@@ -1,0 +1,23 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "results": {
+    "path": "content/003-radii/000000/item/002-results.json",
+    "sha256": "9a23b245d3f9b8763e12f206ed35c34a7b582ac2eb178e36c14d14c209afb970",
+    "kind": "array"
+  },
+  "weighted_upper": {
+    "kind": "inline",
+    "value": "578510861884607072190658985169749719/57233700656616094613311972162500000"
+  },
+  "weighted_excess": {
+    "kind": "inline",
+    "value": "0"
+  }
+}

@@ -1,0 +1,89 @@
+**命题 3.10（失谐与不交换极限）。** 固定整数 $m\ge2$，令
+
+$$
+H_{m,\epsilon}=\operatorname{diag}(0,1,m+\epsilon),\qquad
+|\psi\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3,\qquad
+\rho_\psi=|\psi\rangle\langle\psi|.
+\tag{TM.289}
+$$
+
+先用B卷第2.2.8节的 $m$ 份纯来源。取字 $I=1^m$、$J=(2,0,\ldots,0)$，则
+
+$$
+E_I=m,\qquad E_J=m+\epsilon,\qquad
+\langle I|\rho_\psi^{\otimes m}|J\rangle=3^{-m},\qquad
+\langle I|\mathcal A_T^{H_{m,\epsilon}^{(m)}}(\rho_\psi^{\otimes m})|J\rangle
+=3^{-m}k_T(-\epsilon).
+\tag{TM.290}
+$$
+
+固定效果 $Q_+=\tfrac12(|I\rangle+|J\rangle)(\langle I|+\langle J|)$。两个对角字概率都是 $3^{-m}$，所以完整批次的未条件化概率是
+
+$$
+p_{\epsilon,T}
+=\operatorname{Tr}\!\left[Q_+\mathcal A_T^{H_{m,\epsilon}^{(m)}}(\rho_\psi^{\otimes m})\right]
+=3^{-m}\bigl(1+\operatorname{sinc}(\epsilon T)\bigr).
+\tag{TM.291}
+$$
+
+固定实效果读 $\operatorname{Re}k_T(-\epsilon)=\sin(\epsilon T)/(\epsilon T)$，整个复相干的衰减模长却是 $|\operatorname{sinc}(\epsilon T/2)|$，不能混用。由同一精确式，
+
+$$
+\lim_{T\to\infty}\lim_{\epsilon\to0}p_{\epsilon,T}=2\,3^{-m},\qquad
+\lim_{\substack{\epsilon\to0\\\epsilon\ne0}}\lim_{T\to\infty}p_{\epsilon,T}=3^{-m},\qquad
+|p_{\epsilon,T}-2\,3^{-m}|\le3^{-m}\frac{(\epsilon T)^2}{6}.
+\tag{TM.292}
+$$
+
+末项使用 $\operatorname{sinc}(x)=\int_0^1\cos(xs)\,ds$ 与 $0\le1-\cos u\le u^2/2$。这是当前实效果的二阶界，不是所有效果的二阶界。另一正交相位读数可以取得
+
+$$
+\operatorname{Im}[3^{-m}k_T(-\epsilon)]
+=3^{-m}\frac{1-\cos(\epsilon T)}{\epsilon T}.
+\tag{TM.293}
+$$
+
+零点按连续延拓取零，首阶项为 $3^{-m}\epsilon T/2$。以 $|v_\theta\rangle=(|I\rangle+e^{i\theta}|J\rangle)/\sqrt2$ 的投影为效果，$\theta=-\pi/2$ 与 $\pi/2$ 的概率差的一半正好给该虚部，失败结果不删除。
+
+B卷第2.3.11节达到统一阶数 $N=2m-1$ 的稀疏正定态也能接入有限窗口。取 $a=1/12$，写
+
+$$
+R_\varphi=\begin{pmatrix}
+1/3&0&ae^{-i\varphi}\\
+0&1/3&a\\
+ae^{i\varphi}&a&1/3
+\end{pmatrix},\qquad
+\rho_m=R_0,\quad \sigma_m=R_{\pi/(m-1)},\qquad N=2m-1.
+\tag{TM.294}
+$$
+
+其谱为 $1/3,1/3\pm\sqrt2a$，全为正。取 $I_*=(2^m,0^{m-1})$、$J_*=(1^m,2^{m-1})$ 及 $Q_*=\tfrac12(|I_*\rangle+|J_*\rangle)(\langle I_*|+\langle J_*|)$。实际能量和矩阵元给
+
+$$
+\begin{aligned}
+E_{I_*}(\epsilon)&=m^2+m\epsilon,\qquad
+E_{J_*}(\epsilon)=m^2+(m-1)\epsilon,\\
+\langle I_*|R_\varphi^{\otimes N}|J_*\rangle
+&=a^Ne^{-i(m-1)\varphi},\\
+\operatorname{Tr}\!\left[Q_*\mathcal A_T^{H_{m,\epsilon}^{(N)}}(\rho_m^{\otimes N})\right]
+&=3^{-N}+a^N\operatorname{sinc}(\epsilon T),\\
+\operatorname{Tr}\!\left[Q_*\mathcal A_T^{H_{m,\epsilon}^{(N)}}(\sigma_m^{\otimes N})\right]
+&=3^{-N}-a^N\operatorname{sinc}(\epsilon T).
+\end{aligned}
+\tag{TM.295}
+$$
+
+$\epsilon=0$ 恢复B卷第2.3节的差 $2a^N$；固定非零失谐时，当前效果的差随 $T\to\infty$ 趋零。实分量恰为零不代表复模式为零：$\epsilon T=\pi$ 时实 sinc 为零，而 $|k_T(\epsilon)|=2/\pi$。未在此计算两产品来源的全部最优区别，也没有从次数有限推出显著统计信号。
+
+pinching 通道的不连续还可直接展示。对 $|\chi\rangle=(|I_*\rangle+|J_*\rangle)/\sqrt2$，共振时 pinching 保留纯态，非零失谐时删除两字交叉项。两个输出的迹距离为 $1/2$，所以
+
+$$
+d_\diamond(\mathcal P_{H_{m,\epsilon}^{(N)}},\mathcal P_{H_{m,0}^{(N)}})\ge\frac12
+\quad(\epsilon\ne0),\qquad
+d_\diamond(\mathcal A_T^{H_{m,\epsilon}^{(N)}},\mathcal A_T^{H_{m,0}^{(N)}})
+\le F(NT|\epsilon|/2).
+\tag{TM.296}
+$$
+
+后式因单副本扰动谱为 $0,0,\epsilon$，故 $\delta=|\epsilon|/2$。前式用一般总系统纯态作见证，不声称产品来源限制下也有最优值 $1/2$。固定有限 $T,N$ 时后式趋零；两结论对应不同极限次序。
+

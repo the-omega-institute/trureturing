@@ -1,0 +1,41 @@
+**Proof.** The identity operator commutes with pushforward by $R_\theta$. Induction and Pascal's identity therefore give the binomial formula. For $0<p<1$ its coefficients are
+$$
+b_{n,p}(j)=\binom njp^j(1-p)^{n-j};
+$$
+at $p=0$ the law is concentrated at $j=0$, and at $p=1$ at $j=n$. This also includes $n=0$. The semigroup identity is the identity for powers of one operator. Haar invariance under rotations gives the last measure identity.
+
+For an initial probability $\eta$, its observation vector is the coordinatewise integral of the vectors from point masses. Convexity of the norm gives
+$$
+\|(\pi_{N,\theta})_\#P_p^n\eta-\boldsymbol\mu\|_1
+ \le\int D_{N,\theta,p}(n,x)\,d\eta(x)
+ \le\sup_xD_{N,\theta,p}(n,x).
+$$
+Point masses give the reverse inequality. Each coordinate of $\boldsymbol r_{n,p}$ is a finite sum of right-continuous step functions. All their possible discontinuities belong to
+$$
+\{[k\theta]:-n\le k\le N-1\}.
+$$
+On each complementary open arc the whole vector is constant, and its value at a cut equals its value immediately to the right. Thus every attained vector also occurs on an open arc. There are finitely many such vectors, and every such arc meets the complement of the countable set $\mathcal G_\theta$. This proves the asserted maximum, including its restriction to that single exceptional-set complement.
+
+Using the preceding Dirac reduction,
+$$
+e_{N,\theta,p}(n+r)
+ =\sup_\eta
+   \|(\pi_{N,\theta})_\#P_p^n(P_p^r\eta)-\boldsymbol\mu\|_1
+ \le e_{N,\theta,p}(n).
+$$
+This argument uses the full semigroup, not a transition matrix on observation labels. Adding the cut $[N\theta]$ refines the partition. Summing finer coordinates into their coarser cells contracts the norm by the triangle inequality, proving monotonicity in $N$.
+
+A point mass in cell $i$ has distance $2(1-\mu_i)$ from $\boldsymbol\mu$. At a deterministic parameter the law remains a point mass; the bijectivity of $R_\theta^n$ makes every cell available as a terminal cell. This proves the displayed deterministic identities. Since $\mu_{\min}\le1/N\le1/2$, their value is at least one.
+
+Time monotonicity bounds every interior-parameter error by its time-zero value. Start in a minimum-mass cell. The probability of any nonzero step count is $1-(1-p)^n$, so contraction under observation and the reverse triangle inequality give
+$$
+e_{N,\theta,p}(n)
+ \ge2(1-\mu_{\min})-2\bigl(1-(1-p)^n\bigr).
+$$
+For the other endpoint, choose the initial point so that its $n$-th rotation lies in a minimum-mass cell, obtaining
+$$
+e_{N,\theta,p}(n)
+ \ge2(1-\mu_{\min})-2(1-p^n).
+$$
+The two limits and the supremum formula follow. A one-cell observation always has probability vector $(1)$, proving the separate $N=1$ statement. Finally, time monotonicity proves the assertion about first passage. $\square$
+

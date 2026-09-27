@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:510429db24b6822d0335f3a60c924b048d81b774fb03b2e3692ed3eaa868454d
+  normalized_sha256: sha256:510429db24b6822d0335f3a60c924b048d81b774fb03b2e3692ed3eaa868454d
+cas_ref: sha256:510429db24b6822d0335f3a60c924b048d81b774fb03b2e3692ed3eaa868454d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “一条确定性策略只能”与“策略须对每个”规定可接受策略的输入、时序、终止及正确性条件；“固定策略预先给出”是固定类的定义，并未声称存在满足条件的策略，亦未在定义中夹带读取数界。
+    previous_atom_id: 8732509f706cbe9d97aec38dfb81e45ee68cde688c98a0118258218c9978608a
+    next_atom_id: 42da8e1d448ab7a2a8e1becf926b3c366690ce7f402bba86eeddd0f6d45483eb

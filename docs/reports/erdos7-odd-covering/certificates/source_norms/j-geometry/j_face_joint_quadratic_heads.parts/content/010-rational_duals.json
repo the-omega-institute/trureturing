@@ -1,0 +1,72 @@
+{
+  "0c09b1b701831aa9ba525a82a90a77f03acc30b7fe2ec7706cfd6b2d0bfc1e1b": {
+    "path": "content/010-rational_duals/000-0c09b1b701831aa9ba525a82a90a77f03acc30b7fe2ec7706cfd6b2d0bfc1e1b.json",
+    "sha256": "14514899454cf3cb6b4df74b242da3c03b6b000f83ea41caec8f3b9741549853",
+    "kind": "value"
+  },
+  "203f19a90f08ca255f373f0b798804281239d8b82133c2df8d3c14d15a7fad12": {
+    "path": "content/010-rational_duals/001-203f19a90f08ca255f373f0b798804281239d8b82133c2df8d3c14d15a7fad12.json",
+    "sha256": "8fa23bfb9e900167abe9a59f441523580fad6c2835cb60d0e32371033d955e79",
+    "kind": "value"
+  },
+  "3701623371e3725174b1a367f0a37002f6547c5eb32272d8c909a0762de0ce8e": {
+    "path": "content/010-rational_duals/002-3701623371e3725174b1a367f0a37002f6547c5eb32272d8c909a0762de0ce8e.json",
+    "sha256": "b1445efc6ddcdd94bda145d11a0bdf099c474ef03f1111861dc6109d70ff9c0d",
+    "kind": "value"
+  },
+  "4baf2dbe53262acf8580d9509c7a833c8b734bd4d820905ded2a2cf72f2ed146": {
+    "path": "content/010-rational_duals/003-4baf2dbe53262acf8580d9509c7a833c8b734bd4d820905ded2a2cf72f2ed146.json",
+    "sha256": "7cc9dcd37230241e052836b2abc8f769f2e2b7f8cf23a32a19f66dbe2bb6e5e6",
+    "kind": "value"
+  },
+  "5291c522b9f15658f60ddf72c6323fb63e51cca1519b049eb629797dec694e90": {
+    "path": "content/010-rational_duals/004-5291c522b9f15658f60ddf72c6323fb63e51cca1519b049eb629797dec694e90.json",
+    "sha256": "50450a39664efaf50476952d6b32c27b45ed90220810bc8578e7c5dcc79b06bc",
+    "kind": "value"
+  },
+  "5406b812522d207780fbd1ed6080e7e3e6358d1e2a8e068bf27535b86586e70c": {
+    "path": "content/010-rational_duals/005-5406b812522d207780fbd1ed6080e7e3e6358d1e2a8e068bf27535b86586e70c.json",
+    "sha256": "1671e0ab33646bd123839a9635a00e9f505c5052658ad32f2015b29a26cc98d9",
+    "kind": "value"
+  },
+  "54e1ad880dafed20bcd941f09fe1a500fce0d8ea047be3099554261e9e2e760f": {
+    "path": "content/010-rational_duals/006-54e1ad880dafed20bcd941f09fe1a500fce0d8ea047be3099554261e9e2e760f.json",
+    "sha256": "2f61ee3e25b215e3afe79b34908451fb1fd7a15724d861287b7bcfdab4d5f6b2",
+    "kind": "value"
+  },
+  "9d82000b65c50ceac00aa14e0d0daa0e78f032cac609fbfe39a2965a6833b297": {
+    "path": "content/010-rational_duals/007-9d82000b65c50ceac00aa14e0d0daa0e78f032cac609fbfe39a2965a6833b297.json",
+    "sha256": "2f0bd24246c814fe64109e52b2730ac8e4300a5cee5ebcbc68ea9305091f0bb3",
+    "kind": "value"
+  },
+  "a8502d2fc701a715377b87e73335a7670ba8e7181930b03b31cfdd3ddf610a55": {
+    "path": "content/010-rational_duals/008-a8502d2fc701a715377b87e73335a7670ba8e7181930b03b31cfdd3ddf610a55.json",
+    "sha256": "1b7d578b919987899913fa7a39f9e22ca6b0608ceed46fdb5843016f78adef72",
+    "kind": "value"
+  },
+  "c64557e298976fe470158ff289a355c9cd2ca7f4ec6e07ca40ab25ac7b625db8": {
+    "path": "content/010-rational_duals/009-c64557e298976fe470158ff289a355c9cd2ca7f4ec6e07ca40ab25ac7b625db8.json",
+    "sha256": "038e5fa267a3e80b4195f1bb9cc99c30944c8a27ef47183865a04f88c0d2594b",
+    "kind": "value"
+  },
+  "c7378370ffc43904eb1864044039700ef7f81837251c0c85dd2c44c649ebc1f5": {
+    "path": "content/010-rational_duals/010-c7378370ffc43904eb1864044039700ef7f81837251c0c85dd2c44c649ebc1f5.json",
+    "sha256": "9dc3b26225f03e835b45f282270989c52351afa394bcc41c6866e9b85414fdf3",
+    "kind": "value"
+  },
+  "e344ec2837f8f14d96473cc45f4ec1e37cde8e351e3e7296a39f4a56233f2850": {
+    "path": "content/010-rational_duals/011-e344ec2837f8f14d96473cc45f4ec1e37cde8e351e3e7296a39f4a56233f2850.json",
+    "sha256": "481334ed7db288a448c8709181268be5d35b5cc65366b7c6a0105ee2e15d49c2",
+    "kind": "value"
+  },
+  "ec30a4c6e077bb283ee87702377f369d5746830b8c9194eaccd6013aa55bf312": {
+    "path": "content/010-rational_duals/012-ec30a4c6e077bb283ee87702377f369d5746830b8c9194eaccd6013aa55bf312.json",
+    "sha256": "2147454f93a4a46dcf85098ee5a238cc07228a146b8d88a1eb5db1a71203eb60",
+    "kind": "value"
+  },
+  "f5e3e7c2d03536f8dfe414f9fa10f85e7df633ad5ec9fb55db9a85ee0b0de69a": {
+    "path": "content/010-rational_duals/013-f5e3e7c2d03536f8dfe414f9fa10f85e7df633ad5ec9fb55db9a85ee0b0de69a.json",
+    "sha256": "c1439ce814f25d05b8cc97156cf248dea6a8157498d8ecf982d5442b4202c6c1",
+    "kind": "value"
+  }
+}

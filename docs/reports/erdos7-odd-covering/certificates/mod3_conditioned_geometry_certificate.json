@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+  "parts_directory": "mod3_conditioned_geometry_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "7afef293f2d2e0c81e26190b63f5853d29b3c0aa33c8fb959ad46d5a27107b0f",
+    "kind": "object"
+  }
+}

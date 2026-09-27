@@ -1,0 +1,62 @@
+{
+  "old_labels": [
+    {
+      "cofactor": 1,
+      "residue": 0,
+      "weight": 1,
+      "role": "old"
+    },
+    {
+      "cofactor": 3,
+      "residue": 1,
+      "weight": 1,
+      "role": "original3"
+    },
+    {
+      "cofactor": 9,
+      "residue": 1,
+      "weight": 1,
+      "role": "original9"
+    },
+    {
+      "cofactor": 5,
+      "residue": 1,
+      "weight": 1,
+      "role": "old"
+    },
+    {
+      "cofactor": 15,
+      "residue": 1,
+      "weight": 1,
+      "role": "old"
+    },
+    {
+      "cofactor": 45,
+      "residue": 1,
+      "weight": 2,
+      "role": "old"
+    },
+    {
+      "cofactor": 9,
+      "residue": 1,
+      "weight": 1,
+      "role": "higher9"
+    }
+  ],
+  "maximum_load": 16,
+  "independent_digit_counterexample": {
+    "points": [
+      1,
+      46
+    ],
+    "maximum_numerator": 0,
+    "common_digit_maximum_numerator": -58763136
+  },
+  "digit_zero_maximum_numerator": 0,
+  "signed_random_maximum_numerator": 3715417218,
+  "signed_random_common_digit_maximum_numerator": 2761403116,
+  "invalid_domains_rejected": [
+    "missing_load_column",
+    "signed64_overflow"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "threshold_domain": {
+    "kind": "inline",
+    "value": [
+      [
+        "1",
+        "100/11"
+      ],
+      [
+        "1",
+        "144/13"
+      ]
+    ]
+  },
+  "lower_endpoints_are_limits": {
+    "kind": "inline",
+    "value": true
+  },
+  "corners": {
+    "path": "content/006-continuous_threshold_comparison/002-corners.json",
+    "sha256": "c3a83b4ac1aca0aa2cced2da870cdbdf175ce8ea9bf28f733d8a84622bf0f8da",
+    "kind": "array"
+  },
+  "positive_survival_corners": {
+    "kind": "inline",
+    "value": 95
+  },
+  "biaffine_identity_checks": {
+    "kind": "inline",
+    "value": 198
+  },
+  "minimum_thresholds": {
+    "kind": "inline",
+    "value": [
+      "4",
+      "4"
+    ]
+  },
+  "minimum_complete_bound": {
+    "kind": "inline",
+    "value": "2067798683059000695610477008251208202322203/5021258689796464979957877553768798800000"
+  },
+  "gap403": {
+    "kind": "inline",
+    "value": "44231431071025308687452354082382285922203/5021258689796464979957877553768798800000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "The ordinary polynomial-degree and positive linear-fractional argument extends the corner minimum throughout the nonnegative geometric-count domain. Higher-cap saturated comparison laws and stronger source estimates are outside this conclusion."
+  }
+}

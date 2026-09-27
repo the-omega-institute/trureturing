@@ -1,0 +1,37 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "25062419895814855003/47852545933684800000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "1508333397345559003/47852545933684800000"
+  },
+  "bounded_labels": {
+    "path": "content/009-expanded_residual_comparison/002-complete_H1/003-bounded_labels.json",
+    "sha256": "6a604ef5650c7da0fa3e8698d06cce3cde8b87dabe84bb4187082a92c951d183",
+    "kind": "value"
+  },
+  "layout_rows": {
+    "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows.json",
+    "sha256": "6186bfeb8a9f04d1cd0e9798cdae59c24323b861ab66ecaebcfe59e73cfc031d",
+    "kind": "array"
+  },
+  "complete_exponent_tails": {
+    "path": "content/009-expanded_residual_comparison/002-complete_H1/005-complete_exponent_tails.json",
+    "sha256": "536171c23295c88053d0417a7b62fe93c241db7790e9055c65903dfe38d9880b",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "1/6"
+  }
+}

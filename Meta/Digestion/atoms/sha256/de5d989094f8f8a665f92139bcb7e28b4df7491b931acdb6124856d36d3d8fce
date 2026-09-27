@@ -1,0 +1,24 @@
+**定理 7.7（一般预算尾证书）。** 对每个类型定义
+$$
+\varepsilon_s(B)=
+\sup_{\substack{C:s\to t,\ f\\b(C,f)>B}}
+\frac{\operatorname{diam}(Y_f)}{\ell(C)},
+\tag{7.6}
+$$
+其中空族取零，直径允许为无穷。则
+$$
+D_s^{\langle B\rangle}(x,y)\le D_s(x,y)
+\le\max\{D_s^{\langle B\rangle}(x,y),\varepsilon_s(B)\}.
+\tag{7.7}
+$$
+若 $\varepsilon_s(B)\to0$ 且 $D_s$ 在所有点对上有限，则预算距离以相应加性尾界一致逼近完整距离。一个可检验的充分条件是：读数直径统一不超过有限数 $M\ge0$、读取费用统一不超过有限数 $c_*\ge0$，并存在 $\alpha>0$ 使每条允许路径满足
+$$
+\ell(C)\ge e^{\alpha c(C)}.
+\tag{7.8}
+$$
+此时 $B\ge c_*$ 时有
+$$
+\varepsilon_s(B)\le M e^{-\alpha(B-c_*)}.
+\tag{7.9}
+$$
+

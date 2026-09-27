@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e6bdc499b3a9a6e30b40e8c9556cc3c346b11fdd92a5280f2c0c3aee8ca5aea
+  normalized_sha256: sha256:8e6bdc499b3a9a6e30b40e8c9556cc3c346b11fdd92a5280f2c0c3aee8ca5aea
+cas_ref: sha256:8e6bdc499b3a9a6e30b40e8c9556cc3c346b11fdd92a5280f2c0c3aee8ca5aea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子提出全部有限未来读数的研究问题，列出现有结果并限定所指实验族，没有独立待证结论。
+    previous_atom_id: 4388a5b17ba1feb336a0bfcda83389098167de258a52790051711b1188649e11
+    next_atom_id: 5ba012dc8c19b34b062ff39949c389b81a151bf3095807d70c2535d967668880

@@ -1,0 +1,19 @@
+**定理 46.5（所有有限算术观察都可满足的无自然解系统）。** 对系统
+$$
+\Sigma_*:\qquad x^2=x,\qquad x=z+2
+$$
+有 $S_*=\varnothing$，但 $E_{\Sigma_*}\ne\varnothing$。具体地，对整数 $r$ 定义尾类
+$$
+\tau_\alpha(r)=q_\alpha(n)\quad(n\ge t,\ n\equiv r\pmod p),\qquad\alpha=(t,p),
+$$
+并令 $\xi_\alpha=\tau_\alpha(1)$、$\zeta_\alpha=\tau_\alpha(-1)$。这些坐标定义 $\xi,\zeta\in K$，且
+$$
+\xi^2=\xi,\qquad\xi=\zeta+\iota(2),\qquad
+\xi,\zeta\notin\iota[\mathbb N_0].
+$$
+自然元组
+$$
+x_k=1+k!,\qquad z_k=k!-1\qquad(k\ge2)
+$$
+在 $K^2$ 中收敛到 $(\xi,\zeta)$。对任意有限观察集，有一个充分大的 $k$ 同时满足其全部商方程。原样选取的 $q_{c_k}^2(x_k,z_k)$ 从 $k=2$ 起并不构成相容线程；从 $k\ge3$ 的共尾子塔起则相容，低层必须由该子塔下投影补齐。所有 $A_\alpha$ 均为空，且 $C_{(2,1)}=\varnothing$，不能把这些商方程解称为实际共同像。阶乘稳定的经典半群背景见 [Kyriakoglou–Perrin，Profinite semigroups，5.5 节](https://arxiv.org/html/1703.10088v1)；下面给出此系统的直接坐标证明。
+

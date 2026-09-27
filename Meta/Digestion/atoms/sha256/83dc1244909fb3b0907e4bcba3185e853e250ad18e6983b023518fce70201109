@@ -1,0 +1,100 @@
+**theorem 57.7（固定常量、确定系数、重复变量与共同参数的精确边界）。** 以下各项成立。
+
+甲，字面 $0$ 是例外地兼容轨道语义的固定常量：
+$$
+\delta_0=m_{\boldsymbol\infty},
+\qquad \boldsymbol\infty=(\infty)_p.
+$$
+字面 $1$ 满足 $\rho(1)=\boldsymbol0=(0)_p$，但
+$$
+\delta_1\ne m_{\boldsymbol0}.
+$$
+把固定 $1$ 换成 $m_{\boldsymbol0}$ 是改变实验，而不是同一实验的粗化。
+
+乙，若 $c\in R$ 固定且 $X$ 有 $U$-不变律，则 $cX$ 仍有 $U$-不变律，并且
+$$
+\rho(cX)=\rho(c)\oplus\rho(X).
+$$
+特别地，对 $X\sim m_a$，
+$$
+cX\sim m_{\rho(c)\oplus a}.
+$$
+因此确定乘法系数可作为一元标签平移使用，而无需随机化 $c$。
+
+丙，对固定 $c\in R$，可定义确定平移的标签核
+$$
+t_c(a)=\rho_*(x\mapsto x+c)_*m_a.
+$$
+该核是 Feller；若 $X\sim\mathcal L\nu$，则
+$$
+\operatorname{Law}(\rho(X+c))
+=\int_I t_c(a)\,\nu(da).
+$$
+但 $X+c$ 一般不再 $U$-不变，所以仅知道这一新标签边缘律通常不足以把它继续送入 $k$。
+
+丁，设 $S$ 是标准 Borel 参数空间，$\beta\in\operatorname{Prob}(S)$，$T$ 是一个固定有限二叉 $+$、$\cdot$ 表达式树，叶集合为有限集 $L$。对每个 $\ell\in L$，给定 Borel Markov 核
+$$
+\nu_\ell:S\leadsto I.
+$$
+对 $\theta\in S$ 写 $\nu_{\ell,\theta}=\nu_\ell(\theta,\cdot)$。设随机参数 $\Theta$ 的律为 $\beta$，叶向量 $X_L=(X_\ell)_{\ell\in L}$ 有一个选定的、处处定义的 Borel 正规条件核
+$$
+Q:S\leadsto R^L,
+$$
+并存在一个 Borel 集 $S_0\subseteq S$，满足 $\beta(S_0)=1$，使对每个同一个 $\theta\in S_0$ 都有
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}.
+$$
+则可在所有 $\theta\in S$ 上递归定义 Borel 标签核 $\nu_v:S\leadsto I$：叶上取给定 $\nu_\ell$；若 $v=r+s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}k(a,b)(C)\,\nu_r(\theta,da)\nu_s(\theta,db);
+$$
+若 $v=r\cdot s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}\mathbf1_C(a\oplus b)\,\nu_r(\theta,da)\nu_s(\theta,db).
+$$
+对每个节点 $v$，令 $Y_v$ 是从叶代表按树求值得到的普通算术值，则存在由 $Q_\theta$ 推前得到的 Borel 条件核，使对每个 $\theta\in S_0$ 同时成立
+$$
+\operatorname{Law}(\rho(Y_v)\mid\Theta=\theta)=\nu_{v,\theta},
+$$
+$$
+\operatorname{Law}(Y_v\mid\Theta=\theta)=\mathcal L\nu_{v,\theta}.
+$$
+因此无条件律为
+$$
+\operatorname{Law}(\rho(Y_v))
+=\int_S\nu_{v,\theta}\,\beta(d\theta),
+$$
+$$
+\operatorname{Law}(Y_v)
+=\int_S\mathcal L\nu_{v,\theta}\,\beta(d\theta).
+$$
+$S\setminus S_0$ 上条件版本可以任意修改而不影响这些等式；不能把“几乎处处条件独立”改写成对每个参数值成立。
+
+戊，先遗忘共同参数再把无条件边缘独立相乘一般给出错误的算术输出。具体地，令
+$$
+S=\{0,1\},\qquad \beta(0)=\beta(1)=\frac12,
+$$
+取两个叶 $X,Y$，并规定
+$$
+Q_0=\delta_{(0,0)},
+\qquad
+Q_1=m_{\boldsymbol0}\otimes m_{\boldsymbol0}.
+$$
+于是给定 $\Theta$ 后两叶独立，且它们分别处于零轨道或单位轨道。对乘法输出 $Z=XY$，实际共同参数实验满足
+$$
+\Pr\bigl(\rho(Z)=\boldsymbol0\bigr)=\frac12.
+$$
+然而每个无条件边缘均为
+$$
+\mu=\frac12\delta_0+\frac12m_{\boldsymbol0}.
+$$
+若丢掉 $\Theta$ 后另取独立 $X',Y'\sim\mu$，则
+$$
+\Pr\bigl(\rho(X'Y')=\boldsymbol0\bigr)=\frac14.
+$$
+故共同参数产生的联合信息能够改变一个具体普通乘法门的输出分布。
+
+己，同名变量若每次出现均重新独立采样，则只是多个不同叶；若同名表示同一个已采样代表被多处复用，则是复制，不能用独立叶替代。
+

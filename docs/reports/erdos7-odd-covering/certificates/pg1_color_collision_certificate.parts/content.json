@@ -1,0 +1,22 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-color-collision-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+    }
+  },
+  "parameters": {
+    "path": "content/002-parameters.json",
+    "sha256": "6f6cf9b1677a832d86fd61ac425b4a4e30dbb1576a46fe2d025f9581ffa49c18",
+    "kind": "value"
+  },
+  "result": {
+    "path": "content/003-result.json",
+    "sha256": "398bf021cde5407d0770ec757a239a0a06b30d708d2a459f638ddb86c1d5713c",
+    "kind": "object"
+  }
+}

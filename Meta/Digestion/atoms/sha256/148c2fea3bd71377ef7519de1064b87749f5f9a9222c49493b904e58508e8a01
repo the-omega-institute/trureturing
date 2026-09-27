@@ -1,0 +1,6 @@
+4. flat 边标签空间维数为 $MN+1$。holonomy 映射
+$$
+\operatorname{Hol}:\{y:p(y)=0\}\longrightarrow\mathbb F_2^2,\qquad
+y\longmapsto(H,U)
+$$
+满射；四个 holonomy 扇区各含 $2^{MN-1}$ 个标签。因而在 flat 标签的均匀分布下，具有单值周期顶点提升的比例恰为 $1/4$。

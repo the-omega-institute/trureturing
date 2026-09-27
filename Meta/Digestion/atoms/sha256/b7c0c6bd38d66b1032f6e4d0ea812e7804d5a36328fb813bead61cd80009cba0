@@ -1,0 +1,7 @@
+令唯一来源 $t\in\{1,2\}$，在四事件平衡整体上取两个正贡献和两个负贡献，时间、位置为零，偏序为空，来源均为 leaf(7)。在世界 $t$ 中选前 $t$ 个正贡献，得到函数 $H$ 的读数恰为 $t$。于是
+
+$$
+\operatorname{Poss}(H\boxplus N(H))=\{0\},\qquad
+\operatorname{Poss}(H\boxtimes H)=\{1,4\}.
+$$
+

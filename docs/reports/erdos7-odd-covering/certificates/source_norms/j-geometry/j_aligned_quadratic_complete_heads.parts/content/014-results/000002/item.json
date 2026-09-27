@@ -1,0 +1,53 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "factorial3"
+  },
+  "target_scheduling_upper": {
+    "kind": "inline",
+    "value": "722/625"
+  },
+  "complete_uniform_upper": {
+    "kind": "inline",
+    "value": "1222663/1058400"
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "at_one": "0",
+      "positive_hinges": {},
+      "factorial_coefficient": "1",
+      "factorial_threshold": 3
+    }
+  },
+  "complete_prefix": {
+    "kind": "inline",
+    "value": {
+      "original_choices": 3125000000,
+      "counts": {
+        "layouts": 12500,
+        "pure_layout_bounded": 12498,
+        "two": 0,
+        "two_bounded": 0,
+        "four": 0,
+        "four_bounded": 0
+      },
+      "coarse_choices_closed": 3124500000,
+      "conditional_choices_closed": 484306,
+      "residual_choices": 15694,
+      "remaining_first_profiles": 126,
+      "maximum_complete_prefix_upper": "1222663/1058400",
+      "closed_prefix_digest": "097992badde721380ffbe7abfb4444f06fb59d4b4c8b81bb8cc27b2489d798ee",
+      "remaining_groups_sha256": "79618b66a10a676684c0214f0d44b72920c676d25411e894abe7170254a603b3"
+    }
+  },
+  "closed_node_count": {
+    "kind": "inline",
+    "value": 162
+  },
+  "closed_node_batches": {
+    "path": "content/014-results/000002/item/006-closed_node_batches.json",
+    "sha256": "10d2f2e9e6cc26bc50f7420fbb912de9ba6ab204220ceda10fb222d592e5e32a",
+    "kind": "array"
+  }
+}

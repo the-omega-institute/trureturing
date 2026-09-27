@@ -1,0 +1,94 @@
+**命题 152.1（逐支纠缠破坏的二元过程与有限更新记忆的统一预测界）。** 固定实数 $0<p<1/2$，令 $R=\mathbb C^2$、$E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，初态固定为 $\rho=I_2/2$。报告字母表为 $\{0,1\}$，每次使用同一个复线性仪器，对所有 $X\in M_2(\mathbb C)$ 定义
+$$
+\phi_0(X)=pX_{00}E_0+(1-p)X_{11}E_1,
+\qquad
+\phi_1(X)=(1-p)X_{00}E_0+pX_{11}E_1.
+$$
+没有反馈、重置或中间插入的其他操作。记
+$$
+(c_{bi})_{b,i=0}^1=
+\begin{pmatrix}p&1-p\\1-p&p\end{pmatrix},
+\qquad K_{bi}=\sqrt{c_{bi}}E_i.
+$$
+每个报告分支使用两个分别列出的秩一 Kraus 算子 $K_{b0},K_{b1}$，即 $\phi_b(X)=\sum_{i=0}^1K_{bi}XK_{bi}^{\dagger}$。这使每支完全正且不增迹，其效应分别为
+$$
+F_0=pE_0+(1-p)E_1,\qquad
+F_1=(1-p)E_0+pE_1,\qquad F_0+F_1=I_2.
+$$
+非选择通道为计算基退相干 $X\mapsto X_{00}E_0+X_{11}E_1$。特别地，这里没有用单个对角 Kraus 算子替代每支的两个秩一算子。
+
+令 $\mathcal W=\bigcup_{N\ge0}\{0,1\}^N$ 包含空词 $\varnothing$；词按报告的时间顺序书写，连接记为 $wv$，且
+$$
+\phi_w=\phi_{w_{|w|}}\circ\cdots\circ\phi_{w_1},
+\qquad \phi_{\varnothing}=\operatorname{Id}.
+$$
+令 $z(w),o(w)$ 分别为零、一的出现次数，并定义
+$$
+d(w)=z(w)-o(w),\qquad
+L_0(w)=p^{z(w)}(1-p)^{o(w)},\qquad
+L_1(w)=(1-p)^{z(w)}p^{o(w)},\qquad
+\kappa=\frac{1-p}{p}>1.
+$$
+对任意有限维参考 $A$ 和任意正算子
+$$
+\Omega_{AR}=\sum_{i,j=0}^1A_{ij}\otimes|i\rangle\langle j|\ge0,
+$$
+每个 $A_{ii}\ge0$；对所有非空 $w$，有
+$$
+\phi_w(X)=L_0(w)X_{00}E_0+L_1(w)X_{11}E_1,
+\qquad
+(\operatorname{Id}_A\otimes\phi_w)(\Omega_{AR})
+=L_0(w)A_{00}\otimes E_0+L_1(w)A_{11}\otimes E_1.
+$$
+因此每个非空报告分支均为纠缠破坏操作：其参考扩张输出是有限正乘积和，非零输出归一化后可分。参考块无须相互交换。这个关于任意输入的公式只断言非空词；空词的恒等操作仍可保持输入纠缠。
+
+对于上面指定的对角初态 $I_2/2$，以下公式则对全部 $w\in\mathcal W$ 成立，包括空词：
+$$
+Q_w:=\phi_w(I_2/2)=\frac{L_0(w)E_0+L_1(w)E_1}{2},\qquad
+P(w):=\operatorname{Tr}Q_w=\frac{L_0(w)+L_1(w)}2>0,
+\qquad
+\sum_{|w|=N}P(w)=1\quad(N\ge0).
+$$
+令
+$$
+q_1(w)=\frac{L_1(w)}{L_0(w)+L_1(w)}
+=\frac{\kappa^{d(w)}}{1+\kappa^{d(w)}},
+\qquad
+\rho_w=\frac{Q_w}{P(w)}=(1-q_1(w))E_0+q_1(w)E_1.
+$$
+给定历史 $w$ 后下一实际报告为零的概率是
+$$
+P(0\mid w)=f(d(w)),\qquad
+f(d)=p+(1-2p)\frac{\kappa^d}{1+\kappa^d}\quad(d\in\mathbb Z).
+$$
+对每个有限未来词 $v$，包括空词，完整条件词概率和其末端归一化态分别为
+$$
+P(v\mid w)=\frac{P(wv)}{P(w)}
+=\frac{L_0(w)L_0(v)+L_1(w)L_1(v)}{L_0(w)+L_1(w)},
+\qquad
+\rho_{wv}=
+\frac{E_0+\kappa^{d(w)+d(v)}E_1}{1+\kappa^{d(w)+d(v)}}.
+$$
+以全部有限未来报告律相等定义有限历史上的预测等价关系，即
+$$
+w\sim u\quad\Longleftrightarrow\quad
+P(v\mid w)=P(v\mid u)\ \text{对所有 }v\in\mathcal W.
+$$
+则 $w\sim u$ 当且仅当 $d(w)=d(u)$；加入上述每个未来词末端的归一化端点态仍得到同一等价关系。可达商恰为 $\mathbb Z$，零、一报告的更新分别为 $d\mapsto d+1$ 与 $d\mapsto d-1$。在固定长度 $N$，恰有 $N+1$ 个不同可达类 $-N,-N+2,\ldots,N$。跨长度的等价不要求未归一化算子 $Q_w$ 或过去词概率 $P(w)$ 相同。
+
+该报告过程同时有一个精确的两隐状态经典生成实现：起初一次性均匀抽取 $I\in\{0,1\}$ 并始终保留它；给定 $I$，各步使用新的独立随机性，满足
+$$
+\Pr(0\mid I=0)=p,\qquad \Pr(0\mid I=1)=1-p.
+$$
+其全部有限词概率恰为 $P(w)$，后验为 $\Pr(I=i\mid w)=L_i(w)/(L_0(w)+L_1(w))$。两个后验质量在每个有限词后均严格为正，所以隐标签 $I$ 不是已观察历史的确定函数。
+
+现在把观察者限定为任意一个非空有限集 $S$、固定初态 $s_0\in S$、两个固定的确定性全函数 $T_0,T_1:S\to S$，以及固定读出 $a:S\to[0,1]$。允许 $a$ 取任意精确实数。递归状态为
+$$
+s(\varnothing)=s_0,\qquad s(wb)=T_b(s(w))\quad(b\in\{0,1\}).
+$$
+全部随历史演化且可读的记忆均须包含在 $S$ 内；没有可免费读取的完整档案、无界时钟、生成器隐标签或共享隐藏随机种子。该观察者用 $a(s(w))$ 预测下一报告为零的概率，定义
+$$
+\mathcal E(S,s_0,T_0,T_1,a)
+=\sup_{w\in\mathcal W}|a(s(w))-f(d(w))|,
+\qquad \delta=\frac12-p>0.
+$$

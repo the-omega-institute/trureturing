@@ -1,0 +1,11 @@
+**定义 53.1（固定三对谐波构造）。** 对 $0<\varepsilon\le1/2$，置 $Z_\varepsilon=9+20\varepsilon$，定义
+\[
+ H_\varepsilon(\varphi)
+ =\frac{(\sqrt\varepsilon\,c_2(\varphi),\ c_3(\varphi),\
+               \sqrt\varepsilon\,c_4(\varphi))}{\sqrt{Z_\varepsilon}}
+ \in\mathbb R^6.
+\]
+下弦增益 $l_\varepsilon$ 和上弦增益 $U_\varepsilon$ 指对全部不同圆周状态的比值
+$\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
+  \|x(\varphi)-x(\psi)\|$ 的下确界和上确界。
+

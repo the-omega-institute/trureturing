@@ -1,0 +1,29 @@
+**命题 44.19（固定源谱下界不控制归一分母）。** 取
+$$
+S_\varepsilon=
+\begin{pmatrix}
+1-\varepsilon&\sqrt\varepsilon/2\\
+\sqrt\varepsilon/2&1/2
+\end{pmatrix}.
+$$
+$S_\varepsilon-\frac14I$ 的对角元正、行列式为 $3/16-\varepsilon/2>0$；$I-S_\varepsilon$ 的对角元正、行列式为 $\varepsilon/4>0$。所以
+$$
+\frac14I<S_\varepsilon<I.
+$$
+共同正谱下界保留，但由 $\lambda_{\max}(S_\varepsilon)\ge1-\varepsilon$，不存在共同 $b<1$。此时
+$$
+A=1-\varepsilon,\quad
+W(2h)=(1-\varepsilon)^2+\varepsilon/4
+=1-\tfrac74\varepsilon+\varepsilon^2,
+$$
+$$
+\mathcal T=\tau=-\log(1-\varepsilon)\longrightarrow0,
+\qquad
+R(2)\longrightarrow\frac74.
+$$
+这里 $-\log W(2h)=\tfrac74\varepsilon+O(\varepsilon^2)$、$\mathcal T=\varepsilon+O(\varepsilon^2)$，故极限明确。小残差仍留下 $1/4$ 的归一倍时偏差。
+
+这两个模型都可按第44.7节的二维模型取 $B=F,t_0=0,k=0,C=-h^{-1}\log S_\varepsilon$，得到非零耦合、二维有效循环空间中的实际未饱和来源。因此反例不依赖附加不可见直和，也不与 Context40 的精确饱和判据冲突。
+
+准确边界是：共同 $b<1$ 可以由实际 $\tau$ 的共同正下界替代，但在不另加任何分母控制时没有该统一稳定保证；正谱下界也不能仅由小 $\delta$ 推出。这是允许来源族中的统一估计反例，不是已经构造了两个完整档案相同的世界。若 $C_{\rm archive}$ 中还有区分这些来源的外部记录或时间戳，必须保留；完整观察者的 minimax 不可识别结论需要另证共同档案与联合误差相容性。
+

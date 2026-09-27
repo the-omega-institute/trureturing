@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d4da8d6c3b351ed21caa75877f5d07d239204830a6a6e24bb2946a775da8a960
+  normalized_sha256: sha256:d4da8d6c3b351ed21caa75877f5d07d239204830a6a6e24bb2946a775da8a960
+cas_ref: sha256:d4da8d6c3b351ed21caa75877f5d07d239204830a6a6e24bb2946a775da8a960
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: atom 只说“采用以下已实际核读的来源收据”并提醒“无需把元数据检索冒称逐页证明核读”，随后即为来源表头。不存在文献定理正文或定义中的隐含结论；本建议仅确认无数学证明对象，不复核历史核读行为。
+    previous_atom_id: 1fe2418e41af141bb2b8725f95724a85b577dd6390458bee5d9b2dc1cad0356e
+    next_atom_id: fedceb0ad689fc7cf026cb571730b1a389202d1a1b35cf0441c1af3a595fa749

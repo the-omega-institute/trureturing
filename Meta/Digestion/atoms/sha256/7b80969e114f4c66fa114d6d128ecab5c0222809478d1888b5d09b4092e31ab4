@@ -1,0 +1,7 @@
+**定理 8.4（时间合成、指针代数及完整不动空间）。** 对互不相交的时间集合$A,B\subseteq T$，每步均满足定义8.1且输入环境保持新鲜，则
+$$
+\Gamma_{A\cup B}=\Gamma_A\odot\Gamma_B,\qquad
+C_{A\cup B}=C_A\odot C_B,\qquad
+\Phi_{A\cup B}=\Phi_B\circ\Phi_A=\Phi_A\circ\Phi_B.
+$$
+这里交换的是指定记录通道；不宣称$U_s,U_t$在任意非预备的环境输入上可交换。相交集合若仍用上式复合，会把交集步骤计算两次，只能解释为另备独立副本后再次执行，不能解释为原时间集合的并。

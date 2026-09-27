@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ae23d5f084747ddbe6665beba5ebbf89823600e894538466b9c1a77eeee04b9
+  normalized_sha256: sha256:8ae23d5f084747ddbe6665beba5ebbf89823600e894538466b9c1a77eeee04b9
+cas_ref: sha256:8ae23d5f084747ddbe6665beba5ebbf89823600e894538466b9c1a77eeee04b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “另取任意正整数”与“指定新网格”给出新中心及步长的定义，不宣称舍入误差、区间不变量或精度界；该网格记号没有把任何结论当作定义。
+    previous_atom_id: de0078b6fe51c9166ecd39af26b74bc5a78496b6e1fc7096e451e0151cd5426b
+    next_atom_id: bb6cc20fc8bc844d973dc7e5afbec1a4473275a81f465e130aea221d3072ee87

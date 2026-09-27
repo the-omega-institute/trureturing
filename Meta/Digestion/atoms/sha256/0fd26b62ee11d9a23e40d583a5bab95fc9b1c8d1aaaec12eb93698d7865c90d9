@@ -1,0 +1,2 @@
+更一般地，记 $m_Q(a,a')=\mathbf1_Q(a\diamond_t a')$，则两个不同所选父事件的无序对贡献为 $\epsilon\epsilon'[m_Q(a,a')+m_Q(a',a)]$；只有相应两核值相等时才能写为 $2\epsilon\epsilon'm_Q(a,a')$。对角父点 $e$ 的属性若为 $a=(p,\epsilon,\rho,t)$、选择位为 $b$，其子点属性为 $(2p,+1,\operatorname{pair}(\rho,\rho),t+1)$、选择位为 $b^2=b$，而其 $U_t$ 为该子点属性的单点集。同属性的非对角父对产生相同子点属性，不能由属性筛选隔离为对角父对。
+

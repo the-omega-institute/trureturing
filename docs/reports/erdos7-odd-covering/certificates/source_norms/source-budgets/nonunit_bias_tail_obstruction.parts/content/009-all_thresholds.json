@@ -1,0 +1,141 @@
+{
+  "target": "138877/1000",
+  "fraction": "5/6",
+  "initial_floor": 54,
+  "rows": [
+    {
+      "prime": 41,
+      "input_floor": "54",
+      "output_strict_floor": "6207/100",
+      "a": "61/780",
+      "b": "1/6084",
+      "quadratic": [
+        "807/100",
+        "-5001/1300",
+        "6207/13520"
+      ],
+      "four_AC_minus_B_squared": "8811/422500"
+    },
+    {
+      "prime": 43,
+      "input_floor": "6207/100",
+      "output_strict_floor": "7113/100",
+      "a": "64/861",
+      "b": "1/6724",
+      "quadratic": [
+        "453/50",
+        "-63803/14350",
+        "14716797/26896000"
+      ],
+      "four_AC_minus_B_squared": "1002918289/16473800000"
+    },
+    {
+      "prime": 47,
+      "input_floor": "7113/100",
+      "output_strict_floor": "8069/100",
+      "a": "14/207",
+      "b": "1/8100",
+      "quadratic": [
+        "239/25",
+        "-3277/690",
+        "19131599/32400000"
+      ],
+      "four_AC_minus_B_squared": "2613168169/107122500000"
+    },
+    {
+      "prime": 53,
+      "input_floor": "8069/100",
+      "output_strict_floor": "451/5",
+      "a": "79/1326",
+      "b": "1/10404",
+      "quadratic": [
+        "951/100",
+        "-24943/5304",
+        "3639119/6242400"
+      ],
+      "four_AC_minus_B_squared": "1071263749/17582760000"
+    },
+    {
+      "prime": 59,
+      "input_floor": "451/5",
+      "output_strict_floor": "9967/100",
+      "a": "88/1653",
+      "b": "1/12996",
+      "quadratic": [
+        "947/100",
+        "-771631/165300",
+        "4495117/7797600"
+      ],
+      "four_AC_minus_B_squared": "7546145993/163944540000"
+    },
+    {
+      "prime": 61,
+      "input_floor": "9967/100",
+      "output_strict_floor": "110",
+      "a": "91/1770",
+      "b": "1/13924",
+      "quadratic": [
+        "1033/100",
+        "-921413/177000",
+        "109637/167088"
+      ],
+      "four_AC_minus_B_squared": "410740931/31329000000"
+    },
+    {
+      "prime": 67,
+      "input_floor": "110",
+      "output_strict_floor": "12031/100",
+      "a": "20/429",
+      "b": "1/16900",
+      "quadratic": [
+        "1031/100",
+        "-20209/3900",
+        "132341/202800"
+      ],
+      "four_AC_minus_B_squared": "115879/1901250"
+    },
+    {
+      "prime": 71,
+      "input_floor": "12031/100",
+      "output_strict_floor": "6551/50",
+      "a": "106/2415",
+      "b": "1/19044",
+      "quadratic": [
+        "1071/100",
+        "-1311179/241500",
+        "78815081/114264000"
+      ],
+      "four_AC_minus_B_squared": "16799579501/233289000000"
+    },
+    {
+      "prime": 73,
+      "input_floor": "6551/50",
+      "output_strict_floor": "7129/50",
+      "a": "109/2556",
+      "b": "1/20164",
+      "quadratic": [
+        "289/25",
+        "-763309/127800",
+        "46702079/60492000"
+      ],
+      "four_AC_minus_B_squared": "2127432091/81664200000"
+    }
+  ],
+  "final_strict_floor": "7129/50",
+  "final_gap": "3703/1000",
+  "negative_unit_example": {
+    "clips": [
+      "1/10000",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4",
+      "1/4"
+    ],
+    "coefficient": "-688497775928360522711984856943395897524239059182/3035411626441239081198559277112895403819203125"
+  },
+  "scope": "Use nonunit coefficient positivity and the exact unit. If allocated final mass is nonpositive the gate fails immediately; otherwise each earlier allocated mass and every relaxed denominator is positive, so the nine barriers apply."
+}

@@ -1,0 +1,13 @@
+**theorem 48.5 (Bounded natural coordinates and boundary replacement).** The set $F_r$ is a fixed point of the anchoring operation. For every solution $\mathbf a$ of $\Sigma$ with exact ambient-zero set $Z$, every $i\in F_k$ satisfies
+$$
+a_i\in\{1,\ldots,b_k\}\qquad(0\leq k\leq r).
+$$
+Define $\mathbf a'$ by setting $a'_i=0$ on $Z$, $a'_i=a_i$ on $F$, and $a'_i=\tau(\rho(a_i))$ on $U$. Then $\mathbf a'$ is a solution of the same literal equations, has the same ambient-zero set, and satisfies
+$$
+\rho(a'_i)=\rho(a_i)\qquad(i\in V).
+$$
+Its natural coordinates are all at most $M_\Sigma$, and all coordinates in $U$ are boundary. Consequently every satisfiable system has a solution in
+$$
+\bigl(\{0,1,\ldots,M_\Sigma\}\cup B\bigr)^r.
+$$
+

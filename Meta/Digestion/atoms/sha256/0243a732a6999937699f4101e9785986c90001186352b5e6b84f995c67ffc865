@@ -1,0 +1,11 @@
+**证明。** 首先建立统一于 $\delta$ 的产品链势。令 $\Pi=\mathbf1\eta$、$P=I_4\otimes\Pi$，则 $P$ 与 $Q_{\delta,d}$ 交换。置
+$$
+A_{\delta,d}=I-Q_{\delta,d}+P.
+$$
+对全部 $0\le\delta\le1/2$，此矩阵均可逆。事实上，若 $A_{\delta,d}h=0$，施加 $P$ 得 $(2I-K_{\delta,d})Ph=0$；由行随机矩阵的无穷范数至多为 $1$，必有 $Ph=0$，进而 $Q_{\delta,d}h=h$。当 $\delta>0$ 时，$K_{\delta,d}$ 全正且 $T$ 不可约，产品链不可约，有限不可约链的调和函数为常数。当 $\delta=0$ 时，产品链有陷阱 $\times M$ 和环 $\times M$ 两个不可约闭类，因为纯环核 $R_d$ 全正；调和函数在每类上为常数。两种情形都由 $Ph=0$ 迫使 $h=0$。这些事实不要求 $T$ 非周期。
+
+有限维矩阵逆连续，参数区间紧，故
+$$
+C_\perp:=\max_{\substack{0\le\delta\le1/2\\d=0,1}}
+\|A_{\delta,d}^{-1}(I-P)\|_\infty<\infty.
+$$

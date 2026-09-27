@@ -1,0 +1,17 @@
+**证明。** 全局解投影到任意有限剩余环即给出必要性。反过来，假设每个模数都有解，并令
+$$
+C_m=\left\{\bar r\in\widehat{\mathbb Z}^{\,d}:
+\forall j\in\{1,\ldots,s\},\ P_j(\bar r)\bmod m=0\right\}.
+$$
+剩余投影 $\widehat{\mathbb Z}\to\mathbb Z/m\mathbb Z$ 满射：给定一个剩余类，取整数代表元，其对角线程便是提升。逐坐标提升模 $m$ 的解，说明 $C_m$ 非空。这个集合是有限离散商中一个集合的逆像，故开闭，特别地闭。
+
+对于任意非空有限组模数 $m_1,\ldots,m_h$，取 $M=\operatorname{lcm}(m_1,\ldots,m_h)$，则
+$$
+C_M\subseteq\bigcap_{i=1}^h C_{m_i}.
+$$
+由于 $M>1$，假设保证 $C_M$ 非空。空有限交是非空空间 $\widehat{\mathbb Z}^{\,d}$ 本身，因此整个闭集族具有有限交性质。紧致性给出
+$$
+\bigcap_{m>1}C_m\ne\varnothing.
+$$
+取交中的 $\bar r$。每个 $P_j(\bar r)$ 在全部模 $m>1$ 的坐标中都为零，在模一坐标中也自动为零。逆极限元素由全部坐标唯一确定，所以 $P_j(\bar r)=0$。证明没有预先选取一族相容的模解；这种相容性由紧致性产生。证毕。
+

@@ -1,0 +1,6 @@
+对 $k\in\mathbb N$，以同一符号 $q_k$ 表示两个域上的前缀限制，置
+$$
+q_kx=(x_0,\ldots,x_{k-1}),\qquad
+W_k=q_k[X_{\rm fs}]=q_k[\widehat X],\qquad
+F_{k,w}=\{x\in X_{\rm fs}:q_kx=w\}.
+$$

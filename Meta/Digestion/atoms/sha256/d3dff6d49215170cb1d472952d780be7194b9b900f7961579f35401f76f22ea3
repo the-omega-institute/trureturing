@@ -1,0 +1,28 @@
+**theorem 56.2（$\rho$ 的纤维恰为 $U$-轨道，含零坐标；规范轨道概率与稳定子）。** 对任意 $x,y\in R$，
+$$
+\rho(x)=\rho(y)\quad\Longleftrightarrow\quad \exists u\in U,\ y=ux.
+$$
+若 $A\in I$，则 $s(A)$ 的稳定子为
+$$
+H_A=\prod_pH_{A,p},\qquad H_{A,p}=\begin{cases}\{1\},&A_p<\infty,\\ \mathbb Z_p^\times,&A_p=\infty.\end{cases}
+$$
+而
+$$
+m_A:=(u\mapsto us(A))_*m_U
+$$
+是该轨道上唯一的 $U$-不变 Borel 概率；若以轨道内任意其他代表 $t=ws(A)$ 定义同一推前，则仍得到 $m_A$。因此即使 $H_A$ 非平凡、作用不自由，轨道概率仍规范且与代表元选择无关。
+
+**证明。** 固定 $p$。若 $v_p(x_p)=v_p(y_p)=n<\infty$，则可唯一写成 $x_p=p^na_p$、$y_p=p^nb_p$，其中 $a_p,b_p\in\mathbb Z_p^\times$；取 $u_p=b_pa_p^{-1}$ 即有 $y_p=u_px_p$。若公共赋值为 $\infty$，则 $x_p=y_p=0$，任意 $u_p\in\mathbb Z_p^\times$ 均满足 $y_p=u_px_p$。逐坐标组装 $u=(u_p)_p\in U$ 得正向蕴含；反向由单位不改变赋值立即成立。
+
+对稳定子，若 $A_p<\infty$ 且 $u_pp^{A_p}=p^{A_p}$，因 $\mathbb Z_p$ 为整环，得 $u_p=1$；若 $A_p=\infty$，该坐标为 $0$，全部单位都稳定它，故得到所列乘积稳定子。特别地，含零坐标时作用一般不自由。
+
+若 $t=ws(A)$，则
+$$
+(u\mapsto ut)_*m_U=(u\mapsto uws(A))_*m_U=m_A,
+$$
+因为右乘固定 $w$ 保持归一化 Haar 概率。为证唯一性，令 $\nu$ 是轨道 $U\cdot s(A)$ 上任意 $U$-不变概率，且 $f$ 为该轨道上的连续函数。Fubini 与不变性给出
+$$
+\int f(x)\,d\nu(x)=\int\!\!\int_U f(ux)\,dm_U(u)\,d\nu(x).
+$$
+若 $x=ws(A)$，内层积分经变量 $u\mapsto uw$ 后等于 $\int_Uf(us(A))\,dm_U(u)$，与 $x$ 无关。因此 $\nu(f)=m_A(f)$；连续函数分离紧 Hausdorff 空间上的概率，故 $\nu=m_A$。证毕。
+

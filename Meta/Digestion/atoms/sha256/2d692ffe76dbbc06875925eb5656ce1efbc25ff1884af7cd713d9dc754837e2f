@@ -1,0 +1,10 @@
+**定理 15.5（概率单纯形上的目标最小最坏误差）。** 对同一 $B,V$ 及任意 $h\in\mathbb R^X$，允许所有集合函数解码器，有
+$$
+\inf_{g:\mathcal P\to\mathbb R}
+\sup_{p\in\Delta_X}|ph-g(pB)|
+=\operatorname{dist}_\infty(h,V)
+:=\min_{v\in V}\max_{x\in X}|h_x-v_x|.
+\tag{15.11}
+$$
+右侧的最佳逼近存在，且一个线性读出已达到该误差。该式是在有界概率域上的目标恢复结论；[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定理1.4针对无界线性输入得到的无穷风险不能转移到这里。它与该卷§3.1的候选纤维半径公式相容。
+

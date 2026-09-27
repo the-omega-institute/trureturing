@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "311c23d963060b7a7cbc8a3b2f462628f7a6b2f9789affcb25caf4b873bd24d2",
+  "parts_directory": "first9_prefix_edge_charges_input.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "cbd6582dd521c42e0e583b6bb1d9a169a2e4a7c140befc242a9726e09d55ee5a",
+    "kind": "object"
+  }
+}

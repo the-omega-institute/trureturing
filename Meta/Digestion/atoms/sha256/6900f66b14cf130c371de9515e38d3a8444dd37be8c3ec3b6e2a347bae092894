@@ -1,0 +1,5 @@
+**定理 2.7（较长阻塞的递推改变）。** 固定整数$R\ge1$。对每个整数$L\ge0$，令$\mathcal W_L^{(R)}\subseteq\{0,1\}^L$由满足
+$$
+c_ic_j=0\qquad(0\le i,j<L,\quad0<|i-j|\le R)
+$$
+的字串组成，并记$A_L^{(R)}=|\mathcal W_L^{(R)}|$。

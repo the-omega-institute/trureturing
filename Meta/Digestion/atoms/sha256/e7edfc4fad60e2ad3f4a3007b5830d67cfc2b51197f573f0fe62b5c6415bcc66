@@ -1,0 +1,26 @@
+**theorem 57.4（不变律的唯一轨道提升与显式析取）。** 对任意 $\nu\in\operatorname{Prob}(I)$ 定义
+$$
+\mathcal L\nu=\int_I m_a\,\nu(da).
+$$
+等价地令
+$$
+T:I\times U\to R,\qquad T(a,u)=u\,s(a),
+$$
+则
+$$
+\mathcal L\nu=T_*(\nu\otimes\lambda_U).
+$$
+于是 $\mathcal L\nu$ 是 $U$-不变概率且
+$$
+\rho_*(\mathcal L\nu)=\nu.
+$$
+反之，若 $\mu\in\operatorname{Prob}(R)$ 是 $U$-不变的，则
+$$
+\boxed{\mu=\mathcal L(\rho_*\mu)}.
+$$
+故一个 $U$-不变随机元素的完整分布由其 $\rho$-分布唯一确定。进一步，令 $\nu=\rho_*\mu$，则 $a\mapsto m_a$ 是 $\mu$ 关于 $\rho$ 的一个正规条件分布：对任意 Borel $B\subseteq R$、$C\subseteq I$，
+$$
+\mu\bigl(B\cap\rho^{-1}(C)\bigr)=\int_C m_a(B)\,\nu(da).
+$$
+在 $\nu$-几乎处处意义下它唯一。此结论不要求轨道作用自由。
+

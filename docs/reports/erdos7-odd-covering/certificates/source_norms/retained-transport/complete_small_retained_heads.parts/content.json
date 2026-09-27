@@ -1,0 +1,29 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-complete-small-retained-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "3a4e800f7972616ffaae2bedd57fb614491c4f8a0e89b8fbd2f9bc2f98da61ec",
+    "kind": "value"
+  },
+  "domain": {
+    "path": "content/002-domain.json",
+    "sha256": "5b98ec296da23c2f8e2865de271d0f204db9d35ec6bfa1b2fb89811fa039d453",
+    "kind": "value"
+  },
+  "original_raw_prefix_duals": {
+    "kind": "inline",
+    "value": 12
+  },
+  "complete_tests": {
+    "path": "content/004-complete_tests.json",
+    "sha256": "23e8b079656c7f2d528fc3da93a75e9fb2c000dfe37e4084e552898d9b90a8dd",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete225/226 heavy0,heavy16,AP13 and AP11-block0 bounds on delta<=10^-8,rho<=10^-11. Every original two/four/six,joint and raw-prefix candidate is transported before taking their minimum; all independent labels and infinite tails remain. No complete52-cost K comparison, global complement, Lean or unrestricted Erdos7 resolution."
+  }
+}

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9e8493bb355621da6a1677d8a85d60cab14781a67bce923d25abe7f51a27cfa3
+  normalized_sha256: sha256:9e8493bb355621da6a1677d8a85d60cab14781a67bce923d25abe7f51a27cfa3
+cas_ref: sha256:9e8493bb355621da6a1677d8a85d60cab14781a67bce923d25abe7f51a27cfa3
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.contextual_equivalence_is_greatest
+    target_statement_id: sha256:b9dd6282132e7750fe3a6c1eb7e6a3eac5a2e7cf3e939631bd31ba192450378c
+receipts:
+  unresolved_subitems: []

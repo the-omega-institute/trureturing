@@ -1,0 +1,29 @@
+**定理 122.16。** $\mathcal S$ 非减，且
+$$
+\mathcal S(s)\longrightarrow\sum_bp_bh(a_b).
+$$
+对所有 $s\ge0$，有精确 Jensen 缺陷式
+$$
+\sum_bp_bh(a_b)-\mathcal S(s)
+=\sum_x\mu_x d_{\mathrm{Ber}}(u_s(x)\Vert a_{q(x)}),
+$$
+其中 $d_{\mathrm{Ber}}(r\Vert a)=r\log(r/a)+(1-r)\log((1-r)/(1-a))$；当 $a=0$ 或 $1$ 时，该纤维的 $u_s$ 同为该端点，整条纤维贡献约定为零。
+
+**证明。** $h$ 在 $[0,1]$ 凹，故对每个状态的转移概率使用有限 Jensen，
+$$
+h(S_tu_s)\ge S_t h(u_s).
+$$
+乘以 $\mu$ 求和并用平稳性，得 $\mathcal S(s+t)\ge\mathcal S(s)$。有限点逐点 $u_s\to a$，由连续性得极限。若 $a_b\in(0,1)$，在该纤维展开 Bernoulli KL，利用 $\sum_{x\in X_b}\mu_xu_s(x)=p_ba_b$，其和恰为 $p_bh(a_b)-\sum_{x\in X_b}\mu_xh(u_s(x))$。端点均值在满支撑且 $0\le f\le1$ 下迫使原函数整条纤维恒为该端点，故约定与实际零项一致。证毕。
+
+对 $s>0$，在所有 $0<a_b<1$ 的纤维上都有 $0<u_s(x)<1$；端点纤维恒定，去掉它们后可求导，得到
+$$
+\mathcal S'(s)
+=\frac12\sum_{x,y\text{ 位于混合纤维}}
+w_{xy}(u_s(x)-u_s(y))
+\left[\log\frac{u_s(x)}{1-u_s(x)}-
+\log\frac{u_s(y)}{1-u_s(y)}\right]\ge0.
+$$
+**证明。** $\mathcal S'=-\langle h'(u_s),Lu_s\rangle_\mu$，用定理 122.13 的双线性恒等式及 $h'(r)=-\log(r/(1-r))$ 即得；logit 严格递增，故每个边项非负。证明单调性本身无需在 $s=0$ 的尖锐端点使用不存在的有限导数。证毕。
+
+指标初值时，极限 $\sum_bp_bh(a_b)$ 正是原二值目标 $Y=1_A(X)$ 在观察 $q(X)$ 下的条件熵。中间的 $u_s$ 是一个随时间改变的函数，$\mathcal S(s)$ 不是“原固定目标因获得更多记录而增加的条件熵”；观察 $q$ 在此全程不变。一般 $[0,1]$ 初值的同一公式也成立，但若要解释成随机二值目标，必须另外规定以该函数为成功概率的共同概率模型。
+

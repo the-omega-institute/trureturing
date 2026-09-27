@@ -1,0 +1,152 @@
+{
+  "candidate_digest_format": "ASCII decimal N:sigma(N), newline, ascending N",
+  "candidate_sha256": "96bf2c6c6c0744bfc55de5e04744665c3fa4f4ceb7abdc087a19348e340120d1",
+  "conclusion": "hypothetical odd-cover lcm exceeds 11486474",
+  "even_cover": [
+    {
+      "modulus": 2,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 0
+    },
+    {
+      "modulus": 4,
+      "residue": 1
+    },
+    {
+      "modulus": 6,
+      "residue": 5
+    },
+    {
+      "modulus": 12,
+      "residue": 7
+    }
+  ],
+  "examples": [
+    {
+      "N": 315,
+      "factorization": {
+        "3": 2,
+        "5": 1,
+        "7": 1
+      },
+      "mixed_bound": "49/120",
+      "pure_survivor_count_lower": 120,
+      "uncovered_count_lower": 71
+    },
+    {
+      "N": 945,
+      "factorization": {
+        "3": 3,
+        "5": 1,
+        "7": 1
+      },
+      "mixed_bound": "157/336",
+      "pure_survivor_count_lower": 336,
+      "uncovered_count_lower": 179
+    },
+    {
+      "N": 45045,
+      "factorization": {
+        "11": 1,
+        "13": 1,
+        "3": 2,
+        "5": 1,
+        "7": 1
+      },
+      "mixed_bound": "233/320",
+      "pure_survivor_count_lower": 14400,
+      "uncovered_count_lower": 3915
+    }
+  ],
+  "first_unresolved_by_these_criteria": {
+    "N": 11486475,
+    "factorization": {
+      "11": 1,
+      "13": 1,
+      "17": 1,
+      "3": 3,
+      "5": 2,
+      "7": 1
+    },
+    "mixed_bound": "371667/340480",
+    "partition": {
+      "A": [
+        3,
+        5
+      ],
+      "A_mixed_bound": "39/133",
+      "B": [
+        7,
+        11,
+        13,
+        17
+      ],
+      "B_mixed_bound": "149/2304"
+    },
+    "pure_survivor_count_lower": 3064320,
+    "two_block_bound": "1095631/1021440",
+    "uncovered_count_lower": -222573
+  },
+  "golden_fiber_5040": [
+    5040,
+    10080,
+    15120,
+    20160,
+    30240,
+    60480
+  ],
+  "golden_fiber_odd_parts": [
+    315,
+    315,
+    945,
+    315,
+    945,
+    945
+  ],
+  "interval": [
+    1,
+    11486474
+  ],
+  "largest_successful_pure_bound": {
+    "N": 10135125,
+    "bound": "307413/308320"
+  },
+  "odd_abundant_candidates": 23758,
+  "odd_perfect_candidates": 0,
+  "pure_bound_exclusions": 23757,
+  "two_block_exclusions": [
+    {
+      "N": 6891885,
+      "factorization": {
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "3": 4,
+        "5": 1,
+        "7": 1
+      },
+      "mixed_bound": "211973/209920",
+      "partition": {
+        "A": [
+          3,
+          5
+        ],
+        "A_mixed_bound": "10/41",
+        "B": [
+          7,
+          11,
+          13,
+          17
+        ],
+        "B_mixed_bound": "149/2304"
+      },
+      "pure_survivor_count_lower": 1889280,
+      "two_block_bound": "1877957/1889280",
+      "uncovered_count_lower": 11323
+    }
+  ],
+  "verification_boundary": "ordinary CRT proof and exact integer enumeration; not Lean formalized"
+}

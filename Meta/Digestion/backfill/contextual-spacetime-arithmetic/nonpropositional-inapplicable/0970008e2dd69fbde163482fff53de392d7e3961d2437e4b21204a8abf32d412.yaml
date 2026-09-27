@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0970008e2dd69fbde163482fff53de392d7e3961d2437e4b21204a8abf32d412
+  normalized_sha256: sha256:0970008e2dd69fbde163482fff53de392d7e3961d2437e4b21204a8abf32d412
+cas_ref: sha256:0970008e2dd69fbde163482fff53de392d7e3961d2437e4b21204a8abf32d412
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子建议用来源树含指定叶的谓词选择来源集合，是定义的使用方式而非新命题。
+    previous_atom_id: 9b032af413a577fde222629a2527d3ec60eaa8b57c02530c5d5facaaad33b719
+    next_atom_id: f310b861113e46742db61a8cb144e86dfb0fc4c040eb45bb76b939f2392082e9

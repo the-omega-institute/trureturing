@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:766e14a00beca0ee45375e9363aa58beef249a7ee66e55d4bed31c96805c0a09
+  normalized_sha256: sha256:766e14a00beca0ee45375e9363aa58beef249a7ee66e55d4bed31c96805c0a09
+cas_ref: sha256:766e14a00beca0ee45375e9363aa58beef249a7ee66e55d4bed31c96805c0a09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “判据不要求证书是网格构造”与“不要求”指定余量公式说明判据前提的适用范围，“零或负余量不满足本命题前提”重述正余量限制；本叶不声称存在证书或收敛速度，也未在定义中夹带这些结论。
+    previous_atom_id: 1505088babe4783124b88e110b68fb6c4fc2d02ac9aef63c4056196676554888
+    next_atom_id: 5c3fb1184245846fed88e2d66d76a267ffc4f4c44f0a1ae5696f3f5c794a0017

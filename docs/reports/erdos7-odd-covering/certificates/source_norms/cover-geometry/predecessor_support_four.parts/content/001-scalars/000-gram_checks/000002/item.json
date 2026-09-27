@@ -1,0 +1,39 @@
+{
+  "coordinates": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11
+    ]
+  },
+  "support_count": {
+    "kind": "inline",
+    "value": 4
+  },
+  "cases": {
+    "kind": "inline",
+    "value": 1365
+  },
+  "maximum": {
+    "kind": "inline",
+    "value": "169/18"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": [
+      [
+        1,
+        2,
+        3,
+        5
+      ]
+    ]
+  },
+  "rows": {
+    "path": "content/001-scalars/000-gram_checks/000002/item/005-rows.json",
+    "sha256": "a4199fb0442845750863754d16f6fa38966a14e1b0a36ee7929ec5fc53f4881d",
+    "kind": "array"
+  }
+}

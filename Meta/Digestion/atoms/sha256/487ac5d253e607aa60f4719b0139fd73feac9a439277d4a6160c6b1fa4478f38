@@ -1,0 +1,122 @@
+**theorem 63.102（公共满测种子冻结与完整历史的精确似然因子分解）。** 设 $\Pi$ 是 definition 63.101 的随机零错误终止策略。
+
+首先，存在一个与目标无关的集合
+$$
+\Omega_\star\in\mathcal F,
+\qquad
+\nu(\Omega_\star)=1,
+$$
+使得对每个
+$$
+\omega\in\Omega_\star
+$$
+以及每个
+$$
+a\in X,
+$$
+冻结策略 $D_\omega$ 在隐藏目标为 $a$ 时都有限步停止并输出 $a$。换言之，在有限严格正支撑下，可以在一个共同的满测种子集合上同时冻结出对所有目标零错误的确定性策略。
+
+其次，对任意长度 $n$ 的完整已答查询迹
+$$
+h=(c_1,y_1;\ldots;c_n,y_n)
+$$
+和任意 $a\in X$，有精确等式
+$$
+\Pr(H_n=h\mid A=a)
+=
+\mathbf 1_{\{a\in S(h)\}}\nu(W(h)),
+$$
+其中事件 $H_n=h$ 表示策略至少执行了前 $n$ 次查询且这些查询中心与答复恰为 $h$。等价地，
+$$
+\Pr(A=a,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+
+更强地，对所有
+$$
+a,a'\in S(h)
+$$
+都有完全相同的相容种子集合：
+$$
+\{\omega:H_n=h\text{ 在目标 }a\text{ 下发生}\}
+=
+W(h)
+=
+\{\omega:H_n=h\text{ 在目标 }a'\text{ 下发生}\}.
+$$
+因此完整历史的随机策略乘子在全部相容目标上是同一个常数
+$$
+\nu(W(h)),
+$$
+并不随 $a\in S(h)$ 改变。
+
+若
+$$
+\Pr(H_n=h)>0,
+$$
+则擦除随机种子以后，目标的条件后验仍恰为原先验在 $S(h)$ 上的限制：
+$$
+\Pr(A=a\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}.
+$$
+而且对任意可测
+$$
+B\in\mathcal F
+$$
+都有
+$$
+\Pr(A=a,\ R\in B\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}
+\,
+\frac{\nu(B\cap W(h))}{\nu(W(h))}.
+$$
+所以给定完整历史后，隐藏目标与随机种子再次条件独立，其两边分别是
+$$
+\mu(\,\cdot\mid S(h))
+$$
+与
+$$
+\nu(\,\cdot\mid W(h)).
+$$
+
+同样的结论对显式停止历史成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{stop}(\widehat a)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\downarrow(h,\widehat a)),
+$$
+以及对显式继续到下一中心 $c$ 成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{query}(c)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\rightarrow(h,c)).
+$$
+只要相应事件具有正概率，其种子擦除后验仍是
+$$
+\mu(\,\cdot\mid S(h)).
+$$
+
+特别地，若一个停止历史
+$$
+(h,\operatorname{stop}(\widehat a))
+$$
+具有正概率，则必有
+$$
+S(h)=\{\widehat a\}.
+$$
+
+最后，对每个非空完整历史纤维 $S(h)$，theorem 63.3 仍适用：
+$$
+S(h)
+$$
+要么是单点，要么是某个兄弟状态
+$$
+S(B,I).
+$$
+故 theorem 63.3 的后验闭包不仅对每个冻结种子成立；在这里完整记录查询中心与答复以后，擦除随机种子仍保持同一个兄弟状态闭包。不存在由种子擦除本身造成的不同兄弟支撑混合。
+

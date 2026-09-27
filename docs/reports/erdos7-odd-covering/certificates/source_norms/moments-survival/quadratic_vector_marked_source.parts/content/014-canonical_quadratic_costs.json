@@ -1,0 +1,50 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-canonical_quadratic_costs/000000-000001.json",
+        "sha256": "1c3faae1a34a2933ee5e271cfb471596c6c19ac76ab057f06d882abaa9364bb3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-canonical_quadratic_costs/000001-000002.json",
+        "sha256": "938091229711e608b9ca22d1dd8bda15838953b363666d86c105b4749e48fabc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-canonical_quadratic_costs/000002-000003.json",
+        "sha256": "e83d1ec8bf31c78579760a7672782b53bad3db81227c1d9e8375556912fe65d0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/014-canonical_quadratic_costs/000003-000004.json",
+        "sha256": "86f17671940871d845f9b3707e74b178c6fde56762db3f66e79aa15b7ded8afa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/014-canonical_quadratic_costs/000004-000005.json",
+        "sha256": "be53c6ecf3263a1a9cdac62ee3df659b05f597c332c6a54de664cc7ba65d28b6",
+        "kind": "value"
+      }
+    }
+  ]
+}

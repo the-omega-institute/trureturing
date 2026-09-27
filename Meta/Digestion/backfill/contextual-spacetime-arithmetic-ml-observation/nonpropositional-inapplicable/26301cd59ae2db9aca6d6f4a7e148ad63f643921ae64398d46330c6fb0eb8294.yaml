@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26301cd59ae2db9aca6d6f4a7e148ad63f643921ae64398d46330c6fb0eb8294
+  normalized_sha256: sha256:26301cd59ae2db9aca6d6f4a7e148ad63f643921ae64398d46330c6fb0eb8294
+cas_ref: sha256:26301cd59ae2db9aca6d6f4a7e148ad63f643921ae64398d46330c6fb0eb8294
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “精度请求只在 Ready 激活”并要求“准备并核查目标机”的数据后进入 Warm；本叶规定何时接受请求及如何初始化，未声称核查必成功或已经捕获新成员。
+    previous_atom_id: fa7279a9079a6254842cfb35dd18e5bc4a38c2e6ef1f841d8bd361e8354b6ac5
+    next_atom_id: 4b520f529ac2e61db03630ef966324f48889966d923654f47ecbaecbacf8589b

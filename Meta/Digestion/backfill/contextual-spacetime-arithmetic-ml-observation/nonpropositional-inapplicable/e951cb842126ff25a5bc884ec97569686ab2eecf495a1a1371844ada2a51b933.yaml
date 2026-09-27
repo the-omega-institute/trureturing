@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e951cb842126ff25a5bc884ec97569686ab2eecf495a1a1371844ada2a51b933
+  normalized_sha256: sha256:e951cb842126ff25a5bc884ec97569686ab2eecf495a1a1371844ada2a51b933
+cas_ref: sha256:e951cb842126ff25a5bc884ec97569686ab2eecf495a1a1371844ada2a51b933
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “为实际最坏误差；不把”该量“定义为给定容差”明确把误差定义成历史误差的上确界；容差保证已留在另一叶，这里没有证明误差小于容差，也没有用定义偷换该保证。
+    previous_atom_id: 6ed43732b239d80d84cf0b40eced5f3fbd3273a198e419c2a169b0b28fac5c40
+    next_atom_id: a3146c5acc1650fb4e3234e637dee984c98389e7823910379f11f695818337f7

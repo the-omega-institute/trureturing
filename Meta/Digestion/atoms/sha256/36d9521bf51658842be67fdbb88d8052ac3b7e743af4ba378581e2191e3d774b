@@ -1,0 +1,16 @@
+**theorem 59.5 零一标签的完整复杂性分界与小整数证书。** 对每个素数 $p$，任一可实现的 $\mathrm{SPVAL}^{01}_p$ 实例都有普通整数共同见证满足
+$$
+1\le z_w<p^2\qquad(w\in W).
+$$
+因此固定 $p$ 时该问题属于 $\mathrm{NP}$，而且其困难性若存在，并不来自大估值深度或巨大整数见证。更精确地，
+$$
+\mathrm{SPVAL}^{01}_p\in\mathrm P\quad(p=2,3),
+$$
+而对每个固定素数 $p\ge5$，
+$$
+\mathrm{SPVAL}^{01}_p\text{ 是 NP-complete}.
+$$
+后一结论即使限制到约束图 $H$ 本身为二部图仍成立。可变素数承诺问题 $\mathrm{SPVAL}^{01}_{\mathrm{var}}$ 也为 NP-complete；其证书长度对每个顶点仅为 $O(\log p)$ 位。
+
+复杂性证明使用的唯一外部图论复杂性输入是一般有限简单图的 GRAPH 3-COLORABILITY 为 NP-complete。Garey、Johnson、Stockmeyer 的[原始论文](<https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/JohnsonDavid2.pdf>)（Theoretical Computer Science 1 (1976), 237--267）在 Theorem 2.1、期刊页 248--249（PDF 第 7/16 扫描页） 给出从 $\mathrm{SAT3}$ 到 GRAPH 3-COLORABILITY 的多项式归约及构造；Karp 的 1972 [原始论文《Reducibility Among Combinatorial Problems》](<https://cgi.di.uoa.gr/~sgk/teaching/grad/handouts/karp.pdf>)把至多三个文字的可满足性列为完整问题并给出从一般可满足性的归约。 下面从该三着色事实到本问题的其余归约全部直接证明，不调用额外的 $p$ 进数 CSP 定理。
+

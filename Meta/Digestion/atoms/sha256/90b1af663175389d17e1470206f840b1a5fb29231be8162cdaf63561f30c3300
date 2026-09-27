@@ -1,0 +1,38 @@
+**Proof.** For any nonzero integer $r$, the phase $r\delta$ cannot equal $h$, because $r\phi$ cannot differ from $1/2$ by an integer. Also $h\ne0$. These observations show $h\notin E$ and $h\notin\{n\delta:n\ge0\}$.
+
+If $E_1+h=E_m$, then $h=(1-m)\delta$, which is impossible for $m\ne1$ by the preceding irrationality argument and for $m=1$ because $h\ne0$. If $E_1+h=n\delta$, then $h=(n+1)\delta$, again impossible. Thus both $a$ and $b$ are the asserted nonsplit, nonnatural states.
+
+The exact rule in Theorem 37.11 gives $a\star a=\{k_0\}=\{0_K\}$, since $2h=0$. It gives $x\star a=\{b\}$ because $E_1+h$ is nonsplit. The right-unit identity gives $x\star0_K=\{x_1^+\}$. Finally, $H(b)+h=E_1$ and $\mathcal S(b)=\Sigma$, so $b\star a$ contains both split lifts. This proves the unequal bracketings.
+
+For the exact operator witnesses, Theorem 37.9 gives
+$$
+e^{-1}(\{x\})=\{p\},\quad p=P_{E_1}^+,
+$$
+$$
+e^{-1}(\{a\})=\{q_+,q_-\},\quad q_t=P_h^t,
+$$
+$$
+e^{-1}(\{b\})=\{P_{E_1+h}^+,P_{E_1+h}^-\}.
+$$
+For either $t$,
+$$
+pq_t=P_{E_1+h}^+.
+$$
+Therefore only the positive representative of $b$ is produced by the original witnesses. With either representative $q_v$ of the last $a$,
+$$
+(pq_t)q_v=P_{E_1+2h}^+=P_{E_1}^+.
+$$
+Every actual triple consequently evaluates to $x_1^+$.
+
+If the intermediate operator is replaced merely by its value $b$, the next projected product admits the other representative and obtains
+$$
+P_{E_1+h}^-q_v=P_{E_1}^-,
+$$
+whose evaluation is $x_1^-$. This is the additional output, and its intermediate representative was not reachable from $e^{-1}(\{x\})e^{-1}(\{a\})$.
+
+For completeness, the reachable operators for the other intermediate product are
+$$
+\{q_tq_v:t,v\in\Sigma\}=\{P_0^+,P_0^-\}.
+$$
+Their common state is $0_K$, whose full evaluation fibre also contains the identity. But $p$ composed on the right with any of these three zero-state representatives remains $p$. That enlargement does not produce the negative output. The discrepancy is precisely the loss of the reachable positive representative at $b$. $\square$
+

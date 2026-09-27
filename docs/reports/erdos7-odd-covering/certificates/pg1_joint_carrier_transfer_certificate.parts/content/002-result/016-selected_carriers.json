@@ -1,0 +1,41 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/002-result/016-selected_carriers/000000/single.json",
+        "sha256": "0037083b42206a0cad288f5c9a0a9ad6571904448e358e400af3b6542862bd67",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/002-result/016-selected_carriers/000001/single.json",
+        "sha256": "dd62b9f4c8fbaf6f9268edecf438d9786369c5a0060a3c2323cdc6d076f34a2a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/002-result/016-selected_carriers/000002/single.json",
+        "sha256": "59c03aeaa48470b9ba14d5d24383d8294e599d4931dda9ef99478e7cf48b776a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/002-result/016-selected_carriers/000003/single.json",
+        "sha256": "08760cc49fbb3a3989dcf6c0036db9fcbe250cf71421ec684b7aadecc544d900",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

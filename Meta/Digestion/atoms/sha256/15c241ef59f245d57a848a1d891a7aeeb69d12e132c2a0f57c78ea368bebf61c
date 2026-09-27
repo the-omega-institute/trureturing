@@ -1,0 +1,54 @@
+**命题 130.1。** $C_rR_p=I$，$E_p$ 是 $T_p$ 上关于 Fisher 内积的正交投影，且
+
+$$
+\|E_pv\|_{p,\mathrm{mass}}^2=\|C_rv\|_{q,\mathrm{mass}}^2,
+\qquad
+\|v\|_{p,\mathrm{mass}}^2
+=\|C_rv\|_{q,\mathrm{mass}}^2+\|(I-E_p)v\|_{p,\mathrm{mass}}^2.
+$$
+
+**证明。** 每个纤维求和给
+$\sum_{r(i)=b}p_iw_b/q_b=w_b$，所以 $C_rR_p=I$。并且对 $v\in T_p,w\in T_q$，
+
+$$
+\langle C_rv,w\rangle_q^{\mathrm{mass}}
+=\sum_b\frac{w_b}{q_b}\sum_{r(i)=b}v_i
+=\langle v,R_pw\rangle_p^{\mathrm{mass}}.
+$$
+
+因此 $R_p=C_r^*$，$E_p$ 自伴且由 $C_rR_p=I$ 得幂等。又
+
+$$
+\|R_pw\|_{p,\mathrm{mass}}^2
+=\sum_b\frac{w_b^2}{q_b^2}\sum_{r(i)=b}p_i
+=\sum_b\frac{w_b^2}{q_b}.
+$$
+
+把 $w=C_rv$ 代入，再用正交投影的 Pythagoras 分解即可。证毕。
+
+得分空间为
+
+$$
+\mathcal H=L^2_0(p)
+=\{f:\sum_i p_if_i=0\},\qquad
+\langle f,g\rangle_p=\sum_i p_if_ig_i.
+$$
+
+映射 $D_p:\mathcal H\to T_p$，$D_pf=(p_if_i)_i$，是等距同构。质量投影在该坐标下成为
+
+$$
+\Pi=D_p^{-1}E_pD_p,\qquad
+(\Pi f)_i=\frac{\sum_{r(j)=r(i)}p_jf_j}{q_{r(i)}}.
+$$
+
+它是到可见空间
+$\mathcal V=\{f\in\mathcal H:f_i\text{ 只依赖 }r(i)\}$ 的正交投影，即条件期望。$E_p$ 作用于质量切向量，$\Pi$ 作用于得分或函数；它们由 $D_p$ 共轭，不能省略坐标而使用同一个数组。可见得分在 $\mathcal X$ 上的 $L^2(p)$ 范数等于其在 $\mathcal B$ 上的 $L^2(q)$ 范数。
+
+Fisher 度量确实是局部概率差异的二阶项。例如固定 $v\in T_p$，取足够小的实数 $t$ 使 $p+tv>0$。写 $f_i=v_i/p_i$，逐项 Taylor 展开 $(1+tf_i)\log(1+tf_i)$，有限求和且 $\sum_i p_if_i=0$ 给出
+
+$$
+D(p+tv\Vert p)=\frac{t^2}{2}\sum_i\frac{v_i^2}{p_i}+O(|t|^3).
+$$
+
+同样对粗概率 $q+tC_rv$ 展开，二阶系数差恰为 $\frac12\|(I-E_p)v\|_{p,\mathrm{mass}}^2$。这里只陈述固定有限正参考附近的局部展开；零质量边界、移动支撑和无限维余项需要额外条件。
+

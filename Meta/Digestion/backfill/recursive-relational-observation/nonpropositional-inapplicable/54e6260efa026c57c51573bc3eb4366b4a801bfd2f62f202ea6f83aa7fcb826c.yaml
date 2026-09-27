@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54e6260efa026c57c51573bc3eb4366b4a801bfd2f62f202ea6f83aa7fcb826c
+  normalized_sha256: sha256:54e6260efa026c57c51573bc3eb4366b4a801bfd2f62f202ea6f83aa7fcb826c
+cas_ref: sha256:54e6260efa026c57c51573bc3eb4366b4a801bfd2f62f202ea6f83aa7fcb826c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Define”及“extend this notation to subsets by taking unions”以算子代表构造集合值关系；“This is a relation”说明所定义对象的类型，不在本叶宣称存在多输出实例，定义未夹带非单值性命题，故仅结算关系记号。
+    previous_atom_id: fe969a021c5cd89cc5fe97456de7736dae4da16f99c3dbc88367e92f1bd49d07
+    next_atom_id: 3648f927e4b410b69a91671a748b2c7570b19109a88f2c1a8611fe8bb62b7808

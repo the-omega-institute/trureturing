@@ -1,0 +1,8 @@
+以下算子均限制在 $H_{\mathrm{obs}}$ 上。定义
+$$
+\Delta_0=\Pi_0,\qquad
+\Delta_L=\Pi_L-\Pi_{L-1}\quad(L\ge1),\qquad
+V_L=\operatorname{ran}\Delta_L,
+$$
+并记 $m_0=1$、$m_L=N_L-N_{L-1}$（$L\ge1$）。允许 $m_L=0$，即该步没有新增正质量可见方向。
+

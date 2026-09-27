@@ -1,0 +1,19 @@
+**推论 10.3（零条件互信息与精确恢复等价）。** 对有限维三方态，
+$$
+I(A:C\mid B)_\rho=0
+\quad\Longleftrightarrow\quad
+\exists\mathcal R:B\to BC\ \mathrm{CPTP},\
+(\operatorname{id}_A\otimes\mathcal R)(\rho_{AB})=\rho_{ABC}.
+\tag{10.6}
+$$
+
+**证明。** 正向由式(10.5)得到半迹距离为零。反向设精确恢复成立。互信息在局部通道下满足数据处理，因此对输入 $\rho_{AB}$ 上的通道 $\mathcal R$ 有
+$$
+I(A:BC)_\rho\le I(A:B)_\rho.
+$$
+而熵的链式恒等式给出
+$$
+I(A:C\mid B)_\rho=I(A:BC)_\rho-I(A:B)_\rho\le0.
+$$
+结合强次可加性得零。$\square$
+

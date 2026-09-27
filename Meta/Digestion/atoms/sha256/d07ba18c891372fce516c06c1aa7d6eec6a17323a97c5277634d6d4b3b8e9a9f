@@ -1,0 +1,10 @@
+**命题 130.4（闭单位球最优式）。**
+
+$$
+I_{\mathrm{obs}}
+=\max_{\substack{h\in\mathcal W\\\|h\|_p\le1}}
+|\langle h,\Pi s\rangle_p|^2.
+$$
+
+若 $g\ne0$，$h=g/\|g\|$ 达到最大值；若 $g=0$，闭球上每个 $h$ 的配对均为零。
+

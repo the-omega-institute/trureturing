@@ -1,0 +1,47 @@
+{
+  "0": {
+    "path": "content/009-rational_dual_buckets/012-c/000-0.json",
+    "sha256": "3f6e0251082fc57bd158b06033dbb7e58c141aef911986d2f57df87602be3925",
+    "kind": "value"
+  },
+  "1": {
+    "path": "content/009-rational_dual_buckets/012-c/001-1.json",
+    "sha256": "8b5d91ca90371b1574939cd38c2c6b2c0f611348076fdfc3904e83533c5b3bc0",
+    "kind": "object"
+  },
+  "2": {
+    "path": "content/009-rational_dual_buckets/012-c/002-2.json",
+    "sha256": "e37d9d408129d9f8e48f4b71b6008f193f772abf8b484179f833329c3e8ead93",
+    "kind": "object"
+  },
+  "4": {
+    "path": "content/009-rational_dual_buckets/012-c/003-4.json",
+    "sha256": "2b94a19164ad3b321888ab1bb0e3f7aefa2681826effc1bd39386d9b5905f12f",
+    "kind": "value"
+  },
+  "8": {
+    "path": "content/009-rational_dual_buckets/012-c/004-8.json",
+    "sha256": "5b7d582c4d5eb1bded8ecb5befe9848940d8082d81db97fff1fb4915d01e5eaf",
+    "kind": "object"
+  },
+  "b": {
+    "path": "content/009-rational_dual_buckets/012-c/005-b.json",
+    "sha256": "a70e8618534516bf784c38dd32ce1b430e4c4afc4b712642eb916f859a9a05c0",
+    "kind": "object"
+  },
+  "d": {
+    "path": "content/009-rational_dual_buckets/012-c/006-d.json",
+    "sha256": "07dbb6107e3b28f3f2566e08b0789a93df159bf63aab85aff10a56747620346c",
+    "kind": "value"
+  },
+  "e": {
+    "path": "content/009-rational_dual_buckets/012-c/007-e.json",
+    "sha256": "699218e6753ffc9948fa94e61a0698ce7355b655e89e01c30752d5642b44ec86",
+    "kind": "value"
+  },
+  "f": {
+    "path": "content/009-rational_dual_buckets/012-c/008-f.json",
+    "sha256": "9312fc02fd268d2fe7dd562b6ce73e6a847163477f8bb2ef5a50f4bb8aace503",
+    "kind": "object"
+  }
+}

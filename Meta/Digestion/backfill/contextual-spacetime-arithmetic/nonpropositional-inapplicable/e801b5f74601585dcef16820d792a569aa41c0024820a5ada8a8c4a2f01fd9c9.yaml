@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e801b5f74601585dcef16820d792a569aa41c0024820a5ada8a8c4a2f01fd9c9
+  normalized_sha256: sha256:e801b5f74601585dcef16820d792a569aa41c0024820a5ada8a8c4a2f01fd9c9
+cas_ref: sha256:e801b5f74601585dcef16820d792a569aa41c0024820a5ada8a8c4a2f01fd9c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶以“指定”把全部来源筛选加入原空间签名，并明确“观察与全槽位、全参数、任意有限深度上下文仍按定义 16”。这是允许语言的命名，没有断言该语言核或充分性，定义无暗中附带的数学命题。
+    previous_atom_id: 396753d7f74806246a40384319b93ee031f54d3feb783f9b4ff2145816b7ad9f
+    next_atom_id: a29622f89d6515a16264b4892e91b9d461cf0fdf332162e770a5158c4b109c7d

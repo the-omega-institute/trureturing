@@ -1,0 +1,24 @@
+
+
+系统使用时间无关的自伴Hamiltonian $H$，并沿用$\hbar>0$。定义
+$$
+H_{\mathrm d}=\sum_i\langle i|H|i\rangle P_i,\qquad
+V=H-H_{\mathrm d},\qquad U_H(\tau)=e^{-i\tau H/\hbar},\qquad
+\theta(\tau)=\frac{\tau\|V\|}{\hbar}.
+$$
+$\theta(\tau)$是无量纲偏差预算。不同记录单元独立擦除，联合保留通道为
+$$
+\mathcal T_\tau=\operatorname{Ad}_{U_H(\tau)}\otimes\mathcal N_\tau^{\otimes m},\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger.
+$$
+对$J\subseteq\{1,\ldots,m\}$，记$a=|J|$，$J^c$为记录单元中的补集，定义
+$$
+\varrho_{SJ}(\tau)=\operatorname{tr}_{J^c}\mathcal T_\tau(|\Psi_\alpha\rangle\langle\Psi_\alpha|),\qquad
+\sigma_i(\tau)=\eta(\tau)Q_i+[1-\eta(\tau)]Q_\bot,
+$$
+$$
+\omega_{SJ}(\tau)=\sum_i p_iP_i\otimes\sigma_i(\tau)^{\otimes a},\qquad
+D(\varrho,\sigma)=\frac12\|\varrho-\sigma\|_1,\qquad
+\|X\|_1=\operatorname{tr}\sqrt{X^\dagger X}.
+$$
+空张量积使用一维空间，空乘积为一；特别约定$\mu^0=1$，包括$\mu=0$。其他概率幂的零次幂也按空积处理。

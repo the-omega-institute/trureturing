@@ -1,0 +1,54 @@
+**theorem 39.2 (Exact separating-evaluation criterion).** For every $D\subseteq K$, the map $\operatorname{Eval}_D$ is injective if and only if both conditions hold:
+$$
+U(D)=\mathbb T,
+\tag{39.1}
+$$
+$$
+\forall s\in\Sigma\ \forall n\ge0\ \exists m>n:
+\quad x_m^s\in D.
+\tag{39.2}
+$$
+Equivalently, each of $N_+(D)$ and $N_-(D)$ is unbounded. More precisely,
+$$
+P_\theta^+(b)\ne P_\theta^-(b)
+\quad\Longleftrightarrow\quad
+\theta\in E-H(b),
+\tag{39.3}
+$$
+and
+$$
+\{b\in K:T^n(b)\ne P_{n\delta}^s(b)\}
+=\{x_m^{-s}:m>n\}.
+\tag{39.4}
+$$
+Here $-s$ denotes the opposite sign. Operators of different phases are distinguished by every single evaluation coordinate.
+
+With $e$ supplied, the exact criterion is instead
+$$
+E\cup U(D)=\mathbb T
+\quad\text{and}\quad
+N_+(D),N_-(D)\text{ are unbounded}.
+\tag{39.5}
+$$
+
+**Proof.** The selector definition gives (39.3): at a nonsplit output phase there is one possible value, whereas at a split output phase the two selected lifts are distinct.
+
+If $H(b)\notin E$, then $H(b)+n\delta\notin E$. Indeed, equality to $E_m$ would give $H(b)=E_{m+n}$. Consequently $T^n(b)$ and $P_{n\delta}^s(b)$ are the same unique lift. If $b=x_m^t$ and $m\le n$, both operators give $Z(n-m)$. If $m>n$, their respective values are $x_{m-n}^t$ and $x_{m-n}^s$, which differ exactly when $t=-s$. This proves (39.4), including $n=0$ and the coalescence case $m=n$.
+
+For any fixed $b$, the identity
+$$
+H(p(b))-H(b)=\theta(p)
+$$
+shows that equal evaluations imply equal phases. Thus different phases require no additional sign analysis.
+
+If (39.1) fails at $\theta$, (39.3) gives two distinct selectors agreeing on all of $D$. If (39.2) fails for a sign $t$ and an index $n$, (39.4) shows that $T^n$ and $P_{n\delta}^{-t}$ agree on all of $D$. Both conditions are therefore necessary.
+
+Conversely, (39.1) implies $D\ne\varnothing$. Choose one input in $D$ to distinguish different phases. At any common phase, two distinct selectors are distinguished by (39.1) and (39.3). The only remaining possible pair is $T^n$ and $P_{n\delta}^s$; an input $x_m^{-s}\in D$ with $m>n$ distinguishes them by (39.4). Distinct finite iterates cannot have the same phase, by irrationality of $\delta$. The adopted classification exhausts all pairs, proving sufficiency.
+
+Finally, supplying $e$ is exactly adjoining $0_K$ to $D$. Since $H(0_K)=0$ and $0_K$ is not an exceptional lift,
+$$
+U(D\cup\{0_K\})=U(D)\cup E,\qquad
+N_s(D\cup\{0_K\})=N_s(D).
+$$
+Applying the criterion proves (39.5). $\square$
+

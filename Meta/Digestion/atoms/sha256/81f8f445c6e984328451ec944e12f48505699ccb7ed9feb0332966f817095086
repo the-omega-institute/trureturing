@@ -1,0 +1,20 @@
+#### 1.3.7 已有供应与本节结论的归属
+
+Bloch 球与迹距离的成熟来源可取 C. Carmeli、T. Heinosaari、J. Schultz、A. Toigo，*Probing quantum state space: does one have to learn everything to learn something?*，[arXiv:1611.04388v2](https://arxiv.org/pdf/1611.04388v2)。PDF第7页第3.2节写 $\rho_{\mathbf r}=\tfrac12(I+\mathbf r\cdot\boldsymbol\sigma)$、$\|\mathbf r\|_2\le1$；第11页 Proposition 3.6 后的实例明确给出 $\|\rho_{\mathbf a}-\rho_{\mathbf r}\|_1=\|\mathbf a-\mathbf r\|_2$。该处称作 trace distance 的量采用完整迹范数，本文采用半迹距离，故B卷第1.3.6节的 Bloch 欧氏距离须乘 $1/2$。上右矩阵元为 $c$ 时坐标为 $(2\operatorname{Re}c,-2\operatorname{Im}c,2p-1)$，与本文 Pauli $Y$ 的约定一致。这个来源承担球几何和范数归一化，不直接承担固定占据圆盘的精确投影或锐残差常数。
+
+固定快照 `237012b49d0d4729a86f7e9dd252d94df1de8dd0` 的 `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md:6537`，定理31.8已使用纯参考态的平方根界，并在第6567、6589行明确归属 Fuchs–van de Graaf 不等式。其标准形式为 $D(\rho,\sigma)\le\sqrt{1-F(\rho,\sigma)^2}$，根保真度约定为 $F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$。本节取 $\sigma=|1\rangle\langle1|$ 时，$F^2=\langle1|R(p,c)|1\rangle=1-p$，直接得到式(TM.93)的平方根上界。成熟来源是 C. A. Fuchs、J. van de Graaf，*Cryptographic distinguishability measures for quantum-mechanical states*，IEEE Transactions on Information Theory 45（1999），1216–1227，[arXiv:quant-ph/9712042](https://arxiv.org/abs/quant-ph/9712042)。本节不将该界另立为新的一般结果。
+
+同一快照的 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean:264` 与 `:455` 给出实际迹范数和半迹距离的定义，`:497` 给出其同型 CPTP 后处理收缩供应。它们确定所用距离及相应合法后处理的已有接口，并未因此自动包含本节的圆盘纤维闭式和精确内点常数。式(TM.83)—(TM.98)按上述直接矩阵与球面几何计算呈现，不宣称已取得新增形式化结论或原创性确认。
+
+一般线性矩阵不等式的 Hölder 误差界可通过 Stefan Sremac、Hugo J. Woerdeman、Henry Wolkowicz，*Error Bounds and Singularity Degree in Semidefinite Programming*，[arXiv:1908.04357v1](https://arxiv.org/pdf/1908.04357v1)，准确接入本例。该文 PDF第2页式(1.1)—(1.2)区分前向与后向误差，第3页规定实对称矩阵空间及 Frobenius 范数，第4页式(2.2)固定谱面 $F=\{X\succeq0:\mathcal A(X)=b\}$。第5页第2.2节将奇异度 $\operatorname{sd}(F)$ 定义为面约化所需最少步数，并说明 $\operatorname{sd}(F)=0$ 当且仅当存在严格正定可行点。同页 Fact 2.2 对非空谱面和有界矩阵族给出：当 $F\ne\{0\}$ 时，前向误差是后向误差的 $2^{-\operatorname{sd}(F)}$ 次阶；零谱面单列为线性界。以该文记号写，
+$$
+\varepsilon_f(X,F)=\operatorname{dist}_{\mathrm F}(X,F),\qquad
+\varepsilon_b(X,F)=\operatorname{dist}_{\mathrm F}(X,L)
+ +\operatorname{dist}_{\mathrm F}(X,\mathbb S_+^n),\qquad
+\varepsilon_f=O\!\left(\varepsilon_b^{\,2^{-\operatorname{sd}(F)}}\right)
+\quad(F\ne\{0\}),
+$$
+其中 $L=\{X:\mathcal A(X)=b\}$ 固定，渐近界用于所声明的有界族及后向误差趋零范围，不据此给任意变化切面的统一常数。
+
+Fact 2.2 明确将证明归给 Jos F. Sturm，*Error Bounds for Linear Matrix Inequalities*，SIAM Journal on Optimization 10(4)（2000），1228–1248，[doi:10.1137/S1052623498338606](https://doi.org/10.1137/S1052623498338606)，Theorem 3.3。这里的定理供应来自 SWW 的明确重述；Sturm 原定理正文未读到，不能声称独立核实其原始全部量词与证明。SWW 对零谱面的奇异度采用一，而其记载的 Sturm 约定为零，所以将该例外单列；本文端点谱面是 $\{E_{22}\}$ 或 $\{E_{11}\}$，均非零谱面，不需要借用该例外。
+

@@ -1,0 +1,18 @@
+**定义 14.1（同律条件投影与隐藏余项）。** 在定义13.1、13.3的同一个有限 $\Omega$ 上固定概率律 $\mu$。以下实 Hilbert 空间为 $\mathcal H=L^2(\Omega,\mu;\mathbb R)$，把零概率点上的差别识别；算子恒等及函数恢复均按此约定解释。对任意 Boolean 子集 $S\subseteq E$，定义
+$$
+\mathcal F_S=\sigma(C,X_e:e\in S),\qquad
+P_Sf=\mathbb E_\mu[f\mid\mathcal F_S],\qquad
+P_\varnothing=P_C,\qquad Q=\operatorname{Id}_{\mathcal H}-P_E.
+\tag{14.1}
+$$
+这里 $C$ 始终是全部已表示旧记录的商；$P_C$ 不一般是常数投影。$P_S$ 是到 $\mathcal F_S$ 可测函数空间的正交投影。具体地，在正概率记录纤维 $F$ 上，$P_S f$ 等于 $\sum_{\omega\in F}\mu(\omega)f(\omega)/\mu(F)$；逐纤维求和显示 $f-P_Sf$ 与所有纤维常值函数正交，从而给该投影刻画。$S$ 不为理想时，$P_S$ 仅是用于分解的数学辅助算子，不宣告这些事件可单独合法取得。$Q$ 保留全部具名记录仍未观察到的方向。
+
+对 $f\in\mathcal H$，定义积分均方风险
+$$
+\mathscr R_I(f)=\|f-P_If\|_2^2
+=\sum_{\omega\in\Omega}\mu(\omega)|f(\omega)-P_If(\omega)|^2
+\quad(I\in\mathcal J(E)).
+\tag{14.2}
+$$
+它对全部实现积分，不是某次实际记录取值上的条件方差。固定这份 $\mu$ 是风险比较的共同前提。
+

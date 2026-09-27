@@ -1,0 +1,2 @@
+这不是启发式搜索；Lean 定理逐对证明了它与源语义 `exactSeparationDepth` 的相等。
+

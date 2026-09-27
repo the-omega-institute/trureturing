@@ -14,9 +14,21 @@ public sealed record RawRepositoryEntry(
         new(path, ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(text)));
 }
 
+// Effective working inventory includes indexed-but-absent paths. Regular bodies
+// and index blob identities are deliberately absent from this projection.
+internal sealed record RepositoryPathInventoryEntry(string Path, string? IndexMode,
+    string State, string? EffectiveMode, string? LinkTarget);
+
 public sealed class RawRepositorySnapshot
 {
-    private RawRepositorySnapshot(ImmutableArray<RawRepositoryEntry> entries) => Entries = entries;
+    private RawRepositorySnapshot(ImmutableArray<RawRepositoryEntry> entries,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory = default)
+    { Entries = entries; PathInventory = pathInventory; }
+
+    internal ImmutableArray<RepositoryPathInventoryEntry> PathInventory { get; }
+
+    internal static RawRepositorySnapshot Create(IEnumerable<RawRepositoryEntry> entries,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory) => new(entries.ToImmutableArray(), pathInventory);
 
     public ImmutableArray<RawRepositoryEntry> Entries { get; }
 
@@ -29,6 +41,9 @@ public sealed class RawRepositorySnapshot
 
 public sealed class RepositoryFile
 {
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private readonly Lazy<string> text;
+
     internal RepositoryFile(
         RepoPath path,
         ImmutableArray<byte> rawBytes,
@@ -38,21 +53,60 @@ public sealed class RepositoryFile
     {
         Path = path;
         RawBytes = rawBytes;
-        Text = text;
+        this.text = new(() => text);
         IsOpaque = isOpaque;
         GitBlobOid = gitBlobOid;
         HasBom = text.StartsWith('\uFEFF');
         HasCarriageReturn = text.Contains('\r');
-        HasTrailingWhitespace = text
-            .Split('\n')
-            .Any(static line => line.EndsWith(' ') || line.EndsWith('\t') || line.EndsWith('\r'));
+        HasTrailingWhitespace = ContainsTrailingWhitespace(text.AsSpan());
+    }
+
+    // SnapshotDecoder validates UTF-8 eagerly; consumers materialize text only when needed.
+    internal RepositoryFile(
+        RepoPath path,
+        ImmutableArray<byte> rawBytes,
+        bool isOpaque,
+        string? gitBlobOid)
+    {
+        Path = path;
+        RawBytes = rawBytes;
+        IsOpaque = isOpaque;
+        GitBlobOid = gitBlobOid;
+        text = new(() => IsOpaque ? string.Empty : StrictUtf8.GetString(RawBytes.AsSpan()));
+        var bytes = isOpaque ? ReadOnlySpan<byte>.Empty : rawBytes.AsSpan();
+        HasBom = bytes.Length >= 3 && bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf;
+        HasCarriageReturn = bytes.Contains((byte)'\r');
+        while (true)
+        {
+            var newline = bytes.IndexOf((byte)'\n');
+            var length = newline < 0 ? bytes.Length : newline;
+            if (length > 0 && bytes[length - 1] is (byte)' ' or (byte)'\t' or (byte)'\r')
+            {
+                HasTrailingWhitespace = true;
+                break;
+            }
+            if (newline < 0) break;
+            bytes = bytes[(newline + 1)..];
+        }
+    }
+
+    private static bool ContainsTrailingWhitespace(ReadOnlySpan<char> remaining)
+    {
+        while (true)
+        {
+            var newline = remaining.IndexOf('\n');
+            var length = newline < 0 ? remaining.Length : newline;
+            if (length > 0 && remaining[length - 1] is ' ' or '\t' or '\r') return true;
+            if (newline < 0) return false;
+            remaining = remaining[(newline + 1)..];
+        }
     }
 
     public RepoPath Path { get; }
 
     public ImmutableArray<byte> RawBytes { get; }
 
-    public string Text { get; }
+    public string Text => text.Value;
 
     public bool IsOpaque { get; }
 
@@ -67,12 +121,16 @@ public sealed class RepositoryFile
 
 public sealed class RepositorySnapshot
 {
-    private RepositorySnapshot(ImmutableDictionary<RepoPath, RepositoryFile> files) => Files = files;
+    private RepositorySnapshot(ImmutableDictionary<RepoPath, RepositoryFile> files,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory)
+    { Files = files; PathInventory = pathInventory; }
+
+    internal ImmutableArray<RepositoryPathInventoryEntry> PathInventory { get; }
 
     public ImmutableDictionary<RepoPath, RepositoryFile> Files { get; }
 
-    internal static RepositorySnapshot Create(ImmutableDictionary<RepoPath, RepositoryFile> files) =>
-        new(files);
+    internal static RepositorySnapshot Create(ImmutableDictionary<RepoPath, RepositoryFile> files,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory = default) => new(files, pathInventory);
 
     public bool TryGetFile(string path, [NotNullWhen(true)] out RepositoryFile? file)
     {
@@ -118,12 +176,11 @@ public static class SnapshotDecoder
                 }
 
                 var isOpaque = DigestionOpaquePathPolicy.IsOpaque(path);
-                var text = string.Empty;
                 if (!isOpaque)
                 {
                     try
                     {
-                        text = StrictUtf8.GetString(entry.Bytes.AsSpan());
+                        _ = StrictUtf8.GetCharCount(entry.Bytes.AsSpan());
                     }
                     catch (DecoderFallbackException exception)
                     {
@@ -142,12 +199,11 @@ public static class SnapshotDecoder
                 builder.Add(path, new RepositoryFile(
                     path,
                     entry.Bytes,
-                    text,
                     isOpaque,
                     entry.GitBlobOid));
             }
 
-            return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable()));
+            return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable(), raw.PathInventory));
         }
         catch (FormatException exception)
         {

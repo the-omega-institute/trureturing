@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1f99a63a0605c01f32a47070eb8edeab8a6eb568f3caa04ad78a3a487508f1c
+  normalized_sha256: sha256:d1f99a63a0605c01f32a47070eb8edeab8a6eb568f3caa04ad78a3a487508f1c
+cas_ref: sha256:d1f99a63a0605c01f32a47070eb8edeab8a6eb568f3caa04ad78a3a487508f1c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子规定本稿所称来源运输必须保持的结构，是运输概念的使用条件，没有声称任意来源映射都满足这些条件。
+    previous_atom_id: d146769904be8c054d76d936ae8c555b588b3098087ea0a2d813a3fe89dcc6ad
+    next_atom_id: cf515c52682e913ad115567d9038ff6fc7df6ede8438b0dfd9482cd1489043d3

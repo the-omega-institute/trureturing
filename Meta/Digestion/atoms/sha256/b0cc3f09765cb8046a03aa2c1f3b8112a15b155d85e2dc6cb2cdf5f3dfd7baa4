@@ -1,0 +1,14 @@
+**theorem 55.8 每个固定素数的 $2p$ 顶点极小障碍。** 固定整数 $d\ge s_p$，任选
+$$
+h_1,\ldots,h_{p-1}\in\{d+1,d+2,\ldots\}\cup\{\infty\}.
+$$
+取 $V=\{u_1,\ldots,u_p,v_1,\ldots,v_p\}$，同色不同顶点间的标签均为 $\delta_p$，跨色标签规定为
+$$
+a_{u_i v_j}=
+\begin{cases}
+h_i,&i=j<p,\\
+d,&\text{其余情形}.
+\end{cases}
+$$
+该完整数组不可实现，但每个真诱导限制都由满足 $x_i\in\mathbb Z$、$p\nmid x_i$ 的共同元组实现。特别地，取全部 $h_i=d+1$ 就得到不含 $\infty$ 的极小障碍。
+

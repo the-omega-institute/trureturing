@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed4079913fc1afe6dac34f5a6d35bbe24272b7964a343d2286a7a1923126c139
+  normalized_sha256: sha256:ed4079913fc1afe6dac34f5a6d35bbe24272b7964a343d2286a7a1923126c139
+cas_ref: sha256:ed4079913fc1afe6dac34f5a6d35bbe24272b7964a343d2286a7a1923126c139
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文用“先将定义 23 的区域筛选及定义 24 的配对选择加入含时间因果语言”交代本节安排，用“有限实验只核对所列实例，不替代全称证明”规定证据范围。未给出闭包公式、表达性条件或量化结论，不在定义中暗置数学主张，因此仅结算章节导言。
+    previous_atom_id: 6a7f6900e1324e7322eacf2804991ec66af5a52bc7eed7a0109c5d48fe1fc721
+    next_atom_id: 1ea09a1aececa1eca1e3f388999042b1c89834aaf2d66b5ec8e239381a77460e

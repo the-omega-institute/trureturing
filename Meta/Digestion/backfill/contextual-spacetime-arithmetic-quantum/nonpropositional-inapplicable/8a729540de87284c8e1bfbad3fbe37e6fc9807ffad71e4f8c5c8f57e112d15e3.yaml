@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a729540de87284c8e1bfbad3fbe37e6fc9807ffad71e4f8c5c8f57e112d15e3
+  normalized_sha256: sha256:8a729540de87284c8e1bfbad3fbe37e6fc9807ffad71e4f8c5c8f57e112d15e3
+cas_ref: sha256:8a729540de87284c8e1bfbad3fbe37e6fc9807ffad71e4f8c5c8f57e112d15e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对当前读出的实际值域使用 Submodule.starProjection_eq_self_iff 证明投影保持读出，得到原文指定的因子化恒等式，再以算子范数界和三角不等式得到两项预算；仓内无冻结 GID。
+    previous_atom_id: 3921d56e1d581f10d66b92c6028f49c7fc869f93a4d83048036e619289d77cd5
+    next_atom_id: b4509968a0eeb90e5ec91c0a91bd633e0547d6ba2408ce59bc07b10ddc16a979

@@ -1,0 +1,100 @@
+[
+  {
+    "source_index": 0,
+    "lost_source_points": [
+      88,
+      208,
+      313
+    ],
+    "support_size": 72,
+    "deletion_masks_by_source_digit": [
+      44378,
+      38032,
+      2320,
+      50192,
+      49664,
+      0
+    ],
+    "normalized_deletion_masks": [
+      2320,
+      38032,
+      44378,
+      49664,
+      50192
+    ],
+    "distinct_old_images": 12
+  },
+  {
+    "source_index": 1,
+    "lost_source_points": [
+      43,
+      88,
+      253
+    ],
+    "support_size": 72,
+    "deletion_masks_by_source_digit": [
+      61274,
+      38032,
+      2320,
+      50192,
+      32768,
+      0
+    ],
+    "normalized_deletion_masks": [
+      2320,
+      32768,
+      38032,
+      50192,
+      61274
+    ],
+    "distinct_old_images": 12
+  },
+  {
+    "source_index": 2,
+    "lost_source_points": [
+      2,
+      128
+    ],
+    "support_size": 73,
+    "deletion_masks_by_source_digit": [
+      44378,
+      46226,
+      2320,
+      33808,
+      32768,
+      0
+    ],
+    "normalized_deletion_masks": [
+      2320,
+      32768,
+      33808,
+      44378,
+      46226
+    ],
+    "distinct_old_images": 12
+  },
+  {
+    "source_index": 3,
+    "lost_source_points": [
+      38,
+      143
+    ],
+    "support_size": 73,
+    "deletion_masks_by_source_digit": [
+      44378,
+      38032,
+      10520,
+      33808,
+      32768,
+      0
+    ],
+    "normalized_deletion_masks": [
+      10520,
+      32768,
+      33808,
+      38032,
+      44378
+    ],
+    "distinct_old_images": 12
+  }
+]

@@ -1,0 +1,24 @@
+**定义 45.7（超自然周期及对应逆极限）。** 超自然数为形式乘积
+$$
+D=\prod_{p\text{ 素}}p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+对有限正整数 $m$，$m\mid D$ 表示 $v_p(m)\le e_p$ 对每个素数成立；超自然数之间的整除也逐素数定义。若 $D$ 等于某个有限正整数的素因子分解，则称其为有限周期，否则称其为无限周期。定义
+$$
+R_D=\varprojlim_{m\mid D}\mathbb Z/m\mathbb Z,
+\qquad
+\widehat{\mathbb Z}=\varprojlim_{m\ge1}\mathbb Z/m\mathbb Z.
+$$
+各过渡映射为剩余类约化，记自然整数在 $R_D$ 中的像为 $\bar n$。另定义闭理想
+$$
+J_D=\bigcap_{m\mid D}\ker\bigl(\widehat{\mathbb Z}\to\mathbb Z/m\mathbb Z\bigr).
+$$
+这里的 $D$ 在无限周期情形不是一个可作整数乘法的数。
+
+对 $t\in\mathbb N_0\cup\{\infty\}$，令
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\mid D\},
+\qquad
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m}.
+$$
+逆极限均取有限离散因子的积拓扑与逐坐标运算。记全部素数指数均为 $\infty$ 的超自然数为 $D_*$. 全部有限自然商的逆极限因而为 $K_I=K_{\infty,D_*}$。
+

@@ -1,0 +1,27 @@
+**定理 13.6（不同维数模型的带噪初态响应证书）。** 给两份有限维模型 $(E,T,J,h_0)$、$(\widehat E,\widehat T,\widehat J,\widehat h_0)$，使用同一个 $U$ 和谱区间 $[u,v]$。设
+$$
+z_j=J^*T^jh_0,\quad
+\widehat z_j=\widehat J^*\widehat T^j\widehat h_0,\quad
+\|z_j-\widehat z_j\|\le\delta_j\quad(0\le j\le r),
+$$
+$$
+m=\|J^*J\|,\quad\widehat m=\|\widehat J^*\widehat J\|,\qquad
+A_{\mathrm f}=\sqrt m\,\|h_0\|+
+\sqrt{\widehat m}\,\|\widehat h_0\|.
+$$
+对连续实函数 $f$ 和任意 $p(x)=\sum_{j=0}^r c_jx^j$，有
+$$
+\boxed{
+\|J^*f(T)h_0-\widehat J^*f(\widehat T)\widehat h_0\|
+\le A_{\mathrm f}\|f-p\|_\infty
++\sum_{j=0}^r|c_j|\delta_j.
+}
+\tag{13.14}
+$$
+若已有 $\sum_{j=0}^r w_j\|z_j-\widehat z_j\|^2\le\eta_z^2$、$w_j>0$，最后一项可换成
+$$
+\eta_z\left(\sum_{j=0}^r|c_j|^2/w_j\right)^{1/2}.
+\tag{13.15}
+$$
+两份模型均满足相同质量与能量预算时，可用 $A_{\mathrm f}\le2\sqrt{m_*}E_*$。此比较不要求内部空间的坐标识别或非零 Gram 谱间隔。
+

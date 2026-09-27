@@ -1,0 +1,8 @@
+定义最优一致新报告界
+$$
+T_\varepsilon=\min\left\{N\in\mathbb N_0:
+\ \exists A\ \forall w\in\{0,1\}^{*}\ \forall v\in\{0,1\}^{\mathbb N},\
+\tau_A(D(w),\varepsilon,v)\le N
+\ \text{且上述误差条件成立}\right\},
+$$
+若集合为空则取 $+\infty$。

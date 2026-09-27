@@ -1,0 +1,34 @@
+**Proof.** The product $K^K$ is compact Hausdorff, so its closed subset $\mathscr E$ is compact Hausdorff. All its elements are actual functions $K\to K$, although they need not be continuous.
+
+Fix $q\in\mathscr E$ and $m\ge0$. Choose a net of iterates $T^{a_i}\to q$. Such nets can be obtained by directing finite-coordinate neighborhoods by reverse inclusion. Since $T^m$ is continuous,
+$$
+T^{m+a_i}(x)=T^m(T^{a_i}x)\longrightarrow T^m(qx)
+$$
+for every $x$. Hence $T^m q\in\mathscr E$.
+
+Now choose $T^{b_j}\to p\in\mathscr E$. For every $j$, the preceding paragraph gives $T^{b_j}q\in\mathscr E$, and
+$$
+(T^{b_j}q)(x)=T^{b_j}(qx)\longrightarrow p(qx).
+$$
+Closedness therefore gives $pq\in\mathscr E$. Associativity and the identity law are inherited from function composition.
+
+For fixed $q$, the $x$-coordinate of $R_q(p)$ is the $qx$-coordinate of $p$. Thus $R_q$ is continuous in the product topology. For fixed $m$, the $x$-coordinate of $L_{T^m}(p)$ is $T^m(p(x))$, which is continuous in $p$. Taking the limit of
+$$
+T^mT^{a_i}=T^{a_i}T^m
+$$
+is now legitimate on both sides and gives $T^m q=qT^m$. This uses continuity of the finite iterate, not commutation of arbitrary limits.
+
+If $T^{b_j}\to p$, continuity of evaluation and of $H$ gives
+$$
+b_j\delta=H(T^{b_j}0_K)\longrightarrow H(p0_K)=\vartheta(p).
+$$
+For every $x$,
+$$
+H(T^{b_j}x)=H(x)+b_j\delta.
+$$
+Passing to the limit proves the phase formula. Applying it to $q0_K$ gives
+$$
+\vartheta(pq)=H(p(q0_K))=H(q0_K)+\vartheta(p).
+$$
+The map $\vartheta=H\circ e$ is continuous. Its image is compact and contains the dense irrational orbit $\{n\delta:n\ge0\}$, so it is the whole circle. $\square$
+

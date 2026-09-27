@@ -1,0 +1,5 @@
+**theorem 51.3 (同余类中的任意大互素提升).** 设 $M\ge1$，给定 $U_0,V_0\in\mathbb Z/M\mathbb Z$，并假设对每个 $p\mid M$，它们在 $\mathbb Z/p\mathbb Z$ 中不同时为零。则对任意整数 $B\ge1$，存在正整数 $U,V>B$ 满足
+$$
+U\equiv U_0\pmod M,\qquad V\equiv V_0\pmod M,\qquad \gcd(U,V)=1.
+$$
+

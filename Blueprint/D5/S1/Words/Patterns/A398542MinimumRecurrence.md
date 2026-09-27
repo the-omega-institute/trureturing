@@ -1,0 +1,142 @@
+# Actual minimum split and cardinal recurrence
+
+## Abstract
+
+The upper-minimum split is a bijection of actual fixed-bottom permutations.
+
+All sizes are natural numbers. Perm(n) means bijections of Fin(n). The definitions Actual, Configuration, count, gap and dead are those of A398542FixedBottom. Both children always retain the same whole bottom b, and their upper values are restandardized. Empty children and repeated gaps are allowed. This is the actual-object recurrence used to prove the fixed-bottom conjecture.
+
+**Definition 1.1 (Actual permutations with restricted gaps).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalActual`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalActual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b in Perm(m) and l,h,k in N, IntervalActual(b,l,h,k) is the subtype of Actual(b,k) whose every upper gap, extracted from the actual permutation, lies between l and h inclusive. There is no change to the bottom alphabet or its ordering.
+
+**Definition 1.2 (The corresponding restricted configurations).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalConfiguration`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalConfiguration` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b in Perm(m) and l,h,k in N, IntervalConfiguration(b,l,h,k) is the subtype of Configuration(b,k) in which every gap label lies in [l,h]. It is the matching restriction of the existing actual/configuration equivalence.
+
+**Definition 1.3 (Actual interval cardinality).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.intervalCount`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.intervalCount` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all b,l,h,k, intervalCount(b,l,h,k) is Nat.card(IntervalActual(b,l,h,k)). It is not recursively defined.
+
+**Definition 1.4 (The forced value shifts at the minimum).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinUpper`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinUpper` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a,c, v in Perm(a), and r in Perm(c), joinUpper(v,r) is in Perm(a+(c+1)). At the first a positions its values are c+1+v(i); at position a its value is zero; at position a+1+j its value is r(j)+1. The existing actual blockSum constructor is used directly, with the right minimum inserted via finSuccEquiv.
+
+**Theorem 1.5 (Avoidance of a minimum join).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.join_avoids_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/A398542MinimumRecurrence.join_avoids_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all a,c and arbitrary v in Perm(a), r in Perm(c), joinUpper(v,r) avoids 213 if and only if both v and r avoid 213. The factors may be empty. A putative crossing occurrence contradicts the strict ordering of the forced value blocks.
+
+**Theorem 1.6 (Unique factors of an actual upper permutation).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.minimum_factorization`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/A398542MinimumRecurrence.minimum_factorization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a,c and u in Perm(a+(c+1)), if u(a)=0 and u avoids 213, there is exactly one pair (v,r) in Perm(a) times Perm(c) such that joinUpper(v,r)=u and both v and r avoid 213. The minimum forces every left value above every right value. Bijection of u then forces the exact value sets, including when a=0 or c=0.
+
+**Definition 1.7 (In-order gap concatenation).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinGaps`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinGaps` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every root gap g in Fin(m+1), left gap function v:Fin(a)->Fin(m+1) and right gap function r:Fin(c)->Fin(m+1), joinGaps(g,v,r) is the function on Fin(a+(c+1)) given by v, then g, then r. The definition itself does not assume monotonicity; repeated labels are retained.
+
+**Definition 1.8 (Reconstruction over one entire bottom).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinConfiguration`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinConfiguration` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every b in Perm(m), g in Fin(m+1), l<=g<=h with g<dead(b,g), v in IntervalConfiguration(b,l,g,a), and r in IntervalConfiguration(b,g,min(h,dead(b,g)-1),c), joinConfiguration returns an element of IntervalConfiguration(b,l,h,a+(c+1)). The root cutoff constrains right gaps; no monotonicity of dead is used. Both children keep the same b. The new upper permutation is joinUpper and its labels are joinGaps.
+
+**Definition 1.9 (Disjoint actual splitting data).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.SplitActual`
+
+*Formalization.* `D5/S1/Words/Patterns/A398542MinimumRecurrence.SplitActual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b in Perm(m) and l,h,k in N, SplitActual(b,l,h,k) is the dependent sum over g in Fin(m+1) with l<=g<=h and a in Fin(k+1) of IntervalActual(b,l,g,a) times IntervalActual(b,g,min(h,dead(b,g)-1),k-a). These are actual children, each with the complete bottom b. The data describe a parent with k+1 upper points.
+
+**Theorem 1.10 (The full actual cardinal recurrence).**
+
+Lean statement: `D5/S1/Words/Patterns/A398542MinimumRecurrence.actual_cardinal_recurrence`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/A398542MinimumRecurrence.actual_cardinal_recurrence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m, b in Perm(m) avoiding 132, and natural l<=h<=m, write N(l,h,k)=intervalCount(b,l,h,k). Then N(l,h,0)=1. For every k in N there exists an equivalence from IntervalActual(b,l,h,k+1) to SplitActual(b,l,h,k), and N(l,h,k+1) is the sum over all g in [l,h] and a in [0,k] of N(l,g,a)*N(g,min(h,dead(b,g)-1),k-a). Finally, for every k in N, N(0,m,k)=count(b,k). These are the three conclusions of the one theorem. The inverse maps split at the unique upper minimum and rejoin with the forced value shifts. They treat both empty children and repeated gaps, and the zero-size class consists of b alone. In particular the source boundary d(b,0)=1 follows.
+
+## References
+
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalActual`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.IntervalConfiguration`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.SplitActual`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.actual_cardinal_recurrence`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.intervalCount`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinConfiguration`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinGaps`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.joinUpper`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.join_avoids_iff`
+- Truth anchor: `D5/S1/Words/Patterns/A398542MinimumRecurrence.minimum_factorization`
+- Dependency: [D5/S1/Words/Patterns/A398542FixedBottom](A398542FixedBottom.md)
+- Dependency: [D5/S1/Words/Patterns/Separable/CutFactorization](Separable/CutFactorization.md)

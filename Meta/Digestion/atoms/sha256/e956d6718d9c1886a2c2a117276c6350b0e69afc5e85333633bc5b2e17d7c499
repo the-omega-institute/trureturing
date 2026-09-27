@@ -1,0 +1,14 @@
+**Definition 37.3 (The phase-selecting operators).** For every $\theta\in\mathbb T$ and $s\in\Sigma$, define the actual function $P_\theta^s:K\to K$ by
+$$
+P_\theta^s(x)=
+\begin{cases}
+k_{H(x)+\theta},&H(x)+\theta\notin E,\\
+x_m^s,&H(x)+\theta=E_m.
+\end{cases}
+$$
+The index $m$ in the second case is unique by irrationality. Put
+$$
+\mathscr D=\{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+$$
+Each $P_\theta^s$ is constant on every $H$-fibre. Membership in $\mathscr E$ is not part of this definition.
+

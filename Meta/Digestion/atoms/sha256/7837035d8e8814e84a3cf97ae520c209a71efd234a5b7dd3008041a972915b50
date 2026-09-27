@@ -1,0 +1,22 @@
+### 135.2 复制混合中的匹配率依赖一份指定联合律
+
+设 $(X,\mathcal F,\mu)$ 为概率空间，$q_L:X\to Q_L$ 为有限可测标签，且有父映射满足 $q_L=r_Lq_{L+1}$。一次成对抽样的机制明确规定为
+
+$$
+J_{\eta,\mu}
+=(1-\eta)\operatorname{diag}_*\mu+\eta\,\mu\otimes\mu,
+\qquad 0\le\eta\le1.
+$$
+
+其中 $1-\eta$ 是复制同一份样本的权重，$\eta$ 是独立重抽的权重。实际观察仅为匹配位
+
+$$
+B_L=\mathbf1_{\{q_L(X_1)=q_L(X_2)\}}.
+$$
+
+记 $p_{L,w}=\mu(q_L=w)$，并定义独立碰撞概率
+
+$$
+C_L=\sum_{w\in Q_L}p_{L,w}^2.
+$$
+

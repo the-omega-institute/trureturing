@@ -1,0 +1,82 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 16
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/100",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "599/1800",
+      "v0": "19/2500",
+      "v1": "1833/239600",
+      "gap": "3971/180000",
+      "tbar": "101/48",
+      "Cbar": "602/157",
+      "kbar": "599/298",
+      "budget_increments": [
+        "167/240000",
+        "1/3600",
+        "1/400"
+      ],
+      "c": [
+        "281/400",
+        "3613/9000",
+        "401/1500",
+        "401/4500"
+      ],
+      "H": [
+        "189/3125",
+        "15317/150000",
+        "61/900",
+        "81199/3600000"
+      ],
+      "positive7": "2719/42000"
+    }
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "113030172417388488839521339535147647/3510863581945200248270294588671875"
+  },
+  "raw_zero_prices": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/003-raw_zero_prices.json",
+    "sha256": "0c8466f35f81f7dc23610ccf15af6a7848d9b7032e2967a40391cf750482b4ea",
+    "kind": "value"
+  },
+  "raw_complete_prices": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/004-raw_complete_prices.json",
+    "sha256": "180d0647cf69470ac467bc7557d12a2f5fb99b4d3a2d81af63780932cde980f9",
+    "kind": "value"
+  },
+  "common_price": {
+    "kind": "inline",
+    "value": "143456240220100247589010662035227/1526232017509762523021652591000000"
+  },
+  "non_H_cap_growth": {
+    "kind": "inline",
+    "value": "211751/53910000"
+  },
+  "non_H_budget_growth": {
+    "kind": "inline",
+    "value": "923/240000"
+  },
+  "non_H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "532718921/58222800000"
+  },
+  "H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "1049/4050000"
+  },
+  "branches": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/010-branches.json",
+    "sha256": "ee53c53f444014e55939423f957465828ac17215b52f528cfa7c83253cf1f0fd",
+    "kind": "array"
+  },
+  "uniform_margin_error": {
+    "kind": "inline",
+    "value": "21922896589337417297927126069338795440267931/52547590684042496222520535012624306500000000"
+  }
+}

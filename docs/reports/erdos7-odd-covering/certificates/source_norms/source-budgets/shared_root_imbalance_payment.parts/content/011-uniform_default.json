@@ -1,0 +1,60 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/44"
+  },
+  "r_upper_inclusive": {
+    "kind": "inline",
+    "value": "1/840"
+  },
+  "four_gap_guards": {
+    "kind": "inline",
+    "value": [
+      "83/840",
+      "299/4620",
+      "8/385",
+      "8117/325248"
+    ]
+  },
+  "G_lower": {
+    "kind": "inline",
+    "value": "8/385"
+  },
+  "remaining_hole_coefficient": {
+    "kind": "inline",
+    "value": "43/220"
+  },
+  "best_slot_credit_lower": {
+    "kind": "inline",
+    "value": "83/4200"
+  },
+  "uniform_source_credit": {
+    "kind": "inline",
+    "value": "86/21175"
+  },
+  "cost_rows": {
+    "path": "content/011-uniform_default/007-cost_rows.json",
+    "sha256": "7fcf083c5065a0d412a461f25d712922bf07f8bebb45ce06d786e86d927aad15",
+    "kind": "array"
+  },
+  "weighted_g_sum": {
+    "kind": "inline",
+    "value": "399144496215145187995979/29283910461731914025637600"
+  },
+  "weighted_P_sum": {
+    "kind": "inline",
+    "value": "39112501201778114203236195223/1045508208220511310667392000"
+  },
+  "weighted_Q_sum": {
+    "kind": "inline",
+    "value": "3222290486225598233534630653085872009709/1445875168022480492644888052443181250000"
+  },
+  "strictly_reduced_penalty_count": {
+    "kind": "inline",
+    "value": 46
+  },
+  "comparison": {
+    "kind": "inline",
+    "value": "d_i>=m_i_old+[g_i-P_i*(rho-r/5)-Q_i*chi]_+; all root0 labels use one sigma_D*C*chi charge, chi<=sigma_escape/4."
+  }
+}

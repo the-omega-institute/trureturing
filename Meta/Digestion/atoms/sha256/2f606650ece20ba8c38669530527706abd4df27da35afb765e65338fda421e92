@@ -1,0 +1,11 @@
+**命题 11.4（顺序接线的 Choi 收缩）。** 若 $\Phi:\mathcal L(A)\to\mathcal L(B)$、$\Psi:\mathcal L(B)\to\mathcal L(C)$，则在 $A\otimes B\otimes C$ 的次序下
+$$
+J(\Psi\circ\Phi)
+=\operatorname{Tr}_B\!\left[
+\bigl(J(\Phi)^{\mathsf T_B}\otimes I_C\bigr)
+\bigl(I_A\otimes J(\Psi)\bigr)
+\right].
+\tag{11.7}
+$$
+这里 $\mathsf T_B$ 只转置接线空间 $B$；两个乘因子不要求交换。
+

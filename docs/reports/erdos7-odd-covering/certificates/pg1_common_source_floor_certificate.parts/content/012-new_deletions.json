@@ -1,0 +1,23 @@
+{
+  "length": 16,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 8,
+      "part": {
+        "path": "content/012-new_deletions/000000-000008.json",
+        "sha256": "b28353a3463491dd7a92227d244da1c75b8f044f703a886fcf3e90d46fb7a807",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 16,
+      "part": {
+        "path": "content/012-new_deletions/000008-000016.json",
+        "sha256": "5b3c44ecec433897d7d5f393e289b41415f67f22abc79534f9b0aff165ab91e9",
+        "kind": "value"
+      }
+    }
+  ]
+}

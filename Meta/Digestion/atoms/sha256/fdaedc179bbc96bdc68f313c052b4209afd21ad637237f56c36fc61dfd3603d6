@@ -1,0 +1,13 @@
+**定理 37.7（固定概率多面体的顶点间隙界）。** 令 $\mathcal D$ 是一个固定非空概率多面体，$R$ 为其上非负仿射函数，且 $\mathcal F=\{\rho\in\mathcal D:R(\rho)=0\}\ne\varnothing$。全部来源和记录约束须包含在 $\mathcal D$ 中；应用于循环时也固定节点律以保证剩余量非负。若所有顶点剩余量为零，则 $\mathcal F=\mathcal D$；否则定义最小正顶点剩余量 $\gamma>0$，有
+$$
+\operatorname{dist}_{\rm TV}(\rho,\mathcal F)\le\min\{1,R(\rho)/\gamma\}.
+\tag{37.14}
+$$
+证明。写 $\rho=\sum_v\alpha_vv$，令 $\eta=\sum_{R(v)>0}\alpha_v$，则 $R(\rho)\ge\gamma\eta$。选任一 $f\in\mathcal F$，令
+$$
+\rho_* =\sum_{R(v)=0}\alpha_vv+\eta f\in\mathcal F.
+$$
+有限和的三角不等式给 $\operatorname{TV}(\rho,\rho_*)\le\sum_{R(v)>0}\alpha_v\operatorname{TV}(v,f)\le\eta$，即得。$\square$
+
+这个明确顶点证明处于 Hoffman 型多面体误差界的成熟背景[^rroctx37_hoffman]，只给某个被准入最优律的存在性，不是指定解码输出 $Q$ 的提升。计算 $\gamma$、顶点分解及见证另需资源，换多面体不能保留同一常数。仿射性不可省：在 $\rho_t=(1-t,t)$ 上取非线性剩余量 $t^2$，零集为 $\{\rho_0\}$、正顶点间隙为一，但距离 $t>t^2$（$0<t<1$）。非负性则防止顶点剩余量相互抵消。空零面及额外非线性准入不属该定理。
+

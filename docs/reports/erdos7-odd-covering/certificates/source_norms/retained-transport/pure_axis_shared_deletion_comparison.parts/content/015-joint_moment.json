@@ -1,0 +1,75 @@
+{
+  "allowed_deep_cross_weights": {
+    "kind": "inline",
+    "value": [
+      [
+        "0",
+        "1",
+        "1",
+        "1",
+        "4/5"
+      ],
+      [
+        "0",
+        "4/5",
+        "4/5",
+        "4/5",
+        "3/5"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "4/5",
+        "2/5"
+      ],
+      [
+        "0",
+        "0",
+        "4/5",
+        "4/5",
+        "2/5"
+      ],
+      [
+        "0",
+        "0",
+        "4/5",
+        "4/5",
+        "2/5"
+      ]
+    ]
+  },
+  "candidate_rows": {
+    "path": "content/015-joint_moment/001-candidate_rows.json",
+    "sha256": "bf0c210f4fcfbcdfcaebd55e82d28b5fe972631806010bd4099e7382e7e964a6",
+    "kind": "array"
+  },
+  "candidate_count": {
+    "kind": "inline",
+    "value": 1250
+  },
+  "joint_upper": {
+    "kind": "inline",
+    "value": "125/108"
+  },
+  "maximizing_choices": {
+    "kind": "inline",
+    "value": [
+      [
+        0,
+        1,
+        2,
+        1,
+        2
+      ]
+    ]
+  },
+  "next_shallow_upper": {
+    "kind": "inline",
+    "value": "599/540"
+  },
+  "uncorrected_joint_slot_upper": {
+    "kind": "inline",
+    "value": "1567/1350"
+  }
+}

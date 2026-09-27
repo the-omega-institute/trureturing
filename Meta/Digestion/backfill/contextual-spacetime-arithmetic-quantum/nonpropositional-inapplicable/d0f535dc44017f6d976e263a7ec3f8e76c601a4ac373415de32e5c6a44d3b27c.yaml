@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0f535dc44017f6d976e263a7ec3f8e76c601a4ac373415de32e5c6a44d3b27c
+  normalized_sha256: sha256:d0f535dc44017f6d976e263a7ec3f8e76c601a4ac373415de32e5c6a44d3b27c
+cas_ref: sha256:d0f535dc44017f6d976e263a7ec3f8e76c601a4ac373415de32e5c6a44d3b27c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子介绍读出噪声与标定误差的章节问题，未断言误差上界或存在性结果，属于研究导言。
+    previous_atom_id: 95f399163b76c8482ffbadeaa413b097f5c1aedb0dfd7c6f1ddd098a3e5baea0
+    next_atom_id: 069047ba9a8ed70490c8888037f19a4947952882d58ba94c7011c0e64d9f85fc

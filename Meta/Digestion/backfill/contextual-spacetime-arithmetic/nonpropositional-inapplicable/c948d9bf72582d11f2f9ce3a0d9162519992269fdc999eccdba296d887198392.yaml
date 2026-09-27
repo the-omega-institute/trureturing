@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c948d9bf72582d11f2f9ce3a0d9162519992269fdc999eccdba296d887198392
+  normalized_sha256: sha256:c948d9bf72582d11f2f9ce3a0d9162519992269fdc999eccdba296d887198392
+cas_ref: sha256:c948d9bf72582d11f2f9ce3a0d9162519992269fdc999eccdba296d887198392
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子限定档案历史一词的含义及记录范围，是模型约定，不作未观测事实或过程恢复的数学断言。
+    previous_atom_id: 92f1828034e30230c9d7f20a5fc088c1745224f2822ad9cad8114fbaa1704755
+    next_atom_id: 3e191fbdce9b165990a8875c4adc0dadebd54eb14d101c2f433299c72deb4afe

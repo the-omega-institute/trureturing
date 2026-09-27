@@ -1,0 +1,15 @@
+**命题 72.10（一个等权二分的四个读数）。** 取 $I$ 为单点，$J=\{0,1\}$，$r$ 为常值映射，$q_0=q_1=1/2$、$p=1$。则
+$$
+U_r=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\sigma_r=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\rho_q=\frac12I_2,
+$$
+$$
+\operatorname{Tr}\Gamma_r(\rho_q)=\tfrac12,\qquad
+\mathcal C_r(\rho_q)=[1],\qquad
+D(\sigma_r\Vert\rho_q)=\ln2,\qquad
+D(\rho_q\Vert\sigma_r)=+\infty.
+$$
+
+证明。代入 $U_r$ 与两态的条目公式即得矩阵。压缩给出一维矩阵 $[1/2]$，经典标签通道则将两个对角质量相加为一。$S(\sigma_r)=0$、$S(\rho_q)=\ln2$，由定理 72.6 得正向值；命题 72.9 的核向量可取 $f_0-f_1$，给出反向无穷值。两态的细基测量分布同为 $(1/2,1/2)$，其经典 KL 值仍为零。故压缩迹缺口 $1/2$、经典总质量一、正向相干相对熵 $\ln2$ 与反向无穷值是不同读数。证毕。
+

@@ -1,0 +1,15 @@
+所以定义粗事件缺陷算子
+$$
+D_B(C)=M_C^*(Q_B)-Q_B
+=(\overline C-J)\odot Q_B.
+$$
+$D_B(C)$ 是 Hermitian 算子，因而
+$$
+\delta_B(C)=\|D_B(C)\|_\infty.
+$$
+这里使用了有限维事实
+$$
+\sup_{\rho}\left|\operatorname{tr}(\rho A)\right|=\|A\|_\infty
+$$
+对任意 Hermitian $A$ 成立。
+

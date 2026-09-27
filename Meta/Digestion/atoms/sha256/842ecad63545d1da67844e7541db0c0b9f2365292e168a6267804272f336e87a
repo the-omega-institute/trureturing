@@ -1,0 +1,13 @@
+**theorem 50.4（lcm 的完全分类与同层稳定性）。** 存在联合连续映射
+$$
+L:K_{t,D}^2\to K_{t,D},
+\qquad
+L(j(a),j(b))=j(\operatorname{lcm}(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+D\mid2.
+\tag{50.3}
+$$
+这里 $t$ 可以是任意有限自然数，也可以是 $\infty$。当 $D\mid2$ 时，对每个输出层 $\alpha=(u,m)$，可取完全相同的输入层 $\beta=\alpha$；即 lcm 在每个有限层已经同层良定义。
+

@@ -1,0 +1,93 @@
+### 48.13 Stirling 常数、精确半径与临界截断误差
+
+给出（48.45）的精确渐近证明。令 \(a=2d-2\to\infty\)，选择任意众数
+\[
+m=\frac{a\rho}{1-\rho}+O(1),\qquad n=a+m.
+\]
+该点质量可写为
+\[
+p_m=(1-\rho)\binom{n}{a}(1-\rho)^a\rho^m.
+\]
+Stirling 公式对 \(a,m,n\) 同时使用，因三个量均线性增长，给
+\[
+p_m=(1-\rho)
+\sqrt{\frac{n}{2\pi am}}\,
+\exp\{F_a(m)\}\bigl(1+O_\rho(a^{-1})\bigr),
+\]
+其中
+\[
+F_a(m)=(a+m)\log(a+m)-a\log a-m\log m
++a\log(1-\rho)+m\log\rho.
+\]
+把 \(m\) 暂作实变量，在
+\(m_0=a\rho/(1-\rho)\) 处直接代入得
+\[
+F_a(m_0)=F_a'(m_0)=0,\qquad
+F_a''(m)=-\frac{a}{m(a+m)}.
+\]
+因为 \(m-m_0=O(1)\)，该区间内二阶导数为 \(O_\rho(a^{-1})\)，Taylor 定理给
+\(F_a(m)=O_\rho(a^{-1})\)。同时
+\[
+\frac{n}{am}\sim\frac1{a\rho}.
+\]
+因此两个可能众数均满足
+\[
+\frac{h_d}{m_d}
+\sim\frac{1-\rho}{\sqrt{2\pi\rho(2d-2)}}
+\sim\frac{1-\rho}{\sqrt{4\pi\rho d}}.
+\tag{48.47}
+\]
+这证明了常数，不只给出中心极限定理的量级。
+
+由（48.2）
+\[
+A_{\mathrm c}^{\,d}m_d=\frac{1-\rho}{\rho}.
+\]
+结合（48.47）得到
+\[
+\boxed{
+A_{\mathrm c}^{\,d}h_d
+\sim\frac{A_{\mathrm c}}{\sqrt{4\pi\rho d}},
+\qquad
+\lim_{d\to\infty}h_d^{1/d}
+=\frac{\rho}{(1-\rho)^2}
+=A_{\mathrm c}^{-1}.
+}
+\tag{48.48}
+\]
+所以以原点为中心的 Banach 值齐次级数
+\(\sum_{d\ge1}H_d(a)\) 具有精确半径 \(A_{\mathrm c}\)：
+
+- 若 \(r<A_{\mathrm c}\)，由（48.48）及根值判别，
+  \(\sum_d h_dr^d<\infty\)，故在 \(\|a\|_\infty\le r\) 上一致绝对范数收敛。
+- 若 \(r>A_{\mathrm c}\)，同一个输入 \(a=-r\mathbf1\) 对所有次数同时饱和，
+  \(\|H_d(a)\|_\rho=r^dh_d\not\to0\)，故级数在该输入处不收敛。
+
+这一证明给精确原点球半径，不排除特定其他输入或非球形区域上的延拓。
+
+在临界输入 \(a=-A_{\mathrm c}\mathbf1\)，每项范数依（48.48）确实趋零，但不能据此推断级数收敛。事实上可以加强式（47.53）的下界：对每个有限 \(D\ge1\)，
+\[
+\boxed{
+\left\|\mathcal E(a)-\sum_{d=1}^{D}H_d(a)\right\|_\rho
+=c_{A_{\mathrm c}}.
+}
+\tag{48.49}
+\]
+这里 \(\mathcal E(a)-\sum_{d=1}^D H_d(a)\) 按每个坐标的有限次数多项式定义；没有预设临界 Banach 级数收敛。证明如下。常边界使递归数组及每个齐次部分在 \(n\) 上常值，故范数的最大行权为 \(n=0\)。对固定 \(k\)，余项绝对值是正系数尾和
+\[
+\rho^k\sum_{d>D}c_{k,d}A_{\mathrm c}^{\,d},
+\]
+其中 \(d>k+1\) 的项为零。由于 \(D\ge1\)，这个量介于零和仅删除次数一项的余量之间。记此处 \(A=A_{\mathrm c}\)、\(\lambda=\rho^{-1}\)，使用 \(c_{k,1}=1\) 与（48.1）得
+\[
+\begin{aligned}
+\rho^k[u_k(A)-A]
+&=c_A+b_A\rho^{2k}-A\rho^k\\
+&\le c_A,
+\end{aligned}
+\]
+因为 \(b_A\rho^k\le b_A<A\)。于是范数至多 \(c_A\)。另一方面，每个固定次数 \(d\) 的
+\(\rho^kc_{k,d}A^d\to0\)，而
+\(\rho^ku_k(A)\to c_A\)。对固定有限 \(D\)，余量沿 \(k\to\infty\) 趋于 \(c_A\)，故上确界至少为 \(c_A\)，证明等号。
+
+逐坐标上，当 \(D\ge k+1\) 时已经完全相等；范数中却永远留下（48.49）的正误差。区别由不同聚合与移动深度给出，而不是由不同的递归关系造成。
+

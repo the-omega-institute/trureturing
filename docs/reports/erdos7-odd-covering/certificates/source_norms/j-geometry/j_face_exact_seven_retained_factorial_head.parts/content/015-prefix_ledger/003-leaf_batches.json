@@ -1,0 +1,50 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000000/single.json",
+        "sha256": "dbd2c6675e3d8dcf57c5989eb53d907de73869700b07ba6056bd78441745ca2b",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000001/single.json",
+        "sha256": "aef6cdd5e4ab199582716e34c35c8f9c1576bd9ba7e61b5dccbee201a53b52fe",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000002/single.json",
+        "sha256": "8200d03271e371d0164092500828af873f8163876f98115070e73c77ec135ec8",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000003/single.json",
+        "sha256": "9b8fc0a77b9cdbcd142e265d8f99e31613eece50331c9d1008a7bdee51b89b5a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000004/single.json",
+        "sha256": "e69febacadb355a0bba66c3afd93e008d17d1b607df0b726fbb4b66977bcea03",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

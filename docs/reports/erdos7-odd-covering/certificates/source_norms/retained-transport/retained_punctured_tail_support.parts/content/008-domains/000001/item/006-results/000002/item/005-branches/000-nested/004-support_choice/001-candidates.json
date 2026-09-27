@@ -1,0 +1,23 @@
+{
+  "length": 81,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 44,
+      "part": {
+        "path": "content/008-domains/000001/item/006-results/000002/item/005-branches/000-nested/004-support_choice/001-candidates/000000-000044.json",
+        "sha256": "ea65f2fa3af1cfcdb725d6211623cc8abf686d532c1a76be9857b3900b2d8bbb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 44,
+      "stop": 81,
+      "part": {
+        "path": "content/008-domains/000001/item/006-results/000002/item/005-branches/000-nested/004-support_choice/001-candidates/000044-000081.json",
+        "sha256": "e2c4eda703bc2d7a716a5d1e2bd828ae8c5d96a64cd6657d8d25d28ff3fed5c4",
+        "kind": "value"
+      }
+    }
+  ]
+}

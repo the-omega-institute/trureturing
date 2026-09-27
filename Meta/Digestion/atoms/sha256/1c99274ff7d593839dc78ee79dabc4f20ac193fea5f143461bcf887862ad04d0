@@ -1,0 +1,2 @@
+**注记 51.3（已有真源的复用边界）。** `partition_inseparable_iff_kernel` 与 `partitionTopology_eq_of_kernel_iff` 的值域明确取离散拓扑，所以前述例子不反驳它们。初始拓扑、Sierpiński 正检验和 $T_0$ 商属于经典及表示空间理论，本节不将其重新命名为新基础。以下真正的定量问题是：即使同一个紧致状态空间上的读数均为嵌入、诱导完全相同的拓扑，它们的有限资源恢复能力能相差多大。[^tcs10-repo]
+

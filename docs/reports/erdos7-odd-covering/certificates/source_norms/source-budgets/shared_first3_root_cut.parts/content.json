@@ -1,0 +1,118 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "shared-first3-root-mincut-certificate-v1"
+  },
+  "status": {
+    "kind": "inline",
+    "value": "PASS"
+  },
+  "labels": {
+    "path": "content/002-labels.json",
+    "sha256": "56cee53d712c0c05d679b2a097e82a6070cce1ae4c9dfbd5fa068f810a3b61d8",
+    "kind": "value"
+  },
+  "old_selected_upper": {
+    "kind": "inline",
+    "value": "71576373124828933019116097687161656373635380152613/2377242059818037342329721832275390625000000000000"
+  },
+  "new_selected_upper": {
+    "kind": "inline",
+    "value": "6075425176777688726177644242065944184629553131757/222363564979902569867149365234375000000000000000"
+  },
+  "additional_credit": {
+    "kind": "inline",
+    "value": "335680934236751212955658318363804156256517981364017/120446931030780558678039239501953125000000000000000"
+  },
+  "new_total_credit_lower": {
+    "kind": "inline",
+    "value": "1516871817296881199027768166061857799400014447861/89930510973703752123971557617187500000000000000"
+  },
+  "baseline_score": {
+    "kind": "inline",
+    "value": "68370315920936304110765180614885808460660671840726715101391664102177445341640407538454801622083828816802705425644539766864114123568423804668520354028637987553007486429/67777455285257386778217171715567384859162612966704093999566328517087192291739747409954475369473615069849776105829694292062832614068406520660964488281250000000000000000"
+  },
+  "E7_score": {
+    "kind": "inline",
+    "value": "966262377194498323758578859780324925802092128963134667335167363013614560154430080136036724003578290275393028701516417076446195719605277348078236988651010767026390328108158057098726786833735724527296408278518766745287116865215471906937878757775067117156366579297260681579672241124500026659871/922220263228654716112800844717895766288016589240442035144610439817983701473858755231663455275729528652893218735042191417509190874197184446278347358672058044474877289055760946629113249729991244412765214478115721611891593287025882921186357065672376320000000000000000000000000000000000000000000"
+  },
+  "decimals": {
+    "kind": "inline",
+    "value": {
+      "old_selected_upper": 30.108996611942683,
+      "new_selected_upper": 27.322035322319064,
+      "additional_credit": 2.7869612896236187,
+      "new_total_credit_lower": 16.867154438168644,
+      "baseline_score": 1.0087471657527378,
+      "E7_score": 1.047756610564654
+    }
+  },
+  "maximizing_roots": {
+    "path": "content/010-maximizing_roots.json",
+    "sha256": "234ff52ea058d25f3475da899b373f18447e767f338a390ccc6524a9b385d50a",
+    "kind": "value"
+  },
+  "common_denominator": {
+    "kind": "inline",
+    "value": "121952517668665315661514729995727539062500000000000000000000000"
+  },
+  "constant_numerator": {
+    "kind": "inline",
+    "value": "3565733353415023478628138433919563462302201283396673437500000000"
+  },
+  "flow_value_numerator": {
+    "kind": "inline",
+    "value": "233742358026009817865086669911522198544430737698693750000000000"
+  },
+  "source_vertex": {
+    "kind": "inline",
+    "value": 66
+  },
+  "sink_vertex": {
+    "kind": "inline",
+    "value": 67
+  },
+  "source_side": {
+    "path": "content/016-source_side.json",
+    "sha256": "680cbd8bdacb0ea225c39a8dab2bac40e68e9759e84197dd0450386123be4990",
+    "kind": "value"
+  },
+  "flow_edges": {
+    "path": "content/017-flow_edges.json",
+    "sha256": "447c5caed343ee58d28a30d7d667e6fdd74f7ab00ae4e7bdf5a444619fa10e08",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact optimum of the globally shared first3-root binary upper relaxation; higher digits and other query residues remain relaxed. Every original selected label distinct. Previous triangle credit overlaps and is not added."
+  },
+  "unary_count": {
+    "kind": "inline",
+    "value": 66
+  },
+  "shared_pair_count": {
+    "kind": "inline",
+    "value": 2145
+  },
+  "mixed_pair_count": {
+    "kind": "inline",
+    "value": 5808
+  },
+  "graph_arc_count": {
+    "kind": "inline",
+    "value": 4356
+  },
+  "root_query_count": {
+    "kind": "inline",
+    "value": 2662
+  },
+  "source_sha256": {
+    "path": "content/024-source_sha256.json",
+    "sha256": "6ff5d1c2d4adf9002b31724919b14e86a38540e3d613ebcc224f8722e0ccce00",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "a399afc407784af6dc6c6c95a73a434a1946a25cd944af084d47e04a95b4917d"
+  }
+}

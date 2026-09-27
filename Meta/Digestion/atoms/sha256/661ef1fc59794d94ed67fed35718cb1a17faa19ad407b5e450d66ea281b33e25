@@ -1,0 +1,26 @@
+**推论 40.5（固定支撑行列式与有符号间隔）。** 在定理40.4下，$\det_{E_r}\mathsf H_r(t)$ 指限制到同一个 $E_r$ 后的行列式，也就是环境半正定矩阵非零特征值的乘积 $\operatorname{pdet}\mathsf H_r(t)$。令 $\kappa=\operatorname{tr}C_{\mathcal R}>0$。则
+$$
+\det_{E_r}\mathsf H_r(t)
+=\det_{E_r}\mathsf H_r(0)e^{-t\kappa}\quad(t\ge0),
+\tag{40.13}
+$$
+以及对任意实际年龄 $a,b\ge0$，
+$$
+\log\operatorname{pdet}\mathsf H_r(a)
+-\log\operatorname{pdet}\mathsf H_r(b)=(b-a)\kappa.
+\tag{40.14}
+$$
+实际取得 $\mathsf H_r(a),\mathsf H_r(a+h),\mathsf H_r(b)$ 时，
+$$
+\boxed{
+\frac{\log\operatorname{pdet}\mathsf H_r(a)-\log\operatorname{pdet}\mathsf H_r(b)}
+{\log\operatorname{pdet}\mathsf H_r(a)-\log\operatorname{pdet}\mathsf H_r(a+h)}
+=\frac{b-a}{h}.}
+\tag{40.15}
+$$
+分母也可换成任何另外实际取得的同源、同接口 $c,c+h$ 对的对数行列式差，其中 $c\ge0$ 不必已知。所有行列式必须使用同一历史阶数、支撑和边界内积。
+
+证明。在（40.11）中以零年龄作为数学基准取行列式，得 $\det W_{r,0}(t)=e^{-t\kappa}$，而白化两侧的行列式为 $\det_{E_r}\mathsf H_r(t)/\det_{E_r}\mathsf H_r(0)$，证明（40.13）。在任意两个非负年龄相减得（40.14）；任意 $c,c+h$ 对的差恒为 $h\kappa>0$，得（40.15）。零年龄在这里仅用于证明恒等式，操作公式没有要求已经观察它，也不要求逐个重建谱率或原始 $B$。$\square$
+
+$b<a$ 时右端为负，仍是两个非负实际年龄之间的有符号差，未使用负年龄实验。定理40.4的未知基准白化给相同的正向间隔结果；任意基准不是准备原点。要恢复距实际准备的年龄仍须对应原点参考；要恢复绝对物理单位仍须校准。对任意 $c_0>0$，$C\mapsto c_0C$、所有年龄和延迟 $t\mapsto t/c_0$ 保持响应样本，且保持间隔比。这是恢复卷命题15.9—15.10已有的尺度规范自由。
+

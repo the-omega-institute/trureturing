@@ -92,6 +92,10 @@ $$\forall H, E \in \operatorname{Matrix}(\operatorname{Fin}(1), \operatorname{Fi
 
 One-by-one complex matrices commute, so the commutator derivative vanishes at time zero.
 
+Thermal recovery and covariance: `D5/L/Quantum/oi2006interference` gives the two-state interference ceiling; `D5/L/Quantum/marvian2014modes` supplies the symmetry-mode selection rule. `D5/L/Quantum/lostaglio2015coherence` and `D5/L/Quantum/faist2015gibbspreserving` distinguish Gibbs calibration, coherent covariance and thermal implementation. The Lean declarations here establish the commutator derivative and orbit-span identity, not a thermal recovery optimum or channel-norm bound.
+
+Joint statistical interpretation: `D5/L/Quantum/nuradha2025multivariate` poses operational questions for multivariate fidelities. `D5/L/Quantum/beny2015inference` motivates observation-based scale descriptions. The commutator identity does not settle these statistical questions or resource costs.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.empty_hamiltonian_effect_orbit`

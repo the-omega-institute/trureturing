@@ -1,0 +1,55 @@
+**定义 49.1（supernatural 周期与 Carmichael 闭包条件）。** 令
+$$
+D=\prod_p p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+对正整数 $m$，写 $m\mid D$ 表示对每个素数 $p$ 都有 $v_p(m)\le e_p$。令
+$$
+H(D)=\sup_p e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+称 $D$ 为 Carmichael 闭合的，若
+$$
+\forall m\in\mathbb N_{>0},\qquad m\mid D\Longrightarrow \lambda(m)\mid D,
+$$
+其中约定 $\lambda(1)=1$，而对 $m>1$，$\lambda(m)$ 是 $(\mathbb Z/m\mathbb Z)^\times$ 的指数。Ford、Luca、Pomerance，*The image of Carmichael's $\lambda$-function*，第 1 节明确把 $\lambda(n)$ 定义为单位群的指数，并给出
+$$
+\lambda(n)=\operatorname{lcm}_{p^a\parallel n}\lambda(p^a)
+$$
+及素数幂公式；见 [arXiv:1408.6506v2，PDF 第 1—2 页](https://arxiv.org/pdf/1408.6506v2)。这里 $\lambda(1)=1$ 只是平凡群指数的本节约定。
+
+对 $t\in\mathbb N_0\cup\{\infty\}$，令
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\mid D\},
+$$
+其中 $u\le\infty$ 恒成立。令
+$$
+a\mathrel{R_{u,m}}b
+\quad\Longleftrightarrow\quad
+a=b\ \lor\ \bigl(a,b\ge u\land a\equiv b\pmod m\bigr),
+$$
+并令 $Q_{u,m}=\mathbb N_0/R_{u,m}$，赋予有限离散拓扑。按
+$$
+(u,m)\preceq(v,n)
+\quad\Longleftrightarrow\quad
+u\le v\ \land\ m\mid n
+$$
+取规范商映射组成逆系统，并定义
+$$
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m}.
+$$
+自然映射记为
+$$
+j:\mathbb N_0\longrightarrow K_{t,D}.
+$$
+对任意 $t\in\mathbb N_0\cup\{\infty\}$，记
+$$
+R_D=\varprojlim_{m\mid D}\mathbb Z/m\mathbb Z.
+$$
+若 $t<\infty$，把候选载体写成
+$$
+\{0,1,\ldots,t-1\}\sqcup R_D.
+$$
+若 $t=\infty$，把候选载体写成
+$$
+\mathbb N_0\sqcup R_D.
+$$
+

@@ -1,0 +1,23 @@
+**命题 13.3（可见初态商与最小相容能量）。** 固定一个实际模型 $T,J$，令 $P_r$ 为 $\mathcal K_r$ 上的正交投影。若 $z\in\operatorname{ran}H$，则所有满足 $V^*h=z$ 的初态恰为
+$$
+h=h_{\mathrm{vis}}+w,\qquad
+h_{\mathrm{vis}}=VH^\dagger z,\qquad
+w\in\mathcal K_r^\perp.
+\tag{13.7}
+$$
+且
+$$
+P_r=VH^\dagger V^*,\qquad
+\|h\|^2=e_{\min}+\|w\|^2.
+\tag{13.8}
+$$
+所以 $h_{\mathrm{vis}}$ 是该模型内唯一的最小范数相容初态，$e_{\min}$ 也是定理13.2允许的全部模型中的最小相容能量。当 $e_{\min}\le E_*^2$ 时，能量上界下的相容初态纤维为
+$$
+\mathcal H(z,E_*)
+=h_{\mathrm{vis}}+
+\{w\in\mathcal K_r^\perp:\|w\|\le q\},\qquad
+q=\sqrt{E_*^2-e_{\min}}.
+\tag{13.9}
+$$
+若 $e_{\min}>E_*^2$，该纤维为空。式（13.7）恢复了观察商上的可见分量，未识别 $w$。记录给出的 $e_{\min}$ 是实际能量的下界，不能用作实际能量的上界。
+

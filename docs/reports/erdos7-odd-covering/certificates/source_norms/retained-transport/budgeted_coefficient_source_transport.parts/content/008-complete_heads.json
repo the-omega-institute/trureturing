@@ -1,0 +1,209 @@
+{
+  "denominator_costs": {
+    "path": "content/008-complete_heads/000-denominator_costs.json",
+    "sha256": "22a927c89c3ffd6393830b391d5f95e25feb2e6fb764d3589701ab8cc22cb2e4",
+    "kind": "array"
+  },
+  "denominator_shared": {
+    "path": "content/008-complete_heads/001-denominator_shared.json",
+    "sha256": "ea7de550f83d9a28cef361551d4c07946dc9ba9802f5cfa24d3fa0d844441a52",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/008-complete_heads/002-H2.json",
+    "sha256": "9a63c0008c51ce589b72073aedcc023d1ce162e7bdbf3604704a2914617ab5de",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/008-complete_heads/003-mean_costs.json",
+    "sha256": "6821b869e2706170f8ba44ca64bdf00db10f1892137721f197a3ca669bb37423",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/008-complete_heads/004-mean_shared.json",
+    "sha256": "b6d3859951d36e26e4769c38da4bca37f1d636f2899b0731b1473c29c9cd6cb3",
+    "kind": "value"
+  },
+  "quadratic_costs": {
+    "path": "content/008-complete_heads/005-quadratic_costs.json",
+    "sha256": "862b491dd21fedb41e9eacb7ffcf0ab2b0008b1eb0772e1ffb4486121d8f8a16",
+    "kind": "array"
+  },
+  "quadratic_shared": {
+    "path": "content/008-complete_heads/006-quadratic_shared.json",
+    "sha256": "6f460d4e5d31ccb57d960d94406ba910ddad3c9123b4c664e91a20e973827969",
+    "kind": "value"
+  },
+  "old_parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/1000",
+      "rbar": "1/200",
+      "h1min": "161/486",
+      "v0": "51/2600",
+      "v1": "10343/418600",
+      "gap": "817/48600",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "14/225"
+    }
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/26",
+      "rho": "1/940",
+      "rbar": "1/188",
+      "h1min": "155/468",
+      "v0": "97/4700",
+      "v1": "3797/145700",
+      "gap": "151/9165",
+      "tbar": "27/11",
+      "Cbar": "790/193",
+      "kbar": "155/76",
+      "budget_increments": [
+        "79/46800",
+        "1/936",
+        "1/300"
+      ],
+      "c": [
+        "369/520",
+        "73/180",
+        "7/26",
+        "7/78"
+      ],
+      "H": [
+        "609/6760",
+        "329/3042",
+        "83/1170",
+        "5719/243360"
+      ],
+      "positive7": "20389/327600"
+    }
+  },
+  "cap_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/63180",
+      "1/63180",
+      "863/11877840",
+      "1/63180",
+      "0",
+      "0",
+      "0",
+      "5/43992",
+      "0",
+      "0",
+      "0",
+      "0",
+      "824491/5489101800",
+      "0",
+      "0",
+      "0",
+      "0",
+      "824491/5489101800",
+      "0",
+      "0",
+      "0",
+      "0",
+      "824491/5489101800",
+      "0"
+    ]
+  },
+  "factorial_head_increment": {
+    "kind": "inline",
+    "value": "26532387613/17352633402000"
+  },
+  "factorial_difference_digest": {
+    "kind": "inline",
+    "value": "79c931f0eb721b73e6b8ac2f82f86dea0f7013768897e07d711260b128d450bb"
+  },
+  "factorial_layouts": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "group_budget_increments": {
+    "kind": "inline",
+    "value": [
+      "83/1263600",
+      "1/25272",
+      "1/7800"
+    ]
+  },
+  "old_scores": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "26/27",
+      "26/27",
+      "26/27",
+      "26/27"
+    ]
+  },
+  "new_scores": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "25/26",
+      "25/26",
+      "25/26",
+      "25/26"
+    ]
+  },
+  "joint_mean_factorial_difference_digests": {
+    "kind": "inline",
+    "value": [
+      "a6bb0784ddf7e0e6c3220a51eea7476a61ea49dd0ebae40fcc88a5c00f1f4602",
+      "4d3e3a4c2dd93a3786ac47ec0fc664b1a70b254e2a6659a667f60cc947a5a8ad",
+      "4d3e3a4c2dd93a3786ac47ec0fc664b1a70b254e2a6659a667f60cc947a5a8ad"
+    ]
+  },
+  "complete_pair_upper": {
+    "kind": "inline",
+    "value": "3298064657/4575168000"
+  },
+  "finite_branch_transport_checks": {
+    "kind": "inline",
+    "value": 3120
+  },
+  "reused_original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "new_original_head_evaluations": {
+    "kind": "inline",
+    "value": 0
+  },
+  "old_group_coefficient_supports": {
+    "kind": "inline",
+    "value": 234
+  },
+  "strict_coefficient_improvements": {
+    "kind": "inline",
+    "value": 78
+  },
+  "refined_finite_branch_checks": {
+    "kind": "inline",
+    "value": 3120
+  }
+}

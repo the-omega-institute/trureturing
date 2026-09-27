@@ -1,0 +1,6 @@
+若实际后续读数 $f_{\mathrm{actual}}$ 还满足 $\|f_{\mathrm{actual}}-Fx\|\le\mu$，则总误差不超过
+
+$$
+\delta M+\|L\|\nu+\mu.
+$$
+

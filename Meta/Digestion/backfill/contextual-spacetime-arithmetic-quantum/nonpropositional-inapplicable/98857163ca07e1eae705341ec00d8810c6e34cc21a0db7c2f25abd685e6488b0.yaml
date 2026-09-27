@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98857163ca07e1eae705341ec00d8810c6e34cc21a0db7c2f25abd685e6488b0
+  normalized_sha256: sha256:98857163ca07e1eae705341ec00d8810c6e34cc21a0db7c2f25abd685e6488b0
+cas_ref: sha256:98857163ca07e1eae705341ec00d8810c6e34cc21a0db7c2f25abd685e6488b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子定义历史事件截取、事件概率及仅在正概率下定义的条件态，零概率时不作归一化断言。
+    previous_atom_id: 982d30d99f9f1238cff9ded11d0866b47fe454065825a2fb698b522ca1008454
+    next_atom_id: 346d7d13f327d6548266bb0b0ae81e8c809420287570097da1ecdca75cdeb55d

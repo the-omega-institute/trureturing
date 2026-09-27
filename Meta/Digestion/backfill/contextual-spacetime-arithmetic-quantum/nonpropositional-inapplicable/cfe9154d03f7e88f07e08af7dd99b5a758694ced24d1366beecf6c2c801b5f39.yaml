@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cfe9154d03f7e88f07e08af7dd99b5a758694ced24d1366beecf6c2c801b5f39
+  normalized_sha256: sha256:cfe9154d03f7e88f07e08af7dd99b5a758694ced24d1366beecf6c2c801b5f39
+cas_ref: sha256:cfe9154d03f7e88f07e08af7dd99b5a758694ced24d1366beecf6c2c801b5f39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定擦除标志、振幅与写入态的表达式，归一化性质已另分叶，没有独立待证结论。
+    previous_atom_id: ab4548dd2ccb67290cb85bb776031e472bae532ec9ebd55a0c4d599842b4c77e
+    next_atom_id: 7ca80e7abb4a5b4f3da2625f4cae1fefbace0fc58b259a8f468bddb00ba0aa67

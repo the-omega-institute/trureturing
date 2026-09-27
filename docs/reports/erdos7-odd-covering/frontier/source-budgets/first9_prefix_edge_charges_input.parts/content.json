@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "shared-first9-prefix-edge-charges-input-v1"
+  },
+  "labels": {
+    "path": "content/001-labels.json",
+    "sha256": "56cee53d712c0c05d679b2a097e82a6070cce1ae4c9dfbd5fa068f810a3b61d8",
+    "kind": "value"
+  },
+  "states": {
+    "path": "content/002-states.json",
+    "sha256": "442919af5e9a380598eb0db908fa1523f0a39c44bb15bdf76ebd93bf52bbe00b",
+    "kind": "value"
+  },
+  "edge_charges": {
+    "path": "content/003-edge_charges.json",
+    "sha256": "d6e856a31babaf69af865ce1929bf530999fc8a8dc3ae8d437c036b481c8d600",
+    "kind": "array"
+  },
+  "proposal_metadata": {
+    "kind": "inline",
+    "value": {
+      "method": "scipy.optimize.linprog with HiGHS",
+      "rounding_scale": 1000000000,
+      "rational_repairs": 0,
+      "numerical_objective": 27.32108819540114,
+      "dimensions": {
+        "variables": 14106,
+        "constraints": 8832,
+        "nonzeros": 31488
+      }
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Rational witness data. Feasibility is established by exact verification against the canonical model; numerical optimality is not claimed."
+  }
+}

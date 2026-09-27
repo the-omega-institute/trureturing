@@ -1,0 +1,75 @@
+{
+  "refined_directions": {
+    "kind": "inline",
+    "value": 41
+  },
+  "unclipped_directions": {
+    "kind": "inline",
+    "value": 41
+  },
+  "raised_barriers": {
+    "kind": "inline",
+    "value": 34
+  },
+  "unchanged_barriers": {
+    "kind": "inline",
+    "value": 7
+  },
+  "unchanged_one_event_directions": {
+    "kind": "inline",
+    "value": 0
+  },
+  "H41_increase": {
+    "kind": "inline",
+    "value": "254374752977690590476788497009/32345410191822068673772440000"
+  },
+  "updated_vertices": {
+    "kind": "inline",
+    "value": [
+      398,
+      410,
+      422,
+      616,
+      628,
+      640
+    ]
+  },
+  "inherited_vertices": {
+    "kind": "inline",
+    "value": 1290
+  },
+  "predecessor_layout_checks": {
+    "kind": "inline",
+    "value": 2460
+  },
+  "refined_layout_checks": {
+    "kind": "inline",
+    "value": 24600
+  },
+  "linear_tail_weight": {
+    "kind": "inline",
+    "value": "94212612766226/1174116234095805"
+  },
+  "thresholds": {
+    "path": "content/032-linear_refinement/011-thresholds.json",
+    "sha256": "15db01b7b5c70e788e1110b2351509c82310d90bef3010b06ad13ba1ba42b339",
+    "kind": "value"
+  },
+  "changes": {
+    "path": "content/032-linear_refinement/012-changes.json",
+    "sha256": "990e30b9d516b63d23cb2334d9341201b336275d63c50d496831161cf2fb3920",
+    "kind": "array"
+  },
+  "margin_sha256": {
+    "kind": "inline",
+    "value": "9394f562f7520d8e1212e8e03fd4a305fcc0d48b0da096e8d4dfd3c346d927df"
+  },
+  "vertex_table_semantics": {
+    "kind": "inline",
+    "value": "M41 is a vertex lower bound for one globally defined separately concave 41-direction refinement at globally fixed raised barriers. Inherited rows use old M41 plus H41_increase times D; no concavity claim is made for the patched table itself."
+  },
+  "consumer_obligation": {
+    "kind": "inline",
+    "value": "Add H41_increase to the complete H41 cost, check the final target at all 1296 returned rows and its nonnegative D coefficient, then apply separate concavity to the global refined margin. Eight missing-class branches remain separate."
+  }
+}

@@ -1,0 +1,35 @@
+**定义 25.1（环面、方程与准备范围）。** 本节统一采用
+$$
+\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2,\quad
+ d\mu=(2\pi)^{-2}\,dX_1dX_2,\quad
+\widehat v(k)=\int v(X)e^{-ik\cdot X}\,d\mu,
+$$
+$$
+\|v\|_{H^2}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^2|\widehat v(k)|^2,
+\quad \widehat{\partial_jv}(k)=ik_j\widehat v(k),
+\quad \widehat{\Delta v}(k)=-|k|^2\widehat v(k).
+\tag{25.101}
+$$
+向量系数用 Hermitian Euclidean 范数，张量系数用 Frobenius 范数。$H^2_\sigma$ 是实值、均值零、无散度的二维向量场闭子空间；在 Fourier 侧即 $\widehat v(-k)=\overline{\widehat v(k)}$、$\widehat v(0)=0$、$k\cdot\widehat v(k)=0$。固定 $\nu>0$、$A_\alpha>0$、$B_0\ge0$，考虑
+$$
+u_t+(u\cdot\nabla)u=\nu\Delta u-\nabla p,
+\quad \nabla\cdot u=0,\quad\int p\,d\mu=0,
+$$
+$$
+u_{\alpha,\beta}(0)=\alpha a_0+\beta b_0,
+\quad a_0=(0,\cos X_1),\quad
+b_0=(\cos(X_2-X_1),\cos(X_2-X_1)),
+\tag{25.102}
+$$
+其中 $|\alpha|\le A_\alpha$、$|\beta|\le B_0$。记
+$$
+R=2\sqrt{2A_\alpha^2+9B_0^2},\quad
+\tau=\frac{\nu}{16384R^2},\quad
+M_F=\nu R+4R^2,\quad D_F=\nu+8R,
+$$
+$$
+J=\nu^2+10\nu R+12R^2,\qquad M=(\nu+R)M_F.
+\tag{25.103}
+$$
+第24节引用的 `ReversalWaveSynthesis` 精确识别此准备加零第三分量后的原场；本节在该准备上构造真正保留全部频率的演化。
+

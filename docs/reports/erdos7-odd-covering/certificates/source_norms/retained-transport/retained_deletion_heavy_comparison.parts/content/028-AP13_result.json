@@ -1,0 +1,68 @@
+{
+  "hinge_coefficients": {
+    "4": "1"
+  },
+  "previous_upper": "2005090285718827/10584000000000000",
+  "hinge_upper": "146657771428963033/793800000000000000",
+  "denominator_gain": "58187499999203/74418750000000000",
+  "scan": {
+    "coefficients": {
+      "4": "1"
+    },
+    "selected_prefix_lengths": {
+      "4": 4
+    },
+    "complete_hinge_upper": "146657771428963033/793800000000000000",
+    "counts": {
+      "two": 125000,
+      "two_bounded": 124948,
+      "four": 2600,
+      "four_bounded": 2506,
+      "six": 940,
+      "six_bounded": 417,
+      "joint": 524,
+      "prefix_available": 0,
+      "prefix_bounded": 0
+    },
+    "unique_dual_certificates": 523,
+    "covered_containing_choices": 62500000,
+    "source_capacity_lp_count": 128543,
+    "maximum_pruned_uppers": {
+      "two": "852433/4630500",
+      "four": "426421/2315250",
+      "six": "40729/220500",
+      "prefix": "-1"
+    },
+    "maximizing_witness": {
+      "layout": [
+        1,
+        3,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projections21_35_63_105_147_245": [
+        1,
+        4,
+        3,
+        1,
+        4,
+        1,
+        4
+      ],
+      "two_projection_upper": "303091/1543500",
+      "four_projection_upper": "295741/1543500",
+      "six_projection_upper": "295741/1543500",
+      "joint_raw_upper": "11040196825440337/88200000000000000",
+      "complete_tail_constant": "5912/99225",
+      "prior_prefix_upper": null,
+      "mean_credit": "0",
+      "joint_complete_upper": "146657771428963033/793800000000000000",
+      "accepted_upper": "146657771428963033/793800000000000000",
+      "dual_key": "ae6d2a7ea74e95f9f4b94b1ab96c189160455f5f79cd04b38f609429d320105a"
+    },
+    "branch_decisions_sha256": "6896c1db165cee1ee8145b85a170138c549c00580b812b7a0148e9130cecad85"
+  }
+}

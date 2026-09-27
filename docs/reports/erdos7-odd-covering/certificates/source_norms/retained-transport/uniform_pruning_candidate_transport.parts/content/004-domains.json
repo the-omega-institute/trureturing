@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-domains/000000-000001.json",
+        "sha256": "c09e9d0319efe39e368f3bee21bf609d2e3cadbd5d097d11e408f21197aeee10",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-domains/000001-000002.json",
+        "sha256": "ea75e2032c2d67b565bcfa445bf0b0b9895b34f9ffa92a25f9375c70e68cdfcf",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-domains/000002-000003.json",
+        "sha256": "3360327da9ef940beeae26f33ba8fcb64928960f41a93246b561a9406f9befc9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-domains/000003-000004.json",
+        "sha256": "5e7745748c191a95dcdcf2b6dd02c4c73c63e0fe9f21da26e1f53c428222fd70",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-domains/000004-000005.json",
+        "sha256": "22f29c7b22cc35aaa5f7560d069f9d5a23714147c881ec308dbcaf814c8ce6af",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-domains/000005-000006.json",
+        "sha256": "2a21478d1f652b667eea60a5bb8ffa4bbcdb8965dae10a266a18c86917d76443",
+        "kind": "value"
+      }
+    }
+  ]
+}

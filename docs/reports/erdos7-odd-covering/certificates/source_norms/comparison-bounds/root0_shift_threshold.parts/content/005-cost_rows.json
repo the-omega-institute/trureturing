@@ -1,0 +1,50 @@
+{
+  "length": 46,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 10,
+      "part": {
+        "path": "content/005-cost_rows/000000-000010.json",
+        "sha256": "74d428390ba7d588ca4acced38b9acd7fd095fb54afecd3c35ab1c7c3b0efcf8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 20,
+      "part": {
+        "path": "content/005-cost_rows/000010-000020.json",
+        "sha256": "6ae04b8a7ca71f6e03104d6bbee67cd374b9207771344ff41f1d0886512182f8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 30,
+      "part": {
+        "path": "content/005-cost_rows/000020-000030.json",
+        "sha256": "db6dd9977f5bdb3511f3fd09be008daa732cf7ee8c9e1bc354d1110fd9d8472f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 30,
+      "stop": 40,
+      "part": {
+        "path": "content/005-cost_rows/000030-000040.json",
+        "sha256": "a5bb176bdef5148cdd6c260e9a49c76a68234e3ca04d045c03d6dce95d4313e6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 40,
+      "stop": 46,
+      "part": {
+        "path": "content/005-cost_rows/000040-000046.json",
+        "sha256": "88322221c3c3674b91749a99129f4507824fff6c6541abbaaf65c8759fd01c85",
+        "kind": "value"
+      }
+    }
+  ]
+}

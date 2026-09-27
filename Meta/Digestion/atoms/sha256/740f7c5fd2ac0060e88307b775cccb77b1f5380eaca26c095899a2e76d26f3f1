@@ -1,0 +1,33 @@
+**推论 12.5（原始记录与已选合法拟合的误差接口）。** 设原始对称块记录为 $\widehat H,\widehat S$，一份真实合法前缀为 $H,S$，一份已经取得的合法拟合为 $H',S'$。若已知
+$$
+\|H-\widehat H\|_F\le\varepsilon_H,\quad
+\|S-\widehat S\|_F\le\varepsilon_S,
+\qquad
+\|H'-\widehat H\|_F\le\eta_H,\quad
+\|S'-\widehat S\|_F\le\eta_S,
+\tag{12.19}
+$$
+且两份合法前缀满足式(12.1)及(12.2)，则定理12.2–12.4中可以分别用
+$$
+\varepsilon_H+\eta_H,\qquad\varepsilon_S+\eta_S
+$$
+替换 $\delta_H,\delta_S$。上界 $R$ 可取任何不小于
+$$
+\|H'\|_{\rm op}+\varepsilon_H+\eta_H
+$$
+的数；非零谱下界 $\gamma$ 仍须对两份合法前缀成立。
+
+若两份自伴矩前缀逐矩误差满足 $\|M_k-M'_k\|_F\le\varepsilon$，则
+$$
+\delta_H,\delta_S\le(r+1)\varepsilon.
+\tag{12.20}
+$$
+这些结论不要求各块误差独立。
+
+**证明。** 式(12.19)经三角不等式给所列 $\delta_H,\delta_S$ 上界，且
+$$
+\|H\|_{\rm op}\le\|H'\|_{\rm op}+\|H-H'\|_{\rm op}
+\le\|H'\|_{\rm op}+\varepsilon_H+\eta_H.
+$$
+各稳定界的右端对两个非负误差单调。对式(12.20)，块矩阵 Frobenius 范数平方是全部 $(r+1)^2$ 个块的 Frobenius 范数平方之和，每一项至多 $\varepsilon^2$；移位块同理。这只是确定性误差集合上的计算，不使用概率或独立性。$\square$
+

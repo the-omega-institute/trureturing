@@ -1,0 +1,37 @@
+**theorem 54.8（精确整数计数公式、实际解约化类的双射与完全有限判定）.** 若 $G_\infty$ 不是二分图，置
+$$
+C_p(a)=0.
+$$
+若其二分，令 $N,m,E_f,M_{T,U}$ 如上，并令每个 $M_{T,U}$ 的整数 Smith 非零不变量为
+$$
+d_1(T,U),\ldots,d_{s(T,U)}(T,U).
+$$
+定义
+$$
+C_p(a)=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N).
+$$
+令 $\mathcal Y_N(a)$ 为 theorem 54.4 中满足全部单位条件与全部有限边精确条件的模 $p^N$ 参数类集合；令
+$$
+\mathcal R_N(a)=
+\left\{
+(x_i\bmod p^N)_{i\in V}:
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+\text{ 是原阵列的实际精确共同解}
+\right\}.
+$$
+则
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+换言之，这里计数的是实际精确 $p$-进共同解的不同模 $p^N$ 约化类，等价地计数 theorem 54.2 的规范有符号参数经 theorem 54.4 实际提升后得到的约化类；它不是把“仅在模 $p^N$ 意义满足无穷边方程”的任意顶点元组都计入。因此
+$$
+\text{存在实际 }(x_i)\in(\mathbb Z_p^\times)^V
+\quad\Longleftrightarrow\quad
+C_p(a)>0.
+$$
+这给出对任意有限输入的终止算法：先判定 $G_\infty$ 是否二分；若是，构造有限多个整数矩阵 $M_{T,U}$，计算其整数 Smith 标准形并代入上式。整数 Smith 形存在确定性终止算法的来源见 axiom 54.1 中 Storjohann, Theorem 14；零矩阵与空维数在本文中先直接返回。
+

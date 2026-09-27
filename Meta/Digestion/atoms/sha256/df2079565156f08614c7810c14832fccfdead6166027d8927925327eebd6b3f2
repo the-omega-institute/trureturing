@@ -1,0 +1,20 @@
+更具体地，若系统为
+
+$$
+(V,A,B,C),
+\qquad
+A:V\to V,\quad B:U\to V,\quad C:V\to Y,
+$$
+
+其 Markov 响应为
+
+$$
+ m_n=C A^n B,
+$$
+
+则每个未来尾都来自 $V$ 的像，所以
+
+$$
+\dim\mathcal T(m)\le\dim V.
+$$
+

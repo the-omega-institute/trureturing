@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b8f4d61f668ba36bd8795cab0895e7a7b82297c789000355615d7b50c6226b0
+  normalized_sha256: sha256:2b8f4d61f668ba36bd8795cab0895e7a7b82297c789000355615d7b50c6226b0
+cas_ref: sha256:2b8f4d61f668ba36bd8795cab0895e7a7b82297c789000355615d7b50c6226b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “35.3 支撑下界上的精确单射域与全域失败”读作“39.3”仅指认子标题，不重新判定单射域；无定义夹带结论，保留为编辑元数据。
+    previous_atom_id: 90bcf072ae3b3f42223193426600a58d30502579d35588dc9ea7c6ba38aa4d9b
+    next_atom_id: a5846a59bf09e6525d0743ed0775325b17db21970299a0cae784f275df97ab79

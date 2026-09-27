@@ -1,0 +1,2 @@
+经典实现论背景是 R. E. Kalman, “Mathematical Description of Linear Dynamical Systems”, J. SIAM Control Ser. A 1(2), 152–192 (1963), DOI 10.1137/0301010；以及 B. L. Ho and R. E. Kalman, “Effective construction of linear state-variable models from input/output functions”, 1966, pp. 545–548, DOI 10.1524/auto.1966.14.112.545。这里只采用经典的可达/可观测与 Markov 参数视角；本定理的具体截尾等价由下述直接论证给出。
+

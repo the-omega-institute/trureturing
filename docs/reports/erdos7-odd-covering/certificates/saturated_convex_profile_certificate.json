@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "82b5211366625c3c9eed79d8124db700f7b24bd7a43f088d9b4487492c32d940",
+  "parts_directory": "saturated_convex_profile_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "5376c0185bdfe6f6fd466b4907d3147ecffe742af10ed3af0ca6f8187535cf24",
+    "kind": "object"
+  }
+}

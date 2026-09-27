@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:771c0e1e29956bd8bc11c1f3cedd6d91fbf796d7d85f4cc10f713f5104310f37
+  normalized_sha256: sha256:771c0e1e29956bd8bc11c1f3cedd6d91fbf796d7d85f4cc10f713f5104310f37
+cas_ref: sha256:771c0e1e29956bd8bc11c1f3cedd6d91fbf796d7d85f4cc10f713f5104310f37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片段将成熟框架列为背景并明确“它们不直接承担本批的 CSA 特定摘要证明”，最后开启来源表。没有具体 CSA 定理或以定义夹带的推论；非命题结算不把背景引文当成摘要证明。
+    previous_atom_id: 939c7553625c67cea063018f623c03acb69122768e615625d69e5021553753f8
+    next_atom_id: 92a0d209cd2c9ac52b1e6b36de94f4888dccbb45d385e8897ea3eb7bd6d7cb21

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d25005f18fb27833bb09dd1c5fb4bff15341bcb5b633f2515a974000f4b7ace
+  normalized_sha256: sha256:3d25005f18fb27833bb09dd1c5fb4bff15341bcb5b633f2515a974000f4b7ace
+cas_ref: sha256:3d25005f18fb27833bb09dd1c5fb4bff15341bcb5b633f2515a974000f4b7ace
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“也不把有限视界结果外推到无限时域”仅限制论文文字的适用范围，“没有新增 Lean 声明”是证明状态声明，没有通过定义预设矩形 Bellman 定理。
+    previous_atom_id: ba83f7b916073c53fce6c1db1c65b8acea5a2ab1061b9563459bc9614a8a2a29
+    next_atom_id: e8369e88ba61a9415fe8fcd495ef6696ac4a85443304064f45b1a7c6259995fa

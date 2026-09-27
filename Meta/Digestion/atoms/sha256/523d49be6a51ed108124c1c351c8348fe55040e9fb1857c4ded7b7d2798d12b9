@@ -1,0 +1,57 @@
+**证明。** 先按纤维求和，得到
+$$
+Z_\ell(Ed)
+=\sum_j\ell_j\frac{q_j}{p_{r(j)}}(Cd)_{r(j)}
+=\sum_i(Cd)_i\bar\ell_i.
+$$
+若 $Z_\ell(d)>0$，有限非负和中必有一项 $d_j\ell_j>0$。于是 $(Cd)_{r(j)}\ge d_j>0$，而严格正参考保证
+$$
+\bar\ell_{r(j)}\ge\frac{q_j}{p_{r(j)}}\ell_j>0.
+$$
+所以 $Z_\ell(Ed)>0$，证明定义域包含。若同一纤维中有 $j,k$ 满足 $\ell_j=0<\ell_k$，则 $Z_\ell(\delta_j)=0$，但
+$$
+Z_\ell(E\delta_j)=\bar\ell_{r(j)}>0,
+$$
+从而该包含严格。这种似然在任一至少含两点的纤维上均可取到。
+
+由 $E=BC$，其矩阵元为
+$$
+E_{jk}=\mathbf1_{r(j)=r(k)}\frac{q_j}{p_{r(j)}},
+\qquad
+(ED_\ell)_{jk}=E_{jk}\ell_k,\qquad
+(D_\ell E)_{jk}=\ell_jE_{jk}.
+$$
+异纤维的条目均为零，同纤维的 $E_{jk}$ 严格为正。因此两矩阵相等恰好要求同纤维的 $\ell_j,\ell_k$ 相等，证明前两个条件等价。
+
+若 $\ell$ 纤维常值，则该纤维上的常值恰为 $\bar\ell_i$。对所有概率 $d$，
+$$
+Z_\ell(d)=\sum_i\bar\ell_i\sum_{r(j)=i}d_j
+=\sum_i\bar\ell_i(Cd)_i=Z_\ell(Ed).
+$$
+所以完整定义域相同；在共同的正证据域上，
+$$
+E U_\ell(d)
+=\frac{ED_\ell d}{Z_\ell(d)}
+=\frac{D_\ell Ed}{Z_\ell(Ed)}
+=U_\ell(Ed).
+$$
+
+反过来，假设归一化交换对每个 $d\in\mathcal D_\ell$ 成立。逐个固定粗标签 $i$。若 $\bar\ell_i=0$，则严格正权重下的非负平均为零，故这条纤维上的每个 $\ell_j=0$。若 $\bar\ell_i>0$，取 $d=b_i$，则
+$$
+Eb_i=b_i,\qquad Z_\ell(b_i)=\bar\ell_i>0.
+$$
+概率 $U_\ell(b_i)$ 的支撑包含于 $r^{-1}(i)$，所以 $CU_\ell(b_i)=e_i$，继而 $EU_\ell(b_i)=b_i$。假设给出
+$$
+U_\ell(b_i)=U_\ell(Eb_i)=E U_\ell(b_i)=b_i.
+$$
+在该纤维的每个坐标，$(b_i)_j=q_j/p_i>0$，于是
+$$
+\frac{\ell_j(b_i)_j}{\bar\ell_i}=(b_i)_j
+\quad\Longrightarrow\quad \ell_j=\bar\ell_i.
+$$
+这同时处理活纤维与零似然纤维，证明必要性。特别地，若 $\ell\equiv0$，两个定义域均为空，归一化交换是空域上的全称命题；线性交换成立，但没有概率后验被构造。
+
+最后，$\mathbf1_A$ 纤维常值恰好表示每条纤维或者完全包含于 $A$，或者与 $A$ 不交，即 $A$ 是完整纤维的并。证毕。
+
+附引：纤维参考平均的条件期望公式见 Steven P. Lalley，[*Conditional Expectation*，第 1 页 Exercise 2](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=1)。纤维常值因子对应分区可测函数，其提出性质见同文[第 4 页 §2.1 property (4)](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=4)。这里有限实值函数自动可积，严格正参考使几乎处处等式等价于逐点等式；质量算子与条件投影的转换为定义 82.1 的 $E=D_q\Pi D_q^{-1}$。
+

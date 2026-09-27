@@ -1,0 +1,4 @@
+**theorem 37.14 (The precise continuity obstruction and the distinction between operators and values).** There is no separately continuous function $A:K^2\to K$ satisfying
+$$
+A(Z(n),Z(m))=Z(n+m)\qquad(n,m\ge0).
+$$

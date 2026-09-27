@@ -1,0 +1,19 @@
+### 17.1 定义：固定最低态权重的被动观察模型
+
+固定 $0\leq E_-<E_+<\infty$ 及 $0<\eta<1$。令 $\mathcal M$ 为支撑于 $[E_-,E_+]$ 的 Borel 概率测度 $\mu$，要求
+\[
+g(\mu)=\min\operatorname{supp}\mu,\qquad \mu(\{g(\mu)\})\geq\eta.
+\]
+令 $\mathcal M_d$ 为其中至多有 $d$ 个原子的子类。对 $T>0$，定义
+\[
+C_\mu(t)=\int e^{-tE}\,\mu(dE),\quad 0\leq t\leq T,
+\]
+以及统一绝对噪声下的确定性 minimax 误差
+\[
+\mathcal R_T(\varepsilon)=\inf_{\widehat g}\sup_{\mu\in\mathcal M}
+\sup_{\|Y-C_\mu\|_{L^\infty[0,T]}\leq\varepsilon}
+|\widehat g(Y)-g(\mu)|.
+\tag{17.1}
+\]
+这里范数取逐点上确界，$Y$ 可为任意实值函数；估计函数不限计算复杂度。将 $\mathcal M$ 换成 $\mathcal M_d$ 得到 $\mathcal R_{d,T}$。没有对低能原子之外的支撑间距作假设。
+

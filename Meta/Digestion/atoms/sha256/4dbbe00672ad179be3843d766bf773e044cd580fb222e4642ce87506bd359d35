@@ -1,0 +1,42 @@
+**定义 33.1（支撑准入的循环概率塔）。** 固定一个整数 $n\ge3$，层指标为 $l\in\mathbb N_0$。每层给有限非空离散字母集 $B_l$、满射 $q_l:B_{l+1}\twoheadrightarrow B_l$、置换 $g_l:B_l\to B_l$ 及概率 $\mu_l$，满足
+$$
+q_lg_{l+1}=g_lq_l,\qquad
+(g_l)_*\mu_l=\mu_l,\qquad(q_l)_*\mu_{l+1}=\mu_l.
+\tag{33.1}
+$$
+保留全部零质量标签。另给合法联合支撑 $S_l\subseteq B_l^n$，要求
+$$
+q_l^n(S_{l+1})\subseteq S_l.
+\tag{33.2}
+$$
+不要求支撑限制满射或 $S_l$ 对置换不变。记 $q_{l:m}=q_l\cdots q_{m-1}$（$m>l$），$q_{l:l}=\mathrm{id}$；上标 $n$ 表示逐节点应用同一映射。
+
+对 $y=(y_0,\ldots,y_{n-1})$ 定义
+$$
+N_l(y)=\sum_{i=0}^{n-2}\mathbf1_{y_i\ne y_{i+1}}
+       +\mathbf1_{y_0\ne g_l(y_{n-1})},\qquad
+b_l(y)=\mathbf1_{y_0\ne g_l(y_0)},\qquad r_l=N_l-b_l.
+\tag{33.3}
+$$
+对节点边缘均为 $\mu_l$ 的联合律 $P_l$，写 $\delta_{i,l}$ 为第 $i$ 条边失败的概率，$a_l=\mu_l\{x:g_lx\ne x\}$，则
+$$
+R_l(P_l)=\mathbb E_{P_l}r_l=\sum_{i<n}\delta_{i,l}-a_l.
+\tag{33.4}
+$$
+这是定理32.1的同一联合律剩余量。定义
+$$
+F_l=\{Q_l\in\mathcal P(B_l^n):Q_l(S_l)=1,
+       \ (\operatorname{pr}_j)_*Q_l=\mu_l\ (j<n),\ R_l(Q_l)=0\},
+\qquad F_l\ne\varnothing\quad(l\ge0).
+\tag{33.5}
+$$
+这里 $\mathcal P$ 表示概率律。$F_l$ 只加入支撑、精确节点边缘和零剩余量；固定准备、原来源提升、档案关联、执行机制及合法时序不在这些条件中。它们由[上下文卷第38节](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)另行区分。
+
+令
+$$
+B_\infty=\varprojlim(B_l,q_l),\qquad X_\infty=B_\infty^n,\qquad
+S_\infty=\bigcap_l(\pi_l^n)^{-1}(S_l),
+\tag{33.6}
+$$
+其中 $\pi_l$ 是坐标投影。使用逆极限拓扑及其全部 Borel 事件；不预置额外事件。定理33.4构造 $\mu_\infty$，并以 $(g_\infty x)_l=g_lx_l$ 定义连续置换。用这两个对象按（33.3）定义 $N_\infty,b_\infty,r_\infty$，按（33.5）定义 $F_\infty\subseteq\mathcal P(X_\infty)$，即支撑于 $S_\infty$、每个节点边缘为 $\mu_\infty$、$\mathbb E r_\infty=0$ 的 Borel 概率。
+

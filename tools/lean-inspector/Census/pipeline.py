@@ -154,7 +154,7 @@ def execute(options):
             "import os,json;print(json.dumps(dict(os.environ)))"], cwd=repository, env=env))
         lean_binary = shutil.which("lean", path=env["PATH"])
         env["LEAN_NUM_THREADS"] = "1"
-        env["LEAN_SRC_PATH"] = str(repository / "tools/lean-inspector") + os.pathsep + str(repository)
+        # Keep Lake's source paths for the native builder's recursive --src-deps queries.
         if options.fixture_truth_export:
             report_path = pathlib.Path(options.fixture_truth_export).resolve()
             raw_report = pathlib.Path(options.lean_report).resolve()
@@ -237,6 +237,7 @@ def execute(options):
         io_phase("hash", "receipt_hashing")
         sources = {canonical(source): source for source in candidates["source_inputs"]}
         write(directory / "emission.json", {"head_sha": head, "report_sha256": request["report_sha256"],
+            "information_template_bindings": candidates["binding_evidence"],
             "source_inputs": [sources[key] for key in sorted(sources)], "theorem_count": len(all_keys),
             "requested_keys": len(all_keys), "input_kind": "synthetic_fixture" if options.fixture_truth_export else "production",
             "query_verification": "lean_streaming_query"})

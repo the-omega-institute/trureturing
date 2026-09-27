@@ -1,0 +1,13 @@
+**定理 6.2（有限树的缺陷传播）。** 给同一有限类型正确的组合树 $\mathcal T$，在两套实现中分别求值。每个对应叶满足
+$$
+D_s(r_s\widetilde x,x)\le\varepsilon_{\rm leaf}<\infty.
+$$
+定义有限实数预算
+$$
+E_{\rm leaf}=\varepsilon_{\rm leaf},\qquad
+E_{g(\mathcal T_1,\ldots,\mathcal T_m)}
+=\delta_g+\sum_{i=1}^mL_{g,i}E_{\mathcal T_i}.
+\tag{6.2}
+$$
+则根的实际距离不超过 $E_{\mathcal T}$。每个叶误差乘其到根路径的增益积，每个节点缺陷乘其严格上方路径的增益积，再全部相加，得到同一个预算。零元组合的预算是其 $\delta_g$。
+

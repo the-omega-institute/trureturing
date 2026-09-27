@@ -1,0 +1,23 @@
+{
+  "length": 11,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 7,
+      "part": {
+        "path": "content/008-linear_results/000000-000007.json",
+        "sha256": "b623d6a2939b3bf2e4f47c9918e123fbf0572377465ab02b388ad9edf85ce36e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 11,
+      "part": {
+        "path": "content/008-linear_results/000007-000011.json",
+        "sha256": "dd2c9c197ae8a9e8e527fcc210116299b15f85e88b5d494e64243425ca5ecbb0",
+        "kind": "value"
+      }
+    }
+  ]
+}

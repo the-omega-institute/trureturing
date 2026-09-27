@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e85561a3584ff6368a9e457489b71924b6e29301df6a35b3167afb0f0fff5c9f
+  normalized_sha256: sha256:e85561a3584ff6368a9e457489b71924b6e29301df6a35b3167afb0f0fff5c9f
+cas_ref: sha256:e85561a3584ff6368a9e457489b71924b6e29301df6a35b3167afb0f0fff5c9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明本批结果的来源和适用边界，并明确不宣称一般开放系统的统一定理，没有新增待证数学结论。
+    previous_atom_id: 053db2e3245772fcbe7b5a2ca970c010a87a8755746e3da2a663369e00116779
+    next_atom_id: eea4df0b97477e55bd450e0020b2cd87486539bf073c9b614c2786c64327101a

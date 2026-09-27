@@ -1,0 +1,15 @@
+**定义与假设 74.1（有限列质量接口）。** 沿用第 73 节的有限非空集合 $J,I$、满射 $r:J\to I$、严格正概率 $q$ 与 $p=r_*q$。记 $\Delta(X)$ 为有限集合 $X$ 上包括边界在内的全部概率列向量，定义实矩阵
+$$
+C_{ij}=\mathbf1_{r(j)=i},\qquad
+B_{ji}=\mathbf1_{r(j)=i}\frac{q_j}{p_i},\qquad
+E=BC.
+$$
+这里 $C:\mathbb R^J\to\mathbb R^I$、$B:\mathbb R^I\to\mathbb R^J$ 是定理 72.4、命题 73.2 在对角质量上的作用；$B\Delta(I)$ 是命题 73.4 的指定参考族在质量空间中的表示。$\operatorname{Im}B$ 指整个实线性像空间。
+
+给定任意非负列随机矩阵 $T$，即 $\sum_kT_{kj}=1$ 对每个 $j$ 成立，置
+$$
+P=T^{\mathsf T},\qquad S=CTB,\qquad K=S^{\mathsf T},\qquad
+\delta(d)=D_{\mathrm{KL}}(d\Vert Ed)\quad(d\in\Delta(J)).
+$$
+质量演化是 $d\mapsto Td$；行核的约定是 $P_{jk}=T_{kj}$，即从 $j$ 到 $k$ 的转移概率。KL 与绝对连续性 $u\ll v$ 沿用定理 73.3 的正支撑求和约定。
+

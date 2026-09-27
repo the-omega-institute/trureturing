@@ -1,0 +1,6 @@
+**定义 16（部分签名与全部一孔上下文）。** 固定一个集合 $X$、一个集合签名 $\Sigma$。每个符号 $f\in\Sigma$ 指定一个有限元数 $n_f\in\mathbb N$ 和一个确定部分函数 $f:D_f\subseteq X^{n_f}\to X$。固定总读数 $q:X\to Q$，其中 $Q$ 是集合，**不要求 $q$ 满射**。上下文族 $\operatorname{Ctx}_\Sigma$ 恰由以下生成元及有限复合生成：恒等孔 $\square$；对每个 $n_f\ge1$、每个槽位 $1\le i\le n_f$ 和任意固定参数 $a_j\in X\ (j\ne i)$，基本一孔部分函数
+
+$$
+x\longmapsto f(a_1,\ldots,a_{i-1},x,a_{i+1},\ldots,a_{n_f}).
+$$
+

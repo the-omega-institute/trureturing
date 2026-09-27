@@ -1,0 +1,15 @@
+{
+  "start": {
+    "kind": "inline",
+    "value": 640
+  },
+  "stop": {
+    "kind": "inline",
+    "value": 768
+  },
+  "rows": {
+    "path": "content/035-proof_data/003-zero_induction_batches/000005/item/002-rows.json",
+    "sha256": "b277138e5e8aa6a3671493cafa7f19bb2adb50c745c4aec510fd9195bf31afa1",
+    "kind": "array"
+  }
+}

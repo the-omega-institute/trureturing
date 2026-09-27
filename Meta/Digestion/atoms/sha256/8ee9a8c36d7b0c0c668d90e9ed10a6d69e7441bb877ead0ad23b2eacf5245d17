@@ -1,0 +1,30 @@
+**定理 67.12（时间边与空间边的共同见证判据）。**
+
+设 $F_t,F_s\subseteq E$ 分别是两类已观察边，给定标签
+$$
+z_t\in\mathbb F_2^{F_t},\qquad z_s\in\mathbb F_2^{F_s}.
+$$
+存在同一个顶点配置 $x\in\mathbb F_2^V$ 同时满足
+$$
+\delta x|_{F_t}=z_t,\qquad \delta x|_{F_s}=z_s
+$$
+当且仅当：
+$$
+z_t|_{F_t\cap F_s}=z_s|_{F_t\cap F_s},
+$$
+并且把二者合并为 $z\in\mathbb F_2^{F_t\cup F_s}$ 后，子图 $(V,F_t\cup F_s)$ 的每个简单循环都有
+$$
+\sum_{e\in C}z_e=0.
+$$
+条件成立时，共同见证恰有
+$$
+2^{c(V,F_t\cup F_s)}
+$$
+个。
+
+对于完整开矩形，将水平边与竖直边分别看作两类观察时，全部基本方格方程已经等价于这个全局循环条件；对于周期矩形，全部 plaquette 方程只保证 flat，仍必须额外要求两个 holonomy
+$$
+H=U=0
+$$
+才有共同单值周期见证。
+

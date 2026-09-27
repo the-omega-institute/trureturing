@@ -1,0 +1,102 @@
+{
+  "combined_source_upper": 0,
+  "old_profile_source_uppers_25_75_27_81": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "raw_base_prices": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "raw_face_subtraction": 30,
+  "raw_mass_price": 31,
+  "primitive_prices": {
+    "shallow_five_shifted_defect": 32,
+    "shallow_alpha_shifted_defect": 33,
+    "pure_deep_five_defect": 34,
+    "alpha_deep_five_defect": 35,
+    "union_overlap": 36,
+    "pure_three_27_defect": 37,
+    "pure_three_later_defect": 38
+  },
+  "common_raw_node_prices": [
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "common_atom_fields_sha256": "$hash",
+  "triangle_vertices": [
+    {
+      "q": [
+        64,
+        65
+      ],
+      "signed_raw_transport": 66,
+      "complete_row_error_upper": 67
+    },
+    {
+      "q": [
+        68,
+        69
+      ],
+      "signed_raw_transport": 70,
+      "complete_row_error_upper": 71
+    },
+    {
+      "q": [
+        72,
+        73
+      ],
+      "signed_raw_transport": 74,
+      "complete_row_error_upper": 75
+    }
+  ],
+  "complete_row_error_upper": 76
+}

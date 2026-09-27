@@ -1,0 +1,46 @@
+### 126.3 同一配对同时恢复隐藏演化和边界耦合
+
+在边界词上定义右移
+
+$$
+(\sigma v)_0=0,\qquad (\sigma v)_{j+1}=v_j.
+$$
+
+实际映射满足 $T\sigma=CT$。因此 $v\in\mathcal Z_K$ 蕴含 $\sigma v\in\mathcal Z_K$，右移下降成良定义的算子
+
+$$
+\mathcal C_K[v]=[\sigma v],\qquad
+\Phi_K\mathcal C_K=C_{\mathcal R}\Phi_K.
+$$
+
+由等距性与 $C_{\mathcal R}>0$，$\mathcal C_K$ 是正自伴算子。在边界配对层也能直接看出自伴性：
+
+$$
+\gamma_K(\sigma v,w)
+=\sum_{i,j}\langle v_i,M_{i+j+1}w_j\rangle_U
+=\gamma_K(v,\sigma w).
+$$
+
+定义零次插入 $J_K:U\to\mathcal H_K$，$J_Ku=[(u,0,0,\ldots)]$，再令 $\mathcal B_K=J_K^*$。则
+
+$$
+\Phi_KJ_K=B^*,\qquad
+\mathcal B_K[v]=\sum_{j\ge0}M_jv_j=B\Phi_K[v].
+$$
+
+第二式由对每个 $u\in U$ 与 $J_Ku$ 配对得到，因此也直接证明它不依赖代表元。于是
+
+$$
+\boxed{K(t)=\mathcal B_Ke^{-t\mathcal C_K}\mathcal B_K^*.}
+$$
+
+且 $\operatorname{span}\{\mathcal C_K^j\mathcal B_K^*u\}=\mathcal H_K$，因为所有边界词都是有限次插入及右移之和。这个规范实现已经最小。
+
+因此由响应恢复的对象是三元关系
+
+$$
+(\mathcal H_K,\mathcal C_K,\mathcal B_K),
+$$
+
+连同边界 $U$ 的固定内积与接口；只说“恢复了一个同维 Euclidean 空间”会丢失该构造保留的耦合和演化信息。
+

@@ -1,0 +1,33 @@
+**定理 15.3（预测坐标、正锥与支撑内更新）。** 令 $r=\dim V$，选列基矩阵 $B\in\mathbb R^{X\times r}$，第一列为 $\mathbf1$。记 $e_1$ 为 $\mathbb R^r$ 的第一标准列向量。存在唯一矩阵 $M_{a,y}\in\mathbb R^{r\times r}$ 满足
+$$
+K_{a,y}B=BM_{a,y}.
+\tag{15.5}
+$$
+定义实际归一化预测域及未归一化正锥
+$$
+\mathcal P=\{pB:p\in\Delta_X\}
+=\operatorname{conv}\{B(x,:):x\in X\},\qquad
+\mathcal C=\{uB:u\in\mathbb R^X_{\ge0}\}.
+\tag{15.6}
+$$
+对任意 $s\in\mathcal P$，有 $se_1=1$，且
+$$
+\ell_{a,y}(s)=sM_{a,y}e_1\ge0,\qquad
+\sum_y\ell_{a,y}(s)=1.
+\tag{15.7}
+$$
+当 $\ell_{a,y}(s)>0$ 时，
+$$
+F_{a,y}(s)=\frac{sM_{a,y}}{\ell_{a,y}(s)}\in\mathcal P
+\tag{15.8}
+$$
+与 $s=pB$ 所选的代表 $p$ 无关。若分支质量为零，则 $sM_{a,y}=0$，而该分支没有由条件化确定的后验。每个 $M_{a,y}$ 保持 $\mathcal C$；其矩阵元素无需逐项非负。
+
+**证明。** 命题15.2给 $K_{a,y}V\subseteq V$，所以 $K_{a,y}B$ 的各列在基 $B$ 中有唯一坐标，得到式（15.5）。对任意 $u\ge0$，
+$$
+(uB)M_{a,y}=(uK_{a,y})B\in\mathcal C.
+$$
+若 $s=pB$，则 $se_1=p\mathbf1=1$，且 $sM_{a,y}e_1=pK_{a,y}\mathbf1$；非负性与输出质量和由式（15.1）给出。正质量时 $p'=pK_{a,y}/\ell$ 是概率行向量，$p'B$ 就是式（15.8）。其右侧只依赖 $s,a,y$，因此代表无关。质量为零时非负行向量 $pK_{a,y}$ 的坐标和为零，故它全部为零，进而 $sM_{a,y}=0$；不对 $0/0$ 作后验解释。相同论证还表明 $c\in\mathcal C$ 且 $ce_1=0$ 必有 $c=0$。
+
+对词定义 $M_w=M_{a_1,y_1}\cdots M_{a_k,y_k}$、$M_\varnothing=I$。逐次应用式（15.5）得 $K_wB=BM_w$，故所有词概率为 $sM_we_1$。概率正性由实际锥保证，而非由任意坐标矩阵的符号保证。第15.7条将直接展示负元素。上述归一化公式是所引 PSR 文献式（3）在含常数列的基上的写法；其适用范围始终是 $\mathcal P$，没有把整个超平面 $se_1=1$ 宣告为可实现概率态。$\square$
+

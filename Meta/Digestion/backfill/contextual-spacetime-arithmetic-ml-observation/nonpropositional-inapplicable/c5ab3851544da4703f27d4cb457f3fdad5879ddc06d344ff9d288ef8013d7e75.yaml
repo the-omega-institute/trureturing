@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5ab3851544da4703f27d4cb457f3fdad5879ddc06d344ff9d288ef8013d7e75
+  normalized_sha256: sha256:c5ab3851544da4703f27d4cb457f3fdad5879ddc06d344ff9d288ef8013d7e75
+cas_ref: sha256:c5ab3851544da4703f27d4cb457f3fdad5879ddc06d344ff9d288ef8013d7e75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “确定性分层观察者有固定初态”开始列出机器接口，“状态”须“包含全部持久、可读、随历史改变的信息”规定完整状态；外生时钟及收费边界均为模型契约，没有宣称某个层宽足够，也未把存在性隐藏在定义中。
+    previous_atom_id: b1f5f8e76d6f8488dd66cb4e01828891d0de6a4fd77568b7c33c1a376c38c57a
+    next_atom_id: 180a02cefa3e16b15347924b1032e8cbc6238f26d0cf5bfa4bcdb688283bfe3a

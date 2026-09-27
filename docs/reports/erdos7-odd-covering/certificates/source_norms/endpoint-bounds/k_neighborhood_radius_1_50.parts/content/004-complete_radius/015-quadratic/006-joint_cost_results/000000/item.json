@@ -1,0 +1,63 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 41
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "2371/2880"
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "75376570/184225041",
+        "2": "474292550/184225041",
+        "3": "512/429",
+        "4": "3356/429",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "8/3",
+      "polynomial_tail": {
+        "leading": "4/3",
+        "constant": "-2535551750/184225041",
+        "entrance": 4
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "75376570/184225041",
+        "3": "625045690/184225041",
+        "4": "1394582458/184225041",
+        "5": "3605282950/184225041",
+        "6": "6307250218/184225041",
+        "7": "9500484262/184225041",
+        "8": "13184985082/184225041"
+      }
+    }
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "321941926743947/60932432310750"
+  },
+  "exhaustive_vertices": {
+    "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000000/item/004-exhaustive_vertices.json",
+    "sha256": "57b6d29e1e6be825e74d46d4aceb5339644757f1338a3ea72150c5db9be8bac6",
+    "kind": "value"
+  },
+  "support_candidates": {
+    "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000000/item/005-support_candidates.json",
+    "sha256": "0dc6c3d6c5f599bfb539e430a5bd9aa54d1768cce12826e266e4a5bad4c4ec09",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000000/item/006-selected_support.json",
+    "sha256": "139eb393a73e117b3c963c1d7bf3cdfcf9eb6b0b7b1d28caac727aaabf862634",
+    "kind": "value"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "31227471654855352206767/233340749534017125000000"
+  }
+}

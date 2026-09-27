@@ -1,0 +1,13 @@
+#### 122.5.1 由同纤维关系构造能量
+
+仍用同一有限满支撑模型。令
+$$
+w_{xy}=1_{q(x)=q(y)}\frac{\mu_x\mu_y}{p_{q(x)}}.
+$$
+它对称，且 $\sum_yw_{xy}=\mu_x$。对实函数 $f,g$ 定义
+$$
+\mathcal D_q(f,g)=\tfrac12\sum_{x,y}w_{xy}(f_x-f_y)(g_x-g_y),
+\qquad\mathcal D_q(f)=\mathcal D_q(f,f).
+$$
+二重和遍历有序点对，前面的 $1/2$ 负责消去双计数；自环项为零。
+

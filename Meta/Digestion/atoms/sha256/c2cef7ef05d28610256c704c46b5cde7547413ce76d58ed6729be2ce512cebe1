@@ -1,0 +1,7 @@
+**定理 47.0.1（坐标构造与尾线程的良定义性）。** 定义 47.0 中的过渡映射、商运算、逐坐标运算及尾线程公式均良定义。空间 $K$ 是非空紧致 Hausdorff 交换幺半环，其加乘联合连续，$\iota$ 保持加乘及环境常量。空间 $\widehat{\mathbb Z}$ 是紧致 Hausdorff 拓扑环，$\tau$ 是取值于 $K$ 的映射，并且
+$$
+\tau(0_{\widehat{\mathbb Z}})\ne0_K,\qquad
+\tau(1_{\widehat{\mathbb Z}})\ne1_K.
+$$
+有限商与完成的基础构造参见[《递归关系观察》第 14.0—14.1 条，固定版本 54e52af3e2ce49e65cbf066649cee410fafc2dff](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+

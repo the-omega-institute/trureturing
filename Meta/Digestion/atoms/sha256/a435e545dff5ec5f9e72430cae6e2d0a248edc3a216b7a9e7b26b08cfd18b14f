@@ -1,0 +1,15 @@
+**定理 43.12（满联合闭图的秩判据与单个非线性输出）。** 对定义43.8中的完整输入输出族，
+$$
+\Gamma(P)=K^q
+\quad\Longleftrightarrow\quad
+\operatorname{rank}_{\mathbb R}A=q.
+$$
+等价地，$R_1-c_1,\ldots,R_q-c_q$ 在有理数域上线性无关。此处只要求模去常数后的线性无关，不要求这些多项式代数无关。
+
+特别，若 $d\ge1$ 且单个 $P\in\mathbb N_0[X_1,\ldots,X_d]$ 含有总次数至少为二的项，则
+$$
+\overline{\{(Z(n_1),\ldots,Z(n_d),Z(P(\mathbf n))):\mathbf n\in\mathbb N_0^d\}}
+=K^{d+1},
+$$
+并且同一结论对全部同时输入尾部成立。若该单个输出是仿射多项式，则其完整图不是 $K^{d+1}$。
+

@@ -1,0 +1,194 @@
+{
+  "length": 21,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000000/single.json",
+        "sha256": "e3bf45f2b4e845075a68513e7d6386b417698937a6918ff79b42a3ecc5e666be",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000001/single.json",
+        "sha256": "f928718f0e646f3d73d5dd3626339eb109cec720a1f91671e1ada6e7ee3854ef",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000002/single.json",
+        "sha256": "bdb9fbaaa4c84a2b0d8d3e8dfd43443e0d41e439a25dc4d2d724788d709d21de",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000003/single.json",
+        "sha256": "0f5d487d39733b4e07ea3cd68f9a36ee1e51f762726ca71d9e37eaf1500cabde",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000004/single.json",
+        "sha256": "6523ccd1c8ed9d8658df113cdf40e63031d33f0cc3e7c7538d1442fe390becf7",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000005/single.json",
+        "sha256": "0719a088acebcb8c49f959baf55bdb3e73da684cbb3b02a930d0db5ef494b9e6",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000006/single.json",
+        "sha256": "9617f04e02ce0d119b14008132759464c408882be3153ff5ed21ec343592c0f7",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000007/single.json",
+        "sha256": "4c71be5ceef437dfc6a0f2ca03cffbc92339645a03eff1494eff95f9eb5a1f01",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000008/single.json",
+        "sha256": "fe543635f1fc25cf65564f2b899d15cc9fe80092c15d1744b61e68c8aa7cee8c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000009/single.json",
+        "sha256": "392b03e7612c3317e1d4a0f228f3c8e64da7917bb51595201d57e45a17d65821",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000010/single.json",
+        "sha256": "58c59d97bc4488374664b63e2188f28c2444b88b8676fba634eb7d0e4c7ad019",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 12,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000011/single.json",
+        "sha256": "a28872ca1e2ccc620810ec18c4019243fe625a525e20ecae36cc50b94d1a92cb",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 12,
+      "stop": 13,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000012/single.json",
+        "sha256": "742dc7b738cc3f7e5d357084a327f35147c1099b95dd841464a70f4d4bf63225",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 13,
+      "stop": 14,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000013/single.json",
+        "sha256": "073f5a77837077a818ad132a1e11de2867280cace0bbc1970b10d63ae0237e5c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 14,
+      "stop": 15,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000014/single.json",
+        "sha256": "62ad048958754b3dc4742140dd883fca72ca8ca00630168b578120f9576e28d4",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 15,
+      "stop": 16,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000015/single.json",
+        "sha256": "37d8376e4a6402068a33969256aa54308377dcba3a9a9d6d93b8ad31727d8a96",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 16,
+      "stop": 17,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000016/single.json",
+        "sha256": "1e95fcc9969e7b16d36c25286157e3906b0788fad44de44b37d446e8e2fc76a0",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 17,
+      "stop": 18,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000017/single.json",
+        "sha256": "8d13cbcf8e826c55a34ec51f7d8637c7222192cef89b3507659cd4a937659e7b",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 19,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000018/single.json",
+        "sha256": "d23be93625c8c70fa3dce32f56e929c6551b42b25e50f7668a64ea94c802813f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 19,
+      "stop": 20,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000019/single.json",
+        "sha256": "9e63384d0c88d7022f44e49d88da5261f2be173020de61b00c182cdfaadc689f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 21,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000020/single.json",
+        "sha256": "5d25935929e0c6ba164c2c1b7522e0c2e3029fe175c5d470e9b36148cfcd6885",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

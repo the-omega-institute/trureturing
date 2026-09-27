@@ -1,0 +1,26 @@
+**定理 84.2（固定参考的证据交换充要条件）。** 在定义与假设 84.1 下，对每个 $d\in\Delta(J)$，有
+$$
+Z_\ell(Ed)=\sum_i(Cd)_i\bar\ell_i,
+\qquad
+Z_\ell(d)>0\ \Longrightarrow\ Z_\ell(Ed)>0.
+$$
+因此
+$$
+\operatorname{Dom}(E\circ U_\ell)
+\subseteq\operatorname{Dom}(U_\ell\circ E),
+$$
+且此包含可以严格。以下三个条件等价：
+$$
+\boxed{
+\begin{aligned}
+ED_\ell=D_\ell E
+&\ \Longleftrightarrow\
+\forall j,k\in J,\quad r(j)=r(k)\Rightarrow\ell_j=\ell_k\\
+&\ \Longleftrightarrow\
+\forall d\in\mathcal D_\ell,\quad
+E U_\ell(d)=U_\ell(Ed).
+\end{aligned}
+}
+$$
+等价条件成立时，对所有 $d\in\Delta(J)$ 都有 $Z_\ell(d)=Z_\ell(Ed)$，两个复合的完整定义域相同。定义域相同本身不蕴含交换，命题 84.4 给出两域均为整个单纯形的反例。对于事件似然 $\ell=\mathbf1_A$，上述等价条件成立当且仅当 $A\subseteq J$ 为完整 $r$-纤维的并。
+

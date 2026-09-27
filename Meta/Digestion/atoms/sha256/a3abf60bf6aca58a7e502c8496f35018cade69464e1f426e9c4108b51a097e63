@@ -1,0 +1,21 @@
+**定理 12.6（连续时间的交织缺陷）。** 在有限维空间中，设 $\mathcal T_t=e^{t\mathcal L}$、$\overline{\mathcal T}_t=e^{t\overline{\mathcal L}}$ 对全部 $t\ge0$ 均为通道。定义
+$$
+\mathcal K=\mathcal E\mathcal L-\overline{\mathcal L}\mathcal E,
+\qquad \delta=\tfrac12\|\mathcal K\|_\diamond.
+\tag{12.6}
+$$
+则
+$$
+\mathcal E\mathcal T_t-\overline{\mathcal T}_t\mathcal E
+=\int_0^t\overline{\mathcal T}_{t-s}\mathcal K\mathcal T_s\,ds,
+\tag{12.7}
+$$
+$$
+d_\diamond(\mathcal E\mathcal T_t,\overline{\mathcal T}_t\mathcal E)
+\le\min\{1,t\delta\},\qquad
+d_\diamond(\mathcal S\overline{\mathcal T}_t\mathcal E,
+\mathcal Q\mathcal T_t)\le\min\{1,\kappa+t\delta\}.
+\tag{12.8}
+$$
+更一般地，连续时变生成元具有通道传播子 $\mathcal T(t,s)$、$\overline{\mathcal T}(t,s)$，且固定 $\mathcal E$ 满足 $\mathcal K(s)=\mathcal E\mathcal L(s)-\overline{\mathcal L}(s)\mathcal E$，则上述 $t\delta$ 替换为 $\int_{t_0}^{t_1}\tfrac12\|\mathcal K(s)\|_\diamond ds$。
+

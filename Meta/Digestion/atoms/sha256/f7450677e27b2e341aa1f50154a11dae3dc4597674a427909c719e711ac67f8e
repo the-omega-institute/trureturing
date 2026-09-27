@@ -1,0 +1,24 @@
+**定理 15.3（总变差 Laplace 域与密度换元）。** (a) 对合并后时间原子定义绝对积分域
+$$
+\mathcal D_{ij}^{\beta,z}=\left\{s\in\mathbb C:\int_{\mathbb R}e^{-(\operatorname{Re}s)t}\,d|\mathsf M_{ij}^{\beta,z}|(t)<\infty\right\}.
+$$
+则 $s\in\mathcal D'_{ij}{}^{\beta,z}$ 当且仅当 $cs\in\mathcal D_{ij}^{\beta,z}$，且在此域有
+$$
+\mathcal L\mathsf M'_{ij}(s)=e^{-\beta\Delta U-s\Delta V_0}\mathcal L\mathsf M_{ij}(cs).
+$$
+证明。Borel 双射不会合并不同旧原子；在有限窗上由总变差的分割上确界定义，推前分割与原像分割互对应，得到 $|a f_*\mathsf M|=|a|f_*|\mathsf M|$。取递增有界窗延伸到全变差测度。因此
+$$
+\int e^{-(\operatorname{Re}s)t'}d|\mathsf M'|(t')
+=e^{-\operatorname{Re}(\beta)\Delta U-(\operatorname{Re}s)\Delta V_0}
+\int e^{-c(\operatorname{Re}s)t}d|\mathsf M|(t).
+$$
+前因子有限且严格正，给域的双向等价。绝对可积后作推前积分换元，提出复端点因子，即得 Laplace 式。本处全时间积分只在该绝对域内定义。$\square$
+
+这没有自动把积分变成逐路径或逐长度 Neumann 展开。要认作 $[(I-zW(\beta,s))^{-1}]_{ij}$，另用定理16.3的逐边控制矩阵及 $|z|\rho(B^{\rm abs})<1$；$z=0$ 直接只有空路径。反例为一个顶点的两条单位时长正费用环，在允许额外相位的版本取相位一、负一，$\beta=0,z=1,s=0$。每个正长度 $n$ 的所有路径在同一时间 $n$，系数总和 $(1-1)^n=0$，故合并测度为 $\delta_0$、$W=0$，Laplace 总变差积分有限。但每条路径的绝对权为一，共 $2^n$ 条，$B^{\rm abs}=2$，逐路径绝对总和发散。相消后的时间原子丢失了绝对重排信息。
+
+(b) 若另一个模型给普通密度 $k(t)dt$，则其推前密度才是
+$$
+k'(t')=\frac{e^{-\beta\Delta U}}c\,k\!\left(\frac{t'-\Delta V_0}c\right).
+$$
+证明对有界可测测试函数作 $t'=ct+\Delta V_0$ 的 Lebesgue 换元，$dt=dt'/c$ 即得；半轴支持按实际支持向实直线零延拓。当前图的原子测度不凭空取得函数密度。若另采用旧钟 $t=c\tau$ 的记号，其自变量方向不同于本处 $t'=ct+\Delta V_0$，须先固定方向才能与 Context 定理12.7、Recovery 命题15.9等卷积 Jacobian 对照；各端点偏移也不自动成为共同来源的一次全局平移。
+

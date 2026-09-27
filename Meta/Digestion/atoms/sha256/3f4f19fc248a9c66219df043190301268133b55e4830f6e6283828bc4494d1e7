@@ -1,0 +1,54 @@
+**命题 40.13（小残差的钟偏差与真实秩二的数据不稳定）。** 对 $0<\epsilon<1/2$ 取 $h=1$，
+$$
+C_\epsilon=\operatorname{diag}(\epsilon^2,1),\qquad
+B_\epsilon=(\sqrt{1-\epsilon},\sqrt\epsilon),\qquad
+K_\epsilon(t)=(1-\epsilon)e^{-\epsilon^2t}+\epsilon e^{-t}.
+\tag{40.43}
+$$
+同一实际来源有效维数为二，标量一步 Schur 残差为
+$$
+K_\epsilon(2)-K_\epsilon(1)^2
+=\epsilon(1-\epsilon)(e^{-\epsilon^2}-e^{-1})^2>0,
+\tag{40.44}
+$$
+且趋于零。但错误地把阶零压缩当作饱和钟时，
+$$
+-\log K_\epsilon(t)=\epsilon(1-e^{-t})+O_t(\epsilon^2)\quad(t>0\text{ 固定}),\qquad
+\lim_{\epsilon\downarrow0}
+\frac{-\log K_\epsilon(2)}{-\log K_\epsilon(1)}
+=1+e^{-1}\ne2.
+\tag{40.45}
+$$
+即使保留真实秩二，使用同一来源、同一 $\mathsf H_1(0),\mathsf H_1(1)$，两个事件块 $\mathsf H_1(2)$ 和 $\mathsf H_1(3)$ 的 Frobenius 差仍为 $O(\epsilon)$，而精确归一年龄分别为2与3。
+
+证明。两个率不同且两权正，给维数二与（40.44）的二原子展开。对固定 $t$，$e^{-\epsilon^2t}=1-\epsilon^2t+O_t(\epsilon^4)$，故
+$$
+K_\epsilon(t)=1-\epsilon(1-e^{-t})-\epsilon^2t+O_t(\epsilon^3).
+\tag{40.46}
+$$
+再用 $-\log(1-z)=z+O(z^2)$ 得（40.45）的展开。由于 $1-e^{-1}>0$，两个展开之比趋于 $(1-e^{-2})/(1-e^{-1})=1+e^{-1}$。因此把趋零残差当作精确闭合可保留阶一量级的钟偏差。
+
+对每个 $t\ge0$，
+$$
+0<K_\epsilon(t)-K_\epsilon(t+1)
+\le(1-\epsilon)(1-e^{-\epsilon^2})+\epsilon(1-e^{-1})
+\le\epsilon^2+\epsilon(1-e^{-1}).
+\tag{40.47}
+$$
+两个阶一事件块的四个条目分别使用 $t=2,3,3,4$，故
+$$
+\|\mathsf H_1(2)-\mathsf H_1(3)\|_F
+\le2\bigl(\epsilon^2+\epsilon(1-e^{-1})\bigr)=O(\epsilon).
+\tag{40.48}
+$$
+阶一接口确已饱和；更直接地，二原子行列式给
+$$
+\det\mathsf H_1(t)
+=\epsilon(1-\epsilon)(e^{-\epsilon^2}-e^{-1})^2
+ e^{-(\epsilon^2+1)t}.
+\tag{40.49}
+$$
+所以（40.15）的锚对固定为0与1时，目标2与3的比恰为2与3。基准块行列式趋零而迹趋2，最小 Gram 特征值趋零，故没有共同正的 Gram 下界。$\square$
+
+这说明在未限制来源族上不能断言响应数据统计量的统一连续模；它并非两个完整已获档案相同的例子。若旧档案含能区分这两个事件的外部时间戳，必须保留。要提升成完整观察者的 minimax 碰撞，还须构造同时解释同一整份实际记录、合法历史和联合误差的两个允许世界；本例未提出这种额外结论。
+

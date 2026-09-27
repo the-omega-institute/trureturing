@@ -1,0 +1,15 @@
+**推论 10.11（恢复误差对后续任务的有效范围）。** 在推论10.5的假设下，对每个 $\rho\in\mathcal F$，令 $\widehat\rho=(\operatorname{id}_A\otimes\mathcal R_\omega)(\rho_{AB})$。若 $\Lambda$ 是定义于完整 $ABC$ 输出上的共同 CPTP 后处理，则
+$$
+d_1(\Lambda(\rho),\Lambda(\widehat\rho))
+\le\sqrt{1-e^{-\varepsilon}}.
+\tag{10.19}
+$$
+特别地，对任意有限结果的共同 POVM 读出，其输出概率分布的总变差距离至多为此值；任意取值于 $[0,L]$ 的共同损失函数之期望差，绝对值至多为 $L\sqrt{1-e^{-\varepsilon}}$。
+
+这一任务界控制所声明的固定边缘态族。定理10.4虽然量化所有有限维 $A$，仍要求每个联合输入的 $BC$ 边缘等于 $\omega_{BC}$；diamond 距离则对全部输入态取上确界。要得到
+$$
+d_\diamond(\operatorname{id}_{BC},
+           \mathcal R_\omega\circ\operatorname{Tr}_C)\le\delta,
+$$
+必须另外证明同一个 $\mathcal R_\omega$ 对式(10.12)中的全部联合输入具有误差界 $\delta$。固定边缘上的估计不包含这个额外量词。相反，一旦 diamond 界成立，命题10.8就使它对所有共同 CPTP 接线成立。这与量子上下文卷第120—122节区分状态族缺陷、完整过程缺陷及共同模拟器的方式一致。
+

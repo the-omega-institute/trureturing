@@ -1,0 +1,10 @@
+**定理 128.2。**
+$$
+m_{n+1}=m_n+K_n\nu_n,\qquad
+\Sigma_{n+1}=\Sigma_n-\Sigma_nH_n^TS_n^{-1}H_n\Sigma_n,
+$$
+$$
+J_{n+1}=J_n+H_n^TR_n^{-1}H_n.
+$$
+条件于 $\mathcal Y_n$，$Y_n\sim N(H_nm_n,S_n)$，$\nu_n\sim N(0,S_n)$。
+

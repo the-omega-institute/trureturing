@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f86d8b6b5dc65dd2064f162d873e63bd8c69354d35dde78faeb05bf2cd7552d
+  normalized_sha256: sha256:6f86d8b6b5dc65dd2064f162d873e63bd8c69354d35dde78faeb05bf2cd7552d
+cas_ref: sha256:6f86d8b6b5dc65dd2064f162d873e63bd8c69354d35dde78faeb05bf2cd7552d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “主数学来源是实际完成的 GPT PRO memo”记载来源、版本哈希及历史稿的使用限制；“不能作为本次开发基线内已发表前置”是在限定出处，不是数学结论，无定义偷带，按来源声明处理。
+    previous_atom_id: 2f69b8b6cdfe7318d8f8bbbf3f19a10930902b1f28557faea57ed61d01a7d63f
+    next_atom_id: 7c224425e326e6bd6d0d3e9c64350534bf24f951b3b6c4ff1a121782601d5478

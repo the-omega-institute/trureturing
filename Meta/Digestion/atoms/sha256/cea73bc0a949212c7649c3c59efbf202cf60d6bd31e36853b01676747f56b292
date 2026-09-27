@@ -1,0 +1,27 @@
+**定义与假设 104.1（共享方向标签的独立分段实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态核 $K_k$、均匀平稳律 $\pi$、$k\ge2$ 及完整状态路径律 $P_{k,n},P_{k,n}^{R}$。增加如下实验能力：给定同一个未知方向标签后，每段独立从 $\pi$ 抽取初态，再按该方向的核演化；标签只抽取一次，在全部段之间共享，先验各为 $1/2$。这里反向核为 $K_k^{\mathsf T}$。
+
+一个设计为
+$$
+\mathcal D=(m;\ell_1,\ldots,\ell_m),\qquad
+m\ge1,\quad\ell_s\in\mathbb N_{>0},\qquad
+L=\sum_{s=1}^{m}\ell_s,
+\tag{104.1a}
+$$
+其中每个 $\ell_s$ 计转移次数；段数和段长均预先确定，与 $k$ 和观测数据无关。两份完整记录律为
+$$
+\mathcal P_{k,\mathcal D}
+ =\bigotimes_{s=1}^{m}P_{k,\ell_s},
+\qquad
+\mathcal P_{k,\mathcal D}^{R}
+ =\bigotimes_{s=1}^{m}P_{k,\ell_s}^{R}.
+\tag{104.1b}
+$$
+记 $R_{k,\mathcal D}$ 为这两份已知简单模型的最优等先验平均错误率，允许任意随机化检验使用全部分段记录；记
+$$
+\overline R(\mathcal D)=\sup_{k\ge2}R_{k,\mathcal D},
+\qquad
+\beta=\frac{17+10\sqrt2}{32}.
+\tag{104.1c}
+$$
+独立平稳重启是额外的制备能力；将同一相关轨迹切段并不满足 (104.1b)。段内仍允许 Markov 依赖。
+

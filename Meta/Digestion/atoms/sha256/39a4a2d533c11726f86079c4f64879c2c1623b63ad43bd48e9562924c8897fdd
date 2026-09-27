@@ -1,0 +1,29 @@
+### 50.14 候选阶数的明确上界
+
+令 $a=-\log\rho>0$，并设
+$$
+Q_0(\rho)=
+\max\left\{3,\frac6a\log\frac{288}{\rho a^2}\right\}.
+$$
+取不小于它的最小奇整数
+$$
+\boxed{
+\overline q(\rho)
+=2\left\lceil\frac{Q_0(\rho)-1}{2}\right\rceil+1.
+}
+\tag{50.38}
+$$
+这确实满足（50.32）。证明令 $q=\overline q$、$x=aq/6>0$。由指数级数
+$e^x\ge x^2/2$，有
+$$
+\begin{aligned}
+4q^2\rho^{q/3-1}
+&=\frac{144}{\rho a^2}x^2e^{-2x}\\
+&\le\frac{288}{\rho a^2}e^{-x}\le1.
+\end{aligned}
+$$
+最后一步因为
+$x\ge\log(288/(\rho a^2))$。取三次方即得（50.32）。
+
+因此可以直接使用明确的 $\overline q$，也可以从奇数三开始检验（50.32）以得到较小候选；这个搜索有已证的有限终止上界。对于有理或代数 $\rho$，（50.32）只含整数次幂和代数比较，不需要用浮点近似来决定对数取整。
+

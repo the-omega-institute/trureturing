@@ -1,0 +1,8 @@
+取前缀距离
+$$
+p(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m},&x\ne y,\ m=\min\{j:x_j\ne y_j\}.
+\end{cases}
+$$

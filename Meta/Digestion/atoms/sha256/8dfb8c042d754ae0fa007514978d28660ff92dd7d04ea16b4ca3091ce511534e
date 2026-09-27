@@ -1,0 +1,33 @@
+**定理 17.4（固定目标的风险下降与实际策略总创新）。** 在定义17.1的一份实际联合律下，给定固定函数 $f:\Theta\to\mathbb R$，将其值列记为 $f$。对每个正概率 $h,a$，一次观测的条件 Bayes 均方风险下降等于
+$$
+\operatorname{Var}(f(\Theta)\mid h)
+-\sum_{y:p_y>0}p_y\operatorname{Var}(f(\Theta)\mid h,a,y)
+=f^{\mathsf T}G(h,a)f.
+\tag{17.8}
+$$
+令 $m_t=\mathbb E[f(\Theta)\mid H_t]$。则
+$$
+\begin{aligned}
+\sum_{t=0}^{T-1}\mathbb E[f^{\mathsf T}G(H_t,A_t)f]
+&=\sum_{t=0}^{T-1}\mathbb E[(m_{t+1}-m_t)^2]\\
+&=\mathbb E[(m_T-m_0)^2]\\
+&=\mathbb E[\operatorname{Var}(f(\Theta)\mid C)]
+-\mathbb E[\operatorname{Var}(f(\Theta)\mid H_T)]\\
+&\le\mathbb E[\operatorname{Var}(f(\Theta)\mid C)].
+\end{aligned}
+\tag{17.9}
+$$
+各期望只在其实际历史和动作支撑上求和。停止后的吸收延续不增加来源信息时，其创新为零。$T=0$ 时空和及风险差均为零。
+
+**证明。** 用 $f$ 左右乘式（17.7），各协方差二次型正是相应条件方差，得式（17.8）。也可在每个后验下展开平方损失：对任意实数 $d$，
+$$
+\mathbb E[(f(\Theta)-d)^2\mid h]
+=\operatorname{Var}(f(\Theta)\mid h)+(b_h^{\mathsf T}f-d)^2,
+$$
+故条件均值为 Bayes 解。命题17.2使给定 $H_t,A_t$ 的观测前条件均值仍为 $m_t$，式（17.5）遂给
+$\mathbb E[(m_{t+1}-m_t)^2\mid H_t,A_t]=f^{\mathsf T}G(H_t,A_t)f$。
+
+历史保留使各 $\sigma(H_t)$ 嵌套，同一固定目标的 $m_t$ 为鞅。对于 $i<j$，$m_{i+1}-m_i$ 在 $H_j$ 下可测，而 $\mathbb E[m_{j+1}-m_j\mid H_j]=0$，所以两增量的内积期望为零。正交增量求和得式（17.9）的第二行；把单步风险差积分后望远镜求和得第三行，末端风险非负给最后界。本卷命题14.3、[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)§121及[ConditionalExpectationRefinementPythagoras](../../../D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.lean)已给嵌套条件期望的同一 Pythagoras 供应结构；本式将其落实到受控历史上的 $G(H_t,A_t)$。
+
+此处非负的是对下一观测平均后的风险下降，不声称每个分支的条件方差都下降。例如 $\Theta\sim\operatorname{Bernoulli}(1/10)$，取二元输出满足 $L(1\mid1)=1$、$L(1\mid0)=1/9$。则 $p_1=1/5$，该支后验公平，方差 $1/4$ 大于先验方差 $9/100$；另一支后验为零态，平均剩余风险为 $1/20$，总下降 $1/25>0$。不同策略产生不同联合律，各自按式（17.9）结算，不把分别可达的逐步最大创新当作同一策略的同时收益。$\square$
+

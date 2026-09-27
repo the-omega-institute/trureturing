@@ -1,0 +1,50 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 3,
+      "part": {
+        "path": "content/001-fixture_results/000000-000003.json",
+        "sha256": "aa8513573bc9530067eaaa404996e10c52b911156cdbbde35f684ad52dbf2807",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 6,
+      "part": {
+        "path": "content/001-fixture_results/000003-000006.json",
+        "sha256": "9eb10fe552c751b02425de06422fdcd5decc4d2059ba6f6fd2fa7b22cfbbd8e0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/001-fixture_results/000006/single.json",
+        "sha256": "460c58c5943a3e0baa097554f072c91b553c52d765f57583a5c2c4f5ee104d8d",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/001-fixture_results/000007-000008.json",
+        "sha256": "66437eccc6ed336b283489a4dc1b95a9de16d7f5eff2847a027cf1a889137852",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/001-fixture_results/000008-000009.json",
+        "sha256": "2571c0d1038c5119f91d7665e0cd9e5cbdd75deda711171bee264c4d25d58cce",
+        "kind": "value"
+      }
+    }
+  ]
+}

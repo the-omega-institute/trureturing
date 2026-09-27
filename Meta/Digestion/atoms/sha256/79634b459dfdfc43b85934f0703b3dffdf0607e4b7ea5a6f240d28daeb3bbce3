@@ -1,0 +1,23 @@
+**推论 14.7（指定响应容差的充分样本量）。** 给目标 $\epsilon_{\rm out}>0$，选择核积分与强迫一致容差 $\kappa_0,\varphi_0>0$，满足
+$$
+\varphi_0+\kappa_0(L_*X_*+G)
+\le(1-\lambda_*)\epsilon_{\rm out}.
+\tag{14.18}
+$$
+选定 $r\ge1$、$N=2r+1$，使 $\kappa_0>B_K/a^2$、$\varphi_0>B_f/(ea)$，并置
+$$
+\zeta=
+\min\left\{
+\frac{a(\kappa_0-B_K/a^2)}{\sqrt q\, \mathcal R^N},
+\frac{\varphi_0-B_f/(ea)}{\sqrt d\, \mathcal R^r}
+\right\}>0.
+\tag{14.19}
+$$
+若 $2b_0+\nu_0<\zeta$，则任意整数
+$$
+\boxed{n\ge\max\left\{1,
+\left\lceil\frac{2W^2\log(2D/\alpha)}{(\zeta-2b_0-\nu_0)^2}\right\rceil\right\}}
+\tag{14.20}
+$$
+以及式(14.8)的实际合法拟合证书，足以使式(14.17)右侧不超过 $\epsilon_{\rm out}$，置信水平至少为 $1-\alpha$。
+

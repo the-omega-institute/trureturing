@@ -1,0 +1,15 @@
+{
+  "shells": {
+    "path": "content/036-complete_neighborhood_transport/000-shells.json",
+    "sha256": "5e7713d53d8450d578688851a3ca8c84ab8e9f039dd41c3dd1711abbc0ca242d",
+    "kind": "array"
+  },
+  "uniform_comparison_upper": {
+    "kind": "inline",
+    "value": "18503529197385232278541946281959165920378396246760251318939/36355533928228277760973015573728153842747196423090000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both original160 residual shells, with162 stronger inner heavy margins. Source radius1/27, residual radius1/1000, actual r<=1/520, both orientations. Only the complete pure-five square block changes; all52 independent costs, five denominator objectives and infinite tails remain."
+  }
+}

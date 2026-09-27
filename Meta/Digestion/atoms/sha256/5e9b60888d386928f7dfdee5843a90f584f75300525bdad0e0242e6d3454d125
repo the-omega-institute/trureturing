@@ -1,0 +1,12 @@
+**证明。** Given a program $E$ with no input, count computation steps starting at one. Define an element $z_E\in\widehat{\mathbb Z}$ by taking $z_E=0$ if $E$ never halts, and $z_E=h!$ if its first halting step is $h\geq1$.
+
+There is a uniformly obtainable total residue program for $z_E$ which does not decide whether $E$ halts. On input $m\geq1$, simulate $E$ for $m$ steps. If it halts at a step $h\leq m$, return $h!$ modulo $m$; otherwise return zero modulo $m$. If $E$ later halts at $h>m$, then $m\mid h!$, so the earlier zero answer was correct. Hence the returned residues are exactly those of $z_E$ and are coherent. They also give a full threshold-period name for $c_E=\tau(z_E)$ by always returning the tail class with the prescribed residue.
+
+By the boundary operation law and injectivity of $\tau$,
+$$
+c_E+c_E=c_E\quad\Longleftrightarrow\quad z_E+z_E=z_E\quad\Longleftrightarrow\quad z_E=0.
+$$
+If $E$ halts, its value $h!$ is nonzero in $\widehat{\mathbb Z}$: reduction modulo $h!+1$ distinguishes it from zero. Thus the displayed ground equation is true exactly when $E$ does not halt. A uniform decision algorithm on the promised parameter codes would decide halting by complementing its answer. Halting is undecidable: a proposed decider for a program on a supplied input would yield a program which, on input $n$, halts exactly when that decider predicts that program $n$ on input $n$ does not halt; applying it to its own index contradicts either prediction. Hard-coding an input reduces that problem to the no-input version used here.
+
+The reduction uses only a positive equality; a dummy existential variable with the equation $x=x$ may be added without changing truth. Every parameter in this construction is individually a computable boundary point, but its value is not supplied as an explicit integer numeral. This dependence on the naming representation distinguishes the extension from Definition 48.0 and a fortiori excludes any unsupported transfer to arbitrarily specified noncomputable parameters. 证毕。
+

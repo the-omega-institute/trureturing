@@ -1,0 +1,98 @@
+**定理 83.2（族保持下的纤维缺陷与粗预测差异不等式）。** 在定义与假设 83.1 下，全部下列项都是有限实数，且
+$$
+\boxed{
+\mathcal J_\Phi(Td;q,r)
++\sum_i p_i B_\Phi\!\left(
+  \frac{(CTd)_i}{p_i},\frac{(SCd)_i}{p_i}\right)
+\le\mathcal J_\Phi(d;q,r).
+}
+$$
+粗预测项非负，因此 $\mathcal J_\Phi(Td;q,r)\le\mathcal J_\Phi(d;q,r)$。若固定 $q$ 并在
+$$
+\mathcal K=[0,1/\min_jq_j]
+$$
+上满足上述函数假设，则该结论同时适用于所有 $d\in\Delta(J)$。
+
+**证明。** 先落实似然比坐标中的权重。由 $Tq=q$ 得
+$$
+\sum_k L_{jk}=\frac{(Tq)_j}{q_j}=1,
+$$
+而由 $T$ 的列随机性得
+$$
+\sum_jq_jL_{jk}
+=q_k\sum_jT_{jk}=q_k.
+$$
+所有 $L_{jk}\ge0$。这是命题 74.4 的同参考反向行核；质量更新与似然比更新满足 $D_qLu=Td$。再用 $E=D_q\Pi D_q^{-1}$ 共轭族保持等式，得到
+$$
+L\Pi=\Pi L\Pi.
+$$
+置 $v=Lu$、$z=L\Pi u$，于是 $\Pi z=z$，即 $z$ 在每条纤维上为常值。$\Pi$ 的纤维权重为 $q_k/p_i$，非负且和为一；$L$ 的各行也非负归一化。因此 $u,\Pi u,v,z,\Pi v$ 的全部坐标均为 $\mathcal K$ 中各点的凸组合，仍在 $\mathcal K$ 中。
+
+在输入端，记 $m_i=(Cd)_i/p_i$，则 $(\Pi u)_j=m_{r(j)}$，且
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)=0.
+$$
+由于 $\Phi'(m_i)$ 在纤维内为同一有限实数，Bregman 展开的线性项逐纤维相消：
+$$
+\begin{aligned}
+\sum_jq_jB_\Phi(u_j,(\Pi u)_j)
+&=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i)
+  -\sum_i\Phi'(m_i)\sum_{r(j)=i}q_j(u_j-m_i)\\
+&=\mathcal J_\Phi(d;q,r).
+\end{aligned}
+$$
+
+对 $L$ 的第 $j$ 行，以权重 $L_{jk}$ 对点对 $(u_k,(\Pi u)_k)\in\mathcal K\times\mathcal K$ 应用有限 Jensen。其权重非负、和为一，乘积域凸，核在该域联合凸，所以
+$$
+B_\Phi(v_j,z_j)
+\le\sum_k L_{jk}B_\Phi(u_k,(\Pi u)_k).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在实二维点对上的有限凸组合不等式。乘 $q_j$，有限换序，并用上面的加权不变性，得
+$$
+\begin{aligned}
+\sum_jq_jB_\Phi(v_j,z_j)
+&\le\sum_k\left(\sum_jq_jL_{jk}\right)
+       B_\Phi(u_k,(\Pi u)_k)\\
+&=\sum_kq_kB_\Phi(u_k,(\Pi u)_k)
+=\mathcal J_\Phi(d;q,r).
+\end{aligned}
+$$
+
+最后在输出端分离纤维缺陷与粗预测差异。对 $r(j)=i$，写
+$$
+\bar v_i=(\Pi v)_j=\frac{(CTd)_i}{p_i},\qquad
+\bar z_i=z_j.
+$$
+因 $z$ 纤维常值且 $D_qz=TEd$，有
+$$
+p_i\bar z_i
+=\sum_{r(j)=i}q_jz_j
+=(CTEd)_i=(SCd)_i.
+$$
+这里 $SCd=CTBCd=CTEd$ 仅由定义给出；把 $z_j$ 识别为每条纤维上的常数 $\bar z_i$ 才使用了族保持。对每个 $i$ 直接展开，并用 $\sum_{r(j)=i}q_jv_j=p_i\bar v_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_jB_\Phi(v_j,\bar z_i)
+&=\sum_{r(j)=i}q_j\Phi(v_j)-p_i\Phi(\bar z_i)
+  -p_i\Phi'(\bar z_i)(\bar v_i-\bar z_i)\\
+&=\left[\sum_{r(j)=i}q_j\Phi(v_j)-p_i\Phi(\bar v_i)\right]
+  +p_iB_\Phi(\bar v_i,\bar z_i).
+\end{aligned}
+$$
+按纤维求和即得精确恒等式
+$$
+\sum_jq_jB_\Phi(v_j,z_j)
+=\mathcal J_\Phi(Td;q,r)
++\sum_i p_iB_\Phi\!\left(
+  \frac{(CTd)_i}{p_i},\frac{(SCd)_i}{p_i}\right).
+$$
+结合前面的 Jensen 界得到所述加强不等式。凸可微函数的切线支撑不等式给出 $B_\Phi(s,t)\ge0$，所以粗预测项非负。
+
+若统一取所列 $\mathcal K$，每个概率 $d$ 都满足
+$$
+0\le u_j=\frac{d_j}{q_j}\le\frac1{q_j}\le\frac1{\min_kq_k}.
+$$
+所有后续坐标仍由已证的凸组合性质留在这个区间。分母始终为正参考 $q_j,p_i$；$C^1$ 假设保证各处导数有限，包括区间包含零点时的 $\Phi'(0)$。所以 $d$、$CTd$ 或 $SCd$ 的零坐标不产生未定义项，全部有限和均有意义。证毕。
+
+附引：反向核与输出似然比的关系见 Raginsky，*Strong Data Processing Inequalities and $\Phi$-Sobolev Inequalities for Discrete Channels*，[arXiv:1411.3575v4，§1.1 式 (1.2)、Lemma A.1](https://arxiv.org/abs/1411.3575v4)。输入端的纤维相消对应其 §2.1 式 (2.4)–(2.5)、Lemma A.4 的条件 $\Phi$ 熵及 Bregman 表达，也对应 Chafaï 同文式 (58) 的条件熵分解。这里的 $C^1$ 正则性由上述有限和证明承担。$\Phi(t)=t\ln t$ 在零点不满足本定理的有限导数假设；含零质量的 KL 缺陷不等式由定理 74.2 的支撑型结论给出。
+

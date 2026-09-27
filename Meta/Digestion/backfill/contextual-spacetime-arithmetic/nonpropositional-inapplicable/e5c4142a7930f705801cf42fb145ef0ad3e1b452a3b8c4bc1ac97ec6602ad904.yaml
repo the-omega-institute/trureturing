@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5c4142a7930f705801cf42fb145ef0ad3e1b452a3b8c4bc1ac97ec6602ad904
+  normalized_sha256: sha256:e5c4142a7930f705801cf42fb145ef0ad3e1b452a3b8c4bc1ac97ec6602ad904
+cas_ref: sha256:e5c4142a7930f705801cf42fb145ef0ad3e1b452a3b8c4bc1ac97ec6602ad904
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句规定时间复合采用部分运算，并把平移写作输入变换，是定义约定，无待证明命题。
+    previous_atom_id: c621d93d5c2736c202a783afaa2d21fffd6b76731d4e4ef078b436f6d20be98c
+    next_atom_id: 2899180c47f096c6ddf7340b928690b17ea464090692643e4e14aac59df0cfa2

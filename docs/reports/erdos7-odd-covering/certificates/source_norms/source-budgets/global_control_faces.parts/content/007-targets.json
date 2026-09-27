@@ -1,0 +1,12 @@
+{
+  "J": {
+    "path": "content/007-targets/000-J.json",
+    "sha256": "c4e01b6f83c2b7b35a6c297b094b9e49b1cbf63862c5e26ce1d580ea775a8a9e",
+    "kind": "object"
+  },
+  "K": {
+    "path": "content/007-targets/001-K.json",
+    "sha256": "a140339dea690d2eeb2ec6145bedec87b5d9c6bbe954cfc8612e3697d13f0043",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8317ed25988cf00d532d2f55273a2c700fc4f23d170b1d615337fddb46376c1
+  normalized_sha256: sha256:a8317ed25988cf00d532d2f55273a2c700fc4f23d170b1d615337fddb46376c1
+cas_ref: sha256:a8317ed25988cf00d532d2f55273a2c700fc4f23d170b1d615337fddb46376c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Let”与“retain the original carrier and phase observation”重列黄金常数、零状态、合法序列和相位映射；紧性与相位满射另在第三叶，不属于本叶，已检查这些定义未夹带新的性质断言，故无命题待证。
+    previous_atom_id: ec0e30e68de8ebe02d4597ff24590fc35ebcba3102d8272fb00333d8fc2cf0f2
+    next_atom_id: 697e36c70f8ddc8f63df84e03aadbffd9840e01e446fe276cf6ab468d26021fa

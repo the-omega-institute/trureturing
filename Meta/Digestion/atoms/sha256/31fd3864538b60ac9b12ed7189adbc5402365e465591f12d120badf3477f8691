@@ -1,0 +1,33 @@
+**命题 137.10（普通平坦与移位平坦的区别）。** 当 $r\ge1$ 时，
+$$
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1}
+\tag{137.20}
+$$
+蕴含全部未来唯一；若规范 $C\succ0$，则式(137.20)也是必要条件。若只在严格正定实现类中比较，规范 $C\succ0$ 时仍有同一充要条件。允许零特征值时，式(137.20)不再必要。
+
+**证明。** $H_{r-1}$ 是 $e_0,\ldots,e_{r-1}$ 的 Gram 算子，故其秩为 $\dim L$；$H_r$ 的秩为 $\dim E$。式(137.20)因此恰为 $L=E$，由定理137.8推出未来唯一。
+
+若 $C\succ0$，则 $\ker C=0$，定理137.8使未来唯一等价于 $L=E$。若将竞争类也限制为严格正定，$L\ne E$ 时选非零 $D:E\to\mathbb R$ 消灭 $L$，并取
+$$
+A=DC^{-1}D^*+\eta,\qquad\eta>0.
+$$
+对任意 $(x,y)\ne0$，
+$$
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+=\|C^{1/2}x+C^{-1/2}D^*y\|^2+\eta y^2>0.
+$$
+该严格正扩张仍由式(137.14)改变下一偶矩。
+
+为证明允许零谱时普通平坦不必要，取
+$$
+C=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad J=\binom10.
+$$
+$C^2=2C$，所以前四矩为 $(1,1,2,4)$。此时
+$$
+H_1=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+S_1=\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad S_0=(1).
+$$
+$H_1$ 秩二、$H_0$ 秩一；$S_1$ 与 $S_0$ 却同为秩一。定理137.8给所有未来唯一，而式(137.20)不成立。$\square$
+

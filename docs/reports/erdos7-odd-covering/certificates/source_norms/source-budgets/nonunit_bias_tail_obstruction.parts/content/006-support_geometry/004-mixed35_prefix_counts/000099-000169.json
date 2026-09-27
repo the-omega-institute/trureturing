@@ -1,0 +1,562 @@
+[
+  {
+    "exponents": [
+      7,
+      8
+    ],
+    "support_upper": 263554961,
+    "omega": 255
+  },
+  {
+    "exponents": [
+      7,
+      9
+    ],
+    "support_upper": 1317773711,
+    "omega": 285
+  },
+  {
+    "exponents": [
+      7,
+      10
+    ],
+    "support_upper": 6588867461,
+    "omega": 315
+  },
+  {
+    "exponents": [
+      7,
+      11
+    ],
+    "support_upper": 32944336211,
+    "omega": 345
+  },
+  {
+    "exponents": [
+      7,
+      12
+    ],
+    "support_upper": 164721679961,
+    "omega": 375
+  },
+  {
+    "exponents": [
+      8,
+      0
+    ],
+    "support_upper": 3281,
+    "omega": 17
+  },
+  {
+    "exponents": [
+      8,
+      1
+    ],
+    "support_upper": 10937,
+    "omega": 51
+  },
+  {
+    "exponents": [
+      8,
+      2
+    ],
+    "support_upper": 51404,
+    "omega": 85
+  },
+  {
+    "exponents": [
+      8,
+      3
+    ],
+    "support_upper": 253739,
+    "omega": 119
+  },
+  {
+    "exponents": [
+      8,
+      4
+    ],
+    "support_upper": 1265414,
+    "omega": 153
+  },
+  {
+    "exponents": [
+      8,
+      5
+    ],
+    "support_upper": 6323789,
+    "omega": 187
+  },
+  {
+    "exponents": [
+      8,
+      6
+    ],
+    "support_upper": 31615664,
+    "omega": 221
+  },
+  {
+    "exponents": [
+      8,
+      7
+    ],
+    "support_upper": 158075039,
+    "omega": 255
+  },
+  {
+    "exponents": [
+      8,
+      8
+    ],
+    "support_upper": 790371914,
+    "omega": 289
+  },
+  {
+    "exponents": [
+      8,
+      9
+    ],
+    "support_upper": 3951856289,
+    "omega": 323
+  },
+  {
+    "exponents": [
+      8,
+      10
+    ],
+    "support_upper": 19759278164,
+    "omega": 357
+  },
+  {
+    "exponents": [
+      8,
+      11
+    ],
+    "support_upper": 98796387539,
+    "omega": 391
+  },
+  {
+    "exponents": [
+      8,
+      12
+    ],
+    "support_upper": 493981934414,
+    "omega": 425
+  },
+  {
+    "exponents": [
+      9,
+      0
+    ],
+    "support_upper": 9842,
+    "omega": 19
+  },
+  {
+    "exponents": [
+      9,
+      1
+    ],
+    "support_upper": 32807,
+    "omega": 57
+  },
+  {
+    "exponents": [
+      9,
+      2
+    ],
+    "support_upper": 154193,
+    "omega": 95
+  },
+  {
+    "exponents": [
+      9,
+      3
+    ],
+    "support_upper": 761123,
+    "omega": 133
+  },
+  {
+    "exponents": [
+      9,
+      4
+    ],
+    "support_upper": 3795773,
+    "omega": 171
+  },
+  {
+    "exponents": [
+      9,
+      5
+    ],
+    "support_upper": 18969023,
+    "omega": 209
+  },
+  {
+    "exponents": [
+      9,
+      6
+    ],
+    "support_upper": 94835273,
+    "omega": 247
+  },
+  {
+    "exponents": [
+      9,
+      7
+    ],
+    "support_upper": 474166523,
+    "omega": 285
+  },
+  {
+    "exponents": [
+      9,
+      8
+    ],
+    "support_upper": 2370822773,
+    "omega": 323
+  },
+  {
+    "exponents": [
+      9,
+      9
+    ],
+    "support_upper": 11854104023,
+    "omega": 361
+  },
+  {
+    "exponents": [
+      9,
+      10
+    ],
+    "support_upper": 59270510273,
+    "omega": 399
+  },
+  {
+    "exponents": [
+      9,
+      11
+    ],
+    "support_upper": 296352541523,
+    "omega": 437
+  },
+  {
+    "exponents": [
+      9,
+      12
+    ],
+    "support_upper": 1481762697773,
+    "omega": 475
+  },
+  {
+    "exponents": [
+      10,
+      0
+    ],
+    "support_upper": 29525,
+    "omega": 21
+  },
+  {
+    "exponents": [
+      10,
+      1
+    ],
+    "support_upper": 98417,
+    "omega": 63
+  },
+  {
+    "exponents": [
+      10,
+      2
+    ],
+    "support_upper": 462560,
+    "omega": 105
+  },
+  {
+    "exponents": [
+      10,
+      3
+    ],
+    "support_upper": 2283275,
+    "omega": 147
+  },
+  {
+    "exponents": [
+      10,
+      4
+    ],
+    "support_upper": 11386850,
+    "omega": 189
+  },
+  {
+    "exponents": [
+      10,
+      5
+    ],
+    "support_upper": 56904725,
+    "omega": 231
+  },
+  {
+    "exponents": [
+      10,
+      6
+    ],
+    "support_upper": 284494100,
+    "omega": 273
+  },
+  {
+    "exponents": [
+      10,
+      7
+    ],
+    "support_upper": 1422440975,
+    "omega": 315
+  },
+  {
+    "exponents": [
+      10,
+      8
+    ],
+    "support_upper": 7112175350,
+    "omega": 357
+  },
+  {
+    "exponents": [
+      10,
+      9
+    ],
+    "support_upper": 35560847225,
+    "omega": 399
+  },
+  {
+    "exponents": [
+      10,
+      10
+    ],
+    "support_upper": 177804206600,
+    "omega": 441
+  },
+  {
+    "exponents": [
+      10,
+      11
+    ],
+    "support_upper": 889021003475,
+    "omega": 483
+  },
+  {
+    "exponents": [
+      10,
+      12
+    ],
+    "support_upper": 4445104987850,
+    "omega": 525
+  },
+  {
+    "exponents": [
+      11,
+      0
+    ],
+    "support_upper": 88574,
+    "omega": 23
+  },
+  {
+    "exponents": [
+      11,
+      1
+    ],
+    "support_upper": 295247,
+    "omega": 69
+  },
+  {
+    "exponents": [
+      11,
+      2
+    ],
+    "support_upper": 1387661,
+    "omega": 115
+  },
+  {
+    "exponents": [
+      11,
+      3
+    ],
+    "support_upper": 6849731,
+    "omega": 161
+  },
+  {
+    "exponents": [
+      11,
+      4
+    ],
+    "support_upper": 34160081,
+    "omega": 207
+  },
+  {
+    "exponents": [
+      11,
+      5
+    ],
+    "support_upper": 170711831,
+    "omega": 253
+  },
+  {
+    "exponents": [
+      11,
+      6
+    ],
+    "support_upper": 853470581,
+    "omega": 299
+  },
+  {
+    "exponents": [
+      11,
+      7
+    ],
+    "support_upper": 4267264331,
+    "omega": 345
+  },
+  {
+    "exponents": [
+      11,
+      8
+    ],
+    "support_upper": 21336233081,
+    "omega": 391
+  },
+  {
+    "exponents": [
+      11,
+      9
+    ],
+    "support_upper": 106681076831,
+    "omega": 437
+  },
+  {
+    "exponents": [
+      11,
+      10
+    ],
+    "support_upper": 533405295581,
+    "omega": 483
+  },
+  {
+    "exponents": [
+      11,
+      11
+    ],
+    "support_upper": 2667026389331,
+    "omega": 529
+  },
+  {
+    "exponents": [
+      11,
+      12
+    ],
+    "support_upper": 13335131858081,
+    "omega": 575
+  },
+  {
+    "exponents": [
+      12,
+      0
+    ],
+    "support_upper": 265721,
+    "omega": 25
+  },
+  {
+    "exponents": [
+      12,
+      1
+    ],
+    "support_upper": 885737,
+    "omega": 75
+  },
+  {
+    "exponents": [
+      12,
+      2
+    ],
+    "support_upper": 4162964,
+    "omega": 125
+  },
+  {
+    "exponents": [
+      12,
+      3
+    ],
+    "support_upper": 20549099,
+    "omega": 175
+  },
+  {
+    "exponents": [
+      12,
+      4
+    ],
+    "support_upper": 102479774,
+    "omega": 225
+  },
+  {
+    "exponents": [
+      12,
+      5
+    ],
+    "support_upper": 512133149,
+    "omega": 275
+  },
+  {
+    "exponents": [
+      12,
+      6
+    ],
+    "support_upper": 2560400024,
+    "omega": 325
+  },
+  {
+    "exponents": [
+      12,
+      7
+    ],
+    "support_upper": 12801734399,
+    "omega": 375
+  },
+  {
+    "exponents": [
+      12,
+      8
+    ],
+    "support_upper": 64008406274,
+    "omega": 425
+  },
+  {
+    "exponents": [
+      12,
+      9
+    ],
+    "support_upper": 320041765649,
+    "omega": 475
+  },
+  {
+    "exponents": [
+      12,
+      10
+    ],
+    "support_upper": 1600208562524,
+    "omega": 525
+  },
+  {
+    "exponents": [
+      12,
+      11
+    ],
+    "support_upper": 8001042546899,
+    "omega": 575
+  },
+  {
+    "exponents": [
+      12,
+      12
+    ],
+    "support_upper": 40005212468774,
+    "omega": 625
+  }
+]

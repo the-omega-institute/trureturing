@@ -1,0 +1,126 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/50"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/50",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "299/900",
+      "v0": "151/10000",
+      "v1": "453/29900",
+      "gap": "439/20000",
+      "tbar": "51/23",
+      "Cbar": "302/77",
+      "kbar": "299/148",
+      "budget_increments": [
+        "251/180000",
+        "1/1800",
+        "1/200"
+      ],
+      "c": [
+        "141/200",
+        "1813/4500",
+        "67/250",
+        "67/750"
+      ],
+      "H": [
+        "1773/25000",
+        "5863/56250",
+        "31/450",
+        "20599/900000"
+      ],
+      "positive7": "2131/31500"
+    }
+  },
+  "coordinates": {
+    "kind": "inline",
+    "value": [
+      "E5-g*q5",
+      "E15-g*q15",
+      "E27",
+      "Ege4",
+      "E5deep",
+      "E15deep",
+      "omega"
+    ]
+  },
+  "uniform_factorial_pairs": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "1211977875769/8991000000000",
+      "old_positive7": "30307/180000",
+      "positive7_positive7_distinct": "22331/54000",
+      "tail_distinct_pairs": "6443924025769/8991000000000",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "35738393/899100000",
+        "pure5": "6133063/562500000",
+        "root5": "13357/281250",
+        "cell5": "134043727/4500000000"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_coefficient_upper": [
+        "13/50",
+        "67/450",
+        "7/75",
+        "151/200",
+        "451/900",
+        "1/3",
+        "1/9",
+        "1"
+      ],
+      "positive7_pair_prices": [
+        "1/30",
+        "3/10",
+        "17/30",
+        "29/540",
+        "11/120",
+        "13/40",
+        "67/120",
+        "109/2160"
+      ]
+    }
+  },
+  "uniform_factorial_heads_sha256": {
+    "kind": "inline",
+    "value": "14858e3b178be1bdd620b5377b149f63490940866b84aaac410201fb8e3c974f"
+  },
+  "joint_cost_results": {
+    "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results.json",
+    "sha256": "d7bcb267e43e2d1c00b01aa730d196d4cc674c78d305494fd55fe352de50b7aa",
+    "kind": "array"
+  },
+  "retained_raw81_n2": {
+    "path": "content/004-complete_radius/015-quadratic/007-retained_raw81_n2.json",
+    "sha256": "9dee1f9de2838633b3b9f618d694b98222729162a1c3943bffa0717b84041ac9",
+    "kind": "value"
+  },
+  "shared_portfolio": {
+    "path": "content/004-complete_radius/015-quadratic/008-shared_portfolio.json",
+    "sha256": "a33410e88ab419f9f3895d4622052b4a42a6aa07a5e63603523aa295b150d88a",
+    "kind": "value"
+  },
+  "weighted_adopted_face_upper": {
+    "kind": "inline",
+    "value": "2111889246010484736362835017/167630845620786142795200000"
+  },
+  "weighted_uniform_excess": {
+    "kind": "inline",
+    "value": "115204886692510439272974933996589943/374684702990148883013441760000000000"
+  },
+  "original_branch_evaluations": {
+    "kind": "inline",
+    "value": 3375000
+  },
+  "independent_rational_checks": {
+    "kind": "inline",
+    "value": 108
+  }
+}

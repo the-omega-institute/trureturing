@@ -1,0 +1,9 @@
+**theorem 42.11 (Finite continuous observers versus a countable global tower).** Every continuous map $f:S(V)\to E$ to a finite discrete set factors through a single finite actual image:
+$$
+f=\bar f\circ\pi_F,\qquad \pi_F:S(V)\twoheadrightarrow Q_F
+\tag{42.15}
+$$
+for some finite $F\subseteq V^*$. Conversely, every such factorization is continuous.
+
+If $d\ge2$, no countable family of linear sign tests separates all points of $S(V)$, and no inverse limit of a countable tower of finite discrete spaces is homeomorphic to $S(V)$.
+

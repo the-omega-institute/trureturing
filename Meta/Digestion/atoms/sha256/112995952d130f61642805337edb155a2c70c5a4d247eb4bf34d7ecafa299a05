@@ -1,0 +1,67 @@
+**命题 42.3（四维持续接收与八维门构造）。** 取 $K=\mathbb C^4$。存在已知装置决定的线性映射 $F_n:H_n\to K$，在 $S_n$ 上等距、在 $S_n^\perp$ 上为零，以及 $K\otimes B$ 上的酉 $U_n$，满足
+$$
+U_n[(F_n\otimes I_B)s]=F_{n+1}s\otimes|0\rangle
+\qquad(s\in S_{n+1}\subseteq S_n\otimes B).
+\tag{42.14}
+$$
+初始接收态为 $F_0(1)$。在定义42.1的实际无干预来源族上，依次接收每个发出 qubit 后，完整联合态为
+$$
+\widehat\Omega_n=(I_J\otimes F_n\otimes I_M)\Omega_n
+                         (I_J\otimes F_n^*\otimes I_M).
+\tag{42.15}
+$$
+每次消耗的 $B$ 在丢弃前已是与整个其余系统乘积的纯空白，包含与 $J$ 和活动 $M$ 的关系；不留下输入相关信息。
+
+证明。对（42.4）的活动记忆施加同一个 $T$，逐坐标有
+$$
+v^{n+1}_{i,a}=\sum_{b=0}^1(m_b)_a\,v^n_{i,b}\otimes|b\rangle.
+\tag{42.16}
+$$
+所以 $S_{n+1}\subseteq S_n\otimes B$，且两侧指定映射在该子空间上都等距，有限等距延拓可给（42.14）。为明确给出不需构造 $2^n$ 阶矩阵的门，令
+$$
+w^n_{i,a}=\sqrt{G_n}\,e_{i,a}\in\mathbb C^4,\qquad
+F_nv^n_{i,a}=w^n_{i,a}.
+\tag{42.17}
+$$
+对任意四列系数 $z$，原像与目标的范数平方同为 $z^*G_nz$，故两列映射有相同核，指定映射良定并保持所有内积，包括相关列和零列。再在正交补上置零，即得所需 $F_n$。
+
+构造 $K\otimes B$ 中四个输入、输出列：
+$$
+x_{i,a}=\sum_b(m_b)_a\,w^n_{i,b}\otimes|b\rangle,
+\qquad y_{i,a}=w^{n+1}_{i,a}\otimes|0\rangle.
+\tag{42.18}
+$$
+它们都是 $8\times4$ 矩阵的列。正交输出基使
+$$
+\begin{aligned}
+\langle x_{i,a},x_{j,c}\rangle
+&=\sum_b\overline{(m_b)_a}(m_b)_c\,
+      G_n[(i,b),(j,b)]\\
+&=\sum_b\overline{(m_b)_a}(m_b)_c
+      [E^n(|j\rangle\langle i|)]_{b,b}\\
+&=[E^{n+1}(|j\rangle\langle i|)]_{c,a}
+ =G_{n+1}[(i,a),(j,c)]
+ =\langle y_{i,a},y_{j,c}\rangle.
+\end{aligned}
+\tag{42.19}
+$$
+记列矩阵为 $X_n,Y_n$，则 $X_n^*X_n=Y_n^*Y_n$。直接使用既有 [GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq](../../../D5/S3/Quantum/Algebra/GramUnitaryExtension.lean)，以其 $B=Y_n,A=X_n$，得到 $Y_n=U_nX_n$。该声明允许任意有限矩形复矩阵，无满秩假设；因此初期秩亏也被覆盖。[SequentialRegisterCircuit.exists_unitary_agree](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)及同文件的 `rectangular_unitary` 是相应等距／填充寄存器供应，不另立通用包装。实际门规格只需（42.10）的 $4\times4$ 正平方根和八维正交补完成；$n=0$ 使用（42.9）。
+
+酉共轭后偏迹
+$$
+\mathcal A_n:\mathcal L(K\otimes B)\to\mathcal L(K),\qquad
+\mathcal A_n(Y)=\operatorname{Tr}_B(U_nYU_n^*)
+\tag{42.20}
+$$
+在整个输入空间上 CPTP。在 $J\otimes K\otimes B\otimes M$ 的因子次序中，（42.14）逐列作用于实际来源展开，给出的向量恰为（42.15）下一步的 $J,K,M$ 向量插入空白 $|0\rangle_B$；在密度层面就是张量积 $\widehat\Omega_{n+1}\otimes|0\rangle\langle0|_B$，按上述固定次序置换因子。混态及所有参考块由线性性给出。因此先保留再丢弃这个 $B$ 不损失任何联合关系。由 $F_0(1)$ 起归纳即得（42.15）。生成器作用于活动 $M$ 与新空白，接收器作用于 $K$ 与已经发出的 $B$；不交因子的张量线性作用可交换，即使态纠缠也成立。这是操作交换，不是概率独立。
+
+这一归纳的域是实际像族 $\operatorname{Ad}_{T_n}(\theta)$。不能把仅有支撑 $J\otimes S_n\otimes M$ 当成任意下一步的来源闭合。例如 $|1\rangle_{B_1}\otimes|1\rangle_M\in S_1\otimes M$，但
+$$
+(I_B\otimes T)(|1\rangle\otimes|1\rangle)
+=|11\rangle\otimes|0\rangle\notin S_2\otimes M.
+\tag{42.21}
+$$
+静态支持态可逆性仍可成立，因果接续却需要实际联合像。
+
+同一门序列不依赖未来终端 $N$：对 $n\le N$，后续 $T_{N-n}$ 是每个前缀切口另一侧的等距，保持前缀约化态与支撑；（42.16）和 $G_n$ 本身也未使用 $N$。这正是 Blume-Kohout、Croke、Zwolak 的相干逐步收卷机制在来源子空间 $T_N(\mathbb C^2)$ 上的应用，把 $J$ 和终端活动 $M$ 放在未处理／参考一侧。[^rroctx42_bcz] 所需的是每个前缀秩受控与相干访问，不是仅有最终小维数；该文的高纠缠前缀例子排除了后一推断。$\square$
+

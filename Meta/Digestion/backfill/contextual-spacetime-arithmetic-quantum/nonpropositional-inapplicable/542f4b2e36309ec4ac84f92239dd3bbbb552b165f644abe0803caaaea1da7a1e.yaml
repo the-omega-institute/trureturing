@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:542f4b2e36309ec4ac84f92239dd3bbbb552b165f644abe0803caaaea1da7a1e
+  normalized_sha256: sha256:542f4b2e36309ec4ac84f92239dd3bbbb552b165f644abe0803caaaea1da7a1e
+cas_ref: sha256:542f4b2e36309ec4ac84f92239dd3bbbb552b165f644abe0803caaaea1da7a1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说“允许任意混态，不限于纯态”并规定“任务是任意总函数”，且“起初不假定连续”；正半定单位迹及迹范数只是输出对象和距离公式的约定，未声称紧完备或延拓存在，没有偷渡这些性质。
+    previous_atom_id: e16f050957daa1a9042e1d2597cccd1fc0e561442b4d620adb6395146afe51bd
+    next_atom_id: 7f429b2f010ea8d882aacded26f88656aa2245a5a11fb087069722ce0bd9a3bb

@@ -1,0 +1,42 @@
+## 3. 从真实矩阵计算二阶及三阶观察
+
+设 K 为任意域，I 为有限指标集，a∈I。给定零对角矩阵 H，并令
+
+\[
+N_i=e_iH_{i,*},\qquad T_i=1+N_i.
+\]
+
+这些是实际的 I×I 矩阵。直接相乘得到
+
+\[
+N_i^2=0,\quad T_i^{-1}=1-N_i,
+\]
+\[
+\operatorname{tr}(N_iN_j)=H_{ij}H_{ji},\qquad
+\operatorname{tr}(N_iN_jN_k)=H_{ij}H_{jk}H_{ki}.
+\]
+
+N_i 的秩至多为一；非零性需要另行满足。在下文的非退化八维实例中它们确为非零。
+一般系数空间允许有 radical，不能由指标个数直接认定实际非退化状态维数。
+
+假设双向星形条件
+
+\[
+H_{aj}\ne0,\qquad H_{ja}\ne0\quad(j\ne a).
+\]
+
+定义真实观察
+
+\[
+p_j=\operatorname{tr}(N_aN_j),\qquad
+ t_{ij}=\operatorname{tr}(N_aN_iN_j).
+\]
+
+非锚点的 p_j 均非零。定义 d_a=1、d_j=H_aj，并令 D=diag(d)。
+从观察构造矩阵 R：
+
+\[
+R_{aa}=0,\quad R_{aj}=1,\quad R_{ia}=p_i,
+\qquad R_{ij}=t_{ij}/p_j\quad(i,j\ne a).
+\]
+

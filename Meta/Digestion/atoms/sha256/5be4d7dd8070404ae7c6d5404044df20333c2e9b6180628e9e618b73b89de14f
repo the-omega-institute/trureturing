@@ -1,0 +1,35 @@
+**证明。** 置 $t=\phi(u)$、$0<u<1$。直接求导得
+
+$$
+H'(t)=1+\frac{u}{(1-u^2)h(u)},\qquad
+H''(t)=\frac{(1+u^2)h(u)-u}{(1-u^2)^2h(u)^3}>0,
+$$
+
+其中正性由 $h(u)>u$ 给出。
+在零点，$H(t)=2t+\frac23t^2+O(t^3)$，故 $H$ 在整个 $[0,\log2)$ 上严格凸。
+将 (2.2) 写成 $\sigma=\mathbb E H(\phi(b))$，Jensen 不等式给出
+$\sigma\ge H(\mathbb E\phi(b))=H(I_0)$。
+等号当且仅当所有 $\phi(b(x))$ 相等，亦即所有 $|b(x)|$ 相等。
+因每个奇偶类含偶数个状态，将该类一半取正、一半取负，
+即可在任何 $I_0$ 上满足零均值并达到下界。
+
+当 $d=2$ 时，每个奇偶类恰有两个状态；零均值强制其取值分别为
+$(u,-u)$ 和 $(v,-v)$，其中 $|u|,|v|<1$。写
+$\alpha=\phi(u)$、$\beta=\phi(v)$，则
+
+$$
+I_0=\frac{\alpha+\beta}{2},\qquad
+\sigma=\frac{H(\alpha)+H(\beta)}2.
+$$
+
+若 $2I_0<\log2$，可行线段为
+$0\le\alpha\le2I_0$、$\beta=2I_0-\alpha$。
+严格凸函数在该线段上的最大值位于端点，给出
+$\sigma\le H(2I_0)/2$ 及等号刻画。
+
+若 $2I_0\ge\log2$，取 $\alpha_k\uparrow\log2$ 并令
+$\beta_k=2I_0-\alpha_k$。
+对足够大的 $k$，二者均在 $[0,\log2)$ 内；
+$H(\alpha_k)\to\infty$，而 $H(\beta_k)\ge0$。
+由对应的 $u_k,v_k$ 构造严格正核，给出信息精确固定的发散序列。$\square$
+

@@ -294,40 +294,23 @@ internal static partial class SelfTestGovernancePolicy
             : [$"{path}: namespace {declarations[0]} does not match {expected}"];
     }
 
-    private static IEnumerable<string> InspectToolsNamespaces(string repositoryRoot)
+    internal static IEnumerable<string> InspectToolsNamespaces(string repositoryRoot)
     {
-        var toolsRoot = Path.Combine(repositoryRoot, "tools");
-        foreach (var path in Directory.EnumerateFiles(toolsRoot, "*.cs", SearchOption.AllDirectories)
-                     .Where(static path => !IsBuildOutput(path))
-                     .Order(StringComparer.Ordinal))
+        try
         {
-            var project = FindProject(path, toolsRoot);
-            var relative = Path.GetRelativePath(repositoryRoot, path)
-                .Replace(Path.DirectorySeparatorChar, '/');
-            if (project is null)
-            {
-                yield return $"{relative}: C# source is not owned by a project directory";
-                continue;
-            }
-
-            var roots = XDocument.Load(project)
-                .Descendants("RootNamespace")
-                .Select(static element => element.Value)
+            var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+                .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+                    || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
+                    || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
+                .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath)))
                 .ToArray();
-            if (roots.Length != 1)
-            {
-                yield return $"{relative}: owning project must declare exactly one RootNamespace";
-                continue;
-            }
-
-            foreach (var finding in CheckToolsNamespace(
-                         relative,
-                         roots[0],
-                         File.ReadAllText(path),
-                         AllowsGlobalNamespace(path, project)))
-            {
-                yield return finding;
-            }
+            var sources = EngineeringProjectRegistry.Read(files).NamespaceSources(files);
+            return sources.SelectMany(source => CheckToolsNamespace(
+                source.Source.Path, source.RootNamespace, source.Source.Content, source.AllowGlobalNamespace)).ToArray();
+        }
+        catch (InvalidDataException exception)
+        {
+            return ["namespace registration: " + exception.Message];
         }
     }
 
@@ -377,40 +360,6 @@ internal static partial class SelfTestGovernancePolicy
             findings.Add($"{label}: symbol matrix is not canonical");
         }
     }
-
-    private static string? FindProject(string path, string toolsRoot)
-    {
-        for (var current = Directory.GetParent(path); current is not null; current = current.Parent)
-        {
-            var projects = Directory.EnumerateFiles(current.FullName, "*.csproj")
-                .Order(StringComparer.Ordinal)
-                .ToArray();
-            if (projects.Length > 1)
-            {
-                throw new FormatException($"multiple project owners for {path}");
-            }
-
-            if (projects.Length == 1)
-            {
-                return projects[0];
-            }
-
-            if (current.FullName == toolsRoot)
-            {
-                return null;
-            }
-        }
-
-        return null;
-    }
-
-    private static bool AllowsGlobalNamespace(string path, string project) =>
-        Path.GetFileName(path) is "AssemblyInfo.cs" or "Usings.cs"
-        || (Path.GetFileName(path) == "Program.cs"
-            && Path.GetFileName(Path.GetDirectoryName(project)) == "StrataLint.Scribe");
-
-    private static bool IsBuildOutput(string path) =>
-        path.Split(Path.DirectorySeparatorChar).Any(static part => part is "bin" or "obj");
 
     [GeneratedRegex(
         @"^\s*namespace\s+([A-Za-z_][A-Za-z0-9_.]*)\s*(?:;|\{)",

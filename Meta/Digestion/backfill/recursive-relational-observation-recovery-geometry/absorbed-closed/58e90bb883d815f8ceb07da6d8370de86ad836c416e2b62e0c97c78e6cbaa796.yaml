@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:58e90bb883d815f8ceb07da6d8370de86ad836c416e2b62e0c97c78e6cbaa796
+  normalized_sha256: sha256:58e90bb883d815f8ceb07da6d8370de86ad836c416e2b62e0c97c78e6cbaa796
+cas_ref: sha256:58e90bb883d815f8ceb07da6d8370de86ad836c416e2b62e0c97c78e6cbaa796
+coverage_gids:
+  - gid: D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.synthesis_eq_realVelocity
+    target_statement_id: sha256:c6582abf28c604327dc4863c7b44aff4072ee8ba7bb010a2a2c46d18bad7481c
+  - gid: D5/S3/FluidDynamics/Fourier/WeightedTensorConvolution.weighted_tensor_convolution
+    target_statement_id: sha256:838ad1f42caabf58e6e8994a858695df2ea53e669caedf8ddd931fb6d26f2ebb
+  - gid: D5/S3/FluidDynamics/Volterra/SingularKernelUniqueness.eq_zero_of_le_sqrt_kernel_integral
+    target_statement_id: sha256:95b8d6a33474cc126385fb91529ca805c1519af36bdcd38d0e7e64099bfe6fba
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 70f4e343e6bfc401b4d7f6fb5d66819dfbee36f906bf79afcb706498a028599e
+    - 8b0bd2013afcff0b1e3bfe80ae417a3c71a2ee489a9336ce1ee44e8f6aa6d684
+    - ab08661a159cec092036182db4a97374466b80afaa0f3d436a064f822822ee3a
+    - adbca0af1fcbedc1a439e2f034cc485209e087155041caa919389c5d6b2d9155

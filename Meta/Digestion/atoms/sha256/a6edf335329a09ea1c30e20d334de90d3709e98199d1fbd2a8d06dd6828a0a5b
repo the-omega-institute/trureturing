@@ -1,0 +1,6 @@
+**定理 15.4（共同谱隙恢复一致的全未来精度）。** 若另外已知 $0<a\le\rho<1$，定义 15.3 的全未来最优风险满足
+\[
+ \mathcal R^{(\rho)}_{T,\infty}(\eta)
+ \le\min\left\{\frac12,\frac{\eta}{1-\rho}\right\}.
+\]
+

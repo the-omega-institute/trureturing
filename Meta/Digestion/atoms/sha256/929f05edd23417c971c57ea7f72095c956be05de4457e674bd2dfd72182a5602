@@ -1,0 +1,28 @@
+**定理 9.7（逐窗最优值收敛而相邻系数距离保持正极限）。** 固定定义9.4中的 $\delta$。将每个 $a^{*,L}$ 补零为 $\ell^1(\mathbb N)$ 元素。以下相邻式取整数 $L\ge4$，则
+$$
+\Gamma_{L-1}^*-\Gamma_L^*
+=\frac{(G+1)(r_{L-1}-r_L)}{(1-r_{L-1})(1-r_L)}\longrightarrow0
+\quad(L\to\infty),
+\tag{9.11}
+$$
+但
+$$
+\|a^{*,L}-a^{*,L-1}\|_1\longrightarrow G+1>0.
+\tag{9.12}
+$$
+故该系数序列不为 $\ell^1$ Cauchy 列。对 $L\ge4$ 还成立
+$$
+\eta_L=\frac{2(r_{L-1}-r_L)}{1-r_L},
+$$
+而对 $L\ge5$，补零的旧优化器在式（9.10）恰好取等：
+$$
+\sum_{t\notin S_L}|a_t^{*,L-1}|
+=\frac{\Gamma_{L-1}^*-\Gamma_L^*}{\eta_L}
+=\frac{G+1}{2(1-r_{L-1})}.
+$$
+此外，$\eta_L\to0$；不存在与 $L$ 无关的有限常数 $C$，使全部这些时间字典中的精确可行近最优系数都满足
+$$
+\sum_{t\notin S_L}|a_t|\le C\bigl(\Gamma(a)-\Gamma_L^*\bigr).
+\tag{9.13}
+$$
+

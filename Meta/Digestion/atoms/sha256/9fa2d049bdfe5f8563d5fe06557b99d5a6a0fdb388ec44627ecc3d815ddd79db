@@ -1,0 +1,32 @@
+**证明。** 若 $r=D^jCv$ 是 $R$ 的生成元，则 $Dr=D^{j+1}Cv\in R$，故 $R$ 对 $D$ 不变。若 $h\in N$，则对每个 $j\ge0$，
+$$
+BD^j(Dh)=BD^{j+1}h=0,
+$$
+故 $Dh\in N$，于是 $N$ 及 $R\cap N$ 都对 $D$ 不变，两个商上的诱导映射均良定义。
+
+先证 $1\Rightarrow2$。任取
+$$
+r=\sum_{\ell}D^{\ell}Cv_{\ell}\in R.
+$$
+对任意 $k\ge0$，
+$$
+BD^kD^mr =\sum_{\ell}BD^{m+\ell+k}Cv_{\ell} =\sum_{\ell}M_{m+\ell+k}v_{\ell} =0.
+$$
+故 $D^mr\in N$，又 $D^mr\in R$，所以 $D^mR\subseteq R\cap N$，即 $\bar D_{\mathrm{fb}}^{\,m}=0$。
+
+再证 $2\Rightarrow1$。由 $C(V)\subseteq R$，对任意 $v\in V$，
+$$
+D^mCv\in R\cap N.
+$$
+由于 $N$ 对 $D$ 不变，对任意 $j=m+k\ge m$，
+$$
+D^jCv=D^k(D^mCv)\in N,
+$$
+从而 $M_jv=BD^jCv=0$。故 $M_j=0$。
+
+若 1 成立，则 $F_n$ 中只有滞后 $<m$ 的项可能非零，所以只依赖最后 $\min(m,n)$ 个输入，得 3。反之假设 3，任取 $j\ge m$、$v\in V$，置 $n=j+1$，令两条输入串只在 $i=0$ 处相差 $v$，其余均为零。因为 $0<n-m$，两串在要求的后缀上相同，于是
+$$
+0=F_n(u)-F_n(u')=M_jv.
+$$
+故 1 成立。最小截止与幂零指数相等由逐个 $m$ 的等价立即得到。若 $Q_{\mathrm{fb}}=0$，则 $\bar D_{\mathrm{fb}}^0=\operatorname{id}_{0}=0$，故截止为 $0$；反向由 $m=0$ 的等价得到。证毕。
+

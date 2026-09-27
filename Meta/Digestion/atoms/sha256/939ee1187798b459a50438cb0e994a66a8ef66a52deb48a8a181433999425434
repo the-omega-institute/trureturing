@@ -1,0 +1,34 @@
+**axiom 54.1（整数 Smith 标准形、可计算性及所用外部代数事实）.** 对任意 $r,m\in\mathbb N_0$ 与整数矩阵 $M\in M_{r\times m}(\mathbb Z)$，记其整数秩为 $s$。本文使用如下整数 Smith 标准形事实：存在
+$$
+U\in\operatorname{GL}_r(\mathbb Z),\qquad V\in\operatorname{GL}_m(\mathbb Z)
+$$
+使
+$$
+UMV=\operatorname{diag}(d_1,\ldots,d_s,0,\ldots,0),
+$$
+其中可取 $d_j>0$ 且 $d_j\mid d_{j+1}$。这里 $\operatorname{diag}$ 表示相应的 $r\times m$ 矩形对角阵。若 $s=0$，则 $M=0$，非零不变量列表为空；可取 $U=I_r,V=I_m$。若 $r=0$ 或 $m=0$，同样按唯一空矩阵、秩零与相应空恒等矩阵解释，空乘积约定为 $1$。对非零矩阵，Smith 对角形中非零对角元的个数等于 $s$，因为左右乘可逆矩阵保持在 $\mathbb Q$ 上的秩；在 $\mathbb Z$ 中再以单位 $-1$ 调整符号即可令各 $d_j>0$。
+
+Richard Elman, *Lectures on Abstract Algebra*, Appendix D, Theorem D.2 对任意欧几里得环上的矩形矩阵给出左右可逆矩阵把它化为 Smith 标准形；其证明明确从零矩阵情形开始，并以欧几里得函数的严格下降和维数归纳给出终止过程。（[Theorem D.2，印刷页 854／PDF 页 862](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=862)；[证明续，印刷页 855／PDF 页 863](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=863)）
+
+整数矩阵 Smith 标准形的显式终止计算另可由 Arne Storjohann, *Near Optimal Algorithms for Computing Smith Normal Forms of Integer Matrices*, University of Waterloo Technical Report CS-96-03, Theorem 14 得到；该定理在 PDF 第 8 页给出输入任意 $n\times m$ 整数矩阵并输出其 Smith 标准形的确定性算法。（[Theorem 14，PDF 页 8](https://cs.uwaterloo.ca/research/tr/1996/03/CS-96-03.pdf#page=8)） 空维数情形在本文中按上一段的平凡约定直接处理。
+
+关于有限整数的逐素数分解，Longhi–Mu–Saettone, *Coset Topologies on $\mathbb Z$ and Arithmetic Applications*, arXiv:2202.13478v3, §3.1.2 在 Theorem 3.6 前给出
+$$
+v_p(x)=0\Longleftrightarrow x\in\mathbb Z_p^\times,
+$$
+Theorem 3.6 及其证明给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,
+$$
+而 §3.3.1 的式 (36) 给出
+$$
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+（[单位判据与 Theorem 3.6，PDF 页 19](https://arxiv.org/pdf/2202.13478v3#page=19)；[式 (36)，PDF 页 24](https://arxiv.org/pdf/2202.13478v3#page=24)）
+
+若把本节与轨道商超加法背景比较，Connes–Consani, *The Hyperring of Adèle Classes*, arXiv:1001.4260v2, Proposition 2.5 的式 (6) 是
+$$
+x+y=(xG+yG)/G.
+$$
+（[Proposition 2.5，式 (6)，PDF 页 7](https://arxiv.org/pdf/1001.4260v2#page=7)） 该公式描述轨道商上的超加法；它本身不提供本节所要求的“一组共同代表同时实现全部边”的结论，因此下文始终直接处理共同元组。
+

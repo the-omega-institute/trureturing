@@ -1,0 +1,52 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-complete-off-face-cost-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0",
+      "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6",
+      "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645"
+    }
+  },
+  "independent_compiled_checks": {
+    "kind": "inline",
+    "value": 120
+  },
+  "nonzero_constant_regression": {
+    "kind": "inline",
+    "value": [
+      {
+        "source_height": null,
+        "survivor_mass": "53/360",
+        "linear_constant_mass_term": "53/360"
+      },
+      {
+        "source_height": 5,
+        "survivor_mass": "530644181/3545268750",
+        "linear_constant_mass_term": "530644181/3545268750"
+      },
+      {
+        "source_height": 8,
+        "survivor_mass": "1813706264603609/12312129125390625",
+        "linear_constant_mass_term": "1813706264603609/12312129125390625"
+      }
+    ]
+  },
+  "cost_results": {
+    "path": "content/004-cost_results.json",
+    "sha256": "19d5e90085fc264337b7fa951bdc34e9b874cc2a204f8969a065153d2fa41af3",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "General complete same-head off-face cost interface with full omitted tails and one actual capacity/union-error vector. Numeric instances cover the whole-face reference and two genuine finite398 source families for original AP cost1. No uniform maximization over all sources, new global K, Lean verification or Erdos7 resolution."
+  }
+}

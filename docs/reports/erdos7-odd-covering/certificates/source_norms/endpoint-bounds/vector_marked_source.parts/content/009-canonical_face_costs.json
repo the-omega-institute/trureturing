@@ -1,0 +1,374 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/009-canonical_face_costs/000000-000001.json",
+        "sha256": "4bde18e50ac1958695d80dee31d6832cdfab769fcddc33449d05639e0b5f243f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/009-canonical_face_costs/000001-000002.json",
+        "sha256": "4573e58b1d2f0c33dbef8616da36d0473a8fe26d0930336acd53347a863f0cf5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/009-canonical_face_costs/000002-000003.json",
+        "sha256": "f4c4a625636a9da683b333431431c6773e8f85fb080d6546c987a559bb57a2ad",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/009-canonical_face_costs/000003-000004.json",
+        "sha256": "9f53eb857c10bc9df73d983d03221fa8e737f664c5d9d5bfaaf26310dfcf340e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/009-canonical_face_costs/000004-000005.json",
+        "sha256": "8fe2e3be29b5c740764bed09479f4902cb37f2f4568dc330ac980873120d347e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/009-canonical_face_costs/000005-000006.json",
+        "sha256": "05864d60c5c6bcae163feaaac13f3ffd46a5266fcf015f4a000d20a7ad949e5b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/009-canonical_face_costs/000006-000007.json",
+        "sha256": "07c15bf6ffaffbbeb4bbccd10394329de1d3fd4166a4a520ef27514df830e0b8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/009-canonical_face_costs/000007-000008.json",
+        "sha256": "5e56f25a6afc81c96f43e199fde25b0293dcce2a1a96d4be244690592c06e1e7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/009-canonical_face_costs/000008-000009.json",
+        "sha256": "d05f91265318fb0df2cb9eeabdc53a4d1f12c6e60389ba87bb6ae2d21fabd3b6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/009-canonical_face_costs/000009-000010.json",
+        "sha256": "f9138d74c3577753618313f8b549196b4aaedf1f30a346bd790c15a6449817bf",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/009-canonical_face_costs/000010-000011.json",
+        "sha256": "a607a3d772dba86490f839d403b00803ea089e2e3ed9af742ac9c9a312e9203b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 12,
+      "part": {
+        "path": "content/009-canonical_face_costs/000011-000012.json",
+        "sha256": "7f5be4e65a3a4ffa3199d5ba5dff4a63b200709020114a66b8e21510ee0fdd4b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 12,
+      "stop": 13,
+      "part": {
+        "path": "content/009-canonical_face_costs/000012-000013.json",
+        "sha256": "c842f00934d6fdb1a3690d7f4d9cf3125910b39370b0e5f8afaffd2690efb58e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 13,
+      "stop": 14,
+      "part": {
+        "path": "content/009-canonical_face_costs/000013-000014.json",
+        "sha256": "81d08a8adf8dc2c9b29c83f0e49384a024ffd9408c700723f0bd782aae12c30f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14,
+      "stop": 15,
+      "part": {
+        "path": "content/009-canonical_face_costs/000014-000015.json",
+        "sha256": "3820fc3202cdd711878294b38e89258d4e55c9074ad390e3c28bfdfb4d17195b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15,
+      "stop": 16,
+      "part": {
+        "path": "content/009-canonical_face_costs/000015-000016.json",
+        "sha256": "27e2233767b6fe9c271f494bb4d37dd834bd40808fe05c3cb4db036fa2e38fea",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 16,
+      "stop": 17,
+      "part": {
+        "path": "content/009-canonical_face_costs/000016-000017.json",
+        "sha256": "130b5d0e8a6b9a0255b9a6dbb81623f2e61d13d0c344005f4df2b0943ed9cc17",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 17,
+      "stop": 18,
+      "part": {
+        "path": "content/009-canonical_face_costs/000017-000018.json",
+        "sha256": "48d176dbed8331d7b1465adb51ef57236600eb6737e16a8b7ec9e1d845d3782f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 19,
+      "part": {
+        "path": "content/009-canonical_face_costs/000018-000019.json",
+        "sha256": "b08f1867345d0573f50d84bb98d15c71a124533e19e61884aca60ee38c3bf6a3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 19,
+      "stop": 20,
+      "part": {
+        "path": "content/009-canonical_face_costs/000019-000020.json",
+        "sha256": "c773bb4f49d96407bdd0d3718a02c5d0bbb5ab306bb7faa306dbab6e9bcd72e5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 21,
+      "part": {
+        "path": "content/009-canonical_face_costs/000020-000021.json",
+        "sha256": "d66c8d291b9026d9090554cc6f6fdec37717f76e7137dca0f6c03a57df87a8b7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21,
+      "stop": 22,
+      "part": {
+        "path": "content/009-canonical_face_costs/000021-000022.json",
+        "sha256": "175cd464b25fe654c53c4fda0d6c76f5d7556fbffae70c46168601146c9a5965",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 23,
+      "part": {
+        "path": "content/009-canonical_face_costs/000022-000023.json",
+        "sha256": "e581a19caa66e58697d58684affb5791d7fe03d1f4d64e077be3c966bf5d8867",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 23,
+      "stop": 24,
+      "part": {
+        "path": "content/009-canonical_face_costs/000023-000024.json",
+        "sha256": "f5f1c92bfc374aa9b1f4f49d3101a77ef1d9fad4e4545fbcd8df670e9518e505",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 24,
+      "stop": 25,
+      "part": {
+        "path": "content/009-canonical_face_costs/000024-000025.json",
+        "sha256": "913a90074f41675e8d449577f2d705c044e01604eaee2cb0ea5b86bef3d9de43",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 26,
+      "part": {
+        "path": "content/009-canonical_face_costs/000025-000026.json",
+        "sha256": "f9082f1f5f823c31d05fb932b4c492027f6ab762758032e65499773341b371e0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 26,
+      "stop": 27,
+      "part": {
+        "path": "content/009-canonical_face_costs/000026-000027.json",
+        "sha256": "9d71b27cf91443cf16ca5a7e58c16448ab1055d12618ff1783a13b6ef00ab9ce",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 27,
+      "stop": 28,
+      "part": {
+        "path": "content/009-canonical_face_costs/000027-000028.json",
+        "sha256": "dfa3984955481a89a649d29f63e8de7b0b596cbb9377258925253b48650e5566",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 29,
+      "part": {
+        "path": "content/009-canonical_face_costs/000028-000029.json",
+        "sha256": "5c9bb7850bad2031876273c887163e7c2ff2f8ac52fb17947fc705fa4e6ffe7e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 29,
+      "stop": 30,
+      "part": {
+        "path": "content/009-canonical_face_costs/000029-000030.json",
+        "sha256": "08aaacb222e20dbd16881f099f9c63bc59f1b0bac8470a0006b04d5b62df95a7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 30,
+      "stop": 31,
+      "part": {
+        "path": "content/009-canonical_face_costs/000030-000031.json",
+        "sha256": "a7c2fea6f8bab1f253e17fce7741f342e0de77738b2c9a3a0e0470fa9a7267c9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 31,
+      "stop": 32,
+      "part": {
+        "path": "content/009-canonical_face_costs/000031-000032.json",
+        "sha256": "58260efdba72349ad1e707a8fb6d79aba97b1836ed52169e8d89168670e128f4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 32,
+      "stop": 33,
+      "part": {
+        "path": "content/009-canonical_face_costs/000032-000033.json",
+        "sha256": "75e87e62960e779a0c05bb36012bfdd8fa69d214712fe689847179d74a4ec534",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 34,
+      "part": {
+        "path": "content/009-canonical_face_costs/000033-000034.json",
+        "sha256": "eb541d08668f0a48c4b00f7060ebaaa45f89637a28e3938e6c63d40ad52fec85",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 34,
+      "stop": 35,
+      "part": {
+        "path": "content/009-canonical_face_costs/000034-000035.json",
+        "sha256": "9df736f2d8d008f3b0ed9365460f3968a1544287007f6c17a761638214e2e84f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 35,
+      "stop": 36,
+      "part": {
+        "path": "content/009-canonical_face_costs/000035-000036.json",
+        "sha256": "e8142046fb872a6b0e7eaa3b93e43c8dcb61d879ef3b365709272cbf75fa6188",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 37,
+      "part": {
+        "path": "content/009-canonical_face_costs/000036-000037.json",
+        "sha256": "d45130363ac25be01b1ef213819180c5ca972f9dbd4c60c5f0e4c267ed8a97b4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 37,
+      "stop": 38,
+      "part": {
+        "path": "content/009-canonical_face_costs/000037-000038.json",
+        "sha256": "f4246fc2a3dc163bd270ab19e5bc6639318b7f05a74da0b432daeb6ea133f25f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 38,
+      "stop": 39,
+      "part": {
+        "path": "content/009-canonical_face_costs/000038-000039.json",
+        "sha256": "183f0c67d17a926c2cede02d54b6a4d9dd69e8936907b2ba2be6ee859ee81d2a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 39,
+      "stop": 40,
+      "part": {
+        "path": "content/009-canonical_face_costs/000039-000040.json",
+        "sha256": "7fa5d21504edee30da0cc317527a9e7c8999a4c4f0514eb2fb694a9174a84d72",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 40,
+      "stop": 41,
+      "part": {
+        "path": "content/009-canonical_face_costs/000040-000041.json",
+        "sha256": "be2b91c748bfe4dbdf7c56bd0430d8fe56f305a4086ccc751353a34cfb77a3ac",
+        "kind": "value"
+      }
+    }
+  ]
+}

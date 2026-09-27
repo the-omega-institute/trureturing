@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:82e5511d607caff2309160c603947d570ba6a6d6c721679fc57e73a9701b4715
+  normalized_sha256: sha256:82e5511d607caff2309160c603947d570ba6a6d6c721679fc57e73a9701b4715
+cas_ref: sha256:82e5511d607caff2309160c603947d570ba6a6d6c721679fc57e73a9701b4715
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.two_step_outputs_iff_commuting_difference
+    target_statement_id: sha256:c322f6afe054334e198110579746d49079b1fcb76dae85b404a7d3a04d6c44df
+receipts:
+  unresolved_subitems: []

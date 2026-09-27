@@ -1,0 +1,1 @@
+| 72·相干删除 | [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.lean) 取 $U=I$、$\tau_k=\Delta_f^{\,k}(\sigma_r)$、$k=0$，使用单步等式与非负性；这里的相对熵仍是旧实值迹对数表达式。 

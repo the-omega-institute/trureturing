@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,17 +14,24 @@ internal sealed class FileMapPatternException(string pattern)
 
 internal sealed class FileMapGlob
 {
+    private static readonly ConcurrentDictionary<string, Lazy<FileMapGlob>> compiledPatterns = new(StringComparer.Ordinal);
     private readonly Regex regex;
+    private readonly string literalPrefix;
 
     private FileMapGlob(string pattern, Regex regex)
     {
         Pattern = pattern;
         this.regex = regex;
+        var wildcard = pattern.IndexOf('*');
+        literalPrefix = wildcard < 0 ? pattern : pattern[..wildcard];
     }
 
     internal string Pattern { get; }
 
-    internal bool IsMatch(string path) => regex.IsMatch(path);
+    // Every accepted match begins with this literal prefix. Keep the regex as
+    // the final matcher, including its existing null-input diagnostic.
+    internal bool IsMatch(string path) =>
+        (path is null || path.StartsWith(literalPrefix, StringComparison.Ordinal)) && regex.IsMatch(path!);
 
     internal static FileMapGlob Create(string pattern)
     {
@@ -39,7 +47,7 @@ internal sealed class FileMapGlob
             throw new FileMapPatternException(pattern);
         }
 
-        return Compile(pattern);
+        return GetOrCompile(pattern);
     }
 
     internal static FileMapGlob CreateForAdmissionPlane(string pattern)
@@ -49,8 +57,13 @@ internal sealed class FileMapGlob
             throw new FileMapPatternException(pattern);
         }
 
-        return Compile(pattern);
+        return GetOrCompile(pattern);
     }
+
+    // Each entry validates before sharing the immutable compiled pattern.
+    private static FileMapGlob GetOrCompile(string pattern) =>
+        compiledPatterns.GetOrAdd(pattern, static value =>
+            new Lazy<FileMapGlob>(() => Compile(value), LazyThreadSafetyMode.ExecutionAndPublication)).Value;
 
     private static FileMapGlob Compile(string pattern)
     {

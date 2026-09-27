@@ -1,0 +1,5 @@
+因此点预测停止任务还有充分界
+$$
+T_\varepsilon\le V_\varepsilon,\qquad
+V_\varepsilon=\min\{n\in\mathbb N_0:16\varepsilon\,2^n\ge1\}.
+$$

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26373f3df2b9940dbbb7668e1cace79206a82c1e8376499c9a879a200e650e45
+  normalized_sha256: sha256:26373f3df2b9940dbbb7668e1cace79206a82c1e8376499c9a879a200e650e45
+cas_ref: sha256:26373f3df2b9940dbbb7668e1cace79206a82c1e8376499c9a879a200e650e45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “35.1 全部解的类型与两个尾部的构造”读作“39.1”是构造正文的地址说明，不在本子句构造解；未暗含额外存在断言，可按编号更正结算。
+    previous_atom_id: 5e5f94a6122d854e9e9d227db253ef116e53db0569a3b1a8041e8fdc0d139775
+    next_atom_id: 90bcf072ae3b3f42223193426600a58d30502579d35588dc9ea7c6ba38aa4d9b

@@ -1,0 +1,18 @@
+**定理 122.7。** 有
+$$
+L_q(A)\subseteq U_q(A),\quad
+U_q(A^c)=B\setminus L_q(A),\quad
+L_q(A^c)=B\setminus U_q(A),
+$$
+$$
+\partial_q A=U_q(A)\cap U_q(A^c)=\partial_q(A^c).
+$$
+下列条件等价：
+$$
+\begin{gathered}
+U_q(A^c)=B\setminus U_q(A),\qquad \partial_q A=\varnothing,\qquad U_q(A)=L_q(A),\\
+A=q^{-1}(q[A]),\qquad
+\exists!\chi:B\to\{0,1\},\quad1_A=\chi q.
+\end{gathered}
+$$
+

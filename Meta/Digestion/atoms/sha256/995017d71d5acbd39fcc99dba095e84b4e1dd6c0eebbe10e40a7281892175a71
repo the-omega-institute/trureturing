@@ -1,0 +1,21 @@
+**theorem 49.4（跨层幂判据）。** 设 $1\le t<\infty$，$m\mid n$。则
+$$
+a\mathrel{R_{t,n}}a',\quad b\mathrel{R_{t,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{t,m}}(a')^{b'}
+$$
+对所有自然数 $a,a',b,b'$ 成立，当且仅当
+$$
+h(m)\le t,\qquad \lambda(m)\mid n.
+$$
+更一般地，若 $t=\infty$，给定有限 $u,m$，只要
+$$
+v\ge\max\{u,1,h(m)\},\qquad m\mid n,\qquad \lambda(m)\mid n,
+$$
+就有
+$$
+a\mathrel{R_{v,n}}a',\quad b\mathrel{R_{v,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{u,m}}(a')^{b'}.
+$$
+

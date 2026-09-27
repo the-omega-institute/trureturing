@@ -1,0 +1,19 @@
+## 8. 接到真正的 27 维读数：一个精确恒等式
+
+设 V 是特征零 n 维辛空间，n 为偶数，X,Y,Z∈sp(V)。令
+
+\[
+L_X=X\otimes1+1\otimes X,
+\qquad W=\Lambda^2_0V.
+\]
+
+对本节的公式，L_X 表示其在二阶外幂及 primitive 部分的诱导作用。
+普通张量迹计算给出
+
+\[
+\operatorname{tr}_W(L_XL_Y)=(n-2)\operatorname{tr}_V(XY),
+\]
+\[
+\operatorname{tr}_W(L_XL_YL_Z)=(n-2)\operatorname{tr}_V(XYZ).
+\]
+

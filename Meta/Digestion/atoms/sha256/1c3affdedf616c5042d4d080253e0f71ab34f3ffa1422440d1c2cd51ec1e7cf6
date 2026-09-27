@@ -1,0 +1,22 @@
+**theorem 51.2.1 (影子连续性、单位商拓扑与主理想格运算).** 映射 $\sigma$ 连续，且
+$$
+\sigma(j(n))=n,\qquad \sigma(\tau(x))=x.
+$$
+映射 $\rho$ 是连续满射及商映射，并诱导同胚
+$$
+R/R^\times\cong\mathcal I\cong\operatorname{Prin}(R).
+$$
+第一个商是单位乘法作用的轨道空间，不是环理想商。第二个识别由 $e\mapsto J(e)$ 给出。对所有 $x,y\in R$，有
+$$
+xR=\prod_p x_p\mathbb Z_p=J(\rho(x)),
+$$
+$$
+xR+yR=J\bigl((\min\{v_p(x_p),v_p(y_p)\})_p\bigr),
+$$
+$$
+xR\cap yR=J\bigl((\max\{v_p(x_p),v_p(y_p)\})_p\bigr).
+$$
+特别地，和与交仍为主理想，包含任意零分量。映射 $\min,\max:E^2\to E$ 连续。以后可通过上述同胚把一个主理想与其赋值向量视为同一参数。
+
+单位轨道双射的既有结果是 Longhi–Mu–Saettone Proposition 4.3；主理想识别见紧随其后的 Remark 4.4，均在印页 26（[Longhi–Mu–Saettone，v3，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)）。商拓扑与一点紧化赋值乘积拓扑的一致性是该文 Lemma 4.5，印页 27（[Longhi–Mu–Saettone，v3，第 27 页](https://arxiv.org/pdf/2202.13478v3#page=27)）。这些结果的对象是整个 $R$，并未排除零坐标；它们本身不是关于 $C$ 的共同自然见证定理。
+

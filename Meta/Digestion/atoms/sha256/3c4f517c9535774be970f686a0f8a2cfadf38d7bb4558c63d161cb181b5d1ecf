@@ -1,0 +1,6 @@
+**Assumption 41.9 (Local density of actual inputs).** An actual set $D\subseteq V$ is locally dense around zero when there is a $\rho>0$ such that
+$$
+B_V(0,\rho)\subseteq\overline D^{\,V}.
+$$
+Closures and balls are taken in the topology of the specified input space $V$. This assumption holds when $D$ is dense in $V$. It is stronger than $0\in\overline D^{\,V}$ and does not require that $D$ itself contain a neighborhood.
+

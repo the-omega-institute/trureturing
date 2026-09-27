@@ -1,0 +1,123 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-alignment-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+      "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+      "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+    }
+  },
+  "alignment": {
+    "kind": "inline",
+    "value": {
+      "complete_b1": "1/90",
+      "complete_b_ge2": "1/360",
+      "five_other_slot_losses": [
+        "1/10",
+        "1/15",
+        "1/45",
+        "1/50"
+      ],
+      "fifteen_other_slot_losses": [
+        "1/15",
+        "1/15",
+        "1/45",
+        "1/75",
+        "1/30"
+      ],
+      "price": "2/5",
+      "aligned_first_label_gap": "2/675"
+    }
+  },
+  "slot_tables": {
+    "path": "content/003-slot_tables.json",
+    "sha256": "bcf1c5250bf5906cc79469c16d672899be13df83676b1f3d6734581f9cccfb07",
+    "kind": "value"
+  },
+  "affine_product_face_checks": {
+    "path": "content/004-affine_product_face_checks.json",
+    "sha256": "71a3ab6b5d88f0539560f0f8fa27beda388905f13f900557177b8a0a5bd5603b",
+    "kind": "value"
+  },
+  "complete_categories": {
+    "kind": "inline",
+    "value": {
+      "unit": "3/20",
+      "test3": "11/120",
+      "test9": "2/45",
+      "pure3_deep": "11/360",
+      "test5": "4/75",
+      "pure5_deep": "13/600",
+      "test15": "1/25",
+      "3_times_deep5": "1/60",
+      "9_times5": "1/36",
+      "deep35": "1/72",
+      "positive7": "3/20"
+    }
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "margin_lower": {
+    "kind": "inline",
+    "value": "13/50"
+  },
+  "old49_margin_upper": {
+    "kind": "inline",
+    "value": "10661/48600"
+  },
+  "old49_replacement_reserve": {
+    "kind": "inline",
+    "value": "79/1944"
+  },
+  "direction40_weight": {
+    "kind": "inline",
+    "value": "94212612766226/1174116234095805"
+  },
+  "weighted_old49_reserve": {
+    "kind": "inline",
+    "value": "3721398204265927/1141240979541122460"
+  },
+  "finite_off_diagonal_height3": {
+    "kind": "inline",
+    "value": {
+      "height": 3,
+      "kind": "off-diagonal",
+      "moduli": 63,
+      "s": "913/3375",
+      "H": "187/375",
+      "S": "15017/87750",
+      "D": "22501/135000",
+      "global_credit": "0",
+      "strong_neighborhood": false,
+      "direct_CRT": true,
+      "shallow_carrier": [
+        0,
+        1
+      ],
+      "carrier_cap_weight": "342/343",
+      "empty_cap_weight": "1/343"
+    }
+  },
+  "off_diagonal_limit": {
+    "kind": "inline",
+    "value": {
+      "s": "1/4",
+      "H": "1/2",
+      "S": "3/20"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Whole actual saturated J faces only, ordinary proof. No off-face or global-K update; relaxed source simplex need not be realizable."
+  }
+}

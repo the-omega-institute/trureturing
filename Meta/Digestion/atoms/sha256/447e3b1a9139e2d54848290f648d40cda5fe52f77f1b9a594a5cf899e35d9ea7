@@ -1,0 +1,24 @@
+**theorem 44.7 (Tagged closure and the exact failure support).** The graph closure of the strict response in $K^2\times\mathcal O$ is
+$$
+\{(x,z,\iota(y,w)):x,z,y,w\in K\}
+\ \cup\
+\{(x,0_K,\bot):x\in K\}.
+$$
+At each completed input $(x,0_K)$ its fiber contains every successful pair and the failure tag. At a completed divisor different from $0_K$, it contains successful pairs only. There is no continuous extension of the strict response to $K^2$. More quantitatively,
+$$
+\inf_{f\in C(K^2,[0,1])}
+\sup_{a,b\in\mathbb N_0}
+\left|f(Z(a),Z(b))-\mathbf1_{\{b>0\}}\right|
+=\frac12.
+$$
+
+**Proof.** The success and failure components of $\mathcal O$ are clopen. The success graph has closure the entire success component by Theorem 44.5. The actual failure graph is
+$$
+\{(Z(a),0_K,\bot):a\in\mathbb N_0\},
+$$
+whose closure is exactly $K\times\{0_K\}\times\{\bot\}$. Closedness of $\{0_K\}$ excludes any other failure support. Combining the component closures proves the formula.
+
+Every successful approximation in Theorem 44.5 has a positive divisor, even when its divisor encoding tends to $0_K$. Holding the numerical divisor literally equal to zero instead gives only the failure stratum. Thus the simultaneous limit values do not assert a successful witness with divisor zero. For each $x$, actual failure inputs approach $(x,0_K)$, while actual success inputs approach it with any prescribed successful output. A continuous extension into the Hausdorff space $\mathcal O$ would have a closed, single-valued graph containing all these limits, which is impossible.
+
+For the quantitative assertion, let the displayed supremum for $f$ be $\varepsilon$. Density of the successful inputs and continuity give $f\ge1-\varepsilon$ on all of $K^2$. At every actual failure input, $f\le\varepsilon$. Consequently $1-\varepsilon\le\varepsilon$. The constant function $1/2$ attains this bound. $\square$
+

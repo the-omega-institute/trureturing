@@ -1,0 +1,15 @@
+**证明。** 由定义，$d_{p,e}(a,b)\ge0$，且
+$$
+d_{p,e}(a,b)=0
+\Longleftrightarrow
+a=b.
+$$
+又因为同余关系对 $a,b$ 对称，
+$$
+h_a(b)=h_b(a),
+$$
+故
+$$
+d_{p,e}(a,b)=d_{p,e}(b,a).
+$$
+

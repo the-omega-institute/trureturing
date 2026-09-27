@@ -1,0 +1,5 @@
+容差保证是 $E_a\le\varepsilon_a$，其中
+$$
+E_a=\sup_{w\in\mathcal H}|y_a(s_a(w))-h(q_w)|\quad(a=c,f)
+$$
+为实际最坏误差；不把 $E_a$ 定义为给定容差。

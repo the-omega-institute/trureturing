@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fee4bd742c76b619fb5e15f85b3f6b579c054116231be535ce514fd1835b3d99
+  normalized_sha256: sha256:fee4bd742c76b619fb5e15f85b3f6b579c054116231be535ce514fd1835b3d99
+cas_ref: sha256:fee4bd742c76b619fb5e15f85b3f6b579c054116231be535ce514fd1835b3d99
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel
+    target_statement_id: sha256:67427e074ca61a486373990ed0a3cdf2d3ddcd20654f6bf17a2216233d9cf0d3
+  - gid: D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.visible_projection_commutes_iff_cross_blocks_eq_zero
+    target_statement_id: sha256:42c1e103d9cf57dda172aa18217ea525f3666b3f0678e5be46008528363d5c23
+receipts:
+  unresolved_subitems: []

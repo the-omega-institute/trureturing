@@ -1,0 +1,66 @@
+**theorem 40.5 (Pointwise coboundary and exact vector oscillation).** For every $x\in\mathbb T$,
+$$
+\mathbf f(x)=\mathbf g(x)-\mathbf g(x+\theta).
+$$
+The vector oscillation is given by the finite formula
+$$
+\Delta_{N,\theta}
+ =\max_{\substack{0\le k,l<N\\ \eta,\zeta\in\{+,-\}}}
+ \left\|(k-l)\boldsymbol\mu
+       -\mathbf1_{A_k^\eta}
+       +\mathbf1_{A_l^\zeta}\right\|_1
+ \le2(N-1).
+$$
+In particular, for every $m\ge1$,
+$$
+\sup_x\left\|
+ \sum_{j=0}^{m-1}
+ \bigl(\mathbf e_{\pi_{N,\theta}(x+j\theta)}
+       -\boldsymbol\mu\bigr)\right\|_1
+ \le\Delta_{N,\theta}.
+$$
+There is also the nonsharp coordinatewise estimate
+$$
+\Delta_{N,\theta}
+ \le\sum_{i=0}^{N-1}\operatorname{osc}(g_i)
+ \le\sum_{i=0}^{N-1}|\sigma_{i+1}-\sigma_i|
+ \le N(N-1).
+$$
+
+**Proof.** Finite telescoping gives, pointwise,
+$$
+F_q(x)-F_q(x+\theta)=\{x-q\theta\}-\{x\}.
+$$
+For a positively oriented half-open arc $[a,b)$ of length $\ell\in(0,1)$, interpreted modulo one,
+$$
+\{x-b\}-\{x-a\}=\mathbf1_{[a,b)}(x)-\ell.
+$$
+Indeed, put $u=\{x-a\}$. Since $b=a+\ell$ modulo one, the left side is $\{u-\ell\}-u$, equal to $1-\ell$ for $0\le u<\ell$ and to $-\ell$ for $\ell\le u<1$. This includes both endpoints with the specified convention. Subtracting the two transfer identities for $\sigma_{i+1}$ and $\sigma_i$ proves the vector coboundary, including the wraparound cell.
+
+The only possible jumps of $\mathbf g$ occur at $t_1,\ldots,t_{N-1}$. In particular, $\mathbf g$ is continuous at $t_0=0$. On each open cell it is affine, with constant vector slope
+$$
+(\sigma_{i+1}-\sigma_i)_{i<N}.
+$$
+Rotation preserves the direction of one-sided limits. Applying the coboundary successively at $t_0,\ldots,t_{k-1}$, first with right-hand values and then with left-hand values, gives
+$$
+\mathbf g(t_k^\eta)
+ =\mathbf g(0)
+   -\sum_{r=0}^{k-1}
+      (\mathbf e_{a_r^\eta}-\boldsymbol\mu)
+ =\mathbf g(0)+\mathbf v_k^\eta.
+$$
+For the minus sign, this uses the left limit of the pointwise identity; continuity at zero supplies the same initial value for both chains.
+
+The closure of the image of each open cell is the line segment between its two appropriate endpoint values. Thus every image point is a convex combination of endpoint values, and every endpoint value is a limit of image points. For any two such convex combinations, the norm of their difference is at most the largest norm of a difference of endpoint values, by double averaging and the triangle inequality. Conversely, each endpoint pair can be approached by image-point pairs. This proves the exact finite maximum formula for $\Delta_{N,\theta}$.
+
+To bound that maximum, suppose $k\ge l$, put $A=A_k^\eta$ and $B=A_l^\zeta$, and use $|A|=k$, $|B|=l$, and $\|\boldsymbol\mu\|_1=1$:
+$$
+\|(k-l)\boldsymbol\mu-\mathbf1_A+\mathbf1_B\|_1
+ \le k-l+|A\mathbin{\triangle}B|
+ =2k-2|A\cap B|
+ \le2(N-1).
+$$
+Interchanging the pair handles $k<l$. This argument uses the fact that both one-sided lists of labels are permutations; it does not replace the actual masses by uniform masses.
+
+The unweighted discrepancy identity telescopes to $\mathbf g(x)-\mathbf g(x+m\theta)$ and is therefore bounded by $\Delta_{N,\theta}$. Finally, each $g_i$ is a signed sum of $|\sigma_{i+1}-\sigma_i|$ fractional-part functions, each of oscillation one. Summing these coordinatewise estimates proves the last display. Unlike the finite endpoint-vector estimate, that last estimate alone can lose an extra factor of $N$. $\square$
+

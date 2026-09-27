@@ -1,0 +1,18 @@
+**theorem 45.4（联合连续的单生成紧幺半群之尾群）。** 设 $M$ 为紧致 Hausdorff 交换拓扑幺半群，加法联合连续、单位元为 $0$，且 $M=\overline{\{na:n\ge0\}}$。令
+$$
+A_N=\overline{\{na:n\ge N\}},\qquad H=\bigcap_{N\ge0}A_N.
+$$
+则 $H$ 是非空紧致拓扑交换群，也是 $M$ 唯一的最小非空加法理想。若其群单位元为 $e$，则
+$$
+x+H=H\quad(x\in M),\qquad r(x)=x+e
+$$
+定义一个连续加法收缩 $r:M\to H$。以 $H$ 的群零元 $e$ 解释自然数倍数时，$g=a+e$ 的非负整数倍在 $H$ 中稠密。
+
+存在唯一的 $t\in\mathbb N_0\cup\{\infty\}$，使
+$$
+M\setminus H=\{na:0\le n<t\},
+$$
+右侧各点互异且为孤立点。具体地，$t$ 是使 $ta\in H$ 的最小下标；若不存在则为 $\infty$。此外，$0\in H$ 当且仅当 $M=H$。
+
+这一尾群结构属于经典紧单生成半群理论；可与 Tanana 所载 Hewitt 结构定理比较：*Compact Monothetic Semirings*，Theorem 3，pp. 15–16。这里给出包含 $n=0$ 的完整证明。[Tanana, Theorem 3, pp. 15–16](https://www.ijritcc.org/index.php/ijritcc/article/download/5439/5339#page=2)
+

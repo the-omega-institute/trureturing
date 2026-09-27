@@ -1,0 +1,24 @@
+### 40a.2 固定零标签的实际学习状态
+
+固定平方外部维数 q≥1，隐藏宽度 m≥1，U∈R^(m×q)、V∈R^(q×m)。采用同一个训练集 X=I_q、Y=0，同一个未平均损失
+
+$$\mathcal L(U,V)=\frac12\|VU\|_F^2.$$
+
+所有训练步都使用这一个损失；没有重置、改标签或自由选择梯度。步长 h_n>0 已知。读数为完整输出矩阵 W_n=V_nU_n，可由固定基向量输入取得；矩阵读数与单个标量读数的费用应分别计算。
+
+令 A=U^TU、B=VV^T、W=VU，Γ=[[A,W^T],[W,B]]。实际初态域恰为
+
+$$\Gamma\succeq0,\qquad \operatorname{rank}\Gamma\le m.$$
+
+反向由半正定矩阵因子分解 Γ=Z^TZ、Z=[U,V^T] 得到真实参数，必要时补零行。第12节的更新取 G=W，给出
+
+$$
+\begin{aligned}
+A^+&=A-2hW^TW+h^2W^TBW,\\
+B^+&=B-2hWW^T+h^2WAW^T,\\
+W^+&=W-h(BW+WA)+h^2WW^TW.
+\end{aligned}\tag{40a.1}
+$$
+
+定义 H(W)=[[0,W^T],[W,0]]、C_h(W)=I-hH(W)，则同步参数更新的同一个 Gram 满足 Γ^+=C_h(W)ΓC_h(W)^T。这一合同式和实际像条件均为已有方法。
+

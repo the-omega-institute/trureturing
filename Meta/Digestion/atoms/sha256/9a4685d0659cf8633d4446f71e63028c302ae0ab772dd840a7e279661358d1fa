@@ -1,0 +1,24 @@
+**定理 20.2（任意有限前缀的精确参数投影）。** 在假设20.1且无其他限制时，相容参数恰为
+$$
+\mathcal R_D=\{r>0:p_r<z_n\}
+=\bigl(\max\{0,z_n^{-1}-2\},\infty\bigr),\qquad p_r=\frac1{r+2}.
+\tag{20.101}
+$$
+相容性的量词是对每个候选 $r$ 存在一条可依赖 $r$ 的共同钟，拟合该份全部有限记录。
+
+证明。由命题18.4，$k_r(0)=1$，$k_r'(t)=-(e^{-t}+e^{-(1+2/r)t})/2<0$，$k_r(t)\to p_r$，且每个有限 $t$ 有 $k_r(t)>p_r$。因此 $k_r:[0,\infty)\to(p_r,1]$ 连续严格递减双射。有限标签只能给有限内部时间，故 $z_n>p_r$ 必要，等号不能拟合。
+
+反之，设 $n\ge1$ 且 $p_r<z_n$。令 $t_i=k_r^{-1}(z_i)$，则 $0=t_0<t_1<\cdots<t_n<\infty$。写 $\Delta s_i=s_i-s_{i-1}$、$\Delta t_i=t_i-t_{i-1}$，选择
+$$
+0<\varepsilon<\min_{1\le i\le n}\frac{\Delta t_i}{\Delta s_i}.
+$$
+在每个开区间 $(s_{i-1},s_i)$ 取非负、积分为一的 $C_c^\infty$ 隆起函数 $b_i$，向区间外延拓为零，置
+$$
+d(s)=\varepsilon+\sum_{i=1}^n(\Delta t_i-\varepsilon\Delta s_i)b_i(s),
+\qquad \phi(s)=\int_0^s d(u)\,du.
+\tag{20.102}
+$$
+每个系数正，故 $d\ge\varepsilon>0$；紧支撑严格位于区间内部，零延拓及其有限和在全部标签和原点光滑。每段积分为 $\varepsilon\Delta s_i+\Delta t_i-\varepsilon\Delta s_i=\Delta t_i$，所以 $\phi(s_i)=t_i$。末点以后 $\phi(s)=t_n+\varepsilon(s-s_n)$，故无界。若 $n=0$，直接取 $\phi(s)=s$，不对空集取最小值。全部正参数均满足 $p_r<z_0=1$。这证明充分性。
+
+若 $z_n<1/2$，记录给严格下界 $r>z_n^{-1}-2$；若 $z_n\ge1/2$，每个正参数都相容。早期数值和时间间隔约束插值钟，但在此钟类中不给额外的 $r$ 限制。这沿用恢复几何卷引理15.8的单调反演机制；该引理严格正生成元的零平台值域在这里换成精确的 $(p_r,1]$，不搬用其原值域。$\square$
+

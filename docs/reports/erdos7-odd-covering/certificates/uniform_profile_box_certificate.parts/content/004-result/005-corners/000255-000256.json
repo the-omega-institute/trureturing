@@ -1,0 +1,48 @@
+[
+  {
+    "b": [
+      0,
+      3,
+      0,
+      0,
+      1,
+      0,
+      3,
+      0,
+      0,
+      1,
+      1,
+      0,
+      4,
+      0,
+      0,
+      2,
+      1
+    ],
+    "denominator": 86,
+    "survival_lower": "2333/4128",
+    "group_numerators": [
+      1546,
+      52012,
+      48502
+    ],
+    "roots": [
+      {
+        "root": 1,
+        "moment_numerator": "183628451886661/127628156250",
+        "deletion_numerator": "30233/24",
+        "margin_numerator": "159032185718981/510512625000",
+        "normalized_margin": "159032185718981/43904085750000",
+        "depth_maxima_sha256": "138f2da87108f877e9927f2222e88e081f9399832f2b7c7ac585357547a0dcb4"
+      },
+      {
+        "root": 2,
+        "moment_numerator": "32905/18",
+        "deletion_numerator": "14095/12",
+        "margin_numerator": "265/36",
+        "normalized_margin": "265/3096",
+        "depth_maxima_sha256": "f63f5d2a27aeca45e82a8a159d76a812f7ea445e648b01619c0b503938cc8f2a"
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>false</IsTestProject>
+    <RootNamespace>StrataLint.TestSupport</RootNamespace>
+    <AssemblyName>StrataLint.DigestionTestSupport</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />
+    <ProjectReference Include="../StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+</Project>

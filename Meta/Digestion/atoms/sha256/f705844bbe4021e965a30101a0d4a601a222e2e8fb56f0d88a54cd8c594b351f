@@ -1,0 +1,11 @@
+准备的两组 Fourier 支持不交，故 $\|u_0\|_{H^2}^2=2\alpha^2+9\beta^2\le R^2/4$，且 $\|b_0\|_{H^2}=3$。在 $T=\tau$ 置 $\lambda=32\sqrt{\tau/\nu}=1/(4R)$。映射
+$$
+\Phi_{u_0}(u)=E(\cdot)u_0-\mathcal B(u,u)
+\tag{25.109}
+$$
+将 $X_\tau$ 的闭 $R$ 球映入闭 $3R/4$ 球，且
+$$
+\|\Phi_{u_0}(u)-\Phi_{u_0}(v)\|_{X_\tau}
+\le\lambda(\|u\|_{X_\tau}+\|v\|_{X_\tau})\|u-v\|_{X_\tau}
+\le\tfrac12\|u-v\|_{X_\tau}.
+$$

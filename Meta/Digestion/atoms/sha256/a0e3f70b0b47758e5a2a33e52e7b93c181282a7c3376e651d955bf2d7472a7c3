@@ -1,0 +1,6 @@
+**命题 23.3。** 保留式（19.1）、（19.2）的定义。若 $\sigma:P\to P$ 满射，则
+
+$$
+s\approx_S t\Longrightarrow F(s)\approx_S F(t).
+$$
+

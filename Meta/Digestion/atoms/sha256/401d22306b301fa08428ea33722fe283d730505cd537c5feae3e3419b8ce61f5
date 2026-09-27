@@ -1,0 +1,19 @@
+**theorem 56.3（规范概率核、Feller 弱连续性与精确实际支撑）。** 定义
+$$
+K(A,B)=\operatorname{Law}\bigl(\rho(us(A)+vs(B))\bigr),
+$$
+其中 $u,v$ 独立且各服从 $m_U$。则 $K:I\times I\to\mathcal P(I)$ 与代表元选择无关，是弱拓扑连续的 Borel 概率核；等价地，对每个 $f\in C(I)$，
+$$
+(A,B)\longmapsto\int_I f(C)\,K(A,B)(dC)
+$$
+连续。若
+$$
+F(A,B,u,v)=\rho(us(A)+vs(B)),
+$$
+则对每个 $A,B$，
+$$
+\operatorname{supp}K(A,B)=F(\{A\}\times\{B\}\times U^2)
+=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+因此支撑恰是“一对实际代表元”的二元实际支撑，包括概率质量为 $0$ 的支撑点。并且 $(A,B)\mapsto\operatorname{supp}K(A,B)$ 在非空紧子集的 Vietoris–Michael 拓扑中连续。这里弱连续性的极限次序是：先令参数 $(A_j,B_j)\to(A,B)$，利用紧集 $U^2$ 上的一致连续性取得对全部 $(u,v)$ 的一致收敛，再对固定 Haar 概率积分；证明不以“先截断素数、再令素数界趋于无穷”为定义步骤。
+

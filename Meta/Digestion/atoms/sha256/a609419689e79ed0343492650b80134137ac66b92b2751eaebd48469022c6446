@@ -1,0 +1,12 @@
+**定理 12.2（策略因子化的充要条件）。** 下列命题等价：
+
+1. 存在唯一的实际像映射 \(\widehat p:\operatorname{ran}c\to\operatorname{ran}p\)，使 \(p=\widehat p\circ c\)；
+2. 任意 \(c\)-纤维上的策略残余都为空：
+   $$
+   \forall s,t,\quad c(s)=c(t)\Longrightarrow p(s)=p(t);
+   $$
+3. 联合边界没有增加区别：
+   $$
+   \ker e=\ker c.
+   $$
+

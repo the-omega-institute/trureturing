@@ -1,0 +1,63 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 43
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "2371/2880"
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "4395/48334",
+        "2": "6635/72501",
+        "3": "37/507",
+        "4": "37/507",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "37/507",
+      "polynomial_tail": {
+        "leading": "37/1014",
+        "constant": "-7979/145002",
+        "entrance": 4
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "4395/48334",
+        "3": "19820/72501",
+        "4": "25559/48334",
+        "5": "20716/24167",
+        "6": "182497/145002",
+        "7": "41880/24167",
+        "8": "110215/48334"
+      }
+    }
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "46111593947/268572704400"
+  },
+  "exhaustive_vertices": {
+    "path": "content/004-radius_results/000001/item/006-joint_cost_results/000002/item/004-exhaustive_vertices.json",
+    "sha256": "df9fb789ce593044ea3cf25a03cc445e17af584e70e11327c362f6e4c375b4d6",
+    "kind": "value"
+  },
+  "support_candidates": {
+    "path": "content/004-radius_results/000001/item/006-joint_cost_results/000002/item/005-support_candidates.json",
+    "sha256": "f575d17ccdd533a11a57814565c738c1d85a496847bcf2699925ec0ab1e3b81e",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/004-radius_results/000001/item/006-joint_cost_results/000002/item/006-selected_support.json",
+    "sha256": "450f6525e50792b07b4dfa18c83c45b6a7a11cb6db289bdb5dd18c6b3644ad04",
+    "kind": "value"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "1398413994397976815464622505679739/6263567310751650788504616000000000000"
+  }
+}

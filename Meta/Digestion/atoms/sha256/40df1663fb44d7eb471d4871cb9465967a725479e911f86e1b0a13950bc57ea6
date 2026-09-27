@@ -1,0 +1,11 @@
+**theorem 60.7（任意 $M$ 的精确非自适应并行合成）。** 设 $M>1$。则
+$$
+C_{\rm na}(M)=
+\max_{p\mid M}(p-1)p^{e_p-1}.
+$$
+更精确地，一个固定全局查询列表 $n_1,\ldots,n_k$ 能确定 $\rho_M(x)$，当且仅当对每个 $p\mid M$，投影中心列表
+$$
+n_1\bmod p^{e_p},\ldots,n_k\bmod p^{e_p}
+$$
+在 $X_{p,e_p}$ 上能确定局部目标 $a_p\equiv-x_p\pmod{p^{e_p}}$。
+

@@ -1,0 +1,33 @@
+**定义 91.1（相容读数、实际线程与观察伪距离）。** 在 ZFC 中，取指标 $L\in\mathbb N_0$、有限非空集合 $Q_L$ 和映射
+$$
+r_L:Q_{L+1}\longrightarrow Q_L.
+$$
+不要求 $r_L$ 满射。另取集合 $X$，允许 $X=\varnothing$，以及满足 $r_Lq_{L+1}=q_L$ 的读数 $q_L:X\to Q_L$。记
+$$
+K=\left\{z\in\prod_{L\ge0}Q_L:
+       r_L(z_{L+1})=z_L\text{ 对每个 }L\right\},
+\qquad \pi_L(z)=z_L,
+$$
+$$
+\iota:X\longrightarrow K,\qquad
+\iota(x)=(q_L(x))_L,\qquad
+A=\iota[X],\qquad e:X\twoheadrightarrow A,\quad e(x)=\iota(x).
+\tag{91.1}
+$$
+最后一个等号按到实际像的陪域限制理解。对 $a\in A$，定义
+$$
+X_a=\{x\in X:e(x)=a\},\qquad
+x\sim x'\ \Longleftrightarrow\ \iota(x)=\iota(x').
+$$
+各层取离散结构，在 $K$ 上使用首差距离
+$$
+d(z,z')=
+\begin{cases}
+0,&z=z',\\
+2^{-\min\{L:z_L\ne z'_L\}},&z\ne z',
+\end{cases}
+\qquad d_X(x,x')=d(\iota(x),\iota(x')).
+\tag{91.2}
+$$
+这是可数离散乘积的标准超度量及其拉回伪度量；$d_X(x,x')=0$ 当且仅当 $\iota(x)=\iota(x')$，故 $d_X$ 分离原状态当且仅当 $\iota$ 单射。各个相容方程的解集闭，所以 $K$ 在该完备乘积中闭；观察商 $X/{\sim}$ 通过 $[x]\mapsto\iota(x)$ 等距识别为 $A$，故其度量完成可典范识别为 $\overline A^{\,K}$。在此嵌入下，整个 $K$ 是这个完成当且仅当 $A$ 在 $K$ 中稠密；定理 4.2 的非空原状态与满射有限读数条件是已有的充分情形。[^rro91-metric]
+

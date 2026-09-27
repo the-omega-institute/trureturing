@@ -1,0 +1,67 @@
+**theorem 57.4（不变律的唯一轨道提升与显式析取）。** 对任意 $\nu\in\operatorname{Prob}(I)$ 定义
+$$
+\mathcal L\nu=\int_I m_a\,\nu(da).
+$$
+等价地令
+$$
+T:I\times U\to R,\qquad T(a,u)=u\,s(a),
+$$
+则
+$$
+\mathcal L\nu=T_*(\nu\otimes\lambda_U).
+$$
+于是 $\mathcal L\nu$ 是 $U$-不变概率且
+$$
+\rho_*(\mathcal L\nu)=\nu.
+$$
+反之，若 $\mu\in\operatorname{Prob}(R)$ 是 $U$-不变的，则
+$$
+\boxed{\mu=\mathcal L(\rho_*\mu)}.
+$$
+故一个 $U$-不变随机元素的完整分布由其 $\rho$-分布唯一确定。进一步，令 $\nu=\rho_*\mu$，则 $a\mapsto m_a$ 是 $\mu$ 关于 $\rho$ 的一个正规条件分布：对任意 Borel $B\subseteq R$、$C\subseteq I$，
+$$
+\mu\bigl(B\cap\rho^{-1}(C)\bigr)=\int_C m_a(B)\,\nu(da).
+$$
+在 $\nu$-几乎处处意义下它唯一。此结论不要求轨道作用自由。
+
+**证明。** theorem 57.3 已给出 $T$ 的连续性和 $a\mapsto m_a$ 的 Borel 性，故 $\mathcal L\nu$ 定义良好。每个 $m_a$ 支持于 $\rho^{-1}(a)$，因此对 Borel $C\subseteq I$，
+$$
+\rho_*(\mathcal L\nu)(C)
+=\int_I m_a(\rho^{-1}(C))\,\nu(da)
+=\int_I\mathbf1_C(a)\,\nu(da)
+=\nu(C).
+$$
+又因 Haar 左平移不变，每个 $m_a$ 对 $U$-作用不变，混合后 $\mathcal L\nu$ 仍不变。
+
+现设 $\mu$ 不变。对 $f\in C(R)$ 定义轨道平均
+$$
+Af(x)=\int_U f(ux)\,d\lambda_U(u).
+$$
+若 $a=\rho(x)$，取 $w\in U$ 使 $x=w\,s(a)$。紧群 $U$ 的归一化 Haar 概率双侧不变，故
+$$
+Af(x)=\int_U f(uw\,s(a))\,d\lambda_U(u)
+=\int_U f(u\,s(a))\,d\lambda_U(u)
+=M_f(a).
+$$
+写 $\nu=\rho_*\mu$，由 Fubini 与 $\mu$ 的不变性，
+$$
+\begin{aligned}
+\int_R f\,d\mathcal L\nu
+&=\int_I M_f(a)\,\nu(da)\\
+&=\int_R Af(x)\,\mu(dx)\\
+&=\int_U\int_R f(ux)\,\mu(dx)\,d\lambda_U(u)\\
+&=\int_R f(x)\,\mu(dx).
+\end{aligned}
+$$
+紧可度量空间上的 Borel 概率由连续函数积分唯一决定，故 $\mu=\mathcal L\nu$。
+
+由于 $m_a(\rho^{-1}(a))=1$，对 $B,C$ 有
+$$
+m_a\bigl(B\cap\rho^{-1}(C)\bigr)=\mathbf1_C(a)m_a(B).
+$$
+将混合恒等式应用于 $B\cap\rho^{-1}(C)$ 即得条件分布公式。若另一 Borel 核 $q_a$ 也满足同一公式，则取 $R$ 的一个可数生成代数 $\mathcal A$。对固定 $B\in\mathcal A$，
+$$
+\int_C q_a(B)\,\nu(da)=\int_Cm_a(B)\,\nu(da)
+$$
+对所有 Borel $C\subseteq I$ 成立，故 $q_a(B)=m_a(B)$ 对 $\nu$-几乎处处成立。对可数个 $B\in\mathcal A$ 取共同满测集，再用单调类定理扩张到全部 Borel $B$，得到一个共同的 $\nu$-满测集，在其上两个条件概率测度完全相同。这与 Simmons Definition 1.1、Theorem 2.1 的存在与共同零集唯一性一致；此处所需条件核本身已经由轨道平均显式给出。来源：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。证毕。
+

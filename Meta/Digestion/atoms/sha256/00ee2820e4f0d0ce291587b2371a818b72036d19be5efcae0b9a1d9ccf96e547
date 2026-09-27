@@ -1,0 +1,58 @@
+**假设 38.0（相位、分裂点及单侧收敛前提）。** 沿用[第16节定义16.0、16.3、定理16.4及其证明，以及第18节假设18.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)中的对象与结论。取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:\forall j\in\mathbb N_0,\ x_jx_{j+1}=0\},\qquad
+\gamma(n)=[n\phi],\qquad
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+这里 $K$ 取数字乘积拓扑，$Z(n)$ 为低位到高位排列、补零后的有限规范字。空间 $K$ 紧致可度量，$Z[\mathbb N_0]$ 稠密；连续满射 $H:K\to\mathbb T$ 满足 $H\circ Z=\gamma$。相位不在 $E$ 时纤维为单点；相位 $\beta\in E$ 时纤维为两个不同的定向点 $z_\beta^+,z_\beta^-$。特别，
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+u=z_{E_1}^+=(10)^\omega,\qquad
+v=z_{E_1}^-=(01)^\omega,
+$$
+$$
+z_{E_2}^+=0v,\qquad z_{E_2}^-=10v.
+$$
+这些符号中的有限字与无限尾均按低位到高位连接；正负号完全采用定义16.3的方向。
+
+采用定理16.4证明中的以下准确收敛规则。若 $H(w)=\beta\notin E$，则
+$$
+\gamma(n_k)\longrightarrow\beta
+\quad\Longrightarrow\quad Z(n_k)\longrightarrow w.
+$$
+若 $\beta\in E$，
+$$
+\gamma(n_k)=\beta+[\varepsilon_k],\qquad
+0<|\varepsilon_k|<\tfrac12,\qquad \varepsilon_k\longrightarrow0,
+$$
+则对 $s\in\{-1,+1\}$，
+$$
+Z(n_k)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+s\varepsilon_k>0\text{ 最终成立}.
+$$
+实相位纤维、端点及方向的前置分类见[固定相位文本的定理371.2、372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+另沿用
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N_0\}}.
+$$
+记分裂点的符号为 $s(z_\beta^\pm)=\pm1$，并置
+$$
+\mathcal S(w)=
+\begin{cases}
+\{s(w)\},&H(w)\in E,\\
+\{-1,+1\},&H(w)\notin E.
+\end{cases}
+$$
+采用定理16.4的分类：输出相位不在 $E$ 时 $\Gamma(w,w')$ 是该相位的唯一纤维点；输出相位 $\theta=H(w)+H(w')$ 在 $E$ 时，
+$$
+\Gamma(w,w')=\{z_\theta^s:s\in\mathcal S(w)\cup\mathcal S(w')\}.
+$$
+

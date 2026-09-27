@@ -1,0 +1,30 @@
+**定理 14.3（联合置信盒中的合法修复）。** 对 $\nu_\ell\ge0$，假设实际返回的拟合 $\widehat\theta$ 同时具有第13节的共同合法性证书与逐坐标残差证书
+$$
+\widehat\theta\in\mathcal C_r,\qquad
+|\widehat\theta_\ell-\bar X_\ell|\le\rho_\ell+\nu_\ell.
+\tag{14.8}
+$$
+在同一个事件 $\mathcal E_n$ 上，
+$$
+|\widehat\theta_\ell-\theta_\ell|\le2\rho_\ell+\nu_\ell.
+\tag{14.9}
+$$
+因此
+$$
+\begin{aligned}
+\|\widehat M_j-M_j\|_{\rm op}
+&\le\|\widehat M_j-M_j\|_F
+\le\left(\sum_{\ell\in I^M_j}(2\rho_\ell+\nu_\ell)^2\right)^{1/2}
+=:\Delta^M_j,\\
+\|\widehat z_j-z_j\|
+&\le\left(\sum_{\ell\in I^z_j}(2\rho_\ell+\nu_\ell)^2\right)^{1/2}
+=:\Delta^z_j,
+\end{aligned}
+\tag{14.10}
+$$
+其中 $I^M_j,I^z_j$ 分别为对应块的坐标集。在 $\mathcal E_n$ 上，取 $\nu=0$ 的置信盒与 $\mathcal C_r$ 的交非空。
+
+**证明。** 真实 $\theta\in\mathcal C_r$ 且在置信盒中，故交非空。经 $\bar X_\ell$ 的三角不等式给式(14.9)；在指定正交归一基中平方求和，再用算子范数不超过 Frobenius 范数，得到式(14.10)。结论在事件上对所有满足式(14.8)的拟合同时成立，因而允许拟合依赖数据。
+
+式(14.8)要求一份共同模型满足全部坐标约束。置信盒的直积形状不表示可以对每个矩、时间或后继分支另换模型；[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)第34节的全局模型与矩形化区别仍适用。置信盒非空是数学可行性，实际求解是否返回合法结果、残差证书和所需费用是不同条件。若将第10.4—10.5节的同一闭凸投影论证用于联合集 $\mathcal C_r$，也可将式(14.7)先转为共同加权 Frobenius 半径，并计入有限最优性误差；这里的逐坐标残差证书直接保留每个块的精度。$\square$
+

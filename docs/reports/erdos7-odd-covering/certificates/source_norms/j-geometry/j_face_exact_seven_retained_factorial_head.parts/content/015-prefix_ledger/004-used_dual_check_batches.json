@@ -1,0 +1,32 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/015-prefix_ledger/004-used_dual_check_batches/000000-000001.json",
+        "sha256": "dc346814341040866590abcf29d014b6316ffd40ff16913185c473ad06a0f2c3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/015-prefix_ledger/004-used_dual_check_batches/000001-000002.json",
+        "sha256": "f89a2587f9f21f4fd3d3e1c9da441f6acac70c2891750a2f574c144b18ac8632",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/015-prefix_ledger/004-used_dual_check_batches/000002-000003.json",
+        "sha256": "caea1748a6c58401dbd0e8e7beeb407c20d5a519157dc835873053e11b645dd1",
+        "kind": "value"
+      }
+    }
+  ]
+}

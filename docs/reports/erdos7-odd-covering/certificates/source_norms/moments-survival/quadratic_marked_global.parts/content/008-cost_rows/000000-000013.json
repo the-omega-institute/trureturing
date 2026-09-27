@@ -1,0 +1,782 @@
+[
+  {
+    "index": 0,
+    "name": "R17",
+    "tuple": [
+      0,
+      0
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "630053335920064561120723361434337/15632787748921114278012443437500",
+    "weight": "1",
+    "vmin": "298469622484874903/2311075142665519230",
+    "vmax": "2498381/1145144",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-127550782303809813079/50335216607255008829400",
+    "residual_penalty": "2498381/1145144",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "298469622484874903/2311075142665519230",
+        "309295315/210542904",
+        "2498381/1145144",
+        "3503/264",
+        "513569/37752",
+        "422491/30888",
+        "425651/30888",
+        "403/8",
+        "403/8"
+      ],
+      "source_increments": [
+        "1005471968558362808623/1585397547868546191780",
+        "282536563489/72216216072",
+        "40550987/8016008",
+        "181381/9240",
+        "26304043/1321320",
+        "21588137/1081080",
+        "3097111/154440",
+        "403/8",
+        "403/8"
+      ],
+      "cost_metadata": [
+        1,
+        "403/8",
+        "-398531940369992407376/1155537571332759615",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "403/8",
+        "-497552342520603195854909/1585397547868546191780",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 1,
+    "name": "R17",
+    "tuple": [
+      0,
+      1
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "60483842677693804423/5124190753280473875",
+    "weight": "1",
+    "vmin": "2191066581337/17538837986670",
+    "vmax": "39159/26026",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-110286177965389/95498972837418150",
+    "residual_penalty": "39159/26026",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "2191066581337/17538837986670",
+        "4466185/3721718",
+        "39159/26026",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14"
+      ],
+      "source_increments": [
+        "1843198605512981/4297015306734150",
+        "5670539/2658370",
+        "310419/130130",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14",
+        "93/14"
+      ],
+      "cost_metadata": [
+        1,
+        "93/14",
+        "-416404602497393/17538837986670",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/14",
+        "-92918393814031069/4297015306734150",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 2,
+    "name": "R17",
+    "tuple": [
+      0,
+      2
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "2932260428807/1594439816970",
+    "weight": "1",
+    "vmin": "93430123067/1594439816970",
+    "vmax": "93/182",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-3253598931217/26045174410204950",
+    "residual_penalty": "93/182",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "93430123067/1594439816970",
+        "83735/338338",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182"
+      ],
+      "source_increments": [
+        "6517574818753/55805393593950",
+        "495091/1691690",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182",
+        "93/182"
+      ],
+      "cost_metadata": [
+        1,
+        "93/182",
+        "-279455274589/227777116710",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/182",
+        "-62698214193617/55805393593950",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 3,
+    "name": "R17",
+    "tuple": [
+      0,
+      3
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "262352443907/1594439816970",
+    "weight": "1",
+    "vmin": "11662836167/1594439816970",
+    "vmax": "93/2366",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "136888162493/3720739201457850",
+    "residual_penalty": "93/2366",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "11662836167/1594439816970",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366"
+      ],
+      "source_increments": [
+        "102036665779/7972199084850",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366",
+        "93/2366"
+      ],
+      "cost_metadata": [
+        1,
+        "93/2366",
+        "-113681967703/1594439816970",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/2366",
+        "-524687353571/7972199084850",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 4,
+    "name": "R17",
+    "tuple": [
+      0,
+      4
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "21766048247/1594439816970",
+    "weight": "1",
+    "vmin": "2482232267/1594439816970",
+    "vmax": "93/30758",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "71669083841/3720739201457850",
+    "residual_penalty": "2482232267/298180952784",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "2482232267/1594439816970",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758"
+      ],
+      "source_increments": [
+        "2059397137/1138885583550",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758",
+        "93/30758"
+      ],
+      "cost_metadata": [
+        1,
+        "93/30758",
+        "-7159675723/1594439816970",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/30758",
+        "-33793759991/7972199084850",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 5,
+    "name": "R17",
+    "tuple": [
+      0,
+      5
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "31917269/28989814854",
+    "weight": "1",
+    "vmin": "4946897/28989814854",
+    "vmax": "93/399854",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "785693647/338249018314350",
+    "residual_penalty": "24734485/27107359344",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "4946897/28989814854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854"
+      ],
+      "source_increments": [
+        "3753379/20707010610",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854",
+        "93/399854"
+      ],
+      "cost_metadata": [
+        1,
+        "93/399854",
+        "-8538289/28989814854",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/399854",
+        "-41152277/144949074270",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 6,
+    "name": "R17",
+    "tuple": [
+      0,
+      6
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "2536073/28989814854",
+    "weight": "1",
+    "vmin": "461429/28989814854",
+    "vmax": "93/5198102",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "76039819/338249018314350",
+    "residual_penalty": "2307145/27107359344",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "461429/28989814854",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102"
+      ],
+      "source_increments": [
+        "2356201/144949074270",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102",
+        "93/5198102"
+      ],
+      "cost_metadata": [
+        1,
+        "93/5198102",
+        "-575893/28989814854",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "93/5198102",
+        "-2830409/144949074270",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 7,
+    "name": "R17",
+    "tuple": [
+      1,
+      0
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "355939493543309768327/26477876486582981460",
+    "weight": "1",
+    "vmin": "2048574445495/16183432951686",
+    "vmax": "148305/88088",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-177466308850969/117491723229240360",
+    "residual_penalty": "148305/88088",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "2048574445495/16183432951686",
+        "1589035/1245816",
+        "148305/88088",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264"
+      ],
+      "source_increments": [
+        "5191021357396739/11101835004856596",
+        "20626945/8720712",
+        "1666975/616616",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264",
+        "2015/264"
+      ],
+      "cost_metadata": [
+        1,
+        "2015/264",
+        "-222074088113875/8091716475843",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "2015/264",
+        "-277479416315906941/11101835004856596",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 8,
+    "name": "R17",
+    "tuple": [
+      1,
+      1
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "169828375/40938898",
+    "weight": "1",
+    "vmin": "5009435/40938898",
+    "vmax": "155/154",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-790082581/6018632089470",
+    "residual_penalty": "155/154",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "5009435/40938898",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154"
+      ],
+      "source_increments": [
+        "78500405/286572286",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154",
+        "155/154"
+      ],
+      "cost_metadata": [
+        1,
+        "155/154",
+        "-77400035/40938898",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "155/154",
+        "-498365885/286572286",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 9,
+    "name": "R17",
+    "tuple": [
+      1,
+      2
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "1361125/3721718",
+    "weight": "1",
+    "vmin": "208545/3721718",
+    "vmax": "155/2002",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "416113933/547148371770",
+    "residual_penalty": "347575/1160016",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "208545/3721718",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002"
+      ],
+      "source_increments": [
+        "1555335/26052026",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002",
+        "155/2002"
+      ],
+      "cost_metadata": [
+        1,
+        "155/2002",
+        "-52535/531674",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "155/2002",
+        "-2478695/26052026",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 10,
+    "name": "R17",
+    "tuple": [
+      2,
+      0
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "1547000386235/622439728911",
+    "weight": "1",
+    "vmin": "87693892465/1244879457822",
+    "vmax": "2015/2904",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "-26066956869827/81340423774089480",
+    "residual_penalty": "2015/2904",
+    "chosen": false,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "87693892465/1244879457822",
+        "2906845/8720712",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904"
+      ],
+      "source_increments": [
+        "18400731672329/121998186866556",
+        "24120955/61044984",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904",
+        "2015/2904"
+      ],
+      "cost_metadata": [
+        1,
+        "2015/2904",
+        "-4177420386925/2489758915644",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "2015/2904",
+        "-93673230757103/60999093433278",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 11,
+    "name": "R17",
+    "tuple": [
+      2,
+      1
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "1361125/3149146",
+    "weight": "1",
+    "vmin": "208545/3149146",
+    "vmax": "155/1694",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "416113933/462971699190",
+    "residual_penalty": "347575/981552",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "208545/3149146",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694"
+      ],
+      "source_increments": [
+        "1555335/22044022",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694",
+        "155/1694"
+      ],
+      "cost_metadata": [
+        1,
+        "155/1694",
+        "-52535/449878",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "155/1694",
+        "-2478695/22044022",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 12,
+    "name": "R17",
+    "tuple": [
+      3,
+      0
+    ],
+    "quadratic": false,
+    "alpha": "1",
+    "selected_cofactor_count": 5,
+    "barrier": "12602421170/47879979147",
+    "weight": "1",
+    "vmin": "1043019655/95759958294",
+    "vmax": "2015/31944",
+    "minimum_source_credit": "2/121",
+    "deep_shift_coefficient": "13/6075",
+    "gain_before_residual": "281871292211/6256955674929960",
+    "residual_penalty": "2015/31944",
+    "chosen": true,
+    "curvature_record": null,
+    "retained_curvature_factor": null,
+    "finite_prefix_and_tail": {
+      "entrance": 8,
+      "cost_increments": [
+        "1043019655/95759958294",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944"
+      ],
+      "source_increments": [
+        "26596121609/1340639416116",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944",
+        "2015/31944"
+      ],
+      "cost_metadata": [
+        1,
+        "2015/31944",
+        "-22075783375/191519916588",
+        8
+      ],
+      "source_metadata": [
+        1,
+        "2015/31944",
+        "-71268318593/670319708058",
+        8
+      ]
+    },
+    "layout_cell_floor_checks": 500
+  }
+]

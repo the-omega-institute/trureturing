@@ -1,0 +1,12 @@
+**证明。** 对每对 i<j，坏条件等价于多项式
+
+$$P_{ij}(A)=(A_{ij}\det A)^2-
+\sigma_i^2\sigma_j^2(\operatorname{adj}A)_{ij}^2=0.$$
+
+这些多项式不是恒零。统一构造 λ>max_i σ_i、t>0、A=λI+t\mathbf1\mathbf1ᵀ。则
+
+$$A^{-1}=\lambda^{-1}I-
+\frac{t}{\lambda(\lambda+qt)}\mathbf1\mathbf1^T,$$
+
+故 i≠j 时 α_ij=t、β_ij=-tσ_iσ_j/[λ(λ+qt)]，并有 |β_ij|<|α_ij|。因此有限乘积 ∏_{i<j}P_ij 非零。非零实多项式的零集无内点且测度为零，限制到正定开集得到结论。零步时固定 W_0 而任取不同 A≻0 都给合法 Gram，故不能识别。证毕。
+

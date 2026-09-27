@@ -1,0 +1,576 @@
+{
+  "schema": "erdos7-common-density-head-v1",
+  "prime_support": [
+    3,
+    5,
+    7,
+    11
+  ],
+  "analytical_inputs": {
+    "pair_R_K": {
+      "5": [
+        "15/7",
+        "173/12"
+      ],
+      "7": [
+        "21/13",
+        "19/2"
+      ],
+      "11": [
+        "33/25",
+        "181/25"
+      ]
+    },
+    "R357": "1649/360",
+    "Gamma35": "57/4"
+  },
+  "ordinary_profile": {
+    "1": "1",
+    "3": "17010/1591",
+    "5": "9360/1591",
+    "7": "1344/361",
+    "11": "3600/1591",
+    "3*5": "22680/1591",
+    "3*7": "20412/1591",
+    "3*11": "18900/1591",
+    "5*7": "13608/1591",
+    "5*11": "10400/1591",
+    "7*11": "7560/1591",
+    "3*5*7": "27216/1591",
+    "3*5*11": "25200/1591",
+    "3*7*11": "22680/1591",
+    "5*7*11": "15120/1591",
+    "3*5*7*11": "30240/1591"
+  },
+  "first_ternary_profile": {
+    "3": "14580/1591",
+    "3*5": "21600/1591",
+    "3*7": "17496/1591",
+    "3*11": "16200/1591",
+    "3*5*7": "27216/1591",
+    "3*5*11": "24000/1591",
+    "3*7*11": "19440/1591",
+    "3*5*7*11": "30240/1591"
+  },
+  "old_profile_K": "187719326/1723053",
+  "cutoffs": {
+    "3": 2,
+    "5": 1,
+    "7": 0,
+    "11": 0
+  },
+  "lambda_lower_bounds": {
+    "35": "2/3",
+    "357": "8/21",
+    "full": "1591/8505"
+  },
+  "exact_uncovered_support_budgets": {
+    "outside_57_in_357": "3/5",
+    "all_pairs_in_357": "1/15",
+    "cover_35_57_3711": "7/45",
+    "cover_35_3711_5711": "1/9"
+  },
+  "positive_seven_transport": {
+    "seven_weight": "2/3",
+    "eleven_weight": "61/45",
+    "v35_coefficient": "1159/90"
+  },
+  "selected_density_cells": [
+    {
+      "cell": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "projection": [
+        11
+      ],
+      "complement_variable": "357",
+      "coefficient": "10/9",
+      "infinite_weight": "8/25",
+      "weighted_coefficient": "16/45"
+    },
+    {
+      "cell": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        5
+      ],
+      "complement_variable": "3711",
+      "coefficient": "4/15",
+      "infinite_weight": "3",
+      "weighted_coefficient": "4/5"
+    },
+    {
+      "cell": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "projection": [
+        5,
+        11
+      ],
+      "complement_variable": "37",
+      "coefficient": "8/27",
+      "infinite_weight": "24/25",
+      "weighted_coefficient": "64/225"
+    },
+    {
+      "cell": [
+        0,
+        2,
+        0,
+        0
+      ],
+      "projection": [
+        5
+      ],
+      "complement_variable": "3711",
+      "coefficient": "4/3",
+      "infinite_weight": "11/40",
+      "weighted_coefficient": "11/30"
+    },
+    {
+      "cell": [
+        0,
+        2,
+        0,
+        1
+      ],
+      "projection": [
+        5,
+        11
+      ],
+      "complement_variable": "37",
+      "coefficient": "40/27",
+      "infinite_weight": "11/125",
+      "weighted_coefficient": "88/675"
+    },
+    {
+      "cell": [
+        2,
+        0,
+        0,
+        1
+      ],
+      "projection": [
+        3,
+        11
+      ],
+      "complement_variable": "57",
+      "coefficient": "20/81",
+      "infinite_weight": "8/5",
+      "weighted_coefficient": "32/81"
+    },
+    {
+      "cell": [
+        3,
+        0,
+        0,
+        0
+      ],
+      "projection": [
+        3
+      ],
+      "complement_variable": "5711",
+      "coefficient": "2",
+      "infinite_weight": "4/9",
+      "weighted_coefficient": "8/9"
+    },
+    {
+      "cell": [
+        3,
+        0,
+        0,
+        1
+      ],
+      "projection": [
+        3,
+        11
+      ],
+      "complement_variable": "57",
+      "coefficient": "20/9",
+      "infinite_weight": "32/225",
+      "weighted_coefficient": "128/405"
+    },
+    {
+      "cell": [
+        3,
+        2,
+        0,
+        0
+      ],
+      "projection": [
+        3,
+        5
+      ],
+      "complement_variable": "711",
+      "coefficient": "8/3",
+      "infinite_weight": "11/90",
+      "weighted_coefficient": "44/135"
+    },
+    {
+      "cell": [
+        3,
+        2,
+        0,
+        1
+      ],
+      "projection": [
+        3,
+        5,
+        11
+      ],
+      "complement_variable": "t",
+      "coefficient": "80/27",
+      "infinite_weight": "44/1125",
+      "weighted_coefficient": "704/6075"
+    }
+  ],
+  "remaining_profile_cells": [
+    {
+      "cell": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "profile_upper_bound": "1",
+      "infinite_weight": "3",
+      "contribution": "3"
+    },
+    {
+      "cell": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "profile_upper_bound": "3600/1591",
+      "infinite_weight": "24/25",
+      "contribution": "3456/1591"
+    },
+    {
+      "cell": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "profile_upper_bound": "1440/1591",
+      "infinite_weight": "9",
+      "contribution": "12960/1591"
+    },
+    {
+      "cell": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "profile_upper_bound": "1600/1591",
+      "infinite_weight": "72/25",
+      "contribution": "4608/1591"
+    },
+    {
+      "cell": [
+        1,
+        2,
+        0,
+        0
+      ],
+      "profile_upper_bound": "7200/1591",
+      "infinite_weight": "33/40",
+      "contribution": "5940/1591"
+    },
+    {
+      "cell": [
+        1,
+        2,
+        0,
+        1
+      ],
+      "profile_upper_bound": "8000/1591",
+      "infinite_weight": "33/125",
+      "contribution": "2112/1591"
+    },
+    {
+      "cell": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "profile_upper_bound": "1",
+      "infinite_weight": "5",
+      "contribution": "5"
+    },
+    {
+      "cell": [
+        2,
+        1,
+        0,
+        0
+      ],
+      "profile_upper_bound": "504/1591",
+      "infinite_weight": "15",
+      "contribution": "7560/1591"
+    },
+    {
+      "cell": [
+        2,
+        1,
+        0,
+        1
+      ],
+      "profile_upper_bound": "560/1591",
+      "infinite_weight": "24/5",
+      "contribution": "2688/1591"
+    },
+    {
+      "cell": [
+        2,
+        2,
+        0,
+        0
+      ],
+      "profile_upper_bound": "2520/1591",
+      "infinite_weight": "11/8",
+      "contribution": "3465/1591"
+    },
+    {
+      "cell": [
+        2,
+        2,
+        0,
+        1
+      ],
+      "profile_upper_bound": "2800/1591",
+      "infinite_weight": "11/25",
+      "contribution": "1232/1591"
+    },
+    {
+      "cell": [
+        3,
+        1,
+        0,
+        0
+      ],
+      "profile_upper_bound": "4536/1591",
+      "infinite_weight": "4/3",
+      "contribution": "6048/1591"
+    },
+    {
+      "cell": [
+        3,
+        1,
+        0,
+        1
+      ],
+      "profile_upper_bound": "5040/1591",
+      "infinite_weight": "32/75",
+      "contribution": "10752/7955"
+    }
+  ],
+  "unit_term": "1",
+  "constant": "332692/7955",
+  "density_variable_order": [
+    "t",
+    "35",
+    "37",
+    "311",
+    "57",
+    "511",
+    "711",
+    "357",
+    "3511",
+    "3711",
+    "5711"
+  ],
+  "objective": [
+    "704/6075",
+    "1159/90",
+    "56/135",
+    "0",
+    "32/45",
+    "0",
+    "44/135",
+    "16/45",
+    "0",
+    "7/6",
+    "8/9"
+  ],
+  "density_dual": [
+    {
+      "name": "append_7",
+      "row": [
+        "0",
+        "4/7",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-1",
+        "0",
+        "0",
+        "0"
+      ],
+      "upper_bound": "0",
+      "multiplier": "2135/108"
+    },
+    {
+      "name": "outside_57_in_357",
+      "row": [
+        "-3/5",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "-1",
+        "0",
+        "0",
+        "0"
+      ],
+      "upper_bound": "0",
+      "multiplier": "1/54"
+    },
+    {
+      "name": "all_pairs_in_357",
+      "row": [
+        "-31/15",
+        "1",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "-1",
+        "0",
+        "0",
+        "0"
+      ],
+      "upper_bound": "0",
+      "multiplier": "56/135"
+    },
+    {
+      "name": "append_11",
+      "row": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1591/3240",
+        "0",
+        "0",
+        "0"
+      ],
+      "upper_bound": "1",
+      "multiplier": "66606/1591"
+    },
+    {
+      "name": "cover_35_57_3711",
+      "row": [
+        "-97/45",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      "upper_bound": "1",
+      "multiplier": "5/18"
+    },
+    {
+      "name": "cover_35_3711_5711",
+      "row": [
+        "-19/9",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "1"
+      ],
+      "upper_bound": "1",
+      "multiplier": "8/9"
+    }
+  ],
+  "density_dual_rhs": "410773/9546",
+  "density_dual_residual": [
+    "21017/6075",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "44/135",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "variable_bound_corrections": [
+    {
+      "variable": "t",
+      "coefficient": "21017/6075",
+      "upper_bound": "8505/1591",
+      "contribution": "147119/7955"
+    },
+    {
+      "variable": "711",
+      "coefficient": "44/135",
+      "upper_bound": "8505/1591",
+      "contribution": "2772/1591"
+    }
+  ],
+  "head_bound": "5015891/47730",
+  "previous_head_bound": "168332/1591",
+  "head_improvement": "34069/47730",
+  "bridge": [
+    {
+      "prime": 67,
+      "delta": "1/4",
+      "input": "5015891/47730",
+      "survival_fraction": "150918019/155933910",
+      "output": "17390094097/150918019"
+    },
+    {
+      "prime": 71,
+      "delta": "53/200",
+      "input": "17390094097/150918019",
+      "survival_fraction": "55875302605721/57614312015421",
+      "output": "7029615126924407/55875302605721"
+    },
+    {
+      "prime": 73,
+      "delta": "27/100",
+      "input": "7029615126924407/55875302605721",
+      "survival_fraction": "138335257526567659561/142728766980895413936",
+      "output": "18990969219984662521362/138335257526567659561"
+    }
+  ],
+  "prime_73_threshold": "138877/1000",
+  "prime_73_threshold_margin": "220616339532474335490997/138335257526567659561000"
+}

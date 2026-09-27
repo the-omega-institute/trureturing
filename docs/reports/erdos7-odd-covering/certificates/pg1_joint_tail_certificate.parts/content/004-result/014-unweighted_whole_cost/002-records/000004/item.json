@@ -1,0 +1,15 @@
+{
+  "charge_root3": {
+    "kind": "inline",
+    "value": 1
+  },
+  "charge_root9": {
+    "kind": "inline",
+    "value": 5
+  },
+  "costs": {
+    "path": "content/004-result/014-unweighted_whole_cost/002-records/000004/item/002-costs.json",
+    "sha256": "c291503e3e82b49e0ebd4658c276a5e2758a658bfca538cc7ad4de4d09cce2df",
+    "kind": "object"
+  }
+}

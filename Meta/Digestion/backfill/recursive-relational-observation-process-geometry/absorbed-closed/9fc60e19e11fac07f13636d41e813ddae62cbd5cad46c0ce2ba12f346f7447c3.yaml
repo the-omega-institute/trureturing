@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9fc60e19e11fac07f13636d41e813ddae62cbd5cad46c0ce2ba12f346f7447c3
+  normalized_sha256: sha256:9fc60e19e11fac07f13636d41e813ddae62cbd5cad46c0ce2ba12f346f7447c3
+cas_ref: sha256:9fc60e19e11fac07f13636d41e813ddae62cbd5cad46c0ce2ba12f346f7447c3
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
+    target_statement_id: sha256:ceba603b788590b7e5f7cf036e0d43e16b5e85797e974ebc93e2a503afddbc0f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,84 @@
+### 16.4 双侧核心的恢复判据
+
+设另一个接口由
+
+$$
+u:S\to U,\qquad v:P\to V,\qquad F:U\times V\to L
+$$
+
+给出，且
+
+$$
+E(s,p)=F(u(s),v(p)).
+\tag{16.6}
+$$
+
+若 $u$ 和 $v$ 只保留实际像，并满足各自的分离条件
+
+$$
+\begin{aligned}
+u(s)\ne u(t)&\Longrightarrow\exists p\in P,
+  F(u(s),v(p))\ne F(u(t),v(p)),\\
+v(p)\ne v(q)&\Longrightarrow\exists s\in S,
+  F(u(s),v(p))\ne F(u(s),v(q)),
+\end{aligned}
+\tag{16.7}
+$$
+
+则 $u$ 在 $\sim_S$ 的类上诱导双射
+
+$$
+\bar u:\bar S\xrightarrow{\ \cong\ }u(S),
+$$
+
+$v$ 在 $\sim_P$ 的类上诱导双射
+
+$$
+\bar v:\bar P\xrightarrow{\ \cong\ }v(P),
+$$
+
+并且
+
+$$
+F(\bar u([s]),\bar v([p]))=\bar E([s],[p]).
+\tag{16.8}
+$$
+
+反之，若某个表示与 $(\bar S,\bar P,\bar E)$ 之间存在这种双侧双射并保持评价，则式（16.6)—（16.7）成立。因而，空间坐标、时间协议、边界状态和记忆读出只有在它们都能双射恢复这一个实际双侧核心时，才是同一任务下的互相恢复表达。
+
+这比“状态边界的核相同”更强：即使两个状态表示相同，协议菜单仍可能被不同地压缩；缺少协议侧的分离，外层观察者的操作序列无法恢复。
+
+更强的普适性可直接写成一个可复用条件。若 $f:S\to S'$、$g:P\to P'$ 都满射，存在 $E':S'\times P'\to L$ 使
+
+$$
+E(s,p)=E'(f(s),g(p)),
+$$
+
+并且 $E'$ 在状态轴和协议轴上分别外延，即相同整行或整列的元素必相等，那么存在唯一的双射
+
+$$
+\alpha:\bar S\xrightarrow{\ \cong\ }S',
+\qquad
+\beta:\bar P\xrightarrow{\ \cong\ }P'
+$$
+
+满足
+
+$$
+\alpha([s])=f(s),\qquad
+\beta([p])=g(p),\qquad
+E'(\alpha([s]),\beta([p]))=\bar E([s],[p]).
+\tag{16.9}
+$$
+
+这正是冻结声明 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality`：满射排除不可达目标值，双轴外延排除目标内部重复，唯一双射因此给出所有实际表达之间的唯一运输。只有“有一个因子化函数”而没有这两个条件时，不能称为恢复；目标可能仍藏有重复状态，或包含共同来源从未实现的值。
+
+在有限状态下，协议族也不必全部显式保存。若 $S$ 有限，`FiniteProtocolCompression.finite_protocol_subfamily_card_le_quotient_card_sub_one` 给出一个有限协议子集，保持完整协议族的状态行为商，并满足
+
+$$
+|P_0|\le |\bar S|-1.
+\tag{16.10}
+$$
+
+这里的上界是指定评价任务的有限证书，不是固定记忆容量，也不表示无限协议的计算成本自动消失；每个被选协议的删除都会产生一个仍未被其他选项区分的状态对。
+

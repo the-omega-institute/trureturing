@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7cafcb4948857b76ac9db82df58d759841642f4e827e3300a71187f8d0f0513a
+  normalized_sha256: sha256:7cafcb4948857b76ac9db82df58d759841642f4e827e3300a71187f8d0f0513a
+cas_ref: sha256:7cafcb4948857b76ac9db82df58d759841642f4e827e3300a71187f8d0f0513a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子说明可见商与动力学下降的接口主题，并列出后续需要明确的条件，属于章节导言。
+    previous_atom_id: aa2d4432cd64880958f123db20df41d328f9687a8d1e88adc5b26eb70f23c058
+    next_atom_id: 940c530f32f8f28d4c4a6d4402ad24a362e180d413925108e9a1f1d36d5f1eac

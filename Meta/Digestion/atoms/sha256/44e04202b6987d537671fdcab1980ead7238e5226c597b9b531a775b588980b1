@@ -1,0 +1,61 @@
+**定义与假设 80.1（完整实现、保留记录与指定耦合）。** 设 $E,W$ 为有限非空集合，$X,Y,Z$ 为集合，给定
+$$
+X\xleftarrow{s}E\xrightarrow{f}Y\xrightarrow{o}Z.
+$$
+$X$ 表示输入，$E$ 表示完整实现，$Y$ 表示完整输出，$Z$ 表示读出；同一输入下不同的实现由 $E$ 的不同元素区分。不要求完整输出映射 $f$ 单射。令
+$$
+r(e)=(s(e),o(f(e))),\qquad B=r[E],
+$$
+并将 $r$ 的陪域限制为实际像 $B$，故 $r:E\to B$ 满射，$B$ 也有限非空。给定严格正参考概率
+$$
+q_e>0,\qquad \sum_e q_e=1,\qquad
+p_b=\sum_{r(e)=b}q_e,\qquad
+R_b(e)=\mathbf1_{r(e)=b}\frac{q_e}{p_b}.
+$$
+在概率质量坐标上定义粗化及参考反向映射
+$$
+(C_r u)_b=\sum_{r(e)=b}u_e,\qquad
+(B_{r,q}v)_e=\frac{q_e}{p_{r(e)}}v_{r(e)}.
+$$
+这沿用 73.2–73.4 的概率坐标公式；参考 $q$ 按 73.5 作为指定数据给定。
+
+令 $J:E\times W\to[0,\infty)$ 是任意归一化联合律，即 $\sum_{e,w}J(e,w)=1$，并置
+$$
+d_e=\sum_wJ(e,w),\qquad
+a(b,w)=\sum_{r(e)=b}J(e,w),\qquad
+c_b=\sum_w a(b,w)=\sum_{r(e)=b}d_e,
+$$
+$$
+d^{\mathrm{rec}}_e=\frac{q_ec_{r(e)}}{p_{r(e)}}
+=(B_{r,q}C_r d)_e,\qquad
+J^{\mathrm{rec}}(e,w)=\frac{q_ea(r(e),w)}{p_{r(e)}}.
+$$
+$d$ 是实际实现边缘，$c$ 是实际粗边缘，$a$ 是实际保留记录 $(B,W)$ 的联合律；$d$ 与 $J$ 可有零质量。
+
+固定旧、新两份实现载体 $E_0,E_1$ 与 $E$ 的标识，在 $E_0\times E_1\times W$ 上定义
+$$
+\Omega(e_0,e_1,w)
+=J(e_0,w)\mathbf1_{r(e_1)=r(e_0)}\frac{q_{e_1}}{p_{r(e_0)}}
+=J(e_0,w)R_{r(e_0)}(e_1).
+$$
+这里 $W$ 是旧记录，抽样器只按保留的 $B=r(E_0)$ 与参考 $q$ 抽取 $E_1$；保留 $W$ 不把 $W$ 增添为抽样器的输入。比较 $J$ 与 $J^{\mathrm{rec}}$ 时始终使用上述固定标识。若保留多个记录，则以它们的实际联合元组为 $W$，并使用该元组与 $E$ 的实际联合律；各记录的单独边缘不指定元组联合律。共同见证及其纤维内耦合的含义沿用 56.6、57.13–57.15。
+
+以下用自然对数。对有限非负质量 $u$，置 $H(u)=-\sum_{x:u_x>0}u_x\ln u_x$；对 $u\ll v$，即 $v_x=0\Rightarrow u_x=0$，置
+$$
+D(u\Vert v)=\sum_{x:u_x>0}u_x\ln\frac{u_x}{v_x}.
+$$
+对有限联合律 $F$，记第一边缘为 $F_U(u)=\sum_vF(u,v)$，采用条件熵
+$$
+H_F(V\mid U)=\sum_{u:F_U(u)>0}F_U(u)
+ H\!\left(\frac{F(u,\cdot)}{F_U(u)}\right).
+$$
+零质量切片贡献零，不在该处指定归一化条件律。令
+$$
+P(b,(e,w))=\mathbf1_{b=r(e)}J(e,w)
+\quad\text{于 }B\times(E\times W),
+$$
+$$
+I_J(E;W\mid B)=H_P(E\mid B)+H_P(W\mid B)-H_P(E,W\mid B),
+$$
+其中前两项分别使用 $P$ 的 $(B,E)$、$(B,W)$ 投影。此为[有限条件熵](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Entropy/ConditionalEntropy.lean)及[条件互信息的条件熵缺陷定义](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)的首坐标条件约定；此处条件坐标是 $B$。
+

@@ -1,0 +1,20 @@
+**命题 37.6（一个固定紧凸类没有线性剩余量界）。** 在命题37.5的四标签模型中，令
+$$
+B_t=(1-t-t^2)P^0+tQ_*+t^2J\quad(0\le t\le1/2),\qquad
+\mathcal A=\operatorname{conv}\bigl(\mathcal F_c\cup\{B_t:0\le t\le1/2\}\bigr).
+\tag{37.12}
+$$
+$\mathcal A$ 是固定紧凸概率类，零剩余面为 $\mathcal F_c$，但不存在有限 $L$ 使所有 $P\in\mathcal A$ 满足 $\operatorname{dist}_{\rm TV}(P,\mathcal F_c)\le LR(P)$。
+
+证明。系数非负且和为一，生成集合紧；有限维空间中紧集的凸包仍紧。具体可由仿射依赖消元把任意凸组合缩到环境维数加一项，从而凸包是紧的“点组乘单纯形”连续像。$R(B_t)=5t^2/4$，非负仿射性及有限凸分解说明零剩余只使用 $\mathcal F_c$ 与 $B_0=P^0$，故零面如述。
+
+定义 $f$ 在第一轨道锚的割 $0$ 元组上为 $+1$，在第二轨道锚的割 $0$ 元组上为 $-1$，其余为零。则 $|f|\le1$，在 $\mathcal F_c$ 与 $J$ 上的期望均为零，在 $Q_*$ 上的期望为 $1/2$。于是 $\mathbb E_{B_t}f=t/2$；对任意 $Q\in\mathcal F_c$，有限和三角不等式给 $|\mathbb E_{B_t}f-\mathbb E_Qf|\le2\operatorname{TV}(B_t,Q)$，从而
+$$
+\operatorname{dist}_{\rm TV}(B_t,\mathcal F_c)\ge t/4,\qquad
+\frac{\operatorname{dist}_{\rm TV}(B_t,\mathcal F_c)}{R(B_t)}\ge\frac1{5t}\quad(t>0).
+\tag{37.13}
+$$
+令 $t\downarrow0$ 即得。$\square$
+
+在一个固定紧类上，若连续非负剩余量有非空零集，则剩余量趋零仍蕴含到零集的距离趋零。否则有距离统一大于某个正数的序列；紧性给收敛子列，连续性使极限落在零集，与距离下界矛盾。这一定性命题与恢复卷命题32.9的变字母集族相容。
+

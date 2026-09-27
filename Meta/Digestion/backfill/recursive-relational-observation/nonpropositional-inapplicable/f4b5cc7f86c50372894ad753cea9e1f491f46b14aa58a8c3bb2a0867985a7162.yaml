@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4b5cc7f86c50372894ad753cea9e1f491f46b14aa58a8c3bb2a0867985a7162
+  normalized_sha256: sha256:f4b5cc7f86c50372894ad753cea9e1f491f46b14aa58a8c3bb2a0867985a7162
+cas_ref: sha256:f4b5cc7f86c50372894ad753cea9e1f491f46b14aa58a8c3bb2a0867985a7162
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic attribution and cross-reference only: Kuhn, The Hungarian Method for the Assignment Problem (1955), DOI 10.1002/nav.3800020109, and Munkres, Algorithms for the Assignment and Transportation Problems (1957), DOI 10.1137/0105003, identify the standard finite assignment problem. The residue weight matrix and its recurrence are the separate preceding mathematical clauses. This receipt provides no formal solver, evaluator, invocation-count or binary-runtime evidence.'
+    previous_atom_id: 79f14ac52d86cfa00d296a4eed5c1d3fcb79df680ad9c5af622550d35abbf616
+    next_atom_id: 4f2e2430fc3bc1df6d20b2a466ffa4533c66d0373860fec5425e7cf8a3848ed0

@@ -1,0 +1,16 @@
+**Definition 42.1 (Sign observation and its actual finite images).** All vector spaces in this section are finite-dimensional over $\mathbb R$, and all indexing collections are sets. We work in ordinary set theory with choice. Put $D=\{-1,0,1\}$ with the discrete topology. For a vector space $V$, write $d=\dim V$ and define
+$$
+\sigma_V(v)(\ell)=\operatorname{sgn}(\ell(v)),
+\qquad
+S(V)=\overline{\sigma_V[V]}\subseteq D^{V^*}.
+$$
+The closure uses the product topology. The zero signature is denoted by $\mathbf 0$. For a finite subset $F\subseteq V^*$, put
+$$
+q_F(v)=\sigma_V(v)|_F,\qquad Q_F=q_F[V]\subseteq D^F.
+$$
+For $p\in S(V)$, its basic sign cylinder at $F$ is
+$$
+N(p;F)=\{q\in S(V):q|_F=p|_F\}.
+$$
+These observations are discrete sign tests, not continuous real-valued evaluations. No assertion that $\sigma_V$ is continuous for the usual Euclidean topology is included in the definition.
+

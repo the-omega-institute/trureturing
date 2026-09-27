@@ -1,0 +1,22 @@
+**推论 30.5（极小提升的全概率域与受限实际域）。** 在定义30.1中，以包含 $U\subseteq\mathbb R^V$ 的类型写
+$$
+E_S:U\to\mathbb R^V,\qquad E_Sx=x-C^{-1}B^*x,\qquad
+J=E_SR D^{-1}:\mathbb R^{\mathcal A}\to\mathbb R^V.
+\tag{30.14}
+$$
+则 $PE_S=\operatorname{id}_U$、$E_S\mathbf1_V=\mathbf1_V$、$R^{\mathsf T}J=I$、$J\bar\pi=\mathbf1_V/N_v$，并且
+$$
+J\Delta_m\subseteq\Delta_{N_v}
+\ \Longleftrightarrow\ E_S\text{ 在全部非负可见函数上保正}
+\ \Longleftrightarrow\ E_S\text{ 是自然包含}
+\ \Longleftrightarrow\ B^*=0\ \Longleftrightarrow\ B=0.
+\tag{30.15}
+$$
+只要求全部严格正粗概率的提升非负也给相同结论。
+
+证明。$C^{-1}B^*x\in H$，故 $P$ 消去修正；$B^*\mathbf1_V=0$ 给保常量。又 $R^{\mathsf T}$ 消去 $H$，所以 $R^{\mathsf T}J=R^{\mathsf T}RD^{-1}=I$，特别地 $J$ 保总质量。$RD^{-1}\bar\pi=\mathbf1_V/N_v$ 给参考保持。应用定理30.4于算术平均、$E_SR$ 与胞腔值，得正性恰为自然包含。自然包含恰说 $C^{-1}B^*=0$，可逆性给 $B^*=0$；伴随给 $B=0$。任意非零非负可见函数均可按总质量正归一化，故概率域与非负函数域等价；严格正版本同理。$\square$
+
+此处的零耦合直接接到主卷定理127.1的零记忆、强可并与全部初态的精确随机下降；[StrongLumpabilityDescent](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean)提供的是推前律在纤维上常值的既有接口。[SchurMinimum](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)中的 `schur_quadratic_is_least` 只承担静态能量极小化，不承担概率正性。主卷定理74.2提供一份指定参考的 Bayes 提升及其参考保持性质，不提供任意截面的唯一性。
+
+保常量／参考保持前提不可删除。例如一胞腔含两点时，$\mathsf P=(1/2,1/2)$，$Eu=(2u,0)$ 是正右截面，却不保常量；相应质量右逆 $b\mapsto(b,0)$ 为随机提升而非均匀提升。反过来，$B\ne0$ 并不排除在某个已声明实际准备族 $\mathcal B\subseteq\Delta_m$ 上逐项满足 $Jb\ge0$，式（30.13）已给完整受限域。它只判向量是否可为概率，执行这份准备所需控制、费用及与旧记录的相容性仍须另给。历史初态 $h_0$ 不因写下 $-C^{-1}B^*x_0$ 就被重置；即使 $r_0=0$，第29节的运动滞后项仍须保留。
+

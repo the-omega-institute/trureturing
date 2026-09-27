@@ -1,0 +1,107 @@
+**命题 1.14（最近点修复的通道障碍）。** 记式(TM.87)的唯一最近点映射为 $N_{p_0}(R(p,c))=R(p_0,d_*)$。对每个内部目标，它都没有面向全部未知输入态的单一 CPTP 实现：
+$$
+0<p_0<1
+\quad\Longrightarrow\quad
+\nexists\,\Phi:M_2(\mathbb C)\to M_2(\mathbb C)\ \text{为 CPTP},\quad
+\Phi(\rho)=N_{p_0}(\rho)\ \text{对全部密度态 }\rho\text{ 成立}.
+\tag{TM.99}
+$$
+
+端点 $p_0=0,1$ 则存在常值制备通道。以下分别证明这些范围，并将它们与单纯的逐态最小化区分。
+
+**内部目标的完全正性反证。** 假设存在式(TM.99)所排除的 $\Phi$，记 $E_{ij}=|i\rangle\langle j|$、$D_{p_0}=\operatorname{diag}(p_0,1-p_0)$。两个计算基纯态的相干均为零，其最近目标态相同，因此
+$$
+\Phi(E_{00})=\Phi(E_{11})=D_{p_0}.
+\tag{TM.100}
+$$
+
+因为 $r_0=\sqrt{p_0(1-p_0)}>0$，可取 $0<\varepsilon\le\min(r_0,1/2)$。以下四态都合法，且其相干位于目标圆盘内，所以最近点保留相干：
+$$
+\begin{aligned}
+R(1/2,\pm\varepsilon)&=I/2\pm\varepsilon X,
+&N_{p_0}(R(1/2,\pm\varepsilon))&=D_{p_0}\pm\varepsilon X,\\
+R(1/2,\pm i\varepsilon)&=I/2\mp\varepsilon Y,
+&N_{p_0}(R(1/2,\pm i\varepsilon))&=D_{p_0}\mp\varepsilon Y.
+\end{aligned}
+\tag{TM.101}
+$$
+
+第二行的符号使用B卷第1.2节固定的 $Y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$。分别将两行中的正负输入相减，使用假设中 $\Phi$ 的线性性，得到
+$$
+\Phi(X)=X,\qquad \Phi(Y)=Y,\qquad
+\Phi(E_{01})=\Phi((X+iY)/2)=E_{01},\qquad
+\Phi(E_{10})=E_{10}.
+\tag{TM.102}
+$$
+
+这里没有假定最近点映射本身线性；这些等式是某个单一线性通道若能在所列实际输入态上完成任务，就必须满足的条件。式(TM.100)、(TM.102)已经确定它在全部矩阵单位上的作用。
+
+取输入参考指标在前、输出指标在后的张量次序，并按 $00,01,10,11$ 排列基。由上述四个矩阵单位的像，未归一化 Choi 矩阵为
+$$
+J_\Phi=\sum_{i,j=0}^1|i\rangle\langle j|\otimes\Phi(E_{ij})
+=\begin{pmatrix}
+p_0&0&0&1\\
+0&1-p_0&0&0\\
+0&0&p_0&0\\
+1&0&0&1-p_0
+\end{pmatrix}.
+\tag{TM.103}
+$$
+
+它的 $00,11$ 主块已经不是正半定；同一事实也有一个不依赖 $p_0$ 的负方向：
+$$
+\det\begin{pmatrix}p_0&1\\1&1-p_0\end{pmatrix}
+=p_0(1-p_0)-1<0,\qquad
+v=\frac{|00\rangle-|11\rangle}{\sqrt2},\qquad
+v^\dagger J_\Phi v=-\tfrac12.
+\tag{TM.104}
+$$
+
+完全正性要求通道与任意外部参考的恒等操作拼接后仍保持正性。具体取 $|\Omega\rangle=|00\rangle+|11\rangle$，有 $J_\Phi=(\operatorname{id}_2\otimes\Phi)(|\Omega\rangle\langle\Omega|)$，所以完全正性要求 $J_\Phi\succeq0$，与式(TM.104)矛盾。若使用归一化的实际 Bell 输入，输出是 $J_\Phi/2$，在同一单位向量 $v$ 上的期望为 $-1/4$，同样违反正性。证明只使用完全正性定义的必要方向，不需要任何“正 Choi 矩阵推出通道”的逆向判据，也不构成新的 Choi 定理。
+
+**中央目标的正性与非完全正性。** 当 $p_0=1/2$ 时，全部合法相干都能保留，最近点映射有唯一的线性延拓
+$$
+\Lambda(A)=\frac{\operatorname{Tr}A}{2}I+A_{01}E_{01}+A_{10}E_{10},\qquad
+\Lambda:\ (x,y,z)\longmapsto(x,y,0)\quad\text{在 Bloch 坐标上}.
+\tag{TM.105}
+$$
+
+该变换将闭单位球送入自身，所以把每个密度态送到密度态；任意非零正半定矩阵都是其迹与某个密度态之积，线性性因此给出整个正锥上的正性。它也保持迹。式(TM.104)仍否定其完全正性。这展示了外部参考的实际作用：单个系统的输出合法性不足以保证它能代表原系统参与任意联合实验。
+
+**非中央目标的非仿射见证。** 当 $p_0\ne1/2$ 且仍在内部，$0<r_0<1/2$。取两个实际输入 $\rho_a=R(1/2,0)$、$\rho_b=R(1/2,1/2)$，由圆盘投影公式有
+$$
+\begin{aligned}
+\tfrac12\bigl(N_{p_0}(\rho_a)+N_{p_0}(\rho_b)\bigr)
+&=R(p_0,r_0/2),\\
+N_{p_0}\bigl((\rho_a+\rho_b)/2\bigr)
+&=R\bigl(p_0,\min(1/4,r_0)\bigr),\\
+\min(1/4,r_0)&>r_0/2\qquad(0<r_0<1/2).
+\end{aligned}
+\tag{TM.106}
+$$
+
+最后一行分 $r_0\le1/4$ 与 $r_0>1/4$ 两种情形立即成立。因此这份最近点映射连凸混合都不保持，不能由单一仿射操作实现。这个独立见证描述径向截断的性质；前面的完全正性反证始终只对所假设的 $\Phi$ 使用线性性，没有偷换前提。
+
+**端点的常值准备及其代价。** 若 $p_0=0$，目标为 $|1\rangle\langle1|$；若 $p_0=1$，目标为 $|0\rangle\langle0|$。分别令 $b=1,0$，定义
+$$
+K_0=|b\rangle\langle0|,\qquad K_1=|b\rangle\langle1|,\qquad
+\sum_{j=0}^1K_j^\dagger K_j=I,\qquad
+\Phi_b(A)=\sum_{j=0}^1K_jAK_j^\dagger
+=\operatorname{Tr}(A)|b\rangle\langle b|.
+\tag{TM.107}
+$$
+
+这给出明确的 CPTP 常值制备，在全部输入态上实现端点最近点。内部证明所需的正 $\varepsilon\le r_0$ 在端点不存在，所以两种结论相容。常值准备会丢弃输入区别；目标态制备、环境控制和重置等资源须按实际协议计费，通道的数学合法性不使这些资源免费。
+
+**零能量嵌入不解除内部障碍。** 使用式(TM.84)的等距 $V$，编码 $\mathcal E(A)=VAV^\dagger$ 为 CPTP。取 $P_\perp=I-VV^\dagger=|00\rangle\langle00|+|11\rangle\langle11|$，定义全四维输入上合法的解码
+$$
+\mathcal D(B)=V^\dagger BV+\operatorname{Tr}(P_\perp B)|0\rangle\langle0|,
+\qquad\mathcal D\mathcal E=\operatorname{id},\qquad
+\mathcal D:\ M_4(\mathbb C)\longrightarrow M_2(\mathbb C).
+\tag{TM.108}
+$$
+
+其 Kraus 算子可取 $V^\dagger,|0\rangle\langle00|,|0\rangle\langle11|$；各伴随乘积之和为 $VV^\dagger+P_\perp=I_4$，所以解码完全正且保迹。若存在四维 CPTP 映射 $\Psi$，对全部逻辑密度态 $\rho$ 都满足 $\Psi(\mathcal E\rho)=\mathcal E(N_{p_0}\rho)$，则 $\Phi=\mathcal D\Psi\mathcal E$ 是被式(TM.99)排除的逻辑 CPTP 实现。因此，把全部输入放进同一个简并零能量块，也不会产生这个内部目标的单一通道。该反证甚至不需要额外要求 $\Psi$ 守能。
+
+这一结论的量词是：对所有单份未知输入，以同一确定 CPTP 操作精确实现该最近点规则。数学模型中的条件化、已知输入后选择不同制备、带成功旗标的条件实验，以及多份样本的统计估计，具有另外的知识、样本、成功概率或误差条件，不能用本反例一并否定，也不能省略这些条件后声称已经取得上述单一通道。这里反驳的是“唯一最近点自动可实施”这一具体推断，所用正性、Kraus 表示和外部参考约束均归成熟量子通道结构。
+

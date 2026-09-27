@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84600c438f9d1463139087017f32fe856eb3ac6df2b87048855377c0cda00521
+  normalized_sha256: sha256:84600c438f9d1463139087017f32fe856eb3ac6df2b87048855377c0cda00521
+cas_ref: sha256:84600c438f9d1463139087017f32fe856eb3ac6df2b87048855377c0cda00521
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “没有新增 Lean 声明，也不把已知通道外推为现实环境中的学习保证”是有限模型与现实保证的适用范围说明；本叶不提供新的值函数命题，亦未在定义中预置学习保证。
+    previous_atom_id: 5a03ae81edf3b234b6f65ee85c5e7e3aed217936cb076aae402f8c51e5e83611
+    next_atom_id: 459a25689f9d75e4110441fc8763d8f242329bc906024e212297db001c9cf91c

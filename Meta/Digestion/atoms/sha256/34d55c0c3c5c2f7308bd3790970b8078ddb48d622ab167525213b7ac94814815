@@ -1,0 +1,23 @@
+**命题 71.9（从参考概率出发的时间演化不产生 Gibbs 位置族）。** 在命题 71.5 的 Bernoulli 模型中，若 $p\ne1/2$，则对每个 $\beta>0$ 与每个 $t\ge0$，
+$$
+\nu_{\beta,p}\ne\mu_pT_t^{(p)},
+\qquad T_t^{(p)}=e^{-tA_p},
+$$
+其中 $(\mu_pT_t^{(p)})(E)=\int T_t^{(p)}\mathbf1_E\,d\mu_p$。
+
+证明。先在定义与假设 71.0 的一般模型中应用第 70.3–70.4 条：$T_t$ 自伴且 $T_t1=1$。因 $\mu$ 是概率，有界 Borel 函数 $f$ 属于 $L^2(\mu)$，故
+$$
+\int T_tf\,d\mu
+=\langle1,T_tf\rangle
+=\langle T_t1,f\rangle
+=\int f\,d\mu.
+$$
+因此 $\mu T_t=\mu$ 对每个时间成立。另一方面，命题 71.5 中
+$$
+0<w_0(\beta)=\frac{1-e^{-\beta a_1}}{Z_\beta}<1,
+\qquad
+\nu_{\beta,p}([1])-p
+=\left(\frac12-p\right)(1-w_0(\beta))\ne0.
+$$
+从 $\mu_p$ 出发的 Markov 演化始终保持其首位质量 $p$，而归一化热迹的首位读出不同，遂得结论。证毕。
+

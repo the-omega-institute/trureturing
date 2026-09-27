@@ -1,0 +1,111 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-supported13-hinges-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+      "certificates/shared_cell_hinges_certificate.json": "7e7227e0b859ad6e30fd17915f40571eacea82cd9aadce09984ed6b7bd790674",
+      "verify_pg1_scalar_schedule.py": "ff5c6d067f417ed2bfd66d034a8e6cab13fadc3ca3ed4cd6e239c7c2964325e9"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Full actual generic AP(4,6) supported13 law with the shared-cell source profile; complete original labels and arbitrary finite heights. Universal hinge transfer uses exact full comparison means. Positive AP17 and17/19 continuations, plus510 exact schedule outcomes. Ordinary mathematics, not Lean or unrestricted Erdos7 resolution."
+  },
+  "source_mean": {
+    "kind": "inline",
+    "value": "3071051/584325"
+  },
+  "source_square": {
+    "kind": "inline",
+    "value": "3849/106"
+  },
+  "source_integer_hinges": {
+    "kind": "inline",
+    "value": {
+      "1": "2486726/584325",
+      "2": "1902401/584325",
+      "3": "1318076/584325",
+      "4": "94745926/61354125",
+      "5": "811368634658/676429228125",
+      "6": "578163435166/676429228125",
+      "7": "123701336587/175370540625",
+      "8": "9480670987427/18413906765625",
+      "9": "796298699261467/1933460210390625",
+      "10": "67064983742536307/203013322091015625",
+      "11": "5627311634056139947/21316398819556640625",
+      "12": "442432515511738016387/2238221876053447265625",
+      "13": "40127245873251313981627/235013296985611962890625",
+      "14": "3549011391199088738251667/24676396183489256103515625",
+      "15": "306746539940500036952722507/2591021599266371890869140625",
+      "16": "26099812896205724335951610147/272057267922969048541259765625",
+      "17": "2322498067880713987452337250587/28566013131911750096832275390625"
+    }
+  },
+  "source_profile_extension": {
+    "kind": "inline",
+    "value": [
+      {
+        "h": 13,
+        "root_bound": "40127245873251313981627/235013296985611962890625",
+        "unit_floor_square_bound": "48659/71550",
+        "selected": "40127245873251313981627/235013296985611962890625"
+      },
+      {
+        "h": 14,
+        "root_bound": "3549011391199088738251667/24676396183489256103515625",
+        "unit_floor_square_bound": "26201/41499",
+        "selected": "3549011391199088738251667/24676396183489256103515625"
+      },
+      {
+        "h": 15,
+        "root_bound": "306746539940500036952722507/2591021599266371890869140625",
+        "unit_floor_square_bound": "56145/95294",
+        "selected": "306746539940500036952722507/2591021599266371890869140625"
+      },
+      {
+        "h": 16,
+        "root_bound": "26099812896205724335951610147/272057267922969048541259765625",
+        "unit_floor_square_bound": "29944/54219",
+        "selected": "26099812896205724335951610147/272057267922969048541259765625"
+      },
+      {
+        "h": 17,
+        "root_bound": "2322498067880713987452337250587/28566013131911750096832275390625",
+        "unit_floor_square_bound": "63631/122430",
+        "selected": "2322498067880713987452337250587/28566013131911750096832275390625"
+      }
+    ]
+  },
+  "supported13_profile": {
+    "path": "content/007-supported13_profile.json",
+    "sha256": "250479626a84ea453e7834b690142290ff6120be7552637a5841a5069ce13536",
+    "kind": "value"
+  },
+  "single17": {
+    "path": "content/008-single17.json",
+    "sha256": "41cdcc7427c736e0dd5c0372d4dbd2e2e39c81a68c98e8e9b16a695669f7a38e",
+    "kind": "value"
+  },
+  "restart17_19": {
+    "path": "content/009-restart17_19.json",
+    "sha256": "462dadacafb5a8b379dd469bda5ff5d3598e84b14c1b22737e436f25393271c1",
+    "kind": "object"
+  },
+  "once_conditioned11_13_17_19": {
+    "path": "content/010-once_conditioned11_13_17_19.json",
+    "sha256": "4257d929043c276b98530eb44354077d2e79e4c660f18391b710b754d2c0e2a8",
+    "kind": "object"
+  },
+  "universal_formula": {
+    "kind": "inline",
+    "value": "U(t)=sum_(n<t)P(N=n)*n*H357(t/n)+M357*E[N;N>=t]-t*P(N>=t), N=N11*N13 and E N=49/36. For t>=1, H13(t)<=inf_(a>=t)[a-t+U(a)/rho13]. Only the listed witnesses are numerically evaluated."
+  },
+  "open_mathematical_obligations": {
+    "kind": "inline",
+    "value": "Every one of the255 supported13-restart schedules and255 four-step once-conditioned schedules has positive W483 defect for this specific upper functional. Some yield larger finite positive-survival bounds. Actual kernels or richer joint observations may perform better."
+  }
+}

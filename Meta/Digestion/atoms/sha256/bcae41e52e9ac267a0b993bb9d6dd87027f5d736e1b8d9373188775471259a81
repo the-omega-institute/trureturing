@@ -1,0 +1,57 @@
+**证明。** 给定方向后，各段独立，且每段初态均为 $\pi$，所以每段首边的正、反律分别为
+$$
+Q_k(i,j)=\frac14K_k(i,j),\qquad Q_k^{R}(i,j)=Q_k(j,i).
+$$
+它们是同一有限载体 $S\times S$ 上的非负归一化概率。令 $\delta=1/k$、$a=1-\delta/3$。单边 Bhattacharyya 亲和度为
+$$
+\begin{aligned}
+b_k
+&=\sum_{i,j}\sqrt{Q_k(i,j)Q_k^{R}(i,j)}\\
+&=\frac{1-\delta}{4}+\frac{\delta}{2}
+  +\frac{3a}{16}+\frac{6a\sqrt2}{16}\\
+&=\frac{7+6\sqrt2}{16}
+  +\delta\frac{3-2\sqrt2}{16}.
+\end{aligned}
+\tag{104.2d}
+$$
+第二行的四项依次来自 $0\to0$、六条连接 $0$ 与环的有向边、三个环内自环及六条有向环边。由于
+$3-2\sqrt2=(\sqrt2-1)^2>0$，且 $0<\delta\le1/2$，
+$$
+0<b_k\le\frac{17+10\sqrt2}{32}=\beta<1;
+$$
+最后一个不等式由 $\sqrt2<3/2$ 得到。
+
+$m$ 个首边的两份条件联合律为 $Q_k^{\otimes m}$ 与 $(Q_k^{R})^{\otimes m}$。直接将既有
+[bhattacharyya_iidPower_multiplicative](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/BhattacharyyaExponent.lean)
+的载体、两律及幂次取为 $S\times S$、$Q_k,Q_k^{R}$ 及 $m$；逐点乘积非负的前提已由概率非负性履行，故其亲和度恰为 $b_k^m$。
+
+对这里的有限归一化概率，已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCam.lean)
+及 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCamTight.lean)
+给出最优等先验错误率 $\tfrac12\sum\min\{P,Q\}$；逐记录的仿射最小化允许随机化而不改变此值。由于对非负数有 $\min\{u,v\}\le\sqrt{uv}$，首边记录的最优错误率至多为
+$$
+\frac12\operatorname{BC}\bigl(Q_k^{\otimes m},(Q_k^{R})^{\otimes m}\bigr)
+=\frac12 b_k^m\le\frac12\beta^m.
+\tag{104.2e}
+$$
+完整记录允许采用同一个首边检验，故 $R_{k,\mathcal D}$ 也满足该上界。
+
+具体地，将首边中的 $1\to2,2\to3,3\to1$ 各计为 $+1$，逆向三边各计为 $-1$，其余计零，总和记为 $J$。定义 103.1 的核给出首边记录的似然比恰为 $2^J$，与 $k$ 无关。因此取 $J>0$ 时报告正向、$J<0$ 时报告反向、$J=0$ 时公平抛币，即为同时适用于全部 $k$ 的最优首边检验，实现 (104.2e)。这条规则只判断共享方向标签，不识别参数 $k$。
+
+另一方面，在完整记录中考虑每段全部为零的那一个联合结果。沿用命题 103.2 中的单段路径质量，并利用段间条件独立性，该结果在两份律下都具有质量
+$$
+\prod_{s=1}^{m}\frac14\left(1-\frac1k\right)^{\ell_s}
+=4^{-m}\left(1-\frac1k\right)^L.
+$$
+在已有最优重叠质量公式的非负和中只保留该结果，得到 (104.2a) 的下界。它约束使用全部段内数据的任何检验，不仅约束首边规则。
+
+固定一个设计 $\mathcal D$ 后，$m,L$ 是与 $k$ 无关的有限整数。令合法整数 $k\to\infty$，有 $(1-1/k)^L\to1$；故对 $k$ 取上确界后得到 (104.2b) 的下界，上界则已经统一。此处未将 $\delta=0$ 的退化核加入模型族，也不要求某个有限 $k$ 取得上确界。
+
+若 $m_N\to\infty$，由 $0<\beta<1$ 与 (104.2b) 得 $\overline R(\mathcal D_N)\to0$。反之，若 $m_N$ 不趋于无穷，则存在有限整数 $M$ 和无限子序列 $N_j$，使 $m_{N_j}\le M$。于是
+$$
+\overline R(\mathcal D_{N_j})\ge\frac1{2\cdot4^M}>0,
+$$
+排除统一一致性，证明 (104.2c)。下界是在每个固定设计内先取 $k$ 的上确界，再考察设计序列的极限。证毕。
+
+本判据把独立平稳段数与段内转移次数分开；独立初态的制备成本未计入转移次数。这里 $m$ 计独立初态制备及正长度段；若只计首次制备后的重置，则为 $m-1$ 次。每段至少一条边以及真正的独立重启均是前提，不能由复制记录、切分同一轨迹或仅知道平稳分布来替代。
+

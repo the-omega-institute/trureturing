@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2891f4a907a65335156470258c1bf772b9593c210315a1885cc6ad1ec54824f3
+  normalized_sha256: sha256:2891f4a907a65335156470258c1bf772b9593c210315a1885cc6ad1ec54824f3
+cas_ref: sha256:2891f4a907a65335156470258c1bf772b9593c210315a1885cc6ad1ec54824f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “定义模拟误差及单向缺陷”及“其代价及最优 Bayes 风险为”约定实值下确界、方向和共同决策数据；“不能读取隐藏参数”是核的模型限制，不是新结论，全文没有宣称下确界取得或缺陷控制风险，因此定义没有夹带后两节的待证命题。
+    previous_atom_id: 9fd1405ebdadada268e4945ef100c54a9e812232ab8b4317fd4dfb4000bc0356
+    next_atom_id: 4bfe4e3e971cced366e366b8c64224d17f5341e1baaa4f6ef765712d77ca8b6e

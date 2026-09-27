@@ -1,0 +1,9 @@
+更明确地，对黏性线段始终落在 $[\underline\nu,\overline\nu]$ 的增量 $h$，逐模 Taylor 积分式、同一控制核和 Bochner 积分给算子范数余项
+$$
+\left\|\partial_\nu^j\mathcal B_{\nu+h}
+ -\sum_{\ell=0}^N\frac{h^\ell}{\ell!}\partial_\nu^{j+\ell}\mathcal B_\nu\right\|
+ \le\frac{|h|^{N+1}}{(N+1)!}M_{j+N+1}.
+\tag{27.107}
+$$
+这同时证明差商收敛和各阶算子导数连续，不仅是逐模的形式微分。
+

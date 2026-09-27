@@ -1,0 +1,10 @@
+#### 134.3.2 Yoneda 引理的完整证明
+
+令 $P:\mathcal C^{\mathrm{op}}\to\mathsf{Set}_{\mathcal U}$ 为任意预层。自然变换 $\eta:h_X\Rightarrow P$ 是一族函数 $\eta_Z:\operatorname{Hom}(Z,X)\to P(Z)$，满足
+
+$$
+\eta_W(f\circ g)=P(g)(\eta_Z(f))
+\quad(g:W\to Z,\ f:Z\to X).
+\tag{134.11}
+$$
+

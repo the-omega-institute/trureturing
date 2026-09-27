@@ -1,0 +1,25 @@
+**证明。** （一）第一个相邻方块已有
+$r_0g_1=\mathrm{flip}\ne\operatorname{id}=g_0r_0$。常零线程逐坐标变为 $(0,1,1,\ldots)$，后者不属于常值线程空间。
+
+（二）沿用命题 7.4 的有限前缀满射、$A_0,A_1$ 稠密与不交结论，并把该处前缀长度 $n$ 改记为 $L+1$。相容前缀族识别为一条无限二进制序列，所以 $K=\{0,1\}^{\mathbb N_0}$、$A=A_0$；首个不同的比特位置 $k$ 正好是首个不同的层 $L=k$。全部前缀相等迫使每个比特相等，故读数分离原状态。取补与截断交换，故给出 $K$ 的等距自同构；它交换最终恒零与最终恒一条件，因此
+$$
+G(A_0)=A_1,\qquad A_0\cap A_1=\varnothing.
+$$
+由（91.6），没有原状态全函数提升。每个有限实际像都是 $Q_L$，故其逐层不变没有补足无限实际像的不变。[^rro91-prefix]
+
+（三）$K=A$ 是两条常值线程。任何提升都满足 $F(b)=F(c)=a$，因而不能单射；取 $F(a)=b$ 就得到一份全函数提升。对应纤维分别含一个与两个元素，不能以双射相配。证毕。
+
+[^rro91-metric]: 首差超度量及可数离散乘积完备性采用钉版 Mathlib [`PiNat.dist_eq_of_ne`、`PiNat.dist_triangle_nonarch`、`PiNat.metricSpace`、`PiNat.completeSpace`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/MetricSpace/PiNat.lean)，底数为 $1/2$。闭子空间继承完备性，$A$ 在其闭包中稠密；满射读数的充分情形见本卷[定理 4.2](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro91-descent]: [`IndependentDescentCriterion.inverse_limit_descent_and_independent_converse`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.lean) 分开全指标自然性的正向下降和带坐标投影满射的独立逆向；本节先把相邻限制复合，满足其 `InverseStageSystem` 接口；本卷[第 5.4、6.3 条](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 给出相应下降及反推边界。
+
+[^rro91-lift]: 实际像必要性复用 [`CanonicalMinimalRealization.realization_range_invariant`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.lean)。截面构造采用 [`ComplementFiberLift.sectionLift`、`sectionLift_isComplementLift`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/Negation/ComplementFiberLift.lean)，此提升等式不要求底映射对合。满射取得右逆的选择步骤是钉版 Mathlib [`Function.Surjective.hasRightInverse`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean)。
+
+[^rro91-range]: 实际像等价采用钉版 Mathlib [`Equiv.ofInjective`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Set.lean)；观察商与实际像的典范对应采用 [`Setoid.quotientKerEquivRange`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Setoid/Basic.lean)。
+
+[^rro91-fibers]: 依赖纤维分解采用 [`CanonicalDependentFiberEquivalence.canonicalDependentFiberEquiv`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.lean)；依赖对到集合纤维的转换及纤维族组装采用钉版 Mathlib [`Equiv.psigmaEquivSubtype`、`Equiv.sigmaCongrRight`、`Equiv.sigmaCongr`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Defs.lean)。
+
+[^rro91-completion]: [`InverseLimitCompletion.stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates`、`stateEquivInverseLimit`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 提供观察分离、线程完备与原状态等价的既有接口。
+
+[^rro91-prefix]: $A_0,A_1$ 及其满前缀、稠密和不交性质沿用本卷[命题 7.4 的第一组构造](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，其前缀长度 $n$ 在此取 $L+1$。
+

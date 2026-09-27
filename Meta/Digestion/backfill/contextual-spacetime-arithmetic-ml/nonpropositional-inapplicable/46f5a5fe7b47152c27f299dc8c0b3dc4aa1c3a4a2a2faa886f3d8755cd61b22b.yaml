@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46f5a5fe7b47152c27f299dc8c0b3dc4aa1c3a4a2a2faa886f3d8755cd61b22b
+  normalized_sha256: sha256:46f5a5fe7b47152c27f299dc8c0b3dc4aa1c3a4a2a2faa886f3d8755cd61b22b
+cas_ref: sha256:46f5a5fe7b47152c27f299dc8c0b3dc4aa1c3a4a2a2faa886f3d8755cd61b22b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.7节先假定“真实读数误差满足”给定预算，再以“构造”命名带噪声传播矩阵与读出算子；这里尚未陈述传播后误差界，没有将待证界作为构造定义的一部分。
+    previous_atom_id: b5c11987235d1da4e73ac54cfc14d15af61886a8aeaf2782385167366d0125e6
+    next_atom_id: 9f5fa52009cc4173eafb7c2e64faf540df4f45fbb400c3295d17fb817461f478

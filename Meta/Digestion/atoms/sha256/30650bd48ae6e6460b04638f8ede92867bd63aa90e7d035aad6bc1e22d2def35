@@ -1,0 +1,6 @@
+**定理 128.1。** 对任意已实现读数，
+$$
+Z\mid\mathcal Y_n=(y_0,\ldots,y_{n-1})\sim N(m_n,\Sigma_n).
+$$
+固定安排下，$\Sigma_n$ 不依赖读数的具体数值。
+

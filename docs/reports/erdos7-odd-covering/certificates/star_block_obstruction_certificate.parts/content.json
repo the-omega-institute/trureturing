@@ -1,0 +1,468 @@
+{
+  "general_357_head": {
+    "kind": "inline",
+    "value": {
+      "primes": [
+        3,
+        5,
+        7
+      ],
+      "same_uniform_law_Gamma_bound": "1889/48",
+      "same_uniform_law_complete_cylinder_sum_bound": "2009/360",
+      "tail_prime_square_31_upper": "549329572676909868097/72216234108018000000000",
+      "tail_prime_square_37_upper": "469089312556889868097/72216234108018000000000",
+      "component_at_most_three_prime_31_factor": "7789681/2430000",
+      "component_at_most_three_prime_31_loss_upper": "8083223933051729599312138630673/8423301546359219520000000000000",
+      "component_at_most_three_prime_31_retained_lower": "340077613307489920687861369327/8423301546359219520000000000000",
+      "maximum_degree_two_prime_37_delta": "2/3",
+      "maximum_degree_two_prime_37_coefficient": "403681/2880",
+      "maximum_degree_two_prime_37_loss_upper": "189362442782277858843265057/207982754231091840000000000",
+      "maximum_degree_two_prime_37_retained_lower": "18620311448813981156734943/207982754231091840000000000",
+      "prime_31_common_delta_scalar_boundary": {
+        "finite_prime_square_lower": "10805196550218654509/1444324682160360000000",
+        "Gamma_times_lower_exceeds_33_over_50_cubed": true,
+        "cylinder_times_lower_exceeds_17_over_50_cubed": true,
+        "Gamma_cube_margin": "479612979889045156621/69327584743697280000000",
+        "cylinder_cube_margin": "25943968135554953269/10611365011790400000000",
+        "scope": "Only the common-delta scalar sufficient expression; not a covering counterexample."
+      }
+    }
+  },
+  "extended_prime_square": {
+    "kind": "inline",
+    "value": {
+      "cutoff": 40000,
+      "scale": 1000000000000,
+      "prime_count": 4182,
+      "ceiling_sum": 2387697612,
+      "odd_integer_tail": "20001/1600000000",
+      "upper_bound": "2400198237/1000000000000"
+    }
+  },
+  "star_forest": {
+    "kind": "inline",
+    "value": [
+      {
+        "head": "star_head",
+        "tail_prime_minimum": 79,
+        "Gamma_bound": "177",
+        "maximum_center_factor": "1580/1521",
+        "prime_square_upper": "2400198237/1000000000000",
+        "loss_upper": "1243035998073/2112500000000",
+        "retained_lower": "869464001927/2112500000000"
+      },
+      {
+        "head": "arbitrary_357_head",
+        "tail_prime_minimum": 19,
+        "Gamma_bound": "1889/48",
+        "maximum_center_factor": "95/81",
+        "prime_square_upper": "167864949504642761860711/12036039018003000000000000",
+        "loss_upper": "6024840902671133365942778501/7019417955299349600000000000",
+        "retained_lower": "994577052628216234057221499/7019417955299349600000000000"
+      }
+    ]
+  },
+  "pendant_degree_two_core": {
+    "kind": "inline",
+    "value": {
+      "tail_prime_minimum": 37,
+      "core_threshold": "2/3",
+      "core_coefficient": "403681/2880",
+      "leaf_coefficient": "511919/10368",
+      "prime_square_upper": "231370093346855785582133/36108117054009000000000000",
+      "loss_upper": "93399710652352090379581031573/103991377115545920000000000000",
+      "retained_lower": "10591666463193829620418968427/103991377115545920000000000000"
+    }
+  },
+  "arbitrary_forest": {
+    "path": "content/004-arbitrary_forest.json",
+    "sha256": "72fc9b54d2afeec3f0f0e09b03b015950574f8fb09da0cb1dbbce9c7fa07c8fa",
+    "kind": "value"
+  },
+  "feedback_vertex": {
+    "path": "content/005-feedback_vertex.json",
+    "sha256": "713fe053104ae410e48822527b4ec7b1905f793f0038076f7011e253a845438c",
+    "kind": "value"
+  },
+  "finite_head_supported_laws": {
+    "path": "content/006-finite_head_supported_laws.json",
+    "sha256": "9df5ef6dfa9860d2b1923fe289d32be51d7caa0db4f6cb709e0aae2d7772142d",
+    "kind": "value"
+  },
+  "local_parent_capped_kernel": {
+    "path": "content/007-local_parent_capped_kernel.json",
+    "sha256": "7ff195d54c1181f1890e87315999fb7875e995c2feeb5823588ee81974150b41",
+    "kind": "value"
+  },
+  "rank_two_tail": {
+    "path": "content/008-rank_two_tail.json",
+    "sha256": "0f594250ed4516dd859300aaba9e7d63d1cd2005d66a49ba36ff55780444b171",
+    "kind": "value"
+  },
+  "rank_three_tail": {
+    "path": "content/009-rank_three_tail.json",
+    "sha256": "dc7706a63998e93a6702615be840a7506defeaa65a1134f3da30af58a24fd864",
+    "kind": "value"
+  },
+  "finite_support_switch": {
+    "path": "content/010-finite_support_switch.json",
+    "sha256": "dfe9d7fe74c91d0a8ec0ea9fabb633719ad1419c2871697aa36759908e3f8e00",
+    "kind": "value"
+  },
+  "unrestricted_star_stoploss": {
+    "path": "content/011-unrestricted_star_stoploss.json",
+    "sha256": "2338231b900ed9675e97d4a9b80eba2b2dc7fce261d7ac44583e71bd94dee667",
+    "kind": "object"
+  },
+  "pure_head_unrestricted_stoploss": {
+    "path": "content/012-pure_head_unrestricted_stoploss.json",
+    "sha256": "1995e1c86ea3419f4b269a830026b74e283703177774ae4fee3035fdaa4151b3",
+    "kind": "array"
+  },
+  "finite_945_tail17_stoploss": {
+    "path": "content/013-finite_945_tail17_stoploss.json",
+    "sha256": "5e57277d77297fb6b6e945ade5b456b6d6cb8f25c12a9d83f3e153d2c04566aa",
+    "kind": "object"
+  },
+  "finite_315_tail13_adaptive": {
+    "path": "content/014-finite_315_tail13_adaptive.json",
+    "sha256": "358393dac29fa2abb1845c035a2bf90dfede80afe57d8f4e3efeaeafa91b0f26",
+    "kind": "object"
+  },
+  "finite_945_tail13_adaptive": {
+    "path": "content/015-finite_945_tail13_adaptive.json",
+    "sha256": "4dca5da9b95bba6ae6e3dcff0f389900c22031e59b80f39fd8faf7be9bddc320",
+    "kind": "object"
+  },
+  "head_mixed_mass_improvement": {
+    "path": "content/016-head_mixed_mass_improvement.json",
+    "sha256": "210667dfcc1e2534ceb75aa04ec6ffb03a9e3f47d927d2499b0fad408d2715be",
+    "kind": "value"
+  },
+  "cm1_actual_head_sharpness": {
+    "path": "content/017-cm1_actual_head_sharpness.json",
+    "sha256": "3436cfbf1eda821eecd406ac61f9c27ff89ded88e04821044f35108e3607f1e4",
+    "kind": "value"
+  },
+  "finite_head_sharp_density": {
+    "path": "content/018-finite_head_sharp_density.json",
+    "sha256": "56cf3f0ff4fc6927dba8597f60dd70223639bdc0a1d20b48a110d3feeba69b09",
+    "kind": "value"
+  },
+  "sharp_head_unmarked_comparison": {
+    "path": "content/019-sharp_head_unmarked_comparison.json",
+    "sha256": "1b49d87f153b03aef9a92fede6ee32580d5cf3b62788c8f523a785127194867e",
+    "kind": "value"
+  },
+  "adaptive_head_stoploss": {
+    "path": "content/020-adaptive_head_stoploss.json",
+    "sha256": "43c9095145647dcdfc6b74ae09a9ecd35ced679404f24c2630143e57609e283b",
+    "kind": "object"
+  },
+  "homogeneous_comb_capacity": {
+    "path": "content/021-homogeneous_comb_capacity.json",
+    "sha256": "60d6e2c5bbd855af6ee09a65c06f756965d86d0db531b551b9db1982c1c3d164",
+    "kind": "value"
+  },
+  "comb_stoploss_dual_transport": {
+    "path": "content/022-comb_stoploss_dual_transport.json",
+    "sha256": "15be6b7fca874a2fcf88ea8e7dc85839385a9c31feb202f4a7974125f8a7a127",
+    "kind": "value"
+  },
+  "local_kernel_crt_regression": {
+    "kind": "inline",
+    "value": {
+      "cases": 8,
+      "full_assignments": 6160,
+      "conditional_cylinder_queries": 9200,
+      "period": 1155,
+      "head_weights": [
+        "1/3",
+        "2/3"
+      ],
+      "original_distinct_moduli": [
+        3,
+        5,
+        7,
+        11,
+        15,
+        21,
+        33,
+        35,
+        55,
+        77,
+        105,
+        165,
+        231,
+        385,
+        1155
+      ],
+      "scope": "Actual CRT regression; the general local-kernel theorem is an ordinary proof."
+    }
+  },
+  "binary_path_regression": {
+    "kind": "inline",
+    "value": {
+      "vertices": 3,
+      "coordinate_cardinality": 2,
+      "cases": 16384,
+      "minimum_unsatisfiable_energy": "3/4",
+      "message_assignment_equivalence": true,
+      "local_potential_checks": true,
+      "scope": "Finite regression; the arbitrary-forest theorem is an ordinary proof."
+    }
+  },
+  "unrestricted_energy_boundary": {
+    "kind": "inline",
+    "value": {
+      "alphabet_cardinality": 3,
+      "predecessor_count": 3,
+      "assignments": 81,
+      "uncovered_assignments": 0,
+      "total_square_energy": "17/27",
+      "distinct_original_modulus_hypothesis": false,
+      "scope": "Abstract CSP boundary; not an odd distinct covering counterexample."
+    }
+  },
+  "forest_potential_identity": {
+    "kind": "inline",
+    "value": [
+      {
+        "b_exponent": 0,
+        "c_exponent": 1,
+        "coefficient": "1"
+      },
+      {
+        "b_exponent": 0,
+        "c_exponent": 3,
+        "coefficient": "-1/3"
+      },
+      {
+        "b_exponent": 1,
+        "c_exponent": 1,
+        "coefficient": "-2"
+      },
+      {
+        "b_exponent": 1,
+        "c_exponent": 2,
+        "coefficient": "1"
+      },
+      {
+        "b_exponent": 3,
+        "c_exponent": 0,
+        "coefficient": "1/3"
+      }
+    ]
+  },
+  "star_head_hubs": {
+    "kind": "inline",
+    "value": {
+      "tail_prime_minimum": 79,
+      "Gamma_bound": "177",
+      "cylinder_sum_bound": "73/10",
+      "prime_square_upper": "2400198237/1000000000000",
+      "vertex_cover_cardinality": 8,
+      "worst_hub_primes": [
+        79,
+        83,
+        89,
+        97,
+        101,
+        103,
+        107,
+        109
+      ],
+      "cube_nonnegative_remainder_margin": "1650701518477/1521000000000000",
+      "partial_derivative_lower_margin": "45351566739662291/27134686950638670",
+      "hub_cylinder_product": "6868087171373809/6309459438796800",
+      "hub_moment_factor": "2355753899781216487/1828060714734059520",
+      "vertex_cover_loss_upper": "12192740246787217690250957521427525512199605621/12396133925611839760650568282275840000000000000",
+      "vertex_cover_retained_lower": "203393678824622070399610760848314487800394379/12396133925611839760650568282275840000000000000",
+      "matching_deletion_cardinality": 1,
+      "matching_pair_factor": "24649/12168",
+      "matching_loss_upper": "33847214316501377/34273200000000000",
+      "matching_retained_lower": "425985683498623/34273200000000000"
+    }
+  },
+  "general_357_head_hubs": {
+    "kind": "inline",
+    "value": {
+      "tail_prime_minimum": 37,
+      "Gamma_bound": "1889/48",
+      "cylinder_sum_bound": "2009/360",
+      "prime_square_upper": "231370093346855785582133/36108117054009000000000000",
+      "vertex_cover_cardinality": 6,
+      "worst_hub_primes": [
+        37,
+        41,
+        43,
+        47,
+        53,
+        59
+      ],
+      "cube_nonnegative_remainder_margin": "64202884763480785582133/36108117054009000000000000",
+      "partial_derivative_lower_margin": "13077912259247/5289581076480",
+      "hub_cylinder_product": "9586934839/8390753280",
+      "hub_moment_factor": "2003669381351/1347337438720",
+      "vertex_cover_loss_upper": "2792346653676516265708382414137/2823523451379671040000000000000",
+      "vertex_cover_retained_lower": "31176797703154774291617585863/2823523451379671040000000000000",
+      "matching_deletion_cardinality": 2,
+      "matching_pair_factor": "5329/2592",
+      "matching_loss_upper": "100223867559296974822299294741453779/110898781501780810137600000000000000",
+      "matching_retained_lower": "10674913942483835315300705258546221/110898781501780810137600000000000000"
+    }
+  },
+  "head_primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "minimum_each_head_height": {
+    "kind": "inline",
+    "value": 1
+  },
+  "K0": {
+    "kind": "inline",
+    "value": "254814125929991056579382979018987583/1440267853813150635786240000000000"
+  },
+  "C0": {
+    "kind": "inline",
+    "value": "245619572691519/33672543600640"
+  },
+  "ternary_finite_height": {
+    "path": "content/033-ternary_finite_height.json",
+    "sha256": "39302565a7803b35e3990eb879734e744c0e540cc0c397dc2ed0ab6308ed4aeb",
+    "kind": "value"
+  },
+  "prime_cutoff": {
+    "kind": "inline",
+    "value": 4000
+  },
+  "rounding_scale": {
+    "kind": "inline",
+    "value": 1000000000
+  },
+  "tail_primes_to_cutoff": {
+    "path": "content/036-tail_primes_to_cutoff.json",
+    "sha256": "09773a5078c0a095895efbd1a4e3e1beb7d358656a88a4b66582f901d782738d",
+    "kind": "value"
+  },
+  "prime_count": {
+    "kind": "inline",
+    "value": 529
+  },
+  "ceiling_sum": {
+    "kind": "inline",
+    "value": 2363054
+  },
+  "odd_integer_tail_bound": {
+    "kind": "inline",
+    "value": "2001/16000000"
+  },
+  "prime_square_upper": {
+    "kind": "inline",
+    "value": "4976233/2000000000"
+  },
+  "matching_pair_factor": {
+    "kind": "inline",
+    "value": "24649/12168"
+  },
+  "matching_loss_upper": {
+    "kind": "inline",
+    "value": "1454291/1622400"
+  },
+  "matching_retained_lower": {
+    "kind": "inline",
+    "value": "168109/1622400"
+  },
+  "singleton_delta": {
+    "kind": "inline",
+    "value": "3/4"
+  },
+  "singleton_loss_upper": {
+    "kind": "inline",
+    "value": "59/75"
+  },
+  "residual_crossing_threshold": {
+    "kind": "inline",
+    "value": "16/75"
+  },
+  "two_prime_raw_crossing_threshold": {
+    "kind": "inline",
+    "value": "1/75"
+  },
+  "weighted_edge_threshold": {
+    "kind": "inline",
+    "value": "2/1095"
+  },
+  "dense_comparison_primes": {
+    "kind": "inline",
+    "value": [
+      79,
+      83,
+      89,
+      97,
+      101,
+      103,
+      107,
+      109,
+      113,
+      127,
+      131,
+      137,
+      139,
+      149,
+      151,
+      157,
+      163,
+      167,
+      173,
+      179,
+      181
+    ]
+  },
+  "dense_comparison_edges": {
+    "kind": "inline",
+    "value": 210
+  },
+  "dense_pair_reciprocal_sum": {
+    "kind": "inline",
+    "value": "1859432625035125161855056066737000055526922/132516293115862693961302822730318247072805007"
+  },
+  "dense_comparison_actual_E": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "dense_comparison_actual_J": {
+    "kind": "inline",
+    "value": "29750922000562002589680897067792000888430752/132516293115862693961302822730318247072805007"
+  },
+  "dense_comparison_violates_simplified_uniform_budget": {
+    "kind": "inline",
+    "value": true
+  },
+  "dense_comparison_satisfies_full_block_criterion": {
+    "kind": "inline",
+    "value": true
+  }
+}

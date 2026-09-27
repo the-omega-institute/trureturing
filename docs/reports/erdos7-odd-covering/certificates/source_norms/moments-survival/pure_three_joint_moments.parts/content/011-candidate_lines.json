@@ -1,0 +1,352 @@
+[
+  {
+    "first_root": 0,
+    "second_cell": 0,
+    "deep_cell": 0,
+    "intercept": "139/360",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 0,
+    "deep_cell": 1,
+    "intercept": "11/40",
+    "slope": "2/15"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 0,
+    "deep_cell": 2,
+    "intercept": "67/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 0,
+    "deep_cell": 3,
+    "intercept": "67/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 0,
+    "deep_cell": 4,
+    "intercept": "67/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 1,
+    "deep_cell": 0,
+    "intercept": "2/5",
+    "slope": "31/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 1,
+    "deep_cell": 1,
+    "intercept": "77/180",
+    "slope": "59/360"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 1,
+    "deep_cell": 2,
+    "intercept": "5/18",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 1,
+    "deep_cell": 3,
+    "intercept": "5/18",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 1,
+    "deep_cell": 4,
+    "intercept": "5/18",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 2,
+    "deep_cell": 0,
+    "intercept": "4/15",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 2,
+    "deep_cell": 1,
+    "intercept": "7/30",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 2,
+    "deep_cell": 2,
+    "intercept": "8/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 2,
+    "deep_cell": 3,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 2,
+    "deep_cell": 4,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 3,
+    "deep_cell": 0,
+    "intercept": "4/15",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 3,
+    "deep_cell": 1,
+    "intercept": "7/30",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 3,
+    "deep_cell": 2,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 3,
+    "deep_cell": 3,
+    "intercept": "8/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 3,
+    "deep_cell": 4,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 4,
+    "deep_cell": 0,
+    "intercept": "4/15",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 4,
+    "deep_cell": 1,
+    "intercept": "7/30",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 4,
+    "deep_cell": 2,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 4,
+    "deep_cell": 3,
+    "intercept": "13/90",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 0,
+    "second_cell": 4,
+    "deep_cell": 4,
+    "intercept": "8/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 0,
+    "deep_cell": 0,
+    "intercept": "31/120",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 0,
+    "deep_cell": 1,
+    "intercept": "59/360",
+    "slope": "2/15"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 0,
+    "deep_cell": 2,
+    "intercept": "61/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 0,
+    "deep_cell": 3,
+    "intercept": "61/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 0,
+    "deep_cell": 4,
+    "intercept": "61/360",
+    "slope": "43/360"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 1,
+    "deep_cell": 0,
+    "intercept": "19/90",
+    "slope": "31/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 1,
+    "deep_cell": 1,
+    "intercept": "23/90",
+    "slope": "59/360"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 1,
+    "deep_cell": 2,
+    "intercept": "1/5",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 1,
+    "deep_cell": 3,
+    "intercept": "1/5",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 1,
+    "deep_cell": 4,
+    "intercept": "1/5",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 2,
+    "deep_cell": 0,
+    "intercept": "23/90",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 2,
+    "deep_cell": 1,
+    "intercept": "43/180",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 2,
+    "deep_cell": 2,
+    "intercept": "5/18",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 2,
+    "deep_cell": 3,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 2,
+    "deep_cell": 4,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 3,
+    "deep_cell": 0,
+    "intercept": "23/90",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 3,
+    "deep_cell": 1,
+    "intercept": "43/180",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 3,
+    "deep_cell": 2,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 3,
+    "deep_cell": 3,
+    "intercept": "5/18",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 3,
+    "deep_cell": 4,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 4,
+    "deep_cell": 0,
+    "intercept": "23/90",
+    "slope": "3/20"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 4,
+    "deep_cell": 1,
+    "intercept": "43/180",
+    "slope": "17/120"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 4,
+    "deep_cell": 2,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 4,
+    "deep_cell": 3,
+    "intercept": "11/45",
+    "slope": "23/180"
+  },
+  {
+    "first_root": 1,
+    "second_cell": 4,
+    "deep_cell": 4,
+    "intercept": "5/18",
+    "slope": "23/180"
+  }
+]

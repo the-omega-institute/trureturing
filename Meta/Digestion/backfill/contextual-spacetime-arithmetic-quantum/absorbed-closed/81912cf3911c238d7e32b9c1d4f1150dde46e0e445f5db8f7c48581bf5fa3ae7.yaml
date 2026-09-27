@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81912cf3911c238d7e32b9c1d4f1150dde46e0e445f5db8f7c48581bf5fa3ae7
+  normalized_sha256: sha256:81912cf3911c238d7e32b9c1d4f1150dde46e0e445f5db8f7c48581bf5fa3ae7
+cas_ref: sha256:81912cf3911c238d7e32b9c1d4f1150dde46e0e445f5db8f7c48581bf5fa3ae7
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.local_observation_partial_trace_equivalence
+    target_statement_id: sha256:2de3a24c72cab4a2fa357c2b4c6e9ab90c84eeaa21d0aed6052bc89890d3fa87
+receipts:
+  unresolved_subitems: []

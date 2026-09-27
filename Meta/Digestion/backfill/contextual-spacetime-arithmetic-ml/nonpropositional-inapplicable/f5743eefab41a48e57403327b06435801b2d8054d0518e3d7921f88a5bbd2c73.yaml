@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5743eefab41a48e57403327b06435801b2d8054d0518e3d7921f88a5bbd2c73
+  normalized_sha256: sha256:f5743eefab41a48e57403327b06435801b2d8054d0518e3d7921f88a5bbd2c73
+cas_ref: sha256:f5743eefab41a48e57403327b06435801b2d8054d0518e3d7921f88a5bbd2c73
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.6节“对任意给定的精确候选轨迹”之后用“令”定义传播矩阵和读出算子；算子的线性断言位于下一叶，本叶未把线性或轨迹可实现性藏进这些定义。
+    previous_atom_id: 358a96c0920f09592614685dab536c58e6c5cd7f9f83249366b024ea4833c384
+    next_atom_id: b6077716559d4fe6495ab68ab0b35250269042e80761687d88b5324eea636e27

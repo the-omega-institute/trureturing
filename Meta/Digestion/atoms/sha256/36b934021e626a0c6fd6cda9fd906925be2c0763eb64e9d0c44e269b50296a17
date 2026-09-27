@@ -1,0 +1,43 @@
+### 46.8 固定幅度下的深度增长及其非一致边界
+
+以下固定 $A>0$，让整数 $M\to\infty$。令
+$$
+C_+(A)=\frac{A\lambda}{\lambda+1},\qquad
+C_-(A)=\frac{A}{\lambda+1}.
+$$
+由（46.12），$u_M=C_+\lambda^M+C_-\lambda^{-M}$。从 $\lambda+\lambda^{-1}=A+2$ 求导，得到
+$$
+\frac{d\log\lambda}{dA}=\frac1{s(A)}.
+$$
+因此精确导数为
+$$
+\boxed{
+L_M(A)
+=\left(C'_++\frac{MC_+}{s}\right)\lambda^M
++\left(C'_- -\frac{MC_-}{s}\right)\lambda^{-M}.
+}
+\tag{46.25}
+$$
+固定 $A>0$ 时，$s,\lambda,C_\pm,C'_\pm$ 均为有限常数，$s>0,\lambda>1,C_+>0$。将（46.25）除以 $(MC_+/s)\lambda^M$，第一括号给 $1+O_A(1/M)$，另一项为指数衰减乘有界的 $M$ 比值，故
+$$
+\boxed{
+u_M(A)\sim\frac{A\lambda}{\lambda+1}\lambda^M,\qquad
+L_M(A)\sim
+\frac{A\lambda}{(\lambda+1)\sqrt{A^2+4A}}\,M\lambda^M.
+}
+\tag{46.26}
+$$
+上述导数主项的相对误差为 $O_A(M^{-1})$；对足够大的 $M$，它的绝对值小于 $1/2$。由 $\log_2(1+t)=O(t)$，对正值取二进制对数，得
+$$
+\boxed{
+\log_2 L_M(A)
+=M\log_2\lambda+\log_2 M
++\log_2\!\frac{A\lambda}{(\lambda+1)\sqrt{A^2+4A}}
++O_A(M^{-1}).
+}
+\tag{46.27}
+$$
+这里的常数与误差记号依赖固定的 $A$；不是 $A\downarrow0$ 时的一致渐近。明确地，对每个固定 $M\ge1$，多项式（46.13）给 $L_M(A)\to1$；而（46.26）的主项因 $s\sim2\sqrt A$、$\lambda\to1$，在 $A\downarrow0$ 时趋于零。故不能让这个大 $M$ 比值近似对所有任意小的正 $A$ 同时有效。$A=0$ 的单点域常数为零，又与多项式导数极限是不同问题。
+
+对每个固定 $A>0$，$L_M(A)$ 随深度无界增长。更直接地，完整负边界 $a_i=-A$ 是一个有界输入序列，但其体坐标绝对值为 $u_k(A)$，随 $k$ 指数增长。因而不能把同一全层重建直接声称为“有界序列到有界无限数组”的 $\ell^\infty$ 映射，也没有与 $M$ 无关的这个通常上确界范数 Lipschitz 常数。全层逐坐标代数恢复仍然成立；两项结论谈的是不同的函数空间要求。
+

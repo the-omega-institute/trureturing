@@ -1,0 +1,12 @@
+**定理 44.2（舍入与截断后的严格向内余量；repo-derived）。** 对定义44.1的任一网格，省略上标，置
+$$
+\mu_{\rm env}=\frac{rk\eta}{4K^2},\qquad
+\mu_{\rm edge}=\frac{\eta pr}{1-p-dr},\qquad
+\mu=\min\{\mu_{\rm env},\mu_{\rm edge}\}>0.
+$$
+则对每个 $j$ 和两个报告 $\beta\in\{0,1\}$，包括区间的截断端点和最近点的向下同距选择，均有
+$$
+F_\beta(I_j)\subseteq
+[\ell_{T_\beta(j)}+\mu,\ u_{T_\beta(j)}-\mu].
+$$
+

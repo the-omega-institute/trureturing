@@ -1,0 +1,496 @@
+{
+  "schema": "erdos7-endpoint-survival-scalar-barrier-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6",
+    "certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json": "75154048adef87983ab5c776537f73e74f9864714b5cc24b54bfa674dcca26f6",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2",
+    "frontier/comparison-bounds/exact_tensor_numerator_reference.py": "3b0e5106da53afc055f72554587feb6e0f40784e0ce849d96343163e4d86e892",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a",
+    "frontier/endpoint-bounds/endpoint_square_common_pure3.py": "4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json": "295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184",
+    "frontier/moments-survival/exact_survival_comparison_boundary.py": "e84d2f45275a8be328a7bb8bdcb0ef0d6d413148231517d9f457aeb278e7dd79",
+    "certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json": "23fa4a41ee72adafa5df06c2313d2234bde2031f3282cd234593665019b29dda",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
+    "frontier/comparison-bounds/verify_allocated_seven_thresholds.py": "3703d61f0f10775934f831e54c13b4bbdbb7fb06c5ca3c860cd2b50548fc0e84",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f012753c39ea325be5b648c51c0e1e0739420b55d3749d8a99eea3a36f0a961d",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+    "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+    "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+    "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "a59d3d620f8abfe814c2c04c0592ebf3eff6805acdc63c28d7ee7544c16b4246",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "1545539894d8b6390dad78918d2961ef6292935765886b3742aff61a12143af8",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "9e61adfccf2e55992a36ae76ae20adac8aa31e68e35044b6ff1efe35bd48265c",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "244ccad2968a7c9c10fab1dcfc742d8860edce05a0f62dac0fbada6fb7a431a6",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "34c767c38ed8af68ebdcaa30a103501a2748322e0c6d9cb8480f9e53e5745cc2",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "fb2d6b8e99918eec23e1554624050a68782b7da78fa42d46e71017e97ce4d92c",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "23914aa7e4775000b01fdea1037e2559bc26c0b596104966e53b102a558ed7de",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4015bb61396aa4369c4960c2728f20abe345d290f63f6c7b7dbdb4c43382c0c1",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "a6c19378ba3b6588e7ff0fd89862bc78ab5bbff5db6298dc575f058776588c0c",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888"
+  },
+  "mass": "3/20",
+  "constraint_count": 57,
+  "constraint_bounds": [
+    "1157/1800",
+    "469/100",
+    "7512226242302051895666449213387/1264106826058311127602084375000",
+    "363427368704020604261/208834943907279690000",
+    "21150047252864353/108485685146638800",
+    "68082395781307/3874488755237100",
+    "1158615608849/774897751047420",
+    "43098243527/352226250476100",
+    "3457125179/352226250476100",
+    "267316063735921092743/134887295309007641400",
+    "1229844519889/2785482619920",
+    "122452537/3014591580",
+    "9755969989290389/37056949260716385",
+    "122452537/2550808260",
+    "2287091553889/81443844529047",
+    "2633588866973/930786794617680",
+    "510045081421/1861573589235360",
+    "6912714073/265939084176480",
+    "25155606975262288527417000106581919/5299416727464453204936293718750000",
+    "297074421057211982251/213581192632445137500",
+    "317101428374727167/2034106596499477500",
+    "4900172704981/348703987971339",
+    "7446331063871/6226856928059625",
+    "4266054324713/43587998496417375",
+    "5432216407/691872992006625",
+    "70505206575838991746703/44512807451972521662000",
+    "1005880296871/2848789043100",
+    "901549277/27747945225",
+    "2942107599928012639/13975763721184465200",
+    "901549277/23479030575",
+    "6591270595608348043/293491038144873769200",
+    "47439584280294209/20963645581776697800",
+    "176702358662839/806294060837565300",
+    "3725670250997/179176457963903400",
+    "24806205198098471479/109788056537509350000",
+    "540945174223/10287293766750",
+    "65996816/13360121775",
+    "1863464/4453373925",
+    "8935304711353/148487650431120",
+    "265207/24845535",
+    "17147611/2561589360",
+    "52155947/77701543920",
+    "17363/24300",
+    "460897656401696/83937534305625",
+    "51437677469/32886453600",
+    "868964699/4698064800",
+    "98580090473/55627241670",
+    "982579417/3973374405",
+    "92329565716407851/56284016906250000",
+    "230720317/69457500",
+    "247309/58800",
+    "2384483/504000",
+    "150823/30000",
+    "2509/480",
+    "81281/220500",
+    "2701424/12403125",
+    "2028798479/12155062500"
+  ],
+  "original53_margins": [
+    "68963/441000",
+    "-3363821/49612500",
+    "-51384776/3038765625"
+  ],
+  "original53_hinge_uppers": [
+    "81281/220500",
+    "2701424/12403125",
+    "2028798479/12155062500"
+  ],
+  "laws": {
+    "W": {
+      "support": [
+        [
+          1,
+          "17366767/297675000"
+        ],
+        [
+          4,
+          "5673091/297675000"
+        ],
+        [
+          7,
+          "2701424/37209375"
+        ]
+      ],
+      "constraint_slacks": [
+        "0",
+        "25444591/33075000",
+        "609583680586952113157931697109/229837604737874750473106250000",
+        "1347931759528191557/39552072709712062500",
+        "31536038924627917/3595642973610187500",
+        "86355190051937/76098263991750000",
+        "31884839773231/228294791975250000",
+        "55722294317/4150814399550000",
+        "699509527/592973485650000",
+        "7470846295158074071/204374689862132790000",
+        "294468278309/11078624056500",
+        "17839441777/4028590566000",
+        "51812755660920977/4491751425541380000",
+        "17839441777/3408807402000",
+        "205149113360273/115173113475420000",
+        "6720638259779/25594025216760000",
+        "276330555689/9213849078033600",
+        "2283522617/731257863336000",
+        "6903428767252043305323106015203377/3251914810035005375756362054687500",
+        "3293249097257954347/121352950359343828125",
+        "121384871965886281/17336135765620546875",
+        "48864046709558807/53934644604152812500",
+        "6020189718323507/53934644604152812500",
+        "23157194150039/2157385784166112500",
+        "125649820367/133171961985562500",
+        "2207939921495885971781/75874103611316798287500",
+        "26725635193/1258934551875",
+        "4862652569/1373383147500",
+        "53741761356861259067/5836469508562830637500",
+        "4862652569/1162093432500",
+        "34176518084554429/24018393039353212500",
+        "544355154005082107/2593986448250146950000",
+        "956974819825249/39907483819233030000",
+        "3691605103913/1478054956267890000",
+        "1483470761713064/69310641753478125",
+        "73258703296/27276915290625",
+        "312244253/708491306250",
+        "33961937/708491306250",
+        "4251668552/1406133053325",
+        "46976443/38736447750",
+        "28215977/47544651000",
+        "332399281/4326563241000",
+        "3487/48600",
+        "10141098394072039/6327598739962500",
+        "305494359587/737837100000",
+        "36206957123/737837100000",
+        "17562940464547/37441412662500",
+        "2456413179247/37441412662500",
+        "92329565716407851/56284016906250000",
+        "257231687/208372500",
+        "695668991/595350000",
+        "6347764849/4762800000",
+        "21760763921/14883750000",
+        "33402461/21262500",
+        "2645633/198450000",
+        "0",
+        "791604397/36465187500"
+      ],
+      "first_moment": "1157/1800",
+      "second_moment": "129677159/33075000"
+    },
+    "V": {
+      "support": [
+        [
+          1,
+          "5264239021/48620250000"
+        ],
+        [
+          9,
+          "2028798479/48620250000"
+        ]
+      ],
+      "constraint_slacks": [
+        "3864295459/24310125000",
+        "1460801417/1215506250",
+        "28636824669394672040517307755857/20225709216932978041633350000000",
+        "302182383065898609884023/1279114031432088101250000",
+        "6308502739491911868443/116283093766553463750000",
+        "168189753225318438857/29070773441638365937500",
+        "7951627230142419601/14535386720819182968750",
+        "6250594729134032/132139879280174390625",
+        "518653650235829/132139879280174390625",
+        "492078769781465411402971/1888422134326106979600000",
+        "85047160957853629/597137836645350000",
+        "17718754940636/1130942872434375",
+        "10560741261373046124487/145263241102008229200000",
+        "17718754940636/956951661290625",
+        "102828606863034224929/11174095469385248400000",
+        "180364978591302451/174595241709144506250",
+        "591290111906276969/5587047734692624200000",
+        "8295180549017717/798149676384660600000",
+        "54042336588013320493655628580548751/47694750547180078844426643468750000",
+        "246246612222816604483871/1308184804873726467187500",
+        "6301721658079557622739/145353867208191829687500",
+        "1512534424923379710214/327046201218431616796875",
+        "143057894005710491884/327046201218431616796875",
+        "2474518844968103606/65409240243686323359375",
+        "22817707266220624/7267693360409591484375",
+        "18865422414968801694472199/90880315214443898393250000",
+        "69532688690969041/610709151114562500",
+        "521741395712279/41639260303265625",
+        "203070385792486596680159/3495396739017073015125000",
+        "521741395712279/35233220256609375",
+        "462882895393331435137267/62917141302307314272250000",
+        "51970559496756665962657/62917141302307314272250000",
+        "51205430796125780519/604972512522185714156250",
+        "4470499280449768693/537753344464165079250000",
+        "228525736654296848149/7685163957625654500000",
+        "3402936641568637/220533860124703125",
+        "7141505497603/4009706547721875",
+        "1098256338077/6682844246203125",
+        "159785916056511977/9094868588906100000",
+        "2181545302841/521973633431250",
+        "18518609013269/7687970066700000",
+        "61457452812373/233201758689900000",
+        "2103195719/9116296875",
+        "62826445780697323771/40306803973561125000",
+        "1223877496311817/2350011163500000",
+        "150231247185769/2350011163500000",
+        "28108017856649477/47700359732025000",
+        "4075827151235267/47700359732025000",
+        "92329565716407851/56284016906250000",
+        "153018857203/194481000000",
+        "6491126543/5402250000",
+        "27010207967/17287200000",
+        "80255273887/45018750000",
+        "1198402771/617400000",
+        "9470540773/97240500000",
+        "9901993/1080450000",
+        "0"
+      ],
+      "first_moment": "5880856333/12155062500",
+      "second_moment": "8479845791/2431012500"
+    }
+  },
+  "all_integer_duals": [
+    {
+      "target": 57,
+      "mass_coefficient": "-1/2",
+      "weights": [
+        [
+          0,
+          "1/2"
+        ],
+        [
+          55,
+          "1/2"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "1/2",
+        "1/2"
+      ],
+      "tail_entrance": 4,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "4": "0"
+      },
+      "bound": "70507267/198450000",
+      "threshold": "5/2",
+      "primal_law": "W"
+    },
+    {
+      "target": 57,
+      "mass_coefficient": "0",
+      "weights": [
+        [
+          55,
+          "1"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_entrance": 4,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "4": "0"
+      },
+      "bound": "2701424/12403125",
+      "threshold": "4",
+      "primal_law": "W"
+    },
+    {
+      "target": 57,
+      "mass_coefficient": "0",
+      "weights": [
+        [
+          56,
+          "1"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_entrance": 5,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "5": "0"
+      },
+      "bound": "2028798479/12155062500",
+      "threshold": "5",
+      "primal_law": "V"
+    },
+    {
+      "target": 57,
+      "mass_coefficient": "-7/9",
+      "weights": [
+        [
+          0,
+          "7/9"
+        ],
+        [
+          55,
+          "2/9"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "4/9",
+        "2/9"
+      ],
+      "tail_entrance": 4,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "4": "0"
+      },
+      "bound": "385493909/893025000",
+      "threshold": "5/3",
+      "primal_law": "W"
+    },
+    {
+      "target": 57,
+      "mass_coefficient": "-11/12",
+      "weights": [
+        [
+          0,
+          "11/12"
+        ],
+        [
+          55,
+          "1/12"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "1/6",
+        "1/12"
+      ],
+      "tail_entrance": 4,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "4": "0"
+      },
+      "bound": "559466017/1190700000",
+      "threshold": "5/4",
+      "primal_law": "W"
+    },
+    {
+      "target": 57,
+      "mass_coefficient": "-1",
+      "weights": [
+        [
+          0,
+          "1"
+        ],
+        [
+          55,
+          "0"
+        ]
+      ],
+      "low_load_gaps": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_entrance": 4,
+      "tail_gap_polynomial": [
+        "0",
+        "0",
+        "0"
+      ],
+      "tail_critical_values": {
+        "4": "0"
+      },
+      "bound": "887/1800",
+      "threshold": "1",
+      "primal_law": "W"
+    }
+  ],
+  "original53_denominator": "40593580507/534822750000",
+  "three_hinge_optimal_scalar_denominator": "27278447033/356548500000",
+  "exact_AP11_optimal_scalar_denominator": "4067559874193/52947452250000",
+  "exact_AP11_endpoint_rho_lower": "4067559874193/7942117837500",
+  "complete_AP11_tail": {
+    "entrance": 5,
+    "mass": "5/43923",
+    "first_moment": "17/29282"
+  },
+  "exact_AP11_coefficients": {
+    "mass": "945008/922383",
+    "first": "45253/1844766",
+    "h4": "346061/1844766",
+    "h5": "4/33"
+  },
+  "three_hinge_gain_over53": "2645633/4365900000",
+  "exact_AP11_gain_over53": "3485386/3781960875",
+  "fixed65_numerator": "60715223853310715587770770761289520296229525714779/1686486379348287587938926113055000000000000000000",
+  "required_denominator_for_fixed65": "298293894791315545682717796750215413215375659836709227/3160217521337008026153572123584561975687500000000000000",
+  "gap_to_required": "55517832161936156421995528839672602196088909836709227/3160217521337008026153572123584561975687500000000000000",
+  "fixed65_endpoint_comparison": "312039193122722126562992076550504647136748909836709227/636529431664481315486343790845737084220000000000000",
+  "scope": "Uniform survival comparison at the fixed65 endpoint. Sharp only for the57 independent scalar constraints; W and V are abstract laws, not original-family witnesses. No global K update, actual-family impossibility or Lean verification."
+}

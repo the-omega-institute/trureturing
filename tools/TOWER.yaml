@@ -54,7 +54,7 @@ components:
     kind: repository-files
     members:
       - tools/StrataLint.Engine/Rules/RuleCatalog.cs
-      - tools/tests/StrataLint.Tests/Rules/RuleEngineTests.cs
+      - tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -98,8 +98,8 @@ components:
   - id: rule-fixtures
     kind: repository-files
     members:
-      - tools/tests/StrataLint.Tests/Rules/RuleEngineTests.cs
-      - tools/tests/StrataLint.Tests/Rules/RuleFixture.cs
+      - tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs
+      - tools/TestSupport/StrataLint.RuleTestSupport/RuleFixture.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -127,11 +127,11 @@ components:
   - id: architecture-tests
     kind: repository-files
     members:
-      - tools/tests/StrataLint.ArchitectureTests/Capabilities/CapabilityConstructionTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetPolicy.cs
-      - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/Capabilities/CapabilityConstructionTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/CanonicalSources/Golden/StratumAlphabetPolicy.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/CanonicalSources/Golden/StratumAlphabetTests.cs
       - tools/tests/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/PublicSurface/EnginePublicSurfaceTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/PublicSurface/EnginePublicSurfaceTests.cs
       - tools/StrataLint.sln
     judged_by:
       - engineering-ci
@@ -140,7 +140,8 @@ components:
     kind: repository-files
     members:
       - Directory.Packages.props
-      - .github/workflows/ci.yml
+      - .github/workflows/ci-pr.yml
+      - .github/workflows/ci-push.yml
       - tools/Architecture/BannedSymbols.txt
       - tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj
       - tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs
@@ -161,21 +162,21 @@ components:
   - id: engineering-ci
     kind: ci-jobs
     members:
-      - candidate-engineering
+      - engineering
     judged_by:
       - dev-baseline
     verification: verified
   - id: report-ci
     kind: ci-jobs
     members:
-      - lean-inspect
+      - current
     judged_by:
       - dev-baseline
     verification: verified
   - id: dev-baseline
     kind: ci-jobs
     members:
-      - baseline-admission
+      - delta
     judged_by:
       - bootstrap-pr-1
     verification: verified

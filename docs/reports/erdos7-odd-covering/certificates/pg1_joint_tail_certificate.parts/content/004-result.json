@@ -1,0 +1,114 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "one unchanged actual PG1 nu; arbitrary finite original357 and11/13 heights; independent final and charge roots; one final conditioning"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d"
+    }
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "independent_tail_survival_lower": {
+    "kind": "inline",
+    "value": "6058911665321144261668772/12369607020968200661109375"
+  },
+  "ordinary_deletion": {
+    "kind": "inline",
+    "value": {
+      "upper": "22571925379/48000000336",
+      "caps": [
+        1000000007,
+        207174054,
+        305330055,
+        67024566,
+        517529280,
+        117763278,
+        190412499,
+        41470054,
+        265958138,
+        46470620,
+        87568636,
+        16622259
+      ],
+      "group_numerator48": 19216215624
+    }
+  },
+  "outside_first_coefficients": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "29774081/54697781250",
+      "121447171/109395562500",
+      "221180777/170170875000",
+      "6441127813/3063075750000"
+    ]
+  },
+  "source_square_max_excess": {
+    "kind": "inline",
+    "value": "5357177152064798207029/13783840971486886125000"
+  },
+  "source_hinge2_max_excess": {
+    "kind": "inline",
+    "value": "-43684194883477173419/1531537885720765125000"
+  },
+  "mean_tail_multiplier": {
+    "kind": "inline",
+    "value": "4/3"
+  },
+  "second_tail_multiplier": {
+    "kind": "inline",
+    "value": "1403/630"
+  },
+  "new_multiplier_Nge3_mass": {
+    "kind": "inline",
+    "value": "5/363"
+  },
+  "new_multiplier_Nge3_mean": {
+    "kind": "inline",
+    "value": "31/726"
+  },
+  "maximum_integer_bound": {
+    "kind": "inline",
+    "value": 129662208907635456
+  },
+  "unweighted_whole_cost": {
+    "path": "content/004-result/014-unweighted_whole_cost.json",
+    "sha256": "b2184d1fe19647a3cdd712ee288330277961168b3179930e36a8d9602b8a15d8",
+    "kind": "object"
+  },
+  "records": {
+    "path": "content/004-result/015-records.json",
+    "sha256": "d416f8c2b3957f0178c02fa6b9317b786f0cf4ac3f380745ab6fb9d6395f26bf",
+    "kind": "array"
+  },
+  "maximum_criterion_excess": {
+    "kind": "inline",
+    "value": "-7557235731940455783756661/101205875626103459954531250"
+  },
+  "Gamma13_upper": {
+    "kind": "inline",
+    "value": "15072118232557475077441399589/101205875626103459954531250"
+  }
+}

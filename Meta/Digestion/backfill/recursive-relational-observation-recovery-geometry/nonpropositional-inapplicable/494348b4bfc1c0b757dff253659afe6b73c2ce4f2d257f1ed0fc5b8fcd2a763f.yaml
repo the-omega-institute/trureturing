@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:494348b4bfc1c0b757dff253659afe6b73c2ce4f2d257f1ed0fc5b8fcd2a763f
+  normalized_sha256: sha256:494348b4bfc1c0b757dff253659afe6b73c2ce4f2d257f1ed0fc5b8fcd2a763f
+cas_ref: sha256:494348b4bfc1c0b757dff253659afe6b73c2ce4f2d257f1ed0fc5b8fcd2a763f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. Retain all Definition30.1 graph and partition hypotheses. Matrix.PosDef.fromBlocks₂₂ and Matrix.PosSemidef.conjTranspose_mul_mul_same supply the actual Schur stiffness properties; ContinuousLinearMap.hasFDerivAt and HasFDerivAt.comp_hasDerivAt transport all three coordinate equations. Capacity normalization and SemiconjBy.exp_right give conservation and stationarity. hasDerivAt_exp_smul_const, HasDerivAt.tendsto_slope_zero_right and ge_of_tendsto give necessity; Matrix.pow_apply_nonneg, NormedSpace.exp_series_hasSum_exp', Pi.hasSum, tsum_nonneg and Matrix.exp_add_of_commute give sufficiency. Includes every nonnegative time, one cell, zero hidden dimension and unequal capacities.
+    previous_atom_id: 37ade29bad19d917da688ec9045f637114db821e123f1abe8d660ef17cbdc700
+    next_atom_id: d2dbfe40a31c684fe77171449521fba8adeed0f693bc12a914348d4727c2108c

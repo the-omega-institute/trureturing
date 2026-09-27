@@ -33,13 +33,18 @@ The 1979 paper poses an elementary distribution-of-divisors question, and the
 
 ## Gap
 
-The checked surfaces on 2026-09-13 were the two cited PDFs, Crossref, Springer,
-arXiv, OpenAlex, MathOverflow, GitHub issues, OEIS, erdosproblems.com, and the
-`teorth/erdosproblems` problem data. A proof or counterexample was not found in
-the checked surfaces, and the problem has no erdosproblems.com number there.
-R. R. Hall's 1992 paper *On some conjectures of Erdős in Astérisque, I*, DOI
-`10.1016/0022-314X(92)90096-8`, was unread because the publisher returned HTTP
-403. Tenenbaum's 2013 statement postdates Hall's paper.
+The question is erdosproblems.com problem 692 (`https://www.erdosproblems.com/692`),
+recorded there as disproved: Stijn Cambie, *Resolution of Erdős' problems about
+unimodularity*, arXiv:2501.10333 (2025), shows that `δ₁(n,m)` is not unimodal
+for `n = 2` and `n = 3` and that for fixed `n` the sequence has superpolynomially
+many local maxima; a Lean formalization of the negative answer by Monticone is
+linked from that page, and `google-deepmind/formal-conjectures`
+(`FormalConjectures/ErdosProblems/692.lean`) marks the unimodality part solved
+with the same reference. The refutation below therefore certifies, in this
+repository's kernel, a statement already refuted in 2025; it is not a first
+resolution. Tenenbaum's 2013 remark predates Cambie's paper. R. R. Hall's 1992
+paper *On some conjectures of Erdős in Astérisque, I*, DOI
+`10.1016/0022-314X(92)90096-8`, remains unread here (publisher HTTP 403).
 
 ## Route
 

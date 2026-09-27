@@ -1,0 +1,14 @@
+设有第三个接口 $G$，且记录空间允许复合相应随机核。对任意 $K_1,K_2$，由三角不等式和随机核对总变差距离的收缩性，得到
+
+$$
+\operatorname{TV}\bigl(G_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl((K_2F)_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl(F_h,(K_1E)_h\bigr).
+$$
+

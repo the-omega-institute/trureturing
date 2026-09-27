@@ -1,0 +1,14 @@
+**定义与假设 89.1（两步运输及额外后果）。** 沿用[定义与假设 88.1](https://github.com/the-omega-institute/trureturing/blob/eb77ed8fcffbf0cacb6494eea514913cc19aede0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的任意公式集、后承闭包及保持、反射、保守的定义，给定
+$$
+F_A\xrightarrow{\tau}F_B\xrightarrow{\sigma}F_C
+$$
+与各自的闭包 $C_A,C_B,C_C$。对从 $F_X$ 到 $F_Y$ 的映射 $f$，仍记
+$$
+K_f(\Gamma)=f^{-1}[C_Y(f[\Gamma])],
+\qquad
+E_f(\Gamma)=K_f(\Gamma)\setminus C_X(\Gamma).
+$$
+$K_f$ 的闭包性直接采用定理 88.2。$E_f$ 只记录源语言中的额外后果；对全部 $\Gamma$ 有 $E_f(\Gamma)=\varnothing$ 恰好表示反射 $K_f\le C_X$，加入保持 $C_X\le K_f$ 后才等价于保守。
+
+以下前提集均可为空或无限，不要求 $\tau,\sigma$ 单射，也不预设联结词、有限后承性或有效呈示。任意前提的后承保持与保守翻译用语可参见 Jeřábek，*The ubiquity of conservative translations*，[arXiv:1108.6263v2，Definitions 2.1–2.2](https://arxiv.org/pdf/1108.6263v2)；其中有限后承性是另列的条件。
+

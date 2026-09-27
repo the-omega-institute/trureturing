@@ -1,0 +1,48 @@
+**定义与假设 72.1（同一有限细化的加权坐标）。** 设 $I,J$ 为有限非空集合，$r:J\to I$，给定
+$$
+q_j>0,\qquad \sum_{j\in J}q_j=1,\qquad
+p_i=\sum_{r(j)=i}q_j>0.
+$$
+于是 $r$ 满射。置 $t_{j\mid i}=q_j/p_i$（$r(j)=i$），并在标准复 Hilbert 空间
+$$
+\mathcal H_c=\mathbb C^I,\qquad \mathcal H_f=\mathbb C^J
+$$
+分别使用正交归一基 $(e_i)$、$(f_j)$。若粗细分区满足 $D_i=\bigsqcup_{r(j)=i}C_j$，且同一概率 $\mu$ 给出 $p_i=\mu(D_i)$、$q_j=\mu(C_j)$，这些坐标基对应
+$$
+e_i=\frac{\mathbf1_{D_i}}{\sqrt{p_i}},\qquad
+f_j=\frac{\mathbf1_{C_j}}{\sqrt{q_j}}
+$$
+所表示的 $L^2(\mu;\mathbb C)$ 向量。定义粗观察子空间到细观察子空间的坐标映射
+$$
+U_r e_i=\sum_{r(j)=i}\sqrt{\frac{q_j}{p_i}}\,f_j,
+\qquad
+\rho_p=\operatorname{diag}(p),\qquad
+\rho_q=\operatorname{diag}(q).
+$$
+向量、乘法观察量与密度矩阵分别属于 $\mathcal H$、$\mathcal B(\mathcal H)$ 与其中正且迹一的部分；同一张概率表在这些位置的作用须分别说明。第 70.12 条的胞腔概率态就是这里的对角态。也可在第 71 节固定一个 $\beta>0$，以 $q_j=\nu_\beta(C_j)$ 代入；此时归一化指示基属于 $L^2(\nu_\beta)$。若沿用原 $L^2(\mu)$ 的指示基，则其权重仍须取 $\mu(C_j)$，不能只替换概率而保留旧坐标公式。胞腔对角态不因此被识别为第 70–71 节的 Gibbs 算子态。
+
+以下一律用自然对数，$0\ln0=0$。对有限概率 $a$ 与密度矩阵 $\rho$，记
+$$
+H(a)=-\sum_xa_x\ln a_x,\qquad
+S(\rho)=-\operatorname{Tr}(\rho\log\rho).
+$$
+矩阵的支撑为其像空间；对同一空间上的两密度矩阵采用带支撑条件的相对熵
+$$
+D(\rho\Vert\eta)=
+\begin{cases}
+\operatorname{Tr}(\rho\log\rho)-\operatorname{Tr}(\rho\log\eta),
+&\operatorname{supp}\rho\subseteq\operatorname{supp}\eta,\\
++\infty,&\text{否则}.
+\end{cases}
+$$
+有限分支中的对数在各自正支撑上取通常值，在核上延零；只有满足所列支撑条件时才使用这个有限表达式。令 $F_j=|f_j\rangle\langle f_j|$，细基去相干为
+$$
+\Delta_f(Y)=\sum_{j\in J}F_jYF_j
+=\operatorname{diag}_j(Y_{jj}).
+$$
+若随机标签 $\mathsf J$ 的律为 $q$，父标签为 $r(\mathsf J)$，则
+$$
+H(\mathsf J\mid r(\mathsf J))
+=\sum_i p_i H(t_{\cdot\mid i}).
+$$
+

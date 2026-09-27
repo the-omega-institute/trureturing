@@ -1,0 +1,14 @@
+**Definition 44.6 (Strict tagged division).** Let
+$$
+\mathcal O=(K^2)\sqcup\{\bot\}
+$$
+be the topological disjoint union, with success inclusion $\iota:K^2\to\mathcal O$. Define the strict response on numerical inputs by
+$$
+\operatorname{Div}_{\mathrm{str}}(a,b)=
+\begin{cases}
+\bot,&b=0,\\
+\iota\bigl(Z(a\operatorname{div}b),Z(a\bmod b)\bigr),&b\ge1.
+\end{cases}
+$$
+Thus success reports the ordered pair of quotient and remainder; $\bot$ is not an element of that pair space.
+

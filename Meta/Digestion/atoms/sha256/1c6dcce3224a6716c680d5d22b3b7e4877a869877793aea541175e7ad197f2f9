@@ -1,0 +1,48 @@
+**应用 97.2（黄金误差的实收敛、局部非柯西性与两个位的同时趋零）。** 在定义与假设 97.1 下，对每个 $N\ge1$，
+$$
+S_N=\frac12(1-\phi^{-3N}),\qquad
+S_N\notin\mathbb Q,\qquad T_N\notin\mathbb Q.
+\tag{97.2a}
+$$
+特别地，$q=1/2$ 时 $S_N=T_N$。在固定的正实嵌入下，
+$$
+S_N\longrightarrow\frac12,\qquad T_N\longrightarrow q,\qquad
+\left|S_N-\frac12\right|_\infty
+=|T_N-q|_\infty=e_N=\frac12\phi^{-3N}.
+\tag{97.2b}
+$$
+对每个允许的 $p,F,\varphi,|\cdot|_F$，
+$$
+|\varphi|_F=1,\qquad
+|T_N^{F,\varphi}-q_F|_F
+=\left|\frac12\right|_p
+=
+\begin{cases}
+1,&p\ne2,\\
+2,&p=2,
+\end{cases}
+\tag{97.2c}
+$$
+且
+$$
+|T_{N+1}^{F,\varphi}-T_N^{F,\varphi}|_F=1.
+\tag{97.2d}
+$$
+因此 $(T_N^{F,\varphi})$ 不是柯西列，在 $F$ 中没有极限；取 $q=1/2$，$(S_N^{F,\varphi})$ 具有相同结论。对应级数的每项 $\varphi^{-2-3j}$ 的绝对值均为一，因而通项不趋零。
+
+另一方面，对每个固定素数 $p$，当 $n\to\infty$ 时，
+$$
+0<|\epsilon_{p,n}|_\infty
+=\frac{p^n}{1+p^{2n}}
+<p^{-n}\longrightarrow0,\qquad
+|\epsilon_{p,n}|_p=p^{-n}\longrightarrow0.
+\tag{97.2e}
+$$
+其余素位满足精确补偿式
+$$
+\prod_{\substack{\ell\ {\rm prime}\\\ell\ne p}}
+|\epsilon_{p,n}|_\ell=1+p^{2n}.
+\tag{97.2f}
+$$
+每个固定 $n$ 只有有限多个非一因子，所以该式是有限乘积；不要求所有 $n$ 共用一个有限支撑，也不断言存在某个固定的其他素数承担随全部 $n$ 的增长。
+

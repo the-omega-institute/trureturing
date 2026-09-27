@@ -1,0 +1,69 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-complete-off-face-quadratic-cost-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+      "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
+      "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0",
+      "frontier/moments-survival/whole_quadratic_same_head.py": "84d7995521352aebd522659d189081eee31dbd200ccb4b1f638e7881d3c145b7",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "certificates/source_norms/moments-survival/whole_quadratic_same_head.json": "c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6"
+    }
+  },
+  "original_positive_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "complete_source_cases": {
+    "path": "content/003-complete_source_cases.json",
+    "sha256": "1b65638ecd28acf4146de2736837bd2a9f96c78d6180c7f22e3026764cf0ea3f",
+    "kind": "array"
+  },
+  "nonzero_constant_regression": {
+    "kind": "inline",
+    "value": [
+      {
+        "source_height": null,
+        "stored_face_mass_term": "53/360",
+        "at_one": "1",
+        "actual_mass_term": "53/360"
+      },
+      {
+        "source_height": 5,
+        "stored_face_mass_term": "53/360",
+        "at_one": "1",
+        "actual_mass_term": "530644181/3545268750"
+      },
+      {
+        "source_height": 8,
+        "stored_face_mass_term": "53/360",
+        "at_one": "1",
+        "actual_mass_term": "1813706264603609/12312129125390625"
+      }
+    ]
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original quadratic costs at fixed actual sources, using one original layout for finite hinges, actual mean deletion and the full factorial head. All source and exponent tails share one actual defect vector. Exact113 face recovery; finite398 heights5 and8 are not a uniform all-source maximum. No new signed global comparison, K bound, Lean verification or Erdos7 resolution."
+  }
+}

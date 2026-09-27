@@ -1,0 +1,41 @@
+**命题 1.4（合法交换揭示相干）。** 令 $U$ 在 $E_0^\perp$ 上为恒等，在有序基 $|01\rangle,|10\rangle$ 上为 Hadamard 矩阵：
+$$
+\begin{aligned}
+U|00\rangle&=|00\rangle,\qquad U|11\rangle=|11\rangle,\\
+U|01\rangle&=(|01\rangle+|10\rangle)/\sqrt2,\\
+U|10\rangle&=(|01\rangle-|10\rangle)/\sqrt2.
+\end{aligned}
+\qquad U^\dagger U=I,\quad U^\dagger=U,\quad [U,H]=0.
+\tag{TM.55}
+$$
+
+正交直和的每一块都是酉矩阵，故 $U$ 是酉操作；它只在同一个零能量本征子空间中混合，因此与 $H$ 对易，在所有输入上保持 $H$ 的完整能量分布。这是一项联合操作：它能把乘积态 $|01\rangle$ 变成纠缠态，不能解释为两个原局部态分别经过后处理。假设模型允许执行这项操作，才有以下可访问性结论；守能本身不授予实验权限，也不证明实施费用为零。
+
+写 $c=x+iy$，直接进行二阶矩阵乘法得
+$$
+\left.U\rho_cU^\dagger\right|_{E_0}
+=\begin{pmatrix}1/2+x&-iy\\iy&1/2-x\end{pmatrix},\qquad
+\operatorname{Tr}\bigl[(Z\otimes I)U\rho_cU^\dagger\bigr]=2\operatorname{Re}c.
+\tag{TM.56}
+$$
+
+特别地，$U\rho_0U^\dagger=\rho_0$，而 $U\rho_{1/2}U^\dagger=|01\rangle\langle01|$。两者仍以概率一具有能量零，但第一系统的 $Z$ 期望分别为 $0$ 和 $1$。过去读数中遗漏的联合相干，经允许的联合演化进入了后来的局部读数。
+
+为准确表述摘要更新失败，令 $\mathcal D_0$ 为全部支撑于 $E_0$ 的密度矩阵集合，$T(\rho)=U\rho U^\dagger$，并在整个 $\mathcal D_0$ 上定义
+$$
+q(\rho)=\bigl(H\text{ 的完整分布},\ \operatorname{Tr}_B\rho,\ \operatorname{Tr}_A\rho,\ (\langle ab|\rho|ab\rangle)_{a,b\in\{0,1\}}\bigr).
+\tag{TM.57}
+$$
+
+式(TM.53)、(TM.56)给出 $q(\rho_0)=q(\rho_{1/2})$，但 $q(T\rho_0)\ne q(T\rho_{1/2})$。因此
+$$
+\nexists\,\overline T:\operatorname{im}q\longrightarrow\operatorname{im}q
+\quad\text{使}\quad
+q\circ T=\overline T\circ q\quad\text{在全部 }\mathcal D_0\text{ 上成立}.
+\tag{TM.58}
+$$
+
+证明只需反证：同一摘要经函数 $\overline T$ 必须产生同一摘要，与上述两态矛盾。这定位了一项实际的信息缺口，不能通过更复杂的摘要后处理补回。
+
+这里必须使用 $\mathcal D_0$ 作为动态定义域。最初的等对角族 $\{\rho_c:|c|\le1/2\}$ 不在 $U$ 下闭合：只要 $\operatorname{Re}c\ne0$，式(TM.56)的两个对角元就不再相等。不能将 $T$ 误写成这一较小初始族的自映射，再以此声称已建立动态系统。
+

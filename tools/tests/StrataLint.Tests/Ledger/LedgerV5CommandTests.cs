@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 
@@ -96,6 +96,39 @@ public sealed class LedgerV5CommandTests
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             statePath.Replace('/', Path.DirectorySeparatorChar))));
+    }
+
+    [Fact]
+    public void RetirementPublicationRestoresDeletedAndRepinnedStateAfterLaterStateFailure()
+    {
+        using var temporary = new TemporaryDirectory();
+        var original = BuildCatalog(Module("A"), Module("B"));
+        var baseline = EventFiles(original);
+        var replacement = EventFiles(BuildCatalog(
+            Module("B") with { StatementMaterial = "changed statement" }, Module("C")));
+        var ledgerPath = Path.Combine(temporary.Path, "accepted");
+        WriteLedgerDirectory(ledgerPath, baseline);
+        foreach (var node in original.ClosedNodes)
+            Assert.True(FrozenStateWriter.Write(temporary.Path, node.RepoPath, node.StatementId));
+        var backups = original.ClosedNodes.ToDictionary(static node => node.RepoPath,
+            node => FrozenStateWriter.ReadCurrentBytes(temporary.Path, node.RepoPath)!.Value.ToArray());
+        // A is deleted, B is repinned, then C's atomic state write hits a directory.
+        var blockedState = Path.Combine(temporary.Path, FrozenStatePath.FromModulePath(RepoPathFor("C")).Value);
+        Directory.CreateDirectory(blockedState);
+
+        var failure = Assert.ThrowsAny<IOException>(() => FrozenLedgerPublication.PublishSnapshot(
+            temporary.Path, ledgerPath, replacement, baseline, LoadEvents(replacement),
+            [RepoPathFor("A")], "test-retirement"));
+
+        Assert.DoesNotContain("rollback was incomplete", failure.Message, StringComparison.Ordinal);
+        var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
+        Assert.Equal(baseline.Length, persisted.Length);
+        Assert.All(persisted, actual => Assert.Equal(
+            baseline.Single(expected => expected.Path == actual.Path).RawBytes.ToArray(), actual.RawBytes.ToArray()));
+        foreach (var (path, bytes) in backups)
+            Assert.Equal(bytes, FrozenStateWriter.ReadCurrentBytes(temporary.Path, path)!.Value.ToArray());
+        Assert.True(Directory.Exists(blockedState));
+        Assert.Empty(Directory.EnumerateDirectories(ledgerPath, ".ledger-stage-*"));
     }
 
     [Fact]

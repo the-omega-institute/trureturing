@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class FormalizeCandidatesTests
 {
     // Hermetic(#4125 pass 5,quality 席四轮坚持,接受):原子化走 GenericId(TheoryAtomizerRules.None),
-    // 合成仓库里的规则文件用 TheoryAtomizerDataTests.Minimal(既有的最小合法文档),Run 的 rulesBytes 覆盖使
+    // 合成仓库里的规则文件用 AtomizerRulesFixture.Minimal(既有的最小合法文档),Run 的 rulesBytes 覆盖使
     // DigestionTestSupport.RulesBytes 的 canonical 文件读取根本不发生——把测试 DLL 拷到任何仓库之外也能跑。
     [Fact]
     public void FormalizeCandidatesProjectsQuarantineInsteadOfOfferingTheAtom()
@@ -41,7 +41,7 @@ public sealed partial class FormalizeCandidatesTests
             [entry],
             ledger: ledger,
             atomizer: AtomizerRegistry.GenericId,
-            rulesBytes: Encoding.UTF8.GetBytes(TheoryAtomizerDataTests.Minimal));
+            rulesBytes: Encoding.UTF8.GetBytes(AtomizerRulesFixture.Minimal));
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);

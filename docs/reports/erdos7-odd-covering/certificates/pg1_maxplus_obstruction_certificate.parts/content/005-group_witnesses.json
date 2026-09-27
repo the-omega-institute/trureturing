@@ -1,0 +1,23 @@
+{
+  "length": 60,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 39,
+      "part": {
+        "path": "content/005-group_witnesses/000000-000039.json",
+        "sha256": "2fb9a4a6ed2357eccd1b0cd95830fa83c4cf58fa6f1051d9813ce591054b4fe4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 39,
+      "stop": 60,
+      "part": {
+        "path": "content/005-group_witnesses/000039-000060.json",
+        "sha256": "7ce0f8c5f5696ed00bdc6e7adb36402efc1d219f9786795364e023aa4b7cf81b",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+### 48.13 Stirling 常数、精确半径与临界截断误差
+
+给出（48.45）的精确渐近证明。令 \(a=2d-2\to\infty\)，选择任意众数
+\[
+m=\frac{a\rho}{1-\rho}+O(1),\qquad n=a+m.
+\]
+该点质量可写为
+\[
+p_m=(1-\rho)\binom{n}{a}(1-\rho)^a\rho^m.
+\]
+Stirling 公式对 \(a,m,n\) 同时使用，因三个量均线性增长，给
+\[
+p_m=(1-\rho)
+\sqrt{\frac{n}{2\pi am}}\,
+\exp\{F_a(m)\}\bigl(1+O_\rho(a^{-1})\bigr),
+\]
+其中
+\[
+F_a(m)=(a+m)\log(a+m)-a\log a-m\log m
++a\log(1-\rho)+m\log\rho.
+\]
+把 \(m\) 暂作实变量，在
+\(m_0=a\rho/(1-\rho)\) 处直接代入得
+\[
+F_a(m_0)=F_a'(m_0)=0,\qquad
+F_a''(m)=-\frac{a}{m(a+m)}.
+\]
+因为 \(m-m_0=O(1)\)，该区间内二阶导数为 \(O_\rho(a^{-1})\)，Taylor 定理给
+\(F_a(m)=O_\rho(a^{-1})\)。同时
+\[
+\frac{n}{am}\sim\frac1{a\rho}.
+\]
+因此两个可能众数均满足
+\[
+\frac{h_d}{m_d}
+\sim\frac{1-\rho}{\sqrt{2\pi\rho(2d-2)}}
+\sim\frac{1-\rho}{\sqrt{4\pi\rho d}}.
+\tag{48.47}
+\]
+这证明了常数，不只给出中心极限定理的量级。
+
+由（48.2）
+\[
+A_{\mathrm c}^{\,d}m_d=\frac{1-\rho}{\rho}.
+\]
+结合（48.47）得到
+\[
+\boxed{
+A_{\mathrm c}^{\,d}h_d
+\sim\frac{A_{\mathrm c}}{\sqrt{4\pi\rho d}},
+\qquad
+\lim_{d\to\infty}h_d^{1/d}
+=\frac{\rho}{(1-\rho)^2}
+=A_{\mathrm c}^{-1}.
+}
+\tag{48.48}
+\]
+所以以原点为中心的 Banach 值齐次级数
+\(\sum_{d\ge1}H_d(a)\) 具有精确半径 \(A_{\mathrm c}\)：
+
+- 若 \(r<A_{\mathrm c}\)，由（48.48）及根值判别，
+  \(\sum_d h_dr^d<\infty\)，故在 \(\|a\|_\infty\le r\) 上一致绝对范数收敛。

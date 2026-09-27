@@ -1,0 +1,28 @@
+**theorem 48.9 (Compact witnesses, effective stabilization, and computable compatible choice).** Let
+$$
+S=\{\mathbf x\in K^r:\Sigma(\mathbf x)\},\qquad S_\alpha=\{\mathbf q\in Q_\alpha^r:Q_\alpha\models\Sigma(\mathbf q)\}.
+$$
+Then $S$ is nonempty if and only if every $S_\alpha$ is nonempty. For each fixed $\alpha$, its actual coordinate image satisfies
+$$
+I_\alpha=\pi_\alpha^r[S]=\bigcap_{\beta\succeq\alpha}b_{\beta\alpha}^r[S_\beta].
+$$
+One can effectively find $\beta_*\succeq\alpha$ such that
+$$
+b_{\gamma\alpha}^r[S_\gamma]=I_\alpha\qquad\text{for every }\gamma\succeq\beta_*.
+$$
+When $S$ is nonempty, one can uniformly construct a solution given by a total algorithm returning its coordinate at every threshold-period quotient.
+
+**证明。** Projection of a $K$-solution supplies every finite-quotient solution. Conversely, inside compact $K^r$ let $E_\alpha$ be the set where the equations hold after projection to $Q_\alpha$. It is closed. If every $S_\alpha$ is nonempty, any finite collection of these conditions is satisfied by lifting a solution at one common refinement: every tuple of quotient classes has a lift to $K^r$ through natural representatives. The finite-intersection property gives a point of every $E_\alpha$. Equality at all coordinates is equality in $K$, so this point belongs to $S$.
+
+The inclusion of $I_\alpha$ in every projected $S_\beta$ is immediate. Conversely, fix $\mathbf q$ in their intersection. Impose the additional closed cylinder condition $\pi_\alpha^r(\mathbf x)=\mathbf q$. Any finite collection of quotient equation conditions, together with this cylinder, has a witness by taking a common refinement $\beta\succeq\alpha$ and using membership of $\mathbf q$ in $b_{\beta\alpha}^r[S_\beta]$. Compactness again gives an actual solution with coordinate $\mathbf q$. This proves the intersection identity.
+
+The projected sets decrease under refinement. For each of the finitely many tuples outside $I_\alpha$, the intersection identity supplies an index excluding it. A common refinement of these indices and $\alpha$ therefore has projected solution image exactly $I_\alpha$, and every further refinement has the same image.
+
+This stabilization index is effectively obtainable. Compute $I_\alpha$ by Theorem 48.8, taking the coordinate variables as output terms. If $\alpha=(t,p)$, enumerate the cofinal chain
+$$
+\beta_k=\bigl(\max(t,k),\operatorname{lcm}(p,1,2,\ldots,k)\bigr),\qquad k\geq1.
+$$
+At each step, compute $S_{\beta_k}$ by finite enumeration and its image in $Q_\alpha^r$. Stop when that image equals the already computed $I_\alpha$. The preceding stabilization argument proves termination and the asserted property for every further refinement. No transition map between the sets $S_\beta$ was required to be onto.
+
+For the final assertion, use the cofinal chain $\alpha_k=(k,\operatorname{lcm}(1,\ldots,k))$, $k\geq1$. Compute its actual images $I_{\alpha_k}$. Choose any tuple in the first image. Having chosen $\mathbf q_k\in I_{\alpha_k}$, choose the first tuple in $I_{\alpha_{k+1}}$ projecting to it. Such a tuple exists: an actual $K$-solution witnessing $\mathbf q_k$ also has a coordinate at $\alpha_{k+1}$. This proves surjectivity for these actual images, not for the raw quotient solution sets. Finite enumeration makes each choice effective. The compatible sequence defines a point of $K^r$, and its coordinates solve every quotient system, so it lies in $S$. To return its coordinate at an arbitrary index, choose a sufficiently high member of the cofinal chain and project. Compatibility makes the answer independent of that choice. 证毕。
+

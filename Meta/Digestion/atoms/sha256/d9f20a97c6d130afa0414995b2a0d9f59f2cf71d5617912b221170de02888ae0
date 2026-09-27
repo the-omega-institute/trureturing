@@ -1,0 +1,11 @@
+**证明。** 定理16.4的支撑公式及 $T^0$ 的合法性给
+$$
+\begin{aligned}
+F_z^H(c)
+&\ge\langle H,T^0\rangle
++\sum_i c_i(z_i-\mathcal A_i(T^0))+\sum_i\epsilon_i|c_i|\\
+&\ge\langle H,T^0\rangle+\delta\|c\|_1.
+\end{aligned}
+$$
+故连续目标在整个系数空间强制趋于无穷，最小值达到；每个最小值至多为 $F_z^H(0)=\sum_\lambda\|H_\lambda\|_*$，给式（17.11）。这次的强制性是全空间的，不是命题17.3的相对代表界。正宽度仍无严格可行点的实际收缩实例由命题18.4给出。$\square$
+

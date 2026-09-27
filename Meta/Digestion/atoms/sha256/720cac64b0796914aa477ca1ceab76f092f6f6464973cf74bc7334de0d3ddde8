@@ -1,0 +1,13 @@
+第 77.3 节引用的受驱下降等式具有如下精确形式。给定线性映射 $A,B,P,J,C$，令
+
+$$
+\widetilde A=PAJ,\quad\widetilde B=PB,\quad\widetilde C=CJ,
+\qquad PA=\widetilde A P,
+$$
+
+$$
+x_0=0,\quad x_{n+1}=Ax_n+Bu_n,
+\qquad
+\widetilde x_0=0,\quad\widetilde x_{n+1}=\widetilde A\widetilde x_n+\widetilde B u_n.
+$$
+

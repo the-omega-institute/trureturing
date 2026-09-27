@@ -1,0 +1,11 @@
+**证明。** 对 $w\in V^\perp$，所有 $v\in\Gamma$ 都有 $w\cdot(y-Rv)=0$，故由
+$$
+F_y^\ell(c)=\max_{v\in\Gamma}\bigl[\ell(v)+c\cdot(y-Rv)\bigr]
+$$
+得到 $F_y^\ell(c+w)=F_y^\ell(c)$。因此投影到 $V$ 不改变目标或下确界。对非零 $c\in V$，相对球条件提供 $v_c\in\Gamma$，使 $Rv_c=y-\rho c/\|c\|_2$；于是
+$$
+F_y^\ell(c)\ge\ell(v_c)+\rho\|c\|_2\ge m+\rho\|c\|_2.
+\tag{17.5}
+$$
+$c=0$ 时该下界也成立，且 $F_y^\ell(0)=M$。紧性使 $F_y^\ell$ 连续，式（17.5）使其在有限维 $V$ 上强制趋于无穷，故最小值达到。定理17.2给该值为 $U(y)$，代回即得式（17.4）。若 $V=\{0\}$，所有记录等于 $y$，所以 $\Gamma_y=\Gamma$，$F_y^\ell(0)=M=U(y)$。$\square$
+

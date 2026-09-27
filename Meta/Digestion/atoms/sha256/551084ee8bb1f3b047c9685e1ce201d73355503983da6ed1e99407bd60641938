@@ -1,0 +1,8 @@
+**Proof.** Given finitely many $\lambda\in W^*$, apply (42.1) to their pullbacks along $A$. If $v$ realizes those signs for $p$, then $Av$ realizes the prescribed output signs. Thus (42.16) belongs to $S(W)$. Each output coordinate is an input coordinate, so the map is continuous. The identities in (42.17) follow by evaluating at every covector.
+
+The output sign is the first nonzero entry of $(\lambda(Av_j))_j$. A deleted vector is a linear combination of previously retained vectors. If those earlier evaluations all vanish, its evaluation also vanishes; if some earlier evaluation does not vanish, the deleted entry cannot change the first nonzero sign. Deletion therefore preserves the signature. The retained list spans $A(U_p)$, proving (42.18), including the case in which every image vanishes.
+
+Every functional on $U$ extends to $W$, so $S(i)$ is injective. Its image consists precisely of signatures whose flags are supported in $U$, by Theorem 42.5; these are exactly (42.19). Zero on a basis of $U^\circ$ is enough, by Theorem 42.3, so the subspace is clopen. A continuous injection from a compact space into a Hausdorff space is a homeomorphism onto its image: it sends closed sets to compact, hence closed, subsets.
+
+If $A$ is surjective, the compact image of $S(A)$ is closed and contains every ordinary signature in $S(W)$ by (42.17). Density makes that image all of $S(W)$. Apply this to $V\twoheadrightarrow\operatorname{im}A$ and then compose with the inclusion to obtain (42.20). $\square$
+

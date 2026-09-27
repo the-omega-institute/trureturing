@@ -1,0 +1,27 @@
+**命题 138.2（平方坐标与两步记录的最小行为表示）。** 取实参数 $\alpha,\beta,\gamma$，其中 $\gamma\ne0$，在 $X=\mathbb R^2$ 上设
+$$
+T(x,y)=(\alpha x,\beta y+\gamma x^2),\qquad q_0(x,y)=y.
+\tag{138.1}
+$$
+只允许 $T$ 的有限次迭代，并以每次的 $y$ 为读数。令
+$$
+\Psi(x,y)=(y,x^2),\qquad Z=\mathbb R\times[0,\infty),\qquad
+M=\begin{pmatrix}\beta&\gamma\\0&\alpha^2\end{pmatrix}.
+$$
+则 $\Psi[X]=Z$、$MZ\subseteq Z$、$\Psi T=M\Psi$，且
+$$
+\ker\Psi=\bigcap_{n\ge0}\ker(q_0T^n)
+=\ker\bigl(q_0,q_0T\bigr).
+\tag{138.2}
+$$
+所以 $\Psi$ 是该语言的最小动态稳定呈示。两步读数的实际像为
+$$
+D=\{(u,v)\in\mathbb R^2:(v-\beta u)/\gamma\ge0\},
+$$
+并有互逆映射
+$$
+(y,s)\longmapsto(y,\beta y+\gamma s),\qquad
+(u,v)\longmapsto\left(u,\frac{v-\beta u}{\gamma}\right).
+\tag{138.3}
+$$
+

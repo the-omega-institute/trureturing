@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:147b5042b038fb2878a5afb6c3ca8a65eda05ce33f2741c0da4bae2c76c0c116
+  normalized_sha256: sha256:147b5042b038fb2878a5afb6c3ca8a65eda05ce33f2741c0da4bae2c76c0c116
+cas_ref: sha256:147b5042b038fb2878a5afb6c3ca8a65eda05ce33f2741c0da4bae2c76c0c116
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该表项澄清情境、事件域、幂集、历史族与世界域的类型，是定义和记号约定，无待证明命题。
+    previous_atom_id: 02b7ed21ab06fc8ac22f70433370b52b0bf6e66d3acd8656b91d4cf9997ce4a0
+    next_atom_id: 7ef80e065db76526451271241fa2046e37d0987a20cc0657ef27c0323f0cb156

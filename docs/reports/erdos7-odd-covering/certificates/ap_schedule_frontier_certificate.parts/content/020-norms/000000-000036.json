@@ -1,0 +1,794 @@
+[
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      0
+    ],
+    "joint": "630053335920064561120723361434337/15632787748921114278012443437500",
+    "cofactor_count": 5,
+    "four_load_cost": "8735638183454200223/2311075142665519230",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      1
+    ],
+    "joint": "60483842677693804423/5124190753280473875",
+    "cofactor_count": 5,
+    "four_load_cost": "7089625470181/2505548283810",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      2
+    ],
+    "joint": "1548681190385557/1159035097720500",
+    "cofactor_count": 5,
+    "four_load_cost": "1302777978497/1594439816970",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      3
+    ],
+    "joint": "11361898264669/93958060642875",
+    "cofactor_count": 5,
+    "four_load_cost": "137007640037/1594439816970",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      4
+    ],
+    "joint": "6784362773983/657706424500125",
+    "cofactor_count": 5,
+    "four_load_cost": "12124140257/1594439816970",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      5
+    ],
+    "joint": "10108853773/11958298627275",
+    "cofactor_count": 5,
+    "four_load_cost": "18432083/28989814854",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      0,
+      6
+    ],
+    "joint": "68170339/1003493591100",
+    "cofactor_count": 5,
+    "four_load_cost": "1498751/28989814854",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      1,
+      0
+    ],
+    "joint": "355939493543309768327/26477876486582981460",
+    "cofactor_count": 5,
+    "four_load_cost": "49936935857815/16183432951686",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      1,
+      1
+    ],
+    "joint": "644772824909/212779922355",
+    "cofactor_count": 5,
+    "four_load_cost": "12488415/5848414",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      1,
+      2
+    ],
+    "joint": "5428073863/19343629305",
+    "cofactor_count": 5,
+    "four_load_cost": "784835/3721718",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      2,
+      0
+    ],
+    "joint": "18271960325753159/10135233985836960",
+    "cofactor_count": 5,
+    "four_load_cost": "2732860900985/2489758915644",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      2,
+      1
+    ],
+    "joint": "5428073863/16367686335",
+    "cofactor_count": 5,
+    "four_load_cost": "784835/3149146",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      3,
+      0
+    ],
+    "joint": "10684032134648/55301375914785",
+    "cofactor_count": 5,
+    "four_load_cost": "26247861995/191519916588",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      4,
+      0
+    ],
+    "joint": "4317705006697/221205503659140",
+    "cofactor_count": 5,
+    "four_load_cost": "5507306965/383039833176",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      5,
+      0
+    ],
+    "joint": "418706295881/221205503659140",
+    "cofactor_count": 5,
+    "four_load_cost": "545155705/383039833176",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R17",
+    "tuple": [
+      6,
+      0
+    ],
+    "joint": "238540013/1325907114840",
+    "cofactor_count": 5,
+    "four_load_cost": "7491565/54719976168",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      0
+    ],
+    "joint": "113030172417388488839521339535147647/3510863581945200248270294588671875",
+    "cofactor_count": 5,
+    "four_load_cost": "24004028822720318117323/8007875369336024131950",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      1
+    ],
+    "joint": "593316291315167803676/62887795608442179375",
+    "cofactor_count": 5,
+    "four_load_cost": "80753421332618/35874895881825",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      2
+    ],
+    "joint": "41794161454611583/39117434548066875",
+    "cofactor_count": 5,
+    "four_load_cost": "23427017110258/35874895881825",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      3
+    ],
+    "joint": "2226111743772052/23019724857504375",
+    "cofactor_count": 5,
+    "four_load_cost": "2464883214698/35874895881825",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      4
+    ],
+    "joint": "189912243156772/23019724857504375",
+    "cofactor_count": 5,
+    "four_load_cost": "31165457534/5124985125975",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      5
+    ],
+    "joint": "3113025924836/4603944971500875",
+    "cofactor_count": 5,
+    "four_load_cost": "3648786322/7174979176365",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      0,
+      6
+    ],
+    "joint": "1049739499/19317251628675",
+    "cofactor_count": 5,
+    "four_load_cost": "4709894/113888558355",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      1,
+      0
+    ],
+    "joint": "105619404347305786623001/9829911645643931867025",
+    "cofactor_count": 5,
+    "four_load_cost": "27520551588735619/11215119035518398",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      1,
+      1
+    ],
+    "joint": "234366165196/96718146525",
+    "cofactor_count": 5,
+    "four_load_cost": "28593398/16747731",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      1,
+      2
+    ],
+    "joint": "1973516852/8792558775",
+    "cofactor_count": 5,
+    "four_load_cost": "770398/4567563",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      2,
+      0
+    ],
+    "joint": "678012431132120753/470338202155246425",
+    "cofactor_count": 5,
+    "four_load_cost": "756790509761383/862701464270646",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      2,
+      1
+    ],
+    "joint": "1973516852/7439857425",
+    "cofactor_count": 5,
+    "four_load_cost": "770398/3864861",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      3,
+      0
+    ],
+    "joint": "42762727675493359/276783386453498925",
+    "cofactor_count": 5,
+    "four_load_cost": "94537446886903/862701464270646",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      4,
+      0
+    ],
+    "joint": "4320864817072799/276783386453498925",
+    "cofactor_count": 5,
+    "four_load_cost": "9919524727363/862701464270646",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      5,
+      0
+    ],
+    "joint": "32235115109167/21291029727192225",
+    "cofactor_count": 5,
+    "four_load_cost": "75542465503/66361651097742",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R19",
+    "tuple": [
+      6,
+      0
+    ],
+    "joint": "64281366311/446664959311725",
+    "cofactor_count": 5,
+    "four_load_cost": "807510127/7373516788638",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      0
+    ],
+    "joint": "3637504822792688/2394554319542385",
+    "cofactor_count": 5,
+    "four_load_cost": "23118949787/52688361726",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      1
+    ],
+    "joint": "5280598124/14654264625",
+    "cofactor_count": 5,
+    "four_load_cost": "798452/3455881",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      2
+    ],
+    "joint": "26489768/777573225",
+    "cofactor_count": 5,
+    "four_load_cost": "54940/2199197",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        398,
+        1
+      ]
+    },
+    "minimizer_count": {
+      "joint": 6
+    }
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      3
+    ],
+    "joint": "330254/114189075",
+    "cofactor_count": 5,
+    "four_load_cost": "4812/2199197",
+    "minimum_margin": {
+      "joint": "0"
+    },
+    "first_minimizer": {
+      "joint": [
+        314,
+        7
+      ]
+    },
+    "minimizer_count": {
+      "joint": 12
+    }
+  }
+]

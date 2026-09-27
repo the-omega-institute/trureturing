@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f213b62c1b2b5e30d03f0538de9d376ff41c3912f1ccf401cb7d6c1863f2d390
+  normalized_sha256: sha256:f213b62c1b2b5e30d03f0538de9d376ff41c3912f1ccf401cb7d6c1863f2d390
+cas_ref: sha256:f213b62c1b2b5e30d03f0538de9d376ff41c3912f1ccf401cb7d6c1863f2d390
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “全体无限续词的量词规定逐前缀的一致任务”及“停止后的持续输出也不是本定义的要求”限定任务边界；没有给单个无限词赋正概率，也不宣称其他资源最优性。
+    previous_atom_id: 7209f116f357b49887973cec8aad8b5ce5c17b1f73b2b05e860f58f8af376505
+    next_atom_id: 263122fac3bb198f1725134a27b005254ebf3c2677b7cc3e7666b1287840ca03

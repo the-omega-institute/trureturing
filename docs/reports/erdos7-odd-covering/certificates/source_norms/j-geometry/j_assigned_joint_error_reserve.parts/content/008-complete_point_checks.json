@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/008-complete_point_checks/000000-000001.json",
+        "sha256": "9231f037e73185980961068baf47482caa5d71c041da3b6791e4326e7468d218",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/008-complete_point_checks/000001-000002.json",
+        "sha256": "c70d90f67b129aec8421bb85fae14266be373938f100e1f80150278574cbdb6f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/008-complete_point_checks/000002-000003.json",
+        "sha256": "9f00cdea7b17229deb5fddf332e4e4c0fe302a66d43f542f15a3461460c07150",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/008-complete_point_checks/000003-000004.json",
+        "sha256": "e19f859986717bc84c43fed24c1ca5cab1b10aa7616984abc9f6279be00f7c9d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/008-complete_point_checks/000004-000005.json",
+        "sha256": "5f5fe5da33d9b38b9feedd8c7657e745d806842ebc7135dfe591745ef4d06171",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/008-complete_point_checks/000005-000006.json",
+        "sha256": "44051cb803cd53596f83e5030d5a43b4c7efecba846aaffcb91ba77b32a1b82d",
+        "kind": "value"
+      }
+    }
+  ]
+}

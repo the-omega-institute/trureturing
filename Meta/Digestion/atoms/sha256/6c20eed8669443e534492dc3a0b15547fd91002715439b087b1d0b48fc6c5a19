@@ -1,0 +1,30 @@
+**definition 51.0 (全算术完成、联合自然图与边界记号).** 令 $\mathbb N_0=\{0,1,2,\ldots\}$，令 $\mathcal P$ 为素数集合。对 $t\in\mathbb N_0$、$m\in\mathbb N_{>0}$，定义
+$$
+a\sim_{t,m}b\quad\Longleftrightarrow\quad a=b\ \lor\ \bigl(a,b\ge t\ \land\ a\equiv b\pmod m\bigr),
+\qquad Q_{t,m}=\mathbb N_0/\!\sim_{t,m}.
+$$
+各商取离散拓扑，指标次序为
+$$
+(t,m)\preceq(T,M)\quad\Longleftrightarrow\quad t\le T\ \land\ m\mid M.
+$$
+当 $(t,m)\preceq(T,M)$ 时，以自然代表元诱导的映射为过渡映射。定义
+$$
+K=\varprojlim_{(t,m)}Q_{t,m},\qquad j(n)=([n]_{t,m})_{(t,m)}.
+$$
+记 $\pi_{t,m}$ 为坐标投影，并记
+$$
+R=\widehat{\mathbb Z}=\varprojlim_{m\ge1}\mathbb Z/m\mathbb Z\cong\prod_{p\in\mathcal P}\mathbb Z_p.
+$$
+$R$ 取此逆极限拓扑，亦即右侧的乘积拓扑；整数在 $R$ 中均指其对角像。对 $x\in R$，以 $\tau(x)$ 表示在每个 $Q_{t,m}$ 上取尾部剩余类 $x\bmod m$ 的线程，即其该坐标由集合 $\{n\ge t:n\equiv x\pmod m\}$ 表示。
+
+采用
+$$
+\gcd(0,0)=0,\qquad \gcd(0,n)=n,\qquad \operatorname{lcm}(0,n)=0.
+$$
+定义
+$$
+\Gamma=\left\{\bigl(j(a),j(b),j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr):a,b\in\mathbb N_0\right\},
+\qquad C=\overline\Gamma\subseteq K^4.
+$$
+这里两个输出始终来自同一对自然输入。上述观察系统是固定基线定义 14.0 的全阈值—周期系统；关系的有限观察闭包与有限观察完成的框架分别见该基线定理 3.4、4.2（[固定基线：定义 14.0、定理 3.4 与 4.2](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)）。
+

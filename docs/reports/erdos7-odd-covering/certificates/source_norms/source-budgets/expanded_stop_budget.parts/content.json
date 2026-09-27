@@ -1,0 +1,161 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "expanded-stopping-cutoff-exact-upper-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual seven-phase154 head, unchanged complete balanced depth caps, numerical head order and uniform complete higher digits. Delta2/5 through B, one common avoiding-event conditioning, then BBMST uniform-base delta1/2. Extra distinct smooth moduli are licensed only outside D7. Ordinary comparison and continuation remain explicit inputs."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "maximum_B": {
+    "kind": "inline",
+    "value": 65536
+  },
+  "prime_order": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "heights": {
+    "kind": "inline",
+    "value": [
+      5,
+      3,
+      3,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "profiles": {
+    "path": "content/006-profiles.json",
+    "sha256": "c3185507ccfe81e653b25c8228475c5519579a1b4e34586974d39cf0b0f4c66a",
+    "kind": "value"
+  },
+  "labels": {
+    "path": "content/007-labels.json",
+    "sha256": "1ff6ded651a0c66bb96554a52129776db9980cf9a09c9618ec926a0a07215b2d",
+    "kind": "value"
+  },
+  "exact_initial_head_mean": {
+    "kind": "inline",
+    "value": "182380820632923825223626937058800000145120317739110813600153491925370465029/23939128508521797874344393031680000000000000000000000000000000000000000000"
+  },
+  "exact_initial_head_second": {
+    "kind": "inline",
+    "value": "189927285123184069286367174760338797816094037835966007975567696682143477536763558866099/944514894208033492360200388980366045444990000000000000000000000000000000000000000000"
+  },
+  "E7_upper": {
+    "kind": "inline",
+    "value": "12178662955108141168417081005254705201720160394907142987095108822695559960850758564670622557276071555190196990071501791348394597770358678684960015024861915465372036169824624949/312197802707202287652441956932779087248084177416077732471611176007832957992945071464388489195781968726093002603002352860875704688558080000000000000000000000000000000000000000000"
+  },
+  "D7_coefficients": {
+    "path": "content/011-D7_coefficients.json",
+    "sha256": "6758933e8c9a51bd9dcad07e5cb770b8d1420acd7768f79b0b8921ec5c4db57d",
+    "kind": "value"
+  },
+  "total_infinite_head_weight": {
+    "kind": "inline",
+    "value": "182380820632923825223626937058800000145120317739110813600153491925370465029/23939128508521797874344393031680000000000000000000000000000000000000000000"
+  },
+  "snapshots": {
+    "path": "content/013-snapshots.json",
+    "sha256": "07f211874361d9788277df848c5bbbc7aa69bd5febd759dcf277be4980a2e7bb",
+    "kind": "value"
+  },
+  "stages": {
+    "path": "content/014-stages.json",
+    "sha256": "b09daf4479da3d824f7d1fa4d41259d7e03206c203ea8a8b9ca51ecc3f1687cd",
+    "kind": "array"
+  },
+  "low_product_tables": {
+    "path": "content/015-low_product_tables.json",
+    "sha256": "be532b73c4090eb12845a3e6db2b2d7c5cfe71a879dd61afb2fc1c4eb3e8a3e8",
+    "kind": "object"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+      "problem-details/62-expanded-stopping-cutoffs-for-the-seven-phase-head.md": "633979bf1b24edb0d198b279e3a0fe62ca79a6e3ddd47f520ef70b465d22c41b",
+      "frontier/source-budgets/uniform_phase_capacity_input.json": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b",
+      "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+      "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+      "certificates/source_norms/source-budgets/expanded_stop_head.json": "4718305d922f6ad708b64bfb38a823bed29e986492cbab910c539314cfdce70b",
+      "frontier/source-budgets/expanded_stop_head.py": "0afac1bf5c0c94ef8ce4cadfe47c1616e23ec53f5e8d6094296f31243cd89230",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+      "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3",
+      "certificates/source_norms/source-budgets/balanced_profile_exponent_frontier.json": "b04a0f5add4e1162792118973f52ed3e90a96cecfe6c9d741a6f43ec662200e3",
+      "frontier/source-budgets/balanced_profile_exponent_frontier.py": "a021e27be38f53566fa69fba1bbed554efc07007d30b2988ab01ef0f8565ca9b",
+      "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+      "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+      "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+      "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+      "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+      "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+      "frontier/source-budgets/head_exponent_downset.py": "0eac881f5ec12c423ee7eff34240706abe67c68af2c5e4054335776446301323",
+      "problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md": "c8b67933791bd6eeb3925159b9b3219d3492703cd340ee720e0bc9d07dd8bee5",
+      "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/CappedGainRearrangement.lean": "ff003bc80d91f1e0026af3c22c5d2ff3a4ab92f733b968c3321e6de521826ab6",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_verification.json": "efe77669ceabee38d5c5b94af03856a894c99f42e6792ef95a61a4fe2b8253a7",
+      "frontier/source-budgets/verify_balanced_profile_tail_budget.py": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "9cf1130ab61454a4b1f8e3ed35cd00a96a67f05f02b0fb13d5526eafeb0dab6e"
+  }
+}

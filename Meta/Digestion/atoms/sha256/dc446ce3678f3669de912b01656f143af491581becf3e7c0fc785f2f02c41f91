@@ -1,0 +1,20 @@
+### 17.4 定理：具有固定端点权重的正测度下界构造
+
+固定
+\[
+E_0=(E_-+E_+)/2>0,\qquad
+\kappa=\min\{(E_+-E_0)/2,E_0/(4e)\}>0,
+\]
+并记 $A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、$W_\eta=1/\eta$。
+对每个奇数 $q\geq3$，存在两个各有 $(q+1)/2$ 个正原子的测度 $\mu_q,\nu_q\in\mathcal M$，使
+\[
+|g(\mu_q)-g(\nu_q)|\geq\frac{\kappa A_\eta^2}{4W_\eta q^2},
+\tag{17.6}
+\]
+并且对每个 $T>0$，
+\[
+\boxed{\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\left[\frac14\min\{1,E_+T/q\}\right]^q.}
+\tag{17.7}
+\]
+

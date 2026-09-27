@@ -1,0 +1,20 @@
+### 123.3 Zeckendorf 前缀的具体幽灵
+
+令 $X_{\mathrm{fs}}$ 为所有只有有限多个 $1$ 的无限合法串：
+
+$$
+X_{\mathrm{fs}}
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0,\ \exists N\ \forall i\ge N,\ x_i=0\right\}.
+$$
+
+令 $Q_n=\mathcal W_n$ 为长度 $n$ 的无相邻 $1$ 字串，$\pi_n$ 删除最后一位，$q_n$ 取前缀。兼容性给出
+
+$$
+\varprojlim Q_n
+\cong
+\left\{z\in\{0,1\}^{\mathbb N}:z_i z_{i+1}=0\right\},
+$$
+
+即所有无限合法串，而不仅是有限支持串。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9905484d991d296765c596d9c084c8c58ee4854b4e7f8676f4bc8425c7ca750
+  normalized_sha256: sha256:c9905484d991d296765c596d9c084c8c58ee4854b4e7f8676f4bc8425c7ca750
+cas_ref: sha256:c9905484d991d296765c596d9c084c8c58ee4854b4e7f8676f4bc8425c7ca750
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “采用”既定紧数位载体、“固定”参数零以及“置”相位、残差和更新算子只引入本节对象；此叶尚未断言迭代移位、概率保持或全变差收敛，未借定义提前取得命题46.2。
+    previous_atom_id: a14ce27f0608af60b583003effef4117f64ff3ef3c48c9244e52cc0372a23e1d
+    next_atom_id: 81628716fefeaed893aa3295e3cbc6a249300fcffc1e6580b685180776cf5577

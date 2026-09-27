@@ -1,0 +1,12 @@
+**theorem 52.17 (独立可达而联合不可能，以及二元数据的不足).** 有严格包含
+$$
+\mathcal J\subsetneq\mathcal S\subsetneq\mathcal M.
+$$
+具体地，
+$$
+(D,D,\rho(6))\in\mathcal S\setminus\mathcal J,
+\qquad
+(D,D,\rho(4))\in\mathcal M\setminus\mathcal S.
+$$
+此外，若只保留局部载体 $E$、其拓扑、二元超加法与乘法，不另保留素数标签或剩余域，那么这些数据不能唯一决定局部实际联合像 $J_p$。
+

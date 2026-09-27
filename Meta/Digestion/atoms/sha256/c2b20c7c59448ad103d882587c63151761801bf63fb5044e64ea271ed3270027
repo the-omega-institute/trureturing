@@ -1,0 +1,17 @@
+**定理 14.5（保留 Bernstein 时间衰减的联合证书）。** 在定义14.4及式(14.8)下，取同一合法拟合的共同实现 $\widehat C,\widehat J,\widehat h_0$。在概率至少 $1-\alpha$ 的事件 $\mathcal E_n$ 上，对全部 $t\ge0$ 同时有
+$$
+\|K(t)-\widehat K(t)\|\le e^{-at}(B_Kt+D_K),\qquad
+\|f(t)-\widehat f(t)\|\le e^{-at}(B_ft+D_f).
+\tag{14.13}
+$$
+因而
+$$
+\begin{aligned}
+\sup_{t\ge0}\|K(t)-\widehat K(t)\|&\le\varepsilon_K,&
+\int_0^\infty\|K(t)-\widehat K(t)\|\,dt&\le I_K,\\
+\sup_{t\ge0}\|f(t)-\widehat f(t)\|&\le\varepsilon_f,&
+\int_0^\infty\|f(t)-\widehat f(t)\|\,dt&\le I_f.
+\end{aligned}
+\tag{14.14}
+$$
+

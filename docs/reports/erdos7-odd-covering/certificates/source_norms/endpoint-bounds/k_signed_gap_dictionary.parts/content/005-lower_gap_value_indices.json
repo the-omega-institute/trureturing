@@ -1,0 +1,275 @@
+{
+  "length": 23328,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/000000-000798.json",
+        "sha256": "bd593929beb2128cbe96e520141aa1e1e36cb8d5822e35de1511fb5d01824b27",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/000798-001596.json",
+        "sha256": "f92e9946b973ca5df5c19942a91f40dc986254c735654be0009afb2303d3ecef",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/001596-002394.json",
+        "sha256": "9727b7cd123e687f53a50af0ced3b1b22c67aa519cf9cda3dc2e6bcf88ce25c3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/002394-003192.json",
+        "sha256": "0e57df9b5b865574bf637157b277ed72b0aefd994afcca9d59264f47e1e6e46a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/003192-003990.json",
+        "sha256": "3a496f7be098e082a603e8d3050ffb49dcceac0434dc83004277d3c6707a45aa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/003990-004788.json",
+        "sha256": "87e93ab4851dabeb5916441cb21e1d43ac4d3216064b82852488922283a04e1f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/004788-005586.json",
+        "sha256": "f0ad300181c4e230c4998f195c06a67f9d4d3e3bd863952c6b30dfce29994a6c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 6384,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/005586-006384.json",
+        "sha256": "58991976bc61e9f8b4080908a5de6aac7dd196382b89a373345a5a7d808bb117",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6384,
+      "stop": 7182,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/006384-007182.json",
+        "sha256": "e97ee84d1153431e9f98c946e581e99f7f2770bc747acf626fc8fdbf9806ae5b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7182,
+      "stop": 7980,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/007182-007980.json",
+        "sha256": "5a586bd058e8d655f2eb166fde601b64d7696b087b1fd59d641ff46d291bbf34",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7980,
+      "stop": 8778,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/007980-008778.json",
+        "sha256": "2eae21d644b25603d283b607f2b1b510d41e0523d481c3e20295acf26af7bc78",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8778,
+      "stop": 9576,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/008778-009576.json",
+        "sha256": "8c59a52e380f5341a579695237171219ef260f46f774e4caeaa53345b00f6ffd",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9576,
+      "stop": 10374,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/009576-010374.json",
+        "sha256": "e40696eb6bd1945348c6394d3edc040c50d92f2c69265bca76af738d89872133",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10374,
+      "stop": 11172,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/010374-011172.json",
+        "sha256": "673586aafe9dbc504cf9d9141b94c225f0eedef57fe20ed488a07f7502bc9cb0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11172,
+      "stop": 11970,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/011172-011970.json",
+        "sha256": "766faf561605cd1bde2f9ab4c4aa8dfd8478ee5fc04fdfdf267d916134afb40f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11970,
+      "stop": 12768,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/011970-012768.json",
+        "sha256": "d44c38202e23f9c891e57022674d32d209ef1148cebbd56a06f427ed2a10237f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 12768,
+      "stop": 13566,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/012768-013566.json",
+        "sha256": "12eec25461745651b4d4003300576d80112398c3e52344089df3a20dbf71e03f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 13566,
+      "stop": 14364,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/013566-014364.json",
+        "sha256": "2dab9f121618879dcde2b8e241acd0f53a3d9e269da966331eda1e32e3dd5615",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14364,
+      "stop": 15162,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/014364-015162.json",
+        "sha256": "0786366a5c4b17c9b97b9980df8872e71cba0604586764e075f3955b77d95714",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15162,
+      "stop": 15960,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/015162-015960.json",
+        "sha256": "7ef67ed96ab8f016bab1c7358350e94050ef2cea39b0fa5e71aa5e6236f179e7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15960,
+      "stop": 16758,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/015960-016758.json",
+        "sha256": "baf1f5e6d5918d3858a8113eaa4ec56b03d6e43362eb7095016aa2206e3a0472",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 16758,
+      "stop": 17556,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/016758-017556.json",
+        "sha256": "ab294457819b80a900c3b57e5c0338e9ccc1b0b85faa900ce0a4b92a7227342e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 17556,
+      "stop": 18354,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/017556-018354.json",
+        "sha256": "c576174cff11e18be4a20e6cb8d4fb8f58954dc1d31bb324ad4d4e2bfcbac7d1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18354,
+      "stop": 19152,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/018354-019152.json",
+        "sha256": "790923709da403b6be5adf6d520fb0137d6c0d36deabc4d1ae57a1d3381caa09",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 19152,
+      "stop": 19950,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/019152-019950.json",
+        "sha256": "dba23f2429e22d7bd073fbdd4e78b98dc742558a9c6761d4bedff4548cab5857",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 19950,
+      "stop": 20748,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/019950-020748.json",
+        "sha256": "3c3d2fc700dd4587c55a51dbe83b68c6f9abab21d8587ae388175c1d7090e9a6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20748,
+      "stop": 21546,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/020748-021546.json",
+        "sha256": "7c0a803267910ee40c518d9d90946931f7dfcca1be2e2de56416597885a11a05",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21546,
+      "stop": 22344,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/021546-022344.json",
+        "sha256": "0629b2eddf09d54cdff9b3c1fca05755b25a9028d98a006470676b0ef9f4dd7f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22344,
+      "stop": 23142,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/022344-023142.json",
+        "sha256": "cc5ec4f54ab7713ac1973ad53cc13cd4e079c7581983781763788c4e64beeff9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 23142,
+      "stop": 23328,
+      "part": {
+        "path": "content/005-lower_gap_value_indices/023142-023328.json",
+        "sha256": "35863ae1ae46611436739c1afe2da64aa687d60e3f2cb9e3dc1d61ca5d6b8f1c",
+        "kind": "value"
+      }
+    }
+  ]
+}

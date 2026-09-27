@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f99dde25f8ada1fbdb2dba4598e5578dfd43306a88ded97f0cf43e933d4ddb1e
+  normalized_sha256: sha256:f99dde25f8ada1fbdb2dba4598e5578dfd43306a88ded97f0cf43e933d4ddb1e
+cas_ref: sha256:f99dde25f8ada1fbdb2dba4598e5578dfd43306a88ded97f0cf43e933d4ddb1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定密度输入、按设置归一化的量子仪器分支与词效应及概率的记号，不声称仪器存在性或额外闭合结论。
+    previous_atom_id: 07e28a2c3767bacbbd7b93a4d30d87f99bc86c3c5d6c2f94a9b44a3e743b963e
+    next_atom_id: 6fd5c18effb2c46b19912f838ba7bbbfb74256062599870aecc2bda8482e5987

@@ -1,0 +1,12 @@
+#### 3.1.15 成熟来源与承担的连接
+
+Iman Marvian、Robert W. Spekkens，[*Modes of asymmetry: the application of harmonic analysis to symmetric quantum dynamics and quantum reference frames*, arXiv:1312.0680v2](https://arxiv.org/pdf/1312.0680v2)。固定版本 PDF 第6页式(2.14)—(2.15)给 weighted twirling 及 $\sigma^{(k)}=p_{-k}\rho^{(k)}$；同页 Proposition 1 给协变操作不产生输入缺少的模式。第8页式(2.23)—(2.25)将参考失配分布接到 Fourier 系数，随后的例子说明参考质量依赖任务所需模式。原文用 $U(\theta)\rho U(\theta)^\dagger=\sum_ke^{ik\theta}\rho^{(k)}$，故出现 $p_{-k}$；本文固定 $e^{-itH}$，直接积分产生 $\widehat\nu(E_a-E_b)$，须核对符号。整数 $U(1)$ 模标签不自动涵盖任意实谱；式(TM.259)是有限谱演算给出的实际 Bohr 频率版本。原文未声明本文的 $Tg$ diamond 界。
+
+Hugh L. Montgomery、Robert C. Vaughan，[*Multiplicative Number Theory II: Primes and Sieves*，作者网页 PDF](https://personal.science.psu.edu/rcv4/571s25/montgomery-vaughanII.pdf)，Appendix G.4，Theorem G.14 及证明，印刷第422—425页，对应本节所据472页 PDF 的第434—437页。定理对间距至少 $\delta$ 的不同实数给双线性型常数 $\pi/\delta$，证明等价使用非对角元素 $1/(\lambda_m-\lambda_n)$ 的斜 Hermitian 矩阵，式(G.16)给所需范数平方界。本文以 $\delta=g$ 调用，再由式(TM.278)及 Schatten Hölder 得通道界；不将成熟 Hilbert 不等式计为新增结果。此处依据作者稿的定理及证明，而非1974年原刊措辞，也不把当前通道常数的最优性归入其结论。
+
+Anthony J. Short、Terence C. Farrelly，[*Quantum equilibration in finite time*, arXiv:1110.5759v1](https://arxiv.org/pdf/1110.5759v1)。PDF 第3页式(11)积分有限窗口振荡核，随后给相应的 $2/(T|\Delta|)$ 包络。原文矩阵按能隙差 $G_\alpha-G_\beta$ 索引；第4页 Theorem 2 用有效维数、能隙密度和测量结果数控制特定测量族的时间平均可分辨性。本文振荡积分属于同一成熟机制，但式(TM.269)、(TM.279)比较通道并对全部参考取最坏值，不是该论文定理的逐字转述；也不能用本文结论宣称大多数时刻的全态平衡。
+
+仓内参考资源边界接到不可变快照 237012b49d0d4729a86f7e9dd252d94df1de8dd0 的 [QUANTUM-REALITY 第373—374节](https://github.com/the-omega-institute/trureturing/blob/237012b49d0d4729a86f7e9dd252d94df1de8dd0/docs/develop/theory/QUANTUM-REALITY.md)。第373.1节原始49984—50048行要求联合效果保持总激发数，其他辅助系统须不变或明确计入资源，证明独立不变参考诱导系统不变效果；原始50054行起构造关系相位效果。第374.1节原始50124行起给有限参考下的最佳区分概率，只承担其特定参考谱及准备合同的优化。本文迁移共同能量块与参考相干接口，不把这些纸面来源或本文公式报为新增 Lean。
+
+本节补足有限时间接口：遗忘记录后，实际能隙字符值完整决定通道；独立增量使其相乘；扇区矩阵控制全部参考下的通道距离；有限窗口对标量等价类上的谱扰动连续；共同副本失谐有明确的未条件化读数；固定重复、Cesàro 混合和保留时间记录对应不同实验。一般自治钟制备、最优能量—精度成本与有限样本预算未由这些公式解决，也没有从随机平均推出新的时空本体关系。全部内容为普通数学源草稿，完整记录、效果权限及实际来源仍是应用前件。
+

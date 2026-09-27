@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc9d8b80525ad68b004aae12919e9b5ee0cb4370da1beca6f760ad521271c44f
+  normalized_sha256: sha256:fc9d8b80525ad68b004aae12919e9b5ee0cb4370da1beca6f760ad521271c44f
+cas_ref: sha256:fc9d8b80525ad68b004aae12919e9b5ee0cb4370da1beca6f760ad521271c44f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子规定情境整体、论域、选择空间以及两层补集的类型，属于定义和类型辨析，没有独立待证结论。
+    previous_atom_id: 683ce9fb27af320640eb285523a03aca9e06ec9d9ff8804e8c80b42763993518
+    next_atom_id: 92f1828034e30230c9d7f20a5fc088c1745224f2822ad9cad8114fbaa1704755

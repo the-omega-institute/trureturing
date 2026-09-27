@@ -1,0 +1,24 @@
+**注记 69.1（定理范围与事件读数）。** 因此
+$$
+\boxed{
+\|f\|_2^2=\|\widehat f\|_2^2+\|r\|_2^2.
+}
+$$
+
+实 $L^2$ 中的唯一残差与正交性对应
+D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean
+中的 conditional_expectation_residual_orthogonal_decomposition；范数等式再由勾股恒等式得到。它把“名字没有保留的预测方向”变成一个明确定义的 Hilbert 向量。选定的 $\sigma(q)$-可测实函数在同一 $q$-纤维上取相同值；但 $L^2$ 向量本身只规定几乎处处等价类，不能无条件赋予每个点唯一读数。
+
+对事件 $A$ 取 $f=\mathbf 1_A$ 时，在有限分区或选定的条件概率版本下，条件期望在每个观察类上可写成该事件的条件概率：
+$$
+\widehat f(x)=\mu(A\mid q(x)).
+$$
+令 $p_q(A)=\mathbb E[\mathbf1_A\mid\sigma(q)]$。于是
+$$
+\boxed{
+\|\mathbf 1_A-\mathbb E[\mathbf 1_A\mid q]\|_2^2
+=\mathbb E\bigl[p_q(A)(1-p_q(A))\bigr].
+}
+$$
+这量化了当前观察仍未决定的事件质量，但它仍依赖 $\mu$；观察核本身保留的是哪些状态被合并。 这个事件方差等式由条件期望的塔式性质和 $\mathbf1_A^2=\mathbf1_A$ 得到，不是上面所引 Lean 声明的额外结论。
+

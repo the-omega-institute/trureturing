@@ -1,0 +1,35 @@
+**命题 72.10（一个等权二分的四个读数）。** 取 $I$ 为单点，$J=\{0,1\}$，$r$ 为常值映射，$q_0=q_1=1/2$、$p=1$。则
+$$
+U_r=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\sigma_r=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\rho_q=\frac12I_2,
+$$
+$$
+\operatorname{Tr}\Gamma_r(\rho_q)=\tfrac12,\qquad
+\mathcal C_r(\rho_q)=[1],\qquad
+D(\sigma_r\Vert\rho_q)=\ln2,\qquad
+D(\rho_q\Vert\sigma_r)=+\infty.
+$$
+
+证明。代入 $U_r$ 与两态的条目公式即得矩阵。压缩给出一维矩阵 $[1/2]$，经典标签通道则将两个对角质量相加为一。$S(\sigma_r)=0$、$S(\rho_q)=\ln2$，由定理 72.6 得正向值；命题 72.9 的核向量可取 $f_0-f_1$，给出反向无穷值。两态的细基测量分布同为 $(1/2,1/2)$，其经典 KL 值仍为零。故压缩迹缺口 $1/2$、经典总质量一、正向相干相对熵 $\ln2$ 与反向无穷值是不同读数。证毕。
+
+### 72.90 数学来源与形式化边界
+
+有限 Kraus 判据与等距熵不变性属于成熟结果（`literature-attested`）：Watrous，*The Theory of Quantum Information*，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Corollary 2.27，印刷第 89 页／PDF 第 97 页式 (2.129)，给出矩形 Kraus 族的完整性与通道作用；Proposition 5.19，印刷第 268 页／PDF 第 276 页式 (5.93)，给出有限维等距映射下的熵不变，包括奇异正算子。Baumgratz–Cramer–Plenio，*Quantifying Coherence*，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 3 页式 (8) 及其前一显示式，给出相对于固定基的 $D(\rho\Vert\Delta\rho)=S(\Delta\rho)-S(\rho)$。换用自然对数时，两侧统一换算。本节在同一有限细化上识别这些现成结果的参数、支撑及运输方向；不作新颖性或穷尽文献的主张。
+
+以下源码引用固定于提交 `6dcc8b24cb208a3a0e06a657b3bf8111e5f70801`，只承担各行所列数学输入。
+
+| 第 72 节的现成输入 | 精确声明与代入范围 |
+| --- | --- |
+| 72·有限通道 | [D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean) 对 $\mathcal E_r$ 取唯一 Kraus 算子 $U_r$，对 $\mathcal C_r$ 取 $K_j=|e_{r(j)}\rangle\langle f_j|$；两次完整性分别在定理 72.2、72.4 中履行。此声明不把 $\Gamma_r$ 升为保迹态通道。 |
+| 72·标签复合 | [D5/S3/Entropy/Forgetting/PushforwardComposition.sum_indicator_comp](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Forgetting/PushforwardComposition.lean) 在定理 72.4 中取加法交换幺半群 $\mathbb C$、质量 $k\mapsto Z_{kk}$、两映射 $s,r$；同模块 `pushforward_comp` 是实质量版本，可用于推论 72.7 的权重相容性。 |
+| 72·正交混合熵 | [D5/S3/Quantum/Information/OrthogonalRecordEntropy.orthogonal_mixture_entropy](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Information/OrthogonalRecordEntropy.lean) 依次取 $(p_i,R_i)$、$(q_j,F_j)$；定理 72.6 已给分量正性、迹一、异分量乘积零及秩一分量熵为零，不省略其平均分量熵项。谱归约的现成输入为钉版 Mathlib 的 [isIdempotentElem_iff_spectrum_subset](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Projection.lean#L29)，其谓词取自伴性。 |
+| 72·相干删除 | [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.lean) 取 $U=I$、$\tau_k=\Delta_f^{\,k}(\sigma_r)$、$k=0$，使用单步等式与非负性；这里的相对熵仍是旧实值迹对数表达式。 |
+| 72·有限分支桥 | [D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.legacy_quantumRelativeEntropy_eq_finite_branch](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.lean) 通过不改变矩阵的 `toLegacyDensityState` 连接旧表达式与有限迹对数分支；还须结合下一行的实际支撑条件，不能单独获得 Umegaki 的无穷分支。 |
+| 72·支撑与方向 | [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy_eq_coe_of_support](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.lean) 的条件为第二态的核包含于第一态的核；定理 72.6 与命题 72.8 给出正向包含。同模块 `extendedQuantumRelativeEntropy_eq_top_of_not_support` 在命题 72.9 的显式核向量证出反向不包含后适用。 |
+| 72·经典条件熵 | [D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Fusion/QuotientFiberDecomposition.lean) 取源 $J$、父标签 $I$、质量 $q$、观察 $r$；只需非负归一化，不需全标签严格正。它给出经典熵差与纤维条件熵，不给出矩形算子构造。 |
+
+本节仍未形式化的是这份有限细化数据到上述接口的完整类型适配及组合证明，包括加权矩形包含与消去、观察量压缩和碰撞迹、标签通道的具体条目与恒等边界、指定秩一提升的熵和支撑接合、有限塔的端点适配，以及零质量延零和反向核向量。源码中通用声明的适用范围不等于这些完整命题已获编译核验；各处给出的纸面证明不替代该项形式化。
+
+所有等式的概率律均为输入，$\sigma_r$ 是归一化指示基指定的提升。经典质量和 Hilbert 坐标没有附带物理制备、测量公理或能量交换假设，故这里没有 Born 规则、物理实现或热耗散的推导。有限塔恒等式也没有断言无限塔的迹一极限、迹范数收敛或无限熵差；这些问题仍须各自的相容性、正规性与可积性假设。
+

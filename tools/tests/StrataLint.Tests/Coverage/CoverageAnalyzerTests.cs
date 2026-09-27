@@ -58,7 +58,7 @@ public sealed class CoverageAnalyzerTests
         Assert.Equal("structured-json", artifact.Mechanisms.ValidationProfile);
         Assert.Equal(CoverageLedgerState.Semantic, artifact.Mechanisms.LedgerState);
         Assert.Contains("path-policy", artifact.Mechanisms.Registrations);
-        Assert.Contains("registry:artifact-kinds", artifact.Mechanisms.Registrations);
+        Assert.Contains("filemap:artifact-kinds", artifact.Mechanisms.Registrations);
         Assert.Contains(RuleId.CreateKnown(18), artifact.Mechanisms.ActiveRules);
     }
 
@@ -90,15 +90,15 @@ public sealed class CoverageAnalyzerTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
-    private static ValidatedPolicy Policy() => RegistryLoadAssert.Accepted(
-        RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+    private static ValidatedPolicy Policy() => PolicyLoadAssert.Accepted(
+        RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
     private sealed class PredicateRule(bool applies) : IRepositoryRule
     {
         public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => applies;
 
-        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) => [];
+        public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) => [];
     }
 }

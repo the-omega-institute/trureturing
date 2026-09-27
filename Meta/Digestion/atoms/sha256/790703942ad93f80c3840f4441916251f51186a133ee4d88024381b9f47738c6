@@ -1,0 +1,16 @@
+**theorem 39.15 (Fixed finite syntax, arbitrary parameters, and the size of a record).** Let $\Lambda$ be an at most countable alphabet, let $\mathcal L\subseteq\Lambda^{<\omega}$ be a set of finite closed descriptions, and fix an interpretation assigning to each $d\in\mathcal L$ one continuous finite-valued observation $f_d$ on $\mathscr E$. Then $(e,(f_d)_{d\in\mathcal L})$ is not injective. The statement remains true after taking every finite record formed from these observations. A countable stock of fixed parameters can be included in $\Lambda$.
+
+In contrast, allowing every actual parameter $b\in K$ in the digit schema $\chi_{b,j}$ supplies a separating family of cardinality $\mathfrak c$. These observations have the following distinct cardinal properties:
+$$
+|\mathscr E|=|\iota(\mathscr E)|=\mathfrak c,
+\qquad
+|\{0,1\}^{K\times\mathbb N}|=2^{\mathfrak c},
+\tag{39.39}
+$$
+$$
+1\le |A_F|\le2^{|F|}\quad(F\text{ finite}),
+\qquad w(\mathscr E)=\mathfrak c.
+\tag{39.40}
+$$
+Thus the number of observation maps, the number of binary positions in a record, the number of attained records, and topological weight are different quantities. The countable binary injection (39.30) remains available when continuity is dropped.
+

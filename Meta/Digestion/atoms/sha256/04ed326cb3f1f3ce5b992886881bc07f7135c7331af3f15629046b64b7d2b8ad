@@ -1,0 +1,24 @@
+**定理 137.4（有限前缀的最小维数实现唯一）。** 假设式(137.3)，取定理137.2的规范实现 $(E,C,J)$。任一维数为 $\operatorname{rank}H_r$ 的正实现 $(E',C',J')$，都有唯一正交同构 $Q:E\to E'$ 满足
+$$
+QC=C'Q,\qquad QJ=J'.
+\tag{137.8}
+$$
+因而最小维数实现所生成的全部矩
+$$
+\widehat M_k=J^*C^kJ\qquad(k\ge0)
+\tag{137.9}
+$$
+只依赖给定前缀。
+
+**证明。** 令 $T'v=\sum_{j=0}^r(C')^jJ'v_j$。由 $H_r=(T')^*T'$，$\ker T'=\ker H_r$，所以
+$$
+Q[v]=T'v
+$$
+良定义且保内积。其像的维数为 $\operatorname{rank}H_r=\dim E'$，故它满射。对任意 $v,w\in P_r$，
+$$
+\langle Q[v],C'Q[w]\rangle_{E'}
+=\langle v,S_rw\rangle_{P_r}
+=\langle Q[v],QC[w]\rangle_{E'}.
+$$
+$Q$ 满射给 $C'Q=QC$；零次插入给 $QJ=J'$。任何满足式(137.8)的映射都必须将 $C^jJu$ 送到 $(C')^jJ'u$，而这些向量在 $0\le j\le r$ 时已张成 $E$，故 $Q$ 唯一。对式(137.8)取幂并使用正交性，得到全部矩相同。$\square$
+

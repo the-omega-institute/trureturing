@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14ac5904c7b001e7c7213bde3437a2cd98bcaba1c46186e9d49dd60429b18bdc
+  normalized_sha256: sha256:14ac5904c7b001e7c7213bde3437a2cd98bcaba1c46186e9d49dd60429b18bdc
+cas_ref: sha256:14ac5904c7b001e7c7213bde3437a2cd98bcaba1c46186e9d49dd60429b18bdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明可独立制备的正交输入与同一输入的路径展开项属于不同模型对象，不提出新的定理。
+    previous_atom_id: 2292705afc048bdebc1db33c56ae8741f2b0ec6b4672b8bf38be7a17b467c05f
+    next_atom_id: d81a0860ebc2a1b2406940509c2086765199cb08c651cba8cf4029a099880bc7

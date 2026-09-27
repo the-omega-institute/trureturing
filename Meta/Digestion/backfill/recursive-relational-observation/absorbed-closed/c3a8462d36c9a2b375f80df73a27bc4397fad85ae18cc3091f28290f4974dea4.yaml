@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:c3a8462d36c9a2b375f80df73a27bc4397fad85ae18cc3091f28290f4974dea4
+  normalized_sha256: sha256:c3a8462d36c9a2b375f80df73a27bc4397fad85ae18cc3091f28290f4974dea4
+cas_ref: sha256:c3a8462d36c9a2b375f80df73a27bc4397fad85ae18cc3091f28290f4974dea4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.cut_scope_eq_separator
+    target_statement_id: sha256:c97a8277ae9eea8c9559136e1f5e1bed1a7cf54bf39dde017af5abe538dad718
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.edge_cut_components
+    target_statement_id: sha256:f37d20ff87ccebfc2fb763870f6f12fa1cc34d3d8ed673caaf845856bc18eeda
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.extend_record_at_neighbor
+    target_statement_id: sha256:aa4630cda695b4453c88a94708d0fc44594be568c545b6f74e44c2daba262ba9
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.local_row_extends_raw_join
+    target_statement_id: sha256:0d3d552033761e6dd7cc45a2c31a34ecc65b6767dfb18414210ddff4186ab4e4
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.mem_completion_payload_iff
+    target_statement_id: sha256:0bff82327f30a3fe83bb097e1857db14cbee3a9e3ad527aa8a5bbcedb91f3760
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - bba973cd7c663218a06c76e14dc09085dc34ca4d627513ae88d6cd83ed45b494
+    - 34f2d00722a229ea9718258f090da9b38ef5ed0a173037f108ee0431e701243a

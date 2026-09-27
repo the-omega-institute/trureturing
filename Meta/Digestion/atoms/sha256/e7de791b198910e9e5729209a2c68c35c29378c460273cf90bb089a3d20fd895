@@ -1,0 +1,12 @@
+**定理 120.6（可消去辅助实现的行为等价）。** 设扩展系统 $\widetilde X$ 到原系统 $X$ 有满射 $r$，对相同操作语言满足
+$$
+r\widetilde T_a=T_ar,\qquad \widetilde o=or.
+$$
+扩展系统仅使用这些运输后的任务与操作。则
+$$
+\widetilde\Phi=\Phi r,\qquad
+\ker\widetilde\Phi=(r\times r)^{-1}[\ker\Phi],\qquad
+\widetilde\Phi[\widetilde X]=\Phi[X].
+$$
+所以二者相对于这份一元操作词语言具有相同最小行为表示；辅助坐标可以被消去而不改变声明的行为。
+

@@ -1,0 +1,17 @@
+{
+  "16384": {
+    "path": "content/015-low_product_tables/000-16384.json",
+    "sha256": "6fda0b53e2a0296d77a1171d0c359fa998bff4a6035573e1731e227a8f4e6e86",
+    "kind": "array"
+  },
+  "32768": {
+    "path": "content/015-low_product_tables/001-32768.json",
+    "sha256": "ea7d9170f6c395bb4ec6fb3a6085b9b38fffbf64aa500a996b7d497805801b79",
+    "kind": "array"
+  },
+  "65536": {
+    "path": "content/015-low_product_tables/002-65536.json",
+    "sha256": "e4494888353d96504e33d77e25c64592959897ec77476f5b105a069f1958b8c5",
+    "kind": "array"
+  }
+}

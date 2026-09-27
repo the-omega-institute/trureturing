@@ -1,0 +1,42 @@
+{
+  "layout": [
+    1,
+    4,
+    2,
+    1,
+    2,
+    4,
+    2
+  ],
+  "projection21_35_63_105_147_245": [
+    1,
+    4,
+    4,
+    1,
+    4,
+    1,
+    4
+  ],
+  "original_affine_complete_upper": "268109/58800",
+  "original_affine_maximizing_late_coordinate": "1",
+  "conditional_affine_complete_upper": "268109/58800",
+  "conditional_affine_maximizing_late_coordinate": "1",
+  "conditional_lines": [
+    [
+      "594813763845/2",
+      "609177698325/2"
+    ],
+    [
+      "593903160585/2",
+      "608351802345/2"
+    ],
+    [
+      "593875933245/2",
+      "608324575005/2"
+    ]
+  ],
+  "joint_complete_upper": "392007731113171819/88200000000000000",
+  "adopted_complete_upper": "392007731113171819/88200000000000000",
+  "dual_key": "3a4952bdf224cfa20019ebd02343cfd9639cd5aa24b7c855fbee4b37c9315423",
+  "complete_tail_constant": "9851159/5670000"
+}

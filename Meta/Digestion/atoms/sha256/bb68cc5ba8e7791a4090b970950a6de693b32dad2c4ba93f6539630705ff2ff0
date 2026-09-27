@@ -1,0 +1,37 @@
+**命题 3.7（Hilbert 不等式的无维数界）。** 使用 Montgomery–Vaughan 的分离频率 Hilbert 不等式：若不同实数 $E_a$ 的距离至少 $g>0$，则对任意复向量 $x,y$，
+
+$$
+\left|\sum_{a\ne b}\frac{\overline{y_a}x_b}{E_a-E_b}\right|
+\le\frac\pi g\|x\|_2\|y\|_2.
+\tag{TM.276}
+$$
+
+这是下文作者专著 Theorem G.14 的直接重命名，允许任意实数位置，不要求等间隔或整数。为转成通道界，定义
+
+$$
+A_{ab}=\begin{cases}(E_a-E_b)^{-1},&a\ne b,\\0,&a=b,\end{cases}
+\qquad A^\dagger=-A,\qquad \|A\|_{\rm op}\le\pi/g,
+\qquad Q_T=\operatorname{diag}(e^{iE_aT/2}).
+\tag{TM.277}
+$$
+
+对非对角项使用 $e^{iu}-e^{-iu}=2i\sin u$，对角项均为零，得到
+
+$$
+S_T=\frac{Q_TAQ_T^\dagger-Q_T^\dagger AQ_T}{iT},
+\qquad \|S_T\|_{\rm op}\le\frac{2\pi}{Tg}.
+\tag{TM.278}
+$$
+
+Schatten Hölder 给 $\|D_pS_TD_p\|_1\le\|D_p\|_2\|S_TD_p\|_2\le\|D_p\|_2^2\|S_T\|_{\rm op}=\|S_T\|_{\rm op}$。结合式(TM.269)，有
+
+$$
+\boxed{
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+\le\min\left\{1,\frac{\sqrt{r-1}}{Tg},\frac{\pi}{Tg}\right\}.
+}
+\tag{TM.279}
+$$
+
+Hilbert 不等式的 $\pi$ 是成熟的一般分离频率常数；没有由此证明最终通道上界中的 $\pi$ 也最优。无显式维数因子仍保留实际 $g$。随副本数增加，总能量间距可缩小，不能换成未证明的统一单副本常数。
+

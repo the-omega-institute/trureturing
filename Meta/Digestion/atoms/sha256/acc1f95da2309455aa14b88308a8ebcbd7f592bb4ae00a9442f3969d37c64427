@@ -1,0 +1,4 @@
+### 32.1 同一联合律的图误差与闭路障碍
+
+本节使用[上下文卷定义37.1](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)的同一完整档案、实际联合律、有限非空字母集、$n\ge3$、双射运输及精确节点边缘。固定该处的归一坐标 $Y_j\in B$、$g_*\mu=\mu$；内部边为相等关系，闭合边为 $Y_0=gY_{n-1}$。所有概率均针对同一 $P$。有限 TV 取 $\operatorname{TV}(p,q)=\tfrac12\sum_x|p(x)-q(x)|$。
+

@@ -1,0 +1,35 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 16
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "15/17"
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "113030172417388488839521339535147647/3510863581945200248270294588671875"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "112943715022372212569204607763847647/23847375273590039422213321734375000"
+  },
+  "remaining_raw_prices": {
+    "kind": "inline",
+    "value": {
+      "mass_L1": "1142057219321133269166901957/314039509775671301033261850",
+      "pure_L1": "71324869769/13764933000",
+      "availability_Linfinity": "891257/3095820"
+    }
+  },
+  "branches": {
+    "path": "content/010-comparisons/000000/item/004-heavy/001-costs/000001/item/005-branches.json",
+    "sha256": "9421f9166b1551d2ce3f496269e85bc192180dc25ca67b3d50916434a91eebb8",
+    "kind": "array"
+  },
+  "uniform_G_error": {
+    "kind": "inline",
+    "value": "55670957443567953744037550267658416343312523/132789033678717155260144494727749173531250000"
+  }
+}

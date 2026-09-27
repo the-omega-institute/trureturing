@@ -1,0 +1,18 @@
+**命题 127.3（相同算子的两种时间展开）。** 若 $Lv=\lambda v$、$\lambda>0$、$v\ne0$，则热流初态 $u(0)=v$ 给
+$$
+u(t)=e^{-\lambda t}v,
+$$
+而波动初态 $z(0)=v,\dot z(0)=0$ 给
+$$
+z(t)=\cos(\sqrt\lambda\,t)v.
+$$
+热流的平方范数满足
+$$
+\frac d{dt}\frac12\|u(t)\|^2=-\langle u(t),Lu(t)\rangle\le0,
+$$
+波动的相空间能量则满足
+$$
+\frac d{dt}\left(\frac12\|\dot z(t)\|^2+
+\frac12\langle z(t),Lz(t)\rangle\right)=0.
+$$
+

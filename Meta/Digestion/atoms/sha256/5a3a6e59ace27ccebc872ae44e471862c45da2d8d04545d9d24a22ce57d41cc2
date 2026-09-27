@@ -1,0 +1,10 @@
+**theorem 51.12 (正整数生成元的自然点提升处处不连续).** 令
+$$
+\mathcal I_{\mathrm{fin}}=\{dR:d\in\mathbb N_{>0}\}\subseteq\mathcal I
+$$
+取子空间拓扑。每个 $I\in\mathcal I_{\mathrm{fin}}$ 有唯一的正整数生成元 $d$。定义
+$$
+\lambda:\mathcal I_{\mathrm{fin}}\to K,\qquad \lambda(dR)=j(d).
+$$
+则 $\lambda$ 在每一点都不连续。
+

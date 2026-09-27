@@ -1,0 +1,30 @@
+**定理 17.3（单步来源创新协方差与剩余预算）。** 固定定义17.1的正概率 $h,a$，记 $b=b_h$、$L=L_{h,a}$，并置
+$$
+q_y(\theta)=b(\theta)L(y\mid\theta),\qquad
+p_y=\sum_\theta q_y(\theta),\qquad
+b_y=q_y/p_y\quad(p_y>0).
+\tag{17.4}
+$$
+则 $\sum_yq_y=b$、$\sum_yp_y=1$，正质量时 $b_y$ 是给定新动作与输出后的来源后验。定义
+$$
+\begin{aligned}
+G(h,a)
+&=\sum_{y:p_y>0}\frac{q_yq_y^{\mathsf T}}{p_y}-bb^{\mathsf T}\\
+&=\sum_{y:p_y>0}p_y(b_y-b)(b_y-b)^{\mathsf T}.
+\end{aligned}
+\tag{17.5}
+$$
+有
+$$
+0\preceq G(h,a)\preceq\operatorname{Diag}(b)-bb^{\mathsf T},\qquad
+G(h,a)\mathbf1=0,
+\tag{17.6}
+$$
+以及精确预算恒等式
+$$
+\operatorname{Diag}(b)-bb^{\mathsf T}
+=G(h,a)+\sum_{y:p_y>0}p_y
+\bigl[\operatorname{Diag}(b_y)-b_yb_y^{\mathsf T}\bigr].
+\tag{17.7}
+$$
+

@@ -1,0 +1,365 @@
+{
+  "length": 2145,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 60,
+      "part": {
+        "path": "content/003-edge_charges/000000-000060.json",
+        "sha256": "9675fe8a859700c000fd9162d62a2e9abeb3d152bbde3eecc0d1dae77b4ed788",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 60,
+      "stop": 110,
+      "part": {
+        "path": "content/003-edge_charges/000060-000110.json",
+        "sha256": "4b8b7979a1f25021c112622c8c02318c335008e49f2bc6b3aa419c3d9ab572c7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 110,
+      "stop": 166,
+      "part": {
+        "path": "content/003-edge_charges/000110-000166.json",
+        "sha256": "417db0715bcd70cf6658cb15670f962413a94da5d607fc36051cc1b3a0507799",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 166,
+      "stop": 226,
+      "part": {
+        "path": "content/003-edge_charges/000166-000226.json",
+        "sha256": "9c4a232c36899fc0d461d810a60a25c27d0aca677c6d5f1b88560065dc40d022",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 226,
+      "stop": 280,
+      "part": {
+        "path": "content/003-edge_charges/000226-000280.json",
+        "sha256": "d527df163ab4aea634f4cb4bcda9526a5ff2362ee7202bd2b6ec86bbfc8c1a79",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 280,
+      "stop": 331,
+      "part": {
+        "path": "content/003-edge_charges/000280-000331.json",
+        "sha256": "e99c5ce1ade3ce70f6cc6d32382324eb9d281f426ed865a3899ac859a59ac557",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 331,
+      "stop": 390,
+      "part": {
+        "path": "content/003-edge_charges/000331-000390.json",
+        "sha256": "37fb6cf137923c872e505545642e3ecde2a0ee42d5c45fd1462c767fb3834160",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 390,
+      "stop": 447,
+      "part": {
+        "path": "content/003-edge_charges/000390-000447.json",
+        "sha256": "69483bcc6edf08e28005d48ea63780bb323748d4dadc442632e7515651bdc6ba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 447,
+      "stop": 496,
+      "part": {
+        "path": "content/003-edge_charges/000447-000496.json",
+        "sha256": "b3352314287a4c833c64d510c4a4ddee113fb9f8027020ef4197812a6e070797",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 496,
+      "stop": 555,
+      "part": {
+        "path": "content/003-edge_charges/000496-000555.json",
+        "sha256": "e45747b5728eb1f9439d35106cb53b14f5bd53480ac36698887d8616c70a738a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 555,
+      "stop": 613,
+      "part": {
+        "path": "content/003-edge_charges/000555-000613.json",
+        "sha256": "439a716fa5c7bdbadc42c79c82782195ba544b0f9bf97993b8ec0908dd358a04",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 613,
+      "stop": 662,
+      "part": {
+        "path": "content/003-edge_charges/000613-000662.json",
+        "sha256": "4d86c5617f6e10d1f059f4344fef00ce7bd2beefce40a27860923b38e22558a9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 662,
+      "stop": 722,
+      "part": {
+        "path": "content/003-edge_charges/000662-000722.json",
+        "sha256": "141a6825cd2f40ad7bc10b4457faeebedf4b1be3aa7e3d5fe01c11c6086b876a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 722,
+      "stop": 779,
+      "part": {
+        "path": "content/003-edge_charges/000722-000779.json",
+        "sha256": "f0537d427f3ad3cf2c6d8c175bc02cbdf0b229d3e878be8454e692cc22649ca6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 779,
+      "stop": 829,
+      "part": {
+        "path": "content/003-edge_charges/000779-000829.json",
+        "sha256": "73de735bbd08707b9f161cc3a2a4bb087be2e9d6aaa5124ca981fd0a770b8060",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 829,
+      "stop": 888,
+      "part": {
+        "path": "content/003-edge_charges/000829-000888.json",
+        "sha256": "61c6889cceac080497b2cbc70db5a4f341ad3520909b48ec6ec874b7084b72cb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 888,
+      "stop": 942,
+      "part": {
+        "path": "content/003-edge_charges/000888-000942.json",
+        "sha256": "650cb1859cadc0560dc46b0d6e9681b80681db24bd474d387d673cdf3506bd51",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 942,
+      "stop": 995,
+      "part": {
+        "path": "content/003-edge_charges/000942-000995.json",
+        "sha256": "bf3acc1093cf17969c87b457c40c9878c161997c98f7f38bb88f1b34ebe1fcb1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 995,
+      "stop": 1054,
+      "part": {
+        "path": "content/003-edge_charges/000995-001054.json",
+        "sha256": "d6780e5e54b1b433d6bf2d1f4a68d9f35ea43640301dbe556124f52ec4fe0468",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1054,
+      "stop": 1104,
+      "part": {
+        "path": "content/003-edge_charges/001054-001104.json",
+        "sha256": "b43f0ae54f1888490e0ca88f48d76094059253268899514b53bf4ded39f9e008",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1104,
+      "stop": 1162,
+      "part": {
+        "path": "content/003-edge_charges/001104-001162.json",
+        "sha256": "7e1fd4593f393d75280febcf9533647291ba886b16fe0ec64a85b59768094a79",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1162,
+      "stop": 1217,
+      "part": {
+        "path": "content/003-edge_charges/001162-001217.json",
+        "sha256": "620373cb57d0717c6e877806f5af2e996cbc2baa295ba594fa11911e36bd841d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1217,
+      "stop": 1270,
+      "part": {
+        "path": "content/003-edge_charges/001217-001270.json",
+        "sha256": "1fbeca0b22b510120b58a8ed6567988fe97cb2b053e9ac38f3e73ef527337d34",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1270,
+      "stop": 1328,
+      "part": {
+        "path": "content/003-edge_charges/001270-001328.json",
+        "sha256": "a6903e9e4493de00a1b6c9ccf97f8fc62d36d7f63f8952c7a2af3bcc802d7809",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1328,
+      "stop": 1379,
+      "part": {
+        "path": "content/003-edge_charges/001328-001379.json",
+        "sha256": "07939d05241019b0fdc7e4eec847d3274aacaf96c294e299bea793fe32897575",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1379,
+      "stop": 1437,
+      "part": {
+        "path": "content/003-edge_charges/001379-001437.json",
+        "sha256": "ed95cb0fde073f2fb82a7ac61057521c3c10c98fc505da8c258c64f3d95308aa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1437,
+      "stop": 1488,
+      "part": {
+        "path": "content/003-edge_charges/001437-001488.json",
+        "sha256": "69b145f3332c93fdf263b82e481e09694a9c2e3a3505c49dfa5102525ebb75df",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1488,
+      "stop": 1546,
+      "part": {
+        "path": "content/003-edge_charges/001488-001546.json",
+        "sha256": "e2760130ba21eb858a25109755170cfc46caf54cd5967718cb97256e62cf4722",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1546,
+      "stop": 1597,
+      "part": {
+        "path": "content/003-edge_charges/001546-001597.json",
+        "sha256": "8a4f70402bae43d2194f0f1231dfac72973296cd232852a639c94c7f2fddf52c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1597,
+      "stop": 1654,
+      "part": {
+        "path": "content/003-edge_charges/001597-001654.json",
+        "sha256": "997716951938da84841918c2f7f255e456ca0fbb6b820b746318608ed33a6bf7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1654,
+      "stop": 1707,
+      "part": {
+        "path": "content/003-edge_charges/001654-001707.json",
+        "sha256": "35af8e9770d2589129170c9988608181d71232be565ccbfec78747c3c9a2e3ce",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1707,
+      "stop": 1760,
+      "part": {
+        "path": "content/003-edge_charges/001707-001760.json",
+        "sha256": "f2612d5ca54ae05fe321655c5d7a6b1317abbe20e13842735a6e6c784d2e7e83",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1760,
+      "stop": 1812,
+      "part": {
+        "path": "content/003-edge_charges/001760-001812.json",
+        "sha256": "31e998774e2e26f9e855ce7f145c20f5d40aac4440d3cc81089699683e72e057",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1812,
+      "stop": 1864,
+      "part": {
+        "path": "content/003-edge_charges/001812-001864.json",
+        "sha256": "3c8c318e179ca465c7c8ec61eda50b0948efa6859699b84145907d6929c9b736",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1864,
+      "stop": 1916,
+      "part": {
+        "path": "content/003-edge_charges/001864-001916.json",
+        "sha256": "93d461e06b9c43f1ca703c1e05b7a97e197b62bf3fd198624467e0fa61ad916c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1916,
+      "stop": 1967,
+      "part": {
+        "path": "content/003-edge_charges/001916-001967.json",
+        "sha256": "9be727a458cbde59c9c92c7f49b345949821acd785898bc558a8cb7e9b92695a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1967,
+      "stop": 2018,
+      "part": {
+        "path": "content/003-edge_charges/001967-002018.json",
+        "sha256": "a9ed86cb86b36c753f87d9d27b08e0050d7bcbc5075559468799c72c974adb68",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2018,
+      "stop": 2072,
+      "part": {
+        "path": "content/003-edge_charges/002018-002072.json",
+        "sha256": "db6144169be1d9155458cb021968d743b3ef99000186eeea4a4248aa0591ea1a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2072,
+      "stop": 2124,
+      "part": {
+        "path": "content/003-edge_charges/002072-002124.json",
+        "sha256": "be37b5432a2cb80577a60ff7a3e0d816c3a6085e0bccd0db16e2b99ded455305",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2124,
+      "stop": 2145,
+      "part": {
+        "path": "content/003-edge_charges/002124-002145.json",
+        "sha256": "f17f6cfe99ce87b0ea468bef240a507bada49b5558dbdcf35a2550034cf7ee4a",
+        "kind": "value"
+      }
+    }
+  ]
+}

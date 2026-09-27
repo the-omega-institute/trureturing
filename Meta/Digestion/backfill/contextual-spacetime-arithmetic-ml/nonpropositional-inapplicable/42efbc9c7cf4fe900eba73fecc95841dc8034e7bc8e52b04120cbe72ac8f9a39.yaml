@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42efbc9c7cf4fe900eba73fecc95841dc8034e7bc8e52b04120cbe72ac8f9a39
+  normalized_sha256: sha256:42efbc9c7cf4fe900eba73fecc95841dc8034e7bc8e52b04120cbe72ac8f9a39
+cas_ref: sha256:42efbc9c7cf4fe900eba73fecc95841dc8034e7bc8e52b04120cbe72ac8f9a39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “若”梯度为零则“永远静止”是明确的全时间断言，非定义伪装；探针把一次同步更新化为不动点，再直接应用 Function.IsFixedPt.iterate，适用于任意实模参数，仓内无冻结 GID。
+    previous_atom_id: 7cf1410319d67dd4908710601f42578afd22defbf7abba5682ab962500ba4da0
+    next_atom_id: f974323fa08aae436e735f2d25b72d8206083ad85606f1ec7229bca9d9aeb350

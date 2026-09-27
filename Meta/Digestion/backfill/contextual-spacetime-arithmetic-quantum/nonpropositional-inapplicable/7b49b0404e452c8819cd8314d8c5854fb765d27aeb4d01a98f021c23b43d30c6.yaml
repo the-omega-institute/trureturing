@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b49b0404e452c8819cd8314d8c5854fb765d27aeb4d01a98f021c23b43d30c6
+  normalized_sha256: sha256:7b49b0404e452c8819cd8314d8c5854fb765d27aeb4d01a98f021c23b43d30c6
+cas_ref: sha256:7b49b0404e452c8819cd8314d8c5854fb765d27aeb4d01a98f021c23b43d30c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶指定 Pauli 矩阵、查询投影及压缩分支的公式，坐标表示唯一性的命题已拆出。
+    previous_atom_id: e2729b0e8118bbdf2fe62b8ce14826ab3b257ac01be7f6bb8c7a2a489cc2032e
+    next_atom_id: ff9c31e09fe2ca22608f35ad611959911033583b04331134e0e1cd60634c949c

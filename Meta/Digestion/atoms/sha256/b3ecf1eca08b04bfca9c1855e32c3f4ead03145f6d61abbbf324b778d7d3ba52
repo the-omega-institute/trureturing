@@ -1,0 +1,9 @@
+
+
+定义指针代数$\mathcal D=\{\sum_i a_iP_i:a_i\in\mathbb C\}$。每个$E_{ij}$是$\Phi_A$的特征算符，且
+$$
+\Phi_A(E_{ij})=C_A(i,j)E_{ij},\qquad
+\Phi_A|_{\mathcal D}=\operatorname{id}_{\mathcal D},\qquad
+\operatorname{Fix}(\Phi_A)=\operatorname{span}\{E_{ij}:C_A(i,j)=1\}.
+$$
+对偶通道在$E_{ij}$上的特征值为$\overline{C_A(i,j)}$，因此同样逐点固定$\mathcal D$；系统的指针布居和全部对角观察均保持。仅有$|C_A(i,j)|=1$不保证$E_{ij}$固定，还须总相位使$C_A(i,j)=1$。

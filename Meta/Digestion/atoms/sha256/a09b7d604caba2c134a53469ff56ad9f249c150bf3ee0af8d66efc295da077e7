@@ -1,0 +1,13 @@
+即可得到同一总变差结论；代入 $p=1/3$ 给 $\delta=1/6$。
+
+最后明确有限视界边界。对任意整数 $H\ge0$，令
+$$
+S_H=\{-H,-H+1,\ldots,H\},\qquad
+s_0=0,\qquad
+T_0(j)=\min\{H,j+1\},\qquad
+T_1(j)=\max\{-H,j-1\},\qquad a(j)=f(j).
+$$
+对长度至多 $H$ 的历史，归纳中每个真正计数都在 $[-H,H]$，且在尚需进行的前 $H$ 步内不会因截断丢失计数，故 $s(w)=d(w)$，下一报告预测完全精确。$H=0$ 时仅要求空词处精确，也成立。这不反驳上面的界，因为那里的同状态历史长度没有预先统一上限。精确实数读出已获允许，所以所证障碍来自固定有限状态的更新记忆，而非舍入精度。任意参考的正块公式只表明所指定右侧分支逐支纠缠破坏，不把参考经典化，也不把生成器持有的隐标签赠予观察者。整个显式构造与下界不以命题146.1—151.1的分块、输入族或支持界为数学前提；它具体体现命题151.1所区分的有限生成隐支持与可访问的递归充分观察者状态。证毕。
+
+本命题的后验引用为[《情境时空算术·机器学习》命题30.4、命题32.1、定理32.3及勘误32.5](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)；半直径步骤仅引用该卷定理17.5证明中的三角不等式，不沿用其有限状态与折扣假设。所直接使用的抽象结果分别为 [`causal_state_factorization`](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 和 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)，应用域及参数已在证明中给出。关于有限记忆的相关问题，T. Berg、O. Ordentlich、O. Shayevitz，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，2020 IEEE International Symposium on Information Theory，1259–1264，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)，[DOI:10.1109/ISIT44484.2020.9174505](https://doi.org/10.1109/ISIT44484.2020.9174505)，研究长时间极限中的二元假设分类 Bayes 错误及其随状态数的变化；其损失不同于本命题对全部有限历史的下一报告概率误差上确界，不能将这里的 $1/2-p$ 地板归于该文。上述逐式推导不附加新颖性或穷尽文献的主张。
+

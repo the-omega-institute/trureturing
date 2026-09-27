@@ -1,0 +1,23 @@
+{
+  "length": 128,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 72,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000014/item/002-rows/000000-000072.json",
+        "sha256": "bd32de73358b1ea3dd50a5d60f014d81ca0abe575e8cd5b970b6a462366d0e60",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 128,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000014/item/002-rows/000072-000128.json",
+        "sha256": "08110822e4362ab280e6d734d36ecd7640701e67424705b4dec1f39dbc79c5ca",
+        "kind": "value"
+      }
+    }
+  ]
+}

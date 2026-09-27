@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f4923115797d6a321545ae32745f1fcbbab623e2a1a18f47ff31ae22dd27cf3
+  normalized_sha256: sha256:0f4923115797d6a321545ae32745f1fcbbab623e2a1a18f47ff31ae22dd27cf3
+cas_ref: sha256:0f4923115797d6a321545ae32745f1fcbbab623e2a1a18f47ff31ae22dd27cf3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅上游绑定的命题消化结算，proof_shape=bind-only，admission_basis=none，escape_witness=none，零新增Lean。保留定义9.1中任意有限维实赋范V、有限非空I、非空S、同一字典vi、目标v、可行b*、线性phi及全部对偶接触假设。钉版Mathlib db584cd6d46c92f209a44c0f1c829460d327499d 的 Module.Basis.equivFun、Module.Basis.equivFun_symm_apply、Module.Basis.sum_equivFun 给实际合成映射的基坐标逆；WithLp.linearEquiv 与 PiLp.norm_eq_of_L1 把该坐标域取为l1，不能误用普通Pi的sup范数。LinearMap.continuous_of_finiteDimensional、LinearEquiv.toContinuousLinearEquiv 提供phi和逆映射的连续有界性，ContinuousLinearMap.le_opNorm / le_opNorm_of_le 给同一phi对偶范数和kappa。Finset.le_max'、min'_mem、min'_le及有限集非空给原文M和非空离支撑集上eta>0。以zi=phi(vi)、e=Tb-v，abs_mul及绝对值序、Finset.sum_le_sum 和 sum_le_sum_of_subset_of_nonneg 给D=sum_i(|bi|-bi zi)>=eta*sum_outside|bi|>=0；线性映射有限和/减法、源phi(v)=gamma*及算子范数界给D=Gamma(b)-gamma*-phi(e)<=epsilon+norm(phi)*rho，除以源eta>0即式9.3。Finset.sum_add_sum_compl拆分Tb-Tb*，b*离支撑为零及基坐标恒等式给TS(bS-b*S)=e-sum_outside bi vi；同一个逆映射le_opNorm、norm_sum_le、norm_smul和每项norm(vi)<=M给l1支撑误差<=kappa*(rho+M*sum_outside|bi|)。PiLp.norm_eq_of_L1和有限和拆分将全部l1误差写成支撑误差加离支撑质量，再代入9.3并作非负实数规范化，恰得式9.4。I=S时补集和为零，直接给9.5，不对空集引入eta。对每个精确可行b，逐项bi zi<=|bi|求和给Gamma(b)>=phi(v)=gamma*，而b*可行取等，故最优。对任一其它最优b，代入epsilon=rho=0，非空补集分支用9.4、空补集分支用9.5，norm_eq_zero及sub_eq_zero给b=b*。源证明中的9.6、两种基逆恒等式和唯一性步骤均由这些相同前置和规范化闭合；没有未核实的额外假设。仓内未找到覆盖该整叶的冻结项目GID，按CLAUDE3.2以现役settle文本收据终结；不声称上述组合已Lean elaborate或kernel验证，不改变父项自身覆盖义务。
+    previous_atom_id: e1aec3630d5880fb379246b8a2cc4069cb77e8f2e78a9e873ab07dd8f11fee33
+    next_atom_id: f5cd114855c4394f912c71a993dce4059d687f468bc2edb3dc9379c19f7a947b

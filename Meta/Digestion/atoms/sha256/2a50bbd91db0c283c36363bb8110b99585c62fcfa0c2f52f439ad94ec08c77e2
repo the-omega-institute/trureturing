@@ -1,0 +1,16 @@
+**证明。** 每项概率差等于 $\operatorname{Tr}((U_w^\dagger F U_w)(\rho-\sigma))$。这些差全部为零，连同密度态归一化给出的 $\operatorname{Tr}(\rho-\sigma)=0$，恰好等于与式(TM.115)所有生成元正交。实线性性再给与整个 $\mathcal W$ 正交；反向直接取生成元。此处只有实际实验可提供的期望及其线性组合，没有假定两个可测算子之积也成为可测算子，因此不能未经工具核对便把 $\mathcal W$ 换成生成的乘法代数。
+
+对任意允许动作 $a$，把一项未来实验接在 $U_a$ 后面仍是允许的有限词，故 $U_a^\dagger\mathcal W U_a\subseteq\mathcal W$。若 $\rho-\sigma\in\mathcal W^\perp$，则对任意 $A\in\mathcal W$ 有 $\operatorname{Tr}(A U_a(\rho-\sigma)U_a^\dagger)=\operatorname{Tr}(U_a^\dagger A U_a(\rho-\sigma))=0$。所以式(TM.116)定义的纤维关系对这些操作稳定，并保留原末端观察。这是既有全部未来响应与动态闭包机制在 Hermitian 线性表示中的直接实现。
+
+如果每个 $F$ 和每个 $U_a$ 都与 $H$ 交换，则 $\mathcal W\subseteq\mathcal C_H$，pinching 相同必给实际实验相同。在全部密度态上，实际工具恰好实现完整 pinching 商的充要条件为
+$$
+\boxed{
+\bigl[\rho-\sigma\in\mathcal W^\perp
+\ \Longleftrightarrow\ P_H(\rho)=P_H(\sigma)
+\quad\forall\rho,\sigma\in\mathcal D(\mathcal H)\bigr]
+\quad\Longleftrightarrow\quad
+\mathcal W=\mathcal C_H.
+}
+\tag{TM.117}
+$$
+

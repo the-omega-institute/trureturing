@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/005-shells/000000/item/002-heavy/000-costs/000000/single.json",
+        "sha256": "f090d1da5096bb752c38216a74446fe557fda67e6a1713bfb069d83b8b9a1cc6",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/005-shells/000000/item/002-heavy/000-costs/000001/single.json",
+        "sha256": "4a6af75b0c3b6cf81882909734be26a8ef67c3b2e82dc71819847193bd079dff",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

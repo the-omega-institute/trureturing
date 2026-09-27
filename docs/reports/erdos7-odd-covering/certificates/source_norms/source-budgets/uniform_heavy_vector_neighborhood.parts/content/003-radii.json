@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/003-radii/000000/single.json",
+        "sha256": "1024da22375fd880dc13c744878af8c197d45081ab499cc11d86912dbdd2b816",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/003-radii/000001/single.json",
+        "sha256": "7f729a86a1a8ac2af723b0e9e4045b1f2b7a553af7b1c11847e7aec15610a7a7",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

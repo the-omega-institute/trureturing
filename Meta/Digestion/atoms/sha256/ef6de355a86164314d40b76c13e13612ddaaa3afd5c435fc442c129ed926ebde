@@ -1,0 +1,12 @@
+**Proof.** The rank bound gives the assertions for dimensions zero and one. Zero is isolated by imposing zero on a basis of $V^*$. A nonzero ray is isolated by imposing zero on a basis of its annihilator, consisting of $d-1$ tests, and then one positive orientation test. The annihilator and sign calculus force every signature in that cylinder to be the specified ray. Conversely, a rank-at-least-two point is not in the ordinary image by (42.8). Since that image is dense, such a point cannot be isolated.
+
+For $d\ge2$, the oriented rays have cardinal $\mathfrak c$: a fixed two-dimensional subspace already supplies the distinct rays through $a+tb$ for $t\in\mathbb R$, while $|V|=\mathfrak c$ gives the upper bound. Every dense subset must contain every isolated point, so density is at least $\mathfrak c$; the ordinary image is dense and has that cardinality. The number of finite coordinate cylinders is at most $\mathfrak c$, since $|V^*|=\mathfrak c$. This gives $w(S(V))\le\mathfrak c$. Any base must contain the singleton of every isolated point, so the reverse inequality holds.
+
+There are at most $\mathfrak c$ finite lists of length at most $d$ in $V$, and every signature has such a list. Thus $|S(V)|\le\mathfrak c$, with equality supplied by the rays.
+
+First countability follows from Theorem 42.9. In a Hausdorff space a finite local base at a point would, by intersecting its members, give the singleton as an open set: every other point can be excluded by a neighborhood and hence by one base member. Consequently the nonisolated points have no finite local base, so their character is exactly $\aleph_0$.
+
+Nonseparability follows from (42.14). A compact metric space is separable: choose a finite $1/n$-net for each positive integer $n$ and take their countable union. Therefore $S(V)$ is not metrizable when $d\ge2$. No assumption about the continuum hypothesis or the cofinality of $\mathfrak c$ was used.
+
+In particular, the rank-one stratum has a discrete topology here, unlike the usual topology on oriented projective space when $d\ge2$. Its singleton preimages under $\sigma_V$ are positive rays, which are not Euclidean open. At zero, the singleton preimage is $\{0\}$, also not open when $d>0$. Thus this construction is an observation completion, not a topological compactification of Euclidean $V$ via a continuous $\sigma_V$. $\square$
+

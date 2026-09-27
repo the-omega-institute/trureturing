@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "scope": "one fixed auxiliary pair at depth (1,1,1), exactly maximized over all twelve original low labels; not all auxiliary profiles, arbitrary heights, or a final continuation bound",
+  "fixed_A_certificate_sha256": "64b9ed3bddaee985dc34a74a211c4805979a892cc090f537a91f846d0f4af425",
+  "fixture_formula": "E_mu[(4/3)*(B+R)^2+(149-B^2)*(L-4)_+/6]",
+  "negative_quadratic_point_count": 3,
+  "previous_fixed_A_maximum": "223040367109/3000000021",
+  "gain_over_previous_fixed_A": "18521457164/3000000021",
+  "global_independent_vs_common_digit_gap": "0",
+  "result": {
+    "scope": "exact maximum of the supplied point-score table over the original twelve low labels on PG1; no quantification over outer auxiliary profiles or heights",
+    "source_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+    "domain_sha256": "67a11b0d0a27861a1445ac451c659e6a5e6c8d3f1cca68a9709eaaa0995c2d5c",
+    "score_sha256": "31330201a285c66ad597cf90f828b2c280808148c082e4b14f4be7bcc3ecace4",
+    "old_A_count": 11808,
+    "old_subset_state_count": 3024,
+    "score_abs_bound": 1558409196748,
+    "int64_guard": "4*score_abs_bound < 2^61",
+    "maximum_numerator": 483123648546,
+    "denominator": 6000000042,
+    "maximum": "80520608091/1000000007",
+    "common_digit_maximum_numerator": 483123648546,
+    "common_digit_maximum": "80520608091/1000000007",
+    "common_maximizing_A_index": 2013,
+    "maximizing_A_index": 2013,
+    "old_points": [
+      1,
+      2,
+      7,
+      8,
+      14,
+      16,
+      17,
+      19,
+      23,
+      28,
+      29,
+      32,
+      34,
+      38,
+      43,
+      44
+    ],
+    "maximizing_A": [
+      1,
+      2,
+      1,
+      4,
+      3,
+      1,
+      2,
+      1,
+      6,
+      2,
+      2,
+      3,
+      1,
+      4,
+      2,
+      2
+    ],
+    "old_residues": [
+      0,
+      2,
+      3,
+      5,
+      8,
+      23
+    ],
+    "twelve_labels": [
+      {
+        "modulus": 1,
+        "residue": 0
+      },
+      {
+        "modulus": 3,
+        "residue": 2
+      },
+      {
+        "modulus": 5,
+        "residue": 3
+      },
+      {
+        "modulus": 9,
+        "residue": 5
+      },
+      {
+        "modulus": 15,
+        "residue": 8
+      },
+      {
+        "modulus": 45,
+        "residue": 23
+      },
+      {
+        "cofactor": 1,
+        "modulus": 7,
+        "old_residue": 0,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 3,
+        "modulus": 21,
+        "old_residue": 2,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 5,
+        "modulus": 35,
+        "old_residue": 3,
+        "digit": 5,
+        "residue": 33
+      },
+      {
+        "cofactor": 9,
+        "modulus": 63,
+        "old_residue": 5,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 15,
+        "modulus": 105,
+        "old_residue": 8,
+        "digit": 5,
+        "residue": 68
+      },
+      {
+        "cofactor": 45,
+        "modulus": 315,
+        "old_residue": 23,
+        "digit": 5,
+        "residue": 68
+      }
+    ],
+    "digit_partition": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      63,
+      0
+    ],
+    "points": [
+      1,
+      2,
+      16,
+      17,
+      19,
+      23,
+      32,
+      34,
+      38,
+      43,
+      46,
+      47,
+      52,
+      53,
+      61,
+      62,
+      64,
+      68,
+      73,
+      83,
+      88,
+      97,
+      104,
+      106,
+      107,
+      109,
+      118,
+      124,
+      128,
+      136,
+      137,
+      142,
+      143,
+      151,
+      152,
+      158,
+      163,
+      164,
+      167,
+      169,
+      173,
+      178,
+      181,
+      187,
+      188,
+      194,
+      199,
+      208,
+      209,
+      212,
+      214,
+      223,
+      226,
+      227,
+      232,
+      233,
+      241,
+      242,
+      244,
+      253,
+      257,
+      263,
+      268,
+      269,
+      271,
+      272,
+      277,
+      278,
+      286,
+      293,
+      298,
+      299,
+      304,
+      313,
+      314
+    ],
+    "B_loads": [
+      1,
+      2,
+      1,
+      2,
+      2,
+      6,
+      3,
+      1,
+      4,
+      2,
+      1,
+      4,
+      1,
+      4,
+      2,
+      2,
+      1,
+      12,
+      2,
+      4,
+      2,
+      1,
+      3,
+      1,
+      2,
+      1,
+      2,
+      2,
+      4,
+      1,
+      2,
+      1,
+      4,
+      1,
+      4,
+      6,
+      2,
+      2,
+      3,
+      1,
+      8,
+      2,
+      1,
+      2,
+      4,
+      6,
+      1,
+      4,
+      2,
+      3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      4,
+      1,
+      2,
+      1,
+      2,
+      6,
+      4,
+      2,
+      2,
+      2,
+      2,
+      1,
+      8,
+      1,
+      6,
+      2,
+      4,
+      1,
+      4,
+      2
+    ],
+    "python_comparisons": [
+      {
+        "A_index": 0,
+        "maximum_numerator": 378383733056,
+        "common_digit_maximum_numerator": 378383733056
+      },
+      {
+        "A_index": 380,
+        "maximum_numerator": 422278579252,
+        "common_digit_maximum_numerator": 422278579252
+      },
+      {
+        "A_index": 761,
+        "maximum_numerator": 400537429968,
+        "common_digit_maximum_numerator": 400479059136
+      },
+      {
+        "A_index": 1142,
+        "maximum_numerator": 404028575364,
+        "common_digit_maximum_numerator": 404028575364
+      },
+      {
+        "A_index": 1523,
+        "maximum_numerator": 433632022572,
+        "common_digit_maximum_numerator": 433632022572
+      },
+      {
+        "A_index": 1904,
+        "maximum_numerator": 450282525484,
+        "common_digit_maximum_numerator": 450282525484
+      },
+      {
+        "A_index": 2285,
+        "maximum_numerator": 411006202294,
+        "common_digit_maximum_numerator": 411006202294
+      },
+      {
+        "A_index": 2666,
+        "maximum_numerator": 450920667012,
+        "common_digit_maximum_numerator": 450920667012
+      },
+      {
+        "A_index": 3046,
+        "maximum_numerator": 408010222406,
+        "common_digit_maximum_numerator": 408010222406
+      },
+      {
+        "A_index": 3427,
+        "maximum_numerator": 448891871374,
+        "common_digit_maximum_numerator": 448891871374
+      },
+      {
+        "A_index": 3808,
+        "maximum_numerator": 443042841220,
+        "common_digit_maximum_numerator": 442984470388
+      },
+      {
+        "A_index": 4189,
+        "maximum_numerator": 447235246358,
+        "common_digit_maximum_numerator": 447228033550
+      },
+      {
+        "A_index": 4429,
+        "maximum_numerator": 446080734218,
+        "common_digit_maximum_numerator": 446022363386
+      },
+      {
+        "A_index": 4570,
+        "maximum_numerator": 399931757242,
+        "common_digit_maximum_numerator": 399873386410
+      },
+      {
+        "A_index": 4951,
+        "maximum_numerator": 418084839194,
+        "common_digit_maximum_numerator": 418084839194
+      },
+      {
+        "A_index": 5332,
+        "maximum_numerator": 405601142888,
+        "common_digit_maximum_numerator": 405601142888
+      },
+      {
+        "A_index": 5713,
+        "maximum_numerator": 420150356244,
+        "common_digit_maximum_numerator": 420150356244
+      },
+      {
+        "A_index": 6474,
+        "maximum_numerator": 418681259020,
+        "common_digit_maximum_numerator": 418681259020
+      },
+      {
+        "A_index": 6855,
+        "maximum_numerator": 439824278556,
+        "common_digit_maximum_numerator": 439824278556
+      },
+      {
+        "A_index": 7236,
+        "maximum_numerator": 410630540440,
+        "common_digit_maximum_numerator": 410572169608
+      },
+      {
+        "A_index": 7617,
+        "maximum_numerator": 436087090706,
+        "common_digit_maximum_numerator": 436087090706
+      },
+      {
+        "A_index": 7998,
+        "maximum_numerator": 416056717384,
+        "common_digit_maximum_numerator": 415998346552
+      },
+      {
+        "A_index": 8379,
+        "maximum_numerator": 440982198164,
+        "common_digit_maximum_numerator": 440923827332
+      },
+      {
+        "A_index": 8760,
+        "maximum_numerator": 418288759328,
+        "common_digit_maximum_numerator": 418230388496
+      },
+      {
+        "A_index": 9140,
+        "maximum_numerator": 437291255236,
+        "common_digit_maximum_numerator": 437291255236
+      },
+      {
+        "A_index": 9521,
+        "maximum_numerator": 418536925390,
+        "common_digit_maximum_numerator": 418536925390
+      },
+      {
+        "A_index": 9902,
+        "maximum_numerator": 439812103416,
+        "common_digit_maximum_numerator": 439812103416
+      },
+      {
+        "A_index": 10283,
+        "maximum_numerator": 426118195710,
+        "common_digit_maximum_numerator": 426059824878
+      },
+      {
+        "A_index": 10664,
+        "maximum_numerator": 410723998056,
+        "common_digit_maximum_numerator": 410665627224
+      },
+      {
+        "A_index": 11045,
+        "maximum_numerator": 427526601436,
+        "common_digit_maximum_numerator": 427468230604
+      },
+      {
+        "A_index": 11426,
+        "maximum_numerator": 413929045538,
+        "common_digit_maximum_numerator": 413929045538
+      },
+      {
+        "A_index": 11807,
+        "maximum_numerator": 435649023242,
+        "common_digit_maximum_numerator": 435590652410
+      }
+    ]
+  }
+}

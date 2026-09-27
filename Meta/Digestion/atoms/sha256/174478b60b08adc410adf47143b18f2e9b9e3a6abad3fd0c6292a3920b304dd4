@@ -1,0 +1,24 @@
+**完成的识别。** 由已证稠密性、实际包含映射及完备性，规范度量完成满足
+$$
+\boxed{
+\widehat{(\mathcal F_A^{\mathbb R},d_\rho)}
+\cong (K_A,d_\rho)
+\cong
+\widehat{(\mathcal F_A^{\mathbb Q},d_\rho)}.
+}
+\tag{47.24}
+$$
+在数组侧，
+$$
+\boxed{
+\widehat{(\mathcal J_{A,\rho}^{\mathbb R},\|\cdot-\cdot\|_\rho)}
+\cong\mathcal I_{A,\rho}
+\cong
+\widehat{(\mathcal J_{A,\rho}^{\mathbb Q},\|\cdot-\cdot\|_\rho)}.
+}
+\tag{47.25}
+$$
+这些是等距同构，分别延续已有的包含映射和 $\mathcal E$。为了明确不存在额外完成点：任意源侧 Cauchy 序列由上面的坐标论证给唯一 $a\in K_A$；任意数组侧 Cauchy 序列在完备的闭像中给唯一 $\mathcal E(a)$。反过来，每个这样的点都由 (47.22) 或 (47.23) 的允许有限支撑来源逼近。因此既无遗漏，也没有把不满足递归关系的任意加权数组补入。
+
+此处的源侧完成使用的是 $d_\rho$，不是通常输入上确界距离。第47.6节已经给出两者不能以连续逆混用的具体序列。本节不将次临界的有限支撑稠密及紧像结论直接推广到临界点。
+

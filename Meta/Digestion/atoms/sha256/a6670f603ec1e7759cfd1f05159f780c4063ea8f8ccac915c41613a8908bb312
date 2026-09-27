@@ -1,0 +1,104 @@
+**证明。** 首先，由平稳性及 $\sum_i\pi_i=1$，
+$$
+\pi_j=\sum_i\pi_iK_{ij}\ge\eta.
+$$
+行归一化给 $d\eta\le1$。若 $d\eta=1$，每行中 $d$ 个不小于 $\eta=1/d$ 的数之和为一，故 $K_{ij}=1/d$；平稳性随即给 $\pi_j=1/d$，于是 $Q=Q^{\mathsf T}$、$c=0$，与 $c\ge c_0>0$ 矛盾。因此 $0<d\eta<1$，特别是 $0<\eta<1/d<1$，故 $B>0$，排除了后续分母退化的情形。
+
+$Q$ 是概率，且对所有 $i,j$ 有 $\eta^2\le Q_{ij}\le1$，所以
+$$
+|A(i,j)|\le2\log(1/\eta)=B,
+\qquad c=\sum_{i,j}Q_{ij}A(i,j)\le B.
+\tag{102.2c}
+$$
+这也给出 $c_0\le B$。所有状态初始概率和转移概率均严格正，故整个笛卡尔积 $S^{n+1}$ 上的路径概率严格正。
+
+将已有[定理 93.3（平稳边流的路径 KL 与读出比较）](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的核、平稳律及边流取为这里的 $K,\pi,Q$；严格正性满足其双向支撑要求。该定理直接给出
+$$
+\begin{aligned}
+\sigma_n(w)
+&=\log\frac{P_n(w)}{P_n^R(w)}
+=\sum_{t=0}^{n-1}A(x_t,x_{t+1})\\
+&=\log\frac{\pi_{x_0}}{\pi_{x_n}}
+ +\sum_{t=0}^{n-1}\log\frac{K_{x_tx_{t+1}}}{K_{x_{t+1}x_t}},
+\qquad \mathbb E_{P_n}\sigma_n=nc.
+\end{aligned}
+\tag{102.2d}
+$$
+因此边分数包含平稳端点项。
+
+在有限载体 $S^{n+1}$ 上，$P_n,P_n^R$ 均为单位质量概率。直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/D5/S3/Estimation/LeCamTight.lean)，得最优平均风险
+$$
+R_n=\frac12\bigl(1-\operatorname{TV}(P_n,P_n^R)\bigr).
+$$
+逐路径的错误质量是 $\varphi(w)$ 的仿射函数，故允许随机化不降低该最小值；在两份路径概率相等时公平抛币也达到它。因此可取 $\sigma_n>0$ 时判正向、$\sigma_n<0$ 时判反向、$\sigma_n=0$ 时公平抛币的规则。反序变换交换两份律，并满足 $\sigma_n(w^R)=-\sigma_n(w)$，所以两种条件错误率相等，得到
+$$
+R_n=P_n(\sigma_n<0)+\frac12P_n(\sigma_n=0)
+\le P_n(\sigma_n\le0).
+\tag{102.2e}
+$$
+始终公平猜测还给出 $R_n\le1/2$。以下只需控制正向链的一次下尾。
+
+令 $\nu$ 为 $S$ 上均匀概率。对每个 $i\in S$ 和 $F\subseteq S$，
+$$
+K(i,F)=\sum_{j\in F}K_{ij}\ge\eta|F|=\alpha\nu(F).
+$$
+直接应用 Roberts–Rosenthal，[*General state space Markov chains and MCMC algorithms*](https://arxiv.org/pdf/math/0404033v4)，arXiv:math/0404033v4，Theorem 8（PDF 第 17 页／刊印第 36 页）：全空间 minorization 的参数取 $n_0=1$、$\epsilon=\alpha$，平稳概率取 $\pi$，得到对整数 $t\ge0$，
+$$
+\sup_{x\in S}\operatorname{TV}(K^t(x,\cdot),\pi)
+\le(1-\alpha)^t\le e^{-\alpha t}.
+\tag{102.2f}
+$$
+采用 Paulin 的 $t_{\rm mix}=t_{\rm mix}(1/4)$ 约定，即
+$$
+t_{\rm mix}=\min\left\{t\in\mathbb N_0:
+ \sup_{x\in S}\operatorname{TV}(K^t(x,\cdot),\pi)\le\frac14\right\},
+$$
+便有 $t_{\rm mix}\le T_\eta$。这里的 TV 归一化与两份来源相同。
+
+现在在原状态序列 $X_0,\ldots,X_n$ 上对函数 $f=\sigma_n$ 应用 Paulin 的集中界。仅改变 $x_0$ 或 $x_n$ 时影响一个边分数，变化至多 $2B$；仅改变任一内部坐标 $x_j$、$1\le j\le n-1$ 时影响两个边分数，变化至多 $4B$。逐次替换坐标因而给出全域 $S^{n+1}$ 上的 bounded-difference 条件
+$$
+|f(x)-f(y)|\le\sum_{j=0}^{n}b_j\mathbf1_{\{x_j\ne y_j\}},
+\qquad b_0=b_n=2B,\quad b_j=4B\ (1\le j\le n-1),
+$$
+并且
+$$
+\|\mathbf b\|_2^2
+=2(2B)^2+(n-1)(4B)^2
+=(16n-8)B^2\le16nB^2.
+\tag{102.2g}
+$$
+$n=1$ 时恰有两个端点而无内部坐标，此式仍成立。
+
+直接使用 Daniel Paulin，[*Concentration inequalities for Markov chains by Marton couplings and spectral methods*](https://arxiv.org/pdf/1212.2015v5)，arXiv:1212.2015v5，Corollary 2.11 及 Remarks 2.10、2.12（PDF 第 9 页，式 (2.7)–(2.9)）。该推论的混合参数 $\tau_{\min}$ 满足
+$$
+\tau_{\min}\le9t_{\rm mix}\le9T_\eta;
+$$
+其单侧版本对 $u>0$ 给出
+$$
+P_n(f-\mathbb E_{P_n}f\le-u)
+\le\exp\left(-\frac{2u^2}{\|\mathbf b\|_2^2\tau_{\min}}\right).
+\tag{102.2h}
+$$
+这里用 Remark 2.10 去掉双侧界前的系数二。取 $u=nc>0$，结合 (102.2d)、(102.2g)，有
+$$
+\begin{aligned}
+P_n(\sigma_n\le0)
+&\le\exp\left(-\frac{2n^2c^2}{\|\mathbf b\|_2^2\tau_{\min}}\right)\\
+&\le\exp\left(-\frac{2n^2c^2}{16nB^2\,9T_\eta}\right)
+\le\exp\left(-\frac{nc_0^2}{72B^2T_\eta}\right).
+\end{aligned}
+$$
+与 (102.2e) 及 $R_n\le1/2$ 合并，得到 (102.2a)。这次应用直接作用于 $n+1$ 个状态坐标，不要求相邻边独立，也不要求反向核具有同一个 $\eta$ 下界。
+
+若 $n$ 满足 (102.2b)，则
+$$
+\frac{nc_0^2}{72B^2T_\eta}\ge\log\frac1\delta,
+$$
+从而 (102.2a) 的指数项至多为 $\delta$。由于括号内的预算严格正，向上取整后至少为一次转移。各界仅依赖 $d,\eta,c_0$，因此在指定模型类上统一。$n=0$ 时只有初始状态，$P_0=P_0^R=\pi$，故 $R_0=1/2$。证毕。
+
+这里增加的统一正转移下界为命题 101.2 所缺少的统一窗口提供了一组充分条件，不作必要性主张。本应用针对完整状态读出下的两份已知方向模型；它不提供未知核的学习或可逆性认证预算。每个有限窗口仍有 $R_n=\tfrac12\sum_w\min\{P_n(w),P_n^R(w)\}>0$，因为两份路径律均处处为正，因此该预算不提供零错误证书。
+
+任意粗读出也不享有同一保证：将已有[推论 93.4](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的三状态环取 $p=1/2,q=1/4$，则全部转移至少为 $1/4$、$c=\tfrac14\log2>0$；取 $d=3$、$\eta=1/4$、$c_0=c$ 即给出一个满足假设的参数选择，而常量读出使两份可见路径律对每个窗口都相同，最优可见错误率恒为 $1/2$。
+

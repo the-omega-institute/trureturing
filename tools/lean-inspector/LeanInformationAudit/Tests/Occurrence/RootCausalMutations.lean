@@ -2,6 +2,7 @@ import LeanInformationAudit.Tests.Occurrence.RootCausalFixture
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.RootCausalFixture
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
 
 namespace LeanInformationAudit.Tests.RootCausalMutations
 
@@ -10,14 +11,15 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
   let original ← getEnv
   try
     registerCausalFixture second extra
-    modifyEnv (·.setMainModule designatedInformationRootId)
+    modifyEnv (·.setMainModule designatedRoot)
+    RootCatalogs.declare designatedContract
     let env ← getEnv
-    let expected := (expectedOccurrencesForRoot env designatedInformationRootId).map
+    let expected := (expectedOccurrencesForRoot env designatedRoot).map
       (fun row => row.objectArenaName.toString ++ "/" ++ row.theoremName.toString)
       |>.qsort (· < ·)
     let actual := (InformationRegistry.entries env).map (·.occurrenceKeyString)
       |>.qsort (· < ·)
-    unless expected.size == 13 &&
+    unless expected.size == 3 &&
         expected.filter (fun key => !actual.contains key) == missing &&
         actual.filter (fun key => !expected.contains key) == unexpected do
       throwError "{label}: wrong mutation input"
@@ -29,12 +31,12 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
     unless errors.size == 1 do
       throwError "{label}: expected exactly one seal error, got {errors.size}"
     let message ← errors[0]!.data.toString
-    let wanted := s!"IE-C028 AnalysisCertificateMismatch root={designatedInformationRootId} " ++
+    let wanted := s!"IE-C028 AnalysisCertificateMismatch root={designatedRoot} " ++
       "catalog=registry-snapshot component=member-set " ++
       s!"expected={(toJson expected).compress} actual={(toJson actual).compress}"
     unless message == wanted do
       throwError "{label}: wrong failure: {message}"
-    unless (SealRecords.forRoot (← getEnv) designatedInformationRootId).isEmpty do
+    unless (SealRecords.forRoot (← getEnv) designatedRoot).isEmpty do
       throwError "{label}: failed seal published records"
     logInfo s!"{label}: IE-C028 missing={(toJson missing).compress} \
       unexpected={(toJson unexpected).compress}"

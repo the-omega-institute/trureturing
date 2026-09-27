@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e339fb89a6cc234c5392ec39aee23330beeb89ac98080d8d29c3b47c85f5c403
+  normalized_sha256: sha256:e339fb89a6cc234c5392ec39aee23330beeb89ac98080d8d29c3b47c85f5c403
+cas_ref: sha256:e339fb89a6cc234c5392ec39aee23330beeb89ac98080d8d29c3b47c85f5c403
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义幂等记录通道的一步闭合缺陷与严格闭合条件，等价的消去式已拆为另一叶，本叶没有独立待证结论。
+    previous_atom_id: ed223fdcd2bfd19b90cc35ddfd9f2519d878044131338cbb3c549bfe46facfc7
+    next_atom_id: 6e7e4c57e9fd6f4c315c4f8f61001a95af9be74a439a6debd28914599a479430

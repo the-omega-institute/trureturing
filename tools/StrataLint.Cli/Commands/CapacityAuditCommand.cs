@@ -17,6 +17,8 @@ internal interface ICapacityAuditFileAccess
 
 internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAccess
 {
+    private const int MaximumMetadataBytes = 64 * 1024 * 1024;
+    private const int MaximumBatchBytes = 512 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static ProductionCapacityAuditFileAccess Instance { get; } = new();
@@ -32,7 +34,7 @@ internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAcce
             ["ls-files", "--stage", "-z"],
             repositoryRoot,
             TimeSpan.FromSeconds(120),
-            64 * 1024 * 1024);
+            MaximumMetadataBytes);
         if (result.ExitCode != 0)
         {
             throw new InvalidOperationException(ProcessError(result, "git ls-files --stage failed"));
@@ -67,38 +69,109 @@ internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAcce
 
     public IReadOnlyList<(string RelativePath, string Text)> ReadFiles(
         string repositoryRoot,
-        IReadOnlyList<CapacityAuditIndexEntry> indexedFiles)
+        IReadOnlyList<CapacityAuditIndexEntry> indexedFiles) =>
+        ReadFiles(indexedFiles,
+            (arguments, maximumBytes, input) => BoundedProcessRunner.Run(
+                "git", arguments, repositoryRoot, TimeSpan.FromSeconds(120), maximumBytes, input),
+            MaximumBatchBytes);
+
+    internal static IReadOnlyList<(string RelativePath, string Text)> ReadFiles(
+        IReadOnlyList<CapacityAuditIndexEntry> indexedFiles,
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        int maximumBatchBytes)
     {
+        ArgumentNullException.ThrowIfNull(indexedFiles);
+        ArgumentNullException.ThrowIfNull(runGit);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBatchBytes);
         if (indexedFiles.Count == 0)
         {
             return [];
         }
 
+        // Read the indexed object sizes, not working-tree files. Keep the existing
+        // per-process bound while allowing the complete index to span many batches.
         var standardInput = Encoding.ASCII.GetBytes(string.Concat(
             indexedFiles.Select(static file => file.ObjectId + "\n")));
-        var result = BoundedProcessRunner.Run(
-            "git",
-            ["cat-file", "--batch"],
-            repositoryRoot,
-            TimeSpan.FromSeconds(120),
-            512 * 1024 * 1024,
-            standardInput);
-        if (result.ExitCode != 0)
+        var metadata = runGit(["cat-file", "--batch-check"], MaximumMetadataBytes, standardInput);
+        if (metadata.ExitCode != 0)
         {
-            throw new InvalidOperationException(ProcessError(result, "git cat-file --batch failed"));
+            throw new InvalidOperationException(ProcessError(metadata, "git cat-file --batch-check failed"));
         }
 
-        return ParseBatch(indexedFiles, result.StandardOutput);
+        var headers = StrictUtf8.GetString(metadata.StandardOutput).Split('\n');
+        if (headers.Length != indexedFiles.Count + 1 || headers[^1].Length != 0)
+        {
+            throw new InvalidOperationException("git cat-file emitted an incomplete or extra size inventory");
+        }
+
+        var files = new List<(string RelativePath, string Text)>(indexedFiles.Count);
+        var batch = new List<CapacityAuditIndexEntry>();
+        var lengths = new List<int>();
+        long batchBytes = 0;
+        void ReadBatch()
+        {
+            var input = Encoding.ASCII.GetBytes(string.Concat(batch.Select(static file => file.ObjectId + "\n")));
+            var result = runGit(["cat-file", "--batch"], maximumBatchBytes, input);
+            if (result.ExitCode != 0)
+            {
+                throw new InvalidOperationException(ProcessError(result, "git cat-file --batch failed"));
+            }
+
+            files.AddRange(ParseBatch(batch, lengths, result.StandardOutput));
+            batch.Clear();
+            lengths.Clear();
+            batchBytes = 0;
+        }
+
+        for (var index = 0; index < indexedFiles.Count; index++)
+        {
+            var file = indexedFiles[index];
+            var length = ParseHeader(file, headers[index]);
+            var outputBytes = (long)StrictUtf8.GetByteCount(headers[index]) + length + 2;
+            if (outputBytes > maximumBatchBytes)
+            {
+                throw new InvalidOperationException($"indexed blob exceeds the supported batch size: {file.RelativePath}");
+            }
+
+            if (batch.Count != 0 && batchBytes + outputBytes > maximumBatchBytes)
+            {
+                ReadBatch();
+            }
+
+            batch.Add(file);
+            lengths.Add(length);
+            batchBytes += outputBytes;
+        }
+
+        ReadBatch();
+        return files;
+    }
+
+    private static int ParseHeader(CapacityAuditIndexEntry indexedFile, string header)
+    {
+        var fields = header.Split(' ');
+        if (fields.Length != 3
+            || fields[0] != indexedFile.ObjectId
+            || fields[1] != "blob"
+            || !int.TryParse(fields[2], NumberStyles.None, CultureInfo.InvariantCulture, out var length)
+            || length < 0)
+        {
+            throw new InvalidOperationException($"git cat-file emitted invalid metadata for {indexedFile.RelativePath}");
+        }
+
+        return length;
     }
 
     private static IReadOnlyList<(string RelativePath, string Text)> ParseBatch(
         IReadOnlyList<CapacityAuditIndexEntry> indexedFiles,
+        IReadOnlyList<int> expectedLengths,
         byte[] output)
     {
         var files = new List<(string RelativePath, string Text)>(indexedFiles.Count);
         var offset = 0;
-        foreach (var indexedFile in indexedFiles)
+        for (var index = 0; index < indexedFiles.Count; index++)
         {
+            var indexedFile = indexedFiles[index];
             var headerEnd = Array.IndexOf(output, (byte)'\n', offset);
             if (headerEnd < offset)
             {
@@ -107,19 +180,10 @@ internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAcce
             }
 
             var header = StrictUtf8.GetString(output.AsSpan(offset, headerEnd - offset));
-            var fields = header.Split(' ');
-            if (fields.Length != 3
-                || fields[0] != indexedFile.ObjectId
-                || fields[1] != "blob"
-                || !int.TryParse(
-                    fields[2],
-                    NumberStyles.None,
-                    CultureInfo.InvariantCulture,
-                    out var blobLength)
-                || blobLength < 0)
+            var blobLength = ParseHeader(indexedFile, header);
+            if (blobLength != expectedLengths[index])
             {
-                throw new InvalidOperationException(
-                    $"git cat-file emitted invalid metadata for {indexedFile.RelativePath}");
+                throw new InvalidOperationException($"indexed blob size changed for {indexedFile.RelativePath}");
             }
 
             offset = headerEnd + 1;

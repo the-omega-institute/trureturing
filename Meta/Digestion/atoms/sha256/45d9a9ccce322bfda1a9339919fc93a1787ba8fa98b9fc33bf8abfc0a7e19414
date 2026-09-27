@@ -1,0 +1,47 @@
+### 125.4 可控边界实验、Hankel 关系与最小内部
+
+另给输入空间 $V$ 与输入耦合 $J:V\to X$，考虑
+$$
+z_{t+1}=Az_t+Ju_t,\qquad y_t=Oz_t.
+$$
+零初态时
+$$
+y_t=\sum_{s=0}^{t-1}OA^{t-1-s}Ju_s.
+$$
+因此全部零初态输入输出关系等价于全部 Markov 参数 $M_k=OA^kJ$；$M_k$ 是时域响应矩阵，此名称不赋予概率转移性质。
+
+令可达映射与可达空间为
+$$
+\mathcal C_s(v_0,\ldots,v_{s-1})=\sum_{j=0}^{s-1}A^jJv_j,
+\qquad \mathcal R=\operatorname{span}\{A^jJv:j\ge0,v\in V\}.
+$$
+块 Hankel 映射定义为 $\mathcal H_{r,s}=(M_{i+j})_{0\le i<r,0\le j<s}$。逐块相乘即得
+$$
+\mathcal H_{r,s}=\mathcal O_r\mathcal C_s.
+$$
+若 $r,s\ge n=\dim X$，Cayley–Hamilton 给 $\operatorname{ran}\mathcal C_s=\mathcal R$ 与 $\ker\mathcal O_r=\mathcal N$，秩—零度公式用于 $\mathcal O_r|_{\mathcal R}$ 后得到
+$$
+\operatorname{rank}\mathcal H_{r,s}
+=\dim\mathcal R-\dim(\mathcal R\cap\mathcal N).
+$$
+$\mathcal R$ 与 $\mathcal R\cap\mathcal N$ 都 $A$ 不变，故在商
+$$
+X_{\mathrm{eff}}=\mathcal R/(\mathcal R\cap\mathcal N)
+$$
+上有诱导的演化、输入与输出。该商可达；若其状态的全部输出为零，任一代表属于 $\mathcal R\cap\mathcal N$，所以它也可观测。其 Markov 参数等于原参数，因为每个 $A^jJv$ 都投向对应商生成元。
+
+这个最小商保持零初态的输入输出实验；任意未知初态可能含不属于可达空间的可见分量。例如 $J=0$ 而 $O\ne0$ 时，全部 Markov 参数为零，零初态最小实现为零维，但未知非零初态仍可产生输出。恢复任意初态须另外保留它的可观测商。
+
+任意实现同一参数序列的另一内部空间 $X'$，都有 $\operatorname{rank}\mathcal H_{r,s}\le\dim X'$。因此上述商取得全部同响应实现中的最小维数。视界前提可使用已声明的状态阶数上界；不能从任意短有限数据先假定该前提成立。
+
+Fibonacci 例另取 $J=(1,0)^{\mathsf T}$，则 $M_0,M_1,M_2,\ldots=1,1,2,\ldots$，
+$$
+\mathcal H_{2,2}=\begin{pmatrix}1&1\\1&2\end{pmatrix},
+\qquad \det\mathcal H_{2,2}=1.
+$$
+故任何同响应线性实现至少二维，给出的模型达到此界。对 $z^2-z-1\ne0$，直接求逆给
+$$
+O(zI-A)^{-1}J=\frac{z}{z^2-z-1}.
+$$
+它编码响应递推，不能替代每条实际输入及初态的记录。
+

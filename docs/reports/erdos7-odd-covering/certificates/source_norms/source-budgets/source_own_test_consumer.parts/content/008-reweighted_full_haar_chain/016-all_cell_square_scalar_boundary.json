@@ -1,0 +1,293 @@
+{
+  "baseline_average": [
+    "23/10",
+    "23/10",
+    "23/10",
+    "23/10",
+    "23/10"
+  ],
+  "source_ratio_floor": "131/12",
+  "head_square_multiplier": "1139/560",
+  "assigned_head_floor": "216789167/8944200",
+  "scalar_quadratics": [
+    {
+      "prime": 17,
+      "input_floor": 24,
+      "output_strict_floor": 34,
+      "quadratic": [
+        "10",
+        "-85/16",
+        "99/128"
+      ],
+      "four_AC_minus_B_squared": "695/256"
+    },
+    {
+      "prime": 19,
+      "input_floor": 34,
+      "output_strict_floor": 48,
+      "quadratic": [
+        "14",
+        "-658/81",
+        "799/648"
+      ],
+      "four_AC_minus_B_squared": "20069/6561"
+    },
+    {
+      "prime": 23,
+      "input_floor": 48,
+      "output_strict_floor": 65,
+      "quadratic": [
+        "17",
+        "-1241/121",
+        "192/121"
+      ],
+      "four_AC_minus_B_squared": "39695/14641"
+    },
+    {
+      "prime": 29,
+      "input_floor": 65,
+      "output_strict_floor": 83,
+      "quadratic": [
+        "18",
+        "-4261/392",
+        "2665/1568"
+      ],
+      "four_AC_minus_B_squared": "648119/153664"
+    },
+    {
+      "prime": 31,
+      "input_floor": 83,
+      "output_strict_floor": 106,
+      "quadratic": [
+        "23",
+        "-3266/225",
+        "581/240"
+      ],
+      "four_AC_minus_B_squared": "2433101/202500"
+    },
+    {
+      "prime": 37,
+      "input_floor": 106,
+      "output_strict_floor": 131,
+      "quadratic": [
+        "25",
+        "-5185/324",
+        "3445/1296"
+      ],
+      "four_AC_minus_B_squared": "1020275/104976"
+    },
+    {
+      "prime": 41,
+      "input_floor": 131,
+      "output_strict_floor": 160,
+      "quadratic": [
+        "29",
+        "-15209/800",
+        "20829/6400"
+      ],
+      "four_AC_minus_B_squared": "10302719/640000"
+    },
+    {
+      "prime": 43,
+      "input_floor": 160,
+      "output_strict_floor": 197,
+      "quadratic": [
+        "37",
+        "-11197/441",
+        "40/9"
+      ],
+      "four_AC_minus_B_squared": "2552471/194481"
+    },
+    {
+      "prime": 47,
+      "input_floor": 197,
+      "output_strict_floor": 241,
+      "quadratic": [
+        "44",
+        "-16381/529",
+        "2955/529"
+      ],
+      "four_AC_minus_B_squared": "6785159/279841"
+    },
+    {
+      "prime": 53,
+      "input_floor": 241,
+      "output_strict_floor": 291,
+      "quadratic": [
+        "50",
+        "-48561/1352",
+        "34945/5408"
+      ],
+      "four_AC_minus_B_squared": "4111279/1827904"
+    },
+    {
+      "prime": 59,
+      "input_floor": 291,
+      "output_strict_floor": 347,
+      "quadratic": [
+        "56",
+        "-34292/841",
+        "50343/6728"
+      ],
+      "four_AC_minus_B_squared": "9535700/707281"
+    },
+    {
+      "prime": 61,
+      "input_floor": 347,
+      "output_strict_floor": 417,
+      "quadratic": [
+        "70",
+        "-94423/1800",
+        "4511/450"
+      ],
+      "four_AC_minus_B_squared": "178473071/3240000"
+    },
+    {
+      "prime": 67,
+      "input_floor": 417,
+      "output_strict_floor": 498,
+      "quadratic": [
+        "81",
+        "-22453/363",
+        "69083/5808"
+      ],
+      "four_AC_minus_B_squared": "14698613/527076"
+    },
+    {
+      "prime": 71,
+      "input_floor": 498,
+      "output_strict_floor": 596,
+      "quadratic": [
+        "98",
+        "-93656/1225",
+        "4233/280"
+      ],
+      "four_AC_minus_B_squared": "121557539/1500625"
+    },
+    {
+      "prime": 73,
+      "input_floor": 596,
+      "output_strict_floor": 724,
+      "quadratic": [
+        "128",
+        "-66703/648",
+        "35909/1728"
+      ],
+      "four_AC_minus_B_squared": "18363935/419904"
+    },
+    {
+      "prime": 79,
+      "input_floor": 724,
+      "output_strict_floor": 879,
+      "quadratic": [
+        "155",
+        "-193039/1521",
+        "79459/3042"
+      ],
+      "four_AC_minus_B_squared": "201657569/2313441"
+    },
+    {
+      "prime": 83,
+      "input_floor": 879,
+      "output_strict_floor": 1079,
+      "quadratic": [
+        "200",
+        "-281702/1681",
+        "473781/13448"
+      ],
+      "four_AC_minus_B_squared": "286569296/2825761"
+    },
+    {
+      "prime": 89,
+      "input_floor": 1079,
+      "output_strict_floor": 1333,
+      "quadratic": [
+        "254",
+        "-839981/3872",
+        "359307/7744"
+      ],
+      "four_AC_minus_B_squared": "1180165271/14992384"
+    },
+    {
+      "prime": 97,
+      "input_floor": 1333,
+      "output_strict_floor": 1649,
+      "quadratic": [
+        "316",
+        "-1262843/4608",
+        "137299/2304"
+      ],
+      "four_AC_minus_B_squared": "4626903527/21233664"
+    },
+    {
+      "prime": 101,
+      "input_floor": 1649,
+      "output_strict_floor": 2086,
+      "quadratic": [
+        "437",
+        "-1936001/5000",
+        "687633/8000"
+      ],
+      "four_AC_minus_B_squared": "8095390499/25000000"
+    },
+    {
+      "prime": 103,
+      "input_floor": 2086,
+      "output_strict_floor": 2756,
+      "quadratic": [
+        "670",
+        "-1582048/2601",
+        "2873465/20808"
+      ],
+      "four_AC_minus_B_squared": "874751471/6765201"
+    },
+    {
+      "prime": 107,
+      "input_floor": 2756,
+      "output_strict_floor": 3851,
+      "quadratic": [
+        "1095",
+        "-53875/53",
+        "25025/106"
+      ],
+      "four_AC_minus_B_squared": "2136125/2809"
+    },
+    {
+      "prime": 109,
+      "input_floor": 3851,
+      "output_strict_floor": 6062,
+      "quadratic": [
+        "2211",
+        "-12266839/5832",
+        "23340911/46656"
+      ],
+      "four_AC_minus_B_squared": "9956256515/34012224"
+    },
+    {
+      "prime": 113,
+      "input_floor": 6062,
+      "output_strict_floor": 12354,
+      "quadratic": [
+        "6292",
+        "-2745639/448",
+        "5348849/3584"
+      ],
+      "four_AC_minus_B_squared": "177053071/200704"
+    },
+    {
+      "prime": 127,
+      "input_floor": 12354,
+      "output_strict_floor": 58341,
+      "quadratic": [
+        "45987",
+        "-60449591/1323",
+        "30030515/2646"
+      ],
+      "four_AC_minus_B_squared": "8122017749/1750329"
+    }
+  ],
+  "next_prime": 131,
+  "carried_floor": 58341,
+  "strict_legal_input_cap": 16900,
+  "scope": "Every fixed nonnegative five-cell reweighting with T>0, the current WF/A2 square allocation and fixed(3,4) head. The assigned upper-bound procedure fails by131 for every legal scalar clipping schedule. This is not a lower bound on actual Gamma or a failure of actual survival or the complete-hinge chain."
+}

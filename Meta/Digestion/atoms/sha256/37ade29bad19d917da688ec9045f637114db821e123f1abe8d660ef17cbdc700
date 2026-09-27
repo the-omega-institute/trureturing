@@ -1,0 +1,20 @@
+**定义 30.1（图消元的容量坐标）。** 取[主卷§127.1、§127.4](RECURSIVE_RELATIONAL_OBSERVATION.md)的有限非空顶点集 $V$、对称权重 $w_{ij}=w_{ji}\ge0$、$w_{ii}=0$，正权边组成连通无向图。令 $L$ 为该图的 Laplace 算子，$q:V\twoheadrightarrow\mathcal A$ 为非空胞腔分区，$m=|\mathcal A|$。在未归一化的 Euclidean 内积中定义
+$$
+R_{ia}=\mathbf1_{q(i)=a},\qquad n_a=|q^{-1}(a)|>0,\qquad
+D=R^{\mathsf T}R=\operatorname{diag}(n_a),\qquad N_v=|V|=\sum_a n_a,
+$$
+$$
+P=RD^{-1}R^{\mathsf T},\qquad U=\operatorname{ran}P,\quad H=\ker P,
+\qquad
+L\big|_{U\oplus H}=\begin{pmatrix}A&B\\B^*&C\end{pmatrix},
+\quad B:H\to U,\quad B^*:U\to H,
+\quad S=A-BC^{-1}B^*:U\to U.
+\tag{30.1}
+$$
+主卷的能量配方及本卷命题29.9给出 $C>0$、$S\succeq0$ 和 $B^*\mathbf1_V=0$；$H=\{0\}$ 时 $C^{-1}$ 按唯一的零维映射解释。对可见向量 $x=Ru\in U$，分别称 $u\in\mathbb R^{\mathcal A}$ 为胞腔均值，$z=D^{1/2}u$ 为正交归一胞腔基 $RD^{-1/2}$ 中的坐标，$b=Du=R^{\mathsf T}x$ 为胞腔质量。实际微观概率 $p$ 给 $x=Pp$ 和 $b=R^{\mathsf T}p$，但 $u,z$ 一般不以坐标和为一归一化。记
+$$
+K=R^{\mathsf T}SR,\qquad \bar\pi=\frac{D\mathbf1_{\mathcal A}}{N_v},\qquad
+\Delta_m=\{b\in\mathbb R^{\mathcal A}:b_a\ge0, \mathbf1^{\mathsf T}b=1\}.
+$$
+以下是主卷的有限图消元、本卷第29节轨迹界与既有正锥、原子几何的普通数学综合（repo-derived），没有扩大它们各自的适用域。有限 Markov 生成元与矩阵指数使用成熟的有限状态理论，参见 J. R. Norris，[*Markov Chains*](https://doi.org/10.1017/CBO9780511810633)，1997，第2章。
+

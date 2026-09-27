@@ -1,0 +1,26 @@
+### 128.9 先验白化提供保真的共同 Gram 结构
+
+定义白化状态与白化响应
+$$
+W=\Sigma_0^{-1/2}(Z-m_0)\sim N(0,I),\qquad
+B=\mathbf R^{-1/2}\mathbf H\Sigma_0^{1/2}.
+$$
+相应白化读数为
+$\mathbf R^{-1/2}(\mathbf Y-\mathbf Hm_0)=BW+\xi$，
+$\xi\sim N(0,I)$ 与 $W$ 独立。因此
+$$
+\operatorname{Cov}(W\mid\mathbf Y)=(I+B^TB)^{-1},
+\qquad
+I(Z;\mathbf Y)=\frac12\log\det(I+B^TB).
+$$
+若 $\lambda_1,\ldots,\lambda_d\ge0$ 为共同响应 Gram 矩阵 $B^TB$ 的特征值，则
+$$
+I(Z;\mathbf Y)=\frac12\sum_{j=1}^d\log(1+\lambda_j).
+$$
+
+**证明。** 这是对模型作可逆仿射坐标运输后应用定理 128.1 与定理 128.4；信息在两侧可逆坐标变化下保持。谱分解给行列式乘积。证毕。
+
+在白化坐标中，$\ker B$ 的正交投影 $P_{\ker B}W$ 与整份观测独立：二者是联合 Gaussian，交叉协方差为 $P_{\ker B}B^T=0$。所以这一投影的先验与后验完全相同。注意 $\ker B=\Sigma_0^{-1/2}\ker\mathbf H$，白化也运输了几何，不能把它不经转换当成原坐标里的欧氏投影。
+
+这是一项保真的辅助构造：把先验度量、噪声权重和全部时间读数放入同一个 $B$，其 Gram 矩阵同时给精度增加、可见方向和信息量。时间结构进入 $H_t=C_tA^t$；这些关系并不单独规定外加的物理时空度量。
+

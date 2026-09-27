@@ -1,0 +1,14 @@
+**theorem 56.2（$\rho$ 的纤维恰为 $U$-轨道，含零坐标；规范轨道概率与稳定子）。** 对任意 $x,y\in R$，
+$$
+\rho(x)=\rho(y)\quad\Longleftrightarrow\quad \exists u\in U,\ y=ux.
+$$
+若 $A\in I$，则 $s(A)$ 的稳定子为
+$$
+H_A=\prod_pH_{A,p},\qquad H_{A,p}=\begin{cases}\{1\},&A_p<\infty,\\ \mathbb Z_p^\times,&A_p=\infty.\end{cases}
+$$
+而
+$$
+m_A:=(u\mapsto us(A))_*m_U
+$$
+是该轨道上唯一的 $U$-不变 Borel 概率；若以轨道内任意其他代表 $t=ws(A)$ 定义同一推前，则仍得到 $m_A$。因此即使 $H_A$ 非平凡、作用不自由，轨道概率仍规范且与代表元选择无关。
+

@@ -1,0 +1,16 @@
+再处理 KL。固定 $a$，令 $x,v$ 都是概率，明确假设 $E_av=v$ 且 $x\ll v$，并置 $y=E_ax$。在纤维 $i$ 上记
+$$
+b_i=\sum_{r_a(j)=i}x_j,\qquad t_i=\sum_{r_a(j)=i}v_j,
+\qquad y_j=\frac{q_jb_i}{p_i^{(a)}},\qquad
+v_j=\frac{q_jt_i}{p_i^{(a)}}\quad(r_a(j)=i).
+$$
+$t_i=0$ 时支撑条件迫使 $b_i=0$；$b_i>0$ 时 $t_i>0$。因此 $x\ll y\ll v$，且在 $x_j>0$ 的坐标上
+$$
+\ln\frac{x_j}{v_j}=\ln\frac{x_j}{y_j}+\ln\frac{b_i}{t_i}.
+$$
+按纤维求和，最后一项为 $b_i\ln(b_i/t_i)$，也正是该纤维对 $D(y\Vert v)$ 的贡献。$b_i=0$ 的纤维中 $x,y$ 全为零，无论 $t_i$ 是否为零都贡献零。于是
+$$
+D(x\Vert v)=D(x\Vert E_ax)+D(E_ax\Vert v). \tag{76.4}
+$$
+这是式 (74.1) 的同一条件分解，也是在[支撑相容的 KL 链式恒等式](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/DivergenceSupport/ZeroSupportDPI.lean)中取输入 $(x,v)$、确定信道 $W(j,i)=\mathbf1_{\{r_a(j)=i\}}$ 的代入；上述支撑与纤维计算分别识别其条件项和粗项。
+

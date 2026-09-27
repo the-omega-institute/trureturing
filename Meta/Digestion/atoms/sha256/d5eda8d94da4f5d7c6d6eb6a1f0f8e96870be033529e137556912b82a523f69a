@@ -1,0 +1,27 @@
+**定理 12.4（最小状态空间的正交对齐）。** 在定义12.1下，若进一步有 $d_P<1$，则 $\operatorname{rank}H=\operatorname{rank}H'$，且存在整个 $\mathcal P$ 上的正交映射 $O$，满足
+$$
+OP=P'O,\qquad \|O-I\|_F\le2d_P.
+\tag{12.15}
+$$
+因而 $O|_{P\mathcal P}:P\mathcal P\to P'\mathcal P$ 是有效内积空间的等距同构，并有
+$$
+\|J-O^*J'\|_F\le d_J+2\sqrt R\,d_P,
+\qquad
+\|T-O^*T'O\|_F\le d_T+4v\,d_P.
+\tag{12.16}
+$$
+记有效生成元为
+$$
+C=-h^{-1}\log(T|_{P\mathcal P}),\qquad
+C'=-h^{-1}\log(T'|_{P'\mathcal P}),
+$$
+则在 $P\mathcal P$ 上有
+$$
+\boxed{\|C-O^*C'O\|_F
+\le\frac{d_T+4v\,d_P}{hu}.}
+\tag{12.17}
+$$
+正交对齐保持内积；式(12.16)控制其输入及演化交织缺陷，不断言两份不同数据的模型精确交织。
+
+所用极分解为标准有限矩阵极分解：N. J. Higham, “Computing the Polar Decomposition—with Applications”, *SIAM Journal on Scientific and Statistical Computing* 7(4) (1986), 1160–1174，[DOI 10.1137/0907079](https://doi.org/10.1137/0907079)，Theorem 1.1；该文§2.4研究其扰动。下证直接给出这里由两投影构成的极分解及所需误差，不以一般扰动结论替代具体常数。
+

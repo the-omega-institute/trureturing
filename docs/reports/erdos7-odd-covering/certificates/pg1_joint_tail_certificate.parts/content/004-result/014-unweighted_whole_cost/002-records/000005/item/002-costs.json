@@ -1,0 +1,22 @@
+{
+  "n1": {
+    "path": "content/004-result/014-unweighted_whole_cost/002-records/000005/item/002-costs/000-n1.json",
+    "sha256": "695969d7311e25cbb95c783013fda68b924bac972012f0eb51c2c43e86637e2b",
+    "kind": "value"
+  },
+  "n2": {
+    "path": "content/004-result/014-unweighted_whole_cost/002-records/000005/item/002-costs/001-n2.json",
+    "sha256": "4040dba444328bbde8fbbe926a21d5f9c32159293adf20f392c087a536b9c63d",
+    "kind": "value"
+  },
+  "n3": {
+    "path": "content/004-result/014-unweighted_whole_cost/002-records/000005/item/002-costs/002-n3.json",
+    "sha256": "ccef2fee73b8c917664c3b3b93845dfa96780270e4b89b878ab0a40cb4689b56",
+    "kind": "value"
+  },
+  "n4": {
+    "path": "content/004-result/014-unweighted_whole_cost/002-records/000005/item/002-costs/003-n4.json",
+    "sha256": "3acba95325410aea35b14128a0b6d2b0f3e181aa04ebcda9b476bfe622e9c6fc",
+    "kind": "value"
+  }
+}

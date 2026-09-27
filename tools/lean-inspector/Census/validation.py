@@ -7,6 +7,7 @@ import subprocess
 
 from incremental import BATCH_KEY_BOUND, BATCH_MODULE_BOUND, atomic_json, candidate_batches, module_digests, validation_key
 from streaming import canonical, closure, digest
+from bindings import absent, incomplete, sources_current
 
 COMMAND = "LeanInformationAudit.Census.Command"
 
@@ -62,7 +63,7 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
             "evidence_inputs": evidence_inputs, "toolchain": toolchain, "query_source": query_digest,
             "scope": input_scope, "source_inputs": source_inputs}
 
-    hits, missing, entries, source_inputs = [], [], [], []
+    hits, missing, entries, source_inputs, binding_evidence = [], [], [], [], []
     for key in membership["candidate_keys"]:
         if key[0] in skipped_owners:
             continue
@@ -74,15 +75,20 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
             value = json.loads(path.read_bytes())
             if value["inputs"] != inputs or value["row"]["statement_id"] != key[2]:
                 raise ValueError("IE-C044 validation cache input binding mismatch")
+            if not sources_current(repository, value.get("binding_evidence")):
+                missing.append(key)
+                continue
             hits.append(key)
             entries.append(value["row"])
             source_inputs.extend(value["source_inputs"])
+            binding_evidence.append([key, value["binding_evidence"]])
         else:
             missing.append(key)
     execute, _ = candidate_batches(missing, imports, graph, bound)
     return {"planned": planned, "skipped": skipped, "execute": execute, "bound": bound,
             "key_bound": BATCH_KEY_BOUND,
             "hits": hits, "misses": missing, "entries": entries, "source_inputs": source_inputs,
+            "binding_evidence": binding_evidence,
             "addresses": addresses, "inputs_for": inputs_for, "keys_by_id": keys_by_id,
             "cache": cache, "scopes": scopes}
 
@@ -115,6 +121,7 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
         batch_scope = set().union(*(set(plan["scopes"][root]) for root in roots))
         named = [entry for entry in membership["named"] if entry["module"] in batch_scope]
         atomic_json(folder / "index.json", {"candidate_keys": batch["keys"], "named": named,
+            "evidence_modules": sorted(batch_scope.intersection(membership["evidence_modules"])),
             "assignment": {owner: membership["assignment"][owner] for owner in owners},
             "scopes": [[root, plan["scopes"][root]] for root in sorted(roots)],
             "batch_module_bound": plan["bound"], "batch_key_bound": plan["key_bound"]})
@@ -138,11 +145,20 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
         keyed_sources = dict(value["key_source_inputs"])
         if set(keyed_sources) != wanted:
             raise ValueError("IE-C044 candidate provenance does not cover its requested keys")
+        binding_rows = value["key_binding_evidence"]
+        keyed_bindings = dict(binding_rows)
+        if len(binding_rows) != len(keyed_bindings) or set(keyed_bindings) != wanted:
+            raise ValueError("IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.census_keys")
+        for evidence in keyed_bindings.values():
+            if not sources_current(repository, evidence):
+                raise ValueError("IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.census_sources")
         for row in value["entries"]:
             identity = row["statement_id"]
             atomic_json(plan["cache"] / (plan["addresses"][identity][7:] + ".json"), {
                 "inputs": plan["inputs_for"](plan["keys_by_id"][identity]),
-                "row": row, "source_inputs": keyed_sources[identity]})
+                "row": row, "source_inputs": keyed_sources[identity],
+                "binding_evidence": keyed_bindings[identity]})
+            plan["binding_evidence"].append([plan["keys_by_id"][identity], keyed_bindings[identity]])
         plan["entries"].extend(value["entries"])
         plan["source_inputs"].extend(value["source_inputs"])
         executions.append({"keys": batch["keys"], "receipt": receipt,
@@ -152,13 +168,21 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
     # are deliberately not stored in the assessment cache.
     for skipped in plan["skipped"]:
         for owner, name, identity in skipped["keys"]:
+            plan["binding_evidence"].append([[owner, name, identity], incomplete(skipped["diagnostic"])])
             plan["entries"].append({"theorem_name": parse_name_key(name), "statement_id": identity,
                 "class": "observed", "payload": {"owning_module": name_json(owner),
                     "root": name_json(membership["assignment"][owner]), "import_scope": None,
                     "query_completed": False, "candidates": [], "note": skipped["diagnostic"]}})
     rows = sorted(plan["entries"], key=lambda row: row["statement_id"])
     sources = {canonical(source): source for source in plan["source_inputs"]}
-    result = {"entries": rows, "source_inputs": [sources[k] for k in sorted(sources)]}
+    selected = {key[2] for key in membership["candidate_keys"]}
+    errors = {row["key"][2]: row["error"] for row in membership["errors"]}
+    for key in request["keys"]:
+        if key[2] not in selected:
+            evidence = incomplete(errors[key[2]]) if key[2] in errors else absent()
+            plan["binding_evidence"].append([key, evidence])
+    result = {"entries": rows, "source_inputs": [sources[k] for k in sorted(sources)],
+              "binding_evidence": sorted(plan["binding_evidence"], key=lambda row: row[0][2])}
     atomic_json(directory / "candidates.json", result)
     record = {"hits": len(plan["hits"]), "misses": len(plan["misses"]),
               "revalidated_keys": plan["misses"], "executions": executions,

@@ -1,0 +1,132 @@
+{
+  "schema": "erdos7-original-prefix-obstruction-v1",
+  "prime": 3,
+  "original_label_heights": 2,
+  "root_equalities": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "child_equalities": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "independent_root_witness": {
+    "L0": 1,
+    "L1": 1,
+    "L2": 1,
+    "R0": 1,
+    "R1": 1,
+    "R2": 1
+  },
+  "independent_child_witness": {
+    "L0": 1,
+    "R0": 1,
+    "L1": 2,
+    "R1": 2,
+    "L2": 4,
+    "R2": 5
+  },
+  "root_CR1_demand": 1,
+  "active_root_alphabet_size": 2,
+  "child_CR1_demand": 4,
+  "active_depth2_alphabet_size": 6,
+  "required_children_inside_one_root": 4,
+  "available_children_inside_one_root": 3,
+  "exhaustive_next_digit_assignments": 729,
+  "joint_witness_count": 0,
+  "single_label_deletions": [
+    {
+      "removed": "L0",
+      "count": 6,
+      "witness": {
+        "L1": 1,
+        "L2": 4,
+        "R0": 7,
+        "R1": 1,
+        "R2": 7
+      }
+    },
+    {
+      "removed": "L1",
+      "count": 6,
+      "witness": {
+        "L0": 1,
+        "L2": 4,
+        "R0": 1,
+        "R1": 7,
+        "R2": 7
+      }
+    },
+    {
+      "removed": "L2",
+      "count": 6,
+      "witness": {
+        "L0": 1,
+        "L1": 4,
+        "R0": 1,
+        "R1": 4,
+        "R2": 7
+      }
+    },
+    {
+      "removed": "R0",
+      "count": 6,
+      "witness": {
+        "L0": 1,
+        "L1": 4,
+        "L2": 1,
+        "R1": 4,
+        "R2": 7
+      }
+    },
+    {
+      "removed": "R1",
+      "count": 6,
+      "witness": {
+        "L0": 1,
+        "L1": 4,
+        "L2": 4,
+        "R0": 1,
+        "R2": 7
+      }
+    },
+    {
+      "removed": "R2",
+      "count": 6,
+      "witness": {
+        "L0": 1,
+        "L1": 4,
+        "L2": 7,
+        "R0": 1,
+        "R1": 4
+      }
+    }
+  ],
+  "scope": "Feasibility cut for a common original-label prefix assignment. No source probability, killed expectation, covering inequality, general endpoint or Lean theorem is computed."
+}

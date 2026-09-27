@@ -1,0 +1,794 @@
+[
+  {
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "probability": "16/35",
+    "square_numerator": 1164949295
+  },
+  {
+    "depth": [
+      0,
+      0,
+      1
+    ],
+    "probability": "16/245",
+    "square_numerator": 1946337070
+  },
+  {
+    "depth": [
+      0,
+      0,
+      2
+    ],
+    "probability": "16/1715",
+    "square_numerator": 3040389743
+  },
+  {
+    "depth": [
+      0,
+      0,
+      3
+    ],
+    "probability": "16/12005",
+    "square_numerator": 4447028894
+  },
+  {
+    "depth": [
+      0,
+      0,
+      4
+    ],
+    "probability": "16/84035",
+    "square_numerator": 6166254523
+  },
+  {
+    "depth": [
+      0,
+      1,
+      0
+    ],
+    "probability": "16/175",
+    "square_numerator": 2127057520
+  },
+  {
+    "depth": [
+      0,
+      1,
+      1
+    ],
+    "probability": "16/1225",
+    "square_numerator": 3601878820
+  },
+  {
+    "depth": [
+      0,
+      1,
+      2
+    ],
+    "probability": "16/8575",
+    "square_numerator": 5666921408
+  },
+  {
+    "depth": [
+      0,
+      1,
+      3
+    ],
+    "probability": "16/60025",
+    "square_numerator": 8321976164
+  },
+  {
+    "depth": [
+      0,
+      1,
+      4
+    ],
+    "probability": "16/420175",
+    "square_numerator": 11567043088
+  },
+  {
+    "depth": [
+      0,
+      2,
+      0
+    ],
+    "probability": "16/875",
+    "square_numerator": 3474009035
+  },
+  {
+    "depth": [
+      0,
+      2,
+      1
+    ],
+    "probability": "16/6125",
+    "square_numerator": 5919637270
+  },
+  {
+    "depth": [
+      0,
+      2,
+      2
+    ],
+    "probability": "16/42875",
+    "square_numerator": 9344065739
+  },
+  {
+    "depth": [
+      0,
+      2,
+      3
+    ],
+    "probability": "16/300125",
+    "square_numerator": 13746902342
+  },
+  {
+    "depth": [
+      0,
+      2,
+      4
+    ],
+    "probability": "16/2100875",
+    "square_numerator": 19128147079
+  },
+  {
+    "depth": [
+      0,
+      3,
+      0
+    ],
+    "probability": "16/4375",
+    "square_numerator": 5205803840
+  },
+  {
+    "depth": [
+      0,
+      3,
+      1
+    ],
+    "probability": "16/30625",
+    "square_numerator": 8899612420
+  },
+  {
+    "depth": [
+      0,
+      3,
+      2
+    ],
+    "probability": "16/214375",
+    "square_numerator": 14071822736
+  },
+  {
+    "depth": [
+      0,
+      3,
+      3
+    ],
+    "probability": "16/1500625",
+    "square_numerator": 20721807428
+  },
+  {
+    "depth": [
+      0,
+      3,
+      4
+    ],
+    "probability": "16/10504375",
+    "square_numerator": 28849566496
+  },
+  {
+    "depth": [
+      0,
+      4,
+      0
+    ],
+    "probability": "16/21875",
+    "square_numerator": 7322441935
+  },
+  {
+    "depth": [
+      0,
+      4,
+      1
+    ],
+    "probability": "16/153125",
+    "square_numerator": 12541804270
+  },
+  {
+    "depth": [
+      0,
+      4,
+      2
+    ],
+    "probability": "16/1071875",
+    "square_numerator": 19850192399
+  },
+  {
+    "depth": [
+      0,
+      4,
+      3
+    ],
+    "probability": "16/7503125",
+    "square_numerator": 29246691422
+  },
+  {
+    "depth": [
+      0,
+      4,
+      4
+    ],
+    "probability": "16/52521875",
+    "square_numerator": 40731301339
+  },
+  {
+    "depth": [
+      0,
+      5,
+      0
+    ],
+    "probability": "16/109375",
+    "square_numerator": 9823923320
+  },
+  {
+    "depth": [
+      0,
+      5,
+      1
+    ],
+    "probability": "16/765625",
+    "square_numerator": 16846212820
+  },
+  {
+    "depth": [
+      0,
+      5,
+      2
+    ],
+    "probability": "16/5359375",
+    "square_numerator": 26679174728
+  },
+  {
+    "depth": [
+      0,
+      5,
+      3
+    ],
+    "probability": "16/37515625",
+    "square_numerator": 39321554324
+  },
+  {
+    "depth": [
+      0,
+      5,
+      4
+    ],
+    "probability": "16/262609375",
+    "square_numerator": 54773351608
+  },
+  {
+    "depth": [
+      1,
+      0,
+      0
+    ],
+    "probability": "16/105",
+    "square_numerator": 1588091414
+  },
+  {
+    "depth": [
+      1,
+      0,
+      1
+    ],
+    "probability": "16/735",
+    "square_numerator": 2687929906
+  },
+  {
+    "depth": [
+      1,
+      0,
+      2
+    ],
+    "probability": "16/5145",
+    "square_numerator": 4323397019
+  },
+  {
+    "depth": [
+      1,
+      0,
+      3
+    ],
+    "probability": "16/36015",
+    "square_numerator": 6426140450
+  },
+  {
+    "depth": [
+      1,
+      0,
+      4
+    ],
+    "probability": "16/252105",
+    "square_numerator": 8996160199
+  },
+  {
+    "depth": [
+      1,
+      1,
+      0
+    ],
+    "probability": "16/525",
+    "square_numerator": 2903019614
+  },
+  {
+    "depth": [
+      1,
+      1,
+      1
+    ],
+    "probability": "16/3675",
+    "square_numerator": 4910099314
+  },
+  {
+    "depth": [
+      1,
+      1,
+      2
+    ],
+    "probability": "16/25725",
+    "square_numerator": 7880402294
+  },
+  {
+    "depth": [
+      1,
+      1,
+      3
+    ],
+    "probability": "16/180075",
+    "square_numerator": 11736347390
+  },
+  {
+    "depth": [
+      1,
+      1,
+      4
+    ],
+    "probability": "16/1260525",
+    "square_numerator": 16449169174
+  },
+  {
+    "depth": [
+      1,
+      2,
+      0
+    ],
+    "probability": "16/2625",
+    "square_numerator": 4743919094
+  },
+  {
+    "depth": [
+      1,
+      2,
+      1
+    ],
+    "probability": "16/18375",
+    "square_numerator": 8074939384
+  },
+  {
+    "depth": [
+      1,
+      2,
+      2
+    ],
+    "probability": "16/128625",
+    "square_numerator": 12860209679
+  },
+  {
+    "depth": [
+      1,
+      2,
+      3
+    ],
+    "probability": "16/900375",
+    "square_numerator": 19170637106
+  },
+  {
+    "depth": [
+      1,
+      2,
+      4
+    ],
+    "probability": "16/6302625",
+    "square_numerator": 26883381739
+  },
+  {
+    "depth": [
+      1,
+      3,
+      0
+    ],
+    "probability": "16/13125",
+    "square_numerator": 7110789854
+  },
+  {
+    "depth": [
+      1,
+      3,
+      1
+    ],
+    "probability": "16/91875",
+    "square_numerator": 12144019474
+  },
+  {
+    "depth": [
+      1,
+      3,
+      2
+    ],
+    "probability": "16/643125",
+    "square_numerator": 19262819174
+  },
+  {
+    "depth": [
+      1,
+      3,
+      3
+    ],
+    "probability": "16/4501875",
+    "square_numerator": 28729009598
+  },
+  {
+    "depth": [
+      1,
+      3,
+      4
+    ],
+    "probability": "16/31513125",
+    "square_numerator": 40298797894
+  },
+  {
+    "depth": [
+      1,
+      4,
+      0
+    ],
+    "probability": "16/65625",
+    "square_numerator": 10003631894
+  },
+  {
+    "depth": [
+      1,
+      4,
+      1
+    ],
+    "probability": "16/459375",
+    "square_numerator": 17117339584
+  },
+  {
+    "depth": [
+      1,
+      4,
+      2
+    ],
+    "probability": "16/3215625",
+    "square_numerator": 27088230779
+  },
+  {
+    "depth": [
+      1,
+      4,
+      3
+    ],
+    "probability": "16/22509375",
+    "square_numerator": 40411464866
+  },
+  {
+    "depth": [
+      1,
+      4,
+      4
+    ],
+    "probability": "16/157565625",
+    "square_numerator": 56695417639
+  },
+  {
+    "depth": [
+      1,
+      5,
+      0
+    ],
+    "probability": "16/328125",
+    "square_numerator": 13422445214
+  },
+  {
+    "depth": [
+      1,
+      5,
+      1
+    ],
+    "probability": "16/2296875",
+    "square_numerator": 22994899714
+  },
+  {
+    "depth": [
+      1,
+      5,
+      2
+    ],
+    "probability": "16/16078125",
+    "square_numerator": 36396336014
+  },
+  {
+    "depth": [
+      1,
+      5,
+      3
+    ],
+    "probability": "16/112546875",
+    "square_numerator": 54218002910
+  },
+  {
+    "depth": [
+      1,
+      5,
+      4
+    ],
+    "probability": "16/787828125",
+    "square_numerator": 76073240974
+  },
+  {
+    "depth": [
+      2,
+      0,
+      0
+    ],
+    "probability": "16/315",
+    "square_numerator": 2225597720
+  },
+  {
+    "depth": [
+      2,
+      0,
+      1
+    ],
+    "probability": "16/2205",
+    "square_numerator": 3761888548
+  },
+  {
+    "depth": [
+      2,
+      0,
+      2
+    ],
+    "probability": "16/15435",
+    "square_numerator": 6071229113
+  },
+  {
+    "depth": [
+      2,
+      0,
+      3
+    ],
+    "probability": "16/108045",
+    "square_numerator": 9040381268
+  },
+  {
+    "depth": [
+      2,
+      0,
+      4
+    ],
+    "probability": "16/756315",
+    "square_numerator": 12669345013
+  },
+  {
+    "depth": [
+      2,
+      1,
+      0
+    ],
+    "probability": "16/1575",
+    "square_numerator": 3986127208
+  },
+  {
+    "depth": [
+      2,
+      1,
+      1
+    ],
+    "probability": "16/11025",
+    "square_numerator": 6847519138
+  },
+  {
+    "depth": [
+      2,
+      1,
+      2
+    ],
+    "probability": "16/77175",
+    "square_numerator": 11088241568
+  },
+  {
+    "depth": [
+      2,
+      1,
+      3
+    ],
+    "probability": "16/540225",
+    "square_numerator": 16540598978
+  },
+  {
+    "depth": [
+      2,
+      1,
+      4
+    ],
+    "probability": "16/3781575",
+    "square_numerator": 23204591368
+  },
+  {
+    "depth": [
+      2,
+      2,
+      0
+    ],
+    "probability": "16/7875",
+    "square_numerator": 6521361749
+  },
+  {
+    "depth": [
+      2,
+      2,
+      1
+    ],
+    "probability": "16/55125",
+    "square_numerator": 11167401964
+  },
+  {
+    "depth": [
+      2,
+      2,
+      2
+    ],
+    "probability": "16/385875",
+    "square_numerator": 18112059005
+  },
+  {
+    "depth": [
+      2,
+      2,
+      3
+    ],
+    "probability": "16/2701125",
+    "square_numerator": 27040903772
+  },
+  {
+    "depth": [
+      2,
+      2,
+      4
+    ],
+    "probability": "16/18907875",
+    "square_numerator": 37953936265
+  },
+  {
+    "depth": [
+      2,
+      3,
+      0
+    ],
+    "probability": "16/39375",
+    "square_numerator": 9780949016
+  },
+  {
+    "depth": [
+      2,
+      3,
+      1
+    ],
+    "probability": "16/275625",
+    "square_numerator": 16721537026
+  },
+  {
+    "depth": [
+      2,
+      3,
+      2
+    ],
+    "probability": "16/1929375",
+    "square_numerator": 27142681424
+  },
+  {
+    "depth": [
+      2,
+      3,
+      3
+    ],
+    "probability": "16/13505625",
+    "square_numerator": 40541295650
+  },
+  {
+    "depth": [
+      2,
+      3,
+      4
+    ],
+    "probability": "16/94539375",
+    "square_numerator": 56917379704
+  },
+  {
+    "depth": [
+      2,
+      4,
+      0
+    ],
+    "probability": "16/196875",
+    "square_numerator": 13764889009
+  },
+  {
+    "depth": [
+      2,
+      4,
+      1
+    ],
+    "probability": "16/1378125",
+    "square_numerator": 23509924324
+  },
+  {
+    "depth": [
+      2,
+      4,
+      2
+    ],
+    "probability": "16/9646875",
+    "square_numerator": 38180108825
+  },
+  {
+    "depth": [
+      2,
+      4,
+      3
+    ],
+    "probability": "16/67528125",
+    "square_numerator": 57041774612
+  },
+  {
+    "depth": [
+      2,
+      4,
+      4
+    ],
+    "probability": "16/472696875",
+    "square_numerator": 80094921685
+  },
+  {
+    "depth": [
+      2,
+      5,
+      0
+    ],
+    "probability": "16/984375",
+    "square_numerator": 18473181728
+  },
+  {
+    "depth": [
+      2,
+      5,
+      1
+    ],
+    "probability": "16/6890625",
+    "square_numerator": 31532563858
+  },
+  {
+    "depth": [
+      2,
+      5,
+      2
+    ],
+    "probability": "16/48234375",
+    "square_numerator": 51224341208
+  }
+]

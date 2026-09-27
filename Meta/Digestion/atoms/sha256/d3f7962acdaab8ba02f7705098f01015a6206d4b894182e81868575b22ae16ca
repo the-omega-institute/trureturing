@@ -1,0 +1,7 @@
+这个实际联合输入像还受共享变量、局部关系及 $K$ 约束，可能为真子集。消费者的部分域取在 $\mathcal D_{\rm ts}^{\,I}$ 中；按指定 $V_c$ 加标签后，输出类型则是
+
+$$
+G[W]\subseteq\prod_{c\in\mathcal F}\operatorname{Tag}(V_c).
+\tag{QI-XI-OUTPUT}
+$$
+

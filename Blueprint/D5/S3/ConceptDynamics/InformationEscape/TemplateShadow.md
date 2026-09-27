@@ -4,7 +4,7 @@
 
 Ten shadow registrations compare generated realizations with their hand registrations on canonical arenas.
 
-Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. The module seals the ten registrations and checks their finite-occurrence census queries.
+Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. Reg.Catalogs.TemplateShadow seals the ten registrations and checks their finite-occurrence census queries; this D5 module retains the pure realizations and mathematical witnesses.
 
 **Definition 1.1 (Spectrum shadow).**
 

@@ -1,0 +1,18 @@
+**命题 69.4（近似闭合与数据噪声的任务预算）。** 若
+
+$$
+\|F-F_0\|_{\mathrm{op}}\le\delta,
+\qquad
+\|x\|\le M,
+\qquad
+b=Ax+\xi,\quad\|\xi\|\le\nu,
+$$
+
+则预测 $Lb$ 满足
+
+$$
+\boxed{
+\|Lb-Fx\|\le\delta M+\|L\|\nu.
+}
+$$
+

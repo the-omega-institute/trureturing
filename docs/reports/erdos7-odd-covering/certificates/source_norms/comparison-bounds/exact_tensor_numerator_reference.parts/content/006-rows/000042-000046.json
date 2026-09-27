@@ -1,0 +1,158 @@
+[
+  {
+    "index": 42,
+    "name": "H16",
+    "tuple": [
+      0,
+      1
+    ],
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "barrier": "51437677469/4932968040",
+    "weight": "1",
+    "degree": 2,
+    "tail_leading": "25/78",
+    "tail_constant": "-139019/145002",
+    "tail_entrance": 4,
+    "actual_integral": "2053783/1703520",
+    "actual_margin": "842099761/2349032400",
+    "old49_margin": "0",
+    "margin_gain": "842099761/2349032400"
+  },
+  {
+    "index": 43,
+    "name": "H16",
+    "tuple": [
+      0,
+      2
+    ],
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        2
+      ]
+    ],
+    "barrier": "868964699/704709720",
+    "weight": "1",
+    "degree": 2,
+    "tail_leading": "37/1014",
+    "tail_constant": "-7979/145002",
+    "tail_entrance": 4,
+    "actual_integral": "34897/243360",
+    "actual_margin": "97639057/2349032400",
+    "old49_margin": "0",
+    "margin_gain": "97639057/2349032400"
+  },
+  {
+    "index": 44,
+    "name": "H16",
+    "tuple": [
+      1,
+      0
+    ],
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "barrier": "197160180946/16688172501",
+    "weight": "1",
+    "degree": 2,
+    "tail_leading": "4/11",
+    "tail_constant": "-1206146/1090089",
+    "tail_entrance": 4,
+    "actual_integral": "13117471/9604980",
+    "actual_margin": "6460073479/15893497620",
+    "old49_margin": "0",
+    "margin_gain": "6460073479/15893497620"
+  },
+  {
+    "index": 45,
+    "name": "H16",
+    "tuple": [
+      2,
+      0
+    ],
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "barrier": "3930317668/2384024643",
+    "weight": "1",
+    "degree": 2,
+    "tail_leading": "124/2541",
+    "tail_constant": "-80846/1090089",
+    "tail_entrance": 4,
+    "actual_integral": "37579/196020",
+    "actual_margin": "883374769/15893497620",
+    "old49_margin": "0",
+    "margin_gain": "883374769/15893497620"
+  }
+]

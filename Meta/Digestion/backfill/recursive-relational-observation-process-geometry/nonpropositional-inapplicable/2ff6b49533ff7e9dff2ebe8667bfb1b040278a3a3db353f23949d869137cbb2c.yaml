@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ff6b49533ff7e9dff2ebe8667bfb1b040278a3a3db353f23949d869137cbb2c
+  normalized_sha256: sha256:2ff6b49533ff7e9dff2ebe8667bfb1b040278a3a3db353f23949d869137cbb2c
+cas_ref: sha256:2ff6b49533ff7e9dff2ebe8667bfb1b040278a3a3db353f23949d869137cbb2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bind-only upstream closure of every natural-order moment of normalized uniform measure on (0,1): Real.volume_Ioo gives total mass one; MeasureTheory.integral_subtype_comap, MeasureTheory.integral_Ioc_eq_integral_Ioo, intervalIntegral.integral_of_le and intervalIntegral.integral_pow at endpoints 0 and 1 give M_n=1/(n+1) for all Nat n including zero. Only definition unfolding, endpoint-nullness and arithmetic normalization are used. No matching project GID was found in the scoped D5 search; do not create a wrapper.'
+    previous_atom_id: 8515630381d5829eefb6848217adc10fd0305a7eba13816ca08141bed3fe6834
+    next_atom_id: 9d7b973407ed2e683204dd2cfdbb411e41a876b5fa43c563efd3968ebc91d7ba

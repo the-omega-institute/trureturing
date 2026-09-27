@@ -1,0 +1,7 @@
+For $L\ge1$, write
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad
+\mathcal W_L=q_L[K],\qquad Q_L=|\mathcal W_L|=G_L,
+$$
+where $G_0=1$, $G_1=2$, and $G_{j+2}=G_{j+1}+G_j$. For $w\in\mathcal W_L$, put $C_w=q_L^{-1}(\{w\})$.
+

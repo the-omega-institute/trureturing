@@ -1,0 +1,9 @@
+**定义 21.10（固定光滑截断的有理测试族）。** 令 $\tau=\operatorname{Real.smoothTransition}$ 为固定光滑过渡函数，满足 $\tau(t)=0$ 对 $t\le0$，$\tau(t)=1$ 对 $t\ge1$。对 $R\in\mathbb N_{>0}$、$p,q\in\mathbb Q[X]$，定义
+$$
+\chi_R(x)=\tau(2-|x|/R),\qquad
+f_{R,p,q}(x)=\chi_R(x)
+\left(\frac{p(x)+p(-x)}2+i\frac{q(x)+q(-x)}2\right).
+\tag{21.21}
+$$
+该偶多项式部分正是 [RationalCutoffApproximation](../../../D5/S3/Weil/TestFunctions/RationalCutoffApproximation.lean) 的 `rationalEvenPolynomial`；此处截断固定为（21.21）的实际 smooth-transition 公式。
+

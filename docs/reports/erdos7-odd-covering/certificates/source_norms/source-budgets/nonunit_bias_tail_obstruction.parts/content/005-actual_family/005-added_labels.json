@@ -1,0 +1,42 @@
+[
+  {
+    "modulus": 11,
+    "residue": 0,
+    "private_integer": 6990926523473489742336454101562504
+  },
+  {
+    "modulus": 13,
+    "residue": 0,
+    "private_integer": 21191743864161808291259165039062504
+  },
+  {
+    "modulus": 17,
+    "residue": 0,
+    "private_integer": 17171659543452247525571485839843754
+  },
+  {
+    "modulus": 19,
+    "residue": 0,
+    "private_integer": 15796367538998976737309911376953129
+  },
+  {
+    "modulus": 23,
+    "residue": 0,
+    "private_integer": 13763327184589793832923236083984379
+  },
+  {
+    "modulus": 29,
+    "residue": 0,
+    "private_integer": 13953611749780801099836274658203129
+  },
+  {
+    "modulus": 31,
+    "residue": 0,
+    "private_integer": 62448553920476056333593089355468754
+  },
+  {
+    "modulus": 37,
+    "residue": 0,
+    "private_integer": 20400144248886952696471243652343754
+  }
+]

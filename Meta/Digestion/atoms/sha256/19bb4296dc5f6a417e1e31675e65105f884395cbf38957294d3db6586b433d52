@@ -1,0 +1,23 @@
+**定理 15.4（全部共同正实现的交叉响应参数化）。** 在假设15.1下，局部正性蕴含
+$$
+P_\lambda,Q_\lambda\succeq0,\qquad
+E_\lambda\ker D_\lambda=0,\qquad
+\operatorname{ran}F_\lambda\subseteq\operatorname{ran}D_\lambda.
+\tag{15.7}
+$$
+$\mathcal M_2$ 非空，其全部可能的未测响应恰为
+$$
+\boxed{K_{AB}(t)=\sum_{\lambda\in\Lambda}e^{-\lambda t}
+\bigl(X^0_\lambda+P_\lambda^{1/2}T_\lambda Q_\lambda^{1/2}\bigr),
+\qquad T\in\mathbb B.}
+\tag{15.8}
+$$
+每一组按谱层分别选择的收缩都有一个有限维共同正实现；不存在只在 $AB$ 出现而在两个局部响应均不可见的额外谱率。整个交叉响应在 $\mathcal M_2$ 上唯一，当且仅当
+$$
+\boxed{\forall\lambda\in\Lambda,\quad P_\lambda=0\ \text{或}\ Q_\lambda=0.}
+\tag{15.9}
+$$
+这比要求共享端口在每层覆盖两侧全部方向弱：准确条件只需每层至少一侧余量为零。
+
+本定理将成熟的块正性因子化用于同一谱响应的缺失块。算子形式见 Moslehian、Kian、Xu，[*Positivity of $2\times2$ block matrices of operators*](https://arxiv.org/pdf/1904.08680v1)，Theorem 5.11的收缩因子化及Theorem 5.12的Gram实现。[QUANTUM-RH卷](QUANTUM-RH.md)“三张切片真正的拼接条件”式（7）已给单位标量复块的圆盘 $|z-ab|^2\le(1-|a|^2)(1-|b|^2)$。下面补足这里所需的有限实矩形、奇异余量及逐谱共同实现证明。
+

@@ -1,0 +1,17 @@
+{
+  "42161f7ed60a4b8ca1c9171497b237602672e80146f5363db0ee3fdd35038380": {
+    "path": "content/013-rational_dual_buckets/004-4/001-2/000-42161f7ed60a4b8ca1c9171497b237602672e80146f5363db0ee3fdd35038380.json",
+    "sha256": "8363e639a1f324a47ca40ed8ca15f234a064cd8657a26921b35b521a0b6816e5",
+    "kind": "value"
+  },
+  "4228d5822dfa9536c152cb1f58d7411217de0e8f2676acf044022ccd4ae66fd6": {
+    "path": "content/013-rational_dual_buckets/004-4/001-2/001-4228d5822dfa9536c152cb1f58d7411217de0e8f2676acf044022ccd4ae66fd6.json",
+    "sha256": "02f9dd3958fb3a05d81273bad42a5143a93fff67ea8697fa14ce6424fcc88ec6",
+    "kind": "value"
+  },
+  "424a9a8a2a59f16125c84069487a4c8f6a5653210ac8b99f0080ec19fddc7ae0": {
+    "path": "content/013-rational_dual_buckets/004-4/001-2/002-424a9a8a2a59f16125c84069487a4c8f6a5653210ac8b99f0080ec19fddc7ae0.json",
+    "sha256": "e57ea7b0cf87df46bd5a4492ef9821b37e4b3cd8c4168a2637938979db560043",
+    "kind": "value"
+  }
+}

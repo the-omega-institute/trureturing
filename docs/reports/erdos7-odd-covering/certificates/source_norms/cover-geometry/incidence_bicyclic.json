@@ -1,0 +1,208 @@
+{
+  "result": "PASS",
+  "scope": "Exact scalar inequalities and actual-family checks; general proof is separate.",
+  "square_sum": "11181700024618215281126396/45205949340120622379111289",
+  "scalar_cases": {
+    "no3": "3697/9604",
+    "five_nonleaf_d1": "126353/163268",
+    "five_nonleaf_d2": "4422770225/4886447972",
+    "five_nonleaf_d3": "3559766533777/3744913891684",
+    "five_nonleaf_d4": "337636291352823447913/345922643206101994564",
+    "five_leaf_d1": "2886018137/4886447972",
+    "five_leaf_d2": "3751069625/4886447972",
+    "five_leaf_d3": "157612311733873/183500780692516",
+    "five_leaf_d4": "1860034061085660581/1999552850902323668",
+    "five_leaf_d5": "3511740635399181789573718321/3593350672588678665890305156"
+  },
+  "cases": [
+    {
+      "name": "theta_three_distinct_supports_same_pair",
+      "period": 15015,
+      "labels": 8,
+      "core_primes": [
+        3,
+        5
+      ],
+      "two_core_prime_count": 2,
+      "path_meetings": {},
+      "retained_prime_degrees": {
+        "3": 3,
+        "5": 3
+      },
+      "max_original_rank": 4,
+      "retained_support_ranks": [
+        2,
+        2,
+        2
+      ],
+      "original_survivors": 5040,
+      "generated_points": 5040,
+      "core_source_points": 8,
+      "good_core_points": 7,
+      "actual_core_loss": "1/8",
+      "same_source_union_bound": "6121/20416",
+      "full_probability": "1",
+      "maximum_density": "143/48",
+      "bound": 36864000
+    },
+    {
+      "name": "small_prime_path_meets_branched_support",
+      "period": 15015,
+      "labels": 9,
+      "core_primes": [
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "two_core_prime_count": 3,
+      "path_meetings": {
+        "3": "s",
+        "5": "p"
+      },
+      "retained_prime_degrees": {
+        "3": 2,
+        "5": 1,
+        "7": 3,
+        "11": 2,
+        "13": 2
+      },
+      "max_original_rank": 4,
+      "retained_support_ranks": [
+        2,
+        2,
+        2,
+        4
+      ],
+      "original_survivors": 4893,
+      "generated_points": 4893,
+      "core_source_points": 5760,
+      "good_core_points": 4893,
+      "actual_core_loss": "289/1920",
+      "same_source_union_bound": "113951/414720",
+      "full_probability": "1",
+      "maximum_density": "715/233",
+      "bound": 13107200
+    },
+    {
+      "name": "figure_eight_with_five_leaf_and_degree_five_root",
+      "period": 255255,
+      "labels": 13,
+      "core_primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "two_core_prime_count": 5,
+      "path_meetings": {
+        "5": "p"
+      },
+      "retained_prime_degrees": {
+        "3": 5,
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2
+      },
+      "max_original_rank": 2,
+      "retained_support_ranks": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "original_survivors": 67351,
+      "generated_points": 67351,
+      "core_source_points": 92160,
+      "good_core_points": 67351,
+      "actual_core_loss": "24809/92160",
+      "same_source_union_bound": "559969/921600",
+      "full_probability": "1",
+      "maximum_density": "255255/67351",
+      "bound": 3355443200
+    },
+    {
+      "name": "theta_without_three",
+      "period": 85085,
+      "labels": 8,
+      "core_primes": [
+        5,
+        7
+      ],
+      "two_core_prime_count": 2,
+      "path_meetings": {},
+      "retained_prime_degrees": {
+        "5": 3,
+        "7": 3
+      },
+      "max_original_rank": 4,
+      "retained_support_ranks": [
+        2,
+        2,
+        2
+      ],
+      "original_survivors": 44160,
+      "generated_points": 44160,
+      "core_source_points": 24,
+      "good_core_points": 23,
+      "actual_core_loss": "1/24",
+      "same_source_union_bound": "229705/3327168",
+      "full_probability": "1",
+      "maximum_density": "17017/8832",
+      "bound": 98304000
+    },
+    {
+      "name": "barbell_with_private_children",
+      "period": 255255,
+      "labels": 11,
+      "core_primes": [
+        3,
+        5,
+        11,
+        13
+      ],
+      "two_core_prime_count": 4,
+      "path_meetings": {},
+      "retained_prime_degrees": {
+        "3": 2,
+        "5": 3,
+        "11": 3,
+        "13": 2
+      },
+      "max_original_rank": 3,
+      "retained_support_ranks": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "original_survivors": 78912,
+      "generated_points": 78912,
+      "core_source_points": 960,
+      "good_core_points": 822,
+      "actual_core_loss": "23/160",
+      "same_source_union_bound": "24617/72000",
+      "full_probability": "1",
+      "maximum_density": "85085/26304",
+      "bound": 1258291200
+    }
+  ],
+  "schema": "incidence-bicyclic-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "38158e0d64ca8449b127d4fe0636eddeafaff4304408f9a073820021f599f9c4",
+    "problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md": "45c5e514d4c948efb5f47971eb273d78f519ff53eb21c630fc3fc38714f4719f",
+    "problem-details/51-incidence-bicyclic-components-with-arbitrary-original-heights.md": "52f178a82164afaf2526b2671cc427d578e5a6afecb4c0c5836eda7082a29ff1",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+  },
+  "producer_sha256": "a229a5b0afe9d838be065c387b52263b9f2dd3398b63baa7da0bcc1e61f2c9e8"
+}

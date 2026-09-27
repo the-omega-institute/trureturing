@@ -1,0 +1,105 @@
+**定义与假设 87.1（有限共同 iid 信道与后验的定义域）。** 设 $J,I,Z$ 为有限非空集合，$r:J\to I$ 为固定满射。设实际先验 $d_0\in\Delta(J)$ 允许零坐标，参考先验 $q_0\in\Delta(J)$ 满足 $q_{0j}>0$ 对每个 $j\in J$。给定同一个行随机信道
+$$
+K(z\mid j)\ge0,\qquad \sum_{z\in Z}K(z\mid j)=1.
+$$
+在共同可测空间 $\Omega=J\times Z^{\mathbb N_{>0}}$ 上，取有限离散空间的乘积 $\sigma$-代数，定义两种概率律
+$$
+\mathbb P_a(\{j\}\times A)=a_jK_j^{\mathbb N_{>0}}(A),
+\qquad a\in\{d_0,q_0\},
+$$
+其中 $K_j=K(\cdot\mid j)$，$K_j^{\mathbb N_{>0}}$ 是该行的可数乘积概率；记 $\mathbb P_d=\mathbb P_{d_0}$、$\mathbb P_q=\mathbb P_{q_0}$。潜状态 $X$ 抽取一次后固定，观察坐标记为 $Z_1,Z_2,\ldots$。两律均由同一个条件 iid 核 $K_j^{\mathbb N_{>0}}$ 混合而成；在 $a_j>0$ 时，给定 $X=j$ 的条件律就是该乘积律。混合掉 $X$ 后不主张观察无条件独立。对每个有限时域，这也是定义 86.1 中取 $K_t(z\mid j,h)=K(z\mid j)$ 的历史模型。
+
+令 $s:J\twoheadrightarrow\mathcal S$ 为观察行等价类映射：
+$$
+s(j)=s(k)\quad\Longleftrightarrow\quad K_j=K_k.
+$$
+写
+$$
+J_c=s^{-1}(c),\qquad
+d_c=\sum_{j\in J_c}d_{0j},\qquad
+q_c=\sum_{j\in J_c}q_{0j}>0,
+$$
+并以 $K_c$ 表示该类的公共信道行。每个类都定义严格正的参考条件律
+$$
+q^c_j=q_{0j}/q_c\quad(j\in J_c).
+$$
+仅当 $d_c>0$ 时定义实际条件律
+$$
+d^c_j=d_{0j}/d_c\quad(j\in J_c).
+$$
+取 $r_c=r|_{J_c}:J_c\twoheadrightarrow r(J_c)$。这些条件向量在比较整个 $J$ 上的坐标时，只在类外作零延拓；$d_c=0$ 的类不定义实际条件概率。
+
+对有限概率向量 $a\ll p$，采用自然对数及正支撑求和
+$$
+D(a\Vert p)=\sum_{j:a_j>0}a_j\ln\frac{a_j}{p_j},
+\qquad
+a\ll p\ \Longleftrightarrow\ \forall j\ (p_j=0\Rightarrow a_j=0).
+$$
+若 $p$ 在当前载体上严格正，$v$ 是到其像的粗标签映射，则参考纤维恢复为
+$$
+(E_{p,v}a)_j=p_j
+\frac{\sum_{v(k)=v(j)}a_k}{\sum_{v(k)=v(j)}p_k}.
+$$
+该向量非负且按纤维求和得总质量一；每个正 $a_j$ 对应正恢复质量，所以 $a\ll E_{p,v}a$。定理 73.3 与定理 74.2 的静态恢复恒等式给出
+$$
+\delta_{p,v}(a):=D(a\Vert E_{p,v}a)
+=D(a\Vert p)-D(v_*a\Vert v_*p)\ge0.
+\tag{87.1}
+$$
+全部散度有限。这里仅用静态恒等式，不要求定理 74.2 中的动力学族保持条件。[^rro87-static]
+
+对历史 $h_n=(z_1,\ldots,z_n)$，定义
+$$
+L_n(j)=\prod_{t=1}^nK(z_t\mid j),\qquad
+D_n=\sum_jd_{0j}L_n(j),\qquad
+Q_n=\sum_jq_{0j}L_n(j),
+$$
+并令 $L_0(j)=1$、$D_0=Q_0=1$。由共同乘积核，有限联合质量为 $a_jL_n(j)$；对 $j$ 求和，以及按各观察坐标使用行随机性，得到
+$$
+\mathbb P_d(H_n=h_n)=D_n(h_n),\qquad
+\mathbb P_q(H_n=h_n)=Q_n(h_n),
+\qquad H_n=(Z_1,\ldots,Z_n),
+$$
+$$
+\sum_{h_n\in Z^n}D_n(h_n)=\sum_{h_n\in Z^n}Q_n(h_n)=1.
+\tag{87.2}
+$$
+因为 $q_0$ 严格正，$D_n>0\Rightarrow Q_n>0$：正的非负有限和 $D_n$ 中有正项，故该位置的 $L_n(j)>0$，进而在 $Q_n$ 中也有正项。
+
+参考后验在每个 $Q_n>0$ 的历史上定义，实际后验仅在 $D_n>0$ 的历史上定义：
+$$
+q_{n,j}=\frac{q_{0j}L_n(j)}{Q_n}\quad(Q_n>0),\qquad
+d_{n,j}=\frac{d_{0j}L_n(j)}{D_n}\quad(D_n>0).
+\tag{87.3}
+$$
+这些公式由有限联合质量除以相应正历史质量得到。参考活动载体及限制后的满射为
+$$
+J_n=\{j:L_n(j)>0\},\qquad
+r_n=r|_{J_n}:J_n\twoheadrightarrow r(J_n).
+$$
+在参考正历史上，$J_n$ 非空且 $q_n$ 在其上严格正；在实际正历史上，$d_n$ 是 $J_n$ 上的概率向量且 $d_n\ll q_n$。写整个 $J$ 上的向量时，仅把活动载体外的坐标置零，不要求 $q_n$ 在整个 $J$ 上严格正。粗化向量在 $I\setminus r(J_n)$ 上也作零延拓。
+
+定义实际正历史上的标量
+$$
+\delta_n=\delta_{q_n,r_n}(d_n).
+\tag{87.4}
+$$
+在实际零质量历史上仅将标量 $\delta_n$ 置零，不定义实际后验。每个有限 $n$ 的这类历史总质量为零，可数次取交后，以 $\mathbb P_d$-概率一，全部有限时刻同时满足 $D_n>0$。对每个 $d_c>0$，定义
+$$
+\delta_c=\delta_{q^c,r_c}(d^c).
+$$
+在 $d_c=0$ 的类上约定标量 $\delta_c=0$；这不定义实际条件概率。
+
+最后，令联合标签 $u=(r,s)$ 的陪域为像 $u(J)$。置
+$$
+J_{i,c}=\{j:r(j)=i,\ s(j)=c\},\qquad
+d_{i,c}=\sum_{j\in J_{i,c}}d_{0j},\qquad
+q_{i,c}=\sum_{j\in J_{i,c}}q_{0j}.
+$$
+每个非空胞腔都有 $q_{i,c}>0$，故
+$$
+(E_{q_0,u}d_0)_j=q_{0j}\frac{d_{r(j),s(j)}}{q_{r(j),s(j)}}
+\tag{87.5}
+$$
+良定义。
+

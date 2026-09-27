@@ -1,0 +1,30 @@
+**命题 42.5（支撑逆与完整终端接口）。** 保持 $F_n:H_n\to K$ 在补空间为零，定义
+$$
+P_n=F_n^*F_n\in\mathcal L(H_n),\qquad Q_n=F_nF_n^*\in\mathcal L(K).
+\tag{42.23}
+$$
+它们分别投影到 $S_n$ 与 $F_nS_n$。任取密度 $\omega_n\in\mathcal D(K)$ 及支撑在 $S_n$ 的密度 $\xi_n$，令
+$$
+\begin{aligned}
+\mathcal C_n(X)&=F_nXF_n^*+\operatorname{Tr}((I_{H_n}-P_n)X)\omega_n,
+&&X\in\mathcal L(H_n),\\
+\mathcal B_n(Y)&=F_n^*YF_n+\operatorname{Tr}((I_K-Q_n)Y)\xi_n,
+&&Y\in\mathcal L(K).
+\end{aligned}
+\tag{42.24}
+$$
+两者在整个声明载体上 CPTP，且
+$$
+\mathcal B_n\mathcal C_n(X)=X\qquad(X=P_nXP_n).
+\tag{42.25}
+$$
+这是全支撑算子恒等式，不限于密度或来源边缘；与任意有限参考恒等张量后仍成立，特别可保留 $J$ 和实际活动 $M$。
+
+证明。对任一补投影 $R$，取其像的正交基 $(e_l)$，并把所准备密度写成 $\sum_jt_j|u_j\rangle\langle u_j|$。映射 $X\mapsto\operatorname{Tr}(RX)\sum_jt_j|u_j\rangle\langle u_j|$ 的 Kraus 算子为
+$$
+K_{jl}=\sqrt{t_j}|u_j\rangle\langle e_l|,\qquad
+\sum_{j,l}K_{jl}^*K_{jl}=R.
+\tag{42.26}
+$$
+对 $\mathcal C_n$ 加入主 Kraus $F_n$，平方和为 $P_n+(I-P_n)=I_{H_n}$；对 $\mathcal B_n$ 加入 $F_n^*$，平方和为 $Q_n+(I-Q_n)=I_K$。这同时证明全域 CP 与 TP，包括补支撑分支。若 $X=P_nXP_n$，第一补项为零，$F_nXF_n^*$ 支撑在 $Q_n$，第二补项也为零，复合恰为 $P_nXP_n=X$。参考版本按其矩阵单位展开即可，不增加独立性前提。命题42.3的顺序接收在实际来源族上与 $\mathcal C_n$ 一致；它在任意不受此合同约束的 $H_n$ 输入上的行为不必等于这个方便的静态补空间延拓。$\square$
+

@@ -1,0 +1,11 @@
+### 定义 56.2（$\varepsilon$-记忆视界）
+
+固定任务时间窗 $T$、可见轨道界 $\|x_k\|\le X$ 和初始隐藏界 $\|y_0\|\le Y$。整数 $h$ 满足 $0\le h<T$ 时，称其为 $(T,\varepsilon)$-记忆视界，如果对每个 $n$ 满足 $h\le n<T$，都有
+
+$$
+\|b_n\|
++X\sum_{r=h+1}^{n}\|K_r\|
+\le\varepsilon.
+$$
+
+最小这样的 $h$ 记为 $h_{\varepsilon,T}$；若没有这样的整数，则记为 $\infty$。

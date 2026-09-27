@@ -1,0 +1,25 @@
+### 120.1 完整过程与保留过程
+
+设参数集为有限集合 $$\Theta$$，先验为 $$\mu$$。对每个 $$\theta\in\Theta$$，令
+
+$$
+I_\theta:X\longrightarrow Y
+$$
+
+是同一输入输出空间上的完整 $$n$$ 槽量子过程。输出空间 $$Y$$ 包含全部仍可访问的历史寄存器、活动记忆和允许保留的参考系统。压缩后的过程为
+
+$$
+\widetilde I_\theta:X\longrightarrow \widetilde Y.
+$$
+
+压缩不是把 $$Y$$ 的坐标重新命名，而是实际丢弃了一部分过程输出。设 $$S:\widetilde Y\to Y$$ 是与 $$\theta$$、输入以及后续决策均无关的 CPTP 模拟器。定义过程缺陷
+
+$$
+\boxed{
+\delta_\diamond(I\mid\widetilde I)
+=
+\inf_S\;\sup_{\theta\in\Theta}
+\frac12\left\|I_\theta-S\circ\widetilde I_\theta\right\|_\diamond .
+}
+$$
+

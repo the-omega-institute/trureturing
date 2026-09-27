@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Syntax
 import LeanInformationAudit.Registry
 
 namespace LeanInformationAudit
@@ -8,6 +9,8 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
+run_cmd TemplateAudit.initializeGrammarPins
+
 /-- Retain construction ownership before the builtin elaborator's structure eta
 compaction loses it. Metadata has no effect on kernel typing or definitional equality.
 Only live forwarding-head traversal consumes this marker; unused arguments do not. -/
@@ -15,7 +18,9 @@ private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx 
   let value ← elaborator stx expected
   let type ← whnfR (← inferType value)
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
-      type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
+      type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena ||
+      type.isAppOf RegistrationGates.objectDomainArenaName ||
+      type.isAppOf RegistrationGates.witnessArenaName then
     return mkAnnotation arenaConstructionMarker value
   return value
 
@@ -96,6 +101,8 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
   let theoremName <- resolveTheorem theoremId
   let objectArenaName <- resolveArena arenaId
+  -- Source evidence is acquired by the declaration command, before IO-free sealing.
+  discard <| liftTermElabM <| resolveCanonicalArenaName objectArenaName
   let env <- getEnv
   let statementIdentity := if statementIdentityOverride.isEmpty then
     theoremStatementIdentity env theoremName
@@ -110,24 +117,20 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
   }
 
 /-- Declare one independently expected auxiliary-root occurrence. -/
-elab "expect_information_occurrence " theoremId:ident ppLine
-    "in " arenaId:ident ppLine
-    "from " registrationModule:str : command =>
-  addExpectedOccurrence theoremId arenaId registrationModule.getString ""
+@[command_elab command___In__From_]
+private def elabExpectedOccurrence : CommandElab := fun stx =>
+  addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩ (TSyntax.getString ⟨stx[7]⟩) ""
 
 /-- Negative-fixture form for pinning an independently supplied statement identity. -/
-elab "expect_information_occurrence " theoremId:ident ppLine
-    "in " arenaId:ident ppLine
-    "from " registrationModule:str ppLine
-    "statement_id " statementIdentity:str : command =>
-  addExpectedOccurrence theoremId arenaId registrationModule.getString
-    statementIdentity.getString
+@[command_elab command___In__From__Statement_id_]
+private def elabExpectedOccurrenceWithIdentity : CommandElab := fun stx =>
+  addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩
+    (TSyntax.getString ⟨stx[7]⟩) (TSyntax.getString ⟨stx[10]⟩)
 
-private def checkRealizationBundle (theoremName arenaName : Name)
+private def checkRealizationBundle (theoremName : Name) (arenaExpr : Expr)
     (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do
   let valid <- liftTermElabM do
     try
-      let arenaExpr <- mkConstWithFreshMVarLevels arenaName
       let typedRealizationType <- instantiateMVars (← whnfR (← inferType typedRealization))
       unless typedRealizationType.getAppFn.constName? ==
           some `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization do
@@ -136,9 +139,10 @@ private def checkRealizationBundle (theoremName arenaName : Name)
       unless realizationArgs.size == 2 do
         return false
       let compiledBundle <- compilePrimitiveBundle arenaExpr typedRealization
-      let suppliedBundle <- elabTerm primitiveTerm none
+      let suppliedBundle <- elabTerm primitiveTerm (some (← inferType compiledBundle))
+      let same ← isDefEq suppliedBundle compiledBundle
       synthesizeSyntheticMVarsNoPostponing
-      return ← isDefEq suppliedBundle compiledBundle
+      return same && (← isDefEq suppliedBundle compiledBundle)
     catch _ =>
       return false
   unless valid do
@@ -149,10 +153,11 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   let valid <- liftTermElabM do
     try
       let arenaExpr <- mkConstWithFreshMVarLevels arenaName
+      let lawArena := (← RegistrationGates.normalizeArena arenaExpr).law
       let realizationExpr <- mkConstWithFreshMVarLevels realizationName
       let expectedLaw <- mkAppM
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
-        #[arenaExpr, realizationExpr]
+        #[lawArena, realizationExpr]
       let statementExpr <- elabTerm statement (some (mkSort .zero))
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq statementExpr expectedLaw
@@ -161,46 +166,141 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   unless valid do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
-elab "information_theorem " theoremId:ident ppLine
-    "in " arenaId:ident ppLine
-    "primitives " primitives:term ppLine
-    variation:("variation " ident)? sensitivity:("sensitivity " ident)?
-    ": " statement:term " := " proof:term : command => do
-    let theoremName <- declarationName theoremId
-    let arenaName <- try
-      liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
+/-- Elaborate an inline legacy bridge at the imported theorem's exact type and
+publish it under the registration-owned companion name. -/
+private def addInlineLegacyRealization (theoremName arenaName realizationName : Name)
+    (realizationTerm proofTerm : TSyntax `term) : CommandElabM Unit := do
+  try
+    let (expected, proof, levelParams) ← liftTermElabM do
+      let theoremInfo ← getConstInfo theoremName
+      withLevelNames theoremInfo.levelParams do
+        let statement := theoremInfo.type
+        let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+        let arena := (← RegistrationGates.normalizeArena arenaExpr).law
+        let signature ← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature #[arena]
+        let realizationType ← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization #[signature]
+        let realization ← elabTerm realizationTerm (some realizationType)
+        synthesizeSyntheticMVarsNoPostponing
+        let realization ← instantiateMVars realization
+        let expected ← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
+          #[arena, statement, realization]
+        let proof ← elabTerm proofTerm (some expected)
+        synthesizeSyntheticMVarsNoPostponing
+        unless ← isDefEq (← inferType proof) expected do
+          throwError "inline realization proof has the wrong type"
+        let expected ← levelMVarToParam (← instantiateMVars expected)
+        let proof ← levelMVarToParam (← instantiateMVars proof)
+        let expectedParams := (collectLevelParams {} expected).params.toList
+        let proofOnlyParams := (collectLevelParams {} proof).params.toList.filter
+          (!expectedParams.contains ·)
+        let proof := proof.instantiateLevelParams proofOnlyParams
+          (proofOnlyParams.map fun _ => .zero)
+        let levelParams :=
+          (collectLevelParams (collectLevelParams {} expected) proof).params.toList
+        return (expected, proof, levelParams)
+    if (← get).messages.hasErrors then
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let valid ← liftTermElabM do
+      addAndCompile <| .thmDecl {
+        name := realizationName
+        levelParams := levelParams
+        type := expected
+        value := proof }
+      let closedExpected := expected.instantiateLevelParams levelParams
+        (levelParams.map fun _ => .zero)
+      withoutModifyingState <| RegistrationGates.checked realizationName closedExpected
+    unless valid && !(← get).messages.hasErrors do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  catch error =>
+    if error.isRuntime then throw error
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+
+/-- Resolve the established named bridge or create the disjoint inline form.
+The Boolean records whether the returned theorem already has its final name. -/
+private def resolveLegacyRealization (theoremName arenaName generatedName : Name)
+    (stx : TSyntax `informationRealization) : CommandElabM (Name × Bool) := do
+  if stx.raw.getKind == ``namedInformationRealization then
+    let id : TSyntax `ident := ⟨stx.raw[0]⟩
+    let name ← try
+      liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
     catch _ =>
-      throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
-    let realizationName := theoremName.str primitiveRealizationSuffix
-    let unitName := theoremName.str theoremUnitSuffix
-    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
-      theoremName, unitName, arenaName, realizationName }
-    ensureRegisterableName (← getEnv) entry
-    let realizationId := absoluteIdentFrom theoremId realizationName
-    elabCommand (← `(command| def $realizationId :
-        D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
-          ($arenaId:ident).signature := $primitives))
-    checkNativeStatement theoremName arenaName realizationName statement
-    elabCommand (← `(command| theorem $theoremId : $statement := $proof))
-    let unitId := absoluteIdentFrom theoremId unitName
-    elabCommand (← `(command| def $unitId :
-        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
-      { primitives := ($realizationId:ident).toPrimitiveBundle
-        Statement := $statement
-        proof := $theoremId }))
-    registerEntry { entry with
-      variationWitness := ← optionalWitnessName (← getRef)[9]
-      sensitivityWitness := ← optionalWitnessName (← getRef)[10]
-    }
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    return (name, false)
+  if stx.raw.getKind == ``inlineInformationRealization then
+    addInlineLegacyRealization theoremName arenaName generatedName
+      ⟨stx.raw[1]⟩ ⟨stx.raw[3]⟩
+    return (generatedName, true)
+  throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
-syntax (name := registerInformationTheoremCmd)
-  "register_information_theorem " ident ppLine
-    "in " ident ppLine
-    "primitives " term " realization " ident
-    (" variation " ident)? (" sensitivity " ident)? : command
+/-- Keep the theorem's universes rigid while the bridge's type determines their alignment. -/
+private def alignedLegacyConstants (theoremName realizationName : Name) :
+    TermElabM (Expr × Expr) := do
+  let theoremInfo ← getConstInfo theoremName
+  let theoremExpr := Lean.mkConst theoremName (theoremInfo.levelParams.map Level.param)
+  let realization ← mkConstWithFreshMVarLevels realizationName
+  let realizationType ← whnfR (← inferType realization)
+  if realizationType.isAppOf
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+    unless ← isDefEq realizationType.getAppArgs[1]! (← inferType theoremExpr) do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let realization ← withLevelNames theoremInfo.levelParams <|
+      levelMVarToParam (← instantiateMVars realization)
+    if realization.hasLevelMVar then
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    return (realization, theoremExpr)
+  return (realization, theoremExpr)
 
-syntax (name := registerInformationTheoremViaCmd)
-  "register_information_theorem " ident " via " term " in " ident (" output_evidence " term)? : command
+/-- The selected arena must retain its full universe telescope. A bridge that
+identifies two arena levels or fixes one at a particular level is narrower than
+the selected arena, even when its statement still matches the source theorem. -/
+private def distinctLevels : List Level → Bool
+  | [] => true
+  | level :: rest => !rest.any (· == level) && distinctLevels rest
+
+private def alignedArenaLevels (arenaExpr : Expr) : MetaM Bool := do
+  let levels := (← instantiateMVars arenaExpr).constLevels!
+  return levels.all (fun level => match level with
+      | .param _ | .mvar _ => true
+      | _ => false) && distinctLevels levels
+
+private def addLegacyUnit (theoremName realizationName unitName : Name) :
+    CommandElabM Unit := do
+  liftTermElabM do
+    let (realization, theoremExpr) ← alignedLegacyConstants theoremName realizationName
+    let realizationType ← whnfR (← inferType realization)
+    unless realizationType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+        (← isDefEq realizationType.getAppArgs[1]! (← inferType theoremExpr)) do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let unit ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+      #[realization, theoremExpr]
+    let unitType ← inferType unit
+    let unit ← levelMVarToParam (← instantiateMVars unit)
+    let unitType ← levelMVarToParam (← instantiateMVars unitType)
+    let levelParams :=
+      (collectLevelParams (collectLevelParams {} unitType) unit).params.toList
+    if unit.hasLevelMVar || unitType.hasLevelMVar then
+      throwError "legacy unit retained a universe metavariable: {unitName}"
+    let declaration := Declaration.defnDecl {
+      name := unitName
+      levelParams := levelParams
+      type := unitType
+      value := unit
+      hints := .abbrev
+      safety := .safe }
+    let env ← getEnv
+    let computationalInputs :=
+      realizationType.getAppArgs[0]!.getUsedConstants ++
+        realizationType.getAppArgs[2]!.getUsedConstants
+    if computationalInputs.any (isNoncomputable env ·) then
+      addDecl declaration
+      modifyEnv (addNoncomputable · unitName)
+    else
+      addAndCompile declaration
 
 /-- Transaction boundary shared by registration and exception-injection controls. -/
 def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := do
@@ -228,6 +328,40 @@ def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := 
       else m
     modify fun s => { s with messages := previousMessages ++ { messages with
       reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
+
+@[command_elab informationTheoremCmd]
+private def elabInformationTheorem : CommandElab := fun stx => registrationTransaction do
+    let theoremId : TSyntax `ident := ⟨stx[1]⟩
+    let arenaId : TSyntax `ident := ⟨stx[3]⟩
+    let primitiveTerm : TSyntax `term := ⟨stx[5]⟩
+    let statement : TSyntax `term := ⟨stx[9]⟩
+    let proof : TSyntax `term := ⟨stx[11]⟩
+    let theoremName <- declarationName theoremId
+    let arenaName <- try
+      liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
+    catch _ =>
+      throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
+    let realizationName := theoremName.str primitiveRealizationSuffix
+    let unitName := theoremName.str theoremUnitSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+      theoremName, unitName, arenaName, realizationName }
+    ensureRegisterableName (← getEnv) entry
+    let realizationId := absoluteIdentFrom theoremId realizationName
+    elabCommand (← `(command| def $realizationId :
+        D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
+          ($arenaId:ident).signature := $primitiveTerm))
+    checkNativeStatement theoremName arenaName realizationName statement
+    elabCommand (← `(command| theorem $theoremId : $statement := $proof))
+    let unitId := absoluteIdentFrom theoremId unitName
+    elabCommand (← `(command| def $unitId :
+        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
+      { primitives := ($realizationId:ident).toPrimitiveBundle
+        Statement := $statement
+        proof := $theoremId }))
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName stx[6]
+      sensitivityWitness := ← optionalWitnessName stx[7]
+    }
 
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
@@ -267,70 +401,96 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => regist
   registerEntry entry
 
 @[command_elab registerInformationTheoremCmd]
-private def elabRegisterInformationTheorem : CommandElab := fun stx => do
+private def elabRegisterInformationTheorem : CommandElab := fun stx => registrationTransaction do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
     let arenaId : TSyntax `ident := ⟨stx[3]⟩
     let primitiveTerm : TSyntax `term := ⟨stx[5]⟩
-    let realizationId : TSyntax `ident := ⟨stx[7]⟩
+    let realizationSyntax : TSyntax `informationRealization := ⟨stx[7]⟩
     let theoremName <- resolveTheorem theoremId
     let arenaName <- try
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
     catch _ =>
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
-    let realizationName <- try
-      liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
-    catch _ =>
-      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let generatedRealizationName :=
+      localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+    let (realizationName, isInline) ← resolveLegacyRealization theoremName arenaName
+      generatedRealizationName realizationSyntax
     let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
     let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
       theoremName, unitName, arenaName, realizationName }
     ensureRegisterableName (← getEnv) entry
-    match (← getEnv).find? realizationName with
-    | some (.thmInfo _) => pure ()
+    let realizationInfo ← match (← getEnv).find? realizationName with
+    | some (.thmInfo info) => pure info
     | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
-    let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
-    let theoremType <- liftTermElabM do
-      instantiateMVars (← whnfR (← inferType theoremExpr))
-    let realizationExpr <- liftTermElabM <| mkConstWithFreshMVarLevels realizationName
-    let realizationType <- liftTermElabM do
-      instantiateMVars (← whnfR (← inferType realizationExpr))
+    let (theoremType, realizationType) ← if isInline then
+      pure ((← getConstInfo theoremName).type, realizationInfo.type)
+    else liftTermElabM do
+      let (realizationExpr, theoremExpr) ←
+        alignedLegacyConstants theoremName realizationName
+      return (← whnfR (← inferType theoremExpr), ← whnfR (← inferType realizationExpr))
     let legacyArgs := realizationType.getAppArgs
-    unless realizationType.getAppFn.constName? ==
-        some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+    unless (realizationType.getAppFn.constName? ==
+        (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge ||
+        realizationType.getAppFn.constName? == some RegistrationGates.witnessBridgeName) &&
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
-      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
-        (← isDefEq legacyArgs[1]! theoremType)
+      let theoremValid ← isDefEq legacyArgs[1]! theoremType
+      let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+      let normalized ← RegistrationGates.normalizeArena arenaExpr
+      let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+      let arenaValid ← isDefEq legacyArgs[0]! expectedBridgeArena
+      let levelsValid ← if realizationType.isAppOf
+          `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+        alignedArenaLevels arenaExpr
+      else pure true
+      return theoremValid && arenaValid && levelsValid
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
-    checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
-    let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
-    let unitType <- `(term|
-      D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
-    let unitValue <- `(term|
-      D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-        $realizationId:ident $theoremId:ident)
-    if isPrivateName unitName then
-      elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
+    checkRealizationBundle theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
+    let variationName ← optionalWitnessName stx[8]
+    let sensitivityName ← optionalWitnessName stx[9]
+    if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+      liftTermElabM do
+        let arena ← mkConstWithFreshMVarLevels arenaName
+        discard <| RegistrationGates.witnessStatement arena legacyArgs[1]! theoremName
+        if let some diagnostic ← RegistrationGates.witnessEvidence arena legacyArgs[2]!
+            variationName sensitivityName then throwError diagnostic
+    if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
+        (stx[8].getNumArgs == 0 || stx[9].getNumArgs == 0) then
+      throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
+    if isInline then
+      addLegacyUnit theoremName realizationName unitName
+    else if realizationType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+      addLegacyUnit theoremName realizationName unitName
     else
-      elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+      let realizationId : TSyntax `ident := ⟨realizationSyntax.raw[0]⟩
+      let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
+      let unitType <- `(term|
+        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
+      let witnessUnitId := absoluteIdentFrom theoremId (RegistrationGates.witnessBridgeName.str "toTheoremUnit")
+      let variationId := absoluteIdentFrom theoremId variationName
+      let unitValue <- if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+          `(term| $witnessUnitId:ident
+            $realizationId:ident (And.left $variationId:ident))
+        else if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+          `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+        else `(term|
+          D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+            $realizationId:ident $theoremId:ident)
+      if isPrivateName unitName then
+        elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
+      else
+        elabCommand (← `(command| def $unitId : $unitType := $unitValue))
     registerEntry { entry with
       variationWitness := ← optionalWitnessName stx[8]
       sensitivityWitness := ← optionalWitnessName stx[9]
     }
 
-syntax (name := informationTheoremOccurrenceCmd)
-  "information_theorem " ident ppLine
-    "in " ident ppLine
-    "object_arena " ident ppLine
-    "catalog " ident ppLine
-    "primitives " term ppLine
-    ("variation " ident)? ("sensitivity " ident)?
-    ": " term " := " term : command
-
 @[command_elab informationTheoremOccurrenceCmd]
-private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
+private def elabInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
   let theoremId : TSyntax `ident := ⟨stx[1]⟩
   let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
@@ -376,22 +536,14 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
     sensitivityWitness := ← optionalWitnessName stx[11]
   }
 
-syntax (name := registerInformationTheoremOccurrenceCmd)
-  "register_information_theorem " ident ppLine
-    "in " ident ppLine
-    "object_arena " ident ppLine
-    "catalog " ident ppLine
-    "primitives " term " realization " ident
-    (" variation " ident)? (" sensitivity " ident)? : command
-
 @[command_elab registerInformationTheoremOccurrenceCmd]
-private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => do
+private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
   let theoremId : TSyntax `ident := ⟨stx[1]⟩
   let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
   let catalogId := catalogIdFrom ⟨stx[7]⟩
   let primitiveTerm : TSyntax `term := ⟨stx[9]⟩
-  let realizationId : TSyntax `ident := ⟨stx[11]⟩
+  let realizationSyntax : TSyntax `informationRealization := ⟨stx[11]⟩
   let theoremName <- resolveTheorem theoremId
   let lawArenaName <- resolveArena lawArenaId
   let objectArenaName <- resolveArena objectArenaId
@@ -412,49 +564,239 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     localRegistrationNames := false
   }
   ensureOccurrenceRegisterable (← getEnv) entry
-  let suppliedRealizationName <- try
-    liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
-  catch _ =>
-    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  let (suppliedRealizationName, isInline) ← resolveLegacyRealization theoremName
+    lawArenaName realizationName realizationSyntax
   let suppliedRealizationInfo <- match (← getEnv).find? suppliedRealizationName with
   | some (.thmInfo info) => pure info
   | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
-  let theoremType <- liftTermElabM do
-    instantiateMVars (← whnfR (← inferType theoremExpr))
-  let realizationExpr <- liftTermElabM <|
-    mkConstWithFreshMVarLevels suppliedRealizationName
-  let realizationType <- liftTermElabM do
-    instantiateMVars (← whnfR (← inferType realizationExpr))
+  let (theoremType, realizationType) ← if isInline then
+    pure ((← getConstInfo theoremName).type, suppliedRealizationInfo.type)
+  else liftTermElabM do
+    let (realizationExpr, theoremExpr) ←
+      alignedLegacyConstants theoremName suppliedRealizationName
+    return (← whnfR (← inferType theoremExpr), ← whnfR (← inferType realizationExpr))
   let legacyArgs := realizationType.getAppArgs
-  unless realizationType.getAppFn.constName? ==
-      some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+  unless (realizationType.getAppFn.constName? ==
+      (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge ||
+        realizationType.getAppFn.constName? == some RegistrationGates.witnessBridgeName) &&
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
-    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
-      (← isDefEq legacyArgs[1]! theoremType)
+    let theoremValid ← isDefEq legacyArgs[1]! theoremType
+    let arenaExpr ← mkConstWithFreshMVarLevels lawArenaName
+    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+    let arenaValid ← isDefEq legacyArgs[0]! expectedBridgeArena
+    let levelsValid ← if realizationType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+      alignedArenaLevels arenaExpr
+    else pure true
+    return theoremValid && arenaValid && levelsValid
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
-  let realizationLevels := suppliedRealizationInfo.levelParams.map Level.param
-  liftCoreM <| addAndCompile <| .thmDecl {
-    name := realizationName
-    levelParams := suppliedRealizationInfo.levelParams
-    type := suppliedRealizationInfo.type
-    value := mkConst suppliedRealizationName realizationLevels
-  }
-  let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
+  checkRealizationBundle theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
+  let variationName ← optionalWitnessName stx[12]
+  let sensitivityName ← optionalWitnessName stx[13]
+  if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+    liftTermElabM do
+      let arena ← mkConstWithFreshMVarLevels lawArenaName
+      discard <| RegistrationGates.witnessStatement arena legacyArgs[1]! theoremName
+      if let some diagnostic ← RegistrationGates.witnessEvidence arena legacyArgs[2]!
+          variationName sensitivityName then throwError diagnostic
+  unless isInline do
+    let realizationLevels := suppliedRealizationInfo.levelParams.map Level.param
+    liftCoreM <| addAndCompile <| .thmDecl {
+      name := realizationName
+      levelParams := suppliedRealizationInfo.levelParams
+      type := suppliedRealizationInfo.type
+      value := mkConst suppliedRealizationName realizationLevels
+    }
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)
-  let unitValue <- `(term|
-    D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-      $qualifiedRealizationId:ident $theoremId:ident)
-  elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+  if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
+      (stx[12].getNumArgs == 0 || stx[13].getNumArgs == 0) then
+    throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
+  if isInline then
+    addLegacyUnit theoremName realizationName unitName
+  else if realizationType.isAppOf
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+    addLegacyUnit theoremName realizationName unitName
+  else
+    let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
+    let witnessUnitId := absoluteIdentFrom theoremId (RegistrationGates.witnessBridgeName.str "toTheoremUnit")
+    let variationId := absoluteIdentFrom theoremId variationName
+    let unitValue <- if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+        `(term| $witnessUnitId:ident
+          $qualifiedRealizationId:ident (And.left $variationId:ident))
+      else if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+        `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+      else `(term|
+        D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+          $qualifiedRealizationId:ident $theoremId:ident)
+    elabCommand (← `(command| def $unitId : $unitType := $unitValue))
   registerEntry { entry with
     variationWitness := ← optionalWitnessName stx[12]
     sensitivityWitness := ← optionalWitnessName stx[13]
   }
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Elab Command
+
+private def elaborateTemplateEnrollment (id : TSyntax `ident)
+    (version : Nat) (types : Array (TSyntax `ident)) : CommandElabM Unit := registrationTransaction do
+  let name ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+  unless version == 1 do
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} reason=unclassified_form rule=E4c.version"
+    return
+  let constructors ← types.mapM fun ast => liftCoreM <| realizeGlobalConstNoOverloadWithInfo ast
+  match ← TemplateAudit.enroll name constructors with
+  | .ok () => pure ()
+  | .error message =>
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields message}"
+
+@[command_elab command__]
+private def elabTemplateEnrollment : CommandElab := fun stx =>
+  elaborateTemplateEnrollment ⟨stx[1]⟩ 1 #[]
+
+@[command_elab «command__Constructors_[_,,]»]
+private def elabTemplateConstructorsEnrollment : CommandElab := fun stx =>
+  elaborateTemplateEnrollment ⟨stx[1]⟩ (TSyntax.getNat ⟨stx[3]⟩)
+    (stx[5].getSepArgs.map fun id => ⟨id⟩)
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command Term
+
+private partial def descriptorHead (stx : Syntax) : Option Syntax :=
+  if stx.isIdent then some stx
+  else if stx.getKind == ``Parser.Term.paren then descriptorHead stx[1]
+  else if stx.getKind == ``Parser.Term.app then descriptorHead stx[0]
+  else none
+
+/-- Resolve the written head first so a missing template is evidence failure.
+Other term/type errors keep the standard elaborator's error/rollback behavior. -/
+def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Expr × Option String) := do
+  if let some head := descriptorHead term then
+    let resolved ← try
+      discard <| liftCoreM <| realizeGlobalConstNoOverloadWithInfo head
+      pure true
+    catch _ => pure false
+    unless resolved do return (none, some "unclassified_form:dtr.missing_template")
+  let value ← liftTermElabM do
+    let value ← elabTerm term none
+    synthesizeSyntheticMVarsNoPostponing
+    instantiateMVars value
+  return (some value, none)
+
+private def elaborateEscapeInput (origin residual : Syntax) : CommandElabM EscapeRecordInput := do
+  let elaborate (stx : Syntax) : CommandElabM Expr := liftTermElabM do
+    let value ← elabTerm stx none
+    synthesizeSyntheticMVarsNoPostponing
+    instantiateMVars value
+  let fromObject ← if origin.getNumArgs == 0 then pure none
+    else some <$> elaborate origin[3]
+  if residual.getNumArgs == 0 then return { fromObject }
+  let node := residual[3]
+  if node.getKind == ``escapeOpenContinuation then return { fromObject, openContinuation := true }
+  return { fromObject, continuation := some (← elaborate node[0]) }
+
+private def withReadout (theoremId arenaId : TSyntax `ident)
+    (objectArena : Option (TSyntax `ident)) (term : TSyntax `term)
+    (native : Bool) (origin residual : Syntax) (command : TSyntax `command) :
+    CommandElabM Unit := registrationTransaction do
+  let lawArena ← resolveArena arenaId
+  let arenaName ← match objectArena with
+    | none => pure lawArena
+    | some id => resolveArena id
+  let arena ← liftTermElabM <| resolveCanonicalArenaName arenaName
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor term
+  if (← get).messages.hasErrors then return
+  let theoremName ← if native then declarationName theoremId else resolveTheorem theoremId
+  let escapeInput ← elaborateEscapeInput origin residual
+  TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic, escapeInput } <| elabCommand command
+
+/-- Remove just the declared readout syntax node and dispatch the established
+registration elaborator. All optional witnesses and their original syntax survive. -/
+private def lowerReadout (stx : Syntax) (kind : Name) (start escapeStart : Nat) : TSyntax `command :=
+  ⟨Syntax.node stx.getHeadInfo kind ((stx.getArgs.extract 0 start) ++
+    stx.getArgs.extract (start + 5) escapeStart ++
+    stx.getArgs.extract (escapeStart + 2) stx.getNumArgs)⟩
+
+@[command_elab registerInformationTheoremReadoutCmd]
+private def elabRegisteredReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ false stx[15] stx[16]
+    (lowerReadout stx ``registerInformationTheoremCmd 4 15)
+
+@[command_elab registerInformationTheoremViaReadoutCmd]
+private def elabReifierReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[5]⟩ none ⟨stx[9]⟩ false stx[12] stx[13]
+    (lowerReadout stx ``registerInformationTheoremViaCmd 6 12)
+
+@[command_elab registerInformationTheoremOccurrenceReadoutCmd]
+private def elabOccurrenceReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ false stx[19] stx[20]
+    (lowerReadout stx ``registerInformationTheoremOccurrenceCmd 8 19)
+
+@[command_elab informationTheoremReadoutCmd]
+private def elabNativeReadout : CommandElab := fun stx => do
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ true stx[13] stx[14]
+    (lowerReadout stx ``informationTheoremCmd 4 13)
+
+@[command_elab informationTheoremOccurrenceReadoutCmd]
+private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
+    (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command
+
+@[command_elab registerInformationSourceTheoremCmd]
+private def elabSourceRegistration : CommandElab := fun stx => registrationTransaction do
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
+  let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let recordName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[10]
+  let selection ← liftTermElabM do
+    let value ← Term.elabTermEnsuringType stx[15] (mkConst ``SourceSelection)
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    if value.hasMVar then throwError "unclassified_form:source.selection_open"
+    -- Syntax transport is evaluated, never a mathematical proposition or readout.
+    unsafe evalExpr SourceSelection (mkConst ``SourceSelection) value
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[7]⟩
+  let residual ← if stx[20].getKind == ``escapeOpenContinuation then
+      pure ({ openContinuation := true } : EscapeRecordInput)
+    else do
+      let value ← liftTermElabM <| Term.elabTerm stx[20][0] none
+      pure ({ continuation := some value } : EscapeRecordInput)
+  let info ← getConstInfo recordName
+  let source ← getConstInfo theoremName
+  let descriptor := descriptor.map (fun e => e.instantiateLevelParams info.levelParams
+    (source.levelParams.map Level.param))
+  let root := (← getEnv).header.mainModule
+  let unit := catalogQualifiedName root arenaName .anonymous theoremName theoremUnitSuffix
+  let unitDecl : Declaration := .defnDecl {
+    name := unit, levelParams := info.levelParams, type := info.type,
+    value := mkConst recordName (info.levelParams.map Level.param), hints := .abbrev, safety := .safe }
+  if isNoncomputable (← getEnv) recordName then
+    -- Retaining a mathematical record does not make its readout executable.
+    -- addDecl still sends the unchanged declaration through the kernel.
+    liftCoreM <| addDecl unitDecl
+    modifyEnv (addNoncomputable · unit)
+  else
+    liftCoreM <| addAndCompile unitDecl
+  TemplateBinding.withDeclaration {
+    theoremName, arena := arenaName, descriptor, diagnostic,
+    escapeInput := { residual with sourceSelection := some selection } } do
+    registerValidatedEntry {
+      theoremName, unitName := unit, arenaName, realizationName := recordName,
+      sourceBound := true, objectArenaName := arenaName, resolvedArenaName := arenaName,
+      registrationModuleName := root, localRegistrationNames := false }
 
 end LeanInformationAudit

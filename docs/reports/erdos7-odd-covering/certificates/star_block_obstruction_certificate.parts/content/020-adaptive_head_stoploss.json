@@ -1,0 +1,109 @@
+{
+  "head": {
+    "kind": "inline",
+    "value": "arbitrary_357_head"
+  },
+  "head_period_bound": {
+    "kind": "inline",
+    "value": null
+  },
+  "head_primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7
+    ]
+  },
+  "tail_prime_lower_bound": {
+    "kind": "inline",
+    "value": 19
+  },
+  "omitted_prime_factors": {
+    "kind": "inline",
+    "value": [
+      2,
+      11,
+      13,
+      17
+    ]
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 11593
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 1395
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 3072
+  },
+  "mixed_head_charge": {
+    "kind": "inline",
+    "value": "82/135"
+  },
+  "head_product_mean": {
+    "kind": "inline",
+    "value": "16/5"
+  },
+  "head_product_second_moment": {
+    "kind": "inline",
+    "value": "325/18"
+  },
+  "threshold_runs": {
+    "path": "content/020-adaptive_head_stoploss/012-threshold_runs.json",
+    "sha256": "c48801b07128e31dc246693d0f6786c36433e67e81161fab6d9358e7dc120d1d",
+    "kind": "value"
+  },
+  "total_charge_upper": {
+    "kind": "inline",
+    "value": "956616008688320979/1000000000000000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "43383991311679021/1000000000000000000"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "16451854240366417389/1000000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "2341844006153474338859/1000000000000000000"
+  },
+  "supported_Gamma_upper": {
+    "kind": "inline",
+    "value": "2340887390144786017880/43383991311679021"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "26988288270685431527657582636743677951/500000000000000000000000000000000"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "415968780112582960031113697093772979950612706965971/21691995655839510500000000000000000000000000000000"
+  },
+  "stopping_bound_method": {
+    "kind": "inline",
+    "value": "Global prime index and verify_finite_continuation.stopping_threshold: exact binary range reduction, 24 positive atanh terms, downward rounding on a 10^-18 grid, positive logarithmic bracket before squaring."
+  },
+  "steps": {
+    "path": "content/020-adaptive_head_stoploss/021-steps.json",
+    "sha256": "2c23f02a33ee0b17a69742ea1a25bbc83dad78fc25899b2320cfae709b166621",
+    "kind": "array"
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "f9ca33ff3d15b2030f3d6ecdc5c594599261b8fa5af1148e210d22fd1809c1ff"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Distinct odd original moduli with arbitrary {3,5,7} exponents and every other prime at least 19; no tail support, exponent, graph or prime-count restriction. The full-family head heights, comparison, coupled head density and BBMST restart are separate ordinary mathematical inputs. No greedy optimality claim is needed."
+  }
+}

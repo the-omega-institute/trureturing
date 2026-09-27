@@ -1,0 +1,64 @@
+**定理 1.2（有限字典的精确成本对偶）。** 对定义 1.1 的任意目标 $h$，有扩展值等式
+
+$$
+\boxed{
+\Gamma_w(h)=\sup_{p_Q(v)\le1}|h(v)|.
+}
+\tag{1.4}
+$$
+
+以下条件等价：$h$ 在 $Q$ 的每条纤维上恒定；$\ker Q\subseteq\ker h$；$h\in E$；$\Gamma_w(h)<\infty$。这些条件成立时，式（1.3）的下确界由某个系数向量达到，并且其值是满足
+
+$$
+|h(v)|\le c\,p_Q(v)\qquad(v\in V)
+\tag{1.5}
+$$
+
+的最小实数 $c\ge0$。
+
+证明。任一满足 $Q^*a=h$ 的系数向量都给出
+
+$$
+|h(v)|
+\le\sum_i|a_i||q_i(v)|
+\le\|a\|_{1,w}p_Q(v).
+\tag{1.6}
+$$
+
+因此式（1.4）的右边不超过左边。若存在 $v\in\ker Q$ 且 $h(v)\ne0$，则 $p_Q(tv)=0$ 对所有实数 $t$ 成立，而 $|h(tv)|$ 无界。此时右边为 $+\infty$，并且任何字典组合都消去 $\ker Q$，所以左边同样为 $+\infty$。
+
+现在假设 $h$ 消去 $\ker Q$。在实际观察像 $M=\operatorname{ran}Q$ 上定义
+
+$$
+\varphi(Qv)=h(v).
+\tag{1.7}
+$$
+
+若 $Qv=Qu$，则 $v-u\in\ker Q$，所以 $h(v)=h(u)$；这证明定义与代表无关。该映射线性。$M$ 是有限维赋范空间，故 $\varphi$ 连续，而且
+
+$$
+\|\varphi\|=
+\sup_{y\in M,\,\|y\|_{\infty,w}\le1}|\varphi(y)|
+=\sup_{p_Q(v)\le1}|h(v)|.
+\tag{1.8}
+$$
+
+实数 Hahn–Banach 定理给出线性延拓 $g:\mathbb R^m\to\mathbb R$，满足 $g|_M=\varphi$ 和 $\|g\|=\|\varphi\|$。写成 $g(z)=\sum_i a_i z_i$ 后，式（1.6）的同一估计给 $\|g\|\le\sum_iw_i|a_i|$。反向取
+
+$$
+z_i=w_i\operatorname{sgn}(a_i),
+$$
+
+零系数处取 $z_i=0$，则 $\|z\|_{\infty,w}\le1$，且 $g(z)=\sum_iw_i|a_i|$。因此
+
+$$
+\|g\|=\|a\|_{1,w}.
+\tag{1.9}
+$$
+
+又有 $gQ=h$，故 $a$ 是可行系数，其成本正好等于式（1.4）的右边。这同时证明反向不等式与最小值达到。
+
+纤维常值推出核包含，只需比较 $v\in\ker Q$ 与 $0$；核包含推出纤维常值，只需考察同读数两点的差。$h\in E$ 与存在可行系数同义，结合前面构造得到全部等价。式（1.6）给最优系数的稳定界；任何满足式（1.5）的 $c$ 都支配式（1.4）的上确界，故不能更小。证毕。
+
+有限 Hilbert 空间中的目标纤维判据可直接引用项目的 [`target_observability_four_way_equivalence`](../../../D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.lean)；最小 Hilbert 范数系数可引用 [`target_visibility_condition_cost`](../../../D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.lean)。本定理使用盒噪声所对应的加权 $\ell^1$ 系数几何，所需等范数标量延拓是 Mathlib 的 [`exists_extension_norm_eq`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Module/HahnBanach.lean)。Hilbert 系数范数和这里的加权 $\ell^1$ 范数分别对应不同噪声集合。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c96cf93a65926acd672b8e8e76960c398725abcad890a4994aff554b0ca60424
+  normalized_sha256: sha256:c96cf93a65926acd672b8e8e76960c398725abcad890a4994aff554b0ca60424
+cas_ref: sha256:c96cf93a65926acd672b8e8e76960c398725abcad890a4994aff554b0ca60424
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “有限视界内未发现反例，只能记为该搜索范围内的结果”说明证据解释范围，“才能把它提升为一般充分性结论”要求后续全称证明；本叶是研究纪律，没有以定义断言全称充分性。
+    previous_atom_id: b4689912cd3899eb7198449aeb4ab7c69d79c812ba10b2d765fec0cdb8c8ff93
+    next_atom_id: c453c6fe705a37ec4fe604b55efa76ee5235a27e3102c50d7f31b6afce023d66

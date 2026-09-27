@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ebd3db169a4e45ab97491993791ab23a5dc03079e6a2ea563aa75f1f8557b28
+  normalized_sha256: sha256:7ebd3db169a4e45ab97491993791ab23a5dc03079e6a2ea563aa75f1f8557b28
+cas_ref: sha256:7ebd3db169a4e45ab97491993791ab23a5dc03079e6a2ea563aa75f1f8557b28
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“由”整值有理多项式“给出，却不由”整系数多项式“给出”是完整的两面命题，并非定义偷带；探针构造二分之一乘 z 乘 z减一，以相邻整数乘积偶性证明全部整数上的整值性，再以整系数多项式在零与二处的差被二整除排除该表示，两面均由上游引理及规范化闭合，仓内无冻结 GID。
+    previous_atom_id: a5dd46f659b3fa23d0a8c4ca312f4c373ceb6696dda47eab3d27f0062b5abf92
+    next_atom_id: 4a551c1e1ff22f0291654b5e7f4f028849c05fcc16563f6be7b39408d5d43473

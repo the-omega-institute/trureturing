@@ -1,0 +1,16 @@
+**推论 89.4（闭理论覆盖下的逐步保守判据）。** 保留 $\mathrm P_\tau,\mathrm P_\sigma$，并假设每个中间闭理论都由某个源闭理论前推得到：
+$$
+\forall U\in\operatorname{Th}(C_B),\
+\exists T\in\operatorname{Th}(C_A),\qquad
+C_B(\tau[T])=U.
+\tag{89.4a}
+$$
+则
+$$
+K_{\sigma\circ\tau}=C_A
+\quad\Longleftrightarrow\quad
+K_\tau=C_A\ \text{且}\ K_\sigma=C_B.
+\tag{89.4b}
+$$
+$\tau$ 对公式满射足以保证 (89.4a)；这里不主张该覆盖条件是 (89.4b) 成立的必要条件。
+

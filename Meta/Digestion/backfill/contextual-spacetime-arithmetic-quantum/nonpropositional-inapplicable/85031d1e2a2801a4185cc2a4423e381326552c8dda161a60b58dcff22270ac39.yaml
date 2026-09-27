@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85031d1e2a2801a4185cc2a4423e381326552c8dda161a60b58dcff22270ac39
+  normalized_sha256: sha256:85031d1e2a2801a4185cc2a4423e381326552c8dda161a60b58dcff22270ac39
+cas_ref: sha256:85031d1e2a2801a4185cc2a4423e381326552c8dda161a60b58dcff22270ac39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “最小平方预测误差到底减少了多少”说明本节研究目标，末句介绍后文“一个正交分解”；本段未给分解等式或严格改善的断言，未把抽象记录自动当作量子实现，也没有定义中夹带的命题，按问题引入结算。
+    previous_atom_id: 99f962e76520493c07eebe53d4c843a912f6f257856682dc71116204c09b9469
+    next_atom_id: 67352528f5a5053b4cbb47f74d9d7edc515b278e5779baec4d281ffe472bad35

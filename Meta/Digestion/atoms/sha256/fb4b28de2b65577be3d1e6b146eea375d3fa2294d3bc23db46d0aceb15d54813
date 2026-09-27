@@ -1,0 +1,14 @@
+**theorem 39.8 (The exact number of continuous metrizable observations).** Let $J$ be an index set, let each $M_a$ be metrizable, and let every $f_a:\mathscr E\to M_a$ be continuous. If $|J|<\mathfrak c$, then
+$$
+p\longmapsto\bigl(e(p),(f_a(p))_{a\in J}\bigr)
+\tag{39.22}
+$$
+is not injective. In fact, there are $\mathfrak c$ phases $\theta$ at which the two distinct selectors have equal values under all these observations, including $e$.
+
+The minimum cardinality of a separating family of continuous metrizable-valued observations is exactly $\mathfrak c$, both without and with $e$ supplied. The same minimum holds when every auxiliary observation is required to be binary-valued. An upper family is
+$$
+\{\chi_{b,j}:(b,j)\in K\times\mathbb N\}.
+\tag{39.23}
+$$
+In particular, no single continuous metrizable label, and no countable family of continuous real-valued or discrete-valued labels, makes the joint map with $e$ injective.
+

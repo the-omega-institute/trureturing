@@ -1,0 +1,95 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000000/single.json",
+        "sha256": "8fc14d12ad51ccbfbab60b231d27a902e9e701ce700a166fb719385bf67714ad",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000001/single.json",
+        "sha256": "c6d12af605fe931957a5a582b50e075d8e569ab94c5ee0e86c552146f8a69d4a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000002/single.json",
+        "sha256": "20e12cd535d7bfe702cb5cada36004cd0307492c104aea97105f396a62025431",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000003/single.json",
+        "sha256": "69b5789231cdac8c4e9c79bae04d60bd1d2f81994e28372660a58b6cc1f08798",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000004/single.json",
+        "sha256": "88af6fe0bbb38c8a67fc132c75cecf8dba686b548cc606d814ffc63ddf4694d0",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000005/single.json",
+        "sha256": "2edd8222ec95a7c77880fdee4d0e002c8e15b0bd350ad401a1f105e9dfe98244",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000006/single.json",
+        "sha256": "aa5adc63a46603164feab3369a605c81885644286babfaa2d82dc65a0fa7aa0c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000007/single.json",
+        "sha256": "e919ec9b182bc163b7ab5271a15fc2aa570b6d6a49d7b3addf817adfa374c568",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000008/single.json",
+        "sha256": "6bfb980b7c383d036653038fb92da46b0f72000ab2886b23b0647b13dc08a3a2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000009-000010.json",
+        "sha256": "4eac22233e217d323ce2961b70bb1ecd94b9213687dd09a2c49ce1debf86347b",
+        "kind": "value"
+      }
+    }
+  ]
+}

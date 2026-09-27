@@ -1,0 +1,43 @@
+**非闭合的局部见证。** 仍取式（127.30），令 $x(t)=PT_t(\pi+\varepsilon h)$。则 $x(0)=\pi$、$x'(0)=-\varepsilon PLh$，且对 $D(x(t)\|\pi)$，
+
+$$
+D'(t)=\sum_i x'_i(t)\log(Nx_i(t)),
+$$
+
+$$
+D''(t)=\sum_i\frac{x'_i(t)^2}{x_i(t)}
++\sum_i x''_i(t)\log(Nx_i(t)).
+\tag{127.32}
+$$
+
+在 $t=0$ 第二项为零，故精确地
+
+$$
+\boxed{D_c''(0;\pi+\varepsilon h)=N\varepsilon^2\|PLh\|_2^2}.
+\tag{127.33}
+$$
+
+若 $[P,L]\ne0$，自伴交叉块判据保证存在此类 $h$ 使 $PLh\ne0$。于是
+
+$$
+D_c(t;\pi+\varepsilon h)
+=\frac{N\varepsilon^2}{2}\|PLh\|_2^2t^2+O(t^3)>0
+\tag{127.34}
+$$
+
+对充分小的 $t>0$ 成立，而完整 KL 仍下降。这里 $\varepsilon$ 已固定在合法正区间，二阶系数不是仅在 $\varepsilon\to0$ 极限下成立。
+
+对隐藏空间的一组正交归一基 $h_j$，分别准备不同初态 $\pi+\varepsilon h_j$，有
+
+$$
+\boxed{
+\sum_jD_c''(0;\pi+\varepsilon h_j)
+=N\varepsilon^2\|B\|_{\mathrm{HS}}^2
+=\frac{N\varepsilon^2}{2}\|[P,L]\|_{\mathrm{HS}}^2
+=N\varepsilon^2\operatorname{Tr}K(0).
+}
+\tag{127.35}
+$$
+
+这是不同准备实验的曲率之和，不是一个初态的曲率，不是信息容量，也不是除以隐藏维数后的平均。它把同一个交叉块的三种读法对齐：未来显露的隐藏方向、记忆核初值，以及从粗平衡出发的熵曲率。
+

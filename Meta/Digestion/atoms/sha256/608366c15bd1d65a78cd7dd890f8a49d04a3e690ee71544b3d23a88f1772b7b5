@@ -1,0 +1,17 @@
+**命题 23.7（素数模态的共同钟代入与全记录碰撞）。**
+
+固定a>0、b∈ℝ。设h:I→[0,∞)连续严格递增，h(τ_0)=0，实际零点归一化复记录为
+$$
+Z_p(\tau)=M_p(a h(\tau),b h(\tau))
+=\exp\!\left[(-a+ib)\lambda_p h(\tau)\right].
+\tag{23.112}
+$$
+若θ是初值为零的连续相位提升，令L=−log|Z_p|，则
+$$
+L(\tau)=a\lambda_p h(\tau),\qquad
+\theta(\tau)=b\lambda_p h(\tau),\qquad
+\boxed{\theta=(b/a)L.}
+\tag{23.113}
+$$
+因此任一正时间处、在相位提升可取得的条件下，θ/L只给b/a，不给p。对任意素数q，令h_q=(log p/log q)h；则同样a,b下有Z_q[h_q]=Z_p[h]，整条复记录逐点相同。
+

@@ -1,0 +1,41 @@
+**定理 17.3（单步来源创新协方差与剩余预算）。** 固定定义17.1的正概率 $h,a$，记 $b=b_h$、$L=L_{h,a}$，并置
+$$
+q_y(\theta)=b(\theta)L(y\mid\theta),\qquad
+p_y=\sum_\theta q_y(\theta),\qquad
+b_y=q_y/p_y\quad(p_y>0).
+\tag{17.4}
+$$
+则 $\sum_yq_y=b$、$\sum_yp_y=1$，正质量时 $b_y$ 是给定新动作与输出后的来源后验。定义
+$$
+\begin{aligned}
+G(h,a)
+&=\sum_{y:p_y>0}\frac{q_yq_y^{\mathsf T}}{p_y}-bb^{\mathsf T}\\
+&=\sum_{y:p_y>0}p_y(b_y-b)(b_y-b)^{\mathsf T}.
+\end{aligned}
+\tag{17.5}
+$$
+有
+$$
+0\preceq G(h,a)\preceq\operatorname{Diag}(b)-bb^{\mathsf T},\qquad
+G(h,a)\mathbf1=0,
+\tag{17.6}
+$$
+以及精确预算恒等式
+$$
+\operatorname{Diag}(b)-bb^{\mathsf T}
+=G(h,a)+\sum_{y:p_y>0}p_y
+\bigl[\operatorname{Diag}(b_y)-b_yb_y^{\mathsf T}\bigr].
+\tag{17.7}
+$$
+
+**证明。** 似然每行和为一，故对 $y$ 求和给 $b$，再对来源求和给一。命题17.2使选择动作前后的 $b$ 相同，随后 Bayes 公式给式（17.4）。$p_y=0$ 时非负向量 $q_y$ 必为零；不定义 $b_y$，该项从全部和中删去。展开式（17.5）第二行，并使用 $\sum_{p_y>0}p_yb_y=b$，得到第一行。
+
+每个外积 $(b_y-b)(b_y-b)^{\mathsf T}$ 半正定，故 $G\succeq0$；且 $(b_y-b)^{\mathsf T}\mathbf1=0$，给 $G\mathbf1=0$。任意概率列 $u$ 满足
+$$
+v^{\mathsf T}[\operatorname{Diag}(u)-uu^{\mathsf T}]v
+=\sum_\theta u_\theta(v_\theta-u^{\mathsf T}v)^2\ge0
+$$
+对每个实列 $v$ 成立。最后 $\sum_yp_y\operatorname{Diag}(b_y)=\operatorname{Diag}(b)$，而 $\sum_yp_yb_yb_y^{\mathsf T}=G+bb^{\mathsf T}$，相减即式（17.7）；余项半正定给上界。若来源支撑为单点，左侧为零，必有 $G=0$；若某个来源质量为零，其在所有正质量后验中也为零，对应行列均不贡献。
+
+这是来源指标向量 $\mathbf e_\Theta$ 的全协方差公式：总条件协方差等于条件均值的协方差加平均剩余协方差。所用条件期望及塔式恒等式是成熟概率论，见 David Williams，*Probability with Martingales*（1991），第9章；这里已用有限求和完整展开。它是本卷命题14.3的固定律嵌套投影在来源指标函数上的矩阵形式，不要求读数之间独立。$\square$
+

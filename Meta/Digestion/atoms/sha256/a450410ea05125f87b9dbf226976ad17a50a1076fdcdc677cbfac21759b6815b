@@ -1,0 +1,17 @@
+**Proof.** Since $\phi=1+\alpha$, the cuts $e_r=[-r\phi]$ of §36 are $[-r\alpha]$. Adding $Q_L\alpha$ gives $[(Q_L-r)\alpha]$ for $1\le r\le Q_L$, exactly the claimed cut set. Translation preserves orientation and lengths, so the open cylinder arcs determine the bijection $\gamma_L$. The cylinder masses from Theorem 36.2 equal those arc lengths, proving the stationary-vector identity.
+
+Use the same binomial integer $J$ for the two laws. The semiconjugacy in §36 gives
+$$
+H(T^j x)+Q_L\alpha=y_L+j\alpha.
+$$
+Away from the depth-$L$ cuts, the inclusions
+$$
+H^{-1}(J_w)\subseteq C_w
+ \subseteq H^{-1}(\overline{J_w})
+$$
+identify the cylinder label uniquely with the phase-cell label. At a cut they need not do so: the two oriented split points of $K$ are not being identified with one chosen half-open endpoint. Thus the labels in this coupling can differ only on the event counted by $B_{Q_L,\alpha,p}(n,y_L)$. Each disagreement costs at most two in full variation, proving the first estimate. The second follows from Theorem 40.3.
+
+Because $H_\#m=\lambda$ and $\mathcal G_\alpha$ is countable, $m(K_{\mathrm{reg}})=1$. Every nonempty cylinder has positive $m$-mass by Theorem 36.2, and cylinders form a basis of $K$. Hence $K_{\mathrm{reg}}$ is dense. For any point in this set, every forward phase lies outside $\mathcal G_\alpha$, so no cut at any depth is encountered. This proves the simultaneous vector equality for all $L,n,p$ on that one set; it is not a separate almost-everywhere assertion for each parameter.
+
+For fixed $L,n,p$, the original-carrier error is continuous in $x$, since its coordinates are finite combinations of indicators of clopen cylinders composed with the continuous maps $T^j$. Its maximum therefore equals its supremum on the dense set $K_{\mathrm{reg}}$. Every phase outside $\mathcal G_\alpha$ has a unique lift, by the carrier hypotheses in §36, and translation by $Q_L\alpha$ preserves this exceptional-set complement. Consequently the last supremum equals the supremum of the circle error over $\mathbb T\setminus\mathcal G_\alpha$. Theorem 40.2 identifies this with the full circle maximum. This proves exact equality of the worst-start errors without asserting pointwise equality at split endpoints. Equality of mixing times follows from their definitions, and the numerical upper bound follows from Theorem 40.7. $\square$
+

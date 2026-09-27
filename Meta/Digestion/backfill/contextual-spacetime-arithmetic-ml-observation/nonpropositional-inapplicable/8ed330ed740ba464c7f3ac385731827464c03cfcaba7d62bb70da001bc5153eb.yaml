@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ed330ed740ba464c7f3ac385731827464c03cfcaba7d62bb70da001bc5153eb
+  normalized_sha256: sha256:8ed330ed740ba464c7f3ac385731827464c03cfcaba7d62bb70da001bc5153eb
+cas_ref: sha256:8ed330ed740ba464c7f3ac385731827464c03cfcaba7d62bb70da001bc5153eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “相容塔则还要求指定方向的因子化”是在引用定义时重申兼容条件，未声称给定两台机器已有该因子化；只设前提，无需证明存在性，也无隐藏结论。
+    previous_atom_id: d6356e10626dec70ac7ce12888c4951ec26cbfa565cdb72844196106f84d0d1d
+    next_atom_id: ca3b216ca2cc078ecb8a342632c7f2ccb6282a21fffc4fd253387512220aff8f

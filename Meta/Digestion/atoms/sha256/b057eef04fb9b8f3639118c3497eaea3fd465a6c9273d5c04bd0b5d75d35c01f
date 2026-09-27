@@ -1,0 +1,14 @@
+### 定理 19.1. 一次收缩和二次收缩
+
+对任意 X，不要求辛或幂零，均有
+
+\[
+\sum_j\mathcal A_X(F_{kj})_{ij}
+=(n-2)X_{ik}+\delta_{ik}\operatorname{tr}X,\tag{19.1}
+\]
+\[
+\sum_j\mathcal A_X^2(F_{kj})_{ij}
+=(n-4)(X^2)_{ik}+2\operatorname{tr}(X)X_{ik}
++\delta_{ik}\operatorname{tr}(X^2).\tag{19.2}
+\]
+

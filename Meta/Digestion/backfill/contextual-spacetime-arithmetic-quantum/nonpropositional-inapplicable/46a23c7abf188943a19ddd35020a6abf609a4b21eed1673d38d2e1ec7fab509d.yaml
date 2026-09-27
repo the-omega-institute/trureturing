@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46a23c7abf188943a19ddd35020a6abf609a4b21eed1673d38d2e1ec7fab509d
+  normalized_sha256: sha256:46a23c7abf188943a19ddd35020a6abf609a4b21eed1673d38d2e1ec7fab509d
+cas_ref: sha256:46a23c7abf188943a19ddd35020a6abf609a4b21eed1673d38d2e1ec7fab509d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶固定线性响应序列与其未来尾空间，并说明这些符号所表示的任务范围，没有断言最小维数或实现存在性。
+    previous_atom_id: 2be12c13074b80492f220f1b9a582f78e1647decb08d73f92ac596c7b6bc844a
+    next_atom_id: d52480d69e18da3aaab7ee49079c96b958e37b248f4812996d335014380b4562

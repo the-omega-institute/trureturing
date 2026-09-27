@@ -1,0 +1,231 @@
+**命题 108.2（共同块规则的统一上界）。** 置
+$$
+\beta=\frac5{288},\qquad
+\kappa_\varepsilon=\frac{\beta^2\lambda^4}{288}>0,\qquad
+L_0=\max\left\{256,\left\lceil\frac{\log12}{\kappa_\varepsilon}\right\rceil\right\},
+$$
+$$
+L_n=\max\left\{L_0,
+\left\lceil\frac{3\log(n+1)}{\kappa_\varepsilon}\right\rceil\right\},
+\qquad T_n=L_n+1,\qquad
+J_n=\left\lfloor\frac{n+1}{T_n}\right\rfloor.
+\tag{108.2a}
+$$
+共同确定规则 $\Gamma_{\varepsilon,n}$ 依次检查 $j=0,\ldots,J_n-1$ 的块。第 $j$ 块读取 $jT_n,\ldots,jT_n+L_n$：若 $\widehat F_{jT_n,L_n}>\beta L_n$，声明方向 $0$；若 $\widehat F_{jT_n,L_n}<-\beta L_n$，声明方向 $1$；其余情形不声明。首次声明即作为结果；全部完整块均无声明时报告 $0$。相邻块不共享标签，跨块转移不计分，阈值相等时继续检查。
+
+对全部 $k\ge2$、$d\in\{0,1\}$ 及 $n\ge0$，原始块规则满足每方向错误界
+$$
+\mathbb P^\varepsilon_{d,k}(\Gamma_{\varepsilon,n}\ne d)
+\le B_{\varepsilon,n}
+:=\frac{32(L_n+1)}{3(n+1)}+\frac3{(n+1)^2}.
+\tag{108.2b}
+$$
+对 $n\ge1$，
+$$
+\frac1{24n}\le\overline R^{*,\varepsilon}_n
+\le M^\varepsilon_n
+\le\min\left\{\frac12,B_{\varepsilon,n}\right\}
+=O_\varepsilon\!\left(\frac{\log(n+1)}{n+1}\right).
+\tag{108.2c}
+$$
+$n=0$ 时 $\overline R^{*,\varepsilon}_0=M^\varepsilon_0=1/2$。式 (108.2b) 是原始块规则的每方向界；式 (108.2c) 中的 $1/2$ 是共同检验另可选择恒定报告所得的平均风险界。
+
+**证明。** 先传递命题 105.2 的共同路径下界。隐藏路径 $(1,0,\ldots,0)$ 在两方向下均有质量
+$$
+w_{k,n}=\frac\delta3(1-\delta)^{n-1}.
+$$
+给定这条路径，两方向产生相同的归一化噪声输出律 $\nu_n$，所以两份可见律均支配 $w_{k,n}\nu_n$。对任意随机检验 $\phi$，将两项错误积分限制到这份共同子测度，得
+$$
+R^\varepsilon_{k,n}(\phi)
+\ge\frac{w_{k,n}}2\int[\phi+(1-\phi)]\,d\nu_n
+=\frac\delta6(1-\delta)^{n-1}.
+\tag{108.2d}
+$$
+这也是既有有限两点重叠公式
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/c04f3432ca0e3639374cdddecc3be083fc5bff37/D5/S3/Estimation/LeCam.lean)、
+[le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/c04f3432ca0e3639374cdddecc3be083fc5bff37/D5/S3/Estimation/LeCamTight.lean)
+对共同噪声分量的应用。取合法整数 $k=2n$，Bernoulli 不等式给 $(1-1/(2n))^{n-1}\ge1/2$，故得到 $1/(24n)$。
+
+下面证明块规则上界。发射矩阵为 $\lambda I+\rho\mathbf1\mathbf1^{\mathsf T}$，从而
+$$
+\mathbb E[f_b(Z_t)\mid X]=\mathbf1_{\{r(X_t)=b\}}.
+$$
+定义隐藏边函数
+$$
+g(i,j)=\mathbf1_{\{i=2,j=3\}}-\mathbf1_{\{i=3,j=2\}}.
+$$
+由相邻两次发射的条件独立性，
+$$
+\mathbb E[\widehat g_\varepsilon(Z_t,Z_{t+1})\mid X]
+=g(X_t,X_{t+1}).
+\tag{108.2e}
+$$
+$\widehat g_\varepsilon$ 的可能值为 $0$、$\pm\rho/\lambda^2$、$\pm(1-\varepsilon)/\lambda^2$，因此
+$$
+|\widehat g_\varepsilon|\le M:=\lambda^{-2}.
+$$
+
+固定 $k,d$，记 $s_0=1,s_1=-1$、$c=a/12\ge c_0:=5/72$。构造有界势 $h_d$ 如下。对环坐标 $(1,2,3)$，令
+$$
+C_0(x_1,x_2,x_3)=(x_2,x_3,x_1),\qquad
+C_1(x_1,x_2,x_3)=(x_3,x_1,x_2),
+$$
+$$
+v_0=(-1/12,5/12,-1/3),\qquad
+v_1=(-1/12,-1/3,5/12),\qquad \chi=a/4.
+$$
+置 $h_d(0)=0$，以及
+$$
+h_d|_{\{1,2,3\}}
+=\frac{a}{1-\chi^3}
+\left(v_d+\chi C_dv_d+\chi^2C_d^2v_d\right).
+\tag{108.2f}
+$$
+两个 $v_d$ 的环坐标和均为零，且 $C_d^3=I$。环内归一化转移矩阵为 $(3/4)U+(1/4)C_d$，其中 $U$ 的各行均为均匀分布。故逐坐标计算得到
+$$
+\sum_{i=1}^3h_d(i)=0,\qquad
+(I-\mathsf K_d)h_d(i)
+=\sum_j\mathsf K_d(i,j)s_dg(i,j)
+-c\mathbf1_{\{i\ne0\}}.
+\tag{108.2g}
+$$
+在状态 $0$，两侧均为零；在环状态，等式归结为
+$(I-\chi C_d)h_d=av_d$。此外，
+$$
+\|h_d\|_\infty
+\le\frac{a(5/12)(1+\chi+\chi^2)}{1-\chi^3}
+=\frac{a(5/12)}{1-a/4}\le\frac59.
+\tag{108.2h}
+$$
+
+对任意隐藏起点，考虑一个 $L$ 条边的块，先将起始时间记为 $0$。置
+$$
+V_L=\sum_{t=0}^{L-1}\mathbf1_{\{X_t\ne0\}},\qquad
+\eta_t=s_dg(X_t,X_{t+1})+h_d(X_{t+1})-h_d(X_t)
+-c\mathbf1_{\{X_t\ne0\}}.
+$$
+式 (108.2g) 表明 $\eta_t$ 对隐藏链历史条件均值为零；由 (108.2h)，
+$$
+|\eta_t|\le1+10/9+1/12<3.
+$$
+记 $H_L=\sum_{t<L}\eta_t$ 以及
+$$
+N_L=\widehat F_{0,L}-\sum_{t<L}g(X_t,X_{t+1}).
+$$
+便有精确分解
+$$
+s_d\widehat F_{0,L}
+=cV_L+H_L+h_d(X_0)-h_d(X_L)+s_dN_L.
+\tag{108.2i}
+$$
+标准 Azuma–Hoeffding 界给出
+$$
+\mathbb P^\varepsilon_{d,k}(H_L\le-u)
+\le\exp\left(-\frac{u^2}{18L}\right),\qquad u\ge0.
+\tag{108.2j}
+$$
+这里使用有界中心化条件分布的 Hoeffding 引理及
+[measure_sum_ge_le_of_hasCondSubgaussianMGF](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L932)
+所述的标准条件 sub-Gaussian 求和界。
+
+给定完整隐藏块，将 $N_L$ 按偶数边、奇数边分为两组。每组使用互不重叠的发射坐标对，组内变量独立且中心化，单项区间长度至多 $2M$。若 $s_dN_L\le-u$，至少一组和不超过 $-u/2$。对两组分别应用有界变量的
+[Hoeffding 界](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L787)
+并取并集，得
+$$
+\mathbb P^\varepsilon_{d,k}(s_dN_L\le-u\mid X)
+\le2\exp\left(-\frac{u^2}{8M^2L}\right).
+\tag{108.2k}
+$$
+两组之间无需独立；该条件界对每份隐藏路径相同，故去掉条件仍成立。
+
+现在固定 $L\ge L_0$。由 $L\ge256$，
+$$
+|h_d(X_0)-h_d(X_L)|\le10/9\le\beta L/4.
+$$
+若 $H_L\ge-\beta L/4$ 且 $s_dN_L\ge-\beta L/4$，由 $cV_L\ge0$ 知不可能作出错向声明。把 $u=\beta L/4$ 代入 (108.2j)、(108.2k)，并用 $M=\lambda^{-2}\ge1$，对任意隐藏起点得到
+$$
+\mathbb P^\varepsilon_{d,k}(\text{单块作出错向声明})
+\le
+e^{-\beta^2L/288}+2e^{-\beta^2L/(128M^2)}
+\le3e^{-\kappa_\varepsilon L}.
+\tag{108.2l}
+$$
+
+若块从任意环状态开始，隐藏环指示量每步离环概率为 $\delta/3$，从 $0$ 回环概率为 $\delta$。直接解两状态递推得
+$$
+\mathbb P(X_t\ne0\mid X_0\ne0)
+=\frac34+\frac14(1-4\delta/3)^t\ge\frac34.
+$$
+因此 $\mathbb EV_L\ge3L/4$；又由
+$\mathbb EV_L\le L/2+(L/2)\mathbb P(V_L\ge L/2)$，得
+$\mathbb P(V_L\ge L/2)\ge1/2$。在该事件以及上述两个偏差界内，
+$$
+s_d\widehat F_{0,L}\ge c_0L/2-3\beta L/4
+=5\beta L/4>\beta L.
+$$
+故从任意环状态开始，单块正确声明概率至少为
+$$
+\frac12-3e^{-\kappa_\varepsilon L}\ge\frac14.
+\tag{108.2m}
+$$
+
+为控制等待时间，令 $T=L+1$，在网格时刻 $jT$ 考察隐藏环指示量 $I_j=\mathbf1_{\{X_{jT}\ne0\}}$。其 Markov 转移由刚才的两状态核直接计算：置 $z=(1-4\delta/3)^T$，则
+$$
+\mathbb P(I_{j+1}=0\mid I_j=1)=\frac{1-z}{4},
+\qquad
+\mathbb P(I_{j+1}=1\mid I_j=0)=\frac{3(1-z)}4.
+\tag{108.2n}
+$$
+因为 $\delta>0$，该网格链不可约；从环到下一次网格回环的平均间隔为
+$$
+1+\frac{(1-z)/4}{3(1-z)/4}=\frac43.
+\tag{108.2o}
+$$
+这里只对隐藏环指示量使用已计算的 Markov 核；噪声标签序列不被假设为 Markov 链。
+
+令 $\sigma_0=0<\sigma_1<\cdots$ 为网格上满足 $I_j=1$ 的时刻，以块编号计数。取块开始前的历史
+$$
+\mathcal G_j
+=\sigma(X_0,\ldots,X_{jT};Z_0,\ldots,Z_{jT-1}).
+$$
+在 $\sigma_m$ 处，当前块的发射尚未读取。先在事件 $\{\sigma_m=j\}$ 上固定截至 $jT$ 的隐藏历史：已经读到的发射只依赖此前隐藏坐标和独立的发射随机性，因而不会改变给定 $X_{jT}$ 后的未来隐藏转移律及尚未读取的发射律。对这些隐藏历史取条件平均，再对 $j$ 求和，便得到相同的停时重启结论。这一步将发射的条件独立性与隐藏链的强 Markov 性结合；后者直接采用
+Richard Weber, [Markov Chains](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf)
+（2011 年 10 月）§4.4 Theorem 4.4（印刷页 15 / PDF 页 19），平均命中时间的一阶步方程见同书 Theorem 4.2。
+
+记 $C_m=\sigma_{m+1}-\sigma_m$，由 (108.2o)，
+$$
+\mathbb E[C_m\mid\mathcal G_{\sigma_m}]=4/3.
+$$
+仅在证明中，把每个 $\sigma_m$ 对应的块作为一次尝试，令 $\nu$ 为首次作出声明的尝试编号，从 $0$ 开始。此前尝试块都在当前块开始前结束，故 $\{\nu\ge m\}$ 可测于 $\mathcal G_{\sigma_m}$。式 (108.2m) 对此条件历史仍给至少 $1/4$ 的声明概率，因此
+$$
+\mathbb P(\nu\ge m)\le(3/4)^m,\qquad
+\mathbb E[C_m\mathbf1_{\{\nu\ge m\}}]
+=\frac43\mathbb P(\nu\ge m).
+\tag{108.2p}
+$$
+当前尝试成功与 $C_m$ 可以相关；上式只把已经确定的过去事件移出条件期望。由非负级数的 Tonelli 交换，
+$$
+\mathbb E\sigma_{\nu+1}
+=\sum_{m\ge0}\mathbb E[C_m\mathbf1_{\{\nu\ge m\}}]
+\le\frac43\sum_{m\ge0}(3/4)^m=\frac{16}3.
+\tag{108.2q}
+$$
+实际规则扫描全部固定块。若 $W$ 是首次声明所需的总块数，成功块也计入，则
+$$
+W\le\sigma_\nu+1\le\sigma_{\nu+1},
+\qquad \mathbb EW\le16/3.
+\tag{108.2r}
+$$
+这些隐藏网格时刻仅用于证明；规则不观察或识别它们。
+
+最后取 $L=L_n$。若 $J_n\ge1$，无声明概率至多 $16/(3J_n)$。每个扫描块无论从什么隐藏状态开始，均满足 (108.2l)，所以对任一方向，错误概率不超过无声明概率加上任一块错向声明的概率：
+$$
+\mathbb P^\varepsilon_{d,k}(\Gamma_{\varepsilon,n}\ne d)
+\le\frac{16}{3J_n}+3J_ne^{-\kappa_\varepsilon L_n}.
+$$
+由 $J_n\ge(n+1)/(2T_n)$、$J_n\le n+1$ 及
+$e^{-\kappa_\varepsilon L_n}\le(n+1)^{-3}$，得到 (108.2b)。若 $J_n=0$，则 $T_n>n+1$，此时 $B_{\varepsilon,n}>1$，同一界仍成立。
+
+逐参数随机检验最优值不超过任一共同确定检验的风险，因此
+$\overline R^{*,\varepsilon}_n\le M^\varepsilon_n$。共同规则 $\Gamma_{\varepsilon,n}$ 给 $B_{\varepsilon,n}$ 上界，恒报 $0$ 的共同规则另给等先验风险 $1/2$。对固定 $\varepsilon$，$L_n=O_\varepsilon(\log(n+1))$，这证明 (108.2c)。$n=0$ 时两方向只有同一个初态发射律，故最优风险为 $1/2$。证毕。
+

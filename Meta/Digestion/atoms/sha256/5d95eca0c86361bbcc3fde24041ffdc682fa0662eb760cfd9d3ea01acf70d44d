@@ -1,0 +1,26 @@
+**命题 10.9（共用恢复器的两态下界）。** 设 $\mathcal E:X\to Y$ 为保留记录通道，$\mathcal T:X\to Z$ 为目标通道，$\mathcal R:Y\to Z$ 为任意共用 CPTP 恢复器。对任意 $\rho,\sigma\in\mathcal D(X)$，令
+$$
+e_\rho=d_1(\mathcal T(\rho),\mathcal R\mathcal E(\rho)),
+\qquad
+e_\sigma=d_1(\mathcal T(\sigma),\mathcal R\mathcal E(\sigma)).
+$$
+则
+$$
+\max\{e_\rho,e_\sigma\}
+\ge\frac12\left[
+d_1(\mathcal T(\rho),\mathcal T(\sigma))
+-d_1(\mathcal E(\rho),\mathcal E(\sigma))
+\right].
+\tag{10.16}
+$$
+
+**证明。** 在两个目标态之间插入 $\mathcal R\mathcal E(\rho)$ 和 $\mathcal R\mathcal E(\sigma)$，两次三角不等式及引理10.6给出
+$$
+d_1(\mathcal T(\rho),\mathcal T(\sigma))
+\le e_\rho+
+d_1(\mathcal E(\rho),\mathcal E(\sigma))+e_\sigma.
+$$
+再用 $e_\rho+e_\sigma\le2\max\{e_\rho,e_\sigma\}$。
+
+式(10.16)是量子上下文卷第120.4节相位态反例所用的两态论证；本库 [FiniteRecordRecoveryError](../../../D5/S3/Quantum/Decoherence/FiniteRecordRecoveryError.lean) 的 **finite_record_recovery_error_lower_bound** 将同一论证用于有限移位记录通道，得到 $(1-|\gamma|)/2$ 的恢复误差下界。 $\square$
+

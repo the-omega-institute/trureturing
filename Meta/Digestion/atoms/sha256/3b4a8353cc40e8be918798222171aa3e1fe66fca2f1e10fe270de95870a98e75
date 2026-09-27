@@ -1,0 +1,18 @@
+**theorem 44.8 (Complete graph criterion for a literally fixed divisor).** Fix an integer $c\ge1$, write $R_c=\{0,\ldots,c-1\}$, and let
+$$
+\mathcal F_c=
+\overline{\{(Z(cn+r),Z(n),Z(r)):n\in\mathbb N_0,\ r\in R_c\}}
+\subseteq K^3.
+$$
+This is the fixed-divisor graph in dividend, quotient, remainder coordinates. Its exact criterion is
+$$
+(x,y,z)\in\mathcal F_c
+\quad\Longleftrightarrow\quad
+\exists r\in R_c:
+\quad
+z=Z(r),\quad
+H(x)=cH(y)+[r\phi],\quad
+\mathcal S(x)\cap\mathcal S(y)\ne\varnothing.
+$$
+In particular, when both dividend and quotient are split, their labels must agree. Every permitted triple is approached with that remainder held exactly fixed and with both quotient and dividend tending to infinity numerically.
+

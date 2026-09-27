@@ -1,0 +1,183 @@
+**定理 66.12（公平锚重构位的相关、传递矩阵、递推与精确谱）。**
+
+令 $\lambda_{\mathrm{fair}}$ 是上述平稳关系律 $\mu_{\mathrm{st}}$ 的公平锚 lift，并定义原位自旋
+$$
+S_j:=(-1)^{x_j}\in\{-1,1\}.
+$$
+则对每个 $j\ge0$，
+$$
+\mathbb E[S_j]=0.
+$$
+对任意 $j,n\ge0$，
+$$
+\mathbb E[S_jS_{j+n}]=a_n,
+$$
+其中
+$$
+a_0:=1,
+\qquad
+a_n:=\mathbb E\prod_{\ell=0}^{n-1}(2c_\ell-1)\quad(n\ge1).
+$$
+
+置
+$$
+G:=\operatorname{diag}(-1,1),
+\qquad
+M:=PG = \begin{pmatrix}
+-\alpha&\alpha^2\\
+-1&0
+\end{pmatrix}.
+$$
+则对 $n\ge1$，
+$$
+a_n = \pi G M^{n-1}
+\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+矩阵 $M$ 的特征多项式与特征根分别为
+$$
+r^2+\alpha r+\alpha^2,
+\qquad
+r_\pm=\alpha e^{\pm2\pi i/3}.
+$$
+序列 $a_n$ 对所有 $n\ge0$ 满足
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0,
+$$
+并且
+$$
+a_0=1,\qquad
+a_1=-\frac1{\sqrt5}.
+$$
+其精确闭式为
+$$
+\boxed{\ 
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right)
+\ }.
+$$
+等价地，
+$$
+a_{3m}=\alpha^{3m},\qquad
+a_{3m+1}=-\frac{\alpha^{3m}}{\sqrt5},\qquad
+a_{3m+2}=-\frac{\alpha^{3m+3}}{\sqrt5}
+\qquad(m\ge0).
+$$
+
+由于每个 $x_j$ 都是公平 Bernoulli 位，
+$$
+\operatorname{Cov}(x_j,x_{j+n})=\frac14a_n,
+\qquad
+\boxed{\ \operatorname{Corr}(x_j,x_{j+n})=a_n\ }.
+$$
+因此重构位相关具有角相位 $2\pi/3$ 的三步振荡和指数包络 $\phi^{-n}$；关系位相关则是实特征值 $-\phi^{-2}$ 产生的周期 2 的符号交替和包络 $\phi^{-2n}$。两种相关的相位结构与衰减率都不同。
+
+**证明。**
+
+由重构递推，
+$$
+x_{\ell+1}=x_\ell\oplus(1-c_\ell).
+$$
+所以
+$$
+S_{\ell+1} = (-1)^{x_{\ell+1}} = S_\ell(-1)^{1-c_\ell} = S_\ell(2c_\ell-1).
+$$
+迭代得到
+$$
+S_{j+n} = S_j\prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+由于 $S_j^2=1$，
+$$
+S_jS_{j+n} = \prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+关系律平稳，因此其期望只依赖 $n$，即为 $a_n$。公平锚定理还给出每个 $x_j$ 都公平，故每个 $S_j$ 的均值为零。
+
+对 $n\ge1$，令 $g(0)=-1,g(1)=1$。展开 Markov 路径概率，
+$$
+a_n = \sum_{i_0,\ldots,i_{n-1}}
+\pi_{i_0}g(i_0)
+P_{i_0i_1}g(i_1)\cdots
+P_{i_{n-2}i_{n-1}}g(i_{n-1}).
+$$
+这正是
+$$
+a_n=\pi G(PG)^{n-1}\mathbf 1
+=\pi G M^{n-1}\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+直接计算
+$$
+\det(rI-M) = \det
+\begin{pmatrix}
+r+\alpha&-\alpha^2\\
+1&r
+\end{pmatrix} = r^2+\alpha r+\alpha^2.
+$$
+因此
+$$
+r_\pm = \frac{-\alpha\pm i\sqrt3\,\alpha}{2} = \alpha e^{\pm2\pi i/3}.
+$$
+由 Cayley--Hamilton，
+$$
+M^2+\alpha M+\alpha^2I=0.
+$$
+左乘 $\pi G M^{n-1}$、右乘 $\begin{pmatrix}1\\1\end{pmatrix}$，可知
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0
+$$
+对所有 $n\ge1$ 成立。
+
+现检查 $n=0$ 的递推端点。首先
+$$
+a_1 = \pi_1-\pi_0 = -\frac{\alpha}{1+\alpha^2} = -\frac1{\sqrt5}.
+$$
+其次，由 $\pi_1=\alpha^2\pi_0$、$1+\alpha^2=\alpha\sqrt5$ 与 $\alpha^3=2\alpha-1$，
+$$
+\begin{aligned}
+a_2
+&=
+\pi_0(\alpha-\alpha^2)-\pi_1\\
+&=
+\frac{\alpha-2\alpha^2}{1+\alpha^2}\\
+&=
+\frac{1-2\alpha}{\sqrt5} = -\frac{\alpha^3}{\sqrt5}.
+\end{aligned}
+$$
+又因为
+$$
+\sqrt5=\alpha^{-1}+\alpha,
+$$
+有
+$$
+a_2+\alpha a_1+\alpha^2a_0 = -\frac{\alpha^3+\alpha}{\sqrt5}+\alpha^2
+=0.
+$$
+所以递推对所有 $n\ge0$ 成立。
+
+具有特征根
+$$
+\alpha e^{\pm2\pi i/3}
+$$
+且满足 $a_0=1,a_1=-1/\sqrt5$ 的唯一实递推解为
+$$
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right).
+$$
+按 $n\bmod3$ 代入即得三条分段公式。
+
+最后，
+$$
+x_j-\frac12=-\frac12S_j.
+$$
+因此
+$$
+\operatorname{Cov}(x_j,x_{j+n}) = \frac14\mathbb E[S_jS_{j+n}] = \frac14a_n.
+$$
+又因
+$$
+\operatorname{Var}(x_j)=\frac14,
+$$
+Pearson 相关恰为 $a_n$。证毕。
+

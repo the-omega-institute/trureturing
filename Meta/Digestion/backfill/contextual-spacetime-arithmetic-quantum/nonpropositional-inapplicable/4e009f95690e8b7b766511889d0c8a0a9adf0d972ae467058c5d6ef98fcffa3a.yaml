@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e009f95690e8b7b766511889d0c8a0a9adf0d972ae467058c5d6ef98fcffa3a
+  normalized_sha256: sha256:4e009f95690e8b7b766511889d0c8a0a9adf0d972ae467058c5d6ef98fcffa3a
+cas_ref: sha256:4e009f95690e8b7b766511889d0c8a0a9adf0d972ae467058c5d6ef98fcffa3a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子在有限确定性更新和读出下定义有限未来关系、完全未来关系及商类数，不断言关系塔终止或类预算界。
+    previous_atom_id: ad94f25be9cfa5bc252f827a7d1894281bd873a5db169db3151a41e25311a266
+    next_atom_id: 4d5853aa4d78e636ab31b9076d7a0ec1d70d5f0642e859105681ab1394b88b9b

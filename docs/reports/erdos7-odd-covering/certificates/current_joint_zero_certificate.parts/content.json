@@ -1,0 +1,15 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "full-height-SH26-joint-zero-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual uniform full357 law and genuine BB kernels at T8; all original tests through actual current heights. SH26 generic-cap covariance and killed excess both vanish. Actual pure-density saving remains positive; no maximizing-current-test claim."
+  },
+  "fixtures": {
+    "path": "content/002-fixtures.json",
+    "sha256": "c636ac7b4a7561eb2ebf7a5f5ddd2d470f0a24a9fddb71ac5821a02b137be10c",
+    "kind": "array"
+  }
+}

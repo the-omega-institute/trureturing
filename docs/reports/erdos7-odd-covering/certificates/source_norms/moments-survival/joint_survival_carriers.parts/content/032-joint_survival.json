@@ -1,0 +1,71 @@
+{
+  "carriers": {
+    "path": "content/032-joint_survival/000-carriers.json",
+    "sha256": "caa72d19ae7d793200011cf566477c88f8666d80d6d052e989ee87d30cf98a3e",
+    "kind": "value"
+  },
+  "hinge_credits": {
+    "kind": "inline",
+    "value": {
+      "4": "4/253125",
+      "5": "4/1265625"
+    }
+  },
+  "raw_denominator_credit": {
+    "kind": "inline",
+    "value": "14/4640625"
+  },
+  "q_effective": {
+    "kind": "inline",
+    "value": "23/42"
+  },
+  "source_vertices": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "conditional_rows": {
+    "kind": "inline",
+    "value": 23328
+  },
+  "h25_original_layout_checks": {
+    "kind": "inline",
+    "value": 129600
+  },
+  "inherited_hinge_margin_checks": {
+    "kind": "inline",
+    "value": 3888
+  },
+  "scalar_reconstruction_checks": {
+    "kind": "inline",
+    "value": 2592
+  },
+  "positive_carrier_gain_vertices": {
+    "kind": "inline",
+    "value": 401
+  },
+  "zero_carrier_gain_vertices": {
+    "kind": "inline",
+    "value": 895
+  },
+  "minimum_carrier_gain": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "maximum_carrier_gain": {
+    "kind": "inline",
+    "value": "114544267/297123750000"
+  },
+  "conditional_margin_sha256": {
+    "kind": "inline",
+    "value": "27bfac501fe2a9ad0c4b9b9a5b6a980dfbafb51f962c5524af9c19ac6e29c1b8"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Common forbidden-carrier mixture with independent original test layouts. Partial carriers use full completion only for absorbed h4/h5. Credit holds conditionally before the same shallow mixture; no46-numerator joint aggregation."
+  },
+  "row_blocks": {
+    "path": "content/032-joint_survival/015-row_blocks.json",
+    "sha256": "23e101aae31730fe73bbd8007f0344f735d7ba100307f95f710eb45fc4d3d3ea",
+    "kind": "array"
+  }
+}

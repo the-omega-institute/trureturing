@@ -163,7 +163,7 @@ public sealed class R15ScopeNarrowingTests
         const string message = "canonical values projection must be Evidence/D5/values.json";
 
         var unrelated = ValuesPathHistory(historicalPath);
-        AssertNoFinding(Execute(unrelated, "global.json"), 18, message, historicalPath);
+        AssertFinding(Execute(unrelated, "global.json"), 18, message, historicalPath);
 
         var changed = ValuesPathHistory(historicalPath);
         AssertFinding(Execute(changed, historicalPath), 18, message, historicalPath);
@@ -188,7 +188,7 @@ public sealed class R15ScopeNarrowingTests
         var unrelated = AnomalyHistory(historicalPath);
         const string unrelatedPath = "Evidence/D5/S0/Carrier/Unrelated.run.json";
         SetHistorical(unrelated, unrelatedPath, "{}\n");
-        AssertNoFinding(Execute(unrelated, unrelatedPath), 19, message, historicalPath);
+        AssertFinding(Execute(unrelated, unrelatedPath), 19, message, historicalPath);
 
         var changed = AnomalyHistory(historicalPath);
         AssertFinding(Execute(changed, historicalPath), 19, message, historicalPath);
@@ -231,16 +231,25 @@ public sealed class R15ScopeNarrowingTests
             .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
-            "      - \"legacy\"\n",
-            "      - \"legacy\"\n      - \"spec\"\n",
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\"]",
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\", \"spec\"]",
             StringComparison.Ordinal);
+        Assert.NotEqual(fixture.Baseline["Meta/FILEMAP.toml"], fixture.Files["Meta/FILEMAP.toml"]);
 
-        var changes = RawChangeSet.Create([RuleFixture.RingPath, "Meta/registry.yaml"]);
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var changes = RawChangeSet.Create([RuleFixture.RingPath, "Meta/FILEMAP.toml"]);
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(fixture.Files["Meta/FILEMAP.toml"]),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var baselinePolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(fixture.Baseline["Meta/FILEMAP.toml"]),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        Assert.True(ArtifactKindId.TryCreate("json", out var json));
+        Assert.DoesNotContain("spec", baselinePolicy.ArtifactKinds[json].Selectors);
+        Assert.Contains("spec", policy.ArtifactKinds[json].Selectors);
+        Assert.NotEqual(baselinePolicy.FileMapSha256, policy.FileMapSha256);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes, policy))).Capability;
 
@@ -252,7 +261,7 @@ public sealed class R15ScopeNarrowingTests
     public void Sl019ReplaysWhenAnyJudgeSourceChangesAlongsideTaskPreservingLeanEdit()
     {
         const string artifactPath = "Evidence/D5/S0/Carrier/Result.run.json";
-        const string helperPath = "tools/StrataLint.Engine/Coordinates/RegistryPolicy.cs";
+        const string helperPath = "tools/StrataLint.Engine/Coordinates/RepositoryPolicy.cs";
         const string task = "/-- TASK D5-T0097\n    historical task. -/\n";
         const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0098\"}\n";
         const string helperSource = "namespace StrataLint.Engine;\n";
@@ -397,7 +406,7 @@ public sealed class R15ScopeNarrowingTests
         string implementationPath)
     {
         var unrelated = fixtureFactory();
-        AssertNoFinding(
+        AssertFinding(
             Execute(unrelated, UnrelatedLeanPath),
             ruleNumber,
             message,

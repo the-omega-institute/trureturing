@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08d7089523a4e48969004760e8901fdf1b6f3cdf145a8b5d65f0cb36137e31bd
+  normalized_sha256: sha256:08d7089523a4e48969004760e8901fdf1b6f3cdf145a8b5d65f0cb36137e31bd
+cas_ref: sha256:08d7089523a4e48969004760e8901fdf1b6f3cdf145a8b5d65f0cb36137e31bd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “集合更新何时失去闭合”提出研究问题，而“仍是条件性、repo-derived/open 的研究对象”保留尚待解答的范围；四元问题只规定要报告什么，未把闭合或风险裕量藏进定义，故本叶本身没有断言答案。
+    previous_atom_id: 842aa881be8a7d5972d2c460bf3a5ad33a5648a11546c9fbd28e57a1665c688b
+    next_atom_id: e027eae8e36f44f7d72ab0b997b899727dad76585f08c50441b83f9cc8ed2c52

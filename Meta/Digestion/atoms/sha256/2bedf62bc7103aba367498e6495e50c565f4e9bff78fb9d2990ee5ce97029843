@@ -1,0 +1,32 @@
+**证明。** $\mathbb Z_p$ 与 $\mathbb Z_p^\times$ 都是紧可度量空间；可数积仍紧可度量。$E$ 是离散可数空间 $\mathbb N_0$ 的一点紧化，故紧可度量，因而 $I=E^{\mathcal P}$ 亦然。对固定 $p$，
+$$
+v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times
+$$
+是开闭集，而
+$$
+v_p^{-1}(E_{\ge L})=p^L\mathbb Z_p
+$$
+也是开闭集，因此 $v_p:\mathbb Z_p\to E$ 连续；乘积映射 $\rho$ 连续。另一方面，$p^n\to0$ 于 $\mathbb Z_p$，故 $n\mapsto p^n$ 连同 $\infty\mapsto0$ 连续，从而 $s$ 连续。$E$ 上带吸收元 $\infty$ 的加法连续：有限点处因其孤立而显然；若一分量趋向 $\infty$，则对任意 $L$，该分量最终至少为 $L$，从而其和也落入 $E_{\ge L}$。故乘积加法 $\oplus$ 连续。
+
+若 $\rho(x)=a$，则在 $a_p<\infty$ 时唯一写成 $x_p=p^{a_p}u_p$，其中 $u_p\in\mathbb Z_p^\times$；在 $a_p=\infty$ 时 $x_p=0$，任取 $u_p$。所以 $x=u\,s(a)$。反向包含显然，故纤维就是轨道。等式 $u\,s(a)=s(a)$ 在有限坐标上因 $\mathbb Z_p$ 为整环而强迫 $u_p=1$，在零坐标上没有约束，遂得 $H_a$。它是闭子群。标准轨道映射
+$$
+U/H_a\longrightarrow U\,s(a),\qquad uH_a\longmapsto u\,s(a)
+$$
+是紧空间到 Hausdorff 空间的连续双射，故为同胚。$U$ 与 $H_a$ 都是紧群，因此 modular function 恒为 $1$；Tornier Theorem 4.2 的商测度条件满足，归一化后得到 $U/H_a$ 上唯一的 $U$-不变概率。它在轨道同胚下正是 $\lambda_U$ 的推前，即 $m_a$。这同时处理了所有零坐标的非平凡稳定子而不要求作用自由。所用 Haar 与商测度结果见 https://arxiv.org/pdf/2006.10956 。
+
+为证 Feller 性，取 $f\in C(R)$。映射
+$$
+(a,u)\longmapsto f(u\,s(a))
+$$
+在紧空间 $I\times U$ 上连续，故一致连续。于是
+$$
+M_f(a)=\int_U f(u\,s(a))\,d\lambda_U(u)
+$$
+随 $a$ 连续；这正是 $a\mapsto m_a$ 的 Feller 性。特别地，对每个 Borel 集 $B\subseteq R$，$a\mapsto m_a(B)$ 可测：先对连续函数成立，再由函数单调类定理扩张到所有有界 Borel 函数。类似地，对 $g\in C(I)$，
+$$
+(a,b)\longmapsto
+\int_{U^2}g\!\left(\rho(u\,s(a)+v\,s(b))\right)
+\,d\lambda_U(u)\,d\lambda_U(v)
+$$
+连续，因为被积函数在紧空间 $I^2\times U^2$ 上连续。因此 $k$ 是 Feller Markov 核。证毕。
+

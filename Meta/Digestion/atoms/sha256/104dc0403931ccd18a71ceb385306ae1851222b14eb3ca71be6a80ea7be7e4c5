@@ -1,0 +1,8 @@
+更一般地，若初始关系不是当前读出的核，而是任意有限载体上的 Setoid $$R$$，`finite_equivalence_descent_and_stability_bound` 给出相应的形式
+
+$$
+ d\le C_\infty-\lvert Y/R\rvert
+ \le
+ \lvert Y\rvert-\lvert Y/R\rvert.
+$$
+

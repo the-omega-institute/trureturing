@@ -1,0 +1,11 @@
+**定理 137.8（全部有限正实现的未来唯一判据）。** 给定前缀在所有有限维正实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C.}
+\tag{137.15}
+$$
+它又等价于
+$$
+\boxed{\operatorname{rank}S_r=\operatorname{rank}S_{r-1}.}
+\tag{137.16}
+$$
+

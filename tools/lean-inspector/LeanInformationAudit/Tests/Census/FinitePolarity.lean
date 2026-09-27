@@ -24,5 +24,5 @@ run_cmd do
       let message ← error.toMessageData.toString
       pure (message.endsWith "invalid=seal_certificate.proposition")
     if rejected then logInfo "finite-polarity rejected"
-    else logInfo "FAIL finite-polarity accepted unrelated certificate"
+    else logError "[FAIL] finite-polarity accepted unrelated certificate"
   finally setEnv env

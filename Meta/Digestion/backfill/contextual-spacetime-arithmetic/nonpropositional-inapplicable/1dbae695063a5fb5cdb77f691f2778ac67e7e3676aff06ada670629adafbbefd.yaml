@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1dbae695063a5fb5cdb77f691f2778ac67e7e3676aff06ada670629adafbbefd
+  normalized_sha256: sha256:1dbae695063a5fb5cdb77f691f2778ac67e7e3676aff06ada670629adafbbefd
+cas_ref: sha256:1dbae695063a5fb5cdb77f691f2778ac67e7e3676aff06ada670629adafbbefd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子约定丰富层对象的组成及读数含义，属于模型和术语的定义，没有另行断言存在性或运算定理。
+    previous_atom_id: daee601d28843a13ce8c1e8ae7d82be7979aad0f1fdbfcd47648511fa8ba7b80
+    next_atom_id: 00a0bc8af6e4d01d9b9c9076e642a8a5c880af2284634027ee914b4ab65e7bc1

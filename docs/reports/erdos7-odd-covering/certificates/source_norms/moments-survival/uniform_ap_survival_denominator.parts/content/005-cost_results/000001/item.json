@@ -1,0 +1,55 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "AP11_B1"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363"
+    }
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1/7"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "12001523/249043410"
+  },
+  "at_one": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "exhaustive_vertices": {
+    "path": "content/005-cost_results/000001/item/005-exhaustive_vertices.json",
+    "sha256": "85c8467c51a665b3a4667dfe7723e82309fc268d0c6ca386706d1369e52cdc1c",
+    "kind": "value"
+  },
+  "candidate_supports": {
+    "path": "content/005-cost_results/000001/item/006-candidate_supports.json",
+    "sha256": "a6ee2041819c6eab4af33890f5f4e5ef0a919adce43f8fe38c1ef1ba03452734",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/005-cost_results/000001/item/007-selected_support.json",
+    "sha256": "bfb1a009d90337eb206fb205076a3b49523d9d7cc6361b0e4e65fbd384a1e76d",
+    "kind": "value"
+  },
+  "zero_vertex": {
+    "path": "content/005-cost_results/000001/item/008-zero_vertex.json",
+    "sha256": "5f4b8db8a5e1008a03fab4b2130bc84dd9c36301dd014bcbb11e8a613e47c121",
+    "kind": "value"
+  },
+  "zero_support": {
+    "path": "content/005-cost_results/000001/item/009-zero_support.json",
+    "sha256": "fd7f8428e671edc8adec81cfc1c698ebc8740fb8927ff86357393b4311cd1425",
+    "kind": "value"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "1879064767135230019073/44827066669770000000000000"
+  }
+}

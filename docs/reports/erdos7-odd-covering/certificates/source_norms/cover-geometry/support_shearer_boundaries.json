@@ -1,0 +1,369 @@
+{
+  "schema": "support-shearer-boundaries-v1",
+  "boundary": {
+    "scope": "Exact counterexample to universal degree6 support-Shearer positivity, not an actual congruence covering.",
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "supports": [
+      [
+        3,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        11
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        3,
+        17
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        5,
+        11
+      ],
+      [
+        5,
+        13
+      ],
+      [
+        5,
+        17
+      ],
+      [
+        7,
+        11
+      ],
+      [
+        7,
+        13
+      ],
+      [
+        7,
+        19
+      ],
+      [
+        11,
+        13
+      ],
+      [
+        11,
+        17
+      ],
+      [
+        11,
+        19
+      ],
+      [
+        3,
+        5,
+        7
+      ]
+    ],
+    "numerical_squarefree_moduli": [
+      15,
+      21,
+      33,
+      39,
+      51,
+      35,
+      55,
+      65,
+      85,
+      77,
+      91,
+      133,
+      143,
+      187,
+      209,
+      105
+    ],
+    "degree": {
+      "3": 6,
+      "5": 6,
+      "7": 6,
+      "11": 6,
+      "13": 4,
+      "17": 3,
+      "19": 2
+    },
+    "common_denominator": 378675,
+    "matching_counts": [
+      1,
+      16,
+      53,
+      30
+    ],
+    "matching_coefficients": [
+      "1",
+      "-9266/8415",
+      "12847/126225",
+      "-338/378675"
+    ],
+    "signed_polynomial": "-92/378675",
+    "proper_subfamilies_checked": 65535,
+    "minimum_proper_polynomial": "83/126225",
+    "minimum_proper_supports": [
+      [
+        3,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        11
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        3,
+        17
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        5,
+        11
+      ],
+      [
+        5,
+        13
+      ],
+      [
+        5,
+        17
+      ],
+      [
+        7,
+        11
+      ],
+      [
+        7,
+        13
+      ],
+      [
+        7,
+        19
+      ],
+      [
+        11,
+        13
+      ],
+      [
+        11,
+        17
+      ],
+      [
+        3,
+        5,
+        7
+      ]
+    ]
+  },
+  "predecessor_support_counts_by_prime": {
+    "3": 0,
+    "5": 1,
+    "7": 3,
+    "11": 3,
+    "13": 4,
+    "17": 3,
+    "19": 2
+  },
+  "degree_seven_replacement": {
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31
+    ],
+    "supports": [
+      [
+        3,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        11
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        3,
+        17
+      ],
+      [
+        3,
+        19
+      ],
+      [
+        3,
+        23
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        5,
+        11
+      ],
+      [
+        5,
+        13
+      ],
+      [
+        5,
+        17
+      ],
+      [
+        5,
+        19
+      ],
+      [
+        5,
+        23
+      ],
+      [
+        7,
+        11
+      ],
+      [
+        7,
+        13
+      ],
+      [
+        7,
+        17
+      ],
+      [
+        7,
+        19
+      ],
+      [
+        7,
+        23
+      ],
+      [
+        11,
+        13
+      ],
+      [
+        11,
+        17
+      ],
+      [
+        11,
+        19
+      ],
+      [
+        11,
+        23
+      ],
+      [
+        13,
+        17
+      ],
+      [
+        13,
+        19
+      ],
+      [
+        13,
+        23
+      ],
+      [
+        17,
+        19
+      ],
+      [
+        17,
+        23
+      ],
+      [
+        19,
+        23,
+        29,
+        31
+      ]
+    ],
+    "incidence": [
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      1,
+      1
+    ],
+    "numerical_ending_counts": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      6,
+      0,
+      1
+    ],
+    "support_count": 28,
+    "maximum_rank": 4,
+    "incidence_cycle_rank": 21,
+    "connected": true,
+    "no_articulation": true,
+    "original_K8_polynomial": "-113684/2650725",
+    "modified_polynomial": "-9849844/230613075",
+    "residual_K6_polynomial": "52/825",
+    "union_weight": "5549956/4521825",
+    "old_support_weight": "1/357",
+    "new_support_weight": "1/279531"
+  },
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/50-prime-support-incidence-at-most-five.md": "846cf7da2cf9b1bf79d57f466df9fd6061a83e7fd9fe2de6276a20167107c6a5",
+    "problem-details/52-two-or-four-exact-predecessor-supports.md": "6ce31e69b18775949e577f4068c5a63da94ad6f62bb8b59c763b85d376c418ee",
+    "problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md": "684db767a72b43b56227809556d93b437aea003e3377b058ed4431a4a04d13bb"
+  },
+  "producer_sha256": "a9fc83f1c6f8b1bac924d2fb0bc201cd7bed2d6370e3a06f2d79c512312669bb"
+}

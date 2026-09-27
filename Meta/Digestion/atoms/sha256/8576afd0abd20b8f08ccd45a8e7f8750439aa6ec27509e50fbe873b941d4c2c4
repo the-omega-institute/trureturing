@@ -1,0 +1,16 @@
+**定理 11.2（Choi 重建与完全正、迹条件）。** 定义11.1给出全部复线性映射与 $\mathcal L(A'\otimes B)$ 之间的线性双射，逆映射为
+$$
+\Phi(X)=\operatorname{Tr}_{A'}\bigl[(X^{\mathsf T}\otimes I_B)J(\Phi)\bigr].
+\tag{11.3}
+$$
+且
+$$
+\begin{aligned}
+\Phi\text{ 完全正}&\iff J(\Phi)\ge0,\\
+\Phi\text{ 保迹}&\iff \operatorname{Tr}_B J(\Phi)=I_{A'},\\
+\Phi\text{ 完全正且不增迹}
+&\iff J(\Phi)\ge0\ \text{且}\ \operatorname{Tr}_B J(\Phi)\le I_{A'}.
+\end{aligned}
+\tag{11.4}
+$$
+

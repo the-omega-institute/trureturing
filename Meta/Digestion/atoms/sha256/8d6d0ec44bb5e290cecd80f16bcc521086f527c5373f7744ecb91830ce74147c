@@ -1,0 +1,8 @@
+**命题 23.5（绝对界不能替代差分界）。** 任给 $M,t_*,\alpha>0$，取 $0<d\le2Mt_*/\alpha$，在 $\beta\in[0,d]$ 上定义
+$$
+y_\beta(t)=-\frac{\alpha\beta t}{4}
+ +\frac{\alpha\beta t^2}{4t_*}.
+\tag{23.109}
+$$
+它们有（23.101）的初始斜率及 $|y_\beta''|=\alpha\beta/(2t_*)\le M$，而所有 $y_\beta(t_*)=0$。逐项求导与代入便是证明。此反例反驳绝对二阶界对指定时刻单射性的充分性，不是 Navier–Stokes 反例。Taylor 积分余项、Gronwall 比较与 Picard–Lindelöf 局部适定性是本节及下一节使用的标准分析工具；钉版 Mathlib 的相应来源为 `Analysis/Calculus/Taylor.lean`、`Analysis/ODE/Gronwall.lean`、`Analysis/ODE/PicardLindelof.lean`。$\square$
+

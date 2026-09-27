@@ -1,0 +1,24 @@
+**证明。** 对 $x=u+(v-u)z$，式（11.8）是 $f_t(u+(v-u)X/N)$ 的平均，其中 $X$ 具有参数 $(N,z)$ 的二项分布。等价地，可只用 Bernstein 权重的非负性、权重和为一及方差恒等式。若 $f$ 的 Lipschitz 常数为 $L$，则 Cauchy–Schwarz 给
+$$
+|p_N(x)-f(x)|
+\le L(v-u)\mathbb E|X/N-z|
+\le L(v-u)\sqrt{z(1-z)/N}
+\le\frac{L(v-u)}{2\sqrt N}.
+\tag{11.13}
+$$
+这些归一化与方差关系正是钉版 Mathlib [`bernstein.probability`、`bernstein.variance`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Bernstein.lean) 的成熟 Bernstein 接口。
+
+对 $\tau\ge0$，
+$$
+|f_t'(x)|=\tau x^{\tau-1}
+\le\tau/u\le T_0/(hu)
+\quad(0\le t\le T_0).
+$$
+当 $v<1$ 时，另有
+$$
+\tau x^{\tau-1}\le\tau v^\tau/u,
+\qquad
+\sup_{\tau\ge0}\tau v^\tau=\frac1{e(-\log v)}.
+$$
+代入式（11.13）得到式（11.9）和（11.10）。最后使用式（11.7），并取 $N=2r+1$。证毕。
+

@@ -1,0 +1,12 @@
+**Definition 44.0 (Digits, phases and finite observations).** Put $\mathbb N_0=\{0,1,\ldots\}$, $G_0=1$, $G_1=2$, $G_{j+2}=G_{j+1}+G_j$, $\phi=(1+\sqrt5)/2$ and $\alpha=\phi^{-1}$. Let $Z(n)$ be the low-to-high Zeckendorf digits of $n$, padded by zeros, and put
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad 0_K=Z(0).
+$$
+Give $K$ its product topology, metrized by $d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$. Let $D_L$ be the legal words of length $L$, $\pi_L:K\to D_L$ the prefix map, and $Z^{\times d}$ the coordinatewise encoding. Write
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right],\qquad
+\gamma(n)=[n\phi],\qquad E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+For $A\subseteq\mathbb R$, write $[A]=\{[t]:t\in A\}$. A point is called split when its phase belongs to $E$, and ordinary otherwise. All closures below use products of $K$ and the explicitly specified discrete spaces; they are not closures for convergence of numerical values in $\mathbb R$.
+

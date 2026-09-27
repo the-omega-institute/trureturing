@@ -1,0 +1,15 @@
+**命题 30.13（可执行原子的指定抽样上界）。** 给一份式（30.31）的实际可调用表示，令 $\Gamma=\sum_j|a_j|$，省去零系数，以概率 $q_j=|a_j|/\Gamma$ 调用第 $j$ 个原子。在已合法取得的该次实验中，读数 $Y$ 满足 $|Y|\le1$，且条件均值 $\mathbb E[Y\mid j]$ 为声明的同一输入和效果下的原子预测。则带符号估计量
+$$
+Z_{\rm est}=\Gamma\operatorname{sgn}(a_j)Y
+$$
+满足
+$$
+\mathbb E Z_{\rm est}=\sum_j a_j\mathbb E[Y\mid j],\qquad
+\mathbb E Z_{\rm est}^2\le\Gamma^2.
+\tag{30.36}
+$$
+
+证明。对实际抽样指标取全期望，$q_j\Gamma\operatorname{sgn}(a_j)=a_j$ 给均值等式，且 $Z_{\rm est}^2=\Gamma^2Y^2\le\Gamma^2$ 给二阶矩界。若另有独立重复的共同输入／准备合同，$n$ 次均值的方差至多 $\Gamma^2/n$；这一步使用独立性，单次界本身不提供它。$\square$
+
+对式（30.33）取 $\Gamma=\lambda^{-1}$。只有另外规定 $\lambda=e^{-\gamma t}$、$\gamma\ge0,t\ge0$，才可写 $\Gamma(t)=e^{\gamma t}$；严格负特征值要求 $\gamma t>0$。式（30.36）是这一指定协议的二阶矩上界，原子范数下界不因此成为一切实验的方差或采样数下界。有符号估计值也不是制备出的有符号物理态。形式记号 $\mathcal D_{-t}$ 在这里仅指该线性逆，不赋予从未来向过去传讯或反向因果推断。
+

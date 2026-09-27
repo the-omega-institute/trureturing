@@ -1,0 +1,20 @@
+### 73.3 有限 Hankel 窗口与可执行校准
+
+对行数 $r$、列数 $c$ 定义有限数据 Hankel 映射
+
+$$
+H_{r,c}(u_0,\ldots,u_{c-1})
+=
+\left(
+\sum_{j=0}^{c-1}m_{i+j}(u_j)
+\right)_{0\le i<r}.
+$$
+
+当 $r,c$ 都不小于 $\operatorname{finrank}\mathcal T(m)$ 时，已有定理 `dataHankel_rank_eq_tailSpace` 给出
+
+$$
+\operatorname{rank}H_{r,c}
+=
+\operatorname{finrank}\mathcal T(m).
+$$
+

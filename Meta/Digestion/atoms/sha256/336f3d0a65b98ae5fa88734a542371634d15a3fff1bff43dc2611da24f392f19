@@ -1,0 +1,45 @@
+### 126.4 有限 Hankel 块的准确秩与视界
+
+对整数 $m\ge0$，令 $U^m$ 是 $m$ 个 $U$ 的正交直和，$U^0=\{0\}$，并定义
+
+$$
+T_m:U^m\to H,\qquad T_m(v_0,\ldots,v_{m-1})
+=\sum_{j=0}^{m-1}C^jB^*v_j,
+\qquad \mathcal R_m=\operatorname{ran}T_m.
+$$
+
+对 $r,s\ge0$，边界矩块
+
+$$
+\mathsf H_{r,s}:U^s\to U^r,\qquad
+(\mathsf H_{r,s}v)_i=\sum_{j=0}^{s-1}M_{i+j}v_j
+$$
+
+满足精确因子化
+
+$$
+\boxed{\mathsf H_{r,s}=T_r^*T_s,\qquad
+\mathsf H_{m,m}=T_m^*T_m,\qquad
+\operatorname{rank}\mathsf H_{m,m}=\dim\mathcal R_m.}
+$$
+
+最后的等式来自 $\ker(T_m^*T_m)=\ker T_m$，因为 $\langle v,T_m^*T_mv\rangle=\|T_mv\|^2$，再用有限维秩—零度公式。它对 $m=0$ 也成立，两边均为零。
+
+令 $d=\dim\mathcal R$。有
+
+$$
+\boxed{\mathcal R_m=\mathcal R\quad\text{对所有 }m\ge d.}
+$$
+
+证明如下。链 $0=\mathcal R_0\subseteq\mathcal R_1\subseteq\cdots$ 若在 $k$ 处停止增长，即 $\mathcal R_k=\mathcal R_{k+1}$，则 $C\mathcal R_k\subseteq\mathcal R_{k+1}=\mathcal R_k$。当 $k\ge1$ 时它还包含 $B^*U$，因此包含全部生成元，等于 $\mathcal R$；当 $k=0$ 时停止增长意味着 $B^*=0$，同样 $\mathcal R=0$。所以到达 $\mathcal R$ 前每一步至少增加一维，至多 $d$ 步必到达。
+
+若 $r,s\ge d$，$T_s$ 满射到 $\mathcal R$，而 $T_r^*$ 限制在 $\mathcal R$ 上单射：其核在 $\mathcal R$ 中等于 $\mathcal R\cap\mathcal R_r^\perp=0$。因而
+
+$$
+\boxed{\operatorname{rank}\mathsf H_{r,s}=d\quad(r,s\ge d).}
+$$
+
+特别地，已知 $n=\dim H$ 时，$r,s\ge n$ 是明确的充分视界；对一个声明了有效阶数上界 $n\ge d$ 的类，也有同样保证。这与 Cayley–Hamilton 给出的有限截断视界相容，以上增长链证明直接处理 $d=0$。
+
+没有这样的视界前提时，任意有限块只具有由因子化得到的界 $\operatorname{rank}\mathsf H_{r,s}\le d$。不能将一个有限块的秩未经进一步条件就认作未知系统的有效阶数上界；本结论也没有把有限带噪记录转成精确全部矩。这里的视界计数指矩的阶数：$\mathsf H_{r,s}$ 最多用到 $M_{r+s-2}$（当 $r,s>0$）。
+

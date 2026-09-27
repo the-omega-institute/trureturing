@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b76fa1ffbe833eab3016ab920c7f58ea37fe71fa34da9e7fdb5b53eb88fc583
+  normalized_sha256: sha256:2b76fa1ffbe833eab3016ab920c7f58ea37fe71fa34da9e7fdb5b53eb88fc583
+cas_ref: sha256:2b76fa1ffbe833eab3016ab920c7f58ea37fe71fa34da9e7fdb5b53eb88fc583
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子定义只依赖指定变量集合的精确含义，并说明来源标签不自动承担依赖性或最小性保证。
+    previous_atom_id: 26fb9666a09aadddcb500623f26b1c7e6157dfe9b2032a75c47d7d83d3c40d36
+    next_atom_id: d21894feff2d20e79d1ccca8e80bb442ae49628666501618e5392137d1e04eb7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:107d8d41c93efb5632bacbcc584ac6a37224d9dbec22a98ce8eaa0baf37c6992
+  normalized_sha256: sha256:107d8d41c93efb5632bacbcc584ac6a37224d9dbec22a98ce8eaa0baf37c6992
+cas_ref: sha256:107d8d41c93efb5632bacbcc584ac6a37224d9dbec22a98ce8eaa0baf37c6992
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“必须先选择”“再额外构造”并要求“验证每对投影的重叠条件”，是在列出应用碰撞定理的额外模型输入；“仍需额外模型与误差分析”明确限制已证范围，没有宣称这些上下文自动存在，也未以定义夹带交换算子恒等式。
+    previous_atom_id: 5d83d24ab5ed8d9c1aaef6b677f0896e8e9e48e11e62812ab380648c7c8a9dca
+    next_atom_id: b6fcb5f72ece22e0522d483c97fc056125c660106b33bfd93abb2f9dcdbba4ae

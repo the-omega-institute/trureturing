@@ -1,0 +1,77 @@
+{
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/20000",
+      "rbar": "1/4000",
+      "h1min": "161/486",
+      "v0": "263/26000",
+      "v1": "43409/4186000",
+      "gap": "20957/972000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "14/225"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "availability_bound": "3/316",
+      "five_gap_bounds": [
+        "399/4000",
+        "64157/972000",
+        "20957/972000",
+        "1131953/38394000",
+        "31357/972000"
+      ],
+      "minimum_gap": "20957/972000",
+      "old_gap_floor": "241/22500",
+      "r_upper": "1/4000",
+      "marker_coefficient_floor": "11/27"
+    }
+  },
+  "heavy": {
+    "path": "content/005-shells/000000/item/002-heavy.json",
+    "sha256": "7275c6f7f7895c9dceeeaff3df9c4819d7f8b47f4087e161937a63a3f35a7144",
+    "kind": "object"
+  },
+  "H1": {
+    "path": "content/005-shells/000000/item/003-H1.json",
+    "sha256": "85d7ec7dcf4abd95a2b544c2fa8fa80c04f07c4e1fb88a21575a4361ea10e0a1",
+    "kind": "object"
+  },
+  "square": {
+    "path": "content/005-shells/000000/item/004-square.json",
+    "sha256": "95e816559466bf1ad5b6d08d778867bc9d3cd202454e2872f2b0262da9f2949b",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/005-shells/000000/item/005-complete_heads.json",
+    "sha256": "d2e826a3c837ca8651cb292800ad5eb332c2e80092c0afdfef26e051666efcbf",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/005-shells/000000/item/006-comparison.json",
+    "sha256": "5a3b7201d4607445cb5a60f66a3f2daaa12a3fd5d8f76e8628612bdf379e2172",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,22 @@
+### 100.3 任意两份的显式恢复
+
+对任意循环相邻的两份，项目定义置换解码
+
+$$
+(a,b)\longmapsto(b-a,\,2b-a).
+$$
+
+`qutrit_two_share_reconstruction` 证明，应用该置换后，两份联合振幅可写成
+
+$$
+\psi(a)
+\times
+\left[
+\frac1{\sqrt3}
+\sum_j
+\mathbf 1_{(b,r)=(j,j)}
+\right],
+$$
+
+其中第二因子是与输入无关的固定纠缠因子。于是输入振幅 $$\psi$$ 被恢复到第一解码坐标，剩余坐标只保留固定辅助态。
+

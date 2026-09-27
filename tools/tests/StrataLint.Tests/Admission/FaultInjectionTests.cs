@@ -203,16 +203,16 @@ public sealed class FaultInjectionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
         return AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed.Capability,
@@ -224,7 +224,7 @@ internal sealed class NoOpRule : IRepositoryRule
 {
     public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => true;
 
-    public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
+    public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) =>
         ImmutableArray<RuleFinding>.Empty;
 }
 
@@ -232,7 +232,7 @@ internal sealed class ThrowingRule : IRepositoryRule
 {
     public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => true;
 
-    public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
+    public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) =>
         throw new InvalidOperationException("injected rule failure");
 }
 

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a5a0ed4d03ef8c44006216af6a4d2a3ea54d5587e61c2caeb1f6f52438be861
+  normalized_sha256: sha256:6a5a0ed4d03ef8c44006216af6a4d2a3ea54d5587e61c2caeb1f6f52438be861
+cas_ref: sha256:6a5a0ed4d03ef8c44006216af6a4d2a3ea54d5587e61c2caeb1f6f52438be861
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure pinned-upstream composition at Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: CovBy.le_of_lt, CovBy.unique_left, CovBy.unique_right, Function.Embedding.sigmaSet, Function.Embedding.optionElim, Function.Embedding.sigmaMap, Function.Injective.sumElim, Finset.orderIsoOfFin, Finset.card_biUnion, Fin.card_Ico, Finset.card_le_card_of_injOn, Finset.sum_range_le_sum, Finset.sum_range_id_mul_two, Nat.two_dvd_mul_add_one, Real.le_sqrt and Int.le_floor close the actual-window packing clause after source definitions and normalization. No usable exact frozen project GID was found in the searched scope. This does not settle the update or persistent encoding bounds.'
+    previous_atom_id: 81d6560a4d5c0f908c845f9993e3ddf2dea8bc04e12d91e9a6b91d994065f181
+    next_atom_id: 4d3660d4a5a7e2e13dc38cb07e424a230190ed7a63c266804789fa33d5981f9e

@@ -1,0 +1,16 @@
+**定义 1.1（奇偶核族）。** 固定整数 $d\ge2$，记 $n=2^d$、$M=2^{d-1}$、
+$X=\{-1,+1\}^d$、$\chi(x)=\prod_{j=1}^d x_j$ 及
+$C_\pm=\{x:\chi(x)=\pm1\}$。$\mathbb E$ 表示 $X$ 上的均匀平均，
+$\mathbb E_\pm$ 表示 $C_\pm$ 上的均匀平均。取 $a:X\to(-1,1)$ 满足
+$\mathbb E a=0$，定义
+
+$$
+P_a(x,y)=\frac{1+a(x)\chi(y)}n,\qquad
+b(x)=\chi(x)a(x),\qquad m=\mathbb E b.
+$$
+
+每行之和为 $1$，每列之和也为 $1$，故均匀分布 $\pi(x)=1/n$ 平稳；
+所有转移概率严格为正。条件 $\mathbb E a=0$ 等价于
+$\mathbb E_+b=\mathbb E_-b=m$。记 $\mathcal K_d^0$ 为额外满足 $m=0$ 的核族，
+并以均匀分布启动相应平稳马尔可夫链 $(X_t)_{t\ge0}$。
+

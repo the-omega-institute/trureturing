@@ -71,7 +71,7 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 
 ## 长门命令的输出不进对话:重定向到文件,只回显退出码
 
-    make preflight BASE="$B" > "$LOG" 2>&1; echo "PREFLIGHT_EXIT=$?"; tail -5 "$LOG"
+    make preflight MODE=push BASE="$B" > "$LOG" 2>&1; echo "PREFLIGHT_EXIT=$?"; tail -5 "$LOG"
 
 `make preflight` / `make gate` / `make lean-report` / `make deposit-uncovered` / `scribe-content-checks.sh`
 会打印数千行 `OPEN` / `OBSERVE`。2026-09-14 实测:实施席把 preflight 的整条流当作命令输出回显,

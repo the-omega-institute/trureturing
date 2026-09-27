@@ -1,0 +1,32 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 4,
+      "part": {
+        "path": "content/010-quadratic_results/000000-000004.json",
+        "sha256": "2d5c4f06e4caef19252af855f6983b93e43feba63beeb081fc6987290187867d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 9,
+      "part": {
+        "path": "content/010-quadratic_results/000004-000009.json",
+        "sha256": "ad4d123ced2ea5e4c1c39fa403e348db3518cdceb24301ffd3a55b4eb2ef6f95",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/010-quadratic_results/000009-000010.json",
+        "sha256": "5d99014cf9f7077500a22c7f7ef8f58b4281cd168a0366f07ce163f44f46f61d",
+        "kind": "value"
+      }
+    }
+  ]
+}

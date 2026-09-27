@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5d8ec140c2319634629f28202a4077327c8ae00704630ab412d8d907f7aa179
+  normalized_sha256: sha256:d5d8ec140c2319634629f28202a4077327c8ae00704630ab412d8d907f7aa179
+cas_ref: sha256:d5d8ec140c2319634629f28202a4077327c8ae00704630ab412d8d907f7aa179
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “初稿定义 25–27 对应合入稿定义 31–33”更正定义编号区间，不改变或证明定义的性质；本子句无偷带结论，属于引用修复。
+    previous_atom_id: c19df0310b7ec0a15e1016a65e4db1a6d10771040e0baf64ecf6e2aaabb711e8
+    next_atom_id: 677d5553632fd3786db5b444acf75f250a4e3cd150a3f1e30cfcfa22884be1f9

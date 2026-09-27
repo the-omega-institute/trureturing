@@ -1,0 +1,10 @@
+**定理 137.11（共同谱上界内的未来唯一性）。** 设 $\Lambda\ge0$ 且
+$$
+H_r\succeq0,\qquad 0\preceq S_r\preceq\Lambda H_r.
+$$
+取定理137.2的规范实现，故 $0\preceq C\preceq\Lambda I$。给定前缀在全部满足 $0\preceq\widetilde C\preceq\Lambda I$ 的有限维实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C+\ker(\Lambda I-C).}
+\tag{137.21}
+$$
+

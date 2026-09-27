@@ -1,0 +1,6 @@
+**命题 43.6（全部旧历史、全部后续词的一致重启界；repo-derived）。** 对定义43.5的同一新网格，任意 $w\in\mathcal H$、$n\ge0$ 及 $u=b_1\cdots b_n\in\{0,1\}^n$ 都满足
+$$
+|h(q_{wu})-h(q^f_{i_n(w,u)})|
+\le\frac d4\left(\eta^nE_0+\delta\frac{1-\eta^n}{1-\eta}\right)
+=\beta+(A_0-\beta)\eta^n.
+$$

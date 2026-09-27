@@ -1,0 +1,32 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 3,
+      "part": {
+        "path": "content/004-radius_results/000000/item/006-joint_cost_results/000000-000003.json",
+        "sha256": "13aa0b0f3ea7b903dccba9b4259da9ab1fc5c6213440144af14c6fa65a1fe29d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 6,
+      "part": {
+        "path": "content/004-radius_results/000000/item/006-joint_cost_results/000003-000006.json",
+        "sha256": "9d7b35acd7ce058621171653ead0153eb632b87f0a213a4b6c5a1db02290d31c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 9,
+      "part": {
+        "path": "content/004-radius_results/000000/item/006-joint_cost_results/000006-000009.json",
+        "sha256": "c1dda72c012a3a56012ed7bb3c33aba5ef6e44d4acc45b4bbb3bf116e60ded1c",
+        "kind": "value"
+      }
+    }
+  ]
+}

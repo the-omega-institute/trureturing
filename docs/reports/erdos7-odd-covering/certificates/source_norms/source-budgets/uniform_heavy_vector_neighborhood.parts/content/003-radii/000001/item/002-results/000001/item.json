@@ -1,0 +1,98 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 16
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/10000",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "59999/180000",
+      "v0": "7/40000",
+      "v1": "539997/2399960000",
+      "gap": "9977/450000",
+      "tbar": "10001/4998",
+      "Cbar": "60002/15997",
+      "kbar": "59999/29998",
+      "budget_increments": [
+        "16667/2400000000",
+        "1/360000",
+        "1/40000"
+      ],
+      "c": [
+        "28001/40000",
+        "360013/900000",
+        "40001/150000",
+        "40001/450000"
+      ],
+      "H": [
+        "25052499/500000000",
+        "150031667/1500000000",
+        "6001/90000",
+        "800119999/36000000000"
+      ],
+      "positive7": "259789/4200000"
+    }
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "113030172417388488839521339535147647/3510863581945200248270294588671875"
+  },
+  "raw_zero_prices": {
+    "path": "content/003-radii/000001/item/002-results/000001/item/003-raw_zero_prices.json",
+    "sha256": "0c8466f35f81f7dc23610ccf15af6a7848d9b7032e2967a40391cf750482b4ea",
+    "kind": "value"
+  },
+  "raw_complete_prices": {
+    "path": "content/003-radii/000001/item/002-results/000001/item/004-raw_complete_prices.json",
+    "sha256": "180d0647cf69470ac467bc7557d12a2f5fb99b4d3a2d81af63780932cde980f9",
+    "kind": "value"
+  },
+  "common_price": {
+    "kind": "inline",
+    "value": "143456240220100247589010662035227/152623201750976252302165259100000000"
+  },
+  "non_H_cap_growth": {
+    "kind": "inline",
+    "value": "22739801/215996400000"
+  },
+  "non_H_budget_growth": {
+    "kind": "inline",
+    "value": "448667/2400000000"
+  },
+  "non_H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "17844243131801/58319028000000000"
+  },
+  "H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "491/40500000"
+  },
+  "branches": {
+    "path": "content/003-radii/000001/item/002-results/000001/item/010-branches.json",
+    "sha256": "5452930a5c30f265fd670577a38e2c6bb398b60c4f6ed8ca15a16df427f12047",
+    "kind": "array"
+  },
+  "uniform_margin_error": {
+    "kind": "inline",
+    "value": "9899168009384381871772090215064253861646985849/2105377558231629870353929602819663282600000000000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "112943715022372212569204607763847647/23847375273590039422213321734375000"
+  },
+  "uniform_upper": {
+    "kind": "inline",
+    "value": "249640887019049091704144952739750638085630357143889/52634438955790746758848240070491582065000000000000"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "358565355381021439619215898655172889859534423889/52634438955790746758848240070491582065000000000000"
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "15/17"
+  }
+}

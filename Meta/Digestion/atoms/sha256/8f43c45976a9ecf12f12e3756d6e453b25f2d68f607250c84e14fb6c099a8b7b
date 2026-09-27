@@ -1,0 +1,9 @@
+**theorem 45.3（有限核与共同细化）。** 自然数后继的每个同余关系或者是对角关系，或者唯一地等于某个 $R_{u,m}$。有限指数情形只能是后一种。每个 $R_{u,m}$ 同时保持自然数加法与乘法，$|Q_{u,m}|=u+m$，且
+$$
+R_{v,n}\subseteq R_{u,m}\iff(u,m)\preceq(v,n),
+$$
+$$
+R_{u,m}\cap R_{v,n}=R_{\max(u,v),\operatorname{lcm}(m,n)}.
+$$
+因此指标细化给出保持自然核心的满半环过渡映射。这与第 11.2 条及第 14.1 条所用核形一致。[第 11.2 条](https://github.com/the-omega-institute/trureturing/blob/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L1805)、[第 14.1 条](https://github.com/the-omega-institute/trureturing/blob/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L2806)
+

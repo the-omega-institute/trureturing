@@ -1,0 +1,24 @@
+**命题 17.6（严格盒裕度与全部最优系数的界）。** 在定理17.5的乘积合同下，若存在合法 $T^0\in\mathbb B$ 使
+$$
+\delta=\min_i\bigl(\epsilon_i-|z_i-\mathcal A_i(T^0)|\bigr)>0,
+\tag{17.10}
+$$
+则式（17.9）的残差对偶目标 $F_z^H$ 在整个 $\mathbb R^n$ 上达到最小值，且每个最小化系数满足
+$$
+\boxed{\|c_*\|_1\le
+\frac{\sum_\lambda\|H_\lambda\|_*-\langle H,T^0\rangle}{\delta}.}
+\tag{17.11}
+$$
+仅有各 $\epsilon_i>0$ 不蕴含式（17.10）。
+
+**证明。** 定理16.4的支撑公式及 $T^0$ 的合法性给
+$$
+\begin{aligned}
+F_z^H(c)
+&\ge\langle H,T^0\rangle
++\sum_i c_i(z_i-\mathcal A_i(T^0))+\sum_i\epsilon_i|c_i|\\
+&\ge\langle H,T^0\rangle+\delta\|c\|_1.
+\end{aligned}
+$$
+故连续目标在整个系数空间强制趋于无穷，最小值达到；每个最小值至多为 $F_z^H(0)=\sum_\lambda\|H_\lambda\|_*$，给式（17.11）。这次的强制性是全空间的，不是命题17.3的相对代表界。正宽度仍无严格可行点的实际收缩实例由命题18.4给出。$\square$
+

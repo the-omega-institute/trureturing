@@ -1,0 +1,406 @@
+{
+  "initial_Haar_fourth_357": "16625/12",
+  "initial_fourth_after_unit_floor": "598121/53",
+  "physical_fourth13": "3530785420609/14310000",
+  "supported_fourth_after_unit_floor": "7061548613243/6392025",
+  "quartic_transfer": "K_new<=K_old*(1+c*(F4(p)-1)); c=2 for the full-Haar11 and13 steps.",
+  "literal_prefix_fixtures": [
+    {
+      "prime": 3,
+      "height": 0,
+      "power": 2,
+      "direct": "1",
+      "infinite_tail": "2"
+    },
+    {
+      "prime": 3,
+      "height": 0,
+      "power": 3,
+      "direct": "1",
+      "infinite_tail": "29/4"
+    },
+    {
+      "prime": 3,
+      "height": 0,
+      "power": 4,
+      "direct": "1",
+      "infinite_tail": "29"
+    },
+    {
+      "prime": 3,
+      "height": 1,
+      "power": 2,
+      "direct": "2",
+      "infinite_tail": "1"
+    },
+    {
+      "prime": 3,
+      "height": 1,
+      "power": 3,
+      "direct": "10/3",
+      "infinite_tail": "59/12"
+    },
+    {
+      "prime": 3,
+      "height": 1,
+      "power": 4,
+      "direct": "6",
+      "infinite_tail": "24"
+    },
+    {
+      "prime": 3,
+      "height": 2,
+      "power": 2,
+      "direct": "23/9",
+      "infinite_tail": "4/9"
+    },
+    {
+      "prime": 3,
+      "height": 2,
+      "power": 3,
+      "direct": "49/9",
+      "infinite_tail": "101/36"
+    },
+    {
+      "prime": 3,
+      "height": 2,
+      "power": 4,
+      "direct": "119/9",
+      "infinite_tail": "151/9"
+    },
+    {
+      "prime": 5,
+      "height": 0,
+      "power": 2,
+      "direct": "1",
+      "infinite_tail": "7/8"
+    },
+    {
+      "prime": 5,
+      "height": 0,
+      "power": 3,
+      "direct": "1",
+      "infinite_tail": "83/32"
+    },
+    {
+      "prime": 5,
+      "height": 0,
+      "power": 4,
+      "direct": "1",
+      "infinite_tail": "253/32"
+    },
+    {
+      "prime": 5,
+      "height": 1,
+      "power": 2,
+      "direct": "8/5",
+      "infinite_tail": "11/40"
+    },
+    {
+      "prime": 5,
+      "height": 1,
+      "power": 3,
+      "direct": "12/5",
+      "infinite_tail": "191/160"
+    },
+    {
+      "prime": 5,
+      "height": 1,
+      "power": 4,
+      "direct": "4",
+      "infinite_tail": "157/32"
+    },
+    {
+      "prime": 5,
+      "height": 2,
+      "power": 2,
+      "direct": "9/5",
+      "infinite_tail": "3/40"
+    },
+    {
+      "prime": 5,
+      "height": 2,
+      "power": 3,
+      "direct": "79/25",
+      "infinite_tail": "347/800"
+    },
+    {
+      "prime": 5,
+      "height": 2,
+      "power": 4,
+      "direct": "33/5",
+      "infinite_tail": "369/160"
+    },
+    {
+      "prime": 7,
+      "height": 0,
+      "power": 2,
+      "direct": "1",
+      "infinite_tail": "5/9"
+    },
+    {
+      "prime": 7,
+      "height": 0,
+      "power": 3,
+      "direct": "1",
+      "infinite_tail": "55/36"
+    },
+    {
+      "prime": 7,
+      "height": 0,
+      "power": 4,
+      "direct": "1",
+      "infinite_tail": "113/27"
+    },
+    {
+      "prime": 7,
+      "height": 1,
+      "power": 2,
+      "direct": "10/7",
+      "infinite_tail": "8/63"
+    },
+    {
+      "prime": 7,
+      "height": 1,
+      "power": 3,
+      "direct": "2",
+      "infinite_tail": "19/36"
+    },
+    {
+      "prime": 7,
+      "height": 1,
+      "power": 4,
+      "direct": "22/7",
+      "infinite_tail": "386/189"
+    },
+    {
+      "prime": 7,
+      "height": 2,
+      "power": 2,
+      "direct": "75/49",
+      "infinite_tail": "11/441"
+    },
+    {
+      "prime": 7,
+      "height": 2,
+      "power": 3,
+      "direct": "117/49",
+      "infinite_tail": "247/1764"
+    },
+    {
+      "prime": 7,
+      "height": 2,
+      "power": 4,
+      "direct": "219/49",
+      "infinite_tail": "947/1323"
+    },
+    {
+      "prime": 11,
+      "height": 0,
+      "power": 2,
+      "direct": "1",
+      "infinite_tail": "8/25"
+    },
+    {
+      "prime": 11,
+      "height": 0,
+      "power": 3,
+      "direct": "1",
+      "infinite_tail": "413/500"
+    },
+    {
+      "prime": 11,
+      "height": 0,
+      "power": 4,
+      "direct": "1",
+      "infinite_tail": "1289/625"
+    },
+    {
+      "prime": 11,
+      "height": 1,
+      "power": 2,
+      "direct": "14/11",
+      "infinite_tail": "13/275"
+    },
+    {
+      "prime": 11,
+      "height": 1,
+      "power": 3,
+      "direct": "18/11",
+      "infinite_tail": "1043/5500"
+    },
+    {
+      "prime": 11,
+      "height": 1,
+      "power": 4,
+      "direct": "26/11",
+      "infinite_tail": "4804/6875"
+    },
+    {
+      "prime": 11,
+      "height": 2,
+      "power": 2,
+      "direct": "159/121",
+      "infinite_tail": "18/3025"
+    },
+    {
+      "prime": 11,
+      "height": 2,
+      "power": 3,
+      "direct": "217/121",
+      "infinite_tail": "1973/60500"
+    },
+    {
+      "prime": 11,
+      "height": 2,
+      "power": 4,
+      "direct": "351/121",
+      "infinite_tail": "12219/75625"
+    },
+    {
+      "prime": 13,
+      "height": 0,
+      "power": 2,
+      "direct": "1",
+      "infinite_tail": "19/72"
+    },
+    {
+      "prime": 13,
+      "height": 0,
+      "power": 3,
+      "direct": "1",
+      "infinite_tail": "193/288"
+    },
+    {
+      "prime": 13,
+      "height": 0,
+      "power": 4,
+      "direct": "1",
+      "infinite_tail": "1411/864"
+    },
+    {
+      "prime": 13,
+      "height": 1,
+      "power": 2,
+      "direct": "16/13",
+      "infinite_tail": "31/936"
+    },
+    {
+      "prime": 13,
+      "height": 1,
+      "power": 3,
+      "direct": "20/13",
+      "infinite_tail": "493/3744"
+    },
+    {
+      "prime": 13,
+      "height": 1,
+      "power": 4,
+      "direct": "28/13",
+      "infinite_tail": "5383/11232"
+    },
+    {
+      "prime": 13,
+      "height": 2,
+      "power": 2,
+      "direct": "213/169",
+      "infinite_tail": "43/12168"
+    },
+    {
+      "prime": 13,
+      "height": 2,
+      "power": 3,
+      "direct": "279/169",
+      "infinite_tail": "937/48672"
+    },
+    {
+      "prime": 13,
+      "height": 2,
+      "power": 4,
+      "direct": "33/13",
+      "infinite_tail": "1063/11232"
+    }
+  ],
+  "original_label_power_tails": [
+    {
+      "box": [
+        8,
+        5,
+        4,
+        3,
+        3
+      ],
+      "power2_tail_upper": "3423277858427070016/673178127034037625",
+      "power4_tail_upper": "185381222683903607968/2447920461941955"
+    },
+    {
+      "box": [
+        12,
+        8,
+        7,
+        6,
+        6
+      ],
+      "power2_tail_upper": "60604793915599835139687872/1533168149008707566964984375",
+      "power4_tail_upper": "1705271269961916573980799609056/1365913441844121286932440625"
+    },
+    {
+      "box": [
+        16,
+        11,
+        9,
+        8,
+        7
+      ],
+      "power2_tail_upper": "24463656641423321078688640658455232/39519671575266133413496731667191796875",
+      "power4_tail_upper": "11677999229359179494991651491188858208/364796968387072000739969830774078125"
+    }
+  ],
+  "cylinder_bound": "E_nu[L_T^2*1_(a mod d)] <= (D/d)*product_p F2(p,v_p(d)).",
+  "queried_cylinder_fixtures": [
+    {
+      "queried_old_exponents": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "original_old_modulus": 1,
+      "square_energy_in_cylinder_upper": "60540480/28409"
+    },
+    {
+      "queried_old_exponents": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "original_old_modulus": 45045,
+      "square_energy_in_cylinder_upper": "198402688/8948835"
+    },
+    {
+      "queried_old_exponents": [
+        8,
+        5,
+        4,
+        3,
+        3
+      ],
+      "original_old_modulus": 143952871334146875,
+      "square_energy_in_cylinder_upper": "3630656/131007588586875"
+    },
+    {
+      "queried_old_exponents": [
+        16,
+        11,
+        9,
+        8,
+        7
+      ],
+      "original_old_modulus": 1140873337698093479733324195098583984375,
+      "square_energy_in_cylinder_upper": "1707425449476224/514461438899446629614984239024693212890625"
+    }
+  ]
+}

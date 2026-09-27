@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2deb2f1740f40b33b6af0f3af03c321433e94adc5ad801367a6691ceb543fd44
+  normalized_sha256: sha256:2deb2f1740f40b33b6af0f3af03c321433e94adc5ad801367a6691ceb543fd44
+cas_ref: sha256:2deb2f1740f40b33b6af0f3af03c321433e94adc5ad801367a6691ceb543fd44
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “查询族可能包含全部点指示函数，此时充分性强制”单射，是显式条件断言；探针对每个点的指示查询保留存在的读出函数，选取被比较的第二个点即推出状态相等，无需增加假设或定义性保证，仓内无冻结 GID。
+    previous_atom_id: 65da21a89185753be556fadca216e3f73f3b233eb20f345468c87e551b0cdc3b
+    next_atom_id: 94a8da17e524f2a07126f8316ce2c9c3e4a7a765dfa269a552c6a030bb7090df

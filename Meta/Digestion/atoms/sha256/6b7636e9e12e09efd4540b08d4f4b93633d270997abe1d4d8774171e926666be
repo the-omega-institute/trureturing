@@ -1,0 +1,30 @@
+## 21. 普通推论：必要性、充分性和局部 Jordan 类型
+
+对特征零八维辛 X，有
+
+\[
+P_X^2=0\quad\Longleftrightarrow\quad X^2=0\text{ 且 }\operatorname{rank}X\le1.\tag{21.1}
+\]
+
+必要性由定理 20.2。充分性中将 X=u v^t 代入，交替 B 满足 v^tBv=0，所以 XBX^t=0；再用实际二次展开即可。
+
+当 X≠0，可选辛基使其唯一非零基本作用为 f_1↦c e_1 (c≠0)。primitive 空间中的 f_1∧z (z∈span{e_2,...,e_4,f_2,...,f_4}) 分别映到 c e_1∧z，给出六个独立像方向，其余基本项均不增加像。因此
+
+\[
+\operatorname{rank}P_X=6,
+\qquad\text{Jordan 类型为 }2^6 1^{15}.\tag{21.2}
+\]
+
+更一般地，若 X²=0 且 rank X=r 在 n 维辛空间中，写 t=n−2r。自然表示作为 nilpotent Jordan 模由 r 个二维块与 t 个平凡块组成。二阶外幂中，每两个二维块贡献一个三维块与一个平凡块，每个二维块与一个平凡块贡献一个二维块，同一二维块的外幂为平凡块；primitive 部分再删除一个不变平凡块。这给出
+
+\[
+\#J_3=\binom r2,\quad \#J_2=rt,
+\quad \#J_1=r+\binom r2+\binom t2-1,
+\]
+\[
+\operatorname{rank}P_X=r(n-r-1),
+\qquad\operatorname{rank}P_X^2=\binom r2.\tag{21.3}
+\]
+
+这个分解可以通过对每个二维 Jordan 块的两个基向量直接求楔积得到。它解释了下面算例中 rank 2、3 的自然平方零算子仍会在 primitive 作用平方中留下秩 1、3，且不会被 (21.1) 错收为 rank one。此处不将经典 Jordan 张量分解单列为新发现。
+

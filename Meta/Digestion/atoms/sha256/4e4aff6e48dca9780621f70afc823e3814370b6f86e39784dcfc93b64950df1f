@@ -1,0 +1,8 @@
+在加法群 $R_T=\mathbb Z^{(\mathbb Z^3\times T)}$ 上定义魔群环乘法：
+
+$$
+\delta_{(p,r)}\star\delta_{(q,s)}
+=\delta_{(p+q,\operatorname{pair}(r,s))},
+\tag{SRC*}
+$$
+

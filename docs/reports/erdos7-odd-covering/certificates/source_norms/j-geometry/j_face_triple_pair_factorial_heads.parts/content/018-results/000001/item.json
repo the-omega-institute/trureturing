@@ -1,0 +1,57 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "cost-49"
+  },
+  "original_cost_index": {
+    "kind": "inline",
+    "value": 49
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 2
+  },
+  "expansion": {
+    "path": "content/018-results/000001/item/003-expansion.json",
+    "sha256": "2806c68640dbe70f99cc47ea9ff2dc65115d45e2ca5325af54cfae5ee25a01db",
+    "kind": "value"
+  },
+  "all_head_tail_split": {
+    "path": "content/018-results/000001/item/004-all_head_tail_split.json",
+    "sha256": "e2eb3976726bc1018239e98b3e82ba971e5ea7af67885700d8f115a857fb703b",
+    "kind": "value"
+  },
+  "scan": {
+    "path": "content/018-results/000001/item/005-scan.json",
+    "sha256": "3a7bfc7992294856fac59165d1450c01824e061548aad793f4cd50102b6bd330",
+    "kind": "object"
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "15189105300089302871/3969000000000000000"
+  },
+  "adopted_upper": {
+    "kind": "inline",
+    "value": "15189105300089302871/3969000000000000000"
+  },
+  "previous_adopted_upper": {
+    "kind": "inline",
+    "value": "3045114520043616887/793800000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "1302403576027913/141750000000000000"
+  },
+  "maximizing_cross_components": {
+    "path": "content/018-results/000001/item/010-maximizing_cross_components.json",
+    "sha256": "f9007149e76ed23f859b7845bb20e66be9b6f8d6bdedd26021407e6970709fbd",
+    "kind": "value"
+  },
+  "maximizing_conditional_PZZ_endpoints": {
+    "kind": "inline",
+    "value": [
+      "195197/529200",
+      "89/240"
+    ]
+  }
+}

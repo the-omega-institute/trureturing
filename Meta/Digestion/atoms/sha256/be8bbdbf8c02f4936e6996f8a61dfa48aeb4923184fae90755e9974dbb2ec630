@@ -1,0 +1,5 @@
+**定理 3.4（记录操作与局部约化态的充分性）。** 对假设 1.2的$(K_a)_a$，映射
+$$
+W\psi=\sum_aK_a\psi\otimes|a\rangle
+$$
+等距，且丢弃记录给出$\Phi(\varrho)=\sum_aK_a\varrho K_a^\dagger$。$\Phi$保迹，并在张量任意有限辅助系统后保持正性。

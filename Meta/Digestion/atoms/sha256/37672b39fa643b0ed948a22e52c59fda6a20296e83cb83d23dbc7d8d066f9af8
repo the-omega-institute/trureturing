@@ -1,0 +1,5 @@
+**定理 31.3（源动作向目标全信息 Bayes 动作的迁移界）。** 假设存在一个只依赖 $(Z,Q)$ 的读出 $a_s(Z,Q)$，且对每个源支持中的 $(h,q)$，$a_s(\phi(h,q),q)$ 是 $r_s(\cdot\mid h,q)$ 的最小化动作。则
+$$
+R_t(\alpha_s)-R_t^*
+\le 2M\,\mathbb E_t[\delta(H,Q)].
+$$

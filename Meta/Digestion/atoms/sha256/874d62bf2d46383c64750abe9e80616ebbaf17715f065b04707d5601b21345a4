@@ -1,0 +1,11 @@
+### 80.4 近似乘法闭包与历史预算
+
+对一个有限维预测截断 $V\subseteq V_\infty$，先选定矩阵范数，并令距离取该范数到子空间的距离；定义乘法缺陷
+
+$$
+\eta(V)
+=
+\sup_{\substack{A,B\in V\\\|A\|,\|B\|\le1}}
+\operatorname{dist}(AB,V+iV).
+$$
+

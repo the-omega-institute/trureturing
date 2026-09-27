@@ -1,0 +1,69 @@
+{
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "2": "31/16",
+      "3": "17/16"
+    }
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "15189105300089302871/3969000000000000000"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "two_projection_branches": 125000,
+      "two_bounded": 124950,
+      "four_projection_branches": 2500,
+      "four_bounded": 707,
+      "six_projection_branches": 17930,
+      "six_affine_bounded": 888,
+      "conditional_affine_bounded": 16400,
+      "joint_dual_branches": 642
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 62500000
+  },
+  "seed_upper": {
+    "kind": "inline",
+    "value": "15189105300089302871/3969000000000000000"
+  },
+  "seed_records": {
+    "path": "content/018-results/000001/item/005-scan/005-seed_records.json",
+    "sha256": "8da19daabb684413fd62625c248e2d1acc35b063fb10f79d42bb859a52d82731",
+    "kind": "array"
+  },
+  "maximizing_certificate_branch": {
+    "path": "content/018-results/000001/item/005-scan/006-maximizing_certificate_branch.json",
+    "sha256": "d64165be82cc5bf56231349945e2723c464fcf23670d914b26347d54f7c8f479",
+    "kind": "value"
+  },
+  "maximum_pruned": {
+    "kind": "inline",
+    "value": {
+      "two": "5781863/1512000",
+      "four": "5786203/1512000",
+      "six": "40502321/10584000",
+      "conditional": "5786183/1512000"
+    }
+  },
+  "independent_affine_checks": {
+    "kind": "inline",
+    "value": 19
+  },
+  "new_distinct_duals": {
+    "kind": "inline",
+    "value": 613
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "b4a675c5a3bf559ed9e7d54c92a36d4b76b0b9c6f6d1c89ce19113e5f8af93c6"
+  },
+  "scanner_kind": {
+    "kind": "inline",
+    "value": "complete-original-conditional-two-four-six"
+  }
+}

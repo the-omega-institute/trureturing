@@ -1,0 +1,19 @@
+**定义 24.1（共同初态、精度与合法加一历史）。** 固定素数 $p\ge2$，以 $\mathbb Z_p$ 为 p 进整数环，$q_m:\mathbb Z_p\to\mathbb Z/p^m\mathbb Z$ 为自然投影，$m\ge0$，$q_0$ 是模一的唯一读数。$[q_m(x)]\in\{0,\ldots,p^m-1\}$ 表示规范整数代表。初始协议仅允许单位动作
+$$
+T(x)=x+1,\qquad T^n(x)=x+n\quad(n\in\mathbb N).
+$$
+所有读数不扰动状态，来自同一初态和同一条轨道。动作数、精度、传感器身份及实际结果均保留在档案。已知事件数 $n_i\in\mathbb N$、深度 $m_i$ 的实际记录为
+$$
+y_i=q_{m_i}(x+n_i).
+\tag{24.101}
+$$
+若有完整旧记录 $C$，所有新增条件均与 $C^{-1}(C_{\rm actual})$ 相交。初态 $x$ 与当前态 $x+n_i$ 是不同目标，由已知事件数运输；未知事件数、起点、增量或传感器标度须列为共同未知量。数学上的所有可能历史不是实际已执行的有限历史，也不提供秒、回溯或复制许可。
+
+使用 $d_p(x,y)=|x-y|_p$、$|p|_p=p^{-1}$，有
+$$
+q_m(x)=q_m(y)\iff x-y\in p^m\mathbb Z_p
+\iff d_p(x,y)\le p^{-m}.
+\tag{24.102}
+$$
+这是 p 进整数投影核与距离的标准关系，参见 Gouvêa, *p-adic Numbers: An Introduction*, 2nd ed., Springer, 1997，及 Mathlib `PadicInt.ker_toZModPow`、`ext_of_toZModPow`。仓内 `PadicBallFiberCorrespondence.modeq_iff_padic_dist_le` 的整数输入结论是它在 $\mathbb Z$ 上的特化；此处完整载体为 $\mathbb Z_p$。
+

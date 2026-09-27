@@ -1,0 +1,9 @@
+
+
+对任意$A\subseteq T$，令
+$$
+\Theta_i(A)=\sum_{t\in A}\theta_{i,t},\qquad
+|e_i^A\rangle=\bigotimes_{t\in A}|e_i^{(t)}\rangle,\qquad
+\Gamma_A(i,j)=\prod_{t\in A}G_t(i,j).
+$$
+张量因子始终按时间递增排列。空和为零，空积为一，空张量空间为$\mathbb C$且$|e_i^\varnothing\rangle=1$；因而$\Gamma_\varnothing$是全部元素为一的矩阵，不是单位矩阵。取$N=0$时只剩恒等系统演化。阶段的重叠和相位可以逐时刻、逐标签变化，全部陈述只涉及这个有限时间集合。

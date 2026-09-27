@@ -1,0 +1,6 @@
+**定理 46.13（最小见证的有效界恰需额外判定能力）。** 不存在总可计算函数 $g(\sigma)$，使每个可解系统都有满足 $\|\mathbf n\|_\infty\le g(\sigma)$ 的自然解；因此也不存在只依赖编码长度的总可计算界。更一般地，在任意语法可判定的系统类上，存在这种总可计算见证上界，当且仅当该类上的可解性可判定。对全部系统定义
+$$
+H(N)=\max\Bigl(\{0\}\cup\bigl\{\min_{\mathbf n\in S_\sigma}\|\mathbf n\|_\infty:|\sigma|\le N,\ S_\sigma\ne\varnothing\bigr\}\Bigr).
+$$
+每个 $H(N)$ 都是有限自然数，但此函数没有总可计算的逐点上界。
+

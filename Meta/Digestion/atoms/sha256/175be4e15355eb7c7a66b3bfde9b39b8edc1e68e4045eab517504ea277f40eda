@@ -1,0 +1,16 @@
+**定义 23.1（能量归一的可见与隐藏分块）。** 取有限维实反对称矩阵
+\[
+ \Omega=\begin{pmatrix}D&B\\-B^{\mathsf T}&E\end{pmatrix},
+ \quad D\in\mathbb R^{r\times r},\quad E\in\mathbb R^{k\times k},
+ \quad r,k\ge1,
+\]
+其中 $D,E$ 反对称，令 $M=BB^{\mathsf T}$、$g=\|B\|_2$。以 $Q=(I_r\ 0)$、$P=(0\ I_k)$ 为坐标投影，记
+\[
+ F_t=Qe^{t\Omega}Q^{\mathsf T},\qquad L_t=Qe^{t\Omega}P^{\mathsf T}.
+\]
+热坐标采用标准 Gaussian 参考 $\gamma_r\otimes\gamma_k$。对任意可见初始分布 $\nu$，以隐藏初态 $V_0\sim\gamma_k$ 独立初始化，定义概率核
+\[
+ \mathsf T_t(u,\cdot)=\mathcal N(F_tu,I_r-F_tF_t^{\mathsf T}),\qquad t\ge0.
+\]
+允许退化 Gaussian。该核对应一次联合初始化后演化到 $t$ 并取边缘；连续复合核意味着每段重新初始化隐藏变量，二者的过程语义分别指定。正定二次 Hamilton 系统经 $S^{1/2}$ 及正交分块可得到此模型，$\Omega$ 可逆时对应非退化 Poisson 结构。以下有限反对称模型也允许零频率。热量纲已吸收到坐标中，$D_{\rm KL}$ 均用自然对数。
+

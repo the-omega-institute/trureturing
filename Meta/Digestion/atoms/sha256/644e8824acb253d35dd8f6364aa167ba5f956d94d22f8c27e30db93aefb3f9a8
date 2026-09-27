@@ -1,0 +1,41 @@
+**theorem 42.13 (Joint surjectivity and exact rank range).** For the direct sum define
+$$
+J=(S(\operatorname{pr}_V),S(\operatorname{pr}_W)):
+S(V\oplus W)\longrightarrow S(V)\times S(W).
+\tag{42.21}
+$$
+It is a continuous surjection. It is injective if and only if $V=0$ or $W=0$.
+
+If $p,q$ have ranks $r,s$, then every joint witness $h\in J^{-1}(p,q)$ has rank $m$ satisfying
+$$
+\max(r,s)\le m\le r+s,
+\tag{42.22}
+$$
+and every integer in this interval occurs. A fiber with a zero marginal is a singleton. Every fiber with both marginals nonzero has cardinality $\mathfrak c$.
+
+**Proof.** Let $(v_1,\ldots,v_r)$ and $(w_1,\ldots,w_s)$ represent $p,q$. The independent joint list
+$$
+(v_1,0),\ldots,(v_r,0),(0,w_1),\ldots,(0,w_s)
+\tag{42.23}
+$$
+has those two marginals by the deletion rule, proving surjectivity. Continuity follows from Theorem 42.12.
+
+For any joint support $L=U_h$, its projections are $U_p,U_q$. Hence $L\subseteq U_p\oplus U_q$, while the projection dimensions give $\dim L\ge r,s$. This proves (42.22). To attain $m=r+s-k$, where $0\le k\le\min(r,s)$, use the list
+$$
+(v_1,w_1),\ldots,(v_k,w_k),
+(v_{k+1},0),\ldots,(v_r,0),
+(0,w_{k+1}),\ldots,(0,w_s).
+\tag{42.24}
+$$
+Its independence follows first by projecting a linear relation to $V$, which kills all coefficients involving a $v_i$, and then to $W$, which kills the remaining coefficients. Its marginals are the required lists.
+
+If $q=\mathbf0$, then $L\subseteq V\oplus0$, and the inclusion theorem gives exactly one joint witness with first marginal $p$. The other zero case is the same argument with the factors exchanged. Thus if one vector space is zero, $J$ is injective.
+
+If $r,s>0$, the lists
+$$
+(v_1,cw_1),(v_2,0),\ldots,(v_r,0),
+(0,w_2),\ldots,(0,w_s),\qquad c>0,
+\tag{42.25}
+$$
+are independent and lie in the specified fiber. Their first oriented rays differ for distinct $c$, so Theorem 42.6 makes their signatures distinct. There are $\mathfrak c$ of them, and Theorem 42.10 bounds the entire joint space by $\mathfrak c$. This proves the fiber cardinality. When both vector spaces are nonzero, choose nonzero rank-one marginals; their fiber is not a singleton, proving the remaining noninjectivity assertion. $\square$
+

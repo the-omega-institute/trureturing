@@ -1,0 +1,45 @@
+**定义 39.1（声明来源的完成化合同）。** 对每个 $l\in\mathbb N_0$，给有限非空离散空间 $W_l,Z_l,U_l$，以及处处定义的连接映射
+$$
+\alpha_l:W_{l+1}\to W_l,\qquad
+\beta_l:Z_{l+1}\to Z_l,\qquad
+\gamma_l:U_{l+1}\to U_l.
+$$
+不要求任何连接映射满射。标签读出 $\lambda_l:W_l\to Z_l$、来源读出 $\sigma_l:W_l\to U_l$ 满足
+$$
+\lambda_l\alpha_l=\beta_l\lambda_{l+1},\qquad
+\sigma_l\alpha_l=\gamma_l\sigma_{l+1}.
+\tag{39.1}
+$$
+写 $W_\infty=\varprojlim(W_l,\alpha_l)$，并同样定义 $Z_\infty,U_\infty$；均取紧可度量逆极限拓扑及其 Borel $\sigma$ 代数。坐标记为 $\pi_l^W,\pi_l^Z,\pi_l^U$。交换式逐坐标诱导连续读出 $\lambda_\infty:W_\infty\to Z_\infty$、$\sigma_\infty:W_\infty\to U_\infty$。
+
+固定一个实际 Borel 概率 $\rho_\infty$，只用它的投影 $\rho_l=(\pi_l^W)_*\rho_\infty$，并定义
+$$
+P_l=(\lambda_l)_*\rho_l,\quad \nu_l=(\sigma_l)_*\rho_l,\qquad
+P_\infty=(\lambda_\infty)_*\rho_\infty,\quad
+\nu_\infty=(\sigma_\infty)_*\rho_\infty.
+\tag{39.2}
+$$
+$U_l$ 是该层所声明全部来源条目的联合取值空间，$\nu_l$ 是它们的联合律；分别列出来源边缘会定义一个较弱的问题。各层实际律来自这同一个实际对象，不能独立拟合后只保留若干相同边缘。
+
+给定相容目标概率 $(\beta_l)_*Q_{l+1}=Q_l$；其唯一完成 Borel 律 $Q_\infty$ 由定理39.3构造。给合法世界集合 $A_l\subseteq W_l$，满足
+$$
+\alpha_l(A_{l+1})\subseteq A_l,\qquad
+A_\infty=\bigcap_{l\ge0}(\pi_l^W)^{-1}(A_l).
+\tag{39.3}
+$$
+有限及完成准入类规定为全部且仅有
+$$
+\begin{aligned}
+\mathcal L_l=\{\theta_l\in\operatorname{Prob}(W_l):\;&
+(\lambda_l)_*\theta_l=Q_l,\quad
+(\sigma_l)_*\theta_l=\nu_l,\quad\theta_l(A_l)=1\},\\
+\mathcal L_\infty=\{\theta\in\operatorname{Prob}_{\rm Borel}(W_\infty):\;&
+(\lambda_\infty)_*\theta=Q_\infty,\quad
+(\sigma_\infty)_*\theta=\nu_\infty,\quad\theta(A_\infty)=1\}.
+\end{aligned}
+\tag{39.4}
+$$
+假设对每个 $l$ 都有 $\mathcal L_l\ne\varnothing$。这是来源、目标和支撑的同时可行性，不由各边缘分别可行推出。概率允许任意实数质量及零质量；例子的严格正性不是一般前提。若改为要求所有候选逐点严格正，闭性和最小值达到性可能丢失。
+
+实际合法性 $\rho_\infty(A_\infty)=1$ 不属于下述距离定理的必要假设。将实际律作为可行候选或合法供给律时，须另加相应合法性及目标条件。额外的档案、参考、准备、机制或原来源限制，须以自己的非空紧有限类、投影保持及准确完成语义接入；称 $U$ 为联合来源不证明全部已获关系已被纳入。任意 $W_l$ 不是字面上的循环元组字母表 $B_l^n$；本节不假设循环置换、割支撑或循环剩余量。
+

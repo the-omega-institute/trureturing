@@ -1,0 +1,2 @@
+对任意总项 $H$，总项 $X\boxplus(H(X)\boxplus N(H(X)))$ 的 $q$ 恒等于 $q(X)$，包括 $H(X)=X\boxtimes X$；故终端的线性不要求每个中间自乘子项消失。另取两个同位置、同时刻的正点 $e_0,e_1$，来源分别为 $l_0=\operatorname{leaf}(0),l_1=\operatorname{leaf}(1)$，再加两个孤立未选负点使之平衡，关系为空。若 $Q$ 恰要求子点来源为 $\operatorname{pair}(l_0,l_1)$，则选择依次为 $\varnothing,\{e_0\},\{e_1\},\{e_0,e_1\}$ 时，$q(D_Q(X))$ 依次为 $0,0,0,1$。
+

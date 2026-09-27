@@ -1,0 +1,22 @@
+**Proof.** Let $C^s$ be the depth-one cylinder containing $x_1^s$. For phases sufficiently close to $E_1$ but unequal to it, every lift belongs to $C^s$ exactly when its phase lies on side $s$ of $E_1$.
+
+Fix $\theta,s$, and choose $b\in H^{-1}(\{E_1-\theta\})$. The conditions
+$$
+\vartheta(p)\in\theta+(-\varepsilon,\varepsilon),\qquad p(b)\in C^s
+$$
+define an open subset of $\mathscr E$. For $\vartheta(p)\ne\theta$, the phase identity in Theorem 37.1 shows that these conditions hold exactly for phases in $I_s(\theta,\varepsilon)$. At phase $\theta$, the classification leaves $P_\theta^+$, $P_\theta^-$, and possibly the single iterate $T^n$ with $n\delta=\theta$. The evaluation condition selects $P_\theta^s$ from the first two. Removing that possible finite iterate, a closed singleton, produces exactly $V_s(\theta,\varepsilon)$. Hence these sets are open.
+
+To prove the base assertion, consider an arbitrary basic product neighborhood of $P_\theta^s$. It prescribes neighborhoods of $P_\theta^s(b_1),\ldots,P_\theta^s(b_r)$ at finitely many actual inputs. For each input whose target phase is nonsplit, all lifts of sufficiently nearby phases lie in its prescribed neighborhood. For each input whose target phase is split, all lifts of sufficiently nearby phases on side $s$ lie in the prescribed neighborhood of the selected branch. These are the finite-depth consequences proved in Theorem 37.2. Choosing one sufficiently small $\varepsilon$ for all the inputs shows that the entire set $V_s(\theta,\varepsilon)$ lies in the given product neighborhood. This argument applies equally to the finite iterates and selector operators occurring at the nearby phases; it does not assume their continuity as functions of the input.
+
+Intersecting with $\mathscr D$ proves the stated base there. These are precisely the circular order neighborhoods which start immediately after $\theta^-$ at $\theta^+$, or end immediately before $\theta^+$ at $\theta^-$. Equivalently, cut the doubled circle between $0^-$ and $0^+$: the resulting linear order has least point $0^+$, greatest point $0^-$, and, for $0<t<1$, the consecutive points $t^-<t^+$ ordered first by $t$. Its order topology has exactly the displayed local bases. The analogous bases with a middle isolated point at $n\delta$ give the full asserted circular order description. Therefore these are homeomorphisms of the actual function spaces, not merely bijections of labels.
+
+Restricting $\varepsilon$ to a decreasing countable sequence gives first countability. Density of $\mathcal I$ holds by definition. Every displayed neighborhood in $\mathscr D$ contains both signs at phases in a nonempty open arc, proving density of each sign subset. It also shows why the topology is not the product topology, in which the two sign subsets would be closed.
+
+For nonmetrizability, fix $0<\varepsilon<\varepsilon_*$ and represent phases in $[0,1)$. Suppose $\mathscr D$ had a countable base $\mathcal B$. For each $\theta\in(0,1/2)$ choose
+$$
+P_\theta^+\in B_\theta\subseteq U_+(\theta,\varepsilon),\qquad B_\theta\in\mathcal B.
+$$
+If $0<\theta<\eta<1/2$ and $B_\theta=B_\eta$, then $P_\theta^+$ would belong to $U_+(\eta,\varepsilon)$. This is impossible: that neighborhood contains only its starting point and phases strictly greater than $\eta$, without wrapping around the circle. Thus the $B_\theta$ are pairwise distinct, contradicting countability. A compact metrizable space is second countable, so $\mathscr D$ is not metrizable; neither is $\mathscr E$, which contains it as a closed subspace.
+
+The classification and distinctness in Theorem 37.4 give the stated cardinalities. There is no contradiction between countable density, first countability, and failure of second countability. $\square$
+

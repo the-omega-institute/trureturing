@@ -1,0 +1,1 @@
+**定义 19.1（因果解释的关系）。** 给低层、高层结构因果模型、允许干预偏序集 $\mathcal I_L,\mathcal I_H$，部分满射状态映射 $\tau$ 与保序部分满射干预映射 $\omega:\operatorname{dom}\omega\twoheadrightarrow\mathcal I_H$，其中 $\operatorname{dom}\omega\subseteq\mathcal I_L$。本节限定所比较解都在状态映射的定义域内。精确抽象要求对每个 $i\in\operatorname{dom}\omega$，低层解集合经 $\tau$ 的像恰等于高层在 $\omega(i)$ 下的解集合，同时保留所需输出。

@@ -1,0 +1,28 @@
+**定理 87.2（共同有限 iid 观察下的双先验后验与纤维缺陷极限）。** 在定义与假设 87.1 下，存在关于无限记录可测的解码器
+$$
+\widehat s:Z^{\mathbb N_{>0}}\to\mathcal S
+$$
+使得 $\widehat s((Z_t)_{t\ge1})=s(X)$ 在 $\mathbb P_d$ 与 $\mathbb P_q$ 下均几乎处处成立。写 $S=s(X)$。在实际律 $\mathbb P_d$ 下，$d_S>0$ 几乎处处，且同步使用同一记录的后验在类外零延拓后满足
+$$
+d_{n,j}\longrightarrow d^S_j,\qquad
+q_{n,j}\longrightarrow q^S_j
+\quad\text{对所有 }j\in J\text{ 同时几乎处处成立}.
+\tag{87.6}
+$$
+进一步，
+$$
+\boxed{\delta_n\longrightarrow\delta_S
+\quad\text{几乎处处且在 }L^1(\mathbb P_d)\text{ 中}.}
+\tag{87.7}
+$$
+因此
+$$
+\boxed{
+\lim_{n\to\infty}\mathbb E_d\delta_n
+=\sum_{c:d_c>0}d_c\delta_c
+=D(d_0\Vert E_{q_0,(r,s)}d_0).
+}
+\tag{87.8}
+$$
+逐路径极限是依赖真实类的随机变量 $\delta_S$；式 (87.8) 是其确定的平均值。该定理识别的是观察行类，不是类内的个别状态。对 $d_c>0$ 的类，非单点类也不必留下正缺陷：若两条件先验相同，则该类缺陷为零；更一般地，定理 73.3 的纤维恢复等号条件给出 $\delta_c=0$ 当且仅当 $d^c=E_{q^c,r_c}d^c$。
+

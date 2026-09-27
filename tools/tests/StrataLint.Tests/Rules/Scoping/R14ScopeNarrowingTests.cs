@@ -28,7 +28,7 @@ public sealed class R14ScopeNarrowingTests
     {
         var unrelated = DuplicateGidHistory();
         SetDelta(unrelated, UnrelatedPath, "base\n", "candidate\n");
-        Assert.Equal(0, CountFindings(Execute(unrelated, UnrelatedPath), 15, DuplicateMessage));
+        Assert.Equal(2, CountFindings(Execute(unrelated, UnrelatedPath), 15, DuplicateMessage));
 
         var implementation = DuplicateGidHistory();
         Assert.Equal(
@@ -60,8 +60,7 @@ public sealed class R14ScopeNarrowingTests
     {
         var unrelated = EvidenceCollisionHistory();
         SetDelta(unrelated, UnrelatedPath, "base\n", "candidate\n");
-        Assert.Equal(
-            0,
+        Assert.Equal(2,
             CountFindings(Execute(unrelated, UnrelatedPath), 15, EvidenceCollisionMessage));
 
         var implementation = EvidenceCollisionHistory();
@@ -130,7 +129,7 @@ public sealed class R14ScopeNarrowingTests
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, path, Header("D5/B/S0/Carrier/AnchorProbe", "https://invalid"));
         SetDelta(unrelated, UnrelatedPath, "base\n", "candidate\n");
-        Assert.Equal(0, CountFindings(Execute(unrelated, UnrelatedPath), 15, message));
+        Assert.Equal(1, CountFindings(Execute(unrelated, UnrelatedPath), 15, message));
 
         var changed = new RuleFixture();
         changed.Baseline[path] = Header("D5/B/S0/Carrier/AnchorProbe");
@@ -157,7 +156,7 @@ public sealed class R14ScopeNarrowingTests
 
         var unrelated = BadgeHistory(badgePath);
         SetDelta(unrelated, unrelatedStatusPath, "base\n", "candidate\n");
-        Assert.Equal(0, CountFindings(Execute(unrelated, unrelatedStatusPath), 6, message));
+        Assert.Equal(1, CountFindings(Execute(unrelated, unrelatedStatusPath), 6, message));
 
         var changed = new RuleFixture();
         SetDelta(changed, badgePath, "plain text\n", "status: proven\n");
@@ -180,8 +179,7 @@ public sealed class R14ScopeNarrowingTests
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, RuleFixture.RingPath, malformed);
         unrelated.Files[RuleFixture.ValuesBindingPath] += "-- candidate delta\n";
-        Assert.Equal(
-            0,
+        Assert.Equal(1,
             CountFindings(Execute(unrelated, RuleFixture.ValuesBindingPath), 12, message));
 
         var changed = new RuleFixture();
@@ -205,8 +203,7 @@ public sealed class R14ScopeNarrowingTests
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, orphanPath, "# historical orphan\n");
         unrelated.Files[RuleFixture.BlueprintPath] += "candidate delta\n";
-        Assert.Equal(
-            0,
+        Assert.Equal(1,
             CountFindings(Execute(unrelated, RuleFixture.BlueprintPath), 25, message, orphanPath));
 
         var implementation = new RuleFixture();

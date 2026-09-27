@@ -1,0 +1,7 @@
+## RK.3 可由数据检查的唯一性条件及显式恢复
+
+对 i≠j 定义完全由读数计算的
+
+$$k_{ij}=-\frac{\alpha_{ij}s_j}{\sigma_j}-
+\sum_{\ell\notin\{i,j\}}\frac{\alpha_{i\ell}\beta_{\ell j}}{\sigma_\ell}.$$
+

@@ -1,0 +1,5 @@
+**定义 124.1（合法串、有限核心与实际前缀像）。** 所有下标从 $0$ 开始，令
+$$
+\widehat X=\{x\in\{0,1\}^{\mathbb N}:\ \forall j\ge0,\ x_jx_{j+1}=0\},\qquad
+X_{\rm fs}=\{x\in\widehat X:\ \exists N\ \forall j\ge N,\ x_j=0\}.
+$$

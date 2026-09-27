@@ -1,0 +1,32 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/single.json",
+        "sha256": "146b4f425a39ebbe014c8fee4a942fd1cb7c4c326eca6511b2add2e5474fdeb4",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000001/single.json",
+        "sha256": "e4dcf5dd2fd760ca577a1a3b49d90cba89def631ad941e4f96f79a54ccbb3e7a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000002/single.json",
+        "sha256": "89f480ba28128a572c63180741b524ec7232d11c07ee9d01a1a48c9d2b6604f4",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

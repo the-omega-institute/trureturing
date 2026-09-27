@@ -13,6 +13,7 @@ import argparse
 import copy
 from dataclasses import dataclass
 from fractions import Fraction
+import io
 import json
 from pathlib import Path
 import re
@@ -111,6 +112,94 @@ def nearest(z):
     """Nearest integer; exact halves go to the smaller integer."""
     quotient, remainder = divmod(z.n, z.d)
     return quotient + int(2 * remainder > z.d)
+
+
+class IntegerObserver:
+    """Table-free integer realization of the grid observer from ML §42.
+
+    The fixed parameters are retained as integer pairs.  Between reports only
+    the current grid index is persistent; every successor and readout is
+    recomputed from that index.
+    """
+
+    def __init__(self, p, r, eps):
+        parameters(p, r, eps)
+        self.p, self.r, self.eps = p, r, eps
+        self.P, self.A = p.n, p.d
+        self.R, self.B = r.n, r.d
+        self.E, self.C = eps.n, eps.d
+        self.D = self.A - 2 * self.P
+        self.H = self.B - 2 * self.R
+        if 4 * self.E * self.A >= self.C * self.D:
+            self.u, self.v = 1, 1
+        else:
+            self.u, self.v = 4 * self.E * self.A, self.C * self.D
+        numerator = self.H * (self.u + self.v) ** 3
+        denominator = self.R * self.u * self.v ** 2
+        self.m = 2 * ((numerator + denominator - 1) // denominator)
+        self.N = self.m + 1
+        self.index = self.m // 2
+
+    def grid_numerator(self, index):
+        if type(index) is not int or not 0 <= index <= self.m:
+            raise CertificateError("grid index out of range")
+        return self.R * self.m + self.H * index
+
+    def _transition_parts(self, index, report):
+        U = self.grid_numerator(index)
+        if report == 0:
+            return self.P * self.B * self.m + self.D * U, (self.A - self.P) * U
+        if report == 1:
+            return (self.A - self.P) * self.B * self.m - self.D * U, self.P * U
+        raise CertificateError("report must be 0 or 1")
+
+    def target(self, index, report):
+        denominator, numerator = self._transition_parts(index, report)
+        quotient, remainder = divmod(self.m * numerator, denominator)
+        return quotient + int(2 * remainder > denominator)
+
+    def readout(self, index=None):
+        if index is None:
+            index = self.index
+        denominator, _ = self._transition_parts(index, 0)
+        return [str(denominator), str(self.A * self.B * self.m)]
+
+    def step(self, report):
+        self.index = self.target(self.index, report)
+        return self.readout()
+
+
+def stream_reports(observer, source, sink):
+    """Emit one exact JSON prediction for the empty history and each report.
+
+    ``source`` is consumed incrementally.  Whitespace is ignored, and each
+    non-whitespace byte must be an ASCII report bit.  ``sink`` receives one
+    JSON line at a time and may discard it.
+    """
+    def emit(value):
+        sink.write(json.dumps(value, separators=(",", ":")) + "\n")
+        flush = getattr(sink, "flush", None)
+        if flush is not None:
+            flush()
+
+    def emit_prediction():
+        emit({"index": observer.index, "prediction": observer.readout()})
+
+    emit_prediction()
+    while True:
+        chunk = source.read(1)
+        if chunk in (b"", ""):
+            break
+        if isinstance(chunk, str):
+            byte = chunk
+        else:
+            byte = chunk.decode("ascii")
+        if byte.isspace():
+            continue
+        if byte not in "01":
+            raise CertificateError("stream reports must be ASCII 0 or 1")
+        emit_prediction_after = observer.step(int(byte))
+        emit({"index": observer.index, "prediction": emit_prediction_after})
 
 
 def construct(p, r, eps):
@@ -348,6 +437,244 @@ def checks():
                                            "words_including_empty": history_count}}
 
 
+def _fraction_grid_reference(p, r, eps):
+    """Independent Fraction reference for the integer grid evaluator."""
+    d, eta = Fraction(1) - 2 * p, Fraction(1) - 2 * r
+    k = min(Fraction(1), 4 * eps / d)
+    K = 1 + k
+    scale = K ** 3 * eta / (r * k)
+    m = 2 * ((scale.numerator + scale.denominator - 1) // scale.denominator)
+
+    def nearest_fraction(value):
+        quotient = value.numerator // value.denominator
+        remainder = value - quotient
+        return quotient + int(2 * remainder > 1)
+
+    rows = []
+    for j in range(m + 1):
+        q = r + eta * j / m
+        b0 = (1 - p) * q / (p + d * q)
+        b1 = p * q / (1 - p - d * q)
+        rows.append({"q": q,
+                     "readout": p + d * q,
+                     "targets": [nearest_fraction(m * b) for b in (b0, b1)]})
+    return m, rows
+
+
+def integer_checks():
+    """Independent bounded checks for the table-free integer observer."""
+    cases = [
+        (Q(1, 4), Q(1, 4), Q(1, 16), "reduced"),
+        (Q(2, 8), Q(2, 8), Q(2, 32), "unreduced"),
+        (Q(1, 4), Q(1, 4), Q(1, 8), "k-saturation"),
+        (Q(1, 3), Q(1, 5), Q(1, 64), "general"),
+    ]
+    summaries = []
+    for p, r, eps, label in cases:
+        observer = IntegerObserver(p, r, eps)
+        m, reference = _fraction_grid_reference(p.fraction(), r.fraction(), eps.fraction())
+        require(observer.m == m and observer.index == m // 2, f"{label}: initialization")
+        require(Fraction(observer.grid_numerator(0), observer.B * m) == r.fraction(),
+                f"{label}: lower endpoint")
+        require(Fraction(observer.grid_numerator(m), observer.B * m) == (1 - r.fraction()),
+                f"{label}: upper endpoint")
+        for j, row in enumerate(reference):
+            actual_readout = Fraction(*map(int, observer.readout(j)))
+            require(actual_readout == row["readout"], f"{label}: readout {j}")
+            for report in (0, 1):
+                require(observer.target(j, report) == row["targets"][report],
+                        f"{label}: target {j}:{report}")
+        summaries.append({"label": label, "states": observer.N,
+                          "checked_targets": 2 * observer.N,
+                          "checked_readouts": observer.N})
+
+    base = IntegerObserver(Q(1, 4), Q(1, 4), Q(1, 16))
+    retained = load(Path(__file__).with_name("rational_observer_certificate.json"))
+    require(len(retained["states"]) == base.N, "retained table state count")
+    for j, row in enumerate(retained["states"]):
+        require(base.target(j, 0) == row["targets"][0]
+                and base.target(j, 1) == row["targets"][1],
+                f"retained table target {j}")
+        require(Fraction(*map(int, base.readout(j))) == Fraction(*map(int, row["readout"])),
+                f"retained table readout {j}")
+
+    # Saturation equality uses k=1 exactly; both exact lower-index ties are
+    # pinned by the supplied regressions, one in each report branch.
+    saturated = IntegerObserver(Q(1, 4), Q(1, 4), Q(1, 8))
+    require(saturated.u == saturated.v == 1, "saturation equality")
+    tie_cases = [(Q(1, 4), Q(1, 4), Q(1, 16), 6, 0),
+                 (Q(1, 3), Q(1, 4), Q(1, 16), 9, 1)]
+    ties = []
+    for p, r, eps, j, report in tie_cases:
+        observer = IntegerObserver(p, r, eps)
+        denominator, numerator = observer._transition_parts(j, report)
+        quotient, remainder = divmod(observer.m * numerator, denominator)
+        require(2 * remainder == denominator and observer.target(j, report) == quotient,
+                "exact lower-index tie")
+        ties.append({"p": p.pair(), "r": r.pair(), "eps": eps.pair(),
+                     "state": j, "report": report, "target": quotient})
+
+    for bad in (Q(0), Q(1, 2), Q(-1, 3)):
+        try:
+            IntegerObserver(bad, Q(1, 4), Q(1, 16))
+        except CertificateError:
+            pass
+        else:
+            raise AssertionError("invalid p accepted")
+    try:
+        IntegerObserver(Q(1, 4), Q(1, 4), Q(0))
+    except CertificateError:
+        pass
+    else:
+        raise AssertionError("nonpositive epsilon accepted")
+
+    class CountingSink:
+        def __init__(self):
+            self.lines = 0
+
+        def write(self, value):
+            self.lines += value.count("\n")
+
+    sink = CountingSink()
+    stream_observer = IntegerObserver(Q(1, 4), Q(1, 4), Q(1, 16))
+    initial_prediction = stream_observer.readout()
+    updated_prediction = stream_observer.step(0)
+    require(updated_prediction == stream_observer.readout()
+            and updated_prediction != initial_prediction, "fresh post-update output")
+    stream_reports(IntegerObserver(Q(1, 4), Q(1, 4), Q(1, 16)),
+                   io.BytesIO(b"01" * 5000), sink)
+    require(sink.lines == 10001, "long stream output count")
+
+    # Full-interval quotient failure: both inputs share rho=1, but their
+    # exact F_0 images round to distinct indices.  They are outside the
+    # fixed-prior reachable invariant and therefore are not a reachable
+    # witness against the grid trajectory theorem.
+    p = r = Fraction(1, 4)
+    m = 32
+    grid = lambda j: r + (1 - 2 * r) * j / m
+    rho = lambda x: min(range(m + 1), key=lambda j: (abs(x - grid(j)), j))
+    bayes_zero = lambda x: r + (1 - 2 * r) * ((1 - p) * x / (p + (1 - 2 * p) * x))
+    x, y = Fraction(13, 50), Fraction(27, 100)
+    require(rho(x) == rho(y) == 1, "ambient quotient input fiber")
+    require(rho(bayes_zero(x)) == 16 and rho(bayes_zero(y)) == 17,
+            "ambient quotient output split")
+    require(bayes_zero(x) == Fraction(77, 152) and bayes_zero(y) == Fraction(79, 154),
+            "ambient quotient exact values")
+
+    return {"cases": summaries, "retained_table": {"states": base.N,
+            "targets_and_readouts": 2 * base.N + base.N},
+            "exact_ties": ties, "invalid_boundary_rejections": 4,
+            "long_stream": {"reports": 10000, "emitted_lines": sink.lines},
+            "stale_output_regression": {"initial": initial_prediction,
+                "after_report_0": updated_prediction},
+            "ambient_counterexample": {"p": "1/4", "r": "1/4", "m": 32,
+                "inputs": [["13", "50"], ["27", "100"]], "shared_index": 1,
+                "F0": [["77", "152"], ["79", "154"]],
+                "output_indices": [16, 17],
+                "reachable_fixed_prior": False}}
+
+
+def unknown_checks():
+    """Bounded paired fixed-model checks for observation companion §48."""
+    require(sys.flags.optimize == 0, "unknown-checks requires assertions enabled")
+    ps, r = (Q(1, 4), Q(1, 3)), Q(1, 4)
+    rf = r.fraction()
+    initial = tuple((p, HALF, Fraction(1, 2), Fraction(1, 2)) for p in ps)
+    stack = [("", initial)]
+    words, zero_rows = 0, {}
+    while stack:
+        word, models = stack.pop()
+        require(tuple(p for p, _, _, _ in models) == ps, "fixed parameter identities")
+        readouts, rows = [], []
+        for p, q, v0, v1 in models:
+            pf, qf, mass = p.fraction(), q.fraction(), v0 + v1
+            label = f"p={pf}, word={word!r}"
+            require(pf ** len(word) <= mass <= (1 - pf) ** len(word)
+                    and v0 > 0 and v1 > 0, f"{label}: finite support")
+            require(qf == v1 / mass, f"{label}: scalar posterior versus masses")
+            y = output(p, q).fraction()
+            require(y == (pf * v0 + (1 - pf) * v1) / mass,
+                    f"{label}: current next-zero readout versus masses")
+            readouts.append(y)
+            rows.append({"p": p.pair(), "posterior": Q(qf.numerator, qf.denominator).pair(),
+                         "next_zero": Q(y.numerator, y.denominator).pair(),
+                         "word_probability": Q(mass.numerator, mass.denominator).pair()})
+        if len(word) <= 8:
+            words += 1
+        if word == "0" * len(word):
+            n = len(word)
+            qa, qb = (q.fraction() for _, q, _, _ in models)
+            a, b = readouts
+            gap = (a - b) / 2
+            require(qb < Fraction(9, 14) and b < Fraction(23, 42),
+                    f"zero prefix {n}: invariant bounds")
+            if n >= 3:
+                require(qa >= Fraction(19, 28) and a >= Fraction(33, 56)
+                        and gap > Fraction(1, 48), f"zero prefix {n}: rational barrier")
+            zero_rows[n] = {"n": n, "models": rows,
+                            "half_gap": Q(gap.numerator, gap.denominator).pair()}
+        # All words through 8, followed only by the zero branch through 64.
+        reports = (0, 1) if len(word) < 8 else (
+            (0,) if word == "0" * len(word) and len(word) < 64 else ())
+        for report in reports:
+            successors = []
+            for p, q, v0, v1 in models:
+                pf = p.fraction()
+                a0, a1 = ((pf * v0, (1 - pf) * v1) if report == 0
+                          else ((1 - pf) * v0, pf * v1))
+                u0, u1 = (1 - rf) * a0 + rf * a1, rf * a0 + (1 - rf) * a1
+                successors.append((p, update(p, r, q, report), u0, u1))
+            stack.append((word + str(report), tuple(successors)))
+
+    require(words == 511 and set(zero_rows) == set(range(65)), "bounded coverage")
+    for n in range(64):
+        before, after = (rational(zero_rows[j]["models"][0]["posterior"]).fraction()
+                         for j in (n, n + 1))
+        require(before < after, f"zero prefix {n}: p=1/4 increasing posterior")
+    require(all(rational(row["next_zero"]).fraction() == Fraction(1, 2)
+                for row in zero_rows[0]["models"]), "empty history exact prediction")
+    expected = {2: Fraction(5, 228), 3: Fraction(935, 41328), 4: Fraction(145, 6424)}
+    for n, value in expected.items():
+        require(rational(zero_rows[n]["half_gap"]).fraction() == value,
+                f"zero prefix {n}: exact half-gap")
+    require(expected[2] < expected[3] > expected[4], "finite nonmonotonicity")
+    require(rational(zero_rows[3]["models"][0]["posterior"]).fraction() == Fraction(19, 28)
+            and rational(zero_rows[3]["models"][0]["next_zero"]).fraction() == Fraction(33, 56),
+            "p=1/4 third iterate and readout")
+    require([rational(row["word_probability"]).fraction() for row in zero_rows[2]["models"]]
+            == [Fraction(9, 32), Fraction(19, 72)], "unequal two-report laws")
+    barrier = update(ps[1], r, Q(9, 14), 0).fraction()
+    require(barrier == Fraction(59, 92) < Fraction(9, 14), "invariant endpoint image")
+    require(output(ps[1], Q(9, 14)).fraction() == Fraction(23, 42)
+            and (Fraction(33, 56) - Fraction(23, 42)) / 2 == Fraction(1, 48),
+            "rational readout barrier")
+    # Exact square comparisons enclose the radicals; no floating-point premise.
+    scale = 10 ** 15
+    l3, u3 = Fraction(1732050807568877, scale), Fraction(1732050807568878, scale)
+    l17, u17 = Fraction(4123105625617660, scale), Fraction(4123105625617661, scale)
+    require(0 < l3 < u3 and l3 * l3 < 3 < u3 * u3, "sqrt(3) bracket")
+    require(0 < l17 < u17 and l17 * l17 < 17 < u17 * u17, "sqrt(17) bracket")
+    lower, upper = (3 * l3 - u17) / 48, (3 * u3 - l17) / 48
+    require(Fraction(1, 48) < lower < upper < expected[3], "limiting gap bracket")
+    return {"parameters": {"fixed_p_candidates": [p.pair() for p in ps],
+                "r": r.pair(), "hidden_bit_prior": HALF.pair()},
+            "bounded_history_crosscheck": {"max_length": 8, "paired_words": words,
+                "fixed_models_per_word": 2, "zero_prefix_max_length": 64,
+                "zero_prefixes_including_empty": len(zero_rows),
+                "distinct_paired_histories": words + len(zero_rows) - 9},
+            "zero_word_samples": [zero_rows[n] for n in (0, 1, 2, 3, 4, 8, 64)],
+            "invariant": {"p": ps[1].pair(), "posterior_upper": Q(9, 14).pair(),
+                "endpoint_image": Q(barrier.numerator, barrier.denominator).pair(),
+                "readout_upper": Q(23, 42).pair(), "half_gap_lower": Q(1, 48).pair(),
+                "checked_lengths": [3, 64]},
+            "finite_nonmonotonicity": "half_gap(2) < half_gap(3) > half_gap(4)",
+            "limit": {"expression": "(3*sqrt(3)-sqrt(17))/48",
+                "sqrt3_bracket": [Q(v.numerator, v.denominator).pair() for v in (l3, u3)],
+                "sqrt17_bracket": [Q(v.numerator, v.denominator).pair() for v in (l17, u17)],
+                "half_gap_bracket": [Q(v.numerator, v.denominator).pair()
+                                     for v in (lower, upper)]}}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -360,6 +687,13 @@ def main():
     ver.add_argument("--out")
     test = sub.add_parser("checks")
     test.add_argument("--out")
+    integer_test = sub.add_parser("integer-checks")
+    integer_test.add_argument("--out")
+    unknown_test = sub.add_parser("unknown-checks")
+    unknown_test.add_argument("--out")
+    stream = sub.add_parser("stream")
+    for name in ("p", "r", "eps"):
+        stream.add_argument(f"--{name}", required=True)
     args = parser.parse_args()
     try:
         if args.command == "generate":
@@ -370,6 +704,14 @@ def main():
             result = verify(load(args.certificate))
             emit(result, args.out)
             return 0 if result["valid"] else 1
+        elif args.command == "integer-checks":
+            emit(integer_checks(), args.out)
+        elif args.command == "unknown-checks":
+            emit(unknown_checks(), args.out)
+        elif args.command == "stream":
+            observer = IntegerObserver(*(cli_rational(getattr(args, name))
+                                          for name in ("p", "r", "eps")))
+            stream_reports(observer, sys.stdin.buffer, sys.stdout)
         else:
             emit(checks(), args.out)
     except (ValueError, OSError) as error:

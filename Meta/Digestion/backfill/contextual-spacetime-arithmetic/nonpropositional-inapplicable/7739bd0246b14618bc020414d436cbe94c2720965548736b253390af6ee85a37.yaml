@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7739bd0246b14618bc020414d436cbe94c2720965548736b253390af6ee85a37
+  normalized_sha256: sha256:7739bd0246b14618bc020414d436cbe94c2720965548736b253390af6ee85a37
+cas_ref: sha256:7739bd0246b14618bc020414d436cbe94c2720965548736b253390af6ee85a37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里规定“全部定义、命题使用本节局部标识”并区分世界准入约束、实际世界集与此前同字母记号，最后说明“构造均在经典 ZFC 中进行”。这是命名和基础范围，没有在定义中偷偷主张最粗性或拼接正确性。
+    previous_atom_id: 101159bf14176d411118f30798c4a9c57e53029fe99b7854897415474605f678
+    next_atom_id: 94d3dcbf30f7131d08afe103609ac8a1bccfe79e9958dfac6e601df036321958

@@ -1,0 +1,36 @@
+**定理 89.2（复合增量的不交分解与源片段判据）。** 不加保持假设时，对任意 $\Gamma\subseteq F_A$ 已有
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\tag{89.2a}
+$$
+若两步都保持后承，即
+$$
+\mathrm P_\tau:\ C_A\le K_\tau,
+\qquad
+\mathrm P_\sigma:\ C_B\le K_\sigma,
+$$
+则
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma)
+                 \subseteq K_{\sigma\circ\tau}(\Gamma),
+\tag{89.2b}
+$$
+且有不交并
+$$
+E_{\sigma\circ\tau}(\Gamma)
+=E_\tau(\Gamma)\ \sqcup\
+  \tau^{-1}[E_\sigma(\tau[\Gamma])].
+\tag{89.2c}
+$$
+令 $S=\tau[F_A]$。在同一组保持假设下，复合保守 $K_{\sigma\circ\tau}=C_A$ 当且仅当 $K_\tau=C_A$，并且
+$$
+\begin{aligned}
+\forall\Delta\subseteq S,\ \forall\psi\in S,\qquad
+\sigma(\psi)\in C_C(\sigma[\Delta])
+\ \Longrightarrow\ \psi\in C_B(\Delta).
+\end{aligned}
+\tag{89.2d}
+$$
+$\mathrm P_\sigma$ 已给出 (89.2d) 的反向，因此该条件检查的是前提与结论都在 $S$ 中的后承双向保持。
+

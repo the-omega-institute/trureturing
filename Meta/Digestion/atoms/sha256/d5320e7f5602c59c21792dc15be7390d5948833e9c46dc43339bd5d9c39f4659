@@ -1,0 +1,13 @@
+**命题 10.7（通道距离的参考量词）。** 对两个同型 CPTP 通道 $\Phi,\Psi:\mathcal L(X)\to\mathcal L(Y)$，定义
+$$
+d_\diamond(\Phi,\Psi)
+=\sup_{\substack{E\text{ 有限维}\\
+                  \eta_{XE}\in\mathcal D(X\otimes E)}}
+d_1\!\left((\Phi\otimes\operatorname{id}_E)(\eta),
+           (\Psi\otimes\operatorname{id}_E)(\eta)\right).
+\tag{10.12}
+$$
+此量等于标准 diamond 范数距离 $\frac12\|\Phi-\Psi\|_\diamond$，且满足 $0\le d_\diamond\le1$。上确界可在 $\dim E=\dim X$ 的纯态输入上取到最大值。
+
+式(10.12)沿用[量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)第72、120节的完整通道比较：输入可以与保留参考纠缠，且两个通道接受同一个联合输入。参考不经被比较通道处理；若某个记忆寄存器在槽内参与相互作用，它属于该槽的输入输出对象。
+

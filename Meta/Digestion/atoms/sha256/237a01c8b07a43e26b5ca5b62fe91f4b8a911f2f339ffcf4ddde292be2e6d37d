@@ -1,0 +1,7 @@
+**定理 43.3（不同正整数幂的共同相位稠密性）。** 设 $e_1,\ldots,e_m$ 为两两不同的正整数，$m\ge1$。序列
+$$
+t\longmapsto ([\phi t^{e_1}],\ldots,[\phi t^{e_m}])\in\mathbb T^m,
+\qquad t=1,2,\ldots,
+$$
+相对于 $\mathbb T^m$ 的归一化 Haar 测度等分布。因而任意非空开集均被任意尾部访问，且访问次数无穷。[^rro43-weyl]
+

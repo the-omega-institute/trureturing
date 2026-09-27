@@ -1,0 +1,6 @@
+**命题 69.7（幂迹不能决定相似类）。** 在任意域 $K$ 上，取 $A=0\in M_2(K)$ 与 $B=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$。它们的全部正幂迹和特征多项式相同，却秩不同且不共轭。因此
+$$
+\boxed{
+\text{全部正幂迹及特征多项式相同}\not\Rightarrow\text{线性演化相似}.
+}
+$$

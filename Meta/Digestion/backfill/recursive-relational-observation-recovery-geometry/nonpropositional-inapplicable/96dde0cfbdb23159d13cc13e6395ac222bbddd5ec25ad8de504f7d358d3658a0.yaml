@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96dde0cfbdb23159d13cc13e6395ac222bbddd5ec25ad8de504f7d358d3658a0
+  normalized_sha256: sha256:96dde0cfbdb23159d13cc13e6395ac222bbddd5ec25ad8de504f7d358d3658a0
+cas_ref: sha256:96dde0cfbdb23159d13cc13e6395ac222bbddd5ec25ad8de504f7d358d3658a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only and source-scope settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. For the actual connected path and partition above, finite matrix normalization gives Schur and direct generators whose BC entry derivatives at zero are -1/6 and0. hasDerivAt_exp_smul_const, HasDerivWithinAt.congr_of_mem, uniqueDiffWithinAt_Ici and UniqueDiffWithinAt.eq_deriv refute equality of those trajectories for all nonnegative times with the same initial mass. Equality at t=0 or when B=0 remains allowed. The existing error bound has the S trajectory as its target, so replacing that target requires a new comparison term or bound. The final sentence records absence of a task/loss accuracy ordering in this section; it asserts no universal impossibility theorem over undefined tasks.
+    previous_atom_id: eb42f17afd7efec799563fd36f01e0df90bbc6c35c493768ce53d449764ce2a1
+    next_atom_id: b0e9e4277fa24e0837316cea722d34999588ca125d0e1c52c17e8a3b34319395

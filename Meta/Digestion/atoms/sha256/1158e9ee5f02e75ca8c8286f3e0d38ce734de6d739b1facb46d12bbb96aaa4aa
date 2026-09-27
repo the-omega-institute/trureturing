@@ -1,0 +1,6 @@
+Let $\mathcal P(K)$ be the Borel probability measures on $K$. We use full variation:
+$$
+\|\xi\|_{\mathrm{TV}}=|\xi|(K),\qquad
+\|\mu-\nu\|_{\mathrm{TV}}=2\sup_A|\mu(A)-\nu(A)|
+$$
+for probabilities. 

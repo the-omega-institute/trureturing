@@ -1,0 +1,8 @@
+**推论 95.3（单位理想完成与赋值度量完成的边界）。** 取 $A=\mathbb Z[1/p]$ 或 $A=\mathbb Q_p$。则对所有 $n\ge1$，
+$$
+p^nA=A,\qquad A/p^nA\cong0,
+\qquad
+\widehat A^{\,(p)}:=\varprojlim_{n\ge1}A/p^nA\cong0.
+$$
+这里是理想 $(p)$ 给出的完成。另一方面，$\mathbb Q$ 关于 $p$-进赋值度量的完成是非零域 $\mathbb Q_p$。
+

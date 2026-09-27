@@ -1,0 +1,2 @@
+**证明。** 将$I((H,Z):F\mid M)$分别按$H$先、$Z$先展开，并移项即得。取独立公平位$H,F$、常值$M$以及$Z=H\mathbin{\mathrm{XOR}}F$，则$I(H:F\mid M)=0$，给定$Z$后$H$决定$F$，所以$I(H:F\mid M,Z)=\log2$。此时$I(Z:F\mid M)=0$而$I(Z:F\mid H,M)=\log2$，验证缺陷可以增加。证毕。
+

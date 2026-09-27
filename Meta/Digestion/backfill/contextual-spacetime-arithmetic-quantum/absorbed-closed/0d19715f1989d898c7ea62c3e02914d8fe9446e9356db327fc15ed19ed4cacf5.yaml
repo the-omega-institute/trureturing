@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0d19715f1989d898c7ea62c3e02914d8fe9446e9356db327fc15ed19ed4cacf5
+  normalized_sha256: sha256:0d19715f1989d898c7ea62c3e02914d8fe9446e9356db327fc15ed19ed4cacf5
+cas_ref: sha256:0d19715f1989d898c7ea62c3e02914d8fe9446e9356db327fc15ed19ed4cacf5
+coverage_gids:
+  - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
+    target_statement_id: sha256:83e8fe3359e2a1b890e4e4f9244f99f64fc96454b65d91cbe5a0f05eb3b661bd
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e4aff6e48dca9780621f70afc823e3814370b6f86e39784dcfc93b64950df1f
+  normalized_sha256: sha256:4e4aff6e48dca9780621f70afc823e3814370b6f86e39784dcfc93b64950df1f
+cas_ref: sha256:4e4aff6e48dca9780621f70afc823e3814370b6f86e39784dcfc93b64950df1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶仅用“定义魔群环乘法”规定基向量相乘时位置相加、来源配对。它不是结合律或交换律声明，后续“双线性延拓”及“于是”引出的系数与非结合结论均在另一叶；本定义未夹带那些性质。
+    previous_atom_id: ee0f4261b5792666f461fb72ea0dd3dc6dd58288f1a1cb2e650ddb26e737eefc
+    next_atom_id: 396753d7f74806246a40384319b93ee031f54d3feb783f9b4ff2145816b7ad9f

@@ -1,0 +1,32 @@
+**theorem 42.6 (Exact oriented-flag classification).** An oriented flag of length $r$ in $V$ means
+$$
+0=L_0<L_1<\cdots<L_r,\qquad \dim L_j=j,
+$$
+together with an orientation of each real line $L_j/L_{j-1}$. Such flags, including the empty flag, are in bijection with $S(V)$. A representing list defines $L_j=\operatorname{span}(v_1,\ldots,v_j)$ and declares the class of $v_j$ positive.
+
+More precisely, independent column lists $v=(v_1,\ldots,v_r)$ and $w=(w_1,\ldots,w_s)$ define the same signature if and only if $r=s$ and
+$$
+w=vC,\qquad
+C\in B_r^+,
+\tag{42.9}
+$$
+where $B_r^+$ is the group of invertible upper triangular real matrices with positive diagonal entries. Entries strictly above the diagonal are unrestricted. Thus
+$$
+w_j=\sum_{i\le j}v_iC_{ij},\qquad C_{jj}>0.
+$$
+For a fixed inner product every oriented flag has exactly one compatible orthonormal list.
+
+**Proof.** If (42.9) holds and $k$ is the first nonzero evaluation index for $v$, then every $\ell(w_j)$ with $j<k$ vanishes and
+$$
+\ell(w_k)=C_{kk}\ell(v_k).
+$$
+All-zero evaluations also remain all zero. Hence the signatures agree.
+
+For the converse, equality of zero sets gives $r=s$ and equality of the final spans by (42.8). If the common rank is positive, the first vectors must lie on the same positive ray. Indeed, for independent first vectors one can prescribe evaluations $1$ and $-1$ and extend linearly to $V$; for negatively proportional first vectors any nonvanishing evaluation has opposite signs. Either possibility contradicts equality of signatures. Consequently $w_1=cv_1$ for some $c>0$.
+
+Restrict the signatures to covectors annihilating $L_1=\mathbb Rv_1$. These are the dual covectors of $V/L_1$, and the restricted signatures are represented by the independent projected lists beginning with $v_2$ and $w_2$. Induction on the common rank identifies their oriented flags. Pulling back gives equality of every $L_j$ and agreement of the orientation of every quotient $L_j/L_{j-1}$. It follows that $w_j$ is a linear combination of $v_1,\ldots,v_j$ with positive coefficient at $v_j$, which is precisely (42.9).
+
+Given any oriented flag, choose $v_j\in L_j$ with positive nonzero quotient class. These vectors are independent, so Theorem 42.5 supplies a signature. The result does not depend on the choices by (42.9), and the preceding argument proves injectivity.
+
+Finally, Gram-Schmidt subtracts combinations of earlier vectors and divides by a positive norm, so it preserves the oriented flag and signature. At stage $j$, the line $L_j\cap L_{j-1}^\perp$ has exactly one unit vector with the required quotient orientation. This proves uniqueness of the orthonormal list. $\square$
+

@@ -1,0 +1,30 @@
+#### 134.6.1 命名闭合：加入已经由现有读数决定的任务
+
+固定来源 $X$ 和一个小的带类型读数宇宙 $\Omega$。每个 $\omega\in\Omega$ 有目标集合 $Y_\omega$ 及函数 $r_\omega:X\to Y_\omega$。使用读数集合 $D\subseteq\Omega$ 时，定义共同核
+
+$$
+K_D=\{(x,y):\forall\omega\in D,\ r_\omega(x)=r_\omega(y)\}.
+$$
+
+对任意关系 $R\subseteq X^2$，定义
+
+$$
+\operatorname{Inv}(R)=\{\omega\in\Omega:R\subseteq\ker r_\omega\}.
+$$
+
+二者满足反向 Galois 对应
+
+$$
+D\subseteq\operatorname{Inv}(R)
+\quad\Longleftrightarrow\quad R\subseteq K_D.
+\tag{134.14}
+$$
+
+证明是展开两边，都要求每个 $R$ 相关的状态对在全部 $D$ 读数下相同。
+
+定义命名闭合
+
+$$
+\operatorname{Cl}_{\rm name}(D)=\operatorname{Inv}(K_D).
+$$
+

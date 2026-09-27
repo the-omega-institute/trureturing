@@ -1,0 +1,91 @@
+### 127.4 被隐藏的关系如何回到未来：精确记忆与初态强迫
+
+在 $U=\operatorname{im}P$、$\mathcal H=\ker P$ 的正交直和中，记
+
+$$
+L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix},
+\qquad p_t=v_t+h_t,
+\qquad v_t=Pp_t\in U,\quad h_t=Qp_t\in\mathcal H.
+\tag{127.18}
+$$
+
+这里 $C$ 是隐藏算子，与纤维求和 $\mathsf C$ 不同。两个分块方程为
+
+$$
+\dot v=-Av-Bh,
+\qquad\dot h=-B^*v-Ch.
+\tag{127.19}
+$$
+
+若 $h\in\mathcal H$，则 $h\perp\mathbf1$，且
+
+$$
+\langle h,Ch\rangle=\langle h,Lh\rangle
+=\frac12\sum_{i,j}w_{ij}(h_i-h_j)^2.
+\tag{127.20}
+$$
+
+连通性和正交性共同使该量在 $h\ne0$ 时严格为正。因此非零隐藏空间上的 $C$ 正定；零维隐藏空间按唯一零维算子解释。
+
+对式（127.19）的隐藏方程乘以 $e^{tC}$ 并积分，得
+
+$$
+h_t=e^{-tC}h_0-\int_0^t e^{-(t-s)C}B^*v_s\,ds.
+\tag{127.21}
+$$
+
+代回可见方程便得到
+
+$$
+\boxed{
+\dot v_t=-Av_t-Be^{-tC}h_0
++\int_0^t K(t-s)v_s\,ds,
+\qquad K(t)=Be^{-tC}B^*.
+}
+\tag{127.22}
+$$
+
+微分右边并检查 $t=0$ 也可直接验证式（127.21）。记忆项正号来自两次负耦合。初始隐藏状态产生 $-Be^{-tC}h_0$，它一般不能由 $v_0$ 或裸核 $K$ 决定，因而不能删掉。即使初态来自随机实验，$v_0,h_0$ 的联合来源仍须保留；单独指定两个边缘不能确定其联合律。
+
+正交分块同时给出
+
+$$
+[P,L]=\begin{pmatrix}0&B\\-B^*&0\end{pmatrix},
+\qquad K(0)=BB^*,
+\qquad
+\boxed{\|[P,L]\|_{\mathrm{HS}}^2=2\operatorname{Tr}K(0)}.
+\tag{127.23}
+$$
+
+因为 $\langle u,BB^*u\rangle=\|B^*u\|^2$，
+
+$$
+[P,L]=0\iff B=0\iff K(t)=0\quad\hbox{对所有 }t\ge0.
+\tag{127.24}
+$$
+
+这些是整个允许初态类上的闭合性质；$B\ne0$ 不要求每条特殊轨道都显示记忆，平稳轨道就是一个例外。
+
+正定性还给出收敛积分
+
+$$
+\int_0^\infty K(t)\,dt=BC^{-1}B^*.
+\tag{127.25}
+$$
+
+证明是将 $C$ 对角化，逐个正特征值积分 $e^{-\lambda t}$。相应静态二次型经配方成为
+
+$$
+\begin{aligned}
+\frac12\left\langle\binom vh,L\binom vh\right\rangle
+={}&\frac12\langle v,(A-BC^{-1}B^*)v\rangle\\
+&+\frac12\langle h+C^{-1}B^*v,
+C(h+C^{-1}B^*v)\rangle.
+\end{aligned}
+\tag{127.26}
+$$
+
+故静态边界算子为 $A-\int_0^\infty K(t)\,dt$。静态消元只留下核的积分，精确动态消元还需要时间形状与初态强迫。常数向量属于 $U$ 且被 $A$、$B^*$ 消去，所以静态算子保留守恒零模态；不得在整个 $U$ 上宣称它可逆。
+
+这与第126节的有效实现桥梁相接：在正自伴、伴随耦合模型中，全部响应矩 $BC^jB^*$ 给出边界词的 Gram 配对，恢复有效隐藏空间及其 $C,B$ 到保边界正交同构；它既不恢复完全不可见块，也不自行指定本次实验的隐藏初态。完整响应、概率熵和统计取得成本是不同层次的资料。
+

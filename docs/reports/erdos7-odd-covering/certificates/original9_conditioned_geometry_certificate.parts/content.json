@@ -1,0 +1,27 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-original9-conditioned-geometry-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "source_case": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "reference_target": {
+    "kind": "inline",
+    "value": "33"
+  },
+  "rounded_Gamma_upper": {
+    "kind": "inline",
+    "value": "135/4"
+  },
+  "result": {
+    "path": "content/005-result.json",
+    "sha256": "2bd1b2b725ee90943ba0fc9e17a588eaf2c16609e8f51efca1fb10873cfb844c",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,10 @@
+并且 centered effect 张成完整 trace-zero Hermitian 载体：
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d).
+$$
+

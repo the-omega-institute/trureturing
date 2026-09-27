@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7109cedd001f373fc0c51fc1e484fde7e6ea26b240734af4c072ee18b57234a
+  normalized_sha256: sha256:e7109cedd001f373fc0c51fc1e484fde7e6ea26b240734af4c072ee18b57234a
+cas_ref: sha256:e7109cedd001f373fc0c51fc1e484fde7e6ea26b240734af4c072ee18b57234a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. Finite indicator-sum normalization of L_ij=-w_ij gives both cross-cell formulas for KA and GA with the source column convention and denominator n_b>0. Nonnegative cross-cell sums and zero column sums give a Metzler generator. Matrix.pow_apply_nonneg, NormedSpace.exp_series_hasSum_exp', Pi.hasSum, tsum_nonneg, Matrix.exp_add_of_commute and Matrix.mem_colStochastic_iff_sum give its all-time probability legality. This does not assert exact descent.
+    previous_atom_id: 3f871b14407c992792c18f9087d492c29322cd1dd13258a47ac30da025f3564e
+    next_atom_id: eb42f17afd7efec799563fd36f01e0df90bbc6c35c493768ce53d449764ce2a1

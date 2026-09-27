@@ -1,0 +1,63 @@
+{
+  "family": {
+    "path": "content/001-cases/000001/item/000-family.json",
+    "sha256": "81cdfa5ae5e431c4d92ac3bd7c7aed10bc96a184f577c6a6bb19cc0c161a997b",
+    "kind": "value"
+  },
+  "points": {
+    "path": "content/001-cases/000001/item/001-points.json",
+    "sha256": "5c2e9c473acf64f1f741ce6979ac001ad452801bc205c514b1135238e67d75e9",
+    "kind": "value"
+  },
+  "old_points": {
+    "kind": "inline",
+    "value": [
+      2,
+      7,
+      8,
+      14,
+      16,
+      17,
+      19,
+      23,
+      28,
+      29,
+      32,
+      34,
+      37,
+      38,
+      43,
+      44
+    ]
+  },
+  "weight_numerators": {
+    "path": "content/001-cases/000001/item/003-weight_numerators.json",
+    "sha256": "c26d91870e077e3600626c57036cbc7dd8d91e19c43b7d24968fe9896d362e06",
+    "kind": "value"
+  },
+  "weight_denominator": {
+    "kind": "inline",
+    "value": 999999994
+  },
+  "name": {
+    "kind": "inline",
+    "value": "C2-minimal75"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "35"
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "result": {
+    "path": "content/001-cases/000001/item/008-result.json",
+    "sha256": "1ab818dc718b559871677181b96b98504f62d6823c735f8eb3f1d86ebeade2b8",
+    "kind": "object"
+  }
+}

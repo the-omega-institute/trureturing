@@ -1,0 +1,272 @@
+[
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      2,
+      3
+    ],
+    "crt_residue": 17,
+    "maximum_exact": "66231282111688272373311196603/246763826537109375000000000000",
+    "composite_maximizers": [
+      12
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      2,
+      4
+    ],
+    "crt_residue": 32,
+    "maximum_exact": "15381683305778043845106662114543/48112480746966796875000000000000",
+    "composite_maximizers": [
+      12
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      2,
+      5
+    ],
+    "crt_residue": 12,
+    "maximum_exact": "2035300847385948738553644487899/4524003486513671875000000000000",
+    "composite_maximizers": [
+      12
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      2,
+      6
+    ],
+    "crt_residue": 27,
+    "maximum_exact": "157454566738961539539642558343/602680784467987500000000000000",
+    "composite_maximizers": [
+      6
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      0
+    ],
+    "crt_residue": 28,
+    "maximum_exact": "525213676432702806285961/1959937510465000000000000",
+    "composite_maximizers": [
+      13
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      1
+    ],
+    "crt_residue": 8,
+    "maximum_exact": "8216230385928442665827954166337/28939702302959765625000000000000",
+    "composite_maximizers": [
+      13
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      2
+    ],
+    "crt_residue": 23,
+    "maximum_exact": "2211102766147048233356197/9799687552325000000000000",
+    "composite_maximizers": [
+      13
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      3
+    ],
+    "crt_residue": 3,
+    "maximum_exact": "18103905047841988820894001/48998437761625000000000000",
+    "composite_maximizers": [
+      3
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      4
+    ],
+    "crt_residue": 18,
+    "maximum_exact": "438932897516724751641308075677/1717640235733764375000000000000",
+    "composite_maximizers": [
+      13
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      5
+    ],
+    "crt_residue": 33,
+    "maximum_exact": "66042640593805376941484767195241/209008961076931640625000000000000",
+    "composite_maximizers": [
+      12
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      3,
+      6
+    ],
+    "crt_residue": 13,
+    "maximum_exact": "19899924895323434100205773/48998437761625000000000000",
+    "composite_maximizers": [
+      13
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      0
+    ],
+    "crt_residue": 14,
+    "maximum_exact": "197118886361036668552982558343/1004467974113312500000000000000",
+    "composite_maximizers": [
+      6
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      1
+    ],
+    "crt_residue": 29,
+    "maximum_exact": "87378715906940276267734762129/443742101978716406250000000000",
+    "composite_maximizers": [
+      22
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      2
+    ],
+    "crt_residue": 9,
+    "maximum_exact": "157454566738961539539642558343/1004467974113312500000000000000",
+    "composite_maximizers": [
+      6
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      3
+    ],
+    "crt_residue": 24,
+    "maximum_exact": "157067209829366562987525234943/602680784467987500000000000000",
+    "composite_maximizers": [
+      31
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      4
+    ],
+    "crt_residue": 4,
+    "maximum_exact": "1780163467780091502707936296081/8814206472844317187500000000000",
+    "composite_maximizers": [
+      32
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      5
+    ],
+    "crt_residue": 19,
+    "maximum_exact": "5347517915500581727784365575931/19000814643357421875000000000000",
+    "composite_maximizers": [
+      12
+    ]
+  },
+  {
+    "primes": [
+      5,
+      7
+    ],
+    "pure_residues": [
+      4,
+      6
+    ],
+    "crt_residue": 34,
+    "maximum_exact": "181157131393158849347646558343/602680784467987500000000000000",
+    "composite_maximizers": [
+      6
+    ]
+  }
+]

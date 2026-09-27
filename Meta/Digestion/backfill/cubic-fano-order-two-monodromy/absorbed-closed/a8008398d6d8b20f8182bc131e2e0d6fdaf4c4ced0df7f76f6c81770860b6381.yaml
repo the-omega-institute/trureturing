@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a8008398d6d8b20f8182bc131e2e0d6fdaf4c4ced0df7f76f6c81770860b6381
+  normalized_sha256: sha256:a8008398d6d8b20f8182bc131e2e0d6fdaf4c4ced0df7f76f6c81770860b6381
+cas_ref: sha256:a8008398d6d8b20f8182bc131e2e0d6fdaf4c4ced0df7f76f6c81770860b6381
+coverage_gids:
+  - gid: D5/S3/Observer/Monodromy/TransvectionLieFiltration.layer_eq_band
+    target_statement_id: sha256:fc96d78b1a9825302390ecb9ca12500e2d3fd42fd8640da32a1f1e16db70e83f
+receipts:
+  unresolved_subitems: []

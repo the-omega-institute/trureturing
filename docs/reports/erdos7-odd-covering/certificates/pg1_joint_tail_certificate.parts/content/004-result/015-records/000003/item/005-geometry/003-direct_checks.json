@@ -1,0 +1,68 @@
+[
+  {
+    "charge_root3": 1,
+    "charge_root9": 8,
+    "cost": "h4",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 44985680935
+  },
+  {
+    "charge_root3": 2,
+    "charge_root9": 8,
+    "cost": "h4",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 58628413940
+  },
+  {
+    "charge_root3": 1,
+    "charge_root9": 8,
+    "cost": "n1",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 23810537480
+  },
+  {
+    "charge_root3": 2,
+    "charge_root9": 8,
+    "cost": "n1",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 38229885085
+  },
+  {
+    "charge_root3": 1,
+    "charge_root9": 8,
+    "cost": "n2",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 206368260547
+  },
+  {
+    "charge_root3": 2,
+    "charge_root9": 8,
+    "cost": "n2",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 253888087045
+  }
+]

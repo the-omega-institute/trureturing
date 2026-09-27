@@ -1,0 +1,54 @@
+**theorem 37.14 (The precise continuity obstruction and the distinction between operators and values).** There is no separately continuous function $A:K^2\to K$ satisfying
+$$
+A(Z(n),Z(m))=Z(n+m)\qquad(n,m\ge0).
+$$
+Consequently there is no jointly continuous extension of finite addition, and no separately continuous single-valued selection of $\Gamma$.
+
+On the larger carrier $\mathscr E$, actual composition is associative and unital, with precisely the one-sided continuity proved above. On the state carrier $K$, evaluation forgets composition witnesses. Even an injective recoding of evaluated states cannot turn evaluation into a homomorphism for all representatives. In contrast, the composite
+$$
+\mathscr E\xrightarrow{e}K\xrightarrow{H}\mathbb T
+$$
+is the genuine continuous homomorphism $\vartheta$ into circle addition.
+
+**Proof.** Suppose $A$ were separately continuous and extended finite addition. Fix $n$. The continuous maps of the second variable
+$$
+y\longmapsto A(Z(n),y),\qquad y\longmapsto T^ny
+$$
+agree on the dense natural core, so they agree everywhere. In particular,
+$$
+A(Z(n),y)=T^ny,\qquad A(0_K,y)=y.
+$$
+Choose an increasing sequence $n_j$ with $n_j\delta\to_+0$. By the nonsplit zero fibre,
+$$
+Z(n_j)\longrightarrow0_K.
+$$
+The pointwise operator limit is $T^{n_j}\to P_0^+$, and therefore
+$$
+A(Z(n_j),x_1^-)=T^{n_j}x_1^-\longrightarrow P_0^+(x_1^-)=x_1^+.
+$$
+Continuity of the first-variable slice at $(0_K,x_1^-)$ instead forces the same sequence to converge to
+$$
+A(0_K,x_1^-)=x_1^-.
+$$
+The two points are distinct, a contradiction. The argument used continuity of the second-variable slices at natural first inputs, and continuity of the first-variable slice through $x_1^-$ at zero. Thus the separate-continuity hypothesis is explicit and is stronger than what this particular contradiction needs; it has not been inferred from compactness or from right-topological composition.
+
+Joint continuity implies separate continuity. A selection of $\Gamma$ must agree with finite addition on the natural core, since those input fibres have unique outputs. These observations prove the two stated consequences.
+
+For the recoding assertion, let $j:K\to L$ be any injective function, without a topological assumption. If a binary operation $B$ on $j(K)$ satisfied
+$$
+B(j(e(p)),j(e(q)))=j(e(pq))
+$$
+for all operators, apply the counterexample of Theorem 37.9. The same left input $j(0_K)$ and right input $j(x_1^+)$ would force both $j(x_1^+)$ and $j(x_1^-)$ as outputs. Injectivity makes these different. Hence merely recoding the value cannot recover the missing operator witness.
+
+Associativity on the full operator carrier follows from actual function composition, while Theorems 37.9–37.13 identify exactly what is lost under evaluation and subsequent re-representation. The homomorphism assertion for $H\circ e$ is Theorem 37.1. None of these statements asserts nonexistence of arbitrary discontinuous state operations; the exclusions concern the all-representative evaluation quotient and extensions with the stated continuity properties. $\square$
+
+[^rro37_onesided]: Kevin Aguyar Brix, *Sturmian subshifts and their C*-algebras*, arXiv:2107.10613v1, §2.1, especially equations (2.1)–(2.3) and (2.7). The one-sided branch point has intercept equal to the slope and has the two predecessors $0\omega$ and $1\omega$; the two-sided system is separately defined as an inverse limit. The normalization used here is supplied by Theorems 20.4 and 20.7. [Primary text](https://arxiv.org/html/2107.10613v1).
+
+[^rro37_semigroup]: Eli Glasner and Michael Megrelishvili, *Circularly ordered dynamical systems*, author-hosted version dated February 18, 2018, §1, p. 3. The conventions explicitly include monoid actions; Definition 1.1 and Theorem 1.2 state the tame/Rosenthal criterion for compact metric semigroup systems. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_double]: Glasner and Megrelishvili, *Circularly ordered dynamical systems*, §6.1, p. 19, gives the classical split-orbit rotation enveloping space consisting of the double circle and isolated integer iterates, with the double circle as its minimal left ideal. That passage concerns invertible cascades; Theorems 37.2–37.7 supply the noninvertible nonnegative-time argument needed here. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_functions]: Michael Megrelishvili, *Orderable groups and semigroup compactifications*, arXiv:2112.14615v4, Example 6.8. This gives the actual phase-selecting functions in the split-rotation example and its circular lexicographic description. The multiplication and neighborhood bases on the present carrier are verified above with the orientation fixed by $H$. [Primary text](https://arxiv.org/html/2112.14615v4).
+
+[^rro37_tame]: Eli Glasner and Michael Megrelishvili, *Todorčević’s trichotomy and a hierarchy in the class of tame dynamical systems*, arXiv:2011.04376v4, §0.1, Corollary 8.3, Example 9.3(2), and §10. These passages discuss tame enveloping compacta, the Sturmian split-circle ideal, its two idempotents, and its fixed-sign groups. The Rosenthal representation used in Theorem 37.8 is constructed directly. [Primary text](https://arxiv.org/html/2011.04376v4).
+

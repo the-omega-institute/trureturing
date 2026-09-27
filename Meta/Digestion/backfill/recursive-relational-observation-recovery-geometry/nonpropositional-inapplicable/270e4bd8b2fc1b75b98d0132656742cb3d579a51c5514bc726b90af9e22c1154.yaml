@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:270e4bd8b2fc1b75b98d0132656742cb3d579a51c5514bc726b90af9e22c1154
+  normalized_sha256: sha256:270e4bd8b2fc1b75b98d0132656742cb3d579a51c5514bc726b90af9e22c1154
+cas_ref: sha256:270e4bd8b2fc1b75b98d0132656742cb3d579a51c5514bc726b90af9e22c1154
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure pinned-upstream heat bound: for all j:N, nu>=a>0, T>=0, the actual heat path multiplier is (-t*rho(k))^j exp(-nu*t*rho(k)); d_j is the exact sup_{v>=0} v^j exp(-v), d_0=1. Real.pow_div_factorial_le_exp, le_csSup/csSup_le, lp.mapCLM, lp.norm_mapCLM_le, ContinuousMap.norm_le and scalar substitution v=nu*t*rho(k) give ||A_j(nu)||<=d_j*a^(-j). The physical carrier is obtained via the fixed norm<=1 real/solenoidal restriction whose image membership is coefficientwise. This result has no quantitative dependence on frozen WTC/RWS/SKU; occurrence of the weight definition is coordinate notation, not coverage evidence. No usable project GID; settle from Mathlib db584 suppliers.'
+    previous_atom_id: 1187288d061a7c93d6584cd7602a289fefb91f2229671f3f6071068c9d6b84af
+    next_atom_id: 7d027a03602896d219e60d07388c04621438e07f8c8215766d43a694d9dd2137

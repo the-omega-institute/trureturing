@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ffc2cf9c6c8727d747ffd81c4b24a2e89d9984bce7b52001e77860f90238d7b
+  normalized_sha256: sha256:7ffc2cf9c6c8727d747ffd81c4b24a2e89d9984bce7b52001e77860f90238d7b
+cas_ref: sha256:7ffc2cf9c6c8727d747ffd81c4b24a2e89d9984bce7b52001e77860f90238d7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶以“sup”“max”“inf”三个公式算子定义纤维振幅、全层振幅、中心损失及半径；没有等同不同优化域的结论，且紧随其后的“所有上确界”有界性已另拆，未把该数学断言藏入这组记号。
+    previous_atom_id: ff90ef52d7560dad05fc18892f4bd51d0c0843cb8d3858c197ec6b3515fda59b
+    next_atom_id: c78ec2a8d30b9e527f841686aad1e6b1d8de67a229d2afd0f8d5f01b1f79c825

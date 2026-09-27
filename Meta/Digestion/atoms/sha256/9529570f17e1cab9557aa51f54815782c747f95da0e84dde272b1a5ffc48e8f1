@@ -1,0 +1,46 @@
+**theorem 44.9 (Fixed-divisor fibers, boundary changes and exact numerical inputs).** For $r\in R_c$, put
+$$
+Q_{c,r}(x)=\{y:(x,y,Z(r))\in\mathcal F_c\},\qquad
+Q_c(x)=\{(y,r):r\in R_c,\ y\in Q_{c,r}(x)\}.
+$$
+For every $x$ and every $r$,
+$$
+|Q_{c,r}(x)|=c,\qquad
+|Q_c(x)|=c^2,\qquad
+\left|\bigcup_{r\in R_c}Q_{c,r}(x)\right|=c^2.
+$$
+In particular, every remainder is reachable above every completed dividend.
+
+The complete branch rule is as follows. For $\eta=H(x)$, the quotient phases are the $c$ distinct roots
+$$
+\Theta_{c,r}(\eta)=\{\theta\in\mathbb T:c\theta+[r\phi]=\eta\}.
+$$
+If $\eta\notin E$, all these roots are ordinary and each contributes its unique lift. If $x=z_{E_M}^s$, a split root exists precisely when $c$ divides $M+r$. When it exists, it is
+$$
+\theta=E_{(M+r)/c},
+$$
+and contributes exactly $z_\theta^s$; all other roots are ordinary and contribute their unique lifts. Thus an ordinary quotient can correspond to a split dividend, but a split quotient cannot correspond to an ordinary dividend.
+
+For $x^+=z_{E_M}^{+1}$ and $x^-=z_{E_M}^{-1}$, let $r_0$ be the unique remainder with $c\mid M+r_0$. The two sets $Q_{c,r}(x^+)$ and $Q_{c,r}(x^-)$ coincide when $r\ne r_0$. At $r_0$ their intersection has $c-1$ points and their union has $c+1$ points. Consequently,
+$$
+|Q_c(x^+)\cap Q_c(x^-)|=c^2-1,\qquad
+|Q_c(x^+)\cup Q_c(x^-)|=c^2+1.
+$$
+For $c=1$ the graph reduces exactly to
+$$
+\mathcal F_1=\{(x,x,0_K):x\in K\}.
+$$
+
+At a padded completed dividend $x=Z(A)$, the same fiber has $c^2$ output pairs. Exactly one has a padded quotient: the actual pair
+$$
+\bigl(Z(A\operatorname{div}c),A\bmod c\bigr).
+$$
+If the numerical dividend is held literally equal to $A$, rather than merely approached in $K$, only its actual singleton triple remains. Also,
+$$
+\{(x,Z(c),y,z):(x,y,z)\in\mathcal F_c\}
+\subsetneq
+\overline{\mathscr D}\cap\bigl(K\times\{Z(c)\}\times K^2\bigr)
+=
+K\times\{Z(c)\}\times K^2.
+$$
+

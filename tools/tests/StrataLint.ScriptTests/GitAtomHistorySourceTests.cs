@@ -232,7 +232,11 @@ public sealed class GitAtomHistorySourceTests
                 "--TestCaseFilter:DisplayName~ReaddedMergeAtomRetainsSideBranchCommitterTimeAcrossGitConfig"
                     + $"&DisplayName~{configuration}",
                 "--Logger:trx;LogFileName=child.trx", $"--ResultsDirectory:{temporary.Path}"],
-            temporary.Path, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            // This runs a complete child VSTest host (discovery, execution and TRX
+            // serialization), so the script guard must cover the workflow rather
+            // than only a short helper process. The child assertions still require
+            // one passing result below; this timeout is infrastructure-only.
+            temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
     private static void AssertHistoryChildPassed(
         TemporaryDirectory temporary, ProcessOutput result, string configuration)

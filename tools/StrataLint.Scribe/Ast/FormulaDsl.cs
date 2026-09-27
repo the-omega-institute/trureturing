@@ -80,6 +80,7 @@ public static class FormulaDsl
     public static Formula Phi { get; } = M(FormulaLatexMacro.Phi);
     public static Formula Pi { get; } = M(FormulaLatexMacro.Pi);
     public static Formula Pm { get; } = M(FormulaLatexMacro.Pm);
+    public static Formula Pmod { get; } = M(FormulaLatexMacro.Pmod);
     public static Formula Prod { get; } = M(FormulaLatexMacro.Prod);
     public static Formula Psi { get; } = M(FormulaLatexMacro.Psi);
     public static Formula Qquad { get; } = M(FormulaLatexMacro.Qquad);

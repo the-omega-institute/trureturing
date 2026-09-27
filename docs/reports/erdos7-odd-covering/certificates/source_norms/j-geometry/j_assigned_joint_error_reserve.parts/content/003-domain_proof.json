@@ -1,0 +1,76 @@
+{
+  "original136_guards": {
+    "domain_delta_plus_rho": "1/1000",
+    "wrong5_gaps": [
+      "1/10",
+      "5999/90000",
+      "1999/90000",
+      "1/50"
+    ],
+    "wrong15_gaps": [
+      "5999/90000",
+      "1999/90000",
+      "5999/450000",
+      "1499/45000"
+    ],
+    "label_delta_R_prices": {
+      "test3": [
+        2,
+        3
+      ],
+      "test9": [
+        2,
+        3
+      ],
+      "pure3_deep": [
+        3,
+        3
+      ],
+      "test5": [
+        4,
+        35
+      ],
+      "test15": [
+        3,
+        30
+      ],
+      "pure5_deep": [
+        1,
+        1
+      ]
+    },
+    "uniform_error_coefficient": 100,
+    "capacity_extra_delta": "7/36",
+    "source_cap_delta": "83/72",
+    "positive7_delta": "119/360",
+    "mass_lower_delta": "263/360",
+    "old_margin_delta": "281/6",
+    "rounded_replacement_delta": 54
+  },
+  "domain_delta_plus_rho": "1/1000",
+  "five_cofactor15_gap_lowers": [
+    "5999/90000",
+    "5999/90000",
+    "1999/90000",
+    "5999/450000",
+    "1499/45000"
+  ],
+  "minimum_cofactor15_gap": "5999/450000",
+  "defect_price_dominance_margin": "250899244/80932509",
+  "delta_derivative_upper": "-3737978417987/227812500000",
+  "rho_derivative_upper": "-199/9",
+  "rectangle_proof": "R4_delta=-527/90-L+delta/180-(10/9)(rho+7delta/36)-(7/36)C(delta), C(delta)=(244+10delta)/9. Bound delta/180 by tau/180, discard the nonpositive residual term and use C>=244/9. R4_rho=5-C<=5-244/9. Both partials are negative on the whole triangle; a rectangle inside it has its lower envelope at its upper corner. R3_delta=R4_delta-23/180-delta/20 is smaller and R3_rho=R4_rho.",
+  "boundary_reserve_polynomial": [
+    "43720531/2373046875",
+    "317461329097/56953125000",
+    "707/810"
+  ],
+  "boundary_derivative_lower": "317461329097/56953125000",
+  "whole_triangle_reserve_lower": "43720531/2373046875",
+  "strict_margin_over9_div500": "4022749/9492187500",
+  "minimum_location": {
+    "delta": "0",
+    "rho": "1/1000"
+  },
+  "proof": "For fixed delta both reserves decrease in rho; set rho=tau-delta. The coarse boundary polynomial has positive linear and quadratic coefficients. The sharper support adds23delta/180+delta^2/40. Thus both attain their certified lower envelope minimum at(0,tau)."
+}

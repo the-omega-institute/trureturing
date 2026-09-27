@@ -1,0 +1,12 @@
+**命题 134.3（Yoneda）。** 映射
+
+$$
+\eta\longmapsto\eta_X(\mathrm{id}_X)
+$$
+
+给出双射
+
+$$
+\operatorname{Nat}(h_X,P)\cong P(X).
+$$
+

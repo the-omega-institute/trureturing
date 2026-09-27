@@ -1,0 +1,4 @@
+**证明。** 前式逐坐标就是(23.101)，求和给后式。窗口是 VΨ，其中 V_{nj}=m_j^n、0≤n<N。节点互异，直接应用已有 Vandermonde 窗口单射性，即`FiniteCrystalTimeFrequencyBridge.first_crystal_time_window_injective` 的复数实例。全部未来包含该窗口，所以三个核相等。此论证恢复的是指定模态任务商；除非另证 Ψ 对 X 单射，不恢复全部微观状态。□
+
+复数 s_j 互异不保证采样节点 m_j 互异。纯衰减实率互异在任意 h>0 下给互异节点；含相位时还须排除相差 2πik/h 的率。
+

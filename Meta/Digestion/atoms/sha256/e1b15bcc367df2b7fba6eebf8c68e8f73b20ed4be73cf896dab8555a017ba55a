@@ -1,0 +1,25 @@
+**定理 66.3（精确商度量与固定锚相似性）。**
+
+$\overline d$ 在 $K_{k,k}/\langle C\rangle$ 上良定义并且是度量。在商同胚 $\overline R$ 下有精确恒等式
+$$
+\boxed{\ \overline d([x],[y])=\frac12\,\rho(Rx,Ry)\ }.
+$$
+因此
+$$
+\rho(\overline R([x]),\overline R([y]))=2\overline d([x],[y]).
+$$
+
+此外，对每个固定锚 $b\in\{0,1\}$，令
+$$
+T_b:Y_k\longrightarrow K_{k,k},\qquad T_b(c):=x^{b,c}.
+$$
+则当 $c\ne c'$ 时，
+$$
+d(T_b(c),T_b(c'))=\frac12\,\rho(c,c').
+$$
+所以 $T_b$ 是从 $Y_k$ 到闭开集
+$$
+K_{k,k}^{(b)}:=\{x\in K_{k,k}:x_0=b\}
+$$
+的比例 $1/2$ 相似双射。
+

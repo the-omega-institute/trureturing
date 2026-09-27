@@ -1,0 +1,16 @@
+**definition 48.2 (Separate positive expansions and an explicit bound).** Expand each term separately into a formal polynomial in $\mathbb N_0[x_1,\ldots,x_r]$, using the recursive polynomial operations for its syntax tree. No terms are cancelled between opposite sides of an equality. Continue to denote the resulting side polynomials by $P_j,Q_j$, and let $\mathcal P$ be their finite collection. Put
+$$
+C=\max\bigl(\{1\}\cup\{P(1,\ldots,1):P\in\mathcal P\}\bigr),\qquad d=\max\bigl(\{1\}\cup\{\deg P:P\in\mathcal P\}\bigr),
+$$
+where the zero polynomial has degree zero for this definition. Define
+$$
+b_0=1,\qquad b_{k+1}=C b_k^d,\qquad M_\Sigma=b_r=C^{\sum_{j=0}^{r-1}d^j}.
+$$
+The empty exponent sum is zero, so $M_\Sigma=1$ if $r=0$.
+
+For $V=\{1,\ldots,r\}$ and $Z\subseteq V$, let $P^Z$ be the formal polynomial obtained by substituting zero for $x_i$ with $i\in Z$. Its active support is
+$$
+S_Z(P)=\{i\in V\setminus Z:\text{some positive-coefficient monomial of }P^Z\text{ contains }x_i\}.
+$$
+In particular, both the zero polynomial and a constant polynomial have empty active support, although they remain distinct formal polynomials.
+

@@ -1,0 +1,14 @@
+**证明。** 对所有补全统一有
+$$
+\int_0^\infty\|K_{AB}(t)\|dt
+\le\sum_\lambda\frac{\|X^0_\lambda\|+
+\sqrt{\|P_\lambda\|\|Q_\lambda\|}}{\lambda}<\infty.
+$$
+故既有积分恒等式适用，逐谱积分即其式（16.12）的表达。缺失块的新增范围由
+$$
+\langle a,Z_{AB}b\rangle-c_0
+=\sum_\lambda\lambda^{-1}
+\langle P_\lambda^{1/2}a,T_\lambda Q_\lambda^{1/2}b\rangle
+$$
+和定理16.2证明中的秩一收缩及共同缩放给出：两端和全部中间值都有共同实现，区间为 $[c_0-R_0,c_0+R_0]$，最坏误差为 $R_0+|z-c_0|$。标量指数积分给式（16.14）的 $v_\lambda(T)$，有限和逐项取极限得到卷积极限；同一统一范数界亦给全部补全上的衰减尾界。额外记录只留下其中的可行收缩，故不改变前述信息类限定。$\square$
+

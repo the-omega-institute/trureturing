@@ -9,15 +9,15 @@ public sealed partial class CleanLanesCommandTests
     public void CliReturnsExitTwoAndPreservesPartialFailureStreams()
     {
         const string partialItem =
-            "{\"event\":\"clean_lanes_item\",\"kind\":\"merged_worktree\","
+            "{\"event\":\"clean_lanes_item\",\"kind\":\"stale_worktree\","
             + "\"path\":\"/tmp/partial\",\"branch\":\"harness/partial\","
             + "\"head\":\"abcdef0123456789\",\"action\":\"partially_removed\","
             + "\"reason\":\"worktree_remove_failed_state_indeterminate\"}\n";
         const string completedItem =
-            "{\"event\":\"clean_lanes_item\",\"kind\":\"merged_worktree\","
+            "{\"event\":\"clean_lanes_item\",\"kind\":\"stale_worktree\","
             + "\"path\":\"/tmp/healthy\",\"branch\":\"harness/healthy\","
             + "\"head\":\"0123456789abcdef\",\"action\":\"removed\","
-            + "\"reason\":\"merged_clean\"}\n";
+            + "\"reason\":\"stale_behind\"}\n";
         const string summary =
             "{\"event\":\"clean_lanes_summary\",\"mode\":\"force\","
             + "\"scope\":\"lanes_only\",\"base_revision\":\"origin/dev\","

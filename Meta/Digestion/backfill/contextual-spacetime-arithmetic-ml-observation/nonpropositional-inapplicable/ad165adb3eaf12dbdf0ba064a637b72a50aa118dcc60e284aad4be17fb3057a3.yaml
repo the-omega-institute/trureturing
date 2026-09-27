@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad165adb3eaf12dbdf0ba064a637b72a50aa118dcc60e284aad4be17fb3057a3
+  normalized_sha256: sha256:ad165adb3eaf12dbdf0ba064a637b72a50aa118dcc60e284aad4be17fb3057a3
+cas_ref: sha256:ad165adb3eaf12dbdf0ba064a637b72a50aa118dcc60e284aad4be17fb3057a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “静态表、临时空间与输出空间单独计费”仅设资源核算范围，不给出大小、复杂度或最优性命题，故无数学证明义务。
+    previous_atom_id: 82616a06aa3563f038caa566cab24ca9aa2722549582ebcbc61be164494c432f
+    next_atom_id: 6a78fa784307d3c86288aa554dfafc36ca354b90c86689b450f82fd99459e198

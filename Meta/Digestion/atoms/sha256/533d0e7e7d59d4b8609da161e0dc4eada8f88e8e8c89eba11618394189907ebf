@@ -1,0 +1,1 @@
+再取 $P=\Pi_{L-1}$、$Q=\Pi_L$，应用 [D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Algebra/CommutingProjectionFourSector.lean) 的交换投影条件，可知其 $(1-P)Q=Q-P$ 扇区也是正交投影。

@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/010-domains/000000/single.json",
+        "sha256": "a77447a082563a6c6e46d4aa5c1165d4508111018bdc6cec53ad2e05a35d1143",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/010-domains/000001/single.json",
+        "sha256": "6222c8991f8d71c6d7c128edbe5abc06b5a868d5aab2ef72b5fead6f92a976f3",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

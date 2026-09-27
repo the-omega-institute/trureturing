@@ -1,0 +1,24 @@
+### 105.3 任何精确历史接口都因子化到预测商
+
+设另一个记忆摘要为 $$r:Y\to M$$，并且当前读出与更新都通过它因子化：
+
+$$
+q=\bar q\circ r,
+\qquad
+r\circ\tau=\bar\tau\circ r.
+$$
+
+`predictive_memory_minimal_quotient` 证明存在唯一映射
+
+$$
+\theta:\operatorname{range}(r)\to Y_{\mathrm{pred}}
+$$
+
+使得 canonical projection 满足
+
+$$
+\operatorname{completionProjection}
+=
+\theta\circ\operatorname{rangeFactorization}(r).
+$$
+

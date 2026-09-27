@@ -1,0 +1,54 @@
+### 46.9 统一量程归一后的条件数
+
+对 $A>0$ 定义
+$$
+\boxed{\kappa_M(A)=\frac{A u'_M(A)}{u_M(A)}.}
+\tag{46.28}
+$$
+它是将输入按统一量程 $A$ 归一、输出按整个三角的统一幅度上界 $u_M(A)$ 归一后所得映射的最小全局 Lipschitz 常数。具体映射为 $x\mapsto\mathcal E_M(Ax)/u_M(A)$，定义域是 $[-1,1]^{M+1}$；变量与输出的两次线性缩放把（46.17）的最优常数恰变为（46.28）。
+
+将（46.8）按次数写成 $u_M(A)=\sum_{d=1}^{M+1}c_{M,d}A^d$，其中
+$$
+c_{M,d}=\binom{M+d-1}{2d-2}>0,
+\qquad
+w_d(A)=\frac{c_{M,d}A^d}{u_M(A)}.
+$$
+这些是正权重且 $\sum_d w_d=1$，所以
+$$
+\boxed{
+\kappa_M(A)=\sum_{d=1}^{M+1}d w_d(A),
+\qquad1\le\kappa_M(A)\le M+1.
+}
+\tag{46.29}
+$$
+$M=0$ 时恰为一；$M\ge1$、有限 $A>0$ 时各次数权重都正，故严格位于 $1$ 与 $M+1$ 之间。固定 $M$ 时，$A\downarrow0$ 由一次项主导，$\kappa_M\to1$；$A\to\infty$ 由最高次项主导，$\kappa_M\to M+1$。
+
+固定 $A>0$、$M\to\infty$ 时，将（46.26）的两个等价式相除，得
+$$
+\boxed{
+\kappa_M(A)\sim\frac{A}{\sqrt{A^2+4A}} M.
+}
+\tag{46.30}
+$$
+也可以直接对闭式（46.12）求对数导数得到以下精确式，无需增加一个独立问题：
+$$
+\boxed{
+\kappa_M(A)
+=1+\frac{A}{s}\left(
+M+\frac1{\lambda+1}
+-\frac{2M+1}{\lambda^{2M+1}+1}
+\right).
+}
+\tag{46.31}
+$$
+证明。对分子 $\lambda^{M+1}+\lambda^{-M}$ 求对数导数，得到
+$$
+\frac1s\,
+\frac{(M+1)\lambda^{M+1}-M\lambda^{-M}}
+{\lambda^{M+1}+\lambda^{-M}}
+=\frac1s\left(M+1-\frac{2M+1}{\lambda^{2M+1}+1}\right).
+$$
+对分母 $\lambda+1$ 的对数导数为 $\lambda/[s(\lambda+1)]$；加上外因子 $A$ 的对数导数并乘 $A$，便得（46.31）。$M=0$ 时括号为零，仍与恒等映射一致。
+
+这里的归一化是**固定域的统一输入／输出量程**。它不是用某个实际输入的 $\|a\|$ 与实际输出的 $\|\mathcal E_M(a)\|$ 定义的点态相对条件数，也不消除输出可能为零、相消或特别小的问题。不能把（46.29）的线性深度界当成每一个实际输出都有同样相对精度保证。
+

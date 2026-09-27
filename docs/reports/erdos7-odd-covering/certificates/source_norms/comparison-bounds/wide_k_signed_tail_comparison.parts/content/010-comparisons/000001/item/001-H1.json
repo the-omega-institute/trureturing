@@ -1,0 +1,41 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "230440811161129319773/446228528542861500000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "10797213222809714773/446228528542861500000"
+  },
+  "bounded_labels": {
+    "path": "content/010-comparisons/000001/item/001-H1/003-bounded_labels.json",
+    "sha256": "2108f53f0d04d3c1ab5379f9512cb290ec0e301e6a7fe94e04f4674916b49058",
+    "kind": "value"
+  },
+  "complete_exponent_tails": {
+    "path": "content/010-comparisons/000001/item/001-H1/004-complete_exponent_tails.json",
+    "sha256": "f7fdc27af1311839d22ec4abeba0b118cf8677f672d3d819661190232857e6e4",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "319/1944"
+  },
+  "previous_upper": {
+    "kind": "inline",
+    "value": "49294975477897/62975758500000"
+  },
+  "layout_rows": {
+    "path": "content/010-comparisons/000001/item/001-H1/008-layout_rows.json",
+    "sha256": "2144a3f3f193ae12e1fd14b6477c1a0c5888ff42c18f430870cededd039142ed",
+    "kind": "array"
+  }
+}

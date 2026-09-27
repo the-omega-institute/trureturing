@@ -1,0 +1,34 @@
+**命题 39.6（完成等距离的共同半径判据）。** 下列条件等价：
+$$
+\begin{aligned}
+d_\infty=\tau_\infty
+&\iff \exists\theta\in\mathcal L_\infty:
+     \operatorname{TV}(\rho_\infty,\theta)=\tau_\infty\\
+&\iff \forall l,\ d_l\le\tau_\infty\\
+&\iff \forall l,\ \mathcal G_l(\tau_\infty)\ne\varnothing\\
+&\iff \lim_l g_l=0.
+\end{aligned}
+\tag{39.18}
+$$
+此外，对每个 $\epsilon\ge0$，
+$$
+\begin{aligned}
+g_\infty\le\epsilon
+&\iff \forall l,\ d_l\le\tau_\infty+\epsilon\\
+&\iff \forall\eta>0\ \exists N\ \forall l\ge N,\
+               d_l\le\tau_l+\epsilon+\eta.
+\end{aligned}
+\tag{39.19}
+$$
+
+证明。（39.18）的第一步使用最小值达到及标签收缩下界；第二步使用 $d_\infty=\sup_l d_l$；第三步使用有限最小值达到；最后一步使用（39.17）。式（39.19）的第一步仍由上确界公式。若 $g_\infty\le\epsilon$，收敛保证对任意 $\eta>0$ 最终有 $g_l\le\epsilon+\eta$；反向，把每个这样的最终不等式取极限，再令 $\eta\downarrow0$，得 $g_\infty\le\epsilon$。$\square$
+
+式（39.18）在每一层使用同一个半径 $\tau_\infty$，不是各自的 $\tau_l$。若所有层，或只在一个无界共尾层集上，有 $d_l=\tau_l$，则收敛的 $g_l$ 有零子序列，完成等距离成立；命题39.9证明全层有限等距离并非必要。有限等距离候选集合也未必被投影保持。这些是全尺度断言，不能当作有限停止程序。
+
+若某一层 $\tau_l=\tau_\infty$，且完成等距离成立，则
+$$
+\tau_l\le d_l\le d_\infty=\tau_\infty=\tau_l,
+\tag{39.20}
+$$
+该层必等距离。特别地，若所有标签限制对这一个实际／目标概率对都保 TV，则 $\tau_l$ 全相等，逐层等距离与完成等距离等价；这是额外的无抵消条件，不是定义39.1的默认性质。
+

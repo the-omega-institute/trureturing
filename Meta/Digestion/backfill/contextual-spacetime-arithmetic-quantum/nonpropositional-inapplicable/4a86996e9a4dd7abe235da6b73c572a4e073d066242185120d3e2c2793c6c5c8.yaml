@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a86996e9a4dd7abe235da6b73c572a4e073d066242185120d3e2c2793c6c5c8
+  normalized_sha256: sha256:4a86996e9a4dd7abe235da6b73c572a4e073d066242185120d3e2c2793c6c5c8
+cas_ref: sha256:4a86996e9a4dd7abe235da6b73c572a4e073d066242185120d3e2c2793c6c5c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶自称“这个量是研究定义”，列出“扩大记录”或“固定允许误差”两种研究处理，并说明“不自动给出任意多步实验的误差界”；它没有给出任何多步估计，也没有在定义中暗设物理误差定理。
+    previous_atom_id: 1c09caf527da750231408956f0229c8f7827c0533d2007060f88627a3ced814b
+    next_atom_id: 9c4d8fb114c8b5739aa33022797fefbd5ad2f3b700b4f32dac7f78587af921c0

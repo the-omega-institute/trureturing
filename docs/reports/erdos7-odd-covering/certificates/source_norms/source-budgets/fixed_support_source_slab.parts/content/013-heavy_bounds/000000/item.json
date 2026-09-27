@@ -1,0 +1,40 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1"
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "630053335920064561120723361434337/15632787748921114278012443437500"
+  },
+  "margin_lower": {
+    "kind": "inline",
+    "value": "1193878489939499612/259995953549870913375"
+  },
+  "max_derivative": {
+    "kind": "inline",
+    "value": "2498381/1145144"
+  },
+  "slot_loss_price": {
+    "kind": "inline",
+    "value": "2498381/792792"
+  },
+  "one_residual_price": {
+    "kind": "inline",
+    "value": "1561488125/68994926"
+  },
+  "minimizers": {
+    "path": "content/013-heavy_bounds/000000/item/007-minimizers.json",
+    "sha256": "e2a273870a305c7de366d53cfe86efdb1c5af29d364aa7959385a13b7f7af559",
+    "kind": "value"
+  },
+  "supports": {
+    "path": "content/013-heavy_bounds/000000/item/008-supports.json",
+    "sha256": "4b4c6c0bee0328d5734113b9cda80d06e87e9fe2f5a89a7a89046e35f929d4f2",
+    "kind": "array"
+  }
+}

@@ -1,0 +1,35 @@
+**定理 38.10（没有统一严格方向的共同自然数逼近及必需的相对尺度分离）。** 取两个输入极限 $(u,v)$，并对每个 $n\ge1$ 请求输出形式
+$$
+a_n=(n,1)
+$$
+的极限
+$$
+y_n=z_{E_{n+1}}^-.
+$$
+该整个可数元组属于 $\mathcal G_{\mathbb N_{\ge1}}$。每个有限符号子系统可行，却不存在一个实方向同时严格满足全部输入和输出符号约束。
+
+更准确地，存在共同实际自然数序列 $P_k,Q_k\ge k$，其局部相位偏移满足
+$$
+\gamma(P_k)=E_1+[\varepsilon_k],\qquad
+\gamma(Q_k)=E_1+[\delta_k],
+$$
+$$
+t_k=\frac1{8(k+1)},\qquad
+|\varepsilon_k-t_k^2|<t_k^3,\qquad
+|\delta_k+t_k|<t_k^2,
+$$
+并且
+$$
+Z(P_k)\longrightarrow u,\qquad
+Z(Q_k)\longrightarrow v,\qquad
+Z(nP_k+Q_k)\longrightarrow z_{E_{n+1}}^-
+\quad\text{对每个固定 }n\ge1.
+$$
+对任意实现同一可数元组的实际共同序列，取其趋零局部偏移 $\varepsilon_k,\delta_k$，必有
+$$
+\varepsilon_k>0,\qquad\delta_k<0
+\quad\text{最终成立},\qquad
+\frac{\varepsilon_k}{-\delta_k}\longrightarrow0.
+$$
+因此本例中相对尺度分离不仅是一种构造选择，也是所有共同逼近必须满足的条件；并不要求偏移恰为二次与一次幂。
+

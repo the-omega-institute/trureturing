@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9a3ac71a86db39637ab776f77e63a6ad17d7bb4569bb8130c1bc1dc70b5a7fe
+  normalized_sha256: sha256:d9a3ac71a86db39637ab776f77e63a6ad17d7bb4569bb8130c1bc1dc70b5a7fe
+cas_ref: sha256:d9a3ac71a86db39637ab776f77e63a6ad17d7bb4569bb8130c1bc1dc70b5a7fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该叶区分“caller 亲验范围”与“本 worker 亲验范围”，明说“二者不合算为独立评审”，然后记录基线与 ingest 形态。没有提出新的理论命题或定义夹带推论；本建议仅结算工程来源叙述，不替历史运行背书。
+    previous_atom_id: 6b5e74500f30053d728a07e79e4f52dc595c3fbfa649ebb3af08b278e4116bfd
+    next_atom_id: 7cb58b293cc06d311af2722fcbdd08a3c278f9c9a3ba4914ec935226c1b3064e

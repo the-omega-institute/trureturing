@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3921d56e1d581f10d66b92c6028f49c7fc869f93a4d83048036e619289d77cd5
+  normalized_sha256: sha256:3921d56e1d581f10d66b92c6028f49c7fc869f93a4d83048036e619289d77cd5
+cas_ref: sha256:3921d56e1d581f10d66b92c6028f49c7fc869f93a4d83048036e619289d77cd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子在已指定线性任务下约定可实现近似任务及其扩展映射，属于后续预算定理的参数设置，没有给出最优性或误差结论。
+    previous_atom_id: 24e7e54aef397cf6aff4396526b60f874d21d928edcd5d414a9ed26dff7afed6
+    next_atom_id: 8a729540de87284c8e1bfbad3fbe37e6fc9807ffad71e4f8c5c8f57e112d15e3

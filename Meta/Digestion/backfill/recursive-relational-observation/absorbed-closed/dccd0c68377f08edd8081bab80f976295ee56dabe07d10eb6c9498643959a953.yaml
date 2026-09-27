@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dccd0c68377f08edd8081bab80f976295ee56dabe07d10eb6c9498643959a953
+  normalized_sha256: sha256:dccd0c68377f08edd8081bab80f976295ee56dabe07d10eb6c9498643959a953
+cas_ref: sha256:dccd0c68377f08edd8081bab80f976295ee56dabe07d10eb6c9498643959a953
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/LegalDigitCoveringNumber.least_covering_number
+    target_statement_id: sha256:9c7f5c6613895a642e649c71fcfcd56e0437178e06089de73360a34ed3367fb2
+  - gid: D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
+    target_statement_id: sha256:3b522c177ae30ca1a8062ad38d15b46c3dd8bbff2cfde6cb02d98070d9c00dcd
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
+    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+receipts:
+  unresolved_subitems: []

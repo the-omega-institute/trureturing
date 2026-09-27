@@ -1,0 +1,32 @@
+**theorem 59.3 单一标签的精确分类、无界极小障碍与完整化后的短矛盾。** 令
+$$
+\delta_p=v_p(2),\qquad s_p=\delta_p+1.
+$$
+设 $G=(V,E)$ 为有限简单图，$I_{G,d}\in\mathcal C_d(p)$。若 $E=\varnothing$，则 $I_{G,d}$ 对每个 $d\in\overline{\mathbb N}_0$ 都可实现。若 $E\ne\varnothing$ 且 $d<\infty$，则
+$$
+I_{G,d}\text{ 可实现}
+\Longleftrightarrow
+\begin{cases}
+\text{否},&d<\delta_p,\\
+\text{是},&d=\delta_p,\\
+G\text{ 为二部图},&d>\delta_p.
+\end{cases}
+$$
+若 $d=\infty$ 且 $E\ne\varnothing$，则同样有
+$$
+I_{G,\infty}\text{ 可实现}\Longleftrightarrow G\text{ 为二部图}.
+$$
+在 $d=\delta_p$ 的可行情形可取所有 $x_i=1$；在有限 $d>\delta_p$ 的二部情形，每个含边连通分量的二分 $A\sqcup B$ 上可取
+$$
+x_i=1\quad(i\in A),\qquad x_j=p^d-1\quad(j\in B),
+$$
+孤立点取 $1$；在 $d=\infty$ 时把第二个值换成 $-1$。因此这些见证全是普通整数单位。
+
+特别地，对每个素数 $p$，
+$$
+\kappa_p(\mathcal C_{s_p}(p))=\infty.
+$$
+更精确地，每个无弦奇圈 $C_{2m+1}$ 的全部边标记为 $s_p$ 后都是诱导极小不可实现实例：整体不可实现，而每个真顶点诱导限制都有只使用整数 $1$ 与 $p^{s_p}-1$ 的共同见证。尽管如此，这个单一标签类的可实现性判定恰好是二部性判定，可在邻接表模型中用 $O(|V|+|E|)$ 时间完成。
+
+再取 $2m+1>2p$。对上述奇圈稀疏实例的任意完整延拓 $A$，$A$ 都不可实现；而由 section 55 完整数组结论，每个这样的 $A$ 都已有某个 $|W|\le2p$ 的不可实现完整诱导限制 $A|_W$。因为 $W$ 是该长奇圈的真顶点子集而原稀疏限制 $I|_W$ 可实现，所以这个短完整矛盾不可能只由原来已指定的奇圈边支撑；它必然使用完整化时加入的至少一个缺失点对约束。故任意补齐缺失标签都会破坏这个长障碍作为完整接口中诱导极小障碍的性质。
+

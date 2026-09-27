@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89cad1c68ebe219d3e7dcd2abdf742886b8a8b8046fc5354b498713dcf3b81bb
+  normalized_sha256: sha256:89cad1c68ebe219d3e7dcd2abdf742886b8a8b8046fc5354b498713dcf3b81bb
+cas_ref: sha256:89cad1c68ebe219d3e7dcd2abdf742886b8a8b8046fc5354b498713dcf3b81bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “不能将所有无下界”区域“一概记为 open”是对已有命题 53 与 D14 的状态引用，未提出新的可表达性公式或证明；该段无定义夹带结论，按既有结算范围说明处理。
+    previous_atom_id: a7ffd70075ddedce5b19e6a7a71e1a35476b5fdaf5d0cc910bdc350cdcbf8c74
+    next_atom_id: ce49faf753439afc645d01cfbb0b39eb958b12e0a1d3106c6038523183c57083

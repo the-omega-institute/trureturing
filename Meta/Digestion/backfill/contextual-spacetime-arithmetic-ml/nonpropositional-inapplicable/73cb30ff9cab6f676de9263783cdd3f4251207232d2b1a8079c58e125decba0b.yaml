@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73cb30ff9cab6f676de9263783cdd3f4251207232d2b1a8079c58e125decba0b
+  normalized_sha256: sha256:73cb30ff9cab6f676de9263783cdd3f4251207232d2b1a8079c58e125decba0b
+cas_ref: sha256:73cb30ff9cab6f676de9263783cdd3f4251207232d2b1a8079c58e125decba0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “设系统允许的线性读出函数张成有限维子空间”以及“其维数为”只是为后续命题命名空间与维数参数；此处不声称它能恢复多少目标，未在定义中夹带容量上界。
+    previous_atom_id: 626ef8f58817bc1125a9634fd4ba6783b89f25f8770dadab65974881df0561c7
+    next_atom_id: bc8af8cb955178ef4655a94064692481145fe6e50b30c63470abb1d33713d118

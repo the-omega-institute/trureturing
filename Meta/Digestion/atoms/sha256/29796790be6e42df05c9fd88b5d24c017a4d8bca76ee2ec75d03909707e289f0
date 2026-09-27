@@ -1,0 +1,89 @@
+### 48.11 固定深度的次数高斯涨落
+
+固定 \(A>0\)，对每个整数 \(k\) 使用条件律
+\[
+\Pr(D=d\mid K=k)=\frac{c_{k,d}A^d}{u_k(A)}.
+\]
+这一条件律与 \(\rho\) 无关。它的矩母函数在所有有限复数 \(z\) 处都是有限和：
+\[
+M_k(z)=\mathbb E[e^{zD}\mid K=k]
+=\frac{u_k(Ae^z)}{u_k(A)}.
+\tag{48.39}
+\]
+为了从闭式推导统一局部展开，选取 \(A\) 的小复邻域，避开
+\(w^2+4w=0\) 的两个零点。选择在 \(w=A\) 取正值的解析平方根
+\(s(w)\)，并令
+\[
+\lambda(w)=\frac{w+2+s(w)}2,\quad
+c(w)=\frac{w\lambda(w)}{\lambda(w)+1},\quad
+b(w)=\frac w{\lambda(w)+1}.
+\]
+缩小 \(z=0\) 的固定圆盘，使 \(w=Ae^z\) 留在上述邻域，
+\(|\lambda(w)|\ge L>1\)，且 \(c(w)\ne0\)。这些要求由连续性和
+\(A>0\)、\(\lambda(A)>1\)、\(c(A)>0\) 同时保证。
+
+有限递推解的代数恒等式在此邻域仍给
+\[
+u_k(Ae^z)
+=c(Ae^z)\lambda(Ae^z)^k
+\left[1+\frac{b(Ae^z)}{c(Ae^z)}\lambda(Ae^z)^{-2k}\right].
+\]
+方括号内的误差在圆盘上一致为 \(O_A(L^{-2k})\)。对足够大 \(k\)，它的模小于 \(1/2\)，可以取以零为基点的解析对数。明确写 \(e_k(z)=[b(Ae^z)/c(Ae^z)]\lambda(Ae^z)^{-2k}\)，并取
+\[
+E_k(z)=\log(1+e_k(z))-\log(1+e_k(0)).
+\]
+其解析对数由 \(|e_k|<1/2\) 的幂级数选定。再对 \(c,\lambda\) 选局部解析对数，得到在固定小圆盘内
+\[
+\log M_k(z)=k\ell(z)+a(z)+E_k(z),
+\tag{48.40}
+\]
+其中
+\[
+\ell(z)=\log\lambda(Ae^z)-\log\lambda(A),\qquad
+a(z)=\log c(Ae^z)-\log c(A),
+\]
+且 \(\ell(0)=a(0)=E_k(0)=0\)，
+\(\sup|E_k|\le C_A\gamma^k\)、\(0<\gamma<1\)。在更小圆盘上使用 Cauchy 导数估计，\(E_k\) 的任意固定阶导数也有这样的指数上界。这一步明确保证了根分离和导数余项控制。
+
+由 \(d\log\lambda/dA=1/s\)，计算
+\[
+\ell'(0)=\frac As=:\beta,
+\]
+\[
+\ell''(0)=A\frac d{dA}\left(\frac As\right)
+=\frac As-\frac{A^2(A+2)}{s^3}
+=\frac{2A^2}{s^3}=: \sigma_A^2>0.
+\tag{48.41}
+\]
+对（48.40）在零点求导，得到
+\[
+\mathbb E[D\mid K=k]=\beta k+a'(0)+O_A(\gamma^k),
+\]
+\[
+\operatorname{Var}(D\mid K=k)
+=\sigma_A^2k+a''(0)+O_A(\gamma^k).
+\tag{48.42}
+\]
+若需一个显式均值常数，
+\(a'(0)=1+A/[s(\lambda+1)]\)。二阶常数不影响随后极限。
+
+对任意固定实数 \(u\)，代入
+\(z=iu/\sqrt{\sigma_A^2k}\)。局部 Taylor 展开给
+\[
+k\bigl(\ell(z)-\beta z\bigr)
+=-\frac{u^2}{2}+O_{A,u}(k^{-1/2}),
+\qquad a(z)=O_{A,u}(k^{-1/2}).
+\]
+因此标准化变量的特征函数趋于 \(e^{-u^2/2}\)，由特征函数连续性定理
+\[
+\boxed{
+\frac{D-\beta k}{\sqrt{\sigma_A^2k}}
+\Bigm|\;K=k
+\Rightarrow N(0,1).
+}
+\tag{48.43}
+\]
+也可用精确条件均值居中，因两种中心相差 \(O_A(1)\)。这完整证明固定深度的高斯结论，无需把尚未核对的文献条件当作前提。
+
+（48.43）与（48.37）研究不同抽样协议。固定深度时，次数在 \(\beta k\) 周围只有 \(\sqrt{k}\) 量级涨落；对全部深度作临界混合时，深度本身在 \(\varepsilon^{-1}\) 尺度上仍有非退化指数涨落。两种结论相容，不能将其中一个替换成另一个。复邻域和误差常数均依赖固定的 \(A>0\)，不声称在 \(A\downarrow0\) 时一致。
+

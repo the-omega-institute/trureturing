@@ -1,0 +1,8 @@
+### 43.1 既有自然源的归属与本节的有理域
+
+本节的形式供应固定在 `1fae30cf331dd943f49e44f88c9ee0feb3829770`。[AntidiagonalArraySourceSeries 的 `result`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.lean#L78) 给出自然数组的存在唯一性、归一化有理源级数的存在唯一性、其自然系数序列的存在唯一性，以及包括 $n=0$ 在内的首列恒等式 $T(n,0)=[X^{n+1}]F$。其 `IsArray` 除后继关系外还要求整条第零行等于一；`IsSource` 要求 $F(0)=1$ 及 $F(X/F(X))=(1-X)^{-1}$。`sourceCoeff` 先从源方程独立构造系数，再由证明接上数组；不能把任意有理边界都称为该唯一源。
+
+该证明中的局部 `hrow`（第117行）建立行级数关系，`hrowrec`、`htel`、`hbridge`（第222、228、241行）给出从第零行展开及逐系数余项消失的机制；这些是证明内部事实，不是可另行调用的公开定理名。第275—293行用源方程与唯一性识别 $1+X$ 乘首列级数。另一个供应 [QuotientThetaCompositionModFour 的 `quotient_triangular`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean#L72) 要求两级数常数项均为一、在次数 $d$ 以下相同，并断言在次数不超过 $d$ 时，商代入后的系数差等于原系数差；它直接用于上述源构造与唯一性，但自身不识别这个数组。
+
+自然对象及方程的来源分别归 Mikhail Kurkov 的 A392095 与 Paul D. Hanna 的 A088713。[^rroctx43_oeis] 本节的任意有理边界、有限多项式逆、离散前缀完成及具体任务应用属于仓内推导（`repo-derived`）；固定核的 Riordan 系数方法属于成熟方法（`literature-attested`），归属见第43.8节。这里不作原创优先权或新的形式化声明。
+

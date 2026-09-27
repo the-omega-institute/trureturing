@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5bcc94cefa5850f918ab284ab8f95937640fd8812473158c16331f360ff4088
+  normalized_sha256: sha256:c5bcc94cefa5850f918ab284ab8f95937640fd8812473158c16331f360ff4088
+cas_ref: sha256:c5bcc94cefa5850f918ab284ab8f95937640fd8812473158c16331f360ff4088
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d supplies every clause by binding and finite normalization; no complete frozen project GID is available in the searched scope. InformationTheory.klDiv_compProd_eq_add with base B x C, output A, mu=P_BC, nu=P_B r, kappa=P_A|bc and eta=P_A|b gives joint KL = BC KL + glued-reference KL. Measure.rnDeriv_eq_div, rnDeriv_withDensity, Integrable.of_finite and integral_fintype identify finite probability KL with the source definition and normalize the last two terms to the weighted conditional KL and finite CMI. Zero B slices vanish; positive joint mass forces both conditional marginals positive. Missing recovery support makes joint, BC and the corresponding positive-weight row KL infinite via klDiv_of_not_ac, so no infinity subtraction is used. klDiv_self supplies the conditional-row minimizer; klDiv_eq_zero_iff and ENNReal finite cancellation give every minimizer exactly on positive B rows, leaving zero rows arbitrary. All laws and marginals come from the same P and each recovery row depends only on B. Proof-shape bind-only; no new Lean or freeze, and the uncovered chain parent remains open.
+    previous_atom_id: 0432f016d101621362cd90f019138b968360657277b187616193b15b1fd31a6f
+    next_atom_id: 7a96f2fbbee7a2915dd80ea037c57c70acd2038772c6401b20375e652ce76bb2

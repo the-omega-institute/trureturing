@@ -1,0 +1,2 @@
+本章的后验结论还应与仓库已有定理区分：`D5/S3/Estimation/DecisionRisk/PosteriorFuturePolicySufficiency` 及 `D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency` 在其显式的 belief-adaptive future-law 前提下已给出等后验的 Bayes 价值和有限自适应输出结论。这里追加的策略状态 $\kappa_t,b_t,g_t$ 处理的是协议还读取独立控制记忆、预算或公开记录的情形；它是接口边界和反例说明，不新增 Lean 包装，也不把已有定理扩张到隐藏控制状态。
+

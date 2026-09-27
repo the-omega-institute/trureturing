@@ -1,0 +1,44 @@
+**命题 71.3（测度等价与常数基态的冷极限）。** 对每个有限 $\beta>0$，有测度不等式及等价关系
+$$
+\nu_\beta\ge\frac1{Z_\beta}\mu,
+\qquad
+\nu_\beta\sim\mu.
+$$
+当 $\beta\to\infty$ 时，
+$$
+d_{\mathrm{TV}}(\nu_\beta,\mu)
+\le1-\frac1{Z_\beta}\longrightarrow0.
+$$
+
+证明。因 $\mu(X)=1$，常数函数 $1$ 是单位向量，$\Pi_0=|1\rangle\langle1|$ 的位置读出为 $\mu$。层速率在 $n\ge1$ 时严格为正，故
+$$
+R_\beta:=T_\beta-\Pi_0
+=\sum_{n\ge1}e^{-\beta a_n}\Delta_n\ge0,
+\qquad
+\operatorname{Tr}(R_\beta)=Z_\beta-1.
+$$
+对 Borel 集 $E$，正夹心迹满足
+$$
+Z_\beta\nu_\beta(E)-\mu(E)
+=\operatorname{Tr}(R_\beta M_E)
+=\operatorname{Tr}(R_\beta^{1/2}M_ER_\beta^{1/2})\ge0.
+$$
+定理 71.2 已给出 $\nu_\beta\ll\mu$，上述下界给出反向绝对连续性，也给出 $d\nu_\beta/d\mu\ge Z_\beta^{-1}$ 几乎处处。
+
+固定一个 $\beta_0>0$。对 $\beta\ge\beta_0$，正项级数
+$$
+Z_\beta=1+\sum_{n\ge1}m_ne^{-\beta a_n}
+$$
+由可和序列 $m_ne^{-\beta_0a_n}$ 支配，而每个尾层项趋零，故 $Z_\beta\to1$。若 $Z_\beta>1$，测度下界使
+$$
+\xi_\beta=\frac{Z_\beta\nu_\beta-\mu}{Z_\beta-1}
+$$
+成为概率，并有
+$$
+\nu_\beta=\frac1{Z_\beta}\mu
++\left(1-\frac1{Z_\beta}\right)\xi_\beta.
+$$
+任意两个概率的 $d_{\mathrm{TV}}$ 至多为一，遂得所列估计。若 $Z_\beta=1$，则 $R_\beta=0$，直接有 $\nu_\beta=\mu$。证毕。
+
+此冷极限使用了零能空间恰为一维常数空间。若另有零能模态，受控迹极限选择的是整个零能投影的归一化位置读出；它不能仅凭保守性识别为 $\mu$。
+

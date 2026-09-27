@@ -4,11 +4,10 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> ScribeLegacyConstructorBudget(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> ScribeLegacyConstructorBudget(CurrentRuleContext context)
     {
         var paths = context.Current.Files.Keys
             .Where(static path => IsBlueprintPath(path.Value, ".scribe.cs"))
-            .Where(path => context.IsBaseFactAffected(path.Value))
             .ToImmutableArray();
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
 

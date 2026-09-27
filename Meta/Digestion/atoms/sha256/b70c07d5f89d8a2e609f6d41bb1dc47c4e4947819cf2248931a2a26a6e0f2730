@@ -1,0 +1,25 @@
+**定理 10.4（固定边缘的通用恢复器）。** 固定任意 $\omega_{BC}\in\mathcal D(B\otimes C)$，存在一个 CPTP 映射 $\mathcal R_\omega:B\to BC$，使对每个有限维系统 $A$ 及每个满足 $\rho_{BC}=\omega_{BC}$ 的扩展 $\rho_{ABC}$，都有
+$$
+F\!\left(\rho_{ABC},
+(\operatorname{id}_A\otimes\mathcal R_\omega)(\rho_{AB})\right)
+\ge e^{-I(A:C\mid B)_\rho/2}.
+\tag{10.7}
+$$
+其量词顺序为
+$$
+\forall\omega_{BC}\ \exists\mathcal R_\omega\
+\forall A\ \forall\rho_{ABC}\text{ 满足 }\rho_{BC}=\omega_{BC}.
+\tag{10.8}
+$$
+这是 David Sutter、Omar Fawzi、Renato Renner，[*Universal recovery map for approximate Markov chains*](https://arxiv.org/abs/1504.07251v3)，Theorem 2.1 的有限维、自然对数版本。
+
+同一映射还满足
+$$
+\mathcal R_\omega(\omega_B)=\omega_{BC}.
+\tag{10.9}
+$$
+
+式(10.9)约束指定输入 $\omega_B$，并不把 $\operatorname{Tr}_C\circ\mathcal R_\omega$ 规定为整个 $\mathcal L(B)$ 上的恒等通道。式(10.8)也没有将恢复器统一到所有彼此不同的 $BC$ 边缘上。上述来源的 Corollary 2.4 对其显式结构给出线性化保真度界；这里引用的是 Theorem 2.1 的存在性与完整指数界。
+
+**证明。** 对式(10.9)，取任意乘积扩展 $\rho_{ABC}=\rho_A\otimes\omega_{BC}$。其条件互信息为零；式(10.7)及式(10.5)中的保真度到迹距离转换给出精确恢复。对 $A$ 取偏迹即得式(10.9)。这也是原文 Remark 2.3。$\square$
+

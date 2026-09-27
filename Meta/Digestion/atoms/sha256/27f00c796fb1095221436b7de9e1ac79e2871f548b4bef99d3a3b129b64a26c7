@@ -1,0 +1,48 @@
+**定理 88.3（源闭理论往返只检查反射）。** 不预设后承保持时，已经有
+$$
+K_\tau\le C_A
+\quad\Longleftrightarrow\quad
+\forall T\subseteq F_A,\quad
+[C_A(T)=T\Rightarrow K_\tau(T)=T].
+\tag{88.3a}
+$$
+若再满足 $C_A\le K_\tau$，则定理 88.2 的闭理论伴随良定义，而且
+$$
+C_A=K_\tau
+\quad\Longleftrightarrow\quad
+RL=\mathrm{id}_{\operatorname{Th}(C_A)}.
+\tag{88.3b}
+$$
+在同一保持条件下，对任意目标闭理论 $U$，目标侧往返为
+$$
+LR(U)=C_B(U\cap\tau[F_A])\subseteq U.
+\tag{88.3c}
+$$
+因此 $LR=\mathrm{id}_{\operatorname{Th}(C_B)}$ 恰须另有
+$$
+\forall U\in\operatorname{Th}(C_B),\quad
+C_B(U\cap\tau[F_A])=U.
+\tag{88.3d}
+$$
+源侧恒等式 (88.3b) 不自动给出这个目标侧条件。
+
+**证明。** 若 $K_\tau\le C_A$，对源闭 $T$ 有
+$$
+T\subseteq K_\tau(T)\subseteq C_A(T)=T,
+$$
+故原始往返恒等。反之，对任意 $\Gamma$，$C_A(\Gamma)$ 是源闭理论。由 $K_\tau$ 单调与原始往返假设，
+$$
+K_\tau(\Gamma)
+\subseteq K_\tau(C_A(\Gamma))
+=C_A(\Gamma).
+$$
+这证明式 (88.3a)，没有使用保持条件。加入 $C_A\le K_\tau$ 后，反射恰等价于两算子相等；且 $RL(T)=K_\tau(T)$，得到式 (88.3b)。
+
+最后，对目标闭 $U$，任意映射都满足 $\tau[\tau^{-1}[U]]=U\cap\tau[F_A]$，所以
+$$
+LR(U)=C_B(\tau[\tau^{-1}[U]])
+     =C_B(U\cap\tau[F_A])
+     \subseteq C_B(U)=U.
+$$
+这给出式 (88.3c)，逐点相等恰为式 (88.3d)。命题 88.7 给出源侧恒等而目标侧严格包含的模型见证。证毕。
+

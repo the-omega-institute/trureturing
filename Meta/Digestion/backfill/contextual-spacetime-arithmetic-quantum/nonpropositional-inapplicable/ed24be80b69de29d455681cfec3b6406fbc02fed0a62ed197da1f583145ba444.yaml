@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed24be80b69de29d455681cfec3b6406fbc02fed0a62ed197da1f583145ba444
+  normalized_sha256: sha256:ed24be80b69de29d455681cfec3b6406fbc02fed0a62ed197da1f583145ba444
+cas_ref: sha256:ed24be80b69de29d455681cfec3b6406fbc02fed0a62ed197da1f583145ba444
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“显式保存每个有序状态对的一条反向边，边数恰为”后的平方计数是命题，已对 explicitReverseEdgeTable 的像映射用 Finset.card_image_of_injective 与 Fintype.card_prod 证明；仓内无冻结 GID 可用，因为同名计数引理为 private，表定义未预设计数结论。
+    previous_atom_id: 5a979f2106e444ad859566f09e6ce79c7da48c1e55ce0ae14ddf5ff9b6eca8e6
+    next_atom_id: dbbe57cb1908e8c7df0fe852f6934be0a7994857ed968e17a46192ca1c3a80e2

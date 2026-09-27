@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:11576720668d27895a6440ce363362630117030c049e469afb4cb97e01b4dd69
+  normalized_sha256: sha256:11576720668d27895a6440ce363362630117030c049e469afb4cb97e01b4dd69
+cas_ref: sha256:11576720668d27895a6440ce363362630117030c049e469afb4cb97e01b4dd69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此项区分选择族的直接像与选择空间上的补集，属于记号和类型约定，没有断言两个集合在所有输入下不相等。
+    previous_atom_id: b69e4ef26a33bfa14b55869331b0955a33085d351dd1f6467ece53bf638d6399
+    next_atom_id: 76f91e276b69fa0e7ce2261266cd49edd0c531c385b44010d5797d35991936bd

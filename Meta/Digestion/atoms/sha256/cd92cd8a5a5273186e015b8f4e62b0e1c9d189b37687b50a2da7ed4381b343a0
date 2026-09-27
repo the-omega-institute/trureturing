@@ -1,0 +1,27 @@
+**证明。** 在独立情形令
+$$
+Z_p=Y_pX_p^{-1}.
+$$
+因 Haar 概率在乘法平移下不变，$Z_p$ 是 $\mathbb Z_p^\times$ 上的 Haar 单位，并且
+$$
+v_p(X_p+Y_p)=v_p(1+Z_p).
+$$
+Haar 概率推前到有限商 $(\mathbb Z/p^n\mathbb Z)^\times$ 后仍是平移不变概率，故是该有限群上的均匀概率。因此
+$$
+\Pr(v_p(1+Z_p)\ge n)
+=\Pr(Z_p\equiv-1\pmod{p^n})
+=\frac1{\varphi(p^n)}
+=\frac1{p^{n-1}(p-1)}.
+$$
+奇 $p$ 时，$n=1$ 的补事件给出
+$$
+\Pr(v_p=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而相邻尾概率之差为
+$$
+\frac1{p^{n-1}(p-1)}-\frac1{p^n(p-1)}=p^{-n}.
+$$
+尾概率趋于零，故无穷估值概率为零。复制时 $p\nmid2$ 且 $X_p$ 为单位，故估值恒为零。
+
+对 $p=2$，同一尾概率公式化为 $2^{1-n}$；所有奇单位都满足 $Z_2\equiv-1\pmod2$，所以估值至少为 $1$。相邻尾概率之差为 $2^{-n}$。复制时 $2X_2$ 恰有估值 $1$。所用 Haar 平移不变性与有限归一化见 Tornier Theorem 2.2 与 compact-group discussion：https://arxiv.org/pdf/2006.10956 。证毕。
+

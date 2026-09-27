@@ -1,0 +1,28 @@
+**定义与假设 71.0（位置乘法表示与分层热态）。** 设 $X$ 为非空紧可度量空间，$\mathcal P_n$ 是由非空开闭集组成的有限分区，满足
+$$
+\mathcal P_0=\{X\},\qquad
+\mathcal P_{n+1}\text{ 加细 }\mathcal P_n,
+\qquad
+\bigcup_{n\ge0}\mathcal P_n\text{ 分离点}.
+$$
+令 $\mu$ 为 $X$ 上满支撑的 Borel 概率，故每格 $C$ 均有 $\mu(C)>0$。记
+$$
+H=L^2(X,\mu;\mathbb C),\qquad
+H_n=\operatorname{span}\{\mathbf1_C:C\in\mathcal P_n\},\qquad
+N_n=|\mathcal P_n|.
+$$
+有限层柱函数的并是含常数、对共轭封闭且分离点的连续函数代数；Stone–Weierstrass 定理给出其在 $C(X)$ 中一致稠密。紧可度量空间上的有限 Borel 测度为正则测度，$C(X)$ 在 $H$ 中稠密，因而第 70 节的 $H_{\mathrm{obs}}$ 在此恰为完整的 $H$。特别地，每个有界 Borel 函数 $f$ 的乘法算子 $M_f:g\mapsto fg$ 都作用于此空间，且 $\|M_f\|\le\|f\|_\infty$。
+
+沿用第 70 节的条件平均投影 $\Pi_n$、层投影 $\Delta_0=\Pi_0$、$\Delta_n=\Pi_n-\Pi_{n-1}$（$n\ge1$）及分层自伴算子 $A$，写
+$$
+m_0=1,\qquad m_n=N_n-N_{n-1}\ (n\ge1),\qquad
+0=a_0<a_1<a_2<\cdots\longrightarrow\infty.
+$$
+本节 $\beta>0$ 表示逆温度，并始终假定
+$$
+Z_\beta:=\operatorname{Tr}(e^{-\beta A})
+=\sum_{n\ge0}m_ne^{-\beta a_n}<\infty
+\quad\text{对每个 }\beta>0.
+$$
+于是 $T_\beta=e^{-\beta A}$ 与 $\rho_\beta=T_\beta/Z_\beta$ 分别为热算子与 Gibbs 态。各层有限秩和 $a_n\to\infty$ 本身不代替上述迹类假设；允许某些 $m_n=0$。
+

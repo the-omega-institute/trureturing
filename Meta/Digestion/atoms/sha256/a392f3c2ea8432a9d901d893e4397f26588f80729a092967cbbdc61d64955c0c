@@ -1,0 +1,8 @@
+对不同 i,j，特别有
+
+\[
+C_{ij}\in L_k\quad\Longleftrightarrow\quad d_\Gamma(i,j)\le k.\tag{13.3}
+\]
+
+不连通时距离记为无穷。
+

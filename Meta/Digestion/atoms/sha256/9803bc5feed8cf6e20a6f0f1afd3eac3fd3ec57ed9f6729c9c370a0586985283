@@ -1,0 +1,1 @@
+先只替换一个槽位，写基本上下文为 $B$。若 $x\approx_\Sigma y$，则 $\operatorname{obs}_B(x)=\operatorname{obs}_B(y)$。严格失败与所有正常值分离，故 $B(x),B(y)$ 同时有定义或同时无定义。

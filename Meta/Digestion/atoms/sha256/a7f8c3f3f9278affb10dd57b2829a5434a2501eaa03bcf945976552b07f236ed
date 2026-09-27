@@ -1,0 +1,38 @@
+**命题 3.8（两扇区下界）。** 取两个扇区单位向量的等幅叠加，式(TM.269)的非零部分是特征值为 $\pm|k_T(E_a-E_b)|/2$ 的二阶矩阵。因此
+
+$$
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+\ge\frac12\max_{a\ne b}|\operatorname{sinc}((E_a-E_b)T/2)|,
+\qquad
+r=2\ \Longrightarrow\
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+=\frac12|\operatorname{sinc}(gT/2)|.
+\tag{TM.280}
+$$
+
+$r=2$ 的上界由 $\sqrt{p_1p_2}\le1/2$ 得到。矩形窗口没有单调的逐频率正下包络：$T\omega=2\pi\ell$，$\ell\ne0$ 为整数时，该非零频率恰被抹去。
+
+来源受限时不必对所有 $p$ 取最大。式(TM.270)对纯输入给实际输出的精确迹距离；对混合输入纯化，再取部分迹，保留相同能量概率，得到
+
+$$
+\begin{aligned}
+\frac12\|\mathcal A_T^H(|\Psi\rangle\langle\Psi|)
+-\mathcal P_H(|\Psi\rangle\langle\Psi|)\|_1
+&=\frac12\|D_pC_TD_p\|_1,\quad p_a=\|\Pi_a\Psi\|^2,\\
+\frac12\|\mathcal A_T^H(\rho)-\mathcal P_H(\rho)\|_1
+&\le\frac12\|D_qC_TD_q\|_1,\quad q_a=\operatorname{Tr}(\Pi_a\rho).
+\end{aligned}
+\tag{TM.281}
+$$
+
+对 $H^{(n)}$ 与 $|\psi\rangle^{\otimes n}$，必须取实际总能量分布 $p_\lambda=\|\Pi_\lambda^{(n)}\psi^{\otimes n}\|^2$，不能任意选择单纯形坐标。对混合产品态使用第二行。若实际占用 $s\ge2$ 个不同总能量，其最小间距为 $g_{\rm supp}$，限制到非零概率坐标可得
+
+$$
+\frac12\|\mathcal A_T^{H^{(n)}}(\rho^{\otimes n})
+-\mathcal P_{H^{(n)}}(\rho^{\otimes n})\|_1
+\le\min\left\{1,\frac{\sqrt{s-1}}{Tg_{\rm supp}},\frac\pi{Tg_{\rm supp}}\right\}.
+\tag{TM.282}
+$$
+
+只占一个扇区时差为零，不定义 $g_{\rm supp}$。这些界依赖真实来源分布；抽象最坏分布存在，不表示来源合同允许它。
+

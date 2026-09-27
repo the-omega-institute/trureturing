@@ -17,7 +17,8 @@ public sealed class QuarantineSummaryCommandTests
         var subitems = hasSubitems ? "\n    - remaining-proof" : "[]";
         var raw = RawRepositorySnapshot.Create(
         [
-            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, TheoryAtomizerDataTests.Minimal),
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
+            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, AtomizerRulesFixture.Minimal),
             RawRepositoryEntry.FromText("Meta/Digestion/backfill/source-a/source.toml", """
                 source_id = "source-a"
                 path = "synthetic/source-a.md"

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a48e37a4e708c652ac90fe4eb458a244a36c5e82e32497f575006119f390f45
+  normalized_sha256: sha256:4a48e37a4e708c652ac90fe4eb458a244a36c5e82e32497f575006119f390f45
+cas_ref: sha256:4a48e37a4e708c652ac90fe4eb458a244a36c5e82e32497f575006119f390f45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“对全部未来读数保持等价”的双向陈述不是单纯定义备注，已展开 exactSeparationDepth 的存在性分支，以 Option.some_ne_none、not_forall、not_exists 和 not_not 完成量词规范化；仓内无冻结 GID 直接给出此等价式，定义没有偷带新的分离事实。
+    previous_atom_id: 5d2436da3a3e573f3b1545b2c4a8ada23287633e46881e2285aedd2250981436
+    next_atom_id: c6802111de6bc462321f8a569df89f51db473ff449885a1f4d5d9802c5492d15

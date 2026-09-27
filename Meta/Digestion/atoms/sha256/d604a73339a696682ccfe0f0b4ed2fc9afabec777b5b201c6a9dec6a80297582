@@ -1,0 +1,43 @@
+#### 47.9.4 临界有限来源的完成及有理闭包
+
+沿用 (47.20) 的拉回公式，在临界 \(\mathcal F_A^{\mathbb R}\) 上定义 \(d_\rho\)。临界有界性保证距离有限，首列恢复保证距离为零当且仅当边界相同；因此它仍是真距离，\(\mathcal E\) 是到
+\(\mathcal J_{A,\rho}^{\mathbb R}\) 的等距双射。Banach 空间中该像的闭包完备，而像按闭包定义在其中稠密，所以
+$$
+\widehat{(\mathcal F_A^{\mathbb R},d_\rho)}
+\cong\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.41}
+$$
+第47.5节已经以首列极限与有限坐标多项式连续性完整证明
+\(\mathcal I_{A,\rho}\) 是闭的。有限来源像的闭包因此留在实际像中；
+(47.40) 又说明实际数组到这个闭包距离为零，当且仅当它的尾幅度为零。
+因为闭包是闭集，这给出完整自由来源类的精确刻画：
+$$
+\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}
+=\mathcal I_{A,\rho}\cap\mathcal B_{\rho,0}
+\subsetneq\mathcal I_{A,\rho},
+\qquad T^\star\notin\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.42}
+$$
+严格性由 (47.13)、(47.31) 给出。因此，对实际数组还有等价判据
+\[
+T\in\overline{\mathcal J_{A,\rho}^{\mathbb R}}
+\quad\Longleftrightarrow\quad L_\rho(T)=0
+\quad\Longleftrightarrow\quad
+\|\mathsf U_\tau T-T\|_\rho\longrightarrow0
+\quad(\tau\downarrow0).
+\]
+这刻画的是完整 \(K_A\) 下的临界有限来源闭包，不推广为任意受限来源的闭包结论。
+
+这不与 Context43 的精确前缀完成冲突。若给实系数采用逐字相等的前缀距离，同一组截断是 Cauchy，而 (47.33) 证明它们在临界数值距离中不是 Cauchy；当 \(A\) 有理时，这组截断也就在 Context43 的有理来源类内。当 \(A\) 无理时，不把含 \(-A\) 的截断称为有理来源。合法无限来源不必属于每一种有限来源完成。
+
+**有理有限来源的补充。** 对第47.7节已定义的有理有限来源类
+\(\mathcal F_A^{\mathbb Q}\)，
+固定 $M$ 时，$\mathcal E:[-A,A]^M\to\mathcal B_\rho$ 连续：由 (47.29) 先同时控制任意两份输入的远尾，再对有限头部使用坐标多项式连续性。每个有限实边界可在同一个支撑范围内逐坐标作内向有理逼近，包括 $A$ 无理时的端点，故
+$$
+\overline{\mathcal E(\mathcal F_A^{\mathbb Q})}^{\,\|\cdot\|_\rho}
+=\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.43}
+$$
+有理有限来源的拉回度量完成也等于 (47.41) 的右侧。由相同闭包，
+(47.40) 对有理有限来源的距离同样等于 \(L_\rho(T)\)，特别地到 \(T^\star\) 的距离为 \(c_A\)。这是数值闭包结论；不声称当 $A$ 无理时，有限有理来源能逐字复制含精确读数 $-A$ 的访问记录。
+

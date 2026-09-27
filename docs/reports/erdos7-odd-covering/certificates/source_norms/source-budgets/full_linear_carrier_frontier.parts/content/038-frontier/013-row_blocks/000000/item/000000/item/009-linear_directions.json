@@ -1,0 +1,23 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 25,
+      "part": {
+        "path": "content/038-frontier/013-row_blocks/000000/item/000000/item/009-linear_directions/000000-000025.json",
+        "sha256": "7947bf45072a35b5181b2c7b9c61d2ad9fd643fdc627465285f4a29dab0423b9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 41,
+      "part": {
+        "path": "content/038-frontier/013-row_blocks/000000/item/000000/item/009-linear_directions/000025-000041.json",
+        "sha256": "ff89204d00001de2c74af1f623a6cb1d52f3f021503f6a61f1fcce497437c3e5",
+        "kind": "value"
+      }
+    }
+  ]
+}

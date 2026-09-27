@@ -1,0 +1,44 @@
+**命题 34.2（从逐模型静态证书到档案预测）。** 在定义34.1下，每个固定世界的整条实际路径属于
+$$
+\mathcal T_\theta
+=\{y:I_T\to U:\ \forall t\in I_T,
+\ \|y(t)-X_\theta(t)\|\le E_\theta(t)\}.
+\tag{34.2}
+$$
+因此实际候选路径族包含于 $\bigcup_{\theta\in\mathcal F(D)}\mathcal T_\theta$。若给定一条仅用合法可访问档案 $D$ 计算的共同预测路径 $p_D:I_T\to U$，则对每个 $t\in I_T$，
+$$
+\sup_{\theta\in\mathcal F(D)}\|x_\theta(t)-p_D(t)\|
+\le\sup_{\theta\in\mathcal F(D)}
+ \left[E_\theta(t)+\|X_\theta(t)-p_D(t)\|\right].
+\tag{34.3}
+$$
+整段路径的版本为
+$$
+\sup_{\theta\in\mathcal F(D)}\|x_\theta-p_D\|_{\infty,I_T}
+\le\sup_{\theta\in\mathcal F(D)}\sup_{t\in I_T}
+ \left[E_\theta(t)+\|X_\theta(t)-p_D(t)\|\right]
+\le E_D^T+M_D^T,
+\tag{34.4}
+$$
+其中
+$$
+E_D^T=\sup_{\theta\in\mathcal F(D)}\sup_{t\in I_T}E_\theta(t),
+\qquad
+M_D^T=\sup_{\theta\in\mathcal F(D)}\|X_\theta-p_D\|_{\infty,I_T}.
+$$
+声称有限半径时须实际认证所用右侧有限；最后一个较松界要求 $E_D^T,M_D^T$ 均有限。若有限精度路径 $\widehat p_D$ 满足已认证的
+$\|\widehat p_D-p_D\|_{\infty,I_T}\le\varepsilon_{\rm eval}$，则式（34.4）相应右侧再加 $\varepsilon_{\rm eval}$。
+
+证明。式（34.1）的两个全称量词给每条固定世界路径的管包含。对固定的同一个 $\theta,t$，三角不等式给
+$$
+\|x_\theta(t)-p_D(t)\|
+\le\|x_\theta(t)-X_\theta(t)\|
+ +\|X_\theta(t)-p_D(t)\|
+\le E_\theta(t)+\|X_\theta(t)-p_D(t)\|.
+$$
+取同一可行集上的上确界得到式（34.3），再对共同 $I_T$ 取上确界得到式（34.4）的第一步。每个世界的两项分别不超过 $E_D^T,M_D^T$，给最后一步；这一步是上界放宽，不声称两个最坏值能在同一世界同时取到。插入 $p_D$ 再用已认证计算误差得到有限精度项。$\square$
+
+这里 $M_D^T$ 是围绕所选 $p_D$ 的静态模型散布，不能因某一模型的动态近似误差很小而删去。当 $S_\theta,x_{0,\theta}$ 尚随世界变化时，恢复卷最初供应的是一族整条路径管，不是一条已取得的统一预测。即使每时刻允许分别选择一个世界的点值，拼出的曲线也未必属于式（34.2）的任何固定世界管；$\bigcup_\theta\mathcal T_\theta$ 的含义是先选一个世界再约束所有时间，不把世界变成时间函数。交换数值上确界 $\sup_\theta\sup_t=\sup_t\sup_\theta$ 不改变这个实现量词，也不授权这种拼接。
+
+若模型和可见初态已由完整档案确定，可选 $p_D=X$，从而 $M_D^T=0$；仍须计算和认证 $p_D$。一般情况下模型估计与可行集求界是额外任务，式（34.3）没有提供估计器、可行集非空性算法或最优预测中心。尺度族要得到单一路径预测的一致收敛，所选适用证书、模型散布及计算／解码误差的完整预算须在同一可行族上一致趋零。恢复卷推论29.8只供应其中的动态近似项。一份适用且完整趋零的预算已经足够；另一较松预算不趋零不证明实际不收敛。
+

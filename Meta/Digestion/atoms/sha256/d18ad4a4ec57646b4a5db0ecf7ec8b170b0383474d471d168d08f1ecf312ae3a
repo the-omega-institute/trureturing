@@ -1,0 +1,14 @@
+**theorem 48.9 (Compact witnesses, effective stabilization, and computable compatible choice).** Let
+$$
+S=\{\mathbf x\in K^r:\Sigma(\mathbf x)\},\qquad S_\alpha=\{\mathbf q\in Q_\alpha^r:Q_\alpha\models\Sigma(\mathbf q)\}.
+$$
+Then $S$ is nonempty if and only if every $S_\alpha$ is nonempty. For each fixed $\alpha$, its actual coordinate image satisfies
+$$
+I_\alpha=\pi_\alpha^r[S]=\bigcap_{\beta\succeq\alpha}b_{\beta\alpha}^r[S_\beta].
+$$
+One can effectively find $\beta_*\succeq\alpha$ such that
+$$
+b_{\gamma\alpha}^r[S_\gamma]=I_\alpha\qquad\text{for every }\gamma\succeq\beta_*.
+$$
+When $S$ is nonempty, one can uniformly construct a solution given by a total algorithm returning its coordinate at every threshold-period quotient.
+

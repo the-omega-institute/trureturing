@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:394e803f4d61d4a087c6afa86c60938a9eaacec4082d5c2efb56c90524f073cd
+  normalized_sha256: sha256:394e803f4d61d4a087c6afa86c60938a9eaacec4082d5c2efb56c90524f073cd
+cas_ref: sha256:394e803f4d61d4a087c6afa86c60938a9eaacec4082d5c2efb56c90524f073cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.2节这个短叶仅有“令 A=U^TU、B=VV^T、W=VU”及块矩阵记号；实际初态域的充要条件在后一子叶，本叶定义本身没有暗含半正定与秩条件的反向实现结论。
+    previous_atom_id: 693b13a55bfcd68f01012ebf3461e0fb223aec2119943b88130bbb97bfa0a6ee
+    next_atom_id: 4a10bbdd16bc0d0caeed5f6365570ceaa9484a6475914308fc96e4d127c10644

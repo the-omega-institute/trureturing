@@ -1,0 +1,17 @@
+**definition 58.5 受限的带符号稀疏整数语言。** 一个成功证书包含 $p,n$，以及按原顶点次序排列的
+$$
+\left(\sigma_i,r_i,k_i;(e_{i1},d_{i1}),\ldots,(e_{ik_i},d_{ik_i})\right),
+$$
+其中 $\sigma_i\in\{+1,-1\}$，并满足
+$$
+0\le k_i\le n-1,\qquad s\le e_{i1}<\cdots<e_{ik_i}\le M,\qquad
+1\le d_{ij}<p.
+$$
+奇素数时要求 $1\le r_i\le q$；$p=2$ 时要求 $r_i=1$。$n=0$ 时没有坐标记录，上述逐坐标条件为空。空尾表允许出现。证书所表示的普通整数严格定义为
+$$
+Y_i=r_i+\sum_{j=1}^{k_i}d_{ij}p^{e_{ij}},\qquad x_i=\sigma_iY_i.
+$$
+所有未列数字都等于零，包括最高列出指数以后的全部数字。符号作用于整个正的整数 $Y_i$，不是把负数写成未终止的 $p$ 进展开。这里没有未知尾项、精度占位符或指数为 $\infty$ 的项。
+
+序列化使用一个三比特类型标记、$\operatorname{enc}(p)\operatorname{enc}(n)$，每个坐标使用一比特符号（$0$ 表示 $+1$，$1$ 表示 $-1$）、$\operatorname{enc}(r_i)\operatorname{enc}(k_i)$，随后编码各 $\operatorname{enc}(e_{ij})\operatorname{enc}(d_{ij})$。
+

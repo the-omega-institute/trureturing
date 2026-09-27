@@ -1,0 +1,80 @@
+{
+  "allocations_by_full_root": {
+    "4": {
+      "0": [
+        "2",
+        "1"
+      ],
+      "1": [
+        "2",
+        "1"
+      ]
+    },
+    "5": {
+      "0": [
+        "2",
+        "1",
+        "1"
+      ],
+      "1": [
+        "5/2",
+        "1",
+        "1"
+      ]
+    }
+  },
+  "credits": {
+    "4": "4/253125",
+    "5": "4/1265625"
+  },
+  "old_margin_checks": 46656,
+  "carriers_per_vertex": 18,
+  "conditional_margin_sha256": "62356b03d8d352f688155299d4c2cb704072a78936088e762cbf29746451b80f",
+  "minimum_gains": {
+    "4": "-1/8575",
+    "5": "-509/1440600"
+  },
+  "maximum_gains": {
+    "4": "23/34300",
+    "5": "13831/7203000"
+  },
+  "control_gains": [
+    {
+      "index": 398,
+      "carrier": [
+        1,
+        1
+      ],
+      "gain4": "1/5145",
+      "gain5": "23/240100"
+    },
+    {
+      "index": 402,
+      "carrier": [
+        0,
+        1
+      ],
+      "gain4": "2/8575",
+      "gain5": "1131/1200500"
+    },
+    {
+      "index": 404,
+      "carrier": [
+        0,
+        1
+      ],
+      "gain4": "2/8575",
+      "gain5": "1131/1200500"
+    },
+    {
+      "index": 406,
+      "carrier": [
+        0,
+        1
+      ],
+      "gain4": "2/8575",
+      "gain5": "1131/1200500"
+    }
+  ],
+  "partial_rule": "Maximum entire positive+zero+carrier source cost over compatible full completions."
+}

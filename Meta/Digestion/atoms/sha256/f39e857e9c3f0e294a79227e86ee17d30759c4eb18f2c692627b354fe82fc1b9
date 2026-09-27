@@ -1,0 +1,36 @@
+**定理 66.7（锚定动力学的 skew-product 公式、周期 lift 奇偶律与非平凡性）。**
+
+锚定同胚满足
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F.
+$$
+对每个整数 $n\ge1$，
+$$
+F^n(b,c) = \left(
+b\oplus\bigoplus_{j=0}^{n-1}(1-c_j),
+\ \sigma^n c
+\right).
+$$
+
+若 $n\ge1$ 且 $\sigma^n c=c$，令
+$$
+z_n(c):=\#\{0\le j<n:c_j=0\}.
+$$
+则：
+
+1. 若 $z_n(c)$ 为偶数，则两个锚定 lifts 都被 $F^n$ 固定，因此两者都是 $n$-周期点；
+2. 若 $z_n(c)$ 为奇数，则 $F^n$ 交换两个 lifts，因此没有 lift 被 $F^n$ 固定，而两个 lifts 都被 $F^{2n}$ 固定；
+3. 若 $n$ 是 $c$ 的最小正周期，则在偶数情形每个 lifted 点的最小正周期恰为 $n$，在奇数情形恰为 $2n$。
+
+此外，对每个 $k\ge2$，动力系统
+$$
+(\{0,1\}\times Y_k,F)
+\quad\text{与}\quad
+(\{0,1\}\times Y_k,G)
+$$
+不存在任何拓扑共轭。特别地，不存在形如
+$$
+H_h(b,c)=(b\oplus h(c),c)
+$$
+的连续纤维保持 gauge 共轭把 $F$ 化为 $G$。
+

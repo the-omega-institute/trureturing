@@ -1,0 +1,468 @@
+[
+  {
+    "index": 48,
+    "tag": [
+      "s",
+      "9"
+    ],
+    "factorial_threshold": 3,
+    "expansion": {
+      "factorial_threshold": 3,
+      "at_one": "0",
+      "hinge_coefficients": {
+        "3": "5"
+      },
+      "factorial_coefficient": "2",
+      "original_phi5_expansion": {
+        "at_one": "0",
+        "hinge_coefficients": {
+          "1": "0",
+          "2": "0",
+          "3": "7",
+          "4": "2",
+          "5": "0"
+        },
+        "factorial_tail_coefficient": "2",
+        "polynomial_tail": {
+          "leading": "1",
+          "constant": "-9",
+          "entrance": 3
+        },
+        "negative_hinge_coefficients": {},
+        "finite_transition_values": {
+          "1": "0",
+          "2": "0",
+          "3": "0",
+          "4": "7",
+          "5": "16",
+          "6": "27",
+          "7": "40",
+          "8": "55"
+        }
+      },
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "7",
+        "5": "16",
+        "6": "27"
+      },
+      "polynomial_tail": {
+        "entrance": 5,
+        "constant": "-9",
+        "linear": "0",
+        "leading": "1"
+      }
+    },
+    "all_head_tail_split": [
+      {
+        "head": 1,
+        "case": "all-T-monotone-integer-binomial",
+        "argument_shift": -1
+      },
+      {
+        "head": 2,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "-1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 3,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 4,
+        "case": "all-T-exact-quadratic",
+        "constant": "1",
+        "linear": "3/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 5,
+        "case": "all-T-exact-quadratic",
+        "constant": "3",
+        "linear": "5/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 6,
+        "case": "all-T-exact-quadratic",
+        "constant": "6",
+        "linear": "7/2",
+        "quadratic": "1/2"
+      }
+    ],
+    "retained_zero7_cross": true,
+    "scan": {
+      "coefficients": {
+        "3": "5"
+      },
+      "complete_cost_upper": "14458716500149327837/3969000000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124989,
+        "four_projection_branches": 550,
+        "four_bounded": 410,
+        "prior251_bounded": 0,
+        "six_projection_branches": 1400,
+        "six_affine_bounded": 284,
+        "joint_dual_branches": 1116,
+        "strict_pair_crossings": 0
+      },
+      "covered_containing_choices": 62500000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2
+        ],
+        "affine_complete_upper": "1949611/529200",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "14458716500149327837/3969000000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "14458716500149327837/3969000000000000000",
+        "dual_key": "f703afa73f9a5ae095ab53bb2de202e91c8f2709e0d4b2b80d3b5667fa9ef96d",
+        "previous251_dual_key": null,
+        "complete_tail_constant": "14726801/7938000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2
+        ],
+        "affine_complete_upper": "1949611/529200",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "14458716500149327837/3969000000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "14458716500149327837/3969000000000000000",
+        "dual_key": "f703afa73f9a5ae095ab53bb2de202e91c8f2709e0d4b2b80d3b5667fa9ef96d",
+        "previous251_dual_key": null,
+        "complete_tail_constant": "14726801/7938000"
+      },
+      "complete_tail_constant": "14726801/7938000",
+      "independent_affine_checks": 19,
+      "maximum_pruned": {
+        "two": "273373/75600",
+        "four": "275353/75600",
+        "prior251": "-1",
+        "six": "1927651/529200"
+      },
+      "new_distinct_duals": 1116,
+      "all_branch_decisions_sha256": "59f8a45f5e3bd0ebf997b1216e7bb02b79df4ba9a536b05bede39e255f12ce5c"
+    },
+    "complete_cost_upper": "14458716500149327837/3969000000000000000",
+    "previous_adopted_upper": "591640644011726489/158760000000000000",
+    "adopted_upper": "14458716500149327837/3969000000000000000",
+    "improvement_over_previous": "83074900035958597/992250000000000000",
+    "maximizing_cross_components": {
+      "h": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "1",
+        "1",
+        "4",
+        "1",
+        "1"
+      ],
+      "zero7_coefficients": [
+        "51/50",
+        "2/3",
+        "2/3",
+        "4/9",
+        "4"
+      ],
+      "old_zero7_cross": "181/900",
+      "selected_zero7_payment": "52/375",
+      "remaining_zero7_cross": "281/4500",
+      "complete_cross_residual_endpoints": [
+        "41471/330750",
+        "14227/110250"
+      ]
+    }
+  },
+  {
+    "index": 49,
+    "tag": [
+      "s",
+      "81/16"
+    ],
+    "factorial_threshold": 2,
+    "expansion": {
+      "factorial_threshold": 2,
+      "at_one": "0",
+      "hinge_coefficients": {
+        "2": "31/16",
+        "3": "17/16"
+      },
+      "factorial_coefficient": "2",
+      "original_phi5_expansion": {
+        "at_one": "0",
+        "hinge_coefficients": {
+          "1": "0",
+          "2": "63/16",
+          "3": "49/16",
+          "4": "2",
+          "5": "0"
+        },
+        "factorial_tail_coefficient": "2",
+        "polynomial_tail": {
+          "leading": "1",
+          "constant": "-81/16",
+          "entrance": 3
+        },
+        "negative_hinge_coefficients": {},
+        "finite_transition_values": {
+          "1": "0",
+          "2": "0",
+          "3": "63/16",
+          "4": "175/16",
+          "5": "319/16",
+          "6": "495/16",
+          "7": "703/16",
+          "8": "943/16"
+        }
+      },
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "63/16",
+        "4": "175/16",
+        "5": "319/16",
+        "6": "495/16"
+      },
+      "polynomial_tail": {
+        "entrance": 5,
+        "constant": "-81/16",
+        "linear": "0",
+        "leading": "1"
+      }
+    },
+    "all_head_tail_split": [
+      {
+        "head": 1,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "-1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 2,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 3,
+        "case": "all-T-exact-quadratic",
+        "constant": "1",
+        "linear": "3/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 4,
+        "case": "all-T-exact-quadratic",
+        "constant": "3",
+        "linear": "5/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 5,
+        "case": "all-T-exact-quadratic",
+        "constant": "6",
+        "linear": "7/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 6,
+        "case": "all-T-exact-quadratic",
+        "constant": "10",
+        "linear": "9/2",
+        "quadratic": "1/2"
+      }
+    ],
+    "retained_zero7_cross": true,
+    "scan": {
+      "coefficients": {
+        "2": "31/16",
+        "3": "17/16"
+      },
+      "complete_cost_upper": "207467385335349113/52920000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124985,
+        "four_projection_branches": 750,
+        "four_bounded": 339,
+        "prior251_bounded": 0,
+        "six_projection_branches": 4110,
+        "six_affine_bounded": 376,
+        "joint_dual_branches": 3734,
+        "strict_pair_crossings": 0
+      },
+      "covered_containing_choices": 62500000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2
+        ],
+        "affine_complete_upper": "41901389/10584000",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "207467385335349113/52920000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "207467385335349113/52920000000000000",
+        "dual_key": "ecf3b1b69b920c233c43c4d18ba791d99d479da2f22fc9c78490064013c1c8f0",
+        "previous251_dual_key": null,
+        "complete_tail_constant": "24284243/13230000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2
+        ],
+        "affine_complete_upper": "41901389/10584000",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "207467385335349113/52920000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "207467385335349113/52920000000000000",
+        "dual_key": "ecf3b1b69b920c233c43c4d18ba791d99d479da2f22fc9c78490064013c1c8f0",
+        "previous251_dual_key": null,
+        "complete_tail_constant": "24284243/13230000"
+      },
+      "complete_tail_constant": "24284243/13230000",
+      "independent_affine_checks": 19,
+      "maximum_pruned": {
+        "two": "1658543/423360",
+        "four": "5926937/1512000",
+        "prior251": "-1",
+        "six": "41492879/10584000"
+      },
+      "new_distinct_duals": 3734,
+      "all_branch_decisions_sha256": "4d835e162bc7d45f2ed9ffac22ef646a623d78f4dff00980c546bb94ddacb037"
+    },
+    "complete_cost_upper": "207467385335349113/52920000000000000",
+    "previous_adopted_upper": "16457976192152444357/4064256000000000000",
+    "adopted_upper": "207467385335349113/52920000000000000",
+    "improvement_over_previous": "2622404991988162393/20321280000000000000",
+    "maximizing_cross_components": {
+      "h": [
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "1",
+        "3",
+        "1",
+        "1",
+        "1",
+        "1",
+        "3",
+        "1",
+        "1",
+        "2",
+        "2",
+        "5",
+        "2",
+        "2"
+      ],
+      "zero7_coefficients": [
+        "36/25",
+        "1",
+        "8/9",
+        "5/9",
+        "5"
+      ],
+      "old_zero7_cross": "163/600",
+      "selected_zero7_payment": "647/3375",
+      "remaining_zero7_cross": "2159/27000",
+      "complete_cross_residual_endpoints": [
+        "18233/110250",
+        "8027/47250"
+      ]
+    }
+  }
+]

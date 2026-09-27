@@ -1,0 +1,13 @@
+### 127.12 动态 Schur 补与零频极限的准确对象
+
+取有限维实内积空间的正交分解 $U\oplus H$，设
+$$
+L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}\succeq0,\qquad C\succ0.
+$$
+令 $p(t)=(x(t),h(t))=e^{-tL}(x_0,h_0)$。因 $L$ 自伴半正定，谱分解给 $\|e^{-tL}\|\le1$，所以对每个实数 $s>0$，状态的 Laplace 变换
+$$
+X(s)=\int_0^\infty e^{-st}x(t)\,dt,\qquad
+H(s)=\int_0^\infty e^{-st}h(t)\,dt
+$$
+均绝对收敛。此处 $H(s)$ 是变换后的向量，与隐藏空间 $H$ 由参数和类型区分。
+

@@ -1,0 +1,25 @@
+**定理 15.3（预测坐标、正锥与支撑内更新）。** 令 $r=\dim V$，选列基矩阵 $B\in\mathbb R^{X\times r}$，第一列为 $\mathbf1$。记 $e_1$ 为 $\mathbb R^r$ 的第一标准列向量。存在唯一矩阵 $M_{a,y}\in\mathbb R^{r\times r}$ 满足
+$$
+K_{a,y}B=BM_{a,y}.
+\tag{15.5}
+$$
+定义实际归一化预测域及未归一化正锥
+$$
+\mathcal P=\{pB:p\in\Delta_X\}
+=\operatorname{conv}\{B(x,:):x\in X\},\qquad
+\mathcal C=\{uB:u\in\mathbb R^X_{\ge0}\}.
+\tag{15.6}
+$$
+对任意 $s\in\mathcal P$，有 $se_1=1$，且
+$$
+\ell_{a,y}(s)=sM_{a,y}e_1\ge0,\qquad
+\sum_y\ell_{a,y}(s)=1.
+\tag{15.7}
+$$
+当 $\ell_{a,y}(s)>0$ 时，
+$$
+F_{a,y}(s)=\frac{sM_{a,y}}{\ell_{a,y}(s)}\in\mathcal P
+\tag{15.8}
+$$
+与 $s=pB$ 所选的代表 $p$ 无关。若分支质量为零，则 $sM_{a,y}=0$，而该分支没有由条件化确定的后验。每个 $M_{a,y}$ 保持 $\mathcal C$；其矩阵元素无需逐项非负。
+

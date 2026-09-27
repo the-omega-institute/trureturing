@@ -1,0 +1,8 @@
+**证明。** 相对于 $H_A^*\otimes I+I\otimes H_B$ 取相互作用绘景，令 $W_t$ 为旋转后的 $W$。其范数为 $g_q$，且因 $\tau_B$ 平稳，$\operatorname{Tr}_B[W_t(I\otimes\tau_B)]=0$。对于产品初态 $\sigma_0=\rho_A\otimes\tau_B$，一次 Duhamel 项在偏迹后为零。再次积分精确方程 $\dot\sigma_t=-i[W_t,\sigma_t]$，余项为
+\[
+ -\int_0^t ds\int_0^s dr\,[W_s,[W_r,\sigma_r]].
+\]
+用 $\|[W,X]\|_1\le2\|W\|\|X\|_1$、$\|\sigma_r\|_1=1$ 及偏迹在 Hermitian 算子上的迹范数收缩，得到 $4g_q^2$ 乘三角积分面积，即 $2g_q^2t^2$。旋回绘景不改变迹范数。
+
+一般初态按 $\sigma_0+\chi$ 分开。自由演化后的 $\chi$ 偏迹仍为零；完整与自由酉演化在 Hermitian 输入 $\chi$ 上的一次 Duhamel 差至多为 $2g_qt\|\chi\|_1$。两部分相加得第一界。支持包含关系 $\operatorname{supp}\rho_{AB}\subseteq\operatorname{supp}\rho_A\otimes\mathcal H_B$ 及 $\tau_B\succ0$ 保证 $\mathscr E$ 有限；分解乘积参考的对数得相关性与隐藏非平衡两项。量子 Pinsker 不等式给 $\|\chi\|_1\le\sqrt{2\mathscr E}$。该精度提升依赖参考匹配的初始化；相关性或隐藏非平衡可以重新引入一阶项。证毕。[^tcs4-recovery]
+

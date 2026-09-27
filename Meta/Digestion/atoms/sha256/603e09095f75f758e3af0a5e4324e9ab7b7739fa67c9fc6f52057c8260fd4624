@@ -1,0 +1,49 @@
+**命题 3.12（直接与 Cesàro 极限）。** 固定 $H,\nu$，写 $\kappa_{ab}=\widehat\nu(E_a-E_b)$。各步独立取新增量且忘记记录时，
+
+$$
+(\mathcal C_\nu^H)^k(X)=\sum_{a,b}\kappa_{ab}^{\,k}\Pi_aX\Pi_b,
+\qquad |\kappa_{ab}|\le1.
+\tag{TM.300}
+$$
+
+**直接收敛判据。** 通道幂对所有矩阵收敛，当且仅当对每个实际能隙都有
+
+$$
+|\widehat\nu(E_a-E_b)|<1\quad\text{或}\quad\widehat\nu(E_a-E_b)=1.
+\tag{TM.301}
+$$
+
+充分性逐块来自复数幂极限；块数有限，故在有限维线性映射空间的所有范数下收敛，包括 diamond 范数。必要性：若 $|z|=1$、$z\ne1$，则 $|z^{k+1}-z^k|=|z-1|>0$。矩阵单位能隔离该块；用实际密度输入时，两扇区等幅纯态也有不收敛的交叉矩阵元 $z^k/2$。共同固定点存在不替代此判据。
+
+直接极限不存在时，先独立均匀抽取 $k\in\{0,\ldots,K-1\}$、执行 $k$ 步、最后忘记步数的 Cesàro 混合仍有极限：
+
+$$
+\frac1K\sum_{k=0}^{K-1}(\mathcal C_\nu^H)^k(X)
+=\sum_{a,b}\left(\frac1K\sum_{k=0}^{K-1}\kappa_{ab}^{\,k}\right)\Pi_aX\Pi_b
+\ \longrightarrow\ \sum_{\kappa_{ab}=1}\Pi_aX\Pi_b.
+\tag{TM.302}
+$$
+
+对 $\kappa\ne1$，括号等于 $(1-\kappa^K)/(K(1-\kappa))$，模至多 $2/(K|1-\kappa|)$；$\kappa=1$ 时恒为一。这是不同于固定重复 $K$ 次的协议，步数随机化不能读取来源未来创新。
+
+保留块组成一个 pinching，因为
+
+$$
+\widehat\nu(\omega)=1
+\ \Longleftrightarrow\
+e^{-it\omega}=1\quad\nu\text{-几乎处处},\qquad
+\int|e^{-it\omega}-1|^2\,d\nu(t)=2-2\operatorname{Re}\widehat\nu(\omega).
+\tag{TM.303}
+$$
+
+非负积分证明等价。定义 $a\sim_\nu b$ 当该条件对 $E_a-E_b$ 成立；自反、对称显然，传递在两份全测度集合交上用字符乘法。能隙有限，可共同取同一个全测度集合。对等价类 $\mathcal K$ 令 $P_{\mathcal K}=\sum_{a\in\mathcal K}\Pi_a$，则
+
+$$
+\mathcal P_\nu^H(X)=\sum_{\mathcal K}P_{\mathcal K}XP_{\mathcal K},\qquad
+\operatorname{Fix}(\mathcal C_\nu^H)
+=\bigoplus_{\mathcal K}\mathcal B(P_{\mathcal K}\mathcal H).
+\tag{TM.304}
+$$
+
+固定点方程是 $(\kappa_{ab}-1)X_{ab}=0$，故给上述代数；它也等于随机酉族在同一全测度时间集上的共同固定代数。$\mathcal P_\nu^H$ 完全正、保迹、幂等，并对该代数左右乘法有模性质，所以是保迹条件期望。Cesàro 极限总是它，直接极限存在时也为它。它不必等于按不同能量分块的 $\mathcal P_H$，因为实际时间支持可让不同能量具有同一字符。
+

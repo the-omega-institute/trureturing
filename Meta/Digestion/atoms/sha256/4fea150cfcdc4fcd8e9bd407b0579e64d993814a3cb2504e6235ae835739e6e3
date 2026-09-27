@@ -1,0 +1,41 @@
+**theorem 52.7 (真正的 Krasner 超环及其单位、零因子).** $(I,\boxplus,\cdot,0_I,1_I)$ 满足定义52.5的全部公理，且
+$$
+-A=A\qquad(A\in I).
+$$
+它的乘法单位群仅为 $\{1_I\}$。对 $A=(a_p)_p,B=(b_p)_p$，有
+$$
+A\cdot B=0_I
+\quad\Longleftrightarrow\quad
+\forall p,\ a_p=\infty\text{ 或 }b_p=\infty.
+$$
+非零 $A$ 是零因子，当且仅当至少一个 $a_p=\infty$。因此 $I$ 是具有零因子的交换含幺 Krasner 超环，不是超域，也不是普通环；其二元素子集 $\{0_I,1_I\}$ 并不构成二元素 Krasner 超域的子超域。这里采用的是商超环机制 [Connes–Consani，命题2.5](https://arxiv.org/html/1001.4260v2)，而不是把“超环”仅用作多值运算的名称。
+
+**证明。** 任意 $A,B$ 都有代表，故 $A\boxplus B$ 非空。交换性来自 $R$ 的加法交换性，结合性由定理52.6得到。因为 $\rho^{-1}(0_I)=\{0\}$，有 $A\boxplus0_I=\{A\}$。
+
+由于 $-1\in U$，有 $\rho(-x)=\rho(x)$。于是 $x+(-x)=0$ 证明 $0_I\in A\boxplus A$。反之，若 $0_I\in A\boxplus B$，则存在 $x,y$ 满足相应输入观察以及 $x+y=0$，故 $B=\rho(-x)=A$。这证明加法逆元存在且唯一，并且 $-A=A$。
+
+若 $C\in A\boxplus B$，取见证 $x,y$，并置 $z=x+y$。则 $y=z+(-x)$，所以 $B\in C\boxplus(-A)$。交换 $x,y$ 也给出另一侧可逆性。若采用典范超群的再生性质表述，任给 $A,C$，取代表 $x,z$，并令 $B=\rho(z-x)$，便有 $C\in A\boxplus B$，因此 $A\boxplus I=I$。
+
+乘法的交换、结合、单位元及零吸收律均由 $E$ 中扩展加法的相应等式逐坐标得到。显然 $0_I\ne1_I$。为核对分配等式，固定 $a,b,c\in R$，分别代表 $A,B,C$。按轨道定义，
+$$
+B\boxplus C=\{\rho(bu+cv):u,v\in U\}.
+$$
+因此
+$$
+\begin{aligned}
+A\cdot(B\boxplus C)
+&=\{\rho(a(bu+cv)):u,v\in U\}\\
+&=\{\rho(abu+acv):u,v\in U\}\\
+&=(A\cdot B)\boxplus(A\cdot C).
+\end{aligned}
+$$
+这里没有约去 $a$，故当 $a$ 为零或零因子时仍成立。乘法交换性给出另一侧分配等式。全部公理得到验证。
+
+若 $A\cdot B=1_I$，则每个坐标满足 $a_p+b_p=0$。非负性迫使 $a_p=b_p=0$，所以 $A=B=1_I$。零乘积的判据直接来自：两个有限非负整数之和不可能为 $\infty$。设 $A\ne0_I$ 且某个 $a_p=\infty$，定义
+$$
+b_p=\begin{cases}\infty,&a_p<\infty,\\0,&a_p=\infty.\end{cases}
+$$
+则 $B\ne0_I$，且 $AB=0_I$。反之，若所有 $a_p$ 都有限，$AB=0_I$ 强迫所有 $b_p=\infty$，即 $B=0_I$。例如，分别由只在素数 $2$ 坐标取 $1$、以及只在其余坐标取 $1$ 的两个非零幂等元所生成的主理想，是一对非零零因子。
+
+定理52.4还给出 $0_I,\rho(2)\in1_I\boxplus1_I$，且两者不同，所以加法不是单值。另一方面 $1_I\notin1_I\boxplus1_I$，而二元素 Krasner 超域要求 $1\boxplus1=\{0,1\}$。这证明最后的全部区别。证毕。
+

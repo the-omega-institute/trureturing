@@ -1,0 +1,17 @@
+**命题 3.4（路径模拟的单向度量控制）。** 设每个源实验 $(C,f)$ 都能由辅助系统中的一个允许实验 $(\widetilde C,\widetilde f)$ 模拟，在比较的全部辅助配置上满足
+$$
+\widetilde f(\widetilde C\widetilde x)=f(Cr_s\widetilde x),
+\qquad
+\widetilde\ell(\widetilde C)\le K_s\ell(C),
+$$
+其中对应读数使用同一个值域和度量，$0<K_s<\infty$ 与具体实验无关。则
+$$
+D_s(r_s\widetilde x,r_s\widetilde y)
+\le K_s\widetilde D_s(\widetilde x,\widetilde y).
+\tag{3.4}
+$$
+
+**证明。** 对每个源实验，将相同的读数差除以 $\ell(C)$，再乘除 $\widetilde\ell(\widetilde C)$，得到其贡献至多 $K_s\widetilde D_s$。对全部源实验取上确界即可。$\square$
+
+单向模拟不提供反向界，允许辅助系统额外读取的区别也不会由式(3.4)消失。模拟路径的时间与费用同样应按实际执行计算；函数相同而增益不同，或者一次调用被展开为多次实验，都必须携带相应数据运输。
+

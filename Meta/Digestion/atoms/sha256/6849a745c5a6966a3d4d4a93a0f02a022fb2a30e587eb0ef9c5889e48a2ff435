@@ -1,0 +1,28 @@
+**(a) 生成全部中间公式不保证闭理论覆盖。** 取不同公式 $a\ne b$，令
+$$
+F_A=\{a\},\qquad F_B=F_C=\{a,b\},
+$$
+$\tau$ 为包含映射，$\sigma=\operatorname{id}$，并定义
+$$
+C_A(\Gamma)=\Gamma,\qquad C_C(\Delta)=\Delta\cup\{b\},
+$$
+$$
+C_B(\Delta)=
+\begin{cases}
+\Delta\cup\{b\},&a\in\Delta,\\
+\Delta,&a\notin\Delta.
+\end{cases}
+$$
+则三者均为闭包，两步都保持，且
+$$
+K_\tau=K_{\sigma\circ\tau}=C_A,
+\qquad
+b\in K_\sigma(\varnothing)\setminus C_B(\varnothing).
+\tag{89.5a}
+$$
+同时，
+$$
+C_B(\tau[F_A])=F_B,
+$$
+但闭理论覆盖 (89.4a) 失败。
+

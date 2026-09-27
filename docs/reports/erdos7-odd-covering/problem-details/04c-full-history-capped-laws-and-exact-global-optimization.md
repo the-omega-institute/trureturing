@@ -1,0 +1,548 @@
+# 04c. Full-history capped laws and exact global optimization
+
+This chapter extends the same-law continuation in [Chapter 04b](04b-arbitrary-star-head-residues-with-unrestricted-tails.md) to full-history capped laws and exact global optimization. These are ordinary mathematical noncoverage deductions supported by exact arithmetic, not end-to-end Lean proofs, unrestricted Erdős #7, or a claim of public-literature originality.
+
+## Full-history capped laws and exact global optimization
+
+Retain a finite family of pairwise distinct odd numerical moduli greater
+than one, with arbitrary original residues. Let P be the odd primes at
+most73 occurring anywhere in the family, with3 added if absent. For each
+p choose H_p>=1 resolving its exponent in the ENTIRE family, including
+later-ending cofactors. Set N_p=p^H_p and
+
+    k_3=(3^H_3-1)/2,
+    k_p=((p-3)p^H_p+2)/(p-1) for p>=5.
+
+These are positive integers at most N_p. Write A_H for the union of the
+actual original classes supported wholly on P, as a subset of the full
+CRT head product. No original label is discarded or replaced by its
+radical. The statements below are ordinary mathematics and exact finite
+algorithms; they assert no new Lean result or solution of unrestricted#7.
+
+Three data must be distinguished. The arithmetic input fixes one residue
+for each original numerical modulus, hence one actual CRT forbidden set.
+The strategy knows that whole input in advance and may read every already
+sampled coordinate when choosing its next conditional row. The prescribed
+coordinate order determines which coordinates form that available prefix.
+It changes the cap-constrained strategy class; it neither changes the
+original congruences nor asserts a physical causal order among them.
+Residues cannot be selected anew in different branches of the strategy.
+
+### 1. A correlated head has the same unrestricted-tail consumer
+
+Fix any permutation sigma of P before generating the law. Admit every
+head joint law mu satisfying
+
+    mu(X_p=a | full preceding coordinates) <= 1/k_p
+
+for every leaf a at every positive-probability prefix IN THAT ORDER. On zero-probability
+prefixes choose a uniform row; this obeys the same cap since k_p<=N_p.
+Equivalently the source is built by normalized full-history kernels with
+these pointwise bounds. Marginal bounds alone are not the assumption.
+
+If mu(A_H)<=9/20, Chapter04b's same-law continuation proves noncoverage
+for the entire original family, including arbitrary tail primes above73.
+The initial coordinates need not be independent or related by one product
+of rooted-tree automorphisms.
+
+For a depth-e cylinder there are exactly p^(H_p-e) leaves. Its conditional
+probability is therefore at most
+
+    p^(H_p-e)/k_p = p^-e/s_p,     s_p=k_p/N_p.
+
+These are exactly Chapter04b's finite reference caps. In particular the
+ternary cap is 2*3^-e/(1-3^-H_3); replacing it directly by2*3^-e would be
+invalid. For p>=5, s_p>=(p-3)/(p-1), so the old height-independent cap
+(p-1)p^-e/(p-3) is valid.
+
+Apply [Schroeder's published conditional convex comparison](../../../../Library/Arith/schroeder2026noncoverage.md) to the actual
+original-label rectangles. It assumes deterministic caps conditional on
+the entire earlier history, and does not assume independent actual
+coordinates. The retained [Comparison.lean source](../../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean) expresses this with
+`KernelChain`, `HasCaps`, and `convex_load_comparison`. Its Lean finite-law
+signature is rational; arbitrary real laws here use the published ordinary
+proposition, not an unclaimed change to that signature.
+
+Only the auxiliary comparison coordinates are independent. After this
+replacement, the same finite ternary auxiliary height is dominated in
+increasing-convex order by the infinite auxiliary law with tail2*3^-e,
+using Chapter04's US3. Its weighted-increment proof uses no independence
+of the initial physical coordinates. The other auxiliary heights are
+bounded by the same geometric tails as before.
+
+After this entire head, append the identical actual normalized tail
+kernels in increasing numerical order for primes above 73. They preserve the
+entire old marginal, hence keep the actual head loss epsilon=mu(A_H)
+unchanged. Complete original exponent tuples before using the positive
+part and second-moment estimates; repeated projected cofactors remain
+permitted. Before each tail prime q, the set of processed coordinates is
+the full head together with the smaller tail primes, regardless of sigma.
+The comparison theorem uses arbitrary ordered coordinate indices, so it
+applies in the actual order sigma followed by the tail prefix. Its
+independent auxiliary coordinates can then be permuted back to numerical
+order: the completed products of factors 1+K_p and their distributions
+are unchanged. The finite ternary convex-order argument applies at any
+position after conditioning on all the other independent factors.
+Thus the existing exact bounds at B=16384 remain
+
+    C_B <= 55386439412229727/125000000000000000,
+    J_B <= 4344363876475156387651/500000000000000000.
+
+The existing directed-rounding calculation stays in its original
+numerical order. It bounds this same independent auxiliary product
+distribution. No assertion that rounded recurrences commute is needed.
+
+The same physical source has common survivor mass at least1-epsilon-C_B.
+Condition once on that actual survivor event. Since every complete layout
+contains the unit divisor and its squared load is at least one, the
+supported law has, simultaneously for every layout,
+
+    Gamma <= 1+(J_B-1)/(1-epsilon-C_B).
+
+At epsilon<=9/20, Chapter04b's unchanged strict BBMST stopping comparison
+applies, and its unrestricted continuation handles all remaining primes.
+This reuses the established numerical certificate; it is a broader class
+of admissible head sources, not a new tail constant.
+
+### 2. Backward averaging is the global optimum over all such laws
+
+For a fixed actual head union, assign terminal cost1_A_H to every full
+word. At a prefix immediately before coordinate p, let its N_p child
+continuation values be v_1,...,v_N, ordered increasingly. Define
+
+    V(prefix) = (v_1+...+v_k)/k,     k=k_p.
+
+This is the exact row optimum over ALL real probability vectors
+0<=a_i<=1/k, sum_i a_i=1. Indeed,
+
+    sum_i a_i v_i - (sum_(i<=k) v_i)/k
+      = sum_(i<=k)(a_i-1/k)(v_i-v_k)
+          + sum_(i>k)a_i(v_i-v_k) >= 0.
+
+The displayed terms are nonnegative, and a uniform choice of k cheapest
+children attains equality. No discrete restriction on the competing row
+probabilities was assumed. Backward induction first bounds every future
+policy from below by its child values, then uses this row bound; selecting
+the minimizing rows gives equality throughout. Consequently
+
+    V(empty) = min_mu mu(A_H),
+
+where mu ranges over the entire full-history capped class just defined.
+In particular the minimum is attained by a rational law. At every reached
+prefix it selects k_p children uniformly. Every reached full word then
+has probability1/K, where K=product_p k_p, and exactly K words are reached.
+The selected children may depend on the actual entire prefix. This law
+generally has correlations.
+
+All values can be computed with integers. Put K_i=product_(j>=i) k_j.
+At a terminal word the numerator is0 or1. A parent sums the k_i smallest
+child numerators and uses denominator K_i. Thus the integer optimum M
+has V(empty)=M/K and its continuation test is exactly20M<=9K.
+
+This is the finite backward-induction/linear-allocation principle applied
+to the actual arithmetic head. A failed product-coordinate descent is not
+its lower-bound certificate; the entire Bellman optimum is required.
+
+### 3. Original-label signatures give an exact compressed computation
+
+At layer i retain the IDs of all original head labels whose requirements
+on earlier coordinates still match. A failed label can never become true
+again. Each surviving label keeps its original future exponents and
+residues. Therefore two prefixes with the same layer and surviving IDs
+have exactly the same remaining forbidden union. Their future row-cap
+constraints also agree because k_p depends only on the layer. They have
+the same continuation problem and the same Bellman value. This proves
+the state reduction; original labels with equal partial projections are
+not identified with one another.
+
+On the current coordinate, split all N_p=p^H_p leaves by their exact set
+of matching current label requirements. These requirements are genuine
+p-adic cylinders. A trie of their least-significant digit words supplies
+the partition. At depth d, matching labels ending at that node are
+retained for every descendant. Only children queried by deeper cylinders
+need expansion. Each unqueried child has the current signature on exactly
+p^(H_p-d-1) leaves; if no deeper query remains, the whole node contributes
+p^(H_p-d) leaves. Sum multiplicities for equal signatures.
+
+This partition includes every original exponent and every current leaf.
+Its multiplicities sum to N_p. A group of size m contributes m copies of
+its child continuation value to the row optimization. Sort groups by that
+value and take their multiplicities until exactly k_p children have been
+selected. A partial take from a tied-signature group is valid because any
+chosen leaves in it have the same future original-label requirements.
+The selected subsets need not themselves be p-adic cylinders.
+
+Memoizing by (layer, surviving original IDs) implements the exact Bellman
+recurrence without materializing the full CRT period. The number of states
+may still grow exponentially in the original label count; no polynomial
+bound in the bit length of the arithmetic input is asserted. Large
+unqueried heights change the exact cardinalities and multiplicities even
+when they add no new signature state. Compression does not truncate those
+heights or grant permission to ignore old exponents appearing in the tail.
+
+### 4. A genuine original head separates all three law classes
+
+Use the seven original residue classes
+
+    0 mod 3, 1 mod 9, 4 mod 27, 0 mod 7,
+    1 mod 21, 2 mod 63, 59 mod 189.
+
+Their numerical moduli are odd, greater than one, pairwise distinct, and
+have least common multiple 189. The full head has coordinates Z/27 and
+Z/7, in numerical prime order, with k_3=13 and k_7=5. The exact minima
+of its actual forbidden mass are
+
+| Admissible head law | Minimum forbidden mass |
+|---|---:|
+| Product of ternary C_(3,3) tree-orbit law and a uniform five-subset at 7 | 4/65 |
+| Any independent product with leaf caps 1/13 and 1/5 | 3/65 |
+| Any full-prefix conditional-cap law | 0 |
+
+These values concern the same original classes and the same full heights.
+They show both that the tree-orbit restriction can cost mass and that
+correlation can strictly improve on every independent capped product.
+
+The pure ternary classes leave exactly the 14 rows
+
+    S={2,5,7,8,11,13,14,16,17,20,22,23,25,26}.
+
+On these rows the pure seven-class forbids column 0. The additional
+mixed conditions have the following disjoint row groups, obtained by
+reducing each ORIGINAL residue modulo 27 or its required ternary power
+and modulo 7:
+
+| Original class | Surviving ternary rows | Additional forbidden column |
+|---|---|---:|
+| 1 mod 21 | 7,13,16,22,25 | 1 |
+| 2 mod 63 | 2,11,20 | 2 |
+| 59 mod 189 | 5 | 3 |
+
+For a correlated law, choose any 13 rows of S uniformly. Each such row
+forbids column 0 and at most one additional column, so it has at least
+five good columns. Choose five of them uniformly, conditional on that
+actual row. The joint law is uniform on 65 original CRT integers, obeys
+both full-prefix caps, and avoids all seven original classes. Its loss
+is zero, which proves the correlated global minimum.
+
+For independent product laws, optimization over arbitrary real
+probabilities reduces to uniform subsets without a discrete assumption.
+The objective is bilinear in the two marginals on compact capped
+simplices, so it has a global minimum. Fix its second marginal and use
+the row inequality from Section 2 to replace the first by a uniform
+13-subset without increasing the objective. Then fix that first marginal
+and replace the second by a uniform five-subset the same way. The result
+still attains the global minimum. Thus the 21 possible five-subsets of
+columns, with the 13 cheapest of ALL 27 rows for each, suffice.
+
+A column subset containing 0 incurs at least 13 forbidden points. A
+subset excluding 0 omits exactly one of columns 1,...,6. All 13 rows
+outside S then have cost five, and each row in S has cost zero or one,
+so the best 13-row choice lies in S. Omitting columns 1, 2, 3, or one
+of 4,5,6 leaves respectively 4, 6, 8, or 9 bad rows in S. A 13-subset
+of S can discard only one row. The resulting minima are 3, 5, 7, and 8
+forbidden points. Hence the exact independent-product minimum is 3/65,
+attained by columns {2,3,4,5,6} and, for example, rows S minus {20}.
+
+Finally restrict the ternary support to a C_(3,3) tree shape. Any shape
+containing a pure-ternary forbidden row incurs at least five forbidden
+points under every five-column choice. For a shape with no such row,
+its full root child of nine leaves must be residue 2 modulo 3: residue 0
+is wholly forbidden, while residue 1 includes rows forbidden by 1 mod 9
+and 4 mod 27. The recursive four-leaf child lies in residue 1. Within
+it, the full second-level child must be {7,16,25}, and the final leaf
+must be 13 or 22. Consequently the only two zero-pure-loss shapes are
+
+    {2,5,8,11,14,17,20,23,26} union {7,13,16,25},
+    {2,5,8,11,14,17,20,23,26} union {7,16,22,25}.
+
+Each has column bad-count vector (13,4,3,1,0,0,0). The sum of its five
+smallest entries is four, attained at columns {2,3,4,5,6}. The four bad
+original integers are 2,59,65,128. This proves the tree-orbit minimum
+4/65 and the strict separation displayed above.
+
+The exact producer checks all 21 column subsets and all 27 actual row
+costs, all 108*21 tree-orbit products, and the actual CRT support of a
+zero-loss correlated policy. All three minima are below 9/20. The example
+does not refute the universal head-selection wish and does not claim a
+new two-prime noncoverage theorem.
+
+### 5. The head order can be selected before sampling
+
+For each prescribed head order sigma, the preceding recursion computes
+the global optimum V_sigma over that order's full-prefix capped laws.
+The same unrestricted-tail consumer applies to every such fixed order.
+One may therefore compare candidate orders or minimize V_sigma over all
+fixed permutations. A single run certifies its specified order; a global
+claim across orders needs all of them or a further valid reduction. No
+efficient bound for that additional optimization is asserted.
+
+Order changes the admissible-law class even for the original period-189
+example. In the order 3 then 7 the exact optimum is zero as proved above.
+In the order 7 then 3, first fix column b=0,...,6. Averaging its 13 cheapest
+ternary terminal costs gives, respectively,
+
+    (1, 4/13, 2/13, 0, 0, 0, 0).
+
+Indeed, column 0 forbids all 27 ternary rows. Columns 1 and 2 leave only
+9 and 11 good rows, while each other column leaves at least 13 good rows.
+The initial seven-coordinate cap then averages the five smallest of the
+displayed child values, yielding exactly 2/65. The real-row inequality
+proves the lower bound, and uniform choices of the indicated five columns
+and their 13 cheapest ternary rows attain it. The checker independently
+constructs this full-period CRT policy and verifies both conditional caps.
+
+A fixed joint law's mass of the actual union does not change when its
+coordinates are renamed or displayed in another order. The values 0 and
+2/65 differ because the full-prefix caps in the two orders describe
+different feasible laws. Both optima are below 9/20. This argument allows
+a prime permutation fixed before sampling; selecting the next prime
+adaptively from already sampled values is outside its scope. Tail primes
+above 73 retain their numerical processing order.
+
+### 6. An explicit original head refutes the numerical-order universal bound
+
+The claim that every original head admits bad mass at most 9/20 under
+these caps in numerical prime order is false. Consider the following
+complete fixed family; each entry m:a denotes the original class a mod m.
+
+```text
+3:0      5:0      7:2      9:4      11:7     13:2
+15:14    17:6     19:1     21:14    25:21    27:10
+33:20    35:27    39:22    45:43    49:43    51:35
+55:11    57:5     63:7     65:33    75:53    77:67
+81:46    85:36    91:12    95:76    99:70    105:17
+117:7    119:39   121:41   125:26   133:68   135:109
+143:47   147:68   153:97   165:143  169:135  171:25
+175:66   187:50   189:28   195:143  209:93   221:123
+225:79   231:32   243:100  245:197  247:127  255:8
+273:173  275:206  285:158  289:251  297:181  315:52
+323:150  325:206  343:78   351:154  357:26   361:170
+363:323  375:308  385:277  399:257  405:154  425:368
+429:245  441:232  455:318  459:190  475:161  495:394
+```
+
+These are 78 pairwise distinct odd numerical moduli greater than one,
+exactly the odd 19-smooth integers between 3 and 500. Their actual prime,
+height, carrier-size, and cap-cardinality vectors are
+
+    P = (3,5,7,11,13,17,19),
+    H = (5,3,3,2,2,2,2),
+    N = (243,125,343,121,169,289,361),
+    k = (121,63,229,97,141,253,321).
+
+Each highest prime power in N is itself an original modulus. Thus H
+records the full original exponents; it is not artificial height padding.
+Every original residue in the table is fixed globally before any sampling.
+Let A be this actual forbidden union and let mu range over ALL real joint
+laws whose full-prefix leaf probabilities, in the order P displayed above,
+are at most 1/k_p. The exact optimum is
+
+    Q = product_p N_p = 22227341715203625,
+    K = product_p k_p = 1938999971129067,
+    min_mu mu(A) = 875843233809638 / 1938999971129067.
+
+Writing b=875843233809638, the decisive strict comparison is
+
+    20b - 9K = 65864936031157 > 0.
+
+This is the global optimum over the specified conditional-cap class, not
+the result of coordinate descent. It follows from the capped-row theorem
+and two exact finite evaluations of the original input. The compressed
+Bellman routine minimizes bad mass. A separate routine uses no trie:
+for every actual leaf in each coordinate it tests each original label
+modulo gcd(m,p^H), retaining only the IDs still matching the revealed
+prefix. A label already completed makes survival zero; if no label
+remains, every future tuple survives. Otherwise it computes the largest
+possible survivor numerator by summing the k_p LARGEST child numerators.
+Every child has the same remaining denominator. The capped-row inequality
+with signs reversed proves this survival recurrence over all real rows,
+and uniform choices of the maximizing children attain it.
+
+The two evaluations agree on
+
+    maximum_survivor_numerator = 1063156737319429 = K-b.
+
+The independent leaf recurrence uses 2,481 states and 237,164 explicit
+coordinate-leaf evaluations. On the same original-label states, summing
+ALL N_p child counts, instead of selecting k_p, counts every actual CRT
+survivor exactly once. It gives
+
+    |R| = 1157800229415935.
+
+Direct original-label membership also verifies that the integer 19 is
+uncovered. Consequently the input is not a covering system. What fails
+is the stronger requirement that the fixed conditional-cap class put
+at least 55 percent of its mass on actual survivors. Appending unused
+head primes after 19 in numerical order cannot repair this marginal
+optimization: future normalized rows preserve the original head law.
+
+The result does not settle other fixed prime orders for this input or
+refute the existential choice of an order for every head. Its survivor
+count even passes the order-independent necessary counting condition:
+
+    20|R| - 11K = 1827004905898963 > 0.
+
+Thus cardinality alone does not explain this example's numerical-order
+obstruction; the full-prefix constraints carry additional restrictions.
+The same-law conditional continuation and the exact Bellman algorithm
+remain valid. Their numerical-order universal success premise is refuted.
+
+### 7. A complete survivor-count obstruction defeats every fixed order
+
+A second actual family refutes the weaker claim that choosing a suitable
+fixed order always restores bad mass at most 9/20. It even defeats the
+larger class of ALL joint laws having atom mass at most 1/K, without any
+sequential-kernel restriction. The complete original input is:
+
+```text
+3:0       5:0       7:2       9:4       11:7      13:2
+15:14     17:6      19:1      21:14     23:6      25:21
+27:10     29:17     31:23     33:20     35:27     37:20
+39:22     41:20     43:17     45:43     47:12     49:43
+51:35     53:25     55:11     57:5      59:20     61:60
+63:7      65:33     67:19     69:35     71:10     73:37
+75:53     77:67     81:46     85:17     87:50     91:12
+93:8      95:76     99:70     105:17    111:8     115:21
+117:1     119:39    121:41    123:59    125:26    129:118
+133:68    135:109   141:14    143:47    145:142   147:68
+153:97    155:78    159:35    161:36    165:143   169:135
+171:25    175:66    177:59    183:55    185:111   187:50
+189:28    195:143   201:155   203:15    205:32    207:43
+209:90    213:187   215:91    217:207   219:215   221:123
+225:79    231:32    235:132   243:100   245:197   247:127
+253:201   255:8     259:138   261:124   265:6     273:173
+275:206   279:25    285:158   287:200   289:251   295:183
+297:181   299:70    301:11    305:196   315:52    319:303
+323:150   325:206   329:57    333:250   335:277   341:170
+343:78    345:41    351:154   355:117   357:26    361:170
+363:2     365:3     369:367   371:64    375:308   377:354
+385:277   387:352   391:333   399:257   403:188   405:154
+407:104   413:284   423:7     425:368   427:166   429:245
+435:161   437:45    441:232   451:258   455:318   459:190
+465:398   469:243   473:96    475:161   477:226   481:235
+483:53    493:126   495:394   497:197
+```
+
+These are 154 distinct odd numerical moduli greater than one, exactly
+all odd 73-smooth integers from 3 through 500. Their largest modulus is
+497. The family is its own literal input: for example, its residues at
+85,117,209,363 are 17,1,90,2. It must not be reconstructed by simply
+appending labels to the preceding 78-label input.
+
+The prime vector consists of the 20 odd primes from 3 through 73, and
+its actual full-height vector is
+
+    H=(5,3,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1).
+
+The first seven prime coordinates are 3,5,7,11,13,17,19; the remaining
+ones are 23,29,31,37,41,43,47,53,59,61,67,71,73. Every highest prime
+power is present as an original modulus. Exact original-label counting
+and the same cap-cardinality formulas give
+
+    Q = 93334171363271157468761359267761115875,
+    K =  4385364744027208669814574741078700875,
+    |R|= 2254630674715456873605308528779445940.
+
+Here R is the actual set of uncovered CRT residues modulo Q. The
+survivor count is obtained by the independent full-leaf recurrence from
+Section 6, summing all child counts in all 20 coordinates. Each state
+continues to retain the original label IDs and complete exponents.
+
+For ANY probability law mu on these Q actual residues satisfying
+mu({x})<=1/K at every point, summing over R gives
+
+    mu(R) <= |R|/K,
+    mu(A) >= 1-|R|/K.
+
+The strict integer gap is
+
+    11K-20|R| = 3146398689990157895854151576276790825 > 0.
+
+Therefore every such law has bad mass strictly greater than 9/20. More
+explicitly its bad mass is at least
+
+    15783215328235198490439008979994481
+    /32484183289090434591219072156138525.
+
+This bound applies simultaneously to every fixed-order full-prefix
+capped law. For any full word of positive mass, the chain rule multiplies
+its conditional leaf probabilities, each at most 1/k_p, giving atom mass
+at most product_p(1/k_p)=1/K. Zero-mass words satisfy the bound as well.
+The product K is independent of the chosen permutation. Thus no choice
+of fixed order, no additional dependence among coordinates, and no other
+law construction that retains this same atom cap can meet the proposed
+55 percent survival target on this family. This is a statement about a
+probability constraint on one fixed arithmetic set, not a physical causal
+claim or a permission to choose different original residues by branch.
+
+The exact numerical-order Bellman calculation is stronger:
+
+    minimum_bad_numerator = 2412632030500994251235961799423987575,
+    minimum_bad_mass = minimum_bad_numerator/K.
+
+The trie minimum and the independent full-leaf maximum agree on this
+value. The latter calculation uses 45,029 states and 3,363,080 explicit
+coordinate-leaf evaluations and also returns the stated survivor count.
+The universal-order obstruction needs only the cardinality inequality,
+not a separate DP run for every permutation.
+
+Finally, direct evaluation shows that 34 is uncovered by all 154 original
+classes. This family is not a cover. It refutes the universal fixed-cap
+head-selection premise, including its order-optimized variant, while
+leaving the conditional continuation criterion and the exact optimizer
+valid for inputs on which their sufficient threshold is met.
+
+### 8. Verification scope and the remaining mathematical target
+
+The implementation compares the compressed optimum with an independent
+full-period CRT construction and uncompressed backward recursion on24
+actual two- and three-prime families. It also checks each queried signature
+partition against all current leaves. The constructed finite optimal law
+has exactly k_p equally weighted children at every reached full prefix;
+its actual original-label union mass agrees with the computed optimum.
+Two fixtures have positive optimal costs1/20 and2/65, so the checks include
+heads that cannot be completely avoided at the prescribed caps.
+The additional period-189 check in the reversed fixed order has exact
+cost2/65 and checks all current leaves against their original CRT classes.
+
+For the seven-label coordinate-trap example from the preceding reference
+optimization result, complete height padding to H=2,3,8,20 in all three
+coordinates leaves the exact optimum zero and uses17 signature states.
+The H=20 ambient period is105^20, while the least common multiple of those
+original labels remains105. A separate fixture adds actual classes of
+moduli 3^20,5^20,7^20; its original period is105^20, its exact optimum is
+zero, and it uses22 signature states. These are exact finite tests, not
+a proof of the same value at all untested heights or for arbitrary labels.
+
+The [exact Bellman program](../frontier/source-budgets/capped_head_bellman.py)
+retains the compressed optimizer, full-period CRT checks, exact signatures,
+finite policy witnesses, the three-class comparison, both complete literal
+counterexamples, and their independent local-leaf survival and cardinality
+checks. All original labels are literal input to the producer. Its
+[complete exact output](../certificates/source_norms/source-budgets/capped_head_bellman.json)
+is reproduced from the repository root by
+
+```sh
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/capped_head_bellman.py --check
+```
+
+Both proposed universal statements are now refuted: numerical order by
+the 78-label family, and existence of a qualifying fixed order by the
+154-label family. The latter obstruction already holds in the larger
+class of all joint laws with the same atom bound. Better optimization or
+more available information cannot alter that counting inequality while
+the original input and the atom cap remain fixed.
+
+The conditional theorem has a different quantifier: whenever an actual
+admissible law meets the sufficient mass threshold, its same-source tail
+continuation is valid. The counterexamples leave that implication intact.
+The exact Bellman program likewise continues to compute the right answer;
+its answers need not always satisfy the desired threshold.
+
+Within this route, a universal replacement would need to change the
+head-law constraints or the survival-versus-moment budget. Enlarging caps
+changes the auxiliary distributions and therefore requires new justified
+tail-charge and moment bounds; the old C_B and J_B cannot simply be kept.
+No universal replacement is established here. Ordinary arithmetic
+noncoverage is weaker than a fixed quantitative survival target, as the
+explicit uncovered integers 19 and 34 demonstrate.

@@ -1,0 +1,17 @@
+**定理 32.8（全好元组质量给出的精确距离）。** 继续定理32.7的前提，在正移动轨道 $O$ 上写 $\alpha_O=\mu(x)=w_O/\ell_O$。对任意 $Q\in\mathcal F_S$，令 $c_{O,k}$ 为其每相位质量，即 $c_{O,k}\ge0$、$k\notin K_O$ 时为零、$\sum_kc_{O,k}=\alpha_O$。则
+$$
+\operatorname{TV}(P,Q)=\beta+\sum_O\sum_{x\in O,k}(p_{x,k}-c_{O,k})_+,
+\tag{32.19}
+$$
+$$
+\operatorname{dist}_{\rm TV}(P,\mathcal F_S)
+=\beta+\sum_O\min_{\substack{c_k\ge0,\ c_k=0\ (k\notin K_O)\\\sum_kc_k=\alpha_O}}
+ \sum_{x\in O,k}(p_{x,k}-c_k)_+.
+\tag{32.20}
+$$
+每个最小值均取得。
+
+证明。轨道上的好质量满足 $\sum_{x,k}(c_{O,k}-p_{x,k})=\beta_O$，故其绝对差总和为 $\beta_O+2\sum_{x,k}(p_{x,k}-c_{O,k})_+$。再加坏质量 $\beta$ 及固定亏损 $\beta_F$，除以二，并用 $\sum_O\beta_O=\beta_N$，得（32.19）。各轨道单纯形紧且非空，目标连续，独立取最小值得（32.20）。$\square$
+
+这是整个合法总误差面的距离。另加最小最大误差条件、硬预算或来源约束会耦合轨道，未必还能分开优化。公式使用全部好元组质量；它不说成对表决定最近点，也不说下节的解码器是最近点。
+

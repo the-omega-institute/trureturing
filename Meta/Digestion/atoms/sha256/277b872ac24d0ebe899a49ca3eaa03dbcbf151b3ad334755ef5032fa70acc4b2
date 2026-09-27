@@ -1,0 +1,19 @@
+**推论 137.9（首个未定矩的全部正方向）。** 令
+$$
+W=(L+\ker C)^\perp,\qquad Q=P_We_r:U\to W.
+$$
+则 $Q$ 满射，
+$$
+\dim W=\operatorname{rank}S_r-\operatorname{rank}S_{r-1},
+\tag{137.18}
+$$
+且所有有限维正竞争实现的首个未定矩差组成的集合恰为
+$$
+\boxed{
+\{\widetilde M_{2r+2}-\widehat M_{2r+2}\}
+=\{Q^*ZQ: Z:W\to W,\ Z=Z^*\succeq0\}.
+}
+\tag{137.19}
+$$
+因此规范第 $2r+2$ 阶矩是全部竞争实现该阶矩的 Loewner 下界。
+

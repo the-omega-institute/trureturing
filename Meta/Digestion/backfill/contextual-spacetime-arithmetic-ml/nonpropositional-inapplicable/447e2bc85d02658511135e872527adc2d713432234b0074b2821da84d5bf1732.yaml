@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:447e2bc85d02658511135e872527adc2d713432234b0074b2821da84d5bf1732
+  normalized_sha256: sha256:447e2bc85d02658511135e872527adc2d713432234b0074b2821da84d5bf1732
+cas_ref: sha256:447e2bc85d02658511135e872527adc2d713432234b0074b2821da84d5bf1732
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This clause fixes the meaning of the preceding least-depth statement: training steps of the fixed actual matrix-output model, not the number or cost of scalar black-box queries. It introduces no additional proposition.'
+    previous_atom_id: 67b1f51ee9e8fa823c208bfcd972aa045a2984332dfbac741129ffaf4c1c4156
+    next_atom_id: 9b90f2387b9a917147b94ab3bed653a950c9e2a27fbb9ad642f9e6873797c4ba

@@ -1,0 +1,47 @@
+**定理 47.7（一个边界零见证给出的 H10 有效归约）。** 存在从有限编码的整数系数多项式
+$$
+P\in\mathbb Z[X_1,\ldots,X_k],\qquad k\in\mathbb N_0,
+$$
+到 $L_{\mathrm{sr}}$ 存在句的可计算映射，使输出句在 $K$ 中成立，当且仅当 $P$ 在 $\mathbb N_0^k$ 有零点。输出句的量词自由部分只使用多项式等式、不等式与合取。因此不存在在所有此类句子上停机并正确判定真值的图灵机，$K$ 的完整一阶理论也不可判定。
+
+**证明。** 将输入表示为有限个有符号整数系数及指数元组，并有效分拆为
+$$
+P=P^+-P^-,\qquad P^+,P^-\in\mathbb N_0[X_1,\ldots,X_k].
+$$
+自然系数可有效展开为由 $0,1,+,\cdot$ 构成的有限项。输出
+$$
+\exists z\,\exists x_1\cdots\exists x_k\,
+\left(
+ z+z=z\land z\ne0
+ \land\bigwedge_{i=1}^k(z+x_i\ne x_i)
+ \land P^+(\bar x)=P^-(\bar x)
+\right).
+$$
+定理 47.3 迫使唯一的额外见证 $z$ 等于 $e$，并使每个 $x_i$ 都是自然锚。最后的等式由定理 47.6 精确对应于原自然数多项式方程。反过来，任何自然数解与见证 $z=e$ 都满足输出句。因此两个可解性条件双向等价，且整个变换由有限语法有效计算。
+
+当 $k=0$ 时，省去变量量词及空守卫合取，保留边界零见证与常数等式，仍给出正确真值。零多项式产生恒真等式；自然数元组空间总非空，包括零维时的空元组。非零常数多项式产生两个不同自然数常量之间的等式，由 $\iota$ 单射而为假。这些退化输入也全部正确处理。
+
+所用不可判定性输入是 Jones–Matijasevic，*Proof of Recursive Unsolvability of Hilbert's Tenth Problem*，American Mathematical Monthly 98(8) (1991)，689–709，[Theorem 1，第 690 页](https://sites.math.rutgers.edu/~zeilberg/akherim/hilbert10Old.pdf#page=3)。该定理的量词范围是：对每个递归可枚举关系 $R\subseteq\mathbb N_0^m$，存在有限个未知数与一个整数系数多项式 $F$，使
+$$
+\forall\bar a\in\mathbb N_0^m,\qquad
+\bar a\in R\Longleftrightarrow
+\exists\bar y\in\mathbb N_0^\ell\ F(\bar a,\bar y)=0.
+$$
+多项式取决于关系，而不是参数取值；全部参数和未知数均在非负整数中量化。
+
+为明确这个输入如何推出所需不可判定性，固定图灵机的有效编号 $\mathsf M_a$，令
+$$
+\mathcal H=\{a\in\mathbb N_0:\mathsf M_a(a)\text{ 停机}\}.
+$$
+并行模拟枚举出 $\mathcal H$。若其特征函数可计算，构造程序在输入 $a$ 被判为属于 $\mathcal H$ 时无限循环，否则停机；把该程序自己的编号作为输入，就与判定结果矛盾。因此 $\mathcal H$ 不可判定。对该固定关系应用上述已发表定理，得到一个固定多项式 $F(T,\bar Y)$。代入整数 $a$ 得到 $F(a,\bar Y)$ 是有效操作；若非负整数多项式可解性有总判定程序，就能判定 $\mathcal H$，矛盾。这里固定一个表示 $\mathcal H$ 的多项式即可，不需要从任意关系描述统一合成表示多项式。
+
+另一直接来源是 Martin Davis，*Hilbert's Tenth Problem is Unsolvable*，American Mathematical Monthly 80(3) (1973)，233–269，[Theorem 7.4，第 262 页](https://www.math.umd.edu/~laskow/Pubs/713/Diophantine.pdf#page=31)。该文在[第 234 页](https://www.math.umd.edu/~laskow/Pubs/713/Diophantine.pdf#page=3)明确约定正文中的变量取正整数，不能把这一约定写成非负整数。两种可解性输入通过有效代换转换：
+$$
+\exists\bar y\in\mathbb N_{>0}^k\ Q(\bar y)=0
+\Longleftrightarrow
+\exists\bar n\in\mathbb N_0^k\ Q(\bar n+\mathbf 1)=0.
+$$
+反向转换对非负整数方程使用 $P(\bar Y-\mathbf 1)$，展开后仍为整数系数多项式。每个代换都来自两个变量域之间的逐坐标双射，所以量词范围精确对应。
+
+最后，把已经证明的非负整数不可判定性与本条的有效归约复合，即排除所述存在句片段的总判定程序；完整一阶理论的判定程序若存在，也会判定这一片段，故同样不存在。证毕。
+

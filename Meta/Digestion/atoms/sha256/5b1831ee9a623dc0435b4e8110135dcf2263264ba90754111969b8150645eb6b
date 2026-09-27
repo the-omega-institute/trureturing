@@ -1,0 +1,21 @@
+**定义 10.1（有限维量子恢复的对象与距离）。** 以下所有系统均为非零有限维复 Hilbert 空间。记 $\mathcal L(A)$ 为 $A$ 上的线性算子空间，$\mathcal D(A)$ 为密度算子集。量子通道均为完全正且保迹的线性映射，简称 CPTP。对 $\rho_{ABC}\in\mathcal D(A\otimes B\otimes C)$，下标表示相应偏迹边缘，定义
+$$
+S(\rho)=-\operatorname{Tr}(\rho\ln\rho),\qquad
+I(A:C\mid B)_\rho
+=S(\rho_{AB})+S(\rho_{BC})-S(\rho_B)-S(\rho_{ABC}),
+\tag{10.1}
+$$
+其中 $0\ln0=0$。本节全部熵使用自然对数。对同一系统上的密度算子，定义根保真度与半迹距离
+$$
+F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1,\qquad
+d_1(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+\tag{10.2}
+$$
+因此 $F$ 不是某些文献采用的平方保真度 $F^2$。恢复映射的类型固定为
+$$
+\mathcal R:\mathcal L(B)\longrightarrow\mathcal L(B\otimes C),\qquad
+\widehat\rho_{ABC}=(\operatorname{id}_A\otimes\mathcal R)(\rho_{AB}).
+\tag{10.3}
+$$
+恢复比较的是整个 $ABC$ 联合态；系统 $A$ 上保持恒等通道。
+

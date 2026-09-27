@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee52d199ca1611e096c9ae3b0d21aba0bf6a70a762ebe04b9e85812de65cc0fb
+  normalized_sha256: sha256:ee52d199ca1611e096c9ae3b0d21aba0bf6a70a762ebe04b9e85812de65cc0fb
+cas_ref: sha256:ee52d199ca1611e096c9ae3b0d21aba0bf6a70a762ebe04b9e85812de65cc0fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子定义规范 Zeckendorf 行的黄金读数及刻度残差，所有公式均为所用坐标的定义，没有声称残差估计。
+    previous_atom_id: 5913e6f01462307789ea6a12f92d8198ffab76054a78a6995deb1d91df298f14
+    next_atom_id: ca0153709c606a6baad16de87378001c039db9d7889d0c92896bdb11306ca114

@@ -1,0 +1,2 @@
+再证 (R)。若 $a$ 不是零序列，存在有理 $\varepsilon>0$，使每个尾部都有一项 $|a_j|\ge\varepsilon$。在 Cauchy 误差 $\varepsilon/2$ 的尾部中，给任一项 $a_n$ 选同尾部这样一个 $a_j$，得到 $|a_n|>\varepsilon/2$，可取 $\delta=\varepsilon/2$。反向，尾部下界显然排除趋零。尾部若还取两项差小于 $\delta$，它们不能异号，否则差至少 $2\delta$；这也证明前述符号最终固定。条件只由零差类决定：若 $a-b\to0$，$a$ 的下界 $\delta$ 在 $b$ 的充分后段给出 $\delta/2$ 下界。
+

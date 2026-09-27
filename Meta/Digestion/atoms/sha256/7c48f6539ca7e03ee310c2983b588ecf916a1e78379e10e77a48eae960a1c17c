@@ -1,0 +1,6 @@
+**证明。** $N$ 的 $D$-不变性已在前一定理证明。若 $BD^j=0$ 对全部 $j\ge m$，则任取 $h\in H$ 与 $k\ge0$，
+$$
+BD^kD^mh=BD^{m+k}h=0,
+$$
+故 $D^mH\subseteq N$，即 $\bar D_{\mathrm{init}}^{\,m}=0$。反之，若 $\bar D_{\mathrm{init}}^{\,m}=0$，则 $D^mH\subseteq N$；对 $j=m+k$，有 $D^jH\subseteq N$，故 $BD^j=0$。最小截止与零商边界同前一定理。证毕。
+

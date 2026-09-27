@@ -1,0 +1,8 @@
+#### 122.6.4 无限增加观察仍可能留下盲核
+
+设 $q_n$ 是同一有限 $X$ 上逐步细化的观察，定义总观察等价关系
+$$
+x\sim_\infty y\iff\forall n,\ q_n(x)=q_n(y),
+$$
+以 $q_\infty:X\to X/{\sim_\infty}$ 表示实际总接口，对应投影 $P_\infty$。
+

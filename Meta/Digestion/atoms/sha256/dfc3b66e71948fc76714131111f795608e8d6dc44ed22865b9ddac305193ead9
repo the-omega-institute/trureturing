@@ -1,0 +1,16 @@
+### 定理 62.5（统一顺序核）
+
+冻结结果 `unified_sequential_kernel` 给出：对任意状态表示 $s$、$s'$，所有允许顺序词的统计相等，当且仅当状态差落在顺序可见空间的正交残差中：
+
+$$
+\begin{aligned}
+&\forall w\in\mathcal A,
+\quad
+\langle s,\mathsf E_w\rangle
+=
+\langle s',\mathsf E_w\rangle\\
+&\qquad\Longleftrightarrow\\
+&s-s'\in\mathcal V_{\mathcal A}^{\perp}.
+\end{aligned}
+$$
+

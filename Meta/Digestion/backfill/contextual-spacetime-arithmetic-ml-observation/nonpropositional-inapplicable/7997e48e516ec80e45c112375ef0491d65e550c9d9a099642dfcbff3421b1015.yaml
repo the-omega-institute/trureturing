@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7997e48e516ec80e45c112375ef0491d65e550c9d9a099642dfcbff3421b1015
+  normalized_sha256: sha256:7997e48e516ec80e45c112375ef0491d65e550c9d9a099642dfcbff3421b1015
+cas_ref: sha256:7997e48e516ec80e45c112375ef0491d65e550c9d9a099642dfcbff3421b1015
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “保留完整相位测度及精确实残差”解释所定义的元组，“只计残差坐标数”规定索引含义；本叶只有分段函数和坐标记号，前置的深度零边界句已拆开，并未夹入边界数等于该分段函数的定理。
+    previous_atom_id: 1c9d8650797c856979f429afda082c1b456cdd149b9a4e9407c1f0efff016d13
+    next_atom_id: dad484d609a5ff0609a0d747d6f0c06569aebdbd48a73a11a131eebf05141b79

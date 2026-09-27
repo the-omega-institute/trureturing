@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c50a5ef7a499aadf1e36f7c7aac41ab072b09a4c6e89d5b6dea153d2aa430ca1
+  normalized_sha256: sha256:c50a5ef7a499aadf1e36f7c7aac41ab072b09a4c6e89d5b6dea153d2aa430ca1
+cas_ref: sha256:c50a5ef7a499aadf1e36f7c7aac41ab072b09a4c6e89d5b6dea153d2aa430ca1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Associativity of actual composition”夹带实际函数复合结合律，探针以 Function.comp_assoc 在原载体上直接证明；“without an additional proof”只限制后续推理范围，不断言两个关系必不相等，仓内无冻结 GID。
+    previous_atom_id: 3648f927e4b410b69a91671a748b2c7570b19109a88f2c1a8611fe8bb62b7808
+    next_atom_id: 469d9ccb62d0171569a448850a3b0aee92c5c59aeccd58448b07fdedfac83109

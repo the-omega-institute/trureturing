@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26834c57a4a498342762e99d54182c157ea5741989b7062723ad231e6649629d
+  normalized_sha256: sha256:26834c57a4a498342762e99d54182c157ea5741989b7062723ad231e6649629d
+cas_ref: sha256:26834c57a4a498342762e99d54182c157ea5741989b7062723ad231e6649629d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “固定因子映射及支撑下界：定义 27 → 定义 29 → 定义 33”是一条定义地址对应，未断言支撑条件可实现或充分；不存在偷带结论，保留为编辑资料。
+    previous_atom_id: 66bc70f7c4ecf14e86e88a9fc6700187fc876749deee17157c42f11bf0fe8558
+    next_atom_id: 317e1b092dd0c1fd9f456183104896bf7152586183700f0b31f8410c5b430cc0

@@ -1,0 +1,4 @@
+**命题 12.3（任务恢复与全部量子状态恢复的维数边界）。** 若定义12.1的完整恢复满足 $\mathcal R\mathcal E=\operatorname{id}_X$，则 $\dim B\ge\dim X$。任务恢复 $\mathcal S\mathcal E=\mathcal Q$ 不具有这一普遍下界。例如 $\mathcal Q$ 是只输出一个固定态的通道时，一维边界已经充分。
+
+**证明。** $\mathcal E$ 具有线性左逆，因此在复向量空间 $\mathcal L(X)$ 上单射。于是 $(\dim X)^2\le(\dim B)^2$。固定态目标经一维迹通道再制备该固定态即得。故要求保留指定任务，与要求可逆编码所有未知量子状态具有不同量词。$\square$
+

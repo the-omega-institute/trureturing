@@ -1,0 +1,238 @@
+{
+  "schema": "erdos7-endpoint-square-neighborhood-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json": "f715fee37ae6c26170d9d9cb43ed2cc2b48e04dc516eb5a5021088f2aee2509e",
+    "frontier/endpoint-bounds/endpoint_square_common_pure3.py": "4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json": "295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a",
+    "frontier/endpoint-bounds/endpoint_square_numerator.py": "c58ef20557da4bebeb741e27feddc59f6f2925a2992f00316c94c52376961d68",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json": "9217c081fcb0bf511d4bd1de134f0d8aacfff2fd09573e4c21519e2f9a563a00",
+    "frontier/endpoint-bounds/endpoint_square_coherent_head.py": "24229193f185d132d2ef0917b0257ddcd20d374b6333dfae327cc70d665ceedb",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json": "d9f23c6b5ca3fbe8b4e1411b845356c6aea1ea4b2af541a6261b840057573f15"
+  },
+  "baseline_square_upper": "469/100",
+  "guard": {
+    "tau": "1/1000",
+    "epsilon": "1/10000"
+  },
+  "all_dual_coefficients": {
+    "count": 12500,
+    "maximum_multiplier": 27,
+    "sha256": "21a62dff80f144730a3fc161fd9c52be5ca1947406717ad5f54f9e60a4f55e1d"
+  },
+  "head_error": [
+    "896",
+    "10430",
+    "84"
+  ],
+  "expanded_zero_head_error": [
+    "8078/9",
+    "95690/9",
+    "3794/45"
+  ],
+  "expanded_raw_head_error": [
+    "4550/9",
+    "8348/3",
+    "0"
+  ],
+  "pair_cap_categories": {
+    "unit": [
+      "8/5",
+      "1",
+      "0"
+    ],
+    "3": [
+      "6",
+      "12",
+      "6/5"
+    ],
+    "9": [
+      "10",
+      "20",
+      "2"
+    ],
+    "5": [
+      "42",
+      "900",
+      "3"
+    ],
+    "15": [
+      "126",
+      "2700",
+      "9"
+    ],
+    "deep3": [
+      "4/9",
+      "0",
+      "8/45"
+    ],
+    "deep5": [
+      "11/40",
+      "0",
+      "11/100"
+    ],
+    "3_times_deep5": [
+      "33/40",
+      "0",
+      "0"
+    ],
+    "9_times5": [
+      "35/8",
+      "0",
+      "0"
+    ],
+    "deep35": [
+      "0",
+      "0",
+      "0"
+    ],
+    "positive7": [
+      "1247/108",
+      "0",
+      "0"
+    ]
+  },
+  "pair_cap_error": [
+    "219311/1080",
+    "3633",
+    "13939/900"
+  ],
+  "common_cauchy_error_coefficient": "16/15",
+  "exact_tau_epsilon_kappa_coefficients": [
+    "1648",
+    "51959/3",
+    "101"
+  ],
+  "Phi": {
+    "tau": 1650,
+    "epsilon": 17400,
+    "kappa": 101,
+    "sqrt_epsilon": 41
+  },
+  "tail_sqrt_bounds": [
+    "864/25",
+    "999949/220500",
+    "7/8"
+  ],
+  "complete_tail_cases": [
+    {
+      "epsilon": "1/10000",
+      "sqrt_epsilon": "1/100",
+      "T_T3_T5": [
+        {
+          "value": "38951/455625",
+          "entrance": 7
+        },
+        {
+          "value": "10061/607500",
+          "entrance": 6
+        },
+        {
+          "value": "203/90000",
+          "entrance": 4
+        }
+      ]
+    },
+    {
+      "epsilon": "1/1000000",
+      "sqrt_epsilon": "1/1000",
+      "T_T3_T5": [
+        {
+          "value": "247763/123018750",
+          "entrance": 11
+        },
+        {
+          "value": "2341153/4920750000",
+          "entrance": 10
+        },
+        {
+          "value": "529/9000000",
+          "entrance": 7
+        }
+      ]
+    },
+    {
+      "epsilon": "1/100000000",
+      "sqrt_epsilon": "1/10000",
+      "T_T3_T5": [
+        {
+          "value": "532888931/14946778125000",
+          "entrance": 15
+        },
+        {
+          "value": "139140163/14946778125000",
+          "entrance": 15
+        },
+        {
+          "value": "313/281250000",
+          "entrance": 10
+        }
+      ]
+    },
+    {
+      "epsilon": "1/1000000000000",
+      "sqrt_epsilon": "1/1000000",
+      "T_T3_T5": [
+        {
+          "value": "14347376137/1816033542187500000",
+          "entrance": 23
+        },
+        {
+          "value": "145984591639/65377207518750000000",
+          "entrance": 23
+        },
+        {
+          "value": "75163/281250000000000",
+          "entrance": 16
+        }
+      ]
+    },
+    {
+      "epsilon": "1/1000000000000000000",
+      "sqrt_epsilon": "1/1000000000",
+      "T_T3_T5": [
+        {
+          "value": "171453057838432042769/10006309019799941400000000000000000",
+          "entrance": 36
+        },
+        {
+          "value": "38332383588184979/7238360112702503906250000000000",
+          "entrance": 35
+        },
+        {
+          "value": "491931/781250000000000000000",
+          "entrance": 24
+        }
+      ]
+    }
+  ],
+  "improvement_box": {
+    "tau": "1/1000000",
+    "epsilon": "1/1000000000000",
+    "kappa": "1/1000000"
+  },
+  "box_Phi": "8960087/5000000000",
+  "inherited_uniform_square_norm": "102715/2916",
+  "box_improvement_over_inherited_norm": "2157275166577/3645000000000",
+  "actual_finite_box_witness": {
+    "height": 24,
+    "original_nonunit_labels": 15624,
+    "s": "4208528049036860536610802089/16834112196028232574462890625",
+    "S": "403137492968970462308077376678811007251724112489/2687583286428083187866562563686430454254150390625",
+    "D": "6733644878474871493279506727/44890965856075286865234375000",
+    "tau": "536449177527523739/134672897568225860595703125000",
+    "epsilon": "7612772210913802471072170796280207731/21500666291424665502932500509491443634033203125000",
+    "kappa": "1/191581231380566414401",
+    "inside_improvement_box": true
+  },
+  "signed_margin": "45*S - 469/100 - Phi(tau,epsilon,kappa)",
+  "scope": "Exact arithmetic for an ordinary uniform finite-neighborhood square theorem. All original residues remain independent; weighted min-geometric tails are complete. The witness uses the closed profile50 construction formulas, not its huge CRT period. No global K, physical denominator bound, Lean result or unrestricted Erdos7 resolution."
+}

@@ -1,0 +1,117 @@
+### 127.6 四点路径：完整熵上升，当前粗熵却下降
+
+取单位边权路径 $1-2-3-4$，
+
+$$
+L=\begin{pmatrix}
+1&-1&0&0\\
+-1&2&-1&0\\
+0&-1&2&-1\\
+0&0&-1&1
+\end{pmatrix},
+\qquad q=12\mid34,
+\qquad p_0=\left(\frac25,\frac1{10},\frac15,\frac3{10}\right).
+\tag{127.36}
+$$
+
+直接相乘得
+
+$$
+Lp_0=\left(\frac3{10},-\frac25,0,\frac1{10}\right),
+\qquad b_0=\left(\frac12,\frac12\right),
+\qquad \dot b_{0,\mathrm{left}}=\frac1{10}.
+\tag{127.37}
+$$
+
+这里纤维等大，所以 $\bar\pi=(1/2,1/2)$。二元熵在 $1/2$ 处的一阶导数为零、二阶导数为 $-4$，故
+
+$$
+H(b_t)=\log2-\frac1{50}t^2+O(t^3),
+\qquad D_c(p_t)=\frac1{50}t^2+O(t^3).
+\tag{127.38}
+$$
+
+与此同时，三条边在式（127.10）的贡献为
+
+$$
+\boxed{\sigma(p_0)=\frac3{10}\log4+\frac1{10}\log2
++\frac1{10}\log\frac32>0}.
+\tag{127.39}
+$$
+
+所以完整状态 Shannon 熵初始增加，而当前标签 Shannon 熵初始下降；它们的差别由式（127.16）准确记账。
+
+这不是只有一项 Taylor 数值的例子。定义有符号坐标
+
+$$
+z=p_1+p_2-p_3-p_4,
+\qquad m=p_1-p_2+p_3-p_4,
+\qquad r=p_1-p_2-p_3+p_4.
+\tag{127.40}
+$$
+
+用 $\dot p=-Lp$ 逐项相减，得到完整的非守恒坐标方程
+
+$$
+\boxed{\dot z=-z+m,\qquad\dot m=z-3m,\qquad\dot r=-2r},
+\qquad z_0=0,\quad m_0=\frac15,\quad r_0=\frac25.
+\tag{127.41}
+$$
+
+加上总质量一，可以反解
+
+$$
+p=\frac14(1+z+m+r,\ 1+z-m-r,\ 1-z+m-r,\ 1-z-m+r).
+\tag{127.42}
+$$
+
+因此没有把额外隐藏方向从完整模型中漏掉；$z,m$ 只是决定这个边界响应所需的耦合子系统。
+
+消去 $m$ 给出精确历史关系
+
+$$
+m(t)=e^{-3t}m_0+\int_0^t e^{-3(t-s)}z(s)\,ds,
+$$
+
+$$
+\boxed{\dot z(t)=-z(t)+e^{-3t}m_0+
+\int_0^t e^{-3(t-s)}z(s)\,ds}.
+\tag{127.43}
+$$
+
+初始隐藏偏差 $m_0$ 正是粗分布从均匀位置离开的原因。对 $z,m$ 的 $2\times2$ 矩阵对角化，或代回式（127.41）核验，得到
+
+$$
+z(t)=\frac1{5\sqrt2}e^{-2t}\sinh(\sqrt2t),
+$$
+
+$$
+m(t)=\frac15e^{-2t}
+\left(\cosh(\sqrt2t)-\frac1{\sqrt2}\sinh(\sqrt2t)\right),
+\qquad r(t)=\frac25e^{-2t}.
+\tag{127.44}
+$$
+
+故 $z(t)>0$ 对每个有限 $t>0$ 成立，而 $z(t)\to0$。粗质量 $b_t=((1+z(t))/2,(1-z(t))/2)$ 从平衡离开，最终又返回平衡。
+
+若取正交归一向量
+
+$$
+e_0=(1,1,1,1)/2,
+\quad e_z=(1,1,-1,-1)/2,
+\quad e_m=(1,-1,1,-1)/2,
+\quad e_r=(1,-1,-1,1)/2,
+\tag{127.45}
+$$
+
+则 $U=\operatorname{span}(e_0,e_z)$、$\mathcal H=\operatorname{span}(e_m,e_r)$，
+
+$$
+Le_z=e_z-e_m,
+\qquad Le_m=-e_z+3e_m,
+\qquad Le_r=2e_r.
+\tag{127.46}
+$$
+
+所以隐藏块的速率为 $3,2$，但 $e_r$ 不耦合到边界。可见核在 $e_z$ 方向为 $e^{-3t}$，在守恒方向为零。式（127.40）的 $z,m,r$ 是正交坐标的两倍，均不是单独的概率；$e_r$ 的速率也不能误作可见记忆核必须包含的速率。
+

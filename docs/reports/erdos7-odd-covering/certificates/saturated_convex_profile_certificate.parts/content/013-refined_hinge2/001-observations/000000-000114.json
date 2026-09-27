@@ -1,0 +1,800 @@
+[
+  {
+    "depth": [
+      0,
+      0
+    ],
+    "correction_numerator": 16371758
+  },
+  {
+    "depth": [
+      0,
+      1
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      2
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      3
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      4
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      5
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      6
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      7
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      8
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      0,
+      9
+    ],
+    "correction_numerator": 16130532
+  },
+  {
+    "depth": [
+      1,
+      0
+    ],
+    "correction_numerator": 14572739
+  },
+  {
+    "depth": [
+      1,
+      1
+    ],
+    "correction_numerator": 14445209
+  },
+  {
+    "depth": [
+      1,
+      2
+    ],
+    "correction_numerator": 14317679
+  },
+  {
+    "depth": [
+      1,
+      3
+    ],
+    "correction_numerator": 14190149
+  },
+  {
+    "depth": [
+      1,
+      4
+    ],
+    "correction_numerator": 14062619
+  },
+  {
+    "depth": [
+      1,
+      5
+    ],
+    "correction_numerator": 13935089
+  },
+  {
+    "depth": [
+      1,
+      6
+    ],
+    "correction_numerator": 13807559
+  },
+  {
+    "depth": [
+      1,
+      7
+    ],
+    "correction_numerator": 13680029
+  },
+  {
+    "depth": [
+      1,
+      8
+    ],
+    "correction_numerator": 13552499
+  },
+  {
+    "depth": [
+      1,
+      9
+    ],
+    "correction_numerator": 13424969
+  },
+  {
+    "depth": [
+      2,
+      0
+    ],
+    "correction_numerator": 14547233
+  },
+  {
+    "depth": [
+      2,
+      1
+    ],
+    "correction_numerator": 14394197
+  },
+  {
+    "depth": [
+      2,
+      2
+    ],
+    "correction_numerator": 14241161
+  },
+  {
+    "depth": [
+      2,
+      3
+    ],
+    "correction_numerator": 14088125
+  },
+  {
+    "depth": [
+      2,
+      4
+    ],
+    "correction_numerator": 13935089
+  },
+  {
+    "depth": [
+      2,
+      5
+    ],
+    "correction_numerator": 13782053
+  },
+  {
+    "depth": [
+      2,
+      6
+    ],
+    "correction_numerator": 13629017
+  },
+  {
+    "depth": [
+      2,
+      7
+    ],
+    "correction_numerator": 13475981
+  },
+  {
+    "depth": [
+      2,
+      8
+    ],
+    "correction_numerator": 13322945
+  },
+  {
+    "depth": [
+      2,
+      9
+    ],
+    "correction_numerator": 13169909
+  },
+  {
+    "depth": [
+      3,
+      0
+    ],
+    "correction_numerator": 14521727
+  },
+  {
+    "depth": [
+      3,
+      1
+    ],
+    "correction_numerator": 14343185
+  },
+  {
+    "depth": [
+      3,
+      2
+    ],
+    "correction_numerator": 14164643
+  },
+  {
+    "depth": [
+      3,
+      3
+    ],
+    "correction_numerator": 13986101
+  },
+  {
+    "depth": [
+      3,
+      4
+    ],
+    "correction_numerator": 13807559
+  },
+  {
+    "depth": [
+      3,
+      5
+    ],
+    "correction_numerator": 13629017
+  },
+  {
+    "depth": [
+      3,
+      6
+    ],
+    "correction_numerator": 13450475
+  },
+  {
+    "depth": [
+      3,
+      7
+    ],
+    "correction_numerator": 13271933
+  },
+  {
+    "depth": [
+      3,
+      8
+    ],
+    "correction_numerator": 13093391
+  },
+  {
+    "depth": [
+      3,
+      9
+    ],
+    "correction_numerator": 12914849
+  },
+  {
+    "depth": [
+      4,
+      0
+    ],
+    "correction_numerator": 14496221
+  },
+  {
+    "depth": [
+      4,
+      1
+    ],
+    "correction_numerator": 14292173
+  },
+  {
+    "depth": [
+      4,
+      2
+    ],
+    "correction_numerator": 14088125
+  },
+  {
+    "depth": [
+      4,
+      3
+    ],
+    "correction_numerator": 13884077
+  },
+  {
+    "depth": [
+      4,
+      4
+    ],
+    "correction_numerator": 13680029
+  },
+  {
+    "depth": [
+      4,
+      5
+    ],
+    "correction_numerator": 13475981
+  },
+  {
+    "depth": [
+      4,
+      6
+    ],
+    "correction_numerator": 13271933
+  },
+  {
+    "depth": [
+      4,
+      7
+    ],
+    "correction_numerator": 13067885
+  },
+  {
+    "depth": [
+      4,
+      8
+    ],
+    "correction_numerator": 12863837
+  },
+  {
+    "depth": [
+      4,
+      9
+    ],
+    "correction_numerator": 12659789
+  },
+  {
+    "depth": [
+      5,
+      0
+    ],
+    "correction_numerator": 14470715
+  },
+  {
+    "depth": [
+      5,
+      1
+    ],
+    "correction_numerator": 14241161
+  },
+  {
+    "depth": [
+      5,
+      2
+    ],
+    "correction_numerator": 14011607
+  },
+  {
+    "depth": [
+      5,
+      3
+    ],
+    "correction_numerator": 13782053
+  },
+  {
+    "depth": [
+      5,
+      4
+    ],
+    "correction_numerator": 13552499
+  },
+  {
+    "depth": [
+      5,
+      5
+    ],
+    "correction_numerator": 13322945
+  },
+  {
+    "depth": [
+      5,
+      6
+    ],
+    "correction_numerator": 13093391
+  },
+  {
+    "depth": [
+      5,
+      7
+    ],
+    "correction_numerator": 12863837
+  },
+  {
+    "depth": [
+      5,
+      8
+    ],
+    "correction_numerator": 12634283
+  },
+  {
+    "depth": [
+      5,
+      9
+    ],
+    "correction_numerator": 12404729
+  },
+  {
+    "depth": [
+      6,
+      0
+    ],
+    "correction_numerator": 14445209
+  },
+  {
+    "depth": [
+      6,
+      1
+    ],
+    "correction_numerator": 14190149
+  },
+  {
+    "depth": [
+      6,
+      2
+    ],
+    "correction_numerator": 13935089
+  },
+  {
+    "depth": [
+      6,
+      3
+    ],
+    "correction_numerator": 13680029
+  },
+  {
+    "depth": [
+      6,
+      4
+    ],
+    "correction_numerator": 13424969
+  },
+  {
+    "depth": [
+      6,
+      5
+    ],
+    "correction_numerator": 13169909
+  },
+  {
+    "depth": [
+      6,
+      6
+    ],
+    "correction_numerator": 12914849
+  },
+  {
+    "depth": [
+      6,
+      7
+    ],
+    "correction_numerator": 12659789
+  },
+  {
+    "depth": [
+      6,
+      8
+    ],
+    "correction_numerator": 12404729
+  },
+  {
+    "depth": [
+      6,
+      9
+    ],
+    "correction_numerator": 12149669
+  },
+  {
+    "depth": [
+      7,
+      0
+    ],
+    "correction_numerator": 14419703
+  },
+  {
+    "depth": [
+      7,
+      1
+    ],
+    "correction_numerator": 14139137
+  },
+  {
+    "depth": [
+      7,
+      2
+    ],
+    "correction_numerator": 13858571
+  },
+  {
+    "depth": [
+      7,
+      3
+    ],
+    "correction_numerator": 13578005
+  },
+  {
+    "depth": [
+      7,
+      4
+    ],
+    "correction_numerator": 13297439
+  },
+  {
+    "depth": [
+      7,
+      5
+    ],
+    "correction_numerator": 13016873
+  },
+  {
+    "depth": [
+      7,
+      6
+    ],
+    "correction_numerator": 12736307
+  },
+  {
+    "depth": [
+      7,
+      7
+    ],
+    "correction_numerator": 12455741
+  },
+  {
+    "depth": [
+      7,
+      8
+    ],
+    "correction_numerator": 12175175
+  },
+  {
+    "depth": [
+      7,
+      9
+    ],
+    "correction_numerator": 11894609
+  },
+  {
+    "depth": [
+      8,
+      0
+    ],
+    "correction_numerator": 14394197
+  },
+  {
+    "depth": [
+      8,
+      1
+    ],
+    "correction_numerator": 14088125
+  },
+  {
+    "depth": [
+      8,
+      2
+    ],
+    "correction_numerator": 13782053
+  },
+  {
+    "depth": [
+      8,
+      3
+    ],
+    "correction_numerator": 13475981
+  },
+  {
+    "depth": [
+      8,
+      4
+    ],
+    "correction_numerator": 13169909
+  },
+  {
+    "depth": [
+      8,
+      5
+    ],
+    "correction_numerator": 12863837
+  },
+  {
+    "depth": [
+      8,
+      6
+    ],
+    "correction_numerator": 12557765
+  },
+  {
+    "depth": [
+      8,
+      7
+    ],
+    "correction_numerator": 12251693
+  },
+  {
+    "depth": [
+      8,
+      8
+    ],
+    "correction_numerator": 11945621
+  },
+  {
+    "depth": [
+      8,
+      9
+    ],
+    "correction_numerator": 11639549
+  },
+  {
+    "depth": [
+      9,
+      0
+    ],
+    "correction_numerator": 14368691
+  },
+  {
+    "depth": [
+      9,
+      1
+    ],
+    "correction_numerator": 14037113
+  },
+  {
+    "depth": [
+      9,
+      2
+    ],
+    "correction_numerator": 13705535
+  },
+  {
+    "depth": [
+      9,
+      3
+    ],
+    "correction_numerator": 13373957
+  },
+  {
+    "depth": [
+      9,
+      4
+    ],
+    "correction_numerator": 13042379
+  },
+  {
+    "depth": [
+      9,
+      5
+    ],
+    "correction_numerator": 12710801
+  },
+  {
+    "depth": [
+      9,
+      6
+    ],
+    "correction_numerator": 12379223
+  },
+  {
+    "depth": [
+      9,
+      7
+    ],
+    "correction_numerator": 12047645
+  },
+  {
+    "depth": [
+      9,
+      8
+    ],
+    "correction_numerator": 11716067
+  },
+  {
+    "depth": [
+      9,
+      9
+    ],
+    "correction_numerator": 11384489
+  },
+  {
+    "depth": [
+      10,
+      0
+    ],
+    "correction_numerator": 14343185
+  },
+  {
+    "depth": [
+      10,
+      1
+    ],
+    "correction_numerator": 13986101
+  },
+  {
+    "depth": [
+      10,
+      2
+    ],
+    "correction_numerator": 13629017
+  },
+  {
+    "depth": [
+      10,
+      3
+    ],
+    "correction_numerator": 13271933
+  },
+  {
+    "depth": [
+      10,
+      4
+    ],
+    "correction_numerator": 12914849
+  },
+  {
+    "depth": [
+      10,
+      5
+    ],
+    "correction_numerator": 12557765
+  },
+  {
+    "depth": [
+      10,
+      6
+    ],
+    "correction_numerator": 12200681
+  },
+  {
+    "depth": [
+      10,
+      7
+    ],
+    "correction_numerator": 11843597
+  },
+  {
+    "depth": [
+      10,
+      8
+    ],
+    "correction_numerator": 11486513
+  },
+  {
+    "depth": [
+      10,
+      9
+    ],
+    "correction_numerator": 11129429
+  },
+  {
+    "depth": [
+      11,
+      0
+    ],
+    "correction_numerator": 14317679
+  },
+  {
+    "depth": [
+      11,
+      1
+    ],
+    "correction_numerator": 13935089
+  },
+  {
+    "depth": [
+      11,
+      2
+    ],
+    "correction_numerator": 13552499
+  },
+  {
+    "depth": [
+      11,
+      3
+    ],
+    "correction_numerator": 13169909
+  }
+]

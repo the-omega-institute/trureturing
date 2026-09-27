@@ -1,0 +1,5 @@
+**定义 24.1（观察函数代数）。** 在实状态集合 $X$ 上，候选坐标 $q_1,\ldots,q_r$ 生成含常数的函数代数
+$$
+\mathbb R[q_1,\ldots,q_r]=\{P(q_1,\ldots,q_r):P\in\mathbb R[t_1,\ldots,t_r]\}.
+$$
+其元素按在实际域上逐点相等识别。Koopman 作用记为 $\mathcal K_af=f\circ T_a$；对部分动作先限制到合法域，并单独保留守卫的纤维饱和性。

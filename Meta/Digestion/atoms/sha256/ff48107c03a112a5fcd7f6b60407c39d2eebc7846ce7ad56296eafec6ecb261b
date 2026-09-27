@@ -1,0 +1,14 @@
+**Proof.** The exponent $\nu$ and the nonzero leading coefficient are intrinsic to a rational function. Factoring the numerator and denominator at zero shows that, on a sufficiently small positive interval, the rational function is defined and has the sign of $\operatorname{lc}_0(f)$. In particular, every nonzero rational function is either eventually positive or eventually negative. Sums and products of eventually positive rational functions remain eventually positive on the intersection of their intervals. This proves the positive-cone axioms and trichotomy, and hence the ordered-field assertion. Constants retain their signs, while $t$ and $c-t$ are positive.
+
+A polynomial supplied by Theorem 41.2 has a positive first nonzero coefficient after evaluation by every $\ell_i$, so it is a simultaneous solution over this ordered field.
+
+Conversely, choose a real basis of $V$ and express $z$ in its finitely many rational-function coordinates. There is a positive interval on which all coordinate denominators are nonzero. For a finite $F\subseteq I$, intersect this interval with the finitely many intervals witnessing positivity of $\ell_i^{\mathbb R(t)}(z)$, $i\in F$. Evaluation at any positive $t$ in that intersection produces one real vector satisfying every row in $F$. Thus finite feasibility holds, and Theorem 41.2 supplies the degree bound.
+
+There is also an elementary denominator-clearing observation. Write $z=P/q$ with $P\in V[t]$ and $0\ne q\in\mathbb R[t]$. Then
+$$
+\beta(t)=tq(t)^2z(t)=tq(t)P(t)
+$$
+is a polynomial tending to zero. The multiplier $tq^2$ is positive in the ordered field, so $\beta$ preserves every strict sign. This observation alone does not bound its degree by $m$; that bound comes from the finite-dimensional rank descent.
+
+The simultaneous field inequalities do not provide a common real interval of positivity for all rows. $\square$
+

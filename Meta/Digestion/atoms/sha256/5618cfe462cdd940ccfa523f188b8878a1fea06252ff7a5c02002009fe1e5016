@@ -1,0 +1,16 @@
+**theorem 48.7 (Uniform decidability over the full compact semiring).** There is an algorithm deciding $K\models\exists\mathbf x\,\Sigma(\mathbf x)$ for every input of Definition 48.0. The same holds for finite existential disjunctions of such conjunctions.
+
+**证明。** Compute the separate positive polynomial expansions, $C,d,M_\Sigma$. Enumerate the finitely many subsets $Z\subseteq V$. For each, compute the fixed anchoring set $F$ and its complement $U$ from Definition 48.4. Enumerate all maps
+$$
+\mathbf n:F\longrightarrow\{1,\ldots,M_\Sigma\}.
+$$
+If $F$ is empty there is exactly one such map. Substitute ambient zero on $Z$ and the specified natural values on $F$.
+
+For an equation whose active support on one side is contained in $F$, fixed-point closure puts the other side's support in $F$ as well. Evaluate both sides as natural numbers and reject this branch unless they agree exactly. Every remaining equation has an active variable in $U$ on each side. For these equations form a ring system in variables $(z_i)_{i\in U}$ by substituting ring zero on $Z$, the same integer numerals on $F$, and $z_i$ on $U$. Keep each equation as an equality between its two separately substituted polynomials. Decide existential satisfiability of this finite ring system in $R$ by Theorem 48.6. Accept precisely when at least one branch passes both tests.
+
+Suppose a branch is accepted, with a ring witness $\mathbf z$. Set $a_i=0$ on $Z$, $a_i=n_i$ on $F$, and $a_i=\tau(z_i)$ on $U$. Its exact ambient-zero set is $Z$, including when some $z_i$ is ring zero. Equations with supports contained in $F$ hold by the natural tests. Both sides of every other equation are boundary by Theorem 48.3, and their equal ring values are their $\rho$-images. Injectivity on $B$ proves the literal $K$-equations. Thus acceptance is sound.
+
+Conversely, any $K$-solution has an ambient-zero set $Z$. Theorem 48.5 replaces it by a solution retaining positive natural values at most $M_\Sigma$ on the corresponding $F$ and having boundary values on $U$. The retained values occur among the enumerated maps $\mathbf n$. Its boundary residues satisfy the ring branch, and its other equations pass the ordinary natural tests. Thus the algorithm accepts every satisfiable input.
+
+All enumerations are finite, their bounds are computable, and every boundary decision terminates. This proves uniform decidability. Zero patterns and boundary replacements are external finite case analysis, not additional predicates in the input language. A finite existential disjunction is satisfiable exactly when one of its finitely many conjunctions is satisfiable; alternatively, any positive existential formula can be effectively distributed into that form after renaming bound variables. 证毕。
+

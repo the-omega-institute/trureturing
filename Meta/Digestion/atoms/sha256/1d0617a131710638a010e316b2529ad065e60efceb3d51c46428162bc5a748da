@@ -1,0 +1,39 @@
+**定理 26.2（$DF$、$DG$ 与连续混合端口界）。** 继续使用恢复卷的 $F:H^2_\sigma\to L^2_\sigma$、$Q_\phi$、$G_\phi$、$M_F,D_F,J,M$。对其任一配对端口 $(\ell,\phi)$，
+$$
+DF(u)h=\nu\Delta h-\mathbb P((h\cdot\nabla)u+(u\cdot\nabla)h),
+$$
+$$
+DG_\phi(u)h=-\nu\ell(DF(u)h)
+ -D^2Q_\phi(h,F(u))-DQ_\phi(u)DF(u)h.
+\tag{26.106}
+$$
+这些是连续 Fréchet 导数；在半径 $R$ 球中
+$$
+\|DF(u)h\|_2\le D_F\|h\|_{H^2},\qquad
+|DG_\phi(u)h|\le J\|h\|_{H^2}.
+\tag{26.107}
+$$
+实际两个端口满足
+$$
+|x_{tt}|,|y_{tt}|\le M,\qquad
+|\partial_\beta x_{tt}|,|\partial_\beta y_{tt}|\le6J,
+\tag{26.108}
+$$
+这些混合导数在参数与时间上连续，包含时间零点的单侧值。
+
+证明。恢复卷的 $\|u\|_\infty\le4\|u\|_{H^2}$ 使对流为连续双线性映射 $H^2\times H^2\to L^2$。二次展开余项至多 $4\|h\|_{H^2}^2$，故 $DF$ 的公式与连续性确实成立，范数界为 $\nu+8R$。恢复卷引理25.5已在完整 $L^2$ 空间证明 $Q_\phi,DQ_\phi,D^2Q_\phi$ 及其界；此处对 $G_\phi=-\nu\ell F-DQ_\phi(\cdot)F$ 用乘积法则，给（26.106）。三项界之和为
+$$
+\nu D_F+M_F+RD_F=\nu^2+10\nu R+12R^2=J.
+$$
+$G_\phi$ 是 $H^2$ 上连续线性、双线性、三线性映射之和。将这些映射逐时作用于 $C_tH^2$，仍为连续多线性映射，因而诱导映射 $C_tH^2\to C_t\mathbb R$ 为 $C^1$，导数逐时为 $DG_\phi$。定理26.1于是给
+$$
+\partial_\beta a_{tt}(\beta,t)=DG_\phi(u_\beta(t))v_\beta(t),
+$$
+范数至多 $6J$，且联合连续。绝对二阶界是恢复卷定理25.6的 $M$。最后由
+$$
+a(\beta,t)=a(\beta,0)+t a_t(\beta,0)
+ +\int_0^t(t-s)G_\phi(u_\beta(s))\,ds
+\tag{26.109}
+$$
+在连续时间函数空间对参数求导，其结果可再对时间微分两次，正好得到上式。因此没有把未证的混合导数交换作为前提，也没有要求 $u_{tt}\in L^2$ 或 $u_t\in H^2$。$\square$
+

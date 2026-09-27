@@ -46,6 +46,7 @@ internal static class FormulaScriptAtom
             or FormulaLatexMacro.Mathrm
             or FormulaLatexMacro.Operatorname
             or FormulaLatexMacro.Overline
+            or FormulaLatexMacro.Pmod
             or FormulaLatexMacro.Sqrt
             or FormulaLatexMacro.Text
             or FormulaLatexMacro.Widehat
@@ -121,7 +122,9 @@ internal static class FormulaScriptAtom
             or FormulaLatexMacro.Widetilde => false,
 
         // Symbol macros, plus the argument-taking macros KaTeX permits in an argument
-        // position (\frac, \mathbb, \mathbf, \mathcal, \mathrm, \text).
+        // position (\frac, \mathbb, \mathbf, \mathcal, \mathrm, \text, \pmod).
+        // \pmod measured against the vendored KaTeX 0.16: `x^\pmod{2}` renders, where
+        // the refused set above raises "Got function ... with no arguments as superscript".
         FormulaLatexMacro.Delta
             or FormulaLatexMacro.Gamma
             or FormulaLatexMacro.Lambda
@@ -174,6 +177,7 @@ internal static class FormulaScriptAtom
             or FormulaLatexMacro.Phi
             or FormulaLatexMacro.Pi
             or FormulaLatexMacro.Pm
+            or FormulaLatexMacro.Pmod
             or FormulaLatexMacro.Psi
             or FormulaLatexMacro.Rangle
             or FormulaLatexMacro.Rfloor

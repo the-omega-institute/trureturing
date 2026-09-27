@@ -1,0 +1,6 @@
+- 对外幂格，$\Psi$ 是将自然格与六维坐标保持在同一度量中的等距识别。Hodge 的来源还包括楔配对与定向：在本节的四维定向空间及其中次外幂上，令 $\mathcal R_g(\beta)(\alpha)=\langle\alpha,\beta\rangle$，令 $\mathcal W_\omega(\beta)(\alpha)$ 是 $\alpha\wedge\beta$ 相对于单位顶次向量 $\omega$ 的系数，则 $*=\mathcal W_\omega^{-1}\mathcal R_g$。这精确说明单有观察关系或内积还不够。星确定后，其 $\pm1$ 特征空间给正交投影 $(I\pm*)/2$；黄金算子只是这两空间上的指定标量作用。
+
+这里统一的是“共同实现、配对、子空间及其运输”的结构，而不是把所有例子强行叫成同一个投影。格需整数子模，Fisher 需概率权重和合法得分，Hodge 需外幂与定向，Gaussian 积分需参考测度；这些额外数据不能由一个无权集合关系凭空恢复。动力学和记忆还需指定演化算子与初值；静态配对及投影不单独决定时间演化或时间箭头。
+
+外幂内积采用 Gram 行列式，Hodge 星依赖指定内积与定向。仓内 `ExteriorSquareCoordinates`、`ExteriorSquareRepresentations`、`ExactDualLatticeFormula`、`FiveModularLatticeSimilarity`、`GoldenMaximalOrderCompletion`、`FibonacciEigen` 与 `GoldenAntiIsometry` 分别提供相应代数接口。
+

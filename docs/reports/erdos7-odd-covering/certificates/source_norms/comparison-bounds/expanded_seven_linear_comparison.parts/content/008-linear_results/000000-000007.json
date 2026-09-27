@@ -1,0 +1,728 @@
+[
+  {
+    "index": 1,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "5/11"
+              ],
+              [
+                6,
+                "10/99"
+              ],
+              [
+                7,
+                "5/36"
+              ],
+              [
+                8,
+                "3577/72"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "93/14",
+    "complete_tail_constant": "-416404602497393/17538837986670",
+    "previous_cost_upper": "18079750684152397381/11601941328182205000",
+    "cost_upper": "5769426295870866157/3867313776060735000",
+    "weighted_gain": "77147179653979891/1160194132818220500",
+    "scan": {
+      "coefficients": {
+        "1": "2191066581337/17538837986670",
+        "2": "9428060266594/8769418993335",
+        "3": "80968/265837",
+        "4": "9552/1859"
+      },
+      "primitive_coefficients": {
+        "1": 2191066581337,
+        "2": 18856120533188,
+        "3": 5341937480880,
+        "4": 90118870601760
+      },
+      "factor": "1/17538837986670",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "5769426295870866157/3867313776060735000",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 124988,
+      "expanded_branches": 12,
+      "expanded_objective_count_including_seed": 1100,
+      "rational_lp_count": 126110,
+      "maximum_unexpanded_upper": "2869291826389938031/1933656888030367500",
+      "all_branch_decisions_sha256": "3293fb11b93030982c51d55aa1899d526395384e1b7cead9b29839dcb78d3728",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 3,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 1782410492227398070742082,
+        "new_four_projection_pair_upper": 1745401459584629655012582,
+        "components": {
+          "head_source_lp": 20975693028179597751918,
+          "mean_head_deletion": 1623993791034615291900,
+          "selected_increment_uppers": [
+            62883686402082452508336,
+            56896041006958367934720,
+            50128123595112313470720
+          ],
+          "complete_tail_constant": 633211416103429237554396
+        }
+      },
+      "old_complete_tail_constant": "49172880558458416/69059174572513125",
+      "new_complete_tail_constant": "21357969168425977/39462385470007500"
+    }
+  },
+  {
+    "index": 2,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "5/11"
+              ],
+              [
+                6,
+                "10/99"
+              ],
+              [
+                7,
+                "5/36"
+              ],
+              [
+                8,
+                "3577/72"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        2
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "93/182",
+    "complete_tail_constant": "-279455274589/227777116710",
+    "previous_cost_upper": "24739290268454813/150674562703665000",
+    "cost_upper": "24567455219148893/150674562703665000",
+    "weighted_gain": "651128/570945375",
+    "scan": {
+      "coefficients": {
+        "1": "93430123067/1594439816970",
+        "2": "150588253604/797219908485",
+        "3": "6368/24167"
+      },
+      "primitive_coefficients": {
+        "1": 93430123067,
+        "2": 301176507208,
+        "3": 420134594880
+      },
+      "factor": "1/1594439816970",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "24567455219148893/150674562703665000",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 125000,
+      "expanded_branches": 0,
+      "expanded_objective_count_including_seed": 500,
+      "rational_lp_count": 125510,
+      "maximum_unexpanded_upper": "24567455219148893/150674562703665000",
+      "all_branch_decisions_sha256": "52ba66e1edf64cf6eaac66a80278fde778a4bf0a5b229ed933982204ad875166",
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 17342019234465888675342,
+        "new_four_projection_pair_upper": 17342019234465888675342,
+        "components": {
+          "head_source_lp": 244796241979382806104,
+          "mean_head_deletion": 140807014628968477230,
+          "selected_increment_uppers": [
+            463578841569297930336,
+            615680336655030366720
+          ],
+          "complete_tail_constant": 5387736181798302580836
+        }
+      },
+      "old_complete_tail_constant": "400513395767456/6278106779319375",
+      "new_complete_tail_constant": "181726198126007/3587489588182500"
+    }
+  },
+  {
+    "index": 7,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "5/11"
+              ],
+              [
+                6,
+                "10/99"
+              ],
+              [
+                7,
+                "5/36"
+              ],
+              [
+                8,
+                "3577/72"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "2015/264",
+    "complete_tail_constant": "-222074088113875/8091716475843",
+    "previous_cost_upper": "106471193924688968933/59949909026225618400",
+    "cost_upper": "33963087014627506721/19983303008741872800",
+    "weighted_gain": "458193288080644877/5994990902622561840",
+    "scan": {
+      "coefficients": {
+        "1": "2048574445495/16183432951686",
+        "2": "74373405250835/64733731806744",
+        "3": "1779475/4360356",
+        "4": "393025/66066"
+      },
+      "primitive_coefficients": {
+        "1": 1638859556396,
+        "2": 14874681050167,
+        "3": 5283607916730,
+        "4": 77019873893820
+      },
+      "factor": "5/64733731806744",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "33963087014627506721/19983303008741872800",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 124988,
+      "expanded_branches": 12,
+      "expanded_objective_count_including_seed": 1100,
+      "rational_lp_count": 126110,
+      "maximum_unexpanded_upper": "16890952346048162813/9991651504370936400",
+      "all_branch_decisions_sha256": "0f75272ee295b28b311e89b0107feb280eee5059cb63a9540889174ee292927a",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 3,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 1499206149048119089278078,
+        "new_four_projection_pair_upper": 1467816694598171585468178,
+        "components": {
+          "head_source_lp": 17551672648436865578514,
+          "mean_head_deletion": 1214704184087727925200,
+          "selected_increment_uppers": [
+            53072102199889570907844,
+            49193820944055528380640,
+            42841879087574489963040
+          ],
+          "complete_tail_constant": 534098327371080773108724
+        }
+      },
+      "old_complete_tail_constant": "11866097348097679/14565089656517400",
+      "new_complete_tail_constant": "18014924113490963/29130179313034800"
+    }
+  },
+  {
+    "index": 10,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "5/11"
+              ],
+              [
+                6,
+                "10/99"
+              ],
+              [
+                7,
+                "5/36"
+              ],
+              [
+                8,
+                "3577/72"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "2015/2904",
+    "complete_tail_constant": "-4177420386925/2489758915644",
+    "previous_cost_upper": "20852579072427569/94112887011343200",
+    "cost_upper": "2957960094980447/13444698144477600",
+    "weighted_gain": "6429889/4120536420",
+    "scan": {
+      "coefficients": {
+        "1": "87693892465/1244879457822",
+        "2": "1309030018295/4979517831288",
+        "3": "393025/1090089"
+      },
+      "primitive_coefficients": {
+        "1": 70155113972,
+        "2": 261806003659,
+        "3": 359067011160
+      },
+      "factor": "5/4979517831288",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "2957960094980447/13444698144477600",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 125000,
+      "expanded_branches": 0,
+      "expanded_objective_count_including_seed": 500,
+      "rational_lp_count": 125510,
+      "maximum_unexpanded_upper": "2957960094980447/13444698144477600",
+      "all_branch_decisions_sha256": "30f4d4a80c7c631acd0c77e578e5cf92a684ddd5d09ad47d3e7e0ca3bb3938de",
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 14616043983002893582326,
+        "new_four_projection_pair_upper": 14616043983002893582326,
+        "components": {
+          "head_source_lp": 205341587954622396942,
+          "mean_head_deletion": 105729628037292316680,
+          "selected_increment_uppers": [
+            399984917400169123428,
+            526189704458513135040
+          ],
+          "complete_tail_constant": 4555227531223495778148
+        }
+      },
+      "old_complete_tail_constant": "48406731421679/560195756019900",
+      "new_complete_tail_constant": "153646012520951/2240783024079600"
+    }
+  },
+  {
+    "index": 17,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "186/35",
+    "complete_tail_constant": "-97406337916066/5124985125975",
+    "previous_cost_upper": "14782106123830208287/11865621812913618750",
+    "cost_upper": "14150363320365198917/11865621812913618750",
+    "weighted_gain": "63174280346500937/1344770472130210125",
+    "scan": {
+      "coefficients": {
+        "1": "3544710516238/35874895881825",
+        "2": "10265808390064/11958298627275",
+        "3": "775232/3262545",
+        "4": "31328/7605"
+      },
+      "primitive_coefficients": {
+        "1": 1772355258119,
+        "2": 15398712585096,
+        "3": 4262219721760,
+        "4": 73891435778160
+      },
+      "factor": "2/35874895881825",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "14150363320365198917/11865621812913618750",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 124988,
+      "expanded_branches": 12,
+      "expanded_objective_count_including_seed": 1100,
+      "rational_lp_count": 126110,
+      "maximum_unexpanded_upper": "7037343499497802111/5932810906456809375",
+      "all_branch_decisions_sha256": "81104fae656587f33fd0219616df2d294d9cedeee5d33ff9d2db57381e55e0d5",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 3,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 1457231055569077911148614,
+        "new_four_projection_pair_upper": 1426950937952267389188114,
+        "components": {
+          "head_source_lp": 17140003887280737084426,
+          "mean_head_deletion": 1313649689703386055300,
+          "selected_increment_uppers": [
+            51442199923051202261472,
+            46557799894096757185920,
+            41101702679744518331520
+          ],
+          "complete_tail_constant": 517862710217445128665332
+        }
+      },
+      "old_complete_tail_constant": "482632906178705264/847544415208115625",
+      "new_complete_tail_constant": "52401909616685177/121077773601159375"
+    }
+  },
+  {
+    "index": 18,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        2
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "186/455",
+    "complete_tail_constant": "-35234351100902/35874895881825",
+    "previous_cost_upper": "31790653046976563/242155547202318750",
+    "cost_upper": "31569249404242003/242155547202318750",
+    "weighted_gain": "6406576/7941331125",
+    "scan": {
+      "coefficients": {
+        "1": "558313934146/11958298627275",
+        "2": "773113064656/5124985125975",
+        "3": "62656/296595"
+      },
+      "primitive_coefficients": {
+        "1": 837470901219,
+        "2": 2705895726296,
+        "3": 3789304398880
+      },
+      "factor": "2/35874895881825",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "31569249404242003/242155547202318750",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 125000,
+      "expanded_branches": 0,
+      "expanded_objective_count_including_seed": 500,
+      "rational_lp_count": 125510,
+      "maximum_unexpanded_upper": "31569249404242003/242155547202318750",
+      "all_branch_decisions_sha256": "2322056b58ba95a4724e085f7bb98ded2901faab8ce1a56d4431ea304b322f7a",
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 155991806172706031259774,
+        "new_four_projection_pair_upper": 155991806172706031259774,
+        "components": {
+          "head_source_lp": 2201263228831284866808,
+          "mean_head_deletion": 1262138736076756018110,
+          "selected_increment_uppers": [
+            4172116624568979260832,
+            5552982868876065342720
+          ],
+          "complete_tail_constant": 48472000117929923667972
+        }
+      },
+      "old_complete_tail_constant": "43242962206782944/847544415208115625",
+      "new_complete_tail_constant": "4904823844244717/121077773601159375"
+    }
+  },
+  {
+    "index": 23,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "403/66",
+    "complete_tail_constant": "-246400234551501617/11215119035518398",
+    "previous_cost_upper": "10533141751537065365461/7418801241995420277000",
+    "cost_upper": "10079138795402167804591/7418801241995420277000",
+    "weighted_gain": "15133431871163252029/280265824697604766020",
+    "scan": {
+      "coefficients": {
+        "1": "374092820950987/3738373011839466",
+        "2": "5142405216043889/5607559517759199",
+        "3": "11116090/34783749",
+        "4": "35155/7371"
+      },
+      "primitive_coefficients": {
+        "1": 1122278462852961,
+        "2": 10284810432087778,
+        "3": 3584095336001180,
+        "4": 53489012304117390
+      },
+      "factor": "1/11215119035518398",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "10079138795402167804591/7418801241995420277000",
+      "original_head_projection_branches": 125000,
+      "bounded_without_extra_projections": 124988,
+      "expanded_branches": 12,
+      "expanded_objective_count_including_seed": 1100,
+      "rational_lp_count": 126110,
+      "maximum_unexpanded_upper": "5012675447620336435493/3709400620997710138500",
+      "all_branch_decisions_sha256": "2771ea43c7a9d5f3b97d6dca48e39aebe392d8761aa71a5d28af3481b744398a",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 3,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_two_projection_pair_upper": 1038153406339759025890826322,
+        "new_four_projection_pair_upper": 1016400514405945405750565622,
+        "components": {
+          "head_source_lp": 12147554493077033636856894,
+          "mean_head_deletion": 831820114919984454740700,
+          "selected_increment_uppers": [
+            36771690570207149953952136,
+            34096860681245949651944880,
+            29752967406905281026568080
+          ],
+          "complete_tail_constant": 369970863674040495914280996
+        }
+      },
+      "old_complete_tail_constant": "24661557852101329493/37851026744874593250",
+      "new_complete_tail_constant": "37436910162760221781/75702053489749186500"
+    }
+  }
+]

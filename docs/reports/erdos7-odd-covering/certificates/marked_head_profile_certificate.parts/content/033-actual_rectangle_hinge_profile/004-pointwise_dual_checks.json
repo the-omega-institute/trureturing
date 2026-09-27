@@ -1,0 +1,85 @@
+[
+  {
+    "threshold": 4,
+    "point_load_endpoints": [
+      1
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 5,
+    "point_load_endpoints": [
+      1,
+      2
+    ],
+    "integer_inequalities_verified": 4741632,
+    "minimum_integer_slack": 9486,
+    "minimum_empty_fibre_dual_numerator": 102
+  },
+  {
+    "threshold": 6,
+    "point_load_endpoints": [
+      2
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 0,
+    "minimum_empty_fibre_dual_numerator": 0
+  },
+  {
+    "threshold": 7,
+    "point_load_endpoints": [
+      2
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 8,
+    "point_load_endpoints": [
+      2
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 9,
+    "point_load_endpoints": [
+      2,
+      3
+    ],
+    "integer_inequalities_verified": 4741632,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 10,
+    "point_load_endpoints": [
+      3
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 11,
+    "point_load_endpoints": [
+      3
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  },
+  {
+    "threshold": 12,
+    "point_load_endpoints": [
+      3
+    ],
+    "integer_inequalities_verified": 2370816,
+    "minimum_integer_slack": 9393,
+    "minimum_empty_fibre_dual_numerator": 101
+  }
+]

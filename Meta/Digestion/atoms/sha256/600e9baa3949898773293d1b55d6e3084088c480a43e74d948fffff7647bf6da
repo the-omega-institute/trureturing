@@ -1,0 +1,125 @@
+**证明。** 由 theorem 63.102，存在
+$$
+\Omega_\star\subseteq\Omega,
+\qquad
+\nu(\Omega_\star)=1,
+$$
+使每个
+$$
+\omega\in\Omega_\star
+$$
+都冻结为一个对全部目标有限零错误的确定性策略 $D_\omega$。
+
+由于所有项非负，Tonelli 定理给出
+$$
+\begin{aligned}
+\mathbb E[\tau]
+&=
+\sum_{a\in X}
+\mu(a)
+\int_\Omega \tau_\omega(a)\,d\nu(\omega)\\
+&=
+\int_\Omega
+\left(
+\sum_{a\in X}\mu(a)\tau_\omega(a)
+\right)
+d\nu(\omega)\\
+&=
+\int_\Omega M(\omega)\,d\nu(\omega).
+\end{aligned}
+$$
+同样，
+$$
+\begin{aligned}
+\Pr(\tau\le t)
+&=
+\sum_{a\in X}\mu(a)
+\int_\Omega
+\mathbf 1_{\{\tau_\omega(a)\le t\}}
+\,d\nu(\omega)\\
+&=
+\int_\Omega R_t(\omega)\,d\nu(\omega).
+\end{aligned}
+$$
+
+对每个
+$$
+\omega\in\Omega_\star,
+$$
+$D_\omega$ 是 definition 63.4 所允许的确定性零错误策略，所以
+$$
+M(\omega)\ge E_\mu(p,e).
+$$
+积分得到
+$$
+\mathbb E[\tau]\ge E_\mu(p,e).
+$$
+反之，取一棵达到 theorem 63.7 最小值的确定性策略，并令随机种子恒定，就达到
+$$
+E_\mu(p,e).
+$$
+
+同理，对每个
+$$
+\omega\in\Omega_\star,
+$$
+$D_\omega$ 是 definition 63.9 中允许的最终零错误确定性策略，因此
+$$
+R_t(\omega)
+\le
+Q(X_{p,e},t)
+=
+H_t.
+$$
+积分给出
+$$
+\Pr(\tau\le t)\le H_t.
+$$
+取达到 $Q(X,t)$ 的确定性策略并使用退化种子，又达到等号。
+
+若随机均值达到最小值，则在 $\Omega_\star$ 上非负函数
+$$
+M(\omega)-E_\mu(p,e)
+$$
+的积分为零：
+$$
+\int_{\Omega_\star}
+\bigl(M(\omega)-E_\mu(p,e)\bigr)
+\,d\nu(\omega)
+=
+0.
+$$
+因此
+$$
+M(\omega)=E_\mu(p,e)
+$$
+几乎处处。
+
+若固定时域达到最大值，则非负函数
+$$
+H_t-R_t(\omega)
+$$
+积分为零，故
+$$
+R_t(\omega)=H_t
+$$
+几乎处处。
+
+对于有限多个时域，每一个等号分别给出一个满测种子集合；与 $\Omega_\star$ 以及可选的均值等号集合取有限交，仍是满测集合。于是几乎每一个冻结策略同时达到所要求的全部确定性极值。
+
+现取 theorem 63.11 的实例。若某随机策略均值最优，则几乎每个冻结策略都是确定性均值最优策略；theorem 63.11 强迫其第一中心属于
+$$
+\{3,7\}.
+$$
+若同一随机策略又两步最优，则几乎每个冻结策略又必须是确定性两步最优策略，其第一中心必须属于
+$$
+E=\{0,2,4,6\}.
+$$
+两个集合不交。两个相应满测种子集合的交仍为满测，因而不可能同时满足这两个互斥要求。这证明均值与两步极值不能同时达到。
+
+一步与两步的论证相同：一步等号几乎处处强迫第一中心位于
+$$
+\{3,7\},
+$$
+两步等号几乎处处强迫第一中心位于 $E$，故不存在同时达到两者的随机策略。证毕。
+

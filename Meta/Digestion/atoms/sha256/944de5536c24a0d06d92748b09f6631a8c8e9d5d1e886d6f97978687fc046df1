@@ -1,0 +1,11 @@
+**theorem 42.9 (An explicit countable local base at every flag).** Fix an inner product and let $e_1,\ldots,e_r$ be the orthonormal list of $p$. Write $U=U_p$, choose a basis $z_1,\ldots,z_{d-r}$ of $U^\circ\subseteq V^*$, and put $f_j(v)=\langle v,e_j\rangle$. For integers $n\ge2$, define
+$$
+\begin{split}
+B_n(p)=\{q\in S(V):\;&q(z_a)=0\ \text{for every }a,\\
+&q(f_j)=1\ \text{for }1\le j\le r,\\
+&q(f_j-nf_{j+1})=1\ \text{for }1\le j<r\}.
+\end{split}
+\tag{42.12}
+$$
+These are nested clopen neighborhoods and form a complete local base at $p$. For $r=0$ or $r=1$, each is the singleton $\{p\}$. Different auxiliary choices give the same neighborhood filter.
+

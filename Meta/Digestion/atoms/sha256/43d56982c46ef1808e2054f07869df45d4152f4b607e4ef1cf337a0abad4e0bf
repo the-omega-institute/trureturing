@@ -1,0 +1,52 @@
+**theorem 49.8（无限阈值时的全部边界公式与非单位消失）。** 设 $t=\infty$ 且 $D$ Carmichael 闭合。仍以定义 49.6 与 theorem 49.6.1 定义 $E(x,z)$ 与 $E(a,z)$。则
+$$
+\operatorname{Pow}_{\infty,D}(a,b)=j(a^b),
+\qquad a,b\in\mathbb N_0;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,0)=j(1),
+\qquad x\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,b)=x^b\in R_D,
+\qquad x\in R_D,\quad b\ge1;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(0,z)=j(0),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(1,z)=j(1),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(a,z)=E(a,z),
+\qquad a\ge2,\quad z\in R_D;
+$$
+以及
+$$
+\operatorname{Pow}_{\infty,D}(x,z)=E(x,z),
+\qquad x,z\in R_D.
+$$
+若 $x$ 的模 $p$ 坐标为零，则最后一式的全部模 $p^e$ 坐标均为零，即
+$$
+E(x,z)\equiv0\pmod{p^e}
+$$
+对每个有限 $p^e\mid D$ 成立。这里 $j(0),j(1)$ 始终是环境中的孤立自然数点，而 $E(x,z)$ 属于边界环 $R_D$。
+
+**证明。** 先证明任意收敛到边界的自然数网都最终逃出每个有限集合。设网 $j(b_i)$ 收敛到 $z\in R_D$，固定 $B\in\mathbb N_0$。由 theorem 49.1.1，每个自然数点 $j(k)$ 都孤立；又因 $K_{\infty,D}$ Hausdorff，每个单点闭。因此
+$$
+F_B=\{j(0),j(1),\ldots,j(B)\}
+$$
+是有限闭集。边界点 $z$ 不属于 $F_B$，故其补集 $K_{\infty,D}\setminus F_B$ 是包含 $z$ 的开邻域。按网收敛的定义，最终有
+$$
+j(b_i)\in K_{\infty,D}\setminus F_B,
+$$
+也就是最终 $b_i>B$。这对每个 $B$ 成立。完全相同的论证适用于任何收敛到边界 $x$ 的自然底数网。此处没有使用序列或子序列论证。
+
+因此若底数在某个 $p$-坐标上为非单位，则对固定 $e$，逼近底数的自然数网最终被 $p$ 整除，而逼近指数网最终大于 $e$，所以相应幂模 $p^e$ 最终为零。这给出非单位消失。
+
+若底数为 $p$-单位，则幂值模 $p^e$ 只依赖指数模该单位的阶，该阶整除 $\lambda(p^e)$；Carmichael 闭合保证 $\lambda(p^e)\mid D$，所以这个有限周期正是指数边界实际记录的坐标。由 theorem 49.6.1，极限正是 $\mathcal E_{p^e}$。
+
+固定正自然指数 $b$ 时，逼近边界底数的自然数网最终逃出每个有限集合，所以其 $b$ 次幂也最终逃出每个有限集合，且模每个 $m\mid D$ 收敛到 $x^b$，故极限属于边界并等于边界环幂 $x^b$。固定指数 $0$ 时输出始终为孤立自然点 $1$，故必须得到 $j(1)$。孤立底数 $0,1$ 与边界指数分别恒给出 $j(0),j(1)$；孤立底数 $a\ge2$ 的幂随指数网逃向无穷并进入边界。最后由逐有限坐标计算和 theorem 49.5 的唯一性得到全部公式。证毕。
+

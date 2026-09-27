@@ -1,0 +1,7 @@
+本节固定已校准的有符号 $\alpha\ne0$。给定任意 $\beta_0\in\mathbb R,\nu_0>0$，取 $B>|\beta_0|$、$0<\underline\nu<\nu_0<\overline\nu<\infty$，令
+$$
+\mathcal V=(-B,B)\times(\underline\nu,\overline\nu),\qquad
+\|v\|_{H^s}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^s|\widehat v(k)|^2.
+\tag{27.102}
+$$
+闭包给紧的正黏性界；随后使用的紧参数集均取在此开域内部。

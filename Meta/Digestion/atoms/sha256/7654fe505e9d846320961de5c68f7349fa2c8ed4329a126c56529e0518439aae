@@ -1,0 +1,8 @@
+**命题 3.12（直接与 Cesàro 极限）。** 固定 $H,\nu$，写 $\kappa_{ab}=\widehat\nu(E_a-E_b)$。各步独立取新增量且忘记记录时，
+
+$$
+(\mathcal C_\nu^H)^k(X)=\sum_{a,b}\kappa_{ab}^{\,k}\Pi_aX\Pi_b,
+\qquad |\kappa_{ab}|\le1.
+\tag{TM.300}
+$$
+

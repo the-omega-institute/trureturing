@@ -37,7 +37,7 @@ declarations, using only:
   * normalisation — definitional unfolding, `simp` with existing lemmas, and, once every
     atomic fact is already supplied, `ring` / `linarith` / `omega` / `norm_num` / `decide`.
 
-If yes, the declaration is **bind-only** and the delivery must be refused — unless the module settles a preregistered external named open problem under `admission_basis: open-problem-resolution` (CLAUDE.md §3.2), in which case report the shape as bind-only and check that basis's conditions (a)–(d) instead.
+If yes, the declaration is **bind-only** and the delivery must be refused — unless the module settles a preregistered external named open problem under `admission_basis: open-problem-resolution` (CLAUDE.md §3.2), in which case report the shape as bind-only and check that basis's conditions (a)–(d) instead. The tree you review is in **Phase-A shape**: the `OpenProblemResolutionClaim` node and the `Problems/` dossier are added in Phase B, after `make deposit` has frozen the host (the emitter refuses a resolution claim whose host is not yet a frozen-state member), so their absence is not a condition-(c) finding — judge (a), (b), (d) and the honesty of the labels; report (c) only if a claim node or dossier is present and wrong.
 
 Watch for the two shapes that hide best:
 
@@ -48,6 +48,22 @@ Watch for the two shapes that hide best:
   2. **A small finite check dressed as the content.** A `decide` over a two- or four-element
      structure is normalisation, not new mathematics. It does not make a declaration content,
      and it does not make it computational either.
+
+  3. **A witness the conclusion does not need.** The module proves a genuinely new lemma
+     (a classification, a structure theorem) and routes the main theorem through it, so the
+     deletion control passes — but the main theorem also follows from pinned Mathlib by the
+     operations above WITHOUT that lemma. Then the lemma is not a witness for it (§3.2: a
+     proposition the conclusion can be reached without, by bind-only operations, is not on the
+     live path in the sense that matters), the main theorem is bind-only, and under
+     `escape-witness` the delivery is refused; the true content lemma, if any, is a separate
+     question. Run the bypass test explicitly: for the main theorem's conclusion, search pinned
+     Mathlib for a direct route (`rg` the conclusion's core symbols under
+     `.lake/packages/mathlib/Mathlib`, e.g. divisibility, monotonicity or multiplicativity
+     lemmas about the same function) and say which upstream declarations close it or that none
+     do. Third recorded lane lost this way (2026-09-18): a divisor-product parity theorem was
+     routed through a modulo-four classification, and two review seats found
+     `Nat.totient_dvd_of_dvd` plus the pairing identity gave the parity by instantiation; the
+     lane was at its third deposit and could not be redone.
 
 Syntactic position is never the criterion. Any test whose answer flips when a step is
 extracted into a helper is not a test of judgement form.

@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/005-domains/000001/item/008-complete_heavy_controllers/000000-000001.json",
+        "sha256": "f864aa75b7bf143ce3417b199c2ff975f6e25154344d793756b13945d792caba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/005-domains/000001/item/008-complete_heavy_controllers/000001-000002.json",
+        "sha256": "be97a917404c83fcff5e9105963a006e1c85e6802132b4b7a66bd91d32a7f646",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+档案乘法写 $g=\gamma(s_X,s_Y)$，更新为
+
+$$
+(\pi_X\pi_Y,\ \min(m_X,m_Y),\ \max(M_X,M_Y,g),\ g),
+\tag{TH*}
+$$
+

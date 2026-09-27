@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0bcbcf702d5751da9615f90e75a9a94d0d0c950f5abeb74b2608d4d7fabb7761
+  normalized_sha256: sha256:0bcbcf702d5751da9615f90e75a9a94d0d0c950f5abeb74b2608d4d7fabb7761
+cas_ref: sha256:0bcbcf702d5751da9615f90e75a9a94d0d0c950f5abeb74b2608d4d7fabb7761
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “对任意”未观察点“存在两个”符合已知标签而给相反结果的函数，直接实例化单射子类型的 Function.extend 补零，再由 Function.update 只改变指定点；延拓及单点更新引理给出全部等式，并保证其他点相同。“因而”表达此已验不可推出性，未冒作纯定义；仓内无冻结 GID。
+    previous_atom_id: 657149bbe5d4982da154ec23ac69944345b91943de83007bc8e12ef9a2264518
+    next_atom_id: 3fdc880ae3ed1812ca46b99f83939ab34347df873efd8a7c5ba081dbf828c9f4

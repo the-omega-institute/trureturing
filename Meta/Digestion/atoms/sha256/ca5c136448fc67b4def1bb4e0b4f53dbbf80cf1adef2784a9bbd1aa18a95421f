@@ -1,0 +1,10 @@
+**定义 138.1（任务相对的有限辅助表示）。** 固定第120节的合法实现、基础读数与允许上下文，包含任务需要的失败标签、共同来源和费用。有限辅助表示是有限个已声明函数组成的映射
+$$
+\Psi:X\to Z,\qquad \Psi(x)=(\psi_1(x),\ldots,\psi_r(x)),\qquad Z=\Psi[X].
+$$
+对每个任务 $f$ 给出恢复映射 $\bar f$ 及等式 $f=\bar f\Psi$；对每个允许操作给出实际像上的更新及等式 $\Psi T_a=\bar T_a\Psi$；对多元拼接另要求相应的合法性与逐孔替换条件。三者构成语义合同。若需要定量结论，再指定误差的范数、传播常数及获取和验证这份表示的资源合同。
+
+第120.2、120.3节的最小性相对于全部已声明实验的共同核；[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 第3–5节处理其实际语言、几何运输和合法拼接。这里的有限坐标数不定义最短编码、最低实验费或最小误差。若 $\ker\Psi$ 恰等于完整实验核，称它是该任务语言的一份精确有限呈示；它是否可通过有限已取得记录恢复，仍须另给记录到 $\Psi$ 的因子化。
+
+有限非空状态、有限非空动作与有限实际读数像的情形，可引用既有 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 的 `controlled_signature_algorithm_correctness`：递归签名在有限深度稳定为完整受控行为核。读数以实际像为值域时满射，满足该声明的读数前提。把这个存在性变为有效的分区细化算法，还要求动作可枚举、读数比较可判定及更新可计算；无限状态系统没有从该有限声明取得终止保证。
+

@@ -1,0 +1,39 @@
+**theorem 57.8（复制与独立采样的精确局部估值分布）。** 令 $\boldsymbol0=(0)_p\in I$。取 $X,Y$ 为独立的 $m_{\boldsymbol0}$ 样本，即独立 Haar 单位。固定素数 $p$。
+
+若 $p$ 为奇数，则
+$$
+\Pr\!\left(v_p(X_p+Y_p)=0\right)=\frac{p-2}{p-1},
+$$
+并且对每个 $n\ge1$，
+$$
+\Pr\!\left(v_p(X_p+Y_p)\ge n\right)
+=\frac{1}{p^{n-1}(p-1)},
+$$
+$$
+\Pr\!\left(v_p(X_p+Y_p)=n\right)=p^{-n},
+\qquad
+\Pr\!\left(v_p(X_p+Y_p)=\infty\right)=0.
+$$
+而复制同一个输入时
+$$
+v_p(X_p+X_p)=v_p(2X_p)=0
+\quad\text{几乎必然}.
+$$
+所以事件 $v_p(\,\cdot\,)\ge1$ 的概率分别为 $1/(p-1)$ 与 $0$。
+
+若 $p=2$，则
+$$
+\Pr\!\left(v_2(X_2+Y_2)\ge n\right)=2^{1-n}
+\qquad(n\ge1),
+$$
+$$
+\Pr\!\left(v_2(X_2+Y_2)=n\right)=2^{-n}
+\qquad(n\ge1),
+$$
+且无穷估值概率为 $0$。复制时却有
+$$
+v_2(X_2+X_2)=1
+\quad\text{几乎必然}.
+$$
+所以事件 $v_2(\,\cdot\,)\ge2$ 的概率分别为 $1/2$ 与 $0$，而事件 $v_2(\,\cdot\,)=1$ 的概率分别为 $1/2$ 与 $1$。
+

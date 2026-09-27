@@ -1,0 +1,10 @@
+第12节的更新取 G=W，给出
+
+$$
+\begin{aligned}
+A^+&=A-2hW^TW+h^2W^TBW,\\
+B^+&=B-2hWW^T+h^2WAW^T,\\
+W^+&=W-h(BW+WA)+h^2WW^TW.
+\end{aligned}\tag{40a.1}
+$$
+

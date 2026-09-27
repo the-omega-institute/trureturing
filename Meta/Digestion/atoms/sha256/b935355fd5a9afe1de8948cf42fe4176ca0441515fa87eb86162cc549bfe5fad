@@ -1,0 +1,20 @@
+**定义 43.0（数字空间、柱集与算术闭图）。** 置 $\mathbb N_0=\{0,1,2,\ldots\}$，$G_0=1$，$G_1=2$，$G_{j+2}=G_{j+1}+G_j$，并令 $Z(n)$ 为 $n$ 的 Zeckendorf 规范字按低位到高位排列后补零所得的无限字。置
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ 对所有 }j\},
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad H(x)=[F(x)],\qquad
+\gamma(n)=[n\phi],\qquad E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+记 $D_L$ 为长度 $L$ 的合法数字字，$\pi_L:K\to D_L$ 为前 $L$ 位投影，$q_L=\pi_L\circ Z$。对 $w\in D_L$，柱集记为 $[w]_K=\pi_L^{-1}(\{w\})$；$D_0$ 只含空字。定义
+$$
+\Gamma_{\mathrm{mul}}=
+\overline{\{(Z(a),Z(b),Z(ab)):a,b\in\mathbb N_0\}}\subseteq K^3.
+$$
+所有闭包均取相应有限乘积的乘积拓扑。[^rro43-phase]
+

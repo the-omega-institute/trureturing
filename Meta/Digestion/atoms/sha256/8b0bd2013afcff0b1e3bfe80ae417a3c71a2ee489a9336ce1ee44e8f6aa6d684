@@ -1,0 +1,11 @@
+向量系数用 Hermitian Euclidean 范数，张量系数用 Frobenius 范数。$H^2_\sigma$ 是实值、均值零、无散度的二维向量场闭子空间；在 Fourier 侧即 $\widehat v(-k)=\overline{\widehat v(k)}$、$\widehat v(0)=0$、$k\cdot\widehat v(k)=0$。固定 $\nu>0$、$A_\alpha>0$、$B_0\ge0$，考虑
+$$
+u_t+(u\cdot\nabla)u=\nu\Delta u-\nabla p,
+\quad \nabla\cdot u=0,\quad\int p\,d\mu=0,
+$$
+$$
+u_{\alpha,\beta}(0)=\alpha a_0+\beta b_0,
+\quad a_0=(0,\cos X_1),\quad
+b_0=(\cos(X_2-X_1),\cos(X_2-X_1)),
+\tag{25.102}
+$$

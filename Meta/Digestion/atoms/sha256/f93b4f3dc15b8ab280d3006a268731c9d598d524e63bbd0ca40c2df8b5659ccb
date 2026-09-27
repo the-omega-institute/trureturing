@@ -1,0 +1,24 @@
+**命题 74.3（粗自治与族保持是两个方向）。** 在定义与假设 74.1 下，
+$$
+CT=SC\ \Longleftrightarrow\ ET=ETE,
+\qquad
+ET=TE\ \Longleftrightarrow\bigl(CT=SC\ \text{且}\ TB=BS\bigr).
+$$
+粗自治 $CT=SC$ 等价于行核 $P$ 对分区 $r$ 强可并，即
+$$
+r(j)=r(j')\ \Longrightarrow\
+\sum_{r(k)=i}P_{jk}=\sum_{r(k)=i}P_{j'k}
+\quad\text{对所有 }i.
+$$
+成立时，唯一的粗列质量动力学为 $S$，对应粗行核为 $K=S^{\mathsf T}$，且 $\sum_{r(k)=i}P_{jk}=K_{r(j),i}$。
+
+证明。若 $CT=SC$，左乘 $B$ 得 $ET=BSC=ETE$。若 $ET=ETE$，左乘 $C$ 并用 $CE=C$ 得 $CT=CTE=CTBC=SC$。结合定理 74.2 的 $TB=BS\Longleftrightarrow TE=ETE$，这两个方向分别是
+$$
+ET(I_J-E)=0,\qquad (I_J-E)TE=0.
+$$
+为应用投影交叉块判据，把实矩阵逐元视为复矩阵，取 $V=\operatorname{Im}E$、$R=\ker E$。对每个 $x$，分解 $x=Ex+(x-Ex)$ 的两项分别属于 $V,R$；若 $y\in V\cap R$，则 $Ey=y$ 且 $Ey=0$，故 $y=0$。因此 $V,R$ 互补，$E$ 在 $V$ 上为恒等、在 $R$ 上为零，正是沿 $R$ 到 $V$ 的投影，其补投影为 $I_J-E$。在标准基下，[ProjectionCommutatorIdentity.visible_projection_commutes_iff_cross_blocks_eq_zero](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.lean) 的两个线性映射交叉块因而恰为上式两矩阵。该判据给出二者同时为零当且仅当 $ET=TE$；实矩阵的逐元嵌入是单射，故也得到原实空间的等价。
+
+令实际观察行 $F(j,i)=\sum_{r(k)=i}P_{jk}=(CT)_{ij}$。在 [StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 中取标签映射 $r$、实值行函数 $F$。它给出上述同纤维行相等条件恰好等价于存在 $\overline K$，使 $F(j,\cdot)=\overline K(r(j),\cdot)$。$F$ 非负，且每行之和为 $\sum_kP_{jk}=1$；$r$ 满射使 $\overline K$ 的每行都等于某个实际 $F$ 行，所以 $\overline K$ 是行核。因子化写成矩阵便是 $CT=\overline K^{\mathsf T}C$，右乘 $B$ 得 $S=\overline K^{\mathsf T}$，于是 $CT=SC$。反之，$CT=SC$ 逐元即为 $F(j,i)=K_{r(j),i}$，给出强可并性。任何满足 $CT=\widetilde S C$ 的粗矩阵都由右乘 $B$ 被迫等于 $CTB=S$，故唯一。证毕。
+
+附引：强可并的逐块行和判据见 Wolfer–Watanabe，*Geometric Aspects of Data-Processing of Markov Chains*，[arXiv:2203.04575v3，Theorem 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmtheorem1)，该处引 Kemeny–Snell 的 Theorem 6.3.2。该文的转移矩阵空间采用固定强连通支撑上的不可约链；本命题的实值行因子化证明适用于这里的任意有限行核。
+

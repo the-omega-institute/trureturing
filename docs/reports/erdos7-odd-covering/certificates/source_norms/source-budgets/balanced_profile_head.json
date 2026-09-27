@@ -1,0 +1,165 @@
+{
+  "schema": "balanced-profile-head-v1",
+  "scope": "Fixed literal 154-label head with the supplied depth profile; exact full-prefix-law head-union optimum. This memoization key does not discard actual sampled coordinates or future cofactor information.",
+  "prime_order": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73
+  ],
+  "heights": [
+    5,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "profiles": [
+    [
+      "1",
+      "729/1100",
+      "243/1100",
+      "81/1100",
+      "27/1100",
+      "9/1100"
+    ],
+    [
+      "1",
+      "7/18",
+      "7/90",
+      "7/450"
+    ],
+    [
+      "1",
+      "49/229",
+      "7/229",
+      "1/229"
+    ],
+    [
+      "1",
+      "1243/9700",
+      "113/9700"
+    ],
+    [
+      "1",
+      "481/4700",
+      "37/4700"
+    ],
+    [
+      "1",
+      "17/220",
+      "1/220"
+    ],
+    [
+      "1",
+      "2147/32100",
+      "113/32100"
+    ],
+    [
+      "1",
+      "9/175"
+    ],
+    [
+      "1",
+      "53/1350"
+    ],
+    [
+      "1",
+      "53/1450"
+    ],
+    [
+      "1",
+      "53/1750"
+    ],
+    [
+      "1",
+      "53/1950"
+    ],
+    [
+      "1",
+      "53/2050"
+    ],
+    [
+      "1",
+      "17/750"
+    ],
+    [
+      "1",
+      "1/50"
+    ],
+    [
+      "1",
+      "17/950"
+    ],
+    [
+      "1",
+      "51/2950"
+    ],
+    [
+      "1",
+      "51/3250"
+    ],
+    [
+      "1",
+      "17/1150"
+    ],
+    [
+      "1",
+      "51/3550"
+    ]
+  ],
+  "original_label_count": 154,
+  "original_label_source": "frontier/source-budgets/capped_head_bellman.py",
+  "original_labels_sha256": "e3edc39efeaf303f6dffa9ed94c1765428ab7e2bf05d09ce1910480842399d2d",
+  "original_period": 93334171363271157468761359267761115875,
+  "epsilon_exact": "39891291142993164384829733829906791483779/130822105133669014006347656250000000000000",
+  "states": 45029,
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+    "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+    "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+    "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+    "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9"
+  },
+  "producer_sha256": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5"
+}

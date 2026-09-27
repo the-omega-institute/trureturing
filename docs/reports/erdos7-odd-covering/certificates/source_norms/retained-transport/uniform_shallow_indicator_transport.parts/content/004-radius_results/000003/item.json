@@ -1,0 +1,49 @@
+{
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "161/486",
+      "v0": "2509/90000",
+      "v1": "404687/14490000",
+      "gap": "105757/4860000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "17/6561",
+        "1/972",
+        "1/108"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "3529/48600"
+    }
+  },
+  "H1": {
+    "path": "content/004-radius_results/000003/item/001-H1.json",
+    "sha256": "677f0d159a2de3e4659ee882e9c9c6ae06c6aba25ecdef83b5afcfd8974a5db7",
+    "kind": "object"
+  },
+  "square": {
+    "path": "content/004-radius_results/000003/item/002-square.json",
+    "sha256": "56288f13f8bc9911adf52bc6f346a7c7c3a0fb5d3379878d5b0befca1113da66",
+    "kind": "value"
+  },
+  "previous_square_upper": {
+    "kind": "inline",
+    "value": "88448808598483/13994613000000"
+  }
+}

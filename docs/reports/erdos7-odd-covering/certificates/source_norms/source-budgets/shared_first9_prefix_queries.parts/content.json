@@ -1,0 +1,40 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "actual64-first9-prefix-restricted-query-v1"
+  },
+  "status": {
+    "kind": "inline",
+    "value": "PASS"
+  },
+  "records": {
+    "path": "content/002-records.json",
+    "sha256": "2952f46fcdf2ba3c5ca3f88465d252dad6b9947a9b6f9d912f3a41371b00a646",
+    "kind": "array"
+  },
+  "queries": {
+    "kind": "inline",
+    "value": 1337
+  },
+  "states": {
+    "kind": "inline",
+    "value": 1299413
+  },
+  "head_survival": {
+    "kind": "inline",
+    "value": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same actual full survivor law, first9 prefix shared; later digits/coordinates remain history-relaxed. Aggregates exactly to first3-root query bounds."
+  },
+  "source_sha256": {
+    "path": "content/007-source_sha256.json",
+    "sha256": "5a710623eac989e98cb77cf7ab4055b314beb5c6287fdec54004f422365ea408",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "6c5677774a843a6a545fecf26355d9ca53aa781dc6667d78e9bebe6262bdbec0"
+  }
+}

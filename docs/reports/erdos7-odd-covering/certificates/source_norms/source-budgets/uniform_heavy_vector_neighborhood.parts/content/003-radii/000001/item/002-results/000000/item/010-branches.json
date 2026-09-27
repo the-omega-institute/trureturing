@@ -1,0 +1,32 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 36,
+      "part": {
+        "path": "content/003-radii/000001/item/002-results/000000/item/010-branches/000000-000036.json",
+        "sha256": "81ed50c3b1b8fee1dc1d3539b63bba55a64a5e3f97690b967d98c10bc34bcd94",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 72,
+      "part": {
+        "path": "content/003-radii/000001/item/002-results/000000/item/010-branches/000036-000072.json",
+        "sha256": "2f1b2f7da61ebefceea2bff1eb8dda7adb4a1353c677d3ff5876b7ddd009dd1e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 100,
+      "part": {
+        "path": "content/003-radii/000001/item/002-results/000000/item/010-branches/000072-000100.json",
+        "sha256": "aef8dbe987f2a5f98bac5f6a7320d40e374f9a2ed41817363445c5b228bf5a13",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "positive_r"
+  },
+  "costs": {
+    "path": "content/010-direction_probes/000006/item/001-costs.json",
+    "sha256": "ac76eff0bc8dadfe50cf764f696c29cfd22b5639ff2bf84b944db668ec5f5e20",
+    "kind": "array"
+  }
+}

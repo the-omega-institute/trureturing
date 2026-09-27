@@ -1,0 +1,117 @@
+{
+  "depth": {
+    "kind": "inline",
+    "value": [
+      1,
+      0,
+      0
+    ]
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "depth_probability": {
+    "kind": "inline",
+    "value": "16/105"
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "records": {
+    "path": "content/003-result/004-records.json",
+    "sha256": "f6a0fa41f0e2d7531837976a25b03a2046f02e0ecbfe59f467eba57a47ee4e59",
+    "kind": "array"
+  },
+  "old_layouts": {
+    "kind": "inline",
+    "value": 39720
+  },
+  "maximum_load": {
+    "kind": "inline",
+    "value": 16
+  },
+  "weighted_subset_states": {
+    "kind": "inline",
+    "value": 3024
+  },
+  "independent_digit_assignments": {
+    "kind": "inline",
+    "value": 117649
+  },
+  "independent_weighted_subset_load_counts": {
+    "path": "content/003-result/009-independent_weighted_subset_load_counts.json",
+    "sha256": "9f551c05fd93ecedafd165334abec66984435ecc1f58e5066d480b591bb74abc",
+    "kind": "value"
+  },
+  "signed_regressions": {
+    "path": "content/003-result/010-signed_regressions.json",
+    "sha256": "4e27496841ad5d73615315656bbb02efab22090d7e609ff946485a963315452e",
+    "kind": "value"
+  },
+  "prior_Gamma_upper": {
+    "kind": "inline",
+    "value": "491665320264992331169931/14604022456869186140625"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "491316187201313799169931/14604022456869186140625"
+  },
+  "improvement": {
+    "kind": "inline",
+    "value": "4255298304/177996524699"
+  },
+  "worst_roots": {
+    "kind": "inline",
+    "value": [
+      2,
+      2
+    ]
+  },
+  "common_floor_consumer": {
+    "kind": "inline",
+    "value": {
+      "uniform_source_integral_improvement": "65098504112/11025000077175",
+      "maximum_source_excess_upper": "-190178690458436062640563/3898857874792004932500000",
+      "split_Q_coefficient": "-803146/12705",
+      "split_constant_max": "35198781446665557681065173289/1050742197256445329308750000",
+      "source_reference": "297/2",
+      "common_Q_candidates": [
+        {
+          "Q": "25428074957/48000000336",
+          "bound": "153262793618815310573250031/1032713016592892448515625"
+        },
+        {
+          "Q": "19341582772973446474593583/36445882274521174135800000",
+          "bound": "3452717513949582813397269113208403/23265022838471110091964891311550"
+        },
+        {
+          "Q": "1",
+          "bound": "124811377293932849220919048289/1050742197256445329308750000"
+        }
+      ],
+      "worst_Q": "19341582772973446474593583/36445882274521174135800000",
+      "prior_Gamma13_upper": "3452976366440462440938598284408403/23265022838471110091964891311550",
+      "Gamma13_upper": "3452717513949582813397269113208403/23265022838471110091964891311550",
+      "improvement": "215199310703435624832000/19341582772973446474593583"
+    }
+  },
+  "target35_conditioning": {
+    "kind": "inline",
+    "value": {
+      "loss_limit": "2478074848638464468993/117162648257638532062500",
+      "weight_denominator": 1000000007,
+      "integer_loss_limit": 21150724,
+      "scope": "Improved threshold only; no new carrier enumeration or coverage count."
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same actual PG1 law and original labels; complete auxiliary depth100 maximum for ten roots, exact zero-depth extension and other268 inside-box bounds and full tails retained. Arbitrary finite physical heights. Common-floor11/13 extension retains all original physical kernels, deletions and a common actual Q. No unrestricted-prime or whole-carrier resolution."
+  }
+}

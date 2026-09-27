@@ -1,0 +1,13 @@
+**theorem 41.10 (Actual simultaneous points near the polynomial curve).** Suppose Assumption 41.9 holds and $\gamma(t)=\sum_{j=1}^rt^jv_j$ is an eventually feasible curve, allowing $r=0$ for the empty family. For arbitrary $I$, there are $t_n\downarrow0$ and $d_n\in D$ with
+$$
+d_n\longrightarrow0,\qquad
+\|d_n-\gamma(t_n)\|<\frac{t_n^r}{n},
+$$
+such that every fixed inequality holds for all sufficiently large $n$.
+
+If $I$ is countable and $F_1\subseteq F_2\subseteq\cdots$ is any increasing finite exhaustion of $I$, the choices can additionally satisfy
+$$
+d_n\in C_{F_n}\qquad\text{for every }n.
+$$
+For an enumeration, this gives one actual point satisfying the first $n$ constraints simultaneously.
+

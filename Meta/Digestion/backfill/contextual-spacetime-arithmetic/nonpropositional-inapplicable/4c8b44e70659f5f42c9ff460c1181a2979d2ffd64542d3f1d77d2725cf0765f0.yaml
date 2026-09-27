@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c8b44e70659f5f42c9ff460c1181a2979d2ffd64542d3f1d77d2725cf0765f0
+  normalized_sha256: sha256:4c8b44e70659f5f42c9ff460c1181a2979d2ffd64542d3f1d77d2725cf0765f0
+cas_ref: sha256:4c8b44e70659f5f42c9ff460c1181a2979d2ffd64542d3f1d77d2725cf0765f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 逐项翻转符号后有限和等于原有限和的负值，探针直接应用 Finset.sum_neg_distrib；本叶子只有该一般有限和恒等式，仓内无冻结 GID 可用。
+    previous_atom_id: 352759b0609b5743c21c9429f273c1daa22029f33df4d04f8ab9abe40e44f4b4
+    next_atom_id: 143d6e2dc5ea8f8f3155a6f8edb128218a141a72765bd3701da26e43401ece91

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf85f1f6c1f2494fee15f29d30aff6eaaa6c020e1562a6aa6358c7f1744cc3ce
+  normalized_sha256: sha256:bf85f1f6c1f2494fee15f29d30aff6eaaa6c020e1562a6aa6358c7f1744cc3ce
+cas_ref: sha256:bf85f1f6c1f2494fee15f29d30aff6eaaa6c020e1562a6aa6358c7f1744cc3ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “固定一个谓词”及“记所得总操作为”指定位置限制配对的参数和操作名称；真正的两个空间卷积等式已分到后一个子项，本子句不暗带那些等式，也不声称任意关系只依赖位置，故按操作定义结算。
+    previous_atom_id: 9a56e19a1076a18059a8bb503bb0380f24b3d7922606a585dc8bac4167e1d3c4
+    next_atom_id: f87c1a99cce7abb4952342ca7e046af410304404659da283e20cedc989afb895

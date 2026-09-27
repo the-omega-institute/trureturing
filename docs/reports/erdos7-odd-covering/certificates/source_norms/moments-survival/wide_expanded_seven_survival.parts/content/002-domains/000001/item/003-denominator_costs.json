@@ -1,0 +1,653 @@
+[
+  {
+    "name": "AP11_B0",
+    "weight": "1/7",
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363",
+      "5": "28/33"
+    },
+    "previous_upper": "35008186342370393/182988331339968000",
+    "uniform_upper": "462388301798911/2577300441408000",
+    "selected_complete_tail_support": {
+      "constant": "10578254009/106258521600",
+      "slopes": [
+        "85/363",
+        "264893/263538",
+        "38/33",
+        "1"
+      ],
+      "cuts": [
+        5,
+        4,
+        4,
+        3
+      ],
+      "supports": {
+        "1": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "2": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "3": {
+          "pure3": {
+            "slope": "1",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/54"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "5": {
+          "pure3": {
+            "slope": "0",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/162"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        }
+      }
+    },
+    "new_positive7_tail": {
+      "raw_coefficients": [
+        "1/35",
+        "1/35",
+        "1/90",
+        "11/700",
+        "11/700",
+        "1/20",
+        "1/360"
+      ],
+      "six_loss_prices": [
+        "1/420",
+        "1/168",
+        "1/1260",
+        "2/1575",
+        "0",
+        "0"
+      ],
+      "face_constant": "13/360",
+      "source_error": "1/2016",
+      "old_to_new_tail_decrease": "47/1800"
+    },
+    "scan": {
+      "upper": "462388301798911/2577300441408000",
+      "branches": 125000,
+      "expanded": 15,
+      "pruned": 124985,
+      "expanded_choices_including_seed": 1250,
+      "maximum_unexpanded_upper": "32673208311872441/182988331339968000",
+      "LPs": 378786,
+      "witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "seven21_root": 0,
+        "seven35_slot": 2,
+        "seven63_cell": 1,
+        "seven105_root": 0,
+        "seven105_slot": 2,
+        "old_complete_upper": "476706637584511/2577300441408000",
+        "new_complete_upper": "462388301798911/2577300441408000"
+      },
+      "digest": "44bfd39140b68412caf1a7e54a0c82258004605b97d585e75ca67f472faf525b"
+    }
+  },
+  {
+    "name": "AP11_B1",
+    "weight": "1/7",
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363"
+    },
+    "previous_upper": "10297520568497/203697585907200",
+    "uniform_upper": "144041783527/2868980083200",
+    "selected_complete_tail_support": {
+      "constant": "56154788479/2868980083200",
+      "slopes": [
+        "85/363",
+        "41285/263538",
+        "10/33",
+        "5/33"
+      ],
+      "cuts": [
+        5,
+        4,
+        4,
+        3
+      ],
+      "supports": {
+        "1": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "2": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "3": {
+          "pure3": {
+            "slope": "1",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/54"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        }
+      }
+    },
+    "new_positive7_tail": {
+      "raw_coefficients": [
+        "1/35",
+        "1/35",
+        "1/90",
+        "11/700",
+        "11/700",
+        "1/20",
+        "1/360"
+      ],
+      "six_loss_prices": [
+        "1/420",
+        "1/168",
+        "1/1260",
+        "2/1575",
+        "0",
+        "0"
+      ],
+      "face_constant": "13/360",
+      "source_error": "1/2016",
+      "old_to_new_tail_decrease": "47/1800"
+    },
+    "scan": {
+      "upper": "144041783527/2868980083200",
+      "branches": 125000,
+      "expanded": 0,
+      "pruned": 125000,
+      "expanded_choices_including_seed": 500,
+      "maximum_unexpanded_upper": "144041783527/2868980083200",
+      "LPs": 376526,
+      "witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_complete_upper": "144041783527/2868980083200",
+        "new_complete_upper": "144041783527/2868980083200"
+      },
+      "digest": "bf8b62960dd7d4c65c049515db3c7039a670f2042314ad4a91ad494ae95728e3"
+    }
+  },
+  {
+    "name": "AP11_B2",
+    "weight": "1/7",
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "2275/263538"
+    },
+    "previous_upper": "37933867403/6311756183040",
+    "uniform_upper": "37929831371/6311756183040",
+    "selected_complete_tail_support": {
+      "constant": "5810210789/2868980083200",
+      "slopes": [
+        "10/363",
+        "4985/263538",
+        "10/363",
+        "5/363"
+      ],
+      "cuts": [
+        5,
+        4,
+        4,
+        3
+      ],
+      "supports": {
+        "1": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "2": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        }
+      }
+    },
+    "new_positive7_tail": {
+      "raw_coefficients": [
+        "1/35",
+        "1/35",
+        "1/90",
+        "11/700",
+        "11/700",
+        "1/20",
+        "1/360"
+      ],
+      "six_loss_prices": [
+        "1/420",
+        "1/168",
+        "1/1260",
+        "2/1575",
+        "0",
+        "0"
+      ],
+      "face_constant": "13/360",
+      "source_error": "1/2016",
+      "old_to_new_tail_decrease": "47/1800"
+    },
+    "scan": {
+      "upper": "37929831371/6311756183040",
+      "branches": 125000,
+      "expanded": 8,
+      "pruned": 124992,
+      "expanded_choices_including_seed": 900,
+      "maximum_unexpanded_upper": "37929831371/6311756183040",
+      "LPs": 377704,
+      "witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_complete_upper": "37929831371/6311756183040",
+        "new_complete_upper": "37929831371/6311756183040"
+      },
+      "digest": "190b833334ba56dce65ccfa38bf277728c38147c12edd84459c5b9c596910e31"
+    }
+  },
+  {
+    "name": "AP11_B3",
+    "weight": "1/7",
+    "hinge_coefficients": {
+      "1": "85/87846",
+      "2": "25/87846"
+    },
+    "previous_upper": "3877503193/6311756183040",
+    "uniform_upper": "3877370137/6311756183040",
+    "selected_complete_tail_support": {
+      "constant": "552350599/2868980083200",
+      "slopes": [
+        "10/3993",
+        "65/29282",
+        "10/3993",
+        "5/3993"
+      ],
+      "cuts": [
+        5,
+        4,
+        4,
+        3
+      ],
+      "supports": {
+        "1": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        },
+        "2": {
+          "pure3": {
+            "slope": "2",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/18"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "2",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/20"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        }
+      }
+    },
+    "new_positive7_tail": {
+      "raw_coefficients": [
+        "1/35",
+        "1/35",
+        "1/90",
+        "11/700",
+        "11/700",
+        "1/20",
+        "1/360"
+      ],
+      "six_loss_prices": [
+        "1/420",
+        "1/168",
+        "1/1260",
+        "2/1575",
+        "0",
+        "0"
+      ],
+      "face_constant": "13/360",
+      "source_error": "1/2016",
+      "old_to_new_tail_decrease": "47/1800"
+    },
+    "scan": {
+      "upper": "3877370137/6311756183040",
+      "branches": 125000,
+      "expanded": 6,
+      "pruned": 124994,
+      "expanded_choices_including_seed": 800,
+      "maximum_unexpanded_upper": "3877370137/6311756183040",
+      "LPs": 377408,
+      "witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_complete_upper": "3877370137/6311756183040",
+        "new_complete_upper": "3877370137/6311756183040"
+      },
+      "digest": "d01cbdd865d0771754b4b6f60f21f033f956754353adec35ed8665f6d59c47ec"
+    }
+  },
+  {
+    "name": "AP13_U4",
+    "weight": "1/6",
+    "hinge_coefficients": {
+      "4": "1"
+    },
+    "previous_upper": "2664282773357/12498349248000",
+    "uniform_upper": "2502554323949/12498349248000",
+    "selected_complete_tail_support": {
+      "constant": "6738253/65318400",
+      "slopes": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "cuts": [
+        5,
+        4,
+        4,
+        3
+      ],
+      "supports": {
+        "4": {
+          "pure3": {
+            "slope": "1",
+            "intercept_coefficient": "1/162",
+            "remaining_geometric": "1/54"
+          },
+          "pure5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "root5": {
+            "slope": "1",
+            "intercept_coefficient": "1/500",
+            "remaining_geometric": "1/100"
+          },
+          "cell5": {
+            "slope": "1",
+            "intercept_coefficient": "1/100",
+            "remaining_geometric": "1/20"
+          }
+        }
+      }
+    },
+    "new_positive7_tail": {
+      "raw_coefficients": [
+        "1/35",
+        "1/35",
+        "1/90",
+        "11/700",
+        "11/700",
+        "1/20",
+        "1/360"
+      ],
+      "six_loss_prices": [
+        "1/420",
+        "1/168",
+        "1/1260",
+        "2/1575",
+        "0",
+        "0"
+      ],
+      "face_constant": "13/360",
+      "source_error": "1/2016",
+      "old_to_new_tail_decrease": "47/1800"
+    },
+    "scan": {
+      "upper": "2502554323949/12498349248000",
+      "branches": 125000,
+      "expanded": 17,
+      "pruned": 124983,
+      "expanded_choices_including_seed": 1350,
+      "maximum_unexpanded_upper": "34966551979/176033088000",
+      "LPs": 379084,
+      "witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 3,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "old_complete_upper": "2560412310317/12498349248000",
+        "new_complete_upper": "2502554323949/12498349248000"
+      },
+      "digest": "3ad0ba3603381f9d6ea27be7685f64e9ed128479d40591d157dbb28be860ae5c"
+    }
+  }
+]

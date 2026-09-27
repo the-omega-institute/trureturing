@@ -1,0 +1,16 @@
+**定理 8.4（完整递归结构的边界运输）。** (a) 有双射
+$$
+\mathcal A_\infty\cong\mathbb Q\times\mathcal A_\infty,\qquad T\mapsto(T(0,0),U_1T).
+$$
+证明。给 $(a,T')$，提取 $T'$ 的首列，在其前接 $a$，再用 $\mathcal E_\infty$ 重建。去掉首项恢复原首列，首项恢复 $a$，而提取后重建恒等，故为双侧逆。$\square$
+
+(b) 以根为 $T(0,0)$、更新为 $U_1$，该数组是 $Z\mapsto\mathbb Q\times Z$ 的终煤代数。对任意 $(Y,q,\tau)$，唯一态射为
+$$
+h(y)=\mathcal E_\infty\bigl((q(\tau^ny))_{n\ge0}\bigr).
+$$
+证明根读数为 $q(y)$，提取边界后移位等于从 $\tau y$ 起读，所以更新交织。任意另一个态射反复更新后取根，其第 $n$ 个边界项必为 $q(\tau^ny)$；边界双射的单射性给唯一。这运输的是一个后继方向的 stream 结构，不把数组两个显示坐标说成两个自由递归方向。$\square$
+
+(c) 特选自然数组与任意有理族须分开。`AntidiagonalArraySourceSeries.result` 的 `IsArray` 有顶行全一条件，`IsSource` 有 $F(0)=1$ 和上述源方程；这些条件不能用来宣称已形式化任意有理边界族。自然数组来源归 Mikhail Kurkov 的 [OEIS A392095](https://oeis.org/A392095)，源系数归 Paul D. Hanna 的 [OEIS A088713](https://oeis.org/A088713)，相关 OEIS 材料按其 CC-BY-SA 4.0 归属保留。Riordan 方法文献为 He–Zhang [arXiv:2105.07262v1](https://arxiv.org/abs/2105.07262v1) 及 Shapiro 等，DOI [10.1016/0166-218X(91)90088-E](https://doi.org/10.1016/0166-218X(91)90088-E)；任意有理族与上述运输的证明归 Context §43 和本节，不以文献名代替构造。
+
+(d) 在实际观察者上，$U_r$ 仅改变工作表示，作用域是保留原始已获系数、来源、端口、校准及钟记录的实际联合像。若来源另有限制，须检验移位仍合法，不能自动把完成空间中的新点当作可取得来源。形式级数本身不供应解析收敛、非负概率或未来样本；重编号也不删除已获历史。
+

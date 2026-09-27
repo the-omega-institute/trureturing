@@ -1,0 +1,31 @@
+**theorem 42.3 (Sign calculus and exact zero equations).** For $p\in S(V)$, define
+$$
+Z_p=\{\ell\in V^*:p(\ell)=0\},
+\qquad
+U_p=Z_p^\circ=\{v\in V:\ell(v)=0\text{ for every }\ell\in Z_p\}.
+$$
+We call $U_p$ the support of $p$. Then $Z_p$ is a linear subspace,
+$$
+p(0)=0,\qquad p(-\ell)=-p(\ell),\qquad p(a\ell)=p(\ell)\quad(a>0),
+\tag{42.4}
+$$
+and
+$$
+p(\ell+z)=p(\ell)\qquad(z\in Z_p).
+\tag{42.5}
+$$
+If $p(\alpha),p(\beta)$ are not opposite nonzero signs, then $p(\alpha+\beta)$ is their common nonzero sign, their unique nonzero sign, or zero when both vanish. Finally, the set-indexed family
+$$
+\mathcal A_p=\{\,p(\ell)\ell|_{U_p}:\ell\in V^*\setminus Z_p\,\}
+\tag{42.6}
+$$
+is finitely strictly feasible on $U_p$: every finite subfamily is simultaneously positive at some vector of $U_p$.
+
+**Proof.** Each identity or sign implication involves only finitely many covectors. Apply (42.1) to those covectors and their indicated linear combinations; the corresponding identity or implication holds for their evaluations at the resulting vector. In particular, if $z,z'\in Z_p$ and $a,b\in\mathbb R$, a vector realizing the signs of $z,z',az+bz'$ forces $p(az+bz')=0$. This proves that $Z_p$ is a subspace, and the same finite realization proves (42.4), (42.5), and the addition rule.
+
+Choose a basis $z_1,\ldots,z_m$ of $Z_p$. For any finitely many nonzero-sign covectors $\ell_1,\ldots,\ell_k$, apply (42.1) to these covectors together with all the $z_a$. The resulting vector annihilates the whole of $Z_p$, hence belongs to $U_p$, and satisfies
+$$
+p(\ell_i)\ell_i(v)>0\qquad(1\le i\le k).
+$$
+This proves the last assertion, including its exact zero constraints. $\square$
+

@@ -1,0 +1,21 @@
+**命题 128.8。** 有
+$$
+\widetilde Y=\widetilde HZ+\widetilde\epsilon,\qquad
+\widetilde\epsilon=\epsilon_{\mathrm n}-L\epsilon_{\mathrm p}
+\sim N(0,\widetilde R),
+$$
+且 $\widetilde\epsilon$ 独立于 $(Z,\mathbf Y_{\mathrm p})$。因此以 $\widetilde H,\widetilde R$ 替代 $H_n,R_n$ 后，定理128.2、推论128.3及定理128.4—128.5 的单步公式仍成立。
+
+**证明。** 直接相减得模型式，并且
+$$
+\operatorname{Cov}(\widetilde\epsilon,\epsilon_{\mathrm p})
+=R_{\mathrm{np}}-LR_{\mathrm{pp}}=0.
+$$
+联合 Gaussian 的零交叉协方差给独立性；它还与 $Z$ 独立，所以独立于 $(Z,\mathbf Y_{\mathrm p})$。协方差计算给 $\widetilde R$，其正定性由完整噪声块的 Schur 补得到。条件于过去，$\mathbf Y_{\mathrm p}$ 是已知量，$Y_{\mathrm n}\leftrightarrow\widetilde Y$ 为平移双射，不改变本次条件信息。证毕。
+
+本次新增精度为 $\widetilde H^T\widetilde R^{-1}\widetilde H$，创新为
+$\widetilde Y-\widetilde Hm_{\mathrm p}$，预测创新协方差为
+$\widetilde R+\widetilde H\Sigma_{\mathrm p}\widetilde H^T$。这也证明在同一相关噪声联合模型内增加观测仍使协方差按半正定序递减。
+
+缓存复制对应奇异块协方差，故不属于本节正定逆公式；去掉重复坐标即可回到原实验。若要使用奇异 Gaussian 描述，须另行规定其支撑和广义逆，不能把两个重复坐标当独立正定噪声代入。
+

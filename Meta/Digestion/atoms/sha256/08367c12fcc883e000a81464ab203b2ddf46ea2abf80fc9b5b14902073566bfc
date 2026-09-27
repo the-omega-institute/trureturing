@@ -1,0 +1,47 @@
+**命题 2.16（精确单批区分及后选择成本）。** 取 $\Delta_m$ 的正特征投影
+$$
+\begin{aligned}
+|w_+\rangle&=(|u\rangle+|s\rangle/\sqrt m)/\sqrt2,\qquad
+Q_m=|w_+\rangle\langle w_+|,\qquad [Q_m,H_m^{(m)}]=0,\\
+q_+&=\operatorname{Tr}(Q_m\rho^{\otimes m})
+ =\frac{m+1+2\sqrt m}{2\,3^m},\qquad
+q_- =\operatorname{Tr}(Q_m\sigma^{\otimes m})
+ =\frac{m+1-2\sqrt m}{2\,3^m}.
+\end{aligned}
+\tag{TM.162}
+$$
+
+相容性来自 $|w_+\rangle$ 完全位于能量 $m$ 块。概率由式(TM.159)与 $\langle w_+|(u\pm s)\rangle=(1\pm\sqrt m)/\sqrt2$ 直接得到。两候选等先验、一次实验使用这一批 $m$ 份样本时，测得 $Q_m$ 就判为 $\rho$、否则判为 $\sigma$，成功率为
+$$
+\boxed{
+p_{\rm succ}^{(m)}=\tfrac12q_++\tfrac12(1-q_-)
+=\tfrac12+\frac{\sqrt m}{3^m}.
+}
+\tag{TM.163}
+$$
+
+这也是完整相容效果合同下该单批实验的最优值。任意二元决策效果 $0\le F\le I$ 的成功率为 $\tfrac12+\tfrac12\operatorname{Tr}(F\Delta_m)$。将 $\Delta_m$ 分成正负谱部分，得到 $\operatorname{Tr}(F\Delta_m)\le\operatorname{Tr}(\Delta_{m,+})=2\sqrt m/3^m$；$Q_m$ 达到等号，且它自身相容。因此不需要额外假定所有非相容测量也可实施，就已达到这个 Helstrom 最优值。
+
+若先读总能量，并仅保留能量 $m$ 的结果，两候选的保留概率相同：
+$$
+p_{\rm block}=\frac{m+1}{3^m},\qquad
+|\chi_\pm\rangle=\frac{|u\rangle\pm|s\rangle}{\sqrt{m+1}},
+\qquad
+\rho_{\rm block}=|\chi_+\rangle\langle\chi_+|,
+\quad\sigma_{\rm block}=|\chi_-\rangle\langle\chi_-|.
+\tag{TM.164}
+$$
+
+归一化后的块差就是式(TM.160)除以 $p_{\rm block}$，同一个正特征方向仍最优。因此
+$$
+D(\rho_{\rm block},\sigma_{\rm block})=\frac{2\sqrt m}{m+1},\qquad
+p_{\rm succ\mid block}=\tfrac12+\frac{\sqrt m}{m+1},\qquad
+p_{\rm block}p_{\rm succ\mid block}+(1-p_{\rm block})\tfrac12
+=\tfrac12+\frac{\sqrt m}{3^m}.
+\tag{TM.165}
+$$
+
+最后一式把保留概率与条件成功率重新结算。其他块的密度矩阵完全相同，等先验下只能以二分之一成功，故条件优势不能脱离越来越小的保留概率单独当作完整实验优势。式(TM.163)与(TM.165)分别属于不后选择的单批任务和声明了保留事件的条件任务。
+
+所有这些概率都以真实取得 $m$ 份共同相位样本及所需联合效果为前件。它们没有推出任意更大样本块、跨批联合操作或全部自适应策略的统一样本下界；改变批间相位和记忆合同，须重新定义候选联合态。当前结论已经足够区分“精确有不同读数”与“单批有显著成功优势”：首次可分时的优势恰为 $\sqrt m/3^m$，并随 $m$ 衰减。
+

@@ -1,0 +1,39 @@
+**定义 12.1（合法采样前缀与共同系数空间）。** 固定有限维实内积空间 $U$、整数 $r\ge0$、采样间隔 $h>0$ 及
+$$
+0<u\le v\le1,\qquad
+a=-\frac{\log v}{h},\qquad b=-\frac{\log u}{h}.
+$$
+两份自伴采样前缀分别为 $M_0,\ldots,M_{2r+1}$ 和 $M'_0,\ldots,M'_{2r+1}$。在同一个带指定内积的系数空间 $\mathcal P=U^{r+1}$ 上，写
+$$
+H=(M_{i+j})_{i,j=0}^r,\qquad
+S=(M_{i+j+1})_{i,j=0}^r,
+$$
+并同样定义 $H',S'$。假设两份前缀均合法：
+$$
+H\succeq0,\quad uH\preceq S\preceq vH,
+\qquad
+H'\succeq0,\quad uH'\preceq S'\preceq vH'.
+\tag{12.1}
+$$
+所有矩不等式与范数都使用这份共同系数几何，不将两份数据分别缩放后仍认作同一误差。
+
+记 $\|\cdot\|_{\rm op}$ 为 Euclidean 算子范数，$\|\cdot\|_F$ 为 Frobenius 范数。取给定常数 $0<\gamma\le R<\infty$，另假设
+$$
+\operatorname{spec}(H),\operatorname{spec}(H')
+\subseteq\{0\}\cup[\gamma,R].
+\tag{12.2}
+$$
+这是两份被比较合法数据的非零 Gram 谱间隔条件；不预设它们具有相同的核或像。令
+$$
+\delta_H=\|H-H'\|_F,\qquad
+\delta_S=\|S-S'\|_F.
+$$
+记 $P,P'$ 为 $\operatorname{ran}H,\operatorname{ran}H'$ 的正交投影；$H^{\dagger/2}$ 在正特征值 $\lambda$ 上取 $\lambda^{-1/2}$，在零特征值上取零，$H'^{\dagger/2}$ 同理。令 $E_0:U\to\mathcal P$ 为零次系数插入，定义
+$$
+T=H^{\dagger/2}SH^{\dagger/2},\qquad J=H^{1/2}E_0,
+\qquad
+T'=H'^{\dagger/2}S'H'^{\dagger/2},\qquad J'=H'^{1/2}E_0.
+\tag{12.3}
+$$
+这些映射暂以整个 $\mathcal P$ 为陪域；其有效状态空间分别是 $P\mathcal P$ 和 $P'\mathcal P$。
+

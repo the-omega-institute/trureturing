@@ -1,0 +1,7 @@
+令 $\mathcal P_L$ 为位置前 $L$ 位的柱分区，$\mathcal P_0=\{K\}$。则其累计可见秩是
+$$
+N_L=G_L,\qquad
+G_0=1,\quad G_1=2,\quad G_{L+2}=G_{L+1}+G_L,
+\qquad
+\phi^L\le G_L\le2\phi^L.
+$$

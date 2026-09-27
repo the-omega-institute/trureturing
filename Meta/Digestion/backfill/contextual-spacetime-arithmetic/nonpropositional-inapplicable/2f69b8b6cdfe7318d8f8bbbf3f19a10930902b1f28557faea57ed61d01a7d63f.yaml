@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f69b8b6cdfe7318d8f8bbbf3f19a10930902b1f28557faea57ed61d01a7d63f
+  normalized_sha256: sha256:2f69b8b6cdfe7318d8f8bbbf3f19a10930902b1f28557faea57ed61d01a7d63f
+cas_ref: sha256:2f69b8b6cdfe7318d8f8bbbf3f19a10930902b1f28557faea57ed61d01a7d63f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “数学来源、成熟锚与本次边界”是来源小节标题，不含数学假设及结论，也不以命名暗示证明已完成，故按结构文本结算。
+    previous_atom_id: 85ff2a9ff695bcbc0c36db8da8c7bddc44b9cbde93f002fdf7f753e9156d5925
+    next_atom_id: 6f86d8b6b5dc65dd2064f162d873e63bd8c69354d35dde78faeb05bf2cd7552d

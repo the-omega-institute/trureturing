@@ -1,0 +1,20 @@
+**定义 11.8（过程张量与梳的端口对应）。** 固定时刻 $0,\ldots,k$、系统端口 $S_j^{\mathrm{in}}$ 和 $S_j^{\mathrm{out}}$。控制分支为完全正不增迹映射 $\mathcal A_j:\mathcal L(S_j^{\mathrm{in}})\to\mathcal L(S_j^{\mathrm{out}})$；确定性控制为 CPTP。给共同初态 $\rho_{S_0E}$，其中 $S_0=S_0^{\mathrm{in}}$，及同型接续的 CPTP 映射 $\mathcal U_{j+1:j}:\mathcal L(S_j^{\mathrm{out}}\otimes E)\to\mathcal L(S_{j+1}^{\mathrm{in}}\otimes E)$，定义
+$$
+\mathfrak T_{k:0}[\mathcal A_{k-1},\ldots,\mathcal A_0]
+=\operatorname{Tr}_E\!\left[
+\mathcal U_{k:k-1}(\mathcal A_{k-1}\otimes\operatorname{id}_E)
+\cdots\mathcal U_{1:0}(\mathcal A_0\otimes\operatorname{id}_E)
+(\rho_{S_0E})\right].
+\tag{11.13}
+$$
+其值为未归一化终态，迹为所选结果序列的概率。独立控制时它对各 $\mathcal A_j$ 分别线性，进而在线性张量积上延伸；反馈或反复接触同一个控制辅助系统时，控制对象取具有对应时间次序的联合控制梳，保持同一辅助实现。
+
+在各系统端口同维且联合演化为酉时，式(11.13)即为 Pollock、Rodríguez-Rosario、Frauenheim、Paternostro、Modi，*Non-Markovian quantum processes: complete framework and efficient characterisation*，[arXiv:1512.00589v3](https://arxiv.org/pdf/1512.00589v3)，定义1、性质P1—P3及定理2，PDF第2—3页的开放量子演化式(2)。其完全正性量化带控制辅助系统的物理输出，containment 按已声明的槽填充操作抽取子区间；在同型槽填入恒等控制与舍弃前段后重置环境是不同操作。该文图4（第5页）将过程及相关控制都表示为量子梳，定理4（第7页）给多时 Choi 表示，第IV.C节（第8页）给因果偏迹及子过程收缩。
+
+本节按定义11.5表示同一端口结构：令 $n=k+1$、$A_1=\mathbb C$、$B_1=S_0^{\mathrm{in}}$，并对 $0\le j<k$ 取
+$$
+A_{j+2}=S_j^{\mathrm{out}},\qquad B_{j+2}=S_{j+1}^{\mathrm{in}}.
+\tag{11.14}
+$$
+因此过程首先输出初始系统，随后每次接收控制后的系统并给出下一系统；控制 $\mathcal A_j$ 接在 $B_{j+1}$ 与 $A_{j+2}$ 之间。未归一化 Choi 梳具有正性与式(11.9)的因果偏迹条件，$R^{(1)}=\rho_{S_0}$；其实现取定理11.6。若以迹一多时 Choi 密度表示，则除以 $\prod_{j=0}^{k-1}\dim S_j^{\mathrm{out}}$，相应收缩公式同时运输此因子。端口量化、归一化与允许控制族属于同一表示合同。
+

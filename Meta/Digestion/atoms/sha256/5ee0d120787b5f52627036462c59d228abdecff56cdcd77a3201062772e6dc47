@@ -1,0 +1,55 @@
+**definition 64.2（实际可达矩形、辅助矩形初始任务、答复纤维与下降势）。** 对任一坐标 $i$ 的非空候选集 $S_i\subseteq X_i$，记
+$$
+m_i(S_i)=\sum_{a\in S_i}\mu_i(a).
+$$
+对中心 $c_i$ 与答复值 $d$，定义答复纤维
+$$
+S_i[c_i,d]
+=
+\{a\in S_i:h_{i,c_i}(a)=d\}.
+$$
+若非空纤维族
+$$
+\{S_i[c_i,d]:S_i[c_i,d]\ne\varnothing\}
+$$
+至少含两个集合，则称 $c_i$ 在 $S_i$ 上有信息。全局候选矩形写为
+$$
+\mathbf S=(S_i)_{i\in I},
+\qquad
+\prod_iS_i\ne\varnothing.
+$$
+若每个 $S_i$ 都是单点，则称 $\mathbf S$ 终止。定义下降势
+$$
+\Phi(\mathbf S)
+=
+\sum_{i\in I}(|S_i|-1).
+$$
+
+从 definition 64.1 的完整根
+$$
+\mathbf X=(X_i)_{i\in I}
+$$
+开始，若某个正概率联合答复历史的逐坐标候选集恰为 $\mathbf S$，则称 $\mathbf S$ 为原任务的实际可达矩形。实际可达性只描述从该固定完整根出发的历史。
+
+另外，对任意外部指定的非空矩形 $\mathbf S$，定义辅助矩形初始信息任务
+$$
+\mathsf P^\square(\mathbf S)
+$$
+如下：隐藏向量从 $\prod_iS_i$ 中抽取，其初始分布为各原先验在 $S_i$ 上限制并归一化后的乘积
+$$
+\nu_{\mathbf S}(\mathbf a)
+=
+\prod_{i\in I}\frac{\mu_i(a_i)}{m_i(S_i)};
+$$
+此后允许的整向量查询、每轮费用、完整多值答复、自适应规则与零错误终止要求全部与 definition 64.1 相同，只要求在该初始矩形内辨认隐藏向量。记其最优期望剩余轮数为
+$$
+V^\square(\mathbf S)
+=
+\min_D\mathbb E_{\nu_{\mathbf S}}[T_D].
+$$
+辅助矩形无需由完整根的任何历史到达；它只是同一查询模型上外部给定初始信息的有限任务。对非终止 $\mathbf S$，记
+$$
+\mathcal A(\mathbf S)
+$$
+为所有中心向量 $\mathbf c$，使每个满足 $|S_i|>1$ 的坐标都在 $S_i$ 上采用有信息中心；单点坐标的中心任意。
+

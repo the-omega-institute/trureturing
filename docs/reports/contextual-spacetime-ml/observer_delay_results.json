@@ -1,0 +1,324 @@
+{
+  "certificates": {
+    "old": {
+      "index_bits": 5,
+      "max_supplied_integer_bits": 25,
+      "scalar_comparisons": 321,
+      "states": 29,
+      "valid": true
+    },
+    "target_strict": {
+      "ordinary_scalar_comparisons": 5799,
+      "states": 527,
+      "strict_scalar_comparisons": 2108,
+      "valid": true
+    }
+  },
+  "collision": {
+    "0000": {
+      "descriptor": [
+        24,
+        4
+      ],
+      "labels": [
+        14,
+        21,
+        23,
+        24,
+        24
+      ],
+      "masses": [
+        [
+          "63",
+          "2048"
+        ],
+        [
+          "135",
+          "2048"
+        ]
+      ],
+      "next_zero": [
+        "13",
+        "22"
+      ],
+      "posterior": [
+        "15",
+        "22"
+      ],
+      "word_probability": [
+        "99",
+        "1024"
+      ]
+    },
+    "1000": {
+      "descriptor": [
+        24,
+        4
+      ],
+      "labels": [
+        14,
+        7,
+        18,
+        22,
+        24
+      ],
+      "masses": [
+        [
+          "45",
+          "2048"
+        ],
+        [
+          "93",
+          "2048"
+        ]
+      ],
+      "next_zero": [
+        "27",
+        "46"
+      ],
+      "posterior": [
+        "31",
+        "46"
+      ],
+      "word_probability": [
+        "69",
+        "1024"
+      ]
+    }
+  },
+  "expected_readout_rejection": [
+    "accuracy:14:upper"
+  ],
+  "initial_prediction_gap": [
+    "1",
+    "253"
+  ],
+  "rejected_inputs": [
+    "zero",
+    "negative",
+    "above_domain",
+    "wrong_carrier"
+  ],
+  "scope": "Finite exact comparisons; no all-history or optimal-constant certification.",
+  "suffix_checks": {
+    "by_length": [
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "253"
+        ],
+        "prefixes": 1,
+        "reports": 0,
+        "witness": ""
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "936"
+        ],
+        "prefixes": 2,
+        "reports": 1,
+        "witness": "0"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "3485"
+        ],
+        "prefixes": 4,
+        "reports": 2,
+        "witness": "00"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "12998"
+        ],
+        "prefixes": 8,
+        "reports": 3,
+        "witness": "000"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "48501"
+        ],
+        "prefixes": 16,
+        "reports": 4,
+        "witness": "0000"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "181000"
+        ],
+        "prefixes": 32,
+        "reports": 5,
+        "witness": "00000"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "675493"
+        ],
+        "prefixes": 64,
+        "reports": 6,
+        "witness": "000000"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "2520966"
+        ],
+        "prefixes": 128,
+        "reports": 7,
+        "witness": "0000000"
+      },
+      {
+        "minimum_prediction_gap": [
+          "1",
+          "9408365"
+        ],
+        "prefixes": 256,
+        "reports": 8,
+        "witness": "00000000"
+      }
+    ],
+    "maximum_reports": 8,
+    "prefixes": 511
+  },
+  "target_example": {
+    "E": [
+      "793",
+      "1578"
+    ],
+    "conservative_capture_upper": 11,
+    "conservative_posterior_bound": [
+      "793",
+      "12926976"
+    ],
+    "eps": [
+      "1",
+      "1024"
+    ],
+    "exact_center_tracker_upper": 6,
+    "m": 526,
+    "mu": [
+      "4",
+      "16641"
+    ],
+    "necessary_lower": 1,
+    "reset_labels_for_7_21_24": [
+      131,
+      394,
+      451
+    ],
+    "scope": "L is necessary; capture, U and V are sufficient for their distinct tasks.",
+    "sufficient_capture_reports": 10
+  },
+  "threshold_boundaries": [
+    {
+      "conservative_capture_upper": 10,
+      "eps": [
+        "1",
+        "506"
+      ],
+      "exact_center_tracker_upper": 5,
+      "lower_threshold_product": [
+        "1",
+        "1"
+      ],
+      "necessary_lower": 0
+    },
+    {
+      "conservative_capture_upper": 10,
+      "eps": [
+        "1",
+        "507"
+      ],
+      "exact_center_tracker_upper": 5,
+      "lower_threshold_product": [
+        "1012",
+        "169"
+      ],
+      "necessary_lower": 1
+    },
+    {
+      "conservative_capture_upper": 13,
+      "eps": [
+        "1",
+        "3036"
+      ],
+      "exact_center_tracker_upper": 8,
+      "lower_threshold_product": [
+        "1",
+        "1"
+      ],
+      "necessary_lower": 1
+    },
+    {
+      "conservative_capture_upper": 13,
+      "eps": [
+        "1",
+        "3037"
+      ],
+      "exact_center_tracker_upper": 8,
+      "lower_threshold_product": [
+        "18216",
+        "3037"
+      ],
+      "necessary_lower": 2
+    },
+    {
+      "conservative_capture_upper": 5,
+      "eps": [
+        "1",
+        "16"
+      ],
+      "exact_center_tracker_upper": 0,
+      "necessary_lower": 0
+    },
+    {
+      "conservative_capture_upper": 6,
+      "eps": [
+        "1",
+        "32"
+      ],
+      "exact_center_tracker_upper": 1,
+      "necessary_lower": 0
+    },
+    {
+      "conservative_capture_upper": 5,
+      "eps": [
+        "3",
+        "64"
+      ],
+      "exact_center_tracker_upper": 1,
+      "necessary_lower": 0
+    },
+    {
+      "conservative_capture_upper": 6,
+      "eps": [
+        "3",
+        "65"
+      ],
+      "exact_center_tracker_upper": 1,
+      "necessary_lower": 0
+    }
+  ],
+  "tracker_endpoint_checks": {
+    "maximum_prediction_error": [
+      "3645",
+      "8501048"
+    ],
+    "reports": 6,
+    "scope": "All 29 old intervals, both endpoints, all 64 six-report words.",
+    "terminal_comparisons": 3712,
+    "witness": {
+      "endpoint": "hi",
+      "old_label": 2,
+      "word": "010101"
+    }
+  },
+  "valid": true
+}

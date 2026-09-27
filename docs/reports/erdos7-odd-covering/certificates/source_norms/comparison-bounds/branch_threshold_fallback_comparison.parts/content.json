@@ -1,0 +1,43 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-branch-threshold-fallback-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "1d0d386749d2692c30a948f73a5e07e3880525f507b71e9e6d8ffd875a1ff3a7",
+    "kind": "value"
+  },
+  "fallbacks": {
+    "path": "content/002-fallbacks.json",
+    "sha256": "ae3dc7aed318d1b5baaaac75619b7d71356e33e89e399c99f3a148ef58328f00",
+    "kind": "value"
+  },
+  "original232_last_complete_bound": {
+    "kind": "inline",
+    "value": "3404213816079321070322396619648097696278819877/8148032166678761182742305326245791763280000"
+  },
+  "same_law_branch_norm_comparison": {
+    "path": "content/004-same_law_branch_norm_comparison.json",
+    "sha256": "e68511a69f98e8e4bf3b63b494e28d24031dd1a4e45c5633933e2f83277e6dc1",
+    "kind": "value"
+  },
+  "new_last_branch_comparison": {
+    "path": "content/005-new_last_branch_comparison.json",
+    "sha256": "71630fabc93805bb217274a4e08ce0d0399e0007fb94a7a961880beec16fd30b",
+    "kind": "value"
+  },
+  "continuous_threshold_comparison": {
+    "path": "content/006-continuous_threshold_comparison.json",
+    "sha256": "17ba87e0fac8ef818986d284b6af769435aac26eccd8b4ff9dee32d0dffb2efe",
+    "kind": "object"
+  },
+  "unchanged_global_bound": {
+    "kind": "inline",
+    "value": "82051870673236134832016195627487654396978574440246645734860460107/161255254826142287825779397797720021318069135643238964595220075"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Seven original232 fallback bounds retain AP(4,5). Only the last missing9 branch uses the actual AP(4,4) law, its same-source norm, complete count tails and both recomputed cores. The inherited threshold interface stays above403 throughout the stated continuous domain. No effective9/global improvement, complete52-cost comparison, Lean or unrestricted Erdos7 resolution."
+  }
+}

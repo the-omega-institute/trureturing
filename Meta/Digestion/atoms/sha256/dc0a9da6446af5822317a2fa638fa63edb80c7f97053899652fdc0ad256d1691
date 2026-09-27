@@ -1,0 +1,48 @@
+**证明。** 由 theorem 49.5，$H(D)\le1$，故 $D$ 平方自由。又对每个素数 $p\mid D$，取 $m=p$，Carmichael 闭合给出
+$$
+p-1=\lambda(p)\mid D.
+$$
+因此 $p-1$ 必为平方自由数，其每个素因子都再次属于 $D$。
+
+证明所有可能素因子都属于
+$$
+S=\{2,3,7,43\}.
+$$
+若否，取最小的 $p\mid D$ 且 $p\notin S$。$p-1$ 的每个素因子 $q$ 都小于 $p$，又因 $q\mid D$，由 $p$ 的最小性有 $q\in S$。由于 $p-1$ 平方自由，遂有
+$$
+p-1\mid2\cdot3\cdot7\cdot43=1806.
+$$
+$1806$ 的正因子为
+$$
+1,2,3,6,7,14,21,42,43,86,129,258,301,602,903,1806.
+$$
+分别加一得到
+$$
+2,3,4,7,8,15,22,43,44,87,130,259,302,603,904,1807.
+$$
+其中素数只有
+$$
+2,3,7,43.
+$$
+确实，$259=7\cdot37$，$302=2\cdot151$，$603=3\cdot201$，$904=8\cdot113$，$1807=13\cdot139$。这与 $p\notin S$ 矛盾。
+
+再由
+$$
+43-1=42,\qquad7-1=6,\qquad3-1=2
+$$
+可知若 $43\mid D$ 则 $2,3,7\mid D$；若 $7\mid D$ 则 $2,3\mid D$；若 $3\mid D$ 则 $2\mid D$。所以素因子集合只能依次为
+$$
+\varnothing,\quad\{2\},\quad\{2,3\},\quad\{2,3,7\},\quad\{2,3,7,43\},
+$$
+正好给出
+$$
+1,2,6,42,1806.
+$$
+每一个都直接满足 $p-1\mid D$ 对所有 $p\mid D$，因而满足 Carmichael 闭合，并由 theorem 49.5 得到连续幂。
+
+这一有限算术结论也与 Halbeisen–Hungerbühler 的广义 Carmichael 分类一致。其定义的 $C_k$ 要求 $n>\max\{1,1-k\}$ 且对所有自然数 $a$ 有 $a^{n+k}\equiv a\pmod n$；其 theorem 2.1 给出平方自由与 $p-1\mid n+k-1$ 的广义 Korselt 判据，而第 3.2 节 theorem 3.1 明确证明
+$$
+C_1=\{2,6,42,1806\}.
+$$
+见 [Halbeisen–Hungerbühler, *On generalised Carmichael numbers*, Hardy–Ramanujan Journal 22 (1999), printed pp. 10, 12–13，DOI 10.46298/hrj.1999.138](https://hrj.episciences.org/138/pdf)。这里额外的 $D=1$ 是空素因子 supernatural，不属于该文 $C_1$ 的正整数范围。证毕。
+

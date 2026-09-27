@@ -20,7 +20,7 @@ def viaTruth (_ : Unit) (x : Bool) : Bool := let _ := truth; x
 def viaAppliedProof (_ : Unit) (x : Bool) : Bool := let _ := numberProof 0; x
 def viaProof (_ : Unit) (x : Bool) : Bool := let _ := proofSource; x
 def viaDecision (_ : Unit) (x : Bool) : Bool := if @decide True statementDecision then x else true
-def viaCertificate (_ : Unit) (x : Bool) : Bool := if certificate.bit then true else x
+def viaCertificate (_ : Unit) (x : Bool) : Bool := cond certificate.bit true x
 def viaIdentity (_ : Unit) (x : Bool) : Bool := let _ := identitySource; x
 def constantTruth (_ : Unit) (_ : Bool) : Bool := @decide True (.isTrue truth)
 def clean (_ : Unit) (x : Bool) : Bool := x
@@ -51,7 +51,8 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       hints := .abbrev, safety := .safe }
     let entry := { entry with theoremName := `RegistrationProvenance ++ theoremName.getId }
     let actual ← tryCatchRuntimeEx
-      (RegistrationGates.validateFinite { entry with realizationName := holder })
+      (RegistrationGates.provenanceErrorCurrent entry.registrationModuleName
+        entry.effectiveCatalogId entry.theoremName holder)
       (fun _ => throwError "[FAIL] {label.getString}: uncaught provenance exhaustion")
     let ok := match actual with
       | none => reason.getString == "clean"
@@ -59,6 +60,12 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
           (message.splitOn s!" reason={reason.getString} provenance=").length == 2 &&
           (message.splitOn "IE-C021").length == 1
     if let some message := actual then
+      let tokens := message.splitOn " "
+      unless tokens.length == 6 && tokens[0]! == "IE-C050" &&
+          tokens[1]! == "ClosedTruthReadout" && tokens[2]!.startsWith "key=" &&
+          tokens[3]!.startsWith "readout=" && tokens[4]!.startsWith "reason=" &&
+          tokens[5]!.startsWith "provenance=" do
+        throwError "[FAIL] {label.getString}: expected six diagnostic tokens"
       let pieces := message.splitOn " provenance="
       let payload := pieces.getLast!
       let expectedKey := s!"key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName}"
@@ -66,33 +73,45 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
           (message.splitOn s!"readout={n}").length == 2 do
         throwError "[FAIL] {label.getString}: diagnostic keys"
       if reason.getString == "incomplete_closure" then
-        unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure"
+        unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure: {payload}"
       else if let .ok json := Json.parse payload then
-        if let .ok names := fromJson? (α := Array String) json then
+        if reason.getString == "unclassified_form" then
+          let .obj fields := json | throwError "[FAIL] {label.getString}: non-object payload"
+          let keys := fields.toList.map Prod.fst |>.toArray.qsort (· < ·)
+          unless keys == #["class", "first", "namespace", "site", "walked"] do
+            throwError "[FAIL] {label.getString}: payload keys"
+          let some walked := fields.get? "walked" | throwError "[FAIL] {label.getString}: walked missing"
+          let .ok names := fromJson? (α := Array String) walked
+            | throwError "[FAIL] {label.getString}: walked shape"
+          unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size && names.contains n.toString do
+            throwError "[FAIL] {label.getString}: canonical closure"
+        else if let .ok names := fromJson? (α := Array String) json then
           unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size &&
               names.contains n.toString do throwError "[FAIL] {label.getString}: canonical closure"
-        else throwError "[FAIL] {label.getString}: non-array closure"
+        else throwError "[FAIL] {label.getString}: non-array closure: {actual}"
       else throwError "[FAIL] {label.getString}: invalid JSON"
     unless ok do throwError "[FAIL] {label.getString}: {actual}"
     logInfo m!"[PASS] {label.getString}"
 
 check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency" for truth
 check_provenance "AppliedProof" using viaAppliedProof expects "clean" for truth
-check_provenance "ProofConstant" using viaProof expects "forbidden_dependency" for truth
+check_provenance "ProofConstant" using viaProof expects "unclassified_form" for truth
 check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency" for truth
 check_provenance "TheoremCertificate" using viaCertificate expects "clean" for truth
 check_provenance "StatementIdentity" using viaIdentity expects "clean" for truth
 check_provenance "CleanReadout" using clean expects "clean" for truth
-check_provenance "C050BeforeC021" using constantTruth expects "forbidden_dependency" for truth
+check_provenance "ConstantReadoutWalker" using constantTruth expects "forbidden_dependency" for truth
 
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
   let name := RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName
   let actual := (← getConstInfo name).value!
   let .lit (.strVal message) := actual | throwError "fixture metadata"
-  unless message.startsWith "IE-C050 ClosedTruthReadout " do
-    throwError "[FAIL] FinitePublished: {actual}"
-  logInfo "[PASS] FinitePublished"
+  let record := (TemplateBinding.records (← getEnv)).find?
+    (·.occurrence.key.theoremName == ``truth)
+  unless message.isEmpty && record.any (fun row => row.result matches .undeclared) do
+    throwError "[FAIL] FiniteUndeclaredPublished: {actual}"
+  logInfo "[PASS] FiniteUndeclaredPublished"
 
 -- A real chain exceeds the fixed production fuel, with no recursive Lean definition.
 run_cmd Elab.Command.liftTermElabM do
@@ -117,25 +136,29 @@ check_provenance "UnavailableDefinition" using unavailable expects "incomplete_c
 noncomputable def unavailableAlias := unavailable
 check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure" for truth
 
--- A structural readout reaches a proof of its registered statement (0 = 0).
-def structuralRead (_ : Unit) (x : Nat) : Nat := let _ : (0 : Nat) = 0 := rfl; x
+-- A structural readout reaches a reserved judge identity constructor.
+def structuralRead (_ : Unit) (x : Nat) : Nat := let _ := StatementKey.mk; x
 structural_theorem structuralTruth in RegistrationStructural.law
   realization ⟨structuralRead⟩ nondegeneracy RegistrationStructural.lawVariation
   sensitivity RegistrationStructural.slotSensitivity := by let _ := proofSource; rfl
 run_cmd Elab.Command.liftTermElabM do
   let entry := ((structuralProvenanceEntries (← getEnv)).find?
     (·.theoremName == ``structuralTruth)).get!
-  let actual ← RegistrationGates.validateStructural entry
+  let actual ← RegistrationGates.provenanceErrorCurrent entry.registrationModule
+    entry.canonicalArena entry.theoremName entry.realizationConst
   unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " do
     throwError "[FAIL] StructuralForbidden: {actual}"
   let name := RegistrationGates.diagnosticName entry.unitConst entry.registrationModule
-  unless (← getConstInfo name).value? == some (mkStrLit (actual.getD "")) do
-    throwError "[FAIL] StructuralPublished"
+  let record := (TemplateBinding.records (← getEnv)).find?
+    (·.occurrence.key.theoremName == ``structuralTruth)
+  unless (← getConstInfo name).value? == some (mkStrLit "") &&
+      record.any (fun row => row.result matches .undeclared) do
+    throwError "[FAIL] StructuralUndeclaredPublished"
   logInfo "[PASS] StructuralForbidden"
 -- A complete clean closure is asserted independently of the collector.
 run_cmd do
   let actual ← Elab.Command.liftCoreM <| RegistrationGates.readoutClosure (← getEnv) ``truth (mkConst ``clean)
-  unless actual == (false, some #["Bool", "PUnit", "RegistrationProvenance.clean", "Unit"]) do
+  unless actual == (false, some #["Bool", "RegistrationProvenance.clean", "Unit"]) do
     throwError "[FAIL] CanonicalClosure: {repr actual}"
   logInfo "[PASS] CanonicalClosure"
 run_cmd Elab.Command.liftTermElabM do
@@ -146,11 +169,11 @@ run_cmd Elab.Command.liftTermElabM do
     value := mkConst ``clean, hints := .abbrev, safety := .safe }
 check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency" for truth
 
--- 65536 distinct leaves in a balanced term exhaust the expression budget
+-- 262144 distinct leaves in a balanced term exhaust the expression budget
 -- while using only a handful of constants; no time-based assertion is involved.
 set_option maxHeartbeats 2000000 in
 run_cmd Elab.Command.liftTermElabM do
-  let mut layer := (List.range 65536).toArray.map mkNatLit
+  let mut layer := (List.range 262144).toArray.map mkNatLit
   while layer.size > 1 do
     layer := (List.range (layer.size / 2)).toArray.map fun i =>
       mkApp2 (mkConst ``Nat.add) layer[2*i]! layer[2*i+1]!
@@ -173,11 +196,12 @@ structural_theorem structuralConstant in boolLaw
 run_cmd Elab.Command.liftTermElabM do
   let entry := ((structuralProvenanceEntries (← getEnv)).find?
     (·.theoremName == ``structuralConstant)).get!
-  let actual ← RegistrationGates.validateStructural entry
+  let actual ← RegistrationGates.provenanceErrorCurrent entry.registrationModule
+    entry.canonicalArena entry.theoremName entry.realizationConst
   unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
       ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2 do
-    throwError "[FAIL] StructuralC050BeforeC021: {actual}"
-  logInfo "[PASS] StructuralC050BeforeC021"
+    throwError "[FAIL] StructuralConstantReadoutWalker: {actual}"
+  logInfo "[PASS] StructuralConstantReadoutWalker"
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
   addDecl <| .defnDecl {

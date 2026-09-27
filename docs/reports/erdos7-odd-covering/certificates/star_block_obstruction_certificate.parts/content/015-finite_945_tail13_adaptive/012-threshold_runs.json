@@ -1,0 +1,174 @@
+[
+  {
+    "last_prime": 17,
+    "threshold": 4
+  },
+  {
+    "last_prime": 19,
+    "threshold": 6
+  },
+  {
+    "last_prime": 31,
+    "threshold": 8
+  },
+  {
+    "last_prime": 37,
+    "threshold": 12
+  },
+  {
+    "last_prime": 59,
+    "threshold": 16
+  },
+  {
+    "last_prime": 61,
+    "threshold": 18
+  },
+  {
+    "last_prime": 73,
+    "threshold": 24
+  },
+  {
+    "last_prime": 109,
+    "threshold": 32
+  },
+  {
+    "last_prime": 113,
+    "threshold": 36
+  },
+  {
+    "last_prime": 149,
+    "threshold": 48
+  },
+  {
+    "last_prime": 211,
+    "threshold": 64
+  },
+  {
+    "last_prime": 227,
+    "threshold": 72
+  },
+  {
+    "last_prime": 283,
+    "threshold": 96
+  },
+  {
+    "last_prime": 419,
+    "threshold": 128
+  },
+  {
+    "last_prime": 443,
+    "threshold": 144
+  },
+  {
+    "last_prime": 571,
+    "threshold": 192
+  },
+  {
+    "last_prime": 823,
+    "threshold": 256
+  },
+  {
+    "last_prime": 881,
+    "threshold": 288
+  },
+  {
+    "last_prime": 883,
+    "threshold": 320
+  },
+  {
+    "last_prime": 1129,
+    "threshold": 384
+  },
+  {
+    "last_prime": 1657,
+    "threshold": 512
+  },
+  {
+    "last_prime": 1789,
+    "threshold": 576
+  },
+  {
+    "last_prime": 2357,
+    "threshold": 768
+  },
+  {
+    "last_prime": 2371,
+    "threshold": 864
+  },
+  {
+    "last_prime": 3467,
+    "threshold": 1024
+  },
+  {
+    "last_prime": 3793,
+    "threshold": 1152
+  },
+  {
+    "last_prime": 3797,
+    "threshold": 1296
+  },
+  {
+    "last_prime": 5059,
+    "threshold": 1536
+  },
+  {
+    "last_prime": 5101,
+    "threshold": 1728
+  },
+  {
+    "last_prime": 7591,
+    "threshold": 2048
+  },
+  {
+    "last_prime": 8423,
+    "threshold": 2304
+  },
+  {
+    "last_prime": 8431,
+    "threshold": 2560
+  },
+  {
+    "last_prime": 11551,
+    "threshold": 3072
+  },
+  {
+    "last_prime": 11657,
+    "threshold": 3456
+  },
+  {
+    "last_prime": 11677,
+    "threshold": 3840
+  },
+  {
+    "last_prime": 17827,
+    "threshold": 4096
+  },
+  {
+    "last_prime": 20071,
+    "threshold": 4608
+  },
+  {
+    "last_prime": 20101,
+    "threshold": 5120
+  },
+  {
+    "last_prime": 20113,
+    "threshold": 5184
+  },
+  {
+    "last_prime": 28517,
+    "threshold": 6144
+  },
+  {
+    "last_prime": 28817,
+    "threshold": 6912
+  },
+  {
+    "last_prime": 28837,
+    "threshold": 7680
+  },
+  {
+    "last_prime": 32141,
+    "threshold": 8192
+  }
+]

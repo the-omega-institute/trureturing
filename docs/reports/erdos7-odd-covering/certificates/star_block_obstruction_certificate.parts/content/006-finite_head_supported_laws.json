@@ -1,0 +1,68 @@
+[
+  {
+    "period_bound": 315,
+    "coordinates": [
+      {
+        "prime": 3,
+        "height": 2,
+        "u": "4/9",
+        "pure_survivor_density_lower": "5/9",
+        "uniform_kappa": "23/9",
+        "survivor_pair_factor": "19/5"
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "u": "1/5",
+        "pure_survivor_density_lower": "4/5",
+        "uniform_kappa": "8/5",
+        "survivor_pair_factor": "7/4"
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "u": "1/7",
+        "pure_survivor_density_lower": "6/7",
+        "uniform_kappa": "10/7",
+        "survivor_pair_factor": "3/2"
+      }
+    ],
+    "mixed_budget": "49/120",
+    "product_moment_bound": "399/40",
+    "Gamma_bound": "1148/71",
+    "uncovered_count_lower": "71"
+  },
+  {
+    "period_bound": 945,
+    "coordinates": [
+      {
+        "prime": 3,
+        "height": 3,
+        "u": "13/27",
+        "pure_survivor_density_lower": "14/27",
+        "uniform_kappa": "76/27",
+        "survivor_pair_factor": "9/2"
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "u": "1/5",
+        "pure_survivor_density_lower": "4/5",
+        "uniform_kappa": "8/5",
+        "survivor_pair_factor": "7/4"
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "u": "1/7",
+        "pure_survivor_density_lower": "6/7",
+        "uniform_kappa": "10/7",
+        "survivor_pair_factor": "3/2"
+      }
+    ],
+    "mixed_budget": "157/336",
+    "product_moment_bound": "189/16",
+    "Gamma_bound": "3812/179",
+    "uncovered_count_lower": "179"
+  }
+]

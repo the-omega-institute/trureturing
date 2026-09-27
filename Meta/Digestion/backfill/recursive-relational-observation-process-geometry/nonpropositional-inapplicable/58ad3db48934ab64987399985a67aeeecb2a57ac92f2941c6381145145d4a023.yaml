@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58ad3db48934ab64987399985a67aeeecb2a57ac92f2941c6381145145d4a023
+  normalized_sha256: sha256:58ad3db48934ab64987399985a67aeeecb2a57ac92f2941c6381145145d4a023
+cas_ref: sha256:58ad3db48934ab64987399985a67aeeecb2a57ac92f2941c6381145145d4a023
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "The mathematical composition-versus-separate-averaging clause is bind-only in pinned Mathlib: MeasureTheory.Measure.comp_assoc, ProbabilityTheory.Kernel.comp_apply' and MeasureTheory.Measure.compProd_apply retain the same outer parameter in composition; ProbabilityTheory.indepFun_prod and ProbabilityTheory.IndepFun.integral_fun_mul_eq_mul_integral give the separate averages under the product prior. No matching project GID was found for this general identity in the scoped search. The final interface sentence is explanatory: retaining conditional parameter information does not add an observation of the parameter. No new Lean is required."
+    previous_atom_id: 9d7b973407ed2e683204dd2cfdbb411e41a876b5fa43c563efd3968ebc91d7ba
+    next_atom_id: 71b6e422529fbe38daaf5fe8e6b7c1be0f13de1fcc1e81ba55d376642da94e0d

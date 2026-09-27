@@ -1,0 +1,8 @@
+在实际解处，固定点方程对 $u$ 的导数为
+$$
+I+\mathcal A_u,\qquad
+\mathcal A_uv=\mathcal B_\nu(v,u)+\mathcal B_\nu(u,v),\quad
+\|\mathcal A_u\|\le\tfrac12,
+\qquad (I+\mathcal A_u)^{-1}=\sum_{n\ge0}(-\mathcal A_u)^n.
+\tag{27.109}
+$$

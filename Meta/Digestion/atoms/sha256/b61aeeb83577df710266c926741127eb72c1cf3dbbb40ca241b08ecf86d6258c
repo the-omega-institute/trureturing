@@ -1,0 +1,19 @@
+**定理 47.0.1（坐标构造与尾线程的良定义性）。** 定义 47.0 中的过渡映射、商运算、逐坐标运算及尾线程公式均良定义。空间 $K$ 是非空紧致 Hausdorff 交换幺半环，其加乘联合连续，$\iota$ 保持加乘及环境常量。空间 $\widehat{\mathbb Z}$ 是紧致 Hausdorff 拓扑环，$\tau$ 是取值于 $K$ 的映射，并且
+$$
+\tau(0_{\widehat{\mathbb Z}})\ne0_K,\qquad
+\tau(1_{\widehat{\mathbb Z}})\ne1_K.
+$$
+有限商与完成的基础构造参见[《递归关系观察》第 14.0—14.1 条，固定版本 54e52af3e2ce49e65cbf066649cee410fafc2dff](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**证明。** 关系 $R_{t,p}$ 的等价类是低于阈值的单点类与阈值以上的模 $p$ 尾类，因此确为等价关系。若 $nR_{t,p}m$，则对每个 $c\in\mathbb N_0$ 都有 $n+c\mathrel{R_{t,p}}m+c$。对于倍乘，$c=0$ 时两个结果都是零；$c>0$ 时，非平凡相关的一对满足 $cn,cm\ge t$ 且模 $p$ 同余。因此固定自然数的加法与乘法都保持该关系。依次改变两个输入，得到加乘的双槽相容性，故商运算良定义，且商继承交换幺半环恒等式。
+
+若 $(t,p)\preceq(u,q)$，则 $R_{u,q}\subseteq R_{t,p}$，所以过渡映射良定义。其复合律及保持加乘的性质都可在自然数代表元上验证。因而逐坐标加乘保持线程相容性，环境常量也是相容线程，幺半环恒等式逐坐标成立。每个输出坐标仅依赖两个有限输入坐标，所以加乘联合连续；代表元公式同时说明 $\iota$ 保持加乘与常量。
+
+有限离散空间的乘积紧致 Hausdorff，而每个线程相容方程定义闭集，因此 $K$ 紧致 Hausdorff；线程 $\iota(0)$ 说明它非空。同样的闭子集论证适用于 $\widehat{\mathbb Z}$，其环运算及加法逆元运算均逐坐标连续。
+
+对于尾类，指定剩余类中存在任意大的自然数，所以代表元可取。任意两个满足条件的代表元都不小于 $t$ 且模 $p$ 同余，故给出同一商类。若 $(t,p)\preceq(u,q)$，取 $n\ge u$ 且 $n\bmod q=r_q$，则 $n\ge t$ 且 $n\bmod p=r_p$，因而
+$$
+b_{(u,q),(t,p)}(\theta_{u,q}(r_q))=\theta_{t,p}(r_p).
+$$
+故 $\tau(r)$ 满足全部相容方程，确实属于 $K$。最后，在坐标 $(1,1)$，$\tau(0_{\widehat{\mathbb Z}})$ 是尾类，而 $0_K$ 是零的单点类；在坐标 $(2,1)$，$\tau(1_{\widehat{\mathbb Z}})$ 是尾类，而 $1_K$ 是一的单点类。两组不等式成立。证毕。
+

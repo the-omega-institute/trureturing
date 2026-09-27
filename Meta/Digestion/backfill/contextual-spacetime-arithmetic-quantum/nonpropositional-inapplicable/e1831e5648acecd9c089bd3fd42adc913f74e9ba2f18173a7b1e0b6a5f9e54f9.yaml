@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1831e5648acecd9c089bd3fd42adc913f74e9ba2f18173a7b1e0b6a5f9e54f9
+  normalized_sha256: sha256:e1831e5648acecd9c089bd3fd42adc913f74e9ba2f18173a7b1e0b6a5f9e54f9
+cas_ref: sha256:e1831e5648acecd9c089bd3fd42adc913f74e9ba2f18173a7b1e0b6a5f9e54f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶澄清权重揭示时刻与最终判别访问权限，属于任务范围说明，没有独立命题。
+    previous_atom_id: fd9d0868c8f2eb3cb05f5ee87546a863a1ec220dab902b5d3b085d435f13d080
+    next_atom_id: 87caeb0599f09856ccbcf57b3735cffa0f234ae9a2734cf96b5b6bd28a4dcf4a

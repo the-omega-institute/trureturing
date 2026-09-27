@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbee9d5760a499d09abe87ea0ab98eb3b1ab05b2fcead64a710fd87b11001821
+  normalized_sha256: sha256:fbee9d5760a499d09abe87ea0ab98eb3b1ab05b2fcead64a710fd87b11001821
+cas_ref: sha256:fbee9d5760a499d09abe87ea0ab98eb3b1ab05b2fcead64a710fd87b11001821
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本章补上一个不同的接口：隐藏状态和观测通道已知，但系统可以付费选择实验”选择讨论的实验设定；前句只指向第33及34章，不在本叶重新断言递推定理。本叶没有由接口定义推出最优性或可执行性的隐藏结论。
+    previous_atom_id: 7d9833cae0a0b34e059c0a7ab05dd458ad81b002e5dd52c31b368b95edab7b95
+    next_atom_id: 5a03ae81edf3b234b6f65ee85c5e7e3aed217936cb076aae402f8c51e5e83611

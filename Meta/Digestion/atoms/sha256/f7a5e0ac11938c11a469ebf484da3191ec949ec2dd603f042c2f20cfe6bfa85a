@@ -1,0 +1,12 @@
+### 113.2 互信息数据处理不等式
+
+Lean 定理 coarse_graining_cannot_add_information 精确证明：
+
+$$
+\boxed{
+I_{p_c}(C_{\mathrm{past}};C_{\mathrm{future}})
+\le
+I_p(X_{\mathrm{past}};X_{\mathrm{future}}).
+}
+$$
+

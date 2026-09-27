@@ -1,0 +1,15 @@
+{
+  "start": {
+    "kind": "inline",
+    "value": 200
+  },
+  "stop": {
+    "kind": "inline",
+    "value": 300
+  },
+  "rows": {
+    "path": "content/011-remaining_leaf_batches/000002/item/002-rows.json",
+    "sha256": "1c78fd25a79a13c35011ad9717742423b75cca4bccf6fdcd28efee5e4792f8a8",
+    "kind": "array"
+  }
+}

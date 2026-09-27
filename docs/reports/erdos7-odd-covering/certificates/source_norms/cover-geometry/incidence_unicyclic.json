@@ -1,0 +1,75 @@
+{
+  "result": "PASS",
+  "scope": "Exact scalar inequalities and actual-family checks; general proof is separate.",
+  "square_sum": "11181700024618215281126396/45205949340120622379111289",
+  "scalar_cases": {
+    "no3": "1/4",
+    "cycle3_has5": "495325/576436",
+    "cycle3_no5": "492899/552908",
+    "double_cycle3_5": "648/833",
+    "double_cycle3_large": "144/173",
+    "path3_has5": "5091/6664",
+    "path3_no5": "1095/1384"
+  },
+  "cases": [
+    {
+      "name": "two_shared_primes_rank_four_and_hanging_edge",
+      "period": 45045,
+      "labels": 10,
+      "core_primes": [
+        3,
+        5
+      ],
+      "cycle_prime_count": 2,
+      "path_meets": null,
+      "max_original_rank": 4,
+      "retained_support_ranks": [
+        2,
+        2
+      ],
+      "original_survivors": 14958,
+      "generated_points": 14958,
+      "core_source_points": 24,
+      "good_core_points": 21,
+      "actual_core_loss": "1/8",
+      "same_source_union_bound": "1965/8128",
+      "full_probability": "1",
+      "maximum_density": "195/59",
+      "bound": 7372800
+    },
+    {
+      "name": "ternary_path_meets_cycle_support_vertex",
+      "period": 15015,
+      "labels": 7,
+      "core_primes": [
+        3,
+        5,
+        7
+      ],
+      "cycle_prime_count": 2,
+      "path_meets": "s",
+      "max_original_rank": 4,
+      "retained_support_ranks": [
+        2,
+        3
+      ],
+      "original_survivors": 5638,
+      "generated_points": 5638,
+      "core_source_points": 48,
+      "good_core_points": 47,
+      "actual_core_loss": "1/48",
+      "same_source_union_bound": "34055/734976",
+      "full_probability": "1",
+      "maximum_density": "2145/799",
+      "bound": 1228800
+    }
+  ],
+  "schema": "incidence-unicyclic-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "38158e0d64ca8449b127d4fe0636eddeafaff4304408f9a073820021f599f9c4",
+    "problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md": "45c5e514d4c948efb5f47971eb273d78f519ff53eb21c630fc3fc38714f4719f",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+  },
+  "producer_sha256": "56267be9848b31bfc4f27c70395ff09fb1c5afb51209c62c218c756a21f1d599"
+}

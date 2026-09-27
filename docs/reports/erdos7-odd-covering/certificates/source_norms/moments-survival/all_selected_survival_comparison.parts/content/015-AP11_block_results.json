@@ -1,0 +1,299 @@
+[
+  {
+    "block": 0,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363",
+      "5": "28/33"
+    },
+    "previous_upper": "5889718452713543020427/34866077400000000000000",
+    "joint_mean_upper": "122006814543704016534479/732187625400000000000000",
+    "denominator_gain": "19059920037277123801/58242197475000000000000",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363",
+        "5": "28/33"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4,
+        "5": 4
+      },
+      "complete_hinge_upper": "122006814543704016534479/732187625400000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124971,
+        "four": 1450,
+        "four_bounded": 1416,
+        "six": 340,
+        "six_bounded": 260,
+        "joint": 81,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 80,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 126793,
+      "maximum_pruned_uppers": {
+        "two": "26841412/161417025",
+        "four": "50714655977/305078177250",
+        "six": "25371073891/152539088625",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          3,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "26664805891/152539088625",
+        "four_projection_upper": "51876858557/305078177250",
+        "six_projection_upper": "51695736077/305078177250",
+        "joint_raw_upper": "8688121509522668503831/81354180600000000000000",
+        "complete_tail_constant": "783134818/13074779025",
+        "prior_prefix_upper": null,
+        "mean_credit": "271/4743684",
+        "joint_complete_upper": "122006814543704016534479/732187625400000000000000",
+        "accepted_upper": "122006814543704016534479/732187625400000000000000",
+        "dual_key": "af73dbb7a8dabfd88c70f963b54da1841ab9bd682d1f7a0caa2c08fdfc5cd3df"
+      },
+      "branch_decisions_sha256": "6c4d5b94e5fea3427243c48314ba32b7e69cec4564597bcd738b1104b7827ca1"
+    }
+  },
+  {
+    "block": 1,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363"
+    },
+    "previous_upper": "104179560625424798251/2179129837500000000000",
+    "joint_mean_upper": "2448709235030872868413/52299116100000000000000",
+    "denominator_gain": "7371459997046041373/52299116100000000000000",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4
+      },
+      "complete_hinge_upper": "2448709235030872868413/52299116100000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124889,
+        "four": 5550,
+        "four_bounded": 5299,
+        "six": 2510,
+        "six_bounded": 925,
+        "joint": 1586,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 1586,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 133063,
+      "maximum_pruned_uppers": {
+        "two": "2590969/55342980",
+        "four": "777101/16602894",
+        "six": "326385299/6973215480",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          1
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "3407797/71155260",
+        "four_projection_upper": "3407797/71155260",
+        "six_projection_upper": "3407797/71155260",
+        "joint_raw_upper": "31209303135410680451/830144700000000000000",
+        "complete_tail_constant": "24429914/2614955805",
+        "prior_prefix_upper": null,
+        "mean_credit": "16531/142310520",
+        "joint_complete_upper": "2448709235030872868413/52299116100000000000000",
+        "accepted_upper": "2448709235030872868413/52299116100000000000000",
+        "dual_key": "98b82387ca084d5f4db1f4888550e900f5ecb09b6e149450ee517dc2705afb7d"
+      },
+      "branch_decisions_sha256": "d1fa929cf80e8c8812a307ee753c7d94288f2b2e50d70c4727bdaa04dace8176"
+    }
+  },
+  {
+    "block": 2,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "2275/263538"
+    },
+    "previous_upper": "33868/5929605",
+    "joint_mean_upper": "74109062957774228749/13074779025000000000000",
+    "denominator_gain": "569877042225771251/91523453175000000000000",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "2275/263538"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4
+      },
+      "complete_hinge_upper": "74109062957774228749/13074779025000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124934,
+        "four": 3300,
+        "four_bounded": 3190,
+        "six": 1100,
+        "six_bounded": 518,
+        "joint": 583,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 583,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 129403,
+      "maximum_pruned_uppers": {
+        "two": "468707/83014470",
+        "four": "234898/41507235",
+        "six": "6586067/1162202580",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "33868/5929605",
+        "four_projection_upper": "33868/5929605",
+        "six_projection_upper": "33868/5929605",
+        "joint_raw_upper": "960826941790067123/207536175000000000000",
+        "complete_tail_constant": "2969354/2614955805",
+        "prior_prefix_upper": null,
+        "mean_credit": "4607/47436840",
+        "joint_complete_upper": "74109062957774228749/13074779025000000000000",
+        "accepted_upper": "74109062957774228749/13074779025000000000000",
+        "dual_key": "7e644da480d2cddeed454a88ae437992b073cbf1a8dcc8d6167c0d8d81d8f887"
+      },
+      "branch_decisions_sha256": "93ec80dd2685e78c8607552e1670edefe771998d604e153a6c576384369e2575"
+    }
+  },
+  {
+    "block": 3,
+    "hinge_coefficients": {
+      "1": "85/87846",
+      "2": "25/87846"
+    },
+    "previous_upper": "16081/27671490",
+    "joint_mean_upper": "2526566820654866203/4358259675000000000000",
+    "denominator_gain": "6190679345133797/30507817725000000000000",
+    "scan": {
+      "coefficients": {
+        "1": "85/87846",
+        "2": "25/87846"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4
+      },
+      "complete_hinge_upper": "2526566820654866203/4358259675000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124962,
+        "four": 1900,
+        "four_bounded": 1849,
+        "six": 510,
+        "six_bounded": 258,
+        "joint": 253,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 253,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 127413,
+      "maximum_pruned_uppers": {
+        "two": "32017/55342980",
+        "four": "15949/27671490",
+        "six": "898201/1549603440",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "16081/27671490",
+        "four_projection_upper": "16081/27671490",
+        "six_projection_upper": "16081/27671490",
+        "joint_raw_upper": "24973240069813163/53805675000000000000",
+        "complete_tail_constant": "116678/871651935",
+        "prior_prefix_upper": null,
+        "mean_credit": "289/15812280",
+        "joint_complete_upper": "2526566820654866203/4358259675000000000000",
+        "accepted_upper": "2526566820654866203/4358259675000000000000",
+        "dual_key": "8e0c7cef5513fe0d323b16e32f8753a5a853a99600c747376e0ba8f9ca98f073"
+      },
+      "branch_decisions_sha256": "e124af88d77160fbedd6f9c3fcfbb87fb0233835073918ddfc9858bbf91858be"
+    }
+  }
+]

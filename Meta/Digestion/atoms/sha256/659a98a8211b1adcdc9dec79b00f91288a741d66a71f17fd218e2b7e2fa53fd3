@@ -1,0 +1,50 @@
+#### 135.6.2 §118 特定逼近族的精确整数阈值
+
+式 (118.2b) 的共同表示族以整数 $m\ge3$ 为参数：
+
+$$
+A_m=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m},\qquad
+B_m=H(1)^{-1}-A_m,\qquad
+p_m(z)=H(z)(A_mz^m+B_m).
+$$
+
+它的最大滞后为 $L=m+2$，三个低次系数严格负，三个高次系数严格正，支撑为 $\{0,1,2,m,m+1,m+2\}$。已有精确差值为
+
+$$
+\Gamma_m-G
+=\frac{2(1+3R)\lambda^m}{1-\lambda^m}.
+$$
+
+置 $A=2(1+3R)=G+1$。对任意 $\epsilon>0$，所有分母都为正，故
+
+$$
+\begin{aligned}
+\Gamma_m-G\le\epsilon
+&\quad\Longleftrightarrow\quad
+\lambda^m\le\frac{\epsilon}{A+\epsilon}\\
+&\quad\Longleftrightarrow\quad
+m\ge\frac{\log(1+A/\epsilon)}{-\log\lambda}.
+\end{aligned}
+$$
+
+最后一步使用 $\log\lambda<0$，除法时不等号反向。因此这一个族达到非严格误差目标的最小允许整数及最大滞后恰为
+
+$$
+m_\epsilon
+=\max\left\{3,\left\lceil
+\frac{\log(1+A/\epsilon)}{-\log\lambda}
+\right\rceil\right\},\qquad
+L_{\rm family}=m_\epsilon+2.
+$$
+
+若要求 $\Gamma_m-G<\epsilon$，整数条件改为
+
+$$
+m_{<\epsilon}
+=\max\left\{3,\left\lfloor
+\frac{\log(1+A/\epsilon)}{-\log\lambda}
+\right\rfloor+1\right\}.
+$$
+
+$\epsilon=0$ 不对应任何有限 $m$。这些都是该特定六点表示族内部的准确阈值；它们并非固定时间窗允许所有表示时的最优阈值。
+

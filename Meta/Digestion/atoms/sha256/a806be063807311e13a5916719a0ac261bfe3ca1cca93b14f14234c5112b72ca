@@ -1,0 +1,11 @@
+**定义 27.1（有限数据、严格模式与动作）。** 固定 $n,d,k,m\ge1$、$H\ge2$，非零有理列 $x_i\in\mathbb Q^d$、标签 $y_i\in\mathbb Q^k$，记 $X=[x_1,\ldots,x_n]$、$Y=[y_1,\ldots,y_n]$。无偏置网络为
+$$
+f_{U,V}(x)=\sum_{j=1}^m v_j\max(0,u_jx),\qquad
+U\in\mathbb Q^{m\times d},\quad V=[v_1,\ldots,v_m]\in\mathbb Q^{k\times m}.
+$$
+初态取显式有理端点紧盒 $K\subset\mathbb R^{m(d+k)}$ 中的有理点，并要求每个 $u_{j,0}x_i\ne0$。动作字母表 $\mathcal A$ 为全部非空批次 $a\subseteq\{1,\ldots,n\}$；每个字母指定固定有理步长 $\eta_a\ge0$，$\lambda_{a,i}=\mathbf1_{\{i\in a\}}/|a|$。损失及更新为
+$$
+L_a(U,V)=\frac12\sum_i\lambda_{a,i}\|f_{U,V}(x_i)-y_i\|_2^2,\qquad
+(U^+,V^+)=(U,V)-\eta_a\nabla L_a(U,V),
+$$
+两层同步使用旧参数和欧氏梯度。在零预激活处固定 ReLU 导数选择为零以定义全参数更新；

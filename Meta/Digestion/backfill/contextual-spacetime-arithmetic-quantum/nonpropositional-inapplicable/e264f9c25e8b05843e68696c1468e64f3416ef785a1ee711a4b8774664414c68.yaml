@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e264f9c25e8b05843e68696c1468e64f3416ef785a1ee711a4b8774664414c68
+  normalized_sha256: sha256:e264f9c25e8b05843e68696c1468e64f3416ef785a1ee711a4b8774664414c68
+cas_ref: sha256:e264f9c25e8b05843e68696c1468e64f3416ef785a1ee711a4b8774664414c68
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义预测响应签名、相等签名的关系及其商，有限类数的命题已拆出，没有其他待证断言。
+    previous_atom_id: cbfb8704f1c9e70e76b8f8f71a7552d9bd7f7dcaca034bfa83e13797a510f659
+    next_atom_id: 1db57e011af71fda442bb834ada9afd94f2d06b56f5c503d4b7d90d94ee59d20

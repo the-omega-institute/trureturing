@@ -1,0 +1,30 @@
+**命题 21.14（谱公式、极限、单侧误差与单调性）。** 令 $b_\mu$ 为 $b$ 在 $K$ 的特征值 $\mu\ge0$ 的正交谱分量，则
+$$
+\begin{aligned}
+E_\lambda
+&=c-b^*R_\lambda b-\lambda b^*R_\lambda^2b\\
+&=c-\sum_{\mu\ge0}
+\frac{\mu+2\lambda}{(\mu+\lambda)^2}\|b_\mu\|^2,
+\end{aligned}
+\tag{21.26}
+$$
+且
+$$
+\frac{dE_\lambda}{d\lambda}
+=\sum_{\mu\ge0}\frac{2\lambda}{(\mu+\lambda)^3}\|b_\mu\|^2\ge0.
+\tag{21.27}
+$$
+若 $b_0\ne0$，则 $E_\lambda\to-\infty$ 当 $\lambda\downarrow0$。若 $b\in\operatorname{ran}K$，令 $s=c-b^*K^\dagger b$，则
+$$
+E_\lambda\longrightarrow s,\qquad
+E_\lambda-s
+=\sum_{\mu>0}
+\frac{\lambda^2\|b_\mu\|^2}{\mu(\mu+\lambda)^2}\ge0.
+\tag{21.28}
+$$
+若另有 $\gamma>0$ 满足每个正特征值 $\mu\ge\gamma$，则在范围条件下
+$$
+0\le E_\lambda-s\le\frac{\lambda^2}{\gamma^3}\|b\|^2.
+\tag{21.29}
+$$
+

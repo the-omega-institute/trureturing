@@ -1,0 +1,27 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 410
+  },
+  "previous_M41": {
+    "kind": "inline",
+    "value": "2969071013381849425967205319/114000606550198060220848320000"
+  },
+  "inherited_M41": {
+    "kind": "inline",
+    "value": "118254802854523567900067505139/99890237357097565021944300000"
+  },
+  "refined_M41": {
+    "kind": "inline",
+    "value": "307200458054594319329581771609/247001314192095797145171360000"
+  },
+  "net_gain": {
+    "kind": "inline",
+    "value": "271124001595827442905938913197/4528357426855089614328141600000"
+  },
+  "directions": {
+    "path": "content/032-linear_refinement/012-changes/000001/item/005-directions.json",
+    "sha256": "c4fa7db60ff66d0c449c90567ad358e71f0ed057250f3fabeb4080d27d3ad0be",
+    "kind": "array"
+  }
+}

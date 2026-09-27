@@ -1,0 +1,23 @@
+**定义 10.1（带谱条件的共同采样关系）。** 设 $U$ 为维数 $m\ge1$ 的实 Euclidean 空间，$E$ 为任意有限维实内积空间，$J:U\to E$ 为线性映射。固定已知采样间隔 $h>0$ 与谱界 $0\le a\le b<\infty$，要求自伴算子 $C:E\to E$ 满足
+$$
+aI\preceq C\preceq bI.
+$$
+边界记忆核与实际等步读数为
+$$
+K(t)=J^*e^{-tC}J\quad(t\ge0),\qquad
+M_j=K(jh)\quad(0\le j\le N),\qquad N=2r+1,
+\tag{10.1}
+$$
+其中 $r\ge0$ 为整数。令
+$$
+T=e^{-hC},\qquad u=e^{-hb},\qquad v=e^{-ha},
+\qquad 0<u\le v\le1.
+\tag{10.2}
+$$
+有限维实谱定理给出 $uI\preceq T\preceq vI$，以及
+$$
+M_j=J^*T^jJ.
+\tag{10.3}
+$$
+这里的矩是实际时间采样，不是默认已经取得的 $K^{(j)}(0)$。$h,a,b$ 是所研究实现类的条件，不能仅由有限个边界数值宣称已知。若把 $K$ 用作记忆项，还须说明输入、初态及允许的卷积操作；本定义不由核单独恢复任意未知初态。
+

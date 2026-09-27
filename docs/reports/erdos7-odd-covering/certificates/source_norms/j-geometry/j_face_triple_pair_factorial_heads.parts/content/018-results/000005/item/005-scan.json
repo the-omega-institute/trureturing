@@ -1,0 +1,91 @@
+{
+  "scanner_kind": {
+    "kind": "inline",
+    "value": "pure-factorial-complete-conditional"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {}
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "2264706575156562827/1984500000000000000"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "layout_bounded": 12495,
+      "conditional_projections": 25000,
+      "conditional_bounded": 24374,
+      "joint_dual_branches": 626
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 62500000
+  },
+  "seed_upper": {
+    "kind": "inline",
+    "value": "2153753309985673/1890000000000000"
+  },
+  "seed_records": {
+    "path": "content/018-results/000005/item/005-scan/006-seed_records.json",
+    "sha256": "bd07335b11fe2b8cb073d9ccb060939b414ffb66e69274fea4fb68e40f7243e5",
+    "kind": "array"
+  },
+  "maximizing_certificate_branch": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        4,
+        4
+      ],
+      "conditional_affine": [
+        "1234909/1058400",
+        "8431/7200"
+      ],
+      "dual_upper": "2264706575156562827/1984500000000000000",
+      "adopted": "2264706575156562827/1984500000000000000",
+      "dual_key": "3fea0a5da1045efb4ad9ffb6a74ab26b96393f222e1e85303e45bc2bedbf9a88",
+      "constant": "10455019/15876000",
+      "projection21_35_63_105_147_245": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ]
+    }
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "10455019/15876000"
+  },
+  "independent_affine_checks": {
+    "kind": "inline",
+    "value": 0
+  },
+  "maximum_pruned": {
+    "kind": "inline",
+    "value": {
+      "layout": "8143/7200",
+      "conditional": "44669/39200"
+    }
+  },
+  "new_distinct_duals": {
+    "kind": "inline",
+    "value": 596
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "2fb9d17b642f071be77bbc90a27bde2cecca930066d0a4505fc9e2af87daedd1"
+  }
+}

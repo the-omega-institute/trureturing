@@ -1,0 +1,26 @@
+### 76.1 相邻稳定已经足够确定全部未来
+
+`FiniteEquivalenceDescent` 给出有限未来关系的递归
+
+$$
+R_0=\ker q,
+$$
+
+$$
+R_{m+1}
+=
+\left\{(x,x')\in R_0:
+(\tau x,\tau x')\in R_m\right\},
+$$
+
+以及有限交表示
+
+$$
+R_m
+=
+\bigcap_{0\le k\le m}
+\left\{(x,x'):
+q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr)
+\right\}.
+$$
+

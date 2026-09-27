@@ -1,0 +1,40 @@
+**定义 96.1（有界连续壹游程与有限语言）。** 对 $n\in\mathbb N_0$，令
+$$
+I_n=\{j\in\mathbb N_0:j<n\},\qquad
+\Sigma_n=\{0,1\}^{I_n},\qquad
+\Sigma=\{0,1\}^{\mathbb N_0}.
+$$
+特别地，$I_0=\varnothing$，$\Sigma_0$ 只含空词。$\Sigma$ 取离散二点空间的乘积拓扑，并配备公平独立 Bernoulli 的 Borel 乘积概率 $\mu$。记前缀读出为
+$$
+\pi_n:\Sigma\to\Sigma_n,\qquad \pi_n(x)=x|_{I_n}.
+$$
+因此对每个 $n\in\mathbb N_0$ 及每个 $w\in\Sigma_n$，
+$$
+\mu\bigl(\pi_n^{-1}(\{w\})\bigr)=2^{-n}.
+$$
+对整数 $k\ge2$，定义
+$$
+K_k=\left\{x\in\Sigma:
+\forall j\in\mathbb N_0,\ \exists i\in I_k,\ x_{j+i}=0\right\},
+\qquad
+U=\bigcup_{k\ge2}K_k,
+$$
+以及
+$$
+W_{k,n}=\left\{w\in\Sigma_n:
+\forall j\in\mathbb N_0,\
+j+k\le n\Longrightarrow\exists i\in I_k,\ w_{j+i}=0\right\}.
+$$
+$K_k$ 与 $W_{k,n}$ 分别禁止无限串与长度 $n$ 的词中出现连续块 $1^k$。沿用 [定义 66.0](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的记号，有 $K_k=Y_{k+1}$。
+
+对 $0\le m\le n$，记截断映射为
+$$
+t_{n,m}:\Sigma_n\to\Sigma_m,\qquad t_{n,m}(w)=w|_{I_m}.
+$$
+有限语言满足
+$$
+W_{k,n}\subseteq W_{k+1,n},\qquad
+t_{n,m}(W_{k,n})\subseteq W_{k,m},
+$$
+且其包含与截断相容：先包含再截断，与先截断再包含，所得有限词相同。以下各 $k$ 的有限语言均作为同一 $\Sigma_n$ 的子集；各逆极限均作为同一相容前缀空间的子集。所有并均为这些自然包含下的普通递增并。
+

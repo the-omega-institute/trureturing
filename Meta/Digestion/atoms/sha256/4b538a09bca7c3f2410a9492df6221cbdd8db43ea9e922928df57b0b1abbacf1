@@ -1,0 +1,13 @@
+**命题 17.3（相对内部的有限系数代表）。** 记
+$$
+V=\operatorname{span}(D-D),\qquad
+m=\min_{v\in\Gamma}\ell(v),\quad M=\max_{v\in\Gamma}\ell(v).
+$$
+设 $y\in D$ 且存在 $\rho>0$ 使 $y+\rho\overline B_2^V\subset D$，其中 $\overline B_2^V=\{w\in V:\|w\|_2\le1\}$。当 $V\ne\{0\}$ 时，对偶在 $V$ 上达到最小值，且其中每个最小化系数 $c_*$ 满足
+$$
+\boxed{\|c_*\|_2\le\frac{U(y)-m}{\rho}
+\le\frac{M-m}{\rho}.}
+\tag{17.4}
+$$
+相对内部 $y\in\operatorname{ri}D$ 提供这样的相对球。若 $V=\{0\}$，$c=0$ 已达到端点。冗余记录及低维 $D$ 均允许；式（17.4）只约束 $V$ 中的代表，不约束添加任意法向分量后的全部代表。这是达到性的充分条件。
+

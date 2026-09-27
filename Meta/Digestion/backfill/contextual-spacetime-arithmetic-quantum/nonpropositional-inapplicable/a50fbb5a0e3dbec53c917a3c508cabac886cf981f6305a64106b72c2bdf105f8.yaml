@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a50fbb5a0e3dbec53c917a3c508cabac886cf981f6305a64106b72c2bdf105f8
+  normalized_sha256: sha256:a50fbb5a0e3dbec53c917a3c508cabac886cf981f6305a64106b72c2bdf105f8
+cas_ref: sha256:a50fbb5a0e3dbec53c917a3c508cabac886cf981f6305a64106b72c2bdf105f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明本章比较粗标签测量概率并区分完整密度矩阵的一致性，提出研究问题但没有断言待证结论，作为章节范围说明结算。
+    previous_atom_id: ed0f18aa5fbefd9fe22cec7729586d96445a274edc853691e36f83481454137b
+    next_atom_id: 845307dc4ea959732fa1c3d962ca6a98ef8e5096b425f4a3066e7c953142a874

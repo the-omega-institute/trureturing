@@ -1,0 +1,82 @@
+{
+  "head_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      63,
+      16
+    ],
+    [
+      35,
+      17
+    ],
+    [
+      105,
+      32
+    ],
+    [
+      315,
+      47
+    ]
+  ],
+  "head_survivors": 74,
+  "root1_head_points": 36,
+  "same_old_point_residual_masses": {
+    "root1": "9/11",
+    "other_root": "10/11"
+  },
+  "same_normalized_head_marginal": true,
+  "next_original_query": {
+    "modulus": 143,
+    "residue": 1
+  },
+  "cases": [
+    {
+      "mixed33_residue": 1,
+      "mixed33_11_digit": 1,
+      "survivors_mod3465": 704,
+      "raw_11_survival": "32/37",
+      "surviving11_digit1_probability": "19/352",
+      "base_survivors_mod45045": 8448,
+      "fixed143_query_hits": 38,
+      "fixed143_query_probability": "19/4224"
+    },
+    {
+      "mixed33_residue": 13,
+      "mixed33_11_digit": 2,
+      "survivors_mod3465": 704,
+      "raw_11_survival": "32/37",
+      "surviving11_digit1_probability": "37/352",
+      "base_survivors_mod45045": 8448,
+      "fixed143_query_hits": 74,
+      "fixed143_query_probability": "37/4224"
+    }
+  ],
+  "conclusion": "Head-indexed residual masses do not determine the next labelled cofactor probability."
+}

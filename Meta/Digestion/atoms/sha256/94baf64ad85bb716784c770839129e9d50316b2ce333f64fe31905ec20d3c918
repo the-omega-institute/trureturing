@@ -1,0 +1,18 @@
+### 90.1 记录重叠给出一条精确的可见性预算
+
+设两个归一化纯记录为 $|r_0\rangle$ 和 $|r_1\rangle$，令
+
+$$
+c=\langle r_0|r_1\rangle,
+\qquad
+V=|c|,
+\qquad
+D=\sqrt{1-V^2}.
+$$
+
+项目中的 `pure_record_distinguishability_coherence_complementarity` 证明：
+
+$$
+\boxed{D^2+V^2=1.}
+$$
+

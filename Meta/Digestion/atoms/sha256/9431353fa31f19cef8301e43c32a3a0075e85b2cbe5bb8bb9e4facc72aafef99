@@ -1,0 +1,9 @@
+$T$ 一般不是 Hermitian 矩阵。写入后对 $B$ 取部分迹，得到
+
+$$
+\mathcal W_F(\rho)=
+\begin{pmatrix}
+\rho_{00}\sigma_0&\rho_{01}T\\
+\rho_{10}T^\dagger&\rho_{11}\sigma_1
+\end{pmatrix}.
+$$

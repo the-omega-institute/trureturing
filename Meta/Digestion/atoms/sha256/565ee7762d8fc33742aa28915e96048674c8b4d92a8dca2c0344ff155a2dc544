@@ -1,0 +1,25 @@
+**定义 49.6（边界单位幂字符）。** 以下假设 theorem 49.5 的相应存在条件成立。设 $p^e\mid D$，$e\ge1$。由于 $\lambda(p^e)\mid D$，任意 $z\in R_D$ 有确定的坐标
+$$
+z_{\lambda(p^e)}\in\mathbb Z/\lambda(p^e)\mathbb Z.
+$$
+对 $x\in R_D$ 与非负整数代表 $r$ 定义候选值
+$$
+\mathcal E_{p^e}(x,z;r)=
+\begin{cases}
+0,&x\equiv0\pmod p,\\
+x_e^r\pmod{p^e},&x\not\equiv0\pmod p,
+\end{cases}
+$$
+其中 $x_e$ 是 $x$ 的模 $p^e$ 坐标，且要求
+$$
+r\equiv z_{\lambda(p^e)}\pmod{\lambda(p^e)}.
+$$
+对自然数 $a$ 同样定义
+$$
+\mathcal E_{p^e}(a,z;r)=
+\begin{cases}
+0,&p\mid a,\\
+a^r\pmod{p^e},&p\nmid a.
+\end{cases}
+$$
+

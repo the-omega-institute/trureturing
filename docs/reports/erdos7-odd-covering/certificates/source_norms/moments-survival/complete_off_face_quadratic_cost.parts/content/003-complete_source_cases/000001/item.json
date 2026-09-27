@@ -1,0 +1,58 @@
+{
+  "source_height": {
+    "kind": "inline",
+    "value": 5
+  },
+  "sigma": {
+    "kind": "inline",
+    "value": "28800389514256941173/389490222930908203125"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "530644181/3545268750"
+  },
+  "one_actual_defect_vector": {
+    "kind": "inline",
+    "value": {
+      "E5": "122/102102525",
+      "E15": "1/1260525",
+      "E3": "6576092/21271359375",
+      "E5d": "1063291/127628156250",
+      "E15d": "17431/3151312500",
+      "omega": "1089754259/893779978218750",
+      "rho": "1545260963683/3575119912875000"
+    }
+  },
+  "E27": {
+    "kind": "inline",
+    "value": "2344/7090453125"
+  },
+  "complete_hinge_tail_data": {
+    "path": "content/003-complete_source_cases/000001/item/005-complete_hinge_tail_data.json",
+    "sha256": "361eb0320bfef0a81d10a6677b782235eb840cb7c94785e0484db905a1c18ef3",
+    "kind": "value"
+  },
+  "complete_factorial_pair_data": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "300050543466833/2234449945546875",
+      "old_positive7": "510701/3037500",
+      "positive7_positive7_distinct": "24570613/60750000",
+      "tail_distinct_pairs": "8423821504818931/11917066376250000",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "26141149927337/662059243125000",
+        "pure5": "84433156793/7296163087500",
+        "root5": "836371427493211/17875599564375000",
+        "cell5": "173129460280681/5958533188125000"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_old_linear_cap": "931439/1215000",
+      "raw_old_square_cap": "913369/253125"
+    }
+  },
+  "quadratic_costs": {
+    "path": "content/003-complete_source_cases/000001/item/007-quadratic_costs.json",
+    "sha256": "cff9f4cf14026a08873fe00445373b4c750513f0ae4d587f61dc289c63ebef83",
+    "kind": "value"
+  }
+}

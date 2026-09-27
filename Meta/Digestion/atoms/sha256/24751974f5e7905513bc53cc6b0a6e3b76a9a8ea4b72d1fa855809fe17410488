@@ -1,0 +1,32 @@
+**定理 71.4（等格条件测度的弱极限传递）。** 在定义与假设 71.0 下，再设
+$$
+N_n\longrightarrow\infty,
+\qquad
+\eta_n\Rightarrow\eta
+$$
+其中 $\eta$ 为 $X$ 上的 Borel 概率。则
+$$
+\nu_\beta\Rightarrow\eta\qquad(\beta\downarrow0).
+$$
+除所有正逆温度的迹类条件外，本结论不要求 $N_n$ 或 $a_n$ 的指定增长率。
+
+证明。对任意固定 $M$，前 $M$ 层的全部模态给出
+$$
+Z_\beta
+\ge\sum_{k=0}^M m_ke^{-\beta a_k}
+\ge e^{-\beta a_M}N_M.
+$$
+先固定 $M$ 令 $\beta\downarrow0$，再令 $M\to\infty$，得 $Z_\beta\to\infty$。具体地，对任意 $R>0$ 可先选 $M$ 使 $N_M>2R$，再取足够小的 $\beta$ 使 $e^{-\beta a_M}>1/2$。另一方面，$N_n$ 单调且 $\sum_nd_n(\beta)=1$，故每个有限层集合的混合权重满足
+$$
+\sum_{n=0}^M w_n(\beta)
+\le\frac{N_M}{Z_\beta}\sum_{n=0}^M d_n(\beta)
+\le\frac{N_M}{Z_\beta}\longrightarrow0.
+$$
+由定理 71.2，对每个 $f\in C(X)$ 有显式估计
+$$
+\left|\int f\,d\nu_\beta-\int f\,d\eta\right|
+\le\frac{2\|f\|_\infty N_M}{Z_\beta}
++\sup_{n>M}\left|\int f\,d\eta_n-\int f\,d\eta\right|.
+$$
+固定 $M$ 时第一项随 $\beta\downarrow0$ 消失；第二项随 $M\to\infty$ 消失。这证明所需弱收敛。证毕。
+

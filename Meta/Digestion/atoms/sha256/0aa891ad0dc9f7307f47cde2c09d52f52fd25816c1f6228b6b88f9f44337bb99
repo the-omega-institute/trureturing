@@ -1,0 +1,37 @@
+**证明。** 对任意一侧 $X$，每个满足 $\Gamma$ 的模型满足 $\Gamma$ 的每个成员，故 $\Gamma\subseteq S_X(\Gamma)$。若 $\Gamma\subseteq\Delta$，则 $\operatorname{Mod}_X(\Delta)\subseteq\operatorname{Mod}_X(\Gamma)$，从而 $S_X(\Gamma)\subseteq S_X(\Delta)$，给出单调性。扩张性给出 $\operatorname{Mod}_X(S_X(\Gamma))\subseteq\operatorname{Mod}_X(\Gamma)$；反向包含由 $S_X(\Gamma)$ 的定义成立。所以
+$$
+\operatorname{Mod}_X(\Gamma)=\operatorname{Mod}_X(S_X(\Gamma)),
+$$
+两边对全部模型的共同真公式相同，即 $S_X(S_X(\Gamma))=S_X(\Gamma)$。这验证语义闭包三律。
+
+将 (SC) 对 $\Gamma$ 的每个成员使用，有
+$$
+N\models_B\tau[\Gamma]
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\Gamma.
+$$
+与结论公式的 (SC) 合用，得到
+$$
+\begin{aligned}
+\varphi\in K_\tau^{\rm sem}(\Gamma)
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[N\models_B\tau[\Gamma]\Rightarrow N\models_B\tau(\varphi)]\\
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[\beta(N)\models_A\Gamma\Rightarrow\beta(N)\models_A\varphi],
+\end{aligned}
+$$
+即式 (88.6a)。在全部源模型上成立的后承也在子族 $\beta[\mathcal M_B]$ 上成立，所以 $S_A\le K_\tau^{\rm sem}$。
+
+设 CE 成立，且 $\varphi\in K_\tau^{\rm sem}(\Gamma)$。若 $\varphi\notin S_A(\Gamma)$，经典地否定定义中的全称命题，得到一个源反模型。CE 给出目标反模型，与 $\tau(\varphi)\in S_B(\tau[\Gamma])$ 矛盾。因此 $\varphi\in S_A(\Gamma)$，证明反射。
+
+反向设 $K_\tau^{\rm sem}\le S_A$，并给定 CE 前件中的源反模型。它保证 $\varphi\notin S_A(\Gamma)$，因而 $\varphi\notin K_\tau^{\rm sem}(\Gamma)$。经典地否定目标语义后承的全称定义，得到
+$$
+\exists N\in\mathcal M_B,\quad
+N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi),
+$$
+正是 CE。反射再与已证保持相合，得到式 (88.6b) 的等式。
+
+最后，若 $\beta$ 满射，给定源反模型 $M$，取 $\beta(N)=M$，再用 (SC) 即得目标反模型。这个充分条件比 CE 的“存在某个反模型”更强；命题 88.7 给出其非必要性。整个证明不要求公式集或模型集非空、紧致或前提集有限，也不产生有效选择反模型的算法。证毕。
+

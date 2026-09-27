@@ -118,6 +118,16 @@ __main() {
               (Golden/Frozen/accepted/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Blueprint/*.md) continue ;;
+              (Problems/*.md)
+                # ProblemPoolPaths.IsCanonicalPath (RepositoryRules.Structure.cs
+                # IsDirectoryCapacityExcluded):the literature problem pool is a flat
+                # slug-addressed pool, never a content bucket, so canonical dossiers do
+                # not occupy directory capacity. 2026-09-18 this list lacked the entry and
+                # reported `Problems 281/96 ✗` on a tree whose CI was green.
+                case "${_r#Problems/}" in
+                  (*/*) ;;
+                  (*) if printf '%s' "${_r#Problems/}" | grep -Eq '^[a-z0-9]+(-[a-z0-9]+)*\.md$'; then continue; fi ;;
+                esac ;;
             esac
             printf 'x\n'
           done | wc -l | tr -d ' ')
@@ -135,6 +145,36 @@ __main() {
   fi
 
   [ $# -gt 0 ] || { echo "usage: header-check.sh <lean-file>..." >&2; return 2; }
+  local _selfdir _owner artifactlimit
+  _selfdir=$(cd "$(dirname "$0")" && pwd)
+  _owner=$(cd "$_selfdir/../../.." 2>/dev/null && pwd)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+  if ! artifactlimit=$(/usr/bin/python3 - "$_owner" 2>/dev/null <<'PYEOF'
+import re
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8", newline="") as stream:
+        text = stream.read()
+except (OSError, UnicodeError):
+    raise SystemExit(1)
+
+matches = re.findall(
+    r"^[ \t]*internal[ \t]+const[ \t]+int[ \t]+ArtifactHardLineLimit"
+    r"[ \t]*=[ \t]*([0-9]+)[ \t]*;[ \t]*$",
+    text,
+    re.MULTILINE,
+)
+if len(matches) != 1:
+    raise SystemExit(1)
+print(matches[0])
+PYEOF
+  ); then
+    echo "  ✗ 无法从 $_owner 读出唯一完整的 ArtifactHardLineLimit 数值声明 —— fail closed"
+    return 1
+  fi
+  case "$artifactlimit" in
+    ''|*[!0-9]*) echo "  ✗ 无法从 $_owner 读出唯一完整的 ArtifactHardLineLimit 数值声明 —— fail closed"; return 1 ;;
+  esac
   for f in "$@"; do
     if [ ! -f "$f" ]; then echo "  ✗ $f  <- 文件不存在"; bad=1; continue; fi
     local first; first=$(head -1 "$f")
@@ -159,18 +199,33 @@ __main() {
       grep -q "^   $k:" "$f" || { echo "  ✗ $f  <- 头部缺键 '$k:'"; ok=0; }
     done
     [ "$ok" = 1 ] || { bad=1; continue; }
-    # ---- SL-003 容量:行数硬线 800(硬编码,见下);目录文件数上限从 RepositoryRules.Structure.cs 派生 ----
+    # ---- SL-003 容量:行数硬线与目录文件数上限均由 RepositoryRules.Structure.cs 持有 ----
     # 2026-08-28 二次勘正:此处原为 `wc -l` + `>= 800`,**两个方向都错**。
     #   ① 真判据是 `lineCount > ArtifactHardLineLimit`(`CapacityPolicy.cs:50`),
-    #      即 **800 行合法、801 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
+    #      即 **恰好硬线上限合法、上限+1 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
     #   ② 真算法是 `text.Split('\n').Length - (text.EndsWith('\n') ? 1 : 0)`
     #      (`RepositoryRules.Structure.cs:112-113`)。对**末尾无换行**的文件,
     #      它比 `wc -l` **多数一行** —— 那个方向是**放行真红**,比误拦危险得多。
-    local lines; lines=$(/usr/bin/python3 -c "
-import sys;t=open(sys.argv[1],encoding='utf-8',errors='replace').read()
-print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
-    if [ "$lines" -gt 800 ]; then
-      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 800(判据 >800;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
+    local lines
+    if ! lines=$(/usr/bin/python3 - "$f" 2>/dev/null <<'PYEOF'
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8", errors="replace", newline="") as stream:
+        text = stream.read()
+except OSError:
+    raise SystemExit(1)
+print(len(text.split("\n")) - (1 if text.endswith("\n") else 0))
+PYEOF
+    ); then
+      echo "  ✗ $f  <- 无法按 C# CountArtifactLines 口径计数 —— fail closed"
+      bad=1; continue
+    fi
+    case "$lines" in
+      ''|*[!0-9]*) echo "  ✗ $f  <- 行数读数不是非负整数 —— fail closed"; bad=1; continue ;;
+    esac
+    if [ "$lines" -gt "$artifactlimit" ]; then
+      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
       bad=1; continue
     fi
     local dir dn; dir=$(dirname "$f")
@@ -234,11 +289,18 @@ __selftest() {
   local t; t=$(mktemp -d); local fail=0
   # 合成一个仓(需要 git rev-parse --show-toplevel 可解)
   ( cd "$t" && git init -q . )
-  mkdir -p "$t/Blueprint/X" "$t/Blueprint/X/sub" "$t/Library/Y" "$t/D5/S3/Z" "$t/D5/S3/Z/sub"
+  mkdir -p "$t/Blueprint/X" "$t/Blueprint/X/sub" "$t/Library/Y" "$t/D5/S3/Z" "$t/D5/S3/Z/sub" "$t/Problems"
   local i
   for i in $(seq 1 5); do : > "$t/Blueprint/X/m$i.scribe.cs"; : > "$t/Blueprint/X/m$i.md"; done
-  for i in $(seq 1 48); do : > "$t/Library/Y/n$i.md"; done
+  # 真阳性夹具按引擎上限生成,不写死 48:上限已经从 24 到 48 到 96,写死的数在每次抬阈后都变成假绿。
+  local _lim; _lim=$(grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' \
+    "$(git -C "$(dirname "$_SELF")" rev-parse --show-toplevel)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs" \
+    | grep -oE '[0-9]+$')
+  for i in $(seq 1 "$_lim"); do : > "$t/Library/Y/n$i.md"; done
   for i in 1 2 3; do : > "$t/D5/S3/Z/a$i.lean"; done
+  # ⑤ Problems 卷宗:规范 slug 路径不占容量(IsDirectoryCapacityExcluded),非规范名照数
+  for i in $(seq 1 "$_lim"); do : > "$t/Problems/dossier-$i.md"; done
+  : > "$t/Problems/NotCanonical.md"
   local ck
   ck() { # ck <期望片段> <目录…>
     local want=$1; shift
@@ -250,10 +312,12 @@ __selftest() {
   }
   # ① Blueprint 桶:5 模块 = 5 .scribe.cs + 5 .md + 1 子目录 = 11 个条目,只应数 5
   ck "5/" Blueprint/X
-  # ② 真阳性必须保留:48 项即报红,不许因本次修复变绿
+  # ② 真阳性必须保留:上限项即报红,不许因本次修复变绿
   ck "不要往这里加文件" Library/Y
   # ③ 子目录不计入父目录
   ck "3/" D5/S3/Z
+  # ⑤ Problems:上限个规范卷宗 + 1 个非规范文件,只应数 1
+  ck "1/" Problems
   # ④ 绝对路径调用与相对路径同结果(首版修复在此处漏过)
   local abs; abs=$( cd "$t" && bash "$_SELF" --dirs "$t/Blueprint/X" 2>&1 | head -1 )
   case "$abs" in

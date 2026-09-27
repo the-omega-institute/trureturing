@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/003-zero_radius/001-costs/000000/single.json",
+        "sha256": "e98004f3836901a8f8f2b023a68ae1a32d4cd7228b1e6c439b211cc6683e7829",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/003-zero_radius/001-costs/000001/single.json",
+        "sha256": "c0ff335e849241ca96668e6a28fe69c3de12bc75a67d71bf09971f1de90f7919",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

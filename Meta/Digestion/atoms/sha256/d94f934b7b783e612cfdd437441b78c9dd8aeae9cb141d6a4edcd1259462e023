@@ -1,0 +1,35 @@
+**命题 137.12（最小实现唯一、未来不唯一与谱上界）。** 前缀
+$$
+(M_0,M_1,M_2,M_3)=(1,2,5,14)
+$$
+具有唯一到正交同构的二维最小正实现，但在严格正定、谱上界为四的有限实现类中不决定全部未来。在谱上界为三的非负实现类中，它决定全部未来。
+
+**证明。** 取
+$$
+C=\begin{pmatrix}2&1\\1&2\end{pmatrix},\quad
+J=\binom10,\qquad
+C_t=\begin{pmatrix}2&1&0\\1&2&t\\0&t&2\end{pmatrix},\quad
+J_t=\begin{pmatrix}1\\0\\0\end{pmatrix},
+\quad t\in\{0,1\}.
+$$
+$C$ 的谱为 $\{1,3\}$。$C_t$ 的特征多项式为
+$$
+\det(\lambda I-C_t)
+=(\lambda-2)\bigl((\lambda-2)^2-(1+t^2)\bigr),
+$$
+故两份 $C_t$ 都满足 $0\prec C_t\prec4I$。并且
+$$
+C_tJ_t=(2,1,0)^T,\qquad C_t^2J_t=(5,4,t)^T.
+$$
+由内积立即得到共同的前四矩与
+$$
+J_t^*C_t^4J_t=41+t^2.
+$$
+$H_1=\left(\begin{smallmatrix}1&2\\2&5\end{smallmatrix}\right)$ 的行列式为一，最小维数为二；定理137.4给该维数类的唯一性。$t=1$ 的三维实现则给不同的第四阶矩。
+
+在二维规范实现中，$L=\mathbb R(1,0)^T$，而
+$$
+\ker(3I-C)=\mathbb R(1,1)^T.
+$$
+二者张成 $E$。定理137.11在 $\Lambda=3$ 时给全部未来唯一。$\square$
+

@@ -1,0 +1,335 @@
+{
+  "scope": "Lower bound for the twelve independent cylinder-cap and union-survival envelope, restricted to probabilities equal on each surviving seven-digit fibre. Not a lower bound for actual Gamma or for arbitrary probabilities on the 77-point carrier.",
+  "old_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      1
+    ]
+  ],
+  "pure_seven_class": [
+    7,
+    0
+  ],
+  "mixed_seven_classes": [
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      10
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      82
+    ]
+  ],
+  "points": [
+    2,
+    7,
+    8,
+    14,
+    16,
+    17,
+    19,
+    23,
+    28,
+    29,
+    32,
+    34,
+    37,
+    38,
+    43,
+    44
+  ],
+  "deletion_vector": [
+    0,
+    1,
+    0,
+    2,
+    1,
+    0,
+    3,
+    0,
+    2,
+    2,
+    0,
+    2,
+    3,
+    0,
+    1,
+    2
+  ],
+  "N": 77,
+  "old_test_moduli": [
+    3,
+    5,
+    9,
+    15,
+    45
+  ],
+  "divisors": [
+    1,
+    7,
+    5,
+    35,
+    3,
+    21,
+    15,
+    105,
+    9,
+    63,
+    45,
+    315
+  ],
+  "constraints": [
+    {
+      "kind": "cylinder",
+      "d": 7,
+      "residue": 0,
+      "multiplier": "-56548205/7809147"
+    },
+    {
+      "kind": "cylinder",
+      "d": 5,
+      "residue": 3,
+      "multiplier": "-967467059/104121960"
+    },
+    {
+      "kind": "cylinder",
+      "d": 5,
+      "residue": 2,
+      "multiplier": "-6993144/4338415"
+    },
+    {
+      "kind": "cylinder",
+      "d": 35,
+      "residue": 4,
+      "multiplier": "-530667131/20824392"
+    },
+    {
+      "kind": "cylinder",
+      "d": 21,
+      "residue": 2,
+      "multiplier": "-70431133/7809147"
+    },
+    {
+      "kind": "cylinder",
+      "d": 15,
+      "residue": 8,
+      "multiplier": "-284327581/20824392"
+    },
+    {
+      "kind": "cylinder",
+      "d": 105,
+      "residue": 14,
+      "multiplier": "-2593307575/62473176"
+    },
+    {
+      "kind": "cylinder",
+      "d": 9,
+      "residue": 7,
+      "multiplier": "-60018937/2603049"
+    },
+    {
+      "kind": "cylinder",
+      "d": 63,
+      "residue": 1,
+      "multiplier": "-1874167141/62473176"
+    },
+    {
+      "kind": "cylinder",
+      "d": 63,
+      "residue": 7,
+      "multiplier": "-1161139055/62473176"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 38,
+      "multiplier": "-1969657603/312365880"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 28,
+      "multiplier": "-560949599/104121960"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 23,
+      "multiplier": "-656605946/195228675"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 17,
+      "multiplier": "-2881465769/312365880"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 16,
+      "multiplier": "-967467059/104121960"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 8,
+      "multiplier": "-903812593/173536600"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 7,
+      "multiplier": "-440695987/104121960"
+    },
+    {
+      "kind": "cylinder",
+      "d": 45,
+      "residue": 2,
+      "multiplier": "-4595440447/312365880"
+    },
+    {
+      "kind": "cylinder",
+      "d": 315,
+      "residue": 37,
+      "multiplier": "-17598447191/312365880"
+    },
+    {
+      "kind": "cylinder",
+      "d": 315,
+      "residue": 28,
+      "multiplier": "-16711609919/312365880"
+    },
+    {
+      "kind": "cylinder",
+      "d": 315,
+      "residue": 19,
+      "multiplier": "-1360242485/31236588"
+    },
+    {
+      "kind": "square",
+      "A_residues": [
+        2,
+        2,
+        8,
+        2,
+        17
+      ],
+      "B_residues": [
+        2,
+        2,
+        8,
+        2,
+        17
+      ],
+      "multiplier": "-1713974678/8785290375"
+    },
+    {
+      "kind": "square",
+      "A_residues": [
+        2,
+        2,
+        5,
+        2,
+        32
+      ],
+      "B_residues": [
+        2,
+        2,
+        5,
+        2,
+        32
+      ],
+      "multiplier": "-4595440447/8785290375"
+    },
+    {
+      "kind": "square",
+      "A_residues": [
+        2,
+        4,
+        8,
+        14,
+        44
+      ],
+      "B_residues": [
+        2,
+        4,
+        8,
+        14,
+        44
+      ],
+      "multiplier": "-3690330697/35141161500"
+    },
+    {
+      "kind": "square",
+      "A_residues": [
+        2,
+        4,
+        2,
+        14,
+        29
+      ],
+      "B_residues": [
+        2,
+        4,
+        2,
+        14,
+        29
+      ],
+      "multiplier": "-4803827/31236588"
+    },
+    {
+      "kind": "square",
+      "A_residues": [
+        2,
+        4,
+        5,
+        14,
+        14
+      ],
+      "B_residues": [
+        2,
+        4,
+        5,
+        14,
+        14
+      ],
+      "multiplier": "-202216232/8785290375"
+    }
+  ],
+  "equality_multipliers": [
+    "101816531/2603049",
+    "99213482/2603049",
+    "0"
+  ],
+  "envelope_lower_bound": "101816531/2603049",
+  "comparison_bound": "3849/106",
+  "strict_excess": "773416685/275923194"
+}

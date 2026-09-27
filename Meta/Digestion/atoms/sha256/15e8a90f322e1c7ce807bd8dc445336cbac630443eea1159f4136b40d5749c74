@@ -1,0 +1,42 @@
+**命题 44.14（二维时钟和通用系数尖锐性）。**
+
+固定 $s\in(0,1)$，取
+$$
+S_\varepsilon=
+\begin{pmatrix}s&\varepsilon\\\varepsilon&s\end{pmatrix},
+\qquad F=(1,0),\qquad
+0<\varepsilon<\min(s,1-s).
+$$
+则
+$$
+A=s,\qquad\delta=\varepsilon^2,\qquad
+W(rh)=\frac{(s-\varepsilon)^r+(s+\varepsilon)^r}{2},
+\qquad\tau=-\log s.
+$$
+对于每个固定 $r\in(0,1)\cup(1,2]$，对称 Taylor 展开给
+$$
+W(rh)=s^r+\frac{r(r-1)}2s^{r-2}\varepsilon^2+O(\varepsilon^4),
+$$
+从而
+$$
+\boxed{
+R(r)-r
+=-\frac{r(r-1)}{2s^2(-\log s)}\varepsilon^2
++O(\varepsilon^4).
+}
+$$
+选取该模型的紧谱界 $a_\varepsilon=s-\varepsilon$、$b_\varepsilon=s+\varepsilon$，实际绝对误差与第44.7节两个上界之比均趋于 $1$。因此在允许任意合法谱界的通用公式中，前系数不能统一缩小。这里谱区间随 $\varepsilon$ 收紧；不宣称对每一组预先固定且分离的 $a<b$，粗常数 $1/(a^2(-\log b))$ 都最优，也不声称随 $r$ 变化的一致相对尖锐性。$r=0,1$ 两边恒为零。
+
+取 $s=1/2,\varepsilon=1/20$，谱为 $9/20,11/20$，有
+$$
+\delta=\frac1{400},\qquad
+2-R(2)=\frac{\log(101/100)}{\log2}\approx0.0143553.
+$$
+由共同谱界得到的上界为
+$$
+\frac{1/400}{(9/20)^2(-\log(11/20))}\approx0.0206506.
+$$
+这些是精确模型的代数读数及其数值显示，不是实际实验精度声明。
+
+这组模型也满足实际历史合同的数学来源部分：取 $H=\mathbb R^2$、$U=\mathbb R$、$B=(1,0)$、$C=-h^{-1}\log S_\varepsilon>0$、$t_0=0$、$k=0$，则 $M_{(0)}=BB^*=1$、$F_{(0)}=B$。因 $\varepsilon\ne0$，$B^*$ 与 $S_\varepsilon B^*$ 线性无关，有效循环空间为二维，而阶零历史为一维，确实未饱和。合法实际取得仍需第44.11节的实验条件；给出数学来源不等于已取得该档案。
+

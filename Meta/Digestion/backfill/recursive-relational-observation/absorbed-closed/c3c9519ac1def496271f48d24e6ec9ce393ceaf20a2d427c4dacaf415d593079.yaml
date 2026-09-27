@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3c9519ac1def496271f48d24e6ec9ce393ceaf20a2d427c4dacaf415d593079
+  normalized_sha256: sha256:c3c9519ac1def496271f48d24e6ec9ce393ceaf20a2d427c4dacaf415d593079
+cas_ref: sha256:c3c9519ac1def496271f48d24e6ec9ce393ceaf20a2d427c4dacaf415d593079
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel
+    target_statement_id: sha256:67427e074ca61a486373990ed0a3cdf2d3ddcd20654f6bf17a2216233d9cf0d3
+  - gid: D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.linear_projection_descent_criterion
+    target_statement_id: sha256:9787445c977950022af34b53f0a7f6dda35dd25b34c081adecebfe3eff4cdc7d
+receipts:
+  unresolved_subitems: []

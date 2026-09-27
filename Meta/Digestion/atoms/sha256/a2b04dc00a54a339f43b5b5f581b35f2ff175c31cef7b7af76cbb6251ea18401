@@ -1,0 +1,66 @@
+**定理 70.2（层对角算子的自伴实现）。** 在定义 70.1 下，给定实数列
+$$
+0=a_0<a_1<a_2<\cdots,\qquad a_L\longrightarrow\infty.
+$$
+按最大定义域设置
+$$
+\mathcal D(A)=\left\{f\in H_{\mathrm{obs}}:
+\sum_{L\ge0}a_L^2\|\Delta_L f\|_2^2<\infty\right\},
+\qquad
+Af=\sum_{L\ge0}a_L\Delta_L f.
+$$
+则级数在 $H_{\mathrm{obs}}$ 中收敛，$A$ 是稠密定义的非负自伴算子；$\bigcup_L H_L$ 是它的图范数核心。
+
+证明。先落实用于这一定义的正交展开。每个正质量胞腔给出单位向量 $e_C=\mu(C)^{-1/2}\mathbf1_C$；同层的这些向量为 $H_L$ 的正交基。因此 $\dim_{\mathbb C}H_L=N_L$，且上式 $\Pi_L$ 就是到 $H_L$ 的正交投影，也就是复条件期望。加细给出 $H_{L-1}\subseteq H_L$，从而
+$$
+\Pi_{L-1}\Pi_L=\Pi_{L-1}=\Pi_L\Pi_{L-1}.
+$$
+这里直接使用钉版 Mathlib 的 [Submodule.starProjection_comp_starProjection_of_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Projection/Basic.lean)：取 $U=H_{L-1}$、$V=H_L$，两个子空间有限维而闭；另一乘法方向由取伴随得到。再取 $P=\Pi_{L-1}$、$Q=\Pi_L$，应用 [D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Algebra/CommutingProjectionFourSector.lean) 的交换投影条件，可知其 $(1-P)Q=Q-P$ 扇区也是正交投影。因此
+$$
+V_L=H_L\cap H_{L-1}^{\perp}\quad(L\ge1),\qquad
+\dim_{\mathbb C}V_L=m_L,
+\qquad
+\Delta_j\Delta_L=0\quad(j\ne L).
+$$
+上述投影引用允许复标量，并不把 $Q-P$ 解释成保持非负函数的算子。
+
+在 [D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Completion/DenseTowerStrongCompletion.lean) 中，取标量 $K=\mathbb C$、空间 $H=H_{\mathrm{obs}}$、指标 $I=\mathbb N$、子空间族 $S(L)=H_L$。单调性来自加细，每层存在正交投影，闭上确界为整个 $H_{\mathrm{obs}}$ 则来自它的定义。故 $\Pi_n f\to f$ 对每个 $f\in H_{\mathrm{obs}}$ 成立。这是逐向量的强收敛。
+
+范数展开也可精确接到第 69 节的残差。写 $f=u+iv$；在实 $L^2$ 定理 [D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.conditional_expectation_refinement_pythagoras](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.lean) 中分别取目标 $u,v$，粗、细 $\sigma$-代数取 $\mathcal F_{L-1}\subseteq\mathcal F_L\subseteq\mathcal F$。将两个实恒等式相加，利用复范数平方为实部、虚部范数平方之和，得到
+$$
+\|f-\Pi_{L-1}f\|_2^2
+=\|f-\Pi_Lf\|_2^2+\|\Delta_Lf\|_2^2.
+$$
+实定理在这里仅分别作用于 $u,v$；胞腔平均公式保证 $\Pi_L$ 与取实部、虚部相容。逐层相加，再用 $f=\Pi_0f+(f-\Pi_0f)$ 的正交性及强收敛，得到
+$$
+f=\sum_{L\ge0}\Delta_Lf,
+\qquad
+\|f\|_2^2=\sum_{L\ge0}\|\Delta_Lf\|_2^2,
+\qquad
+H_{\mathrm{obs}}=\widehat{\bigoplus}_{L\ge0}V_L.
+$$
+这既证明定义域中的级数收敛，也使其定义域包含稠密的 $\bigcup_LH_L$。
+
+各层实标量 $a_L$ 使 $A$ 对称，而且 Cauchy–Schwarz 不等式给出
+$$
+\langle f,Af\rangle
+=\sum_{L\ge0}a_L\|\Delta_Lf\|_2^2\ge0
+\quad(f\in\mathcal D(A));
+$$
+该和有限，因为它不超过
+$\bigl(\sum_L\|\Delta_Lf\|_2^2\bigr)^{1/2}
+\bigl(\sum_La_L^2\|\Delta_Lf\|_2^2\bigr)^{1/2}$。
+若 $g\in\mathcal D(A^*)$ 且 $h=A^*g$，对每一层的全部向量 $v\in V_L\subseteq\mathcal D(A)$ 测试伴随定义，得到 $\Delta_Lh=a_L\Delta_Lg$。由范数展开，
+$$
+\sum_{L\ge0}a_L^2\|\Delta_Lg\|_2^2
+=\sum_{L\ge0}\|\Delta_Lh\|_2^2=\|h\|_2^2<\infty.
+$$
+故 $g\in\mathcal D(A)$ 且 $Ag=h$；结合对称性即得 $A=A^*$。最后，对 $f\in\mathcal D(A)$，$\Pi_nf\to f$ 且
+$$
+\|A(f-\Pi_nf)\|_2^2
+=\sum_{L>n}a_L^2\|\Delta_Lf\|_2^2\longrightarrow0,
+$$
+所以有限层向量构成图范数核心。证毕。
+
+可见空间的范围亦可在此明确。令 $\mathcal F_\infty=\sigma(\bigcup_L\mathcal F_L)$。有限层可测简单函数的闭包为 $L^2(X,\mathcal F_\infty,\mu;\mathbb C)$：指标函数的逼近先对代数 $\bigcup_L\mathcal F_L$ 成立，再以单调类和 $L^2$ 极限扩到其生成的 $\sigma$-代数，最后逼近一般 $L^2$ 函数。因此 $H_{\mathrm{obs}}$ 等于此子空间。它等于环境 $L^2(X,\mathcal F,\mu;\mathbb C)$ 的充要条件是：每个 $B\in\mathcal F$ 都与某个 $B_\infty\in\mathcal F_\infty$ 只差零测集。必要性可将 $\mathbf1_B$ 的 $\mathcal F_\infty$-可测代表元以实部大于 $1/2$ 取水平集得到。以下强连续性首先属于 $H_{\mathrm{obs}}$；向整个环境空间作同一断言时需要这一生成条件。
+

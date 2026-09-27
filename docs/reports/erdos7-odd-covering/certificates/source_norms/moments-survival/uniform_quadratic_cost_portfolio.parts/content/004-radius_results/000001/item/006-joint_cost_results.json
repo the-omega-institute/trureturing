@@ -1,0 +1,86 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000000/single.json",
+        "sha256": "6e2819795c5bc16502948745c9c7a0ad901de2f081457d15c124fdc78c160edd",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000001/single.json",
+        "sha256": "a42898bbd17885ebd2637cc3150bea9f98703ef86527e6a99c129f33d565a771",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000002/single.json",
+        "sha256": "6499a9351bf5104d7b2ce246d4687743a9707f6af7a7ccdfadf9159c5f0b20d7",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000003/single.json",
+        "sha256": "0f18ecf30b9e9e02a7c9d8bac6dd52dc8ef88adbce776cc011fbcf35325c6a04",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000004/single.json",
+        "sha256": "01247f53807b801f03cac9366466b73542d1b642adc01183ecb4ada6c9c60083",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000005/single.json",
+        "sha256": "88d58378ca29795dfd13fbf1d962cdd67ed9cc1129c2ccceae50718dd9c1596b",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000006/single.json",
+        "sha256": "8b05e550eaa8f055003b8ced1079517d7e1238af28a72ef7b00c617f681ff13f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000007/single.json",
+        "sha256": "ecd680aa318d7dd8f6c182af5449a201b403601392324def508842d1560d3205",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/004-radius_results/000001/item/006-joint_cost_results/000008/single.json",
+        "sha256": "bc9ea99722d56e565cffd6588252fac8041a0fdce74e652adf2865237c682a85",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

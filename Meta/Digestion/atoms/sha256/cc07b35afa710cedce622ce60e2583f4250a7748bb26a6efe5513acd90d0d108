@@ -1,0 +1,17 @@
+**theorem 51.14 (完整联合闭包的分情总表).** 集合 $C$ 恰由下表及其最后一行明确引用的分类组成，其中 $a,b\in\mathbb N_0$，$x,y\in R$：
+$$
+\begin{array}{c|c|c}
+\text{输入一}&\text{输入二}&(\gcd\text{ 输出},\operatorname{lcm}\text{ 输出})\\
+\hline
+j(a)&j(b)&\bigl(j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr)\\
+j(a),\ a>0&\tau(y)&\bigl(j(d(a,y)),\tau((a/d(a,y))y)\bigr)\\
+\tau(x)&j(b),\ b>0&\bigl(j(d(b,x)),\tau((b/d(b,x))x)\bigr)\\
+j(0)&\tau(y)&\bigl(\tau(y),j(0)\bigr)\\
+\tau(x)&j(0)&\bigl(\tau(x),j(0)\bigr)\\
+\tau(x)&\tau(y)&\text{theorem 51.5 的三方程与两种输出形态}
+\end{array}
+$$
+最后一行的全部元素还具有 theorem 51.13 的带稳定子单位轨道参数化。交换两个输入不改变相应联合输出。
+
+对于两个边界输入，$xR+yR$ 与 $xR\cap yR$ 是由输入唯一决定且联合连续的理想值数据；实际生成元的联合歧义是反对角单位轨道，而不是两个可任意独立组合的实际生成元轨道。该作用是否自由由共同零分量决定。主理想有连续的规范化 $R$ 值生成元截面，但其正整数生成元的孤立自然点提升处处不连续。环境零 $j(0)$ 与边界零 $\tau(0)$ 在所有情形中保持不同。
+

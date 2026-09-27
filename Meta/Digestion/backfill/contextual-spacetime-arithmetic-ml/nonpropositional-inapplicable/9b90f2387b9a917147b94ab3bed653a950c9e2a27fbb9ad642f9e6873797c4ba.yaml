@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b90f2387b9a917147b94ab3bed653a950c9e2a27fbb9ad642f9e6873797c4ba
+  normalized_sha256: sha256:9b90f2387b9a917147b94ab3bed653a950c9e2a27fbb9ad642f9e6873797c4ba
+cas_ref: sha256:9b90f2387b9a917147b94ab3bed653a950c9e2a27fbb9ad642f9e6873797c4ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Boundary qualifications for the preceding conditional theorem. Repeated/zero singular values and d_i=0 remove the nonzero factors used by the stated cancellation, without asserting permanent unobservability. Disconnected components must be retained individually; S=0 sets the stated third-step scalar signal to zero and does not assert an all-future identity. PSD/rank restrictions remain intersections with the linear fiber. The strict-shrink possibility is already scalar determinant normalization: q=1, W=A=B=1, eta0=1/2 gives Gamma_c=[[1+4c/3,1],[1,1-4c/3]], det=-16c^2/9, hence PSD forces c=0. This is boundary/explanatory text with upstream-only algebra, not permission to weaken hypotheses or a new project theorem.'
+    previous_atom_id: 447e2bc85d02658511135e872527adc2d713432234b0074b2821da84d5bf1732
+    next_atom_id: 7f352ac2ed3703ff105df4a0b7aab56ebea818b4fac2bc3403b838ffba649ae4

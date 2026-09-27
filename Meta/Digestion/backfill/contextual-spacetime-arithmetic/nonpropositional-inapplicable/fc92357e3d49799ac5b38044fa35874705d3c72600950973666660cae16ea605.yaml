@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc92357e3d49799ac5b38044fa35874705d3c72600950973666660cae16ea605
+  normalized_sha256: sha256:fc92357e3d49799ac5b38044fa35874705d3c72600950973666660cae16ea605
+cas_ref: sha256:fc92357e3d49799ac5b38044fa35874705d3c72600950973666660cae16ea605
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在任意有限维整数坐标上用 add_add_add_comm 与 add_left_cancel，非零平移使两个父位置均平移后的和不同于仅平移一次的和，仓内无冻结 GID。
+    previous_atom_id: 6225f0f7090a1ea13b39461241fa507e94f9a28c6f9b52928538e5ee32e50d43
+    next_atom_id: 52df9e206319ab5d05f283fa408857ee0cd1106121046ac3a74f8042734c43b8

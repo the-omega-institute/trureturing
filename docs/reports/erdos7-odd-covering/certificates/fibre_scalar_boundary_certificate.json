@@ -1,0 +1,26 @@
+{
+  "schema": "fibre-scalar-boundary-v1",
+  "primes": [13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61],
+  "old_gamma": "41/10",
+  "old_r": "41/50",
+  "reference_density_cap": "16/15",
+  "old_marginal_cap": "300/241",
+  "current_four_prime_seed": "4939031/47730",
+  "next_prime_square": 256,
+  "quadratic_global_minimum": "146200387232079383/1801269927319680",
+  "p13": {
+    "epsilon": "1/285480",
+    "good_mass_plus": "1146673/1427400",
+    "good_mass_minus": "1146683/1427400",
+    "five_row_new_forbidden_counts": [2197, 4394, 2366, 2210, 2198],
+    "complete_survivors_in_full_period": 258880,
+    "full_period": 428415
+  },
+  "moment_extremizers": [
+    {"delta": "0", "V": "1/4", "atoms": [["1/2", "1"]], "loss": "1/2"},
+    {"delta": "1/4", "V": "1/16", "atoms": [["0", "3/4"], ["1/2", "1/4"]], "loss": "1/12"},
+    {"delta": "1/4", "V": "9/16", "atoms": [["3/4", "1"]], "loss": "2/3"},
+    {"delta": "1/2", "V": "9/16", "atoms": [["0", "7/16"], ["1", "9/16"]], "loss": "9/16"},
+    {"delta": "3/4", "V": "1/4", "atoms": [["0", "3/4"], ["1", "1/4"]], "loss": "1/4"}
+  ]
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ad08d8b0976ac5ea84b1101b0eb37b0353e7941a2ebcd7365b2878d20e22b6f
+  normalized_sha256: sha256:6ad08d8b0976ac5ea84b1101b0eb37b0353e7941a2ebcd7365b2878d20e22b6f
+cas_ref: sha256:6ad08d8b0976ac5ea84b1101b0eb37b0353e7941a2ebcd7365b2878d20e22b6f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “区分三个要求”仅列近似下一报告、恢复指定新标签与恢复旧历史三种目标，未断言目标等价或能完成；后面的纤维等价命题另列叶子，本叶无定义夹带。
+    previous_atom_id: a3146c5acc1650fb4e3234e637dee984c98389e7823910379f11f695818337f7
+    next_atom_id: d6356e10626dec70ac7ce12888c4951ec26cbfa565cdb72844196106f84d0d1d

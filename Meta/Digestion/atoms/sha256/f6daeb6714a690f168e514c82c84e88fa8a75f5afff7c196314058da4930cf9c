@@ -1,0 +1,6 @@
+$$
+c_j=\sup_{v\ge0}v^{j+1/2}e^{-v}<\infty,\qquad
+\|\partial_\nu^j\mathcal B_\nu\|
+ \le2C_{12}c_j\sqrt{T_{12}}\,\underline\nu^{-j-1/2}=:M_j.
+\tag{27.106}
+$$

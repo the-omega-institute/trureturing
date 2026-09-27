@@ -1,0 +1,21 @@
+**定义 11.9（历史索引仪器）。** 使用[量子卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)第72节的完整历史、活动记忆与惰性参考规范。固定时域 $N$、非空有限结果集 $Y_t$ 和每层共同有限维载体 $Q_t$。$Q_t=S_t\otimes M_t$ 包含系统与仍会回流的物理记忆。不同历史的载体通过已声明的共同嵌入识别；动作和仪器的类型在同层一致。
+
+对已取得历史 $h=(y_1,\ldots,y_{t-1})$，控制器选择 $a=\pi_t(h)$，并指定
+$$
+\Phi^{h,a}_{t,y}:\mathcal L(Q_{t-1})\to\mathcal L(Q_t)
+\quad(y\in Y_t),\qquad
+\Phi^{h,a}_{t,y}\text{ 完全正},\qquad
+\sum_y\Phi^{h,a}_{t,y}\text{ 保迹}.
+\tag{11.15}
+$$
+在所比较输入族的每个可达正概率历史上动作须合法；或以失败结果给出总化仪器。全族都不可达的历史可作同型合法扩展，但扩展对各输入共同固定。随机控制的实际随机变量及复用位置并入历史或载体。
+
+给任意有限惰性参考 $R$ 及共同初态密度 $\rho_{RQ_0}$，定义
+$$
+\sigma_\varnothing=\rho_{RQ_0},\qquad
+\sigma_{hy}=(\operatorname{id}_R\otimes\Phi^{h,\pi_t(h)}_{t,y})(\sigma_h),
+\qquad p(h)=\operatorname{Tr}\sigma_h,
+\tag{11.16}
+$$
+并令 $\Phi_h$ 为沿 $h$ 按时间从右向左的分支复合，$\Phi_\varnothing=\operatorname{id}$。全过程使用同一初态及物理记忆，不要求 $R$ 与 $Q_0$ 独立。仪器的完全正分支及经典旗标约定亦见 Watrous 所引第2章第2.3.2节、式(2.255)—(2.262)，印刷第111—113页。
+

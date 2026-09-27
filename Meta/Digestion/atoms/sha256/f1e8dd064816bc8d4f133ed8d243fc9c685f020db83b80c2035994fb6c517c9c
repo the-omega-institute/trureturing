@@ -1,0 +1,10 @@
+**证明。** 转置 JJ⁻¹=1 并用 J^t=−J 得 (J⁻¹)^t=−J⁻¹。将 X^tJ=−JX 左右乘逆矩阵得 J⁻¹X^t=−XJ⁻¹，所以不变线被实际作用杀掉。
+\(\mathcal A_X(B)\) 的转置由 B 的交替性直接计算；迹循环性给出
+
+\[
+\operatorname{tr}(J\mathcal A_X(B))
+=\operatorname{tr}(JXB)+\operatorname{tr}(X^tJB)=0.
+\]
+
+最后 tr(JJ⁻¹)=n，代入投影定义得到其收缩为零，且删除不变线不改变作用。证毕。
+

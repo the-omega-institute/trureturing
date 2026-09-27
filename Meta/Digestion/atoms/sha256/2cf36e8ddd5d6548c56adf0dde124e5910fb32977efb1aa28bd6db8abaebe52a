@@ -1,0 +1,47 @@
+**定义与假设 78.1（实际观察塔及其胞腔态）。** 设 $(X,\mathcal F,\mu)$ 为概率空间，$\mu(X)=1$。对每个 $L\in\mathbb N$，$\mathcal P_L$ 是 $X$ 的实际有限可测分区，$\mathcal P_{L+1}$ 细化 $\mathcal P_L$。以有限离散集合 $Q_L$ 标记全部胞腔，记实际标签映射为 $q_L:X\to Q_L$，父映射为 $r_L:Q_{L+1}\to Q_L$，满足逐点相容性 $q_L=r_L\circ q_{L+1}$。零质量胞腔仍保留在分区和标签中，只从归一化 Hilbert 坐标中略去。
+
+取闭相容逆极限及其 Borel $\sigma$ 代数
+$$
+Y=\left\{y\in\prod_{L\ge0}Q_L:
+r_L(y_{L+1})=y_L\ \text{对所有 }L\right\},
+\qquad q_\infty(x)=(q_L(x))_{L\ge0},
+\qquad \nu=(q_\infty)_*\mu.
+$$
+$Y$ 是紧可度量的标准 Borel 空间，其对角集合可测。沿用定义 70.1 的指示函数子空间，置
+$$
+\mathcal F_\infty=\sigma(q_L:L\ge0),\qquad
+H_L=\operatorname{span}_{\mathbb C}
+\{\mathbf1_C:C\in\mathcal P_L,\ \mu(C)>0\},
+$$
+$$
+H_{\mathrm{obs}}=L^2(X,\mathcal F_\infty,\mu;\mathbb C)
+=\overline{\bigcup_{L\ge0}H_L}.
+$$
+形成 $L^2$ 时可对 $\mathcal F_\infty$ 作 $\mu$-零集完备化；内积仍为 $\langle f,g\rangle=\int\overline f g\,d\mu$。所有算子作用于这个可分的共同空间。将它等同于整个环境 $L^2(X,\mathcal F,\mu;\mathbb C)$ 的条件是：每个 $\mathcal F$ 可测集合都与某个 $\mathcal F_\infty$ 可测集合只差 $\mu$-零集。
+
+对 $y\in Y$ 定义
+$$
+C_L(y)=q_L^{-1}\{y_L\},\qquad
+E_y=q_\infty^{-1}\{y\}=\bigcap_{L\ge0}C_L(y),\qquad
+A=\{y\in Y:\mu(E_y)>0\},
+$$
+$$
+a_y=\mu(E_y)=\nu(\{y\})\quad(y\in A),\qquad
+a=\sum_{y\in A}a_y\in[0,1].
+$$
+$A$ 至多可数；$a=1$ 称为完整观察律 $\nu$ 纯原子。这里的正原子在 $X$ 上是完整观察纤维 $E_y$，不预设它们是环境单点。对正质量胞腔和纤维分别写
+$$
+e_C=\frac{\mathbf1_C}{\sqrt{\mu(C)}},\qquad
+e_y=\frac{\mathbf1_{E_y}}{\sqrt{a_y}},\qquad
+(|u\rangle\langle v|)h=u\langle v,h\rangle.
+$$
+定义
+$$
+R_L=\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)|e_C\rangle\langle e_C|
+=\sum_{C\in\mathcal P_L}|\mathbf1_C\rangle\langle\mathbf1_C|,
+\qquad
+R_{\mathrm{at}}=\sum_{y\in A}a_y|e_y\rangle\langle e_y|.
+$$
+$R_L$ 在 $H_L^\perp$ 上延零；$R_{\mathrm{at}}$ 的级数按 Schatten 迹范数求和。相邻 $H_L$ 使用定理 72.2 的实际 $L^2$ 包含，$R_L$ 是各层胞腔对角态在共同空间中的实现，不以经典标签推前或 Heisenberg 压缩替代这个包含。记 $\Pi_L$ 为到 $H_L$ 的正交投影；$R_L$ 的胞腔权重为 $\mu(C)$，$\Pi_L$ 的对应权重为一。下文 $\|T\|_1=\operatorname{Tr}|T|$ 是未除以二的 Schatten 迹范数，$\|T\|_{\mathrm{HS}}^2=\operatorname{Tr}(T^*T)$ 是 Hilbert–Schmidt 范数平方，$\|T\|_{\mathrm{op}}$ 是算子范数；$\|\cdot\|_1$ 不表示概率全变差。
+

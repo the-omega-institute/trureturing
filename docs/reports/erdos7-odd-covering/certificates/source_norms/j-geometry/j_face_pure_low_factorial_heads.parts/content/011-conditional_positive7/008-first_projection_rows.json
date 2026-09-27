@@ -1,0 +1,86 @@
+{
+  "length": 500,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 61,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000000-000061.json",
+        "sha256": "44162be245e6641e17c2c8c9db387fa7ce4ea623807d2ea70251667b1e0b0819",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 61,
+      "stop": 122,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000061-000122.json",
+        "sha256": "e0597de8e8b7f5a41a3574699bd4e07f9b56d77cccd5be248edf8cd9e44b84fc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 122,
+      "stop": 183,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000122-000183.json",
+        "sha256": "cf7bb102ee5d0a38f6eacd8b1f34a34e4e598f65c2c2aaf9c8800dd06630b0a0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 183,
+      "stop": 244,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000183-000244.json",
+        "sha256": "52da0b99c1e302a635cb16a3068d803bc97bfdc8e250b98cf261cef5833d3d70",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 244,
+      "stop": 305,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000244-000305.json",
+        "sha256": "5bdb2ea70dedea018f813342b1f105875329413da9d120cb0c7e256bbd6a4003",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 305,
+      "stop": 366,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000305-000366.json",
+        "sha256": "689eda665d6ca0322c02f60e086fb8bb6dd95a2ee3097f364341b2715aaad885",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 366,
+      "stop": 427,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000366-000427.json",
+        "sha256": "0560396dfcb75958154e66b84ad3f5514fd9bb4b1b9cc8208cfe9f904271a83d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 427,
+      "stop": 488,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000427-000488.json",
+        "sha256": "13ab23ee9241e3224fe175279004b2134298f6e4216f06ffafafecdbd559ae36",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 488,
+      "stop": 500,
+      "part": {
+        "path": "content/011-conditional_positive7/008-first_projection_rows/000488-000500.json",
+        "sha256": "c1d93c12276a820b65334d6ede5fa06f628fae0dbfea558dd895049cc835209b",
+        "kind": "value"
+      }
+    }
+  ]
+}

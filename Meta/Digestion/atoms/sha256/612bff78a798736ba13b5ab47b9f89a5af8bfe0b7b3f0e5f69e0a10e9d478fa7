@@ -1,0 +1,13 @@
+**theorem 41.5 (Rational-function realization with real coefficients).** Definition 41.4 makes $\mathbb R(t)$ an ordered field extending the usual order of $\mathbb R$, with
+$$
+0<t<c\qquad\text{for every real }c>0.
+$$
+For the family of Definition 41.1,
+$$
+\text{finite feasibility}
+\quad\Longleftrightarrow\quad
+\exists z\in V_{\mathbb R(t)}\quad
+\forall i\in I,\ \ell_i^{\mathbb R(t)}(z)>0.
+$$
+Whenever such a $z$ exists, some witness can be chosen to be the polynomial curve of Theorem 41.2, of degree at most $m$ with orthonormal nonzero coefficient vectors.
+

@@ -405,7 +405,8 @@ public sealed class StandaloneLeanInspectorTests
         var root = TestRepositoryLayout.FindRoot();
         File.Copy(Path.Combine(root, "lean-toolchain"), Path.Combine(directory, "lean-toolchain"));
         var source = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "Inspector.lean"));
-        File.WriteAllText(Path.Combine(directory, "EncodingProbe.lean"), source + "\n" + probe + "\n");
+        File.WriteAllText(Path.Combine(directory, "EncodingProbe.lean"),
+            source + "\nopen Lean LeanInformationAudit.InspectorProducer\n" + probe + "\n");
         var result = TestProcessRunner.Run("lean", ["EncodingProbe.lean"], directory,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
@@ -457,6 +458,8 @@ public sealed class StandaloneLeanInspectorTests
     {
         internal LeanAxiomReport Inspect(RepositorySnapshot snapshot)
         {
+            var manifest = Path.Combine(repositoryRoot, LeanReportRegistrationFixture.ManifestPath);
+            File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
             foreach (var (path, file) in snapshot.Files)
             {
                 var destination = Path.Combine(repositoryRoot, path.Value);
@@ -482,11 +485,13 @@ public sealed class StandaloneLeanInspectorTests
             {
                 "env",
                 "lean",
+                "--root=" + Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector"),
                 "--run",
                 Path.Combine(
                     TestRepositoryLayout.FindRoot(),
                     "tools", "lean-inspector",
                     "Inspector.lean"),
+                "--statements-only",
                 "--output",
                 spoolReport,
                 "--material-spool",
@@ -519,7 +524,7 @@ public sealed class StandaloneLeanInspectorTests
                     Path.Combine(
                         TestRepositoryLayout.FindRoot(),
                         "tools", "lean-inspector", "materials.py"),
-                    "compact", spoolReport, spoolMaterials, output,
+                    "compact", spoolReport, spoolMaterials, output, manifest,
                 ],
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,

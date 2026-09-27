@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0764fc009bc61f674be8caa99c425489b9efd81468352e2792f7c252ce43fd8f
+  normalized_sha256: sha256:0764fc009bc61f674be8caa99c425489b9efd81468352e2792f7c252ce43fd8f
+cas_ref: sha256:0764fc009bc61f674be8caa99c425489b9efd81468352e2792f7c252ce43fd8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID for this complete leaf. Instantiate Real.antitoneOn_rpow_Ioi_of_exponent_nonpos, integrableOn_Ioi_rpow_of_lt and integral_Ioi_rpow_of_lt with f(s)=s^(-3), lower endpoint1 and exponent minus3. AntitoneOn.tsum_comp_add_le_integral bounds the terms starting at2; Summable.sum_add_tsum_nat_add splits off the first term. The integral is1/2, so the displayed series is at most1+1/2=3/2. Positivity, integrability and endpoint conditions are discharged.
+    previous_atom_id: 166dcb1407c9066851bb710dde1cb93597afc45f54d7afd8ca6a4ec1bd06917d
+    next_atom_id: f9c3b666b576d00cca65aa87e38ce3e633cddc83be5253c1ded1730ff221e68c

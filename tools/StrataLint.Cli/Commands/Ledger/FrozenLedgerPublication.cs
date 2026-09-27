@@ -116,6 +116,13 @@ internal static class FrozenLedgerPublication
             {
                 foreach (var (path, previousBytes) in stateBackups)
                 {
+                    var currentBytes = FrozenStateWriter.ReadCurrentBytes(repositoryRoot, path);
+                    if (previousBytes is null ? currentBytes is null
+                        : currentBytes is not null
+                            && previousBytes.Value.AsSpan().SequenceEqual(currentBytes.Value.AsSpan()))
+                    {
+                        continue;
+                    }
                     FrozenStateWriter.Restore(repositoryRoot, path, previousBytes);
                 }
             }

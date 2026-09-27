@@ -1,0 +1,17 @@
+### 93.2 有限 zeta 权重自动落入这个固定点
+
+对有限索引集 $S\subseteq\operatorname{Fin}(d)$，项目定义
+
+$$
+Z_s(S)=\sum_{n\in S}(n+1)^{-s},
+$$
+
+并构造加权算子
+
+$$
+\tau_{B,s,S}
+=
+\sum_{n\in S}
+\frac{(n+1)^{-s}}{Z_s(S)}P_{B,n}.
+$$
+

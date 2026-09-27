@@ -1,0 +1,20 @@
+### 128.9 先验白化提供保真的共同 Gram 结构
+
+定义白化状态与白化响应
+$$
+W=\Sigma_0^{-1/2}(Z-m_0)\sim N(0,I),\qquad
+B=\mathbf R^{-1/2}\mathbf H\Sigma_0^{1/2}.
+$$
+相应白化读数为
+$\mathbf R^{-1/2}(\mathbf Y-\mathbf Hm_0)=BW+\xi$，
+$\xi\sim N(0,I)$ 与 $W$ 独立。因此
+$$
+\operatorname{Cov}(W\mid\mathbf Y)=(I+B^TB)^{-1},
+\qquad
+I(Z;\mathbf Y)=\frac12\log\det(I+B^TB).
+$$
+若 $\lambda_1,\ldots,\lambda_d\ge0$ 为共同响应 Gram 矩阵 $B^TB$ 的特征值，则
+$$
+I(Z;\mathbf Y)=\frac12\sum_{j=1}^d\log(1+\lambda_j).
+$$
+

@@ -1,0 +1,10 @@
+先证 $1\Rightarrow2$。任取
+$$
+r=\sum_{\ell}D^{\ell}Cv_{\ell}\in R.
+$$
+对任意 $k\ge0$，
+$$
+BD^kD^mr =\sum_{\ell}BD^{m+\ell+k}Cv_{\ell} =\sum_{\ell}M_{m+\ell+k}v_{\ell} =0.
+$$
+故 $D^mr\in N$，又 $D^mr\in R$，所以 $D^mR\subseteq R\cap N$，即 $\bar D_{\mathrm{fb}}^{\,m}=0$。
+

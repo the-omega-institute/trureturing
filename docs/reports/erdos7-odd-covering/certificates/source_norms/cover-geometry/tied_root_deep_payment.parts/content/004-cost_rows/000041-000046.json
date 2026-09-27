@@ -1,0 +1,252 @@
+[
+  {
+    "index": 41,
+    "name": "H16",
+    "tuple": [
+      0,
+      0
+    ],
+    "barrier": "1843590625606784/50362520583375",
+    "weight": "2371/2880",
+    "vmin": "75376570/184225041",
+    "vmax": "1792/429",
+    "low_values": [
+      "0",
+      "75376570/184225041",
+      "625045690/184225041",
+      "1394582458/184225041"
+    ],
+    "increments": [
+      "75376570/184225041",
+      "1280/429",
+      "1792/429"
+    ],
+    "generic_cone_coordinates": [
+      "0",
+      "75376570/184225041",
+      "474292550/184225041",
+      "512/429",
+      "148800345463862/7194645797625"
+    ],
+    "layout_pair_checks": 100,
+    "all_layout_checks_sha256": "73ab897c21965211afb6da9105bbcdca37ab1cf21181152248a5eb8adf3018d9",
+    "minimum_tied_shift_slack": "0",
+    "selected_cofactor_count": 6,
+    "selected_deep_coefficient": "8/729",
+    "complete_remaining_mass_tail": "1/7290",
+    "curvature_record": {
+      "tuple": [
+        0,
+        0
+      ],
+      "mean": "8/5",
+      "curvature": "2972/3003",
+      "low_product_atoms": {
+        "1": "9164/15015",
+        "2": "4402126/15030015",
+        "3": "93435698/3009009003"
+      }
+    },
+    "source_payment_multiplier": "6/5"
+  },
+  {
+    "index": 42,
+    "name": "H16",
+    "tuple": [
+      0,
+      1
+    ],
+    "barrier": "51437677469/4932968040",
+    "weight": "2371/2880",
+    "vmin": "15627/48334",
+    "vmax": "175/78",
+    "low_values": [
+      "0",
+      "15627/48334",
+      "139628/72501",
+      "201527/48334"
+    ],
+    "increments": [
+      "15627/48334",
+      "125/78",
+      "175/78"
+    ],
+    "generic_cone_coordinates": [
+      "0",
+      "15627/48334",
+      "92747/72501",
+      "25/39",
+      "8734718849/4932968040"
+    ],
+    "layout_pair_checks": 100,
+    "all_layout_checks_sha256": "e4899b650dd4946f4490bea052d945d85862bbdeb789e346885744ae18ab2cfa",
+    "minimum_tied_shift_slack": "0",
+    "selected_cofactor_count": 6,
+    "selected_deep_coefficient": "8/729",
+    "complete_remaining_mass_tail": "1/7290",
+    "curvature_record": {
+      "tuple": [
+        0,
+        1
+      ],
+      "mean": "5/13",
+      "curvature": "5/13",
+      "low_product_atoms": {
+        "1": 0,
+        "2": "5568/65065",
+        "3": "5568/845845"
+      }
+    },
+    "source_payment_multiplier": "6/5"
+  },
+  {
+    "index": 43,
+    "name": "H16",
+    "tuple": [
+      0,
+      2
+    ],
+    "barrier": "868964699/704709720",
+    "weight": "2371/2880",
+    "vmin": "4395/48334",
+    "vmax": "259/1014",
+    "low_values": [
+      "0",
+      "4395/48334",
+      "19820/72501",
+      "25559/48334"
+    ],
+    "increments": [
+      "4395/48334",
+      "185/1014",
+      "259/1014"
+    ],
+    "generic_cone_coordinates": [
+      "0",
+      "4395/48334",
+      "6635/72501",
+      "37/507",
+      "136314839/704709720"
+    ],
+    "layout_pair_checks": 100,
+    "all_layout_checks_sha256": "4bce6888a96b5a3091e36d3b7e787521db0a3c1fc32a335ae8d7833ae9493566",
+    "minimum_tied_shift_slack": "0",
+    "selected_cofactor_count": 6,
+    "selected_deep_coefficient": "8/729",
+    "complete_remaining_mass_tail": "1/7290",
+    "curvature_record": {
+      "tuple": [
+        0,
+        2
+      ],
+      "mean": "37/845",
+      "curvature": "37/845",
+      "low_product_atoms": {
+        "1": 0,
+        "2": 0,
+        "3": "5568/845845"
+      }
+    },
+    "source_payment_multiplier": "6/5"
+  },
+  {
+    "index": 44,
+    "name": "H16",
+    "tuple": [
+      1,
+      0
+    ],
+    "barrier": "197160180946/16688172501",
+    "weight": "2371/2880",
+    "vmin": "379438/1090089",
+    "vmax": "28/11",
+    "low_values": [
+      "0",
+      "379438/1090089",
+      "2361418/1090089",
+      "5136190/1090089"
+    ],
+    "increments": [
+      "379438/1090089",
+      "20/11",
+      "28/11"
+    ],
+    "generic_cone_coordinates": [
+      "0",
+      "379438/1090089",
+      "1602542/1090089",
+      "8/11",
+      "33572279140/16688172501"
+    ],
+    "layout_pair_checks": 100,
+    "all_layout_checks_sha256": "c1029e2da6e676d6807e3042f6d3045ce34e31897c016b0f9394e97a9258b651",
+    "minimum_tied_shift_slack": "0",
+    "selected_cofactor_count": 6,
+    "selected_deep_coefficient": "8/729",
+    "complete_remaining_mass_tail": "1/7290",
+    "curvature_record": {
+      "tuple": [
+        1,
+        0
+      ],
+      "mean": "24/55",
+      "curvature": "24/55",
+      "low_product_atoms": {
+        "1": 0,
+        "2": "22910/231231",
+        "3": "22910/2543541"
+      }
+    },
+    "source_payment_multiplier": "6/5"
+  },
+  {
+    "index": 45,
+    "name": "H16",
+    "tuple": [
+      2,
+      0
+    ],
+    "barrier": "3930317668/2384024643",
+    "weight": "2371/2880",
+    "vmin": "131938/1090089",
+    "vmax": "124/363",
+    "low_values": [
+      "0",
+      "131938/1090089",
+      "397918/1090089",
+      "770290/1090089"
+    ],
+    "increments": [
+      "131938/1090089",
+      "620/2541",
+      "124/363"
+    ],
+    "generic_cone_coordinates": [
+      "0",
+      "131938/1090089",
+      "134042/1090089",
+      "248/2541",
+      "616938310/2384024643"
+    ],
+    "layout_pair_checks": 100,
+    "all_layout_checks_sha256": "92e65b75643725f97df463f429a1edca64e8b3802cb1816b64e617b35c35e1f7",
+    "minimum_tied_shift_slack": "0",
+    "selected_cofactor_count": 6,
+    "selected_deep_coefficient": "8/729",
+    "complete_remaining_mass_tail": "1/7290",
+    "curvature_record": {
+      "tuple": [
+        2,
+        0
+      ],
+      "mean": "248/4235",
+      "curvature": "248/4235",
+      "low_product_atoms": {
+        "1": 0,
+        "2": 0,
+        "3": "22910/2543541"
+      }
+    },
+    "source_payment_multiplier": "6/5"
+  }
+]

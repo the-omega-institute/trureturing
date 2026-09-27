@@ -1,0 +1,29 @@
+**命题 2.1（完整相容观察商）。** 令 $\dim\mathcal H=d\ge1$，$H=H^\dagger$，其不同特征值组成有限集合 $\mathcal E$。用 $\Pi_E$ 表示完整的特征空间投影，包括简并空间，定义
+$$
+H=\sum_{E\in\mathcal E}E\Pi_E,\qquad
+P_H(A)=\sum_{E\in\mathcal E}\Pi_EA\Pi_E,\qquad
+\mathcal C_H=\{A=A^\dagger:[A,H]=0\}.
+\tag{TM.109}
+$$
+
+$\mathcal C_H$ 是 Hermitian 矩阵的实线性子空间。由 $\Pi_E[H,A]\Pi_{E'}=(E-E')\Pi_EA\Pi_{E'}$ 可知，$[A,H]=0$ 当且仅当 $A$ 在不同能量块之间为零。于是 $P_H$ 在 Hermitian 实空间上恰是投向 $\mathcal C_H$ 的正交投影，这里的实内积为 $\langle A,B\rangle=\operatorname{Tr}(AB)$。具体地，迹循环性和投影正交性给出
+$$
+\operatorname{Tr}(B P_H(A))=\operatorname{Tr}(P_H(B)A),\qquad
+P_H^2=P_H,\qquad
+\operatorname{Tr}P_H(A)=\operatorname{Tr}A.
+\tag{TM.110}
+$$
+
+取 Kraus 算子为 $\Pi_E$，由于 $\sum_E\Pi_E^\dagger\Pi_E=I$，$P_H$ 还是 CPTP 通道。这里只说明这份数学通道合法；特定装置能否实施它仍取决于所声明的工具。
+
+若全部与 $H$ 交换的效果均可调用，则对任意两份密度态有精确等价：
+$$
+\boxed{
+P_H(\rho)=P_H(\sigma)
+\quad\Longleftrightarrow\quad
+\operatorname{Tr}(F\rho)=\operatorname{Tr}(F\sigma)
+\quad\forall F:\ 0\le F\le I,\ [F,H]=0.
+}
+\tag{TM.111}
+$$
+

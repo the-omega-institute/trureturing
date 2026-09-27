@@ -1,0 +1,50 @@
+**定理 84.3（更新参考条件律的原标签 Bayes 运输）。** 在定义与假设 84.1 下，令
+$$
+I_+=\{i\in I:\bar\ell_i>0\},\qquad
+J_+=\{j\in J:\ell_j>0\}.
+$$
+对每个 $i\notin I_+$，选定概率 $v^{(i)}\in\Delta(J)$，使其支撑包含于 $r^{-1}(i)$，例如取 $v^{(i)}=b_i$。定义整个原标签集 $I$ 上的重建矩阵
+$$
+B^\ell_{ji}=
+\begin{cases}
+\displaystyle\mathbf1_{r(j)=i}\frac{q_j\ell_j}{p_i\bar\ell_i},&i\in I_+,\\
+v^{(i)}_j,&i\notin I_+.
+\end{cases}
+$$
+则 $B^\ell$ 非负列随机，每列的支撑包含于其指定纤维，且
+$$
+\boxed{
+CB^\ell=\mathrm{Id}_I,\qquad
+D_\ell B=B^\ell D_{\bar\ell}.
+}
+$$
+对每个 $a\in\Delta(I)$，令
+$$
+z(a)=\sum_i a_i\bar\ell_i.
+$$
+有 $Z_\ell(Ba)=z(a)$；只在 $z(a)>0$ 时定义
+$$
+U_{\bar\ell}(a)=\frac{D_{\bar\ell}a}{z(a)},
+$$
+并有
+$$
+\boxed{
+U_\ell(Ba)=B^\ell U_{\bar\ell}(a),\qquad
+C U_\ell(Ba)=U_{\bar\ell}(a).
+}
+$$
+所有非活标签的更新粗质量均为零，因此上述后验与非活列 $v^{(i)}$ 的选择无关。这些列是零质量条件律的版本选择，不是零分母归一化所得的后验。
+
+若 $Z_q:=Z_\ell(q)>0$，则更新参考及其粗质量为
+$$
+q^\ell_j=\frac{q_j\ell_j}{Z_q},\qquad
+p^\ell_i=(Cq^\ell)_i=\frac{p_i\bar\ell_i}{Z_q}.
+$$
+此时 $I_+=r(J_+)$，$q^\ell$ 的正支撑为 $J_+$，$p^\ell$ 的正支撑为 $I_+$，且对 $i\in I_+$，
+$$
+B^\ell_{ji}=\mathbf1_{r(j)=i}\frac{q^\ell_j}{p^\ell_i}.
+$$
+因此，先限制到满射 $r_+:J_+\to I_+$ 及其严格正概率 $q^\ell|_{J_+},p^\ell|_{I_+}$，才得到严格正参考接口中的反向条件核。整个 $J$ 上的 $q^\ell$ 可以有零坐标。
+
+即使 $Z_q>0$，也不保证每个粗先验都有 $z(a)>0$：若存在非活标签 $i$，取 $a=e_i$ 就有 $z(a)=0$。凡 $z(a)=0$，都有 $D_\ell Ba=0$、$D_{\bar\ell}a=0$，两个归一化更新均无定义。若 $Z_q=0$，则 $\ell\equiv0$，更新参考也无定义，而所列未归一化矩阵恒等式仍成立。
+

@@ -1,0 +1,43 @@
+**命题 72.3（态提升与 Heisenberg 压缩的不同归一化）。** 在定义与假设 72.1 下，定义
+$$
+\mathcal E_r:\mathcal B(\mathcal H_c)\to\mathcal B(\mathcal H_f),
+\quad \mathcal E_r(X)=U_rXU_r^*,
+$$
+$$
+\Gamma_r:\mathcal B(\mathcal H_f)\to\mathcal B(\mathcal H_c),
+\quad \Gamma_r(Y)=U_r^*YU_r.
+$$
+$\mathcal E_r$ 完全正且保迹，即 CPTP；其迹配对伴随 $\Gamma_r$ 完全正且保单位元：
+$$
+\operatorname{Tr}_{\mathcal H_f}(\mathcal E_r(X)Y)
+=\operatorname{Tr}_{\mathcal H_c}(X\Gamma_r(Y)),
+\qquad \Gamma_r(I_{\mathcal H_f})=I_{\mathcal H_c}.
+$$
+对 $Y\ge0$，$0\le\operatorname{Tr}\Gamma_r(Y)\le\operatorname{Tr}Y$。特别地
+$$
+\Gamma_r(\rho_q)
+=\operatorname{diag}_i\frac{\sum_{r(j)=i}q_j^2}{p_i},
+\qquad
+\operatorname{Tr}\Gamma_r(\rho_q)
+=\sum_i p_i\sum_{r(j)=i}t_{j\mid i}^{\,2}\le1.
+$$
+等号成立当且仅当每个正质量父纤维没有两个正质量孩子；在本条严格正设置下等价于 $r$ 为双射。其迹缺口为
+$$
+1-\operatorname{Tr}\Gamma_r(\rho_q)
+=\sum_i p_i\left(1-\sum_{r(j)=i}t_{j\mid i}^{\,2}\right)
+=\sum_i\frac{\sum_{\substack{r(j)=r(k)=i\\j\ne k}}q_jq_k}{p_i}.
+$$
+
+证明。$\mathcal E_r$ 的单个 Kraus 算子为 $U_r$，定理 72.2 给出完整性 $U_r^*U_r=I$，故有限 Kraus 通道定理适用。$\Gamma_r$ 在每个有限放大上都是由 $I\otimes U_r$ 夹乘的压缩，因而完全正；保单位元与迹伴随关系分别由等距性和矩形乘积的迹循环性得到。置 $P_r=U_rU_r^*$，则 $P_r$ 是正交投影。对 $Y\ge0$，
+$$
+\operatorname{Tr}Y-\operatorname{Tr}\Gamma_r(Y)
+=\operatorname{Tr}\bigl(Y^{1/2}(I-P_r)Y^{1/2}\bigr)\ge0.
+$$
+将定理 72.2 中的 $g$ 取为 $q$ 即得对角公式。每条纤维有 $\sum_jt_{j\mid i}=1$，所以
+$$
+1-\sum_jt_{j\mid i}^{\,2}=\sum_{j\ne k}t_{j\mid i}t_{k\mid i}\ge0.
+$$
+该和为零恰好在条件律为点质量时发生；所有 $p_i>0$，故加权和为零恰好在每条纤维如此。证毕。
+
+这里 $\Gamma_r(\rho_q)$ 是次归一化正矩阵，不能把它无条件当作粗密度态 $\rho_p$。迹缺口是加权条件碰撞缺量，使用平方和；它与使用对数的条件熵并非同一个数。将它解释为某个失败概率还须另行指定相应的测量模型，本条没有这样的物理假设。
+

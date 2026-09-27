@@ -1,0 +1,14 @@
+**证明。** 写 $h_0=h_{\mathrm{vis}}+w$。对次数至多 $r$ 的多项式 $p$，因为 $w\perp\mathcal K_r$，有 $J^*p(T)w=0$。谱定理及 $\|w\|\le q$ 给
+$$
+\|J^*f(T)w\|\le\sqrt m\,q\,\|f-p\|_\infty.
+$$
+对 $p$ 取下确界得到第一项。
+
+置 $c=H^\dagger z$，并令 $V_r(c_j)=\sum_{j=0}^rT_r^jJ_rc_j$。式（13.6）给 $V_rc=h_r$，而 $Vc=h_{\mathrm{vis}}$。对 $0\le k\le r+1$，精确核矩匹配至 $2r+1$ 给
+$$
+J^*T^kh_{\mathrm{vis}}
+=\sum_{j=0}^rM_{k+j}c_j
+=J_r^*T_r^kh_r.
+$$
+因此两份可见响应在次数至多 $r+1$ 的多项式上相同。两个初态的范数均为 $\sqrt{e_{\min}}$，两个输入算子的范数均为 $\sqrt m$。从两边分别减去同一个多项式响应，用谱定理和三角不等式，得到 $2\sqrt{m e_{\min}}\|f-p\|_\infty$；取下确界，再加隐藏项即可。此处 $r+1$ 来自可见初态作为长度 $r$ 的核 Krylov 组合，未把一般交叉前缀冒充为长度 $2r+1$。证毕。
+

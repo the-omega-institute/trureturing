@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "5474b60d2ce88ef6cb03ac8db8afef2c599fbac8cb44df21105e73f46dcd8506",
+  "parts_directory": "scalar19_capacity_star_obstruction.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "f4ff19c6342caae62c2e1fbb011f197a3dfdbc5c708ad7846b758c2e99794536",
+    "kind": "object"
+  }
+}

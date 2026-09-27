@@ -1,0 +1,5 @@
+另一个无需对数的充分选择为
+$$
+T_{\rm B}=\max\left\{1,\left\lceil\max\left\{0,
+\frac{\eta}{1-\eta}\left(\frac{E}{4\mu}-1\right)\right\}\right\rceil\right\}.
+$$

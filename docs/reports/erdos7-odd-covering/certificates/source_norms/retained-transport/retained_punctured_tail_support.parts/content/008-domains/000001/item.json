@@ -1,0 +1,61 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "extended_source_bridge_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/12"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/3000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "53/2700"
+  },
+  "raw_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "13/1080",
+      "13/1080",
+      "53/4950",
+      "13/1080",
+      "0",
+      "1/45",
+      "1/45",
+      "581/29700",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "1109/78100",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1109/78100",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1109/78100",
+      "1/45"
+    ]
+  },
+  "raw_budgets": {
+    "kind": "inline",
+    "value": [
+      "301/9504",
+      "37/432",
+      "29/198"
+    ]
+  },
+  "results": {
+    "path": "content/008-domains/000001/item/006-results.json",
+    "sha256": "2c38fafc9e7783aeb7b7bb55623a7db2b497253d913066a8b7ccf84dd524ce58",
+    "kind": "array"
+  }
+}

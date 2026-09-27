@@ -1,0 +1,23 @@
+**命题 127.3（相同算子的两种时间展开）。** 若 $Lv=\lambda v$、$\lambda>0$、$v\ne0$，则热流初态 $u(0)=v$ 给
+$$
+u(t)=e^{-\lambda t}v,
+$$
+而波动初态 $z(0)=v,\dot z(0)=0$ 给
+$$
+z(t)=\cos(\sqrt\lambda\,t)v.
+$$
+热流的平方范数满足
+$$
+\frac d{dt}\frac12\|u(t)\|^2=-\langle u(t),Lu(t)\rangle\le0,
+$$
+波动的相空间能量则满足
+$$
+\frac d{dt}\left(\frac12\|\dot z(t)\|^2+
+\frac12\langle z(t),Lz(t)\rangle\right)=0.
+$$
+
+**证明。** 两个显式式子直接满足各自方程与初值，有限维线性初值问题的唯一性给出所述解。对范数和能量求导，分别代入 $\dot u=-Lu$ 和 $\ddot z=-Lz$；后者的两项为 $-\langle\dot z,Lz\rangle$ 与 $\langle\dot z,Lz\rangle$，由 $L$ 自伴相消。$\square$
+
+在零特征方向，热流保持常值，波动则为 $z_0+t v_0$，再次显示速度是额外状态。若 $z(t)$ 解波动方程，则 $z(-t)$ 仍解同一方程，其速度为 $-\dot z(-t)$；因此相空间流可通过 $(z,\dot z)\mapsto(z,-\dot z)$ 作时间反演。它一般不保持位置坐标的逐点非负性，因此没有在这里成为与热流相同的概率 Markov 模型。上述波动能量与概率 Shannon 熵也不是同一个量。相同空间关系允许不同时间展开，具体选择由演化阶数、状态类型、初值和物理协议共同承担。
+
+

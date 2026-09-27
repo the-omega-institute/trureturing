@@ -1,0 +1,18 @@
+**命题 69.4（预测记忆的唯一完成因子）。** 对状态空间 $X$、更新 $\tau:X\to X$ 与读出 $q:X\to O$，仍按所有 $q(\tau^n x)$ 是否相同定义完整未来等价关系，其商记为 $\operatorname{CompletedState}(\tau,q)$，投影记为 $c$。令 $r:X\to M$ 是候选记忆。要让它真的成为预测记忆，至少要有两个因子化条件：
+$$
+q=\text{factor}\circ r,
+\qquad
+r\circ\tau=\text{induced}\circ r.
+$$
+第一条要求当前读数能从记忆恢复，第二条要求记忆更新不需要重新查看完整状态。
+
+在这两个条件下，存在唯一因子 $\theta$：
+$$
+\boxed{
+\theta:\operatorname{range}(r)\longrightarrow\operatorname{CompletedState}(\tau,q),\qquad \theta(r(x))=c(x).
+}
+$$
+并且该映射与完整状态到完成商的投影交换。精确的唯一性定理是
+D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean
+中的 predictive_memory_minimal_quotient。
+

@@ -1,0 +1,52 @@
+**定理 1.4（盒噪声下的最优标量恢复）。** 给定 $\epsilon\ge0$，数据模型为
+
+$$
+z=Qv+e,
+\qquad v\in V,
+\qquad\|e\|_{\infty,w}\le\epsilon.
+\tag{1.12}
+$$
+
+对任意估计器 $\Psi:\mathbb R^m\to\mathbb R$，定义
+
+$$
+R_\epsilon(\Psi;h)=
+\sup_{v\in V,\,\|e\|_{\infty,w}\le\epsilon}
+|\Psi(Qv+e)-h(v)|.
+\tag{1.13}
+$$
+
+若 $h\in E$，则
+
+$$
+\boxed{
+\inf_\Psi R_\epsilon(\Psi;h)
+=\epsilon\Gamma_w(h),
+}
+\tag{1.14}
+$$
+
+而且任一最优系数 $a$ 所定义的线性估计器 $\Psi(z)=a\cdot z$ 达到此值。若 $h\notin E$，则每个估计器的风险为 $+\infty$，包括 $\epsilon=0$ 的情形；不将该结论写成未定义的 $0\cdot\infty$。
+
+证明。$h\in E$ 时，取定理 1.2 的最优系数。对所有合法数据，
+
+$$
+|a\cdot z-h(v)|=|a\cdot e|
+\le\epsilon\|a\|_{1,w}
+=\epsilon\Gamma_w(h).
+\tag{1.15}
+$$
+
+若右边为零，这已经给出等式。否则 $\epsilon>0$ 且 $\|\varphi\|=\Gamma_w(h)>0$。有限维空间 $M=\operatorname{ran}Q$ 的闭单位球紧，故存在 $y\in M$ 满足
+
+$$
+\|y\|_{\infty,w}=1,
+\qquad |\varphi(y)|=\Gamma_w(h).
+$$
+
+取 $v_*$ 使 $Qv_*=\epsilon y$。状态 $v_*$ 配噪声 $-\epsilon y$，以及状态 $-v_*$ 配噪声 $\epsilon y$，都产生数据 $0$。两个目标值为相反数，距离为 $2\epsilon\Gamma_w(h)$。对同一输出 $\Psi(0)$ 使用三角不等式，至少有一个误差不小于 $\epsilon\Gamma_w(h)$。这给出全部估计器的共同下界。
+
+若 $h\notin E$，定理 1.2 给出 $u\in\ker Q$ 且 $h(u)\ne0$。状态 $tu$、$-tu$ 均配零噪声，数据相同而目标半距为 $|t h(u)|$。令 $|t|$ 无界，得到每个估计器的风险无穷。证毕。
+
+式（1.14）的下界使用整个线性载体和整个噪声盒。若物理状态只占 $V$ 的一个有界子集，或允许噪声具有额外相容性，上界仍有效，下界中的共同数据见证则须重新证明合法。RRO 第 125.7 节已经区分系数绝对和误差界、真实协方差与独立批次；本定理固定的是确定性盒噪声模型，不将其最坏方向解释为已存在的物理采样机制。
+

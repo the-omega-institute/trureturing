@@ -1,0 +1,19 @@
+**证明。** 对第 $k$ 步应用保持条件并取 $f_{k-1}$-逆像，得到
+$$
+\begin{aligned}
+H_{k-1}(\Gamma)
+&\subseteq
+ f_{k-1}^{-1}[K_{\tau_k}(f_{k-1}[\Gamma])]\\
+&=H_k(\Gamma),
+\end{aligned}
+$$
+末个等式是 (89.2a) 的复合公式。再用逆像保持差集得到 $D_k$ 的第二种表达。若 $k<\ell$，则
+$$
+D_k(\Gamma)\subseteq H_k(\Gamma)\subseteq H_{\ell-1}(\Gamma),
+\qquad
+D_\ell(\Gamma)\cap H_{\ell-1}(\Gamma)=\varnothing,
+$$
+所以各 $D_k$ 两两不交。任意属于 $H_n(\Gamma)\setminus H_0(\Gamma)$ 的公式，在有限嵌套链中有唯一首次进入的指标 $k$，恰属于 $D_k(\Gamma)$；反向每个 $D_k(\Gamma)$ 都属于该末端差集，证明 (89.3)。$n=0$ 时两边均为空，包含空并情形。
+
+由于 $H_0(\Gamma)\subseteq H_n(\Gamma)$，末端相等当且仅当差集为空，也就当且仅当每个 $D_k(\Gamma)$ 为空。对全部 $\Gamma$ 使用该结论，再由嵌套关系夹出 $H_k(\Gamma)=C_0(\Gamma)$，得到每个前缀保守。第 $k$ 步由此受到的反射限制只覆盖 $f_{k-1}[F_0]$ 内的前提与结论；没有覆盖条件时，不能升级为该箭头在整个 $F_{k-1}$ 上保守。证毕。
+

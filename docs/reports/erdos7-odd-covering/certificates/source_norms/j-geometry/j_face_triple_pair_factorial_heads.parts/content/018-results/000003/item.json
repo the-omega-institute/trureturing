@@ -1,0 +1,111 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "factorial5"
+  },
+  "original_cost_index": {
+    "kind": "inline",
+    "value": null
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 5
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "factorial_threshold": 5,
+      "at_one": "0",
+      "hinge_coefficients": {},
+      "factorial_coefficient": "1",
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "0",
+        "6": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 5,
+        "constant": "10",
+        "linear": "-9/2",
+        "leading": "1/2"
+      }
+    }
+  },
+  "all_head_tail_split": {
+    "kind": "inline",
+    "value": [
+      {
+        "head": 1,
+        "case": "all-T-monotone-integer-binomial",
+        "argument_shift": -3
+      },
+      {
+        "head": 2,
+        "case": "all-T-monotone-integer-binomial",
+        "argument_shift": -2
+      },
+      {
+        "head": 3,
+        "case": "all-T-monotone-integer-binomial",
+        "argument_shift": -1
+      },
+      {
+        "head": 4,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "-1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 5,
+        "case": "all-T-exact-quadratic",
+        "constant": "0",
+        "linear": "1/2",
+        "quadratic": "1/2"
+      },
+      {
+        "head": 6,
+        "case": "all-T-exact-quadratic",
+        "constant": "1",
+        "linear": "3/2",
+        "quadratic": "1/2"
+      }
+    ]
+  },
+  "scan": {
+    "path": "content/018-results/000003/item/005-scan.json",
+    "sha256": "06a5d1a79b190dfc176849ce9a7caecee007b429cd6eab60ba72e865e92fd0ca",
+    "kind": "object"
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "2120267967804001/2646000000000000"
+  },
+  "adopted_upper": {
+    "kind": "inline",
+    "value": "2120267967804001/2646000000000000"
+  },
+  "previous_adopted_upper": {
+    "kind": "inline",
+    "value": "4552688500270367/5670000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "32399992416277/19845000000000000"
+  },
+  "maximizing_cross_components": {
+    "path": "content/018-results/000003/item/010-maximizing_cross_components.json",
+    "sha256": "48c6525c47a12b689bdc107d5733c7ec2ef9b614db61daae2781ed70ba78da68",
+    "kind": "value"
+  },
+  "maximizing_conditional_PZZ_endpoints": {
+    "kind": "inline",
+    "value": [
+      "195197/529200",
+      "89/240"
+    ]
+  }
+}

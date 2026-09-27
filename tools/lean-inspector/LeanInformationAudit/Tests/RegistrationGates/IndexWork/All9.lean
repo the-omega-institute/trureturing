@@ -1,0 +1,4 @@
+import LeanInformationAudit.Tests.RegistrationGates.IndexWork.All1
+import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Extra8
+
+measure_imported_template_query 9 0

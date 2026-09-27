@@ -1,0 +1,50 @@
+**命题 116.2（共同三次运输与有限外推）。** 在定义 116.1 下，对 $0<\delta\le1/2$，置
+$$
+c_\delta=\frac{1-\delta/3}{4},\qquad
+\lambda_\delta=1-4\delta/3,\qquad
+H_\delta(z)=z^2+c_\delta z+c_\delta^2,
+$$
+$$
+A_\delta=
+\frac{H_\delta(1)^{-1}+3H_\delta(\lambda_\delta)^{-1}}
+     {1-\lambda_\delta},\qquad
+B_\delta=H_\delta(1)^{-1}-A_\delta,
+$$
+$$
+p_\delta(z)=H_\delta(z)(A_\delta z+B_\delta)
+           =\sum_{t=0}^3a_t(\delta)z^t.
+\tag{116.2a}
+$$
+这些系数均有限、不依赖传感器或方向，且两个方向同时满足
+$$
+\boxed{e_1p_\delta(K_{\delta,d})=e_0,\qquad d=0,1,}
+\qquad \sum_{t=0}^3a_t(\delta)=1,
+\tag{116.2b}
+$$
+其中 $e_i$ 是集中于状态 $i$ 的行概率向量。
+
+令 $Q_d(\delta)$ 为隐藏链按实际 $K_{\delta,d}$ 从状态 $0$ 出发、传感器从 $\eta$ 出发时的 $W$ 窗口均值。它是 $\delta$ 的次数至多 $r$ 的多项式，且 $Q_d(0)=\tau$。定义
+$$
+\ell_j=
+\prod_{\substack{0\le i\le r\\i\ne j}}
+\frac{-\delta_i}{\delta_j-\delta_i}
+=\frac{k_j^r}{\displaystyle\prod_{i\ne j}(k_j-k_i)}.
+\tag{116.2c}
+$$
+则实际准备实验的期望满足
+$$
+Q_d(\delta_j)=\sum_{t=0}^3a_t(\delta_j)m_{j,t},\qquad
+\boxed{\tau=\sum_{j=0}^r\sum_{t=0}^3
+                 \ell_j a_t(\delta_j)m_{j,t}.}
+\tag{116.2d}
+$$
+特别地，对定义 116.1 的一批实际前缀，确定的有符号统计量
+$$
+\widehat\tau_{\rm batch}
+=\sum_{j=0}^r\sum_{t=0}^3
+  \ell_j a_t(\delta_j)
+  W(Y^{(j)}_t,\ldots,Y^{(j)}_{t+r})
+\tag{116.2e}
+$$
+满足 $\mathbb E\widehat\tau_{\rm batch}=\tau$。其系数只使用 $r$ 和预选的 $k_0,\ldots,k_r$。
+

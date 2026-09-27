@@ -1,0 +1,77 @@
+{
+  "length": 6292,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/000000-000798.json",
+        "sha256": "a153b8c980f8298dd1b3d1fc30dce835d0c7c5a03dc508e80b83151506537328",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/000798-001596.json",
+        "sha256": "d06b9c94deba133fac9e010d1f40ab8fd6f2881743d6c4e16c80c082b4af2d33",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/001596-002394.json",
+        "sha256": "90dd4511fb7a2714608f1dcc7b221ac5db7333de5ba0ba44a1d06cda5db01818",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/002394-003192.json",
+        "sha256": "dfe42e9fbd6e5733c4eabfec6592a1255123a03d447e505a595ae7de592cb964",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/003192-003990.json",
+        "sha256": "82520f8298cb45303f124108f5058028fedf1f84871e9553b85600d5d67a152a",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/003990-004788.json",
+        "sha256": "8594247efd8aae7f36a037ca4973c683697d3f6b494c5030c84ebc7f71e3a440",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/004788-005586.json",
+        "sha256": "f7500ced0d4f2ebbf43947f62f71535f7dc50feed58272e6cf0f4f68769be9d8",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 6292,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows/005586-006292.json",
+        "sha256": "dea97e56c798a283a0dc9f8068fc54bf278dcdbd0af6bb6ca0697fc8ef7e2b81",
+        "kind": "value-zlib-base85"
+      }
+    }
+  ]
+}

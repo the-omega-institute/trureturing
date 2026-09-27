@@ -1,0 +1,55 @@
+**定义与假设 97.1（同一代数序列、固定嵌入及局部度量）。** 取
+$$
+\phi=\frac{1+\sqrt5}{2}>1,\qquad K=\mathbb Q(\phi)\subset\mathbb R,
+$$
+并固定这个正实嵌入。固定 $q\in\mathbb Q$，对整数 $N\ge1$，在 $K$ 中定义
+$$
+e_N=\frac12\phi^{-3N},\qquad
+S_N=\sum_{j=0}^{N-1}\phi^{-2-3j},\qquad
+T_N=q-e_N.
+\tag{97.1a}
+$$
+黄金比的根关系与共轭恒等式采用
+[golden_ratio_spec](https://github.com/the-omega-institute/trureturing/blob/5446b911a2f4f072834af6c23681dc31218a07b7/D5/S0/Carrier/GoldenRatio.lean)
+及 [Real.goldenRatio_sq、Real.one_lt_goldenRatio、Real.inv_goldenRatio](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Real/GoldenRatio.lean)。
+
+对每个素数 $p$，以 $\eta_p:\mathbb Q\hookrightarrow\mathbb Q_p$ 表示标准有理嵌入。讨论局部像时，固定有限扩张 $F/\mathbb Q_p$ 的结构嵌入
+$$
+\iota_F:\mathbb Q_p\hookrightarrow F,
+\qquad j_F=\iota_F\circ\eta_p:\mathbb Q\hookrightarrow F,
+$$
+固定根 $\varphi\in F$ 满足 $\varphi^2-\varphi-1=0$，并固定正定、实值、乘法性的非阿基米德绝对值 $|\cdot|_F$，要求
+$$
+|\iota_F(x)|_F=|x|_p\quad(x\in\mathbb Q_p),
+\qquad |\eta_p(p)|_p=p^{-1}.
+\tag{97.1b}
+$$
+这里正定指 $|x|_F=0$ 当且仅当 $x=0$；非阿基米德条件为
+$|x+y|_F\le\max(|x|_F,|y|_F)$。赋予 $F$ 度量
+$$
+d_F(x,y)=|x-y|_F.
+$$
+由根 $\varphi$ 决定的有理域嵌入记为
+$$
+\kappa_\varphi:K\hookrightarrow F,\qquad
+\kappa_\varphi(a+b\phi)=j_F(a)+j_F(b)\varphi
+\quad(a,b\in\mathbb Q);
+\tag{97.1c}
+$$
+其存在性、唯一性及单射性在应用 97.2 的证明中说明。记
+$$
+q_F=j_F(q),\qquad
+S_N^{F,\varphi}=\kappa_\varphi(S_N),\qquad
+T_N^{F,\varphi}=\kappa_\varphi(T_N)
+=q_F-j_F(1/2)\varphi^{-3N}.
+$$
+所有局部极限都在所写度量 $d_F$ 中讨论；$q,p,F,\iota_F,\varphi,|\cdot|_F$ 及由此确定的嵌入在 $N$ 变化时保持固定。根不要求落在 $\mathbb Q_p$ 本身，也不假设扩张非分歧。这里比较的是 $K$ 中同一元素的不同嵌入，没有定义 $\mathbb R\to F$ 的映射。
+
+另对素数 $p$ 和整数 $n\ge1$ 定义
+$$
+\epsilon_{p,n}=\frac{p^n}{1+p^{2n}}\in\mathbb Q.
+\tag{97.1d}
+$$
+对有理数 $x$，记 $|x|_\infty$ 为其通常实绝对值，$|x|_p=|\eta_p(x)|_p$；后者是有理 $p$-进范数在实数中的值。标准嵌入的范数相容性见
+[padicNormE.eq_padic_norm'、Padic.eq_padicNorm、Padic.norm_p、Padic.norm_p_pow](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)。讨论 $\epsilon_{p,n}$ 的极限时始终固定 $p$。
+

@@ -1,0 +1,24 @@
+### 定理 62.6（顺序词的有限完备深度）
+
+若所有有限 sequential word effects 在完整实 Hermitian 载体中张成单位空间，即
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\text{ 为任意有限词}\}
+=\operatorname{Herm}(d),
+$$
+
+则 `finite_sequential_completeness_depth` 保证存在某个
+
+$$
+N\le d^2-1
+$$
+
+使长度不超过 $N$ 的 sequential words 已经张成完整 Hermitian 可见空间：
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:\lvert w\rvert\le N\}
+=\operatorname{Herm}(d).
+$$
+

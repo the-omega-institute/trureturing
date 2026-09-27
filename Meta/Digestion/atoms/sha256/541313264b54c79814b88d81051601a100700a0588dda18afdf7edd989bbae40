@@ -1,0 +1,12 @@
+
+
+在实向量空间$\operatorname{Herm}(d)$上使用内积$(A,B)=\operatorname{tr}(AB)$，并定义
+$$
+\mathcal O_0=\operatorname{span}_{\mathbb R}\{I,M_a:a\},
+$$
+$$
+\mathcal O_{k+1}=\operatorname{span}_{\mathbb R}\left(\mathcal O_k\cup\bigcup_{\Phi\in\mathscr C}\Phi^*(\mathcal O_k)\right),\qquad
+\mathcal O_\infty=\bigcup_{k\ge0}\mathcal O_k.
+$$
+线性张成仅使用有限线性组合；$\mathscr C$可以是无限集合。这里不把生成的乘法代数自动视为允许测量族，也不把条件筛选后的失败删除。
+

@@ -1,0 +1,49 @@
+{
+  "objective": {
+    "kind": "inline",
+    "value": "AP13"
+  },
+  "hinge_coefficients": {
+    "kind": "inline",
+    "value": {
+      "4": "1"
+    }
+  },
+  "original_layout": {
+    "kind": "inline",
+    "value": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  },
+  "original_projections": {
+    "kind": "inline",
+    "value": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ]
+  },
+  "face_tail": {
+    "kind": "inline",
+    "value": "121487/2480625"
+  },
+  "branches": {
+    "path": "content/008-domains/000000/item/006-results/000002/item/005-branches.json",
+    "sha256": "e158bbb81371cb88068a680e8d21587e8d059fae89a6824806dbb5c902eaa89f",
+    "kind": "object"
+  },
+  "two_branch_fixed_controller_upper": {
+    "kind": "inline",
+    "value": "39421226339948192014259/179478180000000000000000"
+  }
+}

@@ -1,0 +1,15 @@
+#### 134.3.3 全忠实与“精确到同构”
+
+取 $P=h_Y$，命题 134.3 成为
+
+$$
+\operatorname{Nat}(h_X,h_Y)\cong\operatorname{Hom}_{\mathcal C}(X,Y).
+\tag{134.12}
+$$
+
+箭头 $u:X\to Y$ 对应逐探针后复合 $f\mapsto u\circ f$。所以 $X\mapsto h_X$ 是全忠实函子：任意相容轮廓转换来自一个真实箭头，而且该箭头唯一。
+
+若 $\eta:h_X\cong h_Y$ 是自然同构，由 (134.12) 取其与逆变换对应的 $u:X\to Y$、$v:Y\to X$。自然变换复合对应箭头复合，因此 $h_{vu}=\mathrm{id}_{h_X}$、$h_{uv}=\mathrm{id}_{h_Y}$。在 $\mathrm{id}_X$ 和 $\mathrm{id}_Y$ 处求值得 $vu=\mathrm{id}_X$、$uv=\mathrm{id}_Y$。故 $X\cong Y$。
+
+这里“全部相容关系”不只是每个 Hom 集的元素个数，也不是各分量互不相容的双射。例如在集合范畴中取 $X=\{0,1\}$：对除单点探针 $1$ 以外的各 $Z$，令 $\eta_Z$ 为 $\operatorname{Hom}(Z,X)$ 的恒等；在 $Z=1$ 处，令其交换两个点。每个分量都是双射，但这不是自然变换。因为 $\eta_X(\mathrm{id}_X)=\mathrm{id}_X$ 将迫使所有分量由恒等后复合给出，与单点处分量矛盾。真正承重的是自然性。
+

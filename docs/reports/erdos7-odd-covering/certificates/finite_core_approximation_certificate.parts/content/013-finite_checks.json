@@ -1,0 +1,196 @@
+{
+  "original_test_pair_fixtures": [
+    {
+      "physical_heights": [
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      "cutoff": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "original_test_labels": 12,
+      "original_ordered_pairs": 144,
+      "inside_labels": 4,
+      "exact_Haar_tail": "188/63"
+    },
+    {
+      "physical_heights": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "cutoff": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "original_test_labels": 48,
+      "original_ordered_pairs": 2304,
+      "inside_labels": 8,
+      "exact_Haar_tail": "32672/6435"
+    },
+    {
+      "physical_heights": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "cutoff": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "original_test_labels": 4,
+      "original_ordered_pairs": 16,
+      "inside_labels": 4,
+      "exact_Haar_tail": "0"
+    }
+  ],
+  "geometric_tail_fixtures": [
+    {
+      "prime": 3,
+      "cutoff": 0,
+      "tail": "2"
+    },
+    {
+      "prime": 3,
+      "cutoff": 2,
+      "tail": "4/9"
+    },
+    {
+      "prime": 3,
+      "cutoff": 20,
+      "tail": "22/3486784401"
+    },
+    {
+      "prime": 3,
+      "cutoff": 28,
+      "tail": "10/7625597484987"
+    },
+    {
+      "prime": 3,
+      "cutoff": 64,
+      "tail": "22/1144561273430837494885949696427"
+    },
+    {
+      "prime": 5,
+      "cutoff": 0,
+      "tail": "7/8"
+    },
+    {
+      "prime": 5,
+      "cutoff": 2,
+      "tail": "3/40"
+    },
+    {
+      "prime": 5,
+      "cutoff": 20,
+      "tail": "87/762939453125000"
+    },
+    {
+      "prime": 5,
+      "cutoff": 28,
+      "tail": "119/298023223876953125000"
+    },
+    {
+      "prime": 5,
+      "cutoff": 64,
+      "tail": "263/4336808689942017736029811203479766845703125000"
+    },
+    {
+      "prime": 7,
+      "cutoff": 0,
+      "tail": "5/9"
+    },
+    {
+      "prime": 7,
+      "cutoff": 2,
+      "tail": "11/441"
+    },
+    {
+      "prime": 7,
+      "cutoff": 20,
+      "tail": "65/718130396678508009"
+    },
+    {
+      "prime": 7,
+      "cutoff": 28,
+      "tail": "89/4139878828902659648791209"
+    },
+    {
+      "prime": 7,
+      "cutoff": 64,
+      "tail": "197/10977844388722521301247164763066746386800537647181145609"
+    },
+    {
+      "prime": 11,
+      "cutoff": 0,
+      "tail": "8/25"
+    },
+    {
+      "prime": 11,
+      "cutoff": 2,
+      "tail": "18/3025"
+    },
+    {
+      "prime": 11,
+      "cutoff": 20,
+      "tail": "108/16818749873314000230025"
+    },
+    {
+      "prime": 11,
+      "cutoff": 28,
+      "tail": "148/3605248402662480850941901602025"
+    },
+    {
+      "prime": 11,
+      "cutoff": 64,
+      "tail": "328/111447892113147559896737803334246038487254035874788167887848370656025"
+    },
+    {
+      "prime": 13,
+      "cutoff": 0,
+      "tail": "19/72"
+    },
+    {
+      "prime": 13,
+      "cutoff": 2,
+      "tail": "43/12168"
+    },
+    {
+      "prime": 13,
+      "cutoff": 20,
+      "tail": "259/1368357391791417559593672"
+    },
+    {
+      "prime": 13,
+      "cutoff": 28,
+      "tail": "355/1116211161791692527499406527597512"
+    },
+    {
+      "prime": 13,
+      "cutoff": 64,
+      "tail": "787/14115850303014797279807502750496753110557036160296336706450549396641925192"
+    }
+  ],
+  "BB_delta_half_mask_checks": {
+    "atoms": 8,
+    "all_ordered_mask_pairs": 65536,
+    "intersection_types": 165
+  }
+}

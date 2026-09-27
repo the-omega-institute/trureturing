@@ -1,0 +1,104 @@
+{
+  "length": 11,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000000-000001.json",
+        "sha256": "ac048e69f5e40277f1d9ae550ca550c7cb5300c2b37753d8d741331aac2e9c81",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000001-000002.json",
+        "sha256": "8f5ecb0b706d8ad5619b1de5cbdc09ba53c2a1957c77077aea6864277572fd77",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000002-000003.json",
+        "sha256": "cd6e52e8fee4b056487684c5e684770b2d83e1e739c0a472dfdd98ff5590ac15",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000003-000004.json",
+        "sha256": "6561259125373f0a96cc2c1195205ac3dc4457fc06a3792d8522ce2871886830",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000004-000005.json",
+        "sha256": "f0a1b53623a7a493b1d25af461cc06dd6f071cb387e263c88a5731e607b99a7c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000005-000006.json",
+        "sha256": "a056627439659f8bd6afe5b4f41ae44cc91665f2c105abc92e15f8490a4f440d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000006-000007.json",
+        "sha256": "cd98f87611477ac1fd8a6dd90fc2566d23684fc7924060a4fe2631b93cbcc038",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000007-000008.json",
+        "sha256": "1f36649024067a26b159b2138504fc4744e756fee20c04888884e063c0717196",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000008-000009.json",
+        "sha256": "562fcddc46213c5b95e301dab7b491694e635eecad294e2a2f31788e5a9fb4dc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000009-000010.json",
+        "sha256": "31e5961605c9edfb7d35438c76dddf282767300af94f8355cc17cb08c7a3eff9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/004-complete_radius/012-mean_costs/000010-000011.json",
+        "sha256": "80b0728900b18a0ba41beebf6b8b478d4df0ed5e256c093ef10381d24765a1c6",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c5fad8780c402df0ec8a5c4dece41b7cf06363ea6c9c82fc877fc929cc71d64
+  normalized_sha256: sha256:0c5fad8780c402df0ec8a5c4dece41b7cf06363ea6c9c82fc877fc929cc71d64
+cas_ref: sha256:0c5fad8780c402df0ec8a5c4dece41b7cf06363ea6c9c82fc877fc929cc71d64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子沿用指定记录模型并定义有限前缀态及记号，不作无限张量积存在性断言，没有独立待证结论。
+    previous_atom_id: 5eeaf85924c07452385a4d2136f727298f585360ea14d8d966f0f76bc93a5547
+    next_atom_id: ecd3f852bf8fb3936744d4bcc587c056671d6efa0b5fab442d5bc93138ca0922

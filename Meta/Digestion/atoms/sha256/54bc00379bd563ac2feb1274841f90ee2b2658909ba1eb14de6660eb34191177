@@ -1,0 +1,27 @@
+**假设 17.4（实际交叉取得与固定记忆任务）。** 沿用定义15.3、定理15.4的收缩乘积 $\mathbb B$ 及同一组 $P_\lambda,Q_\lambda,X^0_\lambda$。固定 $n$ 次实际标定测量 $(a_i,b_i,\tau_i)$，其中 $a_i\in U_A,b_i\in U_B,\tau_i\ge0$。其读数为 $y_i=\langle a_i,K_{AB}(\tau_i)b_i\rangle+e_i$。令
+$$
+d_i=\sum_\lambda e^{-\lambda\tau_i}\langle a_i,X^0_\lambda b_i\rangle,
+\qquad
+A_{i,\lambda}=e^{-\lambda\tau_i}
+(P_\lambda^{1/2}a_i)(Q_\lambda^{1/2}b_i)^*,
+$$
+$$
+z_i=y_i-d_i,\qquad
+\mathcal A_i(T)=\sum_\lambda\langle A_{i,\lambda},T_\lambda\rangle_{\rm HS},
+\qquad z=\mathcal A(T)+e.
+\tag{17.6}
+$$
+对同一个候选 $T=(T_\lambda)_\lambda$，固定终时 $\theta\ge0$、$a\in U_A$ 及所有候选共用的 $g\in L^1([0,\theta];U_B)$。按定义16.1置
+$$
+v_\lambda=\int_0^\theta e^{-\lambda(\theta-s)}g(s)\,ds,
+\qquad H_\lambda=(P_\lambda^{1/2}a)(Q_\lambda^{1/2}v_\lambda)^*,
+\qquad m_0=\sum_\lambda\langle a,X^0_\lambda v_\lambda\rangle.
+$$
+记 $\langle H,T\rangle=\sum_\lambda\langle H_\lambda,T_\lambda\rangle_{\rm HS}$，其中 $\langle S,T\rangle_{\rm HS}=\operatorname{tr}(S^*T)$，$uw^*$ 是 $x\mapsto u\langle w,x\rangle$。同一固定输入的记忆任务为
+$$
+q(T)=\int_0^\theta\langle a,K_{AB}(\theta-s)g(s)\rangle ds
+=m_0+\langle H,T\rangle.
+\tag{17.7}
+$$
+端口身份、内积、单位、增益、经过时间标定及制备在候选间固定。未知初态强迫须由有依据的制备消去，或保留在同一扩充载体及任务中；随候选变化的反馈输入不满足这里固定 $g$ 的假设，见命题16.6。
+

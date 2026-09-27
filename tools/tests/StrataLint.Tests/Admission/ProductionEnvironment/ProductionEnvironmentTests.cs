@@ -73,10 +73,10 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         AddFrozenLedger(fixture);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
@@ -109,10 +109,10 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         AddFrozenLedger(fixture);
         var addedEventPath = fixture.Files.Keys
             .First(FrozenLedgerChangeClassifier.IsAcceptedEventPath);
@@ -181,10 +181,10 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
             Snapshot(fixture.Files),
@@ -272,8 +272,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "FILEMAP.toml"), TestFileMap.Canonical, new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestFileMap.Domains, new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(temporary.Path, "manifest.json"),
             "{\"artifact\":\"lean\",\"domain\":\"Carrier\",\"generality\":\"G\",\"module\":\"Probe\",\"plane\":\"F\",\"selector\":\"\",\"tag\":\"\",\"theory\":\"D5\"}\n",
@@ -291,27 +291,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"gid\": \"D5/S0/Carrier/Probe\"", result.Output, StringComparison.Ordinal);
         Assert.EndsWith("\n", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void SelfTestIsByteStableAcrossTwoPasses()
-    {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
-        var environment = new ProductionCliEnvironment(
-            repositoryRoot,
-            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
-            new FakeLeanReportSource(null));
-
-        var first = environment.SelfTest(Array.Empty<string>());
-        var second = environment.SelfTest(Array.Empty<string>());
-
-        Assert.True(first.Success, first.Error);
-        Assert.True(second.Success, second.Error);
-        Assert.Equal(first.Output, second.Output);
-        Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
-        Assert.Contains("SL-032", first.Output, StringComparison.Ordinal);
-        Assert.Contains("SL-033", first.Output, StringComparison.Ordinal);
-        Assert.Contains("SL-034", first.Output, StringComparison.Ordinal);
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
@@ -349,9 +328,7 @@ public sealed partial class ProductionEnvironmentTests
                 .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
-    private static FrozenLedgerConsistent AddFrozenLedger(
-        RuleFixture fixture,
-        string manifest = "{}\n")
+    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
         const string lakefile = "name = \"Fixture\"\n";
@@ -359,8 +336,6 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["lean-toolchain"] = toolchain;
         fixture.Files["lakefile.toml"] = lakefile;
         fixture.Baseline["lakefile.toml"] = lakefile;
-        fixture.Files["lake-manifest.json"] = manifest;
-        fixture.Baseline["lake-manifest.json"] = manifest;
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports);
         var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);

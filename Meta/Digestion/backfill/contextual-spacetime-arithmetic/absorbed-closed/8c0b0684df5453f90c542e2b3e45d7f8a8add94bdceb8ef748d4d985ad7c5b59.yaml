@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8c0b0684df5453f90c542e2b3e45d7f8a8add94bdceb8ef748d4d985ad7c5b59
+  normalized_sha256: sha256:8c0b0684df5453f90c542e2b3e45d7f8a8add94bdceb8ef748d4d985ad7c5b59
+cas_ref: sha256:8c0b0684df5453f90c542e2b3e45d7f8a8add94bdceb8ef748d4d985ad7c5b59
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalCongruence.historical_congruence
+    target_statement_id: sha256:5131faf0b76b62b8d299f4ebbd07bddff54748f09bcde2aa9e5a8bb6886ca03a
+receipts:
+  unresolved_subitems: []

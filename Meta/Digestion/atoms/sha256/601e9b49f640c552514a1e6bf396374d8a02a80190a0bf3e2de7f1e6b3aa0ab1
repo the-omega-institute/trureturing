@@ -1,0 +1,15 @@
+**定义 55.1 完整单位和数组与诱导元数。** 固定素数 $p$，令 $\overline{\mathbb N}_0=\mathbb N_0\cup\{\infty\}$，约定 $v_p(0)=\infty$、$\infty-n=\infty$。有限标号集 $V$ 上的完整数组是函数 $a:\binom V2\to\overline{\mathbb N}_0$。称其可实现，是指存在同一个元组 $(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V$，使所有不同顶点满足 $v_p(x_i+x_j)=a_{ij}$；不同标号不要求取不同数值。记 $a|_W$ 为 $W\subseteq V$ 上的完整诱导限制。定义 $k_{\mathrm{full}}(p)$ 为使下式对所有有限 $V,a$ 成立的最小非负整数 $k$，不存在时记为 $\infty$：
+$$
+\left(\forall W\subseteq V,\ |W|\le k\Longrightarrow a|_W\text{ 可实现}\right)
+\Longrightarrow a\text{ 可实现}.
+$$
+另记
+$$
+\delta_p=v_p(2),\qquad s_p=\delta_p+1,\qquad
+q_p=
+\begin{cases}
+(p-1)/2,&p\ne2,\\
+1,&p=2.
+\end{cases}
+$$
+

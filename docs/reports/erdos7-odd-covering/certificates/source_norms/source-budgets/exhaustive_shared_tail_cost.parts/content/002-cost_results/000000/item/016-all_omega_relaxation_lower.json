@@ -1,0 +1,143 @@
+{
+  "relaxation_lower": "18079750684152397381/11601941328182205000",
+  "exact_complete_tail": "49172880558458416/69059174572513125",
+  "family_errors": {
+    "pure3": "0",
+    "pure5": "0",
+    "root5": "0",
+    "cell5": "0"
+  },
+  "complete_series": {
+    "2": {
+      "pure3": {
+        "upper": "7/180",
+        "crossing": 3,
+        "tail_coefficient": "7/10",
+        "omitted": []
+      },
+      "pure5": {
+        "upper": "1/250",
+        "crossing": 2,
+        "tail_coefficient": "2/5",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "1/75",
+        "crossing": 2,
+        "tail_coefficient": "4/15",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "1/225",
+        "crossing": 2,
+        "tail_coefficient": "4/45",
+        "omitted": []
+      }
+    },
+    "3": {
+      "pure3": {
+        "upper": "7/540",
+        "crossing": 3,
+        "tail_coefficient": "7/10",
+        "omitted": [
+          3
+        ]
+      },
+      "pure5": {
+        "upper": "1/250",
+        "crossing": 2,
+        "tail_coefficient": "2/5",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "1/75",
+        "crossing": 2,
+        "tail_coefficient": "4/15",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "1/225",
+        "crossing": 2,
+        "tail_coefficient": "4/45",
+        "omitted": []
+      }
+    },
+    "4": {
+      "pure3": {
+        "upper": "7/540",
+        "crossing": 3,
+        "tail_coefficient": "7/10",
+        "omitted": [
+          3
+        ]
+      },
+      "pure5": {
+        "upper": "1/250",
+        "crossing": 2,
+        "tail_coefficient": "2/5",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "1/375",
+        "crossing": 2,
+        "tail_coefficient": "4/15",
+        "omitted": [
+          2
+        ]
+      },
+      "cell5": {
+        "upper": "1/225",
+        "crossing": 2,
+        "tail_coefficient": "4/45",
+        "omitted": []
+      }
+    },
+    "1": {
+      "pure3": {
+        "upper": "7/180",
+        "crossing": 3,
+        "tail_coefficient": "7/10",
+        "omitted": []
+      },
+      "pure5": {
+        "upper": "1/50",
+        "crossing": 2,
+        "tail_coefficient": "2/5",
+        "omitted": []
+      },
+      "root5": {
+        "upper": "1/75",
+        "crossing": 2,
+        "tail_coefficient": "4/15",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "1/225",
+        "crossing": 2,
+        "tail_coefficient": "4/45",
+        "omitted": []
+      }
+    }
+  },
+  "attaining_cuts": null,
+  "allocation": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "q": [
+    "0",
+    "0"
+  ],
+  "scope": "Feasible relaxed envelope value; no actual-family realization or actual-cost lower bound."
+}

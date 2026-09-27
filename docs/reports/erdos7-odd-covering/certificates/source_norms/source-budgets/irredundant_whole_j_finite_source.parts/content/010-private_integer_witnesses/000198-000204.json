@@ -1,0 +1,74 @@
+[
+  {
+    "original_index": 198,
+    "modulus": 1977326743,
+    "residue": 1694851494,
+    "private_integer": 1300423622635900878906252,
+    "coordinate_witness": [
+      3,
+      2,
+      1694851494
+    ],
+    "progression_parameter": 657667543940106
+  },
+  {
+    "original_index": 199,
+    "modulus": 5931980229,
+    "residue": 4237128735,
+    "private_integer": 1373723880840885742187502,
+    "coordinate_witness": [
+      3,
+      2,
+      282475249
+    ],
+    "progression_parameter": 231579308731523
+  },
+  {
+    "original_index": 200,
+    "modulus": 17795940687,
+    "residue": 8474257470,
+    "private_integer": 640721298791037109375002,
+    "coordinate_witness": [
+      3,
+      2,
+      564950498
+    ],
+    "progression_parameter": 36003789294436
+  },
+  {
+    "original_index": 201,
+    "modulus": 13841287201,
+    "residue": 11863960458,
+    "private_integer": 54319233151158203125002,
+    "coordinate_witness": [
+      3,
+      2,
+      11863960458
+    ],
+    "progression_parameter": 3924435087744
+  },
+  {
+    "original_index": 202,
+    "modulus": 41523861603,
+    "residue": 29659901145,
+    "private_integer": 567421040586052246093752,
+    "coordinate_witness": [
+      3,
+      2,
+      1977326743
+    ],
+    "progression_parameter": 13664939114069
+  },
+  {
+    "original_index": 203,
+    "modulus": 124571584809,
+    "residue": 59319802290,
+    "private_integer": 823971944303499267578127,
+    "coordinate_witness": [
+      3,
+      2,
+      3954653486
+    ],
+    "progression_parameter": 6614445385493
+  }
+]

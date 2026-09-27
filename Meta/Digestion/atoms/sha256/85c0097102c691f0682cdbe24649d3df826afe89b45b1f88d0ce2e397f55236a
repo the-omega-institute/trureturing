@@ -1,0 +1,2 @@
+数学引文与复用：本定理的二元循环判据及按连通分量选根、沿路径构造顶点位的论证，显式复用 RRO 定理 61.5 中的一般二元图论部分，而不援引其完整的 2-adic 估值分类；见 [RRO 定理 61.5](https://raw.githubusercontent.com/the-omega-institute/trureturing/e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。另见 Frank Harary, “On the notion of balance of a signed graph,” *Michigan Mathematical Journal* 2(2) (1953), 143–146, DOI: 10.1307/mmj/1028989917，<https://doi.org/10.1307/mmj/1028989917>。该文给出 signed-graph balance 的经典表述；这里所需的 $\mathbb F_2$ 结论已在上文直接证明，不依赖外部定理编号。证毕。
+

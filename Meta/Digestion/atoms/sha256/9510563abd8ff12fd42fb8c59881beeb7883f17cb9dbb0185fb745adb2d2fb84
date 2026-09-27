@@ -1,0 +1,21 @@
+**theorem 37.13 (Comparison with the full closed finite-addition graph).** Retain the actual closed graph of §18,
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\ge0\}}^{\,K^3},
+$$
+and its explicitly adopted fibre classification in Assumption 18.1. Regard $\mathcal R_{\mathrm{op}}$ as a subset of $K^3$. Then
+$$
+\mathcal R_{\mathrm{op}}\subsetneq\Gamma,\qquad
+\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}=\Gamma.
+$$
+An exact witness of strictness is
+$$
+(x_1^+,0_K,x_1^-)\in\Gamma\setminus\mathcal R_{\mathrm{op}}.
+$$
+Thus $\mathcal R_{\mathrm{op}}$ is not closed. Its nonassociativity differs from the set-valued associativity of $\Gamma$ established in Proposition 18.2.
+
+In particular, the map
+$$
+F:\mathscr E^2\to K^3,\qquad F(p,q)=(e(p),e(q),e(pq)),
+$$
+is not continuous. Closure equality does not supply continuous composition.
+

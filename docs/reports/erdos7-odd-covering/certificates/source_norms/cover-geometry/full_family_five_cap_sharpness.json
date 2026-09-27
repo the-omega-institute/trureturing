@@ -1,0 +1,168 @@
+{
+  "schema": "erdos7-full-family-five-cap-sharpness-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "profile-notes/001-064/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md": "b4c9a60a2c4a13147177e747d24dfb16a29e42eb2278f5948f22d49c0001563e",
+    "profile-notes/065-128/75-forced27-and-complete-pure3-deletion-on-the-k-faces.md": "bf21f845032d56fb86f86dfdecd5426e58eceac63a1c4e44d6fe0a16d7070f33"
+  },
+  "checks": [
+    {
+      "height": 3,
+      "labels": 63,
+      "original_label_sha256": "8109b8012dbd9b00e14646af4d3a39a336f29bf513459ba0deeb81aeea31efe8",
+      "old_cofactors_preserved": 15,
+      "source_mass": "913/3375",
+      "old_cap_sum": "1687/3375",
+      "survivor_mass": "164959/965250",
+      "deep_coefficient": "251/594",
+      "tests": [
+        {
+          "b": 2,
+          "raw": "14/675",
+          "survivor": "251/14850",
+          "scaled_survivor": "251/594"
+        },
+        {
+          "b": 3,
+          "raw": "14/3375",
+          "survivor": "251/74250",
+          "scaled_survivor": "251/594"
+        }
+      ],
+      "nested_tests": [
+        {
+          "b": 2,
+          "residue": 20,
+          "survivor": "251/14850"
+        },
+        {
+          "b": 3,
+          "residue": 20,
+          "survivor": "251/74250"
+        }
+      ],
+      "first_five_survivor": "1288/19305",
+      "complete_finite_pure_five_test": "41989/482625",
+      "direct_CRT_period": 1157625
+    },
+    {
+      "height": 4,
+      "labels": 124,
+      "original_label_sha256": "262687849e59b9d2113f507b877ab8346242b3c5dee221bc36980c8544cf38c8",
+      "old_cofactors_preserved": 24,
+      "source_mass": "12989/50625",
+      "old_cap_sum": "5156/10125",
+      "survivor_mass": "15678989/101300625",
+      "deep_coefficient": "66041/162081",
+      "tests": [
+        {
+          "b": 2,
+          "raw": "41/2025",
+          "survivor": "66041/4052025",
+          "scaled_survivor": "66041/162081"
+        },
+        {
+          "b": 3,
+          "raw": "41/10125",
+          "survivor": "66041/20260125",
+          "scaled_survivor": "66041/162081"
+        },
+        {
+          "b": 4,
+          "raw": "41/50625",
+          "survivor": "66041/101300625",
+          "scaled_survivor": "66041/162081"
+        }
+      ],
+      "nested_tests": [
+        {
+          "b": 2,
+          "residue": 20,
+          "survivor": "66041/4052025"
+        },
+        {
+          "b": 3,
+          "residue": 20,
+          "survivor": "66041/20260125"
+        },
+        {
+          "b": 4,
+          "residue": 20,
+          "survivor": "66041/101300625"
+        }
+      ],
+      "first_five_survivor": "51632/810405",
+      "complete_finite_pure_five_test": "2833757/33766875",
+      "direct_CRT_period": null
+    },
+    {
+      "height": 5,
+      "labels": 215,
+      "original_label_sha256": "c64288b508fb153a12fb1c06b912f1de7b787ad6076aac45d1308560fb0bec99",
+      "old_cofactors_preserved": 35,
+      "source_mass": "191467/759375",
+      "old_cap_sum": "389059/759375",
+      "survivor_mass": "530644181/3545268750",
+      "deep_coefficient": "1369811/3403458",
+      "tests": [
+        {
+          "b": 2,
+          "raw": "122/6075",
+          "survivor": "1369811/85086450",
+          "scaled_survivor": "1369811/3403458"
+        },
+        {
+          "b": 3,
+          "raw": "122/30375",
+          "survivor": "1369811/425432250",
+          "scaled_survivor": "1369811/3403458"
+        },
+        {
+          "b": 4,
+          "raw": "122/151875",
+          "survivor": "1369811/2127161250",
+          "scaled_survivor": "1369811/3403458"
+        },
+        {
+          "b": 5,
+          "raw": "122/759375",
+          "survivor": "1369811/10635806250",
+          "scaled_survivor": "1369811/3403458"
+        }
+      ],
+      "nested_tests": [
+        {
+          "b": 2,
+          "residue": 20,
+          "survivor": "1369811/85086450"
+        },
+        {
+          "b": 3,
+          "residue": 20,
+          "survivor": "1369811/425432250"
+        },
+        {
+          "b": 4,
+          "residue": 20,
+          "survivor": "1369811/2127161250"
+        },
+        {
+          "b": 5,
+          "residue": 20,
+          "survivor": "1369811/10635806250"
+        }
+      ],
+      "first_five_survivor": "11354/181035",
+      "complete_finite_pure_five_test": "440369008/5317903125",
+      "direct_CRT_period": null
+    }
+  ],
+  "limits": {
+    "mass": "53/360",
+    "deep_coefficient": "2/5",
+    "first_five_cap": "14/225",
+    "full_pure_five_test": "37/450"
+  },
+  "scope": "Explicit actual finite original-label sequence approaching the saturated K face. Complete full-family deep-five coefficient2/5 and independent pure-five test bound37/450 are sharp in this limit. Ordinary infinite-limit proof required; no finite covering, improved global K, Lean theorem or unrestricted Erdos7 solution."
+}

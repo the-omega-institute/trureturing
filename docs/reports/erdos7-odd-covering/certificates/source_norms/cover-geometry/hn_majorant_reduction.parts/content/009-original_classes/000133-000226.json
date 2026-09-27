@@ -1,0 +1,623 @@
+[
+  {
+    "kind": "head",
+    "residue": 19690,
+    "modulus": 1476225,
+    "private_integer": "262452814167632527039986315778076171890"
+  },
+  {
+    "kind": "head",
+    "residue": 6810325,
+    "modulus": 7381125,
+    "private_integer": "1052801377755919207640563624010253906325"
+  },
+  {
+    "kind": "head",
+    "residue": 3857875,
+    "modulus": 36905625,
+    "private_integer": "22173050271388159966607099174072266000"
+  },
+  {
+    "kind": "head",
+    "residue": 173623750,
+    "modulus": 184528125,
+    "private_integer": "1096995344631188484942878307489501955000"
+  },
+  {
+    "kind": "head",
+    "residue": 468868750,
+    "modulus": 922640625,
+    "private_integer": "243142884647734546478180516570312509375"
+  },
+  {
+    "kind": "head",
+    "residue": 99812500,
+    "modulus": 4613203125,
+    "private_integer": "956251730156429304831534627971435593750"
+  },
+  {
+    "kind": "head",
+    "residue": 21320546875,
+    "modulus": 23066015625,
+    "private_integer": "785017598630429758590672885479248281250"
+  },
+  {
+    "kind": "head",
+    "residue": 81292187500,
+    "modulus": 115330078125,
+    "private_integer": "1174439727356923140055574939517579296875"
+  },
+  {
+    "kind": "head",
+    "residue": 496480468750,
+    "modulus": 576650390625,
+    "private_integer": "630364798276407822041663676710699218750"
+  },
+  {
+    "kind": "head",
+    "residue": 1419121093750,
+    "modulus": 2883251953125,
+    "private_integer": "401175725586813457310528895674833984375"
+  },
+  {
+    "kind": "head",
+    "residue": 3149072265625,
+    "modulus": 14416259765625,
+    "private_integer": "500823148495332746324065756994775390625"
+  },
+  {
+    "kind": "head",
+    "residue": 236203,
+    "modulus": 885735,
+    "private_integer": "39796808824083059151837703276123046878"
+  },
+  {
+    "kind": "head",
+    "residue": 3956290,
+    "modulus": 4428675,
+    "private_integer": "446985078813038617805795318222412109390"
+  },
+  {
+    "kind": "head",
+    "residue": 9270700,
+    "modulus": 22143375,
+    "private_integer": "1237333642401325298406372626454589843825"
+  },
+  {
+    "kind": "head",
+    "residue": 102272875,
+    "modulus": 110716875,
+    "private_integer": "206705314916794250732416101618408203500"
+  },
+  {
+    "kind": "head",
+    "residue": 235133125,
+    "modulus": 553584375,
+    "private_integer": "35934822920103463039476543434570314375"
+  },
+  {
+    "kind": "head",
+    "residue": 2006603125,
+    "modulus": 2767921875,
+    "private_integer": "427675149293140637243989519014648446875"
+  },
+  {
+    "kind": "head",
+    "residue": 10863953125,
+    "modulus": 13839609375,
+    "private_integer": "1140783994801835395597343630415771531250"
+  },
+  {
+    "kind": "head",
+    "residue": 13631875000,
+    "modulus": 69198046875,
+    "private_integer": "969549863275835849356481887923584218750"
+  },
+  {
+    "kind": "head",
+    "residue": 235065625000,
+    "modulus": 345990234375,
+    "private_integer": "113379205645838118152173175462647656250"
+  },
+  {
+    "kind": "head",
+    "residue": 304263671875,
+    "modulus": 1729951171875,
+    "private_integer": "814897062921813912807472679155035156250"
+  },
+  {
+    "kind": "head",
+    "residue": 2380205078125,
+    "modulus": 8649755859375,
+    "private_integer": "585707990232219548076337898119169921875"
+  },
+  {
+    "kind": "head",
+    "residue": 12759912109375,
+    "modulus": 43248779296875,
+    "private_integer": "685355413140738837089874759439111328125"
+  },
+  {
+    "kind": "head",
+    "residue": 2302918,
+    "modulus": 2657205,
+    "private_integer": "593393602760301331449264710609130859378"
+  },
+  {
+    "kind": "head",
+    "residue": 11337415,
+    "modulus": 13286025,
+    "private_integer": "1000581872749256890103222325555419921890"
+  },
+  {
+    "kind": "head",
+    "residue": 16651825,
+    "modulus": 66430125,
+    "private_integer": "545337649981052458034588867288330078200"
+  },
+  {
+    "kind": "head",
+    "residue": 176084125,
+    "modulus": 332150625,
+    "private_integer": "760302108853012523029843108951416016000"
+  },
+  {
+    "kind": "head",
+    "residue": 973245625,
+    "modulus": 1660753125,
+    "private_integer": "589531616856321735336903550767578126875"
+  },
+  {
+    "kind": "head",
+    "residue": 6619806250,
+    "modulus": 8303765625,
+    "private_integer": "981271943229358909541416526347656259375"
+  },
+  {
+    "kind": "head",
+    "residue": 1637546875,
+    "modulus": 41518828125,
+    "private_integer": "448788002381562555225559871249511765625"
+  },
+  {
+    "kind": "head",
+    "residue": 59763906250,
+    "modulus": 207594140625,
+    "private_integer": "277553870855563008984698128757324453125"
+  },
+  {
+    "kind": "head",
+    "residue": 350395703125,
+    "modulus": 1037970703125,
+    "private_integer": "666975999582056390449600182795655468750"
+  },
+  {
+    "kind": "head",
+    "residue": 4917466796875,
+    "modulus": 5189853515625,
+    "private_integer": "122901070501541072435688919988775390625"
+  },
+  {
+    "kind": "head",
+    "residue": 22562968750000,
+    "modulus": 25949267578125,
+    "private_integer": "1139304784168437820373764905452177734375"
+  },
+  {
+    "kind": "head",
+    "residue": 84841210937500,
+    "modulus": 129746337890625,
+    "private_integer": "1238952207076957109387301766772119140625"
+  },
+  {
+    "kind": "head",
+    "residue": 6,
+    "modulus": 7,
+    "private_integer": "420123883100548607593465981812255859377"
+  },
+  {
+    "kind": "head",
+    "residue": 15,
+    "modulus": 21,
+    "private_integer": "455660129120288515780479342561279296877"
+  },
+  {
+    "kind": "head",
+    "residue": 30,
+    "modulus": 63,
+    "private_integer": "1195908551730235201744603130311035156252"
+  },
+  {
+    "kind": "head",
+    "residue": 42,
+    "modulus": 49,
+    "private_integer": "911618583572315936248496244318847656252"
+  },
+  {
+    "kind": "head",
+    "residue": 105,
+    "modulus": 147,
+    "private_integer": "1160372305710495293557589769562011718752"
+  },
+  {
+    "kind": "head",
+    "residue": 210,
+    "modulus": 441,
+    "private_integer": "114147332197666531960402451313964843752"
+  },
+  {
+    "kind": "head",
+    "residue": 294,
+    "modulus": 343,
+    "private_integer": "615303127805213898826075782367187500002"
+  },
+  {
+    "kind": "head",
+    "residue": 735,
+    "modulus": 1029,
+    "private_integer": "1110986396415978287320519692570068359377"
+  },
+  {
+    "kind": "head",
+    "residue": 1470,
+    "modulus": 3087,
+    "private_integer": "15375513608632519486262297330078125002"
+  },
+  {
+    "kind": "head",
+    "residue": 2058,
+    "modulus": 2401,
+    "private_integer": "1032280510148481862207554081704101562502"
+  },
+  {
+    "kind": "head",
+    "residue": 5145,
+    "modulus": 7203,
+    "private_integer": "765285031354359243661029153626464843752"
+  },
+  {
+    "kind": "head",
+    "residue": 10290,
+    "modulus": 21609,
+    "private_integer": "569565569841885544836491985942138671877"
+  },
+  {
+    "kind": "head",
+    "residue": 14406,
+    "modulus": 16807,
+    "private_integer": "214343827481884267870269877564697265627"
+  },
+  {
+    "kind": "head",
+    "residue": 36015,
+    "modulus": 50421,
+    "private_integer": "836561048636008163383016914019775390627"
+  },
+  {
+    "kind": "head",
+    "residue": 72030,
+    "modulus": 151263,
+    "private_integer": "712117604405183384280467506728759765627"
+  },
+  {
+    "kind": "head",
+    "residue": 100842,
+    "modulus": 117649,
+    "private_integer": "716750980598156670855334281085205078127"
+  },
+  {
+    "kind": "head",
+    "residue": 252105,
+    "modulus": 352947,
+    "private_integer": "89900383251059488767720470273681640627"
+  },
+  {
+    "kind": "head",
+    "residue": 504210,
+    "modulus": 1058841,
+    "private_integer": "464389059991777147719085385735839843752"
+  },
+  {
+    "kind": "head",
+    "residue": 705894,
+    "modulus": 823543,
+    "private_integer": "496822693342590153743152806230957031252"
+  },
+  {
+    "kind": "head",
+    "residue": 1764735,
+    "modulus": 2470629,
+    "private_integer": "1091239657338874329806699196547363281252"
+  },
+  {
+    "kind": "head",
+    "residue": 3529470,
+    "modulus": 7411887,
+    "private_integer": "1221474821810915717127832071783935546877"
+  },
+  {
+    "kind": "head",
+    "residue": 4941258,
+    "modulus": 5764801,
+    "private_integer": "202917468910115646627093248750488281252"
+  },
+  {
+    "kind": "head",
+    "residue": 12353145,
+    "modulus": 17294403,
+    "private_integer": "627057857814631541064285681467529296877"
+  },
+  {
+    "kind": "head",
+    "residue": 24706290,
+    "modulus": 51883209,
+    "private_integer": "293111222762430139643005041624267578127"
+  },
+  {
+    "kind": "head",
+    "residue": 34588806,
+    "modulus": 40353607,
+    "private_integer": "636766470595776322153097879385742187502"
+  },
+  {
+    "kind": "head",
+    "residue": 86472015,
+    "modulus": 121060821,
+    "private_integer": "1114563620214405357875023375406494140627"
+  },
+  {
+    "kind": "head",
+    "residue": 172944030,
+    "modulus": 363182463,
+    "private_integer": "22529961205486660595269663002929687502"
+  },
+  {
+    "kind": "head",
+    "residue": 242121642,
+    "modulus": 282475249,
+    "private_integer": "1182523909682418825496708760833984375002"
+  },
+  {
+    "kind": "head",
+    "residue": 605304105,
+    "modulus": 847425747,
+    "private_integer": "790325597943348737542554933481445312502"
+  },
+  {
+    "kind": "head",
+    "residue": 1210608210,
+    "modulus": 2542277241,
+    "private_integer": "619646703019864532599543545652099609377"
+  },
+  {
+    "kind": "head",
+    "residue": 1694851494,
+    "modulus": 1977326743,
+    "private_integer": "20454837862951898225141864974609375002"
+  },
+  {
+    "kind": "head",
+    "residue": 4237128735,
+    "modulus": 5931980229,
+    "private_integer": "1011845014758934620553697373004638671877"
+  },
+  {
+    "kind": "head",
+    "residue": 8474257470,
+    "modulus": 17795940687,
+    "private_integer": "1062685536651036298621828424698486328127"
+  },
+  {
+    "kind": "head",
+    "residue": 11863960458,
+    "modulus": 13841287201,
+    "private_integer": "605120839622121196008648959453857421877"
+  },
+  {
+    "kind": "head",
+    "residue": 29659901145,
+    "modulus": 41523861603,
+    "private_integer": "71295359755053576293272916668457031252"
+  },
+  {
+    "kind": "head",
+    "residue": 59319802290,
+    "modulus": 124571584809,
+    "private_integer": "427179012999765322770190278525390625002"
+  },
+  {
+    "kind": "current",
+    "residue": 1,
+    "modulus": 3138428376721,
+    "private_integer": "607210206711874183816393583109619140627"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 0,
+    "residue": 1,
+    "modulus": 13,
+    "q_residue": 1,
+    "r_residue": null,
+    "private_integer": "1194560033478168191722846042772705078127"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 1,
+    "residue": 132,
+    "modulus": 143,
+    "q_residue": 2,
+    "r_residue": null,
+    "private_integer": "907115544318977934953028173580566406252"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 2,
+    "residue": 484,
+    "modulus": 1573,
+    "q_residue": 3,
+    "r_residue": null,
+    "private_integer": "619671055159787678183210304388427734377"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 3,
+    "residue": 7986,
+    "modulus": 17303,
+    "q_residue": 4,
+    "r_residue": null,
+    "private_integer": "332226566000597421413392435196289062502"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 4,
+    "residue": 87846,
+    "modulus": 190333,
+    "q_residue": 5,
+    "r_residue": null,
+    "private_integer": "44782076841407164643574566004150390627"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 5,
+    "residue": 1932612,
+    "modulus": 2093663,
+    "q_residue": 6,
+    "r_residue": null,
+    "private_integer": "1002930374038708020542967463311279296877"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 6,
+    "residue": 10629366,
+    "modulus": 23030293,
+    "q_residue": 7,
+    "r_residue": null,
+    "private_integer": "715485884879517763773149594119140625002"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 7,
+    "residue": 77948684,
+    "modulus": 253333223,
+    "q_residue": 8,
+    "r_residue": null,
+    "private_integer": "428041395720327507003331724927001953127"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 8,
+    "residue": 214358881,
+    "modulus": 2786665453,
+    "q_residue": 9,
+    "r_residue": null,
+    "private_integer": "140596906561137250233513855734863281252"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 9,
+    "residue": 25937424601,
+    "modulus": 30653319983,
+    "q_residue": 10,
+    "r_residue": null,
+    "private_integer": "1098745203758438106132906753041992187502"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 10,
+    "residue": 129687123005,
+    "modulus": 337186519813,
+    "q_residue": 11,
+    "r_residue": null,
+    "private_integer": "811300714599247849363088883849853515627"
+  },
+  {
+    "kind": "pure-future",
+    "depth": 11,
+    "residue": 0,
+    "modulus": 3709051717943,
+    "q_residue": 0,
+    "r_residue": null,
+    "private_integer": "236411736280867335823453145465576171877"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 0,
+    "residue": 0,
+    "modulus": 221,
+    "q_residue": 0,
+    "r_residue": 0,
+    "private_integer": "696200354437792544780100815663330078127"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 1,
+    "residue": 715,
+    "modulus": 2431,
+    "q_residue": 0,
+    "r_residue": 1,
+    "private_integer": "493874055140942779629395698525146484377"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 2,
+    "residue": 6292,
+    "modulus": 26741,
+    "q_residue": 0,
+    "r_residue": 2,
+    "private_integer": "1236743146158622051998805396033691406252"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 3,
+    "residue": 276848,
+    "modulus": 294151,
+    "q_residue": 0,
+    "r_residue": 3,
+    "private_integer": "249532659437718219612232903191894531252"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 4,
+    "residue": 761332,
+    "modulus": 3235661,
+    "q_residue": 0,
+    "r_residue": 4,
+    "private_integer": "160931399296258037617228580484619140627"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 5,
+    "residue": 4187326,
+    "modulus": 35592271,
+    "q_residue": 0,
+    "r_residue": 5,
+    "private_integer": "1237882127033240221244998763762207031252"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 6,
+    "residue": 69090879,
+    "modulus": 391514981,
+    "q_residue": 0,
+    "r_residue": 6,
+    "private_integer": "188791285155195074692759314882080078127"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 7,
+    "residue": 3799998345,
+    "modulus": 4306664791,
+    "q_residue": 0,
+    "r_residue": 7,
+    "private_integer": "665098904641671549544629242252441406252"
+  },
+  {
+    "kind": "mixed-future",
+    "depth": 8,
+    "residue": 5573330906,
+    "modulus": 47373312701,
+    "q_residue": 0,
+    "r_residue": 8,
+    "private_integer": "482490590147010282472751577388427734377"
+  }
+]

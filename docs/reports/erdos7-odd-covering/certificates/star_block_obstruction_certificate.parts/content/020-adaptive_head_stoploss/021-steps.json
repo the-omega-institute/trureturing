@@ -1,0 +1,140 @@
+{
+  "length": 1388,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 99,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000000-000099.json",
+        "sha256": "f9c5c9e5a6274b4852e9c6f4257c6a74c9623f79efca81a8e2bbaf3812e51560",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 99,
+      "stop": 198,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000099-000198.json",
+        "sha256": "d570a7f7958b7a1bf0e7133b2fd6433bb53c2c88f223a15067fc4f94f649d105",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 198,
+      "stop": 297,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000198-000297.json",
+        "sha256": "ce7879475e69b1afcb94d0f2c75ea7630460961ef21b198c76ae1e23a0d7d5db",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 297,
+      "stop": 396,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000297-000396.json",
+        "sha256": "16202722955519141cfbfe868beb195b3757494c01fc3b94853dd857f008cb16",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 396,
+      "stop": 495,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000396-000495.json",
+        "sha256": "747282dbecf7d85578decc0662f4c4ee534a60567adbe6d344c3a86ab886ccd3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 495,
+      "stop": 594,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000495-000594.json",
+        "sha256": "93dee81afaf22a26e31b68a614c56555d5d03bfc0f0cfe7ec55f96251c947f65",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 594,
+      "stop": 693,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000594-000693.json",
+        "sha256": "74dd59af54ee01c3e4f72c3e62c6820d75f4f0f089acd3e17251cb07bf01a8a3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 693,
+      "stop": 792,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000693-000792.json",
+        "sha256": "7f0a84d283aae55f739aee37bbc65bb2acdbad8275b72e6419eaa91376d30983",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 792,
+      "stop": 891,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000792-000891.json",
+        "sha256": "768b21a6b4dd3f5ec9cbe58c65d3729aa7d911853ddbca7412c5c88cdb3f2d2a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 891,
+      "stop": 990,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000891-000990.json",
+        "sha256": "71ea3d4d335a11390d4b650a78cc25f08e2e4585390a001c31336011b093f01a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 990,
+      "stop": 1089,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/000990-001089.json",
+        "sha256": "ff21203a876176dcef71fbc6f45a9337286056bb2fb4ba235012c3bdec9b5325",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1089,
+      "stop": 1188,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/001089-001188.json",
+        "sha256": "02ef368f839851e0ea447669e720d8ba4b2099b89f4b5a58ce8893253baffce3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1188,
+      "stop": 1287,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/001188-001287.json",
+        "sha256": "d0cd80ccbdbd2de950193e2a1ce634ca0ceab5d12fad6b7f94bcf218c84fdaf5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1287,
+      "stop": 1386,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/001287-001386.json",
+        "sha256": "dc76aa1e91da327b6b82e4a1330a030efb918401d4b375082e14e3a9c9e056e2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1386,
+      "stop": 1388,
+      "part": {
+        "path": "content/020-adaptive_head_stoploss/021-steps/001386-001388.json",
+        "sha256": "6fb833311116020d3dd199d183871d05c92fbe96693cb3b64936fc02da382a28",
+        "kind": "value"
+      }
+    }
+  ]
+}

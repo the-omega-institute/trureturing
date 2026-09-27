@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ce10545a5ece5b6969c6897eca653fba54e5c179b54d9bafe64dd768bc16f24
+  normalized_sha256: sha256:3ce10545a5ece5b6969c6897eca653fba54e5c179b54d9bafe64dd768bc16f24
+cas_ref: sha256:3ce10545a5ece5b6969c6897eca653fba54e5c179b54d9bafe64dd768bc16f24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子说明类道整体这一名称及其适用范围，并明确不作哲学或物理同一性断言，属于命名与范围说明。
+    previous_atom_id: 39a6c4c3f8e2e0e09974ff5c45663acaefa60005c3a4b65123c76e00271b69a9
+    next_atom_id: 8248191fee06d09baa00eb3b92c8b15b673ab01e0f1d748f1b76eeea1087f415

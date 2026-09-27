@@ -1,0 +1,28 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "squared-load-stoploss-upper-curve-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One actual seven-phase head law, all complete divisor layouts without requiring compatible residues, the same auxiliary comparison and D7 extension. Minimum only among the retained square thresholds; no arbitrary-phase head theorem."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "records": {
+    "path": "content/003-records.json",
+    "sha256": "3914a3929a44733f6cc4c8dd7415dc51883d094d7d54daca90b5d4875b56fae7",
+    "kind": "array"
+  },
+  "source_sha256": {
+    "path": "content/004-source_sha256.json",
+    "sha256": "01983f506460091eded345d509d38a2ec7860b46472811f05c6110d4e13031cf",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "4789953ee494f35347e38c384884f3117d80385041a0fda8cde2893e9e85e9fc"
+  }
+}

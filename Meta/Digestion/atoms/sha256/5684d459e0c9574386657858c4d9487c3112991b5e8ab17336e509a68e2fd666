@@ -1,0 +1,49 @@
+**theorem 44.3 (Order graphs, conjunction and exact bounds).** Give $\{-,0,+\}$ the discrete topology and let $\sigma(a,b)=\operatorname{sgn}(a-b)$ with these three values. If
+$$
+G_\sigma=\{(Z(a),Z(b),\sigma(a,b)):a,b\in\mathbb N_0\},\qquad
+\Delta_K=\{(x,x):x\in K\},
+$$
+then
+$$
+\overline{G_\sigma}
+=(K^2\times\{-,+\})\ \cup\ (\Delta_K\times\{0\}).
+$$
+For $R_\diamond=\{(Z(a),Z(b)):a\diamond b\}$,
+$$
+\overline{R_<}=\overline{R_>}=\overline{R_\le}=\overline{R_\ge}=K^2,
+\qquad
+\overline{R_=}=\Delta_K.
+$$
+Each strict inequality can realize any two prescribed legal prefixes with both integers above any prescribed threshold. Nevertheless,
+$$
+\overline{R_<\cap R_>}=\varnothing
+\quad\text{but}\quad
+\overline{R_<}\cap\overline{R_>}=K^2.
+$$
+The latter intersection is not an equality assertion. More precisely, the joint comparison graph has closure
+$$
+\overline{\{(Z(a),Z(b),\sigma(a,b),\sigma(b,a)):a,b\in\mathbb N_0\}}
+=
+K^2\times\{(-,+),(+,-)\}
+\ \cup\
+\{(x,x,0,0):x\in K\}.
+$$
+For Boolean comparisons, the graph closures of both $\mathbf1_{a<b}$ and $\mathbf1_{a\le b}$ are $K^2\times\{0,1\}$, whereas the equality-indicator graph has closure
+$$
+(K^2\times\{0\})\cup(\Delta_K\times\{1\}).
+$$
+
+If the second numerical input is held literally equal to $c\in\mathbb N_0$, put $B_c=\{Z(0),\ldots,Z(c-1)\}$, with $B_0=\varnothing$. Then
+$$
+\overline{\{(Z(a),\sigma(a,c)):a\in\mathbb N_0\}}
+=
+(B_c\times\{-\})\cup\{(Z(c),0)\}\cup(K\times\{+\}).
+$$
+In particular, the closed images admitted by $a<c$, $a\le c$, and $a=c$ are respectively $B_c$, $B_{c+1}$, and $\{Z(c)\}$.
+
+**Proof.** Let $U,V$ be the prescribed cylinders and $B$ the threshold. Using the explicit integers in Theorem 44.2, choose $a\ge B$ with $Z(a)\in U$, then choose $b\ge\max(B,a+1)$ with $Z(b)\in V$. This gives $a<b$. For $a>b$, first choose $b\ge B$ in $V$, then $a\ge\max(B,b+1)$ in $U$. Applying these choices to shrinking cylinders proves density of both strict-order strata in $K^2$. The zero stratum is the numerical diagonal; its closure is $\Delta_K$, by density of $Z[\mathbb N_0]$ and closedness of the diagonal in a Hausdorff space. Since the three tags are clopen, their closures combine exactly as displayed. The admitted-relation and Boolean formulas follow by grouping the appropriate strata.
+
+The actual strict relations have empty intersection. Their closed intersection contains, for example, $(0_K,Z(1))$, which does not belong to $\Delta_K$. Thus removing the order obstruction does not identify the inputs. The joint-tag formula follows from $\sigma(b,a)=-\sigma(a,b)$ and the same three stratum closures.
+
+For literal $c$, the negative and zero strata are finite and hence closed. The positive stratum is dense because every cylinder contains an integer greater than $c$. These facts prove all fixed-bound formulas. By contrast, merely requiring $Z(b_j)\to Z(c)$ does not hold $b_j$ equal to $c$: the cofinal constructions remain available in every neighborhood of $Z(c)$. $\square$
+

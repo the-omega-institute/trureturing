@@ -1,0 +1,124 @@
+{
+  "head": {
+    "kind": "inline",
+    "value": "head_divides_315"
+  },
+  "head_period_bound": {
+    "kind": "inline",
+    "value": 315
+  },
+  "head_primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7
+    ]
+  },
+  "tail_prime_lower_bound": {
+    "kind": "inline",
+    "value": 13
+  },
+  "omitted_prime_factors": {
+    "kind": "inline",
+    "value": [
+      2,
+      11
+    ]
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 1021
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 172
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 192
+  },
+  "mixed_head_charge": {
+    "kind": "inline",
+    "value": "49/120"
+  },
+  "head_product_mean": {
+    "kind": "inline",
+    "value": "21/8"
+  },
+  "head_product_second_moment": {
+    "kind": "inline",
+    "value": "399/40"
+  },
+  "threshold_runs": {
+    "path": "content/014-finite_315_tail13_adaptive/012-threshold_runs.json",
+    "sha256": "5b46f23593a52751f215b06e31ee1f0b2539dc923f8264164e0c12195f6eefa6",
+    "kind": "value"
+  },
+  "total_charge_upper": {
+    "kind": "inline",
+    "value": "808205363366166533/1000000000000000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "191794636633833467/1000000000000000000"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "2427619684310180409/250000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "58955750078534228453/125000000000000000"
+  },
+  "supported_Gamma_upper": {
+    "kind": "inline",
+    "value": "470837795264907661091/191794636633833467"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "616354713939123394926331754277098284347/250000000000000000000000000000000000"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "504079581277627654057853973784573988202646959410841049/47948659158458366750000000000000000000000000000000000"
+  },
+  "stopping_bound_method": {
+    "kind": "inline",
+    "value": "Global prime index and verify_finite_continuation.stopping_threshold: exact binary range reduction, 24 positive atanh terms, downward rounding on a 10^-18 grid, positive logarithmic bracket before squaring."
+  },
+  "steps": {
+    "path": "content/014-finite_315_tail13_adaptive/021-steps.json",
+    "sha256": "001e760351e835fbb326feec226178bba880e51c5f4acd64fa367c28fc313e17",
+    "kind": "array"
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "96a475f42a2ed17c3eb5c83bb81d66932125f4830bc4addb3037c2228e0c8f7b"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Distinct odd original moduli with the full-family {3,5,7} head period dividing 315 and every other prime at least 13; the head-height bound includes moduli ending at future primes. No tail support, exponent, graph or prime-count restriction. The comparison and BBMST restart are separate ordinary mathematical inputs. No greedy optimality claim is needed."
+  },
+  "head_heights": {
+    "kind": "inline",
+    "value": [
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        7,
+        1
+      ]
+    ]
+  }
+}

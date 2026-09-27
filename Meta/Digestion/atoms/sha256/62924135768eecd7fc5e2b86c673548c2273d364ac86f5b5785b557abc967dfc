@@ -1,0 +1,24 @@
+**theorem 54.4（有限停止界、模 $p^N$ 精确判据与实际提升）.** 在 theorem 54.2 的二分条件下，令 $N$ 按 definition 54.3 的分支定义，即
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing.
+\end{cases}
+$$
+原始 $p$-进实现存在，当且仅当存在
+$$
+\bar y=(\bar y_1,\ldots,\bar y_m)\in(\mathbb Z/p^N\mathbb Z)^m
+$$
+满足
+$$
+\bar y_c\not\equiv0\pmod p\qquad(1\le c\le m),
+$$
+以及对每条 $e\in E_f$，
+$$
+b_e\bar y\equiv0\pmod{p^{a_e}},
+\qquad
+b_e\bar y\not\equiv0\pmod{p^{a_e+1}}.
+$$
+因此当 $E_f\ne\varnothing$ 时，$N=1+\max a_e$ 是由输入显式给出的充分停止指数；当 $E_f=\varnothing$ 时固定取 $N=1$，不存在未定义的最大值。每个这样的 $\bar y$ 都提升为实际的 $p$-进共同单位解，并且所有无穷标号在提升后仍是精确零和。若 $m=0$，模参数空间是只含空向量的单点集。
+

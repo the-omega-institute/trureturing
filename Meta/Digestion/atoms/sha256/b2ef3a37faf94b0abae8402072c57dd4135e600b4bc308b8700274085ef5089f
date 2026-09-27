@@ -1,0 +1,23 @@
+定义
+
+$$
+p=\|\psi\|^2,\qquad q=\|\phi\|^2,
+\qquad k=|\langle\phi,\psi\rangle|^2,
+$$
+
+以及三参数域
+
+$$
+\mathcal G=\{(p,q,k)\in\mathbb R^3:
+ p,q\ge0,\ 0\le k\le pq\}.
+$$
+
+分支权重不重新归一化，允许 $p=0$ 或 $q=0$。给定有限剩余参数列 $\boldsymbol\beta=(\beta_1,\ldots,\beta_n)$，从该分支对继续执行共同控制及两种记录仪器，记末端延续历史 $w\in\{0,1\}^n$ 的未归一化向量为 $\psi_w,\phi_w$。延续代价是
+
+$$
+\sup_U\sum_{w\in\{0,1\}^n}
+\left|\|\psi_w\|^2-\|\phi_w\|^2\right|.
+$$
+
+这里不乘 $1/2$，并保留原分支的两个权重。下述定理证明此代价只依赖 $(p,q,k)$，记为 $V_{\boldsymbol\beta}(p,q,k)$。
+

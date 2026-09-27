@@ -1,0 +1,825 @@
+{
+  "schema": "erdos7-uniform-square-and-raw81-neighborhood-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/moments-survival/uniform_ap_survival_denominator.py": "181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180",
+    "certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json": "080ecc953d56c722d9026fcc8517fa08dbd67ae7381a5af581c3afc20d48db3a",
+    "frontier/moments-survival/uniform_quadratic_cost_portfolio.py": "5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1",
+    "frontier/comparison-bounds/uniform_k_neighborhood_cost.py": "365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b",
+    "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498",
+    "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
+    "frontier/endpoint-bounds/k_face_complete_ratio.py": "00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160",
+    "certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json": "2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a",
+    "certificates/source_norms/moments-survival/whole_quadratic_same_head.json": "c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/comparison-bounds/uniform_mean_cost_portfolio.py": "ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238",
+    "certificates/source_norms/moments-survival/whole_block_mean_survival.json": "cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json": "59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79",
+    "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+    "frontier/source-budgets/shared_budget_affine_tail.py": "bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd",
+    "frontier/source-budgets/actual_five_slot_source_modulus.py": "4dd89f4919d2150fa27ba405e586f6bfe74f76b6037b934441ca7ff5357afa86",
+    "frontier/moments-survival/complete_off_face_quadratic_cost.py": "f3f4065f5334810da2af00f0f8d29463024ec53e2d7f32d0ffa5d02cc74436da",
+    "frontier/moments-survival/uniform_factorial_neighborhood.py": "f88deae1854a1fc5af0a40a0a3bbf5918c813959145c5d45dcb8cd91a5c31d3c",
+    "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+    "frontier/moments-survival/whole_factorial_same_head.py": "845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24",
+    "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+    "frontier/source-budgets/source_cost_endpoint_attainment.py": "9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2"
+  },
+  "radius_results": [
+    {
+      "parameters": {
+        "delta": "0",
+        "rho": "0",
+        "rbar": "0",
+        "h1min": "1/3",
+        "v0": "0",
+        "v1": "0",
+        "gap": "1/45",
+        "tbar": "2",
+        "Cbar": "15/4",
+        "kbar": "2",
+        "budget_increments": [
+          "0",
+          "0",
+          "0"
+        ],
+        "c": [
+          "7/10",
+          "2/5",
+          "4/15",
+          "4/45"
+        ],
+        "H": [
+          "1/20",
+          "1/10",
+          "1/15",
+          "1/45"
+        ],
+        "positive7": "779/12600"
+      },
+      "square": {
+        "mass_upper": "53/360",
+        "bounded_cylinders": [
+          {
+            "modulus": 3,
+            "face": "7/90",
+            "delta_coefficient": 2,
+            "rho_coefficient": 8,
+            "transported_upper": "7/90",
+            "raw_haar_cap": "1/3",
+            "upper": "7/90",
+            "LCM_weight": 3,
+            "weighted_upper": "7/30"
+          },
+          {
+            "modulus": 9,
+            "face": "1/18",
+            "delta_coefficient": 2,
+            "rho_coefficient": 8,
+            "transported_upper": "1/18",
+            "raw_haar_cap": "1/9",
+            "upper": "1/18",
+            "LCM_weight": 5,
+            "weighted_upper": "5/18"
+          },
+          {
+            "modulus": 5,
+            "face": "14/225",
+            "delta_coefficient": 3,
+            "rho_coefficient": 23,
+            "transported_upper": "14/225",
+            "raw_haar_cap": "1/5",
+            "upper": "14/225",
+            "LCM_weight": 3,
+            "weighted_upper": "14/75"
+          },
+          {
+            "modulus": 15,
+            "face": "8/225",
+            "delta_coefficient": 2,
+            "rho_coefficient": 21,
+            "transported_upper": "8/225",
+            "raw_haar_cap": "1/15",
+            "upper": "8/225",
+            "LCM_weight": 9,
+            "weighted_upper": "8/25"
+          },
+          {
+            "modulus": 45,
+            "face": "4/225",
+            "delta_coefficient": 2,
+            "rho_coefficient": 21,
+            "transported_upper": "4/225",
+            "raw_haar_cap": "1/45",
+            "upper": "4/225",
+            "LCM_weight": 15,
+            "weighted_upper": "4/15"
+          }
+        ],
+        "complete_weighted_tails": [
+          {
+            "family": "pure3",
+            "prime": 3,
+            "start": 3,
+            "raw": "3/4",
+            "branches": [
+              [
+                "7/10",
+                "0",
+                "1/20"
+              ]
+            ],
+            "LCM_multiplier": 1,
+            "crossing": null,
+            "reference_weighted_sum": "14/45",
+            "error_weighted_sum": "0",
+            "upper": "14/45"
+          },
+          {
+            "family": "pure5",
+            "prime": 5,
+            "start": 2,
+            "raw": "1/2",
+            "branches": [
+              [
+                "2/5",
+                "0",
+                "1/10"
+              ]
+            ],
+            "LCM_multiplier": 1,
+            "crossing": null,
+            "reference_weighted_sum": "11/100",
+            "error_weighted_sum": "0",
+            "upper": "11/100"
+          },
+          {
+            "family": "root5",
+            "prime": 5,
+            "start": 2,
+            "raw": "1/3",
+            "branches": [
+              [
+                "4/15",
+                "0",
+                "1/15"
+              ]
+            ],
+            "LCM_multiplier": 3,
+            "crossing": null,
+            "reference_weighted_sum": "11/50",
+            "error_weighted_sum": "0",
+            "upper": "11/50"
+          },
+          {
+            "family": "cell5",
+            "prime": 5,
+            "start": 2,
+            "raw": "1/9",
+            "branches": [
+              [
+                "4/45",
+                "0",
+                "1/45"
+              ]
+            ],
+            "LCM_multiplier": 5,
+            "crossing": null,
+            "reference_weighted_sum": "11/90",
+            "error_weighted_sum": "0",
+            "upper": "11/90"
+          }
+        ],
+        "complete_mixed_pair_sum": "7/18",
+        "zero7_pair_upper": "4651/1800",
+        "raw_cap_order": [
+          "s",
+          "N3",
+          "N9",
+          "D",
+          "h",
+          "h1",
+          "eta_max",
+          "deep_mixed"
+        ],
+        "raw_cap_upper": [
+          "1/4",
+          "5/36",
+          "1/12",
+          "3/4",
+          "1/2",
+          "1/3",
+          "1/9",
+          "1"
+        ],
+        "raw_LCM_weights": [
+          "1",
+          "3",
+          "5",
+          "4/9",
+          "7/8",
+          "21/8",
+          "35/8",
+          "7/18"
+        ],
+        "raw35_pair_upper": "173/48",
+        "positive7_factor": "2/3",
+        "full_square_upper": "374/75",
+        "face_square_upper": "374/75",
+        "square_excess": "0"
+      },
+      "raw81": {
+        "index": 46,
+        "tag": [
+          "s",
+          "81"
+        ],
+        "source_prices": {
+          "tag": [
+            "s",
+            "81"
+          ],
+          "mass_L1": "7764926/28824005",
+          "pure_L1": "57201/9800",
+          "availability_Linfinity": "306266/1607445",
+          "separate_source_mass_price": "46/28824005",
+          "finite_seven_blocks": [
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  0
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "13833/4900",
+              "availability_Linfinity": "120128/1607445",
+              "positive_five_pure_price": "11699656615119/6433929687500",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  1
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "4437/1960",
+              "availability_Linfinity": "18/245",
+              "positive_five_pure_price": "28508258111/20588575000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  2
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "171/280",
+              "availability_Linfinity": "76/2205",
+              "positive_five_pure_price": "304922927/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  3
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "45/392",
+              "availability_Linfinity": "20/3087",
+              "positive_five_pure_price": "62469947/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  4
+                ]
+              ],
+              "mass_L1": "632417/41177150",
+              "pure_L1": "279/13720",
+              "availability_Linfinity": "124/108045",
+              "positive_five_pure_price": "11620883/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  5
+                ]
+              ],
+              "mass_L1": "24877/8235430",
+              "pure_L1": "333/96040",
+              "availability_Linfinity": "148/756315",
+              "positive_five_pure_price": "409531/164708600",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  6
+                ]
+              ],
+              "mass_L1": "893/1647086",
+              "pure_L1": "387/672280",
+              "availability_Linfinity": "172/5294205",
+              "positive_five_pure_price": "69331/164708600",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  7
+                ]
+              ],
+              "mass_L1": "1067/11529602",
+              "pure_L1": "9/96040",
+              "availability_Linfinity": "4/756315",
+              "positive_five_pure_price": "79993/1152960200",
+              "polynomial_cutoff": 9
+            }
+          ],
+          "full_monomial_tail": {
+            "coefficient": "4/1764735",
+            "prices": {
+              "tag": [
+                "s",
+                "0"
+              ],
+              "mass_L1": "9",
+              "pure_L1": "63/8",
+              "availability_Linfinity": "4/9",
+              "positive_five_pure_price": "243/40",
+              "polynomial_cutoff": 2
+            }
+          }
+        },
+        "delta_price": "7726415908741/7564571872200",
+        "face_vertex_indices": [
+          398,
+          410,
+          422,
+          616,
+          628,
+          640
+        ],
+        "face_vertex_values": [
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000"
+        ],
+        "face_upper": "646314683124386207/393988118343750000",
+        "uniform_upper": "646314683124386207/393988118343750000",
+        "uniform_excess": "0",
+        "outside_weight": "316/429"
+      },
+      "full_square_outside_weight": "2061512697931813067/15514910048663625600",
+      "weighted_upper": "6876179817427182247996148468699/3675258667836412093812375000000",
+      "weighted_face_upper": "6876179817427182247996148468699/3675258667836412093812375000000",
+      "weighted_excess": "0"
+    },
+    {
+      "parameters": {
+        "delta": "1/10000",
+        "rho": "1/100000",
+        "rbar": "1/20000",
+        "h1min": "59999/180000",
+        "v0": "7/40000",
+        "v1": "539997/2399960000",
+        "gap": "9977/450000",
+        "tbar": "10001/4998",
+        "Cbar": "60002/15997",
+        "kbar": "59999/29998",
+        "budget_increments": [
+          "16667/2400000000",
+          "1/360000",
+          "1/40000"
+        ],
+        "c": [
+          "28001/40000",
+          "360013/900000",
+          "40001/150000",
+          "40001/450000"
+        ],
+        "H": [
+          "25052499/500000000",
+          "150031667/1500000000",
+          "6001/90000",
+          "800119999/36000000000"
+        ],
+        "positive7": "259789/4200000"
+      },
+      "square": {
+        "mass_upper": "132559/900000",
+        "bounded_cylinders": [
+          {
+            "modulus": 3,
+            "face": "7/90",
+            "delta_coefficient": 2,
+            "rho_coefficient": 8,
+            "transported_upper": "17563/225000",
+            "raw_haar_cap": "1/3",
+            "upper": "17563/225000",
+            "LCM_weight": 3,
+            "weighted_upper": "17563/75000"
+          },
+          {
+            "modulus": 9,
+            "face": "1/18",
+            "delta_coefficient": 2,
+            "rho_coefficient": 8,
+            "transported_upper": "12563/225000",
+            "raw_haar_cap": "1/9",
+            "upper": "12563/225000",
+            "LCM_weight": 5,
+            "weighted_upper": "12563/45000"
+          },
+          {
+            "modulus": 5,
+            "face": "14/225",
+            "delta_coefficient": 3,
+            "rho_coefficient": 23,
+            "transported_upper": "56477/900000",
+            "raw_haar_cap": "1/5",
+            "upper": "56477/900000",
+            "LCM_weight": 3,
+            "weighted_upper": "56477/300000"
+          },
+          {
+            "modulus": 15,
+            "face": "8/225",
+            "delta_coefficient": 2,
+            "rho_coefficient": 21,
+            "transported_upper": "32369/900000",
+            "raw_haar_cap": "1/15",
+            "upper": "32369/900000",
+            "LCM_weight": 9,
+            "weighted_upper": "32369/100000"
+          },
+          {
+            "modulus": 45,
+            "face": "4/225",
+            "delta_coefficient": 2,
+            "rho_coefficient": 21,
+            "transported_upper": "16369/900000",
+            "raw_haar_cap": "1/45",
+            "upper": "16369/900000",
+            "LCM_weight": 15,
+            "weighted_upper": "16369/60000"
+          }
+        ],
+        "complete_weighted_tails": [
+          {
+            "family": "pure3",
+            "prime": 3,
+            "start": 3,
+            "raw": "375064999/500000000",
+            "branches": [
+              [
+                "28001/40000",
+                "59999/2999800000",
+                "25052499/500000000"
+              ]
+            ],
+            "LCM_multiplier": 1,
+            "crossing": 8,
+            "reference_weighted_sum": "28001/90000",
+            "error_weighted_sum": "264497668889/202486500000000",
+            "upper": "63262547518889/202486500000000"
+          },
+          {
+            "family": "pure5",
+            "prime": 5,
+            "start": 2,
+            "raw": "2250160001/4500000000",
+            "branches": [
+              [
+                "360013/900000",
+                "1/96000",
+                "150031667/1500000000"
+              ]
+            ],
+            "LCM_multiplier": 1,
+            "crossing": 6,
+            "reference_weighted_sum": "3960143/36000000",
+            "error_weighted_sum": "16550855009/37500000000000",
+            "upper": "12425099440027/112500000000000"
+          },
+          {
+            "family": "root5",
+            "prime": 5,
+            "start": 2,
+            "raw": "18751/56250",
+            "branches": [
+              [
+                "40001/150000",
+                "1/100000",
+                "6001/90000"
+              ]
+            ],
+            "LCM_multiplier": 3,
+            "crossing": 6,
+            "reference_weighted_sum": "440011/2000000",
+            "error_weighted_sum": "294009/250000000",
+            "upper": "6911923/31250000"
+          },
+          {
+            "family": "cell5",
+            "prime": 5,
+            "start": 2,
+            "raw": "4000199999/36000000000",
+            "branches": [
+              [
+                "40001/450000",
+                "1/100000",
+                "800119999/36000000000"
+              ]
+            ],
+            "LCM_multiplier": 5,
+            "crossing": 5,
+            "reference_weighted_sum": "440011/3600000",
+            "error_weighted_sum": "56202759977/36000000000000",
+            "upper": "1485437586659/12000000000000"
+          }
+        ],
+        "complete_mixed_pair_sum": "7/18",
+        "zero7_pair_upper": "105379357163170886077/40497300000000000000",
+        "raw_cap_order": [
+          "s",
+          "N3",
+          "N9",
+          "D",
+          "h",
+          "h1",
+          "eta_max",
+          "deep_mixed"
+        ],
+        "raw_cap_upper": [
+          "5001/20000",
+          "25009/180000",
+          "5003/60000",
+          "30001/40000",
+          "90001/180000",
+          "1/3",
+          "1/9",
+          "1"
+        ],
+        "raw_LCM_weights": [
+          "1",
+          "3",
+          "5",
+          "4/9",
+          "7/8",
+          "21/8",
+          "35/8",
+          "7/18"
+        ],
+        "raw35_pair_upper": "5190671/1440000",
+        "positive7_factor": "2/3",
+        "full_square_upper": "67565983358140295359/13499100000000000000",
+        "face_square_upper": "374/75",
+        "square_excess": "250471358140295359/13499100000000000000"
+      },
+      "raw81": {
+        "index": 46,
+        "tag": [
+          "s",
+          "81"
+        ],
+        "source_prices": {
+          "tag": [
+            "s",
+            "81"
+          ],
+          "mass_L1": "7764926/28824005",
+          "pure_L1": "57201/9800",
+          "availability_Linfinity": "306266/1607445",
+          "separate_source_mass_price": "46/28824005",
+          "finite_seven_blocks": [
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  0
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "13833/4900",
+              "availability_Linfinity": "120128/1607445",
+              "positive_five_pure_price": "11699656615119/6433929687500",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  1
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "4437/1960",
+              "availability_Linfinity": "18/245",
+              "positive_five_pure_price": "28508258111/20588575000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  2
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "171/280",
+              "availability_Linfinity": "76/2205",
+              "positive_five_pure_price": "304922927/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  3
+                ]
+              ],
+              "mass_L1": "2577227/41177150",
+              "pure_L1": "45/392",
+              "availability_Linfinity": "20/3087",
+              "positive_five_pure_price": "62469947/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  4
+                ]
+              ],
+              "mass_L1": "632417/41177150",
+              "pure_L1": "279/13720",
+              "availability_Linfinity": "124/108045",
+              "positive_five_pure_price": "11620883/823543000",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  5
+                ]
+              ],
+              "mass_L1": "24877/8235430",
+              "pure_L1": "333/96040",
+              "availability_Linfinity": "148/756315",
+              "positive_five_pure_price": "409531/164708600",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  6
+                ]
+              ],
+              "mass_L1": "893/1647086",
+              "pure_L1": "387/672280",
+              "availability_Linfinity": "172/5294205",
+              "positive_five_pure_price": "69331/164708600",
+              "polynomial_cutoff": 9
+            },
+            {
+              "tag": [
+                "seven_block",
+                [
+                  [
+                    "s",
+                    "81"
+                  ],
+                  7
+                ]
+              ],
+              "mass_L1": "1067/11529602",
+              "pure_L1": "9/96040",
+              "availability_Linfinity": "4/756315",
+              "positive_five_pure_price": "79993/1152960200",
+              "polynomial_cutoff": 9
+            }
+          ],
+          "full_monomial_tail": {
+            "coefficient": "4/1764735",
+            "prices": {
+              "tag": [
+                "s",
+                "0"
+              ],
+              "mass_L1": "9",
+              "pure_L1": "63/8",
+              "availability_Linfinity": "4/9",
+              "positive_five_pure_price": "243/40",
+              "polynomial_cutoff": 2
+            }
+          }
+        },
+        "delta_price": "7726415908741/7564571872200",
+        "face_vertex_indices": [
+          398,
+          410,
+          422,
+          616,
+          628,
+          640
+        ],
+        "face_vertex_values": [
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000",
+          "646314683124386207/393988118343750000"
+        ],
+        "face_upper": "646314683124386207/393988118343750000",
+        "uniform_upper": "15512518196973861593/9455714840250000000",
+        "uniform_excess": "7726415908741/75645718722000000",
+        "outside_weight": "316/429"
+      },
+      "full_square_outside_weight": "2061512697931813067/15514910048663625600",
+      "weighted_upper": "8724745916565483803958287523733984217307106033/4656977298030042585185356330560000000000000000",
+      "weighted_face_upper": "6876179817427182247996148468699/3675258667836412093812375000000",
+      "weighted_excess": "11831751592734707653878898821247108827106033/4656977298030042585185356330560000000000000000"
+    }
+  ],
+  "scope": "Complete source-uniform square complement and original raw81 index46 on134 K neighborhood, both orientations and whole beta face. Square uses139 surviving cylinder caps plus complete weighted tails and raw positive-seven pair caps. Raw81 retains84 adopted convex source controller via140 Lipschitz bound. Both recover exact adopted face values. Ordinary proof plus rational arithmetic; no Lean, global K or unrestricted Erdos7 result."
+}

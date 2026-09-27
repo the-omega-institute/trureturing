@@ -1,0 +1,57 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 23
+  },
+  "name": {
+    "kind": "inline",
+    "value": "R19"
+  },
+  "tuple": {
+    "kind": "inline",
+    "value": [
+      1,
+      0
+    ]
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "15/17"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "2": "5142405216043889/5607559517759199",
+      "3": "11116090/34783749",
+      "4": "35155/7371",
+      "1": "374092820950987/3738373011839466"
+    }
+  },
+  "at_one": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "10533141751537065365461/7418801241995420277000"
+  },
+  "exhaustive_vertices": {
+    "path": "content/006-cost_results/000006/item/007-exhaustive_vertices.json",
+    "sha256": "1920aedcc97187673afd460c507cf36c47d285c7dfd7a98af533e66b1f39de03",
+    "kind": "value"
+  },
+  "cut_candidates": {
+    "path": "content/006-cost_results/000006/item/008-cut_candidates.json",
+    "sha256": "d2e4855e399852f04490d1b583e8221fc2ea0d827cad029353b090ec710332f3",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/006-cost_results/000006/item/009-selected_support.json",
+    "sha256": "9389026b9bf4aae5d7d0310e0ca22247025f0a662413217409454d3eea0d29f5",
+    "kind": "value"
+  },
+  "individual_uniform_excess": {
+    "kind": "inline",
+    "value": "71317456459485701162544461749404731/44512065571848322119972300000000000000"
+  }
+}

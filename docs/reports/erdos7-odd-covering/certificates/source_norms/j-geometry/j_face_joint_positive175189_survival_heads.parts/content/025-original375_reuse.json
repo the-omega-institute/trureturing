@@ -1,0 +1,33 @@
+{
+  "branch_reuse_count": {
+    "kind": "inline",
+    "value": 104
+  },
+  "bounded_leaf_count": {
+    "kind": "inline",
+    "value": 54
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 1345864
+  },
+  "branch_batches": {
+    "path": "content/025-original375_reuse/003-branch_batches.json",
+    "sha256": "f43a7c4d5e78eec9e28780407410f59a94a390570468f3835c81104a79b84ba5",
+    "kind": "array"
+  },
+  "bounded_leaf_batches": {
+    "path": "content/025-original375_reuse/004-bounded_leaf_batches.json",
+    "sha256": "1a4a8418888a8231e77c507ac3af7fbeda676cdfa27e3d192f5f5d256689138a",
+    "kind": "array"
+  },
+  "remaining_leaf_batches": {
+    "path": "content/025-original375_reuse/005-remaining_leaf_batches.json",
+    "sha256": "d1eabcd153d39398ff980e9eb07a7b598e4e973bfe94348ec78bdad99b3dc246",
+    "kind": "array"
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "82d552873fbb01c35e23ad26345da237ea1113c37f5353406e27a808d3b15ab9"
+  }
+}

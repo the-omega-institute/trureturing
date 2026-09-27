@@ -1,0 +1,44 @@
+**命题 78.3（混合前缀与常值观察的两种边界）。** 在 $X=\{0,1\}^{\mathbb N}$ 的 Borel 空间上用长度 $L$ 的前缀分区，令 $\nu_p$ 是各坐标独立且取一概率为 $p$ 的 Bernoulli 乘积律，并取
+$$
+\mu=a\delta_{0^\infty}+(1-a)\nu_p,
+\qquad 0\le a<1,\qquad0<p<1.
+$$
+当 $0<a<1$ 时，完整观察律唯一的正原子为 $0^\infty$，质量为 $a$，故
+$$
+R_{\mathrm{at}}=a|e_{0^\infty}\rangle\langle e_{0^\infty}|,
+\qquad
+\|R_L-R_{\mathrm{at}}\|_1\longrightarrow1-a;
+$$
+而每个有限 $L$ 的 $R_L-R_{\mathrm{at}}$ 都不是正算子。当 $a=0$ 时，$R_{\mathrm{at}}=0$，并有
+$$
+\|R_L\|_{\mathrm{op}}=\max(p,1-p)^L,\qquad
+\operatorname{Tr}(R_L^2)=[p^2+(1-p)^2]^L,\qquad
+\operatorname{Tr}R_L=1.
+$$
+特别地，$a=0,p=1/2$ 时 $R_L=2^{-L}\Pi_L$；固定紧测试 $J=|\mathbf1\rangle\langle\mathbf1|$ 满足
+$$
+\operatorname{Tr}(R_LJ)=2^{-L}\longrightarrow0,
+\qquad \operatorname{Tr}(J^2)=1,
+$$
+尽管 $R_L$ 与 $J$ 对全部乘法算子的读数相同。
+
+若环境改为 $[0,1]$ 上的 Lebesgue 概率而每个 $q_L$ 都恒定，则完整观察律只有一个质量一的原子，$H_{\mathrm{obs}}=\mathbb C\mathbf1$，并且所有 $R_L=J$。所以环境无点原子本身不能推出胞腔态趋于零。
+
+证明。二进制前缀分离点并生成 Borel $\sigma$ 代数。任一单点的 $\nu_p$ 质量不超过 $\max(p,1-p)^L$ 对所有 $L$ 成立，因而为零。这证明混合律的原子断言，定理 78.2 随即给出精确缺口。对 $0<a<1$，令 $C_L^0$ 为全零前缀胞腔，$b_L=(1-a)(1-p)^L>0$。在正交单位向量
+$$
+e_{0^\infty}=a^{-1/2}\mathbf1_{\{0^\infty\}},
+\qquad b_L^{-1/2}\mathbf1_{C_L^0\setminus\{0^\infty\}}
+$$
+张成的二维空间上，$R_L-R_{\mathrm{at}}$ 的压缩矩阵为
+$$
+\begin{pmatrix}
+0&\sqrt{ab_L}\\
+\sqrt{ab_L}&b_L
+\end{pmatrix}.
+$$
+其行列式为 $-ab_L<0$，故它有负特征值，差算子不正。
+
+当 $a=0$ 时，含 $k$ 个一的长度 $L$ 胞腔质量为 $p^k(1-p)^{L-k}$。正交胞腔谱的最大值给出算子范数，平方和按二项式定理给出所列纯度。公平情形每个权重为 $2^{-L}$，故 $R_L=2^{-L}\Pi_L$。由于 $\mathbf1\in H_L$，$\operatorname{Tr}(R_LJ)=\langle\mathbf1,R_L\mathbf1\rangle=2^{-L}$；$J^2=J$ 给出另一读数。全部乘法读数的一致性由定理 78.2 的两个精确等式给出。
+
+常值观察时，每层实际分区只有胞腔 $X$，完整标签也只有一个取值，其纤维为整个 $[0,1]$，质量为一。指示函数构造因此给出 $H_{\mathrm{obs}}=\mathbb C\mathbf1$ 及固定算子 $R_L=J$；Lebesgue 测度的每个环境单点质量仍为零。证毕。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:45c2529abd2fb4c230071cf539da1338c1ad0406baf0c41820bb06845bec6fce
+  normalized_sha256: sha256:45c2529abd2fb4c230071cf539da1338c1ad0406baf0c41820bb06845bec6fce
+cas_ref: sha256:45c2529abd2fb4c230071cf539da1338c1ad0406baf0c41820bb06845bec6fce
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/ConstantObserverClosureContrast.constant_observer_closure_can_be_coarse
+    target_statement_id: sha256:970962dda21c1ff534296deb3522f310f2ff94932a093745c6074a5b521d58a0
+receipts:
+  unresolved_subitems: []

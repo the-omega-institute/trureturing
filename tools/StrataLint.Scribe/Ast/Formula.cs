@@ -70,7 +70,7 @@ public enum FormulaLatexMacro
     Infty, Int, Iota, Kappa, Ker, LambdaLower, Land, Langle, Le, Left, Leq,
     Lfloor, Lim, Log, Longrightarrow, Lor, Lvert, Mapsto, Mathbb, Mathbf,
     Mathcal, Mathrm, Max, Mid, Middle, Min, Mu, Neg, Neq, Nu, Omega,
-    Operatorname, Overline, Perp, Phi, Pi, Pm, Prod, Psi, Qquad, Quad,
+    Operatorname, Overline, Perp, Phi, Pi, Pm, Pmod, Prod, Psi, Qquad, Quad,
     Rangle, Rfloor, Rho, Right, Rvert, Setminus, SigmaLower, Sim, Sin, Sqrt,
     Subset, Subseteq, Sum, Tau, Text, Theta, Times, To, Varepsilon,
     Varnothing, Varphi, Widehat, Widetilde, Xi, Zeta,

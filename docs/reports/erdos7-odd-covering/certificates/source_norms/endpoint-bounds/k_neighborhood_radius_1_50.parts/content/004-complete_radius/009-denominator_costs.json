@@ -1,0 +1,50 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-complete_radius/009-denominator_costs/000000-000001.json",
+        "sha256": "777f6399ed9fe551fac7eb678302f92cf22843af31c008a540b0cd6b2bdc9d3d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-complete_radius/009-denominator_costs/000001-000002.json",
+        "sha256": "cfb670a5e4c3df2095e4dda1aa25fc79e1b0f13dd2cad1e8edaf6f8eccf5591a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-complete_radius/009-denominator_costs/000002-000003.json",
+        "sha256": "2fe0e84e512a1763a196c709780a2e325a9fe15438d4ba91fb08bf202934980a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-complete_radius/009-denominator_costs/000003-000004.json",
+        "sha256": "6fcff9fff18ea060487e5df2c44aece62ff1855c3af50e92f45daaf96aa109bb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-complete_radius/009-denominator_costs/000004-000005.json",
+        "sha256": "dbc94826b938dd7a519576c6dd8db6d2974730d4e0d9f4e2882b5dcaa7517b07",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+**定理 47.3（唯一非零加法幂等元与自然锚的无参数定义）。** 在纯幺半环语言
+$$
+L_{\mathrm{sr}}=\{0,1,+,\cdot\}
+$$
+中，常量在 $K$ 内解释为 $0_K,1_K$。令
+$$
+E(z)\Longleftrightarrow z+z=z\land z\ne0.
+$$
+则 $K\models E(z)$ 恰有一个解，即 $e$。此外，
+$$
+B=\{x\in K:e+x=x\},\qquad
+A=\{x\in K:e+x\ne x\}.
+$$
+这两个集合均无参数一阶可定义；具体公式为
+$$
+B(x)\Longleftrightarrow\exists z\,(E(z)\land z+x=x),
+$$
+$$
+N(x)\Longleftrightarrow\exists z\,(E(z)\land z+x\ne x).
+$$
+

@@ -23,22 +23,17 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void ColdBuildBudgetReviewLineIsPinnedToTheAdjudicatedValue()
     {
-        Assert.Equal(8013, StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
+        Assert.Equal(8013, StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
     }
 
     /// <summary>
     /// D5 内容层模块数尚未达到
-    /// <see cref="StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount"/>。
+    /// <see cref="StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount"/>。
     ///
     /// **在本类之前那条线没有任何观察者** —— 2026-08-26 实测 `grep -rnw 2672` 全仓 0 命中,
     /// 阳性对照 `grep -rnw 7200` 得 7 条,证明探针有效,故那个 0 是阴性证据而非坏探针。
     ///
-    /// **为什么用 <see cref="GitIndexRepositoryFiles"/> 而不是目录枚举**:
-    /// `ScribeTestMapDeriver.InspectMethod:338` 对**任何** `EnumerateFiles` 调用无条件记
-    /// `TestMapUnknownReason.DirectoryEnumeration`,而 `ScribeUnknownDebtPolicy` 对**每个**新增
-    /// unknown identity 直接 Block(**不是**撞 280 上限才 Block)。本条的第一版正是这样被
-    /// admission 判红的。改用 git index 同时消掉了另一处口径差:`Directory.EnumerateFiles`
-    /// 的递归枚举**跟随目录符号链接**,而 `find` 与 git index 都不跟随。
+    /// Git index enumeration counts tracked files without following directory symlinks.
     ///
     /// **红了怎么办**:不要改那个数让它变绿(那由上一条测试拦住),也不要删本测试。
     /// 按 #2535 重新把预算收口到三型之一,或按 #3029 的五条开建条件建拦全量冷建的门,
@@ -89,11 +84,11 @@ public sealed class ColdBuildBudgetReviewLineTests
             "`.lean` 集合不可能大于它所属的 D5 tracked 集合 —— 枚举自相矛盾。");
 
         Assert.True(
-            leanFiles.Length < StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
+            leanFiles.Length < StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
             $"D5 内容层已有 {leanFiles.Length} 个模块,达到或越过 #3029 裁定的复审触发线 "
-            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount}:"
+            + $"{StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount}:"
             + "全量冷建的预计耗时已越过 "
-            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s 预算的 80% 线,"
+            + $"{StrataLint.EngineeringScope.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s 预算的 80% 线,"
             + "该 policy-override 的取值依据失效,其「非永久」声明到期。"
             + "按 https://github.com/the-omega-institute/trureturing/issues/2535 重新按三型收口,"
             + "或按 #3029 的五条开建条件建拦全量冷建的门。");
@@ -145,20 +140,8 @@ public sealed class ColdBuildBudgetReviewLineTests
     /// 手写的 `StartsWith` 谓词代表正确的前缀语义、`RelativePath` 足以代表被比较的对象、
     /// 两次枚举观察的是同一稳定快照。这几条此前一条都没列出来。
     ///
-    /// **为什么不在这里解决**:任何住在 `tools/tests/**` 的独立比对若也调 `Enumerate`,
-    /// 就与被测对象同源;改用**目录遍历**则撞 `TestMapUnknownReason.DirectoryEnumeration`
-    /// 的 unknown 棘轮(对每个新增 unknown identity 直接 Block)。
-    ///
-    /// **但这两条不构成穷尽论证**(第六轮评审补正):还有第三条路 ——
-    /// **用已知 tracked 条目的合成 git fixture 直接钉住 Engine 的单文件行为**,
-    /// 或使用独立的 git-index oracle,两者都不需要目录遍历。
-    /// 故「不在本文件解决」是一个**测试归属选择**,不是由 unknown 棘轮推出的技术必然。
-    /// 那条路记在 #3833 的候选修法里。
-    ///
-    /// **为什么单独一条测试而不并进上面那条**:本测试调无前缀的 `Enumerate`,
-    /// deriver 因此把它归因为**整仓**;而上面那条必须保持 `D5` 归因,
-    /// 否则它对 D5-only 变更的可达性就没了(那是第二轮评审实测过的缺口)。
-    /// 两条各自归因,互不污染。
+    /// This test checks the wrapper against the Engine enumerator. Independent tracked-file
+    /// completeness is a separate obligation recorded in #3833.
     /// </summary>
     [Fact]
     public void EnumerateDeclaredReturnsEveryTrackedFileUnderThePrefix()

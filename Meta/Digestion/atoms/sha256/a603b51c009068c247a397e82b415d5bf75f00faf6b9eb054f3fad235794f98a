@@ -1,0 +1,36 @@
+**命题 69.3a（稳定历史词与完成信息分解）。** 设 $Y,O$ 有限非空，$\tau:Y\to Y$，$q:Y\to O$，$W_k=(q,q\circ\tau,\ldots,q\circ\tau^k)$。选定满足 $\ker W_d=\ker W_{d+1}$ 的深度 $d$。设初始权重为 $p:Y\to\mathbb R$，满足 $p(y)\ge0$ 且 $\sum_y p(y)=1$。令 $Y_0$ 按 $p$ 分布；本节 $H(W_d)$ 简记随机变量 $W_d(Y_0)$ 的熵，条件熵也均由同一 $Y_0$ 的联合律计算。有限 Shannon 链式法则给出
+$$
+\boxed{
+H(W_d)=H(W_0)+\sum_{k<d}H(q\circ\tau^{k+1}\mid W_k).
+}
+$$
+每个增量
+$$
+H(q\circ\tau^{k+1}\mid W_k)
+$$
+就是在已有历史后再加入一格读数所付出的平均区分成本；它为零时，该层没有增加新的预测信息。
+
+定义完整未来等价关系为
+$$
+y\sim_{\tau,q}y'\quad\Longleftrightarrow\quad
+q(\tau^ny)=q(\tau^ny')\quad\forall n\ge0,
+$$
+令 $\operatorname{CompletedState}(\tau,q)=Y/{\sim_{\tau,q}}$，投影为 $c:Y\to\operatorname{CompletedState}(\tau,q)$。当指定深度 $d$ 满足
+$$
+\ker W_d=\ker W_{d+1},
+$$
+便有规范双射
+$$
+\operatorname{range}(W_d)\simeq\operatorname{CompletedState}(\tau,q),
+$$
+将 $W_d(y)$ 映到 $c(y)$。项目
+D5/S3/Entropy/Observation/CompletionInformationChainDecomposition.lean
+中的 stableObservationCompletionEquiv 与 completion_information_chain_decomposition 给出这一双射及信息分解。对完成随机变量 $C=c(Y_0)$，有
+$$
+\boxed{
+H(C\mid W_0(Y_0))
+= \sum_{k<d}H(q\circ\tau^{k+1}\mid W_k).
+}
+$$
+这里的完成不是把任意局部描述强行拼起来，而是把所有规定的未来读数放进同一个相容商。
+

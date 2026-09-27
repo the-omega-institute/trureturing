@@ -1,0 +1,83 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-joint-selected-heads-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
+      "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+      "frontier/source-budgets/joint_selected_source_comparison.py": "849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8",
+      "frontier/retained-transport/retained_deletion_heavy_comparison.py": "553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f",
+      "frontier/j-geometry/j_face_joint_selected_heads.py": "77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b",
+      "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab",
+      "profile-notes/257-320/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "ff1ed4852f7eb16e40b587aa4f1de491e39d335475f515c33edd965860931f3d",
+      "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c82d4369189cbe84daa37b97a89e80d7f300bbdc0fcf132de9b334dd5d42128b",
+      "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f"
+    }
+  },
+  "domain": {
+    "kind": "inline",
+    "value": "Actual completed aligned312 endpoint qJ=1,rho=2/675,original45 and135 in one root1 cell; uniform limiting statement for actual finite sources approaching this endpoint."
+  },
+  "actual_source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "actual_survivor_mass": {
+    "kind": "inline",
+    "value": "413/2700"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "293/450"
+  },
+  "model": {
+    "path": "content/006-model.json",
+    "sha256": "00735ef04d2511b3e3242e86969f9dbbb6c2e414ff672305b03078a4e2211371",
+    "kind": "value"
+  },
+  "actual_nonempty_embedding": {
+    "path": "content/007-actual_nonempty_embedding.json",
+    "sha256": "871641a79ddd884ee29ee3ae335fc513f496d5c5b8d1d782d2365d87d7f36e10",
+    "kind": "value"
+  },
+  "seeds": {
+    "path": "content/008-seeds.json",
+    "sha256": "9352cbe9e0777b1f86fa7892bed8282064033416d5b4f305f7366a602d8e28e0",
+    "kind": "value"
+  },
+  "results": {
+    "path": "content/009-results.json",
+    "sha256": "1c7c4072270783c82b2efaeeaf364373afd8e44de8a10246cbeefea6a27dd180",
+    "kind": "value"
+  },
+  "rational_duals": {
+    "path": "content/010-rational_duals.json",
+    "sha256": "3664756eb3508bd53fe24126da556deb950ac9f0a85e49afed28c10aba9c840d",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 60
+  },
+  "rational_dual_columns_checked": {
+    "kind": "inline",
+    "value": 52560
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 31250000
+  },
+  "fixed299_consumer_account": {
+    "path": "content/014-fixed299_consumer_account.json",
+    "sha256": "356fd224d74d4a3b0a21717279ea562bb6e0af6d257c1313b064912e804f0458",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Five complete independently labelled original source bounds,all selected and omitted exponent/cofactor tails. No common optimizer or actual attainment of relaxed maxima. No explicit finite-source radius,positive403 comparison,unrestricted Erdos7 resolution,or Lean verification."
+  }
+}

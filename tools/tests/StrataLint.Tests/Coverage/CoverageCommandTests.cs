@@ -203,12 +203,13 @@ public sealed class CoverageCommandTests
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
+                on: {pull_request: {branches: [dev]}}
                 jobs:
-                  baseline-admission:
-                    name: Content-addressed dev baseline admission
+                  delta:
+                    name: delta
                 """,
-            ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/domains.yaml"] = TestFileMap.Domains,
+            ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
             [DescriptorSelector] = "theorem fixture : True := by trivial\n",
             [StateDescriptorSelector] = "theorem stateFixture : True := by trivial\n",
             ["Golden/Frozen/state/D5/S0/Tower/StateFixture.lean.json"] =
@@ -247,7 +248,7 @@ public sealed class CoverageCommandTests
           - id: dev-baseline
             kind: ci-jobs
             members:
-              - baseline-admission
+              - delta
             judged_by:
               - bootstrap-pr-1
             verification: verified

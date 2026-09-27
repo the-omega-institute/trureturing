@@ -1,0 +1,47 @@
+**定理 16.4（共同任务体的支撑函数与兼容性证书）。** 对式（16.7）的 $m\ge1$ 个任务，记 $c=(c_j)_{j=1}^m$，置 $u_{j\lambda}=P_\lambda^{1/2}a_j,w_{j\lambda}=Q_\lambda^{1/2}v_{j,\lambda}$。对每个 $\alpha\in\mathbb R^m$，令
+$$
+S_\lambda(\alpha)=\sum_{j=1}^m\alpha_j u_{j\lambda}w_{j\lambda}^*:U_B\to U_A,
+\qquad
+\Gamma(\alpha)=\sum_\lambda\|S_\lambda(\alpha)\|_*,
+\tag{16.8}
+$$
+其中 $w^*$ 为 $x\mapsto\langle w,x\rangle$，$\|\cdot\|_*$ 为全部奇异值之和。则两响应类的 $\mathcal C$ 非空、紧致、凸，关于 $c$ 对称，其支撑函数为
+$$
+\boxed{h_{\mathcal C}(\alpha):=\max_{z\in\mathcal C}\alpha\cdot z
+=\alpha\cdot c+\Gamma(\alpha).}
+\tag{16.9}
+$$
+因此，一组待同时实现的任务值 $z\in\mathbb R^m$ 属于 $\mathcal C$，当且仅当
+$$
+\boxed{\forall\alpha\in\mathbb R^m,\quad
+|\alpha\cdot(z-c)|\le\Gamma(\alpha).}
+\tag{16.10}
+$$
+$\Gamma$ 一般只是半范数，不要求 $\mathcal C$ 具有非空内部；空谱或所有任务余量为零时 $\mathcal C=\{c\}$。
+
+对完整档案类，令 $\mathcal C_{\mathcal D,h}$ 为式（16.7）在 $\mathbb F(\mathcal D,h)$ 上的像。式（16.10）始终是成员资格的必要条件；当 $\mathbb F(\mathcal D,h)=\mathbb B$ 时亦充分。更小的可行域须另证其任务像等于 $\mathcal C$ 才能沿用充分性；档案约束一般不保留凸性、对称性或闭性。
+
+**证明。** 有限维实矩形算子空间的闭收缩球非空、紧致、凸、中心对称；有限乘积保持这些性质。式（16.7）是该乘积的线性像加 $c$，故 $\mathcal C$ 具有所述性质。其任意线性目标残差为
+$$
+\sum_j\alpha_j(z_j-c_j)
+=\sum_\lambda\operatorname{tr}(S_\lambda(\alpha)^*T_\lambda).
+\tag{16.11}
+$$
+对任意实矩形算子 $S:U_B\to U_A$，取奇异值分解 $S=\sum_{k=1}^r\sigma_k p_kq_k^*$，其中 $\sigma_k>0$，两组向量分别正交规范。任意收缩 $T$ 满足
+$$
+\operatorname{tr}(S^*T)=\sum_k\sigma_k\langle p_k,Tq_k\rangle
+\le\sum_k\sigma_k=\|S\|_*.
+$$
+取 $T_{\rm opt}=\sum_kp_kq_k^*$，在初始空间的正交补上为零，则 $\|T_{\rm opt}x\|^2=\sum_k|\langle q_k,x\rangle|^2\le\|x\|^2$，且每个 $T_{\rm opt}q_k=p_k$，达到等号。$S=0$ 或某个端口空间为零时取零算子；该论证包括奇异及矩形情形。各谱层分别选该收缩，定理15.4将整组选择实现于同一个有限维模型，证明式（16.9）的上界和实际可达性。$\Gamma$ 是线性映射后核范数的有限和，所以绝对齐次且满足三角不等式；不同任务的线性依赖可使其对非零 $\alpha$ 为零，因此只保证半范数。
+
+支撑公式及 $\Gamma(-\alpha)=\Gamma(\alpha)$ 给式（16.10）的必要性。若 $z\notin\mathcal C$，紧性使距离最近点 $z_0\in\mathcal C$ 存在，令 $\alpha=z-z_0\ne0$。对任意 $x\in\mathcal C$，凸性使 $z_0+s(x-z_0)\in\mathcal C$ 对 $0\le s\le1$ 成立；距离平方在 $s=0$ 处的一侧导数非负，给 $\alpha\cdot(x-z_0)\le0$。于是
+$$
+h_{\mathcal C}(\alpha)=\alpha\cdot z_0
+<\alpha\cdot z_0+\|\alpha\|^2=\alpha\cdot z,
+$$
+违反式（16.10），证明充分性。该最近点论证也覆盖低维和单点集合。
+
+受限类满足 $\mathcal C_{\mathcal D,h}\subseteq\mathcal C$，所以必要性保留。不能由端点可行补出充分性：在命题16.3的单谱标量模型中，额外同源记录 $(K_{AB}(0))^2=1$ 把收缩限制到 $\{-1,1\}$。一个非零非负输入的读数值集为 $\{-R,R\}$，$R>0$；两端都可达且其支撑函数与 $[-R,R]$ 相同，但零读数不可达。一般任何线性泛函在一个集合、其凸包及其闭凸包上的上确界相同，分别由凸组合的线性性和连续性得到；故即使求得受限支撑函数，若未另证闭凸性，也只识别其闭凸包，不能恢复原可行像中的孔隙。
+
+这里使用的奇异值分解和核范数—算子范数对偶是成熟线性代数。[量子伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)定理13.3的证明已用收缩迹对偶作精确求值；本卷命题1.3给评价极性，命题7.1给共同系数不能替为边缘乘积的边界。本定理将这些结构应用于同一谱补全的联合任务，不额外假定不同任务的最优值能共同取得。$\square$
+

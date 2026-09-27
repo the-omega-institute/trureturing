@@ -1,0 +1,234 @@
+{
+  "schema": "erdos7-endpoint-k-face-neighborhood-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json": "f715fee37ae6c26170d9d9cb43ed2cc2b48e04dc516eb5a5021088f2aee2509e",
+    "frontier/endpoint-bounds/endpoint_k_face_linear.py": "1e55513fa608217d3d0b7868505c390e401e80f3f63200627576ae32b55535c7",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json": "e298f636e8f54c5b13c839647fe8494e90713964b9e23bdfc9e52ff22373b9c4",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "face_vertices": [
+    398,
+    410,
+    422
+  ],
+  "carrier": [
+    1,
+    1
+  ],
+  "symmetric_face_vertices": [
+    616,
+    628,
+    640
+  ],
+  "symmetric_carrier": [
+    1,
+    0
+  ],
+  "guards": {
+    "tau": "1/1000",
+    "epsilon": "1/10000",
+    "etaL_lower": "991/9000",
+    "root_gap_lower": "497/3000",
+    "H_loss_upper": "7/12000",
+    "assigned_one_deep_family_Q_lower": "43309/991000",
+    "assigned_both_deep_families_Q_lower": "92859/991000",
+    "bad_carrier_gaps": [
+      "1/10",
+      "997/15000",
+      "991/45000",
+      "43309/1982000",
+      "497/15000",
+      "30860141/991000000"
+    ]
+  },
+  "complete_test_categories": {
+    "test3": [
+      "31/360",
+      "2",
+      "4",
+      "2/5"
+    ],
+    "test9": [
+      "11/180",
+      "2",
+      "4",
+      "2/5"
+    ],
+    "test5": [
+      "29/450",
+      "14",
+      "300",
+      "1"
+    ],
+    "test15": [
+      "8/225",
+      "14",
+      "300",
+      "1"
+    ],
+    "deep3": [
+      "7/180",
+      "1/18",
+      "0",
+      "1/45"
+    ],
+    "deep5": [
+      "37/1800",
+      "1/20",
+      "0",
+      "1/50"
+    ],
+    "3_times_deep5": [
+      "1/60",
+      "1/20",
+      "0",
+      "0"
+    ],
+    "9_times5": [
+      "1/36",
+      "1/4",
+      "0",
+      "0"
+    ],
+    "deep35": [
+      "1/72",
+      "0",
+      "0",
+      "0"
+    ],
+    "positive7": [
+      "11/72",
+      "4/5",
+      "0",
+      "0"
+    ]
+  },
+  "summed_constants": [
+    "233/450",
+    "5977/180",
+    "608",
+    "1279/450"
+  ],
+  "endpoint_linear_upper": "133/200",
+  "endpoint_margin_lower": "131/600",
+  "old_face_margin_upper": "9257/48600",
+  "numerator_errors": {
+    "tau": 36,
+    "epsilon": 609,
+    "kappa": 3,
+    "sqrt_epsilon": 2
+  },
+  "margin_errors": {
+    "tau": 42,
+    "epsilon": 608,
+    "kappa": 3,
+    "sqrt_epsilon": 2
+  },
+  "old_margin_errors": {
+    "tau": 12,
+    "kappa": "1/2"
+  },
+  "guaranteed_gain": {
+    "constant": "677/24300",
+    "tau": -54,
+    "epsilon": -608,
+    "kappa": "-7/2",
+    "sqrt_epsilon": -2
+  },
+  "complete_tail_checks": [
+    {
+      "epsilon": "1/10000",
+      "sqrt_epsilon": "1/100",
+      "R3": "449/405000",
+      "R5": "151/450000",
+      "entrances": [
+        5,
+        5
+      ]
+    },
+    {
+      "epsilon": "1/1000000",
+      "sqrt_epsilon": "1/1000",
+      "R3": "2851/102515625",
+      "R5": "707/112500000",
+      "entrances": [
+        9,
+        8
+      ]
+    },
+    {
+      "epsilon": "1/100000000",
+      "sqrt_epsilon": "1/10000",
+      "R3": "593941/1328602500000",
+      "R5": "257/2812500000",
+      "entrances": [
+        13,
+        10
+      ]
+    },
+    {
+      "epsilon": "1/10000000000",
+      "sqrt_epsilon": "1/100000",
+      "R3": "332577047/53808401250000000",
+      "R5": "13399/11250000000000",
+      "entrances": [
+        17,
+        13
+      ]
+    },
+    {
+      "epsilon": "1/1000000000000",
+      "sqrt_epsilon": "1/1000000",
+      "R3": "204996710857/2615088300750000000000",
+      "R5": "41423/2812500000000000",
+      "entrances": [
+        22,
+        16
+      ]
+    }
+  ],
+  "improvement_box": {
+    "tau": "1/10000",
+    "epsilon": "1/100000000",
+    "kappa": "1/10000"
+  },
+  "box_corner_error": "74451/12500000",
+  "box_guaranteed_gain": "66533407/3037500000",
+  "finite_box_witness": {
+    "height": 15,
+    "original_nonunit_labels": 4095,
+    "s": "109473487857591133/437893890380859375",
+    "S": "255053758115810396813484578959/1732440149509545697082519531250",
+    "D": "2578709045526541829/17515755615234375000",
+    "tau_upper_at_vertex398": "275032869029/3503151123046875000",
+    "epsilon": "241531134187528235656633/34648802990190913941650390625000",
+    "kappa": "1/4747561509943",
+    "inside_box": true
+  },
+  "actual_height3_validation": {
+    "height": 3,
+    "variant": 398,
+    "labels": 63,
+    "s": "913/3375",
+    "cells": [
+      "157/3375",
+      "94/1125",
+      "32/1125",
+      "7/125",
+      "7/125"
+    ],
+    "H": "1687/3375",
+    "S": "164959/965250",
+    "D": "22469/135000",
+    "S_minus_D": "86113/19305000",
+    "direct_CRT_union": true
+  },
+  "scope": "Uniform finite-neighborhood identity-cost improvement along both entire controlling beta faces. Tau minimizes over the compact face and does not penalize internal beta variation. Ordinary proof; no global K update or Lean verification."
+}

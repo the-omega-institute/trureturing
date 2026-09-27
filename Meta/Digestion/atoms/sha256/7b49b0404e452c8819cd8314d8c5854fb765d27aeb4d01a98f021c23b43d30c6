@@ -1,0 +1,16 @@
+**定义 78.4（量子比特任务及未归一化坐标）。** 在计算基 $|0\rangle=(1,0)^T$、$|1\rangle=(0,1)^T$ 中取
+
+$$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+对 $b\in\{X,Z\}$、$s\in\{+1,-1\}$，定义
+
+$$
+P_s^b=\frac{I+sb}{2},\qquad
+\mathcal J_{b,s}(A)=P_s^bAP_s^b.
+$$
+

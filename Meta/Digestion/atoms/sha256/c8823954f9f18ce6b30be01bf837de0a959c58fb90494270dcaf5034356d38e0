@@ -1,0 +1,12 @@
+**命题 69.1（可测观察的实正交残差）。** 设 $(X,\mathcal F,\mu)$ 是概率空间，$(B,\mathcal B)$ 是可测空间，$q:X\to B$ 可测，$f\in L^2(X,\mu;\mathbb R)$ 是目标读数。令 $\sigma(q)=q^{-1}\mathcal B$，并令 $L^2_q$ 为具有 $\sigma(q)$-可测代表元的实 $L^2$ 等价类所成的闭子空间。记条件期望为
+$$
+\widehat f=\mathbb E[f\mid\sigma(q)].
+$$
+则有分解
+$$
+\boxed{
+f=\widehat f+r,
+\qquad
+r\perp L^2_q.
+}
+$$

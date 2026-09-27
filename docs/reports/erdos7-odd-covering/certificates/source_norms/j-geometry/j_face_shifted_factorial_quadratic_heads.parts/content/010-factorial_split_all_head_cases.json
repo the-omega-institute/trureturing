@@ -1,0 +1,44 @@
+[
+  {
+    "head": 1,
+    "case": "monotone-binomial",
+    "head_phi": "0",
+    "head_cross": 0,
+    "argument_shift": -2
+  },
+  {
+    "head": 2,
+    "case": "monotone-binomial",
+    "head_phi": "0",
+    "head_cross": 0,
+    "argument_shift": -1
+  },
+  {
+    "head": 3,
+    "case": "exact-quadratic",
+    "constant": "0",
+    "tail_linear": "-1/2",
+    "tail_quadratic": "1/2"
+  },
+  {
+    "head": 4,
+    "case": "exact-quadratic",
+    "constant": "0",
+    "tail_linear": "1/2",
+    "tail_quadratic": "1/2"
+  },
+  {
+    "head": 5,
+    "case": "exact-quadratic",
+    "constant": "1",
+    "tail_linear": "3/2",
+    "tail_quadratic": "1/2"
+  },
+  {
+    "head": 6,
+    "case": "exact-quadratic",
+    "constant": "3",
+    "tail_linear": "5/2",
+    "tail_quadratic": "1/2"
+  }
+]

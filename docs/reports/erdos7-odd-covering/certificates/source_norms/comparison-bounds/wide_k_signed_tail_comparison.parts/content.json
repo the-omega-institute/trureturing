@@ -1,0 +1,112 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-wide-k-signed-tail-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "452389d64019852c96710080e53c5a117157d3c713b7bf536d30675d9bba1574",
+    "kind": "value"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "slot_bound": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "161/486",
+      "v0": "1263/130000",
+      "v1": "204409/20930000",
+      "gap": "105757/4860000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "137671/2211300"
+    }
+  },
+  "native_parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "161/486",
+      "v0": "2509/90000",
+      "v1": "404687/14490000",
+      "gap": "105757/4860000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "17/6561",
+        "1/972",
+        "1/108"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "3529/48600"
+    }
+  },
+  "positive7_improvement": {
+    "kind": "inline",
+    "value": "45797/4422600"
+  },
+  "denominator": {
+    "path": "content/008-denominator.json",
+    "sha256": "6d29db4d718908e064e0cd8c2325ad0c6b60a9a0d2f9654ed86936eda95f77ea",
+    "kind": "object"
+  },
+  "missing_head_completion": {
+    "path": "content/009-missing_head_completion.json",
+    "sha256": "b36e884a2d5dc12a0323dab2034bfe8de531ea293782577b6b9c6b2a3765effb",
+    "kind": "object"
+  },
+  "comparisons": {
+    "path": "content/010-comparisons.json",
+    "sha256": "8334c15c67b39fb7c52640171c1ebfc53ca9db70b960825155175ddbd54c29e6",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete ordinary source-uniform signed comparison on qK>=26/27,0<=rho<=1/100000,r<=1/520. All52 original tests, five denominator objectives, both orientations, the whole valid first-beta face, every infinite count/exponent tail and one actual residual are retained. Exactly21 missing objectives are recomputed; five exact denominator head certificates are reused by a proved constant transport. No new global K, Lean theorem or unrestricted Erdos7 resolution."
+  }
+}

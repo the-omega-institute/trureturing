@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21c765d9dd7a322434c2f91cbd084bc961f6490303026679efb2d5899dc08720
+  normalized_sha256: sha256:21c765d9dd7a322434c2f91cbd084bc961f6490303026679efb2d5899dc08720
+cas_ref: sha256:21c765d9dd7a322434c2f91cbd084bc961f6490303026679efb2d5899dc08720
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Mathlib-only bind-only chart closure at pinned revision db584cd6d46c92f209a44c0f1c829460d327499d; no project GID is used and no new Lean declaration is warranted. With c=2*pi and unchanged time, AddCircle.equivAddCircle, homeomorphAddCircle_apply_mk and homeomorphAddCircle_symm_apply_mk give the reversible periodic coordinate map. AddMonoidHom.measurePreserving, measurePreserving_pi and MeasurePreserving.prod preserve normalized Haar space measure and restricted-time product measure. ContDiffOn.comp, ContDiffOn.comp_contDiff and ContDiffOn.const_smul transport the full smooth classes. fderivWithin_const_smul_field', fderiv_const_smul_field, fderiv_comp_smul, iteratedFDeriv_comp_const_smul, laplacian_eq_iteratedFDeriv_orthonormalBasis and laplacian_smul yield the actual time, convection, divergence, gradient and Laplacian factors; scalar normalization gives viscosity nu/c^2. MeasurePreserving.integral_comp, integral_smul, MeasurableEmbedding.eLpNorm_map_measure and eLpNorm_const_smul give mean and physical Linfinity transport; inverse field maps give equal Icc and Ico lifespan sets and their suprema at the same time. The complete general and c=2*pi specialized anonymous proof is kernel checked with only propext, Classical.choice and Quot.sound. Tao254A Notes1 dated2018-09-16 Definition32 and Theorem37 use the unit torus and CtHs intersect L2tH(s+1); Exercise43 supplies local Lipschitz dependence but no explicit constant6. The preceding CtH2 uniqueness is a separate cross-reference, not proved again by this chart. This settlement proves no constructed-path smoothness, existence, maximal continuation or earlier numerical constant.
+    previous_atom_id: 54c2fc5adf6af2f16d5cf731eb65b6935c4e53cade5ed5c4746aeef034453223
+    next_atom_id: c1581979db9afadbacb37c00b25de0e28a62ece88801ea60aab003b2ca6e7dce

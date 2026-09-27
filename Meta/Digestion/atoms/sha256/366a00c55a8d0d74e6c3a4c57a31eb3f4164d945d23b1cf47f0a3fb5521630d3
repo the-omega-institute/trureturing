@@ -1,0 +1,28 @@
+**定理 25.3（两份实际读数的参数与时间误差）。** 对 $(s,w)=\Psi(\beta,t)$、$(s',w')=\Psi(\beta',t')\in Y$，置 $m=\min\{s,s'\}>0$。则
+$$
+|\beta-\beta'|\le\frac{3\nu}{m}\bigl(|w-w'|+L_g|s-s'|\bigr),
+\tag{25.110}
+$$
+$$
+|t-t'|\le\frac2\nu|s-s'|+
+ \frac{4A_1m^2}{\nu^3}|\beta-\beta'|,
+\tag{25.111}
+$$
+因而
+$$
+|t-t'|\le\left(\frac2\nu+\frac{12A_1L_gm}{\nu^2}\right)|s-s'|
+ +\frac{12A_1m}{\nu^2}|w-w'|.
+\tag{25.112}
+$$
+若同一测得坐标的真实点和拟合点均在 $s\ge s_0>0$ 的图中，且各有坐标残差至多 $\epsilon_r,\epsilon_z$，则参数差至多 $6\nu(\epsilon_z+L_g\epsilon_r)/s_0$。
+
+证明。由（25.104）和（25.109），$|\partial_sG_s|=|z_t/r_t|\le L_g$。不妨 $s=m\le s'$，则在同一阈值 $m$ 比较两个参数，得到
+$$
+\frac{m}{3\nu}|\beta-\beta'|
+\le|G_m(\beta)-G_m(\beta')|
+\le |w-w'|+L_g(s'-m).
+$$
+这给（25.110）。阈值时间的导数满足 $|\partial_st|\le2/\nu$，在 $m$ 处 $|\partial_\beta t_\beta(m)|\le A_1t_\beta(m)^2/\nu\le4A_1m^2/\nu^3$；同样先同阈值比参数再移动阈值给（25.111），代入得（25.112）。噪声结论用两个候选之间的坐标差各至多两倍残差界。测得坐标本身无需在 $Y$ 中。
+
+正阈值下截断图的逆统一 Lipschitz；靠近零时参数界的 $1/m$ 因子不能仅凭时间界删掉。例如合法响应 $r=\nu t,z=\beta t$ 在固定 $t$ 给 $|\delta z|=t|\delta\beta|$，已排除延伸到零的统一参数 Lipschitz 常数。$\square$
+

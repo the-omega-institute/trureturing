@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca3b216ca2cc078ecb8a342632c7f2ccb6282a21fffc4fd253387512220aff8f
+  normalized_sha256: sha256:ca3b216ca2cc078ecb8a342632c7f2ccb6282a21fffc4fd253387512220aff8f
+cas_ref: sha256:ca3b216ca2cc078ecb8a342632c7f2ccb6282a21fffc4fd253387512220aff8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “适用于已经可用或独立恢复的联合坐标”明确适用前提，“联合记号不提供丢失坐标的初始化”防止把记号当作初始化算法；“初始化义务在这里仍是前提”不是初始化存在性结论，没有在定义中夹带新恢复定理。
+    previous_atom_id: 8ed330ed740ba464c7f3ac385731827464c03cfcaba7d62bb70da001bc5153eb
+    next_atom_id: b67179797ed14cbedaf3465c3bf477a07553783da41333e95f4d77772a9ff180

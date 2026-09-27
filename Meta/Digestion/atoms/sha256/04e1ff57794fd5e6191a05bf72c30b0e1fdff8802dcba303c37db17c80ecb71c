@@ -1,0 +1,6 @@
+**命题 5.5（价格归一化的承重条件）。** 定义5.1所需的统一界是 $\sup_i\|u_i\|/w_i<\infty$，不要求价格本身有共同正下界。若 $u_n\to u$ 且 $w_n\to w>0$，相应归一化极限是 $u/w$，等价于裸原子 $u$ 继承价格 $w$。
+
+**证明与边界。** 极限公式由除法连续性得到。取 $u_n=w_n=1/n$，归一化原子恒为一，虽价格趋零，代价仍为绝对值范数。取 $u_n=1,w_n=1/n$，目标一具有成本 $1/n$ 的表示，故其代价下确界为零；原子无界使正定性确实失效。另取 $u_n=1-1/n,w_n=2$，$n\ge2$；原下确界为 $2|v|$。正确极限原子为 $1/2$；若将裸极限一改按单位价格调用，目标一的代价降为一，已经是重新定价。证毕。
+
+有限维凸规范的相关成熟组件见钉版 Mathlib 的 `Analysis/Convex/Gauge.lean`：`continuous_gauge` 与 `gauge_le_one_iff_mem_closure` 的前提包括凸性及集合为零邻域；本题从原子中抽取的有限基对称凸包提供该零邻域。支撑延拓使用 `Analysis/Normed/Module/HahnBanach.lean` 的 `exists_extension_norm_eq`。有限维凸表示使用 `Analysis/Convex/Caratheodory.lean` 的仿射独立表示结论。这里是这些标准结果的字典接口，全文普通证明不构成新增 Lean 核验。原子规范的标准框架亦见 Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1。
+

@@ -1,0 +1,48 @@
+{
+  "index": 41,
+  "original_tag": [
+    "ap_block",
+    [
+      [
+        "s",
+        "16"
+      ],
+      [
+        [
+          11,
+          "5/3"
+        ],
+        [
+          13,
+          "12/7"
+        ]
+      ],
+      0,
+      0
+    ]
+  ],
+  "square_minus_mass": "312522845/736900164",
+  "raw_square9": "127212451/736900164",
+  "hinge4": "948/143",
+  "factorial5": "632/429",
+  "load_two_remainder": "636062255/736900164",
+  "low_load_gaps": [
+    "0",
+    "636062255/736900164",
+    "0",
+    "0"
+  ],
+  "tail_entrance": 5,
+  "identical_tail_polynomial": [
+    "-2535551750/184225041",
+    "0",
+    "4/3"
+  ],
+  "second_factorial_tail_upper": "619/720",
+  "previous_hinge4_upper": "938213/4630500",
+  "hinge4_upper": "295741/1543500",
+  "previous_cost_upper": "8798610237821641/1706108104701000",
+  "cost_upper": "8674062463991161/1706108104701000",
+  "cost_gain": "805642/11036025",
+  "weighted_numerator_gain": "955088591/15891876000"
+}

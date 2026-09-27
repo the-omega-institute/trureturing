@@ -1,0 +1,6 @@
+**定义 43.1（切换时可用信息与三个任务；repo-derived）。** 沿用ML 定义41.1的有理参数、发射后翻转顺序、固定均匀先验及下一零报告读出 $h(q)=p+dq$，记全部有限报告历史为 $\mathcal H=\{0,1\}^{*}$。对ML 定义41.2的两台观察者，分别记容差为 $\varepsilon_c,\varepsilon_f$，标签映射为
+$$
+s_c:\mathcal H\twoheadrightarrow Q_c=s_c[\mathcal H],\qquad
+s_f:\mathcal H\twoheadrightarrow Q_f=s_f[\mathcal H].
+$$
+这里的余域是各自的实际可达像，不以全部名义网格编号代替。

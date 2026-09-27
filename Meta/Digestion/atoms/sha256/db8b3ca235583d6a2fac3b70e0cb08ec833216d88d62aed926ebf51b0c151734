@@ -1,0 +1,29 @@
+**定理 15.5（单个交叉任务与响应内积距离的精确区间）。** 固定 $a\in U_A,b\in U_B,t\ge0$，令
+$$
+c_t=\sum_\lambda e^{-\lambda t}\langle a,X^0_\lambda b\rangle,\qquad
+R_t=\sum_\lambda e^{-\lambda t}
+\sqrt{\langle a,P_\lambda a\rangle\langle b,Q_\lambda b\rangle}.
+\tag{15.14}
+$$
+在 $\mathcal M_2$ 上，$\langle a,K_{AB}(t)b\rangle$ 的值集恰为 $[c_t-R_t,c_t+R_t]$。定义响应内积距离
+$$
+d_t^2(a,b)=\|e^{-tC/2}(J_Aa-J_Bb)\|^2,
+$$
+以及仅由局部数据给出的
+$$
+D_t=\langle a,K_{AA}(t)a\rangle+\langle b,K_{BB}(t)b\rangle-2c_t.
+$$
+则其平方距离的值集恰为
+$$
+\boxed{[D_t-2R_t,D_t+2R_t],\qquad D_t-2R_t\ge0.}
+\tag{15.15}
+$$
+$t=0$ 时，这是耦合向量的原始内积距离；将它认作观察位置之间的物理Euclidean距离另需识别合同，参见[机器学习伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)命题5.4的任务几何与物理度量边界。
+
+**证明。** 令 $u_\lambda=P_\lambda^{1/2}a,w_\lambda=Q_\lambda^{1/2}b$。每层的残差标量为 $\langle u_\lambda,T_\lambda w_\lambda\rangle$，其绝对值不超过 $\|u_\lambda\|\|w_\lambda\|$。两向量非零时式（15.13）取得正负端点；任一为零时该层贡献恒为零。各层同时取正号得到总正端点，同时取负号得到总负端点。对任意 $\eta\in[-1,1]$，将所有正端点收缩同乘 $\eta$ 得 $c_t+\eta R_t$，并由定理15.4得到共同实现；$R_t=0$ 时为单点。这证明整个区间均可达，不只证明端点可达。展开平方范数得
+$$
+d_t^2=\langle a,K_{AA}(t)a\rangle+\langle b,K_{BB}(t)b\rangle
+-2\langle a,K_{AB}(t)b\rangle,
+$$
+即式（15.15）；下端也由合法Gram实现取得，因而非负。每个区间针对指定的 $a,b,t$，不同任务分别取得的极值不表示同一实现能同时取得它们。对 $\mathcal M(\mathcal D,h)$，按定义15.3把收缩域换成 $\mathbb F(\mathcal D,h)$；全乘积区间是外界，只有另证所需任务像相等时才是完整档案下的精确值集。$\square$
+

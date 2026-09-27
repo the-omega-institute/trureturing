@@ -1,0 +1,27 @@
+**theorem 54.6（Smith 标准形的模 $p^N$ 核计数，包括秩零与空矩阵）.** 设 $M\in M_{r\times m}(\mathbb Z)$，其中 $r,m\in\mathbb N_0$，整数秩为 $s$，Smith 非零不变量为 $d_1,\ldots,d_s$。对 $N\ge1$，令
+$$
+K_N(M):=\#\{\bar y\in(\mathbb Z/p^N\mathbb Z)^m:M\bar y\equiv0\pmod{p^N}\}.
+$$
+则
+$$
+K_N(M)=p^{N(m-s)}\prod_{j=1}^s\gcd(d_j,p^N)
+=p^{N(m-s)+\sum_{j=1}^s\min(v_p(d_j),N)}.
+$$
+当 $s=0$ 时两个求和与乘积均为空，故
+$$
+K_N(M)=p^{Nm}.
+$$
+特别地，若 $m=0$，则 $K_N(M)=1$。
+
+**证明。** 若 $s=0$，则 $M=0$，所有 $m$ 个坐标任意，直接得到 $p^{Nm}$；当 $m=0$ 时只有空向量，计数为 $1$。以下设 $s>0$。由 axiom 54.1 取整数幺模矩阵 $U,V$ 使 $UMV=D$ 为 Smith 对角形。因为 $\det U,\det V=\pm1$，它们模 $p^N$ 后仍可逆，所以左乘 $U$ 不改变齐次方程解集，变量替换 $\bar y=V\bar z$ 是 $(\mathbb Z/p^N\mathbb Z)^m$ 的双射。因此只需计数
+$$
+d_j\bar z_j\equiv0\pmod{p^N}\qquad(1\le j\le s),
+$$
+其余 $m-s$ 个坐标任意。
+
+对单个非零整数 $d$，令 $g=\gcd(d,p^N)$，写 $d=gd'$、$p^N=gq$ 且 $\gcd(d',q)=1$。条件 $p^N\mid dz$ 等价于 $q\mid z$，故模 $p^N$ 恰有 $g$ 个解。于是前 $s$ 个坐标贡献 $\prod_j\gcd(d_j,p^N)$，其余坐标贡献 $p^{N(m-s)}$。又
+$$
+\gcd(d_j,p^N)=p^{\min(v_p(d_j),N)},
+$$
+得到第二式。证毕。
+

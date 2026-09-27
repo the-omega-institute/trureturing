@@ -1,0 +1,63 @@
+**证明。** 每条水平边 $s_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i-1,j}$ 中，每条竖直边 $u_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i,j-1}$ 中，所以所有 plaquette 求和为零。反过来，若系数 $\lambda_{i,j}\in\mathbb F_2$ 满足
+$$
+\sum_{i,j}\lambda_{i,j}p_{i,j}\equiv0
+$$
+作为边变量的恒等式，则比较 $s_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i-1,j}=0,
+$$
+比较 $u_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i,j-1}=0.
+$$
+沿两个周期方向传播可知所有 $\lambda_{i,j}$ 相同，故关系空间恰为由全 $1$ 系数生成的一维空间，plaquette 秩为 $MN-1$。
+
+若 $p=0$，对固定 $i$ 求和全部 $j$，竖直边各出现两次并消去，得到
+$$
+H_i+H_{i+1}=0.
+$$
+故所有 $H_i$ 相同。同理对固定 $j$ 求和全部 $i$，得
+$$
+U_j+U_{j+1}=0,
+$$
+所以所有 $U_j$ 相同。
+
+若边标签为 $\delta x$，每个 plaquette 和为零，且任一闭合水平或竖直周期上的顶点值望远镜消去，所以 $H=U=0$。反之，设 $p=0$ 且 $H=U=0$。取代表 $0\leq i<M$、$0\leq j<N$，任取 $a\in\mathbb F_2$，定义
+$$
+x_{i,j}=a+\sum_{k=0}^{i-1}u_{k,0}
++\sum_{\ell=0}^{j-1}s_{i,\ell}.
+$$
+与开矩形同样的望远镜计算，使用所有 $0\leq i<M-1$、$0\leq j<N-1$ 的 plaquette 方程，给出全部不跨周期缝的水平、竖直边差分。对水平缝边，
+$$
+H=0
+\quad\Longrightarrow\quad
+s_{i,N-1}=\sum_{\ell=0}^{N-2}s_{i,\ell}
+=x_{i,N-1}+x_{i,0}.
+$$
+对竖直缝边，因 $U_j=U=0$，
+$$
+u_{M-1,j}=\sum_{i=0}^{M-2}u_{i,j}
+=x_{M-1,j}+x_{0,j}.
+$$
+所以 $x$ 是单值周期提升。
+
+边变量总维数是 $2MN$，plaquette 秩为 $MN-1$，故 flat 空间维数 $MN+1$。为证明 holonomy 满射，给定 $h,v\in\mathbb F_2$，定义 seam 标签
+$$
+s_{i,j}=
+\begin{cases}
+h,&j=N-1,\\
+0,&\text{否则},
+\end{cases}
+\qquad
+u_{i,j}=
+\begin{cases}
+v,&i=M-1,\\
+0,&\text{否则}.
+\end{cases}
+$$
+每个 plaquette 若遇到水平 seam 就同时含两条值为 $h$ 的水平边，若遇到竖直 seam 就同时含两条值为 $v$ 的竖直边；在两条 seam 的交会处两种成对消去同时发生，因此总和仍为零，而其 holonomy 恰为 $(h,v)$。所以四个扇区均非空，且它们是零 holonomy 子空间的四个仿射陪集。零 holonomy 子空间恰为 $\operatorname{im}\delta$，周期图连通且有 $MN$ 个顶点，故其维数为 $MN-1$，每个扇区大小均为 $2^{MN-1}$。flat 总数因此为
+$$
+4\cdot2^{MN-1}=2^{MN+1}.
+$$
+相除即得第 4、5 项中的各比例。证毕。
+

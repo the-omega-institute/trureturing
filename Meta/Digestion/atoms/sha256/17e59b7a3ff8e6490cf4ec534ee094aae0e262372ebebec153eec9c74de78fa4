@@ -1,0 +1,12 @@
+对有限概率 $x,v$，记 $x\ll v$ 为 $v_j=0\Rightarrow x_j=0$ 对所有 $j$ 成立；在此条件下置
+$D(x\Vert v)=\sum_{j:x_j>0}x_j\ln(x_j/v_j)$，否则置 $D(x\Vert v)=+\infty$，零质量项取零。每个 $N\ge0$ 都有全部项有限的恒等式
+$$
+D(d\Vert s)=\sum_{k=0}^{N-1}D(d_k\Vert d_{k+1})+D(d_N\Vert s), \tag{76.2}
+$$
+并且
+$$
+\sum_{k\ge0}D(d_k\Vert d_{k+1})
+=D(d\Vert s)=D(d\Vert q)-D(s\Vert q). \tag{76.3}
+$$
+每个半步损失非负，恰在该次重采样固定其输入时为零。
+

@@ -1,0 +1,86 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000000/single.json",
+        "sha256": "3a13d5d8317a8cc33205f5323c24dd443f14e43787c952a35509365f1face059",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000001/single.json",
+        "sha256": "d1747f622915225d5e7ca64cb18a48b10d3e22b55d01bbcac46cc273f04e048a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000002/single.json",
+        "sha256": "3821b5cbff21aef9c9a5559248e03dd6a57a8c8703d749967e32ed23f356834f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000003/single.json",
+        "sha256": "ab73703b26fb1131ad1f3929294d2ec379b979ac8e5d6ea3cc702b7524a2ef07",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000004/single.json",
+        "sha256": "e4c7286c147cc93eb4983b02d3f307ce3986b7522fde05157fc7a8430efdc0df",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000005/single.json",
+        "sha256": "6cd72e133be8914c4382a8cf25c1ae3c95868784c6d65405bd50fcea4e1aee59",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000006/single.json",
+        "sha256": "e13e4b5de12e3f84c89b79312f7a4f3887ac728067ea7fc96be914c65031ac0d",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000007/single.json",
+        "sha256": "20b0e5d76e66d632b61ee217a9286ffaa06cf11b7e23cf408ca453dd1cc62657",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/004-complete_radius/015-quadratic/006-joint_cost_results/000008/single.json",
+        "sha256": "2b955f2e5a127d51af7aa52a9bc92a9aff5653848f5df696f37d7deb152f97d2",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

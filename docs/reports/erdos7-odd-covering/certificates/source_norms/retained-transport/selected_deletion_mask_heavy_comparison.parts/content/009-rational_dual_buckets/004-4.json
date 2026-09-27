@@ -1,0 +1,57 @@
+{
+  "0": {
+    "path": "content/009-rational_dual_buckets/004-4/000-0.json",
+    "sha256": "b181ac31bd8f8ab39e7f34ee7c2199da8934af9281404a2f7191dc9d843d9dcc",
+    "kind": "object"
+  },
+  "1": {
+    "path": "content/009-rational_dual_buckets/004-4/001-1.json",
+    "sha256": "f8dcaffad290f67b81a3ac0e9cd10ed108afb9515a3838cc6f8a519627b398f1",
+    "kind": "value"
+  },
+  "3": {
+    "path": "content/009-rational_dual_buckets/004-4/002-3.json",
+    "sha256": "5c10f19edb33e15f92bf773cb8aee8277637d9548f19fafdaea857505da6b48d",
+    "kind": "object"
+  },
+  "5": {
+    "path": "content/009-rational_dual_buckets/004-4/003-5.json",
+    "sha256": "b7b7e08f4c5f97880feb706489b99fd2e0bc691ee7f1a271c567cb0da21c74e0",
+    "kind": "value"
+  },
+  "6": {
+    "path": "content/009-rational_dual_buckets/004-4/004-6.json",
+    "sha256": "1dd49497f409c240e5d417ac2147474a89828dbddc6901a77dc6c2a57ff62e43",
+    "kind": "object"
+  },
+  "7": {
+    "path": "content/009-rational_dual_buckets/004-4/005-7.json",
+    "sha256": "2a2dd9a937e1e798585417670c466668ee8e4b82a91e49bcda40e87bbd0a9349",
+    "kind": "value"
+  },
+  "a": {
+    "path": "content/009-rational_dual_buckets/004-4/006-a.json",
+    "sha256": "f4392efc01b8ff6fa75d191b879371fb2653d848a172a27067032ed4d8164d3d",
+    "kind": "object"
+  },
+  "b": {
+    "path": "content/009-rational_dual_buckets/004-4/007-b.json",
+    "sha256": "8e9fd2e01a128645e2f0267f85d68ecedd51d3cc5a1469bcc8ba5582dbb58a67",
+    "kind": "object"
+  },
+  "d": {
+    "path": "content/009-rational_dual_buckets/004-4/008-d.json",
+    "sha256": "db2edcf662153b164ca9776419cb11d66c2d089be4932da8849d92ce60729914",
+    "kind": "object"
+  },
+  "e": {
+    "path": "content/009-rational_dual_buckets/004-4/009-e.json",
+    "sha256": "b9a517261ac2211e23db2ebb2b5e77c39c7cac26c5d2797b6bd4cf131ea4ca3f",
+    "kind": "object"
+  },
+  "f": {
+    "path": "content/009-rational_dual_buckets/004-4/010-f.json",
+    "sha256": "8503bbecd7389818d6c4ed3847f3bc79be8e39ab2b5203700824f7dab9fd1fd1",
+    "kind": "value"
+  }
+}

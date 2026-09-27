@@ -1,0 +1,33 @@
+**命题 47.2（最优全层 Lipschitz 常数）。** 当 $q<1$ 时，$\mathcal E$ 从输入通常上确界距离到输出加权范数的最优全局 Lipschitz 常数为
+$$
+C_\rho(A)=\sup_{k\ge0}\rho^kL_k(A)<\infty.
+\tag{47.8}
+$$
+这个上确界在某个有限 $k$ 处取得，并且 $C_\rho(A)\ge1$。
+
+证明。由 $u_k$ 的正系数及次数至多 $k+1$，
+$$
+L_k(A)\le\frac{k+1}{A}u_k(A)\le(k+1)\lambda^k.
+$$
+最后一步来自 (47.3)：
+$$
+u_k(A)
+=A\lambda^k\,\frac{\lambda+\lambda^{-2k}}{\lambda+1}
+\le A\lambda^k.
+\tag{47.9}
+$$
+所以 $0\le\rho^kL_k(A)\le(k+1)q^k\to0$。$L_0(A)=1$，故此正序列的上确界有限，且可在一个有限初始段内取到最大值。
+
+逐坐标使用有限 Lipschitz 界，再取所有 $n,k$ 的上确界，得到
+$$
+\|\mathcal E(a)-\mathcal E(b)\|_\rho
+\le C_\rho(A)\|a-b\|_\infty.
+\tag{47.10}
+$$
+为证最优性，固定任意 $k$，比较共同角点 $-A\mathbf1$ 与 $-(A-h)\mathbf1$，其中 $0<h\le A$。其输入距离是 $h$，第 $(0,k)$ 个坐标的加权割线比为
+$$
+\rho^k\frac{u_k(A)-u_k(A-h)}h
+\longrightarrow\rho^kL_k(A)\quad(h\downarrow0).
+$$
+任何全局 Lipschitz 常数均须大于等于每个这样的极限，因此不能小于 (47.8)。有限索引取得 $C_\rho(A)$ 不等于有不同输入对取得最优割线比。证毕。
+

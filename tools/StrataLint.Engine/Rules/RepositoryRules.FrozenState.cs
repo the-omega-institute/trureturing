@@ -4,12 +4,12 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> FrozenStates(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> FrozenStates(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        ValidateChangedAcceptedFreezePins(context, findings);
-
-        var affected = AffectedFrozenStateFiles(context);
+        var affected = context.Current.Files.Values
+            .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))
+            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToImmutableArray();
         if (affected.IsEmpty)
         {
             return findings.ToImmutable();
@@ -39,8 +39,6 @@ internal static partial class RepositoryRules
                     exception.InnerException?.Message ?? exception.Message));
                 continue;
             }
-
-            ObservePinChange(context, file, modulePath, record, findings);
 
             if (!context.Current.Files.ContainsKey(modulePath))
             {
@@ -82,7 +80,7 @@ internal static partial class RepositoryRules
     // Transitional contract: remove this check together with the accepted directory (#4687).
     // Frozen state remains authoritative; only changed candidate accepted files are read here.
     private static void ValidateChangedAcceptedFreezePins(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         ImmutableArray<RuleFinding>.Builder findings)
     {
         foreach (var change in context.Changes.Entries
@@ -151,108 +149,8 @@ internal static partial class RepositoryRules
         }
     }
 
-    private static ImmutableArray<RepositoryFile> AffectedFrozenStateFiles(
-        RuleEvaluationContext context)
-    {
-        if (AllFrozenStatesAffected(context))
-        {
-            return AllCurrentFrozenStateFiles(context);
-        }
-
-        var paths = context.Changes.Paths
-            .Where(path => FrozenStatePath.IsUnderRoot(path.Value)
-                && context.Current.Files.ContainsKey(path))
-            .ToHashSet();
-        var changedModules = context.Changes.Paths
-            .Where(FrozenStatePath.IsCanonicalModulePath)
-            .ToImmutableHashSet();
-        if (!changedModules.IsEmpty)
-        {
-            var currentAdjacency = LeanImportAdjacency.Build(context.Current, context.Lean);
-            // RuleEvaluationContext has no baseline report, only the baseline source snapshot.
-            // CLAUDE.md rule 19 keeps base at SHA/object-diff level without checkout or compilation.
-            var baselineAdjacency = LeanImportAdjacency.BuildFromSources(context.Baseline);
-            var currentDependents = ReverseDependencies(currentAdjacency);
-            var baselineDependents = ReverseDependencies(baselineAdjacency);
-            var affectedModules = changedModules.ToHashSet();
-            var pending = new Queue<RepoPath>(changedModules);
-            while (pending.TryDequeue(out var changed))
-            {
-                foreach (var dependent in DependentsOf(
-                    changed,
-                    currentDependents,
-                    baselineDependents))
-                {
-                    if (affectedModules.Add(dependent))
-                    {
-                        pending.Enqueue(dependent);
-                    }
-                }
-            }
-
-            foreach (var modulePath in affectedModules)
-            {
-                var statePath = FrozenStatePath.FromModulePath(modulePath);
-                if (context.Current.Files.ContainsKey(statePath))
-                {
-                    paths.Add(statePath);
-                }
-            }
-        }
-
-        return paths
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .Select(path => context.Current.Files[path])
-            .ToImmutableArray();
-    }
-
-    private static bool AllFrozenStatesAffected(RuleEvaluationContext context) =>
-        context.RuleImplementationChanged
-        || Changed(context, IsLeanReportProducerInput);
-
-    private static ImmutableArray<RepositoryFile> AllCurrentFrozenStateFiles(
-        RuleEvaluationContext context) =>
-        context.Current.Files.Values
-            .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-
-    private static ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> ReverseDependencies(
-        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
-    {
-        var result = new Dictionary<RepoPath, HashSet<RepoPath>>();
-        foreach (var (path, dependencies) in adjacency)
-        {
-            foreach (var dependency in dependencies)
-            {
-                if (!result.TryGetValue(dependency, out var dependents))
-                {
-                    dependents = new HashSet<RepoPath>();
-                    result.Add(dependency, dependents);
-                }
-
-                dependents.Add(path);
-            }
-        }
-
-        return result.ToImmutableDictionary(
-            static item => item.Key,
-            static item => item.Value.ToImmutableHashSet());
-    }
-
-    private static IEnumerable<RepoPath> DependentsOf(
-        RepoPath path,
-        IReadOnlyDictionary<RepoPath, ImmutableHashSet<RepoPath>> current,
-        IReadOnlyDictionary<RepoPath, ImmutableHashSet<RepoPath>> baseline) =>
-        (current.TryGetValue(path, out var currentPaths)
-            ? currentPaths
-            : ImmutableHashSet<RepoPath>.Empty)
-        .Union(baseline.TryGetValue(path, out var baselinePaths)
-            ? baselinePaths
-            : ImmutableHashSet<RepoPath>.Empty);
-
     private static void ObservePinChange(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         RepositoryFile currentFile,
         RepoPath modulePath,
         FrozenStateRecord currentRecord,

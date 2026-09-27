@@ -1,0 +1,64 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "cost-49"
+  },
+  "original_cost_index": {
+    "kind": "inline",
+    "value": 49
+  },
+  "tag": {
+    "kind": "inline",
+    "value": [
+      "s",
+      "81/16"
+    ]
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 2
+  },
+  "expansion": {
+    "path": "content/019-results/000001/item/004-expansion.json",
+    "sha256": "2806c68640dbe70f99cc47ea9ff2dc65115d45e2ca5325af54cfae5ee25a01db",
+    "kind": "value"
+  },
+  "all_head_tail_split": {
+    "path": "content/019-results/000001/item/005-all_head_tail_split.json",
+    "sha256": "e2eb3976726bc1018239e98b3e82ba971e5ea7af67885700d8f115a857fb703b",
+    "kind": "value"
+  },
+  "scan": {
+    "path": "content/019-results/000001/item/006-scan.json",
+    "sha256": "b56b18a057ed0e6441bcc687b0c8e66e70eb7653b8a05720d82cad5346578c70",
+    "kind": "object"
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "3045114520043616887/793800000000000000"
+  },
+  "previous_adopted_upper": {
+    "kind": "inline",
+    "value": "207467385335349113/52920000000000000"
+  },
+  "adopted_upper": {
+    "kind": "inline",
+    "value": "3045114520043616887/793800000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "2090508124581869/24806250000000000"
+  },
+  "maximizing_cross_components": {
+    "path": "content/019-results/000001/item/011-maximizing_cross_components.json",
+    "sha256": "36771982e13addf4459f1eb761b142ac2e89b6c1084a54ed94e24b753f827e03",
+    "kind": "value"
+  },
+  "maximizing_conditional_PZZ_endpoints": {
+    "kind": "inline",
+    "value": [
+      "195197/529200",
+      "89/240"
+    ]
+  }
+}

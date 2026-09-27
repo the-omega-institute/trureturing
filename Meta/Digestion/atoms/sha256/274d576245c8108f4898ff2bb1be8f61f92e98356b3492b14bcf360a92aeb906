@@ -1,0 +1,11 @@
+**theorem 41.11 (Exact criterion for a restricted actual set).** Let $I$ be countable, let $(F_n)$ be an increasing finite exhaustion, and let $D\subseteq V$ be arbitrary. There exist
+$$
+d_n\in D\cap C_{F_n},\qquad d_n\longrightarrow0,
+$$
+if and only if
+$$
+0\in\overline{D\cap C_F}^{\,V}
+\qquad\text{for every finite }F\subseteq I.
+$$
+Thus mere accumulation of $D$ at zero is not a substitute for either local density or this simultaneous finite-system condition.
+

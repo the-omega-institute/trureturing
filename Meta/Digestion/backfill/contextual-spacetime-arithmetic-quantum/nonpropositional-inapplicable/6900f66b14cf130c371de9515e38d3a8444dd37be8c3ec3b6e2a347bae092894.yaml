@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6900f66b14cf130c371de9515e38d3a8444dd37be8c3ec3b6e2a347bae092894
+  normalized_sha256: sha256:6900f66b14cf130c371de9515e38d3a8444dd37be8c3ec3b6e2a347bae092894
+cas_ref: sha256:6900f66b14cf130c371de9515e38d3a8444dd37be8c3ec3b6e2a347bae092894
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅定义间隔阻塞的布尔字串集合及其计数，初值、递推和严格包含关系均在后续叶中承担。
+    previous_atom_id: 0c1d7538e2f66b885528799f8561685beafa86c78e1e917540b1fc05fb2c9e19
+    next_atom_id: a5f4ea38850530a4d5a8c40da79d534c8c040d244814f2399eaa314597cf4144

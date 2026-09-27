@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb949c01617d6fd7bc00320766faf13232ad435affdf4dddea548b15d8a6b677
+  normalized_sha256: sha256:bb949c01617d6fd7bc00320766faf13232ad435affdf4dddea548b15d8a6b677
+cas_ref: sha256:bb949c01617d6fd7bc00320766faf13232ad435affdf4dddea548b15d8a6b677
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “把全部演化状态取为”与“每收到报告”后的公式定义标签及饱和计数器更新；本叶没有断言认证正确、位数最优或所有配对可达，属于有限状态接口定义。
+    previous_atom_id: b72a726f86f69dfa7313a93314ab60810535ecda9dc6d3f0f3b07404e8cc9329
+    next_atom_id: 82616a06aa3563f038caa566cab24ca9aa2722549582ebcbc61be164494c432f

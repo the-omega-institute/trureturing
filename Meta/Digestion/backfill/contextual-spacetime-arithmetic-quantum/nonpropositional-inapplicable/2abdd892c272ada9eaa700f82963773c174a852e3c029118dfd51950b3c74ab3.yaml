@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2abdd892c272ada9eaa700f82963773c174a852e3c029118dfd51950b3c74ab3
+  normalized_sha256: sha256:2abdd892c272ada9eaa700f82963773c174a852e3c029118dfd51950b3c74ab3
+cas_ref: sha256:2abdd892c272ada9eaa700f82963773c174a852e3c029118dfd51950b3c74ab3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶固定参数、读取轴菜单、允许参考系统和控制范围，并定义最优任务分数；通道控制与幺正控制等值的命题已拆出。
+    previous_atom_id: faf570d8f315965efade76d175738a5f19a9d927556dbb6752c2e109f6deee99
+    next_atom_id: e99062abee914e91a426f111d0e42f268bbf85ce62211623ea11b4a6c8bd26bc

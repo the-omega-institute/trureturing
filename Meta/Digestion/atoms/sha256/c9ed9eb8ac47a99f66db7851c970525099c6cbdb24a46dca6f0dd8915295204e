@@ -1,0 +1,38 @@
+**theorem 42.9 (An explicit countable local base at every flag).** Fix an inner product and let $e_1,\ldots,e_r$ be the orthonormal list of $p$. Write $U=U_p$, choose a basis $z_1,\ldots,z_{d-r}$ of $U^\circ\subseteq V^*$, and put $f_j(v)=\langle v,e_j\rangle$. For integers $n\ge2$, define
+$$
+\begin{split}
+B_n(p)=\{q\in S(V):\;&q(z_a)=0\ \text{for every }a,\\
+&q(f_j)=1\ \text{for }1\le j\le r,\\
+&q(f_j-nf_{j+1})=1\ \text{for }1\le j<r\}.
+\end{split}
+\tag{42.12}
+$$
+These are nested clopen neighborhoods and form a complete local base at $p$. For $r=0$ or $r=1$, each is the singleton $\{p\}$. Different auxiliary choices give the same neighborhood filter.
+
+**Proof.** Each condition is a finite sign condition, so $B_n(p)$ is clopen. Its defining signs agree with the lexicographic signature of $e_1,\ldots,e_r$, so it contains $p$.
+
+For an ordinary point $\sigma_V(x)\in B_n(p)$, the zero equations force $x\in U$. Write
+$$
+x=\sum_{j=1}^r x_je_j.
+$$
+When $r>0$, the other conditions are exactly
+$$
+x_j>0,\qquad 0<x_{j+1}<x_j/n.
+\tag{42.13}
+$$
+Thus $B_{n+1}(p)\cap\sigma_V[V]\subseteq B_n(p)$. The ordinary image is dense in every open subset of $S(V)$, and $B_n(p)$ is closed, so $B_{n+1}(p)\subseteq B_n(p)$.
+
+Let $\ell\in V^*$ and set $a_j=\ell(e_j)$. If every $a_j$ vanishes, then $\ell(x)=0$ on all the ordinary points in every $B_n(p)$; density and the closed zero cylinder imply the same for every point of $B_n(p)$. Otherwise let $k$ be the first index with $a_k\ne0$. Choose $n$ so large that
+$$
+\sum_{j>k}|a_j|n^{-(j-k)}<|a_k|.
+$$
+For every $x$ satisfying (42.13),
+$$
+\left|\sum_{j>k}a_jx_j\right|
+\le x_k\sum_{j>k}|a_j|n^{-(j-k)}
+<|a_k|x_k.
+$$
+Hence $\operatorname{sgn}(\ell(x))=\operatorname{sgn}(a_k)=p(\ell)$. Again density inside the clopen set and closedness of the desired sign cylinder give this equality for every $q\in B_n(p)$. For finitely many tests, take a sufficiently large $n$ for all of them. Then $B_n(p)\subseteq N(p;F)$, proving the local-base assertion.
+
+When $r=0$, the equations impose all basis covectors to be zero and hence force the zero signature. When $r=1$, they restrict support to the single oriented line and impose its positive orientation, hence force $p$. The proof works for every choice of the inner product and annihilator basis; each resulting family is cofinal in the same cylinder neighborhood filter. Thus the local topology is intrinsic to the signature, not to those choices. $\square$
+

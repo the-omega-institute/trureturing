@@ -1,0 +1,781 @@
+[
+  {
+    "index": 828,
+    "margin": "6786793/23814000",
+    "previous_raw_bound": "170873/441000",
+    "D_numerator": "4362691/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 829,
+    "margin": "14291443/23814000",
+    "previous_raw_bound": "24506/55125",
+    "D_numerator": "5009341/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 830,
+    "margin": "6125293/23814000",
+    "previous_raw_bound": "4693/12250",
+    "D_numerator": "4230391/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 831,
+    "margin": "13471183/23814000",
+    "previous_raw_bound": "194123/441000",
+    "D_numerator": "4956421/11907000",
+    "D_numerator_gain": "407/17010",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 832,
+    "margin": "6125293/23814000",
+    "previous_raw_bound": "4693/12250",
+    "D_numerator": "4230391/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 833,
+    "margin": "13471183/23814000",
+    "previous_raw_bound": "194123/441000",
+    "D_numerator": "4956421/11907000",
+    "D_numerator_gain": "407/17010",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 834,
+    "margin": "704321/2976750",
+    "previous_raw_bound": "170773/441000",
+    "D_numerator": "4359991/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 835,
+    "margin": "6569609/11907000",
+    "previous_raw_bound": "5443/12250",
+    "D_numerator": "5006641/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 836,
+    "margin": "704321/2976750",
+    "previous_raw_bound": "170773/441000",
+    "D_numerator": "4359991/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 837,
+    "margin": "6569609/11907000",
+    "previous_raw_bound": "5443/12250",
+    "D_numerator": "5006641/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 838,
+    "margin": "704321/2976750",
+    "previous_raw_bound": "170773/441000",
+    "D_numerator": "4359991/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 839,
+    "margin": "6569609/11907000",
+    "previous_raw_bound": "5443/12250",
+    "D_numerator": "5006641/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 840,
+    "margin": "704321/2976750",
+    "previous_raw_bound": "170773/441000",
+    "D_numerator": "4359991/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 841,
+    "margin": "6569609/11907000",
+    "previous_raw_bound": "5443/12250",
+    "D_numerator": "5006641/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 842,
+    "margin": "1243267/5953500",
+    "previous_raw_bound": "21106/55125",
+    "D_numerator": "4227691/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 843,
+    "margin": "6238859/11907000",
+    "previous_raw_bound": "194023/441000",
+    "D_numerator": "4874341/11907000",
+    "D_numerator_gain": "1301/42525",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 844,
+    "margin": "1243267/5953500",
+    "previous_raw_bound": "21106/55125",
+    "D_numerator": "4227691/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 845,
+    "margin": "6238859/11907000",
+    "previous_raw_bound": "194023/441000",
+    "D_numerator": "4874341/11907000",
+    "D_numerator_gain": "1301/42525",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 846,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 847,
+    "margin": "11986993/23814000",
+    "previous_raw_bound": "24481/55125",
+    "D_numerator": "5003941/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 848,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 849,
+    "margin": "11986993/23814000",
+    "previous_raw_bound": "24481/55125",
+    "D_numerator": "5003941/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 850,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 851,
+    "margin": "11986993/23814000",
+    "previous_raw_bound": "24481/55125",
+    "D_numerator": "5003941/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 852,
+    "margin": "704321/2976750",
+    "previous_raw_bound": "170773/441000",
+    "D_numerator": "4359991/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 853,
+    "margin": "6569609/11907000",
+    "previous_raw_bound": "5443/12250",
+    "D_numerator": "5006641/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 854,
+    "margin": "1243267/5953500",
+    "previous_raw_bound": "21106/55125",
+    "D_numerator": "4227691/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 855,
+    "margin": "6238859/11907000",
+    "previous_raw_bound": "194023/441000",
+    "D_numerator": "4874341/11907000",
+    "D_numerator_gain": "1301/42525",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 856,
+    "margin": "1243267/5953500",
+    "previous_raw_bound": "21106/55125",
+    "D_numerator": "4227691/11907000",
+    "D_numerator_gain": "9463/340200",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 857,
+    "margin": "6238859/11907000",
+    "previous_raw_bound": "194023/441000",
+    "D_numerator": "4874341/11907000",
+    "D_numerator_gain": "1301/42525",
+    "minimizers": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 858,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 859,
+    "margin": "11986993/23814000",
+    "previous_raw_bound": "24481/55125",
+    "D_numerator": "5003941/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 860,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 861,
+    "margin": "11986993/23814000",
+    "previous_raw_bound": "24481/55125",
+    "D_numerator": "5003941/11907000",
+    "D_numerator_gain": "1159/48600",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "index": 862,
+    "margin": "4482343/23814000",
+    "previous_raw_bound": "56891/147000",
+    "D_numerator": "4357291/11907000",
+    "D_numerator_gain": "128/6075",
+    "minimizers": [
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  }
+]

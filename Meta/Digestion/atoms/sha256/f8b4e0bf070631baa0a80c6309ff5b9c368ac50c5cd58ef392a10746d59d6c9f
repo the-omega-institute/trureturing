@@ -1,0 +1,6 @@
+**定理 46.17（有限商障碍恰半判定理想不可解性）。** 对可计算编码的系统，性质
+$$
+\exists\alpha\in I,\quad B_\alpha=\varnothing
+$$
+可半判定，等价于 $E_\Sigma=\varnothing$，并且蕴含 $S_\Sigma=\varnothing$。它不能半判定全部自然不可解系统；即使使用全部有限自然算术同态，仍不完备。
+

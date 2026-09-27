@@ -1,0 +1,35 @@
+**theorem 42.7 (Polynomial realization, sharp depth, and nonuniformity).** For a rank-$r$ point represented by $v_1,\ldots,v_r$,
+$$
+\gamma(t)=tv_1+\cdots+t^rv_r,\qquad t>0,
+\tag{42.10}
+$$
+satisfies $\sigma_V(\gamma(t))\to p$ as $t\downarrow0$. Every individual covector has its prescribed sign eventually, and every zero coordinate is exactly zero for all $t$. In particular, for any fixed positive sequence $t_n\to0$, the sequence $\sigma_V(\gamma(t_n))$ converges to $p$. Thus the ordinary image is sequentially dense, even with all covectors as observations.
+
+For $p\ne\mathbf0$, its rank is the smallest possible degree of a polynomial curve $h$ with $h(0)=0$ and $\sigma_V(h(t))\to p$ as $t\downarrow0$. A single sufficiently small interval on which all covectors simultaneously have their limiting signs exists for (42.10) if and only if $r\le1$.
+
+**Proof.** The polynomial calculation in Theorem 42.5 proves the eventual sign separately for each covector. Finitely many such eventual statements hold simultaneously after taking the minimum of their positive thresholds. This is precisely convergence in the product topology and proves the assertion for every $t_n\to0$.
+
+Suppose
+$$
+h(t)=\sum_{j=1}^m t^ja_j,\qquad h(0)=0,
+$$
+and its signature converges to $p$. A covector belongs to $Z_p$ if and only if $\ell(h(t))$ is zero for all sufficiently small positive $t$, because zero is isolated in $D$. A real polynomial vanishing on an interval is identically zero. Conversely, a nonzero real polynomial has the eventual nonzero sign of its first nonzero coefficient. Therefore
+$$
+Z_p=\operatorname{span}(a_1,\ldots,a_m)^\circ.
+$$
+Equation (42.8) gives
+$$
+r=\dim\operatorname{span}(a_1,\ldots,a_m)\le m.
+$$
+Curve (42.10) has degree exactly $r$ when $r>0$, proving sharpness. The zero signature is realized by the identically zero curve.
+
+For $r=0$ or $r=1$, all signs in (42.10) agree with $p$ for every $t>0$. If $r\ge2$, fix any $t>0$ and choose a covector with
+$$
+\ell(v_1)=1,\qquad
+\ell(v_2)=-2/t,\qquad
+\ell(v_j)=0\quad(j>2).
+$$
+Independence permits these prescriptions. Then $p(\ell)=1$ but $\ell(\gamma(t))=-t<0$. Since this works at every positive $t$, there is no common positive threshold for all covectors. The covector used here depends on $t$; this does not contradict coordinatewise eventual agreement.
+
+The finite scale bound concerns the number of independent input directions. $\square$
+

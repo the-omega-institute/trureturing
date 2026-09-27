@@ -1,0 +1,173 @@
+{
+  "denominator_costs": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/000-denominator_costs.json",
+    "sha256": "5e18324f199b316293a55c5d44e35aba15b6d1f9051d427450bdf6ce60b361dc",
+    "kind": "array"
+  },
+  "denominator_shared": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/001-denominator_shared.json",
+    "sha256": "695f1e281d876381d914a0066e33dadbbc12819912c2e5e469d5cf6f33563c57",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/002-H2.json",
+    "sha256": "0dd79598a42af6209ddedc23402c5ca0c5bcfd3d242f70b3b54f3018608cb3c0",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs.json",
+    "sha256": "df5cfa684dc171dd1d4446f7d5d4373ddc23d026b4e06d57f23f8e7acdb962d0",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/004-mean_shared.json",
+    "sha256": "5162867694497772f8eb73fab29a8aaa7dbfe11ca5a13c8fb0d70f05c6c9f024",
+    "kind": "value"
+  },
+  "quadratic_costs": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs.json",
+    "sha256": "d76386db2b904683fa07dcb15688ce97d12d50093b351e4c4bcb15f3685a8d83",
+    "kind": "array"
+  },
+  "quadratic_shared": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads/006-quadratic_shared.json",
+    "sha256": "ed390bbe6b42a8c6c2467ba98507e36ea739533a67eaed229db348d49b799a9b",
+    "kind": "value"
+  },
+  "old_parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/22",
+      "rho": "1/20000",
+      "rbar": "1/4000",
+      "h1min": "131/396",
+      "v0": "521/42000",
+      "v1": "34829/2751000",
+      "gap": "92797/4356000",
+      "tbar": "23/9",
+      "Cbar": "670/161",
+      "kbar": "131/64",
+      "budget_increments": [
+        "67/33264",
+        "1/792",
+        "1/252"
+      ],
+      "c": [
+        "313/440",
+        "161/396",
+        "89/330",
+        "89/990"
+      ],
+      "H": [
+        "471/4840",
+        "199/1815",
+        "71/990",
+        "827/34848"
+      ],
+      "positive7": "17273/277200"
+    }
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/22",
+      "rho": "1/15000",
+      "rbar": "1/3000",
+      "h1min": "131/396",
+      "v0": "11/875",
+      "v1": "17761/1375500",
+      "gap": "92071/4356000",
+      "tbar": "23/9",
+      "Cbar": "670/161",
+      "kbar": "131/64",
+      "budget_increments": [
+        "67/33264",
+        "1/792",
+        "1/252"
+      ],
+      "c": [
+        "313/440",
+        "161/396",
+        "89/330",
+        "89/990"
+      ],
+      "H": [
+        "471/4840",
+        "199/1815",
+        "71/990",
+        "827/34848"
+      ],
+      "positive7": "17273/277200"
+    }
+  },
+  "cap_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "0",
+      "0",
+      "1/108000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1/54000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "11/393000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "11/393000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "11/393000",
+      "0"
+    ]
+  },
+  "factorial_head_increment": {
+    "kind": "inline",
+    "value": "277739791637353/318346182991620000"
+  },
+  "factorial_difference_digest": {
+    "kind": "inline",
+    "value": "e8e6091462f683a49457e47333d2e7ae60658e74406d5eeef29b84aa4eb222d1"
+  },
+  "factorial_layouts": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "mean_coordinate_price_maxima": {
+    "kind": "inline",
+    "value": [
+      "8/27",
+      "0",
+      "137/9",
+      "73/9",
+      "2",
+      "131/32",
+      "0"
+    ]
+  },
+  "complete_pair_upper": {
+    "kind": "inline",
+    "value": "5595073691/7840800000"
+  },
+  "finite_branch_transport_checks": {
+    "kind": "inline",
+    "value": 3120
+  },
+  "reused_original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "new_original_head_evaluations": {
+    "kind": "inline",
+    "value": 0
+  }
+}

@@ -1,0 +1,14 @@
+**定理 124.11（不相容分量与全部最小点）。** 对 $E(x)=\frac12\|Dx-b\|^2$，有
+$$
+E(x)=\frac12\|Dx-Pb\|^2+\frac12\|(I-P)b\|^2,
+$$
+$$
+\min_xE(x)=\frac12\|(I-DD^\dagger)b\|^2,\qquad
+\operatorname{argmin}E=D^\dagger b+\ker D.
+$$
+其中 $D^\dagger b$ 是唯一最小范数极小点。原方程可解当且仅当最小残差为零。
+
+**证明。** $Dx-Pb$ 属于 $\operatorname{im}D$，$(I-P)b$ 属于其正交补，勾股等式给第一式。取 $x=D^\dagger b$ 使第一项为零；任意极小点也必须满足 $Dx=Pb$，故与 $D^\dagger b$ 相差核向量。由伪逆性质 $D^\dagger b\perp\ker D$，其余极小点的范数平方是 $\|D^\dagger b\|^2$ 加核向量范数平方，得到唯一最小范数性。最后 $(I-P)b=0$ 等价于 $b\in\operatorname{im}D$。$\square$
+
+这里的极小值在整个 $V$ 上取得。如果另有非负、整数或离散约束，仍须处理受限可行域；该公式只是其下界。
+

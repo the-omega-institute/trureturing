@@ -1,0 +1,55 @@
+**引理 31.2（先证明逆值域裕量的三次登记界）。** 固定 $m\ne0$，令
+$$
+I_k=[k_0-d_0,k_0+d_0],\qquad d_0>0,\quad k_0-d_0>0,
+\qquad P_I=\{(m,k):k\in I_k\}.
+\tag{31.107}
+$$
+该段须在同一共同分支／先验内；与定理31.1比较时还要求 $P_I\subset U$。缩短共同图域到 $[0,\bar r]$，可以对全部 $k\in I_k$ 保证
+$$
+|\partial_kg_{m,k}(r)|\le\frac{|m|}{40}r^3,\qquad
+|\partial_rg_{m,k}(r)|\ge\frac{|m|}{2},\qquad
+\operatorname{sign}(\partial_rg_{m,k})=\sigma=\operatorname{sign}(m).
+\tag{31.108}
+$$
+取 $0<\eta\le\bar r/3$、$d_0\eta^2\le1$。对任意 $k_a,k_b\in I_k$ 且 $|k_a-k_b|\le d_0$，$g_{m,k_b}([0,2\eta])$ 在 $g_{m,k_a}([0,3\eta])$ 的逆值域中；具体地，写 $w_k=\sigma g_{m,k}$，有
+$$
+w_{k_a}(3\eta)-w_{k_b}(2\eta)\ge\frac{3|m|\eta}{10}>0.
+\tag{31.109}
+$$
+因此实际登记
+$$
+h_{a,b}=g_{m,k_a}^{-1}\circ g_{m,k_b}:[0,2\eta]\to[0,3\eta]
+\tag{31.110}
+$$
+连续严格增加、$h_{a,b}(0)=0$，并满足
+$$
+|h_{a,b}(r)-r|\le\frac{|k_a-k_b|}{20}r^3
+\quad(0\le r\le2\eta).
+\tag{31.111}
+$$
+
+证明。引理28.4给 $\partial_kg=-mr^3/60+O(r^4)$；在此固定紧段上取统一余项界 $Cr^4$，$C\bar r\le|m|/120$ 足以给第一界。$g_r(0)=m$ 和联合连续性允许再缩 $\bar r$ 得后两界。这里使用实际混合 Taylor 余项，不由有限数值点猜全域导数界。
+
+先在已知正向域证明逆像存在：$w_k(0)=0$，且 $w_k'\ge|m|/2$，故
+$$
+\begin{aligned}
+w_{k_a}(3\eta)-w_{k_b}(2\eta)
+&=[w_{k_a}(3\eta)-w_{k_a}(2\eta)]
+  +[w_{k_a}(2\eta)-w_{k_b}(2\eta)]\\
+&\ge\frac{|m|\eta}{2}
+ -\frac{|m|\,|k_a-k_b|}{40}(2\eta)^3\\
+&\ge |m|\eta\left(\frac12-\frac{d_0\eta^2}{5}\right)
+ \ge\frac{3|m|\eta}{10}.
+\end{aligned}
+\tag{31.112}
+$$
+第二差沿位于 $I_k$ 内的参数线段积分。严格增加及共同零点使每个 $w_{k_b}(r)$ 都落在 $w_{k_a}([0,3\eta])$，因此（31.110）已定义且其值确实在导数估计域内。现在才能在 $r$ 和 $h_{a,b}(r)$ 之间用导数下界：
+$$
+\frac{|m|}{2}|h_{a,b}(r)-r|
+\le |g_{m,k_a}(h_{a,b}(r))-g_{m,k_a}(r)|
+=|g_{m,k_b}(r)-g_{m,k_a}(r)|
+\le\frac{|m|\,|k_a-k_b|}{40}r^3.
+\tag{31.113}
+$$
+约去正 $|m|/2$ 得（31.111），没有预设逆像仍在域内的循环论证。固定参考 $k_b=k_{\rm ref}$ 时就给 $|h_k(r)-r|\le|k-k_{\rm ref}|r^3/20$。$k_a,k_b$ 各在 $I_k$ 并不足以给距离 $\le d_0$；本引理明确保留这一附加条件，下一定理以同侧参数保证它。$\square$
+

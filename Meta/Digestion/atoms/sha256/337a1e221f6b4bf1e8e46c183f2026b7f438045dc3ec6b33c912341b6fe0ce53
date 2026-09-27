@@ -1,0 +1,22 @@
+**命题 30.6（三点路径分离两种合法性）。** 取单位权路径 $1-2-3$、胞腔 $\{1,2\}\mid\{3\}$。此时
+$$
+L=\begin{pmatrix}1&-1&0\\-1&2&-1\\0&-1&1\end{pmatrix},\quad
+R=\begin{pmatrix}1&0\\1&0\\0&1\end{pmatrix},\quad
+h=(1,-1,0)^{\mathsf T},\quad D=\operatorname{diag}(2,1),
+$$
+$$
+h^{\mathsf T}Lh=5,\quad R^{\mathsf T}Lh=(-1,1)^{\mathsf T},\quad
+R^{\mathsf T}LR=\begin{pmatrix}1&-1\\-1&1\end{pmatrix},\quad
+K=\frac45\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+\tag{30.16}
+$$
+故 $G_b=\bigl(\begin{smallmatrix}-2/5&4/5\\2/5&-4/5\end{smallmatrix}\bigr)$ 合法，但
+$$
+J=\begin{pmatrix}3/5&-1/5\\2/5&1/5\\0&1\end{pmatrix},\qquad
+J\binom{1/5}{4/5}=\frac1{25}(-1,6,20)^{\mathsf T}
+\tag{30.17}
+$$
+不是概率，尽管其自然微观准备 $(1/10,1/10,4/5)^{\mathsf T}$ 严格正。
+
+证明。直接相乘得 $Lh=(2,-3,1)^{\mathsf T}$，给二次型 $5$ 与所列耦合。极小隐藏系数为 $\alpha=(u_A-u_B)/5$，从 $Ru+\alpha h$ 并代入 $u=(b_A/2,b_B)$ 得 $J$。刚度由 $R^{\mathsf T}LR-vv^{\mathsf T}/5$ 得到，非对角元非正，所以命题30.2适用。将严格正粗质量代入 $J$ 即得式（30.17）；其总和一而第一坐标负。这是极小准备障碍，未违反命题30.3关于生成元负率至少需要四点的最小性。$\square$
+

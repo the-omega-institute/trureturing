@@ -1,0 +1,128 @@
+{
+  "source": {
+    "kind": "inline",
+    "value": "wide_fresh_full_slot_source_comparison"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/20",
+      "rho": "1/1000",
+      "rbar": "1/200",
+      "h1min": "119/360",
+      "v0": "11/475",
+      "v1": "1279/45220",
+      "gap": "1/60",
+      "tbar": "21/8",
+      "Cbar": "122/29",
+      "kbar": "119/58",
+      "budget_increments": [
+        "61/27360",
+        "1/720",
+        "1/228"
+      ],
+      "c": [
+        "57/80",
+        "733/1800",
+        "27/100",
+        "9/100"
+      ],
+      "H": [
+        "51/500",
+        "1991/18000",
+        "13/180",
+        "3439/144000"
+      ],
+      "positive7": "449/7200"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/20",
+      "residual_radius": "1/1000",
+      "actual_r_upper": "1/200",
+      "joint_source_Delta_upper": "1/76",
+      "source_z_upper": "61/80",
+      "availability_upper": "3/232",
+      "h1_lower": "119/360",
+      "first_beta_eta_lower": "13/120",
+      "h_upper": "181/360",
+      "five_actual_gap_lowers": [
+        "19/200",
+        "11/180",
+        "1/60",
+        "7843/417600",
+        "49/1800"
+      ],
+      "minimum_actual_gap": "1/60",
+      "common_wrong_slot_gap": "1/60",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "4/5",
+        "shallow_C_minus_1_t": "27/8",
+        "shallow_C_minus_k": "3353/80",
+        "pure3_maximizing_cell": "743/400",
+        "root0_below_root1_reference": "659/400"
+      },
+      "heavy_residual_price_coefficient": "65/9",
+      "heavy_slot_movement_coefficient": "13/9",
+      "independent_r_cutoff": null
+    }
+  },
+  "denominator_costs": {
+    "path": "content/002-domains/000000/item/003-denominator_costs.json",
+    "sha256": "e5fc727e168671d2349e2e0e87453ae2aa31ea04b7d7a230b8fd1907d9e43f6d",
+    "kind": "value"
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 60
+  },
+  "rational_lp_count": {
+    "kind": "inline",
+    "value": 1888766
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "complete_H1_upper": {
+    "kind": "inline",
+    "value": "4593224413/8282400000"
+  },
+  "actual_survivor_mass_coefficient": {
+    "kind": "inline",
+    "value": "614921/614922"
+  },
+  "actual_survivor_mass_floor": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "separate_survival_loss_upper": {
+    "kind": "inline",
+    "value": "602701422621877709/8829206512156800000"
+  },
+  "previous_shared_survival_loss_upper": {
+    "kind": "inline",
+    "value": "211867971043050503/2943068837385600000"
+  },
+  "adopted_survival_loss_upper": {
+    "kind": "inline",
+    "value": "602701422621877709/8829206512156800000"
+  },
+  "denominator_gain": {
+    "kind": "inline",
+    "value": "23501778933767/6306576080112000"
+  },
+  "comparison": {
+    "path": "content/002-domains/000000/item/014-comparison.json",
+    "sha256": "71bfe5a5a261cab9a0afe4eb0b0384e79e11802fc66f8fd61efc598d934bf674",
+    "kind": "value"
+  }
+}

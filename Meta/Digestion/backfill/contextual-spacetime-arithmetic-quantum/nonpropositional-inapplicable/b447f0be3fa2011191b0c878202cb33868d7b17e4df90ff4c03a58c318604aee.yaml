@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b447f0be3fa2011191b0c878202cb33868d7b17e4df90ff4c03a58c318604aee
+  normalized_sha256: sha256:b447f0be3fa2011191b0c878202cb33868d7b17e4df90ff4c03a58c318604aee
+cas_ref: sha256:b447f0be3fa2011191b0c878202cb33868d7b17e4df90ff4c03a58c318604aee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“要求存在两个因子化”规定精确预测记忆的含义，“这里还显式保留当前读出因子化条件”强调定义的两个输入要求；它没有宣称任意候选记忆都满足这些要求，后面的“保证”仅解释各定义条件，不夹带所有记忆均精确的命题，因此此定义无另需证明的结论。
+    previous_atom_id: 12cb066b01f2dd2bb7b8646217769e9c21d449644bc1101733faf7efd1475860
+    next_atom_id: 5033511f4a8eb8693b277076b5d3069f3d88a147065947a96758611e959b43a6

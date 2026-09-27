@@ -16,13 +16,16 @@ internal static class RepositoryCapacityAudit
                 continue;
             }
 
-            var lineCount = RepositoryRules.CountArtifactLines(text);
-            if (lineCount > RepositoryRules.ArtifactHardLineLimit)
+            if (!RepositoryRules.IsArtifactLineCapacityExcluded(path))
             {
-                findings.Add(new RepositoryCapacityFinding(
-                    path,
-                    $"artifact spans {lineCount} lines (hard limit "
-                    + $"{RepositoryRules.ArtifactHardLineLimit})"));
+                var lineCount = RepositoryRules.CountArtifactLines(text);
+                if (lineCount > RepositoryRules.ArtifactHardLineLimit)
+                {
+                    findings.Add(new RepositoryCapacityFinding(
+                        path,
+                        $"artifact spans {lineCount} lines (hard limit "
+                        + $"{RepositoryRules.ArtifactHardLineLimit})"));
+                }
             }
 
             if (RepositoryRules.IsDirectoryCapacityExcluded(path))

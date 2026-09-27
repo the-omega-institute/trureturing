@@ -1,0 +1,53 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "AP13_U4"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "4": "1"
+    }
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1/6"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "938213/4630500"
+  },
+  "at_one": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "exhaustive_vertices": {
+    "path": "content/005-cost_results/000004/item/005-exhaustive_vertices.json",
+    "sha256": "f3701f9656a9b9205202d6ebe4aa6bdfc8c9c176f42f662a56b177dcdcdf8e21",
+    "kind": "value"
+  },
+  "candidate_supports": {
+    "path": "content/005-cost_results/000004/item/006-candidate_supports.json",
+    "sha256": "f0dd12496b4fcd26ff9ba9dd1007cae0beb1432a39b3b4f3d4cd8c56d081ef62",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/005-cost_results/000004/item/007-selected_support.json",
+    "sha256": "22256f9d8f41cdfd97e8158a5cc8592d8177789bad089bc68b7a45fb1c70cce4",
+    "kind": "value"
+  },
+  "zero_vertex": {
+    "path": "content/005-cost_results/000004/item/008-zero_vertex.json",
+    "sha256": "23c932355ac1ea11187ecac519f773368a9b997bfe913f5603f605d1f7e533b3",
+    "kind": "value"
+  },
+  "zero_support": {
+    "path": "content/005-cost_results/000004/item/009-zero_support.json",
+    "sha256": "c83bf3945d66263dc083662330884afbd4dc38f58ddd688e54befd760975de69",
+    "kind": "value"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "64269863095164904717/250042832550000000000000"
+  }
+}

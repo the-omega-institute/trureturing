@@ -1,0 +1,6 @@
+**证明。** (a) 因 $C=0$，所有 $M_j$ 都为零；而 $B=D=\operatorname{id}$ 给出 $BD^n=\operatorname{id}$。这里 $R=0$，所以反馈商为零，但 $N=0$，故初始商为 $H$，其诱导 $D$ 为恒等映射。
+
+(b) 由 $DC=0$ 得 $M_j=0$ 对 $j\ge1$，而 $M_0=BC=\operatorname{id}$。同时 $(0,1)$ 是 $D$ 的不动向量，所以 $D$ 不幂零。事实上 $N=\operatorname{span}\{(0,1)\}$、$R=\operatorname{span}\{(1,0)\}$，故可达的可见商上诱导 $D$ 为零；不可见的非幂零方向被商掉。
+
+(c) 从零初态按线性更新归纳得 $y_n=h_n=0$；另一方面 $BD^jC=\operatorname{id}$ 对全部 $j$ 成立。故仅观察这一条轨迹上的抵消不能推出 Markov 参数尾消失，必要性必须按任意输入串的输入输出命题判断。证毕。
+

@@ -1,0 +1,54 @@
+**定理 27.1（隐藏初始方向的正则比值坐标）。** 固定推论26.3的全部准备、黏性、常数和第一分支。置
+$$
+\vartheta(\beta,t)=\nu z(\beta,t)/r(\beta,t)\quad(t>0),
+\qquad \vartheta(\beta,0)=\beta,
+$$
+$$
+Z_*=B_0+C_zT/2,\quad E_\vartheta=C_z+A_rB_0/\nu,
+\quad L_\vartheta=C_z+2A_rZ_*/\nu,
+\quad D_\vartheta=C_1+A_r/\nu+2A_1Z_*/\nu.
+\tag{27.101}
+$$
+则 $\vartheta$ 是 $[-B_0,B_0]\times[0,T]$ 上的 $C^1$ 函数（时间端点单侧），并有
+$$
+|\vartheta-\beta|\le E_\vartheta t,\quad
+|\vartheta_t|\le L_\vartheta,\quad
+|\vartheta_\beta-1|\le D_\vartheta t,
+\quad 1/3\le\vartheta_\beta\le3.
+\tag{27.102}
+$$
+初始边界导数为
+$$
+\vartheta_\beta(\beta,0)=1,\qquad
+\vartheta_t(\beta,0)=\tfrac12 z_{tt}(\beta,0)
+ -\frac{\beta}{2\nu}r_{tt}(\beta,0).
+\tag{27.103}
+$$
+
+证明。先分离已知的一阶时间零点，定义
+$$
+U(\beta,t)=\int_0^1r_t(\beta,qt)\,dq,
+\quad V(\beta,t)=\int_0^1z_t(\beta,qt)\,dq.
+\tag{27.104}
+$$
+于是 $r=tU,z=tV$，$U(\beta,0)=\nu,V(\beta,0)=\beta$。第26节的连续混合正则性保证 $U,V$ 均 $C^1$，且由（25.109）积分得到
+$$
+\begin{gathered}
+U\ge\nu/2,\quad |U-\nu|\le A_rt/2,\quad
+|V-\beta|\le C_zt/2,\quad |V|\le Z_*,\\
+|U_t|\le A_r/2,\quad |V_t|\le C_z/2,\quad
+|U_\beta|\le A_1t/2,\quad |V_\beta-1|\le C_1t/2.
+\end{gathered}
+\tag{27.105}
+$$
+因此 $\nu V/U$ 就是在零点也有定义的 $C^1$ 延伸。由 $\nu V-\beta U=\nu(V-\beta)+\beta(\nu-U)$ 得第一误差界；对商求时间导数，用（27.105）给 $C_z+2A_rZ_*/\nu$。参数导数减一，分别界定 $\nu(V_\beta-1)/U$、$\nu/U-1$ 及 $\nu VU_\beta/U^2$，得到 $D_\vartheta t$。代入零点的积分导数给（27.103）。
+
+正的参数导数不需再缩短 $T$。对 $t>0$，
+$$
+\vartheta_\beta=\frac\nu r\left(z_\beta-\frac zr r_\beta\right),\qquad
+\left|z_\beta-\frac zr r_\beta-t\right|
+\le\left(C_1/2+A_1Z_*/\nu\right)t^2
+\le\kappa t^2\le t/2.
+$$
+再用 $(\nu/2)t\le r\le(3\nu/2)t$ 得 $1/3\le\vartheta_\beta\le3$，零点由（27.103）直接成立。$\square$
+

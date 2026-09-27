@@ -1,0 +1,46 @@
+**theorem 45.4（联合连续的单生成紧幺半群之尾群）。** 设 $M$ 为紧致 Hausdorff 交换拓扑幺半群，加法联合连续、单位元为 $0$，且 $M=\overline{\{na:n\ge0\}}$。令
+$$
+A_N=\overline{\{na:n\ge N\}},\qquad H=\bigcap_{N\ge0}A_N.
+$$
+则 $H$ 是非空紧致拓扑交换群，也是 $M$ 唯一的最小非空加法理想。若其群单位元为 $e$，则
+$$
+x+H=H\quad(x\in M),\qquad r(x)=x+e
+$$
+定义一个连续加法收缩 $r:M\to H$。以 $H$ 的群零元 $e$ 解释自然数倍数时，$g=a+e$ 的非负整数倍在 $H$ 中稠密。
+
+存在唯一的 $t\in\mathbb N_0\cup\{\infty\}$，使
+$$
+M\setminus H=\{na:0\le n<t\},
+$$
+右侧各点互异且为孤立点。具体地，$t$ 是使 $ta\in H$ 的最小下标；若不存在则为 $\infty$。此外，$0\in H$ 当且仅当 $M=H$。
+
+这一尾群结构属于经典紧单生成半群理论；可与 Tanana 所载 Hewitt 结构定理比较：*Compact Monothetic Semirings*，Theorem 3，pp. 15–16。这里给出包含 $n=0$ 的完整证明。[Tanana, Theorem 3, pp. 15–16](https://www.ijritcc.org/index.php/ijritcc/article/download/5439/5339#page=2)
+
+**证明。** 紧致性与连续性给出
+$$
+A_N=Na+M.
+$$
+因此各 $A_N$ 为非空紧集，逐次嵌套，且对任意 $x\in M$ 有 $x+A_N\subseteq A_N$。故 $H$ 非空、紧，并为加法理想。
+
+首先证明 $a+H=H$。一侧包含由理想性得到。对 $y\in H$，因 $y\in A_{N+1}=a+A_N$，集合
+$$
+\{z\in A_N:a+z=y\}
+$$
+均为非空紧集且逐次嵌套；其交非空，给出 $y\in a+H$。于是 $na+H=H$ 对所有 $n\ge0$ 成立。
+
+固定 $x\in M$、$y\in H$。取网 $n_i a\to x$，并逐项选 $h_i\in H$ 使 $n_i a+h_i=y$。由紧致性存在子网使 $h_i\to h\in H$；联合连续性给出 $x+h=y$。因此 $x+H=H$。
+
+取 $b\in H$。由 $b+H=H$，可选 $e\in H$ 使 $b+e=b$。任意 $z\in H$ 可写成 $z=b+c$，从而 $e+z=z$。故 $e$ 为 $H$ 的单位元。再次使用 $z+H=H$，可解出 $z+w=e$，故 $H$ 是交换群。逆元图
+$$
+\{(z,w)\in H^2:z+w=e\}
+$$
+闭且紧，其第一投影为到 Hausdorff 空间 $H$ 的连续双射，因而为同胚；逆元映射连续。任一非空加法理想包含某个 $x$，遂包含 $x+H=H$，证明最小性与唯一性。
+
+又有
+$$
+M=\{0,a,\ldots,(N-1)a\}\cup A_N.
+$$
+若 $x\notin H$，可选 $N$ 使 $x\notin A_N$。从 $M\setminus A_N$ 再删除有限个不等于 $x$ 的前段点，所得即开集 $\{x\}$。故尾群之外仅有孤立自然点。若 $na=ma$ 且 $n<m$，则 $na=(n+k(m-n))a$ 对所有 $k\ge0$ 成立，故 $na\in H$。因此尾群之外的自然下标唯一。由于 $H$ 是理想，$na\in H$ 的下标集合向上封闭，得到所述 $t$。若 $0\in H$，理想性给出 $M=M+0\subseteq H$；反向显然。
+
+最后，$r(x)=x+e$ 连续，且 $r|_H$ 为恒等映射。因 $e+e=e$，它保持加法并把 $0$ 映到群零元 $e$。其稠密自然像为 $ng$，所以 $H=\overline{\{ng:n\ge0\}}$。证毕。
+

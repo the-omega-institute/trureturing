@@ -1,0 +1,4 @@
+**命题 24.6（没有附加先验时的锐恢复半径）。** 对式（24.104）的非空球，若全部球内初态均被允许且输出可取任意 $\mathbb Z_p$ 点，最小最坏 $d_p$ 误差恰为 $p^{-K}$，每个相容中心都达到。
+
+证明。若 $b\in\mathcal F$，全部 $x\in\mathcal F$ 有 $|x-b|_p\le p^{-K}$，而 $x=b+p^K$ 达到等号。若 $b\notin\mathcal F$，则 $|b-a|_p>p^{-K}$，强三角关系使每个 $x\in\mathcal F$ 都满足 $|x-b|_p=|a-b|_p>p^{-K}$。故半径等于球直径，不是实线段的半直径。附加旧档案可缩小纤维，所述无先验下界不直接适用于该交集。[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)的纤维恢复原则可以使用，其实凸对偶与中点公式不能无条件搬到此超度量。$\square$
+

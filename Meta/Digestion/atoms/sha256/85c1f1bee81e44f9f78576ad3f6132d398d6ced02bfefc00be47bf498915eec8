@@ -1,0 +1,16 @@
+**定理 86.3（有界停止预算与有限时域最大界）。** 在定义与假设 86.1 下，对每个取值于 $\{0,\ldots,N\}$ 的 $(\mathcal F_t)$-停止时刻 $\tau$，有
+$$
+\boxed{
+\mathbb E_d\delta_\tau+
+ \sum_{s=0}^{N-1}\mathbb E_d[\mathbf1_{\{\tau>s\}}G_s]
+=\mathbb E_d[\delta_\tau+A_\tau]=\delta_0.
+} \tag{86.9}
+$$
+费用只计 $s<\tau$，不包含 $G_\tau$。特别地，$\mathbb E_d\delta_\tau\le\delta_0$。对每个实数 $\lambda>0$，有
+$$
+\boxed{
+\mathbb P_d\!\left(\max_{0\le t\le N}\delta_t\ge\lambda\right)
+\le\min\!\left(1,\frac{\delta_0}{\lambda}\right).
+} \tag{86.10}
+$$
+

@@ -1,0 +1,105 @@
+**证明。** 满射及 $q_j>0$ 保证 $p_i>0$；$p,a$ 均非负归一化。由行随机性与有限换序，
+$$
+\sum_zm_{iz}=a_i,\qquad
+\sum_zn_{iz}=p_i,\qquad
+\sum_zb_z=\sum_zc_z=1.
+$$
+因此 $m,n$ 是 $I\times Z$ 上的概率，$b,c$ 是 $Z$ 上的概率，所有 $\kappa_i^q$ 及正 $a_i$ 上的 $\kappa_i^d$ 也归一化。若 $a_i=0$，该纤维全部 $d_j=0$，故所有 $m_{iz}=0$。若 $n_{iz}=0$，非负和的各项 $q_jK(z\mid j)$ 在该纤维全为零；由 $q_j>0$ 得该纤维全部 $K(z\mid j)=0$，于是 $m_{iz}=0$。这证明
+$$
+a_i>0\ \Longrightarrow\ \kappa_i^d\ll\kappa_i^q.
+$$
+同理，$c_z=\sum_jq_jK(z\mid j)=0$ 迫使所有 $K(z\mid j)=0$，所以 $J_z=\varnothing$、$b_z=0$，并得到 $b_z>0\Rightarrow c_z>0$。
+
+令 $t=Ed$。由参考重建公式，
+$$
+t_j=\frac{q_j a_{r(j)}}{p_{r(j)}}\ge0,\qquad
+\sum_jt_j
+=\sum_i\frac{a_i}{p_i}\sum_{r(j)=i}q_j
+=\sum_i a_i=1.
+$$
+若 $d_j>0$，则 $a_{r(j)}\ge d_j>0$，所以 $t_j>0$，即 $d\ll t$，初始缺陷有限。
+
+对于 $c_z>0$，$J_z$ 非空；$n_{iz}>0$ 恰好表示纤维 $r^{-1}(i)$ 中有一个点属于 $J_z$，故 $I_z=r(J_z)$，$r_z$ 满射。$q_z$ 在 $J_z$ 上严格正，且
+$$
+\sum_{j\in J_z}(q_z)_j=\frac{c_z}{c_z}=1,\qquad
+(C_zq_z)_i=\frac{n_{iz}}{c_z}>0\quad(i\in I_z).
+$$
+$C_z$ 的每列恰有一个 $1$，$B_z$ 的第 $i$ 列之和为 $n_{iz}/n_{iz}=1$，所以二者及 $E_z$ 均非负列随机。若再有 $b_z>0$，则 $d_z\ge0$、$\sum_{j\in J_z}(d_z)_j=b_z/b_z=1$，且
+$$
+(C_zd_z)_i=\frac{m_{iz}}{b_z},\qquad
+(E_zd_z)_j
+=\frac{q_jK(z\mid j)}{n_{r(j),z}}\frac{m_{r(j),z}}{b_z}.
+$$
+当 $(d_z)_j>0$ 时，$m_{r(j),z}>0$，右侧严格为正。因此 $d_z\ll E_zd_z$，其缺陷有限。正 $b_z$ 仍允许 $m_{iz}=0<n_{iz}$；这样的活参考纤维具有零实际粗后验质量，不在其上归一化实际纤维条件律。
+
+现在取输入载体 $J$、输出载体 $I\times Z$，定义
+$$
+W(j,(i,z))=\mathbf1_{r(j)=i}K(z\mid j).
+$$
+它非负，每行之和为 $\sum_zK(z\mid j)=1$。输入 $d,t$ 的输出分别为 $m$ 与
+$$
+h_{iz}=\sum_jt_jW(j,(i,z))
+=\frac{a_i}{p_i}n_{iz}=a_i\kappa_i^q(z). \tag{85.4}
+$$
+$h\ge0$ 且 $\sum_{i,z}h_{iz}=\sum_i a_i=1$。若 $m_{iz}>0$，则 $a_i,n_{iz}>0$，所以 $h_{iz}>0$，即 $m\ll h$。在这些正实际输出上，两份条件概率为
+$$
+(\rho_{iz})_j=\mathbf1_{r(j)=i}\frac{d_jK(z\mid j)}{m_{iz}},\qquad
+(\sigma_{iz})_j=\mathbf1_{r(j)=i}\frac{t_jK(z\mid j)}{h_{iz}}
+=\mathbf1_{r(j)=i}\frac{q_jK(z\mid j)}{n_{iz}}.
+$$
+最后一次约分使用 $a_i/p_i>0$ 与 $n_{iz}>0$。两向量非负，总和分别为 $m_{iz}/m_{iz}=1$、$n_{iz}/n_{iz}=1$；$\rho_{iz}$ 的正质量位置必有 $q_jK(z\mid j)>0$，所以 $\rho_{iz}\ll\sigma_{iz}$。此处识别的是给定同一对 $(i,z)$ 的参考条件律。
+
+对已经归一化且满足 $d\ll t$ 的输入对 $(d,t)$ 及共同信道 $W$，应用
+[ZeroSupportDPI.classical_dpi_identity_zero_support](https://github.com/the-omega-institute/trureturing/blob/544abb3d37a644649198d83bd00267cd6fcf7dfd/D5/S3/DivergenceSupport/ZeroSupportDPI.lean)，得到
+$$
+D(d\Vert t)
+=D(m\Vert h)
+ +\sum_{(i,z):m_{iz}>0}m_{iz}D(\rho_{iz}\Vert\sigma_{iz}). \tag{85.5}
+$$
+这里所引实值公式的全载体和采用零分母除法及 $\log0$ 的总值化约定。对本证明中每一对非负质量 $u\ll v$，正 $u_x$ 必对应正 $v_x$，而零 $u_x$ 的乘积项为零，所以全载体和恰等于本节的正支撑和。链式公式中 $m_{iz}=0$ 的加权项为零，正是同一出处的 zero_output_weighted_posterior_kl；省略这些项不把总值化的零事件函数当作概率。已经证明的各支撑包含及有限载体保证这里没有无穷 KL 项。
+
+在 $m_{iz}>0$ 处，由式 (85.4)，
+$$
+\frac{m_{iz}}{h_{iz}}
+=\frac{m_{iz}/a_i}{n_{iz}/p_i}
+=\frac{\kappa_i^d(z)}{\kappa_i^q(z)}.
+$$
+按纤维求和得
+$$
+D(m\Vert h)
+=\sum_{i:a_i>0}a_i
+  \sum_{z:m_{iz}>0}\kappa_i^d(z)
+    \ln\frac{\kappa_i^d(z)}{\kappa_i^q(z)}
+=\mathcal G. \tag{85.6}
+$$
+实际与重建输入的粗边缘都为 $a$，故这是按 $a$ 加权的条件证据差异。即使只取 $h$ 的结果边缘，所得也是
+$$
+\widetilde c_z=\sum_i a_i\kappa_i^q(z),
+\qquad\text{而}\qquad c_z=\sum_i p_i\kappa_i^q(z).
+$$
+因此 $D(m\Vert h)$ 所保留的粗标签与所用参考输入均不能从 $D(b\Vert c)$ 的记号中省去。
+
+固定 $b_z>0$。在已证严格正参考的有限满射接口 $(J_z,I_z,q_z,r_z)$ 上，定理 74.2 的静态缺陷公式与定理 73.3 的纤维分解给出
+$$
+\begin{aligned}
+\delta_{q_z,r_z}(d_z)
+&=D(d_z\Vert q_z)-D(C_zd_z\Vert C_zq_z)\\
+&=\sum_{i:m_{iz}>0}\frac{m_{iz}}{b_z}
+       D(\rho_{iz}\Vert\sigma_{iz}).
+\end{aligned} \tag{85.7}
+$$
+确实，在这些纤维上，实际条件律的比率为
+$(d_jK(z\mid j)/b_z)/(m_{iz}/b_z)=d_jK(z\mid j)/m_{iz}$，参考条件律的比率为
+$(q_jK(z\mid j)/c_z)/(n_{iz}/c_z)=q_jK(z\mid j)/n_{iz}$。两者限制到 $J_z$ 后就是上述 $\rho_{iz},\sigma_{iz}$；在纤维外及 $J\setminus J_z$ 上作共同零延拓不改变正支撑 KL。若 $m_{iz}=0$，相应实际粗后验权重为零，第 73.3 条的该项贡献零。
+
+由 $m_{iz}\ge0$ 及 $b_z=\sum_i m_{iz}$，$b_z=0$ 时所有 $m_{iz}=0$；因此有限换序与式 (85.7) 给出
+$$
+\sum_{(i,z):m_{iz}>0}m_{iz}D(\rho_{iz}\Vert\sigma_{iz})
+=\sum_{z:b_z>0}b_z\delta_{q_z,r_z}(d_z).
+$$
+把此式及式 (85.6) 代入式 (85.5)，即得式 (85.2)。所有用于 KL 的概率对都已证明非负归一化及绝对连续性，故
+[GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/544abb3d37a644649198d83bd00267cd6fcf7dfd/D5/S3/Divergence/GrandmotherTheorem.lean)
+逐项给出非负性，消去 $\mathcal G\ge0$ 得式 (85.3)。证毕。
+
+附引：Yury Polyanskiy–Yihong Wu，*6.441 Information Theory*，MIT OpenCourseWare，Spring 2016，Chapter 2 “Information measures: mutual information”，[§2.2，Definition 2.2 及 Theorem 2.2(2)，印刷第 21 页；有限字母证明见第 22 页](https://ocw.mit.edu/courses/6-441-information-theory-spring-2016/184197ca5d5418da2415d37e929860b9_MIT6_441S16_chapter_2.pdf#page=2)。条件散度按第一份边缘律加权；该处提供通用 KL 链式法则，上述纤维缺陷公式由其共同信道后验分解与定理 73.3、74.2 的静态接口识别得到。
+

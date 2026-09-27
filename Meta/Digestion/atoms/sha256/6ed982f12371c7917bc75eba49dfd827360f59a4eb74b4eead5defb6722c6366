@@ -1,0 +1,61 @@
+**定理 11.4（正谱采样的 Bernstein 响应证书）。** 设 $0<u<v\le1$、$N\ge1$。对 $t\ge0$ 置 $\tau=t/h$、$f_t(x)=x^\tau$，在 $[u,v]$ 上取 Bernstein 多项式
+$$
+p_{N,t}(x)=\sum_{k=0}^N
+\left(u+(v-u)\frac{k}{N}\right)^{t/h}
+\binom Nk z^k(1-z)^{N-k},
+\qquad z=\frac{x-u}{v-u}.
+\tag{11.8}
+$$
+则对每个有限 $T_0\ge0$，
+$$
+\sup_{0\le t\le T_0}\|f_t-p_{N,t}\|_\infty
+\le\frac{(v-u)T_0}{2hu\sqrt N}.
+\tag{11.9}
+$$
+若还有共同谱隙 $a>0$，即 $v=e^{-ha}<1$，则
+$$
+\sup_{t\ge0}\|f_t-p_{N,t}\|_\infty
+\le\frac{v-u}{2e\,u(-\log v)\sqrt N}
+=\frac{v-u}{2e\,uha\sqrt N}.
+\tag{11.10}
+$$
+因此对精确规范压缩有
+$$
+\sup_{0\le t\le T_0}\|K(t)-K_r(t)\|
+\le\frac{m(v-u)T_0}{hu\sqrt{2r+1}},
+\tag{11.11}
+$$
+以及在 $a>0$ 时
+$$
+\sup_{t\ge0}\|K(t)-K_r(t)\|
+\le\frac{m(v-u)}{e\,uha\sqrt{2r+1}}.
+\tag{11.12}
+$$
+上述结论为充分误差界，近似阶的最优性不属于结论。
+
+在精确采样、共同谱合同固定时，式（11.11）给满足指定有限窗误差的明确充分记录阶数；$a>0$ 时式（11.12）、（11.20）再给全部未来及有界输入记忆误差。这些保证允许真实实现维数未知且任意大。若数据带固定非零误差，须同时检查式（11.14）的噪声项，不能仅让 $r$ 增大宣称风险趋零。没有共同正下界时，主卷命题137.18的 $e^{-\epsilon t}$ 与 $e^{-2\epsilon t}$ 已表明有限窗趋近不推出全时间或积分趋近；它们同样在每个固定等步采样前缀上趋近。有限 $b$ 则确保 $u>0$，支撑本节对任意非整数时间幂及有限生成算子对数的统一区间控制。
+
+**证明。** 对 $x=u+(v-u)z$，式（11.8）是 $f_t(u+(v-u)X/N)$ 的平均，其中 $X$ 具有参数 $(N,z)$ 的二项分布。等价地，可只用 Bernstein 权重的非负性、权重和为一及方差恒等式。若 $f$ 的 Lipschitz 常数为 $L$，则 Cauchy–Schwarz 给
+$$
+|p_N(x)-f(x)|
+\le L(v-u)\mathbb E|X/N-z|
+\le L(v-u)\sqrt{z(1-z)/N}
+\le\frac{L(v-u)}{2\sqrt N}.
+\tag{11.13}
+$$
+这些归一化与方差关系正是钉版 Mathlib [`bernstein.probability`、`bernstein.variance`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Bernstein.lean) 的成熟 Bernstein 接口。
+
+对 $\tau\ge0$，
+$$
+|f_t'(x)|=\tau x^{\tau-1}
+\le\tau/u\le T_0/(hu)
+\quad(0\le t\le T_0).
+$$
+当 $v<1$ 时，另有
+$$
+\tau x^{\tau-1}\le\tau v^\tau/u,
+\qquad
+\sup_{\tau\ge0}\tau v^\tau=\frac1{e(-\log v)}.
+$$
+代入式（11.13）得到式（11.9）和（11.10）。最后使用式（11.7），并取 $N=2r+1$。证毕。
+

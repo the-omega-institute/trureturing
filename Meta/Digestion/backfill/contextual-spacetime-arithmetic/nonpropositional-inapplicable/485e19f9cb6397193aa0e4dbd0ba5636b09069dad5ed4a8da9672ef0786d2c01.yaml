@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:485e19f9cb6397193aa0e4dbd0ba5636b09069dad5ed4a8da9672ef0786d2c01
+  normalized_sha256: sha256:485e19f9cb6397193aa0e4dbd0ba5636b09069dad5ed4a8da9672ef0786d2c01
+cas_ref: sha256:485e19f9cb6397193aa0e4dbd0ba5636b09069dad5ed4a8da9672ef0786d2c01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “剖面的累积表示：定义 25 → 定义 27 → 定义 31”记录同一命名的版本地址，CUM-TYPE 是检索标签；该句不证明累积表示的性质，不暗加定义结论，按编号映射处理。
+    previous_atom_id: 87d4442113f02c52bfb9eee9ed6c12ef006c893b9cbcfa5bc3fb19afa29e6555
+    next_atom_id: 66bc70f7c4ecf14e86e88a9fc6700187fc876749deee17157c42f11bf0fe8558

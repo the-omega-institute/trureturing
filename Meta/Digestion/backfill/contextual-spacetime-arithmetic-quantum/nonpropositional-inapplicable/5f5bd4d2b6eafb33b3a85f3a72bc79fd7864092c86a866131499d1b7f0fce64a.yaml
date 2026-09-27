@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f5bd4d2b6eafb33b3a85f3a72bc79fd7864092c86a866131499d1b7f0fce64a
+  normalized_sha256: sha256:5f5bd4d2b6eafb33b3a85f3a72bc79fd7864092c86a866131499d1b7f0fce64a
+cas_ref: sha256:5f5bd4d2b6eafb33b3a85f3a72bc79fd7864092c86a866131499d1b7f0fce64a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子的“提供了一个直接算法”是对具名项目结果的章节导读，前句说明前节尚未给出计算方法；没有独立算法步骤、正确性或复杂度公式需要证明，也未借定义偷带这些结论。
+    previous_atom_id: 81e435d65c0b67b441f24f6faee111790b97dd6f95974cb7a956306881a2d949
+    next_atom_id: 5d2436da3a3e573f3b1545b2c4a8ada23287633e46881e2285aedd2250981436

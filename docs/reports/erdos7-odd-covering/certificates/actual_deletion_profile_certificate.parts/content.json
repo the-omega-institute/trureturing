@@ -1,0 +1,157 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-common-fibre-head-experiment-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "same actual C=40/31 clipped law; full original357 part divides315; arbitrary actual11/13 axes, point holes and finite heights; no tail or Lean conclusion"
+  },
+  "source_certificate_sections": {
+    "kind": "inline",
+    "value": [
+      "shared_count_clipped_head",
+      "deletion_weighted_comparison",
+      "actual_rectangle_hinge_profile",
+      "joint_cost_hinge_refinement",
+      "common_rectangle_moment_bounds"
+    ]
+  },
+  "source_sections_sha256": {
+    "kind": "inline",
+    "value": "43ee37b084b09a9574b5e53a2ae5c0d79180202c453ce991e3838c5457662c13"
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": "existing verified rectangle hinge duals, JC whole-cost bounds, common rectangle coefficients and high-height coefficients"
+  },
+  "arithmetic": {
+    "kind": "inline",
+    "value": "exact signed-int64 arrays with checked intermediate bounds; Python integers and Fractions for final comparisons"
+  },
+  "all_optional_deletion_vectors": {
+    "kind": "inline",
+    "value": 161375
+  },
+  "old_test_layouts": {
+    "kind": "inline",
+    "value": 27720
+  },
+  "rectangle_constraints": {
+    "kind": "inline",
+    "value": {
+      "rectangle_triples": 1372,
+      "common_diagonal_numerators": [
+        228733,
+        264815,
+        215188,
+        41873
+      ],
+      "common_diagonal_denominator": 1000000,
+      "minimum_leading_principal_minors": [
+        21272169,
+        124620589337355,
+        430233787326429539820,
+        215234220560783422105980
+      ],
+      "common_diagonal_sum": "750609/1000000",
+      "high_square_coefficient": "12259/83700",
+      "first_numerator_saving": "9/496"
+    }
+  },
+  "square_transfer_factor": {
+    "kind": "inline",
+    "value": "1587849733/837000000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": {
+      "shape": "root1_same_other_column",
+      "bound": "591122424341/16497075000",
+      "N": 86,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        5,
+        0,
+        0,
+        2,
+        1
+      ]
+    }
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": {
+      "shape": "root1_same_other_column",
+      "bound": "1175795/219961",
+      "N": 86,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        5,
+        0,
+        0,
+        2,
+        1
+      ]
+    }
+  },
+  "reference_fraction_lower": {
+    "kind": "inline",
+    "value": {
+      "shape": "root1_same_other_column",
+      "bound": "108683/204000",
+      "N": 85,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        2,
+        0,
+        4,
+        0,
+        0,
+        2,
+        2
+      ]
+    }
+  },
+  "full_hinge_upper_at_4_through_12": {
+    "path": "content/013-full_hinge_upper_at_4_through_12.json",
+    "sha256": "c33b6daeae0a903e30807fc666a3283c2150020883e0d3fd1f6b96741ddf637d",
+    "kind": "value"
+  },
+  "cases": {
+    "path": "content/014-cases.json",
+    "sha256": "2b40b41769f771dd28e4ad9caedfb07f58c5f0d246c7762d16501db5c0e353fe",
+    "kind": "array"
+  }
+}

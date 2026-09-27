@@ -1,0 +1,73 @@
+{
+  "divisors": {
+    "kind": "inline",
+    "value": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ]
+  },
+  "cap_numerators": {
+    "kind": "inline",
+    "value": [
+      999999994,
+      206661045,
+      334321686,
+      67634753,
+      520760661,
+      116310578,
+      185728277,
+      40512614,
+      281216811,
+      49134997,
+      81019633,
+      16915975
+    ]
+  },
+  "group_numerator48": {
+    "kind": "inline",
+    "value": 19436742364
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "25170030757/47999999712"
+  },
+  "unrestricted_root_square_upper": {
+    "kind": "inline",
+    "value": "68120816577929544627127/3445960198074238687500"
+  },
+  "unit_loss_Gamma_upper": {
+    "kind": "inline",
+    "value": "531854671821065105532641/14455820782222658015625"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "35"
+  },
+  "improvement_from_unit_loss": {
+    "kind": "inline",
+    "value": "25900944443272074985766/14455820782222658015625"
+  },
+  "roots": {
+    "path": "content/001-cases/000001/item/008-result/008-roots.json",
+    "sha256": "96143b4df4130e94f7c94dbabbaef0acf0ffaf1f7b18bf3c607859a634cd0ab9",
+    "kind": "array"
+  },
+  "minimum_margin": {
+    "kind": "inline",
+    "value": "697199872596794233/91892271948646365000"
+  },
+  "maximum_square_integer_bound": {
+    "kind": "inline",
+    "value": 213443998719336
+  }
+}

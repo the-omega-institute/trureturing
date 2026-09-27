@@ -1,0 +1,23 @@
+**theorem 48.3 (Exact support, output type, and bounds).** Let $\mathbf a\in K^r$ have exact ambient-zero set $Z=\{i:a_i=0\}$, and put $T=\{i:a_i\in B\}$. For every positive polynomial $P$,
+$$
+P(\mathbf a)=0\quad\Longleftrightarrow\quad P^Z=0,
+$$
+$$
+P(\mathbf a)\in B\quad\Longleftrightarrow\quad S_Z(P)\cap T\ne\varnothing.
+$$
+If $P(\mathbf a)$ is natural, every coordinate indexed by $S_Z(P)$ is a positive natural number, and $P(\mathbf a)$ is its ordinary natural polynomial evaluation. In that case,
+$$
+a_i\leq P(\mathbf a)\qquad(i\in S_Z(P)).
+$$
+For $P\in\mathcal P$, if all these active coordinates are natural and at most $b\geq1$, then
+$$
+P(\mathbf a)\leq Cb^d.
+$$
+All separate term expansions in Definition 48.2 preserve their evaluations in $K$.
+
+**证明。** Evaluation respects the recursive polynomial expansion by induction on the term tree, using only semiring identities. A monomial containing a variable from $Z$ vanishes. Every surviving monomial has a positive natural coefficient and only ambient nonzero variable factors. Theorem 48.1 shows that such a monomial is ambient nonzero, even if its profinite residue is zero. A nonempty sum of surviving monomials is likewise ambient nonzero. This proves the first equivalence.
+
+A surviving monomial is boundary precisely when it contains a boundary variable; otherwise all its factors are positive naturals and its value is natural. A sum with a boundary summand is boundary, whereas a sum of natural summands is natural. This proves the second equivalence and the assertion concerning ordinary evaluation. In particular, an internal ring zero divisor can make a boundary monomial equal $e$, but cannot make it equal ambient zero.
+
+For an active index $i$ in a natural evaluation, choose a surviving monomial containing $x_i$. Its coefficient and all other variable factors are at least one, and its positive power of $a_i$ is at least $a_i$. That monomial, and hence the entire natural sum, is at least $a_i$. Finally, each surviving monomial has degree at most $d$, its variable part is at most $b^d$, and the sum of its coefficients is at most $P(1,\ldots,1)\leq C$. The asserted upper bound follows, including the zero and constant cases. 证毕。
+

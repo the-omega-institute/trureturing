@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d517acbc40f2541c5d61f2a10657ec52e9d09efca22dc46a28b9baa21811629b
+  normalized_sha256: sha256:d517acbc40f2541c5d61f2a10657ec52e9d09efca22dc46a28b9baa21811629b
+cas_ref: sha256:d517acbc40f2541c5d61f2a10657ec52e9d09efca22dc46a28b9baa21811629b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “只观察 W_0,W_1,W_2,W_3”规定实验读数，“假设”给出正且互异的奇异值及非共振条件，最后“定义无向图”；本叶到连通分量数的命名为止，没有因此断言三步识别，定义没有夹带定理。
+    previous_atom_id: a91754c112bcc66432bd3d015fcaf939f26c45843d12887740d6b540cd02c7a7
+    next_atom_id: ad4260e482282c0a948ed1dd9dbe8e71d67ef920e86457fcfcc4be70c4b65994

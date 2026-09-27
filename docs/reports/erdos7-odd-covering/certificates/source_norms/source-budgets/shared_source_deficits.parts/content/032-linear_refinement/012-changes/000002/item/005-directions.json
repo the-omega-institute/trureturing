@@ -1,0 +1,23 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 31,
+      "part": {
+        "path": "content/032-linear_refinement/012-changes/000002/item/005-directions/000000-000031.json",
+        "sha256": "8b9c85892e5c2cbda35e4d0316f15799d1194bac90d4a0dabf8e8d70b3539a7d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 31,
+      "stop": 41,
+      "part": {
+        "path": "content/032-linear_refinement/012-changes/000002/item/005-directions/000031-000041.json",
+        "sha256": "4a43ff48968744045fa7b1a2d881a7594a0776109a6f1ffbc7c55f288f7ea42d",
+        "kind": "value"
+      }
+    }
+  ]
+}

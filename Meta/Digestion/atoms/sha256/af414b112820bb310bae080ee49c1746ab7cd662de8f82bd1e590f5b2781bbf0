@@ -1,0 +1,171 @@
+**定理 66.5（有限词计数与 $k=3$ 的 Hausdorff 维数）。**
+
+令
+$$
+r:=k-1.
+$$
+则
+$$
+N_k(n)=2^n\qquad(0\le n<r),
+$$
+并且对每个 $n\ge r$，
+$$
+N_k(n)=N_k(n-1)+N_k(n-2)+\cdots+N_k(n-r).
+$$
+此外，对每个 $L\ge1$，
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+特别地，当 $k=3$ 时，
+$$
+N_3(n)=F_{n+2},\qquad M_3(L)=2F_{L+1},
+$$
+其中 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。若
+$$
+\phi=\frac{1+\sqrt5}{2},
+\qquad
+s:=\frac{\log\phi}{\log2},
+$$
+则
+$$
+\dim_{\mathrm H}(Y_3,\rho) = \dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d) = \dim_{\mathrm H}(K_{3,3},d)
+=s.
+$$
+
+**证明。**
+
+当 $n<r$ 时，长度不足以出现 $r$ 个连续的 $1$，故 $N_k(n)=2^n$。当 $n\ge r$ 时，全 $1$ 词非法，所以任一允许词存在最后一个 $0$，并且有唯一末尾形式
+$$
+u\,0\,1^j,\qquad 0\le j\le r-1,
+$$
+其中 $u$ 是长度 $n-j-1$ 的允许词。按 $j$ 分类即得
+$$
+N_k(n)=\sum_{j=0}^{r-1}N_k(n-j-1).
+$$
+有限锚定重构给出长度 $L$ 的原位允许词与“一个锚位 $b$ 加一个长度 $L-1$ 的允许关系词”之间的双射，因此
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+当 $k=3$ 时，递推化为 Fibonacci 递推，初值 $N_3(0)=1,N_3(1)=2$，故
+$$
+N_3(n)=F_{n+2}.
+$$
+由 Binet 公式，存在常数 $A_1,A_2>0$ 使
+$$
+A_1\phi^n\le F_{n+2}\le A_2\phi^n
+$$
+对所有 $n\ge0$ 成立。
+
+先证上界。长度 $n$ 的允许关系柱覆盖 $Y_3$，每个柱的 $\rho$-直径至多 $2^{-n}$，柱数为 $F_{n+2}$。若 $q>s$，则
+$$
+\mathcal H^q_{\rho,2^{-n}}(Y_3)
+\le A_2\phi^n2^{-qn}
+=A_2\,2^{(s-q)n}\longrightarrow0.
+$$
+所以
+$$
+\dim_{\mathrm H}(Y_3,\rho)\le s.
+$$
+
+再证下界。置
+$$
+\alpha:=\phi^{-1},
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+$$
+矩阵 $P$ 的各行和为 $1$，直接计算有 $\pi P=\pi$，且 $P_{11}=0$。因此相应柱公式定义一个支撑在 $Y_3$ 上的平稳 Markov 概率 $\mu_{\mathrm{st}}$。对任意长度 $n\ge1$ 的允许词 $u$，令 $N_{ab}(u)$ 为相邻转移 $a\to b$ 的次数。因为 $N_{11}(u)=0$，
+$$
+\mu_{\mathrm{st}}([u])
+=\pi_{u_0}\alpha^{N_{00}(u)+2N_{01}(u)}.
+$$
+又有
+$$
+N_{01}(u)-N_{10}(u)=u_{n-1}-u_0
+$$
+以及
+$$
+N_{00}(u)+N_{01}(u)+N_{10}(u)=n-1,
+$$
+故
+$$
+N_{00}(u)+2N_{01}(u)
+=n-1+u_{n-1}-u_0.
+$$
+上式指数至少为 $n-2$，故例如取
+$$
+B:=\max\{\pi_0,\pi_1\}\alpha^{-2}
+$$
+即可得到对所有允许的 $u$ 与 $n\ge1$，
+$$
+\mu_{\mathrm{st}}([u])\le B\alpha^n
+=B\,2^{-sn}.
+$$
+
+对每个 $n\ge1$，闭球
+$$
+\overline B_\rho(c,2^{-n})
+$$
+正是由 $c_0,\ldots,c_{n-1}$ 决定的长度 $n$ 柱。于是增大常数后，存在 $B'>0$ 使对所有 $c\in Y_3$ 与 $0<r\le1$，
+$$
+\mu_{\mathrm{st}}(\overline B_\rho(c,r))\le B'r^s.
+$$
+这里若 $2^{-(n+1)}<r\le2^{-n}$，则
+$$
+\overline B_\rho(c,r)\subseteq\overline B_\rho(c,2^{-n})
+$$
+并且 $2^{-sn}\le2^sr^s$，故上述统一界成立。
+
+令 $\mu_{\mathrm{st}}^*$ 表示由 $\mu_{\mathrm{st}}$ 产生的外测度。对任意非空子集 $U\subseteq Y_3$，若
+$$
+\delta:=\operatorname{diam}_\rho U>0,
+$$
+取 $c\in U$，则
+$$
+U\subseteq\overline B_\rho(c,\delta),
+$$
+从而
+$$
+\mu_{\mathrm{st}}^*(U)\le B'\delta^s.
+$$
+若 $\delta=0$，则 $U$ 是单点集。该单点是其一列嵌套长度 $n$ 柱的交，而这些柱的质量至多为 $B2^{-sn}\to0$。由概率测度对递减可测集列的从上连续性，该单点质量为零，于是同一不等式在 $\delta=0$ 时也成立。
+
+现在令 $\{U_i\}_{i\ge1}$ 是 $Y_3$ 的任意可数覆盖；这些集合不要求可测。由外测度的单调性和可数次次可加性，
+$$
+1=\mu_{\mathrm{st}}^*(Y_3)
+\le\sum_i\mu_{\mathrm{st}}^*(U_i)
+\le B'\sum_i(\operatorname{diam}_\rho U_i)^s.
+$$
+因此每个允许直径阈值下的 $s$-维 Hausdorff 覆盖代价都至少为 $1/B'$，所以
+$$
+\mathcal H^s_\rho(Y_3)\ge\frac1{B'}>0.
+$$
+于是
+$$
+\dim_{\mathrm H}(Y_3,\rho)\ge s.
+$$
+结合上界得到等号。
+
+上一条定理给出
+$$
+\rho=2\overline d
+$$
+在商空间对应下成立。把度量乘一个正常数不改变 Hausdorff 维数，因此
+$$
+\dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d)=s.
+$$
+同一条定理还给出两个固定锚相似副本
+$$
+K_{3,3}=K_{3,3}^{(0)}\cup K_{3,3}^{(1)},
+\qquad
+K_{3,3}^{(b)}=T_b(Y_3),
+$$
+且每个 $T_b$ 的相似比例为 $1/2$，所以每个 $K_{3,3}^{(b)}$ 的 Hausdorff 维数都是 $s$。对任意 $q>s$，两个部分的 $q$-维 Hausdorff 测度都为零，所以其有限并的 $q$-维测度也为零；另一方面并集包含任一维数为 $s$ 的部分。因此
+$$
+\dim_{\mathrm H}(K_{3,3},d)=s.
+$$
+证毕。
+

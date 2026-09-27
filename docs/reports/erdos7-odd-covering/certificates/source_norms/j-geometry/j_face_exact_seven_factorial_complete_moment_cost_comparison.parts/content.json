@@ -1,0 +1,154 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-exact-seven-factorial-complete-moment-cost-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "21a42b52aab8641bbc6b5a832f9f64996455ba09063ecb8db4a0d3fa835f32cf",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "all_original_indices": {
+    "path": "content/004-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/005-original_cost_tags.json",
+    "sha256": "04f5501da405482502f277a79570ce9ca5eab4ee0185dfc640a5a26fb47a2ace",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/006-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "changed_basis_bounds": {
+    "kind": "inline",
+    "value": [
+      {
+        "name": "factorial5",
+        "previous_upper": "782845887531143161/992250000000000000",
+        "updated_upper": "130204314611580731/165375000000000000",
+        "source": "294"
+      }
+    ]
+  },
+  "added_basis_bounds": {
+    "kind": "inline",
+    "value": []
+  },
+  "basis": {
+    "path": "content/013-basis.json",
+    "sha256": "9912fee5db066ac7b1a0c6b9ac86e36982728fdd5997846af8797ff70b8a221e",
+    "kind": "value"
+  },
+  "proof_data": {
+    "path": "content/014-proof_data.json",
+    "sha256": "9e3eb1b148805c47c8829f5db62873207c8bf464f90e68d3272e6971253dbfee",
+    "kind": "array"
+  },
+  "results": {
+    "path": "content/015-results.json",
+    "sha256": "7e440e187e2e992ec1bf3c1af44a518537fb917893341a9730cc60a524a6177f",
+    "kind": "array"
+  },
+  "comparison_upper": {
+    "path": "content/016-comparison_upper.json",
+    "sha256": "e00e358f67081ff9e6fcab54a5881b0d01ad4347ab177623a14312f1546b33c7",
+    "kind": "value"
+  },
+  "previous_comparison_upper": {
+    "kind": "inline",
+    "value": "114246004250776299879031942241279999045453543609022200680174022936643628781873095225985301133260831294308483423292585687555558611779005672238767096834698166816091787293083510707461670089413113398464480405933923134150592498913442690765846249972733487633609306770662929155953213140170743644498627167975983545850826507957061074476450903580419779393295762457454733570387993559275145758339848392096980558760979514864425128152021445771944050090246276095077169526569103881640768488534722914106711649048333474487624206886063049409430183619387465234380619891856640619939556803/280210906387641197282393435256469999432618468042172560191279828538715574601147547302786432016240505408821826765592550690094799974861821202686764009413830745143741743152989807029314905246029129862682270031545186825169145406223472467960246312730548475983424012437993138404316882173608887207541492689487329105054165693910275644781309191246613704205803838783853647662285933206112021865448131779825888986433752625840809179050807843117804592077984679848527206403087735222275644843370722072804262865833983779471503983887134306679449427340373548465439620747261062089344000"
+  },
+  "complete_comparison_improvement": {
+    "kind": "inline",
+    "value": "28879675098996313595811500/854151881875784427513568791"
+  },
+  "independent_moment_method_lower": {
+    "path": "content/019-independent_moment_method_lower.json",
+    "sha256": "43533674da794f829ac2087bae11b7f9b8e333f5e791a0cca9ffae815537c5ca",
+    "kind": "value"
+  },
+  "method_bracket_width": {
+    "kind": "inline",
+    "value": "1772815501948454683494680316700003823924325725789866095948983521899303554109354849427631859947099049940662813479463651841575748892466899940083832267483674853667000718985079353223013500588262158647795279307487835466985655390808893462730754801109927081889482990724080757379647046871536381522509213323472203952259310767938513030357547660816011689294539357352228364355718337889094347305497749767892297409074852696458123968479164630150803355048376728760892891140738065052465018205558639844580251344343933448703566016535141553874462046660643522602995197681/14555125818293346160047654000782471244752211727875821041945179791034193444987830975032507172128908999062047535142151416902540428647729855363666285517284034690297560054220792684071367509475763310328679455571399991554227704829609084684569373271153107658242963471538800424141027432605769974190998878793570445609409133313264895487394564808062525476970794696682663974629619277071542572509936047033840451049132852506928752639872179973302690937984031762688940306571355419406390744181866171203296271411211702971932712712327161571443553233484150645621764072630536672128000"
+  },
+  "target403_position": {
+    "kind": "inline",
+    "value": "above"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "basis_functions": 34,
+      "updated_basis_bounds": 1,
+      "added_basis_bounds": 0,
+      "targets": 59,
+      "cost_targets": 52,
+      "low_load_inequalities": 472,
+      "whole_tail_polynomials": 59,
+      "exact_witness_moment_checks": 2006,
+      "positive_witness_atoms": 262,
+      "nonzero_envelope_coefficients": 171
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original52-cost comparison on both entire actual saturated J faces. All34 observations from293 remain, including the full retained375 H4 and AP11-0 bounds and full H7/H8 inequalities. Only the original complete Phi5 source bound is strengthened by294. Its unchanged6531-variable seven-retained model and exact fixed partition cover all62500000 independent containing choices, with the same sixty seeds and every residual leaf. Every original exponent/cofactor tail remains. All59 whole-positive-integer envelopes and fresh finite moment witnesses are checked against all34 updated observations; mass is an equality. Exact mass3/20, all52 positive cost weights, signed mass, outside square, all four AP11 blocks, AP13 survival and the complete count tail are recomputed. The method lower is restricted to independent scalar-envelope comparisons with positive survival denominator; its witnesses need not be actual sources or mutually compatible. No actual attainment, off-face/global join, unrestricted Erdos7 result or Lean verification is asserted."
+  }
+}

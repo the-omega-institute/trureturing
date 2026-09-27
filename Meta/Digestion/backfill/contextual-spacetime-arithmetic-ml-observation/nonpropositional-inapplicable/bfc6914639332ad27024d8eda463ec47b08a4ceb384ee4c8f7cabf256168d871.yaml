@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bfc6914639332ad27024d8eda463ec47b08a4ceb384ee4c8f7cabf256168d871
+  normalized_sha256: sha256:bfc6914639332ad27024d8eda463ec47b08a4ceb384ee4c8f7cabf256168d871
+cas_ref: sha256:bfc6914639332ad27024d8eda463ec47b08a4ceb384ee4c8f7cabf256168d871
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段用“标签映射为”引入两台指定机器的记号，并明确“这里的余域是各自的实际可达像”；这是选定既有映射之像作为余域，尚未断言精度或核包含，后续容差保证已切出，故没有偷带定理。
+    previous_atom_id: c4766e3ee4c38162cb6d6baf7cd015f0c2e5dd8023ddd75d26e42c1b55837462
+    next_atom_id: b9e4ac11cc54830627f13e85e7a5a774aa0c2850461dbdc216392f0476f88404

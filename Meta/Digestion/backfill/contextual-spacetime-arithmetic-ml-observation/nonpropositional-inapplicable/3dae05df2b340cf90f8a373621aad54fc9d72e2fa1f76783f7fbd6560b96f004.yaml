@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3dae05df2b340cf90f8a373621aad54fc9d72e2fa1f76783f7fbd6560b96f004
+  normalized_sha256: sha256:3dae05df2b340cf90f8a373621aad54fc9d72e2fa1f76783f7fbd6560b96f004
+cas_ref: sha256:3dae05df2b340cf90f8a373621aad54fc9d72e2fa1f76783f7fbd6560b96f004
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “两个精确概率更新的导数分别为”及“均不超过”给出两条导数公式与共同上界；HasDerivAt.div和常数加乘求导直接应用于源式，正分母及平方非负性完成规范化，仓内无冻结 GID；本叶不是定义，且未夹带下一叶的全历史网格误差保证。
+    previous_atom_id: aa5bccd76e5e67e4785fbe5f7dde25c365ec1b1cb2f7546f0183cdbe23a10707
+    next_atom_id: 625baeea56d88041ba91d1f2a0c09d33a226f2c4956396888bafbe5965e0c8b1

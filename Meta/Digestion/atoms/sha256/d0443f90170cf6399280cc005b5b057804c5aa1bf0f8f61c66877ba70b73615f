@@ -1,0 +1,8 @@
+### 定理 62.2（观察深度的单调性）
+
+冻结结果 `finite_time_observer_monotonicity` 证明对每个 $n$：
+
+$$
+\mathcal V_n\subseteq\mathcal V_{n+1},
+$$
+

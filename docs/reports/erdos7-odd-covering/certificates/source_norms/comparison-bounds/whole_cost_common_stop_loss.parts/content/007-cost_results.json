@@ -1,0 +1,50 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 7,
+      "part": {
+        "path": "content/007-cost_results/000000-000007.json",
+        "sha256": "09b1d3fd487385fa7b5c7ecb1bf2bf0372e3d246b1a13d892804da7230d1a695",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 17,
+      "part": {
+        "path": "content/007-cost_results/000007-000017.json",
+        "sha256": "30675905f1a25733b6f7ba887f7992bf958769a3e3a975d3b7d5c19d2678cbda",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 17,
+      "stop": 26,
+      "part": {
+        "path": "content/007-cost_results/000017-000026.json",
+        "sha256": "7272e9e8bbbdfd8eef728c5e46bef8b61bac755cb2912bb8846051854a817298",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 26,
+      "stop": 36,
+      "part": {
+        "path": "content/007-cost_results/000026-000036.json",
+        "sha256": "cbcc8c616c063eac3361c87880038bb563e1895157c208f13b3c41f9627d4d5b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 41,
+      "part": {
+        "path": "content/007-cost_results/000036-000041.json",
+        "sha256": "f2423d828097d0eb764b3e43a034b965d80ff5bc9bc46a705f2c5fb8c8fcd0ff",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+**定义 141.3（交换坐标后的提升核）。** 将第139节提升状态 $(j,A)$ 交换坐标，写为 $s=(a,j)$。其核记为 $Q$，即
+$$
+Q((a,j),(1-a,0))=\frac1{\lambda h_j},
+\qquad
+Q((a,j),(a,j+1))=\frac{h_{j+1}}{\lambda h_j}\quad(j<k-1).
+\tag{141.7}
+$$
+其平稳律为
+$$
+\widehat\pi(a,j)=\frac{\lambda^{-j}h_j}{2S}.
+$$
+定义 $C(a,j)=(1-a,j)$。则 $Q(Cs,Ct)=Q(s,t)$，且 $\widehat\pi(Cs)=\widehat\pi(s)$。
+

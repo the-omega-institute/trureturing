@@ -1,0 +1,8 @@
+仍使用完整乘积情境，因此
+
+$$
+w_{M_K(X,Y)}=w_X*w_Y,\qquad
+z_{M_K(X,Y)}(r)=\sum_{p+q=r}\mathbf1_K(p,q)z_X(p)z_Y(q).
+\tag{K}
+$$
+

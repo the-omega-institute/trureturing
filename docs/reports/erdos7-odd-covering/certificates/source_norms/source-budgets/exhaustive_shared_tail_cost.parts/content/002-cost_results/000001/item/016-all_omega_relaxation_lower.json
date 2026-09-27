@@ -1,0 +1,148 @@
+{
+  "relaxation_lower": "50040424450190247635241689153/31351724467416195405688125000",
+  "exact_complete_tail": "6547083945100925211847106513/8957635562118912973053750000",
+  "family_errors": {
+    "pure3": "1545260963683/3575119912875000",
+    "pure5": "1545260963683/3575119912875000",
+    "root5": "1545260963683/3575119912875000",
+    "cell5": "1545260963683/3575119912875000"
+  },
+  "complete_series": {
+    "2": {
+      "pure3": {
+        "upper": "71621142238663/1787559956437500",
+        "crossing": 5,
+        "tail_coefficient": "2344/3125",
+        "omitted": []
+      },
+      "pure5": {
+        "upper": "16634478000683/3575119912875000",
+        "crossing": 4,
+        "tail_coefficient": "122/243",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "130704466273/9120203859375",
+        "crossing": 4,
+        "tail_coefficient": "1/3",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "18229342971433/3575119912875000",
+        "crossing": 3,
+        "tail_coefficient": "1/9",
+        "omitted": []
+      }
+    },
+    "3": {
+      "pure3": {
+        "upper": "48998136528253/3575119912875000",
+        "crossing": 5,
+        "tail_coefficient": "2344/3125",
+        "omitted": [
+          3
+        ]
+      },
+      "pure5": {
+        "upper": "16634478000683/3575119912875000",
+        "crossing": 4,
+        "tail_coefficient": "122/243",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "130704466273/9120203859375",
+        "crossing": 4,
+        "tail_coefficient": "1/3",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "18229342971433/3575119912875000",
+        "crossing": 3,
+        "tail_coefficient": "1/9",
+        "omitted": []
+      }
+    },
+    "4": {
+      "pure3": {
+        "upper": "48998136528253/3575119912875000",
+        "crossing": 5,
+        "tail_coefficient": "2344/3125",
+        "omitted": [
+          3
+        ]
+      },
+      "pure5": {
+        "upper": "16634478000683/3575119912875000",
+        "crossing": 4,
+        "tail_coefficient": "122/243",
+        "omitted": [
+          2
+        ]
+      },
+      "root5": {
+        "upper": "11555710168333/3575119912875000",
+        "crossing": 4,
+        "tail_coefficient": "1/3",
+        "omitted": [
+          2
+        ]
+      },
+      "cell5": {
+        "upper": "18229342971433/3575119912875000",
+        "crossing": 3,
+        "tail_coefficient": "1/9",
+        "omitted": []
+      }
+    },
+    "1": {
+      "pure3": {
+        "upper": "71621142238663/1787559956437500",
+        "crossing": 5,
+        "tail_coefficient": "2344/3125",
+        "omitted": []
+      },
+      "pure5": {
+        "upper": "37838331223433/1787559956437500",
+        "crossing": 4,
+        "tail_coefficient": "122/243",
+        "omitted": []
+      },
+      "root5": {
+        "upper": "130704466273/9120203859375",
+        "crossing": 4,
+        "tail_coefficient": "1/3",
+        "omitted": []
+      },
+      "cell5": {
+        "upper": "18229342971433/3575119912875000",
+        "crossing": 3,
+        "tail_coefficient": "1/9",
+        "omitted": []
+      }
+    }
+  },
+  "attaining_cuts": {
+    "pure3": 5,
+    "pure5": 4,
+    "root5": 4,
+    "cell5": 3
+  },
+  "allocation": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "1545260963683/3575119912875000"
+  ],
+  "q": [
+    "0",
+    "0"
+  ],
+  "scope": "Feasible relaxed envelope value; no actual-family realization or actual-cost lower bound."
+}

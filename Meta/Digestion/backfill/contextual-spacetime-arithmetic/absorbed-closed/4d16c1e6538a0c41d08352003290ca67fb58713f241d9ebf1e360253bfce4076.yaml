@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d16c1e6538a0c41d08352003290ca67fb58713f241d9ebf1e360253bfce4076
+  normalized_sha256: sha256:4d16c1e6538a0c41d08352003290ca67fb58713f241d9ebf1e360253bfce4076
+cas_ref: sha256:4d16c1e6538a0c41d08352003290ca67fb58713f241d9ebf1e360253bfce4076
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_joint_refutation
+    target_statement_id: sha256:b9c264f83bd73d98c28b8cb464ea0ef768b0384364745d5e409dcee7dd4ee15c
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.cartesian_probability_refutation
+    target_statement_id: sha256:994753e3595c5bcbd0972a96c118eaa7df1a12213103bb172160f0e4f9a040c5
+receipts:
+  unresolved_subitems: []

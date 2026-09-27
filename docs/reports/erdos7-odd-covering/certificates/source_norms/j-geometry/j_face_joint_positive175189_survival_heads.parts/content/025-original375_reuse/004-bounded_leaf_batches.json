@@ -1,0 +1,14 @@
+{
+  "length": 1,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/025-original375_reuse/004-bounded_leaf_batches/000000/single.json",
+        "sha256": "cf14eddba94baf3da004071f56df4045df285860547a81e8a2bde3feaa8fd090",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

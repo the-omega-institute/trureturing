@@ -1,0 +1,13 @@
+**命题 133.1（等核运输）。** 存在唯一双射
+
+$$
+h_{ij}:Q_i\to Q_j,\qquad h_{ij}(q_i(x))=q_j(x),
+$$
+
+并满足
+
+$$
+h_{ii}=\mathrm{id}_{Q_i},\qquad h_{ji}=h_{ij}^{-1},\qquad
+h_{jk}\circ h_{ij}=h_{ik}.
+$$
+

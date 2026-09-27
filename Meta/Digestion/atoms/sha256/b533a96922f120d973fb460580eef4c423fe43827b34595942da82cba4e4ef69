@@ -1,0 +1,6 @@
+**命题 120.7（半正定配对的商几何）。** 对称双线性 $\gamma\ge0$ 满足
+$$
+|\gamma(v,w)|^2\le\gamma(v,v)\gamma(w,w).
+$$
+因此 $N=\{v:\gamma(v,w)=0\text{ 对所有 }w\}$，且 $\langle[v],[w]\rangle=\gamma(v,w)$ 是 $P/N$ 上良定义的正定内积。
+

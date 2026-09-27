@@ -1,0 +1,41 @@
+**命题 72.8（零质量标签的支撑约化与部分等距）。** 将定义与假设 72.1 的权重条件放宽为 $q_j\ge0$、$\sum_jq_j=1$，仍令 $p_i=\sum_{r(j)=i}q_j$，但不要求所有 $p_i>0$。置
+$$
+J_+=\{j:q_j>0\},\qquad I_+=\{i:p_i>0\}.
+$$
+限制 $r_+:J_+\to I_+$ 是满射；在这两个正支撑空间上，前述加权等距、压缩及熵恒等式适用。在全部原标签上定义延零矩阵
+$$
+(U_0)_{ji}=
+\begin{cases}
+\sqrt{q_j/p_i},&r(j)=i,\ p_i>0,\\
+0,&\text{否则}.
+\end{cases}
+$$
+则
+$$
+U_0^*U_0=\Pi_{I_+},
+\qquad \Pi_{I_+}=\sum_{i\in I_+}|e_i\rangle\langle e_i|.
+$$
+因此 $U_0$ 是部分等距；若存在零质量父标签，它不在整个 $\mathbb C^I$ 上等距，且 $X\mapsto U_0XU_0^*$ 不在整个矩阵代数上保迹。不过
+$$
+\sigma_0=U_0\rho_pU_0^*,\qquad
+\operatorname{Tr}\sigma_0=1,\qquad
+\Delta_f\sigma_0=\rho_q,\qquad
+\operatorname{supp}\sigma_0\subseteq\operatorname{supp}\rho_q,
+$$
+$$
+D(\sigma_0\Vert\rho_q)
+=S(\rho_q)-S(\sigma_0)
+=H(q)-H(p)
+=\sum_{i\in I_+}p_iH(t_{\cdot\mid i}).
+$$
+令 $\Gamma_0(Y)=U_0^*YU_0$，则
+$$
+\operatorname{Tr}\Gamma_0(\rho_q)
+=\sum_{i\in I_+}p_i\sum_{r(j)=i}t_{j\mid i}^{\,2};
+$$
+$\Gamma_0(\rho_q)$ 的零质量父标签对角元为零。$\mathcal C_r$ 仍按原标签定义并保持 CPTP 与经典推前性质。
+
+证明。若 $q_j>0$，则 $p_{r(j)}\ge q_j>0$；若 $p_i>0$，有限非负和中至少一项为正。因此限制映射确为满射且权重归一化。$U_0$ 在正支撑坐标上就是定理 72.2 的等距，在其余粗坐标上为零；列内积遂给出 $\Pi_{I_+}$。若 $p_i=0$，迹一矩阵 $|e_i\rangle\langle e_i|$ 被送到零，直接反驳全空间保迹。一般正矩阵的输出仍为正，其迹为 $\operatorname{Tr}(X\Pi_{I_+})$。
+
+由于 $\rho_p$ 支撑在 $I_+$，$\operatorname{Tr}\sigma_0=\operatorname{Tr}(\rho_p\Pi_{I_+})=1$。对 $i\in I_+$ 展开正支撑块，仍有 $(\sigma_0)_{jk}=\mathbf1_{r(j)=r(k)}\sqrt{q_jq_k}$；零质量行列全为零。因此去相干给出 $\rho_q$，且 $\sigma_0$ 的像包含在 $\operatorname{span}\{f_j:j\in J_+\}=\operatorname{supp}\rho_q$ 中，等价地 $\ker\rho_q\subseteq\ker\sigma_0$。在正支撑上应用定理 72.6，再添回零特征值，熵与有限迹对数项均不变；所证支撑条件保证这仍是扩展相对熵的有限分支。正质量父纤维内的零质量孩子贡献零；零父纤维的条件律没有被指定，只在加权熵中贡献零。压缩迹公式在正支撑上由命题 72.3 给出，延零后不增添项；Kraus 标签通道的完整性完全不涉及权重。证毕。
+

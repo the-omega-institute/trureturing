@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e027eae8e36f44f7d72ab0b997b899727dad76585f08c50441b83f9cc8ed2c52
+  normalized_sha256: sha256:e027eae8e36f44f7d72ab0b997b899727dad76585f08c50441b83f9cc8ed2c52
+cas_ref: sha256:e027eae8e36f44f7d72ab0b997b899727dad76585f08c50441b83f9cc8ed2c52
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “矩形不确定性下的主动实验闭包”在此子叶仅为第34章标题；关于反例与必要性的正文不在本叶内，因此没有数学命题或定义夹带的推论。
+    previous_atom_id: 08d7089523a4e48969004760e8901fdf1b6f3cdf145a8b5d65f0cb36137e31bd
+    next_atom_id: ba83f7b916073c53fce6c1db1c65b8acea5a2ab1061b9563459bc9614a8a2a29

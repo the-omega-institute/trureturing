@@ -1,0 +1,40 @@
+{
+  "zero7": {
+    "kind": "inline",
+    "value": "45213098789384621754008/99769795891559912109375"
+  },
+  "positive7": {
+    "kind": "inline",
+    "value": "66513239064857653328/443421315073599609375"
+  },
+  "total": {
+    "kind": "inline",
+    "value": "60178577578977593752808/99769795891559912109375"
+  },
+  "positive7_raw35_mean": {
+    "kind": "inline",
+    "value": "2162440324133/2883251953125"
+  },
+  "old_test_rows": {
+    "path": "content/007-results/000001/item/010-finite_test/004-old_test_rows.json",
+    "sha256": "b8e6df4e1d67d74ced0616ed9ae09779f214d21c1010b3100c589f8a56236a22",
+    "kind": "array"
+  },
+  "positive7_test_cylinders": {
+    "path": "content/007-results/000001/item/010-finite_test/005-positive7_test_cylinders.json",
+    "sha256": "9a614265297b1073ee68813e5695e3c95cd757d354113c7e7cdbb611b8e96165",
+    "kind": "value"
+  },
+  "complete_nonunit_test_count": {
+    "kind": "inline",
+    "value": 2196
+  },
+  "old_partition": {
+    "kind": "inline",
+    "value": {
+      "three_leaves": 87,
+      "five_leaves": 93,
+      "survivor_leaf_pairs": 5265
+    }
+  }
+}

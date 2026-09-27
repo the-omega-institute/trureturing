@@ -1,0 +1,32 @@
+{
+  "length": 60,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 28,
+      "part": {
+        "path": "content/018-results/000003/item/005-scan/006-seed_records/000000-000028.json",
+        "sha256": "b290ab26720a11c61192379e32ada4000b82a5f9aed9d80e9c8ce9bb3393b95e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 56,
+      "part": {
+        "path": "content/018-results/000003/item/005-scan/006-seed_records/000028-000056.json",
+        "sha256": "ab468059ec5ee88f04970d98435903e76c5a9d3b46fe6170de9c05d1ca92df89",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 56,
+      "stop": 60,
+      "part": {
+        "path": "content/018-results/000003/item/005-scan/006-seed_records/000056-000060.json",
+        "sha256": "53674bc83b58753e91b8e7d3e0c00eb3204b57ee49f4fe5cc9648f5ac958f68f",
+        "kind": "value"
+      }
+    }
+  ]
+}

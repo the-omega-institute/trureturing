@@ -1,0 +1,41 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 25,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000002/item/000000-000025.json",
+        "sha256": "7b7f375e7ca6829bca8aa7754da905f7162e0a2dfaef60f049609a347c5ee19c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 50,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000002/item/000025-000050.json",
+        "sha256": "74099a441f48b1dff39173ee06c1550377be14f90bcbb801f1e81db5ffa698e2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 50,
+      "stop": 75,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000002/item/000050-000075.json",
+        "sha256": "a790cd6389f4343b5e03edeb00a52c193386c7e3674a80aa5fc5f9fa41a96709",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 75,
+      "stop": 100,
+      "part": {
+        "path": "content/027-residual_leaf_batches/000002/item/000075-000100.json",
+        "sha256": "d856a9e089da0a0a6e50ee4fbb27530ef000850f852812052aa3f4875eaf2599",
+        "kind": "value"
+      }
+    }
+  ]
+}

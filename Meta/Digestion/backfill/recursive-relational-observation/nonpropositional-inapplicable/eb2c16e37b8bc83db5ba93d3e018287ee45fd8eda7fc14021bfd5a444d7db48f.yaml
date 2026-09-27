@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb2c16e37b8bc83db5ba93d3e018287ee45fd8eda7fc14021bfd5a444d7db48f
+  normalized_sha256: sha256:eb2c16e37b8bc83db5ba93d3e018287ee45fd8eda7fc14021bfd5a444d7db48f
+cas_ref: sha256:eb2c16e37b8bc83db5ba93d3e018287ee45fd8eda7fc14021bfd5a444d7db48f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Finally, write”给出在零状态处求值及再取相位的两个记号；未断言求值满射、商映射或相位同态，定义未夹带这些命题，故本叶没有证明内容。
+    previous_atom_id: 83e8ee793b9ce2ce8875cb10792eb9b3963fe6c79b27322b5d9abedc8e0d584f
+    next_atom_id: 16eb9e3c731b88c55def360b8162932e6680bc7f37d86467ef03e9913b94d8d1

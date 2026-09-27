@@ -20,7 +20,7 @@ run_cmd do
       (← mkConstWithFreshMVarLevels counts.catalog.arenaName)
       (counts.theorems.map (·.unitName)) root counts.catalog.catalogId
       counts.catalog.arenaName `RouteBinding).run #[]
-  for declaration in declarations do liftCoreM <| addDecl declaration
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   let record : AnalysisCatalogRecord := { counts, projection, analysis, layerChains := layers }
   let _ ← liftTermElabM <| serializeAnalysisArtifact root #[record]
     (root.str "__system_catalog_irredundant")

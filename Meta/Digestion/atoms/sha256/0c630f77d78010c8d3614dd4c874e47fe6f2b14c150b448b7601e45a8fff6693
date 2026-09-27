@@ -1,0 +1,6 @@
+**definition 48.4 (Constant-anchoring closure).** Fix $Z\subseteq V$. Starting with $F_0=\varnothing$, define
+$$
+F_{k+1}=F_k\ \cup\!\!\bigcup_{\substack{1\leq j\leq s\\ S_Z(P_j)\subseteq F_k}}\!S_Z(Q_j)\ \cup\!\!\bigcup_{\substack{1\leq j\leq s\\ S_Z(Q_j)\subseteq F_k}}\!S_Z(P_j).
+$$
+Write $F=F_r$ and $U=V\setminus(Z\cup F)$. The empty support of a constant side is therefore an initial anchor. Subsequent anchors arise only from complete containment of one side's active support in the already anchored set.
+

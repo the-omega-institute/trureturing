@@ -1,0 +1,9 @@
+具体取总局部丰富响应 $\chi_i:\Gamma_i\to\mathcal B$，令 $h_i=\Xi\circ\chi_i$，便有
+
+$$
+H_\Xi:J\to\mathcal D_{\rm ts}^{\,I},\qquad
+H_\Xi(w)=(\Xi(\chi_i(w|_{S_i})))_{i\in I},
+\qquad H_\Xi[W]\subseteq\mathcal D_{\rm ts}^{\,I}.
+\tag{QI-XI-INPUT}
+$$
+

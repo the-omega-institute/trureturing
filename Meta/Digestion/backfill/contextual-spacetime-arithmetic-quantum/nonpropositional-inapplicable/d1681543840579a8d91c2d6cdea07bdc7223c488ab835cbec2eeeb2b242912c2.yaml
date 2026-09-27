@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1681543840579a8d91c2d6cdea07bdc7223c488ab835cbec2eeeb2b242912c2
+  normalized_sha256: sha256:d1681543840579a8d91c2d6cdea07bdc7223c488ab835cbec2eeeb2b242912c2
+cas_ref: sha256:d1681543840579a8d91c2d6cdea07bdc7223c488ab835cbec2eeeb2b242912c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “粗粒化后的联合律把所有具有相同粗标签的微观对相加”给出 coarseGrainedJoint 的求和定义，“并满足”所列非负和归一是输入条件；末段说明统计操作的含义，没有断言互信息不增或量子演化等价，定义中没有夹带待证结论。
+    previous_atom_id: 2777f2a6c36892c30ac17cf293b8197864b9c84065dd535cefbac22cb3475d61
+    next_atom_id: f7a5e0ac11938c11a469ebf484da3191ec949ec2dd603f042c2f20cfe6bfa85a

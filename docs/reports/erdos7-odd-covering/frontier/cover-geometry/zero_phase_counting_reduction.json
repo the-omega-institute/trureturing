@@ -1,0 +1,16 @@
+{
+  "graphs": 1100,
+  "vertex_counts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "active_checks": 9904,
+  "inclusion_exclusion_terms": 59810,
+  "largest_ambient_period_bits": 107,
+  "finite_check_scope": "all labeled simple graphs through five vertices",
+  "unbounded_claim": "requires the ordinary polynomial reduction proof"
+}

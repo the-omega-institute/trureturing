@@ -47,7 +47,7 @@ public sealed class HeartsAuthorizationLedgerTests
     }
 
     [Fact]
-    public void Sl008DoesNotRevalidateMalformedAuthorizationLedgerButFailsClosedForAddedAcceptedEvent()
+    public void Sl008DeltaSkipsStoredAuthorizationSyntaxAndRejectsAddedMalformedEvent()
     {
         var fixture = new RuleFixture();
         var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
@@ -57,7 +57,7 @@ public sealed class HeartsAuthorizationLedgerTests
             "sha256:" + new string('a', 64));
         fixture.Files[acceptedPath] = "candidate accepted event\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
+        var evaluation = RuleCatalog.Default.EvaluateDeltaSingle(
             RuleId.CreateKnown(8),
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(acceptedPath, RawChangeKind.Added)])));

@@ -1,0 +1,146 @@
+**全发射长度的有符号左逆及单位原子成本。** 以下是全来源算子空间上的共同恢复任务，与上段受限来源类 $\Theta$ 的距离极小化相互独立；不以该类的非空或紧性作为左逆前提。
+
+本卷定理41.2、式（41.7）与（41.17）对每个整数 $n\ge1$ 供应一份仅依赖装置与 $n$、且对所有输入共同使用的解码器
+
+$$
+\mathcal D_n:\mathcal L(H_n)\longrightarrow\mathcal L(M)
+\quad\text{为 CPTP},
+$$
+$$
+\mathcal D_n\Gamma_n=\mathcal D_{c_n}
+\quad\text{在全部来源算子上成立},
+\qquad 0<c_n<1,
+\qquad c_1=\sqrt\alpha,
+\qquad c_n\longrightarrow1.
+\tag{45.33}
+$$
+
+其构造仅在相干档案上作受控极分解酉再丢弃，不读取 $J$ 或最终活动 $M$。本卷式（41.17）拥有这个具体通道，不在这里重造。
+
+为固定可计算参数，直接沿用本卷式（41.5）—（41.6）的条件记忆公式：
+$$
+\lambda=-\alpha^2,\quad
+\pi_0=(1+\alpha^2)^{-1},\quad
+\pi_1=\alpha^2(1+\alpha^2)^{-1},
+$$
+$$
+a_n=\pi_1(1-\lambda^{n-1}),\qquad
+b_n=\pi_1+\pi_0\lambda^{n-1},
+$$
+$$
+c_n^2=1-\alpha^2
+\left[\sqrt{a_n(1-b_n)}-\sqrt{b_n(1-a_n)}\right]^2
+\qquad(n\ge1).
+$$
+这些条件态及 $c_n$ 的证明归本卷定理41.2；这里不另建恢复器或根保真度计算。该节同时证明
+
+$$
+D(\Gamma_n\rho_+,\Gamma_n\rho_-)=c_n,
+\qquad
+\epsilon_n=1-c_n
+=\min_{\mathcal E\ {\rm CPTP}}
+\|\mathcal E\Gamma_n-\operatorname{id}_M\|_\diamond.
+\tag{45.34}
+$$
+
+竞争通道类型均为 $\mathcal L(H_n)\to\mathcal L(M)$。定义同一类型、全 CPTP 单位价格字典的有限实系数代价
+
+$$
+\gamma_n=
+\inf\left\{
+\sum_{i=1}^m|a_i|:\quad
+\begin{array}{l}
+m\in\mathbb N,\ a_i\in\mathbb R,\\
+\mathcal E_i:\mathcal L(H_n)\to\mathcal L(M)\ {\rm CPTP},\\
+\displaystyle\sum_{i=1}^m a_i\mathcal E_i\Gamma_n
+=\operatorname{id}_M
+\end{array}
+\right\}.
+\tag{45.35}
+$$
+
+等式要求全部来源算子；等价地可先在 Hermitian 实空间说明，再由复线性延拓。它自动保留任意有限惰性参考。原子是档案到来源类型的通道，不能误写成仅作用在来源 qubit 上的同型通道字典。
+
+直接把恢复卷定理30.12的逆取 $\lambda=c_n$，与既有 $\mathcal D_n$ 复合，即 $\mathcal S_n=L_{c_n}\circ\mathcal D_n$，得到
+
+$$
+\mathcal S_n=
+a_{+,n}\mathcal D_n+
+a_{-,n}\operatorname{Ad}_Z\circ\mathcal D_n,
+\qquad
+a_{\pm,n}=\frac{1\pm c_n^{-1}}2.
+\tag{45.36}
+$$
+
+这两个原子都为所需类型的 CPTP。由（45.33）与恢复卷的逆恒等式，$\mathcal S_n\Gamma_n=\operatorname{id}_M$，系数绝对值和为 $c_n^{-1}$。
+
+恢复卷定理30.12的原字典是 qubit 到 qubit；这里的原子输入为整个 $H_n$，一般竞争者未必经 $\mathcal D_n$ 分解，故其成本下界仍须按此输入类型履行。为证明整个档案字典不能更便宜，对任意（45.35）的表示取 $\Delta=\rho_+-\rho_-$。同一档案差由（45.34）满足 $\|\Gamma_n(\Delta)\|_1=2c_n$。每个竞争通道对自伴差的迹范数收缩，所以
+
+$$
+2=\|\Delta\|_1
+\le\sum_i|a_i|\,
+\|\mathcal E_i\Gamma_n(\Delta)\|_1
+\le2c_n\sum_i|a_i|.
+\tag{45.37}
+$$
+
+因此极小值达到且
+
+$$
+\boxed{
+\gamma_n=\frac1{c_n}=\frac1{1-\epsilon_n}.
+}
+\tag{45.38}
+$$
+
+对任意迹一来源输入取（45.35）的迹，得到 $\sum_i a_i=1$。若正、负系数质量为 $P_a,N_a$，则 $P_a-N_a=1$；在最优表示中 $P_a+N_a=\gamma_n$。所以每份最优表示均有
+
+$$
+\boxed{N_a=\frac{\gamma_n-1}{2}.}
+\tag{45.39}
+$$
+
+不要求或宣称分解唯一。若受限可执行类包含（45.36）的两个通道，也达到这个值；否则全 CPTP 下界仍成立，但受限字典的可行性、代价和实现成本须重新检验。
+
+作为同一计算的稳定性表达，
+
+$$
+\|\mathcal S_n\|_\diamond=c_n^{-1}.
+\tag{45.40}
+$$
+
+上界来自两 CPTP 通道的完整 diamond 范数均为一；下界用迹范数归一化档案差 $\Gamma_n(\Delta)/(2c_n)$，其经 $\mathcal S_n$ 的像迹范数为 $1/c_n$。同一个归一化档案差也给任意线性精确左逆的 diamond 范数下界 $1/c_n$。因此真实来源对在任意有限参考下满足
+
+$$
+D(\theta,\vartheta)
+\le c_n^{-1}D(q_n(\theta),q_n(\vartheta)),
+\tag{45.41}
+$$
+
+且共同独立参考下的 $\pm$ 对达到等号。$n>1$ 时 $\mathcal S_n$ 是来源像上的左逆，不是整个高维档案算子空间上的双侧逆；任意档案目标经它所得候选正，也不能省去真实像一致性的检查。
+
+由实际档案的前缀关系，对同一 $\rho_\pm$ 态对取偏迹并用收缩，式（45.34）给 $c_n\le c_{n+1}$，所以 $\gamma_n$ 不增。活动记忆的谱率 $-\alpha^2$ 可交替，不能据此推断档案代价交替。设 $\phi=(1+\sqrt5)/2=\alpha^{-1}$，则
+
+$$
+\gamma_1=\sqrt\phi,
+\qquad\gamma_n>1\text{ 对每个有限 }n,
+\qquad\gamma_n\longrightarrow1,
+\qquad
+\gamma_n-1=\frac{\epsilon_n}{1-\epsilon_n}.
+\tag{45.42}
+$$
+
+本卷式（41.9）对 $n\ge3$ 的 $\epsilon_n\le\alpha^{4n-6}/4$ 可直接运输为
+
+$$
+0<\gamma_n-1
+\le\frac{\alpha^{4n-6}}{4-\alpha^{4n-6}}.
+\tag{45.43}
+$$
+
+这一步只是同一正分母上的单调代换，不是新的一般尾定理。单位原子价格不计算发射长度、档案相干存储、受控酉综合、校准或终端测量的真实成本。
+
+所有有限 $n\ge1$ 的 $q_n$ 已因可偏迹到单射 $q_1$ 而单射。因此增长档案在这里改善的是逆的条件数、所需正负权重和最优物理恢复误差；不能写成“一步没有来源识别性，长记录才有”。这里的识别性以完整联合密度读数为对象，不以单个物理样本提供完整矩阵为前提。
+
+这份单位价格逆成本属于已有有符号通道实现理论的具体装置应用。Jiang、Wang、Wang 的相位阻尼参数 $p$ 对应 $c=1-2p$，其 $2^{\nu}=1/c$ 是系数绝对值总量，$\nu$ 为它的二进制对数；在本装置取 $p=(1-c_n)/2=\kappa_n=\epsilon_n/2$，不能将文献的 $p$ 误作完整 diamond 误差。[^rro_signedsource_cost] 该文献的 qubit 逆成本与恢复卷30.12供应上式的两原子构造；（45.37）另外承担所有 $H_n\to M$ 竞争通道的下界。
+

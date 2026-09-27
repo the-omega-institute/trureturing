@@ -1,0 +1,7 @@
+令 $S_t$ 只取长度 $t$ 的词所到达的状态，置
+$$
+N_\varepsilon(T)=\min\left\{\max_{0\le t\le T}|S_t|:
+\ \forall t\le T\ \forall w\in\{0,1\}^t,
+\ |y_t(z(w))-f(b(w))|\le\varepsilon\right\}.
+$$
+预测包括读完第 $T$ 个报告后对下一报告的预测。

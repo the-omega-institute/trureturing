@@ -1,0 +1,14 @@
+**假设 49.2（已公开有限算术前置）。** 固定公开源 [RECURSIVE_RELATIONAL_OBSERVATION.md，第 13.0—13.2 与 14.0、14.0a、14.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的有限阈值—周期结论。特别地，有限同层核 $R_{u,m}$ 双槽保幂当且仅当
+$$
+(u,m)=(0,1)
+$$
+或
+$$
+u\ge\max\{1,h(m)\},\qquad \lambda(m)\mid m,
+$$
+其中
+$$
+h(m)=\max_p v_p(m).
+$$
+对正整数 $m$，周期条件 $\lambda(m)\mid m$ 等价于每个素数 $p\mid m$ 都满足 $p-1\mid m$。后一个判据与 Novák-Carmichael 条件一致：Kalmynin 在第 1 节定义正整数 $N$ 为对每个 $(a,N)=1$ 都有 $a^N\equiv1\pmod N$，并在第 2 节引理 1 证明其充要条件为每个素因子 $p\mid N$ 都满足 $p-1\mid N$；见 [arXiv:1706.07343v1，PDF 第 1—3 页，尤其第 2—3 页的 Lemma 1 及完整证明](https://arxiv.org/pdf/1706.07343v1)。本节以下证明不把同层条件 $\lambda(m)\mid m$ 当作无限完备化的必要条件。
+

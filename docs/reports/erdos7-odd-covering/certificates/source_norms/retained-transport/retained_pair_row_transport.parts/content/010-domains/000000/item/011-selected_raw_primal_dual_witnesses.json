@@ -1,0 +1,27 @@
+{
+  "2687bc8646b3adb2b1d264f6f1dcc76df570db67aac4ce3059039b379bf06ab0": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses/000-2687bc8646b3adb2b1d264f6f1dcc76df570db67aac4ce3059039b379bf06ab0.json",
+    "sha256": "4324df56d1c4a0be826e553ec533af658c0e955c35ba2450e8daa80fc4843074",
+    "kind": "value"
+  },
+  "6edafaa09d0a631a1c0faf08abcdbe5f3cd9dc73ba34d5aacebb0dc588f0f3c3": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses/001-6edafaa09d0a631a1c0faf08abcdbe5f3cd9dc73ba34d5aacebb0dc588f0f3c3.json",
+    "sha256": "8f253d65afb2b233ba4498db19832945b74dcee957012f113a32b5715bd743b4",
+    "kind": "value"
+  },
+  "b63b2ad721b21cc4907a23d23b2b1662343b438a1fd8580078be8b579c399450": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses/002-b63b2ad721b21cc4907a23d23b2b1662343b438a1fd8580078be8b579c399450.json",
+    "sha256": "25d5a4f8b85fc08a16ea4c4c3542435f481dee0ec280da7c619789c49e82ef6c",
+    "kind": "value"
+  },
+  "c34177cdfc4d573986d2a59f06baae459e1f673f22cd334469e08fc879024408": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses/003-c34177cdfc4d573986d2a59f06baae459e1f673f22cd334469e08fc879024408.json",
+    "sha256": "34732b66a2fa6c0fb08f2df3e4585f7b7171a9bf58000510166dd9620261e464",
+    "kind": "value"
+  },
+  "db2dd87f83709e10edc4a758ee57f0b1cbb0fcd2890dd6c4af49d17a5cf9f4fb": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses/004-db2dd87f83709e10edc4a758ee57f0b1cbb0fcd2890dd6c4af49d17a5cf9f4fb.json",
+    "sha256": "39f4b67a705805b0280eb7b07f85eae7b5b2b5a8e8e6856ea00d3b15a515f12d",
+    "kind": "value"
+  }
+}

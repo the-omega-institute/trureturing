@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -7,12 +6,12 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
-    private static ValidatedPolicy AcceptedPolicy(string registry)
+    private static ValidatedPolicy AcceptedPolicy(string fileMap)
     {
-        var outcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(registry),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        return RegistryLoadAssert.Accepted(outcome).Policy;
+        var outcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(fileMap),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        return PolicyLoadAssert.Accepted(outcome).Policy;
     }
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
@@ -26,10 +25,10 @@ public sealed partial class ReviewRegressionTests
         string repositoryRoot,
         bool installWorkflow)
     {
-        RunGit(remoteRoot, "init", "--bare", "--initial-branch=dev");
-        RunGit(repositoryRoot, "init", "--initial-branch=dev");
-        RunGit(repositoryRoot, "config", "user.email", "stratalint@example.invalid");
-        RunGit(repositoryRoot, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(remoteRoot, "init", "--bare", "--initial-branch=dev");
+        TestGit.Run(repositoryRoot, "init", "--initial-branch=dev");
+        TestGit.Run(repositoryRoot, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repositoryRoot, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(
             Path.Combine(repositoryRoot, "README.md"),
             "# topology fixture\n",
@@ -37,44 +36,21 @@ public sealed partial class ReviewRegressionTests
         if (installWorkflow)
         {
             // 合成夹具,不复制真实 workflow:被测的是 AdmissionTopology 的判据
-            // (on.pull_request.branches 含默认分支,且 jobs 有 baseline-admission),
+            // (on.pull_request.branches 含默认分支,且 jobs 有 delta),
             // 不是仓库 workflow 长什么样。对 workflow 的测试已被永久禁止,见
             // WorkflowTestProhibitionTests。
             var workflowDirectory = Path.Combine(repositoryRoot, ".github", "workflows");
             Directory.CreateDirectory(workflowDirectory);
             File.WriteAllText(
-                Path.Combine(workflowDirectory, "ci.yml"),
-                "on:\n  pull_request:\n    branches: [dev]\njobs:\n  baseline-admission:\n"
+                Path.Combine(workflowDirectory, "ci-pr.yml"),
+                "on:\n  pull_request:\n    branches: [dev]\njobs:\n  delta:\n"
                 + "    runs-on: ubuntu-latest\n    steps:\n      - run: 'true'\n",
                 new UTF8Encoding(false));
         }
 
-        RunGit(repositoryRoot, "add", ".");
-        RunGit(repositoryRoot, "commit", "-m", "default branch fixture");
-        RunGit(repositoryRoot, "remote", "add", "origin", remoteRoot);
-        RunGit(repositoryRoot, "push", "--set-upstream", "origin", "dev");
+        TestGit.Run(repositoryRoot, "add", ".");
+        TestGit.Run(repositoryRoot, "commit", "-m", "default branch fixture");
+        TestGit.Run(repositoryRoot, "remote", "add", "origin", remoteRoot);
+        TestGit.Run(repositoryRoot, "push", "--set-upstream", "origin", "dev");
     }
-
-    internal static string RunGit(string root, params string[] arguments)
-    {
-        var startInfo = new ProcessStartInfo("git")
-        {
-            WorkingDirectory = root,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
-        foreach (var argument in arguments)
-        {
-            startInfo.ArgumentList.Add(argument);
-        }
-
-        using var process = Process.Start(startInfo) ?? throw new InvalidOperationException("git did not start");
-        var stdout = process.StandardOutput.ReadToEnd();
-        var stderr = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        Assert.True(process.ExitCode == 0, $"git {string.Join(' ', arguments)} failed: {stderr}");
-        return stdout;
-    }
-
 }

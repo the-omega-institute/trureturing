@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b7095c9f44a664646c545bc3c57e90e7014d9a2e5c0f7e9e364f69d6563989b
+  normalized_sha256: sha256:0b7095c9f44a664646c545bc3c57e90e7014d9a2e5c0f7e9e364f69d6563989b
+cas_ref: sha256:0b7095c9f44a664646c545bc3c57e90e7014d9a2e5c0f7e9e364f69d6563989b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定允许恢复操作的访问范围并定义恢复误差下确界，没有声称该下确界的值或达到性。
+    previous_atom_id: 8163de4638c3129bf5246d5a0767077123901b74f5ad66d0a0fe3fb314f4aa77
+    next_atom_id: c168d9fa2c594027f8a7bc3e35aff10e4272e986f38386fd50b415746cf7cfee

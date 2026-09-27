@@ -1,0 +1,12 @@
+**theorem 52.7 (真正的 Krasner 超环及其单位、零因子).** $(I,\boxplus,\cdot,0_I,1_I)$ 满足定义52.5的全部公理，且
+$$
+-A=A\qquad(A\in I).
+$$
+它的乘法单位群仅为 $\{1_I\}$。对 $A=(a_p)_p,B=(b_p)_p$，有
+$$
+A\cdot B=0_I
+\quad\Longleftrightarrow\quad
+\forall p,\ a_p=\infty\text{ 或 }b_p=\infty.
+$$
+非零 $A$ 是零因子，当且仅当至少一个 $a_p=\infty$。因此 $I$ 是具有零因子的交换含幺 Krasner 超环，不是超域，也不是普通环；其二元素子集 $\{0_I,1_I\}$ 并不构成二元素 Krasner 超域的子超域。这里采用的是商超环机制 [Connes–Consani，命题2.5](https://arxiv.org/html/1001.4260v2)，而不是把“超环”仅用作多值运算的名称。
+

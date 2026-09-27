@@ -1,0 +1,794 @@
+[
+  {
+    "original_index": 0,
+    "coordinates": [
+      2,
+      4,
+      4
+    ],
+    "integer": 1599959533949577636718754
+  },
+  {
+    "original_index": 1,
+    "coordinates": [
+      6,
+      4,
+      4
+    ],
+    "integer": 195896792072551513671879
+  },
+  {
+    "original_index": 2,
+    "coordinates": [
+      9,
+      4,
+      4
+    ],
+    "integer": 1387670143192443359375004
+  },
+  {
+    "original_index": 3,
+    "coordinates": [
+      27,
+      4,
+      4
+    ],
+    "integer": 1354884945823277832031254
+  },
+  {
+    "original_index": 4,
+    "coordinates": [
+      81,
+      4,
+      4
+    ],
+    "integer": 1256529353715781250000004
+  },
+  {
+    "original_index": 5,
+    "coordinates": [
+      243,
+      4,
+      4
+    ],
+    "integer": 961462577393291503906254
+  },
+  {
+    "original_index": 6,
+    "coordinates": [
+      729,
+      4,
+      4
+    ],
+    "integer": 76262248425822265625004
+  },
+  {
+    "original_index": 7,
+    "coordinates": [
+      2187,
+      4,
+      4
+    ],
+    "integer": 1012373913567672851562504
+  },
+  {
+    "original_index": 8,
+    "coordinates": [
+      6561,
+      4,
+      4
+    ],
+    "integer": 228996256948966308593754
+  },
+  {
+    "original_index": 9,
+    "coordinates": [
+      19683,
+      4,
+      4
+    ],
+    "integer": 1470575939137104980468754
+  },
+  {
+    "original_index": 10,
+    "coordinates": [
+      59049,
+      4,
+      4
+    ],
+    "integer": 1603602333657262695312504
+  },
+  {
+    "original_index": 11,
+    "coordinates": [
+      177147,
+      4,
+      4
+    ],
+    "integer": 206825191195606689453129
+  },
+  {
+    "original_index": 12,
+    "coordinates": [
+      4,
+      1,
+      4
+    ],
+    "integer": 1321354821376929931640626
+  },
+  {
+    "original_index": 13,
+    "coordinates": [
+      4,
+      5,
+      4
+    ],
+    "integer": 1355404718896485839843755
+  },
+  {
+    "original_index": 14,
+    "coordinates": [
+      4,
+      25,
+      4
+    ],
+    "integer": 1525654206494265380859400
+  },
+  {
+    "original_index": 15,
+    "coordinates": [
+      4,
+      125,
+      4
+    ],
+    "integer": 581045318461033935547000
+  },
+  {
+    "original_index": 16,
+    "coordinates": [
+      4,
+      625,
+      4
+    ],
+    "integer": 1245569856361264160156875
+  },
+  {
+    "original_index": 17,
+    "coordinates": [
+      4,
+      3125,
+      4
+    ],
+    "integer": 976479893818156982425000
+  },
+  {
+    "original_index": 18,
+    "coordinates": [
+      4,
+      15625,
+      4
+    ],
+    "integer": 1426886407124750244156250
+  },
+  {
+    "original_index": 19,
+    "coordinates": [
+      4,
+      78125,
+      4
+    ],
+    "integer": 87206321613458252031250
+  },
+  {
+    "original_index": 20,
+    "coordinates": [
+      4,
+      390625,
+      4
+    ],
+    "integer": 572231198145514892968750
+  },
+  {
+    "original_index": 21,
+    "coordinates": [
+      4,
+      1953125,
+      4
+    ],
+    "integer": 1201499254783668947265625
+  },
+  {
+    "original_index": 22,
+    "coordinates": [
+      4,
+      9765625,
+      4
+    ],
+    "integer": 756126885930180917968750
+  },
+  {
+    "original_index": 23,
+    "coordinates": [
+      4,
+      48828125,
+      4
+    ],
+    "integer": 325121367684869921875000
+  },
+  {
+    "original_index": 24,
+    "coordinates": [
+      1,
+      2,
+      4
+    ],
+    "integer": 1484986189153523925781252
+  },
+  {
+    "original_index": 25,
+    "coordinates": [
+      1,
+      10,
+      4
+    ],
+    "integer": 1553085984192635742187510
+  },
+  {
+    "original_index": 26,
+    "coordinates": [
+      1,
+      50,
+      4
+    ],
+    "integer": 97728633366065673828175
+  },
+  {
+    "original_index": 27,
+    "coordinates": [
+      1,
+      250,
+      4
+    ],
+    "integer": 4367183321731933594000
+  },
+  {
+    "original_index": 28,
+    "coordinates": [
+      1,
+      1250,
+      4
+    ],
+    "integer": 1333416259122192382813750
+  },
+  {
+    "original_index": 29,
+    "coordinates": [
+      1,
+      6250,
+      4
+    ],
+    "integer": 795236334035978027350000
+  },
+  {
+    "original_index": 30,
+    "coordinates": [
+      1,
+      31250,
+      4
+    ],
+    "integer": 1696049360649164550812500
+  },
+  {
+    "original_index": 31,
+    "coordinates": [
+      1,
+      156250,
+      4
+    ],
+    "integer": 812545515648709716953125
+  },
+  {
+    "original_index": 32,
+    "coordinates": [
+      1,
+      781250,
+      4
+    ],
+    "integer": 1782595268712822998828125
+  },
+  {
+    "original_index": 33,
+    "coordinates": [
+      1,
+      3906250,
+      4
+    ],
+    "integer": 1245275055967001957031250
+  },
+  {
+    "original_index": 34,
+    "coordinates": [
+      1,
+      19531250,
+      4
+    ],
+    "integer": 354530318260025898437500
+  },
+  {
+    "original_index": 35,
+    "coordinates": [
+      1,
+      97656250,
+      4
+    ],
+    "integer": 1288375607791533056640625
+  },
+  {
+    "original_index": 36,
+    "coordinates": [
+      1,
+      3,
+      4
+    ],
+    "integer": 1044534582027880615234378
+  },
+  {
+    "original_index": 37,
+    "coordinates": [
+      1,
+      15,
+      4
+    ],
+    "integer": 1146684274586548339843765
+  },
+  {
+    "original_index": 38,
+    "coordinates": [
+      1,
+      75,
+      4
+    ],
+    "integer": 1657432737379886962890700
+  },
+  {
+    "original_index": 39,
+    "coordinates": [
+      1,
+      375,
+      4
+    ],
+    "integer": 619462399302321777344125
+  },
+  {
+    "original_index": 40,
+    "coordinates": [
+      1,
+      1875,
+      4
+    ],
+    "integer": 817179686980883300783125
+  },
+  {
+    "original_index": 41,
+    "coordinates": [
+      1,
+      9375,
+      4
+    ],
+    "integer": 9909799351561767587500
+  },
+  {
+    "original_index": 42,
+    "coordinates": [
+      1,
+      46875,
+      4
+    ],
+    "integer": 1361129339271341552781250
+  },
+  {
+    "original_index": 43,
+    "coordinates": [
+      1,
+      234375,
+      4
+    ],
+    "integer": 933801734781723877187500
+  },
+  {
+    "original_index": 44,
+    "coordinates": [
+      1,
+      1171875,
+      4
+    ],
+    "integer": 593020038355764649609375
+  },
+  {
+    "original_index": 45,
+    "coordinates": [
+      1,
+      5859375,
+      4
+    ],
+    "integer": 684967882248097662109375
+  },
+  {
+    "original_index": 46,
+    "coordinates": [
+      1,
+      29296875,
+      4
+    ],
+    "integer": 1144707101709762724609375
+  },
+  {
+    "original_index": 47,
+    "coordinates": [
+      1,
+      146484375,
+      4
+    ],
+    "integer": 1647546872995958886718750
+  },
+  {
+    "original_index": 48,
+    "coordinates": [
+      16,
+      3,
+      4
+    ],
+    "integer": 1615832359560952392578128
+  },
+  {
+    "original_index": 49,
+    "coordinates": [
+      16,
+      15,
+      4
+    ],
+    "integer": 1717982052119620117187515
+  },
+  {
+    "original_index": 50,
+    "coordinates": [
+      16,
+      75,
+      4
+    ],
+    "integer": 432874188890829589843825
+  },
+  {
+    "original_index": 51,
+    "coordinates": [
+      16,
+      375,
+      4
+    ],
+    "integer": 1190760176835393554687875
+  },
+  {
+    "original_index": 52,
+    "coordinates": [
+      16,
+      1875,
+      4
+    ],
+    "integer": 1388477464513955078126875
+  },
+  {
+    "original_index": 53,
+    "coordinates": [
+      16,
+      9375,
+      4
+    ],
+    "integer": 581207576884633544931250
+  },
+  {
+    "original_index": 54,
+    "coordinates": [
+      16,
+      46875,
+      4
+    ],
+    "integer": 136570790782284179734375
+  },
+  {
+    "original_index": 55,
+    "coordinates": [
+      16,
+      234375,
+      4
+    ],
+    "integer": 1505099512314795654531250
+  },
+  {
+    "original_index": 56,
+    "coordinates": [
+      16,
+      1171875,
+      4
+    ],
+    "integer": 1164317815888836426953125
+  },
+  {
+    "original_index": 57,
+    "coordinates": [
+      16,
+      5859375,
+      4
+    ],
+    "integer": 1256265659781169439453125
+  },
+  {
+    "original_index": 58,
+    "coordinates": [
+      16,
+      29296875,
+      4
+    ],
+    "integer": 1716004879242834501953125
+  },
+  {
+    "original_index": 59,
+    "coordinates": [
+      16,
+      146484375,
+      4
+    ],
+    "integer": 422988324506901513671875
+  },
+  {
+    "original_index": 60,
+    "coordinates": [
+      34,
+      3,
+      4
+    ],
+    "integer": 1583047162191786865234378
+  },
+  {
+    "original_index": 61,
+    "coordinates": [
+      34,
+      15,
+      4
+    ],
+    "integer": 1685196854750454589843765
+  },
+  {
+    "original_index": 62,
+    "coordinates": [
+      34,
+      75,
+      4
+    ],
+    "integer": 400088991521664062500075
+  },
+  {
+    "original_index": 63,
+    "coordinates": [
+      34,
+      375,
+      4
+    ],
+    "integer": 1157974979466228027344125
+  },
+  {
+    "original_index": 64,
+    "coordinates": [
+      34,
+      1875,
+      4
+    ],
+    "integer": 1355692267144789550783125
+  },
+  {
+    "original_index": 65,
+    "coordinates": [
+      34,
+      9375,
+      4
+    ],
+    "integer": 548422379515468017587500
+  },
+  {
+    "original_index": 66,
+    "coordinates": [
+      34,
+      46875,
+      4
+    ],
+    "integer": 103785593413118652390625
+  },
+  {
+    "original_index": 67,
+    "coordinates": [
+      34,
+      234375,
+      4
+    ],
+    "integer": 1472314314945630127187500
+  },
+  {
+    "original_index": 68,
+    "coordinates": [
+      34,
+      1171875,
+      4
+    ],
+    "integer": 1131532618519670899609375
+  },
+  {
+    "original_index": 69,
+    "coordinates": [
+      34,
+      5859375,
+      4
+    ],
+    "integer": 1223480462412003912109375
+  },
+  {
+    "original_index": 70,
+    "coordinates": [
+      34,
+      29296875,
+      4
+    ],
+    "integer": 1683219681873668974609375
+  },
+  {
+    "original_index": 71,
+    "coordinates": [
+      34,
+      146484375,
+      4
+    ],
+    "integer": 390203127137735986328125
+  },
+  {
+    "original_index": 72,
+    "coordinates": [
+      88,
+      3,
+      4
+    ],
+    "integer": 1484691570084290283203128
+  },
+  {
+    "original_index": 73,
+    "coordinates": [
+      88,
+      15,
+      4
+    ],
+    "integer": 1586841262642958007812515
+  },
+  {
+    "original_index": 74,
+    "coordinates": [
+      88,
+      75,
+      4
+    ],
+    "integer": 301733399414167480468825
+  },
+  {
+    "original_index": 75,
+    "coordinates": [
+      88,
+      375,
+      4
+    ],
+    "integer": 1059619387358731445312875
+  },
+  {
+    "original_index": 76,
+    "coordinates": [
+      88,
+      1875,
+      4
+    ],
+    "integer": 1257336675037292968751875
+  },
+  {
+    "original_index": 77,
+    "coordinates": [
+      88,
+      9375,
+      4
+    ],
+    "integer": 450066787407971435556250
+  },
+  {
+    "original_index": 78,
+    "coordinates": [
+      88,
+      46875,
+      4
+    ],
+    "integer": 5430001305622070359375
+  },
+  {
+    "original_index": 79,
+    "coordinates": [
+      88,
+      234375,
+      4
+    ],
+    "integer": 1373958722838133545156250
+  },
+  {
+    "original_index": 80,
+    "coordinates": [
+      88,
+      1171875,
+      4
+    ],
+    "integer": 1033177026412174317578125
+  },
+  {
+    "original_index": 81,
+    "coordinates": [
+      88,
+      5859375,
+      4
+    ],
+    "integer": 1125124870304507330078125
+  },
+  {
+    "original_index": 82,
+    "coordinates": [
+      88,
+      29296875,
+      4
+    ],
+    "integer": 1584864089766172392578125
+  },
+  {
+    "original_index": 83,
+    "coordinates": [
+      88,
+      146484375,
+      4
+    ],
+    "integer": 291847535030239404296875
+  },
+  {
+    "original_index": 84,
+    "coordinates": [
+      250,
+      3,
+      4
+    ],
+    "integer": 1189624793761800537109378
+  },
+  {
+    "original_index": 85,
+    "coordinates": [
+      250,
+      15,
+      4
+    ],
+    "integer": 1291774486320468261718765
+  },
+  {
+    "original_index": 86,
+    "coordinates": [
+      250,
+      75,
+      4
+    ],
+    "integer": 6666623091677734375075
+  },
+  {
+    "original_index": 87,
+    "coordinates": [
+      250,
+      375,
+      4
+    ],
+    "integer": 764552611036241699219125
+  }
+]

@@ -1,0 +1,11 @@
+**已有实数优化的精确供应。** 开头所列第48.2节全幅度有限截止定理已证明这个同一负前缀逐坐标同时最优，并给
+$$
+W_N=A\sum_{i=1}^{N}\rho^{-i}
+=\frac{1-\rho}{\rho}(\rho^{-N}-1),\qquad
+\|T^1-\mathcal E(b^{A,N})\|_\rho=c_A
+\quad\Longleftrightarrow\quad W_N\ge1
+\quad\Longleftrightarrow\quad\rho^N\le1-\rho.
+\tag{49.32}
+$$
+其达到情形中，每个有限坐标的加权误差都严格小于 $c_A$，首行误差则趋于 $c_A$。这份实数阈值、充分性归纳及必要性的有理行解析证明，均以先前的全幅度截止定理为唯一证明归属；下面只证明复候选不改善它，以及整条相位族怎样运输这个优化问题。
+

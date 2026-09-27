@@ -1,0 +1,11 @@
+**证明。** 对 $m\geq2$，在第 17.4 节的构造中取 $q=2m-1$，并将能量缩放系数 $\kappa$ 换成 $\kappa v$，其中
+\[
+M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
+\]
+端点间距至少为 $c_2v/m^2$，而整个窗口的曲线差不超过
+\[
+2\left[\frac v4\min\{1,U/q\}\right]^q
+=2(v/(4M))^q\leq2\varepsilon.
+\]
+中点论证给出对应风险下界。$m=1$ 用 $\delta_{E_0}$ 与 $\delta_{E_0+\kappa\varepsilon}$，因为 $U\geq1$ 时该项的 $v=\varepsilon$；由 $e^{-E_0t}(1-e^{-\kappa\varepsilon t})\leq\kappa\varepsilon/E_0$ 得相同结论。最后使用 $\mathcal M_m\subseteq\mathcal M_d$ 并对 $m$ 取最大值。
+

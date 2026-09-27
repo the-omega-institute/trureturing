@@ -1,0 +1,49 @@
+**定义与假设 92.1（反演、条件投影与三种 KL 量）。** 设 $\Omega$ 为有限非空集合，$\Theta:\Omega\to\Omega$ 满足 $\Theta^2=\mathrm{id}$，读出 $r:\Omega\to B$ 的陪域取为实际像 $B=r[\Omega]$。固定严格正概率 $\nu$，满足
+$$
+\nu(\Theta x)=\nu(x)\quad(x\in\Omega).
+$$
+所有对数均为自然对数。对质量函数 $d$ 和实函数 $g$，分别记
+$$
+(Cd)(b)=\sum_{r(x)=b}d(x),\qquad p=C\nu>0,
+\qquad d^R(x)=d(\Theta x),\qquad Rg=g\circ\Theta.
+$$
+沿用 [定义与假设 82.1](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的条件投影与参考恢复算子：
+$$
+(\Pi g)(x)=\frac{1}{p(r(x))}
+ \sum_{r(y)=r(x)}\nu(y)g(y),\qquad
+(Ed)(x)=\nu(x)\frac{(Cd)(r(x))}{p(r(x))}.
+$$
+因此
+$$
+Ed=\nu\,\Pi(d/\nu).
+$$
+$\Pi$ 作用于实函数空间
+$$
+\mathcal H_\nu=\mathbb R^\Omega,\qquad
+\langle g,h\rangle_\nu=\sum_x\nu(x)g(x)h(x),\qquad
+\|g\|_\nu^2=\langle g,g\rangle_\nu,
+$$
+是到可见子空间 $\mathcal V_r=\{k\circ r:k:B\to\mathbb R\}$ 的正交投影；$E$ 作用于质量。
+
+对满足 $\sum_x\nu(x)f(x)=0$ 的实函数 $f$，定义
+$$
+Z(t)=\sum_x\nu(x)e^{tf(x)},\qquad
+u_t(x)=\frac{e^{tf(x)}}{Z(t)},\qquad
+d_t(x)=\nu(x)u_t(x),\qquad t\in\mathbb R,
+$$
+另记
+$$
+f_-:=\frac{f-Rf}{2},\qquad M:=\max_{x\in\Omega}|f(x)|.
+$$
+对同一有限集合上的严格正概率 $a,b$，令
+$$
+D(a\Vert b)=\sum_x a(x)\log\frac{a(x)}{b(x)}.
+$$
+本节研究
+$$
+\Delta(t)=D(d_t\Vert Ed_t),\qquad
+A(t)=D(d_t\Vert d_t^R),\qquad
+A_r(t)=D(Cd_t\Vert Cd_t^R).
+$$
+它们均为有限统计 KL 量；这里不赋予物理熵产生的含义，也不将其等同于对称化混合的有界熵隙。
+

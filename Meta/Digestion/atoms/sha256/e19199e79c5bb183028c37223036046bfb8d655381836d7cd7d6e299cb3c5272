@@ -1,0 +1,14 @@
+**定理 17.4（跨势垒作用量与上坡代价）。** 对 $U\in C^1(\mathbb R^d)$ 和绝对连续路径 $z:[0,T]\to\mathbb R^d$，假设下式积分有限，定义
+\[
+ I_T(z)=\frac14\int_0^T\|\dot z+\nabla U(z)\|^2dt.
+\]
+则
+\[
+ I_T(z)=U(z(T))-U(z(0))+rac14\int_0^T\|\dot z-\nabla U(z)\|^2dt,
+\]
+且
+\[
+ I_T(z)\ge\max_{0\le t\le T}\bigl(U(z(t))-U(z(0))\bigr).
+\]
+若所有允许的端点连接路径都须经过高于初始势能至少 $b\ge0$ 的位置，则其作用量下确界至少为 $b$。
+

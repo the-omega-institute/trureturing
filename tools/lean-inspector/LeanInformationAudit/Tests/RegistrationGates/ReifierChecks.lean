@@ -45,7 +45,7 @@ register_information_theorem clean
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem reflexive (x : Bool) : x = x := rfl
-reject_via "reflexive_closed_truth" expects "forbidden_dependency" in
+reject_via "reflexive_closed_truth" expects "rule=p1.reflexive_source" in
 register_information_theorem reflexive
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in eqArena
 
@@ -85,21 +85,22 @@ reject_via "unrelated_true_bridge" expects "UnsupportedDescriptor" in
 register_information_theorem unrelatedTrue via trueBridge in eqArena
 
 theorem hidden (x : Bool) : (have _p := clean; x.not.not) = x := Bool.not_not _
-reject_via "provenance_hidden_proof" expects "forbidden_dependency" in
+reject_via "provenance_hidden_proof" expects "reason=unclassified_form rule=dtr.argument_audit" in
 register_information_theorem hidden
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in eqArena
 
 def singletonArena := pointwiseEqArena (Arena.ofFintype (Fin 1)) Bool
-theorem singleton (_x : Fin 1) : false = false := rfl
+theorem singleton (_x : Fin 1) : false.not.not = false := rfl
 reject_via "nondegenerate_required" expects "IE-C004" in
 register_information_theorem singleton
-  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Fin 1 => false) (fun _ => false)) in singletonArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Fin 1 => false.not.not) (fun _ => false)) in singletonArena
 
 def trivialOutput := pointwiseEqArena (Arena.ofFintype Bool) Unit
-theorem noOutputs (_x : Bool) : Unit.unit = Unit.unit := rfl
+def unitOutput (_ : Bool) : Unit := Unit.unit
+theorem noOutputs (x : Bool) : unitOutput x = Unit.unit := rfl
 reject_via "distinct_outputs_required" expects "MissingEvidence" in
 register_information_theorem noOutputs
-  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Bool => Unit.unit) (fun _ => Unit.unit)) in trivialOutput
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => unitOutput x) (fun _ => Unit.unit)) in trivialOutput
 
 theorem unresolved (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "unresolved_descriptor" expects "UnresolvedMetavariables" in
@@ -348,7 +349,7 @@ register_information_theorem resourceEvidence
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
   output_evidence review_exhaustion
 
--- Q4: the consumer trusts correct report production; an empty literal is no scan proof.
+-- The source exclusion runs before diagnostics can be published or consumed.
 run_meta do
   let saved ← getEnv
   try
@@ -362,13 +363,8 @@ run_meta do
       realizationName := original.realizationName.str "producerBug"
       statementIdentity := theoremStatementIdentity (← getEnv) ``reflexive
       derivedCertificate := none }
-    let e ← derive e (← freezeArena ``eqArena) descriptor
-    let some diagnostic ← RegistrationGates.validateFinite e | throwError "boundary: scanner accepted"
-    unless (diagnostic.splitOn "forbidden_dependency").length > 1 do throwError diagnostic
-    RegistrationGates.publishDiagnostic e.unitName none
-    validateDerivedCertificate e
-    closedTruthExcluded e
-    logInfo "P1_REVIEW producer_report_boundary conditional_on_correct_producer"
+    expectFailure "producer_reflexive_source" "rule=p1.reflexive_source" do
+      discard <| derive e (← freezeArena ``eqArena) descriptor
   finally setEnv saved
 
 run_meta do

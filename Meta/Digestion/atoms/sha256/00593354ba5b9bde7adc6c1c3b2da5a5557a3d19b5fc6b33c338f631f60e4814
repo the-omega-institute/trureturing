@@ -1,0 +1,38 @@
+**证明。** 上下文卷的既有块表述取两个对角块半正定；这里允许标量 $c$ 为任意实数。若 $c<0$，末坐标单位向量已给负值，而 $K^\dagger\succeq0$ 使 $s=c-b^*K^\dagger b<0$，所以（21.15）两侧均不成立。$c\ge0$ 时仅满足该既有表述的对角块半正定前提，不据此断言满足其等维密度块等其余假设。以下范围与配方论证直接覆盖全部实数 $c$。
+
+Hermitian 性给 $\operatorname{ran}K=(\ker K)^\perp$。若 $b$ 不在范围中，可取 $v\in\ker K$ 使 $z=v^*b\ne0$。令 $t=-Rz$，则
+$$
+\binom{tv}{1}^{\!*}M\binom{tv}{1}
+=c+2\Re(\overline t z)=c-2R|z|^2.
+$$
+取命题21.6的阈值便严格负，证明范围条件必要，并在实际测试上给 $-RzS_nv+g$ 这个负证人。
+
+范围条件成立时，置 $u=K^\dagger b$。由 $Ku=b$ 及伪逆的 Hermitian 性，$u^*Ku=b^*K^\dagger b$。对任意 $x\in\mathbb C^n,t\in\mathbb C$，
+$$
+\begin{aligned}
+Q(S_nx+tg)
+&=\binom{x}{t}^{\!*}M\binom{x}{t}\\
+&=(x+ut)^*K(x+ut)+s|t|^2.
+\end{aligned}
+\tag{21.16}
+$$
+若 $s\ge0$ 则右侧非负；若 $M\succeq0$，取 $x=-u,t=1$ 得 $s\ge0$。等价地，
+$$
+M=
+\begin{pmatrix}I&0\\u^*&1\end{pmatrix}
+\begin{pmatrix}K&0\\0&s\end{pmatrix}
+\begin{pmatrix}I&u\\0&1\end{pmatrix},
+\tag{21.17}
+$$
+两侧三角矩阵可逆且互为伴随。$K=0$ 时范围条件强制 $b=0$，剩余条件恰为 $c\ge0$，包括零维旧块。
+
+实际残余 $r=g-S_nu$ 满足
+$$
+B(f_i,r)=0,
+\qquad Q(r)=s.
+\tag{21.18}
+$$
+这是二次型值；在扩张非负性尚无前提时不能把它预称为非负平方范数。若 $Ku'=b$ 也是解，则 $u'-u\in\ker K$，两种残余之差属于 $\operatorname{Rad}(B|_{V_n})$，故在仿射陪集 $g+V_n$ 模掉此根基后相同；是否对其他未来响应仍相同，由命题21.5决定。伪逆选的是最小 Euclidean 系数范数解，不自动给脱离坐标的唯一原始测试。
+
+省略范围条件的抽象反例是 $K=[0],b=[1],c=0$：伪逆余量为零，而 $M$ 的特征值为 $1,-1$。只查对角元的抽象反例是 $\left(\begin{smallmatrix}1&2\\2&1\end{smallmatrix}\right)$，其两个对角元都为一，但向量 $(1,-1)$ 的值为 $-2$。这些例子不声称由实际 $\zeta$ 测试实现。证毕。
+

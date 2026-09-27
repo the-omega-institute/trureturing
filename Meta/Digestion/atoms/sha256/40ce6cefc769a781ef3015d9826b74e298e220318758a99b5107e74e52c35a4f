@@ -1,0 +1,8 @@
+**定理 11.15（精确不可克隆与经典档案的恢复界限）。** 设单位向量 $\psi,\phi\in H$ 满足 $0<|\langle\psi,\phi\rangle|<1$，记 $P_\psi=|\psi\rangle\langle\psi|$。不存在同一个 CPTP 映射 $\mathcal C:\mathcal L(H)\to\mathcal L(H\otimes H)$ 同时满足
+$$
+\mathcal C(P_\psi)=P_\psi\otimes P_\psi,\qquad
+\mathcal C(P_\phi)=P_\phi\otimes P_\phi.
+\tag{11.25}
+$$
+因此，对任何包含这两个态的输入族，不存在取值于有限经典寄存器的 CPTP 编码 $\mathcal E$ 及共同 CPTP 解码 $\mathcal R$，使 $\mathcal R\mathcal E$ 在该族上精确恢复原态。此结论的量词是同一确定性编码、解码对一个未知输入样本的精确全态恢复。
+

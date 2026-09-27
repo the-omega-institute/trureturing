@@ -1,0 +1,65 @@
+**theorem 44.9 (Fixed-divisor fibers, boundary changes and exact numerical inputs).** For $r\in R_c$, put
+$$
+Q_{c,r}(x)=\{y:(x,y,Z(r))\in\mathcal F_c\},\qquad
+Q_c(x)=\{(y,r):r\in R_c,\ y\in Q_{c,r}(x)\}.
+$$
+For every $x$ and every $r$,
+$$
+|Q_{c,r}(x)|=c,\qquad
+|Q_c(x)|=c^2,\qquad
+\left|\bigcup_{r\in R_c}Q_{c,r}(x)\right|=c^2.
+$$
+In particular, every remainder is reachable above every completed dividend.
+
+The complete branch rule is as follows. For $\eta=H(x)$, the quotient phases are the $c$ distinct roots
+$$
+\Theta_{c,r}(\eta)=\{\theta\in\mathbb T:c\theta+[r\phi]=\eta\}.
+$$
+If $\eta\notin E$, all these roots are ordinary and each contributes its unique lift. If $x=z_{E_M}^s$, a split root exists precisely when $c$ divides $M+r$. When it exists, it is
+$$
+\theta=E_{(M+r)/c},
+$$
+and contributes exactly $z_\theta^s$; all other roots are ordinary and contribute their unique lifts. Thus an ordinary quotient can correspond to a split dividend, but a split quotient cannot correspond to an ordinary dividend.
+
+For $x^+=z_{E_M}^{+1}$ and $x^-=z_{E_M}^{-1}$, let $r_0$ be the unique remainder with $c\mid M+r_0$. The two sets $Q_{c,r}(x^+)$ and $Q_{c,r}(x^-)$ coincide when $r\ne r_0$. At $r_0$ their intersection has $c-1$ points and their union has $c+1$ points. Consequently,
+$$
+|Q_c(x^+)\cap Q_c(x^-)|=c^2-1,\qquad
+|Q_c(x^+)\cup Q_c(x^-)|=c^2+1.
+$$
+For $c=1$ the graph reduces exactly to
+$$
+\mathcal F_1=\{(x,x,0_K):x\in K\}.
+$$
+
+At a padded completed dividend $x=Z(A)$, the same fiber has $c^2$ output pairs. Exactly one has a padded quotient: the actual pair
+$$
+\bigl(Z(A\operatorname{div}c),A\bmod c\bigr).
+$$
+If the numerical dividend is held literally equal to $A$, rather than merely approached in $K$, only its actual singleton triple remains. Also,
+$$
+\{(x,Z(c),y,z):(x,y,z)\in\mathcal F_c\}
+\subsetneq
+\overline{\mathscr D}\cap\bigl(K\times\{Z(c)\}\times K^2\bigr)
+=
+K\times\{Z(c)\}\times K^2.
+$$
+
+**Proof.** For a real lift $\widetilde\eta$ of $\eta$, the roots are
+$$
+\left[\frac{\widetilde\eta-r\phi+j}{c}\right],
+\qquad 0\le j<c.
+$$
+They are distinct and exhaustive. If a root is $E_m$, then
+$$
+cE_m+[r\phi]=E_{cm-r},
+$$
+and $cm-r\ge1$, since $m\ge1$ and $r\le c-1$. Therefore a split quotient necessarily has a split dividend; in particular it never occurs over an ordinary dividend. Over $E_M$, equality $E_{cm-r}=E_M$ is equivalent, by irrationality, to $cm-r=M$. It has exactly the stated solution when $c\mid M+r$, and no solution otherwise. There is at most one split root. Theorem 44.8 selects one same-sign lift at that root and one unique lift at each ordinary root. This proves the per-remainder count and the full branch rule, including the ordinary-quotient, split-dividend case.
+
+Roots belonging to two different remainders cannot coincide: subtraction of their phase equations would give $[(r-r')\phi]=0$, forcing $r=r'$. Hence the quotient sets for different remainders are disjoint. Summing their sizes proves both $c^2$ assertions. Existence and arbitrarily large numerical dividend and quotient witnesses follow from Theorem 44.8, not merely from the count.
+
+There is exactly one $r_0\in R_c$ for which $M+r_0$ is divisible by $c$. For every other remainder, both dividend orientations see precisely the same ordinary quotient lifts. At $r_0$, they share the $c-1$ ordinary lifts but select the two different split lifts. This proves all intersection and union counts. The cardinality over each oriented input remains $c^2$; the boundary change is the exchange of one quotient branch. When $c=1$, the only remainder is zero and the only phase root is $H(x)$; unique ordinary lifts and agreement of split signs both force $y=x$.
+
+The phase of $Z(A)$ is ordinary. If a quotient in its fiber were $Z(n)$, the phase relation would give $[(A-cn-r)\phi]=0$, hence $A=cn+r$. With $0\le r<c$, this is exactly the unique numerical Euclidean quotient and remainder. To see uniqueness directly, two such decompositions give $c(n-n')=r'-r$, whose right side has absolute value less than $c$, forcing $n=n'$ and then $r=r'$. The actual decomposition supplies the one padded pair; all other quotient points are nonpadded. Holding $A$ fixed admits only that decomposition, whereas Theorem 44.8 realizes all limit pairs through dividends at least $k$.
+
+Finally, Theorem 44.5 makes the unrestricted closure slice the entire displayed product. In the literally fixed-divisor closure the remainder belongs to the finite proper subset $Z[R_c]\subset K$. Choosing a remainder point outside this set proves strict inclusion. $\square$
+

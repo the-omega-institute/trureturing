@@ -2,6 +2,12 @@
   "version": 2,
   "dependencies": {
     "net10.0": {
+      "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+        "type": "Direct",
+        "requested": "[5.6.0, )",
+        "resolved": "5.6.0",
+        "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
+      },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
         "resolved": "3.11.0",
@@ -15,6 +21,19 @@
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         }
       },
+      "stratalint.buildruntime": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
+      "stratalint.ciartifacts": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -26,6 +45,35 @@
           "Trureturing.Truth": "[0.1.0, )",
           "YamlDotNet": "[16.3.0, )"
         }
+      },
+      "stratalint.executionevidence": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.inspectionscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
+      "stratalint.lean": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
+      "stratalint.releaseselection": {
+        "type": "Project",
+        "dependencies": {
+          "Trureturing.Truth": "[0.1.0, )"
+        }
+      },
+      "stratalint.resourceplanning": {
+        "type": "Project"
       },
       "trureturing.truth": {
         "type": "Project"

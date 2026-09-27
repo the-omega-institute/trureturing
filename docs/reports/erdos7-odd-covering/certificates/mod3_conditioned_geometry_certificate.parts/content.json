@@ -1,0 +1,11 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-mod3-conditioned-geometry-v1"
+  },
+  "cases": {
+    "path": "content/001-cases.json",
+    "sha256": "6e895032ded99a58d4824ac9867569bf5094a8c9c1b4373e5907a9ffb080dd4f",
+    "kind": "array"
+  }
+}

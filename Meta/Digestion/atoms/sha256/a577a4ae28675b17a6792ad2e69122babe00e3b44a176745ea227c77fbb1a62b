@@ -1,0 +1,13 @@
+**命题 5.4（共同耦合上的期望与成功概率）。** 设在同一概率空间上有随机元组 $\boldsymbol X,\boldsymbol Y$，所有距离与输出均可测，并且几乎处处满足
+$$
+D_t(g\boldsymbol X,g\boldsymbol Y)
+\le\sum_iL_iD_{s_i}(X_i,Y_i).
+$$
+则非负扩展期望满足
+$$
+\mathbb E D_t(g\boldsymbol X,g\boldsymbol Y)
+\le\sum_iL_i\mathbb E D_{s_i}(X_i,Y_i).
+\tag{5.2}
+$$
+若有限个局部证书在事件 $E_i$ 上成立，且 $\Pr(E_i^c)\le\alpha_i$，那么全部证书共同成立的概率至少为 $1-\sum_i\alpha_i$。
+

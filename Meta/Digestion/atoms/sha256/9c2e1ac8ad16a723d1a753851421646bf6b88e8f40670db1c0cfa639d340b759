@@ -1,0 +1,12 @@
+### 121.2 经典近似缺陷的复合律
+
+定义从 $E$ 模拟 $F$ 的最坏行总变差缺陷
+
+$$
+\delta_B(F\mid E)
+=
+\inf_K\max_{h\in H}
+\operatorname{TV}\bigl(F_h,(K E)_h\bigr),
+$$
+
+其中 $E_h$、$F_h$ 表示固定历史 $h$ 的记录分布。

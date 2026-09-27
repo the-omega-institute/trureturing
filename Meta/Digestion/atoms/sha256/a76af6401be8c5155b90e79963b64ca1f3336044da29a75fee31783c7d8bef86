@@ -1,0 +1,8 @@
+### 105.4 有限状态何时可以停止继续保留历史
+
+若 $$Y$$ 有限，`finite_horizon_stabilizes_at_completionDepth` 给出某个有限深度 $$H_*$$，使
+
+$$
+R_{H_*}=R_\infty.
+$$
+

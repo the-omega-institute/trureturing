@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40c494b2124cb508368a751db7414a4797c17441943eecf50573e8a0cb51f703
+  normalized_sha256: sha256:40c494b2124cb508368a751db7414a4797c17441943eecf50573e8a0cb51f703
+cas_ref: sha256:40c494b2124cb508368a751db7414a4797c17441943eecf50573e8a0cb51f703
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “固定满足命题44.5的”阈值与 Ready 状态“的前提，输出”指定有效状态的契约；阈值满足条件和区间成员都作为输入前提，未通过命名断言其存在，初始中点的有效性另切出。
+    previous_atom_id: d9a95e0ee6650a8dcf490ceb86fecca652666dc043c184440fae29873d351565
+    next_atom_id: fa7279a9079a6254842cfb35dd18e5bc4a38c2e6ef1f841d8bd361e8354b6ac5

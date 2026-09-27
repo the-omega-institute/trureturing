@@ -1,0 +1,6 @@
+**定理 46.8（有界商见证恢复真实方程）。** 对固定系统 $\Sigma$ 及 $M\in\mathbb N_0$，以下等价：存在 $\mathbf n\in S$ 且 $\|\mathbf n\|_\infty\le M$；对每个 $\alpha\in I$，存在 $\mathbf n_\alpha\in[0,M]^d$，使所有 $j$ 同时满足
+$$
+q_\alpha(P_j^+(\mathbf n_\alpha))=q_\alpha(P_j^-(\mathbf n_\alpha)).
+$$
+第二条件中的元组可随层变化，但数值界必须统一。
+

@@ -1,0 +1,23 @@
+**命题 76.2（固定有限分区的参考律可使速率趋于一）。** 取 $J=\{1,2,3\}$，两观察分区分别为 $12\mid3$ 与 $1\mid23$，并取
+$$
+q=(a,\varepsilon,a),\qquad a=\frac{1-\varepsilon}{2},\qquad0<\varepsilon<1.
+$$
+定理 76.1 的共同商只有一个分量，且
+$$
+c=\frac{1-\varepsilon}{1+\varepsilon},\qquad
+\lambda_{\mathrm{cycle}}=c^2\longrightarrow1
+\quad(\varepsilon\downarrow0).
+$$
+其中 $\lambda_{\mathrm{cycle}}$ 是约化周期算子的非零特征值。因此，即使状态集和两分区固定、并允许前因子依赖参考律和初态，也没有对全部正参考律统一的严格小于一的逐周期渐近几何因子。
+
+证明。两种纤维的并连接三个状态，故 $\mathcal Jd=q$ 对所有概率 $d$ 成立。在 $L^2(q)$ 中去掉常数后，两观察像分别由
+$\mathbf1_{\{3\}}-a$ 与 $\mathbf1_{\{1\}}-a$ 张成。它们的方差均为 $a(1-a)$，协方差为 $-a^2$，所以归一化向量 $f_1,f_2$ 满足
+$$
+\gamma:=\langle f_1,f_2\rangle_{L^2(q)}=-\frac{a}{1-a}.
+$$
+两个秩一投影的乘积将 $f_2$ 送到 $\gamma^2f_2$，范数为 $|\gamma|$，故由定理 76.1 的约化夹角读数得到上述 $c$ 与 $c^2$。令 $h_j=q_jf_2(j)$，则 $\sum_jh_j=0$、$\|h\|_{q^{-1}}=1$。因 $q>0$，充分小的非零 $t$ 使 $d=q+th$ 仍为概率，并且
+$$
+\|(E_2E_1)^nd-q\|_{q^{-1}}=|t|c^{2n}.
+$$
+任给 $0<\rho<1$，选 $\varepsilon$ 使 $c^2>\rho$，则 $|t|(c^2/\rho)^n\to\infty$，排除任何有限前因子对 $\rho^n$ 的控制。这是固定参考下的标准投影角速率在该三状态族中的边界，不否定每个固定 $\varepsilon>0$ 时的严格收敛。证毕。
+

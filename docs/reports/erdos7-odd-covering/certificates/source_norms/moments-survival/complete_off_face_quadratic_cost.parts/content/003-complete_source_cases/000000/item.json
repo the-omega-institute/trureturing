@@ -1,0 +1,58 @@
+{
+  "source_height": {
+    "kind": "inline",
+    "value": null
+  },
+  "sigma": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "one_actual_defect_vector": {
+    "kind": "inline",
+    "value": {
+      "E5": "0",
+      "E15": "0",
+      "E3": "0",
+      "E5d": "0",
+      "E15d": "0",
+      "omega": "0",
+      "rho": "0"
+    }
+  },
+  "E27": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "complete_hinge_tail_data": {
+    "path": "content/003-complete_source_cases/000000/item/005-complete_hinge_tail_data.json",
+    "sha256": "07d42310ff5b865ff9532b8827877be942c96476d6e178fe3513d19948607204",
+    "kind": "value"
+  },
+  "complete_factorial_pair_data": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "479/3600",
+      "old_positive7": "121/720",
+      "positive7_positive7_distinct": "97/240",
+      "tail_distinct_pairs": "2539/3600",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "7/180",
+        "pure5": "1/100",
+        "root5": "7/150",
+        "cell5": "13/450"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_old_linear_cap": "55/72",
+      "raw_old_square_cap": "173/48"
+    }
+  },
+  "quadratic_costs": {
+    "path": "content/003-complete_source_cases/000000/item/007-quadratic_costs.json",
+    "sha256": "f4ad58010131a890221bcb8db5dde8116aef7caca376f15a2449f76743398437",
+    "kind": "value"
+  }
+}

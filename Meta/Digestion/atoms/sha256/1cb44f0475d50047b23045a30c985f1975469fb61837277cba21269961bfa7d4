@@ -1,0 +1,50 @@
+### 定理 64.1（跨记录类的指数收缩）
+
+假设存在
+
+$$
+q\in[0,1)
+$$
+
+使得只要 $r_i\ne r_j$，就有
+
+$$
+|G_{ij}|\le q.
+$$
+
+对每个记录值 $\lambda$ 定义记录类投影 $P_\lambda$，并令 pinching 映射为
+
+$$
+\Pi(\rho)
+=\sum_{\lambda}P_\lambda\rho P_\lambda.
+$$
+
+`repeated_record_exponential_decay` 同时证明三件事：
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij},
+$$
+
+$$
+\Pi(\rho)_{ij}
+=
+\begin{cases}
+\rho_{ij},&r_i=r_j,\\
+0,&r_i\ne r_j,
+\end{cases}
+$$
+
+以及 Frobenius 范数界
+
+$$
+\left\|
+\mathcal C^N(\rho)-\Pi(\rho)
+\right\|_F
+\le
+q^N
+\left\|
+\rho-\Pi(\rho)
+\right\|_F.
+$$
+

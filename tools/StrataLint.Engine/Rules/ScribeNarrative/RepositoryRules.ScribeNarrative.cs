@@ -4,7 +4,7 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> ScribeNarrativeProvenance(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> ScribeNarrativeProvenance(DeltaRuleContext context)
     {
         // Keep this local: IsBaseFactAffected includes every file when the judge changes.
         var paths = context.Changes.Paths
@@ -17,7 +17,7 @@ internal static partial class RepositoryRules
             .ToImmutableArray();
     }
 
-    private static ImmutableHashSet<RepoPath> ScribeNarrativeMoves(RuleEvaluationContext context)
+    private static ImmutableHashSet<RepoPath> ScribeNarrativeMoves(DeltaRuleContext context)
     {
         var comparer = new ScribeNarrativeByteComparer();
         var deleted = context.Changes.Entries

@@ -1,0 +1,37 @@
+**定义 14.1（同一模型的完整试验合同）。** 固定边界空间 $U=\mathbb R^d$、$d\ge1$，采样间隔 $h>0$，共同常数 $0<a<b<\infty$、$m_*>0$、$E_*\ge0$。置
+$$
+u=e^{-hb},\qquad v=e^{-ha},\qquad
+\mathcal R=\frac{2+u+v}{v-u}>1.
+\tag{14.1}
+$$
+固定整数 $r\ge1$、$N=2r+1$。真实模型属于第13节的共同实现类：
+$$
+aI\preceq C\preceq bI,\quad \|J^*J\|\le m_*,\quad \|h_0\|\le E_*,\qquad
+M_j=J^*e^{-jhC}J\ (0\le j\le N),\quad
+z_j=J^*e^{-jhC}h_0\ (0\le j\le r).
+\tag{14.2}
+$$
+其核为 $K(t)=J^*e^{-tC}J$，初态强迫为 $f(t)=J^*e^{-tC}h_0$。这些谱、质量与初态能量界是共同模型合同，不能由有限读数自动取得。记定理13.2的共同合法前缀集为 $\mathcal C_r$；它同时约束 $M,z$，特别包括
+$$
+H\succeq0,\quad uH\preceq S\preceq vH,\quad
+\begin{pmatrix}H&z\\z^*&E_*^2\end{pmatrix}\succeq0,\quad M_0\preceq m_*I,
+\tag{14.3}
+$$
+其中 $H=(M_{i+j})_{0\le i,j\le r}$、$S=(M_{i+j+1})_{0\le i,j\le r}$、$z=\operatorname{col}(z_0,\ldots,z_r)$。
+
+取 $\operatorname{Sym}(U)$ 的固定 Frobenius 正交归一基 $F_1,\ldots,F_q$，$q=d(d+1)/2$，以及 $U$ 的固定正交归一基。全部 $M_j$ 的 $F_\ell$ 系数与全部 $z_j$ 的向量坐标组成
+$$
+\theta\in\mathbb R^D,\qquad D=(N+1)q+(r+1)d.
+\tag{14.4}
+$$
+一次实际可执行的完整协议给经典随机向量 $X^{(i)}\in\mathbb R^D$。该协议可以包含不同读数设置及分别制备的系统；坐标是否能在同一样本上联合取得由协议本身保证，不由式(14.4)赋予。每个设置的制备、探测反作用及校准都属于取得合同。
+
+对一个固定但未知的模型参数，取整数 $n\ge1$，要求 $X^{(1)},\ldots,X^{(n)}$ 是完整协议的独立重复。每个坐标在各重复中具有同一均值 $\mu_\ell$，并满足已认证的区间宽度与偏差合同
+$$
+A_\ell\le X^{(i)}_\ell\le B_\ell\quad\text{几乎处处},\qquad
+W_\ell\ge B_\ell-A_\ell\ge0,\qquad
+|\mu_\ell-\theta_\ell|\le b_\ell.
+\tag{14.5}
+$$
+区间端点可随固定模型而定，但宽度上界 $W_\ell$ 与偏差预算 $b_\ell$ 须在取得前已有依据。同一试验内的不同时间、设置及坐标允许任意相关。$b_\ell\ge0$ 是已验证的系统偏差上界。概率始终对这一固定模型的重复试验取值，不要求给未知模型加先验，也不将每轮重新抽取模型当作固定模型实验。
+

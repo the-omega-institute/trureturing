@@ -30,6 +30,7 @@ internal static class WorktreeCommand
     internal static string Usage { get; } =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
+        + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
         + "StrataLint worktree remove --names \"NAME [NAME ...]\" | "
         + "StrataLint worktree --kind KIND --name TASK_CODE --path DIR "
@@ -78,7 +79,7 @@ internal static class WorktreeCommand
                 cloner);
         }
         if (arguments.Count > 0
-            && string.Equals(arguments[0], "with-cache-writer", StringComparison.Ordinal))
+            && arguments[0] is "with-cache-writer" or "with-cache-reader")
         {
             return LeanCacheEnsureCommand.RunWithWriter(
                 repositoryRoot,

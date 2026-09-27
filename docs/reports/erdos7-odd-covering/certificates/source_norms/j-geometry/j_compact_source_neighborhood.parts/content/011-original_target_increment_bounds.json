@@ -1,0 +1,23 @@
+{
+  "length": 59,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 42,
+      "part": {
+        "path": "content/011-original_target_increment_bounds/000000-000042.json",
+        "sha256": "566e322fce4232cc47b4ce8b58534ae312121cda9ba537add6ed18d390305496",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 42,
+      "stop": 59,
+      "part": {
+        "path": "content/011-original_target_increment_bounds/000042-000059.json",
+        "sha256": "5fa8091c664d96415fd1e9908c689bf0caaef3a086cc1f9b47165cc9c9b13776",
+        "kind": "value"
+      }
+    }
+  ]
+}

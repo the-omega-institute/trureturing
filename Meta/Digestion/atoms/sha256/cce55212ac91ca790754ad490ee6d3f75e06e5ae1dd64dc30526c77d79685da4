@@ -1,0 +1,81 @@
+**theorem 49.4（跨层幂判据）。** 设 $1\le t<\infty$，$m\mid n$。则
+$$
+a\mathrel{R_{t,n}}a',\quad b\mathrel{R_{t,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{t,m}}(a')^{b'}
+$$
+对所有自然数 $a,a',b,b'$ 成立，当且仅当
+$$
+h(m)\le t,\qquad \lambda(m)\mid n.
+$$
+更一般地，若 $t=\infty$，给定有限 $u,m$，只要
+$$
+v\ge\max\{u,1,h(m)\},\qquad m\mid n,\qquad \lambda(m)\mid n,
+$$
+就有
+$$
+a\mathrel{R_{v,n}}a',\quad b\mathrel{R_{v,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{u,m}}(a')^{b'}.
+$$
+
+**证明。** 先证有限 $t$ 的充分性。若两个底数相等且两个指数相等，则显然成立。其余只需考察发生尾部替换的槽。
+
+由 $m\mid n$，若 $a,a'\ge t$ 且 $a\equiv a'\pmod n$，则
+$$
+a\equiv a'\pmod m,
+$$
+所以固定指数时底数替换不改变模 $m$ 的幂值。
+
+再固定底数 $a$，设 $b,b'\ge t$ 且 $b\equiv b'\pmod n$。对任意 $p^e\parallel m$ 分情况。若 $p\mid a$，则
+$$
+v_p(a^b)\ge b\ge t\ge e,
+$$
+且同样 $v_p(a^{b'})\ge e$，故两者都模 $p^e$ 为零。若 $p\nmid a$，则 $a$ 在 $(\mathbb Z/p^e\mathbb Z)^\times$ 中的阶整除 $\lambda(p^e)$，而
+$$
+\lambda(p^e)\mid\lambda(m)\mid n\mid b-b'.
+$$
+所以
+$$
+a^b\equiv a^{b'}\pmod{p^e}.
+$$
+中国剩余定理给出模 $m$ 相等。依次替换两个槽即可得到
+$$
+a^b\equiv(a')^{b'}\pmod m.
+$$
+
+还须检查 $R_{t,m}$ 的输出阈值，而不仅是模 $m$ 同余。先设 $t=1$。此时低于阈值的唯一输出是 $0$。若某个幂值为 $0$，则指数为正且底数为 $0$；但 $0$ 是 $R_{1,n}$ 的孤立类，所以对应的另一个底数也必须等于 $0$，从而两个输出都等于 $0$。因此只要两个输出不完全相等，它们就都至少为 $1=t$，故属于同一尾剩余类。
+
+再设 $t\ge2$。若发生尾底数替换，则底数均至少为 $t$；指数若为 $0$，两边输出都精确等于 $1$，若指数为正，则输出均至少为 $t$。若只发生尾指数替换，则指数均至少为 $t$；固定底数 $0$ 或 $1$ 时输出分别恒为精确的 $0$ 或 $1$，固定底数 $a\ge2$ 时输出至少为 $2^t\ge t$。因此所有低于输出阈值 $t$ 的情形都被精确保持；一旦两个输出不同，它们必同时至少为 $t$。结合已经证明的模 $m$ 同余，得到所需 $R_{t,m}$ 关系。
+
+必要性方面，取 $p^e\mid m$。若 $e>t$，任选足够大的 $a\ge t$ 满足 $v_p(a)=1$，并取
+$$
+b=t,\qquad b'=t+n.
+$$
+指数二者属于同一 $R_{t,n}$ 类，而
+$$
+v_p(a^t)=t,\qquad
+v_p(a^{t+n})=t+n.
+$$
+于是
+$$
+v_p\bigl(a^{t+n}-a^t\bigr)
+=v_p\bigl(a^t(a^n-1)\bigr)=t<e,
+$$
+因为 $p\mid a$ 蕴含 $a^n\equiv0\pmod p$，故 $p\nmid a^n-1$。两输出既不相等，又不模 $p^e$ 同余，与输出必须满足 $R_{t,m}$ 矛盾。因此 $e\le t$，即 $h(m)\le t$。
+
+再取任意模 $m$ 单位类，选择其一个足够大的自然数代表 $a\ge t$。仍取任意 $b\ge t$ 与 $b'=b+n$。输出不能相等时必须模 $m$ 相等；相等时当然也模 $m$ 相等，因此总有
+$$
+a^b(a^n-1)\equiv0\pmod m.
+$$
+因 $a^b$ 为单位，得到
+$$
+a^n\equiv1\pmod m.
+$$
+这对每个单位类成立，因此有限群 $(\mathbb Z/m\mathbb Z)^\times$ 的指数整除 $n$，即
+$$
+\lambda(m)\mid n.
+$$
+
+当 $t=\infty$ 时，把上述充分性证明中的输入阈值 $t$ 换成所选 $v$。条件 $v\ge h(m)$ 保证非单位底数在尾指数下消失模各 $p^e\parallel m$，而 $v\ge u$ 保证所有非恒值输出进入输出尾部；对低于 $u$ 的输出，和上面有限阈值论证一样，只有由孤立常值情形产生的值需要保留，而这些值在替换前后精确相等。故得到 $R_{u,m}$。证毕。
+

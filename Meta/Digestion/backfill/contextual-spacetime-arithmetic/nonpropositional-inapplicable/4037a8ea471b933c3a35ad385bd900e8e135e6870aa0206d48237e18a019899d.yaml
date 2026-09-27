@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4037a8ea471b933c3a35ad385bd900e8e135e6870aa0206d48237e18a019899d
+  normalized_sha256: sha256:4037a8ea471b933c3a35ad385bd900e8e135e6870aa0206d48237e18a019899d
+cas_ref: sha256:4037a8ea471b933c3a35ad385bd900e8e135e6870aa0206d48237e18a019899d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此项给出丰富有理表示、交叉乘积等价关系及加乘负逆除的定义和守卫；运算闭包与商同构不在此叶子断言。
+    previous_atom_id: b276fb08f8b4349e9100855e34c60ca137080f43d938ba722a9912c479048d57
+    next_atom_id: 15c045439e1b3a6822b487e49844b837b7f75284f5018c994421043a033b7d2e

@@ -1,0 +1,10 @@
+**证明。** 令 $V_Kx=K*(Ax)$。积分三角不等式给 $\|V_K\|_{\infty\to\infty}\le kL<1$；因此 $\sum_{n\ge0}V_K^n$ 在算子范数中收敛，且为 $I-V_K$ 的逆。这是 Banach 空间上的 Neumann 级数。应用于 $f+K*g$ 得唯一性及第一个界；第二系统同理。
+
+相减并使用同一个实际反馈 $A$，得
+$$
+\widehat x-x=(\widehat f-f)
++\widehat K*A(\widehat x-x)
++(\widehat K-K)*(Ax+g).
+$$
+取 $L^\infty$ 范数，把 $L\widehat k\|\widehat x-x\|_\infty$ 移到左边，得到式（12.14）。每个卷积及其幂均因果，级数极限也保留因果性。初态引起的外源项须归入 $f,\widehat f$ 并实际控制 $e_f$；核误差本身不给该控制。本结论针对式（12.13）及其小增益假设，不把核逼近自动提升为任意微分反馈方程的稳定性。$\square$
+

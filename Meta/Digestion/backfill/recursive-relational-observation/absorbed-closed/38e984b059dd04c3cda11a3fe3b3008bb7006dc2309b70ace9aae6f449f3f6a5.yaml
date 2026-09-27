@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:38e984b059dd04c3cda11a3fe3b3008bb7006dc2309b70ace9aae6f449f3f6a5
+  normalized_sha256: sha256:38e984b059dd04c3cda11a3fe3b3008bb7006dc2309b70ace9aae6f449f3f6a5
+cas_ref: sha256:38e984b059dd04c3cda11a3fe3b3008bb7006dc2309b70ace9aae6f449f3f6a5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.conditional_expectation_residual_orthogonal_decomposition
+    target_statement_id: sha256:a8bc3d904adc85f14308856965a1b9c1bea36b05e25b2d17a68c11492fecbe00
+receipts:
+  unresolved_subitems: []

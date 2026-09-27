@@ -1,0 +1,32 @@
+**定义 42.1（规范整数网格执行器；repo-derived）。** 将
+$$p=P/A,\qquad r=R/B,\qquad\varepsilon=E/C$$
+写成正整数对，不要求约分，并令
+$$D=A-2P,\qquad H=B-2R.$$
+固定
+$$
+(u,v)=
+\begin{cases}(1,1),&4EA\ge CD,\\(4EA,CD),&4EA<CD,
+\end{cases}
+\qquad
+m=2\left\lceil\frac{H(u+v)^3}{Ruv^2}\right\rceil,
+\qquad N=m+1,\qquad j_0=m/2.
+$$
+这里 $u/v=\min\{1,4\varepsilon/(1-2p)\}$；规范化只作这一次，不作任意公因数缩放。对 $0\le j\le m$ 置
+$$U_j=Rm+Hj,$$
+$$
+\begin{array}{c|cc}
+b&V_b(j)&W_b(j)\\ \hline
+0&PBm+DU_j&(A-P)U_j\\
+1&(A-P)Bm-DU_j&PU_j.
+\end{array}
+$$
+令
+$$mW_b(j)=t_b(j)V_b(j)+e_b(j),\qquad0\le e_b(j)<V_b(j),$$
+并定义
+$$T_b(j)=t_b(j)+\mathbf1_{2e_b(j)>V_b(j)}.$$
+等号留在 $t_b(j)$，所以每个分支分别取较小编号；不能在同距处用未经证明的反射把分支一换成分支零。网格执行器从 $j_0$ 开始，读到 $b$ 后把 $j$ 改为 $T_b(j)$；边界输出定义为
+$$
+\widehat h_j=\frac{V_0(j)}{ABm}.
+$$
+空历史先输出 $\widehat h_{j_0}$，每次报告更新后再以**新**编号重新计算 $V_0$，不输出旧转移分母。
+

@@ -1,0 +1,15 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": -3
+  },
+  "threshold": {
+    "kind": "inline",
+    "value": 5
+  },
+  "branches": {
+    "path": "content/013-seed_rows/002-branches.json",
+    "sha256": "f9cd6e8021e0902bed7adc0849de14b1606b9c2d418b06d25a06a3a0de58004b",
+    "kind": "array"
+  }
+}

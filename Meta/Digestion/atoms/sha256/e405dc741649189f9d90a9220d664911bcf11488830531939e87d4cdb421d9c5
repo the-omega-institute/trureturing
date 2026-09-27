@@ -1,0 +1,2 @@
+**定理 20.2（五点精确识别与路径相容性）。** 假设20.1下，五个值 $F_0,\ldots,F_4$ 对所有 $a,c,r>0$ 唯一确定该三元组。下列检查亦刻画任意五个数是否属于此精确模型。一般 Prony 递推、节点及权重识别直接使用 `FinitePronyHankelReconstruction.prony_hankel_factorization`、`FinitePronyNodeIdentification.recurrence_window_identifies_node_roots` 与 `FinitePronyAnnihilatorUniqueness.recurrence_window_identifies_annihilator`；这里证明其端点模型的相容条件。
+

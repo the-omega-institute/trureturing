@@ -94,11 +94,20 @@ public sealed class RepositoryAccessorTests
     }
 
     [Fact]
-    public void TemporaryFileSystemRejectsRepositoryPaths()
+    public void TemporaryFileSystemEnforcesTheTemporaryDirectoryBoundary()
     {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
+        using var root = new TemporaryRoot();
+        TemporaryFileSystem.File.WriteAllText(root.Resolve(RootMarkerPath), "fixture");
+        var repository = RepositoryAccessor.Discover(root.Path, RepositoryRootCriterion.ClaudeDirectoryNotFound);
         var repositoryPath = repository.GetFullPath(RepositoryRelativePath.Create(RootMarkerPath));
 
-        Assert.Throws<ArgumentException>(() => TemporaryFileSystem.File.ReadAllText(repositoryPath));
+        // A checkout can itself live under the temporary root.
+        Assert.Equal("fixture", TemporaryFileSystem.File.ReadAllText(repositoryPath));
+
+        // A sibling sharing the temporary root's prefix is still outside it.
+        var temporaryRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetTempPath()));
+        var outsideRepositoryPath = Path.Combine(
+            temporaryRoot + "-repository-" + Guid.NewGuid().ToString("N"), RootMarkerPath);
+        Assert.Throws<ArgumentException>(() => TemporaryFileSystem.File.ReadAllText(outsideRepositoryPath));
     }
 }

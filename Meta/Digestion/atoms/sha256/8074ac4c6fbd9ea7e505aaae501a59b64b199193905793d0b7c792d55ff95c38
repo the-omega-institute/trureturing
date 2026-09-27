@@ -1,0 +1,10 @@
+**定义 33.5（共同模型族下的鲁棒更新）。** 令 $\mathcal{M}$ 是一族已知的标签通道，$K(y\mid s,x)$ 是其中一个通道。对 $\mathcal{F}$、动作 $x$ 和观察 $y$，定义可行后验集合
+$$
+\mathsf U_{\mathcal{M}}(\mathcal{F},x,y)=
+\left\{
+\frac{\mu(s)K(y\mid s,x)}{\sum_{s'}\mu(s')K(y\mid s',x)}
+:
+\mu\in\mathcal{F}, K\in\mathcal{M},
+\sum_{s'}\mu(s')K(y\mid s',x)>0
+\right\}.
+$$

@@ -1,0 +1,109 @@
+{
+  "shape": "root1_same_other_column",
+  "law": "uniform on actual complete old315 survivors",
+  "old_test_layouts": 4760,
+  "survivor_counts": [
+    80,
+    81,
+    82
+  ],
+  "deleted_counts": [
+    22,
+    21,
+    20
+  ],
+  "maximum_old_hinge_sums_at_0_through_6": [
+    42,
+    25,
+    11,
+    5,
+    2,
+    1,
+    0
+  ],
+  "union_counts_by_label_subset": [
+    1,
+    3,
+    5,
+    14,
+    6,
+    13,
+    30,
+    61,
+    8,
+    17,
+    32,
+    50,
+    47,
+    78,
+    184,
+    243,
+    18,
+    37,
+    73,
+    144,
+    91,
+    144,
+    368,
+    557,
+    126,
+    197,
+    400,
+    517,
+    613,
+    803,
+    1875,
+    2164
+  ],
+  "costs": [
+    {
+      "hinge_weights": {
+        "1": 1,
+        "2": 2,
+        "3": 16,
+        "6": 74
+      },
+      "numerator_upper": [
+        1986,
+        1986,
+        1992
+      ],
+      "mean_upper": [
+        "993/40",
+        "662/27",
+        "996/41"
+      ],
+      "cheap_screened_layouts": 4688,
+      "exact_partition_layouts": 72,
+      "minimum_exact_slacks": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "hinge_weights": {
+        "1": 1,
+        "3": 9,
+        "4": 2
+      },
+      "numerator_upper": [
+        728,
+        728,
+        732
+      ],
+      "mean_upper": [
+        "91/10",
+        "728/81",
+        "366/41"
+      ],
+      "cheap_screened_layouts": 4640,
+      "exact_partition_layouts": 120,
+      "minimum_exact_slacks": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

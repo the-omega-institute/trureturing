@@ -1,0 +1,141 @@
+{
+  "q": [
+    "0",
+    "0"
+  ],
+  "residual": "0",
+  "head_maxima": [
+    "1561/3953070",
+    "1561/3953070",
+    "1561/3953070",
+    "1561/3953070",
+    "1561/3953070",
+    "1561/3953070",
+    "1561/3953070"
+  ],
+  "witnesses": [
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7": [
+        1,
+        4
+      ],
+      "finite_upper": "6533/15812280",
+      "reference_and_mean_price_shift": "-289/15812280"
+    }
+  ],
+  "original_head_evaluations": 125000,
+  "rational_comparisons": 4,
+  "integer_scale": 3320578800,
+  "finite_objectives_sha256": "941509819dba351988d3690733a5c6d7d332273ac9dd247d77866dad6c2e6dde"
+}

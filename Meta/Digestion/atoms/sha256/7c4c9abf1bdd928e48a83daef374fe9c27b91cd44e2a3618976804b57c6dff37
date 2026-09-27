@@ -1,0 +1,81 @@
+**定理 67.6（奇偶无关的 seam 反例与扭曲提升）。**
+
+对任意 $M,N\geq3$，令
+$$
+s_{i,N-1}=1\quad\text{对所有 }i,\qquad
+s_{i,j}=0\quad(j\neq N-1),\qquad
+u_{i,j}=0.
+$$
+则该标签 flat，但
+$$
+H=1,\qquad U=0,
+$$
+因此不存在单值周期顶点提升；此结论与 $M,N$ 的奇偶无关。
+
+更一般地，每个 flat 周期标签 $y=(s,u)$ 与每个锚点 $a\in\mathbb F_2$ 在模 M,N 约化给出的周期拉回图论覆盖方格 $\mathbb Z^2$ 上恰有一个提升 $\widetilde x$，且该提升在坐标 (0,0) 处的值等于 a，其相邻差分等于周期拉回的边标签，并满足扭曲边界条件
+$$
+\widetilde x_{i,j+N}=\widetilde x_{i,j}+H,\qquad
+\widetilde x_{i+M,j}=\widetilde x_{i,j}+U.
+$$
+因此 $(H,U)$ 正是从局部 plaquette 条件到单值周期提升的全局障碍。
+
+**证明。** 第一组 seam 标签是前一定理满射构造的 $(h,v)=(1,0)$ 情形，故 flat，且每行恰一条水平边取 $1$，所以 $H=1$。前一定理遂排除单值周期提升；这里没有使用 $M$ 或 $N$ 的奇偶。
+
+对一般 flat 标签，把 $s,u$ 周期拉回 $\mathbb Z^2$，记为 $\widetilde s,\widetilde u$。定义有限路径和
+$$
+U(i)=
+\begin{cases}
+\sum_{k=0}^{i-1}\widetilde u_{k,0},&i>0,\\
+0,&i=0,\\
+\sum_{k=i}^{-1}\widetilde u_{k,0},&i<0,
+\end{cases}
+$$
+以及对每个固定 $i$，
+$$
+S_i(j)=
+\begin{cases}
+\sum_{\ell=0}^{j-1}\widetilde s_{i,\ell},&j>0,\\
+0,&j=0,\\
+\sum_{\ell=j}^{-1}\widetilde s_{i,\ell},&j<0.
+\end{cases}
+$$
+令
+$$
+\widetilde x_{i,j}=a+U(i)+S_i(j).
+$$
+则水平差分由定义直接满足
+$$
+\widetilde x_{i,j}+\widetilde x_{i,j+1}=\widetilde s_{i,j}
+$$
+对所有整数 $i,j$ 成立。对于竖直相邻点，当 $j>0$ 时，把 $0\leq \ell<j$ 的 plaquette 方程求和；当 $j<0$ 时，把 $j\leq \ell<0$ 的 plaquette 方程求和；当 $j=0$ 时无需 plaquette。三种情形都给出
+$$
+S_i(j)+S_{i+1}(j)=\widetilde u_{i,0}+\widetilde u_{i,j},
+$$
+其中 $j=0$ 时右侧为 $0$。结合
+$$
+U(i)+U(i+1)=\widetilde u_{i,0}
+$$
+得到
+$$
+\widetilde x_{i+1,j}+\widetilde x_{i,j}=\widetilde u_{i,j}.
+$$
+故 $\widetilde x$ 是全格点提升。若有另一提升同锚点，两者之差在每条相邻边两端相等；$\mathbb Z^2$ 连通，故两者处处相等。
+
+定义
+$$
+D_H(i,j)=\widetilde x_{i,j+N}+\widetilde x_{i,j}.
+$$
+由拉回边标签的 $N$-周期性，任意水平或竖直相邻两点上的 $D_H$ 值相等，所以 $D_H$ 在连通的 $\mathbb Z^2$ 上常值。在 $(0,0)$ 处，
+$$
+D_H(0,0)=\sum_{j=0}^{N-1}\widetilde s_{0,j}=H,
+$$
+故第一条扭曲边界式成立。同理
+$$
+D_U(i,j)=\widetilde x_{i+M,j}+\widetilde x_{i,j}
+$$
+为常值，且
+$$
+D_U(0,0)=\sum_{i=0}^{M-1}\widetilde u_{i,0}=U,
+$$
+得到第二式。若 $H=U=0$，提升对两个周期平移均不变，因而下降为单值周期顶点配置；若任一 holonomy 非零，则相应周期平移改变顶点值，不能下降。这再次识别了全局障碍。证毕。
+

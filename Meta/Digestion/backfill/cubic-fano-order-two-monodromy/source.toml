@@ -1,0 +1,5 @@
+source_id = "cubic-fano-order-two-monodromy"
+path = "docs/develop/theory/CUBIC_FANO_ORDER_TWO_MONODROMY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

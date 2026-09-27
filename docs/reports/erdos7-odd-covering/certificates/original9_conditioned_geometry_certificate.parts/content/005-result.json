@@ -1,0 +1,53 @@
+{
+  "cap_numerators": {
+    "kind": "inline",
+    "value": [
+      1000000007,
+      207174054,
+      305330055,
+      67024566,
+      517529280,
+      117763278,
+      190412499,
+      41470054,
+      265958138,
+      46470620,
+      87568636,
+      16622259
+    ]
+  },
+  "group_numerator48": {
+    "kind": "inline",
+    "value": 19216215624
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "records": {
+    "path": "content/005-result/003-records.json",
+    "sha256": "f046c7d88bf1def3889aecdef03ecaa36f64cf01ec5a002ba9bec15e48aea60b",
+    "kind": "array"
+  },
+  "maximum_nonnegative_excess": {
+    "kind": "inline",
+    "value": "5357177152064798207029/13783840971486886125000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "492647095380812739054683/14604022456869186140625"
+  },
+  "rounding_margin": {
+    "kind": "inline",
+    "value": "954650154089172765643/58416089827476744562500"
+  },
+  "maximum_square_integer_bound": {
+    "kind": "inline",
+    "value": 290521002033647
+  },
+  "hinge2": {
+    "path": "content/005-result/008-hinge2.json",
+    "sha256": "1c8ec40a09ca9eae5fe747bbc14967e93736d29c1723439a48150a23b8226fbc",
+    "kind": "object"
+  }
+}

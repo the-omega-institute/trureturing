@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf2e54d1ec1b257d10e774b792b62018966291dc40416adfc67ed837278a4806
+  normalized_sha256: sha256:cf2e54d1ec1b257d10e774b792b62018966291dc40416adfc67ed837278a4806
+cas_ref: sha256:cf2e54d1ec1b257d10e774b792b62018966291dc40416adfc67ed837278a4806
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.9节“本节不从此证明任何量子过程的diamond误差或物理实现”限定量子类比；所列滤波、制备与控制器只是所需操作接口，没有公式或量子保证被定义性地宣布为真。
+    previous_atom_id: 6c57df6cbb694be9ca32abfb4ace2074550928f7a45076a3b6d92515eedfd431
+    next_atom_id: 31665a88c0d2633586b0ad943d8a7831dc97923a335ebf1cd424a82070887d1a

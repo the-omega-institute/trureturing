@@ -1,0 +1,16 @@
+**证明。** 展开矩阵单位得
+
+\[
+\mathcal A_X(F_{kl})_{ij}
+=X_{ik}\delta_{jl}-X_{il}\delta_{jk}
++\delta_{ik}X_{jl}-\delta_{il}X_{jk}.
+\]
+
+再由实际复合算出
+
+\[
+\mathcal A_X^2(B)=X^2B+2XBX^t+B(X^2)^t.
+\]
+
+其中 \((XF_{kl}X^t)_{ij}=X_{ik}X_{jl}-X_{il}X_{jk}\)。取 l=j 后对 j 求和，分别使用 \(\sum_jX_{ij}X_{jk}=(X^2)_{ik}\) 和对角求迹，即得两式。证毕。
+

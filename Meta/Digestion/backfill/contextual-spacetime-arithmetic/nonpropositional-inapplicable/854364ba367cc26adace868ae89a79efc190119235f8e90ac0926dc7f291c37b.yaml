@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:854364ba367cc26adace868ae89a79efc190119235f8e90ac0926dc7f291c37b
+  normalized_sha256: sha256:854364ba367cc26adace868ae89a79efc190119235f8e90ac0926dc7f291c37b
+cas_ref: sha256:854364ba367cc26adace868ae89a79efc190119235f8e90ac0926dc7f291c37b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句定义实际世界域为自然连接域与附加约束域的交，是定义约定，无待证明命题。
+    previous_atom_id: 38b119192af4228e3b6c0652cbddc00df128707ac05ad1b1306816657fccd48d
+    next_atom_id: 4d16c1e6538a0c41d08352003290ca67fb58713f241d9ebf1e360253bfce4076

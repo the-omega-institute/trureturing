@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:821829d777b6208b610aa168a9e02d75c340c584822ab89362f9f68d6554dd0e
+  normalized_sha256: sha256:821829d777b6208b610aa168a9e02d75c340c584822ab89362f9f68d6554dd0e
+cas_ref: sha256:821829d777b6208b610aa168a9e02d75c340c584822ab89362f9f68d6554dd0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶设定完整和压缩递推、投影与提升映射及残差，误差递推恒等式已拆出，保留内容仅为模型定义。
+    previous_atom_id: 5b07f157d9378e9a7744ebe71612fc5779809a4c8610bda0fed2651bb5459781
+    next_atom_id: d0563321e9887813d596c27275d714d4cd976fadc82d47a7162ae68e50db3c0d

@@ -1,0 +1,95 @@
+**定理 44.7（分数幂正差及其范数）。** 本节首先只要求有限维实或复 Hilbert 空间、$FF^*=I_E$、$S=S^*\succeq aI_R$，其中共同谱下界 $a>0$。仍令
+$$
+A=FSF^*,\qquad \Delta=FS^2F^*-A^2\succeq0,
+\qquad \delta=\|\Delta\|.
+$$
+不需要 $b<1$、预先给定 $h$ 或 $S=e^{-hC}$，也不要求 $S$ 与 $P=F^*F$ 交换。共同正谱下界用于控制负指数因子 $a^{r-2}$；有限维保证谱有界。
+
+对 $0<r<1$，有
+$$
+\boxed{
+0\preceq A^r-FS^rF^*,\qquad
+\|A^r-FS^rF^*\|
+\le \frac{r(1-r)}2a^{r-2}\delta.
+}
+$$
+对 $1<r<2$，有
+$$
+\boxed{
+0\preceq FS^rF^*-A^r,\qquad
+\|FS^rF^*-A^r\|
+\le \frac{r(r-1)}2a^{r-2}\delta.
+}
+$$
+这里分别给出半正定方向及算子范数控制，不将范数估计改写成缺陷矩阵受同一常数乘以 $\Delta$ 控制的 Loewner 序断言。
+
+证明。先给两段标量表示及共同截断。
+
+沿用定理44.4的精确二阶 resolvent 恒等式，令
+$$
+D(u)=F(S+uI_R)^{-1}F^*-(A+uI_E)^{-1},\qquad u\ge0.
+$$
+则
+$$
+D(u)\succeq0,\qquad
+\|D(u)\|\le\frac{\delta}{(a+u)^3}.
+$$
+对 $0<r<1$，标量公式及有限维谱演算给出
+$$
+x^r=\frac{\sin(\pi r)}\pi
+\int_0^\infty u^{r-1}\frac{x}{x+u}\,du.
+$$
+标量式由 $u=xv$ 给 $x^r\int_0^\infty v^{r-1}/(1+v)dv$，后者为 $B(r,1-r)=\pi/\sin\pi r$；端点收敛由 $0<r<1$ 保证。使用 $x/(x+u)=1-u/(x+u)$ 及 $FF^*=I_E$，在相同截断积分中相减，再取极限，得到
+$$
+A^r-FS^rF^*
+=\frac{\sin(\pi r)}\pi
+\int_0^\infty u^rD(u)\,du\succeq0.
+$$
+不能将这一步写成分别计算发散的常数项积分。
+
+对 $1<r<2$，使用另一段标量表示
+$$
+x^r=\frac{\sin(\pi(r-1))}\pi
+\int_0^\infty u^{r-2}\frac{x^2}{x+u}\,du.
+$$
+此式用 $u=xv$ 化为 $x^r B(r-1,2-r)$，正弦归一化来自同一反射公式。由 $x^2/(x+u)=x-u+u^2/(x+u)$，压缩前后的仿射项在相同截断处精确抵消，因此
+$$
+FS^rF^*-A^r
+=\frac{\sin(\pi(r-1))}\pi
+\int_0^\infty u^rD(u)\,du\succeq0.
+$$
+两段积分的系数均为正，故正性来自同一份 $D(u)$。
+
+归一化、收敛与端点如下。
+
+令 $u=av$，再令 $z=v/(1+v)$，则
+$$\int_0^\infty\frac{u^r}{(a+u)^3}du
+=a^{r-2}\int_0^1 z^r(1-z)^{1-r}dz.$$
+共同的范数积分为
+$$
+\begin{aligned}
+\int_0^\infty\frac{u^r}{(a+u)^3}\,du
+&=a^{r-2}B(r+1,2-r)\\
+&=\frac{a^{r-2}}2\Gamma(r+1)\Gamma(2-r).
+\end{aligned}
+$$
+其零点附近为 $O(u^r)$，无穷远为 $O(u^{r-3})$，故上述两段均可积。在 $0<r<1$，$\Gamma(r+1)\Gamma(2-r)=r(1-r)\pi/\sin(\pi r)$；在 $1<r<2$，写 $p=r-1$，该乘积为 $r(r-1)\pi/\sin(\pi(r-1))$。这里逐次使用 $\Gamma(z+1)=z\Gamma(z)$ 与 $\Gamma(p)\Gamma(1-p)=\pi/\sin\pi p$。乘以各自正弦系数并除以二，恰好得到
+$$
+\frac{r|r-1|}{2}a^{r-2}.
+$$
+端点单独计算，不将 $r=2$ 代入已发散的积分：
+$$
+FS^0F^*-A^0=0,\qquad
+FSF^*-A=0,\qquad
+FS^2F^*-A^2=\Delta.
+$$
+所以统一范数界为
+$$
+\boxed{
+\|FS^rF^*-A^r\|
+\le\frac{r|r-1|}{2}a^{r-2}\delta,
+\qquad 0\le r\le2.
+}
+$$
+此处不将分数幂序方向或此系数外推到 $r>2$；定理44.3的整数范数界仍独立成立。
+

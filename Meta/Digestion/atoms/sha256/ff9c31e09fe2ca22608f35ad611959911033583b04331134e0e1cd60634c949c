@@ -1,0 +1,8 @@
+任意 Hermitian $A$ 唯一写为
+
+$$
+A=\frac{tI+xX+yY+zZ}{2},
+\qquad (t,x,y,z)\in\mathbb R^4,
+\qquad t=\operatorname{tr}A.
+$$
+

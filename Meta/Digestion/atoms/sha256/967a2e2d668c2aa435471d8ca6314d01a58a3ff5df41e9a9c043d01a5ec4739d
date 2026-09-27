@@ -1,0 +1,26 @@
+**定理 68.4（任意隐藏初态的强制终止由整个可见隐藏商控制）。** $Q_{\mathrm{init}}=H/N$ 上的 $\bar D_{\mathrm{init}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+$$
+BD^j=0:H\to V\quad(\forall j\ge m),
+$$
+$$
+\bar D_{\mathrm{init}}^{\,m}=0.
+$$
+因此对 MF1 中的初始隐藏强制
+$$
+\eta_n(h_0)=BD^nh_0
+$$
+而言，“对任意 $h_0$ 都从某一统一时刻起恒为零”当且仅当 $\bar D_{\mathrm{init}}$ 幂零；存在时
+$$
+\tau_{\mathrm{init}} =\min\{m:\bar D_{\mathrm{init}}^{\,m}=0\}.
+$$
+并且
+$$
+\tau_{\mathrm{init}}=0\iff H/N=0\iff BD^j=0\ \text{对全部 }j\ge0.
+$$
+
+**证明。** $N$ 的 $D$-不变性已在前一定理证明。若 $BD^j=0$ 对全部 $j\ge m$，则任取 $h\in H$ 与 $k\ge0$，
+$$
+BD^kD^mh=BD^{m+k}h=0,
+$$
+故 $D^mH\subseteq N$，即 $\bar D_{\mathrm{init}}^{\,m}=0$。反之，若 $\bar D_{\mathrm{init}}^{\,m}=0$，则 $D^mH\subseteq N$；对 $j=m+k$，有 $D^jH\subseteq N$，故 $BD^j=0$。最小截止与零商边界同前一定理。证毕。
+

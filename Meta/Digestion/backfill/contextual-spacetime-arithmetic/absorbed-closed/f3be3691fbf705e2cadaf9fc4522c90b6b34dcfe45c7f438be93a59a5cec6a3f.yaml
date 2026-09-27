@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f3be3691fbf705e2cadaf9fc4522c90b6b34dcfe45c7f438be93a59a5cec6a3f
+  normalized_sha256: sha256:f3be3691fbf705e2cadaf9fc4522c90b6b34dcfe45c7f438be93a59a5cec6a3f
+cas_ref: sha256:f3be3691fbf705e2cadaf9fc4522c90b6b34dcfe45c7f438be93a59a5cec6a3f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyRestrictionMonotonicity.restricting_sensor_family_enlarges_kernel
+    target_statement_id: sha256:ebe51b2b72a5c09dc2415bef5db6c75397e06cf7e68a49d42a6de747b848e9d7
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53a1999ffb729098828c96393a92ece069e897236934e8d726111bf8df94771a
+  normalized_sha256: sha256:53a1999ffb729098828c96393a92ece069e897236934e8d726111bf8df94771a
+cas_ref: sha256:53a1999ffb729098828c96393a92ece069e897236934e8d726111bf8df94771a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition and convention only: Q(S,t) is the unnormalized successful mass maximized over every deterministic selector that eventually terminates with zero error on every target of S, with actual terminal length compared to t; Q(S,t)=0 for negative integer cutoffs. This clause does not require all targets to terminate by t. Existence and rational attainment belong to the separate final child of definition 63.9.'
+    previous_atom_id: f988ddf38445c39f5f5ace154e946aca909f3d1a8bbbd4ab6d9b23e24883129c
+    next_atom_id: 6a9bf84350905ff0d63ef134f508c0031b2b76cbf8d119ca626a5771a5bfff3a

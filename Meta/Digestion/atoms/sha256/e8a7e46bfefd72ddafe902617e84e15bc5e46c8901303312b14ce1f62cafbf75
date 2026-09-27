@@ -1,0 +1,15 @@
+**命题 70.10（柱计数、Hilbert 维数与热指数）。** 取第 33.0 节的位置数字空间
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\},
+\qquad
+d(x,y)=2^{-\min\{j:x_j\ne y_j\}}
+\quad(x\ne y),
+$$
+相等点距离为零；取第 33.1 节的满支撑 Borel 概率 $\nu$。写 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，则非空长度 $L\ge1$ 柱的质量为
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1.
+\end{cases}
+$$

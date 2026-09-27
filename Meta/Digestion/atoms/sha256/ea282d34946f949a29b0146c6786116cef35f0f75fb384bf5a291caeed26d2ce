@@ -1,0 +1,20 @@
+### 19.3 动态商的最小性与选择器条件
+
+设摘要 $q_S:S\to B$ 能决定所有未来带标签读数，并存在 $\bar F:B\to B$ 使
+
+$$
+q_S\circ F=\bar F\circ q_S.
+\tag{19.4}
+$$
+
+则
+
+$$
+q_S(s)=q_S(t)\Longrightarrow s\approx_S t.
+\tag{19.5}
+$$
+
+换言之，任何真正可继续运行的摘要，都必须至少保留动态核所保留的区别；它可以更细，但不能更粗。协议摘要满足对称结论。在线性情形，冻结声明 `FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics` 以所有未来读出核的交集构造最粗商，并给出唯一诱导线性动力学；一般集合情形，`PredictionCompletionUniversality.prediction_completion_universality` 与 `PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient` 给出完整未来轨迹因子化及其最小记忆像。
+
+选择器也必须落在同一条件内。若 $A=\pi(M)$ 依赖记忆 $M$，而摘要只保留读数、不保留 $\pi$ 的动作分支，那么两个相同摘要可能选择不同协议，(19.4) 就不能成立。此时要么把动作、权限和失败标签加入 $\widehat L$，要么把选择器的残余加入边界；仓内 `AgencyEnrichment.strategy_factorization_iff_no_residual` 正是“无残余才能因子化”的这一侧条件。
+

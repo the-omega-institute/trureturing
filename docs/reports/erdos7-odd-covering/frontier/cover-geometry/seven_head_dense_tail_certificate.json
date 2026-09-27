@@ -1,0 +1,67 @@
+{
+  "schema": "seven-head-dense-tail-certificate-v1",
+  "scope": "Exact arithmetic for at most seven odd prime divisors <=100000, and for an attributed eight-prime head at cutoff 100000000; with any finite number of larger prime divisors, arbitrary original finite heights, residues, and support arities. Ordinary proof, not Lean.",
+  "head_certificate_sha256": "b6c47c2e710cdb27e599b92ccfe7d1b5c4e55b4b4082ad8058d196c1e964b9b2",
+  "head_row_children": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "head_mass_lower_bound": "7235955529/450000000000",
+  "head_thresholds": [
+    2,
+    4,
+    4,
+    8,
+    8
+  ],
+  "source_kernel_caps": [
+    "1",
+    "1",
+    "3/2",
+    "5/3",
+    "3/2",
+    "2",
+    "9/5"
+  ],
+  "joint_density_cap": "27/2",
+  "haar_local_second_moments": [
+    "3",
+    "15/8",
+    "14/9",
+    "33/25",
+    "91/72",
+    "153/128",
+    "95/81"
+  ],
+  "haar_joint_second_moment_upper_bound": "2263261/110592",
+  "homogeneous_joint_load_seed_upper_bound": "2263261/8192",
+  "tail_cutoff": 100000,
+  "logarithm_lower_bound": 10,
+  "prime_product_constant": "201/199",
+  "tau7": "16202267391964665023172/617896138521372358365262955",
+  "tail_loss_upper_bound": "482499472365859733223806367/66602699562724767891160975360",
+  "tail_loss_strict_simple_upper_bound": "29/4000",
+  "weighted_survivor_mass_lower_bound": "51720587809099079409487317331098587/5853752891255106552934070100000000000",
+  "weighted_survivor_mass_strict_simple_lower_bound": "7/800",
+  "head_geometry_reexecuted": false,
+  "analytic_premise_checked_by_this_program": false,
+  "original_haar_density_claim": "Only positivity; weighted mass is not Haar density.",
+  "eight_prime_application": {
+    "source": "schroeder2026nine, cor:uncovered-density",
+    "source_archive_sha256": "9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c",
+    "head_density_is_attributed_source_premise": true,
+    "head_mass_lower_bound": "1/1002375",
+    "joint_density_cap": "1",
+    "haar_joint_second_moment_upper_bound": "4732273/202752",
+    "tail_cutoff": 100000000,
+    "logarithm_lower_bound": 16,
+    "tau7": "102233761825090897760894841796875/5962469980721804569768693918223960571904",
+    "tail_loss_upper_bound": "1097047779531311514783771237357421875/2741275994402057415260186461015293546201088",
+    "weighted_survivor_mass_lower_bound": "149238429672214457784436706088104344931633/249798774989887481965584491260018624397574144000",
+    "weighted_survivor_mass_strict_simple_lower_bound": "1/2000000"
+  }
+}

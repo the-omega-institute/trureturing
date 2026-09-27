@@ -1,0 +1,22 @@
+**假设 66.10（平稳黄金均值关系律）。**
+
+令
+$$
+\phi:=\frac{1+\sqrt5}{2},
+\qquad
+\alpha:=\frac{\sqrt5-1}{2}=\phi^{-1},
+\qquad
+\alpha+\alpha^2=1,
+$$
+并令关系过程
+$$
+c=(c_j)_{j\ge0}
+$$
+服从状态 $0,1$ 上的平稳 Markov 律
+$$
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+这给出 $Y_3$ 上的平稳 no-$11$ 关系律 $\mu_{\mathrm{st}}$。
+

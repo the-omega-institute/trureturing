@@ -1,0 +1,18 @@
+**theorem 51.1 (边界序列判据).** 对 $x\in R$ 与自然数序列 $(n_N)$，有 $j(n_N)\to\tau(x)$ 当且仅当
+$$
+n_N\longrightarrow+\infty
+$$
+且对每个 $m\ge1$，存在 $N_m$ 使
+$$
+N\ge N_m\quad\Longrightarrow\quad n_N\equiv x\pmod m.
+$$
+每个 $\tau(x)$ 都有正自然数序列如此逼近。
+
+**证明。** 若 $j(n_N)\to\tau(x)$，取任意阈值 $T$。在有限离散坐标 $Q_{T,1}$ 上，充分大时必须进入尾类，故 $n_N\ge T$。$T$ 任意，得到 $n_N\to+\infty$。再在 $Q_{0,m}$ 上取极限，有限离散性给出最终的模 $m$ 同余。
+
+反之，任一基本邻域只规定一个足够大的阈值 $T$ 与一个有限模数 $M$；两项条件保证充分大时 $n_N\ge T$ 且 $n_N\equiv x\pmod M$，故进入该邻域。为证明最后的存在性，记
+$$
+M_N=\operatorname{lcm}(1,2,\ldots,N)\qquad(N\ge1).
+$$
+在 $x\bmod M_N$ 的等差数列中选取 $n_N>N$。每个固定 $m$ 在 $N\ge m$ 时整除 $M_N$，所以该序列满足上述两个条件。证毕。
+

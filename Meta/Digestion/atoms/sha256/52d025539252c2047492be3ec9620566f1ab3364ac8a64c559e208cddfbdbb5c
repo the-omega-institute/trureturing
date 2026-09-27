@@ -1,0 +1,107 @@
+**theorem 56.5（有界复测度轨道卷积的精确拓扑合同与概率限制）。** 记 $M_b(I)$ 为 $I$ 上有界复正则 Borel 测度的 Banach 空间，范数为全变差范数 $\|\cdot\|$。本定理中 $M_b(I)$ 的弱星拓扑明确指
+$$
+\sigma(M_b(I),C(I)),
+$$
+即使所有映射
+$$
+\mu\longmapsto\int_I f\,d\mu,\qquad f\in C(I),
+$$
+连续的最弱拓扑。对 $M,N\ge0$ 记
+$$
+B_M=\{\mu\in M_b(I):\|\mu\|\le M\},\qquad B_N=\{\nu\in M_b(I):\|\nu\|\le N\}.
+$$
+再记
+$$
+M_b^U(R)=\{\lambda\in M_b(R):u_*\lambda=\lambda\ \text{对所有 }u\in U\}.
+$$
+令 $q:R\to R/U$ 为轨道商映射，并令
+$$
+\bar\rho:R/U\longrightarrow I,\qquad \bar\rho(Ux)=\rho(x).
+$$
+则 $\bar\rho$ 是同胚。
+
+对任意 $\mu\in M_b(I)$ 定义规范不变提升 $\Lambda_b\mu\in M_b(R)$ 为
+$$
+\int_R f(x)\,d(\Lambda_b\mu)(x)
+=\int_I\int_U f(us(A))\,dm_U(u)\,d\mu(A),
+\qquad f\in C(R).
+$$
+定义
+$$
+\mu\star_b\nu
+:=\rho_*\bigl((\Lambda_b\mu)*_R(\Lambda_b\nu)\bigr),
+$$
+其中 $*_R$ 是紧阿贝尔加法群 $(R,+)$ 上的复测度卷积。则：
+
+1. $\Lambda_b$ 是 $M_b(I)$ 到 $M_b^U(R)$ 的等距线性双射，其逆为 $\rho_*$。
+
+2. $\star_b$ 双线性、结合、交换，以
+$$
+e=(\infty,\infty,\ldots)=\rho(0)
+$$
+对应的 $\delta_e$ 为单位元，并满足
+$$
+\|\mu\star_b\nu\|\le\|\mu\|\,\|\nu\|.
+$$
+因而 $\star_b$ 是有界双线性映射并对全变差范数联合连续。
+
+3. 对弱星拓扑 $\sigma(M_b(I),C(I))$，$\star_b$ 在整个 $M_b(I)$ 上对每个变量分别连续。对每个固定的 $M,N<\infty$，其限制
+$$
+\star_b:B_M\times B_N\longrightarrow M_b(I)
+$$
+在两个因子均取弱星子空间拓扑时联合连续。因此它在概率空间 $\mathcal P(I)$ 上联合弱连续，并且在正测度锥 $M_b^+(I)$ 上取 $\sigma(M_b(I),C(I))$ 的子空间拓扑时也联合连续。相反，
+$$
+\star_b:M_b(I)\times M_b(I)\longrightarrow M_b(I)
+$$
+在整个复测度空间上并非联合 $\sigma(M_b(I),C(I))$-连续；失败已经发生在 $(0,0)$。
+
+4. 对任意 $A,B\in I$，
+$$
+\delta_A\star_b\delta_B
+=\int_U\delta_{\rho(s(A)+us(B))}\,dm_U(u)
+=K(A,B).
+$$
+特别地，点卷积是紧支撑概率，并且
+$$
+(A,B)\longmapsto\operatorname{supp}(\delta_A\star_b\delta_B)
+$$
+到非空紧子集空间在 Michael 拓扑中连续。
+
+5. 点对合为连续恒等映射 $A^\ast=A$。若对 Borel 集 $D\subset I$ 记 $D^\ast=\{A^\ast:A\in D\}$，并对 $\mu\in M_b(I)$ 记
+$$
+\mu^{-}(D)=\overline{\mu(D^\ast)},
+$$
+则 $(M_b(I),\star_b,{}^{-})$ 是以 $\delta_e$ 为单位元的交换 Banach-$\ast$-代数，而且
+$$
+\delta_{A^\ast}\star_b\delta_{B^\ast}
+=(\delta_B\star_b\delta_A)^{-},
+$$
+以及
+$$
+B=A^\ast\quad\Longleftrightarrow\quad
+e\in\operatorname{supp}(\delta_A\star_b\delta_B).
+$$
+由于 $A^\ast=A$，后一条件等价于 $A=B$。
+
+Rösler–Voit, *Dunkl theory, convolution algebras, and related Markov processes*, §3.2, Definition 3.6，印刷页 p.40，给出其超群定义；Example 3.8，印刷页 pp.40–41，把局部紧阿贝尔群 $V$ 上紧自同构群 $K$ 的不变有界测度 Banach-$\ast$-代数搬运到轨道空间 $V^K$，称所得结构为交换 orbit hypergroup，并给出上述形式的点测度 Haar 平均、单位元与对合。来源：https://math.uni-paderborn.de/fileadmin/mathematik/AG_Harmonische_Analysis/Publications_Roesler/roesler_voit_angers.pdf 。这里采用该轨道代数与点卷积结构；对于复测度空间的拓扑连续性，则以本定理明确指定的 $\sigma(M_b(I),C(I))$ 为准，并由下面证明给出精确范围，而不把 Definition 3.6(1) 的未限定弱连续性表述解释为全空间的联合弱星连续性。
+
+在概率层面，$\mathcal P(I)$ 是 $M_b(I)$ 中的凸集。令 $\Lambda=\Lambda_b|_{\mathcal P(I)}$，并定义
+$$
+\mu\star\nu:=\rho_*\bigl((\Lambda\mu)*_R(\Lambda\nu)\bigr),
+\qquad \mu,\nu\in\mathcal P(I).
+$$
+则 $\star$ 恰为 $\star_b$ 在 $\mathcal P(I)$ 上的限制；特别地，
+$$
+\delta_A\star\delta_B=K(A,B).
+$$
+并且 $\star$ 在 $\mathcal P(I)$ 上交换、结合、对每个变量仿射并对弱拓扑联合连续。
+
+最后，点核在以下正确的连续性类别中唯一决定整个复测度卷积：若 $\diamond$ 是 $M_b(I)$ 上另一个双线性运算，对每个变量分别关于 $\sigma(M_b(I),C(I))$ 连续，并且
+$$
+\delta_A\diamond\delta_B=K(A,B)\qquad(A,B\in I),
+$$
+则
+$$
+\mu\diamond\nu=\mu\star_b\nu\qquad(\mu,\nu\in M_b(I)).
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:609f7831e2234e3e448af8b62c4fccaec8bd10c222269b24ff40879fe68d456c
+  normalized_sha256: sha256:609f7831e2234e3e448af8b62c4fccaec8bd10c222269b24ff40879fe68d456c
+cas_ref: sha256:609f7831e2234e3e448af8b62c4fccaec8bd10c222269b24ff40879fe68d456c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “取预先固定的有限视界”及深度计划后定义有序推前元组和前缀读出；它没有声称任何残差前缀足以解码，故只是固定任务数据的定义。
+    previous_atom_id: 81628716fefeaed893aa3295e3cbc6a249300fcffc1e6580b685180776cf5577
+    next_atom_id: 06b6c9d5b005c74b2d1d93e3654144320d2b3d6dc0c37b5ec8ba054131e6683a

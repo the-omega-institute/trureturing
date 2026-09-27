@@ -1,0 +1,42 @@
+### 129.2 观察是逐阶外代数延拓后的线性读出
+
+令 $P:V\to V$ 为正交投影，即 $P^2=P=P^*$，记 $Q_\perp=I-P$。外代数的通用性质给线性映射的外代数延拓
+
+$$
+\Lambda(P):\Lambda V\to\Lambda V,
+\qquad
+\Lambda(P)(v_1\wedge\cdots\wedge v_k)
+=Pv_1\wedge\cdots\wedge Pv_k.
+\tag{129.8}
+$$
+
+$\Lambda(P)$ 保持外积及外代数单位；这里只谈外代数中的乘法。定义同一个 Clifford 空间上的线性观察
+
+$$
+\boxed{\mathcal E_P=j_Q\circ\Lambda(P)\circ s_Q:
+\operatorname{Cl}(V,Q)\longrightarrow\operatorname{Cl}(V,Q)}.
+\tag{129.9}
+$$
+
+这个定义先取符号、再观察各个向量方向、最后回到 Clifford 表示，没有预设它保持几何乘法。由式（129.4）、（129.8）立即得到
+
+$$
+\mathcal E_P(\lambda1_{\rm Cl})=\lambda1_{\rm Cl},
+\qquad\mathcal E_P(\iota_Q(v))=\iota_Q(Pv),
+\qquad\mathcal E_P^2=\mathcal E_P.
+\tag{129.10}
+$$
+
+最后一个等式使用 $\Lambda(P)\Lambda(P)=\Lambda(P^2)=\Lambda(P)$。逐阶定义也证明 $\mathcal E_P$ 保持由式（129.4）选定的外代数阶数。
+
+若希望把值域写成较小空间 $U=\operatorname{im}P$ 的 Clifford 代数，则应另记
+
+$$
+p:V\to U,\qquad
+\mathcal E_{P,U}=j_{Q|_U}\Lambda(p)s_Q:
+\operatorname{Cl}(V,Q)\to\operatorname{Cl}(U,Q|_U).
+\tag{129.11}
+$$
+
+包含 $U\hookrightarrow V$ 保持二次型，因而诱导真正的 Clifford 代数映射。它将式（129.11）接回式（129.9）；外代数识别对该保度量包含相容：把包含诱导的代数映射逐项作用于式（129.6），即得到相同外积生成元的两条像。下面全部差式采用式（129.9）的共同陪域，避免把两个不同代数中的元素直接相减。
+

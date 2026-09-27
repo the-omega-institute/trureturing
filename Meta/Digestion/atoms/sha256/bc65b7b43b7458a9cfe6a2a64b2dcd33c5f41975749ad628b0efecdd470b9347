@@ -1,0 +1,16 @@
+**证明。** $p_A$ 与 $p_B$ 在每对 $N,\beta(N)$ 上真值相同，故 (SC) 成立。源前提集只有 $\varnothing,\{p_A\}$ 两种。空前提下 $p_A$ 的反模型 $m_F,m_F'$ 均可由目标反模型 $n_F$ 见证相同失败；前提为 $\{p_A\}$ 时没有使结论 $p_A$ 为假的源模型。所以 CE 成立。不同对象 $m_F'$ 不在 $\beta$ 像中，故模型身份满射失败。
+
+源侧 $S_A(\varnothing)=\varnothing$、$S_A(\{p_A\})=\{p_A\}$。目标侧，两个模型的共同真公式为空；只满足 $p_B$ 的模型 $n_T$ 的真公式集为 $\{p_B\}$，只满足 $q_B$ 的模型 $n_F$ 的真公式集为 $\{q_B\}$；没有模型同时满足 $p_B,q_B$，其全部后果为 $F_B=\{p_B,q_B\}$。所以 $S_B$ 也在全部四个前提集上等于恒等闭包。又因 $\tau$ 将唯一源公式映到 $p_B$，$\tau^{-1}[\tau[\Gamma]]=\Gamma$，故 $K_\tau^{\rm sem}=S_A$。由定义 $RL(T)=K_\tau^{\rm sem}(T)=T$，给出源侧往返恒等；而 $\{q_B\}$ 是目标闭理论，并有
+$$
+R(\{q_B\})=\varnothing,\qquad
+L(R(\{q_B\}))=S_B(\varnothing)=\varnothing,
+$$
+证明严格包含。
+
+将目标族限制为 $\{n_T\}$ 后，原满足条件仍逐模型成立。令 $\widetilde S_B$ 为限制后的目标语义闭包，$\widetilde K_\tau^{\rm sem}(\Gamma)=\tau^{-1}[\widetilde S_B(\tau[\Gamma])]$。空前提的翻译结论 $p_B$ 在全部剩余目标模型上为真，源侧的 $p_A$ 仍被 $m_F$ 反驳。所以
+$$
+p_A\in\widetilde K_\tau^{\rm sem}(\varnothing),\qquad
+p_A\notin S_A(\varnothing);
+$$
+目标侧已经没有提升这一失败的反模型。$q_B$ 在此只是第二个公式，不预设一个将它与 $p_B$ 联系起来的否定联结词。源保守所覆盖的是源语言后承，不能据此识别全部目标闭理论。证毕。
+

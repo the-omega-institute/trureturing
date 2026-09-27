@@ -1,0 +1,58 @@
+**证明。** 设 $G_\infty$ 二分；非二分情形由 theorem 54.2 已知没有实际解，而定义给出 $C_p(a)=0$。在所有满足基础整除条件
+$$
+p^{a_e}\mid b_e\bar y\qquad(e\in E_f)
+$$
+的模 $p^N$ 向量中，定义坏事件
+$$
+B_e=\{\bar y:p^{a_e+1}\mid b_e\bar y\},
+\qquad
+D_c=\{\bar y:p\mid\bar y_c\}.
+$$
+所需参数集合 $\mathcal Y_N(a)$ 正是基础解集中避开全部 $B_e$ 与全部 $D_c$ 的元素。
+
+对固定 $T,U$，同时强制 $B_e$ 对 $e\in T$ 成立、强制 $D_c$ 对 $c\in U$ 成立，并保留每条边的基础整除条件，等价于
+$$
+b_e\bar y\equiv0\pmod{p^{k_e(T)}}\qquad(e\in E_f),
+$$
+以及
+$$
+\bar y_c\equiv0\pmod p\qquad(c\in U).
+$$
+第一类同余乘以 $p^{N-k_e(T)}$，第二类乘以 $p^{N-1}$，恰变成统一模数系统
+$$
+M_{T,U}\bar y\equiv0\pmod{p^N}.
+$$
+故其解数由 theorem 54.6 精确给出。对这组有限坏事件应用容斥原理，得到
+$$
+|\mathcal Y_N(a)|=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N)
+=C_p(a).
+$$
+
+现证明这确实等于实际解的约化类数。定义
+$$
+\Phi:\mathcal Y_N(a)\longrightarrow\mathcal R_N(a)
+$$
+如下：给定 $\bar y$，先按 theorem 54.4 任取实际提升 $y\in(\mathbb Z_p^\times)^m$，再以
+$$
+x_i=\varepsilon_i y_{c(i)}
+$$
+重建顶点元组，并取模 $p^N$。因为重建后的模类直接是
+$$
+\bar x_i=\varepsilon_i\bar y_{c(i)},
+$$
+所以 $\Phi$ 与提升选择无关。theorem 54.4 保证该重建是实际精确解，故 $\Phi$ 确实落在 $\mathcal R_N(a)$。
+
+反过来，给定 $\mathcal R_N(a)$ 中一类，按定义它来自某个实际精确解 $x$。theorem 54.2 给出唯一的实际参数 $y_C=x_{r_C}$；约化后得到 $\bar y\in\mathcal Y_N(a)$，且重建正回到给定顶点约化类，所以 $\Phi$ 满射。又每个分量根满足 $\varepsilon_{r_C}=1$，因此从任意顶点约化类可直接读回
+$$
+\bar y_C=\bar x_{r_C}.
+$$
+故 $\Phi$ 单射。若 $m=0$，两边都是只含空类的单点集，同一论证真空成立。于是 $\Phi$ 是双射，得到
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+特别地，$C_p(a)>0$ 当且仅当实际精确共同解存在。全部求和集合有限，且每个所需 Smith 形可由终止的整数算法求得，所以整个判定过程终止。证毕。
+

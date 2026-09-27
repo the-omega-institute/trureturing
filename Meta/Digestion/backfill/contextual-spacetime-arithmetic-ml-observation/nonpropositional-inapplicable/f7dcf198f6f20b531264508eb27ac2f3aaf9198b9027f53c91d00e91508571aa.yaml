@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f7dcf198f6f20b531264508eb27ac2f3aaf9198b9027f53c91d00e91508571aa
+  normalized_sha256: sha256:f7dcf198f6f20b531264508eb27ac2f3aaf9198b9027f53c91d00e91508571aa
+cas_ref: sha256:f7dcf198f6f20b531264508eb27ac2f3aaf9198b9027f53c91d00e91508571aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “在整个过程开始前选定一次，此后保持不变且不向预测者公开”规定隐藏模型参数，随后指定发射、翻转和隐藏位先验；“这不是模型索引的先验”澄清建模约定，未宣称参数可辨识或预测误差界，定义未夹带推导结论。
+    previous_atom_id: dae4feff38534562b239c0d182328a9588e0d40264b9ef2c5e404b7de9725906
+    next_atom_id: 880d2ddc1625009de0e35add7d3bd590b00e0f2ca174370a7cdc5e99185e71f2

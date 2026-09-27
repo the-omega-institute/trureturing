@@ -1,0 +1,10 @@
+记
+$$
+\ell(q)=\log\frac q{1-q},\qquad
+\delta=\frac{\Delta}{2r(1-r)},\qquad
+E_0=\log K_c+\delta,\qquad
+A_0=\frac d4E_0,\qquad
+\beta=\frac{d\delta}{4(1-\eta)}.
+$$
+新网格仅要求上述端点、步长和舍入契约，不预设它携有ML 定义41.2的新区间证书。
+

@@ -6,6 +6,9 @@ import Lean.CoreM
 import Lean.PrivateName
 import Lean.Util.CollectAxioms
 import Lean.Meta
+import Lean.Elab.Term
+
+namespace LeanInformationAudit.InspectorProducer
 
 open Lean
 
@@ -182,6 +185,7 @@ structure ModuleReport where
   sourceSha256 : String
   refutation : Option RefutationReport := none
   informationRegistrationErrors : Array String := #[]
+  informationTemplates : Json := Json.null
 
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
@@ -320,9 +324,30 @@ def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityI
     return ← Meta.isDefEq (← Meta.inferType result.value) expected
   return (← check.run' |>.toIO { fileName := "<utility-refutation>", fileMap := default } { env }).1
 
+elab "informationMaterialWriterProgram" : term => do
+  let path := (System.FilePath.mk (← getFileName)).parent.getD "." / "materials.py"
+  return mkStrLit path.toString
+
+abbrev MaterialWriter := IO.Process.Child {
+  stdin := .piped, stdout := .piped, stderr := .inherit }
+
+def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := do
+  writer.stdin.putStr "chunks\n"
+  let stream : IO.FS.Stream := { (default : IO.FS.Stream) with
+    write := fun bytes => do
+      writer.stdin.putStr s!"{bytes.size}\n"
+      writer.stdin.write bytes
+      writer.stdin.flush }
+  writeStatement ⟨stream, ← IO.mkRef ByteArray.empty⟩ info
+  writer.stdin.putStr "0\n"
+  writer.stdin.flush
+  unless (← writer.stdout.getLine) == "ok\n" do
+    throw <| IO.userError "statement spool writer did not acknowledge the material"
+
 def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
-    (materialSpool : System.FilePath) (materialCounter : IO.Ref Nat)
+    (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
     (utilities : Array UtilityInput)
+    (informationTemplates : Json)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
@@ -359,10 +384,8 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     sccNanos.modify (· + (encodeStart - sccStart))
     let materialIndex ← materialCounter.get
     materialCounter.set (materialIndex + 1)
-    let materialFile := s!"{materialIndex}.statement"
-    IO.FS.withFile (materialSpool / materialFile) .write fun handle => do
-      writeStatement ⟨IO.FS.Stream.ofHandle handle, ← IO.mkRef ByteArray.empty⟩ info
-      handle.flush
+    let materialFile := s!"{materialIndex}.statement.gz"
+    writeMaterial writer info
     if profiling then encodingNanos.modify (· + ((← IO.monoNanosNow) - encodeStart))
     return {
       axioms := sortedUnique (axioms.map Name.toString)
@@ -389,6 +412,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
         isClosedNegation := valid
       }
   return {
+    informationTemplates
     informationRegistrationErrors
     declarations
     imports := sortedUnique (moduleData.imports.map (fun item => item.module.toString))
@@ -440,6 +464,8 @@ def renderModule (report : ModuleReport) : String :=
     ++ String.intercalate ", " (report.declarations.toList.map renderDeclaration)
     ++ "], \"imports\": " ++ renderStrings report.imports
     ++ ", \"information_registration_errors\": " ++ renderStrings report.informationRegistrationErrors
+    ++ (if report.informationTemplates == Json.null then "" else
+      ", \"information_templates\": " ++ report.informationTemplates.compress)
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
     ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
@@ -465,14 +491,14 @@ def parseModuleInputs : List String → Except String (Array ModuleInput)
 
 def parseArguments : List String → Except String
     (System.FilePath × System.FilePath × Option System.FilePath × Array ModuleInput)
-  | "--output" :: output :: "--material-spool" :: materialSpool :: rest => do
+  | "--output" :: reportOutput :: "--material-spool" :: materialSpool :: rest => do
       let (utilityInput, rest) := match rest with
         | "--utility-input" :: path :: tail => (some (System.FilePath.mk path), tail)
         | _ => (none, rest)
       let inputs ← parseModuleInputs rest
       if inputs.isEmpty then
         throw "at least one module is required"
-      return (output, materialSpool, utilityInput,
+      return (reportOutput, materialSpool, utilityInput,
         inputs.qsort (fun left right => left.moduleName < right.moduleName))
   | _ => .error
       "usage: Inspector.lean --output FILE --material-spool DIR [--utility-input FILE] MODULE SOURCE_PATH SOURCE_SHA256 [...]"
@@ -549,6 +575,35 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
     for region in regions.reverse do region.free
     out.flush
 
+/-- Report mode loads the fixed Registry judge independently of the requested
+source modules. Even an empty inventory requires its source/native verifier.
+The two producer identities are fixed judge APIs, never content callbacks. -/
+private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput) :
+    IO (Array Json) := do
+  let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
+      some (`LeanInformationAudit.informationTemplateReportDriver,
+        `LeanInformationAudit.DispositionEvidence)
+    else if env.header.moduleNames.contains `LeanInformationAudit.Registry then
+      some (`LeanInformationAudit.finiteInformationTemplateReportDriver,
+        `LeanInformationAudit.Registry)
+    else none
+  if let some (producerName, producerOwner) := selected then
+    let some owner := env.getModuleIdxFor? producerName
+      | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+    unless env.header.moduleNames[owner.toNat]! == producerOwner do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_owner"
+    let typeName := `LeanInformationAudit.InformationTemplateReportDriver
+    let some typeOwner := env.getModuleIdxFor? typeName
+      | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
+    unless env.header.moduleNames[typeOwner.toNat]! == `LeanInformationAudit.RegistryTypes do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
+    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
+      typeName producerName
+    let (bindings, _) ← (driver (inputs.map (·.moduleName.toName))).run' |>.toIO
+      { fileName := "<information-template-join>", fileMap := default } { env }
+    return bindings
+  throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with
     | ["--request-file", path] =>
@@ -560,7 +615,11 @@ unsafe def main (args : List String) : IO Unit := do
   if let ["--statement-identities", manifest, request] := args then
     statementIdentities manifest request
     return
-  let (output, materialSpool, utilityInput, inputs) ← match parseArguments args with
+  -- Statement-only output deliberately has no binding fields and cannot meet
+  -- the declared-template admission consumer. It serves standalone encoders.
+  let statementOnly := args.head? == some "--statements-only"
+  let args := if statementOnly then args.drop 1 else args
+  let (reportOutput, materialSpool, utilityInput, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
   IO.FS.createDirAll materialSpool
@@ -574,18 +633,54 @@ unsafe def main (args : List String) : IO Unit := do
       | .error message => throw <| IO.userError s!"invalid utility input: {message}"
   let selectedUtilities := utilities.filter fun utility =>
     inputs.any (·.sourcePath == utility.modulePath)
-  let moduleNames := sortedUnique (inputs.map (·.moduleName) ++ selectedUtilities.map (·.claimModule))
+  -- Empty inventories also require current source/native coherence. The fixed
+  -- judge driver is loaded independently of the source's old native imports.
+  let moduleNames := sortedUnique (inputs.map (·.moduleName) ++
+    selectedUtilities.map (·.claimModule) ++
+    (if statementOnly then #[] else #["LeanInformationAudit.Registry"]))
   let imports := moduleNames.map fun moduleName => { module := moduleName.toName }
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let importStart ← if profiling then IO.monoNanosNow else pure 0
-  withImportModules imports {} (trustLevel := 0) fun env => do
+  enableInitializersExecution
+  -- Extension initialization can leave imported expressions in the interpreter.
+  -- Keep this process-lifetime environment alive through interpreter teardown.
+  let env ← importModules imports {} (trustLevel := 0) (leakEnv := true) (loadExts := true)
+  let produce : IO Unit := do
     if profiling then
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    let reports ← inputs.mapM (inspectModule env cache materialSpool materialCounter utilities)
-    -- Consume all environment-derived references before freeing import regions.
-    let renderStart ← if profiling then IO.monoNanosNow else pure 0
-    IO.FS.writeFile output (renderReport reports)
-    if profiling then
-      (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE render_ns={(← IO.monoNanosNow) - renderStart}"
+    let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
+      templateBindings env inputs
+    unless bindings.size == inputs.size do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
+    -- Compiled executables can move between private build trees. Prefer the
+    -- current repository's writer; a standalone statement probe can instead
+    -- use the writer adjacent to its directly elaborated source.
+    let localWriter := System.FilePath.mk "tools/lean-inspector/materials.py"
+    let writerProgram := if (← localWriter.pathExists) || !statementOnly then
+      localWriter.toString else informationMaterialWriterProgram
+    let writer ← IO.Process.spawn {
+      cmd := "python3", args := #["-I", writerProgram, "stream",
+        materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
+    try
+      let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
+        inspectModule env cache writer materialCounter utilities binding input
+      writer.stdin.putStr "done\n"
+      writer.stdin.flush
+      unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
+        throw <| IO.userError "statement spool writer did not complete"
+      let renderStart ← if profiling then IO.monoNanosNow else pure 0
+      IO.FS.writeFile reportOutput (renderReport reports)
+      if profiling then
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE render_ns={(← IO.monoNanosNow) - renderStart}"
+    catch error =>
+      try writer.kill catch _ => pure ()
+      try discard <| writer.wait catch _ => pure ()
+      throw error
+  produce
+
+end LeanInformationAudit.InspectorProducer
+
+unsafe def main (args : List String) : IO Unit :=
+  LeanInformationAudit.InspectorProducer.main args

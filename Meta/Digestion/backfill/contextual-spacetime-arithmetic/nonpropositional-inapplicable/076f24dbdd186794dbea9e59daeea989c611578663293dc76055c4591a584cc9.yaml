@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:076f24dbdd186794dbea9e59daeea989c611578663293dc76055c4591a584cc9
+  normalized_sha256: sha256:076f24dbdd186794dbea9e59daeea989c611578663293dc76055c4591a584cc9
+cas_ref: sha256:076f24dbdd186794dbea9e59daeea989c611578663293dc76055c4591a584cc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子限定前述表达式定理的适用语言，不把其他历史操作包含在该定理内，是适用范围说明。
+    previous_atom_id: 38cd666839366c290b81b2bb77c58ef91055d7b687fcd328c265cc9815baa14e
+    next_atom_id: f1c26416696a2925fe555d79417cc0c3aac7838b9c9fd3f2178ea5dbafd32f20

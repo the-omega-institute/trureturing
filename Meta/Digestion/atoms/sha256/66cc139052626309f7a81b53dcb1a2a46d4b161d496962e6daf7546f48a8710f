@@ -1,0 +1,17 @@
+**命题 52.4（三种同单时刻分布的真实路径律）。** 在表中所列实际代表上，定义 $\mu_{\rm const}$ 在 $A,G$ 各取一半，$\mu_{\rm once}$ 在 $B,E$ 各取一半，$\mu_{\rm alt}$ 在 $C,D$ 各取一半。三者均满足
+$$
+\Pr(q_t=1)=\tfrac12\quad(t\ge0),\qquad
+\mathbb E\phi=(1,\tfrac12,\tfrac12,\tfrac12),
+\tag{52.8}
+$$
+但有
+$$
+\begin{array}{c|ccc}
+&\mu_{\rm const}&\mu_{\rm once}&\mu_{\rm alt}\\\hline
+\Pr(q_0\ne q_1)&0&1&1\\
+\Pr(q_1\ne q_2)&0&0&1
+\end{array}.
+\tag{52.9}
+$$
+它们的三输出分布支持两两不交，总变差距离两两为一。$\mu_{\rm const}$ 和 $\mu_{\rm alt}$ 的输出律平稳，$\mu_{\rm once}$ 的输出律不平稳。
+

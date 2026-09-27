@@ -46,3 +46,4 @@ Sensitivity at a supplied readout slot yields a realization satisfying the law a
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/ReifierTemplates.sensitivity`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/ReifierTemplates.variation`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates](PointwiseRegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

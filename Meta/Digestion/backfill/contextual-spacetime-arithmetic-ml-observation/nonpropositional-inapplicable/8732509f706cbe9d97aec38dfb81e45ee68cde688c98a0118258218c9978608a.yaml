@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8732509f706cbe9d97aec38dfb81e45ee68cde688c98a0118258218c9978608a
+  normalized_sha256: sha256:8732509f706cbe9d97aec38dfb81e45ee68cde688c98a0118258218c9978608a
+cas_ref: sha256:8732509f706cbe9d97aec38dfb81e45ee68cde688c98a0118258218c9978608a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句以“采用RRO定义20.1的低位在前载体”引入载体、后继、前缀及时间记录，末句“目标是初始”指定任务输出；它定义观察对象，没有断言此输出可由某份记录恢复，也没有把可恢复性夹入定义，故无新增待证命题。
+    previous_atom_id: bdfcc705765fafb8a7880442a520f299bb4b691470024f9001eb60f9a79dfcb8
+    next_atom_id: 510429db24b6822d0335f3a60c924b048d81b774fb03b2e3692ed3eaa868454d

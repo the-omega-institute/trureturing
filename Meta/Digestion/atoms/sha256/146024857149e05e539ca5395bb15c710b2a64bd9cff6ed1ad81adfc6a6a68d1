@@ -1,0 +1,51 @@
+### 48.1 共同系数、两种聚合与适用范围
+
+固定 \(A>0\)、\(0<\rho<1\)，定义
+\[
+s=\sqrt{A^2+4A},\qquad
+\lambda=\frac{A+2+s}{2}>1,\qquad
+c_A=\frac{A\lambda}{\lambda+1},\qquad
+b_A=\frac{A}{\lambda+1}.
+\]
+由第46.2—46.3节式（46.3）、（46.6）、（46.8）、（46.12）给出的同一递归系数族是
+\[
+c_{k,d}=\binom{k+d-1}{2d-2},\qquad
+u_k(A)=\sum_{d=1}^{k+1}c_{k,d}A^d
+=c_A\lambda^k+b_A\lambda^{-k}.
+\tag{48.1}
+\]
+其中 \(k\ge0\)、\(1\le d\le k+1\)。三个基本关系为
+\[
+\lambda+\lambda^{-1}=A+2,\qquad
+\lambda-\lambda^{-1}=s,\qquad
+\frac{d\log\lambda}{dA}=\frac1s.
+\]
+
+对固定 \(\rho\)，记
+\[
+A_{\mathrm c}=\frac{(1-\rho)^2}{\rho},\qquad
+t=\frac{A\rho}{(1-\rho)^2},\qquad
+m_d=\sum_{k\ge d-1}\rho^kc_{k,d}
+=\frac{\rho^{d-1}}{(1-\rho)^{2d-1}}.
+\tag{48.2}
+\]
+正标签总权为
+\[
+Z=\sum_{k\ge0}\rho^ku_k(A)
+=\sum_{d\ge1}A^dm_d.
+\]
+它有限当且仅当 \(t<1\)，等价于 \(\rho\lambda<1\)，并且在此严格内部
+\[
+Z=\frac{A}{(1-\rho)(1-t)}.
+\tag{48.3}
+\]
+所有概率论断均限于这个严格内部，除非明确讨论从内部趋近边界的极限。临界 \(t=1\) 时正项总权无穷，不存在这份归一化标签律。
+
+Banach 空间部分固定 \(0<\rho<1\)，输入为
+\(X=\ell^\infty(\mathbb N;\mathbb C)\)，输出为
+\[
+Y_\rho=\left\{T:\|T\|_\rho
+=\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|<\infty\right\}.
+\]
+递归映射 \(\mathcal E\) 取（47.1）的逐列定义，\(H_d(a)(n,k)\) 是该坐标实际多项式的总次数 \(d\) 部分，\(d>k+1\) 时为零。第47.13节式（47.51）—（47.52）通过连续对称多线性映射的对角值构造这些连续齐次多项式，并给出 Banach 值解析和；系数绝对值和与共同全负输入的符号饱和分别由（46.3）、（46.6）、（46.8）供应。这些是本节解析结论的供应前提；仅有一个抽象标签计数，并不能推出递归多项式具有这些性质。
+

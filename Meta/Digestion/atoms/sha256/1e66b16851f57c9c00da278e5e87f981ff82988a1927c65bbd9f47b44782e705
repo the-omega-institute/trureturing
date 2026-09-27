@@ -1,0 +1,37 @@
+**定理 26.1（开邻域上的实际参数导数）。** 固定已知 $\nu>0$、$0<a\le|\alpha|\le A_\alpha$ 及 $B_0\ge0$，使用[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定义25.1的全部空间、归一化、准备和常数 $R,\tau$。令 $X=C([0,\tau];H^2_\sigma)$、$\lambda=1/(4R)$、$\delta_\beta=R/24$。同一实际温和解可定义在参数开区间
+$$
+J_\beta=(-B_0-\delta_\beta,B_0+\delta_\beta),
+\tag{26.101}
+$$
+且 $\beta\mapsto u_\beta\in X$ 为 $C^1$，满足
+$$
+\|\partial_\beta u_\beta\|_X\le6.
+\tag{26.102}
+$$
+
+证明。只使用恢复卷定理25.3的同一双线性算子 $\mathcal B$，不重新构造 PDE。将 $\beta$ 投影到 $[-B_0,B_0]$，初态范数增加至多 $3\delta_\beta=R/8$，故开区间初态范数小于或等于 $5R/8$。同一 $R$ 球上的映射像范数至多 $5R/8+R/4=7R/8$，收缩系数仍为 $1/2$。因此同一时间与同一球适用，且相减仍给 $\|u_\beta-u_\gamma\|_X\le6|\beta-\gamma|$。
+
+定义有界线性算子 $\mathcal A_\beta v=\mathcal B(v,u_\beta)+\mathcal B(u_\beta,v)$，其范数至多 $2\lambda R=1/2$。Neumann 级数给 $(I+\mathcal A_\beta)^{-1}$，范数至多二。令
+$$
+v_\beta=(I+\mathcal A_\beta)^{-1}E(\cdot)b_0,
+\quad
+v_\beta=E(\cdot)b_0-\mathcal B(v_\beta,u_\beta)-\mathcal B(u_\beta,v_\beta).
+\tag{26.103}
+$$
+$\|b_0\|_{H^2}=3$ 给 $\|v_\beta\|_X\le6$。对 $h\ne0$ 且 $\beta+h\in J_\beta$，实际差商 $q_h=(u_{\beta+h}-u_\beta)/h$ 满足 $\|q_h\|_X\le6$。将两个二次温和方程精确相减得
+$$
+(I+\mathcal A_\beta)q_h=E(\cdot)b_0-h\mathcal B(q_h,q_h),
+\quad
+\|q_h-v_\beta\|_X\le72\lambda|h|.
+\tag{26.104}
+$$
+这证明真实参数导数存在于整个时间 Banach 空间，而不是假定逐点可微。再将（26.103）在两参数处相减，得到
+$$
+\|v_\beta-v_\gamma\|_X
+\le2\|\mathcal A_\beta-\mathcal A_\gamma\|\,\|v_\gamma\|_X
+\le24\lambda\|u_\beta-u_\gamma\|_X
+\le144\lambda|\beta-\gamma|.
+\tag{26.105}
+$$
+故导数连续；原闭区间端点的导数来自这个真正的开邻域。$\square$
+

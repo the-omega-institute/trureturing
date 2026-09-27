@@ -1,0 +1,18 @@
+**命题 27.3（比值噪声与原始读数的必要误差量级）。** 在正时间实际对 $(s,w)=(r,z)$ 上，若 $|\delta s|\le\epsilon_r<s$、$|\delta w|\le\epsilon_z$，计算比值 $\widetilde\vartheta=\nu(w+\delta w)/(s+\delta s)$ 满足
+$$
+\widetilde\vartheta-\vartheta
+=\frac{\nu\delta w-\vartheta\delta s}{s+\delta s},\qquad
+|\widetilde\vartheta-\vartheta|
+\le\frac{\nu\epsilon_z+|\vartheta|\epsilon_r}{s-\epsilon_r}.
+\tag{27.112}
+$$
+又 $|\vartheta|\le2Z_*$；$\epsilon_r\le s/2$ 时上界至多 $2(\nu\epsilon_z+2Z_*\epsilon_r)/s$。当 $B_0>0$，仅由一对读数、内部时间未知且没有进一步区分这对候选的档案时，即使第一坐标精确已知，任意确定性参数估计器的最坏误差至少为
+$$
+\min\{B_0,\nu\epsilon_z/(3s)\}.
+\tag{27.113}
+$$
+
+证明。通分给（27.112），分母和三角界给所列估计，$\vartheta=\nu V/U$ 给 $2Z_*$。取 $d=\min\{B_0,\nu\epsilon_z/(3s)\}$。参数 $d,-d$ 在各自阈值时间的第二读数相差至多 $6sd/\nu\le2\epsilon_z$，由（25.105）的上界积分可得；第一读数均为 $s$。共同中点同时是两种合法含噪输出，参数相距 $2d$，故至少一个估计误差不小于 $d$。$d=0$ 时下界自然为零。
+
+此两点论证针对仅此原始对的外包合同；若加入旧档案 $C$ 或精确时间旁路，须另证明两候选都在同一个 $K_H$ 中，不能自动把下界限制到任意较小交集。$B_0=0$ 时参数已知，不存在该参数歧义。单个初始原始对 $(0,0)$ 不能计算 $\vartheta(\beta,0)=\beta$；该边界标签需独立提供。提升图的统一稳定性针对提升坐标自身的误差，原始测量转换的 $1/s$ 代价仍在。$\square$
+

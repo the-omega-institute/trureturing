@@ -1,0 +1,16 @@
+**证明。** 把定理11.4的 Bernstein 逼近界以次数 $r$ 代入式（13.14），便得到式（13.16）、（13.17）。保留其证明中的 $v^{t/h}$ 因子，有
+$$
+\|f_t-p_{r,t}\|_\infty
+\le\frac{(v-u)t}{2hu\sqrt r}v^{t/h}.
+$$
+Bernstein 节点值均不超过 $v^{t/h}$；在推论11.5的幂基展开证明中保留该因子，便得到 $\sum_j|c_j(t)|\le v^{t/h}R^r$。因 $v^{t/h}=e^{-at}$，代入式（13.14）得到式（13.17a）。最后代入共同预算的 $A_{\mathrm f}$ 上界。本条复用第11节及其钉版 Mathlib `bernstein.probability`、`bernstein.variance` 所承载的成熟 Bernstein 结构；未另声称这些充分界的最优性。证毕。
+
+若 $u=v$，共同演化必为 $T=uI$，自由响应已经是 $u^{t/h}z_0$，无须用 $R$。若 $r=0$ 且 $u<v$，使用定理13.6的常数多项式证书，不套用含 $1/\sqrt r$ 的式子。若 $r\ge1$、$a>0$ 且 $\delta_j\le\delta$，直接积分式（13.17a）得到
+$$
+\int_0^\infty\|g_0(t)-\widehat g_0(t)\|dt
+\le\frac{A_{\mathrm f}(v-u)}{2hu a^2\sqrt r}
++\frac{\delta R^r}{a}.
+\tag{13.19}
+$$
+这里只用 $\int_0^\infty te^{-at}dt=a^{-2}$ 和 $\int_0^\infty e^{-at}dt=a^{-1}$。强迫差范数积分与强迫积分之差的范数仍是不同对象。
+

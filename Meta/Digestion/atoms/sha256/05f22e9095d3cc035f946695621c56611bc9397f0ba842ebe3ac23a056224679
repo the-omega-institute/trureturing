@@ -1,0 +1,10 @@
+**定理 124.11（不相容分量与全部最小点）。** 对 $E(x)=\frac12\|Dx-b\|^2$，有
+$$
+E(x)=\frac12\|Dx-Pb\|^2+\frac12\|(I-P)b\|^2,
+$$
+$$
+\min_xE(x)=\frac12\|(I-DD^\dagger)b\|^2,\qquad
+\operatorname{argmin}E=D^\dagger b+\ker D.
+$$
+其中 $D^\dagger b$ 是唯一最小范数极小点。原方程可解当且仅当最小残差为零。
+

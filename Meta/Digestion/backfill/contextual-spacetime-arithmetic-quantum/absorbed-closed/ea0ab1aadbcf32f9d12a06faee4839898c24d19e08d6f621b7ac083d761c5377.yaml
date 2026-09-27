@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ea0ab1aadbcf32f9d12a06faee4839898c24d19e08d6f621b7ac083d761c5377
+  normalized_sha256: sha256:ea0ab1aadbcf32f9d12a06faee4839898c24d19e08d6f621b7ac083d761c5377
+cas_ref: sha256:ea0ab1aadbcf32f9d12a06faee4839898c24d19e08d6f621b7ac083d761c5377
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.finite_memory_history_capacity
+    target_statement_id: sha256:353d1e037d6454ba9080d2b08640f17eb339e6e8c887d4f53e9f6ef2b5f93a3d
+receipts:
+  unresolved_subitems: []

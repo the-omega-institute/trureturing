@@ -1,0 +1,16 @@
+定义完整未来等价关系为
+$$
+y\sim_{\tau,q}y'\quad\Longleftrightarrow\quad
+q(\tau^ny)=q(\tau^ny')\quad\forall n\ge0,
+$$
+令 $\operatorname{CompletedState}(\tau,q)=Y/{\sim_{\tau,q}}$，投影为 $c:Y\to\operatorname{CompletedState}(\tau,q)$。当指定深度 $d$ 满足
+$$
+\ker W_d=\ker W_{d+1},
+$$
+便有规范双射
+$$
+\operatorname{range}(W_d)\simeq\operatorname{CompletedState}(\tau,q),
+$$
+将 $W_d(y)$ 映到 $c(y)$。项目
+D5/S3/Entropy/Observation/CompletionInformationChainDecomposition.lean
+中的 stableObservationCompletionEquiv 与 completion_information_chain_decomposition 给出这一双射及信息分解。

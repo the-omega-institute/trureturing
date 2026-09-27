@@ -1,0 +1,657 @@
+{
+  "retained_old_labels": [
+    25,
+    27,
+    75,
+    81,
+    135,
+    125,
+    225
+  ],
+  "selected_POO_pairs": [
+    {
+      "labels": [
+        25,
+        27
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        25,
+        75
+      ],
+      "lcm": 75,
+      "assigned_survivor_cap": "1/75"
+    },
+    {
+      "labels": [
+        25,
+        81
+      ],
+      "lcm": 2025,
+      "assigned_survivor_cap": "1/2025"
+    },
+    {
+      "labels": [
+        25,
+        135
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        25,
+        125
+      ],
+      "lcm": 125,
+      "assigned_survivor_cap": "13/3750"
+    },
+    {
+      "labels": [
+        25,
+        225
+      ],
+      "lcm": 225,
+      "assigned_survivor_cap": "1/225"
+    },
+    {
+      "labels": [
+        27,
+        75
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        27,
+        81
+      ],
+      "lcm": 81,
+      "assigned_survivor_cap": "11/1620"
+    },
+    {
+      "labels": [
+        27,
+        135
+      ],
+      "lcm": 135,
+      "assigned_survivor_cap": "1/135"
+    },
+    {
+      "labels": [
+        27,
+        125
+      ],
+      "lcm": 3375,
+      "assigned_survivor_cap": "1/3375"
+    },
+    {
+      "labels": [
+        27,
+        225
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        75,
+        81
+      ],
+      "lcm": 2025,
+      "assigned_survivor_cap": "1/2025"
+    },
+    {
+      "labels": [
+        75,
+        135
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        75,
+        125
+      ],
+      "lcm": 375,
+      "assigned_survivor_cap": "1/375"
+    },
+    {
+      "labels": [
+        75,
+        225
+      ],
+      "lcm": 225,
+      "assigned_survivor_cap": "1/225"
+    },
+    {
+      "labels": [
+        81,
+        135
+      ],
+      "lcm": 405,
+      "assigned_survivor_cap": "1/405"
+    },
+    {
+      "labels": [
+        81,
+        125
+      ],
+      "lcm": 10125,
+      "assigned_survivor_cap": "1/10125"
+    },
+    {
+      "labels": [
+        81,
+        225
+      ],
+      "lcm": 2025,
+      "assigned_survivor_cap": "1/2025"
+    },
+    {
+      "labels": [
+        135,
+        125
+      ],
+      "lcm": 3375,
+      "assigned_survivor_cap": "1/3375"
+    },
+    {
+      "labels": [
+        135,
+        225
+      ],
+      "lcm": 675,
+      "assigned_survivor_cap": "1/675"
+    },
+    {
+      "labels": [
+        125,
+        225
+      ],
+      "lcm": 1125,
+      "assigned_survivor_cap": "1/1125"
+    }
+  ],
+  "selected_POO_payment": "11537/202500",
+  "selected_POZ_blocks": [
+    {
+      "old_label": 25,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 25,
+      "assigned_raw_cap": "1/50",
+      "assigned_payment": "1/250"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/875"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 25,
+      "assigned_raw_cap": "1/50",
+      "assigned_payment": "3/875"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/875"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/6125"
+    },
+    {
+      "old_label": 25,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 25,
+      "assigned_raw_cap": "1/50",
+      "assigned_payment": "3/6125"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 27,
+      "assigned_raw_cap": "1/36",
+      "assigned_payment": "1/180"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 27,
+      "assigned_raw_cap": "1/36",
+      "assigned_payment": "1/210"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 27,
+      "assigned_raw_cap": "1/36",
+      "assigned_payment": "1/210"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 27,
+      "assigned_raw_cap": "1/36",
+      "assigned_payment": "1/1470"
+    },
+    {
+      "old_label": 27,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/11025"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "1/375"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/875"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/875"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/875"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/6125"
+    },
+    {
+      "old_label": 75,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 75,
+      "assigned_raw_cap": "1/75",
+      "assigned_payment": "2/6125"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 81,
+      "assigned_raw_cap": "1/108",
+      "assigned_payment": "1/540"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 81,
+      "assigned_raw_cap": "1/108",
+      "assigned_payment": "1/630"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 405,
+      "assigned_raw_cap": "1/405",
+      "assigned_payment": "2/4725"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 81,
+      "assigned_raw_cap": "1/108",
+      "assigned_payment": "1/630"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 405,
+      "assigned_raw_cap": "1/405",
+      "assigned_payment": "2/4725"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 81,
+      "assigned_raw_cap": "1/108",
+      "assigned_payment": "1/4410"
+    },
+    {
+      "old_label": 81,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 405,
+      "assigned_raw_cap": "1/405",
+      "assigned_payment": "2/33075"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "1/675"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/1575"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/11025"
+    },
+    {
+      "old_label": 135,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 135,
+      "assigned_raw_cap": "1/135",
+      "assigned_payment": "2/11025"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 125,
+      "assigned_raw_cap": "1/250",
+      "assigned_payment": "1/1250"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 375,
+      "assigned_raw_cap": "1/375",
+      "assigned_payment": "2/4375"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 125,
+      "assigned_raw_cap": "1/250",
+      "assigned_payment": "3/4375"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 1125,
+      "assigned_raw_cap": "1/1125",
+      "assigned_payment": "2/13125"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 375,
+      "assigned_raw_cap": "1/375",
+      "assigned_payment": "2/4375"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 375,
+      "assigned_raw_cap": "1/375",
+      "assigned_payment": "2/30625"
+    },
+    {
+      "old_label": 125,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 125,
+      "assigned_raw_cap": "1/250",
+      "assigned_payment": "3/30625"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 1,
+      "depth": "all-positive-depths",
+      "complete_depth_weight": "1/5",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "1/1125"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 3,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 5,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 9,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 15,
+      "depth": 1,
+      "complete_depth_weight": "6/35",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/2625"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 3,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/18375"
+    },
+    {
+      "old_label": 225,
+      "positive7_cofactor": 5,
+      "depth": 2,
+      "complete_depth_weight": "6/245",
+      "old_lcm": 225,
+      "assigned_raw_cap": "1/225",
+      "assigned_payment": "2/18375"
+    }
+  ],
+  "selected_POZ_payment": "17351/275625",
+  "new225_POO_payment": "134/10125",
+  "new225_POZ_payment": "229/55125",
+  "original_POO_upper": "111/800",
+  "original_POZ_upper": "121/720",
+  "remaining_POO_upper": "132479/1620000",
+  "remaining_POZ_upper": "51501/490000",
+  "original_PZZ_upper": "89/240",
+  "original_complete_pair_tail": "4879/7200",
+  "old_cross_weights": [
+    "1/18",
+    "1/20",
+    "1/20",
+    "1/20",
+    "1/72"
+  ],
+  "selected_cross_weights": [
+    "4/81",
+    "6/125",
+    "1/25",
+    "1/25",
+    "1/135"
+  ],
+  "remaining_cross_weights": [
+    "1/162",
+    "1/500",
+    "1/100",
+    "1/100",
+    "7/1080"
+  ],
+  "state_identity_checks": 128,
+  "positive7_cross_tail_unchanged": true
+}

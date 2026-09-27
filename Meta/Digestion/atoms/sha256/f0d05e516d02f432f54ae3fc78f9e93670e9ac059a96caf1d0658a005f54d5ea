@@ -1,0 +1,20 @@
+**定义 43.5（最近新格点重启与量化误差）。** 对任意ML 定义41.2的旧机，保留 $m_c,k_c,K_c=1+k_c$ 及区间 $I^c_j$。另取任意正整数 $m_f$，在同一 $[r,1-r]$ 上指定新网格
+$$
+q^f_i=r+\frac{\eta i}{m_f}\quad(0\le i\le m_f),\qquad
+\Delta=\frac\eta{m_f}.
+$$
+令 $R_f(x)$ 为距 $x\in[r,1-r]$ 最近的新网格点编号，同距取较小编号。在旧历史 $w$ 后置
+$$
+i_0(w)=R_f(q^c_{s_c(w)}),\qquad
+i_{t+1}(w,b_1\cdots b_{t+1})=R_f(F_{b_{t+1}}(q^f_{i_t(w,b_1\cdots b_t)})).
+$$
+读完 $t$ 个新报告后预测下一零报告为 $h(q^f_{i_t})$。这个初态不被定义为从空词运行的新机标签。记
+$$
+\ell(q)=\log\frac q{1-q},\qquad
+\delta=\frac{\Delta}{2r(1-r)},\qquad
+E_0=\log K_c+\delta,\qquad
+A_0=\frac d4E_0,\qquad
+\beta=\frac{d\delta}{4(1-\eta)}.
+$$
+新网格仅要求上述端点、步长和舍入契约，不预设它携有ML 定义41.2的新区间证书。
+

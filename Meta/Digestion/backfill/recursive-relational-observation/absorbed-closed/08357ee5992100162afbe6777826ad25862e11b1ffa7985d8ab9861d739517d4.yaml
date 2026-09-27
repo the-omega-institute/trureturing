@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:08357ee5992100162afbe6777826ad25862e11b1ffa7985d8ab9861d739517d4
+  normalized_sha256: sha256:08357ee5992100162afbe6777826ad25862e11b1ffa7985d8ab9861d739517d4
+cas_ref: sha256:08357ee5992100162afbe6777826ad25862e11b1ffa7985d8ab9861d739517d4
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization
+    target_statement_id: sha256:abb4abd493515c25b3b128ea960df8618ab961dafa22982a6cae6aecc7b926c3
+receipts:
+  unresolved_subitems: []

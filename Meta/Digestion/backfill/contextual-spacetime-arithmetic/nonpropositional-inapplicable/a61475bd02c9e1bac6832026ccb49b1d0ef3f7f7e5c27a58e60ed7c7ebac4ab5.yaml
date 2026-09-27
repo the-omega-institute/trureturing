@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a61475bd02c9e1bac6832026ccb49b1d0ef3f7f7e5c27a58e60ed7c7ebac4ab5
+  normalized_sha256: sha256:a61475bd02c9e1bac6832026ccb49b1d0ef3f7f7e5c27a58e60ed7c7ebac4ab5
+cas_ref: sha256:a61475bd02c9e1bac6832026ccb49b1d0ef3f7f7e5c27a58e60ed7c7ebac4ab5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原句“这是本收据与周期对照补充之前的固定检查点，不能充作最终摄入”限定历史工件的证据范围；新增数量与提交号是工程来源资料，不宣称数学真值，也不存在伪装成定义的推论，故作为记录说明处理。
+    previous_atom_id: ecf2b8b4c8e6c42c2ae3c3c2b0ef8694a6bfc9f96558cd596ad9fa7f0f94e361
+    next_atom_id: 1577fda76ff0d8523686b02f13539ef9166c8f63d894a3798c7d9f7b46729788

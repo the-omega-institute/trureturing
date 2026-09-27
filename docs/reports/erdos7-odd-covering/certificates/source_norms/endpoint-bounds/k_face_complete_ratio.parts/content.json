@@ -1,0 +1,143 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-k-face-complete-ratio-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "5f75ded15a5de639a4d5aac370958619d83d468bdbc275a1a01e3380acb1496f",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "square_sums": {
+    "kind": "inline",
+    "value": {
+      "raw35_pair_sum": "173/48",
+      "zero7_pair_sum": "4651/1800",
+      "positive7_factor": "2/3",
+      "full_square_upper": "374/75",
+      "finite_boxes_and_complete_tails": [
+        {
+          "cut": 3,
+          "prefix": "29179783/6615000",
+          "complete_tail": "3807017/6615000"
+        },
+        {
+          "cut": 5,
+          "prefix": "834776803291/170170875000",
+          "complete_tail": "13808626709/170170875000"
+        },
+        {
+          "cut": 9,
+          "prefix": "309345415302930199153/62053128639140625000",
+          "complete_tail": "92852844251050847/62053128639140625000"
+        }
+      ]
+    }
+  },
+  "hinge_uppers": {
+    "kind": "inline",
+    "value": {
+      "4": "62639/308700",
+      "5": "565031/3601500"
+    }
+  },
+  "vertex_cost_inputs": {
+    "path": "content/007-vertex_cost_inputs.json",
+    "sha256": "a5cb60ee206a57168452dfdd583bb833a0f5412747c0b9291432c5ef72046025",
+    "kind": "value"
+  },
+  "uniform_cost_constraint_bounds": {
+    "path": "content/008-uniform_cost_constraint_bounds.json",
+    "sha256": "81f1d8bd1d65b44cf504bf04d1ab8d6224fac4ee06995b4545a0ea8fe3188bb7",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/009-majorants.json",
+    "sha256": "16a1f97a2815e518e14753aa7d53918bc63f0534d1fa16315574f62208ed360b",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/010-improved_cost_bounds.json",
+    "sha256": "3c8a15c8a3d12ac7a7dbf49af1413458eafacf1417b91550147089294f3d7c47",
+    "kind": "value"
+  },
+  "improved_cost_count": {
+    "kind": "inline",
+    "value": 42
+  },
+  "cost_weights": {
+    "path": "content/012-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "3063088142288715515239590374589329147633938418059/84324318967414379396946305652750000000000000000"
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282"
+    }
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "148190644027/1898264214000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "15747344294871382499167225946807708645683351947923867/32341766064530868677439097092818490375000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both complete actual K-control beta faces at saturated mass, with independent original tests and all exponent tails. Uses convexity only of the old genuine cost functions, not patched endpoint data. No off-face neighborhood, new global K bound, scalar sharpness, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

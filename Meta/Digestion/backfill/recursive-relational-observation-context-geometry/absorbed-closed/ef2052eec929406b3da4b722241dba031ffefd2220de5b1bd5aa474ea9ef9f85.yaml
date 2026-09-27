@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:ef2052eec929406b3da4b722241dba031ffefd2220de5b1bd5aa474ea9ef9f85
+  normalized_sha256: sha256:ef2052eec929406b3da4b722241dba031ffefd2220de5b1bd5aa474ea9ef9f85
+cas_ref: sha256:ef2052eec929406b3da4b722241dba031ffefd2220de5b1bd5aa474ea9ef9f85
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/MeasurableRefinement/DoobDynkinFactorization.measurable_refinement_iff_generated_information_inclusion
+    target_statement_id: sha256:e55c3aa47b18a40821305ff140de6195017dcb204ba01d10b8517a3ae5af05f8
+  - gid: D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.dual_supremum_pseudometric_kernels
+    target_statement_id: sha256:aa6afebd6cc1c0871158fd7973022e8bc1c0cb2f12073a199a4cad80cb762b90
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HasLawTrajectory.has_law_traj_measure
+    target_statement_id: sha256:8b17a872b3e7fac2aeee7117d2e4c632944d238af49d11b65b258003cbe12fa6
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
+    target_statement_id: sha256:ceba603b788590b7e5f7cf036e0d43e16b5e85797e974ebc93e2a503afddbc0f
+  - gid: D5/S3/TotalVariation/DataProcessing.total_variation_channel_le
+    target_statement_id: sha256:0fcf09f55b7d4d7d738c0302dadae43da45df416b2af70f466e283909e162ec6
+  - gid: D5/S3/TotalVariation/Metric.total_variation_comm
+    target_statement_id: sha256:6a5bab07e46ac82cef7fb6ade05c2a3f4a9cdda756dbb7d6990b9af9fd5ec47f
+  - gid: D5/S3/TotalVariation/Metric.total_variation_eq_sup_event_gap
+    target_statement_id: sha256:ddc3d9fb9bf4413e0c392db2d84701b64a7311328b94a854ea1e583e60637fae
+  - gid: D5/S3/TotalVariation/Metric.total_variation_eq_zero_iff
+    target_statement_id: sha256:e869b33499427d7a91c233fa3e1988da5c4c012975145dc8e698ec47cd2dfccf
+  - gid: D5/S3/TotalVariation/Metric.total_variation_le_one
+    target_statement_id: sha256:d45f47a9d938be20f48a7e030be9fb50512163fbf421488e6b914ddf81859d02
+  - gid: D5/S3/TotalVariation/Metric.total_variation_nonneg
+    target_statement_id: sha256:74ba9cf49f98917ba597239e3b4a2da08a3d8c1196bf4b0a2aff7d3f266e58a5
+  - gid: D5/S3/TotalVariation/Metric.total_variation_triangle
+    target_statement_id: sha256:20463353c839835afe865b934c6141783d3f1b28b88d1f73079528345022302d
+  - gid: D5/S3/TotalVariation/Pinsker.total_variation_eq_sum_positive
+    target_statement_id: sha256:603850d0162ae2d86c55a8a0798294f237671b67fd1f3db1e229418fdbe1e81e
+receipts:
+  unresolved_subitems: []

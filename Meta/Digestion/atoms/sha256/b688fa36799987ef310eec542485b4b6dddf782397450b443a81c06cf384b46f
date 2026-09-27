@@ -1,0 +1,27 @@
+**命题 30.9（同一容量下的质量度量运输）。** 对定义30.1的同一 $R,D,N_v$，任取 $x,X\in U$，置 $b=R^{\mathsf T}x$、$\widehat b=R^{\mathsf T}X$，则
+$$
+\|b-\widehat b\|_{D^{-1}}=\|x-X\|_2,\qquad
+\|b-\widehat b\|_1\le\sqrt{N_v}\,\|x-X\|_2.
+\tag{30.23}
+$$
+若 $b\in\Delta_m$、$\sum_i\widehat b_i=1$，且同次实际与静态轨迹已有第29节的适用证书 $\|x(t)-X(t)\|_2\le E(t)$，则
+$$
+\|b(t)-\Pi_D\widehat b(t)\|_{D^{-1}}\le E(t),\qquad
+\operatorname{TV}\bigl(b(t),\mathcal Q\widehat b(t)\bigr)
+\le\min\{1,\sqrt{N_v}E(t)/2\},\quad
+\mathcal Q\in\{\mathcal R_+,\Pi_D\}.
+\tag{30.24}
+$$
+相同的 TV 界控制所有 $[0,1]$ 效果；这里 $N_v$ 是微观顶点数而非胞腔数。
+
+证明。写 $x-X=R\delta u$，则 $b-\widehat b=D\delta u$，故
+$$
+(b-\widehat b)^{\mathsf T}D^{-1}(b-\widehat b)
+=\delta u^{\mathsf T}D\delta u=\|R\delta u\|_2^2.
+$$
+再对 $\sum_i\sqrt{n_i}|(b-\widehat b)_i|/\sqrt{n_i}$ 使用 Cauchy–Schwarz，得到式（30.23）。投影固定 $b$，加权非扩张给式（30.24）的首式；原始 $\ell_1$ 误差至多 $\sqrt{N_v}E(t)$，命题30.7–30.8给两种修复的 TV 与效果界。$\square$
+
+具体地，对同一个微观初态 $p_0\in\Delta_{N_v}$，取 $x(t)=Pe^{-tL}p_0$、$h_0=(I-P)p_0$、$X(t)=e^{-tS}Pp_0$。实际 $b(t)=R^{\mathsf T}e^{-tL}p_0$ 合法，静态 $\widehat b(t)=e^{tG_b}R^{\mathsf T}p_0$ 总质量一。第29节的 $r_0,V$ 或能量坐标参数均用这一模型与准备；命题29.9允许在共同守恒分量之外使用正隙。若只取得半正定视界界，式（30.24）沿用该视界，不能据此宣称统一无界时间精度。
+
+在一个非空完整可行族上，式（30.24）可对同一世界的整条路径取上确界，再对同一世界集取上确界。若不同世界的 $S_\theta,p_{0,\theta}$ 未确定，模型间的 $\widehat b_\theta$ 散布仍须保留；这部分由[上下文卷§34.2及§35.2](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)给共同档案预测合同。一份公共加权投影要求各世界使用同一分区和容量，或先给有界的合法坐标运输。计算输出的质量一、投影的数值残差、最终概率域成员资格及实际制备权限分别是应用前提，向量投影的存在不提供这些访问条件。
+

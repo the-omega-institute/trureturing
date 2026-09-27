@@ -1,0 +1,18 @@
+若粗 effect 集合包含于细 effect 集合，则
+
+$$
+C(E_{\mathrm{coarse}})
+\le
+C(E_{\mathrm{fine}}),
+$$
+
+并且
+
+$$
+Q(E_{\mathrm{fine}})
+\le
+Q(E_{\mathrm{coarse}}).
+$$
+
+所以每增加一个真正独立的可见方向，残差容量至少相应减少；如果新增 effect 落在原有 span 中，两个容量都不改变。这个守恒式给出的是维数账本，不是信息熵守恒，也不是说每个新增 effect 都携带一个独立可读取的经典 bit。
+

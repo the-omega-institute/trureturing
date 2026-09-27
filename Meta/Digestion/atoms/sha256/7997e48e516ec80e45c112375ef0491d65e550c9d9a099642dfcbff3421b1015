@@ -1,0 +1,5 @@
+$$
+B(0)=0,\qquad B(L)=G_L\ (L\ge1),\qquad
+Q_J(\mu)=(\nu,g_1,\ldots,g_J)\quad(J\in\mathbb N_0).
+$$
+$Q_J$ 保留完整相位测度及精确实残差，$J$ 只计残差坐标数。

@@ -1,0 +1,60 @@
+### 11.4 二标签最小反例
+
+取 $X=\{0,1\}$，并令粗测量为
+$$
+Q_+=|+\rangle\langle+|,
+\qquad
+Q_-=|-\rangle\langle-|,
+$$
+其中
+$$
+|\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2}.
+$$
+设一步记录的非对角 Schur 因子为
+$$
+ c_{01}=re^{i\phi}\ne1,
+\qquad
+c_{10}=\overline{c_{01}},
+\qquad
+0\le r\le1.
+$$
+对事件 $\{+\}$，有
+$$
+Q_+=
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix},
+$$
+从而
+$$
+D_+(C)=
+\frac12
+\begin{pmatrix}
+0&\overline{c_{01}}-1\\
+c_{01}-1&0
+\end{pmatrix}.
+$$
+其算子范数为
+$$
+\|D_+(C)\|_\infty=\frac{|1-c_{01}|}{2}.
+$$
+$Q_-$ 给出相同范数，因此
+$$
+\boxed{
+\delta_Q(C)=\frac{|1-c_{01}|}{2}.
+}
+$$
+若改用指针测量
+$$
+Q_0=|0\rangle\langle0|,
+\qquad
+Q_1=|1\rangle\langle1|,
+$$
+则所有 $D_B(C)$ 都为零，故
+$$
+\delta_Q(C)=0
+$$
+即使完整含系统态的非对角元已经被记录改变。这一对测量明确展示了“同一个物理记录，对一个读数代数不可见，对另一个读数代数可见”。
+

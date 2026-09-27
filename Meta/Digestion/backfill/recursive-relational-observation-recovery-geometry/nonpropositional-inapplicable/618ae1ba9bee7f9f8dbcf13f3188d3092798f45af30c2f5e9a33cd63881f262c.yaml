@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:618ae1ba9bee7f9f8dbcf13f3188d3092798f45af30c2f5e9a33cd63881f262c
+  normalized_sha256: sha256:618ae1ba9bee7f9f8dbcf13f3188d3092798f45af30c2f5e9a33cd63881f262c
+cas_ref: sha256:618ae1ba9bee7f9f8dbcf13f3188d3092798f45af30c2f5e9a33cd63881f262c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition/context clause: V is the open real rectangle Ioo(-B,B) x Ioo(a,b), with arbitrary fixed signed alpha!=0, B>|beta0|, 0<a<nu0<b. isOpen_Ioo, IsOpen.prod, closure_Ioo, closure_prod_eq, isCompact_Icc and IsCompact.prod supply the compact closure [−B,B]x[a,b] and positive lower bound. Hs is the stated weighted Fourier-sum definition; the actual s=12 and s=2 norms are the exact lp.norm_rpow_eq_tsum specializations. No usable project frozen GID contributes to these parameter-topology/norm-convention facts; only pinned Mathlib db584 and definitional/ordered-field normalization are used.'
+    previous_atom_id: ceb22d37d0102f87945b079d4d6f11353433edbdcc9a72539ee60a455a2cabc3
+    next_atom_id: 02cadfec9cc6e50ad7cd6afbc3bd4207c35032ce21e2fae1c8396089f3e7ecde

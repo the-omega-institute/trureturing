@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0876bf8b643bce15a0e03e6142e774d59578c52457cd560cd58b01e6eef43b80
+  normalized_sha256: sha256:0876bf8b643bce15a0e03e6142e774d59578c52457cd560cd58b01e6eef43b80
+cas_ref: sha256:0876bf8b643bce15a0e03e6142e774d59578c52457cd560cd58b01e6eef43b80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “以下对”限定正深度，“位置数”断言闭整数区间的基数；该叶含可证明的计数关系而非纯定义，取现有G的斐波那契表达，以Nat.fib_mono保证至少为二，再由Nat.card_Icc和自然数规范化得到两式，仓内无冻结 GID；没有另外夹入策略可恢复性。
+    previous_atom_id: 42da8e1d448ab7a2a8e1becf926b3c366690ce7f402bba86eeddd0f6d45483eb
+    next_atom_id: b5173f0807d1d07e2b7817308e5acee2b1021d7574d0215481e41454506f9016

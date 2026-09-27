@@ -1,0 +1,56 @@
+[
+  {
+    "prime_order": [
+      3,
+      5,
+      7
+    ],
+    "bad_mass": "1/60",
+    "actual_prefix_states": 370
+  },
+  {
+    "prime_order": [
+      3,
+      7,
+      5
+    ],
+    "bad_mass": "1/30",
+    "actual_prefix_states": 388
+  },
+  {
+    "prime_order": [
+      5,
+      3,
+      7
+    ],
+    "bad_mass": "1/20",
+    "actual_prefix_states": 366
+  },
+  {
+    "prime_order": [
+      5,
+      7,
+      3
+    ],
+    "bad_mass": "1/30",
+    "actual_prefix_states": 356
+  },
+  {
+    "prime_order": [
+      7,
+      3,
+      5
+    ],
+    "bad_mass": "1/15",
+    "actual_prefix_states": 386
+  },
+  {
+    "prime_order": [
+      7,
+      5,
+      3
+    ],
+    "bad_mass": "1/15",
+    "actual_prefix_states": 358
+  }
+]

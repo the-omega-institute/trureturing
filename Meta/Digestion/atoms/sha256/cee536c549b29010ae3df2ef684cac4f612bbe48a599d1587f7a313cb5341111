@@ -1,0 +1,15 @@
+**定义 16.1（共同仪器的有限时域距离）。** 固定约定15.1的同一有限仪器、同一个确定的初始可访问记录 $H_0=c$ 及相同控制器初始状态。两个先验 $p,q\in\Delta_X$ 只改变隐藏初态律，不改变策略、动作访问权或核。对整数 $H\ge1$，定义
+$$
+\begin{aligned}
+d_{{\rm ol},H}(p,q)
+&=\max_{\boldsymbol a\in A^H}
+\operatorname{TV}(P_p^{\boldsymbol a},P_q^{\boldsymbol a}),\\
+d_{{\rm fb},H}(p,q)
+&=\sup_{\pi}
+\operatorname{TV}(P_p^{\pi,H},P_q^{\pi,H}),\qquad
+\operatorname{TV}(P,Q)=\tfrac12\sum_z|P(z)-Q(z)|.
+\end{aligned}
+\tag{16.1}
+$$
+前者的随机对象是整个输出词；后者为整个动作—输出记录，$\pi$ 遍历满足式（15.3）的共同历史反馈策略。固定词实验的动作是确定的，将它附在输出词上不改变 TV。外部随机策略种子独立于隐藏初态及环境噪声；所比较的双方使用同一策略机制，条件核契约仍须成立。定义 $d_{{\rm ol},0}=d_{{\rm fb},0}=0$，因为初始可访问记录已固定相同。随机终止若纳入模型，完整记录用共同吸收符号延长到 $H$。
+

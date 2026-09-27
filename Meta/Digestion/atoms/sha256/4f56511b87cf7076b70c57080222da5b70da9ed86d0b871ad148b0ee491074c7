@@ -1,0 +1,94 @@
+**定理 39.3（声明来源下的达到最小值与有限上确界）。** 在定义39.1下，每个有限最小值及完成最小值都存在且达到。采用有限概率的 $\operatorname{TV}(p,q)=\frac12\sum_w|p(w)-q(w)|$、Borel 概率的 $\operatorname{TV}(p,q)=\sup_E|p(E)-q(E)|$，记
+$$
+d_l=\min_{\theta_l\in\mathcal L_l}\operatorname{TV}(\rho_l,\theta_l),\qquad
+d_\infty=\min_{\theta\in\mathcal L_\infty}\operatorname{TV}(\rho_\infty,\theta).
+\tag{39.6}
+$$
+则
+$$
+\boxed{\mathcal L_\infty\ne\varnothing,\qquad
+ d_l\uparrow d_\infty=\sup_{l\ge0}d_l.}
+\tag{39.7}
+$$
+对任意固定 $c\ge0$，所有有限层各有距离不超过 $c$ 的可行律，当且仅当有一个完成可行律的距离不超过 $c$。
+
+证明分为以下四个应用检查。紧选择、弱拓扑识别、柱事件逼近及共同半径方法分别使用[恢复卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)引理33.3、定理33.6、33.9、33.11及推论33.12的相应证明步骤；世界、来源及非满射载体条件在这里逐项履行。
+
+#### 39.2.1 有限类的紧性与投影保持
+
+$\mathcal L_l$ 是有限概率单纯形与标签、来源仿射等式及 $A_l$ 外坐标为零条件的交，故为紧凸多面体，且由假设非空。对任一 $\theta_{l+1}\in\mathcal L_{l+1}$，
+$$
+\begin{aligned}
+(\lambda_l)_*(\alpha_l)_*\theta_{l+1}
+ &=(\beta_l)_*(\lambda_{l+1})_*\theta_{l+1}
+   =(\beta_l)_*Q_{l+1}=Q_l,\\
+(\sigma_l)_*(\alpha_l)_*\theta_{l+1}
+ &=(\gamma_l)_*(\sigma_{l+1})_*\theta_{l+1}
+   =(\gamma_l)_*\nu_{l+1}=\nu_l.
+\end{aligned}
+\tag{39.8}
+$$
+最后一个来源等式使用实际律的相容性。由（39.3），该推前在 $A_l$ 上质量为一，所以
+$$
+(\alpha_l)_*\mathcal L_{l+1}\subseteq\mathcal L_l.
+\tag{39.9}
+$$
+这些限制映射连续仿射，不必满射。恢复卷引理33.3适用于这组非空紧 Hausdorff 空间，给一个相容候选族；它是 Stacks 0A2R 的可数链情形。[^rroctx39_stacks] 此结论不保证任意预定有限候选可延伸。概率多面体通常有无限多个点，不能以“字母表有限”为由把要求对象载体有限的线程定理直接用于它们。
+
+#### 39.2.2 Fremlin 418Q 的非满射概率延拓检查
+
+对选出的相容族 $\theta_l$，每个 $(W_l,\mathcal P(W_l),\theta_l)$ 配有限离散拓扑，是完全、局部确定、Hausdorff、局部有限且对紧集内正则的 Radon 概率空间。$\alpha_l$ 连续，故 almost continuous；并且对任意 $E\subseteq W_l$，
+$$
+\theta_{l+1}(\alpha_l^{-1}E)=\theta_l(E).
+\tag{39.10}
+$$
+这是 inverse-measure-preserving 条件。Fremlin 418Q 对这样的序列给实际线程空间上的唯一相容 Radon 概率。[^rroctx39_fremlin] 按其411H的完全 Radon 约定，取所得概率的 Borel 限制作为本节的 $\theta$；有限坐标开闭柱生成 $W_\infty$ 的 Borel $\sigma$ 代数，故指定柱概率唯一确定这个 Borel 限制。对 $(Z_l,Q_l,\beta_l)$ 逐项作同一检查，构造 $Q_\infty$。来源完成律已由实际推前 $\nu_\infty$ 给定。
+
+这里没有满射假设，也没有把恢复卷定理33.4依赖投影满射的柱预测度证明删去前提后套用。使用的是418Q，不是不加限定的418O；结论也不扩张至任意额外指定的可测事件域。
+
+零质量点解释了非满射时的空柱。令 $\alpha_{l:m}=\alpha_l\cdots\alpha_{m-1}$，$\alpha_{l:l}=\mathrm{id}$。对固定 $l$，每个相容概率族在 $\alpha_{l:m}(W_m)$ 上质量为一。这些有限集合随 $m\ge l$ 递减，其交恰为可延伸的 $l$ 层坐标：一方向由线程投影成立；另一方向，对交中一点，任意有限组线程方程及指定坐标可用足够高层的一个提升满足，恢复卷引理33.3所用的紧乘积有限交论证遂给完整线程。因此不能延伸的点必有零相容质量，空柱不造成概率冲突，不必删掉零质量载体点。
+
+#### 39.2.3 完成可行类的精确识别
+
+上述延拓的标签推前满足
+$$
+(\pi_l^Z)_*(\lambda_\infty)_*\theta
+=(\lambda_l)_*(\pi_l^W)_*\theta=Q_l.
+\tag{39.11}
+$$
+柱唯一性给 $(\lambda_\infty)_*\theta=Q_\infty$。来源推前同理等于 $\nu_\infty$；每个合法柱质量一，可数交仍质量一，故 $\theta(A_\infty)=1$。这证明延拓在 $\mathcal L_\infty$ 中。
+
+反向，任意 $\theta\in\mathcal L_\infty$ 的坐标投影保持两个读出等式，且 $A_\infty\subseteq(\pi_l^W)^{-1}A_l$，故属于每个 $\mathcal L_l$。于是得到精确仿射双射
+$$
+\mathcal L_\infty\cong
+\varprojlim\bigl(\mathcal L_l,(\alpha_l)_*\bigr).
+\tag{39.12}
+$$
+它在概率弱拓扑下为同胚：坐标开闭柱的指示函数连续，给正向连续；恢复卷定理33.6以共同有限柱分割一致逼近连续函数的论证给逆向连续。该论证只在非空柱分块选函数值，不要求坐标满射。右侧是紧乘积的闭子集，因此 $\mathcal L_\infty$ 弱紧。也可直接看出 $A_\infty$ 闭、固定连续推前条件弱闭。完整相容族确定唯一概率，不等于最优族唯一、原世界唯一或 TV 弱连续。
+
+#### 39.2.4 柱 TV、单调距离与共同半径
+
+实际逆极限上的开闭柱仍构成生成 Borel 事件的代数，有限组柱总能在同一较高层表达。对有限测度 $\rho_\infty+\theta$，恢复卷定理33.9的生成代数事件逼近论证因此适用，给
+$$
+\operatorname{TV}(\rho_\infty,\theta)
+=\sup_l\operatorname{TV}\bigl(\rho_l,(\pi_l^W)_*\theta\bigr).
+\tag{39.13}
+$$
+原先满射条件用于柱内容赋值，不用于此 Borel 逼近步骤。式（39.13）亦适用于共同的 $(\rho_\infty+\theta)$-完成事件域；任意未声明的更大事件域不在内。右侧是弱连续有限目标的上确界，故完成 TV 弱下半连续，一般不弱连续。
+
+有限 TV 连续，有限最小值达到。对任意细层可行律，用（39.9）、实际相容性及有限确定通道收缩，得
+$$
+d_l\le\operatorname{TV}(\rho_l,(\alpha_l)_*\theta_{l+1})
+\le\operatorname{TV}(\rho_{l+1},\theta_{l+1}).
+\tag{39.14}
+$$
+所以 $d_l\le d_{l+1}$。所用有限收缩由 `total_variation_channel_le` 供应，确定核为 $\mathbf1_{\alpha_l(w)=v}$，非负且每行和一。置 $c=\sup_l d_l\in[0,1]$，定义共同半径集
+$$
+\mathcal G_l(c)=\{\theta_l\in\mathcal L_l:
+          \operatorname{TV}(\rho_l,\theta_l)\le c\}.
+\tag{39.15}
+$$
+各集非空紧，且由（39.14）映入前层。再次应用紧选择及39.2.2的延拓检查，得到同一个 $\theta^*\in\mathcal L_\infty$。式（39.13）给其距离不超过 $c$。任意完成可行律投影于每个有限类，距离又至少每个 $d_l$，故至少 $c$。这证明（39.7）和达到性。
+
+对任意共同半径 $c\ge0$，若每个 $\mathcal G_l(c)$ 非空，同一论证给半径内的完成律；反向由投影收缩。这并不声称按各自最小半径独立选出的有限 argmin 相容，也不是不附条件地交换 $\sup$ 与 $\min$。$\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ddad47131688cfb0d5fe352ae5049a13ea2e28a6dcb2369bba265d5cf920107
+  normalized_sha256: sha256:9ddad47131688cfb0d5fe352ae5049a13ea2e28a6dcb2369bba265d5cf920107
+cas_ref: sha256:9ddad47131688cfb0d5fe352ae5049a13ea2e28a6dcb2369bba265d5cf920107
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题“微分流、有限步算法与固定标签下的被动 Gram 识别”和“本增补接第12节”仅给出40a节的位置及前文联系；本叶没有识别条件或数学结论，没有定义夹带主张的问题。
+    previous_atom_id: 86ba46b6e7fd5256f6c3f610af161a9f7c634936462288329fe77348cf422051
+    next_atom_id: 0ee96c40baac27e7d35e66b0e899924dae11428c472faa6bfdc76b2d59fb0427

@@ -1,0 +1,11 @@
+在这个定义域上，求逆可逐项**完整**定义为
+
+$$
+(\operatorname{Inv}R)_n=
+\begin{cases}
+(R_n)^{-1}_{\mathbb Q},&a_n\ne0,\\
+R_n\boxplus_{\mathbb Q}N_{\mathbb Q}(R_n),&a_n=0.
+\end{cases}
+\tag{I}
+$$
+

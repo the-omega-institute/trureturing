@@ -1,0 +1,17 @@
+## 4. 从观察构造并求尽不变交替形式
+
+现在直接以 p,t 为输入，仅要求 p_i≠0 对所有 i≠a 成立。令
+
+\[
+\mu_a=1,\qquad \mu_i=-p_i^{-1},\qquad J=\operatorname{diag}(\mu)R.
+\]
+
+于是
+
+\[
+J_{aa}=0,\quad J_{aj}=1,\quad J_{ja}=-1,\qquad
+J_{ij}=-\frac{t_{ij}}{p_ip_j}\quad(i,j\ne a).
+\]
+
+p_a 及带锚点的 t 坐标不参与构造。实际三阶观察在这些重复指标处为零；不能把未使用的任意输入坐标说成已被读回。
+

@@ -1,0 +1,772 @@
+[
+  {
+    "index": 727,
+    "4": {
+      "margin": "7921289/138915000",
+      "previous_lower": "2252023/46305000",
+      "gain": "1189/141750",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51839/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1719241459/14586075000",
+      "previous_lower": "540617333/4862025000",
+      "gain": "99377/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "104147/1543500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 728,
+    "4": {
+      "margin": "-1436293/69457500",
+      "previous_lower": "-713801/23152500",
+      "gain": "1439/141750",
+      "zero5_raw": "3529151/23152500",
+      "positive7_complement": "22487/308700",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "227477917/7293037500",
+      "previous_lower": "14196776/607753125",
+      "gain": "233129/29767500",
+      "zero5_raw": "271053871/2431012500",
+      "positive7_complement": "22993/385875",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 729,
+    "4": {
+      "margin": "8252039/138915000",
+      "previous_lower": "2252023/46305000",
+      "gain": "3053/283500",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51839/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1739086459/14586075000",
+      "previous_lower": "540617333/4862025000",
+      "gain": "119627/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "104147/1543500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 730,
+    "4": {
+      "margin": "-1436293/69457500",
+      "previous_lower": "-713801/23152500",
+      "gain": "1439/141750",
+      "zero5_raw": "3529151/23152500",
+      "positive7_complement": "22487/308700",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "227477917/7293037500",
+      "previous_lower": "14196776/607753125",
+      "gain": "233129/29767500",
+      "zero5_raw": "271053871/2431012500",
+      "positive7_complement": "22993/385875",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 731,
+    "4": {
+      "margin": "8252039/138915000",
+      "previous_lower": "2252023/46305000",
+      "gain": "3053/283500",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51839/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1739086459/14586075000",
+      "previous_lower": "540617333/4862025000",
+      "gain": "119627/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "104147/1543500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 732,
+    "4": {
+      "margin": "-401899/9922500",
+      "previous_lower": "-39917/826875",
+      "gain": "2203/283500",
+      "zero5_raw": "126242/826875",
+      "positive7_complement": "809/11025",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "13244881/1041862500",
+      "previous_lower": "1083811/173643750",
+      "gain": "192629/29767500",
+      "zero5_raw": "77537981/694575000",
+      "positive7_complement": "26417/441000",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 733,
+    "4": {
+      "margin": "5498039/138915000",
+      "previous_lower": "1444273/46305000",
+      "gain": "1189/141750",
+      "zero5_raw": "7634177/46305000",
+      "positive7_complement": "52169/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1469558959/14586075000",
+      "previous_lower": "457389833/4862025000",
+      "gain": "99377/14883750",
+      "zero5_raw": "577079617/4862025000",
+      "positive7_complement": "209269/3087000",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 734,
+    "4": {
+      "margin": "-1888709/34728750",
+      "previous_lower": "-1439051/23152500",
+      "gain": "2203/283500",
+      "zero5_raw": "126242/826875",
+      "positive7_complement": "45299/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "-8569583/7293037500",
+      "previous_lower": "-4646974/607753125",
+      "gain": "192629/29767500",
+      "zero5_raw": "77537981/694575000",
+      "positive7_complement": "161801/2701125",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 735,
+    "4": {
+      "margin": "3569789/138915000",
+      "previous_lower": "801523/46305000",
+      "gain": "1189/141750",
+      "zero5_raw": "7634177/46305000",
+      "positive7_complement": "207/2450",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1266991459/14586075000",
+      "previous_lower": "389867333/4862025000",
+      "gain": "99377/14883750",
+      "zero5_raw": "577079617/4862025000",
+      "positive7_complement": "81381/1200500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 736,
+    "4": {
+      "margin": "-1888709/34728750",
+      "previous_lower": "-1439051/23152500",
+      "gain": "2203/283500",
+      "zero5_raw": "126242/826875",
+      "positive7_complement": "45299/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "-8569583/7293037500",
+      "previous_lower": "-4646974/607753125",
+      "gain": "192629/29767500",
+      "zero5_raw": "77537981/694575000",
+      "positive7_complement": "161801/2701125",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 737,
+    "4": {
+      "margin": "3569789/138915000",
+      "previous_lower": "801523/46305000",
+      "gain": "1189/141750",
+      "zero5_raw": "7634177/46305000",
+      "positive7_complement": "207/2450",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1266991459/14586075000",
+      "previous_lower": "389867333/4862025000",
+      "gain": "99377/14883750",
+      "zero5_raw": "577079617/4862025000",
+      "positive7_complement": "81381/1200500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 738,
+    "4": {
+      "margin": "-252137/4961250",
+      "previous_lower": "-193793/3307500",
+      "gain": "2203/283500",
+      "zero5_raw": "3529151/23152500",
+      "positive7_complement": "1249/17150",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "2141131/1041862500",
+      "previous_lower": "-383407/86821875",
+      "gain": "192629/29767500",
+      "zero5_raw": "271053871/2431012500",
+      "positive7_complement": "71531/1200500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 739,
+    "4": {
+      "margin": "4064789/138915000",
+      "previous_lower": "966523/46305000",
+      "gain": "1189/141750",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51829/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1314106459/14586075000",
+      "previous_lower": "405572333/4862025000",
+      "gain": "99377/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "182251/2701125",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 740,
+    "4": {
+      "margin": "-480649/9922500",
+      "previous_lower": "-193793/3307500",
+      "gain": "1439/141750",
+      "zero5_raw": "3529151/23152500",
+      "positive7_complement": "1249/17150",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "3558631/1041862500",
+      "previous_lower": "-383407/86821875",
+      "gain": "233129/29767500",
+      "zero5_raw": "271053871/2431012500",
+      "positive7_complement": "71531/1200500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 741,
+    "4": {
+      "margin": "4395539/138915000",
+      "previous_lower": "966523/46305000",
+      "gain": "3053/283500",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51829/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1333951459/14586075000",
+      "previous_lower": "405572333/4862025000",
+      "gain": "119627/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "182251/2701125",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 742,
+    "4": {
+      "margin": "-480649/9922500",
+      "previous_lower": "-193793/3307500",
+      "gain": "1439/141750",
+      "zero5_raw": "3529151/23152500",
+      "positive7_complement": "1249/17150",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "3558631/1041862500",
+      "previous_lower": "-383407/86821875",
+      "gain": "233129/29767500",
+      "zero5_raw": "271053871/2431012500",
+      "positive7_complement": "71531/1200500",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 743,
+    "4": {
+      "margin": "4395539/138915000",
+      "previous_lower": "966523/46305000",
+      "gain": "3053/283500",
+      "zero5_raw": "7622927/46305000",
+      "positive7_complement": "51829/617400",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "1333951459/14586075000",
+      "previous_lower": "405572333/4862025000",
+      "gain": "119627/14883750",
+      "zero5_raw": "144105373/1215506250",
+      "positive7_complement": "182251/2701125",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "index": 744,
+    "4": {
+      "margin": "-401899/9922500",
+      "previous_lower": "-39917/826875",
+      "gain": "2203/283500",
+      "zero5_raw": "126242/826875",
+      "positive7_complement": "809/11025",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    },
+    "5": {
+      "margin": "13244881/1041862500",
+      "previous_lower": "1083811/173643750",
+      "gain": "192629/29767500",
+      "zero5_raw": "77537981/694575000",
+      "positive7_complement": "26417/441000",
+      "maximizing_carriers_and_baselines": [
+        [
+          1,
+          3,
+          [
+            9
+          ]
+        ],
+        [
+          1,
+          4,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  }
+]

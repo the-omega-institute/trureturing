@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8598d8df14f7d27cc22d20dcb0bc5e1eb94a7f25caf7c2d88cfeafd8793dc3f3
+  normalized_sha256: sha256:8598d8df14f7d27cc22d20dcb0bc5e1eb94a7f25caf7c2d88cfeafd8793dc3f3
+cas_ref: sha256:8598d8df14f7d27cc22d20dcb0bc5e1eb94a7f25caf7c2d88cfeafd8793dc3f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Put”只把伯努利参数乘积、累计方差及其平方根缩记为三个符号；没有宣称它们正、非零或等于某测度的方差，已确认定义未夹带性质命题，故本叶没有证明义务。
+    previous_atom_id: 24aa505240ee589c58bb239d853cbbe178f6a8e3f8549333d26e606a800cc9bf
+    next_atom_id: f9ed2b279a3eee8da442280b3d1b5711398e1f863c38d077b031272d49c06205

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da41d986671080c10b10db39b2f162cec5d0badb1a3ab334f610d189abc186d3
+  normalized_sha256: sha256:da41d986671080c10b10db39b2f162cec5d0badb1a3ab334f610d189abc186d3
+cas_ref: sha256:da41d986671080c10b10db39b2f162cec5d0badb1a3ab334f610d189abc186d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “候选思路”及“不作定理”把一次部分提取明确标成待核验设想，末句“本批未证”没有宣称归约已经成立；没有以定义偷带证明，按研究问题说明结算，不关闭相邻充分性命题。
+    previous_atom_id: b4f5ee010eaab05ec0b29c6b26a6c799611139d92ffe445a240085ecb06bfa49
+    next_atom_id: 02e0e6402ec6b17f0209d9e2ef25d00bfa1b19f9bec7ee5a703c0cce7ace2582

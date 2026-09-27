@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9ed2b279a3eee8da442280b3d1b5711398e1f863c38d077b031272d49c06205
+  normalized_sha256: sha256:f9ed2b279a3eee8da442280b3d1b5711398e1f863c38d077b031272d49c06205
+cas_ref: sha256:f9ed2b279a3eee8da442280b3d1b5711398e1f863c38d077b031272d49c06205
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“with value”及“if the set is empty”明确为未达标情形指定无穷值；这只是首次达标时间的扩展值定义，没有断言达标集合非空或混合会发生，定义未夹带有限性命题，故无需证明。
+    previous_atom_id: 8598d8df14f7d27cc22d20dcb0bc5e1eb94a7f25caf7c2d88cfeafd8793dc3f3
+    next_atom_id: 1661a844689da42b383a60bcf7d3adbb7159b519df4b7f0738cf8d82bdc00bd1

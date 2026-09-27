@@ -1,0 +1,23 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/000-denominator_costs/000000-000002.json",
+        "sha256": "1046648839d76502c411fd572aef8b06e4a379324161c813765592e9331b42c7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 5,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/000-denominator_costs/000002-000005.json",
+        "sha256": "c84affc0b861ea31d4b62864860d454a6d57dded6d89e88082c0413b039a256c",
+        "kind": "value"
+      }
+    }
+  ]
+}

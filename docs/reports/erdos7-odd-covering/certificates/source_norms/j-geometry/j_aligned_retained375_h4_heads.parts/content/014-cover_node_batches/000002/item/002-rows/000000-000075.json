@@ -1,0 +1,793 @@
+[
+  {
+    "level": 2,
+    "leaf_indices": [
+      783,
+      784,
+      785
+    ],
+    "dual_key": "4f7bab9940e9beb8ab972acd94c95a7b8cf8cce1d36b920aa3497ce9969ee6e4",
+    "complete_upper": "757463802753566459/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      786,
+      787,
+      788,
+      789,
+      790
+    ],
+    "dual_key": "e422f8138542fe991b2eb99fcf7e1d083ee8dd6d6a7d2c95b0e8134b288a81d3",
+    "complete_upper": "18114138161180981/94500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      791,
+      792,
+      793,
+      794,
+      795
+    ],
+    "dual_key": "b71622b796beb0ebde6198bbed61a0fec0dc081fe05649424ad65d9232c12e25",
+    "complete_upper": "36228276317691077/189000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      796,
+      797,
+      798,
+      799,
+      800
+    ],
+    "dual_key": "508413f755d3a17a0206db8ee169dacf11d3758c5bccb0ed69b7e92908d2992a",
+    "complete_upper": "380576901384527591/1984500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      801,
+      802,
+      803,
+      804,
+      805
+    ],
+    "dual_key": "80dcff389f7ff3ec115d2faa9c86a5e7087420060bfe6753056711d0c9bc0fd0",
+    "complete_upper": "253717934165070913/1323000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      806,
+      807,
+      808,
+      809,
+      810
+    ],
+    "dual_key": "4b926b83ca6061a0b83920d1b79fa81a3a0186208b568be00bd732f0acb88c73",
+    "complete_upper": "10913482893933353/56700000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      811,
+      812,
+      813,
+      814,
+      815
+    ],
+    "dual_key": "8803af69b2740e1737245f2841ba06f2d00fc059e8cd427d76f284f73318117f",
+    "complete_upper": "109134828907355603/567000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      816
+    ],
+    "dual_key": "fbcbb59cec43232f2f4908285dd28ae4d60728a4b4774060f2b1d0d483694308",
+    "complete_upper": "94480475340335383/496125000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      817
+    ],
+    "dual_key": "eebd166149d3f72d73f0842c7d04d515f152b88b927aebd0e8ee1a304c54527a",
+    "complete_upper": "3614684773519037/18900000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      818
+    ],
+    "dual_key": "3f929200e564663a49ab3089fb3be12e2b0bb95c856acf73586871b5cac417f7",
+    "complete_upper": "126513967107341767/661500000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      819
+    ],
+    "dual_key": "dea907978714e2d4322a3173c7551545844ae55d12a0951b2726201a5468df39",
+    "complete_upper": "379136901315145531/1984500000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      820
+    ],
+    "dual_key": "cbfa0fc9c7c08148ef17be89d00446df0a17cdefe4e953b863498319a48bbfe7",
+    "complete_upper": "6325698357102263/33075000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      821
+    ],
+    "dual_key": "fbcbb59cec43232f2f4908285dd28ae4d60728a4b4774060f2b1d0d483694308",
+    "complete_upper": "94480475340335383/496125000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      822
+    ],
+    "dual_key": "fbcbb59cec43232f2f4908285dd28ae4d60728a4b4774060f2b1d0d483694308",
+    "complete_upper": "94480475340335383/496125000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      823
+    ],
+    "dual_key": "f2b1f953c54c22b09c5b84e1d98df6dca3bd0817c965003578b9c12d8da3b0a2",
+    "complete_upper": "47487737671278953/248062500000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      824
+    ],
+    "dual_key": "fdc1372a31704a7b0c4503aaa9a51f998801832a6f52ca2c974cd4a5d12a0ef2",
+    "complete_upper": "84252644720495701/441000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      825
+    ],
+    "dual_key": "a3cee688271a039ced7a8c1e3345f9eb041cfc46d43e314a48538ecced42899c",
+    "complete_upper": "380801901358319311/1984500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      826,
+      827,
+      828,
+      829,
+      830
+    ],
+    "dual_key": "12a58345ed5a960a1151fc407d29752bb1fe707910139cdc448177063efda249",
+    "complete_upper": "190400950733159189/992250000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      831,
+      832,
+      833,
+      834,
+      835
+    ],
+    "dual_key": "989d3bdb19e9d7a84d3ad1bdebe3b5f50ad11da7bfde5f8bf98d4e66ed1adb89",
+    "complete_upper": "108800543234230933/567000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      836,
+      837,
+      838,
+      839,
+      840
+    ],
+    "dual_key": "c8c3a31e6c526932b1a0cdf2d5d0df4b45a0f4b30462e3783a9074b1c6028577",
+    "complete_upper": "1300907827569407/6750000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      841,
+      842,
+      843,
+      844,
+      845
+    ],
+    "dual_key": "e6e6624b8a5f6f850eaa130ace9d75bd71db32de607f3fd0995fc6f8e91caf9f",
+    "complete_upper": "50995586831316217/264600000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      846,
+      847,
+      848,
+      849,
+      850
+    ],
+    "dual_key": "b6f8c1a3e3a996dddda47f14e5019bfa179b4dac893e1168e916b2a74a209483",
+    "complete_upper": "191323450668396229/992250000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      851,
+      852,
+      853,
+      854,
+      855
+    ],
+    "dual_key": "0918382643f6b6fe3ee3b73fd0ec0edd272741ce9a98e865e77308e61fed218c",
+    "complete_upper": "7288512405596083/37800000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      856,
+      857,
+      858,
+      859
+    ],
+    "dual_key": "18dcada5131bb1df2463b528f0c93e723a3c3089bf8ce45dfde98692e4b263e8",
+    "complete_upper": "754943802646210151/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      860,
+      861,
+      862
+    ],
+    "dual_key": "3af2aa0886f0f39a5ee19559a9084c740778fc22c912eda5357fefcf76d28082",
+    "complete_upper": "5307200218807502117/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      863,
+      864,
+      865,
+      866,
+      867
+    ],
+    "dual_key": "0f0183ae68f7c9fd1bfd59e52b5938048ce01f929af3196c81512880359295af",
+    "complete_upper": "758993802393102551/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      868,
+      869,
+      870,
+      871,
+      872
+    ],
+    "dual_key": "91bc4abb9a6f414bf01eeaaada2184a5ad43fd339a3f8199cd9e631241187fda",
+    "complete_upper": "5324253404288703301/27783000000000000000"
+  },
+  {
+    "level": 1,
+    "leaf_indices": [
+      873,
+      874,
+      875,
+      876,
+      877
+    ],
+    "dual_key": "0a128b1609602aeaa38e00231926231d815f55863b41a6aadf4af252eb6f426d",
+    "complete_upper": "297082056455802767/1543500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      878,
+      879,
+      880,
+      881,
+      882
+    ],
+    "dual_key": "02fe9f80a938ac3bbc723d4f37af0e5f30bba419e4fe5c9cff02416b38e40563",
+    "complete_upper": "755933802478151327/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      883,
+      884,
+      885,
+      886,
+      887
+    ],
+    "dual_key": "33756ca0e0805a04ce6c54b7f235fe828e3b7379e5d686673f07ceca2aef3201",
+    "complete_upper": "5325427017215669363/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      888,
+      889,
+      890,
+      891,
+      892
+    ],
+    "dual_key": "dac15cdc2a49a92f84a2cd9b9642e3a937a40b42ac8f5f132b1bdcb789af439f",
+    "complete_upper": "756293802591709643/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      893,
+      894,
+      895,
+      896,
+      897
+    ],
+    "dual_key": "bb8439b9063e5ae45aa0e0a767bab6508f25021bb563e3bf5cf6e6c438c04da4",
+    "complete_upper": "1775982339451517531/9261000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      898,
+      899,
+      900,
+      901,
+      902
+    ],
+    "dual_key": "c4495fd81375946bd119eb57e7bf34daaca63358b9522eb841d3c29af8e0affd",
+    "complete_upper": "12034663533598297/63000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      903,
+      904,
+      905,
+      906,
+      907
+    ],
+    "dual_key": "d7e1013849d221f90fd411a56b39b707cf9b41efb3be2706151becb8d83e1645",
+    "complete_upper": "5316920219147937773/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      908,
+      909,
+      910,
+      911,
+      912
+    ],
+    "dual_key": "040e9381e2f1534a7652549126e3cf37b84634829bc73898a1816702558576dd",
+    "complete_upper": "254077934176400393/1323000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      913,
+      914,
+      915,
+      916,
+      917
+    ],
+    "dual_key": "f7b16958b8357a1cb8874c87f37aefa347d1c76819a5f0917c1d46c819484ae4",
+    "complete_upper": "762921916608777703/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      918,
+      919,
+      920
+    ],
+    "dual_key": "b78c03620e7009cacd2e3380436d9de7d6fa058fdb1ccbdfbb01f5b39ec22d11",
+    "complete_upper": "42306776165660597/222264000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      921,
+      922,
+      923
+    ],
+    "dual_key": "903ee4591762227062e5a37598d88090e1cc2e031f058800ae62bd27d6b58f0a",
+    "complete_upper": "221056542417201679/1157625000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      924,
+      925,
+      926,
+      927,
+      928
+    ],
+    "dual_key": "6db787b12e70e742bd9d437e1d22d9e1c57af60e1ea96904d7e270a0656bd411",
+    "complete_upper": "50611586835978869/264600000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      929,
+      930,
+      931,
+      932,
+      933
+    ],
+    "dual_key": "55e08e6f3f1e72a26679abdd3a48e4b49a63d3f7751b70715136fd9b6491dde3",
+    "complete_upper": "5328667017848148013/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      934,
+      935,
+      936,
+      937,
+      938
+    ],
+    "dual_key": "b7293ed57e403fa71fa54145d0682bc5e527210b63ac34a51a20ea9925257164",
+    "complete_upper": "253177934185858421/1323000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      939,
+      940,
+      941,
+      942,
+      943
+    ],
+    "dual_key": "1a626276be38ea779480e96c0f7f64f6c2217d72c022f7d58f301c644305daff",
+    "complete_upper": "5331187019534052707/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      944,
+      945,
+      946,
+      947,
+      948
+    ],
+    "dual_key": "71175b52883c2bf21eb7415c2016952340e16541cced174d53bec0139273f836",
+    "complete_upper": "762143802433640167/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      949,
+      950,
+      951,
+      952,
+      953
+    ],
+    "dual_key": "7edb64b540f1f0acb372f3414d934f0b8f69fff11b15b9bdc7357d61959a4666",
+    "complete_upper": "1785866739904165337/9261000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      954,
+      955,
+      956,
+      957,
+      958
+    ],
+    "dual_key": "b8b17a0f52c59c7b0dbde98255524c13987635b5a67defbb83ec4c7da4063b3b",
+    "complete_upper": "1042440547429519/5400000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      959
+    ],
+    "dual_key": "fdc954552dc673c2283b2be6dae7b5f76aeaa8afa2a39857e5f320512a6ecdf4",
+    "complete_upper": "13060749180764211/68600000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      960
+    ],
+    "dual_key": "fdc954552dc673c2283b2be6dae7b5f76aeaa8afa2a39857e5f320512a6ecdf4",
+    "complete_upper": "13060749180764211/68600000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      961
+    ],
+    "dual_key": "9e29159173f20ae728e86979f23592be30e670c041ff46e87f86af626eb52431",
+    "complete_upper": "1772441136244105459/9261000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      962
+    ],
+    "dual_key": "53efa2b424aa1348138ea1a78bea9a6823615aa6a15dd17edf8b6d636312afea",
+    "complete_upper": "1061322683458473763/5556600000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      963
+    ],
+    "dual_key": "e2abe8d9c49bfc1ca2321b028fd5e478f1d36292315c20596a139d7940300530",
+    "complete_upper": "118442742634447279/617400000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      964,
+      965,
+      966,
+      967,
+      968
+    ],
+    "dual_key": "500bdf0d7ba43f7f8b74cf8fa5eeeb93401e50d3a4b172f489262f2261a1719f",
+    "complete_upper": "253267934221076813/1323000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      969,
+      970,
+      971,
+      972,
+      973
+    ],
+    "dual_key": "2f865e44d80c0c91e58b25596b24863dd33c129186f1c61ec53a0f678677cf4d",
+    "complete_upper": "892086169616224393/4630500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      974,
+      975,
+      976,
+      977,
+      978
+    ],
+    "dual_key": "fcd3361d684de668818f66b70cc5c4aeb3913707d20fc9db46a93ec7dfd58f00",
+    "complete_upper": "109019114646535733/567000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      979
+    ],
+    "dual_key": "489878c5829b0d93e2cb64d1e56636ce3d267a344031e81234991d588ec989a4",
+    "complete_upper": "1763592337985488523/9261000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      980
+    ],
+    "dual_key": "489878c5829b0d93e2cb64d1e56636ce3d267a344031e81234991d588ec989a4",
+    "complete_upper": "1763592337985488523/9261000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      981
+    ],
+    "dual_key": "407f59c2e5297ba5bc338b7ac86887ef36450589cc80c9fcb8f3782f700eaa43",
+    "complete_upper": "5318497018054965823/27783000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      982
+    ],
+    "dual_key": "906a828934667d9f75730d7fdd5d99831725d66d9dca0a4457cfef18528bd1b6",
+    "complete_upper": "5307787019579629789/27783000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      983
+    ],
+    "dual_key": "624d6cf2ab2ea936b2a09ca932984c99a8b21cbb84fe4496e5d4e7573c3c9e00",
+    "complete_upper": "1777032339479660009/9261000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      984,
+      985,
+      986,
+      987,
+      988
+    ],
+    "dual_key": "f001cdea41a1baf0328960fc3bc8f0224779f2ad993f89b04d0082f2cb1970d6",
+    "complete_upper": "763493802524805239/3969000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      989
+    ],
+    "dual_key": "46e8b9d98376bd98102defb89f760bfac321ef8ac9518e39c02f4d16fbb307c9",
+    "complete_upper": "5293297020718508701/27783000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      990
+    ],
+    "dual_key": "46e8b9d98376bd98102defb89f760bfac321ef8ac9518e39c02f4d16fbb307c9",
+    "complete_upper": "5293297020718508701/27783000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      991
+    ],
+    "dual_key": "29555494a39b8095fb236c94cd17be2c9a8e1bfb4dbbebdaec232ef217144808",
+    "complete_upper": "354734467900182133/1852200000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      992
+    ],
+    "dual_key": "78b733dd2fc8751890dd119c0931f816d1820f0add680ed3a9ba9199ef7d9b57",
+    "complete_upper": "5310307017234987221/27783000000000000000"
+  },
+  {
+    "level": 3,
+    "leaf_indices": [
+      993
+    ],
+    "dual_key": "e3e420187f54a46a0c6451eb55fc7c120a88c0f93afdb3d281c31ac4c00a44cb",
+    "complete_upper": "5333617017024719627/27783000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      994,
+      995,
+      996,
+      997,
+      998
+    ],
+    "dual_key": "5a752abfaadd2689e5551b17eba169426b3e2414665bf3e12ecb8f44ee05f279",
+    "complete_upper": "36181133461379911/189000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      999,
+      1000,
+      1001,
+      1002,
+      1003
+    ],
+    "dual_key": "d3cd03e634b49e2bb7d8de03313a5e814f819d2657831a6891e1ff0f8fdf9301",
+    "complete_upper": "11900862981644719/62015625000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1004,
+      1005,
+      1006,
+      1007,
+      1008
+    ],
+    "dual_key": "fd744565f9ac51228345ac4f09a46815b05a9991ab0649ab2715e822b0b22a26",
+    "complete_upper": "109121971785012079/567000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1009,
+      1010,
+      1011,
+      1012,
+      1013
+    ],
+    "dual_key": "18450a201acde806a8f2c2f502184f3ec147804e9207a905578fcebffaca7b3c",
+    "complete_upper": "2676728308643531381/13891500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1014,
+      1015,
+      1016,
+      1017,
+      1018
+    ],
+    "dual_key": "4f7bab9940e9beb8ab972acd94c95a7b8cf8cce1d36b920aa3497ce9969ee6e4",
+    "complete_upper": "757463802753566459/3969000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1019,
+      1020,
+      1021,
+      1022,
+      1023
+    ],
+    "dual_key": "2d5ad74e9152816561ecf1d4814488f5664baaf1e28e907a0113ce9242ee77e3",
+    "complete_upper": "2660843308451763899/13891500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1024,
+      1025,
+      1026,
+      1027,
+      1028
+    ],
+    "dual_key": "b71622b796beb0ebde6198bbed61a0fec0dc081fe05649424ad65d9232c12e25",
+    "complete_upper": "36228276317691077/189000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1029,
+      1030,
+      1031,
+      1032,
+      1033
+    ],
+    "dual_key": "7ceb18d0de7a963c4126559995f556b0af2b614e0dca3f9988cdbe2dbc79dfd4",
+    "complete_upper": "668124577439127743/3472875000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1034,
+      1035,
+      1036,
+      1037,
+      1038
+    ],
+    "dual_key": "80dcff389f7ff3ec115d2faa9c86a5e7087420060bfe6753056711d0c9bc0fd0",
+    "complete_upper": "253717934165070913/1323000000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1039,
+      1040,
+      1041,
+      1042,
+      1043
+    ],
+    "dual_key": "cd280f2b06154b2a32d917008523d9b878452e14ddd8ac5f15d94051fc09e1bd",
+    "complete_upper": "891252769574150917/4630500000000000000"
+  },
+  {
+    "level": 2,
+    "leaf_indices": [
+      1044,
+      1045,
+      1046,
+      1047,
+      1048
+    ],
+    "dual_key": "8803af69b2740e1737245f2841ba06f2d00fc059e8cd427d76f284f73318117f",
+    "complete_upper": "109134828907355603/567000000000000000"
+  }
+]

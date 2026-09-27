@@ -1,0 +1,5 @@
+并且
+$$
+\lim_{L\to\infty}M(L)=\inf_{S\Subset\Gamma}\nu(E_S)\ge\nu(B).
+$$
+若 $\nu$ 可数可加且有限，则最后的不等式为等号；仅有限可加不足以保证等号。

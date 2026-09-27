@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2105b4c1696dd25ef022b5273ed1491e696cac76570553f0dd41c76ccfdf98f3
+  normalized_sha256: sha256:2105b4c1696dd25ef022b5273ed1491e696cac76570553f0dd41c76ccfdf98f3
+cas_ref: sha256:2105b4c1696dd25ef022b5273ed1491e696cac76570553f0dd41c76ccfdf98f3
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient
+    target_statement_id: sha256:2ac8d147c44eb4223931da46da7ce0d0742f8bb0dc6b9769c23491ba1dfacb4b
+receipts:
+  unresolved_subitems: []

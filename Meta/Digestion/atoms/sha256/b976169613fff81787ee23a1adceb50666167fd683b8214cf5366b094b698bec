@@ -1,0 +1,22 @@
+**命题 11.14（相同局部态与记录访问的区别）。** 取 qubit $S,M$，令
+$$
+|\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2},\qquad
+|\Phi_\pm\rangle=\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+\tag{11.22}
+$$
+两联合纯态正交，双方局部态均为 $I_2/2$。未来若仅操作 $S$ 及独立于 $SM$、且制备不依赖符号的辅助系统，$M$ 始终不回流，则全部这类仪器历史统计相同。若允许控制 $SM$ 上的耦合 $U|i,j\rangle=|i,j\mathbin{\mathrm{XOR}}i\rangle$，则逆耦合后测量 $S$ 的 $X$ 基能完全区分两态。若实际测量 $M$ 的计算基并只保存经典结果及 $S$，两个输出反而相同。
+
+**证明。** 取 $\rho=|+\rangle\langle+|$、$\sigma=|-\rangle\langle-|$，它们对角元相同且非对角元不同。[CanonicalRecordAccessRecovery](../../../D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.lean) 的 reduced_irreversibility_is_canonical_record_access_defect 直接给 copied-address 模型的全局区别、约化同一、无共同约化恢复函数及实际记录的逆耦合恢复。此例中
+$$
+U(|\pm\rangle_S|0\rangle_M)=|\Phi_\pm\rangle,
+\qquad U^\dagger|\Phi_\pm\rangle=|\pm\rangle_S|0\rangle_M.
+\tag{11.23}
+$$
+局部偏迹各为 $I_2/2$，故限定局部协议从同一局部态出发，定理11.10给相同历史权重。允许 $U^\dagger=U$ 时，后续 $\{|+\rangle\langle+|,|-\rangle\langle-|\}$ 测量分别给确定结果。计算基测量 $M$ 后的经典记录与条件 $S$ 态对两个符号均为
+$$
+\frac12|0\rangle\langle0|_H\otimes|0\rangle\langle0|_S
++\frac12|1\rangle\langle1|_H\otimes|1\rangle\langle1|_S.
+\tag{11.24}
+$$
+该相同输出的任何共同后处理仍相同，故保存标签本身不恢复相位。$\square$
+

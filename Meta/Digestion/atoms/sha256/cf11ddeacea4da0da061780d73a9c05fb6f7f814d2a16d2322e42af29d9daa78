@@ -1,0 +1,21 @@
+**Definition 39.11 (Finite observations of actual iterates).** Put $\mathcal A=K\times\mathbb N$ and let $\operatorname{Fin}(\mathcal A)$ be its finite subsets, ordered by inclusion. For $F\in\operatorname{Fin}(\mathcal A)$ define
+$$
+q_F:\mathbb N\to\{0,1\}^F,\qquad
+q_F(n)=\bigl((T^n b)_j\bigr)_{(b,j)\in F},
+$$
+$$
+A_F=q_F(\mathbb N).
+\tag{39.31}
+$$
+The single integer $n$ is common to every coordinate of this record. Each $A_F$ is its actual nonempty finite image, with the discrete topology; $A_\varnothing$ is a singleton. For $F\subseteq G$, the bonding map is restriction,
+$$
+r_{GF}:A_G\to A_F,\qquad r_{GF}(a)=a|_F.
+$$
+Define the inverse limit
+$$
+L=\left\{(a_F)_F\in\prod_{F\in\operatorname{Fin}(\mathcal A)}A_F:
+ r_{GF}(a_G)=a_F\text{ whenever }F\subseteq G\right\}.
+\tag{39.32}
+$$
+These are finite observation sets. No multiplication or congruence property is stipulated for them.
+

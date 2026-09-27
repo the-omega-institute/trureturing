@@ -72,6 +72,12 @@ LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-7200}"
 BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
+OUTER_DEADLINE=0
+if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
+  [[ "$PREFLIGHT_DEADLINE_AT" =~ ^[0-9]{1,11}$ ]] \
+    || { echo "report-supervisor: invalid PREFLIGHT_DEADLINE_AT" >&2; exit 2; }
+  OUTER_DEADLINE=$((10#$PREFLIGHT_DEADLINE_AT))
+fi
 LOCK_INITIALIZATION_GRACE_SECONDS=5
 CLOCK_SOURCE="${STRATALINT_SUPERVISOR_CLOCK:-}"
 if [[ -n "$CLOCK_SOURCE" && ( "$CLOCK_SOURCE" != /* || ! -x "$CLOCK_SOURCE" ) ]]; then
@@ -592,6 +598,19 @@ if [[ "$LEAN_SLOT" == "1" ]]; then
 fi
 
 STARTED_MS="$(now_ms)"
+BUILD_DEADLINE=0
+if (( BUILD_TIMEOUT_SECONDS > 0 )); then
+  BUILD_DEADLINE=$(( $(now_seconds) + BUILD_TIMEOUT_SECONDS ))
+fi
+if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
+  if (( OUTER_DEADLINE <= $(now_seconds) )); then
+    echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2
+    exit 2
+  fi
+  if (( BUILD_DEADLINE == 0 || OUTER_DEADLINE < BUILD_DEADLINE )); then
+    BUILD_DEADLINE=$OUTER_DEADLINE
+  fi
+fi
 cat "$RUN_STDOUT" &
 STDOUT_RELAY_PID=$!
 cat "$RUN_STDERR" >&2 &
@@ -601,16 +620,16 @@ TMPDIR="$SCRATCH" "$@" 9< "$RUN_MARKER" > "$RUN_STDOUT" 2> "$RUN_STDERR" &
 CHILD_PID=$!
 PROCESS_GROUP_ID="$CHILD_PID"
 set +m
-BUILD_DEADLINE=0
-if (( BUILD_TIMEOUT_SECONDS > 0 )); then
-  BUILD_DEADLINE=$(( $(now_seconds) + BUILD_TIMEOUT_SECONDS ))
-fi
 BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
   sample_supervised_resources
   if (( BUILD_DEADLINE > 0 )) && (( $(now_seconds) >= BUILD_DEADLINE )); then
-    echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
-      "terminating to release the lean slot (#403)" >&2
+    if (( BUILD_DEADLINE == OUTER_DEADLINE )); then
+      echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2
+    else
+      echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
+        "terminating to release the lean slot (#403)" >&2
+    fi
     terminate_process_group "$PROCESS_GROUP_ID"
     BUILD_TIMED_OUT=1
     break

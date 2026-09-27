@@ -1,0 +1,20 @@
+#### 134.3.1 宇宙、局部小性和方向
+
+为避免把“所有对象”当成一个未声明的最大集合，固定宇宙 $\mathcal U\in\mathcal V$。假设 $\mathcal C$ 的对象和全部结构数据在 $\mathcal V$ 中可容纳，每个 $\operatorname{Hom}_{\mathcal C}(X,Y)$ 是 $\mathcal U$ 中的集合。这样的范畴称为在 $\mathcal U$ 中局部小；对象可以比单个 Hom 集所在的宇宙更大。以下的自然变换集合和函子范畴在足够大的 $\mathcal V$ 中解释。若所用对象类还超出该宇宙，就必须再提升宇宙，不能省略此步骤而把任意大乘积称为小集合。
+
+令 $\mathsf{Set}_{\mathcal U}$ 表示 $\mathcal U$ 中的集合与函数。对每个对象 $X$，定义反变探针轮廓
+
+$$
+h_X:\mathcal C^{\mathrm{op}}\to\mathsf{Set}_{\mathcal U},
+\qquad h_X(Z)=\operatorname{Hom}_{\mathcal C}(Z,X).
+$$
+
+探针箭头 $g:W\to Z$ 通过前复合产生
+
+$$
+h_X(g):\operatorname{Hom}(Z,X)\to\operatorname{Hom}(W,X),
+\qquad f\longmapsto f\circ g.
+$$
+
+这套轮廓同时包含各探针映射及它们在探针转换下的相容关系。
+

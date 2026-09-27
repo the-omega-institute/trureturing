@@ -1,0 +1,725 @@
+[
+  {
+    "index": 36,
+    "name": "R5",
+    "tuple": [
+      1,
+      0
+    ],
+    "constant_mass_term": "0",
+    "previous_cost_bound": "9203668/179864685",
+    "fixed_layout_lower_support": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        1
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "value": "2144818901/42088336290",
+      "mean_head_correction_parts": [
+        "107/5400",
+        "1/360"
+      ],
+      "scaled_head_lp": 2685091514808402,
+      "scaled_selected_increments": [
+        5647528022674860,
+        6539476028985900
+      ],
+      "head_dual": [
+        {
+          "gamma": 10348530865589,
+          "alpha": [
+            0,
+            0,
+            65084411522130,
+            0,
+            5628941934833
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 386338722483742
+        },
+        {
+          "gamma": 30780942465406,
+          "alpha": [
+            0,
+            31121485731336,
+            62242971462672,
+            0,
+            918747041429
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 1677693907845676
+        },
+        {
+          "gamma": 6040175425956,
+          "alpha": [
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572,
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572,
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 621058884478984
+        }
+      ],
+      "scaled_mean_head_correction": 1903104592472370
+    },
+    "status": "enumerate",
+    "objective_group": 10,
+    "objective": {
+      "coefficients": {
+        "2": "3183325/44537922",
+        "3": "1975/33033",
+        "1": "6313865/311765454"
+      },
+      "factor": "5/311765454",
+      "primitive_coefficients": {
+        "2": 4456655,
+        "3": 3728010,
+        "1": 1262773
+      },
+      "highest_selected_label": 2,
+      "constant": 80849053436782680
+    },
+    "uniform_cost_upper": "2144818901/42088336290",
+    "maximizing_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        1
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "scaled_mean_head_correction": 1903104592472370,
+      "mean_head_correction_parts": [
+        "107/5400",
+        "1/360"
+      ],
+      "scaled_head_lp": 2685091514808402,
+      "scaled_selected_increments": [
+        5647528022674860,
+        6539476028985900
+      ],
+      "head_dual": [
+        {
+          "gamma": 10348530865589,
+          "alpha": [
+            0,
+            0,
+            65084411522130,
+            0,
+            5628941934833
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 386338722483742
+        },
+        {
+          "gamma": 30780942465406,
+          "alpha": [
+            0,
+            31121485731336,
+            62242971462672,
+            0,
+            918747041429
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 1677693907845676
+        },
+        {
+          "gamma": 6040175425956,
+          "alpha": [
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572,
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572,
+            0,
+            0,
+            9937297374466,
+            0,
+            6668889799572
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 621058884478984
+        }
+      ]
+    },
+    "maximizer_count": 2,
+    "accepted_cost_upper": "2144818901/42088336290",
+    "weighted_direct_gain": "39145963/19060984800"
+  },
+  {
+    "index": 37,
+    "name": "R5",
+    "tuple": [
+      1,
+      1
+    ],
+    "constant_mass_term": "0",
+    "previous_cost_bound": "84011/9018009",
+    "fixed_layout_lower_support": {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "value": "84011/9018009",
+      "mean_head_correction_parts": [
+        "29/1800",
+        "1/360"
+      ],
+      "scaled_head_lp": 69838799380,
+      "scaled_selected_increments": [
+        25793366760
+      ],
+      "head_dual": [
+        {
+          "gamma": 583068444,
+          "alpha": [
+            0,
+            0,
+            588833245,
+            0,
+            7882483
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 8217547352
+        },
+        {
+          "gamma": 851190515,
+          "alpha": [
+            109884166,
+            109884166,
+            580950762,
+            109884166,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 31721699870
+        },
+        {
+          "gamma": 197532671,
+          "alpha": [
+            0,
+            0,
+            864484852,
+            0,
+            100942842,
+            0,
+            0,
+            1335551448,
+            0,
+            100942842,
+            0,
+            0,
+            864484852,
+            0,
+            100942842
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 29899552158
+        }
+      ],
+      "scaled_mean_head_correction": 142382349270
+    },
+    "status": "fixed-layout-obstruction",
+    "objective": {
+      "coefficients": {
+        "2": "600/143143",
+        "1": "2260/143143"
+      },
+      "factor": "20/143143",
+      "primitive_coefficients": {
+        "2": 30,
+        "1": 113
+      },
+      "highest_selected_label": 1,
+      "constant": 1421557572960
+    },
+    "accepted_cost_upper": "84011/9018009",
+    "weighted_direct_gain": "0"
+  },
+  {
+    "index": 38,
+    "name": "R5",
+    "tuple": [
+      2,
+      0
+    ],
+    "constant_mass_term": "0",
+    "previous_cost_bound": "242923/41507235",
+    "fixed_layout_lower_support": {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "value": "242923/41507235",
+      "mean_head_correction_parts": [
+        "29/1800",
+        "1/360"
+      ],
+      "scaled_head_lp": 304370904390,
+      "scaled_selected_increments": [
+        339612662340
+      ],
+      "head_dual": [
+        {
+          "gamma": 1960855883,
+          "alpha": [
+            0,
+            0,
+            2989461090,
+            0,
+            239886311
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 32525948434
+        },
+        {
+          "gamma": 3721826115,
+          "alpha": [
+            358005907,
+            358005907,
+            2749574779,
+            358005907,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 138663464380
+        },
+        {
+          "gamma": 831543132,
+          "alpha": [
+            0,
+            0,
+            3760767934,
+            0,
+            512479044,
+            0,
+            0,
+            6152336806,
+            0,
+            512479044,
+            0,
+            0,
+            3760767934,
+            0,
+            512479044
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 133181491576
+        }
+      ],
+      "scaled_mean_head_correction": 417066881490
+    },
+    "status": "fixed-layout-obstruction",
+    "objective": {
+      "coefficients": {
+        "2": "1975/263538",
+        "1": "1655/263538"
+      },
+      "factor": "5/263538",
+      "primitive_coefficients": {
+        "2": 395,
+        "1": 331
+      },
+      "highest_selected_label": 1,
+      "constant": 6958110101040
+    },
+    "accepted_cost_upper": "242923/41507235",
+    "weighted_direct_gain": "0"
+  },
+  {
+    "index": 39,
+    "name": "R5",
+    "tuple": [
+      3,
+      0
+    ],
+    "constant_mass_term": "0",
+    "previous_cost_bound": "295013/503621118",
+    "fixed_layout_lower_support": {
+      "layout": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "value": "295013/503621118",
+      "mean_head_correction_parts": [
+        "29/1800",
+        "1/360"
+      ],
+      "scaled_head_lp": 982913864870,
+      "scaled_selected_increments": [
+        339612662340
+      ],
+      "head_dual": [
+        {
+          "gamma": 8265901091,
+          "alpha": [
+            0,
+            0,
+            8243665430,
+            0,
+            89766187
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 115992737378
+        },
+        {
+          "gamma": 11978432935,
+          "alpha": [
+            1558966899,
+            1558966899,
+            8153899243,
+            1558966899,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 446409718580
+        },
+        {
+          "gamma": 2783104744,
+          "alpha": [
+            0,
+            0,
+            12167494878,
+            0,
+            1413199788,
+            0,
+            0,
+            18762427222,
+            0,
+            1413199788,
+            0,
+            0,
+            12167494878,
+            0,
+            1413199788
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 420511408912
+        }
+      ],
+      "scaled_mean_head_correction": 2024853409530
+    },
+    "status": "fixed-layout-obstruction",
+    "objective": {
+      "coefficients": {
+        "2": "1975/7993986",
+        "1": "8035/7993986"
+      },
+      "factor": "5/7993986",
+      "primitive_coefficients": {
+        "2": 395,
+        "1": 1607
+      },
+      "highest_selected_label": 1,
+      "constant": 19928488814640
+    },
+    "accepted_cost_upper": "295013/503621118",
+    "weighted_direct_gain": "0"
+  },
+  {
+    "index": 40,
+    "name": "linear",
+    "tuple": null,
+    "constant_mass_term": "53/360",
+    "previous_cost_bound": "1151/1800",
+    "fixed_layout_lower_support": {
+      "layout": [
+        1,
+        1,
+        2,
+        1,
+        2,
+        3,
+        2
+      ],
+      "positive7_root": 1,
+      "positive7_slot": 4,
+      "value": "897/1400",
+      "mean_head_correction_parts": [
+        "7/900",
+        "7/900"
+      ],
+      "scaled_head_lp": 528714606,
+      "scaled_selected_increments": [],
+      "head_dual": [
+        {
+          "gamma": 823543,
+          "alpha": [
+            0,
+            0,
+            4117715,
+            0,
+            705894
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 27529866
+        },
+        {
+          "gamma": 4000066,
+          "alpha": [
+            117649,
+            117649,
+            3411821,
+            117649,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 148943634
+        },
+        {
+          "gamma": 3882417,
+          "alpha": [
+            941192,
+            941192,
+            7529536,
+            941192,
+            0,
+            941192,
+            941192,
+            10823708,
+            941192,
+            0,
+            941192,
+            941192,
+            7529536,
+            941192,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 352241106
+        }
+      ],
+      "scaled_mean_head_correction": 1037664180
+    },
+    "status": "fixed-layout-obstruction",
+    "objective": {
+      "coefficients": {
+        "1": "1"
+      },
+      "factor": "1",
+      "primitive_coefficients": {
+        "1": 1
+      },
+      "highest_selected_label": 0,
+      "constant": 10164873600
+    },
+    "accepted_cost_upper": "1151/1800",
+    "weighted_direct_gain": "0"
+  }
+]

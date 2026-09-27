@@ -1,0 +1,5 @@
+**定理40a.3。** 在隐藏宽度m下，恰好产生该精确轨迹的所有真实初始Gram为
+
+$$\boxed{\{X\succeq0:\operatorname{rank}X\le m,
+\quad\mathcal O_W(X)=(W_0,...,W_N)\}.}\tag{40a.5}$$
+

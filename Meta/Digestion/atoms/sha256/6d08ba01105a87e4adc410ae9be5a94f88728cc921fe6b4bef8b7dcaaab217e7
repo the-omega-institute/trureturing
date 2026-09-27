@@ -1,0 +1,9 @@
+### 47.24 精确来源、归属与本单元边界
+
+本节的有限输入归第46节：式（46.1）的递推及有限多项式依赖、式（46.3）的非负系数分解、式（46.6）的共同全负角点、式（46.8）、（46.11）—（46.12）的系数与两根闭式、式（46.14）—（46.17）的坐标 Lipschitz 性、式（46.19）的同立方体精确模量、式（46.28）—（46.31）的统一量程条件数，以及式（46.34）的完整观察者实际像运输。它们共同保留有限深度、同一输入域及共同见证条件。[第46节的不可变正文](https://github.com/the-omega-institute/trureturing/blob/bb03a0b32070a52ae10b180158ad1e4092698f99/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L10922)提供这些普通证明；本节据此推导全层结论。
+
+[Context43 的不可变正文](https://github.com/the-omega-institute/trureturing/blob/419ffbbb196cb45f824532f8f2c16c12e3268286/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L8704)中，第43.2—43.4节拥有有限多项式、限制相容与第一列互逆；定理43.4的式（43.6）—（43.9）拥有实际行有限系数公式，引理43.5拥有有限依赖；第43.5节拥有离散有理坐标的精确前缀完成；第43.6及43.11节区分全部已获档案、实际来源和完成对象。第47.9节只将同一有限代数证明运输到实／复系数，再在明确的有限支撑、无零点圆盘与 Cauchy 系数估计条件下给解析尾界，未把形式级数自动当成无条件解析函数。
+
+标量族的成熟归属与记号如下：
+
+- M. N. S. Swamy, “Properties of the Polynomials Defined by Morgan-Voyce,” *The Fibonacci Quarterly* 4(1) (1966), pp.73–81，[原文](https://www.fq.math.ca/Scanned/4-1/swamy.pdf)。印刷第73页式（7）的小写 $b_k$ 满足 $b_0=1,b_1=x+1$ 及 $b_{k+2}=(x+2)b_{k+1}-b_k$，本节 $u_k(A)=A b_k(A)$；印刷第79页式（40）给相同二项式系数。第80页式（42b）为旧缩放 Chebyshev 表示，不能替代当前 $V/W$ 约定。

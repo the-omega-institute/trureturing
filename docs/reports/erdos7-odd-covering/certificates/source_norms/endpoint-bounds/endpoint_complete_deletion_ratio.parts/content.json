@@ -1,0 +1,116 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-endpoint-complete-deletion-ratio-v1"
+  },
+  "source_vertex": {
+    "kind": "inline",
+    "value": 404
+  },
+  "carrier": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "source_sha256": {
+    "path": "content/003-source_sha256.json",
+    "sha256": "70f9e81d5a13aa126e5aa447c6fa3476de41acb621816af83b258388a0dc16e4",
+    "kind": "value"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "old_linear_upper": {
+    "kind": "inline",
+    "value": "1157/1800"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "linear_gain": {
+    "kind": "inline",
+    "value": "1/360"
+  },
+  "square_upper": {
+    "kind": "inline",
+    "value": "114/25"
+  },
+  "cost_rows": {
+    "path": "content/009-cost_rows.json",
+    "sha256": "f45f69ec281b3670ae89ba9bef3692ac3e81b111562cb7aa717e90ed3fbcbd03",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/010-majorants.json",
+    "sha256": "aa496214d39e32cbd801d02e66418cc468f111d92116bed0d24434f62a040759",
+    "kind": "array"
+  },
+  "improved_cost_count": {
+    "kind": "inline",
+    "value": 37
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "60321475386022830087519437143027730327824815714779/1686486379348287587938926113055000000000000000000"
+  },
+  "numerator_gain": {
+    "kind": "inline",
+    "value": "5248843187693106310125863/422681844274489800000000000"
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282"
+    }
+  },
+  "original_hinge_caps": {
+    "kind": "inline",
+    "value": [
+      "81281/220500",
+      "2701424/12403125",
+      "2028798479/12155062500"
+    ]
+  },
+  "uniform_endpoint_denominator": {
+    "kind": "inline",
+    "value": "30788205925733/400415107640625"
+  },
+  "denominator_gain": {
+    "kind": "inline",
+    "value": "45253/664115760"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "endpoint_comparison_upper": {
+    "kind": "inline",
+    "value": "310116898732206214518556550510799549733695319606709227/637094021676915888504186526722890646720000000000000"
+  },
+  "endpoint_comparison_gain": {
+    "kind": "inline",
+    "value": "292242559830542830728357809937001133749662747733673699/508915978806515889716941142966607721563342950400000000"
+  },
+  "scalar_laws": {
+    "path": "content/023-scalar_laws.json",
+    "sha256": "7ffe0000eea7691c1fda3f0fd3e2a8ea17f888e01b273cd6448290912b741fd0",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Uniform actual404 endpoint numerator/survival using complete pure3 deletion, retained square114/25 and all52 existing majorants. The revised57-constraint survival relaxation is sharp by abstract laws only; no actual realization, globalK update or Lean claim."
+  }
+}

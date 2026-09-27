@@ -1,0 +1,10 @@
+**证明。** 对 $u\in U$，$\langle u,Eu\rangle=\langle u,Qu\rangle=\|Qu\|^2$，介于零与 $\|u\|^2$ 之间；压缩自伴性也直接成立。相对于 $H=U\oplus V$，写
+$$
+Q=\begin{pmatrix}E&C^*\\C&F\end{pmatrix}.
+$$
+$Q^2=Q$ 的左上块给 $E^2+C^*C=E$。若 $C^*C=0$，对每个 $u$ 有 $\|Cu\|^2=0$，故 $C=0$；反向显然。又
+$$
+[P,Q]=\begin{pmatrix}0&C^*\\-C&0\end{pmatrix},
+$$
+所以其为零当且仅当 $C=0$。最后其伴随乘积的两个对角块分别为 $C^*C$ 和 $CC^*$。在相应正交基中，二者迹同为矩阵元素模平方之和，故给出 HS 恒等式。零维子空间也成立。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d21894feff2d20e79d1ccca8e80bb442ae49628666501618e5392137d1e04eb7
+  normalized_sha256: sha256:d21894feff2d20e79d1ccca8e80bb442ae49628666501618e5392137d1e04eb7
+cas_ref: sha256:d21894feff2d20e79d1ccca8e80bb442ae49628666501618e5392137d1e04eb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在同一个联合域上，所有输入函数分别只依赖各自坐标集合时，任意确定性点态组合只依赖这些集合的并；探针展开该域内依赖的定义，以 Set.mem_iUnion、funext 和 congrArg 完成逻辑归约，仓内无冻结 GID 可用。
+    previous_atom_id: 2b76fa1ffbe833eab3016ab920c7f58ea37fe71fa34da9e7fdb5b53eb88fc583
+    next_atom_id: 317f6918afcf95cfcf14c232008e6fab8fed6638b3f4edc74f02c2637d13786f

@@ -1,0 +1,36 @@
+如果输入满足
+
+$$
+\|u_k\|\le M,
+$$
+
+且压缩动力学和完整动力学分别满足
+
+$$
+\|\widetilde A\|<1,
+\qquad
+\|A\|<1,
+$$
+
+则已有的 uniform 结果给出一个与
+
+$$
+n
+$$
+
+无关的充分界：
+
+$$
+\boxed{
+\|y_n-\widetilde y_n\|
+\le
+\|C\|
+\frac{
+\|R_A\|
+\dfrac{\|\widetilde B\|M}{1-\|\widetilde A\|}
++
+\|R_B\|M
+}{1-\|A\|}.
+}
+$$
+

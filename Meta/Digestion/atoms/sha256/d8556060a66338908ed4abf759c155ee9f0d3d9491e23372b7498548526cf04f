@@ -1,0 +1,2 @@
+在 [D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Completion/DenseTowerStrongCompletion.lean) 中，取标量 $K=\mathbb C$、空间 $H=H_{\mathrm{obs}}$、指标 $I=\mathbb N$、子空间族 $S(L)=H_L$。单调性来自加细，每层存在正交投影，闭上确界为整个 $H_{\mathrm{obs}}$ 则来自它的定义。故 $\Pi_n f\to f$ 对每个 $f\in H_{\mathrm{obs}}$ 成立。这是逐向量的强收敛。
+

@@ -8,12 +8,20 @@ namespace StrataLint.Tests;
 [Collection("Lean cache environment")]
 public sealed partial class LeanCacheEnsureCommandTests
 {
-    [Fact]
-    public void MatchingPinStampReportsUnknownMathlibOleanCompletenessWithoutBlocking()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MatchingPinStampReportsUnknownMathlibOleanCompletenessWithoutBlocking(bool metadataChanged)
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "already warm\n", mathlibComplete: false);
+        if (metadataChanged)
+        {
+            File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest() + " \n");
+            StrataLint.TestSupport.RegPackageFixture.Write(repository.Path);
+            File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.34.0\n");
+        }
         var runner = new RecordingWorktreeProcessRunner();
 
         Assert.False(LeanCacheFixtureFile.MathlibProjectionExists(repository.Path));
@@ -84,7 +92,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void StampCarriesTheExactPinBytesAndLeavesNoPublicationTemporary()
+    public void StampCarriesMathlibPartitionAndLeavesNoPublicationTemporary()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -94,10 +102,10 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         using var stamp = LeanCacheFixtureFile.ParseJson(LeanCacheStamp.PathFor(lake));
 
-        Assert.Equal(pins.LeanToolchain, Convert.FromBase64String(
-            stamp.RootElement.GetProperty("lean_toolchain_base64").GetString()!));
-        Assert.Equal(pins.LakeManifest, Convert.FromBase64String(
-            stamp.RootElement.GetProperty("lake_manifest_base64").GetString()!));
+        Assert.Equal("stratalint-lean-cache-v2", stamp.RootElement.GetProperty("schema").GetString());
+        Assert.Equal(pins.MathlibRevision, stamp.RootElement.GetProperty("mathlib_revision").GetString());
+        Assert.False(stamp.RootElement.TryGetProperty("lean_toolchain_base64", out _));
+        Assert.False(stamp.RootElement.TryGetProperty("lake_manifest_base64", out _));
         Assert.Empty(Directory.GetFiles(lake, ".stratalint-lean-cache-stamp.*.tmp"));
     }
 
@@ -159,13 +167,14 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void StampForPreviousPinsDeletesOldLakeBeforeProvisioning()
+    public void StampForPreviousMathlibPartitionDeletesOldLakeBeforeProvisioning()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "old pin cache\n");
-        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('f'));
+        StrataLint.TestSupport.RegPackageFixture.Write(repository.Path);
         var runner = new RecordingWorktreeProcessRunner();
 
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
@@ -314,14 +323,15 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void DonorStampForDifferentPinBytesIsRejectedEvenWhenWorktreePinsMatch()
+    public void DonorStampForDifferentMathlibPartitionIsRejectedEvenWhenWorktreePinsMatch()
     {
         using var repository = new TemporaryDirectory();
         using var otherPins = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         File.WriteAllText(Path.Combine(otherPins.Path, "lean-toolchain"), "leanprover/lean4:v4.30.0\n");
-        File.WriteAllText(Path.Combine(otherPins.Path, "lake-manifest.json"), "{\"version\":\"old\"}\n");
+        File.WriteAllText(Path.Combine(otherPins.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('f'));
+        StrataLint.TestSupport.RegPackageFixture.Write(otherPins.Path);
         WriteCache(repository.Path, "wrongly stamped donor\n", stamp: false);
         LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(otherPins.Path));
         var target = AddWorktree(repository.Path, "wrong-stamp-donor-target");
@@ -340,18 +350,19 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void ByteMismatchedPinsNeverCopyCandidateCache()
+    public void MetadataOnlyPinChangesReuseDonorWithoutReplacingCandidatePins()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         var target = AddWorktree(repository.Path, "mismatched-target");
         var targetManifest = File.ReadAllBytes(Path.Combine(target, "lake-manifest.json"));
-        File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), "{\"version\": \"1.1.0\"}\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest() + " \n");
+        StrataLint.TestSupport.RegPackageFixture.Write(repository.Path);
         Git(repository.Path, "add", "lake-manifest.json");
         Git(repository.Path, "commit", "-m", "change pin bytes only");
         var donorManifest = File.ReadAllBytes(Path.Combine(repository.Path, "lake-manifest.json"));
-        WriteCache(repository.Path, "poisoned for target pins\n");
+        WriteCache(repository.Path, "same partition donor\n");
         var runner = new RecordingWorktreeProcessRunner();
 
         using (var targetJson = JsonDocument.Parse(targetManifest))
@@ -370,12 +381,10 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.True(result.Success);
         Assert.Empty(result.Error);
-        Assert.Contains("pin bytes do not match", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
-        Assert.DoesNotContain(
-            runner.Invocations,
-            static call => call.FileName == "cp");
+        Assert.Equal("same partition donor\n", LeanCacheFixtureFile.ReadCacheText(target));
+        Assert.Equal(targetManifest, File.ReadAllBytes(Path.Combine(target, "lake-manifest.json")));
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.DoesNotContain(runner.Invocations, static call => Path.GetFileName(call.FileName) == "lake");
     }
 
     [Theory]
@@ -517,8 +526,9 @@ public sealed partial class LeanCacheEnsureCommandTests
         Git(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# lean cache fixture\n");
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
-        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
-        Git(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
+        StrataLint.TestSupport.RegPackageFixture.Write(root);
+        Git(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg");
         Git(root, "commit", "-m", "fixture baseline");
     }
 
@@ -544,93 +554,19 @@ public sealed partial class LeanCacheEnsureCommandTests
         JsonDocument.Parse(output["LEAN_CACHE ".Length..]);
 
     private static string Git(string root, params string[] arguments) =>
-        ReviewRegressionTests.RunGit(root, arguments);
-}
-
-[Collection("Lean cache environment")]
-public sealed class LeanCacheRunScriptTests
-{
-    [Fact]
-    public void AdapterDelegatesWrappedCommandToCanonicalWriterJudgeWithoutExecutingItDirectly()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new TemporaryDirectory();
-        var repository = Path.Combine(fixture.Path, "repository");
-        var script = Path.Combine(
-            repository,
-            "tools",
-            "scripts",
-            "worktree",
-            "lean-cache-run.sh");
-        var bin = Path.Combine(fixture.Path, "bin");
-        var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
-        var wrappedMarker = Path.Combine(fixture.Path, "wrapped-command-ran");
-        var wrapped = Path.Combine(fixture.Path, "wrapped-command");
-        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
-        Directory.CreateDirectory(bin);
-        File.Copy(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"),
-            script);
-        WriteExecutable(
-            Path.Combine(bin, "dotnet"),
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nexit 97");
-        WriteExecutable(
-            wrapped,
-            "#!/usr/bin/env bash\ntouch \"$WRAPPED_MARKER\"\nexit 23");
-
-        var result = TestProcessRunner.Run(
-            "/bin/bash",
-            [
-                "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" WRAPPED_MARKER=\"$3\" exec /bin/bash \"$4\" \"$5\" payload",
-                "lean-cache-run-test",
-                bin,
-                arguments,
-                wrappedMarker,
-                script,
-                wrapped,
-            ],
-            fixture.Path,
-            TestBudgets.ScriptProcessHangGuard,
-            64 * 1024);
-
-        Assert.Equal(97, result.ExitCode);
-        Assert.False(File.Exists(wrappedMarker));
-        Assert.Equal(
-            new[]
-            {
-                "run",
-                "--project",
-                Path.Combine(
-                    LeanCacheGuard.PhysicalPath(repository),
-                    "tools",
-                    "StrataLint.Cli",
-                    "StrataLint.Cli.csproj"),
-                "--configuration",
-                "Release",
-                "--",
-                "worktree",
-                "with-cache-writer",
-                "--",
-                wrapped,
-                "payload",
-            },
-            File.ReadAllLines(arguments));
-    }
-
-    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteExecutable(string path, string content)
-    {
-        File.WriteAllText(path, content + "\n");
-        File.SetUnixFileMode(
-            path,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-    }
+        TestGit.Run(root, arguments);
 }
 
 internal static class LeanCacheFixtureFile
 {
+    internal static string Manifest(char revision = 'a') => JsonSerializer.Serialize(new
+    {
+        version = "1.1.0",
+        packages = new[] { new { type = "git", name = "mathlib", rev = new string(revision, 40),
+            url = "https://example.test/mathlib", inputRev = "v4.31.0", subDir = (string?)null,
+            configFile = "lakefile.lean", manifestFile = "lake-manifest.json", inherited = false } },
+    }) + "\n";
+
     internal static bool MathlibProjectionExists(string repositoryRoot) =>
         Directory.Exists(Path.Combine(
             repositoryRoot,

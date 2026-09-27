@@ -1,0 +1,259 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-complete-small-source-k-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "a91c384f70e3b7e48711969d5abaff09319a04273d54237c046d1324d84d87d5",
+    "kind": "value"
+  },
+  "domain": {
+    "path": "content/002-domain.json",
+    "sha256": "5b98ec296da23c2f8e2865de271d0f204db9d35ec6bfa1b2fb89811fa039d453",
+    "kind": "value"
+  },
+  "original_slot_bound": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "baseline_uniform_domain": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/10000",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "59999/180000",
+      "v0": "7/40000",
+      "v1": "539997/2399960000",
+      "gap": "9977/450000",
+      "tbar": "10001/4998",
+      "Cbar": "60002/15997",
+      "kbar": "59999/29998",
+      "budget_increments": [
+        "16667/2400000000",
+        "1/360000",
+        "1/40000"
+      ],
+      "c": [
+        "28001/40000",
+        "360013/900000",
+        "40001/150000",
+        "40001/450000"
+      ],
+      "H": [
+        "25052499/500000000",
+        "150031667/1500000000",
+        "6001/90000",
+        "800119999/36000000000"
+      ],
+      "positive7": "259789/4200000"
+    }
+  },
+  "all_original_indices": {
+    "path": "content/005-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/006-original_cost_tags.json",
+    "sha256": "386608e2ad3679cde1707dc810fd49a3e39cf6e2a68d094375a1bccbffcc089b",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/007-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "mass_lower": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "mass_upper": {
+    "kind": "inline",
+    "value": "132500005009/900000000000"
+  },
+  "mass_floor_source": {
+    "kind": "inline",
+    "value": "146 complete effective source-product theorem; S=S0+rho>=53/360"
+  },
+  "cost_results": {
+    "path": "content/011-cost_results.json",
+    "sha256": "6848a62e87ed97fefa5e1f0b85fcfd84aebfe073fa5daa3ea4de879bbe08ed0c",
+    "kind": "array"
+  },
+  "transported_affine_costs": {
+    "path": "content/012-transported_affine_costs.json",
+    "sha256": "1bdcc791d6b2f6ea6a81954f20bd02d5f4f2b779d07d952e687c0369ab824e6f",
+    "kind": "value"
+  },
+  "integer_identity_feedback": {
+    "path": "content/013-integer_identity_feedback.json",
+    "sha256": "5687fb56d61de8f83a011f3c48001960ef885f50476e35064c3dc5f5d7286bb1",
+    "kind": "value"
+  },
+  "unchanged_uniform_cost_indices": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15,
+      19,
+      20,
+      21,
+      22,
+      24,
+      25,
+      27,
+      28,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37,
+      38,
+      39,
+      40,
+      46,
+      47,
+      48
+    ]
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "89359748755092445061069245203600327911742144141435798518397322706004451/19613161528303574948284951491462045899817199218750000000000000000000000"
+  },
+  "complete_factorial_upper": {
+    "kind": "inline",
+    "value": "3512889949929178020487713752529395166961052029/4086075442681371867187500000000000000000000000"
+  },
+  "uniform_raw_square9_upper": {
+    "kind": "inline",
+    "value": "170250064086064900113112026144329/43196420123526922308000000000000"
+  },
+  "uniform_hinge4_upper": {
+    "kind": "inline",
+    "value": "89373916202830542872403225000712427726483652637966391621/492167504358045723702791835000000000000000000000000000000"
+  },
+  "AP11_block_results": {
+    "path": "content/019-AP11_block_results.json",
+    "sha256": "c6c2b9a2f714965e1921fe832f11b347ab3accdeabedf05c843b2e684ffa0bdf",
+    "kind": "value"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "count_probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "H1_source": "139 uniform domain delta<=1/10000,rho<=1/100000",
+      "H1_upper": "90100796087148144919/182237850000000000000",
+      "positive_mass_upper": "132500005009/900000000000",
+      "remaining_cost_upper": "1017938219222884472609/16008866171100000000000000"
+    }
+  },
+  "AP13_penalty_upper": {
+    "kind": "inline",
+    "value": "89373916202830542872403225000712427726483652637966391621/2953005026148274342216751010000000000000000000000000000000"
+  },
+  "AP11_penalty_upper": {
+    "kind": "inline",
+    "value": "152898116331918411170619004427491665698953623012093456097155830002274717828400419/4977767973350218521585885031172664731976824198092725000000000000000000000000000000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "286190495820209483312602320324290832991849684034866642240245431814118403163685739/3318511982233479014390590020781776487984549465395150000000000000000000000000000000"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "signed_mass_upper": {
+    "kind": "inline",
+    "value": "-239487086662097082670327/21573978899788328632819200"
+  },
+  "positive_cost_sum": {
+    "kind": "inline",
+    "value": "48743139324752296052326030592478020518252036000704978265131843013576673463801093195816045318650338322466067739372689/1513301505334694719020513122832822265885338355861510034872597300602815008232128890000000000000000000000000000000000"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_payment": {
+    "kind": "inline",
+    "value": "184216256742619600456001312484312361775961786531220215101597242050256439070285093801961217/304296436881539967446584651169277652046203460609695853721862500000000000000000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "1936056306252412992598386578997163677711243570323931675064916466459179423925637579873634930137193457602528747789649271/59018758708053094041800011790480068369528195878598891360031294723509785321053026710000000000000000000000000000000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "1827605983968039892391753777217539487829715211035377580394544473377812891231922719880231828270460585342244837651215243821/4546591783026944674485880536330298310243803914390979118720495185241884470509480533316259921055267752549614109850803600"
+  },
+  "room_below403": {
+    "kind": "inline",
+    "value": "4670504591818811426056078923570731198537766464187004449815086274666550383397935046220919914812318935249648618658606979/4546591783026944674485880536330298310243803914390979118720495185241884470509480533316259921055267752549614109850803600"
+  },
+  "strict403_numerator_margin": {
+    "kind": "inline",
+    "value": "4670504591818811426056078923570731198537766464187004449815086274666550383397935046220919914812318935249648618658606979/52719847551393609277702446895750650163544004791192064227606136541200650051333367313860000000000000000000000000000000000"
+  },
+  "head_consumer_counts": {
+    "kind": "inline",
+    "value": {
+      "new235": 4,
+      "legacy237": 14,
+      "affine_costs": 13,
+      "AP11_blocks": 4,
+      "AP13_tests": 1
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original52-cost signed comparison below403 on both actual K-source neighborhoods sigma<=10^-8,rho<=10^-11. The actual r<=5rho satisfies the inherited r<=1/520 condition. All independent tests, complete square, complete factorial, four AP11 blocks, separate AP13 test, complete count law and every exponent tail remain. No untransported face-only cost,174 factorial,207 raw-square9,previous218 minimum or unexplained improvement subtraction is used. The residual/source complement, global K join,actual-family attainment,Lean verification and unrestricted Erdos7 remain separate."
+  }
+}

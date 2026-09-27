@@ -1,0 +1,88 @@
+{
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/22",
+      "rho": "1/15000",
+      "rbar": "1/3000",
+      "h1min": "131/396",
+      "v0": "11/875",
+      "v1": "17761/1375500",
+      "gap": "92071/4356000",
+      "tbar": "23/9",
+      "Cbar": "670/161",
+      "kbar": "131/64",
+      "budget_increments": [
+        "67/33264",
+        "1/792",
+        "1/252"
+      ],
+      "c": [
+        "313/440",
+        "161/396",
+        "89/330",
+        "89/990"
+      ],
+      "H": [
+        "471/4840",
+        "199/1815",
+        "71/990",
+        "827/34848"
+      ],
+      "positive7": "17273/277200"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/22",
+      "residual_radius": "1/15000",
+      "actual_r_upper": "1/3000",
+      "joint_source_Delta_upper": "1/84",
+      "source_z_upper": "67/88",
+      "availability_upper": "3/256",
+      "five_actual_gap_lowers": [
+        "299/3000",
+        "6517/99000",
+        "2117/99000",
+        "361627/12672000",
+        "3167/99000"
+      ],
+      "minimum_actual_gap": "2117/99000",
+      "common_wrong_slot_gap": "92071/4356000",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "9/11",
+        "shallow_C_minus_1_t": "439/121",
+        "shallow_C_minus_k": "20293/484",
+        "pure3_maximizing_cell": "949/484",
+        "root0_below_root1_reference": "813/484"
+      },
+      "fixed_support_slab_r_cutoff": "1/2500"
+    }
+  },
+  "complete_H1": {
+    "path": "content/009-expanded_residual_comparison/002-complete_H1.json",
+    "sha256": "643f2f923aa55e26c2394630945a3eb172331ddc6e8f6deb7836a235e56c3cc0",
+    "kind": "object"
+  },
+  "complete_square": {
+    "path": "content/009-expanded_residual_comparison/003-complete_square.json",
+    "sha256": "5367ce81df0b27c2821eff165bd57229e451ae0aeab31d0b7c2dffc7ca5f8068",
+    "kind": "value"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/009-expanded_residual_comparison/004-joint_pure_five_transport.json",
+    "sha256": "bf30e8d18f64b1e20657dd0207de3e7686b318e4ab5aff2652b35d9e9111f4ff",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/009-expanded_residual_comparison/005-complete_heads.json",
+    "sha256": "f69e01a75f75944a0c6f4abf161874f6183f0285109b35cb139550315f69edc7",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/009-expanded_residual_comparison/006-comparison.json",
+    "sha256": "031dfcbc747c5b7fc51d7acf82656ce0607fc189f28d23f5132a81a158f851ad",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,14 @@
+对前后两段事件词，`time_ordered_cocycle_append_laws` 给出精确拼接律
+
+$$
+\Lambda(W_1W_2)=\Lambda(W_1)\Lambda(W_2),
+$$
+
+以及
+
+$$
+M_a(W_1W_2)
+=
+ a^{|W_2|}M_a(W_1)+M_a(W_2)\Lambda(W_1).
+$$
+

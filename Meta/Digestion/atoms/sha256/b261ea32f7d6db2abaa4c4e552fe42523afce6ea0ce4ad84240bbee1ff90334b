@@ -1,0 +1,42 @@
+### 121.5 新增部分是正交投影，且各步增量互相正交
+
+定义
+
+$$
+\Delta_n=\Pi_{n+1}-\Pi_n,\qquad 0\le n<N.
+\tag{121.13}
+$$
+
+由式（121.12），$\Delta_n$ 自伴，且
+
+$$
+\begin{aligned}
+\Delta_n^2
+&=\Pi_{n+1}-\Pi_{n+1}\Pi_n-\Pi_n\Pi_{n+1}+\Pi_n\\
+&=\Pi_{n+1}-\Pi_n=\Delta_n.
+\end{aligned}
+\tag{121.14}
+$$
+
+其像恰为
+
+$$
+\boxed{\mathcal W_n=V_{n+1}\cap V_n^\perp}.
+\tag{121.15}
+$$
+
+确实，$\Delta_nf\in V_{n+1}$ 且 $\Pi_n\Delta_nf=0$；反之，$w\in V_{n+1}\cap V_n^\perp$ 时，$\Delta_nw=w$。所以 $\Delta_n$ 是“新可见且与旧可见空间正交”的投影。
+
+若 $i<j$，再次用式（121.12）逐项展开，
+
+$$
+\Delta_i\Delta_j
+=(\Pi_{i+1}-\Pi_i)(\Pi_{j+1}-\Pi_j)
+=\Pi_{i+1}-\Pi_{i+1}-\Pi_i+\Pi_i=0.
+\tag{121.16}
+$$
+
+取伴随得反向复合也为零。并且 $\Pi_0\Delta_i=\Delta_i\Pi_0=0$。因此不同增量空间互相正交。
+
+这里的“正交投影”或 $\langle f,\Delta_nf\rangle\ge0$ 不意味着 $\Delta_n$ 是保持函数非负性的概率核。事实上 $\Delta_n1=0$；在上一节两点例中，$\Delta_0=I-\Pi_0$ 将单点指标函数送到 $(1/2,-1/2)$。它测量新增方向，不是另一份概率分布或独立新样本。
+

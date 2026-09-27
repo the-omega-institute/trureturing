@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/010-comparisons/000000/single.json",
+        "sha256": "b34766ce37d830e8bd50d806578f73b7aedad7da4e9bb0e11af2485394a88645",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/010-comparisons/000001/single.json",
+        "sha256": "a74d8f6462d2d8b0bdd8fe213f0efbb749731141276ca7913656bfba0171f766",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

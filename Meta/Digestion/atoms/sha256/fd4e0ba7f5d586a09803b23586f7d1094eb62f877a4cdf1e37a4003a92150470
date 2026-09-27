@@ -1,0 +1,23 @@
+**证明。** $B_n$ 非零且端点权重严格为正，所以 $Z_n>0$，归一化得到概率。$B_n$ 的反演不变性使 $\Omega_n$ 反演不变，并给出
+$$
+\frac{P_n(w)}{P_n^R(w)}
+=\frac{a(x_0)b(x_n)}{a(x_n)b(x_0)}.
+$$
+取对数即得式 (93.1) 的第一个等式。内部端点抵消，故
+$$
+g(x_0)-g(x_n)=\sum_{t=0}^{n-1}(g(x_t)-g(x_{t+1}))
+=\sum_{i,j}N_{ij}(w)(g(i)-g(j)).
+$$
+对角项为零，将 $i\to j$ 与 $j\to i$ 两项配对，即得式 (93.1) 的第二个等式。$n=0$ 时这些和均为空和，且 $\Theta_0$ 为恒等。
+
+在共同正支撑上应用已有 Gibbs 非负性，得到散度下界；所用有限概率与绝对连续性假设见 [`kl_divergence_nonneg`](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/D5/S3/Divergence/GrandmotherTheorem.lean)。另一方面，逐路径有 $g(x_0)-g(x_n)\le\operatorname{osc}(g)$，故
+$$
+D(P_n\Vert P_n^R)=\sum_{w\in\Omega_n}P_n(w)\sigma_n(w)
+\le\operatorname{osc}(g).
+$$
+固定有限上界分别除以 $n$、$n+1$，夹逼得到两个极限。
+
+最后，式 (93.1) 表明似然比在每条端点纤维以及每条净计数纤维上恒定。分别应用 [定理 73.3](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)：细载体取 $\Omega_n$，输入取 $d=P_n$，参考取 $q=P_n^R$，粗载体取相应读出的实际像。细载体有限，参考严格正，读出满射，因而粗参考质量也严格正；该定理的等号判据恰由上述似然比满足，给出式 (93.3)。
+
+若另允许端点权重随 $n$ 改变，同一证明只给出 $D(P_n\Vert P_n^R)\le\operatorname{osc}(g_n)$。条件 $\operatorname{osc}(g_n)=o(n)$ 是每次转移的散度趋零的充分条件；缺少该条件时，这个上界本身不能推出该极限。证毕。
+

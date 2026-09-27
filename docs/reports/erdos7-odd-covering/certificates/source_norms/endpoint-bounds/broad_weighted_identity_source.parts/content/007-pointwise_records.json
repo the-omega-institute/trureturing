@@ -1,0 +1,207 @@
+{
+  "p=1/1000": {
+    "path": "content/007-pointwise_records/000-p%3D1%2F1000.json",
+    "sha256": "34eb071264cf46313c59fb772cbc1eb4712ace7460fe1b977e76e3085f7b68b7",
+    "kind": "value"
+  },
+  "p=1/100": {
+    "path": "content/007-pointwise_records/001-p%3D1%2F100.json",
+    "sha256": "824cfcdf628e93cdcf8cb2f31709fef869942c14bed4e1d597f765309a7681af",
+    "kind": "value"
+  },
+  "p=1/18": {
+    "path": "content/007-pointwise_records/002-p%3D1%2F18.json",
+    "sha256": "554d60debde22871e540d8059f086b55783ad60e85b2f4b7e93b650cdd2d46dd",
+    "kind": "value"
+  },
+  "a=1/1000": {
+    "path": "content/007-pointwise_records/003-a%3D1%2F1000.json",
+    "sha256": "36c869ace95581e68b9aa753bb6262eca9af2bb51d3690ddbf64e50d4fed172e",
+    "kind": "value"
+  },
+  "a=1/100": {
+    "path": "content/007-pointwise_records/004-a%3D1%2F100.json",
+    "sha256": "ab1e2d0d03bca4c164f4e5891325a5244365e71282dbe489e8e49e38ba88ac1f",
+    "kind": "value"
+  },
+  "a=1/18": {
+    "path": "content/007-pointwise_records/005-a%3D1%2F18.json",
+    "sha256": "a1cd8869102651726c20d40b75e11b4f1c6cda8b2719e422629bc1dc8869eb6e",
+    "kind": "value"
+  },
+  "b=1/1000": {
+    "path": "content/007-pointwise_records/006-b%3D1%2F1000.json",
+    "sha256": "e770f43a3e602e55beb9867355bb05fef3d10d98460548885ad03c75b26f1055",
+    "kind": "value"
+  },
+  "b=1/100": {
+    "path": "content/007-pointwise_records/007-b%3D1%2F100.json",
+    "sha256": "9d2b670f9123e2b3c726e984403cfe6f6153ca5ac39b7493a7161be4df5e4d70",
+    "kind": "value"
+  },
+  "b=1/18": {
+    "path": "content/007-pointwise_records/008-b%3D1%2F18.json",
+    "sha256": "8412b7a5309b9929555eb174279af9830d8daf563d596912735322cdd876c773",
+    "kind": "value"
+  },
+  "late0": {
+    "path": "content/007-pointwise_records/009-late0.json",
+    "sha256": "f3837980a2635d9e71c60b31c26d2592d58930b4af74c57ecd146f7d4a721159",
+    "kind": "value"
+  },
+  "late1": {
+    "path": "content/007-pointwise_records/010-late1.json",
+    "sha256": "748a90833b89a9e7fb415f8b358edadc3cf1de98c9930e671cbea0bf01614e5f",
+    "kind": "value"
+  },
+  "late2": {
+    "path": "content/007-pointwise_records/011-late2.json",
+    "sha256": "81e84a8143fc0d2104a297348a917f61209cacfbf938320371691c6b0885be2f",
+    "kind": "value"
+  },
+  "late3": {
+    "path": "content/007-pointwise_records/012-late3.json",
+    "sha256": "683d52295511c5ceffa6d6700a9fcb95ead0c3deb7d90340502db877740c167b",
+    "kind": "value"
+  },
+  "late4": {
+    "path": "content/007-pointwise_records/013-late4.json",
+    "sha256": "e869339d240fbb0bb35296f8003d95e53e5aec3504fa3d302799ac3261240528",
+    "kind": "value"
+  },
+  "deficit-1": {
+    "path": "content/007-pointwise_records/014-deficit-1.json",
+    "sha256": "90ed9df9c4f78f9b6466eb795acdcbe866738c13f1062edcf189938fa09d1d0d",
+    "kind": "value"
+  },
+  "deficit0": {
+    "path": "content/007-pointwise_records/015-deficit0.json",
+    "sha256": "f3837980a2635d9e71c60b31c26d2592d58930b4af74c57ecd146f7d4a721159",
+    "kind": "value"
+  },
+  "deficit1": {
+    "path": "content/007-pointwise_records/016-deficit1.json",
+    "sha256": "65249b0209f1ece54328a016a2a39371d9fae98e69381d74b9e621bf6a2bb741",
+    "kind": "value"
+  },
+  "deficit2": {
+    "path": "content/007-pointwise_records/017-deficit2.json",
+    "sha256": "257c3f627c10d29c89e4223752c4b1c20c5710cae7494e4cad1ac4dd41ec616b",
+    "kind": "value"
+  },
+  "deficit3": {
+    "path": "content/007-pointwise_records/018-deficit3.json",
+    "sha256": "216672d5d1127f448f25d7c25602fa6e394da5fc8b03ab204377dcc4f9895f86",
+    "kind": "value"
+  },
+  "deficit4": {
+    "path": "content/007-pointwise_records/019-deficit4.json",
+    "sha256": "a3aed83cfa6a687c710b7760328c690d18262bc26ab0839b3e5ee43ab9c3e0f8",
+    "kind": "value"
+  },
+  "carrier(-1, -1)": {
+    "path": "content/007-pointwise_records/020-carrier%28-1%2C%20-1%29.json",
+    "sha256": "2d12e84fc37ee30e45da76ba215a10ddd7dfa1f6a71b7a49689d1928fce9de19",
+    "kind": "value"
+  },
+  "carrier(-1, 0)": {
+    "path": "content/007-pointwise_records/021-carrier%28-1%2C%200%29.json",
+    "sha256": "394d1a9f9e676c83355d398619a4fe9db07ed002788606d4d075fd4d44c6cdad",
+    "kind": "value"
+  },
+  "carrier(-1, 1)": {
+    "path": "content/007-pointwise_records/022-carrier%28-1%2C%201%29.json",
+    "sha256": "957613955d16f39d7b02ab65b9f996b2d78bbc13ef56a263d735766826c8d8ed",
+    "kind": "value"
+  },
+  "carrier(-1, 2)": {
+    "path": "content/007-pointwise_records/023-carrier%28-1%2C%202%29.json",
+    "sha256": "d93f7b1305ccceef9040242d0e62fdd893eb6d9af03ebd10dcfd3634399b8eba",
+    "kind": "value"
+  },
+  "carrier(-1, 3)": {
+    "path": "content/007-pointwise_records/024-carrier%28-1%2C%203%29.json",
+    "sha256": "547b06973fbb4ec13cdf8c49fabf408d6ec0085abd6a4788ba32b41a92ee2c5f",
+    "kind": "value"
+  },
+  "carrier(-1, 4)": {
+    "path": "content/007-pointwise_records/025-carrier%28-1%2C%204%29.json",
+    "sha256": "ad7d6c6abc4cc6bd00d7b7fac21c45e6a7d17b81282ad18db31f1ded1e2a84ec",
+    "kind": "value"
+  },
+  "carrier(0, -1)": {
+    "path": "content/007-pointwise_records/026-carrier%280%2C%20-1%29.json",
+    "sha256": "1375a1f60d385220a19c2ad23cbff4565ab9e8340007512f1b6c1f3a1940a0d7",
+    "kind": "value"
+  },
+  "carrier(0, 0)": {
+    "path": "content/007-pointwise_records/027-carrier%280%2C%200%29.json",
+    "sha256": "58e8f13acfc669e32004cac5fff26073fb41d75e81e3b38ed7f3ddbecef9124e",
+    "kind": "value"
+  },
+  "carrier(0, 1)": {
+    "path": "content/007-pointwise_records/028-carrier%280%2C%201%29.json",
+    "sha256": "338add77e1e0e7ec98a5a45eb02312cb37fbf02f317ce94e0a429418f0045f40",
+    "kind": "value"
+  },
+  "carrier(0, 2)": {
+    "path": "content/007-pointwise_records/029-carrier%280%2C%202%29.json",
+    "sha256": "92772ca5b7c5f7625877a3837f8b6841f2ab0b042314d6b3af791e9f2d566dcb",
+    "kind": "value"
+  },
+  "carrier(0, 3)": {
+    "path": "content/007-pointwise_records/030-carrier%280%2C%203%29.json",
+    "sha256": "1cc5225d864c545dafb246ddfa3e038600ddf162cffee08d0dc592007d613b82",
+    "kind": "value"
+  },
+  "carrier(0, 4)": {
+    "path": "content/007-pointwise_records/031-carrier%280%2C%204%29.json",
+    "sha256": "44ab1c24dd6550ef433f6873ea25f6d945be4acfce0aed561acb1fc3c85f8506",
+    "kind": "value"
+  },
+  "carrier(1, -1)": {
+    "path": "content/007-pointwise_records/032-carrier%281%2C%20-1%29.json",
+    "sha256": "feef1f84ceef8377d0ae4532b4c208dc88fd3b80d3c70eb9019b33338fc0e7a0",
+    "kind": "value"
+  },
+  "carrier(1, 0)": {
+    "path": "content/007-pointwise_records/033-carrier%281%2C%200%29.json",
+    "sha256": "7f52b9ed4cae6ba5beb7de5d2653b2cab287fa7bda7a382bea4354214f47b7c8",
+    "kind": "value"
+  },
+  "carrier(1, 1)": {
+    "path": "content/007-pointwise_records/034-carrier%281%2C%201%29.json",
+    "sha256": "f3837980a2635d9e71c60b31c26d2592d58930b4af74c57ecd146f7d4a721159",
+    "kind": "value"
+  },
+  "carrier(1, 2)": {
+    "path": "content/007-pointwise_records/035-carrier%281%2C%202%29.json",
+    "sha256": "ff126b9bea444486be8594cca7dc3595be8d3b0fe4619d59b29acab38374c023",
+    "kind": "value"
+  },
+  "carrier(1, 3)": {
+    "path": "content/007-pointwise_records/036-carrier%281%2C%203%29.json",
+    "sha256": "fdf9987feaf22538e861f1276ede7463f416b952d44f43c9445ace9b7c3efdd2",
+    "kind": "value"
+  },
+  "carrier(1, 4)": {
+    "path": "content/007-pointwise_records/037-carrier%281%2C%204%29.json",
+    "sha256": "40b5ef6b49f3d50f73306d07a999ddedf9edcdcea57c0fa16f39193dedd2a71a",
+    "kind": "value"
+  },
+  "positive_r": {
+    "path": "content/007-pointwise_records/038-positive_r.json",
+    "sha256": "91a3fcb63c44f0ee6c4699e22d02904b422f81ecbd042417d06d33a660964ff4",
+    "kind": "value"
+  },
+  "p=1/20": {
+    "path": "content/007-pointwise_records/039-p%3D1%2F20.json",
+    "sha256": "8bea0d4d47a5bcab72409f8088ee955fbda1fbcf8b3e3a4f688333f21d8e4809",
+    "kind": "value"
+  },
+  "mixed_pi": {
+    "path": "content/007-pointwise_records/040-mixed_pi.json",
+    "sha256": "6e3055f3dcfb58147ec7cf1d5fec13829b71d348d5b39d1d2d6ad77cdfa817f3",
+    "kind": "value"
+  }
+}

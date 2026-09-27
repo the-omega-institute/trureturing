@@ -1,0 +1,23 @@
+{
+  "costs": {
+    "path": "content/005-shells/000000/item/002-heavy/000-costs.json",
+    "sha256": "eb9820406623491db4263f53d22642d07327ae41910746419f20011e133dc3cc",
+    "kind": "array"
+  },
+  "nonH_marker_intercept": {
+    "kind": "inline",
+    "value": "12970805191/741537342000"
+  },
+  "H_marker_intercept": {
+    "kind": "inline",
+    "value": "917/2430000"
+  },
+  "weighted_G_error": {
+    "kind": "inline",
+    "value": "5666794578729872450435085182947679831305023913/8053387167091457761442948227200420522150000000"
+  },
+  "weighted_barrier": {
+    "kind": "inline",
+    "value": "9842264924061537171771956384088145223/143243234143364170129428019217812500"
+  }
+}

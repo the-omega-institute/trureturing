@@ -1,0 +1,8 @@
+**Proof.** For each point choose a finite cylinder on which $f$ is constant. Compactness gives finitely many such cylinders covering $S(V)$. Let $F$ be the union of their finite test sets. Two points agreeing on $F$ belong together to any one of these cylinders that contains the first point, so they have the same $f$-value. This defines $\bar f$ on the actual image $Q_F$. The projection is surjective because every member of $Q_F$ is realized by an ordinary vector. The converse follows because $\pi_F$ is continuous and $Q_F$ is finite discrete.
+
+Now let $C\subseteq V^*$ be countable and choose independent $a,b\in V$. For every $\ell\in C$ whose restriction to $\operatorname{span}(a,b)$ is nonzero, the expression $\ell(a)+t\ell(b)$ has at most one zero, or no zero. Choose $t$ outside the resulting countable set of forbidden real numbers. Put $v=a+tb$. The rank-one flag $(v)$ and the rank-two flag $(v,b)$ agree on every $\ell\in C$: either $\ell(v)\ne0$ decides both signs, or $\ell$ annihilates the entire two-plane and gives zero to both. Their ranks differ, so they are distinct. Combining this with (42.15), no countable family of finite-valued continuous observers separates all points either: the union of their finite test sets is countable. The test family in a countable local base can depend on the point.
+
+Finally, a countable product of finite discrete spaces has a countable cylinder base; every subspace has a countable base as well. A countable finite inverse limit therefore cannot have weight $\mathfrak c$ as in (42.14). This also shows why the separate sequential approximations in Theorem 42.7 do not provide a countable global observation tower.
+
+The topology nevertheless requires uncountably many sign tests globally. $\square$
+

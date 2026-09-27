@@ -206,7 +206,7 @@ public sealed partial class WorktreeCommandTests
     private static string AddColdGuardWorktree(string repositoryRoot, string name)
     {
         var target = Path.Combine(repositoryRoot, name);
-        _ = ReviewRegressionTests.RunGit(
+        _ = TestGit.Run(
             repositoryRoot,
             ["worktree", "add", "-b", $"harness/{name}", target, "HEAD"]);
         return target;

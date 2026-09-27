@@ -114,7 +114,7 @@ public sealed class RuleCatalog
     internal static RuleCatalog CreateForTesting(ImmutableArray<RuleRegistration> registrations) =>
         new(registrations);
 
-    internal SingleRuleEvaluation EvaluateSingle(RuleId id, RuleEvaluationContext context)
+    internal SingleRuleEvaluation EvaluateSingle(RuleId id, DeltaRuleContext context)
     {
         var registration = RegistrationFor(id);
         var descriptor = registration.Descriptor;
@@ -123,8 +123,36 @@ public sealed class RuleCatalog
             return new SingleRuleEvaluation(ImmutableArray<Diagnostic>.Empty, descriptor.DeferredCase);
         }
 
-        return new SingleRuleEvaluation(Stamp(descriptor, registration.Rule.Evaluate(context)), null);
+        return new SingleRuleEvaluation(Stamp(descriptor,
+            registration.Rule.EvaluateCurrent(context.CurrentFacts).AddRange(registration.Rule.EvaluateDelta(context))), null);
     }
+
+    internal SingleRuleEvaluation EvaluateCurrentSingle(RuleId id, CurrentRuleContext context)
+    {
+        var registration = RegistrationFor(id);
+        return registration.Descriptor.Lifecycle is RuleLifecycle.Deferred
+            ? new([], registration.Descriptor.DeferredCase)
+            : new((id == RuleId.CreateKnown(15) ? RepositoryPathPolicy.Evaluate(context.Current, context.Policy, registration.Descriptor) : [])
+                .AddRange(Stamp(registration.Descriptor, registration.Rule.EvaluateCurrent(context))), null);
+    }
+
+    internal SingleRuleEvaluation EvaluateDeltaSingle(RuleId id, DeltaRuleContext context)
+    {
+        var registration = RegistrationFor(id);
+        return registration.Descriptor.Lifecycle is RuleLifecycle.Deferred
+            ? new([], registration.Descriptor.DeferredCase)
+            : new(Stamp(registration.Descriptor, registration.Rule.EvaluateDelta(context)), null);
+    }
+
+    internal IEnumerable<RuleId> CurrentPredicateIds => registrations
+        .Where(item => item.Descriptor.Lifecycle is RuleLifecycle.Active && item.Rule.HasCurrentPredicate)
+        .Select(item => item.Descriptor.Id);
+
+    internal RuleExecutionOutcome ExecuteCurrent(CurrentRuleContext current) =>
+        ExecuteInOrder(current, null, ExecutionOrder, null, null, includeCurrent: true);
+
+    internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta) =>
+        ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, null, null, includeCurrent: false);
 
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
         RepositoryFile artifact,
@@ -139,23 +167,25 @@ public sealed class RuleCatalog
     }
 
     internal RuleExecutionOutcome Execute(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null) =>
-        ExecuteInOrder(context, ExecutionOrder, measureRule, measureApplicability);
+        ExecuteInOrder(context.CurrentFacts, context, ExecutionOrder, measureRule, measureApplicability, includeCurrent: true);
 
     internal RuleExecutionOutcome ExecuteInOrderForTesting(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         ImmutableArray<RuleId> executionOrder,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null) =>
-        ExecuteInOrder(context, executionOrder, measureRule, measureApplicability);
+        ExecuteInOrder(context.CurrentFacts, context, executionOrder, measureRule, measureApplicability, includeCurrent: true);
 
     private RuleExecutionOutcome ExecuteInOrder(
-        RuleEvaluationContext context,
+        CurrentRuleContext current,
+        DeltaRuleContext? delta,
         ImmutableArray<RuleId> executionOrder,
         RuleEvaluationMeasure? measureRule,
-        RuleApplicabilityMeasure? measureApplicability)
+        RuleApplicabilityMeasure? measureApplicability,
+        bool includeCurrent)
     {
         try
         {
@@ -225,11 +255,18 @@ public sealed class RuleCatalog
             {
                 var registration = RegistrationFor(ruleId);
                 var descriptor = registration.Descriptor;
-                var isAffected = registration.RecheckOnImplementationChange && context.RuleImplementationChanged
-                    || (measureApplicability is null
-                        ? registration.Rule.IsAffectedBy(context)
-                        : measureApplicability(() => registration.Rule.IsAffectedBy(context)));
-                if (!isAffected)
+                if (includeCurrent && current.Selection is { } selection
+                    && !selection.Selected.Contains(descriptor.Id))
+                {
+                    skipped.Add(descriptor.Id);
+                    continue;
+                }
+                var runCurrent = includeCurrent && registration.Rule.HasCurrentPredicate;
+                var runDelta = delta is not null && registration.Rule.HasDeltaPredicate
+                    && (registration.RecheckOnImplementationChange && delta.RuleImplementationChanged || (measureApplicability is null
+                        ? registration.Rule.IsAffectedBy(delta)
+                        : measureApplicability(() => registration.Rule.IsAffectedBy(delta))));
+                if (!runCurrent && !runDelta)
                 {
                     skipped.Add(descriptor.Id);
                     continue;
@@ -241,16 +278,16 @@ public sealed class RuleCatalog
                 {
                     // SL-015 has a pre-body path-policy pass. Keep it in the same callback as
                     // the rule body so one timing event covers the complete executable phase.
-                    if (descriptor.Id == RuleId.CreateKnown(15))
+                    if (runCurrent && descriptor.Id == RuleId.CreateKnown(15))
                     {
                         phaseDiagnostics = RepositoryPathPolicy.Evaluate(
-                            context.Current,
-                            context.Policy,
-                            descriptor,
-                            context.IsBaseFactAffected);
+                            current.Current,
+                            current.Policy,
+                            descriptor);
                     }
 
-                    return registration.Rule.EvaluateCandidateDelta(context);
+                    var findings = runCurrent ? registration.Rule.EvaluateCurrent(current) : [];
+                    return runDelta ? findings.AddRange(registration.Rule.EvaluateDelta(delta!)) : findings;
                 }
 
                 var findings = measureRule is null

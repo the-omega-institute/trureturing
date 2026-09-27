@@ -1,0 +1,4 @@
+### 124.4 最小残差、不动点与仿射运输
+
+固定有限维实内积空间 $V,W$、线性映射 $D:V\to W$ 与 $b\in W$。记 $D^\dagger$ 为 Moore–Penrose 逆，$D^*$ 为伴随，$P=DD^\dagger$ 为到 $\operatorname{im}D$ 的正交投影。
+

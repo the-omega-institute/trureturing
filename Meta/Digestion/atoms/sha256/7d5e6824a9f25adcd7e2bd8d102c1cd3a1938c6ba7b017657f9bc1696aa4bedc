@@ -1,0 +1,26 @@
+**命题 82.3（族保持不推出所有凸缺陷的动力学单调性）。** 取四状态集 $J=\{1,2,3,4\}$，分区 $\{1,2\}\mid\{3,4\}$，并令
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},
+\qquad
+d=\begin{pmatrix}2/5\\1/10\\2/5\\1/10\end{pmatrix},
+\qquad
+T=\frac1{40}
+\begin{pmatrix}
+37&1&37&1\\
+1&37&1&37\\
+1&1&1&1\\
+1&1&1&1
+\end{pmatrix}.
+$$
+则 $T$ 严格正且列随机，满足 $TE=ET=ETE$；但二次凸缺陷严格增加：
+$$
+\mathcal J_{t^2}(d;q,r)=\frac9{25},
+\qquad
+\mathcal J_{t^2}(Td;q,r)=\frac{729}{1250}>\frac9{25}.
+$$
+这里
+$$
+Tq=\begin{pmatrix}19/40\\19/40\\1/40\\1/40\end{pmatrix}\ne q,
+$$
+故本命题不涉及另加平稳参考条件 $Tq=q$ 的结论。
+

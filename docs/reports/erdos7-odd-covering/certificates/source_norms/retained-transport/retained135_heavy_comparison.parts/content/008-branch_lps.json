@@ -1,0 +1,12 @@
+{
+  "nested": {
+    "path": "content/008-branch_lps/000-nested.json",
+    "sha256": "1d011235891ec0482d1ad37eef5295bcc50c6028390579bb6dbd2851f03b2d08",
+    "kind": "value"
+  },
+  "disjoint": {
+    "path": "content/008-branch_lps/001-disjoint.json",
+    "sha256": "4b3ac278b919a6c4a8bf3ec2646541f6dc045c9fc8244ea19afb503fd056550e",
+    "kind": "value"
+  }
+}

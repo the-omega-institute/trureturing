@@ -1,0 +1,73 @@
+{
+  "original_raw_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "raw_endpoint_record_count": {
+    "kind": "inline",
+    "value": 25000
+  },
+  "raw_objective_evaluations": {
+    "kind": "inline",
+    "value": 50000
+  },
+  "original265_components_sha256": {
+    "kind": "inline",
+    "value": "8f3c332832941c87bfac4bbf8f547c53c9cfdabdb7551aea4b2169bb0bd4dc77"
+  },
+  "first_depth_weights": {
+    "kind": "inline",
+    "value": [
+      "6/35",
+      "1/70"
+    ]
+  },
+  "second_depth_weights": {
+    "kind": "inline",
+    "value": [
+      "6/245",
+      "1/70"
+    ]
+  },
+  "later_depth_weights": {
+    "kind": "inline",
+    "value": [
+      "1/245",
+      "1/210"
+    ]
+  },
+  "complete_later_depth_constant": {
+    "kind": "inline",
+    "value": "31/1470"
+  },
+  "first_projection_rows": {
+    "path": "content/013-conditional_positive7/008-first_projection_rows.json",
+    "sha256": "d1f1afd9e792045d18978a3e4f9ff3154f77d7a61c93a7865bebe100b8e0bfb1",
+    "kind": "array"
+  },
+  "second_projection_rows": {
+    "path": "content/013-conditional_positive7/009-second_projection_rows.json",
+    "sha256": "a2d5e810809918db564bd9f62a738998170ebd35baf5cb3b67715a1bbea98f7b",
+    "kind": "value"
+  },
+  "first_completion_count": {
+    "kind": "inline",
+    "value": 25
+  },
+  "second_completion_count": {
+    "kind": "inline",
+    "value": 1250
+  },
+  "complete_projection_count": {
+    "kind": "inline",
+    "value": 5000
+  },
+  "conditional_endpoint_count": {
+    "kind": "inline",
+    "value": 10000
+  },
+  "all_conditional_endpoints_sha256": {
+    "kind": "inline",
+    "value": "441c84b787b0c8bad375efbd73f17352033d51e354f703430be408ab5d68bdf6"
+  }
+}

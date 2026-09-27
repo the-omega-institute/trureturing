@@ -1,0 +1,33 @@
+**定义与假设 109.1（固定有限随机通道的共同准备实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态行核 $K_k$，状态集为 $S=\{0,1,2,3\}$，整数 $k\ge2$，记 $\delta_k=1/k$、$a_k=1-\delta_k/3$。方向 $d=0$ 使用 $\mathsf K_0=K_k$，方向 $d=1$ 使用 $\mathsf K_1=K_k^{\mathsf T}$；两方向均确定准备于 $X_0=1$，先验各为 $1/2$。
+
+固定非空有限字母表 $\mathcal A$ 及已知随机通道
+$$
+E_i(y)=E(y\mid i)\ge0,\qquad
+\sum_{y\in\mathcal A}E_i(y)=1.
+$$
+允许零发射项。通道不依赖时间或参数 $k$；给定整条隐藏路径后，实际读数 $Y_t$ 逐时独立，条件律为 $E_{X_t}$。传感器没有内部状态，其随机性每时刻刷新。有效字母数为
+$|\{y\in\mathcal A:\exists i,\ E_i(y)>0\}|$。
+
+观察 $n\ge0$ 次转移得到 $n+1$ 个读数 $(Y_0,\ldots,Y_n)$，两份律记为 $P^E_{k,n},Q^E_{k,n}$，相应概率记为 $\mathbb P^E_{d,k}$。检验 $\varphi:\mathcal A^{n+1}\to[0,1]$ 的值表示报告方向 $1$ 的概率，风险为
+$$
+R^E_{k,n}(\varphi)
+=\frac12\left(
+\int\varphi\,dP^E_{k,n}
++\int(1-\varphi)\,dQ^E_{k,n}\right).
+\tag{109.1a}
+$$
+定义逐参数最优随机风险、其最坏参数值及共同确定检验的最优最坏风险：
+$$
+R^{*,E}_{k,n}=\inf_{\varphi:\mathcal A^{n+1}\to[0,1]}
+R^E_{k,n}(\varphi),\qquad
+\overline R^{*,E}_n=\sup_{k\ge2}R^{*,E}_{k,n},
+$$
+$$
+M^E_n=
+\inf_{\substack{\varphi:\mathcal A^{n+1}\to\{0,1\}\\
+\varphi\text{ 可使用 }E,n\text{，不使用 }k}}
+\ \sup_{k\ge2}R^E_{k,n}(\varphi).
+\tag{109.1b}
+$$
+前一个下确界允许使用给定的 $k$，后一个要求同一确定规则适用于全部 $k$。无限记录取 $\mathcal A^{\mathbb N_0}$ 的乘积 $\sigma$-代数，允许所有可测随机化检验，相应风险记为 $R^{*,E}_{k,\infty}$。上横线作用于概率或期望时，专指将隐藏初态改为均匀平稳律 $\pi_i=1/4$。
+

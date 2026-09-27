@@ -1,0 +1,61 @@
+### 49.7 同时误差、有限角网格与证书的条件完备性
+
+仍固定同一实际来源 $a\in K_A^{\mathbb F}$ 及其完整取得记录。假设一次合法读取给出有限前缀读数 $\widetilde a_0,\ldots,\widetilde a_J$ 和**同时**成立的误差界
+$$
+|a_i-\widetilde a_i|\le\eta_i\quad(0\le i\le J).
+$$
+全部未读系数的幅度界 $|a_i|\le A$ 仍是同一来源合同的一部分。不能用彼此不相容的单项误差事件拼成这个合同。读数与真实来源均可在复数域；实数情形是其限制。
+
+定义有限三角多项式及两个显式常数
+$$
+H(\theta)=\sum_{i=0}^{J}\rho^{i+1}
+ \left[A+\operatorname{Re}\bigl(\widetilde a_i e^{\mathrm i(i+1)\theta}\bigr)\right],
+\quad E_J=\sum_{i=0}^{J}\rho^{i+1}\eta_i,
+\quad \Lambda_J=\sum_{i=0}^{J}(i+1)\rho^{i+1}|\widetilde a_i|.
+\tag{49.23}
+$$
+取圆周上的有限角网格 $\theta_1,\ldots,\theta_m$，其圆周覆盖半径至多 $\Delta$：每个角度到某个网格点的最短圆周距离不超过 $\Delta$。每个网格值均有经认证的下界 $\ell_l\le H(\theta_l)$。可使用经认证的上界 $\Lambda^\sharp\ge\Lambda_J$ 与 $E^\sharp\ge E_J$。若
+$$
+\boxed{\Gamma:=\min_l\ell_l-\Lambda^\sharp\Delta-E^\sharp>0,}
+\tag{49.24}
+$$
+则这个有限证书保证所有与同一读数和幅度合同相容的完整来源均有
+$$
+\operatorname{Re}F_a(\rho e^{\mathrm i\theta})\ge\rho+\Gamma
+\quad\text{对全部 }\theta.
+\tag{49.25}
+$$
+
+证明。对真实前缀令
+$$
+g_J(\theta)=\sum_{i=0}^{J}\rho^{i+1}
+ \left[A+\operatorname{Re}\bigl(a_i e^{\mathrm i(i+1)\theta}\bigr)\right].
+$$
+同时误差界给 $|g_J-H|\le E_J$，逐项求导给 $|H'|\le\Lambda_J$。对任意 $\theta$，取覆盖它的网格点，沿最短圆弧积分，得
+$H(\theta)\ge H(\theta_l)-\Lambda_J\Delta\ge\ell_l-\Lambda^\sharp\Delta$。因此 $g_J(\theta)\ge\Gamma$。另一方面，由临界恒等式
+$$
+\operatorname{Re}F_a(\rho e^{\mathrm i\theta})-\rho
+=\sum_{i\ge0}\rho^{i+1}
+ \left[A+\operatorname{Re}\bigl(a_i e^{\mathrm i(i+1)\theta}\bigr)\right],
+$$
+其后缀项逐项非负，保留前缀即得 (49.25)。这是同一个来源的整圆下界，没有将不同角度的不同来源最优值合并。$\square$
+
+现在可在 (49.16) 中取 $\gamma=\Gamma$，得到同一个 $r>\rho$ 及全部相容来源共同的
+$$
+\tau_N(\mathcal E(a))\le\frac{2A}{\Gamma}(\rho/r)^N.
+\tag{49.26}
+$$
+若数学比较允许将真实前缀保留至 $N>J$ 后置零，所得有限来源与原来源在 $n+k<N$ 的数组坐标完全相同；两者都满足 (49.26)，故其全层范数差至多
+$4A\Gamma^{-1}(\rho/r)^N$。这是一份关于真实前缀的数学比较，不代表带误差读数已经取得了真实系数，或该有限来源在当前记录纤维中已可制备。若实际使用 $\widetilde a_i$，还须支付有限头部系数误差并保证替代来源合法。
+
+**条件完备性。** 假定读取协议能够最终访问任意给定有限前缀，并能将该前缀的同时误差界任意精炼；角网格覆盖半径可趋零，网格值下界可以一致趋近真实 $H(\theta_l)$，且使用的 $\Lambda^\sharp$ 保持有界、$E^\sharp\to0$。那么每个非相位来源最终都能得到正证书。
+
+证明。对一个非相位来源，第49.4节给有限 $J$ 排除所有相位前缀；非负函数 $g_J$ 在整圆没有零点，故 $\gamma_J=\min g_J>0$。若网格下界误差至多 $\varepsilon_{\rm eval}$，则
+$$
+\Gamma\ge\gamma_J-2E^\sharp-\varepsilon_{\rm eval}
+-\Lambda^\sharp\Delta.
+$$
+访问到这一前缀后，将后三项精炼至总和小于 $\gamma_J$，即得正证书。协议须有到达所需见证前缀及精炼同时误差、网格与数值下界的能力；见证前缀取得后不必继续增长下标，只需将该前缀的误差及评价精度精炼到上述严格界内。只重复读取一个仍与相位相容的短前缀并不充分。对相位来源，每个 $g_J$ 都在其相位角取零，故任何有效同时误差合同都不可能给出正证书。$\square$
+
+这些条件不承诺统一停止深度或统一精度预算：非相位缺口可以任意小、任意晚。若误差合同只在一个概率至少为 $1-\delta$ 的共同事件上成立，以上证书在该事件上可靠，因此“输出了错误正证书”的无条件概率至多 $\delta$；不能由此声称条件于输出证书后的错误概率也至多 $\delta$。多次自适应尝试须使用同时覆盖整段尝试的误差合同或另作错误预算。
+

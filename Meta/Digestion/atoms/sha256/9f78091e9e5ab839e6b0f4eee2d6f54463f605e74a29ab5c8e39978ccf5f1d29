@@ -1,0 +1,15 @@
+**可直接复用的线性求解加强。** 为缩小(20.166)，可另取中心矩阵
+$$
+\widehat K=\begin{pmatrix}\hat d_1&-\hat d_0\\\hat d_2&-\hat d_1\end{pmatrix},
+\quad\hat b=(\hat d_2,\hat d_3)^\mathsf T,
+\quad\hat w=\widehat K^{-1}\hat b.
+$$
+若(20.165)给ρ_j，置δ_K=max(ρ₁+ρ₀,ρ₂+ρ₁)、δ_b=max(ρ₂,ρ₃)，并计算b_inv≥||\hat K⁻¹||∞。在b_inv δ_K<1时，`HoKalmanPerturbation.solve_error_le` 的后验线性求解界 直接给
+$$
+\|(S,P)-\hat w\|_\infty\le
+\frac{b_{\rm inv}(\delta_b+\delta_K\|\hat w\|_\infty)}
+{1-b_{\rm inv}\delta_K}.
+\tag{20.171}
+$$
+将这两个区间与𝒮、𝒫相交即可；此处使用所引一般扰动界。中心不可逆或该余量未通过时，只表示这个加强没有证书，不替代(20.166)或推翻真实模型。
+

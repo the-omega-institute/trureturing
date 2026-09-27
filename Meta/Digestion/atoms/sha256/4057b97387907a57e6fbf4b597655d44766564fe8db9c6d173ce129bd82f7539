@@ -1,0 +1,8 @@
+**命题 128.8。** 有
+$$
+\widetilde Y=\widetilde HZ+\widetilde\epsilon,\qquad
+\widetilde\epsilon=\epsilon_{\mathrm n}-L\epsilon_{\mathrm p}
+\sim N(0,\widetilde R),
+$$
+且 $\widetilde\epsilon$ 独立于 $(Z,\mathbf Y_{\mathrm p})$。因此以 $\widetilde H,\widetilde R$ 替代 $H_n,R_n$ 后，定理128.2、推论128.3及定理128.4—128.5 的单步公式仍成立。
+

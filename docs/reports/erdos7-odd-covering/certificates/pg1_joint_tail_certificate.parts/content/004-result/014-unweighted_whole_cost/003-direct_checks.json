@@ -1,0 +1,46 @@
+[
+  {
+    "charge_root3": 1,
+    "charge_root9": 1,
+    "cost": "n1",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 248611212
+  },
+  {
+    "charge_root3": 2,
+    "charge_root9": 1,
+    "cost": "n1",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 198168672
+  },
+  {
+    "charge_root3": 1,
+    "charge_root9": 1,
+    "cost": "n2",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 1691218891
+  },
+  {
+    "charge_root3": 2,
+    "charge_root9": 1,
+    "cost": "n2",
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "numerator": 1682782427
+  }
+]

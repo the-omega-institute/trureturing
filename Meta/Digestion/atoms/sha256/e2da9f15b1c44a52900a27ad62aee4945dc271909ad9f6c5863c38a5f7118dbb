@@ -1,0 +1,22 @@
+**定理 44.23（带测量误差的事件集合）。** 在同一实际 $F,S$ 下，对 $0\le r<s$，每个源特征值 $\lambda\in(0,1)$ 满足 $\lambda^r-\lambda^s>0$。故 $S^r-S^s\succ0$；$F^*$ 单射使 $W(rh)-W(sh)\succ0$。若 $X\succ Y\succ0$，$Y^{-1/2}XY^{-1/2}\succ I$ 的特征值全大于一，因而 $\det X>\det Y$。应用于这两个响应得到 $R(r)<R(s)$。所以 $R(0)=0,R(1)=1$ 和 $1<R(2)\le2$ 区分锚点两侧；单独的分数幂符号不足以得此严格分支信息。
+
+使用命题44.21的 $K_{\rm err}$ 和定理44.22的 $q,\eta$，令
+$$L=\max(0,q-\eta),\qquad U=\min(2,q+\eta).$$
+若 $L>U$，测量与证书不能同时满足所声明合同。否则真实 $r$ 属于 $I_-\cup I_0\cup I_+$，其中空区间删除，且
+$$I_-=
+\begin{cases}
+[\max(0,L-K_{\rm err}/4),\min(1,U)]\cap[0,1),&L<1,\\
+\varnothing,&L\ge1,
+\end{cases}$$
+$$I_0=\begin{cases}\{1\},&L\le1\le U,\\\varnothing,&\text{否则},\end{cases}$$
+$$I_+=
+\begin{cases}
+[\max(1,L),\min(2,U+2K_{\rm err})]\cap(1,2],&U>1,\\
+\varnothing,&U\le1.
+\end{cases}$$
+证明。真实 $R(r)\in[0,2]\cap[q-\eta,q+\eta]=[L,U]$。在 $0\le r<1$，定理44.11给 $0\le R-r\le K_{\rm err}r(1-r)\le K_{\rm err}/4$，所以 $R-K_{\rm err}/4\le r\le R$；并且严格单调迫使 $R<1$，故必须 $L<1$。在 $1<r\le2$，$0\le r-R\le K_{\rm err}r(r-1)\le2K_{\rm err}$，于是 $R\le r\le R+2K_{\rm err}$，且 $R>1$ 迫使 $U>1$。与真实区间和对应严格分支相交恰给上述两项，$r=1$ 时 $R=1$ 给中项。
+
+因此 $q+\eta<1$ 排除 $r\ge1$，$q-\eta>1$ 排除 $r\le1$。等号只给对应非严格侧，跨越一时保留并集。未反演可能非单调的二次包络，公式对每个 $K_{\rm err}\ge0$ 都有效。把集合乘以实际已校准的 $h$ 即包围 $t$；三角不等式及 $\max_{[0,2]}r|r-1|=2$ 还给
+$$\boxed{|hq-t|\le h\eta+2hK_{\rm err}.}$$
+源谱下界、固定真实支撑、$h$ 的校准和事件范围仍是独立前提，比值不能认证自己的范围或产生未观测事件。证毕。
+

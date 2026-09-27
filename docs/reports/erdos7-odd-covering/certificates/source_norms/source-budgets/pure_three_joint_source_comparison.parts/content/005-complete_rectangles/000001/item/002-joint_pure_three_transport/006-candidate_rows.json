@@ -1,0 +1,95 @@
+{
+  "length": 30,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 3,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000000-000003.json",
+        "sha256": "e9b89068670e351436070dac472f48cb776fa58d50bc50d2341ed14e09d362d2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 6,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000003-000006.json",
+        "sha256": "1b25207413bdfc427909d059c34bba892142f0740b5bb98771703fc799c52797",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 9,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000006-000009.json",
+        "sha256": "4eb0ef2af76490201354f11de90edc9ed23f96170625a4aae5f359a52711e08e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 12,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000009-000012.json",
+        "sha256": "306c700c2c41d3e7a344cc1dc483a706bca4c47f684406cbcbb5cee059857cc6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 12,
+      "stop": 15,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000012-000015.json",
+        "sha256": "4547d5f623c0476ffe90b5fe75d4d9869f4e51dc07e6b0e19134eecf7b929ee6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15,
+      "stop": 18,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000015-000018.json",
+        "sha256": "5d377ce1704f82348404131024f91e869d6af294d74eb3e8df36b897270ef71e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 21,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000018-000021.json",
+        "sha256": "3ad79136d4c599a6a6fc3b579c79313d0f0054339ab9b47123fef466eb3b4e5b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21,
+      "stop": 24,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000021-000024.json",
+        "sha256": "022e587ec2e2a35253b28ae55a927355024939c1d606b957002c5294756e7a41",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 24,
+      "stop": 27,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000024-000027.json",
+        "sha256": "46052fd658dc3972c7d7e5b8dac67f420cbb80ecfe5693bc78599b7c116b0cbe",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 27,
+      "stop": 30,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows/000027-000030.json",
+        "sha256": "b629717e1c9848eeb3effdc79a3d4326d6dd4baab6217e95a30a04c9585e4c82",
+        "kind": "value"
+      }
+    }
+  ]
+}

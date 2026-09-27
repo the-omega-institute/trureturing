@@ -1,0 +1,19 @@
+**命题 108.3（整段去噪净流符号规则的较慢最坏参数风险）。** 令 $\Psi_{\varepsilon,n}$ 在 $\widehat F_n>0$ 时报告 $0$，在 $\widehat F_n<0$ 时报告 $1$，零分处采用任意固定平局决定。置
+$$
+v_\varepsilon=2(\varepsilon/2)^2(1-\varepsilon)>0,\qquad
+N_\varepsilon=\max\left\{2,\left\lceil256/v_\varepsilon\right\rceil\right\}.
+$$
+对所有整数 $n\ge N_\varepsilon$ 及两个方向，取合法参数 $k=n$，有
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d)
+\ge\frac{v_\varepsilon^{5/2}}{13824e\sqrt n}.
+\tag{108.3a}
+$$
+特别地，
+$$
+\sup_{k\ge2}R^\varepsilon_{k,n}(\Psi_{\varepsilon,n})
+=\Omega_\varepsilon(n^{-1/2}).
+\tag{108.3b}
+$$
+该结论只约束 $\Psi_{\varepsilon,n}$，不是 $\overline R^{*,\varepsilon}_n$ 或 $M^\varepsilon_n$ 的相同阶下界。
+

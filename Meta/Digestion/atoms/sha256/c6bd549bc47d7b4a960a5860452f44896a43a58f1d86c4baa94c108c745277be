@@ -1,0 +1,4 @@
+**证明。** 在 $X=\mathbb R$ 上取 $T(x)=x^2$、当前读数 $f(x)=x$。若函数空间 $W$ 包含 $f$，且对拉回 $g\mapsto g\circ T$ 不变，则包含每个 $x\mapsto x^{2^n}$。这些函数线性独立：任一有限线性关系是一个在所有实数上恒零、次数互异的多项式，其每个系数必须为零。因此 $W$ 不可能有限维。
+
+这不排除单坐标上的非线性闭合 $x\mapsto x^2$，也不排除受限状态集、近似闭合或不同任务。有限 Koopman 不变子空间的成熟背景见 Brunton、Brunton、Proctor、Kutz，[*Koopman Invariant Subspaces and Finite Linear Representations of Nonlinear Dynamical Systems for Control*](https://arxiv.org/abs/1510.03007)。本命题只使用上述函数线性独立性。证毕。
+

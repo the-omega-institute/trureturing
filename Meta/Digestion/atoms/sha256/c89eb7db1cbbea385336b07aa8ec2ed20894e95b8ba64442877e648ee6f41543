@@ -1,0 +1,36 @@
+**定理 49.2（同长度碰撞的有限视界宽度下界；repo-derived）。** 设 $0<\varepsilon<1/4$，对整数 $\ell\ge0$ 定义
+$$
+c_\ell=\frac{3^\ell-1}{4(3^\ell+1)},\qquad
+L=\min\{\ell\in\mathbb Z_{\ge1}:c_\ell>\varepsilon\}.
+$$
+则对每个整数 $T\ge0$，即使更新与读出依赖免费外生时钟，也有
+$$
+N_\varepsilon(T)\ge1+\left\lfloor\frac{T+L}{2L}\right\rfloor
+\ge1+\left\lfloor\frac{T}{2L}\right\rfloor.
+$$
+严格阈值不可换成非严格阈值：$\varepsilon=c_j$ 时最小 $L=j+1$，其中 $j\ge1$。
+
+证明。$c_0=0$，$c_\ell$ 严格递增且趋于 $1/4$，故 $L$ 存在。先取整数 $m\ge1$，在同一时刻 $M=Lm$ 考察
+$$
+w_j=1^{Lj}0^{L(m-j)},\qquad j=0,\ldots,m.
+$$
+其平衡为 $b(w_j)=L(2j-m)$。若某对 $i<j$ 在时刻 $M$ 碰撞，追加共同的一元词 $v$，使
+$$
+b(v)=-L(i+j-m),\qquad |v|=L|i+j-m|.
+$$
+正平衡选全一词，负平衡选全零词，零平衡选空词。因 $1\le i+j\le2m-1$，有
+$$
+|v|\le L(m-1),\qquad |w_iv|=|w_jv|\le(2m-1)L,
+$$
+且
+$$
+b(w_iv)=-L(j-i),\qquad b(w_jv)=L(j-i).
+$$
+同长度的碰撞状态按同一时刻序列接受同一后缀，归纳得到相同的终态和读出，即使 $U_{t,x}$、$y_t$ 随时间变化也如此。两个目标的半差却为
+$$
+\frac{f(L(j-i))-f(-L(j-i))}{2}=c_{L(j-i)}\ge c_L>\varepsilon.
+$$
+同一实数不可能同时距两个目标不超过 $\varepsilon$。因此只要 $(2m-1)L\le T$，这 $m+1$ 个前缀在时刻 $M$ 必有不同的完整持久状态。这里 $M\le(2m-1)L$，故该层确在视界内；$m=1$ 的后缀为空，也包括在论证中。
+
+现在取 $m=\lfloor(T+L)/(2L)\rfloor$。若 $m\ge1$，则 $(2m-1)L\le T$，应用上述结论；若 $m=0$，只用初始层非空得到下界一，不定义带负指数的词。第二个下界由取整单调性得到。$c_\ell$ 的严格递增同时给出所述阈值等号结论。证毕。
+

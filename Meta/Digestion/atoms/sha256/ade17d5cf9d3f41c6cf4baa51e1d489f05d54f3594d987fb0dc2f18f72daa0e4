@@ -1,0 +1,17 @@
+**theorem 48.3 (Exact support, output type, and bounds).** Let $\mathbf a\in K^r$ have exact ambient-zero set $Z=\{i:a_i=0\}$, and put $T=\{i:a_i\in B\}$. For every positive polynomial $P$,
+$$
+P(\mathbf a)=0\quad\Longleftrightarrow\quad P^Z=0,
+$$
+$$
+P(\mathbf a)\in B\quad\Longleftrightarrow\quad S_Z(P)\cap T\ne\varnothing.
+$$
+If $P(\mathbf a)$ is natural, every coordinate indexed by $S_Z(P)$ is a positive natural number, and $P(\mathbf a)$ is its ordinary natural polynomial evaluation. In that case,
+$$
+a_i\leq P(\mathbf a)\qquad(i\in S_Z(P)).
+$$
+For $P\in\mathcal P$, if all these active coordinates are natural and at most $b\geq1$, then
+$$
+P(\mathbf a)\leq Cb^d.
+$$
+All separate term expansions in Definition 48.2 preserve their evaluations in $K$.
+

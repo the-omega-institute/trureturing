@@ -1,0 +1,314 @@
+{
+  "actual_forbidden_labels": 107,
+  "complete_test_labels": 192,
+  "period": 14549535,
+  "tail_threshold": {
+    "exact": "704627631753217/45514648675654535",
+    "decimal": 0.01548133737721494
+  },
+  "all_test_fixture_CT121_gain": {
+    "exact": "205896979837828461405671/2013422410535194533888000",
+    "decimal": 0.10226218738823827
+  },
+  "CT121_gain_intercept": {
+    "exact": "14797180266817557/45514648675654535",
+    "decimal": 0.3251080849215137
+  },
+  "crude_unrestricted_tail17": {
+    "exact": "650660582446875/151400078754776",
+    "decimal": 4.297623804415291
+  },
+  "crude_unrestricted_tail19": {
+    "exact": "2624163406239375/302800157509552",
+    "decimal": 8.666321140062797
+  },
+  "rows": [
+    {
+      "cutoff": 1,
+      "mass": {
+        "exact": "33/128",
+        "decimal": 0.2578125
+      },
+      "actual_survival": {
+        "exact": "24750857863/98537472000",
+        "decimal": 0.25118218846734774
+      },
+      "head_baseline": {
+        "exact": "749969/2949120",
+        "decimal": 0.2543026394314236
+      },
+      "price17": {
+        "exact": "6791/5308416",
+        "decimal": 0.0012792893397955247
+      },
+      "price19_killed": {
+        "exact": "45355853/24634368000",
+        "decimal": 0.001841161624280355
+      },
+      "price19_physical": {
+        "exact": "187296403/98537472000",
+        "decimal": 0.0019007632243701158
+      },
+      "linear_union_price": {
+        "exact": "6041462527/203793408000",
+        "decimal": 0.029645034087658027
+      },
+      "gated_union_price": {
+        "exact": "518511311/65691648000",
+        "decimal": 0.007893108588172427
+      },
+      "two_cell_lower": {
+        "exact": "49177253621/197074944000",
+        "decimal": 0.24953579903592413
+      },
+      "positive_tail_source_cells": 135,
+      "zero_slack_charge_source_cells": 88
+    },
+    {
+      "cutoff": 2,
+      "mass": {
+        "exact": "1189/1920",
+        "decimal": 0.6192708333333333
+      },
+      "actual_survival": {
+        "exact": "30101492867/49268736000",
+        "decimal": 0.6109653973465039
+      },
+      "head_baseline": {
+        "exact": "16324757/26542080",
+        "decimal": 0.6150519100236304
+      },
+      "price17": {
+        "exact": "20797/13271040",
+        "decimal": 0.0015670964747299383
+      },
+      "price19_killed": {
+        "exact": "496513807/197074944000",
+        "decimal": 0.002519416202396587
+      },
+      "price19_physical": {
+        "exact": "510197411/197074944000",
+        "decimal": 0.0025888497068404597
+      },
+      "linear_union_price": {
+        "exact": "23015969993/426995712000",
+        "decimal": 0.053902110363581356
+      },
+      "gated_union_price": {
+        "exact": "12409649/1194393600",
+        "decimal": 0.01038991585353438
+      },
+      "two_cell_lower": {
+        "exact": "120015961463/197074944000",
+        "decimal": 0.6089864039895402
+      },
+      "positive_tail_source_cells": 387,
+      "zero_slack_charge_source_cells": 304
+    },
+    {
+      "cutoff": 4,
+      "mass": {
+        "exact": "211/240",
+        "decimal": 0.8791666666666667
+      },
+      "actual_survival": {
+        "exact": "2383324489/2737152000",
+        "decimal": 0.8707315081515385
+      },
+      "head_baseline": {
+        "exact": "967583/1105920",
+        "decimal": 0.8749122902199075
+      },
+      "price17": {
+        "exact": "20983/13271040",
+        "decimal": 0.0015811119550540123
+      },
+      "price19_killed": {
+        "exact": "28462769/10948608000",
+        "decimal": 0.0025996701133148615
+      },
+      "price19_physical": {
+        "exact": "175363537/65691648000",
+        "decimal": 0.002669495169309803
+      },
+      "linear_union_price": {
+        "exact": "664533683/10189670400",
+        "decimal": 0.0652164061165315
+      },
+      "gated_union_price": {
+        "exact": "232288813/21897216000",
+        "decimal": 0.010608143656252922
+      },
+      "two_cell_lower": {
+        "exact": "594465541/684288000",
+        "decimal": 0.8687358845982978
+      },
+      "positive_tail_source_cells": 597,
+      "zero_slack_charge_source_cells": 508
+    },
+    {
+      "cutoff": 8,
+      "mass": {
+        "exact": "4229/4320",
+        "decimal": 0.9789351851851852
+      },
+      "actual_survival": {
+        "exact": "241490699/248832000",
+        "decimal": 0.9704969577867798
+      },
+      "head_baseline": {
+        "exact": "1077919/1105920",
+        "decimal": 0.9746808087384259
+      },
+      "price17": {
+        "exact": "20983/13271040",
+        "decimal": 0.0015811119550540123
+      },
+      "price19_killed": {
+        "exact": "2590579/995328000",
+        "decimal": 0.0026027389965920782
+      },
+      "price19_physical": {
+        "exact": "15960467/5971968000",
+        "decimal": 0.00267256405258702
+      },
+      "linear_union_price": {
+        "exact": "153247305389/2241727488000",
+        "decimal": 0.06836125541990945
+      },
+      "gated_union_price": {
+        "exact": "7041421/663552000",
+        "decimal": 0.01061170940634645
+      },
+      "two_cell_lower": {
+        "exact": "60248531/62208000",
+        "decimal": 0.9685013342335391
+      },
+      "positive_tail_source_cells": 695,
+      "zero_slack_charge_source_cells": 606
+    },
+    {
+      "cutoff": 10,
+      "mass": {
+        "exact": "4229/4320",
+        "decimal": 0.9789351851851852
+      },
+      "actual_survival": {
+        "exact": "241490699/248832000",
+        "decimal": 0.9704969577867798
+      },
+      "head_baseline": {
+        "exact": "1077919/1105920",
+        "decimal": 0.9746808087384259
+      },
+      "price17": {
+        "exact": "20983/13271040",
+        "decimal": 0.0015811119550540123
+      },
+      "price19_killed": {
+        "exact": "2590579/995328000",
+        "decimal": 0.0026027389965920782
+      },
+      "price19_physical": {
+        "exact": "15960467/5971968000",
+        "decimal": 0.00267256405258702
+      },
+      "linear_union_price": {
+        "exact": "153247305389/2241727488000",
+        "decimal": 0.06836125541990945
+      },
+      "gated_union_price": {
+        "exact": "7041421/663552000",
+        "decimal": 0.01061170940634645
+      },
+      "two_cell_lower": {
+        "exact": "60248531/62208000",
+        "decimal": 0.9685013342335391
+      },
+      "positive_tail_source_cells": 695,
+      "zero_slack_charge_source_cells": 606
+    },
+    {
+      "cutoff": 16,
+      "mass": {
+        "exact": "17249/17280",
+        "decimal": 0.9982060185185185
+      },
+      "actual_survival": {
+        "exact": "246285899/248832000",
+        "decimal": 0.9897677911201131
+      },
+      "head_baseline": {
+        "exact": "1099231/1105920",
+        "decimal": 0.9939516420717592
+      },
+      "price17": {
+        "exact": "20983/13271040",
+        "decimal": 0.0015811119550540123
+      },
+      "price19_killed": {
+        "exact": "2590579/995328000",
+        "decimal": 0.0026027389965920782
+      },
+      "price19_physical": {
+        "exact": "15960467/5971968000",
+        "decimal": 0.00267256405258702
+      },
+      "linear_union_price": {
+        "exact": "154221912539/2241727488000",
+        "decimal": 0.06879601261284084
+      },
+      "gated_union_price": {
+        "exact": "7041421/663552000",
+        "decimal": 0.01061170940634645
+      },
+      "two_cell_lower": {
+        "exact": "61447331/62208000",
+        "decimal": 0.9877721675668725
+      },
+      "positive_tail_source_cells": 718,
+      "zero_slack_charge_source_cells": 629
+    },
+    {
+      "cutoff": 48,
+      "mass": {
+        "exact": "1",
+        "decimal": 1.0
+      },
+      "actual_survival": {
+        "exact": "246732299/248832000",
+        "decimal": 0.9915617726015946
+      },
+      "head_baseline": {
+        "exact": "220243/221184",
+        "decimal": 0.9957456235532407
+      },
+      "price17": {
+        "exact": "20983/13271040",
+        "decimal": 0.0015811119550540123
+      },
+      "price19_killed": {
+        "exact": "2590579/995328000",
+        "decimal": 0.0026027389965920782
+      },
+      "price19_physical": {
+        "exact": "15960467/5971968000",
+        "decimal": 0.00267256405258702
+      },
+      "linear_union_price": {
+        "exact": "30855578893/448345497600",
+        "decimal": 0.06882098528516593
+      },
+      "gated_union_price": {
+        "exact": "7041421/663552000",
+        "decimal": 0.01061170940634645
+      },
+      "two_cell_lower": {
+        "exact": "61558931/62208000",
+        "decimal": 0.9895661490483539
+      },
+      "positive_tail_source_cells": 720,
+      "zero_slack_charge_source_cells": 631
+    }
+  ]
+}

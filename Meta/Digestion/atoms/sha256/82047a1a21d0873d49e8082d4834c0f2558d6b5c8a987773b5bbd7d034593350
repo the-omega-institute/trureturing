@@ -1,0 +1,33 @@
+**定理 66.1（精确像、两点互补纤维、锚定重构与拓扑商）。**
+
+对每个 $k\ge2$，映射
+$$
+R:K_{k,k}\longrightarrow Y_k
+$$
+连续且满射，并且对每个 $c\in Y_k$，其纤维恰有两个点；若其中一个是 $x$，另一个就是 $Cx$。更精确地，对任意 $b\in\{0,1\}$ 与 $c\in Y_k$，递推
+$$
+x^{b,c}_0=b,\qquad
+x^{b,c}_{j+1}=x^{b,c}_j\oplus(1-c_j)\qquad(j\ge0)
+$$
+给出 $K_{k,k}$ 中唯一满足 $x_0=b$ 且 $R(x)=c$ 的点；两个锚 $b=0,1$ 所得序列互为逐位补。于是
+$$
+\Theta:K_{k,k}\longrightarrow\{0,1\}\times Y_k,\qquad
+\Theta(x)=(x_0,R(x))
+$$
+是同胚，并且
+$$
+\Theta(Cx)=(1-x_0,R(x)).
+$$
+因此 $R$ 在补变换轨道商上诱导同胚
+$$
+\overline R:K_{k,k}/\langle C\rangle\longrightarrow Y_k,\qquad
+\overline R([x])=R(x).
+$$
+
+当 $k=2$ 时，
+$$
+Y_2=\{0^\infty\},\qquad
+K_{2,2}=\{0101\ldots,1010\ldots\},
+$$
+故上述像、纤维、锚定重构和商结论仍成立。
+

@@ -1,0 +1,4 @@
+因此，任何能够精确预测所有未来读出的记忆接口，都会唯一映射到 canonical predictive state。这个结论比“某个编码看起来够用”更严格：它给出所有 exact predictive memories 的共同目标，而不要求先指定哪一个内部标签才是真实对象。
+
+`prediction_completion_universality` 还说明，若当前读出和一步更新已经通过某个粗状态半共轭因子化，那么完整未来 itinerary 自动通过同一个粗状态因子化。换句话说，真正的闭合条件一旦成立，不需要为每个未来时刻重新发明一个独立记录。
+

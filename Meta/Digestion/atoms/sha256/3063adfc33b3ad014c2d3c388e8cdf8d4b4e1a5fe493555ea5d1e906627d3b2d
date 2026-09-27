@@ -1,0 +1,21 @@
+**假设 43.1（明确采用的相位与定向背景）。** 采用如下相位结论：$K$ 紧致可度量，$Z[\mathbb N_0]$ 稠密；$H$ 连续满射且 $H(Z(n))=\gamma(n)$；$\beta\notin E$ 时 $H^{-1}(\{\beta\})$ 为单点，$\beta\in E$ 时该纤维恰为两个不同的定向点 $z_\beta^{+1},z_\beta^{-1}$。此外，
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+U:=z_{E_1}^{+1}=(10)^\omega,\qquad V:=z_{E_1}^{-1}=(01)^\omega,
+$$
+$$
+z_{E_2}^{+1}=0V,\qquad z_{E_2}^{-1}=10V.
+$$
+若 $\beta\in E$、$s\in\{-1,+1\}$，且自然数列满足
+$$
+\gamma(n_k)=\beta+[\varepsilon_k],\qquad
+0<|\varepsilon_k|<\tfrac12,\qquad \varepsilon_k\longrightarrow0,
+$$
+则
+$$
+Z(n_k)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+s\varepsilon_k>0\text{ 最终成立}.
+$$
+这里的标签与单侧等价严格采用定义16.3及定理16.4证明中的约定。[^rro43-phase]
+

@@ -1,0 +1,86 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "independent-relative-profile-neighborhood-obstruction-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same seven-phase head; every finite nonroot depth cap of all20 coordinates varies in its relative box, with geometric high-digit lifts and fixed continuation schedule. Lower bounds concern exact independent auxiliary C and J, not actual losses or actual-law moments."
+  },
+  "B": {
+    "kind": "inline",
+    "value": 16384
+  },
+  "T": {
+    "kind": "inline",
+    "value": "326059/4"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "2/5"
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000
+  },
+  "h": {
+    "kind": "inline",
+    "value": "1/50000"
+  },
+  "C_lower": {
+    "kind": "inline",
+    "value": "130197166187131/250000000000000"
+  },
+  "J_lower": {
+    "kind": "inline",
+    "value": "2468848925830800739/250000000000000"
+  },
+  "polynomial_degree": {
+    "kind": "inline",
+    "value": 12
+  },
+  "base_survivor_upper": {
+    "kind": "inline",
+    "value": "696181396681816852739454137354543/1086338369123261718750000000000000"
+  },
+  "new_auxiliary_B_lower": {
+    "kind": "inline",
+    "value": "166272819416251277624961105892596309189393309253380768740086958885370146811501169325831384302069268138666102400387/259125232696533203125000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "new_survivor_upper": {
+    "kind": "inline",
+    "value": "6296553987607012221332172099533896965501486419212278584708531685581409235971165254190909/9822938088860511779785156250000000000000000000000000000000000000000000000000000000000000"
+  },
+  "score_excess_lower": {
+    "kind": "inline",
+    "value": "354752923942358689456571608399832327780199397081606699757554854228773625666715498227877812370186242933620981665176961020591/533803013093902361392974853515625000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "score_excess_lower_decimal": {
+    "kind": "inline",
+    "value": 0.0006645764734189565
+  },
+  "stages": {
+    "path": "content/015-stages.json",
+    "sha256": "a8c9b58363649927d1ee7427b2e13bc68656233405c1a997d261d27124d2e2a3",
+    "kind": "array"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "divisor_terms": 3206294,
+      "head_updates": 20,
+      "tail_updates": 1879,
+      "charge_mass_terms": 5833107,
+      "stage_comparisons": 1879
+    }
+  },
+  "source_sha256": {
+    "path": "content/017-source_sha256.json",
+    "sha256": "73c67f279d21e980002c1101494405a7f7c88cb97fde93f1fc5b6bf6a165fa86",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "2efff46ca425e5d0f5a81d7c2b629e029476ccd87c34f78acb0bf8cb11e4b006"
+  }
+}

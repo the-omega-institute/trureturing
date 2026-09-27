@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1ffa8bb46d369acf088baf8b6543e37b8f8acaa2bdb842be803f0064edf07a1
+  normalized_sha256: sha256:a1ffa8bb46d369acf088baf8b6543e37b8f8acaa2bdb842be803f0064edf07a1
+cas_ref: sha256:a1ffa8bb46d369acf088baf8b6543e37b8f8acaa2bdb842be803f0064edf07a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由 Finset.sum_add_distrib、Finset.sum_sub_distrib、Finset.mul_sum 及平方的环规范化展开有限样本平方和，得到原文全部系数及样本数分母，其他文字仅定义摘要与更新约定；仓内无冻结 GID。
+    previous_atom_id: 3c7686aba1f9cecceb524a99a1fe26f61ad21c4e9a7498ba6e725693af5802b0
+    next_atom_id: 3adafaa60c40bc650de53f9711b17666158e8d68420a2693b552d19dd81a2fe8

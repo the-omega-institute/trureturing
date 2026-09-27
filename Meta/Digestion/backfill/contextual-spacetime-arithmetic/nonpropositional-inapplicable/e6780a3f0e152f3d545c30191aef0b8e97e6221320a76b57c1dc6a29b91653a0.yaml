@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6780a3f0e152f3d545c30191aef0b8e97e6221320a76b57c1dc6a29b91653a0
+  normalized_sha256: sha256:e6780a3f0e152f3d545c30191aef0b8e97e6221320a76b57c1dc6a29b91653a0
+cas_ref: sha256:e6780a3f0e152f3d545c30191aef0b8e97e6221320a76b57c1dc6a29b91653a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句是增补章节标题或范围介绍，规定后续操作参数及不预设的包含关系，无独立待证明命题。
+    previous_atom_id: 616866eeb023f7f6c1d512349d0ea9072a08245157ddb0ba27bfa860f08bec5b
+    next_atom_id: e1b176597b2af334b5cad7cfeb490f2e9d3717805a23438936a23706594e180f

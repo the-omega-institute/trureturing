@@ -1,0 +1,8 @@
+**Proof.** For each $k\ge1$ and each coordinate, apply Theorem 44.2 to the cylinder specified by the first $k$ digits of the target. This supplies a nonempty open phase arc whose natural lifts all have those digits. For a split target, the arc lies on its specified oriented side; for an ordinary target, including $0_K$ and every $Z(c)$, it lies around the unique phase lift. Their product is a nonempty open box in $\mathbb T^4$.
+
+Theorem 44.4 permits an integer $t_k\ge\max(2,k)$, chosen larger than the preceding one, with $\Xi(t_k)$ in that box. Set
+$$
+b_k=t_k^3,\qquad q_k=t_k,\qquad r_k=t_k^2,\qquad a_k=t_k^4+t_k^2.
+$$
+The identity $a_k=b_kq_k+r_k$ is exact, and $0<t_k^2<t_k^3$. All four integers are at least $k$. The four phases are exactly the four coordinates of $\Xi(t_k)$, so all four encodings have the prescribed first $k$ digits. Their distances to their targets are at most $2^{-k}$. This proves simultaneous convergence, including every requested split orientation and every finite numerical target. Projection onto the first two coordinates gives the input-domain assertion. $\square$
+

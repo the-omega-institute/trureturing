@@ -1,0 +1,12 @@
+{
+  "core_residues": {
+    "path": "content/000-core_residues.json",
+    "sha256": "cd0c4948f96f67e09d240ab3d685a9919d35957314861a4c4a3c21103ec95ed3",
+    "kind": "value"
+  },
+  "dual": {
+    "path": "content/001-dual.json",
+    "sha256": "a3feea8aa251a0de0283395a8f1e8151ae5c70bbde2a66ef743770d598d02037",
+    "kind": "array"
+  }
+}

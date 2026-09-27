@@ -1,0 +1,23 @@
+**theorem 40.7 (An absolute observation-error bound for every irrational angle).** For every $N\ge2$, $\theta\in(0,1)\setminus\mathbb Q$, $0<p<1$, and $n\ge1$,
+$$
+M_{n,p}
+ \le\min\left\{1,\frac{\sqrt\pi}{2\sqrt{2np(1-p)}}\right\},
+$$
+$$
+e_{N,\theta,p}(n)
+ \le\min\left\{
+ 2(1-\mu_{\min}),
+ \Delta_{N,\theta}M_{n,p},
+ \sqrt{\frac\pi2}\,
+ \frac{N-1}{\sqrt{np(1-p)}}
+ \right\}.
+$$
+In particular the proposed absolute-constant inequality is true, with
+$$
+C=\sqrt{\frac\pi2},
+\qquad
+e_{N,\theta,p}(n)
+ \le\min\left\{2,\frac{CN}{\sqrt{np(1-p)}}\right\}.
+$$
+Every fixed observation therefore mixes uniformly in its initial phase. The bound is also uniform in the angle, and uniform in $p$ on every set where $p(1-p)$ has a positive lower bound.
+

@@ -1,0 +1,20 @@
+#### 132.1.3 解码还需要可逆编码及所需访问权限
+
+在有限维复内积空间中，若给定线性编码 $V:\mathcal H_{\rm log}\to\mathcal H_{\rm phys}$，且 $V^*V=I$，则 $V$ 是等距嵌入，并有 $V^*V\xi=\xi$。这才提供全物理输出上的精确逻辑解码。对非零逻辑空间，固定一个逻辑密度矩阵 $\rho_0$，可把码空间上的逆延拓为通道
+
+$$
+\mathcal D(\rho)=V^*\rho V+
+\operatorname{Tr}((I-VV^*)\rho)\rho_0.
+$$
+
+第一项完全正。把 $\rho_0=\sum_jr_j|e_j\rangle\langle e_j|$ 对角化，并为 $(\operatorname{im}V)^\perp$ 选正交基 $g_k$，第二项的 Kraus 算子可取 $\sqrt{r_j}|e_j\rangle\langle g_k|$，故也完全正。总迹等于 $\operatorname{Tr}(VV^*\rho)+\operatorname{Tr}((I-VV^*)\rho)=\operatorname{Tr}\rho$。对 $\rho=V\sigma V^*$，补充项为零，第一项为 $\sigma$。这验证了完整通道层面的解码。
+
+如果只允许访问某个子系统，还需额外恢复条件。例如
+
+$$
+V|0\rangle=|0\rangle_A|0\rangle_B,\qquad
+V|1\rangle=|0\rangle_A|1\rangle_B
+$$
+
+是等距编码，但 $A$ 的约化态对任意输入都恒为 $|0\rangle\langle0|$，所以只观察 $A$ 不能恢复逻辑比特；$B$ 或全系统的访问能力与之不同。切口秩、熵上界或足够大的边界维数，都不会补回这种被丢弃的区别。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6782cb71b0a75f0cc43cc6a29c93be3361a8aea74b63d8ebd4a47edc19ce4bae
+  normalized_sha256: sha256:6782cb71b0a75f0cc43cc6a29c93be3361a8aea74b63d8ebd4a47edc19ce4bae
+cas_ref: sha256:6782cb71b0a75f0cc43cc6a29c93be3361a8aea74b63d8ebd4a47edc19ce4bae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “两极值点分别只有这一种”及“均非零”是本叶的三个实质要求，不是定义所偷带的性质；已运行探针对最小和最大两端分别给出唯一拆分、系数乘积和非零性，唯一性来自有界两加数和相等的上游等价，未省去任何一端，仓内无冻结 GID。
+    previous_atom_id: 1d54261887ca33a24ffe52b30debaed950313a05b9006ca72e377f25ecb5f0c7
+    next_atom_id: b433dda67178afdae7f088cec2b14f95ac782ce60f1860ff31ed6979853e3f7b

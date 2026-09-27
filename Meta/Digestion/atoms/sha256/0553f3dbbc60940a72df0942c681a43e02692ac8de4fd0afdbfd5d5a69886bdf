@@ -1,0 +1,11 @@
+观察值域取不交并 $Q_\bot=(\{1\}\times Q)\sqcup\{\bot\}$；即使 $Q$ 自己包含一个名为“失败”的值，它也不等于新标签 $\bot$。定义
+
+$$
+\operatorname{obs}_C(x)=
+\begin{cases}(1,q(C(x))),&C(x)\text{ 有定义},\\ \bot,&C(x)\text{ 无定义},\end{cases}
+\qquad
+x\approx_\Sigma y\ \Longleftrightarrow\quad
+\forall C\in\operatorname{Ctx}_\Sigma,\quad
+\operatorname{obs}_C(x)=\operatorname{obs}_C(y).
+$$
+

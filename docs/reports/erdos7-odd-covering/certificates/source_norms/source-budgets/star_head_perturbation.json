@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "scope": "Ordinary conditional comparison and BBMST continuation plus exact arithmetic. Any actual reference-head bad mass <=9/20 is paid once. Two separate original-head sufficient conditions allow all 27-divisible labels or all labels with at least four distinct primes to have arbitrary residues; all tail primes >73 are unrestricted. No assertion for the union of these two head classes or unrestricted Erdos7.",
+  "cutoff": 16384,
+  "last_prime": 16381,
+  "global_index": 1900,
+  "tail_steps": 1879,
+  "retained_states": 6553,
+  "max_query": 6552,
+  "C": "55386439412229727/125000000000000000",
+  "J": "4344363876475156387651/500000000000000000",
+  "epsilon": "9/20",
+  "survival": "13363560587770273/125000000000000000",
+  "Gamma": "4343917330717507468743/53454242351081092",
+  "stopping": "326059/4",
+  "margin": "3347967742569993841/13363560587770273",
+  "budget27": "27291063632391/67345087201280",
+  "budget_support4": "288440010638780744436573/670918019074091909120000",
+  "step_digest": "bf4c03c869daaf731394dfcf0f0911d586fd7d7eaaeab9dc52a8889aae68ea3c",
+  "final_low_state_digest": "9572db84e83e58d4f2672a0af13cad2ddd90501ba541932b6fc7d55da28162e8",
+  "fixture27": {
+    "period": 675,
+    "head_labels": 11,
+    "source": 169,
+    "bad": 13,
+    "old_residue": 8,
+    "new_residue": 1,
+    "probability": "1/13"
+  },
+  "fixture_support4": {
+    "period": 1155,
+    "head_labels": 15,
+    "source": 135,
+    "bad": 1,
+    "old_residue": 0,
+    "new_residue": 772,
+    "probability": "1/135"
+  },
+  "schema": "star-head-perturbation-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+    "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+    "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+  },
+  "producer_sha256": "49a69df08e06a29fad890d2c2024a2eb2b1d4e20e62560e102936e6a983f4935"
+}

@@ -1,0 +1,273 @@
+{
+  "head_modulus": 315,
+  "head_survivors": 144,
+  "lcm": 107415,
+  "original_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      9,
+      0
+    ],
+    [
+      15,
+      0
+    ],
+    [
+      21,
+      0
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      45,
+      0
+    ],
+    [
+      63,
+      0
+    ],
+    [
+      105,
+      0
+    ],
+    [
+      315,
+      0
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      33,
+      1
+    ],
+    [
+      55,
+      46
+    ],
+    [
+      77,
+      36
+    ],
+    [
+      165,
+      136
+    ],
+    [
+      231,
+      148
+    ],
+    [
+      385,
+      281
+    ],
+    [
+      1155,
+      106
+    ],
+    [
+      99,
+      19
+    ],
+    [
+      495,
+      361
+    ],
+    [
+      31,
+      0
+    ],
+    [
+      93,
+      1
+    ],
+    [
+      155,
+      126
+    ],
+    [
+      217,
+      127
+    ],
+    [
+      279,
+      190
+    ],
+    [
+      341,
+      98
+    ],
+    [
+      465,
+      316
+    ],
+    [
+      651,
+      379
+    ],
+    [
+      1023,
+      1000
+    ],
+    [
+      1085,
+      71
+    ],
+    [
+      1395,
+      1126
+    ],
+    [
+      1705,
+      1561
+    ],
+    [
+      1953,
+      694
+    ],
+    [
+      2387,
+      2276
+    ],
+    [
+      3069,
+      1099
+    ],
+    [
+      3255,
+      2836
+    ],
+    [
+      5115,
+      4201
+    ],
+    [
+      7161,
+      1660
+    ],
+    [
+      9765,
+      6931
+    ],
+    [
+      11935,
+      6126
+    ],
+    [
+      15345,
+      7336
+    ],
+    [
+      21483,
+      12979
+    ],
+    [
+      35805,
+      31921
+    ],
+    [
+      107415,
+      36541
+    ]
+  ],
+  "original_modulus_count": 45,
+  "cofactor11_order": [
+    3,
+    5,
+    7,
+    15,
+    21,
+    35,
+    105,
+    9,
+    45
+  ],
+  "coherent_old_centre_mod3465": 1891,
+  "thresholds": {
+    "11": "2/5",
+    "31": "2/5"
+  },
+  "active11_label_histogram": {
+    "0": 45,
+    "1": 54,
+    "2": 15,
+    "3": 19,
+    "4": 3,
+    "5": 5,
+    "7": 2,
+    "9": 1
+  },
+  "later_charge_head_rows": [
+    {
+      "head": 1,
+      "coherent_load": 12,
+      "active11_labels": 9,
+      "surviving_row_mass": "1/6",
+      "free11_digit10_mass": "1/6"
+    },
+    {
+      "head": 106,
+      "coherent_load": 8,
+      "active11_labels": 7,
+      "surviving_row_mass": "1/2",
+      "free11_digit10_mass": "1/6"
+    },
+    {
+      "head": 211,
+      "coherent_load": 8,
+      "active11_labels": 7,
+      "surviving_row_mass": "1/2",
+      "free11_digit10_mass": "1/6"
+    }
+  ],
+  "first_charge": "1/54",
+  "later_charge_before_killing": "17/15552",
+  "charge_event_intersection": "0",
+  "later_charge_after_killing_raw": "17/15552",
+  "remaining_mass_after11": "53/54",
+  "later_charge_after_conditioning11": "17/15264",
+  "all_later_charge_head_points_previously_depleted": true,
+  "height_prefix_checks": [
+    {
+      "height": 1,
+      "row_mass_before": "1",
+      "row_mass_after": "1/6",
+      "equal_positive_depth_prefix_caps": [
+        "1/6"
+      ]
+    },
+    {
+      "height": 2,
+      "row_mass_before": "1",
+      "row_mass_after": "1/6",
+      "equal_positive_depth_prefix_caps": [
+        "1/6",
+        "1/66"
+      ]
+    },
+    {
+      "height": 3,
+      "row_mass_before": "1",
+      "row_mass_after": "1/6",
+      "equal_positive_depth_prefix_caps": [
+        "1/6",
+        "1/66",
+        "1/726"
+      ]
+    }
+  ]
+}

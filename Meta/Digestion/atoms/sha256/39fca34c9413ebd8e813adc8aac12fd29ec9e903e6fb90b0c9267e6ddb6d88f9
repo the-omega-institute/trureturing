@@ -1,0 +1,29 @@
+**推论 94.3（二进制的全局等变障碍、扩域不动点与不变概率）。** 在定义 94.1 的二进制情形：
+
+1. 不存在任何集合映射 $s:[0,1]\to\mathbb Z_2$ 满足
+   $$
+   s\circ J_\infty=J_2\circ s.
+   \tag{94.3a}
+   $$
+   因而不存在同时满足 $M_2\circ s=\mathrm{id}_{[0,1]}$ 的等变截面。等价地，实译码 $D_{\infty,2}$ 也没有取值于 $\Sigma_2$ 的补码等变截面。这里不附加连续性或可测性要求。
+2. 将仿射式 $z\mapsto-1-z$ 从 $\mathbb Z_2$ 延拓到 $\mathbb Q_2$，其唯一不动点为
+   $$
+   -\frac12,
+   \qquad
+   \left|-\frac12\right|_2=2.
+   \tag{94.3b}
+   $$
+   它属于 $\mathbb Q_2\setminus\mathbb Z_2$，所以不在原映射 $M_2$ 的定义域内。
+3. 在 $\mathbb Z_2$ 的 Borel 空间上，取实值概率
+   $$
+   \nu=\frac12\delta_1+\frac12\delta_{-2}.
+   $$
+   则
+   $$
+   (J_2)_*\nu=\nu,
+   \qquad
+   (M_2)_*\nu=\delta_{1/2},
+   \tag{94.3c}
+   $$
+   尽管这两个支撑状态都不是 $J_2$ 的不动点。
+

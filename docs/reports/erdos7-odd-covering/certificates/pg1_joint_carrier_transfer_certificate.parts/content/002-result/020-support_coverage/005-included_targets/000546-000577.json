@@ -1,0 +1,776 @@
+[
+  {
+    "masks": [
+      4224,
+      25352,
+      44378
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 16,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 19525181,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 0,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        3,
+        2,
+        4,
+        5,
+        1,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      25354
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 8,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      25368
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 8,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      26378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 9,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      26394
+    ],
+    "orbit_size": 12,
+    "minimal": false,
+    "deleted_points": 10,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      26442
+    ],
+    "orbit_size": 12,
+    "minimal": false,
+    "deleted_points": 10,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      44378
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 11,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 0,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      44890
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 14691717,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      60762
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4224,
+      61274
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 13,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4226
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 3,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 13119398,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4226,
+      25352
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 8,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4226,
+      44378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 13119398,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 2,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4232
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 3,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 12746123,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4232,
+      25352
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 8,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 19525181,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4232,
+      25352,
+      44378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 17,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 19525181,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 0,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        3,
+        2,
+        4,
+        5,
+        1,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4232,
+      44378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 12746123,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 3,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 0,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240,
+      25352
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 8,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240,
+      26378
+    ],
+    "orbit_size": 12,
+    "minimal": false,
+    "deleted_points": 10,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240,
+      27416
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 10,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240,
+      44378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 0,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      4240,
+      61274
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 14,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 20106847,
+    "previously_covered": false,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 8,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6210
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 4,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6210,
+      25352
+    ],
+    "orbit_size": 2,
+    "minimal": false,
+    "deleted_points": 9,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 4,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416,
+      8456
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 7,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416,
+      8456,
+      25352
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 12,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        3,
+        4,
+        2,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416,
+      25352
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 9,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 1,
+      "old_map_index": 1,
+      "seven_map_including_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416,
+      33808
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 7,
+    "maximum_containing_deletion_points": 22,
+    "minimum_loss_numerator": 5415130,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 6,
+      "seven_map_including_zero": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "masks": [
+      6416,
+      33808,
+      44378
+    ],
+    "orbit_size": 6,
+    "minimal": false,
+    "deleted_points": 16,
+    "maximum_containing_deletion_points": 21,
+    "minimum_loss_numerator": 12561790,
+    "previously_covered": true,
+    "support_containment_witness": {
+      "source_index": 2,
+      "old_map_index": 6,
+      "seven_map_including_zero": [
+        0,
+        3,
+        1,
+        4,
+        2,
+        5,
+        6
+      ]
+    }
+  }
+]

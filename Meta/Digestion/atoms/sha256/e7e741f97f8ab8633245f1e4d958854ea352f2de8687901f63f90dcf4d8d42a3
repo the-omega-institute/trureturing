@@ -1,0 +1,21 @@
+**定理 14.2（任意依赖下的 Boolean 反演）。** 定义自伴算子
+$$
+D_S=\sum_{T\subseteq S}(-1)^{|S|-|T|}P_T,
+\qquad D_\varnothing=P_C.
+\tag{14.3}
+$$
+无需任何独立性，就有
+$$
+P_A=\sum_{S\subseteq A}D_S\quad(A\subseteq E),\qquad
+\operatorname{Id}_{\mathcal H}=Q+\sum_{S\subseteq E}D_S.
+\tag{14.4}
+$$
+在任意依赖下，这只是算子加法恒等式，不断言各 $D_S$ 是正交投影。
+
+**证明。** 将式（14.3）代入第一式的右侧，$P_T$ 的系数为
+$$
+\sum_{T\subseteq S\subseteq A}(-1)^{|S|-|T|}
+=(1-1)^{|A\setminus T|},
+$$
+它在 $T=A$ 时为 $1$，其余为 $0$。再用 $Q=\operatorname{Id}-P_E$ 得第二式。自伴性来自各 $P_T$ 自伴及系数实值。这是 Boolean 格的 Möbius 反演；在乘积测度的函数 ANOVA 中，同一反演见 Art B. Owen，*Monte Carlo theory, methods and examples*，附录 [The ANOVA decomposition of $[0,1]^d$](https://artowen.su.domains/mc/A-anova.pdf)，§A.4，式（A.11）—（A.12）。$\square$
+

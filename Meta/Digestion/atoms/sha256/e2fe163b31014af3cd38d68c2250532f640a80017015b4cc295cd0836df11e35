@@ -1,0 +1,89 @@
+**theorem 60.4（有限残基超度量与局部答复的信息等价）。** 对每个素数 $p$ 与 $e\ge1$，definition 60.3 的 $d_{p,e}$ 是 $X_{p,e}$ 上的超度量。更精确地，对任意 $a,b,c\in X_{p,e}$，
+$$
+d_{p,e}(a,c)\le
+\max\bigl(d_{p,e}(a,b),d_{p,e}(b,c)\bigr).
+$$
+此外，对任意固定中心 $c$，函数
+$$
+a\longmapsto h_c(a)
+$$
+与
+$$
+a\longmapsto d_{p,e}(a,c)
+$$
+携带完全相同的信息：各自的值唯一决定另一个的值。
+
+**证明。** 由定义，$d_{p,e}(a,b)\ge0$，且
+$$
+d_{p,e}(a,b)=0
+\Longleftrightarrow
+a=b.
+$$
+又因为同余关系对 $a,b$ 对称，
+$$
+h_a(b)=h_b(a),
+$$
+故
+$$
+d_{p,e}(a,b)=d_{p,e}(b,a).
+$$
+
+为证强三角不等式，先注意对任意 $a,b,c$ 都有
+$$
+h_a(c)\ge\min\bigl(h_a(b),h_b(c)\bigr).
+$$
+事实上，若
+$$
+r\le\min\bigl(h_a(b),h_b(c)\bigr),
+$$
+则
+$$
+a\equiv b\pmod{p^r},
+\qquad
+b\equiv c\pmod{p^r},
+$$
+因而
+$$
+a\equiv c\pmod{p^r}.
+$$
+取所有这样的 $r$ 中的最大允许值即得所述不等式。
+
+若 $a=c$，则强三角不等式左端为 $0$。若 $a=b$ 或 $b=c$，强三角不等式直接退化为恒等式。剩下只需考虑 $a,b,c$ 两两不同的情形。此时
+$$
+d_{p,e}(a,c)
+=
+p^{-h_a(c)}
+\le
+p^{-\min(h_a(b),h_b(c))}
+=
+\max\bigl(p^{-h_a(b)},p^{-h_b(c)}\bigr),
+$$
+右端正是
+$$
+\max\bigl(d_{p,e}(a,b),d_{p,e}(b,c)\bigr).
+$$
+因此 $d_{p,e}$ 满足全部度量公理及强三角不等式，是超度量。
+
+最后定义有限集合之间的映射
+$$
+\phi:\{0,\ldots,e\}\longrightarrow
+\{0\}\cup\{p^{-r}:0\le r<e\}
+$$
+为
+$$
+\phi(r)=
+\begin{cases}
+p^{-r},&0\le r<e,\\
+0,&r=e.
+\end{cases}
+$$
+这些值两两不同，所以 $\phi$ 为双射。对任意 $a$，若 $a=c$，则 $h_c(a)=e$ 且 $d_{p,e}(a,c)=0=\phi(e)$；若 $a\ne c$，则 $h_c(a)<e$ 且
+$$
+d_{p,e}(a,c)=p^{-h_c(a)}=\phi(h_c(a)).
+$$
+故恒有
+$$
+d_{p,e}(a,c)=\phi(h_c(a)).
+$$
+因为 $\phi$ 可逆，$h_c(a)$ 唯一决定距离，距离也唯一决定 $h_c(a)$，所需信息等价得证。
+

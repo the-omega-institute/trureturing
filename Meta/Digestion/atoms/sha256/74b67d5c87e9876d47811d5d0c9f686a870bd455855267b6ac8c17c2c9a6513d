@@ -1,0 +1,40 @@
+**theorem 49.7（有限阈值时的全部边界公式）。** 设 $1\le t<\infty$ 且 $K_{t,D}$ 满足 theorem 49.5。对 $x,z\in R_D$，存在唯一边界元素
+$$
+E(x,z)\in R_D
+$$
+使对每个 $p^e\mid D$ 都有
+$$
+E(x,z)\bmod p^e=\mathcal E_{p^e}(x,z).
+$$
+对 $a\in\{0,\ldots,t-1\}$，同样记 $E(a,z)$ 为由 $\mathcal E_{p^e}(a,z)$ 给出的边界元素。连续幂延拓完全由下列公式决定：
+$$
+\operatorname{Pow}_{t,D}(a,b)=j(a^b),
+\qquad a,b<t;
+$$
+$$
+\operatorname{Pow}_{t,D}(x,0)=j(1),
+\qquad x\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(x,b)=x^b\in R_D,
+\qquad x\in R_D,\quad1\le b<t;
+$$
+$$
+\operatorname{Pow}_{t,D}(0,z)=j(0),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(1,z)=j(1),
+\qquad 1<t,\quad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(a,z)=E(a,z),
+\qquad2\le a<t,\quad z\in R_D;
+$$
+以及
+$$
+\operatorname{Pow}_{t,D}(x,z)=E(x,z),
+\qquad x,z\in R_D.
+$$
+当 $t=1$ 时，孤立自然数部分只有 $0$，所以含孤立 $1$ 的两条公式自动消失；$j(1)$ 此时就是边界中的环常数 $1$。当 $t>1$ 时，$j(0),j(1)$ 是环境空间中的孤立自然数点，必须与边界环中的 $0,1\in R_D$ 区分。
+

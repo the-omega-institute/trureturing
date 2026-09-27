@@ -1,0 +1,9 @@
+**命题 130.1。** $C_rR_p=I$，$E_p$ 是 $T_p$ 上关于 Fisher 内积的正交投影，且
+
+$$
+\|E_pv\|_{p,\mathrm{mass}}^2=\|C_rv\|_{q,\mathrm{mass}}^2,
+\qquad
+\|v\|_{p,\mathrm{mass}}^2
+=\|C_rv\|_{q,\mathrm{mass}}^2+\|(I-E_p)v\|_{p,\mathrm{mass}}^2.
+$$
+

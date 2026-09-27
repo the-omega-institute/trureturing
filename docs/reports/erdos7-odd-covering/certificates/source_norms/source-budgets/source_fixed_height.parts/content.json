@@ -1,0 +1,47 @@
+{
+  "cases": {
+    "path": "content/000-cases.json",
+    "sha256": "b4c06fecf974c707055832f61c6cc791852c08657d352d83a3f81412f7be0310",
+    "kind": "array"
+  },
+  "fixed12_supremum_raw": {
+    "kind": "inline",
+    "value": "39102661327827027195665233/8620110364906219921875000"
+  },
+  "fixed12_supremum_normalized": {
+    "kind": "inline",
+    "value": "195513306639135135978326165/7696556594173900372773312"
+  },
+  "fixed12_supremum_decimal": {
+    "kind": "inline",
+    "value": 25.40269849859011
+  },
+  "source_growing_limit": {
+    "kind": "inline",
+    "value": "1829/72"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Only fixed plain F_N, N>=12, Haar-lifted to complete test rectangles A,B,E>=N. Infinite-index comparison uses the existing ordinary source-box proof."
+  },
+  "schema": {
+    "kind": "inline",
+    "value": "source-fixed-height-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/source_full_square.py": "b5184ed67f1e16c2a24fd6d0cf9d6d7df660d8184d4b49b6613fa5ba77b5ad28",
+      "frontier/source-budgets/source_plain_schur.py": "c8b0296253c1b759693e5a78a2891437fdc63c3e0452a2a6276033d222c75834",
+      "profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md": "7d978556bb90cdc3d7167d5703f527d48e077c982c7aa11da4e66c8704d16cab",
+      "profile-notes/321-384/339b-the-actual-near-j-source-and-the-unit-refund.md": "5276f7c3ba0bc165be64acb506152221d6bfb5d35a4f209ae216f866a06531cf",
+      "profile-notes/321-384/339d-the-complete-plain-source-square-at-every-height.md": "d82dca7aeb91c60308fe7e51f67bbf5fe4486a23dbc63f2276c35b07c90aec96",
+      "profile-notes/321-384/339f-fixed-plain-source-at-arbitrary-test-heights.md": "3cd25591e86d71efddfe10ad58a83120715454073b3877956b1271ddbf67bbe6"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "0dc6982705020b2e85ceb4bb42c2ca70dc8076ab8c5e1ceeac93f15435ae97ea"
+  }
+}

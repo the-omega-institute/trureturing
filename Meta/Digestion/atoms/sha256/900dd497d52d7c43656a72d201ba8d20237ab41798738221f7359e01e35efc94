@@ -1,0 +1,45 @@
+**定义与假设 90.1（有限测试及其实际真值像）。** 沿用定义 88.5 的公式集、模型集、满足关系、映射
+$\tau:F_A\to F_B$、$\beta:\mathcal M_B\to\mathcal M_A$，以及满足条件 (SC)。
+保留其语义闭包 $S_A,S_B$ 和
+$$
+K_\tau^{\mathrm{sem}}(\Gamma)
+=\tau^{-1}[S_B(\tau[\Gamma])].
+$$
+这些算子不与另外指定的证明后承闭包 $C_A,C_B$ 混同；从语义结论转到证明后承仍使用推论 88.8 的桥接条件。
+
+称有限反模型存在性提升成立，记为 $\mathrm{CE}_{\mathrm{fin}}$，若
+$$
+\begin{aligned}
+\forall\Gamma\subseteq F_A\text{ 有限},\quad\forall\varphi\in F_A,\qquad
+&[\exists M\in\mathcal M_A,\ M\models_A\Gamma\ \land\ M\not\models_A\varphi]\\
+&\Longrightarrow
+[\exists N\in\mathcal M_B,\ N\models_B\tau[\Gamma]\ \land\ N\not\models_B\tau(\varphi)].
+\end{aligned}
+\tag{90.1a}
+$$
+有限前提包括 $\Gamma=\varnothing$，结论遍历全部 $F_A$。不限制前提集的同一条件仍记为 $\mathrm{CE}$。
+将定理 88.6 的逐前提反模型判据限制到有限前提，得到
+$$
+\mathrm{CE}_{\mathrm{fin}}
+\quad\Longleftrightarrow\quad
+\forall\Gamma\subseteq F_A\text{ 有限},\qquad
+K_\tau^{\mathrm{sem}}(\Gamma)=S_A(\Gamma).
+\tag{90.1b}
+$$
+这里的 $M\not\models_A\varphi$ 是经典元理论中的否定，不预设语言有否定联结词。
+
+记 $\mathbf2=\{0,1\}$，定义源模型的真值剖面
+$$
+e(M)(\varphi)=
+\begin{cases}
+1,&M\models_A\varphi,\\
+0,&M\not\models_A\varphi,
+\end{cases}
+\qquad
+X=e[\mathcal M_A],\qquad
+Y=(e\circ\beta)[\mathcal M_B]\subseteq X\subseteq\mathbf2^{F_A}.
+\tag{90.1c}
+$$
+赋予 $\mathbf2$ 离散拓扑，赋予乘积及 $X,Y$ 相应的积拓扑与子空间拓扑。
+模型载体本身不需拓扑；不同模型允许具有相同剖面。$\overline{Y}^{\,X}$ 表示在实际源剖面空间 $X$ 内的相对闭包。
+

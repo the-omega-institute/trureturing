@@ -1,0 +1,83 @@
+{
+  "scope": "Plain actual F_N, every N>=12; the ordinary proof supplies source-box and exponent-tail reductions. Compressed layouts and their site/pair LP have a unique centered optimum; no arbitrary-source, weighted all-height, later-prime, or unrestricted covering conclusion.",
+  "grid": {
+    "actual_source_entries": 4056,
+    "direct_rows": 20,
+    "grid_checks": 16224,
+    "best_ratio": "14980406372658004079678077933975956045126998016/15350952520756367392769130825192909307865234375",
+    "best_at": [
+      3,
+      0,
+      12,
+      "29524/531441",
+      "61035156/244140625",
+      "5/6"
+    ],
+    "lambda_value": "11/10",
+    "sigma_value": "101/100",
+    "class_weights": [
+      [
+        20,
+        27,
+        30
+      ],
+      [
+        33,
+        50,
+        47
+      ],
+      [
+        14,
+        20,
+        22
+      ],
+      [
+        21,
+        34,
+        33
+      ]
+    ],
+    "schur_ratio_upper": "49/50"
+  },
+  "tail": {
+    "root0_cap_checks": 64,
+    "depth1_corner_minima": [
+      {
+        "positive_five": false,
+        "positive_seven": false,
+        "minimum": "881515/708588"
+      },
+      {
+        "positive_five": false,
+        "positive_seven": true,
+        "minimum": "797159/708588"
+      },
+      {
+        "positive_five": true,
+        "positive_seven": false,
+        "minimum": "375382/177147"
+      },
+      {
+        "positive_five": true,
+        "positive_seven": true,
+        "minimum": "354293/177147"
+      }
+    ],
+    "tail_checks": 264,
+    "min_tail_margin": "24166047412258860810455648580882485/516810321021989547903667836685719",
+    "a_tail_shift": "1-gamma/d; d=3/4 for b=0 and d=1 otherwise"
+  },
+  "value": {
+    "finite_values": [
+      {
+        "height": 12,
+        "value": "2036574313467845778288943/80172464522644795549722"
+      },
+      {
+        "height": 24,
+        "value": "1828716454870908884078061103973706637506656447162/71988838029841937181983634214065550432830039081"
+      }
+    ],
+    "limit": "1829/72"
+  }
+}

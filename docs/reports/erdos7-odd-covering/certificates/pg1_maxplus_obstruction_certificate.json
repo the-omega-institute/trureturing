@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "50a56850cb5c329305fbd55ac2843ac42b7298ee208020b33b02742bf262a5c6",
+  "parts_directory": "pg1_maxplus_obstruction_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "29d276e355cf2bd044992ae25e276ca7e6ec83fda406b6362176a71e330c8988",
+    "kind": "object"
+  }
+}

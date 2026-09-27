@@ -1,0 +1,332 @@
+[
+  {
+    "height": 8,
+    "cuts": {
+      "pure3": 12,
+      "pure5": 6,
+      "root5": 11,
+      "cell5": 10
+    },
+    "tail_results": [
+      {
+        "original": "14538541870316488925703917987394811871299/20409375639782133786271945700811972656250",
+        "affine_upper": "14538541870316488925703917987394811871299/20409375639782133786271945700811972656250",
+        "difference": "0",
+        "envelope": {
+          "constant": "1107164397037047051346752033413/1554771099668399537620007812500",
+          "defect_prices": {
+            "E5": "202248913/3721718",
+            "E15": "442318372731/4067837774",
+            "E3": "175857526086416/8769418993335",
+            "E5d": "202248913/3721718",
+            "E15d": "442318372731/4067837774",
+            "omega": "1597671624307361/8769418993335"
+          },
+          "slopes": {
+            "pure3": "202248913/3721718",
+            "pure5": "175857526086416/8769418993335",
+            "root5": "1422255/26026",
+            "cell5": "372/7"
+          },
+          "kappa": "2187/1093",
+          "cuts": {
+            "pure3": 12,
+            "pure5": 6,
+            "root5": 11,
+            "cell5": 10
+          },
+          "family_parameters": {
+            "pure3": {
+              "prime": 3,
+              "start": 3,
+              "c": "1093751/1562500",
+              "H": "1/20"
+            },
+            "pure5": {
+              "prime": 5,
+              "start": 2,
+              "c": "151320267281/378228593610",
+              "H": "51883201/518832090"
+            },
+            "root5": {
+              "prime": 5,
+              "start": 2,
+              "c": "4611841/17294403",
+              "H": "384320/5764801"
+            },
+            "cell5": {
+              "prime": 5,
+              "start": 2,
+              "c": "4611841/51883209",
+              "H": "384320/17294403"
+            }
+          },
+          "source_offset": "0",
+          "punctured_supports": {
+            "2": {
+              "pure3": {
+                "slope": "9",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/18"
+              },
+              "pure5": {
+                "slope": "3",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/100"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            },
+            "3": {
+              "pure3": {
+                "slope": "8",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/54"
+              },
+              "pure5": {
+                "slope": "3",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/100"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            },
+            "4": {
+              "pure3": {
+                "slope": "8",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/54"
+              },
+              "pure5": {
+                "slope": "3",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/100"
+              },
+              "root5": {
+                "slope": "8",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/100"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            },
+            "1": {
+              "pure3": {
+                "slope": "9",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/18"
+              },
+              "pure5": {
+                "slope": "4",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/20"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            }
+          }
+        }
+      },
+      {
+        "original": "118410675857157596058781747601566378709/1855397785434739435115631427346542968750",
+        "affine_upper": "118410675857157596058781747601566378709/1855397785434739435115631427346542968750",
+        "difference": "0",
+        "envelope": {
+          "constant": "9017760519754853869065352591/141342827242581776147273437500",
+          "defect_prices": {
+            "E5": "1466831/338338",
+            "E15": "3207959397/369803434",
+            "E3": "1268826899266/797219908485",
+            "E5d": "1466831/338338",
+            "E15d": "3207959397/369803434",
+            "omega": "11650395528841/797219908485"
+          },
+          "slopes": {
+            "pure3": "1466831/338338",
+            "pure5": "1268826899266/797219908485",
+            "root5": "837/182",
+            "cell5": "372/91"
+          },
+          "kappa": "2187/1093",
+          "cuts": {
+            "pure3": 12,
+            "pure5": 6,
+            "root5": 11,
+            "cell5": 10
+          },
+          "family_parameters": {
+            "pure3": {
+              "prime": 3,
+              "start": 3,
+              "c": "1093751/1562500",
+              "H": "1/20"
+            },
+            "pure5": {
+              "prime": 5,
+              "start": 2,
+              "c": "151320267281/378228593610",
+              "H": "51883201/518832090"
+            },
+            "root5": {
+              "prime": 5,
+              "start": 2,
+              "c": "4611841/17294403",
+              "H": "384320/5764801"
+            },
+            "cell5": {
+              "prime": 5,
+              "start": 2,
+              "c": "4611841/51883209",
+              "H": "384320/17294403"
+            }
+          },
+          "source_offset": "0",
+          "punctured_supports": {
+            "2": {
+              "pure3": {
+                "slope": "9",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/18"
+              },
+              "pure5": {
+                "slope": "3",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/100"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            },
+            "3": {
+              "pure3": {
+                "slope": "8",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/54"
+              },
+              "pure5": {
+                "slope": "3",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/100"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            },
+            "1": {
+              "pure3": {
+                "slope": "9",
+                "intercept_coefficient": "1/354294",
+                "remaining_geometric": "1/18"
+              },
+              "pure5": {
+                "slope": "4",
+                "intercept_coefficient": "1/12500",
+                "remaining_geometric": "1/20"
+              },
+              "root5": {
+                "slope": "9",
+                "intercept_coefficient": "1/39062500",
+                "remaining_geometric": "1/20"
+              },
+              "cell5": {
+                "slope": "8",
+                "intercept_coefficient": "1/7812500",
+                "remaining_geometric": "1/20"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "g5": "1/45",
+    "g15": "1/45",
+    "actual_slots": [
+      "1/28824005",
+      "1/28824005"
+    ],
+    "actual_shared_upper": {
+      "upper": "2791872918209064821808793494720693240027779/2449125076773856054352633484097436718750000",
+      "coordinate_values": [
+        "2787537948843600952851919091134638260473781/2449125076773856054352633484097436718750000",
+        "2789002076078027986951450997261187348629711/2449125076773856054352633484097436718750000",
+        "4535588606462320267232516770166058969881404151/3986195974957128114064346258716988003437500000",
+        "45355450326693413931893631792023860279551935981/39861959749571281140643462587169880034375000000",
+        "2787546872748787960496377089959839481475227/2449125076773856054352633484097436718750000",
+        "2789002076078027986951450997261187348629711/2449125076773856054352633484097436718750000",
+        "2791872918209064821808793494720693240027779/2449125076773856054352633484097436718750000"
+      ],
+      "residual": "14556647819941007293/946359657255746671875000",
+      "maximizing_coordinates": [
+        "omega"
+      ]
+    },
+    "actual_separate_budget_upper": "2791872918209064821808793494720693240027779/2449125076773856054352633484097436718750000",
+    "vertex_values": [
+      [
+        [
+          "0",
+          "0"
+        ],
+        "2554321386045096332600750091041795619263/2240736575273427314137816545377343750000"
+      ],
+      [
+        [
+          "0",
+          "14558107035244757293/21030214605683259375000"
+        ],
+        "2789002145031811318801980773948796385456391/2449125076773856054352633484097436718750000"
+      ],
+      [
+        [
+          "14558107035244757293/21030214605683259375000",
+          "0"
+        ],
+        "179327514459004839672407665470818009970426577/157551790448912858025315225846844482421875000"
+      ]
+    ],
+    "restricted_head_vertex_upper": "2554321386045096332600750091041795619263/2240736575273427314137816545377343750000",
+    "heads_per_cost": 8,
+    "scope": "Exact restricted-head regression; not an exhaustive original-head or all-source numerical bound."
+  }
+]

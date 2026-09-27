@@ -1,0 +1,26 @@
+**命题 127.5（记录细化的路径 KL 收支）。** 有
+
+$$
+\boxed{D(P_Z\Vert R_Z)\le D(P_Y\Vert R_Y)\le D(P\Vert R)}.
+$$
+
+两份差值精确为
+
+$$
+\boxed{
+D(P\Vert R)-D(P_Y\Vert R_Y)
+=\sum_{y:P_Y(y)>0}P_Y(y)
+D\bigl(P(\cdot\mid q=y)\Vert R(\cdot\mid q=y)\bigr),
+}
+$$
+
+$$
+\boxed{
+D(P_Y\Vert R_Y)-D(P_Z\Vert R_Z)
+=\sum_{z:P_Z(z)>0}P_Z(z)
+D\bigl(P_Y(\cdot\mid f=z)\Vert R_Y(\cdot\mid f=z)\bigr).
+}
+$$
+
+第二个不等号取等，当且仅当每个正 $P_Y$ 纤维上的两份路径条件律相同；第一个不等号取等，当且仅当每个正 $P_Z$ 纤维上的两份细记录条件律相同。相应条件在至少一个正权纤维上失败时，对应不等号严格。
+

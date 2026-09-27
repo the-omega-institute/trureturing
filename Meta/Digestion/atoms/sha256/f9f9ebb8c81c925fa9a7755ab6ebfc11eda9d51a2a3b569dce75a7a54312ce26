@@ -1,0 +1,37 @@
+**定理 68.6（有限维下的有限测试界）。** 令 $d=\dim H$。
+
+若 $d=0$，则 $H=0$，两个商均为零，且 $\tau_{\mathrm{fb}}=\tau_{\mathrm{init}}=0$。
+
+若 $d>0$，则
+$$
+N=\bigcap_{j=0}^{d-1}\ker(BD^j),
+\qquad
+R=\operatorname{span}\{D^jCv:0\le j<d,\ v\in V\}.
+$$
+此外，有限反馈尾存在当且仅当
+$$
+M_d=M_{d+1}=\cdots=M_{2d-1}=0.
+$$
+在此情形
+$$
+\tau_{\mathrm{fb}}\le \dim Q_{\mathrm{fb}}\le d,
+$$
+并且
+$$
+\tau_{\mathrm{fb}} =\min\Bigl\{0\le m\le d:
+M_m=M_{m+1}=\cdots=M_{m+d-1}=0\Bigr\}.
+$$
+同理，任意隐藏初态的统一强制终止存在当且仅当
+$$
+BD^d=BD^{d+1}=\cdots=BD^{2d-1}=0
+$$
+作为 $H\to V$ 的映射成立；存在时
+$$
+\tau_{\mathrm{init}}\le \dim Q_{\mathrm{init}}\le d,
+$$
+且
+$$
+\tau_{\mathrm{init}} =\min\Bigl\{0\le m\le d:
+BD^m=BD^{m+1}=\cdots=BD^{m+d-1}=0\Bigr\}.
+$$
+

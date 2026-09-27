@@ -1,0 +1,48 @@
+**定理 122.18。** 存在某个有限 $N$，使全部 $n\ge N$ 的观察核已等于 $\sim_\infty$，因而 $P_n=P_\infty$。对任意目标 $f$，
+$$
+\lim_n\|f-P_nf\|_\mu^2=\|f-P_\infty f\|_\mu^2,
+$$
+右侧为零当且仅当总观察决定 $f$。对有限值确定目标 $Y=Y(X)$，
+$$
+\lim_nH(Y\mid q_n)=H(Y\mid q_\infty),
+$$
+且满支撑下极限为零当且仅当总观察决定 $Y$。
+
+**证明。** 对每个不满足 $x\sim_\infty y$ 的点对，选一个首次或任意分离层；这样的点对有限，取这些层的最大值 $N$，无此点对时取 $N=0$。细化保证此后它们永不重新合并，所以第 $N$ 层已实现总核。条件投影只由纤维及参考律决定，故稳定。平方残差为零恰为 $f$ 纤维常值；有限条件熵为零恰为每个正质量纤维上的目标条件律为点质量，满支撑将其提升为整条实际纤维常值。证毕。
+
+不能仅由 $|X|$ 给出最后分离层的时间索引上界：允许长时间重复同一观察后才增加信息。严格细化的次数有有限上界，发生这些变化的时刻仍须由实际观察程序给定。
+
+更一般的 Hilbert 版本也不需要零残差承诺。对同一 Hilbert 空间的递增闭子空间 $U_n$，设 $U_\infty=\overline{\bigcup_nU_n}$，相应正交投影为 $P_n,P_\infty$，则 $P_nf\to P_\infty f$。**证明。** 令 $h=P_\infty f$，有 $P_nf=P_nh$。给定 $\varepsilon>0$，选某个 $v\in U_N$ 使 $\|h-v\|<\varepsilon$；$n\ge N$ 时投影的最佳逼近性质给 $\|h-P_nh\|\le\|h-v\|<\varepsilon$。故结论成立，而极限残差恰为到 $U_\infty$ 的距离。证毕。将这些子空间解释为条件观察空间时，还须按所选概率模型识别其闭并所对应的总可测信息。
+
+这个识别在一般概率空间上也可以明确完成。设 $(X,\mathcal F,\mu)$ 为概率空间，$\mathcal F_n$ 递增，$\mathcal F_\infty=\sigma(\bigcup_n\mathcal F_n)$，令 $U_n=L^2(\mathcal F_n)$，均按几乎处处等价理解。则
+$$
+\overline{\bigcup_nL^2(\mathcal F_n)}=L^2(\mathcal F_\infty).
+$$
+**证明。** 左侧 $V$ 包含常函数并包含每个 $\mathcal F_n$ 事件的指标。令 $\mathscr D$ 为指标属于 $V$ 的 $\mathcal F_\infty$ 事件族。它含全空间，对补封闭；若 $A_j$ 两两不交，有限和 $\sum_{j\le m}1_{A_j}$ 属于 $V$，并以 $L^2$ 范数收敛到 $1_{\bigcup_jA_j}$，因为尾部集合的概率趋零。因此 $\mathscr D$ 是 Dynkin 系统。递增并 $\bigcup_n\mathcal F_n$ 是一个代数，尤其对有限交封闭，且包含于 $\mathscr D$。由 $\pi$–$\lambda$ 定理，$\mathscr D$ 包含整个 $\mathcal F_\infty$。简单函数的 $L^2$ 稠密性给 $L^2(\mathcal F_\infty)\subseteq V$；反向来自每个 $U_n$ 包含于闭子空间 $L^2(\mathcal F_\infty)$。证毕。
+
+故对一般 $f\in L^2(\mu)$，上述 Hilbert 结论就是
+$$
+\mathbb E[f\mid\mathcal F_n]\longrightarrow
+\mathbb E[f\mid\mathcal F_\infty]\quad\text{于 }L^2,
+$$
+残差消失当且仅当 $f$ 有 $\mathcal F_\infty$ 可测代表元。有限值目标 $Y$ 的各条件概率是指标的条件期望，因此同时在 $L^2$ 收敛到总信息的条件概率。概率单纯形上的熵连续且有界，故这些概率向量的依概率收敛给出熵期望收敛：具体地，用熵的一致连续性控制向量距离不超过 $\delta$ 的部分，以其有限上界控制其余部分，再用 $L^2$ 收敛使后者概率趋零。因此
+$$
+H(Y\mid\mathcal F_n)\longrightarrow H(Y\mid\mathcal F_\infty).
+$$
+极限为零恰在总条件律几乎处处为点质量，此时每个目标指标的条件方差为零，故指标等于其总条件期望，等价于总信息决定 $Y$（几乎处处）。这个一般版本的零点不能提升为所有零质量状态上的逐点决定。
+
+各层收支可以逐项相加，得到
+$$
+\|f-P_0f\|^2
+=\|f-P_nf\|^2+\sum_{j<n}\|P_{j+1}f-P_jf\|^2,
+$$
+$$
+H(Y\mid Q_0)-H(Y\mid Q_n)
+=\sum_{j<n}I(Y;Q_{j+1}\mid Q_j).
+$$
+在一般递增条件信息版本中将 $Q_j$ 改成 $\mathcal F_j$，同一结论成立；取极限得到累计增益恰等于初始误差减去总接口残差，而不是无条件耗尽初始误差。
+
+例如 $X=\{0,1\}^2$ 配均匀律，全部 $q_n(a,b)=a$，目标 $f(a,b)=b$。任意层都有 $P_nf=1/2$、残差平方 $1/4$、条件熵 $\log2$。重复已保留的确定观察不能切开其盲纤维。带新噪声或新干预的重复实验是另一份联合接口，不能在未定义它时套用这个确定重复例子或反向排除其信息增益。
+
+分区拓扑与上下近似见 Z. Pawlak, “Rough sets”, DOI 10.1007/BF01001956。条件平均采用标准条件期望；投影扩张使用有限维谱分解。仓内 `PartitionTopologyKernel`、`DirectImageComplementSaturation`、`ConditionalExpectationResidualDecomposition`、`ConditionalExpectationRefinementPythagoras` 与 `SharpEffectComplementBoundary` 分别提供对应接口；各特殊模型条件以上述证明为准。
+

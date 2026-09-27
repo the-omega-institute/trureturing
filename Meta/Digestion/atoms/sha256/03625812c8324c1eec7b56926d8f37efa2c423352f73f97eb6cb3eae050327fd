@@ -1,0 +1,18 @@
+**定义 46.1（固定边际任务及其残差前缀）。** 采用[递归关系观察卷](RECURSIVE_RELATIONAL_OBSERVATION.md)（以下记为RRO）假设34.0的紧数位载体，记为 $\mathcal K$，保留其相位映射 $H:\mathcal K\to\mathbb T$、定向分裂纤维 $x_m^\pm$、$E_m=[-m\phi]$、$\phi=(1+\sqrt5)/2$ 及 $v_m=\delta_{x_m^+}-\delta_{x_m^-}$。固定RRO 定义34.1的参数 $\tau=0$ 与定理28.7的实际全测度乘法 $\star_0$，其相位提升记为 $\mathcal L_0$。对任意概率测度 $\mu$，置
+$$
+\nu=H_\#\mu,\qquad g_m=(R_0\mu)_m=\mu(\{x_m^+\}),\qquad
+U\mu=\mu\star_0\delta_{x_1^+}.
+$$
+这里 $\mathcal L_0$ 在分裂相位取负支，在非分裂相位取唯一支；$U^0$ 专指恒等算子。取预先固定的有限视界 $h\ge0$ 和深度计划 $\boldsymbol\ell=(\ell_0,\ldots,\ell_h)\in\mathbb N_0^{h+1}$，令
+$$
+\mathcal M_{\boldsymbol\ell}(\mu)
+=\bigl((q_{\ell_n})_\#U^n\mu\bigr)_{n=0}^h,
+\qquad q_L(x)=(x_0,\ldots,x_{L-1}).
+$$
+任务是这个有序的边际直方图元组；不包含联合记录律、自适应查询或计划外精度。沿用RRO 的 $G_0=1,G_1=2,G_{L+2}=G_{L+1}+G_L$，但深度零无边界，故定义
+$$
+B(0)=0,\qquad B(L)=G_L\ (L\ge1),\qquad
+Q_J(\mu)=(\nu,g_1,\ldots,g_J)\quad(J\in\mathbb N_0).
+$$
+$Q_J$ 保留完整相位测度及精确实残差，$J$ 只计残差坐标数。完整相位、计划、提取、数值精度、查询和解码费用按[ML主卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定义22.1分别计量。
+

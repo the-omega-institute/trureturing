@@ -1,0 +1,13 @@
+**定理 44.4（从旧成员到新成员的有限报告捕获；repo-derived）。** 取定义44.1中同一 $p,r$ 下的旧机 $a$ 与新机 $b$，任取 $j$ 及 $q\in I^a_j$。重启编号与初始对数误差上界取为
+$$
+i_0=\operatorname{nearest}_{\downarrow}(m_bj/m_a),\qquad
+E_{ab}=k_a+\frac{\eta}{2m_b r(1-r)}.
+$$
+对共同报告词 $u=\beta_1\cdots\beta_n$，令 $i_{t+1}=T^b_{\beta_{t+1}}(i_t)$。若整数 $T\ge1$ 满足
+$$
+\frac{\eta^TE_{ab}}4\le\mu_b,
+$$
+则对每个长度 $n\ge T$ 的词 $u$ 都有
+$$
+F_u(q)\in I^b_{i_n},\qquad |y^b_{i_n}-h(F_u(q))|\le\varepsilon_b.
+$$

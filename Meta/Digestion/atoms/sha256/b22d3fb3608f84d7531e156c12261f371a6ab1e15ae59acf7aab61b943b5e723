@@ -1,0 +1,26 @@
+**theorem 42.17 (Addition: global failure and its exact legitimate domain).** Let
+$$
+a:V\oplus V\to V,\qquad a(x,y)=x+y.
+$$
+Then $S(a)$ is continuous. It descends through
+$$
+J:S(V\oplus V)\to S(V)\times S(V)
+$$
+on the whole product if and only if $V=0$.
+
+There is an exact fiberwise criterion. For $p,q\in S(V)$, the following are equivalent:
+
+(a) $S(a)$ is constant on $J^{-1}(p,q)$.
+
+(b) There is no $\ell\in V^*$ with $p(\ell)=-q(\ell)\ne0$.
+
+(c) One oriented flag is an initial segment of the other, including all orientations on the shared quotients.
+
+When these conditions hold, the output is the longer flag. In particular the output is $p$ when $p=q$, and is the nonzero marginal when the other marginal is zero. The domain
+$$
+\mathcal C=
+\{(p,q):\text{there is no }\ell\text{ with }p(\ell)=-q(\ell)\ne0\}
+\tag{42.42}
+$$
+is closed in $S(V)^2$, and the longer-flag rule is a continuous map $\mathcal C\to S(V)$.
+

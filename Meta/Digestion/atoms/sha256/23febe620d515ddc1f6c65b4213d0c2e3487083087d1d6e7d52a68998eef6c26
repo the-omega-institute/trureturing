@@ -1,0 +1,2 @@
+**证明。** supernatural gcd/lcm 的赋值公式是其标准定义；所引文献给出 supernatural numbers 与 profinite 整数商结构的公开背景。本节定理 50.3 与 50.4 已独立证明在 $K_{t,D}$ 中的精确存在条件，因此当 $D$ 有 $m>2$ 时，supernatural 商上的格运算不能被误当作这里要求的 $K_{t,D}$ 值连续提升。其余限制陈述只是明确本节定理的量词范围。证毕。
+

@@ -1,0 +1,22 @@
+**定理 4.4（收缩动力学的有限状态近似上界）。** 设 $(X,d_X)$ 为度量空间，全部 $F_a$ 具有共同 Lipschitz 常数 $L\ge0$，观察 $o$ 的 Lipschitz 常数为 $M\ge0$。设点集 $z_1,\ldots,z_s\in X$ 及映射 $Q:X\to\{1,\ldots,s\}$ 满足
+\[
+ d_X(x,z_{Q(x)})\le\delta\quad\text{对全部 }x\in X.
+\]
+定义有限状态更新及输出
+\[
+ \widehat F_a(i)=Q(F_az_i),\qquad \widehat o(i)=o(z_i),
+\]
+初始状态取 $Q(x)$。对任意长度 $t$ 的动作词，输出误差至多为
+\[
+ M\delta\sum_{j=0}^{t}L^j.
+\]
+特别地，若 $L<1$，则全部时刻的误差一致不超过 $M\delta/(1-L)$。
+
+**证明。** 令 $x_t$ 为真实轨道，$z_{i_t}$ 为近似轨道，$e_t=d_X(x_t,z_{i_t})$。初始 $e_0\le\delta$。对于实际执行的任意动作 $a_t$，有
+\[
+ e_{t+1}\le d_X(F_{a_t}x_t,F_{a_t}z_{i_t})
+             +d_X(F_{a_t}z_{i_t},z_{Q(F_{a_t}z_{i_t})})
+          \le Le_t+\delta.
+\]
+归纳得到 $e_t\le\delta\sum_{j=0}^tL^j$，再应用观察的 Lipschitz 界。收缩情形对几何级数求和。此构造给出数学上的有限状态表示；只有再给出 $Q(F_az_i)$ 和所需输出的有效求值条件，才能把它解释为可执行构造。证毕。
+

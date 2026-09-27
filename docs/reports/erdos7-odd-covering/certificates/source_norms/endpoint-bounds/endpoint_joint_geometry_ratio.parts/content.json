@@ -1,0 +1,124 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-endpoint-joint-geometry-ratio-v1"
+  },
+  "source_vertex": {
+    "kind": "inline",
+    "value": 404
+  },
+  "carrier": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "source_sha256": {
+    "path": "content/003-source_sha256.json",
+    "sha256": "5aae2005089d4639ff1101c1860f3c63fbb425a78d96d8ce9103ba3720c0ea4a",
+    "kind": "value"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "old_linear_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "238/375"
+  },
+  "linear_gain": {
+    "kind": "inline",
+    "value": "2/375"
+  },
+  "old_square_upper": {
+    "kind": "inline",
+    "value": "114/25"
+  },
+  "square_upper": {
+    "kind": "inline",
+    "value": "508716559089313/111663855622800"
+  },
+  "cost_rows": {
+    "path": "content/010-cost_rows.json",
+    "sha256": "4aa411c5e35f33910dad07229ecfc54fbfb82db98be355d7a0e513a92b167703",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/011-majorants.json",
+    "sha256": "19b4165e3e6e6f42aa70c925fa2f8c6d2feee7387306084a2682d5240e1fd05f",
+    "kind": "array"
+  },
+  "improved_cost_count": {
+    "kind": "inline",
+    "value": 46
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "5325964619600558733333513488461979789289572994948886508317/149034165537643159841742247635525728265000000000000000000"
+  },
+  "numerator_gain": {
+    "kind": "inline",
+    "value": "14269880635061415990643966502937573302183/460183273226093252943229662540000000000000"
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282"
+    }
+  },
+  "old_native_h5_cap": {
+    "kind": "inline",
+    "value": "2028798479/12155062500"
+  },
+  "updated_hinge_caps": {
+    "kind": "inline",
+    "value": [
+      "81281/220500",
+      "2701424/12403125",
+      "30941653/194481000"
+    ]
+  },
+  "uniform_endpoint_denominator": {
+    "kind": "inline",
+    "value": "12487883191877/160166043056250"
+  },
+  "denominator_gain": {
+    "kind": "inline",
+    "value": "287668035973/266943405093750"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "endpoint_comparison_upper": {
+    "kind": "inline",
+    "value": "27399247261425663709058469146047099787354650637693879415361421/57088809405942745546774312717867611728542221600000000000000"
+  },
+  "endpoint_comparison_gain": {
+    "kind": "inline",
+    "value": "4884888052734778795398299380294899099769815469469560862302592670312323/715514764927778654975990348847482201509668258935397691200000000000000"
+  },
+  "scalar_laws": {
+    "path": "content/025-scalar_laws.json",
+    "sha256": "17ba6c10908f710d4e7e396ac216ca183fceda771e8adae1045e594ad53dd5db",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Uniform actual404 endpoint numerator/survival using the joint15/25/75 mean, common-head fifth hinge, stronger complete-pure3 square and all52 existing majorants. The revised57-constraint survival relaxation is sharp by abstract laws only; no actual realization, globalK update or Lean claim."
+  }
+}

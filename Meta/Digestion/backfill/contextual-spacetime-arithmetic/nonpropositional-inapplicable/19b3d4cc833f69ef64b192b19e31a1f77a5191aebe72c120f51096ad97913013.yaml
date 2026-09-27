@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19b3d4cc833f69ef64b192b19e31a1f77a5191aebe72c120f51096ad97913013
+  normalized_sha256: sha256:19b3d4cc833f69ef64b192b19e31a1f77a5191aebe72c120f51096ad97913013
+cas_ref: sha256:19b3d4cc833f69ef64b192b19e31a1f77a5191aebe72c120f51096ad97913013
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“累积表示与 join 乘法的成熟背景见”定位会议文献，并以“该来源并未直接陈述本稿的无限整数时间链”限定引用范围；所列公式是书目条目的内容说明，不在本子句重新断言 CSA 变换定理，也没有把待证结论塞入定义，因此按文献来源说明处理。
+    previous_atom_id: aac9ed7f78a71d1cfdf4fba094c2a9a9a838a519a0da306d2911683d77e846b2
+    next_atom_id: a5c4d675b21328f915a74aca36bd5e8f2bf5266d5a53b2bdbefa0baf77df6bbb

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef7b3b4ef0a5b3268c63b3794693e8c04c853b4a72b693a9e22636a5333c1f8b
+  normalized_sha256: sha256:ef7b3b4ef0a5b3268c63b3794693e8c04c853b4a72b693a9e22636a5333c1f8b
+cas_ref: sha256:ef7b3b4ef0a5b3268c63b3794693e8c04c853b4a72b693a9e22636a5333c1f8b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子定义有限 Heisenberg 观察塔和正交残差，并限定深度的含义，单调性和稳定性不在本叶断言。
+    previous_atom_id: d46348308083873c13c3b02dda27ab076875bc423c2d6515050fd9d02ebfee6a
+    next_atom_id: d0443f90170cf6399280cc005b5b057804c5aa1bf0f8f61c66877ba70b73615f

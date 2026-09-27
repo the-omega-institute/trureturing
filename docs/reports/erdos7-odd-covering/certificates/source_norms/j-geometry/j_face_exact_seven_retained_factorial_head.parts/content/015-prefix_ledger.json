@@ -1,0 +1,53 @@
+{
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "layout_bounded": 12488,
+      "projection_seen": 60000,
+      "conditional_bounded": 59318,
+      "new_dual_bounded": 40,
+      "old_dual_bounded": 197,
+      "remaining": 445
+    }
+  },
+  "maxima": {
+    "kind": "inline",
+    "value": {
+      "layout": "1123/1440",
+      "conditional": "55553/70560",
+      "new_dual": "130204314611580731/165375000000000000",
+      "old_dual": "1553513975124767473/1984500000000000000"
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 62500000
+  },
+  "leaf_batches": {
+    "path": "content/015-prefix_ledger/003-leaf_batches.json",
+    "sha256": "0e872d40e86bc6ae12c8bb69101ecfa23d8626e6bee7622a122bf438a5614bdc",
+    "kind": "array"
+  },
+  "used_dual_check_batches": {
+    "path": "content/015-prefix_ledger/004-used_dual_check_batches.json",
+    "sha256": "e83e1ecfa4d44c64f4593e107626b356a7b92ab1ef49d87379442a42f73f7637",
+    "kind": "array"
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "0d766a8449ae7b7c3d113e8bd0a534028369a70897d6e7275a3aab734b776277"
+  },
+  "seed_dual_count": {
+    "kind": "inline",
+    "value": 60
+  },
+  "original_dual_column_checks": {
+    "kind": "inline",
+    "value": 1286607
+  },
+  "componentwise_objective_checks": {
+    "kind": "inline",
+    "value": 4192902
+  }
+}

@@ -1,0 +1,19 @@
+**推论 88.8（语义运输到证明后承的充分桥接条件）。** 在定义与假设 88.5 的数据与 (SC) 下，将 $C_A,C_B$ 解释为另外指定的证明后承闭包，仍与 $S_A,S_B$ 分开。下列两组条件分别充分：
+
+1. 若源系统可靠，即 $C_A\le S_A$，且目标系统对翻译前提与翻译结论完备，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in S_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+   $$
+   则 $C_A\le K_\tau$。
+2. 若 CE 成立，源系统完备，即 $S_A\le C_A$，且目标系统对翻译推理可靠，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in C_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in S_B(\tau[\Gamma]),
+   $$
+   则 $K_\tau\le C_A$。
+
+两组条件同时成立时，证明后承运输保守。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01062fc64d01044c6f12102cbf6855e95d2d44093efbeca0c1833ffa8d32a57b
+  normalized_sha256: sha256:01062fc64d01044c6f12102cbf6855e95d2d44093efbeca0c1833ffa8d32a57b
+cas_ref: sha256:01062fc64d01044c6f12102cbf6855e95d2d44093efbeca0c1833ffa8d32a57b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题“预测商”及正文“不是先猜一个“真正对象”的内部标签”引入按未来读出区分历史的方法；“可以被一个更一般的有限状态构造统一”是本章安排的概述，本段没有给出具体等价关系、量词化的最大性条件或商的构造结论，也不把任意标签都稳定作为定义中的断言，属于章节导引而无独立待证命题。
+    previous_atom_id: 9d0494d8967a99b10532c8625d3a11aaa674b2df071fc5e7c1336dc9815b0609
+    next_atom_id: 88f764dba476d6cbfa9d386d5f958be0814953bb611c594d3fe645d8dcb285c5

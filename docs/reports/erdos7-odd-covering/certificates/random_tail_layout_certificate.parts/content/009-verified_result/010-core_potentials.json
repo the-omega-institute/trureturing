@@ -1,0 +1,41 @@
+{
+  "length": 791,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 199,
+      "part": {
+        "path": "content/009-verified_result/010-core_potentials/000000-000199.json",
+        "sha256": "cf0e5b64d726336ef1f4d50896e6032bef94e407c1b4dae5c8bdd28099f19683",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 199,
+      "stop": 398,
+      "part": {
+        "path": "content/009-verified_result/010-core_potentials/000199-000398.json",
+        "sha256": "00b74e536ca3ee313fd6aed6b7258a627b111d6ad23e98fdc8e87dfdce102600",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 398,
+      "stop": 597,
+      "part": {
+        "path": "content/009-verified_result/010-core_potentials/000398-000597.json",
+        "sha256": "6e042914ba755ed53bb123df23b3b7d0257c98e1db0b7ba81eadc416061174f0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 597,
+      "stop": 791,
+      "part": {
+        "path": "content/009-verified_result/010-core_potentials/000597-000791.json",
+        "sha256": "a65afd1c673732895152ba4ee7988c8d91d32b63f08278aaa362ae7d88808132",
+        "kind": "value"
+      }
+    }
+  ]
+}

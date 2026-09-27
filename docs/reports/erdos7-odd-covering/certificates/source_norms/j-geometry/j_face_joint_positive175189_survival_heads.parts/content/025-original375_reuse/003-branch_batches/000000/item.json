@@ -1,0 +1,41 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 27,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000000/item/000000-000027.json",
+        "sha256": "05a004a49d725bab719fd7979819bd00d04525092039eea558241173907b99e1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 27,
+      "stop": 54,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000000/item/000027-000054.json",
+        "sha256": "d4297a817b6f4c93654535aeaf5597a2adcb738e3b95c5ddc1487150d9f534bd",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 54,
+      "stop": 81,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000000/item/000054-000081.json",
+        "sha256": "7ef47134ec72ea6c6f9c7f2bd9e87a0f3e21c2b2f3e3519e40db4c0b1f0c2153",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 81,
+      "stop": 100,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000000/item/000081-000100.json",
+        "sha256": "6360eedbcab4c4edc27dcb081e4c16b44b09af35bbe2e230ae1f8523469167ce",
+        "kind": "value"
+      }
+    }
+  ]
+}

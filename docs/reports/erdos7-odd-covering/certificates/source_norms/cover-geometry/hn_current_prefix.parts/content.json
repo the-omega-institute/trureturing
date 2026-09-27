@@ -1,0 +1,24 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "hn-prefix-diagnostic-v1"
+  },
+  "pullback": {
+    "path": "content/001-pullback.json",
+    "sha256": "a66381d2aa83ab06feac08179a79c8b8eb2ce626c976f3ee02b2cacaad5febfa",
+    "kind": "value"
+  },
+  "benchmark": {
+    "path": "content/002-benchmark.json",
+    "sha256": "d69aca2319e33869501e9e5346e2a07e45e14d23beb8726c625b3f87d5f7dee5",
+    "kind": "object"
+  },
+  "source": {
+    "kind": "inline",
+    "value": {
+      "url": "https://arxiv.org/pdf/1703.02133v2",
+      "theorem": "Theorem 4, equations (5) and (6), page 4",
+      "proof": "Section 4, pages 7-9"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+**命题 3.2（当前总量不是动态边界）。** 即使两个历史的总实现数相同，也可能有不同的后续响应。若边界有 \(b\in\{0,1\}\)，旧响应分别为 \((3,5)\) 与 \((4,4)\)，而新块只允许 \(b=0\)，拼接后的总数分别为 \(3\) 与 \(4\)。因此总量不能替代边界函数。
+
+这也是 FiniteCapacity.finite_knowledge_capacity 只比较有限读数类数、不替代未来接口的原因。
+
+## 4. 观察者的闭环边界
+
+令完整边界响应为 \(\mathcal H_\Sigma\)，观察者状态为 \(O\)。内部选择器和局部核共同给出
+\[
+\begin{aligned}
+a&=\pi(O),\\
+\mathcal H_{\Sigma'}(b')
+&=
+\bigoplus_{b,z}\mathcal H_\Sigma(b)\otimes
+W^{O}_{a,Y}(b,z,b'),\\
+O'&=U(O,a,Y).
+\end{aligned}
+\tag{4.1}
+\]
+

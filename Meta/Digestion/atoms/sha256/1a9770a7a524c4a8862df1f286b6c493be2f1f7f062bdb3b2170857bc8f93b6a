@@ -1,0 +1,9 @@
+则每个这样的有限确定性观察者均有
+$$
+\mathcal E(S,s_0,T_0,T_1,a)\ge\delta,
+\qquad
+\inf_{\substack{S\ne\varnothing\ \text{有限},\ s_0\in S\\
+T_0,T_1:S\to S,\ a:S\to[0,1]}}
+\mathcal E(S,s_0,T_0,T_1,a)=\delta.
+$$
+一个单状态观察者取恒定读出 $a=1/2$ 即达到这个下确界。

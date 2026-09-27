@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "725e2d7fb1c8abf2a41734a1e74c1ad787ed4294b18c661cace971023f22731f",
+  "parts_directory": "capped_head_bellman.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "0234d127ea4247fc74e70b226fb95ef53aacfd35e90b18ce514e52676d121b97",
+    "kind": "object"
+  }
+}

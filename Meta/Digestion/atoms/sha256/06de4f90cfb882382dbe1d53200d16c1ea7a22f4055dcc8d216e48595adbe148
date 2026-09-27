@@ -1,0 +1,13 @@
+**theorem 51.0.1 (紧致可度量性、边界分解与共同序列判据).** 空间 $K$ 紧致、Hausdorff 且可度量。映射 $j$ 单射，其像稠密，每个 $j(n)$ 是孤立点。映射 $\tau$ 是从 $R$ 到 $K$ 的闭嵌入，并有集合的不交分解
+$$
+K=j(\mathbb N_0)\sqcup\tau(R).
+$$
+这不是两个开子空间的拓扑不交并。对 $T\ge0$、$m\ge1$，边界点 $\tau(x)$ 有基本邻域
+$$
+\mathcal U_{T,m}(x)=\{j(n):n\ge T,\ n\equiv x\pmod m\}\ \cup\ \{\tau(y):y\equiv x\pmod m\}.
+$$
+特别地，$j(0)\ne\tau(0)$。对任意 $P\in K^4$，$P\in C$ 当且仅当存在同一对自然数序列 $(a_N,b_N)$，使
+$$
+\bigl(j(a_N),j(b_N),j(\gcd(a_N,b_N)),j(\operatorname{lcm}(a_N,b_N))\bigr)\longrightarrow P.
+$$
+

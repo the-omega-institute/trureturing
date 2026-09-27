@@ -1,0 +1,162 @@
+{
+  "source_norm": "102715/2916",
+  "source_barrier": "45",
+  "source_barrier_increase": "28505/2916",
+  "H16_increase": "9122837117/7513289784",
+  "quadratic_tail_weight": "1600217/12882870",
+  "updated_vertices": [
+    398,
+    410,
+    422,
+    616,
+    628,
+    640
+  ],
+  "inherited_vertices": 1290,
+  "predecessor_layout_checks": 600,
+  "refined_layout_checks": 600,
+  "predecessor_margin_sha256": "1f4a84f6bdf28d8f4803f6f804895ddccee22e27fdb1d3dd39c6037308427b3c",
+  "margin_sha256": "441e6eba10da340ccfc326aa54b672b0dce5efaddfd7a4c45a1c925db9cec146",
+  "changes": [
+    {
+      "index": 398,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "index": 410,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "index": 422,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "index": 616,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ]
+      ]
+    },
+    {
+      "index": 628,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ]
+      ]
+    },
+    {
+      "index": 640,
+      "previous_source_margin": "67723/1049760",
+      "inherited_source_margin": "197311/131220",
+      "refined_source_margin": "2264641/1458000",
+      "net_gain": "650669/13122000",
+      "previous_Mquad": "121444659893987971/1015308414960840000",
+      "refined_Mquad": "4831185637854256/15864193983763125",
+      "minimizers": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ]
+      ]
+    }
+  ],
+  "vertex_table_semantics": "Source margins are vertex lower bounds for one globally defined separately concave square refinement at barrier45. Inherited rows add source_barrier_increase times D. Five independent quadratic margins are unchanged; their complete complement uses the new source margin. No concavity claim is made for the patched table itself.",
+  "consumer_obligation": "Keep source_norm as the proved uniform norm. Add H16_increase to H16 and cG times source_barrier_increase to A81, retain the updated raw deficits in all consumers, check all 1296 target vertices and the four positive D coefficients. Eight missing-class branches remain separate."
+}

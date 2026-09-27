@@ -1,0 +1,44 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "actual64-first3-root-restricted-cylinder-v1"
+  },
+  "status": {
+    "kind": "inline",
+    "value": "PASS"
+  },
+  "records": {
+    "path": "content/002-records.json",
+    "sha256": "c49e82838bfa864b029d2c20fd38424fee43e924d7c6ea3a8fe35d417cde9cf1",
+    "kind": "array"
+  },
+  "queries": {
+    "kind": "inline",
+    "value": 2662
+  },
+  "states": {
+    "kind": "inline",
+    "value": 1623086
+  },
+  "head_survival": {
+    "kind": "inline",
+    "value": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000"
+  },
+  "common_denominator": {
+    "kind": "inline",
+    "value": "121952517668665315661514729995727539062500000000000000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "First3 root retained globally; all remaining query phases are history-relaxed exactly as in65. Same actual law and H. Exact literal controls override four moduli."
+  },
+  "source_sha256": {
+    "path": "content/008-source_sha256.json",
+    "sha256": "7d76244ce97a7ad1e37e5d1bf9e85f689f07f5e5de337eedb607dcbdedb9278a",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "c384b1be18a61e96a88308bce816eab3d54796ca06f7091e393cc0c2757ad411"
+  }
+}

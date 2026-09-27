@@ -1,0 +1,16 @@
+**定理 61.4（差估值的逐位着色定理与一个全局整数提升）。** 对任意素数 $p$ 与任意有限差估值实例 $J$，
+$$
+J\text{ 可实现}
+\Longleftrightarrow
+\forall r\in R(J),\ Q_r(J)\text{ 可 }p\text{-着色}.
+$$
+若右侧成立，对每个 $r\in R(J)$ 固定一个适当着色 $c_r$，把颜色取标准代表
+$$
+\widetilde c_r:\Pi_r\to\{0,1,\ldots,p-1\},
+$$
+并定义
+$$
+z_v=\sum_{r\in R(J)}\widetilde c_r([v]_r)p^r.
+$$
+则这个同一个普通整数元组 $z$ 已经实现全部有限边与全部 $\infty$ 边。
+

@@ -1,0 +1,86 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000000-000001.json",
+        "sha256": "058a97a1ca32947bdc8493fd41af641777a6ac2474e3492976c31556980c211d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000001-000002.json",
+        "sha256": "b33a20ff9f2285dc9ffb640af92b52c86bdd9f8f7d9ebcb6d43060f3b3c6a1e4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000002-000003.json",
+        "sha256": "55e8c67b8a53ff9d1a2cb2f34084883e8e4f5df8f45dcf4a0bcaaada8f543459",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000003-000004.json",
+        "sha256": "14a96059772a3d678b9bc7ce5c6cbfcf63ab049d152c3e7f29086f37a9e4f2e9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000004-000005.json",
+        "sha256": "a4d890b03828a7a8e6cac6a673361df5d28d1f2c85d2f35f892f55bd397bee0a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000005-000006.json",
+        "sha256": "5c7191ab7924aa23de60dece548c00371aa295467d4c35c88c1d1c8cabb1d959",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000006-000007.json",
+        "sha256": "98a629eef3c67103fc97f31b3cc75601ca4a722aa304a4b0f9e34bef0e487a1d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000007-000008.json",
+        "sha256": "a6b1e4589fea2a018534e04b44fa3f29c11b6d98a5987f590166e80b18ee4b5d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/009-missing_head_completion/006-quadratic_costs/000008-000009.json",
+        "sha256": "684fe1b346e776849064878ac601bc43d1cfa831e175f5c84108224126c3eed2",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90d8ec98af489abd71c88c24d7dd56ea90b87a867f6342a1a7b9665c3b7cff9f
+  normalized_sha256: sha256:90d8ec98af489abd71c88c24d7dd56ea90b87a867f6342a1a7b9665c3b7cff9f
+cas_ref: sha256:90d8ec98af489abd71c88c24d7dd56ea90b87a867f6342a1a7b9665c3b7cff9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明噪声数据的秩校准和过程到线性响应的接口仍需给出，不提出新的精确秩或误差定理。
+    previous_atom_id: 0e673443279c14283669a14cdf54c01c262c5e9c6be054d54e1e4a6092d1c2f0
+    next_atom_id: 5b07f157d9378e9a7744ebe71612fc5779809a4c8610bda0fed2651bb5459781

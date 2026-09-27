@@ -1,0 +1,22 @@
+{
+  "h2": {
+    "path": "content/004-result/015-records/000000/item/005-geometry/002-records/000001/item/002-costs/000-h2.json",
+    "sha256": "f33b0fce6d3f2eb3664f836bb26aa6bfc88a28289b0fe5e8727d6db075462e8b",
+    "kind": "value"
+  },
+  "h4": {
+    "path": "content/004-result/015-records/000000/item/005-geometry/002-records/000001/item/002-costs/001-h4.json",
+    "sha256": "d1d851c0652f1c8205c41c71c7333005d53cb4225cb73b51c8fba8ee437a80b8",
+    "kind": "value"
+  },
+  "n1": {
+    "path": "content/004-result/015-records/000000/item/005-geometry/002-records/000001/item/002-costs/002-n1.json",
+    "sha256": "29fe03ca671ede0aaab034bc52eb222c980e0583da3645d3dfdf8207a2368b75",
+    "kind": "value"
+  },
+  "n2": {
+    "path": "content/004-result/015-records/000000/item/005-geometry/002-records/000001/item/002-costs/003-n2.json",
+    "sha256": "50cd3f354306b4e806682d87cce065a307795164c0840568ae907d392e89393f",
+    "kind": "value"
+  }
+}

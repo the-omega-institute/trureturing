@@ -1,0 +1,95 @@
+{
+  "length": 256,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 28,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000000-000028.json",
+        "sha256": "a090c3f046da46cec9772d0f52d506e01b567518b769e638d2a315fded61e6cf",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 56,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000028-000056.json",
+        "sha256": "30c34ee2a19b64e60b0b4a80ffaadf0b551ed8679311e00e89f181274308e21a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 56,
+      "stop": 84,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000056-000084.json",
+        "sha256": "e31ad40bfe916a07ef308c69839d0aefc82ba8e90da526806418d3bd41c47fea",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 84,
+      "stop": 112,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000084-000112.json",
+        "sha256": "83281be050a71fe1ceb45a87ba37b37c5feb650aff530349f3c6bb807b5c84b5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 112,
+      "stop": 140,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000112-000140.json",
+        "sha256": "994a6b5bd0bec801f693e2b3e69be1abaf4483138633562e55f81ed39cebd8f0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 140,
+      "stop": 168,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000140-000168.json",
+        "sha256": "3751f02f5d05504c922d311b3128c1a729e053ba4658cb931f4e47210443f0b1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 168,
+      "stop": 196,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000168-000196.json",
+        "sha256": "6679796335152dd201b503af6449c462d56c2ff4f20714e8ccd1c97acd7fc0e5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 196,
+      "stop": 224,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000196-000224.json",
+        "sha256": "fd6d81ad05bc9c51f61b940757723dc5910f373a64775edf96765db7c82a5e2d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 224,
+      "stop": 252,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000224-000252.json",
+        "sha256": "42fccbe025657f490412ef98d64252bb0e4a18c68e976873b07e4b453386aabc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 252,
+      "stop": 256,
+      "part": {
+        "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000067/item/002-rows/000252-000256.json",
+        "sha256": "6df35edb962219593364d87d98df0c5a22104b4d8074db87f17336bb5f08e74a",
+        "kind": "value"
+      }
+    }
+  ]
+}

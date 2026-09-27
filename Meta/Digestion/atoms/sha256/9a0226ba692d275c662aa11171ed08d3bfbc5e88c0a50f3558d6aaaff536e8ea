@@ -1,0 +1,9 @@
+**证明。** 正定 Gaussian 的密度给
+$$
+h(N(m,\Sigma))
+=\frac d2\log(2\pi)+\frac12\log\det\Sigma
++\frac12\mathbb E[(Z-m)^T\Sigma^{-1}(Z-m)]
+=\frac12\log((2\pi e)^d\det\Sigma).
+$$
+最后二次期望为 $d$。定理 128.1 的后验协方差不依赖历史值，因此 $h(Z)-h(Z\mid\mathcal Y_n)$ 正是所示行列式比。有限维正定模型使这些熵与信息有限。证毕。
+

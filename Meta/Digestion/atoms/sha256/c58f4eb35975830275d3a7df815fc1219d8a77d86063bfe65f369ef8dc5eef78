@@ -1,0 +1,18 @@
+### 17.3 定理：可直接选择采样时刻的非渐近界
+
+取整数 $n\geq1$、$T>0$，记
+\[
+U=E_+T,\quad u=\min\{1,U/n\},\quad h=u/E_+,
+\quad K_n=64\max\{1,n/U\}.
+\]
+若 $\mu,\nu\in\mathcal M$ 在时刻 $0,h,\ldots,nh\subseteq[0,T]$ 上满足
+\[
+|C_\mu(kh)-C_\nu(kh)|\leq2\varepsilon\quad(0\leq k\leq n),
+\qquad \varepsilon K_n^n\leq1,
+\]
+则
+\[
+\boxed{|g(\mu)-g(\nu)|\leq\frac{3eE_+}{\eta n^2}.}
+\tag{17.5}
+\]
+

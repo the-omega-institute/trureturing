@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c5305d2b74848945d5809c18e8db2a5c25e8b7abcdcdd7bfca0144f341c1cd2
+  normalized_sha256: sha256:0c5305d2b74848945d5809c18e8db2a5c25e8b7abcdcdd7bfca0144f341c1cd2
+cas_ref: sha256:0c5305d2b74848945d5809c18e8db2a5c25e8b7abcdcdd7bfca0144f341c1cd2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子把系统共同控制任务推广到有限历史并定义最优半迹距离，没有给出最优值定理。
+    previous_atom_id: 76223c75e2b0d2f9fea828a0ac26f5e3664a4392a41313d2b0160a8fad497c5b
+    next_atom_id: c2465437977fbbc6da642bf8a50a0a534bfe875af6722b42a5315ddc0bb5f733

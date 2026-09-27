@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8bb6ef6632520c46de1886dc22717c81e4b6c1cec9a04c398e3dad0fdbc475d9
+  normalized_sha256: sha256:8bb6ef6632520c46de1886dc22717c81e4b6c1cec9a04c398e3dad0fdbc475d9
+cas_ref: sha256:8bb6ef6632520c46de1886dc22717c81e4b6c1cec9a04c398e3dad0fdbc475d9
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/ProjectedRealizationError.outputError_uniform_of_contraction
+    target_statement_id: sha256:df1735aa722faa1626ba2098e7457e503a658b1bbd4144f211bd88d900095b3a
+receipts:
+  unresolved_subitems: []

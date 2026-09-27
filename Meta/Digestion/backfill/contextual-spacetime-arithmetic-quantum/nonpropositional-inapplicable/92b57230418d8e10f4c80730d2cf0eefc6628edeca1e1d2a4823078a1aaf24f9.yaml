@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92b57230418d8e10f4c80730d2cf0eefc6628edeca1e1d2a4823078a1aaf24f9
+  normalized_sha256: sha256:92b57230418d8e10f4c80730d2cf0eefc6628edeca1e1d2a4823078a1aaf24f9
+cas_ref: sha256:92b57230418d8e10f4c80730d2cf0eefc6628edeca1e1d2a4823078a1aaf24f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Propositional bind-only clause, closed by pinned Lean core and Mathlib db584cd6d46c92f209a44c0f1c829460d327499d after unfolding BinaryMixingMemoryDivergence.transfer, wordVector, wordMass and prediction; no existing frozen project theorem carries this all-r upper/cardinality clause. List.foldlRecOn preserves both positive coordinates from (1/2,1/2) for 0<p<1/2 and 0<=r<1/2 using mul_pos, mul_nonneg, add_pos_of_pos_of_nonneg and add_pos_of_nonneg_of_pos. List.foldl_append, List.foldl_cons and List.foldl_nil with field normalization give f=(p*v1+(1-p)*v2)/(v1+v2), positive wordMass and p<f<1-p on every List Bool, including empty and arbitrarily rare words. lt_div_iff₀, div_lt_iff₀ and abs_lt give constant-1/2 error strictly below Delta; csSup_le gives uniform error at most Delta. Unit with identity updates and fixed readout 1/2 is feasible for every epsilon>=Delta, including equality; Fintype.card_unit, Fintype.card_pos_iff and IsLeast.csInf_eq give minimum nonempty state cardinality exactly one. The receipt settles an upstream-only proposition; it does not classify the source as nonmathematical or assert setup/Kraus coverage.
+    previous_atom_id: 57869af50de67956d9e9aa2c5e90eaad3e9de9e7581aaad9124537ee2f575935
+    next_atom_id: cb85b4e8e91e6483c03d0e870bb6290abf2c7a201fd8fac3991c0be7204adf7a

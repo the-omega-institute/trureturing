@@ -1,0 +1,957 @@
+{
+  "status": "exact fixed-A optimizer and independent finite regression checks; no global-floor claim",
+  "source_file": "mod3_conditioned_geometry_certificate.json",
+  "source_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+  "source_law": "PG1",
+  "brute_force_checks": [
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 0,
+      "maximum": "-6/5"
+    },
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 1,
+      "maximum": "49/6"
+    },
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 2,
+      "maximum": "44/3"
+    },
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 3,
+      "maximum": "211/10"
+    },
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 4,
+      "maximum": "87/5"
+    },
+    {
+      "old_points": [
+        0,
+        1,
+        4
+      ],
+      "cofactors": [
+        1,
+        3,
+        9
+      ],
+      "digit_modulus": 2,
+      "trial": 5,
+      "maximum": "337/12"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 0,
+      "maximum": "151/5"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 1,
+      "maximum": "32"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 2,
+      "maximum": "433/20"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 3,
+      "maximum": "163/6"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 4,
+      "maximum": "183/10"
+    },
+    {
+      "old_points": [
+        0,
+        1
+      ],
+      "cofactors": [
+        1,
+        3
+      ],
+      "digit_modulus": 7,
+      "trial": 5,
+      "maximum": "257/20"
+    }
+  ],
+  "empty_singleton_maximum": 0,
+  "full_carrier_singleton_maximum": -1,
+  "actual_old_cylinder_counts": [
+    1,
+    3,
+    5,
+    6,
+    8,
+    17
+  ],
+  "old_states_without_singleton": 3024,
+  "old_residue_mask_combinations": 12240,
+  "distinct_old_load_vectors": 11808,
+  "subset_transitions": 5103,
+  "fixed_old_residues": [
+    0,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "fixed_old_load": [
+    1,
+    6,
+    2,
+    2,
+    2,
+    1,
+    4,
+    1,
+    2,
+    1,
+    3,
+    4,
+    1,
+    3,
+    1,
+    2
+  ],
+  "common_digit_counterexample": {
+    "points_and_weight_numerators": [
+      [
+        1,
+        14690784
+      ],
+      [
+        46,
+        14690784
+      ]
+    ],
+    "formula_description": "-mu(point)*(B-A-1)^2 on these two points; zero elsewhere",
+    "maximum": "0",
+    "common_digit_maximum": "-14690784/1000000007",
+    "labels": [
+      {
+        "cofactor": 1,
+        "modulus": 7,
+        "old_residue": 0,
+        "digit": 4,
+        "residue": 4
+      },
+      {
+        "cofactor": 3,
+        "modulus": 21,
+        "old_residue": 1,
+        "digit": 1,
+        "residue": 1
+      },
+      {
+        "cofactor": 5,
+        "modulus": 35,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 9,
+        "modulus": 63,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 15,
+        "modulus": 105,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 45,
+        "modulus": 315,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      }
+    ]
+  },
+  "digit_zero_example": {
+    "maximum": 0,
+    "labels": [
+      {
+        "cofactor": 1,
+        "modulus": 7,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 3,
+        "modulus": 21,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 5,
+        "modulus": 35,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 9,
+        "modulus": 63,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 15,
+        "modulus": 105,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      },
+      {
+        "cofactor": 45,
+        "modulus": 315,
+        "old_residue": 0,
+        "digit": 0,
+        "residue": 0
+      }
+    ]
+  },
+  "joint_auxiliary_example": {
+    "formula_description": "E_mu[(4/3)*(B+R)^2+(149-B^2)*(L-4)_+/6]",
+    "scope": "one fixed-A, fixed-auxiliary, one-depth score profile; not the all-height or global final-floor maximum",
+    "depth": [
+      1,
+      1,
+      1
+    ],
+    "divisors": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ],
+    "moment_auxiliary_residues": [
+      0,
+      2,
+      2,
+      12,
+      2,
+      2,
+      8,
+      59,
+      5,
+      38,
+      23,
+      32
+    ],
+    "charge_auxiliary_residues": [
+      0,
+      6,
+      2,
+      27,
+      2,
+      20,
+      2,
+      62,
+      2,
+      20,
+      2,
+      272
+    ],
+    "negative_quadratic_points": 3,
+    "maximum": "223040367109/3000000021",
+    "common_digit_maximum": "223011181693/3000000021",
+    "independent_digit_gain": "9728472/1000000007",
+    "labels": [
+      {
+        "cofactor": 1,
+        "modulus": 7,
+        "old_residue": 0,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 3,
+        "modulus": 21,
+        "old_residue": 2,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 5,
+        "modulus": 35,
+        "old_residue": 2,
+        "digit": 5,
+        "residue": 12
+      },
+      {
+        "cofactor": 9,
+        "modulus": 63,
+        "old_residue": 5,
+        "digit": 5,
+        "residue": 5
+      },
+      {
+        "cofactor": 15,
+        "modulus": 105,
+        "old_residue": 2,
+        "digit": 5,
+        "residue": 47
+      },
+      {
+        "cofactor": 45,
+        "modulus": 315,
+        "old_residue": 32,
+        "digit": 4,
+        "residue": 32
+      }
+    ],
+    "digit_partition": [
+      0,
+      0,
+      0,
+      0,
+      32,
+      31,
+      0
+    ],
+    "auxiliary_point_loads": [
+      {
+        "point": 1,
+        "weight_numerator": 14690784,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 2,
+        "weight_numerator": 13119398,
+        "R": 3,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 16,
+        "weight_numerator": 13899202,
+        "R": 1,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 17,
+        "weight_numerator": 13757948,
+        "R": 1,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 19,
+        "weight_numerator": 15599667,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 23,
+        "weight_numerator": 14264667,
+        "R": 7,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 32,
+        "weight_numerator": 14592708,
+        "R": 9,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 34,
+        "weight_numerator": 12257998,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 38,
+        "weight_numerator": 12746123,
+        "R": 4,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 43,
+        "weight_numerator": 5415130,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 46,
+        "weight_numerator": 14690784,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 47,
+        "weight_numerator": 13119398,
+        "R": 4,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 52,
+        "weight_numerator": 14594498,
+        "R": 1,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 53,
+        "weight_numerator": 13396306,
+        "R": 1,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 61,
+        "weight_numerator": 13899202,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 62,
+        "weight_numerator": 11412885,
+        "R": 1,
+        "L": 18,
+        "h": 14
+      },
+      {
+        "point": 64,
+        "weight_numerator": 15599667,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 68,
+        "weight_numerator": 14264667,
+        "R": 5,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 73,
+        "weight_numerator": 14691717,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 83,
+        "weight_numerator": 12746123,
+        "R": 1,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 88,
+        "weight_numerator": 5415130,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 97,
+        "weight_numerator": 14594498,
+        "R": 1,
+        "L": 9,
+        "h": 5
+      },
+      {
+        "point": 104,
+        "weight_numerator": 16189447,
+        "R": 1,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 106,
+        "weight_numerator": 13899202,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 107,
+        "weight_numerator": 13757948,
+        "R": 3,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 109,
+        "weight_numerator": 15599667,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 118,
+        "weight_numerator": 14691717,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 124,
+        "weight_numerator": 12561790,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 128,
+        "weight_numerator": 12746123,
+        "R": 3,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 136,
+        "weight_numerator": 14690784,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 137,
+        "weight_numerator": 13119398,
+        "R": 1,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 142,
+        "weight_numerator": 14594498,
+        "R": 2,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 143,
+        "weight_numerator": 13396306,
+        "R": 1,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 151,
+        "weight_numerator": 13899202,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 152,
+        "weight_numerator": 13757948,
+        "R": 4,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 158,
+        "weight_numerator": 14264667,
+        "R": 5,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 163,
+        "weight_numerator": 14691717,
+        "R": 1,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 164,
+        "weight_numerator": 16622259,
+        "R": 6,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 167,
+        "weight_numerator": 14592708,
+        "R": 2,
+        "L": 18,
+        "h": 14
+      },
+      {
+        "point": 169,
+        "weight_numerator": 12561790,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 173,
+        "weight_numerator": 12746123,
+        "R": 1,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 178,
+        "weight_numerator": 5415130,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 181,
+        "weight_numerator": 14517028,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 187,
+        "weight_numerator": 14594498,
+        "R": 4,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 188,
+        "weight_numerator": 10896132,
+        "R": 1,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 194,
+        "weight_numerator": 16189447,
+        "R": 1,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 199,
+        "weight_numerator": 15599667,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 208,
+        "weight_numerator": 14110051,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 209,
+        "weight_numerator": 7919659,
+        "R": 0,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 212,
+        "weight_numerator": 14592708,
+        "R": 4,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 214,
+        "weight_numerator": 12561790,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 223,
+        "weight_numerator": 5415130,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 226,
+        "weight_numerator": 14690784,
+        "R": 1,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 227,
+        "weight_numerator": 13119398,
+        "R": 4,
+        "L": 12,
+        "h": 8
+      },
+      {
+        "point": 232,
+        "weight_numerator": 14594498,
+        "R": 1,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 233,
+        "weight_numerator": 13396306,
+        "R": 3,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 241,
+        "weight_numerator": 13899202,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 242,
+        "weight_numerator": 13757948,
+        "R": 1,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 244,
+        "weight_numerator": 14035203,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 253,
+        "weight_numerator": 14691717,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 257,
+        "weight_numerator": 14592708,
+        "R": 5,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 263,
+        "weight_numerator": 12746123,
+        "R": 1,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 268,
+        "weight_numerator": 5415130,
+        "R": 1,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 269,
+        "weight_numerator": 16622259,
+        "R": 3,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 271,
+        "weight_numerator": 14288471,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 272,
+        "weight_numerator": 13119398,
+        "R": 1,
+        "L": 36,
+        "h": 32
+      },
+      {
+        "point": 277,
+        "weight_numerator": 14594498,
+        "R": 1,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 278,
+        "weight_numerator": 13396306,
+        "R": 1,
+        "L": 2,
+        "h": 0
+      },
+      {
+        "point": 286,
+        "weight_numerator": 13899202,
+        "R": 0,
+        "L": 3,
+        "h": 0
+      },
+      {
+        "point": 293,
+        "weight_numerator": 14264667,
+        "R": 5,
+        "L": 6,
+        "h": 2
+      },
+      {
+        "point": 298,
+        "weight_numerator": 14691717,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 299,
+        "weight_numerator": 16622259,
+        "R": 0,
+        "L": 4,
+        "h": 0
+      },
+      {
+        "point": 304,
+        "weight_numerator": 12561790,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 313,
+        "weight_numerator": 5415130,
+        "R": 0,
+        "L": 1,
+        "h": 0
+      },
+      {
+        "point": 314,
+        "weight_numerator": 16622259,
+        "R": 0,
+        "L": 6,
+        "h": 2
+      }
+    ]
+  }
+}

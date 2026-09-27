@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d7d8a994a8a919c11c19256befe6d1aab76a2d2c87fe037d8e60825e52fcead
+  normalized_sha256: sha256:6d7d8a994a8a919c11c19256befe6d1aab76a2d2c87fe037d8e60825e52fcead
+cas_ref: sha256:6d7d8a994a8a919c11c19256befe6d1aab76a2d2c87fe037d8e60825e52fcead
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “令”指定独立均匀符号，“定义 Walsh 目标”给出各子集对应的乘积函数；正交归一断言已经在下一子叶，本叶没有将该性质当作定义的一部分，故只结算这些对象约定。
+    previous_atom_id: 83adb4601b456e258cbe8cfa9e215ed4c2985cde620ee2dfeb4ed3c5daf2937b
+    next_atom_id: 626ef8f58817bc1125a9634fd4ba6783b89f25f8770dadab65974881df0561c7

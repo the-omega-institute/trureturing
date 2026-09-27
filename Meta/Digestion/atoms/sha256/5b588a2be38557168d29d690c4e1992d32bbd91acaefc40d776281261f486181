@@ -1,0 +1,14 @@
+**定义 18.1（固定关系图上的容量与物理端口）。** 取有 $n\ge2$ 个顶点的有限连通无向图，每条边具有固定正权；在固定顶点坐标中记其 Laplacian 为 $L$。取正对角容量矩阵 $M$，定义
+$$
+S_M(t)=\exp(-tM^{-1}L),\qquad t\ge0.
+\tag{18.1}
+$$
+这里直接采用[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第123.4节的图关系律：若 $D_G$ 是定向差分、$W$ 是边权对角矩阵，则 $L=D_G^*WD_G$；正顶点权作为容量不要求总和为一。尤其 $L\mathbf1=0$、$\ker L=\mathbb R\mathbf1$，且每个 $L_{ii}>0$。本节比较固定图和固定顶点坐标中的不同常值 $M$，不把顶点重标或状态坐标共轭算作同一个矩阵等式。
+
+固定物理输入 $B:\mathbb R^p\to\mathbb R^n$ 和读出 $H:\mathbb R^n\to\mathbb R^q$。对 $u\in L^1_{\rm loc}([0,\infty);\mathbb R^p)$，状态 $x$ 在每个有限区间绝对连续，动力学几乎处处成立，输出为
+$$
+M\dot x=-Lx+Bu,\qquad o=Hx.
+\tag{18.2}
+$$
+输入、读出单位和端口身份均保持固定。以下脉冲响应使用零初态，或在固定完整历史下已由制备与独立已知项扣除自由响应的条件；未知初态不因指定 $B,H$ 而自动消失。该取得合同沿用本卷定义13.1、命题13.2及定义13.3的完整记录与共同来源，及[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)命题16.6的初态边界。
+

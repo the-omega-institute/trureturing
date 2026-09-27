@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5675cffe7fab33f2ed133f8e7cd143fbba700cd1957e3ff3b6e3ad90aa5b468
+  normalized_sha256: sha256:b5675cffe7fab33f2ed133f8e7cd143fbba700cd1957e3ff3b6e3ad90aa5b468
+cas_ref: sha256:b5675cffe7fab33f2ed133f8e7cd143fbba700cd1957e3ff3b6e3ad90aa5b468
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “设每个历史”产生密度算子后，以“定义”给出同一个 CPTP 映射同时模拟所有历史的关系；开头的“对应”说明所取量子版本的对象，未断言经典量子两范畴等价或预序性质，没有偷渡证明。
+    previous_atom_id: 47dd04f4040f8de206b336559e55a9b6b0a1a79cc935620b792f8d323eab7eda
+    next_atom_id: 1ee72878cab7493ec0882a731b70db21f5767446b4edc6df77afc54fd86514a7

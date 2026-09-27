@@ -1,0 +1,22 @@
+**定理 46.6（实际关系闭包、存在投影与自然参数）。** 对任意 $R\subseteq\mathbb N_0^d$，有
+$$
+\overline{\iota^d[R]}=\bigcap_{\alpha\in I}(\pi_\alpha^d)^{-1}(q_\alpha^d[R]),\qquad
+\overline{\iota^d[R]}\cap\iota^d[\mathbb N_0^d]=\iota^d[R].
+$$
+若 $R\subseteq\mathbb N_0^a\times\mathbb N_0^b$，$p$ 表示输出投影，则
+$$
+p\bigl(\overline{\iota^{a+b}[R]}\bigr)=\overline{\iota^a[p(R)]}.
+$$
+特别地，固定 $\mathbf u\in\mathbb N_0^a$ 后，闭包中存在输出恰为 $\iota^a(\mathbf u)$ 的点，当且仅当存在自然见证 $\mathbf v$ 使 $(\mathbf u,\mathbf v)\in R$。对于多项式系统，只能无条件断言
+$$
+\overline{\iota^d[S]}\subseteq E_\Sigma,\qquad
+E_\Sigma\cap\iota^d[\mathbb N_0^d]=\iota^d[S].
+$$
+把实际关系闭包换成 $E_\Sigma$ 后，即使固定输出为自然锚，前述存在性等价也可能失败。
+
+**证明。** 每个有限实际像的柱集都是闭集并包含 $\iota^d[R]$，故包含其闭包。反向地，右侧一点的任意基本邻域只指定有限坐标。取共同上界，该点在此层的读数属于实际像，故有一个 $R$ 中元组匹配此层以及全部较低的所需坐标。于是任意邻域均与 $\iota^d[R]$ 相交，得到闭包公式。每个自然元组是开单点，故不属于 $R$ 的自然元组不可能属于其像的闭包，证明第二式。
+
+令 $D=\overline{\iota^{a+b}[R]}$。它紧致，故 $p(D)$ 在 Hausdorff 空间 $K^a$ 中闭，并包含 $\iota^a[p(R)]$，从而包含其闭包。另一方面，若 $x\in D$，则 $p(x)$ 的每个开邻域的逆像都是 $x$ 的开邻域，必与 $\iota^{a+b}[R]$ 相交，因此 $p(x)$ 属于输出实际像的闭包。投影等式成立，再使用自然元组的开单点性得到固定自然输出的等价。
+
+多项式延拓连续且保持自然值，故 $E_\Sigma$ 闭并包含实际解的像；在全部坐标均为自然锚时，$\iota$ 的单射性将 $K$ 中等式反推为自然数等式。严格反例是在 $\Sigma_*$ 上附加输出变量 $y$ 及方程 $y=0$：自然解仍为空，但 $(\iota(0),\xi,\zeta)$ 是完成中的解。所有系数原本就是自然常量，并未发生常量漂移。限制某些变量等于固定自然锚是闭条件；限制剩余变量属于所有自然锚组成的非闭集合，则不再保留紧致性。证毕。
+

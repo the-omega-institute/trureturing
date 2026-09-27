@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1dd1e7713ff6ffc19e105741531210e0b6bb7afc3f78287149415d9dba9b8e7f
+  normalized_sha256: sha256:1dd1e7713ff6ffc19e105741531210e0b6bb7afc3f78287149415d9dba9b8e7f
+cas_ref: sha256:1dd1e7713ff6ffc19e105741531210e0b6bb7afc3f78287149415d9dba9b8e7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “历史相关输入恰为”描述符以及“全部由这些输入确定性地新初始化”定义停止任务可访问的信息，后文“本节只优化新报告次数”指定优化坐标；并未断言存在成功算法。
+    previous_atom_id: d43a94a098684063d388e728fd22775a2be0f82c326ee6ee996eb0acffcc3c10
+    next_atom_id: 79db24616e1cebc5d57040e28c5fd810e8b3c84986e54cd9de96f26bf7a7037c

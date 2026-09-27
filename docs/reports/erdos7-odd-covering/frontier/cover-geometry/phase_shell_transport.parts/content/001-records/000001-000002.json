@@ -1,0 +1,109 @@
+[
+  {
+    "name": "odd_repeated",
+    "classes": [
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "period": 3,
+    "unique_regions": [
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        2
+      ]
+    ],
+    "overlap_region": [],
+    "shell_count": 3,
+    "demand_rows": 3,
+    "private_point_prime_checks": 3,
+    "cuts": 7,
+    "strictly_sharper_cuts": 0,
+    "tight_cuts": 7,
+    "column_omissions": [],
+    "demand": "2",
+    "overlap_tax": "0",
+    "unused_unique_service": "0",
+    "total_shell_capacity": "2",
+    "positive_demand_service": "2",
+    "inactive_depth_without_strict_supplier_gain": {
+      "mask": 1,
+      "supplier": 0,
+      "mass_bound": "0",
+      "active_bound": "0",
+      "full_bound": "2/3"
+    },
+    "cut_columns": [
+      "mask",
+      "demand",
+      "actual_service",
+      "active_depth_bound",
+      "all_depth_bound"
+    ],
+    "all_nonempty_cuts": [
+      [
+        1,
+        "2/3",
+        "2/3",
+        "2/3",
+        "2/3"
+      ],
+      [
+        2,
+        "2/3",
+        "2/3",
+        "2/3",
+        "2/3"
+      ],
+      [
+        3,
+        "4/3",
+        "4/3",
+        "4/3",
+        "4/3"
+      ],
+      [
+        4,
+        "2/3",
+        "2/3",
+        "2/3",
+        "2/3"
+      ],
+      [
+        5,
+        "4/3",
+        "4/3",
+        "4/3",
+        "4/3"
+      ],
+      [
+        6,
+        "4/3",
+        "4/3",
+        "4/3",
+        "4/3"
+      ],
+      [
+        7,
+        "2",
+        "2",
+        "2",
+        "2"
+      ]
+    ]
+  }
+]

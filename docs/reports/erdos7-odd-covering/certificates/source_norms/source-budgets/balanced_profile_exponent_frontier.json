@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "b04a0f5add4e1162792118973f52ed3e90a96cecfe6c9d741a6f43ec662200e3",
+  "parts_directory": "balanced_profile_exponent_frontier.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "8850490ab28478ab0199d8af6c2a4c51c563db3faa344309255e1c7b1d6591fd",
+    "kind": "object"
+  }
+}

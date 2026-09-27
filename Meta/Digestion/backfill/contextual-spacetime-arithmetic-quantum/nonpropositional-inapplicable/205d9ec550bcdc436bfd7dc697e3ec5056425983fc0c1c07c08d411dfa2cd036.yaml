@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:205d9ec550bcdc436bfd7dc697e3ec5056425983fc0c1c07c08d411dfa2cd036
+  normalized_sha256: sha256:205d9ec550bcdc436bfd7dc697e3ec5056425983fc0c1c07c08d411dfa2cd036
+cas_ref: sha256:205d9ec550bcdc436bfd7dc697e3ec5056425983fc0c1c07c08d411dfa2cd036
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子仅定义预测缺陷、保持误差和以读取分布为初值的比较列，不包含后续预算定理。
+    previous_atom_id: f785f73f26cf8c4cf807d8471b90bbad3f1bdbd265ade938aaf2e9bbd38cebd3
+    next_atom_id: d34ce6f4cd311108ed24b0ec2cf54a4cb4c9f18185cdb8a296e5bcf42dcf55c7

@@ -1,0 +1,57 @@
+**命题 101.2（正 KL 率、稀有跳转与方向识别的观察尺度）。** 定义 101.1 的核坐标与平稳律均为有理数；每个核严格正、不可约、非周期，并以 $\pi$ 为平稳律。但因 $K_k(i,i-1)=q_k\to0$，有 $\inf_{k\ge2}\min_{i,j\in S}K_k(i,j)=0$；以下结论没有统一正转移下界假设。对所有 $k\ge2$、$n\ge0$，
+$$
+\log\frac{P_{k,n}(w)}{Q_{k,n}(w)}=k(\log2)J_n(w),
+\qquad
+D_{\rm KL}(P_{k,n}\Vert Q_{k,n})=nc_k,
+\tag{101.2a}
+$$
+其中
+$$
+c_k=(1-2^{-k})\log2\ge\frac34\log2>0,
+\qquad c_k\longrightarrow\log2.
+$$
+同时，
+$$
+\operatorname{TV}(P_{k,n},U_n)
+=\operatorname{TV}(Q_{k,n},U_n)=1-r_k^n,
+\tag{101.2b}
+$$
+$$
+\max\{0,1-r_k^n-2nq_k\}
+\le\operatorname{TV}(P_{k,n},Q_{k,n})
+\le1-r_k^n
+\le\frac{n(1+2^{-k})}{k}
+\le\frac{5n}{4k},
+\tag{101.2c}
+$$
+以及
+$$
+R_{k,n}=\frac12\bigl(1-\operatorname{TV}(P_{k,n},Q_{k,n})\bigr),
+\qquad
+\frac12r_k^n\le R_{k,n}
+\le\min\left\{\frac12,\frac12r_k^n+nq_k\right\}.
+\tag{101.2d}
+$$
+净计数为正时报正向、为负时报反向、为零时公平抛币，达到这个最优错误率。
+
+若整数 $n_k\ge0$ 随 $k\to\infty$ 变化，则有三种尺度：
+$$
+\bigl(\operatorname{TV}(P_{k,n_k},Q_{k,n_k}),R_{k,n_k}\bigr)
+\longrightarrow
+\begin{cases}
+(0,\tfrac12),&n_k/k\longrightarrow0,\\
+(1-e^{-\lambda},\tfrac12e^{-\lambda}),
+&n_k/k\longrightarrow\lambda\in(0,\infty),\\
+(1,0),&n_k/k\longrightarrow\infty.
+\end{cases}
+\tag{101.2e}
+$$
+特别地，每个固定有限 $n$ 都满足 $\sup_{k\ge2}R_{k,n}=1/2$，尽管全部模型共有正 KL 率下界 $(3/4)\log2$。因此，仅凭状态数三、这个共同率下界和目标错误率 $\delta<1/2$，不能选择对全族有效的有限观察窗口；这不排除由完整已知核或 $k$ 选取窗口，也不否认本例的精确值 $c_k$ 可以确定 $k$。取 $n_k=\lfloor\sqrt{k}\rfloor$，更有
+$$
+D_{\rm KL}(P_{k,n_k}\Vert Q_{k,n_k})\longrightarrow\infty,
+\qquad
+\operatorname{TV}(P_{k,n_k},Q_{k,n_k})\longrightarrow0,
+\qquad R_{k,n_k}\longrightarrow\frac12.
+\tag{101.2f}
+$$
+

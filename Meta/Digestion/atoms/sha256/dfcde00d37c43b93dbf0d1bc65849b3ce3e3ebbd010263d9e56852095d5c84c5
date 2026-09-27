@@ -1,0 +1,35 @@
+**命题 2.5（独立不变参考恒等式）。** 增加一个参考系统不必细分旧观察纤维。令 $H_R=\sum_{e\in\mathcal E_R}eQ_e$ 为有限维参考 Hamiltonian，$\tau$ 是一份固定密度态，并满足 $[\tau,H_R]=0$；不同系统输入均与同一 $\tau$ 独立组成 $\rho\otimes\tau$。记
+$$
+H_{SR}=H\otimes I_R+I\otimes H_R,\qquad
+R_\lambda=\sum_{E+e=\lambda}\Pi_E\otimes Q_e,\qquad
+P_{H_{SR}}(B)=\sum_\lambda R_\lambda B R_\lambda.
+\tag{TM.125}
+$$
+
+$R_\lambda$ 是总能量的完整谱投影；不同的 $(E,e)$ 可给同一个 $\lambda$，这些简并不能在定义时被拆成互不相干的小测量。对任意系统矩阵 $A$，逐块展开有
+$$
+\begin{aligned}
+P_{H_{SR}}(A\otimes\tau)
+&=\sum_{E+e=E'+e'}
+ (\Pi_EA\Pi_{E'})\otimes(Q_e\tau Q_{e'}),\\
+Q_e\tau Q_{e'}&=0\quad(e\ne e'),\qquad
+\sum_eQ_e\tau Q_e=\tau.
+\end{aligned}
+\tag{TM.126}
+$$
+
+第二行来自 $[\tau,H_R]=0$，允许每个参考简并块内部有任意矩阵。非零项因此必须先有 $e=e'$，再由总能量相等得 $E=E'$。故
+$$
+\boxed{
+P_{H_{SR}}(A\otimes\tau)=P_H(A)\otimes\tau
+\qquad\forall A.
+}
+\tag{TM.127}
+$$
+
+这给出完整的张量恒等式，而不仅是一类测试下的上界。若 $P_H(\rho)=P_H(\sigma)$，两份乘积输入的总能量 pinching 相同，式(TM.111)用于联合系统便说明：全部总能量相容效果均不能区分它们。插入任意保持总能量的联合酉词仍不能区分，因为式(TM.113)同样适用于 $H_{SR}$；若还保留仪器记录，则应逐分支使用B卷第2.1.4节的条件。
+
+反过来，若 $P_H(\rho)\ne P_H(\sigma)$，B卷第2.1.1节构造的系统相容效果 $Q_+$ 能区分两者，且 $Q_+\otimes I_R$ 与总能量交换，读取概率不依赖归一化的 $\tau$。所以在全部联合相容效果可用的合同下，加入这份参考前后观察等价关系完全相同。若装置只允许受限联合效果菜单，后者未必包含 $Q_+\otimes I_R$，则不能无条件保留这一逆向断言。
+
+独立、固定和不变是不同条件。已有的相关档案不必是 $\rho\otimes\tau$；相干参考有 $Q_e\tau Q_{e'}\ne0$ 的交叉块，能与相反系统能隙配对；随候选系统态改变的第二份样本也不属于同一个固定 $\tau$ 合同。因此式(TM.127)既不排除关系相位的测量，也不排除同源重复制备增加可区分性。它精确说明在何种资源扩展下旧商得到保持。
+

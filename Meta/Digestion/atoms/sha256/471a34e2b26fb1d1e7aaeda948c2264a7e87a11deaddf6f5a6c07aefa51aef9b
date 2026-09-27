@@ -1,0 +1,15 @@
+**命题 16.3（积分抵消与同一补全的联合约束）。** 定义16.1的精确半径满足
+$$
+R_T\le\int_0^T\sum_\lambda e^{-\lambda(T-s)}
+\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}g(s)\|\,ds,
+\tag{16.6}
+$$
+且可严格小于右侧。给定有限个固定任务 $(a_j,g_j,T_j)$，$1\le j\le m$，按式（16.1）记 $v_{j,\lambda},c_j$，则全部共同实现的联合值集为
+$$
+\mathcal C=\left\{\left(c_j+\sum_\lambda
+\langle P_\lambda^{1/2}a_j,T_\lambda Q_\lambda^{1/2}v_{j,\lambda}\rangle\right)_{j=1}^m:
+T\in\mathbb B\right\}.
+\tag{16.7}
+$$
+它一般严格小于各标量区间的直积。同一组 $T_\lambda$ 也必须用于第15节的不同时间响应和距离任务。
+

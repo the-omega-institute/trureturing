@@ -1,0 +1,34 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-loss-signed-k-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "ecfe35dc69b0e0bdf4450505d0ebfa54b0daada4cc64f13c330bf45c889154cf",
+    "kind": "value"
+  },
+  "global_raw_mass_floor": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "zero_radius": {
+    "path": "content/003-zero_radius.json",
+    "sha256": "379dfe0d5cfc7f4d296f44a0186ca29e97af4ffc75e2283053e87581f1fc9dc5",
+    "kind": "object"
+  },
+  "comparisons": {
+    "path": "content/004-comparisons.json",
+    "sha256": "8586e4ba59d8d421a9638cfcf1fbefba122b9789e1bf05e9afb6be22a3bdf523",
+    "kind": "array"
+  },
+  "actual_source_checks": {
+    "path": "content/005-actual_source_checks.json",
+    "sha256": "4127e9b997c8abf6d40baff3a38cebcc067cc13e565f92b18669edccd4ccaaef",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary continuous-source proof with exact rational evaluation. The complete1/50 rectangle retains all52 original costs, all five denominator objectives and every original infinite tail. The1/27 calculation retains the explicit unpaid positive groups and gives no full comparison there. One actual residual budget is retained. No new global K, Lean theorem, or unrestricted Erdos7 resolution."
+  }
+}

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f183884fe726338c965c16c8ccd5b02134183a7290614a7a719fa3749540c217
+  normalized_sha256: sha256:f183884fe726338c965c16c8ccd5b02134183a7290614a7a719fa3749540c217
+cas_ref: sha256:f183884fe726338c965c16c8ccd5b02134183a7290614a7a719fa3749540c217
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SharpChallengeInstrument.result
+    target_statement_id: sha256:29a6400e04bca8bfde429c7f158b4092da1e99e3a37b8cf296e3f64878c787fe
+receipts:
+  unresolved_subitems: []

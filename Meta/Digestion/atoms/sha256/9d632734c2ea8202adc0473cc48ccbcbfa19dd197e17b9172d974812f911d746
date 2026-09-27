@@ -1,0 +1,21 @@
+**引理 139.1（转移归一化、单词概率与串长律）。** 令 $\varphi=(1+\sqrt5)/2$。上述参数满足
+$$
+\varphi\le\lambda<2,\qquad
+h_0=1,\qquad p\le h_j\le1,\qquad
+\frac12\le p\le\frac23.
+\tag{139.3}
+$$
+给定某位置以前的完整过去，任意指定合法 $m$ 位词 $u$ 若把当前后缀 $j$ 送到 $j'$，则
+$$
+\Pr(u\mid\text{过去})=p^m\frac{h_{j'}}{h_j}
+\le\lambda^{1-m}.
+\tag{139.4}
+$$
+条件于固定位置的一个真实 $1\to0$ 边界，后续完整零串长度 $Z$、其后一串长度 $W$ 及各相继周期独立，且
+$$
+\Pr(Z=z)=qp^{z-1}\quad(z\ge1),\qquad
+\Pr(W=w)=\frac{p^{w+1}}q\quad(1\le w<k).
+\tag{139.5}
+$$
+条件于一个真实 $0\to1$ 边界，向过去读取完整串时，也有相同的独立长度律。
+

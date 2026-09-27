@@ -1,0 +1,32 @@
+**命题 112.2（无需传感器参数的共同最坏参数阶）。** 定义 112.1 的同一规则满足
+$$
+\forall(T,E)\text{ 满足定义 112.1}\quad
+\exists C_{T,E,W,r,b}<\infty\quad
+\forall k\ge2,d\in\{0,1\},n\ge0:
+\quad
+\Pr_{d,k}(\Psi^{W,r,b}_n\ne d)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2a}
+$$
+常数允许依赖固定模型，规则不使用这些依赖量。记公平方向平均风险为 $R^{T,E}_{k,n}$，则对 $n\ge1$，
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^{T,E}_{k,n}(\Psi^{W,r,b}_n)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2b}
+$$
+该模型类包含传感器确实造成读数时间相关的子族，其中有周期传感器，且非周期部分的混合可以任意慢：可取二元读数、$r=3$、$b=1$、$W(y_0,y_1,y_2,y_3)=(1-y_0)(1-y_3)(y_2-y_1)$，并取
+$$
+\kappa_0=125/1327104,\quad \alpha=\kappa_0/64,\quad
+(p_0,p_1,p_2,p_3)=(1/2,1/4,1/2,3/4),
+$$
+$$
+M=\{-1,1\},\quad
+T_\varepsilon(z,z')=(1-\varepsilon)/2+
+ \varepsilon\mathbf1_{\{z=z'\}},\quad
+E_{x,z}(1)=p_x+\alpha z,
+\qquad -1\le\varepsilon<1,\qquad\varepsilon\ne0.
+\tag{112.2c}
+$$
+纯陷阱下该子族有 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$，并满足 $\gamma\ge5\kappa_0/6$。
+

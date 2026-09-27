@@ -1,0 +1,76 @@
+{
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      5
+    ]
+  },
+  "barriers": {
+    "kind": "inline",
+    "value": [
+      "1",
+      "1"
+    ]
+  },
+  "source_hinge_weight": {
+    "kind": "inline",
+    "value": "29/35"
+  },
+  "minimum_absorbed_hinge_coefficient": {
+    "kind": "inline",
+    "value": "3/7"
+  },
+  "omega0_scalar_reconstruction_checks": {
+    "kind": "inline",
+    "value": 2592
+  },
+  "strict_margin_domination_checks": {
+    "kind": "inline",
+    "value": 2592
+  },
+  "carrier_operator_evaluations": {
+    "kind": "inline",
+    "value": 25920
+  },
+  "tail_identity_checks": {
+    "kind": "inline",
+    "value": 143
+  },
+  "gains": {
+    "kind": "inline",
+    "value": {
+      "4": {
+        "minimum": "1/9375",
+        "maximum": "1721/141750",
+        "strictly_positive_vertices": 1296
+      },
+      "5": {
+        "minimum": "1/56250",
+        "maximum": "13589/1488375",
+        "strictly_positive_vertices": 1296
+      }
+    }
+  },
+  "rows": {
+    "path": "content/031-full_absorbed_hinges/009-rows.json",
+    "sha256": "2366bdfe898b22761e6a957c1d15c453a4b0952294b04c3bae1bce6090061ca6",
+    "kind": "array"
+  },
+  "full_margin_sha256": {
+    "kind": "inline",
+    "value": "51c36fb6ec3e600f1e7b8e8ac9de971459b33a362ba1c823fe3b0083210f4cee"
+  },
+  "tail_rule": {
+    "kind": "inline",
+    "value": "For v at or above ceil(t+C), g_l(v)=v-a_t-omega_l*C. Thus q_n,l(v)=v-1 for n at or above that cutoff, bar_g has constant tail, and every remaining sum is an exact geometric zeroth or first moment."
+  },
+  "vertex_table_semantics": {
+    "kind": "inline",
+    "value": "These are exact values of the globally defined separately concave full absorbed margin with C=1. Predecessor epsilon values remain only lower bounds."
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "General CellCost accepts a nonnegative rational C, but this certificate evaluates only C=1 for h4 and h5. Independent original labels and complete tails are preserved; ordinary source-law proof plus exact arithmetic, no unrestricted endpoint."
+  }
+}

@@ -1,0 +1,21 @@
+**定理 137.13（偶数前缀的正平坦实现）。** 设 $r\ge1$，只给自伴数据 $M_0,\ldots,M_{2r}$。若
+$$
+H_r\succeq0,\qquad
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1},\qquad
+S_{r-1}\succeq0,
+\tag{137.22}
+$$
+其中 $S_{r-1}=(M_{i+j+1})_{0\le i,j<r}$，则存在维数为 $\operatorname{rank}H_r$ 的正实现匹配全部已知矩；在全部有限维自伴实现之间，这一偶数前缀已经决定全部未来。
+
+写
+$$
+G=H_{r-1},\qquad
+h=(M_r,\ldots,M_{2r-1})^{\mathsf T}.
+$$
+方程 $GR=h$ 有解，对任意这样的 $R:U\to U^r$，唯一允许的下一矩为
+$$
+M_{2r+1}=R^*S_{r-1}R.
+\tag{137.23}
+$$
+正平坦扩张的标量机制可参见 M. Laurent、B. Mourrain, “A generalized flat extension theorem for moment matrices”, *Archiv der Mathematik* 93 (2009)，[DOI 10.1007/s00013-009-0007-6](https://doi.org/10.1007/s00013-009-0007-6)，以及其 [arXiv:0812.2563v1](https://arxiv.org/abs/0812.2563v1) 的Theorem 1.2与Corollary 1.3；以下证明直接处理矩阵系数与截断移位。
+

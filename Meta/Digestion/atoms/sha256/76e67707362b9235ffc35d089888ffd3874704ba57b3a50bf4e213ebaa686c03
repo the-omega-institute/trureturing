@@ -1,0 +1,41 @@
+### 48.3 有理前缀的精确达到条件与未达下确界
+
+仍固定同一个 \(A>0\)、临界 \(\rho\) 和截止 \(N\ge1\)，令
+\[
+\mathcal F^{\mathbb Q}_{A,N}
+=\mathcal F_{A,N}\cap\mathbb Q^{\mathbb N},
+\qquad
+\mathcal J^{\mathbb Q}_{A,N}
+=\mathcal E(\mathcal F^{\mathbb Q}_{A,N}),
+\qquad S_N=\sum_{i=1}^{N}\rho^{-i}.
+\]
+这里实际幅度上限 \(A\) 可以无理，来源坐标要求有理。
+
+先证明一个可用于有理近似的实幅度构造。若
+\[
+b_A<B\le A,\qquad BS_N\ge1,
+\tag{48.13}
+\]
+取长度 \(N\) 的全负 \(B\) 前缀 \(b^{B,N}\)，则
+\[
+\|T^\star-\mathcal E(b^{B,N})\|_\rho=c_A,
+\]
+并且每个有限坐标的加权误差严格小于 \(c_A\)。证明需处理同一来源的全部行。
+
+首行 \(p_k=-\mathcal E(b^{B,N})(0,k)\) 在 \(k<N\) 时为 \(u_k(B)\ge B\rho^k\)。递推归纳与前节相同，只将其系数 \(A\) 换成 \(B\)，由 \(BS_N\ge1\) 得
+\(p_k\ge B\rho^k\)。目标仍为幅度 \(A\) 的同一个角点，所以
+\[
+0\le\rho^k[u_k(A)-p_k]
+\le c_A+(b_A-B)\rho^{2k}<c_A.
+\]
+若 \(n\ge1\)、\(m=n+k<N\)，有限依赖给近似坐标为 \(-u_k(B)\)。因 \(u_k(B)\ge B\)，
+\[
+\begin{aligned}
+\rho^{n+k}[u_k(A)-u_k(B)]
+&\le\rho^n[c_A+b_A\rho^{2k}-B\rho^k]\\
+&\le\rho^n[c_A+(b_A-B)\rho^{2k}]
+<c_A.
+\end{aligned}
+\]
+这也与已证临界模量 \(\max\{A-B,c_A\}=c_A\) 一致，但这里已逐式给出所需估计。若 \(n\ge1\)、\(m\ge N\)，则 \(BS_N\ge1\)、\(B\le A\) 蕴含 \(AS_N\ge1\)，故（48.9）的目标粗界仍适用；近似数组非正且绝对值不超过目标，不需要再给不同来源拼接界。最后用（48.5）的首行极限取得范数下界 \(c_A\)。
+

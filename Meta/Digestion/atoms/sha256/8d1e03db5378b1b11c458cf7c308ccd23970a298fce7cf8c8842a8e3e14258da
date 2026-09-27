@@ -1,0 +1,75 @@
+**命题 92.4（四态分区诊断与高阶可见反演）。** 取
+$$
+\Omega=\{-1,+1\}^2,\qquad \nu(a,b)=\frac14,\qquad
+\Theta(a,b)=(-a,b),\qquad r(a,b)=a.
+$$
+读出相容，下降反演为 $\theta(a)=-a$。置
+$$
+L(t)=t\tanh t-\log\cosh t,\qquad Q(t)=2t\tanh t.
+$$
+三条纯分区方向的精确值为
+
+| $f(a,b)$ | 分区 | $\Delta(t)$ | $A(t)$ | $A_r(t)$ |
+|---|---|---|---|---|
+| $b$ | 隐藏偶 | $L(t)$ | $0$ | $0$ |
+| $a$ | 可见奇 | $0$ | $Q(t)$ | $Q(t)$ |
+| $ab$ | 隐藏奇 | $L(t)$ | $Q(t)$ | $0$ |
+
+对混合方向 $f=b+ab=b(1+a)$，则
+$$
+f_-=ab,\qquad \Pi f_-=0,
+$$
+但对所有 $t\ne0$，
+$$
+A_r(t)=\tanh^2(t)\log\cosh(2t)>0,\qquad
+\lim_{\substack{t\to0\\t\ne0}}\frac{A_r(t)}{t^4}=2. \tag{92.14}
+$$
+三条纯方向 $b,a,ab$ 构成此模型中心化函数空间的一组基；可见偶分区只有常函数，故不存在第四条非零中心化纯分区方向。
+
+**证明。** 此时 $\Pi$ 对第二坐标作均匀平均，故 $\Pi b=\Pi(ab)=0$、$\Pi a=a$；同时 $Rb=b$、$Ra=-a$、$R(ab)=-ab$。这给出表中的分区。对三条纯方向，$f$ 的值均为等概率的 $-1,+1$，于是共同有
+$$
+Z(t)=\cosh t,\qquad
+\sum_{a,b}d_t(a,b)f(a,b)=\tanh t.
+$$
+当 $f=b$ 或 $f=ab$ 时，$a$ 边缘仍为均匀律，故 $Ed_t=\nu$，且
+$$
+\Delta(t)=\sum_{a,b}d_t(a,b)\bigl(tf(a,b)-\log\cosh t\bigr)=L(t).
+$$
+当 $f=a$ 时，$u_t$ 已经可见，故 $Ed_t=d_t$，于是 $\Delta(t)=0$。偶方向 $b$ 给出 $d_t^R=d_t$，所以 $A=A_r=0$；奇方向 $a,ab$ 由式 (92.7) 得 $A=2t\tanh t=Q(t)$。对 $a$，$f_-=a$ 可见，式 (92.8) 给出 $A_r=A$；对 $ab$，粗律与其反演均为均匀律，故 $A_r=0$。
+
+混合方向在均匀律下中心化，且
+$$
+Rf=b-ab,\qquad f_-=ab,\qquad \Pi f_-=0.
+$$
+令 $c=\cosh(2t)$，则 $a=+1$ 时的指数为 $2tb$，$a=-1$ 时的指数为零，所以
+$$
+Z(t)=\frac{c+1}{2},\qquad
+Cd_t=\left(\frac{c}{c+1},\frac{1}{c+1}\right),\qquad
+Cd_t^R=\left(\frac{1}{c+1},\frac{c}{c+1}\right),
+$$
+其中坐标按 $(+1,-1)$ 排列。这两个二点概率的 KL 值由 [FourLocalEvidenceClosedForms](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.lean) 中 `kl_divergence_closed_form` 直接给出：取
+$$
+\delta=\frac{c-1}{2(c+1)}=\frac{\tanh^2t}{2},
+\qquad 0\le\delta<\frac12,
+$$
+便有
+$$
+A_r(t)=2\delta\log\frac{1+2\delta}{1-2\delta}
+=\frac{c-1}{c+1}\log c
+=\tanh^2t\log\cosh(2t).
+$$
+有限实数 $t$ 满足 $|\tanh t|<1$，故上述公式的严格正性前提成立。若 $t\ne0$，则 $\tanh^2t>0$ 且 $c>1$，给出式 (92.14) 的严格正性。
+
+由 $\tanh(0)=0$、$\tanh'(0)=1$，有 $\tanh t/t\to1$。令 $g(t)=\log\cosh(2t)$，则
+$$
+g(0)=g'(0)=0,\qquad
+g''(t)=\frac{4}{\cosh^2(2t)},\qquad g''(0)=4.
+$$
+对 $t\ne0$ 作二阶 Taylor 展开，存在介于 $0$ 与 $t$ 之间的 $\eta_t$，使 $g(t)=g''(\eta_t)t^2/2$。$g''$ 的连续性给出 $g(t)/t^2\to2$，因此
+$$
+\frac{A_r(t)}{t^4}
+=\left(\frac{\tanh t}{t}\right)^2
+  \frac{\log\cosh(2t)}{t^2}\longrightarrow2.
+$$
+最后，$1,a,b,ab$ 在均匀加权内积下为正交归一基，后三者均中心化；只依赖 $a$ 且在 $a\mapsto-a$ 下为偶的函数必为常数。故三条纯方向恰好用尽中心化空间的三个分区方向，而混合方向以式 (92.14) 说明 $\Pi f_-=0$ 不蕴含精确的 $A_r=0$。证毕。
+

@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:c480484dc16441cf6e8b10962ffe53d74901dfc5bd3d7a539b9b8023e8930f59
+  normalized_sha256: sha256:c480484dc16441cf6e8b10962ffe53d74901dfc5bd3d7a539b9b8023e8930f59
+cas_ref: sha256:c480484dc16441cf6e8b10962ffe53d74901dfc5bd3d7a539b9b8023e8930f59
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/PositiveGramianBalancing.gramianRoot_spec
+    target_statement_id: sha256:a1774cd2124a9daa2936a7225dfb02b6040d8047711705a2c898a8e1eed8cc13
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.gramOutputStep
+    target_statement_id: sha256:6dd110bcf63ffb86d427b88807262351dd3aedf516b61ad50e3577587a05148b
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.inputStep
+    target_statement_id: sha256:c1a17cf7442319add7c4faaf7d8722ac65276975aa44b0d2a2907899ae0d7871
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.outputStep
+    target_statement_id: sha256:516adc70478bb522c9f9341fa315c4bb9f3d00fa73bd4d20dac51584d7112f04
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.twoStepOutput
+    target_statement_id: sha256:2459c9f07033ab94460b9f3e36acdaba8502b3ed496babfecdf010911ccce6f6
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.two_step_outputs_iff_commuting_difference
+    target_statement_id: sha256:c322f6afe054334e198110579746d49079b1fcb76dae85b404a7d3a04d6c44df
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - edd8fac2c0ef1e13aa984287e3e39e259e543112e1e45a3d05475a5ad03edda0
+    - 67b1f51ee9e8fa823c208bfcd972aa045a2984332dfbac741129ffaf4c1c4156
+    - 447e2bc85d02658511135e872527adc2d713432234b0074b2821da84d5bf1732
+    - 9b90f2387b9a917147b94ab3bed653a950c9e2a27fbb9ad642f9e6873797c4ba

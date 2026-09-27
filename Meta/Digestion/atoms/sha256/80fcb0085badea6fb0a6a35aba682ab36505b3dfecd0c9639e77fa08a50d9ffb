@@ -1,0 +1,41 @@
+**命题 2.12（量子位二阶轨道恢复）。** 这个有限阶存在结论在量子位能量相位模型中可以显式实现。取 $H=\operatorname{diag}(E_0,E_1)$，$E_0\ne E_1$，写
+$$
+\rho=\begin{pmatrix}p&c\\\overline c&1-p\end{pmatrix},\qquad
+0\le p\le1,\quad |c|^2\le p(1-p),\qquad
+P_1(\rho)=\operatorname{diag}(p,1-p).
+\tag{TM.148}
+$$
+
+两份系统的三种总能量 $2E_0,E_0+E_1,2E_1$ 各不相同，中间能量块由 $01,10$ 张成。按 $00,01,10,11$ 排列，直接 pinching 得
+$$
+P_2(\rho)=\begin{pmatrix}
+p^2&0&0&0\\
+0&p(1-p)&|c|^2&0\\
+0&|c|^2&p(1-p)&0\\
+0&0&0&(1-p)^2
+\end{pmatrix}.
+\tag{TM.149}
+$$
+
+因此它除占据概率外还保留相干的模。实际效果可取 $Q_\pm=|\psi_\pm\rangle\langle\psi_\pm|$，$|\psi_\pm\rangle=(|01\rangle\pm|10\rangle)/\sqrt2$，二者都与总能量交换，并可与 $I-Q_+-Q_-$ 合成三结果测量。对应概率满足
+$$
+q_\pm=\operatorname{Tr}(Q_\pm\rho^{\otimes2})=p(1-p)\pm|c|^2,\qquad
+|c|^2=(q_+-q_-)/2,\qquad
+\operatorname{Tr}_2P_2(\rho)=P_1(\rho).
+\tag{TM.150}
+$$
+
+正性前件保证所有概率非负。若另一态写为 $\sigma=\left(\begin{smallmatrix}p'&c'\\\overline{c'}&1-p'\end{smallmatrix}\right)$，则
+$$
+\boxed{
+P_2(\rho)=P_2(\sigma)
+\Longleftrightarrow p=p',\ |c|=|c'|
+\Longleftrightarrow\sigma\in G\cdot\rho.
+}
+\tag{TM.151}
+$$
+
+第一个方向由部分迹与中间块得到，反向代入式(TM.149)。最后一个等价来自非零能隙：$e^{-itH}$ 将 $c$ 乘以 $e^{-it(E_0-E_1)}$，当 $t$ 遍历实数时覆盖全部圆周相位，所以同模的非零相干可互相变换；若两者均零，它们已经是同一态。端点 $p=0,1$ 强迫 $c=0$，也已涵盖。B卷第2.1.6节的 $|+\rangle\langle+|$ 与 $I/2$ 给相同 $P_1$、不同 $P_2$，因此对整个量子位态空间，一阶不足、二阶足够。
+
+这个 $N=2$ 结论适用于所声明的非退化单 Hamiltonian 相位作用，不是对任意抽象紧群在二维空间上的任何表示都给统一二阶界。若 $H$ 是数量矩阵，则 $P_1(\rho)=\rho$，一阶就足够，也不能套用式(TM.148)的去相干公式。
+

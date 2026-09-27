@@ -1,0 +1,2 @@
+**theorem 55.3 矩形条件恰好控制阈值分量。** 交叉数组满足 $\mathrm R$，当且仅当每个 $G_t(b)$ 的混合分量都是完全二部图。可实现的交叉数组必满足 $\mathrm R$。所用循环极值机制可参见 [Dovgoshey–Petrov，Lemma 2.1、Theorem 3.3](https://arxiv.org/html/1110.6802v1)：以 $w=p^{-b}$、$p^{-\infty}=0$ 换元，循环上的最大距离重复对应最小估值重复；此处的阈值论证如下。
+

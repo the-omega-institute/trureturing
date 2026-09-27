@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4766e3ee4c38162cb6d6baf7cd015f0c2e5dd8023ddd75d26e42c1b55837462
+  normalized_sha256: sha256:c4766e3ee4c38162cb6d6baf7cd015f0c2e5dd8023ddd75d26e42c1b55837462
+cas_ref: sha256:c4766e3ee4c38162cb6d6baf7cd015f0c2e5dd8023ddd75d26e42c1b55837462
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶用“记 ML 为”指定引用简称，并说明“其他卷的条目均注明卷名”；这是符号与编号约定，不宣称被引用结论成立，未借定义夹带数学主张，无须新增证明。
+    previous_atom_id: 856d7f4f1cbe352ae6c17d1b595b789041987593ebaed44696d5e1e4cadeaa37
+    next_atom_id: bfc6914639332ad27024d8eda463ec47b08a4ceb384ee4c8f7cabf256168d871

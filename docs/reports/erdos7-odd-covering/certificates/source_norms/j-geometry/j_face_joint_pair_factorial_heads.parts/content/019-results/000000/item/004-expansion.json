@@ -1,0 +1,49 @@
+{
+  "factorial_threshold": 3,
+  "at_one": "0",
+  "hinge_coefficients": {
+    "3": "5"
+  },
+  "factorial_coefficient": "2",
+  "original_phi5_expansion": {
+    "at_one": "0",
+    "hinge_coefficients": {
+      "1": "0",
+      "2": "0",
+      "3": "7",
+      "4": "2",
+      "5": "0"
+    },
+    "factorial_tail_coefficient": "2",
+    "polynomial_tail": {
+      "leading": "1",
+      "constant": "-9",
+      "entrance": 3
+    },
+    "negative_hinge_coefficients": {},
+    "finite_transition_values": {
+      "1": "0",
+      "2": "0",
+      "3": "0",
+      "4": "7",
+      "5": "16",
+      "6": "27",
+      "7": "40",
+      "8": "55"
+    }
+  },
+  "finite_transition_values": {
+    "1": "0",
+    "2": "0",
+    "3": "0",
+    "4": "7",
+    "5": "16",
+    "6": "27"
+  },
+  "polynomial_tail": {
+    "entrance": 5,
+    "constant": "-9",
+    "linear": "0",
+    "leading": "1"
+  }
+}

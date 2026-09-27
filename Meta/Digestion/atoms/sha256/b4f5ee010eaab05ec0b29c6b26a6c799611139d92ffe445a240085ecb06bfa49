@@ -1,0 +1,2 @@
+已证 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$，因为 (O-CONSTRUCTION) 的单孔项属于该扩张；反向以及 $\forall B\subseteq K:E_q^{\rm dup}(B)$ 均未证，记 open。引理 4 的首乘固定旁参数条件不适用于 $X\boxtimes X$，不得移贴单孔必要性。
+

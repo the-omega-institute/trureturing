@@ -1,0 +1,7 @@
+**命题 29（$\Theta$ 上的精确域与更新，repo-derived）。** 在 $\mathcal T$ 的实际像上，(ST) 的操作全部下降并恰好保域。并行加法与有定义的时间复合都更新为
+
+$$
+(\pi_X+\pi_Y,\ \min(m_X,m_Y),\ \max(M_X,M_Y),\ \max(s_X,s_Y)).
+\tag{TH+}
+$$
+

@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
+    public void MissingRegPackageExcludesAnOtherwiseWarmDonor()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm donor build\n");
+        _ = WriteProjectOlean(repository.Path, "DonorWarm");
+        var target = AddWorktree(repository.Path, "missing-reg-donor-target");
+        File.Delete(Path.Combine(repository.Path, "Reg/lakefile.toml"));
+        File.Delete(Path.Combine(repository.Path, "Reg/lake-manifest.json"));
+        var cloner = new RecordingDirectoryCloner();
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache", "--path", target],
+            new RecordingWorktreeProcessRunner(), cloner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(cloner.Invocations);
+        Assert.Contains("REG-MANIFEST-MISSING", result.Output, StringComparison.Ordinal);
+        Assert.True(File.Exists(Path.Combine(target, ".lake/cache-get.marker")));
+        Assert.Equal("warm donor build\n", LeanCacheFixtureFile.ReadCacheText(repository.Path));
+    }
+
+    [Fact]
     public void MissingColdClearCacheClonesOnlyWarmDonorBuildWithoutOverwritingLake()
     {
         using var repository = new TemporaryDirectory();
@@ -163,7 +186,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         InitializeRepository(repository.Path);
         var target = AddWorktree(repository.Path, "pin-mismatched-missing-target");
         Directory.CreateDirectory(Path.Combine(target, ".lake"));
-        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.30.0\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('f'));
+        StrataLint.TestSupport.RegPackageFixture.Write(repository.Path);
         WriteCache(repository.Path, "wrong pin donor\n");
         _ = WriteProjectOlean(repository.Path, "DonorWarm");
         var cloner = new RecordingDirectoryCloner();
@@ -177,7 +201,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Empty(cloner.Invocations);
         Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
-        Assert.Contains("pin bytes", result.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("mathlib partition", result.Output, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

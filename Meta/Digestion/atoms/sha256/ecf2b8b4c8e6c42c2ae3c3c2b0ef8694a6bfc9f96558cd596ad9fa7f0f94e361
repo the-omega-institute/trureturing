@@ -1,0 +1,10 @@
+### 37.3 ingest 检查点与最终工件
+
+首次摄入以 684487f7be64b35e05cc62f8154cd9f541f81fa3 为已提交输入，实际命令如下，退出 **0**、stderr 为空。
+```sh
+BASE=462d0a4368ba5a890c5eab619c82437baa88966f make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+```text
+INGEST residual_open_added=33 skipped_existing=289 coarse_fallbacks=0 open_genres=0 cas_objects_written=33 ledger_changed=true
+```
+

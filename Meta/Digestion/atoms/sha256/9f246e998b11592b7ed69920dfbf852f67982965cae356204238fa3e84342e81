@@ -1,0 +1,32 @@
+完全未来类数为 $$C_\infty$$。在源码的自然数减法语境下，`finite_stability_class_bound` 给出两段类预算
+
+$$
+\boxed{
+ d\le C_\infty-C_0,
+}
+$$
+
+以及
+
+$$
+\boxed{
+ C_\infty-C_0
+ \le
+ \lvert X\rvert-C_0.
+}
+$$
+
+这表示每次关系塔严格细化，都必须消耗至少一个新的商类；它不是说每一步一定恰好增加一个类，也不是最小线性预测维数定理。若 $$q$$ 满射到有限字母表 $$O$$，则
+
+$$
+C_0=\lvert O\rvert,
+$$
+
+从而得到
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ \lvert X\rvert-\lvert O\rvert.
+$$
+

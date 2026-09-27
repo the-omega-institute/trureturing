@@ -1,0 +1,22 @@
+**theorem 53.6（图形障碍与容量障碍的精确分离）。** 设 $p$ 为奇素数，$m=(p-1)/2$，并令
+$$
+F_m=mK_2\sqcup K_1.
+$$
+则有限图 $G$ 在 $p$ 处可实现，当且仅当 $G$ 不含下列任何诱导子图：
+$$
+K_3,\qquad P_4,\qquad F_m.
+$$
+其中 $K_3$ 与 $P_4$ 是与残数域容量无关的图形障碍，而 $F_m$ 是容量障碍。
+
+当 $p=3$ 时，$m=1$ 且
+$$
+F_1=K_2\sqcup K_1
+$$
+已经作为诱导子图包含在 $P_4$ 中，所以最小禁诱导族可取
+$$
+\{K_3,\ K_2\sqcup K_1\}.
+$$
+对每个 $m\ge1$，$F_m$ 都是相对于容量 $m$ 的顶点极小不可实现图；当 $p\ge5$ 时，$K_3,P_4,F_m$ 三者都是顶点极小的不可实现图。
+
+这里使用的纯图论机制在文献中有直接对应：Alfaro、Barrus、Sinkovic、Villagrán 的 [*Graphs with few trivial characteristic ideals*](https://arxiv.org/pdf/2004.00172v1)，Lemma 13，arXiv v1 PDF 排印页 7，原文假设是“$G$ 为连通且 $\{P_4,K_3\}$-free”，结论为完全二部图；其原始引用 Barrett、van der Holst、Loewy 的 [*Graphs whose minimal rank is two*](https://journals.uwyo.edu/index.php/ela/article/download/275/275)，Proposition 1，期刊页 269，给出“图是完全二部图的并”当且仅当它是 $(K_3,P_4)$-free。Alfaro 等的 Lemma 13 原文没有额外写“包含一条边”；下面只对本节的“含边连通分支”使用该机制，并给出完整自足证明，因此不依赖关于单点图是否计作退化完全二部图的记号约定。
+

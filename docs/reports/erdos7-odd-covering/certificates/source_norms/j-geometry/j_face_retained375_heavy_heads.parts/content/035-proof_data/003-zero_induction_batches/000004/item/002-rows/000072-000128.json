@@ -1,0 +1,618 @@
+[
+  {
+    "kind": "inequality",
+    "row": 12528,
+    "sign": 1,
+    "negative_antecedents": [
+      754
+    ],
+    "new_zero_columns": [
+      10060
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12531,
+    "sign": 1,
+    "negative_antecedents": [
+      330
+    ],
+    "new_zero_columns": [
+      6861
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12532,
+    "sign": 1,
+    "negative_antecedents": [
+      755
+    ],
+    "new_zero_columns": [
+      10061
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12535,
+    "sign": 1,
+    "negative_antecedents": [
+      331
+    ],
+    "new_zero_columns": [
+      6862
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12536,
+    "sign": 1,
+    "negative_antecedents": [
+      756
+    ],
+    "new_zero_columns": [
+      10062
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12539,
+    "sign": 1,
+    "negative_antecedents": [
+      332
+    ],
+    "new_zero_columns": [
+      6863
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12540,
+    "sign": 1,
+    "negative_antecedents": [
+      757
+    ],
+    "new_zero_columns": [
+      10063
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12543,
+    "sign": 1,
+    "negative_antecedents": [
+      333
+    ],
+    "new_zero_columns": [
+      6864
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12544,
+    "sign": 1,
+    "negative_antecedents": [
+      758
+    ],
+    "new_zero_columns": [
+      10064
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12547,
+    "sign": 1,
+    "negative_antecedents": [
+      334
+    ],
+    "new_zero_columns": [
+      6865
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12548,
+    "sign": 1,
+    "negative_antecedents": [
+      759
+    ],
+    "new_zero_columns": [
+      10065
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12551,
+    "sign": 1,
+    "negative_antecedents": [
+      335
+    ],
+    "new_zero_columns": [
+      6866
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12552,
+    "sign": 1,
+    "negative_antecedents": [
+      760
+    ],
+    "new_zero_columns": [
+      10066
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12555,
+    "sign": 1,
+    "negative_antecedents": [
+      336
+    ],
+    "new_zero_columns": [
+      6867
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12556,
+    "sign": 1,
+    "negative_antecedents": [
+      761
+    ],
+    "new_zero_columns": [
+      10067
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12559,
+    "sign": 1,
+    "negative_antecedents": [
+      337
+    ],
+    "new_zero_columns": [
+      6868
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12560,
+    "sign": 1,
+    "negative_antecedents": [
+      762
+    ],
+    "new_zero_columns": [
+      10068
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12563,
+    "sign": 1,
+    "negative_antecedents": [
+      338
+    ],
+    "new_zero_columns": [
+      6869
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12564,
+    "sign": 1,
+    "negative_antecedents": [
+      763
+    ],
+    "new_zero_columns": [
+      10069
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12567,
+    "sign": 1,
+    "negative_antecedents": [
+      339
+    ],
+    "new_zero_columns": [
+      6870
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12568,
+    "sign": 1,
+    "negative_antecedents": [
+      764
+    ],
+    "new_zero_columns": [
+      10070
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12571,
+    "sign": 1,
+    "negative_antecedents": [
+      340
+    ],
+    "new_zero_columns": [
+      6871
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12572,
+    "sign": 1,
+    "negative_antecedents": [
+      765
+    ],
+    "new_zero_columns": [
+      10071
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12575,
+    "sign": 1,
+    "negative_antecedents": [
+      341
+    ],
+    "new_zero_columns": [
+      6872
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12576,
+    "sign": 1,
+    "negative_antecedents": [
+      766
+    ],
+    "new_zero_columns": [
+      10072
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12579,
+    "sign": 1,
+    "negative_antecedents": [
+      342
+    ],
+    "new_zero_columns": [
+      6873
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12580,
+    "sign": 1,
+    "negative_antecedents": [
+      767
+    ],
+    "new_zero_columns": [
+      10073
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12583,
+    "sign": 1,
+    "negative_antecedents": [
+      343
+    ],
+    "new_zero_columns": [
+      6874
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12584,
+    "sign": 1,
+    "negative_antecedents": [
+      768
+    ],
+    "new_zero_columns": [
+      10074
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12587,
+    "sign": 1,
+    "negative_antecedents": [
+      344
+    ],
+    "new_zero_columns": [
+      6875
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12588,
+    "sign": 1,
+    "negative_antecedents": [
+      769
+    ],
+    "new_zero_columns": [
+      10075
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12591,
+    "sign": 1,
+    "negative_antecedents": [
+      345
+    ],
+    "new_zero_columns": [
+      6876
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12592,
+    "sign": 1,
+    "negative_antecedents": [
+      770
+    ],
+    "new_zero_columns": [
+      10076
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12595,
+    "sign": 1,
+    "negative_antecedents": [
+      346
+    ],
+    "new_zero_columns": [
+      6877
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12596,
+    "sign": 1,
+    "negative_antecedents": [
+      771
+    ],
+    "new_zero_columns": [
+      10077
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12599,
+    "sign": 1,
+    "negative_antecedents": [
+      347
+    ],
+    "new_zero_columns": [
+      6878
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12600,
+    "sign": 1,
+    "negative_antecedents": [
+      772
+    ],
+    "new_zero_columns": [
+      10078
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12603,
+    "sign": 1,
+    "negative_antecedents": [
+      348
+    ],
+    "new_zero_columns": [
+      6879
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12604,
+    "sign": 1,
+    "negative_antecedents": [
+      773
+    ],
+    "new_zero_columns": [
+      10079
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12607,
+    "sign": 1,
+    "negative_antecedents": [
+      349
+    ],
+    "new_zero_columns": [
+      6880
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12608,
+    "sign": 1,
+    "negative_antecedents": [
+      774
+    ],
+    "new_zero_columns": [
+      10080
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12611,
+    "sign": 1,
+    "negative_antecedents": [
+      350
+    ],
+    "new_zero_columns": [
+      6881
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12612,
+    "sign": 1,
+    "negative_antecedents": [
+      775
+    ],
+    "new_zero_columns": [
+      10081
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12615,
+    "sign": 1,
+    "negative_antecedents": [
+      351
+    ],
+    "new_zero_columns": [
+      6882
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12616,
+    "sign": 1,
+    "negative_antecedents": [
+      776
+    ],
+    "new_zero_columns": [
+      10082
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12811,
+    "sign": 1,
+    "negative_antecedents": [
+      876
+    ],
+    "new_zero_columns": [
+      6931
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12812,
+    "sign": 1,
+    "negative_antecedents": [
+      3676
+    ],
+    "new_zero_columns": [
+      10131
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12815,
+    "sign": 1,
+    "negative_antecedents": [
+      877
+    ],
+    "new_zero_columns": [
+      6932
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12816,
+    "sign": 1,
+    "negative_antecedents": [
+      3677
+    ],
+    "new_zero_columns": [
+      10132
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12819,
+    "sign": 1,
+    "negative_antecedents": [
+      878
+    ],
+    "new_zero_columns": [
+      6933
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12820,
+    "sign": 1,
+    "negative_antecedents": [
+      3678
+    ],
+    "new_zero_columns": [
+      10133
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12823,
+    "sign": 1,
+    "negative_antecedents": [
+      879
+    ],
+    "new_zero_columns": [
+      6934
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12824,
+    "sign": 1,
+    "negative_antecedents": [
+      3679
+    ],
+    "new_zero_columns": [
+      10134
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12827,
+    "sign": 1,
+    "negative_antecedents": [
+      880
+    ],
+    "new_zero_columns": [
+      6935
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12828,
+    "sign": 1,
+    "negative_antecedents": [
+      3680
+    ],
+    "new_zero_columns": [
+      10135
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 12831,
+    "sign": 1,
+    "negative_antecedents": [
+      881
+    ],
+    "new_zero_columns": [
+      6936
+    ]
+  }
+]

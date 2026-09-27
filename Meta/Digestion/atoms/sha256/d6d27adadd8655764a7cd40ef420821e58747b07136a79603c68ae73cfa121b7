@@ -1,0 +1,32 @@
+**定理 9.5（结构缺陷加恢复核失配）。** 对任意定义9.4的$r$，扩展非负实数中有
+$$
+\begin{aligned}
+D(P_{ABC}\Vert Q_r)
+&=I_P(A:C\mid B)
+  +D(P_{BC}\Vert P_Br)\\
+&=I_P(A:C\mid B)
+  +\sum_{b:P_B(b)>0}P_B(b)D(P_{C|b}\Vert r(\cdot\mid b)).
+\end{aligned}
+\tag{9.6}
+$$
+这里$(P_Br)(b,c)=P_B(b)r(c\mid b)$。所以
+$$
+\min_r D(P_{ABC}\Vert P_{AB}r)=I_P(A:C\mid B),
+\tag{9.7}
+$$
+且最小值恰由正$P_B$切片上$r(\cdot\mid b)=P_{C|b}$的核取得；零切片上的行不受约束。
+
+**证明。** 先核对无穷分支。若存在$P_{BC}(b,c)>0$而$r(c\mid b)=0$，则$P_B(b)>0$，并有某个$a$使$P(a,b,c)>0$。该点$Q_r=0$，故式（9.6）左边无穷，右边的第二项及对应条件KL也无穷。第一项有限，因此整条式子是$+\infty=\text{有限数}+(+\infty)$，没有无穷减无穷。
+
+否则$r(c\mid b)>0$在$P_{BC}$的正支持上成立。于是所有需取对数的比值均正。在$P(a,b,c)>0$处有
+$$
+\frac{P(a,b,c)}{P_{AB}(a,b)r(c\mid b)}
+=\frac{P(a,b,c)P_B(b)}{P_{AB}(a,b)P_{BC}(b,c)}
+ \frac{P_{BC}(b,c)}{P_B(b)r(c\mid b)}.
+$$
+取对数、乘$P(a,b,c)$并求有限和。第一项由式（9.4）为$I_P(A:C\mid B)$；第二项先对$a$求和，得到$D(P_{BC}\Vert P_Br)$。再把$P_{BC}=P_BP_{C|b}$代入正$B$切片，约去同一个$P_B$，得到式（9.6）的第二行。$P_B=0$时非负边缘和为零迫使整片$P_{BC}$和$P$均为零，因此不出现任何遗漏项。
+
+所有条件KL非负，选$r=P_{C|B}$并任意补全零行，得到最小值。由于$I_P(A:C\mid B)$有限，等于最小值当且仅当第二项为零；有限和中每个正$P_B$权重的KL均必须为零，即该行$r=P_{C|b}$。
+
+一般组合积的成熟KL链式公式见钉版Mathlib [`KullbackLeibler/ChainRule.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean)中的`InformationTheory.klDiv_compProd_eq_add`：其前提为有限测度及Markov核，证明包括非绝对连续和不可积导致的无穷分支。项目[`Divergence/ChainRule`](../../../D5/S3/Divergence/ChainRule.lean)的`kl_divergence_chain_rule`则要求有限质量函数处处严格正；上面的支持分类明确处理了超出该严格正接口的情形。证毕。
+

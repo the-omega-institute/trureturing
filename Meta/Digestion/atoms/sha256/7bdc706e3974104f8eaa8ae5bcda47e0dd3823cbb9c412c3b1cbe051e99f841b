@@ -1,0 +1,9 @@
+若 $a_\mu$ 是点信念风险的唯一最优动作，并且
+$$
+\gamma_\mu=\min_{a\ne a_\mu}
+\left[
+\sum_s\mu(s)\ell(a,s)-\sum_s\mu(s)\ell(a_\mu,s)
+\right]>2M\varepsilon,
+$$
+则 $a_\mu$ 也是鲁棒风险 $R_{\mathcal{F}}$ 的唯一最优动作。
+

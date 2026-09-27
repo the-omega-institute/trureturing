@@ -1,0 +1,10 @@
+**命题 135.1（解析拉回的零／一）。** 在这些假设下，
+
+$$
+\Pr(R(G(U))=0)=
+\begin{cases}
+1,&h\equiv0\text{ 于 }\Omega,\\
+0,&h\not\equiv0\text{ 于 }\Omega.
+\end{cases}
+$$
+

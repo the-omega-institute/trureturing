@@ -1,0 +1,15 @@
+**theorem 60.4（有限残基超度量与局部答复的信息等价）。** 对每个素数 $p$ 与 $e\ge1$，definition 60.3 的 $d_{p,e}$ 是 $X_{p,e}$ 上的超度量。更精确地，对任意 $a,b,c\in X_{p,e}$，
+$$
+d_{p,e}(a,c)\le
+\max\bigl(d_{p,e}(a,b),d_{p,e}(b,c)\bigr).
+$$
+此外，对任意固定中心 $c$，函数
+$$
+a\longmapsto h_c(a)
+$$
+与
+$$
+a\longmapsto d_{p,e}(a,c)
+$$
+携带完全相同的信息：各自的值唯一决定另一个的值。
+

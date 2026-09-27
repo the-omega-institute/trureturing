@@ -1,0 +1,26 @@
+**theorem 52.8 (闭关系、紧输出与集合值连续性).** $\Gamma_+$ 是 $I^3$ 的紧闭子集，每个 $A\boxplus B$ 是非空紧集。乘法 $I^2\to I$ 连续，超加法作为映射
+$$
+I^2\longrightarrow\mathcal K(I),\qquad (A,B)\longmapsto A\boxplus B
+$$
+对 Vietoris 拓扑连续。
+
+**证明。** 映射
+$$
+R^2\longrightarrow I^3,\qquad (x,y)\longmapsto(\rho(x),\rho(y),\rho(x+y))
+$$
+连续，其像恰为 $\Gamma_+$。$R^2$ 紧且 $I^3$ Hausdorff，所以该像紧且闭。固定前两个坐标所得截面闭于紧空间 $I$，因而紧；非空性已证明。
+
+扩展加法 $E^2\to E$ 连续：在有限输入对处，两坐标可固定为孤立点；若至少一坐标为 $\infty$，为使和进入任意指定尾集，只须使该坐标进入同一尾集。逐坐标应用即得 $I$ 上乘法连续。
+
+设 $O\subseteq I$ 开。所有满足 $(A\boxplus B)\cap O\ne\varnothing$ 的输入对，恰为开集
+$$
+\{(x,y)\in R^2:\rho(x+y)\in O\}
+$$
+在 $\rho\times\rho$ 下的像。定理52.2说明 $\rho$ 开；由开矩形构成乘积拓扑的基，$\rho\times\rho$ 也开，故该输入集开。
+
+所有不满足 $A\boxplus B\subseteq O$ 的输入对，恰为
+$$
+\Gamma_+\cap\bigl(I^2\times(I\setminus O)\bigr)
+$$
+投影到 $I^2$ 的像。被投影集合紧，投影像在 Hausdorff 空间 $I^2$ 中闭。因此满足 $A\boxplus B\subseteq O$ 的输入集开。两类 Vietoris 子基的原像都开，证明连续性。证毕。
+

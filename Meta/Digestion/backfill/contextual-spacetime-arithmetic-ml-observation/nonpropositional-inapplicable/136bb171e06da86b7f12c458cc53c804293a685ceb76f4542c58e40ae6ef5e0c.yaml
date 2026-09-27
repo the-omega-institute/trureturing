@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:136bb171e06da86b7f12c458cc53c804293a685ceb76f4542c58e40ae6ef5e0c
+  normalized_sha256: sha256:136bb171e06da86b7f12c458cc53c804293a685ceb76f4542c58e40ae6ef5e0c
+cas_ref: sha256:136bb171e06da86b7f12c458cc53c804293a685ceb76f4542c58e40ae6ef5e0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “它允许等号，逐个检验”并“必在有限步结束”是真实终止主张，不能当定义结算；探针以 one_add_mul_le_pow 和 Nat.le_ceil 给出一个正整数成功阈值，且使用非严格比较，因此对可判有理比较的顺次检验提供有限上界。仓内无冻结 GID，本行只结算该充分不等式的搜索终止。
+    previous_atom_id: cc69aca903473f38e3971caf17eb16668f24633ee60fc51bd44ae2d653fa9ef8
+    next_atom_id: d037843cdc64a43ca47ed51e7478d0dd1e62d3344c27ee0378d7db0a4bffab74

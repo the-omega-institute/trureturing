@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61991d339973978cc8812299af8227a99bd6d792bfebded89b3b1480a0ea509e
+  normalized_sha256: sha256:61991d339973978cc8812299af8227a99bd6d792bfebded89b3b1480a0ea509e
+cas_ref: sha256:61991d339973978cc8812299af8227a99bd6d792bfebded89b3b1480a0ea509e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定保留阶段的操作限制并定义擦除率和线性映射，通道性质与半群律另分叶核验。
+    previous_atom_id: 7ca80e7abb4a5b4f3da2625f4cae1fefbace0fc58b259a8f468bddb00ba0aa67
+    next_atom_id: d43c19937c358ebeb9555deff41fa19063f9d8c7e2277be22d913dbf05a7e561

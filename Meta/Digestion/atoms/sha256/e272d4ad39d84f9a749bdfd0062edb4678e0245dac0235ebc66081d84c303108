@@ -1,0 +1,14 @@
+**命题 14.2（标准浓缩给整份前缀的共同事件）。** 设 $0<\alpha<1$，预先取 $\alpha_\ell>0$、$\sum_{\ell=1}^D\alpha_\ell\le\alpha$，令
+$$
+\bar X_\ell=\frac1n\sum_{i=1}^nX^{(i)}_\ell,\qquad
+\rho_\ell=b_\ell+
+W_\ell\sqrt{\frac{\log(2/\alpha_\ell)}{2n}}.
+\tag{14.6}
+$$
+则共同事件
+$$
+\mathcal E_n=\{\forall\ell\le D: |\bar X_\ell-\theta_\ell|\le\rho_\ell\}
+\tag{14.7}
+$$
+满足 $\Pr(\mathcal E_n)\ge1-\alpha$。该结论不需要时间点之间独立。
+

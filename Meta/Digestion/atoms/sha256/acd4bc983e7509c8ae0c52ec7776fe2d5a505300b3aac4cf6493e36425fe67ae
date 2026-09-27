@@ -1,0 +1,23 @@
+**推论 14.9（固定取得合同下的增长前缀）。** 设 $d,h,a,b,m_*,E_*,W,L_*,G$ 固定，且 $\lambda_*<1$。假设实际取得的增长协议始终满足同一模型、统一读数宽度及零偏差合同，每次返回一份共同合法盒拟合；其求解容差满足 $\nu_0=O(n^{-1/2})$。对充分大的 $n$，取
+$$
+N_n=\text{不超过 }\frac{\log n}{4\log\mathcal R}
+\text{ 的最大正奇数},\qquad r_n=(N_n-1)/2.
+\tag{14.21}
+$$
+对固定 $0<\alpha<1$，有 $D_n=O(\log n)$、
+$$
+t_n=O\!\left(\sqrt{\frac{\log\log n}{n}}\right),\qquad
+\mathcal R^{N_n}\le n^{1/4},\qquad
+\varepsilon_K=O((\log n)^{-1/2}),\qquad
+\varepsilon_f=O((\log n)^{-1/2}),
+\tag{14.22}
+$$
+且以至少 $1-\alpha$ 的置信水平，
+$$
+I_K=O\!\left((\log n)^{-1/2}\right),\qquad
+\|x-\widehat x\|_\infty
+=O\!\left((\log n)^{-1/2}\right).
+\tag{14.23}
+$$
+这些为固定置信水平下趋零的全时间误差半径。若改取预分配 $\alpha_n=6\alpha/(\pi^2n^2)$，则 $t_n=O(\sqrt{\log n/n})$，式(14.22)的核与强迫结论及式(14.23)仍成立，且可使全部阶段的证书以概率至少 $1-\alpha$ 同时有效。对这一具体分配 $\alpha_n=6\alpha/(\pi^2n^2)$，失败概率与上述误差半径都趋零，故相应误差依概率收敛到零。
+

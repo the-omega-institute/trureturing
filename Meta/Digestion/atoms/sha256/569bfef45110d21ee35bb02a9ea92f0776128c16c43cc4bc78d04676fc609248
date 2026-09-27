@@ -1,0 +1,14 @@
+**theorem 45.8（稠密幺元紧环的周期分类）。** 设 $R$ 为紧致 Hausdorff 拓扑幺环，且其幺元的非负整数倍稠密。则存在唯一超自然数 $D$，使 $R$ 与 $R_D$ 存在保持自然核心的拓扑幺环同构。其有限连续满环商恰为 $\mathbb Z/m\mathbb Z$，其中 $m\mid D$。此外，存在唯一连续满幺环同态
+$$
+\widehat{\mathbb Z}\longrightarrow R_D,
+\qquad
+R_D\cong\widehat{\mathbb Z}/J_D.
+$$
+若 $\mathbb Z_p=\varprojlim_k\mathbb Z/p^k\mathbb Z$，则中国剩余同构给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,
+\qquad
+J_D\cong\prod_p p^{e_p}\mathbb Z_p,
+$$
+其中 $p^0\mathbb Z_p=\mathbb Z_p$，$p^\infty\mathbb Z_p=\{0\}$。特别地，有限 $D=d$ 时 $J_D=d\widehat{\mathbb Z}$ 且 $R_D\cong\mathbb Z/d\mathbb Z$。
+

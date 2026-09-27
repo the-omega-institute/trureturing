@@ -1,0 +1,29 @@
+**命题 18.3（合法重叠圆盘的尖锐端点与有限精度代价）。** 在假设15.1中取单率 $\lambda=1$、$U_A=U_S=\mathbb R$、$U_B=\mathbb R^2$，并取局部系数
+$$
+D=1,\quad E=1,\quad F=(1,0),\quad
+A=2,\quad B_{\rm loc}=\operatorname{diag}(2,1).
+\tag{18.6}
+$$
+则 $P=1,Q=I_2,X^0=(1,0)$。定理15.4给出全部合法余量 $T=(t_1,t_2)$，其中 $t_1^2+t_2^2\le1$，以及
+$$
+K_{AB}(t)=e^{-t}(1+t_1,t_2).
+$$
+取得实际无误差读数 $\langle1,K_{AB}(0)e_1\rangle=2$，即中心化记录 $t_1=1$。固定终时一及输入 $g(s)=e_2/(1-e^{-1})$，$0\le s\le1$，则定义16.1的记忆任务恰为 $t_2$。其真实任务纤维为 $\{0\}$，而上端点对偶满足
+$$
+\inf_{c\in\mathbb R}\bigl[c+\sqrt{1+c^2}\bigr]=0,\qquad
+c+\sqrt{1+c^2}>0\quad(c\in\mathbb R).
+\tag{18.7}
+$$
+因此无有限最小化系数。对两个任务符号，定理18.1的值相同，且
+$$
+\boxed{U_B=\sqrt{1+B^2}-B,\qquad
+[-U_B,U_B]\text{ 是相应证书区间}.}
+\tag{18.8}
+$$
+对 $0<\eta<1$，
+$$
+\boxed{U_B\le\eta\iff B\ge\frac{1-\eta^2}{2\eta}.}
+\tag{18.9}
+$$
+$\eta\ge1$ 时每个 $B\ge0$ 均满足容差；$\eta=0$ 时没有有限预算满足。
+

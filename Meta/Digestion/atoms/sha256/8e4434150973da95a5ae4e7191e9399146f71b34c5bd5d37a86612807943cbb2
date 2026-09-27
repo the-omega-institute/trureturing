@@ -1,0 +1,18 @@
+**定理 28.2（参数依赖的初始逆时间）。** 在任意紧参数集 $K$ 的开邻域内，缩短恢复卷的共同 $H^{12}$ 时间后，存在共同 $T_g,r_*>0$，使 $0\le r\le r_*$ 有唯一初始分支时间 $t_p(r)\in[0,T_g]$。函数 $t(p,r)$ 及
+$$
+g(p,r)=z_p(t_p(r)),\qquad g(p,0)=0
+\tag{28.102}
+$$
+联合 $C^5$ 至 $r=0$，且对 $\xi=m,k$ 有
+$$
+\partial_rt_p(r)=\frac1{\partial_tr_p(t_p(r))},\qquad
+\partial_\xi t_p(r)=-\frac{\partial_\xi r_p(t_p(r))}{\partial_tr_p(t_p(r))}.
+\tag{28.103}
+$$
+
+证明。恢复卷定理27.3—27.4给联合 $C^5$ 的真实端口及 $r_t(p,0)=\nu(p)>0$。在 $K$ 的稍大紧邻域取 $\nu_{\min}>0$；联合连续性允许同一 $T_g\le T_{12}$ 使 $r_t\ge\nu_{\min}/2$。可取 $r_*\le\nu_{\min}T_g/4$，介值定理和严格单调性给唯一逆，且正端点离 $T_g$ 留有裕量。
+
+为使用普通开域逆函数定理，在负时间把每个端口延成其零点的五次 Taylor 多项式。恢复卷（27.111）说明各初始系数对参数光滑；正时间的全部所需混合导数连续至零，所以正负两侧在总阶至多五的导数上相合，得到联合 $C^5$ 延拓。它只是一种函数延拓，绝非负时间 PDE 解。对 $(p,t)\mapsto(p,r_p(t))$ 使用逆函数定理，$r_t>0$ 给可逆导数；局部逆由单调性一致拼接，限制回非负 $r$ 得所需函数。对 $r_p(t_p(r))=r$ 求导得到（28.103），再复合真实 $z$ 得 $g$。这同时供应连续的 $\partial_m\partial_r^4g,\partial_k\partial_r^4g$：参数微分逆时间可出现第五时间导数，已由恢复卷供应，没有对外部未知钟求导。
+
+普通逆函数步骤的钉版直接供应者是 Mathlib 的 [InverseFunctionTheorem/ContDiff.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean) 中 `ContDiffAt.toOpenPartialHomeomorph`、`ContDiffAt.localInverse`、`ContDiffAt.to_localInverse`；这些有限维逆接口不承担恢复卷的 PDE 正则性。$\square$
+

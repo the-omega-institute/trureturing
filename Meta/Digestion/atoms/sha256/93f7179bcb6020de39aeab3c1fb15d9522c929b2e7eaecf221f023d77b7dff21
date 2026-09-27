@@ -1,0 +1,13 @@
+**theorem 54.5（同分量有限边的 $0,\pm2$ 系数约束）.** 在 theorem 54.2 的二分条件下，若有限边 $e=\{i,j\}$ 的两端属于同一无穷分量，则：
+
+1. 若 $\varepsilon_i=-\varepsilon_j$，任何有限 $a_e$ 都不可能，因为 $x_i+x_j=0$；
+2. 若 $\varepsilon_i=\varepsilon_j$，则必且只可能有
+$$
+a_e=v_p(2)=
+\begin{cases}
+1,&p=2,\\
+0,&p\ne2.
+\end{cases}
+$$
+当该值被指定时，此边对自由单位参数不再增加限制。
+

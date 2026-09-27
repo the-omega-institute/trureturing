@@ -1,0 +1,800 @@
+[
+  {
+    "kind": "head",
+    "residue": 2,
+    "modulus": 3,
+    "private_integer": "1070672807034979154523113781786376953125"
+  },
+  {
+    "kind": "head",
+    "residue": 6,
+    "modulus": 9,
+    "private_integer": "939569865979176747711699206255126953125"
+  },
+  {
+    "kind": "head",
+    "residue": 9,
+    "modulus": 27,
+    "private_integer": "841242660187324942603138274606689453125"
+  },
+  {
+    "kind": "head",
+    "residue": 27,
+    "modulus": 81,
+    "private_integer": "251279425436214111951772684716064453125"
+  },
+  {
+    "kind": "head",
+    "residue": 81,
+    "modulus": 243,
+    "private_integer": "972575293895863845336097448042724609375"
+  },
+  {
+    "kind": "head",
+    "residue": 243,
+    "modulus": 729,
+    "private_integer": "645277326561830820150650205024169921875"
+  },
+  {
+    "kind": "head",
+    "residue": 729,
+    "modulus": 2187,
+    "private_integer": "908976210916222857263519242467773437500"
+  },
+  {
+    "kind": "head",
+    "residue": 2187,
+    "modulus": 6561,
+    "private_integer": "454480077622907855932915588299316406250"
+  },
+  {
+    "kind": "head",
+    "residue": 6561,
+    "modulus": 19683,
+    "private_integer": "336584464099453964610315392293212890625"
+  },
+  {
+    "kind": "head",
+    "residue": 19683,
+    "modulus": 59049,
+    "private_integer": "1228490409885583403311725570774169921875"
+  },
+  {
+    "kind": "head",
+    "residue": 59049,
+    "modulus": 177147,
+    "private_integer": "167429888174498381408323806719238281250"
+  },
+  {
+    "kind": "head",
+    "residue": 177147,
+    "modulus": 531441,
+    "private_integer": "721026682110716653705750814052246093750"
+  },
+  {
+    "kind": "head",
+    "residue": 1,
+    "modulus": 5,
+    "private_integer": "339761442490965912703843693131347656251"
+  },
+  {
+    "kind": "head",
+    "residue": 5,
+    "modulus": 25,
+    "private_integer": "890688461272781469811566486946533203130"
+  },
+  {
+    "kind": "head",
+    "residue": 25,
+    "modulus": 125,
+    "private_integer": "1154137982468877030011758923023925781275"
+  },
+  {
+    "kind": "head",
+    "residue": 125,
+    "modulus": 625,
+    "private_integer": "1225792802092863718343510336911621093875"
+  },
+  {
+    "kind": "head",
+    "residue": 625,
+    "modulus": 3125,
+    "private_integer": "338474113856306047333056639850830078750"
+  },
+  {
+    "kind": "head",
+    "residue": 3125,
+    "modulus": 15625,
+    "private_integer": "884251818099482142957631220543945315625"
+  },
+  {
+    "kind": "head",
+    "residue": 15625,
+    "modulus": 78125,
+    "private_integer": "1121954766602380395742082591010986343750"
+  },
+  {
+    "kind": "head",
+    "residue": 78125,
+    "modulus": 390625,
+    "private_integer": "1064876722760380546995128676846923906250"
+  },
+  {
+    "kind": "head",
+    "residue": 390625,
+    "modulus": 1953125,
+    "private_integer": "779486503550381303260359106026611718750"
+  },
+  {
+    "kind": "head",
+    "residue": 1953125,
+    "modulus": 9765625,
+    "private_integer": "598128193856876197255722018424318359375"
+  },
+  {
+    "kind": "head",
+    "residue": 9765625,
+    "modulus": 48828125,
+    "private_integer": "936929431745841779901747346912119140625"
+  },
+  {
+    "kind": "head",
+    "residue": 48828125,
+    "modulus": 244140625,
+    "private_integer": "139750048477687467793452456352587890625"
+  },
+  {
+    "kind": "head",
+    "residue": 7,
+    "modulus": 15,
+    "private_integer": "756115658511591978445223439327148437502"
+  },
+  {
+    "kind": "head",
+    "residue": 10,
+    "modulus": 75,
+    "private_integer": "612376909718731979991458260458251953135"
+  },
+  {
+    "kind": "head",
+    "residue": 175,
+    "modulus": 375,
+    "private_integer": "1139275952110923100391843132613037109425"
+  },
+  {
+    "kind": "head",
+    "residue": 250,
+    "modulus": 1875,
+    "private_integer": "36992805002405364386135193889160156500"
+  },
+  {
+    "kind": "head",
+    "residue": 4375,
+    "modulus": 9375,
+    "private_integer": "753541001242272247703649332766113282500"
+  },
+  {
+    "kind": "head",
+    "residue": 6250,
+    "modulus": 46875,
+    "private_integer": "599503623372133326283587727653076178125"
+  },
+  {
+    "kind": "head",
+    "residue": 109375,
+    "modulus": 234375,
+    "private_integer": "1074909520377929831852490468587158234375"
+  },
+  {
+    "kind": "head",
+    "residue": 156250,
+    "modulus": 1171875,
+    "private_integer": "960753432693930134358582640259033359375"
+  },
+  {
+    "kind": "head",
+    "residue": 2734375,
+    "modulus": 5859375,
+    "private_integer": "389972994273931646889043498618408984375"
+  },
+  {
+    "kind": "head",
+    "residue": 3906250,
+    "modulus": 29296875,
+    "private_integer": "27256374886921434879769323413822265625"
+  },
+  {
+    "kind": "head",
+    "residue": 68359375,
+    "modulus": 146484375,
+    "private_integer": "704858850664852600171819980389423828125"
+  },
+  {
+    "kind": "head",
+    "residue": 97656250,
+    "modulus": 732421875,
+    "private_integer": "356092870485035088624440965769628906250"
+  },
+  {
+    "kind": "head",
+    "residue": 28,
+    "modulus": 45,
+    "private_integer": "1205245609796168645889456829405761718753"
+  },
+  {
+    "kind": "head",
+    "residue": 40,
+    "modulus": 225,
+    "private_integer": "268513887636781286765642746204345703140"
+  },
+  {
+    "kind": "head",
+    "residue": 1075,
+    "modulus": 1125,
+    "private_integer": "1058862451225067967366220054436523437575"
+  },
+  {
+    "kind": "head",
+    "residue": 2875,
+    "modulus": 5625,
+    "private_integer": "28234123740536919692263529600341797250"
+  },
+  {
+    "kind": "head",
+    "residue": 17500,
+    "modulus": 28125,
+    "private_integer": "1103056418100337244668534737915771486250"
+  },
+  {
+    "kind": "head",
+    "residue": 118750,
+    "modulus": 140625,
+    "private_integer": "249203958116883306203836946996582040625"
+  },
+  {
+    "kind": "head",
+    "residue": 203125,
+    "modulus": 703125,
+    "private_integer": "962312803625578064557191058397705125000"
+  },
+  {
+    "kind": "head",
+    "residue": 625000,
+    "modulus": 3515625,
+    "private_integer": "791078672099578518316329315905517812500"
+  },
+  {
+    "kind": "head",
+    "residue": 16796875,
+    "modulus": 17578125,
+    "private_integer": "1180500800826071899781231369943848828125"
+  },
+  {
+    "kind": "head",
+    "residue": 44921875,
+    "modulus": 87890625,
+    "private_integer": "636425871745556581767320107136968750000"
+  },
+  {
+    "kind": "head",
+    "residue": 273437500,
+    "modulus": 439453125,
+    "private_integer": "407236799055962217036185326101103515625"
+  },
+  {
+    "kind": "head",
+    "residue": 1855468750,
+    "modulus": 2197265625,
+    "private_integer": "506884221964481506049722187421044921875"
+  },
+  {
+    "kind": "head",
+    "residue": 64,
+    "modulus": 135,
+    "private_integer": "113801157348698785338796658039794921879"
+  },
+  {
+    "kind": "head",
+    "residue": 340,
+    "modulus": 675,
+    "private_integer": "1120797850825865179000609786109863281265"
+  },
+  {
+    "kind": "head",
+    "residue": 1825,
+    "modulus": 3375,
+    "private_integer": "665553628057660746931976327842773437575"
+  },
+  {
+    "kind": "head",
+    "residue": 16000,
+    "modulus": 16875,
+    "private_integer": "880518086929620811927230569505859375375"
+  },
+  {
+    "kind": "head",
+    "residue": 36250,
+    "modulus": 84375,
+    "private_integer": "709747594932930024234291011322021486250"
+  },
+  {
+    "kind": "head",
+    "residue": 306250,
+    "modulus": 421875,
+    "private_integer": "1101487921305967198438803986902099618750"
+  },
+  {
+    "kind": "head",
+    "residue": 2078125,
+    "modulus": 2109375,
+    "private_integer": "569003980458170844122947331803955125000"
+  },
+  {
+    "kind": "head",
+    "residue": 8828125,
+    "modulus": 10546875,
+    "private_integer": "397769848932171297882085589311767812500"
+  },
+  {
+    "kind": "head",
+    "residue": 10937500,
+    "modulus": 52734375,
+    "private_integer": "787191977658664679346987643350098828125"
+  },
+  {
+    "kind": "head",
+    "residue": 74218750,
+    "modulus": 263671875,
+    "private_integer": "243117048578149361333076380543218750000"
+  },
+  {
+    "kind": "head",
+    "residue": 126953125,
+    "modulus": 1318359375,
+    "private_integer": "13927975888554996601941599507353515625"
+  },
+  {
+    "kind": "head",
+    "residue": 390625000,
+    "modulus": 6591796875,
+    "private_integer": "113575398797074285615478460827294921875"
+  },
+  {
+    "kind": "head",
+    "residue": 358,
+    "modulus": 405,
+    "private_integer": "123646346085798789695286581272949218753"
+  },
+  {
+    "kind": "head",
+    "residue": 115,
+    "modulus": 2025,
+    "private_integer": "530834616074754348349244196219238281265"
+  },
+  {
+    "kind": "head",
+    "residue": 2950,
+    "modulus": 10125,
+    "private_integer": "75590393306549916280610737952148437575"
+  },
+  {
+    "kind": "head",
+    "residue": 27250,
+    "modulus": 50625,
+    "private_integer": "290554852178509981275864979615234375375"
+  },
+  {
+    "kind": "head",
+    "residue": 148750,
+    "modulus": 253125,
+    "private_integer": "119784360181819193582925421431396486250"
+  },
+  {
+    "kind": "head",
+    "residue": 1009375,
+    "modulus": 1265625,
+    "private_integer": "511524686554856367787438397011474618750"
+  },
+  {
+    "kind": "head",
+    "residue": 2781250,
+    "modulus": 6328125,
+    "private_integer": "1224633532063551126140792508412597703125"
+  },
+  {
+    "kind": "head",
+    "residue": 5312500,
+    "modulus": 31640625,
+    "private_integer": "1053399400537551579899930765920410390625"
+  },
+  {
+    "kind": "head",
+    "residue": 81250000,
+    "modulus": 158203125,
+    "private_integer": "197228742907553848695622053459473828125"
+  },
+  {
+    "kind": "head",
+    "residue": 777343750,
+    "modulus": 791015625,
+    "private_integer": "898746600183529643350921557151861328125"
+  },
+  {
+    "kind": "head",
+    "residue": 1884765625,
+    "modulus": 3955078125,
+    "private_integer": "669557527493935278619786776115996093750"
+  },
+  {
+    "kind": "head",
+    "residue": 11376953125,
+    "modulus": 19775390625,
+    "private_integer": "769204950402454567633323637435937500000"
+  },
+  {
+    "kind": "head",
+    "residue": 88,
+    "modulus": 1215,
+    "private_integer": "844942214545448523079611344599609375003"
+  },
+  {
+    "kind": "head",
+    "residue": 3490,
+    "modulus": 6075,
+    "private_integer": "6537698177912969064358193046630859390"
+  },
+  {
+    "kind": "head",
+    "residue": 26575,
+    "modulus": 30375,
+    "private_integer": "796886261766199649664935501278808593825"
+  },
+  {
+    "kind": "head",
+    "residue": 111625,
+    "modulus": 151875,
+    "private_integer": "1011850720638159714660189742941894531625"
+  },
+  {
+    "kind": "head",
+    "residue": 233125,
+    "modulus": 759375,
+    "private_integer": "841080228641468926967250184758056642500"
+  },
+  {
+    "kind": "head",
+    "residue": 3118750,
+    "modulus": 3796875,
+    "private_integer": "1232820555014506101171763160338134775000"
+  },
+  {
+    "kind": "head",
+    "residue": 17546875,
+    "modulus": 18984375,
+    "private_integer": "700336614166709746855906505239990281250"
+  },
+  {
+    "kind": "head",
+    "residue": 89687500,
+    "modulus": 94921875,
+    "private_integer": "529102482640710200615044762747802968750"
+  },
+  {
+    "kind": "head",
+    "residue": 450390625,
+    "modulus": 474609375,
+    "private_integer": "918524611367203582079946816786133984375"
+  },
+  {
+    "kind": "head",
+    "residue": 1304687500,
+    "modulus": 2373046875,
+    "private_integer": "374449682286688264066035553979253906250"
+  },
+  {
+    "kind": "head",
+    "residue": 3203125000,
+    "modulus": 11865234375,
+    "private_integer": "145260609597093899334900772943388671875"
+  },
+  {
+    "kind": "head",
+    "residue": 24560546875,
+    "modulus": 59326171875,
+    "private_integer": "244908032505613188348437634263330078125"
+  },
+  {
+    "kind": "head",
+    "residue": 1708,
+    "modulus": 3645,
+    "private_integer": "517644247211415497894164101581054687503"
+  },
+  {
+    "kind": "head",
+    "residue": 7540,
+    "modulus": 18225,
+    "private_integer": "924832517200371056548121716527343750015"
+  },
+  {
+    "kind": "head",
+    "residue": 36700,
+    "modulus": 91125,
+    "private_integer": "469588294432166624479488258260253906325"
+  },
+  {
+    "kind": "head",
+    "residue": 364750,
+    "modulus": 455625,
+    "private_integer": "684552753304126689474742499923339844125"
+  },
+  {
+    "kind": "head",
+    "residue": 2005000,
+    "modulus": 2278125,
+    "private_integer": "513782261307435901781802941739501955000"
+  },
+  {
+    "kind": "head",
+    "residue": 5650000,
+    "modulus": 11390625,
+    "private_integer": "905522587680473075986315917319580087500"
+  },
+  {
+    "kind": "head",
+    "residue": 23875000,
+    "modulus": 56953125,
+    "private_integer": "373038646832676721670459262221435593750"
+  },
+  {
+    "kind": "head",
+    "residue": 58046875,
+    "modulus": 284765625,
+    "private_integer": "201804515306677175429597519729248281250"
+  },
+  {
+    "kind": "head",
+    "residue": 1083203125,
+    "modulus": 1423828125,
+    "private_integer": "591226644033170556894499573767579296875"
+  },
+  {
+    "kind": "head",
+    "residue": 513671875,
+    "modulus": 7119140625,
+    "private_integer": "47151714952655238880588310960699218750"
+  },
+  {
+    "kind": "head",
+    "residue": 19023437500,
+    "modulus": 35595703125,
+    "private_integer": "1063555428619551986818664296424101562500"
+  },
+  {
+    "kind": "head",
+    "residue": 4785156250,
+    "modulus": 177978515625,
+    "private_integer": "1163202851528071275832201157744042968750"
+  },
+  {
+    "kind": "head",
+    "residue": 2923,
+    "modulus": 10935,
+    "private_integer": "781343131565807535007033139024658203128"
+  },
+  {
+    "kind": "head",
+    "residue": 37915,
+    "modulus": 54675,
+    "private_integer": "1188531401554763093660990753970947265640"
+  },
+  {
+    "kind": "head",
+    "residue": 158200,
+    "modulus": 273375,
+    "private_integer": "733287178786558661592357295703857421950"
+  },
+  {
+    "kind": "head",
+    "residue": 212875,
+    "modulus": 1366875,
+    "private_integer": "948251637658518726587611537366943359750"
+  },
+  {
+    "kind": "head",
+    "residue": 486250,
+    "modulus": 6834375,
+    "private_integer": "777481145661827938894671979183105470625"
+  },
+  {
+    "kind": "head",
+    "residue": 1853125,
+    "modulus": 34171875,
+    "private_integer": "1169221472034865113099184954763183603125"
+  },
+  {
+    "kind": "head",
+    "residue": 42859375,
+    "modulus": 170859375,
+    "private_integer": "636737531187068758783328299665039109375"
+  },
+  {
+    "kind": "head",
+    "residue": 247890625,
+    "modulus": 854296875,
+    "private_integer": "465503399661069212542466557172851796875"
+  },
+  {
+    "kind": "head",
+    "residue": 2981640625,
+    "modulus": 4271484375,
+    "private_integer": "854925528387562594007368611211182812500"
+  },
+  {
+    "kind": "head",
+    "residue": 12378906250,
+    "modulus": 21357421875,
+    "private_integer": "310850599307047275993457348404302734375"
+  },
+  {
+    "kind": "head",
+    "residue": 102080078125,
+    "modulus": 106787109375,
+    "private_integer": "81661526617452911262322567368437500000"
+  },
+  {
+    "kind": "head",
+    "residue": 123437500000,
+    "modulus": 533935546875,
+    "private_integer": "181308949525972200275859428688378906250"
+  },
+  {
+    "kind": "head",
+    "residue": 28438,
+    "modulus": 32805,
+    "private_integer": "326846998272492533676429484856201171878"
+  },
+  {
+    "kind": "head",
+    "residue": 74365,
+    "modulus": 164025,
+    "private_integer": "734035268261448092330387099802490234390"
+  },
+  {
+    "kind": "head",
+    "residue": 796075,
+    "modulus": 820125,
+    "private_integer": "278791045493243660261753641535400390700"
+  },
+  {
+    "kind": "head",
+    "residue": 1124125,
+    "modulus": 4100625,
+    "private_integer": "493755504365203725257007883198486328500"
+  },
+  {
+    "kind": "head",
+    "residue": 2764375,
+    "modulus": 20503125,
+    "private_integer": "322985012368512937564068325014648439375"
+  },
+  {
+    "kind": "head",
+    "residue": 92978125,
+    "modulus": 102515625,
+    "private_integer": "714725338741550111768581300594726571875"
+  },
+  {
+    "kind": "head",
+    "residue": 441531250,
+    "modulus": 512578125,
+    "private_integer": "182241397893753757452724645496582078125"
+  },
+  {
+    "kind": "head",
+    "residue": 1671718750,
+    "modulus": 2562890625,
+    "private_integer": "11007266367754211211862903004394765625"
+  },
+  {
+    "kind": "head",
+    "residue": 133984375,
+    "modulus": 12814453125,
+    "private_integer": "400429395094247592676764957042725781250"
+  },
+  {
+    "kind": "head",
+    "residue": 5259765625,
+    "modulus": 64072265625,
+    "private_integer": "1101947252370223387332064460735113281250"
+  },
+  {
+    "kind": "head",
+    "residue": 30888671875,
+    "modulus": 320361328125,
+    "private_integer": "872758179680629022600929679699248046875"
+  },
+  {
+    "kind": "head",
+    "residue": 479394531250,
+    "modulus": 1601806640625,
+    "private_integer": "972405602589148311614466541019189453125"
+  },
+  {
+    "kind": "head",
+    "residue": 6568,
+    "modulus": 98415,
+    "private_integer": "208951384749038642353829288850097656253"
+  },
+  {
+    "kind": "head",
+    "residue": 183715,
+    "modulus": 492075,
+    "private_integer": "616139654737994201007786903796386718765"
+  },
+  {
+    "kind": "head",
+    "residue": 1069450,
+    "modulus": 2460375,
+    "private_integer": "160895431969789768939153445529296875075"
+  },
+  {
+    "kind": "head",
+    "residue": 7958500,
+    "modulus": 12301875,
+    "private_integer": "375859890841749833934407687192382812875"
+  },
+  {
+    "kind": "head",
+    "residue": 30101875,
+    "modulus": 61509375,
+    "private_integer": "205089398845059046241468129008544923750"
+  },
+  {
+    "kind": "head",
+    "residue": 263837500,
+    "modulus": 307546875,
+    "private_integer": "596829725218096220445981104588623056250"
+  },
+  {
+    "kind": "head",
+    "residue": 1124968750,
+    "modulus": 1537734375,
+    "private_integer": "64345784370299866130124449490478562500"
+  },
+  {
+    "kind": "head",
+    "residue": 817421875,
+    "modulus": 7688671875,
+    "private_integer": "1138704439200791432558473473497558828125"
+  },
+  {
+    "kind": "head",
+    "residue": 30034375000,
+    "modulus": 38443359375,
+    "private_integer": "282533781570793701354164761036622265625"
+  },
+  {
+    "kind": "head",
+    "residue": 176119140625,
+    "modulus": 192216796875,
+    "private_integer": "984051638846769496009464264729009765625"
+  },
+  {
+    "kind": "head",
+    "residue": 137675781250,
+    "modulus": 961083984375,
+    "private_integer": "754862566157175131278329483693144531250"
+  },
+  {
+    "kind": "head",
+    "residue": 4750878906250,
+    "modulus": 4805419921875,
+    "private_integer": "854509989065694420291866345013085937500"
+  },
+  {
+    "kind": "head",
+    "residue": 137788,
+    "modulus": 295245,
+    "private_integer": "1100857330535168081055239467331054687503"
+  }
+]

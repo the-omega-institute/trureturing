@@ -9,6 +9,33 @@ public sealed class BoundedProcessRunnerTests
     [InlineData(false, 17)]
     [InlineData(true, 16)]
     [InlineData(true, 17)]
+    public void ForwardedStreamsRetainExactBytesAndExistingOutputBounds(bool stderr, int bytes)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var forwarded = new MemoryStream();
+        void RunAndAssert()
+        {
+            var result = TestProcessRunner.Run(
+                "/bin/sh", ["-c", "head -c \"$1\" /dev/zero" + (stderr ? " >&2" : ""),
+                    "forwarded-probe", bytes.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                Path.GetTempPath(), BoundedProcessRunner.HangDetectionBudget, 16,
+                standardOutput: stderr ? null : forwarded, standardError: stderr ? forwarded : null);
+            Assert.Equal(0, result.ExitCode);
+            Assert.Equal(new byte[bytes], forwarded.ToArray());
+            Assert.Equal(forwarded.ToArray(), stderr ? result.StandardError : result.StandardOutput);
+            Assert.Empty(stderr ? result.StandardOutput : result.StandardError);
+        }
+        if (bytes <= 16) RunAndAssert();
+        else Assert.Contains("process output exceeded 16 bytes",
+            Assert.Throws<InvalidOperationException>(RunAndAssert).Message, StringComparison.Ordinal);
+        Assert.True(forwarded.Length <= 16);
+    }
+
+    [Xunit.SkippableTheory]
+    [InlineData(false, 16)]
+    [InlineData(false, 17)]
+    [InlineData(true, 16)]
+    [InlineData(true, 17)]
     public void BufferedStdoutAndStreamingStderrKeepTheirBounds(bool stderr, int bytes)
     {
         if (OperatingSystem.IsWindows()) return;

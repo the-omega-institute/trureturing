@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:989c8cd49be05fd0848992494c6ddaf644c6c4eaa72bba3ec912d3510adfff5a
+  normalized_sha256: sha256:989c8cd49be05fd0848992494c6ddaf644c6c4eaa72bba3ec912d3510adfff5a
+cas_ref: sha256:989c8cd49be05fd0848992494c6ddaf644c6c4eaa72bba3ec912d3510adfff5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本批形态为 ingest”与“不作 deposit／cover，不报告冻结或 absorbed”区分文本摄入和证明交付；这段不再陈述前一段的奇偶性命题，没有定义偷带，故仅此工程子句可结算。
+    previous_atom_id: 43388e9aa0cafd2968939b99b51448f1d2da7ca391d22bba8740a4418ec5b915
+    next_atom_id: c947713abce24e9da97989c88916f766ac76912f8fb5535e5a637389aece659e

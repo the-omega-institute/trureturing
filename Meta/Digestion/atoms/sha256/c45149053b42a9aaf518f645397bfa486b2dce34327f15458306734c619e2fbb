@@ -1,0 +1,38 @@
+**Proof.** The exact fibres from Theorem 37.9 are
+$$
+e^{-1}(\{Z(n)\})=\{T^n,P_{n\delta}^+,P_{n\delta}^-\}
+\quad(n\ge0),
+\tag{39.27}
+$$
+$$
+e^{-1}(\{x_m^s\})=\{P_{E_m}^s\}
+\quad(m\ge1),
+\tag{39.28}
+$$
+and
+$$
+e^{-1}(\{k_\gamma\})=\{P_\gamma^+,P_\gamma^-\}
+\quad\bigl(\gamma\notin E\cup\{n\delta:n\ge0\}\bigr).
+\tag{39.29}
+$$
+Every state belongs to exactly one of these cases. On a three-element fibre, (39.26) gives three different labels; on a two-element fibre it gives the two signs; on a singleton fibre no separation is needed. Thus $(e,\ell_0)$ is injective.
+
+At zero, specifically,
+$$
+e^{-1}(\{0_K\})=\{\operatorname{id}_K,P_0^+,P_0^-\}.
+$$
+Any auxiliary label making $(e,\ell)$ injective must take three distinct values on this fibre. This proves the lower bound in (39.25), including impossibility of a binary label. A fixed record of $r$ binary digits offers $2^r$ labels, so $r\ge2$ is necessary, and the codes $00$, $01$, $10$ assigned to the three symbols suffice.
+
+Let $c_0,c_1$ be those two code digits. The map
+$$
+C(p)=\bigl(c_0(\ell_0(p)),c_1(\ell_0(p)),
+(e(p))_0,(e(p))_1,\ldots\bigr)
+\in\{0,1\}^{\mathbb N}
+\tag{39.30}
+$$
+is injective, because its tail reconstructs $e(p)$ and its first two digits reconstruct $\ell_0(p)$. This is a countably infinite record, not a two-bit encoding of the whole operator: the two-bit assertion is relative to the already supplied complete state $e(p)$.
+
+Theorem 39.8 excludes every continuous metrizable auxiliary label and every countable continuous family, irrespective of their target cardinalities. It also implies that the injective map $C$ in (39.30) cannot be continuous into the binary sequence space. The particular discrete label $\ell_0$ is discontinuous as well: the preimage of the closed singleton $\{\mathrm{iterate}\}$ is the dense proper subset $\{T^n:n\ge0\}$, which is not closed in $\mathscr E$.
+
+Finally, suppose $e$ were a covering map. By (39.28), a point $x_1^+$ has a singleton fibre. An evenly covered open neighborhood $W$ of $x_1^+$ would therefore have exactly one sheet, and every point of $W$ would have a singleton fibre. Density of $Z(\mathbb N)$ in $K$ supplies $Z(n)\in W$, contradicting the three-element fibre in (39.27). Thus $e$ is not a covering. Its continuity, surjectivity, and quotient property are those of Theorem 37.9; finite fibres do not provide the additional covering structure. $\square$
+

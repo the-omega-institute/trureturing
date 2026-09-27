@@ -1,0 +1,272 @@
+{
+  "clean_cylinders": [
+    [
+      5,
+      1,
+      4
+    ],
+    [
+      5,
+      2,
+      20
+    ],
+    [
+      7,
+      1,
+      4
+    ],
+    [
+      7,
+      1,
+      5
+    ]
+  ],
+  "pure3_survivors": 265721,
+  "pure3_test_union_cap": 265720,
+  "clipping_threshold": "3/10",
+  "active_mixed_fraction_charge": [
+    [
+      0,
+      "1/11",
+      "0"
+    ],
+    [
+      1,
+      "2/11",
+      "0"
+    ],
+    [
+      2,
+      "3/11",
+      "0"
+    ],
+    [
+      4,
+      "5/11",
+      "17/77"
+    ]
+  ],
+  "unweighted_charge": "46895305009765625/3527588438996371004187768",
+  "reweighted_charge_by_cell": [
+    "46895305009765625/2884428516245345623992684",
+    "234476525048828125/15864356839349400931959762",
+    "93790610019531250/7932178419674700465979881",
+    "93790610019531250/7932178419674700465979881",
+    "93790610019531250/7932178419674700465979881"
+  ],
+  "sample_a": 0,
+  "sample_added_originals": [
+    {
+      "modulus": 11,
+      "residue": 10,
+      "current_digit": 10
+    },
+    {
+      "modulus": 5845851,
+      "residue": 0,
+      "current_digit": 0
+    },
+    {
+      "modulus": 40920957,
+      "residue": 28697814,
+      "current_digit": 2
+    },
+    {
+      "modulus": 146146275,
+      "residue": 90344970,
+      "current_digit": 1
+    },
+    {
+      "modulus": 1023023925,
+      "residue": 914078520,
+      "current_digit": 3
+    }
+  ],
+  "extended_label_count": 209,
+  "witness_scope": "Sample a checks extension geometry only. The ordinary proof supplies an uncomputed maximizing layout and a hole that may depend on the source weights.",
+  "complete_next11": {
+    "clean_root": 9,
+    "clean_root_caps": [
+      "1/10",
+      "1/9",
+      "1/8",
+      "10/77"
+    ],
+    "pair_moments": {
+      "5": "91552733/48828125",
+      "7": "21530891197/13841287201"
+    },
+    "square_coefficient": "13/10",
+    "fibre_square_upper": "1665674083394287733845/320689858090579182198888",
+    "reweighted_fibre_square_upper": "18322414917337165072295/2884428516245345623992684",
+    "additive_error_upper": "7662100783613723575687/16462079381983064686209584",
+    "reweighted_additive_error_upper": "7662100783613723575687/13460666409144946245299192"
+  },
+  "fixed_depth": {
+    "holes": [
+      {
+        "depth": 2,
+        "residue": 1,
+        "weight": "1",
+        "added_originals": [
+          {
+            "modulus": 11,
+            "residue": 10,
+            "current_digit": 10
+          },
+          {
+            "modulus": 99,
+            "residue": 55,
+            "current_digit": 0
+          },
+          {
+            "modulus": 693,
+            "residue": 145,
+            "current_digit": 2
+          },
+          {
+            "modulus": 2475,
+            "residue": 595,
+            "current_digit": 1
+          },
+          {
+            "modulus": 17325,
+            "residue": 9595,
+            "current_digit": 3
+          }
+        ],
+        "unweighted_charge": "923040288507216796875/1175862812998790334729256",
+        "reweighted_charge": "1846080577014433593750/2644059473224900155326627"
+      },
+      {
+        "depth": 3,
+        "residue": 12,
+        "weight": "5/4",
+        "added_originals": [
+          {
+            "modulus": 11,
+            "residue": 10,
+            "current_digit": 10
+          },
+          {
+            "modulus": 297,
+            "residue": 66,
+            "current_digit": 0
+          },
+          {
+            "modulus": 2079,
+            "residue": 1146,
+            "current_digit": 2
+          },
+          {
+            "modulus": 7425,
+            "residue": 4170,
+            "current_digit": 1
+          },
+          {
+            "modulus": 51975,
+            "residue": 23070,
+            "current_digit": 3
+          }
+        ],
+        "unweighted_charge": "307680096169072265625/1175862812998790334729256",
+        "reweighted_charge": "1538400480845361328125/5288118946449800310653254"
+      },
+      {
+        "depth": 4,
+        "residue": 54,
+        "weight": "11/8",
+        "added_originals": [
+          {
+            "modulus": 11,
+            "residue": 10,
+            "current_digit": 10
+          },
+          {
+            "modulus": 891,
+            "residue": 297,
+            "current_digit": 0
+          },
+          {
+            "modulus": 6237,
+            "residue": 3456,
+            "current_digit": 2
+          },
+          {
+            "modulus": 22275,
+            "residue": 4995,
+            "current_digit": 1
+          },
+          {
+            "modulus": 155925,
+            "residue": 98145,
+            "current_digit": 3
+          }
+        ],
+        "unweighted_charge": "102560032056357421875/1175862812998790334729256",
+        "reweighted_charge": "102560032056357421875/961476172081781874664228"
+      }
+    ],
+    "shallow_choices": [
+      {
+        "shallow_residues": [
+          0,
+          0
+        ],
+        "missed_holes": [
+          0
+        ]
+      },
+      {
+        "shallow_residues": [
+          0,
+          3
+        ],
+        "missed_holes": [
+          0
+        ]
+      },
+      {
+        "shallow_residues": [
+          0,
+          4
+        ],
+        "missed_holes": [
+          0
+        ]
+      },
+      {
+        "shallow_residues": [
+          1,
+          0
+        ],
+        "missed_holes": [
+          1
+        ]
+      },
+      {
+        "shallow_residues": [
+          1,
+          3
+        ],
+        "missed_holes": [
+          2
+        ]
+      },
+      {
+        "shallow_residues": [
+          1,
+          4
+        ],
+        "missed_holes": [
+          1,
+          2
+        ]
+      }
+    ],
+    "unweighted_charge_floor": "17/1091475",
+    "reweighted_charge_floor": "17/1091475",
+    "unweighted_lower_limit": "68/779625",
+    "scope": "The ordinary ternary-compression proof selects one of these holes for each of the two fixed laws. The maximizing layout and selected hole are not computed. This stronger variant does not cover arbitrary three-coordinate reweighting or prove decay of the complete next11 error."
+  }
+}

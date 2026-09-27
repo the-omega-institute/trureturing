@@ -1,0 +1,797 @@
+[
+  {
+    "prime": 4787,
+    "charge_scaled_upper": 17943598203960,
+    "cumulative_scaled_upper": 787566410117430260
+  },
+  {
+    "prime": 4789,
+    "charge_scaled_upper": 17949971108729,
+    "cumulative_scaled_upper": 787584360088538989
+  },
+  {
+    "prime": 4793,
+    "charge_scaled_upper": 17933364064282,
+    "cumulative_scaled_upper": 787602293452603271
+  },
+  {
+    "prime": 4799,
+    "charge_scaled_upper": 17893775332580,
+    "cumulative_scaled_upper": 787620187227935851
+  },
+  {
+    "prime": 4801,
+    "charge_scaled_upper": 17900006655099,
+    "cumulative_scaled_upper": 787638087234590950
+  },
+  {
+    "prime": 4813,
+    "charge_scaled_upper": 17791712270494,
+    "cumulative_scaled_upper": 787655878946861444
+  },
+  {
+    "prime": 4817,
+    "charge_scaled_upper": 17774904898429,
+    "cumulative_scaled_upper": 787673653851759873
+  },
+  {
+    "prime": 4831,
+    "charge_scaled_upper": 17644055229393,
+    "cumulative_scaled_upper": 787691297906989266
+  },
+  {
+    "prime": 4861,
+    "charge_scaled_upper": 17332964793143,
+    "cumulative_scaled_upper": 787708630871782409
+  },
+  {
+    "prime": 4871,
+    "charge_scaled_upper": 17248449488851,
+    "cumulative_scaled_upper": 787725879321271260
+  },
+  {
+    "prime": 4877,
+    "charge_scaled_upper": 17208855311214,
+    "cumulative_scaled_upper": 787743088176582474
+  },
+  {
+    "prime": 4889,
+    "charge_scaled_upper": 17102103345409,
+    "cumulative_scaled_upper": 787760190279927883
+  },
+  {
+    "prime": 4903,
+    "charge_scaled_upper": 16973319097188,
+    "cumulative_scaled_upper": 787777163599025071
+  },
+  {
+    "prime": 4909,
+    "charge_scaled_upper": 16933707566973,
+    "cumulative_scaled_upper": 787794097306592044
+  },
+  {
+    "prime": 4919,
+    "charge_scaled_upper": 16849680727669,
+    "cumulative_scaled_upper": 787810946987319713
+  },
+  {
+    "prime": 4931,
+    "charge_scaled_upper": 16743651668240,
+    "cumulative_scaled_upper": 787827690638987953
+  },
+  {
+    "prime": 4933,
+    "charge_scaled_upper": 16748195645936,
+    "cumulative_scaled_upper": 787844438834633889
+  },
+  {
+    "prime": 4937,
+    "charge_scaled_upper": 16730598843328,
+    "cumulative_scaled_upper": 787861169433477217
+  },
+  {
+    "prime": 4943,
+    "charge_scaled_upper": 16690860603633,
+    "cumulative_scaled_upper": 787877860294080850
+  },
+  {
+    "prime": 4951,
+    "charge_scaled_upper": 16629033992591,
+    "cumulative_scaled_upper": 787894489328073441
+  },
+  {
+    "prime": 4957,
+    "charge_scaled_upper": 16589247958322,
+    "cumulative_scaled_upper": 787911078576031763
+  },
+  {
+    "prime": 4967,
+    "charge_scaled_upper": 16505452546074,
+    "cumulative_scaled_upper": 787927584028577837
+  },
+  {
+    "prime": 4969,
+    "charge_scaled_upper": 16509568006268,
+    "cumulative_scaled_upper": 787944093596584105
+  },
+  {
+    "prime": 4973,
+    "charge_scaled_upper": 16491669957736,
+    "cumulative_scaled_upper": 787960585266541841
+  },
+  {
+    "prime": 4987,
+    "charge_scaled_upper": 16364049487654,
+    "cumulative_scaled_upper": 787976949316029495
+  },
+  {
+    "prime": 4993,
+    "charge_scaled_upper": 16324151354790,
+    "cumulative_scaled_upper": 787993273467384285
+  },
+  {
+    "prime": 4999,
+    "charge_scaled_upper": 16284224842850,
+    "cumulative_scaled_upper": 788009557692227135
+  },
+  {
+    "prime": 5003,
+    "charge_scaled_upper": 16266108130691,
+    "cumulative_scaled_upper": 788025823800357826
+  },
+  {
+    "prime": 5009,
+    "charge_scaled_upper": 16226114529354,
+    "cumulative_scaled_upper": 788042049914887180
+  },
+  {
+    "prime": 5011,
+    "charge_scaled_upper": 16229738073686,
+    "cumulative_scaled_upper": 788058279652960866
+  },
+  {
+    "prime": 5021,
+    "charge_scaled_upper": 16146063263576,
+    "cumulative_scaled_upper": 788074425716224442
+  },
+  {
+    "prime": 5023,
+    "charge_scaled_upper": 16149547826309,
+    "cumulative_scaled_upper": 788090575264050751
+  },
+  {
+    "prime": 5039,
+    "charge_scaled_upper": 16000748227627,
+    "cumulative_scaled_upper": 788106576012278378
+  },
+  {
+    "prime": 5051,
+    "charge_scaled_upper": 15895711696114,
+    "cumulative_scaled_upper": 788122471723974492
+  },
+  {
+    "prime": 5059,
+    "charge_scaled_upper": 15834024511051,
+    "cumulative_scaled_upper": 788138305748485543
+  },
+  {
+    "prime": 5077,
+    "charge_scaled_upper": 15664848235117,
+    "cumulative_scaled_upper": 788153970596720660
+  },
+  {
+    "prime": 5081,
+    "charge_scaled_upper": 15646219383015,
+    "cumulative_scaled_upper": 788169616816103675
+  },
+  {
+    "prime": 5087,
+    "charge_scaled_upper": 15606105101303,
+    "cumulative_scaled_upper": 788185222921204978
+  },
+  {
+    "prime": 5099,
+    "charge_scaled_upper": 15501791758991,
+    "cumulative_scaled_upper": 788200724712963969
+  },
+  {
+    "prime": 5101,
+    "charge_scaled_upper": 15504380385103,
+    "cumulative_scaled_upper": 788216229093349072
+  },
+  {
+    "prime": 5107,
+    "charge_scaled_upper": 15464196557863,
+    "cumulative_scaled_upper": 788231693289906935
+  },
+  {
+    "prime": 5113,
+    "charge_scaled_upper": 15423986177268,
+    "cumulative_scaled_upper": 788247117276084203
+  },
+  {
+    "prime": 5119,
+    "charge_scaled_upper": 15383749334579,
+    "cumulative_scaled_upper": 788262501025418782
+  },
+  {
+    "prime": 5147,
+    "charge_scaled_upper": 15233118851089,
+    "cumulative_scaled_upper": 788277734144269871
+  },
+  {
+    "prime": 5153,
+    "charge_scaled_upper": 15219792296885,
+    "cumulative_scaled_upper": 788292953936566756
+  },
+  {
+    "prime": 5167,
+    "charge_scaled_upper": 15157710166724,
+    "cumulative_scaled_upper": 788308111646733480
+  },
+  {
+    "prime": 5171,
+    "charge_scaled_upper": 15156517816257,
+    "cumulative_scaled_upper": 788323268164549737
+  },
+  {
+    "prime": 5179,
+    "charge_scaled_upper": 15130998428737,
+    "cumulative_scaled_upper": 788338399162978474
+  },
+  {
+    "prime": 5189,
+    "charge_scaled_upper": 15093365136215,
+    "cumulative_scaled_upper": 788353492528114689
+  },
+  {
+    "prime": 5197,
+    "charge_scaled_upper": 15067868324087,
+    "cumulative_scaled_upper": 788368560396438776
+  },
+  {
+    "prime": 5209,
+    "charge_scaled_upper": 15018245904403,
+    "cumulative_scaled_upper": 788383578642343179
+  },
+  {
+    "prime": 5227,
+    "charge_scaled_upper": 14932715310716,
+    "cumulative_scaled_upper": 788398511357653895
+  },
+  {
+    "prime": 5231,
+    "charge_scaled_upper": 14931273421262,
+    "cumulative_scaled_upper": 788413442631075157
+  },
+  {
+    "prime": 5233,
+    "charge_scaled_upper": 14941804826125,
+    "cumulative_scaled_upper": 788428384435901282
+  },
+  {
+    "prime": 5237,
+    "charge_scaled_upper": 14940332024913,
+    "cumulative_scaled_upper": 788443324767926195
+  },
+  {
+    "prime": 5261,
+    "charge_scaled_upper": 14819353967604,
+    "cumulative_scaled_upper": 788458144121893799
+  },
+  {
+    "prime": 5273,
+    "charge_scaled_upper": 14770236488968,
+    "cumulative_scaled_upper": 788472914358382767
+  },
+  {
+    "prime": 5279,
+    "charge_scaled_upper": 14756747108937,
+    "cumulative_scaled_upper": 788487671105491704
+  },
+  {
+    "prime": 5281,
+    "charge_scaled_upper": 14766950369902,
+    "cumulative_scaled_upper": 788502438055861606
+  },
+  {
+    "prime": 5297,
+    "charge_scaled_upper": 14694274657526,
+    "cumulative_scaled_upper": 788517132330519132
+  },
+  {
+    "prime": 5303,
+    "charge_scaled_upper": 14680745072011,
+    "cumulative_scaled_upper": 788531813075591143
+  },
+  {
+    "prime": 5309,
+    "charge_scaled_upper": 14667200237042,
+    "cumulative_scaled_upper": 788546480275828185
+  },
+  {
+    "prime": 5323,
+    "charge_scaled_upper": 14606601988453,
+    "cumulative_scaled_upper": 788561086877816638
+  },
+  {
+    "prime": 5333,
+    "charge_scaled_upper": 14569589062820,
+    "cumulative_scaled_upper": 788575656466879458
+  },
+  {
+    "prime": 5347,
+    "charge_scaled_upper": 14509265051811,
+    "cumulative_scaled_upper": 788590165731931269
+  },
+  {
+    "prime": 5351,
+    "charge_scaled_upper": 14507343506853,
+    "cumulative_scaled_upper": 788604673075438122
+  },
+  {
+    "prime": 5381,
+    "charge_scaled_upper": 14354474551063,
+    "cumulative_scaled_upper": 788619027549989185
+  },
+  {
+    "prime": 5387,
+    "charge_scaled_upper": 14340882815404,
+    "cumulative_scaled_upper": 788633368432804589
+  },
+  {
+    "prime": 5393,
+    "charge_scaled_upper": 14327276488880,
+    "cumulative_scaled_upper": 788647695709293469
+  },
+  {
+    "prime": 5399,
+    "charge_scaled_upper": 14313655613593,
+    "cumulative_scaled_upper": 788662009364907062
+  },
+  {
+    "prime": 5407,
+    "charge_scaled_upper": 14288510305408,
+    "cumulative_scaled_upper": 788676297875212470
+  },
+  {
+    "prime": 5413,
+    "charge_scaled_upper": 14274862680772,
+    "cumulative_scaled_upper": 788690572737893242
+  },
+  {
+    "prime": 5417,
+    "charge_scaled_upper": 14272691035715,
+    "cumulative_scaled_upper": 788704845428928957
+  },
+  {
+    "prime": 5419,
+    "charge_scaled_upper": 14281999134771,
+    "cumulative_scaled_upper": 788719127428063728
+  },
+  {
+    "prime": 5431,
+    "charge_scaled_upper": 14233864114905,
+    "cumulative_scaled_upper": 788733361292178633
+  },
+  {
+    "prime": 5437,
+    "charge_scaled_upper": 14220159076791,
+    "cumulative_scaled_upper": 788747581451255424
+  },
+  {
+    "prime": 5441,
+    "charge_scaled_upper": 14217891116332,
+    "cumulative_scaled_upper": 788761799342371756
+  },
+  {
+    "prime": 5443,
+    "charge_scaled_upper": 14227063894673,
+    "cumulative_scaled_upper": 788776026406266429
+  },
+  {
+    "prime": 5449,
+    "charge_scaled_upper": 14213309735962,
+    "cumulative_scaled_upper": 788790239716002391
+  },
+  {
+    "prime": 5471,
+    "charge_scaled_upper": 14108263887804,
+    "cumulative_scaled_upper": 788804347979890195
+  },
+  {
+    "prime": 5477,
+    "charge_scaled_upper": 14094498923054,
+    "cumulative_scaled_upper": 788818442478813249
+  },
+  {
+    "prime": 5479,
+    "charge_scaled_upper": 14103450743642,
+    "cumulative_scaled_upper": 788832545929556891
+  },
+  {
+    "prime": 5483,
+    "charge_scaled_upper": 14101021694477,
+    "cumulative_scaled_upper": 788846646951251368
+  },
+  {
+    "prime": 5501,
+    "charge_scaled_upper": 14019180590449,
+    "cumulative_scaled_upper": 788860666131841817
+  },
+  {
+    "prime": 5503,
+    "charge_scaled_upper": 14027990441871,
+    "cumulative_scaled_upper": 788874694122283688
+  },
+  {
+    "prime": 5507,
+    "charge_scaled_upper": 14025472975835,
+    "cumulative_scaled_upper": 788888719595259523
+  },
+  {
+    "prime": 5519,
+    "charge_scaled_upper": 13977733868335,
+    "cumulative_scaled_upper": 788902697329127858
+  },
+  {
+    "prime": 5521,
+    "charge_scaled_upper": 13986445497000,
+    "cumulative_scaled_upper": 788916683774624858
+  },
+  {
+    "prime": 5527,
+    "charge_scaled_upper": 13972572204418,
+    "cumulative_scaled_upper": 788930656346829276
+  },
+  {
+    "prime": 5531,
+    "charge_scaled_upper": 13969961962602,
+    "cumulative_scaled_upper": 788944626308791878
+  },
+  {
+    "prime": 5557,
+    "charge_scaled_upper": 13843752027904,
+    "cumulative_scaled_upper": 788958470060819782
+  },
+  {
+    "prime": 5563,
+    "charge_scaled_upper": 13829858426856,
+    "cumulative_scaled_upper": 788972299919246638
+  },
+  {
+    "prime": 5569,
+    "charge_scaled_upper": 13815951441568,
+    "cumulative_scaled_upper": 788986115870688206
+  },
+  {
+    "prime": 5573,
+    "charge_scaled_upper": 13813197392825,
+    "cumulative_scaled_upper": 788999929068081031
+  },
+  {
+    "prime": 5581,
+    "charge_scaled_upper": 13788104477897,
+    "cumulative_scaled_upper": 789013717172558928
+  },
+  {
+    "prime": 5591,
+    "charge_scaled_upper": 13751886137785,
+    "cumulative_scaled_upper": 789027469058696713
+  },
+  {
+    "prime": 5623,
+    "charge_scaled_upper": 13594058863918,
+    "cumulative_scaled_upper": 789041063117560631
+  },
+  {
+    "prime": 5639,
+    "charge_scaled_upper": 13525184227200,
+    "cumulative_scaled_upper": 789054588301787831
+  },
+  {
+    "prime": 5641,
+    "charge_scaled_upper": 13533177369713,
+    "cumulative_scaled_upper": 789068121479157544
+  },
+  {
+    "prime": 5647,
+    "charge_scaled_upper": 13519220070771,
+    "cumulative_scaled_upper": 789081640699228315
+  },
+  {
+    "prime": 5651,
+    "charge_scaled_upper": 13516209965183,
+    "cumulative_scaled_upper": 789095156909193498
+  },
+  {
+    "prime": 5653,
+    "charge_scaled_upper": 13524149935983,
+    "cumulative_scaled_upper": 789108681059129481
+  },
+  {
+    "prime": 5657,
+    "charge_scaled_upper": 13521112386636,
+    "cumulative_scaled_upper": 789122202171516117
+  },
+  {
+    "prime": 5659,
+    "charge_scaled_upper": 13529030114014,
+    "cumulative_scaled_upper": 789135731201630131
+  },
+  {
+    "prime": 5669,
+    "charge_scaled_upper": 13493077143829,
+    "cumulative_scaled_upper": 789149224278773960
+  },
+  {
+    "prime": 5683,
+    "charge_scaled_upper": 13435327214463,
+    "cumulative_scaled_upper": 789162659605988423
+  },
+  {
+    "prime": 5689,
+    "charge_scaled_upper": 13421280715670,
+    "cumulative_scaled_upper": 789176080886704093
+  },
+  {
+    "prime": 5693,
+    "charge_scaled_upper": 13418118821893,
+    "cumulative_scaled_upper": 789189499005525986
+  },
+  {
+    "prime": 5701,
+    "charge_scaled_upper": 13393156532439,
+    "cumulative_scaled_upper": 789202892162058425
+  },
+  {
+    "prime": 5711,
+    "charge_scaled_upper": 13357336565901,
+    "cumulative_scaled_upper": 789216249498624326
+  },
+  {
+    "prime": 5717,
+    "charge_scaled_upper": 13343244761916,
+    "cumulative_scaled_upper": 789229592743386242
+  },
+  {
+    "prime": 5737,
+    "charge_scaled_upper": 13253427961161,
+    "cumulative_scaled_upper": 789242846171347403
+  },
+  {
+    "prime": 5741,
+    "charge_scaled_upper": 13250112983553,
+    "cumulative_scaled_upper": 789256096284330956
+  },
+  {
+    "prime": 5743,
+    "charge_scaled_upper": 13257572945186,
+    "cumulative_scaled_upper": 789269353857276142
+  },
+  {
+    "prime": 5749,
+    "charge_scaled_upper": 13243441519682,
+    "cumulative_scaled_upper": 789282597298795824
+  },
+  {
+    "prime": 5779,
+    "charge_scaled_upper": 13110587442211,
+    "cumulative_scaled_upper": 789295707886238035
+  },
+  {
+    "prime": 5783,
+    "charge_scaled_upper": 13109213351389,
+    "cumulative_scaled_upper": 789308817099589424
+  },
+  {
+    "prime": 5791,
+    "charge_scaled_upper": 13088525418008,
+    "cumulative_scaled_upper": 789321905625007432
+  },
+  {
+    "prime": 5801,
+    "charge_scaled_upper": 13058214452430,
+    "cumulative_scaled_upper": 789334963839459862
+  },
+  {
+    "prime": 5807,
+    "charge_scaled_upper": 13047150618518,
+    "cumulative_scaled_upper": 789348010990078380
+  },
+  {
+    "prime": 5813,
+    "charge_scaled_upper": 13036073982648,
+    "cumulative_scaled_upper": 789361047064061028
+  },
+  {
+    "prime": 5821,
+    "charge_scaled_upper": 13015387875583,
+    "cumulative_scaled_upper": 789374062451936611
+  },
+  {
+    "prime": 5827,
+    "charge_scaled_upper": 13004287004849,
+    "cumulative_scaled_upper": 789387066738941460
+  },
+  {
+    "prime": 5839,
+    "charge_scaled_upper": 12964466771520,
+    "cumulative_scaled_upper": 789400031205712980
+  },
+  {
+    "prime": 5843,
+    "charge_scaled_upper": 12962899442736,
+    "cumulative_scaled_upper": 789412994105155716
+  },
+  {
+    "prime": 5849,
+    "charge_scaled_upper": 12951763199622,
+    "cumulative_scaled_upper": 789425945868355338
+  },
+  {
+    "prime": 5851,
+    "charge_scaled_upper": 12959714899458,
+    "cumulative_scaled_upper": 789438905583254796
+  },
+  {
+    "prime": 5857,
+    "charge_scaled_upper": 12948550931697,
+    "cumulative_scaled_upper": 789451854134186493
+  },
+  {
+    "prime": 5861,
+    "charge_scaled_upper": 12946919918077,
+    "cumulative_scaled_upper": 789464801054104570
+  },
+  {
+    "prime": 5867,
+    "charge_scaled_upper": 12935729597562,
+    "cumulative_scaled_upper": 789477736783702132
+  },
+  {
+    "prime": 5869,
+    "charge_scaled_upper": 12943608222434,
+    "cumulative_scaled_upper": 789490680391924566
+  },
+  {
+    "prime": 5879,
+    "charge_scaled_upper": 12913323382518,
+    "cumulative_scaled_upper": 789503593715307084
+  },
+  {
+    "prime": 5881,
+    "charge_scaled_upper": 12921148122979,
+    "cumulative_scaled_upper": 789516514863430063
+  },
+  {
+    "prime": 5897,
+    "charge_scaled_upper": 12862358912120,
+    "cumulative_scaled_upper": 789529377222342183
+  },
+  {
+    "prime": 5903,
+    "charge_scaled_upper": 12851110552601,
+    "cumulative_scaled_upper": 789542228332894784
+  },
+  {
+    "prime": 5923,
+    "charge_scaled_upper": 12773655348186,
+    "cumulative_scaled_upper": 789555001988242970
+  },
+  {
+    "prime": 5927,
+    "charge_scaled_upper": 12771822133855,
+    "cumulative_scaled_upper": 789567773810376825
+  },
+  {
+    "prime": 5939,
+    "charge_scaled_upper": 12732295530551,
+    "cumulative_scaled_upper": 789580506105907376
+  },
+  {
+    "prime": 5953,
+    "charge_scaled_upper": 12683461346269,
+    "cumulative_scaled_upper": 789593189567253645
+  },
+  {
+    "prime": 5981,
+    "charge_scaled_upper": 12569504716803,
+    "cumulative_scaled_upper": 789605759071970448
+  },
+  {
+    "prime": 5987,
+    "charge_scaled_upper": 12558217064420,
+    "cumulative_scaled_upper": 789618317289034868
+  },
+  {
+    "prime": 6007,
+    "charge_scaled_upper": 12482074380517,
+    "cumulative_scaled_upper": 789630799363415385
+  },
+  {
+    "prime": 6011,
+    "charge_scaled_upper": 12480011039860,
+    "cumulative_scaled_upper": 789643279374455245
+  },
+  {
+    "prime": 6029,
+    "charge_scaled_upper": 12413402497264,
+    "cumulative_scaled_upper": 789655692776952509
+  },
+  {
+    "prime": 6037,
+    "charge_scaled_upper": 12392897696810,
+    "cumulative_scaled_upper": 789668085674649319
+  },
+  {
+    "prime": 6043,
+    "charge_scaled_upper": 12381570254779,
+    "cumulative_scaled_upper": 789680467244904098
+  },
+  {
+    "prime": 6047,
+    "charge_scaled_upper": 12379405110568,
+    "cumulative_scaled_upper": 789692846650014666
+  },
+  {
+    "prime": 6053,
+    "charge_scaled_upper": 12368053192734,
+    "cumulative_scaled_upper": 789705214703207400
+  },
+  {
+    "prime": 6067,
+    "charge_scaled_upper": 12320085183328,
+    "cumulative_scaled_upper": 789717534788390728
+  },
+  {
+    "prime": 6073,
+    "charge_scaled_upper": 12308716262343,
+    "cumulative_scaled_upper": 789729843504653071
+  },
+  {
+    "prime": 6079,
+    "charge_scaled_upper": 12297335969401,
+    "cumulative_scaled_upper": 789742140840622472
+  },
+  {
+    "prime": 6089,
+    "charge_scaled_upper": 12267718675488,
+    "cumulative_scaled_upper": 789754408559297960
+  },
+  {
+    "prime": 6091,
+    "charge_scaled_upper": 12274530912480,
+    "cumulative_scaled_upper": 789766683090210440
+  },
+  {
+    "prime": 6101,
+    "charge_scaled_upper": 12244917919514,
+    "cumulative_scaled_upper": 789778928008129954
+  },
+  {
+    "prime": 6113,
+    "charge_scaled_upper": 12206262081042,
+    "cumulative_scaled_upper": 789791134270210996
+  },
+  {
+    "prime": 6121,
+    "charge_scaled_upper": 12185773710341,
+    "cumulative_scaled_upper": 789803320043921337
+  },
+  {
+    "prime": 6131,
+    "charge_scaled_upper": 12156247520694,
+    "cumulative_scaled_upper": 789815476291442031
+  },
+  {
+    "prime": 6133,
+    "charge_scaled_upper": 12162874856221,
+    "cumulative_scaled_upper": 789827639166298252
+  },
+  {
+    "prime": 6143,
+    "charge_scaled_upper": 12133353027353,
+    "cumulative_scaled_upper": 789839772519325605
+  }
+]

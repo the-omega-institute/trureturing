@@ -1,0 +1,21 @@
+**Proof.** A joint witness in this fiber has rank one or two. Its first vector $(a,b)$ has $a,b\ge0$, since a negative first coordinate would already make the corresponding marginal negative. The first vector is nonzero.
+
+If $a,b>0$, normalize it to $(1,\rho)$ with $\rho>0$. A rank-one witness is $H_\rho^0$. For rank two, subtract an appropriate multiple of the first vector from the second to make its first coordinate zero. Independence makes its remaining coordinate nonzero. Positive rescaling then gives $(0,1)$ or $(0,-1)$, exactly the two quotient orientations in (42.33).
+
+If $a>0,b=0$, rank one cannot give positive second marginal. Rank two requires the second vector's second coordinate to be positive; the permitted triangular changes give exactly $E_0$. If $a=0,b>0$, the symmetric argument gives $E_\infty$. These exhaust all possibilities. Different first rays, different ranks, and the two distinct quotient orientations establish distinctness by Theorem 42.6. Evaluation gives (42.34) and the endpoint formulas. Coordinate reflections are invertible linear maps, so their induced homeomorphisms give the stated other fibers.
+
+Already the three ordinary vectors
+$$
+(1,2),\qquad(1,1),\qquad(2,1)
+\tag{42.35}
+$$
+have identical positive marginal signatures, while $x-y$ has signs $-1,0,1$. Thus marginal ambiguity is present before completion, because positive magnitude has been forgotten.
+
+There is also genuinely relative scale information inside the same leading ray. The points $H_1^1,H_1^0,H_1^{-1}$ have $x-y$ signs $-1,0,1$ and are realized by
+$$
+(t,t+t^2),\qquad(t,t),\qquad(t,t-t^2),
+\quad t\downarrow0.
+\tag{42.36}
+$$
+In the rank-two cases both marginal flags are already decided at the first column; the second column records a joint distinction that neither marginal retains. Equations (42.35) and (42.36) are finite-dimensional sign calculations, not an assertion about any infinite-expansion addition law. $\square$
+

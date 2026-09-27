@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:874d62bf2d46383c64750abe9e80616ebbaf17715f065b04707d5601b21345a4
+  normalized_sha256: sha256:874d62bf2d46383c64750abe9e80616ebbaf17715f065b04707d5601b21345a4
+cas_ref: sha256:874d62bf2d46383c64750abe9e80616ebbaf17715f065b04707d5601b21345a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“先选定矩阵范数”并“定义乘法缺陷”，只约定单位范数乘积到复化空间的距离上确界；零缺陷闭合与正缺陷存在新方向已分在下一叶，本叶没有在该定义中夹带它们。
+    previous_atom_id: dde4a2536795f7a15f7706ed3fb876652f5763bc1d0359d3541cb7c65c0ea7e7
+    next_atom_id: 1c09caf527da750231408956f0229c8f7827c0533d2007060f88627a3ced814b

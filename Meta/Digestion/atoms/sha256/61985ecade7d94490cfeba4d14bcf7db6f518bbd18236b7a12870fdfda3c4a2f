@@ -1,0 +1,7 @@
+**命题 11.3（因子次序与归一化运输）。** Watrous 的输出在前约定 $J_W(\Phi)\in\mathcal L(B\otimes A')$ 与式(11.2)由交换两因子的固定酉映射对应。通道满足 $\operatorname{Tr}J(\Phi)=d_A$。归一化 Bell 输入给出的 $\widehat J=J/d_A$ 满足
+$$
+\operatorname{Tr}\widehat J=1,\qquad
+\operatorname{Tr}_B\widehat J=I_{A'}/d_A,
+$$
+且以 $\widehat J$ 重建时，式(11.3)右侧须乘 $d_A$。
+

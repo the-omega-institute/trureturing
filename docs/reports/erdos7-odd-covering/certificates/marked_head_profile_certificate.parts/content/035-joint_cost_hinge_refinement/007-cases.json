@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000000/single.json",
+        "sha256": "9ec9239382a68318e057c4ece801f3a063f26dd51ee18b38f5e443d8c055dec1",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000001/single.json",
+        "sha256": "ceed2b10cde8fbd83fbaa2911a8f7b2ff46cb073b6e2d614dff2f4774cc12118",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000002/single.json",
+        "sha256": "23de61851fe868052cce763dbfaff1f11f28731c46df8a950812f6a39a43118d",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000003/single.json",
+        "sha256": "41072f9febb71368359d30837bfac99aff1b4496d69f3b578c84ceaf2b5cd265",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000004/single.json",
+        "sha256": "baa71f2a8aa569828fdfc53385830186ad81d54907d4afc2b0ec384904ad044d",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000005/single.json",
+        "sha256": "cb987ef1b37cd001c3f1db315ce8e863d1f7fa9567982bd9dbb2343282ee9e82",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

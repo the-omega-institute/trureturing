@@ -1,0 +1,11 @@
+**定义 12.8（允许的坐标运输及资源合同）。** 若 $F:X\to X'$、$G:B\to B'$、$H:A\to A'$ 是酉共轭通道，定义
+$$
+\mathcal E'=G\mathcal E F^{-1},\quad
+\mathcal Q'=H\mathcal QF^{-1},\quad
+\mathcal S'=H\mathcal SG^{-1},\quad
+\mathcal T_j'=F\mathcal T_jF^{-1},\quad
+\overline{\mathcal T}_j'=G\overline{\mathcal T}_jG^{-1}.
+\tag{12.10}
+$$
+坐标运输本身不指称执行这些酉操作；若协议实际执行它们，执行费用另计。一个已准许路径的费用合同可以取任意有限维非负向量，逐坐标相加：编码、边界操作、解码分别有界为 $c_E,c_j,c_S$ 时，实现路径的费用不超过 $c_E+\sum_jc_j+c_S$。共同来源、同时取得的旁支、失败和复制许可仍按本卷第1、4、5、7节声明；误差上界不生成这些许可。
+

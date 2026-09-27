@@ -1,0 +1,584 @@
+[
+  {
+    "index": 49,
+    "name": "49",
+    "weight": "2580440672/8781393621",
+    "coefficients": {
+      "2": "63/16",
+      "3": "49/16",
+      "4": "2"
+    },
+    "factorial_tail_coefficient": "2",
+    "exhaustive_vertices": [
+      {
+        "q": [
+          "0",
+          "0"
+        ],
+        "residual": "1/1000",
+        "head_maxima": [
+          "14122869071/7507584000",
+          "14122869071/7507584000",
+          "14122869071/7507584000",
+          "14122869071/7507584000",
+          "14122869071/7507584000",
+          "14122869071/7507584000",
+          "14122869071/7507584000"
+        ],
+        "witnesses": [
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "11543596879/7507584000",
+            "reference_and_mean_price_shift": "773/2250"
+          }
+        ],
+        "original_head_evaluations": 125000,
+        "rational_comparisons": 4,
+        "integer_scale": 402031123200000,
+        "finite_objectives_sha256": "7bd9028e3a29d0dfdb20351f40844680f7b4a77b36c5adc7fd3a7938b89a1160"
+      },
+      {
+        "q": [
+          "0",
+          "3/50"
+        ],
+        "residual": "0",
+        "head_maxima": [
+          "88291003/46922400",
+          "88291003/46922400",
+          "88291003/46922400",
+          "88291003/46922400",
+          "88291003/46922400",
+          "88291003/46922400",
+          "88291003/46922400"
+        ],
+        "witnesses": [
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              1,
+              3,
+              2,
+              1,
+              2,
+              3,
+              2
+            ],
+            "positive7": [
+              1,
+              4
+            ],
+            "finite_upper": "40094751/26068000",
+            "reference_and_mean_price_shift": "773/2250"
+          }
+        ],
+        "original_head_evaluations": 125000,
+        "rational_comparisons": 4,
+        "integer_scale": 402031123200000,
+        "finite_objectives_sha256": "4427e30356db4d5f17603163c45489b56b125b9ebd997a0fdb92558f1d809ee3"
+      },
+      {
+        "q": [
+          "3/50",
+          "0"
+        ],
+        "residual": "0",
+        "head_maxima": [
+          "70885377781/37537920000",
+          "70885377781/37537920000",
+          "70885377781/37537920000",
+          "70885377781/37537920000",
+          "70885377781/37537920000",
+          "70885377781/37537920000",
+          "70885377781/37537920000"
+        ],
+        "witnesses": [
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          },
+          {
+            "layout": [
+              0,
+              1,
+              2,
+              0,
+              2,
+              1,
+              2
+            ],
+            "positive7": [
+              0,
+              2
+            ],
+            "finite_upper": "57989016821/37537920000",
+            "reference_and_mean_price_shift": "773/2250"
+          }
+        ],
+        "original_head_evaluations": 125000,
+        "rational_comparisons": 4,
+        "integer_scale": 402031123200000,
+        "finite_objectives_sha256": "eb8945ebda9d93ef5f9ae48013f80150521772efcd85f77fd1023373b36f4808"
+      }
+    ],
+    "selected_support": {
+      "cuts": [
+        4,
+        3,
+        3,
+        2
+      ],
+      "upper": "3607099718329/797680800000",
+      "vertices": [
+        {
+          "q": [
+            "0",
+            "0"
+          ],
+          "coordinate_values": [
+            "3565620316729/797680800000",
+            "25874696415929/5783185800000",
+            "3562479448579/797680800000",
+            "3562479448579/797680800000",
+            "3565620316729/797680800000",
+            "25874696415929/5783185800000",
+            "3607099718329/797680800000"
+          ],
+          "upper": "3607099718329/797680800000"
+        },
+        {
+          "q": [
+            "0",
+            "3/50"
+          ],
+          "coordinate_values": [
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000",
+            "414040639270789/92530972800000"
+          ],
+          "upper": "414040639270789/92530972800000"
+        },
+        {
+          "q": [
+            "3/50",
+            "0"
+          ],
+          "coordinate_values": [
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000",
+            "7142759511563/1595361600000"
+          ],
+          "upper": "7142759511563/1595361600000"
+        }
+      ],
+      "tail": {
+        "constant": "1808253/1600000",
+        "slopes": [
+          "63/16",
+          "0",
+          "7",
+          "0"
+        ],
+        "cuts": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "supports": {
+          "2": {
+            "pure3": {
+              "slope": "1",
+              "intercept_coefficient": "1/54",
+              "remaining_geometric": "1/18"
+            },
+            "pure5": {
+              "slope": "0",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/100"
+            },
+            "root5": {
+              "slope": "1",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/20"
+            },
+            "cell5": {
+              "slope": "0",
+              "intercept_coefficient": "1/20",
+              "remaining_geometric": "1/20"
+            }
+          },
+          "3": {
+            "pure3": {
+              "slope": "0",
+              "intercept_coefficient": "1/54",
+              "remaining_geometric": "1/54"
+            },
+            "pure5": {
+              "slope": "0",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/100"
+            },
+            "root5": {
+              "slope": "1",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/20"
+            },
+            "cell5": {
+              "slope": "0",
+              "intercept_coefficient": "1/20",
+              "remaining_geometric": "1/20"
+            }
+          },
+          "4": {
+            "pure3": {
+              "slope": "0",
+              "intercept_coefficient": "1/54",
+              "remaining_geometric": "1/54"
+            },
+            "pure5": {
+              "slope": "0",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/100"
+            },
+            "root5": {
+              "slope": "0",
+              "intercept_coefficient": "1/100",
+              "remaining_geometric": "1/100"
+            },
+            "cell5": {
+              "slope": "0",
+              "intercept_coefficient": "1/20",
+              "remaining_geometric": "1/20"
+            }
+          }
+        }
+      },
+      "selected_error": "1026541/101745000",
+      "mean_source_error": "0",
+      "constant_factorial_pair_payment": "1664239/1152000",
+      "constant": "1664239/1152000"
+    }
+  }
+]

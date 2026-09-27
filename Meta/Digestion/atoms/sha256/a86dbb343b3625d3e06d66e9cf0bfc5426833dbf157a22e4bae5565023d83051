@@ -1,0 +1,22 @@
+#### 134.5.1 迭代箭头范畴给出交换立体图
+
+$\operatorname{Arr}(\mathcal C)$ 仍是普通一范畴。两条平行方块 $s,t:q\to q'$ 可以相等或不相等，但这个定义没有额外提供一个“从 $s$ 到 $t$ 的变换”类型。
+
+可以再次取 $\operatorname{Arr}(\operatorname{Arr}(\mathcal C))$。具体地，令
+
+$$
+s=(\alpha,\beta):q_0\to q_1,\qquad
+t=(\gamma,\delta):r_0\to r_1.
+$$
+
+从 $s$ 到 $t$ 的态射由两个方块 $u:q_0\to r_0$、$v:q_1\to r_1$ 组成，要求 $t\circ u=v\circ s$。若写 $u=(u_X,u_B)$、$v=(v_X,v_B)$，额外交换条件就是
+
+$$
+\gamma u_X=v_X\alpha,\qquad
+\delta u_B=v_B\beta.
+$$
+
+连同 $s,t,u,v$ 本身的四个交换条件，得到一个六面都交换的立体图。其复合仍由各分量的复合给出。
+
+这并不自动成为固定边界上两个不同方块之间的非平凡二胞。若 $q_0=r_0$、$q_1=r_1$，并要求比较在两端都是恒等方块，则条件直接成为 $t=s$。要允许非平凡的高层变换，就需另选相应的二胞结构。
+

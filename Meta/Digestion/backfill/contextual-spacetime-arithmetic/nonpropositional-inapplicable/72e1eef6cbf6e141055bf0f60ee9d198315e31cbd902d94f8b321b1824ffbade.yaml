@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72e1eef6cbf6e141055bf0f60ee9d198315e31cbd902d94f8b321b1824ffbade
+  normalized_sha256: sha256:72e1eef6cbf6e141055bf0f60ee9d198315e31cbd902d94f8b321b1824ffbade
+cas_ref: sha256:72e1eef6cbf6e141055bf0f60ee9d198315e31cbd902d94f8b321b1824ffbade
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “不构成全球优先权、物理定律、量子解释或 Lean 内核验证声明”限定贡献归属，末句限定本次交付；这些是来源及范围说明，不是数学断言，无定义夹带结论。
+    previous_atom_id: 6a155f984c114480f37097064aa8777f2a7523639c9ee9a651ba80088f27b451
+    next_atom_id: 194ed638b39c0eb63778683461977610ae8e31dde5ba5e3ce2b6d168a0062b74

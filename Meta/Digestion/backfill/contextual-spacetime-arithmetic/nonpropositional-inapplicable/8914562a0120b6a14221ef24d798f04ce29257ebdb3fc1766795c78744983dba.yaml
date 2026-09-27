@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8914562a0120b6a14221ef24d798f04ce29257ebdb3fc1766795c78744983dba
+  normalized_sha256: sha256:8914562a0120b6a14221ef24d798f04ce29257ebdb3fc1766795c78744983dba
+cas_ref: sha256:8914562a0120b6a14221ef24d798f04ce29257ebdb3fc1766795c78744983dba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文以“输入是 caller 收敛 brief”说明先验暴露，以“两版卷字节相同，仍为 3251 行”交代编号接续，并止于“没有 rebase”。本 atom 没有下一片段的选择位推断；其内容为实施与版本记录，未在定义中夹带命题。
+    previous_atom_id: 56c239a2bd8a527d1e3e3677fc438efa202304866b91792a45ed8ad09da1a0cf
+    next_atom_id: cc66bc06cb34f697bff0a21dd2755745369b64f8f75f6cfaa5f3f90af4e3b447

@@ -1,0 +1,108 @@
+**证明。** 定义实际标签的原始净流与端点函数
+$$
+S_n=\sum_{t=0}^{n-1}
+\left(\mathbf1_{\{Z_t=B,Z_{t+1}=C\}}
+-\mathbf1_{\{Z_t=C,Z_{t+1}=B\}}\right),
+\qquad q(z)=\mathbf1_{\{z=B\}}-\mathbf1_{\{z=C\}}.
+$$
+展开 (108.1b) 并将梯度项求和，得
+$$
+\lambda^2\widehat F_n
+=S_n-\rho[q(Z_0)-q(Z_n)],
+\qquad |\rho[q(Z_0)-q(Z_n)]|\le2\rho=\varepsilon<1.
+\tag{108.3c}
+$$
+
+先计算纯陷阱区间的噪声矩。若 $U_0,\ldots,U_\ell$ 独立，且各自标签概率为 $(1-\varepsilon,\rho,\rho)$，置
+$$
+\zeta_t=\mathbf1_{\{U_t=B,U_{t+1}=C\}}
+-\mathbf1_{\{U_t=C,U_{t+1}=B\}},\qquad
+\widetilde S_\ell=\sum_{t=0}^{\ell-1}\zeta_t.
+$$
+对调全部 $B,C$ 保持标签律并使分数变号，故 $\widetilde S_\ell$ 的分布对称。直接计算得
+$$
+\mathbb E\zeta_t=0,\qquad
+\mathbb E\zeta_t^2=2\rho^2,\qquad
+\mathbb E(\zeta_t\zeta_{t+1})=-2\rho^3.
+$$
+不相邻边独立，因此对 $\ell\ge1$，
+$$
+\mathbb E\widetilde S_\ell^2
+=2\rho^2\ell-4\rho^3(\ell-1)
+=v_\varepsilon\ell+4\rho^3
+\ge v_\varepsilon\ell.
+\tag{108.3d}
+$$
+偶数边组与奇数边组各自由独立、中心化、绝对值至多 $1$ 的变量组成。对任一含 $m$ 项的组，其四阶矩为
+$$
+\sum_i\mathbb E\zeta_i^4
++6\sum_{i<j}\mathbb E\zeta_i^2\,\mathbb E\zeta_j^2
+\le m+3m(m-1)\le3m^2.
+$$
+空组的四阶矩为零。用 $(x+y)^4\le8(x^4+y^4)$ 合并两组，得到
+$$
+\mathbb E\widetilde S_\ell^4\le24\ell^2.
+\tag{108.3e}
+$$
+
+令 $u=v_\varepsilon\ell/2$。Cauchy–Schwarz 不等式及 (108.3d)、(108.3e) 给出
+$$
+\frac{v_\varepsilon\ell}{2}
+\le\mathbb E\!\left[\widetilde S_\ell^2
+\mathbf1_{\{\widetilde S_\ell^2\ge u\}}\right]
+\le\sqrt{\mathbb E\widetilde S_\ell^4\,
+\mathbb P(\widetilde S_\ell^2\ge u)}.
+$$
+这里第一步使用
+$\mathbb E\widetilde S_\ell^2\le u+
+\mathbb E[\widetilde S_\ell^2\mathbf1_{\{\widetilde S_\ell^2\ge u\}}]$。
+故 $\mathbb P(|\widetilde S_\ell|\ge\sqrt{v_\varepsilon\ell/2})
+\ge v_\varepsilon^2/96$。由对称性，
+$$
+\mathbb P\!\left(\widetilde S_\ell\le-\sqrt{v_\varepsilon\ell/2}\right)
+\ge\frac{v_\varepsilon^2}{192},
+\qquad
+\mathbb P\!\left(\widetilde S_\ell\ge\sqrt{v_\varepsilon\ell/2}\right)
+\ge\frac{v_\varepsilon^2}{192}.
+\tag{108.3f}
+$$
+这是对平方变量使用 Cauchy–Schwarz 所得的标准二阶、四阶矩尾概率估计。
+
+现在令 $k=n$。对 $1\le m\le n$，令 $E_m$ 为隐藏链在时刻 $m$ 首次进入 $0$ 并一直留至时间 $n$ 的事件。每个环状态留在环内的概率均为 $a$，进入 $0$ 的概率均为 $1/(3n)$，所以两方向都有
+$$
+\mathbb P^\varepsilon_{d,n}(E_m)
+=a^{m-1}\frac1{3n}(1-1/n)^{n-m}.
+$$
+由 Bernoulli 不等式，
+$a^{m-1}\ge1-(m-1)/(3n)\ge2/3$；且
+$(1-1/n)^{n-m}\ge(1-1/n)^{n-1}\ge e^{-1}$，
+最后一步等价于 $(1+1/(n-1))^{n-1}\le e$。因此
+$$
+\mathbb P^\varepsilon_{d,n}(E_m)\ge\frac2{9en}.
+\tag{108.3g}
+$$
+这些事件随 $m$ 互斥。
+
+置 $x=\sqrt{v_\varepsilon n}$ 及 $m_n^\circ=\lfloor x/8\rfloor$。由 $n\ge N_\varepsilon$，$x\ge16$，故
+$m_n^\circ\ge x/16$。又因 $v_\varepsilon<1$，对 $m\le m_n^\circ$ 有 $m\le n/2$。条件于 $E_m$，标签 $Z_m,\ldots,Z_n$ 独立，均服从上述纯陷阱发射律；对应 $\ell=n-m\ge n/2$ 条边。噪声独立于隐藏事件，所以 (108.3f) 仍适用，且
+$$
+\sqrt{v_\varepsilon(n-m)/2}\ge x/2,
+\qquad m+1\le x/8+1\le3x/16<x/2.
+\tag{108.3h}
+$$
+陷阱前包含 $t=0,\ldots,m-1$ 的 $m$ 条原始边分数，其绝对值至多 $m$。对方向 $0$，若陷阱段净流不超过 $-x/2$，由 (108.3c)、(108.3h) 可知 $\widehat F_n<0$，从而判错；方向 $1$ 使用不小于 $x/2$ 的对称涨落，同样判错。前缀与陷阱段共享发射 $Z_m$，但前缀仅使用逐路径绝对值界，未要求它与陷阱分数独立。端点校正也只使用其小于 $1$ 的确定界。因此，对每个 $m\le m_n^\circ$，
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d\mid E_m)
+\ge v_\varepsilon^2/192.
+$$
+对互斥事件求和并用 (108.3g)，得到
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d)
+\ge\frac{v_\varepsilon^2}{192}
+\frac{2m_n^\circ}{9en}
+\ge\frac{v_\varepsilon^{5/2}}{13824e\sqrt n}.
+$$
+构造产生严格错误符号，故零分平局约定不影响结论。两方向分别成立，平均风险遂满足 (108.3b)。证毕。
+
+以上常数均允许依赖固定的 $\varepsilon$。命题 108.3 排除了整段去噪净流符号规则的统一 $O_\varepsilon(1/n)$ 保证。上述结果尚未判定 $\overline R^{*,\varepsilon}_n=O_\varepsilon(1/n)$ 或 $M^\varepsilon_n=O_\varepsilon(1/n)$ 是否成立，也未判定要求共用一条不使用 $k$ 的规则是否改变可达风险阶；命题 108.2 中的对数因子未被证明必要。
+

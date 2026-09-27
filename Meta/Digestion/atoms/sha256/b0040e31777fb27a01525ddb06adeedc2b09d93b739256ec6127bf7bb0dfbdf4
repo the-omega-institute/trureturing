@@ -1,0 +1,36 @@
+**证明。** $P_k$ 的各前缀概率与定义 101.1 相容，因为对最后一个状态求和使用核的行和一；既有轨迹构造给出这些前缀概率。均匀律平稳使所得过程平稳。$Q_0$ 的每条常轨迹在反序下不变，故 $Q_0$ 可逆；移位不变事件“最终恒为状态 $0$”在 $Q_0$ 下的概率为 $1/3$，所以它非遍历。每个 $P_k$ 则由 $p_k/3\ne q_k/3$ 的一步词概率判为不可逆。
+
+对有限前缀 $w\in S^{n+1}$，令 $a_n(w)\in[0,1]$ 为观察到 $w$ 时使规则在时刻 $n$ 或更早签发证书的种子集合之 $\nu$-概率。$C_n\in\mathcal G_n$ 保证这些种子截面可测，且不依赖未见的轨迹后缀。因此
+$$
+\bar P_k(C_n)=\sum_wP_{k,n}(w)a_n(w),
+\qquad
+\bar Q_0(C_n)=\frac13\sum_{i\in S}a_n(i,\ldots,i).
+$$
+第一项求和中常路径的部分恰为 $r_k^n\bar Q_0(C_n)$，其余部分非负。由 (101.2g)，
+$$
+\bar P_k(C_n)\ge r_k^n\bar Q_0(C_n).
+\tag{101.4c}
+$$
+进而
+$$
+\bar Q_0(C_n)-\bar P_k(C_n)
+\le(1-r_k^n)\bar Q_0(C_n)\le1-r_k^n,
+$$
+所以
+$$
+\bar Q_0(C_n)\le\bar P_k(C)+1-r_k^n.
+\tag{101.4d}
+$$
+这也是 (101.2b) 的有限总变差比较经过随机二元决定后的界；相应既有接口为 [total_variation_channel_le](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/TotalVariation/DataProcessing.lean)。$n=0$ 时 $r_k^0=1$，两份初始律完全相同，以上计算仍成立。
+
+保持 $n$ 固定，令 $k\to\infty$，有 $r_k^n\to1$，故
+$$
+\bar Q_0(C_n)\le\liminf_{k\to\infty}\bar P_k(C).
+$$
+再令 $n\to\infty$，用递增事件的测度连续性
+[tendsto_measure_iUnion_atTop](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/MeasureSpace.lean)，得到 (101.4a)。这里先对每个固定观测时刻取 $k$ 极限，再取事件递增极限，没有交换未经控制的联合极限。统一错误界随即给出 $\bar Q_0(C)\le\delta$；若左端为一，右侧概率序列的下极限至少为一，而各项至多为一，故其极限为一。
+
+最后固定 $k$。若 $\bar P_k(C)=0$，则各 $\bar P_k(C_n)=0$。有限 $n$ 下 $r_k^n>0$，所以 (101.4c) 强迫 $\bar Q_0(C_n)=0$；可数并给出 $\bar Q_0(C)=0$，证明 (101.4b)。这个论证只用有限前缀的单向支配，不要求无限路径律绝对连续。实际上常无限轨迹集合在 $Q_0$ 下概率一，在固定 $P_k$ 下概率 $\lim_n r_k^n=0$，二者在无限轨迹上可完全分离。
+
+规则若总是弃权，可以立即停止而从不签发证书；因此几乎处处有限停止本身不能替代对 $\bar Q_0(C)$ 的要求。反方向也不同：在仅比较 $Q_0$ 与此替代族时，第一次跳转在每个固定 $P_k$ 下几乎处处有限，在 $Q_0$ 下从不发生，故能零错误排除 $Q_0$；但可逆链也可以跳转，这不构成对任意可逆过程的反驳。证毕。
+

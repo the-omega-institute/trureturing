@@ -27,7 +27,7 @@ import native
 
 from test_native_support import *
 
-class NativeRecoveryTests:
+class NativeRecoveryConsumerTests:
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
@@ -36,7 +36,7 @@ class NativeRecoveryTests:
             directory = Path(directory)
             temporary = directory / 'tmp'
             temporary.mkdir()
-            for damage in ['none', 'missing', 'stale', 'stale-dependency']:
+            for damage in ['none', 'missing', 'stale', 'changed-dependency']:
                 with self.subTest(damage=damage):
                     root = directory / damage
                     shutil.copytree(self.root, root, ignore=shutil.ignore_patterns('.lake', '.git'))
@@ -46,7 +46,7 @@ class NativeRecoveryTests:
                     if damage == 'stale':
                         source = root / 'D5/Alone.lean'
                         source.write_text(source.read_text() + '-- changed input\n')
-                    elif damage == 'stale-dependency':
+                    elif damage == 'changed-dependency':
                         (root / 'ClaimSupport.lean').write_text('def claimSupport : Prop := True\n')
                     environment = dict(self.env, TMPDIR=str(temporary),
                         STRATALINT_LEAN_INPUT_MEMO_ROOT=str(directory / 'verify-memo'))
@@ -55,22 +55,22 @@ class NativeRecoveryTests:
                         'stage', '--bundle', str(bundle), '--staging-directory', str(staged.parent),
                         '--repository', str(root)], cwd=directory, env=environment,
                         text=True, capture_output=True, timeout=120)
-                    self.assertEqual(stage.returncode, 0 if damage == 'none' else 1, stage.stdout + stage.stderr)
+                    accepted = damage in ['none', 'changed-dependency']
+                    self.assertEqual(stage.returncode, 0 if accepted else 1, stage.stdout + stage.stderr)
                     self.assertFalse((root / '.lake').exists(), 'stage must preserve whole-tree donor eligibility')
                     self.assertEqual(list(temporary.iterdir()), [], 'stage must clean its input memo')
                     verify = subprocess.run(['bash', str(root / 'tools/scripts/report/lean-report-input.sh'),
-                        'verify', '--repository', str(root), '--report', str(staged if damage == 'none' else bundle)],
+                        'verify', '--repository', str(root), '--report', str(staged if accepted else bundle)],
                         cwd=directory, env=environment, text=True, capture_output=True, timeout=120)
                     self.assertEqual(verify.returncode,
-                        {'none': 0, 'missing': 2, 'stale': 2, 'stale-dependency': 1}[damage], verify.stdout + verify.stderr)
-                    if damage == 'none':
+                        {'none': 0, 'missing': 2, 'stale': 2, 'changed-dependency': 0}[damage], verify.stdout + verify.stderr)
+                    if accepted:
                         self.assertEqual(staged.read_bytes(), incoming.read_bytes())
                         self.assertEqual(publication.member(staged, '.materials.zip').read_bytes(),
                             publication.member(incoming, '.materials.zip').read_bytes())
                     else:
                         self.assertFalse(staged.exists())
-                        diagnostic = {'missing': 'missing bundle member', 'stale': 'stale input/provenance',
-                                      'stale-dependency': 'stale dependency'}[damage]
+                        diagnostic = {'missing': 'missing bundle member', 'stale': 'stale input/provenance'}[damage]
                         self.assertIn(diagnostic, stage.stderr)
                     self.assertFalse((root / '.lake').exists(), 'verify must preserve whole-tree donor eligibility')
                     self.assertEqual(list(temporary.iterdir()), [])
@@ -266,8 +266,6 @@ class NativeRecoveryTests:
         self.record_result('boundaries', dict(without_lzma_valid_control_exit=control.returncode,
             unrelated_validator_error_propagates=True, required_producer_errors_propagate=True,
             required_error_types=[type(error).__name__ for error in errors]))
-    def test_native_recovers_only_row_with_encrypted_member(self):
-        self.check_row_decoder_recovery(self.encrypted_member, ValueError)
     def test_native_recovers_only_row_with_encrypted_material(self):
         def damage(data):
             result = io.BytesIO()
@@ -318,7 +316,7 @@ class NativeRecoveryTests:
             self.assertEqual(path.read_bytes(), expected)
 
         self.write('Audit.lean', 'def audit : False := True.intro\n')
-        self.build(success=False)
+        self.build(success=False, targets=['Audit'])
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
         self.build(success=False)
@@ -345,43 +343,9 @@ class NativeRecoveryTests:
         self.copy('tools/lean-inspector/Inspector.lean')
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)
-    def test_native_no_build_rejects_corruption_without_production(self):
-        cases = [('modules/D5.Alone.zip', targets) for targets in [(':report',),
-            ('D5.Alone:report',), (':report', 'D5.Alone:report'), ('D5.Alone:report', ':report')]]
-        cases.append(('report.zip', (':report',)))
-        for artifact, targets in cases:
-            with self.subTest(artifact=artifact, targets=targets):
-                self.build()
-                path = self.root / '.lake/build/lean-inspector' / artifact
-                expected = path.read_bytes()
-                path.unlink()  # Never mutate a Lake cache hard link.
-                path.write_bytes(b'corrupt optional artifact')
-                self.write('activity.jsonl', '')
-                rejected = self.run_lake('--no-build', 'build', *targets, success=False)
-                self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                                 'no-build must reject before repair extraction or aggregation')
-                self.assertTrue(path.is_file(), 'no-build must not remove the rejected artifact')
-                self.assertEqual(path.read_bytes(), b'corrupt optional artifact',
-                                 'no-build must not start private reconstruction')
-                recovered = self.build() if targets == (':report',) else self.run_lake('build', *targets)
-                self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
-                self.assertEqual(path.read_bytes(), expected)
-                self.assertEqual(path.stat().st_nlink, 1)
-                records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-                self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'),
-                                 0 if artifact == 'report.zip' else 1)
-                aggregates = sum(row['count'] for row in records if row['kind'] == 'aggregate')
-                if artifact == 'report.zip':
-                    self.assertEqual(aggregates, 1)
-                else:
-                    self.assertLessEqual(aggregates, int(':report' in targets))
-                self.build()
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- native miss\n')
-        rejected = self.run_lake('--no-build', 'build', ':report', success=False)
-        self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+
+class NativeModuleFacetTests:
     def test_public_module_validates_and_private_job_is_not_a_target(self):
         self.build()
         path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'

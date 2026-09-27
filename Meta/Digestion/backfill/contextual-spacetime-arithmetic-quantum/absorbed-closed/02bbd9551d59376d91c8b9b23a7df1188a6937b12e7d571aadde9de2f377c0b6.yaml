@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:02bbd9551d59376d91c8b9b23a7df1188a6937b12e7d571aadde9de2f377c0b6
+  normalized_sha256: sha256:02bbd9551d59376d91c8b9b23a7df1188a6937b12e7d571aadde9de2f377c0b6
+cas_ref: sha256:02bbd9551d59376d91c8b9b23a7df1188a6937b12e7d571aadde9de2f377c0b6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.no_memoryless_policy
+    target_statement_id: sha256:5f04b0354ab78ac7c6729c28bf73db04af141d22d5d4ed140c2414e6d00f271e
+receipts:
+  unresolved_subitems: []

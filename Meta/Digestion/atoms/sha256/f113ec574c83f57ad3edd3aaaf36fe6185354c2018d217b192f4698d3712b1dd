@@ -1,0 +1,7 @@
+### 128.8 盲方向：似然不变与边缘不更新的区别
+
+以下写 $\mathbf H,\mathbf R$ 代表某个固定有限历史的堆叠模型，包括独立或已知相关噪声，且 $\mathbf R\succ0$。令
+$$
+L_n=\mathbf H^T\mathbf R^{-1}\mathbf H=J_n-J_0.
+$$
+

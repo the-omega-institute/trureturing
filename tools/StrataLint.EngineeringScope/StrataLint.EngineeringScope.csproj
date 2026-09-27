@@ -5,6 +5,18 @@
     <AssemblyName>StrataLint.EngineeringScope</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
+    <ProjectReference Include="../StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+    <ProjectReference Include="../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />
+    <ProjectReference Include="../StrataLint.Lean/StrataLint.Lean.csproj" />
+    <ProjectReference Include="../StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj" />
+    <ProjectReference Include="../StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj" />
   </ItemGroup>
 </Project>

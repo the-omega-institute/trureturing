@@ -1,0 +1,29 @@
+**命题 42.12（实际 cq 记录的条件熵）。** 在每个固定 $H_n$ 上令 $\Delta_n$ 为计算基完全去相位，定义与通道 $\mathcal C_n$ 不同的标量
+$$
+\chi_n=D_{\rm rel}(\rho_n\|\Delta_n\rho_n)
+=H(Y)-S(\tau(q_n))\ge0.
+\tag{42.44}
+$$
+$D_{\rm rel}$ 是量子相对熵，不是半迹距离。实际测量后保留活动记忆的状态为
+$$
+\xi_{YM}=\sum_{w\in W_n}p_n(w)|w\rangle\langle w|\otimes P_{\ell(w)}^{\rm mem},
+\qquad \xi_M=\tau(q_n),
+\tag{42.45}
+$$
+其中 $n=0$ 单独取空记录与 $P_0^{\rm mem}$。于是
+$$
+S(\xi_{YM})=H(Y),\qquad H(Y\mid M)_\xi=\chi_n,\qquad
+I(Y:M)_\xi=S(\tau(q_n))\le\log2.
+\tag{42.46}
+$$
+
+证明。$\Delta_n\rho_n=\sum_wp_n(w)|w\rangle\langle w|$，且每个合法词的 $p_n(w)>0$。$\rho_n$ 支撑在合法词张成空间，后者恰是 $\Delta_n\rho_n$ 的支撑，所以相对熵的支撑包含条件成立。在该支撑上对角对数给
+$$
+\operatorname{Tr}(\rho_n\log(\Delta_n\rho_n))
+=\sum_wp_n(w)\log p_n(w).
+\tag{42.47}
+$$
+代入相对熵定义和（42.43）即得（42.44）；非负性是有限维相对熵非负性／pinching 恒等式的既有结论。对应 Q89.1—89.4及 [EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity](../../../D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.lean) 时，固定一个 $H_n$，在该载体取酉 $I$、从 $\rho_n$ 到 $\Delta_n\rho_n$ 的一步，随后保持去相位态即可；不把不同 $n$ 的增长载体当成其一个固定载体上的时间迭代。相对熵相干量的标准表达也见 Baumgratz–Cramer–Plenio 的式（8）。[^rroctx42_coherence]
+
+对（42.39）作实际计算基测量，词 $w$ 的条件记忆正是纯态 $P_{\ell(w)}^{\rm mem}$，故得（42.45）。不同词的经典块彼此正交，各块只有一个非零本征值 $p_n(w)$，所以联合熵为 $H(Y)$；偏迹后的记忆为 $(1-q_n)P_0^{\rm mem}+q_nP_1^{\rm mem}$。按条件熵及互信息定义相减即得（42.46）。这里真正保留了活动 $M$，没有替换它；$\langle m_0,m_1\rangle=\sqrt\alpha>0$，两个记忆标签不能作为完美可读的末位旗标。$\square$
+

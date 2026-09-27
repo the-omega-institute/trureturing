@@ -1,0 +1,62 @@
+**definition 59.7 显式顶点表—边表位编码与可变素数承诺约定。** 对 definition 59.4 的零一标签实例
+$$
+H=(W,F),\qquad a:F\to\{0,1\},
+$$
+记
+$$
+n=|W|,\qquad m=|F|.
+$$
+以下固定一个显式编码约定。先把顶点双射编号为
+$$
+W=[n]=\{0,1,\ldots,n-1\},
+$$
+并令
+$$
+\ell_n=\left\lceil\log_2(n+2)\right\rceil.
+$$
+对非负整数 $t$，令
+$$
+r(t)=\left\lfloor\log_2(t+1)\right\rfloor+1,
+$$
+并令 $\operatorname{bin}(t+1)$ 表示 $t+1$ 的无前导零普通二进制表示；于是
+$$
+|\operatorname{bin}(t+1)|=r(t).
+$$
+本节固定使用自定界编码
+$$
+\operatorname{code}(t)
+=
+1^{r(t)}0\,\operatorname{bin}(t+1).
+$$
+因此对所有 $t\ge0$，包括 $t=0$，都有精确长度公式
+$$
+|\operatorname{code}(t)|
+=
+2r(t)+1
+=
+2\left\lfloor\log_2(t+1)\right\rfloor+3.
+$$
+特别地
+$$
+|\operatorname{code}(t)|=\Theta(\log(t+2)),
+$$
+而不是只假定某个上界。
+
+固定素数 $p$ 时，一个良构输入依次写成：
+
+1. 头部 $\operatorname{code}(n)\operatorname{code}(m)$；
+2. **显式顶点表**：恰有 $n$ 条顶点记录，依次写出 $0,1,\ldots,n-1$，每个编号占 $\ell_n$ 位；
+3. **显式边表**：恰有 $m$ 条记录
+   $$
+   (u,v,a_{uv}),
+   $$
+   其中 $0\le u<v<n$，两个端点各占 $\ell_n$ 位，标签 $a_{uv}$ 占一位；不同记录不得表示同一无序边。
+
+边记录的排列次序不属于数学数据。特别地，当 $n=0$ 时必有 $m=0$，编码含头部而顶点表、边表均为空；当 $n=1$ 时仍显式写出唯一顶点记录 $0$，且必有 $m=0$。因此孤立顶点也逐个占有输入记录，不把一个二进制写出的顶点总数视为已经免费提供 $n$ 个可寻址顶点。
+
+可变素数版本再在上述编码前只写一次 $p\ge2$ 的固定编码 $\operatorname{code}(p)$。其承诺集合由所有满足“图编码良构且 $p$ 为素数”的输入组成。本文所谓
+$$
+\mathrm{SPVAL}^{01}_{\mathrm{var}}\in\mathrm{NP}
+$$
+以及其 NP-hardness、NP-completeness，均按如下承诺问题约定理解：验证器只要求在承诺集合上正确，承诺外行为不作规定；多项式 many-one 归约必须把其源问题的每个合法输入送到一个满足素数承诺的目标输入，并在该承诺集合内保持 yes/no。因而这里不把素性判定本身加入待证明的判定任务。
+

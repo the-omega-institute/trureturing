@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:252c25f31764ac89f6c1b80e0dcf5911a5520838757b770442a17b8c806629f7
+  normalized_sha256: sha256:252c25f31764ac89f6c1b80e0dcf5911a5520838757b770442a17b8c806629f7
+cas_ref: sha256:252c25f31764ac89f6c1b80e0dcf5911a5520838757b770442a17b8c806629f7
+coverage_gids:
+  - gid: D5/S3/Observer/Prediction/FiniteStabilityClassBound.finite_stability_class_bound
+    target_statement_id: sha256:ef27e4d1a40b26067f87a5d8e9c6ace544bd92451471dbead609cc873e47a204
+receipts:
+  unresolved_subitems: []

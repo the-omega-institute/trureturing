@@ -1,0 +1,28 @@
+**定理 38.6（逐门合法不蕴含共同可逼近）。** 对定义38.5中的每个图，$\mathcal J\subseteq\mathcal L$，且这个包含可以严格。以下两个无常量有向无环图均给出严格包含。
+
+第一例有四个独立输入，其极限为 $(u,u,v,v)$，依次请求四个输出形式
+$$
+a+c,\qquad a+d,\qquad b+c,\qquad b+d
+$$
+及其极限
+$$
+(0v,\,10v,\,10v,\,0v).
+$$
+每个门都属于 $\Gamma$，但整个元组不属于实际联合闭图。
+
+第二例有两个独立输入，极限为 $(u,v)$，三个门为
+$$
+p=x+y,\qquad q=x+x,\qquad r=q+y,
+$$
+并请求
+$$
+p\longrightarrow0v,\qquad q\longrightarrow0v,\qquad r\longrightarrow00v.
+$$
+这里
+$$
+z_{E_3}^+=010v,\qquad z_{E_3}^-=00v.
+$$
+三个门仍分别合法，但整个元组不属于实际联合闭图。此例的三个输出形式彼此不同。即使只记录 $x+y$ 的正分支和 $2x+y$ 的负分支，这两个不同输出就已构成一个包含极小的不相容输出族，输入极限仍固定为 $(u,v)$。
+
+这些严格包含不否定[第18节命题18.2的集合值结合律](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+

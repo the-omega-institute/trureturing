@@ -1,0 +1,53 @@
+### 51.3 任意环境目标的最近实际数组存在
+
+固定任意 $T\in B_\rho$，不要求 $T$ 满足递归关系。对整数 $N\ge1$ 定义
+$$
+f_N^T(a)=\max_{n+k<N}\rho^{n+k}|E(a)_{n,k}-T_{n,k}|,\qquad
+e_N(T)=\min_{a\in X_A}f_N^T(a).
+\tag{51.8}
+$$
+有限依赖使 $f_N^T$ 连续，紧性保证最小值达到。每个有限目标只使用前 $N$ 个来源坐标，任意允许前缀都能以零延伸为完整来源。
+
+这些有限损失单调递增，且
+$$
+0\le f_N^T(a)\le f_{N+1}^T(a),\qquad
+\sup_Nf_N^T(a)=\|E(a)-T\|_\rho\le A+\|T\|_\rho.
+\tag{51.9}
+$$
+因此 $e_N(T)$ 单调有界。
+$$
+\boxed{d_A(T):=\min_{a\in X_A}\|E(a)-T\|_\rho
+=\sup_{N\ge1}e_N(T).}
+\tag{51.10}
+$$
+准确代入而非新增一般定理：设 $r=\sup_Ne_N(T)$，在 $X_A$ 上取
+$$
+\mathrm{Context}=\mathbb N_{\ge1},\quad \mathrm{Record}=\mathbb R,
+\beta(N,a)=\max\{f_N^T(a)-r,0\},\quad \mathrm{target}(N)=0.
+\tag{51.11}
+$$
+在 $X_A$ 上对每个 $N$ 置 $K_N(r)=\{a:f_N^T(a)\le r\}$。所有 $K_N(r)$ 闭且非空；有限个索引的交由其中最大索引的最小值见证，空索引族由 $X_A$ 的任意成员见证。把上述 $X_A$、正整数索引、实数记录、零目标代入 compact_local_realization，得到共同见证 $a_*$ 属于所有 $K_N(r)$。故完整损失不超过 $r$；任意来源的完整损失又不小于每个 $e_N(T)$，所以恰为 $r$。
+
+这里的全损失是连续有限损失的上确界，因而下半连续；证明不要求 $E:X_A\to B_\rho$ 范数连续，也不要求 $I_A$ 范数紧。
+
+对每个阈值 $r\ge0$，同一个共同来源和同一个半径满足
+$$
+d_A(T)\le r
+\iff(\forall N,\ e_N(T)\le r)
+\iff\exists a\in X_A\ \forall N,\ f_N^T(a)\le r.
+\tag{51.12}
+$$
+严格阈值也在同一窗口见证：
+$$
+d_A(T)>r\iff\exists N,\ e_N(T)>r.
+\tag{51.13}
+$$
+右向左显然；左向右若全部有限值不超过 $r$ 则（51.10）矛盾。这个存在性不是取得数据、认证全来源优化下界或有效搜索截止的替代品；一份可行拟合只给上界。
+
+成员身份由实际达到的零距离刻画：
+$$
+T\in I_A\iff d_A(T)=0\iff\forall N,\ e_N(T)=0.
+\tag{51.14}
+$$
+若 $T\notin I_A$，则存在有限三角使优化距离严格为正；整个环境目标域仍是 $B_\rho$，没有把目标错误限制到递归数组。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95b2ded3a96bfa074c5d02b3b5772ed026d406e7b1f6295507d45228d7a255df
+  normalized_sha256: sha256:95b2ded3a96bfa074c5d02b3b5772ed026d406e7b1f6295507d45228d7a255df
+cas_ref: sha256:95b2ded3a96bfa074c5d02b3b5772ed026d406e7b1f6295507d45228d7a255df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原句“同时严格晚于二者的最早整数”确实断言最小性，并非借定义偷带结论；探针逐一证明严格晚于两个输入及不大于任意共同后继，量词覆盖全部整数，使用 max 的序引理和整数规范化即可闭合，仓内无冻结 GID。
+    previous_atom_id: edab1b58ae6adf36aaabb3231c76be428a13fc29eaf2bd8fa4c06c14a98bb393
+    next_atom_id: f31ebd42d296551ea64b0c0f887374422776226e12996e56e3beaeb76c426e97

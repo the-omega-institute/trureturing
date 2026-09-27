@@ -1,0 +1,21 @@
+**定理 13.4（保留前缀、取得关系与确定性细化障碍）。** 对合法割 $I\subseteq J$，存在唯一满射 $r_{JI}:B_J\to B_I$ 使 $r_{JI}q_J=q_I$。对 $I\subseteq J\subseteq K$，
+$$
+r_{II}=\operatorname{id}_{B_I},\qquad
+r_{KI}=r_{JI}r_{KJ},\qquad
+\ker q_J\subseteq\ker q_I.
+\tag{13.4}
+$$
+从旧记录到新记录的实际取得关系为
+$$
+\mathcal R_{IJ}:=\{(q_I\omega,q_J\omega):\omega\in\Omega\}
+=\{(b,d)\in B_I\times B_J:b=r_{JI}(d)\}.
+\tag{13.5}
+$$
+按先 $\mathcal R_{IJ}$ 后 $\mathcal R_{JK}$ 的关系复合约定，有 $\mathcal R_{JK}\circ\mathcal R_{IJ}=\mathcal R_{IK}$。存在全定义确定性映射 $u:B_I\to B_J$ 满足 $q_J=uq_I$，当且仅当 $\ker q_I\subseteq\ker q_J$；在保留式记录下，这恰为两核相等。因而只以旧记录为输入的确定性更新不能严格细化实际信息。
+
+**证明。** $r_{JI}$ 删除不属于 $I$ 的事件坐标，保留 $C$。任取 $b=q_I\omega$，$q_J\omega$ 是其原像，故满射；$q_J$ 满射到实际像又给唯一性。重复删除给复合式；若 $q_J$ 相等，其前缀相等，故核包含成立。
+
+式（13.5）的左侧必满足右侧等式。反之，对 $d\in B_J$ 取 $\omega$ 使 $q_J\omega=d$，则 $q_I\omega=r_{JI}(d)=b$。复合关系中的中间项必为 $r_{KJ}(d)$，所以其存在恰要求 $b=r_{JI}r_{KJ}(d)=r_{KI}(d)$，得精确复合。这里使用了同一份 $\Omega$、实际像和嵌套前缀。
+
+若 $q_J=uq_I$，旧记录相等必给新记录相等。反之，所述核包含使 $u(q_I\omega):=q_J\omega$ 与代表无关；它定义在整个 $B_I$。结合已经证明的反向包含即得等核判据。$\square$
+

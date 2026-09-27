@@ -1,0 +1,25 @@
+**命题 100.2（逐处趋零而无阿代尔极限）。** 定义 100.1 的同一有理列满足
+$$
+\iota_\infty(e_n)\longrightarrow0,
+\qquad
+\forall p\text{ 为素数},\quad\iota_p(e_n)\longrightarrow0.
+\tag{100.2a}
+$$
+因此 $j(\Delta(e_n))\to0$ 于 $T$，且 $\Delta(e_n)\to0$ 于 $\mathbb A_{\rm prod}$。
+
+对每个 $n\ge2$，$B_n$ 是非空有限集合，并且恰为 $\Delta(e_n)$ 的非整有限坐标集，满足
+$$
+\varnothing\ne B_n\subseteq\{\ell\text{ 为素数}:\ell>n\}.
+\tag{100.2b}
+$$
+特别地，对每个有限素数集 $S$，
+$$
+n\ge N_S:=\max(\{2\}\cup S)
+\quad\Longrightarrow\quad
+B_n\cap S=\varnothing,
+\tag{100.2c}
+$$
+且不存在一个固定有限 $S$ 包含该列某条尾部的全部非整坐标。
+
+序列 $\Delta(e_n)$ 在标准阿代尔拓扑中没有任何极限。自然包含 $j$ 连续且单射，却不是到其像的拓扑嵌入；同一阿代尔底集上的受限直积拓扑严格细于从 $T$ 诱导的拓扑。
+

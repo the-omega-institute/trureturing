@@ -1,0 +1,21 @@
+**命题 67.2（有参考读数的重建预算）。** 设 $A$ 满足下帧界 $\alpha>0$，数据模型为
+
+$$
+b=A(D)+\xi,
+$$
+
+且重建 $\widehat D$ 满足正规方程
+
+$$
+A^\ast(A\widehat D-b)=0.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le\frac{\|\xi\|_2}{\sqrt\alpha}.
+}
+$$
+

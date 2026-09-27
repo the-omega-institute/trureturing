@@ -1,0 +1,7 @@
+**假设 46.10（明确采用的经典 DPRM 定理）。** 对每个有限 $a$ 及递归可枚举集合 $H\subseteq\mathbb N_0^a$，存在有限 $m$ 及整数系数多项式 $D$，使
+$$
+\forall\mathbf u\in\mathbb N_0^a,\qquad
+\mathbf u\in H\iff\exists\mathbf v\in\mathbb N_0^m\ D(\mathbf u,\mathbf v)=0.
+$$
+这是 Davis–Putnam–Robinson–Matiyasevich 定理；采用的非负整数版本及全部量词见 [Jones–Matijasevič，Proof of Recursive Unsolvability of Hilbert's Tenth Problem，American Mathematical Monthly 98 (1991), 689–709，定理 1，第 690 页](https://sites.math.rutgers.edu/~zeilberg/akherim/hilbert10Old.pdf#page=3)。参数与见证都在 $\mathbb N_0$ 中，不以有理数版本或有限解数版本替代。
+

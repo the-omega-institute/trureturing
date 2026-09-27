@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce3b166427defba9fce0bb8c0e0e7b3cf2d14c5164b68269d0e47da5d2c2fb12
+  normalized_sha256: sha256:ce3b166427defba9fce0bb8c0e0e7b3cf2d14c5164b68269d0e47da5d2c2fb12
+cas_ref: sha256:ce3b166427defba9fce0bb8c0e0e7b3cf2d14c5164b68269d0e47da5d2c2fb12
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文仅规定“等式必须说明所在层，不能省略取商步骤”，随后只有“层”“所识别的数据”“可引用的律及边界”三个表头，没有表内命题。它是表格入口与写作约定，不在定义中夹带层间相等或代数律，因此没有需证明的命题。
+    previous_atom_id: 74b3617feb9bb63e4392cfb6ce0553891c1c4786b629edb76fbefd8296af5c6f
+    next_atom_id: 4b3b40602fd5dea920e3c1505cefade85cac60a6b91644a0525caa310a52f42f

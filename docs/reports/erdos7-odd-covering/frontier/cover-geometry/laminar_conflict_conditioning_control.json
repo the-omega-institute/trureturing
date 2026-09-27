@@ -1,0 +1,217 @@
+{
+  "scope": "One actual conditional law, literal nested-prefix events, two strictly feasible graphs. Finite control only; no unrestricted positivity or noncoverage conclusion.",
+  "original_labels": [
+    {
+      "modulus": 5,
+      "residue": 0
+    },
+    {
+      "modulus": 25,
+      "residue": 1
+    },
+    {
+      "modulus": 7,
+      "residue": 0
+    },
+    {
+      "modulus": 11,
+      "residue": 0
+    },
+    {
+      "modulus": 75,
+      "residue": 57,
+      "child_cofactor": 25,
+      "child_residue": 7
+    },
+    {
+      "modulus": 105,
+      "residue": 51,
+      "child_cofactor": 35,
+      "child_residue": 16
+    },
+    {
+      "modulus": 165,
+      "residue": 36,
+      "child_cofactor": 55,
+      "child_residue": 36
+    },
+    {
+      "modulus": 231,
+      "residue": 60,
+      "child_cofactor": 77,
+      "child_residue": 60
+    },
+    {
+      "modulus": 5775,
+      "residue": 1233,
+      "child_cofactor": 1925,
+      "child_residue": 1233
+    }
+  ],
+  "parent_prime": 3,
+  "parent_residue": 0,
+  "child_period": 1925,
+  "original_period": 5775,
+  "source_count": 1140,
+  "survivor_count": 1001,
+  "whole_coordinate_domains": [
+    [
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      11,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      21,
+      22,
+      23,
+      24
+    ],
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  ],
+  "base5_first_digit_counts": [
+    0,
+    4,
+    5,
+    5,
+    5
+  ],
+  "old_event_probabilities": [
+    "1/19",
+    "2/57",
+    "2/95",
+    "1/60",
+    "1/1140"
+  ],
+  "conflict_graph_neighbor_masks": [
+    22,
+    25,
+    25,
+    22,
+    15
+  ],
+  "shared_graph_neighbor_masks": [
+    22,
+    29,
+    27,
+    22,
+    15
+  ],
+  "conflict_induced_polynomials": [
+    "1",
+    "18/19",
+    "55/57",
+    "52/57",
+    "93/95",
+    "88/95",
+    "341/361",
+    "322/361",
+    "59/60",
+    "177/190",
+    "1081/1140",
+    "511/570",
+    "1097/1140",
+    "173/190",
+    "20099/21660",
+    "3163/3610",
+    "1139/1140",
+    "1079/1140",
+    "1099/1140",
+    "1039/1140",
+    "223/228",
+    "211/228",
+    "20441/21660",
+    "19301/21660",
+    "56/57",
+    "1061/1140",
+    "18/19",
+    "1021/1140",
+    "274/285",
+    "1037/1140",
+    "1004/1083",
+    "18959/21660"
+  ],
+  "shared_induced_polynomials": [
+    "1",
+    "18/19",
+    "55/57",
+    "52/57",
+    "93/95",
+    "88/95",
+    "269/285",
+    "254/285",
+    "59/60",
+    "177/190",
+    "1081/1140",
+    "511/570",
+    "1097/1140",
+    "173/190",
+    "1057/1140",
+    "499/570",
+    "1139/1140",
+    "1079/1140",
+    "1099/1140",
+    "1039/1140",
+    "223/228",
+    "211/228",
+    "215/228",
+    "203/228",
+    "56/57",
+    "1061/1140",
+    "18/19",
+    "1021/1140",
+    "274/285",
+    "1037/1140",
+    "88/95",
+    "997/1140"
+  ],
+  "lopsided_subset_checks": 9,
+  "literal_queries_checked": 2975,
+  "selected_query": {
+    "modulus": 5,
+    "residue": 1,
+    "source_probability": "4/19",
+    "actual_conditional_probability": "16/91",
+    "conflict_bound": "80396/360221",
+    "shared_support_bound": "236/997",
+    "strict_bound_improvement": "4857344/359140337",
+    "conflicting_event_indices": [
+      0,
+      4
+    ],
+    "shared_coordinate_event_indices": [
+      0,
+      1,
+      2,
+      4
+    ]
+  }
+}

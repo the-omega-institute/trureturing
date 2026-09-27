@@ -1,0 +1,14 @@
+### 定理 20.3. primitive infinitesimal 作用的显式逆
+
+对实际 primitive 输入有
+
+\[
+\sum_j\mathcal A_X\bigl(\pi_J(F_{kj})\bigr)_{ij}=(n-2)X_{ik}.
+\]
+
+当 n−2≠0，右端可直接相除。特别地 n=8 时
+
+\[
+X_{ik}=\frac16\sum_j\mathcal A_X\bigl(\pi_J(F_{kj})\bigr)_{ij}.\tag{20.3}
+\]
+

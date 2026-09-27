@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0eaf93ae6538bd027d1e11f38a4ecc4a5d9d590b19b4fdff8b5ec3e1cfbc823b
+  normalized_sha256: sha256:0eaf93ae6538bd027d1e11f38a4ecc4a5d9d590b19b4fdff8b5ec3e1cfbc823b
+cas_ref: sha256:0eaf93ae6538bd027d1e11f38a4ecc4a5d9d590b19b4fdff8b5ec3e1cfbc823b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅规定载体、记号、假设或接口与计费条件，所列公式用于定义对象，没有独立待证结论，按定义条目交由现有结算器处理。
+    previous_atom_id: c5349f1845c92a2fb4e5406928a2c35598ba4d4933ae3a31e2294ada48976040
+    next_atom_id: 0abc1b7ddd829266ceeb503dc1f4d2566bda75bbedc7db9026863261b3c3edf9

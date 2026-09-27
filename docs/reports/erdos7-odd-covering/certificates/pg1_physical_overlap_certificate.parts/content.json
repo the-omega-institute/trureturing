@@ -1,0 +1,17 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-physical-overlap-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+    }
+  },
+  "result": {
+    "path": "content/002-result.json",
+    "sha256": "2f14ad7f47174cfaf20475c9a62663ffbbafb25ed71a244e8d40ba19c3db4d6e",
+    "kind": "object"
+  }
+}

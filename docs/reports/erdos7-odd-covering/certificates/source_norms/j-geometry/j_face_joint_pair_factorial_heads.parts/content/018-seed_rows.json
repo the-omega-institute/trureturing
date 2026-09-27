@@ -1,0 +1,41 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/018-seed_rows/000000-000001.json",
+        "sha256": "795c3f173a4ff3370b241f1f54f351c8352746b87659ba8d52a341a4c7076b7c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/018-seed_rows/000001-000002.json",
+        "sha256": "4485bb95eca7460f33e81e2ab78a2a4d852b3269ee06f8fe3699fc463f9bcfac",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/018-seed_rows/000002-000003.json",
+        "sha256": "e2d34e005e045fc47658557434e3bf3c606256530db647da383e998ed121cb08",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/018-seed_rows/000003/single.json",
+        "sha256": "275de4e85c9d4da12398a4b0f88bc57c31a6c0f4879fd6c640ac048c3d904a77",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

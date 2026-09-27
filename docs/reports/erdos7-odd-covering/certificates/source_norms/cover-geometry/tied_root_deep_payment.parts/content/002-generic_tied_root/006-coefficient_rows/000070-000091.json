@@ -1,0 +1,800 @@
+[
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 0,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "253/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 1,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 2,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "65/36",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 3,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 4,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 5,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "65/36",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 6,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 7,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "397/180",
+          "68/45",
+          "49/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 8,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "33/20",
+          "43/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 7,
+    "positive5_layout_index": 9,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "33/20",
+          "43/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 0,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "253/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 1,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 2,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 3,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "65/36",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 4,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "21/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "289/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 5,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "65/36",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "5/4",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 6,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 7,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "33/20",
+          "43/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 8,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "397/180",
+          "68/45",
+          "49/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 8,
+    "positive5_layout_index": 9,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "29/20",
+          "34/45",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "361/180",
+          "59/45",
+          "37/60",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "33/20",
+          "43/45",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  },
+  {
+    "baseline_index": 9,
+    "positive5_layout_index": 0,
+    "low_root_cell": 0,
+    "minimum_root_baseline": 1,
+    "unsafe_comparisons": [
+      {
+        "cell": 2,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 3,
+        "coefficients": [
+          "0",
+          "17/20",
+          "5/9",
+          "5/12",
+          "5/36"
+        ]
+      },
+      {
+        "cell": 4,
+        "coefficients": [
+          "0",
+          "253/180",
+          "10/9",
+          "5/12",
+          "5/36"
+        ]
+      }
+    ]
+  }
+]

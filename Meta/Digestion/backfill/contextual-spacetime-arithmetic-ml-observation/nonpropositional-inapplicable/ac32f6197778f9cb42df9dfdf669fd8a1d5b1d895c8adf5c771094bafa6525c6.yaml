@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac32f6197778f9cb42df9dfdf669fd8a1d5b1d895c8adf5c771094bafa6525c6
+  normalized_sha256: sha256:ac32f6197778f9cb42df9dfdf669fd8a1d5b1d895c8adf5c771094bafa6525c6
+cas_ref: sha256:ac32f6197778f9cb42df9dfdf669fd8a1d5b1d895c8adf5c771094bafa6525c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “读完”新报告后使用指定读出，而“这个初态不被定义为从空词运行的新机标签”限定符号含义；这里只指定输出接口，不推导两个标签的相等或不等，未暗含待证性质。
+    previous_atom_id: bb6cc20fc8bc844d973dc7e5afbec1a4473275a81f465e130aea221d3072ee87
+    next_atom_id: 67ef86d3ff3d5bfa8d8d2247935191f6ad9343a85f8d687b431ceef0b90713e4

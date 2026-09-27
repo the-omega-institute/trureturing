@@ -1,0 +1,138 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "actual-odd-crt-zero-stars-zero-edges-v1"
+  },
+  "source_period": {
+    "kind": "inline",
+    "value": 1575
+  },
+  "source_forbidden": {
+    "path": "content/002-source_forbidden.json",
+    "sha256": "d941a382dc17278cee0d1ccdc750205423360f9344ac4c309754221bb3aaa95d",
+    "kind": "value"
+  },
+  "source_survivors": {
+    "path": "content/003-source_survivors.json",
+    "sha256": "c2173a1d66856bec746549a87dd439fb783e19fbefdca4448164c26d8b8f8e38",
+    "kind": "value"
+  },
+  "source_survivor_count": {
+    "kind": "inline",
+    "value": 382
+  },
+  "original_old_test_labels": {
+    "kind": "inline",
+    "value": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      15,
+      21,
+      25,
+      35,
+      45,
+      63,
+      75,
+      105,
+      175,
+      225,
+      315,
+      525,
+      1575
+    ]
+  },
+  "marginal_maximum_counts": {
+    "kind": "inline",
+    "value": {
+      "1": 382,
+      "3": 264,
+      "5": 130,
+      "7": 75,
+      "9": 96,
+      "15": 90,
+      "21": 50,
+      "25": 26,
+      "35": 25,
+      "45": 30,
+      "63": 18,
+      "75": 18,
+      "105": 15,
+      "175": 5,
+      "225": 6,
+      "315": 5,
+      "525": 3,
+      "1575": 1
+    }
+  },
+  "marginal_maximizer_residues": {
+    "path": "content/007-marginal_maximizer_residues.json",
+    "sha256": "7bfb71fb5d3a82363104b229aa1ac935afcf2d0b9b4267d03ddd912520baa8e5",
+    "kind": "value"
+  },
+  "full_central_unary_star_witnesses": {
+    "kind": "inline",
+    "value": {
+      "3": 2,
+      "5": 2,
+      "7": 3,
+      "9": 2,
+      "15": 2,
+      "21": 8,
+      "25": 2,
+      "35": 2,
+      "45": 2,
+      "63": 29,
+      "75": 2,
+      "105": 2,
+      "175": 2,
+      "225": 2,
+      "315": 2,
+      "525": 2,
+      "1575": 2
+    }
+  },
+  "two_ended_edge_witnesses": {
+    "path": "content/009-two_ended_edge_witnesses.json",
+    "sha256": "0ab12f13bd989d661490b7d3fe84aece3b85a05917650f0f0dc19310c4d0afb7",
+    "kind": "value"
+  },
+  "common_maximizing_state_exists": {
+    "kind": "inline",
+    "value": false
+  },
+  "triangle": {
+    "kind": "inline",
+    "value": {
+      "original_labels": [
+        5,
+        21,
+        35
+      ],
+      "complete_residue_assignments": 3675,
+      "independent_envelope": "725/382",
+      "maximum": "358/191",
+      "maximizers": [
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "loss": "9/382",
+      "loss_if_unary_maximizers_are_imposed": "15/191",
+      "L1_loss_comparison_coefficient": 15
+    }
+  },
+  "pure_extension": {
+    "path": "content/012-pure_extension.json",
+    "sha256": "f84f9ebebed6e36cb5316ef55fcccdb7a7ba63bcac0ebfc9b0a83a212bf752ae",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact actual-family obstruction to zero local clusters implying global saturation. Product extension justified in the accompanying proof; no unrestricted numeric bound or Lean verification."
+  }
+}

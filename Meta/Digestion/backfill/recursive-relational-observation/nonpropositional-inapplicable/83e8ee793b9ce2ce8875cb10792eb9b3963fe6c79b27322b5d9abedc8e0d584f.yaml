@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83e8ee793b9ce2ce8875cb10792eb9b3963fe6c79b27322b5d9abedc8e0d584f
+  normalized_sha256: sha256:83e8ee793b9ce2ce8875cb10792eb9b3963fe6c79b27322b5d9abedc8e0d584f
+cas_ref: sha256:83e8ee793b9ce2ce8875cb10792eb9b3963fe6c79b27322b5d9abedc8e0d584f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“A right translation”与“A left translation”固定不同因子以命名两个平移函数；没有附加任一平移连续的结论，已检查定义未夹带连续性断言，故无需证明。
+    previous_atom_id: afbf81c3d4dc1f342864505cab9dc0a12e5f22e94beaa75d699a3869181b46db
+    next_atom_id: eb2c16e37b8bc83db5ba93d3e018287ee45fd8eda7fc14021bfd5a444d7db48f

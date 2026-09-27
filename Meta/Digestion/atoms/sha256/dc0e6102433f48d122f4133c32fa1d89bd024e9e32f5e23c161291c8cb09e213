@@ -1,0 +1,23 @@
+**定理 15.5（概率单纯形上的目标最小最坏误差）。** 对同一 $B,V$ 及任意 $h\in\mathbb R^X$，允许所有集合函数解码器，有
+$$
+\inf_{g:\mathcal P\to\mathbb R}
+\sup_{p\in\Delta_X}|ph-g(pB)|
+=\operatorname{dist}_\infty(h,V)
+:=\min_{v\in V}\max_{x\in X}|h_x-v_x|.
+\tag{15.11}
+$$
+右侧的最佳逼近存在，且一个线性读出已达到该误差。该式是在有界概率域上的目标恢复结论；[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定理1.4针对无界线性输入得到的无穷风险不能转移到这里。它与该卷§3.1的候选纤维半径公式相容。
+
+**证明。** $V$ 是有限维闭子空间。极小化序列的 $\|h-v\|_\infty$ 有界，故 $\|v\|_\infty$ 有界；取收敛子列，极限仍在 $V$，给最佳 $v_*$。写 $v_*=B\alpha$，则 $g(s)=s\alpha$ 满足
+$$
+|ph-g(pB)|=|p(h-v_*)|\le\|h-v_*\|_\infty
+$$
+对每个概率 $p$ 成立，给上界。
+
+令 $d=\operatorname{dist}_\infty(h,V)$。$d=0$ 时上界已给零风险。若 $d>0$，在商空间 $\mathbb R^X/V$ 的 $\ell_\infty$ 商范数下，对非零元 $h+V$ 取范数一的支撑泛函，并延拓到整个商空间。有限维 Hahn–Banach 定理及 $\ell_\infty$ 与 $\ell_1$ 的对偶给行向量 $z$，使
+$$
+zv=0\ (v\in V),\qquad \|z\|_1=1,\qquad zh=d.
+\tag{15.12}
+$$
+此处使用的是成熟的商范数对偶，见 Walter Rudin，*Functional Analysis*，第二版（1991），第3章的 Hahn–Banach 延拓与分离定理；式（15.12）亦由将上述商泛函拉回原空间直接得到。因为 $z\mathbf1=0$，其正、负部分的质量同为 $1/2$。故 $p=2z^+$、$q=2z^-$ 是概率分布，$pB=qB$，而 $ph-qh=2d$。任意解码器在同一个预测值上只给一个实数 $c$；由 $|ph-qh|\le|ph-c|+|qh-c|$，至少一个误差不小于 $d$。这与上界吻合。零先验坐标不需条件化，因而边界分布同样是合法下界见证。$\square$
+

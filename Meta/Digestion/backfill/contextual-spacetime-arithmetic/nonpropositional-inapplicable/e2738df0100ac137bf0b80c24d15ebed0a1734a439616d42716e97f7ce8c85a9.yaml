@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2738df0100ac137bf0b80c24d15ebed0a1734a439616d42716e97f7ce8c85a9
+  normalized_sha256: sha256:e2738df0100ac137bf0b80c24d15ebed0a1734a439616d42716e97f7ce8c85a9
+cas_ref: sha256:e2738df0100ac137bf0b80c24d15ebed0a1734a439616d42716e97f7ce8c85a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句说明量化所有有限深度而不允许无限复合上下文，是量词和定义范围说明，无独立待证明命题。
+    previous_atom_id: 7071754e17182298b6bf9e3630faeb23bc445ca05de9509e8785b2ff63021b27
+    next_atom_id: bf92fe04918d1e709a10b6617f710882cf39d20bbd8e36a5aa3c4c2c696c122d

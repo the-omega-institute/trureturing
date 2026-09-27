@@ -1,0 +1,41 @@
+**命题 71.5（Bernoulli 高温极限与首位读出）。** 取 $X=\{0,1\}^{\mathbb N}$，$\mathcal P_n$ 为长度 $n$ 的柱分区，$\mu_p$ 为各位独立且 $\Pr(x_j=1)=p$ 的 Bernoulli 概率，$0<p<1$。固定 $z>0$，对全部 $p$ 使用共同速率
+$$
+a_0=0,\qquad a_n=2^{zn}\quad(n\ge1).
+$$
+以 $\nu_{\beta,p}$、$\eta_{n,p}$ 标明参考概率。则全部 $\beta>0$ 的热算子迹类；对任意长度 $m$ 的字 $u$，
+$$
+\eta_{n,p}([u])=2^{-m}\quad(n\ge m),
+\qquad
+\nu_{\beta,p}\Rightarrow\mu_{1/2}\quad(\beta\downarrow0).
+$$
+首位事件 $[1]=\{x:x_0=1\}$ 满足
+$$
+\nu_{\beta,p}([1])
+=\frac12+\left(p-\frac12\right)
+\frac{1-e^{-\beta a_1}}{Z_\beta}.
+$$
+低温有 $d_{\mathrm{TV}}(\nu_{\beta,p},\mu_p)\to0$。若 $p=1/2$，则全部 $\beta>0$ 已有 $\nu_{\beta,1/2}=\mu_{1/2}$。
+
+证明。全部柱质量为正，故 $\mu_p$ 满支撑，且
+$$
+N_n=2^n,\qquad m_0=1,\qquad m_n=2^{n-1}\ (n\ge1),
+\qquad
+Z_\beta=1+\sum_{n\ge1}2^{n-1}e^{-\beta2^{zn}}.
+$$
+对任意固定 $\beta>0$，最后级数相邻项之比为
+$$
+2\exp\bigl(-\beta(2^z-1)2^{zn}\bigr)\longrightarrow0,
+$$
+所以迹有限。$Z_\beta$ 与 $p$ 无关。
+
+当 $n\ge m$ 时，$[u]$ 恰为 $2^{n-m}$ 个第 $n$ 层格之并，每格的条件测度在此事件上取零或一，故其 $\eta_{n,p}$ 质量为 $2^{n-m}/2^n=2^{-m}$。空字的柱是 $X$，同式给出质量一。柱函数在 $C(X)$ 中一致稠密，所有固定柱的上述等式遂给出 $\eta_{n,p}\Rightarrow\mu_{1/2}$；结合 $N_n\to\infty$ 与定理 71.4 得高温结论。
+
+对首位柱，$\eta_{0,p}([1])=p$，而 $\eta_{n,p}([1])=1/2$ 对全部 $n\ge1$ 成立。因此定理 71.2 的混合式给出
+$$
+\nu_{\beta,p}([1])
+=w_0(\beta)p+(1-w_0(\beta))/2,
+\qquad
+w_0(\beta)=\frac{1-e^{-\beta a_1}}{Z_\beta},
+$$
+即所列精确式。低温结论由命题 71.3 得到。若 $p=1/2$，每个第 $n$ 层格的参考质量均为 $2^{-n}$，从 $\eta_{n,p}$ 的定义直接得到 $\eta_{n,1/2}=\mu_{1/2}$，再由混合式得到全部温度的等式。证毕。
+

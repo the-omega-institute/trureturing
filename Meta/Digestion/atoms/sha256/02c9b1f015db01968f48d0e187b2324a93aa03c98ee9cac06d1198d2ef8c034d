@@ -1,0 +1,27 @@
+**定理 11.15（精确不可克隆与经典档案的恢复界限）。** 设单位向量 $\psi,\phi\in H$ 满足 $0<|\langle\psi,\phi\rangle|<1$，记 $P_\psi=|\psi\rangle\langle\psi|$。不存在同一个 CPTP 映射 $\mathcal C:\mathcal L(H)\to\mathcal L(H\otimes H)$ 同时满足
+$$
+\mathcal C(P_\psi)=P_\psi\otimes P_\psi,\qquad
+\mathcal C(P_\phi)=P_\phi\otimes P_\phi.
+\tag{11.25}
+$$
+因此，对任何包含这两个态的输入族，不存在取值于有限经典寄存器的 CPTP 编码 $\mathcal E$ 及共同 CPTP 解码 $\mathcal R$，使 $\mathcal R\mathcal E$ 在该族上精确恢复原态。此结论的量词是同一确定性编码、解码对一个未知输入样本的精确全态恢复。
+
+**证明。** 从式(11.6)及 $\sum_\alpha K_\alpha^\dagger K_\alpha=I$ 构造有限 Stinespring 等距映射 $Vx=\sum_\alpha K_\alpha x\otimes|\alpha\rangle_E$。若 $\mathcal C(P_\psi)=P_\psi\otimes P_\psi$，输出的纯性使
+$$
+V\psi=\psi\otimes\psi\otimes e_\psi
+$$
+对某个单位环境向量成立：投影至 $\psi\otimes\psi$ 正交补后的范数平方，等于该输出边缘在正交补上的迹，因而为零。同理 $V\phi=\phi\otimes\phi\otimes e_\phi$。等距性给
+$$
+|\langle\psi,\phi\rangle|
+=|\langle\psi,\phi\rangle|^2|\langle e_\psi,e_\phi\rangle|
+\le |\langle\psi,\phi\rangle|^2,
+$$
+与严格介于零和一矛盾。在没有剩余环境、指定共同空白及精确向量等式的等距模型中，这正是 [NoCloningInnerProductCriterion](../../../D5/S3/Quantum/PureState/NoCloningInnerProductCriterion.lean) 的 no_cloning_inner_product_criterion；量子卷第90.2节保留了该模型的假设。
+
+再设经典编码与解码存在。对每个输入纯态，写 $\mathcal E(P_\psi)=\sum_zp_\psi(z)|z\rangle\langle z|$，$\tau_z=\mathcal R(|z\rangle\langle z|)$。若 $\sum_zp_\psi(z)\tau_z=P_\psi$，在 $\psi$ 的正交补上取迹，由每项非负可知所有 $p_\psi(z)>0$ 的 $\tau_z$ 均等于 $P_\psi$。经典复制通道 $\Delta(|z\rangle\langle z|)=|z,z\rangle\langle z,z|$ 因而使
+$$
+(\mathcal R\otimes\mathcal R)\Delta\mathcal E(P_\psi)
+=\sum_zp_\psi(z)\tau_z\otimes\tau_z=P_\psi\otimes P_\psi.
+$$
+同一通道也复制 $P_\phi$，与前半部矛盾。正交标签的复制不满足 $0<|\langle\psi,\phi\rangle|<1$，故不受该禁制；带误差恢复或仅恢复指定任务也不满足式(11.25)的精确全态假设。$\square$
+

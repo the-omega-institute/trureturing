@@ -1,0 +1,37 @@
+**theorem 39.5 (Compact-subspace coordinate dependence and continuous factorization).** Let $C$ be a nonempty compact subspace of a product $\prod_{i\in I}X_i$ of Hausdorff spaces. Let $f:C\to M$ be continuous, where $d$ is a metric inducing the topology of $M$. For every $\varepsilon>0$ there is a finite $I_\varepsilon\subseteq I$ such that
+$$
+\forall u,v\in C:\quad
+u|_{I_\varepsilon}=v|_{I_\varepsilon}
+\ \Longrightarrow\ d(f(u),f(v))<\varepsilon.
+\tag{39.14}
+$$
+There is therefore an at most countable $I_f\subseteq I$ and a unique continuous map
+$$
+\bar f:\pi_{I_f}(C)\longrightarrow M
+$$
+such that
+$$
+f=\bar f\circ(\pi_{I_f}|_C).
+\tag{39.15}
+$$
+The factor is asserted on the actual projected image, not on the whole product $\prod_{i\in I_f}X_i$. Coordinate dependence has the meaning of Karlova–Mykhaylyuk, *On $\alpha$-embedded subsets of products*, arXiv:1411.3173v1, Definition 3.1; the compact-subspace assertion here has the following direct proof.
+
+**Proof.** For each $z\in C$, continuity gives a basic ambient product cylinder $W_z$ containing $z$ such that
+$$
+f(C\cap W_z)\subseteq B_d(f(z),\varepsilon/2).
+$$
+The cylinder $W_z$ depends on finitely many coordinates, say $I_z$. Compactness of $C$ supplies $z_1,\ldots,z_r$ with
+$$
+C\subseteq W_{z_1}\cup\cdots\cup W_{z_r}.
+$$
+Put $I_\varepsilon=\bigcup_{a=1}^r I_{z_a}$. If $u,v\in C$ agree there, choose $a$ with $u\in W_{z_a}$. Membership in that cylinder depends only on $I_{z_a}$, so $v\in W_{z_a}$ as well. The triangle inequality gives
+$$
+d(f(u),f(v))
+\le d(f(u),f(z_a))+d(f(z_a),f(v))<\varepsilon.
+$$
+This proves (39.14) with one finite set working for every pair in $C$. It does not use or define $f$ outside $C$.
+
+Take $I_f=\bigcup_{r\ge1}I_{2^{-r}}$. Equality on $I_f$ makes the output distance smaller than $2^{-r}$ for every $r$, hence zero. Thus $\bar f(\pi_{I_f}(u))=f(u)$ is well defined and unique.
+
+The projection $\pi_{I_f}|_C$ is a continuous surjection onto its image. Every closed subset of $C$ is compact, and its image is compact and therefore closed in the Hausdorff space $\pi_{I_f}(C)$. The projection is consequently a closed quotient map. Since its composite with $\bar f$ is the continuous map $f$, the quotient property proves continuity of $\bar f$. Empty $I_f$, which can occur for a constant map, gives the same argument with a one-point image. $\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b0b3ca2cc6d910f5d1634cbeb28de1edf5e80fa6b81bac7e1e054889c9e5101b
+  normalized_sha256: sha256:b0b3ca2cc6d910f5d1634cbeb28de1edf5e80fa6b81bac7e1e054889c9e5101b
+cas_ref: sha256:b0b3ca2cc6d910f5d1634cbeb28de1edf5e80fa6b81bac7e1e054889c9e5101b
+coverage_gids:
+  - gid: D5/S3/Zeros/EdgeTranspositionGeneration.connected_edge_transpositions_generate
+    target_statement_id: sha256:175e46900fab7b51ab07e6b6bd2394aa3b6ba451b295f34d8cfe3820d485b316
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+**出处 16.2（文献状态）。** 本批 13 条结果均有上述完整纸面证明，列为 `repo-derived`；其中精确仿射中性、Bessel 方法、熵覆盖和两点风险下界属于已有数学方法。下列文献的特定范围列为 `literature-attested`。未建立本批定量式的全球优先权，不列 `suspected-novel`，也不声称解决一个外部开放问题。
+
+[^tcs2-dmd]: Till Hauser、Julian Hölz，*Entropy based lower dimension bounds for finite-time prediction of Dynamic Mode Decomposition algorithms*，arXiv:2504.20269v1，提交于 2025-04-28，[原文](https://arxiv.org/abs/2504.20269v1)。来源范围为摘要及 PDF 正文第 1 节对有限分区与一般 $L^2$ 子空间的区分；不引用图表。`literature-attested` 范围为熵与预测子空间维数的关系；第 12.2 条的自主状态实现及第 12.3、12.4 条的具体常数由本卷自证。
+
+[^tcs2-error]: Jiwan Chung、Heechan Choi、Seon Joo Kim，*Rethinking State Tracking in Recurrent Models Through Error Control Dynamics*，arXiv:2605.07755v1，2026-05-08，[第 3.1、3.2 节及 Appendix D.1 至 D.3](https://arxiv.org/html/2605.07755v1)。`literature-attested` 范围是 Theorem 1 的精确仿射中性及状态依赖纠错的研究背景。本批第 14.3 条针对该固定版本的 Corollary 1 及其投影推导补条件；不据此否定其 Theorem 1、实验结果或所有仿射架构的有限时间表现。本文也不把平均误差与类别间距之比当作逐样本正确性的保证。
+
+[^tcs2-hankel]: Michael Kapralov、Cameron Musco、Kshiteej Sheth，*Sublinear Time Low-Rank Approximation of Hankel Matrices*，arXiv:2511.21418v1，2025-11-26，条目注明 SODA 2026，[第 1.2 节 Theorem 1、2](https://arxiv.org/html/2511.21418v1)。核对的定理使用半正定 Hankel 矩阵、逐项访问、带噪 Frobenius 范数保证及结构保持的低秩输出。第 15 节使用真实的半正定秩一实例，但风险针对未观测的未来响应；有限矩阵误差界本身不包含这个量词。本文未运行或修改该文算法。
+
+[^tcs2-zero-memory]: 当前源码 [D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean](https://github.com/the-omega-institute/trureturing/blob/630aac657042e88ca8bb69ee272cfcc6eb070bb8/D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean)，已读取 `eventualKernel`、`eventualKernel_is_greatest`、`zero_memory_iff_eventualKernel_eq_ker` 及核不变构件。它们给出零记忆和核不变性的既有基础；第 14 节的具体文献反例、受迫漂移及斜投影公式不因引用该源文件而自动获得 Lean 证明身份。
+

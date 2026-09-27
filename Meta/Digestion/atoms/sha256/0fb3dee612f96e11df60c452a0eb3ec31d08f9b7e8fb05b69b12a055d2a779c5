@@ -1,0 +1,12 @@
+**theorem 37.5 (Exact multiplication and the closed ideal).** For $n,m\ge0$, $\theta,\eta\in\mathbb T$, and $s,t\in\Sigma$,
+$$
+T^nT^m=T^{n+m},
+$$
+$$
+T^nP_\theta^s=P_{\theta+n\delta}^s=P_\theta^sT^n,
+$$
+$$
+P_\theta^sP_\eta^t=P_{\theta+\eta}^s.
+$$
+Thus the left factor supplies the sign in a product of two remainder operators. The set $\mathscr D$ is a closed two-sided ideal. The unit of $\mathscr E$ is the actual identity, not either zero-phase selector.[^rro37_functions]
+

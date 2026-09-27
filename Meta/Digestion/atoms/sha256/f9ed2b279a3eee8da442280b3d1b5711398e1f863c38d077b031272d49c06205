@@ -1,0 +1,6 @@
+For $0<\varepsilon<1$, define
+$$
+\tau_{L,p}(\varepsilon)=\min\{n\in\mathbb N_0:e_{L,p}(n)\le\varepsilon\},
+$$
+with value $+\infty$ if the set is empty.
+

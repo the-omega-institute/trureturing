@@ -1,0 +1,53 @@
+{
+  "target": {
+    "kind": "inline",
+    "value": "32595101390312727014851562038240600447127/78184115000808437672366395852140969600"
+  },
+  "mass_coefficient": {
+    "kind": "inline",
+    "value": "4134039329057172825003179817341632420241634581341/837324829048565465275418050749093343754055000000"
+  },
+  "signed_endpoint_checks": {
+    "kind": "inline",
+    "value": 46656
+  },
+  "all_signed_gaps_sha256": {
+    "kind": "inline",
+    "value": "6a3c6112a101186d6120e26d5be4b9961e3890ad4a2595bc894b635a2cbfa2b3"
+  },
+  "minimum_positive_signed_gap_both_endpoints": {
+    "kind": "inline",
+    "value": "66327021453770459472122158798315462843660611821/5055546137651716016757241061126601320779200000000"
+  },
+  "minimum_positive_signed_gap_lower_endpoint": {
+    "kind": "inline",
+    "value": "66327021453770459472122158798315462843660611821/5055546137651716016757241061126601320779200000000"
+  },
+  "minimum_positive_gap_controls": {
+    "path": "content/007-targets/000-J/006-minimum_positive_gap_controls.json",
+    "sha256": "d0e1a3611fe10b96c2bd4655fd96e6507ae19c26dd4cf40ae65aaf4b12485443",
+    "kind": "value"
+  },
+  "zero_controls": {
+    "path": "content/007-targets/000-J/007-zero_controls.json",
+    "sha256": "384e61f58011c6a3e50fbe1130fdf2bde4089f975f2a0cb32fd82fc8380e2344",
+    "kind": "value"
+  },
+  "zero_hamming_edges": {
+    "path": "content/007-targets/000-J/008-zero_hamming_edges.json",
+    "sha256": "cb62bb4995675155196ff53dfc8dd57d24deba2edfaefc27c03347c782c1cc89",
+    "kind": "value"
+  },
+  "maximal_cartesian_zero_boxes": {
+    "path": "content/007-targets/000-J/009-maximal_cartesian_zero_boxes.json",
+    "sha256": "49e9521b77375676c3ca4258810635fc58b2799ead595bef8169193b20d727cf",
+    "kind": "value"
+  },
+  "maximal_source_face_dimensions": {
+    "kind": "inline",
+    "value": [
+      4,
+      4
+    ]
+  }
+}
