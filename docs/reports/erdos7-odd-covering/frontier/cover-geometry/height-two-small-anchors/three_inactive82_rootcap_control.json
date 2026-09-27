@@ -1,0 +1,1280 @@
+{
+  "scope": "Necessary integer profiles and exact cap arithmetic only; source suppliers are separate ordinary proofs.",
+  "profiles": 89,
+  "capacity82_profiles": 15,
+  "rows": [
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 71,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 73,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "c": 75,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "c": 75,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2,
+        3
+      ],
+      "c": 77,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "c": 79,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "c": 77,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "c": 79,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "c": 79,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        2,
+        2,
+        2,
+        3
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "c": 70,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "c": 72,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "c": 74,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        3
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "c": 74,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        3
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        2,
+        3
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        3
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        2,
+        2
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        2,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "c": 77,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "c": 79,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1
+      ],
+      "c": 76,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2
+      ],
+      "c": 78,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        3
+      ],
+      "c": 80,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        2
+      ],
+      "c": 80,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        3
+      ],
+      "c": 82,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        2,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0
+      ],
+      "c": 77,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1
+      ],
+      "c": 79,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        2
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 4,
+      "delta": 2,
+      "k": 0,
+      "z": [
+        1,
+        1
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 73,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 75,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      "c": 77,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        2,
+        2
+      ],
+      "c": 77,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        2,
+        3
+      ],
+      "c": 79,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        3,
+        3
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "c": 79,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 0,
+      "z": [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "c": 81,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "c": 70,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "c": 72,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "c": 74,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "c": 74,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        2,
+        3
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        3,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "c": 76,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        1,
+        3
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        2,
+        2
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        2,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        2,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 78,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 80,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        1,
+        3
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 80,
+      "consumer": "B80.3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 1,
+      "z": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 82,
+      "consumer": "B80.3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "c": 77,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "c": 79,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 0,
+      "k": 2,
+      "z": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "c": 78,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "c": 80,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "c": 82,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 0,
+      "z": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "c": 82,
+      "consumer": "B80.2"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "c": 77,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "c": 79,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    },
+    {
+      "n": 5,
+      "delta": 1,
+      "k": 1,
+      "z": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "c": 81,
+      "consumer": "whole_projection_at_most3"
+    }
+  ],
+  "uniform_root_tests": [
+    {
+      "M": 74,
+      "rho": "109/6",
+      "ranges": {
+        "1": [
+          74,
+          75,
+          76
+        ],
+        "2": [
+          74,
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "3": [
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82
+        ]
+      },
+      "source_capacity": "218/3",
+      "source_capacity_enough": false,
+      "conditional_bound": "665/74"
+    },
+    {
+      "M": 75,
+      "rho": "113/6",
+      "ranges": {
+        "1": [
+          75,
+          76,
+          77
+        ],
+        "2": [
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "3": [
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81
+        ]
+      },
+      "source_capacity": "226/3",
+      "source_capacity_enough": true,
+      "conditional_bound": "674/75"
+    },
+    {
+      "M": 76,
+      "rho": "39/2",
+      "ranges": {
+        "1": [
+          76,
+          77
+        ],
+        "2": [
+          76,
+          77,
+          78
+        ],
+        "3": [
+          76,
+          77,
+          78,
+          79,
+          80
+        ]
+      },
+      "source_capacity": "78",
+      "source_capacity_enough": true,
+      "conditional_bound": "683/76"
+    }
+  ],
+  "final75_76_bound": "3572/397",
+  "maximum74_closed": false,
+  "PASS": true
+}

@@ -15,8 +15,14 @@ run_cmd do
   let env ← getEnv
   let roots := #[`LeanInformationAudit.Tests.Occurrence.JointImport.First,
     `LeanInformationAudit.Tests.Occurrence.JointImport.Second]
-  unless (InformationRegistry.entries env).size == 2 do
-    throwError "joint import lost source registrations"
+  let entries := InformationRegistry.entries env
+  unless entries.size == 2 && entries.map (·.registrationModuleName) == roots &&
+      entries.all (·.theoremName == ``shared) do
+    throwError "joint import lost or reordered repeated theorem occurrences"
+  for name in #[``shared, `JointImportMissingTheorem] do
+    unless InformationRegistry.hasTheorem env name ==
+        entries.any (fun row => row.theoremName == name) do
+      throwError "joint import membership differs from repeated ordered entries"
   let mut generated : Array Name := #[]
   for root in roots do
     let records := SealRecords.forRoot env root
