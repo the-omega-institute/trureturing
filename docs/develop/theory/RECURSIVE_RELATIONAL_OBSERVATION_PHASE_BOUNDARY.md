@@ -96849,3 +96849,692 @@ $$
 本节为普通数学证明，未进行 Lean 形式验证、数值优化或实际仪器实验。最佳常数、有限预算最优分配、不同增益或漂移、相关噪声、参考来源的物理实现，以及工作精度与仪器历时尚未在这里求解。
 
 ## 追加锚（本行以下为增补区）
+
+## 301. 消失增益下的统一取得律
+
+### 301.1 全部正增益下界上的统一结论
+
+第300节的统一常数允许依赖一个固定正增益下界。本节让增益下界也趋零，保持同一两源合同，给出对全部正增益下界一致的总调用取得律。新的估计保留两条流的系数之差，在坏校准和低坐标远尾中同时控制它们，避免逐流绝对估计留下额外的对数成本。
+
+沿用第298、300节的完整两源经典实验，固定
+$$
+\kappa_0=-\log\sqrt{3/4},\qquad C_\star=1024/225.
+$$
+已知参数满足
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star,\quad
+0<h_0\le1,\quad0<\kappa\le\kappa_0,
+$$
+$$
+k=e^{-\kappa},\qquad 0<g\le k-k^2,\qquad l=k^2+g.
+$$
+未知 $r\in[l,1]$、$h\in[h_0,1]$ 在一个批次内固定，两假设使用同一个 $(r,h)$，令 $c=k^jr$，$j=0,1$。每次任务或参考调用分别返回
+$$
+T:\ \mathrm{Bernoulli}\!\left(\frac{1-hc/C}{B}\right),\qquad
+H:\ \mathrm{Bernoulli}\!\left(\frac{1-h/C}{B}\right).
+$$
+条件于参数，新调用与过去结果独立。允许按全部过去记录、独立随机数自适应选择下一来源，最后共同决定。成本为确定最大调用总数，任务与参考每次均收费。风险为同一 $(r,h)$ 下两假设错误的平均，再取允许参数上的最坏值：
+$$
+\mathcal R(P)=\sup_{\substack{r\in[l,1]\\h\in[h_0,1]}}
+\frac{\Pr_{0,r,h}(\widehat j=1)+\Pr_{1,r,h}(\widehat j=0)}2.
+$$
+记 $N_{\min}$ 为达到 $\mathcal R(P)\le1/3$ 的最小确定最大总调用数。
+
+定义
+$$
+w(h)=C-h+h\kappa,\qquad w_0=w(h_0).
+$$
+**定理301.1（消失增益下的统一最优总调用数）。** 存在绝对正常数 $a,A$，同时独立于
+$B,C,h_0,\kappa,g$ 在上述整个范围内的变化，使
+$$
+\boxed{
+a\,\frac{w_0}{h_0^2\kappa^2}
+\left[1+\log\frac\kappa g\right]
+\le N_{\min}
+\le
+A\,\frac{w_0}{h_0^2\kappa^2}
+\left[1+\log\frac\kappa g\right].
+}
+\tag{301.1}
+$$
+$\kappa_0,C_\star$ 是已固定的常数。下文估计中的 $a,A,b$ 等正常数允许随公式改变，均独立于全部可变参数。下界覆盖全部适应性来源选择；上界使用真实固定分配 $(N_T,N_H)=(K,K)$。
+
+$h_0=0$ 不包含在定理中；若允许 $h=0$，任务与参考记录均不含假设信息，风险 $1/3$ 不可达。这里是对所有正 $h_0$ 一致的估计，不是把零增益端点也判为可达。
+
+### 301.2 全部适应性策略的统一必要界
+
+固定合法子模型 $h=h_0$。记任务币
+$$
+P_c=\mathrm{Bernoulli}\!\left(\frac{C-h_0c}{BC}\right).
+$$
+此时参考分布已知且与 $c$ 无关。任何最多 $N$ 次总调用的适应性策略，可由 $N$ 枚预取任务币与独立已知参考随机流模拟：需要任务时取下一枚任务币，需要参考时生成相应参考结果，未用任务币忽略。因而完整模拟输出是 $P_c^{\otimes N}$ 的共同后处理。这覆盖来源分配、记忆、随机化和允许停止；给下界策略免费参考并不改变实际上界的计费合同。
+
+准确的单币 chi-square 为
+$$
+\chi^2(P_c\Vert P_z)
+=
+\frac{h_0^2(c-z)^2}
+{(C-h_0z)[C(B-1)+h_0z]}.
+\tag{301.2}
+$$
+对 $z=kl,k^2,k$，有 $z\in[k^3,k]$，从而
+$$
+e^{-3\kappa_0}\kappa\le1-z\le3\kappa.
+$$
+因此
+$$
+C-h_0z=(C-h_0)+h_0(1-z)\asymp w_0
+\tag{301.3}
+$$
+的常数不依赖 $h_0$。第二因子统一位于 $[1,3C_\star+1]$。由 KL 不超过 chi-square：
+$$
+D_{\rm KL}(P_1\Vert P_{kl})\le A h_0^2\kappa^2/w_0,
+$$
+$$
+D_{\rm KL}(P_l\Vert P_{k^2})\le A h_0^2g^2/w_0,\qquad
+D_{\rm KL}(P_1\Vert P_k)\le A h_0^2\kappa^2/w_0.
+\tag{301.4}
+$$
+
+令 $f(c)$ 为共同后处理输出零的概率。成功意味着
+$f(r)-f(kr)\ge1/3$ 对全部合法 $r$ 成立。在 $r=1,k,l$ 三点相加，得到
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\le\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N}).
+\tag{301.5}
+$$
+Bretagnolle–Huber 重叠界与 Pinsker 分别给
+$$
+1-\mathrm{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\ge\tfrac12\exp[-A N h_0^2\kappa^2/w_0],
+$$
+$$
+\mathrm{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N})
+\le A h_0g\sqrt{N/w_0}.
+$$
+置
+$$
+t=\frac{N h_0^2\kappa^2}{w_0},
+$$
+得到
+$$
+g/\kappa\ge a\,t^{-1/2}e^{-At}.
+\tag{301.6}
+$$
+简单合法对 $r=1$ 又要求
+$$
+1/3\le\mathrm{TV}(P_1^{\otimes N},P_k^{\otimes N})
+\le A\sqrt t.
+$$
+故 $t$ 有统一正常数下界。取（301.6）的负对数，结合 $\log t\le t$ 及该正基线，得到
+$$
+t\ge a[1+\log(\kappa/g)].
+\tag{301.7}
+$$
+这证明定理301.1的下界。
+
+唯一的零支持端点是 $C=h_0=1$ 时 $P_1$ 的点击概率为零。它始终位于 KL 第一分布；基线分布 $P_{kl},P_k$ 的点击概率为正，所以（301.2）—（301.4）及重叠界仍有限有效。没有使用反向的无限 KL。$h_0\downarrow0$ 时分母趋向正背景，式（301.4）中的显式 $h_0^2$ 正是需要保留的信号因子。
+
+### 301.3 几何阈值与统一整数基线
+
+仍取
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\quad
+\bar\eta=\min(\eta,1/2),\quad
+D=3-\bar\eta/2,\quad
+L(c)=1+\frac{\log c}{D\kappa}.
+$$
+于是
+$$
+11/4\le D<3,\quad L(r)\le1,\quad L(kr)>0,
+$$
+$$
+L(r)-L(kr)\ge1/3+\bar\eta/18,\qquad
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g).
+\tag{301.8}
+$$
+这些关系与增益无关。
+
+令
+$$
+c_0=e^{-3\kappa_0},\quad \gamma=c_0/16,
+$$
+$$
+t_0=k^{43/16},\quad v_-=k^{21/8},\quad
+v=k^{5/2},\quad u=k^{1/2},\quad u_+=k^{1/4}.
+$$
+需要的所有阈值差
+$$
+t_0-k^{11/4},\ v_--t_0,\ v-v_-,\ k^2-v,\ u-k,\ u_+-u,\ 1-u_+
+$$
+都至少为 $\gamma\kappa$。$k^D\le k^{11/4}$。
+
+现在让低经验坐标截断随增益下界缩小：
+$$
+a_0(h_0)=c_0h_0/4.
+\tag{301.9}
+$$
+选一个固定
+$$
+0<\alpha\le
+\min\left\{\frac1{8\kappa_0},
+\frac{c_0}{32C_\star\kappa_0}\right\},
+\qquad
+d=\lfloor\alpha h_0\kappa K\rfloor.
+\tag{301.10}
+$$
+所以 $d\le K/8$。这里阶数含有 $h_0$，以保留趋零的远阈值距离。
+
+取固定 $K_\star$ 足够大，使
+$$
+K_\star\ge\max\{8C_\star/c_0,\ 6C_\star/\gamma\}.
+\tag{301.11}
+$$
+若 $K\ge K_\star/h_0$，则
+$$
+\varepsilon:=C/K\le a_0(h_0)/2,\qquad
+\varepsilon\le\gamma h_0/6.
+\tag{301.12}
+$$
+上界部分记
+$$
+t=\frac{K h_0^2\kappa^2}{w_0}.
+$$
+有
+$$
+w_0\ge h_0\kappa,\qquad
+w_0\ge\kappa,
+\tag{301.13}
+$$
+其中第二式来自
+$$
+w_0-\kappa=(C-1)+(1-h_0)(1-\kappa)\ge0.
+$$
+因此
+$$
+Kh_0\kappa=\frac{tw_0}{h_0\kappa}\ge t,\qquad
+Kh_0=\frac{tw_0}{h_0\kappa^2}\ge t/\kappa\ge t/\kappa_0.
+$$
+选固定
+$$
+A_0\ge\max\{1,2/\alpha,\kappa_0K_\star\}
+\tag{301.14}
+$$
+并要求 $t\ge A_0$，便同时保证 $d\ge1$、$d\le K/8$ 和 $K\ge K_\star/h_0$。所有整数/合法性条件由一个不依赖 $h_0$ 的基线常数满足。
+
+### 301.4 实际联合表与离散斜率
+
+取得独立的 $K$ 个任务、$K$ 个参考样本，令
+$$
+I\sim\mathrm{Bin}(K,p_x),\quad
+J\sim\mathrm{Bin}(K,p_y),\quad I\perp J,
+$$
+$$
+x=hc,\quad y=h,\quad p_z=(1-z/C)/B.
+$$
+同一经验网格上
+$$
+X_i=C(1-Bi/K),\quad Y_j=C(1-Bj/K),
+$$
+$$
+S_i=\sum_{m=1}^d\frac{B^m}{m}\frac{(i)_m}{(K)_m},
+\quad\lambda_i=\log C-S_i,\quad
+\beta_{ij}=1+\frac{\lambda_i-\lambda_j}{D\kappa}.
+\tag{301.15}
+$$
+简记 $X=X_I,Y=Y_J,\beta=\beta_{IJ}$，并在同一网格上写 $\lambda(X_i)=\lambda_i$、$\lambda(Y_j)=\lambda_j$。下降阶乘在索引不足时按零处理，所有分母非零。
+
+第300节的离散差分推导不需要固定正增益下界：
+$$
+\lambda_i-\lambda_{i+1}
+=\frac BK\sum_{s=0}^{d-1}B^s\frac{(i)_s}{(K-1)_s},
+\qquad0\le i<K.
+\tag{301.16}
+$$
+$d\ge1$ 保证严格单调，故
+$$
+\beta_{ij}>1\quad\Longleftrightarrow\quad X_i>Y_j.
+\tag{301.17}
+$$
+在正的格点 $\varepsilon<X\le Y$ 上，
+$$
+0\le\lambda(Y)-\lambda(X)
+\le\log\frac{Y-\varepsilon}{X-\varepsilon}.
+\tag{301.18}
+$$
+证明是将（301.16）除以步长 $BC/K$，用
+$$
+\frac1C\sum_{s\ge0}\left(\frac{Bi}{K-1}\right)^s
+=\frac{1-1/K}{X_i-\varepsilon}\le\frac1{X_i-\varepsilon},
+$$
+再沿格点积分。
+
+设
+$$
+G=\{Y\ge h_0/2\}.
+$$
+由（301.12）和阈值间距，在 $G$ 上
+$$
+\varepsilon(1-k^D)\le3\varepsilon\kappa
+\le\gamma h_0\kappa/2
+\le(t_0-k^D)Y,
+$$
+所以
+$$
+k^D Y+\varepsilon(1-k^D)\le t_0Y.
+\tag{301.19}
+$$
+与（301.18）结合，得到
+$$
+G,\ X/Y\ge t_0\quad\Longrightarrow\quad\beta\ge0.
+\tag{301.20}
+$$
+所用坐标至少 $t_0h_0/2\ge c_0h_0/2=2a_0(h_0)>\varepsilon$；若 $X>Y$，直接用（301.17）。
+
+实际表为
+$$
+a_{ij}=
+\begin{cases}
+0,&Y_j<h_0/2,\\
+0,&G,\ X_i/Y_j\le v,\\
+\beta_{ij},&G,\ v<X_i/Y_j<u,\\
+1,&G,\ X_i/Y_j\ge u.
+\end{cases}
+\tag{301.21}
+$$
+中区 $v>t_0$ 使 $\beta\ge0$，而 $X/Y<u<1$ 使 $\beta<1$。于是（301.21）逐项合法，包括阈值等号及非正经验坐标。
+
+斜率还给两个全局点态界：
+$$
+(\beta-1)_+\mathbf1_G
+\le\frac A{h_0\kappa}(X-Y)_+,
+\tag{301.22}
+$$
+$$
+(-\beta)_+\mathbf1_{G\cap\{X\ge a_0(h_0)\}}
+\le\frac A{h_0\kappa}(t_0Y-X)_+.
+\tag{301.23}
+$$
+前者使用 $Y-\varepsilon\ge h_0/4$。后者先由（301.18）得到
+$$
+(-\beta)_+\le
+\frac A{h_0\kappa}
+[k^D Y+\varepsilon(1-k^D)-X]_+,
+$$
+再用（301.19）。这些显式 $1/h_0$ 因子将在真实方差与真实均值间距之间抵消，不可直接乘粗略事件概率。
+
+### 301.5 近区的实际增益、方差与均值
+
+对实际 $h\in[h_0,1]$，定义
+$$
+w_h=w(h)=C-h+h\kappa,\qquad
+t_h=\frac{Kh^2\kappa^2}{w_h}.
+$$
+有
+$$
+w_h\le w_0,\qquad w_h\ge h\kappa,\qquad t_h\ge t.
+\tag{301.24}
+$$
+最后一式也可直接由 $h\ge h_0,w_h\le w_0$ 得到，不需要比较不同实验的最优值。
+
+全部真实 $c\ge kl>k^3$ 满足 $1-c\le3\kappa$，故
+$$
+C-hc\le C-h+3h\kappa\le3w_h.
+$$
+经验坐标的准确方差为
+$$
+K\,\mathrm{Var}(X)=(C-hc)[C(B-1)+hc]\le A w_h,
+$$
+参考坐标同样有 $K\,\mathrm{Var}(Y)\le A w_h$。
+
+对 $Z=X-\tau Y$ 或其相反数，$\tau\in[0,1]$，两流独立使
+$$
+\Pr(|Z-\mathbb EZ|\ge s)
+\le2\exp\!\left[-bK\frac{s^2}{w_h+s}\right].
+\tag{301.25}
+$$
+其中每个中心化加权项的绝对值至多 $4C_\star/K$。
+
+若 $\mathbb EZ\le-b_0h\kappa$，$b_0>0$ 为固定阈值常数，则
+$$
+\Pr(Z\ge0)\le A e^{-a t_h},
+$$
+$$
+\boxed{
+\mathbb E Z_+
+\le A\,\frac{w_h}{Kh\kappa}e^{-a t_h}.
+}
+\tag{301.26}
+$$
+完整积分仍使用 $\phi(s)=s^2/(w_h+s)$ 的凸性。
+因 $w_h\ge h\kappa$，在 $s_0=b_0h\kappa$ 有
+$$
+\phi(s_0)\ge a h^2\kappa^2/w_h,\qquad
+\phi'(s_0)\ge a h\kappa/w_h.
+$$
+积分指数切线即可得到（301.26），包括大超额区。
+
+乘上（301.22）、（301.23）的 $1/(h_0\kappa)$ 后，
+$$
+\frac{w_h}{K h_0h\kappa^2}
+=
+\frac1t\frac{w_h}{w_0}\frac{h_0}{h}
+\le\frac1t.
+\tag{301.27}
+$$
+因此两种近区有害期望都不超过
+$A t^{-1}e^{-a t_h}\le A e^{-at}$。
+这里使用的是同一真实对象的 $h$、方差和均值间距；若提前全部替换成 $h_0$ 的粗界，会掩盖所需抵消。
+
+### 301.6 两流系数之差的远尾点态界
+
+分别估计 $S_I,S_J$ 会引入 $\sum q^m/m\sim\log(1/h)$。改为先估计 $\lambda_I-\lambda_J$。
+
+对任意 $i,j\in\{0,\ldots,K\}$，将（301.16）在二者之间求和。每个下降阶乘随非负整数索引不减，且
+$$
+\frac{(K)_s}{(K-1)_s}
+=\frac{K}{K-s}\le\frac87
+\qquad(0\le s\le d-1,\ d\le K/8).
+$$
+于是
+$$
+\boxed{
+|\lambda_i-\lambda_j|
+\le\frac{8B}{7K}|i-j|
+\sum_{s=0}^{d-1}B^s
+\left[
+\frac{(i)_s}{(K)_s}
++\frac{(j)_s}{(K)_s}
+\right].
+}
+\tag{301.28}
+$$
+这是全经验网格上的代数界，包括负经验坐标、$i=j$ 和 $s=0$。用两个端点之和只放宽非负上界；没有对非正坐标取对数。
+
+令
+$$
+F=G^c\cup\{X<a_0(h_0)\}.
+\tag{301.29}
+$$
+由
+$$
+|\beta|\le1+\frac{|\lambda_I-\lambda_J|}{D\kappa},
+$$
+估计（301.28）的联合加权远尾即可。
+
+### 301.7 两种单流倾斜的事件距离与计数差
+
+对 $0\le s<d$，任务流倾斜恒等式为
+$$
+\mathbb E\!\left[
+\frac{(I)_s}{(K)_s}|I-J|\mathbf1_F(I,J)\right]
+=p_x^s
+\mathbb E\!\left[
+|I_s-J|\mathbf1_F(I_s,J)\right],
+\tag{301.30}
+$$
+$$
+I_s=s+\mathrm{Bin}(K-s,p_x),
+$$
+其中 $I_s,J$ 独立。参考流有对称式，$J_s=s+\mathrm{Bin}(K-s,p_y)$，且与 $I$ 独立。$s=0$ 包含在恒等式中；若某个 $p=0,s>0$，该项的权重为零，恒等式仍有效。
+
+**事件并集的两种方向均保留实际 $h$ 距离。**
+未倾斜时
+$$
+h-h_0/2\ge h/2,
+$$
+$$
+hc-a_0(h_0)
+\ge c_0h-c_0h_0/4
+\ge3c_0h/4.
+\tag{301.31}
+$$
+倾斜一个计数，只使对应经验坐标的均值下降
+$$
+BC\,s(1-p)/K\le BCd/K
+\le4C_\star\alpha h_0\kappa
+\le c_0h_0/8\le c_0h/8.
+\tag{301.32}
+$$
+所以坏校准与低任务坐标这两个事件，在任务倾斜或参考倾斜下都与各自均值相隔至少固定倍 $h$；未倾斜坐标当然保持原距离。
+
+倾斜后的随机项数量只减少，故经验坐标方差仍至多
+$A w_h/K$，单项范围仍至多 $4C_\star/K$。Bernstein 分别作用于两个事件并作并集界，给
+$$
+\boxed{
+\Pr_{\rm tilt}(F)\le
+A\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.33}
+$$
+普通未倾斜概率也满足此式。它不是用 $h_0$ 替代真实 $h$ 后的弱界。
+
+**计数差的二阶矩同时控制两个倾斜方向。**
+原始平均计数差为
+$$
+K(p_x-p_y)=\frac{Kh(1-c)}{BC}.
+$$
+任务倾斜后
+$$
+\mathbb E(I_s-J)=K(p_x-p_y)+s(1-p_x),
+$$
+参考倾斜后
+$$
+\mathbb E(I-J_s)=K(p_x-p_y)-s(1-p_y).
+\tag{301.34}
+$$
+由于 $1-c\le3\kappa$、$s\le\alpha h_0\kappa K\le\alpha h\kappa K$，两种均值的绝对值都至多 $A Kh\kappa$。两流独立，且倾斜只减少随机项，所以两种计数差的方差都至多 $A Kw_h$。
+
+将任一倾斜差记为 $M_s$。于是
+$$
+(\mathbb E M_s^2)^{1/2}
+\le A(Kh\kappa+\sqrt{Kw_h}).
+$$
+Cauchy–Schwarz 与（301.33）给
+$$
+\boxed{
+\mathbb E_{\rm tilt}[|M_s|\mathbf1_F]
+\le A(Kh\kappa+\sqrt{Kw_h})
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.35}
+$$
+指数中的常数已经吸收平方根。没有要求 $M_s$ 与 $F$ 独立；Cauchy–Schwarz 正是为保留二者的共同分布而使用。
+
+### 301.8 几何权重消去增益的对数损失
+
+将（301.35）代入（301.30），再代入（301.28）。两流的几何权重分别满足
+$$
+\sum_{s=0}^{d-1}(Bp_x)^s
+\le\frac1{1-Bp_x}=\frac C{hc}\le\frac A h,
+$$
+$$
+\sum_{s=0}^{d-1}(Bp_y)^s
+\le\frac C h\le\frac A h.
+\tag{301.36}
+$$
+这是不带 $1/s$ 的几何和；它产生的 $1/h$ 将与计数差的尺度相消。
+
+准确得到
+$$
+\mathbb E[|\lambda_I-\lambda_J|\mathbf1_F]
+\le
+A\left[
+\kappa+\frac{\sqrt{w_h}}{\sqrt K\,h}
+\right]
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+$$
+所以
+$$
+\boxed{
+\mathbb E[|\beta|\mathbf1_F]
+\le
+A\left(1+\frac1{\sqrt{t_h}}\right)
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.37}
+$$
+前因子只通过 $t_h$ 出现，在 $t_h\ge t\ge A_0$ 下统一有界；没有 $\log(1/h_0)$，也没有 $1/(h_0\kappa)$ 残留。
+
+还需把远尾指数接回统一尺度。由 $w_h\ge h\kappa$，
+$$
+\frac{Kh^2}{w_h+h}
+=
+t_h\frac{w_h}{\kappa^2(w_h+h)}
+\ge\frac{t_h}{\kappa(1+\kappa)}
+\ge\frac{t_h}{\kappa_0(1+\kappa_0)}.
+\tag{301.38}
+$$
+而 $t_h\ge t\ge A_0\ge1$，故
+$$
+\boxed{
+\mathbb E[|\beta|\mathbf1_F]\le A e^{-at}.
+}
+\tag{301.39}
+$$
+这也控制坏校准的全部加权影响和非正任务经验坐标的全部有害影响。并集 $F$ 与两种倾斜方向均已包含，没有遗漏某个交换方向的负均值。
+
+### 301.9 真实联合尾差在趋零增益下的统一性
+
+定义
+$$
+R_d(z)=\sum_{m>d}\frac{(1-z/C)^m}{m}.
+$$
+阶乘矩给准确恒等式
+$$
+\mathbb E\beta
+=L(c)+\frac{R_d(hc)-R_d(h)}{D\kappa}.
+\tag{301.40}
+$$
+而
+$$
+R_d(hc)-R_d(h)
+=\int_{hc}^{h}\frac{(1-z/C)^d}{z}\,dz
+$$
+满足
+$$
+0\le R_d(hc)-R_d(h)
+\le(-\log c)\,q_0^d,
+\qquad
+q_0=1-\frac{c_0h_0}{C_\star}\in(0,1).
+\tag{301.41}
+$$
+使用 $hc\ge c_0h\ge c_0h_0$ 和 $-\log c\le3\kappa$，得到
+$$
+0\le\mathbb E\beta-L(c)\le(3/D)q_0^d.
+$$
+
+这里不能把 $q_0<1$ 当成远离一的固定常数。改用
+$$
+-\log q_0\ge c_0h_0/C_\star,\qquad
+q_0^{-1}\le(1-c_0/C_\star)^{-1},
+$$
+以及 $d\ge\alpha h_0\kappa K-1$，得到
+$$
+q_0^d\le A\exp[-a K h_0^2\kappa].
+$$
+由（301.13）
+$$
+Kh_0^2\kappa=t\,w_0/\kappa\ge t.
+$$
+因此
+$$
+\boxed{
+0\le\mathbb E\beta-L(c)\le A e^{-at}.
+}
+\tag{301.42}
+$$
+这一步保留了联合尾差的积分结构；分别估计两个 $R_d$ 的绝对值仍会丢失正确统一性。此处只声称指数 $t$，不误称它对所有 $h$ 都有指数 $t_h$。
+
+### 301.10 四个响应区域与实际风险
+
+令 $f_K(c,h)=\mathbb E a_{IJ}$，实际表为（301.21）。
+
+第一族 $r\le u_+$：
+坏校准正损失由（301.39）控制；
+好校准低比值区 $X\le vY<Y$ 上，严格单调性给 $\beta\le1$，所以赋零的正损失至多 $\Pr(X-vY\le0)$。该线性均值至少
+$$
+h(r-v)\ge h(k^2-v)\ge\gamma h\kappa,
+$$
+由（301.26）的事件版控制。高区有害下降由（301.22）、（301.26）、（301.27）控制，因为
+$$
+\mathbb E(X-Y)=h(r-1)\le-\gamma h\kappa.
+$$
+结合 $\mathbb E\beta\ge L(r)$：
+$$
+f_K(r,h)\ge L(r)-Ae^{-at}.
+\tag{301.43}
+$$
+
+第一族 $r>u_+$：
+好校准且 $X\ge uY$ 时概率一输出零。补事件由坏校准与 $X-uY<0$ 组成，后者均值至少
+$h(u_+-u)\ge\gamma h\kappa$。坏校准普通概率可直接用（301.33），故
+$$
+f_K(r,h)\ge1-Ae^{-at}\ge L(r)-Ae^{-at}.
+\tag{301.44}
+$$
+
+第二族 $c=kr\le v_-$：
+实际输出零只可能发生在好校准且 $X>vY$ 上。其均值
+$h(c-v)\le-\gamma h\kappa$，于是
+$$
+f_K(c,h)\le Ae^{-at}\le L(c)+Ae^{-at}.
+\tag{301.45}
+$$
+
+第二族 $c=kr>v_-$：
+坏校准及 $X<a_0(h_0)$ 上的有害加权增加由（301.39）控制。
+好校准其余低区的负系数由（301.23）、（301.26）、（301.27）控制，因为
+$$
+\mathbb E(t_0Y-X)=h(t_0-c)\le-\gamma h\kappa.
+$$
+高比值区 $X/Y\ge u>t_0$ 上，$\beta\ge0$，所以赋一增加至多一个跨越概率；真实 $c\le k$ 使
+$$
+\mathbb E(X-uY)=h(c-u)\le-\gamma h\kappa.
+$$
+加入（301.42）的真实期望尾差，得到
+$$
+f_K(c,h)\le L(c)+Ae^{-at}.
+\tag{301.46}
+$$
+
+因此对全部同一真实 $r,h$ 一致有
+$$
+f_K(r,h)-f_K(kr,h)
+\ge1/3+\bar\eta/18-Ae^{-at}.
+$$
+取
+$$
+K=
+\left\lceil
+A\,\frac{w_0}{h_0^2\kappa^2}
+[1+\log(1/\bar\eta)]
+\right\rceil
+\tag{301.47}
+$$
+并使固定常数同时满足（301.14）及尾界所需基线，即可达到风险至多 $1/3$。实际总调用数为 $N=2K$。由（301.8）得到（301.1）的上界，匹配第301.2节覆盖全部策略的下界。
+
+取整每流至多增加一次，总计至多两次；目标尺度有统一正基线，故可以吸收到绝对常数。所有上界来自同一个合法概率表，没有免费获得精确 $h$、免费删除坏校准批次或把条件风险冒充无条件风险。
+
+### 301.11 端点、关系与成本的适用边界
+
+当 $h_0$ 有固定正下界时，
+$$
+C-h_0+h_0\kappa\asymp C-h_0+\kappa,\qquad h_0^{-2}=O(1),
+$$
+所以本结果与第300节一致。它补上了 $h_0\downarrow0$ 时原常数不统一的缺口。
+
+$h_0=C=1$ 给 $w_0=\kappa$，恢复
+$\Theta(\kappa^{-1}[1+\log(\kappa/g)])$。
+固定正背景并令 $h_0\downarrow0$，预算增加明确的 $h_0^{-2}$ 因子。
+$h_0,\kappa,g/\kappa$ 可以同时趋零，所有估计仍使用同一组绝对常数。
+
+没有新的最小接口维数结论。对于任意正 $h$，准确接口 $(hc,h)$ 仍恢复 $c$；但围绕同一准确关系完成本节风险判别的取得成本由（301.1）量化。这里没有另行证明任意精度参数估计的成本。准确可恢复性相同不代表完整概率几何相同；任务与参考的局部权重及信号幅度随增益改变。
+
+定理仅属于已声明的完整两源经典实验。额外物理输出可能改变必要界；未证明原量子仪器的完整统计等价，不转移其全协议下界。这里计的是总调用数，不是物理历时、局域钟、仪器实现、工作精度或档案成本。若两类币的物理来源代价不同，应保留 $(K,K)$ 向量再按实际成本加权。
+
+标准工具仍是阶乘矩倾斜、离散差分、Bernstein、Pinsker、Cauchy–Schwarz 与检验重叠不等式。新连接是（301.28）—（301.39）的两流差分远尾估计：它同时处理并集坏事件、两种倾斜方向、趋零增益和共同实现，消除了旧分流绝对估计的对数损失。这是一项仓内综合推导，不将它自动宣称为文献原创。
+
+本节为普通数学证明，未进行 Lean 形式验证、数值优化或实际仪器实验。所用检验重叠不等式可由第299节列出的根亲和系数证明取得，相关文献为 Clément L. Canonne, [*A short note on an inequality between KL and TV*](https://arxiv.org/abs/2202.07198)（2022）。最佳常数、有限预算的最优两源分配、参考物理实现、增益漂移或两流相关性、计算精度、工作存储与实际操作历时仍未在这里求解。
+
+## 追加锚（本行以下为增补区）
