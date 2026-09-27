@@ -7,6 +7,8 @@
    digest: A general instrument has no definite dark direction iff its limit effect vanishes iff Tr(rho F) = 0 for every density rho. -/
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
+import Mathlib.Analysis.InnerProductSpace.Rayleigh
+import Mathlib.Analysis.CStarAlgebra.Matrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -70,10 +72,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
         (hFpsd.dotProduct_mulVec_nonneg w)).2).symm)
     have hn_pos : ∀ w, w ≠ 0 → 0 < (n w).re := by
       intro w hw
-      have h0 := (Complex.nonneg_iff.mp (hn_nonneg w)).1
-      refine lt_of_le_of_ne h0 fun h => hw ?_
-      have : n w = 0 := by rw [hn_real w, ← h]; simp
-      exact dotProduct_star_self_eq_zero.mp this
+      exact (Complex.pos_iff.mp (dotProduct_star_self_pos_iff.mpr hw)).1
     have hscale : ∀ (t : ℝ) (w : Fin d → ℂ), q F ((t : ℂ) • w) = ((t ^ 2 : ℝ) : ℂ) * q F w ∧
         n ((t : ℂ) • w) = ((t ^ 2 : ℝ) : ℂ) * n w := by
       intro t w
@@ -84,10 +83,9 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
     -- the Rayleigh quotient attains its maximum on the unit sphere
     let R : (Fin d → ℂ) → ℝ := fun w => (q F w).re / (n w).re
     have hv0 : v ≠ 0 := by rintro rfl; simp at hv
+    let _ : Nontrivial (Fin d → ℂ) := ⟨⟨v, 0, hv0⟩⟩
     have hsphere_ne : (Metric.sphere (0 : Fin d → ℂ) 1).Nonempty :=
-      ⟨(((‖v‖⁻¹ : ℝ)) : ℂ) • v, by
-        rw [mem_sphere_zero_iff_norm, norm_smul, Complex.norm_real, Real.norm_eq_abs,
-          abs_inv, abs_norm, inv_mul_cancel₀ (norm_ne_zero_iff.mpr hv0)]⟩
+      NormedSpace.sphere_nonempty.mpr zero_le_one
     have hRcont : ContinuousOn R (Metric.sphere (0 : Fin d → ℂ) 1) := by
       have hqc : Continuous fun w : Fin d → ℂ => (q F w).re :=
         Complex.continuous_re.comp (continuous_star.dotProduct (continuous_const.matrix_mulVec continuous_id))
@@ -143,16 +141,56 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
           linarith [hbound w]
         · simp
     have hv₀P : P *ᵥ v₀ = 0 := by
-      refine (hPpsd.dotProduct_mulVec_zero_iff v₀).mp ?_
-      change q P v₀ = 0
-      rw [hqP, hn_real v₀, hq_real v₀]
-      have : (q F v₀).re = lam * (n v₀).re := by
+      have heq : (q F v₀).re = lam * (n v₀).re := by
         rw [hlam]
         simp only [R]
         field_simp [(hn_pos v₀ hv₀ne).ne']
-      rw [this]
-      push_cast
-      ring
+      let T := Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) F
+      let x₀ : EuclideanSpace ℂ (Fin d) := WithLp.toLp 2 v₀
+      have hT : IsSelfAdjoint T :=
+        hFpsd.1.isSelfAdjoint.map (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ))
+      have hTq : ∀ x : EuclideanSpace ℂ (Fin d),
+          T.reApplyInnerSelf x = (q F (WithLp.ofLp x)).re := by
+        intro x
+        rw [ContinuousLinearMap.reApplyInnerSelf_apply, inner_re_symm]
+        rw [← WithLp.toLp_ofLp (p := 2) x]
+        simp only [T, q, Matrix.toEuclideanCLM_toLp, EuclideanSpace.inner_toLp_toLp,
+          dotProduct_comm]
+        rfl
+      have hn' : ∀ x : EuclideanSpace ℂ (Fin d), (n (WithLp.ofLp x)).re = ‖x‖ ^ 2 := by
+        intro x
+        rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ)]
+        rw [← WithLp.toLp_ofLp (p := 2) x]
+        simp only [n, EuclideanSpace.inner_toLp_toLp, dotProduct_comm]
+        rfl
+      have hmaxT : IsMaxOn T.reApplyInnerSelf (Metric.sphere 0 ‖x₀‖) x₀ := by
+        intro x hx
+        change T.reApplyInnerSelf x ≤ T.reApplyInnerSelf x₀
+        rw [hTq, hTq]
+        have hxnorm : ‖x‖ = ‖x₀‖ := by
+          simpa only [mem_sphere_zero_iff_norm] using hx
+        calc
+          (q F (WithLp.ofLp x)).re ≤ lam * (n (WithLp.ofLp x)).re := hbound _
+          _ = lam * ‖x‖ ^ 2 := by rw [hn']
+          _ = lam * ‖x₀‖ ^ 2 := by rw [hxnorm]
+          _ = lam * (n v₀).re := by rw [hn' x₀]
+          _ = (q F v₀).re := heq.symm
+      have hx₀ne : x₀ ≠ 0 := by simpa only [x₀, ne_eq, WithLp.toLp_eq_zero]
+      have hray : T.rayleighQuotient x₀ = lam := by
+        change T.reApplyInnerSelf x₀ / ‖x₀‖ ^ 2 = lam
+        rw [hTq]
+        change (q F v₀).re / ‖x₀‖ ^ 2 = lam
+        rw [heq, hn' x₀]
+        field_simp [norm_ne_zero_iff.mpr hx₀ne]
+      have heig := hT.eq_smul_self_of_isLocalExtrOn (Or.inr hmaxT.localize)
+      rw [hray] at heig
+      have hFv : F *ᵥ v₀ = (lam : ℂ) • v₀ := by
+        have h := congrArg WithLp.ofLp heig
+        simp only [T, x₀, Matrix.toEuclideanCLM_toLp, WithLp.ofLp_toLp,
+          WithLp.ofLp_smul] at h
+        ext i
+        exact congrFun h i
+      simp only [P, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, hFv, sub_self]
     -- the kernel of the gap operator is killed by every click and invariant under every no-click
     let M : Submodule ℂ (Fin d → ℂ) := LinearMap.ker P.mulVecLin
     have hM : ∀ w ∈ M, (∀ i, L i *ᵥ w = 0) ∧ ∀ a, Q a *ᵥ w ∈ M := by
@@ -205,10 +243,6 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
     intro v
     rw [hlayer d, LinearMap.mem_ker, Matrix.mulVecLin_apply]
   -- (iv) testing against rank-one densities
-  have htrace : ∀ (a b : Fin d → ℂ) (A : Matrix (Fin d) (Fin d) ℂ),
-      (vecMulVec a b * A).trace = b ⬝ᵥ (A *ᵥ a) := by
-    intro a b A
-    rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm, dotProduct_mulVec]
   tfae_have 1 → 2 := hFzero
   tfae_have 2 → 1 := by
     intro hF0
@@ -242,11 +276,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
       by_cases hw : w = 0
       · rw [hw, Matrix.mulVec_zero]
       · have hnw : 0 < (star w ⬝ᵥ w).re := by
-          have h0 := (Complex.nonneg_iff.mp (dotProduct_star_self_nonneg w)).1
-          refine lt_of_le_of_ne h0 fun h => hw ?_
-          have hre : star w ⬝ᵥ w = 0 := Complex.ext (by simpa using h.symm)
-            (by simpa using ((Complex.nonneg_iff.mp (dotProduct_star_self_nonneg w)).2).symm)
-          exact dotProduct_star_self_eq_zero.mp hre
+          exact (Complex.pos_iff.mp (dotProduct_star_self_pos_iff.mpr hw)).1
         have hnwC : star w ⬝ᵥ w = ((star w ⬝ᵥ w).re : ℂ) := Complex.ext rfl
           (by simpa using ((Complex.nonneg_iff.mp (dotProduct_star_self_nonneg w)).2).symm)
         let c : ℂ := (((star w ⬝ᵥ w).re)⁻¹ : ℝ)
@@ -254,15 +284,16 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
         let ρ : Matrix (Fin d) (Fin d) ℂ := c • vecMulVec w (star w)
         have hρpsd : ρ.PosSemidef := (posSemidef_vecMulVec_self_star w).smul hc
         have hρtr : ρ.trace = 1 := by
-          have := htrace w (star w) 1
-          rw [Matrix.mul_one, Matrix.one_mulVec] at this
-          simp only [ρ, Matrix.trace_smul, this, smul_eq_mul, c]
+          simp only [ρ, Matrix.trace_smul, smul_eq_mul, c]
+          rw [Matrix.trace_vecMulVec, dotProduct_comm w (star w)]
           rw [hnwC]
           push_cast
           simp only [Complex.ofReal_re]
           exact inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hnw.ne')
         have h := hρ ρ hρpsd hρtr
-        simp only [ρ, Matrix.smul_mul, Matrix.trace_smul, htrace, smul_eq_mul] at h
+        simp only [ρ, Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul] at h
+        rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
+          dotProduct_comm w (star w ᵥ* F), ← dotProduct_mulVec] at h
         have hc0 : c ≠ 0 := Complex.ofReal_ne_zero.mpr (inv_ne_zero hnw.ne')
         exact (hFpsd.dotProduct_mulVec_zero_iff w).mp ((mul_eq_zero.mp h).resolve_left hc0)
     exact Matrix.ext fun i j => by

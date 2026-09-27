@@ -7,6 +7,7 @@
    digest: Without a definite dark direction the survival effects of a general instrument decay geometrically in blocks of d rounds. -/
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
+import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
@@ -44,8 +45,7 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
   -- degenerate dimension: every Loewner inequality holds
   have htriv : d = 0 → ∀ A B : Matrix (Fin d) (Fin d) ℂ, A ≤ B := by
     rintro rfl A B
-    rw [Matrix.le_iff, Subsingleton.elim (B - A) 0]
-    exact PosSemidef.zero
+    exact le_of_subsingleton
   -- the dual map is positive, monotone and homogeneous, and so are its iterates
   have hpos : ∀ X : Matrix (Fin d) (Fin d) ℂ, X.PosSemidef → (noClickDual Q X).PosSemidef :=
     fun X hX => posSemidef_sum _ fun a _ => hX.conjTranspose_mul_mul_same (Q a)
@@ -55,20 +55,15 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
   have hsmulA : ∀ (c : ℂ) X, noClickDual Q (c • X) = c • noClickDual Q X := by
     intro c X
     simp only [noClickDual, Matrix.mul_smul, Matrix.smul_mul, Finset.smul_sum]
-  have hmonoIt : ∀ k (X Y : Matrix (Fin d) (Fin d) ℂ), X ≤ Y →
-      (noClickDual Q)^[k] X ≤ (noClickDual Q)^[k] Y := by
-    intro k
-    induction k with
-    | zero => exact fun X Y h => h
-    | succ k ih =>
-        intro X Y h
-        rw [Function.iterate_succ_apply', Function.iterate_succ_apply', Matrix.le_iff, ← hsub]
-        exact hpos _ (Matrix.le_iff.mp (ih X Y h))
+  have hmono : Monotone (noClickDual Q) := by
+    intro X Y h
+    rw [Matrix.le_iff, ← hsub]
+    exact hpos _ (Matrix.le_iff.mp h)
+  have hmonoIt : ∀ k, Monotone (noClickDual Q)^[k] := fun k => hmono.iterate k
   have hsmulIt : ∀ k (c : ℂ) X, (noClickDual Q)^[k] (c • X) = c • (noClickDual Q)^[k] X := by
-    intro k
-    induction k with
-    | zero => intro c X; rfl
-    | succ k ih => intro c X; rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih, hsmulA]
+    intro k c X
+    exact ((show Function.Semiconj (fun Y => c • Y) (noClickDual Q) (noClickDual Q) from
+      fun Y => (hsmulA c Y).symm).iterate_right k X).symm
   have hshift : ∀ n k, survival Q (n + k) = (noClickDual Q)^[k] (survival Q n) := by
     intro n k
     induction k with
@@ -77,8 +72,7 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
   have hsmul_mono : ∀ (c : ℝ), 0 ≤ c → ∀ X Y : Matrix (Fin d) (Fin d) ℂ, X ≤ Y →
       (c : ℂ) • X ≤ (c : ℂ) • Y := by
     intro c hc X Y h
-    rw [Matrix.le_iff, ← smul_sub]
-    exact (Matrix.le_iff.mp h).smul (Complex.zero_le_real.mpr hc)
+    exact smul_le_smul_of_nonneg_left h (Complex.zero_le_real.mpr hc)
   refine ⟨fun hD => ?_, fun g hg hgle => ?_⟩
   · -- (i) a positive lower bound for the quadratic form of `I - S_d`
     have hPD : (1 - survival Q d).PosDef := (htfae.out 0 2).mp hD
@@ -118,7 +112,7 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
       | succ m ih =>
           rw [Nat.succ_mul, hshift]
           calc (noClickDual Q)^[d] (survival Q (m * d))
-              ≤ (noClickDual Q)^[d] ((((1 - g) ^ m : ℝ) : ℂ) • 1) := hmonoIt d _ _ ih
+              ≤ (noClickDual Q)^[d] ((((1 - g) ^ m : ℝ) : ℂ) • 1) := hmonoIt d ih
             _ = (((1 - g) ^ m : ℝ) : ℂ) • survival Q d := by
                 have h0 := hshift 0 d
                 rw [zero_add] at h0
@@ -130,33 +124,25 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
                 rw [smul_smul]; push_cast; ring_nf
     refine ⟨hdecay, fun ρ hρ hρtr => ?_⟩
     -- (iii) summation of the survival probabilities
-    obtain ⟨k, v, hv⟩ := Matrix.posSemidef_iff_eq_sum_vecMulVec.mp hρ
-    have htrace : ∀ (a b : Fin d → ℂ) (A : Matrix (Fin d) (Fin d) ℂ),
-        (vecMulVec a b * A).trace = b ⬝ᵥ (A *ᵥ a) := by
-      intro a b A
-      rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm, dotProduct_mulVec]
-    have htr_nonneg : ∀ Y : Matrix (Fin d) (Fin d) ℂ, Y.PosSemidef → 0 ≤ (ρ * Y).trace := by
-      intro Y hY
-      rw [hv, Finset.sum_mul, Matrix.trace_sum]
-      exact Finset.sum_nonneg fun i _ => by rw [htrace]; exact hY.dotProduct_mulVec_nonneg _
+    have htr_nonneg : ∀ Y : Matrix (Fin d) (Fin d) ℂ, Y.PosSemidef → 0 ≤ (ρ * Y).trace.re :=
+      fun Y hY => RHLinalg.trace_mul_nonneg_of_posSemidef hρ hY
     let s : ℕ → ℝ := fun N => (ρ * survival Q N).trace.re
     have hs_nonneg : ∀ N, 0 ≤ s N := fun N =>
-      (Complex.nonneg_iff.mp (htr_nonneg _ (Matrix.nonneg_iff_posSemidef.mp (hchain N).1))).1
+      htr_nonneg _ (Matrix.nonneg_iff_posSemidef.mp (hchain N).1)
     have hs_anti : Antitone s := by
       refine antitone_nat_of_succ_le fun N => ?_
       have h := htr_nonneg _ (Matrix.le_iff.mp (hchain N).2.1)
-      rw [Matrix.mul_sub, Matrix.trace_sub, Complex.nonneg_iff] at h
-      simp only [Complex.sub_re] at h
+      rw [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re] at h
       change s (N + 1) ≤ s N
-      linarith [h.1]
+      linarith
     have hs_block : ∀ m, s (m * d) ≤ (1 - g) ^ m := by
       intro m
       have h := htr_nonneg _ (Matrix.le_iff.mp (hdecay m))
       rw [Matrix.mul_sub, Matrix.trace_sub, Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul,
-        hρtr, smul_eq_mul, mul_one, Complex.nonneg_iff] at h
+        hρtr, smul_eq_mul, mul_one] at h
       simp only [Complex.sub_re, Complex.ofReal_re] at h
       change s (m * d) ≤ (1 - g) ^ m
-      linarith [h.1]
+      linarith
     by_cases hd0 : d = 0
     · have hs0 : ∀ N, s N = 0 := fun N => by
         subst hd0

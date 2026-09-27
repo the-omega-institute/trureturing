@@ -55,7 +55,7 @@ internal sealed class GeneralInstrumentNoDarkDirectionDocument : IScribeDocument
             Operatorname, Grp(F.Id("Tr")), Sp, F.Rho, Sp, Eq, Sp, D(1), Comma, Sp,
             Operatorname, Grp(F.Id("Tr")), Open, F.Rho, Sp, Eff, Close, Sp, Eq, Sp, D(0));
         return Disp(Seq(
-            complete, Sp, Land, Sp, limit, Sp, Rightarrow, RowBreak, Grp(),
+            Grp(complete, Sp, Land, Sp, limit), Sp, Rightarrow, RowBreak, Grp(),
             Sub("D", F.Id("d")), Sp, Eq, Sp, D(0), Sp, Iff, Sp, Eff, Sp, Eq, Sp, D(0), Sp, Iff, Sp,
             F.Id("I"), Minus, Sub("S", F.Id("d")), Sp, Gt, Sp, D(0), Sp, Iff, RowBreak, Grp(),
             density, Dot));

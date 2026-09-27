@@ -7,6 +7,9 @@
    digest: Survival effects of a general instrument decrease to the largest fixed effect below the identity. -/
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
+import Mathlib.Analysis.CStarAlgebra.Matrix
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+import Mathlib.Analysis.InnerProductSpace.LinearMap
 import Mathlib.Topology.Instances.Matrix
 import Mathlib.Topology.Order.MonotoneConvergence
 
@@ -16,7 +19,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
 
 open Matrix Filter Topology
-open scoped ComplexOrder MatrixOrder
+open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
 
 variable {d : ℕ} {α ι : Type} [Fintype α] [Fintype ι]
@@ -95,31 +98,26 @@ theorem survival_tendsto_maximal_fixed_effect (Q : α → Matrix (Fin d) (Fin d)
       (1 / 4 : ℂ) * (c A (e i + e j) - c A (e i - e j) - Complex.I * c A (e i + Complex.I • e j) +
         Complex.I * c A (e i - Complex.I • e j)) := by
     intro A i j
-    have hB : ∀ u w : Fin d → ℂ, c A (u + w) = c A u + star u ⬝ᵥ (A *ᵥ w) +
-        star w ⬝ᵥ (A *ᵥ u) + c A w := by
-      intro u w
-      simp only [c, Matrix.mulVec_add, star_add, dotProduct_add, add_dotProduct]
-      ring
-    have hneg : ∀ u w : Fin d → ℂ, c A (u - w) = c A u - star u ⬝ᵥ (A *ᵥ w) -
-        star w ⬝ᵥ (A *ᵥ u) + c A w := by
-      intro u w
-      simp only [c, Matrix.mulVec_sub, star_sub, dotProduct_sub, sub_dotProduct]
-      ring
-    have hsmul : ∀ (z : ℂ) (u w : Fin d → ℂ), star u ⬝ᵥ (A *ᵥ (z • w)) = z * (star u ⬝ᵥ (A *ᵥ w)) ∧
-        star (z • w) ⬝ᵥ (A *ᵥ u) = star z * (star w ⬝ᵥ (A *ᵥ u)) ∧
-        c A (z • w) = star z * z * c A w := by
-      intro z u w
-      refine ⟨?_, ?_, ?_⟩
-      · rw [Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
-      · rw [star_smul, smul_dotProduct, smul_eq_mul]
-      · simp only [c, Matrix.mulVec_smul, star_smul, dotProduct_smul, smul_dotProduct, smul_eq_mul]
-        ring
-    have hentry : star (e i) ⬝ᵥ (A *ᵥ e j) = A i j := by
-      simp [e, Matrix.mulVec_single, dotProduct, Pi.single_apply]
-    rw [hB, hneg, hB, hneg, (hsmul _ _ _).1, (hsmul _ _ _).2.1, (hsmul _ 0 _).2.2, hentry]
-    have hI : star Complex.I = -Complex.I := Complex.conj_I
-    rw [hI]
-    linear_combination (1 / 2 : ℂ) * (A i j - star (e j) ⬝ᵥ (A *ᵥ e i)) * Complex.I_sq
+    let T := Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) Aᴴ
+    have hquadE : ∀ z : Fin d → ℂ,
+        inner ℂ (T.toLinearMap (WithLp.toLp 2 z)) (WithLp.toLp 2 z) = c A z := by
+      intro z
+      change inner ℂ (T (WithLp.toLp 2 z)) (WithLp.toLp 2 z) = star z ⬝ᵥ (A *ᵥ z)
+      rw [Matrix.toEuclideanCLM_toLp, EuclideanSpace.inner_toLp_toLp,
+        Matrix.star_mulVec, conjTranspose_conjTranspose, dotProduct_comm, dotProduct_mulVec]
+    have hentryE :
+        inner ℂ (T.toLinearMap (WithLp.toLp 2 (e i))) (WithLp.toLp 2 (e j)) = A i j := by
+      change inner ℂ (T (WithLp.toLp 2 (e i))) (WithLp.toLp 2 (e j)) = _
+      rw [Matrix.toEuclideanCLM_toLp, EuclideanSpace.inner_toLp_toLp,
+        Matrix.star_mulVec, conjTranspose_conjTranspose, dotProduct_comm]
+      simp only [e, Pi.star_single, star_one, Matrix.single_one_vecMul, dotProduct_single_one]
+      rfl
+    have h := inner_map_polarization' T.toLinearMap (WithLp.toLp 2 (e i)) (WithLp.toLp 2 (e j))
+    simp only [← WithLp.toLp_smul, ← WithLp.toLp_add, ← WithLp.toLp_sub] at h
+    rw [hentryE, hquadE, hquadE, hquadE, hquadE] at h
+    rw [div_eq_mul_inv] at h
+    rw [div_eq_mul_inv, one_mul]
+    exact h.trans (mul_comm _ _)
   let F : Matrix (Fin d) (Fin d) ℂ := Matrix.of fun i j =>
     (1 / 4 : ℂ) * ((ℓ (e i + e j) : ℂ) - (ℓ (e i - e j) : ℂ) -
       Complex.I * (ℓ (e i + Complex.I • e j) : ℂ) + Complex.I * (ℓ (e i - Complex.I • e j) : ℂ))
@@ -133,24 +131,32 @@ theorem survival_tendsto_maximal_fixed_effect (Q : α → Matrix (Fin d) (Fin d)
     refine h'.congr fun N => ?_
     exact (hpol (survival Q N) i j).symm
   -- (iii) closedness of the cone of positive semidefinite matrices
-  have hclosed : ∀ (f : ℕ → Matrix (Fin d) (Fin d) ℂ) (A : Matrix (Fin d) (Fin d) ℂ),
-      Tendsto f atTop (𝓝 A) → (∀ᶠ N in atTop, (f N).PosSemidef) → A.PosSemidef := by
-    intro f A hf hpsd
-    refine PosSemidef.of_dotProduct_mulVec_nonneg ?_ fun v => ?_
-    · have hc : IsClosed {X : Matrix (Fin d) (Fin d) ℂ | Xᴴ = X} :=
-        isClosed_eq (continuous_id.matrix_conjTranspose) continuous_id
-      exact hc.mem_of_tendsto hf (hpsd.mono fun N hN => hN.1)
-    · have hcont : Continuous fun X : Matrix (Fin d) (Fin d) ℂ => star v ⬝ᵥ (X *ᵥ v) :=
-        continuous_const.dotProduct (continuous_id.matrix_mulVec continuous_const)
-      exact ge_of_tendsto ((hcont.tendsto A).comp hf)
-        (hpsd.mono fun N hN => hN.dotProduct_mulVec_nonneg v)
+  have hclosed : IsClosed {X : Matrix (Fin d) (Fin d) ℂ | X.PosSemidef} := by
+    cases isEmpty_or_nonempty (Fin d) with
+    | inl hempty =>
+        let _ := hempty
+        have hset : {X : Matrix (Fin d) (Fin d) ℂ | X.PosSemidef} = Set.univ := by
+          ext X
+          simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
+          rw [Subsingleton.elim X 0]
+          exact PosSemidef.zero
+        rw [hset]
+        exact isClosed_univ
+    | inr hnonempty =>
+        let _ := hnonempty
+        have hset : {X : Matrix (Fin d) (Fin d) ℂ | X.PosSemidef} = Set.Ici 0 := by
+          ext X
+          exact Matrix.nonneg_iff_posSemidef.symm
+        rw [hset]
+        exact isClosed_Ici
   have hFle : ∀ N, F ≤ survival Q N := by
     intro N
     rw [Matrix.le_iff]
-    exact hclosed (fun M => survival Q N - survival Q M) _ (tendsto_const_nhds.sub hlim)
+    exact hclosed.mem_of_tendsto (tendsto_const_nhds.sub hlim)
       (eventually_atTop.mpr ⟨N, fun M hM => Matrix.le_iff.mp (hanti hM)⟩)
   have hF0 : 0 ≤ F := Matrix.nonneg_iff_posSemidef.mpr
-    (hclosed _ _ hlim (Eventually.of_forall fun N => Matrix.nonneg_iff_posSemidef.mp (hnonneg N)))
+    (hclosed.mem_of_tendsto hlim
+      (Eventually.of_forall fun N => Matrix.nonneg_iff_posSemidef.mp (hnonneg N)))
   have hcontA : Continuous (noClickDual Q) := by
     unfold noClickDual
     exact continuous_finsetSum _ fun a _ =>
@@ -171,7 +177,7 @@ theorem survival_tendsto_maximal_fixed_effect (Q : α → Matrix (Fin d) (Fin d)
       | zero => exact hH1
       | succ N ih => rw [← hHfix, hS]; exact hmono _ _ ih
     rw [Matrix.le_iff]
-    exact hclosed (fun N => survival Q N - H) _ (hlim.sub tendsto_const_nhds)
+    exact hclosed.mem_of_tendsto (hlim.sub tendsto_const_nhds)
       (Eventually.of_forall fun N => Matrix.le_iff.mp (hbelow N))
   refine ⟨F, hlim, fun N => ⟨hnonneg N, hdecr N, hle1 N, hFle N⟩, hF0, hFle 0, hfix, hmax,
     fun ρ => ?_⟩
