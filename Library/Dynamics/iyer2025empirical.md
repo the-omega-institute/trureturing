@@ -6221,3 +6221,13 @@ Nico M. Temme，*Uniform Asymptotic Methods for Integrals*，[arXiv:1308.1547v1]
 第 4.1 节针对在无限条带内解析的振幅及实际极点 $t=i\alpha$，分离显式 erfc 项，并在极点穿越时处理变形或留数；一致性要求 $i\alpha$ 留在条带的严格内部。本章不将端点渐近式中的 $H-a_1$ 直接等同于该实际极点，也不凭 erfc 记号借用周期系数。本文另行证明模型特有的中心化射线界、噪声一致余项及低模混合下界；Temme 的角域与增长假设不能自动完成这些步骤。
 
 高斯变换、Cauchy 变形、Rouché/解析隐函数论和局部鞍点积分均为成熟工具。新连接的结论止于能量轮廓和有限电荷变形：总电荷等幅延拓、总尾相对控制及新零点标签仍待证明。普通理论推导不冒称 Lean 核验或全球原创；文献核对范围限于上述版本及段落。
+
+## 谱边界卷第 185 章补充：无均值上限的原始群联合 Poisson 定律
+
+对应 [谱边界卷第 185 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：第 180 章的显式系数估计在 $h=q$ 的整个信号数组上求和，并支付原始数组及参考数组的尾部；第 183 章的共同标签构造仅改变背景总数，从而产生与仍属实际分布的信号数组独立的参考背景。精确得分关系控制背景目标行质量，共同条件类别核再把多元互斥代价降为每行目标概率。所得定理对各实验自己的实际均值成立，无额外均值上限；全变差仍不自动控制非有界矩。
+
+Louis H. Y. Chen 与 Aihua Xia，*Stein's method, Palm theory and Poisson process approximation*，[arXiv:math/0410169v1](https://arxiv.org/abs/math/0410169v1)，*Annals of Probability* 32(3B), 2545–2569 (2004)，DOI [10.1214/009117904000000027](https://doi.org/10.1214/009117904000000027)。核对原始电子重印版的 Palm/Stein 恒等式、Theorem 2.3 的局部误差分解、第 3 节度量与 Theorem 3.1，以及第 5 节占据模型、Theorem 5.2 和重新分配证明。原文令 $\rho_0\equiv0$ 时给出总点数的全变差；一般归一化匹配度量不是类别向量的完整全变差。其占据模型使用独立球及低阈值事件 $X_i\le m$，不能直接成为本章依赖路径、精确双计数目标的耦合。原文引用的 Stein 因子和方差估计之未核对原始证明，不作为本文输入；提取中存在字体编码诊断，编码不明的公式片段不承担数值常数。
+
+Nickos Papadatos，*On corrected Poisson approximations for sums of independent indicators*，[arXiv:2304.10314v2](https://arxiv.org/abs/2304.10314v2)，沿用第 180 章的文献归属。其独立指示变量 Poisson 界将因子 $(1-e^{-\theta})/\theta$ 归于既有 Chen–Stein 工作，包括 Barbour–Eagleson 与 Barbour–Hall。第 185 章使用稍弱的 $\theta^{-1}\sum_i p_i^2$，并给出完整标量差分证明及共同条件 Multinomial 标记核的提升；这一经典标量界不算本章新结论。Barbour 的 arXiv:0902.0879v1 条件占据构造仍按第 183 章说明其独立球、平移 Poisson 及方差条件边界。
+
+本章新增的是原始信号全数组、只改变背景的共同实现、精确得分质量比及均值一致类别界之间的连接。它不借用点过程度量替代向量全变差，不假定路径行独立，不由单一均值接近代替联合概率证明。文献比较限于上述版本及已核对内容，不宣称全球原创、检索穷尽或 Lean 核验。

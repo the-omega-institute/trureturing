@@ -56873,3 +56873,418 @@ There is no original probability measure at a complex charge w asserted here. Th
 上述解析结论保留有限均值、实际噪声、完整低模元组和选择插入；既没有以确定性谱极限替代原数组，也没有从实正性推出复非零性。能量周期系数不能直接成为总电荷周期系数，有限切段中端点近似的表观极点也不构成原始整个函数的物理障碍。
 
 ## 追加锚（本行以下为增补区）
+
+## 185. 无均值上限的联合 Poisson 定律：信号全数组与背景条件标签
+
+第 183 章的标签增删耦合在多项式均值窗口中成立。本章进一步利用原始得分直线：它把背景行质量压到信号行质量的 $O(q/M)$ 倍。先以第 180 章的显式高维界比较整个 $q$ 行信号数组，再只对背景总数做 Poisson 化，即可保留信号与背景在同一实验中的关系。参考数组内部的类别互斥通过共同的条件标记核化为一维 Binomial–Poisson 比较，代价是每行目标概率，而不随巨大总均值相乘。
+
+因此，对固定紧区间 $J\subset D$、一或两个确定的原始完整群、原始计数截止 $K+B\le C_0\lambda$ 及每个确定大小为 $q$ 的支持，分别在实际 pair 与依赖 path 下有
+
+$$
+d_{\mathrm{TV}}\!\left(\mathcal L(C),\bigotimes_v\operatorname{Pois}(\mu_v)\right)
+\le C_{r,C_0}\left(Q^{-3}+\frac q{\sqrt M}+\frac{Q^3q^2}{M}\right)
+=O_{J,r,C_0}(Q^{-3}),\qquad \mu_v=\mathbb E C_v.
+\tag{185.1}
+$$
+
+不要求实际均值有多项式上限或正下界。原始中央群的均值可达 $q/Q^3$ 量级；本章同时覆盖这些指数大均值和趋零均值。群指标必须在观察前确定；全变差仍不足以转移非有界熵矩，同层算术同步问题 $E_2$ 也未由此解决。
+
+### 185.1 原始实验、群指标与参考行质量
+
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad\vartheta=\sum_{h\ge1}10^{-e_h},
+\quad\lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+
+All floors and compensation remain exact:
+
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s=M-q,\quad\epsilon=rq/s,\quad T=2M\lambda.
+\tag{185.2}
+$$
+
+The state space has parity classes C_+, C_- of size M. For every deterministic S contained in C_+, |S|=q, use the original kernel
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+
+The path starts uniformly and has T transitions; the pair experiment has T independent stationary adjacent pairs. These are the correctly oriented experiments of Chapter 72. Correctly reversing an original reverse observation recovers this law, as in that source. No unaligned reverse scoring or data-dependent choice of the tested groups is part of the theorem.
+
+Choose d=1 or2 distinct lawful original integer indices j_v, deterministic at the given layer and beta, with
+
+$$
+K_v=k_0+Qj_v\ge0,\quad B_v=l_0+Pj_v\ge0,\quad
+K_v+B_v\le C_0\lambda,
+\tag{185.3}
+$$
+
+where C_0>=1 is fixed (a smaller fixed cutoff is covered by replacing C_0 with1 in the bound). In particular this includes all indices on the prescribed fixed internal arcs within that cutoff. Let C_v be their complete actual score-group counts and mu_v=E_S^E C_v, E=pair or path. Chapter 175's global injectivity gives, exactly at late layers,
+
+$$
+C_v=\sum_{x\in C_+}{\bf1}\{(N_{x,+},N_{x,-})=(K_v,B_v)\}.
+$$
+
+Thus no complete-group tail is removed. Decompose C=C^{(1)}+C^{(0)} into signal and background row counts, still within the same experiment.
+
+Set nu_{1,+}=a lambda, nu_{1,-}=b lambda and nu_{0,+}=(1-epsilon)lambda/2, nu_{0,-}=(1+epsilon)lambda/2. Define the exact reference row masses
+
+$$
+f_{i,v}=e^{-\lambda}\frac{\nu_{i,+}^{K_v}\nu_{i,-}^{B_v}}{K_v!B_v!},
+\quad F_i=\sum_{v=1}^d f_{i,v},\quad
+m_v=qf_{1,v}+sf_{0,v},\quad m=\sum_vm_v.
+\tag{185.4}
+$$
+
+The final comparison uses mu_v, not these intermediate reference means.
+
+### 185.2 有限参数下的精确实际均值定理
+
+Put A=1+C_0/b and B_*=2/sqrt(ab). Use the inherited explicit function
+
+$$
+\Delta(t)=10^6(t+Tt^2)e^{10^6Tt^2}+12\,2^{-T},\qquad
+\delta_S=\Delta(3q/(2M)),\quad
+\delta_1=\Delta((1+C_0)/(2M)).
+$$
+
+**定理 185.1（原始完整群的无均值上限联合 Poisson 逼近）。** At every sufficiently late original layer, uniformly on J, the following finite bound holds:
+
+$$
+\boxed{\begin{split}
+d_{TV}\left(\mathcal L_S^{\mathcal E}(C),
+                         \bigotimes_{v=1}^d\operatorname{Pois}(\mu_v)\right)
+\le{}&\frac6\lambda+36A\lambda\sqrt s\,F_0
+       +\frac{\delta_S}{2}+\frac2{q\lambda}\\
+ &+F_1+F_0+\delta_1m.
+\end{split}}\tag{185.5}
+$$
+
+Every quantity on the right is given by the original parameters and exact count floors. TV is half the l1 distance, or the supremum over events. No group-mean upper bound is a hypothesis. The right side can be capped at one.
+
+For clarity, sufficient finite-layer conditions are q>=1, s>=2, q<=M/2, epsilon<=1/2, b lambda>=2, both arguments of Delta at most1/200, delta_1<1,
+
+$$
+\frac1{\sqrt s}\le\frac b2,\qquad
+\frac{A\lambda}{\sqrt s}+\frac{C_0\lambda}{s}\le1,
+$$
+
+the complete-group identification, and
+
+$$
+\rho_Q:=h(C_0+1)\lambda(\vartheta-P/Q)+2C_0\epsilon\lambda\le1,
+\qquad h=-\log(1-r).
+\tag{185.6}
+$$
+
+These are fulfilled by the unchanged family. Section 185.8 verifies this uniformly and derives (185.1). They are finite checks defining the bound's domain, not new parameters or altered history.
+
+### 185.3 精确得分关系约束全部实际均值
+
+The equality of the two total row intensities gives the exact identity
+
+$$
+f_{0,v}=e^{-W(K_v,B_v)}f_{1,v},\qquad
+W(K,B)=K\log\frac{1+r}{1-\epsilon}
+                  +B\log\frac{1-r}{1+\epsilon}.
+\tag{185.7}
+$$
+
+Since (K_v,B_v) lies on the ORIGINAL count line,
+
+$$
+K_v\log(1+r)+B_v\log(1-r)-z_0
+=h j_vQ(\vartheta-P/Q).
+$$
+
+Moreover |j_v|Q=|K_v-k_0|<=(C_0+1)lambda. For epsilon<=1/2, the logarithms in the compensation contribute at most2epsilon(K_v+B_v) in absolute value. Thus
+
+$$
+|W(K_v,B_v)-z_0|\le\rho_Q.
+\tag{185.8}
+$$
+
+This uses the same floors, amplitude and j_v for both masses. As Me^{-z_0}<q+1<=2q and rho_Q<=1,
+
+$$
+sf_{0,v}\le2e\,qf_{1,v}<6qf_{1,v},\qquad
+F_0\le\frac{6q}{s}F_1,\qquad m\le7qF_1.
+\tag{185.9}
+$$
+
+Also the existing maximal Poisson row-mass bound gives F_1<=B_*/lambda. Here is an explicit elementary justification for the constant. For nu>=2, at a Poisson mode k=floor(nu)>=nu/2, Stirling's lower bound k!>=sqrt(2pi k)(k/e)^k and log x<=x-1 give
+
+$$
+\max_l e^{-\nu}\nu^l/l!\le(2\pi k)^{-1/2}\le\nu^{-1/2}.
+$$
+
+Apply it to the two independent reference coordinates and sum at most two target pairs. Hence
+
+$$
+F_1\le B_*/\lambda,\qquad
+F_0\le6B_*q/(s\lambda),\qquad m\le7B_*q/\lambda.
+\tag{185.10}
+$$
+
+The order1/lambda maximal mass was already in Section 69.43; it is not a new theorem attributed here. Its useful new role is that, jointly with the exact score relation, it bounds the cost of changing only the background totals while allowing exponentially large group means.
+
+### 185.4 整个信号行数组的联合比较
+
+Let V=(N_{x,+},N_{x,-})_{x in S}, with all q signal rows retained. Let V^* have independent Poisson coordinates of means a lambda,b lambda at each such row. This comparison is for the whole array, not only a fixed number of its rows.
+
+Chapter 180, equation (180.18) proves the following explicit statement: for any finite h marked positive rows, every prescribed count tuple of total at most C h lambda has relative point error at most Delta((1+C)h/(2M)), provided that argument is <=1/200. The proof uses the exact rank-two PGF, its two-variable absolute-coefficient majorant and a positive Poisson coefficient multiplier. The only count dependence is the sum of the prescribed counts divided by T. There is no additional requirement that h be fixed or polynomial in Q. This dimension-explicit domain allows h=q.
+
+Apply that estimate with h=q and C=2. On the finite set of all tuples with total at most2q lambda, summing the pointwise errors costs at most delta_S, since the reference masses sum to at most one. No number-of-tuples factor is introduced.
+
+It remains to pay the rest of the count lattice. The total of V is the number of departures from S, namely sum_{t<T}1_{X_t in S}. Its mean is q lambda. For the path, the original two-step reset P_S^2=Pi makes the stationary state indicators independent at lags>=2. Their lag1 covariance is at most their single probability, so the variance of the total is at most3q lambda. For pairs it is at most q lambda. The total of V^* is Poisson(q lambda) with variance q lambda. Chebyshev bounds the sum of the two upper-tail probabilities beyond2q lambda by4/(q lambda). Therefore
+
+$$
+\boxed{\quad d_{TV}(\mathcal L(V),\mathcal L(V^*))
+\le\delta_S/2+2/(q\lambda).\quad}\tag{185.11}
+$$
+
+The actual row counts need not be independent. The proof pays their entire joint dependence by the exact PGF estimate and the full-array tail, not by a factorial-moment inversion. Since lambda q^2/M tends to zero, delta_S tends to zero even though q is exponentially large. This is an application of the existing dimension-explicit estimate at a new lawful scale, with its array-level tail supplied here; it is not a reproof of that estimate or an inference from fixed-order moments.
+
+### 185.5 只改变背景总数并保留共同实现
+
+Use Chapter 183's exact disintegration with classes S, C_+ minus S, C_-. Conditional on the whole class trajectory G_0,...,G_T, the concrete state labels at all times are independent uniforms in their indicated classes. The proof divides the common probability of every label path within a class trajectory by its number of label paths. Its exact four-list representation uses independent uniform label lists U_{i,sigma}, independent of the class trajectory, with the actual dependent list lengths H_{i,sigma}. This includes the shared endpoints of adjacent edges. In the pair experiment the analogous conditional statement uses its independent class-pair sequence. These statements are reused, not claimed as new.
+
+Retain both signal list lengths and both signal label lists unchanged. Introduce only two independent Poisson totals Z_{0,sigma} of means s nu_{0,sigma}, independent of all the original class and label randomness, and form the reference background array using the first Z_{0,sigma} labels of the SAME background lists. Call its group vector Y_0.
+
+There are now two exact facts:
+
+1. C^{(1)}+C^{(0)} is the original joint count vector.
+2. Y_0 is a function only of the independent Z_0 and background label lists. Therefore it is independent of the entire actual signal array V, which is a function of the class trajectory and signal lists.
+
+The second fact is independence on this constructed probability space, not an inference from zero covariance or separately obtained marginals. It removes the common-total dependence at a precisely bounded cost.
+
+Set D_0=lambda sqrt(s). The inherited variance bound is Var H_{0,sigma}<=5s nu_{0,sigma} for the path, and <=s nu_{0,sigma} for pairs. Poisson totals have their exact mean as variance. Since nu_{0,+}+nu_{0,-}=lambda, the event B that all four H_0 and Z_0 totals lie within D_0 of their respective means satisfies
+
+$$
+\Pr(B^c)\le6s\lambda/D_0^2=6/\lambda.
+\tag{185.12}
+$$
+
+We record the local bound with its present width to check the changed hypothesis. At a deterministic length n with |n-s nu|<=D_0, and 0<=k<=C_0 lambda,
+
+$$
+\frac{\Pr\{\operatorname{Bin}(n,1/s)=k\}}
+ {\Pr\{\operatorname{Pois}(\nu)=k\}}
+\le\exp\{A D_0/s+C_0\lambda/s\}\le e.
+\tag{185.13}
+$$
+
+If k>n the numerator is zero. Otherwise the exact ratio is bounded by
+exp{k log(n/(s nu))-(n-s nu)/s+k/s}, using (n)_k<=n^k and log(1-1/s)<=-1/s. Writing Delta=n/s-nu, the exponent is at most |Delta|(1+k/nu)+k/s. The lower bound nu>=b lambda, positivity n>0 from (185.6)'s domain conditions, and the displayed width condition in Section 185.2 prove (185.13). This is the existing add/delete estimate with the stated hypotheses discharged.
+
+For a plus addition, a selected row enters or leaves group v only when its preceding count pair is (K_v-1,B_v) or (K_v,B_v). The first event is empty if K_v=0. Independent signs and (185.13) bound their combined probability at the independent uniformly chosen added label by9A f_{0,v}, since the predecessor Poisson mass ratio is K_v/nu_{0,+}<=C_0/b. The minus case uses B_v/nu_{0,-}. A deletion is viewed as the reverse of adding the last independent label to the preceding list, so the same bound holds without conditioning on an already altered row count.
+
+On B, change the two background list lengths successively. There are at most4D_0 changes, and every intermediate length lies in the same band. Conditional on all totals and the class trajectory, the lists remain independent uniforms. Summing over the two target categories and all steps gives
+
+$$
+\Pr\{C^{(0)}\ne Y_0,\ B\}\le36A D_0F_0.
+$$
+
+As in Chapter 183, this is a union bound over steps under fixed lengths, without conditioning on earlier successful matches. Combining with (185.12),
+
+$$
+d_{TV}\bigl(\mathcal L(C^{(1)},C^{(0)}),
+                   \mathcal L(C^{(1)},Y_0)\bigr)
+\le6/\lambda+36A\lambda\sqrt s F_0.
+\tag{185.14}
+$$
+
+The common signal part is kept inside the coupled vector, so this is joint distributional control. By (185.10), its second term is at most216A B_* q/sqrt(s), tending to zero. Changing the width alone would not solve the signal-class problem; the full-array comparison (185.11) is the other essential step.
+
+Now replace the signal array V in the independent product (V,Y_0) by V^*. Product with the same independent law preserves its TV distance, and taking the selected group counts and summing the two classes is a deterministic map. Thus (185.11) and (185.14) compare the actual total group vector with the sum of two independent reference class vectors at cost
+
+$$
+6/\lambda+36A\lambda\sqrt s F_0+\delta_S/2+2/(q\lambda).
+\tag{185.15}
+$$
+
+In Y_0 the background row counts are independent Poisson coordinates: mixing a multinomial allocation of Z~Pois(s nu) labels gives PGF exp(nu sum_x(z_x-1)). This classical Poissonization identity was proved explicitly in Chapter 183. Both reference class vectors are consequently multinomial category counts within each class. Their category probabilities are the original f_{i,v} in (185.4), not calibrated fictitious row probabilities.
+
+### 185.6 均值一致的类别 Poisson 界
+
+We need a classical scalar estimate with the mean dependence retained. The following elementary proof supplies the scalar estimate used here; the inequality is classical.
+
+**引理 185.1（经典 Bernoulli 和的均值一致 Poisson 界）。** If W is a sum of independent Bernoulli variables with probabilities p_i and theta=sum p_i>0, then
+
+$$
+d_{TV}(\mathcal L(W),\operatorname{Pois}(\theta))
+\le\theta^{-1}\sum_i p_i^2.
+\tag{185.16}
+$$
+
+In particular dTV(Bin(N,p),Pois(Np))<=p for every N and every p. If theta=0 both laws are concentrated at zero. This is a slightly weaker version of the standard Chen–Stein bound with factor (1-e^{-theta})/theta; no novelty is claimed for (185.16).
+
+Proof. Let pi_j=e^{-theta}theta^j/j!, and take any indicator h on the nonnegative integers. Write bar h=sum pi_j h(j). Define f at positive integers by
+
+$$
+f(k+1)=\frac{\sum_{j=0}^k\pi_j(h(j)-\bar h)}{\theta\pi_k},\quad k\ge0.
+$$
+
+It solves theta f(k+1)-k f(k)=h(k)-bar h; f(0) is irrelevant. We prove |f(k+1)-f(k)|<=1/theta for k>=1. Let L=P(Pois(theta)<=k-1), R=P(Pois(theta)>=k+1), p=pi_k, and c_k=(k-theta)/(kp). Direct subtraction gives
+
+$$
+\theta\{f(k+1)-f(k)\}
+=h(k)-\bar h+c_k\sum_{j<k}\pi_j(h(j)-\bar h).
+\tag{185.17}
+$$
+
+Viewed as a linear functional of h, its coefficients off k are
+pi_j[-1+c_k(1-L)] for j<k, and pi_j[-1-c_k L] for j>k. Both are nonpositive. Indeed, if k>=theta, the only nontrivial assertion is (k-theta)R<=theta p, which follows from
+
+$$
+\sum_{j\ge k+1}(j-\theta)\pi_j=\theta p.
+$$
+
+If k<theta, the needed assertion is (theta-k)L<=kp; it follows from
+
+$$
+\sum_{j<k}(\theta-j)\pi_j=k p.
+$$
+
+In each use the terms on the relevant side have the appropriate sign and magnitude. The coefficient at k equals R+(theta/k)L, is nonnegative, and is at most one. For k>=theta this last claim follows from theta/k<=1; for k<theta it follows from (theta-k)L<=kp. All coefficients sum to zero, since a constant h makes (185.17) vanish. Therefore its absolute value is at most one for every indicator h, proving the asserted difference bound.
+
+Let W_i=W-I_i. Independence gives
+
+$$
+\begin{split}
+\mathbb E h(W)-\bar h
+&=\mathbb E\{\theta f(W+1)-W f(W)\}\\
+&=\sum_i p_i^2\,\mathbb E\{f(W_i+2)-f(W_i+1)\}.
+\end{split}
+$$
+
+Use the difference bound and take the supremum over h. All expectations involving W are finite sums, so no unbounded-series interchange is needed. QED.
+
+Now consider N independent categorical rows with probabilities f_1,...,f_d for the distinct target categories and 1-F for zero, F=sum f_v<=1. Their total number of selected rows is Bin(N,F). Conditional on that total being k, their category count vector is Multinomial(k; f_1/F,...,f_d/F). Independent Poisson coordinates of means Nf_v have a Pois(NF) total and EXACTLY the same conditional category kernel for every k. Consequently the TV distance of the vectors equals the TV distance of the totals: one inequality is contraction by the common kernel, the other is contraction by taking the total. By (185.16),
+
+$$
+d_{TV}\bigl(\operatorname{MultinomialCategories}(N;f_v),
+                           \bigotimes_v\operatorname{Pois}(Nf_v)\bigr)
+\le F.
+\tag{185.18}
+$$
+
+At F=0 the statement is immediate. This controls within-row categorical exclusion jointly for arbitrarily large NF. It is not obtained by multiplying separately attained marginal estimates. Apply it once with N=q,F=F_1 and once with N=s,F=F_0 to the independent reference classes from Section 185.5. Product coupling and summation yield cost at most F_1+F_0, with independent final Poisson coordinates of means m_v.
+
+### 185.7 精确实际均值校准与定理证明
+
+The existing Chapter 180 one-row estimate, now at the fixed count bound C_0, yields
+
+$$
+|\mu_v-m_v|\le\delta_1m_v.
+\tag{185.19}
+$$
+
+The complete-group equality from Chapter 175 makes this an exact full-group comparison. It holds separately for the actual pair and path law. No equality of their actual means is assumed.
+
+For nonnegative x,y, couple Poisson(x) and Poisson(y) by a shared Poisson(min(x,y)) variable and an independent remainder. Their TV distance is at most |x-y|. Coordinatewise application pays at most sum_v|mu_v-m_v|<=delta_1m. Adding this to (185.15) and the F_1+F_0 cost of (185.18) proves (185.5).
+
+By (185.10), the fully parameter-only consequence is
+
+$$
+\begin{split}
+d_{TV}\le{}&\frac{6+B_*}{\lambda}
+ +216AB_*\frac q{\sqrt s}
+ +\frac{\delta_S}{2}+\frac2{q\lambda}\\
+ &+\frac{6B_*q}{s\lambda}
+ +\frac{7B_*\delta_1q}{\lambda}.
+\end{split}\tag{185.20}
+$$
+
+Zero means are harmless: a nonnegative count with zero mean vanishes almost surely. Under delta_1<1, (185.19) also forces its reference mean to vanish. The scalar/category proof explicitly includes zero category probability. Neither (185.5) nor (185.20) divides by an actual group mean. Very small means and enormous means are therefore included in the same statement.
+
+### 185.8 原始尺度一致性与实际指数大均值
+
+The unchanged floors give uniformly for beta in J=[beta_0,beta_1] inside D,
+
+$$
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O(1),\quad
+z_0=\phi\lambda+O(1).
+\tag{185.21}
+$$
+
+The original threshold beta_*>1/2 is established at Section 68.25. Thus
+
+$$
+\gamma_J=\phi\left(1-\frac1{2\beta_0}\right)>0,\qquad
+q/\sqrt M\le C_{J,r}e^{-\gamma_J\lambda},\qquad
+q^2/M\le C_{J,r}e^{-2\gamma_J\lambda}.
+\tag{185.22}
+$$
+
+Also q grows exponentially, s~M, epsilon tends exponentially to zero, and the original decimal tail satisfies 0<vartheta-P/Q<2*10^{-Q^5}. All finite-layer conditions of Section 185.2 follow uniformly. Since T=2M lambda, the explicit Delta formula gives
+
+$$
+\delta_S=O(\lambda q^2/M),\qquad
+\delta_1=O_{C_0}(\lambda/M).
+$$
+
+Use these in (185.20); terms q/(s lambda), delta_1 q/lambda and1/(q lambda) are absorbed by (185.1)'s right side. Equations (185.21)–(185.22) prove the uniform O(Q^{-3}) conclusion. This covers all actually attained means on those arcs without requiring them to satisfy a new cap. The fact that the family itself has maximal means of order q/lambda is a derived property, not an extra hypothesis.
+
+Here are explicit lawful large-mean examples. When the fixed internal arc includes u=0 and C_0>=1, take j=0. The original floors put K_0=a lambda+O(1), B_0=b lambda+O(1), so Stirling's formula gives
+
+$$
+f_{1,0}\sim(2\pi\lambda\sqrt{ab})^{-1}.
+$$
+
+By (185.8), rho_Q tends to zero; moreover Me^{-z_0}/q tends to one and s/M tends to one. Hence sf_{0,0}/(qf_{1,0}) tends to one, and (185.19) gives the ACTUAL mean
+
+$$
+\mu_0^{\mathcal E}\sim\frac q{\pi\lambda\sqrt{ab}}.
+\tag{185.23}
+$$
+
+This holds for each experiment and is exponentially large uniformly on J. If C_0>1 and the arc includes a neighborhood of zero, the distinct pair j=0,1 gives the same leading mean for each coordinate: at j=1 the count deviations are O(Q)=o(sqrt(lambda)), so the two Stirling exponents change by O(Q^2/lambda)=O(Q^{-1}) and their prefactors by o(1). The finite-vector estimate applies to them jointly.
+
+The example is not limited to arcs that contain the central point. Fix beta and any interior u in a chosen original arc for which the original rate
+
+$$
+I(u)=(a+u)\log\frac{a+u}{a}
+ +(b+\vartheta u)\log\frac{b+\vartheta u}{b}
+ -(1+\vartheta)u
+$$
+
+satisfies I(u)<c_q:=phi(1/beta-1), with strict room inside the count cutoff and positivity domain. Set j_n=floor(u Q_n^2). Then K_{j_n}/lambda tends to a+u and B_{j_n}/lambda tends to b+vartheta u. More precisely the errors are O(Q^{-2}) plus the original decimal-tail error. Stirling in a compact positive coordinate neighborhood yields
+
+$$
+\log f_{1,j_n}=-\lambda I(u)+O(Q+\log\lambda),\qquad
+\log\mu_{j_n}^{\mathcal E}
+=\lambda(c_q-I(u))+O(Q+\log\lambda).
+\tag{185.24}
+$$
+
+Here (185.7)–(185.9), with rho_Q=o(1), give the factor2 mixture, and (185.19) supplies the actual-law comparison. The deterministic original indices j_n and j_n+1 are both lawful and have the same positive limiting log-mean divided by lambda. Every fixed open neighborhood of an internal rate root contains inward points with I(u)<c_q, by the strict convexity already established at Section 68.24. Thus the theorem reaches attained exponential means even in inward parts of the usual root neighborhoods.
+
+These count-line indices also belong to the original score window at late layers, not an enlarged experiment. The Section 68.23 identification can be used directly. Alternatively, (185.8) and tau=log(M/q)=z_0+O(1/q) show that the score error is O(epsilon lambda+lambda(vartheta-P/Q)+1/q). Dividing by the original width sqrt(lambda/q) gives terms tending to zero: epsilon sqrt(q lambda)=O(q^{3/2}sqrt(lambda)/M) tends to zero by (185.22), and the other two terms do also. Every chosen complete group remains defined by its original exact score and count floors.
+
+The argument does not infer a failure from an enormous mean. Near the typical signal counts the log-mass derivatives in the two Poisson intensities are K/nu_+-1 and B/nu_--1, which are O(1/lambda) at j=0. Our proof does not replace that behavior by a worst-case add/delete cost on the signal class. It controls the whole signal array first, then pays categorical exclusion through (185.18). On the background class the exact score ratio supplies a different smallness factor. All common-total dependence is retained until the joint coupling (185.14). No independent-marginal variance calculation is used as a distributional proof.
+
+
+### 185.9 结论的适用边界
+
+本章保留同一原始支持、路径或 pair 实验、精确取整、补偿得分和计数直线。独立数组与额外 Poisson 总数只存在于比较概率空间中；原始边缘律不变。比较先处理整个信号数组及其尾部，再令参考背景与仍为实际分布的信号独立，最后校准到各实验自己的精确均值。它不由边缘方差或固定阶矩推出联合分布。
+
+结论不涵盖从已观察数据中选择群、任意离开原计数直线的目标、趋向 $1/2$ 的参数边界或任意增长维数。指数大均值的实际构造与 $E_2$ 所要求的无限多公共楼层上的双正有界均值属于不同断言；本章既不证明也不反驳后者。第 180、183 章各自已有估计保留原范围。
+
+## 追加锚（本行以下为增补区）
