@@ -1,0 +1,22 @@
+{
+  "input_sha256": "1fbabeeb4ce5f9bdc630656d06c9b68bcde5a5dc03e9cbda4eb3b3fe1b9f8a8e",
+  "literal_integer_hole": 64366265250,
+  "margin_above_five_forty_eighths": "11/2352",
+  "margin_above_one_third": "11/735",
+  "minimum_FS": "256/735",
+  "minimum_numerator": 3628800,
+  "minimum_survivors": [
+    19802
+  ],
+  "numeric_survivor_score_sha256": "c344b00770c20a6045acc3d8fda78ad8bdd4ca3314c6945cec962e9b62e07fb6",
+  "original_count": 452,
+  "original_period": 481225870125,
+  "outside_period": 46189,
+  "outside_survivor_count": 34560,
+  "pointwise_FH_lower_from_FS": "16/147",
+  "retained_count": 28,
+  "retained_period": 10418625,
+  "scope": "A noncover refutes an unconditional low-excess supplier; Erd\u0151s #7 remains open.",
+  "status": "PASS",
+  "weight_denominator": 10418625
+}
