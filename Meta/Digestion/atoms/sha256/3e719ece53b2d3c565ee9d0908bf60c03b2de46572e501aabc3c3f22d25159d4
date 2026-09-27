@@ -1,0 +1,7 @@
+**定义 19.1（最终点击效果与剩余尾项）。** 对第 18 节的仪器，令
+
+$$
+R=I-F,\qquad R_n=S_n-F=\mathcal A^n(R),
+\qquad r_\rho=\operatorname{Tr}(\rho R).
+$$
+
