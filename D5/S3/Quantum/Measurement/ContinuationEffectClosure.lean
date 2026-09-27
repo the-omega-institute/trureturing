@@ -7,6 +7,7 @@
    digest: The continuation effect spaces of finitely many Kraus branches close within d squared minus r steps to the least invariant space. -/
 
 import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
+import D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate
 import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
@@ -104,27 +105,19 @@ theorem continuationSpace_closure (K : (j : J) → κ j → Matrix (Fin d) (Fin 
   have hr_le : r ≤ d ^ 2 := hdim 0
   set N := d ^ 2 - r with hN
   have hstable : Z (N + 1) = Z N := by
-    by_contra hne
-    have hstrict : ∀ k, k ≤ N → Z (k + 1) ≠ Z k := by
-      intro k hk hk'
-      apply hne
-      have h1 := hprop k hk' (N + 1 - k)
-      have h2 := hprop k hk' (N - k)
-      rw [show k + (N + 1 - k) = N + 1 by omega] at h1
-      rw [show k + (N - k) = N by omega] at h2
-      rw [h1, h2]
-    have hgrow : ∀ k, k ≤ N + 1 → r + k ≤ Module.finrank ℝ (Z k) := by
-      intro k hk
-      induction k with
-      | zero => exact le_of_eq (by rw [add_zero, hr]; rfl)
-      | succ k ih =>
-          have hlt : Z k < Z (k + 1) := lt_of_le_of_ne (hstep k) (hstrict k (by omega)).symm
-          have := Submodule.finrank_lt_finrank_of_lt hlt
-          have := ih (by omega)
-          omega
-    have := hgrow (N + 1) le_rfl
-    have := hdim (N + 1)
-    omega
+    -- the ranks are monotone and bounded by `d²`, so some step among the first `d² - r` is flat
+    obtain ⟨m, hm, hmeq⟩ :=
+      D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate.bounded_monotone_has_equal_step
+        (fun n => Module.finrank ℝ (Z n)) (d ^ 2)
+        (fun a b hab => Submodule.finrank_mono (hmono hab)) hdim
+    have hm' : m ≤ N := hm
+    have hflat : Z (m + 1) = Z m :=
+      (Submodule.eq_of_le_of_finrank_eq (hstep m) hmeq).symm
+    have h1 := hprop m hflat (N + 1 - m)
+    have h2 := hprop m hflat (N - m)
+    rw [show m + (N + 1 - m) = N + 1 by omega] at h1
+    rw [show m + (N - m) = N by omega] at h2
+    rw [h1, h2]
   refine ⟨fun n hn => ?_, hmono (Nat.zero_le N), hinv N hstable, fun W hW hWinv => ?_⟩
   · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hn
     exact hprop N hstable m
