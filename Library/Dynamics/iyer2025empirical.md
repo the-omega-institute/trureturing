@@ -5708,3 +5708,19 @@ Gergő Nemes，*An explicit formula for the coefficients in Laplace’s method*�
 本章的剖面随 $Q$ 变化，$h$ 未必趋于无穷，且另一内部阱同时贡献质量，因此不直接套用该固定端点定理。以 $x=hr$ 归一化后，本章证明共同包络及 $O(t^{-4})$ 的边界积分余项；$\int_0^\infty x^2e^{-x}\,dx=2$ 与由此得到的端点系数属于经典计算。原 PDF 为 206,643 字节，SHA256 `6d828445701d81369f3cce02747838ada8a7b159b16452619964ebc83d698840`。抽取存在字体编码警告；后续势多项式结果及所引书籍中的完整渐近证明未作为本章的定理级替代。
 
 第 148 章的仓内推导是变化剖面的精确导数控制、同一实倾斜上的 $O(\delta^4)$ 非中心相对密度比较、相对于两个小区域各自质量的计数与完整选择误差，以及不求导未知计数余项的等质量外场反演。Borgs–Kotecký 的轮廓／Peierls 和格子条件未在本模型中建立；Temme 与 Fernandez–Spence–Fokas 的适用边界保留第 144、146 章的说明。Siripraparat–Neammanee 的异质 Bernoulli 总方差局部界与 Arratia–Goldstein–Langholz 的条件乘积表示按第 143 章使用。有限检索不证明全局原创性；以上是普通数学推导，尚未经过 Lean 形式化认证。
+
+## 谱边界第 149 章补充：可调有理弧与细化对偶网格
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 149 章对每个固定 $c>0$，在原始确定支持上一致地证明 $\rho\asymp e^{-cQ^2}$ 下完整选择计数后验的加权方差熵极限；pair 与 path 分别使用其实际数据律。固定宏观占据块提供至少 $aQ^2$ 个因子，弧外收缩选为 $\eta=\exp[-(c+2)/a]$。分母截止 $B_\eta$ 与公共倍数 $D$ 在取 $Q\to\infty$ 前固定；全部有理弧保留精确 Gauss 权重与外部二次相位，细化对偶网格的逐坐标和为 $1+O_D(e^{-c_DQ^{3600}})$，因此没有 $D^{|J|}$ 损失。
+
+Francesco Cellarosi、Jens Marklof，*Quadratic Weyl Sums, Automorphic Functions, and Invariance Principles*，[arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)。已核对原始 TeX 的上半平面 Jacobi 恒等式、Schwartz 权重和式、含两个移位的广义 theta 函数、变换公式、尖点展开及其证明，以及不变性原理的条件。本文一维因子对应 $z=2\theta+i/(2\pi d)$；复线性变量的虚部承载实均值，实部承载经验线性相位，并明确除去 Gaussian 归一化。有限有理剩余类分解后再作 Gaussian Fourier 积分，是确定性恒等式的专门化；(149.38)–(149.46) 所需两阶实温度导数和变化数组界仍由本章逐项推导。
+
+该文的不变性原理要求实参数具有绝对连续分布，并对固定系数施加指定的无理性条件。原始计数生成的经验中心没有由本文证明这种分布，故不引入其随机过程极限、相位均匀性或尾分布。尖截断变换的条件收敛问题也不替代这里逐个有限 $Q$ 的绝对收敛 Gaussian 和。所核对原始归档 8,052,728 字节，SHA256 `6055e60c27e27a45875eba07fce12b1663380b3caf3d70e15a7de7d6096843ea`；主 TeX 179,340 字节，SHA256 `4cb9a9ee0368997043e15bb4911c825c887cb3156e24c62eff2d9ea3ecfd1fd7`。本次核对的是上述确定性接口及相关原文条件，不宣称重新检查整篇所有定理。
+
+Kai-Min Chung、Daniel Dadush、Feng-Hao Liu、Chris Peikert，*On the Lattice Smoothing Parameter Problem*，[arXiv:1412.7979v1](https://arxiv.org/abs/1412.7979v1)。已核对 Gaussian 质量与对偶平滑参数定义、小质量缩放引理及证明、对称平移界、Voronoi 刻画及证明。平滑参数以非零对偶晶格 Gaussian 质量不超过 $\varepsilon$ 定义；缩放引理先要求原质量小于 $\varepsilon<1$，然后用非负项的幂和不等式。Voronoi 刻画适用于 Euclidean 晶格与对称铺砌单元，使用半空间 Gaussian 尾及对称平移不等式。
+
+这些条件不直接适用于从完整计数元组到标量 $T$ 的非线性映射、复二次核或条件惊异标记。第 149 章先精确分解并作 Poisson 变换，绝对误差才成为矩形对偶网格上的正 Gaussian 和；(149.40) 直接验证精度，(149.10)、(149.41) 以正 Poisson 系数控制所有平移。未将无移位的非零质量前提静默用于任意移位网格，也未从“噪声很小”类比推出后验结论。
+
+该版本原始 TeX 的 Voronoi 半空间定义将内积 `pr(y,y)` 误写为 `pr(y,x)`；其后证明使用正确半空间。源文还保留摘要 $\varepsilon$ 范围的编辑问题、Gaussian 尾参考文献待补注记及其他部分的重复标签。这些均不作为已验证前提。原始归档 40,685 字节，SHA256 `1a8974d60c0f6d6a0ba958f76788d8c612ef15b42c5c76facc3ead3b96c9a5a8`；提取 TeX 139,562 字节，SHA256 `20020f403a37eed90836cd697663c2ad159bb4f71b0c625ab518151658732cfd`。不引用未核对的复杂性结论或数值图例。
+
+模型内组合承接第 68 章的相对行律、第 120、147 章的条件槽位律、第 132 章的固定偏移 Bernoulli 比、第 134 章的互素投影、第 138 章的共享有理值，以及第 101、111、142、145、147 章的带标记完整后验回接。新关系是将任意固定收缩要求、有限有理共振和同一数组的算术能量控制组合起来，同时保留两阶实导数、有符号矩、条件均值平方和全部输出。没有独立经验相位、整后验 Gaussian 替换或复 theta 无零点假设。文献方法归属与仓内综合推导分列；增长的 $c_Q$、必要阈值和零噪声仍未解决，有限搜索不证明全球原创性。
