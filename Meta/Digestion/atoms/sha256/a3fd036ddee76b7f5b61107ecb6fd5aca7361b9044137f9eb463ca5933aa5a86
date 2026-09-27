@@ -1,0 +1,15 @@
+**定义 717.2（对偶可行点与归一化桥梁）。** 分别以非负变量 $\lambda_S,v_i,\alpha,\beta$ 对应上述四类约束。按源码的对偶定义，条件成为
+
+$$
+\sum_S\lambda_S\ge1,\qquad q_i-v_i-\alpha+\beta\le0,\qquad
+q_i=\sum_{S\ni i}\lambda_S,
+$$
+
+对偶最小化 $L\sum_i v_i+E(\alpha-\beta)$。任取 $S_0\in\mathcal F$，取 $\lambda_{S_0}=1$、$v_i=\mathbf1_{S_0}(i)$、$\alpha=\beta=0$，便得到具体有限可行点，值为 $pL$。
+
+这里原始对偶只要求权重和至少一。为接到第 705 节的概率权重，令 $h=\sum_S\lambda_S\ge1$，将全部对偶变量除以 $h$；约束仍满足，权重和变为一。对偶目标在任意可行点非负：由 $q_i\le v_i+\alpha-\beta$ 对原始可行 $u$ 求和并使用 $u_i\le L$，可得 $L\sum_i v_i+E(\alpha-\beta)\ge\sum_S\lambda_Su(S)\ge0$。所以归一化不会增大目标。
+
+归一化后令 $\theta=\alpha-\beta$，给定 $q,\theta$ 时最小可行 $v_i=(q_i-\theta)_+$。任意实 $\theta$ 都可用非负 $\alpha,\beta$ 表示。若 $\theta<0$，目标为 $Lp+(E-nL)\theta$，将它移到零不会增大目标；若 $\theta>1$，目标为 $E\theta$，移到一也不会增大。因此可限制 $0\le\theta\le1$，对偶最小值正是 $\min_qT_{E,L}(q)$。这补全从项目接口到第 705—706 节的符号、归一化与阈值桥梁。
+
+该源码注明承接 Martin Dvořák 与 Vladimir Kolmogorov 相关工作的 `madvorak/duality`，源修订为 `7e6502ab40b9ea7d42bd2eadc115b6a8b653392f`。这里将有限强对偶作为成熟结果使用，没有把这一一般原理申报成 MMM 新定理。本批只有接口与普通推导阅读，没有编译这份实例，也没有取得当前内核或公理闭包核验。
+

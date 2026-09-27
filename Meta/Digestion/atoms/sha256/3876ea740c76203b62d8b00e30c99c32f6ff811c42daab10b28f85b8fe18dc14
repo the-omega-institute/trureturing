@@ -1,0 +1,4 @@
+**定义 775.1（数学来源及项目接口范围）。** 非负秩、概率混合、条件独立、矩展开、信息处理与张量识别均为成熟数学成分。本批读取 Gillis 与 Glineur 的 *On the Geometric Interpretation of the Nonnegative Rank*，[arXiv:1009.0880v1](https://arxiv.org/abs/1009.0880v1)的引言、第 2 节定义、第 2.1 节定理 1 及其证明，并读到第 2.2.1 节定理 2 与后续几何说明开头；使用其普通／受限非负秩区分与嵌套多面体关系，不据局部阅读宣称完成全文或掌握任意秩的算法。PDF 提取出现字体编码警告，正文可读的定义与公式结合本批独立推导使用，未依赖未辨明字符作额外结论。Allman、Matias、Rhodes 的读取范围与 Kruskal 条件已在第 768 节给出；未直接重读 Kruskal 原始论文，故明确通过该文转述。
+
+项目接口包括 LatentAdequacyCriterion、AnswerabilityCriterion、JointFaithfulnessLeibnizCriterion、MarkovDataProcessing 与 MixtureEntropyBracket。它们分别承担确定目标恢复、观察纤维、联合点分离、有限 Markov 信息处理和混合熵关系；本批给出对象与参数对应，没有把任一个接口冒称为非负秩或神学共同来源定理。源码阅读不是当前内核或公理闭包核验。本批没有新增 Lean、构建、测试、消化、求解器、枚举或数值实验。
+

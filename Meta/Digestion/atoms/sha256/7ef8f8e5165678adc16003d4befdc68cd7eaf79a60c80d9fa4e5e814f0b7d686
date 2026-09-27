@@ -1,0 +1,22 @@
+**定义 841.1（固定观察，允许全部有限来源）。** 固定 $0<\rho<1$，令
+
+$$
+P_\rho(x,y)=\frac14(1+\rho xy),\qquad x,y\in\{-1,1\}.
+$$
+
+一个表示由有限正权重 $\lambda_h$ 与两个条件均值 $a_h,b_h\in[-1,1]$ 构成，给定 $H=h$ 后两观察独立，条件律为 $q_{a_h}\otimes q_{b_h}$，其中 $q_z(x)=(1+zx)/2$。它准确生成 $P_\rho$ 当且仅当
+
+$$
+\sum_h\lambda_h=1,\qquad
+\mathbb E a_H=\mathbb E b_H=0,\qquad
+\mathbb E[a_Hb_H]=\rho.
+$$
+
+期望均按同一组 $\lambda$ 计算。令 $H(\lambda)=-\sum_h\lambda_h\log\lambda_h$，全部对数为自然对数，并定义
+
+$$
+F_\rho(B)=\inf\{I(H;X,Y):\text{上述准确表示且 }H(\lambda)\le B\}.
+$$
+
+空可行集的下确界约定为 $+\infty$。先用下确界定义，随后以明确构造证明达到，避免在潜在状态数尚未统一限制时预设最小值存在。沿用 $g(z)=h_2((1+z)/2)$、$f(t)=g(\sqrt t)$，以及 $H_\rho=H(P_\rho)=\log2+h_2((1-\rho)/2)$。第 830 节已给出 $f$ 在 $[0,1]$ 上严格凹且严格递减的普通证明。
+

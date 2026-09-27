@@ -1,0 +1,17 @@
+**命题 533.3（较宽预算区间的达到）。** 若 $\max(\beta,\eta_0)\le\eta\le\lambda$，取 $R=R_*$，并令
+
+$$
+T_S(\circ)=b,\qquad
+T_S(x)=
+\begin{cases}
+\varepsilon+D/p+\dfrac{\lambda-\eta}{(1-r)p},&x\in S,\\[2mm]
+\varepsilon-\dfrac{\lambda-\eta}{(1-r)q},&x\notin S.
+\end{cases}
+$$
+
+则该生成器合法，且 $m(T)=\eta$、$j(T)=2\lambda-\eta$。
+
+证明：子集外质量非负，恰由 $\lambda-\eta\le(1-r)q\varepsilon$ 保证，而这等价于 $\eta\ge\eta_0$。子集内增加与子集外减少的总量相同，公共质量不变，所以归一化成立；全部非负后，每个坐标自然不超过一。
+
+擦除分支相对目标的误差为 $\lambda$，其超额位于子集外。揭示分支从子集外向内搬移总质量 $(\lambda-\eta)/(1-r)$，加权后的联合贡献为 $\lambda-\eta$。新增边缘中这两种差部分抵消，剩余子集外超额恰为 $\eta$，因此 $m=\eta$。联合仍保留分支，两个贡献相加为 $2\lambda-\eta$。证毕。
+

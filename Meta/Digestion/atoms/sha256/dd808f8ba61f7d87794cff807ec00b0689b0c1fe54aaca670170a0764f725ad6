@@ -1,0 +1,19 @@
+**命题 851.1（最优缺口的四项分解）。** 固定 $B\in[G_\rho,\log2]$，取一个预算内准确表示，令 $\delta=I_{\rm old}-F_\rho(B)\ge0$。先按第 842 节得到 $z$，再按第 844—845 节取 $m,q,u,w,L_m$。置
+
+$$
+\begin{aligned}
+A&=I_{\rm old}-I_{\rm new},\\
+J&=L_m(u)-\mathbb E g(z_H),\\
+D&=K_\rho(q)-L_m(u),\\
+E&=K_\rho(\pi_B)-K_\rho(q).
+\end{aligned}
+$$
+
+则四项均非负，且
+
+$$
+\delta=A+2J+2D+2E.
+$$
+
+证明：各项非负分别来自第 842、845、845、846—847 节；将定义相加，内部项消去，余下 $I_{\rm old}-H_\rho+2K_\rho(\pi_B)$，就是所示缺口。证毕。
+

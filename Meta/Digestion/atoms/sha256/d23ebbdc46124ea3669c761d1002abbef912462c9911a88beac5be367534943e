@@ -1,0 +1,48 @@
+**命题 583.1（固定共同分布后的完整解）。** 在定义 582.2 中取 $0<r<1$，固定 $R$，对每个状态置
+
+$$
+q_i=(1-r)Q_i,\quad B_i=r(R-Q_i),\quad
+ a_i=r\operatorname{TV}(R,Q_i),\quad
+ \mu_i=\sum_{x\in X}(rR_x-Q_i(x))_+.
+$$
+
+其中 $(t)_+=\max(t,0)$。存在揭示行使全部 $m_i\le\eta$，当且仅当全部 $\mu_i\le\eta$。在这个条件下，最小联合误差为
+
+$$
+\max_i\{a_i+(a_i-\eta)_+\}
+=\max\{A_R,2A_R-\eta\},\qquad A_R=\max_i a_i.
+$$
+
+证明：在集合 $H_i=\{x:rR_x>Q_i(x)\}$ 上，任何非负揭示行都不能消去 $rR_x-Q_i(x)$ 这部分超额。TV 的事件形式因而给出 $m_i\ge\mu_i$。又令 $g_i=(1-r)\operatorname{TV}(T_i,Q_i)$，TV 三角不等式给出 $a_i\le m_i+g_i$，所以 $j_i=a_i+g_i\ge a_i+(a_i-\eta)_+$。
+
+为同时达到这些界，先观察 $\sum_x(B_i(x))_+=\sum_x(-B_i(x))_+=a_i$，并且
+
+$$
+\sum_x\min\{(B_i(x))_+,q_i(x)\}
+=a_i-\sum_x(B_i(x)-q_i(x))_+
+=a_i-\mu_i.
+$$
+
+第二个等号使用 $B_i-q_i=rR-Q_i$，也表明 $0\le\mu_i\le a_i$。置 $v_i=(a_i-\eta)_+$。若 $v_i=0$，直接取 $T_i=Q_i$，此时 $m_i=a_i\le\eta$、$j_i=a_i$。
+
+若 $v_i>0$，则 $a_i>\eta\ge\mu_i$，两个分母均严格正。定义
+
+$$
+\begin{aligned}
+\alpha_i(x)&=\frac{v_i}{a_i-\mu_i}
+ \min\{(B_i(x))_+,q_i(x)\},\\
+\zeta_i(x)&=\frac{v_i}{a_i}(-B_i(x))_+,\\
+V_i&=q_i-\alpha_i+\zeta_i,\qquad T_i=\frac{V_i}{1-r}.
+\end{aligned}
+$$
+
+由于 $v_i\le a_i-\mu_i\le a_i$，有 $0\le\alpha_i\le q_i$。两种搬移量分别只支撑在 $B_i$ 的正、负坐标，且各自总和为 $v_i$。故 $V_i\ge0$、$\sum_xV_i(x)=1-r$，构成合法概率行。向量 $B_i-\alpha_i+\zeta_i$ 不改变原有符号，其正、负质量都从 $a_i$ 降至 $a_i-v_i$。因此
+
+$$
+m_i=a_i-v_i=\min(a_i,\eta),\qquad
+(1-r)\operatorname{TV}(T_i,Q_i)=v_i,\qquad
+j_i=a_i+v_i.
+$$
+
+每个 $T_i$ 在已经揭示状态的分支上分别定义，而 $R$ 始终是同一个；这些行确实组成一个共同随机核。最后，$a\mapsto a+(a-\eta)_+$ 单调，故可以将状态最大值移到该函数内。证毕。
+

@@ -1,0 +1,46 @@
+**定理 665.1（全原始域的逐状态半径权衡）。** 令
+
+$$
+\rho(R)=\max_S\operatorname{TV}(R,Q_S),\qquad \rho_*=cD.
+$$
+
+对任意原始概率行及任意指定状态 $S_0$，都有
+
+$$
+\boxed{\operatorname{TV}(R,Q_{S_0})\ge\rho_*-\chi[\rho(R)-\rho_*].}
+$$
+
+证明：本节用 $a_x=R_x-l_x$，所以 $\sum_i a_i=D-a_\circ$。记 $X_0=\sum_{i\in S_0}a_i$。所有事件差下界都针对两个总质量为一的概率行，符合项目 TV 事件接口的等质量前提。
+
+先设 $p\le d$。在 $S_0$ 的补集中均匀取所有 $p$ 元状态 $T$，对每个 $T$ 使用“被 $T$ 排除的标签，加上偏差为正时的公共坐标”这一事件。有
+
+$$
+\rho(R)\ge(a_\circ)_++\sum_{i\notin T}a_i.
+$$
+
+对这些 $T$ 求平均，每个补集标签被排除的比例为 $(d-p)/d$，得到
+
+$$
+\rho(R)\ge\frac pdX_0+\frac{d-p}{d}D+
+\left[(a_\circ)_+-\frac{d-p}{d}a_\circ\right]
+\ge\frac pdX_0+\frac{d-p}{d}D.
+$$
+
+方括号对公共偏差的两个符号都非负。另一方面，状态 $S_0$ 的标签事件给出 $\operatorname{TV}(R,Q_{S_0})\ge D-X_0$。两式相加，得到 $(d/p)\rho+\operatorname{TV}(R,Q_{S_0})\ge(d/p)D$，正是所需结论。
+
+再设 $p\ge d$。令 $U$ 遍历 $S_0$ 内全部 $d$ 元子集，取状态 $T=I\setminus U$。同一事件界求平均给出
+
+$$
+\rho(R)\ge(a_\circ)_++\frac dpX_0.
+$$
+
+对 $S_0$ 自身使用补集标签及正公共偏差，得到
+
+$$
+\operatorname{TV}(R,Q_{S_0})\ge D-X_0+(-a_\circ)_+.
+$$
+
+于是 $(p/d)\rho+\operatorname{TV}(R,Q_{S_0})\ge D+(p/d)(a_\circ)_++(-a_\circ)_+\ge D$，也等价于所列权衡。两种情形在 $p=d$ 处一致。证毕。
+
+这是同一份 $R$ 上的关系。它说明一个状态的距离降到自由半径以下时，其他状态中必有足够的代价增加；不需要把不同状态的最优行拼成一个虚假的共同实现。
+

@@ -1,0 +1,33 @@
+**命题 570.1（端点实验及单向模拟的延伸）。** 本节允许把
+
+$$
+Q_{L,1}=(0,a+D,L),\qquad Q_{L,2}=(0,a,L+D)
+$$
+
+作为解码构造中的边界实验。其两行均为概率分布。对 $a\le\ell<u\le L$，令
+
+$$
+\gamma(\ell,u)=\frac{D(u-\ell)}{2u+D}.
+$$
+
+则
+
+$$
+\operatorname{def}(Q_\ell\longrightarrow Q_u)=0,\qquad
+\operatorname{def}(Q_u\longrightarrow Q_\ell)=\gamma(\ell,u).
+$$
+
+证明：$a+L+D=M+D=1$，所以边界两行归一且非负。$\ell<u\le L$ 保证 $L-\ell>0$，前向核将公共符号以概率 $(u-\ell)/(L-\ell)$ 改成标签二，固定两个标签。这个概率至多为一；在 $u=L$ 时恰为一。两行同时得到 $Q_u$。
+
+反向核固定公共符号与标签一，将标签二以概率
+
+$$
+h=\frac{2(u-\ell)}{2u+D}
+$$
+
+送到公共符号。因 $\ell>0,D>0$，有 $0<h<1$。两状态公共坐标的误差分别为 $-\gamma(\ell,u)$ 与 $+\gamma(\ell,u)$，标签二误差相反，标签一不变，所以两个 TV 都为 $\gamma(\ell,u)$。
+
+下界仍使用先验 $\pi=(u+D)/(2u+D)$。逐输出的最小错误质量公式在公共坐标为零时照样成立，直接相减得到两实验的 Bayes 风险差 $\gamma(\ell,u)$。项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的有界损失风险转移关系使任何反向模拟误差至少为该值。于是显式上界与下界相合。证毕。
+
+这里只扩展用于解码的端点实验，未知真实参数仍为 $d<L$。原来全支撑定理的适用域没有被静默修改；新边界的合法性和两方向核均已另行给出。
+

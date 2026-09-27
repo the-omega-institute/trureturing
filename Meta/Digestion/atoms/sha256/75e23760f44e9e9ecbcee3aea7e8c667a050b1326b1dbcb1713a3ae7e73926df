@@ -1,0 +1,11 @@
+**命题 733.1（二元族的完整原始解）。** 取 $p=2$，将 $\mathcal F$ 看作简单图的非空边集，并假设 $C=\varnothing$。则对整个 $0<E\le2L$，
+
+$$
+\mu(E)=\left(1-\frac1\tau\right)E,
+\qquad
+\operatorname{Argmin}\Phi=
+\left\{R:\ a_\circ=0,\ a_i=(E/\tau)y_i,\ y\in Y\right\}.
+$$
+
+此处 $Y$ 的每个最小分数覆盖都能实现，不需要再加容量裁剪条件。
+

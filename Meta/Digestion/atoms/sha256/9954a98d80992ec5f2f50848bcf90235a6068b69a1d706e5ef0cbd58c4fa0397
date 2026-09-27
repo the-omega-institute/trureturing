@@ -1,0 +1,9 @@
+**定义 757.1（严格正的方形族）。** 对 $\varepsilon>0$，令
+
+$$
+P_\varepsilon=\frac{M+\varepsilon\mathbf1\mathbf1^{\mathsf T}}{8+16\varepsilon},
+\qquad Z_\varepsilon=8+16\varepsilon.
+$$
+
+所有单元都严格正，普通秩仍为三：同一交错核向量保留，左上三阶子式在未归一化矩阵中的行列式为 $1+2\varepsilon>0$。
+

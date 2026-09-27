@@ -1,0 +1,17 @@
+**定义 690.1（支撑上的保留比例）。** 对非空 $J\subseteq I$，定义
+
+$$
+\beta_{\mathcal F}(J)=\max_{w\in\Delta(J)}\min_{S\in\mathcal F}\sum_{i\in S\cap J}w_i.
+$$
+
+它测量把单位质量放在 $J$ 上后，能够保证每个状态都保留的最大比例。最大值由紧性取得。排除覆盖使每个 $\beta_{\mathcal F}(J)<1$：若达到一，正权重支撑必须同时包含于每个状态，与交集为空矛盾。
+
+令
+
+$$
+\beta_t=\max_{\substack{\varnothing\ne J\subseteq I\\\sum_{i\in J}e_i<t}}
+\beta_{\mathcal F}(J),
+$$
+
+没有合法非空 $J$ 时约定为零。这里保留严格不等式；正超额不能只靠刚好填满底量取得。
+

@@ -1,0 +1,14 @@
+**命题 739.1（高元族完整原始分类）。** 对第 737 节的族，$0<E\le2L$ 时，全部原始最优残余为
+
+$$
+a_\circ=0,\quad a_h=E/2,\quad a_j=0\ (j\in B),\quad
+a_i\ge0\ (i\in A),\quad\sum_{i\in A}a_i=E/2.
+$$
+
+当 $2L<E\le pL$ 时，全部原始最优残余恰为第 738 节的构造：
+
+$$
+a_\circ=0,\quad a_h=L,\quad a_j=z\ (j\in B),\quad
+a_i=z+r_i\ (i\in A),\quad r_i\ge0,\quad\sum_{i\in A}r_i=L-z.
+$$
+

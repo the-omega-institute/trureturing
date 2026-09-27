@@ -1,0 +1,32 @@
+**定理 667.1（预算参与的擦除稳定性）。** 固定 $0<r<1$，记 $\lambda=rcD$。设同一个合法模拟器满足
+
+$$
+\operatorname{err}_{\rm marg}\le\eta,\qquad
+j\le\lambda+\varepsilon,\qquad \eta\ge\lambda,\quad\varepsilon\ge0.
+$$
+
+定义
+
+$$
+q_{\eta,\varepsilon}=\min\left\{\varepsilon,\frac{\eta-\lambda+\varepsilon}{2}\right\}.
+$$
+
+则
+
+$$
+\boxed{\operatorname{TV}(R,R^*)\le\frac n{rm}q_{\eta,\varepsilon}.}
+$$
+
+若另有 $R_\circ=b$，可将分子 $n$ 改为 $n-1$。各界仍可与一取最小值。
+
+证明：令 $A_R=r\rho(R)$、$\Delta=A_R-\lambda\ge0$。第 602 节对同一个共同 $R$ 给出 $j\ge\max(A_R,2A_R-\eta)$。因此
+
+$$
+\Delta\le\varepsilon,\qquad
+\Delta\le\frac{\eta-\lambda+\varepsilon}{2},
+$$
+
+故 $\Delta\le q_{\eta,\varepsilon}$。第 642 节在 $t=1$ 的界给出 $\operatorname{TV}(R,R^*)\le n\Delta/(rm)$；固定公共坐标时改用第 660 节。证毕。
+
+当 $\eta\ge\lambda+\varepsilon$ 时，$q=\varepsilon$，恢复较松预算的旧界。当 $\lambda\le\eta<\lambda+\varepsilon$ 时，预算本身提供额外信息；尤其固定 $\eta=\lambda$ 时，$q=\varepsilon/2$，擦除距离的系数减半。不能用一个允许增加边缘预算的见证，代替这个固定预算结论。$r=1$ 没有揭示分支可作补偿，本节的内部擦除率条件不应删除。
+

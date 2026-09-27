@@ -1,0 +1,35 @@
+**命题 614.1（选择一个合法标签的风险）。** 在全部 $p$ 元状态上取均匀先验，行动空间取标签集 $I$，损失为 $\ell(S,a)=\mathbf1_{\{a\notin S\}}$。则来源 $E_r$、目标 $Q$ 及保留来源记录的目标联合 $\mathsf J$ 的最优风险分别为
+
+$$
+R(E_r)=cr,\qquad R(Q)=cM,\qquad R(\mathsf J)=crM.
+$$
+
+因此项目的有限有界风险转移关系给出
+
+$$
+d(E_r\longrightarrow Q)\ge c(r-M)_+,\qquad
+d(E_r\longrightarrow\mathsf J)\ge crD.
+$$
+
+两界均由本批构造达到，其中联合下界即使允许重新生成整个记录仍成立。
+
+证明：无信息时，每个标签属于真实子集的概率都是 $p/n$，故最优风险为 $c$；揭示 $S$ 后可以选其中任意一个标签，风险为零，得到来源风险 $cr$。
+
+对目标 $Q$，观察公共符号时各行动等价。观察标签 $x$ 时，选择 $a=x$ 的“观察发生且行动正确”的联合概率为
+
+$$
+\frac pn e_x+\frac Dn.
+$$
+
+选择任意 $a\ne x$ 的相应概率为
+
+$$
+\frac pn e_x+\frac{D(p-1)}{n(n-1)}.
+$$
+
+两者之差是 $D(n-p)/(n(n-1))>0$，所以输出观察到的标签最优。合计成功率为 $Mp/n+D$，风险为 $cM$。目标联合在揭示分支风险为零，在擦除分支保留 $Q$，故风险为 $rcM$。
+
+项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的 deficiency_risk_bound 在有限状态、观察和行动空间、概率先验、随机核与 $[0,1]$ 损失条件下，界定来源风险不超过目标风险加模拟误差。此处全部条件由已定义的有限实验满足；源码参数顺序为 finiteDeficiency target source，对应这里的 $d(\text{source}\longrightarrow\text{target})$。分别代入上述风险，并使用误差非负性，得到两界。第 605 节的精确可行域达到第一界，自由中心与不改动揭示目标的构造达到第二界。证毕。
+
+这个决策只要求选中一个属于 $S$ 的标签，不要求从观察完整辨认 $S$。所以一个较小的问题族可以见证某些明确的信息差，而不必先重建全部状态。它没有因此成为判断全部问题是否等价的充分读数。
+

@@ -1,0 +1,6 @@
+**定义 633.2（与可答性接口相接）。** 把状态域取为这一闭区间中的 $a$，读数取 $(G(w^{(a)}),F(w^{(a)}),\mathcal J)$，问题取 $R^{(a)}_3$。读数在整个区间恒定，问题则随 $a$ 严格变化。项目 [AnswerabilityCriterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean) 的 answerability_criterion 所要求的观察纤维恒定性，在这里有一对直接的失败见证；例如 $a=1/3$ 与 $a=11/30$。因此这组精确最优值不足以恢复实际擦除行。
+
+如果另外保留第三标签的实际擦除概率，就有 $a=(R_3-e_3)/D$，能够区分该族内全部成员。这又给 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的联合分离条件一个明确的对应：新增关系切开了旧读数的非平凡纤维。充分性只在本节明确给定的这一参数族内成立，不因此扩成关于所有可能生成器的充分认识。
+
+这个例子使“真理有形”与“表达仍有范围”可以在同一个有限问题中被分别落实：最优值确实由精确证据决定；生成方式的某个问题仍需另一个读数。未被确定的项目无需被称为虚幻，已经确定的项目也无需因为仍有未知而失去确定性。
+

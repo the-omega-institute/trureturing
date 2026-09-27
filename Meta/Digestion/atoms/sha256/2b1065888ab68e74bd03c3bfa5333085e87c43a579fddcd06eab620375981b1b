@@ -1,0 +1,54 @@
+**命题 537.1（擦除率的临界值）。** 对定义 530.1，设 $0<r\le M$，令
+
+$$
+r_{\mathrm c}=\frac{n\varepsilon}{1-b}.
+$$
+
+则 $0<r_{\mathrm c}<M$，受容量约束半径满足
+
+$$
+\rho_r=
+\max\left\{
+cD,\;
+D-\frac{(1-r)p\varepsilon}{r}
+\right\}.
+$$
+
+于是
+
+$$
+\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+=
+\max\left\{
+2,\;
+\frac2c\left(1-\frac{(1-r)p\varepsilon}{rD}\right)
+\right\},
+$$
+
+该比例在 $0<r\le r_{\mathrm c}$ 时等于二，在 $r_{\mathrm c}<r\le M$ 时严格大于二。
+
+证明：由 $M=b+n\varepsilon$、$D=1-M$，
+
+$$
+M-r_{\mathrm c}
+=\frac{bD}{1-b}>0,
+$$
+
+其余正性也由参数保证。$r\le M$ 使精确新增边缘可行。命题 534.1 在 $\eta=0$ 时给出
+
+$$
+j_{\mathrm{exact}}
+=\max\{2rcD,\;2rD-2(1-r)p\varepsilon\},
+$$
+
+因为 $2\lambda\ge\lambda$。利用第 485 节 $j_{\mathrm{exact}}=2r\rho_r$、$j_{\mathrm{free}}=r\rho$ 及 $\rho=cD$，得到两式。两项的大小关系等价于
+
+$$
+rD\le(1-r)n\varepsilon
+\quad\Longleftrightarrow\quad r\le r_{\mathrm c}.
+$$
+
+证毕。
+
+自由中心的容量条件还给出同一临界值的直接读法：公共坐标要求 $rb\le b$，自动成立；标签坐标要求 $r(\varepsilon+D/n)\le\varepsilon$，恰是 $r\le r_{\mathrm c}$。因此转折点就是自由中心开始放不进共同标签容量的位置，不是仅由公式形状命名的转折。
+

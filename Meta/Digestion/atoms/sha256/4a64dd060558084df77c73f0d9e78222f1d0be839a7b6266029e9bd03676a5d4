@@ -1,0 +1,29 @@
+**命题 624.1（消元后的共同实现）。** 任意三变量可行点 $(s,\tau,v)$ 都给出一个共同擦除行 $R=l+Dw(v)$，满足最坏边缘障碍不超过 $\eta$，且
+
+$$
+\max_S r\operatorname{TV}(R,Q_S)\le rD(1-s).
+$$
+
+若 $s=F_*(h)$，则该共同擦除行与第 602 节的揭示行同时达到 $\mathcal J(r,\eta)$。
+
+证明：第 623 节已经给出 $G(w(v))\le h$ 与 $F(w(v))\ge s$，命题 603.2 把二者分别还原为所列障碍和距离。为说明揭示行没有使用额外观察，固定同一个 $R$，对实际揭示的 $S$ 记
+
+$$
+a_S=r\operatorname{TV}(R,Q_S),\quad
+\mu_S=\sum_x(rR_x-Q_S(x))_+,\quad
+B_S=r(R-Q_S),\quad q_S=(1-r)Q_S,\quad
+\delta_S=(a_S-\eta)_+.
+$$
+
+当 $\delta_S=0$ 时取 $T_S=Q_S$。否则沿用第 602 节的质量搬移：
+
+$$
+\alpha_S(x)=\frac{\delta_S}{a_S-\mu_S}\min((B_S(x))_+,q_S(x)),\quad
+\zeta_S(x)=\frac{\delta_S}{a_S}(-B_S(x))_+,\quad
+T_S=\frac{q_S-\alpha_S+\zeta_S}{1-r}.
+$$
+
+这里 $a_S>\eta\ge\mu_S$，分母正；总搬出量与搬入量相等，且搬出不超过现有质量。这些行具有边缘误差 $\min(a_S,\eta)$ 和联合误差 $a_S+(a_S-\eta)_+$。达到最大重叠时 $\max_Sa_S=A_*$，于是回到既有精确公式。证毕。
+
+三变量表示保存了最优值，并提供一个达到它的共同实现。它不宣称保存所有原始生成器的一一身份，也不宣称求出最优值就已经知道现实中实际采用了哪一个生成器。第 633 节给出这一差别的具体连续族。
+

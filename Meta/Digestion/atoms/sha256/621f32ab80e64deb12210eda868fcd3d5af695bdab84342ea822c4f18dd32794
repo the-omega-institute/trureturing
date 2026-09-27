@@ -1,0 +1,9 @@
+**定义 684.1（方向模量）。** 对平衡族，令 $H_0=\{h:\sum_i h_i=0\}$，并定义
+
+$$
+g_{\mathcal F}(h)=\max_{S\in\mathcal F}\left(-\sum_{i\in S}h_i\right),\qquad
+\tau_{\mathcal F}=\min_{\substack{h\in H_0\\\frac12\sum_i|h_i|=1}}g_{\mathcal F}(h).
+$$
+
+单位集合在有限维空间中紧，故最小值存在。平衡保证 $g_{\mathcal F}\ge0$。第 682 节的内部条件等价于 $\tau_{\mathcal F}>0$：它要求每个非零方向的 $g$ 严格正，而紧性把逐方向严格性提升为统一正下界。
+

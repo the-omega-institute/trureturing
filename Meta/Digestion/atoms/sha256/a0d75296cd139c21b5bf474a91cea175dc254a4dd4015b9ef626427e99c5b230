@@ -1,0 +1,41 @@
+**定理 670.1（逐状态预算界的共同实现）。** 固定任意指定状态 $S_0$ 及第 668 节的内部参数。对所有足够小的 $\varepsilon>0$ 和全部 $\eta\ge\lambda$，存在同一个合法模拟器满足边缘预算、$j=\lambda+\varepsilon$，并使第 669 节对 $S_0$ 的界取等号。
+
+证明：记 $q=q_{\eta,\varepsilon}$，在第 666 节取
+
+$$
+H=\chi q/r.
+$$
+
+当 $\varepsilon$ 足够小时，$H<cD$，所造原始行合法、$R_\circ=b$，且
+
+$$
+A_R=\lambda+q,\qquad
+\rho_0:=\operatorname{TV}(R,Q_{S_0})=cD-H>0,\qquad
+r\rho_0=\lambda-\chi q.
+$$
+
+与第 668 节相同，该 $R$ 在中心可行邻域内，故所有状态都可在边缘预算 $\eta$ 上补偿。对特别指定的状态，令 $B=\varepsilon+\chi q$，并取
+
+$$
+T_{S_0}=Q_{S_0}-\frac{B}{(1-r)\rho_0}(R-Q_{S_0}).
+$$
+
+差向量总和为零，故 $T_{S_0}$ 总量为一；当 $\varepsilon\to0$ 时系数趋零，$Q_{S_0}$ 全部坐标严格正，故充分小的 $\varepsilon$ 保证该行非负。因 $q\le\varepsilon$，这些小量条件可统一于所有 $\eta\ge\lambda$。于是
+
+$$
+(1-r)\operatorname{TV}(T_{S_0},Q_{S_0})=B,
+\qquad j_{S_0}=B+r\rho_0=\lambda+\varepsilon.
+$$
+
+该状态的边缘误差则恰为
+
+$$
+\left|r\rho_0-B\right|=|\lambda-\varepsilon-2\chi q|.
+$$
+
+再取 $\varepsilon(1+2\chi)<\lambda$，它等于 $\lambda-\varepsilon-2\chi q<\lambda\le\eta$。这里揭示偏差与擦除偏差方向相反，所以保留来源记录的误差增加，忘却来源后的边缘偏差却部分抵消。
+
+对所有其他状态，分别使用第 602 节的固定行补偿，始终共享刚才这一份 $R$。各状态边缘误差至多 $\eta$，联合误差至多 $\max(A_R,2A_R-\eta)=\lambda+\varepsilon$。指定状态已经取到该联合值，故整个模拟器的最坏联合误差恰为它，同时揭示距离达到 $B/(1-r)$。证毕。
+
+因此第 669 节的两参数线性包络有实际的局部达到者，包含固定 $\eta=\lambda$ 的情形。揭示行的改变不是另选了一份更有利的擦除源；所有补偿都使用同一 $R$。这正是把各分支最优值组合成整体结论时必须补上的共同实现关系。
+

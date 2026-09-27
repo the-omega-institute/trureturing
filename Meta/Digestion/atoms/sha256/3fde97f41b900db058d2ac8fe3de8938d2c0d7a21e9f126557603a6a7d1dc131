@@ -1,0 +1,4 @@
+**定义 593.1（与项目风险接口的参数对应）。** 项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 用 finiteDeficiency target source 表示从来源模拟目标的最小最坏状态 TV。这里沿用正文方向记号 $d(K\longrightarrow L)$，所以对应 finiteDeficiency $L\,K$。项目的 deficiency_risk_bound 需要有限状态、观察和行动空间、概率先验、概率实验行、随机决策核及 $[0,1]$ 有界损失；这些条件下，来源的最优风险至多为目标的最优风险加上该方向的模拟误差。
+
+在本批中，$m$ 比较输出边缘，$j$ 比较保留真实记录的联合实验。共同投影丢弃记录后，项目 [DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 total_variation_channel_le 给出每个状态的 $m_i\le j_i$。所用核确实是同一个“丢弃第一分量”映射，不按状态选择投影。
+

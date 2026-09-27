@@ -1,0 +1,40 @@
+**命题 531.2（边缘与联合模拟的最低误差）。** 对定义 530.1—530.2，通常实验模拟的最优误差为
+
+$$
+d(E_r\longrightarrow Q)=\beta:=c(r-M)_+,\qquad
+d(E_r\longrightarrow J)=\lambda:=crD.
+$$
+
+证明：在全部 $p$ 元子集上使用均匀先验，行动为选择一个标签 $a$，损失为 $\mathbf1_{\{a\notin S\}}$。没有观察时，任一行动的风险都是 $c$；擦除实验的最优风险为 $rc$。
+
+观察 $Q$ 的公共符号时后验仍为原先验，风险为 $c$。观察标签 $x$ 时，选择 $x$ 是最优行动。为核对这一点，对任意 $a\ne x$，以观察 $x$ 为条件之前的未归一化成功概率分别为
+
+$$
+\Pr(x\in S,\text{输出 }x)=\frac pn\varepsilon+\frac Dn,
+$$
+
+与
+
+$$
+\Pr(a\in S,\text{输出 }x)
+=\frac pn\varepsilon+\frac Dn\frac{p-1}{n-1}.
+$$
+
+后者较小；共同归一化不改变排序，随机化也不能改善最优行动。采用观察到的标签时，所有标签输出带来的失败概率总和为 $q\varepsilon$；再加公共分支的 $bc$，得到 $Q$ 的最优风险
+
+$$
+bc+q\varepsilon=cM.
+$$
+
+目标联合 $J$ 在揭示分支可零损失，在擦除分支仍面对 $Q$，故最优风险为 $rcM$。项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的 deficiency_risk_bound 适用于这个归一化先验、行随机实验与 $[0,1]$ 损失，给出边缘下界 $\beta$ 及联合下界 $\lambda$。后一界约束通常模拟器，即使允许重生成整个旧记录也成立。
+
+边缘上界分两种情形。若 $r\le M$，则 $r<1$，取 $R=l/M$、$T_S=(Q_S-rR)/(1-r)$，逐坐标非负且归一化，边缘精确。若 $r>M$，取
+
+$$
+R(\circ)=b/r,\qquad R(x)=(r-b)/(nr),
+$$
+
+揭示分支均匀输出 $S$ 中标签。新增公共质量为 $b$，子集外标签的总超额为 $c(r-b)-q\varepsilon=c(r-M)$，子集内合计短缺同量，达到 $\beta$。$r=0$ 已包含在第一种构造中。
+
+联合上界取 $T_S=Q_S$、$R=R_*$。仅擦除分支贡献误差，故保留实际记录也可达到 $r\rho=\lambda$，从而通常模拟达到同值。证毕。
+

@@ -1,0 +1,23 @@
+**命题 730.1（两种容量阈值）。** 在 $C=\varnothing$ 的条件下，定义
+
+$$
+\rho_- =\min_{y\in Y}\|y\|_\infty,\qquad
+\rho_+ =\max_{y\in Y}\|y\|_\infty,
+\qquad
+B_{\mathrm{exist}}=\frac{\tau L}{\rho_-},\qquad
+B_{\mathrm{all}}=\frac{\tau L}{\rho_+}.
+$$
+
+这些极值达到，且 $0<\rho_-\le\rho_+\le1$。在实际参数域 $0<E\le pL$ 中，
+
+$$
+\mu(E)=\left(1-\frac1\tau\right)E
+\Longleftrightarrow E\le B_{\mathrm{exist}}.
+$$
+
+全部未截顶最小覆盖都通过 $a=Ey/\tau$ 给出合法最优行，当且仅当 $E\le B_{\mathrm{all}}$。如果 $B_{\mathrm{all}}<E\le B_{\mathrm{exist}}$，最优值保持线性，而原覆盖面只有一部分仍可实现。
+
+**证明。** 连续函数 $\|y\|_\infty$ 在紧集 $Y$ 上达到两端极值。每个 $y$ 的总和为正数 $\tau$，所以 $\rho_-\ge\tau/n>0$。第 729 节中存在可行覆盖，恰好等价于 $\rho_-\le\tau L/E$；全部覆盖可行，恰好等价于 $\rho_+\le\tau L/E$。若 $E>B_{\mathrm{exist}}$，原始域上的最小值仍达到，却没有任何行能取到所列下界，因此 $\mu(E)>(1-1/\tau)E$，不是仅仅缺少一个达到构造。证毕。
+
+两个阈值可以都落在实际域以外，或彼此相等。它们回答的是不同量词的问题：“至少有一个”和“对全部”。在解释比较中，将一种表达仍然有效误作所有旧表达都能保留，正好会遗漏这个区别；实际传统与此模型的对应仍需另行给出。
+
