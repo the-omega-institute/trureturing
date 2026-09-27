@@ -2985,3 +2985,168 @@ $\inf_j\|\theta n_j\|>c\epsilon/|\log\epsilon|$。
 这些条件核对仅说明已查原文不能直接补齐当前固定分母的同步缺口；
 不构成没有更强结果或全局原创性的断言。
 $E_2$ 的存在性、锐利维数及指定双均值的共同实现仍未解决。
+
+## 关联补充 84：噪声衰减校正与后验熵的常数阶二次响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 84 章在第 82 章的同一计数实现和同一带噪声输出上，确定后验熵的常数阶项。
+自然单位下，需扣除的首阶线性项是
+$\gamma y/[\sqrt\delta(\nu+\sigma_M^2)]$，完整噪声范围仍为
+$\ln(1/\sigma_M)\to\infty$、$\ln(1/\sigma_M)=o(Q^3)$。
+扣除后，输出积分 $L^1$ 剖面为
+$(1/2-2/\sqrt3)(y^2-\nu)/\nu-\tfrac12\ln\nu$。
+未校正分母 $\nu$ 给同一剖面的充要条件是 $\sigma_M^2=o(\sqrt\delta)$；
+合法序列 $\sigma_M=Q^{-1/16}$ 则使未校正余量在实际条件输出概率下逃离每个有界区间。
+
+Gaussian 回归的噪声衰减、分部积分、Hermite 二次多项式与
+Edgeworth 展开的思想都是成熟工具。新增推导的范围是：实际观测方差和的定量速率、
+完整后验的未尺度化中心信息比较、含精确中心的两次分部积分余项、
+最终噪声尺度上的返回估计，以及由此得到的模型特定剖面和实际反例。
+本条不把一般加权展开或二阶 Gaussian 微积分称作新理论。
+
+Ivan Nourdin 与 Giovanni Peccati 的
+*Stein's method and exact Berry–Esseen asymptotics for functionals of Gaussian fields*，
+[arXiv:0803.0458v3](https://arxiv.org/abs/0803.0458v3)，
+[DOI:10.1214/09-AOP461](https://doi.org/10.1214/09-AOP461)，
+提供精确 Gaussian 逼近误差与一项 Edgeworth 修正。
+核对的是 2009 年 12 月 9 日 v3 的 32 页作者／IMS 电子重印本；
+原件说明其页码及排版与期刊版不同。
+Theorem 3.1 位于 PDF 第 11—12 页：中心变量 $F_n\in\mathbb D^{1,2}$、
+绝对连续律、方差趋一，Stein 因子误差
+$\varphi(n)=\{\mathbb E(1-\langle DF_n,-DL^{-1}F_n\rangle)^2\}^{1/2}$
+有限、最终为正且趋零，并要求 $F_n$ 与标准化 Stein 因子误差联合趋于
+具有单位边缘方差的二元正态。结论包含 Kolmogorov 界及每个固定阈值的归一化 CDF 误差。
+PDF 第 13 页 Proposition 3.3 再要求精确单位方差、有限第三绝对矩及
+统一 $2+\varepsilon$ 阶矩，得到
+
+$$
+\Pr(F_n\le z)-\Phi(z)+\frac{\mathbb EF_n^3}{6}\Phi'''(z)
+ =o_z(\varphi(n)).
+$$
+
+这一固定阈值结论不能直接替代增长信息权下的全直线 $L^1$ 带符号密度展开。
+第 84 章的累积量常数符合这一经典机制，证明则另行支付实际离散后验、
+移动核心以及精细噪声的误差。该 v3 的原始源码端点返回 403；
+所需命题取自可读 PDF，未将源码访问失败记为已读 TeX。
+
+Ciprian A. Tudor 与 Nakahiro Yoshida 的
+*High order asymptotic expansion for Wiener functionals*，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+给出更强的一般多项式加权展开。
+核对的是 2019 年 9 月 19 日提交、题页日期 9 月 20 日的 57 页 v1 PDF
+及其原始 TeX；[2023 年期刊 DOI](https://doi.org/10.1016/j.spa.2023.07.001)
+仅作书目关联，不断言两版本相同。
+对象是固定维 Wiener 泛函向量与确定正定目标矩阵。
+PDF 第 10 页 [A1] 要求所有 $r>1$ 的统一 Sobolev 正则性、
+二阶 Gamma 因子到非奇异矩阵的多项式 Sobolev 速率；
+第 11 页 [A2] 要求中心高阶 Gamma 因子的指定 Sobolev $O(N^{-q})$
+及 $L^r$ 中的 $o(N^{-q})$；第 15 页 [A3] 给出阶数关系
+$q_0(k+1)>q$、$\xi(\ell-d)>q$、$\ell_1>p+1+d$
+及期望 Gamma 因子的加权速率。
+PDF 第 17 页 Proposition 1 给截断局部密度的加权一致逼近；
+第 19 页 Theorem 1 在这些假设下对所有满足
+$|g(x)|\le a(1+|x|)^b$ 的可测函数统一给 $o(N^{-q})$ 期望逼近，
+每个固定 $a,b>0$ 均可。它覆盖真正的多项式加权测试，不能缩称为只对光滑或紧支撑函数的结果。
+
+将本章 Gaussian 参考对标准化后，该理论提供候选通用路线；
+但 $S_G$ 的方差随核心增长，其标准化、再放大的成本必须进入全部 Gamma 因子速率。
+本章未仅凭“二者是二次型”就断言 [A1]—[A3] 成立，
+而是给出所需的有限恒等式及显式 $O(\sqrt\delta)$ 二阶导数余项。
+这不证明该 Gaussian 特例超出上述一般理论。
+
+第 82 章已核对的 Herry–Malicet–Poly
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+Corollary 10(a) 继续直接覆盖有限 chaos 参考的 $W^{2,1}$ 导数收敛；
+正文的 Fourier 分块计算同时记录独立半块所需的一致常数。
+已核对的 Nourdin–Peccati [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+提供 Gaussian 导数／散度对偶。
+Nourdin–Viens 的全局正 Stein 核下界并未在此假设；
+Hu–Lu–Nualart 原文 Theorem 4.4 的既有印刷维度问题也未作为前提使用。
+含噪声的有限恒等式必须保留 $v_G+\sigma_M^2$，这些通用引用不能删除该项。
+
+文献检索范围为 Gaussian 精确误差、Wiener 多项式加权展开与条件二次型，
+未命中的关键词结果不构成不存在或全球原创证明。
+第 84 章结论是普通数学文本，未作 Lean、摄入、覆盖或冻结声明。
+它证明输出积分 $L^1$、同一实现的有界联合极限及纤维内第一平均；
+不宣称余量方差／高阶矩收敛、每个输出控制、无界数据平均、
+零噪声、$L_M$ 与 $Q^3$ 同阶的噪声、解码效率或实验等价性。
+
+## 关联补充 85：有理函数根的过渡带与对偶曲线的整数约束
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 85 章把指定原率根的排除从 $\mathbb Q[\vartheta]$ 扩展到
+$\mathbb Q(\vartheta)$，并确定该根对实际熵余项的贡献。
+它在前一截断 $t=P_{n-1}/Q_{n-1}$ 上保留
+$J_n^F=Q_n^2F(t)+Q_nF'(t)+F''(t)/2$。
+该有理量的分母至多为前一层分母的固定幂，远小于 $Q_n/\ln Q_n$；
+因此实际多项式过渡带要么为空，要么只有均值为固定正倍数 $Q_n^{-3}$ 的一个组。
+根项非零的实际概率为 $O(Q_n^{-3})$。
+两个倒数函数例子的预测量分母可精确约分，给出最终空带；它们各自的另一根仍未分类。
+
+Taylor 展开、有理函数的高度控制、整数分离和 Markov 不等式是经典工具。
+模型特定内容是原整数层上的完整过渡带判别、三次 Taylor 项进入实际均值的常数、
+两个倒数参数的合法性与局部熵后果。
+有理函数的分母不被假定为十的幂；普通 Liouville 逼近型分类也不替代原网格上的对数位移。
+
+Ana Paula Chaves、Diego Marques、Pavel Trojovský 的
+*On the Arithmetic Behavior of Liouville Numbers under Rational Maps*，
+[arXiv:1910.14190v1](https://arxiv.org/abs/1910.14190v1)，
+[期刊 DOI](https://doi.org/10.1007/s00574-020-00232-7)，讨论有理映射下的逼近类型。
+核对的是 v1 PDF 与原始 TeX 的主定理、高度定义、引理及证明开头。
+主定理要求有理逼近 $\alpha_n$ 的误差小于
+$H(\alpha_n)^{-\omega_n}$、$\omega_n\to\infty$，并要求
+$H(\alpha_{n+1})\le H(\alpha_n)^{O(\omega_n)}$；
+其结论用原文的不可约有理函数和系数域次数条件表述为 $U_m$ 分类。
+原十进制截断满足此类增长关系，但本文不使用该 $U_m$ 结论，
+也不把系数属于任意扩大的数域当成已满足原始性条件。
+
+该 v1 的 `hgamma` 显示式写 $H(F(\alpha_k))\ll H(\alpha_k)^{2m^2}$，
+未体现函数次数。$m=1$、$F(X)=X^3+2$ 时，紧正区间内的既约 $p/q$
+映到仍既约的 $(p^3+2q^3)/q^3$，高度为 $q^3$ 阶，不能由固定倍数 $q^2$ 控制。
+本章另证依赖次数的分母界，不使用该显示指数。
+原文关于非稠密 $G_\delta$ 与 Hausdorff 大小的关联措辞也未被用作前提；
+类别性质本身不能决定维数。上述范围说明不判定原文所有结论。
+
+V. V. Beresnevich、R. C. Vaughan、S. L. Velani 的
+*Inhomogeneous Diophantine approximation on planar curves*，
+[arXiv:0903.2817v1](https://arxiv.org/abs/0903.2817v1)，
+核对了 PDF 及原始 TeX 中的曲率条件、计数定义、覆盖定理 `thm6`、计数推论和完整下界构造。
+固定 $C^3$ 曲线在固定区间上曲率非零时，对每个子区间，存在依赖曲线及区间的常数，
+使 $R_0<d\le2R_0$、$k_1/R_0\le\delta\le k_2$ 下的近曲线有理点邻域
+覆盖至少一半子区间，并且对两个实平移统一成立。
+其分母块确实可映到固定原 $N$ 下的辅助切线分母；
+其平移量词也确实允许本章单侧相位对应的变化平移。
+
+实际缺口在其他条件：移动对偶曲线的二阶导数为 $N$ 阶，
+原证明的 $C_1=3c_2/(c_1c_0^8)$、$c_0<1/6$、$k_1^3>c_2C_1^2$
+使所需充分宽度随 $N^{1/3}$ 增长；并且原计数不要求 $\gcd(p,d)=1$。
+归一化曲率后还留下指数 $Q$ 的原格同余条件。
+这给出该特定证明的适用障碍，不是最佳可能计数界的不可能性定理。
+原文下界的最后 Taylor 估计将可达 $2R_0$ 的分母按 $R_0$ 处理，
+修正固定二倍因子不改变上述增长次数；上界证明中平方 Fejér 核的一个常数亦未按原值采用。
+两处都未作为本章精确数值前提，也不据此宣称其覆盖定理为假。
+
+Dzmitry Badziahin、Stephen Harrap、Mumtaz Hussain 的
+*An inhomogeneous Jarník type theorem for planar curves*，
+[arXiv:1503.04981v1](https://arxiv.org/abs/1503.04981v1)，
+核对了原始 PDF／TeX 的双重逼近定义、非退化条件、主定理及合并推论。
+对固定 $C^2$ 曲线与沿曲线 $C^2$ 的非齐次函数，曲率零集的相应
+Hausdorff 测度为零，且逼近函数递减趋零时，
+$\sum_q\psi(q)^s q^{2-s}<\infty$ 给 $0<s<1$ 的零测度结论；
+合并推论还包含既有的发散全测度半边及 $s=1$ 范围。
+其整数线性形式在所有系数高度中无限次逼近，
+不能直接产生一个指定原 $N$ 上满足驻点关系与原始基分数条件的有限计数。
+同称“对偶”不保证对象和量词相同。
+
+既有 Huang [arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)
+在本章的新对偶映射下再次按原件条件核对：
+即使暂设曲率常数统一，在宽度 $\delta\asymp A/D$ 处，
+所列误差的 $\sqrt A D\ln D+D^{1+\varepsilon}$ 已不能保证固定 $A$ 的正下界；
+真实移动曲线还具有增长的曲率常数。
+原始三元组条件不能替代 $\gcd(p,d)=1$。这里引用的不是另一个 1403.8038v1。
+
+检索涵盖平移曲线下界、对偶逼近及 Liouville 有理映射；
+关键词和近期元数据中未查到可用结果，不构成不存在或全球原创证书。
+$E_2$ 的空性、非空性、锐利维数和固定参数双均值实现均未由本章解决。
+第 85 章属于普通理论与出处说明，未摄入、覆盖、冻结或作 Lean 声明；
+未推出两个倒数参数的全熵余项趋零，也未推出无界熵的实际期望收敛。

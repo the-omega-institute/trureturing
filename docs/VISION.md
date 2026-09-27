@@ -81,8 +81,9 @@ answered? Existing work gives this picture several mathematical entry points.
 
   The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
   distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
-  and `11`. They have the same two single-qubit reduced states. This counterexample
-  limits claims of recovering a joint state from local readings alone.
+  and `11`. They have the same two single-qubit reduced states. A
+  [joint expectation](../README.md#three-places-to-look) separates this pair without
+  establishing recovery of arbitrary joint states.
 
 - **Space and history.** Does a current spatial reading preserve the historical
   conditions needed for later operations?
@@ -92,11 +93,14 @@ answered? Existing work gives this picture several mathematical entry points.
   selection and spatial reading while changing whether a temporal composition is legal.
   It does not identify the model's time labels with physical time.
 
-The recovery criterion links both counterexamples. The two quantum states share local readings but differ as joint states; the two archives share
-a spatial reading but differ on a temporal operation's legality. Recovering
-either target requires readings that separate its witness pair. This condition
-alone supplies no executable or efficient reconstruction. Relating these models to proof dependencies or physical spacetime still requires maps
-and checks of the relations, operations and error bounds they preserve.
+Both counterexamples hide different target values behind equal readings.
+Separating one pair need not make recovery possible.
+Recovery requires separating **every pair with different target values**:
+the target must be constant on each observation fiber. On a nonempty state
+space, this condition ensures a recovery function exists but supplies no
+algorithm or cost bound.
+Connections to proof dependencies or physical spacetime require maps and checks
+of the relations, operations and error bounds they preserve.
 
 For further reading,
 [proof topology, involutive logic and observational escape](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)
@@ -124,9 +128,9 @@ The method links five steps:
    and proofs or counterexamples to settle mathematical claims. When a
    representation cannot express a needed distinction, investigate new
    relations, languages or forms of observation.
-5. **Return results to the next inquiry.** Reuse known theorems, preserve new
-   reusable content, and state the conditions still to be met. Let the next
-   question begin from an explicit boundary.
+5. **Return results to the next inquiry.** Reuse known theorems and preserve new
+   reusable content. Show which conclusions supply needed premises, checking
+   assumptions and identifying the remaining gaps.
 
 A [circle theorem](../D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.lean)
 rules out choosing a square root continuously around the whole complex unit circle.
@@ -145,11 +149,11 @@ does not ensure positivity for every gain function. This motivates checking
 test provenance, without establishing a general law of learning performance.
 
 Evaluate AI research selection on questions withheld from method design.
-Compare with a stated baseline under matched information and resource budgets.
-Set success and stopping criteria beforehand; assess gap reduction, reusable
-connections and justified route changes. Report unsuccessful and unresolved
-cases. These experiments evaluate the methodological transfer; formalizing
-the structures alone does not establish these capabilities.
+Fix the baseline, matched information and resource budgets, and success and
+stopping criteria before testing. Report evidence for each question's outcome:
+premises supplied, distinctions exposed, routes ruled out, failures and
+unresolved gaps. These experiments evaluate research selection; formalizing
+the structures alone does not establish this capability.
 
 ## Studying time and space through holographic geometry
 
@@ -189,12 +193,12 @@ Existing work offers several connected routes:
   data and allowed operations.
 
 The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-gives one criterion for compatible completion. Arrange nonempty sets of allowed
-local records on a finite tree. Each recorded variable must occur on a connected
-subtree, and neighbors must allow exactly the same joint assignments on their
-full overlap. Every allowed local record then extends to a record on the union
-of the local variable sets, satisfying every local constraint. This establishes
-existence; uniqueness, original-history recovery and computational cost require
+applies to nonempty local record sets on a finite tree. Each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+to the union of the local variable sets, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Unique completion, original-history recovery and computational cost require
 further results.
 
 Here, holography names a research direction concerning wholes and observations.
