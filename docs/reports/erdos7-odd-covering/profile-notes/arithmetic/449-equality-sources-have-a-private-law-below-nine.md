@@ -3407,6 +3407,75 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 
 These programs use no external solver or unpublished fixture. The eleven/eight private-cost inventory and225 overlap controls from the prior shape program are reused, not recounted as new independent cases. These finite checks support the ordinary proofs and actual examples; they do not constitute Lean verification.
 
+## A public-column and two-public-leaf cut supplies T3
+
+This is an ordinary source theorem for Report449's actual height-two network. It is not Lean verification or a solution of general cut77. It reuses the established selected-pair prefix-cost inequality and its sorted-cost bound; the new step connects a saturated cut and a mass20 block to those existing inequalities.
+
+### Exact statement
+
+Let the four occupied root sizes be5,5,5,4, and put q_s=n_s-2. Retain the literal pair premise: the actual projection of every q_r-child restriction at one occupied root and every q_s-child restriction at a different occupied root contains three distinct seven-columns with at least three distinct fine leaves each.
+
+Use the actual network capacities: source-root21, root-child7, private column6, private leaf2, actual bridge126, public leaf7, public column21. Fix an occupied root r, different columns P and G, and different G fine labels u,v. Suppose a cut X has exactly the following forward boundary:
+
+- Public capacity21 wholly in P, realized either by its column arc or by three distinct public leaf arcs in P.
+- The two public G-leaf arcs u,v, each of capacity7.
+- Private arcs of root r, all in G, with total capacity6.
+- Private arcs of the other three roots, with total capacity36.
+
+There are no other forward cut arcs; in particular none is a source-root, root-child, or actual bridge arc. Private arcs here mean only the private column and private leaf levels. Suppose x is an integral actual flow of value77, and its(r,G) block has mass20. The stated boundary also has capacity77, so x and X are a matching flow and minimum cut.
+
+Then every q_r-child restriction at r has at least three actual G neighbors. For a full root this is T3 directly. For the gap root it implies T3 after the empty fifth row is adjoined: every triple of literal rows contains at least two occupied rows.
+
+If this chosen flow's other dangerous blocks already have T3, the existing simultaneous T3 consumer supplies one actual probability law with Gamma_1225<=691/77<9. The consumer is conditional on all dangerous blocks of the SAME chosen flow; this local supplier does not settle the other blocks by itself.
+
+### Saturation identifies the public and private mass
+
+Flow-cut equality saturates every forward arc and makes every backward crossing carry zero flow. Every actual atom has its fixed source-to-sink path. A positive atom path crosses the cut exactly once: two forward crossings would require an intervening backward crossing.
+
+Every actual point of root r lies in P union G. A point in any third column would have an actual path containing none of the listed forward boundary arcs, which is impossible for an S-to-T path.
+
+The private r,G boundary carries6 units, all belonging to the(r,G) block. Every other positive atom of this block crosses a public G-leaf boundary, because P differs from G and no other boundary is available. Thus14 block units cross u,v. Their combined public capacity is14, so root r alone sends7 through each and other roots send none through them. No positive atom that crosses a private r,G boundary can use u or v: that would be a second forward crossing.
+
+Each of u,v has at least four actual child owners, since each child/leaf atom has capacity2. Consequently every q_r-child restriction meets both of these owner sets: q_r=3 out of5 for a full root, and q_r=2 out of4 for the gap.
+
+### A bad restriction has zero private cut cost
+
+Suppose a q_r-child set A has at most two actual G neighbors. By the preceding paragraph its complete G neighborhood is exactly{u,v}.
+
+There can be NO private forward cut arc belonging to a child in A. Every such arc belongs to r,G and is saturated with positive capacity. Its positive flow would contain an actual point at that child with G label outside{u,v}, because private-boundary positive atoms cannot use the two public G-leaf arcs. This contradicts the complete actual neighborhood of A. Thus A has private integer cost0, where private capacity is measured in units of2.
+
+Fix another occupied root s and any q_s-child restriction B. Every actual point in the A,B projection is covered by the fixed public boundary and the private boundary at B. The public boundary has unweighted ternary-prefix cost5: P contributes3, and u,v contribute1 each. The A-private contribution is zero. A ternary height-two tree cannot be covered at integer prefix cost below9. Therefore the private cost at B is at least4.
+
+This is exactly the existing selected-pair inequality with the ACTUAL selected A cost0 and public k=5; it does not require a new averaged-token theorem.
+
+Write the nonnegative private child costs at s in increasing order, and let p be the sum of the smallest q_s. Since every B costs at least4, p>=4. The established sorted-cost inequality gives
+
+    Z_s >= p+(n_s-q_s)*ceil(p/q_s).
+
+For a full root this is at least4+2*ceil(4/3)=8 tokens. For the gap root it is at least4+2*ceil(4/2)=8 tokens as well. Every one of the three other roots therefore requires at least16 raw units of private boundary, hence at least48 in total. The displayed cut allocates only36. Contradiction.
+
+No bad A exists, proving the supplier.
+
+The same contradiction can be phrased as a hypothetical boundary demand21+14+6+48=89. It is used only under the stated saturation and block-mass hypotheses. It is not an unconditional lower bound on arbitrary cuts; saturation cannot be omitted when interpreting this budget.
+
+### Relation to existing source theorems
+
+Report449 already gives T3 when EVERY occupied root is supported in one common column plus its own exclusive private column. This supplier assumes that two-column containment only for the distinguished root, and derives it from its cut boundary. Other roots may have actual points in additional columns, including G, subject to the same global cut and capacity assumptions.
+
+The existing164-point forced20 control has exactly the displayed cut with r=0,P=0,G=1,u=0,v=1: public21+14, distinguished private6, other private36. Its integral bad-flow block mass is20, and its actual G support has T3. This verifies the supplier's nonempty scope without creating a new example solely to repeat that source's old conclusion.
+
+There is also a direct strict extension of the two-column source hypothesis: add the single actual point(1,0,1,0) to that published164-point source. Its root1 now uses columns0,1,2, so the all-root two-column source premise fails. The old flow remains feasible with zero mass at the added point. The old cut is unchanged because the added bridge lies wholly on its source side. Literal blocking and standalone-tree existence persist under enlarging the actual source. Thus this165-point source satisfies the new cut supplier and demonstrates that its hypotheses need not satisfy the older all-root two-column premise. This comparison does not claim exclusion from every other sufficient theorem in the repository.
+
+The published68-point bad-neighborhood control has a displayed cut consisting of three source-root21 arcs and seven private leaf2 arcs. It fails this supplier's boundary hypothesis. Its root0/column1 actual T3 failure is retained as a negative control, without re-running its already published full literal suite or pretending that checking one displayed cut enumerates all minimum cuts.
+
+The companion finite checker validates the published source/flow/cut data, the164 and derived165 hypotheses, the actual T3 conclusion, and the68 displayed-cut mismatch. The proof, rather than finite testing, establishes the theorem for arbitrary sources satisfying its exact conditions.
+
+The [cut-supplier checker](../../frontier/cover-geometry/height_two_cut77_public_two_leaf_supplier.py) and [exact data](../../frontier/cover-geometry/height_two_cut77_public_two_leaf_supplier.json) reproduce these controls from the published adjacent164-point and68-point fixtures:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_public_two_leaf_supplier.py
+```
+
 ## Cut72: all partial profiles and the fully active public6 stratum
 
 This section gives ordinary source proofs for thirteen of the fourteen necessary cut72 profile families, counting full-root permutations as one family. A controlled family has a single actual law below nine; an impossible family has no source satisfying the literal premises. The only remaining family is fully active4555 with public4/private22, containing22 necessary private shapes. This is not a complete cut72 theorem or an original-cofactor lift.
@@ -3908,7 +3977,7 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. Thus thirteen of fourteen necessary cut72 families are controlled or impossible; the sole remaining family is fully active4555 with public4/private22, comprising22 necessary private shapes. General high-incidence sources in the remaining
 range72/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
