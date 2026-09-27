@@ -12026,3 +12026,254 @@ blocks, and does not yet yield a universal occupation mixture. The safe
 transport normal form gives an independent jointly terminating repair family;
 its terminal actual-support traps still require a bridge to this global
 minimum-cost alternative or a separate source supplier.
+
+## Current maximal mass18 entries admit global capacity reductions
+
+Ordinary exact actual-network mathematics, not Lean verification. The local
+cut is derived from an actual full-network cut below; it is not assumed to
+extend to a global cut.
+
+### GE74.1. Statement
+
+Fix a complete original literal4555 source satisfying its original pair and
+standalone premises, with a half-integral balanced flow of value74 and four
+root totals37/2. Consider a selected root/column block(r,G) with mass18 and
+public-column total21. Write x for its matrix, r_i,c_j for its row/column
+totals, and z_i,y_j for the same-root off-G and other-root in-G vectors.
+Suppose an actual selected entry e=(i*,j) has
+
+    z_i*=1/2, r_i*=6, c_j=7, x_i*j=2, y_j=0.       (GE1)
+
+Thus e attains the only maximal local score625/2 of the half-integral
+mass18 block. No T3 hypothesis on its support is needed.
+
+Then either the original source has an already supplied one-inactive-root
+cut of capacity at most77 or three-inactive-root cut of capacity at most82,
+or the SAME full balanced network carries value74 after lowering the one
+actual entry capacity at e from2 to3/2. In the latter case a half-integral
+flow exists. This statement does not hold the other block masses or the
+external vectors fixed.
+
+### GE74.2. A failed entry-cap reduction gives an exact balanced cut
+
+All balanced capacities are half-integral. If lowering only e by1/2 prevents
+value74, a failed cut must cross e and must previously have capacity exactly74:
+every old cut was at least74 and a nontight cut was at least149/2. Let X be
+this original balanced cut, evaluated against the GIVEN flow f. Every forward
+balanced cut arc is saturated and every backward cut arc has zero flow.
+
+The selected entry has positive flow2. Its private prefix is source-side and
+its private leaf is sink-side. Positive flow on its ancestor path forces its
+child and root to be source-side as well. Every selected-root child total is
+at most6+1/2<7, so none of that root's child arcs can cross; all its original
+children are source-side. The entire selected-root off-G flow is1/2, smaller
+than every private capacity2 or6. Starting at each source-side child, every
+actual off-G private path and its actual126 bridge must remain source-side.
+Thus every actual off-G leaf belongs to the public forward-cut cylinders P.
+
+The public fine leaf j is sink-side, since the selected private leaf's positive
+actual bridge forbids a backward crossing. Its positive flow onward forces
+the public G-column node sink-side. Therefore the public G part of the cut
+consists only of source-side fine leaves of capacity7, never a whole G prefix.
+
+Only the source-root capacities are nonintegral. If t roots are inactive,
+74 being integral makes t even. The selected root is active, so t=0 or2.
+The capacity of this SAME cut in the original network is74+(5/2)t, at most79.
+It need not be an original minimum cut.
+
+### GE74.3. Deriving the exact local18 cut from X
+
+In the selected G matrix let a be the number of actual G-prefix nodes on the
+sink side, b the number of source-side public G fine leaves, and c the number
+of actual entries crossing from a source-side selected G prefix to a sink-side
+public G fine leaf. Pad the gap's missing fifth literal row by an empty row;
+it has no actual prefix and never contributes to a or c.
+
+Each sink-side G prefix has a forward capacity6 arc from its source-side
+child and hence carries6. For a source-side prefix and a sink-side actual
+public fine leaf, the private leaf must be sink-side: otherwise its126 bridge
+would cross a cut of capacity74. Its entry edge therefore crosses, carries2,
+and is counted in c. Conversely a crossing selected entry cannot end at a
+source-side public fine leaf, since its positive actual bridge would then
+cross backwards. A sink-side private prefix sends no positive selected flow
+to a source-side public leaf, by the same zero-backward-flow argument.
+
+Each source-side public fine leaf h has a saturated forward public edge, so
+its selected-root mass is exactly7-y_h. These are precisely the boundary
+terms of the local selected matrix, and selected-flow conservation gives
+
+    6a + sum_(h public-source in G)(7-y_h) + 2c =18.    (GE2)
+
+The designated entry crosses this local cut. This is an ACTUAL exact local18
+cut, not merely the capacity of a cut in a relaxed matrix. All35 literal
+positions retain their actual or absent support status.
+
+### GE74.4. The local bad-entry inventory has only two viable forms
+
+For reference, the doubled exact-cut equation is
+
+    12a+14b+4c-Y=36, Y=sum_source(2y_h), 0<=Y<=6.
+
+The existing T318 cut inventory and its bad-entry argument apply to(GE2).
+Here is the necessary exclusion in full. Let u count crossing entries at
+the designated public label j. They all carry2. The a outside rows can each
+contribute at most2 to j, while c_j=7, so2u<=7<=2u+2a.
+If a=0 parity is impossible. If a>=3 the exact-cut inventory has no crossing
+entry. For a=2 the only case with enough crossing entries is b=0,c=3; but
+the flagged row of mass6 uses all three entries, only one at j, leaving
+column j at most2+4=6. For a=1, u=3. The viable numerical cases are b=0,c=6;
+b=1,c=3,Y=2; or b=1,c=4,Y=6. In the middle case all three crossing entries
+are at j, leaving the flagged row at most one such entry and one source-column
+entry, hence row mass at most4. Consequently only
+
+    a=1,b=0,c=6;
+    a=1,b=1,c=4,Y=6                              (GE3)
+
+remain. The full necessary cut inventory is already checked in T318; no
+non-realizable matrix support is promoted to an actual source by this use.
+
+In the first case the selected root contributes exactly6+12=18 to the
+global private forward boundary; it has no off-G private boundary and no
+crossed child edge. Move its entire private forest and root sink-side.
+The resulting original cut has capacity at most
+
+    74+(5/2)t-18+21=77+(5/2)t.
+
+This is one-inactive<=77 for t=0 or three-inactive<=82 for t=2, already supplied.
+
+### GE74.5. The b=1 case contradicts the original pair premise
+
+Now a=1,b=1,c=4,Y=6. Call the single source-side public G fine label h.
+Its external mass y_h=3 uses ALL other-root G mass; its selected mass is4.
+The selected private forward boundary is6+8=14.
+
+The flagged row carries6. Three crossing entries point to j, and the fourth
+crossing entry must also belong to the flagged row: otherwise that row has
+at most its j entry and its one possible h entry, totaling4. It follows that
+the other three source-side literal rows have their ENTIRE actual G
+neighborhood in{j,h}. At a full root those three rows are an original legal
+triple. At the gap the missing literal row is among them (the flagged and
+outside rows carry positive flow and hence are actual); deleting that empty
+row gives the original legal pair of two actual children. Denote this legal
+restriction by A. Its entire off-G projection is contained in P.
+
+At any other ACTIVE original child, its actual G neighborhood is contained
+in{h}. Indeed an outgoing private G-prefix cut would be saturated at6, more
+than the3 total other-root G units. A private G entry crossing to any other
+public fine label would be saturated at2 and carry positive flow at that
+label, whereas ALL other-root G flow is at h. An actual126 bridge cannot
+cross. Thus no actual G point at another label can occur at that active
+child. This concerns actual support, including its previously zero entries.
+
+Let k be the public forward-cut token cost: one for a fine leaf, three for a
+whole column. It includes the single G leaf h, so k>=1. At another active
+root choose any original legal restriction B consisting of active children.
+Such a restriction exists: a root of flow18.5 has at most two inactive
+children of saturated cost7, leaving at least n-2 active children. Write
+z_B for the private first-crossing prefix cost at those children, in tokens
+one for an entry and three for a whole private column.
+
+The pair A,B must contain the original three-branch, three-leaf-per-branch
+tree. Their G projection is contained in{j,h}, so NONE of that tree's three
+branches can be G. All nine tree leaves are covered by the public prefixes
+OUTSIDE G, of token cost k-1, and B's private prefixes. Hence
+
+    k-1+z_B>=9, equivalently z_B>=10-k.             (GE4)
+
+This counts only the chosen tree's three leaves against a whole prefix and
+does not bound a whole prefix's complete actual fiber by three points.
+
+### GE74.6. The same-cut affine budget is at least84
+
+If k>=10, public capacity7k plus selected private capacity14 is at least84.
+Suppose1<=k<=10. An inactive OTHER root contributes original capacity21.
+For an active other root with n original children and u active children,
+put q=n-2. There are u>=q active children. Averaging(GE4) over all q-subsets
+gives total private token cost at least u(10-k)/q. Together with inactive
+child edges its original raw contribution is at least
+
+    F_(n,u)(k)=7(n-u)+2u(10-k)/q.
+
+At k=1 this equals35-u>=30 for a full root or28+2u>=32 for the gap. At k=10
+it is nonnegative. Affine interpolation gives F_(n,u)(k)>=21(10-k)/9.
+Inactive roots satisfy the same bound. Therefore all three other-root
+contributions and the public contribution total at least
+
+    3*21(10-k)/9+7k=70.
+
+Adding the selected root's14 gives ORIGINAL cut capacity at least84. But
+this very cut has original capacity74+(5/2)t<=79. This contradiction excludes
+the second case of(GE3), and completes the global entry-cap alternative.
+
+### GE74.7. Joint consequence and remaining limit
+
+On a source outside the supplied cut branches, no balanced minimum cut
+crosses any current entry satisfying(GE1). Such a source also has NO balanced
+cut of capacity149/2. A half-integral cut of that capacity has an odd number
+t=1 or3 of inactive roots, and original capacity149/2+(5/2)t, respectively77
+or82. Either is an already supplied cut. Hence every nontight balanced cut
+has capacity at least75.
+
+Let B be the nonempty set of current entries satisfying(GE1). For ANY
+nonnegative reductions delta_e with sum_(e in B)delta_e<=1, lowering these
+entry caps by their respective delta_e preserves balanced value74. Tight
+cuts cross none of B, and every nontight cut has margin at least1 while
+losing at most1. In particular all B caps may be reduced by1/|B|. There are
+at most six entries in B, since at most three public21 blocks can be
+dangerous and each mass18 block has at most two such fine columns of mass7.
+
+The same observation simultaneously lowers the at most TWO current bad
+entries of any specified mass18 block by1/2 each, retaining half-integral
+capacities and allowing a half-integral new flow. If only one selected
+current bad entry is being constrained, its cap can even be lowered to1.
+
+For general rational reductions the resulting common flow need not be
+half-integral. Even the half-integral choices can change other block masses
+and external vectors; entry feasibility alone does not imply all the
+H185/T318 consumer hypotheses.
+Subsequent regularization must also preserve the entry improvement that is
+being consumed. Thus this simultaneous capacity feasibility is new global
+information, not yet a complete common-query law below9 for maximum74.
+
+### GE74.8. Complete actual-source control with two genuinely maximal entries
+
+The [complete-source checker](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_bad_entry_global_control.py) and [exact data](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_bad_entry_global_control.json) reuse the272-point
+cross-repair source. It has a matching original cut74 and an explicitly
+balanced flow. In the selected gap/G block its four actual rows are
+
+    row0:A2 B2;
+    row1:A2 B2;
+    row2:A2 B2 C2;
+    row3:A1 B1 D2.
+
+The outside half-unit belongs to row2. Both A and B have internal mass7 and
+external mass0, so row2/A and row2/B are actual(GE1) entries. Each has raw
+coherent charge593. The program constructs one full-network half-unit
+circulation reducing the first entry to1.5 and then a second reducing the
+other entry to1.5. All four root totals and all public coarse totals remain
+fixed. The two displayed charges become561 and581 after the first repair,
+and549 and549 after both repairs.
+
+The checks cover655 actual live edges, all480 original legal pairs, the
+standalone premise, original flow/cut equality, all capacities including
+the lowered entry caps, half-integrality, and the exact query readings.
+The source and all three atom laws are emitted. This is a control with
+genuine maximal entries, not a claim that the exhibited simple circulations
+exist on every source.
+
+Independent reconstruction from the saved source and all three atom tables,
+without the author helpers, reproduces the480 original pair checks,655
+network edges, balanced masses, matching original cut and all six displayed
+query charges. The source's three full roots are individually robust; this
+control verifies genuine maximal entries and both capacity reductions,
+without asserting that this source lies outside every other supplied branch.
+The general alternative and the simultaneous unit reduction budget follow
+from GE74.2--GE74.7. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_bad_entry_global_control.py \
+  --base-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py \
+  --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
+  --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
+  --output /tmp/e7_balanced74_bad_entry_global_replay.json
+```
