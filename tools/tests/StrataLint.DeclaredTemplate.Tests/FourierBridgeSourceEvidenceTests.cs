@@ -30,14 +30,24 @@ public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOut
         {
             // Normal engineering invocations produce the original source and mirror
             // through the supported native facets, with the usual cache admission.
-            var produced = BoundedProcessRunner.Run("/bin/bash",
-                ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "Reg", "build",
-                    "+" + module + ":report", "+Reg." + module + ":report"],
-                root, NativeEvidenceDeadline, 4 * 1024 * 1024);
-            var diagnostics = Encoding.UTF8.GetString(produced.StandardOutput)
-                + Encoding.UTF8.GetString(produced.StandardError);
-            output.WriteLine(diagnostics);
-            Assert.True(produced.ExitCode == 0, diagnostics);
+            using var stdout = new MemoryStream();
+            using var stderr = new MemoryStream();
+            try
+            {
+                var produced = BoundedProcessRunner.Run("/bin/bash",
+                    ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "Reg", "build",
+                        "+" + module + ":report", "+Reg." + module + ":report"],
+                    root, NativeEvidenceDeadline, 4 * 1024 * 1024,
+                    standardOutput: stdout, standardError: stderr);
+                Assert.True(produced.ExitCode == 0, "Native source/mirror report production failed.");
+            }
+            finally
+            {
+                // Preserve the last completed build/cache work even when the
+                // process deadline throws before returning its output buffers.
+                output.WriteLine(Encoding.UTF8.GetString(stdout.ToArray()));
+                output.WriteLine(Encoding.UTF8.GetString(stderr.ToArray()));
+            }
             directory = Path.Combine(root, ".lake/build/lean-inspector/modules");
         }
         Assert.False(string.IsNullOrEmpty(directory), "Required native :report artifacts were not supplied.");

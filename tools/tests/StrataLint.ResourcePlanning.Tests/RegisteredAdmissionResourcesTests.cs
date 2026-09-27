@@ -29,9 +29,13 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         var requirements = JsonNode.Parse(result.Text)!;
         Assert.Contains("test-declared-template", Strings(plan["stages"]!["engineering"]!["resources"]!));
         Assert.Contains("lake", Strings(requirements["tools"]!));
-        Assert.Contains("elan", Strings(requirements["cache_layers"]!));
-        Assert.Contains("lean-toolchain", Strings(requirements["materials"]!));
-        Assert.Equal("stage-start", requirements["cache_activation"]!["elan"]!.GetValue<string>());
+        foreach (var layer in new[] { "dependency", "elan", "project" })
+        {
+            Assert.Contains(layer, Strings(requirements["cache_layers"]!));
+            Assert.Equal("stage-start", requirements["cache_activation"]![layer]!.GetValue<string>());
+        }
+        foreach (var material in new[] { "lean-toolchain", "lake-manifest.json", "lakefile.toml" })
+            Assert.Contains(material, Strings(requirements["materials"]!));
     }
 
     [Theory]
