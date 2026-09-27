@@ -67,7 +67,6 @@ theorem paired_angle_demand
   have hsqDo : (Real.sqrt Do)^2 = Do := Real.sq_sqrt hDo.le
   have hsqrt_mul : Real.sqrt (Dr * Do) = Real.sqrt Dr * Real.sqrt Do := by
     rw [Real.sqrt_mul (le_of_lt hDr)]
-
   have hct_den : ct * Dr = numerator r a b o a b := by
     have hrad_swap : rad r b a = rad r a b := by unfold rad; ring
     have hct0 : ct = numerator r a b o a b / Real.sqrt (rad r a b) /
@@ -100,7 +99,6 @@ theorem paired_angle_demand
   have hP : 0 < L * M := mul_pos hL hM
   have hPs : 0 < Real.sqrt (L * M) := Real.sqrt_pos.2 hP
   have hsqP : (Real.sqrt (L * M))^2 = L * M := Real.sq_sqrt hP.le
-
   have hca_exact : ca * Real.sqrt (Dr * Do) = numerator a b r a b o := by
     dsimp [ca]
     unfold cosine
@@ -154,7 +152,6 @@ theorem paired_angle_demand
     rcases (mul_pos_iff.mp hprod) with h | h
     · exact h.1
     · linarith [h.2, hQs]
-
   have hcos_theta : Real.cos theta = ct := by
     dsimp [theta]
     exact Real.cos_arccos ht.1.le ht.2.le
@@ -239,7 +236,6 @@ theorem paired_angle_demand
         rw [hsin_beta_exact, hsin_delta_exact]
       _ = (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1)) *
           Real.sqrt (L * M) := by ring
-
   let eta : ℝ := (beta + delta) / 2
   let phi : ℝ := (beta - delta) / 2
   have hphi_bounds : -(Real.pi / 2) < phi ∧ phi < Real.pi / 2 := by
@@ -313,7 +309,6 @@ theorem paired_angle_demand
           _ = ((Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1)) *
               Real.sqrt (L * M)) * (Real.cos beta + Real.cos delta) := by
             rw [hcos_beta, hcos_delta]
-
   let T : ℝ := (Real.tan eta)^2
   let t : ℝ := (Real.tan (theta / 2))^2
   let q : ℝ :=
@@ -369,7 +364,6 @@ theorem paired_angle_demand
   have htan_relation_eq : t = (r - 1) * M / ((r + 1) * L) := by
     apply (eq_div_iff (mul_ne_zero (by linarith : r + 1 ≠ 0) (ne_of_gt hL))).2
     exact htan_relation
-
   have hk : 0 < k := by dsimp [k]; linarith
   have hk2 : 0 < k + 2 := by linarith
   have hksq : 0 < k^2 := sq_pos_of_pos hk
@@ -491,7 +485,6 @@ theorem paired_angle_demand
     ring
   have hkey : 1 < t + 2 * q := by
     linarith only [ht_lower, hq_lower, hbase_sum]
-
   have htan_eta_sq : T * t = q := by
     dsimp [T, q]
     rw [htan_eta, htan_relation_eq]
