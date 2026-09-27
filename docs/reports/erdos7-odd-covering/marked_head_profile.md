@@ -848,6 +848,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Simultaneous root absorption and Hall obstructions](profile-notes/arithmetic/350-399/383-simultaneous-root-absorption-and-hall-obstructions.md)
 - [The private-witness profile upper is automatic for odd divisor labels](profile-notes/arithmetic/350-399/384-private-witness-profile-upper-is-automatic.md)
 - [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+- [Joint composite-parent contractions forbid two actual residue patterns, including an arbitrary-height ternary pattern; irredundant divisor-closed controls separate joint repair from two failed single repairs](profile-notes/arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#6-a-mixed-root-cross-permits-a-joint-composite-parent-contraction)
 - [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/350-399/386-pair-root-conflicts-and-original-survivor-capacity.md)
 - [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/350-399/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
 - [A saturated 36-point chain blocker admits no full-history capped law and separates the finite-depth stop-loss comparison](profile-notes/arithmetic/350-399/388-saturated-chain-blockers-do-not-supply-conditional-caps.md)
@@ -931,6 +932,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Every literal65/63 equality source has an exact five-column decomposition and one actual private law with Gamma at most25/3; the same law works on any source containing its private structure](profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md)
 
 - [Weighted original ternary depths have sharp fixed-cofactor bounds34/9 and11/3 with one Gram deletion credit; a702-label actual family separates good head marginals from the uniform outside-lift completion budget](profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md)
+- [The463-class phase obstruction excludes every compatible same-prime centered two-parent contraction; eight extra private points complete the certificate, and pure-prime tails preserve it at arbitrarily high density below one](profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md#136-every-centered-two-parent-contraction-is-blocked-in-the-same-family)
 
 - [Trimming actual early-depth cylinders preserves any given core law and bounds all single-outside-prime-power completion tails with a|1225 and p>=43 by3677489/17297280<1/4, retaining arbitrary finite heights and original phases](profile-notes/arithmetic/450-499/451-original-phase-trimming-gives-a-summable-single-prime-lift.md)
 

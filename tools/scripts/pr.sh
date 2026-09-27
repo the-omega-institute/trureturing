@@ -201,8 +201,10 @@ parse_snapshot() {
       # The workflow path must be known before selecting its PR identity policy.
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
+      # Non-native PR runs lack certified trigger identity. Even one association
+      # is a mutable open-head match, so reject before applicability or supersession.
       (if native_run then (associated_prs | length) == 1
-       elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
+       elif (.event | pr_event) then false else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
         .url == ("https://api.github.com/repos/" + $repo + "/pulls/" + (.number | tostring)) and

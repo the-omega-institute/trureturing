@@ -1,0 +1,8 @@
+若 $X$ 是所述解，则
+
+$$
+X=\sum_{n=0}^{k-1}\mathcal A^nR+\mathcal A^kX,
+\qquad 0\le\mathcal A^kX\le cR_k\longrightarrow0,
+$$
+
+故 $X=T$。
