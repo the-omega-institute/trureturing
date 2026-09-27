@@ -58,8 +58,11 @@ internal sealed class CarryRevealsLowDigitsDocument : IScribeDocumentDefinition
             Sub("W", Seq(K, Comma, Nn)), Open, D(0), Close, Sp, Eq, Sp, Sub("W", Seq(K, Comma, Nn)), Open, D(1),
             Close, Sp, Land, Sp, Sub("q", Seq(K, Plus, D(1))), Open, D(0), Close, Sp, Neq, Sp,
             Sub("q", Seq(K, Plus, D(1))), Open, D(1), Close);
+        Formula setting = Seq(F.Id("p"), Sp, F.Text, Grp(Sp, F.Id("prime"), Sp), Comma, Sp, K, Sp, InMacro, Sp,
+            Mathbb, Grp(F.Id("N")), Comma, Sp, X, Comma, Sp, Y, Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Underscore,
+            Grp(F.Id("p")), Comma, Sp);
         return Disp(Seq(
-            split, Sp, Rightarrow, RowBreak, Grp(),
+            setting, split, Sp, Rightarrow, RowBreak, Grp(),
             carry, Comma, RowBreak, Grp(),
             firstChange, Comma, RowBreak, Grp(),
             kernel, Comma, RowBreak, Grp(),

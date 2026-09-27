@@ -30,7 +30,7 @@ The protocol reads the sensor after 0, 1, ..., N unit translations.
 
 **Theorem 1.3 (Carry revelation and the sharp horizon).**
 
-$$q_{k+1}(x) = b p^{k}+r, b < p, r < p^{k} \Rightarrow\\{}d_{k}(x+n) = (b+\lfloor\frac{r+n}{p^{k}}\rfloor) \operatorname{mod} p \text{ for }n \leq p^{k}-1,\\{}\text{first change at }n = p^{k}-r \text{ if }r > 0, \text{no change if }r = 0,\\{}W_{k,p^{k}-1}(x) = W_{k,p^{k}-1}(y) \iff q_{k+1}(x) = q_{k+1}(y),\\{}k \geq 1, N < p^{k}-1 \Rightarrow W_{k,N}(0) = W_{k,N}(1) \land q_{k+1}(0) \neq q_{k+1}(1).$$
+$$p \text{ prime }, k \in \mathbb{N}, x, y \in \mathbb{Z}_{p}, q_{k+1}(x) = b p^{k}+r, b < p, r < p^{k} \Rightarrow\\{}d_{k}(x+n) = (b+\lfloor\frac{r+n}{p^{k}}\rfloor) \operatorname{mod} p \text{ for }n \leq p^{k}-1,\\{}\text{first change at }n = p^{k}-r \text{ if }r > 0, \text{no change if }r = 0,\\{}W_{k,p^{k}-1}(x) = W_{k,p^{k}-1}(y) \iff q_{k+1}(x) = q_{k+1}(y),\\{}k \geq 1, N < p^{k}-1 \Rightarrow W_{k,N}(0) = W_{k,N}(1) \land q_{k+1}(0) \neq q_{k+1}(1).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/CarryRevealsLowDigits.carry_reveals_low_digits` (`✓ std3`). ∎
 
