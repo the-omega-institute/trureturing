@@ -87837,3 +87837,486 @@ $$
 Schur补、有限维谱定理与产品分解在本节内直接给出；单位圆谱的完整竞争类分类由§275供应，单Jordan负性界与尖锐下界由§269、§272供应。结论限于给定来源和数据合同，不附加蒸馏、有限副本或物理时间结论，也不据这些组合推导宣称外部文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 277. 重置仪器方向、零概率开启与统一角度副本过渡
+
+### 277.1 固定的真实来源对
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$、qubit输入 $H$ 及其固定 $Y$ 本征基。沿用§269—270的同一单Jordan来源对：
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad t=\frac14,\qquad M=I_n+tJ,
+$$
+$$
+Q=Q^\dagger\succ0,
+\qquad Q+M^\dagger QM=I_n,
+\qquad Z=2QM.
+\tag{277.1}
+$$
+令 $C$、$k>0$ 为§269式（269.32）—（269.43）所固定的矩阵与常数，定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,
+\qquad\delta=\delta_h=kh^{2n},
+$$
+$$
+\Omega_*=
+\frac1n\begin{pmatrix}Q&QM\\M^\dagger Q&I_n-Q\end{pmatrix},
+\qquad
+\Omega_h=
+\frac1n\begin{pmatrix}
+Q+D_h&(1-\delta)QM\\
+(1-\delta)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{277.2}
+$$
+§269的Schur缩放证明给某个 $h_*>0$，使 $0<h\le h_*$ 时 $\Omega_h\succ0$。缩小 $h_*$，可同时要求 $h_*\le1$ 和 $0<\delta\le1/2$。两来源均为迹一的实际密度态，满足
+$$
+\rho_*:=\operatorname{Tr}_H\Omega_*
+=\operatorname{Tr}_H\Omega_h=I_n/n,
+$$
+$$
+K_*:=\mathscr K(\Omega_*)=Z/n,
+\qquad
+K_h:=\mathscr K(\Omega_h)=(1-\delta)Z/n,
+\qquad \mathscr K(X)=2X_{+-},
+$$
+$$
+\|\Omega_h-\Omega_*\|_1=\Theta(h).
+\tag{277.3}
+$$
+这里及下文的渐近常数可以依赖固定的 $n,t,Q,C,k$。态和数据的迹范数均未除以二；无下标矩阵范数为算子范数。
+
+对任意同维密度态 $\Xi$，沿用参考响应
+$$
+R_Z(\Xi)=\operatorname{Tr}_H[(Z_H\otimes I)\Xi],
+\qquad
+R_X(\Xi)=\operatorname{Tr}_H[(X_H\otimes I)\Xi],
+$$
+$$
+K_\Xi=R_Z(\Xi)-iR_X(\Xi).
+\tag{277.4}
+$$
+对两个来源 $\Xi,\Omega$，记完整数据距离为
+$$
+\varepsilon_{\mathcal D}(\Xi,\Omega)
+=\|\rho_\Xi-\rho_\Omega\|_1+\|K_\Xi-K_\Omega\|_1.
+\tag{277.5}
+$$
+
+### 277.2 已知角度的实际仪器与完整输出合同
+
+给定已知实数 $\theta$，取两个设置
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad
+A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{277.6}
+$$
+每个 $A_w$ 的本征值为 $\pm1$，故四个效果正半定，且和为单位矩阵。仪器把输入量子输出重置为同一固定纯态 $P_{\rm reset}$，保留全部实际记录 $(w,\eta)$ 和整个参考 $E$。
+
+记
+$$
+R'_0(\Xi)=\cos\theta\,R_Z(\Xi)+\sin\theta\,R_X(\Xi),
+$$
+$$
+R'_1(\Xi)=-\sin\theta\,R_Z(\Xi)+\cos\theta\,R_X(\Xi).
+\tag{277.7}
+$$
+完整输出除共同纯重置因子外，精确为
+$$
+\sigma_\theta(\Xi)
+=\bigoplus_{w,\eta}\sigma_{w,\eta}(\Xi),
+\qquad
+\sigma_{w,\eta}(\Xi)
+=\frac{\rho_\Xi+\eta R'_w(\Xi)}4.
+\tag{277.8}
+$$
+它是记录空间 $\mathbb C^4$ 与参考 $E$ 上的迹一正矩阵。完整物理输出为 $P_{\rm reset}\otimes\sigma_\theta(\Xi)$；插入固定纯因子是等距嵌入，保留迹距离、根保真度和二元可区分性。因此下文可在这个 $4n$ 维有效输出空间中计算，所有记录和参考仍完整保留。
+
+令
+$$
+H_0(\theta)=\operatorname{Re}(e^{i\theta}Z),
+\qquad
+H_1(\theta)=\operatorname{Re}(e^{i(\theta+\pi/2)}Z),
+\qquad \operatorname{Re}B=(B+B^\dagger)/2.
+\tag{277.9}
+$$
+对固定来源对，输出块为
+$$
+\sigma_{\theta,*;w,\eta}=\frac{I_n+\eta H_w(\theta)}{4n},
+\qquad
+\sigma_{\theta,h;w,\eta}
+=\frac{I_n+\eta(1-\delta)H_w(\theta)}{4n}.
+\tag{277.10}
+$$
+在有效输出空间上还有精确恒等式
+$$
+\boxed{
+\sigma_{\theta,h}
+=(1-\delta)\sigma_{\theta,*}+\frac{\delta}{4n}I_{4n}.
+}
+\tag{277.11}
+$$
+因此两输出交换；在每个记录内选择 $H_w(\theta)$ 的本征基即可同时对角化。不同记录的 $H_w$ 无需彼此交换。
+
+二元假设 $j\in\{*,h\}$ 具有等先验，此后提供同一来源的独立副本。每份都经过同一个已知角度 $\theta$ 的仪器。允许对所有完整输出作任意集体POVM与终端处理。令
+$$
+N_{\rm out}(\theta,h)
+=\min\{N\ge1:\text{$N$份完整输出可使等先验平均错误率不超过 $1/3$}\}.
+\tag{277.12}
+$$
+这里 $N$ 是固定整数；方案知道来源族、$h$ 和 $\theta$。角度是两假设共用的设置参数；不同角度定义不同仪器。在每次此二元检验中，所有副本使用同一角度。
+
+采用半迹距离与未平方的根保真度
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,
+\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1.
+\tag{277.13}
+$$
+
+### 277.3 完整数据与实际输出的角度统一等价
+
+**定理277.1（完整输出的统一范数界）。** 对任意实数 $\theta$ 及任意两个同维来源，
+$$
+\boxed{
+\frac13\varepsilon_{\mathcal D}(\Xi,\Omega)
+\le\|\sigma_\theta(\Xi)-\sigma_\theta(\Omega)\|_1
+\le\varepsilon_{\mathcal D}(\Xi,\Omega).
+}
+\tag{277.14}
+$$
+两个常数与角度和参考维数均无关。
+
+**证明。** 记输出块差为
+$$
+B_{w,\eta}=\frac{\Delta\rho+\eta\Delta R'_w}4,
+\qquad d_{\rm out}=\sum_{w,\eta}\|B_{w,\eta}\|_1.
+$$
+由（277.7）—（277.8），
+$$
+\Delta\rho=\sum_{w,\eta}B_{w,\eta},
+\qquad
+\Delta R'_w=2(B_{w,+}-B_{w,-}),
+$$
+$$
+\Delta K=e^{-i\theta}(\Delta R'_0-i\Delta R'_1).
+\tag{277.15}
+$$
+三角不等式给 $\|\Delta\rho\|_1\le d_{\rm out}$ 和 $\|\Delta K\|_1\le2d_{\rm out}$，得到左侧。
+
+反向，对任意矩阵 $B$ 和实数 $\phi$，核范数的三角不等式及伴随不变性给 $\|\operatorname{Re}(e^{i\phi}B)\|_1\le\|B\|_1$。因此
+$$
+\begin{aligned}
+d_{\rm out}
+&\le\|\Delta\rho\|_1+
+\frac12\bigl(\|\Delta R'_0\|_1+\|\Delta R'_1\|_1\bigr)\\
+&\le\|\Delta\rho\|_1+\|\Delta K\|_1.
+\end{aligned}
+\tag{277.16}
+$$
+这就是右侧。$\square$
+
+式（277.15）同时给出输出与完整数据的精确对应。对每个固定 $\theta$，$\Omega_*$ 的实际输出纤维与完整数据纤维相同，故由§269可知其唯一。若以实际输出迹距离代替完整数据误差，$\Omega_*$ 处的最优局部逆指数仍恰为 $1/(2n)$：上界由（277.14）与§269的完整数据上界合成；同边缘族（277.2）的态差为 $\Theta(h)$，而
+$$
+\varepsilon_{\mathcal D}(\Omega_h,\Omega_*)
+=\frac{k\|Z\|_1}{n}h^{2n},
+\tag{277.17}
+$$
+所以（277.14）也排除一切更大指数。此指数对全部竞争态和精确共同边缘子合同相同。
+
+### 277.4 对齐端点的零概率开启
+
+由（277.1），对任意 $|\zeta|=1$ 有谱因子恒等式
+$$
+\boxed{
+I_n+\operatorname{Re}(\zeta Z)
+=(I_n+\zeta M)^\dagger Q(I_n+\zeta M).
+}
+\tag{277.18}
+$$
+取正负相位可知 $-I_n\preceq H_w(\theta)\preceq I_n$。
+
+在 $\theta=0$ 时，
+$$
+I_n-H_0(0)=(I_n-M)^\dagger Q(I_n-M),
+\qquad\ker(I_n-H_0(0))=\ker J=\mathbb Ce_1.
+\tag{277.19}
+$$
+$n=1$ 时右侧就是整个参考空间。其余三个记录块的因子相位为 $1,i,-i$，对应矩阵 $I_n+\zeta M$ 可逆，故严格正。因此理想有效输出恰有一个零方向，位于记录 $(0,-1)$ 和参考向量 $e_1$。
+
+**定理277.2（对齐仪器的副本界）。** 令
+$$
+C_n=\frac{\|H_0(0)\|_1+\|H_1(0)\|_1}{4n}.
+\tag{277.20}
+$$
+则 $0<C_n\le1/2$，且对 $0<h\le h_*$，
+$$
+\boxed{
+\frac1{3C_n\delta}
+\le N_{\rm out}(0,h)
+\le\left\lceil\frac{4n\log(3/2)}{\delta}\right\rceil.
+}
+\tag{277.21}
+$$
+特别有 $N_{\rm out}(0,h)=\Theta(\delta^{-1})=\Theta(h^{-2n})$。
+
+**证明。** 令 $P_0$ 为有效输出中记录 $(0,-1)$ 与参考 $e_1$ 上的一维投影。由（277.10）、（277.19），
+$$
+\operatorname{Tr}(P_0\sigma_{0,*})=0,
+\qquad
+\operatorname{Tr}(P_0\sigma_{0,h})=\frac{\delta}{4n}.
+\tag{277.22}
+$$
+逐份读实际记录，并在该记录中测量参考投影。若有任一次点击则判 $h$，否则判 $*$。该方案的等先验平均错误为
+$$
+P_{\rm err}=\frac12\left(1-\frac{\delta}{4n}\right)^N
+\le\frac12\exp\left(-\frac{N\delta}{4n}\right).
+\tag{277.23}
+$$
+于是（277.21）的整数上界足够。
+
+另一方面，直和核范数可加，式（277.10）给精确单次半迹距离
+$$
+d(\sigma_{0,h},\sigma_{0,*})=C_n\delta.
+\tag{277.24}
+$$
+$\|H_w(0)\|_1\le n$ 给 $C_n\le1/2$；$H_0(0)e_1=e_1$ 给 $C_n>0$。对张量幂作逐项差分，并用密度态核范数一，得到
+$$
+d(\sigma_{0,h}^{\otimes N},\sigma_{0,*}^{\otimes N})
+\le NC_n\delta.
+\tag{277.25}
+$$
+Holevo–Helstrom公式使平均错误不超过 $1/3$ 必须满足左侧至少为 $1/3$，故给（277.21）的下界。它适用于任意集体POVM。$\square$
+
+### 277.5 小角度下唯一小概率的Jordan尺度
+
+**引理277.3（小输出谱的统一尺度）。** 存在 $\theta_0>0$ 和固定常数 $c_a,C_a,b>0$，使对所有 $0\le\theta\le\theta_0$，$I_n-H_0(\theta)$ 的最小本征值 $a_\theta$ 满足
+$$
+c_a\theta^{2n}\le a_\theta\le C_a\theta^{2n},
+\qquad 0\le a_\theta\le1/2.
+\tag{277.26}
+$$
+在两输出的共同本征基中，理想输出恰有一个可能趋零的概率
+$$
+p_0=\frac{a_\theta}{4n},
+\tag{277.27}
+$$
+其余 $4n-1$ 个概率都至少为 $b$。$\theta>0$ 时全部理想有效输出概率严格正。
+
+**证明。** 令
+$$
+B_\theta=I_n-e^{i\theta}M.
+$$
+由（277.18），$I_n-H_0(\theta)=B_\theta^\dagger QB_\theta$。在零点，$B_0=-tJ$ 的最大 $n-1$ 个奇异值都是 $t$，最小奇异值为零。又有
+$$
+\|B_\theta-B_0\|\le(1+t)|1-e^{i\theta}|\le(1+t)\theta.
+\tag{277.28}
+$$
+奇异值的算子范数扰动界使充分小角度下的最大 $n-1$ 个奇异值 $s_1,\ldots,s_{n-1}$ 都位于 $[t/2,2t]$。当 $n=1$ 时，这组奇异值为空，乘积按一解释。
+
+因为 $M$ 上三角且对角全为一，
+$$
+|\det B_\theta|=|1-e^{i\theta}|^n
+=\prod_{j=1}^n s_j(B_\theta).
+\tag{277.29}
+$$
+取小角区间包含于 $[0,1]$。其上有 $2\theta/\pi\le|1-e^{i\theta}|\le\theta$，所以
+$$
+\frac{(2\theta/\pi)^n}{(2t)^{n-1}}
+\le s_n(B_\theta)
+\le\frac{\theta^n}{(t/2)^{n-1}}.
+\tag{277.30}
+$$
+该式也包含 $\theta=0$ 与 $n=1$。
+
+设 $q_{\min},q_{\max}$ 为 $Q$ 的最小、最大本征值。由
+$$
+q_{\min}B_\theta^\dagger B_\theta
+\preceq B_\theta^\dagger QB_\theta
+\preceq q_{\max}B_\theta^\dagger B_\theta,
+\tag{277.31}
+$$
+得到（277.26）的双向阶。$n\ge2$ 时，其余 $n-1$ 个本征值至少为 $q_{\min}(t/2)^2$。另外三个记录块在零点严格正；连续性使其在一个共同小角区间上保持统一正下界。再缩小 $\theta_0$，可使 $a_\theta\le1/2$，并使这一最小本征值与其余谱分离。除以 $4n$ 即得到所需 $b$。
+
+在 $0<\theta\le\theta_0$ 内，$1-e^{i\theta}\ne0$，故 $B_\theta$ 可逆；所有理想概率都正。$\square$
+
+对每个已知角度，共同本征基可随角度选取。记 $q_j$ 为竞争输出在该基中的概率，式（277.11）给
+$$
+q_j=(1-\delta)p_j+\frac{\delta}{4n}.
+\tag{277.32}
+$$
+特别地，
+$$
+q_0=\frac{a_\theta+\delta(1-a_\theta)}{4n},
+\qquad
+\frac{\delta}{8n}\le q_0-p_0\le\frac{\delta}{4n}.
+\tag{277.33}
+$$
+由（277.26），存在固定 $c_s,C_s>0$，使
+$$
+c_s(\theta^{2n}+\delta)
+\le p_0+q_0\le C_s(\theta^{2n}+\delta).
+\tag{277.34}
+$$
+其余概率满足 $p_j\ge b$、$q_j\ge b/2$，且所有 $j$ 均有 $|q_j-p_j|\le\delta/(4n)$。这些界在 $0\le\theta\le\theta_0$、$0<h\le h_*$ 上统一。
+
+### 277.6 实际输出对的统一根保真度缺口
+
+**引理277.4（角度与扰动的共同分母）。** 在上述矩形上，令
+$$
+F(\theta,h)=\mathsf F(\sigma_{\theta,*},\sigma_{\theta,h}),
+\qquad a(\theta,h)=1-F(\theta,h)^2.
+$$
+存在固定 $c_F,C_F>0$，使
+$$
+\boxed{
+c_F\frac{\delta^2}{\theta^{2n}+\delta}
+\le a(\theta,h)
+\le C_F\frac{\delta^2}{\theta^{2n}+\delta}.
+}
+\tag{277.35}
+$$
+
+**证明。** 共同本征基给
+$$
+F=\sum_{j=0}^{4n-1}\sqrt{p_jq_j},
+\qquad
+1-F=\frac12\sum_{j=0}^{4n-1}(\sqrt{p_j}-\sqrt{q_j})^2.
+\tag{277.36}
+$$
+其中第零项精确为
+$$
+\frac{(q_0-p_0)^2}
+{2(\sqrt{p_0}+\sqrt{q_0})^2}.
+\tag{277.37}
+$$
+其分母位于 $[2(p_0+q_0),4(p_0+q_0)]$。由（277.33）—（277.34），该项上下均为固定正常数乘 $\delta^2/(\theta^{2n}+\delta)$。
+
+对 $j\ne0$，分母至少为 $2p_j\ge2b$，所以这些项的总和不超过 $(4n-1)\delta^2/(32bn^2)$。又因为 $\theta^{2n}+\delta\le\theta_0^{2n}+1/2$，这个 $O(\delta^2)$ 余项被（277.35）的目标阶统一控制。所有项非负，第零项独自给出下界。
+
+最后使用 $a=(1-F)(1+F)$ 与 $1\le1+F\le2$。这些平方根恒等式在 $\theta=0$、$p_0=0$ 时仍成立。$h>0$ 时 $q_0>p_0$，而其余概率为正，所以 $0<F<1$。$\square$
+
+### 277.7 集体测量下界与实际似然检验上界
+
+**定理277.5（小角度和小扰动的统一副本阶）。** 存在固定 $\theta_0,h_0,c_N,C_N>0$，使对所有 $0\le\theta\le\theta_0$、$0<h\le h_0$，
+$$
+\boxed{
+c_N\frac{\theta^{2n}+\delta}{\delta^2}
+\le N_{\rm out}(\theta,h)
+\le C_N\frac{\theta^{2n}+\delta}{\delta^2}.
+}
+\tag{277.38}
+$$
+等价地，矩形上一致有
+$$
+\boxed{
+N_{\rm out}(\theta,h)
+=\Theta\!\left(h^{-2n}+\theta^{2n}h^{-4n}\right).
+}
+\tag{277.39}
+$$
+下界允许任意集体终端POVM；上界由逐份记录读取、参考本征基测量和经典似然比检验达到。
+
+**证明。** 取引理277.4的区间，并令 $a=1-F^2$。在共同本征基中，张量输出的根保真度为 $F^N$。根保真度—迹距不等式给
+$$
+d(\sigma_{\theta,*}^{\otimes N},\sigma_{\theta,h}^{\otimes N})^2
+\le1-F^{2N}=1-(1-a)^N\le Na.
+\tag{277.40}
+$$
+Holevo–Helstrom公式使目标平均错误要求半迹距离至少为 $1/3$，故
+$$
+N_{\rm out}(\theta,h)\ge\frac1{9a}
+\ge\frac{\theta^{2n}+\delta}{9C_F\delta^2}.
+\tag{277.41}
+$$
+这对完整联合输出上的所有集体POVM成立。
+
+为得上界，逐份读取实际记录 $(w,\eta)$，并在该记录内测量已知的 $H_w(\theta)$ 本征基。两个假设产生的实际经典分布是 $p$ 和 $q$。对 $N$ 个独立样本作等先验似然比检验，其平均错误为
+$$
+\begin{aligned}
+P_{\rm err}
+&=\frac12\sum_{\boldsymbol j}
+\min\left\{\prod_{\ell=1}^Np_{j_\ell},
+\prod_{\ell=1}^Nq_{j_\ell}\right\}\\
+&\le\frac12\sum_{\boldsymbol j}
+\prod_{\ell=1}^N\sqrt{p_{j_\ell}q_{j_\ell}}
+=\frac12F^N.
+\end{aligned}
+\tag{277.42}
+$$
+该公式允许某个 $p_j$ 为零；对应序列的检验按两个似然值直接比较。
+
+由 $0<F<1$ 和自然对数不等式，
+$$
+-\log F\ge1-F=\frac{a}{1+F}\ge\frac a2.
+$$
+因此取
+$$
+N=\left\lceil\frac{2\log(3/2)}a\right\rceil
+\le
+\left\lceil
+\frac{2\log(3/2)}{c_F}
+\frac{\theta^{2n}+\delta}{\delta^2}
+\right\rceil
+\tag{277.43}
+$$
+即足够。因 $0<\delta\le1/2$，有 $(\theta^{2n}+\delta)/\delta^2\ge2$，取整项可被固定系数吸收。与（277.41）合并得到（277.38）；代入 $\delta=kh^{2n}$，其中 $k>0$ 固定，便得到（277.39）。$\square$
+
+证明中使用的标准判别界可见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4（Holevo–Helstrom）和 Theorem 3.33（根保真度—迹距界）。本节统一阶的来源是（277.26）、（277.33）和（277.35）的具体输出谱估计。
+
+### 277.8 已知角度路径与一维参考端点
+
+**推论277.6（角度路径的副本指数）。** 在定理277.5的固定来源合同下，
+$$
+N_{\rm out}(0,h)=\Theta(h^{-2n});
+\qquad
+N_{\rm out}(\theta,h)=\Theta(h^{-4n})
+\quad\text{对每个固定 }0<\theta\le\theta_0.
+\tag{277.44}
+$$
+若每次检验的已知角度选择为 $\theta(h)=h^\beta$、$\beta>0$，则充分小 $h$ 时
+$$
+\boxed{
+N_{\rm out}(h^\beta,h)=
+\begin{cases}
+\Theta(h^{-2n(2-\beta)}),&0<\beta<1,\\
+\Theta(h^{-2n}),&\beta\ge1.
+\end{cases}
+}
+\tag{277.45}
+$$
+
+**证明。** 将固定角度或 $\theta=h^\beta$ 代入（277.39），比较两个幂次即可。$\beta>0$ 保证路径最终进入已声明的小角矩形。两项在 $\theta^{2n}$ 与 $\delta=kh^{2n}$ 同阶时相当，即角度为 $h$ 阶。$\square$
+
+$n=1$ 时，$J=0$、$M=1$、$Q=1/2$、$Z=1$；同一规范来源族具有 $k=1/64$。这时
+$$
+H_0(\theta)=\cos\theta,
+\qquad H_1(\theta)=-\sin\theta,
+\qquad a_\theta=1-\cos\theta,
+$$
+$$
+p_0=\frac{1-\cos\theta}{4},
+\qquad
+q_0=\frac{1-(1-\delta)\cos\theta}{4}.
+\tag{277.46}
+$$
+引理277.3中的空乘积为一，全部证明仍适用。因此
+$$
+N_{\rm out}(\theta,h)=\Theta(h^{-2}+\theta^2h^{-4}).
+\tag{277.47}
+$$
+对齐时其阶为 $h^{-2}$，每个固定小非零角度下为 $h^{-4}$。
+
+定理270.3对同一来源对的完整输入访问给 $N_{\rm in}(h)=\Theta(h^{-2})$。因此对齐输出在 $n=1$ 时具有相同副本阶；$n\ge2$ 时对齐输出的阶为 $h^{-2n}$。当 $\theta=\pi/4$，本节第二设置为§270第二设置的负号，交换对应的 $\eta$ 记录即可相互对应；定理270.3因而给该固定角度的阶 $h^{-4n}$。这一固定角度结果与定理277.5的小角矩形各按其已证明范围使用。
+
+定理277.1同时表明，每个固定角度下的精确数据纤维和锐逆指数保持不变。副本阶由实际输出概率 $p_0\asymp\theta^{2n}$ 与扰动增量 $q_0-p_0\asymp\delta$ 的共同尺度决定。
+
+本节角度是已知的仪器设置，不是待估计的校准误差；（277.45）中的两个假设也使用相同的已知 $\theta(h)$。副本上界使用实际记录和参考测量，副本下界允许完整输出的集体测量。数学数据反演（277.15）不附带不同仪器之间的物理后处理模拟。本文合同只规定该已知二元来源对的独立副本数，不包含未知角度估计、一般来源层析或测量实现历时。
+
+## 追加锚（本行以下为增补区）
