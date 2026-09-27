@@ -7422,3 +7422,271 @@ The neighborhood criterion, GP selected-block lowerings, OM occupation criterion
 The individual GF, PS, FD, TN, IG and IFP source proofs are retained with their stronger or more specific bounds. They preserve whole private-prefix fibres, original owner multiplicities and the fourth-column exception; they do not saturate a nonminimum original cut78. AC.8 also covers the four profiles not supplied by these individual arguments: full11222/full22222, gap1223/full22222, gap2222/full12223 and gap2223/full12222.
 
 These are fixed-head1225 results. An actual full odd-covering residual must additionally preserve every original outside-cofactor constraint under one common lift, as in439. A head law does not provide that lift, and439 rules out a uniform complete-Gamma bound below nine for arbitrary free cofactors. All-height transport and a bound for the actual original test family's same-law deletion correlations remain necessary arithmetic obligations. No unrestricted noncoverage conclusion or Lean kernel verification follows from AC77 alone.
+
+## Small complete anchors supply additional common laws below nine
+
+These ordinary actual-source proofs supply new conditional common laws and seven necessary cut-cost shapes. They do not assert Lean verification, realizability of every necessary shape, or closure of the entire remaining cut74--76 window. All complete fibres, owners and original numerical phase labels are retained.
+
+### SA.1. Original actual-source premises
+
+Retain an actual literal4555 source, its complete nonempty occupied-child fibres and original numerical public labels. A legal restriction selects three original children at a full root and two at the gap. Every pair of legal restrictions at distinct roots has a union containing a ternary seven-tree: three distinct public columns, each with three distinct actual fine labels. All laws below are fixed before the original independent phase queries.
+
+The source's maximum-flow value is not needed. The standalone five-tree may be retained but is not used here. With no public cut, private cost1 gives an actual singleton and private cost2 gives at most two actual fine labels. Private cost3 may be an entire public column, so its complete fibre is kept arbitrary.
+
+Existing inputs from Report449 IA.1 are the one-/two-leaf legal-anchor supplier (largest bound328/37), the balanced-three puncture construction IA2, the entire monochromatic-anchor puncture construction IA3, and the ordered-LCM cylinder envelope. The strengthened balanced-three consumer below retains the global fine-label disjointness of the same puncture law. The subsequent actual-support arguments supply a full root with three singleton children, a gap singleton with two doubles, and the stated public-singleton shapes.
+
+Caps always have divisor order
+
+    (1,5,7,25,35,49,175,245,1225),
+
+with ordered-LCM coefficients
+
+    (1,3,3,5,9,5,15,15,25).
+
+### SA.2. B3: A complete nonmonochromatic three-label legal anchor
+
+Let F be the COMPLETE actual projection of a legal restriction at R, with exactly three labels and at most two in any column. In every paired ternary tree remove all labels of F. Each of the three branches retains a leaf, and the sum of remaining branch sizes truncated at2 is at least5. Select five remaining actual leaves, at most two per column; lift each to its actual owner in the other restriction. Average over all original legal restrictions at each other root and mix those three root laws equally.
+
+The resulting single psi has IA2 caps
+
+    (1,1/3,2/5,1/5,2/15,1/5,2/25,1/15,1/25).
+
+It is supported at roots other than R and assigns zero to EVERY global fine label of F. Both properties persist under the entire averaging operation. In particular, the zero assertion is about the pure modulus49 cylinder, not merely a point with one selected owner.
+
+Choose one actual owner of each of the three F labels with at most two selected points at any owner. Such a choice exists because the legal restriction has at least two nonempty children: if an initial selection assigns all three labels to one child, another nonempty child supplies one of those labels and can own it instead. Let eta be uniform on the three selected actual points. Its column, child, root-column and child-column masses are at most2/3; its fine-label, root-fine and atom masses are at most1/3.
+
+For nu=(25/28)psi+(3/28)eta, all root-dependent caps combine by maxima because root supports are disjoint. The pure fine-label cap ALSO combines by a maximum because psi(F)=0. Only the pure column cap uses a sum. Hence ONE nu has caps
+
+    (1,25/84,3/7,5/28,5/42,5/28,1/14,5/84,1/28),
+
+and the ordered-LCM envelope is249/28<9. No fourth or fifth distinct label is needed.
+
+### SA.3. H4-two: A monochromatic complete anchor and four labels at at most two points per owner
+
+Suppose a COMPLETE original legal restriction at R lies in column H. Suppose also that four distinct actual H labels can be assigned at R to original child owners with at most two selected points per owner. The latter points need not belong to the anchor.
+
+The IA3 construction gives one psi, supported at the other roots and outside H, with caps
+
+    (1,1/3,1/2,1/5,1/6,1/6,1/10,1/18,1/30).
+
+Let eta be uniform on the four selected actual points. Its child and child-column caps are at most1/2; its fine-label, root-fine and atom caps are1/4. Put nu=(6/7)psi+(1/7)eta. Because its two components have disjoint root supports AND column supports, every nonunit cap combines by maxima. The resulting caps are
+
+    (1,2/7,3/7,6/35,1/7,1/7,3/35,1/21,1/28).
+
+For the only modified owner condition, eta's scaled child-column cap is1/14, below psi's3/35; thus distinct owners are unnecessary. The ordered-LCM envelope is249/28<9.
+
+### SA.4. Three actual singleton children at a full root
+
+Assume a full root R has three actual singleton children; its other two COMPLETE fibres are arbitrary nonempty sets. We prove that one actual law has Gamma<=503/56<9.
+
+Let the three singleton labels be u,v,w and write A={u,v,w}; let E,F be the other two COMPLETE actual fibres.
+
+If the singleton labels are not all distinct, their original legal triple has at most two fine labels and IA.1 applies. Assume they are distinct. If A is not monochromatic, its actual legal triple is balanced and B3 gives 249/28 < 503/56.
+
+It remains that A lies in one public column H. The three singleton owners themselves give a whole monochromatic legal restriction. The IA.1 monochromatic puncture law psi is therefore available, avoiding H. We use only the following established consumers:
+
+* H4: any eta supported at R inside H with child cap 1/4, fine-label cap 3/8, and atom cap 1/4 gives Gamma <= 503/56 via (6/7)psi+(1/7)eta.
+* H3+2: five distinct labels at five distinct R owners, three in H and two outside H, give Gamma <= 206/23 via (18/23)psi+(5/23)eta, with eta uniform.
+* IA.2: four original actual singleton children suffice, with the fifth fibre arbitrary.
+
+Now apply this exhaustive classification to E,F.
+
+1. If either fibre is a singleton, use IA.2.
+2. If E or F contains an H label outside A, choose that label at its owner and u,v,w at their singleton owners. Uniform mass on these four actual points is an H4 eta.
+3. If E or F contains at least two distinct H labels, give each of the three singleton owners mass 1/4 and split the remaining 1/4 equally between two such labels at that fourth owner. Every child and atom has mass at most 1/4. Each fine label has mass at most 1/4+1/8=3/8. This is another H4 eta. The arbitrary portions of that fibre outside H remain in the source but receive zero eta mass.
+4. Otherwise each of E,F has at most one H label, which belongs to A if present. Their outside-H parts are nonempty: an empty outside part would make the whole nonempty fibre a singleton, already handled in step 1. If the union of these two outside parts has at least two labels, choose different representatives, one from each part. Together with the three original singleton points these give H3+2. The existence of those representatives follows directly from both parts being nonempty and their union having at least two elements.
+5. The remaining outside parts are both the same singleton {x}, with x outside H. Since whole singleton fibres were removed in step 1, E={x,s}, F={x,t} for s,t in A. If s=t, the two complete double fibres and the original singleton s form a legal full restriction with at most two labels, so IA.1 applies. If s differs from t, let z be the third label in A. Give mass 1/4 to z at its original singleton owner. Give total mass 3/8 to s, split equally between its singleton owner and E's owner; give total mass 3/8 to t, split equally between its singleton owner and F's owner. The five owner masses are 1/4,3/16,3/16,3/16,3/16; the three fine masses are 1/4,3/8,3/8. This is an H4 eta.
+
+Every branch uses a single prescribed convex mixture of actual-source laws. Every anchor is an original legal restriction with its complete actual fibres; only eta's assigned mass is restricted. The largest bound is 503/56.
+
+### SA.5. G122: A gap singleton, two doubles and an arbitrary fourth fibre
+
+Suppose the gap root has one complete singleton fibre {z}, two other complete nonempty fibres E1,E2 of size at most2, and a fourth arbitrary nonempty complete fibre.
+
+If either Ei is a singleton, the pair with {z} is a legal restriction on at most two labels. If z belongs to Ei, that same pair again has at most two labels. Thus assume both Ei have size2 and avoid z. If either {z} union Ei is nonmonochromatic, this entire legal restriction is a B3 anchor.
+
+Otherwise both Ei lie in H=col(z), and the singleton together with either double is a complete monochromatic legal anchor. If E1=E2, the pair of double owners is a legal two-label restriction. In the remaining case the two distinct two-sets have at least three labels in their union, all different from z. Choose any three distinct labels from E1 union E2 and assign each to an actual owner among these two doubles. Each double has only two labels, so no owner receives more than two selected points. Together with z at its singleton owner these give four distinct actual H labels with at most two points per owner. Apply H4-two.
+
+Consequently this entire gap source class has one law with Gamma<=249/28. No property of the fourth fibre is required beyond nonemptiness; it is not deleted from the original source or from its legal tests.
+
+### SA.6. P0111: A public singleton and three private singleton candidates
+
+Fix a fine label y and three distinct original children e1,e2,e3 at one root. Assume their COMPLETE fibres satisfy
+
+    F(ei) subset {y,zi},   i=1,2,3,
+
+for specified private candidate labels zi. The candidates need not initially be distinct or actual. There are two cases:
+
+* A full root also has a fourth child e0 with entire fibre {y}; its fifth fibre is arbitrary and nonempty.
+* This is the gap root; its fourth fibre is arbitrary and nonempty.
+
+In the full case, consider each original legal triple {e0,ei,ej}; in the gap case, consider each original legal pair {ei,ej}. Its whole projection is contained in {y,zi,zj}. If one such projection has at most two labels, apply the existing supplier. If one has exactly three labels and is nonmonochromatic, apply B3.
+
+Otherwise EVERY displayed legal projection consists of three distinct actual labels in one column. It follows that y,z1,z2,z3 are pairwise distinct and each zi is actual at ei: a missing or repeated candidate would produce a legal projection of size at most2. These three projections share y, so all four labels lie in H=col(y). Thus each designated complete fibre lies in H, supplying a complete monochromatic legal anchor.
+
+For the full case choose y at e0 and zi at ei, giving four points at distinct owners. For the gap choose each zi at its own owner and choose y at any designated owner where it is actual (the displayed three-label projections guarantee such an owner). At most one gap owner then receives two points. In both cases H4-two applies, giving one law with Gamma<=249/28. The unselected fifth/fourth fibre remains arbitrary.
+
+### SA.7. B4-spread: a four-label complete anchor of column type211 or1111
+
+Retain one actual literal4555 source with nonempty complete child fibres and the original legal-pair ternary-tree condition. Let R have an ORIGINAL legal restriction whose COMPLETE actual projection F consists of four distinct fine labels. Suppose the positive column multiplicities of F are 211 or 1111.
+
+There is one probability law on the same actual source, chosen before all numerical phase queries, with
+
+    Gamma_1225 <= 250/29 < 9.
+
+No maximum-flow or cut-capacity assumption is used. All original owners and numerical labels are preserved. No fibre is shortened to create the legal restriction.
+
+#### Five-leaf puncture and actual ownership
+
+Pair this fixed restriction with each original legal restriction at each other root, and choose a ternary tree in the actual union. Such a tree has three public columns with three distinct fine labels in each. Delete every leaf belonging to F.
+
+Write d_i for the deleted count in its i-th column. In either allowed type every d_i is at most two, and at most one d_i equals two. Hence every branch remains nonempty, and
+
+    sum_i min(2, 3-d_i) >= 1+2+2 = 5.
+
+Choose five of the remaining leaves, with at most two in each column. Since their labels lie outside the COMPLETE F, each selected leaf has an actual owner in the other root's chosen legal restriction. Lift to those actual owners, make the five points uniform, average over all original legal restrictions at that other root, and mix equally over the other three roots.
+
+An original full child is included with probability 3/5; an original gap child with probability 1/2 <= 3/5. The resulting SAME psi therefore has the established IA2 caps in divisor order
+
+    (1,5,7,25,35,49,175,245,1225):
+    (1,1/3,2/5,1/5,2/15,1/5,2/25,1/15,1/25).
+
+Additionally, psi is supported away from root R and gives zero mass to every global fine label in F. All averaging preserves both facts.
+
+The fixed original legal restriction has at least two nonempty children. Assign each label of F to an actual owner so that no child receives all four labels. To see this, begin with arbitrary actual owners. If all four are assigned to one child, select another occupied child in the restriction. Its nonempty fibre contains a label of F because F is the complete projection. Reassign that label to this second child. Now no child receives more than three labels.
+
+Let eta be uniform on these four selected actual incidences. Its caps in the same divisor order are
+
+    (1,1,1/2,3/4,1/2,1/4,1/2,1/4,1/4).
+
+The child-column bound is 1/2 even if a child receives three labels: F has at most two distinct labels in any one column. No disjointness between eta's own marginal cylinders is assumed.
+
+#### One common mixture
+
+Set
+
+    nu = (25/29) psi + (4/29) eta.
+
+For cylinders involving the root coordinate, the two components have disjoint root supports, so their bounds combine by maxima. For a pure fine-label cylinder they also combine by maxima: psi avoids every label of F and eta is supported on F. Only the pure public-column bound requires a sum. Thus one and the same nu has caps
+
+    (1,25/87,12/29,5/29,10/87,5/29,2/29,5/87,1/29).
+
+The ordered-LCM coefficients are (1,3,3,5,9,5,15,15,25), and the scalar product is exactly 250/29. This supplies all original phase queries through the established cylinder-cap bound.
+
+#### Scope of the puncture condition
+
+The type22 deletion pattern (2,2,0) can leave only four leaves after truncation at two per column. Type31 can remove a whole three-leaf branch, as can type4. These observations explain why those types are not included in this five-leaf puncture argument. They do not refute the existence of some other good actual law for those types.
+
+#### At most one repeated column: a complete three-to-eight-label anchor
+
+The same construction applies when the COMPLETE original legal projection F has n>=3 distinct fine labels, at most two in each public column, and at most one column containing two. There are seven original public columns, so 3<=n<=8.
+
+In each paired ternary tree every branch loses at most two F labels and at most one branch loses two. Thus the truncated survivor count remains at least5. The five-leaf construction above gives the SAME IA2 psi, supported away from R and assigning zero to every global fine label of F. No new actual labels are inserted and no child fibre is shortened.
+
+Choose one actual owner for each F label. If all labels initially receive one owner, reassign one label to a different nonempty owner of the original legal restriction; that label lies in F because F is its complete projection. Hence eta can be uniform on the n selected actual incidences with child cap(n-1)/n. Its column, root-column and child-column caps are at most2/n; its fine-label, root-fine and atom caps are1/n.
+
+Put D=25+n and choose nu=(25/D)psi+(n/D)eta. Since n<=8<25/3, psi dominates the root cap. Root-dependent cylinders combine by maxima, as does the pure fine-label cylinder because psi(F)=0. The pure column uses a sum. One common law therefore has caps
+
+    (1,25/(3D),12/D,max(5,n-1)/D,10/(3D),5/D,2/D,5/(3D),1/D).
+
+Its original ordered-LCM envelope is
+
+    Gamma_1225(nu)<=1+[196+5 max(5,n-1)]/(25+n)<=249/28<9.
+
+For n=3,4,5,6,7,8 the exact displayed upper bounds are respectively
+
+    249/28, 250/29, 251/30, 252/31, 129/16, 8.
+
+For n<=6 the expression is1+221/(25+n); for n>=6 it is6+66/(25+n). Both decrease over their stated ranges, proving the uniform upper bound. In particular this extends the preceding three-/four-label suppliers to complete legal anchors with five through eight labels. It does not include a second doubled column or a column with three labels; those require a separate argument.
+
+### SA.8. Root-cap tests, actual-source consumers and remaining shapes
+
+The following root-cap applications explain the finite inventory to which the new suppliers apply. Keep the original actual network capacities21,7,6,2,126,7,21 and let its maximum be M=75 or76. Replace each of its four source-root capacities by rho, leaving every actual incidence and every other edge unchanged. If this network still supports mass M, every root cylinder and every root/column cylinder has mass at most rho.
+
+In raw integer flow units, the earlier LC2 coherent-centre estimate becomes
+
+    K <= 8u5+3u7+4u35+5u49+20u175+15u245+25u1225
+      <= 373+12rho.
+
+The independent pair envelope is378+12rho. Any layout without a common centre still has at least two incompatible unordered pairs, each losing at least4 from this envelope, so its nonunit charge is at most370+12rho. These are applications of the existing LC2 proof to the changed root caps. Thus the same actual mass-M law, normalized once, has
+
+    Gamma <= 1+(373+12rho)/M.
+
+For M75 take rho=113/6; the bound is674/75=9-1/75. For M76 take rho=39/2; the bound is683/76=9-1/76. Neither root-cap feasibility assertion is automatic.
+
+If a cut has original capacity c and exactly t occupied roots sink-side, its modified capacity is
+
+    c-(21-rho)t.
+
+Every original cut has c>=M. For t0 it is unchanged; for t4 its four modified source arcs alone contribute4rho>=M. Exact integer arithmetic leaves the following possible obstructions:
+
+| Original maximum M | t1 original c | t2 original c | t3 original c |
+|---:|---|---|---|
+|75|75,76,77|75,76,77,78,79|75,76,77,78,79,80,81|
+|76|76,77|76,77,78|76,77,78,79,80|
+
+Only the t3 branch is classified here. Keep its three inactive root subtrees sink-side, remove private islands and take the usual public/private prefix antichains. No actual bridge of capacity126 crosses a cut of capacity at most81. Replace any active child's private raw contribution at least8 by its incoming7 edge. These changes preserve every complete original fibre, do not increase the cut, and cannot make the fourth root inactive because four original source-root edges would cost84. Normalization therefore leaves a cut of capacity c between M and81, with
+
+    c = 63+7(delta+k)+2 sum(z).
+
+Here delta is the number of inactive children at the remaining root, k the public token cost, and z its sorted active-child private token costs, each between0 and3. At k0 every active z is positive because its complete fibre is nonempty. Delta+k<=2. Cost3 can be a whole column, with arbitrarily many actual labels in that column.
+
+All normalized c77/78 rows are supplied by the earlier IA.1--IA.6 actual-support arguments. Those local consumers use the original legal-pair premise, not maximum77; that maximum was used only to restrict IA's old budget list to77/78. The extra c75/76 rows required here are directly supplied as follows:
+
+| c | Active-root data | Existing supplier |
+|---:|---|---|
+|75|full, delta0,k0,private11112|IA.2 four singleton children, fifth fibre arbitrary|
+|75|gap, delta0,k0,private1113 or1122|IA.1 legal pair of singleton owners|
+|76|delta0,k1,sum(z)=3 at either root type|The cheapest legal restriction has private cost at most1, so its whole projection has at most the public leaf plus one private leaf; IA.1|
+|76|gap,delta1,k0,private111|IA.1 legal pair of active singleton owners|
+
+At c76 no full delta1/k0 row exists: four nonempty active fibres require private token cost at least4, while the budget is3. Thus all t3 cuts of capacity at most78 are supplied also when M is75 or76.
+
+For c79--81, the displayed budget equation and the existing at-most-two-leaf and IA.2--IA.5 consumers leave exactly the following necessary cost-shape inventory. This is not an assertion of actual realizability. An inactive child's complete original fibre remains arbitrary.
+
+| c | Root | delta | k | Private costs not directly supplied by those IA consumers |
+|---:|---|---:|---:|---|
+|79|full|0|0|11123,11222|
+|79|gap|0|0|1223,2222|
+|80|full|0|1|01112,11111|
+|80|full|1|0|1112|
+|80|gap|0|1|1112|
+|80|gap|1|0|122|
+|81|full|0|0|11133,11223,12222|
+|81|gap|0|0|1233,2223|
+
+There are nine shapes through80 and fourteen through81. The new consumers below supply seven of these shapes in their entirety, with the complete-fibre implications made explicit.
+
+Together with the full-root three-singleton theorem in SA.4 (bound503/56), the suppliers cover the following complete actual-source families. No saturation of the indicated cut is used; it need not be minimum.
+
+| Cut capacity | Sole active root | Inactive children | Public token cost | Active private costs | Supplier |
+|---:|---|---:|---:|---|---|
+|79|full|0|0|11123|three-singleton full root|
+|79|gap|0|0|1223|G122|
+|80|full|1|0|1112|three-singleton full root; inactive fifth fibre arbitrary|
+|80|gap|1|0|122|G122; inactive fourth fibre arbitrary|
+|80|full|0|1|01112|P0111 full case|
+|80|gap|0|1|1112|P0111 gap case|
+|81|full|0|0|11133|three-singleton full root|
+
+In public-token-cost1 rows the public prefix is exactly one fine leaf y. Whole source containment gives the displayed {y,zi} constraints for the three private-cost1 children; the full private-cost0 child has entire nonempty fibre {y}. Other active cost2 or cost3 children are allowed arbitrary fibres by the corresponding supplier.
+
+Thus six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test are supplied, and seven of the fourteen needed by the C75 test. Remaining C76 t=3 shapes are full/private11222, gap/private2222, and full/public1/private11111. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
+
+### SA.9. Exact controls on complete original sources
+
+The [actual-source control program](../../../frontier/cover-geometry/height-two-small-anchors/small_anchor_actual_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/small_anchor_actual_controls.json) retain20 complete literal4555 sources. Every source preserves all19 original occupied children and each whole actual fibre. Across these sources the program checks9600 original legal-pair tests, the standalone five-tree, support of both component measures and their single mixture, and all35340 original numerical cylinders(1767 per source) using the literal CRT coordinates. It separately measures psi mass in EVERY original modulus49 fibre belonging to the complete anchor F and obtains zero. These checks cover B3, H4-two, the arbitrary-fibre full-root theorem, G122, P0111, and B4-spread.
+
+The controls include whole-column fibres, an inactive child's entire49-point fibre with eta actually using that owner, the H4 fine-label mass3/8 boundary, two eta points at one owner, a three-label anchor requiring a two-point owner, and a four-label anchor requiring a three-point owner. They also retain a full/public1/private11111 source with a spread four-label anchor; this is a conditional B4-spread application, not a general supply of that remaining shape. Reported capacities77,79,80,81 are explicit complete-fibre cut witnesses only; they are not claimed to be minimum cuts.
+
+The [three-singleton local controls](../../../frontier/cover-geometry/height-two-small-anchors/full_three_singletons_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/full_three_singletons_controls.json) separately check3969 mono support incidences covering every branch of SA.4,290 two-/three-owner complete incidence families for B3,17 finite deletion patterns, and the exact rational B3 caps. The [four-label controls](../../../frontier/cover-geometry/height-two-small-anchors/four_label_small_anchor_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/four_label_small_anchor_controls.json) check277 deletion subcases under all three-column selections,2240 two-/three-owner complete incidence families and the exact B4-spread caps. These finite controls support the general arguments above; they are neither an exhaustive enumeration of all actual sources nor Lean verification.
+
+The [sparse-anchor controls](../../../frontier/cover-geometry/height-two-small-anchors/sparse_anchor_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/sparse_anchor_controls.json) independently construct seven complete sources: the six anchor sizes3 through8 and an H4-two source. They verify3360 original legal pairs and12369 original numerical cylinders, including the larger child caps at sizes7 and8, global fine-label exclusion and all six displayed rational bounds. They also enumerate the fourteen necessary IA-unhandled shapes through81 and the nine through80 directly from the normalized budget equation. These are finite controls of the proofs and inventory, not claims that all listed cost shapes are actually realized.
+
+All four programs retain checks under Python -O and require an explicit --output path. The actual-source command is:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/small_anchor_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/small_anchor_actual_controls.json
+```
+
+All bounds concern a single fixed actual law at the original numerical head1225. Neither the outstanding one-/two-inactive branches, the entire cut74--76 classes, nor the arbitrary outside-cofactor common-law lift is supplied by this section.

@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "exact cap arithmetic, finite puncture and ownership controls; ordinary proof only",
+  "balanced_caps": [
+    "1",
+    "25/84",
+    "3/7",
+    "5/28",
+    "5/42",
+    "5/28",
+    "1/14",
+    "5/84",
+    "1/28"
+  ],
+  "balanced_charge": "249/28",
+  "deletion_patterns": 17,
+  "owner_incidence_cases": 290,
+  "mono_actual_support_cases": 3969,
+  "mono_routes": {
+    "H3+2-distinct-outside": 82,
+    "H4-new-H-label": 2573,
+    "H4-shared-outside": 12,
+    "H4-two-H-labels": 576,
+    "IA1-repeated-double": 6,
+    "IA2-four-singletons": 720
+  }
+}

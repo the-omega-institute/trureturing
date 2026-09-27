@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "scope": "exact rational caps and finite structural controls; no Lean verification",
+  "allowed_anchor_column_types": [
+    "211",
+    "1111"
+  ],
+  "deletion_controls": {
+    "211": {
+      "column_selection_and_deleted_subset_cases": 148,
+      "distinct_ordered_deletion_patterns": 12,
+      "minimum_truncated_survivors": 5
+    },
+    "1111": {
+      "column_selection_and_deleted_subset_cases": 129,
+      "distinct_ordered_deletion_patterns": 8,
+      "minimum_truncated_survivors": 6
+    }
+  },
+  "complete_projection_owner_families": 2240,
+  "owner_family_counts": {
+    "2": 79,
+    "3": 2161
+  },
+  "common_law_caps": [
+    "1",
+    "25/87",
+    "12/29",
+    "5/29",
+    "10/87",
+    "5/29",
+    "2/29",
+    "5/87",
+    "1/29"
+  ],
+  "ordered_lcm_charge": "250/29",
+  "type22_deleted_220_truncated_survivors": 4
+}
