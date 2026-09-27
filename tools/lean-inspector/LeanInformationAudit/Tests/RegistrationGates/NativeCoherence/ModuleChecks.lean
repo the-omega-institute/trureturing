@@ -58,3 +58,34 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
         setEnv saved
   discard <| observe "restored_module_native_accepted" root ""
   setEnv saved
+
+-- Exercise the real export/verification path: malformed hash text is a syntax
+-- rejection, while valid boundary values reach the native-output comparison.
+run_meta LeanInformationAudit.Tests.withPrivateSources do
+  let saved ← getEnv
+  let root := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Modern
+  let tracePath := (← findOLean root).withExtension "trace"
+  let original ← IO.FS.readBinFile tracePath
+  let trace ← ofExcept <| Json.parse (String.fromUTF8! original)
+  let outputs ← ofExcept <| trace.getObjVal? "outputs"
+  let hashes ← ofExcept <| outputs.getObjValAs? (Array String) "o"
+  for (label, text, valid) in #[
+      ("zero", "0000000000000000", true),
+      ("signed_boundary", "8000000000000000", true),
+      ("maximum", "ffffffffffffffff", true),
+      ("short", "000000000000000", false),
+      ("uppercase", "000000000000000A", false),
+      ("nonhex", "000000000000000g", false),
+      ("nonascii", "00000000000000é", false)] do
+    let changed := trace.setObjVal! "outputs"
+      (outputs.setObjVal! "o" (toJson (hashes.set! 0 text)))
+    try
+      replaceNative tracePath changed.compress.toUTF8
+      let expected := if valid then s!"incomplete_closure:E7.native_output:{root}"
+        else "incomplete_closure:E7.native_trace_hash"
+      discard <| observe ("trace_hash_" ++ label ++ "_rejected") root expected
+    finally
+      replaceNative tracePath original
+      setEnv saved
+  discard <| observe "restored_trace_hash_accepted" root ""
+  setEnv saved
