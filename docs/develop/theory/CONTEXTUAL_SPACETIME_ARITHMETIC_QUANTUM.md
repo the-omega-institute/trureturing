@@ -70153,3 +70153,233 @@ $$
 本节的局部结论同时保留了三个区别：标量生成元修复的最小噪声、给定任务预算下的最小恢复误差，以及通道矩阵本身的最优性。重新用满残差预算使这一显式构造达到最优误差差距的联合首项，但它仍保留一阶不对称矩阵偏差及严格正的更高阶误差。本节未求一般有限预算曲线，也未将这些任务系数视为一般量子动力学的普适常数。
 
 ## 追加锚（本行以下为增补区）
+
+## 328. 预算匹配修复的两种剩余代价与交叉尺度
+
+第327节的预算匹配修复达到了最优值差距的联合首项，但仍不是最优通道。本节继续分解它的剩余误差：一部分来自三个列误差不再同时活跃，另一部分来自实际矩阵在约束面上的偏移。二者由同一个实际修复通道产生。
+
+**定理 328.1（列误差分裂与矩阵位移的联合展开）。** 保留第327节的固定 $a,u$、半径族、实际齐次最优值 $H(\varepsilon,\delta)$、预算匹配修复 $T_{\rm match}$ 及常数 $K_u=a\|u\|_2^2/(3456\sqrt2)$。记
+
+$$
+\mathcal E(\varepsilon,\delta)
+=e_\varepsilon(T_{\rm match}(\varepsilon,\delta))-H(\varepsilon,\delta).
+$$
+
+在足够小的共同参数邻域内，有一致展开
+
+$$
+\mathcal E(\varepsilon,\delta)
+=\varepsilon^2\delta^3\left[
+4K_u\max_i(-\varepsilon u_i)
++\frac{5K_u}{144}\delta^2
++O\bigl(\varepsilon^2+|\varepsilon|\delta+\delta^3\bigr)
+\right].
+\tag{328.1}
+$$
+
+因此，当 $\varepsilon\ne0$、$\delta>0$ 联合趋零时，也可写成
+
+$$
+\mathcal E(\varepsilon,\delta)
+=K_u\varepsilon^2\delta^3
+\left[4\max_i(-\varepsilon u_i)+\frac5{144}\delta^2\right]
+\left[1+O(|\varepsilon|+\delta)\right].
+\tag{328.2}
+$$
+
+余项常数只需对固定 $a,u$ 一致。$\varepsilon=0$ 时误差超额严格为零。
+
+证明。令 $\widetilde M$ 为第327节预算匹配修复的归一化主衰减对数，令 $M_H$ 为实际齐次最优支线。两者在同一正角点邻域中满足精确等式
+
+$$
+g_\delta(\widetilde M)=g_\delta(M_H)=0,
+\qquad c(\widetilde M)=c(M_H)=0.
+\tag{328.3}
+$$
+
+第一组等式来自精确残差预算，第二组来自最小标量修复和齐次最优支线的活跃生成元条件。这里 $g_\delta,c,f_{\delta,i}$ 均为第322、324节的同一归一化函数，半径参数取当前 $\varepsilon$。
+
+记实际齐次最优点的列乘子、残差乘子及锥乘子分别为 $\pi_i,\mu,\zeta$。它们共同解析，且 $\sum_i\pi_i=1$。以这些固定在最优点的乘子定义矩阵变量的拉格朗日函数
+
+$$
+\mathcal L(M)=\sum_i\pi_i f_{\delta,i}(M)
+-\mu g_\delta(M)-\zeta c(M).
+\tag{328.4}
+$$
+
+完整拉格朗日函数的 $z$ 系数为 $1-\sum_i\pi_i=0$，所以此处没有省去任何变化项，并且 $D_M\mathcal L(M_H)=0$。
+
+令 $E_i=\delta f_{\delta,i}(\widetilde M)$ 为修复通道的三个实际列误差。齐次最优点的三个列误差全为 $H$。由式（328.3）得到精确分解
+
+$$
+\mathcal E
+=\left(\max_i E_i-\sum_i\pi_iE_i\right)
++\delta\bigl(\mathcal L(\widetilde M)-\mathcal L(M_H)\bigr).
+\tag{328.5}
+$$
+
+这个恒等式保留了最大值，不假定修复后的全部列约束仍然活跃。
+
+先计算第二项。第327节给出
+
+$$
+\Delta M:=\widetilde M-M_H
+=\varepsilon\delta^2R_u
++O\bigl(|\varepsilon|\delta^2(|\varepsilon|+\delta)\bigr),
+\qquad
+R_u=\frac{-U+3PU-2UP}{288}.
+\tag{328.6}
+$$
+
+其中 $U=\operatorname{diag}(u)$、$P=n_0n_0^{\mathsf T}$、$n_0=(1,1,1)^{\mathsf T}/\sqrt3$。归一化约束和乘子在共同邻域内解析，故 $\mathcal L$ 的三阶导数一致有界。平稳性与 Taylor 展开遂给出
+
+$$
+\delta\bigl(\mathcal L(\widetilde M)-\mathcal L(M_H)\bigr)
+=\frac\delta2 D_M^2\mathcal L(M_H)[\Delta M,\Delta M]
++O(\delta\|\Delta M\|^3).
+\tag{328.7}
+$$
+
+$R_u$ 属于对称端点的约束切空间。第326节已计算该切空间上的 Hessian：对切向矩阵 $E$，
+
+$$
+\mathcal H_0[E,E]
+=\frac{a}{3\sqrt2}\mathscr B(E,E),
+\quad
+\mathscr B(E,E)=\|E\|_F^2
++4\|(I-P)\operatorname{sym}(E)n_0\|_2^2.
+\tag{328.8}
+$$
+
+将式（326.13）的系数 $\alpha=-1/288$、$\beta=1/96$、$\gamma=-1/144$ 代入，得到
+
+$$
+\mathscr B(R_u,R_u)
+=\frac{\|u\|_2^2}{3}
+\frac{15-54+54}{288^2}
+=\frac{5\|u\|_2^2}{82944}.
+\tag{328.9}
+$$
+
+Hessian 的连续解析变化和式（328.6）于是把式（328.7）化为
+
+$$
+\delta\bigl(\mathcal L(\widetilde M)-\mathcal L(M_H)\bigr)
+=\frac{5K_u}{144}\varepsilon^2\delta^5
++O\bigl(\varepsilon^2\delta^5(|\varepsilon|+\delta)\bigr).
+\tag{328.10}
+$$
+
+这里的系数含 Taylor 公式的 $1/2$；具体为
+$a(5\|u\|_2^2/82944)/(6\sqrt2)=5K_u/144$。高阶余项 $O(\delta\|\Delta M\|^3)$ 被所示界吸收。
+
+再计算式（328.5）的第一项。记 $\theta$ 为匹配前预算，$\alpha=\alpha(\varepsilon,\theta)$。第327节逐列的范数展开给出
+
+$$
+E_i=G(\varepsilon,\theta)
++\alpha d_i(\varepsilon,\theta)+O(\alpha^2/\theta),
+\tag{328.11}
+$$
+
+三个余项一致，其中 $d_i$ 为式（327.11）的解析列系数。它们在对称轴上相同，记共同值为 $d_{\rm sym}(s)$。
+
+还需明确 $d_i$ 在原点关于 $\varepsilon$ 的一阶系数。第323节给出
+
+$$
+M_*(\varepsilon)=M_0(I+\varepsilon U)+O(\varepsilon^2),
+\qquad M_0=(I+P)/2.
+$$
+
+所以第 $i$ 列在一阶只乘以 $1+\varepsilon u_i$，其单位方向没有一阶变化；同时 $a_i(\varepsilon)=a(1-\varepsilon u_i)+O(\varepsilon^2)$。在 $s=0$，式（327.11）中的 $T_G$ 等于 $I$，从而
+
+$$
+d_i(\varepsilon,0)
+=d_0(1-\varepsilon u_i)+O(\varepsilon^2),
+\qquad d_0=\frac{a\sqrt2}{3}.
+$$
+
+共同解析性因此给出
+
+$$
+d_i(\varepsilon,\theta)
+=d_{\rm sym}(\theta)-d_0\varepsilon u_i
++O(\varepsilon^2+|\varepsilon|\theta).
+\tag{328.12}
+$$
+
+实际齐次最优解及其唯一乘子在等半径时具有坐标置换对称性，所以对所有小 $\delta$ 都有 $\pi_i(0,\delta)=1/3$。解析性使 $\pi_i(\varepsilon,\delta)=1/3+O(|\varepsilon|)$，余项对 $\delta$ 一致。利用 $\sum_i u_i=0$、$\sum_i\pi_i=1$，公共的 $d_{\rm sym}(\theta)$ 完全消去，并有
+
+$$
+\max_i d_i(\varepsilon,\theta)-\sum_i\pi_i d_i(\varepsilon,\theta)
+=d_0\max_i(-\varepsilon u_i)
++O(\varepsilon^2+|\varepsilon|\delta).
+\tag{328.13}
+$$
+
+这一步只用有限最大值对一致误差的 Lipschitz 性。$\pi_i$ 在目标预算 $\delta$ 取值，而 $d_i$ 在匹配前预算 $\theta$ 取值；上述估计明确保留了这一区别，并使用 $0<\theta\le\delta$。
+
+再由第327节
+
+$$
+\alpha=\varepsilon^2\delta^3
+\left[\frac{\|u\|_2^2}{576}+O(|\varepsilon|+\delta)\right],
+\qquad \theta/\delta=1+O(\varepsilon^2\delta^2),
+$$
+
+式（328.11）至（328.13）给出
+
+$$
+\max_i E_i-\sum_i\pi_iE_i
+=\varepsilon^2\delta^3
+\left[4K_u\max_i(-\varepsilon u_i)
++O(\varepsilon^2+|\varepsilon|\delta)\right].
+\tag{328.14}
+$$
+
+其中 $\alpha^2/\theta=O(\varepsilon^4\delta^5)$ 被余项吸收，且 $d_0\|u\|_2^2/576=4K_u$。
+
+将式（328.10）、（328.14）代入精确分解（328.5），即可得到式（328.1）。因为固定非零零和向量同时有正分量和负分量，存在只依赖于 $u$ 的 $c_u,C_u>0$，使
+
+$$
+c_u|\varepsilon|\le\max_i(-\varepsilon u_i)\le C_u|\varepsilon|.
+$$
+
+首项括号因此与 $|\varepsilon|+\delta^2$ 相互控制。又有
+
+$$
+\varepsilon^2+|\varepsilon|\delta+\delta^3
+\le (|\varepsilon|+\delta)(|\varepsilon|+\delta^2).
+$$
+
+除以严格正的首项括号便得到式（328.2）。等半径情形由第327节的精确相等单独处理。证毕。
+
+**定理 328.2（交叉尺度与两侧不对称系数）。** 在定理328.1的条件下，沿任何 $\varepsilon\ne0$、$\delta>0$ 的联合趋零序列，有以下结论。
+
+若 $|\varepsilon|=o(\delta^2)$，则
+
+$$
+\frac{\mathcal E}{\varepsilon^2\delta^5}\longrightarrow\frac{5K_u}{144}.
+\tag{328.15}
+$$
+
+若 $\delta^2=o(|\varepsilon|)$ 且 $\operatorname{sgn}\varepsilon=\sigma\in\{-1,1\}$ 固定，则
+
+$$
+\frac{\mathcal E}{|\varepsilon|^3\delta^3}
+\longrightarrow4K_u\max_i(-\sigma u_i).
+\tag{328.16}
+$$
+
+若 $\varepsilon/\delta^2\to\tau\in\mathbb R$，则
+
+$$
+\frac{\mathcal E}{\varepsilon^2\delta^5}
+\longrightarrow K_u\left[\frac5{144}+4\max_i(-\tau u_i)\right].
+\tag{328.17}
+$$
+
+证明。分别按所述尺度除以式（328.2），利用有限最大值的连续性，即得三式。对 $\tau=0$，式（328.17）还原式（328.15）；参数序列仍要求 $\varepsilon\ne0$，不在零分母处取比值。证毕。
+
+本节使用标准 KKT 拉格朗日展开与有限最大值的连续性。新增内容是同一实际修复方案的两个显式代价：列误差分裂给出带方向的三次不对称项，约束面上的矩阵位移给出五阶预算项。交叉尺度由这两个非负首项共同决定，而不是把分别优化的两个方案当作同一实现。结论不确定固定正预算下的完整各向异性系数，也不扩展到奇异支撑分支。
+
+## 追加锚（本行以下为增补区）
