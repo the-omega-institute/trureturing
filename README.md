@@ -179,7 +179,8 @@ formal coverage.
 ## Information escape
 
 **Information escape**: some distinct states remain indistinguishable under
-chosen **readouts** (observation methods). Four questions guide the judge's development:
+chosen **readouts** (observation methods). Four questions guide an **automated
+reviewer** under development:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
@@ -210,7 +211,7 @@ neither a universal value score nor a historical novelty judgment.
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
 adding this readout?
 
-The current rule checks declared-template bindings; its findings are
+The current declared-template binding rule issues
 **Observe warnings that do not block admission**
 ([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
 [implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
