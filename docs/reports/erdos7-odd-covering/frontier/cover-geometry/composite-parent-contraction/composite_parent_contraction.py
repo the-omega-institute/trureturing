@@ -162,8 +162,8 @@ def main():
     args = parser.parse_args()
     raw = Path(args.input).read_bytes()
     fixtures = json.loads(raw)
-    require(isinstance(fixtures, list) and len(fixtures) == 2,
-            'expected two literal control families')
+    require(isinstance(fixtures, list) and bool(fixtures),
+            'expected a nonempty list of literal control families')
     results = [evaluate(fixture) for fixture in fixtures]
     require(len({result['name'] for result in results}) == len(results),
             'duplicate fixture names')

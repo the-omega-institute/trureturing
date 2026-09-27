@@ -1037,3 +1037,254 @@ The program uses only the standard library; its checks remain active under -O. T
 The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
 
 Thus the remaining precise alternatives are still unresolved: either find an actual odd-DISTINCT PS1 noncover, or prove that numerical distinctness prevents an overlap separator between nonempty private and uncovered regions. The latter would make PS1 sufficient for whole coverage in that class, hence equivalent to whole coverage there; it would not by itself exclude odd distinct whole covers. A separate proof that no nonempty irredundant odd-distinct family can satisfy PS1 would imply the desired noncoverage theorem. These are different obligations and must not be conflated.
+
+## Arbitrary quotient cuts collapse to the same depth suffixes
+
+The following identities locate exactly what changes when the published
+private-point inequality is applied after an arbitrary divisor cut. They
+retain all original labels, residues and heights. They are ordinary
+research-interface deductions, not a new attributed theorem or Lean
+verification. The all-depth rows and their joint capacity accounting above
+remain the existing interface.
+
+Let the finite original classes be `C_j=a_j mod m_j`, let Q be their full
+period, and let x be an actual private point with unique original owner t.
+For this identity the family need not cover, be odd, or have distinct
+moduli. Write c(y) for its actual covering multiplicity. Fix a prime p
+of Q and put `H=v_p(Q)`, `e=v_p(m_t)`.
+
+For any divisor L of Q, set `ell=v_p(L)`, `g_j=gcd(m_j,L)` and
+`r_j=m_j/g_j`. On the actual fibre through x, write `z=x mod L` and
+`u=(x-z)/L`. Original j is active exactly when `g_j | a_j-x`; its trace
+has phase
+
+    theta_j=((a_j-z)/g_j)*(L/g_j)^(-1) mod r_j.
+
+When the original family is a whole cover this is a quotient cover,
+possibly with repeated residual moduli, and u is private to t. The
+published inequality applies for every prime; its right side is positive
+precisely when `ell<e`, equivalently `p|r_t`.
+
+### Labelwise cancellation of the other cut coordinates
+
+Put `h_j=v_p(m_j)`. A quotient p-direction term occurs precisely when
+
+    m_j/p^h_j | a_j-x,
+    ell <= b_j:=v_p(a_j-x) < h_j.                    (QC1)
+
+Indeed, at every prime different from p, activity supplies agreement up
+to the cut depth and the quotient prime-free condition supplies all
+remaining agreement. Together these are exactly agreement at the full
+original prime-free modulus. At p, activity requires agreement to ell,
+while the quotient mismatch requires failure before h_j. Consequently
+
+    v_p(r_j)=h_j-ell,
+    v_p(theta_j-u)=b_j-ell,
+    p^(-(v_p(r_j)-v_p(theta_j-u)-1))=p^(1-h_j+b_j).
+
+The valuations used here are strictly below their respective modulus
+heights and are independent of the chosen integer representatives.
+In particular, valuation at zero never occurs in a directional term.
+
+Define the original shell service
+
+    F_b(x,p)=sum_(j: m_j/p^h_j | a_j-x,
+                    v_p(a_j-x)=b<h_j) p^(1-h_j+b),
+    S_ell(x,p)=sum_(b=ell)^(H-1) F_b(x,p).
+
+The entire quotient left side is EXACTLY S_ell. Thus the same original
+private point of a WHOLE COVER gives
+
+    S_ell(x,p)>=(e-ell)(p-1),   0<=ell<e,             (QC2)
+
+and all other prime coordinates of L have disappeared. This is not a
+replacement of actual phases by optimized phases. It is a term-by-term
+identity for each original label. At ell>=e the theorem's right side
+is zero; its inequality is simply S_ell>=0, also immediate from the
+definition without coverage.
+
+### The precise overlap-minus-hole identity
+
+Let B_b(x,p), 0<=b<H, be the complete set of points agreeing with x at
+all non-p coordinates and first disagreeing at p-depth b. Each such
+shell has `(p-1)p^(H-b-1)` points. All averages below use its actual
+uniform probability.
+
+Owner t covers the entire shell exactly when b>=e. Every other class
+meeting the line is in exactly one shell b_j; when b_j=b, its proportion
+of B_b is `p^(1-h_j+b)/(p-1)`. Classes containing x other than t do not
+exist. Hence
+
+    F_b=(p-1)*(Avg_(B_b)c-1_(b>=e)).
+
+Summing yields the identity, valid even for noncovers,
+
+    S_ell-(e-ell)_+(p-1)
+      =(p-1)*sum_(b=ell)^(H-1) Avg_(B_b)(c-1),
+      0<=ell<=H.                                    (QC3)
+
+For ell=H both sides are zero. Under whole coverage each summand is
+nonnegative. On a noncover, overlap excess in one shell can pay for a
+hole deficit in another shell within this scalar expression.
+
+In particular, any nonnegative combination of these inequalities over
+actual private points, primes and cuts has slack of the form
+
+    sum_(y mod Q) K(y)*(c(y)-1),   K(y)>=0,           (QC4)
+
+where K is the sum of the explicitly weighted uniform shell indicators.
+The multiplicity is that of the SAME original family throughout. Such
+aggregation requires an additional arithmetic bound on this common
+weighted overlap if it is to give a contradiction; it cannot assign a
+fresh capacity to each appearance of one supplier. The preceding
+complete columns, omitted-private term, and reserve bounds address that
+shared-budget issue and are not new consequences of changing L.
+
+### Exactly which depth weights positive combinations can generate
+
+For a fixed x,p with e>0, assign nonnegative coefficients w_ell to the
+positive-demand rows ell=0,...,e-1, after combining cuts with equal p-depth. Their
+combined slack is
+
+    (p-1)*sum_(b=0)^(H-1) K_b Avg_(B_b)(c-1),
+    K_b=sum_(ell=0)^min(b,e-1) w_ell.                (QC5)
+
+Thus K_b is nonnegative and nondecreasing up to depth e-1, then
+constant. Conversely every such weight sequence is obtained by
+`w_0=K_0`, `w_ell=K_ell-K_(ell-1)`. This is the exact cone for the positive-demand
+private-point rows; adding zero-demand rows is not included in this cone. Taking differences of two LOWER bounds is not an
+admissible way to extract a single-shell lower bound.
+
+### Two distinct-odd noncovers separate the three levels
+
+First take
+
+    0 mod9, 10 mod15, 7 mod21, 22 mod33, 13 mod39.
+
+The displayed residues themselves are private witnesses, the moduli are
+distinct and odd, and integer2 is uncovered. At x=0, p=3, H=e=2,
+the shell services are `(4,0)`. The uncut inequality is satisfied with
+equality, `4>=4`, but the ell=1 inequality fails, `0<2`. Thus the
+suffix family really retains information lost by the one uncut sum.
+
+Next take
+
+    1 mod3, 0 mod9, 30 mod45, 21 mod63, 33 mod99.
+
+Its period is3465. Its five displayed residues are private witnesses;
+all numerical moduli are distinct and odd, and every comparable pair
+of original classes is disjoint. Integer2 remains uncovered. At the
+SINGLE private point x=0 and prime p=3, H=e=2. The first shell has
+mean multiplicity1/2: the root1 branch is covered and the root2 branch
+is missed. The second shell consists of roots3 and6 with multiplicities
+2 and1, giving mean3/2. Therefore
+
+    (F_0,F_1)=(1,3),
+    S_0=4=2(p-1),   S_1=3>p-1.
+
+Every divisor cut at this x,p passes its valid suffix inequality, yet
+this complete p-line has holes. By QC5 every nonnegative combination
+also passes. This does not assert the inequalities at every private
+point, divisor closure, global minimality, or an odd covering example.
+It rules out reconstructing shellwise coverage from all these scalar
+cuts at one source.
+
+The stronger private-line coverage condition PS1 above retains actual
+incidence. Neither the cutoff sums nor the scalar shell averages are a
+substitute for that condition. This distinction does not by itself
+settle the original odd-distinct noncoverage problem.
+
+### Arbitrary heights retain divisor closure and normalized prime classes
+
+There is a second, different loss of information: even every shell mean
+can reach its demand while individual branches remain uncovered. This
+happens at one specified private point in a divisor-closed family at
+arbitrary height.
+
+Choose an odd prime p, an integer e>=2, and p-1 pairwise distinct odd
+primes q_j different from p. Take the original numerical inventory
+
+    D={p^k:1<=k<=e} union {p^r q_j:0<=r<=e}.
+
+Its e+(p-1)(e+1) labels are distinct and divisor-closed above one. Set
+its phases, using CRT for the mixed classes, as follows:
+
+| Original label | p-adic condition | q_j condition |
+|---|---|---|
+| p^k, k<e | x=p^(k-1) mod p^k | none |
+| p^e | x=0 mod p^e | none |
+| q_j | none | x=1 mod q_j |
+| p^r q_j, 1<=r<e | x=2p^(r-1) mod p^r | x=0 mod q_j |
+| p^e q_j | x=p^(e-1) mod p^e | x=0 mod q_j |
+
+All comparable original classes are disjoint. Nonzero displayed prefixes at different
+heights have different first nonzero depths. At equal
+heights r<e, the pure and mixed digit values are1 and2; at height e
+they are0 and1. Each q_j-prime class has q_j-root1, disjoint from its
+mixed descendants with q_j-root0. These exhaust the comparable pairs.
+
+Every class has a private witness on Q=p^e product_j q_j. For a pure
+p-class choose its displayed p-coordinate and put all q-coordinates2.
+For a mixed class with q_j choose its displayed p-coordinate, put
+q_j=0 and all other q-coordinates2. For the q_j-prime class choose
+p-coordinate2p^(e-1), put q_j=1 and all other q-coordinates2. The
+first nonzero p-depth and these actual cofactor roots exclude every
+other original. Thus the family is irredundant.
+
+At x=0 exactly p^e occurs. Freeze all q-coordinates to0. In shell
+b<e-1, digit1 is covered once by the pure original; digit2 is covered
+p-1 times by the mixed originals, and all other next digits are missed.
+In shell e-1, only digit1 is covered, with multiplicity p-1; the other
+p-2 branches are empty. Therefore
+
+    Avg_(B_b)c=p/(p-1),  b<e-1,
+    Avg_(B_(e-1))c=1,
+    F_b=p,              b<e-1,
+    F_(e-1)=p-1.
+
+Every positive-demand suffix has slack
+
+    S_ell-(e-ell)(p-1)=e-1-ell>=0, 0<=ell<e.
+
+Yet the point with p-coordinate2p^(e-1) and all q-coordinates0 is a
+hole on this same line. Even all individual shell means are sufficient
+here for the scalar inequalities but insufficient for actual coverage.
+A global translation by -1 normalizes every original prime class to
+zero and moves the displayed private point to -1; all properties remain.
+
+This is specifically a ONE-POINT, ONE-PRIME control. It does not satisfy
+the private inequalities throughout the family. At the q_j-prime
+private witness given above, no other original can meet its q_j-line:
+the other q-prime roots are2, and the p-coordinate2p^(e-1) misses every
+pure and mixed p-prefix. Its q_j-directional sum is0, strictly below
+q_j-1. Thus it supplies no counterexample to the full system of
+whole-cover necessary conditions.
+
+### Fixed arithmetic controls
+
+The accompanying standard-library verifier computes quotient traces
+using modular inverses and independently computes the original shell
+sums and full prime-line multiplicities. It checks every divisor cut
+at the selected actual private points in three literal whole covers,
+the two five-class noncovers, and normalized members of the general
+family at p=3,e=2 and p=3,e=3 with q_j=5,7. No candidate search runs.
+
+The whole covers have periods12,48,135, include original heights four
+at2 and three at3, and have other prime components in their cuts. They
+are even or have repeated moduli. The normalized controls have periods
+315 and945, respectively8 and11 originals,84 and219 holes, and minimum
+private-region size3. Their literal phases, private witnesses and
+failed q_j-directions are retained in the output.
+
+There are46048 labelwise quotient equalities and5476 shell-slack
+identities at206 checked private points. Positive, zero and negative
+slacks occur in the controls. The results are finite verification of
+the identities' implementation; the general arguments are QC1--QC5
+and the arbitrary-height construction above. No Lean result or
+unrestricted odd-covering conclusion is claimed.
+
+The [self-contained producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py) and [exact output](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.json) retain the fixed controls. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py --output /tmp/e7_quotient_private_shells.json
+```

@@ -11,10 +11,11 @@ of moduli 15 and 35 intersect, numerical modulus 21 must also be present.
 
 This is a residue-sensitive specialization of the existing replacement
 principle, not a new general exchange principle. It keeps the original
-labels and every prime-power height. Sections6--8 also give two explicit
-joint composite-parent reductions, one at every ternary height, and
-irredundant divisor-closed examples where joint reduction succeeds while
-both separate reductions fail. The ordinary proofs and exact finite
+labels and every prime-power height. Sections6--9 also give explicit
+joint composite-parent reductions, including every ternary height and
+an exact mixed-carrier allocation threshold, with irredundant
+divisor-closed examples where joint reduction succeeds while both
+separate reductions fail. The ordinary proofs and exact finite
 controls below do not establish unrestricted Erdős #7, literature
 priority, or new Lean verification.
 
@@ -469,3 +470,173 @@ composite-parent contraction. Exact minimality does prohibit the two
 proved patterns. The remaining whole-cover question is whether it
 forces one of these patterns or some other improving replacement;
 neither occurrence nor an exhaustive classification is proved here.
+
+## 9. Mixing three carrier types lowers the exact divisor requirement
+
+The whole-cell strategy in section6 has a larger admissible class than
+using only guards of modulus pqh. Some cells can use existing divisors
+of one old parent. Mixing these with pqh guards gives an exact numerical
+allocation criterion. It keeps all original phases in any application;
+divisor closure alone does not supply those phases.
+
+Keep JC1--JC4: p,q are distinct odd primes, g>1 is odd and coprime to
+pq, both old parents lie on g=c, and the old/new roots are a,u at p
+and b,v at q. Assume normalized original prime classes and disjointness
+of comparable originals. Split the exposed cross V from JC4 into
+
+    row cells:    (a,s), s notin {0,v,b};  count q-3,
+    column cells: (r,b), r notin {0,u,a};  count p-3,
+    central cell: (a,b);                   count 1.    (MC1)
+
+A cell denotes its ENTIRE congruence class modulo pqg, including all
+other coordinates. A retained carrier must contain that whole class,
+not just one representative integer.
+
+### 9.1. The available numerical carrier types are exact
+
+For a row cell, the only possible retained whole-cell carrier moduli are
+
+    qh with 1<h<g, h|g;   or pqh with h<g, h|g.       (MC2)
+
+For a column cell, replace qh by ph. The central cell requires pqh
+with h a proper divisor of g, allowing h=1. Each carrier's phase must
+agree with that cell at every prime dividing its modulus.
+
+To prove the classification, containment of a complete pqg-class in a
+d-class forces d|pqg. A row cell lies in the old pg-parent. If q does
+not divide d, then d|pg, so its carrier intersects a comparable
+original, contrary to the stated disjointness. Thus d is qh or pqh.
+For qh, h=1 is the original q-class, whose zero root misses the cell;
+h=g is the removed old qg-parent, whose q-root b also misses this
+row cell. For pqh, h=g makes the carrier a subclass of the old
+pg-parent, again impossible. The column argument is symmetric. At
+the central cell, omitting either p or q makes the carrier a divisor
+class of an intersected old parent, so both factors are required.
+
+Every permitted carrier meets at most ONE cell of V. A qh carrier
+fixes its one row root s!=b; a ph carrier fixes its one column root
+r!=a; a pqh carrier fixes both roots. Consequently any whole-cell
+assignment uses exactly p+q-5 distinct carriers. This is optimal
+within this strategy, not a bound on fragmented coverings of cells by
+several higher-modulus originals.
+
+### 9.2. An exact allocation threshold
+
+Let t=tau(g)-1 be the number of proper divisors of g, including1.
+There are t-1 available qh labels, t-1 available ph labels, and t
+available pqh labels. These three pools are mutually disjoint, since
+g is coprime to pq. A divisor may be reused across the pools without
+repeating a numerical modulus.
+
+Ignoring actual phases only for this numerical allocation question,
+there is an injective assignment of permitted carrier labels to all
+cells of MC1 if and only if
+
+    1+max(0,q-t-2)+max(0,p-t-2)<=t.                   (MC3)
+
+The central cell uses one pqh label. At most t-1 row cells can use
+qh labels, so max(0,q-3-(t-1)) row cells still require pqh. The analogous
+column deficit is max(0,p-3-(t-1)). This proves necessity. Conversely,
+use distinct qh labels for min(q-3,t-1) row cells and distinct ph
+labels for min(p-3,t-1) column cells. Assign distinct pqh labels to
+the central cell and both remaining deficits; MC3 supplies enough.
+There are no other numerical conflicts, which proves sufficiency.
+
+Equivalently, since p and q are odd,
+
+    t >= max((p-1)/2, (q-1)/2, ceil((p+q-3)/3)).      (MC4)
+
+Indeed MC3 is equivalent to the two individual inequalities
+q-3<=2t-2 and p-3<=2t-2 and the joint inequality
+(p-3)+(q-3)<=3t-3. They control, respectively, each arm's access to
+the shared pqh pool after reserving the central cell, and the total
+number of labels. This also proves the integer threshold directly.
+
+The all-pqh construction in section6 instead requires t>=p+q-5.
+MC3 includes that assignment but can use strictly fewer proper
+divisors. A construction using only qh/ph on the arms and one pqh
+in the center is also a special case; mixing the types can succeed
+when neither special case has enough labels.
+
+For an ACTUAL original family, MC3 by itself does not permit choosing
+new residues on retained labels. The additional premise is an actual
+assignment of retained originals with the cell phases in MC2. Under
+that premise their union covers V pointwise. The primes, the two new
+parents and these carriers therefore cover the full old parent union,
+by the same cross decomposition as JC8. Any original children contained
+in the new parents may then be deleted. Thus a minimum-cardinality
+whole cover cannot contain this actual carrier pattern and even one
+such child. Arbitrary untouched original labels and arbitrary child
+heights remain allowed.
+
+### 9.3. A strict consumer with g=27 and seven carriers
+
+Take
+
+    p=5, q=7, g=27, c=u=v=1, a=b=2, child prime=11.
+
+Here the proper g-divisors are only1,3,9, so t=3. MC3 holds with
+equality:1+2+0=3. The all-pqh route would require t>=7. Using only
+parent divisors for the arms also fails because the four row cells
+have only two qh labels. The mixed assignment is:
+
+| Cell | Type | Actual retained residue class |
+|---|---|---|
+| (2,3) | qh, h=3 | 10 mod21 |
+| (2,4) | qh, h=9 | 46 mod63 |
+| (3,2) | ph, h=3 | 13 mod15 |
+| (4,2) | ph, h=9 | 19 mod45 |
+| (2,2) | pqh, h=1 | 2 mod35 |
+| (2,5) | pqh, h=3 | 82 mod105 |
+| (2,6) | pqh, h=9 | 307 mod315 |
+
+The old parents are82 mod135 and163 mod189. Their original children
+are1 mod1485 and1135 mod2079; both project to cofactor residue1,
+and their first11-roots are1 and2. Move both parents to residue1
+and delete these two children.
+
+The [literal26-class input](../../../frontier/cover-geometry/composite-parent-contraction/mixed_cell_carrier_originals.json)
+completes this pattern to a divisor-closed irredundant family with
+initial odd-prime support{3,5,7,11} and normalized prime classes.
+The [existing complete-period verifier](../../../frontier/cover-geometry/composite-parent-contraction/composite_parent_contraction.py)
+reconstructs every modification from this input. Its
+[exact output](../../../frontier/cover-geometry/composite-parent-contraction/mixed_cell_carrier_contraction.json)
+gives:
+
+| Quantity on the full period10395 | Value |
+|---|---:|
+| Original classes / classes after contraction | 26 / 24 |
+| Originally covered / covered after contraction | 8399 / 8422 |
+| Previously covered integers lost | 0 |
+| Integers lost by either single contraction | 9 / 8 |
+| Full old covered-union deletion liability | 23 |
+| Liability points with multiple old owners | 2 |
+| Original holes / holes after contraction | 1996 / 1973 |
+
+All26 original private regions are nonempty. The old parent
+intersection has11 residues, all covered by retained originals.
+The joint check also keeps the two multiple-owner liability points;
+for example1486 has precisely old owners189 and1485. It would be
+incorrect to certify this change from individual private sets alone.
+
+The common cofactor1 avoids every original free of11. Only roots1,2,4
+are covered at that source; there is no full nonzero-root matching
+premise. This is an actual union-preserving reduction of a noncover,
+not a covering counterexample, a globally minimum family, or a proof
+that every hypothetical whole cover must supply these carrier phases.
+The original and modified families both leave integer16 uncovered.
+
+Normal and optimized execution use the same standard-library verifier:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/composite_parent_contraction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/mixed_cell_carrier_originals.json --output /tmp/e7_mixed_cell_carrier_contraction.json
+```
+
+The general criterion MC3--MC4 and the coverage implication are the
+ordinary proofs above. Complete-period arithmetic verifies the strict
+consumer; it does not extend its chosen residues to arbitrary families
+or supply new Lean verification. Together with450 section13.7, this
+separates two concrete facts: more flexible actual guards can enable
+a contraction, while another divisor-closed irredundant family can
+resist every size of the entire same-prime centered-relocation class.
+A whole-cover condition forcing an improving operation remains missing.

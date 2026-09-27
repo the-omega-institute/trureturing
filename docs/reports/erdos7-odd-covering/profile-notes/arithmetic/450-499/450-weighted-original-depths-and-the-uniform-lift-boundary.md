@@ -1778,9 +1778,163 @@ low-phase-excess obstructions remain unchanged. Thus adding resistance
 to these two-parent contractions does not supply either low-excess law,
 even at an arbitrarily high fixed density below one.
 
-This leaves three-or-more-parent operations, incompatible new centers,
-children over different primes, other edits and consequences of exact
-whole coverage outside the result. In particular it does not prove
+The two-parent result alone leaves larger batches outside its scope;
+section13.7 below excludes every size at one fixed prime. Incompatible
+new centers, different child primes, other edits and consequences of
+exact whole coverage remain outside both results. In particular it does not prove
 minimality under all covered-union-preserving changes. The finite
 certificate and the tail-extension proof are ordinary mathematics,
 not new Lean verification or a resolution of unrestricted Erdős#7.
+
+### 13.7. Every size of same-prime centered parent relocation is blocked
+
+The two-parent obstruction extends to a complete class of simultaneous
+relocations, with no bound on the number of selected parents. In the
+same463 family, fix ANY one support prime P. Select any nonempty set
+of distinct P-free original parents m>1, and for each select a center
+
+    c_m=a_d mod m,  d=P^e m an actual original, e>=1.
+
+Require that all selected centers have one common CRT realization:
+
+    c_m=c_n modulo gcd(m,n) for every selected m,n.    (CB1)
+
+Replacing each selected A_m by c_m mod m necessarily loses an integer
+that was private to one of the selected original parents. This remains
+true even when ALL children and every other original are retained.
+Deleting children afterwards cannot repair the loss. Thus the result
+excludes every size of CP1--CP2 contraction at once, including all
+original heights, prime parents, and composite parents.
+
+The proof uses finite necessary-condition propagation on all actual
+relocation options. It does not enumerate parent subsets of sizes
+three, four, and so on. The result is about this family and the
+extensions below, not about every irredundant odd family. The successful
+joint contractions in385 remain valid.
+
+#### A private-witness rule excludes whole classes of subsets
+
+For a fixed P, an option i is a pair (m_i,c_i) arising from one or more
+actual children P^e m_i. Children giving the same pair are recorded
+under that one option. This identifies identical proposed parent
+classes, not original numerical labels: all child labels and heights
+are reconstructed from the original input. Let V be the full finite
+option set. Different options at the same parent cannot both be chosen.
+For i in V, put
+
+    C(i)={i} union {j: m_j!=m_i,
+                      c_j=c_i mod gcd(m_j,m_i)}.
+
+For each verified original private integer w of m_i, put
+
+    R(i,w)={j in C(i) minus {i}: w=c_j mod m_j}.       (CB2)
+
+Every covered-union-preserving selected set S must satisfy
+
+    i in S implies S subset C(i),
+    i in S implies S intersect R(i,w) nonempty
+                    for EVERY checked w of m_i.      (CB3)
+
+Indeed, no unchanged original contains w. The new i-class also misses
+w: irredundancy and m_i|P^e m_i give c_i!=a_(m_i). Thus some other
+selected new parent must cover w; that parent has a different label
+and a center compatible with i. This is only a necessary condition:
+rescuing these points would not certify the other private points or
+joint liabilities. Failure, however, supplies a literal lost integer.
+The rescue-cycle necessity in356 section5 is an earlier instance of
+this principle; CB3 retains a separate obligation for EVERY supplied
+private witness.
+
+Start with any live set U containing all options of a possible S.
+If i in U has a witness w with R(i,w) intersect U empty, delete i.
+No member of S is deleted, by CB3. Repeating simultaneous deletion
+rounds therefore preserves S inside every live set. An empty result
+rules out every nonempty S, regardless of its cardinality.
+
+A second sound rule uses a provisional selected option i. Any S
+containing i lies inside U intersect C(i). Apply the same deletion
+rule in that smaller universe. If i itself disappears, no feasible S
+can contain it, so i may also be deleted from the global U. Several
+such conclusions derived from the same old U may be applied together;
+ordinary deletion then continues. This is a finite implication proof,
+not an assertion that pairwise compatibility or nonempty residuals
+would be sufficient for a valid exchange.
+
+#### Exact exhaustion using the original numerical classes
+
+The [additional private integers](../../../frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_blockers.json)
+contain395 points, in addition to the463 private witnesses in the
+unchanged original input. The
+[standalone verifier](../../../frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_obstruction.py)
+validates all858 against all463 originals:397254 literal membership
+checks. It reconstructs every eligible child, every option, every
+compatibility relation and every witness-rescue relation. Its
+[exact output](../../../frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_obstruction.json)
+records:
+
+| P | Original eligible children | Distinct parent-center options | Ordinary deletion layers | Remaining |
+|---:|---:|---:|---|---:|
+| 3 | 299 | 298 | 71,78,68,22,58,1 | 0 |
+| 5 | 237 | 233 | 46,70,17,15,16,7,18,41,3 | 0 |
+| 7 | 205 | 203 | 34,47,4 | 118 |
+| 11 | 231 | 231 | 74,128,27,2 | 0 |
+| 13 | 231 | 231 | 102,74,23,9,8,2,13 | 0 |
+| 17 | 231 | 231 | 108,88,32,3 | 0 |
+| 19 | 231 | 231 | 113,30,72,15,1 | 0 |
+
+At P=7, condition separately on each of the118 remaining options.
+For115 of them, deletion inside its compatible universe eliminates
+the provisional selected option. Delete those115 globally; the
+remaining three then fail the ordinary witness rule in one round.
+The final live set is empty for every P. In total1658 distinct options
+are excluded, with5908 individual deletion checks including the
+conditional tests. These totals refer to the displayed395-point input
+and deterministic witness order, not to a search for optimal witnesses.
+
+The finite computation is a certificate of the CB3 contradiction.
+It never enumerates the full481225870125-point carrier, assumes an
+unobserved private integer, or trusts a solver's unsatisfiability status.
+The common center is not required to avoid the P-free originals, so
+CB1's checked domain also contains all choices satisfying that stronger
+actual-source condition. The entire input remains a noncover, with
+its original explicit hole170272916129.
+
+The canonical original SHA256 remains
+427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11.
+Only the three explicit paths are accessed. Checks remain active under
+Python optimization:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_obstruction.py --originals docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction_originals.json --blockers docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/centered_batch_relocation_blockers.json --output /tmp/e7_centered_batch_relocation_obstruction.json
+```
+
+#### Arbitrarily small positive hole density retains the all-size obstruction
+
+In every13.5 extension, all new originals are pure powers of new
+primes. Such a child has cofactor1 and contributes no option; no old
+child acquires a new cofactor parent. Thus all same-prime option sets
+are exactly the old ones, and new primes have empty option sets.
+
+Extend each of the858 private integers by CRT, retaining its old
+residue and taking the explicit avoiding residue c_(l,H_l+1) modulo
+l^H_l at each new prime, as in13.5. Every extended point still has its
+unique old owner and misses every new class. All congruences used in
+CB1--CB3 involve only old parent moduli, so their truth values remain
+unchanged. The same finite implication proof therefore excludes every
+nonempty relocation batch in every extension.
+
+Consequently, for every epsilon>0, there is a finite divisor-closed,
+irredundant, odd-distinct family with normalized prime classes, both
+IC6 low-excess obstructions, uncovered density strictly between0 and
+epsilon, AND resistance to all the same-prime centered parent
+relocations just defined. Arbitrarily many initial support primes and
+arbitrarily high added pure-prime prefixes are allowed. Exact whole
+coverage cannot be replaced by an arbitrarily high fixed density and
+this entire relocation-resistance condition in the proposed supplier.
+
+The theorem leaves different child primes in one batch, incompatible
+new centers, centers not induced by actual children, and other changes
+outside its scope. In particular it does not prove global minimality
+of the463 family or exclude exchanges that also alter other originals.
+The argument and finite certificate are ordinary mathematics, not new
+Lean verification or a resolution of unrestricted Erdős#7.
