@@ -78,8 +78,8 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Choose questions whose answers could supply missing premises, expose overlooked
-distinctions or connect results. Search existing proofs and literature.
+Work backward from your question: which premises, distinctions or connections
+are missing? Search existing proofs and literature.
 Specify supporting and refuting outcomes before designing discriminating tests.
 Keep results with their assumptions; check those against your objects before reuse.
 
