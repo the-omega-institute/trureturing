@@ -218,7 +218,7 @@ From the repository root, with NumPy installed:
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_full_dual_verify.py
 ```
 
-The canonical run passes1316614 explicit checks. The [exact result](../../frontier/cover-geometry/joined33_full_dual_verify.json)
+The canonical run passes1316615 explicit checks. The [exact result](../../frontier/cover-geometry/joined33_full_dual_verify.json)
 reproduces(FJ1). A separate audit additionally checked632 reverse scalar
 contractions across all79 positive central cells and obtained the same rational
 upper. Removing zero-probability layouts changes neither their charge nor U.
@@ -231,3 +231,9 @@ phases, numerical labels, heights and prime support, or an actual covering
 counterexample. This fixed-family obstruction supplies neither. Its actionable
 consequence is that thinning or changing the reference within the stated class,
 under this complete criterion, cannot supply the desired continuation margin.
+
+[Report705](705-the-complete-square-has-a-feasible-dual-above-the-target.md)
+selects all528 pairs of these33 labels and pays the resulting complete square.
+That changes the remaining fees and gives a stronger gate. The present upper
+bounds do not bound that gate from above; its own exact feasible dual remains
+above the target, so the complete-square target is unresolved.

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Exact fixed-source699 dual verification from query and whole-layout simplexes.
+"""Exact fixed-source duals from query and whole-layout simplexes.
 
 Existing source reconstruction/integer transform is reused. Complete layout
 atoms are compiled independently by generalized CRT. No numerical search is
 imported. Source-envelope coefficients use the same exact residual. Their measure-level
-scope is supplied by Report704, not inferred from finite enumeration.
+scope is supplied by Reports704/705, not inferred from finite enumeration.
 """
 from pathlib import Path
 from fractions import Fraction as F
@@ -16,6 +16,7 @@ import numpy as np
 P=(3,5,7,11,13,17,19);Q=P[2:];D0=(3,5,9,15,25,45,75,225)
 EDGES=tuple(z for z in combinations(P,2) if z!=(3,5));LABELS=tuple(sorted(set(D0)|set(Q)|{p*q for p,q in EDGES}))
 PAIRS=tuple(combinations(D0,2))+tuple(z for p,q in EDGES for z in ((p,q),(p,p*q),(q,p*q)))
+FULL_PAIRS=tuple(combinations(LABELS,2))
 CHECKS=0
 def ck(x,label):
  global CHECKS
@@ -23,10 +24,10 @@ def ck(x,label):
  if not x:raise ArithmeticError(label)
 def load(name,path):
  spec=importlib.util.spec_from_file_location(name,path);mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod);return mod
-def compile_layout(layout,selector_index,token_shape):
+def compile_layout(layout,selector_index,token_shape,pairs=PAIRS):
  ck(set(layout)==set(LABELS) and all(type(a) is int and 0<=a<d for d,a in layout.items()),'complete legal33-label layout')
  atoms=[(d,layout[d],F(3)) for d in LABELS]
- for d,e in PAIRS:
+ for d,e in pairs:
   a,b=layout[d],layout[e];g=gcd(d,e)
   if (b-a)%g:continue
   n=e//g;modulus=lcm(d,e);phase=(a+d*(((b-a)//g*pow(d//g,-1,n))%n))%modulus
@@ -51,12 +52,17 @@ def compile_layout(layout,selector_index,token_shape):
   col=int(np.ravel_multi_index(tuple(toks),token_shape));key=(sid,col);result[key]=result.get(key,F(0))+coef/den
  return result
 def main():
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--base',type=Path,default=Path(__file__).resolve().parent);ap.add_argument('--witness',type=Path,default=Path(__file__).with_name('joined33_full_dual_witness.json'));ap.add_argument('--output',type=Path,default=Path(__file__).with_suffix('.json'));a=ap.parse_args()
- w=json.loads(a.witness.read_text());ck(w['schema']=='actual109-joined33-full-dual-v1','complete699 candidate schema');D=w['denominator'];ck(type(D) is int and D>0,'positive common probability denominator')
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--base',type=Path,default=Path(__file__).resolve().parent);ap.add_argument('--block',choices=('joined','full-square'),default='joined');ap.add_argument('--witness',type=Path);ap.add_argument('--output',type=Path);a=ap.parse_args()
+ full=a.block=='full-square';pairs=FULL_PAIRS if full else PAIRS
+ stem='joined33_full_square' if full else 'joined33_full_dual'
+ if a.witness is None:a.witness=a.base/(stem+'_witness.json')
+ if a.output is None:a.output=a.base/(stem+'_verify.json')
+ schema='actual109-full33-square-dual-candidate-v1' if full else 'actual109-joined33-full-dual-v1'
+ w=json.loads(a.witness.read_text());ck(w['schema']==schema,'declared block matches candidate schema');D=w['denominator'];ck(type(D) is int and D>0,'positive common probability denominator')
  helper=a.base/'clustered_full5_allfield_verify.py'
  ck(sha256(helper.read_bytes()).hexdigest()=='95cadfecb95a472c17465cfbb7b3b5b512312fa6386aead7e3259a33bdd4db44','pinned exact source engine')
  core=load('exact_source',helper)
- ck(len(LABELS)==33 and len(PAIRS)==88 and 3*len(LABELS)+2*len(PAIRS)==275,'complete121 selected atom ownership')
+ ck(len(LABELS)==33 and len(pairs)==(528 if full else 88) and 3*len(LABELS)+2*len(pairs)==(1155 if full else 275),'complete selected atom ownership')
  class EmptyRows:
   def read_text(self):return json.dumps({'schema':'clustered109-full5-rational-dual-v1','source_sha256':w['source_sha256'],'denominator':D,'rows':[],'expected':{}})
  p=core.prepare(a.base,EmptyRows(),D);c=1-core.G;ck(F(w['block_budget'])==c,'same selected budgetc')
@@ -64,7 +70,7 @@ def main():
  for i,q in enumerate(Q):
   if i:coeff[256+(1<<i)]+=core.G/F(q*(q-2))
  selected=[F(0)]*512
- for d,k in [(d,3) for d in LABELS]+[(lcm(d,e),2) for d,e in PAIRS]:
+ for d,k in [(d,3) for d in LABELS]+[(lcm(d,e),2) for d,e in pairs]:
   n=d;ex=ey=T=0;norm=1
   while n%3==0:n//=3;ex+=1
   while n%5==0:n//=5;ey+=1
@@ -72,6 +78,14 @@ def main():
    if n%q==0:n//=q;T|=1<<i;norm*=q-1
   ck(n==1,'literal selected ownership factorization');selected[32*(4*ex+ey)+T]+=F(k,norm)
  remaining=[x-c*v for x,v in zip(coeff,selected)];ck(remaining==list(map(F,w['remaining_coefficients'])) and min(remaining)>=0,'all original loss/fullmode8/query remainders unchanged')
+ if full:
+  for j,(fee,v) in enumerate(zip(coeff,selected)):
+   mode,T=divmod(j,32);ex,ey=divmod(mode,4)
+   W=(F(1),F(3),F(5),F(8,9))[ex]*(F(1),F(3),F(5),F(1,8))[ey]
+   for i,q in enumerate(Q):
+    if T>>i&1:W*=F(3,q-1)+F(5*q-3,(q-2)*(q-1)**2)
+   if j==0:W=F(0)
+   ck(fee-c*W>=0 and W-v>=0 and remaining[j]==(fee-c*W)+c*(W-v),'full square preserves original losses and every unselected all-height query budget')
  selectors=[]
  for mode in range(16):
   ex,ey=divmod(mode,4);xm=((0,),(0,1),(0,1,2,4,5),(0,1,2,4,5))[ex];ym=((0,),(0,1,2,3),tuple(m for m in range(20) if m!=5),tuple(m for m in range(20) if m!=5))[ey]
@@ -83,7 +97,7 @@ def main():
    selectors.append((mode,left,right,ids,mult))
  ck(len(selectors)==559,'complete central selector interface')
  sidmap={(mode,l,m):i for i,(mode,l,m,ids,mult) in enumerate(selectors)}
- layout_maps=[compile_layout({int(d):phase for d,phase in lo.items()},sidmap,p['token_shape']) for lo in w['layouts']]
+ layout_maps=[compile_layout({int(d):phase for d,phase in lo.items()},sidmap,p['token_shape'],pairs) for lo in w['layouts']]
  loads=[0]*512;seen=set();layout_load=0;layout_nums={}
  for li,num in w['layout_rows']:
   ck(type(li) is int and 0<=li<len(layout_maps) and li not in layout_nums and type(num) is int and num>0,'one nonnegative complete-layout probability');layout_nums[li]=num;layout_load+=num
@@ -133,10 +147,12 @@ def main():
  slopes=[branchesF[1+2*i]-branchesF[2+2*i]/(q-1) for i,q in enumerate(Q)];cell_slopes=[cellF[1+2*i]-cellF[2+2*i]/(q-1) for i,q in enumerate(Q)]
  outside=branchesF[0]+sum(max(q*branchesF[1+2*i],F(q,q-1)*branchesF[2+2*i]) for i,q in enumerate(Q))
  celloutside=cellF[0]+sum(max(q*cellF[1+2*i],F(q,q-1)*cellF[2+2*i]) for i,q in enumerate(Q))
- ck(0<=upper<target,'strict complete fixed-source dual obstruction')
- for slope in slopes+cell_slopes:ck(slope<0,'shared outside endpoint maximizes the affine residual envelope')
- ck(upper<=outside<=celloutside<target,'both complete common-source arithmetic envelopes below target')
- result={'status':'PASS','exact':True,'scope':'Exact fixed-source full699 dual from complete512 remaining fees plus a probability law on complete33-label layouts. All-measurable scope uses689/699 fixed-source averaging and simultaneous pooling. The common-source envelope uses the ordinary redistribution proof in Report704; the executable certifies its rational coefficients.',
+ ck(0<=upper<=outside<=celloutside,'ordered nonnegative common-source arithmetic envelopes')
+ if not full:
+  ck(upper<target,'strict complete699 fixed-source dual obstruction')
+  for slope in slopes+cell_slopes:ck(slope<0,'shared outside endpoint maximizes the affine residual envelope')
+  ck(celloutside<target,'complete699 common-source arithmetic envelopes below target')
+ result={'status':'PASS','exact':True,'block':a.block,'selected_pairs':len(pairs),'selected_atomic_weight':3*len(LABELS)+2*len(pairs),'scope':'Exact feasible dual for the declared block with all512 remaining fees and one law on complete33-label layouts. Reports704/705 supply the arbitrary-depth and common-source redistribution proofs. PASS certifies the rational bound; below_target separately records whether the target is excluded. No optimum or positive primal is claimed.',
  'source_sha256':p['pins'],'witness_sha256':sha256(a.witness.read_bytes()).hexdigest(),'program_sha256':sha256(Path(__file__).read_bytes()).hexdigest(),'source_helper_sha256':sha256((a.base/'clustered_full5_allfield_verify.py').read_bytes()).hexdigest(),
  'upper':str(upper),'upper_decimal':float(upper),'target':str(target),'below_target':upper<target,'margin':str(target-upper),'actual_states':states,'positive_residual_states':positive_states,'source_mass':str(F(source_num,p['M0'])),'old_query_rows':len(w['rows']),'layout_columns':len(layout_maps),'positive_layout_probabilities':len(layout_nums),'budget_denominator':D,'remaining_coefficients':list(map(str,remaining)),'group_loads':loads,'layout_budget_load':layout_load,'new_checks':CHECKS,'source_checks':core.CHECKS,'checks':CHECKS+core.CHECKS,
  'branch_coefficients':list(map(str,branchesF)),'outside_slopes':list(map(str,slopes)),'outside_arithmetic_envelope':str(outside),'outside_arithmetic_envelope_decimal':float(outside),'cellwise_coefficients':list(map(str,cellF)),'cellwise_slopes':list(map(str,cell_slopes)),'cellwise_arithmetic_envelope':str(celloutside),'cellwise_arithmetic_envelope_decimal':float(celloutside),'source_extension_requires_measure_proof':True}
