@@ -8751,3 +8751,526 @@ $$
 全部结论仍限于固定名义装置、二维完整活动记忆与齐次重复；终端通道丢弃时间，未声称完整时间记录也趋向同一个固定输出。平方关系是临界极限，不是未经余项控制的有限 $h$ 不等式。未声称达到边界曲线的内部实现唯一，也未求每个有限半径的全部最优仪器。本批不主张文献原创性，未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 119. 固定临界相位下，等待占比与慢点击态的完整可达区域
+
+第 116 节只把慢点击后继压缩成一个标量距离，第 117 节证明了该标量平方边界可以达到。继续保留后继的全部密度矩阵，可以得到更细的结论：**临界等待占比的上限不是由终端态到 $P_0$ 的距离单独决定，而是由终端态在 $P_0$ 上的实际人口决定。**
+
+**定义 119.1（固定相位的临界可达对）。** 固定最近失效相位 $\vartheta$，并记其暗态投影为 $P_\vartheta$。称一对
+
+$$
+(\lambda,\zeta),
+\qquad 0\le\lambda\le1,
+\qquad \zeta\succeq0,
+\qquad \operatorname{Tr}\zeta=1,
+$$
+
+是**可达的**，若存在 $h_j\downarrow0$ 和完整齐次仪器 $\Gamma_j\in\mathfrak B_{R-h_j}$，满足
+
+$$
+\Gamma_j\longrightarrow\Gamma_\vartheta^{\rm eq},
+\qquad
+\frac{M(\Gamma_j)}{\mathscr K(R-h_j)}\longrightarrow\lambda,
+$$
+
+并且其准平稳慢点击态
+
+$$
+\zeta_j=\frac{\mathcal C_j(\sigma_j)}{\epsilon_j}
+$$
+收敛到 $\zeta$。这里的终端通道仍然丢弃首次点击轮数；$\zeta_j$ 保存点击后量子输出。
+
+**定理 119.2（完整可达区域）。** 对固定 $\vartheta$，可达对恰好满足
+
+$$
+\boxed{
+\mathcal A_\vartheta
+=
+\left\{
+(\lambda,\zeta):
+0\le\lambda\le1,\quad
+\zeta\succeq0,\quad
+\operatorname{Tr}\zeta=1,\quad
+\lambda\le\langle0|\zeta|0\rangle
+\right\}.
+}
+\tag{119.1}
+$$
+
+若 $(\lambda,\zeta)\in\mathcal A_\vartheta$，则相应终端通道在完整 diamond 范数中趋向
+
+$$
+\boxed{
+\Lambda_{\vartheta,\zeta}(X)
+=
+\operatorname{Tr}(P_\vartheta X)\zeta
++
+\operatorname{Tr}[(I-P_\vartheta)X]P_0.
+}
+\tag{119.2}
+$$
+
+反之，任何满足定义 119.1 的临界序列都满足 $\lambda\le\langle0|\zeta|0\rangle$。
+
+### 证明：必要性
+
+记 $\lambda_j:=M(\Gamma_j)/\mathscr K(R-h_j)$；按定义 $\lambda_j\to\lambda$。若 $\lambda=0$，所需不等式自动成立。设 $\lambda>0$。
+
+由第 113 节的精确首系数、第 96 节的谱估计以及第 93.2 节的均值渐近式，
+
+$$
+\mathscr K(R-h_j)\sim\kappa^2h_j^{-2},
+\qquad
+\epsilon_jM(\Gamma_j)\longrightarrow1,
+\qquad
+\kappa=\frac{\sqrt\phi}{4}.
+$$
+
+故
+
+$$
+\frac{h_j^2}{\kappa^2\epsilon_j}\longrightarrow\lambda.
+\tag{119.3}
+$$
+
+沿第 111 节，在当前准平稳态的本征基中作相位对齐。相位不预先固定 $g_j$ 的符号；保留第 112.6 式中的相干项并取其绝对值，得到
+
+$$
+ h_j\le R-\delta(\Gamma_j)
+\le (\kappa+o(1))|g_j|+o(\sqrt{\epsilon_j}).
+\tag{119.4}
+$$
+
+结合 $|g_j|/\sqrt{\epsilon_j}$ 的统一有界性与式（119.3），得到
+
+$$
+\liminf_j
+\frac{|g_j|}{\sqrt{\epsilon_j}}
+\ge\sqrt\lambda.
+\tag{119.5}
+$$
+
+令 $P_j:=|\psi_j\rangle\langle\psi_j|$，并令 $E_j=\mathcal C_j^*(I)$。完整性和准平稳方程给出
+
+$$
+(E_j)_{\psi_j\eta_j}=-g_j+o(\sqrt{\epsilon_j}),
+\qquad
+(E_j)_{\psi_j\psi_j}\le\epsilon_j(1+o(1)).
+\tag{119.6}
+$$
+
+取点击分支的任意 Stinespring 算子 $V_j$，置
+
+$$
+ x_j=V_j\psi_j,\qquad z_j=V_j\eta_j,\qquad
+ A=P_0\otimes I_{\rm env}.
+$$
+
+则
+
+$$
+\langle x_j,z_j\rangle=(E_j)_{\psi_j\eta_j},\qquad
+\|x_j\|=O(\sqrt{\epsilon_j}).
+$$
+
+第 106 节分类的是原始点击映射，因此给出
+
+$$
+\mathcal C_j(P_{\eta_j})\longrightarrow P_0.
+$$
+
+于是 $\|Az_j\|\to1$ 且 $\|(I-A)z_j\|\to0$。把内积分成 $A$ 和 $I-A$ 两部分，Cauchy–Schwarz 不等式给出
+
+$$
+\frac{|(E_j)_{\psi_j\eta_j}|}{\sqrt{\epsilon_j}}
+\le
+\sqrt{\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}}\,\|Az_j\|
++
+\frac{\|x_j\|}{\sqrt{\epsilon_j}}\|(I-A)z_j\|.
+\tag{119.7}
+$$
+
+第二项趋于零，故式（119.5）—（119.7）推出
+
+$$
+\liminf_j
+\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}
+\ge\lambda.
+\tag{119.8}
+$$
+
+准平稳态为 $\sigma_j=(1-y_j)P_j+y_jP_{\eta_j}$，两个点击输出均为正半定，且 $y_j\to0$。因此
+
+$$
+\langle0|\zeta_j|0\rangle
+=(1-y_j)\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}
++
+\frac{y_j}{\epsilon_j}\langle0|\mathcal C_j(P_{\eta_j})|0\rangle
+\ge
+(1-y_j)\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}.
+$$
+由式（119.8）得到
+
+$$
+\lambda\le\langle0|\zeta|0\rangle.
+$$
+
+再证终端通道的极限。令
+
+$$
+\mathcal P_j(X)=\sigma_j\operatorname{Tr}(G_jX),
+$$
+
+并令 $\mathcal R_j$ 为第 115 节的有界稳定 resolvent。准确恒等式为
+
+$$
+(\operatorname{id}-\mathcal N_j)^{-1}
+=\epsilon_j^{-1}\mathcal P_j+\mathcal R_j,
+$$
+
+故
+
+$$
+\Xi_j(X)=\zeta_j\operatorname{Tr}(G_jX)+\mathcal C_j\mathcal R_j(X).
+\tag{119.9}
+$$
+
+由第 106 节的原始点击分类以及第 115、96 节的稳定 resolvent 连续性，$G_j\to P_\vartheta$，$\mathcal R_j\to\operatorname{id}-\mathcal P_\vartheta$，并且
+
+$$
+\mathcal C_j\mathcal R_j(X)\longrightarrow
+\operatorname{Tr}[(I-P_\vartheta)X]P_0.
+$$
+固定有限维输入输出空间上的线性映射范数等价，所以这是完整 diamond 范数收敛。得到式（119.2）。证毕。
+
+### 证明：充分性
+
+先取 $\vartheta=0$，令
+
+$$
+\psi=|+\rangle,\qquad
+\eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},\qquad
+P=P_\psi,\qquad Q=P_\eta,
+$$
+
+$$
+\psi_t=\cos t\,\psi-\sin t\,\eta,\qquad S_t=P_{\psi_t}.
+$$
+
+设 $0<\lambda<1$ 且 $\zeta_{00}:=\langle0|\zeta|0\rangle\ge\lambda$。取二维环境的纯化 $|w\rangle$，满足
+
+$$
+\operatorname{Tr}_{\rm env}|w\rangle\langle w|=\zeta.
+$$
+
+令 $y=(\langle0|\otimes I)|w\rangle$，则 $\|y\|^2=\zeta_{00}$。选单位向量 $e_0$ 使
+
+$$
+\langle e_0,y\rangle=-\sqrt\lambda.
+$$
+
+这是可能的，因为 $\|y\|^2\ge\lambda$；若 $y\ne0$，可在其正交补中取单位向量并令
+
+$$
+ e_0=-\sqrt{\frac\lambda{\zeta_{00}}}\frac y{\|y\|}
+ +\sqrt{1-\frac\lambda{\zeta_{00}}}\,e_\perp.
+$$
+
+令 $s=|0\rangle\otimes e_0$，并置
+
+$$
+ u=\frac{w+\sqrt\lambda\,s}{\sqrt{1-\lambda}}.
+$$
+
+则 $u$ 为单位向量，且 $u\perp s$，并有
+
+$$
+ w=-\sqrt\lambda\,s+\sqrt{1-\lambda}\,u.
+\tag{119.10}
+$$
+
+定义同一 qubit 活动空间上的未点击算子和点击 Stinespring 算子
+
+$$
+ A_{t,k}=\sqrt{1-k}\,|\psi_t\rangle\langle\psi|,
+$$
+
+$$
+ V_k\eta=s,\qquad V_k\psi=\sqrt{k}\,u,
+$$
+
+其中 $k=\frac{1-\lambda}{\lambda}t^2$。取 $t$ 足够小使 $0<k<1$。定义两种实际记录分支
+
+$$
+\mathcal N_{t,k}(X)=A_{t,k}XA_{t,k}^\dagger,\qquad
+\mathcal C_k(X)=\operatorname{Tr}_{\rm env}(V_kXV_k^\dagger).
+\tag{119.11}
+$$
+
+由于 $u\perp s$，
+
+$$
+A_{t,k}^\dagger A_{t,k}=(1-k)P,\qquad
+V_k^\dagger V_k=Q+kP,
+$$
+
+两者之和为 $I$。环境指标未成为第三种可读记录；将其分解成 Kraus 算子至多只增加同一个点击记录内部的表示项。
+
+未点击本征分支的谱泄漏为
+
+$$
+\epsilon_{t,k}=\sin^2t+k\cos^2t.
+$$
+
+本模型的最大均值为
+
+$$
+M_{t,k}=1+\frac{1-k}{\epsilon_{t,k}},
+\tag{119.12}
+$$
+
+并且该最大值由输入 $P$ 达到；从 $P_{\psi_t}$ 出发的均值则为 $1/\epsilon_{t,k}$。
+
+记点击分支在该输入上的未归一化输出向量为
+
+$$
+v_{t,k}=-\sin t\,s+\sqrt{k}\cos t\,u.
+$$
+
+归一化慢点击后继是活动 qubit 上的密度矩阵
+
+$$
+\zeta_{t,k}
+=
+\frac{\operatorname{Tr}_{\rm env}|v_{t,k}\rangle\langle v_{t,k}|}
+{\sin^2t+k\cos^2t}.
+\tag{119.13}
+$$
+
+由式（119.10）与 $k=((1-\lambda)/\lambda)t^2$，有
+
+$$
+\frac{v_{t,k}}{\sqrt{\sin^2t+k\cos^2t}}\longrightarrow w,
+\qquad
+\zeta_{t,k}\longrightarrow\operatorname{Tr}_{\rm env}|w\rangle\langle w|=\zeta.
+$$
+
+另一方面，需要检验实际完整仪器到固定名义仪器的距离，而不能只比较两个实际仪器。由于环境是二维的，可将 $u$ 分解为
+
+$$
+u=\alpha|1\rangle\otimes e_0+|r\rangle\otimes e_1,
+$$
+
+其中 $e_1\perp e_0$，$|\alpha|^2+\lVert r\rVert^2=1$。令 $k'=k|\alpha|^2$，并定义
+
+$$
+B_{0,\alpha}=|0\rangle\langle\eta|+\sqrt{k}\,\alpha|1\rangle\langle\psi|,
+\qquad
+B_1=\sqrt{k}\,|r\rangle\langle\psi|.
+$$
+
+实际点击分支为 $\operatorname{Ad}_{B_{0,\alpha}}+\operatorname{Ad}_{B_1}$。去掉 $e_1$ 分量的比较仪器定义为
+
+$$
+\widetilde A=\sqrt{1-k'}\,|\psi_t\rangle\langle\psi|,
+\qquad
+\widetilde{\mathcal C}=\operatorname{Ad}_{B_{0,\alpha}},
+$$
+
+并以 $\widetilde{\mathcal N}=\operatorname{Ad}_{\widetilde A}$ 作为未点击分支。因为
+
+$$
+B_{0,\alpha}^\dagger B_{0,\alpha}=Q+k'P,
+\qquad
+\widetilde A^\dagger\widetilde A=(1-k')P,
+$$
+
+它是完整的两记录仪器。对任意参考输入，实际仪器与该比较仪器的两个记录块之差分别是一个正的 $k-k'$ 质量与其相反的未点击质量，故
+
+$$
+\frac12\lVert\Gamma_{t,k}-\widetilde\Gamma_{t,k'}\rVert_\diamond
+=k-k'=k(1-|\alpha|^2).
+\tag{119.14}
+$$
+
+对相干比较仪器，点击 Kraus 算子满足
+
+$$
+B_{0,\alpha}^\dagger L_0=|\eta\rangle\langle0|,
+$$
+
+所以第 117.2 节的全参考输入估计对复数 $\alpha$ 原样适用：其完整距离在 $k'$ 处相对于 $k'=0$ 的变化只有 $O(k')$。具体地，在 $k'=0$ 的全部最大化边缘态上，第 103 节的两个平方根分别严格为正；紧性把所有邻近最大化点限制在一个共同邻域，平方根在那里有统一 Lipschitz 常数。因此
+
+$$
+\delta(\Gamma_{t,k})
+=R-\kappa t+O(t^2+k).
+\tag{119.15}
+$$
+
+置
+
+$$
+ h_t=R-\delta(\Gamma_{t,k})>0.
+$$
+
+则 $h_t\sim\kappa t$，且
+
+$$
+\epsilon_{t,k}\sim \frac{t^2}{\lambda},\qquad
+M_{t,k}\sim\lambda t^{-2},\qquad
+\mathscr K(R-h_t)\sim t^{-2}.
+$$
+所以等待占比趋向 $\lambda$，而归一化慢点击后继趋向目标 $\zeta$。取一列 $t_j\downarrow0$，必要时再取子列，使正间隙 $h_{t_j}\downarrow0$。
+
+若 $\lambda=1$，条件 $\zeta_{00}\ge1$ 迫使 $\zeta=P_0$；第 103 节的原旋转族给出该端点。
+
+若 $\lambda=0$，对任意目标 $\zeta$ 使用第 108.4 节的经典点击制备族，取 $\widetilde k_t=t^{3/2}$。设所得仪器为 $\widetilde\Gamma_t^\zeta$，无附加点击分支的旋转仪器为 $\widehat\Gamma_{-t}$。第 108.4 节给出
+
+$$
+\frac12\lVert\widetilde\Gamma_t^\zeta-\widehat\Gamma_{-t}\rVert_\diamond=\widetilde k_t,
+$$
+
+因此到同一名义仪器的距离满足反向三角估计
+
+$$
+|\delta(\widetilde\Gamma_t^\zeta)-\delta(\widehat\Gamma_{-t})|
+\le\widetilde k_t.
+$$
+
+结合第 103 节的 $\delta(\widehat\Gamma_{-t})=R-\kappa t+O(t^2)$，实际间隙仍为 $h_t\sim\kappa t$。此外，第 107 节的几何求和给出慢点击后继
+
+$$
+\widetilde\zeta_t
+=
+\frac{\sin^2t\,P_0+\widetilde k_t\cos^2t\,\zeta}
+{\sin^2t+\widetilde k_t\cos^2t}
+\longrightarrow\zeta,
+$$
+
+并且 $\widetilde\epsilon_t\sim t^{3/2}$、$M_t\sim t^{-3/2}$，而 $\mathscr K(R-h_t)\sim t^{-2}$，所以等待占比趋向零。这一步不把 $\lambda=0$ 的任意目标误塞入上面的纯化构造。
+
+最后，对一般 $\vartheta$，令
+
+$$
+U_\vartheta=\operatorname{diag}(1,e^{i\vartheta}),
+\qquad
+\operatorname{Ad}_{U_\vartheta}(X)=U_\vartheta XU_\vartheta^\dagger.
+$$
+
+先以 $U_\vartheta^\dagger\zeta U_\vartheta$ 代替目标运行上述构造，并把两条分支显式共轭为
+
+$$
+\mathcal N^{(\vartheta)}(X)=U_\vartheta\mathcal N^{(0)}(U_\vartheta^\dagger XU_\vartheta)U_\vartheta^\dagger,
+\qquad
+\mathcal C^{(\vartheta)}(X)=U_\vartheta\mathcal C^{(0)}(U_\vartheta^\dagger XU_\vartheta)U_\vartheta^\dagger.
+$$
+
+由于 $\operatorname{Ad}_{U_\vartheta}(Q_0)=e^{-i\vartheta}Q_0$ 且 $\operatorname{Ad}_{U_\vartheta}(L_0)=L_0$，固定名义仪器的 CP 映射不变；距离、均值和等待占比保持不变，暗态变为 $P_\vartheta$，目标后继恢复为 $\zeta$。证毕。
+
+## 120. 终端状态的 Bloch 球帽与目标检验上界
+
+**推论 120.1（固定等待占比的状态几何）。** 对固定 $0\le\lambda\le1$，可达慢点击密度矩阵正好是
+
+$$
+\boxed{
+\{\zeta:\zeta\succeq0,\ \operatorname{Tr}\zeta=1,\ \zeta_{00}\ge\lambda\}.
+}
+\tag{120.1}
+$$
+
+记
+
+$$
+\mathcal Z_\lambda:=\{\zeta:\zeta\succeq0,\ \operatorname{Tr}\zeta=1,\ \zeta_{00}\ge\lambda\}.
+$$
+
+写 $\zeta=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，其中 $\sigma_z=|0\rangle\langle0|-|1\rangle\langle1|$，则它是 Bloch 球帽
+
+$$
+|\mathbf r|\le1,\qquad r_z\ge2\lambda-1.
+\tag{120.2}
+$$
+
+特别地，
+
+$$
+\max_{\zeta\in\mathcal Z_\lambda}|\zeta_{01}|
+=
+\begin{cases}
+\frac12,&0\le\lambda\le\frac12,\\[1mm]
+\sqrt{\lambda(1-\lambda)},&\frac12\le\lambda\le1.
+\end{cases}
+\tag{120.3}
+$$
+
+证明。式（120.1）是定理 119.2 的直接投影；Bloch 表示给出式（120.2）。正性给 $|\zeta_{01}|^2\le\zeta_{00}(1-\zeta_{00})$。在 $\zeta_{00}\ge\lambda$ 上最大化右侧，得到式（120.3）；定理 119.2 的构造实现每个最大值。证毕。
+
+**推论 120.2（任意纯目标的最大终端检验概率）。** 令 $|v\rangle$ 为目标纯态，并记
+
+$$
+q_v=|\langle0|v\rangle|^2.
+$$
+在固定等待占比 $\lambda$ 下，从边界暗态的输入 $P_\vartheta$ 出发，终端输出通过检验 $|v\rangle\langle v|$ 的最大临界概率为
+
+$$
+\boxed{
+\sup_{\zeta\in\mathcal Z_\lambda}
+\langle v|\zeta|v\rangle
+=
+\begin{cases}
+1,&q_v\ge\lambda,\\[1mm]
+\left(\sqrt{\lambda q_v}
++\sqrt{(1-\lambda)(1-q_v)}\right)^2,&q_v<\lambda.
+\end{cases}
+}
+\tag{120.4}
+$$
+
+证明。固定 $q=\zeta_{00}$ 时，正性给
+
+$$
+|\zeta_{01}|\le\sqrt{q(1-q)}.
+$$
+选择相位使非对角项与 $|v\rangle$ 的相位一致，得到
+
+$$
+\langle v|\zeta|v\rangle
+\le
+q q_v+(1-q)(1-q_v)+2\sqrt{q(1-q)q_v(1-q_v)}.
+$$
+右侧是
+
+$$
+\left(\sqrt{q q_v}+\sqrt{(1-q)(1-q_v)}\right)^2.
+$$
+它在 $q=q_v$ 处取一；若 $q_v\ge\lambda$，该点可行。若 $q_v<\lambda$，令
+
+$$
+g(q)=\sqrt{q q_v}+\sqrt{(1-q)(1-q_v)}.
+$$
+
+在 $q_v<q<1$ 上
+
+$$
+g'(q)=\frac12\left(\sqrt{\frac{q_v}{q}}-\sqrt{\frac{1-q_v}{1-q}}\right)<0,
+$$
+
+故在区间 $q\ge\lambda$ 上最大值位于端点 $q=\lambda$；端点 $q=1$ 由连续性处理，给出式（120.4）。达到上界的矩阵是相应相位的纯态投影，定理 119.2 保证其可达。证毕。
+
+## 121. 人口而非距离是临界后继的真实预算
+
+**关系结论 121.1（AHH：等待预算由后继对点击端口的人口承载）。** 第 118 节的平方关系是完整终端距离的投影；第 119 节给出更细的算子事实：在固定最近失效相位与固定等待占比 $\lambda$ 下，终端后继的真正必要且充分条件是
+
+$$
+\boxed{\zeta_{00}\ge\lambda.}
+$$
+
+因此两个密度矩阵可以到 $P_0$ 的距离相同，却拥有不同的等待预算；距离只记录一个投影，而 $P_0$ 人口保留了相干和混合结构所需的方向信息。比如 $\zeta=I/2$ 的最大等待占比是 $1/2$，虽然它到 $P_0$ 的平方距离只有 $1/4$；状态人口给出的限制严格得多。
+
+该人口规律描述的是临界极限中归一化慢点击后继的预算，也解释了相干点击构造的作用：在极限中，点击分支必须把足够的归一化人口送入 $|0\rangle$ 输出端口，剩余振幅才能以环境内部的相干方式组成任意目标纯化。环境指标不成为额外记录；它只是完整 CP 分支的内部表示。把环境标签公开，会改变观察接口，不能拿来替代本定理的两记录模型。
+
+**来源与边界 121.2。** 本批在第 106—118 节的原始点击分类、精确首系数、准平稳谱投影、Stinespring 向量估计和完整参考输入校准上继续推导。新增区域定理由密度矩阵正性、准确 resolvent 分解和显式 Kraus/Stinespring 构造承担；不依赖数值优化，不主张文献原创性。连续时间 QSS 文献仅作背景，不能替代本离散仪器证明。
+
+本批只描述临界序列的极限可达区域，不给有限 $h$ 的精确状态区域，不分类达到同一极限的内部实现，也不把 terminal channel 丢弃时间后的结论推广为保留完整时间记录的结论。模型仍固定为指定名义仪器、二维活动记忆、两个可读记录和齐次重复；调用轮数仍不是物理秒数。未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
