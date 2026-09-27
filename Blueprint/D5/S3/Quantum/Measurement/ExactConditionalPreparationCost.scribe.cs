@@ -76,7 +76,7 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
         Seq(left, Sp, Le, Sp, right);
 
     private static Formula Imply(Formula left, Formula right) =>
-        Seq(Open, left, Close, Sp, Rightarrow, Sp, right);
+        Seq(Open, left, Close, Sp, Rightarrow, Sp, Open, right, Close);
 
     private static Formula ForAll(Formula value, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(value, type), Comma, Sp, body);
