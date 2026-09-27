@@ -496,3 +496,169 @@ The program's complete-period cap limits the finite checks only.
 The proof in sections7.1--7.7 allows arbitrary original heights and
 periods. Neither these controls nor the necessary inequality LA5 force
 a descent in every hypothetical distinct odd cover.
+
+## 8. Joint liability gives the exact absorption criterion
+
+The live filter in section7 still forbids some harmless low-r events:
+a removed class may hit a selected source point that a retained class
+also covers. The exact criterion uses the joint region left uncovered
+by the retained originals. It gives an if-and-only-if for the specified
+prefix transports, and a stronger support condition on the blocking
+probability in a hypothetical extremal odd cover. These are ordinary
+mathematical deductions, not new Lean verification or a claim of
+literature priority.
+
+### 8.1. One actual joint region
+
+Keep section7's distinct original whole cover, with its actual least
+common multiple Q=lcm(D) and two actual support primes r,q:
+
+    Q=r^H q^G M, r<q primes, H,G>=1, gcd(M,rq)=1.
+
+For each original numerical modulus d=r^a q^e s, put
+
+    J={d : e>=1 and a<H},
+    K=D minus J,
+    E_J=(Z/Q) minus union_(d in K) A_d,
+    E_u={xi mod q^G : exists v mod M, (u,xi,v) in E_J}.  (JL1)
+
+Thus K contains exactly the q-free originals and the full-r-height
+q-bearing originals. Because the full original family covers, E_J is
+the set of points whose nonempty original-owner set is contained in J.
+It includes points covered jointly by several removed classes and
+private to none of them. This is one actual region; the witness v in
+JL1 may depend on xi.
+
+For every u, E_u is contained in the old live-filtered F_u. Indeed a
+witness has no q-free owner, so its cofactor is live; an original owner
+must be low-r and contributes its literal q-prefix to F_u. The converse
+need not hold because a full-r owner can also cover such a point.
+
+### 8.2. Necessary and sufficient for the specified source maps
+
+Choose complete r-ary prefix injections theta_(u,e) into the q-ary
+depth-G tree, compatible with truncation and independent of v. Use
+exactly the LA2 source map and the LA3 inverse APs of K. Then
+
+    the output covers its full transport carrier
+    iff image(theta_(u,G)) intersects E_u trivially for every u. (JL2)
+
+For proof, every retained event at a new point is exactly its original
+event at the single source point (u,theta_u(b),v), with zero for an empty
+inverse AP. The output misses the new point exactly when that source
+point lies in E_J. If a selected xi belongs to E_u, choose its actual
+witness v. CRT supplies a new point with that u, b and v, giving an
+output hole. Conversely each output hole supplies the selected xi and
+witness v. Both directions preserve all retained original events.
+
+Consequently the finite tree recurrence applied to the complement of
+E_u decides whether a covering transport of this specified form exists.
+It does not decide every possible covering transformation. Its success
+at every u gives strict lexicographic descent in (class count, modulus
+sum): each original produces at most one output, all J originals are
+dropped, and a retained full-r original maps from r^H q^e s to
+r^(H+e)s. These output moduli are distinct, have r-height greater than
+H, and cannot collide with the q-free outputs. If no class is dropped,
+at least one q-bearing original survives and strictly decreases its
+modulus because q>r. Oddness and nonunit moduli are preserved on odd
+input.
+
+### 8.3. A probability supported on genuine joint liability
+
+In a lexicographically minimum distinct odd whole cover, some u must
+therefore have no complete r-ary tree avoiding E_u. The finite-tree
+duality from sections1--4 supplies a complete t-ary depth-G tree T,
+where t=q-r+1, all of whose leaves belong to E_u. For each leaf xi,
+choose one actual witness v_xi in JL1 and give the t^G points
+(u,xi,v_xi) equal mass. This is one probability nu with
+
+    support(nu) subset E_J,
+    nu(A_d)=0 for every d in K,
+    nu(q-coordinate=c mod q^e)<=t^(-e), 0<=e<=G.       (JL3)
+
+A q-prefix either misses the tree or has exactly t^(G-e) descendant
+leaves, proving the last bound. The source law now excludes every
+retained full-r event as well as the q-free events. Its cofactor choices
+can be correlated with the q-coordinate; no common constant cofactor
+or simultaneous law for different absorbed primes is asserted.
+
+Let I_u consist of low-r original labels whose events meet E_J in the
+u-fibre. Since these actual events cover JL3's support,
+
+    1<=sum_(d in I_u)nu(A_d)
+      <=sum_(d in I_u)t^(-v_q(d)).                    (JL4)
+
+One can retain the prefix-cover structure more precisely. For every
+subset C of the low-r originals whose literal q-prefixes cover E_u,
+
+    1<=sum_(d in C)t^(-v_q(d)).                       (JL5)
+
+Evaluate those covering prefixes on the same uniform law on T to
+obtain JL5. The minimum weight over such prefix covers is thus at least
+one. This is necessary for blockage, not sufficient. JL4 still implies
+the inventory bound LA5; no stronger unconditional scalar inventory
+bound is claimed. Its additional restriction is that the law is
+supported on the actual joint loss and labels irrelevant to that loss
+need not be charged.
+
+### 8.4. A strict whole-cover control and a false private-set shortcut
+
+Add the deliberately redundant class 3 mod15 to section7.8's fourteen
+original classes. This differs from the earlier 13 mod15 control.
+For r=2,q=5,H=3,G=2,M=3, the only q-free live u is7, with R_7={0,2}.
+The new class meets that live region. The old F_7 now forbids roots
+0,1,2,3 entirely and three children of root4, so no binary depth-two
+avoiding tree exists.
+
+K has not changed, hence neither has E_u. At u=7 one permitted map is
+
+    theta_7([0,1,2,3])=[3,19,8,24] mod25.
+
+It gives the same eight-class period96 cover listed in section7.8.
+The class count falls15 to8 and the modulus sum1223 to230. All768
+retained original event coordinates on the96-point transport carrier
+agree. Two discarded-class hits occur on live cofactors; both are
+harmless because retained full-r originals cover those same source
+points. Thus requiring every discarded event to vanish even on the
+live region is strictly stronger than JL2.
+
+This strict control contains even moduli and a redundant added class.
+It establishes a strict difference between the criteria for whole
+covers, without asserting that the difference has been realized on an
+irredundant or all-odd whole cover.
+
+For a separate negative control, instead add 0 mod15 and 5 mod30 to
+the fourteen-class base. K and E_J again stay unchanged. Above u=7,
+every q-leaf0 mod5 has a live witness owned by the modulus5 class AND
+one added low-r class. None of these leaves has a point private to a
+single low-r class, yet all remain in E_u.
+
+Replacing E_u by the projection of the union of individual private
+regions incorrectly permits first roots0,3. The resulting literal
+transport has holes23,39,71,87 in the96-point carrier, corresponding
+to source points455,375,575,255. Its output period is48, with two
+distinct holes. Every listed source point has only removed low-r
+owners. Using the actual E_u instead still gives the valid eight-class
+cover. Report385's special descendant-phase reduction to ONE complete
+private region therefore cannot be applied to an arbitrary deleted
+stratum without its hypotheses.
+
+The [joint-liability checker](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_prime_absorption.py)
+and [exact data](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_prime_absorption.json)
+retain the original numerical classes, complete-period owner sets,
+the actual liability and private projections, all prefix maps and
+literal transported classes. The base, strict, corrected negative and
+deliberately incorrect negative transports check3072 retained event
+coordinates in total. Independent enumeration of the CRT source point
+confirms all projections, transported APs and holes. Normal and
+optimized runs produce identical result bytes:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/p-flat-constructor/joint_liability_prime_absorption.py --output /tmp/e7_joint_liability_prime_absorption.json
+```
+
+The remaining unrestricted obligation is to contradict JL3 for every
+hypothetical odd extremal family, or to repair its E_J with a smaller
+allowed AP inventory. Different blocked leaves can still require
+different cofactor witnesses. Neither the tree nor the private-hull
+repair rules make those witnesses one common cofactor.
