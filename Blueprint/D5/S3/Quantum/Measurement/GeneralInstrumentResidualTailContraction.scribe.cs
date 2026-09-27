@@ -78,8 +78,9 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Scalar(Power(q, Floor(Frac(n, m))), residual));
         Formula summable = Call("Summable", Seq(n, Sp, Mapsto, Sp, Residual(n, eff)));
         Formula tDefinition = Seq(
-            t, Sp, Eq, Sp, Sum, Underscore, Grp(n, Eq, D(0)), Caret, Grp(Infty), Sp,
-            Residual(n, eff));
+            Operatorname, Grp(F.Id("let")), Open,
+            t, Sp, Colon, Eq, Sp, Sum, Underscore, Grp(n, Eq, D(0)), Caret, Grp(Infty), Sp,
+            Residual(n, eff), Close, SemiSpace);
         Formula tUpper = Seq(
             t, Sp, Leq, Sp, Scalar(Frac(m, oneMinusQ), residual));
         Formula poisson = Seq(
@@ -94,7 +95,8 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Parenthesized(Seq(D(0), Sp, Leq, Sp, tail)), Sp, Land, Sp,
             Parenthesized(Seq(tail, Sp, Leq, Sp, Scalar(tailCoefficient, residual))));
         Formula rDefinition = Seq(
-            rRho, Sp, Colon, Eq, Sp, RealTrace(Seq(rho, Sp, residual)));
+            Operatorname, Grp(F.Id("let")), Open,
+            rRho, Sp, Colon, Eq, Sp, RealTrace(Seq(rho, Sp, residual)), Close, SemiSpace);
         Formula densityPremises = Seq(
             Parenthesized(Call("PosSemidef", rho)), Sp, Rightarrow, Sp,
             Parenthesized(Seq(Trace(rho), Sp, Eq, Sp, D(1))), Sp, Rightarrow, Sp);
@@ -102,12 +104,12 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Parenthesized(Seq(D(0), Sp, Lt, Sp, rRho)), Sp, Rightarrow, Sp);
         Formula traceUpper = Seq(
             Forall, Sp, Typed(rho, matrix), Comma, Sp, densityPremises,
-            rDefinition, Comma, Sp, positiveResidualPremise,
+            rDefinition, positiveResidualPremise,
             Frac(RealTrace(Seq(rho, Sp, t)), rRho), Sp, Leq, Sp,
             Frac(m, oneMinusQ));
         Formula traceTailBound = Seq(
             Forall, Sp, Typed(rho, matrix), Comma, Sp, densityPremises,
-            rDefinition, Comma, Sp, positiveResidualPremise,
+            rDefinition, positiveResidualPremise,
             Parenthesized(Seq(
                 Forall, Sp, k, Sp, InMacro, Sp, nat, Comma, Sp,
                 D(0), Sp, Leq, Sp,
@@ -129,14 +131,14 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Parenthesized(contract), Sp, Land, Sp,
             Parenthesized(decay), Sp, Land, Sp,
             Parenthesized(summable), Sp, Land, RowBreak, Grp(),
-            tDefinition, Comma, Sp,
-            Parenthesized(Seq(D(0), Sp, Leq, Sp, t)), Sp, Land, Sp,
-            Parenthesized(tUpper), Sp, Land, Sp,
-            Parenthesized(poisson), Sp, Land, RowBreak, Grp(),
-            Parenthesized(traceUpper), Sp, Land, Sp,
-            Parenthesized(tailBound), Sp, Land, RowBreak, Grp(),
-            Parenthesized(traceTailBound), Sp, Land, Sp,
-            Parenthesized(uniqueness));
+            tDefinition, Parenthesized(Seq(
+                Parenthesized(Seq(D(0), Sp, Leq, Sp, t)), Sp, Land, Sp,
+                Parenthesized(tUpper), Sp, Land, Sp,
+                Parenthesized(poisson), Sp, Land, RowBreak, Grp(),
+                Parenthesized(traceUpper), Sp, Land, Sp,
+                Parenthesized(tailBound), Sp, Land, RowBreak, Grp(),
+                Parenthesized(traceTailBound), Sp, Land, Sp,
+                Parenthesized(uniqueness))));
 
         return Disp(Seq(
             Forall, Sp, Typed(d, nat), Comma, Sp,
