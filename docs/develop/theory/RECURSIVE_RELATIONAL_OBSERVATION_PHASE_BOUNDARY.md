@@ -82372,3 +82372,373 @@ $$
 这里确定的是该真值处的最优指数，没有声称常数 $20$ 或 $30$ 最优，也没有将两层计算提升为一般半正定问题的奇异度判定。它与§264的纯纠缠源线性界相容：当前真值是秩二混合态，精确唯一性本身不足以继承纯源的线性稳定性。
 
 ## 追加锚（本行以下为增补区）
+
+## 266. 面约化步骤与固定来源纤维的Hölder误差界
+
+§263用共同核确定了固定边缘纤维的精确仿射自由度；§265则在一个唯一混合来源处发现最优四次根稳定性。两者之间可以通过成熟的半正定误差界理论建立准确联系：一条经过对偶条件认证的面约化链，给出固定纤维上的Hölder误差上界。链的长度控制一个保证指数，但不能单凭长度宣称该指数最优。
+
+本节直接应用Lourenço的对称锥误差界，写清完整数据残差与仿射距离的对应，并对§262的整个二维参数族证明奇异度恰为二。该步数计算限于固定 $2\otimes2$ 接口；§265的任意环境扩展及显式常数由其独立投影证明承担。
+
+### 266.1 对称锥误差界的标准供应
+
+设 $\mathcal E$ 为有限维欧氏Jordan代数，$\mathcal C$ 为其平方锥，$L\subseteq\mathcal E$ 为实线性子空间，$a_0\in\mathcal E$，且
+$$
+\mathcal C\cap(a_0+L)\ne\varnothing.
+\tag{266.1}
+$$
+范数与距离由Jordan迹内积诱导。
+
+本节使用 Bruno F. Lourenço，*Amenable cones: error bounds without constraint qualifications*，[arXiv:1712.06221v2](https://arxiv.org/pdf/1712.06221v2)，PDF第27页 Proposition 38：对每个固定 $B>0$，存在常数 $\kappa>0$，使所有满足
+$$
+\operatorname{dist}(x,\mathcal C)\le\epsilon,\qquad
+\operatorname{dist}(x,a_0+L)\le\epsilon,\qquad
+\|x\|\le B,\qquad 0\le\epsilon\le1
+\tag{266.2}
+$$
+的 $x$ 都满足
+$$
+\boxed{
+\operatorname{dist}\bigl(x,\mathcal C\cap(a_0+L)\bigr)
+\le\kappa\epsilon^{\,2^{-d_{\mathrm{PPS}}}}.
+}
+\tag{266.3}
+$$
+$\kappa$ 可以依赖固定的锥、仿射切片和范数界 $B$。此定理不要求原始切片含锥的严格内部点，也不要求偏移 $a_0$ 为零。
+
+$d_{\mathrm{PPS}}$ 是到达满足部分多面体Slater条件之面的最少约化步数，定义见该文PDF第5—6页。该文PDF第17页 Proposition 24给
+$$
+d_{\mathrm{PPS}}\le d_S,
+\tag{266.4}
+$$
+其中标准奇异度 $d_S$ 是到达最小面、恢复相对Slater条件所需的最少面约化步数。两种计数不需要预先认定相等。
+
+复Hermitian问题直接属于此框架。取
+$$
+\mathcal E=\operatorname{Herm}(H\otimes E)
+\quad\text{作为实向量空间},
+$$
+$$
+X\circ Y=\frac{XY+YX}{2},
+\qquad
+\langle X,Y\rangle=\operatorname{Re}\operatorname{Tr}(XY).
+\tag{266.5}
+$$
+这是标准欧氏Jordan代数；Hermitian谱分解说明其平方锥就是正半定锥，所诱导范数为Hilbert–Schmidt范数。迹循环性给Jordan积与内积的相容性。因而可直接使用该文PDF第19—20页的Jordan代数约定及（266.3），不把复Hermitian空间误作同阶实对称空间。
+
+### 266.2 哪些约束递归可以计为面约化步骤
+
+一条合法的 $d$ 步链为
+$$
+\mathcal C=\mathcal F_0
+\supsetneq\mathcal F_1
+\supsetneq\cdots
+\supsetneq\mathcal F_d,
+\tag{266.6}
+$$
+并须在每一步给出证书
+$$
+Y_j\in\mathcal F_{j-1}^*\cap L^\perp\cap\{a_0\}^\perp,
+\qquad
+\mathcal F_j=\mathcal F_{j-1}\cap\{Y_j\}^\perp.
+\tag{266.7}
+$$
+这里 $\mathcal F_{j-1}^*$ 是在原实内积空间中取的对偶锥。终端须满足
+$$
+\operatorname{ri}\mathcal F_d\cap(a_0+L)\ne\varnothing,
+\tag{266.8}
+$$
+即相对Slater条件；标准定理还允许较弱的PPS终端，本节使用（266.8）就已足够。于是
+$$
+d_{\mathrm{PPS}}\le d_S\le d.
+\tag{266.9}
+$$
+对 $0\le\epsilon\le1$，可由（266.3）使用保证指数 $2^{-d}$。
+
+在PSD锥中，若当前面由支撑投影 $P$ 表示，则
+$$
+Y\in\mathcal F_P^*
+\iff
+PYP\succeq0
+\quad\text{作为 }\operatorname{ran}P\text{ 上的算子}.
+\tag{266.10}
+$$
+因此后续证书只要求在当前面上正，不必在原全空间上正。与此同时，（266.7）始终要求证书消去整个固定仿射切片：它必须既垂直于方向空间，又垂直于偏移。
+
+这些正是Lourenço PDF第16页 Lemma 22与 Theorem 23的链条件。其PDF第23页 Theorem 35为一个对称锥步骤给出形如
+$$
+\kappa\epsilon+\kappa\sqrt{\epsilon\|x\|}
+\tag{266.11}
+$$
+的面残差函数；第26页 Lemma 36控制连续步骤的复合，从而得到（266.3）的幂指数。
+
+所以，最终核的维数、手算中出现几次Schur补、某个可行点有几条零二次型，都不能直接代替 $d$。必须核对（266.7）和终端条件。即使已经求得最短步数 $d_S$，标准定理给出的仍是有效上界；最优指数还需要独立下界。
+
+### 266.3 固定完整数据就是一个非齐次仿射切片
+
+令 $\dim H=2$，参考空间 $E$ 有限维，记 $m=\dim E$。固定一组可实现数据
+$$
+\rho\succeq0,\qquad\operatorname{Tr}\rho=1,\qquad
+K\in\mathcal L(E).
+\tag{266.12}
+$$
+所有块矩阵均使用同一输入 $Y$ 本征基，且
+$$
+\mathscr K(X)=2X_{+-}.
+\tag{266.13}
+$$
+定义
+$$
+A_{\rho,K}=
+\begin{pmatrix}\rho/2&K/2\\K^\dagger/2&\rho/2\end{pmatrix},
+\qquad
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{266.14}
+$$
+固定完整数据的仿射集为
+$$
+\mathcal L_{\rho,K}=A_{\rho,K}+L.
+\tag{266.15}
+$$
+它与正半定锥的交集恰为合法来源纤维
+$$
+\mathfrak S(\rho,K)
+=\left\{\Xi\succeq0:
+\operatorname{Tr}_H\Xi=\rho,\ \mathscr K(\Xi)=K\right\}.
+\tag{266.16}
+$$
+其中归一化自动来自 $\operatorname{Tr}\rho=1$。
+
+白化后的Ando形式也属于同一结构：将偏移中的 $\rho,K$ 换成 $I_S,Z$，就得到
+$$
+A_{I,Z}+L
+=\left\{
+\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_S-F\end{pmatrix}
+:F=F^\dagger
+\right\}.
+\tag{266.17}
+$$
+这里联合矩阵的迹为 $\dim S$。这只改变归一化尺度与所需范数界，不改变其作为固定非齐次仿射切片的性质。
+
+对实际含边缘误差的竞争态，可以直接在整个 $H\otimes E$ 上使用（266.14），即使 $\rho$ 有核，也不必先缩支撑或对白化边缘求逆。相应链必须属于这个已声明完整空间中的切片。只有精确共同边缘已经排除参考核外方向时，才可直接改用§263的支撑内问题。
+
+### 266.4 数据残差给出精确的仿射距离
+
+对任意Hermitian联合矩阵
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix},
+$$
+定义
+$$
+R=P+Q-\rho,\qquad N=2C-K,
+\qquad
+E_X=\begin{pmatrix}R/2&N/2\\N^\dagger/2&R/2\end{pmatrix}.
+\tag{266.18}
+$$
+则 $X-E_X\in\mathcal L_{\rho,K}$。又对任意Hermitian $D$，
+$$
+\left\langle E_X,\operatorname{diag}(D,-D)\right\rangle=0.
+\tag{266.19}
+$$
+因此 $E_X$ 是到该仿射集的精确正交修正，得到
+$$
+\boxed{
+\operatorname{dist}_{\mathrm{HS}}(X,\mathcal L_{\rho,K})
+=
+\sqrt{\frac{\|R\|_{\mathrm{HS}}^2+\|N\|_{\mathrm{HS}}^2}{2}}.
+}
+\tag{266.20}
+$$
+到正半定锥的距离则是
+$$
+\operatorname{dist}_{\mathrm{HS}}(X,\mathcal C)
+=\|X_-\|_{\mathrm{HS}}.
+\tag{266.21}
+$$
+
+特别地，若 $X=\Xi$ 是任意合法密度态，则PSD残差为零，而且
+$$
+\|\Xi\|_{\mathrm{HS}}\le\operatorname{Tr}\Xi=1.
+\tag{266.22}
+$$
+令未除以二的完整数据误差为
+$$
+\varepsilon=
+\|\operatorname{Tr}_H\Xi-\rho\|_1+
+\|\mathscr K(\Xi)-K\|_1.
+\tag{266.23}
+$$
+HS范数不超过核范数，所以
+$$
+\operatorname{dist}_{\mathrm{HS}}(\Xi,\mathcal L_{\rho,K})
+\le\frac{\varepsilon}{\sqrt2}.
+\tag{266.24}
+$$
+这同时核对了标准定理所需的残差与有界性，不把方程读数直接当作未经换算的距离。
+
+**推论266.1（认证链给固定纤维误差界）。** 对固定的可实现数据 $(\rho,K)$，若存在满足（266.6）—（266.8）的 $d$ 步链，则存在有限常数 $C$，使每个归一化正半定竞争态 $\Xi$ 在 $0\le\varepsilon\le1$ 时满足
+$$
+\boxed{
+\operatorname{dist}_1\bigl(\Xi,\mathfrak S(\rho,K)\bigr)
+\le C\varepsilon^{\,2^{-d}}.
+}
+\tag{266.25}
+$$
+这里 $\operatorname{dist}_1$ 用未除以二的迹范数。
+
+**证明。** 对标准界取范数界 $B=1$，由（266.21）—（266.24）满足其两个距离前提。再用（266.9）及 $0\le\varepsilon\le1$，得到HS距离的 $2^{-d}$ 次上界。最后，任意 $2m$ 阶矩阵满足
+$$
+\|X\|_1\le\sqrt{2m}\|X\|_{\mathrm{HS}}.
+\tag{266.26}
+$$
+对到纤维的距离取下确界便得（266.25），将固定因子吸收入 $C$。$\square$
+
+该推论是所引标准误差界的直接应用。常数可以依赖固定数据、环境维数与所用链；它没有给变化数据切片的统一常数。若纤维不是单点，左边只控制到可实现纤维的距离；只有另行证明唯一性时，才能把它写成与某个唯一来源的态误差。
+
+### 266.5 二维例族中首步无法暴露完整核
+
+回到§262，在固定 $H\otimes S$、$S=\mathbb C^2$ 上取
+$$
+0<a<1,\qquad
+Z_a=\begin{pmatrix}1&a\\-a&1-2a^2\end{pmatrix},
+\qquad
+F_a=\frac12\begin{pmatrix}1&-a\\-a&1\end{pmatrix},
+$$
+$$
+T_a=T_{Z_a}(F_a),\qquad\Omega_a=\frac12T_a.
+\tag{266.27}
+$$
+固定数据为 $\rho_a=I_2/2$、$K_a=Z_a/2$。§262已证明该来源唯一、秩为二，并给出
+$$
+N=\ker\Omega_a=\operatorname{span}\{q_0,q_1\},
+$$
+$$
+q_0=(e_0,-e_0),\qquad
+q_1=(ae_0+e_1,ae_0-e_1).
+\tag{266.28}
+$$
+$q_0,q_1$ 正交。$\Omega_a$ 在 $N^\perp$ 上的两项本征值为
+$(1+a^2)/2,(1-a^2)/2$，均严格正。
+
+固定切片的方向空间仍为（266.14）的 $L$，其正交补为
+$$
+\boxed{
+L^\perp=
+\left\{
+\begin{pmatrix}A&B\\B^\dagger&A\end{pmatrix}:
+A=A^\dagger
+\right\}.
+}
+\tag{266.29}
+$$
+确实，与每个 $\operatorname{diag}(D,-D)$ 正交等价于上下两个对角块相等。
+
+考察任意非零首步证书 $Y\succeq0$，要求
+$$
+Y\in L^\perp,\qquad
+\langle Y,A_{\rho_a,K_a}\rangle=0.
+\tag{266.30}
+$$
+由于 $\Omega_a-A_{\rho_a,K_a}\in L$，这等价于
+$\langle Y,\Omega_a\rangle=0$。两个PSD矩阵迹乘积为零，推出 $Y$ 的支撑包含于 $N$。所以可以写
+$$
+Y=\alpha q_0q_0^\dagger
++\beta q_0q_1^\dagger
++\overline\beta q_1q_0^\dagger
++\gamma q_1q_1^\dagger,
+\quad \alpha,\gamma\in\mathbb R,\quad\beta\in\mathbb C.
+\tag{266.31}
+$$
+记
+$$
+X_{01}=|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|.
+$$
+（266.31）的上下对角块之差恰为
+$$
+4a\,\operatorname{Re}\beta\,|e_0\rangle\langle e_0|
++2a\gamma X_{01}.
+\tag{266.32}
+$$
+由 $a>0$ 和等对角条件，$\gamma=0$、$\operatorname{Re}\beta=0$。又因为 $q_0,q_1$ 正交且非零，对该支撑作可逆对角缩放后，$Y\succeq0$ 等价于相应二阶系数矩阵正半定。其一个对角元 $\gamma$ 为零，PSD性强制 $\beta=0$。
+
+因此全部非零首步证书只有
+$$
+\boxed{Y=\alpha q_0q_0^\dagger,\qquad\alpha>0.}
+\tag{266.33}
+$$
+它们确实属于 $L^\perp$，且消去固定仿射切片；但只能约化到支撑 $q_0^\perp$ 的三维PSD面，不能同时排除 $q_1$。唯一可行态 $\Omega_a$ 在该面上仍秩亏，故一步尚未恢复相对Slater条件。原四维锥内也没有严格正定可行态。
+
+### 266.6 第二步证书与奇异度恰二
+
+取
+$$
+v=(-ae_1,-ae_1),
+\qquad
+Y_2=q_1q_1^\dagger+q_0v^\dagger+vq_0^\dagger.
+\tag{266.34}
+$$
+第一项的上下对角块之差为 $2aX_{01}$，两项交叉项的差之和为 $-2aX_{01}$。因此
+$$
+Y_2\in L^\perp.
+\tag{266.35}
+$$
+又由 $\Omega_a q_0=\Omega_a q_1=0$，
+$$
+\langle Y_2,\Omega_a\rangle=0.
+\tag{266.36}
+$$
+结合（266.35），可将 $\Omega_a$ 换成仿射偏移 $A_{\rho_a,K_a}$，所以这是整个固定切片的对偶证书。
+
+令 $P_0$ 为 $q_0^\perp$ 的正交投影。因为 $q_1\perp q_0$，
+$$
+\boxed{
+P_0Y_2P_0=q_1q_1^\dagger\succeq0.
+}
+\tag{266.37}
+$$
+由（266.10），$Y_2$ 属于首步面的对偶锥。这正是需要的正性条件，不要求 $Y_2$ 在原全空间中PSD。
+
+第二步将面严格约化到
+$$
+\mathcal F_2
+=\{X\succeq0:\operatorname{supp}X\subseteq N^\perp\}.
+\tag{266.38}
+$$
+由于 $\Omega_a$ 在 $N^\perp$ 上严格正，
+$$
+\Omega_a\in\operatorname{ri}\mathcal F_2
+\cap\mathcal L_{\rho_a,K_a}.
+\tag{266.39}
+$$
+两步足够；（266.33）又证明一步不足。因此，对每个 $0<a<1$，在这里声明的固定复 $2\otimes2$ 问题中，
+$$
+\boxed{
+d_S(\mathcal C,L,A_{\rho_a,K_a})=2.
+}
+\tag{266.40}
+$$
+
+这个计算还区分了“知道整个共同核”和“一步可暴露整个共同核”。§263从最大秩填充读取的共同核决定最终最小面，却不保证其完整核投影本身已属于可由原始数据读取的对偶空间。当前例子必须先经首步，再使用只在约化面上为正的第二证书。
+
+### 266.7 四次根界与最优例的衔接
+
+由（266.4）和（266.40），该族有 $d_{\mathrm{PPS}}\le2$。所以对每个固定 $a\in(0,1)$，存在有限常数 $C_a$，使同一 $2\otimes2$ 空间上的全部合法竞争态在完整数据误差不超过一时满足
+$$
+\boxed{
+\|\Xi-\Omega_a\|_1
+\le C_a
+\left(
+\left\|\operatorname{Tr}_H\Xi-\frac12I_2\right\|_1+
+\left\|\mathscr K(\Xi)-\frac12Z_a\right\|_1
+\right)^{1/4}.
+}
+\tag{266.41}
+$$
+这里使用§262已证的唯一性，将到纤维距离换成到 $\Omega_a$ 的误差。竞争态可以混合、变秩和改变边缘；精确同边缘竞争子集当然也满足此界。
+
+当 $a=1/2$ 时，§265已经独立给出指数 $1/4$ 的显式上界，以及排除全部更大指数的严格正共同边缘族。因此（266.40）给该例两层约束的标准面约化解释，而最优指数结论仍由§265的上下界共同承担。对其余 $a$，本节只给四次根上界，没有另行证明最优指数。
+
+（266.41）的常数可依赖固定 $a$，没有声称在 $a\to0$ 或 $a\to1$ 时统一有界。本节也没有将这个二维奇异度计算直接移给附加参考环境；在 $a=1/2$ 处，任意环境中的维数无关常数 $30$ 已由§265的投影和归一化估计另行给出。
+
+由此，精确共同核、取得它所需的合法面约化步骤、到固定纤维的误差界，以及某个具体唯一源的最优指数各有独立判据。标准误差界连接这些对象，但不把其中一个对象的已知性当作其余对象已经取得，也不提供取得最大秩填充或最短约化链的效率保证。
+
+## 追加锚（本行以下为增补区）
