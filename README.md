@@ -151,15 +151,6 @@ We study **holographic spacetime geometry** by asking when partial records
 of time and space support reconstruction and
 [temporal composition](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean).
 
-Theory inputs study
-[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
-retaining time, position, causal order and provenance;
-[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
-composition, shared sources and targets; and
-[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
-defined through allowed experiments and responses. Their prose does not certify
-formal coverage.
-
 [Local agreement can fail globally](D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean):
 three windows on Boolean variables require `x=y`, `y=z` and `x≠z`. Every
 overlap allows both values, yet no triple satisfies all three constraints.
@@ -174,6 +165,15 @@ Additional global constraints can exclude every extension.
 Uniqueness, original-history recovery, computational cost, and reconstruction
 with resolution and error bounds require further results. Links to physical
 spacetime or holographic duality remain research questions.
+
+Theory inputs study
+[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+retaining time, position, causal order and provenance;
+[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+composition, shared sources and targets; and
+[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+defined through allowed experiments and responses. Their prose does not certify
+formal coverage.
 
 ## Information escape
 
