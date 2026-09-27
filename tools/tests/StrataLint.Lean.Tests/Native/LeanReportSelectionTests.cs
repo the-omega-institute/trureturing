@@ -270,8 +270,16 @@ public sealed class LeanReportSelectionTests
         var result = TestProcessRunner.Run("env", arguments,
             temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
+        static string BoundedDiagnostic(byte[] bytes)
+        {
+            var text = Encoding.UTF8.GetString(bytes);
+            return text.Length <= 8192 ? text : text[..4096] + "\n[truncated]\n" + text[^4096..];
+        }
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
-            $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
+            $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode} " +
+            $"buildProducer={buildProducer} unavailableClock={unavailableClock}\n" +
+            $"attempted={string.Join(",", ScriptHarnessScratch.ReadRecordedCalls(phases))}\n" +
+            $"stdout:\n{BoundedDiagnostic(result.StandardOutput)}\nstderr:\n{BoundedDiagnostic(result.StandardError)}");
         var allPhases = buildProducer
             ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "seal" }
             : new[] { "inputs", "reuse", "capture", "ensure", "report", "seal" };
