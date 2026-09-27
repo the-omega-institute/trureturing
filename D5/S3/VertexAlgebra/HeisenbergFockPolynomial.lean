@@ -14,7 +14,7 @@ admission_basis: escape-witness
 Direct frozen dependencies: none; the polynomial and vertex-operator APIs are pinned Mathlib.
 -/
 
-import Mathlib.Algebra.Vertex.VertexOperator
+import D5.S3.VertexAlgebra.HeisenbergModeLocality
 import Mathlib.Algebra.MvPolynomial.PDeriv
 import Mathlib.RingTheory.Derivation.Lie
 import Mathlib.Tactic
@@ -25,6 +25,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.VertexAlgebra.HeisenbergFockPolynomial
 
 open MvPolynomial
+open D5.S3.VertexAlgebra.HeisenbergModeLocality
 open scoped VertexOperator
 
 abbrev Fock := MvPolynomial ℕ ℚ
@@ -182,25 +183,37 @@ theorem heisenberg_fock_polynomial :
     (((field[[1]]).comp (field[[-1]]) -
       (field[[-1]]).comp (field[[1]])) (1 : Fock) = 1) ∧
     (∀ k : ℕ, (field[[Int.negSucc k]]) (1 : Fock) = X k) ∧
-    Submodule.span ℚ (Set.range creationState) = ⊤ := by
+    Submodule.span ℚ (Set.range creationState) = ⊤ ∧
+    (∀ m n : ℤ, coefficientShift (coefficientShift (modeCommutator field)) m n = 0) ∧
+    coefficientShift (modeCommutator field) 0 (-1) = LinearMap.id ∧
+    (¬ ∀ m n : ℤ, coefficientShift (modeCommutator field) m n = 0) := by
   have hcoeff (m : ℤ) : field[[m]] = mode m := by
     rw [field, VertexOperator.ncoeff_of_coeff]
     congr 1
     omega
-  refine ⟨hcoeff, ?_, ?_, ?_, ?_, creation_spans⟩
+  have hccr (m n : ℤ) : modeCommutator field m n =
+      if m + n = 0 then (m : ℚ) • (LinearMap.id : Module.End ℚ Fock) else 0 := by
+    change (field[[m]]).comp (field[[n]]) - (field[[n]]).comp (field[[m]]) = _
+    rw [hcoeff, hcoeff]
+    exact mode_ccr m n
+  have hlocal := heisenberg_mode_locality field
+    (LinearMap.id : Module.End ℚ Fock) hccr
+  refine ⟨hcoeff, ?_, hccr, ?_, ?_, creation_spans, hlocal.1, hlocal.2.1, ?_⟩
   · intro p
     refine ⟨(p.vars.sup id : ℕ) + 1, ?_⟩
     intro m hm
     rw [hcoeff]
     exact positive_vanish p m hm
-  · intro m n
-    rw [hcoeff, hcoeff]
-    exact mode_ccr m n
   · rw [hcoeff, hcoeff]
     simpa using congrArg (fun T : Module.End ℚ Fock => T (1 : Fock))
       (mode_ccr 1 (-1))
   · intro k
     rw [hcoeff]
     simp [mode]
+  · intro hzero
+    have hidzero := hlocal.2.2.mp hzero
+    have hone : (1 : Fock) = 0 := by
+      simpa using congrArg (fun T : Module.End ℚ Fock => T (1 : Fock)) hidzero
+    exact one_ne_zero hone
 
 end D5.S3.VertexAlgebra.HeisenbergFockPolynomial

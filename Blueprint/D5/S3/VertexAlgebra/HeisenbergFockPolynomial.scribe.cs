@@ -35,6 +35,11 @@ internal sealed class HeisenbergFockPolynomialDocument : IScribeDocumentDefiniti
                     + "nontrivially. Every X_k is A[[-(k+1)]] applied to 1. The rational "
                     + "linear span of all finite words of negative modes applied to 1 is V.")),
                 Paragraph(Text(
+                    "The second coefficient shift of this field's mode commutator vanishes "
+                    + "for all integer index pairs. Its first shift at (0,-1) is the identity "
+                    + "endomorphism, which is nonzero on the polynomial vacuum. Thus the "
+                    + "field has exact coefficientwise locality order two.")),
+                Paragraph(Text(
                     "The mixed commutator follows from the polynomial Leibniz rule and "
                     + "partial derivative of X_j. Partial derivatives commute and multiplication "
                     + "operators commute. Chu and Lin, Moduli spaces of conformal structures "

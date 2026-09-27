@@ -29,6 +29,12 @@ pointwise Laurent truncation and construction using Mathlib's
 `VertexOperator.of_coeff` are formalization steps in the repository, not
 claims attributed verbatim to Chu and Lin.
 
+The repository also applies its coefficient-shift locality theorem to this
+field. The second shift of the commutator vanishes, while the first shift at
+$(0,-1)$ is the identity endomorphism and is nonzero. This is the algebraic
+coefficient form of the familiar second-order Heisenberg pole; the exact
+Mathlib statement and proof are repository formalization details.
+
 ## Verified locator
 
 - arXiv:1812.11378v1, Section 3.1:
