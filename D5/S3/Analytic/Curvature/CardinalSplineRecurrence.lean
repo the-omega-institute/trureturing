@@ -38,7 +38,7 @@ namespace D5.S3.Analytic.Curvature.CardinalSplineRecurrence
 open Filter Topology Set intervalIntegral
 open scoped BigOperators
 
-private lemma hasDerivAt_max_sub_pow (c : ℝ) (n : ℕ) (x : ℝ) :
+lemma hasDerivAt_max_sub_pow (c : ℝ) (n : ℕ) (x : ℝ) :
     HasDerivAt (fun y : ℝ => max (y - c) 0 ^ (n + 2))
       (((n : ℝ) + 2) * max (x - c) 0 ^ (n + 1)) x := by
   rcases lt_trichotomy x c with hx | rfl | hx
