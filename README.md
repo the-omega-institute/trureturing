@@ -206,16 +206,14 @@ capture does not mean worthlessness: another occurrence can carry the same
 distinction. Information here is contextual; this supplies neither a universal
 value score nor a historical novelty judgment.
 
-The judge is **under development**. Its current **declared-template findings
-are Observe warnings and do not block admission**, as specified in
-[A5.5 of the repository specification](docs/develop/spec/golden-ledger-repo-spec.md)
-and implemented in the
-[rule source](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs).
-Other admission checks retain their own effects. The rule's delta selection
-determines which modules to inspect; it is separate from the mathematical
-comparison within one current catalog above. The wider design is described
-in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
-its proposed system is not a claim of completed implementation.
+The judge is **under development**. Its declared-template findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Module selection for this rule is
+separate from the fixed-catalog comparison above.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
 
 [Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
