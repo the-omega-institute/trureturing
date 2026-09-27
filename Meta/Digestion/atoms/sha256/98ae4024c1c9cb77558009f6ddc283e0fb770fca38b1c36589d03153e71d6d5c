@@ -1,0 +1,17 @@
+**证明。** 先设 $\langle A,B\rangle\ne0$。实际零位像 $T\otimes B$ 与一位像 $S\otimes A$、$\mathbb Cv\otimes A$ 正交，因此 $S,v$ 也都正交于 $T$。由（83.8），这意味着
+
+$$
+T\subset N^\perp=P.
+$$
+
+于是 $V_1T=S\otimes A\subset V_1P$；读取（83.5）的 $A$ 纤维，得 $S\subset Q$。二者均二维，所以 $S=Q$。引理83.2遂给 $v\notin Q$。
+
+现在设 $A\perp B$。固定等距性和（83.5）分别给
+
+$$
+U\perp L,\qquad H_2\perp H_3.
+\tag{83.10}
+$$
+
+由 $u\in U$、$U\perp L$、$Q\perp U$ 及 $H_3\subset L\oplus Q$，有 $u\perp H_3$。实际非零系数 $b$ 和 $a^2u+bv\in H_2$ 继而给 $v\perp H_3$。同时（83.7）给 $v\perp L$；再用 $P_QH_3=Q$，得到 $v\perp Q$。$v$ 是单位向量，故也有 $v\notin Q$。两个分支全部覆盖。证明完毕。
+

@@ -1,0 +1,35 @@
+### 94.1 同一第四终端回返给出的局部禁阻
+
+实际早期正交单位组 $p,q$ 与 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes\eta_2,\qquad V_1p=v\otimes\eta_2,\qquad
+V_0q=w\otimes\eta_2,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{94.2}
+$$
+
+对实际 $3\le n\le6$，二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,\qquad
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{94.3}
+$$
+
+两个投影均为同构，故 $H_n\cap G_n=0$。
+

@@ -1,0 +1,34 @@
+### 8.1 圆周误差与先于噪声取得的标签
+
+仍取 $P=2^j$、$r=2t+u$，令 $n=P/2$。真实完成相位为
+
+$$
+S_t=P-1-2t\pmod P,\qquad 0\le t<n.
+\tag{TM.801}
+$$
+
+接收端不再取得精确 $S_t$，而取得圆周 $\mathbb R/P\mathbb Z$ 上的 $\widehat S$，其误差合同是
+
+$$
+d_P(\widehat S,S_t)\le\varepsilon,\qquad
+d_P(a,b)=\min_{k\in\mathbb Z}|a-b+kP|.
+\tag{TM.802}
+$$
+
+这是逐来源成立的最坏误差界；允许误差由对手选择，不赋予它概率律。最后的原始传感器位 $Y$ 仍精确。允许发送的补充标签为 $z(t)$，它只依赖在末读之前已经取得的前缀 $t$；不得依赖尚未发生的 $u$ 读数或尚未取得的时钟误差。接收端仅持有 $(\widehat S,Y,z(t),b,\pi)$。
+
+记圆周中以 $S_t$ 为中心、半径 $\varepsilon$ 的闭球为 $B_t$。两个不同前缀能够被同一时钟读数混淆，当且仅当
+
+$$
+B_t\cap B_{t'}\ne\varnothing
+\quad\Longleftrightarrow\quad
+d_P(S_t,S_{t'})\le2\varepsilon
+\quad\Longleftrightarrow\quad
+d_n(t,t')\le\varepsilon,
+\tag{TM.803}
+$$
+
+其中 $d_n(t,t')=\min\{|t-t'|,n-|t-t'|\}$。中间等价的反向取圆周最短弧中点；因此误差恰等于阈值时，两球相接也必须判为混淆。末个等价来自 $d_P(S_t,S_{t'})=2d_n(t,t')$。
+
+在前缀集 $\mathbb Z/n\mathbb Z$ 上将不同且满足 (TM.803) 的顶点连边，得到有限混淆图 $G_\varepsilon$。这个图一般不是等价类的并：不同闭误差球可以链式相交而两端不相交，不能直接当作确定读出的一条纤维。
+

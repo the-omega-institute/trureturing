@@ -1,0 +1,39 @@
+**定理 179.2（合同扩张的单调性）。** 若 $\mathfrak T_1\preceq\mathfrak T_2$，则
+
+$$
+\boxed{
+\Gamma(\mathfrak T_1)
+\subseteq
+\Gamma(\mathfrak T_2).
+}
+\tag{179.1}
+$$
+
+令 $K_i=\Gamma(\mathfrak T_i)^\perp\subseteq\mathcal X$。则
+
+$$
+K_2\subseteq K_1,
+$$
+
+并且第一个评价商在第二个评价商上有唯一线性因子化：存在唯一线性映射 $L$ 使
+
+$$
+\mathsf q_{\Gamma(\mathfrak T_1)}
+=
+L\circ\mathsf q_{\Gamma(\mathfrak T_2)}
+$$
+
+在第二个评价商的像上成立。因此闭包秩满足
+
+$$
+\dim\Gamma(\mathfrak T_1)
+\le
+\dim\Gamma(\mathfrak T_2).
+$$
+
+### 证明
+
+$\Gamma(\mathfrak T_1)$ 的每个生成元仍然是 $\mathfrak T_2$ 的允许终端效果和接口词，所以（179.1）成立。对偶取正交补反向包含给出 $K_2\subseteq K_1$。
+
+取 $\Gamma(\mathfrak T_1)$ 的一组基。若两个状态在 $\mathsf q_{\Gamma(\mathfrak T_2)}$ 下相同，它们对较小闭包的所有效果也相同，因此 $\mathsf q_{\Gamma(\mathfrak T_1)}$ 在第二个评价商的每个纤维上为常值。有限维因子化给出 $L$；在像空间上，因子化唯一。秩不等式是子空间包含的维数不等式。证毕。
+

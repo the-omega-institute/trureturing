@@ -1,0 +1,61 @@
+**引理49.2（钟准备态）。** 给定 $0<\kappa<\mathfrak L_a(0)$，令 $e\in(0,1)$ 是唯一满足
+
+$$
+\mathfrak L_a(e)=\kappa
+\tag{49.14}
+$$
+
+的数。存在一个可由（46.18）有限求出的概率向量 $b$，使矩阵
+
+$$
+B_\kappa=vv^* -\kappa\operatorname{diag}b
+\tag{49.15}
+$$
+
+只有一个正特征值，且该特征值恰为 $e$。同时
+
+$$
+\sum_\ell\frac{a_\ell}{e+\kappa b_\ell}=1.
+\tag{49.16}
+$$
+
+证明。取（46.18）的最大点 $x_\ell=\min\{1,c v_\ell\}$，记 $S=v^*x>0$ 及 $H=\{\ell:x_\ell=1\}$。每个坐标都严格正。内部坐标的一阶条件和上端点的一阶条件分别是
+
+$$
+S v_\ell=e x_\ell\quad(\ell\notin H),
+\qquad S v_\ell\ge e\quad(\ell\in H).
+\tag{49.17}
+$$
+
+定义
+
+$$
+b_\ell=
+\begin{cases}
+(Sv_\ell-e)/\kappa,&\ell\in H,\\
+0,&\ell\notin H.
+\end{cases}
+\tag{49.18}
+$$
+
+式（49.17）给非负性，而且
+
+$$
+\kappa=S^2-e\|x\|^2
+=\sum_\ell x_\ell(Sv_\ell-e x_\ell)
+=\sum_{\ell\in H}(Sv_\ell-e),
+\tag{49.19}
+$$
+
+所以 $\sum_\ell b_\ell=1$。逐坐标计算得
+
+$$
+B_\kappa x=e x,
+\qquad (e+\kappa b_\ell)x_\ell=S v_\ell.
+\tag{49.20}
+$$
+
+秩一正算子减去正算子至多有一个正特征值：在 $v^\perp$ 上二次型非正，故不可能存在二维正谱子空间。由于 $e>0$ 是其特征值，它就是唯一正特征值。将（49.20）除以正分母，乘 $v_\ell$ 后求和并约去 $S$，得到（49.16）。证明完毕。
+
+相位对角酉只共轭 $vv^*$，并保持 $\operatorname{diag}b$ 不变，所以同一特征值结论对全部相位成立。边界情形 $M_*=1$、$\kappa=1$ 另取 $b=(1)$、$e=0$。
+

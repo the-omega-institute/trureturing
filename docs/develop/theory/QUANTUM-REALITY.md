@@ -61727,3 +61727,2845 @@ $$
 矛盾排除每个有限协议的接受成功一。固定 $k,n$ 的精确最大值已由有限树取得，因而 $p_{k,n}<1$。代入 $B_a=4^4+2^2=260$ 和 $D_R=2^k$，再取 $c=(1+p_{k,n})/2$，得到所述小误差区间与固定深度零误差极限。若 $\delta_j\to0$、$p_j\to1$ 的协议列在某个固定深度 $n$ 内出现无穷多次，则该子列最终同时满足 $p_j\le\eta_{k,n}(\delta_j)<(1+p_{k,n})/2$ 与 $p_j>(1+p_{k,n})/2$，再次矛盾。全过程固定物理拷贝数 $k$，没有把增加拷贝数代入深度极限。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 423. 五射线有限局部恢复的共同阈值质量间隙
+
+沿用第 416、421 节的原始两量子比特分割、全矩阵恢复条件及有限局部操作类。固定已知 $r>0$ 且 $1/2<r^2<2$，取
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=R_B=\mathbb C^2,&R&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\qquad J:S\to S\otimes R,\qquad J|i\rangle=|i\rangle\otimes q_i.
+\end{aligned}
+$$
+
+在完整的 $R$ 上记 $W=\operatorname{Sym}^2(\mathbb C^2)$，其标准正交基为 $e_0=|00\rangle$、$e_1=(|01\rangle+|10\rangle)/\sqrt2$、$e_2=|11\rangle$；又记 $e_-=(|01\rangle-|10\rangle)/\sqrt2$、$P_-=|e_-\rangle\langle e_-|$、$P_W=I_R-P_-$。记录仪器始终在完整四维空间上完备，$W$ 只标识准备像所在的数学子空间。
+
+每棵允许树各自具有有限深度、有限结果数和有限维局部工作空间。两方可用与未知输入和未操作参考独立的初始乘积辅助态、局部完全正仪器、私有量子及经典记忆、双向经典通信、重复访问、局部丢弃、粗粒结果、结果遗忘、提前终止和单结果通道；不允许共享纠缠、量子通信或终端反馈之前对 $S$ 的操作。局部仪器各分支之和保迹。真实取得的完整终端历史记为 $\ell$，最终实际标签记为 $y(\ell)$；隐藏 Kraus 指标不是取得的结果。每个最终标签只使用原协议指定的同一个全系统酉反馈 $U_y$，同一标签内的真实历史及隐藏项均共用它。接受集合 $Y_{\mathrm s}$ 预先固定，全部失败历史保留。协议只可依赖已知 $r$，不能依赖未知输入或参考。
+
+逐真实历史迹掉包括剩余记忆在内的全部记录输出，得系统映射 $\mathcal M_\ell$。精确恢复要求同一 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}
+ U_{y(\ell)}\mathcal M_\ell(X)U_{y(\ell)}^\dagger=pX
+ &&(X\in\mathcal L(S)),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+ &&(X_{FS}\in\mathcal L(F\otimes S))
+ \quad\text{对每个有限维未操作参考 }F.
+\end{aligned}
+$$
+
+两式由矩阵张量基展开等价。按第 416、421 节，$\eta_{\mathrm{fin}}(r)$ 是这类各自有限的精确协议之 $p$ 的上确界，包含空接受集合。
+
+使用第 421 节固定的 Pauli 坐标，令
+
+$$
+\begin{aligned}
+D&=\{a\in\mathbb R^3:|a|\le1\},&
+\rho(a)&=\frac{I_2+a\cdot\sigma}{2},&Q(a,b)&=\rho(a)\otimes\rho(b),\\
+d(a,b)&=\operatorname{Tr}(P_-Q(a,b))=\frac{1-a\cdot b}{4},&
+C(a,b)&=\frac{a_z^2+b_z^2}{2},\\
+\kappa&=\frac{\sqrt{4+2(r^2+r^{-2})}}3,&
+h&=\frac1{3(1+\kappa)},&g&=3\kappa h=\frac{\kappa}{1+\kappa},\\
+U&=\frac1{3\kappa},&Z&=1-4h=\frac{3\kappa-1}{3(1+\kappa)},&
+H&=\frac{Z(1-\kappa)}{2\kappa}
+ =\frac{(3\kappa-1)(1-\kappa)}{6\kappa(1+\kappa)},\\
+\tau&=\frac H4,&\varepsilon&=\frac{H^2}{8192}=\frac{\tau^2}{512}.
+\end{aligned}
+$$
+
+这里 $\rho(a),\rho(b)$ 是累计输入效果的归一化坐标。记第 421 节既有集合 $\mathcal S_{\mathrm{flat}}$ 为 $K_{\mathrm s}$，即
+
+$$
+K_{\mathrm s}=\{(x,y)\in D^2:|x|=|y|=1,\quad
+ \langle q_i|Q(x,y)|q_i\rangle=h\quad(1\le i\le5)\}.
+$$
+
+本节的 $f$ 始终表示第 421 节已经定义的同一个函数 $V_\infty$，定义域是整个闭集 $D^2$。另置
+
+$$
+f_{\mathrm{SEP}}(a,b)=\frac{d(a,b)}{3\kappa},
+\qquad \psi(a,b)=f_{\mathrm{SEP}}(a,b)-f(a,b).
+$$
+
+**定理 423.1（共同阈值总质量给出的统一有限树间隙）。** 在上述严格内部参数及完整操作条件下，每棵允许的有限精确恢复树满足
+
+$$
+\boxed{\displaystyle
+p\le U-\frac{H^3}{49152\kappa},\qquad
+\eta_{\mathrm{fin}}(r)\le U-\frac{H^3}{49152\kappa}<U.}
+$$
+
+该界对固定 $r$ 的全部有限树同时成立，不要求共同的深度、分支数、局部记忆维数或最小正叶权重。函数 $f=V_\infty$ 等于从任意 $(a,b)\in D^2$ 出发、每次只对一个 Bloch 向量作有限重心分裂的有限树终端报酬上确界；终端位于 $K_{\mathrm s}$ 时得 $h$，否则得零，允许立即停止。在整个闭域上，$f$ 分别凹，且
+
+$$
+\begin{gathered}
+0\le f\le f_{\mathrm{SEP}},\qquad
+f|_{K_{\mathrm s}}=h,\qquad f(n,n)=0\quad(|n|=1),\\
+p\le4f(0,0)\le U-\frac{H^3}{49152\kappa}.
+\end{gathered}
+$$
+
+因此 $\psi$ 分别凸，并满足完整证书条件
+
+$$
+\boxed{\displaystyle
+0\le\psi\le f_{\mathrm{SEP}},\quad
+\psi|_{K_{\mathrm s}}=0,\quad
+\psi(n,n)=0\ (|n|=1),\quad
+\psi(0,0)\ge\frac{H^3}{196608\kappa}.}
+$$
+
+证明。先由定理 416.1 的普遍平坦几何接出本节需要的归一化。该定理及其证明给出：单位对称平坦向量 $u=\sum_{j=0}^2u_je_j$ 存在，且每个这样的向量均满足
+
+$$
+|u_0|^2=|u_1|^2=|u_2|^2
+ =|\langle u|q_i\rangle|^2=\frac13,
+\qquad |u_1^2-2u_0u_2|=\kappa.
+$$
+
+五个 $q_i$ 张成 $W$，而反对称线不含非零乘积向量（定理 421.1 的证明）。故任一单位平坦乘积向量 $v$ 的对称投影非零，可写为 $v=\alpha u+\delta e_-$，其中 $\alpha=\|P_Wv\|>0$。乘积秩一的行列式等式给
+
+$$
+\delta^2=\alpha^2(u_1^2-2u_0u_2),\qquad
+|\delta|^2=\kappa\alpha^2,\qquad
+1=(1+\kappa)\alpha^2.
+$$
+
+因此其共同重叠为 $h$，反对称权重为 $g$。反过来，对上述任一 $u$ 取 $\delta_0^2=u_1^2-2u_0u_2$，向量 $(u+\delta_0e_-)/\sqrt{1+\kappa}$ 的系数矩阵非零且行列式为零，故为单位乘积向量，给出 $K_{\mathrm s}$ 中一点。集合 $K_{\mathrm s}$ 由闭球上的单位模长条件与连续等式定义，因而紧。若 $(x,y)\in K_{\mathrm s}$，两极响应分别为 $(1+x_z)(1+y_z)/4$ 和 $(1-x_z)(1-y_z)/4$，两者都等于 $h$，故
+
+$$
+x_z=-y_z,\qquad x_z^2=y_z^2=Z,\qquad
+C(x,y)=Z,\qquad x_zy_z=-Z,\qquad d(x,y)=g.
+$$
+
+严格内部条件保证
+
+$$
+\frac{2\sqrt2}{3}\le\kappa<1,\quad
+0<g<\frac12,\quad
+0<\frac Zg=1-\frac1{3\kappa}<1,\quad
+0<H<1,\quad 0<\varepsilon<\frac1{8192},\quad
+d(0,0)=\frac14>\varepsilon,\quad g>\varepsilon.
+$$
+
+以下对所有有限树使用同一个正阈值 $\varepsilon$。
+
+（一）真实历史、原反馈与乘积效果树。沿一条真实取得历史，把添加独立局部辅助态、局部完全正分支、私有记忆及丢弃分别合成为 $\Lambda_{A,v},\Lambda_{B,v}$。固定该历史后，联合分支是 $\Lambda_{A,v}\otimes\Lambda_{B,v}$。其原始输入效果为
+
+$$
+A_v=\Lambda_{A,v}^\dagger(I),\qquad
+B_v=\Lambda_{B,v}^\dagger(I),\qquad E_v=A_v\otimes B_v.
+$$
+
+根效果是 $I_R$。Alice 操作时子效果满足 $\sum_jA_{vj}=A_v$、$B_{vj}=B_v$；Bob 操作时对称。全部终端效果之和为 $I_R$，包括每个失败历史。对后来遗忘的真实结果，可为求和保留历史，但其后续映射仍遵守原协议的控制限制；隐藏 Kraus 项从未变成可用结果。这正是定理 421.1 的真实历史效果接口。
+
+对矩阵单位 $E_{ij}=|i\rangle\langle j|$，输出迹给出
+
+$$
+\mathcal M_\ell(E_{ij})
+ =\operatorname{Tr}\mathcal I_\ell(|q_i\rangle\langle q_j|)E_{ij}
+ =\langle q_j|E_\ell|q_i\rangle E_{ij}.
+$$
+
+对每个非零接受真实历史，将两局部效果谱分解为
+
+$$
+E_\ell=\sum_\nu c_{\ell\nu}|v_{\ell\nu}\rangle\langle v_{\ell\nu}|,
+\qquad c_{\ell\nu}>0,\qquad
+v_{\ell\nu}=\xi_{\ell\nu}\otimes\zeta_{\ell\nu},\quad
+\|\xi_{\ell\nu}\|=\|\zeta_{\ell\nu}\|=1,
+$$
+
+并令 $K_{\ell\nu}=\sqrt{c_{\ell\nu}}\operatorname{diag}(\langle v_{\ell\nu}|q_1\rangle,\ldots,\langle v_{\ell\nu}|q_5\rangle)$。这些谱指标仅用于表达 $\mathcal M_\ell(X)=\sum_\nu K_{\ell\nu}XK_{\ell\nu}^\dagger$。以 $|L\rangle\!\rangle=\sum_i|i\rangle\otimes L|i\rangle$ 向量化，完整的接受恢复条件是
+
+$$
+\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |U_{y(\ell)}K_{\ell\nu}\rangle\!\rangle
+ \langle\!\langle U_{y(\ell)}K_{\ell\nu}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+正性迫使每项都在右边的一维支撑上：
+
+$$
+U_{y(\ell)}K_{\ell\nu}=\gamma_{\ell\nu}I_S,
+\qquad p=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |\gamma_{\ell\nu}|^2.
+$$
+
+若 $\gamma_{\ell\nu}=0$，则 $v_{\ell\nu}$ 与所有 $q_i$ 正交，成为反对称线中的非零乘积向量，矛盾。因此每个保留项均有正的平坦响应。固定一条真实历史时，原有的同一个 $U_{y(\ell)}$ 还使所有幅度向量成比例。由 $q_i$ 张成 $W$，所有 $P_Wv_{\ell\nu}$ 成比例，遂有
+
+$$
+\dim P_W(\operatorname{supp}A_\ell\otimes\operatorname{supp}B_\ell)\le1.
+$$
+
+此处使用定理 421.1 的单射桥梁：对任一非零 $\xi\in\operatorname{supp}A_\ell$，$P_W$ 在 $\xi\otimes\mathbb C^2$ 上单射，因为其核中非零向量会同时属于乘积锥和反对称线。因此 $\operatorname{rank}B_\ell\le1$，交换两方得到 $\operatorname{rank}A_\ell\le1$。非零性给出两秩都为一。所以每个非零接受真实历史有
+
+$$
+E_\ell=t_\ell Q(x_\ell,y_\ell),\qquad
+t_\ell=\operatorname{Tr}E_\ell>0,\qquad
+(x_\ell,y_\ell)\in K_{\mathrm s}.
+$$
+
+该真实历史的校正接受贡献为 $t_\ell h$。合并后的最终标签可以有较高秩，也不要求它只有一个归一化 Bloch 对；复制完成后才按原实际标签重新合并。$p=0$ 时同一正 Choi 等式排除所有非零接受项。所有系统等式在矩阵张量基上延伸到任意未操作有限参考，所用反馈始终是原来的 $U_y$。
+
+删除零效果及其全零后代后，每个节点唯一写成
+
+$$
+E_v=t_vQ(a_v,b_v),\qquad t_v=\operatorname{Tr}A_v\operatorname{Tr}B_v>0.
+$$
+
+一次 Alice 分裂给出 $t_{vj}=t_vw_j$、$a_v=\sum_jw_ja_{vj}$、$b_{vj}=b_v$，其中 $w_j=\operatorname{Tr}A_{vj}/\operatorname{Tr}A_v>0$、$\sum_jw_j=1$；Bob 同理。根的 $t_\varnothing=4$、$(a_\varnothing,b_\varnothing)=(0,0)$。由此得到有限的一坐标重心分裂树。这些概率是效果的迹权重；实际未知输入下的结果条件概率一般不同。
+
+（二）反对称预算与二阶矩超额。现在对任意根为 $(0,0)$ 的上述抽象树证明界，允许只把 $K_{\mathrm s}$ 叶子的任意子集标为成功，其余全部标为失败。记终端的根概率权重为 $w_\ell$，成功总权重为 $S_*$，失败反对称预算为
+
+$$
+\Delta=\sum_{\ell\text{ 失败}}w_\ell d(a_\ell,b_\ell)\ge0.
+$$
+
+两个 Bloch 向量分别是有限树上的鞅；$d$ 与 $a_zb_z$ 都分别仿射。因此
+
+$$
+gS_*+\Delta=\frac14,\qquad
+\mathbb E[a_zb_z]=0.
+$$
+
+成功叶上 $C=Z$、$a_zb_z=-Z$，而任意叶上 $C\ge a_zb_z$。故失败部分的 $C$ 加权和至少为 $ZS_*$，从而
+
+$$
+\begin{aligned}
+\mathbb E[C]-Z
+ &\ge Z(2S_*-1)\\
+ &=\frac{Z(1-2g)}{2g}-\frac{2Z}{g}\Delta
+ =H-\frac{2Z}{g}\Delta.
+\end{aligned}
+$$
+
+对原协议抽出的树，$S_*=p/(4h)$，所以
+
+$$
+\Delta=\frac{1-3\kappa p}{4},\qquad
+p=\frac{1-4\Delta}{3\kappa}.
+$$
+（三）有限阈值细化及原叶保持。对树中任一归一化节点 $Q=Q(a,b)$，若 $d=d(a,b)>\varepsilon$，写其原始子效果为 $E_i=w_iQ_i$，其中 $w_i>0$、$\sum_iw_i=1$、$Q_i=Q(a_i,b)$ 或 $Q(a,b_i)$。令
+
+$$
+\alpha_i=\frac{w_i(\varepsilon-d_i)_+}{d-\varepsilon},
+\qquad
+\beta=\frac1{1+\sum_i\alpha_i},
+\qquad
+\widetilde Q_i=\beta(E_i+\alpha_iQ).
+$$
+
+这里 $d_i=d(Q_i)$。所有 $E_i$ 与 $Q$ 共享未被本次分裂的局部因子，故 $\widetilde Q_i$ 仍是同一坐标的一次正重心分裂；并且
+
+$$
+\sum_i\widetilde Q_i=Q.
+$$
+
+其归一化后的缺陷为
+
+$$
+\frac{w_id_i+\alpha_id}{w_i+\alpha_i}.
+$$
+
+当 $d_i<\varepsilon$ 时后一个量等于 $\varepsilon$，当 $d_i\ge\varepsilon$ 时它等于 $d_i$。第一阶段进入第 $i$ 行的效果权重是 $\beta(w_i+\alpha_i)$；在该行内，把原来的所有列子效果 $E_j$ 复制为
+
+$$
+E_{ij}=\beta(\delta_{ij}+\alpha_i)E_j.
+$$
+
+于是
+
+$$
+\sum_jE_{ij}=\widetilde Q_i,
+\qquad
+\sum_iE_{ij}=E_j,
+$$
+
+且第 $i$ 行的条件列概率为
+
+$$
+\frac{(\delta_{ij}+\alpha_i)w_j}{w_i+\alpha_i}.
+$$
+
+零权重先删除；没有零权重被重新归一化。这个有限行列构造只是在效果树上作代数细化。它的阈值停法在方法上与 M. Kleinmann、H. Kampermann、D. Bruß，*Asymptotically perfect discrimination in the LOCC paradigm*（arXiv:[1105.5132v2](https://arxiv.org/abs/1105.5132v2)，pp.3--4，式(5a)--(5b)、(6)）关于弱测量细化的写法，以及 Andrew M. Childs、Debbie Leung、Laura Mancinska、Maris Ozols，*A framework for bounding nonlocality of state discrimination*（arXiv:[1206.5822v1](https://arxiv.org/abs/1206.5822v1)，pp.9--10，Theorem 1、式(12)、Figure 2）的阈值停止递推相近；这里只借用行列插值与停止的数学方法，不使用其中的区分性结论，也不把它们当作本恢复问题的证明。
+
+对原树的剩余高度 $D$ 作归纳。若叶子满足 $d>\varepsilon$，保留该原叶；若第一阶段得到 $d=\varepsilon$ 的节点，立即停止细化，并在该节点接上这一行中原始子树的全部复制；若某节点仍有 $d>\varepsilon$，则 $\alpha_i=0$，其行只有 $j=i$，只对原始子节点 $i$ 递归。等号同样停止。每次递归均进入原树的严格较小剩余高度，因而得到有限树，且高度至多 $2D$。恢复复制不再递归调用恢复副本。
+
+列恒等式说明每个原始终端叶 $\ell$ 的所有复制效果之和仍是 $E_\ell$；每个复制保留原叶的归一化对、成功或失败标记以及原协议的共同反馈。故终端迹掉后的系统映射、终端分布和报酬均保持。这里没有声称任意记录输出 CP 仪器被保持，也没有为抽象细化树赋予新的物理控制；它只用于上界。细化后的前沿是所有首次达到 $d=\varepsilon$ 的节点与所有仍有 $d>\varepsilon$ 的原始叶组成的不交完全割。
+
+（四）前沿总质量。对阈值节点 $Q(a,b)$，有 $a\cdot b=1-4\varepsilon$，从而 $|a|,|b|\ge1-4\varepsilon$。其完整后继树中 $a_T,b_T$ 都是鞅，故
+
+$$
+\mathbb E|a_T-a|^2\le1-|a|^2,
+\qquad
+\mathbb E|b_T-b|^2\le1-|b|^2,
+$$
+
+并因此
+
+$$
+\mathbb E[C(a_T,b_T)]
+\le C(a,b)+\frac{2-|a|^2-|b|^2}{2}
+\le C(a,b)+8\varepsilon.
+$$
+
+令 $W_{\mathrm{fr}}$ 为满足 $C(a,b)\ge Z+\tau$ 的阈值节点根权重总和。其余阈值节点的 $C-Z$ 小于 $\tau$，被计入 $W_{\mathrm{fr}}$ 的节点至多贡献 $W_{\mathrm{fr}}$；未停止的成功叶贡献为零；未停止的失败叶均有 $d>\varepsilon$，其总权重至多为 $\Delta/\varepsilon$。于是
+
+$$
+H-\frac{2Z}{g}\Delta
+\le \tau+W_{\mathrm{fr}}+8\varepsilon+\frac{\Delta}{\varepsilon}.
+$$
+
+因 $\tau=H/4$ 且 $8\varepsilon=H^2/1024\le H/4$，得到
+
+$$
+W_{\mathrm{fr}}\ge\frac H2-\left(\frac{2Z}{g}+\frac1\varepsilon\right)\Delta.
+$$
+
+（五）每个被计数阈值节点的条件失败缺陷。对这样的节点，
+
+$$
+|a-b|\le\sqrt{8\varepsilon}=\frac H{32}=\frac\tau8.
+$$
+
+置 $n=a/|a|$。由 $C(a,b)\ge Z+\tau$、$|a|\le1$ 及 $|a_z^2-b_z^2|\le2|a-b|$，有
+
+$$
+n_z^2\ge a_z^2\ge C(a,b)-|a-b|\ge Z+\frac\tau2.
+$$
+
+对每个 $(x,y)\in K_{\mathrm s}$，$x_z=-y_z$、$x_z^2=Z$，且 $|n|=|x|=|y|=1$，故
+
+$$
+\frac{(1-n\cdot x)(1-n\cdot y)}4
+\ge\frac{(n_z^2-Z)^2}{16}\ge\frac{\tau^2}{64}\qquad((x,y)\in K_{\mathrm s}).
+$$
+
+置 $P_{-n}=(I_2-n\cdot\sigma)/2$。令该节点后继中成功部分的条件权重为 $s$，失败效果之和为 $F$，则
+
+$$
+Q=\sum_{\mathrm{success}}u\,Q(x,y)+F,
+\qquad
+\frac{\tau^2}{64}s\le\operatorname{Tr}\bigl[Q(P_{-n}\otimes P_{-n})\bigr]
+=\frac{(1-|a|)(1-n\cdot b)}4.
+$$
+
+由
+
+$$
+4\varepsilon=(1-|a|)+|a|(1-n\cdot b),
+$$
+
+以及 $|a|>1/2$，右端不超过 $4\varepsilon^2/|a|$。所以
+
+$$
+s\le\frac{4\varepsilon^2}{|a|(\tau^2/64)}
+\le\frac{512\varepsilon^2}{\tau^2}=\varepsilon.
+$$
+
+该节点的条件失败反对称缺陷为
+
+$$
+\delta=\operatorname{Tr}(P_-F)=\varepsilon-gs
+\ge\varepsilon(1-g)\ge\frac\varepsilon2.
+$$
+
+前沿不交且其余失败缺陷非负，故
+
+$$
+\Delta\ge\frac{\varepsilon}{2}W_{\mathrm{fr}}.
+$$
+
+（六）聚合与常数。和前式合并，得到
+
+$$
+\Delta\left(\frac32+\frac{\varepsilon Z}{g}\right)
+\ge\frac{\varepsilon H}{4}.
+$$
+
+因为 $Z/g<1$、$\varepsilon<1/8$，可用较弱但统一的估计
+
+$$
+\Delta\ge\frac{\varepsilon H}{8}=\frac{H^3}{65536}.
+$$
+
+再用 $p=(1-4\Delta)/(3\kappa)$，便得
+
+$$
+p\le\frac1{3\kappa}-\frac{H^3}{49152\kappa}
+=U-\frac{H^3}{49152\kappa}.
+$$
+
+这一步使用的是前沿的总质量 $W_{\mathrm{fr}}$，不是某一片叶子的正权重下界；任意进一步的标量细分都不改变论证。
+
+（七）闭域变分证书。立即停止说明从任意 $(a,b)$ 出发的有限树族非空。对任意成功叶 $(x,y)\in K_{\mathrm s}$，有 $h=d(x,y)/(3\kappa)$，失败叶贡献非负，且 $d$ 分别仿射，因此每棵树的报酬不超过 $d(a,b)/(3\kappa)$。取所有有限一坐标重心树的报酬上确界，正是第 421 节的 $f=V_\infty$，从而
+
+$$
+0\le f\le f_{\mathrm{SEP}}.
+$$
+
+若把任一有限分裂的各子点接上报酬任意接近相应 $f$ 值的有限树，再将它们拼接到该分裂上，令误差趋于零，便得
+
+$$
+f\left(\sum_j\lambda_ja_j,b\right)\ge\sum_j\lambda_jf(a_j,b),
+$$
+
+Bob 方向同理。故 $f$ 在整个闭域上分别凹。这里不假定 $f$ 连续，也不假定上确界取得。对 $K_{\mathrm s}$，立即停止给出 $f\ge h$，而上界给出 $f\le h$，所以 $f=h$；对纯对角线 $d(n,n)=0$，有 $f(n,n)=0$。
+
+对任意真实协议的效果树，将全部 $K_{\mathrm s}$ 终端标为成功所得的归一化树报酬至少为 $p/4$；由 $f$ 的上确界定义，根处有
+
+$$
+p\le4f(0,0).
+$$
+
+现在固定任意一个根为 $(0,0)$ 的有限一坐标重心树 $T$，把它的全部 $K_{\mathrm s}$ 终端都标为成功，记成功终端的根概率总质量为 $S_*$，并定义其报酬
+
+$$
+R_T=hS_*.
+$$
+
+在这棵抽象树上令 $p_T:=4R_T=4hS_*$；部分（二）的同一预算恒等式于是写成 $\Delta=(1-3\kappa p_T)/4$。
+
+上述部分（二）至（六）的论证（反对称预算、阈值细化、前沿总质量及聚合）只使用这个抽象树的重心恒等式和终端标记；它不需要该树有任何物理实现、记录输出仪器或反馈。因此对每一个这样的 $T$ 都得到
+
+$$
+4R_T\le U-\frac{H^3}{49152\kappa}.
+$$
+
+对所有这类有限树取上确界，并使用第 421 节已经导入的等式 $f(0,0)=\sup_T R_T$，便有
+
+$$
+4f(0,0)\le U-\frac{H^3}{49152\kappa}.
+$$
+
+另一方面，$f_{\mathrm{SEP}}(a,b)=d(a,b)/(3\kappa)$ 固定任一变量时为仿射函数，故分别凹；它在 $K_{\mathrm s}$ 上等于 $h$，在集合外支配零。第 421 节的最小分别凹上包络性质给出 $f\le f_{\mathrm{SEP}}$，并且
+
+$$
+\psi=f_{\mathrm{SEP}}-f
+$$
+
+分别凸、非负，在 $K_{\mathrm s}$ 与纯对角线上为零。最后
+
+$$
+\psi(0,0)=\frac1{12\kappa}-f(0,0)
+\ge\frac{H^3}{196608\kappa}.
+$$
+
+证毕。
+
+本定理只给出固定严格内部参数下对全部有限协议的统一正间隙。它不主张实际控制的可实现性超出原操作类，不主张常数尖锐、精确最优值、上确界取得、闭包或近似协议，也不延伸到端点；端点 $r^2=1/2,2$ 时 $H=0$，上述正间隙除法不适用。
+
+## 追加锚（本行以下为增补区）
+## 424. 固定深度参数稳定性与有效代数恢复
+
+操作与记号。采用第 422 节的完整操作接口及定理 422.1 的接受映射识别。固定整数 $d,k,d_a\ge1$，固定局部仪器树的路径深度上界 $n\ge0$，并令
+
+$$
+S=\mathbb C^d,\qquad R_a=\mathbb C^{d_a},\qquad
+R=\bigotimes_{a=1}^kR_a,\qquad D_R=\prod_{a=1}^kd_a.
+$$
+
+取非空紧致度量空间 $\Theta$。对 $i=1,\ldots,d$，给定连续单位向量族 $q_i:\Theta\to R$，以 $J_\theta|i\rangle=|i\rangle\otimes q_i(\theta)$ 准备记录。各 $q_i$ 可以纠缠、重复或不张成 $R$；物理分割始终为完整的原始因子 $R_a$，不从较小的张成空间取得联合压缩权限。同一个外部已知参数 $\theta$ 在全部后代描述符中保持不变，它不是额外的源寄存器。未知系统输入可以与任意有限维参考纠缠；所有协议及反馈均不依赖这一未知输入，参考始终不被操作，系统 $S$ 在终端反馈以前不被操作。
+
+每个协议各自为有限树，每个非终端节点由一位持有者在当前有限维工作空间上执行有限实际结果的完全正仪器，总和在整个工作空间上保迹。允许有限私有经典或量子记忆、重复访问、局部丢弃、粗粒 CP 结果、实际取得后又遗忘的结果、零 CP 结果、单结果通道、提前停止及不等叶深。初始辅助态与未知输入及参考独立，并在持有者之间为乘积态；允许经典通信，禁止额外共享纠缠和量子通信。下一操作方和设置只由固定策略按当时实际可用的信息选择。隐藏 Kraus 指标不是实际结果，遗忘的历史不能重新成为控制信息。
+
+最终实际标签 $y$ 决定接受与否以及一个作用于整个 $S$ 的酉反馈 $U_y$；并入同一标签的历史、隐藏 Kraus 项及数学分解项共用这个反馈。逐历史迹掉全部记录输出及记忆后，将接受项在系统矩阵空间内相加，得到 $T$；失败和提前停止仍保留在完整仪器内。记 $\mathcal A_n(\theta)$ 为深度至多 $n$ 的这些聚合接受映射。深度按每条路径上的局部仪器节点计数，局部硬币和单结果通道都占节点，纯经典通信、记账和最终系统酉反馈不另占节点。初始策略、首位持有者及终端接受或反馈均无免费抽签。所有映射等式都在全部系统矩阵上成立，等价地在张量上每个有限参考的恒等映射后成立。
+
+记
+
+$$
+\mathcal D_a=\{\rho_a\in\operatorname{Herm}(R_a):\rho_a\succeq0,\ \operatorname{Tr}\rho_a=1\},\qquad
+\mathcal D=\prod_{a=1}^k\mathcal D_a,\qquad
+\rho_\star=(I_{d_a}/d_a)_a,
+$$
+
+并置 $B_a=d^4+d_a^2$、
+
+$$
+\mathcal H=\{Z\in\operatorname{Herm}(\mathbb C^d\otimes\mathbb C^d):Z\succeq0,\ \operatorname{Tr}Z\le d\}.
+$$
+
+用 $\rho[a\leftarrow\sigma]$ 表示只替换第 $a$ 个局部密度的元组，$\Delta_B$ 为 $B$ 项概率单纯形，$E_{ij}=|i\rangle\langle j|$，$\operatorname{Ad}_U(X)=UXU^*$。对输入先写的未归一化 Choi 矩阵采用
+
+$$
+C(T)=\sum_{i,j=1}^dE_{ij}\otimes T(E_{ij}),\qquad
+\Omega=\sum_{i=1}^d|ii\rangle.
+$$
+
+令
+
+$$
+\Phi_{(\theta,\mathcal E)}(E_{ij})
+ =\langle q_j(\theta)|\mathcal E|q_i(\theta)\rangle E_{ij}.
+$$
+
+在 $\mathcal U(d)$ 上定义
+
+$$
+\mathcal K_0(\theta,\rho)
+=\{0\}\cup
+\{C(\operatorname{Ad}_U\circ
+ \Phi_{(\theta,\otimes_a\rho_a)}):U\in\mathcal U(d)\}.
+$$
+
+对 $m<n$，令 $\mathcal K_{m+1}^a(\theta,\rho)$ 由所有
+
+$$
+\sum_{j=1}^{B_a}\lambda_jZ_j
+$$
+
+组成，其中
+
+$$
+\lambda_j\ge0,\quad \sum_j\lambda_j=1,\quad
+\sigma_j\in\mathcal D_a,\quad
+\sum_j\lambda_j\sigma_j=\rho_a,
+$$
+
+且
+
+$$
+Z_j\in
+\mathcal K_m(\theta,\rho[a\leftarrow\sigma_j])
+\quad(1\le j\le B_a).
+$$
+
+置
+
+$$
+\mathcal K_{m+1}(\theta,\rho)=\bigcup_{a=1}^k
+\mathcal K_{m+1}^a(\theta,\rho),
+$$
+
+零权重补齐短列表，不对持有者并集或 $\mathcal K_0$ 作凸化。定理 422.1 的识别在每个固定 $\theta$ 上给出
+
+$$
+C(\mathcal A_n(\theta))=D_R\mathcal K_n(\theta,\rho_\star).
+$$
+
+定义固定深度的精确成功率与相对钻石误差成功率
+
+$$
+ p_n(\theta)=\max\{p\in[0,1]:p\,\operatorname{id}\in\mathcal A_n(\theta)\},
+$$
+
+$$
+\eta_n(\delta,\theta)=
+\max\left\{p\in[0,1]:\begin{array}{l}
+\exists T\in\mathcal A_n(\theta),\quad T^*(I)=pI,\\[-2pt]
+\|T-p\,\operatorname{id}\|_\diamond\le\delta p
+\end{array}\right\},
+\qquad 0\le\delta\le2.
+$$
+
+这里 $T^*$ 是 Hilbert--Schmidt 伴随，使用未除以二的钻石范数，并保留 $(T,p)=(0,0)$；只有 $p>0$ 时才把 $T/p$ 解释为归一化通道。
+
+**定理 424.1（固定深度的参数稳定性、严格间隙与有效恢复）。**
+
+在上述同一接口和固定深度下，以下五项同时成立。
+
+**（一）联合紧性与上半连续性。** 对每个 $m\le n$，集合
+
+$$
+\mathfrak G_m=\{(\theta,\rho,Z):\theta\in\Theta,\ \rho\in\mathcal D,\ Z\in\mathcal K_m(\theta,\rho)\}
+$$
+
+是紧集且每个 $(\theta,\rho)$ 的纤维非空；根集合
+
+$$
+\mathfrak A_n=\{(\theta,T):T\in\mathcal A_n(\theta)\}
+$$
+
+也是紧集。$p_n(\theta)$ 和 $\eta_n(\delta,\theta)$ 的最大值均由允许的有限协议取得，分支数可取各 $B_a$。函数 $p_n:\Theta\to[0,1]$ 上半连续。逐点地，定理 422.1 给出的固定源结论仍有
+
+$$
+\eta_n(0,\theta)=p_n(\theta),
+\qquad
+\lim_{\delta\downarrow0}\eta_n(\delta,\theta)=p_n(\theta).
+$$
+
+证明。深度零时，$\Theta\times\mathcal D\times\mathcal U(d)$ 是紧集，映射
+
+$$
+(\theta,\rho,U)\longmapsto
+ C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+$$
+
+连续；再并入恒为零的图，得到紧的 $\mathfrak G_0$。由于
+
+$$
+\operatorname{Tr}C(\operatorname{Ad}_U\circ\Phi_{(\theta,\otimes_a\rho_a)})
+=\sum_i\langle q_i(\theta)|\otimes_a\rho_a|q_i(\theta)\rangle\le d,
+$$
+
+因每个密度矩阵的算子范数至多一，所以上述迹界成立；完全正性给出 Choi 矩阵非负，故非零部分确实落在 $\mathcal H$ 中。凸权重和保留正性及迹界，所以每层递归仍落在同一个 $\mathcal H$ 中。
+
+假设 $\mathfrak G_m$ 紧。固定持有者 $a$，考虑紧集
+
+$$
+\Theta\times\mathcal D\times\Delta_{B_a}
+ \times(\mathcal D_a\times\mathcal H)^{B_a},
+$$
+
+并以有限个闭条件
+
+$$
+\sum_j\lambda_j\sigma_j=\rho_a,
+\qquad
+(\theta,\rho[a\leftarrow\sigma_j],Z_j)\in\mathfrak G_m
+$$
+
+截取其子集，再用连续映射 $(\lambda_j,Z_j)_j\mapsto\sum_j\lambda_jZ_j$。零权重和奇异密度均被闭条件保留，所以每个 $\mathfrak G_{m+1}^a$ 紧；有限持有者并集仍紧，且每个纤维非空：取 $\lambda_1=1$、$\sigma_j=\rho_a$、全部 $Z_j=0$ 即得零元，其余权重为零。归纳至 $n$，再限制 $\rho=\rho_\star$ 并乘以 $D_R$，再通过 Choi 线性同构的连续逆得到紧的 $\mathfrak A_n$。对于任意线性映射 $F$ 和有限参考矩阵 $X=\sum_{i,j}X_{ij}\otimes E_{ij}$，块压缩给出 $\|X_{ij}\|_1\le\|X\|_1$，因而
+
+$$
+\begin{aligned}
+\|(\operatorname{id}\otimes F)(X)\|_1
+&\le\sum_{i,j}\|X_{ij}\otimes F(E_{ij})\|_1\\
+&=\sum_{i,j}\|X_{ij}\|_1\|F(E_{ij})\|_1\\
+&\le\|X\|_1\sum_{i,j}\|F(E_{ij})\|_1.
+\end{aligned}
+$$
+
+这一定理 422.1 中使用的 Choi 坐标连续性估计说明 Choi 坐标收敛蕴含钻石范数收敛，其界对全部参考维数一致。因而在 $\mathfrak A_n\times[0,1]$ 上施加 $T=p\operatorname{id}$，或固定 $\delta$ 后施加 $T^*(I)=pI$ 及 $\|T-p\operatorname{id}\|_\diamond\le\delta p$，均得到含 $(0,0)$ 的非空紧可行集，两个最大值都取得。再由定理 422.1 的反向实现，每个最大化映射由同深度的允许有限树实现，持有者 $a$ 的每个节点至多有 $B_a$ 个实际结果。
+
+取任意 $\theta_j\to\theta$，并令 $p_j=p_n(\theta_j)$。先取子列使 $p_j\to\bar p=\limsup_jp_n(\theta_j)$，再由根图紧性，从相应最大化映射中取进一步子列 $(\theta_j,T_j)\to(\theta,T)$。闭图给出 $T=\bar p\operatorname{id}\in\mathcal A_n(\theta)$，故 $\bar p\le p_n(\theta)$。这正是上半连续性。最后两条逐点等式和极限直接应用定理 422.1 的固定源结论。证毕。
+
+**（二）紧参数族上的统一严格间隙。** 若 $v:\Theta\to\mathbb R$ 连续且
+
+$$
+ p_n(\theta)<v(\theta)\qquad(\theta\in\Theta),
+$$
+
+则存在 $\varepsilon>0$ 与 $\delta_0\in(0,2]$，使得
+
+$$
+\eta_n(\delta,\theta)\le v(\theta)-\varepsilon
+\qquad(\theta\in\Theta,\ 0\le\delta\le\delta_0).
+$$
+
+证明。由 $p_n$ 上半连续，$v-p_n$ 下半连续；紧性和处处严格正性给出
+
+$$
+\gamma=\min_{\theta\in\Theta}(v(\theta)-p_n(\theta))>0.
+$$
+
+置 $\varepsilon=\gamma/2$。若不存在统一的闭误差区间，则对每个 $j$ 可取 $0<\delta_j\le1/j$、$\theta_j\in\Theta$ 及近似可行最大化元 $(T_j,p_j)$，满足
+
+$$
+ p_j>v(\theta_j)-\gamma/2,
+\qquad
+\|T_j-p_j\operatorname{id}\|_\diamond\le\delta_jp_j.
+$$
+
+取子列使 $\theta_j\to\theta$、$p_j\to p$、$T_j\to T$。因 $0\le p_j\le1$，右端不超过 $\delta_j$，故第一项所引定理 422.1 的范数连续性估计给出 $T=p\operatorname{id}$；根图闭性给出 $p\le p_n(\theta)$。另一方面连续性给出
+
+$$
+ p\ge v(\theta)-\gamma/2,
+$$
+
+这与
+
+$$
+ p\le p_n(\theta)\le v(\theta)-\gamma
+$$
+
+矛盾。因此某个 $\delta_0>0$ 成立，并可将其截到 $2$ 以内。
+
+作为同一接口的五射线应用，取 $A\subset(1/\sqrt2,\sqrt2)$ 非空紧集、$d=5$、$k=2$、$d_1=d_2=2$、$D_R=4$、$B_1=B_2=629$，取第 420 节的连续源
+
+$$
+\omega=e^{2\pi i/3},\quad s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}(r)=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\ (j=0,1,2),\quad q_i(r)=s_i(r)\otimes s_i(r),
+$$
+
+并令
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad U(r)=\frac1{3\kappa(r)}.
+$$
+
+定理 422.1 的精确最大化元是一棵实际有限树，其原始两因子、全参考条件、局部操作权限和按实际标签共用的终端反馈均属于定理 420.1 的接口。对这棵树应用定理 420.1 的逐协议严格界，才得到 $p_n(r)<U(r)$。五个源向量及 $U$ 在 $A$ 上连续，所以应用前半部得到某个统一正间隙。若存在 $r_j\in A$、$\delta_j\to0$ 及近似协议使
+
+$$
+ p_j\ge U(r_j)-e_j,\qquad e_j\ge0,\quad e_j\to0,
+$$
+
+则对每个固定 $n$，充分大的 $j$ 满足 $\delta_j\le\delta_0$、$e_j<\varepsilon$。若此时深度仍至多 $n$，便同时有 $p_j\le\eta_n(\delta_j,r_j)\le U(r_j)-\varepsilon$ 和 $p_j\ge U(r_j)-e_j>U(r_j)-\varepsilon$，矛盾。因此深度最终超过每个固定整数。这里没有断言这样的近似列存在，也没有把结论延伸到开区间端点。证毕。
+
+**（三）零深度退相干反例。** 令 $d=d_1=2$、$k=1$、$n=0$，取
+
+$$
+q_1(t)=|0\rangle,
+\qquad
+q_2(t)=t|0\rangle+\sqrt{1-t^2}|1\rangle,
+\qquad 0\le t\le1,
+$$
+
+并写
+
+$$
+D_t\!\begin{pmatrix}a&b\\c&e\end{pmatrix}
+=\begin{pmatrix}a&tb\\tc&e\end{pmatrix}.
+$$
+
+则
+
+$$
+\mathcal A_0(t)=\{0\}\cup\{\operatorname{Ad}_U\circ D_t:U\in\mathcal U(2)\},
+$$
+
+且
+
+$$
+\min_U\|\operatorname{Ad}_U\circ D_t-\operatorname{id}\|_\diamond=1-t,
+$$
+
+$$
+ p_0(t)=\begin{cases}0,&t<1,\\1,&t=1,\end{cases}
+\qquad
+\eta_0(\delta,t)=\begin{cases}1,&\delta\ge1-t,\\0,&\delta<1-t.
+\end{cases}
+$$
+
+因此对每个 $0<\delta\le2$，
+
+$$
+\sup_{0\le t\le1}(\eta_0(\delta,t)-p_0(t))=1,
+$$
+
+而在 $\delta=0$ 时该上确界为零。
+
+证明。零深度只有确定性的末端拒绝或一个酉校正；没有可免费抽取的硬币，因此每个非零接受映射都保迹并有 $p=1$。令 $Z=|0\rangle\langle0|-|1\rangle\langle1|$、$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。在矩阵单位上计算源重叠给出 $\Phi_{(t,I)}=D_t$，由零深度根等式得到所列 $\mathcal A_0(t)$。直接计算又得
+
+$$
+D_t=\frac{1+t}{2}\operatorname{id}
+ +\frac{1-t}{2}\operatorname{Ad}_Z,
+$$
+
+酉共轭在任意参考扩张后都保持迹范数，故 $\|\operatorname{Ad}_Z-\operatorname{id}\|_\diamond\le2$；输入 $|+\rangle\langle+|$ 给出两个正交纯态之差，迹范数为二，所以该范数恰为二。从而用 $U=I$ 得
+
+$$
+\|D_t-\operatorname{id}\|_\diamond\le1-t.
+$$
+
+对任意 $U$，令 $P_+=|+\rangle\langle+|$，$\sigma=UD_t(P_+)U^*$。$\sigma$ 的最大特征值为 $(1+t)/2$。利用 $2P_+-I$ 的算子范数为一，得到
+
+$$
+\|\sigma-P_+\|_1
+\ge2\bigl(1-\operatorname{Tr}(P_+\sigma)\bigr)
+\ge1-t.
+$$
+
+钻石范数支配无参考输入的迹范数，故任意 $U$ 都有相反方向的不等式；两者合起来给出最小值 $1-t$。当 $t<1$ 时该距离为正，故不能精确得到恒等映射；$t=1$ 时 $D_1=\operatorname{id}$，取 $U=I$ 即得 $p_0(1)=1$。前述零深度结构又说明近似约束只能接受 $p=1$ 或零映射，故恰好在 $\delta\ge1-t$ 时取到 $1$，否则只能取零。给定 $\delta>0$，选取 $t=1-\min(\delta/2,1/2)$ 即得上确界一；$\delta=0$ 时它退化为精确情形。这里 $p_0$ 在 $t=1$ 向上跳跃；第一项只给出上半连续性。第二项比较的是连续严格阈值，不是可能不连续的 $p_0$ 本身。在 $t=1$，只有 $v(1)\le1$ 才与严格阈值条件冲突；例如 $v\equiv2$ 满足该条件，所以不与第二项矛盾。证毕。
+
+**（四）精确代数输入下的半代数性与有效性。** 固定一个源、维数和深度，并假定每个源坐标的实部和虚部都是精确编码的实代数数。则可达 Choi 集、精确成功集合和
+
+$$
+F_n(\delta,p)=\left\{(T,p):T\in\mathcal A_n,\ T^*(I)=pI,
+ \|T-p\operatorname{id}\|_\diamond\le\delta p\right\}
+$$
+
+都有在实代数数域上的有效半代数描述；$p_n$ 是可有效计算的实代数数；$[0,2]$ 上 $\eta_n(\delta)$ 的图是有效半代数集，并且每个精确编码的代数 $\delta$ 所对应的 $\eta_n(\delta)$ 是可有效计算的实代数数。
+
+证明。把有限递归逐层展开为实多项式等式与不等式：张量积、酉性、单纯形条件、重心条件和有限持有者析取都只含有限次加法与乘法。对 Hermitian 矩阵 $H=A+iB$，其中 $A$ 实对称、$B$ 实斜对称，使用实化矩阵
+
+$$
+\begin{pmatrix}A&-B\\B&A\end{pmatrix}
+$$
+
+的所有主子式非负来精确表达 $H\succeq0$；这保留零特征值和奇异密度，不引入逆矩阵或平方根。实部、虚部、部分迹以及 Choi 等式同样是多项式条件。半代数集合在投影下保持半代数性；对实闭域上的量词消去和代数点的符号判定，使用 Basu--Pollack--Roy, *On the Combinatorial and Algebraic Complexity of Quantifier Elimination*, Journal of the ACM 43(6) (1996), pp.1002--1045, Theorems 1.3.1--1.3.2, pp.1004--1005。
+
+剩下的是钻石范数的精确桥接。对任意复线性
+
+$$
+F:\mathcal L(\mathbb C^d)\longrightarrow\mathcal L(\mathbb C^d),
+$$
+
+有
+
+$$
+\|F\|_\diamond
+=\sup_{m\ge1}\|F\otimes\operatorname{id}_m\|_{1\to1}
+=\|F\otimes\operatorname{id}_d\|_{1\to1}.
+$$
+
+这一定义适用于 $F=T-p\operatorname{id}$，即使 $F$ 不是完全正的。秩一输入 $uv^*$ 的左右 Schmidt 支持可以不同；分别对左右支持使用两个参考等距嵌入仍保持迹范数，所以参考维数 $d$ 的约化对该一般线性映射仍成立。
+
+令 $X$ 为输入、$Y$ 为输出，并置
+
+$$
+J_W(F)=\operatorname{Swap}\,C(F)\,\operatorname{Swap}^*
+=\sum_{i,j}F(E_{ij})\otimes E_{ij}
+$$
+
+作用在 $Y\otimes X$ 上。对每个 $e\ge0$，以下条件等价于 $\|F\|_\diamond\le e$：存在 $Y_0,Y_1\succeq0$（作用在 $Y\otimes X$ 上）和 $t_0,t_1\ge0$，满足
+
+$$
+\begin{pmatrix}
+Y_0&-J_W(F)\\
+-J_W(F)^*&Y_1
+\end{pmatrix}\succeq0,
+$$
+
+$$
+ t_bI_X-\operatorname{Tr}_Y(Y_b)\succeq0\quad(b=0,1),
+\qquad
+\frac{t_0+t_1}{2}\le e.
+$$
+
+这里没有把钻石范数除以 $d$，也没有采用半钻石范数约定。输入先行 Choi 约定给出
+
+$$
+\operatorname{Tr}_Y C(T)=(T^*(I_Y))^{\mathsf T},
+$$
+
+所以 $\operatorname{Tr}_Y C(T)=pI_X$ 正好就是标量成功条件（转置不改变标量矩阵）。
+
+上述等价性正是 John Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, p.3, Theorem 6 (p.10) 及 §3.2 (pp.11--12) 的完全有界范数半定规划：其原问题为
+
+$$
+\max\ \operatorname{Re}\operatorname{Tr}(J_W(F)^*X_{\rm block})
+$$
+
+在
+
+$$
+\rho_0,\rho_1\succeq0,\quad
+\operatorname{Tr}\rho_b=1,\quad
+\begin{pmatrix}
+I_Y\otimes\rho_0&X_{\rm block}\\
+X_{\rm block}^*&I_Y\otimes\rho_1
+\end{pmatrix}\succeq0
+$$
+
+下取得同一未减半的钻石范数。原问题以 $\rho_b=I/d$、$X_{\rm block}=0$ 严格可行；对偶问题取足够大的正 $Y_b$ 及更大的 $t_b$ 也严格可行，故两端最优值均取得。弱对偶给出上式的充分性，取得的对偶最优值给出必要性，包括 $e=0$ 与等号情形；当 $F=0$ 时零对偶见证直接成立。式中的 $1/2$ 是两个对偶界的平均，不是对钻石范数作二分。
+
+在上式中代入 $F=T-p\operatorname{id}$ 与 $e=\delta p$，再把半正定条件改写成有限个主子式不等式，即得到 $F_n(\delta,p)$ 的有效半代数公式。对 $p_n$，用可行性公式及
+
+$$
+\forall s\,\bigl(\operatorname{Feasible}(s)\Rightarrow s\le p\bigr)
+$$
+
+刻画最大值，不预设可行 $p$ 的集合是区间。取得性使最大值集合为单点；量词消去与实根隔离遂给出该点的代数编码。对 $\eta_n$，同样以 $p$ 可行且所有可行成功率不超过 $p$ 的公式刻画图。实代数系数由整数多项式和有理隔离区间编码，故所有所述符号判定和代数数运算均有效。这里的有效性是有限维、固定深度的代数可计算性；没有推出优化的复杂度界、整棵递归的单一半定规划、任意实输入的有效性、参数族在未加假设下的半代数性或无界深度结论。证毕。
+
+**（五）固定代数实例的有效幂次误差界。** 对第四项的每个固定实例，存在正整数 $m$、正有理数 $C$ 和 $0<r\le2$，使
+
+$$
+0\le\eta_n(\delta)-p_n\le C\,\delta^{1/m}
+\qquad(0\le\delta\le r).
+$$
+
+并且存在一个终止的精确程序输出某个这样的三元组 $(m,C,r)$。
+
+证明。令
+
+$$
+ h(\delta)=\eta_n(\delta)-p_n.
+$$
+
+精确可行集包含误差为零的精确最大化元，故 $h\ge0$ 且 $h(0)=0$；定理 422.1 的固定源极限给出 $h(\delta)\to0$。第四项给出 $h$ 的图为半代数集。
+
+先处理不恒为零的情形。对 $(0,2)$ 上的半代数图取量词消去后的无量词公式，删去恒等于零的多项式。图上的每一点至少使一个余下多项式为零；否则所有符号在该点邻域内恒定，公式会包含一个二维开集，这不可能是单值函数的图。于是这些非零多项式的乘积 $P(x,y)$ 满足
+
+$$
+P(\delta,h(\delta))=0\qquad(0<\delta<2).
+$$
+
+除去 $P$ 中最大的公共 $x$ 次幂，得到 $Q$，使 $Q(0,y)$ 不恒等于零，且仍有 $Q(\delta,h(\delta))=0$。因 $h(\delta)\to0$，连续性给出 $Q(0,0)=0$。取 $m\ge1$ 为 $Q(0,y)$ 在 $y=0$ 处的最小非零次数，则
+
+$$
+Q(x,y)=xS(x,y)+y^mR(y),
+\qquad R(0)\ne0.
+$$
+
+在某个邻域内 $|R(y)|$ 有正下界而 $|S(x,y)|$ 有有限上界；代入 $y=h(x)\ge0$ 得
+
+$$
+ h(x)^m|R(h(x))|=x|S(x,h(x))|,
+$$
+
+从而 $h(x)^m\le Kx$。把常数增大并把区间端点缩为正有理数，得到所需的有理 $C,r$。
+
+若 $h$ 在某个 $(0,r_1)$ 上恒为零，则任取正整数 $m$、正有理数 $C$ 及足够小的正有理数 $r\le r_1$ 即可；这也包含在同一零点邻域论证中，不需另设分类。为使选择完全有效，按一个固定的穷举顺序枚举所有
+
+$$
+(m,C,r),\qquad m\ge1,\quad C\in\mathbb Q_{>0},\quad r\in\mathbb Q\cap(0,2].
+$$
+
+对每个三元组，用量词消去判定
+
+$$
+\forall\delta,y\;\bigl[
+0\le\delta\le r\ \wedge\ (\delta,y)\in\operatorname{Graph}(\eta_n)
+\bigr]
+\Rightarrow
+\bigl[0\le y-p_n\ \wedge\ (y-p_n)^m\le C^m\delta\bigr].
+$$
+
+每次判定都终止，而上面的多项式论证保证至少有一个真三元组，故穷举程序在有限步后返回第一个真三元组。这个结论只给出某个有效幂次上界，不给出尖锐指数、精确渐近式、对源参数或深度的统一模数。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 425. 五射线近似恢复的统一有限树间隙与内部参数一致性
+
+操作约定。固定已知实数 $r>0$ 且 $1/2<r^2<2$，在固定计算基中取
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=R_B=\mathbb C^2,&R&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\\
+J&:S\longrightarrow S\otimes R,&J|i\rangle&=|i\rangle\otimes q_i
+\quad(1\le i\le5).
+\end{aligned}
+$$
+
+Alice、Bob 分别持有原始因子 $R_A,R_B$。记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&
+P_-&=|e_-\rangle\langle e_-|,&P_W&=I_R-P_-.
+\end{aligned}
+$$
+
+所有记录仪器均在完整四维 $R$ 上完备；$W$ 只表示准备像所在的数学子空间，不改变两个物理因子或其访问权限。
+
+允许每棵各自有限的局部操作树。每个非终端节点由一方在当前有限维局部工作空间上执行有限实际结果的完全正仪器，各分支迹不增、总和保迹。允许与未知输入和未操作参考独立的初始乘积辅助态、有限维私有量子及经典记忆、双向经典通信、同一方连续或重复操作、局部重置与丢弃、粗粒 CP 结果、曾取得而后来遗忘的实际结果、提前停止、不等叶深、零分支、单结果通道及零深度树。后续操作只使用当时实际可用的信息；量子记忆中的局部控制包含在该方的 CP 映射内。禁止共享纠缠、量子通信，以及终端反馈之前对 $S$ 的任何操作。这一局部仪器、条件复合与粗粒化接口沿用第 416、421 节及 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3。不同协议之间不预设共同的深度、分支数、局部记忆或输出维数上界。
+
+真实终端历史记为 $\ell$，最终实际标签记为 $y=y(\ell)$。遗忘的实际结果只在数学求和中保留，不能重新成为可用控制；一个 CP 结果内部的隐藏 Kraus 指标不是取得的结果。若记录分支为 $\mathcal I_\ell$，则迹掉包括剩余私有记忆在内的全部记录输出，定义
+
+$$
+\begin{aligned}
+\mathcal M_\ell(X)
+ &=\operatorname{Tr}_{O_{A,\ell}\otimes O_{B,\ell}}
+   \bigl[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)\bigr],\\
+\mathcal M_y(X)&=\sum_{\ell:\,y(\ell)=y}\mathcal M_\ell(X),\\
+\mathcal T(X)&=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger
+\qquad(X\in\mathcal L(S)).
+\end{aligned}
+$$
+
+接受集合 $Y_{\mathrm s}$ 预先固定，每个实际标签只指定一个作用于整个 $S$ 的终端酉算子 $U_y$。同一 $y$ 内的全部真实历史、隐藏 Kraus 项及以下的代数谱项和复制项均共用原来的 $U_y$。全部失败历史保留在完整仪器中。协议、接受规则与反馈可以依赖已知 $r$，但同一个协议必须适用于全部未知系统输入和每个有限维未操作参考。
+
+以迹对偶定义 $\mathcal T^*$，以未除以二的钻石范数度量误差：
+
+$$
+\|\Lambda\|_\diamond
+ =\sup_{m\ge1}\ \sup_{X\ne0}
+ \frac{\|(\operatorname{id}_{\mathbb C^m}\otimes\Lambda)(X)\|_1}{\|X\|_1},
+\qquad X\in\mathcal L(\mathbb C^m\otimes S).
+$$
+
+本节要求精确的输入无关接受条件与相对误差条件
+
+$$
+\mathcal T^*(I_S)=pI_S,\qquad
+\|\mathcal T-p\operatorname{id}_S\|_\diamond\le\delta p,
+\qquad p\ge0,\quad\delta\ge0.
+$$
+
+当 $p>0$ 时，$\mathcal T/p$ 为量子通道，且对每个有限维未操作参考 $F$ 和全部联合矩阵 $X$，
+
+$$
+\|(\operatorname{id}_F\otimes\mathcal T)(X)-pX\|_1
+ \le\delta p\|X\|_1.
+$$
+
+允许空接受集合及 $p=0$。不以随输入变化的接受概率或只检验某些状态的误差代替上述条件。
+
+使用固定计算基中的标准 Pauli 矩阵 $\sigma=(\sigma_x,\sigma_y,\sigma_z)$，置
+
+$$
+\begin{aligned}
+\mathbb D&=\{a\in\mathbb R^3:|a|\le1\},&
+\rho(a)&=\frac{I_2+a\cdot\sigma}{2},&Q(a,b)&=\rho(a)\otimes\rho(b),\\
+d(a,b)&=\operatorname{Tr}(P_-Q(a,b))=\frac{1-a\cdot b}{4},&
+C(a,b)&=\frac{a_z^2+b_z^2}{2},&L(a,b)&=a_zb_z.
+\end{aligned}
+$$
+
+这里 $\rho(a),\rho(b)$ 表示累计输入效果的归一化坐标，不是操作后的条件态；$C$ 是二阶矩函数，不表示 concurrence。若 $|x|=|y|=1$，选择具有这些 Bloch 向量的单位自旋子 $\xi,\zeta$，令
+
+$$
+\begin{aligned}
+v&=\xi\otimes\zeta,&k_i&=\langle v|q_i\rangle,&
+K_v&=\operatorname{diag}(k_1,\ldots,k_5),\\
+f_i(r,x,y)&=|k_i|^2
+ =\frac{(1+x\cdot u_i(r))(1+y\cdot u_i(r))}{4},&
+a_r(x,y)&=\sum_{i=1}^5f_i(r,x,y),\\
+e_r(x,y)&=a_r(x,y)-\frac15\left(\sum_{i=1}^5\sqrt{f_i(r,x,y)}\right)^2.
+\end{aligned}
+$$
+
+其中 $u_i(r)$ 为 $s_i$ 的 Bloch 向量。$K_v$ 的无关整体相位不影响这些量。记五个 $f_i$ 相等的纯对集合为 $K_{\mathrm s}(r)$。
+
+定义以下只依赖 $r$ 的常数：
+
+$$
+\begin{aligned}
+\kappa&=\frac{\sqrt{4+2(r^2+r^{-2})}}3,&
+h&=\frac1{3(1+\kappa)},&g&=\frac{\kappa}{1+\kappa}=3\kappa h,\\
+U&=\frac1{3\kappa},&Z&=1-4h,&H&=\frac{Z(1-\kappa)}{2\kappa},\\
+\tau&=\frac H4,&\varepsilon&=\frac{H^2}{8192}=\frac{\tau^2}{512},&
+G&=\frac{H^3}{49152\kappa}=\frac{\varepsilon H}{6\kappa},\\
+B_0&=\frac{2Z}{g}+3,&
+\eta&=\min\left\{\frac\tau8,\frac{g-\varepsilon}{2},
+ \frac{H}{8B_0},\frac{G}{32(1+1/(3\kappa))}\right\}.
+\end{aligned}
+$$
+
+$U$ 是定理 416.1 的精确可分恢复值，$G$ 与定理 423.1 的精确有限树间隙相同；这里没有把 $U$ 定义为近似可分恢复最优值。对纯对定义
+
+$$
+\begin{aligned}
+\Xi_r(x,y)=\max\biggl\{&\left|\frac{a_r(x,y)}5-h\right|,
+ |d(x,y)-g|,|C(x,y)-Z|,\\
+ &|x_zy_z+Z|,|x_z+y_z|\biggr\},\\
+e_*(r)&=\min_{\substack{|x|=|y|=1\\\Xi_r(x,y)\ge\eta(r)}}e_r(x,y),
+\qquad
+\delta_r=\min\left\{1,\frac{e_*(r)G(r)}{40}\right\}.
+\end{aligned}
+$$
+
+上述最小值的定义域非空且最小值严格为正，将在证明中给出。对代数细分后的纯接受叶，称 $\Xi_r<\eta$ 为好接受叶，称 $\Xi_r\ge\eta$ 为坏接受叶。这只是估计中的分类，不产生新的实际结果或反馈权限。
+
+**定理 425.1（相对钻石误差下的统一有限树间隙及紧内部区间容差）。** 在上述完整操作约定下，对每个固定的 $r>0$、$1/2<r^2<2$，有 $e_*(r)>0$ 和 $\delta_r>0$。每棵允许的各自有限协议，只要
+
+$$
+\mathcal T^*(I_S)=pI_S,\qquad
+\|\mathcal T-p\operatorname{id}_S\|_\diamond\le\delta p,
+\qquad 0\le\delta\le\delta_r,
+$$
+
+就满足
+
+$$
+\boxed{\displaystyle
+p\le U-\frac G2
+ =\frac1{3\kappa}-\frac{H^3}{98304\kappa}<U.}
+$$
+
+该结论包含 $p=0$，且不要求协议族具有共同的深度、结果数、局部维数或最小正叶权重。
+
+进一步，对任意非空紧区间 $I\subset(1/\sqrt2,\sqrt2)$，令
+
+$$
+\begin{aligned}
+G_I&=\min_{r\in I}G(r),\\
+\mathcal B_I&=\{(r,x,y):r\in I,\ |x|=|y|=1,
+                         \ \Xi_r(x,y)\ge\eta(r)\},\\
+e_I&=\min_{(r,x,y)\in\mathcal B_I}e_r(x,y),\\
+\delta_I&=\min\left\{1,\frac{e_IG_I}{40}\right\},&c_I&=\frac{G_I}{2}.
+\end{aligned}
+$$
+
+则 $G_I,e_I,\delta_I,c_I$ 都严格为正，并且对每个 $r\in I$、每棵允许的有限协议，只要满足上述精确接受条件和 $0\le\delta\le\delta_I$ 的相对误差条件，就有
+
+$$
+\boxed{\displaystyle
+p\le U(r)-\frac{G(r)}2\le U(r)-c_I.}
+$$
+
+容差由所列有限维紧集上的正最小值完全指定，不要求该最小值具有初等闭式或已求得数值。结论只涉及各自有限的协议与严格内部参数，不断言常数尖锐、最优概率或上确界取得，不延伸到无限树、协议闭包或端点一致性。
+
+证明。以下固定 $r$，不写只依赖 $r$ 的常数的参数。
+
+（一）平坦几何与正容差。五个 $q_i$ 张成 $W$，因为 $q_1=e_0,q_2=e_2$，而 $q_3$ 的 $e_1$ 坐标非零。非零反对称向量 $\beta e_-$ 的系数矩阵为
+
+$$
+\begin{pmatrix}0&\beta/\sqrt2\\-\beta/\sqrt2&0\end{pmatrix},
+\qquad \det=\frac{\beta^2}{2}\ne0.
+$$
+
+乘积向量的系数矩阵秩为一，故反对称线不含非零乘积向量。于是任意单位乘积 $v$ 至少有一个非零重叠，且每个平方重叠至多为一，即 $0<a_r\le5$。Cauchy–Schwarz 不等式给 $e_r\ge0$，等号恰在五个 $\sqrt{f_i}$ 相等时成立；此时共同平方重叠严格为正。
+
+直接使用定理 416.1 及其证明中的普遍平坦几何：单位对称平坦向量 $u=u_0e_0+u_1e_1+u_2e_2$ 存在，且每一个这样的 $u$ 都满足
+
+$$
+|u_0|^2=|u_1|^2=|u_2|^2
+ =|\langle u|q_i\rangle|^2=\frac13,
+\qquad |u_1^2-2u_0u_2|=\kappa.
+$$
+
+后一坐标量是该处采用的纯态 concurrence，源于 Wootters，[*Entanglement of Formation of an Arbitrary State of Two Qubits*, quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)；此处只使用第 416 节给出的普遍取值，不需要混态纠缠公式。
+
+对任意单位平坦乘积向量写 $v=\alpha u+\beta e_-$，其中 $\alpha=\|P_Wv\|>0$、$u=P_Wv/\alpha$。由于 $q_i\in W$，$u$ 是单位对称平坦向量，适用刚才的普遍结论。$v$ 的系数矩阵行列式为零，故
+
+$$
+\begin{aligned}
+0&=\det\begin{pmatrix}
+\alpha u_0&(\alpha u_1+\beta)/\sqrt2\\
+(\alpha u_1-\beta)/\sqrt2&\alpha u_2
+\end{pmatrix},\\
+\beta^2&=\alpha^2(u_1^2-2u_0u_2),\qquad
+|\beta|^2=\kappa\alpha^2,\qquad
+1=(1+\kappa)\alpha^2.
+\end{aligned}
+$$
+
+因此 $f_i=h$、$d=|\beta|^2=g$。反过来，取任一上述 $u$ 及复平方根 $b_0^2=u_1^2-2u_0u_2$，则 $(u+b_0e_-)/\sqrt{1+\kappa}$ 范数为一、系数矩阵非零且行列式为零，所以是单位乘积向量。这说明 $K_{\mathrm s}(r)$ 非空。两极响应给
+
+$$
+\frac{(1+x_z)(1+y_z)}4
+ =\frac{(1-x_z)(1-y_z)}4=h,
+$$
+
+从而
+
+$$
+x_z+y_z=0,\qquad x_zy_z=-Z,\qquad
+x_z^2=y_z^2=C(x,y)=Z.
+$$
+
+综上，$e_r=0$ 当且仅当纯对平坦，且此时 $\Xi_r=0$。
+
+严格内部参数满足
+
+$$
+\frac{2\sqrt2}{3}\le\kappa<1,\qquad
+0<g<\frac12,\qquad
+0<\frac Zg=1-\frac1{3\kappa}<1,\qquad
+0<H<1,\qquad
+0<\varepsilon<\frac1{8192}<g.
+$$
+
+例如 $\kappa>1/2$ 给 $g>1/3$，而 $0<Z<1$ 及 $0<1-\kappa<2\kappa$ 给出 $H<1$。所以 $\eta>0$、$\eta\le\tau/8<1$，且 $B_0<5$。由 $f_i$ 的 Bloch 表达式，$e_r$、$\Xi_r$ 对纯对连续；集合 $\{(x,y)\in\mathbb S^2\times\mathbb S^2:\Xi_r\ge\eta\}$ 紧。取 $x=y=(0,0,1)$，有 $|x_z+y_z|=2>\eta$，故该集合非空。若其上 $e_r$ 的最小值为零，取得最小值的点将同时满足 $\Xi_r=0$ 和 $\Xi_r\ge\eta>0$，矛盾。因此 $e_*(r)>0$，也就有 $\delta_r>0$。
+
+（二）真实历史的效果树与代数谱追加。复用定理 421.1、423.1 中从真实历史到累计输入效果的接口，并明确保留原控制。固定一条真实历史后，把初始辅助态的添加、已经执行的局部分支、私有记忆和丢弃合成为两个局部 CP 映射 $\Lambda_{A,v},\Lambda_{B,v}$。联合分支为 $\Lambda_{A,v}\otimes\Lambda_{B,v}$，其原始输入效果为
+
+$$
+A_v=\Lambda_{A,v}^*(I),\qquad B_v=\Lambda_{B,v}^*(I),
+\qquad E_v=A_v\otimes B_v.
+$$
+
+根效果为 $I_R$。Alice 在该节点执行局部仪器 $\{\Phi_i\}_i$ 时，
+
+$$
+A_{vi}=\Lambda_{A,v}^*(\Phi_i^*(I)),\qquad B_{vi}=B_v,
+\qquad \sum_i A_{vi}=A_v,
+\qquad \sum_i E_{vi}=E_v;
+$$
+
+Bob 操作时交换两方。这里总和保迹保证完整分裂，失败结果与单结果通道均包括在内。遗忘实际结果后，对那些历史采用原协议规定的相同后继控制，再利用线性性求和；没有把隐藏 Kraus 指标变成分支控制。有限树归纳给出全部终端效果之和为 $I_R$。零效果节点的后代由正性全部为零，可先删除而不作归一化。
+
+每个非零节点写成 $E_v=t_vQ(a_v,b_v)$，其中 $t_v=\operatorname{Tr}E_v>0$。Alice 分裂时，设 $\lambda_i=\operatorname{Tr}A_{vi}/\operatorname{Tr}A_v$，则
+
+$$
+\sum_i\lambda_i=1,\qquad
+\sum_i\lambda_i a_{vi}=a_v,\qquad b_{vi}=b_v,
+\qquad t_{vi}=t_v\lambda_i.
+$$
+
+Bob 分裂同理。这给出一坐标重心分裂树，根为 $I_R=4Q(0,0)$。根到终端的乘积权重是 $w_\ell=t_\ell/4$；它们是输入效果的迹权重，一般不是未知输入下的实际结果概率。
+
+对矩阵单位 $E_{ij}=|i\rangle\langle j|$，直接取输出迹得到
+
+$$
+\mathcal M_\ell(E_{ij})
+ =\operatorname{Tr}\mathcal I_\ell(|q_i\rangle\langle q_j|)E_{ij}
+ =\langle q_j|E_\ell|q_i\rangle E_{ij}.
+$$
+
+所以迹掉全部记录后的系统映射只依赖 $E_\ell$，且线性依赖于这个效果。在每个接受终端 $tQ(a,b)$ 后，仅在抽象效果树中追加两个一坐标谱分裂：
+
+$$
+\rho(a)=\sum_j\lambda_j\rho(x_j),\qquad
+\rho(b)=\sum_k\mu_k\rho(y_k),\qquad |x_j|=|y_k|=1,
+$$
+
+先按 $\lambda_j$ 分裂 $a$，再按 $\mu_k$ 分裂 $b$，删除零谱权重。所得终端为
+
+$$
+t\lambda_j\mu_k Q(x_j,y_k),\qquad
+\sum_{j,k}t\lambda_j\mu_k Q(x_j,y_k)=tQ(a,b).
+$$
+
+将这两个谱指标合记为 $\nu$。每个 $(\ell,\nu)$ 保留原标签 $y(\ell)$、原接受标记与原来的 $U_{y(\ell)}$；拒绝终端可保持混合，并赋予一个虚设的 $\nu$。不要求接受真实历史的原效果秩为一。
+
+这两个追加分裂不代表对现存输出补做测量。事实上，取 $A=\operatorname{diag}(a,b)$、$0<a<b<1$，局部分支 $\Phi_0(X)=\operatorname{Tr}(AX)|0\rangle\langle0|$ 可由 $\Phi_1(X)=\operatorname{Tr}((I-A)X)|0\rangle\langle0|$ 补成完整仪器；对重置输出上的任何效果 $F$，都有 $\Phi_0^*(F)=\langle0|F|0\rangle A$，只能得到 $A$ 的标量倍，不能分别取回 $a|0\rangle\langle0|$ 和 $b|1\rangle\langle1|$。添加独立新辅助态后，后续结果对固定输出仍只产生标量概率。因此这里的谱指标只表达输入效果的代数分解，不恢复已经丢失的信息。
+
+（三）Choi 总杂质量控制坏接受迹权重。对纯接受项记其效果为 $t_{\ell\nu}|v_{\ell\nu}\rangle\langle v_{\ell\nu}|$，$K_{\ell\nu}=K_{v_{\ell\nu}}$ 不含 $\sqrt{t_{\ell\nu}}$。上面的矩阵单位公式给出保持原反馈的完整表达式
+
+$$
+\begin{aligned}
+\mathcal T(X)&=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ t_{\ell\nu}U_{y(\ell)}K_{\ell\nu}XK_{\ell\nu}^\dagger U_{y(\ell)}^\dagger,\\
+\operatorname{Ch}(\mathcal T)
+ &=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ t_{\ell\nu}|U_{y(\ell)}K_{\ell\nu}\rangle\!\rangle
+ \langle\!\langle U_{y(\ell)}K_{\ell\nu}|.
+\end{aligned}
+$$
+
+这里采用第 416 节的 Choi 向量化约定：
+
+$$
+|L\rangle\!\rangle=\sum_{i=1}^5|i\rangle\otimes L|i\rangle,
+\qquad |\Omega\rangle=|I_S\rangle\!\rangle,
+\qquad P_\Omega=\frac{|\Omega\rangle\langle\Omega|}{5},
+\qquad
+\operatorname{Ch}(\mathcal T)
+ =(\operatorname{id}_{\mathbb C^5}\otimes\mathcal T)(|\Omega\rangle\langle\Omega|).
+$$
+
+因 $\||\Omega\rangle\langle\Omega|\|_1=5$，钻石范数假设给
+
+$$
+\|\operatorname{Ch}(\mathcal T)-p|\Omega\rangle\langle\Omega|\|_1
+ \le5\delta p.
+$$
+
+目标项在 $I-P_\Omega$ 上为零；由 Choi 正性及迹范数对偶，
+
+$$
+0\le\operatorname{Tr}[(I-P_\Omega)\operatorname{Ch}(\mathcal T)]
+ \le5\delta p.
+$$
+
+逐正项展开左边，得到
+
+$$
+\sum_{\mathrm{接受}\ (\ell,\nu)}t_{\ell\nu}
+ \left(\|U_{y(\ell)}K_{\ell\nu}\|_F^2
+       -\frac{|\operatorname{Tr}(U_{y(\ell)}K_{\ell\nu})|^2}{5}\right)
+ \le5\delta p.
+$$
+
+对原来的任意酉矩阵 $U_y$，由于 $K_v$ 对角，
+
+$$
+|\operatorname{Tr}(U_yK_v)|
+ =\left|\sum_i(U_y)_{ii}k_i\right|
+ \le\sum_i|k_i|,\qquad \|U_yK_v\|_F^2=a_r(x,y).
+$$
+
+从而
+
+$$
+\sum_{\mathrm{接受}\ (\ell,\nu)}t_{\ell\nu}e_r(x_{\ell\nu},y_{\ell\nu})
+ \le5\delta p.
+$$
+
+这是全部接受项的总量估计，不把它变成逐叶相对误差，也没有逐谱项优化反馈。
+
+完整记录仪器与终端酉反馈使总映射保迹，接受子和迹不增；结合 $\mathcal T^*(I_S)=pI_S$ 得 $0\le p\le1$。记坏接受叶的根迹权重总和为 $b_{\mathrm{bad}}$，则由 $w=t/4$ 和坏集上 $e_r\ge e_*(r)$，
+
+$$
+4e_*(r)b_{\mathrm{bad}}\le5\delta p,\qquad
+b_{\mathrm{bad}}\le\frac{5\delta p}{4e_*(r)}
+ \le\frac{5\delta}{4e_*(r)}\le\frac G{32}.
+$$
+
+最后一步使用 $\delta\le\delta_r\le e_*(r)G/40$。
+
+（四）扰动后的接受预算与二阶矩。对完成谱追加的整棵树，令 $\mathcal G$ 为好接受终端集，$\mathcal B$ 为坏接受终端集，$\mathcal R$ 为所有不属于 $\mathcal G$ 的终端。于是 $\mathcal R$ 同时包含全部物理拒绝项和全部坏接受项。以 $j$ 统一表示终端 $(\ell,\nu)$，定义
+
+$$
+w_j=\frac{t_j}{4},\qquad
+S_{\mathrm g}=\sum_{j\in\mathcal G}w_j,\qquad
+b_{\mathrm{bad}}=\sum_{j\in\mathcal B}w_j,\qquad
+\Delta=\sum_{j\in\mathcal R}w_jd(a_j,b_j).
+$$
+
+这里 $\sum_jw_j=1$，$\Delta\ge0$。$\Delta$ 是余项携带的反对称缺陷，不是物理失败概率；坏接受项仍然存在于 $\mathcal T$ 中。
+
+每次只分裂一个坐标，$d$ 和 $L$ 分别仿射，所以从根到终端保持
+
+$$
+\mathbb E[d]=d(0,0)=\frac14,\qquad
+\mathbb E[L]=L(0,0)=0.
+$$
+
+令
+
+$$
+e_d=\sum_{j\in\mathcal G}w_j(d(a_j,b_j)-g),\qquad
+|e_d|\le\eta S_{\mathrm g}\le\eta.
+$$
+
+完整反对称预算遂为
+
+$$
+gS_{\mathrm g}+\Delta+e_d=\frac14.
+$$
+
+另一方面，由精确接受条件和 Choi 迹，
+
+$$
+5p=\operatorname{Tr}\mathcal T(I_S)
+ =\operatorname{Tr}\operatorname{Ch}(\mathcal T)
+ =\sum_{j\in\mathcal G\cup\mathcal B}t_j a_r(x_j,y_j).
+$$
+
+好叶上 $a_r/5\le h+\eta$，坏叶上 $a_r/5\le1$，因此
+
+$$
+\begin{aligned}
+p&\le4(h+\eta)S_{\mathrm g}+4b_{\mathrm{bad}}
+ \le4hS_{\mathrm g}+4\eta+4b_{\mathrm{bad}}\\
+ &\le U-\frac{4\Delta}{3\kappa}
+       +4\eta\left(1+\frac1{3\kappa}\right)+4b_{\mathrm{bad}}.
+\end{aligned}
+$$
+
+最后一行将 $S_{\mathrm g}=(1/4-\Delta-e_d)/g$ 代入，并使用 $h/g=1/(3\kappa)$。近似情形所用的是这条不等式，不把精确恢复时的 $\Delta=(1-3\kappa p)/4$ 移用到这里。
+
+任意 $(a,b)\in\mathbb D^2$ 都有
+
+$$
+C(a,b)-L(a,b)=\frac{(a_z-b_z)^2}{2}\ge0.
+$$
+
+好接受叶满足 $C\ge Z-\eta$、$L\le-Z+\eta$，故 $C-L\ge2Z-2\eta$。利用 $\mathbb E[L]=0$ 及 $S_{\mathrm g}\le1$，
+
+$$
+\mathbb E[C]=\mathbb E[C-L]
+ \ge(2Z-2\eta)S_{\mathrm g}
+ \ge2ZS_{\mathrm g}-2\eta.
+$$
+
+再次代入反对称预算，并使用 $Z/(2g)-Z=H$，得到
+
+$$
+\boxed{\displaystyle
+\mathbb E[C]-Z
+ \ge H-\frac{2Z}{g}\Delta-\left(\frac{2Z}{g}+2\right)\eta.}
+$$
+
+这两个预算均在包含全部失败项的根迹分布上计算，没有对接受部分另作归一化。
+
+（五）有限共同阈值插值与逐项保持。现在使用第 423 节的一坐标效果插值，并对这里的谱追加树保留每个原终端 $(\ell,\nu)$。所用的稀释及恢复行列结构在方法上对应 Kleinmann、Kampermann、Bruß，[*Asymptotically perfect discrimination in the LOCC paradigm*, arXiv:1105.5132v2](https://arxiv.org/abs/1105.5132v2)，pp.3–4，式 (5a)、(5b)、(6)；首次达到共同阈值的停止方式也见 Childs、Leung、Mančinska、Ozols，[*A framework for bounding nonlocality of state discrimination*, arXiv:1206.5822v1](https://arxiv.org/abs/1206.5822v1)，pp.9–10，Theorem 1、式 (12)、Figure 2。以下直接证明需要的行列恒等式及有限性，不应用这些文献的态区分误差界。
+
+在归一化节点 $Q=Q(a,b)$ 上，若 $d=d(a,b)>\varepsilon$，将其一次原分裂写成
+
+$$
+Q=\sum_iE_i,\qquad E_i=w_iQ_i,\qquad
+w_i>0,\quad\sum_iw_i=1,\qquad d_i=d(Q_i).
+$$
+
+所有 $Q_i$ 与 $Q$ 共享未被本次分裂的局部因子。定义
+
+$$
+\alpha_i=\frac{w_i(\varepsilon-d_i)_+}{d-\varepsilon},
+\qquad
+\beta=\frac1{1+\sum_i\alpha_i},
+\qquad
+F_i=\beta(E_i+\alpha_iQ),
+\qquad
+F_{ij}=\beta(\mathbf1_{\{i=j\}}+\alpha_i)E_j.
+$$
+
+所有系数非负，分母只在 $d>\varepsilon$ 时使用。第一阶段 $Q\mapsto\{F_i\}$、第二阶段 $F_i\mapsto\{F_{ij}\}_j$ 都共享同一个未变局部因子，因此仍是一坐标效果分裂。直接计算得
+
+$$
+\begin{aligned}
+\sum_iF_i&=\beta\left(1+\sum_i\alpha_i\right)Q=Q,\\
+\sum_jF_{ij}&=\beta(E_i+\alpha_iQ)=F_i,\\
+\sum_iF_{ij}&=\beta\left(1+\sum_i\alpha_i\right)E_j=E_j.
+\end{aligned}
+$$
+
+第一阶段第 $i$ 行的迹权重及行内条件权重分别是
+
+$$
+\operatorname{Tr}F_i=\beta(w_i+\alpha_i),\qquad
+\frac{\operatorname{Tr}F_{ij}}{\operatorname{Tr}F_i}
+ =\frac{(\mathbf1_{\{i=j\}}+\alpha_i)w_j}{w_i+\alpha_i}.
+$$
+
+归一化 $F_i$ 的缺陷为
+
+$$
+\frac{\operatorname{Tr}(P_-F_i)}{\operatorname{Tr}F_i}
+ =\frac{w_id_i+\alpha_i d}{w_i+\alpha_i}.
+$$
+
+当 $d_i<\varepsilon$ 时，
+$w_i(d_i-\varepsilon)+\alpha_i(d-\varepsilon)=0$，故这个缺陷恰为 $\varepsilon$；当 $d_i\ge\varepsilon$ 时 $\alpha_i=0$，该缺陷为 $d_i$。等号节点立即停止插值，绝不在 $d=\varepsilon$ 处使用上面的除法。所有零权重复制在归一化前删除。
+
+令 $D$ 为完成两个谱追加之后、尚未作阈值插值的原抽象树高度。根满足 $d(0,0)=1/4>\varepsilon$，每个好接受原叶满足
+
+$$
+d>g-\eta\ge\frac{g+\varepsilon}{2}>\varepsilon.
+$$
+
+对原树剩余高度归纳：若当前原节点是 $d>\varepsilon$ 的叶子，就保留它；否则执行上述两阶段行列分裂。第一阶段到达 $d=\varepsilon$ 的行即成为停止节点，但仍在其下保留整行恢复项 $F_{ij}$，并接上各原子节点 $j$ 的完整原后继树的比例复制。停止的是插值递归，不是删去这些后继。第一阶段仍满足 $d>\varepsilon$ 的行必有 $\alpha_i=0$，该行只有 $j=i$，只对这个原子节点继续递归。递归从不进入停止节点下的恢复副本。
+
+每次递归进入严格较小的原剩余高度。若当前剩余高度为 $k\ge1$，继续递归的分支至多有 $2+2(k-1)=2k$ 层；停止分支接原后继的高度至多为 $2+(k-1)\le2k$。因此最终树有限，高度至多 $2D$。它具有一个不交完全前沿：每条路径首次达到 $d=\varepsilon$ 的节点，或者从未达到阈值而仍有 $d>\varepsilon$ 的原叶。恢复副本内部后来出现的等号不再产生前沿节点。
+
+逐列恒等式 $\sum_iF_{ij}=E_j$ 与归纳表明：对每一个原终端 $(\ell,\nu)$，其全部复制效果之和仍等于原来的 $t_{\ell\nu}Q(a_{\ell\nu},b_{\ell\nu})$；各复制效果只是该效果的非负标量倍，保留同一归一化对、原接受标记和原 $U_{y(\ell)}$。因此每个原项的总迹权重不变。先保持每个 $(\ell,\nu)$，再按实际标签 $y$ 合并；不要求一个粗标签只有一个 Bloch 对。
+
+矩阵单位公式于是保证 $\mathcal T$ 及其完整 Choi 矩阵不变；由于归一化对与标记不变，$\sum_{\mathrm{接受}}t a_r$、$\sum_{\mathrm{接受}}t e_r$、$S_{\mathrm g}$、坏接受总权重和 $\Delta$ 也全部保持。这只是在抽象上界类中改写输入效果树，不声称保持任意原记录输出 CP 仪器，也不赋予复制项新的物理控制。从现在起在这棵有限插值树上计算，所有此前的预算仍成立。
+
+（六）高二阶矩阈值节点的总质量。对任一阈值节点 $Q(a,b)$，
+
+$$
+a\cdot b=1-4\varepsilon,\qquad
+|a|,|b|\ge1-4\varepsilon.
+$$
+
+在该节点的完整条件后继树中，一坐标重心恒等式给
+$\mathbb E[a_T]=a$、$\mathbb E[b_T]=b$。有限树逐层条件平均即可得到这两个等式，包括原后继和恢复副本；不需要关于无穷停止时刻的结论。因 $|a_T|,|b_T|\le1$，
+
+$$
+\begin{aligned}
+\mathbb E|a_T-a|^2&=\mathbb E|a_T|^2-|a|^2\le1-|a|^2,\\
+\mathbb E|b_T-b|^2&=\mathbb E|b_T|^2-|b|^2\le1-|b|^2.
+\end{aligned}
+$$
+
+在 $z$ 坐标上同样消去交叉项，得到
+
+$$
+\begin{aligned}
+\mathbb E[C(a_T,b_T)]
+ &=C(a,b)+\frac{\mathbb E[(a_{T,z}-a_z)^2]
+                         +\mathbb E[(b_{T,z}-b_z)^2]}2\\
+ &\le C(a,b)+\frac{2-|a|^2-|b|^2}{2}
+ \le C(a,b)+8\varepsilon.
+\end{aligned}
+$$
+
+令 $W_{\mathrm{high}}$ 为前沿中满足 $C(a,b)\ge Z+\tau$ 的阈值节点的根迹权重总和。其余阈值节点的 $C-Z<\tau$；高节点上用 $C-Z\le1$。全部阈值节点的根权重之和至多为一，故其 $C-Z$ 加权和至多为 $\tau+W_{\mathrm{high}}$，条件方差增量合计至多为 $8\varepsilon$。
+
+未停止的好接受原叶满足 $C-Z\le\eta$，合计贡献至多为 $\eta$。未停止的其余原叶均属于 $\mathcal R$ 且 $d>\varepsilon$，故其总根权重至多为 $\Delta/\varepsilon$；在这些叶上仍可用 $C-Z\le1$。按不交完全前沿展开终端期望，遂有
+
+$$
+\mathbb E[C]-Z
+ \le\tau+W_{\mathrm{high}}+8\varepsilon+\eta+\frac{\Delta}{\varepsilon}.
+$$
+
+与部分（四）的下界合并，利用 $\tau=H/4$ 及
+$8\varepsilon=H^2/1024\le H/4$，得到
+
+$$
+\boxed{\displaystyle
+W_{\mathrm{high}}\ge
+\frac H2-\left(\frac{2Z}{g}+\frac1\varepsilon\right)\Delta-B_0\eta.}
+$$
+
+这里统计的是整个前沿的根迹权重，不选择某一条路径，也没有随深度逐层累加误差。
+
+（七）高节点上的对跖检验与条件余项缺陷。固定一个被计入 $W_{\mathrm{high}}$ 的阈值节点，置 $t=|a|$、$n=a/t$。由于 $t\ge1-4\varepsilon>1/2$，这个单位向量有定义。又
+
+$$
+|a-b|^2=|a|^2+|b|^2-2a\cdot b\le8\varepsilon,
+\qquad |a-b|\le\sqrt{8\varepsilon}=\frac\tau8.
+$$
+
+由 $|a_z^2-b_z^2|\le2|a-b|$ 及 $t\le1$，得到
+
+$$
+n_z^2\ge a_z^2\ge C(a,b)-|a-b|
+ \ge Z+\frac{7\tau}{8}\ge Z+\frac\tau2.
+$$
+
+若 $(x,y)$ 是该节点以下任一好接受纯对，则
+$|x_z+y_z|<\eta$、$|x_zy_z+Z|<\eta$。因为 $|n_z|\le1$ 且 $\eta\le\tau/8$，
+
+$$
+\begin{aligned}
+(n_z-x_z)(n_z-y_z)
+ &=n_z^2-n_z(x_z+y_z)+x_zy_z\\
+ &\ge\frac\tau2-2\eta\ge\frac\tau4.
+\end{aligned}
+$$
+
+定义对跖纯投影 $P_{-n}=(I_2-n\cdot\sigma)/2$。单位向量恒等式
+$1-n\cdot x=|n-x|^2/2\ge(n_z-x_z)^2/2$，以及对 $y$ 的同一估计，给出
+
+$$
+\begin{aligned}
+m_n(x,y)
+ &:=\operatorname{Tr}[Q(x,y)(P_{-n}\otimes P_{-n})]\\
+ &=\frac{(1-n\cdot x)(1-n\cdot y)}4
+ \ge\frac{((n_z-x_z)(n_z-y_z))^2}{16}
+ \ge\frac{\tau^2}{256}.
+\end{aligned}
+$$
+
+令该节点条件后继中好接受叶的总迹权重为 $s$，将其他全部后继效果之和记为 $F$。以 $\theta_j$ 表示条件迹权重，则
+
+$$
+Q(a,b)=\sum_{j\in\mathcal G\text{ 后继}}\theta_jQ(x_j,y_j)+F,
+\qquad F\succeq0,\qquad
+s=\sum_{j\in\mathcal G\text{ 后继}}\theta_j.
+$$
+
+在这条效果等式上取正的对跖检验，正性保证
+
+$$
+s\frac{\tau^2}{256}
+ \le\operatorname{Tr}[Q(a,b)(P_{-n}\otimes P_{-n})]
+ =\frac{(1-t)(1-n\cdot b)}4.
+$$
+
+为保留足够的扰动余量，令
+
+$$
+u=1-t,\qquad v=t(1-n\cdot b),\qquad
+u,v\ge0,\qquad u+v=1-a\cdot b=4\varepsilon.
+$$
+
+应用初等乘积界 $uv\le(u+v)^2/4$，精确保留其中的因子 $1/4$，得到
+
+$$
+\frac{(1-t)(1-n\cdot b)}4
+ =\frac{uv}{4t}
+ \le\frac{\varepsilon^2}{t}\le2\varepsilon^2.
+$$
+
+于是
+
+$$
+s\le\frac{512\varepsilon^2}{\tau^2}=\varepsilon.
+$$
+
+任意乘积归一化效果都满足 $0\le d\le1/2$。在上述效果等式上取 $P_-$ 的迹，因此该节点条件余项缺陷至少为
+
+$$
+\operatorname{Tr}(P_-F)
+ =\varepsilon-\sum_{j\in\mathcal G\text{ 后继}}\theta_jd(x_j,y_j)
+ \ge\varepsilon-\frac s2\ge\frac{\varepsilon}{2}.
+$$
+
+$F$ 同时容纳混合的物理拒绝效果和坏接受效果；本步只用其正性，没有把近似接受叶的缺陷强行设成 $g$。
+
+（八）总质量聚合与半间隙。前沿不交，每个余项终端至多属于一个被计数的阈值后继，其他余项缺陷均非负。故
+
+$$
+\Delta\ge\frac{\varepsilon}{2}W_{\mathrm{high}}.
+$$
+
+将部分（六）的下界代入，移项得
+
+$$
+\Delta\left(\frac32+\frac{\varepsilon Z}{g}\right)
+ \ge\frac{\varepsilon H}{4}-\frac{\varepsilon B_0\eta}{2},
+\qquad
+\Delta\ge
+\frac{\varepsilon(H-2B_0\eta)}{6+4\varepsilon Z/g}.
+$$
+
+由 $\eta\le H/(8B_0)$，分子至少为 $3\varepsilon H/4$；由 $Z/g<1$ 和 $\varepsilon<1/8192$，分母小于 $8$，所以
+
+$$
+\Delta\ge\frac{3\varepsilon H}{32}.
+$$
+
+回代部分（四）的接受上界，并使用 $G=\varepsilon H/(6\kappa)$，
+
+$$
+\begin{aligned}
+p
+ &\le U-\frac{\varepsilon H}{8\kappa}
+       +4\eta\left(1+\frac1{3\kappa}\right)+4b_{\mathrm{bad}}\\
+ &=U-\frac{3G}{4}
+       +4\eta\left(1+\frac1{3\kappa}\right)+4b_{\mathrm{bad}}.
+\end{aligned}
+$$
+
+几何容差的定义给
+$4\eta(1+1/(3\kappa))\le G/8$，部分（三）给 $4b_{\mathrm{bad}}\le G/8$。因此
+
+$$
+p\le U-\frac{3G}{4}+\frac G8+\frac G8
+ =U-\frac G2.
+$$
+
+上述证明只要求每棵效果树有限，所有常数均只依赖 $r$；根迹为 $4$、Choi 迹为 $5p$ 的两个归一化因子始终分别保留。特别地，任意小叶权重及进一步的比例细分都不改变总量估计。对于 $p=0$，也可直接由
+
+$$
+\frac{G}{2U}=\frac{H^3}{32768}<1
+$$
+
+得到 $0<U-G/2$，所以该情形确实包括在结论内，不需要除以 $p$。
+
+（九）紧内部参数区间。设 $I\subset(1/\sqrt2,\sqrt2)$ 为非空紧区间。全部已列出的源常数、$\eta(r)$ 和 $G(r)$ 在 $I$ 上连续且严格为正，故 $G_I>0$。由显式 Bloch 公式，$e_r(x,y)$ 和 $\Xi_r(x,y)$ 对 $(r,x,y)$ 联合连续；平方根只作用于非负的 $f_i$，这里不需要选择连续变化的自旋子或平坦见证。
+
+集合
+
+$$
+\mathcal B_I=\{(r,x,y)\in I\times\mathbb S^2\times\mathbb S^2:
+                    \Xi_r(x,y)-\eta(r)\ge0\}
+$$
+
+是紧积空间中的闭集，因而紧。每个 $r\in I$ 的北极对 $x=y=(0,0,1)$ 都属于该集合，所以它非空。若连续函数 $e_r(x,y)$ 在其上的最小值为零，取得最小值的三元组由部分（一）满足 $\Xi_r(x,y)=0$，但同时 $\Xi_r(x,y)\ge\eta(r)>0$，矛盾。故 $e_I>0$，进而 $\delta_I>0$、$c_I>0$。
+
+对每个固定 $r\in I$，其坏集是联合坏集的一个截面。因此
+
+$$
+e_I\le e_*(r),\qquad G_I\le G(r),\qquad
+\delta_I=\min\left\{1,\frac{e_IG_I}{40}\right\}
+ \le\min\left\{1,\frac{e_*(r)G(r)}{40}\right\}=\delta_r.
+$$
+
+应用已经证明的固定参数结论，就有
+
+$$
+p\le U(r)-\frac{G(r)}2\le U(r)-\frac{G_I}{2}
+ =U(r)-c_I.
+$$
+
+这里的紧性只用于 $I\times\mathbb S^2\times\mathbb S^2$ 中的联合坏集；不需要 $e_*(r)$ 的连续性，不需要移动平坦集的连续选择，也不使用协议族的紧性。端点 $r^2=1/2,2$ 上 $\kappa=1$、$H=0$，不满足本证明所用的正阈值和正间隙条件。证毕。
+
+## 追加锚（本行以下为增补区）
+## 426. $r=1$ 时五射线边界、首边界树与有限取得判据
+
+### 426.0 继承的操作与坐标
+
+沿用第421节的完整操作约定，取
+
+$$
+\omega=e^{2\pi i/3},\qquad
+s_1=|0\rangle,\quad s_2=|1\rangle,\quad
+s_{3+j}=\frac{|0\rangle+\omega^j|1\rangle}{\sqrt2}\quad(0\le j\le2),
+$$
+
+$$
+S=\mathbb C^5,\qquad R_A=R_B=\mathbb C^2,\qquad R=R_A\otimes R_B,
+\qquad q_i=s_i\otimes s_i,
+$$
+
+并令 $J|i\rangle=|i\rangle\otimes q_i$。第421节的累计效果树以根效果
+
+$$
+E_{\varnothing}=I_R=4\,\rho(0)\otimes\rho(0),
+$$
+
+故以下根权归一化带有同一物理因子 $4$。Alice 与 Bob 持有原始的两个因子；$W=\operatorname{span}\{e_0,e_1,e_2\}$ 和 $\mathbb C e_-$ 仍只是完整四维 $R$ 中的数学子空间。允许的协议是第421节的各自有限局部 CP 操作树：局部私有量子与经典记忆、独立的乘积辅助态、双向经典通信、重复访问、重置、丢弃、粗粒结果、遗忘的实际历史、提前停止、零分支和单结果通道均保留；每一个局部仪器节点均按第421节计数，所有失败历史均保留，且每棵仪器在完整四维 $R$ 上完备；实际标签下的真实历史及隐藏 Kraus 指标共用同一个原定终端反馈。禁止共享纠缠、量子通信以及终端反馈以前对 $S$ 的操作。对每个有限维未操作参考 $H_{\mathrm{ref}}$，同一个协议须满足第421节的全矩阵等式
+
+$$
+(\operatorname{id}_{H_{\mathrm{ref}}}\otimes\mathcal T)(X)=pX
+\qquad(X\in\mathcal L(H_{\mathrm{ref}}\otimes S)),
+\qquad \mathcal T^*(I_S)=pI_S.
+$$
+
+记录输出和剩余私有记忆全部迹掉后，真实历史 $\ell$ 的系统映射记为 $\mathcal M_\ell$，同一最终实际标签下的映射为 $\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell$，并
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger.
+$$
+
+以下使用固定计算基的标准 Pauli 矩阵，特别是
+
+$$
+\sigma_2=\begin{pmatrix}0&-i\\ i&0\end{pmatrix},\qquad
+\rho(a)=\frac{I_2+a\cdot\sigma}{2},\qquad
+D=\{a\in\mathbb R^3:|a|\le1\}.
+$$
+
+令 $H_{\mathrm{ref}}$ 只表示未操作参考，不与下述半径混淆。置
+
+$$
+\begin{gathered}
+h=3-2\sqrt2,
+\qquad R_{\perp}=2(\sqrt2-1),
+\qquad \zeta=\sqrt{8\sqrt2-11},\\
+\theta=\arccos\frac{\sqrt2-1}{2},
+\qquad m_k=\frac{(2k+1)\pi}{3}\quad(k=0,1,2).
+\end{gathered}
+$$
+
+于是 $R_{\perp}^2=4h$、$\zeta^2+R_{\perp}^2=1$，且 $\cos(2\theta)=\frac12-\sqrt2$。对 $\epsilon,\sigma\in\{\pm1\}$ 定义
+
+$$
+ x_{k,\epsilon,\sigma}
+ =\bigl(R_{\perp}\cos(m_k+\epsilon\theta),
+        R_{\perp}\sin(m_k+\epsilon\theta),
+        \sigma\zeta\bigr),
+$$
+
+$$
+X=\{x_{k,\epsilon,\sigma}:0\le k\le2,\ \epsilon,\sigma\in\{\pm1\}\},
+\qquad
+\pi(x_{k,\epsilon,\sigma})=x_{k,-\epsilon,-\sigma}.
+$$
+
+令 $\mathbb S^2=\{a:|a|=1\}$。对纯方向 $y\in\mathbb S^2$ 定义
+
+$$
+\ell(b;y)=\max\{\lambda\ge0:\rho(b)-\lambda\rho(y)\succeq0\},
+\qquad b\in D,
+$$
+
+并约定边界报酬 $B_{\mathrm{partial}}$ 在 $\partial(D^2)=(\mathbb S^2\times D)\cup(D\times\mathbb S^2)$ 上如下定义：若 $a\in X$，则
+
+$$
+B_{\mathrm{partial}}(a,b)=h\,\ell(b;\pi(a));
+$$
+
+若 $b\in X$，则
+
+$$
+B_{\mathrm{partial}}(a,b)=h\,\ell(a;\pi(b));
+$$
+
+两式在交集上相等；若边界坐标不属于 $X$，相应的报酬为零。记第421节在 $r=1$ 的函数 $V_\infty$ 为 $F$，并令 $V_1$ 仍表示该节的第一步递推。
+
+### 定理426.1（十二射线平坦匹配、精确边界函数与有限取得判据）
+
+在上述约定下，以下结论成立。
+
+1. 五个源方向的单位乘积对 $(x,y)\in\mathbb S^2\times\mathbb S^2$ 具有相同平方响应，当且仅当
+
+$$
+(x,y)=(x,\pi(x))\quad(x\in X).
+$$
+
+因此平坦有序对集合正是 $\{(x,\pi(x)):x\in X\}$；$X$ 含有十二个互异方向，$\pi$ 将它们配成六个无序平坦对；每一对的共同响应是 $h$，两个高度均可取，且第416节列出的六个乘积只是一个达到构造，并非穷尽证明。
+
+2. 对 $b\in D$ 与 $y\in\mathbb S^2$，$\ell$ 的完整分段式为
+
+$$
+\ell(b;y)=
+\begin{cases}
+\displaystyle\frac{1-|b|^2}{2(1-b\cdot y)},& |b|<1,\\[6pt]
+1,& |b|=1\text{ 且 }b=y,\\
+0,& |b|=1\text{ 且 }b\ne y.
+\end{cases}
+$$
+
+这里没有在纯重合情形代入 $0/0$。在整个边界上
+
+$$
+\boxed{F=V_1=B_{\mathrm{partial}}}.
+$$
+
+达到该值的规范实现至多再用一个局部仪器节点；其余谱残量作为失败保留。
+
+3. $F$ 的零点恰为
+
+$$
+\boxed{
+\bigl((\mathbb S^2\setminus X)\times D\bigr)
+\cup\bigl(D\times(\mathbb S^2\setminus X)\bigr)
+\cup\bigl\{(x,y)\in X^2:y\ne\pi(x)\bigr\}.
+}
+$$
+
+$F$ 在纯根处不连续：若 $a_j\in\mathbb S^2\setminus X$ 且 $a_j\to x\in X$，则
+
+$$
+F(a_j,0)=0,\qquad F(x,0)=\frac h2.
+$$
+
+4. 设 $\mathscr T_{\partial}$ 为如下有限首边界树：根为 $(0,0)$，所有正权内部节点在 $\operatorname{int}(D)\times\operatorname{int}(D)$，每个内部节点只对一个坐标作有限重心分裂，所有叶在 $\partial(D^2)$；根权为 $1$，子权为父权乘以相应的重心系数。零权项可从等式中删去，但失败叶、零报酬叶、硬币和单结果通道均保留。则
+
+$$
+\boxed{
+F(0,0)=\sup_{T\in\mathscr T_{\partial}}
+ \sum_{\ell\in\operatorname{Leaves}(T)}w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\frac{\eta_{\mathrm{fin}}(1)}4.
+}
+$$
+
+这里的上确界遍历所有有限树，不作固定深度的断言。
+
+5. 对 $T\in\mathscr T_{\partial}$，设内部节点 $v$ 的位置为 $z_v$，分裂子节点为 $z_{vj}$、系数为 $\lambda_{vj}$，并定义
+
+$$
+\Delta_v=F(z_v)-\sum_j\lambda_{vj}F(z_{vj}).
+$$
+
+则 $\Delta_v\ge0$，并有加权 Jensen 缺陷恒等式
+
+$$
+\boxed{
+F(0,0)-\sum_{\ell}w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\sum_{v\in\operatorname{Int}(T)}w_v\Delta_v.
+}
+$$
+
+存在达到 $\eta_{\mathrm{fin}}(1)$ 的有限物理协议，当且仅当存在一棵有限首边界树，使其每一个正权内部节点都满足 $\Delta_v=0$。这是关于未知函数 $F$ 的判据，不给出存在性结论或算法。
+
+#### 426.1 证明
+
+先证平坦方向的穷尽性。五个源的 Bloch 方向为
+
+$$
+ u_1=(0,0,1),\qquad u_2=(0,0,-1),\qquad
+ u_{3+j}=(\cos(2\pi j/3),\sin(2\pi j/3),0).
+$$
+
+令 $x,y\in\mathbb S^2$，并令
+
+$$
+ f_i(x,y)=\frac{(1+x\cdot u_i)(1+y\cdot u_i)}4.
+$$
+
+若五个 $f_i$ 相同，前两个极点给出
+
+$$
+(1+x_z)(1+y_z)=(1-x_z)(1-y_z),
+\qquad x_z+y_z=0.
+$$
+
+置 $R_0^2=1-x_z^2=1-y_z^2$。若 $R_0=0$，则极点共同值为零，而三条赤道方向的响应为 $1/4$，不可能平坦；故 $R_0>0$。写
+
+$$
+ x_\perp=R_0(\cos\alpha,\sin\alpha),\qquad
+ y_\perp=R_0(\cos\beta,\sin\beta).
+$$
+
+三条赤道方向的离散 Fourier 系数为零，等价于
+
+$$
+1+\frac{R_0^2}{2}\cos(\alpha-\beta)-R_0^2=0,
+$$
+
+以及
+
+$$
+\frac{R_0}{2}(e^{i\alpha}+e^{i\beta})
+ +\frac{R_0^2}{4}e^{-i(\alpha+\beta)}=0.
+$$
+
+第二式的模给出 $|\cos((\alpha-\beta)/2)|=R_0/4$。令
+$\mu=(\alpha+\beta)/2$、$\delta=(\alpha-\beta)/2$；乘以 $e^{2i\mu}$ 后，第二式还给出
+$e^{3i\mu}=-1$（若 $\cos\delta<0$，同时把 $\mu$ 加 $\pi$、把 $\delta$ 减 $\pi$）。于是模 $2\pi$ 意义下
+
+$$
+\mu=m_k,\qquad \delta=\epsilon\theta,
+\qquad \cos\theta=\frac{R_0}{4},
+$$
+
+其中 $k=0,1,2$、$\epsilon=\pm1$。将 $\cos(2\delta)=R_0^2/8-1$ 代入第一式，得到
+
+$$
+R_0^4-24R_0^2+16=0.
+$$
+
+因为 $0<R_0^2\le1$，唯一可取的根是
+
+$$
+R_0^2=12-8\sqrt2=R_{\perp}^2,
+\qquad
+\cos\theta=\frac{\sqrt2-1}{2},
+\qquad
+\cos(2\theta)=\frac12-\sqrt2.
+$$
+
+极点约束再给 $x_z=\sigma\zeta$、$y_z=-\sigma\zeta$，其中 $\sigma=\pm1$。这正是 $(x,y)=(x_{k,\epsilon,\sigma},x_{k,-\epsilon,-\sigma})$。反向代入两条 Fourier 等式和极点等式，立即得到五个响应都为
+
+$$
+\frac{R_{\perp}^2}{4}=h.
+$$
+
+方向的互异性来自 $\zeta>0$ 及 $\cos(2\theta)=\frac12-\sqrt2\notin\{1,-\frac12\}$；故六个 $k,\epsilon$ 横向方向各不相同，两个高度也各不相同。上面的穷尽性同时说明每个方向只有一个伙伴，且 $\pi^2=\operatorname{id}$。第416节的六个乘积分支提供一个构造，但不替代这一步穷尽枚举。
+
+再证 $\ell$ 的分段式。若 $|b|<1$，则
+
+$$
+\det\bigl(\rho(b)-\lambda\rho(y)\bigr)
+ =\frac{1-|b|^2-2\lambda(1-b\cdot y)}4.
+$$
+
+矩阵在 $\lambda=0$ 时正定，且 $1-b\cdot y>0$；最大允许值正是行列式首次为零的根
+$\lambda=(1-|b|^2)/(2(1-b\cdot y))$。它不超过 $1$，因为
+$|b-y|^2=1+|b|^2-2b\cdot y\ge0$。若 $b=y$ 为纯态，差为 $(1-\lambda)\rho(y)$，故最大值为 $1$；若 $b\ne y$ 为纯态，两个秩一支撑不同，任意正的 $\lambda$ 都破坏正性，故最大值为 $0$。这三种情形互斥，公式没有未定义的分式。
+
+在 $0<\ell(b;y)<1$ 时，余项
+
+$$
+\rho(b)-\ell(b;y)\rho(y)=(1-\ell(b;y))\rho(c),
+\qquad
+c=\frac{b-\ell(b;y)y}{1-\ell(b;y)},
+$$
+
+行列式为零而余项非零，因而 $|c|=1$ 且 $c\ne y$；纯非重合情形的余项本身也是非零秩一项。该余项在规范完成中作为失败保留。
+
+现在证明边界值。第421节的输入效果树中，若一个坐标已经是纯态 $x$，则其正性支撑包含关系使所有正权后继仍在同一纯支撑上。因此当 $x\notin X$ 时没有平坦成功后继，$F(x,b)=0$；当 $x\in X$ 时，平坦性穷尽性迫使唯一可能的成功伙伴为 $\pi(x)$。若成功后继的总归一化权重为 $s$，完整失败和成功效果的和给出
+
+$$
+\rho(b)\succeq s\rho(\pi(x)),
+$$
+
+故 $s\le\ell(b;\pi(x))$，任何有限树的报酬至多为 $h\ell(b;\pi(x))$。反之，将
+$\rho(b)$ 按上式分成 $\ell(b;\pi(x))\rho(\pi(x))$ 与余项，并在前一支接受、在余项上失败，正是一个至多一个局部仪器节点的规范完成。这里得到的是从原始输入重新构造的一份新的规范协议（canonical protocol）：终端叶各自取得自己的实际标签；对每个实际标签指定一个且仅一个符合第421节共同标签约束的反馈，同一标签下的全部真实历史与隐藏 Kraus 项共用该反馈；完整四维仪器、原始两因子、根权的物理因子 $4$、所有失败和全矩阵/未操作参考等式均按第421节保留。它不是在丢弃的记忆之后继续运行；只有重放一棵未改变且已指定的效果树时，才沿用该树原有的实际标签与反馈，本次边界替换不声称保留任意早先协议的标签。故 $F(x,b)=V_1(x,b)=h\ell(b;\pi(x))$。交换两方得另一面。两面在交集上由纯态分段式相等，遂得 $F=V_1=B_{\mathrm{partial}}$。
+
+若 $a,b$ 均在 $\operatorname{int}D$，任取 $x\in X$。由已经证明的内点公式，两个分子 $1-|a|^2$ 与 $1-|b|^2$ 为正；又因 $|x|=|\pi(x)|=1$ 且 $|a|,|b|<1$，两个分母 $2(1-a\cdot x)$ 与 $2(1-b\cdot\pi(x))$ 均为正，故 $\ell(a;x)>0$ 与 $\ell(b;\pi(x))>0$；先分别抽取 $x$ 与 $\pi(x)$ 的两坐标分支，得到正报酬
+
+$$
+ h\,\ell(a;x)\ell(b;\pi(x))>0.
+$$
+
+结合边界值，零点恰为定理第3项所列集合。取任意 $a_j\in\mathbb S^2\setminus X$ 趋于 $x\in X$，边界公式给
+$F(a_j,0)=0$，而
+$F(x,0)=h\ell(0;\pi(x))=h/2$，故确有纯根不连续；这里不作更强的整体正则性断言。
+
+最后证明首边界树表示。由第421节，$F(0,0)=V_\infty(0,0)=\eta_{\mathrm{fin}}(1)/4$。这些 $w_\ell$ 是累计输入效果的迹权重，不是未知输入下的结果概率；累计效果也不是操作后的输出态。谱分裂只是在效果树上的代数重写，不是对已丢弃记录的继续操作。任取一棵有限效果树，在每条根到叶路径第一次到达 $\partial(D^2)$ 处截断。被截断的内部后继报酬至多为该边界点的 $F$，而边界值等于 $B_{\mathrm{partial}}$，故替换不会降低报酬。若原树在内部点提前停止且报酬为零，则把该点的第一坐标作有限谱分裂为纯点；得到的叶在边界，且新增报酬非负。这样得到一棵 $\mathscr T_{\partial}$ 中的树，保留全部失败和零报酬叶，并且其报酬不低于原树。因此任意有限协议的归一化报酬都不超过右端上确界。
+
+反过来，对任意 $\mathscr T_{\partial}$，在每个边界叶使用前面构造的至多一个节点的局部谱分裂；匹配的纯对接受，非匹配项和余项均作为失败保留。由此从原始输入重新构造一份新的规范协议（canonical protocol）：每个终端叶拥有自己的实际标签；对每个实际标签指定一个且仅一个符合第421节共同标签约束的反馈，同一标签下的全部真实历史与隐藏 Kraus 项共用该反馈。第421节的规范实现把这棵效果树接回同一原始两量子比特分割，保持完整四维仪器、原始两因子、根权的物理因子 $4$、所有真实失败和 $H_{\mathrm{ref}}$ 的全矩阵等式。这里构造的是新协议，不是继续执行被丢弃的记忆；不声称把变换或优化得到的无标签重心树保留为任意早先协议的标签，只有重放未改变且已指定的效果树时才沿用其原标签与反馈。因此该树的加权边界报酬不超过 $F(0,0)$，两边即得
+
+$$
+F(0,0)=\sup_{T\in\mathscr T_{\partial}}\sum_\ell w_\ell B_{\mathrm{partial}}(z_\ell)
+ =\frac{\eta_{\mathrm{fin}}(1)}4.
+$$
+
+对任意 $T\in\mathscr T_{\partial}$，$F$ 分别凹，所以每个内部节点的 $\Delta_v\ge0$。把每个父节点项
+$w_vF(z_v)$ 替换为
+$w_v\sum_j\lambda_{vj}F(z_{vj})+w_v\Delta_v$，在有限树上逐层相消；叶值为 $B_{\mathrm{partial}}$，得到
+
+$$
+F(0,0)-\sum_\ell w_\ell B_{\mathrm{partial}}(z_\ell)
+=\sum_v w_v\Delta_v.
+$$
+
+若有限物理协议达到 $\eta_{\mathrm{fin}}(1)$，设其成功率为 $p=\eta_{\mathrm{fin}}(1)$，并按第421节的真实历史效果分解记 $Q$ 为整棵完整效果树所有叶子的 $V_0$ 加权报酬。所有接受叶的合计报酬为 $p/4$；拒绝的平坦叶仍是物理失败，但在数学的 $V_0$ 记账中可以带有非负报酬。因此
+
+$$
+\frac p4\le Q\le F(0,0).
+$$
+
+当 $p=\eta_{\mathrm{fin}}(1)=4F(0,0)$ 时，$Q=F(0,0)$。把其内部停止点替换为首边界谱分裂后，所得首边界树的报酬至少为 $Q$，而首边界树表示给出它至多为 $F(0,0)$，故恰为 $F(0,0)$。恒等式右侧各项非负且权重为正，遂每个 $\Delta_v=0$。
+
+反之，若存在有限首边界树且所有正权内部节点满足 $\Delta_v=0$，恒等式给出其报酬为 $F(0,0)$；附接边界规范完成即产生成功率 $4F(0,0)=\eta_{\mathrm{fin}}(1)$ 的有限物理协议。故有限达到性与所述零缺陷树判据等价。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 427. 十二射线装填的精确最优值与三节点恢复的取得
+
+### 427.0 操作约定、射线编号与装填目标
+
+本节取 $r=1$，完整继承定理421.1的操作类别、固定 Pauli 坐标、$D=\{a\in\mathbb R^3:|a|\le1\}$、$\rho(a)=(I_2+a\cdot\sigma)/2$ 及 $p_n,V_n$。两个记录因子仍是原始的 $R_A=R_B=\mathbb C^2$；局部 CP 仪器及其私有量子、经典记忆、独立乘积辅助态、粗粒结果、遗忘、重复行动、提前停止、零分支和所有失败均按第421节保留。深度计数的是路径上的实际局部仪器节点，单结果通道也计数。接受标签各自只拥有一个作用于整个系统 $S=\mathbb C^5$ 的终端酉反馈，同标签下所有真实历史和隐藏 Kraus 项共用它；记录输出及剩余记忆全部迹掉。恢复要求仍是对全部系统矩阵及每个有限维未操作参考的全部联合矩阵成立的同一标量恒等式。以下归一化效果是累计原始输入效果，迹权重不是未知输入下的条件结果概率。
+
+十二个纯方向及其唯一伙伴取自定理426.1第1项。为写出有限表格，给该同一几何集合作本节的数值编号。置
+
+$$
+\begin{gathered}
+h=3-2\sqrt2,\qquad B=\sqrt{4\sqrt2-5},\qquad z=\sqrt{8\sqrt2-11},\qquad
+ t=\frac{h}{\sqrt3 B}=\sqrt{\frac{8\sqrt2-11}{21}},\qquad 0<t<\frac13,\\
+i=4k+(1-\epsilon)+\frac{1-\sigma}{2},\qquad
+k\in\{0,1,2\},\quad\epsilon,\sigma\in\{1,-1\},\\
+y_i=\left(\frac{\sqrt3 B}{2}U_{k,\epsilon},\frac B2 V_{k,\epsilon},\sigma z\right),\qquad
+(U_{k,\epsilon},V_{k,\epsilon})=
+\begin{cases}
+(t-\epsilon,3t+\epsilon),&k=0,\\
+(-2t,-2\epsilon),&k=1,\\
+(t+\epsilon,-3t+\epsilon),&k=2.
+\end{cases}
+\end{gathered}
+$$
+
+第426节的 $R_{\perp}\cos\theta=h$、$R_{\perp}\sin\theta=B$ 给出上述笛卡尔坐标，故 $y_i$ 就是该节的 $x_{k,\epsilon,\sigma}$，没有改变射线集合或计算基。以下另记目标方向
+
+$$
+x_i=\pi(y_i)=y_{i\mathbin{\mathrm{xor}}3},\qquad
+(0,1,2,3,4,5,6,7,8,9,10,11)\stackrel{\pi}{\longmapsto}
+(3,2,1,0,7,6,5,4,11,10,9,8).
+$$
+
+这里 $i\mathbin{\mathrm{xor}}3$ 只是翻转最低两位的整数编号。由
+
+$$
+3U_{k,\epsilon}^2+V_{k,\epsilon}^2=4(3t^2+1),\qquad
+3B^2t^2=h^2,\qquad h^2+B^2=4h,\qquad 4h+z^2=1
+$$
+
+得到 $|x_i|=|y_i|=1$。令 $X=\{x_i:0\le i<12\}=\{y_i:0\le i<12\}$。提取函数完整沿用定理426.1第2项：
+
+$$
+\ell(a;x)=\max\{c\ge0:\rho(a)-c\rho(x)\succeq0\}
+=\begin{cases}
+\dfrac{1-|a|^2}{2(1-a\cdot x)},&|a|<1,\\[4pt]
+1,&|a|=1,\ a=x,\\
+0,&|a|=1,\ a\ne x.
+\end{cases}
+\tag{427.1}
+$$
+
+定义紧装填集及其目标
+
+$$
+\begin{aligned}
+\mathcal P&=\left\{\lambda\in\mathbb R_{\ge0}^{12}:
+\sum_i\lambda_i\rho(y_i)\preceq\frac{I_2}{2}\right\},&
+Q_\lambda&=\frac{I_2}{2}-\sum_i\lambda_i\rho(y_i),\\
+s_\lambda&=\sum_i\lambda_i,&v_\lambda&=\sum_i\lambda_i y_i,\\
+Q_\lambda&=\frac{(1-s_\lambda)I_2-v_\lambda\cdot\sigma}{2},&
+\lambda\in\mathcal P&\iff\lambda_i\ge0,\quad s_\lambda+|v_\lambda|\le1,\\
+F_\lambda(a)&=\sum_i\lambda_i\ell(a;x_i),&
+M(a)&=\max_{\lambda\in\mathcal P}F_\lambda(a),\qquad
+M_* =\max_{a\in D}M(a).
+\end{aligned}
+\tag{427.2}
+$$
+
+特别指定 $S_0=\{0,1,2,11\}$，按这个升序令
+
+$$
+(\lambda^S_0,\lambda^S_1,\lambda^S_2,\lambda^S_{11})
+=\left(\frac t2,\frac{1-t}{2(1+3t)},\frac{1-t}{2},\frac{2t}{1+3t}\right),
+\qquad F_S=F_{\lambda^S},
+\tag{427.3}
+$$
+
+其余系数为零。以上最大值的存在、下述驻点的存在唯一性均在证明中给出。
+
+### 定理427.1（精确三节点值及其有限取得）
+
+在第427.0节的约定下，方程
+
+$$
+(1-|a|^2)\sum_{i\in S_0}\frac{\lambda_i^S x_i}{(1-a\cdot x_i)^2}
+=2a\sum_{i\in S_0}\frac{\lambda_i^S}{1-a\cdot x_i}
+\tag{427.4}
+$$
+
+在 $|a|<1$ 中恰有一解 $a_Z$。以 $Z=F_S(a_Z)$ 定义精确实数，则
+
+$$
+\boxed{
+M_* =Z,\qquad
+0.512524543602794092782067<Z<0.512524543602794093714769,\qquad
+p_3(1)=4hZ.
+}
+\tag{427.5}
+$$
+
+该成功率由一棵 Alice—Bob—Alice 的三节点有限协议取得，满足原始全矩阵及未操作参考恢复条件。
+
+#### 427.1.1 证明：整个闭域上的两节点装填与根分裂
+
+先在 $D\times D$ 的全部点证明
+
+$$
+\begin{aligned}
+V_2(a,b)=h\max\biggl\{&
+\max_{\lambda_i\ge0,\ \sum_i\lambda_i\rho(y_i)\preceq\rho(a)}
+\sum_i\lambda_i\ell(b;x_i),\\
+&\max_{\mu_i\ge0,\ \sum_i\mu_i\rho(y_i)\preceq\rho(b)}
+\sum_i\mu_i\ell(a;x_i)\biggr\}.
+\end{aligned}
+\tag{427.6}
+$$
+
+固定第一行动方为 Alice。若未动的 $b$ 是混合点，一条正报酬路径必须在第二节点由 Bob 行动，而且第一节点已把 Alice 的累计效果分到一个纯方向 $y_i$：否则第二节点后至少还有一个混合坐标，不能成为定理426.1的平坦对。把第一节点所有具有同一纯方向的子效果相加，写为 $\lambda_i\rho(y_i)$。保留其余子效果及失败给出 $\sum_i\lambda_i\rho(y_i)\preceq\rho(a)$；每个这样的子节点，Bob 的最大成功迹权重是 $\ell(b;x_i)$。所以 Alice 起始的报酬受第一项控制。同一方连做两个节点不能使未动的混合坐标变纯。
+
+若未动的 $b$ 是纯点，任何正子效果都保持该纯支撑。$b\notin X$ 时不可能成功；$b\in X$ 时唯一成功伙伴为 $\pi(b)$。无论随后两次是否都由 Alice 行动，把成功效果求和，都有
+
+$$
+\rho(a)\succeq c\rho(\pi(b)),\qquad c\le\ell(a;\pi(b)).
+$$
+
+这也正是第一项：只有满足 $x_i=b$ 的一项可以非零。因而重复行动、纯父节点和提前停止都在同一界内；纯重合处用 (427.1) 的值 $1$，绝不把内点商延拓成 $0/0$。Bob 起始的论证交换两坐标，得到第二项。若两个坐标已经平坦，提前接受的值同样包含在式中；零效果的后代均为零。
+
+反向地，给第一项的任意可行装填，Alice 将 $\rho(a)$ 分为各 $\lambda_i\rho(y_i)$ 与非负余项，余项失败；在结果 $i$ 上，Bob 将 $\rho(b)$ 分为 $\ell(b;x_i)\rho(x_i)$ 与非负余项，前者接受、后者失败。第二项用相反次序。可行集由迹界封闭有界，固定 $a,b$ 后目标对装填系数线性，最大值取得。定理421.1的同深度效果树对应使这些指定分裂属于原操作类别，遂得 (427.6)。这里使用该定理的完整实现结论，不要求任意破坏性输出还能执行这个后继。
+
+取正旋转
+
+$$
+C=R_z(2\pi/3),\qquad H=\operatorname{diag}(1,-1,-1),\qquad
+G_+=\{C^k,C^kH:0\le k<3\}\cong D_3.
+$$
+
+它们在射线标号上的作用是
+
+$$
+C:(k,\epsilon,\sigma)\mapsto(k+1,\epsilon,\sigma),\qquad
+H:(k,\epsilon,\sigma)\mapsto(-k-1,-\epsilon,-\sigma),
+\tag{427.7}
+$$
+
+其中 $k$ 模 $3$。二者行列式均为 $1$，保持平坦伙伴关系且与 $\pi$ 交换。三个 $C$ 旋转消去水平分量，$H$ 反转高度，故
+
+$$
+\frac16\sum_{g\in G_+}ga=0\qquad(a\in\mathbb R^3).
+\tag{427.8}
+$$
+
+因此 Alice 的一个真实局部仪器可以取六个根效果
+
+$$
+E_g=\frac13\rho(ga),\qquad
+\sum_{g\in G_+}E_g=I_2,\qquad
+\frac{\operatorname{Tr}E_g}{\operatorname{Tr}I_2}=\frac16.
+\tag{427.9}
+$$
+
+(427.6) 对 $G_+$ 不变，所以这六个结果的最优续接值都是 $V_2(a,0)$。任何 Alice 根分裂的加权续接值至多为 $\max_{a\in D}V_2(a,0)$，而 (427.9) 对达到最大值的 $a$ 取得此界。这个根是一个六结果仪器；$g$ 是其实际结果标签，不是先抛硬币选择 $g$ 后免费施加旋转。第421节关于存在至多五结果的最优表示不限制允许的有限结果数，也不排除这个六结果实现。
+
+在 (427.6) 取 $b=0$，第一项因 $\ell(0;x_i)=1/2$ 及 $\sum_i\lambda_i\le\operatorname{Tr}\rho(a)=1$ 至多为 $1/2$，第二项就是 $M(a)$。式 (427.3) 的系数为正，且
+
+$$
+\lambda^S_0+\lambda^S_2=\lambda^S_1+\lambda^S_{11}=\frac12,
+\qquad \sum_{i\in S_0}\lambda_i^S U_i=
+\sum_{i\in S_0}\lambda_i^S V_i=0.
+\tag{427.10}
+$$
+
+故 $Q_{\lambda^S}=0$、$M(0)=1/2$，从而
+
+$$
+\max_{a\in D}V_2(a,0)=hM_*.
+$$
+
+Bob 根通过交换两方有同一上界与取得方式，根直接停止的报酬为零。结合定理421.1，得到
+
+$$
+V_3(0,0)=hM_*,\qquad p_3(1)=4hM_*.
+\tag{427.11}
+$$
+
+这是对 $a$ 最大化后的等式；无需逐点声称 $V_2(a,0)=hM(a)$。
+
+#### 427.1.2 证明：取得、严格凹性与闭球切平面
+
+单投影的最大可减系数这一形式见 Lewenstein–Sanpera，[*Separability and entanglement of composite quantum systems*](https://arxiv.org/abs/quant-ph/9707043)，第2页引理1及式(6)–(7)；本节使用的是 (427.1) 的单投影支撑条件及其二阶特化，不引入该文的其他分解结论。若 $\rho(a_j)-c_j\rho(x)\succeq0$，则它们的凸组合仍非负，故 $\ell(\cdot;x)$ 在整个闭球上凹，且 $0\le\ell\le1$。它在除 $x$ 以外的各点连续，在 $x$ 的上极限不超过 $1=\ell(x;x)$，所以处处上半连续。有限个有界非负函数与非负系数的乘积之和使 $(a,\lambda)\mapsto F_\lambda(a)$ 联合上半连续；由 $s_\lambda\le1$，$\mathcal P$ 紧，全部所写最大值均取得。对纯点 $a$，至多一个 $\ell(a;x_i)$ 非零，且 $\lambda_i\rho(y_i)\preceq I_2/2$ 蕴涵 $\lambda_i\le1/2$，单项 $\lambda_i=1/2$ 又可行。因此
+
+$$
+M(a)=\begin{cases}1/2,&a\in X,\\0,&|a|=1,\ a\notin X,\end{cases}
+\qquad M(0)=\frac12.
+\tag{427.12}
+$$
+
+对单位 $x$、开球中的 $a$ 和方向 $d$，记 $a_\perp=a-(a\cdot x)x$、$d_\perp=d-(d\cdot x)x$。将
+
+$$
+\ell(a;x)=\frac{1+a\cdot x}{2}-\frac{|a_\perp|^2}{2(1-a\cdot x)}
+$$
+
+沿 $d$ 求两次导数，得
+
+$$
+D^2\ell(a;x)[d,d]
+=-\frac{\left|d_\perp+a_\perp\dfrac{d\cdot x}{1-a\cdot x}\right|^2}{1-a\cdot x}.
+\tag{427.13}
+$$
+
+其零空间为 $\operatorname{span}(x-a)$。一条直线至多与单位球面交于两点，故至少三个互异目标的正加权和在开球上的 Hessian 负定。对后面出现的正零余项四射线装填，每个权重严格小于 $1/2$（第427.1.3节证明），故纯边界值至多为最大权重，小于 $F_\lambda(0)=1/2$。上半连续性给出的最大点因而在内部，严格凹性使它唯一；可微凹函数的驻点又必为最大点。这特别证明了 (427.4) 恰有一个开球解。
+
+还需一个对边界同样有效的上界。任取非负权重 $w_i$ 及内点 $b$，对 $L(a)=\sum_iw_i\ell(a;x_i)$ 置
+
+$$
+\begin{aligned}
+c&=\frac{1-|b|^2}{2},&d_i&=1-b\cdot x_i,\\
+s_0&=\sum_i\frac{w_i}{d_i},&s_1&=\sum_i\frac{w_i x_i}{d_i^2},\\
+f&=cs_0,&g&=-bs_0+cs_1,\qquad
+\beta=f-b\cdot g+|g|.
+\end{aligned}
+\tag{427.14}
+$$
+
+所有 $d_i>0$。对任意 $a\in D$ 和 $0<s<1$，闭球凹性给
+
+$$
+L(a)\le L(b)+\frac{L(b+s(a-b))-L(b)}s.
+$$
+
+令 $s\downarrow0$，导数在内点 $b$ 存在，遂有
+
+$$
+L(a)\le f+g\cdot(a-b)\le\beta
+\le f+(1+|b|)|g|.
+\tag{427.15}
+$$
+
+第一步直接使用闭球函数的凹性，包含 $a=x_i$ 的不连续纯目标值；它没有把内点商的极限指定为边界定义。以下所有表格共用这个欧氏范数切平面界。
+
+#### 427.1.3 证明：极端装填与全部零余项支撑
+
+固定一个最大化的 $a$，其装填目标对 $\lambda$ 线性，故可以在最大化面内选 $\mathcal P$ 的极端点。设正权重数为 $n$，$Q_\lambda$ 的秩为 $r_Q$。正权重的 $n$ 个实扰动与支撑在 $\operatorname{ran}Q_\lambda$ 上的 Hermitian 余项扰动共有 $n+r_Q^2$ 个实维度，而约束的值域 $\operatorname{Herm}(2)$ 只有四维。若 $n+r_Q^2>4$，则
+
+$$
+(\delta\lambda,\delta Q)\longmapsto
+\sum_i\delta\lambda_i\rho(y_i)+\delta Q
+$$
+
+有非零核向量。充分小的正负扰动均保持各正系数和余项在其支撑上的正定性，产生两个不同可行点，以原点为中点，矛盾。因而
+
+$$
+n+r_Q^2\le4.
+\tag{427.16}
+$$
+
+这正是支撑内扰动与秩平方方法在当前装填集的特化；相应一般 POVM 扰动准则见 D’Ariano–Lo Presti–Perinotti，[*Classical randomness in quantum measurements*](https://arxiv.org/abs/quant-ph/0408115)，§II 定理1、式(4)、定理2及推论1。上面的维数及正负扰动论证给出了本处所需结论。
+
+$r_Q=2$ 时只剩零装填；$r_Q=1$ 时至多三个正射线；$Q_\lambda=0$ 时至多四个，且列 $(1,y_i)$ 线性独立，否则同样可以在正系数上作双向扰动。反过来，正的独立零余项四列确实给出极端点：任何可行中点分解的两个非负余项平均为零，因此各自为零；零系数也不能在任一端变正；列独立性继而固定全部系数。
+
+零余项要求两个高度上的总权重各为 $1/2$。所有水平向量有同一非零长度 $\sqrt{4h}$，且没有互为负向量的两个；这也可直接由下面六组 $(U,V)$ 及 $0<t<1/3$ 看出。若某一高度只有一个支撑，它的水平负向量就必须是另一高度上同长度向量的凸组合，范数三角不等式的等号迫使出现缺失的水平反向量。因此三个及以下支撑不能零余项，四支撑则恰为每层两个。若某个零余项权重等于 $1/2$，其余归一化权重的空间均值必须是该单位射线的负向量，等号同样迫使存在反向射线；大于 $1/2$ 已被装填界排除。所以每个正权重严格小于 $1/2$，也补足了第427.1.2节的内部最大点论证。
+
+为约简支撑，使用十二阶正交群
+
+$$
+\mathcal G=\{C^k\mathsf S^eJ_z^j:0\le k<3,\ e,j\in\{0,1\}\},\qquad
+\mathsf S=\operatorname{diag}(1,-1,1),\quad
+J_z=\operatorname{diag}(1,1,-1).
+\tag{427.17}
+$$
+
+其中 $\mathsf S:(k,\epsilon,\sigma)\mapsto(-k-1,-\epsilon,\sigma)$，$J_z:(k,\epsilon,\sigma)\mapsto(k,\epsilon,-\sigma)$。三种生成元的整数置换依次为
+
+$$
+\begin{aligned}
+C&:(0,1,2,3,4,5,6,7,8,9,10,11)\mapsto(4,5,6,7,8,9,10,11,0,1,2,3),\\
+\mathsf S&:(0,1,2,3,4,5,6,7,8,9,10,11)\mapsto(10,11,8,9,6,7,4,5,2,3,0,1),\\
+J_z&:(0,1,2,3,4,5,6,7,8,9,10,11)\mapsto(1,0,3,2,5,4,7,6,9,8,11,10).
+\end{aligned}
+$$
+
+它们与伙伴映射交换，保持全部点积、闭球及装填约束。$\mathsf S,J_z$ 各自为非正旋转，仅作优化问题的等价变换；实际根效果所用的群仍只是 $G_+=\langle C,\mathsf SJ_z\rangle$。
+
+全部四支撑候选为
+
+$$
+\{2a,2b,2c+1,2d+1\},\qquad
+0\le a<b\le5,\quad0\le c<d\le5,
+\tag{427.18}
+$$
+
+共 $15^2=225$ 个。以 $A,B,C,D,E,F$ 表示偶数索引 $0,2,4,6,8,10$ 的水平标号；本段的字母 $B,C$ 在成对标号中只指水平点。按此顺序
+
+$$
+q_P=(U_P,V_P):\quad
+(t-1,3t+1),\ (t+1,3t-1),\ (-2t,-2),\ (-2t,2),\ (t+1,1-3t),\ (t-1,-3t-1).
+\tag{427.19}
+$$
+
+奇数索引具有相同的水平标号。对上层一对 $(P,Q)$ 和下层一对 $(R,S)$ 定义
+
+$$
+d_1=q_P-q_Q,\quad d_2=q_R-q_S,\quad w=-q_Q-q_S,\quad
+\Delta=\det(d_1,d_2),\quad
+\alpha=\frac{\det(w,d_2)}{\Delta},\quad
+\gamma=\frac{\det(d_1,w)}{\Delta}.
+\tag{427.20}
+$$
+
+$\Delta\ne0$ 时，依次对应 $P^+,Q^+,R^-,S^-$ 的四权重正是
+$(\alpha,1-\alpha,\gamma,1-\gamma)/2$，这是把每层权重 $1/2$ 代入零水平均值后的二阶 Cramer 公式。等价地，对按升序排列的四列 $(1,U_i,V_i,\sigma_i)$，每个权重是把该列替换成 $(1,0,0,0)$ 的行列式除以原行列式。
+
+这些行列式及 Cramer 分子都是至多二次的有理系数多项式。将 (427.19) 代入展开，每个非零多项式除去非零有理常数后，只有以下因子的乘积：
+
+$$
+t,\quad t-1,\quad t+1,\quad3t-1,\quad3t+1,\quad3t^2+1.
+\tag{427.21}
+$$
+
+恒零行列式单独记为 $\mathrm S$，不为它定义 Cramer 商；四个 Cramer 分子没有恒零项。非零因子在 $0<t<1/3$ 上均不变号，所以可在 $t=1/8$ 判全部符号。此时 (427.19) 的 $8q_P$ 依次为
+
+$$
+(-7,11),\ (9,-5),\ (-2,-16),\ (-2,16),\ (9,5),\ (-7,-11).
+$$
+
+下表的列遍历下层全部十五对；行给上层对在 $\langle C,\mathsf S\rangle$ 下的四个轨道。$\mathrm P$ 表示 $0<\alpha,\gamma<1$，$\mathrm N$ 表示非奇异但含负权重，$\mathrm S$ 表示奇异。在非奇异情形分子均不为零；特别是没有被遗漏的非负三支撑退化。
+
+| 427符号行 | 上层对轨道 | 重数 | AB | AC | AD | AE | AF | BC | BD | BE | BF | CD | CE | CF | DE | DF | EF | 每行 $(\mathrm S,\mathrm N,\mathrm P)$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 427.DAB | $AB,CD,EF$ | 3 | S | P | N | N | P | P | N | N | P | P | P | S | S | P | P | $(3,4,8)$ |
+| 427.DAC | $AC,AE,BD,BF,CE,DF$ | 6 | P | S | N | P | N | P | P | N | P | N | P | N | P | N | P | $(1,6,8)$ |
+| 427.DAD | $AD,BE,CF$ | 3 | N | N | S | N | N | S | N | N | N | N | N | N | N | N | S | $(3,12,0)$ |
+| 427.DAF | $AF,BC,DE$ | 3 | P | N | N | P | S | P | P | S | P | S | P | N | P | N | P | $(3,4,8)$ |
+
+这是一组由 (427.20) 及所列整数坐标直接给出的符号恒等式；同一上层对轨道的其他行只置换全部下层列。因此奇异、含负权重、正权重三类的数目分别为
+
+$$
+3(3,4,8)+6(1,6,8)+3(3,12,0)+3(3,4,8)=(33,96,96).
+\tag{427.22}
+$$
+
+以下十行给出全部正解轨道。权重按支撑升序排列；稳定子按 (427.17) 表示，$e$ 为恒等元。每个所列代表都是其轨道中升序四元组的字典序最小元，稳定子由上面的十二个置换逐一作用得到；因而轨道两两不交。各行权重代入 Cramer 等式即给出总和为一和零均值，且在 $0<t<1/3$ 均严格为正。轨道数相加为 $6\cdot12+4\cdot6=96$，等于 (427.22) 的全部正候选，故没有剩余零余项极端支撑。
+
+| 427四射线行 | 支撑 | 升序权重 | 稳定子 | 轨道大小 |
+| --- | --- | --- | --- | --- |
+| 427.Q01 | $\{0,1,2,5\}$ | $(\frac{3t(1-t)}{2(1+3t)},\frac{1-t}{2(1+3t)},\frac{3t^2+1}{2(1+3t)},\frac{2t}{1+3t})$ | $\{e\}$ | 12 |
+| 427.Q02 | $\{0,1,2,11\}$ | $(\frac t2,\frac{1-t}{2(1+3t)},\frac{1-t}{2},\frac{2t}{1+3t})$ | $\{e\}$ | 12 |
+| 427.Q03 | $\{0,1,4,9\}$ | $(\frac16,\frac16,\frac13,\frac13)$ | $\{e\}$ | 12 |
+| 427.Q04 | $\{0,1,8,11\}$ | $(\frac t2,\frac{3t(1-t)}{2(1+3t)},\frac{1-t}{2},\frac{3t^2+1}{2(1+3t)})$ | $\{e\}$ | 12 |
+| 427.Q05 | $\{0,2,5,7\}$ | $(\frac{1-t}{4},\frac{1+t}{4},\frac{1+t}{4},\frac{1-t}{4})$ | $\{e,C^2\mathsf SJ_z\}$ | 6 |
+| 427.Q06 | $\{0,2,5,9\}$ | $(\frac{3(1-t^2)}8,\frac{3t^2+1}8,\frac{1+t}4,\frac{1-t}4)$ | $\{e\}$ | 12 |
+| 427.Q07 | $\{0,3,4,7\}$ | $(\frac{1-t}{4},\frac{1+t}{4},\frac{1+t}{4},\frac{1-t}{4})$ | $\{e,C^2\mathsf SJ_z\}$ | 6 |
+| 427.Q08 | $\{0,3,4,11\}$ | $(\frac{1+t}{2(1+3t)},\frac{1+t}{2(1+3t)},\frac{t}{1+3t},\frac{t}{1+3t})$ | $\{e,C\mathsf SJ_z\}$ | 6 |
+| 427.Q09 | $\{0,3,5,8\}$ | $(\frac{1+t}{2(1+3t)},\frac{3t^2+1}{2(1+3t)^2},\frac{3t(1+t)}{(1+3t)^2},\frac{t}{1+3t})$ | $\{e\}$ | 12 |
+| 427.Q10 | $\{0,3,5,10\}$ | $(\frac{1+t}{2(1+3t)},\frac{1+t}{2(1+3t)},\frac{t}{1+3t},\frac{t}{1+3t})$ | $\{e,C\mathsf SJ_z\}$ | 6 |
+
+#### 427.1.4 证明：有理向外算术与十个四射线目标的比较
+
+以下有限不等式统一使用有理端点区间。固定 $N=10^{80}$，对有理数 $r$ 定义
+
+$$
+\operatorname d_N(r)=\frac{\lfloor Nr\rfloor}{N},\qquad
+\operatorname u_N(r)=\frac{\lceil Nr\rceil}{N}.
+\tag{427.23}
+$$
+
+$[l,u]$ 表示其两有理端点之间的所有实数。区间加法的未舍入端点为 $l_1+l_2,u_1+u_2$，减法为 $l_1-u_2,u_1-l_2$；乘法取四个端点乘积的最小值及最大值。每次对下端用 $\operatorname d_N$、上端用 $\operatorname u_N$。正下端区间的倒数先取 $[1/u,1/l]$ 再向外舍入，除法是乘倒数。平方的下端在 $l\le0\le u$ 时取零，否则取 $\min(l^2,u^2)$，上端取 $\max(l^2,u^2)$，再分别向外舍入；绝对值同样在跨零时下端为零，否则下端取两端绝对值的较小者，上端取较大者。
+
+对非负有理数 $r$，令 $k_N(r)$ 为唯一非负整数，满足
+
+$$
+k_N(r)^2\le N^2r<(k_N(r)+1)^2.
+$$
+
+平方根下端取 $k_N(r)/N$，上端取 $(k_N(r)+1)/N$；若左边是等式，上端可取 $k_N(r)/N$。对非负区间分别以其两端给出平方根两端。上述各运算都包含对应的精确实数运算，平方跨零及倒数正性保证没有遗漏极值；按表达式的组成归纳即得整个表达式的包含性。重复使用同一个区间只会扩大范围，不会丢掉真值。
+
+具体表达式顺序如下：先从 $2,3$ 得到 $\sqrt2,\sqrt3$，再依第427.0节给出 $h,B,z,t$ 及射线，再给出各行有理函数权重；在各有理 $b$ 处依 (427.14) 依次形成 $c,d_i,s_0,s_1,f,g,\beta$。求和使用支撑升序，点积使用固定笛卡尔坐标次序，欧氏范数使用各分量平方之和再开方。表中有限小数一律是精确有理数，不是省略尾数的近似记号。
+
+下表与 427.Q01–427.Q10 逐行对应，写 $b=n/d$；$f_-,f_+$ 是 $f$ 的有理包围端点，整数三元组 $G$ 表示逐坐标 $|g_j|\le G_j10^{-24}$，$U$ 是该行整个闭球上目标的上界。所有这些 $b$ 均满足 $|b|<3/10$，可直接由整数平方和比较 $9d^2/100$ 得到；特别地，所有 $d_i>7/10$。427.Q03 的 $f=1/2$、$g=0$ 还直接来自其有理权重的总和及零目标均值，故该行可以用这个精确等式收紧区间。
+
+| 427四射线切平面行 | $n$ | $d$ | $[f_-,f_+]$ | $G$，单位 $10^{-24}$ | $U$ |
+| --- | --- | --- | --- | --- | --- |
+| 427.F01 | $(-13201112763,165039149165,-19070435238)$ | $10^{12}$ | $[0.509965477863443439430179,0.509965477863443439430180]$ | $(146071069365,280657022003,278347566268)$ | $0.509965478$ |
+| 427.F02 | $(249972636047834564,35114248141415356,126229711527462939)$ | $10^{18}$ | $[0.512524543602794092782067,0.512524543602794092782068]$ | $(333925,6809,451291)$ | $0.512524543602794093714769$ |
+| 427.F03 | $(0,0,0)$ | $10^{12}$ | $[0.500000000000000000000000,0.500000000000000000000000]$ | $(1,1,1)$ | $0.500000001$ |
+| 427.F04 | $(252728870647,-26087546153,126980890175)$ | $10^{12}$ | $[0.512277701125245983017890,0.512277701125245983017891]$ | $(92650800297,328074629813,8310608918)$ | $0.512277702$ |
+| 427.F05 | $(-85786437627,148586468570,0)$ | $10^{12}$ | $[0.507469249975827628343178,0.507469249975827628343179]$ | $(97976773806,100594426435,3519335481)$ | $0.50746925$ |
+| 427.F06 | $(11335975422,60035792082,3705536495)$ | $10^{12}$ | $[0.501328824602708834847415,0.501328824602708834847416]$ | $(54802173309,107687396284,77521339577)$ | $0.501328825$ |
+| 427.F07 | $(-85786437627,148586468570,0)$ | $10^{12}$ | $[0.507469249975827628343178,0.507469249975827628343179]$ | $(97976773806,100594426435,33084124022)$ | $0.50746925$ |
+| 427.F08 | $(66003021787,114320587189,0)$ | $10^{12}$ | $[0.508414983716582448355580,0.508414983716582448355581]$ | $(14276933130,309488471479,135309742254)$ | $0.508414984$ |
+| 427.F09 | $(-53708162081,180987586142,99419686369)$ | $10^{12}$ | $[0.507163397999641826187263,0.507163397999641826187264]$ | $(267353666546,101906576180,267491469682)$ | $0.507163399$ |
+| 427.F10 | $(66003021787,114320587189,0)$ | $10^{12}$ | $[0.508414983716582448355580,0.508414983716582448355581]$ | $(14276933130,309488471479,194404169668)$ | $0.508414984$ |
+
+将所列权重和 $b$ 代入上述区间运算，分别有 $f_-\le f\le f_+$ 和所列三条梯度绝对值界。除 427.F02 的细化如下单列外，(427.15) 与
+
+$$
+f_++\frac{13}{10}\,10^{-24}\sqrt{G_1^2+G_2^2+G_3^2}<U
+\tag{427.24}
+$$
+
+给出其余九行的上界；此处亦可将最后的正数比较平方为整数不等式。九行 $U$ 都严格小于 $0.512524543602794092782067$。
+
+对于 427.F02，所列有理点为
+
+$$
+b=\frac{(249972636047834564,35114248141415356,126229711527462939)}{10^{18}},\qquad
+|b|^2=\frac{79653269267546561880030842444194553}{10^{36}}<\frac9{100}.
+\tag{427.25}
+$$
+
+上述 $N$ 精度运算在同一精确表达式 $F_S(b)$ 上进一步给出
+
+$$
+\begin{aligned}
+0.512524543602794092782067762394
+&\le F_S(b)\\
+&\le0.512524543602794092782067762395.
+\end{aligned}
+\tag{427.26}
+$$
+
+左端比所需的下端 $0.512524543602794092782067$ 大恰好 $762394/10^{30}>0$，故
+
+$$
+Z\ge F_S(b)>0.512524543602794092782067>\frac12.
+\tag{427.27}
+$$
+
+上端则用表中有余量的梯度界：
+
+$$
+\begin{gathered}
+|g_j|\le(333925,6809,451291)_j10^{-24}
+<(334,7,452)_j10^{-21},\\
+334^2+7^2+452^2=315909<600^2,
+\qquad |g|<6\cdot10^{-19}.
+\end{gathered}
+$$
+
+结合 $|b|<3/10$，在 (427.15) 取 $a=a_Z$ 得
+
+$$
+\begin{aligned}
+Z&\le F_S(b)+(1+|b|)|g|\\
+&<0.512524543602794092782068+\frac{78}{10^{20}}\\
+&=0.512524543602794093562068\\
+&<0.512524543602794093714769.
+\end{aligned}
+\tag{427.28}
+$$
+
+故两个要求的端点都被严格跨过。$b$ 在这里仅为有理取值点及切平面点，精确最大点仍由 (427.4) 定义，未把 $b$ 指定为 $a_Z$。结合全部零余项轨道的上界与 427.Q02 的取得，零余项装填的最大值正是 $Z$：对固定 $a$，任意零余项装填的线性目标可在其多面体的一个极端点取得；该极端点就是第427.1.3节所列独立四支撑之一。又由 (427.12)、(427.27)，整个问题的最大化 Bloch 向量也只能在开球内。
+
+#### 427.1.5 证明：秩一余项与十九个三射线轨道
+
+若极端装填的余项秩一且 $s=s_\lambda>0$，非负余项的一个本征值为零，所以 $s+|v_\lambda|=1$。令 $p_i=\lambda_i/s$，则
+
+$$
+\lambda_i=\frac{p_i}{1+|Y_Tp|},\qquad
+Y_Tp=\sum_{i\in T}p_i y_i,\qquad
+F_\lambda(a)=\frac{L_p(a)}{1+|Y_Tp|},\qquad
+L_p(a)=\sum_{i\in T}p_i\ell(a;x_i).
+\tag{427.29}
+$$
+
+这里 $T$ 至多含三条射线，$p_i\ge0$、$\sum p_i=1$。反过来，对任一三支撑闭单纯形的 $p$，上述公式都给可行装填；其均值不可能为零，否则产生已被排除的三支撑零余项装填。三支撑的面包括所有二支撑和单支撑，无须另漏掉零系数。定义
+
+$$
+R_T=\max_{a\in D,\ p\in\Delta_2}
+\frac{L_p(a)}{1+|Y_Tp|},\qquad
+\Delta_2=\{p\in\mathbb R^3_{\ge0}:p_0+p_1+p_2=1\}.
+\tag{427.30}
+$$
+
+当 $T=\{i_0<i_1<i_2\}$ 时，约定 $p_{i_j}=p_j$，即 $p$ 的坐标依 $T$ 的升序索引；其分母为正，联合上半连续性及紧性保证最大值取得。下表列出全部十九个轨道，均以字典序最小的升序三元组为代表。按 (427.17) 逐一作用，除 $\{0,4,8\}$ 的稳定子为 $\{e,C,C^2\}$ 外，其余稳定子均为 $\{e\}$。代表各异且互不在彼此轨道，轨道大小之和 $4+18\cdot12=220=\binom{12}{3}$，因此表格穷尽全部三射线集。
+
+为同时记下可消去的十个轨道，置
+
+$$
+D_0=2\sqrt3 hB>0,\qquad
+\Delta_{ij}=x_i\cdot x_j-y_i\cdot y_j.
+$$
+
+对升序 $(i,j,k)$，表中符号三元组表示 $(\Delta_{ij},\Delta_{ik},\Delta_{jk})/D_0$；“保留”行的破折号不表示其符号为零。
+
+| 427三射线行 | 代表 $T$ | 轨道大小 | 处理 | 成对符号三元组 |
+| --- | --- | --- | --- | --- |
+| 427.T01 | $\{0,1,2\}$ | 12 | 消去 | $(0,0,0)$ |
+| 427.T02 | $\{0,1,4\}$ | 12 | 消去 | $(0,0,0)$ |
+| 427.T03 | $\{0,1,6\}$ | 12 | 消去 | $(0,-1,-1)$ |
+| 427.T04 | $\{0,1,8\}$ | 12 | 消去 | $(0,0,0)$ |
+| 427.T05 | $\{0,1,10\}$ | 12 | 保留 | — |
+| 427.T06 | $\{0,2,4\}$ | 12 | 保留 | — |
+| 427.T07 | $\{0,2,5\}$ | 12 | 保留 | — |
+| 427.T08 | $\{0,2,6\}$ | 12 | 消去 | $(0,-1,0)$ |
+| 427.T09 | $\{0,2,7\}$ | 12 | 消去 | $(0,-1,0)$ |
+| 427.T10 | $\{0,3,4\}$ | 12 | 保留 | — |
+| 427.T11 | $\{0,3,5\}$ | 12 | 保留 | — |
+| 427.T12 | $\{0,3,6\}$ | 12 | 消去 | $(0,-1,0)$ |
+| 427.T13 | $\{0,3,7\}$ | 12 | 消去 | $(0,-1,0)$ |
+| 427.T14 | $\{0,4,8\}$ | 4 | 消去 | $(0,0,0)$ |
+| 427.T15 | $\{0,4,9\}$ | 12 | 消去 | $(0,0,0)$ |
+| 427.T16 | $\{0,4,10\}$ | 12 | 保留 | — |
+| 427.T17 | $\{0,4,11\}$ | 12 | 保留 | — |
+| 427.T18 | $\{0,5,10\}$ | 12 | 保留 | — |
+| 427.T19 | $\{0,5,11\}$ | 12 | 保留 | — |
+
+这些符号也可按下式直接求得，式中 $\pi i=i\mathbin{\mathrm{xor}}3$：
+
+$$
+\frac{\Delta_{ij}}{D_0}
+=\frac{3U_{\pi i}U_{\pi j}+V_{\pi i}V_{\pi j}-3U_iU_j-V_iV_j}{24t}.
+$$
+
+这是因为伙伴同时反转两个高度，垂直点积抵消，且 $D_0=6B^2t$。代入 (427.19) 得到表中符号，同一正交群作用不改变它们。对十个消去行和 $p\in\Delta_2$，有
+
+$$
+\left|\sum_i p_ix_i\right|^2-|Y_Tp|^2
+=2\sum_{i<j}p_ip_j\Delta_{ij}\le0.
+$$
+
+在整个 $D$ 上都有
+
+$$
+\ell(a;x)\le\frac{1+a\cdot x}{2}.
+\tag{427.31}
+$$
+
+内点两边之差为 $(|a|^2-(a\cdot x)^2)/(2(1-a\cdot x))\ge0$；在纯目标是等号，在其他纯点左边为零、右边非负。因此这十个轨道的全部 $112$ 个三支撑及其所有面满足
+
+$$
+\frac{L_p(a)}{1+|Y_Tp|}
+\le\frac{1+|\sum_i p_ix_i|}{2(1+|Y_Tp|)}\le\frac12<Z.
+\tag{427.32}
+$$
+
+余下九个代表组成集合
+
+$$
+\mathcal R_{427}=\{\{0,1,10\},\{0,2,4\},\{0,2,5\},\{0,3,4\},\{0,3,5\},
+\{0,4,10\},\{0,4,11\},\{0,5,10\},\{0,5,11\}\}.
+$$
+
+固定全局最大化 $a$ 后取极端装填，第427.1.3节的秩分类、零余项比较以及 (427.32) 给出
+$M_*\le\max(Z,\max_{T\in\mathcal R_{427}}R_T)$。反向不等式成立，因为 $\lambda^S$ 可行，而 (427.29) 对每个所列 $T,p$ 都构造原问题中的可行装填。由此
+
+$$
+M_* =\max\left(Z,\max_{T\in\mathcal R_{427}}R_T\right).
+\tag{427.33}
+$$
+
+这个等式覆盖全部余项秩与全部较小支撑，不要求三支撑公式中的每一点本身极端。
+
+#### 427.1.6 证明：九个闭单纯形的完整有限数据
+
+对以下九族依表次编号 $\nu=1,\ldots,9$。每行给出一个具体的 $(T,p,b)$，其中 $p$ 的三个系数按该族 $T$ 的升序，$b=n/10^9$ 的三个分量则始终是第421节固定的笛卡尔 Bloch 坐标，既不是沿 $T$ 三条射线的展开系数，也不随 $T$ 改变坐标轴。重复的笛卡尔三元组在不同 $(T,p)$ 下仍各自列出。
+
+这里 $e_0=(1,0,0)$、$e_1=(0,1,0)$、$e_2=(0,0,1)$ 是系数单纯形的三个顶点，根三角形的有序顶点为 $C_{\varnothing}=(e_0,e_1,e_2)$。对有序三角形 $(A,B,C)$，令 $AB=(A+B)/2$、$BC=(B+C)/2$、$CA=(C+A)/2$，按下式定义有序四个子三角形：
+
+$$
+(A,AB,CA),\quad(AB,B,BC),\quad(CA,BC,C),\quad(AB,BC,CA),
+\qquad\text{编号依次为 }0,1,2,3.
+\tag{427.34}
+$$
+
+叶词 $w$ 从左到右依次选子三角形，记 $C_w=(p_w^{(0)},p_w^{(1)},p_w^{(2)})$。每族在表后列出完整叶词集合 $\mathcal L_\nu$。这些词两两无前缀关系，每个非叶前缀都具有全部四个子前缀；由四个闭子三角形的并为父三角形递归可知，叶三角形覆盖整个闭单纯形，包括边和顶点。
+
+##### 427.1.6.1 三射线族 $T_1=\{0,1,10\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C1.01 | $(0,0,1)$ | $(787654355,256641125,-560085664)$ |
+| 427.C1.02 | $(0,1/4,3/4)$ | $(787498173,256590222,-559974575)$ |
+| 427.C1.03 | $(0,1/2,1/2)$ | $(487382419,0,0)$ |
+| 427.C1.04 | $(0,3/4,1/4)$ | $(787498173,-256590222,559974575)$ |
+| 427.C1.05 | $(0,1,0)$ | $(787654355,-256641125,560085664)$ |
+| 427.C1.06 | $(1/4,0,3/4)$ | $(673637522,164987481,-479010516)$ |
+| 427.C1.07 | $(1/4,1/4,1/2)$ | $(578864365,61831871,-361821632)$ |
+| 427.C1.08 | $(1/4,1/2,1/4)$ | $(494158919,-94980948,39156715)$ |
+| 427.C1.09 | $(1/4,3/4,0)$ | $(765478567,-249415596,543587966)$ |
+| 427.C1.10 | $(1/2,0,1/2)$ | $(626795493,0,-445702061)$ |
+| 427.C1.11 | $(1/2,1/2,0)$ | $(504877509,-164504051,0)$ |
+| 427.C1.12 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_1=\{\mathtt{0},\mathtt{3},\mathtt{10},\mathtt{11},\mathtt{12},\mathtt{13},\mathtt{20},\mathtt{21},\mathtt{22},\mathtt{23}\}.
+$$
+
+##### 427.1.6.2 三射线族 $T_2=\{0,2,4\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C2.01 | $(0,0,1)$ | $(-171569444,810449245,-560085665)$ |
+| 427.C2.02 | $(0,1/2,1/2)$ | $(-313397746,542820820,-445702061)$ |
+| 427.C2.03 | $(0,3/4,1/4)$ | $(-479702111,500893467,-479010516)$ |
+| 427.C2.04 | $(0,1,0)$ | $(-616084911,553808119,-560085664)$ |
+| 427.C2.05 | $(1/4,1/2,1/4)$ | $(-347229409,456807995,-422159925)$ |
+| 427.C2.06 | $(1/4,3/4,0)$ | $(-616063878,553789211,-560066543)$ |
+| 427.C2.07 | $(1/2,0,1/2)$ | $(179362025,161231259,-326117706)$ |
+| 427.C2.08 | $(1/2,1/4,1/4)$ | $(167654815,85178741,-318325232)$ |
+| 427.C2.09 | $(1/2,1/2,0)$ | $(47382779,82069381,-309360626)$ |
+| 427.C2.10 | $(3/4,0,1/4)$ | $(787610513,-256626838,-560054490)$ |
+| 427.C2.11 | $(3/4,1/4,0)$ | $(787627465,-256632363,-560066543)$ |
+| 427.C2.12 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_2=\{\mathtt{2},\mathtt{3},\mathtt{00},\mathtt{01},\mathtt{02},\mathtt{03},\mathtt{10},\mathtt{11},\mathtt{12},\mathtt{13}\}.
+$$
+
+##### 427.1.6.3 三射线族 $T_3=\{0,2,5\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C3.01 | $(0,0,1)$ | $(-171569444,810449245,560085665)$ |
+| 427.C3.02 | $(0,1/2,1/2)$ | $(-243691210,422085556,0)$ |
+| 427.C3.03 | $(0,1,0)$ | $(-616084911,553808119,-560085664)$ |
+| 427.C3.04 | $(1/2,0,1/2)$ | $(161263743,144962437,0)$ |
+| 427.C3.05 | $(1/2,1/2,0)$ | $(47382779,82069381,-309360626)$ |
+| 427.C3.06 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_3=\{\mathtt{0},\mathtt{1},\mathtt{2},\mathtt{3}\}.
+$$
+
+##### 427.1.6.4 三射线族 $T_4=\{0,3,4\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C4.01 | $(0,0,1)$ | $(-171569444,810449245,-560085665)$ |
+| 427.C4.02 | $(0,1/2,1/2)$ | $(-243691210,422085556,0)$ |
+| 427.C4.03 | $(0,1,0)$ | $(-616084911,553808119,560085664)$ |
+| 427.C4.04 | $(1/4,1/4,1/2)$ | $(-92645572,435619743,-265109453)$ |
+| 427.C4.05 | $(1/4,1/2,1/4)$ | $(-280790865,341205527,180391563)$ |
+| 427.C4.06 | $(1/2,0,1/2)$ | $(179362025,161231259,-326117706)$ |
+| 427.C4.07 | $(1/2,1/4,1/4)$ | $(306938026,-11069360,-279383023)$ |
+| 427.C4.08 | $(1/2,1/2,0)$ | $(43212759,74846694,0)$ |
+| 427.C4.09 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_4=\{\mathtt{0},\mathtt{1},\mathtt{2},\mathtt{30},\mathtt{31},\mathtt{32},\mathtt{33}\}.
+$$
+
+##### 427.1.6.5 三射线族 $T_5=\{0,3,5\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C5.01 | $(0,0,1)$ | $(-171569444,810449245,560085665)$ |
+| 427.C5.02 | $(0,1/2,1/2)$ | $(-313397746,542820820,445702061)$ |
+| 427.C5.03 | $(0,1,0)$ | $(-616084911,553808119,560085664)$ |
+| 427.C5.04 | $(1/4,1/4,1/2)$ | $(-213165084,565287264,422869098)$ |
+| 427.C5.05 | $(1/4,3/8,3/8)$ | $(-281645526,503659826,409090387)$ |
+| 427.C5.06 | $(1/4,1/2,1/4)$ | $(-374620828,475176489,424916821)$ |
+| 427.C5.07 | $(3/8,1/4,3/8)$ | $(-197072943,467494318,354371031)$ |
+| 427.C5.08 | $(3/8,3/8,1/4)$ | $(-275070867,427920415,358006828)$ |
+| 427.C5.09 | $(3/8,7/16,3/16)$ | $(-331815009,425780720,377560244)$ |
+| 427.C5.10 | $(3/8,1/2,1/8)$ | $(-405564753,438963501,412888928)$ |
+| 427.C5.11 | $(7/16,5/16,1/4)$ | $(-173882045,349520734,269003947)$ |
+| 427.C5.12 | $(7/16,3/8,3/16)$ | $(-225134439,349553588,288405170)$ |
+| 427.C5.13 | $(7/16,7/16,1/8)$ | $(-300256036,367565646,328193291)$ |
+| 427.C5.14 | $(1/2,0,1/2)$ | $(161263743,144962437,0)$ |
+| 427.C5.15 | $(1/2,1/4,1/4)$ | $(218039824,27098089,-104524079)$ |
+| 427.C5.16 | $(1/2,5/16,3/16)$ | $(219039196,13628975,-114300464)$ |
+| 427.C5.17 | $(1/2,3/8,1/8)$ | $(211994674,5729922,-116859692)$ |
+| 427.C5.18 | $(1/2,1/2,0)$ | $(43212759,74846694,0)$ |
+| 427.C5.19 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_5=\{\mathtt{0},\mathtt{1},\mathtt{2},\mathtt{31},\mathtt{32},\mathtt{300},\mathtt{301},\mathtt{330},\mathtt{331},\mathtt{332},\mathtt{333},\mathtt{3020},\mathtt{3021},\mathtt{3022},\mathtt{3023},\mathtt{3030},\mathtt{3031},\mathtt{3032},\mathtt{3033}\}.
+$$
+
+##### 427.1.6.6 三射线族 $T_6=\{0,4,10\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C6.01 | $(0,0,1)$ | $(787654355,256641125,-560085664)$ |
+| 427.C6.02 | $(0,1/2,1/2)$ | $(198249469,343378153,-360459032)$ |
+| 427.C6.03 | $(0,1,0)$ | $(-171569444,810449245,-560085665)$ |
+| 427.C6.04 | $(1/2,0,1/2)$ | $(626795493,0,-445702061)$ |
+| 427.C6.05 | $(1/2,1/4,1/4)$ | $(551943396,-46232448,-413945827)$ |
+| 427.C6.06 | $(1/2,1/2,0)$ | $(179362025,161231259,-326117706)$ |
+| 427.C6.07 | $(3/4,0,1/4)$ | $(673637522,-164987481,-479010516)$ |
+| 427.C6.08 | $(3/4,1/4,0)$ | $(787610513,-256626838,-560054490)$ |
+| 427.C6.09 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_6=\{\mathtt{1},\mathtt{2},\mathtt{3},\mathtt{00},\mathtt{01},\mathtt{02},\mathtt{03}\}.
+$$
+
+##### 427.1.6.7 三射线族 $T_7=\{0,4,11\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C7.01 | $(0,0,1)$ | $(787654355,256641125,560085664)$ |
+| 427.C7.02 | $(0,1/4,3/4)$ | $(787624719,256631469,560064590)$ |
+| 427.C7.03 | $(0,1/2,1/2)$ | $(172315411,298459047,0)$ |
+| 427.C7.04 | $(0,1,0)$ | $(-171569444,810449245,-560085665)$ |
+| 427.C7.05 | $(1/4,0,3/4)$ | $(787498173,256590222,559974575)$ |
+| 427.C7.06 | $(1/4,1/4,1/2)$ | $(425279635,135811740,158236976)$ |
+| 427.C7.07 | $(1/2,0,1/2)$ | $(487382419,0,0)$ |
+| 427.C7.08 | $(1/2,1/4,1/4)$ | $(426027464,-40852871,-242220967)$ |
+| 427.C7.09 | $(1/2,1/2,0)$ | $(179362025,161231259,-326117706)$ |
+| 427.C7.10 | $(3/4,0,1/4)$ | $(787498173,-256590222,-559974575)$ |
+| 427.C7.11 | $(3/4,1/4,0)$ | $(787610513,-256626838,-560054490)$ |
+| 427.C7.12 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_7=\{\mathtt{1},\mathtt{3},\mathtt{00},\mathtt{01},\mathtt{02},\mathtt{03},\mathtt{20},\mathtt{21},\mathtt{22},\mathtt{23}\}.
+$$
+
+##### 427.1.6.8 三射线族 $T_8=\{0,5,10\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C8.01 | $(0,0,1)$ | $(787654355,256641125,-560085664)$ |
+| 427.C8.02 | $(0,1/2,1/2)$ | $(172315411,298459047,0)$ |
+| 427.C8.03 | $(0,3/4,1/4)$ | $(-171562988,810418750,560064590)$ |
+| 427.C8.04 | $(0,1,0)$ | $(-171569444,810449245,560085665)$ |
+| 427.C8.05 | $(1/4,1/2,1/4)$ | $(116084728,273607978,60857568)$ |
+| 427.C8.06 | $(1/4,3/4,0)$ | $(-171565220,810429290,560071875)$ |
+| 427.C8.07 | $(1/2,0,1/2)$ | $(626795493,0,-445702061)$ |
+| 427.C8.08 | $(1/2,1/4,1/4)$ | $(591162143,-76877626,-415510258)$ |
+| 427.C8.09 | $(1/2,1/2,0)$ | $(161263743,144962437,0)$ |
+| 427.C8.10 | $(3/4,0,1/4)$ | $(673637522,-164987481,-479010516)$ |
+| 427.C8.11 | $(3/4,1/4,0)$ | $(787634963,-256634806,-560071875)$ |
+| 427.C8.12 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_8=\{\mathtt{2},\mathtt{3},\mathtt{00},\mathtt{01},\mathtt{02},\mathtt{03},\mathtt{10},\mathtt{11},\mathtt{12},\mathtt{13}\}.
+$$
+
+##### 427.1.6.9 三射线族 $T_9=\{0,5,11\}$
+
+| 427情境行 | $p$ | $10^9b$（固定笛卡尔坐标） |
+| --- | --- | --- |
+| 427.C9.01 | $(0,0,1)$ | $(787654355,256641125,560085664)$ |
+| 427.C9.02 | $(0,1/2,1/2)$ | $(198249469,343378153,360459032)$ |
+| 427.C9.03 | $(0,1,0)$ | $(-171569444,810449245,560085665)$ |
+| 427.C9.04 | $(1/2,0,1/2)$ | $(487382419,0,0)$ |
+| 427.C9.05 | $(1/2,1/4,1/4)$ | $(422431473,-34001943,-136543088)$ |
+| 427.C9.06 | $(1/2,1/2,0)$ | $(161263743,144962437,0)$ |
+| 427.C9.07 | $(3/4,0,1/4)$ | $(787498173,-256590222,-559974575)$ |
+| 427.C9.08 | $(3/4,1/4,0)$ | $(787634963,-256634806,-560071875)$ |
+| 427.C9.09 | $(1,0,0)$ | $(787654355,-256641125,-560085664)$ |
+
+$$
+\mathcal L_9=\{\mathtt{1},\mathtt{2},\mathtt{3},\mathtt{00},\mathtt{01},\mathtt{02},\mathtt{03}\}.
+$$
+
+
+上述九表共有 $100$ 个不同的 $(T,p)$ 情境行，其 $b$ 有 $62$ 个不同笛卡尔值；九个叶词集合共有 $84$ 个词。每个按 (427.34) 得到的叶顶点都恰有本族的一行，因而下列关联索引集的每个量均已被唯一指定：
+
+$$
+\mathcal I_{427}
+=\{(\nu,w,j):1\le\nu\le9,\ w\in\mathcal L_\nu,\ j\in\{0,1,2\}\},
+\qquad |\mathcal I_{427}|=252.
+\tag{427.35}
+$$
+
+同一顶点可能参与多个叶，这些是不同的关联不等式。对情境行 $(T,p,b)$，用 (427.14) 的权重 $w_i=p_i$ 定义 $f_{T,p},g_{T,p},\beta_{T,p}$，故对所有 $a\in D$ 已有
+
+$$
+L_p(a)\le\beta_{T,p}=f_{T,p}-b\cdot g_{T,p}+|g_{T,p}|.
+\tag{427.36}
+$$
+
+对每个叶取其精确有理重心、对应射线均值及单位方向
+
+$$
+\bar p_w=\frac{p_w^{(0)}+p_w^{(1)}+p_w^{(2)}}3,\qquad
+v_w=Y_{T_\nu}\bar p_w,\qquad u_w=\frac{v_w}{|v_w|}.
+\tag{427.37}
+$$
+
+三支撑无零均值已经保证 $v_w\ne0$，下表还给出具体的正平方范数下界。令
+
+$$
+q=\frac{41}{80},\qquad m=\frac{1447939399}{10^{12}},\qquad
+\delta_{\nu,w,j}=q\left(1+u_w\cdot Y_{T_\nu}p_w^{(j)}\right)
+-\beta_{T_\nu,p_w^{(j)}}.
+\tag{427.38}
+$$
+
+全体 $252$ 个所需不等式为
+
+$$
+\delta_{\nu,w,j}\ge m
+\qquad\bigl((\nu,w,j)\in\mathcal I_{427}\bigr).
+\tag{427.39}
+$$
+
+下面九行给这些已完整索引的表达式的有理下界。$A_\nu$ 表示该族所有 $\delta_{\nu,w,j}$ 的共同下界，$M_\nu/10^{12}$ 是便于比较的较粗下界；$D_\nu$ 表示该族所有 $|v_w|^2$ 的共同下界。
+
+| 427余量行 | $T_\nu$ | 情境数 / 叶数 | $A_\nu$ | $M_\nu$ | $D_\nu$ |
+| --- | --- | --- | --- | --- | --- |
+| 427.M1 | $\{0,1,10\}$ | 12/10 | $0.014663894663160331339886$ | $14663894663$ | $0.422369447781131500732867$ |
+| 427.M2 | $\{0,2,4\}$ | 12/10 | $0.008978574573461117710489$ | $8978574573$ | $0.342982855228686539085613$ |
+| 427.M3 | $\{0,2,5\}$ | 6/4 | $0.009628750953289865832063$ | $9628750953$ | $0.064130856131121747606937$ |
+| 427.M4 | $\{0,3,4\}$ | 9/7 | $0.008297578848704371568429$ | $8297578848$ | $0.010680639883142514912559$ |
+| 427.M5 | $\{0,3,5\}$ | 19/19 | $0.001447939399557560384478$ | $1447939399$ | $0.003357301669415145867933$ |
+| 427.M6 | $\{0,4,10\}$ | 9/7 | $0.003749695765204644661947$ | $3749695765$ | $0.532705538030919865778042$ |
+| 427.M7 | $\{0,4,11\}$ | 12/10 | $0.004950335047293933118441$ | $4950335047$ | $0.326791721883809019026725$ |
+| 427.M8 | $\{0,5,10\}$ | 12/10 | $0.017896796659652258703145$ | $17896796659$ | $0.247781863929026004277284$ |
+| 427.M9 | $\{0,5,11\}$ | 9/7 | $0.004950335047293933118441$ | $4950335047$ | $0.227711164017958375098241$ |
+
+这些是有限有理不等式的具体数值界，证明可完全使用第427.1.4节的区间定义及上述全部表项。首先，直接对各整数 $10^9b$ 平方求和，得到
+
+$$
+\min_{(T,p,b)\text{ 为上述情境行}}(1-|b|^2)
+=\frac{19997512984307}{500000000000000000}>0.
+\tag{427.40}
+$$
+
+因此每个表项都是严格内点，且对每个单位目标
+
+$$
+1-b\cdot x_i\ge1-|b|
+=\frac{1-|b|^2}{1+|b|}
+\ge\frac{1-|b|^2}{2}>0.
+\tag{427.41}
+$$
+
+按照 (427.14) 的顺序对各情境行取 $N=10^{80}$ 的区间，得到 $\beta_{T,p}$ 的包围区间。对各叶再按 (427.34) 形成三个精确有理顶点和重心，依次形成 $v_w$、$\sum_{j=1}^3(v_w)_j^2$、其平方根及 $u_w$，最后代入 (427.38)。每个求和均按已固定的坐标或索引次序，平方区间跨零时用零作下端。逐项端点比较给出表中
+
+$$
+\begin{aligned}
+\min_{w\in\mathcal L_\nu,\ 0\le j\le2}
+\operatorname{lower}_N(\delta_{\nu,w,j})
+&\ge A_\nu\ge\frac{M_\nu}{10^{12}}\ge m,\\
+\min_{w\in\mathcal L_\nu}
+\operatorname{lower}_N(|v_w|^2)&\ge D_\nu>\frac3{1000},
+\end{aligned}
+\tag{427.42}
+$$
+
+其中 $\operatorname{lower}_N$ 指上述逐运算有理包围区间的下端。所有 $d_i$ 的区间下端保持正数，所有重心平方范数的区间下端也保持正数；故每个倒数和平方根都处于所声明的定义域内。式 (427.40) 是整数平方恒等式，(427.42) 是将已列 $100$ 行、$84$ 个词和固定递推代入有理端点运算得到的有限不等式；其中每个实数表达式的包含性已由运算归纳证明。于是这些下端界确实推出 (427.39)，不仅是对所列点函数值的抽样比较。
+
+#### 427.1.7 证明：从全部顶点关联界到闭域残量界
+
+任取 $T=T_\nu$、$p\in\Delta_2$、$a\in D$。闭覆盖给出一个含 $p$ 的叶 $C_w$，可写
+$p=\sum_{j=0}^2\alpha_jp_w^{(j)}$，其中 $\alpha_j\ge0$、$\sum_j\alpha_j=1$。利用对 $p$ 的线性、对整个闭球成立的 (427.36)，以及每个关联的 (427.39)，有
+
+$$
+\begin{aligned}
+L_p(a)
+&=\sum_{j=0}^2\alpha_j L_{p_w^{(j)}}(a)\\
+&\le\sum_{j=0}^2\alpha_j\beta_{T,p_w^{(j)}}\\
+&\le\sum_{j=0}^2\alpha_j\left[q\left(1+u_w\cdot Y_Tp_w^{(j)}\right)-m\right]\\
+&=q(1+u_w\cdot Y_Tp)-m\\
+&\le q(1+|Y_Tp|)-m.
+\end{aligned}
+\tag{427.43}
+$$
+
+最后一步只用了 $|u_w|=1$。这里不要求五变量目标联合凹；起作用的是各顶点上的全 $a$ 上界可以依 $p$ 线性插值，而同一叶的 $u_w$ 给出范数的线性下界。由单位射线及 $p$ 的非负归一性，$|Y_Tp|\le1$，所以
+
+$$
+\frac{L_p(a)}{1+|Y_Tp|}
+\le q-\frac{m}{1+|Y_Tp|}
+\le q-\frac m2
+=\frac{1023552060601}{2000000000000}
+=0.5117760303005<\frac{41}{80}<Z.
+\tag{427.44}
+$$
+
+该推理包括单纯形的所有边、顶点，以及 Bloch 球面的全部点。反向下界取任一 $i\in T$，令 $p$ 为对应单纯形顶点、$a=x_i$；由 (427.1)，$L_p(x_i)=1$；(427.30) 的分母为 $1+|y_i|=2$，因而
+
+$$
+\frac12\le R_T\le0.5117760303005<Z
+\qquad(T\in\mathcal R_{427}).
+\tag{427.45}
+$$
+
+结合 (427.33)，得到 $M_* =Z$；再由 (427.11) 得 $p_3(1)=4hZ$。严格端点已经由 (427.27)–(427.28) 给出。
+
+#### 427.1.8 证明：达到 $4hZ$ 的实际三节点树
+
+最后将取得写成一棵指定的效果树。Alice 的根效果为
+
+$$
+A_g=\frac13\rho(ga_Z)\qquad(g\in G_+),\qquad
+\sum_g A_g=I_2.
+\tag{427.46}
+$$
+
+结果 $g$ 后由 Bob 行动，取四个效果
+
+$$
+B_{g,i}=2\lambda_i^S\rho(gy_i)\qquad(i\in S_0),\qquad
+\sum_{i\in S_0}B_{g,i}=I_2.
+\tag{427.47}
+$$
+
+最后在实际历史 $(g,i)$ 上由 Alice 分裂自己的累计效果：
+
+$$
+\begin{aligned}
+A_{g,i}^{\mathrm s}
+&=\frac13\ell(a_Z;x_i)\rho(gx_i),\\
+A_{g,i}^{\mathrm f}
+&=\frac13\left[\rho(ga_Z)-\ell(a_Z;x_i)\rho(gx_i)\right]\succeq0,\\
+A_{g,i}^{\mathrm s}+A_{g,i}^{\mathrm f}&=A_g.
+\end{aligned}
+\tag{427.48}
+$$
+
+非负性来自 (427.1) 及正旋转对它的不变性。成功和失败是实际结果；失败效果留在完整仪器中。每个成功终端的乘积输入效果为
+
+$$
+A_{g,i}^{\mathrm s}\otimes B_{g,i}
+=\frac23\lambda_i^S\ell(a_Z;x_i)\,
+\rho(gx_i)\otimes\rho(gy_i),
+\tag{427.49}
+$$
+
+其迹为 $\frac23\lambda_i^S\ell(a_Z;x_i)$。由于 $g$ 与 $\pi$ 交换，$(gx_i,gy_i)$ 是定理426.1的平坦有序对。
+
+现在将定理421.1的完整同深度局部实现结论应用于这棵指定效果树。它在原始两个量子比特上实现 (427.46)–(427.48)，所有局部仪器在完整输入上完备，深度就是三个实际 Alice—Bob—Alice 节点；局部支撑补全不产生可控制的隐藏结果。新树的每个终端取得自己的实际标签 $(g,i,\mathrm s)$ 或 $(g,i,\mathrm f)$。对每个成功标签，取第421节由平坦乘积方向确定的全系统相位反馈；该标签下的所有真实历史和隐藏 Kraus 项共用这一反馈。因而迹掉全部记录和剩余私有记忆后，每个成功标签在全部系统矩阵、以及张量任意有限维未操作参考后的全部联合矩阵上，都是标量
+$\frac23h\lambda_i^S\ell(a_Z;x_i)$ 乘恒等映射。
+
+六个根结果及四个 Bob 结果求和，便有
+
+$$
+\sum_{g\in G_+}\sum_{i\in S_0}
+\frac23h\lambda_i^S\ell(a_Z;x_i)
+=6\cdot\frac23h F_S(a_Z)=4hZ.
+\tag{427.50}
+$$
+
+这里 $1/6$ 始终是根累计效果的归一化迹权重；实际未知输入的结果概率仍按第421节计算。群元素只指定这些固定坐标中的效果及真实结果标签，树中没有随机选择器节点，也没有免费的对称操作。所用同深度对应构造的是允许类别中的规范协议，不声称可以继续任意已破坏的记录输出、恢复已经遗忘的控制、读取隐藏 Kraus 指标，或把变换后的树自动配给任意旧标签的反馈。上述新树明确拥有自己的实际标签及相容反馈，因此原始恢复接口没有变化。
+
+本结论确定的是 $r=1$、深度至多三的有限最优值及其取得；$a_Z$ 的精确定义是唯一内点驻点方程 (427.4)。各残量族的精确值以及第426节的全部有限深度上确界 $\eta_{\mathrm{fin}}(1)=4F(0,0)$ 均未由本定理确定。证毕。
+
+## 追加锚（本行以下为增补区）

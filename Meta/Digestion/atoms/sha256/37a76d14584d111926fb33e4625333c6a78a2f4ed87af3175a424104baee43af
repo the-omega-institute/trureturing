@@ -1,0 +1,7 @@
+**证明。** 两相位差除以 $`\delta`$ 等于 $`b`$，自身和交叉相位和都远离 $`2\pi\mathbb Z`$。
+定理 67.3 因此给出同一场的两个调制，而非独立场。
+外频限制由 $`c<U/2`$ 和 $`\log(1/\delta)\sqrt\delta\to0`$ 满足。
+对共同 proper Gaussian 坐标用 Wick 公式
+$`\operatorname{Cov}(|Z_1|^2,|Z_2|^2)=|\mathbb EZ_1\overline Z_2|^2`$，再用 Gaussian Fourier 变换及有向积分，即得 (67.14)。
+这里只计算极限变量的协方差。证毕。
+

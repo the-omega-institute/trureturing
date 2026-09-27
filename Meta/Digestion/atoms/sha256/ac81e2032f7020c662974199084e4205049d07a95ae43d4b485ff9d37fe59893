@@ -1,0 +1,24 @@
+**推论188.2（跨过 $3/4$ 的满秩联动构造）。** 取
+
+$$
+R=4,\qquad h=\frac\beta2,\qquad
+m=\frac2{25},\qquad n=0.
+$$
+
+则对任意固定 $\gamma\in\mathbb R$，足够小的正 $\epsilon$ 上，来源满足
+$\ell=\beta\epsilon/2>0$，但同一合法接收端解码器达到
+
+$$
+\boxed{
+e_\epsilon\left(\frac2{25},0\right)
+=\frac34-\frac{11\beta}{100}\epsilon+O(\epsilon^2)
+<\frac34.
+}
+\tag{188.10}
+$$
+
+**证明。** 将上述参数代入（188.8）得到
+$F_h=-11\beta/100<0$。$n=0$ 时解码器不依赖旗标，均匀旗标平均消掉全部 $\gamma$ 交叉项，所以结论不要求 $\gamma=0$。对足够小的 $\epsilon$，来源满秩、输入状态合法，且二阶余项小于负一阶项的绝对值。证毕。
+
+这个结论不推翻第186节针对固定 $\kappa<1$ 的展开：这里的来源随 $\epsilon$ 变化，恰好走向其非一致边界。它也没有把 $F_h$ 的可行族最小值声明为全部 CPTP 解码器的最优过渡函数；后者还需控制任意随 $\epsilon$ 变化的共同 instrument。
+

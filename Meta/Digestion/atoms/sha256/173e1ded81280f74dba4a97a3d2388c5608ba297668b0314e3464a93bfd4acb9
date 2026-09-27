@@ -1,0 +1,10 @@
+### 155.4 全时域误差与有限相位覆盖证书
+
+记
+
+$$
+E_\infty=\sup_{n\ge1}e_n,
+\qquad M_{N-1}=\max_{1\le n<N}e_n,
+\qquad h_G=\max_{z\in G}h(z).
+$$
+

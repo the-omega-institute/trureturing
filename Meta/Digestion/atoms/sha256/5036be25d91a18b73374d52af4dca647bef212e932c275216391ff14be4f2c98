@@ -1,0 +1,56 @@
+**分离目标的共同解码下界。** 对相同 Bell 初始参考输入，记相位 $`\vartheta_j`$ 的纯联合目标为 $`|\Psi_{j,n}\rangle`$。式（19.4）及（5.17）给
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le\exp\left\{-\alpha^3
+\left\lfloor\frac{n-1}{3}\right\rfloor
+\sin^2\frac{d_{\mathbb T}(\vartheta_j,\vartheta_k)}2\right\}.
+\tag{22.6}
+$$
+
+对 $`0\le d\le\pi`$，有 $`\sin(d/2)\ge d/\pi`$；对 $`n\ge4`$，有 $`\lfloor(n-1)/3\rfloor\ge n/6`$。故
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le e^{-a_*n d_{\mathbb T}(\vartheta_j,\vartheta_k)^2}.
+\tag{22.7}
+$$
+
+固定 $`j`$，从 $`\vartheta_j`$ 分别沿顺时针及逆时针方向排列距离不超过 $`\pi`$ 的其余点；若有对径点，只归入一侧。同一侧第 $`r`$ 个点的距离至少为 $`r\delta`$：首个距离至少为 $`\delta`$，相邻点之间的弧长不超过 $`\pi`$，因而等于它们的测地距离，也至少为 $`\delta`$。因此 Gram 矩阵 $`G_{jk}=\langle\Psi_{j,n}|\Psi_{k,n}\rangle`$ 的每个绝对行和满足
+
+$$
+\sum_k|G_{jk}|
+\le1+2\sum_{r=1}^{\infty}e^{-a_*n(r\delta)^2}
+=C_*.
+\tag{22.8}
+$$
+
+令 $`Q=q^{-1}\sum_j|\Psi_{j,n}\rangle\langle\Psi_{j,n}|`$。令 $`V`$ 为以这些目标向量为列的矩阵，则 $`VV^*`$ 与 Gram 矩阵 $`G=V^*V`$ 具有相同非零特征值。式（22.8）的最大绝对行和控制 Hermitian 矩阵 $`G`$ 的谱范数；以下 $`\|\cdot\|_\infty`$ 均表示算子谱范数。因此
+
+$$
+\|Q\|_\infty=\frac{\|G\|_\infty}{q}
+\le\frac{C_*}{q}.
+\tag{22.9}
+$$
+
+任取维数 $`D`$ 的合法编码及同一个解码器。不可访问系统 $`R=JM`$ 的维数为四。对编码所得各 $`KR`$ 态使用 $`0\preceq\tau_j\preceq I_{KR}`$，与（19.9）同样的正性及幺性计算给
+
+$$
+\frac1q\sum_j
+\operatorname{Tr}\bigl[
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|
+(\mathcal D\otimes\operatorname{id}_R)(\tau_j)
+\bigr]
+\le\frac{4DC_*}{q}.
+\tag{22.10}
+$$
+
+半迹误差不小于一减去目标重叠。因此任何同一解码器的最坏误差 $`e_n`$ 满足
+
+$$
+e_n\ge\max\{0,1-4DC_*/q\}.
+\tag{22.11}
+$$
+
+若要求 $`e_n\le\epsilon`$，即得（22.4）的下界。这里只对有限候选子集取平均，不需要在 $`\Theta`$ 上定义概率测度。
+

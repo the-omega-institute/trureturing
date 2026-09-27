@@ -1,0 +1,40 @@
+**终端恢复误差控制解耦缺陷。** 令 $`\epsilon_n`$ 是指定纯来源在终端 $`n`$ 的恢复半迹误差。对解码器取 Stinespring 等距，将 $`\chi_n`$ 送到全局纯态 $`\zeta`$；其档案与活动记忆边缘记为 $`\tau`$，纯目标记为 $`|\Psi_n\rangle`$。由目标纯态投影这一效果，
+
+$$
+f:=\langle\Psi_n|\tau|\Psi_n\rangle\ge1-\epsilon_n.
+\tag{20.9}
+$$
+
+当 $`f>0`$ 时，将 $`\zeta`$ 在目标方向上的分量归一化，得到其余系统上的纯态 $`|\xi\rangle`$，使
+ $`|\langle\zeta|\Psi_n\otimes\xi\rangle|^2=f`$。
+当 $`f=0`$ 时任取 $`\xi`$；此时（20.9）迫使 $`\epsilon_n=1`$，下述界仍成立。纯态距离公式给
+
+$$
+d\bigl(|\zeta\rangle\langle\zeta|,
+|\Psi_n\rangle\langle\Psi_n|\otimes|\xi\rangle\langle\xi|\bigr)
+\le\sqrt{\epsilon_n},
+\qquad d(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{20.10}
+$$
+
+解码只作用于 $`K`$，所以它不改变 $`ME`$ 边缘；真实来源目标的活动记忆边缘也恰为 $`\rho_n`$。对（20.10）偏迹，先得到
+ $`d(\rho_{ME,n},\rho_n\otimes\xi_E)\le\sqrt{\epsilon_n}`$，
+再得到 $`d(\rho_{E,n},\xi_E)\le\sqrt{\epsilon_n}`$。
+由三角不等式以及 $`\|X\|_{\rm HS}\le\|X\|_1`$，
+
+$$
+d(\rho_{ME,n},\rho_n\otimes\rho_{E,n})\le2\sqrt{\epsilon_n},
+\qquad h_n\le16\epsilon_n.
+\tag{20.11}
+$$
+
+因此，若
+
+$$
+G=\sum_{n=1}^{N}h_n,
+\qquad N=8D^2,
+\tag{20.12}
+$$
+
+则 $`G\le16N\max_{1\le n\le N}\epsilon_n`$。
+

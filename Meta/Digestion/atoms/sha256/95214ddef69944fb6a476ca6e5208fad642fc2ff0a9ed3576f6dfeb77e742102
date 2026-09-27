@@ -1,0 +1,28 @@
+**引理157.7（最大渐近误差为实代数数）。** 有 $h_G\in\mathbb A$。
+
+**证明。** 在当前固定装置下，
+
+$$
+\mathcal R_z=\sum_j z_j\Phi_j.
+\tag{157.16}
+$$
+
+由引理157.4，$\Phi_j$ 与 $\mathcal V_*=\operatorname{Ad}_{W_*}$ 的矩阵具有代数坐标；因此（157.16）的实坐标对 $z$ 的实部、虚部为代数系数线性函数。对 $z\in G$，第155节证明 $\mathcal R_z$ 为实际 CPTP 子序列极限，所以第153节的解码 SDP 及其最小值取得适用。
+
+把 $z$ 作为自由实变量，在这个 SDP 中用与（157.8）相同的最优值公式。全部可行性条件都是代数系数实多项式条件。量词消去给出当前函数 $h:G\to[0,1]$ 的图为定义在 $\mathbb A$ 上的半代数集。
+
+由推论157.6，$G$ 具有整数系数有限定义；由第155节，$G$ 紧且 $h$ 连续。因此 $h_G$ 确实由某个 $z\in G$ 取得。若以 $\operatorname{Graph}_h(z,t)$ 表示上述半代数图，则
+
+$$
+\begin{aligned}
+&\exists z\in G\quad \operatorname{Graph}_h(z,t),\\
+&\forall w\in G,\ u\in\mathbb R\quad
+\operatorname{Graph}_h(w,u)\Longrightarrow u\le t
+\end{aligned}
+\tag{157.17}
+$$
+
+是系数属于 $\mathbb A$ 的有限实量词公式，且恰好定义单点 $\{h_G\}$。应用引理157.2，得到 $h_G\in\mathbb A$。证毕。
+
+此处没有断言每个任意实相位点上的 $h(z)$ 都是实代数数。结论使用的是同一代数定义紧群上的整体最大值，以及代数系数的最优值图。
+

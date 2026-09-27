@@ -1,0 +1,29 @@
+### 42.4 形式 profile 的实际来源判据
+
+固定任务索引集 $J$ 和实际 profile 映射
+
+$$
+\Phi:\Omega\to\prod_{j\in J}Y_j.
+$$
+
+每个有限或局部片上的相容选择可以拼成一个形式 profile $p=(p_j)_{j\in J}$，但
+
+$$
+\boxed{
+p\text{ 实际可实现}
+\Longleftrightarrow
+p\in\operatorname{im}\Phi.
+}
+\tag{42.10}
+$$
+
+因此，普通函数的 gluing 只解决“存在一个形式函数”，不解决它是否来自同一个来源。一个最小有限反例是
+
+$$
+\Omega=\{00,11\}\subseteq\{0,1\}^2.
+$$
+
+两个坐标的局部读出都允许 $0$ 和 $1$；局部选择 $(0,1)$ 形成了良定义的全局 profile，却不在 $\operatorname{im}\Phi$ 中。
+
+在图运输模型中，若 $r:\Omega\to\Gamma(T)$ 尊重每条运输，且根读出 $\operatorname{ev}_v\circ r:\Omega\to B_v$ 满射，则 (42.6) 的固定点集合必须等于整个 $B_v$，从而 $r$ 满射到全部相容 section。这个正向结论同时说明：不能在同一模型中既假设根值全部实际可达、又保留非平凡 holonomy 固定点限制。
+

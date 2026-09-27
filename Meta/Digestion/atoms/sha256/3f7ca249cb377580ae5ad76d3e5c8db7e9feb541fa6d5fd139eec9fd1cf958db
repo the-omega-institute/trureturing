@@ -1,0 +1,22 @@
+**定义 458.1（本批的有限概率对象）。** 令 $X$ 为有限非空集合，$p,q$ 为其上的非负概率质量，记
+
+$$
+Z(p,q)=\sum_x\sqrt{p(x)q(x)},\qquad
+A(p,q)=\frac{p+q}{2},
+$$
+
+并定义等权的几何组合与平方根组合
+
+$$
+G(p,q)(x)=\frac{\sqrt{p(x)q(x)}}{Z(p,q)},\qquad
+H(p,q)(x)=\frac{(\sqrt{p(x)}+\sqrt{q(x)})^2}{2(1+Z(p,q))}.
+$$
+
+$G$ 只在 $Z>0$ 时定义；$A,H$ 对全部所列概率向量都有定义。Cauchy—Schwarz 给出 $0\le Z\le1$，而 $H$ 的分母正好是其分子总和。这里 $H$ 是本批一个组合算子的符号，不代表熵。项目 [Hellinger](../../../D5/S3/TotalVariation/Hellinger.lean) 的 hellingerSq 使用
+
+$$
+\mathcal H^2(p,q)=\sum_x(\sqrt{p(x)}-\sqrt{q(x)})^2=2(1-Z(p,q)),
+$$
+
+并由 hellinger_sq_eq_two_sub 将平方根距离与亲和量连接起来。本文沿用这一未除以二的平方距离；全变差仍取 $\operatorname{TV}(p,q)=\frac12\sum_x|p(x)-q(x)|$。
+

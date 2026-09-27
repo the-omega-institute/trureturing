@@ -1,0 +1,26 @@
+### 152.2 任意解码器都必须通过首位测试
+
+任取第六终端的全域 CPTP 解码器
+$\mathcal D:\mathcal L(K)\to\mathcal L(B^{\otimes6})$。在输出档案上测量第一位是否为零，其效果算子为
+
+$$
+Q_0=|0\rangle\langle0|_{B_1}\otimes I_{B_2\cdots B_6}.
+$$
+
+将它拉回接收器，得到
+
+$$
+F=\mathcal D^*(Q_0),\qquad 0\preceq F\preceq I_K.
+\tag{152.8}
+$$
+
+两份真实输入的理想档案第一位分别确定为零、一，故这个测试必须区分 $\varrho_0,\varrho_1$。令 $e$ 为该解码器在第六终端对全部来源输入及参考的最坏半迹误差，则
+
+$$
+1-\operatorname{Tr}(F\varrho_0)\le e,\qquad
+\operatorname{Tr}(F\varrho_1)\le e.
+\tag{152.9}
+$$
+
+这些必要条件只取了合同中允许的两个纯初态，参考可取一维；上界合同仍然包含全部参考输入。
+

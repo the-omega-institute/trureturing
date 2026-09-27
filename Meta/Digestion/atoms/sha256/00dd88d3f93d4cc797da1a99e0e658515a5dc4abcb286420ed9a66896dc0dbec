@@ -1,0 +1,117 @@
+**定理 215.2（混态尖锐点强制原算子的谱签名）。** 对任意定义215.1的 $`C^1`$ 程序，在原联合支持空间 $`\mathcal H`$ 上固定第213.6式的 $`E,K`$。每个尖锐点 $`t`$ 都强制
+
+```math
+\{0,\lambda_+((1+t)/2),\lambda_-((1+t)/2)\}
+                       \subseteq\operatorname{spec}(K^\dagger).
+\tag{215.3}
+```
+
+因此任意非空有限尖锐点集 $`S`$ 满足
+
+```math
+\dim\mathcal H\ge N(a,S),\qquad
+\#\mathcal E_*(\rho)\le\dim\mathcal H-2
+       \quad\text{若 }\mathcal E_*(\rho)\ne\varnothing.
+\tag{215.4}
+```
+
+这里的谱属于原程序算子；证明所用的纯化空间不计入程序维数。
+
+证明。 第211.2节的有限忠实平均与固定对称化归约适用于混态曲线，得到同一对 $`E,K`$。取第213.7式的固定 Naimark 等距 $`J`$ 及 $`T`$，并记
+
+```math
+\sigma_u=J\rho_uJ^\dagger,\qquad
+\mathcal R=\operatorname{ran}J,\qquad
+\Pi=JJ^\dagger,\qquad M=(T+T^\dagger)/2.
+\tag{215.5}
+```
+
+它们满足 $`PT=T`$、$`\|T\|\le1`$、$`J^\dagger TJ=K`$ 及 $`\operatorname{ran}T^\dagger\subseteq\mathcal R`$。固定等距保留点态 SLD 信息。置 $`g(u)=I_Q(\rho_u)-I_r(u)`$ 与
+$`v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]`$。第211.7、211.11式给出
+
+```math
+e(u)^2\le g(u)v(u),\qquad
+ \frac{e(u)}{u-t}\longrightarrow\frac a{c_t},\qquad
+ v(t)\le V_*(a,t),\qquad c_t=(1-t)(1+t)^2.
+\tag{215.6}
+```
+
+$`v`$ 连续。取实现尖锐下极限的序列 $`u_n\to t`$，便有
+
+```math
+\frac{a^2}{c_t^2}\le\kappa_*(a,t)v(t)
+       \le\kappa_*(a,t)V_*(a,t)=\frac{a^2}{c_t^2}.
+\tag{215.7}
+```
+
+因此名义方差必须取等：$`v(t)=V_*`$。
+
+将固定扩大空间上的算子记为
+$`H_t=P/(1+t)-Q/(1-t)`$。校准等号给出 $`\sigma'_t=(H_t\sigma_t+\sigma_tH_t)/2`$。由于 $`\sigma_t`$ 和 $`\sigma'_t`$ 均支持在固定空间 $`\mathcal R`$ 中，左乘 $`I-\Pi`$ 得
+
+```math
+(I-\Pi)H_t\sigma_t=0,\qquad
+ H_t\operatorname{supp}\sigma_t\subseteq\mathcal R.
+\tag{215.8}
+```
+
+第二式只用到 $`\sigma_t`$ 在其支持上可逆，不要求邻近参数处具有相同的秩。
+
+现在只在 $`t`$ 这个单独位置选择静态纯化。若 $`\sigma_t=\sum_jp_j|x_j\rangle\langle x_j|`$，其中 $`p_j>0`$，取辅助正交基 $`\epsilon_j`$ 并置
+
+```math
+\varphi=\sum_j\sqrt{p_j}\,x_j\otimes\epsilon_j,
+ \qquad \widetilde T=T\otimes I,\quad
+ \widetilde P=P\otimes I,\quad\widetilde Q=Q\otimes I.
+\tag{215.9}
+```
+
+由（215.8），$`\varphi`$ 与 $`(H_t\otimes I)\varphi`$ 均在 $`\mathcal R\otimes\mathcal F`$ 内。$`H_t`$ 在 $`P,Q`$ 两个分量上的系数不同，故
+
+```math
+p=\widetilde P\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad q=\widetilde Q\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad \|p\|^2=h,\quad\|q\|^2=\ell,
+ \quad h=(1+t)/2,\quad\ell=1-h.
+\tag{215.10}
+```
+
+对这份静态纯化应用第211.13—211.14式的正交分解。方差已经取等，三角不等式和两个范数界因而同时取等。令
+$`\alpha=\sqrt{1-a^2/h}>0`$、$`\gamma=\sqrt{1-a^2/h^2}>0`$，便有一个单位向量 $`\widetilde z`$，正交于 $`p,q`$，使
+
+```math
+\widetilde T\varphi=\frac ahp+\alpha\widetilde z,
+ \qquad
+\widetilde T^\dagger p=\frac{at}{h}p+2aq+
+                             \sqrt h\,\gamma\widetilde z,
+ \qquad \widetilde P\widetilde z=\widetilde z.
+\tag{215.11}
+```
+
+$`\operatorname{ran}\widetilde T^\dagger\subseteq\mathcal R\otimes\mathcal F`$，再结合（215.10）和第二式，得到 $`\widetilde z\in\mathcal R\otimes\mathcal F`$。所以三个正交方向都能通过 $`J^\dagger\otimes I`$ 回到 $`\mathcal H\otimes\mathcal F`$。记其归一化像为 $`e,z,f`$，并置 $`\psi=\sqrt h\,e+\sqrt\ell\,f`$、$`\widehat K=K^\dagger\otimes I`$。由 $`J`$ 的形式可得
+$`(E\otimes I)e=e`$、$`(E\otimes I)z=z`$、$`(E\otimes I)f=0`$。
+
+第一式的范数为一，压缩性给出 $`\widetilde T^\dagger\widetilde T\varphi=\varphi`$。将（215.11）及此等式施加 $`J^\dagger\otimes I`$，再用 $`KK^\dagger\le E`$，得到
+
+```math
+\begin{aligned}
+ \widehat K e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
+ \widehat K z&=\frac{\psi-(a/\sqrt h)\widehat K e}{\alpha},
+ \qquad \widehat K f=0.
+\end{aligned}
+\tag{215.12}
+```
+
+因而 $`\operatorname{span}\{e,z,f\}`$ 是 $`K^\dagger\otimes I`$ 的三维不变子空间，限制的矩阵正是第213.4式，特征多项式为
+$`x(x^2-s(h)x-b(h))`$。有限维算子的不变子空间特征值属于整个算子的谱，而
+
+```math
+\operatorname{spec}(K^\dagger\otimes I_{\mathcal F})
+                         =\operatorname{spec}(K^\dagger).
+\tag{215.13}
+```
+
+所以得到原算子的（215.3）。辅助维数只增加特征值的重数，不增加不同特征值，也没有进入维数下界。这里没有选择可微纯化，更没有把秩变化的点态信息量替换为连续延拓。
+
+最后，第213.19式保证 $`\lambda_+`$ 严格递增；不同尖锐点贡献不同的正特征值，还必须保留零及全部不同的负特征值。对任意有限子集计数即得（215.4），并排除无限尖锐集合。证毕。
+

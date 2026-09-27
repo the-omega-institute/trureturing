@@ -1,0 +1,45 @@
+### 112.6 AABAA 的同一个首轮向量禁阻
+
+最后考虑 $AABAA$。$G_2,G_5$ 的一位后继为 $A$，$G_3$ 的一位后继为 $B$，三者当前环境均为 $A$。同一正交与四维预算给
+
+$$
+G_2=G_5=T,\qquad L=G_3,\qquad
+P_A=T\oplus L,
+\tag{112.11}
+$$
+
+此处直和正交。同时 $G_4=P_B$。相同零位像
+
+$$
+V_0H_1=T\otimes A=V_0H_4
+$$
+
+使 $H_1=H_4$。
+
+若首轮环境为 $B$ 或第三条射线，（112.3）给 $p\in P_B$。
+但 $Q_4\perp P_B$、$G_4=P_B$，所以非零
+$p\in H_1=H_4$ 将落入 $H_4\cap G_4=0$。因此首轮只能为 $A$，真实首轮零位像给 $p\in P_A$。
+
+真实 $V_1p=v\otimes A$ 与 $V_1L\subset K\otimes B$ 正交，故 $p\perp L$。由（112.11），
+
+$$
+0\ne p\in T=G_2.
+\tag{112.12}
+$$
+
+现在只需比较两个已经执行的零位像：
+
+$$
+V_0H_1=T\otimes A,\qquad
+V_0H_2=L\otimes A,\qquad T\perp L.
+$$
+
+所以 $H_1\perp H_2$，特别 $p\perp H_2$。然而同一个早期来源列满足
+
+$$
+P_TH_2=T:
+$$
+
+这是因为 $H_2=\operatorname{span}(a^2u+bv,w)$、$u,w$ 张成
+$T=G_2$，且 $a\ne0$、$v\perp P_A\supset T$。因此属于 $T$ 又正交于 $H_2$ 的向量只能为零，与（112.12）矛盾。最后一词排除。
+

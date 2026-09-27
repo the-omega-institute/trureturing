@@ -1,0 +1,20 @@
+**推论277.6（角度路径的副本指数）。** 在定理277.5的固定来源合同下，
+$$
+N_{\rm out}(0,h)=\Theta(h^{-2n});
+\qquad
+N_{\rm out}(\theta,h)=\Theta(h^{-4n})
+\quad\text{对每个固定 }0<\theta\le\theta_0.
+\tag{277.44}
+$$
+若每次检验的已知角度选择为 $\theta(h)=h^\beta$、$\beta>0$，则充分小 $h$ 时
+$$
+\boxed{
+N_{\rm out}(h^\beta,h)=
+\begin{cases}
+\Theta(h^{-2n(2-\beta)}),&0<\beta<1,\\
+\Theta(h^{-2n}),&\beta\ge1.
+\end{cases}
+}
+\tag{277.45}
+$$
+

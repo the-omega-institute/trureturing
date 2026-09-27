@@ -1,0 +1,13 @@
+**定理160.1（有限原子与密度穷尽经验分布）。** 存在有限集合 $A\subseteq[0,1]$、正数 $\alpha_t$ 以及非负可积函数 $f\in L^1([0,1])$，使
+
+$$
+\boxed{
+\nu=\sum_{t\in A}\alpha_t\delta_t+f(t)\,dt,
+\qquad
+\sum_{t\in A}\alpha_t+\int_0^1f(t)\,dt=1.
+}
+\tag{160.1}
+$$
+
+$A$ 恰为 $\nu$ 的原子位置，$\alpha_t=\mu_G(h^{-1}(t))$；$f$ 在几乎处处意义下唯一。特别地，$\nu$ 的奇异连续部分为零。
+

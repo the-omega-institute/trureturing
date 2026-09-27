@@ -1,0 +1,19 @@
+### 179.2 单输入 Choi 预算给出新的有限下界
+
+定义
+
+$$
+B_w=
+\begin{pmatrix}
+1-\beta w&\sqrt6\,\gamma w\\
+\sqrt6\,\gamma w&6\beta w
+\end{pmatrix},
+$$
+
+$$
+\mu(w)=\lambda_{\max}(B_w)
+=\frac{1+5\beta w+
+\sqrt{(1-7\beta w)^2+24\gamma^2w^2}}2.
+\tag{179.8}
+$$
+

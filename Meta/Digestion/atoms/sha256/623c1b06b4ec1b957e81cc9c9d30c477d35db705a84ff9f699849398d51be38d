@@ -1,0 +1,49 @@
+**命题173.5（二元测量的调和型精确目标）。** 对 $0\preceq E\preceq I_K$ 置
+
+$$
+a_E=\operatorname{Tr}(E\kappa_0),\qquad
+b_E=\operatorname{Tr}((I-E)\kappa_1),
+\qquad \frac{a_Eb_E}{a_E+b_E}:=0\quad\text{若 }a_E+b_E=0.
+$$
+
+则
+
+$$
+\boxed{
+e\ge e_{\mathrm{bit}}
+=1-\max_{0\preceq E\preceq I_K}\frac{a_Eb_E}{a_E+b_E}
+\ge\frac{3-d_K}{4}.
+}
+\tag{173.12}
+$$
+
+**证明。** 在没有附加纯化目标时，引理173.1把解码器限制为二元 POVM 后制备对应计算基标签。固定正确率 $a,b$，定理173.3的矩阵变为
+
+$$
+C_q=\begin{pmatrix}
+q(1-a)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-b)
+\end{pmatrix}.
+$$
+
+其非负非对角元使最大本征值可在实非负单位向量 $(x,y)$ 上取得。置
+$u=\sqrt q\,x$、$v=\sqrt{1-q}\,y$，则 $u+v\le1$，二次型为
+$(1-a)u^2+2uv+(1-b)v^2$。所有系数非负，最大值可在
+$u+v=1$ 上取得；该边界上每个点都由 $q=u$、$x=\sqrt u$、$y=\sqrt v$ 实现。故
+
+$$
+\begin{aligned}
+\max_q\lambda_{\max}(C_q)
+&=\max_{0\le u\le1}
+\bigl[(1-a)u^2+2u(1-u)+(1-b)(1-u)^2\bigr]\\
+&=1-\frac{ab}{a+b}.
+\end{aligned}
+$$
+
+当 $a+b>0$，最大点 $u=q=b/(a+b)$；当 $a=b=0$，值恒为一。再对 POVM 优化得到等式。
+最后
+$ab/(a+b)\le(a+b)/4\le(1+d_K)/4$，给最后一个下界。证毕。
+
+例如，若有自伴酉 $W$ 交换 $\kappa_0,\kappa_1$，把 POVM 与其交换版本平均可使 $a=b$ 且保持 $a+b$。从 Helstrom 最优 POVM 出发就得到
+$a=b=(1+d_K)/2$，于是 $e_{\mathrm{bit}}=(3-d_K)/4$。一般不具备该对称性的分支不在这里被强制视为等正确率。
+

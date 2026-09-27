@@ -1,0 +1,19 @@
+**定义 202.1（概率加权鲁棒边界）。** 对集合值来源 $\mathfrak R$、事件分支 $\Phi$、未来响应族 $\mathfrak P$ 和联合来源 $\mathfrak J$，定义边界合同至少包含
+
+$$
+\boxed{
+\eta_{\mathrm{rob}}
+=
+\left(
+ p^-_\Phi,p^+_\Phi,
+ \mathsf C_\Phi(\mathfrak R),
+ \mathfrak J_\Phi,
+ \Gamma_{\mathfrak P},
+ \text{来源与控制记录}
+\right),
+}
+\tag{202.1}
+$$
+
+其中 $\Gamma_{\mathfrak P}$ 是未来映射的统一增益上界。若任务只要求先验平均，则还需声明 $\mu$ 和 $\bar\rho_{\Phi,\mu}$；平均态不能替代式（202.1）中的条件集合或联合来源。
+

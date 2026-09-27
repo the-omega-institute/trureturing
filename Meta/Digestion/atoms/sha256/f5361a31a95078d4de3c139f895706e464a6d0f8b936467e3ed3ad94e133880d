@@ -1,0 +1,16 @@
+**引理153.1（输出支撑压缩的精确等价）。** 令 $e_n(\mathcal R_n)$ 为固定接收器在第 $n$ 个终端优化全部全域解码器后的完整参考半迹误差。则
+
+$$
+\boxed{
+e_n(\mathcal R_n)
+=\min_{\mathcal D:\mathcal L(K)\to\mathcal L(S_n)\ \text{CPTP}}
+\frac12\left\|
+(\operatorname{id}_{M_{\rm out}}\otimes\mathcal D)\mathcal R_n
+-\operatorname{Ad}_{\widetilde T_n}
+\right\|_\diamond.
+}
+\tag{153.4}
+$$
+
+这里的 diamond 输入空间是原始二维 $M_{\rm in}$。
+

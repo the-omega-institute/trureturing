@@ -1,0 +1,17 @@
+**定理33.2（相干长度窗口的精确与近似容量）。** 设 $N_n=\sum_{i,j}|\mathcal C_n(i,j)|$，其中 $\mathcal C_n(i,j)$ 为长度 $n$、端点 $i,j$ 的可达完整边计数集合。则对全部 $N\ge1$、$1\le W\le N+1$，
+$$
+k_{N,W}^{0,\mathrm{coh}}
+=\sum_{n=N}^{N+W-1}N_n.
+\tag{33.2}
+$$
+对每个固定 $0<\epsilon<1$，有统一于全部 $1\le W\le N+1$ 的渐近界
+$$
+\boxed{
+k_{N,W}^{0,\mathrm{coh}}\asymp_P WN^r,
+\qquad
+k_{N,W}^{\epsilon,\mathrm{coh}}\asymp_{P,\epsilon} WN^{r/2}.
+}
+\tag{33.3}
+$$
+即存在只依赖所列固定参数的正上下常数和阈值 $N_0$，对全部 $N\ge N_0$ 及该范围内每个 $W$ 同时成立。
+

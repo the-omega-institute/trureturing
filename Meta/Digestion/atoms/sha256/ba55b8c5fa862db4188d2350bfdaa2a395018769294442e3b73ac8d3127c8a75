@@ -1,0 +1,14 @@
+### 22.6 推论：黄金斜率下的显式参数位数预算
+
+令 $\alpha=\phi-1=\phi^{-1}$，$n\geq1$。已有 `GoldenHurwitzBound.golden_hurwitz_bound` 对有理数 $a/k$ 的约分分母给出
+\[
+\|k\phi\|>\frac1{\sqrt5\,k+1}>\frac1{4k},
+\]
+其中 $\|\cdot\|$ 为到最近整数的距离。于是第 22.2 节所有切点到零的距离及不同切点的距离均大于 $1/(4n)$，且 $1-\alpha>1/4$，故 $g_n>1/(4n)$。因此
+\[
+0\leq\delta\leq\frac1{8n(n+1)}
+\quad\Longrightarrow\quad
+\lambda(E_n(\alpha,\alpha+\delta))=\frac{n(n+1)}2\delta.
+\tag{22.10}
+\]
+

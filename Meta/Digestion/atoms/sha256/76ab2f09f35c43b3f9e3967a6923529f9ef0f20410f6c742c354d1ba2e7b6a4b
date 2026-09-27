@@ -1,0 +1,20 @@
+### 277.4 对齐端点的零概率开启
+
+由（277.1），对任意 $|\zeta|=1$ 有谱因子恒等式
+$$
+\boxed{
+I_n+\operatorname{Re}(\zeta Z)
+=(I_n+\zeta M)^\dagger Q(I_n+\zeta M).
+}
+\tag{277.18}
+$$
+取正负相位可知 $-I_n\preceq H_w(\theta)\preceq I_n$。
+
+在 $\theta=0$ 时，
+$$
+I_n-H_0(0)=(I_n-M)^\dagger Q(I_n-M),
+\qquad\ker(I_n-H_0(0))=\ker J=\mathbb Ce_1.
+\tag{277.19}
+$$
+$n=1$ 时右侧就是整个参考空间。其余三个记录块的因子相位为 $1,i,-i$，对应矩阵 $I_n+\zeta M$ 可逆，故严格正。因此理想有效输出恰有一个零方向，位于记录 $(0,-1)$ 和参考向量 $e_1$。
+

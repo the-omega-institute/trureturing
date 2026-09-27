@@ -1,0 +1,14 @@
+**定理 17.1（扭曲周期计数的特征标表达）。** 对 essential A∈M_n(N[H])，令 A_rho 为第 12.1 条的复不可约表示块、chi_rho 为其特征标。对 h∈H、j≥1，有
+
+$$
+F_{h,j}(A)=\sum_{\rho\in\operatorname{Irr}(H)}
+\chi_\rho(h^{-1})\operatorname{tr}(A_\rho^j).
+$$
+
+等价地，
+
+$$
+\operatorname{tr}(A_\rho^j)
+=\frac1s\sum_{h\in H}F_{h,j}(A)\chi_\rho(h).
+$$
+

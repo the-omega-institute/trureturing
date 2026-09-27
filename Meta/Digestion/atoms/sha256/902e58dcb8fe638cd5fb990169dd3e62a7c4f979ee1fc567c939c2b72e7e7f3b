@@ -1,0 +1,10 @@
+**引理159.2（同一真实来源上的旋转编码轨道）。** 有通道恒等式
+
+$$
+\boxed{
+\mathcal F_{\mathrm{run}}\mathfrak E
+=\mathfrak E\operatorname{Ad}_U.
+}
+\tag{159.16}
+$$
+

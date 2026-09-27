@@ -1,0 +1,79 @@
+**定理 13.4（存活消失时，联合恢复误差趋于一）。** 对定义13.3中的接收器，在 Bell 初始输入上，任意允许解码器的最坏相位半迹误差满足
+
+$$
+\sup_\vartheta
+D\bigl(\widehat\Omega_{\vartheta,n},\Omega_{\vartheta,n}\bigr)
+\ge(1-s_n)(1-\beta_n),
+\qquad
+\beta_n={\sqrt\pi\over2\sqrt{\alpha^3\lfloor(n-1)/3\rfloor}}
+\quad(n\ge4).
+\tag{13.9}
+$$
+
+特别地，若 $`s_n\to0`$，最坏误差趋于一。令
+
+$$
+\sigma^2={p(1-p)\over(1+p)^3}>0.
+\tag{13.10}
+$$
+
+若
+
+$$
+\limsup_{n\to\infty}{b_n\over\sqrt{2\sigma^2 n\log\log n}}<1,
+\tag{13.11}
+$$
+
+则 $`s_n\to0`$，上述恢复失败成立。因此任意固定 $`C<\infty`$ 的 $`b_n=C\sqrt n`$ 均不能使这个装置类保持小于一的统一误差。
+
+式（13.9）的对象是定义13.3指定的吸收截断码；一般 CPTP 接收器可保留其他失败信息或使用混合的中间表示，本定理不对它们给出迭代对数容量下界。定理13.2提供一个无终端构造，定理5.3只对任意此类构造给逐终端平方根下界，两者之间的迭代对数差距未由这里的证明消除。
+
+证明。记 $`Q_n`$ 为完整档案中选取全部存活计算基词的投影。对 Bell 来源，目标为 $`\Omega_{\vartheta,n}=|\Psi_\vartheta\rangle\langle\Psi_\vartheta|`$。其共同相位作用只在档案一侧，且与 $`Q_n`$ 对易。因此原始 $`JM`$ 边缘和成功分支的 $`JM`$ 边缘均不依赖相位。局部保迹接收不改变总 $`JM`$ 边缘，所以失败分支的未归一化 $`JM`$ 态也不依赖相位：它是这两个边缘之差。
+
+定义13.3的实际输出按成功块与旗标块分块对角，且旗标仅一维。于是解码后的失败项是同一个相位无关的正算子 $`\Gamma_n`$，其迹为 $`1-s_n`$；成功项的迹为 $`s_n`$。这不要求丢弃环境独立于相位，只要求它不再进入接收器和解码器。
+
+以目标纯态投影配对，成功项贡献不超过 $`s_n`$。由（5.15）、（5.18），相位平均目标的谱范数至多 $`\beta_n`$，故
+
+$$
+\begin{aligned}
+{1\over2\pi}\int_{-\pi}^{\pi}
+\langle\Psi_\vartheta|\widehat\Omega_{\vartheta,n}|\Psi_\vartheta\rangle
+\,d\vartheta
+&\le s_n+\operatorname{Tr}(\overline\Omega_n\Gamma_n)\\
+&\le s_n+(1-s_n)\beta_n.
+\end{aligned}
+\tag{13.12}
+$$
+
+半迹距离至少为目标纯态检验的概率差。取相位上确界不小于相位平均，得到（13.9）。半迹距离至多一；$`s_n\to0`$ 与 $`\beta_n\to0`$ 因而给趋于一。
+
+余下验证（13.11）确实使存活消失。实际二状态链有严格正的平稳分布
+ $`\pi=(1/(1+p),p/(1+p))`$，不可约且有自环。对 $`g(x)=x-\mu`$，有 $`Pg=-pg`$。因此 $`g`$ 有零平稳均值且有界，$`\sum_{k=0}^{n-1}P^kg`$ 的 $`L^2(\pi)`$ 范数一致有界，满足 Miao–Yang 的 Markov 加性泛函迭代对数律条件。[^phase_anytime_lil]
+
+更明确地，Poisson 方程的解为 $`h=g/(1+p)`$，其鞅增量为
+ $`H(x,y)=h(y)-Ph(x)=(g(y)+pg(x))/(1+p)`$。
+当 $`x=1`$ 时增量为零；当 $`x=0`$ 时分子分别以概率 $`1-p,p`$ 取 $`-p,1-p`$。故平稳二阶矩为
+
+$$
+\mathbb E_\pi H(X_0,X_1)^2
+={1\over1+p}\,{p(1-p)\over(1+p)^2}
+=\sigma^2.
+\tag{13.13}
+$$
+
+该标准迭代对数律对 $`g`$ 与 $`-g`$ 分别给
+
+$$
+\limsup_{n\to\infty}{S_n-n\mu\over\sqrt{2\sigma^2 n\log\log n}}=1,
+\qquad
+\liminf_{n\to\infty}{S_n-n\mu\over\sqrt{2\sigma^2 n\log\log n}}=-1
+\quad\text{几乎必然}.
+\tag{13.14}
+$$
+
+改变求和起点只差有界端项。由于两个初位的平稳权重均严格正，平稳律下的概率一结论在分别固定每个初位后也为概率一。（13.11）于是保证几乎每条路径最终越界，乃至无穷次越界。全前缀存活事件随 $`n`$ 递减，连续性给两个初位的存活概率均趋零，即 $`s_n\to0`$。证明完毕。
+
+[^phase_anytime_stitching]: Steven R. Howard、Aaditya Ramdas、Jon McAuliffe、Jasjeet Sekhon，*Time-uniform, nonparametric, nonasymptotic confidence sequences*，[arXiv:1810.08240v9，Theorem 1、§3.1](https://arxiv.org/html/1810.08240v9#S3.SS1)。几何时域分配与 stitched boundary 是既有概率方法；本节通过来源的首末荷空间递推，把同一个无限时域事件实现为保持参考联合态的接收门序列。
+
+[^phase_anytime_lil]: Yu Miao and Guangyu Yang，*The law of the iterated logarithm for additive functionals of Markov chains*，Statistics & Probability Letters **78** (2008)，[doi:10.1016/j.spl.2007.05.032](https://doi.org/10.1016/j.spl.2007.05.032)，[arXiv:math/0701167v2，Theorem 2.4](https://arxiv.org/pdf/math/0701167v2#page=3)。该定理的条件为平稳遍历链、$`g\in L_0^2(\pi)`$ 以及 $`\|\sum_{k<n}P^kg\|_2=O(n^a)`$ 对某个 $`a<1/2`$ 成立；本文通过 $`Pg=-pg`$ 和（13.13）核对条件及方差，只将已知迭代对数律作为接收失败证明的中间步骤。
+

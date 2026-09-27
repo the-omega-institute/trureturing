@@ -1,0 +1,27 @@
+**命题151.3（固定接收器的有限参数夹逼）。** 记 $[t]_+=\max(t,0)$。则
+
+$$
+\boxed{
+\begin{aligned}
+e_{148}(p)\ge\sqrt{xp}\bigl[
+&\lambda\sqrt{x^2\lambda^2+p\kappa^2}\\
+&-\nu\sqrt{x^2\nu^2+p\kappa^2}
+-x\mu^2
+\bigr]_+ ,
+\end{aligned}
+}
+\tag{151.11}
+$$
+
+且
+
+$$
+\boxed{
+e_{148}(p)\le
+\mu^2\left(
+\frac{\sqrt x}{\lambda+\nu}+\frac{x}{2}
+\right).
+}
+\tag{151.12}
+$$
+

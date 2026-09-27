@@ -1,0 +1,86 @@
+**证明。** 由（80.4），$\dim E_0=d$。更精确的秩估计
+$\operatorname{rank}L_0\ge q-\operatorname{rank}H_0$ 使 $H_0$ 秩为 $d$，故单射。对任意 $v\in E_0$，（80.3）的交叉块给 $H_0H_1^*v=0$，所以 $H_1^*v=0$。两对角式继而给
+$$
+Yv=\nu v,\qquad H_0H_0^*v=(\mu/s)v.
+$$
+因此 $E_0\subset\operatorname{ran}H_0$；两侧维数都是 $d$，故存在满等距 $J_0:\mathbb C^d\to E_0$，满足
+$$
+H_0=\sqrt{\mu/s}\,J_0,\qquad
+H_0H_0^*=(\mu/s)P_{E_0},\qquad
+\operatorname{ran}H_1\subset W:=E_0^\perp.
+\tag{80.6}
+$$
+这里 $\dim W=2d-1$。
+
+置 $T=H_1:\mathbb C^d\to W$。解（80.3）的两个对角方程，得到相对于 $E_0\oplus W$ 的分解
+$$
+X=0\oplus X_W,\qquad
+X_W=\frac{\mu s}{\Delta}(\mu I_W+\nu TT^*)>0,
+$$
+$$
+Y=\nu I_{E_0}\oplus Y_W,\qquad
+Y_W=\frac{\nu s}{\Delta}(\nu I_W-sTT^*)\succeq0.
+\tag{80.7}
+$$
+所以 $TT^*\preceq(\nu/s)I_W$，$T^*T$ 的 $d$ 个特征值 $\lambda_i$ 均属于 $[0,\nu/s]$。
+
+令输入 $P=(\ker L_0)^\perp$、$N=\ker L_0$，维数分别为 $2d-1,d$。用 $L_0$ 的极分解把输入 $P$ 酉识别到输出 $W$，则
+$$
+L_0=
+\begin{pmatrix}
+0&0\\
+X_W^{1/2}&0
+\end{pmatrix}:W\oplus N\longrightarrow E_0\oplus W.
+$$
+（80.3）的交叉块使 $L_1P\subset E_0$，故在同一分解中
+$$
+L_1=\begin{pmatrix}B&C\\0&E\end{pmatrix},
+\qquad
+B=-\sqrt{\mu s}\,J_0T^*X_W^{-1/2}.
+\tag{80.8}
+$$
+由（80.7），计算 $L_1L_1^*$ 的各块得到
+$$
+BB^*+CC^*=\nu I_{E_0},\qquad
+EE^*=Y_W,\qquad CE^*=0.
+\tag{80.9}
+$$
+
+设 $k$ 为 $T^*T$ 中特征值 $\nu/s$ 的重数，$0\le k\le d$。$TT^*$ 在 $W$ 上的谱由 $\lambda_1,\ldots,\lambda_d$ 及另外 $d-1$ 个零构成；当 $d=1$ 时后者为空。由（80.7），
+$$
+\operatorname{rank}E=2d-1-k.
+\tag{80.10}
+$$
+另一方面，
+$$
+BB^*=\Delta J_0T^*(\mu I_W+\nu TT^*)^{-1}TJ_0^*.
+$$
+在 $J_0$ 的坐标中，$CC^*$ 的对应特征值为
+$$
+\nu-\frac{\Delta\lambda_i}{\mu+\nu\lambda_i}
+=\frac{\mu(\nu-s\lambda_i)}{\mu+\nu\lambda_i}.
+$$
+它恰在 $\lambda_i=\nu/s$ 时为零，所以
+$$
+\operatorname{rank}C=d-k.
+\tag{80.11}
+$$
+
+$C,E$ 的定义域是同一个 $d$ 维输入补空间 $N$。由于 $CE^*=0$，$\operatorname{ran}C^*$ 与 $\operatorname{ran}E^*$ 在 $N$ 内正交。因此
+$$
+(d-k)+(2d-1-k)\le d,
+\qquad 2k\ge2d-1.
+$$
+$k$ 为至多 $d$ 的整数，故必须
+$$
+k=d,\qquad T^*T=(\nu/s)I_d,\qquad C=0.
+\tag{80.12}
+$$
+这一步使用同一个实际块分解的正交秩预算，没有仅凭两个系数分别奇异断言整个铅笔奇异。
+
+令 $E_1=\operatorname{ran}T$。由（80.12），$E_1$ 为 $d$ 维且与 $E_0$ 正交。$E_c=W\ominus E_1$ 为 $d-1$ 维。代回（80.7）得到（80.5），其 $Y$ 的核恰为 $E_1$，与定理中 $E_1=\ker L_1^*$ 的定义一致。取满等距 $J_1:\mathbb C^d\to E_1$，则
+$$
+H_1=\sqrt{\nu/s}\,J_1.
+$$
+结合（80.6），$H^*H=(\mu/s+\nu/s)I_d=I_d$，故 $\mathscr D=HH^*$ 为秩 $d$ 正交投影。证明完毕。
+

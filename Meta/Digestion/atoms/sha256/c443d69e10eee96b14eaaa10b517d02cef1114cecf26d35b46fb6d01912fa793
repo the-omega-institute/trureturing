@@ -1,0 +1,20 @@
+**定理147.3（真实规范纯化的端点阶）。** 对 $0<p\le1/2$ 和每个整数 $T\ge3$，
+
+$$
+\boxed{
+\delta_T(p)\le
+\frac{2+\sqrt2}{1+p}\,p^{T-1}.
+}
+\tag{147.11}
+$$
+
+对每个固定整数 $T\ge3$，还有
+
+$$
+\boxed{
+\delta_T(p)\sim\frac12p^{T-1}
+\quad(p\downarrow0).
+}
+\tag{147.12}
+$$
+

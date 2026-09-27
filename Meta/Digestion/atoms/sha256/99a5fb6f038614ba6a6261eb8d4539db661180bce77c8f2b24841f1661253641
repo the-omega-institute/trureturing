@@ -1,0 +1,37 @@
+### 定理 12.7：全部逻辑矩阵单位的显式运输生成元
+
+令 $F_{ij}(t)$ 为实参数 $t$ 上的可微矩阵族，逐时满足定理12.5的矩阵单位和伴随关系。记 $D_{ij}=\dot F_{ij}$、$\dot P=\sum_iD_{ii}$，定义
+
+$$
+Z=\frac1d\sum_{i,j}D_{ij}F_{ji},\qquad K=Z-P\dot P.
+\tag{12.8}
+$$
+
+则
+
+$$
+K^\dagger=-K,\qquad [K,F_{ij}]=D_{ij},\qquad [K,P]=\dot P.
+\tag{12.9}
+$$
+
+**证明。** 对实际矩阵族求导，乘法和伴随关系给出
+
+$$
+D_{ij}F_{kl}+F_{ij}D_{kl}=\delta_{jk}D_{il},\qquad D_{ij}^\dagger=D_{ji}.
+$$
+
+对 $F_{ij}F_{ji}$ 求和后微分得 $Z+Z^\dagger=\dot P$；对 $P^2=P$ 微分得 $P\dot P+\dot PP=\dot P$ 和 $P\dot PP=0$。因此 $K+K^\dagger=0$。固定 $k,l$，前述乘法律及其导数给出
+
+$$
+ZF_{kl}=\frac1d\sum_jD_{kj}F_{jl},\qquad
+F_{kl}Z=\frac1d\sum_jD_{kj}F_{jl}-D_{kl}P.
+$$
+
+同时 $[P\dot P,F_{kl}]=-F_{kl}\dot P$。故
+
+$$
+[K,F_{kl}]=D_{kl}P+F_{kl}\dot P=D_{kl},
+$$
+
+最后一步是 $F_{kl}P=F_{kl}$ 的实际导数。对对角指标求和得到投影式。∎
+

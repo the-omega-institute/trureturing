@@ -1,0 +1,17 @@
+**证明。** 固定酉及添加独立归一化状态不改变迹范数，所以定理168.1把左侧化为两个退相干输出的半迹距离。无迹 Hermitian qubit 矩阵
+$aX+bY+cZ$ 的本征值是
+$\pm\sqrt{a^2+b^2+c^2}$，代入（168.10）即得。证毕。
+
+特别地，令
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，则
+
+$$
+\frac12\|
+\mathcal N_{\mathrm{loc}}(P_+)
+-\mathcal N_{\mathrm{loc}}(P_-)
+\|_1=\kappa<1,
+\tag{168.12}
+$$
+
+而两个计算基输入仍有局部距离一。
+

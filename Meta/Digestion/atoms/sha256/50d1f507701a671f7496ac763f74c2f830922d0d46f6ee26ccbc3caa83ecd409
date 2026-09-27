@@ -1,0 +1,12 @@
+**引理92.2（至少差二余量的匹配方向）。** 存在子空间 $Z\subset\mathbb C^d$，$\dim Z\ge d-2$，使每个 $f\in Z$ 满足
+
+$$
+H_0f\in E_0,\qquad H_1f\in E_1,
+$$
+
+$$
+H_0^*H_0f=(\mu/s)f,\qquad
+H_1^*H_1f=(\nu/s)f.
+\tag{92.9}
+$$
+

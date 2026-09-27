@@ -1,0 +1,25 @@
+#### 8.7.2 概率单纯形内的共同中心界
+
+设非空紧集 $K\subseteq\Delta_m$ 在最大坐标范数中的直径不超过 $w$。记各格极值 $l_i=\min_{p\in K}p_i$、$u_i=\max_{p\in K}p_i$，所以 $u_i-l_i\le w$。取
+$$
+r=\frac{m-1}{m}w,\qquad
+\alpha_i=\max\{0,u_i-r\},\qquad
+\beta_i=l_i+r.
+$$
+有 $\alpha_i\le\beta_i$，因为 $2r\ge w$。还满足
+$$
+\sum_i\alpha_i\le1\le\sum_i\beta_i.
+\tag{ER8.SO.2}
+$$
+右侧：选 $p\in K$ 达到某一坐标 $l_j$，其余坐标至多 $l_i+w$，于是 $1\le\sum_i l_i+(m-1)w=\sum_i\beta_i$。
+
+左侧：令 $S=\{i:u_i>r\}$，$k=|S|$。$S$ 为空时直接成立；否则选 $j\in S$ 和达到 $u_j$ 的 $p\in K$。每个其他 $i\in S$ 有 $u_i\le p_i+w$，故
+$$
+\sum_i\alpha_i=\sum_{i\in S}(u_i-r)
+\le1+(k-1)w-kr
+=1+\left(\frac{k}{m}-1\right)w\le1.
+$$
+由 ER8.SO.2 可在每个区间 $[\alpha_i,\beta_i]$ 内选 $q_i$，使总和一；从所有下界起，按固定次序补足总量即可。$q\ge0$ 且总和一，自动属于 $\Delta_m$。对所有 $p\in K$，有 $u_i-r\le q_i\le l_i+r$，因此 $\|p-q\|_\infty\le r$。
+
+这个构造给出一个对整个可能来源集共同有效的中心。它不是对任意外部实向量进行截断或归一化，也没有声称存在保持所有真值距离的非扩张归一化映射。
+

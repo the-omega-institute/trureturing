@@ -1,0 +1,74 @@
+**定理89.3（七维候选的固定酉替代）。** 若存在本节合同中的七维接收器，则存在一个固定酉
+
+$$
+W:K\otimes B\longrightarrow K\otimes F,\qquad \dim F=2,
+\tag{89.7}
+$$
+
+使新全域 CPTP 通道
+
+$$
+\widetilde{\mathcal C}(X)
+=\operatorname{Tr}_F(WXW^*)
+\tag{89.8}
+$$
+
+在前六轮对任意初始输入与任意参考都产生与原接收器完全相同的联合状态。因此同一个独立纯初态和原六个终端解码器仍满足完整合同。
+
+**证明：构造一个同时延拓六轮的酉。** 由（89.6），$V|_U$ 可视为 $U\to K\otimes F$ 的等距。输入和目标全空间维数相同：
+
+$$
+\dim(K\otimes B)=\dim(K\otimes F)=14.
+$$
+
+设 $\dim U=r$，则 $U^\perp$ 与 $V(U)^\perp\cap(K\otimes F)$ 均为 $14-r$ 维。任取两者之间的酉 $J_0$，定义
+
+$$
+W(u+u^\perp)=Vu+J_0u^\perp
+\qquad(u\in U,\ u^\perp\in U^\perp).
+\tag{89.9}
+$$
+
+两个输出像正交且覆盖 $K\otimes F$，所以 $W$ 为全域酉。若 $\iota:F\hookrightarrow E$ 为包含映射，则
+
+$$
+(I_K\otimes\iota)Wu=Vu\qquad(u\in U).
+\tag{89.10}
+$$
+
+这一次延拓同时固定了全部 $U_n$ 上的动作；对交叠输入的相容性已由原来的同一个 $V$ 保证。补空间上的自由选择不会改变任何 $U_n$ 上的作用。
+
+**证明：忠实输入的支撑涵盖任意初始输入。** 初始活动记忆空间记为 $S\cong\mathbb C^2$，令 $\pi_S=I_S/2$。对原接收器，记从初始 $S$ 状态到第 $n$ 轮接收前 $H$ 边缘的固定 CPTP 映射为 $\mathcal T_n$。它包括此前所有来源和接收操作、独立纯初始化，以及对其他系统取偏迹。最大纠缠测试输入的 $S$ 边缘就是 $\pi_S$，故
+
+$$
+\rho_n=\mathcal T_n(\pi_S).
+$$
+
+任意初始状态 $\sigma_S$ 满足 $0\preceq\sigma_S\preceq I_S=2\pi_S$。由正性，
+
+$$
+0\preceq\mathcal T_n(\sigma_S)\preceq2\rho_n,
+\qquad
+\operatorname{supp}\mathcal T_n(\sigma_S)\subset U_n.
+\tag{89.11}
+$$
+
+如果初始 $S$ 与任意参考 $R_0$ 关联，其接收前 $H$ 边缘仍是 $\mathcal T_n(\sigma_S)$；把参考、活动记忆及其他未受接收器作用的系统一并记为 $R$，引理89.2的（89.3）给该完整接收前状态的支撑包含于 $R\otimes U_n$。所以（89.11）没有丢弃参考关联所携带的限制。
+
+**证明：六轮联合轨迹的归纳。** 两个接收器从相同的独立纯 $k$ 和相同来源、参考输入启动。假设第 $n-1$ 轮后的完整参考—活动记忆—接收器状态相同；$n=1$ 时由共同初始化成立。下一次来源操作相同，因此第 $n$ 轮接收前的联合状态 $\omega_n$ 也相同。按（89.11）及引理89.2，其支撑在 $R\otimes U_n$。
+
+由（89.10），$I_R\otimes V$ 与 $I_R\otimes((I_K\otimes\iota)W)$ 在该支撑上一致，故
+
+$$
+(I_R\otimes V)\omega_n(I_R\otimes V)^*
+=
+(I_R\otimes((I_K\otimes\iota)W))
+\omega_n
+(I_R\otimes((I_K\otimes\iota)W))^*.
+\tag{89.12}
+$$
+
+左侧取 $E$ 偏迹与右侧取 $F$ 偏迹给相同的参考—活动记忆—接收器联合状态。因此归纳成立，直至第六轮。相同终端状态再经过原来的同一个终端解码器，自然给相同的完整原档案联合态。证明完毕。
+
+这里没有逐轮选择不同酉，也没有让补空间延拓参与控制或留下新的持久寄存器。输入量子比特经过固定碰撞后成为当轮丢弃的输出环境因子；它不在下一轮复用。
+

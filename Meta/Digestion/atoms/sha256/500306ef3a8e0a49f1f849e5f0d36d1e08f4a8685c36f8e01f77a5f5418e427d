@@ -1,0 +1,13 @@
+### 44.2 成本是另一种路径读出
+
+给每个实验一个非负费用 $c(e)$，策略在来源 $s$ 上的费用为
+
+$$
+C_\pi(s)=\sum_{t=0}^{N-1}c(\pi_t(\text{history}_t(s)));
+\tag{44.4}
+$$
+
+若协议允许提前停止，$N$ 换成由转录决定的停止时刻 $\tau_\pi(s)$。两个策略可能有相同的被动边界 $J$、相同的目标恢复能力，却有不同的 $C_\pi$；因此“边界充分”与“取得便宜”是两个偏序。
+
+四状态余数模型给出具体分离：只允许模 $2,3,5$ 三个被动传感器时，固定套件要三项才精确，而先问模 $2$、再按首个答案选择模 $3$ 或模 $5$ 的自适应树在两轮内精确。仓内 `AdaptiveResidueIdentification.two_step_adaptive_residue_identification` 证明深度 $2$ 与静态基数 $3$ 的严格差异；`AdaptiveEarlyStopping.expected_experiment_count_eq_one_add` 及其严格小于二的条件进一步说明期望查询数要以先验和停止协议为参数，不能由边界类数直接读出。
+

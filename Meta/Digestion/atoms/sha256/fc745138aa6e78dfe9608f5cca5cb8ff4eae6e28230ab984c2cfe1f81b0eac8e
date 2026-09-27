@@ -1,0 +1,12 @@
+**引理64.1（乘积纤维的共同直线）。** 设 $e_1,e_2,e_3$ 线性无关，$U_1,U_2,U_3$ 各二维，且维数至多七的子空间 $S$ 包含
+$$
+B=(U_1\otimes e_1)\dotplus(U_2\otimes e_2)\dotplus(U_3\otimes e_3).
+\tag{64.4}
+$$
+若 $W\otimes\eta\subseteq S$，其中 $\dim W=2$、$\eta=\sum_j c_je_j$，则
+$$
+\dim\left(W\cap\bigcap_{c_j\ne0}U_j\right)\ge1.
+\tag{64.5}
+$$
+特别地，所有非零环境坐标对应的接收因子有共同直线。更一般地，左侧维数至少为 $\dim W-1$。
+

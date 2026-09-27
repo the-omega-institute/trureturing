@@ -1,0 +1,23 @@
+### 定理 11.4：综合征编码保留的是带支持单位的忠实逻辑代数
+
+沿用定义10.1的正交综合征族，定义
+
+$$
+\pi(A)=\sum_jS_jAS_j^\dagger,\qquad A\in\mathcal B(L).
+\tag{11.4}
+$$
+
+则 $\pi$ 线性、保伴随、保乘法，且 $\pi(I_L)=P$。对任意综合征标签 $j$，
+
+$$
+\pi(A)S_j=S_jA,\qquad S_j^\dagger\pi(A)S_j=A.
+\tag{11.5}
+$$
+
+因指标集非空，$\pi$ 单射。它作为 $P\mathcal B(H)P$ 中的表示以 $P$ 为单位；除非 $P=I_H$，不能称其为到整个 $\mathcal B(H)$ 的保单位表示。进一步，对任意矩阵 $\rho,\sigma$，包括非对角综合征矩阵，有
+
+$$
+\pi(A)\mathcal E_\sigma(\rho)=\mathcal E_\sigma(A\rho).
+\tag{11.6}
+$$
+

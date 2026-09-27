@@ -1,0 +1,17 @@
+**命题 3.2（历史编码与切面态）。** 有 $W^\dagger W=I$、$K_{\rm hist}W=0$。在 $\Gamma$ 上读钟标签 $n$ 的概率为 $1/(N+1)$，对应系统条件态为 $\rho_n$。
+
+证明。钟标签正交且 $V_n$ 酉，故
+
+$$
+W^\dagger W=\frac1{N+1}\sum_nV_n^\dagger V_n=I.
+$$
+
+$V_{n+1}=U_nV_n$ 给出 $A_nW=0$。展开
+
+$$
+\Gamma=\frac1{N+1}\sum_{n,m}|n\rangle\langle m|
+\otimes V_n\rho_0V_m^\dagger
+$$
+
+并取第 $n$ 个钟对角块，得到 $\rho_n/(N+1)$，取迹与归一化即得。$\square$
+

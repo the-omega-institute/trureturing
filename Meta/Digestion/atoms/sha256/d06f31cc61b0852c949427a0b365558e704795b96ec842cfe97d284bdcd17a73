@@ -1,0 +1,18 @@
+**定理275.3（单位圆谱、最短深度与锐指数）。** 对（275.1）—（275.6）的任意固定合同，下列条件等价：
+$$
+\text{完整数据纤维只有来源 }\Omega;
+\qquad
+\operatorname{spec}(M)\subseteq\{z\in\mathbb C:|z|=1\}.
+\tag{275.63}
+$$
+当这些条件成立时，令 $m$ 为 $M$ 的最大Jordan块长度，则
+$$
+\boxed{
+d_S=m,
+\qquad
+\alpha_{\mathrm{sharp}}(\Omega)=\frac1{2m}.
+}
+\tag{275.64}
+$$
+锐指数对完整竞争合同和精确同边缘子合同相同。
+

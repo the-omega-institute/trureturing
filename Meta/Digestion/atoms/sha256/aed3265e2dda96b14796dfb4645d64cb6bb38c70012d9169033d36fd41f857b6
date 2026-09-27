@@ -1,0 +1,15 @@
+**定义 166.1（固定模式、周边模式与一阶匹配）。** 沿用定义165.1的已校准三标签记录源、全参考距离和风险 $W_r$，其中 $0<r<1$，每个预测器为在原三维系统上反复使用的 CPTP 通道。令 $\Delta$ 为计算基下的完全去相干通道。对通道 $\mathcal F$，记
+$$
+\operatorname{Fix}(\mathcal F)=\ker(\mathcal F-\mathrm{Id}),\qquad
+m(\mathcal F)=\dim_{\mathbb C}\operatorname{Fix}(\mathcal F).
+\tag{166.1}
+$$
+周边空间指复线性算子 $\mathcal F$ 的全部模长为一的特征值所对应的广义特征空间之和，其维数记为 $p(\mathcal F)$。CPTP 通道的幂有界，因而周边 Jordan 块均为一阶。固定模式是周边模式的一部分，二者不先验等同。
+
+仍以 $\mathcal T_r(A)=C(r,r^{k_*})\odot A$ 表示第163节的达到通道，$k_*=3\sqrt3\log2/\pi$。称通道族 $\mathcal F_r$ 与它一阶匹配，若该族在某个 $(r_0,1)$ 上定义，且
+$$
+\delta_r:=d_{\rm ref}(\mathcal F_r,\mathcal T_r)=o(1-r).
+\tag{166.2}
+$$
+这里使用整个通道的全参考距离，不只比较一个输入、单步风险值或某个相干分量。
+

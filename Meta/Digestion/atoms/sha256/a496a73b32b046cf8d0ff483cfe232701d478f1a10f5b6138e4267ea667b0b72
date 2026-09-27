@@ -1,0 +1,43 @@
+### 258.2 参考核外支撑必须同时消失
+
+记
+$$
+S=\operatorname{supp}\rho,\qquad P_\rho=P_S.
+\tag{258.7}
+$$
+若（258.4）成立，则 $P,Q\succeq0$ 且 $P,Q\preceq\rho$。对任意 $x\in S^\perp$，
+$$
+\langle x,Px\rangle+\langle x,Qx\rangle
+=\langle x,\rho x\rangle=0.
+\tag{258.8}
+$$
+两项非负，故均为零。正半定算子的零二次型向量属于其核，因此 $Px=Qx=0$。
+
+还须控制非对角块。向量 $(x,0)$ 和 $(0,x)$ 在整个正半定块矩阵中的二次型均为零，所以整个矩阵也分别将它们送到零。这给出 $K^\dagger x=Kx=0$。于是
+$$
+\boxed{
+K=P_\rho KP_\rho,
+\qquad
+\Omega_Y=(I_H\otimes P_\rho)\Omega_Y(I_H\otimes P_\rho).
+}
+\tag{258.9}
+$$
+这一步适用于全部合法竞争态。固定边缘排除了参考核外的质量及其相干，不仅排除对角块中的额外权重。
+
+在 $S$ 上，$\rho_S=\rho|_S$ 严格正。若支撑条件成立，定义白化后的数据
+$$
+Z_\rho=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2}.
+\tag{258.10}
+$$
+对（258.4）作可逆同余，得到等价问题
+$$
+\begin{pmatrix}
+F&Z_\rho/2\\
+Z_\rho^\dagger/2&I_S-F
+\end{pmatrix}\succeq0,
+\qquad
+F=\rho_S^{-1/2}(P|_S)\rho_S^{-1/2}.
+\tag{258.11}
+$$
+其对角块正性自动给 $0\preceq F\preceq I_S$。白化是用于判定正性的代数变换；不把它当作无成本、保迹的物理处理。
+

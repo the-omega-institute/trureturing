@@ -1,0 +1,1 @@
+| [FarkasAlternative](https://github.com/the-omega-institute/trureturing/blob/708968483b4104bcc227cc4d65a0d40fccfdf930/D5/S3/Analytic/Convexity/FarkasAlternative.lean) | 其非负变量形式需先将自由变量写成两个非负向量之差；本章自由方向不能直接塞入未改写的非负变量系统。上述 RationalFarkas 参数则直接允许自由有理变量。 

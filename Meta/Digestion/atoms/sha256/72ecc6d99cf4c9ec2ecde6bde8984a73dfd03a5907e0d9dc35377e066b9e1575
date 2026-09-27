@@ -1,0 +1,55 @@
+## 3. 按实际邻接数据的紧致极小值证书
+
+**定义。** 为每条全局边选择一个余弦长度上限 $b_e\in(1,2]$。对局部出现 $\hat e$，以它为局部边一，并记另外四条邻边的全局边为 $e_2,e_3,e_5,e_6$。定义
+
+$$u_{\hat e}(b)=\varphi_1(b_{P(\hat e)},b_{e_2},b_{e_3},1,b_{e_5},b_{e_6}),$$
+
+$$S_e(b)=\sum_{\hat e\in P^{-1}(e)}\arccos u_{\hat e}(b).$$
+
+这些 $u_{\hat e}$ 属于 $[0,1)$，因为第 2 节的估计在对边等于一时仍成立。相同的全局边在任何位置都使用同一个 $b_e$。
+
+**定理。** 如果
+
+$$\boxed{S_e(b)>2\pi\quad\text{对全部 }e\in E,}$$
+
+则存在 $l^*\in\mathcal L(\mathcal T)$，使所有 $K_e(l^*)=0$。因此给定的同一理想剖分具有非退化双曲几何实现。
+
+**证明。** 记 $D=\max_ed(e)$。选择 $a>1$ 足够接近一，使
+
+$$a<\min_eb_e,\qquad
+D\arccos\frac{2(2-a)}{a+1}<2\pi.$$
+
+这样的 $a$ 存在，因为边集合有限、全部 $b_e>1$，而显示的反余弦在 $a\downarrow1$ 时趋于零。考虑实际全局长度的紧盒
+
+$$\Omega=\prod_{e\in E}[\operatorname{arccosh}a,\operatorname{arccosh}b_e].$$
+
+第 2 节证明 $\Omega\subset\mathcal L(\mathcal T)$，所以它的全部边界点也是真实非退化几何。
+
+在上面 $x_e=b_e$，逐坐标估计给出 $\alpha_{\hat e}(l)\ge\arccos u_{\hat e}(b)$，故 $K_e(l)<0$。即使某个邻边或对边与 $e$ 被识别，实际向量仍属于用于估计的盒，结论不变。
+
+在下面 $x_e=a$，第 2 节给出每个 $\alpha_{\hat e}(l)\le\arccos(2(2-a)/(a+1))$，所以 $K_e(l)>0$。
+
+对单个超理想四面体，Schlafli 公式为 $d\operatorname{Vol}=-\frac12\sum_i l_i\,d\alpha_i$。因此共体积
+
+$$\operatorname{cov}=2\operatorname{Vol}+\sum_i l_i\alpha_i$$
+
+满足 $d\operatorname{cov}=\sum_i\alpha_i\,dl_i$。在共同全局长度上定义
+
+$$\mathcal H(l)=\sum_{\sigma}\operatorname{cov}_\sigma(l|_\sigma)-2\pi\sum_el_e.$$
+
+按出现次数求导得到 $\partial\mathcal H/\partial l_e=-K_e$。$\mathcal H$ 在 $\Omega$ 上取得最小值。若最小点在某个上面，将该坐标稍微减小使能量严格下降，因为 $-K_e>0$；若在某个下面，将该坐标稍微增加同样使能量下降，因为 $-K_e<0$。故最小点位于盒的内部，所有偏导为零，从而 $K(l^*)=0$。
+
+此证明没有先假设零曲率度量存在，也不需要以一个可能退化的极限代替真实极小点。共体积与实际角度几何是既有输入；本定理要求的有限邻接不等式需在每个应用中真正验证。
+
+**推论。** 从 $\Omega$ 内部出发的乘法组合 Ricci 流
+
+$$\dot l_e=l_eK_e(l)$$
+
+始终停留在 $\Omega$ 内，且全时间存在。沿流有
+
+$$\frac{d\mathcal H}{dt}=-\sum_el_eK_e^2.$$
+
+已知的超理想曲率刚性和 Feng–Ge–Hua 收敛定理随后给出零曲率度量唯一，并给出任意正长度初态的延拓流指数收敛。
+
+**证明。** 盒的各面上的流场方向由前述严格曲率符号决定，不可能首次向外穿越。盒紧包含于光滑的真实度量域，标准有限维 ODE 延拓给出全时间存在。能量公式是链式法则。最后两项使用已有的全局刚性与收敛结果；它们并非代替前面存在性证明的新假设。
+

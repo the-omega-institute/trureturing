@@ -1,0 +1,27 @@
+### 114.5 两尾剩余空间的准确乘积生成维数
+
+由第112节，对任意实际候选有 $\gamma\in\{1,2\}$，并有
+
+$$
+R_1=(Q\otimes F)\oplus N,\qquad
+Q=S_0^\perp,\quad\dim Q=\gamma,
+$$
+
+$$
+\dim N=7-2\gamma,\qquad
+(R_1)_{\mathrm{prod}}=(Q\otimes F)\oplus N_{\mathrm{prod}}.
+\tag{114.14}
+$$
+
+因此定理114.1给出准确的两尾选项：
+
+$$
+\boxed{
+\dim N_{\mathrm{prod}}
+\in\{6-2\gamma,\ 7-2\gamma\}.
+}
+\tag{114.15}
+$$
+
+若 $\gamma=1$，五维 $N$ 的乘积生成维数只能为四或五；若 $\gamma=2$，三维 $N$ 的乘积生成维数只能为二或三。两种情况下，较小的值 $6-2\gamma$ 当且仅当（114.11）的首轮第三射线与真实向量混合跨度条件成立；较大的值 $7-2\gamma$ 当且仅当 $N_{\mathrm{prod}}=N$。这给两尾候选的准确充要分类，没有把必要的代数形态当作已经实现的六轮来源过程。
+

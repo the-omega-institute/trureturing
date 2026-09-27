@@ -1,0 +1,27 @@
+**定理 66.1。** 参数范围（66.2）保证 $\varepsilon<p\le2\varepsilon<b^2$。在这一范围内有准确上界
+
+$$
+\varepsilon\le e(R_{a,\varepsilon})
+\le\varepsilon+d\left[
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt{1-p}}
+\right].
+\tag{66.5}
+$$
+
+因此对每个固定 $a\in(0,1)$，
+
+$$
+e(R_{a,\varepsilon})=\varepsilon+O_a(\varepsilon^2).
+\tag{66.6}
+$$
+
+在充分小的正 $\varepsilon$ 下，严格反例定理仍给 $e>\varepsilon$，故
+
+$$
+0<e(R_{a,\varepsilon})-\varepsilon
+=O_a(\varepsilon^2).
+\tag{66.7}
+$$
+
+这是差值的上界阶数，不宣称差值为 $\Theta_a(\varepsilon^2)$，也不宣称式（66.5）的显式修复必为最优。
+

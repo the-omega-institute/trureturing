@@ -1,0 +1,79 @@
+### 93.4 中心方向与两个系数的同时约化
+
+若 $m=0$，先取原算子为核心；维数界将在下一款结算。以下设 $m=q-2d>0$。由（93.10），可取 $m$ 维 $Z'\subset Z$，以及等距 $J_Z:\mathbb C^m\to Z'$。另有
+
+$$
+\dim(\operatorname{ran}H_0+\operatorname{ran}H_1)^\perp
+\ge q-\operatorname{rank}H_0-\operatorname{rank}H_1
+\ge q-2d=m.
+$$
+
+在此正交补中取一个 $m$ 维中心空间，并以等距 $C_o:\mathbb C^m\to Q$ 参数化。照第92节取
+
+$$
+A_o=\sqrt{s/\nu}\,H_1J_Z,\qquad
+B_o=-\sqrt{s/\mu}\,H_0J_Z.
+\tag{93.12}
+$$
+
+（93.11）使 $A_o,B_o$ 为等距，且
+$\operatorname{ran}B_o\subset\ker H_1^*$，所以两个像正交；中心像又与它们正交。由精确对角式、交叉式及（93.11），得到
+
+$$
+XA_o=\mu A_o,\quad YA_o=0,\quad
+XB_o=0,\quad YB_o=\nu B_o,
+$$
+
+$$
+XC_o=\beta^2C_o,\quad YC_o=\delta^2C_o,
+\qquad
+\beta=\mu\sqrt{s/\Delta},\quad
+\delta=\nu\sqrt{s/\Delta},
+$$
+
+$$
+L_1L_0^*A_o=\sqrt{\mu\nu}\,B_o,\quad
+L_0L_1^*B_o=\sqrt{\mu\nu}\,A_o,
+$$
+
+$$
+L_1L_0^*C_o=L_0L_1^*C_o=0.
+\tag{93.13}
+$$
+
+在同一个输入 $Q$ 中定义
+
+$$
+P_o=\mu^{-1/2}L_0^*A_o
+=\nu^{-1/2}L_1^*B_o,\qquad
+R_o=\beta^{-1}L_0^*C_o,\qquad
+S_o=\delta^{-1}L_1^*C_o.
+\tag{93.14}
+$$
+
+两个 $P_o$ 表达式的相等、三者各自等距及彼此正交，均由（93.13）计算 Gram 矩阵得到，正如（92.17）、（92.18）。相应的系数作用为
+
+$$
+\begin{array}{c|ccc}
+& P_o & R_o & S_o\\ \hline
+L_0&\sqrt\mu\,A_o&\beta C_o&0\\
+L_1&\sqrt\nu\,B_o&0&\delta C_o
+\end{array}.
+\tag{93.15}
+$$
+
+同时，两个伴随满足
+
+$$
+L_0^*A_o=\sqrt\mu P_o,\quad L_0^*B_o=0,\quad
+L_0^*C_o=\beta R_o,
+$$
+
+$$
+L_1^*A_o=0,\quad L_1^*B_o=\sqrt\nu P_o,\quad
+L_1^*C_o=\delta S_o.
+\tag{93.16}
+$$
+
+因此三个输入像的正交和与三个输出像的正交和，不仅被两个系数共同保持，其正交补也被共同保持。（93.15）、（93.16）给真正同时直和分解，避免分别为两个系数选取不相容的极分解。分别选择输入、输出酉基并按每个坐标重排，即得（93.2）。
+

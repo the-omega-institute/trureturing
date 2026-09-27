@@ -1,0 +1,214 @@
+**证明。** 使用第 68 章的实际一、二行比较、完整线占据数与全局校准。
+记 $N_J=\sum_jC_j$、$d_c=d_{J^c}$。这些估计给
+
+```math
+N_J=O_{\mathbb P}(qQ^{-5/2}),\qquad d_{\rm all},d_c\sim q/2,
+\qquad d_J=O_{\mathbb P}(qQ^{-5/2}).
+```
+
+式 (70.4)。
+
+这里第一式来自实际行数，而不是从后验方差反推。
+所以以概率趋一有 $N_J<q<M-N_J$；补集 Bernoulli 参数均严格在零一之间，
+每个 $0\le\sum_jn_j\le N_J$ 都能由补集凑成总数 $q$。
+这证明完整盒支持。(68.29) 的对数占据数估计及全域 Riemann 和随即证明 (70.3)。
+
+还需要比窗口半宽更精确的参数界。
+在全行截断上，完整窗口恰为原有计数线，因而
+
+```math
+\sup_{j\in K_M}|W_j-\tau|
+ \le C\{\lambda|\alpha-P/Q|+\epsilon\lambda+q^{-1}\}
+ =o(q^{-1/2}),\qquad
+\eta_x:=\max_{j:C_j>0}|p_j-1/2|=O_{\mathbb P}(q^{-1/2}).
+```
+
+式 (70.5)。
+
+第一项的十进制尾是 $10^{-Q^5}$ 阶；第二项乘 $\sqrt q$ 的指数率为
+$-\phi+c_q/2<0$；第三项显然满足。
+又有 $\tau-\log((M-q)/q)=O(q/M)=o(q^{-1/2})$，
+加上 $O_{\mathbb P}(q^{-1/2})$ 的全局校准根即得第二式。
+空组单独置 $p_j=1/2$，不改变任何律。
+
+令 $m_J=\sum_jC_jp_j$、$D=k-m_J$。
+精确后验与乘积律的密度比仍为
+
+```math
+L_x(k)=\frac{\mathsf Q_x(S_{J^c}=q-k)}{\mathsf Q_x(S_{\rm all}=q)},\qquad
+\mathsf P_x(n)=L_x\!\left(\sum_jn_j\right)\mathsf Q_x(n).
+```
+
+式 (70.6)。
+
+(68.39) 的局部 Bernoulli 界给
+$\log L_x(k)\le C(d_J/q+q^{-1/2})$。
+远离中心的下界不能取该加性近似的对数，须另作倾斜。
+对补集定义 $K(t)=\sum_{i\notin J}\log(1-p_i+p_ie^t)$。
+logistic 方差的对数导数绝对值至多为一，所以
+
+```math
+e^{-|t|}d_c\le K''(t)\le e^{|t|}d_c.
+```
+
+式 (70.7)。
+
+在 $d_c\ge c_1q$ 且 $N_J\le c_1q/(4e)$ 的好数据上，
+每个所选总数都对应唯一 $t$，使 $K'(t)=q-k$，且
+$|t|\le C|D|/q=o(1)$，一致于完整盒。
+这是将 (70.7) 先在 $[-1,1]$ 上积分定位根，再用导数下界所得。
+倾斜后的均值恰为目标整数，方差 $d_t=K''(t)\asymp q$，
+故同一局部 Bernoulli 估计给中心原子
+$(2\pi d_t)^{-1/2}(1+O(q^{-1/2}))$。
+撤销倾斜付出 $\exp(-\mathcal I_t)$，其中
+$0\le\mathcal I_t=t(q-k)-K(t)\le C D^2/q$。
+由于 $d_{\rm all}\ge d_c$ 且 $|\log(d_t/d_c)|\le|t|$，得到
+
+```math
+-C\{D^2/q+q^{-1/2}\}\le\log L_x(k)
+ \le C\{d_J/q+q^{-1/2}\},\qquad0\le k\le N_J.
+```
+
+式 (70.8)。
+
+此式允许极端元组具有很小的密度比；并未给出一致的正常数下界。
+
+现在估计乘积计数律的幂倾斜。
+对 $f_{n,p}(k)=\binom nkp^k(1-p)^{n-k}$，令
+
+```math
+f_{n,p;\nu}(k)=\frac{f_{n,p}(k)^\nu}{\sum_h f_{n,p}(h)^\nu}
+ \propto\binom nk^\nu e^{\nu t k},\qquad t=\operatorname{logit}p.
+```
+
+式 (70.9)。
+
+这是经典 COM-binomial 指数族，在 Kadane 的参数化中成功参数为
+$\operatorname{logistic}(\nu\operatorname{logit}p)$，而非原 $p$；其计数组合因子也被取幂，
+因此不同于先对独立标签取幂再合并为计数。
+以下直接证明所需的阶数一致界。
+记未归一化权重为 $w_k$、相邻比为 $r_k=w_{k+1}/w_k$。
+当 $n\ge2$ 时
+
+```math
+\log r_{k+1}-\log r_k
+ =\nu\left\{\log\frac{n-k-1}{n-k}+\log\frac{k+1}{k+2}\right\}
+ \le-2\nu/n=:-\kappa.
+```
+
+式 (70.10)。
+
+取该律的两个独立样本 $X_1,X_2$，条件于和 $h$。
+距离 $d=|X_1-h/2|$ 的格为非负整数或正半整数；
+除零点一次、其余两次的重数外，权重为 $w_{h/2+d}w_{h/2-d}$。
+相邻距离权重比至多为 $e^{-\kappa(2d+1)}$。
+所以其对同重数折叠离散 Gaussian $e^{-\kappa d^2}$ 的密度比随距离不增，
+递增函数的期望不超过该 Gaussian 的期望。
+这一比较由递增函数与递减密度比的协方差非正直接得到。
+整数格、半整数格的 Gaussian 和与积分比较给
+$\mathbb E d^2\le C(1+\kappa^{-1})$；$\kappa\ge1$ 时先提出最小格点权重即可。
+因此
+$2\operatorname{Var}X_1=\mathbb E(X_1-X_2)^2=4\mathbb Ed^2\le C(1+n/\nu)$。
+$n=1$ 用方差至多 $1/4$，$n=0$ 为零。
+
+在 $t=0$ 处均值为 $n/2$，均值对 $t$ 的导数为 $\nu\operatorname{Var}X_1$。
+积分并用 $|\operatorname{logit}p|\le C|p-1/2|$，对 $p\in[1/4,3/4]$ 得
+
+```math
+\operatorname{Var}_{n,p;\nu}X_1\le Cn/\nu,\qquad
+|\mathbb E_{n,p;\nu}X_1-np|\le Cn|p-1/2|,\quad0<\nu\le1.
+```
+
+式 (70.11)。
+
+对每个固定 $\nu>1$，同样的结论以依赖 $\nu$ 的常数成立。
+产品律的幂倾斜仍是这些计数幂倾斜的乘积，故
+
+```math
+\mathbb E_{\mathsf Q_{x,\nu}}D^2
+ \le C\{N_J/\nu+\eta_x^2N_J^2\}\quad(0<\nu\le1).
+```
+
+式 (70.12)。
+
+固定 $\nu>1$ 时右边可写成 $C_\nu(N_J+\eta_x^2N_J^2)$。
+这已足够，无须另证每个组的幂倾斜均值偏移为 $O_\nu(1)$。
+
+在完整盒支持事件上精确有
+
+```math
+(\log2)(H_{\nu,M}-\widetilde H_{\nu,M})
+ =\frac{\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu}{1-\nu}.
+```
+
+式 (70.13)。
+
+Jensen 不等式、(70.8)、(70.12) 给，在 $0<\nu\le1$ 上一致地
+
+```math
+-C\left\{\frac{N_J}q+\frac{\nu\eta_x^2N_J^2}q+\nu q^{-1/2}\right\}
+ \le\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu
+ \le C\nu(d_J/q+q^{-1/2}).
+```
+
+式 (70.14)。
+
+(70.4)、(70.5) 使 $\eta_x^2N_J^2/q=O_{\mathbb P}(Q^{-5})$；
+不需要这些数据函数相互独立。
+故对固定非一正阶得到 (70.2) 第一式，$\nu>1$ 用同一固定阶矩界。
+同时已得到后续所需的更强一致性
+
+```math
+\sup_{0<\nu\le1/2}|H_{\nu,M}-\widetilde H_{\nu,M}|
+ =O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (70.15)。
+
+分母不靠近零；未将此绝对误差界一致地延伸到 $\nu=1$ 的缩小邻域。
+
+固定阶的单组结论由经典二项局部极限给出。
+具体地，紧参数区间上对全部原子都有
+
+```math
+\frac c{\sqrt{n+1}}e^{-C(k-np)^2/(n+1)}
+ \le f_{n,p}(k)\le
+\frac C{\sqrt{n+1}}e^{-c(k-np)^2/(n+1)}.
+```
+
+式 (70.16)。
+
+下界已见 (68.47)。上界在 $k/n$ 离端点有固定距离时由 Stirling 与
+$D(k/n\Vert p)\ge2(k/n-p)^2$ 得到；在其余区域，
+$|k-np|\ge cn$，粗略类型上界 $e^{-nD}$ 的额外指数衰减吸收所需的 $\sqrt{n+1}$ 因子。
+于是中心 Stirling 展开、标准化网格的 Riemann 和及 (70.16) 的尾控制给
+
+```math
+\sum_{k=0}^n f_{n,p}(k)^\nu
+ =(2\pi np(1-p))^{(1-\nu)/2}\nu^{-1/2}(1+o(1)),
+```
+
+```math
+h_\nu(f_{n,p})-h_\infty(f_{n,p})\longrightarrow
+ \frac{\log\nu}{2(\nu-1)},\qquad
+0\le h_\nu(f_{n,p})-h_\infty(f_{n,p})\le C_\nu.
+```
+
+式 (70.17)。
+
+这里 $h$ 用自然对数，阶数固定且不为一，极限对 $p\in[1/4,3/4]$ 一致；
+小 $n$ 包括零由 (70.16) 及双边模态界处理。
+其中有界差还可直接使用 Melbourne–Tkocz 对整数对数凹律的经典界
+$h_\nu-h_\infty<\log\nu/(\nu-1)$；它不要求质量序列单调，
+但不能替代这里的半倍 Gaussian 极限和趋零阶数的一致估计。
+这些单组 Gaussian 熵系数是成熟工具，不是新的抽象熵公式。
+
+产品律的两种熵都逐组相加。
+在 $I\le c_q-e$ 的固定正区域上占据数指数增长，故每组贡献趋于 (70.17) 的常数；
+在 $I\ge c_q+e$ 上实际组以概率趋一全部为空；
+过渡条带用 $C_\nu$ 界。
+先令规模趋无穷，再令 $e\downarrow0$，第 68 章的完整域网格计数给正区域长度 $\ell$。
+由定理 68.6 的最小熵比较及 (70.13) 传回实际律，即得 (70.2) 第二式。
+端点邻接区间未删除，也未分别展开两个熵的较大算术修正。
+支持置换及共同判向成功事件按第 68 章传递全部结论。证毕。
+

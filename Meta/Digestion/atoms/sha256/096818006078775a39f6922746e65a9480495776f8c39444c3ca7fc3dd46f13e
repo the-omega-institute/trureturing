@@ -1,0 +1,69 @@
+### 192.1 任意路径的一阶定律
+
+保持第186节独立旗标模型与完整原输入恢复任务。固定
+$\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+$\delta=R-1$、$\Sigma=R+1$。令
+
+$$
+0<\ell_\epsilon\le\frac12,\qquad
+r_\epsilon=1-\ell_\epsilon,\qquad
+\kappa_\epsilon=1-2\ell_\epsilon,\qquad
+\frac{\epsilon}{\ell_\epsilon}\longrightarrow0.
+\tag{192.1}
+$$
+
+来源及其正交伙伴为
+
+$$
+|\Xi_\epsilon\rangle
+=\sqrt{r_\epsilon}|00\rangle+\sqrt{\ell_\epsilon}|11\rangle,
+\qquad
+|\psi_\epsilon\rangle=(I\otimes Y)|\Xi_\epsilon\rangle.
+$$
+
+仍取 $w_0=\epsilon$、$w_1=R\epsilon$，以及
+
+$$
+\eta_s(w)
+=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+输入旗标态为
+$\omega_j=\frac12\sum_{s=\pm1}P_s^Q\otimes\eta_s(w_j)$，
+通道为
+$\mathcal N(X)=\sum_jX_{jj}\omega_j$，
+目标为
+$\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。
+解码器只作用于 $QR$，系统 $M$ 始终不可访问；
+误差仍是对全部外部参考取最坏值的半 diamond 范数。
+记所有共同 CPTP 解码器的最优误差为
+$H_\epsilon=h_{\kappa_\epsilon}(\epsilon,R)$。
+
+则
+
+$$
+\boxed{
+H_\epsilon
+=\frac34+\frac{\beta\Sigma}{8}\epsilon+o(\epsilon).
+}
+\tag{192.2}
+$$
+
+这里不要求 $\ell_\epsilon$ 收敛，更不要求
+$\ell_\epsilon\to0$ 或 $\ell_\epsilon^2=o(\epsilon)$。
+
+还有一项操作层的刚性。对任意满足
+$e_\epsilon\le3/4+C\epsilon$ 的解码器族，先作第189节不增加误差的输出标签与旗标对称化。由此得到的每个旗标上的共同二结果 instrument 满足
+
+$$
+\boxed{
+\Gamma_{j,s}^{(\epsilon)}
+\longrightarrow \frac12\operatorname{id},
+\qquad j=0,1,\quad s=\pm1,
+}
+\tag{192.3}
+$$
+
+收敛可取 Choi 范数或 diamond 范数；本节空间维数固定，两者给出相同收敛概念。此式的逐旗标平衡以该对称化为前提。未经对称化时，旗标本身可以用于随机分配输出标签，不能要求每个旗标的标签概率分别为 $1/2$。
+

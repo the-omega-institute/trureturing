@@ -1,0 +1,24 @@
+**命题 438.2（有限似然的极限记录了哪一部分质量）。** 对该实现，在三个承载事件上分别有
+
+$$
+L_n\longrightarrow
+\begin{cases}
+0,&A\text{ 几乎处},\\
+b/a,&C\text{ 几乎处},\\
++\infty,&B\text{ 几乎处}.
+\end{cases}
+$$
+
+有限历史来源后验 $\lambda p_n/[\lambda p_n+(1-\lambda)q_n]$ 因而分别趋于一、$\lambda a/[\lambda a+(1-\lambda)b]$、零。另一方面，每个 $n$ 有 $\mathbb E_PL_n=1$，而其 $P$ 几乎处有限极限满足 $\mathbb E_PL_\infty=b<1$。
+
+证明：对任意不同的 Bernoulli 参数 $s,t\in(0,1)$，在参数 $s$ 的独立路径律下，强大数律与圆柱概率乘积给出
+
+$$
+\frac1n\log\frac{\Pr_t(H_n)}{\Pr_s(H_n)}
+\longrightarrow s\log(t/s)+(1-s)\log[(1-t)/(1-s)]<0.
+$$
+
+严格负性是 Bernoulli 相对熵的严格正性，也可由严格 Jensen 不等式得到。这是本推导使用的经典大数律／相对熵事实。在 $C$ 下，$u_n/c_n,v_n/c_n$ 均趋于零，将 $L_n$ 的分子分母同时除以 $c_n$ 得 $b/a$。在 $A$ 下除以 $u_n$，分子趋于零、分母趋于 $1-a>0$。在 $B$ 下对 $L_n^{-1}$ 同理处理，得到其趋于零，故 $L_n\to\infty$。后验公式连续地给出各分支极限。
+
+有限时刻期望为一来自 $\sum_hp_n(h)L_n(h)=\sum_hq_n(h)=1$。在 $P$ 下，$E_C$ 的质量为 $a$，$E_A$ 的质量为 $1-a$，所以极限期望为 $a(b/a)+(1-a)0=b$。证毕。
+

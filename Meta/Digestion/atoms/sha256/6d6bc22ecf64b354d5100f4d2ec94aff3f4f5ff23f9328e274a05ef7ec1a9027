@@ -1,0 +1,2 @@
+**定义 240.1（移动任务中的联合资源）。** 沿用第239节的实际任务族和窗口 $K_s$，并对每个 $s$ 使用第238节的联合允许类。固定 $\lambda,\mu\ge0$、$\lambda^2+\mu^2>0$，置 $R_0=\sqrt{\lambda^2+\mu^2}$。仍以 $Q_s^{\lambda,\mu}(\varepsilon),E_s^{\lambda,\mu}(\varepsilon)$ 表示窗口内的峰值和积分下确界。两个全域预算分别为 $I_R^C\le\lambda\varepsilon$、$J\le\mu\varepsilon$，每个实际任务的处理器及共轭固定。
+

@@ -1,0 +1,13 @@
+**排除 $`G_4\ne A`$。** 反设二者不同。由它们都是 $`U`$ 中二维空间，$`A+G_4=U`$。它们又包含于三维 $`S_1`$，故 $`S_1=U`$。因此 $`G_\xi\subset U`$，且 $`g:U\to W`$ 为满等距。
+由 （29.3），$`P_UH_3=A`$、$`P_UH_4=G_4`$，所以 $`P_US_0=U`$。三维空间 $`S_0`$ 必是某个线性映射 $`T:U\to W`$ 的图：
+$$
+S_0=\{u+Tu:u\in U\}.
+\tag{29.13}
+$$
+又由 （29.3），$`T(A)=B_3`$、$`T(G_4)=Q_4`$，且 $`T|_A`$ 单射。因此
+$$
+\operatorname{im}T=B_3+Q_4=g(G_\xi+A).
+\tag{29.14}
+$$
+然而 $`0\ne w\otimes\xi\in H_\xi\cap G_\xi\subset S_0\cap U`$，故 $`\ker T\ne0`$、$`\operatorname{rank}T\le2`$。式 （29.14） 迫使两个二维空间 $`G_\xi,A`$ 相等。于是 $`w\otimes\xi\in A\cap\ker T`$，与 $`T|_A`$ 单射矛盾。证得 $`G_4=A`$；（29.11） 随即给 $`H_3=H_\xi`$，即 （29.5）。
+

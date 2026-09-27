@@ -1,0 +1,63 @@
+**证明。** 使用定理77.1中的 $J_0,J_1$。选输出满等距
+$$
+A_o=J_1:\mathbb C^d\to E_1,\qquad
+B_o=-J_0:\mathbb C^d\to E_0,
+$$
+并选任意满等距 $C_o:\mathbb C^d\to E_c$。三者具有两两正交像。由（77.5），
+$$
+L_1L_0^*=\sqrt{\mu\nu}\,B_oA_o^*.
+\tag{77.9}
+$$
+令
+$$
+P=\frac1{\sqrt\mu}L_0^*A_o,
+\qquad
+\widetilde P=\frac1{\sqrt\nu}L_1^*B_o.
+$$
+（77.4）说明 $P,\widetilde P$ 均为等距；（77.9）说明 $P^*\widetilde P=I_d$。所以
+$$
+(P-\widetilde P)^*(P-\widetilde P)=0,
+\qquad P=\widetilde P.
+\tag{77.10}
+$$
+再置
+$$
+\beta=\mu\sqrt{s/c},\qquad \delta=\nu\sqrt{s/c},
+\qquad R=\beta^{-1}L_0^*C_o,
+\qquad S=\delta^{-1}L_1^*C_o.
+$$
+由（77.4），$R,S$ 也是等距。像的正交性直接来自
+$$
+\begin{aligned}
+P^*R&=(\sqrt\mu\beta)^{-1}A_o^*XC_o=0,\\
+P^*S&=(\sqrt\mu\delta)^{-1}A_o^*L_0L_1^*C_o=0,\\
+R^*S&=(\beta\delta)^{-1}C_o^*L_0L_1^*C_o=0.
+\end{aligned}
+$$
+每个像都是 $d$ 维，而 $q=3d$，故 $P,R,S$ 的像正交分解整个输入 $Q$。
+
+在输入坐标 $(P,R,S)$ 和输出坐标 $(A_o,B_o,C_o)$ 中，（77.4）、（77.9）、（77.10）分别给
+$$
+L_0P=\sqrt\mu A_o,\quad L_1P=\sqrt\nu B_o,
+\quad L_0R=\beta C_o,\quad L_1S=\delta C_o,
+\quad L_1R=L_0S=0.
+$$
+这就是（77.7）。反向代入加权块矩阵，则
+$$
+I-MM^*=\mathcal H\mathcal H^*,\qquad
+\mathcal H v=\frac{\sqrt\mu B_ov\otimes e_0-\sqrt\nu A_ov\otimes e_1}{\sqrt s}.
+\tag{77.11}
+$$
+由于 $\mathcal H$ 是等距，缺陷恰是秩 $d$ 的正交投影，且 $M$ 是收缩。式（77.1）直接验证所有二次纤维的保持。
+
+最后，对非零 $z$，标准形的铅笔为
+$$
+z_0L_0+z_1L_1=
+\begin{pmatrix}
+\sqrt\mu z_0I_d&0&0\\
+\sqrt\nu z_1I_d&0&0\\
+0&\beta z_0I_d&\delta z_1I_d
+\end{pmatrix}.
+$$
+第一输入块的像在前两个输出块中有维数 $d$；后两个输入块的像正好是第三输出块，也有维数 $d$。两像正交，故总秩恰为 $2d$。证毕。
+

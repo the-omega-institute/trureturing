@@ -1,0 +1,36 @@
+**推论 120.1（固定等待占比的状态几何）。** 对固定 $0\le\lambda\le1$，可达慢点击密度矩阵正好是
+
+$$
+\boxed{
+\{\zeta:\zeta\succeq0,\ \operatorname{Tr}\zeta=1,\ \zeta_{00}\ge\lambda\}.
+}
+\tag{120.1}
+$$
+
+记
+
+$$
+\mathcal Z_\lambda:=\{\zeta:\zeta\succeq0,\ \operatorname{Tr}\zeta=1,\ \zeta_{00}\ge\lambda\}.
+$$
+
+写 $\zeta=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，其中 $\sigma_z=|0\rangle\langle0|-|1\rangle\langle1|$，则它是 Bloch 球帽
+
+$$
+|\mathbf r|\le1,\qquad r_z\ge2\lambda-1.
+\tag{120.2}
+$$
+
+特别地，
+
+$$
+\max_{\zeta\in\mathcal Z_\lambda}|\zeta_{01}|
+=
+\begin{cases}
+\frac12,&0\le\lambda\le\frac12,\\[1mm]
+\sqrt{\lambda(1-\lambda)},&\frac12\le\lambda\le1.
+\end{cases}
+\tag{120.3}
+$$
+
+证明。式（120.1）是定理 119.2 的直接投影；Bloch 表示给出式（120.2）。正性给 $|\zeta_{01}|^2\le\zeta_{00}(1-\zeta_{00})$。在 $\zeta_{00}\ge\lambda$ 上最大化右侧，得到式（120.3）；定理 119.2 的构造实现每个最大值。证毕。
+

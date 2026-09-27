@@ -1,0 +1,40 @@
+**定理 143.2（长期 Laplace 生成率）。** 在上述 primitive 假设下，对每个 $s\ge0$，有
+
+$$
+\boxed{
+\lim_{m\to\infty}\frac1m\log F_m(s;\rho)=\psi(s).
+}
+\tag{143.1}
+$$
+
+只要 $w$ 是非零非负向量，极限与初始输入 $\rho$ 的具体扇区人口无关。更精确地，若 $\ell(s),r(s)$ 分别是满足
+
+$$
+\ell(s)^{\mathsf T}r(s)=1
+$$
+
+的正左、右 Perron 向量，则
+
+$$
+F_m(s;\rho)
+=
+\lambda(s)^{m-1}
+\bigl(\mathbf 1^{\mathsf T}D(s)r(s)\bigr)
+\bigl(\ell(s)^{\mathsf T}w\bigr)
++o(\lambda(s)^{m-1}).
+\tag{143.2}
+$$
+
+### 证明
+
+$D(s)$ 的两个对角元都严格为正，且它不改变 $T$ 的零元图。因此 $A(s)=T D(s)$ 仍为 primitive 非负矩阵。Perron—Frobenius 定理给出简单正特征值 $\lambda(s)>0$，其余特征值的模严格小于 $\lambda(s)$，并给出谱分解
+
+$$
+A(s)^{m-1}
+=
+\lambda(s)^{m-1}r(s)\ell(s)^{\mathsf T}
++o(\lambda(s)^{m-1}).
+$$
+
+左乘 $\mathbf1^{\mathsf T}D(s)$、右乘 $w$ 即得式（143.2）。正性使两个前因子都严格为正，取对数并除以 $m$ 得式（143.1）。证毕。
+

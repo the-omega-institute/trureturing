@@ -1,0 +1,11 @@
+**命题 5.7.1（二元梳与非空零质量柱）。** 对任意严格正二元 iid 概率 $p_0+p_1=1$，一词预算存在满质量族
+$$
+\mathcal F=\{0^n1:n\ge0\},\qquad
+S_{\mathcal F}(p)=\sum_{n\ge0}p_0^np_1=1.
+$$
+其幸存集为 $\{0^\infty\}$，质量为零，故 $B(p)=1$、$\eta(p)=0$。若只取 $n\ge1$，则
+$$
+E=[1]\cup\{0^\infty\},\qquad M=p_1>0,\qquad
+E\cap[0]=\{0^\infty\},\qquad\mu_p(E\cap[0])=0.
+$$
+

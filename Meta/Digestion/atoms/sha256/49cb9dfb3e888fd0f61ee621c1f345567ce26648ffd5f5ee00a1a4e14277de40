@@ -1,0 +1,16 @@
+**定义 58.1（稀有进入、缓慢退出的完整仪器）。** 取正交基 $|s\rangle,|u\rangle$，共同初态 $P_s=|s\rangle\langle s|$。对 $0\le w<1$、$0<\gamma\le1$，未点击分支 $\mathcal N_{w,\gamma}$ 使用两个 Kraus 算子
+
+$$
+\sqrt w\,|u\rangle\langle s|,\qquad
+\sqrt{1-\gamma}\,|u\rangle\langle u|;
+$$
+
+点击分支 $\mathcal C_{w,\gamma}$ 使用
+
+$$
+\sqrt{1-w}\,|s\rangle\langle s|,\qquad
+\sqrt\gamma\,|s\rangle\langle u|.
+$$
+
+每个分支内部求 Kraus 和，不把两个 Kraus 指标视作可读结果。四个伴随平方之和为 $I$，因此这是合法的双结果仪器。另把同一公式的 $(w,\gamma)=(0,0)$ 纳入模型族，作为基准仪器：从 $P_s$ 第一轮必点击，从 $P_u$ 永不点击。
+

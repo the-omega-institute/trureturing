@@ -1,0 +1,86 @@
+**定理 132.1（旋转族反例）。** 假定慢后继为 $\zeta=P_0$，在输出 qubit 上取
+
+$$
+U_t=e^{-itY},
+\qquad
+\Lambda_t(X)=U_tXU_t^\dagger,
+$$
+
+其中 $Y$ 为 Pauli $y$ 矩阵。对慢扇区输入 $P_*$，时间敏感续接的输出为
+
+$$
+\bar\rho
+=
+\int_0^\infty e^{-t}U_tP_0U_t^\dagger\,dt
+=
+\begin{pmatrix}
+3/5&1/5\\
+1/5&2/5
+\end{pmatrix}.
+\tag{132.1}
+$$
+
+而先终端化再使用时间盲续接 $\Lambda_0$ 的输出为 $P_0$。两者不同，且
+
+$$
+\boxed{
+\frac12\|\bar\rho-P_0\|_1=\frac{\sqrt5}{5}>0.
+}
+\tag{132.2}
+$$
+
+### 证明
+
+在计算基中，
+
+$$
+U_t|0\rangle
+=\cos t\,|0\rangle+\sin t\,|1\rangle,
+$$
+
+所以
+
+$$
+U_tP_0U_t^\dagger
+=
+\begin{pmatrix}
+\cos^2t&\sin t\cos t\\
+\sin t\cos t&\sin^2t
+\end{pmatrix}.
+$$
+
+使用
+
+$$
+\int_0^\infty e^{-t}\,dt=1,
+\qquad
+\int_0^\infty e^{-t}\cos(2t)\,dt=\frac15,
+\qquad
+\int_0^\infty e^{-t}\sin(2t)\,dt=\frac25,
+$$
+
+得到
+
+$$
+\int_0^\infty e^{-t}\cos^2t\,dt=\frac35,
+\quad
+\int_0^\infty e^{-t}\sin^2t\,dt=\frac25,
+\quad
+\int_0^\infty e^{-t}\sin t\cos t\,dt=\frac15.
+$$
+
+这给出式（132.1）。先取 $f\equiv1$ 得到慢后继 $P_0$，再施加固定 $\Lambda_0$ 仍为 $P_0$，所以两输出不同。
+
+差矩阵为
+
+$$
+\bar\rho-P_0
+=
+\begin{pmatrix}
+-2/5&1/5\\
+1/5&2/5
+\end{pmatrix},
+$$
+
+其本征值为 $\pm\sqrt5/5$，故半迹范数为式（132.2）。证毕。
+

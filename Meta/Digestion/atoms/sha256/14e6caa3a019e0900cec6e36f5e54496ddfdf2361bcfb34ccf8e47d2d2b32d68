@@ -1,0 +1,25 @@
+## 63. 新环境切口的谱尾误差证书
+
+第62节以投影像秩排除不能精确恢复的环境分支。本节保留同一实际切口，把秩障碍推广为由目标谱控制的误差下界。所有系统均有限维。
+
+固定一轮实际纯化输入，未受通道作用的系统记为 $B\otimes E_{\mathrm{old}}$，通道输入为 $D$。新环境实现为等距
+$$
+W:D\longrightarrow K\otimes E_{\mathrm{new}}.
+$$
+纯输出为 $|\Omega\rangle$。目标是归一化纯态 $|\psi\rangle_{BQ}$；接收器只能对 $K$ 实施任意 CPTP 解码 $\mathcal D:K\to Q$，然后丢弃全部环境。记解码输出为 $\rho_{BQ}$。
+
+设目标跨 $B|Q$ 的 Schmidt 权重按非增顺序为 $\lambda_1,\ldots,\lambda_r>0$。定义
+$$
+\Lambda_m=\sum_{i=1}^{\min(m,r)}\lambda_i,\qquad
+\epsilon_m=1-\Lambda_m,
+$$
+其中 $\Lambda_0=0$。
+
+对新环境正交投影 $P$，置
+$$
+W_P=(I_K\otimes P)W,\quad m_P=\operatorname{rank}W_P,
+\quad |\Omega_P\rangle=(I_{B,E_{\mathrm{old}},K}\otimes P)|\Omega\rangle,
+\quad w_P=\|\Omega_P\|^2.
+$$
+这里 $w_P$ 是同一实际联合输入上的投影概率，不是假设环境能够被接收器访问。
+

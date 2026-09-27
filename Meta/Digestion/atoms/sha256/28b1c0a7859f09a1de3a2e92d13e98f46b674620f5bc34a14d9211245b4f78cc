@@ -1,0 +1,31 @@
+**推论 68.3（精确可恢复性与 Gaussian 独立极限并存）。** 原始数据与单标量 $T_M$ 在 $H_M$ 上
+决定 $D_M$，但原联合弱极限仍有
+
+```math
+(T_M,D_M)\Longrightarrow (N_2,W_\rho(x)),\qquad
+N_2\ \perp\ W_\rho,
+```
+
+式 (68.17)。
+
+并保留第 51–54 章所列旧空间对象及其条件 BL、固定支持无条件一致范围。
+若 $S_M=\operatorname{sgn}D_M$、$\operatorname{sgn}0=0$，TV 采用事件上确界约定，则先验数据概率意义下
+
+```math
+\left\|\mathcal L((T_M,S_M)\mid\mathscr X_M)
+       -\mathcal L((T_M,-S_M)\mid\mathscr X_M)\right\|_{\rm TV}\longrightarrow1.
+```
+
+式 (68.18)。
+
+**证明。** (68.17) 是原精确坐标的既有联合极限；本章只改变所讨论的信息问题，未改变这些随机变量。
+$N_2$ 与整个旧实 Gaussian 场独立，由第 51 章的共同二次型逼近与有限秩删除证明。
+在 $H_M$ 的每份数据上，成功图像与其非零符号反射图像不交，零符号子测度相同，
+所以 (68.18) 左边精确等于 $1-\mathbb P(D_M=0\mid\mathscr X_M)$。
+原偶极条件 CLT 的极限为非退化连续 Gaussian；先用固定 $[-u,u]$ 上界零原子，再令 $u\downarrow0$，
+该原子以数据概率趋零。加上 $\mathbb P(H_M^c)\to0$ 即得结论。
+与之对应，极限 $N_2$ 单独不能预测独立的 $\operatorname{sgn}W_\rho(x)$，其条件符号公平。
+这里未把增长的整个原始数据宣称为某个固定弱极限对象，也未断言统计实验等价。
+有限系统的平移整数格与精确后验中心承担可恢复性；连续 Gaussian 近似不保留该算术分离。
+不存在与弱收敛的矛盾。证毕。
+

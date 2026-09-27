@@ -1,0 +1,24 @@
+### 证明
+
+若两个压缩算子相同，式（127.1）立即给出全部事件集的输出相同。
+
+反之，取 $E=\{0\}$ 得
+
+$$
+\omega_R^Q\otimes P_0
+=\widetilde\omega_R^Q\otimes P_0,
+$$
+
+从而 $\omega_R^Q=\widetilde\omega_R^Q$；取 $E=(0,\infty)$ 得
+
+$$
+\omega_R^P\otimes\zeta
+=\widetilde\omega_R^P\otimes\zeta,
+$$
+
+从而 $\omega_R^P=\widetilde\omega_R^P$。证毕。
+
+**关系解释。** “保留整个临界时间记录”与“恢复整个临界输入”不是同一命题。对无参考输入，连续时间记录的观察商只有一个实数 $p=\operatorname{Tr}(P_*\rho)$；对带参考输入，观察商扩大为两个参考算子 $\omega_R^Q,\omega_R^P$，但跨扇区相干仍在该接口上不可见。
+
+---
+

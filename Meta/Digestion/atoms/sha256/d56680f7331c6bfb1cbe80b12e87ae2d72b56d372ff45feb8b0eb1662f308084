@@ -1,0 +1,46 @@
+### 236.5 任意 $d\ge N-1$ 的实际达到通道
+
+按欧几里得除法写
+$$
+d=t(N-1)+r,\qquad
+t=\left\lfloor\frac d{N-1}\right\rfloor\ge1,
+\qquad0\le r<N-1.
+\tag{236.MP.31}
+$$
+选择输入正交分解
+$$
+A=V_1\oplus\cdots\oplus V_t\oplus G,
+\qquad\dim V_a=N-1,\quad\dim G=r.
+\tag{236.MP.32}
+$$
+$r=0$ 时省略 $G$。每个 $V_a$ 上使用第四节的同一形状补投影效应，均配合原接口中的实际输出 $r_j$。
+
+若 $r>0$，在 $G$ 上取一个原标签分支为零，其余 $N-1$ 个标签各使用权重 $1/(N-1)$ 的完整纯重置。其总 Kraus 秩为 $(N-1)r$，完整误差是概率向量总变差
+$$
+\frac12\left[\frac1N+(N-1)
+\left(\frac1{N-1}-\frac1N\right)\right]=\frac1N.
+\tag{236.MP.33}
+$$
+该完整误差计算与输入维数无关：差映射为固定输出差乘以输入迹；任意参考放大后的部分迹收缩给上界，迹一输入达到等号。
+
+对每个标签，将这些输入块的效应取正交直和，记为 $F_j$。全部效应均正半定且
+$$
+\sum_jF_j=I_A,
+$$
+所以
+$$
+\mathcal S_j^{\rm blk}(X)=\operatorname{Tr}(F_jX)P_j
+\tag{236.MP.34}
+$$
+给出一份同接口 CPTP 候选。其各标签 Choi 秩为 $\operatorname{rank}F_j$，不同输入块的秩相加，故
+$$
+\begin{aligned}
+K(\mathcal S^{\rm blk})
+&=tN(N-2)+(N-1)r\\
+&=(N-1)d-t\\
+&=R_0.
+\end{aligned}
+\tag{236.MP.35}
+$$
+这些是精确秩：在每个单纯形块使用（236.MP.26），在余块对非零标签使用 $|r_j\rangle\langle g_b|/\sqrt{N-1}$；同标签内来自不同块的输入支撑正交，所列非零 Kraus 线性独立。
+

@@ -1,0 +1,48 @@
+**证明。** 先取任意可行 $F$，令 $D=F-F_*$。共同核定理给
+$$
+\begin{pmatrix}D&0\\0&-D\end{pmatrix}\binom uv=0
+\qquad((u,v)\in N).
+\tag{263.10}
+$$
+因此 $Du=Dv=0$，故 $D|_W=0$。又因 $D$ Hermitian，其像包含于 $U$，从而
+$$
+D=P_UDP_U\in\operatorname{Herm}(U).
+\tag{263.11}
+$$
+这证明（263.7）的一侧包含。
+
+反向，取任意 $D\in\operatorname{Herm}(U)$，记
+$$
+\widetilde D=\operatorname{diag}(D,-D).
+\tag{263.12}
+$$
+由（263.3），$\widetilde D$ 消去 $N$；Hermitian性又保证它保持 $N^\perp$。$T_*$ 在 $N^\perp$ 上严格正。记其最小正本征值为 $\mu>0$；由于 $\operatorname{Tr}T_*=n>0$，这个正支撑非零。
+
+对满足 $|t|\|D\|<\mu$ 的任意实数 $t$，在 $N^\perp$ 上有
+$$
+T_*+t\widetilde D
+\succeq(\mu-|t|\|D\|)I_{N^\perp}\succ0,
+\tag{263.13}
+$$
+而在 $N$ 上它为零。因此
+$$
+F_*+tD\in\mathcal F(Z).
+\tag{263.14}
+$$
+尤其每个这样的方向都可以作足够小的正、负扰动。更强地，任意 $D\in\operatorname{Herm}(U)$ 只要 $\|D\|<\mu$，就有 $F_*+D$ 可行，所以 $F_*$ 周围含有该方向空间中的一个相对开球。这给出仿射包的另一侧包含。
+
+设 $k=\dim_{\mathbb C}U$。复 $k$ 维空间的Hermitian矩阵有 $k$ 个实对角自由度，以及 $k(k-1)/2$ 个复非对角自由度，总实维数为
+$$
+k+2\frac{k(k-1)}2=k^2.
+\tag{263.15}
+$$
+得到（263.8）。非空凸集的仿射维数为零当且仅当它是单点，故得（263.9）。$\square$
+
+这个定理给出仿射包和局部双向可行性，并不把任意大小的 $D\in\operatorname{Herm}(U)$ 都当成可行扰动。全局纤维仍为
+$$
+\left\{F_*+D:D\in\operatorname{Herm}(U),
+T_*+\operatorname{diag}(D,-D)\succeq0\right\}.
+\tag{263.16}
+$$
+也就是说，共同核确定所有可能变化的方向，剩余块正性决定沿这些方向允许走多远。
+

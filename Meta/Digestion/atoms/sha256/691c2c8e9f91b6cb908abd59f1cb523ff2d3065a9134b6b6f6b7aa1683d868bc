@@ -1,0 +1,2 @@
+**定义 398.1（纤维的预测半径）。** 对 $b\in B$ 记 $\mathcal L_b=\{L_x:q(x)=b\}$。其半径是 $r_b=\min_{p\in\Delta_C}\max_{L\in\mathcal L_b}\operatorname{TV}(L,p)$。由于各个 $Q_b$ 可独立选择，$e_{\min}=\max_br_b$。因此共同表达的预测值不是必须选某一代表，也可以是纤维中诸规律的折中；但这种折中的质量取决于整个集合的几何形状。
+

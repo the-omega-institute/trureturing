@@ -1,0 +1,30 @@
+**定义 5.1（统一联合近似接收）。** 保留定义1.1—1.2的来源、权限及全部接收资源计数，固定等权 \(c_t=1\) 和全部候选相位 \(\Theta=\mathbb R/(2\pi\mathbb Z)\)。对 \(0<\epsilon<1\)，以 \(k_n^{(\epsilon)}\) 表示满足
+\[
+\sup_{\vartheta,J,\rho}
+\frac12\left\|
+(\operatorname{id}_J\otimes\mathcal D_n\mathcal E_n\otimes\operatorname{id}_M)
+\Omega_{\vartheta,n}(\rho)-\Omega_{\vartheta,n}(\rho)
+\right\|_1\le\epsilon
+\tag{5.1}
+\]
+的最小 \(\dim K\)。上确界取所有有限参考及其允许联合输入，编解码不依赖其中任何未知量。本节优化一个已指定终端的接收；没有要求近似编码同时实现逐位清空或无界前缀服务。
+
+记
+\[
+p=\alpha^2,\quad \mu=\frac p{1+p},\quad
+h_r=\frac{1-(-p)^r}{1+p},\quad
+V_n=\sum_{r=1}^{n-1}h_r^2,\quad
+b_n=n\mu+\left(\frac12-\mu\right)h_n.
+\tag{5.2}
+\]
+有 \(0<h_r\le1\) 及 \(V_n\le n-1\)。定义
+\[
+t_{n,\epsilon}=\sqrt{\frac{V_n}{2}\log\frac4{\epsilon^2}},\qquad
+\mathcal A_{n,\epsilon}
+=\left\{q\in\mathbb Z:
+|q-b_n|\le\frac{h_n}{2}+t_{n,\epsilon}\right\},\qquad
+r_{n,\epsilon}=\sum_{i,j}|\mathcal Q_n^{ij}\cap\mathcal A_{n,\epsilon}|.
+\tag{5.3}
+\]
+对数取自然底。\(r_{n,\epsilon}\) 计算实际保留的首末扇区与荷，不计算全部具有该荷的词数。
+

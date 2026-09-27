@@ -1,0 +1,11 @@
+**证明：可达到的上界。** $c_r\ne0$时，根据记录施加$W_r=\operatorname{diag}(\overline c_r/|c_r|,1)$；$c_r=0$时任选相位。分支的对角元原来乘$q_r$，非对角元乘$c_r$，补偿后非对角元乘$|c_r|$。删除$r$得到
+
+$$
+\mathcal D_{s_T}(\rho)=
+\begin{pmatrix}\rho_{00}&s_T\rho_{01}\\s_T\rho_{10}&\rho_{11}\end{pmatrix}
+=(1-e)\rho+eZ\rho Z,
+\quad e=(1-s_T)/2.
+$$
+
+三角不等式和通道钻石范数为一给出半钻石距离至多$e$。输入$|+\rangle$时$Z|+\rangle=|-\rangle$，两态正交，迹距离为$e$，所以这个上界本身精确。
+

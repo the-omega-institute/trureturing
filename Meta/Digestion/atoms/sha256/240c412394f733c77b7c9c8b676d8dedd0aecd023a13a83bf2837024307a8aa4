@@ -1,0 +1,12 @@
+## §2. 端局量与 König 公式
+
+固定 \(c\in[N]\)，置 \(V=[N]\setminus\{c\}\)。称非空族 \(\mathcal G\) 可容许，若其成员均为避开 \(c\) 的至少四元 AP，并且任意两个不同成员的交是非空 AP。定义
+\[
+ H=\bigcap_{A\in\mathcal G}A,\quad
+ L=\{e\in\tbinom V2:e\cap A\ne\varnothing\ (A\in\mathcal G)\},
+\]
+\[
+ P=\{Q:\ Q\text{ 是含 }c\text{ 的至少四元 AP},\ Q\cap A\text{ 为非空 AP }(A\in\mathcal G)\}.
+\]
+将 \(P\) 与 \(L\) 连为二部图：\(Q\sim e\) 当且仅当 \(e\subseteq Q\) 且 \(e\cup\{c\}\) 不是 AP；记最大匹配数为 \(\nu\)。\(\Phi(N,c,\mathcal G)\) 是避点成员恰为 \(\mathcal G\)、其余成员均含 \(c\) 且没有单元成员的良交族最大基数。
+

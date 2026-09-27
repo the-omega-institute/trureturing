@@ -1,0 +1,4 @@
+**命题 5.4（相干记录读取的条件恢复）。** 若 $d_L,d_R$ 正交，在记录基 $d_\pm=(d_L\pm d_R)/\sqrt2$ 上读取得到各为 $1/2$ 的概率，条件通路态为 $(|L\rangle\pm e^{i\phi}|R\rangle)/\sqrt2$。不按结果分类时，两者平均没有两路干涉。
+
+证明。作用 $\langle d_\pm|$ 得未归一化向量 $(|L\rangle\pm e^{i\phi}|R\rangle)/2$。归一化后，两条件密度矩阵的非对角项在等权平均中抵消。这是量子擦除机制在该接口的计算；参见 Scully–Drühl, [DOI:10.1103/PhysRevA.25.2208](https://doi.org/10.1103/PhysRevA.25.2208)。$\square$
+

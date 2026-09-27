@@ -1,0 +1,344 @@
+**定理 421.1（同深度效果递推、有限最优取得与分别凹包络）。** 在上述严格内部参数和完整操作约定下，$\mathcal S_{\mathrm{flat}}$ 非空且闭，每个 $V_n$ 联合上半连续、取值于 $[0,h]$，并且 $V_n\le V_{n+1}$。对每个固定 $n\in\mathbb N_0$，
+
+$$
+\boxed{p_n(r)=4V_n(0,0),\qquad p_0(r)=0.}
+$$
+
+该上确界由深度至多 $n$ 的有限协议取得，每个局部节点至多有五个真实实际结果。它可在原始两个量子比特上保留量子工作寄存器，并用有限经典历史控制，实施仪器时允许有限局部辅助件；无需随原协议的局部记忆或输出维数增长。
+
+上述递推依据的是如下同深度对应：任意允许的有限协议给出完整的乘积输入效果树；任意指定的这种有限效果树也能在原始两因子上实现，保持其效果、迹掉全部记录后的系统映射、接受规则及相容的共同反馈，不增加实际结果或局部节点的深度。此对应不声称保持任意原协议在记录输出上产生的 CP 仪器；从递推选取最优分裂也可以改变原先的效果树。每个非零接受真实历史的效果必为 $tP_x\otimes P_y$，其中 $t>0$，$x,y$ 为单位向量且对应的 Bloch 对属于 $\mathcal S_{\mathrm{flat}}$，其校正恢复标量恰为 $th$；此秩一结论不施加于合并后的最终标签。
+
+函数 $V_\infty$ 是 $D^2$ 上支配 $V_0$ 的最小实值分别凹函数：固定其中一个变量时，它对另一个变量凹；若任意实值分别凹函数 $g$ 满足 $g\ge V_0$，则 $g\ge V_\infty$。进一步有
+
+$$
+\boxed{\displaystyle
+\eta_{\mathrm{fin}}(r)=4V_\infty(0,0)\le U,
+\qquad
+\varepsilon_n(r):=U-4V_n(0,0)>0\quad\text{对每个固定 }n.}
+$$
+
+这里不要求或断言 $V_\infty$ 联合上半连续。每个固定深度的正间隙不提供对所有深度统一的正下界；上述表述不确定 $\eta_{\mathrm{fin}}(r)$ 的数值是否等于 $U$，不提供收敛速率或求值算法，也不声称五结果数或实现资源最小，不涉及无限协议及协议闭包的可达性。
+
+证明。先把源族的平坦归一化与乘积条件接在一起。五个 $q_i$ 张成 $W$：$q_1=e_0,q_2=e_2$，而 $q_3$ 的 $e_1$ 系数为 $\sqrt2r/(1+r^2)\ne0$。非零反对称向量 $\beta e_-$ 的两量子比特系数矩阵为
+
+$$
+\begin{pmatrix}0&\beta/\sqrt2\\-\beta/\sqrt2&0\end{pmatrix},
+\qquad \det=\frac{\beta^2}{2}\ne0,
+$$
+
+所以反对称线不含非零乘积向量。任意非零乘积向量 $v$ 若五个平方重叠相等，则该共同值严格为正，否则张成性会把 $v$ 放进反对称线。写
+
+$$
+v=\alpha w+\beta e_-,\qquad
+\alpha=\|P_Wv\|>0,\qquad
+w=w_0e_0+w_1e_1+w_2e_2=\frac{P_Wv}{\alpha}.
+$$
+
+此处直接使用定理 416.1 及其证明从定理 413.1 引入的普遍结论：单位对称平坦向量存在，并且每一个这样的 $w$ 都满足
+
+$$
+|w_0|^2=|w_1|^2=|w_2|^2
+ =|\langle w|q_i\rangle|^2=\frac13,
+\qquad |w_1^2-2w_0w_2|=\kappa.
+$$
+
+乘积向量的系数矩阵秩为一，故
+
+$$
+\begin{aligned}
+0&=\det\begin{pmatrix}
+\alpha w_0&(\alpha w_1+\beta)/\sqrt2\\
+(\alpha w_1-\beta)/\sqrt2&\alpha w_2
+\end{pmatrix}
+ =\alpha^2w_0w_2-\frac{\alpha^2w_1^2-\beta^2}{2},\\
+\beta^2&=\alpha^2(w_1^2-2w_0w_2),&
+|\beta|^2&=\kappa\alpha^2,&
+\|v\|^2&=(1+\kappa)\alpha^2.
+\end{aligned}
+$$
+
+因此每个单位平坦乘积向量都具有同一个响应和同一个反对称权重：
+
+$$
+|\langle v|q_i\rangle|^2=h,
+\qquad
+\langle v|P_-|v\rangle=\frac{\kappa}{1+\kappa}=3\kappa h.
+$$
+
+反过来，选任一上述单位 $w$，取复平方根 $d^2=w_1^2-2w_0w_2$，则
+$v=(w+de_-)/\sqrt{1+\kappa}$ 范数为一、系数矩阵行列式为零且非零，所以可写成单位因子的乘积 $x\otimes y$。其五个响应为 $h$，给出 $\mathcal S_{\mathrm{flat}}$ 中一点。该集合由闭球中的单位模长条件与五个连续等式定义，因而闭且紧。由于 $h>0$，其指示函数乘以 $h$ 就是上半连续的 $V_0$：在集合外有开邻域令其恒为零，在集合内函数值已是全局最大值。
+
+接着从任一允许协议直接抽取真实历史的效果。对历史节点 $v$，将独立局部辅助态的添加、所有已经执行的局部 CP 分支及丢弃合成为
+
+$$
+\Lambda_{A,v}:\mathcal L(R_A)\to\mathcal L(H_{A,v}),
+\qquad
+\Lambda_{B,v}:\mathcal L(R_B)\to\mathcal L(H_{B,v}).
+$$
+
+沿一条真实历史，已经发生的选择和结果均已固定，下一次 Alice 操作只复合到第一张映射，Bob 操作只复合到第二张映射；所有尚存记忆留在相应陪域。因此联合分支是 $\Lambda_{A,v}\otimes\Lambda_{B,v}$。确定性经典消息更新可吸收到局部保迹映射中，不改变其输入效果。遗忘实际结果只要求后续映射对已不可区分的历史遵守原来的相同控制，线性性允许在数学上继续逐真实历史求和；这里没有把隐藏 Kraus 指标拆成控制结果。
+
+以迹对偶定义累计输入效果
+
+$$
+A_v=\Lambda_{A,v}^\dagger(I_{H_{A,v}}),\qquad
+B_v=\Lambda_{B,v}^\dagger(I_{H_{B,v}}),\qquad
+E_v=A_v\otimes B_v.
+$$
+
+根处 $A_\varnothing=B_\varnothing=I_2$、$E_\varnothing=I_R$。若 Alice 在 $v$ 执行 $\{\Phi_{v,j}\}_j$，则
+
+$$
+A_{vj}=\Lambda_{A,v}^\dagger\bigl(\Phi_{v,j}^\dagger(I_{H_{A,vj}})\bigr),
+\qquad B_{vj}=B_v,
+\qquad \sum_jA_{vj}=A_v,
+\qquad \sum_jE_{vj}=E_v.
+$$
+
+Bob 操作时交换两方。由有限树归纳，$v$ 以下全部终端后代的效果之和为 $E_v$，包括失败和提前停止；正性还说明零效果节点的全部后代效果为零。最终合并标签的效果是 $E_y=\sum_{\ell:y(\ell)=y}E_\ell$，不要求它是单个乘积。输出迹在全部矩阵单位上给出
+
+$$
+\mathcal M_\ell(|i\rangle\langle j|)
+ =\operatorname{Tr}\mathcal I_\ell(|q_i\rangle\langle q_j|)\,|i\rangle\langle j|
+ =\langle q_j|E_\ell|q_i\rangle\,|i\rangle\langle j|.
+$$
+
+特别地，迹掉所有记录后的系统映射只依赖累计输入效果。
+
+现证明每个非零接受真实历史本身的秩一性质。把它的 $A_\ell,B_\ell$ 谱分解，得到正权重乘积项
+
+$$
+E_\ell=\sum_\nu c_{\ell\nu}|v_{\ell\nu}\rangle\langle v_{\ell\nu}|,
+\qquad c_{\ell\nu}>0,\quad
+v_{\ell\nu}=x_{\ell\nu}\otimes y_{\ell\nu},\quad
+\|x_{\ell\nu}\|=\|y_{\ell\nu}\|=1.
+$$
+
+仅为计算系统映射，令
+
+$$
+K_{\ell\nu}=\sqrt{c_{\ell\nu}}\,
+\operatorname{diag}\bigl(\langle v_{\ell\nu}|q_1\rangle,\ldots,
+                         \langle v_{\ell\nu}|q_5\rangle\bigr).
+$$
+
+则 $\mathcal M_\ell(X)=\sum_\nu K_{\ell\nu}XK_{\ell\nu}^\dagger$。用向量化
+$|D\rangle\!\rangle=\sum_i|i\rangle\otimes D|i\rangle$，接受恢复等式成为正 Choi 项的和：
+
+$$
+\sum_{\ell:y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |U_{y(\ell)}K_{\ell\nu}\rangle\!\rangle
+ \langle\!\langle U_{y(\ell)}K_{\ell\nu}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+对右边支撑的正交补取二次型，每个非负平方必须为零。因此
+
+$$
+U_{y(\ell)}K_{\ell\nu}=\gamma_{\ell\nu}I_S,
+\qquad
+p=\sum_{\ell:y(\ell)\in Y_{\mathrm s}}\sum_\nu|\gamma_{\ell\nu}|^2.
+$$
+
+若 $\gamma_{\ell\nu}=0$，酉性、$q_i$ 的张成性及反对称线不含非零乘积向量共同迫使 $v_{\ell\nu}=0$，与保留的谱项矛盾。故每个非零接受谱项的五个幅度都有相同的非零模长。对固定的真实历史，同一个 $U_{y(\ell)}$ 还迫使所有这些幅度向量在同一条复相位线上。$q_i$ 张成 $W$，所以其对称投影也在同一条一维线上；谱乘积向量张成 $\operatorname{supp}A_\ell\otimes\operatorname{supp}B_\ell$，从而
+
+$$
+\dim P_W\bigl(\operatorname{supp}A_\ell\otimes\operatorname{supp}B_\ell\bigr)\le1.
+$$
+
+取任意非零 $x\in\operatorname{supp}A_\ell$。映射
+$P_W:x\otimes\mathbb C^2\to W$ 是单射：其核中的非零向量既是乘积向量又落在反对称线，已被排除。于是其在 $x\otimes\operatorname{supp}B_\ell$ 上的像维数等于 $\operatorname{rank}B_\ell$，故 $\operatorname{rank}B_\ell=1$。交换两因子，同理 $\operatorname{rank}A_\ell=1$。将两条支撑射线的向量归一化并记为 $x,y$，这才得到真实历史的
+
+$$
+E_\ell=t_\ell P_x\otimes P_y,
+\qquad t_\ell=\operatorname{Tr}E_\ell>0,
+\qquad (a_x,a_y)\in\mathcal S_{\mathrm{flat}},
+\qquad p_\ell=t_\ell h.
+$$
+
+$p=0$ 时同一个 Choi 论证说明不存在非零接受效果。合并标签则可以把不同真实历史相加而秩为二；例如前面由 $w\pm de_-$ 给出的两条平坦乘积方向具有相同对称投影、共用反馈，其正权重效果之和就是秩二。因此不把真实历史的结论转移到合并标签。
+
+反向的终端恢复也直接成立。若 $E=tP_x\otimes P_y$ 对应平坦对，写
+
+$$
+z_i=\frac{\langle x\otimes y|q_i\rangle}{\sqrt h},\qquad |z_i|=1,
+\qquad K=\sqrt{th}\operatorname{diag}(z_1,\ldots,z_5),
+\qquad U_E=\operatorname{diag}(\overline z_1,\ldots,\overline z_5).
+$$
+
+输出迹公式给 $\mathcal M_E(X)=KXK^\dagger$，而 $U_EK=\sqrt{th}I_S$。故对全部系统矩阵以及每个有限未操作参考的全部矩阵，校正映射均为同一个标量 $th$ 乘恒等映射。这既说明终端报酬确为 $V_0$，也给出所需的全系统相位反馈。
+
+现在证明递推所需的五点最大化与上半连续性。固定联合上半连续的 $f:D^2\to[0,h]$ 和 $b\in D$，其截断下图集
+
+$$
+H_b=\{(x,z)\in\mathbb R^3\times\mathbb R:x\in D,\ 0\le z\le f(x,b)\}
+$$
+
+紧：有界性直接成立，若其中一列收敛到 $(x,z)$，上半连续性给
+$z\le\limsup f(x_m,b)\le f(x,b)$，所以该集合闭。这里使用的有限维凸包压缩是经典 Carathéodory 论证；补充背景可见 Bertsekas，MIT 6.253《Convex Analysis and Optimization》，Lecture 3 的凸包与 Carathéodory 定理部分。以下把本处所需的论证直接写出。
+
+对 $\mathbb R^4$ 中超过五个带正权重点的凸组合，增广向量 $(u_j,1)\in\mathbb R^5$ 线性相关，故存在不全为零的实数 $\mu_j$，使
+$\sum_j\mu_j u_j=0$、$\sum_j\mu_j=0$。$\mu_j$ 中既有正数也有负数。令
+
+$$
+\delta=\min_{\mu_j>0}\frac{\lambda_j}{\mu_j}>0,
+\qquad \lambda'_j=\lambda_j-\delta\mu_j.
+$$
+
+新权重仍非负、总和为一、给出同一点，且至少一项变为零。有限次删除零项后，只剩至多五点。因此 $\operatorname{conv}H_b$ 是紧集 $H_b^5\times\Delta_5$ 在凸组合映射下的像，其中
+$\Delta_5=\{\lambda_j\ge0:\sum_j\lambda_j=1\}$，故凸包本身紧。
+
+固定均值 $a$ 的竖直纤维非空，至少含 $(a,f(a,b))$；其最大纵坐标 $z_*$ 由紧性取得。将 $(a,z_*)$ 写成至多五个 $(a_j,z_j)\in H_b$ 的凸组合，再把每个 $z_j$ 提高到 $f(a_j,b)$，得到仍在同一纤维凸包中的一点。其高度不低于 $z_*$，由最大性只能相等。因此
+
+$$
+z_* =\sum_{j=1}^5\lambda_j f(a_j,b)
+\quad\text{且}\quad \sum_{j=1}^5\lambda_j a_j=a,
+$$
+
+即 $\mathcal C_Af$ 的最大值确实取得。对任何有限原分裂，直接把同一个仿射相关消元应用于图上点 $(a_j,f(a_j,b))$，可压缩为至多五点而同时保持均值和该分裂的函数加权值；这一步不需要图集闭。故任意有限结果数的分裂都受刚才的五点最大值控制。$\mathcal C_Bf$ 完全对称。
+
+还须证明最大值对两个变量联合上半连续。设 $(a_m,b_m)\to(a,b)$，沿取得 $\limsup(\mathcal C_Af)(a_m,b_m)$ 的子列选最大化权重和五点。紧性允许再取子列，使所有权重及所有点同时收敛到 $\lambda_j,a_j$；约束极限给 $\sum_j\lambda_ja_j=a$。对 $\lambda_j>0$ 的项，上半连续性给出相应乘积的上极限不超过 $\lambda_j f(a_j,b)$；对 $\lambda_j=0$ 的项，$0\le f\le h$ 保证该项趋零。因此
+
+$$
+\limsup_m(\mathcal C_Af)(a_m,b_m)
+ \le\sum_{j=1}^5\lambda_jf(a_j,b)
+ \le(\mathcal C_Af)(a,b).
+$$
+
+对 Bob 同理。两算子均保持取值区间 $[0,h]$，有限个上半连续函数的最大值仍上半连续。由 $V_0$ 起归纳，每个 $V_n$ 均满足算子的定义域条件。取唯一正权重为一、点为原均值的恒等分裂，得到 $\mathcal C_Af\ge f$ 和 $\mathcal C_Bf\ge f$，故 $V_{n+1}\ge V_n$。
+
+把这些凸组合用于效果树。任取非零节点，唯一写成
+
+$$
+A=\alpha\rho(a),\qquad B=\beta\rho(b),\qquad
+\alpha=\operatorname{Tr}A>0,\quad\beta=\operatorname{Tr}B>0,
+\qquad t=\alpha\beta=\operatorname{Tr}E.
+$$
+
+若 Alice 分裂 $A=\sum_jA_j$，丢开零效果项，置
+
+$$
+\lambda_j=\frac{\operatorname{Tr}A_j}{\operatorname{Tr}A},
+\qquad A_j=\alpha\lambda_j\rho(a_j),
+\qquad\sum_j\lambda_j=1,\quad \sum_j\lambda_ja_j=a,
+\qquad t_j=t\lambda_j.
+$$
+
+这些是输入效果的迹权重。对实际输入记录态 $\tau$，在父事件概率非零时，子事件的条件概率是
+
+$$
+\frac{\operatorname{Tr}[(A_j\otimes B)\tau]}
+     {\operatorname{Tr}[(A\otimes B)\tau]},
+$$
+
+一般不等于 $\lambda_j$；归一化效果坐标不把未知物理输入替换成混合态。Bob 分裂时使用 $\operatorname{Tr}B_j/\operatorname{Tr}B$，道理相同。
+
+对一个尚有至多 $k$ 个局部节点的后继子树，由底向上证明其全部校正接受标量不超过 $tV_k(a,b)$。$k=0$ 时只有终端历史：失败报酬为零，非零成功历史已证明必须平坦且报酬为 $th$，所以成立。零节点所有后代贡献为零。$k>0$ 时，若提前终止，利用 $V_0\le V_k$ 即可；若 Alice 操作，归纳给
+
+$$
+\sum_jp_j\le\sum_jt\lambda_jV_{k-1}(a_j,b)
+ \le t(\mathcal C_AV_{k-1})(a,b)\le tV_k(a,b).
+$$
+
+中间不等式对任意有限原分支数成立，因为图上点压缩同时保存均值和加权值。Bob 操作同理。所有失败后继均留在 $\sum_jA_j=A$ 或 $\sum_jB_j=B$ 中，不能只对成功子项重新归一化。根处 $a=b=0$、$\alpha=\beta=2$、$t=4$，所以每个深度至多 $n$ 的协议满足
+
+$$
+p(\mathsf P)\le4V_n(0,0).
+$$
+
+为证明反向取得，先说明效果树如何在同一深度实现。设给定节点累计局部算子采用标准形式 $\sqrt A,\sqrt B$。对 Alice 的任意有限分裂 $A=\sum_jA_j$，当 $A\ne0$ 时每个 $A_j$ 的支撑包含于 $A$ 的支撑：若 $Az=0$，正性使每个 $\langle z,A_jz\rangle=0$，继而 $A_jz=0$。令 $P$ 为 $A$ 的支撑投影，$A^{-1/2}$ 表示在支撑上的逆平方根、在核上为零，定义
+
+$$
+L_j=\sqrt{A_j}\,A^{-1/2},\qquad Q=I_2-P.
+$$
+
+于是
+
+$$
+\sum_jL_j^\dagger L_j=P,\qquad
+L_j\sqrt A=\sqrt{A_j},\qquad Q\sqrt A=0.
+$$
+
+去掉零权重分裂后至少剩一个正子项，选择其中一个已有实际结果 $j_*$，把 $Q$ 作为它内部的另一个隐藏 Kraus 算子，令
+
+$$
+\Phi_j(Z)=L_jZL_j^\dagger+\mathbf1_{\{j=j_*\}}QZQ.
+$$
+
+总 Kraus 效果为 $P+Q=I_2$，所以这是真正作用于整个局部量子比特空间的完整仪器。补全未增加任何实际结果，也未增加局部节点；即使只有一个正子项，仍是原来的一个单结果节点。隐藏的 $Q$ 项没有单独标签，不可另行控制。
+
+这一补全对完整矩阵及所有参考都不改变累计分支。事实上，对任意有限维附加系统 $G$，包括未操作参考、系统 $S$ 与另一方记录，及任意联合矩阵 $Z$，都有
+
+$$
+\begin{aligned}
+(I_G\otimes Q\sqrt A)Z(I_G\otimes Q\sqrt A)^\dagger&=0,\\
+(I_G\otimes L_j\sqrt A)Z(I_G\otimes L_j\sqrt A)^\dagger
+ &=(I_G\otimes\sqrt{A_j})Z(I_G\otimes\sqrt{A_j})^\dagger.
+\end{aligned}
+$$
+
+此处张量顺序可按寄存器位置重排。后续任意 CP 映射仍把零矩阵送到零，故 $Q$ 项不会在以后变成可见分支。Bob 用 $B$ 的支撑作同一构造。从根的 $\sqrt{I_2}=I_2$ 起归纳，每个真实节点的累计联合分支正是
+
+$$
+Z\longmapsto(\sqrt{A_v}\otimes\sqrt{B_v})
+ Z(\sqrt{A_v}\otimes\sqrt{B_v})^\dagger,
+$$
+
+其输入效果为指定的 $A_v\otimes B_v$。若指定树保留零效果分支，可以把它们保留为零实际结果；在不可达的零节点上任选同样有限结果数的完整局部仪器，其累计映射仍为零。这不会增加指定树的节点或深度。在选择最优树时则直接删除零权重分支。
+
+因此，给定效果树的每个非零分裂均有同深度的完整实现；终端按指定标签合并、取原接受集合并用相容的共同反馈，由矩阵单位的输出迹公式可知所有系统映射保持。新协议可在其真实实际结果中保留有限经典历史，但绝不读取补全项或其他隐藏 Kraus 指标。抽取原协议的效果树时保留遗忘历史只是代数操作；实现效果树是在允许类别内另构一棵协议，并不声称再现原协议的记忆、遗忘机制或任意记录输出状态。
+
+最后按 $V_n$ 递归选取最大化分裂。对状态 $(a,b)$ 与剩余预算 $k>0$，选择使 $V_k$ 取得的行动方及至多五个正权重子点；若选 Alice，令 $A_j=\alpha\lambda_j\rho(a_j)$，保持 $B$，若选 Bob 则对称。对每个子点按 $V_{k-1}$ 继续。预算为零时，平坦点接受并使用上面的全系统对角相位反馈，其余点拒绝。树的分支数至多五、深度至多 $n$，故总共只须选择有限多个最大化元，无须关于整个状态空间的可测选择。其报酬由递推逐节点相加恰为 $tV_k(a,b)$。每个节点按支撑滤波及隐藏补全实现，所有失败终端均保留，所以根的实际接受标量恰为 $4V_n(0,0)$。它与上界合起来证明 $p_n$ 取得；$(0,0)\notin\mathcal S_{\mathrm{flat}}$ 又给 $p_0=0$。每条校正叶映射都是已建立的全矩阵标量恒等式，张量任意未操作有限参考后求和仍为同一个 $p_n$，所以取得并未降低恢复接口。
+
+还剩极限包络及上界。因为 $0\le V_n\le h$ 且单调，$V_\infty$ 是有限实值函数。对任意有限凸组合 $a=\sum_j\lambda_ja_j$，图点压缩和递推给出
+
+$$
+\sum_j\lambda_jV_n(a_j,b)
+ \le(\mathcal C_AV_n)(a,b)\le V_{n+1}(a,b).
+$$
+
+有限和可逐项取单调极限，故
+
+$$
+\sum_j\lambda_jV_\infty(a_j,b)\le V_\infty(a,b).
+$$
+
+交换变量也成立，所以 $V_\infty$ 分别凹。若实值分别凹函数 $g\ge V_0$，并已知 $g\ge V_n$，则对 $V_n$ 任一最大化分裂，有限 Jensen 不等式给
+
+$$
+g(a,b)\ge\sum_j\lambda_jg(a_j,b)
+ \ge\sum_j\lambda_jV_n(a_j,b).
+$$
+
+Bob 的分裂同理，于是 $g\ge V_{n+1}$。归纳并取上确界得到 $g\ge V_\infty$，证明最小性。这里从未把只对联合上半连续函数定义的 $\mathcal C_A,\mathcal C_B$ 作用于一般的 $g$，也没有从单调极限推断 $V_\infty$ 上半连续。每棵允许有限树都有某个有限深度，因此
+
+$$
+\eta_{\mathrm{fin}}(r)=\sup_np_n(r)=4V_\infty(0,0).
+$$
+
+利用同一 Pauli 坐标中的反对称投影恒等式
+
+$$
+P_-=\frac14\left(I_R-\sum_{j=1}^3\sigma_j\otimes\sigma_j\right),
+\qquad
+\operatorname{Tr}\bigl[P_-(\rho(a)\otimes\rho(b))\bigr]
+ =\frac{1-a\cdot b}{4},
+$$
+
+得到分别仿射函数
+
+$$
+F_{\mathrm{sep}}(a,b)=\frac{1-a\cdot b}{12\kappa}\ge0.
+$$
+
+在 $\mathcal S_{\mathrm{flat}}$ 上，前面证明的反对称权重为 $3\kappa h$，故 $F_{\mathrm{sep}}=h$；在集合外 $V_0=0\le F_{\mathrm{sep}}$。所以它是 $V_0$ 的实值分别凹上界，由最小性
+
+$$
+V_\infty\le F_{\mathrm{sep}},
+\qquad
+\eta_{\mathrm{fin}}(r)=4V_\infty(0,0)
+ \le4F_{\mathrm{sep}}(0,0)=\frac1{3\kappa}=U.
+$$
+
+对每个固定 $n$，刚构造的最大化协议是一棵各自有限的树，满足定理 420.1 的全部原始空间、局部 CP、共同终端反馈和全参考条件。准确应用该定理的逐协议结论便得 $p_n(r)<U$，即 $\varepsilon_n(r)>0$。这一步利用的是有限最优值的实际取得；仅知道每棵树都小于 $U$，不能直接把同一严格号移到一类树的上确界上。$n$ 改变时最优树也可以改变，因而没有得到 $\inf_n\varepsilon_n(r)>0$，也没有证明该下确界为零。这里的极限始终是有限协议成功率的上确界，不把它解释为某个无限协议或闭包元素的已实现概率。证毕。
+

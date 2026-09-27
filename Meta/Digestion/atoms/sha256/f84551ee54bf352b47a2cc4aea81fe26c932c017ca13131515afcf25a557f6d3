@@ -1,0 +1,69 @@
+### 156.5 独立纯初始化、全域补全与 $4L$ 维计费
+
+比较态 $|\Xi\rangle$ 不作为免费初态提供。以下从独立纯态出发，以有限精确档案压缩建立真实运行输入。
+
+取第141节的实际档案支撑 $S_t$，并令 $S_0=\mathbb C$。本来源满足
+
+$$
+s_t:=\dim S_t=1,2,3,4,4,\ldots
+\quad(t=0,1,2,3,4,\ldots),
+\qquad
+S_{t+1}\subseteq S_t\otimes B.
+\tag{156.28}
+$$
+
+对 $0\le t<L$ 选一个 $s_t$ 维启动扇区 $K_t$ 和等距同构 $J_t:S_t\to K_t$。全部持久空间取为正交直和
+
+$$
+K=\left(\bigoplus_{t=0}^{L-1}K_t\right)\oplus K_A\oplus K_B,
+$$
+
+$$
+\dim K=1+2+3+4(L-3)+4+2=4L.
+\tag{156.29}
+$$
+
+初态取一维 $K_0$ 扇区中的固定单位向量，与来源和外部参考作张量积。
+
+对每个 $0\le t<L$，把 $S_{t+1}$ 经 $J_t\otimes I_B$ 识别为 $K_t\otimes B$ 中的实际子空间，投影记为 $P_t$。当 $t<L-1$ 时，定义 $B_t$ 在该子空间上等于 $J_{t+1}(J_t^*\otimes I_B)$，并在正交补上取零。因此
+
+$$
+B_t^*B_t=P_t.
+$$
+
+选任意输出密度矩阵 $\tau_t$，定义全域启动通道
+
+$$
+\mathcal C_t(X)
+=B_tXB_t^*
++\operatorname{Tr}[(I-P_t)X]\tau_t.
+\tag{156.30}
+$$
+
+它是 CPTP，并在实际支撑上精确压缩。最后一步 $t=L-1$ 使用第11节的规范等距
+
+$$
+F_L:S_L\longrightarrow Q\otimes R=K_A
+$$
+
+定义同样的 $B_{L-1}$ 与补全（156.30），随后对 $Q$ 作完全退相干。这个最后通道仍是全域 CPTP。前 $L-1$ 步的实际档案均被精确保留；最后一步的主动退相干是反例装置的一部分。
+
+现在把所有 $\mathcal C_t$、$\mathcal C_A$、$\mathcal C_B$ 合成一个固定通道：测量输入持久扇区，将各扇区内 $K_s\otimes B$ 块送入对应全域通道，再嵌入其指定输出扇区。若 $P_s^K$ 是持久扇区投影，$\iota_{d(s)}$ 是目标扇区嵌入，则
+
+$$
+\mathcal C(X)=\sum_{s\in\{0,\ldots,L-1,A,B\}}
+\operatorname{Ad}_{\iota_{d(s)}}\!\left(
+\mathcal C_s\bigl[(P_s^K\otimes I_B)X(P_s^K\otimes I_B)\bigr]
+\right),
+\tag{156.31}
+$$
+
+其中各块经自然识别视为 $K_s\otimes B$ 上的算子，且
+
+$$
+d(t)=t+1\ (t<L-1),\qquad
+d(L-1)=A,\qquad d(A)=B,\qquad d(B)=A.
+$$
+
+各块通道完全正且保块迹，输入扇区投影和为恒等；所以（156.31）是整个 $K\otimes B$ 上的 CPTP 通道。它每一轮都相同。启动计数和运行相位由（156.29）的持久扇区承担，未使用不计费的外部时钟。
+

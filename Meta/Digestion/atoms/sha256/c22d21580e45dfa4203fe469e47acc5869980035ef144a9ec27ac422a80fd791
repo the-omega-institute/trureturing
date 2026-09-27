@@ -1,0 +1,15 @@
+### 54.2 矩形像后的环境模式
+
+设 $K$ 七维，$E$ 为环境 Hilbert 空间，$V_0,V_1:K\to K\otimes E$ 为固定等距。给二维子空间 $A\subset K$、$F\subset E$，满足
+$$
+A\otimes F\subset V_0K.
+\tag{54.6}
+$$
+给有限尾长 $L\ge2$、二维接收子空间 $G_0=A,G_1,\ldots,G_L$，二维 $Q_1,\ldots,Q_L$，以及单位环境向量 $\eta_1,\ldots,\eta_L$，满足
+$$
+G_j\otimes\eta_j\subset V_0K,\qquad
+V_1G_{j-1}=Q_j\otimes\eta_j\quad(1\le j\le L).
+\tag{54.7}
+$$
+该抽象引理不要求 $V_0K\perp V_1K$；实际 CPTP 接收器还满足这个额外正交条件。
+

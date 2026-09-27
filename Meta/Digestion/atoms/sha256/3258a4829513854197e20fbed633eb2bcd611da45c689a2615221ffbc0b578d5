@@ -1,0 +1,16 @@
+### 证明
+
+因为 $Y$ 是 $Y'$ 的随机后处理，有
+
+$$
+\operatorname{Var}(Z\mid Y)
+=
+\mathbb E[\operatorname{Var}(Z\mid Y')\mid Y]
++
+\operatorname{Var}(\mathbb E[Z\mid Y']\mid Y).
+$$
+
+第二项非负。对 $Y$ 取期望即得（243.2）。证毕。
+
+确定性精化给出最坏直径的单调性，随机精化给出先验平均方差的单调性；两者的量词不同，不能互相替代。
+

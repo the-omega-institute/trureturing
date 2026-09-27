@@ -1,0 +1,17 @@
+**引理66.2（中间分叉的共同接口）。** 在（66.1）及（66.10）任一类反设下，存在 $P,Q,T\subset K$，使
+
+$$
+\begin{gathered}
+P\perp Q,\qquad\dim P=4,\quad\dim Q=2,\quad\dim T=2,\\
+G_2=G_4=G_6=T\subset P,\qquad
+Q_3=Q_4=Q_5=Q_6=Q,\\
+U:=V_1|_P:P\longrightarrow Q\otimes F\text{ 为满等距},\\
+UT=Q\otimes B,\qquad UG_3=Q\otimes C,\qquad UG_5=Q\otimes D,\\
+S_0:=H_1+\cdots+H_5=H_3+H_4+H_5=P\oplus Q,\\
+V_0S_0=(P\otimes B)+(T\otimes F).
+\end{gathered}
+\tag{66.11}
+$$
+
+这里没有断言 $v\in Q$；实际第二轮仍可能有 $v$ 在 $P$ 内的分量。
+

@@ -1,0 +1,39 @@
+### 276.2 部分转置的Schur补恰为一个自交换子
+
+定义由正定权重确定的相似矩阵
+$$
+A=Q^{1/2}MQ^{-1/2}.
+\tag{276.7}
+$$
+其谱和Jordan链长与 $M$ 相同；正规性则需要按这个实际的 $A$ 检验。
+
+对合同（276.1）—（276.2），标准Schur补计算在当前坐标中给出
+$$
+\boxed{\Omega(Q,M)^{\Gamma_H}\succeq0
+\quad\Longleftrightarrow\quad A^\dagger A=AA^\dagger.}
+\tag{276.8}
+$$
+
+**证明。** 部分转置交换输入的两个非对角块，得到
+$$
+T^{\Gamma_H}
+=\begin{pmatrix}
+Q&M^\dagger Q\\QM&M^\dagger QM
+\end{pmatrix}.
+\tag{276.9}
+$$
+$Q\succ0$，所以该矩阵正半定当且仅当Schur补
+$$
+S=M^\dagger QM-QMQ^{-1}M^\dagger Q
+\tag{276.10}
+$$
+正半定。直接同余化简给
+$$
+Q^{-1/2}SQ^{-1/2}
+=A^\dagger A-AA^\dagger.
+\tag{276.11}
+$$
+右侧是Hermitian矩阵，且由迹的循环性具有零迹。零迹Hermitian矩阵正半定当且仅当其每个本征值均为零，即矩阵本身为零。可逆同余与归一化因子 $c>0$ 保留正性，故（276.8）成立。$\square$
+
+因此，$A$ 不正规时 $\Omega$ 必为NPT，且负性严格正。这一结论适用于一般复矩阵 $M$，包括具有零本征值的情形。
+

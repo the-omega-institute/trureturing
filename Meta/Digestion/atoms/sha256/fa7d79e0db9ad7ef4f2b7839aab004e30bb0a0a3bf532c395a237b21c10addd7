@@ -1,0 +1,26 @@
+**定义 61.1（整槽宿主条件）。** 称 $v=(r,a)$ 为原实际槽，当且仅当某个原输入的某次读取在 $r$ 观察到 $a$；记这些槽的集合为 $\mathcal V$。固定一个可达非初始读取态 $U\ne S$，令
+
+$$
+\begin{aligned}
+I&=\\{v\in\mathcal V:\sigma(v)=\langle U,\delta_v\rangle\\},
+&1\le\delta_v\le L_U,\\
+\Gamma_v&=\\{a:\text{某次原执行经槽 }v\text{ 等待 }\delta_v\text{ 后在 }U\text{ 读到 }a\\},\\
+Z_q&=\\{a:(q,a)\notin\mathcal V\\}.
+\end{aligned}
+\tag{61.1}
+$$
+
+这里 $I$ 收集所有原实际进入槽，包含以 $U$ 为源的自返槽；$`\Gamma_v`$ 收集所有原输入、所有读取序号上经该槽到达的数字，不能只取一个历史或一个代表输入。每个 $\Gamma_v$ 非空，$`\delta_v`$ 由原驻定表固定。预先为每个整槽 $v\in I$ 选择一个既有读取宿主 $`\phi(v)\notin\{U,S\}`$，要求
+
+$$
+\begin{aligned}
+\Gamma_v&\subseteq Z_{\phi(v)},\\
+F&=\operatorname{image}\phi,\qquad
+E_q=\max_{v\in I:\phi(v)=q}\delta_v,\qquad
+D_q=\bigcup_{v\in I:\phi(v)=q}\Gamma_v\quad(q\in F).
+\end{aligned}
+\tag{61.2}
+$$
+
+同一槽的所有出现必须使用同一个 $\phi(v)$，不能等读到未来数字后再挑宿主。$`Z_q`$ 是在全部原运行中从未使用的数字集，不能只要求该输入此前没使用。由于 $U$ 非初始，它的每次实际读取都有一个属于 $I$ 的前驱槽，故 $\bigcup_{v\in I}\Gamma_v$ 恰是 $U$ 的全部原实际数字。特别，$`\Gamma_v`$ 中每个数字都已在 $U$ 使用，而读取起点 $S$ 在所有 $M$ 个初态上使用全部 $p$ 个数字。因此此合同下，非空集合的空槽条件本身也排除了 $U$ 和 $S$ 作为宿主。不同槽可选不同宿主，即使它们的到达数字相同。
+

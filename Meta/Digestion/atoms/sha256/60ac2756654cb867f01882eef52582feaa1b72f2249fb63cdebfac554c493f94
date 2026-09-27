@@ -1,0 +1,19 @@
+**定理 38.2（含任意参考的精确删失误差）。** 两个公式均定义 CPTP 通道，且
+
+$$
+\boxed{
+\delta(\Phi_\infty^{\mathfrak I},\Phi_m^{\mathfrak I})
+=\|\mathcal A^m(R)\|_\infty.
+}
+$$
+
+证明。点击部分的有限和完全正，在未归一化 Choi 约定下，其 Choi 算子递增且迹等于 $\operatorname{Tr}H_m\le\dim\mathcal H$，所以在有限维空间收敛到正 Choi 算子，给出完全正极限。有限和的效果为 $H_m$，极限效果为 $R$；补上 $S_m$ 或 $F=I-R$ 的旗标后均保迹。
+
+对任意参考联合态 $\rho$，无穷输出减有限输出具有两个正交块：点击块为正的迟到输出 $T_\rho$，旗标块为负的参考算子 $-V_\rho$。后者来自正泛函 $Y\mapsto\operatorname{Tr}[(S_m-F)Y]$，所以 $V_\rho\ge0$。两块的迹均为
+
+$$
+t_\rho=\operatorname{Tr}[(I_{\mathrm{ref}}\otimes\mathcal A^m(R))\rho].
+$$
+
+因此半迹范数恰为 $t_\rho$。其上确界为正算子 $\mathcal A^m(R)$ 的最大本征值，并由无参考的最大本征态达到。$\square$
+

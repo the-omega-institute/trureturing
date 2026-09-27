@@ -1,0 +1,40 @@
+**定理221.1（局部模型的精确最近记录通道与四阶修正）。** 采用
+$$
+p=(\epsilon,h,\nu),\qquad
+t^\sharp=a_{\mathrm{wt}}(p)[\nu-\nu_b(\epsilon,h)]_+.
+$$
+在固定联合小参数箱中，存在由驻点方程唯一给出的局部解析分支
+$z_*(p,t)=h^2V(p,t)$。在实际 $t=t^\sharp$ 上，
+$$
+\boxed{
+d_2(p)=\lambda(p)f\bigl(p,t^\sharp,z_*(p,t^\sharp)\bigr).
+}
+\tag{221.4}
+$$
+保留 $K_0,N_{z_*}$，再统一右乘
+$$
+H_*=(I-M_{z_*}^\dagger M_{z_*})^{-1/2}
+\tag{221.5}
+$$
+得到一份真正距离最优的总秩二 CPTP 记录通道。它的完整 diamond 误差由一个无外部参考输入及一个输出投影事件达到。
+
+此外，存在正解析函数 $J(p,t)$，使
+$$
+\boxed{
+d_2(p)=\lambda(p)
+\bigl[s_+(p,t^\sharp)-h^4J(p,t^\sharp)\bigr],
+\qquad
+J(0,0)=\frac{64}{81\beta^4R^4}.
+}
+\tag{221.6}
+$$
+因此正小 $h$、正谱时严格有 $d_2<\lambda s_+$，并且沿任意联合正 $h$、正谱路径，
+$$
+\boxed{
+\frac{\lambda s_+-d_2}{\lambda h^4}
+\longrightarrow\frac{64}{81\beta^4R^4}.
+}
+\tag{221.7}
+$$
+不要求 detuning 与其它参数有任何幂律。非正谱侧 $\lambda=d_2=0$。
+

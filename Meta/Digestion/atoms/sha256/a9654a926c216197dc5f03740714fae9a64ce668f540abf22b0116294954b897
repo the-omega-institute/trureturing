@@ -1,0 +1,20 @@
+### 229.5 只保留事件投影的内在线丛版本
+
+相位次数可以由事件线相对于输入线的陈类替代。设直接给出连续秩一正交投影
+$$
+P:\mathbb {CP}^{d-1}\to\operatorname{End}(\mathbb C^m),
+$$
+令其像线丛为 $L\to\mathbb {CP}^{d-1}$。连续且固定秩的投影确实定义子丛：在任一点选一个位于其像中的非零向量，附近将该向量投影并归一化即可得到局部单位帧。
+
+仍令 $H$ 为输入重言线丛、$h=c_1(H^*)$。由于 $H^2(\mathbb {CP}^{d-1};\mathbb Z)\cong\mathbb Z$，存在唯一整数 $a$ 满足
+$$
+c_1(L)=a h.
+\tag{229.NC.15}
+$$
+假设目标指定分支 $\Gamma$ 满足统一事件概率下界
+$$
+\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.16}
+$$
+

@@ -1,0 +1,29 @@
+**定理 180.4（预测临界视界不等于最佳信息时长）。** 对任意固定 $t>0$ 和满足 $\varepsilon N(r)\to t$ 的整数时长序列，最优单次信息量的每调用极限为
+$$
+\varepsilon\frac{I_1^{(N(r))}(r,w)}{N(r)}
+\longrightarrow
+f(t):=
+\frac{e^{-2t}[\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)]^2}
+{t[1-e^{-2t}\cos^2(\sqrt3t)]},
+\tag{180.21}
+$$
+且收敛对 $w\in[0,\delta(r)]$ 一致。在 $T=\pi/(3\sqrt3)$ 处，$f'(T)>0$；因此存在略长于临界视界的时长，其渐近每调用信息量严格更大。这里不声称已经确定 $f$ 的全局最大点或自适应信息量的精确最佳常数。
+
+证明。 对该序列，（180.10）的二阶导数界与 $\delta=O(\varepsilon^3)$ 仍给出与（180.17）同阶的误差。三角和（178.17）于是给出一致极限
+$$
+\varepsilon u_N'(w)\longrightarrow
+e^{-t}\left[\frac{\sin(\sqrt3t)}{\sqrt3}-t\cos(\sqrt3t)\right],
+\qquad u_N(w)\longrightarrow e^{-t}\cos(\sqrt3t).
+\tag{180.22}
+$$
+将其代入（180.4）的精确单次值，即得（180.21），包括方括号为零的时长。
+
+令 $g(t)=\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)$，则 $g'(t)=\sqrt3t\sin(\sqrt3t)$。在 $T$ 处直接对数微分得到
+$$
+\frac{f'(T)}{f(T)}
+=-2+\frac{6T}{1-T}-\frac1T
+-\frac{2A^2}{1-A^2/4}>0.
+\tag{180.23}
+$$
+确有 $1/2<T<1$，所以前三项之和大于二；又 $e^T>1+T>3/2$，故 $A<2/3$，最后一个正分式小于一。因此右端为正，小幅增加 $T$ 会增加 $f$。这一常数层面的改进与（180.13）的最优成本量级相容。证毕。
+

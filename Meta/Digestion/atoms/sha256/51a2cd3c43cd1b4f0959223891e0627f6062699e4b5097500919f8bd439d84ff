@@ -1,0 +1,91 @@
+**定理 401.3（完整重复记录的共线商证书）。** 设 $C$ 为任意 $d$ 维复相关矩阵，采用定义 389.1 的归一化纯记录表示。在指标集上定义
+
+$$
+i\sim j\quad\Longleftrightarrow\quad |C_{ij}|=1.
+$$
+
+这是等价关系。设其共有 $k$ 类，每类选代表 $q_a$，令 $a(i)$ 为 $i$ 所属类。存在单位相位 $u_i$，使
+
+$$
+r_i=u_i r_{q_{a(i)}},\qquad
+\widetilde C_{ab}=C_{q_aq_b},\qquad
+C_{ij}=u_i\overline{u_j}\widetilde C_{a(i)a(j)}.
+$$
+
+若 $k=1$，则对所有整数 $n\ge1$，定义 400.1 的接口都有确定精确恢复。若 $k\ge2$，置
+
+$$
+r=\max_{a<b}|\widetilde C_{ab}|<1.
+$$
+
+对每个满足下式的整数 $n\ge1$，同样存在有限 POVM 的确定精确恢复：
+
+$$
+\sum_{a<b}|\widetilde C_{ab}|^n\le1.
+$$
+
+特别地，$r=0$ 时所有 $n\ge1$ 均满足；$0<r<1$ 时，充分条件为
+
+$$
+\frac{k(k-1)}2\,r^n\le1.
+$$
+
+故对每个固定 $C$，存在有限整数 $N\ge1$，使全部 $n\ge N$ 满足 $\eta(C^{\circ n})=1$。此处 $N$ 可依赖于 $C$。
+
+一般的最终相位混合性质已有先例：Bhat–Devendra，[*On Regions of Mixed Unitarity for Semigroups of Unital Quantum Channels*, arXiv:2512.23598v3](https://arxiv.org/abs/2512.23598v3)，Theorem 6.10（PDF 第 28 页）已对每个相关矩阵断言所有充分大的 Hadamard 幂均为 rank-one correlation matrices 的凸组合，即属于这里的 $\mathcal P_d$。其 Theorem 3.9（PDF 第 11–12 页）是 unital 通道的复合幂最终混合酉结论；没有将其表述为张量幂结论。下述证明给出这一已知性质在完整记录接口中的初等充分证书与有限测量构造，不主张最终恢复性质的原创性。
+
+证明。归一化向量的 Cauchy–Schwarz 等号条件给出
+$|\langle r_j|r_i\rangle|=1$ 当且仅当两向量共线；共线且归一化又等价于相差一个单位相位。因此 $\sim$ 自反、对称且传递，代表元与 $u_i$ 满足所示公式。$\widetilde C$ 是代表记录的相关矩阵；不同代表不共线，故不同类间的模严格小于 $1$。类数有限，所以 $k\ge2$ 时所定义最大值 $r$ 也严格小于 $1$。
+
+对任意 $n\ge1$，逐项取幂得到
+
+$$
+(C_{ij})^n
+ =u_i^n\overline{u_j^n}
+   (\widetilde C_{a(i)a(j)})^n.
+$$
+
+若 $k=1$，令 $z_i=u_i^n$，直接有 $C^{\circ n}=zz^\dagger$，可用命题 400.2。若 $k\ge2$ 且所示非对角总量不超过 $1$，命题 401.1 给出有限分解
+
+$$
+\widetilde C^{\circ n}
+ =\sum_{b=1}^m p_b w_b w_b^\dagger,
+\qquad w_b\in\mathbb T^k,\quad
+p_b\ge0,\quad\sum_bp_b=1.
+$$
+
+对每个 $b$ 定义提升相位向量
+
+$$
+(z_b)_i=u_i^n(w_b)_{a(i)}.
+$$
+
+每个分量模为 $1$，而对每个 $i,j$ 有
+
+$$
+\sum_b p_b(z_b)_i\overline{(z_b)_j}
+ =u_i^n\overline{u_j^n}
+   (\widetilde C_{a(i)a(j)})^n
+ =(C_{ij})^n.
+$$
+
+于是 $C^{\circ n}=\sum_bp_bz_bz_b^\dagger\in\mathcal P_d$，命题 400.2 将其实现为全部分支概率之和为 $1$ 的恢复。
+
+$r=0$ 时商矩阵是 $I_k$，其所有正整数幂仍是 $I_k$，上面的有限分解与提升立即适用。对 $0<r<1$，有
+
+$$
+\sum_{a<b}|\widetilde C_{ab}|^n
+ \le\frac{k(k-1)}2r^n\longrightarrow0.
+$$
+
+例如可取
+
+$$
+N=\max\left\{1,
+ \left\lceil\frac{\log(k(k-1)/2)}{-\log r}\right\rceil\right\}.
+$$
+
+分母为正；$k=2$ 时分子为零，由外层最大值给出 $N=1$。对所有 $n\ge N$，上述充分不等式均成立，证明完毕。
+
+该证书保留同一共线类内部的单位模重叠，并仅压低不同类之间的模；直接要求原矩阵每个非对角元的模都小于 $1$ 会遗漏这些类。定理未将充分次数认作最小次数，也未给出维数一致的普遍次数阈值。它产生有限个测量结果，但没有对实现这些联合效果所需的物理资源作估计。
+

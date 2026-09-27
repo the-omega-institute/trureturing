@@ -1,0 +1,23 @@
+**定理 16.2（每一步交换至多改变一层幂零深度）。** 若 A=UV、B=VU，其中 U,V 是尺寸相容的 N[H] 矩阵，则 A inert 当且仅当 B inert。对每个非平凡 lambda 及 j≥0，
+
+$$
+R_{A,\lambda}(j+1)\le R_{B,\lambda}(j),\qquad
+R_{B,\lambda}(j+1)\le R_{A,\lambda}(j).
+$$
+
+惰性成立时还有 |nu_lambda(A)-nu_lambda(B)|≤1。因此任何长度 L 的 N[H] SSE 链都满足
+
+$$
+\Delta_\nu(A,B)\le L,\qquad
+R_{A,\lambda}(j+L)\le R_{B,\lambda}(j),\quad
+R_{B,\lambda}(j+L)\le R_{A,\lambda}(j).
+$$
+
+**证明。** 每个简单分量保持矩形乘积。在除环矩阵上，有
+
+$$
+(UV)^{j+1}=U(VU)^jV,
+$$
+
+其像维数不超过 (VU)^j 的像维数，得到第一秩不等式；交换 U,V 得第二式。若 B_lambda^d=0，则 A_lambda^{d+1}=0，反向同理，所以幂零性同时成立且指数差至多一。对全部非平凡分量应用引理 15.2 得惰性等价。沿长度 L 的链逐步合并秩不等式，并对指数差使用三角不等式，即得全部结论。证毕。
+

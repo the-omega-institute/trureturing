@@ -1,0 +1,96 @@
+### 269.3 单位相位上的高阶近核向量
+
+取
+$$
+0<\theta\le\theta_0
+:=
+\min\left\{1,\frac{t}{2n},\frac{\pi}{n}\right\},
+\qquad \ell=0,\ldots,n-1.
+\tag{269.10}
+$$
+定义
+$$
+\lambda_\ell=e^{i\ell\theta},
+\qquad z_\ell=\frac{\lambda_\ell-1}{t},
+$$
+$$
+x_\ell=(1,z_\ell,\ldots,z_\ell^{n-1})^{\mathsf T},
+\qquad
+v_\ell=(x_\ell,-\lambda_\ell^{-1}x_\ell).
+\tag{269.11}
+$$
+由Jordan移位的定义，
+$$
+Mx_\ell-\lambda_\ell x_\ell=-tz_\ell^ne_n,
+\qquad
+Wv_\ell=\lambda_\ell^{-1}tz_\ell^ne_n.
+\tag{269.12}
+$$
+因此理想矩阵在这些向量上的二次型满足
+$$
+v_\ell^\dagger T_*v_\ell
+\le\|Q\|t^2|z_\ell|^{2n}.
+\tag{269.13}
+$$
+另一方面，$|\lambda_\ell|=1$ 使隐藏方向精确消失：
+$$
+v_\ell^\dagger\operatorname{diag}(D,-D)v_\ell=0.
+\tag{269.14}
+$$
+这里不是忽略一个小项，而是利用同模的两个参考分量得到恒等式。
+
+由（269.10），
+$$
+|z_\ell|
+\le\frac{\ell\theta}{t}\le\frac12,
+\qquad
+\|x_\ell\|^2\le n,\qquad
+\|v_\ell\|^2\le2n.
+\tag{269.15}
+$$
+对PSD矩阵 $T'$ 有 $(T')^2\preceq\|T'\|T'$，故
+$$
+\begin{aligned}
+\|T'v_\ell\|^2
+&\le n\,v_\ell^\dagger T'v_\ell\\
+&\le n\left(\|Q\|t^2|z_\ell|^{2n}+2n\xi\right).
+\end{aligned}
+\tag{269.16}
+$$
+同时，（269.12）给
+$$
+\|T_*v_\ell\|
+\le\|W\|\|Q\|t|z_\ell|^n.
+\tag{269.17}
+$$
+从
+$\operatorname{diag}(D,-D)v_\ell=(T'-T_*-X)v_\ell$
+读取第一分量，再用三角不等式，得到
+$$
+\begin{aligned}
+\|Dx_\ell\|
+\le{}&
+\left(\sqrt{n\|Q\|}+\|W\|\|Q\|\right)t|z_\ell|^n\\
+&+\sqrt2\,n\sqrt\xi+\sqrt{2n}\,\xi.
+\end{aligned}
+\tag{269.18}
+$$
+因此对 $0\le\varepsilon\le1$，存在只依赖固定 $(n,t,Q)$ 的有限常数 $A$，使
+$$
+\boxed{
+\max_\ell\|Dx_\ell\|\le A(\theta^n+\sqrt\varepsilon).
+}
+\tag{269.19}
+$$
+例如可以取
+$$
+A=
+\left(\sqrt{n\|Q\|}+\|W\|\|Q\|\right)t
+\left(\frac{n-1}{t}\right)^n
++n^{3/2}+\frac{n\sqrt{2n}}2.
+\tag{269.20}
+$$
+这里使用了 $\xi\le n\varepsilon/2$ 及 $\varepsilon\le\sqrt\varepsilon$。$n=1$ 时首项为零，仍是有限正的有效选择。
+
+这些相位向量只为证明提供PSD约束，没有被当作实验一次直接开放的振幅读数。
+

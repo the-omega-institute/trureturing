@@ -1,0 +1,11 @@
+**定理 5.2.2（紧致可行族与实际最大值）。** 对任意次指数预算和固定 $p\in\Delta_d^\circ$，最大值
+$$
+M_b(p)=\max_{\mathcal F\in\mathcal C_b}S_{\mathcal F}(p)
+$$
+实际取得。若 $B_d(b)<1$，则
+$$
+\eta_b(p):=1-M_b(p)>0,\qquad
+\forall\mathcal F\in\mathcal C_b,\quad\mu_p(E_{\mathcal F})\ge\eta_b(p).
+$$
+量词为 $\forall p\in\Delta_d^\circ\ \exists\eta_b(p)>0\ \forall\mathcal F$，不是对全部正概率共同取同一个常数。
+

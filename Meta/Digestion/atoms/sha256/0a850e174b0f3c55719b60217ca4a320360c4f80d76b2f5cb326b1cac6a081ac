@@ -1,0 +1,8 @@
+**引理54.4（排除共同外部尾环境）。** 回到54.1节的 $r_1=2,r_2=1$ 合同，不可能有
+$$
+\eta_3\parallel\eta_4\parallel\eta_5\parallel\eta_6,
+\qquad \eta_3\notin F.
+\tag{54.24}
+$$
+该结论没有要求外部射线事先正交于 $F$。
+

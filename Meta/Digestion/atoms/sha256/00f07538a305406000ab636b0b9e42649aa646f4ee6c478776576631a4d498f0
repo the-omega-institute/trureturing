@@ -1,0 +1,50 @@
+### 65.2 显式因果修复
+
+定义
+
+$$
+\begin{aligned}
+s_0&=\sqrt a\,x+cy+\sqrt\varepsilon\beta\,z,\\
+s_1&=\sqrt{1-a-\varepsilon}\,x'
+-\frac{\sqrt{\varepsilon a}}c\,z',\\
+S_{a,\varepsilon}
+&=|s_0\rangle\langle s_0|+|s_1\rangle\langle s_1|
++\varepsilon|h\rangle\langle h|.
+\end{aligned}
+\tag{65.6}
+$$
+
+该算符显然正。其早输出 $B=0$ 对角质量在 $A=0$ 和 $A=1$ 下分别是
+
+$$
+a+(1-a-\varepsilon)=1-\varepsilon,
+\qquad c^2=1-\varepsilon.
+$$
+
+早输出 $B=1$ 对角质量在两输入下分别是
+
+$$
+\varepsilon,
+\qquad
+\varepsilon\beta^2+\frac{\varepsilon a}{c^2}
+=\varepsilon\frac{1-a-\varepsilon+a}{1-\varepsilon}
+=\varepsilon.
+$$
+
+唯一可能在 $D$ 偏迹后留下的非对角项是 $AB=00$ 与 $AB=11$ 之间，其系数为
+
+$$
+\sqrt{\varepsilon a}\left(
+\beta-\frac{\sqrt{1-a-\varepsilon}}c\right)=0.
+$$
+
+所以
+
+$$
+\operatorname{Tr}_D S_{a,\varepsilon}
+=I_A\otimes\operatorname{diag}(1-\varepsilon,\varepsilon).
+\tag{65.7}
+$$
+
+这是合法的归一化因果修复，不需要优化未知矩阵。
+

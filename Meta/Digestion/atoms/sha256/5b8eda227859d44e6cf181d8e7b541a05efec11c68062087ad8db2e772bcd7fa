@@ -1,0 +1,27 @@
+# 385．声明的有限仪器词接口能区分什么
+
+令 $\mathcal D$ 是双方候选准备都能实际执行的共同合法域。它包含同一有限词集合 $\mathcal L$、同一策略、同一仪器分支和同一记录标签；若某一步权限只对一方存在，则该权限差异及相应失败记录必须先纳入接口，不能把它从概率读数中删去。对每个 $w\in\mathcal L$，声明相同的末端 yes 检验 $F_w$，其中 $F_w$ 是 Hermitian 且 $0\preceq F_w\preceq I$。定义未归一化的联合概率
+
+$$
+p_\rho(w,F)=\operatorname{Tr}[\Phi_w(\rho)F],
+$$
+
+它是“出现记录词 $w$ 且末端回答 yes”的联合概率，而不是条件概率 $p(F\mid w)$。定义拉回效果
+
+$$
+E_{w,F}=\Phi_w^*(F_w).
+$$
+
+完全正映射的对偶保持 Hermitian。并且
+
+$$
+0\preceq E_{w,F}\preceq\Phi_w^*(I)\preceq I.
+$$
+
+最后一个不等式来自每个分支的保迹不增性及其复合；前一个不等式来自 $0\preceq F_w\preceq I$ 和对偶的正性。因此所有候选都在同一 $\mathcal D$ 上比较，令
+
+$$
+\Delta=\rho-\sigma,\qquad
+\mathcal V_{\mathcal L}=\operatorname{span}_{\mathbb R}\{E_{w,F}:w\in\mathcal L\}.
+$$
+

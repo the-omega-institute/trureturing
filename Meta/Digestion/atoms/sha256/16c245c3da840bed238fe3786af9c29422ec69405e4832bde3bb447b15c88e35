@@ -1,0 +1,66 @@
+### 306.4 全部分支上的四阶逆矩和发现成本
+
+需要的是无条件矩，不能只在式（306.12）的好事件上估计 \(a^{-2}\)。由于 \(L_{s+1}<2L_s\)，\(r_s\) 严格下降且 \(n_s/L_s\) 严格增加。令 \(s_\star\) 为首个 \(r_s\le t/4\) 的级别，记 \(n_\star=n_{s_\star}\)、\(L_\star=L_{s_\star}\)。它至少为一；前一级最小性和当前阈值分别给
+$$
+\frac{n_\star}{L_\star}\le\frac{16d^2}{t^2},
+\qquad
+\frac{n_\star t^2}{d^2}\ge8L_\star.
+\tag{306.14}
+$$
+若 \(s=s_\star+m\)、\(m\ge1\) 且 \(J\ge s\)，则上一级尚未停止，
+$$
+\widehat t_{s-1}<2r_{s-1}\le t/2.
+$$
+单个样本平均的 Hoeffding 下尾因此给
+$$
+\Pr(J\ge s)\le
+\exp\!\left[-\frac{2^{m-1}n_\star t^2}{2d^2}\right].
+\tag{306.15}
+$$
+各级均值并不独立，证明也不需要这种独立性。
+
+在每个实际停止级，
+$$
+t_0\ge\min(1,r_J),\qquad
+t_0^{-4}\le1+r_J^{-4}
+=1+\frac4{d^4}\left(\frac{n_J}{L_J}\right)^2.
+\tag{306.16}
+$$
+当 \(J\le s_\star\)，式（306.16）中的比值不超过 \(n_\star/L_\star\)；当 \(J=s_\star+m\)，有
+$$
+\left(\frac{n_J}{L_J}\right)^2
+\le2^{2m}\left(\frac{n_\star}{L_\star}\right)^2.
+$$
+结合式（306.15）求和：
+$$
+\begin{aligned}
+\mathbb E\left(\frac{n_J}{L_J}\right)^2
+&\le\left(\frac{n_\star}{L_\star}\right)^2
+\left[1+\sum_{m\ge1}4^m
+\exp\!\left(-\frac{2^{m-1}n_\star t^2}{2d^2}\right)\right]\\
+&\le A\left(\frac{n_\star}{L_\star}\right)^2
+\le A t^{-4}.
+\end{aligned}
+$$
+这里用 \(n_\star t^2/d^2\ge8L_\star\ge64\)，使括号统一有界。故
+$$
+\boxed{\mathbb Et_0^{-4}\le At^{-4},
+\qquad \mathbb Ea^{-2}\le Ah^{-2}.}
+\tag{306.17}
+$$
+右侧没有 \(\Lambda\) 或双对数因子，校准失败分支已包含在内。
+
+同一个 dyadic 尾和给 \(\mathbb En_J\le A n_\star\)。第303.6节对阈值的反解可直接取均值 \(t\)、固定宽度 \(d=8\)，得到
+$$
+n_\star\le At^{-2}\{\Lambda+\ell_+(t)\},
+\qquad
+\ell_+(u)=\log\log(e^e/u).
+$$
+具体可取 \(S=\Lambda+\log(e+\log(e/t))\)，选 \(2^s\) 介于 \(A_2t^{-2}S\) 与 \(2A_2t^{-2}S\) 之间；则 \(L_s\le A_3S+A_3\log\log(e+A_2)\)，足够大的固定 \(A_2\) 保证 \(2^s\ge8d^2L_s/t^2\)。这给
+$$
+\boxed{\mathbb En_J\le
+Ah^{-1}\{H+\ell_+(\sqrt h)\}.}
+\tag{306.18}
+$$
+第一阶段实际费用是累计的 \(n_J\)，不重复相加各级已使用样本。
+

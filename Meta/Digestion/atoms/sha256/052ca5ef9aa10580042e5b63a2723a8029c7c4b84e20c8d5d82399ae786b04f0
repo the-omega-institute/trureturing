@@ -1,0 +1,6 @@
+**约定 1.2（线性模型）。** 特征映射 $\varphi:\mathcal X\to\mathbb R^p$；模型 $f_\theta(x)=\varphi(x)^\top\theta$。训练集 $(x_i,y_i)_{i\le N}$ 给出 $\Phi\in\mathbb R^{N\times p}$（第 $i$ 行 $\varphi(x_i)^\top$）与 $y\in\mathbb R^N$，恒设 $N\le p$ 且 $\Phi$ 行满秩，奇异值 $\sigma_1\ge\cdots\ge\sigma_N>0$。$P=\Phi^\top(\Phi\Phi^\top)^{-1}\Phi$ 是到行空间 $\operatorname{row}\Phi$ 的正交投影，$P^\perp=I-P$ 投到 $\ker\Phi$；$N=p$ 时 $P^\perp=0$，本章关于零空间分量的陈述在该情形下退化为平凡。训练损失 $L(\theta)=\tfrac12\|\Phi\theta-y\|^2$，带权重衰减的梯度流为
+$$
+\dot\theta=-\Phi^\top(\Phi\theta-y)-\lambda\theta,\qquad\lambda\ge0 .
+$$
+记 $\theta_\lambda=\Phi^\top(\Phi\Phi^\top+\lambda I)^{-1}y$（岭解），$\theta_0=\Phi^\top(\Phi\Phi^\top)^{-1}y$（最小范数插值解）。对测试点 $x$ 与其目标 $y(x)$ 记 $a(x)=\varphi(x)^\top\theta_\lambda-y(x)$（岭误差）与 $b(x)=\varphi(x)^\top P^\perp\theta(0)$（初始化逃逸到 $\ker\Phi$ 的分量在 $x$ 处的读数）；对有限测试集把它们写成向量 $a,b$，$\langle a,b\rangle=\sum_xa(x)b(x)$。
+

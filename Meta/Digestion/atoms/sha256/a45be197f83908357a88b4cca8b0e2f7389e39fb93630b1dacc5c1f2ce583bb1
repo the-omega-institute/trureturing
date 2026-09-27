@@ -1,0 +1,40 @@
+### 66.1 候选、参数与结论
+
+沿用第 64 节三个量子比特混合候选及完整 tester 事件误差。记
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+r_0&=\sqrt a\,x+cy+\sqrt\varepsilon b\,z,\\
+r_1&=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|r_0\rangle\langle r_0|+|r_1\rangle\langle r_1|,
+\end{aligned}
+\tag{66.1}
+$$
+
+其中固定 $0<a<1$。它的归一化缺陷仍是 $\Delta=\varepsilon$。现在取
+
+$$
+0<\varepsilon\le\frac{1-a}{8}=\frac{b^2}{8},
+\tag{66.2}
+$$
+
+令 $p$ 为下述二次方程的小根：
+
+$$
+p^2-b^2(1+\varepsilon)p+\varepsilon b^2=0.
+\tag{66.3}
+$$
+
+显式地，
+
+$$
+p=\frac{b^2(1+\varepsilon)
+-\sqrt{b^4(1+\varepsilon)^2-4b^2\varepsilon}}2,
+\qquad s=1-p,
+\qquad d=p-\varepsilon.
+\tag{66.4}
+$$
+

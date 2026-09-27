@@ -1,0 +1,13 @@
+**命题64.8（真实来源的列交换）。** 在命题64.7的必要结构下，可以选择第三轮的正交单位向量 $s,t\in G_3$、$r,j\in Q_3$，使
+$$
+V_0z=sB,\quad V_0w=tB,\quad V_1u=rB,\quad V_1w=jB,
+\qquad z=(a^2u+bv)/c,\quad c=\sqrt{|a|^4+|b|^2}.
+\tag{64.37}
+$$
+则存在单位复数 $\omega$，满足
+$$
+s\in G_3\cap T,\qquad g t=\omega r.
+\tag{64.38}
+$$
+特别地，$G_3\cap T$ 恰为 $\mathbb Cs$，$r\in Q_3\cap Q_4$。
+

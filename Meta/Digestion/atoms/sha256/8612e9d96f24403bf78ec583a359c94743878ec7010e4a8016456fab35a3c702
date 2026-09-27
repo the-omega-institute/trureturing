@@ -1,0 +1,55 @@
+#### 8.6.4 非负概率来源与实向量输出的局部风险
+
+零和向量不是虚构来源差。任意非零零和向量 $z$ 的正负质量相等，记为 $s>0$，则 $z/s$ 恰为两个概率直方图 $z^+/s$ 和 $z^-/s$ 的差。由于 ER8.CM.2 齐次，ER8.CM.1 也是概率直方图两两比较的精确 Lipschitz 常数。
+
+现在给定真实来源 $p\in\Delta_X=\{p\ge0:\sum_cp_c=1\}$，全部读数附加任意逐坐标绝对值不超过 $\varepsilon$ 的确定性噪声。估计器输出域在本节明确为 $\mathbb R^X$，无需输出本身是概率直方图。定义
+$$
+\mathcal R_{\mathbb R^X}(\varepsilon)=
+\inf_{\mathcal A}\sup_{p\in\Delta_X}
+\sup_{\|\eta\|_\infty\le\varepsilon}
+\|\mathcal A(F(p)+\eta)-p\|_\infty,
+\qquad F(p)=(R_{T,a}(p))_{T,a}.
+$$
+
+若所有 $m_i\ge3$，由已知完整读数满足 $\sum_a y_a=t$，目标坐标的仿射恢复式是
+$$
+\widehat p_c=1+\sum_a\left(B_{c,a}-\frac1t\right)\widehat y_a.
+\tag{ER8.CM.6}
+$$
+每行误差至多 $C_0\varepsilon$。若有模数二，直接用 $B\widehat y$ 得到同一界。因此对任意 $\varepsilon\ge0$，
+$$
+\mathcal R_{\mathbb R^X}(\varepsilon)\le C_0\varepsilon.
+$$
+
+给出可实现的局部下界尺度。令
+$$
+P=\prod_i(3m_i-4).
+$$
+因为 $\sum_c|w_c|=P$，且从正的目标格减去 $h$ 不改变其符号，
+$$
+\|v\|_1=\frac{P-h}{t}.
+$$
+非空族有 $P-h>0$。对
+$$
+0\le\varepsilon\le\varepsilon_0:=\frac{t}{P-h},
+\tag{ER8.CM.7}
+$$
+取任意固定概率向量 $p_0$，例如 $\delta_{c^*}$，并构造
+$$
+b=\varepsilon|v|+(1-\varepsilon\|v\|_1)p_0,
+\qquad p^\pm=b\pm\varepsilon v.
+$$
+$b,p^+,p^-$ 均逐格非负，且总质量皆为一。共同输入 $F(b)$ 与两份来源的每条读数分别相差 $\mp\varepsilon F(v)$，绝对值均不超过 $\varepsilon$。同时
+$$
+\|p^+-p^-\|_\infty=2C_0\varepsilon.
+$$
+同输入的两点误差界使任何估计器至少在一侧有误差 $C_0\varepsilon$。故
+$$
+\boxed{\mathcal R_{\mathbb R^X}(\varepsilon)=C_0\varepsilon
+\quad(0\le\varepsilon\le t/(P-h)).}
+\tag{ER8.CM.8}
+$$
+这是充分的统一局部区间，不主张它是最大区间。共同观测本身来自合法归一化来源 $b$，所以要求观测内部相容也保留该下界。空模数族下概率来源唯一，风险恒为零。若允许内部随机化且以期望最大坐标损失计风险，上述共同输入的两点下界也成立：对每个随机输出先用三角不等式，再取期望，至少一份固定来源的期望误差达到同一下界。确定性上界仍可使用，因此这一局部实输出公式不变。
+
+若进一步要求估计器输出仍在 $\Delta_X$，本节任意逐格有界噪声合同下的构造只给出同一个下界：其估计器类更小。ER8.CM.6 不保证输出总和一；普通截断或归一化也没有被证明不增加最大坐标误差。单模数概率输出结果 ER8.SO.1 给出全尺度风险 $(1-1/m)\min(2\varepsilon,1)$；当 $m>2$ 且 $0<\varepsilon\le1/2$，它严格大于实向量输出风险 $\varepsilon$。因此概率输出普遍保留 ER8.CM.8 等式的断言已被否定，一般多模数组合在任意逐格有界噪声合同下的概率输出风险仍未在此求出。要求观测本身完全自洽是另一个更强的合同，下文单独处理。
+

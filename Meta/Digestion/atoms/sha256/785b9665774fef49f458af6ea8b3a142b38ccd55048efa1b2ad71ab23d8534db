@@ -1,0 +1,1 @@
+- `D5/S0/Tower/Tribonacci/Representation.lean` 中 `decode` 使用 $1,2,4,7,\ldots$，`decode_lt_tribonacci`、`decode_bijective`、`decodeEquiv` 与 `encode` 已拥有 $k=3$ 整数情形的范围与双射；本节没有把这一专门化冒称一般 $k$ 源码已全部形式化。

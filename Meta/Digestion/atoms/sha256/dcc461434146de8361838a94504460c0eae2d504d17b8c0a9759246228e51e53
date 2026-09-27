@@ -1,0 +1,10 @@
+**命题 16.3（SE 滞后也必须覆盖深度差）。** 若 inert A,B 由 R,S 给出滞后 l≥1 的 N[H] SE，即
+
+$$
+A^l=RS,\quad B^l=SR,\quad AR=RB,\quad BS=SA,
+$$
+
+则 Delta_nu(A,B)≤l，且定理 16.2 的两个秩不等式中 L 可替换为 l。特别是完整群标记兼容、对齐或 balanced 证书的滞后 m 必须满足 Delta_nu(A,B)≤m。
+
+**证明。** 由交换方程及幂因子分解，对 j≥0 有 A^{l+j}=RB^jS、B^{l+j}=SA^jR。逐简单分量取秩得到结论；令 j 分别为 B_lambda 和 A_lambda 的正幂零指数，得到两个指数不等式。完整具体证书通过路径计数给出这些 SE 方程，因此同样适用。证毕。
+

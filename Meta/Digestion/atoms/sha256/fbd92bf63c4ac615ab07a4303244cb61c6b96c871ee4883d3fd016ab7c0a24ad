@@ -1,0 +1,48 @@
+### 194.1 统一定量结论
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+$\Sigma=R+1$、$\delta=R-1$。任务及最优完整半 diamond 误差
+$\mathscr E(\ell,\epsilon)$ 与第192节相同。
+存在只依赖 $\beta,\gamma,R$ 的正常数
+$\epsilon_0,K,C$，使
+
+$$
+0<\epsilon\le\epsilon_0,\qquad
+K\epsilon\le\ell\le\frac12
+$$
+
+时，
+
+$$
+\boxed{
+\left|
+\mathscr E(\ell,\epsilon)
+-\left(\frac34+\frac{\beta\Sigma}{8}\epsilon\right)
+\right|
+\le C\frac{\epsilon^2}{\ell}.
+}
+\tag{194.1}
+$$
+
+对任意固定 $K_0\ge0$，还有只依赖
+$\beta,\gamma,R,K_0$ 的常数 $C_{K_0}$。
+若共同恢复器的完整误差满足
+
+$$
+e\le\mathscr E(\ell,\epsilon)+K_0\frac{\epsilon^2}{\ell},
+\tag{194.2}
+$$
+
+则先作第192节不增加误差的输出标签与旗标对称化后，其二结果 instrument 满足
+
+$$
+\boxed{
+\max_{\substack{j=0,1\\s=\pm1}}
+\left\|\Gamma_{j,s}-\frac12\operatorname{id}\right\|_\diamond
+\le C_{K_0}\frac{\epsilon}{\ell}.
+}
+\tag{194.3}
+$$
+
+这里的 instrument 距离使用完整 diamond 范数；任务误差仍按半 diamond 范数定义。逐旗标结论以对称化为前提，不给未经对称化的标签随机分配附加条件。常数对整个上述来源区间一致，允许恢复器依赖 $\ell,\epsilon$，也允许任意 Kraus 表示。
+

@@ -1,0 +1,34 @@
+### 211.8 解析分支的相接与接触曲线的严格负位移
+
+上述正规形同时给出两条关于 $(\epsilon,h)$ 联合解析的值分支：
+
+$$
+E_A(\epsilon,h)=\frac34+\epsilon q(\epsilon,h,0),\qquad
+E_I(\epsilon,h)=\frac34+
+\epsilon q(\epsilon,h,\widehat t(\epsilon,h)).
+\tag{211.33}
+$$
+
+$E_A$ 在接触曲线的右侧是真实最优值；
+$E_I$ 在左侧是真实最优值。
+跨过曲线后，两者仍作为解析延拓存在，
+其中带负额外权重的延拓不解释为合法操作。
+
+在 $h=h_b(\epsilon)$ 上，
+$\widehat t(\epsilon,h)=0$ 且 $q_t(\epsilon,h,0)=0$。
+链式法则因此精确给
+
+$$
+\boxed{
+E_I=E_A,\qquad
+\partial_hE_I=\partial_hE_A,\qquad
+\partial_\epsilon E_I=\partial_\epsilon E_A
+\quad\text{在 }h=h_b(\epsilon)\text{ 上}.
+}
+\tag{211.34}
+$$
+
+所以实际最优值在该曲线上一阶连续相接。
+此相接来自已经证明的精确标量互补，
+不是额外假设，也不是从二阶值相等猜得。
+

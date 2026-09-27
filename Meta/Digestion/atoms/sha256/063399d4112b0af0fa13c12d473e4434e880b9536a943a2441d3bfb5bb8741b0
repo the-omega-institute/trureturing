@@ -1,0 +1,1 @@
+- `D5/S0/Automata/TypedPartialDFAOOverBase.lean` 的 `runTransition` 按列表头到尾读取，`evalFrom_append` 与 `runFrom_append` 给部分运行的有序拼接。

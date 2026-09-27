@@ -1,0 +1,75 @@
+**证明。** 在共同空间
+$\operatorname{supp}\rho\otimes\mathbb C^r$ 中固定 $\rho$ 的纯化
+$\Psi$。逐支选择 $\rho_j$ 的纯化 $\phi_j$，使
+
+$$
+|\langle\Psi|\phi_j\rangle|^2=F_j.
+$$
+
+定义辅助密度矩阵
+
+$$
+\tau=\sum_jp_jP_{\phi_j}.
+\tag{169.23}
+$$
+
+则 $\operatorname{Tr}_R\tau=\rho$，
+$\operatorname{rank}\tau\le N$，且
+
+$$
+\langle\Psi|\tau|\Psi\rangle=f=1-u.
+\tag{169.24}
+$$
+
+这里使用一个明确的成熟输入：Holevo 信息在部分迹下不增加，等价地，量子相对熵满足数据处理不等式。将其应用于纯态集合
+$(p_j,P_{\phi_j})$ 及其 $M$ 边缘，得到
+
+$$
+\chi\le
+S(\tau)-\sum_jp_jS(P_{\phi_j})
+=S(\tau).
+\tag{169.25}
+$$
+
+这一步引用标准数据处理定理，不宣称已由本节其余初等运算重新证明。
+
+下面核对熵界所需的范围。由 $\rho\ge p_j\rho_j$，
+
+$$
+\sqrt{\rho_j}\rho\sqrt{\rho_j}\succeq p_j\rho_j^2.
+$$
+
+正矩阵平方根的算子单调性给
+$\sqrt{F_j}\ge\sqrt{p_j}$，所以
+$f\ge\sum_jp_j^2\ge1/k$。另一方面，迹范数不小于
+Hilbert–Schmidt 范数给 $F_j\ge\operatorname{Tr}(\rho_j\rho)$，故
+
+$$
+f\ge\operatorname{Tr}\rho^2\ge\frac1r.
+$$
+
+这两条界蕴含 $f\ge1/N$。具体地，若 $N=k$ 用前一条；若 $N=r^2$ 用后一条及 $1/r\ge1/r^2$。
+
+令 $L=\lambda_{\max}(\tau)$，则 $L\ge f\ge1/N$。对秩至多为 $N$ 的密度矩阵，固定最大本征值后，其余至多 $N-1$ 个本征值均分剩余质量时熵最大，因此
+
+$$
+S(\tau)\le h_2(L)+(1-L)\log(N-1).
+\tag{169.26}
+$$
+
+右侧作为 $L$ 的函数，在 $L\ge1/N$ 上递减；其导数为
+$\log[(1-L)/((N-1)L)]\le0$。于是
+
+$$
+S(\tau)\le h_2(f)+(1-f)\log(N-1)
+=h_2(u)+u\log(N-1).
+$$
+
+结合（169.25）和定理169.1即得（169.22）。证毕。
+
+在输入维数 $d$ 固定、$N$ 一致有界的实例族中，（169.6）与（169.22）表明
+$a\to0$ 当且仅当 $\chi\to0$。这里不需要平均边缘的统一谱下界；代价是熵上界在小 $u$ 处包含 $u\log(1/u)$。
+
+该推导使用了量子 Fano 不等式的标准纯化与熵极值结构。本节保留实际纯化混合态的秩界
+$\operatorname{rank}\tau\le\min(k,r^2)$，把它接到第167节的具体恢复误差合同上。
+

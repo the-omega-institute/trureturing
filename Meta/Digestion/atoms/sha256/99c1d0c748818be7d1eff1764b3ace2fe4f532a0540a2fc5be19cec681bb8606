@@ -1,0 +1,24 @@
+**定理219.1（新增谱权重的尖锐通道距离）。**
+存在联合实解析函数 $r_{\mathrm{low}}$，满足 $r_{\mathrm{low}}(0)=1$，以及固定联合小箱，使其中所有合法参数满足
+$$
+\boxed{r_{\mathrm{low}}(p)\lambda(p)\le d_2(p)\le\lambda(p).}
+\tag{219.3}
+$$
+在正谱侧 $\Delta(p)>0$，可取与参数无关的常数 $C_*$，使
+$$
+\boxed{
+0\le1-\frac{d_2(p)}{\lambda(p)}
+\le C_*\bigl(|\epsilon|+|h|+|\nu|\bigr).
+}
+\tag{219.4}
+$$
+因此在任意合法正谱路径上，
+$$
+\frac{d_2(p)}{\lambda_2^\sharp(p)}\longrightarrow1
+\qquad(p\to0).
+\tag{219.5}
+$$
+不要求正 detuning 与其它参数满足幂律，或有任何额外的正下界。
+无新增谱方向时 $\lambda=d_2=0$；只使用（219.3），不取 $0/0$。
+本定理不声称正来源有限参数下仍有 $d_2=\lambda$，也不声称下面构造的修复候选精确最近。
+

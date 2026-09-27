@@ -1,0 +1,4 @@
+**命题 4.3（同一点击概率不决定受测对象的后继）。** 在 $\mathcal H_1$ 上，理想模式效果 $E_x=|x\rangle\langle x|$ 给出 $p(x\mid n)=\langle x|\rho_n|x\rangle$。取破坏性分支 $K_x=|\mathrm{vac}\rangle\langle x|$，取得结果后系统为空态；取保留模式的分支 $K_x=|x\rangle\langle x|$，取得结果后系统处于 $|x\rangle$。两者效果相同。
+
+证明。分别计算 $K_x^\dagger K_x$ 和 $K_x\rho K_x^\dagger$。正交记录投影满足互斥且完备的结果合同，但上述合同不单独解释为何经验中呈现一个确定结果。$\square$
+

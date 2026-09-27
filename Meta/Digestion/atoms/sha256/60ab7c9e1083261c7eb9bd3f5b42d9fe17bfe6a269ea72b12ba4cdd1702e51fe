@@ -1,0 +1,14 @@
+**定义 265.1（保留规范族）。** 在同一有限条件域和同一实际条件集合 $A$ 上，设非空指标集 $\Lambda$ 给出若干待比较标准 $N_\lambda\subseteq U$。它们可以来自不同承诺、不同事实解释或不同价值根据，是否可信须先交代，不能为制造一致随意增加或删除标准。相应缺失是 $D_\lambda=N_\lambda\setminus A$。
+
+在这族标准中，共同认定的缺失与至少一项标准认定的缺失分别为
+
+$$
+D_{\mathrm{all}}=\bigcap_{\lambda\in\Lambda}D_\lambda
+=\left(\bigcap_{\lambda\in\Lambda}N_\lambda\right)\setminus A,
+\qquad
+D_{\mathrm{some}}=\bigcup_{\lambda\in\Lambda}D_\lambda
+=\left(\bigcup_{\lambda\in\Lambda}N_\lambda\right)\setminus A.
+$$
+
+这些等式逐条件展开全称与存在量词得到。“共同认定”指对这族标准的一致，不自动等于客观无争议或已经找到所有合理标准。
+

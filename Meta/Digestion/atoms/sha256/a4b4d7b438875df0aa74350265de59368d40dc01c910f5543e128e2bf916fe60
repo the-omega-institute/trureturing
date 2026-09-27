@@ -1,0 +1,24 @@
+**证明。** 若 $v\in S$，则实际 $V_1p=v\otimes A$ 属于 $S\otimes A=V_1T$。固定单射性给 $p\in T=G_4$。但 $p\in H_1=H_4$，与 $H_4\cap G_4=0$ 及 $p\ne0$ 矛盾。证明完毕。
+
+于是
+
+$$
+N:=S+\mathbb Cv
+$$
+
+为三维且正交于四维 $P$。七维预算因此给出准确分解
+
+$$
+K=P\oplus N,\qquad N=P^\perp.
+\tag{83.8}
+$$
+
+另令 $W=T+\mathbb Cp$。由 $p\in H_4$ 及 $H_4\cap T=0$，$W$ 为三维；其真实一位像是
+
+$$
+V_1W=(S+\mathbb Cv)\otimes A=N\otimes A.
+\tag{83.9}
+$$
+
+这里的三维补空间由同一候选的实际像给出，不把不同候选的边缘维数拼为共同实现。
+

@@ -1,0 +1,73 @@
+### 289.4 一个有统一信号的实际核内算子
+
+设 $n\ge3$，定义第二副对角算子及其中心化
+$$
+S=J^2+(J^\dagger)^2,
+\qquad
+\lambda=\frac{\operatorname{Tr}(SR)}{\operatorname{Tr}R},
+\qquad X=S-\lambda I.
+\tag{289.13}
+$$
+有 $\operatorname{Tr}(XR)=0$。因为 $R=I-Q$、$S$ 无对角项且 $Q$ 实对称，
+$$
+g:=-\operatorname{Tr}(SR)
+=2\sum_{i=0}^{n-3}Q_{i,i+2}>0,
+\qquad\lambda=-\frac g{\operatorname{Tr}R}<0.
+\tag{289.14}
+$$
+由（289.7）及 $R\succeq(7/23)I$，
+$$
+g\ge\frac{5(n-2)}{1472},\qquad
+|\lambda|\le\frac{41}{448}<\frac18,
+\qquad\|X\|\le2+\frac18=\frac{17}{8}.
+\tag{289.15}
+$$
+于是可在实际中间扇区定义Hermitian算子
+$$
+L_n=\frac18K(X\otimes I)K^\dagger,
+\tag{289.16}
+$$
+并在其余扇区取零。它满足
+$$
+P_nL_nP_n=L_n,\qquad
+\|L_n\|\le\frac18\frac{25}{8}\frac{17}{8}=\frac{425}{512}<1,
+\qquad L_n^2\preceq P_n.
+\tag{289.17}
+$$
+其谱测量是本访问类允许的实际有限维测量；它只由已知规范矩阵决定，与 $r$ 无关。
+
+背景均值由（289.12）准确消失：
+$$
+\operatorname{Tr}(L_n\mathsf A)
+=\frac1{4n^2}\operatorname{Tr}(XR)\operatorname{Tr}R=0.
+\tag{289.18}
+$$
+另一方面，$N$ 与 $T$ 都是三对角矩阵，故
+$$
+\operatorname{Tr}S=\operatorname{Tr}(SN)=\operatorname{Tr}(ST)=0,
+$$
+$$
+\operatorname{Tr}(XT)=-\lambda\operatorname{Tr}T,
+\qquad\operatorname{Tr}(XN)=-\lambda\operatorname{Tr}N.
+\tag{289.19}
+$$
+令 $\beta_n=\operatorname{Tr}(L_n\mathsf B)$、$\gamma_n=\operatorname{Tr}(L_n\mathsf C)$。准确计算得到
+$$
+\begin{aligned}
+\beta_n
+&=\frac{-\lambda\operatorname{Tr}T\operatorname{Tr}R}{16n^2}
+=\frac{g\operatorname{Tr}T}{16n^2},\\
+\gamma_n&=-\frac{\lambda\operatorname{Tr}N}{16n}>0.
+\end{aligned}
+\tag{289.20}
+$$
+又因 $\operatorname{Tr}N=n+(n-1)/16\ge n$，有 $\operatorname{Tr}T\ge2n$。结合（289.15），
+$$
+\boxed{
+\beta_n\ge\frac{5(n-2)}{11776n}\ge\frac5{35328}
+\quad(n\ge3).
+}
+\tag{289.21}
+$$
+这就是将遍布参考空间的带迹余量转成实际核内任务信号的步骤。
+

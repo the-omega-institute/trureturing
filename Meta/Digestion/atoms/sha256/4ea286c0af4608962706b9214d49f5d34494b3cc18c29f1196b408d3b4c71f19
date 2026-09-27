@@ -1,0 +1,11 @@
+**定义 275.1（层析完备模型与实输出恢复误差）。** 对非空有限量子比特模型 $\mathcal R=\{\rho_j\}\subset M_2$，沿用定义272.1的共轭缺口 $\delta(\mathcal R)$。令
+
+$$
+e_{\mathbb R}(\mathcal R)
+=\inf_{D,\mathcal E,\mathcal D}
+\max_j\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1,
+\tag{275.1}
+$$
+
+其中 $D$ 遍历正整数，$\mathcal E:M_2\to M_D$、$\mathcal D:M_D\to M_2$ 是复线性 CPTP 映射，且所有 $\mathcal E(\rho_j)$ 在某个共同输出基底中为实矩阵。若模型的实线性张成为整个 Hermitian 矩阵空间，称它层析完备。令 $\mathrm{EB}_2$ 为量子比特上的纠缠破坏 CPTP 映射集合；等价地，其元素可以写成有限 POVM 测量后再制备状态的形式。
+

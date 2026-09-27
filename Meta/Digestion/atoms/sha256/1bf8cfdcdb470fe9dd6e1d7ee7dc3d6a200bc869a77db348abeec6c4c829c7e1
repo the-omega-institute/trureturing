@@ -1,0 +1,39 @@
+**定理 227.1（对象与精确距离）。**
+
+固定三个 $m\times2$ 矩阵 $K_0,A,B$，满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2,
+\qquad K_0\ne0,
+$$
+并假设 $A,B$ 线性独立。令
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\Gamma(X).
+\tag{227.GD.1}
+$$
+这是结果 Choi 秩恰为 $(1,2)$ 的 CPTP 记录通道。定义
+$$
+\delta=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+\qquad q_0=\|K_0^\dagger K_0\|_\infty.
+\tag{227.GD.2}
+$$
+设 $\mathfrak C_2$ 是同输入、同量子输出、同经典标签、总 Choi 秩至多二的全部 CPTP 记录通道，并置
+$$
+d_2(\mathcal R)=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+记录通道按指定标签块对角，所以它的总 Choi 秩等于两个分支 Choi 秩之和。竞争者可以任意改变两分支；没有把结果0固定或从完整距离中删除。
+
+**定理。** 对上述全部目标，
+$$
+\boxed{d_2(\mathcal R)=\min(\delta,q_0).}
+\tag{227.GD.3}
+$$
+右侧总由一个明确的删除与共同右 Gram 修复候选取得。最近性不要求竞争者的 Kraus 落在 $\operatorname{span}\{A,B\}$。
+

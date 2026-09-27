@@ -1,0 +1,20 @@
+**定义 389.2（允许的测量、反馈与总成功概率）。** 允许对完整记录空间 $E$ 作任意有限 POVM $\{D_y\}_{y\in Y}$，其中 $D_y\succeq0$、$\sum_yD_y=I_E$；将结果 $y$ 作为经典信息，随后只对 $S$ 施加酉算子 $U_y$。可选定成功集合 $Y_{\mathrm{s}}\subseteq Y$。不允许额外的系统—记录相干操作，不存在另一个被默默丢弃的不可访问记录。
+
+记未归一化系统分支为 $\mathcal M_y$，校正分支为 $\mathcal T_y(X)=U_y\mathcal M_y(X)U_y^\dagger$。总成功概率 $t$ 的精确恢复要求是线性映射等式
+
+$$
+\sum_{y\in Y_{\mathrm{s}}}\mathcal T_y=t\,\operatorname{id}_S,
+\qquad 0\le t\le1.
+$$
+
+它要求对全部未知输入以同一概率成功。特别地，对任意有限参考空间 $A$ 及任意联合密度矩阵 $\rho_{AS}$，成功后的未归一化态必须等于 $t\rho_{AS}$：
+
+$$
+\left(\operatorname{id}_A\otimes
+\sum_{y\in Y_{\mathrm{s}}}\mathcal T_y\right)(\rho_{AS})=t\rho_{AS}.
+$$
+
+参考系统不被测量或反馈；成功概率由上式取迹给出。不同成功标签可以对应不同的反馈，不要求它们合并成一个指定的 POVM 结果。
+
+此处采用的环境辅助校正框架见 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)：Theorem 1（PDF 第 4 页）给出纯初始环境下 CP 分解的环境测量实现；Proposition 2（PDF 第 4–5 页）给出完美校正的 Kraus 条件，同维情形对应酉混合。下面将这些前提用于总成功权重，并在固定行坐标约定下写出所需实现与必要性论证。
+

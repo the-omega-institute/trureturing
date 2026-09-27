@@ -1,0 +1,35 @@
+**证明。** 每轮使用完全去极化通道便得到一个正定的因果梳 $S_0$。有限维性保证存在 $q>0$ 使 $R/q\preceq S_0$，故 $R/q$ 与 $S_0-R/q$ 是一个二结果 measuring strategy 的正元素。[Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 定理 4 的最大响应与最小策略上界质量相等，应用于 $R/q$ 后再乘以 $q$，给出达到最优值的
+
+$$
+R\preceq uS^+,\qquad S^+\in\mathcal S.
+\tag{54.27}
+$$
+
+因此任意合法事件 $0\preceq E\preceq C$ 满足
+
+$$
+\operatorname{Tr}((R-S^+)E)
+\le(u-1)\operatorname{Tr}(S^+E)
+\le u-1.
+\tag{54.28}
+$$
+
+令 $K=uS^+-R\succeq0$。由于 $u\ge1$ 及 $R\succeq0$，
+
+$$
+S^+-R=\frac Ku-\frac{u-1}{u}R\preceq\frac Ku.
+$$
+
+于是另一方向满足
+
+$$
+\operatorname{Tr}((S^+-R)E)
+\le\frac{\operatorname{Tr}(KE)}u
+\le\frac{\operatorname{Tr}(KC)}u
+=\frac{u-\operatorname{Tr}(RC)}u
+\le\frac{u-\ell}u.
+\tag{54.29}
+$$
+
+两向结合给式（54.26）的中间上界；由 $u-1\le\Delta(R)$、$1-\ell\le\Delta(R)$ 及 $u\ge1$ 得最后一项。下界仍由整个事件 $E=C$ 给出。$\square$
+

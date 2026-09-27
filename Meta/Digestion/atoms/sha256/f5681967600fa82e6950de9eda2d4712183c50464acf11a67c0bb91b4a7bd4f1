@@ -1,0 +1,13 @@
+**定理60.1（三维尾环境的首轮封闭性）。** 本节合同下有
+$$
+\dim F_2\le3.
+\tag{60.6}
+$$
+若 $\dim F_3=3$，则
+$$
+\eta_1,\eta_2\in F_3,
+\qquad
+\operatorname{span}\{\eta_1,\ldots,\eta_6\}=F_3.
+\tag{60.7}
+$$
+

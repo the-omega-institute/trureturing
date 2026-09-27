@@ -1,0 +1,18 @@
+**定义 67.1（保留既有评价中的控制相容部分）。** 延续 $J$ 与 $C$，在 $X$ 上令 $\sim$ 为包含下列关系的最小等价关系：
+
+$$
+J(x)=J(y)\quad\text{或}\quad C(x)=C(y).
+$$
+
+令 $Q=X/{\sim}$，$q_Q:X\to Q$ 为商映射。它把“原评价已不区分的状态”与“控制读数不区分的状态”连同这些关系的传递后果一并合并。项目的 [`maximal_control_compatible_evaluation`](../../../D5/S3/ConceptDynamics/MoralLuck/MaximalControlCompatibleEvaluation.lean)使用两个核等价关系的上确界构造这个商，并给出共同粗化的普适性质；[《形式概念动力学》第 155 节](FORMAL_CONCEPT_DYNAMICS.md)把它用于控制相容评价。
+
+具体地，存在 $\alpha:L\to Q$、$\beta:B\to Q$，满足
+
+$$
+q_Q=\alpha\circ J=\beta\circ C.
+$$
+
+$X$ 非空保证 $Q$ 非空；先在实际评价值和控制值上按代表定义映射，再在未实现标签上取任一固定类，即可得到这两个全陪域函数。另一方面，若一个候选评价 $D:X\to V$ 同时具有 $D=u\circ J=v\circ C$，则存在唯一 $d:Q\to V$ 使 $D=d\circ q_Q$。良定义来自 $D$ 在每一条生成关系及其等价闭包上恒定，唯一性来自每个商类都有状态代表。
+
+“最大”指保留区别的多少：任何同时由 $J$ 和 $C$ 决定的评价，都能从 $q_Q$ 恢复。$Q$ 不必仍取值于原来的评价尺度 $L$，更没有自动继承一个好坏次序。源码名称中的 fair 也不构成关于现实制度已经公正的证明。
+

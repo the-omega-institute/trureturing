@@ -1,0 +1,10 @@
+**命题 1.6（conversion under a legality promise）。** Suppose instead that an $S$-state subsequential transducer is defined and correct on every word of $\mathcal L_k$, with no restriction on its behavior on illegal words. Then the same argument, after intersection with the $k$-state partial legality automaton, gives
+$$
+kSL\ge kL^k,
+\qquad S\ge L^{k-1}
+\tag{TM.536}
+$$
+for odd $L$.
+
+**Proof.** The legality automaton removes every illegal input, so the triple product recognizes exactly $\mathcal A_{k,L}$ and has at most $kSL$ trim states. $\square$
+

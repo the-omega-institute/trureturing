@@ -1,0 +1,20 @@
+**定义 208.1（来源树与矩形性）。** 设每个历史 $h$ 有有限后继集合 $Y(h)$。一条完整来源 $\omega$ 由各历史上的局部参数 $\theta_h$ 和结果 $y_h$ 组成。给定条件局部集合 $\Theta_h\subseteq\Theta(h)$，称来源合同为矩形的，若任何满足
+
+$$
+\theta_h\in\Theta_h
+$$
+
+并且在每个历史上都遵守允许结果关系的局部选择，都能拼成一条合法完整来源。记 $\mathfrak J^{\square}$ 为所有这些拼接的完整来源集合。
+
+对终端收益 $g$ 定义鲁棒策略值
+
+$$
+V(\mathfrak J,\pi)
+=
+\inf_{\omega\in\mathfrak J}G_\pi(\omega),
+\qquad
+V^*(\mathfrak J)
+=
+\sup_{\pi\ {\rm nonanticipative}}V(\mathfrak J,\pi).
+$$
+

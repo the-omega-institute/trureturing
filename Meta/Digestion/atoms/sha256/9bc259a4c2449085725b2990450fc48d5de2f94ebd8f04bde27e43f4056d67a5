@@ -1,0 +1,10 @@
+**定义 87.1（源对象到相容表达的映射）。** 设非空源集合 $X$，每层读数 $q_n:X\to E_n$ 均满射，并有限制映射 $r_n:E_{n+1}\to E_n$ 满足 $q_n=r_n\circ q_{n+1}$。令
+
+$$
+L=\{(y_n)_{n\in\mathbb N}:r_n(y_{n+1})=y_n\text{ 对每个 }n\},
+\qquad
+\eta:X\to L,\quad \eta(x)=(q_n(x))_n.
+$$
+
+项目[观察商与逆极限](../../../D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.lean)从逐渐扩大的操作族构造各层不可区分关系、商对象与限制映射。这里的源集合、读数和限制映射对应其同一状态、各层商映射和相邻限制；满射性由使用实际像或商对象得到，不能用带有未实现读数的任意更大坐标集合替代。
+

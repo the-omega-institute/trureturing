@@ -1,0 +1,11 @@
+**定义 5.1（双路径记录态）。** 对归一化 $d_L,d_R$，令
+
+$$
+|\Psi_\phi\rangle=
+\frac{|L\rangle|d_L\rangle+e^{i\phi}|R\rangle|d_R\rangle}{\sqrt2},
+\qquad \kappa=\langle d_L|d_R\rangle,
+\qquad |\pm\rangle=\frac{|L\rangle\pm|R\rangle}{\sqrt2}.
+$$
+
+下述计算采用等振幅、纯记录态的限制。一般双路径互补关系见 Englert, *Fringe Visibility and Which-Way Information: An Inequality*, [DOI:10.1103/PhysRevLett.77.2154](https://doi.org/10.1103/PhysRevLett.77.2154)。
+

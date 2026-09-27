@@ -1,0 +1,1 @@
+| `D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.lean`，`canonical_minimal_realization` | 任意类型的单一更新系统之规范行为实现；精确更新及读数下从可达实现像的唯一满射 | 单一自主更新不是任意分支操作族的同一陈述 

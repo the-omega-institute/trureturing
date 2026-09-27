@@ -1,0 +1,36 @@
+**引理262.2（全部极值方向）。** 有
+$$
+\boxed{
+w(Z_a)=1,\qquad
+\mathcal M(Z_a)=\{e^{i\gamma}e_0:\gamma\in\mathbb R\},
+\qquad W(Z_a)=\mathbb Ce_0\subsetneq\mathbb C^2.
+}
+\tag{262.8}
+$$
+
+**证明。** 对单位向量 $x=(u,v)$，记 $r=|v|^2$，于是 $|u|^2=1-r$。有
+$$
+x^\dagger Z_ax
+=1-2a^2r+2ia\operatorname{Im}(\overline u v).
+\tag{262.9}
+$$
+所以
+$$
+\begin{aligned}
+|x^\dagger Z_ax|^2
+&=(1-2a^2r)^2+4a^2[\operatorname{Im}(\overline u v)]^2\\
+&\le(1-2a^2r)^2+4a^2r(1-r)\\
+&=1-4a^2(1-a^2)r^2.
+\end{aligned}
+\tag{262.10}
+$$
+因为 $0<a<1$，当 $r>0$ 时右侧严格小于一。$r=0$ 时 $x=e^{i\gamma}e_0$，且 $x^\dagger Z_ax=1$。因此最大值一恰由这一条复直线上的单位向量达到。$\square$
+
+该族不是§259的统一相位Hermitian情形。事实上
+$$
+Z_aZ_a^\dagger-Z_a^\dagger Z_a
+=\begin{pmatrix}0&-4a^3\\-4a^3&0\end{pmatrix}\ne0.
+\tag{262.11}
+$$
+因此 $Z_a$ 非正规；乘以一个标量相位也不能将它变为Hermitian矩阵。
+

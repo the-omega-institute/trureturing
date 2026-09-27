@@ -1,0 +1,38 @@
+**推论 65.2（相同均值目标的方差与区分能力）。** 对 $\ell$ 份独立实验，两种无偏估计器
+
+$$
+\widehat\mu_{\mathrm{full}}=1+\frac1\ell\sum_iR_i,
+\qquad
+\widehat\mu_{\mathrm{flag}}=1+\frac1{\eta\ell}\sum_iA_i
+$$
+
+分别具有方差
+
+$$
+\boxed{
+\operatorname{Var}\widehat\mu_{\mathrm{full}}
+=\frac{w(1-w)}\ell,
+\qquad
+\operatorname{Var}\widehat\mu_{\mathrm{flag}}
+=\frac{w(1-w\eta)}{\ell\eta}.
+}
+$$
+
+对假设 $w=0$ 与任意固定 $w>0$ 的等先验最优检验，完整记录和仅终端标签的错误概率分别为
+
+$$
+\boxed{
+P_{\mathrm{err}}^{\mathrm{full}}
+=\frac{(1-w)^\ell}{2},
+\qquad
+P_{\mathrm{err}}^{\mathrm{flag}}
+=\frac{(1-w\eta)^\ell}{2}.
+}
+$$
+
+证明。方差由独立 Bernoulli 和得到。基准 $w=0$ 的所有完整记录都为 $(1,\mathrm{click})$，另一模型在这同一记录词上的概率为 $(1-w)^\ell$；故积律总变差为 $1-(1-w)^\ell$。只看标签时，基准全为点击，另一模型全点击的概率为 $(1-w\eta)^\ell$。各自代入等先验最小错误率 $(1-\operatorname{TV})/2$。$\square$
+
+固定 $0<w<1$ 并令 $\eta\downarrow0$，两方差之比趋于无穷；固定 $\ell$ 时，终端标签的最优错误率趋于 $1/2$，完整记录的区分能力保持不变。两接口的运行协议及实际调用数完全相同，每份实验都至多两轮；差异在于是否保留 $C$，记录存储的费用并未计入调用成本。
+
+而在精确概率层面，$\mathbb EA=w\eta$ 仍唯一给出 $w$，因而给出均值。这里分开的正是精确识别与统计实验的充分性。上述无偏估计器和互相模拟结论依赖已知的两点支撑；不能不带这份先验就应用于一般未知等待律。若只允许更小的矩预算 $K$，还须限制 $1+w(2^p-1)\le K$；当 $K>1$ 时，总能选取满足它的足够小的正 $w$；$K=1$ 则只允许 $w=0$。
+

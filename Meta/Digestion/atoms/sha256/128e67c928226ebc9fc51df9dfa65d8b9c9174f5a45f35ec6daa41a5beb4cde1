@@ -1,0 +1,31 @@
+**定理 63.3（能量依赖恰由别名簇区分）。** 在定理 63.2 下，取任意 $\theta_a,\theta_b\ne0$。每个非零时间边缘都非 Gaussian；两个极限能量 $D_a(\theta_a),D_b(\theta_b)$ 独立，当且仅当 $a,b$ 属于不同别名簇。不同簇的整个过程族也相互独立。若 $a$ 在零相位类，则 $D_a(\theta)$ 与旧端点平方 $Y^2-\gamma$ 对每个 $\theta>0$ 的协方差严格为正；其余类别的整个过程与旧场独立。
+
+证明。记 $H_{ab}(v,w)=\mathbb EF_a(v)\overline{F_b(w)}$、$P_{ab}(v,w)=\mathbb EF_a(v)F_b(w)$，其中 $F_a(v)=\mathcal C_a(e^{i\omega vx})$。实高斯 Wick 公式给
+
+$$
+\operatorname{Cov}(D_a(\theta),D_b(\psi))
+=4\sqrt{\zeta_a\zeta_b}
+\int_0^{\theta/\zeta_a}\int_0^{\psi/\zeta_b}
+\left(|H_{ab}(v,w)|^2+|P_{ab}(v,w)|^2\right)dv\,dw.
+\tag{63.16}
+$$
+
+若 $d_{ab}^-$ 有限，第一项是 $|\widehat\rho(d_{ab}^-+\omega(v-w))|^2$；若 $d_{ab}^+$ 有限，第二项是 $|\widehat\rho(d_{ab}^++\omega(v+w))|^2$；相应无穷项为零。原高斯密度满足 $\widehat\rho(t)=\gamma e^{-t^2/(2\kappa)}>0$。同簇至少有一项处处为正；将两个积分改写成正向积分后，其协方差非零且符号为 $\operatorname{sgn}(\theta\psi)$，排除独立。异簇的独立来自整个高斯测度的联合独立，强于二次型零协方差。
+正时间还有 $D_a(\theta)\ge-2\gamma\theta/\sqrt{\zeta_a}$，而上述自协方差严格为正；
+非退化且有单侧界的变量不可能 Gaussian。负时间改用相应上界。
+例如同一 proper 类的两个成员取相同 $\zeta$、零偏移与相反符号，则
+$F_-(v)=\overline{F_+(-v)}$，在同一实现上 $D_-(\theta)=-D_+(-\theta)$。
+其 Hermitian 交叉项为零，伪交叉项却为 $\widehat\rho(\omega(v+w))$；
+分别重抽两个场会破坏这条路径关系。
+
+零相位类同理满足
+
+$$
+\operatorname{Cov}(D_a(\theta),Y^2-\gamma)
+=4\sqrt{\zeta_a}\int_0^{\theta/\zeta_a}
+|\widehat\rho(b_a^0+\omega v)|^2dv>0.
+\tag{63.17}
+$$
+
+其余类别使用与 $W_0$ 独立的测度，所以整个路径都与旧场独立。这是极限律的关系；没有断言有限后验能量独立或其协方差已收敛。
+

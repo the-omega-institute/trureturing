@@ -1,0 +1,38 @@
+#### 5.1.3 紧度量空间上的定量桥：最坏纤维直径趋于零
+
+若进一步给 $X$ 一个相容的度量 $d$，并明确要求 $X$ 非空，则同一观察塔具有定量形式。令
+
+$$
+E_i=\{(x,y)\in X\times X:q_i(x)=q_i(y)\},\qquad
+\delta_i=\max_{(x,y)\in E_i}d(x,y).
+\tag{TM.318}
+$$
+
+各 $E_i$ 包含非空对角线；Hausdorff 目标使等值关系闭，故 $E_i$ 是紧 $X\times X$ 的非空闭子集。距离连续，所以最大值存在且有限。若 $i\le j$，则 $E_j\subseteq E_i$，因此 $\delta_j\le\delta_i$。
+
+联合分离进一步推出有向极限 $\delta_i\to0$：对A卷第5.2.1节的一般核缩小定理取开对角邻域 $U_\varepsilon=\{(x,y):d(x,y)<\varepsilon\}$。本节的连续满射、有向相容及共同分离正好是该定理的假设，故最终 $E_i\subseteq U_\varepsilon$。等价地，
+
+$$
+F_i^\varepsilon=E_i\cap\{(x,y):d(x,y)\ge\varepsilon\}
+\tag{TM.319}
+$$
+
+最终为空。该一般定理的有限交性质证明只在A卷第5.2.1节给出。若允许空 $X$，可另约定所有 $\delta_i=0$；最大值证明本身不以空集为非空。
+
+对任意连续实目标 $f$，定义一致模量
+
+$$
+\omega_f(s)=\max\{|f(x)-f(y)|:x,y\in X,\ d(x,y)\le s\},\qquad s\ge0.
+\tag{TM.320}
+$$
+
+约束集合非空紧致，故最大值存在。紧度量空间上的连续函数一致连续，因而 $s\downarrow0$ 时 $\omega_f(s)\to0$。每层纤维内目标振幅不超过 $\omega_f(\delta_i)$。为每个 $y\in X_i$ 任取一个原像 $s_i(y)$，得到集合层解码器 $\bar f_i(y)=f(s_i(y))$，满足
+
+$$
+\sup_{x\in X}|f(x)-\bar f_i(q_i(x))|
+\le\omega_f(\delta_i)\longrightarrow0.
+\tag{TM.321}
+$$
+
+这里得到的是最坏纤维误差随细化消失。没有要求或证明选择 $s_i$ 连续、可计算，也没有给出带噪逆映射的稳定常数或达到某个精度的有效速率。若另有度量、算法与资源估计，它们须另行接入。这是“分辨率趋细能控制恢复误差”的正面结论，并不使单层商成为拓扑不变量。
+

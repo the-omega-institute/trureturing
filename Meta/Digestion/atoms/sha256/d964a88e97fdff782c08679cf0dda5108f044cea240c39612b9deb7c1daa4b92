@@ -1,0 +1,102 @@
+**定理 20.3（低成功率端的相位衰减率）。** 在定义 20.1 下，记
+
+```math
+A=\frac1{e^{\theta h}-1},\qquad B=\frac1{e^{\eta h}-1},\qquad
+F_+(x)=h\bigl((A+1)e^{-\theta x}+Be^{\eta x}\bigr),\qquad
+\rho_h(\delta)=F_+(h-\delta).
+\tag{20.14}
+```
+
+则对每个固定 $`\delta\in[0,h]`$，
+
+```math
+\lim_{c\to-\infty}\frac{-\log\Psi_h(c,\delta)}{C_c}
+=\rho_h(\delta).
+\tag{20.15}
+```
+
+端点的值相同，而 $`\rho_h`$ 在 $`[0,h]`$ 上严格凸，唯一最小相位为
+
+```math
+\delta_*=h-\log\frac{\theta(A+1)}{\eta B}\in(0,h).
+\tag{20.16}
+```
+
+特别地，存在有限 $`c_0`$，使对每个 $`c\lt c_0`$ 都有
+$`\Psi_h(c,\delta_*)\gt\Psi_h(c,0)`$。更一般地，集合
+$`E_h=\{c\in\mathbb R:\Psi_h(c,\delta_*)=\Psi_h(c,0)\}`$
+在实轴上局部有限，并与 $`(-\infty,c_0)`$ 不交。
+
+证明。暂把 $`C=C_c`$ 视为独立正参数。置
+
+```math
+F_-(x)=h\bigl(Ae^{-\theta x}+(B+1)e^{\eta x}\bigr),\qquad
+F(x)=h\bigl(Ae^{-\theta x}+Be^{\eta x}
+                 +\min(e^{-\theta x},e^{\eta x})\bigr).
+\tag{20.17}
+```
+
+于是 $`F=F_+`$ 于非负半轴，$`F=F_-`$ 于非正半轴，且
+
+```math
+F_-(x)=F_+(x+h),\qquad
+F_+(x+h)-F_+(x)=h(e^{\eta x}-e^{-\theta x}),\qquad
+F_-(x-h)-F_-(x)=h(e^{-\theta x}-e^{\eta x}).
+\tag{20.18}
+```
+
+当 $`0\lt\delta\lt h`$，令 $`x_0=h-\delta\in(0,h)`$。
+格点 $`x_0`$ 与 $`x_0-h`$ 的 $`F`$ 值相等；由后两式，
+向正、负两端逐格远离时该值严格增加。因此
+$`\min_jF(hj-\delta)=F_+(h-\delta)`$。
+端点由同样的非严格不等式得到，且
+$`F_+(0)=F_+(h)`$。
+
+对任一固定格点，(20.13) 的闭式说明相应级数项的负对数除以
+$`C`$ 趋于 $`F(x_j)`$；在 $`a_j=b_j`$ 时，多出的因子
+$`Ch`$ 不改变这个极限。保留一个最小格点即给出 (20.15) 的上极限界。
+反方向利用 $`H(a,b)\le ae^{-\min(a,b)}`$：当 $`C\ge1`$ 时，
+
+```math
+\Psi_h(c,\delta)
+\le C e^{-(C-1)\rho_h(\delta)}
+\sum_{j\in\mathbb Z}h e^{-\theta x_j}e^{-F(x_j)}.
+\tag{20.19}
+```
+
+右侧级数有限，因为 $`F(x)`$ 在两端指数增长。这给出匹配的下极限界，证明 (20.15)。
+
+$`F_+''(x)\gt0`$，且 $`F_+'(x)=0`$ 恰好给出
+$`x_* =\log(\theta(A+1)/(\eta B))`$。
+由
+$`\theta/(1-e^{-\theta h})\gt1/h\gt\eta/(e^{\eta h}-1)`$
+得到 $`x_*\gt0`$；交换 $`\theta,\eta`$ 的同一不等式得到
+$`x_*\lt h`$。所以 (20.16) 是严格内点最小值，
+$`\rho_h(0)\gt\rho_h(\delta_*)`$。
+最后将 (20.15) 分别用于这两个相位，得
+
+```math
+\frac1{C_c}\log\frac{\Psi_h(c,\delta_*)}{\Psi_h(c,0)}
+\longrightarrow\rho_h(0)-\rho_h(\delta_*)\gt0,
+\qquad c\to-\infty.
+\tag{20.20}
+```
+
+因 $`C_c\to\infty`$，所述严格不等式对所有充分负的 $`c`$ 成立。
+
+为证明例外集合的局部有限性，将 (20.13) 的积分式代回 (20.3)，
+并将 $`C`$ 扩展到复半平面 $`\Re C\gt0`$。记
+$`a_j^0=h e^{-\theta x_j}`$、$`b_j^0=h e^{\eta x_j}`$，每一项为整函数
+
+```math
+C a_j^0\int_0^1
+\exp\{-C[(A+t)a_j^0+(B+1-t)b_j^0]\}\,dt.
+```
+
+对任意紧集 $`\Re C\ge\epsilon\gt0`$、$`|C|\le K`$，
+该项的绝对值至多 $`K a_j^0e^{-\epsilon F(x_j)}`$，构成可和包络。
+故级数在此半平面定义全纯函数。相位 $`\delta_*`$ 与 $`0`$ 的函数之差
+由 (20.20) 不是恒零，其零点因而孤立。
+$`c\mapsto C_c`$ 是实轴到正实轴的连续双射，且紧集映为半平面内部的紧集，
+所以 $`E_h`$ 在每个有界闭区间内只有有限个点。∎
+

@@ -1,0 +1,40 @@
+### 188.4 无旗标交叉项时的显式过渡上界
+
+当 $\gamma=0$ 时，最小化本可行族的斜率必取 $n=0$。
+余下二次式的最小点是
+
+$$
+m_*=\min\left\{\frac{2h}{h+3\beta R},\frac12\right\}.
+$$
+
+因此此族的最佳一阶系数为
+
+$$
+\boxed{
+\min_{m,n}F_h(m,n)
+=
+\begin{cases}
+-\dfrac{\beta(R-1)}8+\dfrac{7h}{12}
+-\dfrac{4h^2}{3(h+3\beta R)},&0\le h<\beta R,\\[2mm]
+\dfrac{\beta(R+1)}8,&h\ge\beta R.
+\end{cases}
+}
+\tag{188.9}
+$$
+
+这里的最小化只在（188.2）的可行族内进行；它提供全 CPTP 最优误差的上界。
+当 $h=0$，该系数为 $-\beta(R-1)/8$；
+当 $h\ge\beta R$，最优点 $m=1/2,n=0$ 退化为保持量子接口、均匀输出标签的构造。
+
+也可令 $B=1-4m^2$，把 $n=0$ 的族写成
+$K_{0,s}=K_{1,s}=\operatorname{diag}(1/\sqrt2,\sqrt{(1-B)/2})$
+及额外的 $\sqrt B\,|0\rangle\langle1|$。对应斜率为
+
+$$
+F_h
+=\frac{\beta(R+1)}8-\frac{\beta RB}{4}
++h\left[\frac23-\frac B{12}-\frac23\sqrt{1-B}\right].
+$$
+
+这显式分开了稀少输入方向的标签收益与保存来源纯化的成本。
+

@@ -1,0 +1,67 @@
+#### 2.9.3 The exact tail gap and its effective witnesses
+
+Define
+
+$$
+t_d=\sum_{n>d}w_n,
+\qquad
+\delta_d=w_d-t_d.
+$$
+
+These reals are computable uniformly in $d$ and the radix sequence. For example, truncating $t_d$ at depth $N\ge d$ leaves error at most $w_N\le2^{-N}$. They satisfy
+
+$$
+0\le t_d\le w_d,
+\qquad 0\le\delta_d\le w_d.
+$$
+
+There is also an exact identity:
+
+$$
+\boxed{
+\delta_d=\sum_{j>d}(b_j-2)w_j.
+}
+$$
+
+To prove it, use $b_jw_j=w_{j-1}$ and telescope:
+
+$$
+\begin{aligned}
+\sum_{j=d+1}^{N}(b_j-2)w_j
+&=\sum_{j=d+1}^{N}(w_{j-1}-2w_j)\\
+&=w_d-\sum_{j=d+1}^{N-1}w_j-2w_N.
+\end{aligned}
+$$
+
+Letting $N$ tend to infinity gives the identity. All summands are nonnegative. It follows that
+
+$$
+\boxed{
+\delta_d>0
+\quad\Longleftrightarrow\quad
+\exists j>d:\ b_j>2.
+}
+$$
+
+In particular, the immediate next radix $b_{d+1}$ counts. Finding any such index $j$ gives the explicit positive rational lower bound
+
+$$
+g_d=(b_j-2)w_j\le\delta_d.
+$$
+
+For a depth-$d$ cylinder $D$ with no forbidden ancestor, every forbidden cylinder meeting it is a proper descendant. Therefore
+
+$$
+\mu(E\cap D)\ge w_d-\sum_{n>d}w_n=\delta_d.
+$$
+
+Together with the ancestor criterion, this gives
+
+$$
+\delta_d>0
+\quad\Longrightarrow\quad
+\mu(E\cap D)\in\{0\}\cup[\delta_d,w_d],
+$$
+
+where nonemptiness is equivalent to the second alternative. If $\delta_d=0$, nonemptiness still follows from the ancestor criterion, but a nonempty intersection may be null.
+

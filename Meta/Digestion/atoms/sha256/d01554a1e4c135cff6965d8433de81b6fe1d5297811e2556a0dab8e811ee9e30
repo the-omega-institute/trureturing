@@ -1,0 +1,15 @@
+**定理 26.2（全族同步因子化）。** 令 N_t=Σ_{a<t}e_{a,a+1}、P_t=Σ_{a<t}e_aa。取一个共同正整数 c 清除所有 e_ab 的分母，再取整数 K 大于所有 cN_t、cP_t 的群系数绝对值，令 W=KJu，并定义
+
+$$
+B_t=W^2+c^2N_t,\qquad
+R_t=W+cP_t,\quad S_t=W+cN_t.
+$$
+
+所有 R_t、S_t 的群系数严格为正，且对 2≤t≤d，
+
+$$
+R_tS_t=B_t,\qquad S_tR_t=B_{t-1}.
+$$
+
+所有 B_t 具有同一增广，tau(B_t)=t，且 ell_H(B_t,B_r)=|t-r|。这些构造不改变既有第 25 节的闭式族。
+

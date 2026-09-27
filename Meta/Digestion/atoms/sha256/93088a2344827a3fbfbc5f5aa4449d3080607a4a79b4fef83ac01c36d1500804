@@ -1,0 +1,37 @@
+**定理 80.4（接近真实失效边界必有倒数级成本下界）。** 对每个 $0\le u<\mathfrak r_{\mathrm{fail}}$，
+
+$$
+\boxed{
+\mathscr K(u)\ge
+\frac{\mathfrak r_{\mathrm{fail}}}
+{\mathfrak r_{\mathrm{fail}}-u}.
+} \tag{80.4}
+$$
+
+因而 $\mathscr K(u)\to\infty$ 当 $u\uparrow\mathfrak r_{\mathrm{fail}}$。
+
+证明。取引理 79.1 的最小失效仪器 $\Gamma_*$ 及其未点击固定密度矩阵 $\sigma_*$。令
+
+$$
+t=\frac{u}{\mathfrak r_{\mathrm{fail}}}\in[0,1),
+\qquad
+\Gamma_t=t\Gamma_*+(1-t)\Gamma_0.
+$$
+
+这是同接口完整仪器，其分支逐一取相同凸组合；每一轮都重复这个固定映射。由范数齐次性，
+
+$$
+\frac12\|\Gamma_t-\Gamma_0\|_\diamond
+=t\mathfrak r_{\mathrm{fail}}=u.
+$$
+
+又 $\mathcal N_t(X)\ge t\mathcal N_*(X)$ 对每个 $X\ge0$ 成立。反复使用正性与 $\mathcal N_*(\sigma_*)=\sigma_*$，得到
+
+$$
+\mathcal N_t^n(\sigma_*)\ge t^n\sigma_*.
+$$
+
+因此这个合法装置和初态的生存概率至少为 $t^n$，尾和至少为 $\sum_{n\ge0}t^n=1/(1-t)$，即式 (80.4)。$\Gamma_t$ 距离严格小于失效半径，定理 80.2 同时保证其实际均值有限；证明给的是越来越大的有限成本，而没有把失效端点提前代入。$\square$
+
+凸组合在这里必须逐轮按同一无记忆随机机制实现，或直接作为同一个 CP 仪器使用。如果在执行开始时只抽一次装置并一直保留选择，就引入了额外持久记忆，给出不同过程；那种混合不属于本证明。
+

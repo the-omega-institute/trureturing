@@ -1,0 +1,4 @@
+**定理 2.3（零集上的瞬时动态裁决，repo-derived）。** 设 $R$ 可微，$\theta\in Z$，考虑流 $\dot\theta=-\nabla L(\theta)-\lambda\nabla R(\theta)$。则在 $\theta$ 处 $\dot\theta=-\lambda\nabla R(\theta)$，按 $K(\theta)\oplus K(\theta)^\perp$ 分解为 $-\lambda P_{K(\theta)}\nabla R(\theta)$ 与 $-\lambda P_{K(\theta)^\perp}\nabla R(\theta)$；在定义 2.1 的秩恒定条件下前者是沿 $Z$ 的切向分量、后者是法向分量。此时 $\frac{d}{dt}L(\theta(t))=0$。取 $R=\tfrac12\|\theta\|^2$ 时切向分量为 $-\lambda P_{K(\theta)}\theta$。
+
+证明。$\theta\in Z$ 给 $\nabla L(\theta)=J^\top(F(\theta)-y)=0$，故速度只剩正则项；正交分解与 $\frac{d}{dt}L=\langle\nabla L,\dot\theta\rangle=0$ 都是直接计算。这是一个逐点陈述：$Z$ 在带权重衰减的流下一般不是不变集，离开 $Z$ 之后 $\nabla L$ 重新出现，长期行为要靠具体模型（第 3 章在线性模型上用其精确解；在光滑吸引的插值流形与 Morse–Bott 条件下，$\lambda\to0$ 的慢时间极限流 $d\bar\theta/d\tau=-P_{T\bar\theta Z}\bar\theta$ 是文献定理，第 7 章标注，本卷不重证）。证毕。
+

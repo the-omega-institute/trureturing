@@ -1,0 +1,15 @@
+### 169.7 成熟输入与结论范围
+
+本节的保真度—相对熵界和谱常数界已给出有限维谱证明。纯化最优重叠、平方根算子单调性及相对熵数据处理是成熟量子信息结果；其中数据处理可参见 John Watrous，
+*The Theory of Quantum Information*，Cambridge University Press，2018，
+第5章定理5.35及推论5.37：
+[作者公开书稿页面](https://cs.uwaterloo.ca/~watrous/TQI/)。
+
+量子 Fano 结构的原始来源是 Benjamin Schumacher，
+“Sending entanglement through noisy quantum channels”，
+*Physical Review A* **54**, 2614–2628 (1996)，
+[DOI:10.1103/PhysRevA.54.2614](https://doi.org/10.1103/PhysRevA.54.2614)；
+其 [arXiv 原稿](https://arxiv.org/abs/quant-ph/9604023) 第6.2节给出纯化空间中熵与保真度的 Fano 型控制。本节明确引用数据处理，并给出所需熵极值与实际秩上界的推导，不将上述成熟方法申报为本项目发明。
+
+操作结论限于第167节的常值输入、正交可读纯分支和固定纯化目标。在这个范围内，分支与活动记忆的独立性、几何缺口消失和零额外恢复损失等价；定量比较必须保留（169.12）、（169.17）、（169.22）各自的方向、谱常数和规模条件。没有新增 Lean 核验或物理测量声明。
+

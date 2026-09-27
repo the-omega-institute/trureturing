@@ -1,0 +1,86 @@
+### 183.2 随候选误差变化的检验投影
+
+记
+
+$$
+\widehat t=t_*(w),\qquad C=\cos\widehat t,\quad S=\sin\widehat t.
+$$
+
+在（183.1）的偶宇称空间中，选择最高根的实单位本征向量
+
+$$
+\xi(w)=x(w)|00\rangle+y(w)|11\rangle,
+\qquad
+x(0)=\sqrt r,\quad y(0)=\sqrt\ell.
+\tag{183.3}
+$$
+
+它可以由缩放矩阵 $B(w,\alpha(w))$ 的简单最高谱投影实解析选取，
+并在缩小 $w_*$ 后满足 $x,y>0$。置
+
+$$
+D=\operatorname{diag}(\sqrt r\,x,\sqrt\ell\,y),\qquad
+\tau=\operatorname{Tr}D,\quad
+\zeta=\operatorname{Tr}(DZ).
+\tag{183.4}
+$$
+
+注意 $D$ 并未被假定为密度矩阵；$\tau$ 一般不等于一。
+在 $w=0$，$D=\rho,\tau=1,\zeta=\kappa$。
+
+对旗标 $s$ 的任意接收端通道 $\Gamma_s$，检验
+$P_{\xi(w)}$ 的收益可写成输入优先的 Choi 配对
+$\operatorname{Tr}(J_{\Gamma_s}A_s)$，其中
+
+$$
+g_0=\operatorname{vec}D,\quad
+g_1=\operatorname{vec}(-YD),
+$$
+
+$$
+A_s=a|g_0\rangle\langle g_0|+b|g_1\rangle\langle g_1|
++sc(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|),
+\tag{183.5}
+$$
+
+$$
+a=1-\beta w,\qquad b=\beta w,\qquad c=\gamma w.
+$$
+
+这来自两个振幅
+$\langle\xi|(I\otimes K)\Xi\rangle=\operatorname{Tr}(DK)$、
+$\langle\xi|(I\otimes K)\psi\rangle=\operatorname{Tr}(DKY)$。
+因此对候选酉 $U_s=C I-isS X$，检验收益为
+
+$$
+F_\xi(\widehat t)
+=a\tau^2C^2+b\zeta^2S^2+2c\tau\zeta CS,
+\tag{183.6}
+$$
+
+两个旗标给出相同的值。
+
+定义
+
+$$
+p=a\tau C+c\zeta S,\qquad
+q=b\zeta S+c\tau C.
+\tag{183.7}
+$$
+
+由于 $\xi(w)$ 是实际输出差的简单正本征向量，
+Hellmann–Feynman 公式与（183.2）给
+
+$$
+0=\partial_td(w,\widehat t)
+=-\left.\partial_t
+\langle\xi(w)|\sigma(w,t)|\xi(w)\rangle\right|_{t=\widehat t}.
+$$
+
+此导数中检验向量固定为当前的 $\xi(w)$。对（183.6）求导即得精确关系
+
+$$
+\boxed{p\tau S=q\zeta C.}
+\tag{183.8}
+$$
+

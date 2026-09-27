@@ -1,0 +1,122 @@
+**定理 199.3（任意处理器的二次首项与显式极限矩阵）。** 对每个固定的 $0<a<1$、$2a-1<t<1$，
+$$
+\boxed{
+\mathfrak P_2(a,t;R)
+=B(a,t)+\frac{a^2B(a,t)^2}{2(1+t-2a^2)}R^2+o(R^2)
+}
+\qquad(R\downarrow0).
+\tag{199.11}
+$$
+特别地，定理196.3的系数为
+$$
+\kappa(a,t)=\frac{a^2(1-a^2)^2}
+{2(1-t)^2(1+t-2a^2)^3}.
+\tag{199.12}
+$$
+记 $d=1-a^2$、$D=1+t-2a^2$、$\eta=(a^2-t)/d$。在定义199.1的可行参数中，任意成本趋向 $B$ 的序列都满足
+$$
+\varepsilon\to0,\qquad c^2\to B,\qquad
+\frac{x^2}{\varepsilon}\to0,\qquad
+C\longrightarrow C_0:=
+\begin{pmatrix}1&0&\eta\\0&1&0\\\eta&0&1\end{pmatrix}.
+\tag{199.13}
+$$
+这里的极限只涉及固定 $a,t$，不要求精确区间具有共同正半径。
+
+证明。 首先证明（199.13）。因为 $1\le c\le\sqrt Q$，成本趋于 $B$ 时 $c$ 有固定上下界；$\Gamma$ 是六阶相关矩阵，所以它及其子块属于固定紧集。若某子列 $\varepsilon\ge\varepsilon_0>0$，则 $h^2=4\varepsilon(1-\varepsilon)$ 有正下界，而
+$$
+h^2-x^2=\frac{c^2h^2}{Q}
+\tag{199.14}
+$$
+也有正下界。取收敛子列，极限分块矩阵仍正半定，且极限圆弧在名义点附近有一个真正的开定义域。按定理199.2的反向构造，它给出名义成本恰为 $B$ 的局部精确纯二维程序，与定理194.1的严格不达到性矛盾。因此 $\varepsilon\to0$，进而 $x\to0$。
+
+上左块趋向正定的 $F$，故充分靠后可取 Schur 补，得到
+$$
+C\succeq\frac{1-\varepsilon}{c^2}\,
+E\left(F-\frac xcE-\varepsilon C\right)^{-1}E.
+\tag{199.15}
+$$
+取 $00$ 对角元并用 $(EF^{-1}E)_{00}=B$，得到 $c^2\ge B+o(1)$。结合 $c^2\le Q\to B$，可知 $c^2\to B$；再用（199.3）可知 $x^2/\varepsilon\to0$。
+
+任一 $C$ 的聚点 $C_\infty$ 满足
+$$
+C_\infty\succeq\frac{EF^{-1}E}{B},\qquad
+\operatorname{diag}C_\infty=\mathbf1.
+\tag{199.16}
+$$
+右侧矩阵的对角为 $(1,0,1)$。因此正半定残差的对角为 $(0,1,0)$，其第零和第二行列必须全部为零。这迫使
+$$
+C_\infty=\frac{EF^{-1}E}{B}+|1\rangle\langle1|=C_0.
+\tag{199.17}
+$$
+聚点唯一，故整个序列收敛，完成（199.13）。
+
+现在提取二次成本。记
+$$
+A_3=(EF^{-1}EF^{-1}E)_{00},\qquad
+A_C=(EF^{-1}C_0F^{-1}E)_{00}.
+\tag{199.18}
+$$
+由（199.15）的 $00$ 对角元及逆矩阵的一阶展开，沿上述低成本序列有
+$$
+c^2-B\ge
+\frac{A_3}{\sqrt B}x+(A_C-B)\varepsilon
++o(|x|+\varepsilon).
+\tag{199.19}
+$$
+展开合法因为 $F$ 正定、$C$ 一致有界且 $c$ 有正下界。未给速率的 $C-C_0$ 总是乘以 $\varepsilon$，所以贡献 $o(\varepsilon)$；将 $1/c$ 替换为 $1/\sqrt B$ 贡献 $o(|x|)$。不需要预先控制 $C$ 的收敛速度。
+
+这两个矩阵系数可直接计算。由
+$$
+F^{-1}e_2=
+\begin{pmatrix}\eta B\\-a/D\\B\end{pmatrix},\qquad
+B(1-\eta^2)=\frac1d,
+\tag{199.20}
+$$
+得到
+$$
+A_3=2\eta B^2,\qquad
+A_C=B^2(1+3\eta^2)+\frac{a^2}{D^2}.
+\tag{199.21}
+$$
+令 $A=A_C/B-1$、$k=A_3/B^{3/2}=2\eta\sqrt B$，则
+$$
+A-k^2
+=B(1-\eta^2)+\frac{a^2}{BD^2}-1
+=\frac{2a^2}{D}>0.
+\tag{199.22}
+$$
+它也等于第197节的 $V/B^2$，但（199.20）—（199.22）直接从任意处理器的极限矩阵取得该数。
+
+设 $T=\varepsilon+x^2/\varepsilon$。式（199.13）使 $T\to0$，且 $|x|\le T/2$。结合（199.3）、（199.19）得到
+$$
+Q-B\ge
+B\left(A\varepsilon+kx+\frac{x^2}{4\varepsilon}\right)+o(T).
+\tag{199.23}
+$$
+括号中的二次式满足
+$$
+A\varepsilon+kx+\frac{x^2}{4\varepsilon}
+=\frac{2a^2}{D}\varepsilon
++\varepsilon\left(\frac{x}{2\varepsilon}+k\right)^2
+\ge c_0T
+\tag{199.24}
+$$
+对某个固定 $c_0>0$ 成立。因此任何 $R\downarrow0$ 且 $Q-B=O(R^2)$ 的可行序列都满足 $T=O(R^2)$。由严格覆盖条件，
+$$
+4\varepsilon(1-\varepsilon)>c^2R^2,
+\qquad
+\liminf\frac{\varepsilon}{R^2}\ge\frac B4.
+\tag{199.25}
+$$
+将（199.24）的平方项丢去，余项因 $T=O(R^2)$ 而为 $o(R^2)$，故
+$$
+\liminf\frac{Q-B}{R^2}
+\ge\frac{2a^2B}{D}\liminf\frac{\varepsilon}{R^2}
+\ge\frac{a^2B^2}{2D}.
+\tag{199.26}
+$$
+定理197.2给出相同系数的实际程序上界。由定理199.2，在任意半径序列上选择成本与下确界相差至多 $R^3$ 的可行参数；结合定理193.2的成本下界，所得参数满足 $Q-B=O(R^2)$，所以（199.26）适用。上下界匹配即得（199.11）与（199.12）。
+
+因此，第197节的三结果测量—制备构造已经在二次首项上达到任意固定处理器类的最优值。这不主张它在每个正半径处取得最小值，也不主张各处理器类的高阶项相同。全部推导保留开邻域精确性、固定程序维数与同一处理器内的联合矩阵正性；Gram 分解与 Schur 补只作为该具体优化的标准工具。固定处理器与程序输入的标准框架可参见 Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Physical Review A 66, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II节。证毕。
+

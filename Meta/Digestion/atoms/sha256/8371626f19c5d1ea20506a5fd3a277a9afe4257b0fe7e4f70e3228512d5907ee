@@ -1,0 +1,51 @@
+### 274.2 标准Jordan坐标中，正定权重不改变证书链
+
+先设
+$$
+M=I_E+tJ,\qquad t=\frac14,\qquad
+J=\bigoplus_{b\in\mathcal B}J_{r_b},
+\qquad d=\sum_b r_b,\quad m=\max_b r_b,
+\tag{274.6}
+$$
+其中链分解正交，$\mathcal B$ 有限非空，但 $Q\succ0$ 可以具有任意跨链条目。令 $Q_{\mathrm c}$ 为§271的canonical块对角解：
+$$
+Q_{\mathrm c}+M^\dagger Q_{\mathrm c}M=I_E.
+\tag{274.7}
+$$
+
+所有正定权重都给出同一个核与同一个支撑：
+$$
+\mathcal N_M=\ker G_M=\{(-Mx,x):x\in E\},
+\qquad
+\operatorname{supp}T(Q,M)=\mathcal N_M^\perp.
+\tag{274.8}
+$$
+而且每个 $T(Q,M)$ 都在该支撑上严格正。核基仍是
+$$
+q_{b,j}=(-e_{b,j}-te_{b,j-1},e_{b,j}).
+\tag{274.9}
+$$
+对任何同数据PSD竞争矩阵 $T+\operatorname{diag}(D,-D)$，首层零二次型消去完整列 $De_{b,1}$，以后逐层同样消去 $De_{b,j}$。§271的这一证明只用（274.9）、Hermitian性和PSD性，不用 $Q$ 块对角。因此完整来源仍唯一。
+
+证书链也不依赖权重。设当前面支撑为 $U\supseteq\mathcal N_M^\perp$，令 $P_U$ 为正交投影。对于满足
+$$
+Y_U=P_UYP_U\succeq0,\qquad Y\in L^\perp
+\tag{274.10}
+$$
+的候选证书，
+$$
+\langle Y,T(Q,M)\rangle
+=\operatorname{Tr}(Y_UT(Q,M))=0
+\quad\Longleftrightarrow\quad
+Y_U\big|_{\mathcal N_M^\perp}=0.
+\tag{274.11}
+$$
+这是两个PSD算子零迹乘积的支撑判据；$T(Q,M)$ 在共同支撑上严格正，所以右侧不含 $Q$。这里仅要求当前面压缩PSD，不要求 $Y$ 在全空间PSD。
+
+因此 $Q$ 与 $Q_{\mathrm c}$ 具有相同的合法证书链、严格约化条件和最终相对Slater支撑。§271已经对任意低秩证书链证明最短长度为 $m$，故当前任意正定权重仍满足
+$$
+d_S=m.
+\tag{274.12}
+$$
+将偏移除以其迹 $c$ 不改变方向空间 $L$、零配对条件或最短步数。
+

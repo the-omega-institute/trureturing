@@ -1,0 +1,21 @@
+**证明。** 两读数之差分别是 $2\operatorname{Re}(h-h')$ 和 $-2\operatorname{Im}(h-h')$；平方相加即可。证毕。
+
+若给出的两次强度各有同时误差界 $\varepsilon_0,\varepsilon_1$，由式(TM.3)形成的复数估计与真值的距离至多 $\sqrt{\varepsilon_0^2+\varepsilon_1^2}/2$，但估计未必落在单位圆上。比较两个与同一数据及误差合同相容的单位相位，则其距离至多 $\sqrt{\varepsilon_0^2+\varepsilon_1^2}$；此处每个坐标的两个合法值至多相差 $2\varepsilon_j$。联合误差合同必须在同一个事件上成立，不能用各自不同的成功事件当作同时保证。
+
+在生成树规范中，闭路 $\gamma$ 的运输为
+
+$$
+H_\gamma=\prod_{e\notin T}h_e^{n_e(\gamma)},
+\tag{TM.6}
+$$
+
+其中 $n_e$ 是对该具名非树边的有向净遍历数。这个净计数式使用相位的交换性；非交换纤维运输必须保留完整词序。
+
+对两份单位相位族，若 $|h_e-h'_e|\le\eta_e$，则
+
+$$
+|H_\gamma-H'_\gamma|
+\le\sum_{e\notin T}|n_e(\gamma)|\eta_e.
+\tag{TM.7}
+$$
+

@@ -1,0 +1,17 @@
+**证明.** 定理 3 排除公共点族。非公共点族没有单元成员，二元成员至多 \(N-1\) 个。若三元成员无公共点，Hilton–Milner 三元交族界给出至多 \(3N-8\) 个；因此
+\[
+ |\mathcal F|\leq U(N)+(N-1)+(3N-8).
+\]
+若三元成员都含 \(c\)，但存在二元避点成员，其每个三元成员的另外两点必须碰到这个二元集，故三元成员至多 \(2N-3\) 个。一个基数为 \(a\) 的避点成员允许的三元联结数恰为
+\[
+ g_N(a)=\binom{N-1}{2}-\binom{N-1-a}{2}
+       =a(N-1)-\frac{a(a+1)}2.
+\]
+依次将 \(3N-8\)、\(2N-3\)、\(g_N(\lfloor N/12\rfloor)\) 和 \(g_N(\lfloor(N-1)/13\rfloor+1)\) 代入 \(U(N)+(N-1)+\cdot\leq B(N)\)，整数检验所得的末次失败值分别为 \(41,26,241,171\)。前三项的严格反设或第四项的 \(d\geq13\Rightarrow a\leq\lfloor(N-1)/13\rfloor+1\) 给出结论。\(N\leq8191\) 的逐项精确计算及 \(N\geq8192\) 的有理尾界由命令 `python3 -B tools/scripts/agent/openproblem/erdos272-localization-check.py` 核验；尾界使用 \(\sum d^{-2}<33/20\)、\(H_{\lfloor(N-1)/3\rfloor}\leq N/512\)，从而 \(U(N)\leq33N^2/80+NH_{\lfloor(N-1)/3\rfloor}+N/3\)。
+
+较强的第一项有限结论来自不同公差的联合计数。对公差 \(d\ne e\) 及各自固定 Helly 点 \(p,q\)，令 \(C_d(p),C_e(q)\) 为相应含点长 AP 的全集，\(\nu_{de}(p,q)\) 为两全集之间“不相交”图的匹配数。König 定理给出相容并集的准确上界
+\[
+ M_{de}=\max_{p,q}\bigl(|C_d(p)|+|C_e(q)|-\nu_{de}(p,q)\bigr).
+\]
+对不重叠公差对作最大权匹配并从 \(U(N)\) 扣除节省量，得到 \(N=36,37,38,39,40,41\) 的 AP 上界分别为 \(500,541,564,599,627,670\)；对应排除无核三元族的上限 \(B(N)-4N+9\) 分别为 \(504,537,570,604,639,676\)。命令 `python3 -B tools/scripts/agent/openproblem/erdos272-localization-check.py` 穷举 \(p,q\) 与二部匹配核验这些整数。\(N\geq42\) 已由上一整数检验覆盖。\(\square\)
+

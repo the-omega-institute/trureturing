@@ -1,0 +1,38 @@
+**证明。** 选 $H$ 的正交基 $u_1,\ldots,u_h$，以及参考 $E=\mathbb C^h$ 的指定基 $|a\rangle$，输入
+$$
+|\Omega_H\rangle=\frac1{\sqrt h}\sum_{a=1}^hu_a\otimes|a\rangle.
+\tag{234.SP.7}
+$$
+对每个 $j,\ell$，把候选 Kraus 输出投影到 $r_j$ 后，所得向量为
+$$
+(P_jC_{j\ell}\otimes I_E)|\Omega_H\rangle
+=|r_j\rangle\otimes w_{j\ell},\qquad
+w_{j\ell}=\frac1{\sqrt h}\sum_a\langle r_j,C_{j\ell}u_a\rangle|a\rangle.
+\tag{234.SP.8}
+$$
+令 $Q_j$ 为 $\{w_{j\ell}\}_\ell$ 的张成空间上的正交投影。行秩等于列秩给
+$$
+\operatorname{rank}Q_j=\operatorname{rank}(L_j|_H)=a_j(H).
+$$
+考虑效果
+$$
+F_H=\sum_j|j\rangle\langle j|\otimes P_j\otimes(I_E-Q_j).
+\tag{234.SP.9}
+$$
+各标签块正交，故 $0\preceq F_H\preceq I$。式（234.SP.8）说明每个候选 Kraus 向量在此效果下都为零，因此候选概率为零；候选在 $r_j$ 之外的输出分量同样被 $P_j$ 消去。
+
+目标在（234.SP.7）上的输出是
+$$
+(\mathcal R\otimes\operatorname{id}_E)(P_{\Omega_H})
+=\frac1{Nh}\sum_j|j\rangle\langle j|\otimes P_j\otimes I_E.
+\tag{234.SP.10}
+$$
+所以目标效果概率为
+$$
+\operatorname{Tr}\!\left[F_H(\mathcal R\otimes\operatorname{id}_E)(P_{\Omega_H})\right]
+=\frac1{Nh}\sum_j(h-a_j(H)).
+$$
+两份完整输出都是密度矩阵，任意效果的概率差不超过半迹距离；再取完整范数上界即得（234.SP.6）。$\square$
+
+该下界没有把候选投影成另一份保迹通道后重新计秩。它直接在原候选上执行一个效果测试，因而允许所有输出泄漏与任意 Kraus 结构。$H$ 可以依赖被检验的候选，这符合每个候选分别取最坏输入的量词。
+

@@ -1,0 +1,10 @@
+**定理 54.2（最小量子接口的尖锐修复）。** 对每个满足式（54.1）的 $R$，
+
+$$
+\min_{\substack{\sigma\succeq0\\\operatorname{Tr}\sigma=1}}
+D(R,\sigma\otimes I_A)=\Delta(R).
+\tag{54.5}
+$$
+
+而且，任取输入密度算符 $\tau$，通道输出 $\Phi(\tau)$ 都是一个最优的 $\sigma$。
+

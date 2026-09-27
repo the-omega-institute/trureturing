@@ -1,0 +1,34 @@
+### 189.1 过渡函数
+
+采用第188节的明确模型，固定 $\beta>0$、$\gamma\in\mathbb R$、
+$R>1$、$h\ge0$，并令
+
+$$
+\ell=h\epsilon,\qquad r=1-h\epsilon,\qquad
+\kappa(\epsilon)=1-2h\epsilon,\qquad
+w_0=\epsilon,\quad w_1=R\epsilon.
+$$
+
+参数 $\epsilon>0$ 足够小，使来源与两个旗标条件态合法。
+记完整原输入恢复的最优半 diamond 误差为
+$H_h(\epsilon)=h_{\kappa(\epsilon)}(\epsilon,R)$。
+置 $\delta=R-1$、$\Sigma=R+1$，并定义
+
+$$
+\mathcal D=\{(m,n):m\ge0,\ n\ge0,\ m^2+n^2\le1/4\},
+$$
+
+$$
+\boxed{
+\Phi_h=
+\min_{(m,n)\in\mathcal D}
+\left[
+\frac{7h}{12}-\frac{\beta\delta}{8}
+-\frac{4h}{3}m
++\left(\frac h3+\beta R\right)m^2
++\frac\delta2(\beta n^2-|\gamma|n)
+\right].
+}
+\tag{189.1}
+$$
+

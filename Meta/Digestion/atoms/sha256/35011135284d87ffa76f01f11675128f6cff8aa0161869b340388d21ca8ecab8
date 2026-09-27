@@ -1,0 +1,19 @@
+### 213.3 端点处的带符号权重图
+
+使用第211节的解析图，但中心改为
+
+$$
+\epsilon=h=\nu=t=u=v=0,\qquad
+K_0^*=\frac1{\sqrt2}\begin{pmatrix}1&i\\0&0\end{pmatrix},
+\quad
+K_1^*=\frac1{\sqrt2}\begin{pmatrix}1&-i\\0&0\end{pmatrix}.
+\tag{213.8}
+$$
+
+仍写
+$J_0=k_0k_0^\dagger$、
+$J_1=k_1k_1^\dagger+tww^\dagger$、
+$w=(0,u,1,v)^{\mathsf T}$，
+用第211节的两列参数化严格满足共同 TP。
+$t$ 可带符号，只有 $t\ge0$ 是物理候选。
+

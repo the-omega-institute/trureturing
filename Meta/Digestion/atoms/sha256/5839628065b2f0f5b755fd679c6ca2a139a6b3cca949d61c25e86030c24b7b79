@@ -1,0 +1,98 @@
+**证明。** 记
+
+$$
+u=\max_{C\in\mathcal C}\operatorname{Tr}(RC),
+\qquad
+\ell=\min_{C\in\mathcal C}\operatorname{Tr}(RC).
+\tag{54.6}
+$$
+
+取任意密度算符 $\omega$，归一化算符 $C=I_B\otimes\omega$ 的响应为一。因此
+
+$$
+0\le\ell\le1\le u,
+\qquad
+\Delta(R)=\max\{u-1,1-\ell\}.
+\tag{54.7}
+$$
+
+式（54.6）的两个半定规划对偶为
+
+$$
+\begin{aligned}
+u&=\min_{U=U^*}
+\{\operatorname{Tr}U:U\otimes I_A\succeq R\},\\
+\ell&=\max_{L=L^*}
+\{\operatorname{Tr}L:L\otimes I_A\preceq R\}.
+\end{aligned}
+\tag{54.8}
+$$
+
+原问题有严格正可行点 $I_B\otimes I_A/d_A$，两个对偶分别有充分大的 $U=tI_B$ 和 $L=-tI_B$ 作为严格可行点；紧性给有限最优值，半定规划强对偶遂给式（54.8）及最优值达到。相关强对偶条件可见 [Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 附录 A 的 Fact 6。上界条件自动给 $U\succeq0$；**下界 $L$ 只要求厄米，不要求正性**。
+
+先固定单位向量 $a\in A$，并令
+
+$$
+\sigma_a=(I_B\otimes\langle a|)R(I_B\otimes|a\rangle).
+\tag{54.9}
+$$
+
+压缩式（54.1）与（54.8），得到
+
+$$
+\sigma_a\succeq0,\qquad
+\operatorname{Tr}\sigma_a=1,\qquad
+L\preceq\sigma_a\preceq U.
+\tag{54.10}
+$$
+
+对任意 $C\in\mathcal C$、$0\preceq E\preceq C$，由 $U-\sigma_a\succeq0$ 得
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl((R-S_{\sigma_a})E\bigr)
+&\le\operatorname{Tr}\bigl(((U-\sigma_a)\otimes I_A)E\bigr)\\
+&\le\operatorname{Tr}\bigl(((U-\sigma_a)\otimes I_A)C\bigr)\\
+&=\operatorname{Tr}(U-\sigma_a)=u-1.
+\end{aligned}
+\tag{54.11}
+$$
+
+同理由 $\sigma_a-L\succeq0$ 得
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl((S_{\sigma_a}-R)E\bigr)
+&\le\operatorname{Tr}\bigl(((\sigma_a-L)\otimes I_A)E\bigr)\\
+&\le\operatorname{Tr}\bigl(((\sigma_a-L)\otimes I_A)C\bigr)\\
+&=\operatorname{Tr}(\sigma_a-L)=1-\ell.
+\end{aligned}
+\tag{54.12}
+$$
+
+故 $D(R,S_{\sigma_a})\le\Delta(R)$。另一方面，整个事件 $E=C$ 合法，所以任意因果替代表均满足
+
+$$
+D(R,S_\sigma)
+\ge\max_{C\in\mathcal C}
+\left|\operatorname{Tr}(RC)-\operatorname{Tr}(S_\sigma C)\right|
+=\Delta(R).
+\tag{54.13}
+$$
+
+这证明式（54.5）。
+
+对任意输入态 $\tau$，改用正压缩
+
+$$
+X\longmapsto
+\operatorname{Tr}_A\!\left[
+(I_B\otimes\sqrt{\tau^{\mathsf T}})
+X
+(I_B\otimes\sqrt{\tau^{\mathsf T}})
+\right].
+\tag{54.14}
+$$
+
+它将 $R$ 送到 $\Phi(\tau)$，并分别将 $U\otimes I_A,L\otimes I_A$ 送到 $U,L$，于是同一证明成立。式（54.9）在标准 Choi 约定下对应输入 $|\bar a\rangle\langle\bar a|$，与式（54.14）一致。$\square$
+

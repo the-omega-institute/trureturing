@@ -1,0 +1,108 @@
+**定理201.1（临界来源熵的四项渐近）。** 存在依赖固定模型的
+$\delta>0$，使
+
+$$
+\ell_\epsilon=h_c\epsilon+k_c\epsilon^2
++O(\epsilon^{2+\delta}).
+\tag{201.2}
+$$
+
+相应的临界来源熵满足
+
+$$
+\boxed{
+\begin{aligned}
+S_\epsilon={}&
+h_c\epsilon\log_2\frac1\epsilon
++h_c\epsilon\log_2\frac{\mathrm e}{h_c}
++k_c\epsilon^2\log_2\frac1\epsilon\\
+&-\left(k_c\log_2h_c+
+\frac{h_c^2}{2\ln2}\right)\epsilon^2
++o(\epsilon^2).
+\end{aligned}
+}
+\tag{201.3}
+$$
+
+本结论不要求最佳恢复器是解析曲线，也不要求 $Q(h)$ 在所有比例处连续。
+指数 $\delta$ 只断言存在，不提供统一于模型参数的数值下界。
+
+**证明。** 第199.1节的有限实量词描述给
+$\mathscr E(\ell,\epsilon)$ 的半代数性。
+对充分小正 $\epsilon$，方程
+$\mathscr E(\ell,\epsilon)=3/4$ 在 $0\le\ell\le1/2$ 上恰有一个解。
+因此该方程在此参数域上就是函数
+$\epsilon\mapsto\ell_\epsilon$ 的半代数图。
+
+第199.3节给
+$\ell_\epsilon=h_c\epsilon+k_c\epsilon^2+o(\epsilon^2)$。
+所以
+
+$$
+r(\epsilon)=
+\frac{|\ell_\epsilon-h_c\epsilon-k_c\epsilon^2|}{\epsilon^2}
+\tag{201.4}
+$$
+
+是非负一元半代数函数，且 $r(\epsilon)\to0$。
+直接应用《递归关系观察的边界动力学》
+（[对应理论卷](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)）
+引理77.1的一元半代数趋零量幂次界，得到
+$r(\epsilon)\le C\epsilon^{1/m}$，其中 $m\ge1$ 为某个整数。
+取 $\delta=1/m$，即得（201.2）。
+这里复用的是同一实参数域上的半代数函数性质，不要求将当前恢复任务等同于该卷原来的修复任务。
+
+置 $x_\epsilon=h_c\epsilon+k_c\epsilon^2$。
+因为 $h_c>0$，$x_\epsilon$ 与 $\ell_\epsilon$ 均为
+$h_c\epsilon+O(\epsilon^2)$，在充分小参数处都位于
+$[(h_c/2)\epsilon,2h_c\epsilon]$。
+在连接两点的区间上，
+
+$$
+H_2'(x)=\log_2\frac{1-x}{x}
+=O\left(\log\frac1\epsilon\right).
+$$
+
+由中值定理和（201.2），
+
+$$
+H_2(\ell_\epsilon)-H_2(x_\epsilon)
+=O\left(\epsilon^{2+\delta}\log\frac1\epsilon\right)
+=o(\epsilon^2).
+\tag{201.5}
+$$
+
+接下来只需展开显式的 $x_\epsilon$。用自然对数写
+
+$$
+H_2(x)=\frac{x\ln(1/x)+x-x^2/2+O(x^3)}{\ln2}.
+\tag{201.6}
+$$
+
+而
+
+$$
+\ln x_\epsilon
+=\ln\epsilon+\ln h_c+
+\frac{k_c}{h_c}\epsilon+O(\epsilon^2).
+$$
+
+于是
+
+$$
+\begin{aligned}
+x_\epsilon\ln(1/x_\epsilon)+x_\epsilon
+={}&h_c\epsilon\left(\ln\frac1\epsilon-\ln h_c+1\right)\\
+&+k_c\epsilon^2\left(\ln\frac1\epsilon-\ln h_c\right)
++O(\epsilon^3),\\
+x_\epsilon^2={}&h_c^2\epsilon^2+O(\epsilon^3).
+\end{aligned}
+$$
+
+代入（201.6），再用（201.5），得到（201.3）。证毕。
+
+单独的 $o(\epsilon^2)$ 来源权重余项不足以直接保证（201.5）：
+趋纯端点处熵的导数具有对数增长。
+此处由同一最优问题的有限代数结构补足正幂精度，才将第195节的两项熵渐近推进到
+$\epsilon^2$ 常数项。
+

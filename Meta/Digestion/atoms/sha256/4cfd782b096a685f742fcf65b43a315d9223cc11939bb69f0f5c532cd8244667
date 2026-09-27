@@ -1,0 +1,12 @@
+### 19.1 非空的代数核验
+
+新增程序：`tools/scripts/agent/openproblem/erdos699-quartic-cancellation-check.py`。
+
+实际运行：
+
+```text
+python tools/scripts/agent/openproblem/erdos699-quartic-cancellation-check.py \
+  --nmax 160 --derivative-nmax 80 --symbolic
+```
+
+- `10<=n<=160,4<j<=n/2` 的 5776 个真实参数对：由实际 gcd 生成 (43)，核验系数整性、(45)–(46)、正整数性、粗界 (47) 和紧界 (48)–(49)。

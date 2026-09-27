@@ -1,0 +1,34 @@
+### 67.1 相位阻尼保持同一早边缘
+
+沿用第64节的完整 tester、因果修复与混合候选。本节对该族施加真实末端相位阻尼，给出同系数修复区间和严格间隙区间，并由这两个区间确定转变位置的首阶。
+
+设 $0<a<1$、$0<\varepsilon<1$，$c=\sqrt{1-\varepsilon}$，
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,
+$$
+
+$$
+u=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z,
+\qquad v=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z'.
+$$
+
+对 $0\le\lambda\le1$ 定义
+
+$$
+R_\lambda=|u\rangle\langle u|+|v\rangle\langle v|
++c^2|y\rangle\langle y|
++\lambda c(|u\rangle\langle y|+|y\rangle\langle u|).
+$$
+
+这是对 $R_1=R_{a,\varepsilon}$ 的末输出 $D$ 作相位阻尼所得：保留两个对角块，将异 $D$ 坐标块乘以 $\lambda$。该通道是恒等与完全退相干的凸组合。因此每个 $R_\lambda$ 正、具有同一早边缘 $M_\varepsilon$，归一化缺陷恒为 $\Delta=\varepsilon$。
+
+记
+
+$$
+\mu=\frac1{1+\varepsilon},\qquad
+p=\frac{\varepsilon}{1+\varepsilon},\qquad
+\eta=\mu-c^2=\frac{\varepsilon^2}{1+\varepsilon}.
+$$
+

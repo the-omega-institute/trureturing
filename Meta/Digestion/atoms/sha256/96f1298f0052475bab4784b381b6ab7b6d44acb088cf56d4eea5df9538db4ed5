@@ -1,0 +1,10 @@
+**定理 13（联合 Hall 式）.**
+\[
+ s\geq1-D_{\mathcal J}.\tag{6}
+\]
+并且 \(D_{\mathcal J}\leq1+\varepsilon_c\) 当且仅当对每个 \(X\subseteq\mathcal G\)、\(Y\subseteq P\) 都有
+\[
+ |Z_X\setminus B_Y|+|B_Y|-|Y|
+ \geq |X|+|H_X|-N-\varepsilon_c.\tag{7}
+\]
+

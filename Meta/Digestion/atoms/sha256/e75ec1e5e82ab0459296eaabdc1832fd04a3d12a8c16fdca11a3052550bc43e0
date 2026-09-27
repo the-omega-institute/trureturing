@@ -1,0 +1,55 @@
+#### 233.5.2 所有输入方向上的驻点条件
+
+对输入 Choi 因子上的任意密度矩阵 $\rho$，定义
+$$
+g(\rho)=\| (\sqrt\rho\otimes I_{BO})\,H\,
+(\sqrt\rho\otimes I_{BO})\|_1.
+\tag{233.FF.30}
+$$
+该矩阵正是通道差作用于某个归一化纯输入及其参考后的输出。具体地，在参考副本上令
+$$
+|\psi_\rho\rangle=\sum_{a=1}^d(\sqrt\rho|a\rangle)\otimes|a\rangle,
+\qquad\|\psi_\rho\|^2=\operatorname{Tr}\rho=1.
+\tag{233.FF.31}
+$$
+因此 $g(\rho)\le\|\mathcal S-\mathcal R\|_\diamond$。由（233.FF.25），
+$$
+g(I_d/d)=\frac1d\|H\|_1
+=\|\mathcal S-\mathcal R\|_\diamond,
+\tag{233.FF.32}
+$$
+所以 $g$ 在 $I_d/d$ 取得全局最大。此处只使用实际纯输入（233.FF.31），不需要额外假定一条 diamond 范数变分公式。
+
+任取 $A=A^\dagger$、$\operatorname{Tr}A=0$，令
+$$
+\rho_t=\frac{I_d+tA}{d}.
+$$
+对足够小的正负 $t$，它是密度矩阵。将引理233.2应用于 $H$ 和 $A\otimes I_{BO}$，得
+$$
+\left.\frac d{dt}\right|_{0}g(\rho_t)
+=\frac1d\operatorname{Tr}[(A\otimes I_{BO})|H|]=0.
+\tag{233.FF.33}
+$$
+最后一个等号来自（233.FF.32）的局部最大性。于是
+$$
+\operatorname{Tr}_{BO}|H|=\lambda I_d
+\tag{233.FF.34}
+$$
+对某个实数 $\lambda$ 成立：若一份 Hermitian 矩阵与所有迹零 Hermitian 矩阵的迹配对均为零，它就是标量矩阵。
+
+由保迹性及（233.FF.9），
+$$
+\operatorname{Tr}_{BO}J=I_d,
+\qquad\operatorname{Tr}_{BO}(P_{\rm tar}/N)=I_d.
+$$
+代入（233.FF.29），得到
+$$
+2I_d-\frac2N\operatorname{Tr}_{BO}Q=\lambda I_d.
+\tag{233.FF.35}
+$$
+故 $\operatorname{Tr}_{BO}Q$ 为标量矩阵。其迹为 $\operatorname{Tr}Q=R$，所以
+$$
+\boxed{\operatorname{Tr}_{BO}Q=\frac RdI_d.}
+\tag{233.FF.36}
+$$
+

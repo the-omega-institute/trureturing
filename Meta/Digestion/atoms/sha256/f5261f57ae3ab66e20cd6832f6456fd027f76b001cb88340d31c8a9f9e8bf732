@@ -1,0 +1,35 @@
+### 60.1 共同的实际输入空间
+
+前两轮可取正交单位接收向量 $p,q$ 及正交单位向量 $u,v,w$，满足
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes\eta_2,&V_1p&=v\otimes\eta_2,&
+V_0q&=w\otimes\eta_2.
+\end{aligned}
+\tag{60.1}
+$$
+因此
+$$
+\begin{aligned}
+H_1&=\operatorname{span}(p,q),&G_1&=\mathbb Cp,\\
+H_2&=\operatorname{span}(a^2u+bv,w),&
+G_2&=U=\operatorname{span}(u,w).
+\end{aligned}
+\tag{60.2}
+$$
+对 $3\le n\le6$，实际 $H_n,G_n,Q_n$ 均二维，且
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n.
+\tag{60.3}
+$$
+$H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构。特别地，
+$$
+H_n\cap G_n=0\quad(n\ge3),\qquad
+H_2\cap G_2=\mathbb Cw.
+\tag{60.4}
+$$
+这些关系保留同一实际初态及固定全域等距，不只记录各终端可分别达到的维数。
+

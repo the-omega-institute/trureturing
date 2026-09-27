@@ -1,0 +1,27 @@
+### 198.5 冻结端点最优器并积分
+
+固定 $h_1<h_2$，取 $h_2$ 处任意对称化最优器
+$\Gamma_2$。它位于统一解析邻域，且
+$\mathcal P(\Gamma_2)\ge p_*/2$。
+在整个 $h\in I$ 上冻结同一个 $\Gamma_2$。
+引理198.2的主系数与 $h$ 无关，因此对充分小 $\epsilon$，
+
+$$
+\partial_he_\epsilon(h,\Gamma_2)
+\ge\frac{p_*}{4}\epsilon
+\qquad(h\in I).
+$$
+
+不需要 $\Gamma_2$ 在其他 $h$ 处仍然最优。由最优值的定义，
+
+$$
+\begin{aligned}
+F_\epsilon(h_2)-F_\epsilon(h_1)
+&\ge e_\epsilon(h_2,\Gamma_2)-e_\epsilon(h_1,\Gamma_2)\\
+&=\int_{h_1}^{h_2}\partial_he_\epsilon(h,\Gamma_2)\,dh\\
+&\ge\frac{p_*}{4}\epsilon(h_2-h_1).
+\end{aligned}
+$$
+
+取 $c=p_*/4$，证明定理198.1。
+

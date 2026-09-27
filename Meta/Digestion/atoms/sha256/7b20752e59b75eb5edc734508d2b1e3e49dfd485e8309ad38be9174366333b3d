@@ -1,0 +1,42 @@
+### 289.5 同一读数对全部未知漂移一致有效
+
+实际平均块仍满足
+$$
+\sigma_{\delta,r}
+=(1-\delta)^2\sigma_{0,r}
++\delta(1-\delta)(D\otimes\tau+\tau\otimes D)
++\delta^2\tau^{\otimes2},
+$$
+$$
+\sigma_{0,r}=r\sigma_{0,1}+(1-r)D\otimes D.
+\tag{289.22}
+$$
+$L_n$ 支撑于 $P_n$，所以消去共同相位理想支撑；（289.18）再消去全部漂移背景。因此其真实谱测量结果 $Y$ 满足
+$$
+\mathbb E_{0,r}Y=0,
+\qquad
+\mathbb E_{\delta,r}Y
+=\delta(1-\delta)\beta_n+\delta^2\gamma_n
+\ge\frac5{47104}\delta>\frac\delta{10000}
+\quad(n\ge3).
+\tag{289.23}
+$$
+两个均值都与实际 $r$ 无关。这里保留了全部有限扰动项，正的二次项可以合法舍去。
+
+当 $n=2$，直接使用§288的三结果算子 $L_2$。它同样支撑于 $P_2$、范数至多一，且扰动均值为 $\delta/272$。故对所有 $n\ge2$，可以统一取
+$$
+\kappa=\frac1{10000},\qquad
+\mathbb E_{0,r}Y=0,\qquad
+\mathbb E_{\delta,r}Y\ge\kappa\delta,
+\qquad L_n^2\preceq P_n.
+\tag{289.24}
+$$
+再由§286的总核点击界，对每个允许 $r$，
+$$
+\operatorname{Var}_{0,r}Y\le w,
+\qquad
+\operatorname{Var}_{\delta,r}Y\le w+\delta.
+\tag{289.25}
+$$
+稀有支撑和均值消去同时成立，才能把“不识别漂移也能读出任务”转成所需的样本尺度。
+

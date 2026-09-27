@@ -1,0 +1,8 @@
+**$ZXXYX$。** $G_4$ 的后继为 $Y$，而 $G_2=P,G_3$ 的后继为 $X$。同一四维预算给 $G_4=T$、$G_3=P$。实际零位像
+
+$$
+V_0H_2=P\otimes X,\qquad V_0H_3=T\otimes X
+$$
+
+使 $H_2\perp H_3$，却有非零 $w\in H_2\cap P=H_2\cap G_3$，与后期满投影 $P_{G_3}H_3=G_3$ 矛盾。
+

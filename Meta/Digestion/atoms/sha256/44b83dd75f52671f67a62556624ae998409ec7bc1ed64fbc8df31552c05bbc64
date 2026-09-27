@@ -1,0 +1,47 @@
+### 62.1 接口与结论范围
+
+沿用 $2\times2\times3$ 接口、全部量子 tester 事件和纯等距候选
+
+$$
+R_\varepsilon=|x+c y+\sqrt\varepsilon z\rangle
+\langle x+c y+\sqrt\varepsilon z|,
+\quad c=\sqrt{1-\varepsilon},
+\quad x=|000\rangle,\ y=|101\rangle,\ z=|112\rangle.
+$$
+
+记最优因果修复误差为 $e_\varepsilon$。第 59 节的精确单参数约化给
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\tag{62.1}
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z\rangle
+\langle\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z|
++p|010\rangle\langle010|.
+$$
+
+这个约化针对全部归一化因果修复：每个最优修复的早输出边缘参数 $p=\sigma_{11}$ 均在上述区间内，且相同 $p$ 的 $S_p$ 不增加误差。事件误差包含归一化迹项。
+
+对 $0<\varepsilon\le1/16$，令
+
+$$
+\begin{aligned}
+d&=1-c,\qquad p_0=\frac{d(3-d)}2,
+\qquad p_* =\frac{\varepsilon}{1+\varepsilon},\\
+B(p)&=4(p-d)+d^2,\qquad b(p)^2=d^2(1-p),\\
+F_\varepsilon(p)&=p+\frac{b(p)^2}{B(p)},\\
+G_\varepsilon(p)&=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2,\\
+\gamma(p)&=c\sqrt p-\sqrt{\varepsilon(1-p)},\\
+L_\varepsilon(p)&=p(p-\varepsilon)
++(p+\varepsilon)\frac{b(p)^2}{B(p)}-\gamma(p)^2.
+\end{aligned}
+\tag{62.2}
+$$
+
+$F_\varepsilon$ 与 $L_\varepsilon$ 的使用范围为 $p\ge p_0$，等价于 $B(p)\ge\varepsilon>0$。
+

@@ -1,0 +1,20 @@
+**推论214.4（细层实际接触的位置）。**
+固定 $\zeta>-4R(R+1)$，令
+
+$$
+\kappa_0=\frac{3R}{4}\sqrt{\zeta+4R(R+1)}>0.
+\tag{214.14}
+$$
+
+存在局部唯一解析接触分支 $\kappa_b(x)=\kappa_0+O(x)$，满足
+
+$$
+\boxed{
+h_b=\beta x\kappa_0+O(\beta x^2),\qquad
+\ell_b=x^2\kappa_0+O(x^3).
+}
+\tag{214.15}
+$$
+
+结论亦可在远离 $-4R(R+1)$ 的固定紧 $\zeta$ 区间上一致选取。
+

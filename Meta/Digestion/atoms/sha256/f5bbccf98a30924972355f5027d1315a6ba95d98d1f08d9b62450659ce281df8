@@ -1,0 +1,4 @@
+**来源与证明状态。** 正交 syndrome 恢复和 Knill–Laflamme 条件是既有纠错理论；读取环境标签后纠正随机酉噪声也有既有文献。本增订把它们接到ST19的漏出、ST15的路径连接和ST23的全局图障碍上，并推导有损经典记录下的精确误差公式。没有全球新颖性主张。`OrthogonalSyndromeDecoding` 的公开矩阵声明已在固定 Lean 工具链上构建；有限 syndrome 通道构造另见 `OrthogonalSyndromeChannel`。相位缺陷恒等式、钻石范数最优性、全局物理实现及 Chern 数并未因此形式化。
+
+仓内 `FiniteKrausInstrumentBornMarginal` 提供真实 Kraus/Born 边缘公式；`FutureStatisticsEquivalence` 给出未来算子系统的不可区分性判据。它们没有自动证明本增订的恢复与全局通道结论。
+

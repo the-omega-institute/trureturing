@@ -1,0 +1,57 @@
+**命题 402.1（二次 Hadamard 幂的四相位恒等式）。** 对定义 392.1 的 $R_0$ 与 $C_0=R_0R_0^\dagger$，取以下四个列向量：
+
+$$
+z_1=\begin{pmatrix}1\\i\\1\\1\end{pmatrix},\qquad
+z_2=\begin{pmatrix}1\\i\\i\\-i\end{pmatrix},\qquad
+z_3=\begin{pmatrix}1\\-i\\1\\i\end{pmatrix},\qquad
+z_4=\begin{pmatrix}1\\-i\\-i\\1\end{pmatrix}.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac14\sum_{a=1}^4z_az_a^\dagger
+ =\begin{pmatrix}
+ 1&0&1/2&1/2\\
+ 0&1&1/2&-1/2\\
+ 1/2&1/2&1&-i/2\\
+ 1/2&-1/2&i/2&1
+ \end{pmatrix}
+ =C_0^{\circ2}.
+\quad}
+$$
+
+因此，在同一四维系统的两份完整可访问记录上，存在四个结果的有限 POVM，校正后的四个映射各为 $\operatorname{id}_S/4$，总映射为 $\operatorname{id}_S$，从而 $\eta(C_0^{\circ2})=1$。
+
+证明。按 $R_0$ 的行约定，$C_0$ 的六个严格上三角元依次为
+
+$$
+(C_{0,12},C_{0,13},C_{0,14},C_{0,23},C_{0,24},C_{0,34})
+ =\left(0,\frac1{\sqrt2},\frac1{\sqrt2},
+          \frac1{\sqrt2},-\frac i{\sqrt2},\frac{1-i}2\right).
+$$
+
+故它们的平方依次为 $(0,1/2,1/2,1/2,-1/2,-i/2)$。另一方面，令 $M=\frac14\sum_{a=1}^4z_az_a^\dagger$，逐项有
+
+$$
+\begin{aligned}
+M_{12}&=\tfrac14(-i-i+i+i)=0,\\
+M_{13}&=\tfrac14(1-i+1+i)=\tfrac12,\\
+M_{14}&=\tfrac14(1+i-i+1)=\tfrac12,\\
+M_{23}&=\tfrac14(i+1-i+1)=\tfrac12,\\
+M_{24}&=\tfrac14(i-1-1-i)=-\tfrac12,\\
+M_{34}&=\tfrac14(1-1-i-i)=-\tfrac i2.
+\end{aligned}
+$$
+
+四个对角元均为 $\frac14(1+1+1+1)=1$，下三角元由 Hermitian 共轭确定，故全部矩阵元相符。四个 $z_a$ 都是相位向量，权重均为 $1/4$。将它们代入命题 400.2 的 $n=2$、$R_2$ 与效果公式，取 $U_a=\operatorname{diag}(\overline{z_a})$，得到
+
+$$
+\mathcal T_a=\tfrac14\operatorname{id}_S\quad(1\le a\le4),
+\qquad
+\sum_{a=1}^4\mathcal T_a=\operatorname{id}_S.
+$$
+
+每个结果对所有输入的概率都是 $1/4$；确定性来自接受全部四个经各自反馈校正的结果，不是某个指定结果以概率 $1$ 出现。证毕。
+

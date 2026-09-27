@@ -1,0 +1,9 @@
+**定义 74.2（内部来源中的相对同一）。** 项目[概念相对同一性](../../../D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.lean)用 $q(x)=q(y)$ 表达“相对于读数 $q$ 相同”；[任务同一与全局同一判据](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.lean)进一步检查所选目标族是否共同区分全部状态。固定状态集合 $X$ 与定义在 $X$ 上的读数族，各读数可以有各自的取值域。对其中的问题族 $\mathcal Q$，令
+
+$$
+x\sim_{\mathcal Q}y\quad\Longleftrightarrow\quad
+\forall q\in\mathcal Q,\ q(x)=q(y).
+$$
+
+若 $\mathcal Q\subseteq\mathcal R$，则 $x\sim_{\mathcal R}y$ 蕴含 $x\sim_{\mathcal Q}y$；反向需要补充条件。一个非空而具体的例子是 $X=\{0,1\}^2$，$\mathcal Q$ 只读第一坐标，$\mathcal R$ 再读第二坐标。$(1,0)$ 与 $(1,1)$ 在前一问题族上相同，在后一问题族上不同。因此，“都拒绝把名称当作究竟”即使成立，也没有自动回答“是否承认创造者”“何谓觉悟”“何种实践合宜”。
+

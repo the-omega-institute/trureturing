@@ -1,0 +1,90 @@
+**证明。** 在 $Y$ 基中写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\|u\|^2+\|v\|^2=1.
+\tag{258.33}
+$$
+于是
+$$
+\rho=uu^\dagger+vv^\dagger,\qquad K=2uv^\dagger.
+\tag{258.34}
+$$
+任意具有同一边缘的正半定竞争态，已由（258.9）限制在 $H\otimes S$，其中 $S=\operatorname{span}\{u,v\}$。因此以下低维归约没有排除合法的核外竞争态。
+
+若 $u,v$ 线性无关，则 $\dim S=2$。定义
+$$
+a=\rho_S^{-1/2}u,\qquad b=\rho_S^{-1/2}v.
+\tag{258.35}
+$$
+它们满足 $aa^\dagger+bb^\dagger=I_S$。以 $a,b$ 为列的二阶方阵因而为酉矩阵，所以 $a,b$ 是正交归一基。白化后 $K/2$ 恰为 $ab^\dagger$。
+
+对任意竞争填充，压缩到上半空间的 $a$ 与下半空间的 $b$，得到
+$$
+\begin{pmatrix}
+\langle a,Fa\rangle&1\\
+1&1-\langle b,Fb\rangle
+\end{pmatrix}\succeq0.
+\tag{258.36}
+$$
+由于 $0\preceq F\preceq I_S$，两对角元都不超过一，而行列式要求它们的乘积至少为一。故两者都等于一：
+$$
+\langle a,Fa\rangle=1,\qquad
+\langle b,Fb\rangle=0.
+\tag{258.37}
+$$
+正性给 $Fb=0$，而 $I-F$ 的正性给 $Fa=a$。这已在正交基 $a,b$ 上唯一确定 $F=aa^\dagger$。撤销同余，得到 $P=uu^\dagger$、$Q=vv^\dagger$，整个填充正好为 $|\psi\rangle\langle\psi|$。所以每个纯纠缠源都唯一。
+
+若 $u,v$ 线性相关，则源为产品态，$S$ 一维。取单位参考向量 $e$，写 $u=\alpha e$、$v=\beta e$，其中 $|\alpha|^2+|\beta|^2=1$。于是
+$$
+\rho=P_e,\qquad K=kP_e,\qquad k=2\alpha\overline\beta.
+\tag{258.38}
+$$
+全部竞争态已限制到 $H\otimes\mathbb Ce$，其块矩阵由一个实参数 $p$ 给出：
+$$
+\begin{pmatrix}
+p&k/2\\
+\overline k/2&1-p
+\end{pmatrix}\otimes P_e,
+\qquad
+\frac{1-\sqrt{1-|k|^2}}2
+\le p\le
+\frac{1+\sqrt{1-|k|^2}}2.
+\tag{258.39}
+$$
+区间来自 $p(1-p)\ge|k|^2/4$，是正性的充要条件。它为单点当且仅当 $|k|=1$，也即 $|\alpha|=|\beta|=1/\sqrt2$。这恰好等价于
+$$
+\langle\psi|Y\otimes I|\psi\rangle
+=|\alpha|^2-|\beta|^2=0.
+\tag{258.40}
+$$
+两种情形合并，证明定理。$\square$
+
+一个显式家族显示新增边缘如何把§256球内的数据变为唯一：
+$$
+|\psi_p\rangle
+=\sqrt p\,|y_+\rangle|0\rangle_E
++\sqrt{1-p}\,|y_-\rangle|1\rangle_E,
+\qquad 0<p<1,\quad p\ne\frac12.
+\tag{258.41}
+$$
+它具有
+$$
+\rho_p=\operatorname{diag}(p,1-p),\qquad
+K_p=2\sqrt{p(1-p)}\,E_{01},
+$$
+$$
+\|K_p\|_1=2\sqrt{p(1-p)}<1,\qquad
+Z_{\rho_p}=2E_{01}.
+\tag{258.42}
+$$
+只给响应时，§256保证多个填充；加入同一 $\rho_p$ 后，定理258.2保证唯一。其输入 $Y$ 平均值为 $2p-1\ne0$，所以也明确区分了两种纯态唯一性合同。
+
+此外 $w(2E_{01})=1$，因为对单位向量 $(x_0,x_1)$，
+$$
+|\langle x,2E_{01}x\rangle|
+=2|\overline{x_0}x_1|\le1
+\tag{258.43}
+$$
+且等模分量达到一；但 $\|2E_{01}\|=2$。因此（258.14）中的数值半径不能替换为算子范数不超过一的更强条件。
+

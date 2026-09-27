@@ -1,0 +1,20 @@
+**定义 231.1（有限策略树）。** 令 $\mathsf H_t$ 是第 $t$ 轮的有限记录历史，$\pi_t(a\mid h)$ 是共同声明的策略，$P_{t,h,a}$ 与 $\bar P_{t,h,a}$ 是真实和名义模型在 $(t,h,a)$ 后产生下一条记录的概率核。令
+
+$$
+\kappa_{t,h,a}
+=
+D_{\mathrm{TV}}(P_{t,h,a},\bar P_{t,h,a}),
+\qquad
+D_{\mathrm{TV}}(\mu,\nu)=\frac12\|\mu-\nu\|_1.
+$$
+
+策略诱导的单步核为
+
+$$
+K_t^\pi(h,\cdot)=\sum_a\pi_t(a\mid h)P_{t,h,a}(\cdot),
+\qquad
+\bar K_t^\pi(h,\cdot)=\sum_a\pi_t(a\mid h)\bar P_{t,h,a}(\cdot).
+$$
+
+设 $\mu_t$ 是真实核 $K_0^\pi,\ldots,K_{t-1}^\pi$ 产生的历史分布。这里假定策略本身的历史读取、随机源和动作许可在真实与名义模型中相同；若策略代码也有失配，它必须另列为一个动作—策略误差项。
+

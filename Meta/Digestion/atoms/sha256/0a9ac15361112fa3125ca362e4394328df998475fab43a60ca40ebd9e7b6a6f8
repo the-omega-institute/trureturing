@@ -1,0 +1,4 @@
+- 第 8 页正文的线性上界使用 Rosser 的 C-rule 等具体证明演算条件；不能把这一改进无条件推广至任意证明格式。第 7 页也强调一般有向无环证明与纯树状证明的转换可能造成指数增长，不能忽略表示。
+
+2020 年论文第 27 页列出的原始结果归属为：Pudlák, *On the length of proofs of finitistic consistency statements in first order theories*, **Logic Colloquium 84**，1986，165–196 页；以及 *Improved bounds to the length of proofs of finitistic consistency statements*, **Contemporary Mathematics 65**，1987，309–331 页。本节准确定理文本的直接来源是作者自己的 2020 年 Theorem 4.8 和 2017 年 Theorem 3.1；1986、1987 年文献只按上述作者综述中的归属列示，不作为逐字引文来源。
+

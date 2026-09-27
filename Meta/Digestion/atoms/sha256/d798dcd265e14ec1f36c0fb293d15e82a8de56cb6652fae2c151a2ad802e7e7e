@@ -1,0 +1,16 @@
+**定理 5.3（具体兼容或对齐滞后给出线性 SSE 界）。** 对定义 4.1 的单式兼容数据，存在上述直接构造的链，满足
+
+$$
+\boxed{\operatorname{ell}(A,B)\le 2m-1.}
+$$
+
+更精确的上界为定理 5.2 的 Lambda(d_L,d_R)。若输入是文献定义的同滞后 m 的完整 aligned、balanced 或 compatible concrete shift，则结论同样成立。
+
+所有中间方阵的阶数至多
+
+$$
+q=\sum_{i,j}R_{ij}\le nk\max_{i,j}(A^m)_{ij}.
+$$
+
+令 M=max(|E_A|,|E_B|)。可令全部中间方阵的每个条目不超过 M；普通合并步骤的矩形因子条目不超过 max(1,M)，菱形步骤的因子条目不超过 max(q,M)。
+

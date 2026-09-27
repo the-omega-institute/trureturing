@@ -1,0 +1,1 @@
+- $\mathrm{Step}$ 在 $i<P-1$ 时发出一个 $W$，把 $i$ 加一并直接进 $\mathrm{Read}$。

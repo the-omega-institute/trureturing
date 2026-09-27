@@ -1,0 +1,21 @@
+### 19.6 定理：保留校准节点的最优有限网格
+
+固定整数 $M\geq1$，考虑所有网格
+\[
+G=\{g_0,g_1,\ldots,g_M,b\},\qquad
+a=g_0<g_1<\cdots<g_M=m.
+\]
+这类网格保留 $a,m,b$ 三个校准节点，并允许在 $[a,m]$ 内选择 $M-1$ 个附加节点。则
+\[
+\boxed{\inf_G\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)
+=\frac{(1-b)(2+b)}{9M^2}\bigl(\psi(m)-\psi(a)\bigr)^2.}
+\tag{19.15}
+\]
+唯一最优的有序节点由
+\[
+\psi_j=\psi(a)+\frac jM\bigl(\psi(m)-\psi(a)\bigr),\qquad
+\boxed{g_j=\frac{\psi_j^2-2}{\psi_j^2+1}\quad(0\leq j\leq M)}
+\tag{19.16}
+\]
+给出。
+

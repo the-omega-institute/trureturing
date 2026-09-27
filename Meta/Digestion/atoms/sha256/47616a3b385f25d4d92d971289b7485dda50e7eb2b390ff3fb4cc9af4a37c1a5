@@ -1,0 +1,52 @@
+**推论 120.2（任意纯目标的最大终端检验概率）。** 令 $|v\rangle$ 为目标纯态，并记
+
+$$
+q_v=|\langle0|v\rangle|^2.
+$$
+在固定等待占比 $\lambda$ 下，从边界暗态的输入 $P_\vartheta$ 出发，终端输出通过检验 $|v\rangle\langle v|$ 的最大临界概率为
+
+$$
+\boxed{
+\sup_{\zeta\in\mathcal Z_\lambda}
+\langle v|\zeta|v\rangle
+=
+\begin{cases}
+1,&q_v\ge\lambda,\\[1mm]
+\left(\sqrt{\lambda q_v}
++\sqrt{(1-\lambda)(1-q_v)}\right)^2,&q_v<\lambda.
+\end{cases}
+}
+\tag{120.4}
+$$
+
+证明。固定 $q=\zeta_{00}$ 时，正性给
+
+$$
+|\zeta_{01}|\le\sqrt{q(1-q)}.
+$$
+选择相位使非对角项与 $|v\rangle$ 的相位一致，得到
+
+$$
+\langle v|\zeta|v\rangle
+\le
+q q_v+(1-q)(1-q_v)+2\sqrt{q(1-q)q_v(1-q_v)}.
+$$
+右侧是
+
+$$
+\left(\sqrt{q q_v}+\sqrt{(1-q)(1-q_v)}\right)^2.
+$$
+它在 $q=q_v$ 处取一；若 $q_v\ge\lambda$，该点可行。若 $q_v<\lambda$，令
+
+$$
+g(q)=\sqrt{q q_v}+\sqrt{(1-q)(1-q_v)}.
+$$
+
+在 $q_v<q<1$ 上
+
+$$
+g'(q)=\frac12\left(\sqrt{\frac{q_v}{q}}-\sqrt{\frac{1-q_v}{1-q}}\right)<0,
+$$
+
+故在区间 $q\ge\lambda$ 上最大值位于端点 $q=\lambda$；端点 $q=1$ 由连续性处理，给出式（120.4）。达到上界的矩阵是相应相位的纯态投影，定理 119.2 保证其可达。证毕。
+

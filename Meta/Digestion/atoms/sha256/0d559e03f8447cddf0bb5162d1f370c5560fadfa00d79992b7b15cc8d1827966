@@ -1,0 +1,80 @@
+**定理 97.1（首次点击的缩放分布及全部固定正阶矩）。** 设不失效的 $\Gamma_j\to\Gamma_*\in\mathfrak F_R$，初态 $\rho_j\to\rho_*$。记
+
+$$
+\epsilon_j=1-r(\Gamma_j),\qquad
+\alpha=\operatorname{Tr}(\rho_*F_*)\in[0,1],\qquad
+X_j=\epsilon_j\mathsf N_j.
+$$
+
+其中 $\mathsf N_j$ 是从同一对 $(\Gamma_j,\rho_j)$ 实际产生的首次点击轮数。则
+
+$$
+\boxed{
+X_j\ \Rightarrow\ (1-\alpha)\delta_0+\alpha\operatorname{Exp}(1).
+}
+\tag{97.1}
+$$
+
+$\Rightarrow$ 表示弱收敛，$\delta_0$ 表示零点单位质量。对每个固定 $t>0$，准确的尾极限是
+
+$$
+\lim_j\Pr(X_j>t)=\alpha e^{-t}.
+\tag{97.2}
+$$
+
+对每个固定实数 $a>0$，还有
+
+$$
+\boxed{
+\lim_j\epsilon_j^a\mathbb E\mathsf N_j^a
+=\alpha\int_0^\infty a t^{a-1}e^{-t}\,dt
+=\alpha\,\Gamma_{\rm E}(a+1).
+}
+\tag{97.3}
+$$
+
+$\Gamma_{\rm E}$ 是 Euler Gamma 函数，与仪器符号不同。特别地，整数 $k\ge1$ 的极限为 $\alpha k!$，且
+
+$$
+\epsilon_j^2\operatorname{Var}(\mathsf N_j)
+\longrightarrow2\alpha-\alpha^2.
+\tag{97.4}
+$$
+
+证明。令 $a_j=\operatorname{Tr}(\rho_jG_{\Gamma_j})\to\alpha$。因为 $\mathsf N_j$ 取整数值，
+
+$$
+\Pr(X_j>t)
+=s_{\Gamma_j,\rho_j}\!\left(\left\lfloor t/\epsilon_j\right\rfloor\right).
+$$
+
+对固定 $t>0$，$\epsilon_j\to0$，式（96.4）的余项趋零，而
+
+$$
+(1-\epsilon_j)^{\lfloor t/\epsilon_j\rfloor}\longrightarrow e^{-t}.
+$$
+
+得到式（97.2）。极限分布在每个正点连续，在负点分布函数为零；当 $\alpha<1$ 时零点是允许的跳跃点。因此这些尾极限准确给式（97.1）。当 $\alpha=1$ 时零点也是连续点，原分布在零点的质量始终为零。
+
+矩收敛不能只由弱收敛推出。这里使用同一幂估计提供共同可积包络。$a_j$ 共同有界，取固定 $0<\epsilon_0<1$，使充分大的 $j$ 有 $\epsilon_j\le\epsilon_0$。对全部 $t\ge0$，
+
+$$
+\begin{aligned}
+(1-\epsilon_j)^{\lfloor t/\epsilon_j\rfloor}&\le e^{\epsilon_0}e^{-t},\\
+q^{\lfloor t/\epsilon_j\rfloor}&\le q^{-1}
+\exp\!\left(-\frac{|\log q|}{\epsilon_0}t\right).
+\end{aligned}
+\tag{97.5}
+$$
+
+因此 $\Pr(X_j>t)$ 有与 $j$ 无关的指数包络。任意 $a>0$ 都有非负随机变量的尾积分恒等式
+
+$$
+\mathbb E X_j^a
+=\int_0^\infty a t^{a-1}\Pr(X_j>t)\,dt.
+$$
+
+式（97.5）乘 $a t^{a-1}$ 后在零点附近及无穷远均可积。支配收敛给式（97.3）。使用 $a=1,2$ 后相减即得方差公式。$\square$
+
+极限中的 $\alpha$ 正是从 $\rho_*$ 出发在边界装置 $\Gamma_*$ 上永久未点击的概率。子临界装置仍然最终点击；边界会永久保留的那部分质量，在临界逼近时成为越来越长的指数等待。其余质量的等待在 $1/\epsilon_j$ 尺度下压到零点，零点质量并不表示真实装置在第零轮已经点击。
+

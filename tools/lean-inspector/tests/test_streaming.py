@@ -487,6 +487,199 @@ class PublicationTests(unittest.TestCase):
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 
+class NativeRequestTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix='native request ')
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.logs = self.root / 'build/ci/logs/current/lean-inspector'
+        self.logs.mkdir(parents=True)
+        self.phases = self.logs / 'native-phases.jsonl'
+        self.seen = self.root / 'received.json'
+        self.executable = self.root / 'inspector fixture'
+        # A real failing subprocess observes the request and capture before it
+        # exits. No Lean/compiler setup is needed to exercise producer cleanup.
+        self.executable.write_text(f'#!{sys.executable}\n' + '''import json, os, sys
+from pathlib import Path
+args = sys.argv[1:]
+if args[0] == '--request-file':
+    args = json.loads(Path(args[1]).read_text())
+utilities = json.loads(Path(args[5]).read_text())
+capture = None
+try:
+    phases = Path(os.environ['STRATALINT_INSPECTOR_PHASES'])
+    start = json.loads(phases.read_text().splitlines()[-1])
+    if start.get('request_capture'):
+        capture = json.loads(Path(start['request_capture']).read_text())
+except (OSError, KeyError):
+    pass
+Path(os.environ['REQUEST_SEEN']).write_text(json.dumps(dict(
+    arguments=args, utilities=utilities, capture=capture, cwd=os.getcwd())))
+raise SystemExit(37)
+''')
+        self.executable.chmod(0o755)
+        loader = self.root / 'tools/scripts/report/lean-report-selection.py'
+        loader.parent.mkdir(parents=True)
+        loader.write_text(Path(native.selection.__file__).read_text())
+        inspector = self.root / 'tools/lean-inspector/Inspector.lean'
+        inspector.parent.mkdir(parents=True)
+        inspector.write_text('-- fixture import derivation source\n')
+        (self.root / 'lean-toolchain').write_text('fixture-toolchain\n')
+        manifest_fixture(self.root)
+        native.state(self.root).mkdir(parents=True)
+        self.requests = []
+        self.triples = []
+        self.utilities = []
+        for name in ['B', 'A']:
+            source = self.root / f'{name}.lean'
+            source.write_text(f'-- source {name}\n')
+            utility = dict(modulePath=f'{name}.lean', claimModule=f'Claims.{name}',
+                claimGid=f'claim-{name}', claimSelector='claim', claimSourcePath=f'Claims/{name}.lean',
+                claimSourceSha256='sha256:' + 'a' * 64, resultGid=f'result-{name}',
+                resultModule=name, resultSelector='result')
+            utility_path = native.state(self.root) / f'{name}.json'
+            utility_path.write_text(json.dumps(dict(source_path=f'{name}.lean', utilities=[utility])))
+            Path(str(utility_path) + '.sources.json').write_text('[]')
+            output = native.state(self.root) / f'{name}.zip'
+            output.write_bytes(b'previous artifact')
+            self.requests.append([str(self.root), name, str(source), str(utility_path),
+                                  str(self.executable), str(output)])
+            self.triples.insert(0, [name, f'{name}.lean', 'sha256:' + publication.digest(source)])
+            self.utilities.insert(0, utility)
+        self.addCleanup(native.source_inventory.cache_clear)
+        environment = patch.dict(os.environ, REQUEST_SEEN=str(self.seen),
+            STRATALINT_INSPECTOR_PHASES=str(self.phases))
+        environment.start()
+        self.addCleanup(environment.stop)
+
+    def fail_producer(self, module=False):
+        with self.assertRaises(subprocess.CalledProcessError) as failure:
+            if module:
+                native.module(*self.requests[0])
+            else:
+                native.produce_batch(self.requests)
+        self.assertEqual(failure.exception.returncode, 37)
+        self.assertEqual(failure.exception.cmd[0], str(self.executable))
+        received = json.loads(self.seen.read_text())
+        # The actual temporary request, utility and spool are gone on failure.
+        for path in received['arguments'][1:6:2]:
+            self.assertFalse(Path(path).exists())
+        for request in self.requests:
+            self.assertEqual(Path(request[-1]).read_bytes(), b'previous artifact')
+        self.assertEqual(list(native.state(self.root).glob('.inspection.*')), [])
+        self.assertEqual(list(native.state(self.root).glob('.module.*')), [])
+        return received
+
+    def test_failed_batch_retains_actual_ordered_request_before_invocation(self):
+        received = self.fail_producer()
+        phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
+        self.assertEqual([row['boundary'] for row in phases], ['start', 'finish'])
+        self.assertFalse(phases[-1]['success'])
+        capture = Path(phases[0]['request_capture'])
+        self.assertEqual(capture.parent, self.logs)
+        retained = json.loads(capture.read_text())
+        self.assertEqual(retained, received['capture'])
+        self.assertEqual(retained['arguments'], received['arguments'])
+        self.assertEqual(retained['arguments'][6:], sum(self.triples, []))
+        self.assertEqual(retained['utilities'], self.utilities)
+        self.assertEqual(retained['utilities'], received['utilities'])
+        self.assertEqual(retained['cwd'], str(self.root))
+        self.assertEqual(Path(retained['cwd']).resolve(), Path(received['cwd']))
+        self.assertEqual(retained['origin'], publication.production_origin(self.root, self.executable))
+        self.assertEqual(retained['inspector_executable_sha256'], publication.digest(self.executable))
+        self.assertEqual(retained['inspector_source_sha256'],
+                         publication.digest(self.root / 'tools/lean-inspector/Inspector.lean'))
+        self.assertEqual(retained['lean_toolchain'], 'fixture-toolchain\n')
+        self.assertEqual(list(self.logs.glob('*.tmp')), [])
+
+    def test_repeated_and_single_module_calls_preserve_separate_captures(self):
+        self.fail_producer()
+        previous = {path: path.read_bytes() for path in self.logs.glob('native-request-*.json')}
+        received = self.fail_producer(module=True)
+        self.assertEqual(len(list(self.logs.glob('native-request-*.json'))), 2)
+        self.assertEqual(previous, {path: path.read_bytes() for path in previous})
+        self.assertEqual(received['capture']['arguments'][6:], self.triples[1])
+        self.assertEqual(received['capture']['utilities'], [self.utilities[1]])
+
+    def test_disabled_diagnostics_do_not_read_capture_metadata_or_change_failure(self):
+        (self.root / 'tools/lean-inspector/Inspector.lean').unlink()
+        with patch.dict(os.environ, STRATALINT_INSPECTOR_PHASES=''):
+            self.assertIsNone(self.fail_producer()['capture'])
+        self.assertEqual(list(self.logs.iterdir()), [])
+
+    def test_unwritable_diagnostics_do_not_mask_native_failure(self):
+        blocked = self.root / 'not a directory'
+        blocked.write_text('blocked')
+        with patch.dict(os.environ, STRATALINT_INSPECTOR_PHASES=str(blocked / 'phases.jsonl')), \
+                patch('sys.stderr', new_callable=io.StringIO) as stderr:
+            self.assertIsNone(self.fail_producer()['capture'])
+        self.assertIn('native request capture', stderr.getvalue())
+        self.assertIn('native phases', stderr.getvalue())
+        self.assertEqual(list(self.logs.iterdir()), [])
+
+    def test_capture_publish_failure_does_not_reuse_stale_capture_or_mask_exception(self):
+        self.fail_producer()
+        previous = {path: path.read_bytes() for path in self.logs.glob('native-request-*.json')}
+        failure = subprocess.CalledProcessError(41, ['native-failure'])
+        with patch.object(native.os, 'replace', side_effect=PermissionError('capture denied')), \
+                patch.object(native.subprocess, 'run', side_effect=failure), \
+                patch('sys.stderr', new_callable=io.StringIO) as stderr:
+            with self.assertRaises(subprocess.CalledProcessError) as raised:
+                native.produce_batch(self.requests)
+        self.assertIs(raised.exception, failure)
+        self.assertIn('capture denied', stderr.getvalue())
+        self.assertEqual(previous, {path: path.read_bytes() for path in self.logs.glob('native-request-*.json')})
+        self.assertEqual(list(self.logs.glob('*.tmp')), [])
+        latest = [json.loads(line) for line in self.phases.read_text().splitlines()][-2:]
+        self.assertTrue(all(row['request_capture'] is None for row in latest))
+        self.assertFalse(latest[-1]['success'])
+
+    def test_report_entry_retains_failed_request_in_selected_log_directory(self):
+        repository = Path(native.__file__).resolve().parents[2]
+
+        def write(name, text):
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
+            path.chmod(0o755)
+            return path
+
+        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'publication.py']:
+            path = 'tools/lean-inspector/' + name
+            write(path, (repository / path).read_text())
+        write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
+        write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\nexit 0\n')
+        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        request = write('batch.json', json.dumps([['produce', row] for row in self.requests]))
+        # Lake is the boundary stub; the shell entry, Python batch producer and
+        # failing executable are real, including all their failure cleanup.
+        lake = write('bin/lake', f'#!{sys.executable}\nimport os, sys\n' +
+            'os.execv(sys.executable, [sys.executable, "-B", ' +
+            repr(str(self.root / 'tools/lean-inspector/native.py')) + ', "batch", ' +
+            repr(str(request)) + ', "batch-result.json"])\n')
+        producer = write('candidate.dll', 'fixture candidate producer')
+        report = write('public/report.json', 'previous report')
+        self.phases.write_text('{"phase":"stale"}\n')
+        environment = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED='1',
+            STRATALINT_LEAN_BUILD_TARGETS='[]', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
+            LAKE_BIN=str(lake))
+        result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+            '--repository', str(self.root), '--output', str(report), '--log-dir', str(self.logs)],
+            cwd=self.logs, env=environment, capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=1', result.stderr)
+        self.assertIn('exit status 37', result.stderr)
+        self.assertEqual(report.read_text(), 'previous report')
+        self.assertFalse((self.root / 'batch-result.json').exists())
+        phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
+        self.assertNotIn('stale', [row['phase'] for row in phases])
+        start = next(row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start')
+        capture = Path(start['request_capture'])
+        self.assertEqual(capture.parent, self.logs)
+        self.assertEqual(json.loads(capture.read_text()), json.loads(self.seen.read_text())['capture'])
+        self.assertEqual(list(native.state(self.root).glob('.inspection.*')), [])
+
+
 class EntryPointTests(unittest.TestCase):
     def test_prebuilt_utility_producer_is_required_and_its_failure_stops_preparation(self):
         with tempfile.TemporaryDirectory() as directory:

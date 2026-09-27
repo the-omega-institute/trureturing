@@ -1,0 +1,39 @@
+### 167.1 被忘掉的输入与保留的分支边缘
+
+设原输入空间为 $A=\mathbb C^d$，其中 $d\ge2$；活动记忆为 $M=\mathbb C^m$。固定密度矩阵 $\rho$，在 $M\otimes R_{\mathrm{out}}$ 上选择其归一化纯化 $|\Psi\rangle$，并取 $\dim R_{\mathrm{out}}=m$。记 $P_\xi=|\xi\rangle\langle\xi|$。
+
+接收空间 $K$ 含有两两正交子空间 $K_j$。给定有限个归一化向量与权重
+
+$$
+|\zeta_j\rangle\in M\otimes K_j,
+\qquad p_j>0,\qquad\sum_jp_j=1,
+\qquad \rho_j=\operatorname{Tr}_K P_{\zeta_j}.
+\tag{167.1}
+$$
+
+原输入已经被常值入口忘掉：
+
+$$
+\mathcal S(X)=\operatorname{Tr}(X)\Omega,
+\qquad\Omega=\sum_jp_jP_{\zeta_j}.
+\tag{167.2}
+$$
+
+目标仍要求恢复原输入及指定的活动记忆纯化：
+
+$$
+\mathcal V(X)=X_{A_{\mathrm{out}}}\otimes P_\Psi.
+\tag{167.3}
+$$
+
+这里只允许接收端解码器 $\mathcal D:K\to A_{\mathrm{out}}R_{\mathrm{out}}$ 为 CPTP，不允许操作 $M$ 或外部参考。定义完整参考半 diamond 误差
+
+$$
+e=\min_{\mathcal D}
+\frac12\| (\operatorname{id}_M\otimes\mathcal D)\mathcal S-\mathcal V\|_\diamond,
+\qquad \beta=d^{-2}\in(0,1).
+\tag{167.4}
+$$
+
+不要求 $\sum_jp_j\rho_j=\rho$；该等式成立时，下面的严格损失判据更能区分平均边缘与分支关系。所有分支及权重都来自同一份实际混合态，不允许自由拼入不能共同实现的边缘。
+

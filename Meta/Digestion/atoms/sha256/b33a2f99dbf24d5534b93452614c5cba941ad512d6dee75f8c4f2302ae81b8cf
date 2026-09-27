@@ -1,0 +1,24 @@
+**定义 119.1（固定相位的临界可达对）。** 固定最近失效相位 $\vartheta$，并记其暗态投影为 $P_\vartheta$。称一对
+
+$$
+(\lambda,\zeta),
+\qquad 0\le\lambda\le1,
+\qquad \zeta\succeq0,
+\qquad \operatorname{Tr}\zeta=1,
+$$
+
+是**可达的**，若存在 $h_j\downarrow0$ 和完整齐次仪器 $\Gamma_j\in\mathfrak B_{R-h_j}$，满足
+
+$$
+\Gamma_j\longrightarrow\Gamma_\vartheta^{\rm eq},
+\qquad
+\frac{M(\Gamma_j)}{\mathscr K(R-h_j)}\longrightarrow\lambda,
+$$
+
+并且其准平稳慢点击态
+
+$$
+\zeta_j=\frac{\mathcal C_j(\sigma_j)}{\epsilon_j}
+$$
+收敛到 $\zeta$。这里的终端通道仍然丢弃首次点击轮数；$\zeta_j$ 保存点击后量子输出。
+

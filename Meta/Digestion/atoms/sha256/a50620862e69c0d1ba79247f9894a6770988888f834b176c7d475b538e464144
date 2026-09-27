@@ -1,0 +1,28 @@
+### 293.3 全部合法比较都有统一的正余量
+
+对 $0\le x\le1$，直接代入两段公式，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x(1-x)^2
+\ge\frac13+\varepsilon.
+\tag{293.10}
+$$
+对 $1\le x\le L=2-\eta$，写 $v=x-1\in[0,1-\eta]$，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+v^2\left[\frac{1-v}{3}-\varepsilon(8-5v)\right].
+\tag{293.11}
+$$
+括号至少为 $\eta/3-8\eta/144=5\eta/18\ge0$。因此对全部 $x\in[0,L]$，
+$$
+\boxed{
+A_\varepsilon(x)-A_\varepsilon(x+1)
+\ge\frac13+\frac\eta{144}
+\ge\frac13+\frac\eta{288}.
+}
+\tag{293.12}
+$$
+后面的预算只使用较弱的最后一项，保留余量而不优化常数。
+

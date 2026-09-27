@@ -1,0 +1,14 @@
+#### 3.6.1 成熟供应：参考多面体上的统一等式误差界
+
+令 $R\subseteq\mathbb R^N$ 为固定非空多面体，$C:\mathbb R^N\to\mathbb R^D$ 为固定线性映射，源空间与目标空间分别指定范数。参考多面体版本的 Hoffman 界给出有限常数 $\widetilde H(C\mid R)\ge0$，使
+$$
+\operatorname{dist}\bigl(x,C^{-1}(d)\cap R\bigr)
+\le \widetilde H(C\mid R)\,\|d-Cx\|
+\qquad\forall d\in C(R),\quad\forall x\in R.
+\tag{TM.67}
+$$
+
+这里距离使用源范数，右侧剩余量使用目标范数。Javier Peña、Juan C. Vera、Luis F. Zuluaga 的 *New characterizations of Hoffman constants for systems of linear constraints*，[arXiv:1905.02894v2](https://arxiv.org/pdf/1905.02894v2)，在第2.2节命题5（PDF第9页）给出同时包含不等式、等式和参考多面体的统一界，并给出相应常数的紧性；取不等式矩阵为空，即为第10页式(17)的上述形式。第11页定义原文记号 $\widetilde H(C\mid R)=H([],C\mid R)$，并再次说明式(17)的紧性。本节沿用纯等式版本的 $\widetilde H$，式(TM.70)仅将所指定映射与参考多面体下的值简记为 $H_A$，没有把原文常数改成另一份泛用 $H$。第4页明确说明，未另作限制的结果适用于任意范数。因而本节直接使用该成熟结果，并非另立新的普遍误差界。
+
+两个量词尤其关键：同一常数对全部 $x\in R$ 和全部可行右端 $d\in C(R)$ 同时成立；可行性确保目标纤维非空。$R$ 可以是低维多面体，并不要求其在环境空间有内点。
+

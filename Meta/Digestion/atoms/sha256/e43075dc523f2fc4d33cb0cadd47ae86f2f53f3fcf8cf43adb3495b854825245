@@ -1,0 +1,32 @@
+**三维 $W$：同一内积给出的投影约束。**
+
+假设 $\dim W=3$。式（57.12）使 $K=S\oplus W$，所以 $v\in W$。
+
+定义等距 $f:U\to Q_3$、$g:G_3\to Q_4$，使
+$$
+V_1u'=f(u')\otimes A,\qquad
+V_1z=g(z)\otimes B.
+$$
+由 $p_A\in H_4\subset U\oplus Q_4$，写 $p_A=u_A+q_A$。式（57.12）给 $q_A\perp S$，所以 $u_A=P_Up_A$。等距投影和（57.4）给
+$$
+f(u_A)=P_{Q_3}v.
+\tag{57.14}
+$$
+对任意 $z\in G_3$，一方面
+$$
+\langle p_A,z\rangle
+=\langle u_A,z\rangle
+=\langle A,B\rangle\,\langle P_{Q_3}v,g(z)\rangle,
+$$
+另一方面，直接使用 $V_1p_A=v\otimes A$ 得
+$$
+\langle p_A,z\rangle
+=\langle A,B\rangle\,\langle v,g(z)\rangle.
+$$
+非零 $\langle A,B\rangle$ 可消去，$g$ 满射到 $Q_4$，所以
+$$
+P_{Q_4}v=P_{Q_4}P_{Q_3}v.
+\tag{57.15}
+$$
+于是 $v-P_{Q_3}v$ 同时正交于 $Q_3$、$Q_4$，也即正交于 $W$。但 $v,P_{Q_3}v\in W$，故 $v=P_{Q_3}v\in Q_3$，违反（57.13）。
+

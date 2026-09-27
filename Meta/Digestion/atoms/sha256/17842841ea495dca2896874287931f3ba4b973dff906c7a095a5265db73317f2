@@ -1,0 +1,4 @@
+**命题 13.2（暗空间的有限代数判定）。** $\mathcal D=\ker G_d$。
+
+证明。由命题 11.2，$\langle\psi,G_d\psi\rangle=\sum_{n=0}^{d-1}\sum_x\|L_xQ^n\psi\|^2$。其为零等价于这些项全零。Cayley–Hamilton 定理使所有更高 $Q$ 次幂由前 $d$ 个生成，故全部后续点击振幅为零。此为已知模型的代数判定，不是从 $d$ 次未点击样本推断永久暗。$\square$
+

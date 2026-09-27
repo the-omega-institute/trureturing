@@ -1,0 +1,22 @@
+### 235.6 二维 trine 块的两种误差
+
+在一个二维输入块上取
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\quad\Pi_j=|\psi_j\rangle\langle\psi_j|,
+\quad\sum_j\Pi_j=\frac32I_2.
+\tag{235.AD.18}
+$$
+令 $E_j=(2/3)\Pi_j$，以 $X\mapsto\operatorname{Tr}(E_jX)P_j$ 作为该块候选。三个效应的和为恒等，分支各为秩一。
+
+第231节对同一 trine 通道已经证明两项精确误差：
+$$
+\delta_\diamond^{\rm tr}=\frac12,
+\tag{235.AD.20}
+$$
+$$
+\delta_0^{\rm tr}=\frac13.
+\tag{235.AD.22}
+$$
+其中完整上界由 Hermitian 泛函的完整范数得到，二维最大纠缠输入达到；无参考上界由三个 Bloch 向量的符号和得到，一个 trine 方向的纯输入达到。本节直接复用这两个结果。它们允许当前任意固定纯输出 $r_j$，不需要输出向量正交。
+

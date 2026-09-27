@@ -1,0 +1,72 @@
+**校准例：同一存新位通道的三终端上界。**
+
+用第38节的固定相位换基取 $a,b>0$，仍令 $r=\sqrt{a^4+b^2}$。
+选择全域固定通道
+
+$$
+\mathcal C_{\rm store}(X)=\operatorname{Tr}_{K_{\rm old}}X,
+\tag{40.28}
+$$
+
+把新发出位的二维空间固定识别为新的 $K$。首终端输出固定首位零，第二终端在当前接收位前附上首位零，因此这两个终端精确；接收门本身始终不变。
+
+第三终端省去恒定首位零后，真实目标是
+
+$$
+a^2m_0\otimes|00\rangle
++ab\,m_1\otimes|01\rangle
++b\,m_0\otimes|10\rangle.
+$$
+
+定义正交归一档案向量
+
+$$
+\chi_0=(a^2|00\rangle+b|10\rangle)/r,\qquad
+\chi_1=|01\rangle.
+$$
+
+第三终端解码取全域等距
+$|0\rangle_K\mapsto|0\rangle\otimes\chi_0$、
+$|1\rangle_K\mapsto|0\rangle\otimes\chi_1$。
+在正交归一联合向量 $m_0\otimes\chi_0,m_1\otimes\chi_1$ 上，
+目标和解码输出的矩阵分别为
+
+$$
+\begin{pmatrix}r^2&rab\\rab&a^2b^2\end{pmatrix},
+\qquad
+\begin{pmatrix}r^2&a^3b\\a^3b&a^2b^2\end{pmatrix}.
+\tag{40.29}
+$$
+
+两矩阵迹均为一；区别只在这组联合正交向量上的两个非对角元。
+因此这份完整联合恢复的半迹误差及目标投影损失分别为
+
+$$
+\delta_{\rm store}=ab(r-a^2),\qquad
+q_{\rm store}=2a^2b^2r(r-a^2).
+\tag{40.30}
+$$
+
+这给出
+
+$$
+\boxed{
+\epsilon_{\rm el}(p)\le Q_2^{[3]}\le q_{\rm store},\qquad
+\epsilon_{\rm el}(p)\le
+\varepsilon^0_{2,[3]}\le\delta_{\rm store},
+}
+\tag{40.31}
+$$
+
+其中 $\varepsilon^0_{2,[3]}$ 是指定输入 $|0\rangle$、只要求前三终端的最佳最坏半迹误差。上界只用这份明确装置及解码器，不声称它们最优。
+
+平衡来源 $a=b=1/\sqrt2$ 时，
+
+$$
+q_{\rm store}=\frac{3-\sqrt3}{8},\qquad
+\delta_{\rm store}=\frac{\sqrt3-1}{4},
+$$
+
+而（40.8）给 $Q_2^{[3]}\ge2^{-140}$。
+这一校准仅覆盖指定输入的前三终端；它既不是完整参考合同的上界，也不是前32终端 $\Delta_2$ 的上界。
+

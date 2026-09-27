@@ -1,0 +1,80 @@
+### 189.2 旗标对称化保持局部权限
+
+先按第173节无损地把输出标签取为经典的。固定实际输入旗标
+$s=\pm1$ 后，任意局部解码器给两个 CP 映射
+$\Gamma_{0,s},\Gamma_{1,s}$，且
+$\Gamma_{0,s}+\Gamma_{1,s}$ 保迹。
+
+令 $Z=\operatorname{diag}(1,-1)$。来源满足
+
+$$
+(Z_M\otimes Z_R)\Xi=\Xi,\qquad
+(Z_M\otimes Z_R)\psi=-\psi,
+$$
+
+所以
+
+$$
+\eta_{-s}(w)
+=\operatorname{Ad}_{Z_M\otimes Z_R}(\eta_s(w)).
+\tag{189.3}
+$$
+
+将解码器替换为
+$\Gamma'_{j,s}=\operatorname{Ad}_Z\circ\Gamma_{j,-s}\circ\operatorname{Ad}_Z$，
+其实际输出与原输出只差 $Z_M\otimes Z_{R_{\mathrm{out}}}$ 共轭，
+而目标在该共轭下不变。因此两份解码器的完整误差相同。
+平均二者，diamond 范数的凸性保证误差不增，且得到
+
+$$
+\boxed{
+\Gamma_{j,-s}
+=\operatorname{Ad}_Z\circ\Gamma_{j,s}\circ\operatorname{Ad}_Z.
+}
+\tag{189.4}
+$$
+
+实际平均只使用旗标翻转及接收端 $Z$，没有操作 $M$；
+$Z_M$ 只在证明误差不变时出现。
+故可无损限制为满足（189.4）的共同解码器。
+
+对旗标 $+$、结果 $j$ 选任意有限 Kraus 表示
+
+$$
+K_{j,\alpha}=
+\begin{pmatrix}
+a_{j,\alpha}&b_{j,\alpha}\\
+c_{j,\alpha}&d_{j,\alpha}
+\end{pmatrix}.
+$$
+
+旗标 $-$ 可取 $ZK_{j,\alpha}Z$。以下各和均对 $\alpha$ 求和：
+
+$$
+A_j=\sum|a|^2,\quad B_j=\sum|b|^2,\quad
+C_j=\sum|c|^2,\quad D_j=\sum|d|^2,
+$$
+
+$$
+N_j=\sum a\overline b,\qquad
+M_j=\sum a\overline d,\qquad
+P_j=\sum c\overline d.
+\tag{189.5}
+$$
+
+这些量是 Choi 矩阵的条目，不依赖所选 Kraus 表示。
+输入优先的 Choi 向量为
+$\operatorname{vec}(K^{\mathsf T})=(a,c,b,d)^{\mathsf T}$，
+共同保迹条件给
+
+$$
+\boxed{
+\sum_j(A_j+C_j)=1,\qquad
+\sum_j(B_j+D_j)=1,\qquad
+\sum_j(N_j+P_j)=0.
+}
+\tag{189.6}
+$$
+
+额外的跳跃 Kraus 完整保留在 $B_j,D_j$ 等矩中。
+

@@ -1,0 +1,16 @@
+**命题 42.5（等待算子有统一界，却在端点跳变）。** 第 19 节的等待算子在该族上为
+
+$$
+\boxed{
+T_\varepsilon=\sum_{m\ge0}R_{m,\varepsilon}
+=P_u+P_v\quad(\varepsilon>0),
+\qquad T_0=P_v.
+}
+$$
+
+尤其 $0\le T_\varepsilon\le I$ 对全部参数成立，但 $T_\varepsilon$ 在零参数不连续。
+
+证明。$m=0$ 的项为 $R_\varepsilon=\varepsilon P_u+P_v$。对正 $\varepsilon$，$u$ 方向的全部尾和为 $\varepsilon\sum_{m\ge0}(1-\varepsilon)^m=1$；零参数时该方向每一项都为零。$\square$
+
+对 $P_u$ 来源，有限点击的一阶矩是 $\sum_n n\mathbb P(\mathsf N=n)=1$，而在零参数为零。它等于“点击概率 $\varepsilon$”乘“点击条件下平均轮数 $1/\varepsilon$”。同一个实际模型中，事件质量趋零与等待长度发散相互抵消；概率收敛因此不能单独交换一阶矩的极限。
+

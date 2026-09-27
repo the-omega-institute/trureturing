@@ -1,0 +1,17 @@
+### 96.1 一般方阵铅笔的预算
+
+设 $n\ge1$，并取
+$$
+P(z)=z_1B_0-z_0B_1:\mathbb C^n\to\mathbb C^n,
+\qquad \ker B_0\cap\ker B_1=0.
+$$
+令其通常秩为
+$$
+r=\max_{z\ne0}\operatorname{rank}P(z),\qquad k=n-r,
+$$
+并定义各射线上的额外核维数
+$$
+j([z])=\operatorname{nullity}P(z)-k\ge0.
+$$
+非零的一个 $r$ 阶子式说明，除有限条射线外矩阵秩均为 $r$；这里的 $k$ 因而也是通常核维数。若 $r=0$，两个系数都为零，违反共同核为零，所以 $r>0$。
+

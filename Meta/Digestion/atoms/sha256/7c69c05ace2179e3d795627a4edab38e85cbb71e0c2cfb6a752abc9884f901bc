@@ -1,0 +1,45 @@
+### 243.1 固定候选与精确取等资源
+
+输入 Hilbert 空间为 $H=\mathbb C^d$。固定 $N$ 个经典记录标签及各标签单位量子输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。假设输入投影族满足
+$$
+\sum_{j=1}^N\Pi_j=\frac RdI_H,
+\qquad 1\le R<Nd.
+\tag{243.1}
+$$
+目标与固定候选为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_j|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j,\\
+\mathcal S(X)&=\sum_j|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j.
+\end{aligned}
+\tag{243.2}
+$$
+候选是实际 CPTP 通道，精确总 Choi 秩为 $R$，其完整半 diamond 距离为
+$$
+D_*=\frac12\|\mathcal S-\mathcal R\|_{\diamond}
+=1-\frac R{Nd}.
+\tag{243.3}
+$$
+对归一化纯联合探针 $|\psi\rangle\in H\otimes E$，记输入边缘为 $\rho$，实际半迹距离为 $f(\rho)$。§240已经证明，包括奇异边缘在内，
+$$
+f(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+\tag{243.4}
+$$
+任意相同边缘的纯化在参考支撑上只相差等距变换，故不改变 $f$、Schmidt 秩或纠缠熵。
+
+定义达到完整值的最小纯探针资源
+$$
+\begin{aligned}
+r_{\min}(\mathcal S)&=
+\min\{\operatorname{rank}\rho:f(\rho)=D_*\},\\
+E_{\min}(\mathcal S)&=
+\inf\{S(\rho):f(\rho)=D_*\},
+\end{aligned}
+\tag{243.5}
+$$
+其中 $\rho$ 遍历输入密度矩阵，$S(\rho)=-\operatorname{Tr}(\rho\log_2\rho)$。因为联合探针是纯态，$\operatorname{rank}\rho$ 是其 Schmidt 秩及最小参考支撑维数，$S(\rho)$ 是输入与参考之间的纠缠熵。最大混合边缘 $I_d/d$ 始终满足（243.4），所以取等集合非空。
+

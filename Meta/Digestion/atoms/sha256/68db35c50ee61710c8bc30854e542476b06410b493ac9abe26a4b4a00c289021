@@ -1,0 +1,10 @@
+**定义 450.1（精确替代的区域）。** 在有限实验中，用 $K\succeq L$ 表示存在从 $K$ 到 $L$ 的精确随机后处理。命题 449.1 与最小值达到给出
+
+$$
+E_r\succeq S_e\quad\Longleftrightarrow\quad r\le2e,
+\qquad
+S_e\succeq E_r\quad\Longleftrightarrow\quad e(1-r)=0.
+$$
+
+所以对 $0<e<1/2$，当 $r\le2e$ 时 $E_r$ 能替代 $S_e$，反向不能；当 $2e<r<1$ 时两者不能互相替代；当 $r=1$ 时任何观察都能模拟这个恒定空白。边界 $e=0$ 表示完美观察，不能沿用内部参数下的严格结论。
+

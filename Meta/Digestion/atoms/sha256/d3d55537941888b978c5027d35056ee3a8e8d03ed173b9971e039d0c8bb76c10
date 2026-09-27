@@ -1,0 +1,79 @@
+### 283.7 对残角无偏的二阶统计量
+
+对一组 $k\ge2$ 个独立符号 $\eta_i\in\{\pm1\}$，定义标准二阶U统计量
+$$
+U_k=\frac{(\sum_i\eta_i)^2-k}{k(k-1)}
+=\frac1{\binom k2}\sum_{i<j}\eta_i\eta_j.
+\tag{283.34}
+$$
+若符号均值为 $\mu$，则
+$$
+\mathbb EU_k=\mu^2,
+\qquad
+\operatorname{Var}U_k
+=\frac{4\mu^2(1-\mu^2)}k
++\frac{2(1-\mu^2)^2}{k(k-1)}.
+\tag{283.35}
+$$
+为核对方差，写 $\eta_i=\mu+\xi_i$。一次项为 $2\mu k^{-1}\sum_i\xi_i$，二次项为 $\binom k2^{-1}\sum_{i<j}\xi_i\xi_j$；二者正交，不同二次配对除相同配对外协方差为零，分别给出（283.35）的两项。
+
+在 $G$ 上，用两个实际设置组分别计算 $U_k^{(0)}$、$U_l^{(1)}$，令
+$$
+T=U_k^{(0)}+U_l^{(1)},
+\qquad
+V_B=\frac{{\bf1}_G}{\kappa_L}T.
+\tag{283.36}
+$$
+$G$ 不成立时 $V_B=0$。这些位置全部仍计入 $B$，没有免费补样或未计费后选择。
+
+条件于校准及设置，由（283.31），
+$$
+\mathbb E[T\mid e,k,l]=\mu_0^2+\mu_1^2=a^2.
+\tag{283.37}
+$$
+所以（283.36）准确无偏：$\mathbb E_aV_B=a^2$。残角不进入均值，只影响方差；这一性质允许在不同相位块之间直接平均统计量。
+
+在 $G$ 上，$k,l\ge L/4\ge4$。两个设置组条件独立，由（283.35），
+$$
+\operatorname{Var}(T\mid e,k,l)
+\le\frac{16}{L}\sum_{j=0}^1\mu_j^2(1-\mu_j^2)
++\frac{128}{L^2}.
+\tag{283.38}
+$$
+令 $\epsilon=1-a$，有
+$$
+\sum_j\mu_j^2(1-\mu_j^2)
+=a^2(1-a^2)+2a^4\sin^2e\cos^2e
+\le2\epsilon+2\sin^2e.
+$$
+利用（283.30），平均条件方差因此不超过
+$$
+\frac{32\epsilon}{L}+\frac{1024}{mL}+\frac{128}{L^2}
+\le\frac{64\epsilon}{B}+\frac{6656}{B^2},
+\tag{283.39}
+$$
+最后一步使用 $m\ge B/3$、$L\ge B/2$。
+
+条件均值（283.37）恒为 $a^2$，故总方差只需另加好设置指示量的方差。由 $\kappa_L>1/2$，
+$$
+\operatorname{Var}_aV_B
+\le4\left(\frac{64\epsilon}{B}+\frac{6656}{B^2}\right)
++2\Pr(G^c).
+\tag{283.40}
+$$
+又 $2\Pr(G^c)\le4e^{-B/16}\le1024/B^2$：函数 $B^2e^{-B/16}$ 在 $B\ge32$ 的最大值取于32，而 $4096e^{-2}<1024$。因此
+$$
+\operatorname{Var}_aV_B
+\le\frac{256\epsilon}{B}+\frac{27648}{B^2}
+\le30000\left(\frac\epsilon B+\frac1{B^2}\right).
+\tag{283.41}
+$$
+这证明了大块情形的（283.27）。
+
+对 $2\le B<32$，只需固定前两次角度零，定义
+$$
+V_B=W_1\cdot W_2.
+\tag{283.42}
+$$
+条件于共同相位，两份来源独立，所以 $\mathbb E_aV_B=a^2$；又 $|V_B|\le4$，方差至多16。其余 $B-2$ 个位置完整消耗并忽略。因为 $16\cdot31^2<30000$，同一（283.27）仍成立。于是统计量覆盖所有 $B\ge2$。
+

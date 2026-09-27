@@ -1,0 +1,71 @@
+**定理 59.2（截止矩对截断均值的显式误差证书）。** 固定整数 $k\ge1$，对 $G_m$ 取 Bernstein 多项式
+
+$$
+B_kG_m(x)=\sum_{\ell=0}^{k}
+G_m(\ell/k)\binom{k}{\ell}x^\ell(1-x)^{k-\ell}
+=\sum_{j=0}^k c_jx^j.
+$$
+
+若同时知道
+
+$$
+|a(q_0^j)-b_j|\le\varepsilon_j\qquad(1\le j\le k),
+$$
+
+令
+
+$$
+\widehat v_{m,k}=c_0+\sum_{j=1}^k c_jb_j,
+\qquad
+ e_{m,k}=\frac{L_m}{2\sqrt k}+\sum_{j=1}^k|c_j|\varepsilon_j.
+$$
+
+则
+
+$$
+\boxed{
+\left|\mathbb E\min(\mathsf N,m)-\widehat v_{m,k}\right|
+\le e_{m,k}.
+}
+$$
+
+并有保守系数界
+
+$$
+\boxed{\sum_{j=0}^k|c_j|\le m3^k.}
+$$
+
+证明。固定 $x\in[0,1]$，令 $Z$ 服从参数 $(k,x)$ 的二项分布。Bernstein 权重给
+
+$$
+B_kG_m(x)=\mathbb E G_m(Z/k).
+$$
+
+于是
+
+$$
+\begin{aligned}
+|B_kG_m(x)-G_m(x)|
+&\le L_m\mathbb E|Z/k-x|\\
+&\le L_m\sqrt{x(1-x)/k}
+\le\frac{L_m}{2\sqrt k}.
+\end{aligned}
+$$
+
+对 $X$ 再取期望，结合定义 59.1，得到
+
+$$
+\left|\mathbb E G_m(X)-\left(c_0+\sum_{j=1}^kc_j a(q_0^j)\right)\right|
+\le\frac{L_m}{2\sqrt k}.
+$$
+
+读数误差再由三角不等式控制，给第一结论。为估计系数绝对值之和，展开每项的 $(1-x)^{k-\ell}$；该项系数绝对值之和至多
+
+$$
+m\binom{k}{\ell}2^{k-\ell}.
+$$
+
+对 $\ell$ 求和得 $m(1+2)^k=m3^k$。$\square$
+
+这个构造复用《[递归关系观察的恢复几何](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)》第 11.4 条的 Bernstein 方差方法：那里以谱变量近似未来响应，这里令谱样的标量变量为 $X=q_0^{\mathsf N-1}$，近似指定截断成本。映射保留的是 $[0,1]$ 上正概率权重及幂矩；它没有把原始 CP 动力学的全部算子变成自伴谱模型，也不继承原问题的物理实现结论。
+

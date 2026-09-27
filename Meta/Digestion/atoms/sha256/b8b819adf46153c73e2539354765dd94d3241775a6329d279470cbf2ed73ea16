@@ -1,0 +1,46 @@
+**定理 183.2（Hankel 秩的摘要下界）。** 设 $S:\mathcal X\to Y$ 是线性边界摘要，并假定对每个 $i,n$ 都存在 $\widetilde f_{i,n}\in Y^*$ 使
+
+$$
+ f_i\circ T^n=\widetilde f_{i,n}\circ S.
+$$
+
+也就是说，摘要对这组初始源和固定接口的所有有限 horizon 终端读数充分。则
+
+$$
+\boxed{
+ r_{\mathrm H}\le\dim Y.
+}
+\tag{183.1}
+$$
+
+### 证明
+
+对任意 $N,M$，定义行算子和列算子
+
+$$
+\mathsf O_N[(i,n),y]=\widetilde f_{i,n}(y),
+$$
+
+$$
+\mathsf R_M[y,(j,m)]=S(T^m b_j).
+$$
+
+由摘要因子化假设，
+
+$$
+\mathsf H_{N,M}=\mathsf O_N\mathsf R_M.
+$$
+
+所以
+
+$$
+\operatorname{rank}\mathsf H_{N,M}
+\le\dim Y.
+$$
+
+对所有 $N,M$ 取上确界即得（183.1）。证毕。
+
+这个下界同时依赖输入侧和输出侧：只有终端效果的数量并不能代替可达初始方向，只有初始状态的数量也不能代替未来读数。它是指定合同下的线性状态维数下界，不自动等同于物理记忆的 Hilbert 维数。
+
+---
+

@@ -1,0 +1,42 @@
+### 307.1 完整联合模型与取得阈值
+
+保留第301—306节的参数范围；其中 \(B,C,\kappa,g\) 已知，\(r,h\) 未知，\(k,l\) 由已知参数定义：
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star=1024/225,\quad
+0<\kappa\le\kappa_0=-\log\sqrt{3/4},
+$$
+$$
+k=e^{-\kappa},\quad 0<g\le k-k^2,\quad l=k^2+g,\quad
+r\in[l,1],\quad 0<h\le1/4.
+$$
+另有已知、固定的 \(\beta>0\)。任务系数 \(c=k^jr\)、\(j\in\{0,1\}\)，参考系数 \(c=1\)。一次新完成调用的联合律为
+$$
+p_1=\frac{1-hc/C}{B},\quad p_0=1-p_1,\qquad
+P^\beta_{c,h}(x,z)=\frac{p_x}{2}
+ +\varepsilon h^\beta(-1)^{x+z},\quad \varepsilon=1/16,
+\tag{307.1}
+$$
+实际完成时长 \(\tau=1+Z\)。各次新记录在给定参数与已选来源下独立于过去；来源选择、停止和输出可以使用全部已完成联合记录及共同私随机性。只在调用完成后作决定，不取消、不并行，也不使用未纳入合同的中途信息。
+
+因为 \(p_1\ge3/16\)、\(p_0\ge1/2\)、\(h^\beta\le1\)，每格都有
+$$
+P^\beta_{c,h}(x,z)\ge3/32-1/16=1/32.
+\tag{307.2}
+$$
+求和给 \(P_X=p\)、\(P_Z=\operatorname{Bernoulli}(1/2)\)。这两个边缘性质对全部 \(\beta>0\) 成立；\(\beta\downarrow0\) 不破坏四格正性。
+
+风险在同一 \((r,h)\) 下平均：
+$$
+\mathcal R(r,h)
+=\tfrac12\{\Pr_{0,r,h}(D=1)+\Pr_{1,r,h}(D=0)\}\le1/3.
+\tag{307.3}
+$$
+每个合法正参数世界要求几乎必然经有限调用、有限内部控制步骤给答案。记实际任务与参考调用总数为 \(N\)，已完成调用的串行取得段时长为 \(T=\sum_{i=1}^N(1+Z_i)\)。所有参考调用同样收费。仍记
+$$
+H=1+\log(\kappa/g),\quad
+w_h=C-h+h\kappa,\quad
+\mathcal O(h)=\frac{w_hH}{h^2\kappa^2},\quad
+3C/4\le w_h\le C.
+\tag{307.4}
+$$
+

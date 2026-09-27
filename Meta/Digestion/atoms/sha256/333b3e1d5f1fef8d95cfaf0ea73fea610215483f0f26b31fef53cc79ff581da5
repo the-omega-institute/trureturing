@@ -1,0 +1,77 @@
+### 36.1 最小关系载体不是一个坐标，而是一个带作用的商
+
+设实际来源中的联合配置为 $S$。一项合法有类型接续由
+
+$$
+ s\xrightarrow{a/y}s'
+$$
+
+给出；其中 $a$ 包含接口和权限要求，$y$ 包含正常读数、失败标签与本次必须保留的记录。对可接续的动作词 $w$，记
+
+$$
+ \operatorname{Run}_w(s)
+ $$
+
+为从 $s$ 出发的完整带类型结果：它同时包含词是否合法、各步输出、记录和最终配置。于是定义任务族 $\mathcal W$ 的未来核
+
+$$
+ s\equiv^+_{\mathcal W}t
+ \iff
+ \forall w\in\mathcal W,
+ \operatorname{Run}_w(s)=\operatorname{Run}_w(t).
+ \tag{36.1}
+$$
+
+若只保留输出而忘记合法性或档案，所得关系一般更粗；它可能仍是某个较弱任务的核，却不是原任务的动态充分边界。
+
+当更新 $F:S\to S$ 允许无限向前运行时，过去核不能仅由 $F$ 的形式逆函数定义。令
+
+$$
+ S^-_F:=\{u:\mathbb N\to S\mid F(u_{n+1})=u_n\},
+$$
+
+并令 $\operatorname{Past}(s)$ 表示以 $s$ 为零坐标的所有实际兼容线程及其记录。只有当 $\operatorname{Past}(s)$ 非空且所需的过去记录被任务声明为可读时，才定义
+
+$$
+ s\equiv^- t
+ \iff
+ \operatorname{Past}(s)=\operatorname{Past}(t).
+ \tag{36.2}
+$$
+
+在有限非双射系统中，第34节的 `IdentityFuturePastGap` 说明 $S^-_F$ 只覆盖周期核心；因此 $\equiv^-$ 的定义域应写成实际双向来源 $S^{\leftrightarrow}\subseteq S$，不能把瞬态状态默认为有过去坐标。
+
+把合法性和记忆分别纳入核：
+
+$$
+ \equiv^{\mathrm{adm}},\qquad
+ \equiv^{\mathrm{rec}}.
+$$
+
+对要求同时保留未来作用、过去可回溯性、合法选择和档案读出的任务，最小共同核是
+
+$$
+ \boxed{
+ \equiv_\star
+ :=
+ \equiv^+_{\mathcal W}
+ \cap
+ \equiv^-\cap
+ \equiv^{\mathrm{adm}}
+ \cap
+ \equiv^{\mathrm{rec}}.
+ }
+ \tag{36.3}
+$$
+
+这里的“最小”是指不能再合并而仍保持声明的全部续接；它不是说商的元素数对所有未来任务都绝对最少。缩小 $\mathcal W$、删除失败标签或撤销过去读权限，都会改变任务，因而也会改变 $\equiv_\star$。
+
+在这个意义下，真正的最小关系对象是
+
+$$
+ \boxed{(S/\!\equiv_\star,\ \{\overline T_a\},\ \{\overline{\operatorname{Run}}_w\})}
+ \tag{36.4}
+$$
+
+而不是商集合单独。若商上没有诱导的合法动作、输出和记录更新，边界只是静态标签，不能递归拼接。
+

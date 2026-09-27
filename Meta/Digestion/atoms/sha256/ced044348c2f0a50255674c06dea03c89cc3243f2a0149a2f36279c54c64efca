@@ -1,0 +1,41 @@
+**定理 225.3（原参数区间内的精确最近通道）。**
+
+取 $0<\kappa<1/2$，令
+$$
+K_0=
+\begin{pmatrix}
+\sqrt{1-3\kappa/2}&0\\
+0&\sqrt{1-\kappa}\\
+0&0
+\end{pmatrix},
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa\Gamma(X).
+\tag{225.CT.15}
+$$
+因为
+$$
+M^\dagger M+N^\dagger N=\operatorname{diag}(3/2,1),
+$$
+所以 $\mathcal R$ 为 CPTP，结果 Choi 秩恰为 $(1,2)$。
+
+令 $d_2$ 为它到全部同接口、保持两个经典标签、总 Choi 秩至多二的 CPTP 记录通道的完整半 diamond 距离下确界：
+$$
+d_2=
+\inf_{\substack{\mathcal S\ \mathrm{CPTP\ record}\\
+\operatorname{rank}J_{\mathcal S}\le2}}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{225.CT.16}
+$$
+此处“记录通道”指输出在指定经典标签上块对角，因此
+$$
+\operatorname{rank}J_{\mathcal S}
+=\operatorname{rank}J_{\mathcal S_0}
++\operatorname{rank}J_{\mathcal S_1}.
+\tag{225.CT.17}
+$$
+候选的结果0分支可以改变；只要求完整通道 CP、TP、同接口以及标签预算，没有把结果0分支从距离中删除。
+

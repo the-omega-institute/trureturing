@@ -1,0 +1,8 @@
+**命题 199.1（同一目标的局部表达在交叠处相等）。** 项目 [LocalFactorOverlapCompatibility](../../../D5/S3/ConceptDynamics/Gluing/LocalFactorOverlapCompatibility.lean) 的 `local_factor_overlap_compatibility` 使用一个满射 $q:X\to B$、共同目标 $f:X\to Y$、局部定义域 $U_i\subseteq B$ 及局部表达 $g_i:U_i\to Y$。若每当 $q(x)\in U_i$ 时均有
+
+$$
+f(x)=g_i(q(x)),
+$$
+
+则对任意 $b\in U_i\cap U_j$，有 $g_i(b)=g_j(b)$。理由是满射给出 $x$ 使 $q(x)=b$，而两边都等于同一个 $f(x)$。式中的 $g_i(q(x))$ 省略了属于相应定义域的凭据；各局部表达的值属于同一个已指定的 $Y$。
+

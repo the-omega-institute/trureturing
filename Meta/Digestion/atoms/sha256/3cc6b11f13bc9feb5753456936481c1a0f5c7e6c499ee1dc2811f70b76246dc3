@@ -1,0 +1,40 @@
+**定理 165.1（条件化的概率下界）。** 设 $X,Y\succeq0$ 是同一局域分支在两个边界摘要下给出的未归一化输出，令
+
+$$
+p=\operatorname{Tr}X,
+\qquad
+q=\operatorname{Tr}Y,
+\qquad
+p,q\ge p_*>0,
+$$
+
+且 $\|X-Y\|_1\le\varepsilon$。则
+
+$$
+\boxed{
+|p-q|\le\varepsilon,
+\qquad
+D\left(\frac Xp,\frac Yq\right)
+\le\frac{\varepsilon}{p_*}.
+}
+\tag{165.1}
+$$
+
+### 证明
+
+迹是迹范数的收缩，所以 $|p-q|\le\|X-Y\|_1\le\varepsilon$。又
+
+$$
+\left\|\frac Xp-\frac Yq\right\|_1
+\le
+\frac{\|X-Y\|_1}{p}
++
+\left|\frac1p-\frac1q\right|\|Y\|_1
+=
+\frac{\varepsilon+|p-q|}{p}
+\le
+\frac{2\varepsilon}{p}.
+$$
+
+取半迹范数并用 $p\ge p_*$，得到式（165.1）。证毕。
+

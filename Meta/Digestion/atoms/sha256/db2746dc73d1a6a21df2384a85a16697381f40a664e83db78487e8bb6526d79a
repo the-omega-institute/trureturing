@@ -1,0 +1,20 @@
+**定义 50.1（独立几何截止）。** 设每轮原始仪器由未点击 CP 分支 $\mathcal N$ 与点击分支 $\mathcal C_x$ 组成，各分支允许不同的后继空间，并满足 $\operatorname{Tr}\mathcal N(Y)+\sum_x\operatorname{Tr}\mathcal C_x(Y)=\operatorname{Tr}Y$。沿用
+
+$$
+\mathcal A=\mathcal N^*,\qquad
+B=\sum_x\mathcal C_x^*(I)=I-\mathcal A(I),\qquad
+E_n=\mathcal A^{n-1}(B).
+$$
+
+本批对各端口选固定的 CPTP 终端读出 $\Lambda_x$，不依赖点击轮数；共同有限输出空间为 $\mathcal K$，并保留与点击输出正交的截止旗标 $|\partial\rangle$。这是第 38 节允许接口的一种特殊情形。
+
+给定 $0<\eta\le1$，置 $q=1-\eta$。每次至少执行一轮原始仪器；点击则结束，未点击后才抛独立硬币，以概率 $\eta$ 截止，以概率 $q$ 继续。等价地，可预先独立抽取
+
+$$
+\Pr(\mathsf M=m)=\eta q^{m-1},\qquad m=1,2,\ldots,
+$$
+
+运行到首次点击或第 $\mathsf M$ 轮；同轮点击优先于截止。若原始过程永不点击，记原始轮数为 $\mathsf N=\infty$，实际调用次数仍为 $\min\{\mathsf N,\mathsf M\}$。
+
+硬币独立性、其概率标定及重新使用同一仪器，都是操作合同。这里没有在未点击后重新准备初态，因而不是重启协议。每轮相同的硬币规则无需先存储一个无界整数；本批也不要求保留全部原始时间标签。成本只计原仪器调用次数，不含初态制备、硬币生成、终端读出或秒数；期望成本的上界也不等于确定的最大轮数。
+

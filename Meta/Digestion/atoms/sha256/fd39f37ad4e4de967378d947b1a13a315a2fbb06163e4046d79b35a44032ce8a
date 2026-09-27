@@ -1,0 +1,112 @@
+**定理 78.2（距离 $4/5$ 的完整仪器不可能永久未点击）。** 任一同接口实际仪器若有正概率永不点击的初态，则
+
+$$
+\boxed{\delta(\Gamma)>\frac45.} \tag{78.3}
+$$
+
+这里先断言每个失效仪器的严格不等式；把它升级成失效集合的统一严格间隔，还需要第 79 节的紧性。
+
+证明。第 71.2 条已经证明失效必给 $\delta\ge4/5$，并产生一个未点击固定密度矩阵。假设存在失效仪器满足 $\delta=4/5$。固定态不可能满秩，否则同条证明给 $\delta=1$。因此它为纯态 $P=|\psi\rangle\langle\psi|$。
+
+同一输入的下界
+
+$$
+f(a)=\frac{a+\sqrt{a^2+4(1-a)^2}}2\ge\frac45
+$$
+
+只能在 $a=3/5$ 取等，故 $|\langle0|\psi\rangle|^2=3/5$。式 (78.2) 于是给
+
+$$
+\lambda\ge\frac12,\qquad |d|\le\frac1{\sqrt2}. \tag{78.4}
+$$
+
+为计算相干方向，可令
+
+$$
+\psi=\sqrt{\frac35}|0\rangle+\sqrt{\frac25}|1\rangle,
+\qquad
+\eta=-\sqrt{\frac25}|0\rangle+\sqrt{\frac35}|1\rangle,
+\qquad r=\frac{\sqrt6}{5}.
+$$
+
+这个相位选择不限制实际仪器类：对输入和量子输出同步作计算基对角酉变换，$\Gamma_0$ 不变，完整 diamond 距离不变，且任意相位的 $\psi$ 可变为上述形式。
+
+考察未点击输出差
+
+$$
+D=P-\frac25P_0.
+$$
+
+其本征值为 $4/5,-1/5$，所以其符号算子为
+
+$$
+S=\operatorname{sign}D=2D-\frac35I,
+\qquad \|S\|_\infty=1.
+$$
+
+在完整输出上选同一个 Hermitian 检验
+
+$$
+Z=|\varnothing\rangle\langle\varnothing|\otimes S
+  -|\mathrm c\rangle\langle\mathrm c|\otimes I,
+\qquad \|Z\|_\infty=1,
+$$
+
+并将它拉回输入端：
+
+$$
+M=\frac12(\Gamma^*-\Gamma_0^*)(Z).
+$$
+
+对每个输入密度矩阵 $\rho$，迹范数对偶性与完整校准给 $|\operatorname{Tr}(\rho M)|\le\delta$，故
+
+$$
+-\delta I\le M\le\delta I. \tag{78.5}
+$$
+
+在固定态 $P$ 上，两个记录块之差为 $D$ 与 $-(3/5)P_0$，所以
+
+$$
+\langle\psi|M|\psi\rangle
+=\frac12\left(\|D\|_1+\frac35\right)
+=\frac45=\delta.
+$$
+
+由于 $\delta I-M\ge0$，一个向量上的二次型为零便使该向量落入其核。因此
+
+$$
+\langle\eta|M|\psi\rangle=0. \tag{78.6}
+$$
+
+另一方面，置 $H=|\psi\rangle\langle\eta|+|\eta\rangle\langle\psi|$。引理 78.1 与 $B_j\psi=0$ 给
+
+$$
+\mathcal N(H)=d|\psi\rangle\langle\eta|
++\overline d|\eta\rangle\langle\psi|,
+\qquad \mathcal C(H)=0.
+$$
+
+名义分支满足
+
+$$
+\mathcal N_0(H)=2rP_0,\qquad
+\mathcal C_0(H)=-2rP_0.
+$$
+
+直接计算 $\langle0|S|0\rangle=-1/5$ 与 $\langle\eta|S|\psi\rangle=4r/5$，得到
+
+$$
+\begin{aligned}
+2\operatorname{Re}\langle\eta|M|\psi\rangle
+&=\operatorname{Tr}(MH)\\
+&=\frac12\left(
+\frac{8r}{5}\operatorname{Re}d+\frac{2r}{5}-2r
+\right)\\
+&=\frac{4r}{5}(\operatorname{Re}d-1).
+\end{aligned} \tag{78.7}
+$$
+
+式 (78.6) 迫使 $\operatorname{Re}d=1$，与式 (78.4) 矛盾。故等号不可能成立。$\square$
+
+这个证明的作用点是同一装置对不同输入的相容性。暗态本身使一个距离检验饱和；全输入校准于是迫使相邻相干方向的交叉项为零，而完全正性与点击概率给出不相容的约束。只优化单个固定态上的读数，遗漏了这一层关系。
+

@@ -1,0 +1,85 @@
+### 206.5 保留额外坐标的统一精确 TP 构造
+
+取 $\xi=-a_{\mathrm{eff}}/2$、$\omega=\theta$，定义
+
+$$
+a_j=\sqrt{\frac{1/2+(-1)^j\epsilon\xi}
+{1+4m^2\omega^2\epsilon^2}}.
+$$
+
+用三个 Kraus 槽的六维列向量：首槽属于结果0，后两槽属于结果1。
+置
+
+$$
+\begin{gathered}
+p_\epsilon=
+(a_0,-i2m\omega\epsilon a_0,
+ a_1,-i2m\omega\epsilon a_1,0,0)^{\mathsf T},\\
+r_*=(i\sqrt2n,\sqrt2m,-i\sqrt2n,\sqrt2m,\sqrt{B_*},0)^{\mathsf T}.
+\end{gathered}
+\tag{206.16}
+$$
+
+两向量都是单位向量，且 $p_0^\dagger r_*=0$。
+由于全部参数在 $I$ 有界，
+$\chi_\epsilon=p_\epsilon^\dagger r_*=O_I(\epsilon)$。
+因此充分小噪声下可统一定义
+
+$$
+\boxed{
+r_\epsilon=
+\frac{r_*-p_\epsilon\chi_\epsilon}
+{\sqrt{1-|\chi_\epsilon|^2}}.
+}
+\tag{206.17}
+$$
+
+严格有 $p_\epsilon^\dagger r_\epsilon=0$、
+$\|p_\epsilon\|=\|r_\epsilon\|=1$。
+每连续两行构成一个 Kraus 的两列，故它们严格满足共同 TP。
+负旗标按既有 $Z$ 共轭构造，权限与输入参考均保持不变。
+
+第三槽仍是纯跳跃，其第一列为零，第二列为
+
+$$
+\left(\frac{\sqrt{B_*}}{\sqrt{1-|\chi_\epsilon|^2}},0\right)^{\mathsf T}.
+$$
+
+所以它的 Choi 权重为
+
+$$
+B_{\mathrm{extra}}=\frac{B_*}{1-|\chi_\epsilon|^2},
+\qquad \rho B_{\mathrm{extra}}=0.
+\tag{206.18}
+$$
+
+这份构造在内側保留额外分量，在活跃侧令它精确消失，
+不存在需要取负平方根的预算缺口。
+
+前两槽相对规范 Kraus 只改变 $O_I(\epsilon)$。
+额外 Choi 权重只改变 $O_I(\epsilon^2)$，包括 $B_*\to0$ 的区域。
+于是整份 Choi 对与 $\Gamma^*(h)$ 的距离为 $O_I(\epsilon)$，并有
+
+$$
+\begin{gathered}
+U_0=O_I(\epsilon^2),\quad V=O_I(\epsilon^2),\quad
+M_{\mathrm{def}}=O_I(\epsilon^2),\\
+U_1=B_{\mathrm{extra}}+O_I(\epsilon^2),\qquad
+\rho U_1=O_I(\epsilon^2),\\
+x=\xi+O_I(\epsilon^2),\qquad
+W_\theta=\theta^2V=O_I(\epsilon^2).
+\end{gathered}
+\tag{206.19}
+$$
+
+最后一式使用构造中每个 $c/\epsilon=-i2m\theta a$；
+它对额外槽也成立。
+不能把（206.19）中的加权 $\rho U_1$ 改成全区间无权的 $U_1$ 小量，
+因为内侧规范点本就具有 $U_1=B_*>0$。
+
+构造直接满足所需占据列速率。
+其冻结一阶系数匹配 $\Phi_h$，先结合第191节的统一一阶值界，
+即可将它放入某个固定二阶近优类；这里没有预用待证三阶结论。
+将（206.19）代入（206.14），所有项均为 $O_I(\epsilon^3)$，
+得到与（206.15）匹配的上界，证明定理206.1。
+

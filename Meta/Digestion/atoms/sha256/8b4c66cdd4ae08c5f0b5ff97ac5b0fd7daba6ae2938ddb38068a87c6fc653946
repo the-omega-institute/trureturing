@@ -1,0 +1,17 @@
+**定义 485.2（无约束中心与受容量约束中心）。** 记
+
+$$
+l(x)=\min_{i\in I}Q_i(x),\qquad M=\sum_xl(x),
+\qquad \rho=\min_{R\in\Delta(X)}\max_i\operatorname{TV}(R,Q_i).
+$$
+
+$\rho$ 是有限目标族的 TV 最小包围半径。若 $0<r<1$ 且下列集合非空，另记
+
+$$
+\mathcal C_r=\{R\in\Delta(X):rR(x)\le l(x)\text{ 对全部 }x\},
+\qquad
+\rho_r=\min_{R\in\mathcal C_r}\max_i\operatorname{TV}(R,Q_i).
+$$
+
+概率单纯形与这些非空闭约束集都是有限维紧集，目标函数连续，所写最小值均达到。这里的 Chebyshev 中心是对给定度量的最坏距离最优化，不预设算术平均，也不预设中心唯一。
+

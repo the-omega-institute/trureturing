@@ -1,0 +1,54 @@
+### 240.7 剩余上界的精确等价形式
+
+令 $n=d+1$。任意纯输入 $|\psi\rangle\in V\otimes\mathbb C^h$ 可唯一写成
+$$
+|\psi\rangle=\sum_{j=1}^n e_j\otimes w_j,
+\qquad
+\sum_{j=1}^n w_j=0,
+\qquad
+\sum_{j=1}^n\|w_j\|^2=1.
+\tag{240.33}
+$$
+反向，满足这些约束的向量族也给合法归一化纯输入。其参考边缘记为
+$$
+\sigma=\sum_{j=1}^n w_jw_j^{\dagger}.
+\tag{240.34}
+$$
+候选第 $j\le n$ 个参考块为 $w_jw_j^{\dagger}$，目标各原标签的参考块为 $\sigma/N$。非活跃标签的候选为零，因而其差块没有正谱。全部差块总迹为零，故实际半迹距离为
+$$
+\varepsilon(\psi)=
+\sum_{j=1}^n\operatorname{Tr}
+\left(w_jw_j^{\dagger}-\frac\sigma N\right)_+.
+\tag{240.35}
+$$
+每个括号内的 Hermitian 矩阵至多有一个正本征值：在 $w_j^\perp$ 上其二次型非正。因此它的正谱投影可取秩至多一。对任意独立的正交投影 $F_j$，$\operatorname{rank}F_j\le1$，允许 $F_j=0$，正谱变分公式给
+$$
+\begin{aligned}
+1-\varepsilon(\psi)
+=\min_{(F_j)}\bigg[
+\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\frac1N\sum_{i,j=1}^n\|F_iw_j\|^2
+\bigg].
+\end{aligned}
+\tag{240.36}
+$$
+这里 $\operatorname{Tr}(F_i\sigma)=\sum_j\|F_iw_j\|^2$，且正交投影的勾股分解给第一项。
+
+因此，候选的中间维数公式
+$$
+D_h(\mathcal S^{\triangle})\stackrel{?}{=}
+1-\frac{h+1}{Nh}
+\tag{240.37}
+$$
+尚缺的上界，准确等价于对全部满足 $\sum_jw_j=0$ 的 $h$ 维向量族以及全部上述投影族证明
+$$
+\boxed{
+N\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\sum_{i,j=1}^n\|F_iw_j\|^2
+\ge
+\left(1+\frac1h\right)\sum_{j=1}^n\|w_j\|^2.
+}
+\tag{240.38}
+$$
+从归一化族到一般族只使用齐次性，零族两边均为零。（240.36）及其等价归约已证明；（240.38）在中间维数的一般有效性未在本节证明。对易判据只排除了小参考维数取得完整值，不能直接升级为（240.38）所需的定量上界。本节在（240.32）处保留准确的未解边界。
+

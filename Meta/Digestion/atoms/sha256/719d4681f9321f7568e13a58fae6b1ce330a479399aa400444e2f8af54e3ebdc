@@ -1,0 +1,51 @@
+### 198.4 临界区间的最优器远离零源系数
+
+最优解存在于紧集 $\mathcal K$。
+当 $\epsilon\downarrow0$、$h\in I$ 时，来源和入口数据一致趋向纯来源基点；
+完整误差对固定维数通道连续，因此该收敛对 $\Gamma\in\mathcal K$ 一致。
+恒等保持构造的误差趋于 $3/4$。由（198.6），任何最优器序列的 Choi 聚点都在 $\mathcal F$。
+所以充分小 $\epsilon$ 时，全部这些最优器都位于引理198.2的固定邻域中。
+
+第191节在 $I$ 上给
+
+$$
+F_\epsilon(h)=\frac34+\epsilon\Phi_h+O(\epsilon^2)
+$$
+
+的一致值展开。取任意
+$\epsilon_n\downarrow0$、$h_n\in I$ 及相应最优器
+$\Gamma_n$，再取 $h_n\to h$、$\Gamma_n\to\Gamma$ 的子列。
+在（198.4）中保留（198.6）的非负基点缺陷，得到
+
+$$
+\Gamma\in\mathcal F,\qquad
+\mathcal N(\Gamma)+h\mathcal P(\Gamma)\le\Phi_h.
+\tag{198.10}
+$$
+
+这里只使用基点缺陷非负，没有假定它为 $o(\epsilon)$，
+也没有要求最优器以预设速度接近 $\mathcal F$。
+
+考虑紧集
+
+$$
+\mathcal A=
+\{(h,\Gamma)\in I\times\mathcal F:
+\mathcal N(\Gamma)+h\mathcal P(\Gamma)\le\Phi_h\}.
+$$
+
+最优器的聚点保证该集合非空。
+由（198.8），$\mathcal P\ge0$。
+若在 $\mathcal A$ 上取零，则（198.9）给
+$\Phi_\infty\le\Phi_h\le\Phi_b<\Phi_\infty$，矛盾。
+紧性因此给
+
+$$
+p_*:=\min_{(h,\Gamma)\in\mathcal A}\mathcal P(\Gamma)>0.
+\tag{198.11}
+$$
+
+再次用聚点反证，全部充分小噪声下、$h\in I$ 处的最优器都满足
+$\mathcal P(\Gamma)\ge p_*/2$。此处只控制源系数；
+不要求恢复器本身具有唯一极限。
+

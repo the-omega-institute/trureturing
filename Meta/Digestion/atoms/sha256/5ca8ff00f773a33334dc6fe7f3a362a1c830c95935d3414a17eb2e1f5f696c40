@@ -1,0 +1,40 @@
+**推论 22.4（校准集合的箱维数与容量指数）。** 对固定非空 $`\Theta\subseteq\mathbb T`$，以分离数定义下、上箱维数
+
+$$
+\underline s=\liminf_{\delta\downarrow0}
+\frac{\log P(\Theta,\delta)}{\log(1/\delta)},
+\qquad
+\overline s=\limsup_{\delta\downarrow0}
+\frac{\log P(\Theta,\delta)}{\log(1/\delta)}.
+\tag{22.20}
+$$
+
+则对每个固定 $`0<\epsilon<1`$，
+
+$$
+\boxed{
+\liminf_{n\to\infty}\frac{\log k_n^{(\epsilon)}(\Theta)}{\log n}
+=\frac{\underline s}{2},
+\qquad
+\limsup_{n\to\infty}\frac{\log k_n^{(\epsilon)}(\Theta)}{\log n}
+=\frac{\overline s}{2}.
+}
+\tag{22.21}
+$$
+
+证明。定理22.2给
+ $`\log k_n^{(\epsilon)}(\Theta)=\log P(\Theta,n^{-1/2})+O_\epsilon(1)`$。
+令 $`\delta_n=n^{-1/2}`$，则 $`\log(1/\delta_n)=\tfrac12\log n`$。若 $`\delta_{n+1}<\delta\le\delta_n`$，分离数的单调性给
+
+$$
+P(\Theta,\delta_n)\le P(\Theta,\delta)
+\le P(\Theta,\delta_{n+1}).
+\tag{22.22}
+$$
+
+两端的对数尺度之比趋于一；夹逼表明沿 $`\delta_n`$ 取极限下、上限与沿全部 $`\delta\downarrow0`$ 相同。再除以 $`\log n`$ 即得（22.21）。证明完毕。
+
+箱维数只记录幂次指数，并不替代（22.4）的完整尺度函数。例如有限集合与 $`\Theta_{\exp}`$ 均有零箱维数，但前者的终端容量有界，后者按对数发散。式（22.4）保留了这种区别；其上界仍是一族单终端编码，没有据此得到同一接收器的在线更新或同阶在线容量。
+
+[^phase_metric_population]: Yuxiang Yang, Ge Bai, Giulio Chiribella and Masahito Hayashi, *Compression for quantum population coding*, [arXiv:1701.03372v8, §II Theorem 1 and §VI equations (93)–(106)](https://arxiv.org/html/1701.03372v8), [doi:10.1109/TIT.2017.2788407](https://doi.org/10.1109/TIT.2017.2788407). 该文研究独立同分布的规则参数族，以可区分网证明渐近总记忆的参数维数主阶；其有限维量子态族部分具有满秩、非简并谱以及参数连续变化或固定等明确条件。本文不把该结论直接套于任意稀疏相位集合。式（22.4）使用本卷来源的有限长度重叠估计与保参考编码，处理固定误差、关联档案及任意非空候选集；上述文献作为参数网与压缩关系的先例。
+

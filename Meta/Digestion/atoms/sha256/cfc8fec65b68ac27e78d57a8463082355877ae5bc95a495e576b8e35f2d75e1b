@@ -1,0 +1,43 @@
+## 29. 部分接续的总化：合法边与失败结果必须分开
+
+第26.1节的
+
+$$
+\mathcal R\subseteq X\times A\times L\times X
+$$
+
+只记录成功的合法边。若某个 $(x,a)$ 没有后继，失败标签并不属于这条四元组关系；因此“把失败原因放入 $L$”本身还不足以使 $\mathcal R$ 成为总函数。准确的单步结果应总化为
+
+$$
+\operatorname{Step}_{\mathcal R}:X\times A
+\longrightarrow
+(L_{\rm ok}\times X)\;\sqcup\;L_{\rm fail},
+\tag{29.1}
+$$
+
+其中左侧表示合法读数、记录和后继，右侧表示失败类型。若失败原因也要和成功标签放在同一个结果载体，需显式取不相交和
+
+$$
+L:=L_{\rm ok}\sqcup L_{\rm fail}
+$$
+
+并保留结果的成功/失败构造子；不能把一个失败标签伪装成缺失的后继。
+
+在确定性部分系统中，$\operatorname{Step}_{\mathcal R}$ 由 $\mathcal R$ 与失败判定唯一确定；在非确定性系统中，应改成有限集合、概率分布或带权限的结果关系。完整词响应递归读取 (29.1) 的构造子，所以未来核要求相同的成功/失败形状、标签和后继 profile。第26.1节中“首操作后标签相同或后继再次处于未来核”的说法，只有在这种确定性总化或已声明的结果集合语义下成立。
+
+仓内 `D5/S0/Automata/TypedPartialDFAO.lean` 与 `TypedPartialDFAOOverBase.lean` 已把部分转移、输出、类型保持和非法接续分开；`runFrom_append`、`evalOutput` 与 `runFrom_type` 支撑合法词的拼接和失败边界。对多个合法操作，`ControlledRelationRecursion.controlledDepthRelation` 给出深度零的当前读出核，以及深度递归中的 successor 前像交；`ControlledFiniteStability.controlled_finite_stability` 在有限载体和相应满射条件下把相邻深度稳定提升为永久稳定。
+
+因此，部分关系的统一边界必须同时记录：
+
+$$
+\boxed{
+\text{当前合法域}
++\text{成功标签与后继}
++\text{失败标签}
++\text{操作类型与权限}.
+}
+\tag{29.2}
+$$
+
+只保存成功路径的后继状态，会把“此操作不可执行”和“此操作尚未被测试”合并；只保存失败原因，又会丢失成功读数与后继。两者都必须通过同一个实际来源和同一个协议接口进入 profile。Claim status 为 open；本节没有新增 Lean 声明。
+

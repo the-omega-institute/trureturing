@@ -1,0 +1,29 @@
+**引理66.1（退化纤维的保范数方向）。** 设 $Q$ 为非零有限维复 Hilbert 空间，$F$ 为二维复 Hilbert 空间，$\beta\in F$ 为单位向量。令
+
+$$
+J=(F\otimes\beta)+(\beta\otimes F),\qquad
+M:Q\otimes J\longrightarrow Q\otimes F,
+\qquad MM^*=I_{Q\otimes F}.
+\tag{66.2}
+$$
+
+设非零 $C,D\in F$ 所在的射线互异，且均不同于 $\mathbb C\beta$。假定同一个 $M$ 满足
+
+$$
+\begin{aligned}
+M(Q\otimes\beta\otimes C)&\subset Q\otimes C,\\
+M(Q\otimes\beta\otimes D)&\subset Q\otimes D,\\
+M(Q\otimes D\otimes\beta)&\subset Q\otimes\beta,
+\end{aligned}
+\tag{66.3}
+$$
+
+且将 $M$ 限制到 $Q\otimes C\otimes\beta$ 后，再投影到 $Q\otimes\beta^\perp$，所得算子的秩严格小于 $\dim Q$。那么 $Q\otimes\beta\otimes C$ 或 $Q\otimes\beta\otimes D$ 中存在非零向量 $x$，使
+
+$$
+\|Mx\|=\|x\|.
+\tag{66.4}
+$$
+
+这里 $Q\otimes\beta\otimes C$ 表示 $Q\otimes\mathbb C(\beta\otimes C)$，其余同理。条件使用完整子空间上的同一个线性映射，不是逐输入选择不同的实现。
+

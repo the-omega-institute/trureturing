@@ -1,0 +1,76 @@
+**先排除正定对称的 Choi 秩二。** 定理285.1的谱条件说明，这时必有
+
+$$
+P=tI+(1-t)uu^{\mathsf T},
+\qquad 0<t<1,\quad \|u\|_2=1.
+\tag{288.8}
+$$
+
+确实，排序正奇异值的最小 Pauli 概率为零；再有一个为零便强迫谱为 $1,t,t$。秩一已经由内部预算排除。
+
+先把优化限制在式（288.8）的物理通道族，局部变量为 $O,u,t,E$；每个充分靠近的 $u,t$ 仍给出 CPTP 通道。在这个族上，
+
+$$
+g(u,t)=R^{-2}-\frac{A_0}{t^2}
++(t^{-2}-1)(u\cdot b)^2.
+\tag{288.9}
+$$
+
+所选顶点最大化逆像范数，因而最小化 $|u\cdot b|$。它不能与 $u$ 平行：若平行，$|u\cdot b|=\sqrt{A_0}$；翻转任意一个坐标的符号后，由 $0<b_i^2<A_0$ 得到严格更小的绝对内积。故
+
+$$
+\partial_t g=\frac{2\bigl(A_0-(u\cdot b)^2\bigr)}{t^3}>0.
+\tag{288.10}
+$$
+
+减小 $t$、同时充分增大 $E$，就使预算及全部活跃误差约束的一阶变化严格为负。这验证了此处的约束资格。
+
+由式（288.7），存在 $d\ge0$ 使 $Du=du$。加权误差为
+
+$$
+\sum_iw_if_i=(1-t)^2
+\bigl(\operatorname{Tr}D-u^{\mathsf T}Du\bigr)=E>0.
+\tag{288.11}
+$$
+
+其关于球面变量 $u$ 的切导数为零，关于 $t$ 的导数严格为负。结合式（288.10），$t$ 的驻点条件迫使预算乘子 $\lambda>0$。再对 $u$ 求切导数，得到
+
+$$
+(u\cdot b)\bigl(b-(u\cdot b)u\bigr)=0.
+\tag{288.12}
+$$
+
+已经排除了 $u$ 与 $b$ 平行，所以 $u\cdot b=0$。
+
+令 $n=b/\sqrt{A_0}$，并取 $z=u\times n$，则 $u,n,z$ 是正交单位组，式（288.3）给出 $R=t/\sqrt{A_0}$。对 $0<\varepsilon<(1-t)/2$，考虑
+
+$$
+P_\varepsilon
+=(1-\varepsilon)uu^{\mathsf T}
++t\,nn^{\mathsf T}
++(t+\varepsilon)zz^{\mathsf T}.
+\tag{288.13}
+$$
+
+它正定，排序谱为 $1-\varepsilon,t+\varepsilon,t$，满足完全正边界等式；其余 Pauli 概率非负，故确为 CPTP。沿固定方向 $n$，每个加权残差仍为 $a_i|n^{\mathsf T}P_\varepsilon e_i|=t/\sqrt{A_0}=R$。
+
+每个轴的平方迹距离误差变化为
+
+$$
+\frac{a_i^2}{4}\left[
+-2(1-t)\varepsilon z_i^2
++\varepsilon^2(u_i^2+z_i^2)
+\right].
+\tag{288.14}
+$$
+
+若 $z_i=0$，原误差平方恰为 $(1-t)^2/(4A_0)$。而至少一个 $z_j\ne0$，其原误差平方为
+
+$$
+\frac{(1-t)^2}{4}
+\left(\frac1{A_0}+a_j^2z_j^2\right)
+>\frac{(1-t)^2}{4A_0}.
+$$
+
+所以每个原最大误差轴都有 $z_i\ne0$，式（288.14）使这些误差在充分小的正 $\varepsilon$ 下严格下降；其余有限个轴由严格余量仍低于原最大值。得到更好的实际通道，矛盾。因此每个正定对称最优恢复的 Choi 秩必为三。
+

@@ -1,0 +1,24 @@
+**定义 30.1（幂增长预算曲线）。** 沿用定义 27.1，固定 $`A\gt0`$。
+对 $`\gamma\in[0,A]`$ 取输出大小
+$`m_{M,\gamma}=\lfloor q\lambda^\gamma\rfloor`$，维数充分大时它小于
+$`M`$。所有预算使用同一数据、方向判决和同分优先级，按补偿得分选取
+前 $`m_{M,\gamma}`$ 个位置，记为 $`T_{M,\gamma}`$。
+令 $`H_{M,\gamma}^{\xi}`$ 为 (28.2) 在此输出大小下的精确极小极大
+遗漏风险，并定义
+
+```math
+\begin{aligned}
+D_{M,\gamma}
+ &=\frac{|S\setminus T_{M,0}|-|S\setminus T_{M,\gamma}|}{q},\\[0pt]
+w_M&=\frac{\log\lambda}{\sqrt\lambda},\qquad
+ d_*=\frac{\varphi(z_*)}{\sqrt v},\\[0pt]
+\mathcal V_M(\gamma)
+ &=\sqrt{\frac q{w_M}}\left[
+ D_{M,\gamma}-(H_{M,0}^{\xi}-H_{M,\gamma}^{\xi})\right].
+\end{aligned}
+```
+
+式 (30.1)。
+
+此过程为 $`[0,A]`$ 上的右连续阶梯函数，在零处恒为零。
+

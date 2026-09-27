@@ -1,0 +1,75 @@
+**引理66.2（中间分叉的共同接口）。** 在（66.1）及（66.10）任一类反设下，存在 $P,Q,T\subset K$，使
+
+$$
+\begin{gathered}
+P\perp Q,\qquad\dim P=4,\quad\dim Q=2,\quad\dim T=2,\\
+G_2=G_4=G_6=T\subset P,\qquad
+Q_3=Q_4=Q_5=Q_6=Q,\\
+U:=V_1|_P:P\longrightarrow Q\otimes F\text{ 为满等距},\\
+UT=Q\otimes B,\qquad UG_3=Q\otimes C,\qquad UG_5=Q\otimes D,\\
+S_0:=H_1+\cdots+H_5=H_3+H_4+H_5=P\oplus Q,\\
+V_0S_0=(P\otimes B)+(T\otimes F).
+\end{gathered}
+\tag{66.11}
+$$
+
+这里没有断言 $v\in Q$；实际第二轮仍可能有 $v$ 在 $P$ 内的分量。
+
+**证明。** 外置首轮使 $V_0k=p\otimes\eta_1\notin K\otimes F$，而 $V_0S_0\subset K\otimes F$，所以 $\dim S_0\le6$。
+
+先处理第一类。固定 $V_1$ 在 $G_3,G_5$ 上的后继环境为不同的 $C,D$，故 $G_3\cap G_5=0$。置 $P=G_3+G_5$，则 $\dim P=4$。零位尾像包含 $P\otimes B$ 和 $G_2\otimes A$；两个环境方向不同，恰占六维，所以
+
+$$
+V_0S_0=(P\otimes B)\dotplus(G_2\otimes A),\qquad\dim S_0=6.
+\tag{66.12}
+$$
+
+$C,D$ 不同且均非 $B$，其中至少一个不是 $A$。将相应的 $G_j\otimes\eta_j$ 逐 $A,B$ 坐标代入（66.12），得到 $G_j=G_2\subset P$。置 $T=G_2$。此后（66.12）在每条非 $B$ 射线上的接收纤维都恰为 $T$：沿 $A$ 直接为 $T$，沿其他射线则为 $P\cap T=T$。因此 $G_4=G_6=T$，并且 $V_0S_0=(P\otimes B)+(T\otimes F)$。
+
+固定 $V_1$ 给 $V_1T=Q_3\otimes B=Q_5\otimes B$，故 $Q_3=Q_5=:Q$。又
+
+$$
+V_1P=(Q_4\otimes C)\dotplus(Q_6\otimes D)
+$$
+
+包含 $Q\otimes B$。$B$ 在 $C,D$ 基中的两个坐标均非零，逐坐标比较得 $Q\subset Q_4\cap Q_6$。三者均二维，所以 $Q_4=Q_6=Q$，继而 $V_1P=Q\otimes F$。这给出第一类的 $P,T,Q$ 及 $U$。
+
+再处理第二类。令 $P=G_2+G_3+G_5$。这三个输入在同一个 $V_1$ 下分别具有互异后继环境 $B,C,D$，因而两两交零，$\dim P\ge4$。又零位尾像包含 $P\otimes B$ 和 $G_4\otimes C$；两个环境方向不同，且总维数至多六，所以 $\dim P=4$，并有
+
+$$
+V_0S_0=(P\otimes B)\dotplus(G_4\otimes C),\qquad\dim S_0=6.
+\tag{66.13}
+$$
+
+第三条射线 $D$ 上的实际二维块 $G_6\otimes D$ 逐坐标代入（66.13），给 $G_6=G_4=:T\subset P$，并得到同样的 $V_0S_0=(P\otimes B)+(T\otimes F)$。
+
+现在
+
+$$
+V_1P=(Q_3\otimes B)+(Q_4\otimes C)+(Q_6\otimes D).
+$$
+
+三个互异二维环境乘积块之和的维数为 $6-\dim(Q_3\cap Q_4\cap Q_6)$。左侧四维，故三个二维接收空间全部相等，记为 $Q$，并有 $V_1P=Q\otimes F$。由 $T\subset P$、$V_1T=Q_5\otimes B$，得到 $Q_5=Q$。再由
+
+$$
+V_1G_2=Q\otimes B=V_1T
+$$
+
+及单射性得到 $G_2=T$。第二类也得到与第一类相同的 $P,T,Q,U$。
+
+两类中，$P\otimes B\subset V_0K$ 与 $V_1P=Q\otimes F$ 跨位正交，所以 $P\perp Q$。固定一位映射又分别给 $UT=Q\otimes B$、$UG_3=Q\otimes C$、$UG_5=Q\otimes D$。特别地，$G_5\cap T=0$。
+
+实际 $H_3,H_4,H_5$ 的零位像分别为
+
+$$
+T\otimes C,\qquad G_5\otimes B,\qquad T\otimes D.
+$$
+
+第一、第三项之和为四维 $T\otimes F$；中间项与其交零，因为 $G_5\cap T=0$。因此 $H_3+H_4+H_5$ 六维。另一方面，实际 $H_j\subset G_j\oplus Q_j\subset P\oplus Q$，$j=3,4,5$，右侧恰六维。于是
+
+$$
+S_0=H_3+H_4+H_5=P\oplus Q.
+$$
+
+全部共同接口成立，证明完毕。
+
