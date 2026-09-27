@@ -297,8 +297,28 @@ def resolved_sdk_version(root):
     return result.stdout.strip()
 
 
+def resolved_sdk_root(root, resolved):
+    """Locate the installation containing the SDK selected by the dotnet host."""
+    output = subprocess.run(["dotnet", "--list-sdks"], cwd=root, text=True, capture_output=True)
+    if output.returncode:
+        raise ValueError("dotnet --list-sdks failed: " + output.stderr.strip())
+    candidates = set()
+    for line in output.stdout.splitlines():
+        match = re.fullmatch(r"\s*([^\s]+)\s+\[(.*)\]\s*", line)
+        if match is None or match.group(1) != resolved:
+            continue
+        sdk_directory = pathlib.Path(match.group(2)).resolve()
+        if sdk_directory.name == "sdk":
+            candidates.add(sdk_directory.parent)
+    if len(candidates) == 1:
+        return next(iter(candidates))
+    if not candidates:
+        raise ValueError(f"dotnet --list-sdks did not report the resolved SDK: {resolved}")
+    raise ValueError(f"dotnet --list-sdks reported multiple roots for the resolved SDK: {resolved}")
+
+
 def seed_registration(root, sdk_root=None, resolved=None):
-    """Read declared paths only. DOTNET_ROOT is a supplied location, not a probe."""
+    """Read declared paths only, discovering DOTNET_ROOT when the caller omitted it."""
     def unique_fields(pairs):
         fields = {}
         for name, value in pairs:
@@ -323,9 +343,7 @@ def seed_registration(root, sdk_root=None, resolved=None):
         registration = dict(registration, sdk_version=resolved)
         if not registration["sdk_files"] or registration["target_framework"] != "net10.0":
             raise ValueError("missing SDK materials or unsupported registered framework")
-        location = sdk_root or os.environ.get("DOTNET_ROOT")
-        if not location:
-            raise ValueError("supply DOTNET_ROOT for the pinned SDK")
+        location = sdk_root or os.environ.get("DOTNET_ROOT") or resolved_sdk_root(root, resolved)
         sdk = pathlib.Path(location).resolve() / "sdk" / resolved
 
         def expand(base, patterns):
@@ -489,7 +507,7 @@ def prepare_task(directory, sdk, registration):
     check = ET.SubElement(project, "Target", Name="JudgeSeedRegisteredSdk", BeforeTargets="PrepareForBuild")
     ET.SubElement(check, "Error", Code="JUDGE_SEED_REGISTRATION",
                   Condition=f"'$(NETCoreSdkVersion)' != '{registration['sdk_version']}'",
-                  Text="Build SDK differs from the registered pinned SDK.")
+                  Text="Build SDK differs from the registered SDK.")
     project.find("ItemGroup/Compile").set("Include", str(source))
     write_if_changed(directory / "JudgeSeedTask.csproj", ET.tostring(project))
     write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {framework: {}}}).encode())
