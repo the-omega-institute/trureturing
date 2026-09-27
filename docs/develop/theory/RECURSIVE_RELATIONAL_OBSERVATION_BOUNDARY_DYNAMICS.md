@@ -15983,3 +15983,181 @@ $$
 常数 $3000$ 和幂次 $1/3$ 都未被证明最优。该界在给出的整个范围内有效，但其右侧数值可以很宽；它的内容是通过真实正修复与大尺度尾界直接取得显式、统一的收敛保证，不声称已经得到紧的有限误差估计。第 77 节关于近最坏参数的稳定指数 $\beta$ 仍未显式计算。
 
 ## 追加锚（本行以下为增补区）
+
+## 79. 有限切面容量的布局障碍与重叠拼接的最小接口
+
+本节把[主卷第120节](RECURSIVE_RELATIONAL_OBSERVATION.md#120-可组合关系的最小行为表示与保真辅助构造)的完整实验行为具体化到有限坐标任务。重点是两个实现边界：切面容量一般不具有次模分割所需的结构；不交子树上的最小任务接口，在要求检查重叠坐标一致性时必须细化。以下均为普通数学推导，不是新增 Lean 核验或全球原创性声明。
+
+### 79.1 有限响应与固定树的计费模型
+
+**定义 79.1（完整切面响应）。** 设 $I$ 有限，每个 $X_i$ 非空有限，$X_A=\prod_{i\in A}X_i$，$X_\varnothing$ 为单点。固定总任务 $F:X_I\to O$。对 $A\subseteq I$，置
+
+$$
+R_A(a)(b)=F(a\sqcup b),\qquad b\in X_{I\setminus A},\qquad
+S_A=R_A[X_A],\qquad \eta_A(a)=R_A(a),\qquad \kappa_A=|S_A|.
+$$
+
+这里直接取实际响应像，与按相同响应取商规范等价。所有外部赋值都进入测试，包括任务报告失败的赋值；不能把量词改为“两侧共同合法的补全”而仍然默认获得等价关系。若原任务只在部分配置上定义，则先声明哪些非法、失败及原因标签必须保留，再将这些标签纳入总任务。
+
+例如，三个内部值 $p,q,r$，两个外部值 $0,1$，合法对仅为 $(p,0),(q,1),(r,0)$，对应读数分别为 $0,0,1$。只比较共同合法补全，会得到 $p$ 与 $q$ 相容、$q$ 与 $r$ 相容，却使 $p$ 与 $r$ 冲突；相容性不传递。这不反驳完整总响应核的等价性。
+
+**命题 79.2（充分接口与不交拼接，既有模式的有限应用）。** 若 $m:X_A\to M$ 允许对全部 $a,b$ 解码 $F(a,b)=d(m(a),b)$，则有唯一满射 $m[X_A]\to S_A$ 将 $m(a)$ 送到 $R_A(a)$，故 $|m[X_A]|\ge\kappa_A$。对不交 $A,C$，有满射
+
+$$
+\mu_{A,C}:S_A\times S_C\longrightarrow S_{A\cup C},\qquad
+\mu_{A,C}(R_A(a),R_C(c))=R_{A\cup C}(a\sqcup c).
+$$
+
+这些拼接在坐标规范识别下满足结合律、交换律及空坐标单位律，且 $\kappa_{A\cup C}\le\kappa_A\kappa_C$。
+
+**证明。** 同一 $m$ 标签有相同解码响应，故到 $S_A$ 的映射良定义；像定义给满射与唯一性。若 $R_A(a)=R_A(a')$ 且 $R_C(c)=R_C(c')$，对任意剩余赋值 $b$，依次替换得 $F(a,c,b)=F(a',c,b)=F(a',c',b)$，故拼接良定义。每个联合赋值都可限制到两部分，故满射；坐标合并的恒等式给三条代数律。$\square$
+
+在固定二叉树上，叶坐标各出现一次，内部节点只读两个子消息，无跨子树通道。把根输出也计作根消息。节点 $v$ 的消息仅由 $X_{A_v}$ 决定；固定外部输入后，根部给出命题79.2所需解码器。因此任何准确实现都至少有 $\kappa_{A_v}$ 个可达消息。叶发送 $R_{\{i\}}(x_i)$，内部使用 $\mu$，根从 $S_I\cong\operatorname{im}F$ 读出结果，就在全部节点同时达到下界。空坐标任务另由其唯一输出直接实现。
+
+上述结论按可达标签数计费。固定顺序、外部提供当前位置且每步转移为原子操作时，峰值状态编码位数是 $\max_k\lceil\log_2\kappa_{A_k}\rceil$；程序、位置、输入寄存器、转移表及数值工作空间必须另计。状态最小不等于整张加权动态规划表的位数最小。剩余函数与固定变量顺序决策图的关系属于经典背景。[^boundary79-bryant]
+
+### 79.2 容量剖面一般不是对称次模函数
+
+记 $f(A)=\log_2\kappa_A$。以下计数均直接针对完整响应，未将矩阵秩或 Shannon 熵替代为状态数。
+
+**定理 79.3（不对称与不单调）。** 对每个 $m\ge2$，存在布尔输出有限任务，使某切面两侧容量分别为 $2^m$ 与 $m$；同一任务也存在 $A\subset I$ 而 $\kappa_A>\kappa_I$。
+
+**证明。** 取两个坐标 $u\in\{0,1\}^m$、$j\in\{1,\ldots,m\}$，令 $F(u,j)=u_j$。不同向量 $u$ 在某个索引处不同，故 $\kappa_{\{u\}}=2^m$。不同索引 $j,k$ 由满足 $u_j\ne u_k$ 的向量区分，故 $\kappa_{\{j\}}=m$。完整输入只需保留输出位，$\kappa_I=2<2^m$。$\square$
+
+**定理 79.4（任意大的次模缺口）。** 对每个 $m\ge2$，存在布尔输出任务及相交切面 $A,C$，使
+
+$$
+f(A\cap C)+f(A\cup C)-f(A)-f(C)=(m-1)^2>0.
+\tag{79.1}
+$$
+
+**证明。** 取三个坐标 $v\in\{0,1\}^{m\times m}$、$u,w\in\{1,\ldots,m\}$，定义
+
+$$
+F(v,u,w)=v_{u,w},\qquad A=\{v,u\},\qquad C=\{v,w\}.
+$$
+
+仅给 $v$ 时，全部 $(u,w)$ 查询恢复矩阵的每个元素，所以 $\kappa_{\{v\}}=2^{m^2}$。给定 $(v,u)$ 时，未来响应恰为所选的一行；所有 $m$ 位行向量均可实现，故 $\kappa_A=2^m$。对列同理，$\kappa_C=2^m$。给定全部输入，响应只有输出 $0,1$，故 $\kappa_I=2$。代入得到 $m^2+1-2m=(m-1)^2$。$\square$
+
+这个反例不要求把大向量作为不可拆输入：也可将 $v$ 的 $m^2$ 个矩阵元各设为一个二进制坐标，再令 $A,C$ 都包含这些坐标，计数不变。取 $m=2$ 时，行列索引本身也各为一个二进制坐标，故已有六个二进制坐标的反例。
+
+对两个二进制坐标的奇偶任务，还有 $f(\{1\})=f(\{2\})=f(I)=1$、$f(\varnothing)=0$，故超模不等式也失败。命题79.2给的是不交集合的次可加界；它没有提供相交集合的次模性。应用要求对称性、单调性或次模性的布局算法，必须另证相应条件。这里没有给任何特定算法的复杂性下界，也没有否定其他结构条件下的优化方法。
+
+### 79.3 不依赖次模性的精确布局递推
+
+**定理 79.5（子集与树分割的瓶颈递推）。** 假设全部 $\kappa_A$ 已给出。定义
+
+$$
+L(\varnothing)=1,\qquad
+L(A)=\max\left\{\kappa_A,\min_{i\in A}L(A\setminus\{i\})\right\}
+\quad(A\ne\varnothing).
+\tag{79.2}
+$$
+
+则 $L(I)$ 是全部固定读取顺序中的最小峰值状态数。对非空 $A$，定义
+
+$$
+T(\{i\})=\kappa_{\{i\}},\qquad
+T(A)=\max\left\{\kappa_A,
+\min_{\varnothing\ne B\subsetneq A}
+\max\{T(B),T(A\setminus B)\}\right\}\quad(|A|\ge2).
+\tag{79.3}
+$$
+
+则 $T(I)$ 是全部二叉计算树中的最小节点峰值状态数，根输出计入。$T(A)$ 使用的始终是原任务 $F$ 的切面容量，不是重新选择一个只在 $A$ 上定义的任务。
+
+**证明。** 任何 $A$ 的排列都有最后一个坐标 $i$，其峰值等于较短排列的峰值与 $\kappa_A$ 的最大值；反之，给较短排列接上 $i$ 就达到该最大值。有限取最小即得式(79.2)。每棵 $A$ 上的二叉树在根处分为非空 $B$ 与 $A\setminus B$；全树峰值为两个子树峰值和 $\kappa_A$ 的最大值。对子树归纳优化，得到式(79.3)。命题79.2保证对应最小接口能同时实现。$\square$
+
+若 $n=|I|\ge1$，已有容量表后的式(79.2)涉及 $O(n2^n)$ 次有限数比较；式(79.3)涉及 $O(3^n)$ 次比较，因全部候选 $(A,B)$ 可由每坐标属于 $B,A\setminus B,I\setminus A$ 三种位置计数。这些是给定容量表后的操作数，不含构造该表、整数位长、回溯存储或接口转移表成本。
+
+抽象有限集合和一个任意值域中的函数名，不自动给出统一有效程序。若输入提供各 $X_i$ 的枚举、$F$ 的完整有限表及可判定相等的输出标签，则可枚举每个切面的响应行，按逐项相等分组，构造所有 $S_A,\kappa_A,\mu_{A,C}$，再运行上述递推。有限存在、有效呈示下的可计算性和高效可计算性是三个不同结论。[^boundary79-presentation]
+
+### 79.4 重叠端口的最小补充信息
+
+**定义 79.6（必须检查的一致性端口）。** 固定 $H\subseteq A$。除全部 $F$ 响应外，要求接口能对任意 $z\in X_H$ 判断 $a|_H=z$。定义实际像
+
+$$
+\zeta_{A;H}(a)=(a|_H,R_A(a)),\qquad
+P_{A;H}=\zeta_{A;H}[X_A],\qquad
+\tau_{A;H}=|P_{A;H}|.
+\tag{79.4}
+$$
+
+**定理 79.7（端口接口的精确最小性）。** 对同时支持全部 $F$ 补全与全部指定端口相等查询的编码 $m:X_A\to M$，存在唯一满射 $m[X_A]\to P_{A;H}$ 将 $m(a)$ 送到 $\zeta_{A;H}(a)$。此外
+
+$$
+\tau_{A;H}
+=\sum_{z\in X_H}
+\left|\{R_A(a):a\in X_A,\ a|_H=z\}\right|,
+\qquad
+\max\{|X_H|,\kappa_A\}\le\tau_{A;H}\le |X_H|\kappa_A.
+\tag{79.5}
+$$
+
+**证明。** $m(a)=m(a')$ 先由任务解码给 $R_A(a)=R_A(a')$。在端口查询中取 $z=a|_H$，一侧回答真，另一侧也必须回答真，故 $a'|_H=a|_H$。因此 $\zeta$ 在每个 $m$ 纤维上恒定，实际像给唯一满射。反过来，$\zeta$ 的两个分量准确支持两组查询，所以达到下界。按第一分量 $z$ 分割实际像得到求和公式。非空坐标积使每个 $z$ 都可延拓，投影到 $X_H$ 满射；投影到 $S_A$ 也满射。两项下界和乘积上界随之成立。$\square$
+
+若 $F$ 恒定，则 $\kappa_A=1$，而 $\tau_{A;H}=|X_H|$。两个端口值给相同任务响应，却对“是否等于第一个端口值”给不同回答，直接证明仅保留 $S_A$ 不够。乘积上界也可达到：取 $I=A=H\sqcup U$，任务仅报告 $U$ 上的赋值，则 $\kappa_A=|X_U|$，$\tau_{A;H}=|X_H||X_U|$。
+
+这里要求精确检查全部端口相等查询。若协议保证共享赋值已由共同来源同步，且无需接口再次检查一致性，这份附加任务可以取消；不能把本定理的额外下界强加给那个较弱任务。
+
+**定理 79.8（重叠接口的相容拼接）。** 对任意 $A,C\subseteq I$，令 $H=A\cap C$。只配对端口分量相等的类型，得到纤维积
+
+$$
+P_{A;H}\times_{X_H}P_{C;H}.
+$$
+
+其上有规范满射
+
+$$
+\nu_{A,C}:P_{A;H}\times_{X_H}P_{C;H}\twoheadrightarrow S_{A\cup C},\qquad
+\nu_{A,C}(\zeta_{A;H}(a),\zeta_{C;H}(c))=R_{A\cup C}(a\sqcup_H c).
+\tag{79.6}
+$$
+
+**证明。** 匹配的端口值使代表元在 $H$ 上一致，因此合并赋值唯一。若 $a,a'$ 具有相同 $\zeta_{A;H}$，则固定 $c|_{C\setminus H}$ 和外部 $b$，由 $R_A(a)=R_A(a')$ 可替换 $a$。端口值没有改变，$a'$ 仍与 $c$ 及同类型的 $c'$ 相容；固定 $a'|_{A\setminus H}$ 和 $b$，再由 $R_C(c)=R_C(c')$ 替换 $c$。于是全部剩余响应不变，式(79.6)良定义。每个联合赋值限制到 $A,C$ 给出一个相容原像，故满射。$\square$
+
+若合并后还要参加另一次重叠拼接，仍需保留届时要检查的端口。式(79.6)只保证当前合并后的任务响应，不能一面丢掉未来需用的共享坐标，一面声称还能验证以后的一致性。任意固定外露端口集的补充方式仍由定义79.6决定；删除端口应当对应任务中相应查询的删除。
+
+### 79.5 带权重叠拼接与权重归属
+
+**定理 79.9（相容类型上的半环聚合）。** 固定交换半环 $R$，任取权函数 $g_A:X_A\to R$、$g_C:X_C\to R$，令
+
+$$
+D_A(t)=\bigoplus_{\zeta_{A;H}(a)=t}g_A(a),\qquad
+D_C(u)=\bigoplus_{\zeta_{C;H}(c)=u}g_C(c).
+$$
+
+对每个 $s\in S_{A\cup C}$，有
+
+$$
+\bigoplus_{\substack{(t,u)\in P_{A;H}\times_{X_H}P_{C;H}\\\nu_{A,C}(t,u)=s}}
+D_A(t)\otimes D_C(u)
+=
+\bigoplus_{\substack{x\in X_{A\cup C}\\R_{A\cup C}(x)=s}}
+g_A(x|_A)\otimes g_C(x|_C).
+\tag{79.7}
+$$
+
+**证明。** 展开两个有限聚合并用分配律。端口类型匹配，保证其纤维中每对代表都在 $H$ 上相等。每对相容赋值与一个唯一联合赋值对应，逆为限制到 $A,C$；定理79.8保证目标类型条件相同。因此展开后的求和指标与右侧逐一对应，权重项也一致。$\square$
+
+若目标权重为 $\bigotimes_{i\in A\cup C}w_i(x_i)$，直接令 $g_A,g_C$ 各自乘入自己范围中的全部 $w_i$，会让每个共享坐标的权重出现两次。正确的无除法实现是预先选择
+
+$$
+J_A\sqcup J_C=A\cup C,\qquad J_A\subseteq A,\quad J_C\subseteq C,
+\qquad
+g_A=\bigotimes_{i\in J_A}w_i,\quad g_C=\bigotimes_{i\in J_C}w_i.
+$$
+
+于是式(79.7)中的乘积恰为目标权重。在一般半环中不能通过“除掉共享权重”修补重复乘入；逆元可能不存在，权重也可能为零。更一般的局部因子也可各指定一个包含其全部变量的唯一归属块。归属方式是聚合权重的账，不替代共享变量的一致性检查。
+
+### 79.6 来源与适用边界
+
+主卷定理120.2、120.4、120.5已经给出完整实验商、逐孔替换和剩余行为最小实现。仓内 `contextualSetoid` 与 `contextual_equivalence_is_greatest`、`controlled_behavior_universal_property`、`dynamic_closure_is_least` 分别承担其各自声明中的上下文核、有限受控实现与动态闭包接口；参见固定快照 [40fb7ec 的 StrictOneHoleContexts](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)、[ControlledBehaviorUniversality](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 与 [DynamicClosureMinimality](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)。本节没有新建它们的 Lean 绑定包装，也不把上述引用当作本节全部具体定理已经运行过形式核验。
+
+剩余函数、固定变量顺序的规范决策表示与变量排序的重要性为 `literature-attested` 背景。式(79.1)的显式矩阵族、式(79.2)—(79.3)的指定目标递推、式(79.4)—(79.7)的任务与端口联合接口及其聚合，在这里给出完整普通证明，定位为 `repo-derived` 综合；不据此主张这些抽象机制或实例在文献中首次出现。
+
+[^boundary79-bryant]: Randal E. Bryant，*Graph-Based Algorithms for Boolean Function Manipulation*，IEEE Transactions on Computers C-35(8), 677–691 (1986)，[来源条目](../../../Library/ConceptDynamics/bryant1986boolean.md)与[作者原文](https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf)。本节只借用固定变量顺序、残余函数合并与规范布尔表示的背景；本节按每个已读位置计费，不把跳过无关变量的图节点总数等同于这里的分层消息数。
+
+[^boundary79-presentation]: [Pauly 的表示空间来源条目](../../../Library/ConceptDynamics/pauly2016represented.md)说明有效内容必须绑定表示。本节对有限显式表给出了直接枚举算法；该算法不需要用无限表示空间定理充当证明。
+
+## 追加锚（本行以下为增补区）
