@@ -65,7 +65,11 @@ package_facet reportBatch (_pkg : Package) : ReportState := do
   Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← Std.Mutex.new ()⟩
 
 private def validateArtifact (pkg : Package) (args : Array String) : JobM UInt32 := do
-  return (← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))).exitCode
+  let result ← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))
+  unless result.stdout.isEmpty do logInfo result.stdout
+  unless result.stderr.isEmpty do logInfo result.stderr
+  if result.exitCode > 1 then error s!"Inspector validation/publication failed: {result.exitCode}"
+  return result.exitCode
 
 /-- Utility input is generated once per invocation by its existing .NET owner.
 This job deliberately has no content trace: each module traces its own record. -/

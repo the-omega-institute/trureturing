@@ -265,6 +265,7 @@ internal static partial class CommonExecutionEvidence
     private static TestExecutionRecord ValidateTests(string root, TestExecutionRecord record, string candidate,
         RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null, ValidationScope? validation = null)
     {
+        ObserveAcceptance("tests");
         if (record.Version != 2 || record.Candidate != candidate || !ValidRound(record.Round)
             || record.Projects is null || record.Materials is null)
             throw new InvalidDataException("engineering evidence candidate identity mismatch or invalid version/round");

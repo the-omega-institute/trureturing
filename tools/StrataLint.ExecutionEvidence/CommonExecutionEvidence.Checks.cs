@@ -38,6 +38,11 @@ internal static partial class CommonExecutionEvidence
         _ => throw new InvalidDataException("invalid common check stage: " + stage),
     };
 
+    // Scribe consumes the accepted report directly; only engine predicates
+    // require the closure capability passed to ExecuteCurrentPredicates.
+    internal static bool RequiresLeanClosure(RegisteredCommonCheck check) =>
+        check.Id.StartsWith("SL-", StringComparison.Ordinal) && check.ReportInputs.Length != 0;
+
     internal static CheckExecution BeginChecks(string root, string stage, CommonStageRecord build, TextWriter output,
         string[]? selectedIds = null, ValidationScope? validation = null)
     {
@@ -88,7 +93,7 @@ internal static partial class CommonExecutionEvidence
         {
             this.root = root; this.stage = stage; this.build = build; snapshot = validation.Snapshot;
             registration = validation.Fresh();
-            successfulReport = new(snapshot);
+            successfulReport = validation.SuccessfulReport;
             this.registrations = registrations; this.inputs = inputs; this.environment = environment;
             Ids = ids;
             FileMapScope = fileMapScope;
@@ -171,7 +176,7 @@ internal static partial class CommonExecutionEvidence
         internal RuleExecutionOutcome ExecuteCurrentPredicates(ValidatedPolicy policy, AcceptedLeanClosure? lean)
         {
             if (stage != "current") throw new InvalidDataException("current selection requires current owner");
-            if (lean is null && registrations.Any(check => Ids.Contains(check.Id) && check.ReportInputs.Length != 0))
+            if (lean is null && registrations.Any(check => Ids.Contains(check.Id) && RequiresLeanClosure(check)))
                 throw new InvalidDataException("selected current checks require Lean report evidence");
             var verified = completed.TryGetValue("scribe-describe", out var describe) ? ReadScribe(root, describe, snapshot)
                 : registrations.Any(check => Ids.Contains(check.Id) && UsesScribe(check))
@@ -224,7 +229,7 @@ internal static partial class CommonExecutionEvidence
                     : throw new InvalidDataException("required common unit did not run: " + id)).ToArray());
             ValidateStartedBuild(root, build, validation is null ? Candidate(root) : Candidate(root, validation.Snapshot), validation);
             ValidateCheckRecord(root, record, validation?.Snapshot ?? snapshot, inputs, build.Candidate, build.Round, Ids,
-                validation ?? registration.Fresh());
+                validation ?? registration.Fresh(successfulReport));
             Write(root, ChecksPath(stage), record);
             return record;
         }
@@ -249,6 +254,7 @@ internal static partial class CommonExecutionEvidence
         IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected, ValidationScope? validation = null,
         IReadOnlyCollection<string>? changedPaths = null)
     {
+        ObserveAcceptance(record.Stage + "-checks");
         validation ??= new ValidationScope(snapshot);
         if (record.Version != 2 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
             throw new InvalidDataException("common check candidate or round mismatch");
