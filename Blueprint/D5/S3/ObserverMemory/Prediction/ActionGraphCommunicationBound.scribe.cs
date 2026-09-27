@@ -8,14 +8,17 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
 {
     private const string Owner =
         "D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.";
+    private const string RunWordOwner =
+        "D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cumulative cost on a finite deterministic action graph is bounded exactly when every closed action word has zero cost.",
         H("Action Graph Communication Bound"),
         Blocks(
-            Entry(
+            EntryAt(
                 "action-word-run",
-                "run",
+                RunWordOwner,
+                "runWord",
                 "Finite action words determine terminal states",
                 RunFormula(),
                 "Starting at m, the empty word leaves the state unchanged. Executing a word whose first action is f first applies the deterministic transition T_f and then executes the remaining word.",
@@ -37,9 +40,9 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             Entry(
                 "maximal-edge-cost",
                 "maxEdgeCost",
-                "The maximal edge cost",
+                "The finite supremum of edge costs",
                 MaxEdgeCostFormula(),
-                "For finite state and action carriers, W_max is the largest cost among all labelled edges.",
+                "For finite state and action carriers, W_max is the finite supremum of all labelled-edge costs; its value is zero if either carrier is empty.",
                 DescribeRole.Definition),
             Entry(
                 "cumulative-communication-criterion",
@@ -58,13 +61,24 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
         Formula formula,
         string first,
         DescribeRole role,
+        params string[] rest) =>
+        EntryAt(id, Owner, selector, title, formula, first, role, rest);
+
+    private static DocumentBlock EntryAt(
+        string id,
+        string owner,
+        string selector,
+        string title,
+        Formula formula,
+        string first,
+        DescribeRole role,
         params string[] rest)
     {
         var paragraphs = new List<DocumentBlock> { Paragraph(Text(first)) };
         paragraphs.AddRange(rest.Select(text => Paragraph(Text(text))));
         return Describe.Lean(
             DescribeId.Create(id),
-            DeclarationHandle.Create(Owner + selector),
+            DeclarationHandle.Create(owner + selector),
             H(title),
             StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(),
@@ -99,8 +113,8 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
 
     private static Formula State => F.Id("Q");
 
-    private static Formula Run(Formula state, Formula word) =>
-        Call("run", F.Id("T"), state, word);
+    private static Formula RunWord(Formula word, Formula state) =>
+        Call("runWord", F.Id("T"), word, state);
 
     private static Formula Cost(Formula state, Formula word) =>
         Call("Comm", F.Id("T"), F.Id("w"), state, word);
@@ -117,12 +131,12 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             new Formula.TypeArrow(Action, new Formula.TypeArrow(State, State)),
             Comma, RowBreak, Grp(),
             Forall, Sp, state, InMacro, Sp, State, Comma, Sp,
-            Run(state, Seq(OpenBracket, CloseBracket)), Sp, Eq, Sp, state,
+            RunWord(Seq(OpenBracket, CloseBracket), state), Sp, Eq, Sp, state,
             Comma, RowBreak, Grp(),
             Forall, Sp, action, InMacro, Sp, Action, Comma, Sp,
             Forall, Sp, word, InMacro, Sp, ListOf(Action), Comma, Sp,
-            Run(state, Call("cons", action, word)), Sp, Eq, Sp,
-            Run(Call("T", action, state), word), Dot,
+            RunWord(Call("cons", action, word), state), Sp, Eq, Sp,
+            RunWord(word, Call("T", action, state)), Dot,
             End, Grp(F.Id("gathered"))));
     }
 
@@ -184,7 +198,7 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             new Formula.TypeArrow(State, new Formula.TypeArrow(Action, Nat)),
             Comma, RowBreak,
             Call("maxEdgeCost", F.Id("w")), Sp, Eq, Sp,
-            Max, Underscore, Grp(state, InMacro, Sp, State, Comma, Sp,
+            Operatorname, Grp(F.Id("sup")), Underscore, Grp(state, InMacro, Sp, State, Comma, Sp,
                 action, InMacro, Sp, Action), Sp,
             Call("w", state, action), Dot));
     }
@@ -209,7 +223,7 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             Forall, Sp, state, InMacro, Sp, State, Comma, Sp,
             Exists, Sp, initial, InMacro, Sp, initialSet, Comma, Sp,
             Exists, Sp, prefix, InMacro, Sp, ListOf(Action), Comma, Sp,
-            Run(initial, prefix), Sp, Eq, Sp, state);
+            RunWord(prefix, initial), Sp, Eq, Sp, state);
         Formula finiteInfinite = Seq(
             a, Colon, Sp,
             Forall, Sp, initial, InMacro, Sp, initialSet, Comma, Sp,
@@ -228,7 +242,7 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             Forall, Sp, state, InMacro, Sp, State, Comma, Sp,
             Forall, Sp, cycle, InMacro, Sp, ListOf(Action), Comma, Sp,
             cycle, Sp, Neq, Sp, Seq(OpenBracket, CloseBracket), Sp, Land, Sp,
-            Run(state, cycle), Sp, Eq, Sp, state, Sp, Rightarrow, Sp,
+            RunWord(cycle, state), Sp, Eq, Sp, state, Sp, Rightarrow, Sp,
             Cost(state, cycle), Sp, Eq, Sp, D(0));
 
         return Disp(Seq(
@@ -251,7 +265,9 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             finiteInfinite, Comma, RowBreak,
             uniformlyBounded, Comma, RowBreak,
             zeroCycles, Comma, RowBreak,
-            Open, a, Sp, Iff, Sp, b, Sp, Iff, Sp, c, Close, Sp, Land, RowBreak,
+            Operatorname, Grp(F.Id("List"), Dot, F.Id("TFAE")), Open,
+            OpenBracket, a, Comma, Sp, b, Comma, Sp, c, CloseBracket, Close,
+            Sp, Land, RowBreak,
             Open, c, Sp, Rightarrow, Sp,
             Forall, Sp, initial, InMacro, Sp, initialSet, Comma, Sp,
             Forall, Sp, finiteWord, InMacro, Sp, ListOf(Action), Comma, Sp,

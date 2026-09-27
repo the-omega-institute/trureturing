@@ -6,6 +6,7 @@
    utility: none
    digest: Finite action graphs have bounded cost exactly when all cycles cost zero. -/
 
+import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 import Mathlib.Data.ENat.Lattice
 import Mathlib.Data.Fintype.Pigeonhole
 import Mathlib.Data.List.TFAE
@@ -13,13 +14,15 @@ import Mathlib.Data.Stream.Init
 import Mathlib.Tactic
 
 /- Library-search audit trail (2026-09-27):
-   * Repository searches found finite autonomous-orbit periodicity, but no
-     weighted action-graph theorem combining arbitrary input words, cumulative
-     costs, cycle exclusion, and the sharp cardinality bound.
+   * The frozen `ControlledBehaviorUniversality.runWord` supplies left-to-right
+     execution. Repository searches found finite autonomous-orbit periodicity,
+     but no weighted action-graph theorem combining arbitrary input words,
+     cumulative costs, cycle exclusion, and the sharp cardinality bound.
    * Pinned Mathlib supplies `Fintype.exists_ne_map_eq_of_card_lt` for the
      repeated-state step, `List.TFAE` for the equivalence shell,
-     `Stream'.cycle_eq` and `Stream'.append_take` for an ultimately periodic
-     input word, and `ENat.iSup_natCast_ne_top` for finite prefix supremum.
+     `List.take_add` for the prefix split, `Stream'.cycle_eq` and
+     `Stream'.append_take` for an ultimately periodic input word, and
+     `ENat.iSup_natCast_ne_top` for finite prefix supremum.
      No packaged weighted loop-erasure criterion with this conclusion was found. -/
 
 noncomputable section
@@ -29,9 +32,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ObserverMemory.Prediction.ActionGraphCommunicationBound
 
-/-- The state reached after executing a finite action word. -/
-def run {Q F : Type*} (T : F → Q → Q) (initial : Q) (word : List F) : Q :=
-  word.foldl (fun state action ↦ T action state) initial
+open _root_.D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 
 /-- The sum of the step costs paid while executing a finite action word. -/
 def Comm {Q F : Type*} (T : F → Q → Q) (w : Q → F → ℕ) :
@@ -44,7 +45,8 @@ def InfiniteComm {Q F : Type*} (T : F → Q → Q) (w : Q → F → ℕ)
     (initial : Q) (word : ℕ → F) : ℕ∞ :=
   ⨆ n : ℕ, (Comm T w initial (Stream'.take n word) : ℕ∞)
 
-/-- The largest cost of a labelled edge in a finite action graph. -/
+/-- The finite supremum of the labelled-edge costs, with value zero when
+either carrier is empty. -/
 def maxEdgeCost {Q F : Type*} [Fintype Q] [Fintype F] (w : Q → F → ℕ) : ℕ :=
   Finset.univ.sup fun state : Q ↦ Finset.univ.sup fun action : F ↦ w state action
 
@@ -58,27 +60,30 @@ theorem cumulative_communication_criterion
     {Q F : Type*} [Fintype Q] [Nonempty Q] [Fintype F] [Nonempty F]
     (I : Set Q) (T : F → Q → Q) (w : Q → F → ℕ)
     (hReach : ∀ state : Q, ∃ initial ∈ I, ∃ path : List F,
-      run T initial path = state) :
+      runWord T path initial = state) :
     let finiteInfinite := ∀ initial ∈ I, ∀ word : ℕ → F,
       InfiniteComm T w initial word ≠ ⊤
     let uniformlyBounded := ∃ bound : ℕ, ∀ initial ∈ I, ∀ word : List F,
       Comm T w initial word ≤ bound
     let zeroCycles := ∀ state : Q, ∀ cycle : List F, cycle ≠ [] →
-      run T state cycle = state → Comm T w state cycle = 0
+      runWord T cycle state = state → Comm T w state cycle = 0
     List.TFAE [finiteInfinite, uniformlyBounded, zeroCycles] ∧
       (zeroCycles → ∀ initial ∈ I, ∀ word : List F,
         Comm T w initial word ≤
           (Fintype.card Q - 1) * maxEdgeCost w) := by
   classical
   dsimp only
-  have run_append (state : Q) (left right : List F) :
-      run T state (left ++ right) = run T (run T state left) right := by
-    simp only [run, List.foldl_append]
+  have runWord_append (state : Q) (left right : List F) :
+      runWord T (left ++ right) state = runWord T right (runWord T left state) := by
+    induction left generalizing state with
+    | nil => rfl
+    | cons action left ih =>
+        simpa only [List.cons_append, runWord] using ih (T action state)
   have comm_append (state : Q) (left right : List F) :
       Comm T w state (left ++ right) =
-        Comm T w state left + Comm T w (run T state left) right := by
+        Comm T w state left + Comm T w (runWord T left state) right := by
     induction left generalizing state with
-    | nil => simp [Comm, run]
+    | nil => simp [Comm, runWord]
     | cons action left ih =>
         simp only [List.cons_append, Comm]
         rw [ih, Nat.add_assoc]
@@ -104,7 +109,7 @@ theorem cumulative_communication_criterion
             simp [Nat.add_mul, Nat.add_comm]
   have bound_of_zero_cycles
       (zeroCycles : ∀ state : Q, ∀ cycle : List F, cycle ≠ [] →
-        run T state cycle = state → Comm T w state cycle = 0) :
+        runWord T cycle state = state → Comm T w state cycle = 0) :
       ∀ initial ∈ I, ∀ word : List F,
         Comm T w initial word ≤
           (Fintype.card Q - 1) * maxEdgeCost w := by
@@ -124,7 +129,7 @@ theorem cumulative_communication_criterion
             simp only [Fintype.card_fin]
             omega
           let stateAt : Fin (word.length + 1) → Q := fun index ↦
-            run T initial (word.take index.val)
+            runWord T (word.take index.val) initial
           obtain ⟨i, j, hij, statesEqual⟩ :=
             Fintype.exists_ne_map_eq_of_card_lt stateAt cardLt
           have erase_between
@@ -135,7 +140,6 @@ theorem cumulative_communication_criterion
             let path := word.take i.val
             let cycle := (word.drop i.val).take (j.val - i.val)
             let suffix := word.drop j.val
-            have jLe : j.val ≤ word.length := by omega
             have split : word = path ++ cycle ++ suffix := by
               dsimp only [path, cycle, suffix]
               calc
@@ -147,41 +151,43 @@ theorem cumulative_communication_criterion
                     rw [List.drop_take_append_drop]
                 _ = word.take i.val ++
                     (word.drop i.val).take (j.val - i.val) ++ word.drop j.val := by
-                    rw [show i.val + (j.val - i.val) = j.val by omega,
-                      List.append_assoc]
+                    rw [Nat.add_sub_of_le hijLt.le, List.append_assoc]
             have pathCycle : path ++ cycle = word.take j.val := by
-              apply List.append_left_injective suffix
+              dsimp only [path, cycle]
               calc
-                (path ++ cycle) ++ suffix = word := split.symm
-                _ = word.take j.val ++ word.drop j.val :=
-                  (List.take_append_drop j.val word).symm
-                _ = word.take j.val ++ suffix := by rfl
+                word.take i.val ++ (word.drop i.val).take (j.val - i.val) =
+                    word.take (i.val + (j.val - i.val)) := List.take_add.symm
+                _ = word.take j.val := by
+                  rw [Nat.add_sub_of_le hijLt.le]
             have cycleNonempty : cycle ≠ [] := by
               intro cycleEmpty
-              have lengthZero : cycle.length = 0 := congrArg List.length cycleEmpty
+              have lengthZero : cycle.length = 0 :=
+                List.length_eq_zero_iff.mpr cycleEmpty
               simp only [cycle, List.length_take, List.length_drop] at lengthZero
               omega
-            have cycleClosed : run T (run T initial path) cycle = run T initial path := by
-              rw [← run_append, pathCycle]
+            have cycleClosed :
+                runWord T cycle (runWord T path initial) = runWord T path initial := by
+              rw [← runWord_append, pathCycle]
               exact statesEqual.symm
-            have cycleZero : Comm T w (run T initial path) cycle = 0 :=
-              zeroCycles (run T initial path) cycle cycleNonempty cycleClosed
+            have cycleZero : Comm T w (runWord T path initial) cycle = 0 :=
+              zeroCycles (runWord T path initial) cycle cycleNonempty cycleClosed
             have shorter : (path ++ suffix).length < word.length := by
               have cyclePositive : 0 < cycle.length := List.length_pos_of_ne_nil cycleNonempty
               have lengths := congrArg List.length split
               simp only [List.length_append] at lengths ⊢
               omega
-            have shorterThanN : (path ++ suffix).length < n := by omega
+            have shorterThanN : (path ++ suffix).length < n := by
+              simpa only [wordLength] using shorter
             have reducedBound := ih (path ++ suffix).length shorterThanN
               initial hInitial (path ++ suffix) rfl
             calc
               Comm T w initial word =
                   Comm T w initial path +
-                    Comm T w (run T initial path) cycle +
-                      Comm T w (run T (run T initial path) cycle) suffix := by
-                rw [split, comm_append, comm_append, run_append, Nat.add_assoc]
+                    Comm T w (runWord T path initial) cycle +
+                      Comm T w (runWord T cycle (runWord T path initial)) suffix := by
+                rw [split, comm_append, comm_append, runWord_append, Nat.add_assoc]
               _ = Comm T w initial path +
-                    Comm T w (run T initial path) suffix := by
+                    Comm T w (runWord T path initial) suffix := by
                 rw [cycleZero, cycleClosed]
                 simp
               _ = Comm T w initial (path ++ suffix) :=
@@ -195,7 +201,7 @@ theorem cumulative_communication_criterion
       (∀ initial ∈ I, ∀ word : ℕ → F,
         InfiniteComm T w initial word ≠ ⊤) →
       ∀ state : Q, ∀ cycle : List F, cycle ≠ [] →
-        run T state cycle = state → Comm T w state cycle = 0 := by
+        runWord T cycle state = state → Comm T w state cycle = 0 := by
     intro finiteInfinite state cycle cycleNonempty cycleClosed
     obtain ⟨initial, hInitial, path, pathReaches⟩ := hReach state
     by_contra cycleCostNonzero
