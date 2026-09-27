@@ -6,11 +6,6 @@
    utility: none
    digest: Product signs give exact moments for the second-order pair U-statistic. -/
 
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.GroupWithZero.Units.Fintype
-import Mathlib.Data.Finset.Prod
-import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -95,9 +90,8 @@ theorem sign_pair_u_statistic_moments (k : ℕ) (mu : ℝ) (hk : 2 ≤ k)
     dsimp only [E]
     simp_rw [mul_left_comm (signPairWeight mu _) c, ← Finset.mul_sum]
   have hE_congr {f g : (Fin k → ℤˣ) → ℝ} (h : ∀ eta, f eta = g eta) : E f = E g := by
-    congr 1
-    funext eta
-    exact h eta
+    dsimp only [E]
+    exact Finset.sum_congr rfl fun eta _ => by rw [h eta]
 
   have hfactor_finset (S : Finset (Fin k)) (g : Fin k → ℤˣ → ℝ) :
       E (fun eta => ∏ i ∈ S, g i (eta i)) =
@@ -135,10 +129,6 @@ theorem sign_pair_u_statistic_moments (k : ℕ) (mu : ℝ) (hk : 2 ≤ k)
     | zero => intro f; simp
     | succ n ih =>
         intro f
-        have htotal : (∑ i : Fin (n + 1), f i) =
-            f 0 + ∑ i : Fin n, f i.succ := Fin.sum_univ_succ f
-        have hdiag : (∑ i : Fin (n + 1), f i ^ 2) =
-            f 0 ^ 2 + ∑ i : Fin n, f i.succ ^ 2 := Fin.sum_univ_succ (fun i => f i ^ 2)
         have hpairs :
             (∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
               if i < j then f i * f j else 0) =
@@ -149,17 +139,12 @@ theorem sign_pair_u_statistic_moments (k : ℕ) (mu : ℝ) (hk : 2 ≤ k)
           simp only [lt_self_iff_false, reduceIte, Fin.succ_pos, zero_add, not_lt_zero,
             Fin.succ_lt_succ_iff, add_left_inj]
           rw [← Finset.mul_sum]
-        rw [htotal, hdiag, hpairs]
+        rw [Fin.sum_univ_succ, Fin.sum_univ_succ, hpairs]
         nlinarith [ih (fun i => f i.succ)]
 
   have hx_sq (eta : Fin k → ℤˣ) (i : Fin k) : x eta i ^ 2 = 1 := by
-    rcases Int.units_eq_one_or (eta i) with hi | hi
-    · dsimp only [x]
-      rw [hi]
-      norm_num
-    · dsimp only [x]
-      rw [hi]
-      norm_num
+    dsimp only [x]
+    exact_mod_cast Int.isUnit_sq (eta i).isUnit
   have hz_sq (eta : Fin k → ℤˣ) (i : Fin k) :
       z eta i ^ 2 = 1 - mu ^ 2 - 2 * mu * z eta i := by
     dsimp only [z]
@@ -177,8 +162,7 @@ theorem sign_pair_u_statistic_moments (k : ℕ) (mu : ℝ) (hk : 2 ≤ k)
   have hk_ne : (k : ℝ) ≠ 0 := ne_of_gt (lt_trans Real.zero_lt_one hk_real)
   have hk_sub_ne : (k : ℝ) - 1 ≠ 0 := ne_of_gt (sub_pos.mpr hk_real)
   have hchoose_ne : (Nat.choose k 2 : ℝ) ≠ 0 := by
-    rw [hchoose_cast]
-    positivity
+    exact_mod_cast Nat.choose_ne_zero hk
 
   have hpair_identity : ∀ eta : Fin k → ℤˣ,
       signPairUStatistic eta = pairSum (x eta) / (Nat.choose k 2 : ℝ) := by
@@ -237,7 +221,7 @@ theorem sign_pair_u_statistic_moments (k : ℕ) (mu : ℝ) (hk : 2 ≤ k)
         hE_const_mul _ _
       _ = mu ^ 2 := by
         rw [hpair_mean]
-        field_simp
+        field_simp [hchoose_ne]
 
   have hcentered_decomposition : ∀ eta : Fin k → ℤˣ,
       signPairUStatistic eta = mu ^ 2 +
