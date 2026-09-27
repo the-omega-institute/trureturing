@@ -81482,3 +81482,417 @@ $$
 半正定面的支撑结构与Fejér–Riesz分解均为所引标准理论；这里将它们连接到固定边缘来源的实际纤维。结论不据此宣称文献原创性，也没有给出近似共同核、带噪边缘或有限样本下的同型唯一性证书。
 
 ## 追加锚（本行以下为增补区）
+
+## 264. 纯纠缠全数据稳定性的最坏退化阶恰为逆Schmidt权
+
+§261对任意合法竞争态建立了全数据线性恢复界，但其常数为 $O(p^{-2})$。本节直接分析未观测部分的成对正负谱，将统一上界改进为 $2/p+2$；同时构造保持 $K$ 完全不变的合法竞争态，使全态误差与边缘误差之比趋于 $(1-p)/p$。因此，只按最小非零Schmidt权 $p$ 控制全部纯纠缠源时，最坏退化阶恰为 $p^{-1}$。
+
+### 264.1 合同及已有稳定恢复结果的适用面
+
+沿用有限维联合空间 $H\otimes E$，其中 $\dim H=2$。所有块矩阵使用同一固定输入 $Y$ 本征基。数据映射为
+$$
+\mathscr K(X)=2X_{+-},\qquad
+\mathcal M(X)=\bigl(\operatorname{Tr}_H X,\mathscr K(X)\bigr),
+$$
+$$
+\|\mathcal M(X)\|_{\oplus}
+=\|\operatorname{Tr}_H X\|_1+\|\mathscr K(X)\|_1.
+\tag{264.1}
+$$
+所有联合迹范数与数据核范数均未除以二。
+
+理想源为归一化纯纠缠态
+$$
+\Omega_\psi=P_\psi=|\psi\rangle\langle\psi|,\qquad
+\rho=\operatorname{Tr}_H P_\psi.
+\tag{264.2}
+$$
+令 $p$ 为 $\rho$ 的最小非零本征值。由于输入为qubit且源纯纠缠，$\rho$ 恰有两个非零本征值
+$$
+p,\quad q=1-p,\qquad 0<p\le\frac12.
+\tag{264.3}
+$$
+这里的Schmidt权是Schmidt系数的平方。特别地，在整个参考空间上
+$$
+\|\rho\|=1-p.
+\tag{264.4}
+$$
+
+竞争态 $\Xi$ 可以是同一完整 $H\otimes E$ 上的任意归一化正半定态，不要求相同边缘、相同支撑、相同秩或纯性。记
+$$
+\Delta=\Xi-P_\psi,\qquad
+R=\operatorname{Tr}_H\Delta,\qquad
+N=\mathscr K(\Delta),\qquad
+\varepsilon=\|R\|_1+\|N\|_1.
+\tag{264.5}
+$$
+
+严格完备量子层析中的成熟结果已说明，正性与足够的可识别性能够支持稳健凸恢复。Baldwin、Deutsch、Kalev，*Strictly-complete measurements for bounded-rank quantum-state tomography*，[arXiv:1605.02109v1](https://arxiv.org/pdf/1605.02109v1)，PDF第4页 Corollary 2及第9—10页 Appendix A，讨论这种正性约束下的稳健估计。Carmeli、Heinosaari、Kech、Schultz、Toigo，*Efficient Pure State Quantum Tomography from Five Orthonormal Bases*，[arXiv:1604.02970v1](https://arxiv.org/pdf/1604.02970v1)，PDF第3页 Theorem 2与第4页 Theorems 3—4，给出能区分所有纯态与任意合法态的测量方案的稳定性及恢复结论；该文在第4页明确说明没有给出其常数的显式估计。
+
+这些结果不能直接提供本具体映射的 $p$ 依赖。本映射还存在前节已给出的产品源退化，不能把“每个纯态均与全部合法态区分”的全局前提直接移入。下文利用本映射的具体核计算显式界，研究结论不作文献原创性声明。
+
+### 264.2 将误差分成可读部分与成对谱核
+
+写
+$$
+\Delta=
+\begin{pmatrix}
+\Delta_{++}&N/2\\
+N^\dagger/2&\Delta_{--}
+\end{pmatrix},
+\qquad
+\Delta_{++}+\Delta_{--}=R.
+\tag{264.6}
+$$
+定义
+$$
+X=
+\begin{pmatrix}
+R/2&N/2\\
+N^\dagger/2&R/2
+\end{pmatrix},
+\qquad
+D=\frac{\Delta_{++}-\Delta_{--}}2,
+\qquad
+H_D=\begin{pmatrix}D&0\\0&-D\end{pmatrix}.
+\tag{264.7}
+$$
+于是
+$$
+\Delta=X+H_D,\qquad
+\mathcal M(H_D)=0.
+\tag{264.8}
+$$
+这正是数据映射的完整Hermitian核形状。
+
+由两态归一化，$\operatorname{Tr}R=0$，从而
+$$
+\operatorname{Tr}X=0.
+\tag{264.9}
+$$
+分别估计对角和非对角部分，得到
+$$
+\|X\|_1
+\le
+\left\|\begin{pmatrix}R/2&0\\0&R/2\end{pmatrix}\right\|_1
++
+\left\|\begin{pmatrix}0&N/2\\N^\dagger/2&0\end{pmatrix}\right\|_1
+=\|R\|_1+\|N\|_1=\varepsilon.
+\tag{264.10}
+$$
+其中非对角块的范数计算使用其本征值为 $N/2$ 的正负奇异值。
+
+对Hermitian算子 $A$，记其负部和负谱总量为
+$$
+A_-=\frac{|A|-A}{2},\qquad
+\nu(A)=\operatorname{Tr}A_-
+=\max_{0\preceq Q\preceq I}\{-\operatorname{Tr}(QA)\}.
+\tag{264.11}
+$$
+最后一个等式来自按正负谱分别取 $Q$，是下文使用的标准负部变分公式。
+
+### 264.3 纯源对成对谱核的负部控制
+
+**引理264.1（成对谱核必须留下负部）。** 对任意Hermitian参考算子 $D$，令
+$$
+m=\|D\|_1,\qquad d=\|D\|,\qquad
+n=\nu(P_\psi+H_D).
+\tag{264.12}
+$$
+则
+$$
+\boxed{\quad
+m\le\left(\frac2p+1\right)n.
+\quad}
+\tag{264.13}
+$$
+该结论包括 $D$ 在 $\operatorname{supp}\rho$ 之外的任意方向。
+
+**证明。** 若 $D=0$，结论成立。以下设 $d>0$。
+
+首先证明
+$$
+n\ge m-d.
+\tag{264.14}
+$$
+$H_D$ 的正谱与负谱成对出现，因此
+$$
+\operatorname{Tr}(H_D)_-=\operatorname{Tr}(H_D)_+=m,
+\qquad
+\|(H_D)_-\|=d.
+\tag{264.15}
+$$
+令 $\Pi_-$ 为 $H_D$ 的严格负谱投影，$Q$ 为
+$\operatorname{ran}\Pi_-\cap\psi^\perp$ 的正交投影。则
+$Q\preceq\Pi_-$，而 $\Pi_--Q$ 的秩至多为一。因 $Q\psi=0$，
+$$
+\begin{aligned}
+-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
+&=\operatorname{Tr}\bigl(Q(H_D)_-\bigr)\\
+&=m-\operatorname{Tr}\bigl((\Pi_--Q)(H_D)_-\bigr)\\
+&\ge m-d.
+\end{aligned}
+\tag{264.16}
+$$
+由负部变分公式得到（264.14）。这也给出了此处所需的秩一正更新负谱交错估计的完整证明。
+
+选取 $D$ 的单位本征向量 $e$ 及其本征值 $\lambda$，使 $|\lambda|=d$。写
+$$
+D_0=\lambda|e\rangle\langle e|,
+\qquad
+H_0=\operatorname{diag}(D_0,-D_0),
+\qquad
+H_1=H_D-H_0.
+\tag{264.17}
+$$
+因所选方向属于 $D$ 的谱分解，余下参考谱的核范数为 $m-d$。所以
+$$
+\operatorname{Tr}(H_1)_+=m-d.
+\tag{264.18}
+$$
+令 $n_0=\nu(P_\psi+H_0)$。再次使用变分公式，对每个 $0\preceq Q\preceq I$，
+$$
+\begin{aligned}
+-\operatorname{Tr}\bigl(Q(P_\psi+H_0)\bigr)
+&=-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
++\operatorname{Tr}(QH_1)\\
+&\le n+\operatorname{Tr}(H_1)_+.
+\end{aligned}
+\tag{264.19}
+$$
+取最大值得
+$$
+n_0\le n+(m-d).
+\tag{264.20}
+$$
+
+接着从纯源的Schmidt权证明
+$$
+n_0\ge pd.
+\tag{264.21}
+$$
+$H_0$ 在 $H\otimes\mathbb Ce$ 上有本征值 $-d,+d$；记对应负本征值的单位向量为 $s$。它是 $|y_+\rangle\otimes e$ 或 $|y_-\rangle\otimes e$ 中的一个。
+
+理想源在整条参考方向 $e$ 之外的质量是
+$$
+r=
+\left\|
+\bigl(I_H\otimes(I_E-|e\rangle\langle e|)\bigr)\psi
+\right\|^2
+=1-\langle e,\rho e\rangle
+\ge1-\|\rho\|=p.
+\tag{264.22}
+$$
+因此 $r>0$。令
+$$
+z=
+\frac{\bigl(I_H\otimes(I_E-|e\rangle\langle e|)\bigr)\psi}
+{\sqrt r},
+\qquad
+\alpha=\langle s,\psi\rangle.
+\tag{264.23}
+$$
+$s,z$ 是正交单位向量，$H_0z=0$。将 $P_\psi+H_0$ 压缩到它们张成的二维空间，得到
+$$
+C=
+\begin{pmatrix}
+|\alpha|^2-d&\alpha\sqrt r\\
+\overline\alpha\sqrt r&r
+\end{pmatrix}.
+\tag{264.24}
+$$
+其行列式为 $-dr<0$，所以恰有一个正本征值 $\mu_+$ 和一个负本征值 $\mu_-$。又有
+$$
+C\preceq
+\begin{pmatrix}
+|\alpha|^2&\alpha\sqrt r\\
+\overline\alpha\sqrt r&r
+\end{pmatrix},
+\qquad
+\mu_+\le|\alpha|^2+r\le1.
+\tag{264.25}
+$$
+故
+$$
+-\mu_-=\frac{dr}{\mu_+}\ge dr\ge dp.
+\tag{264.26}
+$$
+取该压缩负本征向量的秩一投影作为（264.11）的候选，便有
+$n_0\ge-\mu_-$，证明（264.21）。这里没有将参考空间截断到理想支撑；即使 $e$ 含参考核外分量，（264.22）仍成立。
+
+合并三项估计，
+$$
+pd\le n_0\le n+(m-d)\le2n.
+\tag{264.27}
+$$
+再由 $m-d\le n$，
+$$
+m\le d+n\le\left(\frac2p+1\right)n.
+\tag{264.28}
+$$
+证毕。$\square$
+
+### 264.4 任意合法竞争态的改进全数据界
+
+**定理264.2（逆Schmidt权上界）。** 在（264.1）—（264.5）的合同下，
+$$
+\boxed{
+\|\Xi-P_\psi\|_1
+\le
+\min\left\{2,\,
+\left(\frac2p+2\right)\varepsilon\right\}
+\le
+\min\left\{2,\frac3p\varepsilon\right\}.
+}
+\tag{264.29}
+$$
+常数不依赖参考空间维数，也不要求竞争态的边缘或参考支撑精确。
+
+**证明。** 由 $\Xi=P_\psi+H_D+X\succeq0$，对任意 $0\preceq Q\preceq I$，
+$$
+-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
+=\operatorname{Tr}(QX)-\operatorname{Tr}(Q\Xi)
+\le\operatorname{Tr}(QX)
+\le\operatorname{Tr}X_+.
+\tag{264.30}
+$$
+而 $\operatorname{Tr}X=0$ 给
+$$
+n=\nu(P_\psi+H_D)
+\le\operatorname{Tr}X_+
+=\frac12\|X\|_1.
+\tag{264.31}
+$$
+引理264.1因此推出
+$$
+\|H_D\|_1=2m
+\le2\left(\frac2p+1\right)n
+\le\left(\frac2p+1\right)\|X\|_1.
+\tag{264.32}
+$$
+从而
+$$
+\|\Delta\|_1
+\le\|H_D\|_1+\|X\|_1
+\le\left(\frac2p+2\right)\|X\|_1
+\le\left(\frac2p+2\right)\varepsilon.
+\tag{264.33}
+$$
+$p\le1/2$ 给 $2+2p\le3$；两态归一化给独立上界二。$\square$
+
+该估计直接控制测量核中的误差，不再把暴露算子与切向逆界的条件数损耗相乘。全数据噪声可沿任意方向出现，且竞争态中的参考核外相干未被删除。
+
+§261的合法凸估计器也直接继承改进常数：若真源对经典估计的目标值不超过 $\eta$，其任意合法最小解 $\widehat\Omega$ 满足
+$$
+\|\widehat\Omega-P_\psi\|_1
+\le
+\min\left\{2,\,
+2\left(\frac2p+2\right)\eta\right\}.
+\tag{264.34}
+$$
+这里继续只使用该估计器的存在性与数据三角不等式，不添加求解效率或有限样本保证。
+
+### 264.5 保持全部响应不变的匹配阶下界
+
+现在取参考空间 $\mathbb C^2$，并设
+$$
+0<p<\frac12,\qquad q=1-p,\qquad
+\psi_p=\sqrt p\,|y_+\rangle\otimes e_0
++\sqrt q\,|y_-\rangle\otimes e_1.
+\tag{264.35}
+$$
+理想边缘为 $\rho_p=\operatorname{diag}(p,q)$，且
+$$
+K_{P_{\psi_p}}=2\sqrt{pq}\,|e_0\rangle\langle e_1|.
+\tag{264.36}
+$$
+选取
+$$
+0<t<q-p,\qquad
+\delta=\frac{pt}{q-t}.
+\tag{264.37}
+$$
+在有序基 $(|y_+e_0\rangle,|y_+e_1\rangle,
+|y_-e_0\rangle,|y_-e_1\rangle)$ 中，定义
+$$
+\Xi_{p,t}=
+\begin{pmatrix}
+p+\delta&0&0&\sqrt{pq}\\
+0&t-\delta&0&0\\
+0&0&0&0\\
+\sqrt{pq}&0&0&q-t
+\end{pmatrix}.
+\tag{264.38}
+$$
+这是合法密度态。确实，其迹为一；原有的二维相干块具有正对角元且
+$$
+(p+\delta)(q-t)-pq
+=\delta(q-t)-pt=0.
+\tag{264.39}
+$$
+该块正半定。余下权重满足
+$$
+t-\delta
+=\frac{t(q-p-t)}{q-t}>0.
+\tag{264.40}
+$$
+因此整个矩阵正半定。
+
+与理想纯源相减后，所有非对角项相消：
+$$
+\Xi_{p,t}-P_{\psi_p}
+=\operatorname{diag}(\delta,t-\delta,0,-t).
+\tag{264.41}
+$$
+故
+$$
+\|\Xi_{p,t}-P_{\psi_p}\|_1=2t,
+\qquad
+\Delta K=0,
+\qquad
+\Delta\rho=\operatorname{diag}(\delta,-\delta).
+\tag{264.42}
+$$
+完整数据误差为 $\varepsilon=2\delta$，于是
+$$
+\boxed{
+\frac{\|\Xi_{p,t}-P_{\psi_p}\|_1}
+{\|\Delta\rho\|_1+\|\Delta K\|_1}
+=\frac{t}{\delta}
+=\frac{q-t}{p}
+\xrightarrow[t\downarrow0]{}
+\frac{1-p}{p}.
+}
+\tag{264.43}
+$$
+这个下界来自趋近同一固定理想源的任意小竞争扰动，不需要在比较对内把源换掉。它保持 $K$ 精确，因此在既有可信坐标转换下也保持两条完整响应精确；误差只来自参考边缘。
+
+### 264.6 最坏阶的精确结算范围
+
+令 $C_*(p)$ 表示下列统一最佳线性常数：对所有有限维参考空间、所有最小非零Schmidt权等于 $p$ 的归一化纯纠缠源，以及同一接口上的所有合法竞争态，都要求
+$$
+\|\Xi-P_\psi\|_1
+\le C_*(p)\,
+\|\mathcal M(\Xi-P_\psi)\|_{\oplus}.
+\tag{264.44}
+$$
+更精确地，可将 $C_*(p)$ 定义为这些误差比值在正数据误差情况下的上确界。定理264.2保证上确界有限；零数据误差时同一定理给全态相同。
+
+对每个 $0<p<1/2$，上界和例族共同给
+$$
+\boxed{
+\frac{1-p}{p}
+\le C_*(p)\le\frac2p+2.
+}
+\tag{264.45}
+$$
+因此
+$$
+\boxed{C_*(p)=\Theta(p^{-1})\qquad(p\downarrow0).}
+\tag{264.46}
+$$
+这个结论确定了只按 $p$ 统一控制时的最坏阶，没有声称数值系数最优，也没有声称每一个固定输入轴取向的纯纠缠源都必须达到该下界。
+
+§260的精确共同边缘合同排除了（264.38）的竞争态，因为它们有非零边缘误差。因此本节的逆权下界不能直接移作该较窄合同的最优常数；它所结算的是§261允许边缘误差的完整数据问题。所有结论继续保留任意正半定竞争态与参考核外方向。
+
+## 追加锚（本行以下为增补区）
