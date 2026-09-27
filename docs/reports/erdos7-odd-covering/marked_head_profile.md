@@ -848,6 +848,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Simultaneous root absorption and Hall obstructions](profile-notes/arithmetic/350-399/383-simultaneous-root-absorption-and-hall-obstructions.md)
 - [The private-witness profile upper is automatic for odd divisor labels](profile-notes/arithmetic/350-399/384-private-witness-profile-upper-is-automatic.md)
 - [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+- [Joint composite-parent contractions forbid two actual residue patterns, including an arbitrary-height ternary pattern; irredundant divisor-closed controls separate joint repair from two failed single repairs](profile-notes/arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#6-a-mixed-root-cross-permits-a-joint-composite-parent-contraction)
 - [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/350-399/386-pair-root-conflicts-and-original-survivor-capacity.md)
 - [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/350-399/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
 - [A saturated 36-point chain blocker admits no full-history capped law and separates the finite-depth stop-loss comparison](profile-notes/arithmetic/350-399/388-saturated-chain-blockers-do-not-supply-conditional-caps.md)
