@@ -28,11 +28,16 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
                     "When R is nonzero, finite-dimensional spectral comparison gives a block length M for which "
                         + "R_M is at most one strict scalar multiple of R. Positivity and monotonicity propagate "
                         + "this estimate to every residual, so the residual series is summable and its block tails "
-                        + "obey a geometric bound.")),
+                        + "obey a geometric bound. When R is zero, all residuals and their sum vanish, and M = 1 "
+                        + "and q = 1/2 give the same conclusions.")),
                 Paragraph(Text(
                     "The sum T of the residuals is positive, is bounded by the corresponding geometric majorant, "
                         + "and satisfies T - A(T) = R. Iterating the same equation shows that any positive solution "
-                        + "dominated by a scalar multiple of R has a remainder tending to zero, and therefore equals T."))),
+                        + "dominated by a scalar multiple of R has a remainder tending to zero, and therefore equals T.")),
+                Paragraph(Text(
+                    "For every positive trace-one matrix whose residual weight is positive, taking the trace against "
+                        + "the operator bounds gives the normalized bound for T and the normalized geometric bound "
+                        + "for every truncated tail."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -41,6 +46,7 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
         Formula a = F.Id("a"), i = F.Id("i"), n = F.Id("n"), k = F.Id("k");
         Formula m = F.Id("M"), q = F.Id("q"), x = F.Id("X"), c = F.Id("c");
         Formula eff = F.Id("F"), identity = F.Id("I"), t = F.Id("T");
+        Formula rho = Rho, rRho = Sub(F.Id("r"), rho);
         Formula nat = Seq(Mathbb, Grp(F.Id("N")));
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
@@ -48,8 +54,9 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
         Formula finD = Call("Fin", d);
         Formula matrix = Call("Matrix", finD, finD, complex);
         Formula qa = Sub(F.Id("Q"), a), li = Sub(F.Id("L"), i);
-        Formula residual = Seq(identity, Sp, Minus, Sp, eff);
+        Formula residual = Parenthesized(Seq(identity, Sp, Minus, Sp, eff));
         Formula rn = Residual(n, eff);
+        Formula oneMinusQ = Parenthesized(Seq(D(1), Sp, Minus, Sp, q));
 
         Formula complete = Seq(
             Sum, Underscore, Grp(a, Sp, InMacro, Sp, alpha), Sp,
@@ -61,8 +68,8 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Sub(F.Id("S"), n), Sp, Eq, Sp, eff);
         Formula residualIdentity = Seq(
             Forall, Sp, n, Sp, InMacro, Sp, nat, Comma, Sp,
-            rn, Sp, Eq, Sp, Iterate(n, residual), Sp, Land, Sp,
-            D(0), Sp, Leq, Sp, rn, Sp, Leq, Sp, residual);
+            Parenthesized(Seq(rn, Sp, Eq, Sp, Iterate(n, residual))), Sp, Land, Sp,
+            Parenthesized(Seq(D(0), Sp, Leq, Sp, rn, Sp, Leq, Sp, residual)));
         Formula contract = Seq(
             Residual(m, eff), Sp, Leq, Sp, Scalar(q, residual));
         Formula decay = Seq(
@@ -74,23 +81,62 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             t, Sp, Eq, Sp, Sum, Underscore, Grp(n, Eq, D(0)), Caret, Grp(Infty), Sp,
             Residual(n, eff));
         Formula tUpper = Seq(
-            t, Sp, Leq, Sp, Scalar(Frac(m, Grp(D(1), Sp, Minus, Sp, q)), residual));
+            t, Sp, Leq, Sp, Scalar(Frac(m, oneMinusQ), residual));
         Formula poisson = Seq(
             t, Sp, Minus, Sp, ApplyA(t), Sp, Eq, Sp, residual);
         Formula partial = Seq(
             Sum, Underscore, Grp(n, Sp, Lt, Sp, Seq(k, Sp, m)), Sp, Residual(n, eff));
-        Formula tail = Seq(t, Sp, Minus, Sp, partial);
+        Formula tail = Parenthesized(Seq(t, Sp, Minus, Sp, partial));
+        Formula tailCoefficient = Frac(
+            Parenthesized(Seq(m, Sp, Power(q, k))), oneMinusQ);
         Formula tailBound = Seq(
             Forall, Sp, k, Sp, InMacro, Sp, nat, Comma, Sp,
-            D(0), Sp, Leq, Sp, tail, Sp, Land, Sp,
-            tail, Sp, Leq, Sp,
-            Scalar(Frac(Seq(m, Sp, Power(q, k)), Grp(D(1), Sp, Minus, Sp, q)), residual));
+            Parenthesized(Seq(D(0), Sp, Leq, Sp, tail)), Sp, Land, Sp,
+            Parenthesized(Seq(tail, Sp, Leq, Sp, Scalar(tailCoefficient, residual))));
+        Formula rDefinition = Seq(
+            rRho, Sp, Colon, Eq, Sp, RealTrace(Seq(rho, Sp, residual)));
+        Formula densityPremises = Seq(
+            Parenthesized(Call("PosSemidef", rho)), Sp, Rightarrow, Sp,
+            Parenthesized(Seq(Trace(rho), Sp, Eq, Sp, D(1))), Sp, Rightarrow, Sp);
+        Formula positiveResidualPremise = Seq(
+            Parenthesized(Seq(D(0), Sp, Lt, Sp, rRho)), Sp, Rightarrow, Sp);
+        Formula traceUpper = Seq(
+            Forall, Sp, Typed(rho, matrix), Comma, Sp, densityPremises,
+            rDefinition, Comma, Sp, positiveResidualPremise,
+            Frac(RealTrace(Seq(rho, Sp, t)), rRho), Sp, Leq, Sp,
+            Frac(m, oneMinusQ));
+        Formula traceTailBound = Seq(
+            Forall, Sp, Typed(rho, matrix), Comma, Sp, densityPremises,
+            rDefinition, Comma, Sp, positiveResidualPremise,
+            Parenthesized(Seq(
+                Forall, Sp, k, Sp, InMacro, Sp, nat, Comma, Sp,
+                D(0), Sp, Leq, Sp,
+                Frac(RealTrace(Seq(rho, Sp, tail)), rRho), Sp, Leq, Sp,
+                tailCoefficient)));
         Formula uniqueness = Seq(
             Forall, Sp, Typed(x, matrix), Comma, Sp, Typed(c, real), Comma, Sp,
-            x, Sp, Minus, Sp, ApplyA(x), Sp, Eq, Sp, residual, Sp, Rightarrow, Sp,
-            D(0), Sp, Leq, Sp, x, Sp, Rightarrow, Sp,
-            x, Sp, Leq, Sp, Scalar(c, residual), Sp, Rightarrow, Sp,
+            Parenthesized(Seq(x, Sp, Minus, Sp, ApplyA(x), Sp, Eq, Sp, residual)),
+            Sp, Rightarrow, Sp,
+            Parenthesized(Seq(D(0), Sp, Leq, Sp, x)), Sp, Rightarrow, Sp,
+            Parenthesized(Seq(x, Sp, Leq, Sp, Scalar(c, residual))), Sp, Rightarrow, Sp,
             x, Sp, Eq, Sp, t);
+
+        Formula contractionPackage = Seq(
+            Exists, Sp, m, Sp, InMacro, Sp, nat, Comma, Sp,
+            Parenthesized(Seq(D(1), Sp, Leq, Sp, m)), Sp, Land, Sp,
+            Exists, Sp, q, Sp, InMacro, Sp, real, Comma, Sp,
+            Parenthesized(Seq(D(0), Sp, Lt, Sp, q, Sp, Lt, Sp, D(1))), Sp, Land, RowBreak, Grp(),
+            Parenthesized(contract), Sp, Land, Sp,
+            Parenthesized(decay), Sp, Land, Sp,
+            Parenthesized(summable), Sp, Land, RowBreak, Grp(),
+            tDefinition, Comma, Sp,
+            Parenthesized(Seq(D(0), Sp, Leq, Sp, t)), Sp, Land, Sp,
+            Parenthesized(tUpper), Sp, Land, Sp,
+            Parenthesized(poisson), Sp, Land, RowBreak, Grp(),
+            Parenthesized(traceUpper), Sp, Land, Sp,
+            Parenthesized(tailBound), Sp, Land, RowBreak, Grp(),
+            Parenthesized(traceTailBound), Sp, Land, Sp,
+            Parenthesized(uniqueness));
 
         return Disp(Seq(
             Forall, Sp, Typed(d, nat), Comma, Sp,
@@ -100,16 +146,8 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
             Typed(F.Id("Q"), Arrow(alpha, matrix)), Comma, Sp,
             Typed(F.Id("L"), Arrow(iota, matrix)), Comma, Sp, Typed(eff, matrix), Comma, RowBreak, Grp(),
             complete, Sp, Rightarrow, Sp, limit, Sp, Rightarrow, RowBreak, Grp(),
-            residualIdentity, Sp, Land, RowBreak, Grp(),
-            residual, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
-            Exists, Sp, m, Sp, InMacro, Sp, nat, Comma, Sp,
-            D(1), Sp, Leq, Sp, m, Sp, Land, Sp,
-            Exists, Sp, q, Sp, InMacro, Sp, real, Comma, Sp,
-            D(0), Sp, Lt, Sp, q, Sp, Lt, Sp, D(1), Sp, Land, RowBreak, Grp(),
-            contract, Sp, Land, Sp, decay, Sp, Land, Sp, summable, Sp, Land, RowBreak, Grp(),
-            tDefinition, Comma, Sp, D(0), Sp, Leq, Sp, t, Sp, Land, Sp,
-            tUpper, Sp, Land, Sp, poisson, Sp, Land, RowBreak, Grp(),
-            tailBound, Sp, Land, Sp, uniqueness, Dot));
+            Parenthesized(residualIdentity), Sp, Land, RowBreak, Grp(),
+            Parenthesized(contractionPackage), Dot));
     }
 
     private static Formula Call(string name, params Formula[] args)
@@ -126,6 +164,8 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
     }
 
     private static Formula Typed(Formula value, Formula type) => Seq(value, Colon, Sp, type);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula Arrow(Formula source, Formula target) =>
         Seq(Grp(source), Sp, To, Sp, target);
@@ -147,7 +187,13 @@ internal sealed class GeneralInstrumentResidualTailContractionDocument : IScribe
         Seq(scalar, Sp, Grp(value));
 
     private static Formula Residual(Formula index, Formula eff) =>
-        Seq(Sub(F.Id("S"), index), Sp, Minus, Sp, eff);
+        Parenthesized(Seq(Sub(F.Id("S"), index), Sp, Minus, Sp, eff));
+
+    private static Formula Trace(Formula value) =>
+        Seq(Operatorname, Grp(F.Id("Tr")), Open, value, Close);
+
+    private static Formula RealTrace(Formula value) =>
+        Seq(Operatorname, Grp(F.Id("Re")), Sp, Trace(value));
 
     private static Formula ApplyA(Formula value) =>
         Seq(Mathcal, Grp(F.Id("A")), Open, value, Close);

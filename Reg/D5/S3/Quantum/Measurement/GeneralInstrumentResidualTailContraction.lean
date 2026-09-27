@@ -7,7 +7,7 @@ open _root_.D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
 open _root_.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction
 open Lean Elab Command
 open Filter LeanInformationAudit Matrix Topology
-open scoped BigOperators MatrixOrder Matrix.Norms.L2Operator
+open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction
@@ -39,8 +39,7 @@ def arena : Arena where
         (noClickDual Q)^[n] ((1 : Matrix (Fin d) (Fin d) ℂ) - F) ∧
       0 ≤ survival Q n - F ∧
         survival Q n - F ≤ (1 : Matrix (Fin d) (Fin d) ℂ) - F) ∧
-    ((1 : Matrix (Fin d) (Fin d) ℂ) - F ≠ 0 →
-      ∃ M : ℕ, 1 ≤ M ∧ ∃ q : ℝ, 0 < q ∧ q < 1 ∧
+    (∃ M : ℕ, 1 ≤ M ∧ ∃ q : ℝ, 0 < q ∧ q < 1 ∧
       survival Q M - F ≤ q • ((1 : Matrix (Fin d) (Fin d) ℂ) - F) ∧
       (∀ n, survival Q n - F ≤
         q ^ (n / M) • ((1 : Matrix (Fin d) (Fin d) ℂ) - F)) ∧
@@ -49,10 +48,21 @@ def arena : Arena where
       0 ≤ T ∧ T ≤ ((M : ℝ) / (1 - q)) •
           ((1 : Matrix (Fin d) (Fin d) ℂ) - F) ∧
         T - noClickDual Q T = (1 : Matrix (Fin d) (Fin d) ℂ) - F ∧
+        (∀ ρ : Matrix (Fin d) (Fin d) ℂ, ρ.PosSemidef → ρ.trace = 1 →
+          let rρ := (ρ * ((1 : Matrix (Fin d) (Fin d) ℂ) - F)).trace.re
+          0 < rρ → (ρ * T).trace.re / rρ ≤ (M : ℝ) / (1 - q)) ∧
         (∀ k, 0 ≤ T - ∑ n ∈ Finset.range (k * M), (survival Q n - F) ∧
           T - ∑ n ∈ Finset.range (k * M), (survival Q n - F) ≤
             ((M : ℝ) * q ^ k / (1 - q)) •
               ((1 : Matrix (Fin d) (Fin d) ℂ) - F)) ∧
+        (∀ ρ : Matrix (Fin d) (Fin d) ℂ, ρ.PosSemidef → ρ.trace = 1 →
+          let rρ := (ρ * ((1 : Matrix (Fin d) (Fin d) ℂ) - F)).trace.re
+          0 < rρ → ∀ k,
+            0 ≤ (ρ * (T - ∑ n ∈ Finset.range (k * M),
+              (survival Q n - F))).trace.re / rρ ∧
+            (ρ * (T - ∑ n ∈ Finset.range (k * M),
+              (survival Q n - F))).trace.re / rρ ≤
+                (M : ℝ) * q ^ k / (1 - q)) ∧
         ∀ (X : Matrix (Fin d) (Fin d) ℂ) (c : ℝ),
           X - noClickDual Q X = (1 : Matrix (Fin d) (Fin d) ℂ) - F →
             0 ≤ X → X ≤ c • ((1 : Matrix (Fin d) (Fin d) ℂ) - F) → X = T)
