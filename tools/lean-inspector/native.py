@@ -45,16 +45,26 @@ def activity(kind, count):
             target.write(json.dumps({'kind': kind, 'count': count}) + '\n')
 
 
+def diagnostic_failure(label, error):
+    try:
+        print(f'LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE {label}: {error}', file=sys.stderr)
+    except (OSError, UnicodeError):
+        pass
+
+
 @contextmanager
-def phase(name):
+def phase(name, **context):
     """Flush invocation phase boundaries independently of buffered process IO."""
     path = os.environ.get('STRATALINT_INSPECTOR_PHASES')
 
     def emit(boundary, **fields):
         if path:
-            with Path(path).open('a', encoding='utf-8') as target:
-                target.write(json.dumps(dict(phase=name, boundary=boundary,
-                    monotonic_ms=time.monotonic_ns() // 1_000_000, **fields)) + '\n')
+            try:
+                with Path(path).open('a', encoding='utf-8') as target:
+                    target.write(json.dumps(dict(phase=name, boundary=boundary,
+                        monotonic_ms=time.monotonic_ns() // 1_000_000, **context, **fields)) + '\n')
+            except (OSError, ValueError) as error:
+                diagnostic_failure('native phases', error)
 
     emit('start')
     success = False
@@ -63,6 +73,47 @@ def phase(name):
         success = True
     finally:
         emit('finish', success=success)
+
+
+def retain_request(root, executable, arguments, utilities, origin=None):
+    """Optional request evidence, never an input to report/cache acceptance.
+
+    Keep the actual argument/utility order. Inspector.main derives its imports
+    from these inputs; its source digest identifies that derivation, without
+    maintaining an independent Python approximation of the import list.
+    """
+    phase_path = os.environ.get('STRATALINT_INSPECTOR_PHASES')
+    if not phase_path:
+        return None
+    temporary = None
+    try:
+        payload = dict(cwd=str(root), executable=str(executable), arguments=arguments,
+            utilities=utilities, origin=origin,
+            inspector_source_sha256=public.digest(Path(root) / 'tools/lean-inspector/Inspector.lean'),
+            inspector_executable_sha256=(origin['inspector_executable_sha256'] if origin
+                else public.digest(executable)),
+            lean_toolchain=(Path(root) / 'lean-toolchain').read_text(encoding='utf-8'))
+        # Unique names preserve multiple native calls in one diagnostic directory.
+        # Only the phase's request_capture identifies this call; old files alone
+        # are not evidence that a later invocation captured or ran a request.
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
+                prefix='native-request-', suffix='.json.tmp',
+                dir=Path(phase_path).parent, delete=False) as target:
+            temporary = Path(target.name)
+            json.dump(payload, target)
+            target.write('\n')
+        capture = temporary.with_suffix('')
+        os.replace(temporary, capture)
+        return str(capture)
+    except (OSError, UnicodeError, ValueError) as error:
+        diagnostic_failure('native request capture', error)
+        return None
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as error:
+                diagnostic_failure('native request temporary cleanup', error)
 
 
 def state(root):
@@ -172,8 +223,11 @@ def module(root, name, source, utility_path, executable, output):
         spool = directory / 'spool'
         spool.mkdir()
         report = directory / public.RAW
-        subprocess.run([str(executable), '--output', str(directory / 'spool.json'), '--material-spool', str(spool),
-            '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)], check=True, cwd=root)
+        arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
+            '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
+        capture = retain_request(root, executable, arguments, record['utilities'])
+        with phase('native-inspect', request_capture=capture):
+            subprocess.run([str(executable), *arguments], check=True, cwd=root)
         materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
         # Lake returns only canonically validated public facets. Generation is
         # private; the completed artifact gets its full validation at acceptance.
@@ -216,7 +270,8 @@ def produce_batch(requests):
                      '--utility-input', str(utility_file), *triples]
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
-        with phase('native-inspect'):
+        capture = retain_request(root, executable, arguments, utilities, origin)
+        with phase('native-inspect', request_capture=capture):
             subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
