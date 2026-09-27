@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0d8a740e90362bbf29840cc180d540d1b35a24273d3f70995e3e5bdadf6cb20
+  normalized_sha256: sha256:b0d8a740e90362bbf29840cc180d540d1b35a24273d3f70995e3e5bdadf6cb20
+cas_ref: sha256:b0d8a740e90362bbf29840cc180d540d1b35a24273d3f70995e3e5bdadf6cb20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This is a mathematical proposition closed by upstream results, not nonmathematical content; the existing settlement receipt is used under CLAUDE 3.2. CLAUDE 3.2 upstream-only closure: mem_convexHull_iff_exists_fintype supplies finite nonnegative normalized decompositions; mem_convexHull_of_exists_fintype with product weights p[a]*q[b] and phase vectors z[a]*w[b], mul_nonneg, norm_mul, Fintype.sum_prod_type, Fintype.sum_mul_sum, conjugation multiplicativity and ring normalization closes all of proposition 401.2 including its displayed witness. Guarded anonymous example compiled exit 0 against Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. No applicable frozen project GID was verified; no new Lean declaration is admitted.'
+    previous_atom_id: 3095be552f77dee71e8ddd3a86656eb6056a365ee337315ffb1b6718845cd51f
+    next_atom_id: 51a2cd3c43cd1b4f0959223891e0627f6062699e4b5097500919f8bd439d84ff

@@ -371,7 +371,7 @@ public sealed class PrOpenScriptTests
     }
 
     [Fact]
-    public void PrWatchOtherWorkflowUsesExplicitAssociationEvenWithUnrelatedReusableRef()
+    public void PrWatchRejectsOtherWorkflowAssociationEvenWithUnrelatedReusableRef()
     {
         using var fixture = new PrScriptFixture();
         var run = NativeRunMetadata(201, 1, 99);
@@ -379,7 +379,51 @@ public sealed class PrOpenScriptTests
         run["pull_requests"] = RunMetadata(201, 1, HeadSha, 42, "pull_request")["pull_requests"]!.DeepClone();
         fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
 
-        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false, "42,99", "pull_request")]
+    [InlineData(false, "99,42", "pull_request")]
+    [InlineData(false, "42", "pull_request")]
+    [InlineData(true, "42,99", "pull_request")]
+    [InlineData(true, "99,42", "pull_request")]
+    [InlineData(true, "42", "pull_request")]
+    [InlineData(false, "42,99", "pull_request_target")]
+    [InlineData(false, "99,42", "pull_request_target")]
+    [InlineData(false, "42", "pull_request_target")]
+    [InlineData(true, "42,99", "pull_request_target")]
+    [InlineData(true, "99,42", "pull_request_target")]
+    [InlineData(true, "42", "pull_request_target")]
+    public void PrWatchRejectsUncertifiedNonNativeSupersession(bool reverseChecks, string associations, string eventName)
+    {
+        using var fixture = new PrScriptFixture();
+        // Actual triggers are PR42 then PR99. REST associations can be identical for
+        // both runs, including only PR42 after PR99 closes; they do not certify origin.
+        var checks = new[] {
+            Check("engineering", "COMPLETED", "FAILURE", checkId: 101),
+            Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2, pr: 99),
+        };
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", reverseChecks ? checks.Reverse().ToArray() : checks)));
+        foreach (var (runId, runNumber, origin) in new[] { (201, 1, 42), (202, 2, 99) })
+        {
+            var run = RunMetadata(runId, runNumber, HeadSha, origin, eventName);
+            run["pull_requests"] = new JsonArray(associations.Split(',')
+                .Select(pr => RunMetadata(runId, runNumber, HeadSha, int.Parse(pr), eventName)
+                    ["pull_requests"]![0]!.DeepClone()).ToArray());
+            fixture.RunResponses(runId, Ok(new JsonArray(run).ToJsonString()));
+        }
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable step=snapshot attempts=3", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -553,7 +597,10 @@ public sealed class PrOpenScriptTests
     public void PrWatchRejectsUnverifiableExecutionMembership(string defect)
     {
         using var fixture = new PrScriptFixture();
-        var run = RunMetadata(201, 1, HeadSha, 42, "pull_request");
+        // An empty association list is valid for native retained refs, but supplies
+        // no trigger identity for other workflows. Other defects exercise native validation.
+        var run = defect == "members-empty" ? RunMetadata(201, 1, HeadSha, 42, "pull_request") :
+            NativeRunMetadata(201, 1, 42, explicitAssociation: true);
         switch (defect)
         {
             case "members-missing": run.Remove("pull_requests"); break;
@@ -1611,15 +1658,15 @@ public sealed class PrOpenScriptTests
                 head = new { sha = head }, @base = new { repo = new { id = 1 } } } },
         })!.AsObject();
     private static JsonObject NativeRunMetadata(int runId, int runNumber, int pr, bool explicitAssociation = false,
-        bool sharedAssociations = false)
+        bool sharedAssociations = false, string head = HeadSha)
     {
-        var run = RunMetadata(runId, runNumber, HeadSha, pr, "pull_request");
+        var run = RunMetadata(runId, runNumber, head, pr, "pull_request");
         run["path"] = ".github/workflows/ci-pr.yml";
         if (!explicitAssociation) run["pull_requests"] = new JsonArray();
         if (sharedAssociations)
             run["pull_requests"] = new JsonArray(
-                RunMetadata(runId, runNumber, HeadSha, 99, "pull_request")["pull_requests"]![0]!.DeepClone(),
-                RunMetadata(runId, runNumber, HeadSha, 42, "pull_request")["pull_requests"]![0]!.DeepClone());
+                RunMetadata(runId, runNumber, head, 99, "pull_request")["pull_requests"]![0]!.DeepClone(),
+                RunMetadata(runId, runNumber, head, 42, "pull_request")["pull_requests"]![0]!.DeepClone());
         // The merge commit differs from the PR head; the reusable path binds its exact SHA.
         run["referenced_workflows"] = new JsonArray(new JsonObject
         {
@@ -1773,8 +1820,13 @@ public sealed class PrOpenScriptTests
                     {
                         if (!runs.TryGetValue(runId, out var responses)) runs[runId] = responses = [];
                         var runNumber = suite["workflowRun"]?["runNumber"] is JsonValue n && n.TryGetValue<int>(out var number) ? number : 1;
-                        var run = RunMetadata(runId, runNumber, suite["commit"]!["oid"]!.GetValue<string>(),
-                            membership?["pr"]?.GetValue<int>() ?? 42, membership?["eventName"]?.GetValue<string>() ?? "pull_request");
+                        var head = suite["commit"]!["oid"]!.GetValue<string>();
+                        var pr = membership?["pr"]?.GetValue<int>() ?? 42;
+                        var eventName = membership?["eventName"]?.GetValue<string>() ?? "pull_request";
+                        // Successful PR executions need the existing native retained-ref contract.
+                        var run = eventName == "pull_request" ?
+                            NativeRunMetadata(runId, runNumber, pr, explicitAssociation: true, head: head) :
+                            RunMetadata(runId, runNumber, head, pr, eventName);
                         responses.Add(Ok(new JsonArray(run).ToJsonString()));
                     }
                     suite?.AsObject().Remove("testMembership");
