@@ -74416,3 +74416,278 @@ $$
 式（348.2）的 $t$ 是该数学自同构群的参数。要把它解释为实际可用的演化或观察者的物理钟，还须给出相应的装置操作和钟标定；上述代数计算没有提供这些资料。这与[观察者—量子卷](OBSERVER-QUANTUM.md)第4节对热时间解释、迹态平凡性及模参数不自带秒单位的限定相容。本更正使用有限矩阵谱分解及凸态空间的标准事实，只修正所引重构对应的适用范围，不新增量子重建或时间涌现结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 349. 交换读数空间的近似乘法闭合与统一分割稳定性
+
+**定义 349.1（交换读数空间及分割距离）。** 在第80.4节的乘法缺陷中，取有限对角环境 $\mathbb C^d$ 及最大绝对值范数，其中 $d\ge1$。设 $V\subseteq\mathbb R^d$ 是包含常数向量 $\mathbf1$ 的实线性子空间，令 $W=V+iV$。所有乘法均逐坐标进行，并定义
+
+$$
+\eta(V)=
+\sup_{\substack{f,g\in V\\\|f\|_\infty,\|g\|_\infty\le1}}
+\operatorname{dist}_\infty(fg,V).
+$$
+
+对实向量 $x$，取复近邻的实部不增加误差，故 $\operatorname{dist}_\infty(x,V)=\operatorname{dist}_\infty(x,W)$；此定义与所引乘法缺陷在该环境中的限制一致。记线性空间 $U$ 的单位球为 $U_1$，并令
+
+$$
+D(U,Z)=\max\left\{
+\sup_{u\in U_1}\operatorname{dist}_\infty(u,Z_1),
+\sup_{z\in Z_1}\operatorname{dist}_\infty(z,U_1)
+\right\}.
+$$
+
+若 $\Pi$ 是 $\{1,\ldots,d\}$ 的分割，则其分割代数为
+
+$$
+A_\Pi=\{a\in\mathbb C^d:
+a_i=a_j\text{ whenever }i,j\text{ belong to the same cell of }\Pi\}.
+$$
+
+它是逐坐标乘法下的含单位自伴子代数，且 $\dim_{\mathbb C}A_\Pi=|\Pi|$。
+
+**定理 349.2（维数无关的交换分割稳定性）。** 对定义349.1中的任意 $d,V,W$，若
+
+$$
+\eta(V)\le10^{-9},
+$$
+
+则存在分割 $\Pi$，使
+
+$$
+\dim_{\mathbb C}W=|\Pi|,
+\qquad
+D(W,A_\Pi)\le240\eta(V).
+$$
+
+此外，存在复线性投影 $P:\mathbb C^d\to W$，满足 $P|_W=\operatorname{id}_W$ 及 $\|P\|\le2$。本定理不预先假设这样的投影，也不要求它为正映射。阈值与常数不主张最优；距离比较的是两个完整的复单位球。
+
+证明。记 $\eta=\eta(V)$。若 $\eta=0$，实空间 $V$ 对乘法闭合，故 $W$ 为含单位自伴子代数。把在 $V$ 上取值相同的坐标归为一类。可选 $f\in V$ 在不同类上取不同值：不区分某两个不同类的条件是真线性超平面，有限个这样的超平面不能覆盖 $V$。对 $f$ 的有限值集作多项式插值，可得到每个类的指标。因此 $W=A_\Pi$，代表取值映射即给范数一的投影。以下设 $0<\eta\le10^{-9}$。
+
+首先，对 $x\in V$、$\|x\|_\infty\le R$，有
+
+$$
+\operatorname{dist}_\infty(x^2,V)\le R^2\eta,
+\qquad
+\operatorname{dist}_\infty(x^3,V)\le R^3(2+\eta)\eta.
+\tag{349.1}
+$$
+
+第二式可直接核对：取 $b\in V$，使 $\|b-x^2\|_\infty\le R^2\eta$，则 $\|b\|_\infty\le R^2(1+\eta)$，再用乘法缺陷近似 $xb$。误差至多
+
+$$
+\|x^3-xb\|_\infty+\operatorname{dist}_\infty(xb,V)
+\le R^3\eta+R^3(1+\eta)\eta.
+$$
+
+所有近邻均可取到，因为所涉线性空间有限维且闭。
+
+第一步，构造能够区分相隔评价的近似指标。定义
+
+$$
+\rho(i,j)=\sup_{f\in V_1}|f_i-f_j|.
+$$
+
+若 $\rho(i,j)>1/2$，取 $f\in V_1$，必要时改变符号，使 $f_i-f_j>1/2$。令
+
+$$
+u=\frac{f-f_j\mathbf1}{f_i-f_j}.
+$$
+
+则 $u_i=1$、$u_j=0$、$\|u\|_\infty\le4$，故以下集合非空、紧且凸：
+
+$$
+K=\{x\in V:x_i=1,\ x_j=0,\ -4\le x_k\le5
+\text{ for every }k\}.
+$$
+
+取固定三次多项式
+
+$$
+h(t)=t-\frac1{100}t(1-t)^2.
+$$
+
+它固定 $0,1$，在 $[-4,5]$ 上递增，并满足
+
+$$
+h([-4,5])=[-3,4.2].
+$$
+
+单调性由 $h'(t)=0.99+0.04t-0.03t^2$ 得到：这是凹二次函数，在两端的值均为正。由式（349.1），对 $x\in K$ 有
+
+$$
+\operatorname{dist}_\infty(h(x),V)
+\le0.02\cdot25\eta
+  +0.01\cdot125(2+\eta)\eta
+\le5\eta.
+$$
+
+存在连续映射 $g:K\to V$，使 $\|g(x)-h(x)\|_\infty\le6\eta$。构造如下：在每个中心选误差至多 $5\eta$ 的近邻；由 $h$ 的连续性，选取邻域使其中的 $h$ 值变化小于 $\eta$；再对有限子覆盖取从属连续单位分解，把这些固定近邻作凸组合。凸组合的误差仍至多 $6\eta$，没有维数因子。这里仅构造连续选择，不假设线性或双线性选择。
+
+修正两个指定坐标，令
+
+$$
+F(x)=g(x)+(1-g(x)_i)u-g(x)_j(\mathbf1-u).
+$$
+
+则 $F(x)_i=1$、$F(x)_j=0$。因为 $h(x)_i=1$、$h(x)_j=0$，且 $\|u\|_\infty\le4$、$\|\mathbf1-u\|_\infty\le5$，有
+
+$$
+\|F(x)-h(x)\|_\infty\le60\eta.
+$$
+
+区间 $[-3,4.2]$ 到 $[-4,5]$ 两端的余量保证 $F(K)\subseteq K$。由 Brouwer 不动点定理，在 $K$ 的仿射包内存在 $p=F(p)$。于是每个坐标满足
+
+$$
+|p_k(1-p_k)^2|\le6000\eta.
+\tag{349.2}
+$$
+
+令 $\delta=\sqrt{12000\eta}<1/100$。若 $|p_k|\le1/2$，式（349.2）给 $|p_k|\le24000\eta\le\delta$；若 $|p_k|>1/2$，则 $|1-p_k|\le\delta$。将各坐标舍入到相应的 $0$ 或 $1$，得到集合 $S$，使
+
+$$
+i\in S,\qquad j\notin S,\qquad
+\operatorname{dist}_\infty(\mathbf1_S,V)\le\delta.
+\tag{349.3}
+$$
+
+两个指定端点精确为 $1,0$，故舍入确实区分 $i,j$。
+
+第二步，统一精化所有足够接近的指标。取 $\delta_0=1/16$，设
+
+$$
+\operatorname{dist}_\infty(\mathbf1_S,V)\le\delta_0.
+$$
+
+若 $v\in V$ 满足 $\|v-\mathbf1_S\|_\infty\le r\le\delta_0$，令 $s(t)=3t^2-2t^3$。在 $0$ 和 $1$ 附近分别展开，得到
+
+$$
+\|s(v)-\mathbf1_S\|_\infty
+\le3r^2+2r^3\le4r^2.
+$$
+
+又由式（349.1）及 $\|v\|_\infty\le1+r$，
+
+$$
+\begin{aligned}
+\operatorname{dist}_\infty(s(v),V)
+&\le3\eta(1+r)^2
+  +2\eta(2+\eta)(1+r)^3\\
+&\le10\eta.
+\end{aligned}
+$$
+
+因此误差 $r$ 可以更新为 $4r^2+10\eta$。从 $r_0=\delta_0$ 开始递推
+
+$$
+r_{n+1}=4r_n^2+10\eta.
+$$
+
+这个序列保持在 $[0,\delta_0]$ 内，递减并趋于较小不动点
+
+$$
+r_*=
+\frac{1-\sqrt{1-160\eta}}8
+=\frac{20\eta}{1+\sqrt{1-160\eta}}
+\le20\eta.
+$$
+
+每一步都给同一距离的上界，因此无需所选近邻本身收敛，即得
+
+$$
+\operatorname{dist}_\infty(\mathbf1_S,V)\le20\eta.
+\tag{349.4}
+$$
+
+第三步，近似指标形成 Boolean 集合代数。定义
+
+$$
+\mathscr B=
+\{S\subseteq\{1,\ldots,d\}:
+\operatorname{dist}_\infty(\mathbf1_S,V)\le\delta_0\},
+\qquad e=20\eta.
+$$
+
+空集、全集属于 $\mathscr B$，且 $\mathscr B$ 对补集封闭，因为 $\mathbf1\in V$。式（349.4）使每个成员的指标到 $V$ 的距离都至多为 $e$。若 $S,T\in\mathscr B$，分别取 $v,w\in V$，以误差至多 $e$ 近似其指标，便有
+
+$$
+\begin{aligned}
+\operatorname{dist}_\infty(\mathbf1_{S\cap T},V)
+&\le2e+e^2+\eta(1+e)^2\\
+&\le42\eta<\delta_0.
+\end{aligned}
+$$
+
+故 $S\cap T\in\mathscr B$，而式（349.4）又把它的误差压回 $e$。并集由 De Morgan 律得到。这样，每个 Boolean 运算后的成员仍有同一个误差界 $e$，不随构造次数累积。
+
+有限 Boolean 集合代数 $\mathscr B$ 是某个分割 $\Pi$ 的全部类并的集合。式（349.3）的区分集合满足 $\delta<\delta_0$，故属于 $\mathscr B$。因此，若 $i,j$ 属于同一 $\Pi$ 类，就必有
+
+$$
+\rho(i,j)\le\frac12.
+\tag{349.5}
+$$
+
+第四步，控制分割代数的整个单位球。令 $A=A_\Pi$。每个实 $a\in A_1$ 的阈值集合 $\{a>t\}$ 都是类的并，故属于 $\mathscr B$。有限值函数的层析表示
+
+$$
+a=-\mathbf1+\int_{-1}^{1}\mathbf1_{\{a>t\}}\,dt
+$$
+
+是有限个指标的正系数组合，系数总和为 $2$。由式（349.4），
+
+$$
+\operatorname{dist}_\infty(a,V)\le2e.
+$$
+
+对复 $a\in A_1$ 分别处理实部与虚部，得到
+
+$$
+\operatorname{dist}_\infty(a,W)\le4e.
+\tag{349.6}
+$$
+
+这样的近邻范数至多为 $1+4e$；必要时径向归一化回 $W_1$，额外误差至多 $4e$，故
+
+$$
+\sup_{a\in A_1}\operatorname{dist}_\infty(a,W_1)\le8e.
+\tag{349.7}
+$$
+
+第五步，证明同维性与反向距离。每个类选一个代表，令 $E:\mathbb C^d\to A$ 把类内坐标替换为代表坐标的值。这是固定 $A$ 的范数一复线性投影。对任意复 $w\in W_1$，将其乘一个单位相位后取实部，可把任意指定的 $|w_i-w_j|$ 化为 $V_1$ 中的实读数差。因此式（349.5）也控制复单位球，并给出
+
+$$
+\|w-Ew\|_\infty\le\frac12\|w\|_\infty
+\qquad(w\in W).
+\tag{349.8}
+$$
+
+所以 $E|_W$ 单射，且在其像上的逆映射范数至多为 $2$。
+
+由式（349.6）及 $E$ 的收缩性，对每个 $a\in A_1$ 有
+
+$$
+\operatorname{dist}_\infty(a,E(W))\le4e<1.
+$$
+
+若 $E(W)$ 是 $A$ 的真线性子空间，有限维 Hahn–Banach 定理给一个范数一、在 $E(W)$ 上为零的线性泛函；它在紧单位球上达到模一，对应单位向量到 $E(W)$ 的距离至少为一，矛盾。因此 $E(W)=A$，结合单射性即得 $\dim_{\mathbb C}W=\dim_{\mathbb C}A=|\Pi|$。
+
+现在取 $w\in W_1$，令 $a=Ew\in A_1$。由式（349.6），选 $v\in W$ 使 $\|v-a\|_\infty\le4e$。于是
+
+$$
+\|E(w-v)\|_\infty=\|a-Ev\|_\infty\le4e.
+$$
+
+用 $E|_W$ 的逆映射界，得到 $\|w-v\|_\infty\le8e$，故
+
+$$
+\|w-a\|_\infty\le12e.
+$$
+
+结合式（349.7），
+
+$$
+D(W,A)\le\max(12e,8e)=240\eta.
+$$
+
+最后，$P=(E|_W)^{-1}E$ 是到 $W$ 的复线性投影，范数至多为 $2$。投影界由上述构造得到，没有作为前提使用。证毕。
+
+## 追加锚（本行以下为增补区）
