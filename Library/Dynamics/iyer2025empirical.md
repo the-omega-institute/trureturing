@@ -6345,3 +6345,36 @@ $$
 原窗口、有限选择补偿和格点比较依次沿用第 68、142、153、167、190 章。新内容是完整复因子的实际概率下界及其原选取输出含义，不是新的 theta 恒等式，也不是物理阈值或 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 谱边界卷第 193 章补充：偏移计数线与联合信息速率
+
+对应 [谱边界卷第 193 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 repo-derived：在原实际共同总数允许的二维强度带内，以沿原计数线的 Gaussian 和控制质量及平方距离加权和，连同任意正频率截止下的条件分配平滑，将保留全部坐标、使用精确实际均值的联合 Poisson 相对熵上界收紧为 $O(Q^{-5/2})$。pair 与平稳依赖 path 分别适用；领先系数、匹配下界及最优性未定。
+
+José A. Adell、Alberto Lekuona、Yaming Yu，*Sharp Bounds on the Entropy of the Poisson Law and Related Quantities*，[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，2010-01-17，[固定版本原始 TeX](https://arxiv.org/src/1001.2897v1)。原文定义
+
+$$
+D(n,p)=D(\operatorname{Bin}(n,p)\|\operatorname{Pois}(np)).
+$$
+
+核对范围包括 Theorems 3、4、Theorem 3 的完整有限似然证明、二项 size-bias 与微分身份、标为 lem3 的积分表示、标为 propbi 的有限中心矩上下界及其完整证明。Theorem 4 把 $\mathbb E\log((B_{n-1,s}+1)/(ns))$ 的有限上下界在 $s\in[1-p,1]$ 上积分；条件是 $n,m\in\mathbb N$、$0<p<1$ 及二项律本身。其相关不等式来自对 $x\log x$ 与 $\log(1+x)$ 的有限余项控制。
+
+原文分别给出固定 $p$、$n\to\infty$ 的
+
+$$
+D(n,p)=-\frac12[p+\log(1-p)]
+       +\frac{p^2}{12(1-p)n}+O(n^{-2}),
+$$
+
+以及固定 $\lambda$ 的
+
+$$
+D(n,\lambda/n)=\frac{\lambda^2}{4n^2}+O(n^{-3}).
+$$
+
+这两种余项不自动适用于本模型中同时变化的标记概率和指数增长的标记均值。它们也不等于原条件分配直方图的联合信息：独立行参考的似然比可化为标记总数的二项似然比，原实际律还须支付共同总数条件化与混合。第 193 章不以这些渐近式作为定理前提，不据此声称原实际领先项。
+
+Kontoyiannis、Harremoës 与 Johnson，[arXiv:math/0211020v2](https://arxiv.org/abs/math/0211020v2)，沿用第 188 章条目。Proposition 1 对依赖指标先支付总相关，再经数据处理比较 Poisson；Theorem 1 及 scaled Fisher information 的卷积论证使用独立加数。原 path 行不满足这一独立前提。此前记录的有限支撑混合表述问题保持原边界，不作为本章前提。第 191 章所引 Leskelä 的 Poisson—Poisson 相对熵公式也不替代本章依赖第一律的比较。
+
+本章复用第 175、183、187–189、191 章。离散 Gaussian 求和和有效线宽是经典方法；新增关系是强度偏移与平方距离权重在原条件分配中的联合支付。不将来源自身的 Poisson 熵、独立行渐近或固定参考公式提升为原模型定理，也不主张全球原创性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）

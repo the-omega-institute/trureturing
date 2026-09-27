@@ -60060,3 +60060,491 @@ $$
 格点特征函数的 theta 表达和整数周期性是经典性质。相关原始来源及其不提供经验相位概率律的边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章为普通数学推导，未作 Lean 核验证明，不主张检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 193. 偏移计数线的加权宽度与完整直方图的信息界
+
+第 191 章支付了整条计数线的尾部，但核心估计仍按全部 $O(Q^2)$ 个合法目标计费。本章证明：在实际共同总数允许的整个二维强度带内，沿原始仿射计数线的质量及平方距离加权和只有 $O(\sqrt Q)$ 的有效求和宽度。将这一关系接入条件直方图平滑，并重新证明更小频率截止下的余项，得到原完整直方图的联合信息改进。
+
+**定理 193.1（无上截断完整直方图的加权信息界）。** 固定 $J=[\beta_0,\beta_1]\Subset D$，保持原始振幅、补偿、取整、历史及观察时长。对每个预先确定的大小 $q$ 支持，分别在实际 pair 和平稳依赖 path 实验下，令 $C_j$ 为全部非负原计数线群的经验计数，$\mu_j=\mathbb E C_j$ 为该实验的精确实际均值。则一致有
+
+$$
+D\!\left(\mathcal L((C_j)_{j\in J_Q})\,
+       \middle\|\,\bigotimes_{j\in J_Q}\operatorname{Pois}(\mu_j)\right)
+\le \mathcal E^\sharp_{Q,C_*}(q)
+   +\mathcal E^\sharp_{Q,C_*}(M-q)+V_Qe^{-2\lambda}
+=O_{J,r}(Q^{-5/2}).
+\tag{193.1}
+$$
+
+$\mathcal E^\sharp_{Q,C_*}$ 在 (193.24) 中给出，$C_*,V_Q$ 见 (193.27)。定理保留全部群，包括零实际均值和超过证明核心截止的坐标；不要求实际均值有上限或正下界。新的背景偏移界保留原有限补偿，但不把背景直方图删去。该上界未给出领先项、匹配下界或最优速率；这些问题在本章末尾保持未解。
+
+### 193.2 Original law, means and finite support
+
+All logarithms are natural. Keep
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0,
+$$
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,\quad
+M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+s_0=M-q,\quad \epsilon=rq/s_0,\quad T=2M\lambda.         \tag{193.2}
+$$
+Fix $J=[\beta_0,\beta_1]\Subset D=(\beta_*,1)$. At late layers, uniformly on $J$, $1\le q<M/2$, both class sizes grow exponentially in $\lambda$, and $0<\epsilon<r<1$.
+
+Both parity classes $C_+,C_-$ have size $M$. For every deterministic $S\subset C_+$, $|S|=q$, the actual kernel is
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\quad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+Here $\chi$ is the parity sign. The stationary path starts uniformly and uses $T$ transitions; the pair experiment uses $T$ independent stationary adjacent pairs. The exact compensation implies $P_S^2=\Pi$, the uniform projection.
+
+Let $\mathbf k_j=(K_j,B_j)=(k_0,l_0)+j(Q,P)$, and
+$$
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},\qquad
+K_j+B_j=\lambda+(Q+P)j.
+$$
+Chapter 175's global injectivity identifies every complete score group with its single count pair, without a count cutoff. Thus
+$$
+C_j=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=\mathbf k_j\}},
+\quad \mu_j=\mathbb E C_j,\qquad \sum_j C_j\le M.         \tag{193.3}
+$$
+Its global scope follows from transcendence of the original $r$ and the distinct zeros/poles of the rational score-ratio function, with rational $q/(M-q)\in(0,1)$. The proof applies to arbitrary integer count differences.
+
+Put
+$$
+j_-=\max\{\lceil-k_0/Q\rceil,\lceil-l_0/P\rceil\},\qquad
+j_+=\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor,\qquad
+A_Q=\{j_-,\ldots,j_+\}.
+$$
+For $j\in J_Q\setminus A_Q$, the count pair exceeds the horizon, hence $C_j=\mu_j=0$. Both the actual countable law and its exact-mean Poisson reference append deterministic zero coordinates to the finite vector on $A_Q$. Removing/adjoining these zeros is a measurable bijection of their supporting subspaces and preserves KL. If an internal $\mu_j=0$, nonnegativity again implies $C_j=0$ almost surely. All subsequent entropy identities are on a finite actual support.
+
+For a fixed proof constant $C\ge1$, set
+$$
+I_C=\{j\in J_Q:K_j+B_j\le C\lambda\}.
+$$
+It has order $Q^2$ legal indices. Define the comparison row mass for positive intensity vector $w$ by
+$$
+f_j(w)=e^{-w_+-w_-}\frac{w_+^{K_j}w_-^{B_j}}{K_j!B_j!}.
+$$
+The two fixed class intensities are
+$$
+\nu_1=(a\lambda,b\lambda),\qquad
+\nu_0=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2),
+$$
+and the positive intermediate full-group means, at every active index, are
+$$
+m_j=q f_j(\nu_1)+s_0 f_j(\nu_0).                         \tag{193.4}
+$$
+These are reference parameters, not assertions of independent actual rows.
+
+### 193.3 Uniform displaced-line mass and weighted estimates
+
+Fix $C\ge1$. Write
+$$
+D_0=\max(2,C),\quad A=8\sqrt{D_0}/b,\quad
+\mathbf v=(Q,P),\quad h=|\mathbf v|=\sqrt{Q^2+P^2}.
+$$
+The symbol $h$ here is the deterministic step length, not a number of marks. For any $w\in[b\lambda/2,2\lambda]^2$, let
+$$
+u_w=\frac{\mathbf v\cdot(w-\mathbf k_0)}{h^2},\qquad
+\rho(w)=\operatorname{dist}(w,\mathbf k_0+\mathbb R\mathbf v).
+$$
+Orthogonal decomposition gives the EXACT identity
+$$
+|\mathbf k_j-w|^2=h^2(j-u_w)^2+\rho(w)^2.                \tag{193.5}
+$$
+No floor or line center has been moved.
+
+Define
+$$
+S_Q=2+\frac{\sqrt{8\pi D_0\lambda}}{h},\quad
+F_*=\frac{A^2S_Q}{\lambda},\quad
+W_*=4A^2(1+2D_0)S_Q,\quad
+\eta_Q=\frac1{Q\sqrt\lambda}=Q^{-5/2}.                   \tag{193.6}
+$$
+
+**引理 193.2（偏移计数线的加权质量）。** Uniformly throughout that entire intensity band,
+$$
+\sum_{j\in I_C}f_j(w)\le F_* e^{-\rho(w)^2/(8D_0\lambda)},
+$$
+$$
+\sum_{j\in I_C}f_j(w)
+             (4\lambda+|\mathbf k_j-w|^2)
+\le W_* e^{-\rho(w)^2/(8D_0\lambda)}.                   \tag{193.7}
+$$
+Consequently $F_*=O_{r,C}(\eta_Q)$ and $W_*/\lambda=O_{r,C}(\eta_Q)$. These estimates include zero target counts and all legal core endpoints.
+
+**Proof.** The scalar Poisson estimate proved in Chapter 188, under the same stated conditions, is
+$$
+\Pr\{\operatorname{Pois}(w)=k\}
+\le \frac A{\sqrt\lambda}
+       e^{-(k-w)^2/(4D_0\lambda)}
+\quad(0\le k\le C\lambda,\quad b\lambda/2\le w\le2\lambda).
+                                                               \tag{193.8}
+$$
+To recall its justification, the rate $I_w(k)=k\log(k/w)-k+w$ has second derivative $1/k$, so
+$I_w(k)\ge(k-w)^2/(2D_0\lambda)$, including $k=0$ by continuity. If $k\ge w/2$, Stirling provides a prefactor at most $2/\sqrt{b\lambda}$. Otherwise $|k-w|\ge b\lambda/4$; half the rate pays the displayed Gaussian and the other half gives $e^{-\alpha\lambda}$, where $\alpha=b^2/(64D_0)$. The inequality $\sqrt y\,e^{-y}\le1$ gives $e^{-\alpha\lambda}\le A/\sqrt\lambda$. This proves (193.8) also at zero.
+
+Multiplication gives $f_j(w)\le A^2\lambda^{-1}e^{-z_j}$, where $z_j=|\mathbf k_j-w|^2/(4D_0\lambda)$.
+For all real $u$, all $\alpha>0$,
+$$
+\sum_{j\in\mathbb Z}e^{-\alpha(j-u)^2}
+\le2\sum_{m=0}^\infty e^{-\alpha m^2}
+\le2+\sqrt{\pi/\alpha}.                                \tag{193.9}
+$$
+The first inequality groups distances in $[m,m+1)$, each containing at most two integers. For the second, monotonicity bounds the sum over $m\ge1$ by $\int_0^\infty e^{-\alpha x^2}\,dx$. This is an upper bound over a larger deterministic lattice sum, not a change in legal groups.
+
+Now $(1+D_0z)e^{-z}\le(1+2D_0)e^{-z/2}$ for $z\ge0$, since $z e^{-z/2}\le2$. Hence
+$$
+f_j(w)(4\lambda+|\mathbf k_j-w|^2)
+\le4A^2(1+2D_0)e^{-z_j/2}.
+$$
+Use (193.5) and (193.9) with $\alpha=h^2/(8D_0\lambda)$. This proves the weighted bound; the unweighted one follows from $e^{-z_j}\le e^{-z_j/2}$ and the same sum. Since $h\ge Q$ and $\lambda=Q^3$,
+$$
+\frac{S_Q}{\lambda}
+\le 2Q^{-3}+\sqrt{8\pi D_0}\,Q^{-5/2}
+\le(2+\sqrt{8\pi D_0})\eta_Q.
+$$
+This proves every assertion. QED.
+
+For completeness the same calculation also controls off-center indices along the line. For $R\ge0$, restrict to $|j-u_w|h\ge R\sqrt\lambda$. Splitting the Gaussian exponent once more gives
+$$
+\sum_{\substack{j\in I_C\\|j-u_w|h\ge R\sqrt\lambda}} f_j(w)
+\le F_*e^{-\rho(w)^2/(8D_0\lambda)-R^2/(8D_0)},          \tag{193.10}
+$$
+and, with $S_Q^{(16)}=2+\sqrt{16\pi D_0\lambda}/h$,
+$$
+\begin{aligned}
+&\sum_{\substack{j\in I_C\\|j-u_w|h\ge R\sqrt\lambda}}
+ f_j(w)(4\lambda+|\mathbf k_j-w|^2)\\
+&\qquad\le4A^2(1+2D_0)S_Q^{(16)}
+ e^{-\rho(w)^2/(16D_0\lambda)-R^2/(16D_0)}.             \tag{193.11}
+\end{aligned}
+$$
+Indeed, after absorbing the polynomial, split $e^{-z_j/2}$ into two copies of $e^{-z_j/4}$; use the tail condition in one copy and sum the other by (193.9). The displayed normal-distance factor is deliberately weaker than the resulting one. The unweighted calculation splits $e^{-z_j}$ into halves. Thus the bounds hold uniformly even when the projected center is outside the legal index interval.
+
+### 193.4 Original floors, background displacement and actual totals
+
+Let $\xi=a\lambda-k_0\in[0,1)$. Then
+$$
+\nu_0-\mathbf k_0=(-d,d),\qquad
+d=(r+\epsilon)\lambda/2-\xi.
+$$
+At late layers $d>0$. The perpendicular distance is
+$$
+\rho(\nu_0)=\frac{Q+P}{h}d\ge r\lambda/2-1.
+                                                               \tag{193.12}
+$$
+For any $\Delta$ with $\max_\sigma|\Delta_\sigma|\le1$, distance to a line is 1-Lipschitz, so
+$$
+\rho(\nu_0+\Delta)\ge r\lambda/2-1-\sqrt2\ge r\lambda/4
+$$
+once $\lambda\ge4(1+\sqrt2)/r$. Equations (193.7) therefore give throughout that background good-total band
+$$
+F(\nu_0+\Delta)\le F_*e^{-c_{\rm bg}\lambda},\qquad
+\mathcal W(\nu_0+\Delta)\le W_*e^{-c_{\rm bg}\lambda},
+\quad c_{\rm bg}=\frac{r^2}{128D_0},                    \tag{193.13}
+$$
+where $\mathcal W$ denotes the weighted sum in (193.7). This is an estimate for the original compensated background, with its actual floor $\xi$ and same $\epsilon$. It does not assert that the background count vector is empty or that its attained means are small.
+
+For the signal center, $\nu_1-\mathbf k_0=(\xi,-\xi)$, so its perpendicular displacement is at most $\sqrt2$. Uniformity in the whole band of 引理 193.2 already covers the random signal-total displacement; no centered-mean substitution is made.
+
+Let $H_{i,\sigma}$ be the four actual departure totals, with $i=1,0$ for support/background and $\sigma=+,-$. Conditional on these SAME four totals, the two sign lists in each class are independent uniform allocations among $s_i=q,s_0$ labels, and the classes are conditionally independent. The four lengths retain their actual joint dependence. This follows from Chapter 183's exact disintegration: conditional on a three-class trajectory, every compatible concrete path has mass
+$$
+(2M)^{-T-1}\prod_{t<T}(1+b_{G_t}\chi_{G_{t+1}}),
+$$
+independent of its chosen labels. The labels at departure positions are thus independent uniforms within the fixed classes. List membership depends only on that class trajectory. Integrating over trajectories with the same $H$ leaves the exact same list law. Pairs have the analogous exact conditioning on their class pairs.
+
+For $s=s_i,\nu=\nu_i,\Delta_\sigma=H_{i,\sigma}/s-\nu_\sigma$, inherited actual-law concentration gives
+$$
+\mathbb E|\Delta|^2\le10\lambda/s,\quad
+\mathbb E\sum_\sigma|\Delta_\sigma|\le\sqrt{20\lambda/s},\quad
+\Pr(G^c)\le4e^{-s/(8\lambda)},\quad
+G=\{\max|\Delta_\sigma|\le1\}.                          \tag{193.14}
+$$
+These follow from $\operatorname{Var}H_{i,\sigma}\le5s\nu_\sigma$ and
+$$
+\Pr\{\max_\sigma|H_{i,\sigma}-s\nu_\sigma|>x\}
+\le4\exp\{-x^2/[2(3s\lambda+x)]\}.
+$$
+For the path, $P_S^2=\Pi$ makes edge indicators in each residue class modulo3 jointly independent; Hölder combines the three lists. The lists and the four totals are not assumed mutually independent. For pairs the variance is smaller, and the same displayed bounds hold. The operative proofs are in Chapters 183 and 187.
+
+As an additional actual-law check on (193.13), the conditional row pair probability on $G$ is at most $2f_j(\nu_0+\Delta)$ under the finite conditions below. This is the conditional binomial/Poisson point-ratio estimate, also proved in Section 193.6. Thus
+$$
+\mathbb E\sum_{j\in I_C}C_{0,j}
+\le2s_0F_*e^{-c_{\rm bg}\lambda}
+       +4s_0e^{-s_0/(8\lambda)}.                        \tag{193.15}
+$$
+This pays the exceptional actual totals too. Its first term need not vanish, since $s_0$ is exponentially large. We retain the entire background in the information comparison.
+
+### 193.5 Paying the entire conditioned histogram at the smaller line scale
+
+The following argument makes explicit why the new line estimate can enter the old joint argument and why its old frequency cutoff is not a restriction. Use $F_*,W_*$ from (193.6) and set
+$$
+c_0=b/(8\pi^2),\quad \delta_*=\frac{2W_*}{b\lambda},
+\quad \kappa=e^2F_*,\quad \tau=\eta_Q.                   \tag{193.16}
+$$
+For now the proof works for ANY $0<\tau\le1$. Sufficient conditions are
+$$
+\lambda\ge\max(1,2/b),\quad
+F_*\le\min\{1/16,b/(16\pi^2)\},\quad
+W_*/\lambda\le b/(4\pi^2),\quad
+\kappa\le1/2,\quad \delta_*+\tau\le1/2,
+$$
+$$
+s\ge4,\qquad F_*+1/s\le1/2,\qquad s\lambda\ge1.         \tag{193.17}
+$$
+They hold at late layers for both original class sizes and the choice (193.16).
+
+Fix positive integer totals $n_\sigma=sw_\sigma$, with $w$ in the band of 引理 193.2. Let $U$ be their whole allocation histogram on $I_C$. Let $A^{\rm hist}$ be the histogram of $s$ independent product-Poisson rows of means $w$. Its row mark probabilities are $f_j(w)$, with total $F(w)\le F_*$; conditioning those Poisson rows on their two sums being $n$ gives exactly $U$.
+
+Let $X^\circ$ denote one such row conditioned to avoid ALL core target pairs. For independent unconditioned $X,X'$, put
+$$
+V(\theta)=w_+\theta_+^2+w_-\theta_-^2,\qquad
+x(\theta)=\sum_\sigma w_\sigma(1-\cos\theta_\sigma).
+$$
+Their squared-characteristic-function gap is $g=1-e^{-2x}$. Removing the cases where either row is a target removes a nonnegative quantity at most
+$$
+\sum_{j\in I_C}f_j(w)
+ \mathbb E[(\theta\cdot(\mathbf k_j-X'))^2]
+\le W_*|\theta|^2,                                     \tag{193.18}
+$$
+using the union bound, $1-\cos t\le t^2/2$, (193.7), and $w_++w_-\le4\lambda$. It is also at most $4F_*$.
+
+On the torus $[-\pi,\pi]^2$, $b\lambda|\theta|^2/\pi^2\le x\le\lambda|\theta|^2$. If $\lambda|\theta|^2\le1$, then $g\ge b\lambda|\theta|^2/(2\pi^2)$; otherwise $g\ge b/(2\pi^2)$. Conditions (193.17) leave at least $b\min(\lambda|\theta|^2,1)/(4\pi^2)$ after removal. Dividing by $(1-F(w))^2\le1$ gives the conditional gap, so
+$$
+|\varphi_\circ(\theta)|\le
+               e^{-c_0\min(\lambda|\theta|^2,1)}.
+$$
+For $V\le\tau$, Taylor inequalities give
+$$
+g\ge V\left(1-\frac{\max_\sigma\theta_\sigma^2}{12}
+                    -\frac V2\right)\ge(1-\tau)V,
+$$
+since $\max\theta_\sigma^2\le2\tau/(b\lambda)$ and $b\lambda\ge1$. The removed part is at most $\delta_*V$, by (193.18). Hence
+$$
+|\varphi_\circ(\theta)|
+\le e^{-(1-\delta_*-\tau)V(\theta)/2}\quad(V\le\tau).
+                                                               \tag{193.19}
+$$
+There is no lower restriction on $\tau$ beyond positivity.
+
+For $l\ge s/2$ independent outside-target rows, Fourier inversion, the Gaussian integral on $V\le\tau$, and the global bound on its complement yield
+$$
+\sup_z\Pr\{X^\circ_1+\cdots+X^\circ_l=z\}
+\le\frac1{2\pi l(1-\delta_*-\tau)\sqrt{w_+w_-}}
+                  +e^{-c_0s\tau/4}.                    \tag{193.20}
+$$
+On $V>\tau$, $V\le2\lambda|\theta|^2$ ensures
+$\min(\lambda|\theta|^2,1)\ge\tau/2$. This proves the exponential remainder for the smaller $\tau$, rather than assuming the old choice $Q^{-1}$.
+
+The probability of conditioning the two Poisson sums to their integer means has the sharp Stirling lower bound
+$$
+p_n\ge\frac{e^{-1/(3bs\lambda)}}{2\pi s\sqrt{w_+w_-}}.
+$$
+Define
+$$
+\mathscr L_s=4\pi s\lambda e^{1/(3bs\lambda)},\qquad
+\chi_s=4\pi s\lambda e^{-c_0s\tau/4},
+$$
+$$
+a_s=\frac1{3bs\lambda}
+ +\log\left(\frac1{(1-\kappa)(1-\delta_*-\tau)}+\chi_s\right),
+$$
+$$
+\mathcal A^\sharp_{Q,C}(s)
+=a_s+2(F_*+1/s)+\mathscr L_s e^{-s\kappa}\log\mathscr L_s.
+                                                               \tag{193.21}
+$$
+For a histogram $c$, let $m(c)=\sum_jc_j$. If $m(c)\le s\kappa$, its marked rows have fixed sum $\sum_jc_j\mathbf k_j$, and $l=s-m(c)$ remaining rows have law $X^\circ$. Their positions are irrelevant to their SUM. Dividing (193.20) by $p_n$ proves
+$$
+\frac{\Pr\{U=c\mid n\}}{\Pr\{A^{\rm hist}=c\}}\le e^{a_s}.
+$$
+For every $c$ the ratio is at most $\mathscr L_s$. Under $A^{\rm hist}$, $m$ has law $\operatorname{Bin}(s,F(w))$. Chernoff and $\kappa\ge e^2F(w)$ give
+$\Pr_A\{m>s\kappa\}\le e^{-s\kappa}$; the actual conditional allocation probability is at most $\mathscr L_s e^{-s\kappa}$.
+
+The full categorical-to-Poisson likelihood ratio is EXACTLY
+$$
+R_s(m)=\frac{(s)_m}{s^m}(1-F)^{s-m}e^{sF},\qquad F=F(w).
+$$
+All coordinate probabilities and factorials cancel. Its successive ratio is $(1-m/s)/(1-F)$, so a maximum occurs at $m\le sF+1$. Put $t=m/s\le F+1/s\le1/2$. A monotone integral gives
+$$
+\sum_{l=0}^{m-1}\log(1-l/s)
+\le s\int_0^t\log(1-x)\,dx-\log(1-t).
+$$
+Thus $\log R_s(m)$ is at most
+$$
+s[-t-(1-t)\log(1-t)+(1-t)\log(1-F)+F]-\log(1-t).
+$$
+The bracket has maximum zero at $t=F$, so the global maximum is at most $2(F+1/s)$. If $F=0$, only the zero mark total occurs and the same conclusion holds.
+
+Adding the two log ratios and averaging under the ACTUAL conditional law proves the joint bound
+$$
+D\!\left(\mathcal L(U\mid n)\middle\|
+      \bigotimes_{j\in I_C}\operatorname{Pois}(sf_j(w))\right)
+\le\mathcal A^\sharp_{Q,C}(s).                          \tag{193.22}
+$$
+It includes all mark totals and all joint categorical exclusion. No marginal divergences have been added to infer this joint statement. The modification is not a formal substitution into a theorem with a fixed dimension: (193.18)--(193.22) explicitly show that only the proved $F_*,W_*$ bounds, the two-dimensional totals and the stated finite conditions enter.
+
+### 193.6 Original common-total response, exceptional totals and exact means
+
+We now integrate (193.22) over the same actual totals of Section 193.4. Set
+$$
+A_0=1+2C/b,\quad C_{\rm rem}=2C/b^2,\quad
+A_t=2/b^2+4C_{\rm rem}^2,\quad C_{\rm cal}=4C^2/b+4,
+\quad A_f=1+C\log(C/b).
+$$
+Also require $s\ge\max\{4,4C/b,2C_{\rm cal}\lambda\}$. On $G$, write $w=\nu+\Delta$, $\ell_j=\log(f_j(w)/f_j(\nu))$, and $g_j=\mathbb E(U_j\mid H)$. Exact reference change gives
+$$
+\begin{aligned}
+D(P_H\|\textstyle\bigotimes_j\operatorname{Pois}(sf_j(\nu)))
+={}&D(P_H\|\textstyle\bigotimes_j\operatorname{Pois}(sf_j(w)))\\
+&+s\sum_j f_j(\nu)(e^{\ell_j}\ell_j-e^{\ell_j}+1)
+ +\sum_j(g_j-sf_j(w))\ell_j.                            \tag{193.23}
+\end{aligned}
+$$
+This uses actual conditional means $g_j$, not Poisson means by assumption.
+
+The derivatives of $\log f_j$ are $k_{j,\sigma}/w_\sigma-1$. Consequently $|\ell_j|\le A_0\sum|\Delta_\sigma|\le2A_0$, and Taylor expansion gives
+$$
+\ell_j=\sum_\sigma
+       \frac{k_{j,\sigma}-\nu_\sigma}{\nu_\sigma}\Delta_\sigma+r_j,
+\qquad |r_j|\le C_{\rm rem}|\Delta|^2/\lambda.
+$$
+Since $|\Delta|^2\le2$,
+$$
+\ell_j^2\le\frac{A_t}{\lambda^2}
+          (\lambda+|\mathbf k_j-\nu|^2)|\Delta|^2,\qquad
+\sum_j f_j(\nu)\ell_j^2\le A_tW_*|\Delta|^2/\lambda^2.
+$$
+Using $e^t t-e^t+1\le e^{|t|}t^2/2$ and (193.14), the expectation ON $G$ of the second line's first sum in (193.23) is at most $5e^{2A_0}A_t W_*/\lambda$. This is the actual common-total payment at the new line scale. A uniform bound on each derivative alone would lose it.
+
+For the conditional mean error, each row coordinate has law $\operatorname{Bin}(n_\sigma,1/s)$. For $n=sw$ and $0\le k\le C\lambda$, the log ratio to $\operatorname{Pois}(w)$ is
+$$
+\sum_{l=0}^{k-1}\log(1-l/n)+(n-k)\log(1-1/s)+w.
+$$
+Our size conditions give $k\le n/2$. The inequalities
+$-2x\le\log(1-x)\le-x$ for $0\le x\le1/2$ and
+$-1/s-1/s^2\le\log(1-1/s)\le-1/s$ show that the two-coordinate log ratio has absolute value at most $C_{\rm cal}\lambda/s\le1/2$. It follows that
+$$
+|g_j-sf_j(w)|\le2C_{\rm cal}\lambda f_j(w).
+$$
+This also proves the factor2 used in (193.15). On $G$, $f_j(w)\le e^{2A_0}f_j(\nu)$. Averaging the last sum in (193.23), in absolute value, now costs at most
+$$
+2C_{\rm cal}A_0e^{2A_0}\lambda F_*\sqrt{20\lambda/s}.
+$$
+The dependence on the original size $s$ makes this term negligible.
+
+On $G^c$, use no conditional approximation. Since $\nu_++\nu_-=\lambda$ and each $\nu_\sigma\ge b\lambda$, the fixed-core bound $k!\le k^k$ gives $f_j(\nu)\ge e^{-A_f\lambda}$. For any class histogram $\sum_j c_j\le s$ and $\log(c_j!)\le c_j\log s$; therefore its fixed-reference cross-entropy is at most $s(1+A_f\lambda)$. Multiplying by (193.14) pays at most $4s(1+A_f\lambda)e^{-s/(8\lambda)}$. Tiny core means and all exceptional actual totals are included.
+
+Thus define the explicit new error
+$$
+\boxed{\begin{aligned}
+\mathcal E^\sharp_{Q,C}(s)={}&
+ \mathcal A^\sharp_{Q,C}(s)+5e^{2A_0}A_t\,W_*/\lambda\\
+&+2C_{\rm cal}A_0e^{2A_0}\lambda F_*\sqrt{20\lambda/s}
+ +4s(1+A_f\lambda)e^{-s/(8\lambda)}.
+\end{aligned}}                                               \tag{193.24}
+$$
+Its constants are all specified in (193.6),(193.16),(193.21),(193.23)--(193.24). Sufficient conditions are (193.17), the class-size condition above, $q\ge1,\ q\le M/2,\ s_0\ge1$, and global complete-group identification. The optional background refinement (193.13),(193.15) also uses $\lambda\ge4(1+\sqrt2)/r$. Every condition holds uniformly at late layers.
+
+Retain $H$ with its exact joint law on both sides of the comparison. Given $H$, the two class histograms are independent, so the conditional entropy chain rule sums their two bounds (193.24). Data processing under coordinatewise addition and dropping $H$ gives
+$$
+D\!\left(\mathcal L(C_{I_C})\middle\|
+                    \bigotimes_{j\in I_C}\operatorname{Pois}(m_j)\right)
+\le\mathcal E^\sharp_{Q,C}(q)+\mathcal E^\sharp_{Q,C}(s_0).
+                                                               \tag{193.25}
+$$
+This compares two histograms on the SAME signal/background realization. No full signal-array divergence is paid, and no marginal-to-joint inference or independent-path-row replacement occurs.
+
+### 193.7 Every tail coordinate and the improved full-vector rate
+
+We retain Chapter 191's information payment, not merely its TV tail. For
+$\mathcal T_C=A_Q\setminus I_C$ and $R_T=\bigotimes_{\mathcal T_C}\operatorname{Pois}(m_j)$, it is
+$$
+\mathbb E[-\log R_T(C_{\mathcal T_C})]
+\le M\left[1+\log(M/q)+\lambda+\frac{32}{b\lambda}\right]
+                         e^{(\gamma-C/4)\lambda},
+\qquad \gamma=(e-1)/2.                                 \tag{193.26}
+$$
+Its proof applies to these same laws: $P_S^2=\Pi$ and Cauchy--Schwarz over even/odd departure lists give $\mathbb E e^{N_x/2}\le e^{\gamma\lambda}$. Consequently
+$\mathbb E[N_x^2\mathbf1_{\{N_x>C\lambda\}}]\le32e^{(\gamma-C/4)\lambda}$ and the corresponding probability is at most $e^{(\gamma-C/4)\lambda}$. For a tail pair of total $t$,
+$-\log f_j(\nu_1)\le\lambda+t^2/(b\lambda)$.
+The bounds $m_j\ge qf_j(\nu_1)$ and $\log(C_j!)\le C_j\log M$ charge its full log-reference mass to the same row's weighted tail. Distinct reference pairs sum to at most the Poisson total-count tail. Summing over the $M$ rows gives (193.26), with no tail cardinality multiplier or row-independence assumption.
+
+Set once and for all
+$$
+c_M=\phi/\beta_0,\quad C_*=4(\gamma+c_M+2),\quad
+V_Q=1+(1+\phi)\lambda+\log2+\frac{32}{b\lambda}.          \tag{193.27}
+$$
+The exact floors give $\log M\le c_M\lambda$,
+$z_0\le\phi\lambda$ and $q\ge Me^{-z_0}/2$ at late layers. Thus
+$\log(M/q)+\lambda\le(1+\phi)\lambda+\log2$.
+Taking $C=C_*$, with $C_*\le2M$ eventually, bounds (193.26) by $V_Qe^{-2\lambda}$. The fixed core is only a proof decomposition; no tail group is dropped.
+
+For the finite full vector, the chain identity
+$$
+D(P\|R_I\otimes R_T)
+=D(P_I\|R_I)+\mathbb E[-\log R_T(C_T)]-H(C_T\mid C_I)
+$$
+and nonnegative conditional Shannon entropy join (193.25) and (193.26). All dependence between core and tail is included in this identity.
+
+Finally exact-mean projection gives, on $A_Q$,
+$$
+D(P\|\textstyle\bigotimes_j\operatorname{Pois}(m_j))
+=D(P\|\textstyle\bigotimes_j\operatorname{Pois}(\mu_j))
+ +\sum_j[\mu_j\log(\mu_j/m_j)-\mu_j+m_j].
+                                                               \tag{193.28}
+$$
+The brackets are nonnegative. At $\mu_j=0$, $C_j=0$ almost surely and its bracket is $m_j$, using $0\log0=0$. This follows by cancellation of the factorials and taking expectations, after removing any zero-mean coordinate. It never needs a lower bound on actual means. The finite-support reduction in Section 193.2 then restores all $J_Q$, proving the explicit bound in (193.1).
+
+For its rate, (193.7) gives $F_*,W_*/\lambda,\delta_*,\kappa=O_{r,C_*}(\eta_Q)$, and we chose $\tau=\eta_Q$. Both $q,s_0$ grow exponentially in $\lambda$, uniformly on $J$, from
+$$
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O(1).
+$$
+Also $\kappa$ is bounded below by a positive constant times $\eta_Q$, since $Q\le h\le\sqrt2 Q$ at late original layers. Therefore $s\kappa$ and $s\tau$ grow exponentially divided by a polynomial. Under (193.17),
+$$
+a_s\le\frac1{3bs\lambda}+2\kappa+2\delta_*+2\tau+\chi_s.
+$$
+In (193.24), the marked-tail, Fourier-remainder, calibration and exceptional-total terms are smaller than every inverse power of $Q$. The other terms are $O(\eta_Q)$. This proves the uniform $O(Q^{-5/2})$ bound, hence $o(Q^{-1})$, for both actual experiments and every deterministic support, without limiting their means.
+
+
+### 193.8 领先项仍缺共同信息的相消估计
+
+加权求和的收益来自原计数线的间距与 Gaussian 宽度：平方距离加权和由第 189 章按 $Q^2$ 个目标计费，降到本章的 $\sqrt Q$ 宽度。共同总数响应中的 $W_*/\lambda$ 因此改善 $Q^{-3/2}$。式 (193.19)–(193.20) 对任意正 $\tau$ 重新证明平滑余项，故取 $\tau=Q^{-5/2}$ 后没有遗留的 $Q^{-1}$ 项。核心截止仅用于分解证明，其全部补集由 (193.26) 支付。
+
+对于有限完整向量、实际四个总数 $H$ 和任意固定正参考参数 $m$，联合熵链式身份与精确均值投影给出
+
+$$
+D(\mathcal L(C)\|R_\mu)
+=\mathbb E_H D(\mathcal L(C\mid H)\|R_m)
+  -I(C;H)-D(R_\mu\|R_m),
+\tag{193.29}
+$$
+
+其中 $R_\mu,R_m$ 是相应的乘积 Poisson 律，最后一项就是 (193.28) 中的非负和。实际侧支撑有限，故该身份没有可积性缺口。本章控制第一个量的上界，并舍去两个非负减项；它没有测出这些项之间的抵消。类别直方图似然比的上确界也不必与其实际期望同阶。因此，不能从本上界或一个 Gaussian 协方差量级读出二阶领先系数。
+
+pair 与 path 的 $H$ 律不同；共同的集中界足以证明 (193.1)，不足以判定其领先信息系数是否不同。本章没有原实际律下的匹配下界，不声称速率最优，也不推出同步集 $E_2$、全数据后验熵、重构或物理方差熵结论。$\beta$ 随 $Q$ 趋近 $D$ 的边界、改变振幅或时长，以及所有二维计数对组成的稠密目标族，均不在本章的一致范围内。
+
+### 193.9 归属与迁移条件
+
+第 175 章提供完整得分群的全局识别；第 183 章提供原三类轨迹下的精确条件分配；第 187 章提供实际总数集中；第 188、189 章提供标量质量界和联合信息比较结构；第 191 章提供逐行尾部交叉熵。本章新增的是允许实际强度偏移的加权计数线估计，以及它经较小频率截止、共同总数响应和完整尾部支付后的联合信息后果。离散 Gaussian 求和与中心化线质量尺度本身是已有方法。
+
+Adell、Lekuona 与 Yu 的有限二项—Poisson 信息公式可用于未条件化的独立行参考：此时整个类别直方图对 Poisson 向量的似然比仅依赖标记总数，联合相对熵化为一个二项—Poisson 相对熵。原实际条件分配却保留两个规定总数及其共同混合律，不能直接移植这个参考结论。其固定参数渐近余项也不能不经检验用于概率与均值同时变化的范围。相关原始文献与适用边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章为普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）
