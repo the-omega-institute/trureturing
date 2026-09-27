@@ -2937,7 +2937,7 @@ $$d\equiv1+u\lambda^2+t\lambda^3\pmod9
 
 Source: Dunn and Radziwill, *Bias in cubic Gauss sums: Patterson's
 conjecture*, arXiv:2109.07463v3, equations (1.4)-(1.5), catalogued in
-`Library/notes/dunn2024cubicreciprocity.md`. These classical identities
+`Library/ArithUnits/dunn2024cubicreciprocity.md`. These classical identities
 are unconditional. No GRH-dependent analytic theorem of that paper is used.
 
 Define the actual oriented factor

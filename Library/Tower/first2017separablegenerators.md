@@ -27,7 +27,7 @@ was read; the requested page-2 and page-5 screenshots failed.
 
 The existing Problems owner remains
 `Problems/wall-sun-sun-golden-unit-lift.md`. Its companion
-`Library/notes/dunn2024cubicreciprocity.md`, GIR and GMI, supplies the
+`Library/ArithUnits/dunn2024cubicreciprocity.md`, GIR and GMI, supplies the
 actual golden tower and the distinction between normalization and
 power-generator indices. GTC is the continuation of those objects.
 It does not create a different WSS problem or attribute its proofs to

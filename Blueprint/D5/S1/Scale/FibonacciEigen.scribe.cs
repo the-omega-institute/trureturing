@@ -30,7 +30,7 @@ Blocks(
                             + "remain unchanged; no WSS prime is constructed by this link.")),
                     Paragraph(
                         Text("Cubic reciprocity on the same integer block depths: "),
-                        Ref(LibraryNoteRef.Create("D5/L/dunn2024cubicreciprocity").Value),
+                        Ref(LibraryNoteRef.Create("D5/L/ArithUnits/dunn2024cubicreciprocity").Value),
                         Text(". GCR in the existing WSS dossier proves single-layer and "
                             + "interlevel cubic-character balances, individual earlier-prime "
                             + "conditions and a Kummer interpretation. Under a P-squared "
@@ -45,7 +45,7 @@ Blocks(
                             + "on the square factor, proves their comparison-prime compatibility "
                             + "and gives an exact irreducible cubic Thue descent with its "
                             + "original Lucas-coordinate condition. Source roles remain in "),
-                        Ref(LibraryNoteRef.Create("D5/L/dunn2024cubicreciprocity").Value),
+                        Ref(LibraryNoteRef.Create("D5/L/ArithUnits/dunn2024cubicreciprocity").Value),
                         Text(". These are ordinary mathematical statements; the Lean "
                             + "declaration, authored formula and provenance above are unchanged.")),
                     Paragraph(
@@ -84,7 +84,7 @@ Blocks(
                             + "common-index recurrences, global attaining elements and "
                             + "quadratic index-valuation growth. The full ordinary proofs "
                             + "and classical finite-field generator source are recorded in "),
-                        Ref(LibraryNoteRef.Create("D5/L/first2017separablegenerators").Value),
+                        Ref(LibraryNoteRef.Create("D5/L/Tower/first2017separablegenerators").Value),
                         Text(". This tower-presentation obstruction is distinct from "
                             + "the block normalization index detecting WSS; it adds no "
                             + "WSS witness or conclusion to this Lean theorem.")),
@@ -100,7 +100,7 @@ Blocks(
                             + "prime-family decision to this declaration.")),
                     Paragraph(
                         Text("OSE returns to the original odd-depth prime support. "),
-                        Ref(LibraryNoteRef.Create("D5/L/andrejic2006fibonaccipowers").Value),
+                        Ref(LibraryNoteRef.Create("D5/L/Recurrence/andrejic2006fibonaccipowers").Value),
                         Text(" supplies a finite rank-closure descent and an explicit "
                             + "cardinality bound for powerful Fibonacci indices covered "
                             + "by any fixed finite odd-super-depth support. It credits "
