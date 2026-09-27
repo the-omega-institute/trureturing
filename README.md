@@ -249,12 +249,13 @@ This repository does **not** establish the Riemann hypothesis.
 ## First run
 
 Install [elan](https://github.com/leanprover/elan#installation) and the
-[.NET SDK](https://dotnet.microsoft.com/en-us/download), with `lake`
-and `dotnet` on your `PATH`. You also need Git, Make and a Bash-compatible shell.
+[.NET SDK](https://dotnet.microsoft.com/en-us/download) version specified in
+[global.json](global.json). Ensure `lake` and `dotnet` are on `PATH`;
+you also need Git, Make and Bash.
 elan selects Lean from [lean-toolchain](lean-toolchain). Mathlib is declared in
 [lakefile.toml](lakefile.toml), with resolved dependencies in
-[lake-manifest.json](lake-manifest.json). Install the .NET SDK version specified
-in [global.json](global.json); the installed SDK must match that file.
+[lake-manifest.json](lake-manifest.json). For contribution checks, add Python
+3.11+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
 
 Clone the project, then build just the introductory module. The `make` entry
 prepares a private Lean cache; the first run may download dependencies.
