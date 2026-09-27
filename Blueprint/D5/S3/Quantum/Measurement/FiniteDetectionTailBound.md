@@ -23,5 +23,4 @@ For every positive semidefinite trace-one matrix supported orthogonally to the d
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionTailBound.finite_detection_tail_bound`
-- Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionDarkBlockContraction](FiniteDetectionDarkBlockContraction.md)
 - Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit](FiniteDetectionSurvivalLimit.md)
