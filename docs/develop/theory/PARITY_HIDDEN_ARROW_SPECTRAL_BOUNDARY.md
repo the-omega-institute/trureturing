@@ -48653,3 +48653,429 @@ These scaled geometric limits are weaker than and do not replace the finite-arra
 Cauchy 变形、解析隐函数、端点与 Gaussian 积分、局部 Morse 坐标和 Rouché 定理均为经典工具。Bennett、Howls、Nemes 与 Olde Daalhuis 的全局超渐近方法要求更强的无穷远轮廓、邻接及余项条件；本章没有假定精确数组满足这些未证条件，而是逐段验证有界复轮廓，并将无穷尾留在已有估计的实轴上。新增组合是显式总轮廓域、共同作用量间隙和保持原选择律的相对振幅返回。来源与条件比较见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限来源核对不构成全球原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 165. 单一仿射响应、共同整数平面与实际概率缺口
+
+固定一个隐藏标签对的总数后，原完整选择后验在所有外部标签上的分布，精确地是两个固定概率律的混合。因此，任意有限组外部后验中心都沿同一条仿射直线变化；增加中心数量并不自动增加独立响应方向。
+
+本章保留这条直线的方向、截距及两个共振坐标的共同整数分母，给出一个行列式引理：在显式误差条件下，全部共振三元组落入同一个整数平面。若该平面与响应直线的允许交段足够短，一个频带只需计入至多 18 个完整投影原子。由此得到 $\gamma<c<3\gamma/2$ 的条件接口，其中 $\gamma=99c_q/200$；唯一新增的未证前提是明确例外事件 $B_{165}$ 在原实际数据律下的概率趋零。
+
+该概率界尚未得到，更宽的原后验定理仍未解决。第 163 章的无条件范围 $0<c<99c_q/200$ 保持原结论。下面完整保留精确后验身份、共同数组上的条件概率估计、可行率和物理返回，区分已得推导与未证条件；不作 Lean 认证。
+
+### 165.1 完整原后验的目标与保留参数
+
+Keep the original fixed beta in(1/2,1), the unchanged Liouville amplitude r, and
+
+$$
+ A_s=\log(1+r),\quad B_s=\log(1-r),\quad v_\pm=1\pm r,
+ \quad\phi=(v_+A_s+v_-B_s)/2,
+$$
+
+$$
+ c_q=\phi(1-\beta)/\beta,\quad c_M=\phi/\beta,
+ \quad\lambda=Q^3,\quad\kappa=c_q/1000,\quad
+ \gamma=c_q/2-5\kappa=99c_q/200.                 \tag{165.1}
+$$
+
+Thus0<c_q<phi and log q=c_q lambda+O(1), log M=c_M lambda+O(1), with the original floors. The amplitude relation and its Liouville sequence are those of Definition 68.1. There is no parameter genericity premise.
+
+For clarity the original theorem whose extension remains open retains
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+ \mathcal B=q/Q^{11/4},\quad\rho=\sigma\mathcal B,
+ \quad T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \quad Y=T+\sigma G,
+$$
+
+$$
+ A=V_H/\sqrt\delta,\quad\nu_0=2\sum_{j\in H}w_j^2,
+ \quad\kappa_3=8\sum_{j\in H}w_j^3,\quad\Lambda=\nu_0+\sigma^2,
+ \quad C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+$$
+
+$$
+ D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+ \quad R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \quad\nu=2g_0.                                      \tag{165.2}
+$$
+
+The required conclusions at rho comparable exp(-c lambda) are
+
+$$
+ \int_{\mathbb R}f_x(y)|D_x(y)-R_*(y)|\,dy\to0,
+ \quad E_xY^2\to\nu,
+$$
+
+$$
+ \int f_xVpost_x-Vprior_x+A^2/\Lambda-C_xm_x
+       \to8/\sqrt3-25/6,\qquad m_x=E_xY.              \tag{165.3}
+$$
+
+The probabilities are the original support-uniform raw-data probabilities, separately pair/path. Complete count multiplicities, full-q selection, exact finite coefficients and centers, low/outside coordinates and SAME G remain mandatory. Nothing in the identities below permits discarding the hidden pair from the physical T. The identities only describe how the actual posterior varies on a permitted conditional slice of the raw data.
+
+### 165.2 单一隐藏对的精确后验混合与仿射响应
+
+**命题 165.1（完整外部后验的精确二分量混合）。** Fix positive likelihood weights L_i of the original uniform-size-q support posterior. Retain one hidden pair u,v and let O be every other label. Conditional on its revealed totals the product P=L_uL_v>0 is fixed, while
+
+$$
+ S=L_u+L_v=2\sqrt P\cosh X.                            \tag{165.4}
+$$
+
+Let E_k be the kth elementary symmetric coefficient of the weights on O, with E_k=0 outside its natural range. We use interior q, as in the original asymptotic experiment, so E_q,E_{q-1},E_{q-2} are positive. Put
+
+$$
+ C=E_q+PE_{q-2},\quad D=E_{q-1},\quad
+ Z=C+DS,\quad \tau=2D\sqrt P/C,
+$$
+
+$$
+ g(X)=C/Z={1\over1+\tau\cosh X},\qquad
+ t(X)=1-g(X)={\tau\cosh X\over1+\tau\cosh X}.        \tag{165.5}
+$$
+
+These are exact finite quantities. The letter t in(165.5) is a bounded response coordinate, not the log-odds score t_raw of the earlier chapters.
+
+For an outside subset A contained in O, write L_A=product_{i in A}L_i. Define two fixed probability measures
+
+$$
+ \nu_0(A)={L_A[\mathbf1_{|A|=q}+P\mathbf1_{|A|=q-2}]\over C},
+ \qquad
+ \nu_1(A)={L_A\mathbf1_{|A|=q-1}\over D}.             \tag{165.6}
+$$
+
+The exact outside-support posterior is
+
+$$
+       \mathcal L(S_{true}\cap O\mid\hbox{full data})
+                  =g(X)\nu_0+t(X)\nu_1.             \tag{165.7}
+$$
+
+Proof. For each outside subset A, the possible pair cardinalities0,1,2 have respective total weights1,S,P. Their outside sizes are q,q-1,q-2. Summing those three disjoint alternatives gives numerator L_A times the bracket1_{|A|=q}+S1_{|A|=q-1}+P1_{|A|=q-2}, and its total is C+DS. Dividing and regrouping proves(165.7). All weights are positive. No asymptotic approximation, known-support posterior, or independent-row replacement is used.
+
+Consequently the posterior expectation of ANY fixed integrable outside statistic O_0 is
+g nu_0(O_0)+t nu_1(O_0). This includes signed outside moments whenever they exist. It does not include a physical observable that itself changes with the hidden allocation or uses its latent labels without further bookkeeping; we make no such transfer.
+
+For a particular outside anchor a, let E_k^{(-a)} omit it as well and put
+
+$$
+ A_a=L_a(E_{q-1}^{(-a)}+PE_{q-3}^{(-a)}),\quad
+ B_a=L_aE_{q-2}^{(-a)},\quad
+ \pi_a^0=A_a/C,\quad\pi_a^1=B_a/D.
+$$
+
+$$
+ \pi_a(X)={A_a+B_aS\over C+DS}
+          =\pi_a^0+(\pi_a^1-\pi_a^0)t(X).            \tag{165.8}
+$$
+
+For two fixed occupied groups with outside anchors of their actual common likelihoods, retain every possible total membership n_i in{n_i^o,n_i^o+1,n_i^o+2}. On each of the nine membership branches the EXACT physical centers are
+
+$$
+ (\mu_1(X),\mu_2(X))=\mathbf A+\mathbf b\,t(X),
+ \quad A_i=n_i\pi_i^0,\quad
+ b_i=n_i(\pi_i^1-\pi_i^0).                            \tag{165.9}
+$$
+
+If a selected label belongs to a group, it has exactly that group's count tuple and likelihood and hence exactly the same posterior marginal. Thus multiplication by the TOTAL membership is correct. Jointly impossible membership combinations can be retained as a harmless superset; none is silently omitted. There is no external empirical center in(165.9).
+
+Every finite vector of such outside centers has the same representation A+b t. Its first and second derivatives in X are b t' and b t'', so every two-coordinate determinant of those derivatives is ZERO identically. Higher derivatives add no direction. An affine relation over the reals holds on the whole conditional slice. Adding centers alone therefore cannot manufacture transversality for this one hidden pair. This assertion concerns variation in X at FIXED actual outside data and fixed r. It does not contradict Proposition 68.2's different argument varying the amplitude to prove rational independence at the actual amplitude.
+
+What the scalar reduction discards is now explicit: the direction b, the intercept A modulo integer shears, and the requirement that both center coordinates have the SAME harmonic denominator. Those data determine which rational plane can contain simultaneous resonance triples. The scalar response t and its curvature by themselves do not determine that plane.
+
+### 165.3 合法稀有总数条件下的定量响应
+
+This section checks the new identity on the original permitted revealment; it does not assume an independent phase. Use one predetermined trial block and a negative-score total pair x(-ell) from (163.7) with fixed0<ell<c_q. The SAME pair has rate I(x(-ell))<67c_q/68 by (163.15). Its exact rounded totals K_e=floor(lambda x_e) have joint point probability at least k_x lambda^-1 exp(-I(x)lambda), with the explicit positive finite prefactor (163.24). Therefore
+
+$$
+ m=\lceil k_x^{-1}Q^5e^{I(x)\lambda}\rceil,
+ \quad\log m\le(67/68)c_q\lambda+5\log Q+O_x(1).      \tag{165.10}
+$$
+
+The joint comparison of Chapter 155 costs8m/M+sqrt(48m/M); trial failure costs e^-Q^2. Both vanish. The available support has2m=o(q/Q^3), leaving anchors in groups j=0 and j=1 of the original count line. On original regularity both fixed groups have order q/Q^3 labels and compact calibrated inclusion probabilities. These are adjacent ORIGINAL isolated count tuples, not newly chosen phases; their likelihoods may be extraordinarily close.
+
+Reveal the original parity record, all trial masks/totals, outside labels, and the permitted arrival or terminal path information. Select the first prescribed-total trial before revealing either allocation. Then reveal all nonselected allocations. The finite partition over selected indices gives exactly Bin(K_+,1/2) tensor Bin(K_-,1/2) for the surviving two counts, conditional on the resulting sigma-field F. This is the conditional slot kernel of Chapters 155 and 163. No selected-pair success is conditioned on its hidden split.
+
+For simultaneous low-band views below, make the finite collection of trial blocks disjoint at the outset, select all by totals, and retain their product fair-binomial kernel. For the high-band view F reveal the other selected splits. The two chosen anchors lie outside ALL trials. Each one-anchor asymptotic estimate deletes only the selected pair and that anchor, exactly three labels. The common exact denominator C+DS in(165.5) omits only the pair; writing that polynomial identity is not a new many-deletion local expansion.
+
+The actual compensated log-odds score satisfies t_raw=-ell lambda+O_x(1). Fix0<h<ell. For the exact split variable X,
+
+$$
+ P(|X|>h\lambda\mid F)\le2e^{-2h^2\lambda/V_x},
+ \quad V_x=2(A_s^2x_++B_s^2x_-+1).                  \tag{165.11}
+$$
+
+The outside mean/variance enlargement is F-measurable and follows from the original full-array regularity event, whose failure is charged separately. We do not condition this kernel on a hidden-dependent regularity event.
+
+Let t_o be the calibration multiplier for O at integer mean q-1. The retained fixed-offset coefficient ratios, at offsets -1,0,1, give
+E_q/E_{q-1}=t_o^-1(1+O(q^-1)) and E_{q-2}/E_{q-1}=t_o(1+O(q^-1)). Removing two labels changes calibration by O(q^-1). Hence log(t_o sqrt P)=-ell lambda+O_x(1), and the EXACT tau in(165.5) obeys
+
+$$
+ C_0^{-1}e^{-\ell\lambda}\le\tau\le C_0e^{-\ell\lambda}.
+                                                               \tag{165.12}
+$$
+
+Here C_0,c_0 denote fixed upper/lower bounds, distinct from the exact finite varentropy coefficient C_x in(165.2).
+
+For the two centers in(165.9), on each membership branch,
+
+$$
+ c_0Q^{-3}\le |b_i|\le C_0Q^{-3},\qquad i=1,2.       \tag{165.13}
+$$
+
+One can verify this without differentiating a C0 expansion. The original three-deletion formula is uniform for all positive pair odds with fixed product: pi_i(X)=p_ref-(v_o/D_o)f_{t_score}(X)+O(q^-2), D_o comparable q, v_o bounded above/below, and t_score=-ell lambda+O(1). Compare ONLY X=0 and the limit |X| to infinity. The first has f=-1+o(1); the second has f=0. Their difference is comparable q^-1. The exact formula(165.8) identifies this difference as (pi_i^0-pi_i^1)/(1+tau), with tau tending to zero. Multiplication by n_i comparable q/Q^3 proves(165.13). Uniform positive averaging of the fixed offsets[-2,1] licenses the limit in the algebraic formula; no probability assertion at an unobserved allocation is made. In particular this use introduces no q^-2 remainder into the exact line(165.9).
+
+The exact response has derivatives
+
+$$
+ t'(X)={\tau\sinh X\over(1+\tau\cosh X)^2},\quad
+ t''(X)={\tau[\cosh X-\tau\cosh^2X+2\tau]
+                       \over(1+\tau\cosh X)^3}.       \tag{165.14}
+$$
+
+If tau cosh X<=1/4, then t''(X)>=tau/4 and |t'(X)|<=tau cosh X. This condition holds uniformly on |X|<=h lambda+o(1) by ell>h. These are derivatives of an exact rational function, not derivatives of a remainder estimate.
+
+Use the original coprime projection Z=Ql-P_n k, with its full preimages, and bar X=(b_s/Q)(Z-Z^0). The original compensation/Liouville bounds give
+
+$$
+ |X-\bar X|\le\Delta=C_0Q^3(q/M+e^{-c_0Q^5}),
+ \quad\sup_zP(Z=z\mid F)\le C_0Q^{-5/2}.             \tag{165.15}
+$$
+
+Here P_n is the original rational numerator, distinct from the pair product P in(165.4). Fixing Z fixes k modulo Q; its fair-binomial residue mass is at most Q^-1(1+Ce^-cQ), while the allowed l atom is at most C Q^-3/2. Summing EVERY k proves the atom bound. Totals are fixed positive multiples of Q^3, so all constants are finite. For Z with |bar X|<=h lambda+Delta, exact(165.14) gives
+
+$$
+ 0\le t(\bar X)\le W=C_0e^{-(\ell-h)\lambda},\quad
+ {d^2\over dZ^2}t(\bar X)\ge\chi=c_0Q^{-2}e^{-\ell\lambda},
+$$
+
+$$
+ |t(X)-t(\bar X)|\le C_0e^{-(\ell-h)\lambda}\Delta.   \tag{165.16}
+$$
+
+The final bound retains the small derivative; replacing it by1 would unnecessarily lose precision. Constants absorb the vanishing Delta and the fixed b_s tending to B_s. The permitted Z values lie in one real interval on which the curvature bound holds. Actual hidden-tail failures remain(165.11).
+
+### 165.4 共同分母的整数平面引理
+
+**引理 165.2（共同分母的整数平面与投影原子数）。** The following deterministic statement is independent of the probabilistic model. Let alpha in[0,1)^2, b in R^2 with B=||b||_infinity>0, and 0<=t(z)<=W on an interval of integer sites. Suppose the twice differentiable extension obeys t''>=chi>0 there. Let1<=L<=H, epsilon>0. Consider ALL integer triples
+
+$$
+ v=(d,k_1,k_2),\quad L\le|d|\le H,\quad
+ |k_i-d(\alpha_i+b_i t)|\le\varepsilon\ (i=1,2)
+ \quad\hbox{for SOME real }t\in[0,W].                \tag{165.17}
+$$
+
+This finite set is defined using the whole response interval, not the actual random site. Suppose
+
+$$
+       6H^2BW\varepsilon+6H\varepsilon^2<1.          \tag{165.18}
+$$
+
+Then its integer span has real rank at most2. If its rank is2, there is a unique primitive integer normal n=(n_0,n_1,n_2), up to sign, containing EVERY triple; choose the sign by the first nonzero coordinate. Necessarily s=|n_1|+|n_2|>0, and
+
+$$
+ \|n\|_\infty\le K=8[H^2BW+H\varepsilon(1+BW)+\varepsilon^2].
+                                                               \tag{165.19}
+$$
+
+Proof. Put a=(1,alpha_1,alpha_2), bbar=(0,b_1,b_2), and e=(0,e_1,e_2). Each triple is d a+d t bbar+e with |e_i|<=epsilon. For any three such triples, the zero-error determinant vanishes. Terms with one error have total absolute value at most6H^2BW epsilon: each contains d_i d_j(t_j-t_i) det(a,bbar,e_k), and |det(a,bbar,e_k)|<=2B epsilon. Terms with two errors total at most6H epsilon^2, because the first coordinate is d and |det(e_j,e_k)| in the last two coordinates is at most2epsilon^2. Three-error terms vanish. The determinant is an integer of absolute value<1, hence zero. Every three are dependent, proving the rank assertion.
+
+For independent v,w their cross product is a nonzero integer normal. Expanding it gives a main term dd'(t'-t)a cross bbar of norm at most2H^2BW, two a/error terms at most4H epsilon, two bbar/error terms at most4HBW epsilon, and an error/error term at most2epsilon^2. This is bounded by K. Dividing by the coordinate gcd only decreases the height. A normal with n_1=n_2=0 would force every nonzero d to vanish, impossible. This proves(165.19), without primitive assumptions on the original triples, any denominator count, or a lattice-counting theorem.
+
+There are three resulting cases.
+
+* Rank0: no candidate, hence no bad site.
+* Rank1: all candidates have the same two rational ratios k_i/d. Choose i with |b_i|=B. Every bad site satisfies |t(z)-zeta|<=epsilon/(LB). If4epsilon/(LB)<chi there are at most TWO integer sites.
+* Rank2: put delta_n=n_0+n_1 alpha_1+n_2 alpha_2 and beta_n=n_1b_1+n_2b_2. Every bad site has
+
+$$
+ t(z)\in J_n=[0,W]\cap
+ \{t:|\delta_n+\beta_n t|\le s\varepsilon/L\}.        \tag{165.20}
+$$
+
+If J_n is empty or has diameter strictly below chi/2, there are again at most TWO integer sites. A convenient sufficient alternative is |beta_n|>4s epsilon/(L chi); a disjoint interval in(165.20) is also enough. The operative condition is the interval diameter, which can be weaker than a uniform slope lower bound.
+
+For completeness the two-site assertion follows directly from strong convexity. If z_1<z_2<z_3 are integer sites, the gap between the chord through the outer two response values and the middle value is at least chi(z_2-z_1)(z_3-z_2)/2>=chi/2. Three values in an interval of diameter<chi/2 cannot have that gap. For a symmetric strip of halfwidth e this reads4e<chi. The proof uses the exact response and all its preimages.
+
+The plane is unique in rank2 and is determined by the complete finite set(165.17). Thus it can be selected measurably from revealed data, before the hidden split. There is NO union over normal vectors. Condition(165.19) describes a possible subsequent arithmetic task; it does not impose a strong Diophantine bound on every normal of that height. In particular replacing(165.20) by independent favorable conditions on its intercept and slope would discard information again.
+
+### 165.5 同一实际数组上的联合例外事件
+
+**定理 165.3（含明确例外事件的实际条件概率界）。** For each of the nine membership branches in(165.9), subtract the integer floor of A_i from the ith center and replace k_i by k_i-d floor(A_i). This is an integer shear of the resonance triples; it gives alpha_i in[0,1) and leaves b and the common denominator d intact. It uses only F-measurable coefficients.
+
+Retain the original occupied block, U=exp(10kappa lambda), denominator cutoff mathfrak b with log mathfrak b=O_c(Q), and harmonic horizon N=exp(c lambda+O_c(Q+log Q)) from (163.32). For the two fixed central groups, low common energy E(p)<=U implies
+
+$$
+ \operatorname{dist}(2p\mu_i,\mathbb Z)\le
+ \varepsilon_0=C_0\mathfrak b Q^{3/2}e^{5\kappa\lambda}/\sqrt q,
+ \quad\log\varepsilon_0=-\gamma\lambda+O_c(Q+\log Q).
+                                                               \tag{165.21}
+$$
+
+Both coordinates are from this SAME p and physical array. No independently chosen resonant harmonics are intersected.
+
+For a band exp(a lambda)<=|p|<=N, use the lemma with d=2p, L=2ceil(exp(a lambda)), H=2N, and, increasing constants to cover endpoint floors,
+
+$$
+ \varepsilon=\varepsilon_0+
+ C_0N B e^{-(\ell-h)\lambda}\Delta.                  \tag{165.22}
+$$
+
+The second term pays the actual-to-projected response error by(165.16). Unlike a finite-q truncated center expansion, the exact affine identity contributes NO remainder N/q or N/q^2. The positive coefficients C,D and anchor numerators are kept exactly; their rough bounds are used only to establish(165.12–16).
+
+For each membership branch form the deterministic set(165.17). Under(165.18) define its exceptional event B_n to be: rank2 and the interval J_n has diameter at least chi/2. In rank0 or rank1 set B_n false. Let B_165 be the union over the nine membership branches. Define it false off the permitted outside enlargement or failed selection, whose probabilities are separately charged. This is an explicitly defined F-measurable event involving the EXACT full-q coefficients. It is not an event chosen after inspecting the hidden allocation. The definition keeps numerator range, common denominator, integer shear, actual multiplicities and every candidate plane generated by the joint data; rank2 has only one such plane.
+
+Assume the deterministic bounds(165.18) and4epsilon/(LB)<chi hold on an F-measurable outside enlargement. Then, separately under each actual experiment,
+
+$$
+ P\{\exists p\hbox{ in the band}:\mathcal E(p)\le U,
+           |X|\le h\lambda\mid F\}
+ \le18C_0Q^{-5/2}+\mathbf1_{B_{165}}.                 \tag{165.23}
+$$
+
+Indeed on the complement of B_165 there are at most two integer projection sites per membership branch, and each FULL atom is bounded by(165.15). All harmonics and their positive/negative numerators have already entered the one finite set(165.17). This proves(165.23) without a harmonic union or an exponential union over selected trials. The hidden tail(165.11), selection failure, and original environment failures are charged separately after this lawful conditional statement.
+
+This is a joint-condition theorem. It does not assert that P(B_165) tends to zero. An equivalent sufficient task is to control the joint intercept/orientation of the generated primitive plane relative to the exact center line. Proving only beta_n nonzero, or rational independence at each finite Q, does not give the required interval diameter.
+
+### 165.6 更宽范围的条件接口与唯一未证概率界
+
+**命题 165.4（更宽范围的条件回接）。** Here we quantify what the new determinant condition changes. Let
+
+$$
+                 \gamma<c<3\gamma/2.                \tag{165.24}
+$$
+
+Choose FIXED quantities
+
+$$
+ e=(3\gamma-2c)/8>0,\quad a=\gamma-e,
+ \quad\ell=2c-\gamma+3e,\quad h=e.                  \tag{165.25}
+$$
+
+The letter e in(165.25) is a margin, not the error epsilon. Since c>gamma,0<e<gamma/8; therefore0<a<gamma and0<h<ell<gamma+a<2gamma<c_q. Negative-score supply(165.10) applies to this SAME ell and its positive attained minimizer x(-ell). There is no separately optimized score and rate.
+
+The determinant and rank1 margins are
+
+$$
+ 2c-(\ell-h)-\gamma=-2e<0,\qquad c-2\gamma<0,
+ \qquad\ell-\gamma-a=-4e<0.                         \tag{165.26}
+$$
+
+The projection-defect margin in(165.22) is also strict:
+
+$$
+ c-(\ell-h)-\phi+\gamma
+       =2\gamma-c-\phi-2e<0,                         \tag{165.27}
+$$
+
+because phi>c_q>2gamma. Hence epsilon has logarithm -gamma lambda+O_c(Q+log Q); (165.18) and4epsilon/(LB)<chi follow for all sufficiently large Q. The constants and legal floors consume only O_c(Q+log Q), absorbed by fixed e. We did not apply a half-mean total estimate outside its scope; the exact compact-point rate and prefactor (163.24) are used.
+
+The primitive-plane height and unresolved normalized slope scale can be bounded explicitly:
+
+$$
+ K\le\exp[(\gamma-2e)\lambda+O_c(Q+\log Q)],\quad
+ {4\varepsilon\over L\chi}
+       \le\exp[-4e\lambda+O_c(Q+\log Q)].            \tag{165.28}
+$$
+
+The first follows by comparing the terms of(165.19):2c-(ell-h)=gamma-2e exceeds c-gamma and0 in this window. The second is precisely the third margin in(165.26). These are bounds on ONE generated normal and its common line, not an instruction to union over exp(constant lambda) independent environments.
+
+For lower harmonics use Chapter 163's already proved finite-band construction at the fixed target a<gamma. Choose its finitely many pools and the new high-band pool together, in disjoint predetermined trial blocks. Their total rate remains at most67c_q/68 with a fixed finite prefactor and5log Q overhead. The joint selected fraction comparison still vanishes, and a single exact product kernel exists. The old views reveal all other retained splits and use anchor j=0. The new view reveals the old splits and uses anchors j=0,1. Exactly three deletions suffice for each one-anchor calibration; no physical coordinate is deleted.
+
+Consequently the actual probability of any low-energy harmonic through N is bounded by
+
+$$
+ b_{163,a}+e^{-Q^2}+8m/M+\sqrt{48m/M}
+ +2e^{-2h^2\lambda/V_x}+18C_0Q^{-5/2}
+ +C(b_{env}+b_{reg}+b_{occ})+P(B_{165}).               \tag{165.29}
+$$
+
+Here b_163,a tends to zero by the already proved fixed lower-band input, implemented in the common trial kernel just described. Every other displayed term except P(B_165) is verified to tend to zero, separately pair/path and uniformly in deterministic support/floors. They are raw-data probabilities, never multiplied by inverse noise.
+
+Thus a precise conditional extension is proved: **if** the new actual outside-measurable event B_165 has probability tending to zero with those same quantifiers, **then** the full original conclusions(165.3) hold at that fixed c in(165.24). This interval extends above the old finite-band ceiling only as a CHECKED CONDITIONAL INTERFACE. The missing probability estimate has not been proved for the original model.
+
+The scaling improvement in the new algebra is2c<ell-h+gamma instead of the scalar plateau condition2c<ell-h. It comes from the small third-direction error in an integer3-by-3 determinant. The price is the joint plane condition(165.20); deleting that price would be an invalid conclusion. This is neither a reoptimized old recurrence nor another unconditional sufficient fraction.
+
+### 165.7 条件成立时的完整频率与标记返回
+
+The following implication retains the explicit probability premise. Suppose P(B_165)=o(1) in the required separate support-uniform senses. Equation(165.29) then supplies the SAME event E(p)>U for ALL nonzero harmonics through N. No other new hypothesis is used in the retained marked return.
+
+The physical groups are unchanged: J={j:d_j>=Q^3600}, E=J^c, original H, all counts, exact empirical centers and original intercept. Q_lat is the normalized integer-Gaussian comparison on J and the EXACT binomial law on E, on the same count tuples. Both real marks are derivatives at u=0 of the SAME normalized tilt exp(uW), W=s_lat+G^2/2, with physical y fixed. The response derivatives in(165.14) are raw-data derivatives and are not substituted for these two marks.
+
+The original occupied block has d_* =q exp(-kappa lambda), fixed macroscopic width a_occ Q^2 and unchanged original rate bound. For our fixed c, log mathfrak b=O_c(Q), while log d_*=(c_q-kappa)lambda+O(1). All denominator/occupancy margins of (163.36)–(163.39) therefore remain strict. The off-arc contraction still chooses eta=exp[-(c lambda+2Q^2)/(a_occ Q^2)]. Reduced rational arcs stay separate; no lcm grid is introduced. Nonzero arcs expand ONLY the occupied block and retain every other coordinate exactly. The zero arc expands full J and retains E exactly. Both identities keep the original center phases, finite Gauss coefficients, noncentral shifts, complete H/scalar and the SAME residual factor.
+
+The translated dual precision remains at least exp((c_q-3kappa)lambda); extracting the common energy event gives min dual energy at least exp(7kappa lambda)/4 on the widened strips. Real differentiation through orders0,1,2 of the exact identity, normalized unexpanded-coordinate marks, and Gaussian absorption give the same CQ^12 envelope. This is not differentiation of a C0 estimate. No complex zero-free premise or growing local expansion order is invoked.
+
+The ONLY inverse-rho costs are still
+
+$$
+ CQ^{20}(1+\rho^{-1})\eta^{a_{occ}Q^2}\le CQ^{20}e^{-2Q^2},
+$$
+
+$$
+ C\mathfrak b^2(1+\rho^{-1})
+ [e^{-e^{7\kappa\lambda}/32}
+       +e^{-\rho^2N^2/(100\mathfrak b^2)}],\quad
+ \rho^2N^2/\mathfrak b^2\ge10^6(c\lambda+\log\mathfrak b+\log Q).
+                                                               \tag{165.30}
+$$
+
+Both are absorbed for any fixed c in(165.24). Zero-arc nonzero modes cost CQ^14 exp(-c_0 Q^3600), and the complete reference tail outside the widened strip costs exp(-c_0 kappa Q^(7/2)) without inverse rho. Thus the full normalized marked density error remains CQ^-400. None of these estimates contains the finite number of proof views in a Fourier determinant or product; those views only supply(165.29).
+
+The signed tuple telescope remains (163.42): complete counts and exact intermediate surprise centerings give TV errors CQ^-444 through marks2 and prior-variance error CQ^-448. The same residual kernels
+K_r(n,y)=((y-T(n))/sigma)^(2r)phi_sigma(y-T(n)) have integral EG^(2r), r<=2. They transport those signed errors independently of sigma. No polynomial signed-mass error is multiplied by exp(c lambda).
+
+The nonlinear conditional-mean-square term uses q_1^2/q_0=sup_z(2zq_1-z^2q_0), clipped at |z|<=Q^10. Fourth moments EW^4<=CQ^4 pay O(Q^-16) clipping and O(Q^-424) signed transport. The original selected full-q correction retains0<=h_selected<=C, ||h_selected-1||_2=a_x=O_P(Q^-5/2), INCLUDING its log-density surprise. The same-kernel return costs C a_xQ^2=o_P(1), for every sigma>0. This checks selection and mean square, not merely unmarked TV.
+
+On the output bulk the full real reference density is at least c_0Q^-60. The two normalized quotient identities of (163.44) cost at most CQ^188 against CQ^-400. They first imply a positive real ratio at least1/2 and only then permit the real log derivative. All finite A,Lambda,C_x are unchanged. Output tails use the same real mgf bound and fourth moments; posterior-variance tails cost CQ^-18, with no tail quotient. The outside energy is translated in the core density BEFORE outside surprise is separated and its exact prior variance cancelled. Chapter 101's derivative bound, clipping and noncentral estimates are unchanged because no cutoff or physical observable was changed here.
+
+The full continuous reference therefore returns the same weighted profile R_*; signed-count and selected-law transport give(165.3), including E_xY^2 and the EXACT integrated C_xm_x. This paragraph proves the return only under the explicit missing P(B_165)=o(1) bridge. Without that bridge, (165.30)'s nonzero-arc suppression is unestablished on an actual event of probability tending to one. The already proved c<gamma theorem remains fully available and unchanged.
+
+### 165.8 缺口的实际含义与多对精确表示
+
+No bound has been established for the distribution of the generated normal's delta_n and beta_n under the actual outside data, after totals-only selection and the other lawful reveals. Those coefficients include all outside elementary symmetric sums and the actual group multiplicities. The two nearby count-line likelihoods are extremely close under the original Liouville/compensation relation. Treating the slope as a generic random direction or declaring the two center phases independent would therefore be especially unjustified.
+
+Proposition 68.2's rational independence can exclude an exact rational affine relation at an actual good data point. It supplies no lower bound on the exponentially small interval in(165.20) uniformly for integer normals with height(165.28). Nonzero is not quantitatively separated. The hidden binomial atom bound controls mass AFTER the permitted number of response sites is known; it does not bound P(B_165), which depends only on the revealed outside array. Nor may an unconditioned outside estimate be conditioned on successful rare totals without the appropriate joint law.
+
+For a possible genuinely multidirectional representation, there is also an exact fixed-multipool identity. Retain d hidden pairs with fixed products P_i and sums S_i. For A contained in{1,...,d}, let
+
+$$
+ C_A=\sum_{B\subset A^c}\Big(\prod_{i\in B}P_i\Big)
+                    E_{q-|A|-2|B|},\quad S_A=\prod_{i\in A}S_i.
+$$
+
+$$
+ Z=\sum_A C_AS_A.                                    \tag{165.31}
+$$
+
+For positive C_A, let nu_A be the fixed outside-support law that assigns weight L_H times sum_{B subset A^c}P_B 1_{|H|=q-|A|-2|B|}, normalized by C_A. Zero C_A terms are omitted. Then
+
+$$
+       \mathcal L(S_{true}\cap O\mid\hbox{data})
+                   =\sum_A{C_AS_A\over Z}\nu_A.       \tag{165.32}
+$$
+
+Proof. In each pair choose none, exactly one, or both. Group terms by the set A of pairs choosing exactly one; their total weights are S_A. Sum the remaining0/2 choices, obtaining C_A and nu_A. This is a finite positive polynomial identity, not a2d-deletion local limit approximation. It retains every outside label and all full-q cardinalities.
+
+Writing theta_i=log S_i, the mixing weights in(165.32) form a finite exponential family. For any fixed outside statistic with component means m_A,
+
+$$
+ \partial_{\theta_i}\sum_Aw_A m_A
+       =\operatorname{Cov}_{w}(m_A,\mathbf1_{i\in A}).\tag{165.33}
+$$
+
+This follows directly by differentiating w_A=C_A exp(sum_{i in A}theta_i)/Z. The common totals-only selection still provides the exact product of2d fair-binomial kernels for fixed d, as in Chapter 163. The CALIBRATED responses are not thereby independent: their derivatives are the common covariances(165.33). For d=1 this reduces to the proven affine line. For d>=2 it identifies the exact covariance minors that would have to be bounded to obtain a transverse surface. We prove no nonvanishing quantitative minor, no rare supply for a new optimized multidirectional target, and no harmonic estimate from(165.33). Those remain explicit further obligations, not consequences of the finite mixture identity.
+
+Thus this finite contribution offers two rigorously specified choices for future work: quantify the actual single-line rational-plane event(165.20), or prove suitable joint covariance-minor/arithmetic bounds for(165.32). Neither is asserted to bypass the physical theorem's present range. No actual-law posterior transition, necessity, endpoint, or zero-noise conclusion follows from the affine-line obstruction.
+
+### 165.9 方法边界与来源
+
+单一隐藏对的仿射退化是精确有限后验身份，不是数值近似。多个经验中心的共同变化方向来自同一个分式线性参数；不能把它们当成独立随机相位，也不能对这条条件直线直接套用非退化曲面的估计。原幅度变化所给的有理独立性与这里固定幅度、固定外部数据后的响应是不同问题。
+
+整数行列式中的第三方向误差，把代数体积条件从原标量方法的 $2c<\ell-h$ 改为 $2c<\ell-h+\gamma$，但留下了共同平面与精确直线的联合交段条件。这个条件同时包含截距与方向，不能用分别可达的有利条件代替。所有候选共振三元组共同生成唯一平面，因此没有对平面法向量、分母、分子或指数多次试验追加联合界。
+
+尚缺的是原选择外部环境下 $\mathbb P(B_{165})\to0$，或能给出同一共同能量事件的另一项联合估计。固定数据上的非零斜率、定性有理独立性和隐藏二项原子界都不单独提供这条概率结论。多隐藏对公式 (165.31)–(165.33) 给出精确有限混合及协方差导数，但没有给出足够的定量非退化小行列式。当前没有原后验的界外反例、必要阈值或端点结论。
+
+Beresnevich 的解析流形有理点结果要求不包含于真仿射子空间的非退化性，并控制固定几何中的 Lebesgue 覆盖和下计数。当前单一隐藏对的响应在高维中心坐标中恰落在一条仿射直线上；原文固定几何常数和格子下界也不能自动用于随 $Q$ 变化、指数扁平且带原子条件律的响应。本文直接证明有限混合、整数行列式和强凸性所需的估计，保留这些经典工具的归属。具体原文版本与迁移边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限检索不构成全球原创性认证。
+
+## 追加锚（本行以下为增补区）
