@@ -13,12 +13,9 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
         "Exact universal conditional preparation is a scalar square-root filter, with optimal worst-case success equal to the spectral endpoint ratio.",
         H("Exact Conditional Preparation Cost"),
         Blocks(
-            Entry("kraus-action", "krausAction", "Kraus action", KrausActionFormula(),
-                "A finite Kraus family sends a matrix to the sum of its conjugated branches.",
-                DescribeRole.Definition),
             Entry("exact-preparation-contract", "ExactPreparationContract",
                 "Exact conditional preparation contract", ContractFormula(),
-                "On every positive trace-one input, the output has positive real trace, zero imaginary trace, and is the normalized positive-square-root sandwich associated with the effect.",
+                "On every positive trace-one input, the output has positive real trace and is the normalized positive-square-root sandwich associated with the effect; the Kraus family is trace-nonincreasing.",
                 DescribeRole.Definition),
             Entry("trace-nonincreasing", "TraceNonincreasing",
                 "Trace-nonincreasing Kraus family", TraceNonincreasingFormula(),
@@ -99,7 +96,9 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
         for (var index = 0; index < clauses.Length; index++)
         {
             if (index > 0) items.AddRange([Sp, Land, Sp]);
-            items.Add(index == 0 ? clauses[index] : Seq(RowBreak, Grp(), clauses[index]));
+            items.Add(index == 0
+                ? Seq(Open, clauses[index], Close)
+                : Seq(RowBreak, Open, clauses[index], Close));
         }
 
         return Seq([.. items]);
@@ -126,11 +125,10 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
     private static Formula Ratio => Seq(Minimum, Sp, Slash, Sp, Maximum);
 
     private static Formula Action(Formula family, Formula input) =>
-        Call("krausAction", family, input);
+        Call("PhyslibLeaf.MatrixMap.of_kraus", family, family, input);
 
     private static Formula Trace(Formula value) => Call("Tr", value);
     private static Formula RealPart(Formula value) => Call("Re", value);
-    private static Formula ImaginaryPart(Formula value) => Call("Im", value);
     private static Formula PositiveSemidefinite(Formula value) => Call("PosSemidef", value);
     private static Formula Contract(Formula family) =>
         Call("ExactPreparationContract", Effect, family);
@@ -141,18 +139,6 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
     private static Formula Density(Formula state) =>
         Conjoin(PositiveSemidefinite(state), Equal(Trace(state), D(1)));
 
-    private static Formula ActionSum(Formula family, Formula input)
-    {
-        Formula j = F.Id("j");
-        Formula branch = Apply(family, j);
-        return Seq(
-            Sum, Underscore, Grp(j, Sp, InMacro, Sp, FinCount), Sp,
-            Multiply(Multiply(branch, input), Call("star", branch)));
-    }
-
-    private static Formula KrausActionFormula() =>
-        Equal(Action(Family, Input), ActionSum(Family, Input));
-
     private static Formula ContractFormula()
     {
         Formula outputTrace = Trace(Action(Family, State));
@@ -160,8 +146,8 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
         Formula normalizedScale = Seq(outputTrace, Sp, Slash, Sp, denominator);
         Formula clauses = Conjoin(
             Less(D(0), RealPart(outputTrace)),
-            Equal(ImaginaryPart(outputTrace), D(0)),
-            Equal(Action(Family, State), Scale(normalizedScale, Sandwich(State))));
+            Equal(Action(Family, State), Scale(normalizedScale, Sandwich(State))),
+            TraceNonincrease(Family));
         return ForAll(State, MatrixType, Imply(Density(State), clauses));
     }
 
@@ -189,12 +175,44 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
         return ForAll(Input, MatrixType, equality);
     }
 
+    private static Formula FinOneFamilyType =>
+        Arrow(Call("Fin", D(1)), MatrixType);
+
+    private static Formula ScalarFamily(Formula family, Formula coefficient)
+    {
+        Formula scale = Scale(Call("sqrt", coefficient), SqrtEffect);
+        return Seq(family, Sp, Colon, Sp, FinOneFamilyType, Sp, Colon, Eq, Sp,
+            F.Id("fun"), Sp, Underscore, Sp, Mapsto, Sp, scale);
+    }
+
     private static Formula RigidityClause()
     {
         Formula body = ExistsTyped(Coefficient, Real,
             Conjoin(Less(D(0), Coefficient), ScalarAction(Family, Coefficient)));
         return ForAll(Count, Nat,
             ForAll(Family, FamilyType, Imply(Contract(Family), body)));
+    }
+
+    private static Formula ScalarConverseClause()
+    {
+        Formula family = F.Id("Kc");
+        Formula outputTrace = Trace(Action(family, State));
+        Formula denominator = Trace(Multiply(Effect, State));
+        Formula normalizedScale = Seq(outputTrace, Sp, Slash, Sp, denominator);
+        Formula conditional = ForAll(State, MatrixType,
+            Imply(Density(State), Conjoin(
+                Less(D(0), RealPart(outputTrace)),
+                Equal(Action(family, State),
+                    Scale(normalizedScale, Sandwich(State))))));
+        Formula tni = Seq(
+            TraceNonincrease(family), Sp, Iff, Sp,
+            PositiveSemidefinite(Seq(
+                Identity, Sp, Minus, Sp, Scale(Coefficient, Effect))));
+        Formula body = Seq(
+            Operatorname, Grp(F.Id("let")), Sp, ScalarFamily(family, Coefficient), Semi, Sp,
+            Conjoin(conditional, tni));
+        return ForAll(Coefficient, Real,
+            Imply(Less(D(0), Coefficient), body));
     }
 
     private static Formula EffectClause()
@@ -225,22 +243,33 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
 
     private static Formula OptimalFamily()
     {
-        Formula j = F.Id("j");
         Formula scale = Seq(D(1), Sp, Slash, Sp, Sqrt, Grp(Maximum));
         return Seq(
-            F.Id("Kopt"), Open, j, Close, Sp, Eq, Sp,
+            F.Id("Kopt"), Sp, Colon, Sp, FinOneFamilyType, Sp, Colon, Eq, Sp,
+            F.Id("fun"), Sp, Underscore, Sp, Mapsto, Sp,
             Scale(scale, SqrtEffect));
     }
+
+    private static Formula Adjoint(Formula value) => Call("conjTranspose", value);
 
     private static Formula AttainmentClause()
     {
         Formula optimal = F.Id("Kopt");
+        Formula failure = F.Id("Kfail");
         Formula lower = ForAll(State, MatrixType,
             Imply(Density(State),
                 LessEqual(Ratio, RealPart(Trace(Action(optimal, State))))));
+        Formula tracePreserving = Equal(
+            Seq(Adjoint(Apply(optimal, D(0))), Sp, Cdot, Sp, Apply(optimal, D(0)), Sp,
+                Plus, Sp, Adjoint(failure), Sp, Cdot, Sp, failure),
+            Identity);
         return Seq(
             Operatorname, Grp(F.Id("let")), Sp, OptimalFamily(), Semi, Sp,
-            Conjoin(Contract(optimal), TraceNonincrease(optimal), lower));
+            Operatorname, Grp(F.Id("let")), Sp, failure, Sp, Colon, Sp, MatrixType,
+            Sp, Colon, Eq, Sp, Call("sqrt", Seq(
+                D(1), Sp, Minus, Sp,
+                Scale(Seq(D(1), Sp, Slash, Sp, Maximum), Effect))), Semi, Sp,
+            Conjoin(Contract(optimal), TraceNonincrease(optimal), tracePreserving, lower));
     }
 
     private static Formula DeterminismClause()
@@ -274,6 +303,7 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
             assumptions,
             Conjoin(
                 RigidityClause(),
+                ScalarConverseClause(),
                 EffectClause(),
                 WorstCaseClause(),
                 AttainmentClause(),
