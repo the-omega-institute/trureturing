@@ -217,8 +217,9 @@ comparison within one current catalog above. The wider design is described
 in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
 its proposed system is not a claim of completed implementation.
 
-Bring your own question to the [journey route](#start-your-journey), and use
-these four questions to follow what becomes distinguishable and what stays open.
+[Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
+indistinguishable pair. Which pairs, if any, remain indistinguishable after
+adding this readout?
 
 ## What is proved, and what is open
 
