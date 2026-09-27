@@ -196,7 +196,7 @@ internal sealed class SinglePeakLogLikelihoodCovarianceDocument : IScribeDocumen
         Formula path = Arrow(Fin(Seq(s, Plus, D(1))), carrier);
         return Disp(Seq(Forall, Sp, Typed(carrier, F.Id("Type")), Comma, Sp, Call("Fintype", carrier),
             Comma, Sp, Typed(p, Arrow(carrier, Arrow(carrier, RealType()))), Comma, Sp,
-            s, Sp, InMacro, Sp, NatType(), Comma, Sp, Typed(f, Arrow(path, RealType())), Comma, Sp,
+            s, Sp, InMacro, Sp, NatType(), Comma, Sp, Typed(f, Arrow(Seq(Open, path, Close), RealType())), Comma, Sp,
             Call("pathExpectation", p, s, f), Sp, Eq, Sp,
             SumOver(x, path, Seq(Call("pathWeight", p, s, x), Sp, Call("f", x)))));
     }
@@ -219,7 +219,7 @@ internal sealed class SinglePeakLogLikelihoodCovarianceDocument : IScribeDocumen
     {
         Formula s = F.Id("s"), p = F.Id("P"), f = F.Id("f"), g = F.Id("g"), carrier = F.Id("X");
         Formula path = Arrow(Fin(Seq(s, Plus, D(1))), carrier);
-        Formula observable = Arrow(path, RealType());
+        Formula observable = Arrow(Seq(Open, path, Close), RealType());
         return Disp(Seq(Forall, Sp, Typed(carrier, F.Id("Type")), Comma, Sp, Call("Fintype", carrier),
             Comma, Sp, Typed(p, Arrow(carrier, Arrow(carrier, RealType()))), Comma, Sp,
             s, Sp, InMacro, Sp, NatType(), Comma, Sp, f, Comma, Sp, g, Sp, InMacro, Sp, observable,
@@ -234,7 +234,7 @@ internal sealed class SinglePeakLogLikelihoodCovarianceDocument : IScribeDocumen
         Formula path = Arrow(Fin(Seq(s, Plus, D(1))), carrier);
         return Disp(Seq(Forall, Sp, Typed(carrier, F.Id("Type")), Comma, Sp, Call("Fintype", carrier),
             Comma, Sp, Typed(p, Arrow(carrier, Arrow(carrier, RealType()))), Comma, Sp,
-            s, Sp, InMacro, Sp, NatType(), Comma, Sp, Typed(f, Arrow(path, RealType())), Comma, Sp,
+            s, Sp, InMacro, Sp, NatType(), Comma, Sp, Typed(f, Arrow(Seq(Open, path, Close), RealType())), Comma, Sp,
             Call("pathVariance", p, s, f), Sp, Eq, Sp, Call("pathCovariance", p, s, f, f)));
     }
 

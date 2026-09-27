@@ -54,7 +54,7 @@ A path of s transitions starts with mass one over the cardinality of X and is we
 
 **Definition 1.5 (Finite-path expectation).**
 
-$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f: \operatorname {Fin}(s+1) \to X \to \mathbb {R}, \operatorname {pathExpectation}(P, s, f) = \sum _{x \in \operatorname {Fin}(s+1) \to X} \operatorname {pathWeight}(P, s, x) \operatorname {f}(x)$$
+$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f: (\operatorname {Fin}(s+1) \to X) \to \mathbb {R}, \operatorname {pathExpectation}(P, s, f) = \sum _{x \in \operatorname {Fin}(s+1) \to X} \operatorname {pathWeight}(P, s, x) \operatorname {f}(x)$$
 
 *Formalization.* `D5/S3/Estimation/TimeArrow/SinglePeakLogLikelihoodCovariance.pathExpectation` (`✓ std3`).
 
@@ -78,7 +78,7 @@ At time t, the increment is the logarithm of the state-space cardinality times t
 
 **Definition 1.7 (Finite-path covariance).**
 
-$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f, g \in \operatorname {Fin}(s+1) \to X \to \mathbb {R}, \operatorname {pathCovariance}(P, s, f, g) = \operatorname {pathExpectation}(P, s, f g)-\operatorname {pathExpectation}(P, s, f) \operatorname {pathExpectation}(P, s, g)$$
+$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f, g \in (\operatorname {Fin}(s+1) \to X) \to \mathbb {R}, \operatorname {pathCovariance}(P, s, f, g) = \operatorname {pathExpectation}(P, s, f g)-\operatorname {pathExpectation}(P, s, f) \operatorname {pathExpectation}(P, s, g)$$
 
 *Formalization.* `D5/S3/Estimation/TimeArrow/SinglePeakLogLikelihoodCovariance.pathCovariance` (`✓ std3`).
 
@@ -90,7 +90,7 @@ The covariance of two path observables is their product expectation minus the pr
 
 **Definition 1.8 (Finite-path variance).**
 
-$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f: \operatorname {Fin}(s+1) \to X \to \mathbb {R}, \operatorname {pathVariance}(P, s, f) = \operatorname {pathCovariance}(P, s, f, f)$$
+$$\forall X: Type, \operatorname {Fintype}(X), P: X \to X \to \mathbb {R}, s \in \mathbb {N}, f: (\operatorname {Fin}(s+1) \to X) \to \mathbb {R}, \operatorname {pathVariance}(P, s, f) = \operatorname {pathCovariance}(P, s, f, f)$$
 
 *Formalization.* `D5/S3/Estimation/TimeArrow/SinglePeakLogLikelihoodCovariance.pathVariance` (`✓ std3`).
 
