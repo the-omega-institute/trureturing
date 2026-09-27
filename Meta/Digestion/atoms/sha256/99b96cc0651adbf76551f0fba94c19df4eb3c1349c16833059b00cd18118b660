@@ -1,0 +1,16 @@
+For each
+rational prime $p\mid B_j$, exactly one prime above $p$ divides
+$\eta_j$; write $\varpi_{j,p}$ for its primary generator. Then
+
+$$
+\eta_j=\prod_{p\mid B_j}\varpi_{j,p}^{h_p},
+\qquad N(\varpi_{j,p})=p.
+$$
+
+The norm follows from the Eisenstein norm form, and the congruence from
+$x_j\equiv4\pmod9$. A common prime ideal of $\eta_j$ and its conjugate
+would divide $2\lambda$, whereas $\gcd(B_j,6)=1$. Every prime factor of
+$B_j$ is congruent to $1$ modulo $3$, so it splits. The norm identifies
+the exponent in the oriented factorization with $v_p(B_j)=h_p$.
+Both sides are primary; hence the remaining unit is $1$.
+
