@@ -4,17 +4,17 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Proves the first-column conjectures of OEIS A098052 and A098530 (Wouter Meeussen, 2004): the solid partitions of n with exactly four extensions to a solid partition of n + 1, and the solid partitions of n + 1 containing exactly one solid partition of n, are the boxes, so both are counted by tau_4 (A007426). -/
+   digest: For every dimension d and n >= 1, the d-dimensional partitions of n with exactly d extensions to a partition of n + 1, and those of n + 1 containing exactly one partition of n, are the boxes, so both are counted by the Piltz function tau_d; d = 4 proves the first-column conjectures of OEIS A098052 and A098530 (Wouter Meeussen, 2004) on solid partitions. -/
 
 /-
 proof_shape: result: content
-escape_witness: form (2), the public conclusion `result` itself: a finite lower set of `ℕ⁴` with
-  exactly four extensions (`ext_box`), or with exactly one shrinking (`shrink_box`), is a box. The
-  extensions of a box are its four axis cells (`box_ext`); a non-box has a fifth extension, the cell
-  of least coordinate sum in its bounding box outside it; a non-box has two cells with nothing above
-  them, found by maximizing the coordinate sum; boxes of `n` cells correspond to ordered
-  factorizations of `n` (`box_inj`, `card_box`)
-admission_basis: open-problem-resolution (issue #10330)
+escape_witness: form (2), the public conclusion `result` itself: a finite lower set of `ℕ^d` with
+  exactly `d` extensions (`ext_box`), or with exactly one shrinking (`shrink_box`), is a box. The
+  extensions of a box are its `d` axis cells (`box_ext`); a non-box has a further extension, the
+  cell of least coordinate sum in its bounding box outside it; a non-box has two cells with nothing
+  above them, found by maximizing the coordinate sum; boxes of `n` cells correspond to ordered
+  factorizations of `n` into `d` factors (`box_inj`, `card_box`)
+admission_basis: escape-witness (issue #10404)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
@@ -28,66 +28,70 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.SolidPartitionFirstColumn
 
-/-- A solid partition of `n`, read as its four-dimensional Ferrers diagram: a finite lower set of
-`n` cells of `ℕ⁴`. -/
-def IsSolidPartition (n : ℕ) (I : Finset (Fin 4 → ℕ)) : Prop :=
-  IsLowerSet (I : Set (Fin 4 → ℕ)) ∧ I.card = n
+/-- A `d`-dimensional partition of `n`, read as its Ferrers diagram: a finite lower set of `n` cells
+of `ℕ^d` in the coordinatewise order (`d = 4` gives the solid partitions of A000293). -/
+def IsSolidPartition {d : ℕ} (n : ℕ) (I : Finset (Fin d → ℕ)) : Prop :=
+  IsLowerSet (I : Set (Fin d → ℕ)) ∧ I.card = n
 
-/-- The number of solid partitions of `n + 1` that contain `I`. -/
-noncomputable def extensions (n : ℕ) (I : Finset (Fin 4 → ℕ)) : ℕ :=
-  {J : Finset (Fin 4 → ℕ) | IsSolidPartition (n + 1) J ∧ I ⊆ J}.ncard
+/-- The number of `d`-dimensional partitions of `n + 1` that contain `I`. -/
+noncomputable def extensions {d : ℕ} (n : ℕ) (I : Finset (Fin d → ℕ)) : ℕ :=
+  {J : Finset (Fin d → ℕ) | IsSolidPartition (n + 1) J ∧ I ⊆ J}.ncard
 
-/-- The number of solid partitions of `n` contained in `J`. -/
-noncomputable def shrinkings (n : ℕ) (J : Finset (Fin 4 → ℕ)) : ℕ :=
-  {I : Finset (Fin 4 → ℕ) | IsSolidPartition n I ∧ I ⊆ J}.ncard
+/-- The number of `d`-dimensional partitions of `n` contained in `J`. -/
+noncomputable def shrinkings {d : ℕ} (n : ℕ) (J : Finset (Fin d → ℕ)) : ℕ :=
+  {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ I ⊆ J}.ncard
 
-/-- The first column of A098052: solid partitions of `n` that extend in exactly four ways. -/
-noncomputable def a098052FirstColumn (n : ℕ) : ℕ :=
-  {I : Finset (Fin 4 → ℕ) | IsSolidPartition n I ∧ extensions n I = 4}.ncard
+/-- The `d`-dimensional partitions of `n` that extend in exactly `d` ways; for `d = 4` the first
+column of A098052. -/
+noncomputable def firstColumn (d n : ℕ) : ℕ :=
+  {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ extensions n I = d}.ncard
 
-/-- The first column of A098530: solid partitions of `n + 1` that shrink in exactly one way. -/
-noncomputable def a098530FirstColumn (n : ℕ) : ℕ :=
-  {J : Finset (Fin 4 → ℕ) | IsSolidPartition (n + 1) J ∧ shrinkings n J = 1}.ncard
+/-- The `d`-dimensional partitions of `n + 1` that shrink in exactly one way; for `d = 4` the first
+column of A098530. -/
+noncomputable def shrinkColumn (d n : ℕ) : ℕ :=
+  {J : Finset (Fin d → ℕ) | IsSolidPartition (n + 1) J ∧ shrinkings n J = 1}.ncard
 
-/-- A007426: the number of ordered factorizations `n = r s t u`. -/
-noncomputable def tau4 (n : ℕ) : ℕ :=
-  {v : Fin 4 → ℕ | ∏ i, v i = n}.ncard
+/-- The number of ordered factorizations of `n` into `d` factors (the Piltz function; A007426 for
+`d = 4`). -/
+noncomputable def tau (d n : ℕ) : ℕ :=
+  {v : Fin d → ℕ | ∏ i, v i = n}.ncard
 
-/-- Meeussen's first-column conjectures in A098052 and A098530. -/
+/-- The first-column conjectures of A098052 and A098530, in every dimension `d`. -/
 def claim : Prop :=
-  ∀ n : ℕ, 1 ≤ n → a098052FirstColumn n = tau4 n ∧ a098530FirstColumn n = tau4 (n + 1)
+  ∀ d n : ℕ, 1 ≤ d → 1 ≤ n → firstColumn d n = tau d n ∧ shrinkColumn d n = tau d (n + 1)
 
 /-- The box `∏ [0, v i)`. -/
-private def box (v : Fin 4 → ℕ) : Finset (Fin 4 → ℕ) :=
+private def box {d : ℕ} (v : Fin d → ℕ) : Finset (Fin d → ℕ) :=
   Fintype.piFinset fun i => Finset.range (v i)
 
 theorem result : claim := by
+  intro d n hd hn
   classical
-  have mem_box : ∀ (v c : Fin 4 → ℕ), c ∈ box v ↔ ∀ i, c i < v i := by
+  have mem_box : ∀ (v c : Fin d → ℕ), c ∈ box v ↔ ∀ i, c i < v i := by
     intro v c
     simp [box, Fintype.mem_piFinset]
-  have card_box : ∀ v : Fin 4 → ℕ, (box v).card = ∏ i, v i := by
+  have card_box : ∀ v : Fin d → ℕ, (box v).card = ∏ i, v i := by
     intro v
     simp [box, Fintype.card_piFinset]
   have lower_box :
-      ∀ v : Fin 4 → ℕ, IsLowerSet ((box v : Finset (Fin 4 → ℕ)) : Set (Fin 4 → ℕ)) := by
+      ∀ v : Fin d → ℕ, IsLowerSet ((box v : Finset (Fin d → ℕ)) : Set (Fin d → ℕ)) := by
     intro v a b hba ha
     rw [Finset.mem_coe, mem_box] at ha ⊢
     exact fun i => lt_of_le_of_lt (hba i) (ha i)
-  have pos_of_prod : ∀ (v : Fin 4 → ℕ) (n : ℕ), 1 ≤ n → ∏ i, v i = n → ∀ i, 0 < v i := by
+  have pos_of_prod : ∀ (v : Fin d → ℕ) (n : ℕ), 1 ≤ n → ∏ i, v i = n → ∀ i, 0 < v i := by
     intro v n hn hv i
     rcases Nat.eq_zero_or_pos (v i) with h | h
     · have : ∏ j, v j = 0 := Finset.prod_eq_zero (Finset.mem_univ i) h
       omega
     · exact h
-  have sum_lt : ∀ a b : Fin 4 → ℕ, a < b → ∑ i, a i < ∑ i, b i := by
+  have sum_lt : ∀ a b : Fin d → ℕ, a < b → ∑ i, a i < ∑ i, b i := by
     intro a b hab
     rw [Pi.lt_def] at hab
     obtain ⟨hle, i, hi⟩ := hab
     exact Finset.sum_lt_sum (fun j _ => hle j) ⟨i, Finset.mem_univ i, hi⟩
   -- a positive box is determined by its cells
-  have box_inj : ∀ v w : Fin 4 → ℕ, (∀ i, 0 < v i) → (∀ i, 0 < w i) → box v = box w → v = w := by
-    have single_mem : ∀ u : Fin 4 → ℕ, (∀ j, 0 < u j) → ∀ i, Pi.single i (u i - 1) ∈ box u := by
+  have box_inj : ∀ v w : Fin d → ℕ, (∀ i, 0 < v i) → (∀ i, 0 < w i) → box v = box w → v = w := by
+    have single_mem : ∀ u : Fin d → ℕ, (∀ j, 0 < u j) → ∀ i, Pi.single i (u i - 1) ∈ box u := by
       intro u hu i
       rw [mem_box]
       intro j
@@ -106,17 +110,9 @@ theorem result : claim := by
     have := hv i
     have := hw i
     omega
-  -- inserting two outside cells gives the same set only for the same cell
-  have insert_inj : ∀ (I : Finset (Fin 4 → ℕ)) (a b : Fin 4 → ℕ), a ∉ I → insert a I = insert b I →
-      a = b := by
-    intro I a b ha h
-    have : a ∈ insert b I := h ▸ Finset.mem_insert_self a I
-    rcases Finset.mem_insert.1 this with h' | h'
-    · exact h'
-    · exact absurd h' ha
   -- Step 1: a positive box has exactly the four extensions at the axis cells.
-  have box_ext : ∀ v : Fin 4 → ℕ, (∀ i, 0 < v i) →
-      {J : Finset (Fin 4 → ℕ) | IsSolidPartition ((box v).card + 1) J ∧ box v ⊆ J} =
+  have box_ext : ∀ v : Fin d → ℕ, (∀ i, 0 < v i) →
+      {J : Finset (Fin d → ℕ) | IsSolidPartition ((box v).card + 1) J ∧ box v ⊆ J} =
         Set.range fun i => insert (Pi.single i (v i)) (box v) := by
     intro v hv
     have single_not : ∀ i, Pi.single i (v i) ∉ box v := by
@@ -148,7 +144,7 @@ theorem result : claim := by
           · exact hcJ
           · exact hsub hx
       -- every cell strictly below `c` lies in the box
-      have below : ∀ y : Fin 4 → ℕ, y ≤ c → y ≠ c → y ∈ box v := by
+      have below : ∀ y : Fin d → ℕ, y ≤ c → y ≠ c → y ∈ box v := by
         intro y hy hne
         have hyJ : y ∈ J := hJl hy hcJ
         rw [hJeq, Finset.mem_insert] at hyJ
@@ -224,21 +220,21 @@ theorem result : claim := by
         · exact Or.inr (lower_box v hba ha)
       · rw [Finset.card_insert_of_notMem (single_not i)]
   -- the four axis extensions are distinct
-  have axis_inj : ∀ (v : Fin 4 → ℕ) (I : Finset (Fin 4 → ℕ)), (∀ i, 0 < v i) →
+  have axis_inj : ∀ (v : Fin d → ℕ) (I : Finset (Fin d → ℕ)), (∀ i, 0 < v i) →
       (∀ i, Pi.single i (v i) ∉ I) → Function.Injective fun i => insert (Pi.single i (v i)) I := by
     intro v I hv hnot i i' h
-    have := insert_inj I _ _ (hnot i) h
+    have := (Finset.insert_inj (hnot i)).1 h
     by_contra hne
     have := congrFun this i
     simp only [Pi.single_eq_same, Pi.single_eq_of_ne hne] at this
     have := hv i
     omega
   -- Step 2: four extensions force a box.
-  have ext_box : ∀ (n : ℕ) (I : Finset (Fin 4 → ℕ)), 1 ≤ n → IsSolidPartition n I →
-      extensions n I = 4 → ∃ v : Fin 4 → ℕ, (∀ i, 0 < v i) ∧ I = box v := by
+  have ext_box : ∀ (n : ℕ) (I : Finset (Fin d → ℕ)), 1 ≤ n → IsSolidPartition n I →
+      extensions n I = d → ∃ v : Fin d → ℕ, (∀ i, 0 < v i) ∧ I = box v := by
     intro n I hn ⟨hIl, hIc⟩ hext
     have hne : I.Nonempty := Finset.card_pos.1 (by omega)
-    set v : Fin 4 → ℕ := fun i => (I.sup fun c => c i) + 1 with hvdef
+    set v : Fin d → ℕ := fun i => (I.sup fun c => c i) + 1 with hvdef
     have hvpos : ∀ i, 0 < v i := fun i => Nat.succ_pos _
     have hsub : I ⊆ box v := by
       intro c hc
@@ -251,12 +247,12 @@ theorem result : claim := by
       intro i h
       have := (mem_box v _).1 (hsub h) i
       simp at this
-    set S := {J : Finset (Fin 4 → ℕ) | IsSolidPartition (n + 1) J ∧ I ⊆ J} with hSdef
+    set S := {J : Finset (Fin d → ℕ) | IsSolidPartition (n + 1) J ∧ I ⊆ J} with hSdef
     have hfin : S.Finite := Set.finite_of_ncard_ne_zero (by
       change extensions n I ≠ 0
       omega)
-    have ins_mem : ∀ c : Fin 4 → ℕ, c ∉ I →
-        IsLowerSet (((insert c I : Finset (Fin 4 → ℕ))) : Set (Fin 4 → ℕ)) → insert c I ∈ S := by
+    have ins_mem : ∀ c : Fin d → ℕ, c ∉ I →
+        IsLowerSet (((insert c I : Finset (Fin d → ℕ))) : Set (Fin d → ℕ)) → insert c I ∈ S := by
       intro c hc hl
       refine ⟨⟨hl, ?_⟩, Finset.subset_insert _ _⟩
       rw [Finset.card_insert_of_notMem hc, hIc]
@@ -314,7 +310,7 @@ theorem result : claim := by
       · exact Or.inr (hIl hba ha)
     have hcne : ∀ i, insert c I ≠ insert (Pi.single i (v i)) I := by
       intro i h
-      have := insert_inj I _ _ hcI h
+      have := (Finset.insert_inj hcI).1 h
       have := (mem_box v _).1 hcbox i
       subst_vars
       simp at this
@@ -327,7 +323,7 @@ theorem result : claim := by
       rintro ⟨i, hi⟩
       exact hcne i hi.symm
     have h5 :
-        (insert (insert c I) (Set.range fun i => insert (Pi.single i (v i)) I)).ncard = 5 := by
+        (insert (insert c I) (Set.range fun i => insert (Pi.single i (v i)) I)).ncard = d + 1 := by
       rw [Set.ncard_insert_of_notMem hnotin (hfin.subset fun J ⟨i, hi⟩ => hi ▸ axis_mem i),
         Set.ncard_range_of_injective (axis_inj v I hvpos single_not)]
       simp
@@ -335,11 +331,11 @@ theorem result : claim := by
     change _ ≤ extensions n I at this
     omega
   -- Step 3: a positive box has exactly one shrinking, removing its top cell.
-  have box_shrink : ∀ (n : ℕ) (v : Fin 4 → ℕ), (∀ i, 0 < v i) → (box v).card = n + 1 →
-      {I : Finset (Fin 4 → ℕ) | IsSolidPartition n I ∧ I ⊆ box v} =
+  have box_shrink : ∀ (n : ℕ) (v : Fin d → ℕ), (∀ i, 0 < v i) → (box v).card = n + 1 →
+      {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ I ⊆ box v} =
         {(box v).erase fun i => v i - 1} := by
     intro n v hv hcard
-    set t : Fin 4 → ℕ := fun i => v i - 1 with htdef
+    set t : Fin d → ℕ := fun i => v i - 1 with htdef
     have htbox : t ∈ box v := by
       rw [mem_box]
       intro i
@@ -376,11 +372,11 @@ theorem result : claim := by
       · rw [Finset.card_erase_of_mem htbox, hcard]
         omega
   -- Step 4: one shrinking forces a box.
-  have shrink_box : ∀ (n : ℕ) (J : Finset (Fin 4 → ℕ)), IsSolidPartition (n + 1) J →
-      shrinkings n J = 1 → ∃ v : Fin 4 → ℕ, (∀ i, 0 < v i) ∧ J = box v := by
+  have shrink_box : ∀ (n : ℕ) (J : Finset (Fin d → ℕ)), IsSolidPartition (n + 1) J →
+      shrinkings n J = 1 → ∃ v : Fin d → ℕ, (∀ i, 0 < v i) ∧ J = box v := by
     intro n J ⟨hJl, hJc⟩ hsh
     have hne : J.Nonempty := Finset.card_pos.1 (by omega)
-    set S := {I : Finset (Fin 4 → ℕ) | IsSolidPartition n I ∧ I ⊆ J} with hSdef
+    set S := {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ I ⊆ J} with hSdef
     have hfin : S.Finite := Set.finite_of_ncard_ne_zero (by
       change shrinkings n J ≠ 0
       omega)
@@ -396,7 +392,7 @@ theorem result : claim := by
       · rw [Finset.card_erase_of_mem hm, hJc]
         omega
     -- the maximum of the coordinate sum is such a cell
-    have top_of_max : ∀ (T : Finset (Fin 4 → ℕ)) (m : Fin 4 → ℕ), m ∈ T → T ⊆ J →
+    have top_of_max : ∀ (T : Finset (Fin d → ℕ)) (m : Fin d → ℕ), m ∈ T → T ⊆ J →
         (∀ z ∈ T, ∑ i, z i ≤ ∑ i, m i) → (∀ z ∈ J, m ≤ z → z ∈ T) → ∀ z ∈ J, m ≤ z → z = m := by
       intro T m hmT hTJ hmax hup z hz hmz
       by_contra hne
@@ -416,16 +412,12 @@ theorem result : claim := by
       have hm'top := top_of_max _ m' hm'T (Finset.filter_subset _ _) hm'max
         (fun z hz hz' => Finset.mem_filter.2 ⟨hz, le_trans hym' hz'⟩)
       have hdist : m' ≠ m := fun h => hym (h ▸ hym')
-      have hpair : ({J.erase m, J.erase m'} : Set (Finset (Fin 4 → ℕ))) ⊆ S := by
+      have hpair : ({J.erase m, J.erase m'} : Set (Finset (Fin d → ℕ))) ⊆ S := by
         intro I hI
         rcases hI with rfl | rfl
         · exact erase_mem m hmJ hmtop
         · exact erase_mem m' hm'J hm'top
-      have hneq : J.erase m ≠ J.erase m' := by
-        intro h
-        have : m ∈ J.erase m' := Finset.mem_erase.2 ⟨Ne.symm hdist, hmJ⟩
-        rw [← h] at this
-        simp at this
+      have hneq : J.erase m ≠ J.erase m' := fun h => hdist ((Finset.erase_inj J hmJ).1 h).symm
       have := Set.ncard_le_ncard hpair hfin
       rw [Set.ncard_pair hneq] at this
       change _ ≤ shrinkings n J at this
@@ -440,10 +432,9 @@ theorem result : claim := by
     · intro hx
       exact hJl (fun i => Nat.lt_succ_iff.1 (hx i)) hmJ
   -- counting
-  intro n hn
   constructor
-  · have hset : {I : Finset (Fin 4 → ℕ) | IsSolidPartition n I ∧ extensions n I = 4} =
-        box '' {v : Fin 4 → ℕ | ∏ i, v i = n} := by
+  · have hset : {I : Finset (Fin d → ℕ) | IsSolidPartition n I ∧ extensions n I = d} =
+        box '' {v : Fin d → ℕ | ∏ i, v i = n} := by
       ext I
       simp only [Set.mem_ofPred_eq, Set.mem_image]
       constructor
@@ -460,13 +451,13 @@ theorem result : claim := by
             have := (mem_box v _).1 h i
             simp at this))]
         simp
-    have hinj : Set.InjOn box {v : Fin 4 → ℕ | ∏ i, v i = n} := fun v hv w hw h =>
+    have hinj : Set.InjOn box {v : Fin d → ℕ | ∏ i, v i = n} := fun v hv w hw h =>
       box_inj v w (pos_of_prod v n hn hv) (pos_of_prod w n hn hw) h
-    unfold a098052FirstColumn tau4
+    unfold firstColumn tau
     rw [hset, hinj.ncard_image]
   · have hn1 : 1 ≤ n + 1 := by omega
-    have hset : {J : Finset (Fin 4 → ℕ) | IsSolidPartition (n + 1) J ∧ shrinkings n J = 1} =
-        box '' {v : Fin 4 → ℕ | ∏ i, v i = n + 1} := by
+    have hset : {J : Finset (Fin d → ℕ) | IsSolidPartition (n + 1) J ∧ shrinkings n J = 1} =
+        box '' {v : Fin d → ℕ | ∏ i, v i = n + 1} := by
       ext J
       simp only [Set.mem_ofPred_eq, Set.mem_image]
       constructor
@@ -479,9 +470,9 @@ theorem result : claim := by
         refine ⟨⟨lower_box v, hc⟩, ?_⟩
         unfold shrinkings
         rw [box_shrink n v hvpos hc, Set.ncard_singleton]
-    have hinj : Set.InjOn box {v : Fin 4 → ℕ | ∏ i, v i = n + 1} := fun v hv w hw h =>
+    have hinj : Set.InjOn box {v : Fin d → ℕ | ∏ i, v i = n + 1} := fun v hv w hw h =>
       box_inj v w (pos_of_prod v (n + 1) hn1 hv) (pos_of_prod w (n + 1) hn1 hw) h
-    unfold a098530FirstColumn tau4
+    unfold shrinkColumn tau
     rw [hset, hinj.ncard_image]
 
 end D5.S3.Combinatorics.SolidPartitionFirstColumn
