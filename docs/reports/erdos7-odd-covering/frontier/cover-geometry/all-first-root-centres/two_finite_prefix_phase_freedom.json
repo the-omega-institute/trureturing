@@ -1,0 +1,55 @@
+{
+  "scope": "Exact finite-prefix phase freedom from the all-first-root survivor bound.\n\nReport490. The ordinary set comparison keeps every original full numerical\nlabel and bounds the discrepancy of two families on one common Haar carrier.\nThis consumer checks the inherited bound, exact cylinder charge and tail.\nIt does not rerun report489's pair certificates or claim new Lean verification.\n",
+  "source_inputs": {
+    "all_first_root_centres.json": "f0152794e624e017ad9e1fc49be33c405992ae2e402df2661c1e89579ecd5680"
+  },
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "prefix_heights": [
+    23,
+    16,
+    13,
+    11,
+    10,
+    9,
+    9
+  ],
+  "prefix_modulus": "2094880281551230219945210068651699543526025256426875090368890282619171142578125",
+  "coordinate_cylinder_charges": [
+    "2/94143178827",
+    "2/152587890625",
+    "2/96889010407",
+    "2/285311670611",
+    "2/137858491849",
+    "2/118587876497",
+    "2/322687697779"
+  ],
+  "inherited_uniform_Haar_lower": "1115864057616097722998000106390465515453850572404922794456836380656892896992327898103985068485678105981988455971285019/952679106137837991686054655208291366735082511275085436379301496702858640623297501002217726470626109047414854500000000000000000",
+  "union_charge_upper": "208596016576270898120845107706139340504684590881548660656773157774846/2094880281551230219945210068651699543526025256426875090368890282619171142578125",
+  "union_charge_upper_float": 9.957419448418714e-11,
+  "exact_discrepancy_charge": "33447250827017642988256625048187702193187644902228383815942/335902800938253423273876152999914643507454613228512055419736083984375",
+  "exact_discrepancy_charge_float": 9.957419448004546e-11,
+  "original_Haar_lower": "1021001803024452772317010007216619168658984044593222862857089698169404583041868933493010772356801837950476695075285019/952679106137837991686054655208291366735082511275085436379301496702858640623297501002217726470626109047414854500000000000000000",
+  "original_Haar_lower_float": 1.0717163800973814e-09,
+  "original_Haar_strict_lower": "1/1000000000",
+  "large_prime_tail": {
+    "B": 100000000000,
+    "ell": 23,
+    "c": "1059/1057",
+    "M2": "14003665/540672",
+    "loss_upper": "2081856917872310178996728720267943603515625/5648012930830327504800161388555785505850669295841676",
+    "distorted_lower": "891539003239504331450858167071960475583761073960419/1412003232707581876200040347138946376462667323960419000000000",
+    "distorted_lower_float": 6.314001148070581e-10,
+    "distorted_strict_lower": "1/2000000000"
+  },
+  "prior_certificates_rerun": false,
+  "Lean_rerun": false,
+  "boundary": "Every original later full label fixes one of two finite old prefixes; all deeper old digits and new-coordinate phases are arbitrary. The centres differ at all seven first digits. The common-carrier set identity, report489 theorem and Chapter33 analytic continuation are ordinary inputs. Arbitrary shallow phases and unrestricted Erdos7 are not settled."
+}

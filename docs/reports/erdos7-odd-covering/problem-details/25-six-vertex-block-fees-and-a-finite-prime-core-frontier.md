@@ -280,8 +280,8 @@ and these results do not settle unrestricted Erdős #7.
 ## 7. Self-contained exact certificate
 
 The standard-library program
-[six_vertex_conditional_kernel_certificate.py](../frontier/cover-geometry/six_vertex_conditional_kernel_certificate.py)
-and its [exact data](../frontier/cover-geometry/six_vertex_conditional_kernel_certificate.json)
+[six_vertex_conditional_kernel_certificate.py](../frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.py)
+and its [exact data](../frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.json)
 form one self-contained finite certificate. The program reads no other
 result files. It reconstructs the 1023-row partition, the 972 kernel
 certificates, the 13 additional KR certificates, the four fixed-budget
@@ -304,5 +304,5 @@ The program requires Python 3.10 or later and rejects optimized `-O`
 execution. From the repository root, reproduce the JSON with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_vertex_conditional_kernel_certificate.py --output /tmp/six-vertex-conditional-kernel-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/six-vertex-conditional-kernel-certificate/six_vertex_conditional_kernel_certificate.py --output /tmp/six-vertex-conditional-kernel-certificate.json
 ```

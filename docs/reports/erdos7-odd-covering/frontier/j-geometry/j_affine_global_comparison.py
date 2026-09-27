@@ -13,12 +13,12 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_affine_global_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/j-geometry/j_aggregate_layer_global_comparison.py': 'cd50ae6d9165f254fe35dd3cadc3f15f02da79b2a32624ff7c0455662125cabd',
-    'certificates/source_norms/j-geometry/j_aggregate_layer_global_comparison.json': 'c711a02b8ddfa20f9e8657ba7513b8e05ca0501c09142b46b6cb96dcfebc78b6',
+    'frontier/j-geometry/j_aggregate_layer_global_comparison.py': '127a0f8a9489cd4aec8e0708e06d96c1021db392810d330dddeaae8e50428fff',
+    'certificates/source_norms/j-geometry/j_aggregate_layer_global_comparison.json': 'a09cdfeed9fbfbaf0e849367fd0232dbff03923aa90cd85c13bba15500d2ff17',
     'frontier/j-geometry/j_affine_margin_reserve.py': '627dcee1ac3b667b4f7fa6ca40a724bb26bb0c415fe8da8409a2691b47557979',
     'certificates/source_norms/j-geometry/j_affine_margin_reserve.json': 'd01e44a1d4264e1a4d959848e21481dfa517b2d1a8683d026d382fefa2a9aa10',
-    'frontier/moments-survival/wide_expanded_seven_survival.py': 'f34e659d2ac3070dc58bc7f54427beaae2edf34b36e1d7f7109ee2f7c8d4dce2',
-    'certificates/source_norms/moments-survival/wide_expanded_seven_survival.json': '61260300e44a592bf87c6fcce57f4208a6ed63e1cf27d18937c6dbe71fa086ba',
+    'frontier/moments-survival/wide_expanded_seven_survival.py': '7497efefa16c323f35bf94c933a8a2132d1aa9e432fed20f9239260f00ad6b60',
+    'certificates/source_norms/moments-survival/wide_expanded_seven_survival.json': '849e25122308e1d2896a134cadb66921546426d70dc69a1ed01cfd01b35aa737',
 }
 
 

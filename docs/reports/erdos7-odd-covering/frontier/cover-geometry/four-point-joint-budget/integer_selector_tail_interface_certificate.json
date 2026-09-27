@@ -1,0 +1,2647 @@
+{
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "split_coordinates": 3,
+  "cases": [
+    {
+      "profiles": [
+        [
+          4,
+          2,
+          -4,
+          1,
+          2,
+          1,
+          1
+        ],
+        [
+          5,
+          -2,
+          4,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          -5,
+          -3,
+          -2,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "weight": [
+        17,
+        16,
+        13
+      ],
+      "expected_capacity": 892,
+      "expected_limit": 32,
+      "axes": [
+        {
+          "prime": 23,
+          "activation": [
+            18,
+            21,
+            18
+          ],
+          "phase_digits": 21,
+          "labels": [
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                2,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                3,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                4,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                4,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                4,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                3,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 1
+            }
+          ]
+        },
+        {
+          "prime": 29,
+          "activation": [
+            21,
+            13,
+            24
+          ],
+          "phase_digits": 24,
+          "labels": [
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                2,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                3,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                4,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                4,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                4,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                3,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 22
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 23
+            },
+            {
+              "exponents": [
+                4,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 24
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                3,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profiles": [
+        [
+          3,
+          2,
+          2,
+          1,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          -3,
+          -2,
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          -3,
+          0,
+          -2,
+          2,
+          2,
+          1,
+          1
+        ]
+      ],
+      "weight": [
+        1,
+        2,
+        1,
+        2
+      ],
+      "expected_capacity": 110,
+      "expected_limit": -14,
+      "axes": [
+        {
+          "prime": 23,
+          "activation": [
+            22,
+            22,
+            16,
+            13
+          ],
+          "phase_digits": 22,
+          "labels": [
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 22
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 22
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 1
+            }
+          ]
+        },
+        {
+          "prime": 29,
+          "activation": [
+            8,
+            8,
+            24,
+            24
+          ],
+          "phase_digits": 24,
+          "labels": [
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 13
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 14
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 15
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 16
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 17
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 18
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 2
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 7
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 8
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 19
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 20
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 9
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 10
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 21
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 3
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 4
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 5
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "A",
+              "digit": 6
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 22
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 23
+            },
+            {
+              "exponents": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 22
+            },
+            {
+              "exponents": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 23
+            },
+            {
+              "exponents": [
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 24
+            },
+            {
+              "exponents": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 11
+            },
+            {
+              "exponents": [
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 12
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 24
+            },
+            {
+              "exponents": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "selector": "B",
+              "digit": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "boundary": "Literal same-centre pure-axis constructions only. No completed-source occupancy, joint mixed-class realization, source-mass improvement or Lean verification."
+}

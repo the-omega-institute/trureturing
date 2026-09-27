@@ -251,11 +251,14 @@ Use the same analytic prime-product premise as Chapter 32:
 \]
 
 for \(B\ge286\), integer \(\ell\ge4\), \(3^\ell\le B\),
-and \(z\ge B\). Chapter 32 identifies the inspected pinned
-Schroeder source, Lemma 8.2 (`lem:mertens`), and its
-Rosser--Schoenfeld premise. The rational certificate here does not
-prove this analytic estimate or improve its source-verification
-status.
+and \(z\ge B\). Chapter32 and the
+[Rosser--Schoenfeld citation note](../../../../Library/Arith/rosser1962approximate.md)
+identify both the pinned Schroeder source, Lemma8.2 (`lem:mertens`),
+and the directly inspected original Theorem8, equations (3.28)--(3.29).
+The displayed ratio follows by dividing the upper product bound at
+`z` by the positive lower bound at `B`. The rational certificate
+here does not prove that analytic theorem or reverify its source
+tables.
 
 Starting from any head submeasure supported on avoidance of all
 original head-only classes, of mass at least \(m\) and at most
@@ -444,12 +447,12 @@ comparison is confined to the inspected statements, not a claim of
 exhaustive literature novelty.
 
 The standalone
-[arithmetic program](../frontier/cover-geometry/seven_head_dense_tail_certificate.py)
+[arithmetic program](../frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.py)
 reads the inherited Chapter 31 certificate, selects its exact
 seven-prime row, checks the kernel-cap product, computes the Haar
 second moment and rational tail allowance, and records the input
 SHA-256 in its
-[output](../frontier/cover-geometry/seven_head_dense_tail_certificate.json).
+[output](../frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.json).
 It also checks the second seed's moment and continuation arithmetic;
 that seed's density theorem remains an attributed premise. The
 program does not execute the inherited geometry or certify the
@@ -457,7 +460,7 @@ external analytic premise. Run from the repository root after the two
 certificates are installed side by side:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven_head_dense_tail_certificate.py --output /tmp/seven-head-dense-tail-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.py --output /tmp/seven-head-dense-tail-certificate.json
 ```
 
 The unrestricted problem still permits configurations satisfying

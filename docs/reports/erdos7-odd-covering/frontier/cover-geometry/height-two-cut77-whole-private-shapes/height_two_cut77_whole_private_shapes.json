@@ -1,0 +1,5403 @@
+{
+  "scope": "Exact finite controls for ordinary normalized k0 cut77 private inventory and the 12222/12222/1333 exclusion when any gapcost3 cut is a whole column. Not Lean, not general cut77 closure.",
+  "ordered_private_shapes": [
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        3,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ]
+  ],
+  "unordered_private_shapes": [
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        3,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    [
+      [
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2
+      ]
+    ]
+  ],
+  "whole_gap1333_overlap_patterns": [
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        2
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        1,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        1,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        3
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        2,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        2,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "shared_pair": [
+        3,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "shared_pair": [
+        4,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "shared_pair": [
+        5,
+        6
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        4,
+        5
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    },
+    {
+      "left_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "right_H": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shared_pair": [
+        3,
+        4
+      ],
+      "ternary_branches": [
+        1,
+        2
+      ]
+    }
+  ],
+  "overlap_count": 225,
+  "excluded_case": {
+    "full_private_costs": [
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    "gap_private_costs": [
+      1,
+      3,
+      3,
+      3
+    ],
+    "additional_condition": "At least one of the three cost3 gap cuts is one whole-column edge."
+  }
+}

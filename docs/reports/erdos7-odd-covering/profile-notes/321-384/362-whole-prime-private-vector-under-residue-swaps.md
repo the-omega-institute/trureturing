@@ -239,7 +239,7 @@ applies.
 
 ## 6. Exact verification scope
 
-The [standalone checker](../../frontier/cover-geometry/prime_private_swap_vector.py) reads no
+The [standalone checker](../../frontier/cover-geometry/prime-private-swap-vector/prime_private_swap_vector.py) reads no
 repository state. It enumerates full original AP membership, recomputes
 both changed residues by CRT, and checks the legal-swap criterion, the
 full multiplicity identity, both exchanged private sets, every prime

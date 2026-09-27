@@ -19,7 +19,7 @@ SOURCE299 = 'certificates/source_norms/j-geometry/j_face_heavy_positive175189_co
 SCHEMA = 'erdos7-j-face-same-law-gamma19-comparison-v1'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    SOURCE299: '4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab',
+    SOURCE299: '6705531fc5fc7241522ddbcf8974957fd413cd6014c3605e110c4633b96d402f',
     'verify_pg1_scalar_schedule.py': 'ff5c6d067f417ed2bfd66d034a8e6cab13fadc3ca3ed4cd6e239c7c2964325e9',
     'profile-notes/001-064/35-ap45-layout-costs-and-complete-core-tails.md': '5b7569bc8a8ac2c03287e8cba51140c390327405126ea2291d7b3073e14f1c20',
     'profile-notes/001-064/07-a-common-weighted-low-layout-and-a-nonnegative-tail-correction.md': '1ae70b104e326431601e769bc8f77c8721c694368fdab53a0854e8bc88058281',

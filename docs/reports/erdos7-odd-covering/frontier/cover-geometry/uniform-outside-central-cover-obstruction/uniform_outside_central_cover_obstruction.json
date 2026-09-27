@@ -1,0 +1,5467 @@
+{
+  "actual_cell_support": [
+    {
+      "cell": [
+        0,
+        6
+      ],
+      "mu": "8/675",
+      "outside_mass": "0",
+      "outside_survivor_count": "0",
+      "root1_other_counts": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          22
+        ],
+        [
+          0,
+          52
+        ],
+        [
+          0,
+          136
+        ],
+        [
+          0,
+          190
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        7
+      ],
+      "mu": "8/675",
+      "outside_mass": "1001/41472",
+      "outside_survivor_count": "1618231615",
+      "root1_other_counts": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          91
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          247
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        8
+      ],
+      "mu": "8/675",
+      "outside_mass": "1001/41472",
+      "outside_survivor_count": "1618231615",
+      "root1_other_counts": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          91
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          247
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        9
+      ],
+      "mu": "8/675",
+      "outside_mass": "1001/41472",
+      "outside_survivor_count": "1618231615",
+      "root1_other_counts": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          91
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          247
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        10
+      ],
+      "mu": "2/225",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        11
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        12
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        13
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        14
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        15
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        16
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        17
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        18
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        0,
+        19
+      ],
+      "mu": "8/675",
+      "outside_mass": "28/81",
+      "outside_survivor_count": "23175792640",
+      "root1_other_counts": [
+        [
+          0,
+          28
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          130
+        ],
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        6
+      ],
+      "mu": "8/675",
+      "outside_mass": "1001/20736",
+      "outside_survivor_count": "3236463230",
+      "root1_other_counts": [
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          91
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          247
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        7
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        8
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        9
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        10
+      ],
+      "mu": "2/225",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        11
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        12
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        13
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        14
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        15
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        16
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        17
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        18
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        1,
+        19
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        6
+      ],
+      "mu": "8/675",
+      "outside_mass": "1001/20736",
+      "outside_survivor_count": "3236463230",
+      "root1_other_counts": [
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          91
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          247
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        7
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        8
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        9
+      ],
+      "mu": "8/675",
+      "outside_mass": "91/512",
+      "outside_survivor_count": "11916069165",
+      "root1_other_counts": [
+        [
+          0,
+          21
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          117
+        ],
+        [
+          0,
+          221
+        ],
+        [
+          0,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        10
+      ],
+      "mu": "2/225",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        11
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        13
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        14
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        15
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        16
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        17
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        18
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        2,
+        19
+      ],
+      "mu": "8/675",
+      "outside_mass": "935/1536",
+      "outside_survivor_count": "40811445675",
+      "root1_other_counts": [
+        [
+          0,
+          35
+        ],
+        [
+          0,
+          99
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        0
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        1
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        4
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "mu": "4/675",
+      "outside_mass": "8020211/27287040",
+      "outside_survivor_count": "19705658427",
+      "root1_other_counts": [
+        [
+          6,
+          21
+        ],
+        [
+          10,
+          77
+        ],
+        [
+          12,
+          117
+        ],
+        [
+          16,
+          221
+        ],
+        [
+          18,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        7
+      ],
+      "mu": "4/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        8
+      ],
+      "mu": "4/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        9
+      ],
+      "mu": "4/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "mu": "1/225",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        11
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        12
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        13
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        14
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        15
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        16
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        17
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        18
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "mu": "4/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        0
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        1
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        2
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        3
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        4
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "mu": "8/675",
+      "outside_mass": "8020211/27287040",
+      "outside_survivor_count": "19705658427",
+      "root1_other_counts": [
+        [
+          6,
+          21
+        ],
+        [
+          10,
+          77
+        ],
+        [
+          12,
+          117
+        ],
+        [
+          16,
+          221
+        ],
+        [
+          18,
+          285
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        7
+      ],
+      "mu": "8/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "mu": "8/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        9
+      ],
+      "mu": "8/675",
+      "outside_mass": "740849/1385670",
+      "outside_survivor_count": "35845238016",
+      "root1_other_counts": [
+        [
+          6,
+          28
+        ],
+        [
+          10,
+          88
+        ],
+        [
+          12,
+          130
+        ],
+        [
+          16,
+          238
+        ],
+        [
+          18,
+          304
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "mu": "2/225",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        11
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        12
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        14
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        15
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        16
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        17
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        18
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    },
+    {
+      "cell": [
+        5,
+        19
+      ],
+      "mu": "8/675",
+      "outside_mass": "6427/6912",
+      "outside_survivor_count": "62339907630",
+      "root1_other_counts": [
+        [
+          7,
+          35
+        ],
+        [
+          11,
+          99
+        ],
+        [
+          13,
+          143
+        ],
+        [
+          17,
+          255
+        ],
+        [
+          19,
+          323
+        ]
+      ]
+    }
+  ],
+  "actual_source_mass": "305684996597/646498195200",
+  "central_mode_support_addresses": 17888,
+  "central_selectors": 559,
+  "check_count": 5728,
+  "checks": {
+    "101_distinct_originals": 1,
+    "512_original_fee_groups": 1,
+    "559_central_selectors": 1,
+    "79_live_central_cells": 1,
+    "actual109_depth4": 1,
+    "actual_gamma3": 1,
+    "actual_gamma5": 1,
+    "actual_source_mass": 1,
+    "all_support_root_tuple_count": 1,
+    "every_literal_selector_bounded": 559,
+    "live_test_weight": 1,
+    "nonnegative_central_screen_mass": 559,
+    "only_dead_cell06": 1,
+    "pair_event_contained_in_both_root1": 40,
+    "positive_remaining_central_capacity": 2,
+    "product_cover_fails": 1,
+    "simple_relaxed_upper_also_separates": 1,
+    "source_single_coordinate_depth_at_most2": 4480,
+    "strict_separation_all_aggregate_covers": 1,
+    "uniform_root_mixture_budget": 32,
+    "uniform_root_mixture_pointwise": 32,
+    "whole_pair_root1_forbidden": 10
+  },
+  "dead_central_cells": [
+    [
+      0,
+      6
+    ]
+  ],
+  "input_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
+  },
+  "live_central_cells": 79,
+  "live_test_mass": "547/675",
+  "maximum_integrated_debit_upper": "4063265037031973858885786851/6128590808851751116800000000",
+  "mode_selector_menus": [
+    {
+      "fee_total": "20022369716765928019493/648528127920820224000000",
+      "literal_count": 1,
+      "maximum_integrated_selector": "547/675",
+      "mode": 0,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "547/675",
+          "right": 0
+        }
+      ]
+    },
+    {
+      "fee_total": "286422866936615159262851/1513232298481913856000000",
+      "literal_count": 4,
+      "maximum_integrated_selector": "4/15",
+      "mode": 1,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "4/45",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "136/675",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "19/75",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 3
+        }
+      ]
+    },
+    {
+      "fee_total": "1958833205475686566247/6826611872850739200000",
+      "literal_count": 19,
+      "maximum_integrated_selector": "4/75",
+      "mode": 2,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "4/225",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "4/225",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "4/225",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "4/225",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "4/225",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "28/675",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "1/25",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "216591871737546649591/16062616171413504000000",
+      "literal_count": 19,
+      "maximum_integrated_selector": "4/5",
+      "mode": 3,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "28/45",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "375/469",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "286422866936615159262851/1513232298481913856000000",
+      "literal_count": 2,
+      "maximum_integrated_selector": "322/675",
+      "mode": 4,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "322/675",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "1/3",
+          "right": 0
+        }
+      ]
+    },
+    {
+      "fee_total": "1431564102749556646247/3792562151583744000000",
+      "literal_count": 8,
+      "maximum_integrated_selector": "8/45",
+      "mode": 5,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "88/675",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "38/225",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "4/45",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "16/225",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "19/225",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "4/45",
+          "right": 3
+        }
+      ]
+    },
+    {
+      "fee_total": "3431208360877866790247/2275537290950246400000",
+      "literal_count": 38,
+      "maximum_integrated_selector": "8/225",
+      "mode": 6,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "16/675",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "2/75",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "1/75",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "4/225",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "3251191629068277247847/91021491638009856000000",
+      "literal_count": 38,
+      "maximum_integrated_selector": "8/15",
+      "mode": 7,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "16/45",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "250/469",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "8/15",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "125/469",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "8376624161372533192529/47786283109955174400000",
+      "literal_count": 5,
+      "maximum_integrated_selector": "2/9",
+      "mode": 8,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "34/225",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "22/135",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "22/135",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "1/9",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "2/9",
+          "right": 0
+        }
+      ]
+    },
+    {
+      "fee_total": "3431208360877866790247/2275537290950246400000",
+      "literal_count": 20,
+      "maximum_integrated_selector": "8/135",
+      "mode": 9,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "8/225",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "38/675",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "8/135",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "32/675",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "38/675",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "8/135",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "32/675",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "38/675",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "8/135",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "4/135",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "16/675",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "19/675",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "4/135",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "8/135",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "32/675",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "38/675",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "8/135",
+          "right": 3
+        }
+      ]
+    },
+    {
+      "fee_total": "2367716106263477772647/1365322374570147840000",
+      "literal_count": 95,
+      "maximum_integrated_selector": "8/675",
+      "mode": 10,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "2/225",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "8/675",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "2/225",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "8/675",
+          "right": 19
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 6
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 7
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 8
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 9
+        },
+        {
+          "left": 2,
+          "mass": "2/225",
+          "right": 10
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 11
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 12
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 13
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 14
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 15
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 16
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 17
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 18
+        },
+        {
+          "left": 2,
+          "mass": "8/675",
+          "right": 19
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 4
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 6
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 7
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 8
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 9
+        },
+        {
+          "left": 4,
+          "mass": "1/225",
+          "right": 10
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 11
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 12
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 13
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 14
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 15
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 16
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 17
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 18
+        },
+        {
+          "left": 4,
+          "mass": "4/675",
+          "right": 19
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 4
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 6
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 7
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 8
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 9
+        },
+        {
+          "left": 5,
+          "mass": "2/225",
+          "right": 10
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 11
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 12
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 13
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 14
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 15
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 16
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 17
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 18
+        },
+        {
+          "left": 5,
+          "mass": "8/675",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "2259706067177724047207/54612894982805913600000",
+      "literal_count": 95,
+      "maximum_integrated_selector": "8/45",
+      "mode": 11,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "250/1407",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "8/45",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "250/1407",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "8/45",
+          "right": 19
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 6
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 7
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 8
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 9
+        },
+        {
+          "left": 2,
+          "mass": "250/1407",
+          "right": 10
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 11
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 12
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 13
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 14
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 15
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 16
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 17
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 18
+        },
+        {
+          "left": 2,
+          "mass": "8/45",
+          "right": 19
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 4
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 6
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 7
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 8
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 9
+        },
+        {
+          "left": 4,
+          "mass": "125/1407",
+          "right": 10
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 11
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 12
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 13
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 14
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 15
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 16
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 17
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 18
+        },
+        {
+          "left": 4,
+          "mass": "4/45",
+          "right": 19
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 4
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 6
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 7
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 8
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 9
+        },
+        {
+          "left": 5,
+          "mass": "250/1407",
+          "right": 10
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 11
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 12
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 13
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 14
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 15
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 16
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 17
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 18
+        },
+        {
+          "left": 5,
+          "mass": "8/45",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "3500212813588518118247/38399691784785408000000",
+      "literal_count": 5,
+      "maximum_integrated_selector": "1",
+      "mode": 12,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "17/25",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "11/15",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "11/15",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "81/82",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "1",
+          "right": 0
+        }
+      ]
+    },
+    {
+      "fee_total": "3096272010022878310247/12799897261595136000000",
+      "literal_count": 20,
+      "maximum_integrated_selector": "4/15",
+      "mode": 13,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "4/25",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "19/75",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "4/15",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "16/75",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "19/75",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "4/15",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "16/75",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "19/75",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "4/15",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "54/205",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "216/1025",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "513/2050",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "54/205",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "4/15",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "16/75",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "19/75",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "4/15",
+          "right": 3
+        }
+      ]
+    },
+    {
+      "fee_total": "2166754295750484684647/7679938356957081600000",
+      "literal_count": 95,
+      "maximum_integrated_selector": "4/75",
+      "mode": 14,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "1/25",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "4/75",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "1/25",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "4/75",
+          "right": 19
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 6
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 7
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 8
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 9
+        },
+        {
+          "left": 2,
+          "mass": "1/25",
+          "right": 10
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 11
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 12
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 13
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 14
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 15
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 16
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 17
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 18
+        },
+        {
+          "left": 2,
+          "mass": "4/75",
+          "right": 19
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 4
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 6
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 7
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 8
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 9
+        },
+        {
+          "left": 4,
+          "mass": "81/2050",
+          "right": 10
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 11
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 12
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 13
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 14
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 15
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 16
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 17
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 18
+        },
+        {
+          "left": 4,
+          "mass": "54/1025",
+          "right": 19
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 4
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 6
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 7
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 8
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 9
+        },
+        {
+          "left": 5,
+          "mass": "1/25",
+          "right": 10
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 11
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 12
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 13
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 14
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 15
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 16
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 17
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 18
+        },
+        {
+          "left": 5,
+          "mass": "4/75",
+          "right": 19
+        }
+      ]
+    },
+    {
+      "fee_total": "1701995438614287871847/307197534278283264000000",
+      "literal_count": 95,
+      "maximum_integrated_selector": "4/5",
+      "mode": 15,
+      "selectors": [
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 0,
+          "mass": "0",
+          "right": 6
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 7
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 8
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 9
+        },
+        {
+          "left": 0,
+          "mass": "375/469",
+          "right": 10
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 11
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 12
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 13
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 14
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 15
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 16
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 17
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 18
+        },
+        {
+          "left": 0,
+          "mass": "4/5",
+          "right": 19
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 1,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 6
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 7
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 8
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 9
+        },
+        {
+          "left": 1,
+          "mass": "375/469",
+          "right": 10
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 11
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 12
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 13
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 14
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 15
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 16
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 17
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 18
+        },
+        {
+          "left": 1,
+          "mass": "4/5",
+          "right": 19
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 0
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 1
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 2
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 3
+        },
+        {
+          "left": 2,
+          "mass": "0",
+          "right": 4
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 6
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 7
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 8
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 9
+        },
+        {
+          "left": 2,
+          "mass": "375/469",
+          "right": 10
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 11
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 12
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 13
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 14
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 15
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 16
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 17
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 18
+        },
+        {
+          "left": 2,
+          "mass": "4/5",
+          "right": 19
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 0
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 1
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 2
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 3
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 4
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 6
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 7
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 8
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 9
+        },
+        {
+          "left": 4,
+          "mass": "30375/38458",
+          "right": 10
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 11
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 12
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 13
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 14
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 15
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 16
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 17
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 18
+        },
+        {
+          "left": 4,
+          "mass": "162/205",
+          "right": 19
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 1
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 2
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 3
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 4
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 6
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 7
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 8
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 9
+        },
+        {
+          "left": 5,
+          "mass": "375/469",
+          "right": 10
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 11
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 12
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 13
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 14
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 15
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 16
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 17
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 18
+        },
+        {
+          "left": 5,
+          "mass": "4/5",
+          "right": 19
+        }
+      ]
+    }
+  ],
+  "new_lean_verification": false,
+  "optimizer_used": false,
+  "product_central_cover": "62746740765897125193629419464731/103564044746511763114229760000000",
+  "product_cover_over_g": "62746740765897125193629419464731/103006137861232514323288473600000",
+  "program_sha256": "a0a75810e65a3e514e63bac6db21949d616379daac9fe2d5780260d088647503",
+  "required_integrated_debit": "109489197649/135841860000",
+  "schema": "uniform-outside-central-cover-obstruction-v1",
+  "scope": "Only query mixtures that, within each selected literal central selector, uniformly average every live outside first-root tuple for its support. This entire aggregated-central-cover subclass cannot give pointwise debit>=g source. No claim that arbitrary outside-dependent query mixtures fail; no positive gate or covering conclusion.",
+  "simple_relaxed_deficit": "29031860337191675392867/286717698659731046400000",
+  "simple_relaxed_upper": "202063994637274331892893/286717698659731046400000",
+  "source_coefficient_g": "200163067/201247200",
+  "status": "PASS",
+  "strict_deficit": "876408863047237046847333149/6128590808851751116800000000",
+  "unexpanded_literal_central_root_tuple_count": 180737557,
+  "uniform_root_tuples_over_all_supports": 323323,
+  "upper_to_required_ratio": "4063265037031973858885786851/4939673900079210905733120000"
+}

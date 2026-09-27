@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/capped_slot_outer_comparison.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/full_slot_union_outer_comparison.py': 'b460efb45f7f520fab11043ead98564a96d5c14d3629e4b1d5e68d4cb73a01b3', 'certificates/source_norms/source-budgets/full_slot_union_outer_comparison.json': 'acdb414078eafae24b798234806d07534c556fdf002ae340d3803b1d7f2faec2', 'profile-notes/129-192/155-the-signed-mass-bound-reaches-the-current-source-credit-ceiling.md': 'c3303db15a17a7594c58f7450df98f163b4d8e59fa111ac3aff4210d71e02f10', 'profile-notes/129-192/147-source-dependent-credits-cross-the-old-middle-bottleneck.md': '7764dcc1e73c7a5a76bbd59ce5f6c9b895ad4985939a2ab72dfb7e401937805d'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/full_slot_union_outer_comparison.py': 'af5a941a1d906b2b5317c6dd4ef573a7c47737f772628208fe12c814f1bfe895', 'certificates/source_norms/source-budgets/full_slot_union_outer_comparison.json': 'f4b032812a5d0f27361dbe79c24140fafe2339924605d2a5cd7cedc8eb93fa9f', 'profile-notes/129-192/155-the-signed-mass-bound-reaches-the-current-source-credit-ceiling.md': 'c3303db15a17a7594c58f7450df98f163b4d8e59fa111ac3aff4210d71e02f10', 'profile-notes/129-192/147-source-dependent-credits-cross-the-old-middle-bottleneck.md': '7764dcc1e73c7a5a76bbd59ce5f6c9b895ad4985939a2ab72dfb7e401937805d'}
 
 
 def require(condition, message):

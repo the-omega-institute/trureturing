@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "checks": 3609,
+  "program_sha256": "032a1be74de6d11f8f5453fecb86d7555a4a871aa5b9b9b02243e13bbbbc23c4",
+  "source_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99"
+  },
+  "cylinder_period": 72747675,
+  "source_mass_per_cylinder": "1/17496000",
+  "each_retained_mass": "1/4374000",
+  "central_mod225": 153,
+  "fixed_root7": 2,
+  "variable_roots": {
+    "11": [
+      9,
+      10
+    ],
+    "13": [
+      9,
+      10
+    ],
+    "17": [
+      9,
+      10
+    ]
+  },
+  "fixed_root19": 9,
+  "same_observations": [
+    "central mod225 joint marginal",
+    "all7 first-root unary marginals",
+    "all21 first-root pair marginals"
+  ],
+  "different_triple_event": {
+    "moduli": [
+      11,
+      13,
+      17
+    ],
+    "residues": [
+      9,
+      9,
+      9
+    ],
+    "even_mass": "1/17496000",
+    "half_mass": "1/34992000"
+  },
+  "complete_screen14": {
+    "central_mode": 0,
+    "outside_support_mask": 14,
+    "outside_primes": [
+      11,
+      13,
+      17
+    ],
+    "even": "2/18225",
+    "half": "1/18225",
+    "ratio": "2",
+    "winning_queries": {
+      "even": {
+        "bits": [
+          0,
+          0,
+          0
+        ],
+        "deep_flags": [
+          0,
+          0,
+          0
+        ]
+      },
+      "half": {
+        "bits": [
+          0,
+          0,
+          0
+        ],
+        "deep_flags": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "allheight_coverage": "Analytic cancellation reduces every e>=2 to multiplier q-2, strictly below the first-root q-1; no numerical height truncation.",
+    "definition_source": "Report689(P2),(P4), equivalent Report682 section2"
+  },
+  "selected_joined33_charge": "same by the already proved Report699 factorization; not recomputed",
+  "conclusion": "The Report699 marginal boundary does not determine the complete remaining screen14, even on actual109. This is an exact full allheight-screen counterexample, not merely a differing named row. No full-gate maximum/obstruction asserted.",
+  "no_lean": true
+}

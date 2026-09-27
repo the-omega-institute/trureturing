@@ -1,0 +1,7354 @@
+{
+  "budgets": {
+    "same_gap_child": {
+      "delta": [
+        "2/3",
+        "3/5",
+        "3/5",
+        "3/5"
+      ],
+      "A": [
+        "12/55",
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "B": [
+        "9/22",
+        "9/22",
+        "9/22",
+        "9/22"
+      ],
+      "private_root_masses": [
+        "2/11",
+        "0",
+        "0",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "1/15",
+        "0",
+        "47/330"
+      ],
+      "caps": {
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "3/22",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/22",
+        "1225": "1/33"
+      }
+    },
+    "same_full_child": {
+      "delta": [
+        "1/2",
+        "3/4",
+        "3/5",
+        "3/5"
+      ],
+      "A": [
+        "2/5",
+        "12/55",
+        "1/3",
+        "1/3"
+      ],
+      "B": [
+        "1/2",
+        "4/11",
+        "17/44",
+        "17/44"
+      ],
+      "private_root_masses": [
+        "0",
+        "2/11",
+        "0",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "1/15",
+        "0",
+        "79/660"
+      ],
+      "caps": {
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/33"
+      }
+    },
+    "two_gap_children": {
+      "delta": [
+        "1",
+        "3/5",
+        "3/5",
+        "3/5"
+      ],
+      "A": [
+        "1/5",
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "B": [
+        "3/11",
+        "5/11",
+        "5/11",
+        "5/11"
+      ],
+      "private_root_masses": [
+        "2/11",
+        "0",
+        "0",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "8/165",
+        "0",
+        "4/33"
+      ],
+      "caps": {
+        "5": "21/55",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "5/33",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "5/99",
+        "1225": "1/33"
+      }
+    },
+    "two_children_same_full": {
+      "delta": [
+        "1/2",
+        "1",
+        "3/5",
+        "3/5"
+      ],
+      "A": [
+        "2/5",
+        "1/5",
+        "1/3",
+        "1/3"
+      ],
+      "B": [
+        "1/2",
+        "3/11",
+        "19/44",
+        "19/44"
+      ],
+      "private_root_masses": [
+        "0",
+        "2/11",
+        "0",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "8/165",
+        "0",
+        "4/33"
+      ],
+      "caps": {
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/33"
+      }
+    },
+    "gap_and_full": {
+      "delta": [
+        "2/3",
+        "3/4",
+        "3/5",
+        "3/5"
+      ],
+      "A": [
+        "3/10",
+        "4/15",
+        "1/3",
+        "1/3"
+      ],
+      "B": [
+        "9/22",
+        "4/11",
+        "19/44",
+        "19/44"
+      ],
+      "private_root_masses": [
+        "1/11",
+        "1/11",
+        "0",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "9/110",
+        "0",
+        "59/330"
+      ],
+      "caps": {
+        "5": "43/110",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "19/132",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "19/396",
+        "1225": "1/33"
+      }
+    },
+    "two_full_roots": {
+      "delta": [
+        "1/2",
+        "3/4",
+        "3/4",
+        "3/5"
+      ],
+      "A": [
+        "2/5",
+        "4/15",
+        "4/15",
+        "1/3"
+      ],
+      "B": [
+        "1/2",
+        "4/11",
+        "4/11",
+        "9/22"
+      ],
+      "private_root_masses": [
+        "0",
+        "1/11",
+        "1/11",
+        "0"
+      ],
+      "cut_inequalities": 44,
+      "minimum_slacks": [
+        "8/165",
+        "0",
+        "41/330"
+      ],
+      "caps": {
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/5",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/33"
+      }
+    }
+  },
+  "universal_caps": {
+    "5": "2/5",
+    "7": "3/11",
+    "25": "1/5",
+    "35": "1/6",
+    "49": "1/11",
+    "175": "1/11",
+    "245": "1/18",
+    "1225": "1/33"
+  },
+  "universal_lcm_bound": "491/55",
+  "controls": [
+    {
+      "owner_configuration": "same_gap_child",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 280,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 270,
+        "selected_points": 90,
+        "original_restriction_choices": 3000,
+        "root_restriction_counts": [
+          3,
+          10,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "1/2",
+        "root_caps": [
+          "4/15",
+          "11/27",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/2",
+          "1/2",
+          "1/2",
+          "1/2"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "2/3",
+          "0:2": "2/3",
+          "0:3": "2/3",
+          "0:4": "0",
+          "1:0": "3/5",
+          "1:1": "3/5",
+          "1:2": "3/5",
+          "1:3": "3/5",
+          "1:4": "3/5",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          0,
+          0,
+          4
+        ],
+        [
+          0,
+          0,
+          11
+        ],
+        [
+          0,
+          0,
+          18
+        ],
+        [
+          0,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 98,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "2/11",
+        "35": "3/22",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/22",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "1809/220",
+      "law": [
+        {
+          "residue": 1,
+          "mass": "1/110"
+        },
+        {
+          "residue": 2,
+          "mass": "1/110"
+        },
+        {
+          "residue": 25,
+          "mass": "1/44"
+        },
+        {
+          "residue": 51,
+          "mass": "1/110"
+        },
+        {
+          "residue": 56,
+          "mass": "1/110"
+        },
+        {
+          "residue": 57,
+          "mass": "1/550"
+        },
+        {
+          "residue": 58,
+          "mass": "1/165"
+        },
+        {
+          "residue": 105,
+          "mass": "1/66"
+        },
+        {
+          "residue": 106,
+          "mass": "1/110"
+        },
+        {
+          "residue": 107,
+          "mass": "1/110"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "2/165"
+        },
+        {
+          "residue": 156,
+          "mass": "1/330"
+        },
+        {
+          "residue": 161,
+          "mass": "1/110"
+        },
+        {
+          "residue": 162,
+          "mass": "1/110"
+        },
+        {
+          "residue": 163,
+          "mass": "1/110"
+        },
+        {
+          "residue": 196,
+          "mass": "1/110"
+        },
+        {
+          "residue": 200,
+          "mass": "1/44"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/110"
+        },
+        {
+          "residue": 212,
+          "mass": "1/110"
+        },
+        {
+          "residue": 246,
+          "mass": "1/110"
+        },
+        {
+          "residue": 247,
+          "mass": "1/110"
+        },
+        {
+          "residue": 296,
+          "mass": "1/110"
+        },
+        {
+          "residue": 301,
+          "mass": "1/110"
+        },
+        {
+          "residue": 302,
+          "mass": "1/550"
+        },
+        {
+          "residue": 303,
+          "mass": "1/165"
+        },
+        {
+          "residue": 351,
+          "mass": "1/110"
+        },
+        {
+          "residue": 352,
+          "mass": "1/110"
+        },
+        {
+          "residue": 401,
+          "mass": "1/330"
+        },
+        {
+          "residue": 406,
+          "mass": "1/110"
+        },
+        {
+          "residue": 407,
+          "mass": "1/110"
+        },
+        {
+          "residue": 408,
+          "mass": "1/110"
+        },
+        {
+          "residue": 441,
+          "mass": "1/110"
+        },
+        {
+          "residue": 455,
+          "mass": "1/66"
+        },
+        {
+          "residue": 456,
+          "mass": "1/110"
+        },
+        {
+          "residue": 457,
+          "mass": "1/110"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/110"
+        },
+        {
+          "residue": 492,
+          "mass": "1/110"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/110"
+        },
+        {
+          "residue": 546,
+          "mass": "1/110"
+        },
+        {
+          "residue": 547,
+          "mass": "1/550"
+        },
+        {
+          "residue": 548,
+          "mass": "1/165"
+        },
+        {
+          "residue": 550,
+          "mass": "1/44"
+        },
+        {
+          "residue": 596,
+          "mass": "1/110"
+        },
+        {
+          "residue": 597,
+          "mass": "1/110"
+        },
+        {
+          "residue": 646,
+          "mass": "1/330"
+        },
+        {
+          "residue": 651,
+          "mass": "1/110"
+        },
+        {
+          "residue": 652,
+          "mass": "1/110"
+        },
+        {
+          "residue": 653,
+          "mass": "1/110"
+        },
+        {
+          "residue": 686,
+          "mass": "1/110"
+        },
+        {
+          "residue": 701,
+          "mass": "1/110"
+        },
+        {
+          "residue": 702,
+          "mass": "1/110"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/110"
+        },
+        {
+          "residue": 737,
+          "mass": "1/110"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/110"
+        },
+        {
+          "residue": 791,
+          "mass": "1/110"
+        },
+        {
+          "residue": 792,
+          "mass": "1/550"
+        },
+        {
+          "residue": 793,
+          "mass": "1/165"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/110"
+        },
+        {
+          "residue": 842,
+          "mass": "1/110"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 890,
+          "mass": "2/165"
+        },
+        {
+          "residue": 891,
+          "mass": "1/330"
+        },
+        {
+          "residue": 896,
+          "mass": "1/110"
+        },
+        {
+          "residue": 897,
+          "mass": "1/110"
+        },
+        {
+          "residue": 898,
+          "mass": "1/110"
+        },
+        {
+          "residue": 900,
+          "mass": "1/44"
+        },
+        {
+          "residue": 931,
+          "mass": "1/110"
+        },
+        {
+          "residue": 946,
+          "mass": "1/110"
+        },
+        {
+          "residue": 947,
+          "mass": "1/110"
+        },
+        {
+          "residue": 980,
+          "mass": "1/66"
+        },
+        {
+          "residue": 981,
+          "mass": "1/110"
+        },
+        {
+          "residue": 982,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/550"
+        },
+        {
+          "residue": 1038,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1135,
+          "mass": "2/165"
+        },
+        {
+          "residue": 1136,
+          "mass": "1/330"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1143,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1176,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "same_gap_child",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 280,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 270,
+        "selected_points": 90,
+        "original_restriction_choices": 3000,
+        "root_restriction_counts": [
+          3,
+          10,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "1/2",
+        "root_caps": [
+          "4/15",
+          "11/27",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/2",
+          "1/2",
+          "1/2",
+          "1/2"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "2/3",
+          "0:2": "2/3",
+          "0:3": "2/3",
+          "0:4": "0",
+          "1:0": "3/5",
+          "1:1": "3/5",
+          "1:2": "3/5",
+          "1:3": "3/5",
+          "1:4": "3/5",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          0,
+          0,
+          4
+        ],
+        [
+          0,
+          0,
+          11
+        ],
+        [
+          0,
+          0,
+          18
+        ],
+        [
+          0,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 98,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "2/11",
+        "35": "3/22",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/22",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "1809/220",
+      "law": [
+        {
+          "residue": 1,
+          "mass": "1/110"
+        },
+        {
+          "residue": 2,
+          "mass": "1/110"
+        },
+        {
+          "residue": 25,
+          "mass": "1/44"
+        },
+        {
+          "residue": 51,
+          "mass": "1/110"
+        },
+        {
+          "residue": 56,
+          "mass": "1/110"
+        },
+        {
+          "residue": 57,
+          "mass": "1/550"
+        },
+        {
+          "residue": 58,
+          "mass": "1/165"
+        },
+        {
+          "residue": 105,
+          "mass": "1/66"
+        },
+        {
+          "residue": 106,
+          "mass": "1/110"
+        },
+        {
+          "residue": 107,
+          "mass": "1/110"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "2/165"
+        },
+        {
+          "residue": 156,
+          "mass": "1/330"
+        },
+        {
+          "residue": 161,
+          "mass": "1/110"
+        },
+        {
+          "residue": 162,
+          "mass": "1/110"
+        },
+        {
+          "residue": 163,
+          "mass": "1/110"
+        },
+        {
+          "residue": 196,
+          "mass": "1/110"
+        },
+        {
+          "residue": 200,
+          "mass": "1/44"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/110"
+        },
+        {
+          "residue": 212,
+          "mass": "1/110"
+        },
+        {
+          "residue": 246,
+          "mass": "1/110"
+        },
+        {
+          "residue": 247,
+          "mass": "1/110"
+        },
+        {
+          "residue": 296,
+          "mass": "1/110"
+        },
+        {
+          "residue": 301,
+          "mass": "1/110"
+        },
+        {
+          "residue": 302,
+          "mass": "1/550"
+        },
+        {
+          "residue": 303,
+          "mass": "1/165"
+        },
+        {
+          "residue": 351,
+          "mass": "1/110"
+        },
+        {
+          "residue": 352,
+          "mass": "1/110"
+        },
+        {
+          "residue": 401,
+          "mass": "1/330"
+        },
+        {
+          "residue": 406,
+          "mass": "1/110"
+        },
+        {
+          "residue": 407,
+          "mass": "1/110"
+        },
+        {
+          "residue": 408,
+          "mass": "1/110"
+        },
+        {
+          "residue": 441,
+          "mass": "1/110"
+        },
+        {
+          "residue": 455,
+          "mass": "1/66"
+        },
+        {
+          "residue": 456,
+          "mass": "1/110"
+        },
+        {
+          "residue": 457,
+          "mass": "1/110"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/110"
+        },
+        {
+          "residue": 492,
+          "mass": "1/110"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/110"
+        },
+        {
+          "residue": 546,
+          "mass": "1/110"
+        },
+        {
+          "residue": 547,
+          "mass": "1/550"
+        },
+        {
+          "residue": 548,
+          "mass": "1/165"
+        },
+        {
+          "residue": 550,
+          "mass": "1/44"
+        },
+        {
+          "residue": 596,
+          "mass": "1/110"
+        },
+        {
+          "residue": 597,
+          "mass": "1/110"
+        },
+        {
+          "residue": 646,
+          "mass": "1/330"
+        },
+        {
+          "residue": 651,
+          "mass": "1/110"
+        },
+        {
+          "residue": 652,
+          "mass": "1/110"
+        },
+        {
+          "residue": 653,
+          "mass": "1/110"
+        },
+        {
+          "residue": 686,
+          "mass": "1/110"
+        },
+        {
+          "residue": 701,
+          "mass": "1/110"
+        },
+        {
+          "residue": 702,
+          "mass": "1/110"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/110"
+        },
+        {
+          "residue": 737,
+          "mass": "1/110"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/110"
+        },
+        {
+          "residue": 791,
+          "mass": "1/110"
+        },
+        {
+          "residue": 792,
+          "mass": "1/550"
+        },
+        {
+          "residue": 793,
+          "mass": "1/165"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/110"
+        },
+        {
+          "residue": 842,
+          "mass": "1/110"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 890,
+          "mass": "2/165"
+        },
+        {
+          "residue": 891,
+          "mass": "1/330"
+        },
+        {
+          "residue": 896,
+          "mass": "1/110"
+        },
+        {
+          "residue": 897,
+          "mass": "1/110"
+        },
+        {
+          "residue": 898,
+          "mass": "1/110"
+        },
+        {
+          "residue": 900,
+          "mass": "1/44"
+        },
+        {
+          "residue": 931,
+          "mass": "1/110"
+        },
+        {
+          "residue": 946,
+          "mass": "1/110"
+        },
+        {
+          "residue": 947,
+          "mass": "1/110"
+        },
+        {
+          "residue": 980,
+          "mass": "1/66"
+        },
+        {
+          "residue": 981,
+          "mass": "1/110"
+        },
+        {
+          "residue": 982,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/550"
+        },
+        {
+          "residue": 1038,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1135,
+          "mass": "2/165"
+        },
+        {
+          "residue": 1136,
+          "mass": "1/330"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1143,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1176,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "same_full_child",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 280,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 270,
+        "selected_points": 90,
+        "original_restriction_choices": 2400,
+        "root_restriction_counts": [
+          6,
+          4,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "4/15",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "4/9",
+          "17/36",
+          "17/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          0,
+          11
+        ],
+        [
+          1,
+          0,
+          18
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 98,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "2/11",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5707/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 2,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 56,
+          "mass": "7/792"
+        },
+        {
+          "residue": 58,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 72,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 106,
+          "mass": "7/792"
+        },
+        {
+          "residue": 107,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 161,
+          "mass": "7/792"
+        },
+        {
+          "residue": 163,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "7/792"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "7/792"
+        },
+        {
+          "residue": 212,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "7/792"
+        },
+        {
+          "residue": 247,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "1/660"
+        },
+        {
+          "residue": 303,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 317,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 352,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 406,
+          "mass": "7/792"
+        },
+        {
+          "residue": 408,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "7/792"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 456,
+          "mass": "7/792"
+        },
+        {
+          "residue": 457,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "7/792"
+        },
+        {
+          "residue": 492,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 501,
+          "mass": "1/44"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "1/660"
+        },
+        {
+          "residue": 546,
+          "mass": "7/792"
+        },
+        {
+          "residue": 548,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 562,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "7/792"
+        },
+        {
+          "residue": 597,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 653,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 686,
+          "mass": "7/792"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 702,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "7/792"
+        },
+        {
+          "residue": 737,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "1/660"
+        },
+        {
+          "residue": 791,
+          "mass": "7/792"
+        },
+        {
+          "residue": 793,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "7/792"
+        },
+        {
+          "residue": 842,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 851,
+          "mass": "1/44"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 896,
+          "mass": "7/792"
+        },
+        {
+          "residue": 898,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "7/792"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "7/792"
+        },
+        {
+          "residue": 947,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 981,
+          "mass": "7/792"
+        },
+        {
+          "residue": 982,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/660"
+        },
+        {
+          "residue": 1036,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1038,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 1052,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1087,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1141,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1143,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1192,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1201,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "same_full_child",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 280,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 270,
+        "selected_points": 90,
+        "original_restriction_choices": 2400,
+        "root_restriction_counts": [
+          6,
+          4,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "4/15",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "4/9",
+          "17/36",
+          "17/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          0,
+          11
+        ],
+        [
+          1,
+          0,
+          18
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 98,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "2/11",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5707/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 2,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 56,
+          "mass": "7/792"
+        },
+        {
+          "residue": 58,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 72,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 106,
+          "mass": "7/792"
+        },
+        {
+          "residue": 107,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 161,
+          "mass": "7/792"
+        },
+        {
+          "residue": 163,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "7/792"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "7/792"
+        },
+        {
+          "residue": 212,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "7/792"
+        },
+        {
+          "residue": 247,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "1/660"
+        },
+        {
+          "residue": 303,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 317,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 352,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 406,
+          "mass": "7/792"
+        },
+        {
+          "residue": 408,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "7/792"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 456,
+          "mass": "7/792"
+        },
+        {
+          "residue": 457,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "7/792"
+        },
+        {
+          "residue": 492,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 501,
+          "mass": "1/44"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "1/660"
+        },
+        {
+          "residue": 546,
+          "mass": "7/792"
+        },
+        {
+          "residue": 548,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 562,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "7/792"
+        },
+        {
+          "residue": 597,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 653,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 686,
+          "mass": "7/792"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 702,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "7/792"
+        },
+        {
+          "residue": 737,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "1/660"
+        },
+        {
+          "residue": 791,
+          "mass": "7/792"
+        },
+        {
+          "residue": 793,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "7/792"
+        },
+        {
+          "residue": 842,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 851,
+          "mass": "1/44"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 896,
+          "mass": "7/792"
+        },
+        {
+          "residue": 898,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "7/792"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "7/792"
+        },
+        {
+          "residue": 947,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 981,
+          "mass": "7/792"
+        },
+        {
+          "residue": 982,
+          "mass": "29/4950"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/660"
+        },
+        {
+          "residue": 1036,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1038,
+          "mass": "73/9900"
+        },
+        {
+          "residue": 1052,
+          "mass": "3/1100"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1087,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1141,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1143,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1192,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1201,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_gap_children",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 109,
+        "original_restriction_choices": 1000,
+        "root_restriction_counts": [
+          1,
+          10,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "5/9",
+        "root_caps": [
+          "11/45",
+          "11/27",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/3",
+          "5/9",
+          "5/9",
+          "5/9"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "0",
+          "0:2": "1",
+          "0:3": "1",
+          "0:4": "0",
+          "1:0": "3/5",
+          "1:1": "3/5",
+          "1:2": "3/5",
+          "1:3": "3/5",
+          "1:4": "3/5",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          1,
+          11
+        ],
+        [
+          0,
+          1,
+          18
+        ],
+        [
+          0,
+          1,
+          25
+        ]
+      ],
+      "law_atoms": 117,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "21/55",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "5/33",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "5/99",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5261/660",
+      "law": [
+        {
+          "residue": 1,
+          "mass": "1/99"
+        },
+        {
+          "residue": 2,
+          "mass": "7/825"
+        },
+        {
+          "residue": 7,
+          "mass": "1/495"
+        },
+        {
+          "residue": 15,
+          "mass": "1/66"
+        },
+        {
+          "residue": 51,
+          "mass": "1/165"
+        },
+        {
+          "residue": 56,
+          "mass": "1/99"
+        },
+        {
+          "residue": 57,
+          "mass": "1/495"
+        },
+        {
+          "residue": 58,
+          "mass": "4/495"
+        },
+        {
+          "residue": 72,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 106,
+          "mass": "1/99"
+        },
+        {
+          "residue": 107,
+          "mass": "1/99"
+        },
+        {
+          "residue": 112,
+          "mass": "1/495"
+        },
+        {
+          "residue": 147,
+          "mass": "1/495"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/495"
+        },
+        {
+          "residue": 163,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/495"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "1/99"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "7/825"
+        },
+        {
+          "residue": 252,
+          "mass": "1/495"
+        },
+        {
+          "residue": 260,
+          "mass": "1/66"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 301,
+          "mass": "1/99"
+        },
+        {
+          "residue": 302,
+          "mass": "1/495"
+        },
+        {
+          "residue": 303,
+          "mass": "4/495"
+        },
+        {
+          "residue": 305,
+          "mass": "1/44"
+        },
+        {
+          "residue": 317,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 351,
+          "mass": "1/99"
+        },
+        {
+          "residue": 352,
+          "mass": "1/99"
+        },
+        {
+          "residue": 357,
+          "mass": "1/495"
+        },
+        {
+          "residue": 392,
+          "mass": "1/495"
+        },
+        {
+          "residue": 406,
+          "mass": "1/99"
+        },
+        {
+          "residue": 407,
+          "mass": "1/495"
+        },
+        {
+          "residue": 408,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/495"
+        },
+        {
+          "residue": 456,
+          "mass": "1/99"
+        },
+        {
+          "residue": 457,
+          "mass": "1/99"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "7/825"
+        },
+        {
+          "residue": 497,
+          "mass": "1/495"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/495"
+        },
+        {
+          "residue": 548,
+          "mass": "4/495"
+        },
+        {
+          "residue": 562,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 590,
+          "mass": "1/110"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "1/99"
+        },
+        {
+          "residue": 602,
+          "mass": "1/495"
+        },
+        {
+          "residue": 637,
+          "mass": "1/495"
+        },
+        {
+          "residue": 651,
+          "mass": "1/99"
+        },
+        {
+          "residue": 652,
+          "mass": "1/495"
+        },
+        {
+          "residue": 653,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 655,
+          "mass": "1/44"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/495"
+        },
+        {
+          "residue": 701,
+          "mass": "1/99"
+        },
+        {
+          "residue": 702,
+          "mass": "1/99"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "7/825"
+        },
+        {
+          "residue": 742,
+          "mass": "1/495"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/495"
+        },
+        {
+          "residue": 793,
+          "mass": "4/495"
+        },
+        {
+          "residue": 807,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 835,
+          "mass": "1/110"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "1/99"
+        },
+        {
+          "residue": 847,
+          "mass": "1/495"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 882,
+          "mass": "1/495"
+        },
+        {
+          "residue": 890,
+          "mass": "1/66"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/495"
+        },
+        {
+          "residue": 898,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "1/99"
+        },
+        {
+          "residue": 932,
+          "mass": "1/495"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "1/99"
+        },
+        {
+          "residue": 981,
+          "mass": "1/99"
+        },
+        {
+          "residue": 982,
+          "mass": "7/825"
+        },
+        {
+          "residue": 987,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1005,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1038,
+          "mass": "4/495"
+        },
+        {
+          "residue": 1052,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1143,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 1176,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1180,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_gap_children",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 109,
+        "original_restriction_choices": 1000,
+        "root_restriction_counts": [
+          1,
+          10,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "5/9",
+        "root_caps": [
+          "11/45",
+          "11/27",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/3",
+          "5/9",
+          "5/9",
+          "5/9"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "0",
+          "0:2": "1",
+          "0:3": "1",
+          "0:4": "0",
+          "1:0": "3/5",
+          "1:1": "3/5",
+          "1:2": "3/5",
+          "1:3": "3/5",
+          "1:4": "3/5",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          1,
+          11
+        ],
+        [
+          0,
+          1,
+          18
+        ],
+        [
+          0,
+          1,
+          25
+        ]
+      ],
+      "law_atoms": 117,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "21/55",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "5/33",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "5/99",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5261/660",
+      "law": [
+        {
+          "residue": 1,
+          "mass": "1/99"
+        },
+        {
+          "residue": 2,
+          "mass": "7/825"
+        },
+        {
+          "residue": 7,
+          "mass": "1/495"
+        },
+        {
+          "residue": 15,
+          "mass": "1/66"
+        },
+        {
+          "residue": 51,
+          "mass": "1/165"
+        },
+        {
+          "residue": 56,
+          "mass": "1/99"
+        },
+        {
+          "residue": 57,
+          "mass": "1/495"
+        },
+        {
+          "residue": 58,
+          "mass": "4/495"
+        },
+        {
+          "residue": 72,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 106,
+          "mass": "1/99"
+        },
+        {
+          "residue": 107,
+          "mass": "1/99"
+        },
+        {
+          "residue": 112,
+          "mass": "1/495"
+        },
+        {
+          "residue": 147,
+          "mass": "1/495"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/495"
+        },
+        {
+          "residue": 163,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/495"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "1/99"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "7/825"
+        },
+        {
+          "residue": 252,
+          "mass": "1/495"
+        },
+        {
+          "residue": 260,
+          "mass": "1/66"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 301,
+          "mass": "1/99"
+        },
+        {
+          "residue": 302,
+          "mass": "1/495"
+        },
+        {
+          "residue": 303,
+          "mass": "4/495"
+        },
+        {
+          "residue": 305,
+          "mass": "1/44"
+        },
+        {
+          "residue": 317,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 351,
+          "mass": "1/99"
+        },
+        {
+          "residue": 352,
+          "mass": "1/99"
+        },
+        {
+          "residue": 357,
+          "mass": "1/495"
+        },
+        {
+          "residue": 392,
+          "mass": "1/495"
+        },
+        {
+          "residue": 406,
+          "mass": "1/99"
+        },
+        {
+          "residue": 407,
+          "mass": "1/495"
+        },
+        {
+          "residue": 408,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/495"
+        },
+        {
+          "residue": 456,
+          "mass": "1/99"
+        },
+        {
+          "residue": 457,
+          "mass": "1/99"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "7/825"
+        },
+        {
+          "residue": 497,
+          "mass": "1/495"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/495"
+        },
+        {
+          "residue": 548,
+          "mass": "4/495"
+        },
+        {
+          "residue": 562,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 590,
+          "mass": "1/110"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "1/99"
+        },
+        {
+          "residue": 602,
+          "mass": "1/495"
+        },
+        {
+          "residue": 637,
+          "mass": "1/495"
+        },
+        {
+          "residue": 651,
+          "mass": "1/99"
+        },
+        {
+          "residue": 652,
+          "mass": "1/495"
+        },
+        {
+          "residue": 653,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 655,
+          "mass": "1/44"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/495"
+        },
+        {
+          "residue": 701,
+          "mass": "1/99"
+        },
+        {
+          "residue": 702,
+          "mass": "1/99"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "7/825"
+        },
+        {
+          "residue": 742,
+          "mass": "1/495"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/495"
+        },
+        {
+          "residue": 793,
+          "mass": "4/495"
+        },
+        {
+          "residue": 807,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 835,
+          "mass": "1/110"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "1/99"
+        },
+        {
+          "residue": 847,
+          "mass": "1/495"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 882,
+          "mass": "1/495"
+        },
+        {
+          "residue": 890,
+          "mass": "1/66"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/495"
+        },
+        {
+          "residue": 898,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "1/99"
+        },
+        {
+          "residue": 932,
+          "mass": "1/495"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "1/99"
+        },
+        {
+          "residue": 981,
+          "mass": "1/99"
+        },
+        {
+          "residue": 982,
+          "mass": "7/825"
+        },
+        {
+          "residue": 987,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1005,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1038,
+          "mass": "4/495"
+        },
+        {
+          "residue": 1052,
+          "mass": "4/2475"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1143,
+          "mass": "16/2475"
+        },
+        {
+          "residue": 1176,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1180,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_children_same_full",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 113,
+        "original_restriction_choices": 600,
+        "root_restriction_counts": [
+          6,
+          1,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "11/45",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "1/3",
+          "19/36",
+          "19/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "0",
+          "1:2": "1",
+          "1:3": "1",
+          "1:4": "1",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          11
+        ],
+        [
+          1,
+          1,
+          18
+        ],
+        [
+          1,
+          1,
+          25
+        ]
+      ],
+      "law_atoms": 121,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5437/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 2,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 7,
+          "mass": "1/990"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 57,
+          "mass": "1/990"
+        },
+        {
+          "residue": 58,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 72,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 107,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 112,
+          "mass": "1/990"
+        },
+        {
+          "residue": 147,
+          "mass": "1/990"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/990"
+        },
+        {
+          "residue": 163,
+          "mass": "2/825"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/990"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 252,
+          "mass": "1/990"
+        },
+        {
+          "residue": 256,
+          "mass": "1/44"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 302,
+          "mass": "1/990"
+        },
+        {
+          "residue": 303,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 317,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 352,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 357,
+          "mass": "1/990"
+        },
+        {
+          "residue": 392,
+          "mass": "1/990"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 407,
+          "mass": "1/990"
+        },
+        {
+          "residue": 408,
+          "mass": "2/825"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/990"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 457,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 497,
+          "mass": "1/990"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/990"
+        },
+        {
+          "residue": 548,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 562,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 602,
+          "mass": "1/990"
+        },
+        {
+          "residue": 606,
+          "mass": "1/44"
+        },
+        {
+          "residue": 637,
+          "mass": "1/990"
+        },
+        {
+          "residue": 652,
+          "mass": "1/990"
+        },
+        {
+          "residue": 653,
+          "mass": "2/825"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/990"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 702,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 742,
+          "mass": "1/990"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/990"
+        },
+        {
+          "residue": 793,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 847,
+          "mass": "1/990"
+        },
+        {
+          "residue": 882,
+          "mass": "1/990"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/990"
+        },
+        {
+          "residue": 898,
+          "mass": "2/825"
+        },
+        {
+          "residue": 932,
+          "mass": "1/990"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 956,
+          "mass": "1/44"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 982,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 987,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1038,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 1052,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1131,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1143,
+          "mass": "2/825"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "19/1980"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_children_same_full",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 113,
+        "original_restriction_choices": 600,
+        "root_restriction_counts": [
+          6,
+          1,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "11/45",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "1/3",
+          "19/36",
+          "19/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "0",
+          "1:2": "1",
+          "1:3": "1",
+          "1:4": "1",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          11
+        ],
+        [
+          1,
+          1,
+          18
+        ],
+        [
+          1,
+          1,
+          25
+        ]
+      ],
+      "law_atoms": 121,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5437/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 2,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 7,
+          "mass": "1/990"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 57,
+          "mass": "1/990"
+        },
+        {
+          "residue": 58,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 72,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 107,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 112,
+          "mass": "1/990"
+        },
+        {
+          "residue": 147,
+          "mass": "1/990"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/990"
+        },
+        {
+          "residue": 163,
+          "mass": "2/825"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/990"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 252,
+          "mass": "1/990"
+        },
+        {
+          "residue": 256,
+          "mass": "1/44"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 302,
+          "mass": "1/990"
+        },
+        {
+          "residue": 303,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 317,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 352,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 357,
+          "mass": "1/990"
+        },
+        {
+          "residue": 392,
+          "mass": "1/990"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 407,
+          "mass": "1/990"
+        },
+        {
+          "residue": 408,
+          "mass": "2/825"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/990"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 457,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 497,
+          "mass": "1/990"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/990"
+        },
+        {
+          "residue": 548,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 562,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 602,
+          "mass": "1/990"
+        },
+        {
+          "residue": 606,
+          "mass": "1/44"
+        },
+        {
+          "residue": 637,
+          "mass": "1/990"
+        },
+        {
+          "residue": 652,
+          "mass": "1/990"
+        },
+        {
+          "residue": 653,
+          "mass": "2/825"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/990"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 702,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 742,
+          "mass": "1/990"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/990"
+        },
+        {
+          "residue": 793,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 847,
+          "mass": "1/990"
+        },
+        {
+          "residue": 882,
+          "mass": "1/990"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/990"
+        },
+        {
+          "residue": 898,
+          "mass": "2/825"
+        },
+        {
+          "residue": 932,
+          "mass": "1/990"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 956,
+          "mass": "1/44"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 982,
+          "mass": "17/4950"
+        },
+        {
+          "residue": 987,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1038,
+          "mass": "7/1100"
+        },
+        {
+          "residue": 1052,
+          "mass": "61/9900"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1131,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1143,
+          "mass": "2/825"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "19/1980"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "gap_and_full",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 109,
+        "original_restriction_choices": 1200,
+        "root_restriction_counts": [
+          3,
+          4,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "19/36",
+        "root_caps": [
+          "11/30",
+          "44/135",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/2",
+          "4/9",
+          "19/36",
+          "19/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "2/3",
+          "0:2": "2/3",
+          "0:3": "2/3",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          0,
+          11
+        ],
+        [
+          1,
+          0,
+          18
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 117,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "43/110",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "19/132",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "19/396",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5209/660",
+      "law": [
+        {
+          "residue": 2,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 7,
+          "mass": "1/990"
+        },
+        {
+          "residue": 15,
+          "mass": "1/66"
+        },
+        {
+          "residue": 56,
+          "mass": "1/99"
+        },
+        {
+          "residue": 57,
+          "mass": "1/990"
+        },
+        {
+          "residue": 58,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 72,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 105,
+          "mass": "1/66"
+        },
+        {
+          "residue": 106,
+          "mass": "1/99"
+        },
+        {
+          "residue": 107,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 112,
+          "mass": "1/990"
+        },
+        {
+          "residue": 147,
+          "mass": "1/990"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "1/66"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/990"
+        },
+        {
+          "residue": 163,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/990"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 252,
+          "mass": "1/990"
+        },
+        {
+          "residue": 260,
+          "mass": "1/66"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 302,
+          "mass": "1/990"
+        },
+        {
+          "residue": 303,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 317,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 352,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 357,
+          "mass": "1/990"
+        },
+        {
+          "residue": 392,
+          "mass": "1/990"
+        },
+        {
+          "residue": 406,
+          "mass": "1/99"
+        },
+        {
+          "residue": 407,
+          "mass": "1/990"
+        },
+        {
+          "residue": 408,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/990"
+        },
+        {
+          "residue": 455,
+          "mass": "1/66"
+        },
+        {
+          "residue": 456,
+          "mass": "1/99"
+        },
+        {
+          "residue": 457,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 497,
+          "mass": "1/990"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 501,
+          "mass": "1/44"
+        },
+        {
+          "residue": 505,
+          "mass": "1/66"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/990"
+        },
+        {
+          "residue": 548,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 562,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 590,
+          "mass": "1/110"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 602,
+          "mass": "1/990"
+        },
+        {
+          "residue": 637,
+          "mass": "1/990"
+        },
+        {
+          "residue": 652,
+          "mass": "1/990"
+        },
+        {
+          "residue": 653,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/990"
+        },
+        {
+          "residue": 702,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 742,
+          "mass": "1/990"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/990"
+        },
+        {
+          "residue": 793,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 807,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 835,
+          "mass": "1/110"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 847,
+          "mass": "1/990"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 851,
+          "mass": "1/44"
+        },
+        {
+          "residue": 882,
+          "mass": "1/990"
+        },
+        {
+          "residue": 890,
+          "mass": "1/66"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/990"
+        },
+        {
+          "residue": 898,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "1/99"
+        },
+        {
+          "residue": 932,
+          "mass": "1/990"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 980,
+          "mass": "1/66"
+        },
+        {
+          "residue": 981,
+          "mass": "1/99"
+        },
+        {
+          "residue": 982,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 987,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1038,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1052,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1143,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1201,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "gap_and_full",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 109,
+        "original_restriction_choices": 1200,
+        "root_restriction_counts": [
+          3,
+          4,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "19/36",
+        "root_caps": [
+          "11/30",
+          "44/135",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/2",
+          "4/9",
+          "19/36",
+          "19/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "2/3",
+          "0:2": "2/3",
+          "0:3": "2/3",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          0,
+          11
+        ],
+        [
+          1,
+          0,
+          18
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 117,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "43/110",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "19/132",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "19/396",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5209/660",
+      "law": [
+        {
+          "residue": 2,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 7,
+          "mass": "1/990"
+        },
+        {
+          "residue": 15,
+          "mass": "1/66"
+        },
+        {
+          "residue": 56,
+          "mass": "1/99"
+        },
+        {
+          "residue": 57,
+          "mass": "1/990"
+        },
+        {
+          "residue": 58,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 72,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 105,
+          "mass": "1/66"
+        },
+        {
+          "residue": 106,
+          "mass": "1/99"
+        },
+        {
+          "residue": 107,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 112,
+          "mass": "1/990"
+        },
+        {
+          "residue": 147,
+          "mass": "1/990"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "1/66"
+        },
+        {
+          "residue": 161,
+          "mass": "1/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/990"
+        },
+        {
+          "residue": 163,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 196,
+          "mass": "1/99"
+        },
+        {
+          "residue": 197,
+          "mass": "1/990"
+        },
+        {
+          "residue": 210,
+          "mass": "1/66"
+        },
+        {
+          "residue": 211,
+          "mass": "1/99"
+        },
+        {
+          "residue": 212,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 246,
+          "mass": "1/99"
+        },
+        {
+          "residue": 247,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 252,
+          "mass": "1/990"
+        },
+        {
+          "residue": 260,
+          "mass": "1/66"
+        },
+        {
+          "residue": 296,
+          "mass": "1/165"
+        },
+        {
+          "residue": 302,
+          "mass": "1/990"
+        },
+        {
+          "residue": 303,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 317,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 352,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 357,
+          "mass": "1/990"
+        },
+        {
+          "residue": 392,
+          "mass": "1/990"
+        },
+        {
+          "residue": 406,
+          "mass": "1/99"
+        },
+        {
+          "residue": 407,
+          "mass": "1/990"
+        },
+        {
+          "residue": 408,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 441,
+          "mass": "1/99"
+        },
+        {
+          "residue": 442,
+          "mass": "1/990"
+        },
+        {
+          "residue": 455,
+          "mass": "1/66"
+        },
+        {
+          "residue": 456,
+          "mass": "1/99"
+        },
+        {
+          "residue": 457,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 490,
+          "mass": "1/66"
+        },
+        {
+          "residue": 491,
+          "mass": "1/99"
+        },
+        {
+          "residue": 492,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 497,
+          "mass": "1/990"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 501,
+          "mass": "1/44"
+        },
+        {
+          "residue": 505,
+          "mass": "1/66"
+        },
+        {
+          "residue": 540,
+          "mass": "1/66"
+        },
+        {
+          "residue": 541,
+          "mass": "1/165"
+        },
+        {
+          "residue": 546,
+          "mass": "1/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/990"
+        },
+        {
+          "residue": 548,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 562,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 590,
+          "mass": "1/110"
+        },
+        {
+          "residue": 596,
+          "mass": "1/99"
+        },
+        {
+          "residue": 597,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 602,
+          "mass": "1/990"
+        },
+        {
+          "residue": 637,
+          "mass": "1/990"
+        },
+        {
+          "residue": 652,
+          "mass": "1/990"
+        },
+        {
+          "residue": 653,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 686,
+          "mass": "1/99"
+        },
+        {
+          "residue": 687,
+          "mass": "1/990"
+        },
+        {
+          "residue": 702,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 735,
+          "mass": "1/66"
+        },
+        {
+          "residue": 736,
+          "mass": "1/99"
+        },
+        {
+          "residue": 737,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 742,
+          "mass": "1/990"
+        },
+        {
+          "residue": 785,
+          "mass": "1/66"
+        },
+        {
+          "residue": 786,
+          "mass": "1/165"
+        },
+        {
+          "residue": 791,
+          "mass": "1/99"
+        },
+        {
+          "residue": 792,
+          "mass": "1/990"
+        },
+        {
+          "residue": 793,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 807,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 835,
+          "mass": "1/110"
+        },
+        {
+          "residue": 840,
+          "mass": "1/66"
+        },
+        {
+          "residue": 841,
+          "mass": "1/99"
+        },
+        {
+          "residue": 842,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 847,
+          "mass": "1/990"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 851,
+          "mass": "1/44"
+        },
+        {
+          "residue": 882,
+          "mass": "1/990"
+        },
+        {
+          "residue": 890,
+          "mass": "1/66"
+        },
+        {
+          "residue": 896,
+          "mass": "1/99"
+        },
+        {
+          "residue": 897,
+          "mass": "1/990"
+        },
+        {
+          "residue": 898,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 931,
+          "mass": "1/99"
+        },
+        {
+          "residue": 932,
+          "mass": "1/990"
+        },
+        {
+          "residue": 946,
+          "mass": "1/99"
+        },
+        {
+          "residue": 947,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 980,
+          "mass": "1/66"
+        },
+        {
+          "residue": 981,
+          "mass": "1/99"
+        },
+        {
+          "residue": 982,
+          "mass": "13/1650"
+        },
+        {
+          "residue": 987,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1031,
+          "mass": "1/165"
+        },
+        {
+          "residue": 1036,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1037,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1038,
+          "mass": "17/1980"
+        },
+        {
+          "residue": 1052,
+          "mass": "17/9900"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/110"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1086,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1087,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1092,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1127,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1141,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1142,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1143,
+          "mass": "17/2475"
+        },
+        {
+          "residue": 1177,
+          "mass": "1/990"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/66"
+        },
+        {
+          "residue": 1191,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1192,
+          "mass": "19/1980"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1201,
+          "mass": "1/44"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_full_roots",
+      "extra_leaf": false,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 75,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 86,
+        "original_restriction_choices": 960,
+        "root_restriction_counts": [
+          6,
+          4,
+          4,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "44/135",
+          "44/135",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "4/9",
+          "4/9",
+          "1/2"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "0",
+          "2:1": "3/4",
+          "2:2": "3/4",
+          "2:3": "3/4",
+          "2:4": "3/4",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          2,
+          0,
+          4
+        ],
+        [
+          2,
+          0,
+          11
+        ],
+        [
+          2,
+          0,
+          18
+        ],
+        [
+          2,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 94,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5437/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 56,
+          "mass": "7/792"
+        },
+        {
+          "residue": 58,
+          "mass": "2/495"
+        },
+        {
+          "residue": 72,
+          "mass": "1/99"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 102,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 106,
+          "mass": "7/792"
+        },
+        {
+          "residue": 107,
+          "mass": "1/99"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 156,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 161,
+          "mass": "7/792"
+        },
+        {
+          "residue": 163,
+          "mass": "1/495"
+        },
+        {
+          "residue": 196,
+          "mass": "7/792"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "7/792"
+        },
+        {
+          "residue": 212,
+          "mass": "1/99"
+        },
+        {
+          "residue": 246,
+          "mass": "7/792"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "7/792"
+        },
+        {
+          "residue": 303,
+          "mass": "2/495"
+        },
+        {
+          "residue": 317,
+          "mass": "1/99"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 406,
+          "mass": "7/792"
+        },
+        {
+          "residue": 408,
+          "mass": "1/495"
+        },
+        {
+          "residue": 441,
+          "mass": "7/792"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 452,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 456,
+          "mass": "7/792"
+        },
+        {
+          "residue": 457,
+          "mass": "1/99"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "7/792"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "7/792"
+        },
+        {
+          "residue": 546,
+          "mass": "7/792"
+        },
+        {
+          "residue": 548,
+          "mass": "2/495"
+        },
+        {
+          "residue": 562,
+          "mass": "1/99"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "7/792"
+        },
+        {
+          "residue": 597,
+          "mass": "1/99"
+        },
+        {
+          "residue": 646,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 653,
+          "mass": "1/495"
+        },
+        {
+          "residue": 686,
+          "mass": "7/792"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "7/792"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "7/792"
+        },
+        {
+          "residue": 791,
+          "mass": "7/792"
+        },
+        {
+          "residue": 793,
+          "mass": "2/495"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 802,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "1/99"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "7/792"
+        },
+        {
+          "residue": 842,
+          "mass": "1/99"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 891,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 896,
+          "mass": "7/792"
+        },
+        {
+          "residue": 898,
+          "mass": "1/495"
+        },
+        {
+          "residue": 931,
+          "mass": "7/792"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "7/792"
+        },
+        {
+          "residue": 947,
+          "mass": "1/99"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 981,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1031,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1036,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1038,
+          "mass": "2/495"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1136,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 1141,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1143,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1152,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/99"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "two_full_roots",
+      "extra_leaf": true,
+      "irregular_public_fibres": false,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 86,
+        "original_restriction_choices": 960,
+        "root_restriction_counts": [
+          6,
+          4,
+          4,
+          10
+        ],
+        "root_signature_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 1,
+        "q_subset_checks": 6,
+        "root_cap": "22/45",
+        "joint_root_coefficient": "11/18",
+        "root_caps": [
+          "22/45",
+          "44/135",
+          "44/135",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "11/18",
+          "4/9",
+          "4/9",
+          "1/2"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "1/2",
+          "0:1": "1/2",
+          "0:2": "1/2",
+          "0:3": "1/2",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "0",
+          "2:1": "3/4",
+          "2:2": "3/4",
+          "2:3": "3/4",
+          "2:4": "3/4",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          10
+        ],
+        [
+          1,
+          0,
+          17
+        ],
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          2,
+          0,
+          4
+        ],
+        [
+          2,
+          0,
+          11
+        ],
+        [
+          2,
+          0,
+          18
+        ],
+        [
+          2,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 94,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "2/5",
+        "7": "3/11",
+        "25": "1/10",
+        "35": "1/6",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "1/18",
+        "1225": "1/44"
+      },
+      "actual_lcm_envelope": "5437/660",
+      "law": [
+        {
+          "residue": 0,
+          "mass": "1/72"
+        },
+        {
+          "residue": 15,
+          "mass": "1/72"
+        },
+        {
+          "residue": 50,
+          "mass": "1/72"
+        },
+        {
+          "residue": 56,
+          "mass": "7/792"
+        },
+        {
+          "residue": 58,
+          "mass": "2/495"
+        },
+        {
+          "residue": 72,
+          "mass": "1/99"
+        },
+        {
+          "residue": 100,
+          "mass": "1/72"
+        },
+        {
+          "residue": 101,
+          "mass": "1/44"
+        },
+        {
+          "residue": 102,
+          "mass": "1/44"
+        },
+        {
+          "residue": 105,
+          "mass": "1/72"
+        },
+        {
+          "residue": 106,
+          "mass": "7/792"
+        },
+        {
+          "residue": 107,
+          "mass": "1/99"
+        },
+        {
+          "residue": 155,
+          "mass": "1/72"
+        },
+        {
+          "residue": 156,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 161,
+          "mass": "7/792"
+        },
+        {
+          "residue": 163,
+          "mass": "1/495"
+        },
+        {
+          "residue": 196,
+          "mass": "7/792"
+        },
+        {
+          "residue": 205,
+          "mass": "1/360"
+        },
+        {
+          "residue": 210,
+          "mass": "1/72"
+        },
+        {
+          "residue": 211,
+          "mass": "7/792"
+        },
+        {
+          "residue": 212,
+          "mass": "1/99"
+        },
+        {
+          "residue": 246,
+          "mass": "7/792"
+        },
+        {
+          "residue": 260,
+          "mass": "1/72"
+        },
+        {
+          "residue": 296,
+          "mass": "7/792"
+        },
+        {
+          "residue": 303,
+          "mass": "2/495"
+        },
+        {
+          "residue": 317,
+          "mass": "1/99"
+        },
+        {
+          "residue": 350,
+          "mass": "1/72"
+        },
+        {
+          "residue": 400,
+          "mass": "1/72"
+        },
+        {
+          "residue": 406,
+          "mass": "7/792"
+        },
+        {
+          "residue": 408,
+          "mass": "1/495"
+        },
+        {
+          "residue": 441,
+          "mass": "7/792"
+        },
+        {
+          "residue": 450,
+          "mass": "1/360"
+        },
+        {
+          "residue": 451,
+          "mass": "1/44"
+        },
+        {
+          "residue": 452,
+          "mass": "1/44"
+        },
+        {
+          "residue": 455,
+          "mass": "1/72"
+        },
+        {
+          "residue": 456,
+          "mass": "7/792"
+        },
+        {
+          "residue": 457,
+          "mass": "1/99"
+        },
+        {
+          "residue": 490,
+          "mass": "1/72"
+        },
+        {
+          "residue": 491,
+          "mass": "7/792"
+        },
+        {
+          "residue": 505,
+          "mass": "1/72"
+        },
+        {
+          "residue": 540,
+          "mass": "1/72"
+        },
+        {
+          "residue": 541,
+          "mass": "7/792"
+        },
+        {
+          "residue": 546,
+          "mass": "7/792"
+        },
+        {
+          "residue": 548,
+          "mass": "2/495"
+        },
+        {
+          "residue": 562,
+          "mass": "1/99"
+        },
+        {
+          "residue": 590,
+          "mass": "1/72"
+        },
+        {
+          "residue": 596,
+          "mass": "7/792"
+        },
+        {
+          "residue": 597,
+          "mass": "1/99"
+        },
+        {
+          "residue": 646,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 653,
+          "mass": "1/495"
+        },
+        {
+          "residue": 686,
+          "mass": "7/792"
+        },
+        {
+          "residue": 700,
+          "mass": "1/72"
+        },
+        {
+          "residue": 735,
+          "mass": "1/72"
+        },
+        {
+          "residue": 736,
+          "mass": "7/792"
+        },
+        {
+          "residue": 750,
+          "mass": "1/72"
+        },
+        {
+          "residue": 785,
+          "mass": "1/72"
+        },
+        {
+          "residue": 786,
+          "mass": "7/792"
+        },
+        {
+          "residue": 791,
+          "mass": "7/792"
+        },
+        {
+          "residue": 793,
+          "mass": "2/495"
+        },
+        {
+          "residue": 801,
+          "mass": "1/44"
+        },
+        {
+          "residue": 802,
+          "mass": "1/44"
+        },
+        {
+          "residue": 807,
+          "mass": "1/99"
+        },
+        {
+          "residue": 835,
+          "mass": "1/72"
+        },
+        {
+          "residue": 840,
+          "mass": "1/72"
+        },
+        {
+          "residue": 841,
+          "mass": "7/792"
+        },
+        {
+          "residue": 842,
+          "mass": "1/99"
+        },
+        {
+          "residue": 890,
+          "mass": "1/72"
+        },
+        {
+          "residue": 891,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 896,
+          "mass": "7/792"
+        },
+        {
+          "residue": 898,
+          "mass": "1/495"
+        },
+        {
+          "residue": 931,
+          "mass": "7/792"
+        },
+        {
+          "residue": 940,
+          "mass": "1/360"
+        },
+        {
+          "residue": 946,
+          "mass": "7/792"
+        },
+        {
+          "residue": 947,
+          "mass": "1/99"
+        },
+        {
+          "residue": 980,
+          "mass": "1/72"
+        },
+        {
+          "residue": 981,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1030,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1031,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1036,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1038,
+          "mass": "2/495"
+        },
+        {
+          "residue": 1080,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1085,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1086,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1087,
+          "mass": "1/99"
+        },
+        {
+          "residue": 1135,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1136,
+          "mass": "19/3960"
+        },
+        {
+          "residue": 1141,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1143,
+          "mass": "1/495"
+        },
+        {
+          "residue": 1151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1152,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1185,
+          "mass": "1/360"
+        },
+        {
+          "residue": 1190,
+          "mass": "1/72"
+        },
+        {
+          "residue": 1191,
+          "mass": "7/792"
+        },
+        {
+          "residue": 1192,
+          "mass": "1/99"
+        }
+      ]
+    },
+    {
+      "owner_configuration": "gap_and_full",
+      "extra_leaf": true,
+      "irregular_public_fibres": true,
+      "source_points": 265,
+      "witness_cut_numerator_over63": 77,
+      "minimum_cut_claimed": false,
+      "selected_pair_tests": 480,
+      "literal_five_tree_tests": 10000,
+      "public_coupling": {
+        "source_points": 255,
+        "selected_points": 70,
+        "original_restriction_choices": 1200,
+        "root_restriction_counts": [
+          3,
+          4,
+          10,
+          10
+        ],
+        "root_signature_counts": [
+          3,
+          1,
+          1,
+          1
+        ],
+        "grouped_profiles": 3,
+        "q_subset_checks": 18,
+        "root_cap": "11/27",
+        "joint_root_coefficient": "19/36",
+        "root_caps": [
+          "11/30",
+          "44/135",
+          "11/27",
+          "11/27"
+        ],
+        "joint_root_coefficients": [
+          "1/2",
+          "4/9",
+          "19/36",
+          "19/36"
+        ],
+        "child_inclusion_probabilities": {
+          "0:0": "0",
+          "0:1": "2/3",
+          "0:2": "2/3",
+          "0:3": "2/3",
+          "0:4": "0",
+          "1:0": "0",
+          "1:1": "3/4",
+          "1:2": "3/4",
+          "1:3": "3/4",
+          "1:4": "3/4",
+          "2:0": "3/5",
+          "2:1": "3/5",
+          "2:2": "3/5",
+          "2:3": "3/5",
+          "2:4": "3/5",
+          "3:0": "3/5",
+          "3:1": "3/5",
+          "3:2": "3/5",
+          "3:3": "3/5",
+          "3:4": "3/5"
+        }
+      },
+      "private_points": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          10
+        ],
+        [
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          24
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          0,
+          11
+        ],
+        [
+          1,
+          0,
+          18
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ],
+      "law_atoms": 78,
+      "numerical_cylinder_tests": 1767,
+      "ordered_lcm_pairs": 81,
+      "actual_caps": {
+        "1": "1",
+        "5": "43/110",
+        "7": "3/11",
+        "25": "43/330",
+        "35": "19/132",
+        "49": "1/11",
+        "175": "1/11",
+        "245": "19/396",
+        "1225": "1/33"
+      },
+      "actual_lcm_envelope": "247/30",
+      "law": [
+        {
+          "residue": 2,
+          "mass": "251/17820"
+        },
+        {
+          "residue": 7,
+          "mass": "1/594"
+        },
+        {
+          "residue": 56,
+          "mass": "2/99"
+        },
+        {
+          "residue": 57,
+          "mass": "1/594"
+        },
+        {
+          "residue": 58,
+          "mass": "67/5940"
+        },
+        {
+          "residue": 105,
+          "mass": "1/33"
+        },
+        {
+          "residue": 106,
+          "mass": "2/99"
+        },
+        {
+          "residue": 107,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 112,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 147,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 150,
+          "mass": "1/44"
+        },
+        {
+          "residue": 151,
+          "mass": "1/44"
+        },
+        {
+          "residue": 155,
+          "mass": "1/33"
+        },
+        {
+          "residue": 161,
+          "mass": "2/99"
+        },
+        {
+          "residue": 162,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 163,
+          "mass": "221/17820"
+        },
+        {
+          "residue": 196,
+          "mass": "2/99"
+        },
+        {
+          "residue": 197,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 198,
+          "mass": "37/17820"
+        },
+        {
+          "residue": 205,
+          "mass": "1/110"
+        },
+        {
+          "residue": 210,
+          "mass": "1/44"
+        },
+        {
+          "residue": 211,
+          "mass": "2/99"
+        },
+        {
+          "residue": 212,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 246,
+          "mass": "2/99"
+        },
+        {
+          "residue": 247,
+          "mass": "251/17820"
+        },
+        {
+          "residue": 252,
+          "mass": "1/594"
+        },
+        {
+          "residue": 260,
+          "mass": "1/44"
+        },
+        {
+          "residue": 296,
+          "mass": "2/165"
+        },
+        {
+          "residue": 302,
+          "mass": "1/594"
+        },
+        {
+          "residue": 303,
+          "mass": "67/5940"
+        },
+        {
+          "residue": 315,
+          "mass": "1/132"
+        },
+        {
+          "residue": 317,
+          "mass": "17/11880"
+        },
+        {
+          "residue": 352,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 357,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 365,
+          "mass": "1/132"
+        },
+        {
+          "residue": 392,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 406,
+          "mass": "2/99"
+        },
+        {
+          "residue": 407,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 408,
+          "mass": "221/17820"
+        },
+        {
+          "residue": 441,
+          "mass": "2/99"
+        },
+        {
+          "residue": 442,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 443,
+          "mass": "37/17820"
+        },
+        {
+          "residue": 455,
+          "mass": "1/44"
+        },
+        {
+          "residue": 456,
+          "mass": "2/99"
+        },
+        {
+          "residue": 457,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 490,
+          "mass": "1/33"
+        },
+        {
+          "residue": 491,
+          "mass": "2/99"
+        },
+        {
+          "residue": 492,
+          "mass": "251/17820"
+        },
+        {
+          "residue": 497,
+          "mass": "1/594"
+        },
+        {
+          "residue": 500,
+          "mass": "1/44"
+        },
+        {
+          "residue": 501,
+          "mass": "1/44"
+        },
+        {
+          "residue": 505,
+          "mass": "1/44"
+        },
+        {
+          "residue": 540,
+          "mass": "1/33"
+        },
+        {
+          "residue": 541,
+          "mass": "2/165"
+        },
+        {
+          "residue": 546,
+          "mass": "2/99"
+        },
+        {
+          "residue": 547,
+          "mass": "1/594"
+        },
+        {
+          "residue": 548,
+          "mass": "67/5940"
+        },
+        {
+          "residue": 560,
+          "mass": "1/66"
+        },
+        {
+          "residue": 562,
+          "mass": "17/11880"
+        },
+        {
+          "residue": 590,
+          "mass": "1/55"
+        },
+        {
+          "residue": 596,
+          "mass": "2/99"
+        },
+        {
+          "residue": 597,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 602,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 610,
+          "mass": "1/66"
+        },
+        {
+          "residue": 652,
+          "mass": "1/1782"
+        },
+        {
+          "residue": 653,
+          "mass": "221/17820"
+        },
+        {
+          "residue": 702,
+          "mass": "19/1188"
+        },
+        {
+          "residue": 805,
+          "mass": "1/132"
+        },
+        {
+          "residue": 807,
+          "mass": "17/11880"
+        },
+        {
+          "residue": 850,
+          "mass": "1/44"
+        },
+        {
+          "residue": 851,
+          "mass": "1/44"
+        },
+        {
+          "residue": 855,
+          "mass": "1/132"
+        },
+        {
+          "residue": 1052,
+          "mass": "17/11880"
+        },
+        {
+          "residue": 1127,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 1177,
+          "mass": "5/1782"
+        },
+        {
+          "residue": 1178,
+          "mass": "37/17820"
+        },
+        {
+          "residue": 1200,
+          "mass": "1/44"
+        },
+        {
+          "residue": 1201,
+          "mass": "1/44"
+        }
+      ]
+    }
+  ],
+  "scope": "One common actual law for fully active R=1 whole-column cut shapes. Witness cut capacities are not claimed minimum; other75/77 shapes, outside-cofactor lifting and original odd-covering realization remain separate."
+}

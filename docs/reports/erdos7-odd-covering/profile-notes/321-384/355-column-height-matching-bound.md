@@ -175,7 +175,7 @@ valid; CH1 strengthens it using actual cofactor height information.
 
 ## 5. Reproducible checks and remaining obligation
 
-The [existing exact matcher](../../frontier/cover-geometry/hsw11_prime_private_matching.py)
+The [existing exact matcher](../../frontier/cover-geometry/hsw11-family/hsw11_prime_private_matching.py)
 now computes each local h_m(x), its order statistic L(x), and checks
 that the returned entire good prefix has depth at most L(x)-1. It
 retains the earlier full-height checks. All 1,280 selected HSW private

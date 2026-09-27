@@ -1,0 +1,982 @@
+{
+  "scope": "Conditional branch-asymmetric lift: exactly the pure3 originals1mod3,3mod9; at most two selected Q phases through exponent3; actual branch-A exponent4 statistic rho below the stated threshold. Arbitrary other residual overlaps and finite later heights. One PA source, complete query tails, one final normalization. Ordinary proof, not Lean or unrestricted Erdos7.",
+  "provenance": [
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    },
+    {
+      "path": "four_level_query_hinge_lift.json",
+      "sha256": "b224c79716585f16b52aeda277810a1a001a4f2d92d3e092cfc1cc41345dbcfd"
+    }
+  ],
+  "producer_sha256": "56c14b860d85a43f44ef7a389a27b56c7ae64bbdf44167952173d47507e413ca",
+  "proof_sources": [
+    "Report569 SD3: actual capped PA kernels and one common source",
+    "Report574 FH3-FH8 and section6: same-source full-suffix stop-loss bounds",
+    "Report574 section4: PA density9/alpha_min and23/29 continuation",
+    "Report579 RC2-RC6: branch caps, actual joint law and complete query sum"
+  ],
+  "constants": {
+    "B": {
+      "exact": "432040125182653876501/86355045355449035400",
+      "decimal": 5.003067549838209
+    },
+    "K3": {
+      "exact": "12019840537595758779003/5715264751774801992890",
+      "decimal": 2.103111764658523
+    },
+    "K7": {
+      "exact": "6258510165289233442029877862409645975916115839/7807154349055719001167517219171937585855811250",
+      "decimal": 0.8016378164787026
+    },
+    "alpha_min": {
+      "exact": "7575003978548161/73724315753088000",
+      "decimal": 0.1027477013678608
+    },
+    "target": {
+      "exact": "566/49",
+      "decimal": 11.551020408163266
+    },
+    "w": {
+      "exact": "1/2",
+      "decimal": 0.5
+    },
+    "tA": {
+      "exact": "1",
+      "decimal": 1.0
+    },
+    "tB": {
+      "exact": "7",
+      "decimal": 7.0
+    },
+    "kappa_A": {
+      "exact": "11/12",
+      "decimal": 0.9166666666666666
+    },
+    "kappa_B": {
+      "exact": "11/18",
+      "decimal": 0.6111111111111112
+    },
+    "raw_query_upper_N": {
+      "exact": "3312131027463407253507/316635166303313129800",
+      "decimal": 10.460401686054764
+    },
+    "rho_threshold": {
+      "exact": "15232049749731473125568032040735530696696089170781/17675397446262147818643258984205266694377556670000",
+      "decimal": 0.8617656149481734
+    },
+    "Gamma_threshold": {
+      "exact": "11272905968952013580460271537329209341001902658427/8837698723131073909321629492102633347188778335000",
+      "decimal": 1.2755476648516233
+    },
+    "branch_A_reciprocal_threshold": {
+      "exact": "5077349916577157708522677346911843565565363056927/516081543750942679175263679751197547297358080000000",
+      "decimal": 0.00983827067264287
+    },
+    "source_density_upper": {
+      "exact": "663518841777792000/7575003978548161",
+      "decimal": 87.59320043353472
+    },
+    "raw_joint_density_upper": {
+      "exact": "1628637157090944000/7575003978548161",
+      "decimal": 215.0014919732216
+    },
+    "zero_rho_mass_lower": {
+      "exact": "40006444865150476562888788183655664447433644134/42939348919806454506421344705445656722206961875",
+      "decimal": 0.9316965876652329
+    },
+    "zero_rho_query_upper": {
+      "exact": "3593302702710697962617097052013898062294166889425/320051558921203812503110305469245315579469153072",
+      "decimal": 11.227261991232368
+    },
+    "zero_rho_target_margin": {
+      "exact": "5077349916577157708522677346911843565565363056927/15682526387138986812652404967993020463393988500528",
+      "decimal": 0.32375841693089824
+    },
+    "zero_rho_nine_prime_Haar_lower": {
+      "exact": "5077349916577157708522677346911843565565363056927/45495414676673208339450453294815817703090068480000000",
+      "decimal": 0.00011160135483236862
+    }
+  },
+  "symbolic_certificate": {
+    "mass_lower": "s0(rho)=1-rho/33-K3/66-K7/22",
+    "query_upper": "R_P(mu)<=N/s0(rho), N=B+(10/11)(1+B)",
+    "strict_gate": "rho<rho_threshold; equality only reaches566/49",
+    "general_Gamma_condition": "For some s in[0,3/2], Gamma_A(s)=(2/3)E_nu(L_A4-s)_++K_(3-2s)/3<Gamma_threshold gives mass>=1-(Gamma_A(s)+K7)/22 and R<=N/[1-(Gamma_A(s)+K7)/22]",
+    "residual_allocation": "YA=(2/3)L_A4+(1/3)ZA; ZA and YB are convex mixtures of partial single-phase layouts under the same nu",
+    "capped_pointwise_loss": "sum_j min(w_j,w_j*(Y_j-t_j)_+/(n_j-t_j)), nA=12,nB=18",
+    "continuation_Haar_lower": "alpha_min*(566*s0(rho)-49*N)/13608",
+    "scope_boundary": "Failure of the rho premise does not imply failure of an actual query law or noncoverage."
+  },
+  "actual_example": {
+    "family": [
+      {
+        "modulus": 3,
+        "phase": 1
+      },
+      {
+        "modulus": 9,
+        "phase": 3
+      },
+      {
+        "modulus": 385,
+        "phase": 0
+      },
+      {
+        "modulus": 1155,
+        "phase": 386
+      },
+      {
+        "modulus": 31185,
+        "phase": 28107
+      }
+    ],
+    "period": 31185,
+    "survivor_count": 17252,
+    "survivor_witness": 2,
+    "private_points": {
+      "3": 28108,
+      "9": 3,
+      "385": 3080,
+      "1155": 1541,
+      "31185": 28107
+    },
+    "selected_phases": {
+      "385": [
+        0,
+        1
+      ]
+    },
+    "projected_originals": [
+      {
+        "exponent3": 0,
+        "Q_cofactor": 385,
+        "Q_phase": 0,
+        "ternary_phase": 0
+      },
+      {
+        "exponent3": 1,
+        "Q_cofactor": 385,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "exponent3": 4,
+        "Q_cofactor": 385,
+        "Q_phase": 2,
+        "ternary_phase": 0
+      }
+    ],
+    "rho_density_upper": {
+      "exact": "1723425563059200/7575003978548161",
+      "decimal": 0.2275148063208694
+    },
+    "rho_actual_selected_PA": {
+      "exact": "1/385",
+      "decimal": 0.0025974025974025974
+    },
+    "conservative_query_upper": {
+      "exact": "3593302702710697962617097052013898062294166889425/317683234641680418995812505094084939519181153072",
+      "decimal": 11.31096107971715
+    },
+    "conservative_nine_prime_Haar_lower": {
+      "exact": "3736878374366916983392122334571070715442355056927/45495414676673208339450453294815817703090068480000000",
+      "decimal": 8.213747255463353e-05
+    },
+    "actual_rho_inserted_query_upper": {
+      "exact": "10779908108132093887851291156041694186882500668275/960073563471673196272955149995069225308944022216",
+      "decimal": 11.228210543733145
+    },
+    "structural_scope": "Separates the through-exponent4 two-projection hypothesis. It is also covered by Report572 with overlap count M=1; no first-proof or unrestricted claim."
+  },
+  "zero_load_structural_example": {
+    "original_count": 21,
+    "period": 130945815,
+    "originals": [
+      {
+        "label": "pure3",
+        "modulus": 3,
+        "phase": 1
+      },
+      {
+        "label": "pure9",
+        "modulus": 9,
+        "phase": 3
+      },
+      {
+        "label": "q5_e0",
+        "modulus": 5,
+        "phase": 0,
+        "Q_cofactor": 5,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q5_e1",
+        "modulus": 15,
+        "phase": 11,
+        "Q_cofactor": 5,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q5_e4",
+        "modulus": 405,
+        "phase": 2,
+        "Q_cofactor": 5,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q7_e0",
+        "modulus": 7,
+        "phase": 0,
+        "Q_cofactor": 7,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q7_e1",
+        "modulus": 21,
+        "phase": 8,
+        "Q_cofactor": 7,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q7_e4",
+        "modulus": 567,
+        "phase": 86,
+        "Q_cofactor": 7,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 5
+      },
+      {
+        "label": "q11_e0",
+        "modulus": 11,
+        "phase": 0,
+        "Q_cofactor": 11,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q11_e1",
+        "modulus": 33,
+        "phase": 23,
+        "Q_cofactor": 11,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q11_e4",
+        "modulus": 891,
+        "phase": 332,
+        "Q_cofactor": 11,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 8
+      },
+      {
+        "label": "q13_e0",
+        "modulus": 13,
+        "phase": 0,
+        "Q_cofactor": 13,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q13_e1",
+        "modulus": 39,
+        "phase": 14,
+        "Q_cofactor": 13,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q13_e4",
+        "modulus": 1053,
+        "phase": 821,
+        "Q_cofactor": 13,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 11
+      },
+      {
+        "label": "q17_e0",
+        "modulus": 17,
+        "phase": 0,
+        "Q_cofactor": 17,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q17_e1",
+        "modulus": 51,
+        "phase": 35,
+        "Q_cofactor": 17,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q17_e4",
+        "modulus": 1377,
+        "phase": 257,
+        "Q_cofactor": 17,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 14
+      },
+      {
+        "label": "q19_e0",
+        "modulus": 19,
+        "phase": 0,
+        "Q_cofactor": 19,
+        "exponent3": 0,
+        "Q_phase": 0,
+        "ternary_phase": null
+      },
+      {
+        "label": "q19_e1",
+        "modulus": 57,
+        "phase": 20,
+        "Q_cofactor": 19,
+        "exponent3": 1,
+        "Q_phase": 1,
+        "ternary_phase": 2
+      },
+      {
+        "label": "q19_e4",
+        "modulus": 1539,
+        "phase": 1313,
+        "Q_cofactor": 19,
+        "exponent3": 4,
+        "Q_phase": 2,
+        "ternary_phase": 17
+      },
+      {
+        "label": "Q_only_385",
+        "modulus": 385,
+        "phase": 4
+      }
+    ],
+    "private_points": [
+      {
+        "label": "pure3",
+        "point": 61431373,
+        "ternary_mod81": 1,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "pure9",
+        "point": 3,
+        "ternary_mod81": 3,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q5_e0",
+        "point": 65957895,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 0,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q5_e1",
+        "point": 56904851,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 1,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q5_e4",
+        "point": 109283177,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 2,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q7_e0",
+        "point": 110853603,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 3,
+          "7": 0,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q7_e1",
+        "point": 86835323,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 3,
+          "7": 1,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q7_e4",
+        "point": 32101358,
+        "ternary_mod81": 5,
+        "Q_roots": {
+          "5": 3,
+          "7": 2,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q11_e0",
+        "point": 44530398,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 0,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q11_e1",
+        "point": 42619853,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 1,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q11_e4",
+        "point": 48792383,
+        "ternary_mod81": 8,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 2,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q13_e0",
+        "point": 51856038,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 0,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q13_e1",
+        "point": 91152218,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 1,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q13_e4",
+        "point": 46384418,
+        "ternary_mod81": 11,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 2,
+          "17": 3,
+          "19": 3
+        }
+      },
+      {
+        "label": "q17_e0",
+        "point": 122957838,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 0,
+          "19": 3
+        }
+      },
+      {
+        "label": "q17_e1",
+        "point": 7607603,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 1,
+          "19": 3
+        }
+      },
+      {
+        "label": "q17_e4",
+        "point": 108883778,
+        "ternary_mod81": 14,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 2,
+          "19": 3
+        }
+      },
+      {
+        "label": "q19_e0",
+        "point": 64579518,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 0
+        }
+      },
+      {
+        "label": "q19_e1",
+        "point": 99634538,
+        "ternary_mod81": 2,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 1
+        }
+      },
+      {
+        "label": "q19_e4",
+        "point": 128223098,
+        "ternary_mod81": 17,
+        "Q_roots": {
+          "5": 3,
+          "7": 3,
+          "11": 3,
+          "13": 3,
+          "17": 3,
+          "19": 2
+        }
+      },
+      {
+        "label": "Q_only_385",
+        "point": 110513484,
+        "ternary_mod81": 0,
+        "Q_roots": {
+          "5": 4,
+          "7": 4,
+          "11": 4,
+          "13": 3,
+          "17": 3,
+          "19": 3
+        }
+      }
+    ],
+    "survivor_witness": 92147058,
+    "selected_phases": [
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        13,
+        0
+      ],
+      [
+        13,
+        1
+      ],
+      [
+        17,
+        0
+      ],
+      [
+        17,
+        1
+      ],
+      [
+        19,
+        0
+      ],
+      [
+        19,
+        1
+      ],
+      [
+        385,
+        4
+      ]
+    ],
+    "live_Q_cylinder": {
+      "phase": 2,
+      "modulus": 1616615,
+      "active_cofactors": [
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "actual_PA_mass": {
+        "exact": "1/378675",
+        "decimal": 2.640786954512445e-06
+      }
+    },
+    "rho_A": "0",
+    "query_upper": {
+      "exact": "3593302702710697962617097052013898062294166889425/320051558921203812503110305469245315579469153072",
+      "decimal": 11.227261991232368
+    },
+    "nine_prime_Haar_lower": {
+      "exact": "5077349916577157708522677346911843565565363056927/45495414676673208339450453294815817703090068480000000",
+      "decimal": 0.00011160135483236862
+    },
+    "structural_scope": "The through-exponent4 two-phase premise fails. The displayed selected PA source also violates the pointwise M<=2 premise on a positive-mass cylinder. This does not assert failure of every alternative spare-phase selection or every older instance-specific certificate."
+  },
+  "controls": {
+    "saturated_feasible_survivals": 48,
+    "hinge_decomposition_points": 144,
+    "actual_fibre_cases": 10
+  },
+  "actual_fibre_controls": {
+    "empty": {
+      "cA": "1",
+      "cB": "1",
+      "YA": "0",
+      "YB": "0",
+      "actual_loss": "0",
+      "capped_loss_upper": "0"
+    },
+    "equal_A_cylinders": {
+      "cA": "17/18",
+      "cB": "1",
+      "YA": "4/3",
+      "YB": "0",
+      "actual_loss": "0",
+      "capped_loss_upper": "1/66"
+    },
+    "nested_A_cylinders": {
+      "cA": "17/18",
+      "cB": "1",
+      "YA": "26/27",
+      "YB": "0",
+      "actual_loss": "0",
+      "capped_loss_upper": "0"
+    },
+    "disjoint_A_cylinders": {
+      "cA": "5/6",
+      "cB": "1",
+      "YA": "2",
+      "YB": "0",
+      "actual_loss": "1/22",
+      "capped_loss_upper": "1/22"
+    },
+    "nested_B_cylinders": {
+      "cA": "1",
+      "cB": "26/27",
+      "YA": "0",
+      "YB": "26/27",
+      "actual_loss": "0",
+      "capped_loss_upper": "0"
+    },
+    "inactive_pure_forbidden_phases": {
+      "cA": "1",
+      "cB": "1",
+      "YA": "0",
+      "YB": "0",
+      "actual_loss": "0",
+      "capped_loss_upper": "0"
+    },
+    "mixed_overlaps": {
+      "cA": "76/81",
+      "cB": "26/27",
+      "YA": "44/27",
+      "YB": "8/9",
+      "actual_loss": "0",
+      "capped_loss_upper": "17/594"
+    },
+    "dead_A": {
+      "cA": "0",
+      "cB": "1",
+      "YA": "12",
+      "YB": "0",
+      "actual_loss": "1/2",
+      "capped_loss_upper": "1/2"
+    },
+    "dead_B": {
+      "cA": "1",
+      "cB": "0",
+      "YA": "0",
+      "YB": "18",
+      "actual_loss": "1/2",
+      "capped_loss_upper": "1/2"
+    },
+    "dead_both": {
+      "cA": "0",
+      "cB": "0",
+      "YA": "12",
+      "YB": "18",
+      "actual_loss": "1",
+      "capped_loss_upper": "1"
+    }
+  },
+  "check_count": 160,
+  "checks": [
+    "pinned source digest height_three_clipping_envelope.json",
+    "pinned source digest four_level_query_hinge_lift.json",
+    "both existing producers supply the same B",
+    "both existing producers supply the same K3",
+    "all four source-mass corners agree between producers",
+    "four complete pure-mass corners are retained",
+    "K7 is the maximum of the four exact source corners",
+    "positive source constants and exact continuation target",
+    "strictly positive branch clips",
+    "equal branch loss coefficients",
+    "equal complete deep-query coefficients",
+    "shallow root plus deep coefficient is ten elevenths",
+    "raw density agrees on disjoint roots without summing twice",
+    "positive rho gate strictly inside positive-mass range",
+    "rho boundary gives target equality, not a strict gate",
+    "rho zero strict full-query gate",
+    "rho gate is the rearranged first-moment loss bound",
+    "Gamma gate and first-moment rho gate coincide",
+    "residual load weights and full tail at height 4",
+    "later load weights and full tail at height 4",
+    "actual branch cylinder caps at height 4",
+    "complete query-height sum at height 4",
+    "residual load weights and full tail at height 5",
+    "later load weights and full tail at height 5",
+    "actual branch cylinder caps at height 5",
+    "complete query-height sum at height 5",
+    "residual load weights and full tail at height 6",
+    "later load weights and full tail at height 6",
+    "actual branch cylinder caps at height 6",
+    "complete query-height sum at height 6",
+    "residual load weights and full tail at height 12",
+    "later load weights and full tail at height 12",
+    "actual branch cylinder caps at height 12",
+    "complete query-height sum at height 12",
+    "residual load weights and full tail at height 30",
+    "later load weights and full tail at height 30",
+    "actual branch cylinder caps at height 30",
+    "complete query-height sum at height 30",
+    "height four coefficient and later coefficient",
+    "hinge split loss coefficients",
+    "saturated branch maximum n=12 Y=0",
+    "saturated branch maximum n=12 Y=1/2",
+    "saturated branch maximum n=12 Y=1",
+    "saturated branch maximum n=12 Y=2",
+    "saturated branch maximum n=12 Y=13/2",
+    "saturated branch maximum n=12 Y=12",
+    "saturated branch maximum n=12 Y=13",
+    "saturated branch maximum n=12 Y=24",
+    "saturated branch maximum n=18 Y=0",
+    "saturated branch maximum n=18 Y=7/2",
+    "saturated branch maximum n=18 Y=7",
+    "saturated branch maximum n=18 Y=8",
+    "saturated branch maximum n=18 Y=25/2",
+    "saturated branch maximum n=18 Y=18",
+    "saturated branch maximum n=18 Y=19",
+    "saturated branch maximum n=18 Y=36",
+    "hinge split includes all threshold and saturation controls",
+    "distinct actual fibre labels empty",
+    "overlap-safe branch union and allocation empty",
+    "actual saturated fibre loss empty",
+    "distinct actual fibre labels equal_A_cylinders",
+    "overlap-safe branch union and allocation equal_A_cylinders",
+    "actual saturated fibre loss equal_A_cylinders",
+    "distinct actual fibre labels nested_A_cylinders",
+    "overlap-safe branch union and allocation nested_A_cylinders",
+    "actual saturated fibre loss nested_A_cylinders",
+    "distinct actual fibre labels disjoint_A_cylinders",
+    "overlap-safe branch union and allocation disjoint_A_cylinders",
+    "actual saturated fibre loss disjoint_A_cylinders",
+    "distinct actual fibre labels nested_B_cylinders",
+    "overlap-safe branch union and allocation nested_B_cylinders",
+    "actual saturated fibre loss nested_B_cylinders",
+    "distinct actual fibre labels inactive_pure_forbidden_phases",
+    "overlap-safe branch union and allocation inactive_pure_forbidden_phases",
+    "actual saturated fibre loss inactive_pure_forbidden_phases",
+    "distinct actual fibre labels mixed_overlaps",
+    "overlap-safe branch union and allocation mixed_overlaps",
+    "actual saturated fibre loss mixed_overlaps",
+    "distinct actual fibre labels dead_A",
+    "overlap-safe branch union and allocation dead_A",
+    "actual saturated fibre loss dead_A",
+    "distinct actual fibre labels dead_B",
+    "overlap-safe branch union and allocation dead_B",
+    "actual saturated fibre loss dead_B",
+    "distinct actual fibre labels dead_both",
+    "overlap-safe branch union and allocation dead_both",
+    "actual saturated fibre loss dead_both",
+    "overlap control is strictly smaller than additive deletion",
+    "dead fibres retain capped loss and avoid zero denominators",
+    "literal family has five distinct odd nonunit labels",
+    "literal period and two actual CRT residues",
+    "private CRT point for original 3",
+    "private CRT point for original 9",
+    "private CRT point for original 385",
+    "private CRT point for original 1155",
+    "private CRT point for original 31185",
+    "literal actual survivor is nonempty",
+    "through height three has precisely two projected phases",
+    "through height four violates the earlier two-phase hypothesis",
+    "sole height-four residual is the actual branch A phase",
+    "literal reciprocal condition implies strict rho gate",
+    "literal conservative full-query certificate passes",
+    "literal selected PA source is a single probability avoiding phases zero and one",
+    "literal selected PA law preserves its old35 Haar marginal",
+    "literal branch statistic under that same actual source",
+    "literal residual fibre is live without clipping loss",
+    "outside pure conditioning density",
+    "same-law continuation density and normalization zero",
+    "same-law continuation density and normalization literal_density_cap",
+    "same-law continuation density and normalization literal_actual_PA",
+    "zero-rho exact Haar certificate",
+    "literal conservative exact Haar certificate",
+    "simple strict continuation bounds",
+    "zero-load witness has21 distinct odd numerical labels",
+    "zero-load CRT period resolves every original without enumeration",
+    "zero-load private point pure3",
+    "zero-load private point pure9",
+    "zero-load private point q5_e0",
+    "zero-load private point q5_e1",
+    "zero-load private point q5_e4",
+    "zero-load private point q7_e0",
+    "zero-load private point q7_e1",
+    "zero-load private point q7_e4",
+    "zero-load private point q11_e0",
+    "zero-load private point q11_e1",
+    "zero-load private point q11_e4",
+    "zero-load private point q13_e0",
+    "zero-load private point q13_e1",
+    "zero-load private point q13_e4",
+    "zero-load private point q17_e0",
+    "zero-load private point q17_e1",
+    "zero-load private point q17_e4",
+    "zero-load private point q19_e0",
+    "zero-load private point q19_e1",
+    "zero-load private point q19_e4",
+    "zero-load private point Q_only_385",
+    "zero-load actual survivor witness",
+    "zero-load through3 two phases and through4 third phase q=5",
+    "zero-load fourth layer lies in branch B q=5",
+    "zero-load through3 two phases and through4 third phase q=7",
+    "zero-load fourth layer lies in branch B q=7",
+    "zero-load through3 two phases and through4 third phase q=11",
+    "zero-load fourth layer lies in branch B q=11",
+    "zero-load through3 two phases and through4 third phase q=13",
+    "zero-load fourth layer lies in branch B q=13",
+    "zero-load through3 two phases and through4 third phase q=17",
+    "zero-load fourth layer lies in branch B q=17",
+    "zero-load through3 two phases and through4 third phase q=19",
+    "zero-load fourth layer lies in branch B q=19",
+    "all-two Q cylinder survives displayed selected phases",
+    "displayed live cylinder activates six residual cofactors",
+    "zero-load narrow fourth layer is identically empty",
+    "zero-load actual source starts in admitted pure-mass rectangle",
+    "zero-load normalized actual row below PA cap q=11",
+    "zero-load normalized actual row below PA cap q=13",
+    "zero-load normalized actual row below PA cap q=17",
+    "zero-load normalized actual row below PA cap q=19",
+    "zero-load actual normalized prefix includes the extra385 deletion",
+    "zero-load actual prefix preserves its allowed5/7 marginal",
+    "zero-load all-two cylinder has positive same-PA-source mass"
+  ]
+}

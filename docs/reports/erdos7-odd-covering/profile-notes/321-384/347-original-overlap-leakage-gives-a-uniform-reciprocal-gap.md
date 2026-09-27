@@ -271,12 +271,12 @@ This localization also states the transport obstruction precisely: at a \(p\)-st
 
 ## 4. Reproducible checks and limits
 
-The [geometry checker](../../frontier/cover-geometry/original_overlap_leakage.py) constructs original residue classes on their complete finite Haar periods. It checks the expanded-prefix union inequality, the denominator-ideal/Rogers bound, an exact identity retaining all discarded slacks, both versions of the overlap recurrence, and the distinct cross-prime/internal-multiplicity accounts. It also checks the iterated minimal-class budget against direct surviving sets. Its current fixtures contain 397 single-stage families and 73,885 period points, followed by 150 stage decompositions over 222,180 period points and 300 localized recurrence checks. A separate implementation checks 82 families, including 46 with redundant original classes, over 727,083 period points. These finite checks support implementation and detect counterexamples; the general argument in Sections 1–3 supplies the unbounded quantifiers.
+The [geometry checker](../../frontier/cover-geometry/original-overlap-leakage/original_overlap_leakage.py) constructs original residue classes on their complete finite Haar periods. It checks the expanded-prefix union inequality, the denominator-ideal/Rogers bound, an exact identity retaining all discarded slacks, both versions of the overlap recurrence, and the distinct cross-prime/internal-multiplicity accounts. It also checks the iterated minimal-class budget against direct surviving sets. Its current fixtures contain 397 single-stage families and 73,885 period points, followed by 150 stage decompositions over 222,180 period points and 300 localized recurrence checks. A separate implementation checks 82 families, including 46 with redundant original classes, over 727,083 period points. These finite checks support implementation and detect counterexamples; the general argument in Sections 1–3 supplies the unbounded quantifiers.
 
 The [rational interval checker](../../frontier/source-budgets/reciprocal_gap_source_interval.py) independently encloses the source equation (24) using logarithm and exponential series with rigorous remainder bounds and outward rational rounding. It returns a lower endpoint greater than \(4.7596769\cdot10^{-50}\). This recomputes the final numerical substitution conditional on the paper's analytic Lemmas 1–2 and prime bounds; it does not replay the paper's earlier large prime calculations. The page-24 Euler-product upper bound remains a cited analytic input. The final comparison \(93(5\cdot10^{-52})<4.7596769\cdot10^{-50}\) uses exact rational arithmetic. A separate interval computation for \(T(6F_0-1)\) gives a lower endpoint exceeding \(2.30481519943514\cdot10^{-41}\); division by 93 exceeds \(2\cdot10^{-43}\). It keeps all analytic inputs and parameters fixed.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_overlap_leakage.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-overlap-leakage/original_overlap_leakage.py
 python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/reciprocal_gap_source_interval.py
 ```
 
@@ -332,12 +332,12 @@ One summand cannot vanish, and two cannot cancel because \(-1\) is not an odd-or
 
 If the total hole density is \(\delta\), the output really does have excess \(\delta H_{\rm cov}\), with its repeated labels counted. For example, retaining \(1,2\bmod3\) and filling \(0\bmod3\) gives \(H_{\rm cov}/3\) but repeats retained modulus 3. Retaining \(0\bmod3\) and filling both other holes gives \(2H_{\rm cov}/3\) but repeats every inserted modulus \(3m_i\). The excess identity is valid; its output does not satisfy the distinctness hypothesis. Different inserted modulus sets or a globally coordinated deletion require their own proof and are not ruled out here.
 
-The standalone [collision checker](../../frontier/cover-geometry/overlap_reduction_collisions.py) verifies the affine membership, all three disintegrations (signed excess, positive excess, and holes), and every selector on five fixtures: 522 complete-period points and 94 selectors. Four ternary transformations are checked at all 162 output-period points. The whole-cover fixtures are explicitly either a distinct cover with even moduli or an odd cover with repeated moduli; none is represented as a distinct odd cover. The general finite-template obstruction is the ordinary Fourier deduction above, not a conclusion inferred from those examples.
+The standalone [collision checker](../../frontier/cover-geometry/overlap-reduction-collisions/overlap_reduction_collisions.py) verifies the affine membership, all three disintegrations (signed excess, positive excess, and holes), and every selector on five fixtures: 522 complete-period points and 94 selectors. Four ternary transformations are checked at all 162 output-period points. The whole-cover fixtures are explicitly either a distinct cover with even moduli or an odd cover with repeated moduli; none is represented as a distinct odd cover. The general finite-template obstruction is the ordinary Fourier deduction above, not a conclusion inferred from those examples.
 
 For the restricted covering problem, a sufficient interface must therefore preserve both residual covering behavior and the original-to-residual modulus collision relation. Recovering only the conditional covering fraction or its excess does not certify an admissible distinct-modulus continuation.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/overlap_reduction_collisions.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/overlap-reduction-collisions/overlap_reduction_collisions.py
 ```
 
 ## 6. Odd-only ideals and fourth moments strengthen the uniform gap

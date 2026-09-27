@@ -12,11 +12,11 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/cover-geometry/uniform_square_and_raw81_neighborhood.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/moments-survival/uniform_ap_survival_denominator.py': '181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180',
-    'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json': '080ecc953d56c722d9026fcc8517fa08dbd67ae7381a5af581c3afc20d48db3a',
-    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': '5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
+    'frontier/moments-survival/uniform_ap_survival_denominator.py': '50cb4e8eae092ac38aa12d291c5d587f7ee71557cc9dcec683a4c82224750b22',
+    'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json': '085ebb71c22db77349d575908e65ced4f812c065ed489354a0a7ce3c275495b7',
+    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': '8225a0ba5970d7f57f4e934d13cf3a7b4055cc80948bd73d5feb341a097a94e7',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '475e060fda48d619f1ecb9ff512bc8fde200521c07429901f4daeafda0f23667',
     'frontier/cover-geometry/complete_off_face_omitted_tails.py': '33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d',
     'frontier/endpoint-bounds/k_face_complete_ratio.py': '00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160',
     'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': '2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a',

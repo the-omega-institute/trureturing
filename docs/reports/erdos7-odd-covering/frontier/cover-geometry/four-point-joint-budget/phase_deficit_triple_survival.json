@@ -1,0 +1,118 @@
+{
+  "certificate_sha256": "ca365d876cea4c51aed12896ee1c730ba91c7081c65a0a601e32434b2265ff71",
+  "inputs": {
+    "integer_selector_tail_interface_certificate.json": "66f155d2d9f65b044017e0c033c1d3e8f9999cea100eabce1b8aa049810ecb5a",
+    "integer_selector_tail_interface.json": "4681c5b6da42138625dfa6c21e680522edf60ed400a3ae83c817d94bfcf9e4f4",
+    "two_region_triple_survival.json": "aada38719d5029f778ea663739a52d9312e7957a1672a7c11d11b71c6f240365"
+  },
+  "literal_label_count": 51,
+  "block_labels": [
+    1,
+    3,
+    9,
+    21,
+    27,
+    63,
+    81,
+    147,
+    189,
+    441,
+    567,
+    1029,
+    1323,
+    3087,
+    3969,
+    9261,
+    27783
+  ],
+  "block_ceiling": "229/667",
+  "good_block_union_upper": "228/667",
+  "good_thresholds": [
+    "4180/207",
+    "3052/261"
+  ],
+  "regions": [
+    {
+      "region": "base_first",
+      "minimum": "41",
+      "vertex_pairs": 330,
+      "minimizers": [
+        {
+          "t": [
+            "18",
+            "21",
+            "18"
+          ],
+          "u": [
+            "22",
+            "12",
+            "23"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "bad_t2",
+      "minimum": "8821/207",
+      "vertex_pairs": 330,
+      "minimizers": [
+        {
+          "t": [
+            "3893/207",
+            "4180/207",
+            "3893/207"
+          ],
+          "u": [
+            "22",
+            "12",
+            "23"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "bad_u2",
+      "minimum": "1269/29",
+      "vertex_pairs": 150,
+      "minimizers": [
+        {
+          "t": [
+            "18",
+            "21",
+            "18"
+          ],
+          "u": [
+            "22",
+            "3052/261",
+            "23"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "base_second",
+      "minimum": "92",
+      "vertex_pairs": 264,
+      "minimizers": [
+        {
+          "t": [
+            "21",
+            "18",
+            "19"
+          ],
+          "u": [
+            "15",
+            "21",
+            "21"
+          ]
+        }
+      ]
+    }
+  ],
+  "vertex_pairs_checked": 1074,
+  "uniform_numerator": "27963/667",
+  "gain_over_41": "616/667",
+  "weighted_survivor_lower": "27963/410872",
+  "max_survivor_lower": "27963/13969648",
+  "scope": "Same three-point/two-centre interface and actual finite families, with full uniform product new fibres. Ordinary proof and exact arithmetic, not arithmetic sharpness, a new Boolean edge, a global source-mass improvement, or Lean verification."
+}

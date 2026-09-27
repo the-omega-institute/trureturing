@@ -1,0 +1,708 @@
+{
+  "result": "PASS",
+  "period": 130945815,
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "heights": [
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "set": "0 mod 81; exactly two of 5,7,11,13,17,19 divide x",
+  "query": "phase zero for every divisor, including one",
+  "query_load_on_E": 20,
+  "E_count": 166464,
+  "haar_mass": "1088/855855",
+  "uniform_density": "855855/1088",
+  "source_density_cap": "6075000000000/7235955529",
+  "complete_divisors_checked": 320,
+  "sum_of_phase_maximum_counts": 3454915,
+  "phase_maxima_by_other_prime_support": [
+    {
+      "other_primes": [],
+      "maxcount": 166464,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5
+      ],
+      "maxcount": 97056,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7
+      ],
+      "maxcount": 76224,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11
+      ],
+      "maxcount": 51264,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        13
+      ],
+      "maxcount": 43872,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        17
+      ],
+      "maxcount": 33984,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        19
+      ],
+      "maxcount": 30528,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7
+      ],
+      "maxcount": 34560,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11
+      ],
+      "maxcount": 20736,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        13
+      ],
+      "maxcount": 17280,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        17
+      ],
+      "maxcount": 12960,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        19
+      ],
+      "maxcount": 11520,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11
+      ],
+      "maxcount": 13824,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        13
+      ],
+      "maxcount": 11520,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        17
+      ],
+      "maxcount": 8640,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        19
+      ],
+      "maxcount": 7680,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        13
+      ],
+      "maxcount": 6912,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        17
+      ],
+      "maxcount": 5184,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        19
+      ],
+      "maxcount": 4608,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        13,
+        17
+      ],
+      "maxcount": 4320,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        13,
+        19
+      ],
+      "maxcount": 3840,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        17,
+        19
+      ],
+      "maxcount": 2880,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11
+      ],
+      "maxcount": 3456,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        13
+      ],
+      "maxcount": 2880,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        17
+      ],
+      "maxcount": 2160,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        19
+      ],
+      "maxcount": 1920,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        13
+      ],
+      "maxcount": 1728,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        17
+      ],
+      "maxcount": 1296,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        19
+      ],
+      "maxcount": 1152,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        13,
+        17
+      ],
+      "maxcount": 1080,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        13,
+        19
+      ],
+      "maxcount": 960,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        17,
+        19
+      ],
+      "maxcount": 720,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        13
+      ],
+      "maxcount": 1152,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        17
+      ],
+      "maxcount": 864,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        19
+      ],
+      "maxcount": 768,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        13,
+        17
+      ],
+      "maxcount": 720,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        13,
+        19
+      ],
+      "maxcount": 640,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        17,
+        19
+      ],
+      "maxcount": 480,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        13,
+        17
+      ],
+      "maxcount": 432,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        13,
+        19
+      ],
+      "maxcount": 384,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        17,
+        19
+      ],
+      "maxcount": 288,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        13,
+        17,
+        19
+      ],
+      "maxcount": 240,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "maxcount": 288,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        17
+      ],
+      "maxcount": 216,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        19
+      ],
+      "maxcount": 192,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        13,
+        17
+      ],
+      "maxcount": 180,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        13,
+        19
+      ],
+      "maxcount": 160,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        17,
+        19
+      ],
+      "maxcount": 120,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        13,
+        17
+      ],
+      "maxcount": 108,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        13,
+        19
+      ],
+      "maxcount": 96,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        17,
+        19
+      ],
+      "maxcount": 72,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 60,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        13,
+        17
+      ],
+      "maxcount": 72,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        13,
+        19
+      ],
+      "maxcount": 64,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        17,
+        19
+      ],
+      "maxcount": 48,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 40,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 24,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "maxcount": 18,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        13,
+        19
+      ],
+      "maxcount": 16,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        17,
+        19
+      ],
+      "maxcount": 12,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 10,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        11,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 6,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 4,
+      "number_of_three_depths": 5
+    },
+    {
+      "other_primes": [
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "maxcount": 1,
+      "number_of_three_depths": 5
+    }
+  ],
+  "phase_maxima_aggregated_by_support_size": [
+    {
+      "size": 0,
+      "supports": 1,
+      "sum_maxcounts_at_one_three_depth": 166464
+    },
+    {
+      "size": 1,
+      "supports": 6,
+      "sum_maxcounts_at_one_three_depth": 332928
+    },
+    {
+      "size": 2,
+      "supports": 15,
+      "sum_maxcounts_at_one_three_depth": 166464
+    },
+    {
+      "size": 3,
+      "supports": 20,
+      "sum_maxcounts_at_one_three_depth": 23320
+    },
+    {
+      "size": 4,
+      "supports": 15,
+      "sum_maxcounts_at_one_three_depth": 1740
+    },
+    {
+      "size": 5,
+      "supports": 6,
+      "sum_maxcounts_at_one_three_depth": 66
+    },
+    {
+      "size": 6,
+      "supports": 1,
+      "sum_maxcounts_at_one_three_depth": 1
+    }
+  ],
+  "maximum_complete_query_mean": "3454915/166464",
+  "R_nonunit": "3288451/166464",
+  "R_bound": "70871/3375",
+  "R_margin": "77660891/62424000",
+  "original_survivor_obstruction": {
+    "scope": "Original distinct nonunit moduli dividing this exact K only",
+    "available_reciprocal_budget": "133338/146965",
+    "required_complement_mass": "854767/855855",
+    "positive_gap": "1330577/14549535"
+  },
+  "higher_prefix_obstruction": {
+    "quantifier": "Every probability nu on Z/(3^(4+h)*5*7*11*13*17*19) whose projection is supported on E; arbitrary projected weights and arbitrary dependent higher digits",
+    "one_other_prime_layout_lower": "8857/2160",
+    "minimum_complement_reciprocal_sum": "217/720",
+    "minimum_pair": [
+      5,
+      7
+    ],
+    "maximum_complete_mean_lower": "(5+sum_(j=1..h)3^(-j))*8857/2160",
+    "R_lower": "(5+sum_(j=1..h)3^(-j))*8857/2160-1",
+    "mechanism": "For arbitrary zero-pair weights w_C, labels with at most two other primes contribute at least four. For each three-prime T, its maximum phase mass is at least (1/3) sum_(C subset T,|C|=2) w_C/(r-1), where {r}=T\\C. Summing T gives at least 217/2160 in addition. Each selected phase is partitioned into 3^j higher three-adic cylinders; their maximum mass is at least 3^(-j) times its original mass. Labels choose phases independently.",
+    "first_excluded_extra_depth_for_this_lower_bound": 2,
+    "first_excluded_total_three_height": 6,
+    "positive_gap_at_extra_depth_two": "158401/486000",
+    "finite_depth_checks": [
+      {
+        "extra_three_depth": 0,
+        "total_three_height": 4,
+        "three_depth_factor": "5",
+        "maximum_complete_mean_lower": "8857/432",
+        "R_lower": "8425/432",
+        "R_lower_minus_source_bound": "-2993/2000"
+      },
+      {
+        "extra_three_depth": 1,
+        "total_three_height": 5,
+        "three_depth_factor": "16/3",
+        "maximum_complete_mean_lower": "8857/405",
+        "R_lower": "8452/405",
+        "R_lower_minus_source_bound": "-1313/10125"
+      },
+      {
+        "extra_three_depth": 2,
+        "total_three_height": 6,
+        "three_depth_factor": "49/9",
+        "maximum_complete_mean_lower": "433993/19440",
+        "R_lower": "414553/19440",
+        "R_lower_minus_source_bound": "158401/486000"
+      }
+    ],
+    "no_uniform_lift_or_independence_assumption": true
+  },
+  "source_measure_escape": {
+    "prime_scope": "Original family supported on a subset of 3,5,7,11,13,17,19",
+    "period_scope": "A common finite period resolving the original family and all divisors of 3^6*5*7*11*13*17*19",
+    "premises": "One actual source probability mu supported on original U, R(mu)<=70871/3375, and mu<=Lambda7*H from report467",
+    "submeasure_inequality": "R(mu)>=R(mu restricted to E)>=mu(E)*414553/19440",
+    "mu_U_minus_E_lower": "158401/10363825",
+    "haar_U_minus_E_lower": "1146182591749129/62960236875000000000",
+    "scope": "Mass must escape this low-R base layer. Escaped points are not asserted to have positive two-prime capacity; no new noncoverage range."
+  },
+  "scope": "Actual complete queries and one actual probability meet all phase maxima, prefix consistency, density and R bounds at the displayed base period. E is provably not the complete original survivor set at this K. Every probability supported over E violates the source R bound after two additional three-adic query depths, so no compatible all-depth source law can have this projected support. The exact-K cover budget does not classify larger-period original-family realizations.",
+  "phase_maximum_method": "For each divisor exponent vector, enumerate the actual truncated valuation type of every possible phase. Count all E patterns in each type. Nonzero phases of one type have equal counts by multiplication by units in the separate CRT coordinates. Take the largest exact count. This uses all 320 labels without enumerating the full period."
+}

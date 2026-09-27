@@ -1,0 +1,203 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "K2": {
+    "decimal": 3.00306754983821,
+    "exact": "259330034471755805701/86355045355449035400"
+  },
+  "K3": {
+    "decimal": 2.103111764658523,
+    "exact": "12019840537595758779003/5715264751774801992890"
+  },
+  "K7": {
+    "decimal": 0.8016378164787026,
+    "exact": "6258510165289233442029877862409645975916115839/7807154349055719001167517219171937585855811250"
+  },
+  "actual_47_zero_fibre_control": {
+    "EU": {
+      "decimal": 0.1344425951232,
+      "exact": "164114496/1220703125"
+    },
+    "EU_hinge2": {
+      "decimal": 0.0,
+      "exact": "0"
+    },
+    "EW": {
+      "decimal": 0.16666666666666666,
+      "exact": "14210854715202003717422485351562/85265128291212022304534912109375"
+    },
+    "Haar_survivor_lower_best_two_certificates": {
+      "decimal": 7.132812631037024e-06,
+      "exact": "1530258670675786974964391411049472405328503552447913/214537903886212967452593147754669189453125000000000000000"
+    },
+    "Haar_survivor_lower_tail_certificate": {
+      "decimal": 7.078753950479898e-06,
+      "exact": "4824482374914898740884238358776709009548062613403296757/681544013065721355003397911787033081054687500000000000000000"
+    },
+    "actual_RP_eta": {
+      "decimal": 2.6803117062959165,
+      "exact": "4675759808025824549528834570035231625543/1744483597576618194580078125000000000000"
+    },
+    "actual_RP_mu": {
+      "decimal": 2.6803117526580658,
+      "exact": "4675759808025824549528834570035231625543/1744483567401766777038574218750000414720"
+    },
+    "actual_damage": "W=(2/3)*min(v5(x5),45); each mixed ternary cylinder is disjoint.",
+    "actual_query_tail_rule": "For e>4, q_(3^e5^j)=3^(4-e)q_(3^4 5^j); for j>45, q_(3^e5^j)=5^(45-j)q_(3^e5^45). Q primes other than5 are Haar. Unit omitted once.",
+    "joint_zero_fibre_source_mass": {
+      "decimal": 3.5184372088832e-32,
+      "exact": "1/28421709430404007434844970703125"
+    },
+    "mixed_ternary_height": 4,
+    "normalized_density_upper": {
+      "decimal": 191.75809075247273,
+      "exact": "381881379382783961773384362459182739257812500000000/1991474664168033901952817359415349092660389650471"
+    },
+    "normalized_supplier_query_upper": {
+      "decimal": 11.533825528334637,
+      "exact": "20948021044398978957997230754699559314963741855173031/1816224893721246918580969431786798372506275361229552"
+    },
+    "original_count": 47,
+    "original_definition": "Pure (3,1),(9,3); enumerate t_j in increasing order from {0<=t<81: t%3!=1 and t%9!=3}; j=1..45, m_j=81*5^j, a_j=5^j*((t_j*(5^j)^(-1)) mod81).",
+    "originals_sha256": "dc0e6d81f9dd7b588b3a5a4e3b0d00c0cfcc56dd2b807442d10fa86047a3f954",
+    "retained_mass": {
+      "decimal": 0.9999999827027027,
+      "exact": "1051603230735054239630699157714844/1051603248924948275089263916015625"
+    },
+    "scope": "47 fixed originals under the actual empty-selection PA source nu=Q-Haar; both complete reserves vanish on positive source mass. This exceeds the pointwise reserve domains of 585, but is not a new bare noncoverage class.",
+    "selected_Q_phases": [],
+    "source": "Q-Haar; every shallow two-phase selection is empty.",
+    "source_RQ": {
+      "decimal": 0.9490439332561729,
+      "exact": "157435/165888"
+    },
+    "tau": {
+      "decimal": 4.266666666666667e-07,
+      "exact": "36379788070917129516601562/85265128291212022304534912109375"
+    },
+    "valuation_atom_count": 46
+  },
+  "alpha": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "check_count": 41,
+  "checks": [
+    "source SHA256 pa_complete_suffix_debits.json",
+    "source SHA256 height_three_clipping_envelope.json",
+    "same-source B pin",
+    "same-source alpha pin",
+    "same-source K3 pin",
+    "SD10 second hinge corner 1/2,2/3",
+    "SD10 second hinge corner 1/2,1",
+    "SD10 second hinge corner 1,2/3",
+    "SD10 second hinge corner 1,1",
+    "exact N2 at16/3",
+    "exact split bound at16/3",
+    "both pointwise bounds pass",
+    "exact tau threshold",
+    "split normalized bound exactly touches gate",
+    "all rational clipping and coupled-loss controls",
+    "zero fibre discards mass with no division",
+    "full deep geometric coefficient",
+    "same-source numerator algebra at tau=0",
+    "same-source numerator algebra at tau=21218460281840396929028797/761273264936403625452948000",
+    "same-source numerator algebra at tau=21218460281840396929028797/380636632468201812726474000",
+    "23 and29 same-law continuation density identity",
+    "generic interpolated tail does not force new gate",
+    "47 fixed pure survivor has 18 A and 27 B cylinders",
+    "47 actual CRT phases",
+    "47 distinct odd numerical originals",
+    "47 shallow mixed selector empty",
+    "47 valuation atoms normalized",
+    "47 all valuation atoms match actual full masks",
+    "47 exact excess tail from actual mask",
+    "47 excess tail equals survival-function sum",
+    "47 actual mean loss",
+    "47 terminal event has both reserves zero",
+    "47 retained mass identity",
+    "47 positive excess tail passes strict gate",
+    "47 actual coupled means satisfy same-source estimates",
+    "47 normalized supplier gate passes",
+    "47 tail and best Haar bounds positive",
+    "47 tail Haar identity",
+    "47 exact unit query equals retained mass",
+    "47 exact actual query lies below supplier certificate",
+    "47 Haar source full query norm below B"
+  ],
+  "clipped": {
+    "Haar_lower_formula": "(185*alpha/149688)*(tau_star-tau)",
+    "generic_interpolated_tail_upper": {
+      "decimal": 1.3439186282202944,
+      "exact": "4496648641323028895561227443147227452823933491/3345923292452451000500364522502258965366776250"
+    },
+    "remaining_gap": "The supplied generic upper estimate exceeds tau_star. This is certificate insufficiency, not actual-law impossibility.",
+    "strict_condition": "E(W-16/3)+<tau_star.",
+    "tau_star": {
+      "decimal": 0.05574466163241126,
+      "exact": "21218460281840396929028797/380636632468201812726474000"
+    }
+  },
+  "formula_contract": {
+    "N2": "1+2B+(z*K2-3)/D",
+    "Nsplit": "1+2B+(3B-9+(z-2)*K3)/D",
+    "allocation": "aA=r*cA, aB=min(1-r*cA,(3/2)*r*cB); beta=aA+aB=1-T/D.",
+    "credit_rule": "K2=B-2 comes from SD10 full hinge; J credits are already in B and are not subtracted again.",
+    "damage": "X=12(1-cA), V=18(1-cB), W=X+V; T=(W-z)+; U=min(X,(z-V)+).",
+    "density": "mu<=486/(D*alpha*(1-tau/D))*Haar_P.",
+    "normalized_bound": "RP(mu)<=min(N2-3tau/D,Nsplit-4tau/D)/(1-tau/D), tau=E T<D.",
+    "range": "2<=z<=6; D=30-z; r=12/D; actual complete reserves0<=cA,cB<=1 under one actual PA source nu.",
+    "same_label_rule": "Both roots share one numerical-label inventory: use sum_d max(q_d(v nu),q_d(w nu)); do not sum independent branch inventories.",
+    "same_source_inputs": "E W<=B, E(W-2)+<=K2, RQ(nu)<=B and every-layout hinges K2,K3. E(U)+tau<=B and E(U-2)++tau<=K2 use the SAME law.",
+    "zero_convention": "a_j/c_j=0 when c_j=0; then a_j=0. The ratio aA/cA<=r, with equality required only on cA>0."
+  },
+  "pointwise": {
+    "D": {
+      "decimal": 24.666666666666668,
+      "exact": "74/3"
+    },
+    "Haar_survivor_lower": {
+      "decimal": 7.132873987154635e-06,
+      "exact": "1346041340014939222441/188709535937264844902400000"
+    },
+    "N2": {
+      "decimal": 11.533825380722519,
+      "exact": "18426074256671263478591/1597568339075807154900"
+    },
+    "Nsplit": {
+      "decimal": 11.533955715826814,
+      "exact": "292683070847312408230270547/25375775497880120848431600"
+    },
+    "query_margin": {
+      "decimal": 0.0171950274407465,
+      "exact": "1346041340014939222441/78280848614714550590100"
+    },
+    "r": {
+      "decimal": 0.4864864864864865,
+      "exact": "18/37"
+    },
+    "z": {
+      "decimal": 5.333333333333333,
+      "exact": "16/3"
+    }
+  },
+  "rational_control_count": 397,
+  "schema": "joint-clipped-query-reserve-v1",
+  "scope": "Conditional same-source ordinary-mathematics certificate. Fixed pure3 geometry and shallow two-phase selection are retained; all original heights and query heights are allowed. Finite controls do not prove universal quantifiers. No new Lean and no unrestricted Erdos7 conclusion.",
+  "sources": [
+    {
+      "path": "pa_complete_suffix_debits.json",
+      "sha256": "b1b204f8728c64ed9265e91d78d3072a2e77f64f6efca57512f3e58f0bdf3ccc"
+    },
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    }
+  ],
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  }
+}

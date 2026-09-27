@@ -221,7 +221,7 @@ the complete middle rank of these old exponent pairs also satisfies
     sum_(j=0..M) binom(M,j)^2/binom(2M,M)=1.
 
 No general antichain theorem is needed for the construction or CP8.
-The [finite check](../../frontier/cover-geometry/original_prefix_completion.py), using
+The [finite check](../../frontier/cover-geometry/original-prefix-completion/original_prefix_completion.py), using
 Python3.9+ standard-library exact arithmetic, reconstructs all1243
 original factor vectors, checks
 771903 original pairs for incomparability and literal CRT disjointness,
@@ -334,7 +334,7 @@ height statement is the ordinary proof above. The standalone entrypoint
 also accepts explicit primes, root count and comb heights:
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_prefix_completion.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-prefix-completion/original_prefix_completion.py
 ```
 
 No new Lean declaration, build or frozen result is asserted.

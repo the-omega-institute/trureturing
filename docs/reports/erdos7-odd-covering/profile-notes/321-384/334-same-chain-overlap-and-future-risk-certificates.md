@@ -270,16 +270,16 @@ identity. These arguments reuse established mathematics and do not add a
 Lean declaration or claim general continuation.
 
 The actual fixture helper is
-[actual_327_three_prime_risk.py](../../frontier/cover-geometry/actual_327_three_prime_risk.py).
+[actual_327_three_prime_risk.py](../../frontier/cover-geometry/actual-327-three-prime-risk/actual_327_three_prime_risk.py).
 The source charges and exact47 deficit are in333's
 [certificate](../../certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json).
 
 ## Exact original-prefix evaluator
 
-The [original-prefix evaluator](../../frontier/cover-geometry/original_prefix_transition.py)
+The [original-prefix evaluator](../../frontier/cover-geometry/original-prefix-transition/original_prefix_transition.py)
 implements this section's fixed-kernel original-label state without
 enumerating entire prime-power coordinates. Its
-[exact output](../../frontier/cover-geometry/original_prefix_transition.json)
+[exact output](../../frontier/cover-geometry/original-prefix-transition/original_prefix_transition.json)
 reproduces both327/334 original families, their full physical event laws,
 first-hit fees, masked moments and surviving masses. It also retains the
 joint match state of all future-ending original labels, so later stages
@@ -339,7 +339,7 @@ omitted-digit accounting; they are not additional noncoverage results.
 Run the standard-library producer from the repository root:
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_prefix_transition.py
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-prefix-transition/original_prefix_transition.py
 ```
 
 It emits the deterministic compact JSON to standard output; `--output PATH`

@@ -8,8 +8,8 @@ import argparse,importlib.util,json,sys
 sys.dont_write_bytecode=True
 CERTIFICATE='certificates/source_norms/j-geometry/j_face_exact_retained_factorial_head.json'
 PINS={
- 'frontier/j-geometry/j_face_joint_pair_factorial_heads.py':'28853a42f7b5d38004bad74245b8b1d46d4ad2764bc8be054d3d483df7cbb0eb',
- 'certificates/source_norms/j-geometry/j_face_joint_pair_factorial_heads.json':'95a3eee9db33fb73c79160982df25c12a66e9f7a213b22c43c9def8b1949ad09',
+ 'frontier/j-geometry/j_face_joint_pair_factorial_heads.py':'ade6e903de4981b26706c8f1dba295106bef608a8052e2250aaf3703a101c33d',
+ 'certificates/source_norms/j-geometry/j_face_joint_pair_factorial_heads.json':'64e95b9e64265a6efc9f719285f8dd77f78c675b7c55471e06e52d4c115aa954',
  'profile-notes/257-320/276-actual-retained-tail-pairs-strengthen-original-j-costs-and-square.md':'397f1db9f44157a345c31826f96920ea8776db620cbeb62bbbfd671dd3eab652'}
 
 def require(ok,message):

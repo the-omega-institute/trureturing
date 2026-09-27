@@ -162,7 +162,7 @@ bound on the same actual physical chain. Any additional same-chain
 intersection correction must exceed the NEW exact47 deficit; no
 intersection lower bound is asserted here.
 
-The [portable exact helper](../../frontier/cover-geometry/high_rho_original_ap_blocks.py)
+The [portable exact helper](../../frontier/cover-geometry/high-rho-original-ap-blocks/high_rho_original_ap_blocks.py)
 reconstructs each original AP pair's finite probabilities, complete
 active tail and omitted-pair mass, checks the existing centered source
 API term by term, and retains the complete outer product tails.
@@ -172,5 +172,5 @@ ordinary proof and producer. This is an ordinary mathematical result
 with exact arithmetic verification, not a new Lean formalization.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/high_rho_original_ap_blocks.py --check
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/high-rho-original-ap-blocks/high_rho_original_ap_blocks.py --check
 ```

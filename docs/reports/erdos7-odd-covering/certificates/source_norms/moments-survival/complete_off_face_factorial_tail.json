@@ -4,7 +4,7 @@
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
     "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
     "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
-    "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+    "frontier/comparison-bounds/complete_off_face_cost.py": "9aecea9f4424bdfd26be82ebb643d72dffe35b5a57d80e6730faaf471eebe986",
     "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
     "frontier/moments-survival/whole_factorial_same_head.py": "845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24",
     "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3"

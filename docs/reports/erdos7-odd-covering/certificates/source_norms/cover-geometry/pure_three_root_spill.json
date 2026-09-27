@@ -6,7 +6,7 @@
     "frontier/source-budgets/source_cost_endpoint_attainment.py": "9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2",
     "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
     "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
-    "frontier/cover-geometry/pure_three_projected_defect.py": "4314b3a05b007df295374ff7fff700c482a4883adbb19094f6c3e12f2a89e16b"
+    "frontier/cover-geometry/pure-three-projected-defect/pure_three_projected_defect.py": "8842b846adee9de93022a3d0b73202b28ac0f8dc728932339fbde95913b9ba83"
   },
   "concentration_interface": [
     {

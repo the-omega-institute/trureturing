@@ -14,8 +14,8 @@ PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
     'frontier/comparison-bounds/exposed_concentration_prices.py': '9c2e6d7ea0777df07559c90a506dcd19d40e2af6febadaee7833a0d66b20488a',
     'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '4cbde5374198bbf645157ef6bb7765e3b8fed57569cd2c99b85c25741f38fd25',
-    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '248c4af165fc4e636c4f4a3c61947384afd9128cae6c652b07819e20a55da484',
-    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '4fa3ff52514576814c380e21caaeb2cc9341180815cab34e5b64c8c6e896bade',
+    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '90836c835232155b2d7380fae38807f2a5136a28773ae97098cbc7674778afc6',
+    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '65c7e1f09d160b6fda88e777aa5fd38da9fde912284257f210c6be37b2be499d',
 }
 SOURCE_ORDER = ('s', 'N3', 'N9', 'D', 'h', 'h1', 'eta_max', 'constant')
 

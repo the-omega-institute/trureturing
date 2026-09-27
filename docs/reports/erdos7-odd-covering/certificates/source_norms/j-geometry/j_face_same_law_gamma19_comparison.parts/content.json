@@ -5,12 +5,12 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "954741bd3a82472581c24d4ac04b4e6090af2acd35b7037a47fdaeb7c4810ac3",
+    "sha256": "6d9aab9817226f17ff7fe3d55c3e742fb46cb5749049e5791d31169aa9d7d084",
     "kind": "value"
   },
   "source299_logical_sha256": {
     "kind": "inline",
-    "value": "4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab"
+    "value": "6705531fc5fc7241522ddbcf8974957fd413cd6014c3605e110c4633b96d402f"
   },
   "same_law": {
     "kind": "inline",

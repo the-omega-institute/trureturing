@@ -12,13 +12,13 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained135125_survival_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/retained-transport/retained135125_heavy_comparison.py': '06fa084b5ce23b8abd6119e8e767ab648c06b183690fe6c60f9d8d20788c58e2',
-    'certificates/source_norms/retained-transport/retained135125_heavy_comparison.json': '451537f6ee699920c955ba0401cedba672f0aaabc97ad193cb282163bcfaf6cf',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
-    'frontier/retained-transport/retained135_survival_comparison.py': 'd89258d6ff710ae6479c1e4e5530ef2e81465c7bed9876d94c7bbdaa1c4a5350',
-    'certificates/source_norms/retained-transport/retained135_survival_comparison.json': '6a203d7da0717fd8b16d3a8016375ea80bdc5848c68753fa72c8690da8a7f176',
-    'frontier/comparison-bounds/load_two_cost_remainders.py': '4bb1f09f0768f92b9dc447156ad0c816e1858c7a1e553c2b422ebe878d7d0ec2',
-    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'f4224aa378cf67701c4d67bc6e7781277163ad429970727013673aa4e3b2a9e3',
+    'frontier/retained-transport/retained135125_heavy_comparison.py': 'd131be585fb08be87d7b8f43fb859ff9c091ecc03acdafc0075dc7d40ab4c2cb',
+    'certificates/source_norms/retained-transport/retained135125_heavy_comparison.json': '6f26d0f0183713a003ab2ce0659c899b15d1162039c9fb3353a41b8a16658e17',
+    'frontier/retained-transport/retained135_heavy_comparison.py': 'cb3dfecc24fe9c95759008a54a9e023bafd45d280a92f06c5072e0565e4b7374',
+    'frontier/retained-transport/retained135_survival_comparison.py': 'df4b125e497868abc5eb22a30800647f60c6724d49a5c9215122404813c98837',
+    'certificates/source_norms/retained-transport/retained135_survival_comparison.json': '33805fcb2b4e435ef3792b0932fba2b9c1961b307b0f19a2651fafe1fdbfbc9c',
+    'frontier/comparison-bounds/load_two_cost_remainders.py': 'd946a67c8179e127e43bc6b9e58ce2820f4f9e7b7e3c37224f3a50dee7387a0a',
+    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': '656c97a891b2fac1fb702c980eac0cdb852fac0293a0bb99047b04a974b903b7',
 }
 
 

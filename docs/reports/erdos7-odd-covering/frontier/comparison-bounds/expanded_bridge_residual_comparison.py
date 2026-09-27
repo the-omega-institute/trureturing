@@ -14,10 +14,10 @@ CERTIFICATE = 'certificates/source_norms/comparison-bounds/expanded_bridge_resid
 DELTA, RHO = F(1, 12), F(1, 2300)
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/source-budgets/extended_source_bridge_comparison.py': '2c40c799b23de126166ba8e95c942f36f27587896d536a2fece790b508ffe92a',
-    'certificates/source_norms/source-budgets/extended_source_bridge_comparison.json': '381ee12bc564ba3c36fb1ff1b14de9d237bff16c5bf7875fdae8e2bf6c66bea2',
-    'frontier/source-budgets/expanded_source_complete_comparison.py': '409a9ef1a59b4ab0164b9917daaec01872c9253bf6d50684c444e504b61c5944',
-    'frontier/source-budgets/wide_fresh_full_slot_source_comparison.py': '4180ce2f7cb27179e7f8f10092d31c61f7da90e4c03623c07ff796c43f9a599d',
+    'frontier/source-budgets/extended_source_bridge_comparison.py': 'bd904b6cbd4c0ff05ccd5b3608fcf808792ad81eb4c83539100f7bad8f84134f',
+    'certificates/source_norms/source-budgets/extended_source_bridge_comparison.json': 'bc6557c575d2c4676d0c0517ce44c100c2e5d890b6c2616945fd2537026d9e8d',
+    'frontier/source-budgets/expanded_source_complete_comparison.py': '0b4f06f6eba8cd84c37c7c1407c7bb639c33a35f879d7a92c4a36038b241b9d3',
+    'frontier/source-budgets/wide_fresh_full_slot_source_comparison.py': '45d0d31efafc178d8adff7aa3cc06d4e4cc29a63197dd5f013674bc7f51c942a',
 }
 
 

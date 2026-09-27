@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
+  "logical_sha256": "23894367d171d518b9e185dc9b1d5754c411c20871cb99c0f98e383cb848fbfe",
   "parts_directory": "high_rho_physical_hinge_prime_scan.parts",
   "root": {
     "path": "content.json",
-    "sha256": "3ea190d3167004a8fb9651f487bc1197b305a59d7d3ed7ff8e2571055d40e4c3",
+    "sha256": "ca2b2c87cbbb189e55ad114b22569997f90547f302a16ee6f38d64f49a8cce40",
     "kind": "object"
   }
 }

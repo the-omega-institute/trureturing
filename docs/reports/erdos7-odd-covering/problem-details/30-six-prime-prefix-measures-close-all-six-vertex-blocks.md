@@ -299,10 +299,10 @@ unrestricted.
 ## 5. Exact numerical input and verification boundary
 
 The portable standard-library program
-[six_prime_prefix_certificate.py](../frontier/cover-geometry/six_prime_prefix_certificate.py)
+[six_prime_prefix_certificate.py](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_certificate.py)
 reads the explicit
-[geometry input](../frontier/cover-geometry/six_prime_prefix_geometry.json)
-and produces the [exact certificate](../frontier/cover-geometry/six_prime_prefix_certificate.json).
+[geometry input](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_geometry.json)
+and produces the [exact certificate](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_certificate.json).
 It imports no source verifier and runs no geometry enumerator. The input
 retains all required integer maxima, their original file hashes, source
 identifiers, and the complete MIT attribution and license text.
@@ -336,5 +336,5 @@ The program requires Python 3.10 or later and rejects optimized `-O`
 execution. From the repository root, reproduce the certificate with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_prime_prefix_certificate.py --geometry docs/reports/erdos7-odd-covering/frontier/cover-geometry/six_prime_prefix_geometry.json --output /tmp/six-prime-prefix-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_certificate.py --geometry docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_geometry.json --output /tmp/six-prime-prefix-certificate.json
 ```

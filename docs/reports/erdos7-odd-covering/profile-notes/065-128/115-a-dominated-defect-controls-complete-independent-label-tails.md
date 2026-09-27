@@ -213,7 +213,7 @@ vertices is insufficient.
 
 ## Reproduction and scope
 
-[dominated_defect_complete_tails.py](../../frontier/cover-geometry/dominated_defect_complete_tails.py)
+[dominated_defect_complete_tails.py](../../frontier/cover-geometry/dominated-defect-complete-tails/dominated_defect_complete_tails.py)
 exports `cap_series(e,k)` and `centered_bounds(e)` for k=1,2. The
 [certificate](../../certificates/source_norms/cover-geometry/dominated_defect_complete_tails.json)
 contains exact rational mass rows, two independent full-tail
@@ -224,7 +224,7 @@ not enumerate actual forbidden covering families. The ordinary
 tuple and measure arguments prove the arbitrary-height statement.
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/dominated_defect_complete_tails.py --check
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/dominated-defect-complete-tails/dominated_defect_complete_tails.py --check
 ```
 
 The reusable content is the complete dominated-defect transfer and

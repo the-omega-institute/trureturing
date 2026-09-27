@@ -1,0 +1,770 @@
+{
+  "result": "PASS",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "coarse_heights": [
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "fine_heights": [
+    5,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "coarse_period": 130945815,
+  "fine_period": 635066906148675,
+  "coarse_profiles_checked": 320,
+  "fine_divisor_labels_grouped": 4374,
+  "grouped_weight_checks": 320,
+  "potential_expansion_checks": 320,
+  "coherent_load_formula": "Q(v)=product_p(v_p+1)",
+  "potential_formula": "Psi(v)=product_p(v_p+1+1/p if v_p=H_p else v_p+1)",
+  "load_spectrum": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    80,
+    96,
+    128,
+    160,
+    192,
+    256,
+    320
+  ],
+  "high_load_threshold": 20,
+  "high_load_profiles": 170,
+  "minimum_high_potential": "7280/323",
+  "minimum_profiles": [
+    [
+      4,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "largest_load_below_threshold": 16,
+  "cases_by_three_depth_and_other_zero_count": [
+    {
+      "three_depth": 0,
+      "other_zero_count": 0,
+      "profiles": 1,
+      "coherent_load": 1,
+      "high_load": false,
+      "minimum_potential": "1",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 1,
+      "profiles": 6,
+      "coherent_load": 2,
+      "high_load": false,
+      "minimum_potential": "39/19",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 2,
+      "profiles": 15,
+      "coherent_load": 4,
+      "high_load": false,
+      "minimum_potential": "1365/323",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 3,
+      "profiles": 20,
+      "coherent_load": 8,
+      "high_load": false,
+      "minimum_potential": "2835/323",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 4,
+      "profiles": 15,
+      "coherent_load": 16,
+      "high_load": false,
+      "minimum_potential": "65205/3553",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 5,
+      "profiles": 6,
+      "coherent_load": 32,
+      "high_load": true,
+      "minimum_potential": "139725/3553",
+      "minimum_profiles": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 0,
+      "other_zero_count": 6,
+      "profiles": 1,
+      "coherent_load": 64,
+      "high_load": true,
+      "minimum_potential": "27945/323",
+      "minimum_profiles": [
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 0,
+      "profiles": 1,
+      "coherent_load": 2,
+      "high_load": false,
+      "minimum_potential": "2",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 1,
+      "profiles": 6,
+      "coherent_load": 4,
+      "high_load": false,
+      "minimum_potential": "78/19",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 2,
+      "profiles": 15,
+      "coherent_load": 8,
+      "high_load": false,
+      "minimum_potential": "2730/323",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 3,
+      "profiles": 20,
+      "coherent_load": 16,
+      "high_load": false,
+      "minimum_potential": "5670/323",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 4,
+      "profiles": 15,
+      "coherent_load": 32,
+      "high_load": true,
+      "minimum_potential": "130410/3553",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 5,
+      "profiles": 6,
+      "coherent_load": 64,
+      "high_load": true,
+      "minimum_potential": "279450/3553",
+      "minimum_profiles": [
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 1,
+      "other_zero_count": 6,
+      "profiles": 1,
+      "coherent_load": 128,
+      "high_load": true,
+      "minimum_potential": "55890/323",
+      "minimum_profiles": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 0,
+      "profiles": 1,
+      "coherent_load": 3,
+      "high_load": false,
+      "minimum_potential": "3",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 1,
+      "profiles": 6,
+      "coherent_load": 6,
+      "high_load": false,
+      "minimum_potential": "117/19",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 2,
+      "profiles": 15,
+      "coherent_load": 12,
+      "high_load": false,
+      "minimum_potential": "4095/323",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 3,
+      "profiles": 20,
+      "coherent_load": 24,
+      "high_load": true,
+      "minimum_potential": "8505/323",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 4,
+      "profiles": 15,
+      "coherent_load": 48,
+      "high_load": true,
+      "minimum_potential": "195615/3553",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 5,
+      "profiles": 6,
+      "coherent_load": 96,
+      "high_load": true,
+      "minimum_potential": "419175/3553",
+      "minimum_profiles": [
+        [
+          2,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 2,
+      "other_zero_count": 6,
+      "profiles": 1,
+      "coherent_load": 192,
+      "high_load": true,
+      "minimum_potential": "83835/323",
+      "minimum_profiles": [
+        [
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 0,
+      "profiles": 1,
+      "coherent_load": 4,
+      "high_load": false,
+      "minimum_potential": "4",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 1,
+      "profiles": 6,
+      "coherent_load": 8,
+      "high_load": false,
+      "minimum_potential": "156/19",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 2,
+      "profiles": 15,
+      "coherent_load": 16,
+      "high_load": false,
+      "minimum_potential": "5460/323",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 3,
+      "profiles": 20,
+      "coherent_load": 32,
+      "high_load": true,
+      "minimum_potential": "11340/323",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 4,
+      "profiles": 15,
+      "coherent_load": 64,
+      "high_load": true,
+      "minimum_potential": "260820/3553",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 5,
+      "profiles": 6,
+      "coherent_load": 128,
+      "high_load": true,
+      "minimum_potential": "558900/3553",
+      "minimum_profiles": [
+        [
+          3,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 3,
+      "other_zero_count": 6,
+      "profiles": 1,
+      "coherent_load": 256,
+      "high_load": true,
+      "minimum_potential": "111780/323",
+      "minimum_profiles": [
+        [
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 0,
+      "profiles": 1,
+      "coherent_load": 5,
+      "high_load": false,
+      "minimum_potential": "16/3",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 1,
+      "profiles": 6,
+      "coherent_load": 10,
+      "high_load": false,
+      "minimum_potential": "208/19",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 2,
+      "profiles": 15,
+      "coherent_load": 20,
+      "high_load": true,
+      "minimum_potential": "7280/323",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 3,
+      "profiles": 20,
+      "coherent_load": 40,
+      "high_load": true,
+      "minimum_potential": "15120/323",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 4,
+      "profiles": 15,
+      "coherent_load": 80,
+      "high_load": true,
+      "minimum_potential": "347760/3553",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 5,
+      "profiles": 6,
+      "coherent_load": 160,
+      "high_load": true,
+      "minimum_potential": "745200/3553",
+      "minimum_profiles": [
+        [
+          4,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "three_depth": 4,
+      "other_zero_count": 6,
+      "profiles": 1,
+      "coherent_load": 320,
+      "high_load": true,
+      "minimum_potential": "149040/323",
+      "minimum_profiles": [
+        [
+          4,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "source_measure_escape": {
+    "prime_scope": "Original old-only family supported on a subset of 3,5,7,11,13,17,19, with arbitrary finite heights and phases",
+    "period_scope": "One common finite period resolving every old-only original class and the displayed fine query heights",
+    "R_upper": "70871/3375",
+    "density_upper": "6075000000000/7235955529",
+    "high_support_R_lower": "6957/323",
+    "same_law_inequality": "R(mu)>=integral(Psi-1)dmu>=(c-1)*mu(Q>=20)",
+    "mu_Q_at_most_16_lower": "588542/23479875"
+  },
+  "coherent_two_prime_consumer": {
+    "new_primes": [
+      23,
+      29
+    ],
+    "hypotheses": "All original numerical moduli are distinct and greater than one, supported on the nine displayed primes. Every class touching 23 or 29 has old cofactor d dividing coarse K and old phase a mod d for one common a. New-coordinate heights and phases are arbitrary finite. Old-only heights and phases are unrestricted. The source mu avoids the old-only family.",
+    "active_old_cofactors_including_unit_upper": 16,
+    "q_only_good_Haar_lower": "3/11",
+    "r_only_good_Haar_lower": "3/7",
+    "cross_bad_Haar_upper": "2/77",
+    "same_old_point_fibre_survival_lower": "1/11",
+    "mu_times_new_Haar_survival_lower": "588542/258278625",
+    "full_Haar_survival_lower": "193575624497669/71320120312500000000",
+    "scope": "The common old phase and bounded old cofactors are required; this does not prove unrestricted nine-prime noncoverage."
+  },
+  "verification_scope": "Finite exact profile and label counts, potential expansions, spectrum and rational consumer constants. The general prefix-partition and same-law source arguments are mathematical premises supplied by report472; this program does not enumerate original families or reverify the source theorem. No Lean certification."
+}

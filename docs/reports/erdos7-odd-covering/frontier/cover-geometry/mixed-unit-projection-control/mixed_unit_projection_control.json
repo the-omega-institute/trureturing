@@ -1,0 +1,217 @@
+{
+  "schema": "mixed-unit-projection-control-result-v1",
+  "input_sha256": "6cbd07f21774f4145b9ebc576725baf8703ff65eb14db18e35cd807ee7921017",
+  "original_class_count": 9,
+  "periods": {
+    "R": 23,
+    "S": 899
+  },
+  "projection_masks": {
+    "R": [
+      [
+        23,
+        0
+      ],
+      [
+        23,
+        2
+      ]
+    ],
+    "S": [
+      [
+        29,
+        0
+      ],
+      [
+        31,
+        0
+      ]
+    ]
+  },
+  "projected_class_count": 2,
+  "distinct_added_projection_count": 1,
+  "core_counts": {
+    "R": 21,
+    "S": 840
+  },
+  "lambda": {
+    "R": "21/23",
+    "S": "840/899"
+  },
+  "old_521_mixed_unit_account": "29/15",
+  "actual_phase_rows": [
+    {
+      "modulus": 23,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 1,
+      "q_R": "0",
+      "q_S": "1",
+      "account": "R",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 29,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 1,
+      "S": 29,
+      "q_R": "1",
+      "q_S": "0",
+      "account": "S",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 31,
+      "residue": 0,
+      "selector": "A",
+      "old": 1,
+      "R": 1,
+      "S": 31,
+      "q_R": "1",
+      "q_S": "0",
+      "account": "S",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 69,
+      "residue": 1,
+      "selector": "A",
+      "old": 3,
+      "R": 23,
+      "S": 1,
+      "q_R": "1/21",
+      "q_S": "1",
+      "account": "R",
+      "scaled_charge": "22/21"
+    },
+    {
+      "modulus": 87,
+      "residue": 1,
+      "selector": "A",
+      "old": 3,
+      "R": 1,
+      "S": 29,
+      "q_R": "1",
+      "q_S": "1/28",
+      "account": "S",
+      "scaled_charge": "1"
+    },
+    {
+      "modulus": 93,
+      "residue": 1,
+      "selector": "A",
+      "old": 3,
+      "R": 1,
+      "S": 31,
+      "q_R": "1",
+      "q_S": "1/30",
+      "account": "S",
+      "scaled_charge": "14/15"
+    },
+    {
+      "modulus": 667,
+      "residue": 2,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 29,
+      "q_R": "0",
+      "q_S": "1/28",
+      "account": "M",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 713,
+      "residue": 2,
+      "selector": "A",
+      "old": 1,
+      "R": 23,
+      "S": 31,
+      "q_R": "0",
+      "q_S": "1/30",
+      "account": "M",
+      "scaled_charge": "0"
+    },
+    {
+      "modulus": 6003,
+      "residue": 1,
+      "selector": "A",
+      "old": 9,
+      "R": 23,
+      "S": 29,
+      "q_R": "1/21",
+      "q_S": "1/28",
+      "account": "M",
+      "scaled_charge": "22/21"
+    }
+  ],
+  "accounts": {
+    "R": {
+      "1": "0",
+      "3": "22/21",
+      "9": "0"
+    },
+    "S": {
+      "1": "0",
+      "3": "29/15",
+      "9": "0"
+    },
+    "M": {
+      "1": "0",
+      "3": "0",
+      "9": "22/21"
+    }
+  },
+  "payments": {
+    "R": {
+      "rows": {
+        "1": "0",
+        "3": "22/21",
+        "9": "0"
+      },
+      "columns": {
+        "1": "1/21",
+        "3": "1",
+        "9": "0"
+      }
+    },
+    "S": {
+      "rows": {
+        "1": "0",
+        "3": "29/15",
+        "9": "0"
+      },
+      "columns": {
+        "1": "14/15",
+        "3": "1",
+        "9": "0"
+      }
+    },
+    "M": {
+      "rows": {
+        "1": "0",
+        "3": "0",
+        "9": "22/21"
+      },
+      "columns": {
+        "1": "0",
+        "3": "1/21",
+        "9": "1"
+      }
+    }
+  },
+  "eta": "20/21",
+  "pair_corners": [
+    "136",
+    "28",
+    "340/21",
+    "232/3"
+  ],
+  "theta": "1/3696",
+  "conditional_strict_Haar_floor": "7/8188092000",
+  "scope": "One actual entry beyond521 for the fixed R={23},S={29,31} partition; projection deletes extra points, so full survivor mass is bounded below by core survivor mass. General source/row transfer remains an ordinary conditional argument, and no unrestricted transport or covering theorem is claimed."
+}

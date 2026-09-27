@@ -1,0 +1,2371 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "actual_source_RQ": {
+    "decimal": 1.4496548412905634,
+    "exact": "214267985/147806208"
+  },
+  "all_six_active_mass": {
+    "decimal": 2.640786954512445e-06,
+    "exact": "1/378675"
+  },
+  "alpha_min": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "check_count": 227,
+  "checks": [
+    "pinned input height_three_clipping_envelope.json",
+    "pinned input four_level_query_hinge_lift.json",
+    "same supplier query bound",
+    "same source mass corner set",
+    "same continuation target",
+    "positive strict load threshold in stated domain",
+    "load threshold is exact certificate equality",
+    "load threshold fraction",
+    "valid uniform root parameters 0",
+    "individual and joint reserves 0",
+    "complete query coefficient 0",
+    "all query heights u=0 h=2",
+    "all query heights u=0 h=4",
+    "all query heights u=0 h=8",
+    "all query heights u=0 h=40",
+    "density and continuation identity 0",
+    "valid uniform root parameters 1",
+    "individual and joint reserves 1",
+    "complete query coefficient 1",
+    "all query heights u=1 h=2",
+    "all query heights u=1 h=4",
+    "all query heights u=1 h=8",
+    "all query heights u=1 h=40",
+    "density and continuation identity 1",
+    "valid uniform root parameters 2",
+    "individual and joint reserves 2",
+    "complete query coefficient 2",
+    "all query heights u=2 h=2",
+    "all query heights u=2 h=4",
+    "all query heights u=2 h=8",
+    "all query heights u=2 h=40",
+    "density and continuation identity 2",
+    "valid uniform root parameters 20750635627803642642318/10004205239367061830851",
+    "individual and joint reserves 20750635627803642642318/10004205239367061830851",
+    "complete query coefficient 20750635627803642642318/10004205239367061830851",
+    "all query heights u=20750635627803642642318/10004205239367061830851 h=2",
+    "all query heights u=20750635627803642642318/10004205239367061830851 h=4",
+    "all query heights u=20750635627803642642318/10004205239367061830851 h=8",
+    "all query heights u=20750635627803642642318/10004205239367061830851 h=40",
+    "density and continuation identity 20750635627803642642318/10004205239367061830851",
+    "valid uniform root parameters 4",
+    "individual and joint reserves 4",
+    "complete query coefficient 4",
+    "all query heights u=4 h=2",
+    "all query heights u=4 h=4",
+    "all query heights u=4 h=8",
+    "all query heights u=4 h=40",
+    "density and continuation identity 4",
+    "valid uniform root parameters 8",
+    "individual and joint reserves 8",
+    "complete query coefficient 8",
+    "all query heights u=8 h=2",
+    "all query heights u=8 h=4",
+    "all query heights u=8 h=8",
+    "all query heights u=8 h=40",
+    "density and continuation identity 8",
+    "two-load exact query upper",
+    "two-load strict query gate",
+    "two-load exact positive Haar continuation",
+    "complete depth-three pure pattern controls",
+    "fixed-weight controls include sparse and overlapping pure patterns",
+    "actual full-height product-source query norm",
+    "six simultaneous active cofactors have positive source mass",
+    "older method succeeds on control source with its actual query norm",
+    "distinct original numerical labels H=3",
+    "mandatory shallow selector H=3",
+    "three actual phases through height four H=3",
+    "all pure-tail and residual cylinders are disjoint H=3",
+    "pure budget exact finite sum H=3",
+    "two root exact extreme reserves H=3",
+    "both branch loads equal two at simultaneous point H=3",
+    "exact root versus whole-pure uniform coefficients H=3",
+    "common-B certificate comparison H=3",
+    "private residue H=3 pure1",
+    "private residue H=3 pure2",
+    "private residue H=3 pure3",
+    "private residue H=3 5-shallow0",
+    "private residue H=3 5-shallow1",
+    "private residue H=3 5-deep4",
+    "private residue H=3 7-shallow0",
+    "private residue H=3 7-shallow1",
+    "private residue H=3 7-deep4",
+    "private residue H=3 11-shallow0",
+    "private residue H=3 11-shallow1",
+    "private residue H=3 11-deep4",
+    "private residue H=3 13-shallow0",
+    "private residue H=3 13-shallow1",
+    "private residue H=3 13-deep4",
+    "private residue H=3 17-shallow0",
+    "private residue H=3 17-shallow1",
+    "private residue H=3 17-deep4",
+    "private residue H=3 19-shallow0",
+    "private residue H=3 19-shallow1",
+    "private residue H=3 19-deep4",
+    "distinct original numerical labels H=4",
+    "mandatory shallow selector H=4",
+    "three actual phases through height four H=4",
+    "all pure-tail and residual cylinders are disjoint H=4",
+    "pure budget exact finite sum H=4",
+    "two root exact extreme reserves H=4",
+    "both branch loads equal two at simultaneous point H=4",
+    "exact root versus whole-pure uniform coefficients H=4",
+    "common-B certificate comparison H=4",
+    "private residue H=4 pure1",
+    "private residue H=4 pure2",
+    "private residue H=4 pure3",
+    "private residue H=4 pure4",
+    "private residue H=4 5-shallow0",
+    "private residue H=4 5-shallow1",
+    "private residue H=4 5-deep4",
+    "private residue H=4 7-shallow0",
+    "private residue H=4 7-shallow1",
+    "private residue H=4 7-deep4",
+    "private residue H=4 11-shallow0",
+    "private residue H=4 11-shallow1",
+    "private residue H=4 11-deep4",
+    "private residue H=4 13-shallow0",
+    "private residue H=4 13-shallow1",
+    "private residue H=4 13-deep4",
+    "private residue H=4 17-shallow0",
+    "private residue H=4 17-shallow1",
+    "private residue H=4 17-deep4",
+    "private residue H=4 19-shallow0",
+    "private residue H=4 19-shallow1",
+    "private residue H=4 19-deep4",
+    "distinct original numerical labels H=8",
+    "mandatory shallow selector H=8",
+    "three actual phases through height four H=8",
+    "all pure-tail and residual cylinders are disjoint H=8",
+    "pure budget exact finite sum H=8",
+    "two root exact extreme reserves H=8",
+    "both branch loads equal two at simultaneous point H=8",
+    "exact root versus whole-pure uniform coefficients H=8",
+    "common-B certificate comparison H=8",
+    "private residue H=8 pure1",
+    "private residue H=8 pure2",
+    "private residue H=8 pure3",
+    "private residue H=8 pure4",
+    "private residue H=8 pure5",
+    "private residue H=8 pure6",
+    "private residue H=8 pure7",
+    "private residue H=8 pure8",
+    "private residue H=8 5-shallow0",
+    "private residue H=8 5-shallow1",
+    "private residue H=8 5-deep4",
+    "private residue H=8 7-shallow0",
+    "private residue H=8 7-shallow1",
+    "private residue H=8 7-deep4",
+    "private residue H=8 11-shallow0",
+    "private residue H=8 11-shallow1",
+    "private residue H=8 11-deep4",
+    "private residue H=8 13-shallow0",
+    "private residue H=8 13-shallow1",
+    "private residue H=8 13-deep4",
+    "private residue H=8 17-shallow0",
+    "private residue H=8 17-shallow1",
+    "private residue H=8 17-deep4",
+    "private residue H=8 19-shallow0",
+    "private residue H=8 19-shallow1",
+    "private residue H=8 19-deep4",
+    "distinct original numerical labels H=40",
+    "mandatory shallow selector H=40",
+    "three actual phases through height four H=40",
+    "all pure-tail and residual cylinders are disjoint H=40",
+    "pure budget exact finite sum H=40",
+    "two root exact extreme reserves H=40",
+    "both branch loads equal two at simultaneous point H=40",
+    "exact root versus whole-pure uniform coefficients H=40",
+    "common-B certificate comparison H=40",
+    "private residue H=40 pure1",
+    "private residue H=40 pure2",
+    "private residue H=40 pure3",
+    "private residue H=40 pure4",
+    "private residue H=40 pure5",
+    "private residue H=40 pure6",
+    "private residue H=40 pure7",
+    "private residue H=40 pure8",
+    "private residue H=40 pure9",
+    "private residue H=40 pure10",
+    "private residue H=40 pure11",
+    "private residue H=40 pure12",
+    "private residue H=40 pure13",
+    "private residue H=40 pure14",
+    "private residue H=40 pure15",
+    "private residue H=40 pure16",
+    "private residue H=40 pure17",
+    "private residue H=40 pure18",
+    "private residue H=40 pure19",
+    "private residue H=40 pure20",
+    "private residue H=40 pure21",
+    "private residue H=40 pure22",
+    "private residue H=40 pure23",
+    "private residue H=40 pure24",
+    "private residue H=40 pure25",
+    "private residue H=40 pure26",
+    "private residue H=40 pure27",
+    "private residue H=40 pure28",
+    "private residue H=40 pure29",
+    "private residue H=40 pure30",
+    "private residue H=40 pure31",
+    "private residue H=40 pure32",
+    "private residue H=40 pure33",
+    "private residue H=40 pure34",
+    "private residue H=40 pure35",
+    "private residue H=40 pure36",
+    "private residue H=40 pure37",
+    "private residue H=40 pure38",
+    "private residue H=40 pure39",
+    "private residue H=40 pure40",
+    "private residue H=40 5-shallow0",
+    "private residue H=40 5-shallow1",
+    "private residue H=40 5-deep4",
+    "private residue H=40 7-shallow0",
+    "private residue H=40 7-shallow1",
+    "private residue H=40 7-deep4",
+    "private residue H=40 11-shallow0",
+    "private residue H=40 11-shallow1",
+    "private residue H=40 11-deep4",
+    "private residue H=40 13-shallow0",
+    "private residue H=40 13-shallow1",
+    "private residue H=40 13-deep4",
+    "private residue H=40 17-shallow0",
+    "private residue H=40 17-shallow1",
+    "private residue H=40 17-deep4",
+    "private residue H=40 19-shallow0",
+    "private residue H=40 19-shallow1",
+    "private residue H=40 19-deep4"
+  ],
+  "families": [
+    {
+      "c0_min": {
+        "decimal": 0.4444444444444444,
+        "exact": "4/9"
+      },
+      "c2_min": {
+        "decimal": 0.8888888888888888,
+        "exact": "8/9"
+      },
+      "originals": [
+        {
+          "Q_phase": 0,
+          "e": 1,
+          "m": 3,
+          "name": "pure1",
+          "phase": 1,
+          "q": 1,
+          "t": 1
+        },
+        {
+          "Q_phase": 0,
+          "e": 2,
+          "m": 9,
+          "name": "pure2",
+          "phase": 6,
+          "q": 1,
+          "t": 6
+        },
+        {
+          "Q_phase": 0,
+          "e": 3,
+          "m": 27,
+          "name": "pure3",
+          "phase": 18,
+          "q": 1,
+          "t": 18
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 5,
+          "name": "5-shallow0",
+          "phase": 0,
+          "q": 5,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 15,
+          "name": "5-shallow1",
+          "phase": 11,
+          "q": 5,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 405,
+          "name": "5-deep4",
+          "phase": 327,
+          "q": 5,
+          "t": 3
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 7,
+          "name": "7-shallow0",
+          "phase": 0,
+          "q": 7,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 21,
+          "name": "7-shallow1",
+          "phase": 8,
+          "q": 7,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 567,
+          "name": "7-deep4",
+          "phase": 93,
+          "q": 7,
+          "t": 12
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 11,
+          "name": "11-shallow0",
+          "phase": 0,
+          "q": 11,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 33,
+          "name": "11-shallow1",
+          "phase": 23,
+          "q": 11,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 891,
+          "name": "11-deep4",
+          "phase": 750,
+          "q": 11,
+          "t": 21
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 13,
+          "name": "13-shallow0",
+          "phase": 0,
+          "q": 13,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 39,
+          "name": "13-shallow1",
+          "phase": 14,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1053,
+          "name": "13-deep4",
+          "phase": 2,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 17,
+          "name": "17-shallow0",
+          "phase": 0,
+          "q": 17,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 51,
+          "name": "17-shallow1",
+          "phase": 35,
+          "q": 17,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1377,
+          "name": "17-deep4",
+          "phase": 410,
+          "q": 17,
+          "t": 5
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 19,
+          "name": "19-shallow0",
+          "phase": 0,
+          "q": 19,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 57,
+          "name": "19-shallow1",
+          "phase": 20,
+          "q": 19,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1539,
+          "name": "19-deep4",
+          "phase": 1142,
+          "q": 19,
+          "t": 8
+        }
+      ],
+      "p0": {
+        "decimal": 0.4444444444444444,
+        "exact": "4/9"
+      },
+      "private_witnesses": [
+        {
+          "original": "pure1",
+          "period": "130945815",
+          "residue": "61431373"
+        },
+        {
+          "original": "pure2",
+          "period": "130945815",
+          "residue": "38798763"
+        },
+        {
+          "original": "pure3",
+          "period": "130945815",
+          "residue": "63047988"
+        },
+        {
+          "original": "5-shallow0",
+          "period": "130945815",
+          "residue": "65957895"
+        },
+        {
+          "original": "5-shallow1",
+          "period": "130945815",
+          "residue": "56904851"
+        },
+        {
+          "original": "5-deep4",
+          "period": "130945815",
+          "residue": "78567492"
+        },
+        {
+          "original": "7-shallow0",
+          "period": "130945815",
+          "residue": "110853603"
+        },
+        {
+          "original": "7-shallow1",
+          "period": "130945815",
+          "residue": "86835323"
+        },
+        {
+          "original": "7-deep4",
+          "period": "130945815",
+          "residue": "78983193"
+        },
+        {
+          "original": "11-shallow0",
+          "period": "130945815",
+          "residue": "44530398"
+        },
+        {
+          "original": "11-shallow1",
+          "period": "130945815",
+          "residue": "42619853"
+        },
+        {
+          "original": "11-deep4",
+          "period": "130945815",
+          "residue": "42325923"
+        },
+        {
+          "original": "13-shallow0",
+          "period": "130945815",
+          "residue": "51856038"
+        },
+        {
+          "original": "13-shallow1",
+          "period": "130945815",
+          "residue": "91152218"
+        },
+        {
+          "original": "13-deep4",
+          "period": "130945815",
+          "residue": "60933953"
+        },
+        {
+          "original": "17-shallow0",
+          "period": "130945815",
+          "residue": "122957838"
+        },
+        {
+          "original": "17-shallow1",
+          "period": "130945815",
+          "residue": "7607603"
+        },
+        {
+          "original": "17-deep4",
+          "period": "130945815",
+          "residue": "123433313"
+        },
+        {
+          "original": "19-shallow0",
+          "period": "130945815",
+          "residue": "64579518"
+        },
+        {
+          "original": "19-shallow1",
+          "period": "130945815",
+          "residue": "99634538"
+        },
+        {
+          "original": "19-deep4",
+          "period": "130945815",
+          "residue": "11826818"
+        }
+      ],
+      "pure_height": 3,
+      "root_uniform_coefficient": {
+        "decimal": 1.0416666666666667,
+        "exact": "25/24"
+      },
+      "whole_pure_Haar_mass": {
+        "decimal": 0.5185185185185185,
+        "exact": "14/27"
+      },
+      "whole_pure_uniform_coefficient": {
+        "decimal": 1.125,
+        "exact": "9/8"
+      }
+    },
+    {
+      "c0_min": {
+        "decimal": 0.4074074074074074,
+        "exact": "11/27"
+      },
+      "c2_min": {
+        "decimal": 0.8888888888888888,
+        "exact": "8/9"
+      },
+      "originals": [
+        {
+          "Q_phase": 0,
+          "e": 1,
+          "m": 3,
+          "name": "pure1",
+          "phase": 1,
+          "q": 1,
+          "t": 1
+        },
+        {
+          "Q_phase": 0,
+          "e": 2,
+          "m": 9,
+          "name": "pure2",
+          "phase": 6,
+          "q": 1,
+          "t": 6
+        },
+        {
+          "Q_phase": 0,
+          "e": 3,
+          "m": 27,
+          "name": "pure3",
+          "phase": 18,
+          "q": 1,
+          "t": 18
+        },
+        {
+          "Q_phase": 0,
+          "e": 4,
+          "m": 81,
+          "name": "pure4",
+          "phase": 54,
+          "q": 1,
+          "t": 54
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 5,
+          "name": "5-shallow0",
+          "phase": 0,
+          "q": 5,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 15,
+          "name": "5-shallow1",
+          "phase": 11,
+          "q": 5,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 405,
+          "name": "5-deep4",
+          "phase": 327,
+          "q": 5,
+          "t": 3
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 7,
+          "name": "7-shallow0",
+          "phase": 0,
+          "q": 7,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 21,
+          "name": "7-shallow1",
+          "phase": 8,
+          "q": 7,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 567,
+          "name": "7-deep4",
+          "phase": 93,
+          "q": 7,
+          "t": 12
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 11,
+          "name": "11-shallow0",
+          "phase": 0,
+          "q": 11,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 33,
+          "name": "11-shallow1",
+          "phase": 23,
+          "q": 11,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 891,
+          "name": "11-deep4",
+          "phase": 750,
+          "q": 11,
+          "t": 21
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 13,
+          "name": "13-shallow0",
+          "phase": 0,
+          "q": 13,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 39,
+          "name": "13-shallow1",
+          "phase": 14,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1053,
+          "name": "13-deep4",
+          "phase": 2,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 17,
+          "name": "17-shallow0",
+          "phase": 0,
+          "q": 17,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 51,
+          "name": "17-shallow1",
+          "phase": 35,
+          "q": 17,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1377,
+          "name": "17-deep4",
+          "phase": 410,
+          "q": 17,
+          "t": 5
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 19,
+          "name": "19-shallow0",
+          "phase": 0,
+          "q": 19,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 57,
+          "name": "19-shallow1",
+          "phase": 20,
+          "q": 19,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1539,
+          "name": "19-deep4",
+          "phase": 1142,
+          "q": 19,
+          "t": 8
+        }
+      ],
+      "p0": {
+        "decimal": 0.48148148148148145,
+        "exact": "13/27"
+      },
+      "private_witnesses": [
+        {
+          "original": "pure1",
+          "period": "130945815",
+          "residue": "61431373"
+        },
+        {
+          "original": "pure2",
+          "period": "130945815",
+          "residue": "38798763"
+        },
+        {
+          "original": "pure3",
+          "period": "130945815",
+          "residue": "63047988"
+        },
+        {
+          "original": "pure4",
+          "period": "130945815",
+          "residue": "4849848"
+        },
+        {
+          "original": "5-shallow0",
+          "period": "130945815",
+          "residue": "65957895"
+        },
+        {
+          "original": "5-shallow1",
+          "period": "130945815",
+          "residue": "56904851"
+        },
+        {
+          "original": "5-deep4",
+          "period": "130945815",
+          "residue": "78567492"
+        },
+        {
+          "original": "7-shallow0",
+          "period": "130945815",
+          "residue": "110853603"
+        },
+        {
+          "original": "7-shallow1",
+          "period": "130945815",
+          "residue": "86835323"
+        },
+        {
+          "original": "7-deep4",
+          "period": "130945815",
+          "residue": "78983193"
+        },
+        {
+          "original": "11-shallow0",
+          "period": "130945815",
+          "residue": "44530398"
+        },
+        {
+          "original": "11-shallow1",
+          "period": "130945815",
+          "residue": "42619853"
+        },
+        {
+          "original": "11-deep4",
+          "period": "130945815",
+          "residue": "42325923"
+        },
+        {
+          "original": "13-shallow0",
+          "period": "130945815",
+          "residue": "51856038"
+        },
+        {
+          "original": "13-shallow1",
+          "period": "130945815",
+          "residue": "91152218"
+        },
+        {
+          "original": "13-deep4",
+          "period": "130945815",
+          "residue": "60933953"
+        },
+        {
+          "original": "17-shallow0",
+          "period": "130945815",
+          "residue": "122957838"
+        },
+        {
+          "original": "17-shallow1",
+          "period": "130945815",
+          "residue": "7607603"
+        },
+        {
+          "original": "17-deep4",
+          "period": "130945815",
+          "residue": "123433313"
+        },
+        {
+          "original": "19-shallow0",
+          "period": "130945815",
+          "residue": "64579518"
+        },
+        {
+          "original": "19-shallow1",
+          "period": "130945815",
+          "residue": "99634538"
+        },
+        {
+          "original": "19-deep4",
+          "period": "130945815",
+          "residue": "11826818"
+        }
+      ],
+      "pure_height": 4,
+      "root_uniform_coefficient": {
+        "decimal": 1.0714285714285714,
+        "exact": "15/14"
+      },
+      "whole_pure_Haar_mass": {
+        "decimal": 0.5061728395061729,
+        "exact": "41/81"
+      },
+      "whole_pure_uniform_coefficient": {
+        "decimal": 1.1571428571428573,
+        "exact": "81/70"
+      }
+    },
+    {
+      "c0_min": {
+        "decimal": 0.3891175125743027,
+        "exact": "851/2187"
+      },
+      "c2_min": {
+        "decimal": 0.8888888888888888,
+        "exact": "8/9"
+      },
+      "originals": [
+        {
+          "Q_phase": 0,
+          "e": 1,
+          "m": 3,
+          "name": "pure1",
+          "phase": 1,
+          "q": 1,
+          "t": 1
+        },
+        {
+          "Q_phase": 0,
+          "e": 2,
+          "m": 9,
+          "name": "pure2",
+          "phase": 6,
+          "q": 1,
+          "t": 6
+        },
+        {
+          "Q_phase": 0,
+          "e": 3,
+          "m": 27,
+          "name": "pure3",
+          "phase": 18,
+          "q": 1,
+          "t": 18
+        },
+        {
+          "Q_phase": 0,
+          "e": 4,
+          "m": 81,
+          "name": "pure4",
+          "phase": 54,
+          "q": 1,
+          "t": 54
+        },
+        {
+          "Q_phase": 0,
+          "e": 5,
+          "m": 243,
+          "name": "pure5",
+          "phase": 162,
+          "q": 1,
+          "t": 162
+        },
+        {
+          "Q_phase": 0,
+          "e": 6,
+          "m": 729,
+          "name": "pure6",
+          "phase": 486,
+          "q": 1,
+          "t": 486
+        },
+        {
+          "Q_phase": 0,
+          "e": 7,
+          "m": 2187,
+          "name": "pure7",
+          "phase": 1458,
+          "q": 1,
+          "t": 1458
+        },
+        {
+          "Q_phase": 0,
+          "e": 8,
+          "m": 6561,
+          "name": "pure8",
+          "phase": 4374,
+          "q": 1,
+          "t": 4374
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 5,
+          "name": "5-shallow0",
+          "phase": 0,
+          "q": 5,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 15,
+          "name": "5-shallow1",
+          "phase": 11,
+          "q": 5,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 405,
+          "name": "5-deep4",
+          "phase": 327,
+          "q": 5,
+          "t": 3
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 7,
+          "name": "7-shallow0",
+          "phase": 0,
+          "q": 7,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 21,
+          "name": "7-shallow1",
+          "phase": 8,
+          "q": 7,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 567,
+          "name": "7-deep4",
+          "phase": 93,
+          "q": 7,
+          "t": 12
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 11,
+          "name": "11-shallow0",
+          "phase": 0,
+          "q": 11,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 33,
+          "name": "11-shallow1",
+          "phase": 23,
+          "q": 11,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 891,
+          "name": "11-deep4",
+          "phase": 750,
+          "q": 11,
+          "t": 21
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 13,
+          "name": "13-shallow0",
+          "phase": 0,
+          "q": 13,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 39,
+          "name": "13-shallow1",
+          "phase": 14,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1053,
+          "name": "13-deep4",
+          "phase": 2,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 17,
+          "name": "17-shallow0",
+          "phase": 0,
+          "q": 17,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 51,
+          "name": "17-shallow1",
+          "phase": 35,
+          "q": 17,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1377,
+          "name": "17-deep4",
+          "phase": 410,
+          "q": 17,
+          "t": 5
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 19,
+          "name": "19-shallow0",
+          "phase": 0,
+          "q": 19,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 57,
+          "name": "19-shallow1",
+          "phase": 20,
+          "q": 19,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1539,
+          "name": "19-deep4",
+          "phase": 1142,
+          "q": 19,
+          "t": 8
+        }
+      ],
+      "p0": {
+        "decimal": 0.4997713763145862,
+        "exact": "1093/2187"
+      },
+      "private_witnesses": [
+        {
+          "original": "pure1",
+          "period": "10606611015",
+          "residue": "1239943708"
+        },
+        {
+          "original": "pure2",
+          "period": "10606611015",
+          "residue": "3443389953"
+        },
+        {
+          "original": "pure3",
+          "period": "10606611015",
+          "residue": "6610338738"
+        },
+        {
+          "original": "pure4",
+          "period": "10606611015",
+          "residue": "5504574078"
+        },
+        {
+          "original": "pure5",
+          "period": "10606611015",
+          "residue": "2187280098"
+        },
+        {
+          "original": "pure6",
+          "period": "10606611015",
+          "residue": "2842009173"
+        },
+        {
+          "original": "pure7",
+          "period": "10606611015",
+          "residue": "4806196398"
+        },
+        {
+          "original": "pure8",
+          "period": "10606611015",
+          "residue": "92147058"
+        },
+        {
+          "original": "5-shallow0",
+          "period": "10606611015",
+          "residue": "5041898865"
+        },
+        {
+          "original": "5-shallow1",
+          "period": "10606611015",
+          "residue": "8044599566"
+        },
+        {
+          "original": "5-deep4",
+          "period": "10606611015",
+          "residue": "6363966612"
+        },
+        {
+          "original": "7-shallow0",
+          "period": "10606611015",
+          "residue": "10193681358"
+        },
+        {
+          "original": "7-shallow1",
+          "period": "10606611015",
+          "residue": "4408047218"
+        },
+        {
+          "original": "7-deep4",
+          "period": "10606611015",
+          "residue": "4269249273"
+        },
+        {
+          "original": "11-shallow0",
+          "period": "10606611015",
+          "residue": "6198983703"
+        },
+        {
+          "original": "11-shallow1",
+          "period": "10606611015",
+          "residue": "8815989458"
+        },
+        {
+          "original": "11-deep4",
+          "period": "10606611015",
+          "residue": "6196779228"
+        },
+        {
+          "original": "13-shallow0",
+          "period": "10606611015",
+          "residue": "9610900533"
+        },
+        {
+          "original": "13-shallow1",
+          "period": "10606611015",
+          "residue": "7555063673"
+        },
+        {
+          "original": "13-deep4",
+          "period": "10606611015",
+          "residue": "6739170518"
+        },
+        {
+          "original": "17-shallow0",
+          "period": "10606611015",
+          "residue": "6539302773"
+        },
+        {
+          "original": "17-shallow1",
+          "period": "10606611015",
+          "residue": "9042868838"
+        },
+        {
+          "original": "17-deep4",
+          "period": "10606611015",
+          "residue": "5623157543"
+        },
+        {
+          "original": "19-shallow0",
+          "period": "10606611015",
+          "residue": "8837949123"
+        },
+        {
+          "original": "19-shallow1",
+          "period": "10606611015",
+          "residue": "7039762733"
+        },
+        {
+          "original": "19-deep4",
+          "period": "10606611015",
+          "residue": "2761688933"
+        }
+      ],
+      "pure_height": 8,
+      "root_uniform_coefficient": {
+        "decimal": 1.0867620751341682,
+        "exact": "1215/1118"
+      },
+      "whole_pure_Haar_mass": {
+        "decimal": 0.500076207895138,
+        "exact": "3281/6561"
+      },
+      "whole_pure_uniform_coefficient": {
+        "decimal": 1.1737030411449016,
+        "exact": "6561/5590"
+      }
+    },
+    {
+      "c0_min": {
+        "decimal": 0.3888888888888889,
+        "exact": "1575993670618490771/4052555153018976267"
+      },
+      "c2_min": {
+        "decimal": 0.8888888888888888,
+        "exact": "8/9"
+      },
+      "originals": [
+        {
+          "Q_phase": 0,
+          "e": 1,
+          "m": 3,
+          "name": "pure1",
+          "phase": 1,
+          "q": 1,
+          "t": 1
+        },
+        {
+          "Q_phase": 0,
+          "e": 2,
+          "m": 9,
+          "name": "pure2",
+          "phase": 6,
+          "q": 1,
+          "t": 6
+        },
+        {
+          "Q_phase": 0,
+          "e": 3,
+          "m": 27,
+          "name": "pure3",
+          "phase": 18,
+          "q": 1,
+          "t": 18
+        },
+        {
+          "Q_phase": 0,
+          "e": 4,
+          "m": 81,
+          "name": "pure4",
+          "phase": 54,
+          "q": 1,
+          "t": 54
+        },
+        {
+          "Q_phase": 0,
+          "e": 5,
+          "m": 243,
+          "name": "pure5",
+          "phase": 162,
+          "q": 1,
+          "t": 162
+        },
+        {
+          "Q_phase": 0,
+          "e": 6,
+          "m": 729,
+          "name": "pure6",
+          "phase": 486,
+          "q": 1,
+          "t": 486
+        },
+        {
+          "Q_phase": 0,
+          "e": 7,
+          "m": 2187,
+          "name": "pure7",
+          "phase": 1458,
+          "q": 1,
+          "t": 1458
+        },
+        {
+          "Q_phase": 0,
+          "e": 8,
+          "m": 6561,
+          "name": "pure8",
+          "phase": 4374,
+          "q": 1,
+          "t": 4374
+        },
+        {
+          "Q_phase": 0,
+          "e": 9,
+          "m": 19683,
+          "name": "pure9",
+          "phase": 13122,
+          "q": 1,
+          "t": 13122
+        },
+        {
+          "Q_phase": 0,
+          "e": 10,
+          "m": 59049,
+          "name": "pure10",
+          "phase": 39366,
+          "q": 1,
+          "t": 39366
+        },
+        {
+          "Q_phase": 0,
+          "e": 11,
+          "m": 177147,
+          "name": "pure11",
+          "phase": 118098,
+          "q": 1,
+          "t": 118098
+        },
+        {
+          "Q_phase": 0,
+          "e": 12,
+          "m": 531441,
+          "name": "pure12",
+          "phase": 354294,
+          "q": 1,
+          "t": 354294
+        },
+        {
+          "Q_phase": 0,
+          "e": 13,
+          "m": 1594323,
+          "name": "pure13",
+          "phase": 1062882,
+          "q": 1,
+          "t": 1062882
+        },
+        {
+          "Q_phase": 0,
+          "e": 14,
+          "m": 4782969,
+          "name": "pure14",
+          "phase": 3188646,
+          "q": 1,
+          "t": 3188646
+        },
+        {
+          "Q_phase": 0,
+          "e": 15,
+          "m": 14348907,
+          "name": "pure15",
+          "phase": 9565938,
+          "q": 1,
+          "t": 9565938
+        },
+        {
+          "Q_phase": 0,
+          "e": 16,
+          "m": 43046721,
+          "name": "pure16",
+          "phase": 28697814,
+          "q": 1,
+          "t": 28697814
+        },
+        {
+          "Q_phase": 0,
+          "e": 17,
+          "m": 129140163,
+          "name": "pure17",
+          "phase": 86093442,
+          "q": 1,
+          "t": 86093442
+        },
+        {
+          "Q_phase": 0,
+          "e": 18,
+          "m": 387420489,
+          "name": "pure18",
+          "phase": 258280326,
+          "q": 1,
+          "t": 258280326
+        },
+        {
+          "Q_phase": 0,
+          "e": 19,
+          "m": 1162261467,
+          "name": "pure19",
+          "phase": 774840978,
+          "q": 1,
+          "t": 774840978
+        },
+        {
+          "Q_phase": 0,
+          "e": 20,
+          "m": 3486784401,
+          "name": "pure20",
+          "phase": 2324522934,
+          "q": 1,
+          "t": 2324522934
+        },
+        {
+          "Q_phase": 0,
+          "e": 21,
+          "m": 10460353203,
+          "name": "pure21",
+          "phase": 6973568802,
+          "q": 1,
+          "t": 6973568802
+        },
+        {
+          "Q_phase": 0,
+          "e": 22,
+          "m": 31381059609,
+          "name": "pure22",
+          "phase": 20920706406,
+          "q": 1,
+          "t": 20920706406
+        },
+        {
+          "Q_phase": 0,
+          "e": 23,
+          "m": 94143178827,
+          "name": "pure23",
+          "phase": 62762119218,
+          "q": 1,
+          "t": 62762119218
+        },
+        {
+          "Q_phase": 0,
+          "e": 24,
+          "m": 282429536481,
+          "name": "pure24",
+          "phase": 188286357654,
+          "q": 1,
+          "t": 188286357654
+        },
+        {
+          "Q_phase": 0,
+          "e": 25,
+          "m": 847288609443,
+          "name": "pure25",
+          "phase": 564859072962,
+          "q": 1,
+          "t": 564859072962
+        },
+        {
+          "Q_phase": 0,
+          "e": 26,
+          "m": 2541865828329,
+          "name": "pure26",
+          "phase": 1694577218886,
+          "q": 1,
+          "t": 1694577218886
+        },
+        {
+          "Q_phase": 0,
+          "e": 27,
+          "m": 7625597484987,
+          "name": "pure27",
+          "phase": 5083731656658,
+          "q": 1,
+          "t": 5083731656658
+        },
+        {
+          "Q_phase": 0,
+          "e": 28,
+          "m": 22876792454961,
+          "name": "pure28",
+          "phase": 15251194969974,
+          "q": 1,
+          "t": 15251194969974
+        },
+        {
+          "Q_phase": 0,
+          "e": 29,
+          "m": 68630377364883,
+          "name": "pure29",
+          "phase": 45753584909922,
+          "q": 1,
+          "t": 45753584909922
+        },
+        {
+          "Q_phase": 0,
+          "e": 30,
+          "m": 205891132094649,
+          "name": "pure30",
+          "phase": 137260754729766,
+          "q": 1,
+          "t": 137260754729766
+        },
+        {
+          "Q_phase": 0,
+          "e": 31,
+          "m": 617673396283947,
+          "name": "pure31",
+          "phase": 411782264189298,
+          "q": 1,
+          "t": 411782264189298
+        },
+        {
+          "Q_phase": 0,
+          "e": 32,
+          "m": 1853020188851841,
+          "name": "pure32",
+          "phase": 1235346792567894,
+          "q": 1,
+          "t": 1235346792567894
+        },
+        {
+          "Q_phase": 0,
+          "e": 33,
+          "m": 5559060566555523,
+          "name": "pure33",
+          "phase": 3706040377703682,
+          "q": 1,
+          "t": 3706040377703682
+        },
+        {
+          "Q_phase": 0,
+          "e": 34,
+          "m": 16677181699666569,
+          "name": "pure34",
+          "phase": 11118121133111046,
+          "q": 1,
+          "t": 11118121133111046
+        },
+        {
+          "Q_phase": 0,
+          "e": 35,
+          "m": 50031545098999707,
+          "name": "pure35",
+          "phase": 33354363399333138,
+          "q": 1,
+          "t": 33354363399333138
+        },
+        {
+          "Q_phase": 0,
+          "e": 36,
+          "m": 150094635296999121,
+          "name": "pure36",
+          "phase": 100063090197999414,
+          "q": 1,
+          "t": 100063090197999414
+        },
+        {
+          "Q_phase": 0,
+          "e": 37,
+          "m": 450283905890997363,
+          "name": "pure37",
+          "phase": 300189270593998242,
+          "q": 1,
+          "t": 300189270593998242
+        },
+        {
+          "Q_phase": 0,
+          "e": 38,
+          "m": 1350851717672992089,
+          "name": "pure38",
+          "phase": 900567811781994726,
+          "q": 1,
+          "t": 900567811781994726
+        },
+        {
+          "Q_phase": 0,
+          "e": 39,
+          "m": 4052555153018976267,
+          "name": "pure39",
+          "phase": 2701703435345984178,
+          "q": 1,
+          "t": 2701703435345984178
+        },
+        {
+          "Q_phase": 0,
+          "e": 40,
+          "m": 12157665459056928801,
+          "name": "pure40",
+          "phase": 8105110306037952534,
+          "q": 1,
+          "t": 8105110306037952534
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 5,
+          "name": "5-shallow0",
+          "phase": 0,
+          "q": 5,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 15,
+          "name": "5-shallow1",
+          "phase": 11,
+          "q": 5,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 405,
+          "name": "5-deep4",
+          "phase": 327,
+          "q": 5,
+          "t": 3
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 7,
+          "name": "7-shallow0",
+          "phase": 0,
+          "q": 7,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 21,
+          "name": "7-shallow1",
+          "phase": 8,
+          "q": 7,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 567,
+          "name": "7-deep4",
+          "phase": 93,
+          "q": 7,
+          "t": 12
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 11,
+          "name": "11-shallow0",
+          "phase": 0,
+          "q": 11,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 33,
+          "name": "11-shallow1",
+          "phase": 23,
+          "q": 11,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 891,
+          "name": "11-deep4",
+          "phase": 750,
+          "q": 11,
+          "t": 21
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 13,
+          "name": "13-shallow0",
+          "phase": 0,
+          "q": 13,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 39,
+          "name": "13-shallow1",
+          "phase": 14,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1053,
+          "name": "13-deep4",
+          "phase": 2,
+          "q": 13,
+          "t": 2
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 17,
+          "name": "17-shallow0",
+          "phase": 0,
+          "q": 17,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 51,
+          "name": "17-shallow1",
+          "phase": 35,
+          "q": 17,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1377,
+          "name": "17-deep4",
+          "phase": 410,
+          "q": 17,
+          "t": 5
+        },
+        {
+          "Q_phase": 0,
+          "e": 0,
+          "m": 19,
+          "name": "19-shallow0",
+          "phase": 0,
+          "q": 19,
+          "t": 0
+        },
+        {
+          "Q_phase": 1,
+          "e": 1,
+          "m": 57,
+          "name": "19-shallow1",
+          "phase": 20,
+          "q": 19,
+          "t": 2
+        },
+        {
+          "Q_phase": 2,
+          "e": 4,
+          "m": 1539,
+          "name": "19-deep4",
+          "phase": 1142,
+          "q": 19,
+          "t": 8
+        }
+      ],
+      "p0": {
+        "decimal": 0.5,
+        "exact": "2026277576509488133/4052555153018976267"
+      },
+      "private_witnesses": [
+        {
+          "original": "pure1",
+          "period": "19654264346093316953628615",
+          "residue": "14265464235024546661086973"
+        },
+        {
+          "original": "pure2",
+          "period": "19654264346093316953628615",
+          "residue": "17910332339649813915626778"
+        },
+        {
+          "original": "pure3",
+          "period": "19654264346093316953628615",
+          "residue": "10934604313875801763619418"
+        },
+        {
+          "original": "pure4",
+          "period": "19654264346093316953628615",
+          "residue": "9661684582647082261225953"
+        },
+        {
+          "original": "pure5",
+          "period": "19654264346093316953628615",
+          "residue": "5842925388960923754045558"
+        },
+        {
+          "original": "pure6",
+          "period": "19654264346093316953628615",
+          "residue": "14040912153995765186132988"
+        },
+        {
+          "original": "pure7",
+          "period": "19654264346093316953628615",
+          "residue": "18980608103006972528766663"
+        },
+        {
+          "original": "pure8",
+          "period": "19654264346093316953628615",
+          "residue": "14145431603947277603039073"
+        },
+        {
+          "original": "pure9",
+          "period": "19654264346093316953628615",
+          "residue": "19294166452861509779484918"
+        },
+        {
+          "original": "pure10",
+          "period": "19654264346093316953628615",
+          "residue": "15086106653510889355193838"
+        },
+        {
+          "original": "pure11",
+          "period": "19654264346093316953628615",
+          "residue": "2461927255459028082320598"
+        },
+        {
+          "original": "pure12",
+          "period": "19654264346093316953628615",
+          "residue": "3897917753490078170958108"
+        },
+        {
+          "original": "pure13",
+          "period": "19654264346093316953628615",
+          "residue": "8205889247583228436870638"
+        },
+        {
+          "original": "pure14",
+          "period": "19654264346093316953628615",
+          "residue": "1475539383769362280979613"
+        },
+        {
+          "original": "pure15",
+          "period": "19654264346093316953628615",
+          "residue": "938754138421080766935153"
+        },
+        {
+          "original": "pure16",
+          "period": "19654264346093316953628615",
+          "residue": "18982662748469553178430388"
+        },
+        {
+          "original": "pure17",
+          "period": "19654264346093316953628615",
+          "residue": "14151595540335019552030248"
+        },
+        {
+          "original": "pure18",
+          "period": "19654264346093316953628615",
+          "residue": "19312658262024735626458443"
+        },
+        {
+          "original": "pure19",
+          "period": "19654264346093316953628615",
+          "residue": "15141582081000566896114413"
+        },
+        {
+          "original": "pure20",
+          "period": "19654264346093316953628615",
+          "residue": "2628353537928060705082323"
+        },
+        {
+          "original": "pure21",
+          "period": "19654264346093316953628615",
+          "residue": "4397196600897176039243283"
+        },
+        {
+          "original": "pure22",
+          "period": "19654264346093316953628615",
+          "residue": "9703725789804522041726163"
+        },
+        {
+          "original": "pure23",
+          "period": "19654264346093316953628615",
+          "residue": "5969049010433243095546188"
+        },
+        {
+          "original": "pure24",
+          "period": "19654264346093316953628615",
+          "residue": "14419283018412723210634878"
+        },
+        {
+          "original": "pure25",
+          "period": "19654264346093316953628615",
+          "residue": "461456350164529648643718"
+        },
+        {
+          "original": "pure26",
+          "period": "19654264346093316953628615",
+          "residue": "17550769383699899823556083"
+        },
+        {
+          "original": "pure27",
+          "period": "19654264346093316953628615",
+          "residue": "9855915446026059487407333"
+        },
+        {
+          "original": "pure28",
+          "period": "19654264346093316953628615",
+          "residue": "6425617979097855432589698"
+        },
+        {
+          "original": "pure29",
+          "period": "19654264346093316953628615",
+          "residue": "15788989924406560221765408"
+        },
+        {
+          "original": "pure30",
+          "period": "19654264346093316953628615",
+          "residue": "4570577068146040682035308"
+        },
+        {
+          "original": "pure31",
+          "period": "19654264346093316953628615",
+          "residue": "10223867191551115970102238"
+        },
+        {
+          "original": "pure32",
+          "period": "19654264346093316953628615",
+          "residue": "7529473215673024880674413"
+        },
+        {
+          "original": "pure33",
+          "period": "19654264346093316953628615",
+          "residue": "19100555634132068566019553"
+        },
+        {
+          "original": "pure34",
+          "period": "19654264346093316953628615",
+          "residue": "14505274197322565714797743"
+        },
+        {
+          "original": "pure35",
+          "period": "19654264346093316953628615",
+          "residue": "719429886894057161132313"
+        },
+        {
+          "original": "pure36",
+          "period": "19654264346093316953628615",
+          "residue": "18324689993888482361021868"
+        },
+        {
+          "original": "pure37",
+          "period": "19654264346093316953628615",
+          "residue": "12177677276591807099804688"
+        },
+        {
+          "original": "pure38",
+          "period": "19654264346093316953628615",
+          "residue": "13390903470795098269781763"
+        },
+        {
+          "original": "pure39",
+          "period": "19654264346093316953628615",
+          "residue": "17030582053404971779712988"
+        },
+        {
+          "original": "pure40",
+          "period": "19654264346093316953628615",
+          "residue": "8295353455141275355878048"
+        },
+        {
+          "original": "5-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "17467343483318156600904735"
+        },
+        {
+          "original": "5-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "11063584986730936721269211"
+        },
+        {
+          "original": "5-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "11792558607655990172177172"
+        },
+        {
+          "original": "7-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "4551684055885405459948788"
+        },
+        {
+          "original": "7-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "15555988265837980596384323"
+        },
+        {
+          "original": "7-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "8806964227879002995729208"
+        },
+        {
+          "original": "11-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "12464439831585312285435633"
+        },
+        {
+          "original": "11-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "14279737334273479495499348"
+        },
+        {
+          "original": "11-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "12764174915812901808095508"
+        },
+        {
+          "original": "13-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "15350730399892722467437038"
+        },
+        {
+          "original": "13-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "16203931046478419616833618"
+        },
+        {
+          "original": "13-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "11668331581995346473688553"
+        },
+        {
+          "original": "17-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "587798809614484393670748"
+        },
+        {
+          "original": "17-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "12913398101657366552198963"
+        },
+        {
+          "original": "17-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "18106265276187975380183693"
+        },
+        {
+          "original": "19-shallow0",
+          "period": "19654264346093316953628615",
+          "residue": "17260456490201384843498118"
+        },
+        {
+          "original": "19-shallow1",
+          "period": "19654264346093316953628615",
+          "residue": "17477081773350861200874338"
+        },
+        {
+          "original": "19-deep4",
+          "period": "19654264346093316953628615",
+          "residue": "8817042932544561189705233"
+        }
+      ],
+      "pure_height": 40,
+      "root_uniform_coefficient": {
+        "decimal": 1.0869565217391304,
+        "exact": "450283905890997363/414261193419717574"
+      },
+      "whole_pure_Haar_mass": {
+        "decimal": 0.5,
+        "exact": "6078832729528464401/12157665459056928801"
+      },
+      "whole_pure_uniform_coefficient": {
+        "decimal": 1.173913043478261,
+        "exact": "12157665459056928801/10356529835492939350"
+      }
+    }
+  ],
+  "fixed_weight_controls": 4480,
+  "pure_pattern_count": 1120,
+  "schema": "arbitrary-pure-root-reserve-v1",
+  "scope": [
+    "Ordinary root-reserve corollary, not new Lean or unrestricted Erdos7.",
+    "Arbitrary pure3 phases and finite heights; shallow two-phase and root-load hypotheses remain.",
+    "The finite star families already admit older noncoverage certificates.",
+    "Generic B interface comparisons do not exclude using the smaller actual R_Q."
+  ],
+  "sources": [
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    },
+    {
+      "path": "four_level_query_hinge_lift.json",
+      "sha256": "b224c79716585f16b52aeda277810a1a001a4f2d92d3e092cfc1cc41345dbcfd"
+    }
+  ],
+  "strict_load_threshold": {
+    "decimal": 2.0741913156828113,
+    "exact": "20750635627803642642318/10004205239367061830851"
+  },
+  "successful_older_actual_source_bound": {
+    "decimal": 4.325336611501225,
+    "exact": "7352083433/1699771392"
+  },
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  },
+  "uniform_parameters": [
+    {
+      "M": {
+        "decimal": 0.6666666666666666,
+        "exact": "2/3"
+      },
+      "coefficient": {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      "continuation_expression": {
+        "decimal": 0.0002474116102859773,
+        "exact": "1152813090433535702351/4659494714500366540800000"
+      },
+      "density_upper": {
+        "decimal": 175.18640086706944,
+        "exact": "1327037683555584000/7575003978548161"
+      },
+      "lambda": {
+        "decimal": 0.037037037037037035,
+        "exact": "1/27"
+      },
+      "load_cap": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "query_upper": {
+        "decimal": 11.006135099676419,
+        "exact": "475217647860378394201/43177522677724517700"
+      },
+      "strict_positive_continuation": true
+    },
+    {
+      "M": {
+        "decimal": 0.68,
+        "exact": "17/25"
+      },
+      "coefficient": {
+        "decimal": 1.04,
+        "exact": "26/25"
+      },
+      "continuation_expression": {
+        "decimal": 0.0001281306122337167,
+        "exact": "826648491418198523959/6451608066231276748800000"
+      },
+      "density_upper": {
+        "decimal": 189.201312936435,
+        "exact": "1433200698240030720/7575003978548161"
+      },
+      "lambda": {
+        "decimal": 0.04,
+        "exact": "1/25"
+      },
+      "load_cap": {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      "query_upper": {
+        "decimal": 11.246257801669948,
+        "exact": "8093092521185674207317/719625377962075295000"
+      },
+      "strict_positive_continuation": true
+    },
+    {
+      "M": {
+        "decimal": 0.6956521739130435,
+        "exact": "16/23"
+      },
+      "coefficient": {
+        "decimal": 1.0869565217391304,
+        "exact": "25/23"
+      },
+      "continuation_expression": {
+        "decimal": 8.849614181456096e-06,
+        "exact": "92778143633689872577/10483863107625824716800000"
+      },
+      "density_upper": {
+        "decimal": 205.65360101786413,
+        "exact": "35830017456000768000/174225091506607703"
+      },
+      "lambda": {
+        "decimal": 0.043478260869565216,
+        "exact": "1/23"
+      },
+      "load_cap": {
+        "decimal": 2.0,
+        "exact": "2"
+      },
+      "query_upper": {
+        "decimal": 11.528140973575395,
+        "exact": "954033422610567164877/82756918465638658925"
+      },
+      "strict_positive_continuation": true
+    },
+    {
+      "M": {
+        "decimal": 0.6969226040943868,
+        "exact": "17702784297867052257000/25401363356367042683149"
+      },
+      "coefficient": {
+        "decimal": 1.0907678122831603,
+        "exact": "27706989537234114087851/25401363356367042683149"
+      },
+      "continuation_expression": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "density_upper": {
+        "decimal": 206.9889735639987,
+        "exact": "812813715101896070341148488069256448000/3926845479286281973300795572468564061"
+      },
+      "lambda": {
+        "decimal": 0.04376057868764151,
+        "exact": "10004205239367061830851/228612270207303384148341"
+      },
+      "load_cap": {
+        "decimal": 2.0741913156828113,
+        "exact": "20750635627803642642318/10004205239367061830851"
+      },
+      "query_upper": {
+        "decimal": 11.551020408163266,
+        "exact": "566/49"
+      },
+      "strict_positive_continuation": false
+    },
+    {
+      "M": {
+        "decimal": 0.7368421052631579,
+        "exact": "14/19"
+      },
+      "coefficient": {
+        "decimal": 1.2105263157894737,
+        "exact": "23/19"
+      },
+      "continuation_expression": {
+        "decimal": -0.00022971238192306509,
+        "exact": "-875735696802936576413/3812313857318481715200000"
+      },
+      "density_upper": {
+        "decimal": 248.94909596899342,
+        "exact": "35830017456000768000/143925075592415059"
+      },
+      "lambda": {
+        "decimal": 0.05263157894736842,
+        "exact": "1/19"
+      },
+      "load_cap": {
+        "decimal": 4.0,
+        "exact": "4"
+      },
+      "query_upper": {
+        "decimal": 12.2699387943792,
+        "exact": "3355308550141131771207/273457643625588612100"
+      },
+      "strict_positive_continuation": false
+    },
+    {
+      "M": {
+        "decimal": 0.9090909090909091,
+        "exact": "10/11"
+      },
+      "coefficient": {
+        "decimal": 1.7272727272727273,
+        "exact": "19/11"
+      },
+      "continuation_expression": {
+        "decimal": -0.0007068363741321075,
+        "exact": "-5928300628713285200449/8387090486100659773440000"
+      },
+      "density_upper": {
+        "decimal": 430.0029839464432,
+        "exact": "3257274314181888000/7575003978548161"
+      },
+      "lambda": {
+        "decimal": 0.09090909090909091,
+        "exact": "1/11"
+      },
+      "load_cap": {
+        "decimal": 8.0,
+        "exact": "8"
+      },
+      "query_upper": {
+        "decimal": 15.372002408649664,
+        "exact": "486731653907771598921/31663516630331312980"
+      },
+      "strict_positive_continuation": false
+    }
+  ]
+}

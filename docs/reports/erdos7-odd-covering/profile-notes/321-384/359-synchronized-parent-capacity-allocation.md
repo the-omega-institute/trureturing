@@ -220,7 +220,7 @@ integrate their sizes. It applies the same allocation to the whole raw
 prime-private source, avoiding the full-matching tail-probability loss.
 That extension still does not give a contradictory surplus bound.
 
-The [standard-library checker](../../frontier/cover-geometry/parent_capacity_allocation.py)
+The [standard-library checker](../../frontier/cover-geometry/parent-capacity-allocation/parent_capacity_allocation.py)
 enumerates complete periods 12, 144 and 960 for the same three even-cover
 fixtures used in 357. It chooses actual synchronized matchings, compares
 their existence with Hall's finite criterion, checks the full-height lift

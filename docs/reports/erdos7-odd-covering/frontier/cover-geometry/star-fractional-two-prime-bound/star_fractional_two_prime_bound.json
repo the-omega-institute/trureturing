@@ -1,0 +1,426 @@
+{
+  "complete": true,
+  "scope": "Independent exact finite two-prime lemma and downstream arithmetic; fractional five-cell dominance and vertex reduction are separate ordinary proofs, not empirical conclusions.",
+  "cells": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "roots": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "anchor_representatives": [
+    0,
+    3
+  ],
+  "u5": "1/3",
+  "u7": "1/5",
+  "eight_rows": [
+    {
+      "parent5_root_size": 3,
+      "parent7_root_size": 3,
+      "anchor_root_size": 3,
+      "min_S": "14/5",
+      "min_3S_R_M": "29/5",
+      "S_witness": {
+        "child5": 3,
+        "child7": 4,
+        "b": [
+          "4/15",
+          "8/15",
+          "8/15",
+          "2/3",
+          "4/5"
+        ],
+        "S": "14/5",
+        "R": "22/15",
+        "M": "4/5",
+        "L": "92/15"
+      },
+      "L_witness": {
+        "child5": 1,
+        "child7": 2,
+        "b": [
+          "4/15",
+          "4/15",
+          "2/5",
+          "1",
+          "1"
+        ],
+        "S": "44/15",
+        "R": "2",
+        "M": "1",
+        "L": "29/5"
+      }
+    },
+    {
+      "parent5_root_size": 3,
+      "parent7_root_size": 3,
+      "anchor_root_size": 2,
+      "min_S": "79/30",
+      "min_3S_R_M": "28/5",
+      "S_witness": {
+        "child5": 0,
+        "child7": 4,
+        "b": [
+          "4/15",
+          "8/15",
+          "8/15",
+          "1/2",
+          "4/5"
+        ],
+        "S": "79/30",
+        "R": "4/3",
+        "M": "4/5",
+        "L": "173/30"
+      },
+      "L_witness": {
+        "child5": 0,
+        "child7": 1,
+        "b": [
+          "4/15",
+          "2/5",
+          "8/15",
+          "1/2",
+          "1"
+        ],
+        "S": "27/10",
+        "R": "3/2",
+        "M": "1",
+        "L": "28/5"
+      }
+    },
+    {
+      "parent5_root_size": 3,
+      "parent7_root_size": 2,
+      "anchor_root_size": 3,
+      "min_S": "41/15",
+      "min_3S_R_M": "6",
+      "S_witness": {
+        "child5": 1,
+        "child7": 3,
+        "b": [
+          "1/3",
+          "1/3",
+          "2/3",
+          "3/5",
+          "4/5"
+        ],
+        "S": "41/15",
+        "R": "7/5",
+        "M": "4/5",
+        "L": "6"
+      },
+      "L_witness": {
+        "child5": 1,
+        "child7": 2,
+        "b": [
+          "1/3",
+          "1/3",
+          "8/15",
+          "4/5",
+          "4/5"
+        ],
+        "S": "14/5",
+        "R": "8/5",
+        "M": "4/5",
+        "L": "6"
+      }
+    },
+    {
+      "parent5_root_size": 3,
+      "parent7_root_size": 2,
+      "anchor_root_size": 2,
+      "min_S": "8/3",
+      "min_3S_R_M": "17/3",
+      "S_witness": {
+        "child5": 0,
+        "child7": 4,
+        "b": [
+          "1/3",
+          "2/3",
+          "2/3",
+          "2/5",
+          "3/5"
+        ],
+        "S": "8/3",
+        "R": "5/3",
+        "M": "2/3",
+        "L": "17/3"
+      },
+      "L_witness": {
+        "child5": 0,
+        "child7": 4,
+        "b": [
+          "1/3",
+          "2/3",
+          "2/3",
+          "2/5",
+          "3/5"
+        ],
+        "S": "8/3",
+        "R": "5/3",
+        "M": "2/3",
+        "L": "17/3"
+      }
+    },
+    {
+      "parent5_root_size": 2,
+      "parent7_root_size": 3,
+      "anchor_root_size": 3,
+      "min_S": "14/5",
+      "min_3S_R_M": "29/5",
+      "S_witness": {
+        "child5": 3,
+        "child7": 1,
+        "b": [
+          "2/5",
+          "3/5",
+          "4/5",
+          "1/3",
+          "2/3"
+        ],
+        "S": "14/5",
+        "R": "9/5",
+        "M": "4/5",
+        "L": "29/5"
+      },
+      "L_witness": {
+        "child5": 3,
+        "child7": 1,
+        "b": [
+          "2/5",
+          "3/5",
+          "4/5",
+          "1/3",
+          "2/3"
+        ],
+        "S": "14/5",
+        "R": "9/5",
+        "M": "4/5",
+        "L": "29/5"
+      }
+    },
+    {
+      "parent5_root_size": 2,
+      "parent7_root_size": 3,
+      "anchor_root_size": 2,
+      "min_S": "43/15",
+      "min_3S_R_M": "28/5",
+      "S_witness": {
+        "child5": 4,
+        "child7": 0,
+        "b": [
+          "3/5",
+          "4/5",
+          "4/5",
+          "1/3",
+          "1/3"
+        ],
+        "S": "43/15",
+        "R": "11/5",
+        "M": "4/5",
+        "L": "28/5"
+      },
+      "L_witness": {
+        "child5": 4,
+        "child7": 0,
+        "b": [
+          "3/5",
+          "4/5",
+          "4/5",
+          "1/3",
+          "1/3"
+        ],
+        "S": "43/15",
+        "R": "11/5",
+        "M": "4/5",
+        "L": "28/5"
+      }
+    },
+    {
+      "parent5_root_size": 2,
+      "parent7_root_size": 2,
+      "anchor_root_size": 3,
+      "min_S": "91/30",
+      "min_3S_R_M": "6",
+      "S_witness": {
+        "child5": 1,
+        "child7": 2,
+        "b": [
+          "1/2",
+          "2/3",
+          "4/5",
+          "8/15",
+          "8/15"
+        ],
+        "S": "91/30",
+        "R": "59/30",
+        "M": "4/5",
+        "L": "19/3"
+      },
+      "L_witness": {
+        "child5": 3,
+        "child7": 1,
+        "b": [
+          "1/2",
+          "4/5",
+          "1",
+          "4/15",
+          "8/15"
+        ],
+        "S": "31/10",
+        "R": "23/10",
+        "M": "1",
+        "L": "6"
+      }
+    },
+    {
+      "parent5_root_size": 2,
+      "parent7_root_size": 2,
+      "anchor_root_size": 2,
+      "min_S": "49/15",
+      "min_3S_R_M": "31/5",
+      "S_witness": {
+        "child5": 0,
+        "child7": 1,
+        "b": [
+          "2/3",
+          "4/5",
+          "1",
+          "4/15",
+          "8/15"
+        ],
+        "S": "49/15",
+        "R": "37/15",
+        "M": "1",
+        "L": "19/3"
+      },
+      "L_witness": {
+        "child5": 4,
+        "child7": 0,
+        "b": [
+          "4/5",
+          "1",
+          "1",
+          "4/15",
+          "4/15"
+        ],
+        "S": "10/3",
+        "R": "14/5",
+        "M": "1",
+        "L": "31/5"
+      }
+    }
+  ],
+  "representative_layouts": 200,
+  "literal_layouts": 500,
+  "literal_R_M_linearizations": 500,
+  "analytic_child_elimination_candidates": 400,
+  "Ustar": "2756/8415",
+  "positive_S_coefficient": "49/2805",
+  "W_lower": "158207/84150",
+  "depth12_union_bound": "220468/378675",
+  "complete_depth3plus_tail": "7244/75735",
+  "full_actual_loss_upper": "256688/378675",
+  "loss_target": "173/250",
+  "strict_loss_margin": "53551/3786750",
+  "pure_source_survivor_lower": "121987/378675",
+  "full_Haar_survivor_lower": "121987/1658880",
+  "all_query_upper": "1280205/121987",
+  "all_query_target": "565/51",
+  "strict_query_margin": "3632200/6221337",
+  "general_finite_R_scope": "R is any finite set of primes>=11 with U=sum1/(q-2)<=1/3; mixed moduli are3^a*q^b for q in{5,7} union R. The same seven-prime G constants are not asserted for arbitrary R.",
+  "general_formula": "loss<=64/135+(28/45)*U<=92/135; Haar(U_actual)>=(5/16)*product_R[(q-2)/(q-1)]*[71/135-(28/45)*U]",
+  "general_endpoints": [
+    {
+      "U": "0",
+      "S_coefficient": "1",
+      "W_lower": "79/30",
+      "loss_upper": "64/135",
+      "survivor_lower": "71/135"
+    },
+    {
+      "U": "1/3",
+      "S_coefficient": "0",
+      "W_lower": "28/15",
+      "loss_upper": "92/135",
+      "survivor_lower": "43/135"
+    }
+  ],
+  "checks": {
+    "roots33_anchor3_S_elimination_agrees": true,
+    "roots33_anchor3_L_elimination_agrees": true,
+    "roots33_anchor3_S_lower": true,
+    "roots33_anchor3_L_lower": true,
+    "roots33_anchor2_S_elimination_agrees": true,
+    "roots33_anchor2_L_elimination_agrees": true,
+    "roots33_anchor2_S_lower": true,
+    "roots33_anchor2_L_lower": true,
+    "roots32_anchor3_S_elimination_agrees": true,
+    "roots32_anchor3_L_elimination_agrees": true,
+    "roots32_anchor3_S_lower": true,
+    "roots32_anchor3_L_lower": true,
+    "roots32_anchor2_S_elimination_agrees": true,
+    "roots32_anchor2_L_elimination_agrees": true,
+    "roots32_anchor2_S_lower": true,
+    "roots32_anchor2_L_lower": true,
+    "roots23_anchor3_S_elimination_agrees": true,
+    "roots23_anchor3_L_elimination_agrees": true,
+    "roots23_anchor3_S_lower": true,
+    "roots23_anchor3_L_lower": true,
+    "roots23_anchor2_S_elimination_agrees": true,
+    "roots23_anchor2_L_elimination_agrees": true,
+    "roots23_anchor2_S_lower": true,
+    "roots23_anchor2_L_lower": true,
+    "roots22_anchor3_S_elimination_agrees": true,
+    "roots22_anchor3_L_elimination_agrees": true,
+    "roots22_anchor3_S_lower": true,
+    "roots22_anchor3_L_lower": true,
+    "roots22_anchor2_S_elimination_agrees": true,
+    "roots22_anchor2_L_elimination_agrees": true,
+    "roots22_anchor2_S_lower": true,
+    "roots22_anchor2_L_lower": true,
+    "all_500_literal_layouts_checked": true,
+    "all_500_R_M_linearizations_checked": true,
+    "global_S_constant_sharp_in_relaxation": true,
+    "global_L_constant_sharp_in_relaxation": true,
+    "two_anchor_orbits_cover_global_minima": true,
+    "representative_candidate_count": true,
+    "analytic_child_elimination_candidates": true,
+    "recovered_eight_row_table": true,
+    "large_prime_budget": true,
+    "S_coefficient_positive": true,
+    "all_prime_budget": true,
+    "W_lower": true,
+    "small_depth_union_bound": true,
+    "complete_ternary_tail": true,
+    "total_loss_two_equivalent_forms": true,
+    "strict_loss_target": true,
+    "same_source_conditional_survivor": true,
+    "full_Haar_survivor_bound": true,
+    "complete_query_upper_bound": true,
+    "strict_query_target": true,
+    "actual_seven_prime_pure_factor": true,
+    "general_U_0_S_coefficient_nonnegative": true,
+    "general_U_0_loss_formula": true,
+    "general_U_0_positive_survivor": true,
+    "general_U_1/3_S_coefficient_nonnegative": true,
+    "general_U_1/3_loss_formula": true,
+    "general_U_1/3_positive_survivor": true,
+    "general_base_pure_factor": true,
+    "general_uniform_bound_below_one": true
+  },
+  "passed_count": 61,
+  "Lean": "not run"
+}

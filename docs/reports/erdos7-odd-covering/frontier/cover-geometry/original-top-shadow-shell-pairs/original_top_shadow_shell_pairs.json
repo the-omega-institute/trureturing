@@ -1,0 +1,8854 @@
+{
+  "scope": "Oneuniformoriginalsourcepercontrol. Distinctodd18-label noncover verifies exactmixedcollision/nonvisibility boundary; literalevenL60wholecover verifies odd-hypothesisboundary; repeated-modulus wholecover controls verify conditional same-source identities withoutclaiming distinctoddcover. Ordinary exact arithmetic, notLean verification.",
+  "controls": [
+    {
+      "name": "distinct_odd18_noncover",
+      "period": 11025,
+      "lower_modulus": 105,
+      "top_box_size": 105,
+      "whole_cover": false,
+      "numerically_distinct": true,
+      "all_moduli_odd": true,
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 3,
+          "residue": 2,
+          "private_witness": 5,
+          "private_count": 2211,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 3
+        },
+        {
+          "label": 1,
+          "modulus": 5,
+          "residue": 2,
+          "private_witness": 7,
+          "private_count": 885,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 5
+        },
+        {
+          "label": 2,
+          "modulus": 7,
+          "residue": 3,
+          "private_witness": 3,
+          "private_count": 532,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 7
+        },
+        {
+          "label": 3,
+          "modulus": 9,
+          "residue": 1,
+          "private_witness": 1,
+          "private_count": 532,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 3
+        },
+        {
+          "label": 4,
+          "modulus": 15,
+          "residue": 10,
+          "private_witness": 25,
+          "private_count": 410,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 15
+        },
+        {
+          "label": 5,
+          "modulus": 21,
+          "residue": 12,
+          "private_witness": 33,
+          "private_count": 322,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 21
+        },
+        {
+          "label": 6,
+          "modulus": 25,
+          "residue": 16,
+          "private_witness": 16,
+          "private_count": 170,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 7,
+          "modulus": 35,
+          "residue": 29,
+          "private_witness": 169,
+          "private_count": 140,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 35
+        },
+        {
+          "label": 8,
+          "modulus": 45,
+          "residue": 9,
+          "private_witness": 9,
+          "private_count": 100,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 9,
+          "modulus": 49,
+          "residue": 0,
+          "private_witness": 0,
+          "private_count": 63,
+          "top_support": [
+            7
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 7
+        },
+        {
+          "label": 10,
+          "modulus": 63,
+          "residue": 27,
+          "private_witness": 90,
+          "private_count": 84,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 21
+        },
+        {
+          "label": 11,
+          "modulus": 75,
+          "residue": 18,
+          "private_witness": 18,
+          "private_count": 77,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 12,
+          "modulus": 105,
+          "residue": 63,
+          "private_witness": 63,
+          "private_count": 72,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 105
+        },
+        {
+          "label": 13,
+          "modulus": 175,
+          "residue": 124,
+          "private_witness": 124,
+          "private_count": 14,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 35
+        },
+        {
+          "label": 14,
+          "modulus": 225,
+          "residue": 30,
+          "private_witness": 30,
+          "private_count": 34,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 15,
+          "modulus": 315,
+          "residue": 111,
+          "private_witness": 111,
+          "private_count": 28,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 105
+        },
+        {
+          "label": 16,
+          "modulus": 525,
+          "residue": 195,
+          "private_witness": 195,
+          "private_count": 14,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 105
+        },
+        {
+          "label": 17,
+          "modulus": 1575,
+          "residue": 735,
+          "private_witness": 2310,
+          "private_count": 6,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 105
+        }
+      ],
+      "uncovered_count": 2415,
+      "first_uncovered": 4,
+      "source_slice_checks": 198450,
+      "original_pair_crt_checks": 8,
+      "private_saving_checks": 96,
+      "top_shell_pair_checks": 7,
+      "actual_supplier_checks": 84,
+      "uncovered_top_neighbors": 3122,
+      "selected_family_checks": [
+        {
+          "selected_original_labels": [
+            3,
+            6,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "private_mass": "374/3675",
+          "collision_uncovered_private_points": 1034,
+          "private_saving_rhs": "2/105",
+          "rhs_over_private_mass": "35/187",
+          "strict_rejection": true,
+          "numerical_inequality_holds": false,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 34,
+          "phase_excess_failures": 32
+        },
+        {
+          "selected_original_labels": [
+            3
+          ],
+          "private_mass": "76/1575",
+          "collision_uncovered_private_points": 532,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "9/38",
+          "strict_rejection": true,
+          "numerical_inequality_holds": false,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 17,
+          "phase_excess_failures": 17
+        },
+        {
+          "selected_original_labels": [
+            6
+          ],
+          "private_mass": "34/2205",
+          "collision_uncovered_private_points": 163,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "63/85",
+          "strict_rejection": true,
+          "numerical_inequality_holds": false,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 11,
+          "phase_excess_failures": 10
+        },
+        {
+          "selected_original_labels": [
+            8
+          ],
+          "private_mass": "4/441",
+          "collision_uncovered_private_points": 100,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "63/50",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 3,
+          "phase_excess_failures": 3
+        },
+        {
+          "selected_original_labels": [
+            9
+          ],
+          "private_mass": "1/175",
+          "collision_uncovered_private_points": 50,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "2",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 6,
+          "phase_excess_failures": 5
+        },
+        {
+          "selected_original_labels": [
+            10
+          ],
+          "private_mass": "4/525",
+          "collision_uncovered_private_points": 56,
+          "private_saving_rhs": "23/1575",
+          "rhs_over_private_mass": "23/12",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 3,
+          "phase_excess_failures": 2
+        },
+        {
+          "selected_original_labels": [
+            11
+          ],
+          "private_mass": "11/1575",
+          "collision_uncovered_private_points": 77,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "18/11",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 4,
+          "phase_excess_failures": 4
+        },
+        {
+          "selected_original_labels": [
+            13
+          ],
+          "private_mass": "2/1575",
+          "collision_uncovered_private_points": 14,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "9",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 1
+        },
+        {
+          "selected_original_labels": [
+            14
+          ],
+          "private_mass": "34/11025",
+          "collision_uncovered_private_points": 28,
+          "private_saving_rhs": "19/1575",
+          "rhs_over_private_mass": "133/34",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 5,
+          "phase_excess_failures": 4
+        },
+        {
+          "selected_original_labels": [
+            15
+          ],
+          "private_mass": "4/1575",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "23/1575",
+          "rhs_over_private_mass": "23/4",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            16
+          ],
+          "private_mass": "2/1575",
+          "collision_uncovered_private_points": 14,
+          "private_saving_rhs": "2/175",
+          "rhs_over_private_mass": "9",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 1
+        },
+        {
+          "selected_original_labels": [
+            17
+          ],
+          "private_mass": "2/3675",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "19/1575",
+          "rhs_over_private_mass": "133/6",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": false,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        }
+      ],
+      "shell_pair_inequalities": [
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            3,
+            8,
+            10,
+            14,
+            15,
+            17
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "16/225",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "5/112",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            3
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "76/1575",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "5/76",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            8
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "4/441",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "7/20",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            10
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "4/525",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "5/12",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            14
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "34/11025",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "35/34",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            15
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "4/1575",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "5/4",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            17
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "2/3675",
+          "lhs": "0",
+          "rhs": "1/315",
+          "holds": true,
+          "rhs_over_private_mass": "35/6",
+          "strict_rejection": false,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            6,
+            11,
+            13,
+            14,
+            16,
+            17
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "1/35",
+          "lhs": "2/35",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            6
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "34/2205",
+          "lhs": "68/2205",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            11
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "11/1575",
+          "lhs": "22/1575",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            13
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "2/1575",
+          "lhs": "4/1575",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            14
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "34/11025",
+          "lhs": "68/11025",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            16
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "2/1575",
+          "lhs": "4/1575",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            17
+          ],
+          "sigma": 2,
+          "pair_coefficient": 2,
+          "private_mass": "2/3675",
+          "lhs": "4/3675",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        },
+        {
+          "prime": 7,
+          "selected_original_labels": [
+            9
+          ],
+          "sigma": 1,
+          "pair_coefficient": 15,
+          "private_mass": "1/175",
+          "lhs": "3/35",
+          "rhs": "0",
+          "holds": false,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": true,
+          "whole_cover_premise": false
+        }
+      ],
+      "top_neighbors_of_private_zero": {
+        "7": [
+          {
+            "phase": 1,
+            "residue": 1575,
+            "covering_original_labels": []
+          },
+          {
+            "phase": 2,
+            "residue": 3150,
+            "covering_original_labels": []
+          },
+          {
+            "phase": 3,
+            "residue": 4725,
+            "covering_original_labels": []
+          },
+          {
+            "phase": 4,
+            "residue": 6300,
+            "covering_original_labels": []
+          },
+          {
+            "phase": 5,
+            "residue": 7875,
+            "covering_original_labels": []
+          },
+          {
+            "phase": 6,
+            "residue": 9450,
+            "covering_original_labels": []
+          }
+        ]
+      },
+      "uncovered_residues": [
+        4,
+        6,
+        13,
+        15,
+        21,
+        34,
+        36,
+        39,
+        43,
+        48,
+        51,
+        58,
+        60,
+        61,
+        69,
+        76,
+        78,
+        79,
+        81,
+        84,
+        88,
+        103,
+        105,
+        106,
+        114,
+        120,
+        121,
+        123,
+        126,
+        133,
+        135,
+        139,
+        148,
+        151,
+        156,
+        165,
+        174,
+        183,
+        184,
+        186,
+        193,
+        198,
+        210,
+        211,
+        214,
+        219,
+        223,
+        225,
+        228,
+        229,
+        231,
+        238,
+        240,
+        246,
+        249,
+        256,
+        258,
+        259,
+        261,
+        268,
+        270,
+        286,
+        288,
+        300,
+        301,
+        303,
+        313,
+        315,
+        319,
+        321,
+        328,
+        330,
+        331,
+        333,
+        336,
+        345,
+        349,
+        351,
+        354,
+        358,
+        363,
+        364,
+        373,
+        375,
+        376,
+        384,
+        394,
+        396,
+        399,
+        403,
+        408,
+        418,
+        420,
+        421,
+        429,
+        435,
+        436,
+        438,
+        439,
+        448,
+        450,
+        454,
+        456,
+        463,
+        471,
+        481,
+        489,
+        498,
+        499,
+        501,
+        508,
+        510,
+        511,
+        513,
+        525,
+        526,
+        529,
+        534,
+        538,
+        540,
+        544,
+        546,
+        553,
+        555,
+        561,
+        564,
+        571,
+        573,
+        574,
+        576,
+        583,
+        585,
+        601,
+        603,
+        606,
+        609,
+        615,
+        628,
+        630,
+        634,
+        636,
+        643,
+        645,
+        646,
+        648,
+        651,
+        660,
+        664,
+        669,
+        673,
+        678,
+        679,
+        681,
+        688,
+        690,
+        699,
+        706,
+        708,
+        709,
+        711,
+        714,
+        718,
+        723,
+        733,
+        736,
+        744,
+        750,
+        751,
+        753,
+        754,
+        756,
+        763,
+        765,
+        769,
+        771,
+        778,
+        781,
+        786,
+        795,
+        796,
+        804,
+        813,
+        814,
+        823,
+        825,
+        826,
+        828,
+        840,
+        844,
+        849,
+        853,
+        855,
+        858,
+        859,
+        861,
+        868,
+        870,
+        876,
+        879,
+        886,
+        888,
+        889,
+        898,
+        900,
+        921,
+        924,
+        933,
+        943,
+        945,
+        949,
+        951,
+        958,
+        960,
+        961,
+        963,
+        975,
+        979,
+        981,
+        984,
+        988,
+        994,
+        996,
+        1003,
+        1005,
+        1006,
+        1014,
+        1021,
+        1023,
+        1024,
+        1026,
+        1033,
+        1038,
+        1048,
+        1050,
+        1051,
+        1059,
+        1065,
+        1069,
+        1071,
+        1080,
+        1084,
+        1086,
+        1093,
+        1096,
+        1101,
+        1110,
+        1111,
+        1119,
+        1128,
+        1129,
+        1131,
+        1138,
+        1140,
+        1156,
+        1159,
+        1164,
+        1168,
+        1170,
+        1173,
+        1183,
+        1185,
+        1194,
+        1201,
+        1203,
+        1204,
+        1206,
+        1213,
+        1215,
+        1231,
+        1233,
+        1236,
+        1239,
+        1246,
+        1248,
+        1258,
+        1260,
+        1264,
+        1273,
+        1275,
+        1276,
+        1278,
+        1281,
+        1290,
+        1294,
+        1296,
+        1299,
+        1303,
+        1308,
+        1309,
+        1311,
+        1318,
+        1320,
+        1321,
+        1329,
+        1336,
+        1338,
+        1339,
+        1344,
+        1348,
+        1353,
+        1363,
+        1365,
+        1374,
+        1381,
+        1383,
+        1384,
+        1386,
+        1393,
+        1395,
+        1399,
+        1401,
+        1408,
+        1411,
+        1425,
+        1426,
+        1434,
+        1444,
+        1446,
+        1453,
+        1455,
+        1456,
+        1458,
+        1471,
+        1474,
+        1479,
+        1483,
+        1485,
+        1488,
+        1489,
+        1498,
+        1500,
+        1506,
+        1509,
+        1521,
+        1528,
+        1530,
+        1546,
+        1548,
+        1551,
+        1554,
+        1560,
+        1561,
+        1563,
+        1573,
+        1575,
+        1579,
+        1581,
+        1588,
+        1590,
+        1596,
+        1609,
+        1611,
+        1614,
+        1618,
+        1623,
+        1624,
+        1626,
+        1633,
+        1635,
+        1636,
+        1644,
+        1651,
+        1653,
+        1654,
+        1656,
+        1659,
+        1663,
+        1678,
+        1680,
+        1681,
+        1689,
+        1695,
+        1696,
+        1698,
+        1701,
+        1708,
+        1710,
+        1714,
+        1723,
+        1726,
+        1731,
+        1740,
+        1749,
+        1758,
+        1759,
+        1761,
+        1768,
+        1771,
+        1773,
+        1785,
+        1786,
+        1789,
+        1794,
+        1798,
+        1800,
+        1803,
+        1804,
+        1806,
+        1815,
+        1821,
+        1824,
+        1831,
+        1833,
+        1834,
+        1836,
+        1843,
+        1845,
+        1861,
+        1863,
+        1869,
+        1875,
+        1876,
+        1878,
+        1888,
+        1890,
+        1894,
+        1896,
+        1903,
+        1905,
+        1906,
+        1908,
+        1920,
+        1924,
+        1926,
+        1929,
+        1933,
+        1938,
+        1939,
+        1948,
+        1950,
+        1951,
+        1959,
+        1969,
+        1971,
+        1974,
+        1978,
+        1983,
+        1993,
+        1995,
+        1996,
+        2004,
+        2010,
+        2011,
+        2013,
+        2014,
+        2023,
+        2025,
+        2029,
+        2031,
+        2038,
+        2046,
+        2056,
+        2064,
+        2073,
+        2074,
+        2076,
+        2083,
+        2085,
+        2086,
+        2088,
+        2100,
+        2101,
+        2104,
+        2109,
+        2113,
+        2115,
+        2119,
+        2121,
+        2128,
+        2130,
+        2136,
+        2139,
+        2146,
+        2148,
+        2149,
+        2151,
+        2158,
+        2160,
+        2176,
+        2178,
+        2181,
+        2184,
+        2190,
+        2203,
+        2209,
+        2211,
+        2218,
+        2220,
+        2221,
+        2223,
+        2226,
+        2235,
+        2239,
+        2244,
+        2248,
+        2253,
+        2256,
+        2263,
+        2265,
+        2274,
+        2281,
+        2283,
+        2284,
+        2286,
+        2289,
+        2293,
+        2298,
+        2308,
+        2311,
+        2319,
+        2325,
+        2326,
+        2328,
+        2329,
+        2331,
+        2338,
+        2340,
+        2344,
+        2346,
+        2353,
+        2356,
+        2361,
+        2370,
+        2371,
+        2379,
+        2388,
+        2389,
+        2398,
+        2400,
+        2403,
+        2415,
+        2419,
+        2424,
+        2428,
+        2430,
+        2433,
+        2434,
+        2436,
+        2443,
+        2445,
+        2451,
+        2454,
+        2461,
+        2463,
+        2464,
+        2473,
+        2475,
+        2496,
+        2506,
+        2508,
+        2518,
+        2520,
+        2524,
+        2526,
+        2533,
+        2535,
+        2536,
+        2538,
+        2550,
+        2554,
+        2556,
+        2559,
+        2563,
+        2569,
+        2571,
+        2578,
+        2580,
+        2581,
+        2589,
+        2596,
+        2598,
+        2599,
+        2601,
+        2604,
+        2608,
+        2613,
+        2623,
+        2625,
+        2626,
+        2634,
+        2640,
+        2644,
+        2653,
+        2655,
+        2659,
+        2661,
+        2668,
+        2671,
+        2676,
+        2685,
+        2686,
+        2694,
+        2703,
+        2704,
+        2706,
+        2713,
+        2715,
+        2731,
+        2734,
+        2739,
+        2743,
+        2745,
+        2748,
+        2751,
+        2758,
+        2760,
+        2769,
+        2776,
+        2778,
+        2779,
+        2781,
+        2788,
+        2790,
+        2806,
+        2808,
+        2811,
+        2814,
+        2821,
+        2823,
+        2833,
+        2835,
+        2839,
+        2848,
+        2850,
+        2851,
+        2853,
+        2856,
+        2865,
+        2869,
+        2871,
+        2874,
+        2878,
+        2883,
+        2884,
+        2886,
+        2893,
+        2895,
+        2896,
+        2904,
+        2911,
+        2913,
+        2914,
+        2919,
+        2923,
+        2928,
+        2938,
+        2949,
+        2956,
+        2958,
+        2959,
+        2961,
+        2968,
+        2970,
+        2974,
+        2976,
+        2983,
+        2986,
+        3000,
+        3001,
+        3009,
+        3019,
+        3021,
+        3028,
+        3030,
+        3031,
+        3033,
+        3045,
+        3046,
+        3049,
+        3054,
+        3058,
+        3060,
+        3063,
+        3064,
+        3073,
+        3075,
+        3081,
+        3084,
+        3094,
+        3096,
+        3103,
+        3105,
+        3121,
+        3123,
+        3126,
+        3129,
+        3135,
+        3138,
+        3148,
+        3150,
+        3154,
+        3156,
+        3163,
+        3165,
+        3171,
+        3184,
+        3186,
+        3189,
+        3193,
+        3198,
+        3199,
+        3201,
+        3208,
+        3210,
+        3211,
+        3219,
+        3226,
+        3228,
+        3229,
+        3231,
+        3238,
+        3253,
+        3255,
+        3256,
+        3264,
+        3270,
+        3271,
+        3273,
+        3276,
+        3285,
+        3289,
+        3298,
+        3301,
+        3306,
+        3315,
+        3324,
+        3333,
+        3334,
+        3336,
+        3343,
+        3346,
+        3348,
+        3360,
+        3361,
+        3364,
+        3369,
+        3373,
+        3375,
+        3378,
+        3379,
+        3388,
+        3390,
+        3396,
+        3399,
+        3406,
+        3408,
+        3409,
+        3411,
+        3418,
+        3420,
+        3436,
+        3438,
+        3444,
+        3450,
+        3451,
+        3453,
+        3463,
+        3465,
+        3469,
+        3471,
+        3478,
+        3480,
+        3481,
+        3483,
+        3486,
+        3495,
+        3499,
+        3501,
+        3504,
+        3508,
+        3513,
+        3514,
+        3523,
+        3525,
+        3526,
+        3534,
+        3544,
+        3546,
+        3549,
+        3553,
+        3558,
+        3568,
+        3570,
+        3571,
+        3579,
+        3585,
+        3586,
+        3588,
+        3589,
+        3598,
+        3600,
+        3604,
+        3606,
+        3613,
+        3621,
+        3631,
+        3639,
+        3648,
+        3649,
+        3651,
+        3658,
+        3660,
+        3661,
+        3663,
+        3676,
+        3679,
+        3684,
+        3688,
+        3690,
+        3694,
+        3696,
+        3703,
+        3705,
+        3711,
+        3714,
+        3721,
+        3723,
+        3726,
+        3733,
+        3735,
+        3751,
+        3753,
+        3756,
+        3759,
+        3765,
+        3778,
+        3780,
+        3784,
+        3786,
+        3793,
+        3795,
+        3796,
+        3798,
+        3801,
+        3810,
+        3814,
+        3819,
+        3823,
+        3828,
+        3829,
+        3831,
+        3838,
+        3840,
+        3849,
+        3856,
+        3858,
+        3859,
+        3861,
+        3864,
+        3868,
+        3873,
+        3883,
+        3886,
+        3894,
+        3900,
+        3901,
+        3903,
+        3904,
+        3906,
+        3913,
+        3915,
+        3919,
+        3921,
+        3928,
+        3931,
+        3936,
+        3945,
+        3946,
+        3954,
+        3963,
+        3964,
+        3973,
+        3975,
+        3976,
+        3978,
+        3990,
+        3994,
+        3999,
+        4003,
+        4005,
+        4008,
+        4009,
+        4011,
+        4020,
+        4026,
+        4029,
+        4036,
+        4038,
+        4039,
+        4048,
+        4050,
+        4071,
+        4074,
+        4081,
+        4083,
+        4093,
+        4095,
+        4099,
+        4101,
+        4108,
+        4110,
+        4111,
+        4113,
+        4125,
+        4129,
+        4131,
+        4134,
+        4138,
+        4144,
+        4146,
+        4153,
+        4155,
+        4156,
+        4164,
+        4171,
+        4173,
+        4174,
+        4176,
+        4179,
+        4183,
+        4188,
+        4198,
+        4200,
+        4201,
+        4209,
+        4215,
+        4219,
+        4221,
+        4228,
+        4230,
+        4234,
+        4236,
+        4243,
+        4246,
+        4251,
+        4260,
+        4261,
+        4269,
+        4278,
+        4279,
+        4281,
+        4288,
+        4290,
+        4306,
+        4309,
+        4314,
+        4318,
+        4320,
+        4323,
+        4326,
+        4333,
+        4335,
+        4344,
+        4351,
+        4353,
+        4354,
+        4356,
+        4363,
+        4365,
+        4381,
+        4383,
+        4386,
+        4389,
+        4396,
+        4398,
+        4408,
+        4414,
+        4423,
+        4425,
+        4426,
+        4428,
+        4431,
+        4440,
+        4444,
+        4446,
+        4449,
+        4453,
+        4458,
+        4461,
+        4468,
+        4470,
+        4471,
+        4479,
+        4486,
+        4488,
+        4489,
+        4494,
+        4498,
+        4503,
+        4513,
+        4515,
+        4524,
+        4531,
+        4533,
+        4534,
+        4536,
+        4543,
+        4545,
+        4549,
+        4551,
+        4558,
+        4561,
+        4575,
+        4576,
+        4584,
+        4594,
+        4596,
+        4603,
+        4605,
+        4608,
+        4620,
+        4621,
+        4624,
+        4629,
+        4633,
+        4635,
+        4638,
+        4639,
+        4648,
+        4650,
+        4656,
+        4659,
+        4669,
+        4671,
+        4678,
+        4680,
+        4696,
+        4698,
+        4701,
+        4710,
+        4711,
+        4713,
+        4723,
+        4725,
+        4729,
+        4731,
+        4738,
+        4740,
+        4746,
+        4759,
+        4761,
+        4764,
+        4768,
+        4773,
+        4774,
+        4776,
+        4783,
+        4785,
+        4786,
+        4794,
+        4801,
+        4803,
+        4804,
+        4806,
+        4809,
+        4813,
+        4828,
+        4830,
+        4831,
+        4839,
+        4845,
+        4846,
+        4848,
+        4858,
+        4860,
+        4864,
+        4873,
+        4876,
+        4881,
+        4890,
+        4899,
+        4908,
+        4909,
+        4911,
+        4918,
+        4921,
+        4923,
+        4935,
+        4936,
+        4939,
+        4944,
+        4948,
+        4950,
+        4953,
+        4954,
+        4956,
+        4963,
+        4965,
+        4971,
+        4974,
+        4981,
+        4983,
+        4984,
+        4986,
+        4993,
+        4995,
+        5011,
+        5013,
+        5019,
+        5025,
+        5026,
+        5028,
+        5038,
+        5040,
+        5044,
+        5046,
+        5053,
+        5055,
+        5056,
+        5058,
+        5061,
+        5070,
+        5074,
+        5076,
+        5079,
+        5083,
+        5088,
+        5089,
+        5098,
+        5100,
+        5101,
+        5109,
+        5119,
+        5121,
+        5124,
+        5128,
+        5133,
+        5143,
+        5146,
+        5154,
+        5160,
+        5161,
+        5163,
+        5164,
+        5173,
+        5175,
+        5179,
+        5181,
+        5188,
+        5196,
+        5206,
+        5214,
+        5223,
+        5224,
+        5226,
+        5233,
+        5235,
+        5236,
+        5238,
+        5250,
+        5251,
+        5254,
+        5259,
+        5263,
+        5265,
+        5269,
+        5271,
+        5278,
+        5280,
+        5286,
+        5289,
+        5296,
+        5298,
+        5299,
+        5301,
+        5308,
+        5310,
+        5326,
+        5328,
+        5331,
+        5334,
+        5340,
+        5353,
+        5355,
+        5359,
+        5361,
+        5368,
+        5370,
+        5371,
+        5373,
+        5376,
+        5385,
+        5389,
+        5394,
+        5398,
+        5403,
+        5404,
+        5406,
+        5413,
+        5415,
+        5424,
+        5431,
+        5433,
+        5434,
+        5436,
+        5443,
+        5448,
+        5458,
+        5461,
+        5469,
+        5475,
+        5476,
+        5478,
+        5479,
+        5481,
+        5490,
+        5494,
+        5496,
+        5503,
+        5506,
+        5511,
+        5520,
+        5521,
+        5529,
+        5538,
+        5539,
+        5548,
+        5550,
+        5551,
+        5553,
+        5565,
+        5569,
+        5574,
+        5578,
+        5580,
+        5583,
+        5584,
+        5593,
+        5595,
+        5601,
+        5604,
+        5611,
+        5613,
+        5614,
+        5623,
+        5625,
+        5646,
+        5649,
+        5656,
+        5658,
+        5668,
+        5670,
+        5674,
+        5676,
+        5683,
+        5685,
+        5686,
+        5688,
+        5700,
+        5704,
+        5706,
+        5709,
+        5713,
+        5719,
+        5721,
+        5728,
+        5730,
+        5731,
+        5739,
+        5746,
+        5748,
+        5749,
+        5751,
+        5754,
+        5758,
+        5763,
+        5773,
+        5775,
+        5776,
+        5784,
+        5790,
+        5794,
+        5796,
+        5803,
+        5805,
+        5809,
+        5811,
+        5818,
+        5821,
+        5826,
+        5835,
+        5836,
+        5844,
+        5853,
+        5854,
+        5856,
+        5863,
+        5865,
+        5881,
+        5884,
+        5889,
+        5893,
+        5895,
+        5898,
+        5901,
+        5908,
+        5910,
+        5919,
+        5926,
+        5928,
+        5931,
+        5938,
+        5940,
+        5956,
+        5958,
+        5961,
+        5964,
+        5971,
+        5973,
+        5983,
+        5985,
+        5989,
+        5998,
+        6000,
+        6001,
+        6003,
+        6006,
+        6015,
+        6019,
+        6021,
+        6024,
+        6028,
+        6033,
+        6034,
+        6036,
+        6043,
+        6045,
+        6046,
+        6054,
+        6061,
+        6063,
+        6064,
+        6069,
+        6073,
+        6078,
+        6088,
+        6090,
+        6099,
+        6106,
+        6108,
+        6109,
+        6111,
+        6118,
+        6120,
+        6124,
+        6126,
+        6133,
+        6136,
+        6150,
+        6151,
+        6159,
+        6169,
+        6171,
+        6178,
+        6180,
+        6181,
+        6183,
+        6195,
+        6196,
+        6199,
+        6204,
+        6208,
+        6210,
+        6213,
+        6214,
+        6225,
+        6231,
+        6234,
+        6244,
+        6246,
+        6253,
+        6255,
+        6271,
+        6273,
+        6276,
+        6279,
+        6285,
+        6286,
+        6288,
+        6298,
+        6300,
+        6304,
+        6306,
+        6313,
+        6315,
+        6334,
+        6336,
+        6339,
+        6343,
+        6348,
+        6349,
+        6351,
+        6358,
+        6360,
+        6361,
+        6369,
+        6376,
+        6378,
+        6379,
+        6381,
+        6384,
+        6388,
+        6403,
+        6405,
+        6406,
+        6414,
+        6420,
+        6421,
+        6423,
+        6426,
+        6433,
+        6435,
+        6439,
+        6448,
+        6451,
+        6456,
+        6465,
+        6474,
+        6483,
+        6484,
+        6486,
+        6493,
+        6496,
+        6498,
+        6510,
+        6511,
+        6514,
+        6519,
+        6523,
+        6525,
+        6528,
+        6529,
+        6531,
+        6538,
+        6540,
+        6546,
+        6549,
+        6556,
+        6558,
+        6559,
+        6561,
+        6568,
+        6570,
+        6586,
+        6588,
+        6594,
+        6600,
+        6601,
+        6603,
+        6613,
+        6619,
+        6621,
+        6628,
+        6630,
+        6631,
+        6633,
+        6636,
+        6645,
+        6649,
+        6651,
+        6654,
+        6658,
+        6663,
+        6673,
+        6675,
+        6676,
+        6684,
+        6694,
+        6696,
+        6699,
+        6703,
+        6708,
+        6718,
+        6720,
+        6721,
+        6729,
+        6735,
+        6736,
+        6738,
+        6739,
+        6748,
+        6750,
+        6754,
+        6756,
+        6763,
+        6771,
+        6781,
+        6789,
+        6798,
+        6799,
+        6801,
+        6808,
+        6810,
+        6813,
+        6825,
+        6826,
+        6829,
+        6834,
+        6838,
+        6840,
+        6844,
+        6846,
+        6853,
+        6855,
+        6861,
+        6864,
+        6871,
+        6873,
+        6874,
+        6876,
+        6883,
+        6885,
+        6901,
+        6903,
+        6906,
+        6915,
+        6928,
+        6930,
+        6934,
+        6936,
+        6943,
+        6945,
+        6946,
+        6948,
+        6951,
+        6960,
+        6964,
+        6969,
+        6973,
+        6978,
+        6979,
+        6981,
+        6988,
+        6990,
+        6999,
+        7006,
+        7008,
+        7009,
+        7011,
+        7014,
+        7018,
+        7023,
+        7033,
+        7036,
+        7044,
+        7050,
+        7051,
+        7053,
+        7054,
+        7063,
+        7065,
+        7069,
+        7071,
+        7078,
+        7081,
+        7086,
+        7095,
+        7096,
+        7104,
+        7113,
+        7114,
+        7123,
+        7125,
+        7126,
+        7128,
+        7140,
+        7144,
+        7149,
+        7153,
+        7155,
+        7158,
+        7159,
+        7161,
+        7168,
+        7170,
+        7176,
+        7179,
+        7186,
+        7188,
+        7189,
+        7198,
+        7200,
+        7221,
+        7224,
+        7231,
+        7233,
+        7243,
+        7245,
+        7249,
+        7251,
+        7258,
+        7260,
+        7261,
+        7263,
+        7275,
+        7279,
+        7281,
+        7284,
+        7288,
+        7294,
+        7296,
+        7303,
+        7305,
+        7306,
+        7314,
+        7321,
+        7323,
+        7324,
+        7326,
+        7329,
+        7333,
+        7338,
+        7348,
+        7351,
+        7359,
+        7365,
+        7369,
+        7371,
+        7378,
+        7380,
+        7384,
+        7386,
+        7393,
+        7396,
+        7401,
+        7410,
+        7411,
+        7419,
+        7428,
+        7429,
+        7431,
+        7438,
+        7440,
+        7456,
+        7459,
+        7464,
+        7468,
+        7470,
+        7473,
+        7476,
+        7483,
+        7485,
+        7494,
+        7501,
+        7503,
+        7504,
+        7506,
+        7513,
+        7515,
+        7531,
+        7533,
+        7536,
+        7539,
+        7548,
+        7558,
+        7560,
+        7564,
+        7573,
+        7575,
+        7576,
+        7578,
+        7581,
+        7590,
+        7594,
+        7596,
+        7599,
+        7603,
+        7608,
+        7609,
+        7611,
+        7618,
+        7620,
+        7621,
+        7629,
+        7636,
+        7638,
+        7639,
+        7648,
+        7653,
+        7663,
+        7665,
+        7674,
+        7681,
+        7683,
+        7684,
+        7686,
+        7695,
+        7699,
+        7701,
+        7708,
+        7711,
+        7725,
+        7726,
+        7734,
+        7744,
+        7746,
+        7753,
+        7755,
+        7756,
+        7758,
+        7770,
+        7771,
+        7774,
+        7779,
+        7783,
+        7785,
+        7788,
+        7789,
+        7798,
+        7800,
+        7806,
+        7809,
+        7819,
+        7821,
+        7828,
+        7830,
+        7846,
+        7848,
+        7851,
+        7854,
+        7860,
+        7861,
+        7863,
+        7873,
+        7875,
+        7879,
+        7881,
+        7888,
+        7890,
+        7896,
+        7909,
+        7911,
+        7914,
+        7918,
+        7923,
+        7924,
+        7926,
+        7933,
+        7935,
+        7936,
+        7944,
+        7951,
+        7953,
+        7954,
+        7956,
+        7959,
+        7963,
+        7978,
+        7980,
+        7981,
+        7989,
+        7995,
+        7996,
+        7998,
+        8001,
+        8008,
+        8010,
+        8014,
+        8023,
+        8026,
+        8031,
+        8040,
+        8049,
+        8058,
+        8059,
+        8061,
+        8068,
+        8071,
+        8073,
+        8086,
+        8089,
+        8094,
+        8098,
+        8100,
+        8103,
+        8104,
+        8106,
+        8113,
+        8115,
+        8121,
+        8124,
+        8131,
+        8133,
+        8136,
+        8143,
+        8145,
+        8161,
+        8163,
+        8169,
+        8175,
+        8176,
+        8178,
+        8188,
+        8190,
+        8194,
+        8196,
+        8203,
+        8205,
+        8206,
+        8208,
+        8211,
+        8220,
+        8224,
+        8226,
+        8229,
+        8233,
+        8238,
+        8239,
+        8248,
+        8250,
+        8251,
+        8259,
+        8269,
+        8271,
+        8274,
+        8278,
+        8283,
+        8293,
+        8295,
+        8296,
+        8304,
+        8310,
+        8311,
+        8313,
+        8314,
+        8323,
+        8325,
+        8329,
+        8331,
+        8338,
+        8346,
+        8356,
+        8364,
+        8373,
+        8374,
+        8376,
+        8383,
+        8385,
+        8386,
+        8388,
+        8400,
+        8401,
+        8404,
+        8409,
+        8413,
+        8415,
+        8419,
+        8421,
+        8430,
+        8436,
+        8439,
+        8446,
+        8448,
+        8449,
+        8451,
+        8458,
+        8460,
+        8476,
+        8478,
+        8481,
+        8484,
+        8490,
+        8503,
+        8505,
+        8509,
+        8511,
+        8518,
+        8520,
+        8521,
+        8523,
+        8535,
+        8539,
+        8544,
+        8548,
+        8553,
+        8554,
+        8556,
+        8563,
+        8565,
+        8574,
+        8581,
+        8583,
+        8584,
+        8586,
+        8589,
+        8593,
+        8598,
+        8608,
+        8611,
+        8619,
+        8625,
+        8626,
+        8628,
+        8629,
+        8631,
+        8638,
+        8640,
+        8644,
+        8646,
+        8653,
+        8656,
+        8661,
+        8670,
+        8671,
+        8679,
+        8688,
+        8689,
+        8698,
+        8700,
+        8701,
+        8703,
+        8715,
+        8719,
+        8724,
+        8728,
+        8730,
+        8733,
+        8734,
+        8736,
+        8743,
+        8745,
+        8751,
+        8754,
+        8761,
+        8763,
+        8764,
+        8773,
+        8775,
+        8796,
+        8799,
+        8806,
+        8808,
+        8818,
+        8824,
+        8826,
+        8833,
+        8835,
+        8836,
+        8838,
+        8850,
+        8854,
+        8856,
+        8859,
+        8863,
+        8871,
+        8878,
+        8880,
+        8881,
+        8889,
+        8896,
+        8898,
+        8899,
+        8901,
+        8904,
+        8908,
+        8913,
+        8923,
+        8925,
+        8926,
+        8934,
+        8940,
+        8944,
+        8946,
+        8953,
+        8955,
+        8959,
+        8961,
+        8968,
+        8971,
+        8976,
+        8985,
+        8986,
+        8994,
+        9003,
+        9004,
+        9006,
+        9013,
+        9015,
+        9031,
+        9034,
+        9039,
+        9043,
+        9045,
+        9048,
+        9051,
+        9058,
+        9060,
+        9069,
+        9076,
+        9078,
+        9079,
+        9081,
+        9088,
+        9090,
+        9106,
+        9108,
+        9111,
+        9121,
+        9123,
+        9133,
+        9135,
+        9139,
+        9148,
+        9150,
+        9151,
+        9153,
+        9156,
+        9165,
+        9169,
+        9171,
+        9174,
+        9178,
+        9183,
+        9184,
+        9186,
+        9193,
+        9195,
+        9196,
+        9204,
+        9211,
+        9213,
+        9214,
+        9219,
+        9223,
+        9228,
+        9238,
+        9240,
+        9249,
+        9256,
+        9258,
+        9259,
+        9268,
+        9270,
+        9274,
+        9276,
+        9283,
+        9286,
+        9300,
+        9301,
+        9309,
+        9319,
+        9321,
+        9328,
+        9330,
+        9331,
+        9333,
+        9345,
+        9346,
+        9349,
+        9354,
+        9358,
+        9360,
+        9363,
+        9364,
+        9373,
+        9375,
+        9381,
+        9384,
+        9394,
+        9396,
+        9403,
+        9405,
+        9421,
+        9423,
+        9426,
+        9429,
+        9435,
+        9436,
+        9438,
+        9448,
+        9450,
+        9454,
+        9456,
+        9463,
+        9465,
+        9471,
+        9484,
+        9486,
+        9489,
+        9493,
+        9498,
+        9499,
+        9501,
+        9508,
+        9510,
+        9511,
+        9519,
+        9526,
+        9528,
+        9529,
+        9531,
+        9534,
+        9538,
+        9553,
+        9556,
+        9564,
+        9570,
+        9571,
+        9573,
+        9576,
+        9583,
+        9585,
+        9589,
+        9598,
+        9601,
+        9606,
+        9615,
+        9624,
+        9633,
+        9634,
+        9636,
+        9643,
+        9646,
+        9648,
+        9660,
+        9661,
+        9664,
+        9669,
+        9673,
+        9675,
+        9678,
+        9679,
+        9681,
+        9688,
+        9690,
+        9696,
+        9699,
+        9706,
+        9708,
+        9709,
+        9711,
+        9718,
+        9720,
+        9736,
+        9738,
+        9744,
+        9750,
+        9753,
+        9763,
+        9765,
+        9769,
+        9771,
+        9778,
+        9780,
+        9781,
+        9783,
+        9786,
+        9795,
+        9799,
+        9801,
+        9804,
+        9808,
+        9813,
+        9814,
+        9823,
+        9825,
+        9826,
+        9834,
+        9844,
+        9846,
+        9853,
+        9858,
+        9868,
+        9870,
+        9871,
+        9879,
+        9885,
+        9886,
+        9888,
+        9889,
+        9900,
+        9904,
+        9906,
+        9913,
+        9921,
+        9931,
+        9939,
+        9948,
+        9949,
+        9951,
+        9958,
+        9960,
+        9961,
+        9963,
+        9975,
+        9976,
+        9979,
+        9984,
+        9988,
+        9990,
+        9994,
+        10003,
+        10005,
+        10011,
+        10014,
+        10021,
+        10023,
+        10024,
+        10026,
+        10033,
+        10035,
+        10051,
+        10053,
+        10056,
+        10059,
+        10065,
+        10078,
+        10080,
+        10084,
+        10086,
+        10093,
+        10095,
+        10096,
+        10098,
+        10101,
+        10110,
+        10114,
+        10119,
+        10123,
+        10128,
+        10129,
+        10131,
+        10138,
+        10140,
+        10149,
+        10156,
+        10158,
+        10159,
+        10161,
+        10164,
+        10168,
+        10173,
+        10183,
+        10186,
+        10194,
+        10200,
+        10201,
+        10203,
+        10204,
+        10206,
+        10213,
+        10215,
+        10219,
+        10221,
+        10228,
+        10231,
+        10236,
+        10245,
+        10246,
+        10254,
+        10263,
+        10264,
+        10273,
+        10275,
+        10276,
+        10278,
+        10294,
+        10299,
+        10303,
+        10305,
+        10308,
+        10309,
+        10311,
+        10318,
+        10320,
+        10326,
+        10329,
+        10336,
+        10338,
+        10348,
+        10350,
+        10371,
+        10374,
+        10381,
+        10383,
+        10393,
+        10395,
+        10399,
+        10401,
+        10408,
+        10410,
+        10411,
+        10413,
+        10425,
+        10429,
+        10431,
+        10434,
+        10438,
+        10444,
+        10446,
+        10453,
+        10455,
+        10456,
+        10464,
+        10471,
+        10473,
+        10474,
+        10476,
+        10479,
+        10483,
+        10488,
+        10498,
+        10500,
+        10501,
+        10509,
+        10515,
+        10519,
+        10521,
+        10528,
+        10530,
+        10534,
+        10536,
+        10543,
+        10546,
+        10551,
+        10560,
+        10561,
+        10569,
+        10578,
+        10579,
+        10581,
+        10588,
+        10590,
+        10606,
+        10609,
+        10614,
+        10618,
+        10620,
+        10623,
+        10626,
+        10635,
+        10644,
+        10651,
+        10653,
+        10654,
+        10656,
+        10663,
+        10665,
+        10681,
+        10683,
+        10686,
+        10689,
+        10696,
+        10698,
+        10708,
+        10710,
+        10714,
+        10723,
+        10725,
+        10726,
+        10728,
+        10740,
+        10744,
+        10746,
+        10749,
+        10753,
+        10758,
+        10759,
+        10761,
+        10768,
+        10770,
+        10771,
+        10779,
+        10786,
+        10788,
+        10789,
+        10794,
+        10798,
+        10803,
+        10813,
+        10815,
+        10824,
+        10831,
+        10833,
+        10834,
+        10836,
+        10843,
+        10845,
+        10849,
+        10851,
+        10858,
+        10861,
+        10875,
+        10876,
+        10884,
+        10894,
+        10896,
+        10903,
+        10905,
+        10906,
+        10908,
+        10920,
+        10921,
+        10924,
+        10929,
+        10933,
+        10935,
+        10938,
+        10939,
+        10948,
+        10950,
+        10956,
+        10959,
+        10969,
+        10971,
+        10978,
+        10980,
+        10996,
+        10998,
+        11001,
+        11004,
+        11010,
+        11011,
+        11013,
+        11023
+      ],
+      "divisor_closed_above_one": true,
+      "active_zero_original_labels": [
+        9,
+        14,
+        17
+      ],
+      "unique_active_parallel_pair": [
+        14,
+        17
+      ],
+      "mixed_defect_endpoints": [
+        {
+          "label": 14,
+          "modulus": 225,
+          "residue": 30,
+          "defect": 15,
+          "shell_memberships": []
+        },
+        {
+          "label": 17,
+          "modulus": 1575,
+          "residue": 735,
+          "defect": 15,
+          "shell_memberships": []
+        }
+      ],
+      "pair_225_1575_lower_capacity": "1/105",
+      "upper_bound_scope": "Thewholecover collision/supplier conclusions are NOT asserted for thisnoncover. Pair CRT, privacy saving and exact shell-intersection identities remain valid."
+    },
+    {
+      "name": "distinct_even_L60_whole_cover",
+      "period": 60,
+      "lower_modulus": 2,
+      "top_box_size": 30,
+      "whole_cover": true,
+      "numerically_distinct": true,
+      "all_moduli_odd": false,
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 2,
+          "residue": 1,
+          "private_witness": 3,
+          "private_count": 14,
+          "top_support": [],
+          "top_phase": [],
+          "lower_index": 2
+        },
+        {
+          "label": 1,
+          "modulus": 4,
+          "residue": 2,
+          "private_witness": 18,
+          "private_count": 1,
+          "top_support": [
+            2
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 2
+        },
+        {
+          "label": 2,
+          "modulus": 3,
+          "residue": 1,
+          "private_witness": 4,
+          "private_count": 2,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 1
+        },
+        {
+          "label": 3,
+          "modulus": 6,
+          "residue": 2,
+          "private_witness": 20,
+          "private_count": 2,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 2
+        },
+        {
+          "label": 4,
+          "modulus": 5,
+          "residue": 1,
+          "private_witness": 36,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 1
+        },
+        {
+          "label": 5,
+          "modulus": 10,
+          "residue": 2,
+          "private_witness": 12,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 2
+        },
+        {
+          "label": 6,
+          "modulus": 20,
+          "residue": 8,
+          "private_witness": 48,
+          "private_count": 1,
+          "top_support": [
+            2,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 2
+        },
+        {
+          "label": 7,
+          "modulus": 15,
+          "residue": 0,
+          "private_witness": 0,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 1
+        },
+        {
+          "label": 8,
+          "modulus": 30,
+          "residue": 24,
+          "private_witness": 24,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 2
+        }
+      ],
+      "uncovered_count": 0,
+      "first_uncovered": null,
+      "source_slice_checks": 540,
+      "original_pair_crt_checks": 3,
+      "private_saving_checks": 27,
+      "top_shell_pair_checks": 3,
+      "actual_supplier_checks": 34,
+      "uncovered_top_neighbors": 0,
+      "selected_family_checks": [
+        {
+          "selected_original_labels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "private_mass": "1/6",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "3/2",
+          "rhs_over_private_mass": "9",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            1
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "9/10",
+          "rhs_over_private_mass": "54",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            2
+          ],
+          "private_mass": "1/30",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "16/15",
+          "rhs_over_private_mass": "32",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            3
+          ],
+          "private_mass": "1/30",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "16/15",
+          "rhs_over_private_mass": "32",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            4
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "1",
+          "rhs_over_private_mass": "60",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            5
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "1",
+          "rhs_over_private_mass": "60",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            6
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "9/10",
+          "rhs_over_private_mass": "54",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            7
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "14/15",
+          "rhs_over_private_mass": "56",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            8
+          ],
+          "private_mass": "1/60",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "14/15",
+          "rhs_over_private_mass": "56",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": false,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        }
+      ],
+      "shell_pair_inequalities": [
+        {
+          "prime": 2,
+          "selected_original_labels": [
+            1,
+            6
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/30",
+          "lhs": "0",
+          "rhs": "0",
+          "holds": true,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 2,
+          "selected_original_labels": [
+            1
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/60",
+          "lhs": "0",
+          "rhs": "0",
+          "holds": true,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 2,
+          "selected_original_labels": [
+            6
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/60",
+          "lhs": "0",
+          "rhs": "0",
+          "holds": true,
+          "rhs_over_private_mass": "0",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            2,
+            3,
+            7,
+            8
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/10",
+          "lhs": "0",
+          "rhs": "1/6",
+          "holds": true,
+          "rhs_over_private_mass": "5/3",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            2
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/30",
+          "lhs": "0",
+          "rhs": "1/6",
+          "holds": true,
+          "rhs_over_private_mass": "5",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            3
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/30",
+          "lhs": "0",
+          "rhs": "1/6",
+          "holds": true,
+          "rhs_over_private_mass": "5",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            7
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/60",
+          "lhs": "0",
+          "rhs": "1/6",
+          "holds": true,
+          "rhs_over_private_mass": "10",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            8
+          ],
+          "sigma": 2,
+          "pair_coefficient": 0,
+          "private_mass": "1/60",
+          "lhs": "0",
+          "rhs": "1/6",
+          "holds": true,
+          "rhs_over_private_mass": "10",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/12",
+          "lhs": "1/12",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24/5",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            4
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/60",
+          "lhs": "1/60",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            5
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/60",
+          "lhs": "1/60",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            6
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/60",
+          "lhs": "1/60",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            7
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/60",
+          "lhs": "1/60",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            8
+          ],
+          "sigma": 3,
+          "pair_coefficient": 1,
+          "private_mass": "1/60",
+          "lhs": "1/60",
+          "rhs": "2/5",
+          "holds": true,
+          "rhs_over_private_mass": "24",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        }
+      ],
+      "top_neighbors_of_private_zero": {
+        "3": [
+          {
+            "phase": 1,
+            "residue": 40,
+            "covering_original_labels": [
+              2
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 20,
+            "covering_original_labels": [
+              3
+            ]
+          }
+        ],
+        "5": [
+          {
+            "phase": 1,
+            "residue": 36,
+            "covering_original_labels": [
+              4
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 12,
+            "covering_original_labels": [
+              5
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 48,
+            "covering_original_labels": [
+              6
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 24,
+            "covering_original_labels": [
+              8
+            ]
+          }
+        ]
+      },
+      "original_names": [
+        "D1",
+        "D2",
+        "P1",
+        "P2",
+        "Q1",
+        "Q2",
+        "Q3",
+        "T1",
+        "T2"
+      ],
+      "odd_hypothesis_boundary": "Whole coverage and numerical distinctness hold; oddness is false. TS1/TS4/TS5 are not asserted as general necessary conditions here. Displayed numerical conclusions are measured individually. TS7/TS8 and actual supplier checks remain applicable."
+    },
+    {
+      "name": "repeated_modulus_partition_3",
+      "period": 3,
+      "lower_modulus": 1,
+      "top_box_size": 3,
+      "whole_cover": true,
+      "numerically_distinct": false,
+      "all_moduli_odd": true,
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 3,
+          "residue": 0,
+          "private_witness": 0,
+          "private_count": 1,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 1
+        },
+        {
+          "label": 1,
+          "modulus": 3,
+          "residue": 1,
+          "private_witness": 1,
+          "private_count": 1,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 1
+        },
+        {
+          "label": 2,
+          "modulus": 3,
+          "residue": 2,
+          "private_witness": 2,
+          "private_count": 1,
+          "top_support": [
+            3
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 1
+        }
+      ],
+      "uncovered_count": 0,
+      "first_uncovered": null,
+      "source_slice_checks": 9,
+      "original_pair_crt_checks": 3,
+      "private_saving_checks": 12,
+      "top_shell_pair_checks": 3,
+      "actual_supplier_checks": 6,
+      "uncovered_top_neighbors": 0,
+      "selected_family_checks": [
+        {
+          "selected_original_labels": [
+            0,
+            1,
+            2
+          ],
+          "private_mass": "1",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "3",
+          "rhs_over_private_mass": "3",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            0
+          ],
+          "private_mass": "1/3",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "5/3",
+          "rhs_over_private_mass": "5",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            1
+          ],
+          "private_mass": "1/3",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "5/3",
+          "rhs_over_private_mass": "5",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            2
+          ],
+          "private_mass": "1/3",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "5/3",
+          "rhs_over_private_mass": "5",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        }
+      ],
+      "shell_pair_inequalities": [
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            0,
+            1,
+            2
+          ],
+          "sigma": 1,
+          "pair_coefficient": 1,
+          "private_mass": "1",
+          "lhs": "1",
+          "rhs": "1",
+          "holds": true,
+          "rhs_over_private_mass": "1",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        }
+      ],
+      "top_neighbors_of_private_zero": {
+        "3": [
+          {
+            "phase": 1,
+            "residue": 1,
+            "covering_original_labels": [
+              1
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 2,
+            "covering_original_labels": [
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "repeated_modulus_partition_25",
+      "period": 25,
+      "lower_modulus": 5,
+      "top_box_size": 5,
+      "whole_cover": true,
+      "numerically_distinct": false,
+      "all_moduli_odd": true,
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 25,
+          "residue": 0,
+          "private_witness": 0,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 1,
+          "modulus": 25,
+          "residue": 1,
+          "private_witness": 1,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 2,
+          "modulus": 25,
+          "residue": 2,
+          "private_witness": 2,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 3,
+          "modulus": 25,
+          "residue": 3,
+          "private_witness": 3,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 4,
+          "modulus": 25,
+          "residue": 4,
+          "private_witness": 4,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            0
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 5,
+          "modulus": 25,
+          "residue": 5,
+          "private_witness": 5,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 6,
+          "modulus": 25,
+          "residue": 6,
+          "private_witness": 6,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 7,
+          "modulus": 25,
+          "residue": 7,
+          "private_witness": 7,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 8,
+          "modulus": 25,
+          "residue": 8,
+          "private_witness": 8,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 9,
+          "modulus": 25,
+          "residue": 9,
+          "private_witness": 9,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            1
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 10,
+          "modulus": 25,
+          "residue": 10,
+          "private_witness": 10,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 11,
+          "modulus": 25,
+          "residue": 11,
+          "private_witness": 11,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 12,
+          "modulus": 25,
+          "residue": 12,
+          "private_witness": 12,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 13,
+          "modulus": 25,
+          "residue": 13,
+          "private_witness": 13,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 14,
+          "modulus": 25,
+          "residue": 14,
+          "private_witness": 14,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            2
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 15,
+          "modulus": 25,
+          "residue": 15,
+          "private_witness": 15,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 16,
+          "modulus": 25,
+          "residue": 16,
+          "private_witness": 16,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 17,
+          "modulus": 25,
+          "residue": 17,
+          "private_witness": 17,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 18,
+          "modulus": 25,
+          "residue": 18,
+          "private_witness": 18,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 19,
+          "modulus": 25,
+          "residue": 19,
+          "private_witness": 19,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            3
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 20,
+          "modulus": 25,
+          "residue": 20,
+          "private_witness": 20,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 21,
+          "modulus": 25,
+          "residue": 21,
+          "private_witness": 21,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 22,
+          "modulus": 25,
+          "residue": 22,
+          "private_witness": 22,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 23,
+          "modulus": 25,
+          "residue": 23,
+          "private_witness": 23,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 5
+        },
+        {
+          "label": 24,
+          "modulus": 25,
+          "residue": 24,
+          "private_witness": 24,
+          "private_count": 1,
+          "top_support": [
+            5
+          ],
+          "top_phase": [
+            4
+          ],
+          "lower_index": 5
+        }
+      ],
+      "uncovered_count": 0,
+      "first_uncovered": null,
+      "source_slice_checks": 625,
+      "original_pair_crt_checks": 250,
+      "private_saving_checks": 6500,
+      "top_shell_pair_checks": 250,
+      "actual_supplier_checks": 100,
+      "uncovered_top_neighbors": 0,
+      "selected_family_checks": [
+        {
+          "selected_original_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ],
+          "private_mass": "1",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "10",
+          "rhs_over_private_mass": "10",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 5,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            0
+          ],
+          "private_mass": "1/25",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "154/25",
+          "rhs_over_private_mass": "154",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            1
+          ],
+          "private_mass": "1/25",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "154/25",
+          "rhs_over_private_mass": "154",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            2
+          ],
+          "private_mass": "1/25",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "154/25",
+          "rhs_over_private_mass": "154",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        }
+      ],
+      "shell_pair_inequalities": [
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ],
+          "sigma": 1,
+          "pair_coefficient": 6,
+          "private_mass": "1",
+          "lhs": "6",
+          "rhs": "6",
+          "holds": true,
+          "rhs_over_private_mass": "6",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        }
+      ],
+      "top_neighbors_of_private_zero": {
+        "5": [
+          {
+            "phase": 1,
+            "residue": 5,
+            "covering_original_labels": [
+              5
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 10,
+            "covering_original_labels": [
+              10
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 15,
+            "covering_original_labels": [
+              15
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 20,
+            "covering_original_labels": [
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "repeated_modulus_partition_225",
+      "period": 225,
+      "lower_modulus": 15,
+      "top_box_size": 15,
+      "whole_cover": true,
+      "numerically_distinct": false,
+      "all_moduli_odd": true,
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 225,
+          "residue": 0,
+          "private_witness": 0,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 1,
+          "modulus": 225,
+          "residue": 1,
+          "private_witness": 1,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 2,
+          "modulus": 225,
+          "residue": 2,
+          "private_witness": 2,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 3,
+          "modulus": 225,
+          "residue": 3,
+          "private_witness": 3,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 4,
+          "modulus": 225,
+          "residue": 4,
+          "private_witness": 4,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 5,
+          "modulus": 225,
+          "residue": 5,
+          "private_witness": 5,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 6,
+          "modulus": 225,
+          "residue": 6,
+          "private_witness": 6,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 7,
+          "modulus": 225,
+          "residue": 7,
+          "private_witness": 7,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 8,
+          "modulus": 225,
+          "residue": 8,
+          "private_witness": 8,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 9,
+          "modulus": 225,
+          "residue": 9,
+          "private_witness": 9,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 10,
+          "modulus": 225,
+          "residue": 10,
+          "private_witness": 10,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 11,
+          "modulus": 225,
+          "residue": 11,
+          "private_witness": 11,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 12,
+          "modulus": 225,
+          "residue": 12,
+          "private_witness": 12,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 13,
+          "modulus": 225,
+          "residue": 13,
+          "private_witness": 13,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 14,
+          "modulus": 225,
+          "residue": 14,
+          "private_witness": 14,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 15,
+          "modulus": 225,
+          "residue": 15,
+          "private_witness": 15,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 16,
+          "modulus": 225,
+          "residue": 16,
+          "private_witness": 16,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 17,
+          "modulus": 225,
+          "residue": 17,
+          "private_witness": 17,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 18,
+          "modulus": 225,
+          "residue": 18,
+          "private_witness": 18,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 19,
+          "modulus": 225,
+          "residue": 19,
+          "private_witness": 19,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 20,
+          "modulus": 225,
+          "residue": 20,
+          "private_witness": 20,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 21,
+          "modulus": 225,
+          "residue": 21,
+          "private_witness": 21,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 22,
+          "modulus": 225,
+          "residue": 22,
+          "private_witness": 22,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 23,
+          "modulus": 225,
+          "residue": 23,
+          "private_witness": 23,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 24,
+          "modulus": 225,
+          "residue": 24,
+          "private_witness": 24,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 25,
+          "modulus": 225,
+          "residue": 25,
+          "private_witness": 25,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 26,
+          "modulus": 225,
+          "residue": 26,
+          "private_witness": 26,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 27,
+          "modulus": 225,
+          "residue": 27,
+          "private_witness": 27,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 28,
+          "modulus": 225,
+          "residue": 28,
+          "private_witness": 28,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 29,
+          "modulus": 225,
+          "residue": 29,
+          "private_witness": 29,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 30,
+          "modulus": 225,
+          "residue": 30,
+          "private_witness": 30,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 31,
+          "modulus": 225,
+          "residue": 31,
+          "private_witness": 31,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 32,
+          "modulus": 225,
+          "residue": 32,
+          "private_witness": 32,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 33,
+          "modulus": 225,
+          "residue": 33,
+          "private_witness": 33,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 34,
+          "modulus": 225,
+          "residue": 34,
+          "private_witness": 34,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 35,
+          "modulus": 225,
+          "residue": 35,
+          "private_witness": 35,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 36,
+          "modulus": 225,
+          "residue": 36,
+          "private_witness": 36,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 37,
+          "modulus": 225,
+          "residue": 37,
+          "private_witness": 37,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 38,
+          "modulus": 225,
+          "residue": 38,
+          "private_witness": 38,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 39,
+          "modulus": 225,
+          "residue": 39,
+          "private_witness": 39,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 40,
+          "modulus": 225,
+          "residue": 40,
+          "private_witness": 40,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 41,
+          "modulus": 225,
+          "residue": 41,
+          "private_witness": 41,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 42,
+          "modulus": 225,
+          "residue": 42,
+          "private_witness": 42,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 43,
+          "modulus": 225,
+          "residue": 43,
+          "private_witness": 43,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 44,
+          "modulus": 225,
+          "residue": 44,
+          "private_witness": 44,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 45,
+          "modulus": 225,
+          "residue": 45,
+          "private_witness": 45,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 46,
+          "modulus": 225,
+          "residue": 46,
+          "private_witness": 46,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 47,
+          "modulus": 225,
+          "residue": 47,
+          "private_witness": 47,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 48,
+          "modulus": 225,
+          "residue": 48,
+          "private_witness": 48,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 49,
+          "modulus": 225,
+          "residue": 49,
+          "private_witness": 49,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 50,
+          "modulus": 225,
+          "residue": 50,
+          "private_witness": 50,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 51,
+          "modulus": 225,
+          "residue": 51,
+          "private_witness": 51,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 52,
+          "modulus": 225,
+          "residue": 52,
+          "private_witness": 52,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 53,
+          "modulus": 225,
+          "residue": 53,
+          "private_witness": 53,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 54,
+          "modulus": 225,
+          "residue": 54,
+          "private_witness": 54,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 55,
+          "modulus": 225,
+          "residue": 55,
+          "private_witness": 55,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 56,
+          "modulus": 225,
+          "residue": 56,
+          "private_witness": 56,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 57,
+          "modulus": 225,
+          "residue": 57,
+          "private_witness": 57,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 58,
+          "modulus": 225,
+          "residue": 58,
+          "private_witness": 58,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 59,
+          "modulus": 225,
+          "residue": 59,
+          "private_witness": 59,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 60,
+          "modulus": 225,
+          "residue": 60,
+          "private_witness": 60,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 61,
+          "modulus": 225,
+          "residue": 61,
+          "private_witness": 61,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 62,
+          "modulus": 225,
+          "residue": 62,
+          "private_witness": 62,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 63,
+          "modulus": 225,
+          "residue": 63,
+          "private_witness": 63,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 64,
+          "modulus": 225,
+          "residue": 64,
+          "private_witness": 64,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 65,
+          "modulus": 225,
+          "residue": 65,
+          "private_witness": 65,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 66,
+          "modulus": 225,
+          "residue": 66,
+          "private_witness": 66,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 67,
+          "modulus": 225,
+          "residue": 67,
+          "private_witness": 67,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 68,
+          "modulus": 225,
+          "residue": 68,
+          "private_witness": 68,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 69,
+          "modulus": 225,
+          "residue": 69,
+          "private_witness": 69,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 70,
+          "modulus": 225,
+          "residue": 70,
+          "private_witness": 70,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 71,
+          "modulus": 225,
+          "residue": 71,
+          "private_witness": 71,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 72,
+          "modulus": 225,
+          "residue": 72,
+          "private_witness": 72,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 73,
+          "modulus": 225,
+          "residue": 73,
+          "private_witness": 73,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 74,
+          "modulus": 225,
+          "residue": 74,
+          "private_witness": 74,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 75,
+          "modulus": 225,
+          "residue": 75,
+          "private_witness": 75,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 76,
+          "modulus": 225,
+          "residue": 76,
+          "private_witness": 76,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 77,
+          "modulus": 225,
+          "residue": 77,
+          "private_witness": 77,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 78,
+          "modulus": 225,
+          "residue": 78,
+          "private_witness": 78,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 79,
+          "modulus": 225,
+          "residue": 79,
+          "private_witness": 79,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 80,
+          "modulus": 225,
+          "residue": 80,
+          "private_witness": 80,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 81,
+          "modulus": 225,
+          "residue": 81,
+          "private_witness": 81,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 82,
+          "modulus": 225,
+          "residue": 82,
+          "private_witness": 82,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 83,
+          "modulus": 225,
+          "residue": 83,
+          "private_witness": 83,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 84,
+          "modulus": 225,
+          "residue": 84,
+          "private_witness": 84,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 85,
+          "modulus": 225,
+          "residue": 85,
+          "private_witness": 85,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 86,
+          "modulus": 225,
+          "residue": 86,
+          "private_witness": 86,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 87,
+          "modulus": 225,
+          "residue": 87,
+          "private_witness": 87,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 88,
+          "modulus": 225,
+          "residue": 88,
+          "private_witness": 88,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 89,
+          "modulus": 225,
+          "residue": 89,
+          "private_witness": 89,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 90,
+          "modulus": 225,
+          "residue": 90,
+          "private_witness": 90,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 91,
+          "modulus": 225,
+          "residue": 91,
+          "private_witness": 91,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 92,
+          "modulus": 225,
+          "residue": 92,
+          "private_witness": 92,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 93,
+          "modulus": 225,
+          "residue": 93,
+          "private_witness": 93,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 94,
+          "modulus": 225,
+          "residue": 94,
+          "private_witness": 94,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 95,
+          "modulus": 225,
+          "residue": 95,
+          "private_witness": 95,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 96,
+          "modulus": 225,
+          "residue": 96,
+          "private_witness": 96,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 97,
+          "modulus": 225,
+          "residue": 97,
+          "private_witness": 97,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 98,
+          "modulus": 225,
+          "residue": 98,
+          "private_witness": 98,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 99,
+          "modulus": 225,
+          "residue": 99,
+          "private_witness": 99,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 100,
+          "modulus": 225,
+          "residue": 100,
+          "private_witness": 100,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 101,
+          "modulus": 225,
+          "residue": 101,
+          "private_witness": 101,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 102,
+          "modulus": 225,
+          "residue": 102,
+          "private_witness": 102,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 103,
+          "modulus": 225,
+          "residue": 103,
+          "private_witness": 103,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 104,
+          "modulus": 225,
+          "residue": 104,
+          "private_witness": 104,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 105,
+          "modulus": 225,
+          "residue": 105,
+          "private_witness": 105,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 106,
+          "modulus": 225,
+          "residue": 106,
+          "private_witness": 106,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 107,
+          "modulus": 225,
+          "residue": 107,
+          "private_witness": 107,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 108,
+          "modulus": 225,
+          "residue": 108,
+          "private_witness": 108,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 109,
+          "modulus": 225,
+          "residue": 109,
+          "private_witness": 109,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 110,
+          "modulus": 225,
+          "residue": 110,
+          "private_witness": 110,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 111,
+          "modulus": 225,
+          "residue": 111,
+          "private_witness": 111,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 112,
+          "modulus": 225,
+          "residue": 112,
+          "private_witness": 112,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 113,
+          "modulus": 225,
+          "residue": 113,
+          "private_witness": 113,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 114,
+          "modulus": 225,
+          "residue": 114,
+          "private_witness": 114,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 115,
+          "modulus": 225,
+          "residue": 115,
+          "private_witness": 115,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 116,
+          "modulus": 225,
+          "residue": 116,
+          "private_witness": 116,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 117,
+          "modulus": 225,
+          "residue": 117,
+          "private_witness": 117,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 118,
+          "modulus": 225,
+          "residue": 118,
+          "private_witness": 118,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 119,
+          "modulus": 225,
+          "residue": 119,
+          "private_witness": 119,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 120,
+          "modulus": 225,
+          "residue": 120,
+          "private_witness": 120,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 121,
+          "modulus": 225,
+          "residue": 121,
+          "private_witness": 121,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 122,
+          "modulus": 225,
+          "residue": 122,
+          "private_witness": 122,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 123,
+          "modulus": 225,
+          "residue": 123,
+          "private_witness": 123,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 124,
+          "modulus": 225,
+          "residue": 124,
+          "private_witness": 124,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 125,
+          "modulus": 225,
+          "residue": 125,
+          "private_witness": 125,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 126,
+          "modulus": 225,
+          "residue": 126,
+          "private_witness": 126,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 127,
+          "modulus": 225,
+          "residue": 127,
+          "private_witness": 127,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 128,
+          "modulus": 225,
+          "residue": 128,
+          "private_witness": 128,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 129,
+          "modulus": 225,
+          "residue": 129,
+          "private_witness": 129,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 130,
+          "modulus": 225,
+          "residue": 130,
+          "private_witness": 130,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 131,
+          "modulus": 225,
+          "residue": 131,
+          "private_witness": 131,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 132,
+          "modulus": 225,
+          "residue": 132,
+          "private_witness": 132,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 133,
+          "modulus": 225,
+          "residue": 133,
+          "private_witness": 133,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 134,
+          "modulus": 225,
+          "residue": 134,
+          "private_witness": 134,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 135,
+          "modulus": 225,
+          "residue": 135,
+          "private_witness": 135,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 136,
+          "modulus": 225,
+          "residue": 136,
+          "private_witness": 136,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 137,
+          "modulus": 225,
+          "residue": 137,
+          "private_witness": 137,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 138,
+          "modulus": 225,
+          "residue": 138,
+          "private_witness": 138,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 139,
+          "modulus": 225,
+          "residue": 139,
+          "private_witness": 139,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 140,
+          "modulus": 225,
+          "residue": 140,
+          "private_witness": 140,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 141,
+          "modulus": 225,
+          "residue": 141,
+          "private_witness": 141,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 142,
+          "modulus": 225,
+          "residue": 142,
+          "private_witness": 142,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 143,
+          "modulus": 225,
+          "residue": 143,
+          "private_witness": 143,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 144,
+          "modulus": 225,
+          "residue": 144,
+          "private_witness": 144,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 145,
+          "modulus": 225,
+          "residue": 145,
+          "private_witness": 145,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 146,
+          "modulus": 225,
+          "residue": 146,
+          "private_witness": 146,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 147,
+          "modulus": 225,
+          "residue": 147,
+          "private_witness": 147,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 148,
+          "modulus": 225,
+          "residue": 148,
+          "private_witness": 148,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 149,
+          "modulus": 225,
+          "residue": 149,
+          "private_witness": 149,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 150,
+          "modulus": 225,
+          "residue": 150,
+          "private_witness": 150,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 151,
+          "modulus": 225,
+          "residue": 151,
+          "private_witness": 151,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 152,
+          "modulus": 225,
+          "residue": 152,
+          "private_witness": 152,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 153,
+          "modulus": 225,
+          "residue": 153,
+          "private_witness": 153,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 154,
+          "modulus": 225,
+          "residue": 154,
+          "private_witness": 154,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 155,
+          "modulus": 225,
+          "residue": 155,
+          "private_witness": 155,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 156,
+          "modulus": 225,
+          "residue": 156,
+          "private_witness": 156,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 157,
+          "modulus": 225,
+          "residue": 157,
+          "private_witness": 157,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 158,
+          "modulus": 225,
+          "residue": 158,
+          "private_witness": 158,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 159,
+          "modulus": 225,
+          "residue": 159,
+          "private_witness": 159,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 160,
+          "modulus": 225,
+          "residue": 160,
+          "private_witness": 160,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 161,
+          "modulus": 225,
+          "residue": 161,
+          "private_witness": 161,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 162,
+          "modulus": 225,
+          "residue": 162,
+          "private_witness": 162,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 163,
+          "modulus": 225,
+          "residue": 163,
+          "private_witness": 163,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 164,
+          "modulus": 225,
+          "residue": 164,
+          "private_witness": 164,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 165,
+          "modulus": 225,
+          "residue": 165,
+          "private_witness": 165,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 166,
+          "modulus": 225,
+          "residue": 166,
+          "private_witness": 166,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 167,
+          "modulus": 225,
+          "residue": 167,
+          "private_witness": 167,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 168,
+          "modulus": 225,
+          "residue": 168,
+          "private_witness": 168,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 169,
+          "modulus": 225,
+          "residue": 169,
+          "private_witness": 169,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 170,
+          "modulus": 225,
+          "residue": 170,
+          "private_witness": 170,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 171,
+          "modulus": 225,
+          "residue": 171,
+          "private_witness": 171,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 172,
+          "modulus": 225,
+          "residue": 172,
+          "private_witness": 172,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 173,
+          "modulus": 225,
+          "residue": 173,
+          "private_witness": 173,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 174,
+          "modulus": 225,
+          "residue": 174,
+          "private_witness": 174,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 175,
+          "modulus": 225,
+          "residue": 175,
+          "private_witness": 175,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 176,
+          "modulus": 225,
+          "residue": 176,
+          "private_witness": 176,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 177,
+          "modulus": 225,
+          "residue": 177,
+          "private_witness": 177,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 178,
+          "modulus": 225,
+          "residue": 178,
+          "private_witness": 178,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 179,
+          "modulus": 225,
+          "residue": 179,
+          "private_witness": 179,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 180,
+          "modulus": 225,
+          "residue": 180,
+          "private_witness": 180,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 181,
+          "modulus": 225,
+          "residue": 181,
+          "private_witness": 181,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 182,
+          "modulus": 225,
+          "residue": 182,
+          "private_witness": 182,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 183,
+          "modulus": 225,
+          "residue": 183,
+          "private_witness": 183,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 184,
+          "modulus": 225,
+          "residue": 184,
+          "private_witness": 184,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 185,
+          "modulus": 225,
+          "residue": 185,
+          "private_witness": 185,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 186,
+          "modulus": 225,
+          "residue": 186,
+          "private_witness": 186,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 187,
+          "modulus": 225,
+          "residue": 187,
+          "private_witness": 187,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 188,
+          "modulus": 225,
+          "residue": 188,
+          "private_witness": 188,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 189,
+          "modulus": 225,
+          "residue": 189,
+          "private_witness": 189,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 190,
+          "modulus": 225,
+          "residue": 190,
+          "private_witness": 190,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 191,
+          "modulus": 225,
+          "residue": 191,
+          "private_witness": 191,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 192,
+          "modulus": 225,
+          "residue": 192,
+          "private_witness": 192,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 193,
+          "modulus": 225,
+          "residue": 193,
+          "private_witness": 193,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 194,
+          "modulus": 225,
+          "residue": 194,
+          "private_witness": 194,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 195,
+          "modulus": 225,
+          "residue": 195,
+          "private_witness": 195,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 196,
+          "modulus": 225,
+          "residue": 196,
+          "private_witness": 196,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 197,
+          "modulus": 225,
+          "residue": 197,
+          "private_witness": 197,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 198,
+          "modulus": 225,
+          "residue": 198,
+          "private_witness": 198,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 199,
+          "modulus": 225,
+          "residue": 199,
+          "private_witness": 199,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 200,
+          "modulus": 225,
+          "residue": 200,
+          "private_witness": 200,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 201,
+          "modulus": 225,
+          "residue": 201,
+          "private_witness": 201,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 202,
+          "modulus": 225,
+          "residue": 202,
+          "private_witness": 202,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 203,
+          "modulus": 225,
+          "residue": 203,
+          "private_witness": 203,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 204,
+          "modulus": 225,
+          "residue": 204,
+          "private_witness": 204,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            0
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 205,
+          "modulus": 225,
+          "residue": 205,
+          "private_witness": 205,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 206,
+          "modulus": 225,
+          "residue": 206,
+          "private_witness": 206,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 207,
+          "modulus": 225,
+          "residue": 207,
+          "private_witness": 207,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 208,
+          "modulus": 225,
+          "residue": 208,
+          "private_witness": 208,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 209,
+          "modulus": 225,
+          "residue": 209,
+          "private_witness": 209,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            1
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 210,
+          "modulus": 225,
+          "residue": 210,
+          "private_witness": 210,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 211,
+          "modulus": 225,
+          "residue": 211,
+          "private_witness": 211,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 212,
+          "modulus": 225,
+          "residue": 212,
+          "private_witness": 212,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 213,
+          "modulus": 225,
+          "residue": 213,
+          "private_witness": 213,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 214,
+          "modulus": 225,
+          "residue": 214,
+          "private_witness": 214,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            2
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 215,
+          "modulus": 225,
+          "residue": 215,
+          "private_witness": 215,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 216,
+          "modulus": 225,
+          "residue": 216,
+          "private_witness": 216,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 217,
+          "modulus": 225,
+          "residue": 217,
+          "private_witness": 217,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 218,
+          "modulus": 225,
+          "residue": 218,
+          "private_witness": 218,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            0,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 219,
+          "modulus": 225,
+          "residue": 219,
+          "private_witness": 219,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            3
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 220,
+          "modulus": 225,
+          "residue": 220,
+          "private_witness": 220,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 221,
+          "modulus": 225,
+          "residue": 221,
+          "private_witness": 221,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            1,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 222,
+          "modulus": 225,
+          "residue": 222,
+          "private_witness": 222,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 223,
+          "modulus": 225,
+          "residue": 223,
+          "private_witness": 223,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        },
+        {
+          "label": 224,
+          "modulus": 225,
+          "residue": 224,
+          "private_witness": 224,
+          "private_count": 1,
+          "top_support": [
+            3,
+            5
+          ],
+          "top_phase": [
+            2,
+            4
+          ],
+          "lower_index": 15
+        }
+      ],
+      "uncovered_count": 0,
+      "first_uncovered": null,
+      "source_slice_checks": 50625,
+      "original_pair_crt_checks": 23625,
+      "private_saving_checks": 5339250,
+      "top_shell_pair_checks": 10125,
+      "actual_supplier_checks": 1350,
+      "uncovered_top_neighbors": 0,
+      "selected_family_checks": [
+        {
+          "selected_original_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224
+          ],
+          "private_mass": "1",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "105",
+          "rhs_over_private_mass": "105",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 15,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            0
+          ],
+          "private_mass": "1/225",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "20489/225",
+          "rhs_over_private_mass": "20489",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            1
+          ],
+          "private_mass": "1/225",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "20489/225",
+          "rhs_over_private_mass": "20489",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        },
+        {
+          "selected_original_labels": [
+            2
+          ],
+          "private_mass": "1/225",
+          "collision_uncovered_private_points": 0,
+          "private_saving_rhs": "20489/225",
+          "rhs_over_private_mass": "20489",
+          "strict_rejection": false,
+          "numerical_inequality_holds": true,
+          "odd_top_shadow_scope": true,
+          "whole_cover_inequality_applicable": true,
+          "phase_excess_sources": 1,
+          "phase_excess_failures": 0
+        }
+      ],
+      "shell_pair_inequalities": [
+        {
+          "prime": 3,
+          "selected_original_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224
+          ],
+          "sigma": 1,
+          "pair_coefficient": 1,
+          "private_mass": "1",
+          "lhs": "1",
+          "rhs": "1",
+          "holds": true,
+          "rhs_over_private_mass": "1",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        },
+        {
+          "prime": 5,
+          "selected_original_labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224
+          ],
+          "sigma": 1,
+          "pair_coefficient": 6,
+          "private_mass": "1",
+          "lhs": "6",
+          "rhs": "6",
+          "holds": true,
+          "rhs_over_private_mass": "6",
+          "strict_rejection": false,
+          "whole_cover_premise": true
+        }
+      ],
+      "top_neighbors_of_private_zero": {
+        "3": [
+          {
+            "phase": 1,
+            "residue": 75,
+            "covering_original_labels": [
+              75
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 150,
+            "covering_original_labels": [
+              150
+            ]
+          }
+        ],
+        "5": [
+          {
+            "phase": 1,
+            "residue": 180,
+            "covering_original_labels": [
+              180
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 135,
+            "covering_original_labels": [
+              135
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 90,
+            "covering_original_labels": [
+              90
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 45,
+            "covering_original_labels": [
+              45
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

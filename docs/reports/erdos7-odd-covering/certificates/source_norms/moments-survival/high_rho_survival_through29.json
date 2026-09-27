@@ -3,14 +3,14 @@
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
     "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
-    "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "192881db2a35f97ab9d786b2ec18f2c07064ffe83158e6b14a40daee29373a19",
+    "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "93dbe756e5ed88d3d5822e4a36e6c8b3a9392bba370f160bac93b32a183534cb",
     "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
     "frontier/j-geometry/j_whole_face_high_rho_finite_guard.py": "72e4a5d9621a46bc446e3e98ed5b85b621426a72842e73926c3cce164d2f2dea",
     "profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md": "f3190a7c8656a2e20dbf1172517caa2fdc1c9cc6366cd87d1a51c8bde9ccf629",
     "profile-notes/001-064/20-genuine-current-kernels-and-positive-charge.md": "2a66a59fc7e533de30dc997db4a998dbab42f67e3b5dd63754a300cbee62da58",
     "profile-notes/001-064/22-comparing-the-two-killed-steps.md": "47102f0efcde817f783dd7792c6d1ad515720f3c659df594e17817a748c5a225",
     "profile-notes/257-320/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md": "126e389d47ede2ab5a4cc85d6cb5f96e0cdfa3201b63b87bc0d1bee0c39a5c33",
-    "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6f4f1ebf49e84ddf4ed886a5330aca588e4a876269240a50e3d5a9575c7b3c7c"
+    "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6a5e627e1387bfad0c804ae90f10642d7a2227427270d6564b028d11cbe166cd"
   },
   "ordinary_proof": {
     "sha256": "208da51fd5288eda3e72cdfe98aa7eaab7eaebd8dfac5c9f09c83f9c3a62b5d3",
