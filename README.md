@@ -2,7 +2,7 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
+[Vision](docs/VISION.md) · [Film](#film) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
 [Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [First run](#first-run) ·
@@ -24,6 +24,14 @@ The project combines philosophical inquiry, theory, experiments and Lean 4
 formalization. Each proof establishes its exact statement under declared
 assumptions. The [vision and research guide](docs/VISION.md) connects this work
 to open directions.
+
+## Film
+
+[![TRURETURING — Truth Is Discovered: download Film 001](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg)](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4)
+
+**TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
+[Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
+[Film source and releases](https://github.com/the-omega-institute/trureturing-film).
 
 ## Truth and computation
 
