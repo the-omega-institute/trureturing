@@ -51,14 +51,15 @@ bracket and $Y(h,z)=\sum_n h(n)z^{-n-1}$; the coefficient-shift consequence is p
 
 ## 3. A rational polynomial Heisenberg field
 
-**Theorem 3.1 (shifted polynomial Fock modes).** Let
+**Theorem 3.1 (shifted polynomial Fock modes).** Following the complex
+Heisenberg Fock construction in Chu--Lin [1, Section 3.1], let
 $V=\mathbb Q[X_0,X_1,\ldots]$, with vacuum $1\in V$. For each integer $m$ define a
 $\mathbb Q$-linear endomorphism $a_m$ of $V$: if $m=k+1>0$, set
 $a_m=(k+1)\partial/\partial X_k$; if $m=-(k+1)<0$, set $a_m$ to multiplication
-by $X_k$; and set $a_0=0$. There is a Mathlib vertex operator $A$ on $V$ whose
-normalized coefficient $A[[m]]$ is $a_m$ for every $m\in\mathbb Z$. Its Laurent
-coefficients are pointwise bounded below: for each polynomial $p$, all sufficiently
-large positive modes $a_m$ annihilate $p$. For every $m,n\in\mathbb Z$,
+by $X_k$; and set $a_0=0$. The formal field
+$A(z)=\sum_{m\in\mathbb Z}a_m z^{-m-1}$ is pointwise lower truncated:
+for each polynomial $p$, all sufficiently large positive modes $a_m$ annihilate
+$p$. For every $m,n\in\mathbb Z$,
 $$
   a_m\circ a_n-a_n\circ a_m
   =\begin{cases}m\,\mathrm{id}_V,&m+n=0,\\0,&m+n\ne0.\end{cases}
@@ -69,7 +70,7 @@ negative modes applied to $1$ span $V$ over $\mathbb Q$.
 
 **Proof.** A polynomial has finite variable support. A positive mode indexed beyond
 that support is a partial derivative in a missing variable, hence zero on the
-polynomial. This supplies the pointwise support bound for `VertexOperator.of_coeff`.
+polynomial. This gives pointwise lower truncation of $A(z)$.
 Two multiplication modes commute, as do two partial derivatives. The Leibniz rule
 and $\partial X_j/\partial X_i=\delta_{ij}$ give
 $[a_{k+1},a_{-(j+1)}]=(k+1)\delta_{kj}\,\mathrm{id}_V$; reversing the order changes
@@ -78,8 +79,5 @@ for every integer pair. Since $a_{-1}(1)=X_0$, $a_1(X_0)=1$, and $a_1(1)=0$,
 the vacuum commutator equals $1$. The monomials in the $X_k$ form the polynomial
 basis and are products of the stated multiplication modes applied to $1$.
 
-Chu--Lin [1, Section 3.1] describe the standard Heisenberg Fock construction over
-$\mathbb C$ and its mode bracket. The rational polynomial carrier, shifted indexing,
-pointwise support argument, and the exact Mathlib `VertexOperator` realization above
-are the claims proved here, not a claim that the cited complex setup supplies their
-formal proof.
+Chu--Lin [1, Section 3.1] work over $\mathbb C$. The rational carrier and shifted
+indexing above give an algebraic specialization of their construction.

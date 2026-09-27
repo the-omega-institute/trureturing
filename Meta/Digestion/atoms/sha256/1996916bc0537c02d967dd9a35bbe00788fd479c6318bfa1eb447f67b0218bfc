@@ -1,0 +1,13 @@
+**Proof.** A polynomial has finite variable support. A positive mode indexed beyond
+that support is a partial derivative in a missing variable, hence zero on the
+polynomial. This gives pointwise lower truncation of $A(z)$.
+Two multiplication modes commute, as do two partial derivatives. The Leibniz rule
+and $\partial X_j/\partial X_i=\delta_{ij}$ give
+$[a_{k+1},a_{-(j+1)}]=(k+1)\delta_{kj}\,\mathrm{id}_V$; reversing the order changes
+the sign. The zero mode contributes zero. These cases yield the displayed relation
+for every integer pair. Since $a_{-1}(1)=X_0$, $a_1(X_0)=1$, and $a_1(1)=0$,
+the vacuum commutator equals $1$. The monomials in the $X_k$ form the polynomial
+basis and are products of the stated multiplication modes applied to $1$.
+
+Chu--Lin [1, Section 3.1] work over $\mathbb C$. The rational carrier and shifted
+indexing above give an algebraic specialization of their construction.

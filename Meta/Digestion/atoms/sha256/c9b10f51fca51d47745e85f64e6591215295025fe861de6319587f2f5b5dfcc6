@@ -1,0 +1,17 @@
+**Theorem 3.1 (shifted polynomial Fock modes).** Following the complex
+Heisenberg Fock construction in Chu--Lin [1, Section 3.1], let
+$V=\mathbb Q[X_0,X_1,\ldots]$, with vacuum $1\in V$. For each integer $m$ define a
+$\mathbb Q$-linear endomorphism $a_m$ of $V$: if $m=k+1>0$, set
+$a_m=(k+1)\partial/\partial X_k$; if $m=-(k+1)<0$, set $a_m$ to multiplication
+by $X_k$; and set $a_0=0$. The formal field
+$A(z)=\sum_{m\in\mathbb Z}a_m z^{-m-1}$ is pointwise lower truncated:
+for each polynomial $p$, all sufficiently large positive modes $a_m$ annihilate
+$p$. For every $m,n\in\mathbb Z$,
+$$
+  a_m\circ a_n-a_n\circ a_m
+  =\begin{cases}m\,\mathrm{id}_V,&m+n=0,\\0,&m+n\ne0.\end{cases}
+$$
+In particular, $(a_1\circ a_{-1}-a_{-1}\circ a_1)(1)=1\ne0$.
+Every variable $X_k=a_{-(k+1)}(1)$ is reached from the vacuum; products of
+negative modes applied to $1$ span $V$ over $\mathbb Q$.
+
