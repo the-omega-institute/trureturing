@@ -78,17 +78,11 @@ theorem result : claim := by
     intro v a b hba ha
     rw [Finset.mem_coe, mem_box] at ha ⊢
     exact fun i => lt_of_le_of_lt (hba i) (ha i)
-  have pos_of_prod : ∀ (v : Fin d → ℕ) (n : ℕ), 1 ≤ n → ∏ i, v i = n → ∀ i, 0 < v i := by
-    intro v n hn hv i
-    rcases Nat.eq_zero_or_pos (v i) with h | h
-    · have : ∏ j, v j = 0 := Finset.prod_eq_zero (Finset.mem_univ i) h
-      omega
-    · exact h
-  have sum_lt : ∀ a b : Fin d → ℕ, a < b → ∑ i, a i < ∑ i, b i := by
-    intro a b hab
-    rw [Pi.lt_def] at hab
-    obtain ⟨hle, i, hi⟩ := hab
-    exact Finset.sum_lt_sum (fun j _ => hle j) ⟨i, Finset.mem_univ i, hi⟩
+  have pos_of_prod : ∀ (v : Fin d → ℕ) (n : ℕ), 1 ≤ n → ∏ i, v i = n → ∀ i, 0 < v i :=
+    fun v n hn hv i =>
+      Nat.pos_of_ne_zero (Finset.prod_ne_zero_iff.1 (by omega) i (Finset.mem_univ i))
+  have sum_lt : ∀ a b : Fin d → ℕ, a < b → ∑ i, a i < ∑ i, b i :=
+    fun a b hab => Fintype.sum_strictMono hab
   -- a positive box is determined by its cells
   have box_inj : ∀ v w : Fin d → ℕ, (∀ i, 0 < v i) → (∀ i, 0 < w i) → box v = box w → v = w := by
     have single_mem : ∀ u : Fin d → ℕ, (∀ j, 0 < u j) → ∀ i, Pi.single i (u i - 1) ∈ box u := by
@@ -347,11 +341,8 @@ theorem result : claim := by
         omega
     · rintro rfl
       refine ⟨⟨?_, ?_⟩, Finset.erase_subset _ _⟩
-      · intro a b hba ha
-        rw [Finset.mem_coe, Finset.mem_erase] at ha ⊢
-        refine ⟨?_, lower_box v hba ha.2⟩
-        rintro rfl
-        exact ha.1 (le_antisymm (le_top a ha.2) hba)
+      · rw [Finset.coe_erase]
+        exact (lower_box v).erase fun b hb htb => le_antisymm (le_top b hb) htb
       · rw [Finset.card_erase_of_mem htbox, hcard]
         omega
   -- Step 4: one shrinking forces a box.
@@ -367,11 +358,8 @@ theorem result : claim := by
     have erase_mem : ∀ m ∈ J, (∀ z ∈ J, m ≤ z → z = m) → J.erase m ∈ S := by
       intro m hm hmax
       refine ⟨⟨?_, ?_⟩, Finset.erase_subset _ _⟩
-      · intro a b hba ha
-        rw [Finset.mem_coe, Finset.mem_erase] at ha ⊢
-        refine ⟨?_, hJl hba ha.2⟩
-        rintro rfl
-        exact ha.1 (hmax a ha.2 hba)
+      · rw [Finset.coe_erase]
+        exact hJl.erase hmax
       · rw [Finset.card_erase_of_mem hm, hJc]
         omega
     -- the maximum of the coordinate sum is such a cell
