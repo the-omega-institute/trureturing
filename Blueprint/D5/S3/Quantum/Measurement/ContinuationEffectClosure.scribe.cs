@@ -48,7 +48,8 @@ internal sealed class ContinuationEffectClosureDocument : IScribeDocumentDefinit
             Operatorname, Grp(F.Id("dim")), Sp, Sub("Z", D(0)), Sp, Eq, Sp, F.Id("r"), Sp, Rightarrow, RowBreak, Grp(),
             Forall, Sp, N, Sp, Geq, Sp, stop, Comma, Sp, Sub("Z", N), Sp, Eq, Sp, zs, Comma, Quad, Sp,
             Sub("Z", D(0)), Sp, Subseteq, Sp, zs, Comma, Quad, Sp,
-            PhiSub(J), Caret, Grp(Star), Open, zs, Close, Sp, Subseteq, Sp, zs, Comma, RowBreak, Grp(),
+            Forall, Sp, J, Comma, Sp, PhiSub(J), Caret, Grp(Star), Open, zs, Close, Sp, Subseteq, Sp, zs, Comma,
+            RowBreak, Grp(),
             Forall, Sp, W, Comma, Sp, Sub("Z", D(0)), Sp, Subseteq, Sp, W, Sp, Land, Sp,
             Open, Forall, Sp, J, Comma, Sp, PhiSub(J), Caret, Grp(Star), Open, W, Close, Sp, Subseteq, Sp, W,
             Close, Sp, Rightarrow, Sp, zs, Sp, Subseteq, Sp, W, Dot));
