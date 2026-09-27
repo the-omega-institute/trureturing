@@ -6,7 +6,7 @@ A general no-click instrument has no definite dark direction exactly when its li
 
 **Theorem 1.1 (Four equivalent forms of the absence of dark directions).**
 
-$$\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \land S_{N} \to F \Rightarrow\\{}D_{d} = 0 \iff F = 0 \iff I-S_{d} > 0 \iff\\{}\forall \rho \geq 0 \text{ with }\operatorname{Tr} \rho = 1, \operatorname{Tr}(\rho F) = 0.$$
+$${\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \land S_{N} \to F} \Rightarrow\\{}D_{d} = 0 \iff F = 0 \iff I-S_{d} > 0 \iff\\{}\forall \rho \geq 0 \text{ with }\operatorname{Tr} \rho = 1, \operatorname{Tr}(\rho F) = 0.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/GeneralInstrumentNoDarkDirection.no_dark_direction_tfae` (`✓ std3`). ∎
 
