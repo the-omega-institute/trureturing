@@ -1,0 +1,48 @@
+{
+  "schema": "temporary-m3-hosted-probe-v1",
+  "source": {
+    "integration_branch": "integration-ci-escape-source-0926-v2-tests",
+    "installed_integration": "e30316c5024b209880cf1e47852596d2f3ac4bcc",
+    "baseline": "53ec407c9a42ebcbbc83c3cf46129dd5faf0e751",
+    "final_verification": "2344decae77045d4d444b9d870fa2f0e67ff702e",
+    "final_core": "d86a54869d231cc1d358eaedd797842fec8919de",
+    "path": "tools/lean-inspector/LeanInformationAudit/Tests/Seal/M3.lean",
+    "sha256": "e88e5b9d86876809cbbf9e725fdad3e2c1f2a952aeadaa1d0f4b05b9aa878497",
+    "bytes": 7879,
+    "toolchain": "Lean4.33.0"
+  },
+  "runner": {
+    "runs_on": "ubuntu-24.04-arm",
+    "runner_availability": "unverified until the pull_request event; no fallback runner",
+    "trigger": "pull_request",
+    "required_jobs_unchanged": true,
+    "permissions": {"contents": "read", "actions": "read"},
+    "retries": 0,
+    "per_process_seconds": 1800,
+    "per_process_output_bytes": 16777216,
+    "job_timeout_minutes": 240
+  },
+  "samples": ["A1 baseline", "B1 final", "B2 final", "A2 baseline"],
+  "acceptance": {
+    "external_processes": ["lean", "reportInspector"],
+    "boundary_samples_included": true,
+    "balanced_pairs": true,
+    "direct_source_execution": true,
+    "imports_separate_from_timing": true,
+    "baseline_imports": {"modules": 144, "limit": 143, "interface": 6, "expected_gate": "known-baseline-limit-failure"},
+    "final_imports": {"modules": 143, "limit": 143, "interface": 6, "expected_gate": "pass"},
+    "export_identity_separate": true,
+    "expected_normalized_export_bytes": 171790,
+    "expected_normalized_export_sha256": "e4aa9d1749672910a3479d734a6d89631a6a151f12d2b8a947c23bb6d81d70ee",
+    "expected_declarations": 282,
+    "expected_identity_sha256": "29247e3efa9866ba16a12555b175a60cdd3a483076800747890993e607192e87",
+    "expected_axioms": ["Classical.choice", "Quot.sound", "propext"]
+  },
+  "disposition": {
+    "temporary": true,
+    "never_production_gate": true,
+    "no_speedup_claim": true,
+    "runtime_artifacts_outside_git": true,
+    "close_after_event_validation": true
+  }
+}

@@ -1,0 +1,126 @@
+name: Temporary M3 hosted measurement probe
+
+on:
+  pull_request:
+    branches: [integration-ci-escape-source-0926-v2-tests]
+    types: [opened, synchronize, reopened]
+
+# This workflow is a discard-after-verification experiment.  It is scoped to
+# the owned branch and only reads source/cache inputs; it does not alter the
+# required CI workflows, branch protections, or production budgets.
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  m3-temporary-measurement:
+    name: m3 temporary measurement
+    if: github.event.pull_request.head.ref == 'lane/governance/sshx-6ab854025f38b43bc1cff4d2-attempt-1'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 240
+    steps:
+      - name: Check out the immutable head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Strip checkout remote state
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$HEAD_SHA"
+
+      - name: Set up the pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Build the cache reader
+        run: make -C tools dotnet
+
+      - name: Resolve cache partitions
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+
+      - name: Restore pinned Lean toolchain cache
+        if: steps.keys.outputs.elan_key != ''
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+
+      - name: Install the pinned Lean toolchain
+        env:
+          TOOLCHAIN_FILE: ${{ github.workspace }}/lean-toolchain
+        run: |
+          set -euo pipefail
+          "$GITHUB_WORKSPACE/tools/scripts/workflow/install-lean-toolchain.sh" \
+            "$TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
+
+      - name: Restore the read-only Lean dependency cache
+        id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+
+      - name: Restore the read-only Lean project cache
+        id: project
+        if: steps.keys.outputs.project_key != ''
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+
+      - name: Restore validated cache inputs
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+
+      - name: Verify historical source reachability
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin \
+            53ec407c9a42ebcbbc83c3cf46129dd5faf0e751 \
+            2344decae77045d4d444b9d870fa2f0e67ff702e \
+            e30316c5024b209880cf1e47852596d2f3ac4bcc \
+            d86a54869d231cc1d358eaedd797842fec8919de
+          git cat-file -e 53ec407c9a42ebcbbc83c3cf46129dd5faf0e751^{commit}
+          git cat-file -e 2344decae77045d4d444b9d870fa2f0e67ff702e^{commit}
+          git cat-file -e e30316c5024b209880cf1e47852596d2f3ac4bcc^{commit}
+          git cat-file -e d86a54869d231cc1d358eaedd797842fec8919de^{commit}
+
+      - name: Run the fixed bounded probe
+        id: probe
+        continue-on-error: true
+        env:
+          OUTPUT_ROOT: ${{ runner.temp }}/m3-temporary-probe
+          PRODUCER_DLL: ${{ github.workspace }}/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll
+        run: |
+          set -euo pipefail
+          test -f "$PRODUCER_DLL"
+          mkdir -p "$OUTPUT_ROOT"
+          python3 tools/lean-inspector/M3TemporaryProbe/probe.py \
+            --repository "$GITHUB_WORKSPACE" \
+            --output "$OUTPUT_ROOT" \
+            --producer-dll "$PRODUCER_DLL" 2>&1 | tee "$OUTPUT_ROOT/probe.log"
+
+      - name: Upload temporary probe artifacts
+        if: always() && steps.probe.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-temporary-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m3-temporary-probe/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Fail the probe when its fixed acceptance contract fails
+        if: steps.probe.outcome == 'failure'
+        run: exit 1
