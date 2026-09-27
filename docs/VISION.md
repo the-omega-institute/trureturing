@@ -193,12 +193,12 @@ Existing work offers several connected routes:
   data and allowed operations.
 
 The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-gives one criterion for compatible completion. Arrange nonempty sets of allowed
-local records on a finite tree. Each recorded variable must occur on a connected
-subtree, and neighbors must allow exactly the same joint assignments on their
-full overlap. Every allowed local record then extends to a record on the union
-of the local variable sets, satisfying every local constraint. This establishes
-existence; uniqueness, original-history recovery and computational cost require
+applies to nonempty local record sets on a finite tree. Each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+to the union of the local variable sets, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Unique completion, original-history recovery and computational cost require
 further results.
 
 Here, holography names a research direction concerning wholes and observations.
