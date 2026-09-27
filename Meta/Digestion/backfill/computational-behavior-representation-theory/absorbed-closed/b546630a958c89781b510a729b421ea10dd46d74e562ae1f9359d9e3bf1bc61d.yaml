@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b546630a958c89781b510a729b421ea10dd46d74e562ae1f9359d9e3bf1bc61d
   normalized_sha256: sha256:b546630a958c89781b510a729b421ea10dd46d74e562ae1f9359d9e3bf1bc61d
 cas_ref: sha256:b546630a958c89781b510a729b421ea10dd46d74e562ae1f9359d9e3bf1bc61d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/ForwardInvariantPredictorCover.finite_predictor_iff_forward_invariant_cover
+    target_statement_id: sha256:0088c7b6887cdb3b17690432ddaa22022df4c367936a2975230e8dc1a2919cba
 receipts:
   unresolved_subitems: []
