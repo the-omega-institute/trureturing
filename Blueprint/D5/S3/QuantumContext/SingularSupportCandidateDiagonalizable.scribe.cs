@@ -21,7 +21,7 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
                 "The radius combines the distinguished positive coordinate with the two support coordinates."),
             Definition(
                 "unnormalized-support-block",
-                "G₀",
+                "gZero",
                 "The unnormalized support block",
                 GZeroFormula(),
                 "The support block is a positive scalar identity plus a positive rank-one matrix."),
@@ -98,7 +98,7 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
     private static Formula GZeroFormula() => Disp(Seq(
         Typed(F.Id("z"), Real()), Comma, Sp,
         Typed(F.Id("p"), Arrow(Fin(2), Real())), Sp, Rightarrow, Sp,
-        Call("G_0", F.Id("z"), F.Id("p")), Sp, Eq, Sp,
+        Call("gZero", F.Id("z"), F.Id("p")), Sp, Eq, Sp,
         F.Id("z"), Sp, Call("r", F.Id("z"), F.Id("p")), Sp, At(F.Id("I"), D(2)),
         Sp, Plus, Sp,
         Fraction(Call("r", F.Id("z"), F.Id("p")),
@@ -118,7 +118,7 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
         Typed(F.Id("z"), Real()), Comma, Sp,
         Typed(F.Id("p"), Arrow(Fin(2), Real())), Sp, Rightarrow, Sp,
         Call("K", F.Id("z"), F.Id("p")), Sp, Eq, Sp,
-        Call("G_0", F.Id("z"), F.Id("p")), Sp,
+        Call("gZero", F.Id("z"), F.Id("p")), Sp,
         Call("H", F.Id("z"), F.Id("p")), Dot));
 
     private static Formula QScalarFormula() => Disp(Seq(

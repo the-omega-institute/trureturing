@@ -23,7 +23,7 @@ def r (z : ℝ) (p : Fin 2 → ℝ) : ℝ :=
   Real.sqrt (z ^ 2 + p 0 ^ 2 + p 1 ^ 2)
 
 /-- The positive two-dimensional support block before column normalization. -/
-def G₀ (z : ℝ) (p : Fin 2 → ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+def gZero (z : ℝ) (p : Fin 2 → ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   (z * r z p) • (1 : Matrix (Fin 2) (Fin 2) ℝ) +
     (r z p / (r z p + z)) • Matrix.vecMulVec p p
 
@@ -33,7 +33,7 @@ def H (z : ℝ) (p : Fin 2 → ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 
 /-- The normalized two-dimensional support block. -/
 def K (z : ℝ) (p : Fin 2 → ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  G₀ z p * H z p
+  gZero z p * H z p
 
 /-- The distinguished eigenvalue of the block candidate. -/
 def q (z : ℝ) (p : Fin 2 → ℝ) : ℝ :=
@@ -86,29 +86,29 @@ theorem singular_support_candidate_positive_and_diagonalizable
       positivity
     · change 0 < p 1 / (r z p * Real.sqrt (z ^ 2 + p 1 ^ 2))
       positivity
-  have hG₀entry : ∀ i j, 0 < G₀ z p i j := by
+  have hgZeroentry : ∀ i j, 0 < gZero z p i j := by
     intro i j
     fin_cases i <;> fin_cases j
     · have hdiag :
           0 < z * r z p + r z p / (r z p + z) * (p 0 * p 0) :=
         add_pos (mul_pos hz hr) (mul_pos (div_pos hr hrz) (mul_pos hp0 hp0))
-      simpa [G₀, Matrix.vecMulVec_apply] using hdiag
+      simpa [gZero, Matrix.vecMulVec_apply] using hdiag
     · have hoff : 0 < r z p / (r z p + z) * (p 0 * p 1) :=
         mul_pos (div_pos hr hrz) (mul_pos hp0 hp1)
-      simpa [G₀, Matrix.vecMulVec_apply] using hoff
+      simpa [gZero, Matrix.vecMulVec_apply] using hoff
     · have hoff : 0 < r z p / (r z p + z) * (p 1 * p 0) :=
         mul_pos (div_pos hr hrz) (mul_pos hp1 hp0)
-      simpa [G₀, Matrix.vecMulVec_apply] using hoff
+      simpa [gZero, Matrix.vecMulVec_apply] using hoff
     · have hdiag :
           0 < z * r z p + r z p / (r z p + z) * (p 1 * p 1) :=
         add_pos (mul_pos hz hr) (mul_pos (div_pos hr hrz) (mul_pos hp1 hp1))
-      simpa [G₀, Matrix.vecMulVec_apply] using hdiag
+      simpa [gZero, Matrix.vecMulVec_apply] using hdiag
   have hKentry : ∀ i j, 0 < K z p i j := by
     intro i j
-    have hKij : K z p i j = G₀ z p i j * H z p j j := by
+    have hKij : K z p i j = gZero z p i j * H z p j j := by
       fin_cases j <;> simp [K, H, Matrix.mul_apply, Fin.sum_univ_two]
     rw [hKij]
-    exact mul_pos (hG₀entry i j) (hHdiag j)
+    exact mul_pos (hgZeroentry i j) (hHdiag j)
   let h : Fin 2 → ℝ := fun j => H z p j j
   have hh0 : 0 < h 0 := hHdiag 0
   have hh1 : 0 < h 1 := hHdiag 1
@@ -145,7 +145,7 @@ theorem singular_support_candidate_positive_and_diagonalizable
         r z p / (r z p + z) * p i * (p 0 ^ 2 * h 0 + p 1 ^ 2 * h 1) := by
     intro i
     fin_cases i <;>
-      simp [K, G₀, H, h, Matrix.mulVec, Matrix.mul_apply, Matrix.vecMulVec_apply,
+      simp [K, gZero, H, h, Matrix.mulVec, Matrix.mul_apply, Matrix.vecMulVec_apply,
         Fin.sum_univ_two] <;> ring
   have hu0_formula :
       u z p 0 = p 0 *
@@ -244,7 +244,7 @@ theorem singular_support_candidate_positive_and_diagonalizable
     fin_cases j
     · exact hu0
     · exact hu1
-  have hG₀pos : (G₀ z p).PosDef := by
+  have hgZeropos : (gZero z p).PosDef := by
     have hscalar :
         ((z * r z p) • (1 : Matrix (Fin 2) (Fin 2) ℝ)).PosDef :=
       (Matrix.PosDef.one (n := Fin 2) (R := ℝ)).smul (mul_pos hz hr)
@@ -281,9 +281,9 @@ theorem singular_support_candidate_positive_and_diagonalizable
   have hinvSqrtH_sqrtH : invSqrtH * sqrtH = 1 := by
     change sqrtH⁻¹ * sqrtH = 1
     exact Matrix.nonsing_inv_mul sqrtH (Matrix.isUnit_iff_isUnit_det sqrtH |>.mp hsqrtHunit)
-  let sym : Matrix (Fin 2) (Fin 2) ℝ := sqrtH * G₀ z p * sqrtH
+  let sym : Matrix (Fin 2) (Fin 2) ℝ := sqrtH * gZero z p * sqrtH
   have hsympos : sym.PosDef := by
-    have hcongr := (Matrix.IsUnit.posDef_star_left_conjugate_iff hsqrtHunit).2 hG₀pos
+    have hcongr := (Matrix.IsUnit.posDef_star_left_conjugate_iff hsqrtHunit).2 hgZeropos
     simpa [sym, sqrtH, Matrix.star_eq_conjTranspose] using hcongr
   let unitary : Matrix (Fin 2) (Fin 2) ℝ := hsympos.isHermitian.eigenvectorUnitary
   let eigDiag : Matrix (Fin 2) (Fin 2) ℝ :=
@@ -299,19 +299,19 @@ theorem singular_support_candidate_positive_and_diagonalizable
       sym * unitary = (unitary * eigDiag * star unitary) * unitary := by rw [hsym_decomp]
       _ = unitary * eigDiag * (star unitary * unitary) := by noncomm_ring
       _ = unitary * eigDiag := by rw [hunitary_star_unitary]; simp
-  change (sqrtH * G₀ z p * sqrtH) * unitary = unitary * eigDiag at hsym_unitary
+  change (sqrtH * gZero z p * sqrtH) * unitary = unitary * eigDiag at hsym_unitary
   have hK_basis : K z p * basis = basis * eigDiag := by
     change K z p * (invSqrtH * unitary) = (invSqrtH * unitary) * eigDiag
     calc
       K z p * (invSqrtH * unitary) =
-          (G₀ z p * (sqrtH * sqrtH)) * (invSqrtH * unitary) := by
+          (gZero z p * (sqrtH * sqrtH)) * (invSqrtH * unitary) := by
         rw [K, hH_sqrtH]
-      _ = G₀ z p * sqrtH * (sqrtH * invSqrtH) * unitary := by noncomm_ring
-      _ = G₀ z p * sqrtH * unitary := by rw [hsqrtH_invSqrtH]; simp
-      _ = (invSqrtH * sqrtH) * (G₀ z p * sqrtH * unitary) := by
+      _ = gZero z p * sqrtH * (sqrtH * invSqrtH) * unitary := by noncomm_ring
+      _ = gZero z p * sqrtH * unitary := by rw [hsqrtH_invSqrtH]; simp
+      _ = (invSqrtH * sqrtH) * (gZero z p * sqrtH * unitary) := by
         rw [hinvSqrtH_sqrtH]
         simp
-      _ = invSqrtH * ((sqrtH * G₀ z p * sqrtH) * unitary) := by noncomm_ring
+      _ = invSqrtH * ((sqrtH * gZero z p * sqrtH) * unitary) := by noncomm_ring
       _ = invSqrtH * (unitary * eigDiag) := by rw [hsym_unitary]
       _ = (invSqrtH * unitary) * eigDiag := by noncomm_ring
   have hinvSqrtHunit : IsUnit invSqrtH := by

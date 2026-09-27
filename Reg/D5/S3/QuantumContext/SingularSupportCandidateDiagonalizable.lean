@@ -48,7 +48,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   let p : Fin 2 → ℝ := fun _ => 1
   have hresult := h 1 p (by norm_num) (by intro j; norm_num [p])
   have hzero := hresult.1 0
-  norm_num [rejected, realize, u, q, K, G₀, H, r, Matrix.mulVec, Matrix.mul_apply,
+  norm_num [rejected, realize, u, q, K, gZero, H, r, Matrix.mulVec, Matrix.mul_apply,
     Matrix.vecMulVec_apply, dotProduct, Fin.sum_univ_two] at hzero
 
 theorem sensitivity_proof : Sensitivity arena actual := by
