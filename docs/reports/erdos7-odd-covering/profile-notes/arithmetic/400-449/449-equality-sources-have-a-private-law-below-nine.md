@@ -8718,3 +8718,255 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 Together with F11222, these suppliers cover all formerly missing C76 three-inactive-root shapes and all C75 three-inactive-root shapes except full/private12222. The other one-/two-inactive-root branches, complete cut74--76 classes and arbitrary outside-cofactor/common-law lift remain open.
+
+## Mass19 transport, terminal synchronization and conditional balance consumers
+
+These are ordinary mathematical results on the original actual network. They extend the local transport in PS.6 and give sufficient conditions for common laws at totals74,75,76. The terminal-cap and four-block avoidance hypotheses in the conditional suppliers are additional premises. TB.8 shows that the terminal caps fail on some complete actual sources, and TB.9 gives a joint coarse-cap alternative. No Lean, complete cut74--76 classification or arbitrary-height conclusion is asserted.
+
+### TB.1. A sharp pure mass19 transport
+
+Let E be any actual support in a5-by7 row/column matrix. Suppose it supports a nonnegative matrix of total19 with row sums r_i<=6, column sums c_j<=7 and entries x_ij<=2. Then E supports another matrix of the same total and caps such that, simultaneously at EVERY cell, including absent cells,
+
+    20r_i+20c_j+25x_ij<=295.                         (TB1)
+
+Only support containment is required; strict positivity on every original incidence is not asserted.
+
+Use the row-entry-column flow network with capacities6,2,7. Its maximum is an integer at least19. If it is at least20, choose a feasible mass20 matrix and scale by19/20. Every unscaled score is at most310, so the scaled score is at most589/2<295.
+
+Otherwise choose an integral maximum and an exact cut of capacity19. Let a count sink-side rows, b source-side columns, and c actual entry edges from source-side rows to sink-side columns. Exact equality gives
+
+    6a+7b+2c=19,
+
+with possibilities(0,1,6),(1,1,3),(2,1,0). All forward cut arcs are saturated and all backward cut flows vanish. In particular, outside rows have total6, inside columns their cap7, crossing entries mass2, and outside-row/inside-column entries mass0. The last type is impossible: its inside column would have to receive7 from only three inside rows with entry cap2.
+
+For type(0,1,6), keep the six crossing entries at2. Let A be the one inside column of mass7. It has k=4 or5 eligible actual neighbors, where eligibility means positive capacity remains after the crossing entries. If k=5, put7/5 at each; each such row has crossing degree at most2 and score at most283. If k=4, let h<=3 count its neighbors of crossing degree2. For h=0 put7/4 at each. Otherwise give each degree2 neighbor mass2-1/h and every other eligible neighbor mass2. These masses sum7 and respect every row and entry cap. At a high-degree A cell the score is
+
+    220+45(2-1/h)<=295;
+
+in the k=4 cases, the other positive A scores are at most270. Every outside column has an even mass at most6, so every positive outside-cell score is at most290. A zero-cell score is at most260.
+
+For type(1,1,3), keep the outside row and the three crossing entries unchanged. The column A of mass7 must have all four inside rows as eligible neighbors. Their crossing degrees sum3 and are at most2. If one has degree2, give it A mass1 and the other three A mass2; otherwise give all four A mass7/4. The positive A scores are at most270.
+
+To check the outside columns, let e be the number of crossing entries in such a column. If e<=2, its mass is at most4+2=6, so all positive-cell scores are at most290. If e=3, these are all three crossing entries. Their rows each have crossing degree1 and total mass at most4, hence scores at most80+140+50=270. The sole outside-row entry in that column is at most1, hence its score is at most120+140+25=285. Zero cells remain at most260. This proves(TB1).
+
+The constant295 is sharp for arbitrary local supports. Take
+
+    row0: A,B,C; row1: A,B,D; row2: A,C,D;
+    row3: A;     row4: empty.
+
+A cut through column A and the six non-A entries has capacity7+12=19. Every mass19 flow therefore saturates those six entries at2 and puts7 in A. Since row3 contributes at most2 to A, some one of rows0,1,2 contributes at least5/3, giving score at least220+45(5/3)=295. Conversely put2 at row3/A and5/3 at each of the three other A entries. This is feasible and attains maximum score295. This sharpness example is a local transport support, not a counterexample or a complete literal4555 source.
+
+### TB.2. PS.6 extends to external totals at most two
+
+Keep the PS.6 notation and its SAME actual support E. Let z_i,y_j be nonnegative integers satisfying
+
+    sum_i z_i<=2,  sum_j y_j<=2,
+
+and suppose a mass19 matrix satisfies
+
+    r_i<=min(6,7-z_i),  c_j<=7-y_j,  x_ij<=2.
+
+Then there is another supported mass19 matrix with these same caps and, simultaneously for every cell,
+
+    20r_i+20c_j+25x_ij+5z_i+5y_j<=310.               (TB2)
+
+To reduce to the existing exact-total-two theorem, add artificial unit flags to previously unflagged rows until the total z is2. Changing z_i from0 to1 leaves the internal row cap equal to6. There are enough unflagged rows: two new flags are needed only if z was zero, and one is needed only if one row carried the previous unit.
+
+Pad y at previously unflagged columns whose current internal mass is at most6. There are enough even if the initial matrix is fractional: a mass19 matrix has at most three columns of mass greater than6, leaving at least four columns with mass at most6. If two new flags are needed, none was previously flagged; if one is needed, at most one column was previously flagged. The initial matrix is therefore feasible under the artificial stricter caps. Apply PS.6 and discard the artificial flags. The actual score only decreases and the actual residual capacities are no smaller. Artificial flags are local numerical bounds; no new external source incidences are required or introduced.
+
+All mass19 blocks of one original integral flow can be replaced simultaneously in this way. Two such blocks cannot share a root or public column, because38>21. Therefore replacing one changes neither the external same-root child vector z nor the external same-column fine vector y of any other selected block. Keep all their original integral external vectors fixed and make the replacements. The final matrix may be rational; every root total, public-column total and coarse block total remains its original integer, every other block is unchanged, and all original capacities and actual support constraints still hold.
+
+### TB.3. Departure and arrival patterns of maximum flows synchronize
+
+Let f and g be maximum flows of the SAME original finite network. Assume the source S has only outgoing original arcs and the sink T only incoming original arcs, as in the actual network here. Then another maximum flow has exactly f's entire vector on arcs leaving S and exactly g's entire vector on arcs entering T. If the capacities and f,g are integral, the resulting flow can be integral.
+
+To prove this directly, orient each nonzero coordinate of g-f along its positive direction in the residual network of f, using a reverse residual edge for a negative difference. Equal values and flow conservation make this a nonnegative circulation at every vertex, including S,T. Decompose it into weighted simple directed cycles.
+
+No cycle contains both S and T: its directed S-to-T segment would be a residual augmenting path for the maximum flow f. Select all cycles containing T. They contain no S, so applying them changes no source outgoing arc. Every residual difference incident to T belongs entirely to selected cycles, so every sink incoming arc reaches its value in g. On each signed original edge the selected change lies between zero and its full g-f change; the resulting flow is between f and g on that edge and respects nonnegativity and capacity. Cycle conservation gives a feasible flow, and its departure pattern preserves the maximum value. For integral differences, the cycle decomposition can use integral weights.
+
+The maximum-flow hypothesis is essential. In the unit-capacity network with two disjoint paths S-a-x-T and S-b-y-T, the value1 flow on the first path and the value1 flow on the second cannot combine departure via a with arrival via y. Their common value is not the network maximum, which is2. This is a counterexample only to dropping maximality from synchronization.
+
+The proof establishes the needed statement directly; no external bibliographic theorem is required. It synchronizes terminal vectors, not independently optimized internal block totals.
+
+### TB.4. Three conditional terminal-balance consumers
+
+Use raw flow units in the original network with capacities21,7,6,2,126,7,21 on its source-root, root-child, private-prefix, entry, actual-bridge, public-leaf and public-column edges. Start from an integral flow of value t and write
+
+    A=max_r a_r,  B=max_G b_G,  D=max_(r,G) d_(r,G),
+
+where a,b,d are root, public-column and coarse block totals. At a coherent query centre, with internal block marginals f,g, cell x and external child/fine masses z,y, the exact nonunit numerator is
+
+    K=3a+3b+9d+20f+20g+25x+5z+5y.                  (TB3)
+
+The ordinary fine term is at most315: f<=6, f+z<=7, g+y<=7 and x<=2. Retain the combinatorial classification in [Noncoherent layouts: the old622 bound can be sharpened below616](#noncoherent-layouts-the-old622-bound-can-be-sharpened-below616), under [Sharp mass21 transport and the remaining cut77 interface](#sharp-mass21-transport-and-the-remaining-cut77-interface). Substituting A,B,D only for the coarse root, public-column and block caps gives
+
+    nonexceptional: K<=3A+3B+9D+299,
+    exceptional:    K<=8A+3B+4D+302.               (TB4)
+
+For the first line, the independent ordered-pair envelope is3A+3B+9D+315. If either first prime digit disagrees among its six relevant query labels, at least five unordered pairs are incompatible. Every nonunit cap in this envelope is at least2, so these pairs remove at least20. Here A,B,D are the unchanged coarse maxima; value t>=74 itself gives A>=t/4, B>=t/7 and D>=t/28, so all three exceed2. The other cap values are the unchanged7,7,6,7,2.
+
+If both first digits agree, the cited classification leaves nonexceptional losses of12+4,14+4 or4+4+4+4. The12 comes from the pair(25,175) at LCM175 with cap6; the14 from(49,245) at LCM245 with cap7; each4 comes from an incompatible pair with1225, whose cap is2. These losses use only unchanged fine caps. Therefore changing A,B,D leaves a loss of at least16 in every nonexceptional case, giving315-16=299. This step uses neither value77 nor its subsequent mass21 regularization.
+
+For the second line, use the exact formula in [One inequality controls both exceptional patterns](#one-inequality-controls-both-exceptional-patterns):
+
+    3a+3b+9d+20f+20g+8x+13x'+5z+5y,
+
+then z<=a-d, g+y<=7, f<=6 and x,x'<=2. These estimates are valid for rational flows and apply after the local replacements.
+
+Apply TB.1 or TB.2 to every mass19 block, retaining the initial coarse integer totals. The sufficient conditions and resulting raw bounds are:
+
+| Value t | Conditions on the SAME initial integral flow | Coherent d<=18 | Regularized d=19 | Nonexceptional | Exceptional | Maximum K |
+|---:|---|---:|---:|---:|---:|---:|
+|74|A<=19 and B<=19|591|580|584|587|591|
+|75|(A,B)<=(19,20) or(20,19)|594|598|587|595|598|
+|76|A<=20 and D<=19; original B<=21|600|604|593|601|604|
+
+At value74, a mass19 block has a=b=d=19 and zero external totals, so TB.1 gives its fine bound295. At value75 each external total is at most1, and at value76 the root external total is at most1 and the column external total at most2; TB.2 gives310 in both cases. The unchanged coarse integrality exhausts the alternatives d=19 and d<=18.
+
+Normalizing the one resulting value-t flow gives respectively
+
+    t74: Gamma_1225<=665/74=9-1/74;
+    t75: Gamma_1225<=673/75=9-2/75;
+    t76: Gamma_1225<=170/19=9-1/19.                 (TB5)
+
+These consumers themselves require only the stated integral value-t flow, not that t is the original maximum. Their additional coarse-cap feasibility is a separate instance condition, not a universal existence claim; see TB.8.
+
+When the ORIGINAL maximum equals74, separate maximum flows realizing root cap19 and public-column cap19 can be synchronized by TB.3 and then consumed by(TB5). When the original maximum equals75, separate maximum flows realizing either root19 with column20, or root20 with column19, can likewise be synchronized. All flows must belong to that same original network. No analogous terminal theorem here supplies the internal block cap D<=19.
+
+### TB.5. Failure cuts can lie above the original maximum
+
+If all source-root capacities21 are changed to an integer u and the modified network fails to carry value t, an integral modified cut of capacity at most t-1 exists. If j source-root arcs cross it, then the capacity of that SAME cut in the original network satisfies
+
+    c_original<=t-1+(21-u)j.                       (TB6)
+
+For public-column sink capacities lowered from21 to v, a failure cut with k such crossed arcs similarly satisfies
+
+    c_original<=t-1+(21-v)k.                       (TB7)
+
+These are aggregate cut statements. They do not saturate individual original arcs. If an original value-t flow exists, every original cut has capacity at least t. In the following cases, four lowered terminal arcs already cost more than t-1, so j or k is at most3:
+
+| Value t | Lowered terminal cap | Possible original capacities of a failure witness lie within |
+|---:|---:|---|
+|74|19|74 through79|
+|75|19|75 through80|
+|75|20|75 through77|
+|76|20|76 through78|
+
+For instance, at t74 a cut crossing three lowered source arcs can have original capacity up to73+2*3=79. These intervals are necessary upper ranges, not realizability assertions or minimum-cut certifications.
+
+A source of original maximum74 can have a nonminimum cut79. Its existence does not imply a value79 flow, and a supplier requiring original maximum77 or78 cannot be invoked merely because the source has a cut of that capacity. Therefore the known exact-maximum strata do NOT automatically restrict terminal-cap failure witnesses to capacities74--76. Particular support shapes may be consumed by existing maximum-independent source lemmas, but their complete original-fibre hypotheses must be checked individually. Both the terminal-cap branch and its actual failure branch must therefore retain these larger possible witness ranges.
+
+### TB.6. A conditional four-block occupation bridge at value76
+
+Let F be the finite nonempty family of integral value76 flows on the SAME original source with every root mass at most20. Exact original maximum76 is not required for this paragraph. A block is bad in f when its coarse mass is20. Bad blocks have distinct roots and columns, and there are at most three because four would contain total80>76.
+
+Regularize all mass19 blocks of each whole component using TB.2. This preserves every coarse block total and hence its bad set. Every coherent centre outside a bad block has K<=604. In a bad block a=d=20 and z=0; the fine term is at most310, giving
+
+    K<=3*20+3*21+9*20+310=613.
+
+The noncoherent bounds at(A,B,D)=(20,21,20) are602 and605, so every noncoherent layout has K<=605.
+
+For a distribution over these whole regularized flows, let p_B be the probability that original block B is bad. Every fixed coherent query centred in B then has averaged numerator at most604+9p_B, while noncoherent queries remain at most605. Thus
+
+    max_B p_B<4/9                                  (TB8)
+
+is sufficient for one common probability law below9.
+
+A sufficient but UNPROVED source condition for(TB8) is four-block avoidance: for every fixed set H of at most four original actual blocks, some integral flow in F simultaneously has d_B<=19 for all B in H. This is a joint condition, stronger than separate ability to lower each block.
+
+Assume this condition. Give blocks arbitrary probability weights in decreasing order w1>=w2>=... and avoid the four heaviest. Since a flow has at most three bad blocks, its weighted bad occupation is at most S=w5+w6+w7, padding weights with zeros when necessary. Since
+
+    1>=4w5+S>=(7/3)S,
+
+we have S<=3/7. Finite minimax therefore gives one distribution over whole flows with every p_B<=3/7. A rational distribution exists because the finite incidence polytope has rational constraints. Its one common normalized law satisfies
+
+    K<=604+27/7=4255/7<608,
+    Gamma_1225<=1+(4255/7)/76=4787/532=9-1/532.      (TB9)
+
+If four-block avoidance fails, there is an inclusion-minimal hitting family H of size1 through4: every flow's bad set meets H. For each B in H, minimality supplies a flow whose bad set meets H only at B. This describes the obstruction; it does not exclude it. In particular singleton hitting families have not been ruled out here.
+
+The existence of F and four-block avoidance are separate instance conditions; F can be empty as TB.8 shows. The remaining source nearcut classifications and the outside-cofactor/common-law lift remain unproved. The results above do not assert closure of the full maximum74--76 window or of unrestricted Erdos #7.
+
+### TB.7. Exact arithmetic controls
+
+The [control program](../../../frontier/cover-geometry/height-two-two-inactive-cuts/terminal_balance_controls.py) and [data](../../../frontier/cover-geometry/height-two-two-inactive-cuts/terminal_balance_controls.json) check the three nonnegative cut shapes in TB.1, all366 feasible degree/neighborhood redistribution cases for the two surviving shapes, and236 outside-column configurations for the one-outside-row case. These include every feasible k,h combination in the stated construction. They also check all35 cells of the sharp mass19 matrix, its matching cut and pigeonhole arithmetic, both asymmetric value75 orientations in the TB.4 table, and the TB.6 occupation threshold4/9 and resulting bound4787/532. Uniform weights on seven blocks provide an equality control for the sorting constant3/7.
+
+The program uses exact integer/Fraction arithmetic, explicit failures active under Python -O, and an explicit output argument:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_balance_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_balance_controls.json
+```
+
+These checks validate the displayed finite arithmetic interfaces and the one local sharpness support. They do not enumerate actual sources, establish terminal-cap feasibility or four-block avoidance, or replace the mathematical synchronization and minimax arguments.
+
+### TB.8. Terminal-cap feasibility fails on complete actual sources
+
+The terminal-cap hypotheses above cannot hold for every complete actual source. There are sources of exact maximum74,75,76 whose every maximum flow has a root of mass21, although each source has one fixed supported law with Gamma1225 below9. At74 and76 a public column is also forced to mass21. Thus the conditional suppliers need a complementary support construction when their terminal caps fail.
+
+Use actual points(r,c,g,h), with gap root r=0 having children c=0,1,2,3 and full roots r=1,2,3 having children c=0,...,4. In all three sources the COMPLETE gap-child fibre is
+
+    F_(0,c)={(4,c),(4,c+1),(5,c),(5,c+1)}.
+
+For e=1 or2, put at every full child the points(r,c,0,c) and(r,c,r,c). Add(3,0,3,5), and when e=2 also add(3,1,3,6). These are all actual points. Call the resulting complete source E_e.
+
+Every original pair of full-root triples supplies three distinct leaves in the two private columns and common column0. A gap pair together with a full triple supplies three leaves in column4, the full private column and column0: for distinct gap children c,d, the union{c,c+1} union{d,d+1} has at least three labels. Thus all480 original legal-pair premises hold. Columns0,1,2,3,4 each contain fine labels0,...,4, supplying the standalone five-tree. No root is individually robust.
+
+An original cut puts the gap root sink-side, the three full roots with their children and private-prefix nodes source-side, and public column0 with its full-root incidences source-side. The private full-root leaves and their public descendants in columns1,2,3 are sink-side. Unused stubs can stay source-side. No actual bridge crosses. The forward cut consists exactly of the gap root edge of capacity21, the column0 terminal edge of capacity21, and15+e private entry edges of capacity2. Hence its capacity is72+2e.
+
+A matching flow assigns the following gap masses for c=0,1,2, leaving the fourth gap child unused:
+
+    x_(0,c,4,c)=2,    x_(0,c,4,c+1)=2,
+    x_(0,c,5,c)=1,    x_(0,c,5,c+1)=2.
+
+Assign mass2 to every private full-root point, including the extra points. The common-column masses, indexed by full root and child, are
+
+    root1: (2,2,2,2,0),
+    root2: (2,2,2,2,0),
+    root3: (1,2,2,0,0).
+
+They sum21 and have public fine-leaf loads(5,6,6,4,0,0,0). The root totals are(21,18,18,15+2e). Every original capacity21,7,6,2,126,7,21 is respected, so the flow attains the displayed cut. Consequently E_1 has exact maximum74 and E_2 exact maximum76. Equality with this cut forces BOTH the gap-root edge and column0 terminal edge to be saturated in every maximum flow. In particular their root and column masses are always21.
+
+For the exact75 source retain the same gap fibres. At full roots1,2 retain both common and private points. At full root3 retain only its five private points and the two extras(3,0,3,5),(3,1,3,6), with no column0 point. For a pair involving root3 and another full root r, the three tree columns are0,r,3. For gap/root3 use4,5,3. The other legal pairs are as above. Columns1,2,3,4,5 supply the standalone five-tree, and again no root is individually robust.
+
+A cut through the gap-root edge and all27 actual full-root entry edges has capacity21+2*27=75. Give mass2 to each of those27 points and retain the same mass21 gap flow. Root totals are(21,20,20,14), column totals are(20,10,10,14,12,9,0), and all finer capacities hold. This attains the cut and proves exact maximum75. The crossed gap-root edge is therefore forced to21 in every maximum flow. Neither of the two terminal-cap recipes in TB.4 can apply to this source.
+
+Nevertheless, all three displayed flows already have good numerical caps under their OWN common law. In divisor order(5,7,25,35,49,175,245,1225), the raw maxima and normalized ordered-LCM bounds are
+
+| Exact maximum | Raw numerical cylinder maxima | Common-query envelope |
+|---:|---|---:|
+|74|(21,21,7,12,6,4,4,2)|543/74|
+|75|(21,20,7,14,4,4,4,2)|183/25|
+|76|(21,21,7,14,6,4,4,2)|563/76|
+
+Indeed the original ordered-pair coefficients are(3,3,5,9,5,15,15,25); their products with these raw caps sum respectively469,474,487. Adding the unit/unit term after dividing by the flow total gives the displayed bounds, all strictly below9. The same chosen atom law supplies every cylinder cap simultaneously. Unused actual incidences keep their original source membership and receive zero probability.
+
+The [countercontrol program](../../../frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py) and [data](../../../frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.json) check all1440 original legal pairs, each standalone premise, every live original network edge, the matching flow/cut equalities, and5301 original numerical cylinders. They also evaluate the same cuts after lowering the relevant terminal capacities to19 or20, obtaining capacities strictly smaller than the original maximum. Checks remain active under Python -O and use an explicit output path:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.json
+```
+
+These are counterexamples to universal terminal-cap feasibility, not to the existence of a good common law or to Erdos #7. Synchronization TB.3 combines two terminal patterns that separately exist; it cannot create a pattern excluded by an exact cut.
+
+### TB.9. A joint coarse-cap alternative and its weighted dual
+
+A source need not have balanced terminal totals if the SAME law has small coarse blocks. Let P_M(E) be the fractional maximum-flow polytope of one original source of integer maximum M. For x in it, use the simultaneous maxima A(x),B(x),D(x) from TB.4. The remaining raw caps stay7,7,6,7,2, so the original ordered-LCM envelope gives
+
+    Gamma1225(x/M) <= 1+[3A(x)+3B(x)+9D(x)+315]/M.
+
+Thus one whole flow satisfying3A+3B+9D<8M-315 supplies the common-law conclusion. The thresholds at74,75,76 are277,285,293. The three explicit flows of TB.8 have coarse charges234,249,252, respectively. They meet these sufficient inequalities despite their forced mass21 terminals.
+
+The exact best coarse charge is a linear program:
+
+    Theta_M(E)=min_(x in P_M(E))[3 max_r a_r(x)+3 max_G b_G(x)
+                                +9 max_(r,G) d_(r,G)(x)].
+
+Introduce three cap variables for the maxima, or equivalently use nonnegative weights alpha,beta,omega with sums3,3,9. Finite bilinear minimax and integrality of the original maximum-flow polytope give
+
+    Theta_M(E)=max_(alpha,beta,omega) min_(f in F_M(E))
+      [sum_r alpha_r a_r(f)+sum_G beta_G b_G(f)
+                          +sum_(r,G) omega_(r,G) d_(r,G)(f)],
+
+where F_M(E) is the finite family of integral maximum flows on that same original source. To verify the expression, maximize each weighted terminal/block sum at a coordinate attaining its respective maximum; this recovers the primal objective. Swap the min and max on the compact convex polytopes. For fixed weights the objective is linear in the flow, so an integral extreme point attains its minimum. The root weights can be charged on source-root edges, column weights on column-sink edges, and omega_(r,G) on every original child-to-(r,c,G)-prefix edge. Each atom path pays each of its three weights exactly once.
+
+For each fixed weight triple, the inner problem is one joint minimum-cost maximum-flow problem; the outer maximization over weight triples remains. All costs are evaluated on a whole flow of the same original network. It does not assert that Theta_M always crosses the sufficient threshold. A complete74--76 proof still needs such an estimate or an alternative actual-support law for its failures. The outside-cofactor/common-law lift remains a separate unrestricted obligation.
