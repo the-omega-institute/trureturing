@@ -91310,3 +91310,211 @@ $$
 因而，对当前来源族，增大已保留参考的维数不能补回被两份刷新规则截断的共同关系。此结论没有声称所有量子参考都无用，也没有给一般来源、任意块长或原输入共同测量的统一预算。未知块边界、相关相位刷新、相干角度控制、reset前新旧系统联合作用及只限制期望停止次数，均不在定理条件中。副本数仍不承担未标定的物理历时。
 
 ## 追加锚（本行以下为增补区）
+
+## 285. 两份原输入的相位不变检验与重置权限的统一成本分离
+
+### 285.1 固定来源关系，只改变可接入的系统
+
+本节沿用§284的全部来源参数：$n\ge1$，$0<\delta\le1/4$，
+$$
+M=I_n+J_n/4,\qquad Q+M^\dagger QM=I_n,
+\qquad q_-I_n\preceq Q\preceq(1-q_-)I_n,
+\qquad q_-=7/23,
+$$
+$$
+Vx=|0\rangle\otimes x+|1\rangle\otimes M^\dagger x,
+\qquad\Omega_n=VQV^\dagger/n,
+\qquad\tau_n=I_{2n}/(2n).
+\tag{285.1}
+$$
+这里 $|0\rangle,|1\rangle$ 表示固定输入 $Y$ 本征基。设
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),
+\qquad\Omega_{n,\phi}=(U_\phi\otimes I_n)\Omega_n(U_\phi^\dagger\otimes I_n),
+$$
+$$
+\Omega_{n,\delta,\phi}=(1-\delta)\Omega_{n,\phi}+\delta\tau_n.
+\tag{285.2}
+$$
+每块独立抽取Haar相位 $\phi$，只在该块两份来源中共同使用；条件于相位，两份独立。两假设为理想来源与扰动来源，先验各为 $1/2$。
+
+来源和相位刷新规则都与§284相同，但现在允许保存每份完整原输入 $H\otimes E_n$，并对它们及旧记忆共同操作，不必先经过reset。记平均错误不超过 $1/3$ 所需的最小确定最大完整块副本数为 $N_{\rm full,2}(n,\delta)$。每块两份，所有已消费位置计费；提前停止可补齐忽略结果的块。相位环境仍不可访问，初始资源仍与假设无关。
+
+下界允许对所有原输入作任意共同测量；上界仅需在每个真实两份块内作一个已知投影。此访问改变必须与§284的重置后参考访问分开。
+
+### 285.2 总相位中间扇区内的已知图像
+
+对两个原输入，重排张量因子为 $H_1H_2E_1E_2$。令
+$$
+\mathcal H_{\rm mid}
+=\operatorname{span}\{|01\rangle,|10\rangle\}\otimes(E_n\otimes E_n),
+\qquad \Pi_{\rm mid}\text{ 为其正交投影}.
+\tag{285.3}
+$$
+两个输入的共同相位在此扇区上都是同一标量 $e^{-i\phi}$。因此任何仅作用在该扇区内部的算子都与共同相位作用对易。
+
+把 $\mathcal H_{\rm mid}$ 按 $|01\rangle,|10\rangle$ 的顺序识别为两份 $E_n\otimes E_n$ 的直和，定义
+$$
+C_nx=
+\begin{pmatrix}I_n\otimes M^\dagger\\M^\dagger\otimes I_n\end{pmatrix}x.
+\tag{285.4}
+$$
+这正是 $(V\otimes V)x$ 的中间扇区分量。$M$ 的最小奇异值至少为 $3/4$，所以 $C_n$ 单射，且
+$$
+C_n^\dagger C_n
+=I_n\otimes MM^\dagger+MM^\dagger\otimes I_n
+\succeq\frac98 I_{n^2}.
+\tag{285.5}
+$$
+在中间扇区上令
+$$
+P_n=I_{\mathcal H_{\rm mid}}
+-C_n(C_n^\dagger C_n)^{-1}C_n^\dagger,
+\tag{285.6}
+$$
+再把它延拓为其余两个扇区上的零算子。则 $P_n$ 是已知正交投影，
+$$
+\operatorname{rank}P_n=n^2,
+\qquad
+P_n(V\otimes V)=0.
+\tag{285.7}
+$$
+该投影只依赖已知的 $n,M$，不依赖未知相位或扰动假设。
+
+### 285.3 每个相位都成立的零点击与扰动质量
+
+由（285.7）及共同相位对易性，对每个 $\phi$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\Omega_{n,\phi})]=0.
+\tag{285.8}
+$$
+这里不需要先平均相位。$P_n$ 消去整个实际图像支撑，包括其中由 $Q\otimes Q$ 给出的全部权重。
+
+更具体地，$P_n$ 恰是共同Haar平均理想两份态的完整核投影。三个总相位扇区分别保留 $V\otimes V$ 的分量 $I_{n^2}$、$C_n$ 和 $M^\dagger\otimes M^\dagger$；相位积分消去不同扇区之间的交叉项。因为 $Q\otimes Q\succ0$，且首末分量可逆、中间分量单射，每个扇区块的秩都是 $n^2$。平均态总秩为 $3n^2$，其 $n^2$ 维核正是（285.6）的投影范围。
+
+考虑扰动后的两份乘积：
+$$
+\begin{aligned}
+\Omega_{n,\delta,\phi}^{\otimes2}
+&=(1-\delta)^2\Omega_{n,\phi}^{\otimes2}\\
+&\quad+\delta(1-\delta)
+(\Omega_{n,\phi}\otimes\tau_n+\tau_n\otimes\Omega_{n,\phi})
++\delta^2\tau_n^{\otimes2}.
+\end{aligned}
+\tag{285.9}
+$$
+在中间扇区中，第一交叉项的压缩准确为
+$$
+\Pi_{\rm mid}(\Omega_{n,\phi}\otimes\tau_n)\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+Q\otimes I_n&0\\0&(I_n-Q)\otimes I_n
+\end{pmatrix}.
+\tag{285.10}
+$$
+原因是第一输入的非对角块改变总相位扇区，压缩后消失；保留的两个对角块分别为 $Q$ 与 $M^\dagger QM=I_n-Q$。第二交叉项同理给
+$$
+\Pi_{\rm mid}(\tau_n\otimes\Omega_{n,\phi})\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+I_n\otimes(I_n-Q)&0\\0&I_n\otimes Q
+\end{pmatrix}.
+\tag{285.11}
+$$
+两式均与相位无关，并均至少为 $q_-I_{\rm mid}/(2n^2)$。因为 $\operatorname{Tr}P_n=n^2$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\tau_n)]\ge q_-/2,
+\qquad
+\operatorname{Tr}[P_n(\tau_n\otimes\Omega_{n,\phi})]\ge q_-/2.
+\tag{285.12}
+$$
+同时，
+$$
+\operatorname{Tr}(P_n\tau_n^{\otimes2})=\frac14.
+\tag{285.13}
+$$
+因此实际扰动点击概率满足
+$$
+\begin{aligned}
+p_\delta
+&:=\operatorname{Tr}(P_n\Omega_{n,\delta,\phi}^{\otimes2})\\
+&\ge q_-\delta(1-\delta)+\delta^2/4
+\ge\frac{21}{92}\delta.
+\end{aligned}
+\tag{285.14}
+$$
+最后一步使用 $\delta\le1/4$。该界同时独立于参考维数和实际相位；Haar平均保持它。
+
+共同相位的总荷扇区分解是标准参考系工具，其一般机制见§282所引 Bartlett、Rudolph、Spekkens，[quant-ph/0610030](https://arxiv.org/abs/quant-ph/0610030)，式（2.7）—（2.9）。这里使用它确定当前规范图来源的中间支撑 $\operatorname{ran}C_n$；（285.10）—（285.14）另行计算了该支撑正交补上维数一致的实际扰动质量。
+
+### 285.4 不读取相位的实际取得方案
+
+每个真实块都对两份完整原输入测量 $\{P_n,I-P_n\}$，只要出现一次 $P_n$ 就判为扰动来源。理想来源从不误报；扰动来源在不同块上独立执行，所以 $K$ 块仍未点击的概率至多
+$$
+(1-p_\delta)^K\le\exp[-(21/92)K\delta].
+\tag{285.15}
+$$
+取
+$$
+K=\left\lceil\frac4\delta\right\rceil.
+\tag{285.16}
+$$
+则漏检概率不超过 $e^{-21/23}<1/2$，等先验平均错误小于 $1/4$。全部制备和检测位置均计费，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta)
+\le2\left\lceil\frac4\delta\right\rceil
+\le\frac9\delta.
+}
+\tag{285.17}
+$$
+它不需要相位估计或额外参考副本，也没有把模拟程序的隐藏标签开放给观察者。所需新权限正是把两份原输入保留到同一次联合测量。
+
+### 285.5 任意全输入处理的匹配下界
+
+记 $d$ 为半迹距离。对任意相位，
+$$
+d(\Omega_{n,\delta,\phi},\Omega_{n,\phi})
+=\delta d(\tau_n,\Omega_{n,\phi})\le\delta.
+\tag{285.18}
+$$
+给定所有块相位，$N$ 份来源按位置独立；逐因子替换及迹范数张量性质给两个原始联合态的距离至多 $N\delta$。再按两个假设共同的相位律积分，由迹范数凸性，平均联合态的距离仍至多 $N\delta$。
+
+任何允许的存储、跨块操作、自适应控制和最终共同测量，都是这些原始输入的共同CPTP后处理。因此最终距离至多 $N\delta$。等先验错误不超过 $1/3$ 需要距离至少 $1/3$，从而
+$$
+\boxed{N_{\rm full,2}(n,\delta)\ge\frac1{3\delta}.}
+\tag{285.19}
+$$
+有确定最大块数的停止用忽略剩余输入补齐，不改变此下界。判别及迹距数据处理使用§283—§284已经列明的标准工具；这里既没有假定操作逐份独立，也没有限制下界中的末端测量。
+
+### 285.6 同一共同来源上的权限分离
+
+**定理285.1（两份原输入的统一线性扰动检测）。** 对（285.1）—（285.3）的实际规范来源及两份共同相位刷新合同，在允许保留和共同处理完整原输入的访问类中，对全部 $n\ge1$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{3\delta}
+\le N_{\rm full,2}(n,\delta)
+\le\frac9\delta.
+}
+\tag{285.20}
+$$
+与§284的先reset访问类相比，在同一来源和同一两份相位保持方式下，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta)\asymp\delta^{-1},
+\qquad
+N_2(n,\delta)\asymp\delta^{-2},
+}
+\tag{285.21}
+$$
+所有比较常数都独立于 $n$。
+
+**证明。** 中间相位扇区的图像 $C_n$ 及其正交补给（285.8）的精确零事件；对实际混合来源展开，两个交叉项的正下界给（285.14）的统一线性点击量。实际重复投影由（285.15）—（285.17）达到上界；原始输入联合态的逐因子替换界给（285.19）的必要性。先reset访问的另一阶由定理284.1承担。$\square$
+
+当 $n=1$，$M=1$，中间图像由 $|01\rangle+|10\rangle$ 张成，$P_1$ 正是反对称投影。这与§283的qubit权限反例一致。对 $n>1$，$P_n$ 由完整输入—参考图像决定，不能把它默认替换成丢弃参考后的qubit反对称测量。
+
+式（285.21）说明，在当前模型中，两份之间保留同一个相位已足够支持一个不需相位校准的联合原输入检验；先reset则抹去这项检验所用的关系，即使完整参考保留下来且维数任意增大，也不能恢复同阶取得成本。这个区别由明确的投影和下界共同承担，不能仅从张量网络可表示或终端边缘一致推断。
+
+单份独立相位时§282的不可判别结论限于reset访问，不能移用于本节新开放的原输入访问。定理也不对任意来源族、任意相位噪声或一般物理时钟作结论。所有预算都是确定最大原输入份数；实现联合投影所需的门数、存储容量及钟表历时需要另行规定。
+
+## 追加锚（本行以下为增补区）
