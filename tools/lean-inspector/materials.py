@@ -125,6 +125,72 @@ def streams_equal(left: BinaryIO, right: BinaryIO) -> bool:
             return True
 
 
+class CompressedMaterials:
+    """Private aggregate spool of accepted ZIP payloads, never expanded materials.
+
+    zipfile has no raw-copy API. Keep its central-directory/ZIP64 writer and
+    supply the existing compressed stream under a canonical local header. The
+    caller validates the source and completed bundle; this is only a writer.
+    """
+
+    def __init__(self, spool):
+        self.archive = zipfile.ZipFile(spool, 'w', allowZip64=True)
+        self.copied_bytes = 0
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.archive.close()
+
+    @staticmethod
+    def _copy(source, entry, target):
+        # Opening checks local header/name agreement, overlapping entries and
+        # flags without decompressing. The shared file now points at payload.
+        with source.open(entry):
+            offset = source.fp.tell()
+        info = zipfile.ZipInfo(entry.filename, ARCHIVE_TIMESTAMP)
+        info.compress_type = entry.compress_type
+        info.flag_bits = entry.flag_bits & 2  # LZMA end-of-stream marker flag.
+        info.CRC, info.file_size, info.compress_size = entry.CRC, entry.file_size, entry.compress_size
+        info.create_system = 3
+        info.external_attr = (stat.S_IFREG | 0o644) << 16
+        zip64 = max(info.file_size, info.compress_size) >= zipfile.ZIP64_LIMIT
+        target.fp.seek(target.start_dir)
+        info.header_offset = target.fp.tell()
+        target._writecheck(info)
+        target.fp.write(info.FileHeader(zip64))
+        source.fp.seek(offset)
+        remaining = info.compress_size
+        while remaining:
+            block = source.fp.read(min(BUFFER_BYTES, remaining))
+            if not block:
+                raise ValueError('truncated compressed material')
+            target.fp.write(block)
+            remaining -= len(block)
+        target.start_dir = target.fp.tell()
+        target.filelist.append(info)
+        target.NameToInfo[info.filename] = info
+
+    def add(self, archive_path):
+        with zipfile.ZipFile(archive_path) as source:
+            for entry in source.infolist():
+                if entry.filename in self.archive.NameToInfo:
+                    # Equal addresses still require equal bytes, even when the
+                    # two producers used different valid compressed encodings.
+                    with source.open(entry) as left, self.archive.open(entry.filename) as right:
+                        if not streams_equal(left, right):
+                            raise ValueError('statement material address collision')
+                else:
+                    self._copy(source, entry, self.archive)
+                    self.copied_bytes += entry.compress_size
+
+    def write(self, destination):
+        with zipfile.ZipFile(destination, 'w', allowZip64=True) as target:
+            for entry in sorted(self.archive.infolist(), key=lambda entry: entry.filename):
+                self._copy(self.archive, entry, target)
+
+
 def require_keys(value: object, expected: set[str], context: str) -> dict:
     if not isinstance(value, dict) or set(value) != expected:
         raise ValueError(f"{context} has unexpected fields")

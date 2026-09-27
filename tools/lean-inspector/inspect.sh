@@ -168,9 +168,9 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+run_phase report env STRATALINT_INSPECTOR_PUBLISH_REPORT="$OUTPUT" \
+  "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
-run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
-cat "$LOG_DIR/publish.stdout.log"
+awk '/LEAN_INSPECTOR_WORK |RAW_LEAN_REPORT path=/' "$LOG_DIR/report.stdout.log"

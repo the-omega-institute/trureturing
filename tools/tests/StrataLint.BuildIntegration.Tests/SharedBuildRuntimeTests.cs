@@ -41,7 +41,8 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                      "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
                      "tools/scripts/report/JudgeSeed.targets",
-                     "tools/scripts/worktree/lean_actions.py", "tools/scripts/worktree/lean_cache.py",
+                     "tools/scripts/worktree/lean_actions.py", "tools/scripts/worktree/lean_actions_report.py",
+                     "tools/scripts/worktree/lean_cache.py",
                      "tools/scripts/worktree/lean_cache_release.py", "tools/scripts/worktree/cache_material.py" })
             Write(path, File.ReadAllText(Path.Combine(repository, path)));
         var seedRegistration = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(repository, "Meta/judge-seed.json")))!;

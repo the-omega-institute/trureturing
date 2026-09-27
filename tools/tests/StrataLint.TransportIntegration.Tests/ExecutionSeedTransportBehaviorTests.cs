@@ -244,8 +244,11 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             }
         }
         var targetEnvironment = Environment(commit, target, "18", "1");
-        var key = Key(Python(fixture.Root, repository, ["keys", "--repository", fixture.Root,
-            "--layers", stage], environment).Text, stage + "_key");
+        var key = stage == "current" ? Key(snapshot.Text, "current_key") :
+            Key(Python(fixture.Root, repository, ["keys", "--repository", fixture.Root,
+                "--layers", stage], environment).Text, stage + "_key");
+        Assert.Equal(key, JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root,
+            "build/lean-cache", stage, "manifest.json")))!["key"]!.GetValue<string>());
         var restore = Python(target, repository, ["restore", "--repository", target, "--layers", stage,
             "--" + stage + "-key", key], targetEnvironment);
         Assert.True(restore.Exit == 0, restore.Text);
