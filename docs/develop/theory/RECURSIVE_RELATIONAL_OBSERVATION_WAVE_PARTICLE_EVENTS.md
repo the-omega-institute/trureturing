@@ -29889,3 +29889,89 @@ $$
 ### 来源与边界 385.6
 
 本节只修正有限压缩值域和字段删除的可执行性，不新增物理解释。所有对象仍是有限概率路径、有限核、显式边缘和停止合同；没有 Lean、消化、coverage 或 freeze 变更。
+
+
+## 386. 文献尽调与本批命题的归属
+
+本批的承重命题逐条标为 **repo-derived**：它们是在有限路径、有限概率和显式合同下，由本文给出的定义、有限求和、核分解和反例直接推出的综合推导；没有把下列文献中的一般理论逐字搬入本卷，也没有把文献结论冒称为本仓新定理。
+
+### 文献检索读数
+
+1. Backhoff、Beiglböck、Lin、Zalashko 的 *Causal Transport in Discrete Time and Applications*，DOI `10.1137/16M1080197`，讨论离散时间因果运输；本批 §379 的有限核定义和严格两步反例与其主题相邻，但本批的具体有限概率表和成本计算标为 `repo-derived`。
+2. Acciaio、Backhoff-Veraguas、Zalashko 的 *Causal optimal transport and its links to enlargement of filtrations and continuous-time stochastic optimization*，DOI `10.1016/j.spa.2019.08.009`，讨论过滤与因果最优运输；本批没有使用其连续时间结论。
+3. Pflug、Pichler 的 *A Distance for Multistage Stochastic Optimization Models*，DOI `10.1137/110825054`，以及 *The Nested Distance*，DOI `10.1007/978-3-319-08843-3_2`，提供多阶段/nested distance 的背景；本批的前缀压缩反例和下降核条件是有限模型中的本仓推导。
+4. Bellman 的动态规划工作作为 Bellman 递推的历史背景；本批 §380.4 的递推只在文中声明的有限后继闭合、目标边缘更新和预算状态合同下成立。
+
+检索方式是 Crossref DOI 元数据查询与当前 `origin/dev`、钉版 Mathlib 的关键词检索；在 D5/Blueprint 中未找到 causal/bicausal transport 的同名冻结声明，在 pinned Mathlib 中未找到可直接复用的同名接口。上述结果只证明本批完成了写作尽调，不证明这些命题在文献意义上全部原创；数学归属仍按 `repo-derived` 读取。
+
+### 归属表
+
+| 命题范围 | 归属 | 需要的先例/边界 |
+| --- | --- | --- |
+| §§379.1–379.5 | repo-derived finite specialization | 因果运输文献为背景；具体有限律、成本和严格间隙由本文证明 |
+| §§380.1–380.5 | repo-derived finite recursion | Bellman 与因果核分解为背景；目标边缘和停止合同是本文显式假设 |
+| §§381–385 | repo-derived corrections and counterexamples | 文献只作概念背景；XOR、压缩和 singleton-kernel 反例由本文直接计算 |
+
+### 来源与边界 386.1
+
+本节记录可核对的来源、检索范围和命题归属；不把 DOI 元数据或关键词检索当作 Lean 证明，也不把 `repo-derived` 当作文献原创性裁决。本文仍是纯理论 Markdown，没有新增 Lean、消化、coverage 或 freeze 内容。
+
+## 387. 偏序完整词的上下文存活条件与指定核成本
+
+### 定理 387.1（非交换性必须在完整执行上下文中存活）
+
+设无序事件 \(e,f\) 的共同合法后缀为 \(u\)，并令
+
+$$
+T_u=T_{g_k}\cdots T_{g_1}.
+$$
+
+若两个完整合法词 \(efu\) 与 \(feu\) 存在且
+
+$$
+T_uT_eT_f\ne T_uT_fT_e,
+$$
+
+则存在初态 \(x\) 和终端效果 \(f_0\)，使两个完整词的响应不同。若只知道 \(T_eT_f\ne T_fT_e\)，而没有共同后缀或终端上下文保留该差异，则不能推出完整词可区分。
+
+### 证明
+
+差算子
+
+$$
+D=T_u(T_eT_f-T_fT_e)
+$$
+
+非零时，有限维对偶分离给出 \(x,f_0\) 使 \(f_0(Dx)\ne0\)。这正是两个完整执行词的响应差。若 \(D=0\)，即使局部交换子非零，后缀也可能把差异映到同一终端值；因此局部不交换只是必要的候选见证，不是任意完整任务中的充分条件。证毕。
+
+### 推论 387.2（对 §253.3 的优先读法）
+
+当偏序只有 \(e,f\) 两个事件，或已声明共同后缀满足定理 387.1 的非零条件时，§253.3 的结论成立；对一般含有更多事件的偏序，必须使用定理 387.1 的上下文条件。AHH 253.5 应读取为：顺序字段的必要性取决于非交换差异能否穿过允许的完整后继，而非只取决于局部交换子。
+
+### 定义 387.3（指定前缀核的政策成本）
+
+在定理 385.4 的一阶段例子中，\(\mathcal K^{\mathrm{id}}\) 与 \(\mathcal K^{\mathrm{flip}}\) 是任务字段 `PrefixKernels` 指定的 singleton 核族。记其受限值为
+
+$$
+W_{\mathcal K}(P,Q,c)
+=
+\inf_{\kappa\in\mathcal K}\mathbb E[c(X_0,Y_0)].
+$$
+
+于是
+
+$$
+W_{\{\mathcal K^{\mathrm{id}}\}}=0,
+\qquad
+W_{\{\mathcal K^{\mathrm{flip}}\}}=1.
+$$
+
+两任务保持相同的 \(P,Q,\mathcal F,\mathcal G,c,\Gamma_{\mathrm{causal}},\mathsf{Event},\mathsf{Budget},\mathsf{Stop}\)，只改变 `PrefixKernels` 字段；这里的 0 与 1 是指定政策核的受限成本，不是 §379.3 对全部因果耦合取下确界的 unrestricted \(W^{\to}_c(P,Q)\)。
+
+### 证明
+
+两个 singleton 核都读取当前 \(X_0\)，均满足过滤、边缘和因果耦合合同。恒等核逐点成本为零，翻转核逐点成本为一；对 singleton 集合取下确界即得。未改变的 \(\Gamma_{\mathrm{causal}}\) 与目标边缘合同仍保留，故这是一个合法的固定余项删除反例。证毕。
+
+### 来源与边界 387.4
+
+本节修正继承的部分序必要性量词，并区分指定政策成本与全可行集最优值。它不改变 §§379–385 的有限范围，也没有新增 Lean、消化、coverage 或 freeze 内容。
