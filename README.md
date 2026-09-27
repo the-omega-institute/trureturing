@@ -3,7 +3,7 @@
 **A scientific method for AI to discover truth and find its next question.**
 
 [Vision](docs/VISION.md) · [Film](#film) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
-[Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
+[Examples](#three-places-to-look) · [Truth and computation](#truth-and-computation) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
@@ -33,26 +33,6 @@ to open directions.
 [Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
 [Film source and releases](https://github.com/the-omega-institute/trureturing-film).
 
-## Truth and computation
-
-Our philosophical starting point is that **truth is discovered, not created
-by the act of computing it**. In this view, **Dao (道), or God (神), names an
-encompassing network of truths and their logical relations**, within which a
-finite observer discovers connections. This is the project's metaphysical
-orientation, not a theorem about the existence of God or the physical universe.
-
-Computation constructs examples and counterexamples, searches for proofs and
-checks them. A verified proof extends what the library can justify and reuse.
-Neither this philosophical conviction nor a growing proof library establishes
-that one program can enumerate or decide every truth.
-
-The [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
-calls a set open when it contains every node reachable from its members. The
-[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
-says that, on a nonempty state space, a target admits a recovery function from
-an observation exactly when any two states with the same observation have the
-same target value. Existence alone supplies no algorithm or cost bound.
-
 ## Start your journey
 
 Bring a question that matters to you. In an installed **Claude Code or Codex**
@@ -76,7 +56,7 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Search [existing proofs](#three-places-to-look) and literature for your target. Identify missing
+Search [Lean source](D5/) and literature for your target. Identify missing
 premises, distinctions or connections; choose questions addressing them.
 Specify supporting and refuting outcomes before designing discriminating tests.
 Keep results with their assumptions; check those against your objects before reuse.
@@ -145,6 +125,26 @@ lowest repeated-carry rules during digit normalization: a reusable connection
 between an arithmetic algorithm and an exact bound, however large the inputs.
 [Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
 [Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
+
+## Truth and computation
+
+Our philosophical starting point is that **truth is discovered, not created
+by the act of computing it**. In this view, **Dao (道), or God (神), names an
+encompassing network of truths and their logical relations**, within which a
+finite observer discovers connections. This is the project's metaphysical
+orientation, not a theorem about the existence of God or the physical universe.
+
+Computation constructs examples and counterexamples, searches for proofs and
+checks them. A verified proof extends what the library can justify and reuse.
+Neither this philosophical conviction nor a growing proof library establishes
+that one program can enumerate or decide every truth.
+
+The [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+calls a set open when it contains every node reachable from its members. The
+[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+says that, on a nonempty state space, a target admits a recovery function from
+an observation exactly when any two states with the same observation have the
+same target value. Existence alone supplies no algorithm or cost bound.
 
 ## Toward holographic spacetime
 
