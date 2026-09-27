@@ -7415,7 +7415,7 @@ All checks remain active under `-O`. These finite controls verify the stated ins
 
 Under the original literal4555 and standalone premises, every source of minimum-cut value65/63 through73/63 is controlled by the source classifications above. The complete maximum77 class has bound2078/231 by AC77; every78/63 source has bound233/26 by sharp saturated-block transport; every cut at least79/63 is controlled by the large-cut estimate. Each conclusion concerns one supported probability fixed before all original numerical phase queries.
 
-The general source strata74/63,75/63 and76/63 remain unresolved. Specified profiles within these strata, including the fully active R=1 whole-column family at75/63, have their stated laws; a supplier for every source at those three values is still missing. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
+The later RC76 theorem supplies the complete75/63 and76/63 source classes with bound3572/397. The remaining general fixed-head stratum is74/63. H185, T318 and BL18 below provide local transport, a conditional common law and a selected-block alternative; simultaneous treatment of all remaining mass18 blocks is still required. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
 
 The neighborhood criterion, GP selected-block lowerings, OM occupation criterion and five-block avoidance bridge retain their own precise conclusions. Coordinatewise integral lowerings do not establish simultaneous integral safety, and OM5 is not proved for every actual source. Neither is now required to remain an unresolved prerequisite for the maximum77 common law: AC77 supplies that law by the root-cap61/3 branch or the IA/TA/asymmetric alternatives. The root-cap61/3 test itself is not asserted to hold on every source. A small hitting family remains insufficient to rule out a good fractional law.
 
@@ -11586,4 +11586,160 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
   --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
   --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
   --output /tmp/e7_balanced74_selected_mass18_replay.json
+```
+
+## Two-inactive cuts through80 and the exact three-inactive83 boundary
+
+Ordinary source-preserving budget deductions reusing the existing common-law
+consumers. No new Lean result, minimum-cut saturation or arbitrary-height claim.
+All statements concern the complete original literal4555 source, its nonempty
+original fibres, original legal-pair ternary-tree premises and the unchanged
+actual network. No subsource is assumed to inherit blocking.
+
+### E80.1. Every two-inactive cut of capacity at most80 is supplied
+
+Suppose an ORIGINAL cut has at least two inactive occupied roots and capacity
+at most80. Then the unchanged source has ONE probability, chosen before all
+original numerical phase queries, with
+
+    Gamma_1225 <=2865/319<9.
+
+Use exactly the B80 cut normalization. No bridge126 can cross. Replace private
+child contributions at least8 by the incoming7 edge. Move any active root whose
+forward contribution is at least21 to the sink side. Four inactive roots are
+impossible below84. If three roots become inactive, RC76.1 applies because the
+cut is at most80<=82. If the normalized cut has capacity at most79, B80 applies.
+It remains to handle an exact80 cut with exactly two active roots.
+
+Each active root has n=4 or5, q=n-2, delta inactive children, active costs z_i
+in0..3 and total Z. Its forward contribution7delta+2Z is at most20, so delta<=2.
+Let p be the sum of its cheapest q active costs. Their whole original legal
+restriction and the other active root's cheapest restriction imply
+
+    p_1+p_2>=9-k,
+
+where k is the original public prefix token cost. The complete-fibre containment
+is exactly the one in B80; a cost3 token can be a whole column. The exact budget is
+
+    7(delta_1+delta_2+k)+2(Z_1+Z_2)=38.             (E80)
+
+Write delta=delta_1+delta_2 and Z=Z_1+Z_2.
+
+For k>=2 and delta>=2, Z>=p_1+p_2 gives cost at least
+18+7delta+5k>=42, contradicting(E80). For delta=1, both active ratios a/q are
+at least4/3, giving cost at least31+(13/3)k>38. For delta=0 and k>=3, both
+ratios are at least5/3 and the cost is at least30+(11/3)k>=41. The only remaining
+k>=2 possibility is k=2,delta=0. Then p_1+p_2>=7. For either fully active root,
+
+    Z_r >= p_r + 2 ceil(p_r/3),
+
+using the stronger gap bound if applicable. Consequently
+
+    Z >=7+2 ceil(7/3)=13,
+
+whereas(E80) gives Z=12. Thus k cannot exceed1.
+
+If k=1, parity in(E80) forces delta odd. Values delta>=3 contradict
+7delta+2Z=31 and Z>=8. Thus delta=1 and Z=12. For the partial root, its
+contribution<=20 implies Z_partial<=6, and the sorted-cost inequality implies
+p_partial<=4. Uniformly for either root type,
+
+    Z_partial >= p+ceil(p/3),
+    Z_full >= (8-p)+2ceil((8-p)/3).
+
+For p=0,1,2,3,4 the sums are respectively14,15,13,13,14, all greater than12.
+This excludes k=1 as well.
+
+Therefore k=0. If either root has delta_r>=1, then
+
+    L_r=sum_all_original_children min(3,|F_c|)
+       <=Z_r+3delta_r<=floor((20-7delta_r)/2)+3delta_r<=9.
+
+If both have delta_r=0, (E80) gives Z_1+Z_2=19, so one Z_r<=9 and again L_r<=9.
+The existing B80 complete-root clipped-cardinality supplier yields2865/319.
+The statistic L_r never replaces or truncates the actual fibres. This proves
+the advertised capacity80 extension.
+
+### E80.2. Exact three-inactive83 budget and remaining shapes
+
+For a three-inactive cut of capacity at most83, the same normalization keeps
+one active root because four inactive roots would cost84. Its budget is
+
+    7(delta+k)+2Z<=20.
+
+Every cut at most82 is already supplied by RC76.1. At exact83, all cases with
+k>=1 are still supplied by its existing small-anchor arguments:
+
+* k=1,delta=0 gives Z<=6, the same public-singleton case as RC76.1.
+* k=1,delta=1 gives Z<=3. The cheapest original restriction has private cost
+  at mostfloor(qZ/(n-1))<=2, so its whole public-plus-private projection has
+  at most three labels.
+* k=2 forces delta=0 and Z<=3. The cheapest original restriction has private
+  cost at mostfloor(qZ/n)<=1, again giving at most three complete labels.
+
+For k=0 and delta>=1, the unchanged clipped statistic satisfies
+
+    L<=Z+3delta<=9,
+
+so B80 applies. The new boundary is exactly k=delta=0,Z=10. Every original
+child is active; a cost1/2 fibre consists of at most one/two actual fine labels,
+and a cost3 fibre is contained either in three finite labels or one entire
+column. Degeneration to a smaller clipped size is supplied by L<=9.
+
+After reusing the existing complete-small-anchor, full1122*, gap12** and
+gap222* consumers, the five remaining necessary cost shapes are
+
+| root | remaining private costs |
+|---|---|
+|gap|1333|
+|gap|2233|
+|full|11233|
+|full|12223|
+|full|22222|
+
+They are new UNSUPPLIED COST PROFILES under only the stated one-root geometry,
+not assertions that all their individual actual realizations remain unsupplied.
+In particular a whole monochromatic original legal restriction uses H2, a
+complete restriction with at most three labels uses the existing small-anchor
+law, and certain spread or matched four-/five-label restrictions already use
+B4-spread/F12222.2/FM9. These are conditional consumers; the bare cost shape
+does not establish their hypotheses.
+
+### E80.3. Repository reuse boundary
+
+The checked Report449 results F1122 and F12222 require respectively two
+singleton plus two size-at-most-two fibres, or one singleton plus four such
+fibres. They do not by themselves cover11233,12223 or22222. The gap consumers
+require a singleton plus a size-at-most-two fibre or three doubles, and do not
+by themselves cover1333 or2233.
+
+Existing appearances of these shape strings in the cut77 multi-root inventory
+use additional classified active roots or different original maximum
+hypotheses. For example the private gap2222/full22222 law assumes BOTH roots'
+full bounded-fibre structures. A three-inactive83 cut leaves its other roots
+arbitrary, so that result cannot be invoked from the shape alone. Likewise the
+whole-gap1333 exclusion with two full12222 roots requires those extra roots.
+No such missing hypothesis has been silently imported here.
+
+### E80.4. Exact necessary-profile certificate
+
+[The exact inventory](../../../frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.py) and [its data](../../../frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.json) enumerate the sorted
+integer domain with active contributions<=20, original legal sizes, nonempty
+costs at k=0, and the two-root inequality when applicable. They find:
+
+    exact80/two-inactive: 11 profiles, all k=0 and all with an L<=9 witness;
+    exact83/three-inactive: 19 profiles, 14 already supplied and the five above.
+
+The script uses explicit exceptions under -I -S -B -O and requires --output.
+It does not enumerate actual source realizations or claim that a normalized
+cut is minimum. The mathematical budget argument above supplies the general
+source mapping; the finite inventory checks its boundary arithmetic.
+
+Independent enumeration of all labelled private-cost vectors gives exactly
+the same11 two-inactive and19 three-inactive normalized profiles. Both
+enumerations retain the unrestricted meaning of a whole-column token.
+Reproduce the canonical inventory with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.py --output /tmp/e7_inactive_80_83_replay.json
 ```
