@@ -27920,3 +27920,516 @@ $$
 本批在有限参数来源类、有限结果字母表、二次可微概率、固定或自适应有限策略、共同钟历史、Fisher 信息、Cramér–Rao 界、重复资源和显式停止合同下，给出事件统计几何、条件 Fisher 链式法则、信息目标、认证下界和信息感知全息边界。没有把有限统计模型推广为连续量子测量的普适定律，没有把 Fisher 非退化解释为单次实验已经恢复完整物理状态，也没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 371. Fisher 张量的全局 Hellinger 几何
+
+上一批的 Fisher 矩阵描述参数空间的局部二阶信息。为了知道有限参数差异在完整记录上有多可见，需要把局部张量接到一个全局概率距离。
+
+### 定义 371.1（有限分布的 Hellinger 几何）
+
+对有限结果集 \(X\) 上的两个概率分布 \(P,Q\)，定义 Bhattacharyya 亲和度
+
+$$
+\mathsf A(P,Q)
+=
+\sum_{x\in X}\sqrt{P(x)Q(x)},
+$$
+
+以及 Hellinger 距离
+
+$$
+\boxed{
+\mathsf H^2(P,Q)
+=
+\frac12\sum_x
+\bigl(\sqrt{P(x)}-\sqrt{Q(x)}\bigr)^2
+=1-\mathsf A(P,Q).
+}
+$$
+
+将概率分布嵌入平方根球面
+
+$$
+\iota(P)=(\sqrt{P(x)})_{x\in X}
+$$
+
+后，\(\mathsf H(P,Q)=2^{-1/2}\|\iota(P)-\iota(Q)\|_2\)。
+
+### 定理 371.2（Hellinger 距离的基本性质）
+
+对任意有限概率分布 \(P,Q\)，有
+
+$$
+0\le\mathsf H(P,Q)\le1,
+$$
+
+并且 \(\mathsf H\) 是度量。若 \(K\) 是有限随机核，则
+
+$$
+\boxed{
+\mathsf H(KP,KQ)\le\mathsf H(P,Q).
+}
+$$
+
+### 证明
+
+平方根嵌入给出非负性、对称性和三角不等式；若距离为零，则每个平方根坐标相等，故 \(P=Q\)。由 Cauchy–Schwarz，
+
+$$
+\begin{aligned}
+\mathsf A(KP,KQ)
+&=
+\sum_y
+\sqrt{\sum_xK(y\mid x)P(x)}
+\sqrt{\sum_xK(y\mid x)Q(x)}\\
+&\ge
+\sum_{y,x}
+K(y\mid x)\sqrt{P(x)Q(x)}
+=\mathsf A(P,Q).
+\end{aligned}
+$$
+
+这里使用 \(\sum_yK(y\mid x)=1\)。亲和度增加等价于 Hellinger 距离不增加。证毕。
+
+### 定理 371.3（Fisher 是 Hellinger 的局部二阶项）
+
+设 \(p_\theta\) 是满足正概率和二次可微条件的有限分布族。对小向量 \(d\theta\)，有
+
+$$
+\boxed{
+\mathsf H^2(p_\theta,p_{\theta+d\theta})
+=
+\frac18
+d\theta^{\mathsf T}I(\theta)d\theta
+o(\|d\theta\|^2).
+}
+$$
+
+### 证明
+
+写 \(p_x=p_\theta(x)\)，
+
+$$
+p_{\theta+d\theta}(x)
+=
+p_x+\nabla p_x^{\mathsf T}d\theta+O(\|d\theta\|^2).
+$$
+
+在正概率区域，
+
+$$
+\sqrt{p_{\theta+d\theta}(x)}
+=
+\sqrt{p_x}
+\left(
+\frac{\nabla p_x^{\mathsf T}d\theta}{2\sqrt{p_x}}
+\right)
+O(\|d\theta\|^2).
+$$
+
+代入 Hellinger 平方并求和，得到
+
+$$
+\mathsf H^2
+=
+\frac18
+\sum_x
+\frac{(\nabla p_x^{\mathsf T}d\theta)^2}{p_x}
++o(\|d\theta\|^2),
+$$
+
+而求和项正是 \(d\theta^{\mathsf T}I(\theta)d\theta\)。证毕。
+
+### 推论 371.4（局部盲方向也是全局距离的二阶盲方向）
+
+若 \(v\in\ker I(\theta)\)，则
+
+$$
+\mathsf H(p_\theta,p_{\theta+\varepsilon v})
+=o(|\varepsilon|).
+$$
+
+若 \(I(\theta)\) 在某邻域正定，则 Fisher 给出该概率族的局部 Riemann 度量；若有零方向，Hellinger 几何在该方向上退化，需扩大事件接口或改变来源参数化。
+
+### AHH 371.5（局部与全局信息的接缝）
+
+Fisher 不是一份独立于记录的抽象矩阵，而是完整事件分布距离的局部极限：
+
+$$
+\boxed{
+\text{Fisher 张量}
+\;=\;
+\text{Hellinger 记录几何的二阶影子}.
+}
+$$
+
+这使“一个点击给出一个局部信息方向”与“两个整体来源在全部记录上能否区分”成为同一关系的局部和全局投影。
+
+---
+
+## 372. 事件通道的收缩与记录粗粒化
+
+局部仪器通常不会把原始关系全部交给观察者；它先经过结果映射、遗忘标签或环境边缘化。数据处理不等式精确说明这些步骤怎样缩小全局距离。
+
+### 定义 372.1（记录通道与粗粒化）
+
+设来源假设 \(i\in\{0,1\}\) 产生原始分布 \(P_i\)；记录通道 \(K\) 给出可见记录
+
+$$
+R_i=KP_i.
+$$
+
+再设 \(L\) 是遗忘部分标签、合并结果或只保留时间粗粒度的随机核。最终记录为
+
+$$
+\widetilde R_i=LKP_i.
+$$
+
+称 \(K\) 的一个记录方向被 \(L\) **粗粒化消除**，若它在 \(\widetilde R_0,\widetilde R_1\) 中不再产生差异。
+
+### 定理 372.2（连续记录通道的 Hellinger 收缩）
+
+有
+
+$$
+\boxed{
+\mathsf H(R_0,R_1)
+\le
+\mathsf H(P_0,P_1),
+}
+$$
+
+以及
+
+$$
+\boxed{
+\mathsf H(\widetilde R_0,\widetilde R_1)
+\le
+\mathsf H(R_0,R_1).
+}
+$$
+
+若 \(LKP_0=LKP_1\) 而 \(P_0\ne P_1\)，则原始关系存在可区分方向，但最终记录完全丢失该方向。
+
+### 证明
+
+前两式分别把定理 371.2 应用于 \(K\) 和 \(L\)。最后一句由最终分布相等给出距离为零，而原始分布不同意味着某个记录任务能够区分它们。证毕。
+
+### 定理 372.3（独立记录的亲和度乘法）
+
+若 \(M\) 次记录在两个假设下分别独立，单次分布为 \(R_0,R_1\)，则联合分布的亲和度满足
+
+$$
+\boxed{
+\mathsf A(R_0^{\otimes M},R_1^{\otimes M})
+=
+\mathsf A(R_0,R_1)^M.
+}
+$$
+
+因而
+
+$$
+\mathsf H^2(R_0^{\otimes M},R_1^{\otimes M})
+=
+1-\bigl(1-\mathsf H^2(R_0,R_1)\bigr)^M.
+$$
+
+### 证明
+
+直接展开：
+
+$$
+\begin{aligned}
+\mathsf A(R_0^{\otimes M},R_1^{\otimes M})
+&=
+\sum_{x_1,\ldots,x_M}
+\prod_{m=1}^M\sqrt{R_0(x_m)R_1(x_m)}\\
+&=
+\prod_{m=1}^M
+\sum_{x_m}\sqrt{R_0(x_m)R_1(x_m)}.
+\end{aligned}
+$$
+
+得到亲和度乘法，再用 \(\mathsf H^2=1-\mathsf A\)。证毕。
+
+### 推论 372.4（记录标签的粗粒化不是相干恢复）
+
+若 \(L\) 把两个原本正交的记录标签合并，则 Hellinger 距离只能减少；从最终粗粒化分布出发的经典后处理不能恢复被合并的差异。要重新得到交叉项，必须声明一个能够访问原始联合记录的相干接口。
+
+### AHH 372.5（粒子记录是收缩通道的输出）
+
+局部点击不是原始关系体的同构像，而是一个通道的输出：
+
+$$
+\boxed{
+\text{整体来源}
+\longrightarrow
+\text{事件通道}
+\longrightarrow
+\text{可见记录}
+\longrightarrow
+\text{粗粒化后继}.
+}
+$$
+
+波性的一部分可能在通道的联合记录中保留，也可能在环境边缘化与标签合并中被压缩；粒子式事件只说明最终记录通道落在了哪一个离散结果支路。
+
+---
+
+## 373. 区分成本、重复资源与信息距离下界
+
+Hellinger 距离给出记录可见性的几何量。要把它变成任务边界，需要把距离、最优二元区分和重复成本连起来。
+
+### 定义 373.1（二元记录任务）
+
+给定两个共同来源假设 \(P_0,P_1\)，等先验二元任务的最优成功概率为
+
+$$
+\mathsf P_{\mathrm{succ}}(P_0,P_1)
+=
+\frac12\bigl(1+\mathsf{TV}(P_0,P_1)\bigr),
+$$
+
+其中
+
+$$
+\mathsf{TV}(P,Q)
+=\frac12\sum_x|P(x)-Q(x)|.
+$$
+
+### 定理 373.2（Hellinger 对二元区分的上下界）
+
+在有限结果集上，有
+
+$$
+\boxed{
+\mathsf H^2(P,Q)
+\le
+\mathsf{TV}(P,Q)
+\le
+\sqrt2\,\mathsf H(P,Q).
+}
+$$
+
+因此
+
+$$
+\frac12(1+\mathsf H^2(P,Q))
+\le
+\mathsf P_{\mathrm{succ}}(P,Q)
+\le
+\frac12(1+\sqrt2\,\mathsf H(P,Q)).
+$$
+
+### 证明
+
+令 \(a_x=\sqrt{P(x)}\)、\(b_x=\sqrt{Q(x)}\)。有
+
+$$
+|P(x)-Q(x)|
+=|a_x-b_x|(a_x+b_x).
+$$
+
+Cauchy–Schwarz 给出
+
+$$
+\sum_x|P(x)-Q(x)|
+\le
+\left(\sum_x(a_x-b_x)^2\right)^{1/2}
+\left(\sum_x(a_x+b_x)^2\right)^{1/2}
+\le2\sqrt2\,\mathsf H(P,Q),
+$$
+
+得到右侧不等式。
+
+另一方面，
+
+$$
+2\mathsf H^2(P,Q)
+=\sum_x(a_x-b_x)^2
+=\sum_x\frac{(P(x)-Q(x))^2}{(a_x+b_x)^2}
+\le
+\sum_x|P(x)-Q(x)|,
+$$
+
+其中使用 \((a_x+b_x)^2\ge|P(x)-Q(x)|\)。除以二得到左侧。代入 Helstrom 式即得成功概率界。证毕。
+
+### 定理 373.3（重复记录的区分上界）
+
+若单次可见记录的亲和度满足
+
+$$
+\mathsf A(R_0,R_1)\ge a>0,
+$$
+
+则 \(M\) 次独立记录的最优成功概率满足
+
+$$
+\boxed{
+\mathsf P_{\mathrm{succ}}(R_0^{\otimes M},R_1^{\otimes M})
+\le
+\frac12\left(
+1+\sqrt{2(1-a^M)}
+\right).
+}
+$$
+
+若 \(\sqrt{2(1-a^M)}<\delta\)，则任何等先验分类器的成功优势都小于 \(\delta/2\)。
+
+### 证明
+
+由定理 372.3，重复记录的 Hellinger 平方为 \(1-a^M\)。将定理 373.2 的右侧代入最优成功概率公式即得。证毕。
+
+### 定义 373.4（任务相对记录成本）
+
+给定目标优势 \(\delta>0\)、单次记录亲和度 \(a\) 和每次记录成本 \(c>0\)，定义 Hellinger 认证成本的保守下界为满足
+
+$$
+\sqrt{2(1-a^M)}\ge\delta
+$$
+
+的最小 \(Mc\)。若没有这样的有限 \(M\)，则在声明的记录接口上任务不可认证。
+
+当 \(0<a<1\) 时，条件等价于
+
+$$
+M
+\ge
+\frac{\log(1-\delta^2/2)}{\log a}.
+$$
+
+### 推论 373.5（局部事件的成本不是点击次数本身）
+
+两个仪器都可以产生相同的点击频率，却有不同的假设亲和度 \(a\)；前者的重复点击可能迅速区分来源，后者可能永远不能达到目标优势。故记录成本必须与来源对在声明通道下的距离和后继合同一起记账。
+
+### AHH 373.6（信息距离变成资源边界）
+
+波粒整体的全局性不只由“结果是否出现”决定，还由不同整体假设在记录接口上的距离决定：
+
+$$
+\boxed{
+\text{Hellinger 距离}
+\longrightarrow
+\text{最优区分优势}
+\longrightarrow
+\text{重复资源成本}.
+}
+$$
+
+粒子式事件是成本链上的一项局部样本；它是否足够改变整体判断，要看这项样本在来源空间上贡献了多少可分距离。
+
+---
+
+## 374. 信息几何全息边界
+
+现在把 Fisher 的局部张量、Hellinger 的全局距离、记录通道的收缩和任务成本放在一份边界中。
+
+### 定义 374.1（信息几何边界）
+
+固定有限来源类、事件通道和允许的后处理。定义
+
+$$
+\boxed{
+\eta_{\mathrm{geom}}
+=
+\left(
+\Theta,
+\mathsf P_\theta,
+\mathsf I_\theta,
+\mathsf H,
+\mathsf A,
+\mathsf K_{\mathrm{evt}},
+\mathsf L_{\mathrm{coarse}},
+\mathsf{Cost},
+\mathsf{Risk},
+\mathsf{Event},
+\mathsf{Stop}
+\right).
+}
+$$
+
+各字段保存：
+
+1. 共同参数来源 \(\Theta\) 与完整记录分布 \(\mathsf P_\theta\)；
+2. Fisher 局部张量 \(\mathsf I_\theta\) 与 Hellinger 全局距离 \(\mathsf H\)；
+3. 事件通道、粗粒化映射及其数据处理收缩；
+4. 二元区分、重复资源、风险目标与停止后继。
+
+### 定理 374.2（信息几何边界的条件充分性）
+
+若两个关系体具有相同的 \(\eta_{\mathrm{geom}}\)，且未来任务限于边界声明的有限参数扰动、事件记录通道、粗粒化、二元区分、重复成本和停止合同，则二者给出相同的：
+
+1. 局部 Fisher 度量与 Hellinger 二阶展开；
+2. 所有声明通道后的距离收缩；
+3. 有限重复记录的亲和度与区分上界；
+4. 任务相对的认证成本、风险和后继策略树。
+
+### 证明
+
+第 1 项由 \(\mathsf I_\theta,\mathsf H\) 和定理 371.3；第 2 项由 \(\mathsf K_{\mathrm{evt}},\mathsf L_{\mathrm{coarse}}\) 的数据处理合同；第 3 项由 \(\mathsf A\) 与定理 372.3、373.2；第 4 项由 \(\mathsf{Cost}},\mathsf{Risk},\mathsf{Event},\mathsf{Stop}\) 对有限记录树归纳。故声明任务的外部响应相同。证毕。
+
+### 定理 374.3（删除几何字段的有限反例）
+
+以下删字段均存在有限反例：
+
+1. 删除 Fisher 局部张量：同一全局距离附近的不同参数方向具有不同局部认证难度；
+2. 删除 Hellinger 全局距离：局部 Fisher 相同的远距离来源对具有不同区分优势；
+3. 删除事件通道：原始来源距离相同，但可见记录距离不同；
+4. 删除粗粒化映射：是否保留时间或路径标签给出不同后处理距离；
+5. 删除成本/风险合同：同一距离在不同重复预算下有不同认证结论；
+6. 删除事件后继：当前区分相同，但下一步允许的接口和停止树不同。
+
+### 证明
+
+第 1 项取同一参数点上不同 Fisher 本征方向。第 2 项取两个具有相同二阶局部展开、但有限参数距离不同的分布族。第 3 项使用定理 372.2 的严格收缩通道。第 4 项合并两个正交标签。第 5 项改变定理 373.4 中的 \(c,\delta\) 或重复上限。第 6 项附加不同的合法后继。每项都使一个任务不能由剩余字段决定。证毕。
+
+### 定义 374.4（信息几何波粒事件链）
+
+一条合法事件链写成
+
+$$
+\mathsf C_{\mathrm{geom}}
+=
+\bigl(
+\text{共同来源},
+\text{局部 Fisher},
+\text{全局记录距离},
+\text{事件通道},
+\text{粗粒化},
+\text{离散结果},
+\text{区分成本},
+\text{记录后继}
+\bigr).
+$$
+
+粒子式事件是一次记录通道输出；波性则是所有允许通道、后处理和来源对之间的距离几何。
+
+### AHH 374.5（信息几何全息）
+
+> Fisher 张量只看见无穷小参数变化，Hellinger 距离看见有限来源差异，事件通道把二者一起推到可见记录，成本合同再决定这份差异能否被认证。全息边界因此不是一张“点击清单”，而是一个带收缩映射和资源尺度的信息几何。
+
+主线可写成
+
+$$
+\boxed{
+\text{局部 Fisher}
+\longrightarrow
+\text{全局 Hellinger}
+\longrightarrow
+\text{记录通道收缩}
+\longrightarrow
+\text{区分成本}
+\longrightarrow
+\text{后继边界}.
+}
+$$
+
+**新的 AHH 时刻是：所谓“波的整体相干”可以被重新表述为来源空间上的距离几何，而粒子式事件是这张几何经过一个具体通道后的局部样本。通道若收缩距离，观察者得到的边界就严格少于原关系；增加点击次数只有在亲和度真正下降时才增加全局信息。**
+
+### 来源与边界 374.6
+
+本批在有限概率分布、二次可微参数族、有限随机记录通道、Hellinger/Bhattacharyya 几何、独立重复记录、二元区分任务和显式成本/停止合同下，给出 Fisher 二阶展开、数据处理收缩、亲和度乘法、区分成功界、重复资源下界和信息几何全息边界。没有把有限统计距离推广为连续量子场论的普适度量，没有把有限记录距离自动解释为单次物理样本的完整状态，也没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
