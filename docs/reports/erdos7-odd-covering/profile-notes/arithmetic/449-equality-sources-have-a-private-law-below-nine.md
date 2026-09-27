@@ -8,7 +8,7 @@ The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md
 
 This result allows incidence five at every full root. It uses actual private points forced by the equality cut, gives the common column zero mass, and chooses ONE probability before all original numerical labels and all phase tests. The same law construction applies to any larger actual source containing the specified private structure, whether or not that larger source has an equality cut or satisfies the tree premises.
 
-The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63 with bound701/78. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
+The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -1692,10 +1692,207 @@ residuals. No Lean formalization is claimed.
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_saturated_block_transport.py
 ```
 
+## Sharp mass21 transport and the remaining cut77 interface
+
+All masses here are raw integer-capacity units. The sharp support theorem below improves the full-block estimate and reduces the general cut77 problem to near-full mass20 blocks. It does not settle every cut77 source or the original odd-covering problem.
+
+Let E be any subset of {0,...,4} x {0,...,6} admitting a nonnegative matrix of total21, row sums at most6, column sums at most7 and entries at most2. There is a rational matrix x supported in E, with the same total and caps, such that at every cell, including absent cells,
+
+    S_ij = 20 r_i + 20 c_j + 25 x_ij <=295.
+
+For a particular feasible initial x0 with rational entries, apply the construction on E=supp(x0). One can retain exactly that positive support by taking (3/4)x+(1/4)x0. Then every score is at most1195/4=298.75<301. Thus a full isolated coarse block has coherent raw charge at most315+1195/4=2455/4=613.75<616 after positive-support-preserving replacement. If mere support containment suffices, the sharper bound is610.
+
+### Minimal support reduction
+
+Delete edges while preserving mass21 feasibility, producing inclusion-minimal E'. Let M be its integer maximum flow for source-row capacities6, entry capacities2 and column-sink capacities7. Removing any edge reduces maxflow to at most20. Removing a cap2 edge reduces maxflow by at most2, so M is21 or22.
+
+If M=22, take any22 flow. For each edge, its removal leaves a mincut of capacity20; that cut had capacity22 before removal, and hence the edge is saturated at2 in every22 flow. Therefore E' has11 edges and every row and column has degree at most3. Give each edge mass21/11. This is feasible, and at a positive cell
+
+    S <= (20*3+20*3+25)*21/11=3045/11<295.
+
+At a zero cell the bound is smaller.
+
+### The M=21 cut cases
+
+Choose a minimum cut. Let I be its inside rows, J its inside columns, and let a=5-|I|, b=|J|, c=|E' intersect(I x J-complement)|. Its capacity is6a+7b+2c=21, whose possibilities are
+
+    (a,b,c)=(0,3,0),(0,1,7),(1,1,4),(2,1,1).
+
+A maximum21 flow saturates all forward cut arcs and has zero backward cut flow. Thus outside rows have mass6, inside columns have mass7, crossing entries are2, and outside-row/inside-column entries are0. The last type is impossible: its only inside column would need7 from only3 inside rows, each entry at most2.
+
+#### Type(0,3,0)
+
+All edges lie in3 columns. Each column has at least4 neighbors. Distribute7 uniformly on its neighbors. Then every row is at most21/4, every entry at most7/4, and every score is at most
+
+    20*(21/4)+20*7+25*(7/4)=1155/4<295.
+
+#### Type(0,1,7)
+
+Let j* be the sole inside column and d_i the row's degree among the7 crossing edges. Keep these edges at2. We have sum d_i=7 and d_i<=3. Rows with d_i=3 cannot contribute to j*. The set H of rows adjacent to j* with d_i<=2 has cardinal k>=4, since j* must receive7 with entry cap2.
+
+Outside column totals are unchanged even integers at most7, hence at most6. Every outside-column positive score is therefore at most20*6+20*6+25*2=290. Any zero-cell score is at most260. It remains to allocate j*.
+
+If k=5, give every row7/5. Row caps hold and the j* score is at most
+
+    20*(4+7/5)+140+25*(7/5)=283.
+
+If k=4, let h be the number of its rows with d_i=2. Since sum d_i=7, h<=3. If h=0, give all four rows7/4; their scores are at most20*(2+7/4)+140+25*(7/4)<295. If1<=h<=3, give each of the4-h low-degree rows2 and each high-degree row
+
+    v=(7-2*(4-h))/h=2-1/h.
+
+The masses sum7, and1<=v<=5/3<2, so all entry and row caps hold. Low-degree row scores are at most270. High-degree row scores are
+
+    20*(4+v)+140+25v=220+45v<=295.
+
+#### Type(1,1,4)
+
+Let r* be the outside row and j* the inside column. Choose an integral maximum21 flow and keep its outside-row flows v_j, of total6, and the4 crossing edges at2. The four inside rows all have an allowed j* edge, because each contributes at least1 to its required mass7. Their crossing degrees d_i are at most2 and sum4. Let h count the rows of degree2; h is0,1 or2.
+
+If h=0, put7/4 at each inside-row/j* entry. Every inside row has mass at most15/4. Its j* score is at most1035/4; a crossing-entry score is at most265.
+
+If h=1, put1 in the high row's j* entry and2 in the other three. The high row has mass5 and the others at most4. Their j* scores are at most270, and crossing scores at most20*5+20*7+50=290.
+
+If h=2, the degree vector is(2,2,0,0) up to permutation. Put3/2 at each high row's j* entry and2 at each zero-degree row. High rows have mass11/2. Every outside column meets at most2 crossing edges; with v_j<=2 its total is at most6. Crossing scores are at most110+120+50=280; high-row j* scores are at most220+45*(3/2)=575/2. Other j* scores are at most230.
+
+For the unchanged outside row, let D_j be a column's crossing degree. Its column total is2D_j+v_j<=7. If D_j<=2, its score is at most120+120+50=290. If D_j=3, then v_j<=1 and its score is at most120+140+25=285. Zero-cell scores are at most260. Hence this entire cut type has bound290.
+
+All constructions preserve total21, the original caps, and support containment. This proves295 in every case. Mixing with x0 as stated follows because every original feasible score is at most310.
+
+### The constant295 is sharp over arbitrary allowed supports
+
+Use columns A,B,C,D,E and four nonempty rows, with support
+
+    row0: A,B,C
+    row1: A,D
+    row2: empty
+    row3: A,B,E
+    row4: A,B,E.
+
+A cut through column A (capacity7) and the seven other entry edges (total capacity14) has capacity21. Every mass21 flow therefore puts2 on those seven non-A edges and7 on column A. Write v_i=x_iA. Since v_1<=2,
+
+    v_0+v_3+v_4=7-v_1>=5.
+
+At least one of these three v_i is at least5/3. That row has four units outside A, so its cell score at A is220+45v_i>=295. Conversely v_1=2 and v_0=v_3=v_4=5/3 gives a feasible matrix with maximum score295; B has total6, C and D total2, E total4. This cut and pigeonhole argument proves that the universal minimax constant is exactly295.
+
+### Same-source cut77 reduction
+
+Start from any integral actual flow of value77 with the eight raw caps. Replace each isolated full21 coarse block by the295 construction, retaining positive support through a quarter-original mixture. All coarse root masses a, coarse column masses b, and coarse block masses d remain unchanged integers; every fine cap remains valid. This is one flow of total77.
+
+### Noncoherent layouts: the old622 bound can be sharpened below616
+
+If the six labels with positive first5 exponent disagree, at least5 unordered pairs are incompatible; each loses at least4 from the independent630 envelope. The same holds on the7-axis. Such layouts have charge at most610.
+
+Assume both first digits agree. Let A,B,E be the full5 digits selected by labels25,175,1225, and C,D,F the full7 digits selected by49,245,1225.
+
+If A differs from B, their ordered pair contribution loses12, since lcm(25,175)=175 and its raw cap is6. At least one of A or B differs from E, losing another4 from its pair with1225. Thus the charge is at most614. If C differs from D, the same argument loses14+4 and gives612. If A=B but E differs, AND C=D but F differs, four distinct incompatible pairs with1225 lose16 in total, giving614.
+
+Consequently only two exceptional noncoherent patterns need extra work: A=B=E, C=D different from F; or A=B different from E, C=D=F.
+
+### One inequality controls both exceptional patterns
+
+Write x_ij for the fine matrix in their common coarse root/column block. Write z_i for row-i mass in that root outside the column, and y_j for fine-column-j mass in that column outside the root. Let
+
+    a=d+sum z_i,  b=d+sum y_j,  f=sum_j x_Aj,
+    g=sum_i x_iC, e=g+y_C,  x=x_AC.
+
+The displaced top cell x' is x_AF in the first pattern and x_EC in the second. On the coarse block the query count is4+2[ i=A ]+2[ j=C ]+[displaced top cell]. Outside it the count is2+[i=A] or2+[j=C]. Thus the exact nonunit charge is
+
+    K=3a+3b+9d+20f+20g+8x+13x'+5z_A+5y_C.
+
+Using z_A<=a-d and e=g+y_C gives
+
+    K <= 8a+7b+20f+20e+8x+13x' -4(b-d)-15y_C
+      <= 617-8(21-a)-7(21-b)-4(b-d).
+
+The last line uses f<=6, e<=7, x,x'<=2. This inequality is valid for a rational measure; only the next step uses unchanged coarse integrality.
+
+If the block is not full, either a<=20, b<=20, or a=b=21 and d<=20. The displayed bound is respectively at most609,610, or613.
+
+If the block is full, a=b=d=21 and z=y=0. The repair supplies S_AC=20f+20g+25x<=L=1195/4. Therefore
+
+    K=315+20f+20g+8x+13x'
+      <=315+(8/25)L+(17/25)*260+26
+      =3067/5=613.4.
+
+Hence EVERY noncoherent layout of the repaired flow has K<=614<616. No new cross-block rerouting is needed for this part.
+
+### What coherent layouts still require
+
+In a full block the repair gives K<=2455/4=613.75. Outside them the inclusion bound and coarse caps show:
+
+* If a<=20, then d<=20, so the Report449 slack estimate gives K<=625-8-4=613.
+* If d<=19, the original coherent formula gives K<=3a+3b+9d+315<=612.
+* If a=21,d=20, then b is20 or21 unless the preceding case applies.
+
+Thus the only remaining coherent obstructions have a=21, d=20 and b in{20,21}. For the initial integer flow, the only actual charges>=616 are621,618,616. Specifically f6,e7,g7,x2 are all forced; for b21, child mass7 gives621 and child mass6 gives616; for b20, child mass7 gives618. This classification of exact fine masses is for the initial integer flow, whereas the coarse exclusions above remain valid after the disjoint full-block replacements.
+
+### The mass20 transport analogue is false on arbitrary positive support
+
+Use5 rows and7 columns. The positive support and unique mass20 feasible matrix are
+
+    row0: A2 B2 C2
+    row1: A2 B2
+    row2: A2 B2
+    row3: empty
+    row4: A1 B1 D2 E2.
+
+All row caps are6, column caps7, entry caps2. A cut consists of the source-to-row4 arc of capacity6 and the seven entry arcs incident with rows0,1,2 of total capacity14. Therefore every feasible mass20 flow forces row4 mass6 and all those seven entries2. Columns A and B already receive6 from the first three rows, so row4 contributes at most1 to each; D and E allow at most2 each. Achieving row4 mass6 forces exactly(1,1,2,2). The flow is unique even among rational flows.
+
+At cells(row0,A) and(row0,B), r=6,c=7,x=2, giving S=310. No supported redistribution lowers it. One flagged column cap6 does not help: flag an unused column. Thus no universal same-positive-support mass20 lemma with S<300 can hold, even though the mass21 analogue has bound295.
+
+This is a local counterexample to an algorithmic premise, not a full literal-source realization, not an obstruction to using previously zero actual edges, and not a counterexample to existence of a good law. For a=21,d20, outside root mass1 implies row allowances7-row_outside>=6, so row capacities do not resolve this example. For b21, one flagged fine column has cap6, but it can be the unused column just described. To advance general cut77, an argument must use additional actual source points beyond the chosen positive support, change coarse block masses through a joint reroute, or construct a different law from the source's literal tree/blocking premises. Merely keeping all coarse masses and replacing arbitrary positive20 blocks cannot supply the needed theorem.
+
+### Two direct consumers of the same repaired law
+
+For a value77 initial flow with no coarse root/column block satisfying
+root mass21 and joint mass20, every coherent centre is at most2455/4
+or613 and every noncoherent layout is at most614. Hence the same law gives
+
+    Gamma_1225(nu)<=1+614/77=691/77<9.                 (SH1)
+
+This is a sufficient source-flow condition, not a claim that every
+cut77 source supplies such a flow. A block of joint mass20 has column
+mass20 or21 automatically.
+
+For value78, all nonfull coherent centres have K<=621: if a<=20 then
+K<=613; if d<=19 then K<=612; otherwise a=21,d=20,b<=21, and the
+original coherent formula gives K<=306+315=621. This uses only the
+unchanged coarse integrality and the fine caps. Full blocks have
+K<=2455/4, and the same noncoherent proof gives K<=614. Consequently the
+uniform cut78 bound in(SB1) sharpens to
+
+    Gamma_1225(nu)<=1+621/78=233/26<9.                (SH2)
+
+All these bounds use one repaired rational flow selected before the
+phase queries, preserve its original positive actual support and all
+network capacities, and retain every original query label.
+
+### Exact constructive controls
+
+The [sharp-block constructor](../../frontier/cover-geometry/height_two_sharp_block_transport.py)
+and [results](../../frontier/cover-geometry/height_two_sharp_block_transport.json)
+implement support deletion, integral minimum-cut classification, the
+explicit rational allocations, and the quarter-original mixture. They
+reuse the existing Dinic implementation. Each output is checked at all35
+cells, including absent cells, with total and every capacity checked
+exactly. The controls exercise all four branches by explicit supports,
+216 three-column supports, and96 further fixed-seed supports:316 cases,
+of which286 are feasible. Each feasible case also has a separate run
+restricted to its initial positive support. The degree/allocation checks
+cover275 eligible-row cases for cut017 and19 degree cases for cut114.
+The sharp295 witness and unique20 counterexample retain exact matrices
+and their cut arguments. Finite controls do not replace the universal
+minimum-cut proof, realize a full original odd cover, or prove the
+missing near-block supplier. No Lean verification is claimed.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_sharp_block_transport.py
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
-The saturated-block theorem also controls every78/63 source. For
+The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The partial-full-root70/63 profile above is controlled by(PF1), without
 settling every cut70 source. General high-incidence sources in the remaining
