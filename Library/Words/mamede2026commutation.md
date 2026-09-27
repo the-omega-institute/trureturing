@@ -10,6 +10,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeSourceAction
   - D5/S1/Words/Permutations/MamedeConditionalConverse
   - D5/S1/Words/Permutations/MamedeShapeExtraction
+  - D5/S1/Words/Permutations/MamedeDeletionEquiv
 license: citation-only
 triage: anchor
 ---
@@ -68,3 +69,16 @@ choosing a nonoscillating word, whereas this result assumes the identities
 directly; the two source predicates are not simply ordered. The paper-to-Lean
 translation remains subject to independent source review. Conjecture 5.1
 remains open; KPI is 0.
+
+The repository-derived `source_deletion_equiv` combines the all-source shape
+result with a new forward deletion proof and the conditional lifting result.
+It identifies the actual singleton-word fibers of `sigma` and
+`sigma * gamma⁻¹` under `exactSourceHypotheses`, where `gamma` is the product
+of `deletedExcursion`. For every shaped source, the forward word is
+`imageWord`, and its length drops by the positive, fixed length of
+`deletedExcursion`. The forward proof establishes consecutiveness and
+reducedness; the first `j` in the word recovers the prefix, including when
+the suffix contains `j`. Proposition 3.8 of the paper supports the deletion
+injection, but does not state this conditional equivalence or its converse.
+This result does not settle the reflected orientation, oscillation and
+involution cases, or the global count in Conjecture 5.1.
