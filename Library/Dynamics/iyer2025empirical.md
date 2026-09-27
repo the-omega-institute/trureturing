@@ -6433,3 +6433,15 @@ Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Num
 完整组识别、一／两行相对概率、实际总量分解和集中、条件化信息、加权尾与同阶方差亏损分别复用第 175、180、183、187、189、191、193、194 章。线质量归一化复用 `PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md` (44.9) 与 `PARITY_HIDDEN_ARROW_WINDOW_PHASES.md` (52.12)–(52.15)。不从本结果推出全数据熵、后验熵、同步 E2、下一阶系数或统计实验等价；不主张全球原创性或 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 198. 重复直方图的似然极限与可达到的检验误差
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 198 章。Lasse Leskelä，*Information divergences and likelihood ratios of Poisson processes and point patterns*，arXiv:2404.00294v2（[原始版本](https://arxiv.org/abs/2404.00294v2)），Hellinger 定义与三角不等式、原文标识 `the:PoissonHellinger` 及 `the:PoissonRenyiFinite` 的完整有限强度证明已核对，包括零密度和共同支配强度。正文采用未减半的平方 Hellinger 距离，转换该文的二分之一约定；Poisson 亲和度公式只用于两个 Poisson 参考律。
+
+Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Numbers*，arXiv:0906.0690v1 的相关归属与适用范围见第 197 章。其固定输入／固定参考均值定理不直接承担当前的三角阵乘积极限。正文复用第 197 章独立建立的全部次数似然余项，直接证明近零似然控制、乘积二阶矩、指数倾斜、相邻性及真实似然的稳定性。
+
+模型内新增关系在完整向量上先支付精确均值变更与信息尾，使其在 $mF_Q^2=O(1)$ 次完整独立实验后仍可传递。真实对数似然的两侧极限为 $N(\mp\tau/16,\tau/8)$，最优等先验错误率为 $\Phi(-\sqrt\tau/(4\sqrt2))$；使用已知精确总均值的二次总计数统计量达到这一极限。临界重复次数为 $Q^5$ 量级，零／无穷尺度的 TV 结论分别证明。原 path 的单次实验内部没有独立化，完整计数线、取整与全部尾均保留。
+
+这是固定参数下规定两种采样分布的普通数学结论，不提供未知均值、未知支持估计、时间箭头区分、全数据恢复或 E2 的结算。有限文献核对不支持全球原创性判断，也不构成 Lean 认证。
+
+## 追加锚（本行以下为增补区）

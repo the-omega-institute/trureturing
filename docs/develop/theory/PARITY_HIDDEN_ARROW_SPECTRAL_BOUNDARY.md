@@ -62612,3 +62612,443 @@ Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Num
 Charlier 正交、Gaussian 复积分和熵变分法属于经典工具。新增原模型推导是 (197.18)–(197.20) 的共同实现与全均值形状支付、(197.32)–(197.36) 低于主阶的熵传递，以及 (197.40)–(197.42) 的尖锐实际方差检验。有限文献核对不构成全球原创性判断；本章为普通数学推导，未作 Lean 认证。全数据熵、后验熵、同步 E2 及下一阶系数均未由本结果判定。
 
 ## 追加锚（本行以下为增补区）
+
+## 198. 重复完整原实验的临界检验：真实似然极限与总计数二次统计量
+
+第 197 章确定完整原始直方图的 KL 首项。本章把该微弱信息接到可取得的检验优势：独立重复整个原始实验，在 $Q^5$ 量级获得非退化的二元检验极限。关键是先在完整向量上支付精确均值变更与信息尾，再控制乘积似然的近零事件、对数余项及换律。每一次原 path 实验内部仍保留全部依赖。
+
+**定理 198.1（完整直方图的临界重复实验）。** 对 pair 与平稳 path 两种原实验分别令 $P_Q$ 为完整计数线直方图的实际律，令
+
+$$
+R_\mu=\bigotimes_{j\in J_Q}\operatorname{Pois}(\mu_j),\qquad
+\mu_j=\mathbb E_{P_Q}C_j,\qquad
+\ell_{Q,m}=\log\frac{dP_Q^{\otimes m}}{dR_\mu^{\otimes m}},\qquad
+\tau_Q=mF_Q^2.
+$$
+
+这里一次重复是相同固定参数与支持下整个原实验的独立副本；$F_Q$ 为原信号 product-Poisson 行落在完整原计数线上的概率。对每个固定紧区间 $J\Subset D=(\beta_*,1)$、所有规定大小的确定性支持，若 $\tau_Q\to\tau\in[0,\infty)$，则分别在两种假设下有
+
+$$
+\ell_{Q,m}\Longrightarrow
+\begin{cases}
+N(-\tau/16,\tau/8),&R_\mu^{\otimes m},\\
+N(\tau/16,\tau/8),&P_Q^{\otimes m}.
+\end{cases}
+\tag{198.1}
+$$
+
+当 $\tau=0$ 时右侧是零点的点质量。有限层可能出现的 $-\infty$ 似然值在参考律下的概率趋零。对每个有限 $K$，在 $\tau_Q\le K$ 的范围内，结论按第 198.5 节给出的有界 Lipschitz 距离对上述参数与支持一致；不声称离散似然律到连续正态律的全变差收敛。
+
+设 $\Phi$ 为标准正态分布函数，全变差采用总绝对质量差的一半。两条指定简单假设的最优等先验错误率满足
+
+$$
+\left\|P_Q^{\otimes m}-R_\mu^{\otimes m}\right\|_{\rm TV}
+\longrightarrow 2\Phi\!\left(\frac{\sqrt\tau}{4\sqrt2}\right)-1,
+\qquad
+\mathcal R_{\rm equal}\longrightarrow
+\Phi\!\left(-\frac{\sqrt\tau}{4\sqrt2}\right).
+\tag{198.2}
+$$
+
+第 198.7 节给出达到此极限的完整总计数二次统计量。它使用同一实际律的已知精确均值；这里没有估计未知支持、参数或均值的结论。原振幅、补偿、时间长度、取整、全部尾坐标和零均值坐标均保留。当 $mF_Q^2\to0$ 时全变差趋零；当其趋于无穷时全变差趋一，后者由固定临界子实验另证，不把有界尺度的误差直接乘到任意大的重复次数。
+
+### 198.2 Original model, full support and operative inputs
+
+Keep
+$$
+e_1=1,\ e_{n+1}=10^{5e_n},\ Q=10^{e_n},\ P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad\lambda=Q^3,
+$$
+$$
+\log(1+r)/[-\log(1-r)]=\vartheta,\quad a=(1+r)/2,\quad b=(1-r)/2,
+\quad\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+Set $h_r=-\log(1-r)$, $t_n=\vartheta-P/Q\in(0,2\,10^{-Q^5})$. Retain the exact integer/floor data
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,\quad
+M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,\quad s_0=M-q,\quad
+\epsilon=rq/s_0,\quad T=2M\lambda.                     \tag{198.3}
+$$
+For $J=[\beta_0,\beta_1]\Subset D=(\beta_*,1)$, the original domain has $\beta_*>1/2$. Uniformly on $J$,
+$$
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O(1),\quad
+q/M=e^{-\phi\lambda+O(1)},\quad
+q^2/M=e^{\phi(1/\beta-2)\lambda+O(1)}.                 \tag{198.4}
+$$
+Thus both class sizes grow exponentially, but $q^2/M$ decays exponentially. All exponential error statements below can absorb fixed polynomial factors and are uniform on this compact interval.
+
+Both parity classes have size $M$. For any deterministic $S\subset C_+$, $|S|=q$, the kernel is
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,\quad b_S=0\text{ on }C_-.
+$$
+The stationary path starts uniformly and makes $T$ transitions; pairs are $T$ independent stationary adjacent pairs. Compensation gives the exact reset $P_S^2=\Pi$. For
+$\mathbf k_j=(K_j,B_j)=(k_0,l_0)+j(Q,P)$, let
+$$
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},\quad
+C_j=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=\mathbf k_j\}}.
+                                                               \tag{198.5}
+$$
+Chapter 175's global score injectivity makes these COMPLETE original groups without a cutoff. At finite horizon only
+$$
+A_Q=\left\{j:\max(\lceil-k_0/Q\rceil,\lceil-l_0/P\rceil)\le j
+\le\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor\right\}
+                                                               \tag{198.6}
+$$
+can occur. All coordinates of $J_Q\setminus A_Q$ have count and mean zero. Within $A_Q$, a zero mean also means deterministic zero. This gives an exact finite-dimensional reduction of the countable-vector laws; it is not a tail deletion. In each actual experiment $\sum C_j\le M$, hence its distribution has finite support and is absolutely continuous with respect to $R_\mu$. Product-Poisson references can have larger counts, on which the actual likelihood is zero.
+
+Use the SAME fixed proof cutoff as Chapter 197:
+$$
+\gamma=(e-1)/2,\quad c_M=\phi/\beta_0,\quad C=4(\gamma+4c_M+4),\quad
+\alpha_Q=e^{(\gamma-C/4)\lambda},\quad I_C=\{j\in J_Q:K_j+B_j\le C\lambda\}.
+$$
+Define $f_j(w)=e^{-w_+-w_-}w_+^{K_j}w_-^{B_j}/(K_j!B_j!)$,
+$$
+\nu_1=(a\lambda,b\lambda),\quad
+\nu_0=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2),\quad
+f_j=f_j(\nu_1),\quad g_j=f_j(\nu_0),
+$$
+$$
+F=\sum_{I_C}f_j,\quad F_0=\sum_{I_C}g_j,\quad
+F_Q=\sum_{J_Q}f_j,\quad m_j=qf_j+s_0g_j,\quad
+\rho=s_0e^{-z_0}/q,\quad \nu=(1+\rho)qF.               \tag{198.7}
+$$
+These $m_j,\nu$ are proof-reference means, not assumed actual means. Chapter 197's floor-uniform line local limit gives
+$$
+F\sim F_Q\sim\frac{Q^{-5/2}}{\sqrt{2\pi(b+a\vartheta^2)}},\quad
+0\le F_Q-F\le\alpha_Q,\quad \rho\to1.                 \tag{198.8}
+$$
+The underlying Stirling/Riemann-sum normalization is already in the original model, specifically POSTERIOR_FIELD (44.9) and WINDOW_PHASES (52.12)–(52.15). In particular $\nu\to\infty$ exponentially times a polynomial factor, uniformly.
+
+Here are the precise information and probability inputs reused from Chapter 197, Sections 197.3–197.6. Let $\mathsf A$ be the core categorical histogram from $q$ iid Poisson signal rows; its marking probabilities are $f_j$. Define the reference convolution and product law
+$$
+\mathsf B_I=\mathsf A*\bigotimes_{I_C}\operatorname{Pois}(\rho qf_j),\qquad
+\mathsf R_I=\bigotimes_{I_C}\operatorname{Pois}((1+\rho)qf_j).
+$$
+The actual core law satisfies
+$$
+D(P_{I_C}\|\mathsf B_I)\le\eta_Q
+=d_{\mathcal E}+\mathcal B_Q^{(20)}(s_0)+E_{\rm shape}
+=O_J(Q^{-20})+O_J(e^{-c_J\lambda}).                    \tag{198.9}
+$$
+This is the actual-law comparison (Chapter 197 (197.19)–(197.20)), not merely its KL coefficient. For specificity, put $p_0=q/(2M)$,
+$$
+d_{\rm pair}=-p_0-\log(1-p_0),\quad
+d_{\rm path}=\frac{T(p_0^2+p_0\epsilon^2)}{1-p_0}+2(p_0+1/T),
+$$
+$$
+u_Q=(C+1)\lambda h_rt_n+2C\lambda\epsilon,\qquad
+E_{\rm shape}=s_0F_0\{e^{u_Q}u_Q^2/2+\delta_1u_Q\},
+$$
+$$
+\theta_h=(1+C)h/(2M),\quad
+\delta_h=10^6(\theta_h+T\theta_h^2)e^{10^6T\theta_h^2}+12\,2^{-T},\quad h=1,2.
+                                                               \tag{198.10}
+$$
+Here $\delta_1=O_C(\lambda/M)$ is the relative error in each original one-row target probability on the whole core, including zero target counts. Its sufficient condition $\theta_2\le1/200$ holds eventually. The exact ratio is
+$$
+\log(g_j/(e^{-z_0}f_j))
+=-jh_rQt_n+K_j\log(1-\epsilon)+B_j\log(1+\epsilon),\qquad |\log(g_j/(e^{-z_0}f_j))|\le u_Q.
+                                                               \tag{198.11}
+$$
+The background payment $\mathcal B_Q^{(20)}$ is precisely the finite SUM in Chapter 197 (197.12) with cutoffs $\kappa=\tau=Q^{-20}$, subject to the finite conditions (197.13). Its proof uses the displaced sparse-line mass and squared-distance bounds, an exponentially small background target mass, Fourier smoothing of the same conditional label allocation, and the actual common-total concentration. The cutoffs are freely positive; $s_0Q^{-20}\to\infty$ exponentially and $e^2\bar F\le Q^{-20}$ eventually, so no finite condition is lost. Its only polynomial-order terms are those cutoffs; all other terms are exponential or smaller.
+
+To fix the common-realization issue, the signal-word chain rule pays the ENTIRE original signal array by $d_{\mathcal E}$. Conditional on the SAME four departure totals $H$, the signal and background label lists are independent uniform allocations, while those totals retain their actual joint law. Conditional convexity with the actual posterior weights of $H$ gives
+$D(P_{U,V}\|\mathsf A\otimes R_{b'})\le d_{\mathcal E}+\mathbb E_HD(P_{V|H}\|R_{b'})$.
+Changing $b_j=s_0g_j$ to $b'_j=\rho qf_j$ costs the full mean-weighted quantity $E_{\rm shape}$, including its linear calibration term. Addition gives (198.9). This is why no independent-path-row premise appears in the present proof.
+
+The information-weighted tail input, on $\mathcal T=A_Q\setminus I_C$, is
+$$
+\mathbb E_{P_Q}[-\log R_T(C_{\mathcal T})]\le\mathcal T_Q,
+\quad R_T=\bigotimes_{\mathcal T}\operatorname{Pois}(m_j),\quad
+\mathcal T_Q=M[1+\log(M/q)+\lambda+32/(b\lambda)]\alpha_Q.
+                                                               \tag{198.12}
+$$
+Also $\sum_{\mathcal T}\mu_j\le M\alpha_Q$, $\sum_{\mathcal T}m_j\le M\alpha_Q$. The operative proof bounds each original row's $\mathbb Ee^{N_x/2}$ by $e^{\gamma\lambda}$, using reset and Cauchy–Schwarz for the path. It pays $N_x^2$ on $N_x>C\lambda$; since one row hits at most one tail target, it pays the entire tail sum with no cardinality factor. The bound $-\log f_j\le\lambda+(K_j+B_j)^2/(b\lambda)$ handles arbitrarily tiny reference intensities. All conditions of (198.9)–(198.12) hold uniformly eventually by (198.4). Nothing here follows from TV continuity of an unbounded observable.
+
+### 198.3 The new weighted exact-mean and full-vector comparison
+
+On the full finite set $A_Q$, let
+$$
+\mathsf B_Q=\mathsf B_I\otimes R_T,\qquad
+\mathsf R_Q=\mathsf R_I\otimes R_T.
+$$
+These references append deterministic zeros outside $A_Q$. By the joint entropy chain identity,
+$$
+D(P_Q\|\mathsf B_Q)
+=D(P_I\|\mathsf B_I)+\mathbb E[-\log R_T(C_T)]-H(C_T\mid C_I)
+\le\varepsilon_Q:=\eta_Q+\mathcal T_Q.
+                                                               \tag{198.13}
+$$
+Thus the full-vector comparison error is $O_J(Q^{-20})+O_J(e^{-c_J\lambda})$; it includes every tail coordinate and its information. This is a one-sided KL comparison only.
+
+The second reference change must be paid at the full moving mean. Define
+$$
+c_Q=e^{u_Q}u_Q,\quad e_Q=c_Q+\delta_1(1+c_Q),\quad
+\omega_Q=\nu e_Q^2+2M\alpha_Q,\quad g_Q=\nu e_Q+M\alpha_Q.
+                                                               \tag{198.14}
+$$
+The letter $e_Q$ here is an error bound, not the original sequence $e_n$. Put $r_j=(1+\rho)qf_j$ in the core. By (198.11),
+$$
+\left|\frac{m_j}{r_j}-1\right|
+=\frac{\rho}{1+\rho}|e^{t_j}-1|\le c_Q.
+$$
+The original one-row comparison gives $|\mu_j-m_j|\le\delta_1m_j$, so
+$$
+|\mu_j/r_j-1|\le e_Q,\qquad
+\sum_{I_C}(\sqrt{\mu_j}-\sqrt{r_j})^2\le\nu e_Q^2.
+                                                               \tag{198.15}
+$$
+The second inequality uses $(\sqrt{1+x}-1)^2\le x^2$ for $x\ge-1$; crucially its sum is weighted by $r_j$, not by the number of coordinates. On the tail, the corresponding sum is at most $\sum(\mu_j+m_j)\le2M\alpha_Q$. Let $\mu_\bullet=\sum_{A_Q}\mu_j$. Then also
+$$
+|\mu_\bullet-\nu|\le g_Q.                             \tag{198.16}
+$$
+All these are actual-law statements. By (198.4), $u_Q=O_J(\lambda q/M)+O_J(\lambda t_n)$, $\delta_1=O_C(\lambda/M)$, and $\nu=O(qF)$. Hence $\nu e_Q^2$ is bounded by fixed polynomial factors times $q^3/M^2+q/M^2$, which decay exponentially. Even $\nu e_Q$ decays exponentially: its largest term is a fixed polynomial factor times $q^2/M$. Thus
+$$
+\omega_Q+g_Q=O_J(e^{-c_J\lambda}).                    \tag{198.17}
+$$
+This stronger absolute aggregate-mean control will later justify the actual centering of a test; it is not assumed merely from relative errors.
+
+Use the unhalved squared Hellinger distance
+$h^2(P,R)=\int(\sqrt{dP}-\sqrt{dR})^2$, with affinity $\mathfrak a=1-h^2/2$. For scalar Poisson laws of means $x,y\ge0$, direct summation gives affinity $e^{-(\sqrt x-\sqrt y)^2/2}$, including zero means. Products multiply affinities. Therefore (198.15) and the tail bound give
+$$
+h^2(R_\mu,\mathsf R_Q)
+=2\left[1-e^{-\frac12\sum_{A_Q}(\sqrt{\mu_j}-\sqrt{\widetilde m_j})^2}\right]
+\le\omega_Q,
+                                                               \tag{198.18}
+$$
+where $\widetilde m_j=r_j$ on the core and $m_j$ on the tail. This is a comparison of TWO Poisson laws. It is never applied directly to $P_Q$. Also $h^2(P_Q,\mathsf B_Q)\le D(P_Q\|\mathsf B_Q)\le\varepsilon_Q$: Jensen gives $D\ge-2\log\mathfrak a\ge2(1-\mathfrak a)$. No $L^2$ likelihood conclusion is drawn.
+
+Since $h^2(P^{\otimes m},R^{\otimes m})=2[1-(1-h^2(P,R)/2)^m]\le mh^2(P,R)$, and TV is at most $h$,
+$$
+\|P_Q^{\otimes m}-\mathsf B_Q^{\otimes m}\|_{\rm TV}\le\sqrt{m\varepsilon_Q},\qquad
+\|R_\mu^{\otimes m}-\mathsf R_Q^{\otimes m}\|_{\rm TV}\le\sqrt{m\omega_Q}.
+                                                               \tag{198.19}
+$$
+For every fixed $K<\infty$, both errors tend to zero uniformly when $mF_Q^2\le K$; their sum is bounded by
+$$
+\frac{\sqrt K}{F_Q}(\sqrt{\varepsilon_Q}+\sqrt{\omega_Q})
+=O_J(Q^{-15/2})+O_J(e^{-c_J\lambda}/F_Q).               \tag{198.20}
+$$
+This is the required faithful binary-experiment comparison, paid before any likelihood transfer. It is not a triangle inequality for KL.
+
+### 198.4 The reference likelihood and its triangular remainder
+
+Under $\mathsf B_I$ and $\mathsf R_I$, conditional on the core total, the mark shape is exactly multinomial with probabilities $\pi_j=f_j/F$. Their total laws are
+$$
+\operatorname{Bin}(q,F)*\operatorname{Pois}(\rho qF),\qquad\operatorname{Pois}(\nu),
+\quad\nu=(1+\rho)qF.
+$$
+The identical independent tail law cancels. Consequently the full reference likelihood $L_Q=d\mathsf B_Q/d\mathsf R_Q$ depends only on the core total $N$. Define
+$$
+W_\nu(N)=\frac{(N-\nu)^2-N}{\nu},\qquad
+s_Q(N)=-\frac{W_\nu(N)}{2(1+\rho)},\qquad
+I_Q=\mathbb E_{\mathsf R_Q}s_Q^2=\frac1{2(1+\rho)^2}\longrightarrow\frac18.
+                                                               \tag{198.21}
+$$
+The exact Charlier orthogonality gives $\mathbb Es_Q=0$, $\mathbb EW_\nu^2=2$. The centered Poisson eighth-moment bound gives $\mathbb Es_Q^4\le K_0$ uniformly for $\nu\ge1$, $\rho\in[1/2,2]$.
+
+Chapter 197's full-degree likelihood calculation, valid uniformly for these moving means, gives
+$$
+L_Q=1+Fs_Q+r_Q,\quad \mathbb Er_Q=0,\quad
+\mathbb E r_Q^2\le K_0F^4,\quad \mathbb E(s_Qr_Q)=0,
+\quad0<L_Q\le e^{2(F+1/q)}\le2.                       \tag{198.22}
+$$
+To specify its scope: the exact centered generating function is $(1+Ft)^qe^{-qFt}$. Its Charlier coefficients are controlled at every degree by the Gaussian entire-function norm
+$\pi^{-1}\int_{\mathbb C}|G(z)|^2e^{-|z|^2}dA=\sum k!|[z^k]G|^2$.
+With $\alpha=F/\sqrt\nu$, $v=qF^2/\nu$, the global remainder bound
+$$
+|(1+\alpha z)^qe^{-q\alpha z}-1+vz^2/2|
+\le\frac{v|z|^2}{2}\left(\frac{v|z|^2}{2}+\alpha|z|\right)e^{v|z|^2/2+2\alpha|z|}
+$$
+has squared norm $O(v^4+v^2\alpha^2)=O(F^4)$. Completeness of the Poisson polynomials and Parseval give (198.22). The likelihood maximum follows from the finite binomial-to-Poisson maximum and convolution. Thus neither a fixed-order moment substitution nor a formal series tail is used here.
+
+Write $y=L_Q-1$. It satisfies $|y|\le1$ eventually, and a useful new consequence of (198.22) is
+$$
+\mathbb Ey^4\le16\mathbb E(Fs_Q)^4+4\mathbb Er_Q^2\le K_1F^4.
+                                                               \tag{198.23}
+$$
+Indeed, where $|Fs_Q|\ge|y|/2$, the first term bounds $y^4$; on the complementary set $|r_Q|\ge|y|/2$ and $y^4\le y^2\le4r_Q^2$. This does not require a fourth moment of the remainder.
+
+Now take $m$ independent reference experiments, always with $mF_Q^2\le K$. Let $y_i,s_i,r_i$ denote their independent copies and $\ell^{B}_{Q,m}=\sum_i\log(1+y_i)$. With $a_Q=F^{1/4}$, (198.23) gives
+$$
+\Pr_{\mathsf R^{\otimes m}}(\max_i|y_i|>a_Q)
+\le mK_1F^4/a_Q^4=O_K(F)\longrightarrow0.             \tag{198.24}
+$$
+This pays the event on which any one-block likelihood can be close to zero. On its complement, Taylor's theorem gives a total log remainder bounded by $K_2a_Q\sum_i y_i^2$. Also
+$$
+\sum_i r_i\longrightarrow0\text{ in }L^2,\qquad
+\sum_i y_i^2=mF^2I_Q+o_{\mathsf R^{\otimes m}}(198.1).
+$$
+The first assertion uses $m\mathbb Er_Q^2=O_K(F^2)$. For the second, (198.22) gives $\mathbb Ey^2=F^2I_Q+O(F^4)$; (198.23) gives variance of the sum at most $O(mF^4)$. Thus $\sum y_i^2=O_P(1)$, and (198.24) proves the signed expansion
+$$
+\boxed{\quad \ell^B_{Q,m}=F\sum_{i=1}^m s_i-\tfrac12mF^2I_Q+o_{\mathsf R^{\otimes m}}(198.1).\quad} \tag{198.25}
+$$
+All remainders are uniform over the original parameter/support range and bounded $mF_Q^2$. No uniform lower bound on likelihoods was assumed.
+
+For clarity the triangular central limit step can be proved directly. For each fixed real $t$, the uniformly bounded third absolute moment of $s_Q$ gives
+$$
+\mathbb Ee^{itFs_Q}=1-t^2F^2I_Q/2+O_t(F^3).
+$$
+Independence between repetitions, $mF^3\to0$, and $mF^2I_Q\to\tau/8$ imply that the characteristic function of $F\sum s_i$ tends to $e^{-t^2\tau/16}$. Equivalently the triangular Lindeberg condition follows from the fourth-moment bound, with Lindeberg sum at most a constant times $mF^4$. Together with (198.25),
+$$
+\ell^B_{Q,m}\Longrightarrow N(-\tau/16,\tau/8)
+\quad\text{under }\mathsf R_Q^{\otimes m}.             \tag{198.26}
+$$
+This also covers $\tau=0$ by the same estimates, without requiring $m\to\infty$.
+
+### 198.5 Change of law and the actual likelihood
+
+Put $b_{Q,m}=e^{\ell^B_{Q,m}}$. Independence and (198.22) yield the essential product bound
+$$
+\mathbb E_{\mathsf R^{\otimes m}}b_{Q,m}^2
+=(1+F^2I_Q+O(F^4))^m\le e^{K_3K}.                    \tag{198.27}
+$$
+Thus the product likelihoods are uniformly integrable, not just their logarithms tight. For bounded continuous $g$, (198.26),(198.27) justify
+$$
+\mathbb E_{\mathsf B^{\otimes m}}g(\ell^B)
+=\mathbb E_{\mathsf R^{\otimes m}}e^{\ell^B}g(\ell^B)
+\longrightarrow\mathbb E[e^Gg(G)],\quad G\sim N(-V/2,V),\ V=\tau/8.
+$$
+The right side is expectation under $N(V/2,V)$, by completing the square in the normal density; at $V=0$ it is a point mass. This proves the alternative reference likelihood law and contiguity of $\mathsf B^{\otimes m}$ with respect to $\mathsf R^{\otimes m}$. The reverse contiguity follows since $b_{Q,m}$ is bounded away from zero in reference probability in the tightness sense: first restrict to $b>c$, then let $c\downarrow0$ using the finite normal log limit. There is no unproved invocation of an exponential tilt.
+
+Componentwise TV approximation alone must still be connected to the ACTUAL likelihood. Here is that step explicitly. On the common dominating law $\mathsf R_Q^{\otimes m}$, let
+$$
+a_{Q,m}=\frac{dP_Q^{\otimes m}}{d\mathsf R_Q^{\otimes m}},\qquad
+r_{Q,m}=\frac{dR_\mu^{\otimes m}}{d\mathsf R_Q^{\otimes m}},\qquad
+b_{Q,m}=\frac{d\mathsf B_Q^{\otimes m}}{d\mathsf R_Q^{\otimes m}}.
+$$
+This dominating law has positive mass at every finite vector on $A_Q$; exact zero means under $R_\mu$ cause no obstruction. By (198.19),
+$$
+\mathbb E|a_{Q,m}-b_{Q,m}|\le2\sqrt{m\varepsilon_Q}\to0,\qquad
+\mathbb E|r_{Q,m}-1|\le2\sqrt{m\omega_Q}\to0.           \tag{198.28}
+$$
+Since $b$ is bounded away from zero in reference probability, (198.28) implies
+$$
+\log(a_{Q,m}/r_{Q,m})-\log b_{Q,m}\longrightarrow0
+\quad\text{in }\mathsf R_Q^{\otimes m}\text{ probability},
+                                                               \tag{198.29}
+$$
+where arbitrary values may be assigned on $r=0$, whose reference probability tends to zero. This can be checked by restricting to $b\ge c$, $|a-b|\le c\delta$, $|r-1|\le\delta$, and using continuity of log, then letting $\delta\downarrow0,c\downarrow0$. The same argument shows the reference probability of $a=0$ tends to zero. Because $P_Q\ll R_\mu$, the left side is the actual log likelihood wherever it is relevant.
+
+Equation (198.29) transfers to $R_\mu^{\otimes m}$ by (198.19). It transfers to $P_Q^{\otimes m}$ because that law is TV-close to $\mathsf B_Q^{\otimes m}$, and (198.27) makes the latter contiguous to the dominating reference. Finally the distribution of $\log b$ under $P_Q^{\otimes m}$ equals its distribution under $\mathsf B_Q^{\otimes m}$ up to a vanishing TV error. These facts prove BOTH actual laws (198.1). They also prove mutual contiguity of the actual hypotheses for bounded critical scale, using the reverse-contiguity argument just given and (198.19).
+
+Uniformity can be stated without an illicit TV claim for a discrete log likelihood versus a continuous normal. For every finite $K$, the bounded-Lipschitz distance between the laws of $\ell_{Q,m}$ and $N(\mp\tau_Q/16,\tau_Q/8)$ tends to zero uniformly over $\beta\in J$, deterministic supports, both experiments separately, and integers $m$ with $\tau_Q\le K$. The exceptional $-\infty$ mass tends to zero uniformly and can be assigned any fixed real value for this metric. To verify uniformity, if it failed choose a violating parameter/repetition sequence, pass to a subsequence with $\tau_Q$ convergent in $[0,K]$, and apply the uniform estimates (198.19),(198.22)–(198.29). This contradicts the violation. No distributional TV convergence of the log likelihood itself is asserted.
+
+### 198.6 Testing distance and a Hellinger check
+
+For any two laws $P\ll R$ with log likelihood $\ell$,
+$$
+\|P-R\|_{\rm TV}=\mathbb E_R(1-e^\ell)_+.
+$$
+The function $(1-e^x)_+$ is bounded and continuous on the real line, with value one at $-\infty$. Hence (198.1) and the paid exceptional mass give, for $V=\tau/8$,
+$$
+\|P_Q^{\otimes m}-R_\mu^{\otimes m}\|_{\rm TV}
+\to\mathbb E(1-e^G)_+
+=\Phi(\sqrt V/2)-\Phi(-\sqrt V/2)
+=2\Phi(\sqrt\tau/(4\sqrt2))-1,
+\quad G\sim N(-V/2,V).                                  \tag{198.30}
+$$
+The equality follows by completing the square in the truncated exponential normal integral. It includes $V=0$ by continuity. Pointwise minimizing the sum of testing errors selects the larger density, so the minimum error sum equals $1-\mathrm{TV}$ and the equal-prior error equals $(1-\mathrm{TV})/2$. This proves (198.2), uniformly on bounded critical scales by the subsequence argument of Section 198.5. It is a statement about testing these two specified sampling distributions, not posterior reconstruction of the support.
+
+One can also verify the local Hellinger scale without claiming actual likelihood $L^2$ closeness. Since
+$$
+\sqrt{1+y}-1-y/2=-\frac{y^2}{2(1+\sqrt{1+y})^2},
+$$
+equations (198.22),(198.23) show, under the reference only,
+$$
+\sqrt{L_Q}-1=Fs_Q/2+u_Q^{\rm root},\qquad
+\|u_Q^{\rm root}\|_2=O(F^2).
+$$
+Thus
+$$
+h^2(\mathsf B_Q,\mathsf R_Q)=F^2I_Q/4+O(F^3)
+=F_Q^2/32+o_J(F_Q^2).
+$$
+By the metric triangle inequality on square-root densities,
+$$
+|h(P_Q,R_\mu)-h(\mathsf B_Q,\mathsf R_Q)|
+\le\sqrt{\varepsilon_Q}+\sqrt{\omega_Q}=o_J(F_Q),
+$$
+so the ACTUAL full-vector result is
+$$
+\boxed{\ h^2(P_Q,R_\mu)=F_Q^2/32+o_J(F_Q^2).\ }       \tag{198.31}
+$$
+Equivalently, the actual one-block affinity equals $1-F_Q^2/64+o(F_Q^2)$, and its product affinity tends to $e^{-\tau/64}$. The Hellinger convention is explicit: with a one-half in the definition, both squared distances in (198.31) are divided by two. This auxiliary check agrees with the likelihood limit, whose Gaussian affinity is $e^{-V/8}$. It does not replace the signed limit or its testing proof.
+
+### 198.7 An attainable test using only full aggregate counts
+
+Write $Z_i=\sum_{j\in J_Q}C_j^{(i)}$ for the FULL aggregate in repetition $i$, and use the SAME exact mean $\mu_\bullet=\mathbb E Z_i$. Define the deterministic statistic
+$$
+\boxed{\quad
+\mathcal A_{Q,m}
+=-\frac{F_Q}{4}\sum_{i=1}^m
+\frac{(Z_i-\mu_\bullet)^2-Z_i}{\mu_\bullet}
+-\frac{mF_Q^2}{16}.
+\quad}                                                     \tag{198.32}
+$$
+For all sufficiently late original layers, $\mu_\bullet\ge1$, uniformly. The test rejects the product-Poisson hypothesis when $\mathcal A_{Q,m}>0$. The sign says that an aggregate deficit of quadratic fluctuations supports the actual histogram law. It is not a fitted support or a data-selected window.
+
+We prove
+$$
+\ell_{Q,m}-\mathcal A_{Q,m}\longrightarrow0
+\quad\text{in probability under BOTH actual hypotheses},
+\qquad mF_Q^2\le K.                                    \tag{198.33}
+$$
+Under $\mathsf R_Q^{\otimes m}$, let $N_i$ denote the core total. The probability of any positive tail count in any repetition is at most $mM\alpha_Q\to0$. On the complementary event $Z_i=N_i$. For positive $c,d$, the exact identity
+$$
+W_c(z)-W_d(z)=(z^2-z)(1/c-1/d)+(c-d)
+$$
+implies, with $N\sim\operatorname{Pois}(\nu)$, $\mu_\bullet/\nu\to1$,
+$$
+\mathbb E|W_{\mu_\bullet}(N)-W_\nu(N)|
+\le |\mu_\bullet-\nu|(\nu/\mu_\bullet+1)\le3g_Q.
+                                                               \tag{198.34}
+$$
+Consequently its contribution to the score sum is at most $3mF_Qg_Q/4$ in expected absolute value, which tends to zero by (198.17) at bounded critical scale. This explicitly pays changing the centering at an exponentially large mean.
+
+Equation (198.25) reads
+$$
+\ell^B_{Q,m}
+=-\frac{F}{2(1+\rho)}\sum_i W_\nu(N_i)
+-\frac{mF^2}{4(1+\rho)^2}+o_P(1).
+$$
+Since $\mathbb E W_\nu=0$, $\mathbb E W_\nu^2=2$, the centered sum is $O_P(\sqrt m)$. Equations (198.8) and $\rho\to1$ therefore allow its coefficient to be replaced by $-F_Q/4$, with error $o_P(1)$; the deterministic quadratic term can similarly be replaced by $-mF_Q^2/16$. Combined with (198.34) and the tail event, this proves $\ell^B-\mathcal A\to0$ under the common reference. Equation (198.29), TV transfer and the proved contiguity then give (198.33) under both actual hypotheses. This uses convergence in probability, not an unproved transfer of an unbounded mean.
+
+For $\tau>0$, the limiting laws in (198.1) have no atom at zero, so the two errors of (198.32) both tend to
+$\Phi(-\sqrt\tau/(4\sqrt2))$. Thus the aggregate test attains the limiting equal-prior optimum of the FULL histogram. In this precise binary-testing sense the aggregate quadratic statistic is first-order sufficient at the critical scale. No sufficiency for support estimation, full data, or unrelated hypotheses is asserted. At $\tau=0$, every test's equal-prior risk differs from one-half by at most TV/2 and hence tends to one-half; no particular limit for its individual error probabilities is asserted.
+
+### 198.8 Boundary regimes and the scale in original parameters
+
+If $mF_Q^2\to0$, Sections 198.4–198.6 already prove $\ell\to0$ under both laws and TV$\to0$. This conclusion does not require taking $m\to\infty$ or inferring a likelihood law from the scalar KL coefficient.
+
+If $mF_Q^2\to\infty$, fix any finite $K>0$ and take only the first $k_Q=\lfloor K/F_Q^2\rfloor$ repetitions. Eventually $k_Q\le m$, and $k_QF_Q^2\to K$. Data processing under this projection gives
+$$
+\liminf\|P_Q^{\otimes m}-R_\mu^{\otimes m}\|_{\rm TV}
+\ge2\Phi(\sqrt K/(4\sqrt2))-1.
+$$
+Letting $K\to\infty$ proves TV$\to1$, and the optimal equal-prior error tends to zero. This proof remains valid for exceptionally large repetition counts: it never claims that $m\varepsilon_Q$ remains small for all such counts. A fixed large $K$ aggregate test on the first $k_Q$ experiments attains any prescribed limiting error tolerance; a diagonal choice yields vanishing error. No normal log-likelihood limit is claimed when $\tau_Q$ diverges.
+
+By (198.8), the critical number of independent original experiments is of order $Q^5$. More explicitly, if $m/Q^5\to c\in[0,\infty)$, then
+$$
+\tau=\frac{c}{2\pi(b+a\vartheta^2)}.
+$$
+All constants are the unchanged original ones. Pair/path equality follows from their common scalar reference and the separately paid actual-law errors, not from an assumption that path rows or edges were independent. Support uniformity follows throughout the original label-symmetric estimates; no support prior has been added.
+
+
+### 198.9 来源与适用边界
+
+第 197 章的完整次数 Charlier 估计及原模型信息支付是本章的输入；完整分数组识别复用第 175 章。原始线质量归一化仍来自 `PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md` (44.9) 与 `PARITY_HIDDEN_ARROW_WINDOW_PHASES.md` (52.12)–(52.15)。Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Numbers*，arXiv:0906.0690v1 的固定输入细化定理不能直接提供这里移动大均值下的乘积实验极限，第 197 章关于其适用范围的限定保留。
+
+Lasse Leskelä，*Information divergences and likelihood ratios of Poisson processes and point patterns*，arXiv:2404.00294v2，提供 Hellinger 定义、三角不等式、原文标识 `the:PoissonHellinger` 的定理及 `the:PoissonRenyiFinite` 的完整有限强度证明，包括共同支配强度与零密度情况。该文的平方 Hellinger 距离含二分之一；本章使用未减半定义并明确转换常数。(198.18) 只比较两个 Poisson 参考律；其有限离散亲和度亦由标量级数直接求得，不把实际依赖直方图当作 Poisson。
+
+三角阵特征函数、似然指数倾斜、相邻性和二元检验是经典方法。本章逐项证明所需条件，不以一般二次均方可微或 Le Cam 定理代替移动均值下的核对。新增原模型关系是 (198.14)–(198.20) 的全均值加权比较及其在临界重复尺度的传递，继而得到两侧真实似然极限和 (198.32)–(198.33) 可达到的总计数检验。单侧 KL 接近不被当作实际似然的平方可积接近，TV 接近也不被用来搬运无界期望。
+
+本章为普通数学推导，未作 Lean 认证；有限文献核对不构成全球原创性判断。这里的最优性只针对规定的直方图二元检验。未知支持恢复、全数据或后验熵、时间箭头区分、同步 E2 均未由本结论判定，发散重复尺度下也未主张正态对数似然极限。
+
+## 追加锚（本行以下为增补区）
