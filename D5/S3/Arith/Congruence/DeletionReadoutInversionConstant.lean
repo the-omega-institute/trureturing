@@ -30,20 +30,20 @@ noncomputable def obsNorm {r : ℕ} (m : Fin r → ℕ) (hm : ∀ i, 2 ≤ m i)
     (fun p : Finset (Fin r) × (∀ i, Fin (m i)) ↦ |R p.1 p.2 z|)
 
 /-- The absolute row sum of the tensor inverse of the full-deletion reading. -/
-noncomputable def κ {r : ℕ} (m : Fin r → ℕ) : ℝ :=
+noncomputable def kappa {r : ℕ} (m : Fin r → ℕ) : ℝ :=
   ∏ i, (2 - 1 / ((m i : ℝ) - 1))
 
-/-- Full deletion readings reconstruct every coordinate with constant `κ`; the constant is
+/-- Full deletion readings reconstruct every coordinate with constant `kappa`; the constant is
 attained by the tensor vector with distinguished entries `2 * m i - 3` and all other entries
 equal to `-1`. -/
 theorem deletion_readout_inversion_constant (r : ℕ) (m : Fin r → ℕ)
     (hm : ∀ i, 2 ≤ m i) (z : (∀ i, Fin (m i)) → ℝ) :
-    (∀ c, |z c| ≤ κ m * obsNorm m hm z) ∧
+    (∀ c, |z c| ≤ kappa m * obsNorm m hm z) ∧
       ∀ cstar : ∀ i, Fin (m i),
         let w : (∀ i, Fin (m i)) → ℝ := fun c ↦
           ∏ i, if c i = cstar i then 2 * (m i : ℝ) - 3 else -1
         obsNorm m hm w = ∏ i, ((m i : ℝ) - 1) ∧
-          |w cstar| = κ m * obsNorm m hm w := by
+          |w cstar| = kappa m * obsNorm m hm w := by
   classical
   letI : ∀ i, Nonempty (Fin (m i)) := fun i ↦
     ⟨⟨0, lt_of_lt_of_le (by norm_num) (hm i)⟩⟩
@@ -185,7 +185,7 @@ theorem deletion_readout_inversion_constant (r : ℕ) (m : Fin r → ℕ)
       (fun p : Finset (Fin r) × (∀ i, Fin (m i)) ↦ |R p.1 p.2 z|)
       (Finset.mem_univ (T, a))
   have hrow_sum : ∀ c : (∀ i, Fin (m i)),
-      (∑ a : (∀ i, Fin (m i)), |∏ i, B i (c i) (a i)|) = κ m := by
+      (∑ a : (∀ i, Fin (m i)), |∏ i, B i (c i) (a i)|) = kappa m := by
     intro c
     simp only [Finset.abs_prod]
     rw [← Fintype.prod_sum (fun i (a : Fin (m i)) ↦ |B i (c i) a|)]
@@ -211,12 +211,12 @@ theorem deletion_readout_inversion_constant (r : ℕ) (m : Fin r → ℕ)
       _ = (∑ a : (∀ i, Fin (m i)), |∏ i, B i (c i) (a i)|) *
           obsNorm m hm z := by
         rw [Finset.sum_mul]
-      _ = κ m * obsNorm m hm z := by rw [hrow_sum]
+      _ = kappa m * obsNorm m hm z := by rw [hrow_sum]
   · intro cstar
     let w : (∀ i, Fin (m i)) → ℝ := fun c ↦
       ∏ i, if c i = cstar i then 2 * (m i : ℝ) - 3 else -1
     change obsNorm m hm w = ∏ i, ((m i : ℝ) - 1) ∧
-      |w cstar| = κ m * obsNorm m hm w
+      |w cstar| = kappa m * obsNorm m hm w
     have hw_total : ∀ i,
         (∑ x : Fin (m i),
           if x = cstar i then 2 * (m i : ℝ) - 3 else -1) =
@@ -331,7 +331,7 @@ theorem deletion_readout_inversion_constant (r : ℕ) (m : Fin r → ℕ)
       have hmi : (2 : ℝ) ≤ (m i : ℝ) := by exact_mod_cast hm i
       linarith
     rw [hw_at, hnorm]
-    unfold κ
+    unfold kappa
     rw [← Finset.prod_mul_distrib]
     apply Finset.prod_congr rfl
     intro i _

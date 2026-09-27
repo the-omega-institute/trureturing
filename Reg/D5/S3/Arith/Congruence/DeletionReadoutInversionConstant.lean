@@ -31,12 +31,12 @@ def arena : Arena where
   signature := signature
   Law readout := ∀ (r : ℕ) (m : Fin r → ℕ) (hm : ∀ i, 2 ≤ m i)
       (z : (∀ i, Fin (m i)) → ℝ),
-    (∀ c, |(readout.readout () ⟨r, m⟩ z) c| ≤ κ m * obsNorm m hm z) ∧
+    (∀ c, |(readout.readout () ⟨r, m⟩ z) c| ≤ kappa m * obsNorm m hm z) ∧
       ∀ cstar : ∀ i, Fin (m i),
         let w : (∀ i, Fin (m i)) → ℝ := fun c ↦
           ∏ i, if c i = cstar i then 2 * (m i : ℝ) - 3 else -1
         obsNorm m hm w = ∏ i, ((m i : ℝ) - 1) ∧
-          |w cstar| = κ m * obsNorm m hm w
+          |w cstar| = kappa m * obsNorm m hm w
 
 theorem actual_law : arena.Law actual := by
   intro r m hm z
@@ -48,7 +48,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   let point : ∀ i, Fin (m i) := fun i ↦ nomatch i
   let zero : (∀ i, Fin (m i)) → ℝ := fun _ ↦ 0
   have hbound := (h 0 m (fun i ↦ nomatch i) zero).1 point
-  norm_num [rejected, realize, signature, κ, obsNorm, R, m, point, zero] at hbound
+  norm_num [rejected, realize, signature, kappa, obsNorm, R, m, point, zero] at hbound
 
 theorem sensitivity_proof : Sensitivity arena actual := by
   constructor
@@ -74,12 +74,12 @@ theorem dependence_proof : ObservationalDependence signature actual := by
 def registration : Registration arena
     (∀ (r : ℕ) (m : Fin r → ℕ) (hm : ∀ i, 2 ≤ m i)
       (z : (∀ i, Fin (m i)) → ℝ),
-      (∀ c, |z c| ≤ κ m * obsNorm m hm z) ∧
+      (∀ c, |z c| ≤ kappa m * obsNorm m hm z) ∧
         ∀ cstar : ∀ i, Fin (m i),
           let w : (∀ i, Fin (m i)) → ℝ := fun c ↦
             ∏ i, if c i = cstar i then 2 * (m i : ℝ) - 3 else -1
           obsNorm m hm w = ∏ i, ((m i : ℝ) - 1) ∧
-            |w cstar| = κ m * obsNorm m hm w) where
+            |w cstar| = kappa m * obsNorm m hm w) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩

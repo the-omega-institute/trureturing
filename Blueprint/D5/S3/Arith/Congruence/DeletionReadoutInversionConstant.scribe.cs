@@ -37,7 +37,7 @@ internal sealed class DeletionReadoutInversionConstantDocument : IScribeDocument
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("inversion-constant"),
-                DeclarationHandle.Create(Module + "κ"),
+                DeclarationHandle.Create(Module + "kappa"),
                 H("Tensor inverse row sum"),
                 StatementSource.FromAuthor(ConstantFormula()),
                 AssessedProvenance.FromRepo(),
@@ -92,7 +92,7 @@ internal sealed class DeletionReadoutInversionConstantDocument : IScribeDocument
         Call("R", subset, deleted, state);
 
     private static Formula Indicator(Formula configuration, Formula deleted) =>
-        Seq(Operatorname, Grp(F.Id("1")), Underscore, Grp(
+        Seq(Mathbf, Sp, Grp(D(1)), Underscore, Grp(
             Subscript(configuration, F.Id("i")), Sp, Neq, Sp,
             Subscript(deleted, F.Id("i"))));
 
@@ -156,7 +156,7 @@ internal sealed class DeletionReadoutInversionConstantDocument : IScribeDocument
         Formula witnessEntry = Seq(
             Operatorname, Grp(F.Id("if")), Sp,
             Subscript(F.Id("c"), F.Id("i")), Sp, Eq, Sp,
-            Subscript(F.Id("c*"), F.Id("i")), Sp,
+            Subscript(Grp(new Formula.Power(F.Id("c"), Star)), F.Id("i")), Sp,
             Operatorname, Grp(F.Id("then")), Sp,
             D(2), Sp, Cdot, Sp, Subscript(F.Id("m"), F.Id("i")), Sp, Minus, Sp, D(3), Sp,
             Operatorname, Grp(F.Id("else")), Sp, Minus, D(1));
@@ -171,7 +171,7 @@ internal sealed class DeletionReadoutInversionConstantDocument : IScribeDocument
         Formula sharpness = Seq(
             Call("obsNorm", F.Id("w")), Sp, Eq, Sp, alphabetProduct, Sp,
             Land, Sp,
-            Abs(Call("w", F.Id("c*"))), Sp, Eq, Sp,
+            Abs(Call("w", new Formula.Power(F.Id("c"), Star))), Sp, Eq, Sp,
             kappa, Sp, Cdot, Sp, Call("obsNorm", F.Id("w")));
         return Disp(Seq(
             Forall, Sp, Bound(F.Id("r"), Nat()), Comma, Sp,
@@ -179,7 +179,7 @@ internal sealed class DeletionReadoutInversionConstantDocument : IScribeDocument
             hypothesis, Comma, RowBreak, Grp(),
             Bound(F.Id("z"), Arrow(xType, Real())), Comma, RowBreak, Grp(),
             Open, pointwise, Close, Sp, Land, Sp, RowBreak, Grp(),
-            Forall, Sp, Bound(F.Id("c*"), xType), Comma, RowBreak, Grp(),
+            Forall, Sp, Bound(new Formula.Power(F.Id("c"), Star), xType), Comma, RowBreak, Grp(),
             witness, sharpness, Dot));
     }
 }
