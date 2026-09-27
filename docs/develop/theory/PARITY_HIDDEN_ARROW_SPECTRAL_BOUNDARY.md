@@ -64584,3 +64584,446 @@ Frédéric Ouimet，*A precise local limit theorem for the multinomial distribut
 精确水平适用于所有有限均值，渐近功效与最优性只在固定 $\alpha\in(0,1)$、正有限临界尺度及规定原参数紧集内主张。不要求非随机化检验在均值趋零时逼近精确水平，也不声称有限求和的计算效率、任意巨大重复次数的统一误差、未知支持恢复、全数据充分性、后验熵、时间箭头或 E2 结算。第 198、200 章的既有结论保持其原范围。以上为普通数学推导，未作 Lean 认证；定向来源核对不构成全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 203. 从物理边界到非局部鞍点：保留精确临界值的全段坐标
+
+第 195 章给出任意固定负实场紧区间上的实际内部鞍点和总量无零邻域。本章将同一有限条件能量剖面贯通到物理电荷边界，证明全段斜率商的双侧界，并构造保留两个精确临界值的全局单射坐标。端点与内部鞍点使用各自的实际能量根；坐标及逆映射、Jacobian 和变换振幅在一个共同复邻域上一致受控。
+
+**定理 203.1（精确临界值坐标与统一逆映射）。** 在 (203.1)–(203.3) 的原始实验、紧类及速率下，固定 $0<\kappa\le1$、$L\ge1$，并令 $x\in[-L,-\kappa]$。对每个实际低模元组，条件能量根在整个 $[0,w_{*,L}(x)]$ 上唯一存在，且能量曲率有固定正下界。精确驻定剖面 $F_L$ 满足 (203.18) 的全段双侧界。由两个精确临界值构造的 (203.21) 满足
+
+$$
+F_L(w;H)=F_{E,L}(H)+\lambda_L(H)t_L(w;H)-\frac12t_L(w;H)^2,
+\qquad t_L(0;H)=0,\quad t_L(w_{*,L}(H);H)=\lambda_L(H).
+$$
+
+该坐标在 (203.25) 的凸复邻域上单射，逆导数由 $2/m$ 控制；所需高阶导数与变换振幅在明确的内层宽度 $4\varepsilon,4\vartheta$ 上一致受控。条件能量轮廓保持原向上方向，给出含原始 $\sigma$ 因子的相对 $O(\delta)$ 公式。结论到达一个实际鞍点，其有限行列式在零能量处的 Taylor 展开已不收敛，并合法穿过条件表示中的精度零点。
+
+这是有限电荷剖面的全段结论。所证场域内，端点与内部的临界值实部仍有固定正间隔；本章不把该场域当作两项振幅相当的振荡域。完整电荷轮廓向等幅区的延拓、两项相对误差、相位反演与新零点计数仍未建立。
+
+### 203.1 Original law, rates and normalization
+
+On the SAME actual array put
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+ \quad x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B.
+$$
+Write $D=\sum_j(x_j+e_j)$, $E=\sum_jx_j^2$,
+$H_y=V+\sqrt\delta y$, $a=(2V)^{-1}+\eta$. The original total is
+$$
+ N_P^-(H/\sqrt\delta,y)=\sum_{D<0}P_x(n)
+ e^{aD^2+HD/\sqrt\delta-(E-H_y)^2/(2\delta\sigma^2)},
+$$
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ \frac{[z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)}
+ {[z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_jn_j .
+ \tag{203.1}
+$$
+This is a finite entire function of H. Its coefficient is not replaced as a definition of the experiment. The inherited Gaussian comparison retains the insertion
+$e^{\ell_{\rm sel}-\epsilon D^2}$,
+$\epsilon=B^2/(2d_c)$, $\ell_{\rm sel}=\tfrac12\log(d_{\rm all}/d_c)$,
+and $b_{\rm ch}=a-\epsilon$. The notation $b_{\rm ch}$ is distinct from the error reserve $\beta_{\rm res}$.
+
+The sequences remain $\eta\to0$, $\eta/\sqrt\delta\to\infty$ arbitrarily slowly, and physical $\sigma>0$, $\sigma\to0$, with only the original strict reserve
+$\limsup\log(1/\sigma)/Q^3<c_q/2$. The same floors, noncentral centers, lows, full-q selection and outside labels are retained. Work on an inherited tight class $M\ge16$, $|y|\le Y$. After the already allowed fixed enlargement for rank-one interlacing,
+$$
+ V,V_H\in[M^{-1},M],\quad \max_H v_j/\delta\le M,\quad
+ \delta^{-1}\sum_Hv_j^2\in[M^{-1},M^2],\quad
+ \|e_H\|\le M\delta^5,
+ \tag{203.2}
+$$
+and the conditional covariance divided by delta has at least $1/(M\delta)$ eigenvalues in $[1/M,M]$. The high dimension is at most $M\delta^{-4}$. Exact lows have probabilities $p_L$, charges $c_L$, energies $u_L$, with
+$$
+ \sum_Lp_L=1,\qquad
+ \ell_Q=\max_L(|c_L|+u_L)\le P(Q)e^{-b_{\rm Low}Q^3}.
+ \tag{203.3}
+$$
+Statements are simultaneous on each such realized array and all the indicated outputs. Exhaustion retains the actual pair and actual path laws separately, uniformly over their original deterministic supports and compact output/separator scopes. There is no limiting occupied profile, new sigma reserve or stronger eta rate.
+
+### 203.2 The exact conditional action, with both critical values live
+
+Let $C=\operatorname{diag}(v_j)$, $v=(v_j)$, and define
+$$
+ A_c=C-vv^T/V_H,\quad B_c=A_c/\delta,\quad
+ q_c=v/(V_H\sqrt\delta),\quad f_L=-c_Lv/V_H-e_H,
+ \quad b_L(w)=f_L-wq_c.
+$$
+The conditional energy action is
+$$
+ J_L(s,w)=\frac{\sigma^2s^2}{2}+s(u_L-H_y)
+ -\frac\delta2\log\det(I-2sB_c)
+ +s\,b_L(w)^T(I-2sB_c)^{-1}b_L(w).
+ \tag{203.4}
+$$
+All complex squares are bilinear. Set
+$$
+ P_L(w)=b_{\rm ch}w^2-\frac{(w+\sqrt\delta c_L)^2}{2V_H},
+ \qquad \Phi_L(s,w;H)=J_L(s,w)+P_L(w)-Hw .
+ \tag{203.5}
+$$
+Define $A_L(s)=\Phi_L(s,0;H)$, independent of $H$. The same phase equals $A_L(s)-\alpha(s)w^2-\nu_L(s,H)w$. To check its normalization, let
+$$
+ S(s)=\sum_H\frac{v_j}{1-2s v_j/\delta},\quad
+ \alpha(s)=\frac1{2S(s)}-b_{\rm ch},\quad
+ m_e(s)=-2s\sum_H\frac{(v_j/\delta)e_j}{1-2s v_j/\delta},
+ \quad \nu_L=H+\sqrt\delta(c_L+m_e)/S.
+$$
+The determinant lemma gives
+$\det(I-2sB_c)=\prod_H(1-2s v_j/\delta)\,S(s)/V_H$.
+Completing the SAME Gaussian conditional charge density gives (203.5) and the stated quadratic form in w. The equality initially holds with positive real determinants and continues in the domain below. Thus the order-delta determinant logarithm, actual e, low tuple and selection precision stay inside the finite phase.
+
+For real w, exact Gaussian disintegration and energy inversion give
+$$
+ I_L(w)=\mathbb E\exp\left[-\frac{(u_L+\|Z+b_L(w)\|^2-H_y)^2}
+ {2\delta\sigma^2}\right],\quad Z\sim N(0,A_c),
+$$
+$$
+ g(w/\sqrt\delta)=\frac{e^{\ell_{\rm sel}}}{\sqrt{2\pi V_H}}
+                  \sum_Lp_Le^{P_L(w)/\delta}I_L(w),\qquad
+ G_-(H/\sqrt\delta,y)=\frac1{\sqrt\delta}\int_0^\infty
+                      g(w/\sqrt\delta)e^{-Hw/\delta}\,dw,
+$$
+$$
+ I_L(w)=\frac{\sigma}{i\sqrt{2\pi\delta}}
+                  \int_{c-i\infty}^{c+i\infty}e^{J_L(s,w)/\delta}\,ds .
+ \tag{203.6}
+$$
+Here c is any lawful real conditional Gaussian tilt below its first determinant pole. At finite array and positive sigma the identities follow from the Gaussian Fourier transform with the original likelihood width. On bounded real w intervals all interchanges are justified by the noise Gaussian and, uniformly without inverse sigma, by the retained conditional spectral block. The upward differential is $ds=i\,d\Im s$. The common raw sigma in (203.6) is never discarded.
+
+For fixed positive sigma the defining conditional Gaussian integral is entire in w: its negative quartic real-integration tail dominates lower degree terms on compact complex w sets. This does not imply nonvanishing; the estimates below supply that on the domain used.
+
+### 203.3 Uniform branch on the ENTIRE attained segment
+
+Fix constants $0<\kappa\le1$, $L\ge1$, and real $x\in[-L,-\kappa]$. Use Chapter 195's attained exact JOINT critical point $(s_{*,L}(x),w_{*,L}(x))$, satisfying $\Phi_s=\Phi_w=0$. It is not its slightly shifted whole-charge energy root. To make all quantitative bounds explicit, retain the following loose class constants from that confinement argument:
+$$
+ u=\min\{(16M)^{-1},\kappa/(2^{12}M^4)\},\quad
+ d_0=(4M^3)^{-1},\quad q_0=(8M^4)^{-1},\quad
+ T=2+64L^2M/(d_0q_0^2),
+$$
+$$
+ A_{\min}=u/(64M^3),\quad A_{\max}=M[1+2M(T+1)],\quad
+ r=\kappa/(32A_{\max}),\quad W=1+8L/A_{\min}.
+ \tag{203.7}
+$$
+For sufficiently large Q, uniformly in all lows and the enlarged real field margin used in Chapter 195, the roots needed here obey
+$-T-1<s_*<-u/2$, $r<w_*<W-1$.
+The slack absorbs the O(delta) difference between its two energy conventions. These are previously established existence and confinement inputs, not postulated new roots.
+
+Write $R_s=(I-2sB_c)^{-1}$, $\tau=(16M)^{-1}$,
+$$
+ D_0=1+2M(T+4),\quad \beta_-=1/(MD_0),\quad
+ k_E=\beta_-^2/(4M).
+$$
+For real $-T-3\le s\le\tau$, direct differentiation gives
+$$
+ J_s=\sigma^2s+u_L-H_y+\delta\operatorname{tr}(B_cR_s)
+                            +b_L^TR_s^2b_L,
+$$
+$$
+ J_{ss}=\sigma^2+2\delta\operatorname{tr}(B_c^2R_s^2)
+                      +4b_L^TB_cR_s^3b_L\ge 2k_E,
+\qquad
+ J_{sw}=2wq_c^TR_s^2q_c-2q_c^TR_s^2f_L .
+ \tag{203.8}
+$$
+The covariance is positive semidefinite, including its null mode. The trace bound uses only the retained block. Also
+$q_c^TR_s^2q_c\ge k_E$: indeed $\|q_c\|^2=(\delta^{-1}\sum_Hv_j^2)/V_H^2\ge M^{-3}$, and the smallest resolvent eigenvalue on this interval is at least $D_0^{-1}$. No lower bound for every positive variance is required.
+
+At s=tau the central part $\sigma^2\tau+u_L-H_y+\delta\operatorname{tr}(B_cR_\tau)$ is strictly positive eventually, uniformly. At zero its difference from zero is $O_{M,Y}(\sqrt\delta)$, since $\delta\operatorname{tr}B_c=V_H-\sum_Hv_j^2/V_H$, while its increase from zero to tau has a fixed retained-block lower bound. The mean-square term is nonnegative for every real w. Hence $J_s(\tau,w)>0$.
+
+At $s_b=-T-3$, strict curvature and the attained root imply
+$J_s(s_b,w_*)\le-4k_E$. Moreover
+$$
+ b_L(w_*)^TR_{s_b}^2b_L(w_*)-f_L^TR_{s_b}^2f_L
+ =w_*^2q_c^TR_{s_b}^2q_c-2w_*q_c^TR_{s_b}^2f_L>0
+ \tag{203.9}
+$$
+eventually, because $w_*\ge r$ and $\|f_L\|\to0$ uniformly. Thus $J_s(s_b,0)<J_s(s_b,w_*)<0$. For fixed s, $J_s(s,w)$ is a convex real quadratic in w; on $[0,w_*]$ its maximum is at an endpoint. Both endpoint signs are negative. This proves a negative lower sign for EVERY w in the segment, without optimizing different energies separately.
+
+By (203.8), for every such w there is exactly one real root
+$$
+ J_{L,s}(s_L(w),w)=0,\qquad -T-3<s_L(w)<\tau,
+ \qquad K_L(w)=J_{L,ss}(s_L(w),w)\ge2k_E .
+ \tag{203.10}
+$$
+The root at w=0 is the actual $s_{E,L}$ satisfying $A_L'(s_{E,L})=0$; the root at w=w_* is the ACTUAL joint energy root s_*. They are not replaced by a common energy. The signs, trace bounds and convexity prove the connected branch directly; this is not a compactness argument over unconstrained arrays.
+
+At w=0, (203.8) also proves $s_{E,L}=O_{M,Y}(\sqrt\delta)$. Consequently
+$$
+ \alpha(s_{E,L})=-\eta+O_{M,Y}(\sqrt\delta)+o(\eta)<-\eta/2
+ \tag{203.11}
+$$
+eventually. Here the inherited small full/high variance and selection errors are retained; their bounds imply the displayed o(eta). This uses only the original arbitrary-slow divergence $\eta/\sqrt\delta\to\infty$.
+
+### 203.4 Common analytic domain and actual energy contours
+
+Here are explicit choices sufficient for uniformity; their size is not an optimization claim. Set
+$$
+ C_0=2^{512}(12!)^2
+ (1+M+Y+L+T+W+r^{-1}+k_E^{-1})^{512},
+$$
+$$
+ d_s=\min\{(256M)^{-1},k_E/(64C_0)\},\quad v_0=d_s/8,
+ \quad \gamma=\beta_-^2/(256M),
+$$
+$$
+ \rho=\min\{1/128,\ k_Ed_s/(2^{14}C_0),\
+               \gamma v_0^2/[2^{18}C_0(T+4)]\} .
+ \tag{203.12}
+$$
+On distance $(128M)^{-1}$ neighborhoods of the real energy interval and $|w|\le W+1$, $|H|\le2L+1$, derivatives through order12 of (203.4),(203.5) are bounded by C0. This follows explicitly from $R_s^{(j)}=j!(2B_c)^jR_s^{j+1}$, $\|R_s\|\le2$, $\delta\operatorname{tr}B_c^j\le M^j$, and $\|b_L(w)\|\le2M^2(1+W)$. Determinant derivatives contain a B factor; its undifferentiated logarithm is bounded by integrating its first derivative from zero. Thus no naked high dimension or inverse sigma occurs. The large elementary constant in (203.12) dominates the fixed product-rule factors.
+
+On an energy circle of radius d_s about a root (203.10), its linear derivative has modulus at least $2k_Ed_s$; its nonlinear remainder is at most $C_0d_s^2$. A charge perturbation of size8rho costs at most $8C_0\rho$. These are strict fractions of the linear bound. Rouché therefore produces a unique analytic s_L(w) on the capsule of width8rho around the full real segment, with
+$$
+ |s_L(w)-s_L(\Re\hbox{anchor})|\le2C_0|w-\hbox{anchor}|/k_E,
+ \qquad \Re K_L(w)\ge k_E.
+ \tag{203.13}
+$$
+The real derivative is bounded by C0/kE. For overlapping charge disks, their energy centers differ by at most this bound times the real-anchor separation; the margins in (203.12) put both roots inside the same uniqueness circle. They coincide. This proves a single branch on the whole capsule and a uniform extension slightly past both endpoints. Roots obtained from different real fields agree wherever their charge domains meet: the equation is independent of H, and real uniqueness followed by analytic identity fixes them. The low-zero reference retains actual e and has the same construction on the common inner domains by the uniform exponentially small low perturbation.
+
+The energy contours are lawful uniformly on this entire branch, including the portion where the energy root is slightly positive. To see this without transferring real positivity to complex means, first fix real charge rho_0 and c=s_L(rho_0). Put
+$T_c=B_c(I-2cB_c)^{-1}$, $\mu_c=(I-2cB_c)^{-1}b_L(\rho_0)$.
+The centered identity is exact:
+$$
+ J_L(c+z,\rho_0)-J_L(c,\rho_0)
+ =\frac{\sigma^2z^2}{2}
+ +\delta[-\tfrac12\log\det(I-2zT_c)-z\operatorname{tr}T_c]
+ +2z^2\mu_c^TT_c(I-2zT_c)^{-1}\mu_c .
+ \tag{203.14}
+$$
+It follows by tilting the conditional Gaussian and subtracting its linear energy derivative, which vanishes by (203.10). Null-mode linear energy is included in that derivative; no nonexistent covariance has been assigned to it. All means in the sign estimate for (203.14) are real.
+
+The retained eigenvalues of T_c are at least beta_- and at most2M. For $z=re^{i\theta}$, $\pi/3\le|\theta|\le\pi/2$,
+$\Re[z^2/(1-2z\beta)]\le0$ for every $\beta\ge0$. On the two rays theta=+-pi/3, the centered determinant term per mode is
+$-\tfrac14\log(1-2a+4a^2)-a/2\le-\tfrac1{16}\min(a^2,a)$, a=r beta; its derivative is $-a(1+2a)/(1-2a+4a^2)$. The retained block therefore gives a loss at least $4\gamma\min(r^2,r)$. The fixed radius-v0 arcs have a quadratic gap, and the local vertical segment has positive curvature. Noise has nonpositive real quadratic part on these rays. For each finite sigma>0 the closing arcs at infinity vanish by its Gaussian factor; subsequent tail estimates use the determinant gap and are independent of inverse sigma.
+
+Start on the upward vertical conditional inversion contour in (203.6). Rotate its two infinite ends to the rays at +-pi/3, with radius-v0 arcs and a central upward segment. No positive determinant pole is swept. For complex w within8rho of the real anchor, the resolvent identity bounds the change of the exact noncentral term and the saddle value by
+$C_0|w-\rho_0|(T+4+r)$, with a fixed enlargement already absorbed in C0. The last restriction in (203.12) pays this cost against the ray and arc gaps for every r>=v0. Move only the local vertical segment through s_L(w), and join back with short finite connectors. Their real-anchor gap survives the same restriction. This is Chapter 184's centered contour argument with the constants and the WHOLE attained interval verified here; it is not an unsupported use of complex noncentral positivity.
+
+Scaling the local energy coordinate by sqrt(delta), the odd cubic term integrates to zero; its square and the quartic term cost O(delta). Bounded derivatives through order8, Gaussian domination and the paid connectors/rays yield
+$$
+ I_L(w)=\sigma K_L(w)^{-1/2}
+                  e^{J_L(s_L(w),w)/\delta}[1+r_L(w)],
+ \qquad |r_L|\le C\delta .
+ \tag{203.15}
+$$
+All fixed derivative orders needed below obey the same O(delta) bound on inner capsule margins by Cauchy estimates. Constants depend only on the displayed fixed class. The raw Gaussian contour integral is $i\sqrt{2\pi\delta/K_L}$, cancelling the 1/i in (203.6). The energy coefficient is +1, fixed by the original upward orientation; it is not a total charge-cycle coefficient.
+
+For real w this is a deformation of the actual conditional integral. Uniform domination on the rays makes both sides holomorphic on each disk; analytic identity and patching establish the same equality on the capsule. On a finite real charge piece one may first integrate these fibers, using their uniform bounds. Thus the family is a legitimate deformation of that finite part of the original half-line representation, not just a formal stationary graph.
+
+### 203.5 The new global slope estimate
+
+Define the exact stationary profile, retaining all order-delta terms,
+$$
+ F_L(w;H)=\Phi_L(s_L(w),w;H).
+$$
+For real x and real w in the entire segment,
+$$
+ F_L'(w;x)=-x-2\alpha(s_L(w))w-m_L(w),\quad
+ m_L(w)=\sqrt\delta(c_L+m_e(s_L(w)))/S(s_L(w)),
+$$
+$$
+ F_L''(w;x)=-2\alpha(s_L(w))-
+                 \Phi_{L,sw}(s_L(w),w;x)^2/K_L(w).
+ \tag{203.16}
+$$
+These follow by exact implicit differentiation, not a quadratic approximation. On our compact resolvent domain, m_L and each required derivative are O(delta^5)+O(delta^{-m}ell_Q) for a fixed m, and in particular uniformly o(1). This uses Cauchy--Schwarz in the actual e sums and the original norm bound. The predictor itself does not discard these terms.
+
+We need control before alpha is positive. Put $\varepsilon_f=\max_L\|f_L\|$. From (203.8), $J_{sw}>0$ for $w>C\varepsilon_f/k_E$, with a fixed C bounded by C0. Hence s_L(w) strictly decreases there and alpha(s_L(w)) strictly increases, because $\alpha_s=-S'/(2S^2)<0$. On the remaining interval of length O(epsilon_f), the equation (203.8) gives $s_L(w)-s_{E,L}=O(\varepsilon_f^2)$. Thus alpha is still negative there by (203.11). This argument includes noncentral linear drift; it is not the false assertion that J_sw is positive at every w including zero.
+
+At the attained interior critical point, (203.16) gives
+$\alpha(s_*)=(-x-m_L(w_*))/(2w_*)\ge\kappa/(4W)$ eventually. Therefore there is exactly one crossing w_b of
+$\alpha(s_L(w_b))=\kappa/(8W)$, after the tiny interval just treated. For $0\le w\le w_b$, (203.16) implies $F_L'\ge\kappa/2$. For $w_b\le w\le w_*$, the real square in (203.16) is nonnegative, so
+$F_L''\le-\kappa/(4W)$. Since $F_L'(w_*)=0$, integration gives the GLOBAL lower bound
+$$
+ F_L'(w;x)\ge k(w_*-w),\qquad k=\kappa/(4W),
+ \qquad 0\le w\le w_* .
+ \tag{203.17}
+$$
+Before w_b it follows from $kW\le\kappa/4$; after w_b it follows by integrating the curvature. In particular no other charge stationary point occurs between the physical boundary and this interior point. We make no assertion about all real extrema outside this segment.
+
+For an explicit upper derivative constant one may take
+$C_1=(2^{20}C_0/(k_E\rho))^{32}$.
+Repeated implicit differentiation of (203.10), using (203.12),(203.13), bounds the required profile derivatives through order8 by C1 on an inner capsule. In particular $|F_L''|\le C_1$, so integrating back from the same w_* proves
+$$
+ \boxed{\quad k\le\frac{F_L'(w;x)}{w_*-w}\le C_1,
+ \qquad
+ k\le\frac{2[F_L(w_*;x)-F_L(w;x)]}{(w_*-w)^2}\le C_1 .\quad}
+ \tag{203.18}
+$$
+At w=w_* both quotients take their removable limits. The second pair follows by integrating the first pair. This is stronger than knowing a nondegenerate root separately at each point. Its constants are uniform in the actual array, every low and every permitted rate. It bounds the profile across the entire distance to the boundary, which is of fixed order at the deep witness.
+
+### 203.6 Global canonical coordinate and inverse
+
+Let $F_*=F_L(w_*;x)$, $F_E=F_L(0;x)=A_L(s_{E,L})$, and define
+$$
+ G_L(w;x)=\frac{2[F_*-F_L(w;x)]}{(w_*-w)^2}.
+ \tag{203.19}
+$$
+This G is a divided difference of an exact finite action, not the total normalizer G_-. It is analytic at w_* because the first derivative vanishes. The useful integral formula is
+$$
+ G_L(w;x)=-2\int_0^1(1-t)F_L''(w_*+t(w-w_*);x)\,dt .
+ \tag{203.20}
+$$
+It supplies uniform complex derivative bounds on a capsule whose straight segments remain in the energy-profile domain. On the real segment G lies in[k,C1] by (203.18), even though F'' need not be negative near zero.
+
+Choose the positive square root on the real segment and set
+$$
+ \lambda_L(x)=w_*\sqrt{G_L(0;x)}=\sqrt{2(F_*-F_E)},\qquad
+ t_L(w;x)=\lambda_L(x)-(w_*-w)\sqrt{G_L(w;x)} .
+ \tag{203.21}
+$$
+Then EXACTLY
+$$
+ t_L(0;x)=0,\quad t_L(w_*;x)=\lambda_L(x),\qquad
+ F_L(w;x)=F_E+\lambda_Lt_L-t_L^2/2 .
+ \tag{203.22}
+$$
+This retains the endpoint at its own energy saddle. In general $\lambda_L^2/2$ is not $-F_L''(w_*)w_*^2/2$, nor the interior Schur-complement surrogate. Equation (203.22) is an identity using the exact finite profile on the whole segment.
+
+For real w<w_*, differentiating (203.22) and using (203.18) gives
+$$
+ m:=k/\sqrt{C_1}\le t_L'(w;x)
+     =\frac{F_L'(w;x)}{(w_*-w)\sqrt{G_L(w;x)}}
+     \le C_1/\sqrt{k}.
+ \tag{203.23}
+$$
+At w_* the derivative is $\sqrt{-F_L''(w_*;x)}>0$, the continuous value. Thus (203.21) is a monotone global coordinate on the complete segment with quantitative nonzero Jacobian, not merely an implicit equation matching actions.
+
+For clarity, the following conservative choices give a COMMON complex domain. Put
+$$
+ C_2=[2^{20}C_1(1+W+r^{-1})/(km)]^{32},
+$$
+$$
+ \varepsilon=\min\{\rho/64,r/64,k/(2^{16}C_2),m/(2^{16}C_2)\},
+$$
+$$
+ \vartheta=\min\{\kappa/64,\vartheta_{195}/64,
+                 k\varepsilon/(2^{16}C_2),kr^2/(2^{16}C_2)\}.
+ \tag{203.24}
+$$
+Here $\vartheta_{195}>0$ is the explicit width (195.7) of Chapter 195 with the SAME M,Y,kappa,L. It is included only to keep the field domain inside the known original-total normalization domain, not to infer the new map from that theorem. C1 and C2 dominate the finite implicit/divided-difference derivative bounds just given; the factors of rho^-1 and k^-1 leave Cauchy and nondegeneracy margins. All constants in (203.24) are fixed positive numbers, independent of Q,eta and inverse sigma.
+
+At the interior saddle $-F_L''(w_*;x)\ge2k$ eventually, by (203.16) and its lower alpha bound. The same quantitative circle argument as in (203.13) continues it for $|H-x|<8\vartheta$, with $|w_*(H)-w_*(x)|\le2|H-x|/k$. Its equation is $F_{L,w}(w;H)=0$; the energy branch remains the one already constructed and is independent of H. Uniqueness and overlap patching fix one continuation.
+
+Use (203.19),(203.20) with this continued saddle. On
+$$
+ \Omega_{L,x}=\{w:\operatorname{dist}(w,[0,w_{*,L}(x)])<8\varepsilon\},
+ \qquad |H-x|<8\vartheta,
+ \tag{203.25}
+$$
+the straight segments in (203.20) stay in the proved energy capsule. The derivative bounds and (203.24) ensure $\Re G_L\ge k/2$, and the square root continues its positive-real branch. Defining lambda by $w_*(H)\sqrt{G_L(0;H)}$ fixes its sign and enforces t(0;H)=0 identically. The same bounds give
+$$
+ \Re\partial_wt_L(w;H)\ge m/2\quad(w\in\Omega_{L,x}),
+ \qquad |\partial_w^jt_L|+|\partial_H\partial_w^{j-1}t_L|\le C_2
+ \quad(1\le j\le4)
+ \tag{203.26}
+$$
+on the explicit inner domain $\operatorname{dist}(w,[0,w_{*,L}(x)])<4\varepsilon$, $|H-x|<4\vartheta$ for the higher derivative bounds. The first inequality in (203.26) holds on the full domain (203.25). For the first inequality compare with the nearest real anchor in (203.23); the change costs at most C2 times the charge/field displacement. The constants in (203.24) make it less than m/2. Bounds for the continued saddle and (203.20), followed by differentiation of the square root with $|G|\ge k/2$, give the stated C2 bound.
+
+The stadium Omega is convex. For any distinct w1,w2 in it,
+$$
+ \frac{t_L(w_2;H)-t_L(w_1;H)}{w_2-w_1}
+       =\int_0^1 t_L'(w_1+u(w_2-w_1);H)\,du
+$$
+has real part at least m/2. Therefore the map is globally injective there and its inverse satisfies $|dw/dt|\le2/m$. Differentiating the inverse identity bounds its derivatives through order4 by fixed polynomials in C2 and 1/m. This proves uniform inverse/Jacobian control on an explicit connected complex neighborhood, not a compactness assertion or a collection of local inverses. Choices from overlapping field anchors coincide on their common connected domains by the real normalization and analytic identity.
+
+In particular $\sqrt{k}\,r\le\lambda_L(x)\le\sqrt{C_1}W$, and
+$$
+ \Re\{F_L(w_*(H);H)-F_L(0;H)\}\ge kr^2/4
+ \tag{203.27}
+$$
+for $|H-x|<4\vartheta$, with (203.24). This last fact specifies a LIMIT: this proved neighborhood still separates the interior and endpoint exponential scales. It does not reach their first amplitude competition.
+
+### 203.7 Transformed amplitude, low sum and finite-cycle ancestry
+
+Substitute (203.15) into a finite piece of (203.6). For each actual low and real anchor x choose a real cut $R_L=w_{*,L}(x)+\varepsilon$, which lies within (203.25), and KEEP its complementary integral. The exact split is linear in the exact low sum; it does not choose different favorable realizations. The leading finite piece becomes
+$$
+ \frac{\sigma e^{\ell_{\rm sel}}}{\sqrt{2\pi V_H\delta}}
+ \sum_Lp_Le^{F_{E,L}/\delta}
+ \int_{t_L([0,R_L];H)} e^{(\lambda_Lt-t^2/2)/\delta}
+       a_L(t;H)[1+r_L(w_L(t;H))]\,\mathrm{d}t,
+$$
+$$
+ a_L(t;H)=K_L(w_L(t;H))^{-1/2}\frac{dw_L}{dt}(t;H).
+ \tag{203.28}
+$$
+Here $F_{E,L}=A_L(s_{E,L})$, and every lambda, inverse and low energy term is retained. Equation (203.28), with r_L defined by the exact ratio (203.15), is an identity for the finite comparator piece. The path is the actual image of its oriented real charge interval. Its orientation is positive at real x; no Stokes coefficient was fitted. Complex continuation of the finite path uses the proved holomorphic domain and all its energy fibers. The determinant square root starts positive real; the canonical inverse derivative is positive real; both branches are fixed before continuation.
+
+By (203.13),(203.26), a_L is nonzero, has uniformly bounded inverse on inner domains, and has uniformly bounded derivatives of the needed fixed orders. Its real value is positive. In particular the transformed amplitude has not been frozen at either energy saddle or treated as an array-independent constant. This is the amplitude control absent from a formal identity matching critical values.
+
+On a real field x, the integral in (203.28) without r_L is positive. A real charge window of width c sqrt(delta) about w_* lies within [0,R_L] eventually; the bounded second derivative gives its leading mass at least
+$c\sqrt\delta\exp(F_{*,L}/\delta)$ before the common prefactor. The finite actions are bounded, so after the prefactor and the exact p_L sum the positive finite piece is at least $c\sigma e^{-C/\delta}$. The bound $|r_L|\le C\delta$ therefore gives a relative O(delta) error on this real piece, after comparison with this actual nonzero integral. For complex fields, what follows directly is the honest bound
+$$
+ |\mathcal R_{\rm finite}|\le C\delta\,
+ \frac{\sigma e^{\ell_{\rm sel}}}{\sqrt{2\pi V_H\delta}}
+ \sum_Lp_L\int_0^{R_L}|K_L(w)^{-1/2}e^{F_L(w;H)/\delta}|\,dw .
+ \tag{203.29}
+$$
+It is NOT divided by a coherent two-amplitude sum. Further charge deformation would need to compare the right side with the actual competing amplitudes on that new contour.
+
+The low mixture is controlled rather than assumed zero-free. On common inner profile domains compare each low with c_L=u_L=0 while KEEPING actual e. Action differences and implicit roots are bounded by $C\delta^{-m_0}\ell_Q$, with a fixed integer m0 (one may take16 here). The resolvent and curvature denominators are fixed lower bounds; repeated differentiation and exponentiation introduce only fixed delta powers. Thus
+$$
+ \sum_Lp_LK_L(w)^{-1/2}e^{[P_L(w)+J_L(s_L(w),w)]/\delta}
+ =K_0(w)^{-1/2}e^{[P_0(w)+J_0(s_0(w),w)]/\delta}[1+\xi_Q(w)],
+$$
+$$
+ |\xi_Q|\le C\delta^{-17}\ell_Q=o(\delta^A)\quad(A>0\text{ fixed}).
+ \tag{203.30}
+$$
+The exact positive weights sum to one before the comparison. This proves nonvanishing of that profile sum on the complex domain, and prevents a loss when summing its energy remainders. It does not identify per-low optima as one simultaneous optimum, nor assert nonvanishing of the total charge integral. Keeping separate maps in (203.28) retains the distinct exact critical values. Replacing all lambda_L by one optimum is not part of the result.
+
+The artificial R_L is only a partition: its complementary real integral from R_L to infinity remains in the exact total. Boundary terms at R_L cancel on recombination. No R_L endpoint is promoted to a physical phase, cycle or zero label. Chapter 186's cutoff and tail estimates retain precisely their existing domains. They do not pay the middle charge contour outside (203.25). On the negative-field domain the WHOLE comparator and original total are already paid by Chapter 195; we do not claim (203.28) as a second proof of a larger total sector.
+
+### 203.8 Realized beyond-Taylor range, overlap and the four boundaries
+
+This map is not confined to a small charge disk. Take the actual deep real anchor supplied by Chapter 195: $c_d=-3M/4$, and its field
+$H_{d,Q}=-\sqrt{-G_c(c_d)/\chi'(c_d)}$, where
+$G_c(s)=\sigma^2s-H_y+S(s)-(\delta/2)q_*'(s)/q_*(s)$,
+$\chi=S/(2q_*)$, $q_*=1-2b_{\rm ch}S$.
+This centered expression only places a field; all predictors here keep actual e and lows. Chapter 195 proves
+$2^{-10}M^{-8}\le|H_{d,Q}|\le2^{10}M^8$, and actual joint energy roots $s_{*,L}(H_{d,Q})=c_d+o(1)$. Choose, for example, $\kappa=2^{-12}M^{-8}$, $L=2^{12}M^8$. Then the realized field lies strictly within [-L,-kappa], on the SAME array, and (203.7)--(203.30) apply. At this real saddle retained conditional eigenvalues satisfy $|2s_*\beta|>1$ eventually, so their determinant series at zero is outside its convergence disk. Its charge is bounded below by r independent of Q. The exact critical-value map spans the WHOLE interval from zero to this point and a fixed complex margin, using finite resolvents throughout.
+
+At the boundary end the capsule contains a fixed open charge disk around zero. Its intersection with Chapter 179's small disk is nonempty and eventually contains its O(sqrt(eta)) real saddle neighborhood. The exact conditional integral g and its normalized logarithm
+$\mathcal B(w)=\delta\log[g(w/\sqrt\delta)/g(0)]$, $\mathcal B(0)=0$, agree with Chapters 184 and 179 there by real normalization and analytic identity. The low comparison (203.30), (203.15) and their margins justify that logarithm; the common raw-sigma factor cancels only in this normalized ratio. The energy roots coincide by real uniqueness, and their square roots are positive real. This fixes the inherited branches without a fitted integer shift. It preserves existing labels on their existing domain; it does not transport them to a new field domain.
+
+There is an ACTUAL precision-zero crossing inside this finite real charge segment. Equation (203.11) makes alpha negative at w=0, while (203.16) makes it positive at the interior point. Its monotonicity after the tiny noncentral interval proves a unique zero in between. There $q_*=2S\alpha=0$, yet (203.4),(203.10),(203.14) remain regular and the profile slope is $-x-m_L>0$. The map has nonzero derivative there. This is a legal passage for the conditional finite-charge representation. It does not continue the divergent whole-line Gaussian split through its escape boundary or assign a residue to it.
+
+Physical w=0, radial support $t_{\rm rad}=0$, precision-zero full-line escape $q_*=0$, and positive diagonal/conditional determinant poles remain distinct. Our contours avoid the poles; a null conditional mode is retained in b and in the stationary equation. No radial support endpoint has been substituted for the physical charge boundary. The finite original normalizer stays entire; representation singularities are not original-law obstructions.
+
+### 203.9 Original return, precision and the unclosed total relation
+
+The original fixed-H-disk estimate is unchanged:
+$$
+ |N_P^-(H/\sqrt\delta,y)-G_-(H/\sqrt\delta,y)|
+ \le\sigma P(Q)\exp[-\beta_{\rm res}Q^3+C_F/(\eta\delta)] .
+ \tag{203.31}
+$$
+It stays ADDITIVE outside its already proved total lower-bound domain. It pays the full selection coefficient, high-cell density and displacement, floors, outside labels, exact lows, sign/equality strips and the same physical residual. Field costs use $(\Re h)D\le\eta D^2+C_F/(\eta\delta)$ under the same-output envelope. Likelihood comparisons retain the log-width/Young bounds and score marks for widths[sigma/2,2sigma], not bare inverse-sigma differentiation. Only the crude excluded full-tuple step spends the original strict reserve to recover raw sigma. None of the contour/map estimates changes this count law or strengthens its rates.
+
+Inside Chapter 195's already established sector one may divide (203.31) by its nonzero total amplitude $c\sigma e^{-C/\delta}$; raw sigma cancels ONLY THEN. The relative count error is superpolynomially small, since eventually eta>=sqrt(delta). This is inherited fidelity, not a new two-contribution lower bound. Formula (203.29) remains an absolute contour-envelope comparison at complex fields, not a total-relative estimate near cancellation.
+
+The map preserves the exact critical-value difference, so it removes the local quadratic surrogate's potentially order-one action mismatch across a fixed charge distance. No order-delta action term was dropped; such a term could produce order-one phase drift after division by delta. Energy inversion has relative O(delta) error on its proved domain. Nevertheless the target needs an integrated error
+$o(1)(|A_{\rm end}|+|A_{\rm int}|)$ with BOTH actual nonzero comparable integrated contributions, actual coefficients, and boundary lower bounds for their coherent sum. That comparison has not been established here.
+
+On (203.24),(203.25), (203.27) keeps the critical values separated by a fixed positive real amount. The local field neighborhood therefore cannot simply be relabeled an oscillatory comparison domain. Angular continuation beyond it needs a larger image/relative cycle, paid charge connectors and exterior, possible additional saddles, exact low-sum control after integration and a reference-to-two-amplitude bound. Neither the canonical coordinate nor the energy coefficient +1 supplies those charge coefficients.
+
+If a future exact finite phase $\Psi(H)=\log(A_{\rm int}/A_{\rm end})$ is proved with an inverse bound $|\Psi'|\ge m_\Psi$, a phase error e_\Psi would lead to the required bookkeeping
+$$
+ |\Delta z|\lesssim \frac{d}{\sqrt\delta}\frac{|e_\Psi|}{m_\Psi},
+ \qquad z=d(h-h_0),\quad h=H/\sqrt\delta .
+ \tag{203.32}
+$$
+No such new inverse bound, unscaled location or Rouché counting boundary is inferred here. The large parameter is delta^-1; eta and physical sigma keep their independent permitted rates. The new constants depend on fixed negative-field compacts and cannot be inserted unchanged into a vanishing kappa or an order-one angular rotation.
+
+
+### 203.10 来源、贡献与适用边界
+
+精确临界值匹配和规范坐标属于经典一致渐近方法。Nico M. Temme，*Uniform Asymptotic Methods for Integrals*，arXiv:1308.1547v1，§4.2 的 Bessel/Airy 变换讨论明确区分临界值匹配、正确代数分支、鞍点处可去的 Jacobian、全局一一性，以及原轮廓到无穷射线的对应。其特定 Bessel 积分和已知轮廓不能直接提供本章随数组变化的统一性；该节所引外部全局映射证明不作为本章前提。
+
+本章的新增连接是有限预解式给出的 (203.18)、全段能量根的统一拼接，以及 (203.21)–(203.30) 对同一实际剖面的全局单射和振幅控制。原始取整、低模、非中心向量、选择精度及独立速率均未更换。相对误差只在已经支付非零积分下界处主张；复杂场中的有限段余项保持 (203.29) 的绝对包络形式，不能除以尚未控制的相消总和。
+
+第 179、184、186、195 章保留各自范围。以上为普通数学推导，未作 Lean 认证；定向来源核对不构成全球原创性判断。
+
+## 追加锚（本行以下为增补区）
