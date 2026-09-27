@@ -2,6 +2,8 @@
 
 The 33-label query block joining the complete central eight-label block to the outside prime-pair triangles now has an exact computable separator. On full retention its outside atoms give no further saving beyond the central block; the two supplied nonconstant retained fields also remain below the continuation target. These are three actual-field evaluations, not an obstruction for every retained field.
 
+[Report704](704-a-full-joined-dual-excludes-the-retention-target.md) now gives a separate rational obstruction for every retention on this fixed source, and for its stated common-source extension. Its proof uses a new full dual; the field evaluations here retain their narrower meaning.
+
 This is a current-source application of the independent-label machinery already present in Reports27/28, problem-details66 and [Report392](392-root-optimal-laws-do-not-tensorize-the-full-layout-bound.md) RT11–RT12. It is ordinary finite mathematics, not a new generic theorem or Lean verification. The executable returns the exact selected query charge for one supplied nonnegative retained measure; it does not optimize that measure.
 
 ## Selected labels, ownership and conditional decomposition
@@ -127,4 +129,4 @@ python3 -I -B -O "$research_data/joined33_independent_audit.py" --controls --pai
 python3 -I -B -O "$research_data/joined33_source_bridge_audit.py" "$research_replay/input_allone_joined_input.json" "$research_replay/input_sign_joined_input.json" "$research_replay/input_smooth20_joined_input.json" --output "$research_replay/source_bridge.json"
 ```
 
-The supplied integer fields, source projections, complete fees, maximum results and two independent checks are the retained experiment. Numerical proposal histories are not needed. The next unresolved question for this interface is whether another actual retained measure pays the target; the stronger unrestricted problem additionally requires uniform control over arbitrary original phases, numerical labels, heights and prime support. Neither condition is supplied by these three computations.
+The supplied integer fields, source projections, complete fees, maximum results and two independent checks are the retained experiment. Numerical proposal histories are not needed. Report704 now excludes the target for every retained measure under this interface and its declared common-source extension. Uniform noncoverage for arbitrary original phases, numerical labels, heights and prime support remains unresolved; these field computations and that fixed-family obstruction do not supply it.

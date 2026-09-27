@@ -23,6 +23,7 @@ positive retained field for that gate. All remaining original-loss and
 all-height screen fees still matter. Unrestricted Erdős#7 remains unresolved.
 The result uses ordinary mathematics and exact rational checks, not new Lean
 verification.
+[Report704](704-a-full-joined-dual-excludes-the-retention-target.md) separately excludes the full gate target by changing both query-row and layout probabilities; it does not use the impossible pointwise domination here.
 
 ## The density whose transfer fails
 
