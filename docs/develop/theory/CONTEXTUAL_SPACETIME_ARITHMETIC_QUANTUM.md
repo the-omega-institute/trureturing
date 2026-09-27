@@ -73819,3 +73819,296 @@ $B_{jj}\ge-2\delta/9-O(\delta^2)$。式（343.23）还给出 $\operatorname{Tr}B
 与零预算端的二次收益不同，平台左端的误差代价从一次项开始。这里没有确定式（343.1）的二次系数，没有分类各个最优因子的完整一阶矩阵，也没有求出 $0<R<\eta$ 的完整最优曲线。结论只属于固定六态、量子比特中间接口和解码纠缠破坏的同一任务。
 
 ## 追加锚（本行以下为增补区）
+
+## 344. 平台端的零二次项与四个最优一阶方向
+
+第343节给出平台左端的线性误差及二阶余项。本节确定这个二次项实际为零，并同时定位全部最优编码的正伸缩部分及复合通道的一阶变化。平台上的复合矩阵唯一为 $I/3$，而在其左侧出现四个不同的一阶方向。
+
+**定义 344.1（平台附近的归一化矩阵对）。** 固定第343节的 $a$、$\eta=a/\sqrt3$，令 $q=1-\delta$。对预算 $\eta q$ 下的任意实际最优因子，写编码线性部分的右极分解为
+
+$$
+A=OS,\qquad S=(A^{\mathsf T}A)^{1/2},\qquad O\in SO(3),
+$$
+
+并置
+
+$$
+X_\delta=\frac{I-S}{\delta},
+\qquad Y_\delta=\frac{LA-I/3}{\delta}.
+\tag{344.1}
+$$
+
+由第343节，足够小的正 $\delta$ 下这些矩阵都定义良好。令 $\mathcal F_\delta$ 为全部实际最优因子产生的 $(X_\delta,Y_\delta)$ 的集合。它非空且紧。对每个平衡单位向量 $n$，定义
+
+$$
+P_n=nn^{\mathsf T},\qquad
+X_n=\frac12(I+P_n),\qquad
+Y_n=-\frac19I-\frac13P_n,
+\qquad
+\mathcal K=\{(X_n,Y_n):n_j^2=1/3\}.
+\tag{344.2}
+$$
+
+符号相反的 $n$ 给出同一个投影，所以 $\mathcal K$ 恰有四个元素。
+
+**定理 344.2（零二次系数与全部最优方向）。** 对固定 $0<a\le1$，当 $\delta\downarrow0$ 时，
+
+$$
+\widehat C_a^{\rm D}\bigl(\eta(1-\delta)\bigr)
+=\frac a3+\frac a9\delta+o(\delta^2),
+\tag{344.3}
+$$
+
+并且在任一固定矩阵乘积范数所定义的 Hausdorff 距离下，
+
+$$
+d_H(\mathcal F_\delta,\mathcal K)\longrightarrow0.
+\tag{344.4}
+$$
+
+因此全部最优编码的奇异值一致满足
+
+$$
+\sigma_1=1-\frac\delta2+o(\delta),\qquad
+\sigma_2=1-\frac\delta2+o(\delta),\qquad
+\sigma_3=1-\delta+o(\delta^2),
+\tag{344.5}
+$$
+
+且第343节的实际预算结论加强为
+
+$$
+|c_y|=o(\delta^2),\qquad
+0\le\eta(1-\delta)-r(\mathcal E)=o(\delta^2).
+\tag{344.6}
+$$
+
+对全部充分小的正 $\delta$，至少存在四个不同的实际最优复合矩阵。这里不声称它们恰好只有四个，也不声称最优因子唯一或可微。
+
+证明。先取乘积 Frobenius 范数，其它固定范数由有限维范数等价得到。先给出达到二阶系数的实际方案。固定平衡 $n$，取 $O\in SO(3)$ 满足 $On=e_y$，并令
+
+$$
+\alpha=\frac{1+q}{2},\qquad
+b=\frac{\alpha-q+q^2}{\alpha^2+2q^2},
+\qquad
+A=O(\alpha Q_n+qP_n),
+\qquad
+L=[bQ_n+(1-2b)P_n]O^{\mathsf T}.
+\tag{344.7}
+$$
+
+当 $q$ 足够接近一时，$0<b<1/2$。编码完全正，因为 $2\alpha=1+q$；解码的三个规范系数非负且和为一，故完全正且纠缠破坏。两个平移都取零。编码的 $y$ 行为 $qn^{\mathsf T}$，所以同一方案的残差恰为 $\eta q$。
+
+复合为 $\alpha bQ_n+q(1-2b)P_n$，平衡性使三个列误差相等。把式（344.7）的 $b$ 代入，得到
+
+$$
+\begin{aligned}
+e_{\rm up}
+&=\frac{a}{2\sqrt3}
+\frac{2q+\alpha-\alpha q}{\sqrt{\alpha^2+2q^2}}\\
+&=\frac{a}{2\sqrt3}
+\frac{1+4q-q^2}{\sqrt{1+2q+9q^2}}.
+\end{aligned}
+\tag{344.8}
+$$
+
+例如直接最小化
+$2(1-\alpha b)^2+(1-q+2qb)^2$，其驻点就是式（344.7）的 $b$，给出第一式。这里只把它作为实际可达方案，不将该一参数族的最优性当作整个任务的最优性。
+
+在 $q=1-\delta$ 处展开式（344.8），
+
+$$
+e_{\rm up}^2
+=\frac{a^2}{9}+\frac{2a^2}{27}\delta
++\frac{a^2}{81}\delta^2+O(\delta^3),
+\qquad
+e_{\rm up}=\frac a3+\frac a9\delta+O(\delta^3).
+\tag{344.9}
+$$
+
+下面建立对全部原最优因子的下界。第343节已经证明原复合平移为零，$T=LA=I/3+O(\delta)$，编码总奇异值损失为 $2\delta+O(\delta^2)$。因而式（344.1）的 $X_\delta,Y_\delta$ 一致有界。
+
+写 $D=LO=TS^{-1}$，并定义
+
+$$
+\kappa_\delta=\frac{\operatorname{Tr}X_\delta-2}{\delta},
+\qquad
+\nu_\delta=\frac{1-\operatorname{Tr}D}{\delta^2}.
+\tag{344.10}
+$$
+
+这两个量均非负且一致有界。第一项来自第343节中总收缩至少 $2\delta$ 以及其二阶估计。对第二项，幺元化解码的核范数至多一，故 $\operatorname{Tr}D\le1$；第343节的 $\xi=O(\delta^2)$ 正是此处的分子。它与那里的奇异值规范矩阵仅相差正交共轭。
+
+先确定任意收敛子列的矩阵限制。由第343节的奇异值估计，$X_\delta$ 的极限 $X$ 对称、半正定，并满足
+
+$$
+\operatorname{Tr}X=2,\qquad \lambda_{\max}(X)=1.
+\tag{344.11}
+$$
+
+同一节对固定输入列的结论给出极限 $Y$ 的对角元
+
+$$
+Y_{jj}=-\frac29.
+\tag{344.12}
+$$
+
+还需要一个来自实际编码行方向的限制。令
+
+$$
+z=A^{\mathsf T}e_y=Sm,\qquad m=O^{\mathsf T}e_y,\qquad \|m\|=1.
+$$
+
+实际残差及最小奇异值给出
+
+$$
+\|z\|_\infty\le\frac q{\sqrt3},
+\qquad \|z\|_2\ge\sigma_3=q+O(\delta^2).
+\tag{344.13}
+$$
+
+各个 $q^2/3-z_j^2$ 都非负，其和为 $O(\delta^2)$，所以每个坐标距相应立方体端点都是 $O(\delta^2)$。因此存在平衡单位向量 $n$ 使
+
+$$
+z=qn+O(\delta^2).
+\tag{344.14}
+$$
+
+这里 $n$ 可随最优因子和 $\delta$ 改变；其取值有限，取子列后可以固定。由于 $S=I-\delta X_\delta$，其一致有界逆展开使
+
+$$
+m=S^{-1}z
+=n+\delta(X_\delta-I)n+O(\delta^2).
+$$
+
+利用 $\|m\|=1$，可得 $n^{\mathsf T}X_\delta n=1+O(\delta)$。结合式（344.11），极限满足
+
+$$
+Xn=n.
+\tag{344.15}
+$$
+
+这一步不要求选取连续的编码奇异轴。
+
+接着保留误差下界中的二阶项。因为 $X_\delta,Y_\delta$ 一致有界，
+
+$$
+\begin{aligned}
+D&=(I/3+\delta Y_\delta)(I-\delta X_\delta)^{-1}\\
+&=I/3+\delta(Y_\delta+X_\delta/3)
++\delta^2(Y_\delta X_\delta+X_\delta^2/3)+O(\delta^3).
+\end{aligned}
+\tag{344.16}
+$$
+
+该式不要求 $X_\delta,Y_\delta$ 交换。对迹使用式（344.10），得到
+
+$$
+1-\operatorname{Tr}T
+=\frac{2\delta}{3}
++\delta^2\left[
+\frac{\kappa_\delta}{3}+\nu_\delta
++\operatorname{Tr}(Y_\delta X_\delta)
++\frac13\operatorname{Tr}(X_\delta^2)
+\right]+O(\delta^3).
+\tag{344.17}
+$$
+
+把它代入第343节的精确 Frobenius 平方下界。记实际最优误差为 $e_\delta$，并置
+
+$$
+w_\delta=
+\frac{e_\delta^2-a^2/9-2a^2\delta/27}{a^2\delta^2},
+\qquad
+F(X,Y)=\frac19\operatorname{Tr}(YX)
++\frac1{27}\operatorname{Tr}(X^2)
++\frac1{12}\|Y\|_F^2.
+\tag{344.18}
+$$
+
+则一致有
+
+$$
+w_\delta\ge
+\frac{\kappa_\delta}{27}+\frac{\nu_\delta}{9}
++F(X_\delta,Y_\delta)+O(\delta).
+\tag{344.19}
+$$
+
+现在精确求解这个极限二次问题。对满足式（344.11）、（344.12）的 $X,Y$，令 $X_{\rm off},Y_{\rm off}$ 表示去掉对角元后的矩阵。因为 $X$ 对称，$\operatorname{Tr}(YX)=\langle Y,X\rangle_F$。逐项完成平方给出
+
+$$
+F(X,Y)
+=\frac1{81}
++\frac1{27}\sum_j(X_{jj}-2/3)^2
++\frac1{12}\left\|Y_{\rm off}+\frac23X_{\rm off}\right\|_F^2.
+\tag{344.20}
+$$
+
+具体地，对角部分为 $(\sum_jX_{jj}^2-1)/27$，非对角部分恰好组成最后一个平方；再用 $\operatorname{Tr}X=2$ 即得该式。它同样覆盖非对称 $Y$，没有先假设最优复合对称。
+
+所以 $F\ge1/81$。结合式（344.15），还可以确定全部取等点。取等要求 $X_{jj}=2/3$。用坐标符号变换将平衡 $n$ 化为 $(1,1,1)/\sqrt3$ 后，$Xn=n$ 使三个非对角行和都等于 $1/3$。对称性于是给出
+
+$$
+X_{12}=X_{13}=X_{23}=1/6.
+$$
+
+还原符号变换，正是 $X=X_n=(I+P_n)/2$。最后一个平方为零，再与式（344.12）相合，得到唯一的 $Y=Y_n=-I/9-P_n/3$。
+
+式（344.9）给出 $\limsup w_\delta\le1/81$。若下极限小于 $1/81$，从相应最优序列提取 $X_\delta,Y_\delta,\kappa_\delta,\nu_\delta$ 的收敛子列，式（344.19）、非负性及式（344.20）即产生矛盾。因此
+
+$$
+w_\delta\longrightarrow\frac1{81}.
+\tag{344.21}
+$$
+
+开平方时，平方误差的二阶项 $a^2\delta^2/81$ 恰与线性误差 $a\delta/9$ 的平方相消，得到式（344.3）。这只给出二阶 Peano 系数，不预设预算邻域中的二阶可微性。
+
+同一比较还约束全部最优者。式（344.19）的前两项非负，极限二次问题的最小值已经用满全部允许的二阶系数，所以每个收敛子列都必须满足
+
+$$
+\kappa_\delta\longrightarrow0,\qquad
+\nu_\delta\longrightarrow0,
+\qquad
+\operatorname{dist}((X_\delta,Y_\delta),\mathcal K)\longrightarrow0.
+\tag{344.22}
+$$
+
+若其中任一结论不对全体最优者一致，取违反它的最优序列并提取上述子列，就与式（344.19）至（344.21）矛盾。这证明集合距离的正向部分。
+
+在奇异值方面，$\operatorname{Tr}(I-S)=2\delta+o(\delta^2)$。第343节的同编码约束仍给出
+
+$$
+\delta\le1-\sigma_3\le\frac12\operatorname{Tr}(I-S),
+$$
+
+所以 $\sigma_3=1-\delta+o(\delta^2)$。$X_n$ 的其余两个特征值均为 $1/2$，式（344.22）与特征值连续性给出 $\sigma_1,\sigma_2$ 的展开。再将更精确的 $1-\sigma_3-\delta=o(\delta^2)$ 代入第343节式（343.24），即得式（344.6）。
+
+还要证明每个极限方向确实被实际最优者接近。令 $R$ 为任一行列式为正的坐标符号置换矩阵，并用相应的酉共轭将因子变为
+
+$$
+\mathcal E'=\mathcal E\circ\operatorname{Ad}_{R^{-1}},
+\qquad
+\mathcal D'=\operatorname{Ad}_R\circ\mathcal D.
+\tag{344.23}
+$$
+
+这里 $\operatorname{Ad}_R$ 表示 Bloch 作用为 $R$ 的酉通道。六个等半径输入只被置换；编码的固定 $y$ 行只被置换并改变列符号，原 $c_y$ 保持不变。因此实际预算、误差和解码纠缠破坏条件全部保持。矩阵满足
+
+$$
+S'=RSR^{\mathsf T},\qquad
+T'=RTR^{\mathsf T},\qquad
+(X'_\delta,Y'_\delta)
+=(RX_\delta R^{\mathsf T},RY_\delta R^{\mathsf T}).
+\tag{344.24}
+$$
+
+这些正旋转对四个平衡投影传递作用。对每个 $\delta$ 任选一个实际最优因子；它到某个 $(X_n,Y_n)$ 的距离由正向结论趋零。用式（344.23）将这个最近方向分别送到其余三个方向，便得到接近 $\mathcal K$ 每个元素的实际最优因子，且误差距离界不变。这证明反向集合距离，完成式（344.4）。
+
+四个 $Y_n$ 两两不同，其最小两两距离严格为正。取足够小的 $\delta$，刚构造的四个归一化复合矩阵分别位于这四个方向的互不相交邻域内，故其实际复合矩阵也两两不同。这证明至少四个实际最优复合的断言。证毕。
+
+本节使用的量子比特完全正性、纠缠破坏判据与幺元化仍来自第339、343节及其中引用的 Ruskai 文献。新增的二阶下界把原任务归结为式（344.20）的极限平方分解；其取等条件同时确定误差的零二次系数和四种一阶矩阵形状。第343节的线性端点定位本身并未确定这些形状。
+
+这四种方向由任务的坐标置换对称联系，不被解释为四种不等价的物理相。定理不确定最优因子的数量，不断言任一有限正预算上只有四个复合，也不证明式（344.8）在整个内部区间最优。最优值的三阶系数和完整有限预算曲线仍未确定。
+
+## 追加锚（本行以下为增补区）
