@@ -113305,3 +113305,2302 @@ $$
 [^infinite_tensor_sources]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)，Proposition 3、式（7）—（11）及 Lemma 4。Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，其相容 Bernstein 包络与第330节所保留的参数估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 340. 固定张量网格的近临界缺口与匹配剖面
+
+第339节给出两种不同量词的准确策略：一份固定策略具有 $u^{-1}\log^2(e/u)$ 的任务近临界上界，按所需矩阶更换策略则可在共同参考预算内达到 $C/u$。本节确定前一种固定网格的实际费用：对该节的非增可求和地板，单一固定策略必有 $uT_{a-u}\to\infty$；对指定的对数平方地板，上界达到匹配阶。
+
+下界从尚未启动的参考环逐系数推出，再经过真实任务二项平均，并在原合同的严格正世界中实现。结论只涉及本节明确给出的累积张量网格类。
+
+### 340.1 固定网格类与结论
+
+沿用原未知双来源合同，固定非整数 $0<\beta<2$，记 $a=\beta/2\in(0,1)$。合法世界满足
+
+$$
+p=\frac{1-hc/C}{B},\qquad
+q=\frac{1-h/C}{B},\qquad
+c=k_0^jr,\quad j\in\{0,1\},\quad r\in[l,1],\quad
+0<h\le1/4.
+\tag{340.1}
+$$
+
+其中 $B\in\{2,4\}$、$1\le C\le1024/225$。实际任务偏差为 $x=C(1-Bp)=hc$。取 $j=0,r=1$ 给出合法的 $c=1$，后面的下界世界均采用这一选择。
+
+固定第339节的参考批量 $n_k=Nb^k$、$d_k=n_k+\lfloor\rho\rfloor$，其中 $\rho>\max(\beta,2)$、$b\ge2$、$N\ge1$ 都不随所检验的矩阶改变。地板和确定性任务批量满足
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\frac{\eta_k}{\eta_{k+1}}\le R_\eta,
+\tag{340.2}
+$$
+
+$$
+c_m n_k^a\eta_k^{-1}\le m_k^a
+ \le C_m n_k^a\eta_k^{-1},\qquad
+1<\frac{m_{k+1}}{m_k}\le R_m.
+\tag{340.3}
+$$
+
+这里 $c_m,C_m,R_\eta,R_m$ 为固定正数，$m_k$ 为整数。采用第338节全任务区间系数 $\bar\ell_{k,t},\bar u_{k,t}$，并定义
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k.
+\tag{340.4}
+$$
+
+本节研究的类要求这些数组满足第339.3节的乘积次数提升相容性，并按该节逐层累积执行；足够大的固定 $M$ 所给的
+$m_k=\lceil Mn_k\eta_k^{-1/a}\rceil$ 及其有效安全取整属于此类。不把只有批量数量级、却没有相容数组的任意程序包括在内。
+
+完整策略保留请求来源的第一实际 $X$，采用第339节同一份准确首币门控包装。记
+
+$$
+T_s(A)=\sup_{w,S}\mathbb E^{A,w,S}N_T^s,\qquad
+H_a(A)=\sup_{w,S}\mathbb E^{A,w,S}N_H^a,
+\tag{340.5}
+$$
+
+其中上确界遍历原合法世界与两种请求，$N_T,N_H$ 均为完整程序的实际来源计数。
+
+**定理340.1（固定网格的参考判据和任务剖面）。** 对上述任一固定准确策略 $A$：
+
+$$
+\boxed{H_a(A)<\infty
+ \quad\Longleftrightarrow\quad
+ \sum_{k\ge0}\eta_k<\infty.}
+\tag{340.6}
+$$
+
+若地板和发散，则每一个合法世界、每一种请求的参考 $a$ 矩都无限。
+
+若地板和收敛，定义
+
+$$
+W_\eta(u)=\sup_{k\ge0}n_k^{-u}\eta_k^{-1+u/a},
+\qquad 0<u<a.
+\tag{340.7}
+$$
+
+存在固定 $c_W,C_W,u_*>0$，其中 $u_*\le a/2$，使
+
+$$
+\boxed{
+c_WW_\eta(u)\le T_{a-u}(A)\le C_WW_\eta(u)
+\quad(0<u<u_*),\qquad
+\lim_{u\downarrow0}uT_{a-u}(A)=+\infty.}
+\tag{340.8}
+$$
+
+无限矩按扩展实数理解；若 $W_\eta(u)=+\infty$，相应 $T_{a-u}$ 也无限。常数和起效阈值允许依赖这份固定策略，均不随 $u$ 改变。因此本类中不存在参考临界矩有限、同时对所有充分小 $u$ 满足固定 $C/u$ 界的单一策略。
+
+特别地，第339.5节的一份固定策略 $A_*$ 满足
+
+$$
+\boxed{
+T_{a-u}(A_*)\asymp u^{-1}\log^2(e/u)
+\qquad(u\downarrow0).}
+\tag{340.9}
+$$
+
+这一式只刻画该份策略，不将它改写成原目标所有准确策略的最优费用下界。
+
+### 340.2 未启动环的逐系数恒等式
+
+采用第336.3、339.2节的公共有理扩域
+
+$$
+\underline c=3/5,\qquad x^\dagger=11/40,\qquad
+w(x)=\Omega x^\beta,\qquad
+\Omega=\frac{15}{16}\left(\frac2{\underline c}\right)^\beta.
+\tag{340.10}
+$$
+
+第330.2节的光滑分割满足
+
+$$
+z(x)=2\log_b(x^\dagger/x),\qquad
+v_j(x)>0\ \Longrightarrow\ |z(x)-j|<1,\qquad
+\sum_{j\ge0}v_j(x)=1.
+\tag{340.11}
+$$
+
+在第 $k$ 层，第327节规定所有 $j>k$ 的环仍未启动，下系数为零、上系数为一。第332.8式因此给出公共参考系数的有限表达
+
+$$
+\begin{aligned}
+\ell_{k,t}(x)
+&=\frac{1-w(x)}2+
+  w(x)\sum_{j=0}^{k}v_j(x)a^j_{k,t}(x),\\
+u_{k,t}(x)
+&=\frac{1-w(x)}2+
+  w(x)\left[
+  1+\sum_{j=0}^{k}v_j(x)(b^j_{k,t}(x)-1)\right].
+\end{aligned}
+\tag{340.12}
+$$
+
+令
+
+$$
+r_k=x^\dagger b^{-(k+1)/2}.
+\tag{340.13}
+$$
+
+当 $0<x'\le r_k$ 时，$z(x')\ge k+1$，所以所有 $j\le k$ 的权重为零。对每一个参考成功数 $0\le t\le d_k$，精确得到
+
+$$
+\boxed{
+\ell_{k,t}(x')=\frac{1-w(x')}2,\qquad
+u_{k,t}(x')=\frac{1+w(x')}2,\qquad
+u_{k,t}(x')-\ell_{k,t}(x')=\Omega(x')^\beta.}
+\tag{340.14}
+$$
+
+在 $x'=0$ 处按既定连续延拓仍有同一式。这是整段系数的相等关系，不由已有尾上界反推。
+
+第338.3节的全任务区间延拓使用 $\zeta(x)=x$ 于 $[0,1/4]$；负 $x$ 区间上下系数同为 $1/2$。在全部任务格点上，差均非负。记
+
+$$
+\bar\Gamma_k(p,q)=
+\sum_{t=0}^{d_k}
+ [\bar u_{k,t}(p)-\bar\ell_{k,t}(p)]\,b_{d_k,t}(q),
+\tag{340.15}
+$$
+
+其中 $b_{d,t}(q)=\binom{d}{t}q^t(1-q)^{d-t}$。第338.23式在当前数组上逐层给出
+
+$$
+\boxed{
+G_k(p,q)=\delta_k+(1-\delta_k)
+   \mathsf B_{m_k}[\bar\Gamma_k(\,\cdot\,,q)](p).}
+\tag{340.16}
+$$
+
+这里 $\mathsf B_m$ 是任务变量上的普通 Bernstein 算子。与之对应的实际核心计数满足
+
+$$
+\boxed{
+\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q).}
+\tag{340.17}
+$$
+
+两个尾事件来自同一份执行的“第 $k$ 层后继续”。任务维的二项平均已经包含在式（340.16）中。
+
+第339节还给出共同上界
+
+$$
+G_k(p,q)\le\delta_k+C_1m_k^{-a}+\Gamma_k(x,q),
+\tag{340.18}
+$$
+
+$$
+\Gamma_k(x,q)\le C_2x^\beta
+  \min\{1,(n_kx^2)^{-\rho/2}\},\qquad
+\sup_{w}\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C_3.
+\tag{340.19}
+$$
+
+式（340.19）先在同一实际世界求和。由 $\eta_k\le1$、式（340.3）及尺度上界还得 $G_k\le Cn_k^{-a}\to0$；因此即使地板和发散，核心也仍逐世界几乎必访问有限层并准确返回。参考矩是否有限是另外的问题。
+
+### 340.3 合法世界中的任务二项下界
+
+**引理340.2（未启动区在真实平滑后仍有正尾）。** 存在只依固定模型与式（340.3）共同常数的 $c_{\rm tail}>0$、$\eta_{\rm conc}>0$ 和几何阈值 $k_{\rm geom}$，使对任一满足
+
+$$
+k\ge k_{\rm geom},\qquad \eta_k\le\eta_{\rm conc}
+\tag{340.20}
+$$
+
+的层，存在原合同合法世界 $w_k$，其中
+
+$$
+x_k=r_k/2,\qquad
+c=1,\quad h=x_k,\quad
+p_k=q_k=\frac{1-x_k/C}{B},
+\tag{340.21}
+$$
+
+并且
+
+$$
+\boxed{G_k(p_k,q_k)\ge c_{\rm tail}n_k^{-a}.}
+\tag{340.22}
+$$
+
+**证明。** 选择固定 $k_{\rm geom}$，使 $k\ge k_{\rm geom}$ 时 $r_k\le1/4$。于是式（340.21）中的增益严格为正且不超过 $1/4$，$c=1$ 由 $j=0,r=1$ 实现，确为合法世界。
+
+在这一个世界中，令
+
+$$
+S_k\sim\operatorname{Bin}(m_k,p_k),\qquad
+\widehat x_k=C(1-BS_k/m_k).
+$$
+
+其均值和方差满足
+
+$$
+\mathbb E\widehat x_k=x_k,\qquad
+\operatorname{Var}(\widehat x_k)
+ =\frac{(CB)^2p_k(1-p_k)}{m_k}
+ \le\frac{(CB)^2}{4m_k}.
+\tag{340.23}
+$$
+
+取事件 $E_k=\{|\widehat x_k-x_k|\le x_k/2\}$。在该事件上，
+
+$$
+x_k/2\le\widehat x_k\le3x_k/2<r_k\le1/4.
+$$
+
+所以延拓函数 $\zeta$ 恰为恒等，式（340.14）对所有参考成功数同时成立：
+
+$$
+\bar u_{k,t}(S_k/m_k)-\bar\ell_{k,t}(S_k/m_k)
+ =\Omega\widehat x_k^\beta
+ \ge\Omega(x_k/2)^\beta.
+\tag{340.24}
+$$
+
+参考 Bernstein 权重非负且和为一，由此在同一事件上有
+$\bar\Gamma_k(S_k/m_k,q_k)\ge\Omega(x_k/2)^\beta$。事件外的差仍非负。
+
+由 Chebyshev 不等式和式（340.3），
+
+$$
+\Pr(E_k^c)
+ \le\frac{(CB)^2}{m_kx_k^2}
+ \le C_4\frac{n_k}{m_k}
+ \le C_5\eta_k^{1/a},
+\qquad
+n_kx_k^2=\frac{N(x^\dagger)^2}{4b}.
+\tag{340.25}
+$$
+
+常数 $C_5$ 只依固定模型和批量下比较常数 $c_m$，不依 $k,\eta$。取
+$\eta_{\rm conc}=\min\{1,(2C_5)^{-a}\}$，则式（340.20）保证 $\Pr(E_k)\ge1/2$。因此
+
+$$
+\begin{aligned}
+\mathsf B_{m_k}[\bar\Gamma_k(\,\cdot\,,q_k)](p_k)
+&=\mathbb E\bar\Gamma_k(S_k/m_k,q_k)\\
+&\ge\frac{\Omega}{2}(x_k/2)^\beta
+ \ge c_1n_k^{-a}.
+\end{aligned}
+\tag{340.26}
+$$
+
+最后用 $\delta_k\le1/4$ 和式（340.16）得到式（340.22）。证毕。
+
+若 $\sum_k\eta_k<\infty$，则 $\eta_k\to0$，所以存在依该固定序列的 $k_*\ge k_{\rm geom}$，使式（340.22）对全部 $k\ge k_*$ 成立。这里只等待已固定策略的地板进入集中范围，没有更换批量常数。每次证明均在同一个 $w_k$ 中平均，未把不同世界的尾相加。
+
+### 340.4 核心尾回接真实首币包装
+
+对 $s=a-u\in[a/2,a)$，在引理340.2的世界中，
+
+$$
+\begin{aligned}
+\mathbb E^{w_k}R_T^s
+&\ge m_k^s\Pr^{w_k}(R_T>m_k)\\
+&\ge c_{\rm tail}m_k^sn_k^{-a}\\
+&\ge c_2n_k^{-u}\eta_k^{-s/a}.
+\end{aligned}
+\tag{340.27}
+$$
+
+式（340.3）中的常数在 $s/a\in[1/2,1]$ 上给共同正下界，因此 $c_2$ 不随 $u$ 改变。
+
+还须核对完整原目标程序的触发概率。对当前请求来源率 $z\in\{p,q\}$，包装先取得实际 $X$，再准确模拟
+
+$$
+\Pr(V=1\mid X=0)=\frac1{6(1-z)},\qquad
+\Pr(V=1\mid X=1)=\frac1{6z}.
+\tag{340.28}
+$$
+
+故每个世界和请求都满足
+
+$$
+\Pr(V=1)
+ =(1-z)\frac1{6(1-z)}+z\frac1{6z}
+ =\frac13.
+\tag{340.29}
+$$
+
+门控结束后，核心使用两来源的新鲜尾和新私随机性。条件于完整门控记录，核心仍有该世界的原输入律。记门控之外尚未启动的核心成本为零，则逐路径完整来源计数不少于被触发的核心计数。因此对任意 $s>0$，
+
+$$
+\mathbb E N_T^s\ge\frac13\mathbb E R_T^s,\qquad
+\mathbb E N_H^s\ge\frac13\mathbb E R_H^s.
+\tag{340.30}
+$$
+
+这两式允许无限矩，可先截断核心成本再用非负单调收敛。门控长度与触发事件不需要独立。
+
+上界只使用第339节固定包装的有限 $a$ 矩。具体地，首币与门控产生的附加来源数 $Q_T,Q_H$ 有
+
+$$
+\sup_{w,S}\mathbb E(Q_T^a+Q_H^a)\le K_{\rm wrap}<\infty.
+\tag{340.31}
+$$
+
+同一包装对全部 $0<s\le a$ 的矩由 $n^s\le1+n^a$ 控制，常数可共同选择。由于 $s\le a<1$，次可加性给核心预算到完整预算的共同上界。有效实现可沿用第332、339节固定 $\rho_g>\beta$ 的 Hölder 门控；本节不需要也不宣称它具有全部正阶来源矩。
+
+当地板可求和时，对式（340.27）取世界上确界并使用式（340.30），得到
+
+$$
+\boxed{
+T_{a-u}(A)\ge
+ c_3\sup_{k\ge k_*}n_k^{-u}\eta_k^{-1+u/a},
+ \qquad 0<u\le a/2.}
+\tag{340.32}
+$$
+
+不同 $k$ 所选世界只进入定义允许的上确界，未被求和。
+
+### 340.5 参考临界矩的充要条件
+
+**证明式（340.6）。** 数组逐系数满足
+
+$$
+B_{k,s,t}-A_{k,s,t}
+ =\delta_k+(1-\delta_k)
+  [\bar u_{k,t}(s/m_k)-\bar\ell_{k,t}(s/m_k)]
+ \ge\delta_k.
+\tag{340.33}
+$$
+
+因此每个世界中 $G_k\ge\delta_k$。核心参考计数取值于 $d_k$，离散尾和精确给
+
+$$
+\mathbb E R_H^a
+ =d_0^a+\sum_{k\ge0}
+      (d_{k+1}^a-d_k^a)G_k.
+\tag{340.34}
+$$
+
+该等式由非负单调收敛成立，无需预先假定矩有限。因为
+$d_k=Nb^k+\lfloor\rho\rfloor$，存在固定 $c_d,C_d>0$，使所有 $k\ge0$ 都有
+
+$$
+c_dn_k^a\le d_{k+1}^a-d_k^a\le C_dn_k^a.
+\tag{340.35}
+$$
+
+大 $k$ 的比值趋于 $b^a-1>0$，有限初项可吸收进常数。由此
+
+$$
+\mathbb E R_H^a
+ \ge d_0^a+\frac{c_dN^a}{4}\sum_{k\ge0}\eta_k.
+\tag{340.36}
+$$
+
+这个下界逐世界成立。如果地板和发散，式（340.30）说明每一种完整请求的参考矩也无限。
+
+反向由式（340.18）、（340.19）和批量下界，
+
+$$
+\begin{aligned}
+\mathbb E R_H^a
+&\le d_0^a+
+ C_d\sum_{k\ge0}n_k^a
+       [\delta_k+C_1m_k^{-a}+\Gamma_k(x,q)]\\
+&\le C_6\left(1+\sum_{k\ge0}\eta_k\right).
+\end{aligned}
+\tag{340.37}
+$$
+
+这一上界先在每个同一世界求和，再取统一常数。加回式（340.31）的包装，得到
+
+$$
+c_4\left(1+\sum_{k\ge0}\eta_k\right)
+ \le H_a(A)\le
+C_7\left(1+\sum_{k\ge0}\eta_k\right).
+\tag{340.38}
+$$
+
+常数依固定模型、共同批量常数和固定包装，不依检验矩阶。按扩展实数理解此式，即得参考充要条件。证毕。
+
+### 340.6 固定可求和地板的严格近临界缺口
+
+非增可求和地板满足
+
+$$
+k\eta_k\longrightarrow0.
+\tag{340.39}
+$$
+
+这是因为
+
+$$
+\lfloor k/2\rfloor\eta_k
+ \le\sum_{j=\lfloor k/2\rfloor}^{k}\eta_j
+ \longrightarrow0.
+$$
+
+对任意 $u\downarrow0$，取 $k=\lfloor1/u\rfloor$。则
+
+$$
+uk\longrightarrow1,\qquad
+n_k^{-u}=N^{-u}b^{-uk}\longrightarrow b^{-1}>0.
+\tag{340.40}
+$$
+
+下界中的 $\eta_k^{u/a}$ 仍须保留。为处理任意衰减速度的地板，置
+
+$$
+z_k=(k\eta_k)^{-1}\longrightarrow+\infty.
+$$
+
+精确变形得到
+
+$$
+u\eta_k^{-1+u/a}
+ =(uk)\,k^{-u/a}\,z_k^{\,1-u/a}.
+\tag{340.41}
+$$
+
+其中 $k^{-u/a}\to1$，且充分小 $u$ 时 $1-u/a\ge1/2$，所以
+
+$$
+u\eta_k^{-1+u/a}\ge c_5\sqrt{z_k}
+ \longrightarrow+\infty.
+\tag{340.42}
+$$
+
+结合式（340.32）、（340.40），证明
+
+$$
+\boxed{\lim_{u\downarrow0}uT_{a-u}(A)=+\infty.}
+\tag{340.43}
+$$
+
+这是沿全部小 $u$ 的极限，不仅是一条子序列；允许任务矩本身无限。式（340.41）避免把指数修正误当作一。这个极限论证本身不需要相邻地板比有界；该条件仍属于本节相容网格和任务上界所采用的构造接口。
+
+### 340.7 数值剖面的匹配上界
+
+对 $s=a-u\in[a/2,a)$，相邻任务批量比有共同上界，离散尾和给
+
+$$
+\mathbb E R_T^{a-u}
+ \le C_8m_0^{a-u}
+   +C_8\sum_{k\ge0}m_k^{a-u}
+       [\delta_k+C_1m_k^{-a}+\Gamma_k(x,q)].
+\tag{340.44}
+$$
+
+先在有限层求和再取非负极限即可，不预设任务矩有限。利用式（340.3），地板项和任务平滑误差项均由
+$Cn_k^{-u}\eta_k^{u/a}$ 控制；局部化项则先在同一世界使用式（340.19）。由式（340.31）加回包装，
+
+$$
+T_{a-u}(A)\le C_9\left[
+ 1+\eta_0^{-1+u/a}
+ +\sum_{k\ge0}n_k^{-u}\eta_k^{u/a}
+ +W_\eta(u)\right].
+\tag{340.45}
+$$
+
+固定策略的 $\eta_0>0$ 使初项在 $0<u\le a/2$ 共同有界。又因 $\eta_k\le1$，
+
+$$
+\sum_{k\ge0}n_k^{-u}\eta_k^{u/a}
+ \le\frac{N^{-u}}{1-b^{-u}}\le C_{10}/u.
+\tag{340.46}
+$$
+
+因此
+
+$$
+T_{a-u}(A)\le C_{11}\bigl(u^{-1}+W_\eta(u)\bigr).
+\tag{340.47}
+$$
+
+前一节已经证明
+
+$$
+u\sup_{k\ge k_*}n_k^{-u}\eta_k^{-1+u/a}
+ \longrightarrow+\infty.
+\tag{340.48}
+$$
+
+有限个 $k<k_*$ 的数值权重在 $u\downarrow0$ 时共同有界。因此对充分小 $u$，去掉这些有限初项不改变 $W_\eta(u)$，且 $u^{-1}$ 可被 $W_\eta(u)$ 吸收。结合式（340.32）、（340.47），即得
+
+$$
+c_WW_\eta(u)\le T_{a-u}(A)\le C_WW_\eta(u).
+\tag{340.49}
+$$
+
+若 $W_\eta(u)=+\infty$，有限初项不能造成这个无限性，式（340.32）直接给任务矩无限。这完成定理340.1的一般部分。
+
+参考临界矩有限不保证所有任务次临界矩有限。式（340.49）准确刻画本类固定策略在充分接近 $a$ 时的情形；第339.5节的缓慢地板另外保证所有 $0<s<a$ 的任务矩都有限。
+
+### 340.8 第339节固定策略的匹配阶
+
+第339.5节选定
+
+$$
+v_k=(k+2)[1+\lceil\log_2(k+2)\rceil]^2,\qquad
+\eta_k=v_k^{-1}.
+\tag{340.50}
+$$
+
+这是一份固定、非增、可求和的地板。第339.22式给出
+
+$$
+W_\eta(u)\le C_{12}u^{-1}\log^2(e/u).
+\tag{340.51}
+$$
+
+对下界仍取 $k=\lfloor1/u\rfloor$。则
+
+$$
+v_k\asymp u^{-1}\log^2(e/u),\qquad
+n_k^{-u}\ge c_6>0.
+$$
+
+并且
+
+$$
+\frac{u}{a}\log v_k
+ =O\!\left(u\log(1/u)+u\log\log(e/u)\right)
+ \longrightarrow0,
+\qquad
+v_k^{-u/a}\longrightarrow1.
+\tag{340.52}
+$$
+
+所以真实合法世界尾下界给
+
+$$
+T_{a-u}(A_*)
+ \ge c_7n_k^{-u}v_k^{1-u/a}
+ \ge c_8u^{-1}\log^2(e/u).
+\tag{340.53}
+$$
+
+与式（340.51）及一般上界结合，得到式（340.9）。
+
+本节将第339.38式对这一份 $A_*$ 的增长指数结论加强为实际 $\Theta$ 阶。它没有加强第339.36式中对所有准确策略取下确界的下界。第339.6节的 $A_u$ 随 $u$ 更换地板，因此在共同参考预算下达到 $C/u$ 与式（340.43）相容。
+
+### 340.9 一份几何地板策略的准确矩阈值
+
+取第339.6节同形的几何地板，固定 $0<v\le a/2$，此后不再更换策略，记对应完整程序为 $A_v$。令
+
+$$
+\eta_k=v\,b^{-vk/2},\qquad
+d_v=1+\frac{v}{2a},\qquad
+s_v=\frac{a}{d_v},\qquad u_v=a-s_v.
+\tag{340.54}
+$$
+
+这里 $0<u_v<a/2$，且 $\sum_k\eta_k<\infty$。因此该策略有有限参考临界矩。
+
+**推论340.3（固定几何地板的闭端点阈值）。** 对每一份固定 $A_v$，
+
+$$
+\boxed{
+T_s(A_v)<\infty\quad\Longleftrightarrow\quad
+0<s\le s_v
+\qquad(s>0).}
+\tag{340.55}
+$$
+
+有限性包含端点 $s=s_v$；常数允许依赖这一份固定的 $v$。
+
+**证明。** 在端点 $s_v=a-u_v$，同世界局部化项的数值权重为
+
+$$
+n_k^{-u_v}\eta_k^{-s_v/a}
+ =N^{-u_v}v^{-s_v/a}
+   b^{k[-u_v+vs_v/(2a)]}
+ =N^{-u_v}v^{-s_v/a}.
+\tag{340.56}
+$$
+
+最后一个等号使用 $s_vd_v=a$；这个权重对全部层恰为常数。地板与任务平滑误差的级数仍收敛：
+
+$$
+\sum_{k\ge0}n_k^{-u_v}\eta_k^{u_v/a}
+ =N^{-u_v}v^{u_v/a}
+   \sum_{k\ge0}b^{-u_vd_vk}
+ <\infty.
+\tag{340.57}
+$$
+
+式（340.45）在 $u=u_v$ 适用，初始批量有限，固定门控有 $a$ 矩，故 $T_{s_v}(A_v)<\infty$。对 $0<s<s_v$ 再用整数计数的 $n^s\le1+n^{s_v}$，得到全部较低阶矩有限。
+
+反向对任意固定 $s>s_v$，引理340.2和准确包装仍给
+
+$$
+T_s(A_v)\ge c_s m_k^sn_k^{-a}
+ \ge c_s' N^{s-a}v^{-s/a}
+       b^{k[s(1+v/(2a))-a]}
+ \qquad(k\ge k_*).
+\tag{340.58}
+$$
+
+这里的正数 $c_s,c_s'$ 允许依赖 $s$，下界只使用单层尾事件，对 $s\ge a$ 也成立。由于 $s>s_v$，指数严格为正，令 $k\to\infty$ 得世界上确界无限。证毕。
+
+这具体说明了逐阶选择策略的量词：每个固定 $v>0$ 都在严格低于 $a$ 的位置结束其有限任务矩区间，即使端点本身可达。让 $v$ 随目标 $u$ 缩小可以使该阈值趋向 $a$，却不把任一固定 $A_v$ 变成覆盖所有 $0<s<a$ 的策略。
+
+### 340.10 仅截断核心时的有限层下界
+
+下面单独明确有限程序的范围。保留第340.4节准确、未截断的首币门控，只把张量核心在第 $J$ 层后的未决部分强制结束，得到程序 $A^{[J]}$。核心的实际计数分别至多为 $m_J,d_J$；门控仍逐世界几乎必有限，但不要求有确定的总调用上限。
+
+对一族这样的有限程序，要求式（340.2）、（340.3）的常数和数组相容性对 $J$ 及所选地板共同成立，使用同一参考网格、模型和门控包装；有关数组条件只需满足至第 $J$ 层。地板允许依 $J$ 改变，无需存在可求和的无限延续。这个定义没有包括随后对门控、系数或整棵执行树所作的截断与有理化。
+
+**推论340.4（固定参考预算下的有限层任务费用）。** 存在固定 $C_{\rm len},c_{\rm fin}>0$ 和 $k_{\rm geom}$，使任一上述程序在
+
+$$
+\sup_{w,S}\mathbb E^{A^{[J]}}N_H^a\le K,\qquad
+J-k_{\rm geom}\ge C_{\rm len}K>0
+\tag{340.59}
+$$
+
+时满足
+
+$$
+\boxed{
+\sup_{w,S}\mathbb E^{A^{[J]}}N_T^a
+ \ge c_{\rm fin}\frac{J-k_{\rm geom}}K.}
+\tag{340.60}
+$$
+
+这些常数只依固定模型、参考网格和共同批量常数，不依 $J,K$ 或该次地板；$k_{\rm geom}$ 与引理340.2相同。
+
+**证明。** 核心仅在最终层被强制结束，所以对全部 $k<J$ 仍有精确的共同尾等式
+
+$$
+\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q).
+$$
+
+门控保持准确，式（340.29）的触发概率仍恰为 $1/3$。由有限参考尾和、式（340.33）、（340.35）及完整参考预算，
+
+$$
+K\ge\frac13\mathbb E R_H^a
+ \ge\frac{c_dN^a}{12}\sum_{k=0}^{J-1}\eta_k.
+\tag{340.61}
+$$
+
+令 $D_0=12/(c_dN^a)$，则 $\sum_{k<J}\eta_k\le D_0K$。记
+$L=J-k_{\rm geom}>0$。由平均值原理，存在
+$k_{\rm geom}\le k<J$，使
+
+$$
+\eta_k\le D_0K/L.
+\tag{340.62}
+$$
+
+取 $C_{\rm len}=D_0/\eta_{\rm conc}$，其中 $\eta_{\rm conc}$ 是引理340.2的共同集中阈值。式（340.59）保证所选层满足 $\eta_k\le\eta_{\rm conc}$，所以在同一合法世界 $w_k$ 中有
+$G_k(p_k,q_k)\ge c_{\rm tail}n_k^{-a}$。
+
+在该世界使用完整计数下界及式（340.3）：
+
+$$
+\begin{aligned}
+\mathbb E N_T^a
+&\ge\frac13\mathbb E R_T^a\\
+&\ge\frac13m_k^aG_k(p_k,q_k)\\
+&\ge\frac{c_{\rm tail}c_m}{3}\eta_k^{-1}\\
+&\ge\frac{c_{\rm tail}c_m}{3D_0}\frac LK.
+\end{aligned}
+\tag{340.63}
+$$
+
+因此可取 $c_{\rm fin}=c_{\rm tail}c_m/(3D_0)$，证毕。
+
+在固定参考预算且 $J$ 足够大时，这给出该类核心截断程序的线性层数下界。它没有证明为了达到精度 $\delta$ 必须有 $J\gtrsim\log(1/\delta)$：终止误差上界只能提供足够层数，不能反向作为必要层数。因此式（340.60）不被改写为原目标的 $\Omega(\log(1/\delta))$ 精度下界。
+
+若进一步截断门控或作整棵有限树有理化，触发概率与尾等式可能改变，必须重新证明适用的下界；本推论未对这种修改后的程序作结论。
+
+### 340.11 适用范围与来源
+
+本节的下界依次使用未启动环的逐参考系数恒等式、任务二项集中、合法 $c=1,h=x_k>0$ 世界、实际尾事件以及准确首币门控的 $1/3$ 触发概率。上界使用同一世界的包络求和；两条链没有拼接不同世界中的费用。
+
+参考充要条件与任务剖面只对第340.1节的固定累积张量网格成立。任意自适应原目标策略能否以一份固定程序达到 $C/u$，本节没有裁决。非整数 $\beta>2$ 的普通正 Bernstein 平滑缺口也未在此解决。
+
+结论首先属于完整实概率策略类；若 $C,\beta$ 以及所选地板和批量具有所需有效名字，可沿用第332、336、339节的实现，全部来源计数下界保持。第339.5节的具体地板只用整数层号，所以在 $C,\beta$ 可计算时，式（340.9）也适用于该份准确有效程序。这里不产生确定性系数求值的时间矩上界，第337节的执行时间障碍仍适用。
+
+相容 Bernstein 包络及超几何次数提升的原始接口来自 Nacu–Peres；第330节参考包络采用 Holtz–Nazarov–Peres。[^fixed_grid_endpoint_sources] 本节直接使用第327、330、332节的未启动系数、第338节的实际张量尾恒等式与第339节的一般地板预算；新增推导是原合法世界中的平滑后正尾、固定地板剖面下界及与已有上界的匹配。
+
+这些是纸面数学结论，不认领 Lean 核验或完整内部执行时间预算。
+
+[^fixed_grid_endpoint_sources]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)，Proposition 3、式（7）—（11）及 Lemma 4；两来源乘积尾恒等式由第338.6节给出。Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，其光滑相容包络经第330节固定尺度构造使用；本节下界取自该构造的未启动系数，不反向使用其尾上界。
+
+## 追加锚（本行以下为增补区）
+
+## 341. 仅核心截断网格的精度必要层数与任务临界费用
+
+第340节对保留准确首币门控、只在第 $J$ 层结束张量核心的程序给出 $J/K$ 任务临界矩下界。本节证明这一严格程序类的最坏输出误差与 $n_J^{-a}$ 双向可比，并由安全地板取得不依参考预算的逐世界 $cJ-C$ 任务下界。结合第338节的平地板族，可在共同且足够的参考预算下取得类内 $\Theta(\log(1/\delta))$ 的任务临界费用。
+
+误差下界分两种地板规模：较大地板在合法正世界趋近零增益时留下残差；较小地板在未启动环上保留不能被任务平滑消去的残差。两种情况共同覆盖全部末层地板。
+
+### 341.1 程序类、实际输出与结论
+
+固定非整数 $0<\beta<2$，令 $a=\beta/2\in(0,1)$，沿用第340节原双来源合同、参考系数与公共有理扩域
+
+$$
+n_k=Nb^k,\qquad d_k=n_k+\lfloor\rho\rfloor,\qquad
+\rho>\max(\beta,2),\qquad
+\underline c=3/5,\qquad x^\dagger=11/40.
+\tag{341.1}
+$$
+
+固定一组模型、网格及批量常数。程序先保留请求来源的第一实际 $X$，执行准确、未截断的倒数门控；触发后运行第340节的相容张量核心，只在第 $J$ 层把仍未决的核心币置零，再使用既定的 $X$ 与核心币映射输出 $Z$。
+
+各次程序允许选择不同的 $J\ge1$ 及有限地板，但到第 $J$ 层均须满足共同的
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_\eta,
+\tag{341.2}
+$$
+
+$$
+c_m n_k^a\eta_k^{-1}\le m_k^a
+ \le C_m n_k^a\eta_k^{-1},\qquad
+1<m_{k+1}/m_k\le R_m.
+\tag{341.3}
+$$
+
+地板数组仍为
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k,
+\tag{341.4}
+$$
+
+且满足到第 $J$ 层的乘积次数提升相容性。这里 $\delta_k$ 是系数地板；不把它等同于输出精度。固定门控包装具有共同有限的 $a$ 矩。
+
+记这个程序类为 $\mathfrak G$，每份程序为 $A^{[J]}$。它不包括随后对门控的截断、整棵执行树的有理化或其他扰动。核心层数有限，但门控不要求有确定的来源调用硬上限。也不要求这段有限网格已有一份无限相容延续。
+
+对世界 $w$ 与请求 $S$，令 $P_{w,S}$ 为原四格目标，$P^{A^{[J]}}_{w,S}$ 为实际输出律，定义
+
+$$
+e(A^{[J]})=
+ \sup_{w,S}\operatorname{TV}
+ (P^{A^{[J]}}_{w,S},P_{w,S}),\qquad
+T_a(A^{[J]})=\sup_{w,S}\mathbb E N_T^a,\qquad
+H_a(A^{[J]})=\sup_{w,S}\mathbb E N_H^a.
+\tag{341.5}
+$$
+
+**定理341.1（实际误差与末层尺度匹配）。** 存在只依固定模型、参考网格与共同批量常数的 $0<c_e\le C_e<\infty$，使全部 $A^{[J]}\in\mathfrak G$ 满足
+
+$$
+\boxed{
+c_e n_J^{-a}\le e(A^{[J]})\le C_e n_J^{-a}.}
+\tag{341.6}
+$$
+
+常数不依 $J$ 或该次有限地板。特别地，若 $e(A^{[J]})\le\delta$，则
+
+$$
+\boxed{
+J\ge
+ \frac{\log(1/\delta)+\log c_e-a\log N}{a\log b}.}
+\tag{341.7}
+$$
+
+这是一条由实际输出误差下界得到的必要层数关系。
+
+### 341.2 有限输出概率与误差上界
+
+令原参考下多项式与其任务延拓为
+
+$$
+L_J(x,q)=\sum_{t=0}^{d_J}\ell_{J,t}(x)b_{d_J,t}(q),\qquad
+\bar L_J(p,q)=
+ \sum_{t=0}^{d_J}\bar\ell_{J,t}(p)b_{d_J,t}(q).
+\tag{341.8}
+$$
+
+第338节的有限乘积相容归纳表明：把末层未决核心置零之后，实际核心成功概率恰为
+
+$$
+\mathcal L_J(p,q)
+ =(1-\delta_J)
+   \mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p).
+\tag{341.9}
+$$
+
+具体地，对 $k\le J$ 记
+
+$$
+\mathcal L_k(p,q)=\sum_{s,t}A_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+\mathcal U_k(p,q)=\sum_{s,t}B_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+G_k=\mathcal U_k-\mathcal L_k,
+$$
+
+其中 $b_{d,t}(q)=\binom{d}{t}q^t(1-q)^{d-t}$。对 $k<J$，有限乘积相容归纳还给同一实际执行中的尾等式
+$\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q)$。
+
+理由是截至第 $J$ 层的核心输出一概率为 $\mathcal L_J$，输出零概率为 $1-\mathcal U_J$，未决概率为 $\mathcal U_J-\mathcal L_J$；最后一项全部归零后，一概率不变。这个结论只使用有限层相容性。
+
+在实际世界中，$x=hc=C(1-Bp)$，核心目标为
+
+$$
+F_x(q)=\frac12+\kappa h^\beta,\qquad
+\kappa=6\varepsilon=3/8.
+\tag{341.10}
+$$
+
+记有符号偏差
+
+$$
+\Delta_J(w)=F_x(q)-\mathcal L_J(p,q).
+\tag{341.11}
+$$
+
+对一般有限网格，以下论证不预设 $\Delta_J(w)$ 在所有世界非负。误差由 $|\Delta_J(w)|$ 控制；下界将在明确世界或合法世界极限中取得正偏差。
+
+原参考包络逐点满足
+
+$$
+0\le F_x(q)-L_J(x,q)\le\Gamma_J(x,q),\qquad
+\Gamma_J(x,q)\le C_\Gamma x^\beta
+ \min\{1,(n_Jx^2)^{-\rho/2}\}.
+\tag{341.12}
+$$
+
+第338节共同任务 $C^\beta$ 界及二项均值匹配给
+
+$$
+\left|
+\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p)
+ -L_J(x,q)\right|
+ \le C_{\rm sm}m_J^{-a}
+\tag{341.13}
+$$
+
+于每个实际世界成立。参考权重非负且和为一，故 $C_{\rm sm}$ 对 $J,q$ 共同；所有 $\bar L_J$ 的值均在 $[0,1]$。
+
+令 $t=n_Jx^2$，则
+
+$$
+x^\beta\min\{1,(n_Jx^2)^{-\rho/2}\}
+ =n_J^{-a}t^a\min\{1,t^{-\rho/2}\}
+ \le n_J^{-a},
+\tag{341.14}
+$$
+
+因为 $\rho>\beta=2a$。由式（341.9）、（341.12）、（341.13），
+
+$$
+\begin{aligned}
+|\Delta_J(w)|
+&\le\Gamma_J(x,q)+C_{\rm sm}m_J^{-a}+\delta_J\\
+&\le\left(C_\Gamma+\frac{C_{\rm sm}}{c_m}
+                 +\frac{N^a}{4}\right)n_J^{-a}.
+\end{aligned}
+\tag{341.15}
+$$
+
+最后一步只用 $\eta_J\le1$ 和式（341.3）。因此不需要通过无限层极限证明有限张量下多项式处处位于目标之下，也已取得所需的绝对误差上界。
+
+### 341.3 地板残差在合法端点极限中保留
+
+第327.9式的参考目标延拓为
+
+$$
+F_y(q)=\frac12+
+ \kappa y^\beta\phi\!\left(\frac{C(1-Bq)}y\right)
+ \quad(y>0),\qquad F_0(q)=1/2.
+\tag{341.16}
+$$
+
+公共有理扩域中的光滑函数 $\phi$ 支于正区间，特别有 $\phi(0)=0$。令
+
+$$
+p_0=q_0=1/B.
+$$
+
+则对所有构造域中的 $y\ge0$，
+
+$$
+F_y(q_0)=1/2.
+\tag{341.17}
+$$
+
+原参考下包络不超过 $F_y$。对任意任务格点参数 $p'\in[0,1]$，若 $C(1-Bp')\ge0$，任务延拓使用
+$y=\zeta(C(1-Bp'))$，仍有
+$\bar L_J(p',q_0)\le1/2$；负偏差侧上下系数都恒为 $1/2$。因此
+
+$$
+\bar L_J(p',q_0)\le1/2\quad(0\le p'\le1),\qquad
+\mathcal L_J(p_0,q_0)\le\frac{1-\delta_J}{2}.
+\tag{341.18}
+$$
+
+后一式使用 Bernstein 平均保序。
+
+现在只沿原合法世界取 $c=1$、$h\downarrow0$。相应
+$p(h)=q(h)=(1-h/C)/B$ 趋于 $p_0=q_0$。对固定的有限 $J,m_J,d_J$，$\mathcal L_J(p,q)$ 是有限多项式，故连续；实际核心目标
+$1/2+\kappa h^\beta$ 趋于 $1/2$。因此
+
+$$
+\lim_{h\downarrow0}
+ \Delta_J(c=1,h)
+ =\frac12-\mathcal L_J(p_0,q_0)
+ \ge\frac{\delta_J}{2}.
+\tag{341.19}
+$$
+
+从而
+
+$$
+\boxed{
+\sup_{w}|\Delta_J(w)|
+ \ge\frac{\delta_J}{2}
+ =\frac{N^a}{8}\eta_J n_J^{-a}.}
+\tag{341.20}
+$$
+
+这里的上确界只遍历严格正的合法增益。式（341.18）在端点处评价有限多项式，式（341.19）取正世界极限；没有要求程序在 $h=0$ 的附加世界执行。
+
+### 341.4 未启动世界抵抗小地板平滑
+
+取
+
+$$
+x_J=\frac{x^\dagger}{2}b^{-(J+1)/2},\qquad
+c=1,\quad h=x_J,\quad
+p_J=q_J=\frac{1-x_J/C}{B}.
+\tag{341.21}
+$$
+
+公共扩域的 $x^\dagger=11/40$、$b\ge2$ 保证
+$x^\dagger b^{-(J+1)/2}<1/4$ 对全部 $J\ge0$ 成立，所以这是严格正的合法世界。该点位于第340.2节全部当前参考环未启动的区间。逐参考系数恒等式给
+
+$$
+L_J(x_J,q_J)=\frac{1-\Omega x_J^\beta}{2},\qquad
+F_{x_J}(q_J)=\frac12+\kappa x_J^\beta,
+\qquad
+\Omega=\frac{15}{16}
+       \left(\frac2{\underline c}\right)^\beta.
+\tag{341.22}
+$$
+
+故原参考残差精确为
+
+$$
+F_{x_J}(q_J)-L_J(x_J,q_J)
+ =\left(\kappa+\frac{\Omega}{2}\right)x_J^\beta
+ =D n_J^{-a},
+\tag{341.23}
+$$
+
+其中固定常数
+
+$$
+D=\left(\kappa+\frac{\Omega}{2}\right)
+   \left(\frac{N(x^\dagger)^2}{4b}\right)^a>0.
+\tag{341.24}
+$$
+
+任务平滑的偏差由式（341.13）控制。又因
+$\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q_J)](p_J)\ge0$，
+乘上 $1-\delta_J$ 只降低核心成功概率。因此
+
+$$
+\begin{aligned}
+\Delta_J(w_J)
+&\ge D n_J^{-a}-C_{\rm sm}m_J^{-a}\\
+&\ge n_J^{-a}
+   \left(D-\frac{C_{\rm sm}}{c_m}\eta_J\right).
+\end{aligned}
+\tag{341.25}
+$$
+
+取固定阈值
+
+$$
+\theta=\min\left\{1,
+ \frac{Dc_m}{2(C_{\rm sm}+1)}\right\}>0.
+\tag{341.26}
+$$
+
+若 $\eta_J\le\theta$，式（341.25）给
+$\Delta_J(w_J)\ge(D/2)n_J^{-a}$。若 $\eta_J>\theta$，式（341.20）给
+$\sup_w|\Delta_J(w)|\ge(N^a\theta/8)n_J^{-a}$。两种情况合并得到
+
+$$
+\boxed{
+\sup_w|\Delta_J(w)|
+ \ge c_{\rm core}n_J^{-a},\qquad
+c_{\rm core}=\min\{D/2,N^a\theta/8\}>0.}
+\tag{341.27}
+$$
+
+此处没有要求末层地板足够小，也没有使用参考预算 $K$ 来取得集中条件。端点极限与未启动世界是分别适用的两支下界；它们只在同一个世界上确界中择一，不相加。
+
+### 341.5 准确首币包装的误差等式
+
+对任一请求，设请求来源成功率为 $z$，并记
+$z_0=1-z,z_1=z$。包装保留实际首枚 $X$，在 $X=x$ 条件下以准确概率 $1/(6z_x)$ 触发新鲜核心；未触发时输出公平 $Z$。
+
+当 $X=0$ 时，映射为 $Z=0$ 当且仅当核心币为一；当 $X=1$ 时，映射为 $Z=0$ 当且仅当核心币为零。条件于完整门控记录，新鲜核心成功概率仍为式（341.9），不随这份记录改变。
+
+将核心成功概率由目标 $F_x(q)$ 改为
+$\mathcal L_J(p,q)=F_x(q)-\Delta_J(w)$，对四个联合输出点，实际律减目标律恰为
+
+$$
+\begin{array}{c|rrrr}
+(X,Z)&(0,0)&(0,1)&(1,0)&(1,1)\\ \hline
+P^{A^{[J]}}_{w,S}-P_{w,S}
+&-\Delta_J/6&+\Delta_J/6&+\Delta_J/6&-\Delta_J/6 .
+\end{array}
+\tag{341.28}
+$$
+
+每个 $X$ 分支中的因子来自
+$z_x/(6z_x)=1/6$；两种 $X$ 的联合支持不交。因此按离散总变差定义，
+
+$$
+\boxed{
+\operatorname{TV}
+ (P^{A^{[J]}}_{w,S},P_{w,S})
+ =\frac12\sum_{x,z}
+   |P^{A^{[J]}}_{w,S}(x,z)-P_{w,S}(x,z)|
+ =\frac{|\Delta_J(w)|}{3}.}
+\tag{341.29}
+$$
+
+这对两种请求都成立，且不依赖偏差的符号。故
+
+$$
+e(A^{[J]})=\frac13\sup_w|\Delta_J(w)|.
+\tag{341.30}
+$$
+
+结合式（341.15）、（341.27），可取
+$c_e=c_{\rm core}/3$ 以及相应共同 $C_e$，证明定理341.1。取对数即得式（341.7）。
+
+准确门控在这里承担真实的等式条件。若随后截断门控、改变最终回退或扰动系数，式（341.28）须重新计算；本节不将它自动延伸给修改后的程序。
+
+### 341.6 安全地板强制逐世界线性任务费用
+
+第340.10节通过固定参考预算得到层数下界。当前指定数组还有一项对所有世界同时成立的任务费用下界，它不需要参考预算。
+
+**定理341.2（地板层数费用与精度费用）。** 存在只依固定类常数的 $c_{\rm lev}>0$、$C_{\rm lev}\ge0$，使每份 $A^{[J]}\in\mathfrak G$、每个合法世界及每一种请求都满足
+
+$$
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_{\rm lev}J-C_{\rm lev}.}
+\tag{341.31}
+$$
+
+因此存在共同 $c_T,\delta_0>0$，使任何 $0<\delta<\delta_0$ 及 $e(A^{[J]})\le\delta$ 的程序都在每个世界、每种请求满足
+$\mathbb E N_T^a\ge c_T\log(1/\delta)$。两项下界均不要求给定参考预算。
+
+**证明。** 固定任意合法世界。有限核心计数的离散尾和为
+
+$$
+\mathbb E R_T^a
+ =m_0^a+\sum_{k=0}^{J-1}
+    (m_{k+1}^a-m_k^a)G_k(p,q).
+\tag{341.32}
+$$
+
+由式（341.4）的逐系数非负差，$G_k(p,q)\ge\delta_k$ 在每个世界成立；同时
+
+$$
+m_k^a\delta_k
+ \ge\frac{c_mN^a}{4}
+ =:\gamma_{\rm floor}>0.
+\tag{341.33}
+$$
+
+令 $r_k=m_{k+1}^a/m_k^a>1$。利用 $r-1\ge\log r$，得到
+
+$$
+\begin{aligned}
+\mathbb E R_T^a
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}(r_k-1)\\
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}\log r_k\\
+&=m_0^a+
+  \gamma_{\rm floor}\log\frac{m_J^a}{m_0^a}.
+\end{aligned}
+\tag{341.34}
+$$
+
+这一步不需要相邻任务批量比具有大于一的共同下界。由共同双向比较和地板非增，
+
+$$
+\log\frac{m_J^a}{m_0^a}
+ \ge aJ\log b+
+       \log\frac{\eta_0}{\eta_J}
+       +\log\frac{c_m}{C_m}
+ \ge aJ\log b-\log\frac{C_m}{c_m}.
+\tag{341.35}
+$$
+
+非空类可取 $0<c_m\le C_m$。准确包装在每个世界、每种请求中都以 $1/3$ 概率触发新鲜核心，因此
+
+$$
+\begin{aligned}
+\mathbb E N_T^a
+&\ge\frac13\mathbb E R_T^a\\
+&\ge
+ \frac{\gamma_{\rm floor}a\log b}{3}J
+ -\frac{\gamma_{\rm floor}}3\log\frac{C_m}{c_m}.
+\end{aligned}
+\tag{341.36}
+$$
+
+可取
+$c_{\rm lev}=\gamma_{\rm floor}a\log b/3$、
+$C_{\rm lev}=(\gamma_{\rm floor}/3)\log(C_m/c_m)$。
+这给出逐世界的式（341.31），没有在不同层选择不同世界。
+
+若 $e(A^{[J]})\le\delta$，定理341.1的必要层数关系代入式（341.36）便得
+
+$$
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge\frac{\gamma_{\rm floor}}3\log(1/\delta)-C_T,
+\tag{341.37}
+$$
+
+其中可取固定非负常数
+
+$$
+C_T=\max\left\{0,\,
+ C_{\rm lev}
+ -\frac{\gamma_{\rm floor}}3
+       (\log c_e-a\log N)\right\}.
+$$
+
+取 $\delta_0>0$ 足够小，使
+$\log(1/\delta)\ge6C_T/\gamma_{\rm floor}$，可得
+
+$$
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_T\log(1/\delta),\qquad
+c_T=\gamma_{\rm floor}/6.}
+\tag{341.38}
+$$
+
+证毕。
+
+这一费用来自指定安全地板与任务批量的共同关系。必要精度先迫使程序使用足够多层，而这些层在每一个世界都承担式（341.34）的费用。常数和小精度阈值不依参考预算 $K$。
+
+### 341.7 无限核心的逐世界临界发散
+
+**推论341.3（无限安全地板的逐世界任务矩）。** 对第340节同一指定类的无限未截核心及其准确首币包装，每个合法世界、每一种请求均有
+
+$$
+\boxed{
+\mathbb E^{A,w,S}N_T^s=+\infty
+\qquad(s\ge a).}
+\tag{341.39}
+$$
+
+这一结论不需要 $\sum_k\eta_k<\infty$，也不要求参考临界矩有限。
+
+**证明。** 对无限核心的实际计数，只截取离散尾和的前 $J$ 项，就有
+$\mathbb E R_T^a\ge m_0^a+
+\sum_{k<J}(m_{k+1}^a-m_k^a)G_k$。式（341.33）—（341.35）逐项适用，故在任意固定世界中
+
+$$
+\mathbb E R_T^a
+ \ge\gamma_{\rm floor}aJ\log b
+   -\gamma_{\rm floor}\log(C_m/c_m)
+ \qquad\text{对全部 }J.
+$$
+
+令 $J\to\infty$ 得核心 $a$ 矩无限；准确包装的 $1/3$ 触发概率保持这一结论。整数计数对 $s\ge a$ 满足 $N_T^s\ge N_T^a$，得到所有较高阶。证毕。
+
+这是指定安全地板数组及共同任务批量所承担的逐层成本。它与逐世界几乎必有限终止相容，也不构成原目标在全部算法类中的逐世界矩下界。
+
+### 341.8 平地板族实现类内匹配
+
+为陈述最优费用，固定的类 $\mathfrak G$ 取包含第338节平地板族的一组共同常数。例如预先选定保证相容性的同一个充分大 $M$，并采用该节的安全整数批量，就能满足这一条件。前面的误差及费用下界不需要这一额外包含条件；它只用于现在的上界。
+
+对每个 $J\ge1$，取
+
+$$
+\eta_k=(J+1)^{-1}\quad(0\le k\le J),\qquad
+m_k\asymp n_k(J+1)^{1/a},
+\tag{341.40}
+$$
+
+保持同一准确、未截断的首币门控。参考临界尾和中，地板及任务平滑误差共同贡献至多常数乘
+$\sum_{k<J}\eta_k\le1$，参考局部化项由同世界求和控制。任务临界尾和中，地板及平滑项各层贡献有共同上界，局部化项的总和为 $O(J+1)$，初始任务批量也为 $O(J+1)$。
+
+由第338.30、338.33式及固定门控的 $a$ 矩，存在与 $J$ 无关的 $K_0,C_0>0$，使这份完整程序满足
+
+$$
+H_a(A_{\rm flat}^{[J]})\le K_0,\qquad
+T_a(A_{\rm flat}^{[J]})\le C_0(J+1),\qquad
+e(A_{\rm flat}^{[J]})\le C_en_J^{-a}.
+\tag{341.41}
+$$
+
+这里停止在准确门控包装完成的程序，没有采用第338.9节后续的门控截断或有限树有理化。
+
+对充分小 $\delta>0$，选择满足 $C_en_J^{-a}\le\delta$ 的最小 $J\ge1$，则 $J+1=O(\log(1/\delta))$。因此
+
+$$
+H_a(A_{\rm flat}^{[J]})\le K_0,\qquad
+T_a(A_{\rm flat}^{[J]})\le C_1\log(1/\delta),\qquad
+e(A_{\rm flat}^{[J]})\le\delta.
+\tag{341.42}
+$$
+
+定义这个严格类中的最优费用
+
+$$
+\mathcal T_a^{\mathfrak G}(\delta,K)
+ =\inf\left\{
+ T_a(A^{[J]}):
+ A^{[J]}\in\mathfrak G,\quad
+ e(A^{[J]})\le\delta,\quad
+ H_a(A^{[J]})\le K
+ \right\},
+\tag{341.43}
+$$
+
+空可行集合的下确界取 $+\infty$。
+
+**推论341.4（共同参考预算下的类内对数阶）。** 存在固定 $K_0,c,C,\delta_*>0$，使对全部 $K\ge K_0$、$0<\delta<\delta_*$，
+
+$$
+\boxed{
+c\log(1/\delta)
+ \le\mathcal T_a^{\mathfrak G}(\delta,K)
+ \le C\log(1/\delta).}
+\tag{341.44}
+$$
+
+因此每个固定 $K\ge K_0$ 都有
+
+$$
+\mathcal T_a^{\mathfrak G}(\delta,K)
+ \asymp\log(1/\delta)\qquad(\delta\downarrow0),
+\tag{341.45}
+$$
+
+且比较常数和小精度阈值可对全部 $K\ge K_0$ 共同选择。
+
+下界由定理341.2对每个可行程序成立，上界由式（341.42）的同一平地板构造给出。参考预算在这里限制可行集合，下界本身不要求参考预算有限。若 $K<K_0$，本节仍对可行程序给出同样的任务下界，但不据此断言可行或匹配。
+
+### 341.9 有效性与适用边界
+
+对于任意固定合法实参数，前述上界首先属于完整实概率策略类。若 $C,\beta$ 可计算，可按第332、336、339节准确计算所需有限系数、使用安全批量取整及有效 Hölder 门控。平地板是有理数，门控保持准确且未截断，因而同一上界在对应有效子类中也成立；类内下界对这些实际程序原样适用。
+
+这只是有效上界的充分条件。本节没有从准确目标的参数门槛反推每个有限精度程序都必须能计算 $C,\beta$，也没有把对未知实参数作有限树有理化后的程序重新视为本节的精确系数网格。
+
+必要层数来源于实际输出的两个误差下界，不由既有误差上界倒推。所得 $\Theta(\log(1/\delta))$ 是固定网格常数、指定末层核心置零及准确首币包装下的类内最优阶。它没有关闭全部自适应原目标近似策略的费用缺口，没有控制最小参考预算，也不产生确定性内部执行时间矩。
+
+本节直接使用第327节参考目标延拓和首币输出映射、第330、332节的未启动环系数、第338节有限张量输出与平地板预算，以及第340节的精确门控与实际尾恒等式。所需相容包络和次数提升沿用第338节已列的 Nacu–Peres 与 Holtz–Nazarov–Peres 接口；误差两分支、包装总变差等式、地板层数费用及类内精度必要界在本节按实际输出推导。
+
+这些是纸面数学结论，不认领 Lean 核验或修改后程序的未经证明误差下界。
+
+## 追加锚（本行以下为增补区）
+
+## 342. 固定网格剖面的可达判据与严格比例改善
+
+第340节把指定累积张量网格的真实任务近临界费用归结为地板剖面。本节据此刻画具有倍增控制的指定增长率，并证明每份近临界矩全部有限的固定地板策略都能由另一份固定策略取得严格的小比例改善。
+
+共同相容构造、参考预算和有效性分别核对。倍增判据保留同一份策略对全部充分小矩阶缺口的量词；严格改善保留旧矩有限的前提，不对无穷矩作比值。
+
+### 342.1 指定网格类与实际成本接口
+
+固定非整数 $0<\beta<2$，令 $a=\beta/2\in(0,1)$，沿用原双来源合同、准确首币包装及第339—340节的参考网格 $n_k=Nb^k$。地板满足
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R<\infty,\qquad
+\sum_{k\ge0}\eta_k<\infty.
+\tag{342.1}
+$$
+
+记完整程序的实际来源矩为
+
+$$
+T_s(A)=\sup_{w,S}\mathbb E^{A,w,S}N_T^s,\qquad
+H_a(A)=\sup_{w,S}\mathbb E^{A,w,S}N_H^a,
+\tag{342.2}
+$$
+
+其中上确界遍历合法世界与两种请求。定义
+
+$$
+W_\eta(u)=\sup_{k\ge0}n_k^{-u}\eta_k^{-1+u/a},
+\qquad 0<u<a.
+\tag{342.3}
+$$
+
+第340节已由真实任务二项尾、同一合法世界及首币门控证明
+
+$$
+T_{a-u}(A)\asymp W_\eta(u)\quad(u\downarrow0),\qquad
+H_a(A)\asymp1+\sum_k\eta_k,\qquad
+uW_\eta(u)\longrightarrow+\infty.
+\tag{342.4}
+$$
+
+任务比较在充分小 $u$ 上成立，允许扩展实数；常数和起效阈值可依这份固定策略，但不依 $u$。对于第340节更一般的相容批量，只要
+$m_k^a\asymp n_k^a/\eta_k$ 且相邻任务批量比有界，这些接口仍适用。本节的必要性允许这种一般批量；构造性结论使用下一节的共同标准选择。
+
+### 342.2 共同批量、相邻比与参考预算
+
+对所有所构造地板，预先固定同一个充分大的 $M$，并取
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+r_k=Mn_k\eta_k^{-1/a},\qquad
+r_k\le m_k\le r_k+2,\qquad MN\ge4,
+\tag{342.5}
+$$
+
+其中 $m_k$ 为安全取整得到的整数。仍使用第339节的数组
+$A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k)$、
+$B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k$。
+
+非增地板给出的相容性估计为
+
+$$
+\begin{aligned}
+c_0(\delta_{k-1}-\delta_k)
+ -C_{\rm sm}m_{k-1}^{-a}
+&\ge
+\left[
+ \frac{c_0(1-b^{-a})N^a}{4}
+ -C_{\rm sm}M^{-a}\right]
+ n_{k-1}^{-a}\eta_{k-1}.
+\end{aligned}
+\tag{342.6}
+$$
+
+所以足够大的 $M$ 只依固定模型和正则常数，不依具体地板、其总和或 $u$。取整满足 $m_k\le3r_k/2$，因此
+
+$$
+M^an_k^a\eta_k^{-1}\le m_k^a
+ \le(3M/2)^an_k^a\eta_k^{-1},\qquad
+4/3\le m_{k+1}/m_k\le\frac32bR^{1/a}.
+\tag{342.7}
+$$
+
+固定共同相邻比上界 $R$ 后，任务尾和使用的网格常数也共同。
+
+参考预算由第339.17式和固定包装的 $a$ 矩给
+
+$$
+H_a(A_\eta)\le
+ C_H\left(1+\sum_k\eta_k\right)+K_{\rm wrap}.
+\tag{342.8}
+$$
+
+其中常数属于同一个模型、参考网格、标准批量与门控。只要归一化为 $\sum_k\eta_k\le1$，即可统一取
+$K_0=2C_H+K_{\rm wrap}$。任务初始批量可以随地板改变；它仍须计入 $T_s$，但不改变固定参考初始批量或上述参考预算。
+
+这里仅使用包装的固定 $a$ 矩，以及由整数计数比较得到的 $0<s\le a$ 矩，不需要更高阶包装矩。
+
+### 342.3 倍增增长率的可达级数判据
+
+设 $g:[2,\infty)\to[1,\infty)$ 处处有限、非减，且存在固定 $D\ge1$ 使
+
+$$
+g(2t)\le Dg(t)\qquad(t\ge2).
+\tag{342.9}
+$$
+
+不要求 $g$ 连续或严格递增。
+
+**定理342.1（倍增剖面的可达判据）。** 以下两项等价：存在第340节指定网格类中的一份固定准确策略 $A$，满足 $H_a(A)<\infty$，且对全部充分小 $u>0$ 有
+$T_{a-u}(A)=O(u^{-1}g(1/u))$；以及
+
+$$
+\boxed{\sum_{k\ge2}\frac1{k\,g(k)}<\infty.}
+\tag{342.10}
+$$
+
+当级数收敛时，可以选一份固定策略取得匹配阶
+
+$$
+\boxed{T_{a-u}(A)\asymp u^{-1}g(1/u).}
+\tag{342.11}
+$$
+
+充分构造的地板相邻比至多 $2D$。对具有共同倍增常数的这一族，按第342.2节归一化后可取共同参考预算 $K_0$。必要性不要求待检验地板本身慢变或倍增。
+
+### 342.4 必要性中的幂修正
+
+令 $d=\log_2D\ge0$。非减性与倍增反复应用给
+
+$$
+g(t)\le C_gt^d\qquad(t\ge2),\qquad
+\log(Ct\,g(t))=O(\log t)
+\tag{342.12}
+$$
+
+对任意固定 $C>0$ 成立。具体地，若
+$2^{r+1}\le t<2^{r+2}$，则
+$g(t)\le g(2^{r+2})\le D^{r+1}g(2)\le g(2)t^d$。
+这一估计不使用连续性。
+
+设某固定策略达到定理中的统一上界。参考判据给
+$\sum_k\eta_k<\infty$。第340节真实单层任务下界在充分大 $k$ 上适用；取 $u=1/k$，利用
+$n_k^{-1/k}=N^{-1/k}b^{-1}$ 的固定正下界，得到
+
+$$
+\eta_k^{-(1-1/(ak))}\le Ck\,g(k)
+\tag{342.13}
+$$
+
+对全部充分大 $k$ 成立。这里已令 $k$ 足够大以保证 $1/k<a/2$。
+
+放大 $C$ 使 $H_k=Ck\,g(k)\ge1$。精确保留地板的指数修正：
+
+$$
+\begin{aligned}
+\eta_k
+&\ge H_k^{-1/(1-1/(ak))}\\
+&=\frac1{H_k}
+ \exp\!\left(-\frac{\log H_k}{ak-1}\right).
+\end{aligned}
+\tag{342.14}
+$$
+
+式（342.12）使指数修正趋于一。因此存在固定 $c>0$，使
+
+$$
+\eta_k\ge\frac{c}{k\,g(k)}
+\tag{342.15}
+$$
+
+于全部充分大 $k$ 成立。可求和性强制式（342.10），证明必要性。
+
+这个方向先由实际成本上界限制地板衰减，再控制式（342.14）的修正项；没有把 $\eta_k^{1/(ak)}$ 未经证明地替换为常数。
+
+### 342.5 充分构造与倍增极值界
+
+假设式（342.10）收敛，记其和为 $S_g<\infty$。选固定 $0<c\le1$，令
+
+$$
+\eta_k=\frac{c}{(k+2)g(k+2)}\qquad(k\ge0).
+\tag{342.16}
+$$
+
+它正、非增，且
+
+$$
+\frac{\eta_k}{\eta_{k+1}}
+ =\frac{(k+3)g(k+3)}{(k+2)g(k+2)}
+ \le2D,\qquad
+\sum_{k\ge0}\eta_k=cS_g.
+\tag{342.17}
+$$
+
+例如取 $c=(1+S_g)^{-1}$ 可使总和小于一；也可选足够小的正有理 $c$。第342.2节据此给固定准确策略与共同参考预算。
+
+令 $t=1/u\ge2$，限定 $0<u\le a/2$，并置 $x=k+2$。因为 $xg(x)\ge1$、$0<1-u/a\le1$，
+
+$$
+\begin{aligned}
+n_k^{-u}\eta_k^{-1+u/a}
+&=N^{-u}b^{-u(x-2)}
+   \left(\frac{xg(x)}c\right)^{1-u/a}\\
+&\le C\,b^{-x/t}xg(x),
+\end{aligned}
+\tag{342.18}
+$$
+
+其中常数不依 $u,k$。若 $x\le t$，非减性给 $xg(x)\le tg(t)$。若 $x>t$，选 $j\ge0$ 使
+$2^jt<x\le2^{j+1}t$，则
+
+$$
+b^{-x/t}xg(x)
+ \le(2D)^{j+1}b^{-2^j}\,tg(t).
+\tag{342.19}
+$$
+
+数列 $(2D)^{j+1}b^{-2^j}$ 有有限上确界，因此
+
+$$
+W_\eta(u)\le C\,t g(t).
+\tag{342.20}
+$$
+
+这是数值权重的上确界估计，不把不同世界的实际费用相加。
+
+为匹配下界，取 $k=\lfloor t\rfloor$，$x=k+2$。此时
+
+$$
+tg(t)\le xg(x)\le2D\,tg(t),\qquad
+n_k^{-u}\longrightarrow b^{-1}>0.
+\tag{342.21}
+$$
+
+由式（342.12），
+
+$$
+\frac{u}{a}\log\frac{xg(x)}c
+ =O\!\left(\frac{\log t}{t}\right)\longrightarrow0,
+\qquad
+\left(\frac{xg(x)}c\right)^{-u/a}\longrightarrow1.
+\tag{342.22}
+$$
+
+故对全部充分小 $u$，
+
+$$
+W_\eta(u)\ge
+n_k^{-u}\frac{xg(x)}c
+ \left(\frac{xg(x)}c\right)^{-u/a}
+ \ge c_1\,t g(t).
+\tag{342.23}
+$$
+
+结合式（342.20）及实际成本接口（342.4），即得式（342.11）。定理342.1证毕。
+
+### 342.6 对数实例及统一量词
+
+下列函数均具有有限倍增常数。由积分比较：
+
+| 指定 $g(t)$ | $\sum_{k\ge2}1/[kg(k)]$ | 固定策略的统一目标 $O(u^{-1}g(1/u))$ |
+|---|---|---|
+| $1$ | 发散 | 不可达到 |
+| $\log(e+t)$ | 发散 | 不可达到 |
+| $[\log(e+t)]^{1+\epsilon}$，$\epsilon>0$ | 收敛 | 可达到匹配阶 |
+| $\log(e+t)[\log\log(e^e+t)]^{1+\epsilon}$，$\epsilon>0$ | 收敛 | 可达到匹配阶 |
+
+特别地，每一份参考临界矩有限的指定网格策略都不能在全部充分小 $u$ 上满足
+$T_{a-u}=O(\log(1/u)/u)$。精确的排除量词是：对每个固定策略 $A$、每个 $C>0$ 和每个足够小的阈值 $u_0>0$，都存在 $0<u<u_0$ 使
+
+$$
+T_{a-u}(A)>C\,u^{-1}\log(e+1/u).
+\tag{342.24}
+$$
+
+这里允许左侧无限。此式不宣称每一个小 $u$ 都有某个共同倍数的对数下界，也不将上确界型排除加强为沿全部 $u\downarrow0$ 的比值发散极限。
+
+对数平方地板因而并非唯一可行的固定剖面；例如选 $0<\epsilon<1$ 的对数幂或相应迭代对数，可以获得更慢的增长。这些仍是一份固定策略同时服务全部小 $u$ 的结论，不约束第339节按 $u$ 更换策略的 $C/u$ 构造。
+
+### 342.7 固定策略严格改善的陈述
+
+固定一个共同相邻比上界 $R>1$。给定式（342.1）的旧地板 $\eta$ 及其准确策略 $A_\eta$，并明确假设
+
+$$
+\exists u_0>0\quad
+\forall\,0<u<u_0:\quad
+T_{a-u}(A_\eta)<\infty.
+\tag{342.25}
+$$
+
+**定理342.2（固定地板的严格比例改善）。** 存在另一地板 $\eta'$，满足
+
+$$
+0<\eta'_{k+1}\le\eta'_k\le1,\qquad
+\sum_k\eta'_k\le1,\qquad
+\frac{\eta'_k}{\eta'_{k+1}}\le R,\qquad
+\frac{\eta'_k}{\eta_k}\longrightarrow+\infty.
+\tag{342.26}
+$$
+
+其共同标准实现 $A_{\eta'}$ 在一个近临界区间中仍有全部有限任务矩，并满足
+
+$$
+\boxed{
+H_a(A_{\eta'})\le K_0,\qquad
+\frac{T_{a-u}(A_{\eta'})}{T_{a-u}(A_\eta)}
+ \longrightarrow0\quad(u\downarrow0).}
+\tag{342.27}
+$$
+
+其中 $K_0$ 来自第342.2节的同一个标准构造，不依旧地板。结论首先属于完整实概率策略类；有效构造的附加条件在第342.10节说明。
+
+### 342.8 差分质量与保持相邻比的加权尾
+
+令
+
+$$
+\Delta\eta_j=\eta_j-\eta_{j+1}\ge0,\qquad
+\mu_j=(j+1)\Delta\eta_j.
+\tag{342.28}
+$$
+
+非增可求和性给 $(m+1)\eta_{m+1}\to0$。有限分部求和后取极限，得到
+
+$$
+\begin{aligned}
+\sum_{j=0}^{m}\mu_j
+ &=\sum_{j=0}^{m}\eta_j-(m+1)\eta_{m+1},\\
+\sum_{j\ge0}\mu_j
+ &=\sum_{j\ge0}\eta_j<\infty,\qquad
+\eta_k=\sum_{j\ge k}\Delta\eta_j.
+\end{aligned}
+\tag{342.29}
+$$
+
+对 $r\ge1$，选择严格递增整数 $K_r\ge r$，使
+
+$$
+\sum_{j\ge K_r}\mu_j\le2^{-r}/r^2.
+\tag{342.30}
+$$
+
+有限质量保证这些阈值存在。置
+
+$$
+a_j=1+\#\{r\ge1:K_r\le j\}.
+\tag{342.31}
+$$
+
+每个 $a_j$ 为有限正整数，序列非减且趋于无穷。非负 Tonelli 求和给
+
+$$
+\begin{aligned}
+\sum_{j\ge0}a_j\mu_j
+&=\sum_{j\ge0}\mu_j+
+  \sum_{r\ge1}\sum_{j\ge K_r}\mu_j\\
+&\le\sum_{j\ge0}\eta_j+
+   \sum_{r\ge1}2^{-r}/r^2<\infty.
+\end{aligned}
+\tag{342.32}
+$$
+
+这是标准的有限质量序列缓增长加权事实。
+
+定义
+
+$$
+\widetilde\eta_k=\sum_{j\ge k}a_j\Delta\eta_j.
+\tag{342.33}
+$$
+
+每项有限，因为 $\Delta\eta_j=\mu_j/(j+1)$；每项严格为正，因为
+$a_j\ge1$ 且 $\eta_k>0$。差为
+$\widetilde\eta_k-\widetilde\eta_{k+1}=a_k\Delta\eta_k\ge0$，所以序列非增。再次交换非负求和，
+
+$$
+\boxed{
+\sum_{k\ge0}\widetilde\eta_k
+ =\sum_{j\ge0}(j+1)a_j\Delta\eta_j
+ =\sum_{j\ge0}a_j\mu_j<\infty.}
+\tag{342.34}
+$$
+
+由于 $a_j\ge a_k$ 对 $j\ge k$ 成立，
+
+$$
+\widetilde\eta_k
+ \ge a_k\sum_{j\ge k}\Delta\eta_j
+ =a_k\eta_k,\qquad
+\widetilde\eta_k/\eta_k\longrightarrow+\infty.
+\tag{342.35}
+$$
+
+相邻比也不增大。由
+$\widetilde\eta_{k+1}\ge a_k\eta_{k+1}>0$，
+
+$$
+\begin{aligned}
+\frac{\widetilde\eta_k}{\widetilde\eta_{k+1}}
+&=1+\frac{a_k\Delta\eta_k}{\widetilde\eta_{k+1}}\\
+&\le1+\frac{\Delta\eta_k}{\eta_{k+1}}
+ =\frac{\eta_k}{\eta_{k+1}}\le R.
+\end{aligned}
+\tag{342.36}
+$$
+
+记 $\widetilde S=\sum_k\widetilde\eta_k<\infty$，选择固定
+$c=(1+\widetilde S)^{-1}>0$，令
+
+$$
+\eta'_k=c\widetilde\eta_k.
+\tag{342.37}
+$$
+
+则新地板总和小于一，每项不超过一；共同缩放保留单调性、相邻比及式（342.35）的发散比例。也可选择足够小的正有理缩放因子。由此得到式（342.26）。
+
+### 342.9 从地板改善到实际任务费用
+
+限定 $0<u\le a/2$，令 $r(u)=1-u/a\in[1/2,1)$。对任意 $0<\epsilon<1$，式（342.26）保证存在固定 $K$，使所有 $k\ge K$ 满足
+$\eta_k/\eta'_k\le\epsilon^2$。于是同时对这些 $u,k$，
+
+$$
+n_k^{-u}(\eta'_k)^{-r(u)}
+ \le\epsilon\,n_k^{-u}\eta_k^{-r(u)}.
+\tag{342.38}
+$$
+
+有限初段 $k<K$ 的新权重也有不依 $u$ 的有限界：
+$n_k^{-u}(\eta'_k)^{-r(u)}\le(\eta'_k)^{-1}$。
+所以存在有限 $C_\epsilon$，使
+
+$$
+\boxed{
+W_{\eta'}(u)\le
+\max\{C_\epsilon,\epsilon W_\eta(u)\}
+\qquad(0<u\le a/2).}
+\tag{342.39}
+$$
+
+这条不等式在扩展实数意义下成立。但是只有加入式（342.25），才能对下面的剖面作通常比值：由式（342.4），旧 $W_\eta(u)$ 在全部充分小 $u$ 上有限，式（342.39）也保证新 $W_{\eta'}(u)$ 有限。
+
+又因 $uW_\eta(u)\to\infty$，特别有 $W_\eta(u)\to\infty$。因此
+
+$$
+\limsup_{u\downarrow0}
+\frac{W_{\eta'}(u)}{W_\eta(u)}
+ \le\epsilon,\qquad
+\frac{W_{\eta'}(u)}{W_\eta(u)}
+ \longrightarrow0.
+\tag{342.40}
+$$
+
+后一式由任意 $\epsilon>0$ 得到。对两份固定策略分别应用式（342.4）；比较常数可以不同，但均不依 $u$，故
+
+$$
+0\le
+\frac{T_{a-u}(A_{\eta'})}{T_{a-u}(A_\eta)}
+ \le C_{\eta,\eta'}
+       \frac{W_{\eta'}(u)}{W_\eta(u)}
+ \longrightarrow0.
+\tag{342.41}
+$$
+
+新策略的近临界矩有限性也已证明。其地板总和至多一，相邻比不超过原来的共同 $R$，由式（342.8）取得同一个参考预算 $K_0$。定理342.2证毕。
+
+因此，在包含这些标准实现、允许参考预算 $K_0$ 且近临界任务矩全部有限的固定策略子类中，每一份策略都有另一份严格比例更小的固定策略。这里的改善是 $u\downarrow0$ 时的实际世界上确界之比；它不要求在每个具体矩阶、每个世界中都更便宜。归一化可以增大有限初段和初始任务批量。
+
+共同预算上界也不等于旧策略的实际参考费用。定理342.2没有证明
+$H_a(A_{\eta'})\le H_a(A_\eta)$，因此不保证保留任意给定的更小预算 $K<K_0$。逐次改善不产生一份达到 $C/u$ 的极限策略，式（342.10）对 $g=1$ 的排除仍适用。
+
+### 342.10 有效名字与尾模边界
+
+上述存在结论首先属于完整实概率策略类。准确有效实现还需第332、336、339节的可计算模型参数及可统一计算的地板、批量名字。
+
+对定理342.1的充分构造，如果整数采样值 $g(k)$ 可统一计算，固定正有理 $c$ 就给可计算地板。因此当 $C,\beta$ 可计算时，相应准确有效策略存在。级数收敛保证参考矩有限；若还要从输入统一选择满足 $\sum\eta_k\le1$ 的缩放，需要可用的级数总和上界。单纯的收敛承诺在这里不被当作求该上界的算法。对每个固定可计算的 $g(k)$，足够小的有理缩放因子逐实例存在；本节不将其升级为统一选取过程。
+
+定理342.2的构造使用了质量尾阈值 $K_r$。只有逐项可计算的旧地板名字，尚未提供这套构造所需的有效尾界。无有效尾模时，式（342.30）—（342.37）只作实数学存在陈述，不宣称可以从旧策略名字算出改善器；也不据此排除其他有效改善方法。
+
+以下额外数据足以使该构造有效：给定可计算的 $\eta_k$，并能对任意要求的有理误差有效产生 $M$，使
+
+$$
+\sum_{k\ge M}\eta_k
+\quad\text{不超过该误差。}
+\tag{342.42}
+$$
+
+由分部求和，
+
+$$
+\sum_{j\ge K}\mu_j
+ =K\eta_K+\sum_{j\ge K}\eta_j.
+\tag{342.43}
+$$
+
+对 $K\ge2$，非增性给
+
+$$
+K\eta_K\le
+2\sum_{j=\lfloor K/2\rfloor}^{K}\eta_j,\qquad
+\sum_{j\ge K}\mu_j
+ \le3\sum_{j\ge\lfloor K/2\rfloor}\eta_j.
+\tag{342.44}
+$$
+
+因此旧地板的尾模可以有效产生满足式（342.30）的严格递增 $K_r$，不需判定真实尾和是否恰好等于阈值。
+
+所得加权质量也有显式有效尾界。对整数 $R_0\ge1$，
+
+$$
+\begin{aligned}
+\sum_{j\ge K_{R_0}}a_j\mu_j
+&=(R_0+1)\sum_{j\ge K_{R_0}}\mu_j
+  +\sum_{r>R_0}\sum_{j\ge K_r}\mu_j\\
+&\le(R_0+1)\frac{2^{-R_0}}{R_0^2}
+  +\sum_{r>R_0}\frac{2^{-r}}{r^2}.
+\end{aligned}
+\tag{342.45}
+$$
+
+右侧有效趋零。每个 $\widetilde\eta_k$ 的截断误差由这一加权质量尾控制，总和 $\widetilde S$ 也因此可有效逼近。从其有限上界选择有理缩放因子，就取得可计算的 $\eta'$。再结合可计算 $C,\beta$、共同安全批量取整及准确门控，得到这套明确改善构造的有效程序版本。
+
+### 342.11 适用范围与来源
+
+倍增判据中的不可达性排除同一份策略在全部充分小 $u$ 上的统一 $O$ 界；严格改善比较两份近临界矩有限的固定策略。两者都使用第340节已经回接真实来源计数的剖面，未把数值权重当作未经实现的理想费用。
+
+结论限于指定相容数组、正安全地板和确定性累积批量关系。不推广到任意自适应原目标策略，不处理没有倍增控制的任意指定增长函数，也不保证任意更小实际参考预算下的改善。无有效尾模时的一般有效改善问题未在此裁决。
+
+本节直接使用第339.3—339.4节的共同相容构造及参考预算、第340.3—340.7节的真实任务尾下界、参考判据与剖面匹配。倍增函数的多项式控制、积分比较和有限质量序列的缓增长加权均为标准分析事实；本节证明了所用版本，并给出它们到指定实际策略成本的综合应用，不认领这些标准事实或文献核定的原创性。
+
+这些是纸面数学结论，不认领 Lean 核验或确定性内部执行时间预算。
+
+## 追加锚（本行以下为增补区）
+
+## 343. 高阶 Lorentz 任务系数的负部与张量相容性障碍
+
+第338—341节的共享任务网格使用正 Bernstein 平滑。在非整数 $0<\beta<2$ 时，均值匹配给出 $m^{-\beta/2}$ 误差，可以由既定地板吸收。对于 $\beta>2$，Lorentz 算子具有更高逼近阶，但函数误差小不保证 Bernstein 系数非负，也不保证两来源的乘积次数提升相容。
+
+本节给出一个精确的局部障碍：第330节已有的小量导数尺度，不能单独保证高阶任务修正的负部被原地板吸收。一个非负光滑函数的局部二次零点，已经产生量级为 $n^{1-\beta/2}/m$ 的负系数。
+
+反例针对“仅凭这些尺度估计即可完成高阶张量化”的通用引理。它不是项目实际 HNP 参考增量的反例，也不排除利用那些增量的额外结构完成另一种高阶构造。本节不依赖第342节。
+
+### 343.1 待检验的高阶接口与量词
+
+固定非整数
+
+$$
+\beta>2,\qquad a=\beta/2>1,\qquad
+r=\lfloor\beta\rfloor\ge2,\qquad
+\theta=\beta-r\in(0,1).
+\tag{343.1}
+$$
+
+
+第330节对参考差与增量的单个任务参数函数 $g$ 给出非负性，以及尺度为 $n$ 时的估计
+
+$$
+g\ge0,\qquad
+\|g^{(j)}\|_\infty\le C_j n^{j/2-a}
+\quad(0\le j\le r),\qquad
+[g^{(r)}]_{C^\theta}\le C.
+\tag{343.2}
+$$
+
+
+拟保留的任务批量与地板关系为
+
+$$
+m\asymp n\eta^{-1/a},\qquad
+\delta\asymp n^{-a}\eta,\qquad 0<\eta\le1.
+\tag{343.3}
+$$
+
+这里 $m$ 是高阶任务算子的基本次数；其实际 Bernstein 表示次数将为 $m+r$。固定偏移 $r$ 不改变式（343.3）的数量级。
+
+若把普通任务 Bernstein 算子直接替换为 HNP 所用的 Lorentz 算子 $Q_{m,r}$，至少需要对参考非负增量证明：变换后的负系数可由式（343.3）的地板差吸收。下面证明，仅有式（343.2），即使再加入同型局部化上界与固定概率余量，也不能得到这一结论。
+
+反例中的 $n=L^2$ 首先固定，此后才令任务次数 $m$ 沿一个指定整数序列趋于无穷，地板 $\eta$ 随之趋零。这里的 $n$ 是通用引理的导数尺度标签；不宣称每个 $L^2$ 都是项目某一份已固定参考网格 $N b^k$ 的层号。
+
+### 343.2 Lorentz 算子的再生与局部系数
+
+HNP 式（27）—（29）定义线性算子 $Q_{m,r}$，并将其输出统一写成次数 $m+r$ 的 Bernstein 多项式。其式（28）为
+
+$$
+Q_{m,r}f(p)
+=\sum_{i=0}^{m}\sum_{j=0}^{r}
+f^{(j)}(i/m)m^{-j}\tau_j(p,m)b_{m,i}(p),
+\tag{343.4}
+$$
+
+其中
+
+$$
+b_{m,i}(p)=\binom mi p^i(1-p)^{m-i},\qquad
+\tau_0=1,\qquad\tau_1=0,
+$$
+
+且 $\tau_j$ 的次数不超过 $j$。HNP Lemma 14 给出
+
+$$
+Q_{m,r}P=P
+\quad\text{当 }\deg P\le r.
+\tag{343.5}
+$$
+
+这些是 Lorentz 高阶逼近的原始接口。[^lorentz_tensor_obstruction]
+
+**引理 343.1（单个输出系数的局部取值范围）。** 令 $D=m+r$。$Q_{m,r}f$ 的次数 $D$ Bernstein 表示中，第 $j_0$ 个系数只依赖满足
+
+$$
+0\le i\le m,\qquad j_0-r\le i\le j_0
+\tag{343.6}
+$$
+
+的格点 $i/m$ 上、至多 $r$ 阶的函数导数。
+
+**证明。** 式（343.4）的每个 $b_{m,i}$ 乘以一个次数至多为 $r$ 的多项式。将后者提升到次数 $r$ 后，其 Bernstein 编号位于 $0,\ldots,r$。乘积只能贡献到总编号 $i,\ldots,i+r$。对所有 $i,j$ 求和，得到式（343.6）。证毕。
+
+因此，只要两个函数在式（343.6）的所有格点附近具有相同的所需导数，它们的这个输出系数就完全相同；不要求两个函数在整个区间相等。
+
+### 343.3 满足局部尺度与局部化的非负函数
+
+选定
+
+$$
+\chi\in C_c^\infty((-2,2)),\qquad
+0\le\chi\le1,\qquad
+\chi=1\text{ 于 }[-1,1].
+\tag{343.7}
+$$
+
+取整数 $L\ge40$，置
+
+$$
+n=L^2,\qquad q_n=\frac12-\frac3L,\qquad
+y=L(p-q_n),
+\tag{343.8}
+$$
+
+并固定 $0<\varepsilon_0\le1/16$。定义
+
+$$
+g_n(p)=\varepsilon_0 n^{-a}y^2\chi(y),
+\qquad
+h_n(p)=4\varepsilon_0 n^{-a}\chi(y).
+\tag{343.9}
+$$
+
+
+两者光滑且
+
+$$
+0\le g_n\le h_n.
+\tag{343.10}
+$$
+
+在 $|p-q_n|\le1/L$ 上，
+
+$$
+g_n(p)=P_n(p)
+:=
+\varepsilon_0n^{1-a}(p-q_n)^2.
+\tag{343.11}
+$$
+
+
+**引理 343.2（反例函数的共同尺度）。** $g_n,h_n,h_n-g_n$ 均满足式（343.2），其中各常数可对全部整数 $L\ge40$ 共同选择。它们还可满足与第330节相同型的任务端点局部化上界。
+
+**证明。** 这些函数都是
+
+$$
+\varepsilon_0n^{-a}\psi(\sqrt n(p-q_n))
+$$
+
+的形式，其中 $\psi$ 是固定光滑紧支集函数。求 $j$ 阶导数给因子 $n^{j/2-a}$。第 $r$ 阶导数的 $\theta$-Hölder 半范数则带因子
+
+$$
+n^{r/2-a}n^{\theta/2}
+=n^{\beta/2-a}=1.
+$$
+
+由此得到所需共同界。
+
+为核对局部化，采用任务坐标
+
+$$
+x=1-2p,
+\tag{343.12}
+$$
+
+即原模型允许的固定响应参数 $B=2,C=1$。三个函数的支撑均包含于
+
+$$
+\frac12-\frac5L<p<\frac12-\frac1L,
+$$
+
+所以支撑上
+
+$$
+2<\sqrt n\,x<10,\qquad0<x\le1/4.
+\tag{343.13}
+$$
+
+对任意固定 $\rho>\beta$，函数
+
+$$
+z^\beta\min\{1,z^{-\rho}\}
+$$
+
+在 $[2,10]$ 上严格为正且有正下界。因此存在不依 $n$ 的 $C_\rho$，使上述三个非负函数在 $0<x\le1/4$ 上各自满足
+
+$$
+f_n(p)\le
+C_\rho x^\beta
+\min\{1,(nx^2)^{-\rho/2}\}.
+\tag{343.14}
+$$
+
+该正偏差区间中的支撑外左侧为零。三个函数在其余任务区间也恒为零，特别是在 $x\le0$ 及零偏差端点附近恒为零；这里不对负 $x$ 使用非整数次幂。证毕。
+
+这里的局部化核对只说明这组函数满足相同型上界，不说明它们就是项目特定参考递推中的系数。
+
+### 343.4 局部二次零点强制精确负系数
+
+**定理 343.3（非负输入的 Lorentz 负系数）。** 固定上述 $\beta,L,n,q_n,\varepsilon_0$。让 $D$ 遍历充分大的 $2L$ 的正整数倍，令
+
+$$
+m=D-r,\qquad j_0=Dq_n.
+\tag{343.15}
+$$
+
+则 $j_0$ 为整数，并且
+
+$$
+\boxed{
+\operatorname{coef}_{D,j_0}(Q_{m,r}g_n)
+=-\frac{\varepsilon_0n^{1-a}q_n(1-q_n)}{D-1}.
+}
+\tag{343.16}
+$$
+
+特别地，该系数严格为负，大小与 $n^{1-a}/m$ 相差固定倍率。
+
+**证明。** $q_n=(L-6)/(2L)$，故 $Dq_n$ 为整数。引理343.1中可能参与的格点满足
+
+$$
+\left|\frac{i}{m}-q_n\right|
+=\frac{|rq_n-(j_0-i)|}{m}\le\frac r m.
+\tag{343.17}
+$$
+
+当 $m>rL$ 时，这些点及其邻域全部落在 $|p-q_n|<1/L$ 内。由式（343.11），$g_n$ 在这些点的全部所需导数与 $P_n$ 相同。
+
+因此两者的第 $j_0$ 个输出系数相同。又因 $r\ge2$，式（343.5）给 $Q_{m,r}P_n=P_n$。
+
+次数 $D$ 的 $p$ 与 $p^2$ 的 Bernstein 系数分别为
+
+$$
+\frac jD,\qquad \frac{j(j-1)}{D(D-1)}.
+$$
+
+在 $j_0=Dq_n$ 处，$(p-q_n)^2$ 的系数恰为
+
+$$
+\begin{aligned}
+\frac{j_0(j_0-1)}{D(D-1)}
+-2q_n\frac{j_0}{D}+q_n^2
+&=-\frac{q_n(1-q_n)}{D-1}.
+\end{aligned}
+\tag{343.18}
+$$
+
+乘以 $\varepsilon_0n^{1-a}$，得到式（343.16）。由于 $q_n$ 位于固定内部区间，比较常数可保持为正。证毕。
+
+这背后有一个一般限制：任何有限次数 Bernstein 输出若精确再生二次多项式，就不可能同时对所有非负输入逐系数保正；在内部整数格点 $q=j/D$，非负函数 $(p-q)^2$ 的对应系数已被式（343.18）强制为负。本节的局部光滑函数把这一限制进一步量化到所需导数尺度与局部化范围。
+
+定理343.3不只适用于 $2<\beta<3$。对任意固定非整数 $\beta>2$，高阶导数在所用格点上都与二次多项式一致；再生二次多项式本身已经强制产生负系数。
+
+### 343.5 原任务批量不能吸收该负部
+
+**推论 343.4（原地板尺度的通用吸收失败）。** 固定任意 $M>0$。先固定定理343.3中的 $n=L^2$，再沿其整数次数序列令 $m\to\infty$，并定义
+
+$$
+\eta_m=\left(\frac{Mn}{m}\right)^a.
+\tag{343.19}
+$$
+
+充分大 $m$ 时 $0<\eta_m\le1$，且
+
+$$
+m=Mn\eta_m^{-1/a}.
+\tag{343.20}
+$$
+
+但是式（343.16）负值的大小与计划地板 $n^{-a}\eta_m$ 的比趋于正无穷。
+
+**证明。** 由精确公式，
+
+$$
+\begin{aligned}
+\frac{|\operatorname{coef}_{D,j_0}(Q_{m,r}g_n)|}
+     {n^{-a}\eta_m}
+&=
+\frac{\varepsilon_0q_n(1-q_n)}{M}
+\frac{m}{m+r-1}\,
+\eta_m^{1/a-1}.
+\end{aligned}
+\tag{343.21}
+$$
+
+$a>1$ 使指数 $1/a-1<0$，而 $\eta_m\to0$、$m/(m+r-1)\to1$。故比值趋于无穷。证毕。
+
+因此，即使 $M$ 已按所有固定导数常数选择得充分大，也不能对全部小地板 $\eta$ 用固定倍数 $n^{-a}\eta$ 吸收负部。实际 Bernstein 次数为 $D=m+r$，与式（343.20）只差固定偏移，不改变这一结论。
+
+这个量词先固定一份非负函数，再增加任务次数。它不以同时改变 $n$ 与 $m$ 的任意路径掩盖所需的一致性。
+
+### 343.6 两层参考相容输入仍会失去张量相容性
+
+下面把负系数接入相邻参考层，检验真正需要的下数组次数提升条件。
+
+对所有参考成功数都使用相同函数，定义
+
+$$
+\ell_{\rm old}=1/2,\qquad
+\ell_{\rm new}=1/2+g_n,\qquad
+u_{\rm old}=u_{\rm new}=1/2+h_n.
+\tag{343.22}
+$$
+
+由于参考计数方向的系数恒定，任何参考次数提升在这些数组上都只保留原函数。
+
+**命题 343.5（两层乘积相容性反例）。** 式（343.22）在高阶任务处理之前满足固定概率余量、逐参考系数相容性，以及非负差与增量的共同局部尺度和局部化上界。但直接使用 Lorentz 任务系数并加入式（343.3）量级的地板后，下相容性可以失败。
+
+**证明。** 式（343.10）给
+
+$$
+\ell_{\rm old}\le\ell_{\rm new}
+\le u_{\rm new}\le u_{\rm old}.
+\tag{343.23}
+$$
+
+由 $\varepsilon_0\le1/16$、$n\ge1$，全部函数位于 $[1/4,3/4]$。两层同级差分别为 $h_n,h_n-g_n$，下增量为 $g_n$，上增量为零。引理343.2给全部所需尺度与局部化估计。原上下系数的 $C^\beta$ 范数也共同有界。
+
+固定任意常数
+
+$$
+d_{\rm old}>d_{\rm new}>0,
+$$
+
+并沿推论343.4取
+
+$$
+\delta_{\rm old}=d_{\rm old}n^{-a}\eta_m,\qquad
+\delta_{\rm new}=d_{\rm new}n^{-a}\eta_m.
+\tag{343.24}
+$$
+
+这种形态包含相邻参考几何尺度、相同地板参数时的固定比例地板差；各固定倍率可吸收入 $d_{\rm old},d_{\rm new}$。
+
+旧下函数恒为 $1/2$，所以无论旧任务基本次数为何，其 Lorentz 系数及随后的任务次数提升都恒为 $1/2$。旧任务次数可选为新次数的一个固定比例并取整，保证严格增加；此处不需要任何特殊旧网格。
+
+新下数组采用
+
+$$
+A_{\rm new}=(1-\delta_{\rm new})Q_{m,r}\ell_{\rm new}
+$$
+
+的次数 $D=m+r$ 系数。旧下数组经任务和参考两方向提升后，仍是常数 $(1-\delta_{\rm old})/2$。故其第 $j_0$ 个下相容性差精确为
+
+$$
+\begin{aligned}
+A_{{\rm new},j_0}
+-(\mathsf E^T\mathsf E^H A_{\rm old})_{j_0}
+={}&\frac{\delta_{\rm old}-\delta_{\rm new}}2\\
+&-(1-\delta_{\rm new})
+\frac{\varepsilon_0n^{1-a}q_n(1-q_n)}{m+r-1}.
+\end{aligned}
+\tag{343.25}
+$$
+
+
+除以 $n^{-a}\eta_m$，第一项为固定常数
+$(d_{\rm old}-d_{\rm new})/2$，第二项由式（343.21）趋于负无穷。因此对充分大的允许 $m$，式（343.25）严格为负。
+
+所需条件
+
+$$
+\mathsf E^T\mathsf E^H A_{\rm old}\le A_{\rm new}
+$$
+
+逐系数失败。证毕。
+
+这是一份满足所列估计的参考数组输入；并未预先假定变换后的联合数组已经合法。下相容性已经失败，就足以否定从这些输入直接推出合法三分类程序的通用引理。
+
+反例没有把式（343.22）认作项目实际 HNP 参考递推，也没有声称它们对原目标的全部参考响应提供同一份目标包络。这里被反驳的是只使用非负性、局部导数尺度、局部化上界和固定余量的推理。
+
+### 343.7 已有导数界实际给出的通用负部量级
+
+**命题 343.6（一般负部上界及其可达量级）。** 若 $g\ge0$ 满足式（343.2），则对 $m\ge n\ge1$，存在只依固定正则阶和导数常数的 $C$，使
+
+$$
+\boxed{
+\min_i\operatorname{coef}_{m+r,i}(Q_{m,r}g)
+\ge-Cn^{1-a}/m.
+}
+\tag{343.26}
+$$
+
+定理343.3的函数达到这一负部量级，所以不能只凭同一组输入将其一致改进为 $Cm^{-a}$。
+
+**证明。** 原始 Bernstein 部分 $B_mg$ 的系数非负，提升次数后仍非负；$\tau_1=0$。HNP Corollary 16对第 $j$ 阶修正给 Bernstein 系数界
+
+$$
+C_jm^{-\lceil j/2\rceil}\|g^{(j)}\|_\infty.
+\tag{343.27}
+$$
+
+具体地，该推论及系数对称性给
+$\tau_j/m^j$ 的系数由固定倍数
+$\min(m^{-i},m^{i-j})$ 控制，其最大量级为
+$m^{-\lceil j/2\rceil}$。与 $B_mg^{(j)}$ 相乘及次数提升只形成相应系数的非负加权平均。
+
+因此
+
+$$
+\min_i\operatorname{coef}_{m+r,i}(Q_{m,r}g)
+\ge-C\sum_{j=2}^r
+m^{-\lceil j/2\rceil}n^{j/2-a}.
+\tag{343.28}
+$$
+
+偶数 $j=2\ell$ 的项等于
+
+$$
+n^{-a}(n/m)^\ell.
+$$
+
+奇数 $j=2\ell+1\ge3$ 的项等于
+
+$$
+n^{-a}n^{-1/2}(n/m)^{\ell+1}.
+$$
+
+由于 $m\ge n\ge1$，全部有限项均由固定倍数
+$n^{-a}(n/m)$ 控制，得到式（343.26）。
+
+定理343.3中负部为固定正数乘 $n^{1-a}/m$。其与 $m^{-a}$ 的比为固定倍数 $(m/n)^{a-1}$，随 $m/n\to\infty$ 无界，证明最后的排除。证毕。
+
+若只想用加性地板吸收这个通用负部，一个足够的任务批量尺度是
+
+$$
+m\gtrsim n/\eta.
+\tag{343.29}
+$$
+
+它比 $n\eta^{-1/a}$ 大。式（343.29）目前只处理单个非负增量的符号预算，不等于证明完整张量相容性。
+
+相应的任务临界批量变成
+
+$$
+m^a\asymp n^a\eta^{-a},
+$$
+
+也改变了第338—339节的费用分配。不能在采用更大批量之后继续不经计算地沿用原来的联合预算。
+
+### 343.8 对实际 HNP 参考增量仍需证明什么
+
+HNP §5的高阶正性构造使用完整概率函数离零一的固定余量。其 Step 4控制的是特定迭代残余的逐系数大小，Step 5再加入明确正校正并证明校正自身的次数提升不等式。该结论不能直接改读为 $Q_{m,r}$ 对任意非负参考增量保序。
+
+高阶路线仍有四项具体义务：
+
+1. **实际增量的特殊正性。** 若保持原任务批量，须证明实际 HNP 参考增量具有排除上述二次零点机制的结构，或直接证明其高阶任务系数负部不超过可用地板。第330节已有的上界本身不足。
+
+2. **跨任务层的逐系数提升差。** 即使单层负部被控制，仍须比较同一个旧参考函数在新、旧任务算子下的系数及其次数提升。函数空间中的 $O(m^{-a})$ 逼近误差不自动给出这个比较。
+
+3. **共同递推与参考提升。** 若改用 HNP 的迭代中心，而非本节直接检验的 $Q_{m,r}$，须定义所有参考系数共用的任务递推，并核对它与参考次数提升的交换，以及参考目标逐层变化产生的新增项。本节的反例不排除所有可能的迭代设计。
+
+4. **联合校正与预算。** 正校正必须同时保持同级上下顺序、两方向相邻相容和同世界局部化；随后还须按同一次实际执行重新计算两来源费用。
+
+因此，本节没有以“可作高阶逼近”宣告高阶张量化完成。它确定了现有尺度估计能承担的负部量级，并给出该量级确实阻断原地板吸收的具体反例。
+
+### 343.9 结论边界与来源
+
+本节证明：对任意固定非整数 $\beta>2$，存在满足所列非负性、导数尺度、局部化与概率余量的参考数组输入，使直接 Lorentz 任务替换在
+
+$$
+m\asymp n\eta^{-1/a},\qquad
+\delta\asymp n^{-a}\eta
+$$
+
+下失去逐系数相容性。证明先固定 $n=L^2$，再令任务次数沿允许的整数序列增大，因而直接检验了对小地板所需的一致吸收能力。
+
+这个方法反例不等于项目实际 HNP 增量的反例，也不等于原关系过程不存在高阶有效表示。实际增量能否提供足以绕开它的额外结构，仍须按第343.8节完成对应义务。
+
+本节使用 HNP 的精确算子公式、二次再生和修正系数界；局部函数、精确负系数及两层相容性失败在本文直接证明。结论属于纸面数学，不认领 Lean 核验、数值实验、完整高阶工厂或未经文献核定的原创性。
+
+[^lorentz_tensor_obstruction]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)，[PDF](https://arxiv.org/pdf/0808.1936v3)。§4式（27）—（29）定义并展开 Lorentz 算子，Lemma 14给多项式再生，Corollary 16给修正项的 Bernstein 系数界；§5 Lemma 23及 Steps 4—5、式（47）—（49）说明完整正性构造另需概率余量、迭代残余控制和相容正校正。
+
+## 追加锚（本行以下为增补区）
