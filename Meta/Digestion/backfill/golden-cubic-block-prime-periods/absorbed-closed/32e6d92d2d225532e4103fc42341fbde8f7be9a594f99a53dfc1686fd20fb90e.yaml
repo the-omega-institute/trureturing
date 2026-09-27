@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:32e6d92d2d225532e4103fc42341fbde8f7be9a594f99a53dfc1686fd20fb90e
+  normalized_sha256: sha256:32e6d92d2d225532e4103fc42341fbde8f7be9a594f99a53dfc1686fd20fb90e
+cas_ref: sha256:32e6d92d2d225532e4103fc42341fbde8f7be9a594f99a53dfc1686fd20fb90e
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/GoldenCubicIndexForm.golden_cubic_discriminant_index_form
+    target_statement_id: sha256:2c5b975dc0db4da27cca22cb75412be562ce81fe1712dff383e3c238500042dd
+receipts:
+  unresolved_subitems: []

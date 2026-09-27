@@ -1,0 +1,12 @@
+## 8. Cubic coordinate discriminant and index form
+
+For $j\geq1$ put $B_j=L_{3^j}^2+3$ and $a_j=(B_j-1)/9$; Theorem 4.1
+shows that $a_j$ is an integer. Use the free rank-three integer
+coordinate ring with basis $(1,\theta,\beta)$ and multiplication
+$\theta^2=3\beta-\theta-1$,
+$\theta\beta=\beta+3a_j$, and
+$\beta^2=\beta+a_j\theta+2a_j$.
+Let $G_j$ be its regular-trace Gram matrix on this basis. For
+$\alpha=r+b\theta+c\beta$, let $I_j(r,b,c)$ be the matrix whose columns
+are the coordinates of $(1,\alpha,\alpha^2)$ on the same basis.
+

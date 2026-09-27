@@ -185,3 +185,36 @@ $\phi$ to $Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$, and the
 multiplicative orders of $\phi$ and $Q$ are equal.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Cubic coordinate discriminant and index form
+
+For $j\geq1$ put $B_j=L_{3^j}^2+3$ and $a_j=(B_j-1)/9$; Theorem 4.1
+shows that $a_j$ is an integer. Use the free rank-three integer
+coordinate ring with basis $(1,\theta,\beta)$ and multiplication
+$\theta^2=3\beta-\theta-1$,
+$\theta\beta=\beta+3a_j$, and
+$\beta^2=\beta+a_j\theta+2a_j$.
+Let $G_j$ be its regular-trace Gram matrix on this basis. For
+$\alpha=r+b\theta+c\beta$, let $I_j(r,b,c)$ be the matrix whose columns
+are the coordinates of $(1,\alpha,\alpha^2)$ on the same basis.
+
+**Theorem 8.1 (coordinate discriminant and signed index form).** For every
+$j\geq1$ and every $r,b,c\in\mathbb Z$,
+
+$$
+\begin{aligned}
+\det G_j&=-3B_j^2,\\
+\det I_j(r,b,c)&=3b^3+3b^2c+bc^2-a_jc^3,\\
+9\det I_j(r,b,c)&=(3b+c)^3-B_jc^3.
+\end{aligned}
+$$
+
+The multiplication table gives
+$G_j=\begin{pmatrix}3&0&1\\0&0&B_j\\1&B_j&6a_j+1\end{pmatrix}$.
+Its determinant is the first formula. Multiplying $\alpha$ in the
+coordinate ring gives the second determinant, and $B_j=9a_j+1$ gives
+the third. These are statements about the constructed coordinate ring;
+identifying it with an order in $\mathbb Q(\sqrt[3]{B_j})$ and computing
+the maximal-order index remain separate GIR1 obligations.
+
+## 追加锚（本行以下为增补区）
