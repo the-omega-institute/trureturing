@@ -10620,3 +10620,391 @@ $$
 因此 $E_2$ 非空性、锐利维数及指定双均值的可实现性仍未决。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 82. 典型输出后验熵的首个随机响应
+
+**定义 82.1（同一计数实现的逐输出后验熵）。** 保持第 75、77、79 章的两种原实际实验、
+完整窗口计数向量 $R$、均匀大小 $q$ 支持先验下的精确纤维律 $P_x$、
+精确中心标量 $T=t_x(R)$ 及同一个独立标准正态 $G$。
+仍令 $Y=T+\sigma_MG$，$L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$。
+沿用 $f_x$、$H_M=i_x(R,Y)-L_M$、$\nu=2g_0$、$c=\tfrac12\ln\nu$，并置
+
+$$
+\gamma=\int_{\mathbb R}\rho(t)\,dt,
+\qquad S_x(n)=-\ln P_x(n),\qquad
+h_x^{\rm nat}=\mathbb E_{P_x}S_x(R),
+\qquad
+\mathsf H_{{\rm post},x}(y)=-\sum_n p_x(n\mid y)\ln p_x(n\mid y).
+\tag{82.1}
+$$
+
+本章熵均用自然单位，$\rho$ 精确取 (77.2)，$\delta=Q^{-1/2}$。
+条件积分始终使用同一个先验计数向量及其测量噪声。
+所有环境收敛均按第 77 章的量词，在两种原实验中分别一致于确定真实支持的数据概率。
+
+**定理 82.2（实际后验熵的输出积分回归）。** 对每个上述确定噪声序列，有
+
+$$
+\int_{\mathbb R} f_x(y)
+ \left|\sqrt\delta\,[\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M]
+             -\frac\gamma\nu y\right|dy\longrightarrow0.
+\tag{82.2}
+$$
+
+更强的中间结论是：若
+
+$$
+r_x(y)=\sqrt\delta\,\mathbb E_{P_x}
+ [(S_x(R)-h_x^{\rm nat})\varphi_{\sigma_M}(y-T)],
+\tag{82.3}
+$$
+
+则 $\|r_x+\gamma\varphi_\nu'\|_1\to0$。
+首个非零随机修正的尺度为 $\delta^{-1/2}=Q^{1/4}$；
+精确中心 $h_x^{\rm nat}$ 不得替换为仅知一阶等价的熵表达式。
+
+证明。首先处理实际后验与乘积律之间的带权误差。
+沿用第 77 章 $\mathsf Q_x,L_x,a_x,v_j,V,U_j,e_j$，
+令 $\mathcal S=-\ln\mathsf Q_x(R)$、$\widetilde h=\mathbb E_{\mathsf Q_x}\mathcal S$、
+$s=\mathcal S-\widetilde h$。
+第 68 章全占据范围的二项信息矩估计与独立乘积结构给
+
+$$
+\mathbb E_{\mathsf Q_x}s^2\le CQ^2,\qquad
+\mathbb E_{\mathsf Q_x}s^4\le CQ^4.
+\tag{82.4}
+$$
+
+这些界包括空组及所有端点组。
+具体地，紧参数范围的全点二项界使单组信息量减去
+$\tfrac12\ln(n+1)$ 介于 $-C$ 与 $C+C(K-np)^2/(n+1)$ 之间；
+Bernoulli 四阶、八阶中心矩分别控制它的二阶、四阶中心矩。
+展开至多 $CQ^2$ 个独立中心变量的四次和即得 (82.4)。
+
+实际正概率原子上 $S_x=\mathcal S-\ln L_x$，且
+
+$$
+\begin{aligned}
+h_x^{\rm nat}-\widetilde h
+ &=\mathbb E_{\mathsf Q_x}[(L_x-1)s]-D(P_x\Vert\mathsf Q_x),\\
+0\le D(P_x\Vert\mathsf Q_x)&\le a_x^2,\qquad
+\mathbb E_{P_x}(\ln L_x)^2\le Ca_x^2,\\
+|h_x^{\rm nat}-\widetilde h|&\le CQa_x+a_x^2.
+\end{aligned}
+\tag{82.5}
+$$
+
+第二行用 $\ln t\le t-1$ 及 $0\le L_x\le C$；
+$t(\ln t)^2/(t-1)^2$ 在零、一处连续延拓后有界。
+零密度点没有实际质量。
+定义 $r_x^{\rm prod}(y)=\sqrt\delta\,\mathbb E_{\mathsf Q_x}
+[s\varphi_{\sigma_M}(y-T)]$，每个测量核的积分等于一，故
+
+$$
+\|r_x-r_x^{\rm prod}\|_1
+ \le C\sqrt\delta(Qa_x+a_x+a_x^2)
+ =O_{\mathbb P}(Q^{-7/4})\to0.
+\tag{82.6}
+$$
+
+这里先消去 $Q^5$ 阶平均信息，才估计其 $O(Q)$ 波动。
+这是整个计数向量的带权比较，未把实际后验的外部组当成独立变量。
+
+接着使用第 77 章原量化耦合，核心半径为
+$R_M^2=\sqrt{\lambda(L_M+\ln Q+1)}$，核心、外部指标分别记为 $\mathcal C,\mathcal O$。
+保留同一组量化均匀变量、独立核心正态 $Z_j$、精确中心及外部中心截距，
+使参考标量为
+
+$$
+T^{\rm G}=\delta^{-1/2}
+ \left[\sum_{\mathcal C}(\sqrt{v_j}Z_j-e_j)^2
+       -V_{\mathcal C}+\|e_{\mathcal O}\|^2\right].
+\tag{82.7}
+$$
+
+对任意固定 $A\ge0,b>0$，(77.9) 实际还给
+
+$$
+Q^A\sigma_M^{-b}D_M(x)\to0,
+\qquad D_M(x)=\mathbb E|T-T^{\rm G}|.
+\tag{82.8}
+$$
+
+因为外部项的实际数据期望至多为
+$CQ^{A+1/4}e^{bL_M}(e^{-cR_M^2}+Q^Ce^{-c\lambda})$，
+核心项在 $V\le Q$ 上至多为 $CQ^{A+5/4}e^{bL_M-c_q\lambda/24}$。
+两项均趋零，坏环境仅付其概率。
+同一假设 $L_M=o(\lambda)$ 足够，未加入额外对数间隔。
+
+两个平移 Gaussian 核的 $L^1$ 距离 $k$ 满足
+$k\le\min(2,\sqrt{2/\pi}|T-T^{\rm G}|/\sigma_M)$，
+故 $\mathbb Ek^2\le CD_M/\sigma_M$。
+由 (82.4)，在保留完整计数向量的耦合上，
+
+$$
+\left\|r_x^{\rm prod}
+ -\sqrt\delta\,\mathbb E[s\varphi_{\sigma_M}(\,\cdot-T^{\rm G})]\right\|_1
+ \le C\sqrt\delta Q\sqrt{D_M/\sigma_M}\to0.
+\tag{82.9}
+$$
+
+在乘积参考中，中心化的外部信息 $s_{\mathcal O}$ 与核心量化变量独立，
+而精确中心与截距只是数据的函数，因此
+$\mathbb E[s_{\mathcal O}\varphi_{\sigma_M}(y-T^{\rm G})]=0$。
+这个精确抵消发生在 (82.6) 已支付实际总数依赖之后。
+
+同一个量化耦合还给单组信息量的带权替换。
+若 $X=(K-np)/\sqrt{np(1-p)}$、$Z$ 为其量化耦合正态、$d=np(1-p)$，则
+
+$$
+\mathbb E\left|[-\ln f_{n,p}(K)-\mathbb E(-\ln f_{n,p}(K))]
+                         -\tfrac12(Z^2-1)\right|\le Cd^{-1/12}.
+\tag{82.10}
+$$
+
+在 $|K-np|\le n^{5/8}$ 内，Stirling 与二项相对熵 Taylor 展开使信息量等于
+$\tfrac12\ln(2\pi d)+X^2/2+O(n^{-1/8})$。
+补集以全点界及四阶中心矩控制，绝对余项期望仍为 $O(n^{-1/8})$。
+中心化至多使此误差加倍；第 75 章量化界
+$\mathbb E|X-Z|^2\le Cd^{-1/6}$ 再给 $\mathbb E|X^2-Z^2|\le Cd^{-1/12}$。
+核心最小 $d$ 至少为 $e^{c_q\lambda/2}$，组数至多 $CQ^2$，所以令
+
+$$
+F_M=\frac{\sqrt\delta}{2}\sum_{\mathcal C}(Z_j^2-1),\qquad
+r_x^{\rm G}(y)=\mathbb E[F_M\varphi_{\sigma_M}(y-T^{\rm G})],
+\tag{82.11}
+$$
+
+便有 $\|r_x-r_x^{\rm G}\|_1\to0$。
+此处核心信息的替换没有逆噪声代价，因为测量核积分为一。
+$F_M$ 的方差可能随移动核心半径增长，下一步不以其方差控制尾部。
+
+令 $w_j=v_j/\sqrt\delta$、$c_j=e_j/\sqrt{v_j}$。
+固定中心区 $|j\delta|\le1$ 的每个模四同余类都有至少 $c/\delta$ 个组，
+且 $c\sqrt\delta\le w_j\le C\sqrt\delta$。
+将核心按这四类分为独立和 $T_0,T_1,T_2,T_3$，外部截距并入 $T_0$。
+在任意固定高概率环境类上，各 $\mathbb E|T_l|\le C$，并且其特征函数满足
+
+$$
+|\psi_l(t)|\le m_\delta(t):=(1+c\delta t^2)^{-c'/\delta}.
+\tag{82.12}
+$$
+
+这由非中心平方正态因子的模长界直接得到，不要求每个 $c_j$ 小。
+各类方差为 $2\sum w_j^2+4\sum w_j^2c_j^2\le C$，
+均值绝对值至多 $\delta^{-1/2}\|e\|^2=o(1)$。
+任意固定次多项式乘 $m_\delta$ 的积分统一有界、尾积分统一趋零：
+在 $|t|\le\delta^{-1/2}$ 用 $e^{-c''t^2}$ 控制，
+外部令 $z=\sqrt\delta|t|\ge1$，将幂指数分成两份，
+一份产生 $e^{-c'''/\delta}$，另一份支付任意固定 $z$ 幂次。
+
+全和及两个半和 $T_A=T_0+T_2$、$T_B=T_1+T_3$ 都可再分成两独立部分。
+对特征函数求导，利用一部分的第一绝对矩、另一部分的衰减，得
+$|\psi'(t)|\le Cm_\delta(t)$。
+对各自密度 $g$，Fourier 反演与 Plancherel 因而给
+
+$$
+\int(1+y^2)|g'(y)|^2dy\le C,
+\qquad \|g'\|_1\le C,
+\qquad \int_{|y|>H}|g'(y)|dy\le CH^{-1/2}.
+\tag{82.13}
+$$
+
+第二个加权平方积分来自 $\psi+t\psi'$ 的 $L^2$ 范数，
+可先在弱 Fourier 导数意义理解，再由上述可积界识别为普通函数。
+第 77 章的平方质量极限与精确中心估计使全和特征函数趋于 $e^{-\nu t^2/2}$。
+用 (82.12) 支配 $|t|$ 加权 Fourier 积分，先得密度导数一致收敛；
+再用 (82.13) 的尾界得到
+
+$$
+\|(g_x^0)'-\varphi_\nu'\|_1\to0,
+\qquad \|g_x'-\varphi_\nu'\|_1\to0,
+\quad g_x=g_x^0*\varphi_{\sigma_M}.
+\tag{82.14}
+$$
+
+最后一步用卷积的 $L^1$ 收缩及 $\varphi_\nu'$ 的平移连续性。
+一般有限 Wiener chaos 下的这一导数极限由 Herry–Malicet–Poly 的
+Corollary 10(a) 直接覆盖；此处的经典 Fourier 推导还给出了两个独立半和所需的统一界。
+
+经典 Gaussian 分部积分
+$\mathbb E[(Z_j^2-1)h]=\mathbb E[Z_j\partial_jh]$ 给精确恒等式
+
+$$
+r_x^{\rm G}(y)=-\mathbb E[K_M\varphi_{\sigma_M}'(y-T^{\rm G})],
+\qquad K_M=\sum_{\mathcal C}v_jZ_j(Z_j-c_j).
+\tag{82.15}
+$$
+
+导数前系数是 $\sqrt\delta w_j=v_j$，决定了响应的正号及常数。
+写 $K_M=V_{\mathcal C}+J_A+J_B$，其中两个 $J$ 是相应半核心上的中心贡献。
+它们分别与对方半和独立，并满足
+
+$$
+\mathbb EJ_l=0,
+\qquad \mathbb EJ_l^2=2\sum_{j\in l}v_j^2+\sum_{j\in l}v_je_j^2\le C\delta.
+\tag{82.16}
+$$
+
+若 $h_B$ 为 $T_B$ 的密度，Fubini 与独立性把含 $J_A$ 的导数项写成
+$\mathbb E[J_A(h_B'*\varphi_{\sigma_M})(y-T_A)]$，
+其 $L^1$ 范数至多为 $\mathbb E|J_A|\|h_B'\|_1\le C\sqrt\delta$。
+另一项相同。因此
+
+$$
+\|r_x^{\rm G}+V_{\mathcal C}g_x'\|_1\le C\sqrt\delta,
+\qquad
+\|r_x+\gamma\varphi_\nu'\|_1\to0.
+\tag{82.17}
+$$
+
+第二式还用 $V_{\mathcal C}\to\gamma$，由原局部剖面和外部第一质量尾界成立。
+这里将导数交给独立核心块的密度，未单独支付测量核的 $\sigma_M^{-1}$ 导数范数。
+
+最后回到实际熵。第 77 章的 $L^1$ 密度收敛与实际输出二阶矩紧性给
+$\|y(f_x-\varphi_\nu)\|_1\to0$：
+在 $\mathbb E_xY^2\le K$ 上，分割 $|y|\le H$ 后误差至多为
+$H\|f_x-\varphi_\nu\|_1+(K+\nu)/H$，依次取极限。
+于是 (82.17) 及 $-\gamma\varphi_\nu'=(\gamma/\nu)y\varphi_\nu$ 给
+
+$$
+\int f_x(y)\left|\sqrt\delta\,\mathbb E_x[S_x-h_x^{\rm nat}\mid Y=y]
+                              -\frac\gamma\nu y\right|dy\to0.
+\tag{82.18}
+$$
+
+有限 Bayes 恒等式为
+
+$$
+\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M
+ =\mathbb E_x[S_x-h_x^{\rm nat}\mid y]-\mathbb E_x[H_M\mid y].
+\tag{82.19}
+$$
+
+第 79 章已证 $\mathbb E_x|H_M|=O_{\mathbb P}(1)$，
+因此第二项乘 $\sqrt\delta$ 后的输出积分绝对值趋零，得到 (82.2)。
+所有推导在高概率好环境进行，环境外只付概率；
+未将无界熵乘以坏环境概率来声称期望收敛。证毕。
+
+**推论 82.3（随机熵响应与平均熵的不同尺度）。** 在同一实际条件实现上，
+
+$$
+\mathcal L_x\!\left(T,Y,G,H_M,
+ \sqrt\delta[\mathsf H_{{\rm post},x}(Y)-h_x^{\rm nat}+L_M]\right)
+\Longrightarrow
+\mathcal L\!\left(\sqrt\nu Z,\sqrt\nu Z,G_\infty,
+ c+\tfrac12(Z^2-G_\infty^2),\frac\gamma{\sqrt\nu}Z\right),
+\tag{82.20}
+$$
+
+其中 $Z,G_\infty$ 为独立标准正态；条件有界 Lipschitz 距离按定义 82.1 趋零。
+因此尺度化熵响应有非退化 $N(0,\gamma^2/\nu)$ 极限，而
+
+$$
+\int f_x(y)\mathsf H_{{\rm post},x}(y)dy
+ =h_x^{\rm nat}-L_M-c+o_{\mathbb P}(1).
+\tag{82.21}
+$$
+
+证明。(82.2) 给第五坐标在实际输出下的条件 $L^1$ 替换；
+将其与定理 79.2 的同一联合向量组合，连续映射即得 (82.20)。
+(82.21) 是第 77 章平均信息式与有限 Bayes 恒等式。
+平均修正为常数阶，不蕴含每个典型输出的熵在常数尺度集中。
+在 bits 单位，(82.2) 的括号改为
+$\mathsf H_{{\rm post},x}^{bits}-h_x^{bits}+L_M/\ln2$，系数改为 $\gamma/(\nu\ln2)$。
+本推论未从 $L^1$ 或弱极限推出熵响应的方差收敛。证毕。
+
+**定理 82.4（典型输出条件信息矩）。** 对每个固定整数 $k\ge1$，令
+$H_*(y,N_0)=c+y^2/(2\nu)-N_0^2/2$，其中 $N_0$ 为描述目标核的标准正态，则
+
+$$
+\int f_x(y)\left|\mathbb E_x[H_M^k\mid y]
+                       -\mathbb E_{N_0}H_*(y,N_0)^k\right|dy\to0.
+\tag{82.22}
+$$
+
+任意固定 $p>0$ 的绝对 $p$ 阶矩也有同样结论。特别地
+
+$$
+\begin{aligned}
+\int f_x\left|\mathbb E_x[H_M\mid y]-c-\frac{y^2}{2\nu}+\frac12\right|dy&\to0,\\
+\int f_x\left|\operatorname{Var}_x(H_M\mid y)-\frac12\right|dy&\to0.
+\end{aligned}
+\tag{82.23}
+$$
+
+证明。这里需要新的实际高阶矩界，不能只用第 77 章二阶矩。
+在乘积律下，中心 Bernoulli 单项展开中每个非零指标至少重复两次，故
+
+$$
+\mathbb E_{\mathsf Q_x}|U_j|^{2m}
+ \le C_m\sum_{l=1}^m v_j^lB^{-2(m-l)}
+ \le C_m(v_j^m+B^{2-2m}v_j).
+\tag{82.24}
+$$
+
+令 $W_j=\delta^{-1/2}(U_j^2-v_j)$，则对固定整数 $k\ge2$，
+
+$$
+\sum_j\mathbb E_{\mathsf Q_x}|W_j|^k
+ \le C_k\left[(\delta^{-1}\sum_jv_j^2)^{k/2}
+              +\delta^{-k/2}B^{2-2k}V\right]=O_{\mathbb P}(1).
+\tag{82.25}
+$$
+
+展开独立中心和的固定 $2m$ 阶矩，仅剩各指标至少出现两次的有限种分拆；
+将不同指标的求和放大为不受限乘积，(82.25) 控制每种分拆，故
+$\mathbb E_{\mathsf Q_x}|\sum_jW_j|^{2m}=O_{\mathbb P}(1)$。
+Minkowski 与 (82.24) 还给
+
+$$
+(\mathbb E_{\mathsf Q_x}\|U\|^{2m})^{1/m}
+ \le C_m[V+B^{-2+2/m}(CQ^2)^{1-1/m}V^{1/m}]=O_{\mathbb P}(1).
+\tag{82.26}
+$$
+
+由 $\|e\|\le a_x\sqrt V$，精确中心线性项乘 $\delta^{-1/2}$ 后的固定阶矩趋零，
+截距也趋零。对原精确展开使用非负密度上界 $L_x\le C$，得到
+
+$$
+\mathbb E_{P_x}|T|^{2m}=O_{\mathbb P}(1),\qquad
+\mathbb E_x|Y|^{2m}=O_{\mathbb P}(1)
+\quad\text{对每个固定 }m.
+\tag{82.27}
+$$
+
+这通过密度支配证明，无 TV 搬运无界矩。
+第 79 章对数密度尾界已给 $\mathbb E_x|H_M|^q=O_{\mathbb P}(1)$，任意固定 $q>0$。
+(82.27) 同时使目标核满足
+$\int f_x\mathbb E|H_*(y,N_0)|^qdy\le C_q(1+\mathbb E_x|Y|^{2q})=O_{\mathbb P}(1)$。
+记 (79.14) 的输出积分条件 CDF 误差为 $\overline D_H(x)\to0$。
+对固定 $q>p>0$，截断函数 $\min(|t|^p,A^p)$ 的总变差至多 $2A^p$，从而
+
+$$
+\begin{aligned}
+&\int f_x\left|\mathbb E_x[|H_M|^p\mid y]-\mathbb E|H_*|^p\right|dy\\
+&\quad\le2A^p\overline D_H(x)
+ +A^{p-q}\left[\mathbb E_x|H_M|^q+\int f_x\mathbb E|H_*|^qdy\right].
+\end{aligned}
+\tag{82.28}
+$$
+
+在固定高概率矩界事件上先选大 $A$，再取规模极限，最后扩大事件，即得绝对矩结论；
+带符号整数次幂的截断总变差也受相同阶数控制。
+对条件方差，还须比较条件均值的平方。
+两条件均值之差 $d(y)$ 的输出积分绝对值趋零，四阶矩积分紧，
+所以 $\int f_xd^2\le A\int f_x|d|+A^{-2}\int f_x|d|^4\to0$。
+Cauchy–Schwarz 控制均值平方之差，再用二阶矩结论与
+$\operatorname{Var}(N_0^2/2)=1/2$，得到 (82.23)。
+
+条件 Markov 不等式将这些积分结论转为典型输出结论。
+所有后验仍是先验定义的纤维核，未改为确定支持的点质量后验。
+有界失败概率经先验平均，再由保持两奇偶类的支持置换不变性，
+传为确定支持的无条件联合实验结论；不据此平均无界数据误差。
+已知反向按原方式对齐，未知方向在单个共同一致事件上传递全部坐标与同一个 $G$，
+仅付该事件失败概率。
+有限纤维中 $G\mid Y=y$ 仍为离散律，其对连续正态的 TV 距离为一。
+本章不声称每个输出成立、增长阶矩一致、全局数据期望收敛，
+也未确定去除 $Q^{1/4}$ 项后的后验熵常数项。证毕。
+
+## 追加锚（本行以下为增补区）
