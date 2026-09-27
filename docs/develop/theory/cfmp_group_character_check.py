@@ -263,7 +263,7 @@ def analyze(U,V):
 
 
 def right_coset_action(G, C, generators):
-    """Left cosets C / G acted on from the right; no normality assumed."""
+    """Cosets Cg acted on from the right; no normality assumed."""
     cosets, index = [], {}
     for g in sorted(G):
         if g in index:
