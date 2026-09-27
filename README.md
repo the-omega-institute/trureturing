@@ -51,9 +51,8 @@ The repository makes part of this geometry precise. Its
 uses reachability in a dependency graph to define open sets. Its
 [recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
 says that, on a nonempty state space, a target admits a recovery function from
-an observation exactly when that target is constant on each observation
-fiber. Here a fiber is the set of states giving the same observation; the
-existence of a recovery function alone gives no algorithm or cost bound.
+an observation exactly when any two states with the same observation have the
+same target value. Existence alone supplies no algorithm or cost bound.
 
 ## Start your journey
 
