@@ -1,0 +1,253 @@
+{
+  "result": "PASS",
+  "actual_controls": [
+    {
+      "name": "B3",
+      "complete_source_points": 789,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "25/84",
+        "3/7",
+        "5/28",
+        "5/42",
+        "5/28",
+        "1/14",
+        "5/84",
+        "1/28"
+      ],
+      "actual_envelope": "249/28"
+    },
+    {
+      "name": "H4-two",
+      "complete_source_points": 790,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "2/7",
+        "3/7",
+        "6/35",
+        "1/7",
+        "1/7",
+        "3/35",
+        "1/21",
+        "1/28"
+      ],
+      "actual_envelope": "249/28"
+    },
+    {
+      "name": "B4-spread",
+      "complete_source_points": 790,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "25/87",
+        "12/29",
+        "5/29",
+        "10/87",
+        "5/29",
+        "2/29",
+        "5/87",
+        "1/29"
+      ],
+      "actual_envelope": "250/29"
+    },
+    {
+      "name": "B5",
+      "complete_source_points": 791,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "5/18",
+        "2/5",
+        "1/6",
+        "1/9",
+        "1/6",
+        "1/15",
+        "1/18",
+        "1/30"
+      ],
+      "actual_envelope": "251/30"
+    },
+    {
+      "name": "B6",
+      "complete_source_points": 792,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "25/93",
+        "12/31",
+        "5/31",
+        "10/93",
+        "5/31",
+        "2/31",
+        "5/93",
+        "1/31"
+      ],
+      "actual_envelope": "252/31"
+    },
+    {
+      "name": "B7",
+      "complete_source_points": 793,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "25/96",
+        "3/8",
+        "3/16",
+        "5/48",
+        "5/32",
+        "1/16",
+        "5/96",
+        "1/32"
+      ],
+      "actual_envelope": "129/16"
+    },
+    {
+      "name": "B8",
+      "complete_source_points": 794,
+      "all_original_pair_tests": 480,
+      "numerical_cylinders": 1767,
+      "psi_global_F_mass": "0",
+      "actual_caps": [
+        "1",
+        "25/99",
+        "4/11",
+        "7/33",
+        "10/99",
+        "5/33",
+        "2/33",
+        "5/99",
+        "1/33"
+      ],
+      "actual_envelope": "8"
+    }
+  ],
+  "sparse_anchor_envelopes": {
+    "3": "249/28",
+    "4": "250/29",
+    "5": "251/30",
+    "6": "252/31",
+    "7": "129/16",
+    "8": "8"
+  },
+  "owner_incidence_pattern_counts": {
+    "3_labels_2_owners": 25,
+    "3_labels_3_owners": 265,
+    "4_labels_2_owners": 79,
+    "4_labels_3_owners": 2161
+  },
+  "necessary_IA_unhandled_shapes_75_81": [
+    [
+      79,
+      4,
+      0,
+      0,
+      "1223"
+    ],
+    [
+      79,
+      4,
+      0,
+      0,
+      "2222"
+    ],
+    [
+      79,
+      5,
+      0,
+      0,
+      "11123"
+    ],
+    [
+      79,
+      5,
+      0,
+      0,
+      "11222"
+    ],
+    [
+      80,
+      4,
+      0,
+      1,
+      "1112"
+    ],
+    [
+      80,
+      4,
+      1,
+      0,
+      "122"
+    ],
+    [
+      80,
+      5,
+      0,
+      1,
+      "01112"
+    ],
+    [
+      80,
+      5,
+      0,
+      1,
+      "11111"
+    ],
+    [
+      80,
+      5,
+      1,
+      0,
+      "1112"
+    ],
+    [
+      81,
+      4,
+      0,
+      0,
+      "1233"
+    ],
+    [
+      81,
+      4,
+      0,
+      0,
+      "2223"
+    ],
+    [
+      81,
+      5,
+      0,
+      0,
+      "11133"
+    ],
+    [
+      81,
+      5,
+      0,
+      0,
+      "11223"
+    ],
+    [
+      81,
+      5,
+      0,
+      0,
+      "12222"
+    ]
+  ],
+  "scope": "Independent exact finite common-law controls and necessary cost-shape arithmetic; no Lean, no exhaustive actual-source enumeration, no realization claim for cost shapes."
+}
