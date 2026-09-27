@@ -9931,3 +9931,311 @@ Reproduction:
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.json
 ```
+
+## Three full11222 roots and one public singleton have one law below nine
+
+Ordinary mathematics on one complete original literal4555 source. No Lean, minimum-cut saturation, arbitrary-height or unrestricted Erdős #7 claim is made. The construction retains the complete source and uses its original legal-pair premises. No blocking property is attributed to a deleted subsource.
+
+### P76.1. Exact branch and conclusion
+
+There is one original gap root with four occupied children and three original full roots R_1,R_2,R_3 with five occupied children each. All complete fibres F_(r,c) are nonempty. Every pair of original legal restrictions at different roots has a fine-label union containing a ternary seven-tree, namely three distinct first-seven columns each containing three distinct fine labels. A legal restriction uses two gap children or three full children.
+
+Suppose one actual cut has the gap root inactive, all children at the three full roots active, a public antichain consisting of one fine label y, and each full root's private costs either02222 or11222. The costs0,1,2 are private leaf-antichain costs; no private whole-column cut is present in this branch. For each full child, its COMPLETE actual fibre lies in {y} union its own private candidate leaves. The exact cut capacity is21+7+2(8+8+8)=76, but the cut need not be minimum and no flow saturation is used.
+
+Then every root is actually of type11222, and one probability nu on the original actual source satisfies
+
+    Gamma_1225(nu)<=80/9=9-1/9.
+
+The gap receives zero mass in this law, but its complete fibres are never removed and no inherited gap-free blocking statement is used.
+
+### P76.2. Every tight pair makes its private candidates actual
+
+At a11222 root choose its two singleton-cost children and any one double-cost child. At a02222 root choose its zero-cost child and any two double-cost children. These are ORIGINAL legal triples; each has private token cost4.
+
+Choose such a triple at each of two different full roots. The entire actual projection of the chosen pair is contained in the public label y and eight private candidate occurrences. The original legal-pair premise supplies a nine-leaf ternary tree. Therefore there are exactly nine distinct actual fine labels, with exactly three in each of three columns. In particular:
+
+- all eight private candidates are distinct from y and from each other within this selected pair;
+- every private candidate is ACTUAL at its original selected owner, since no other selected candidate or public label can supply it;
+- all private candidates at each root are reached by these choices.
+
+Let H_0 be y's public column. For a chosen cheapest triple at root R write V_R for its private column-count vector, with total4. Fix another root's triple and exchange one double child at R. The two complete nine-label vectors both have entries0 or3. Their difference is the difference of two double-child column vectors, each coordinate of which lies between-2 and2. The difference must be zero. Consequently V_R is independent of the cheapest triple chosen at R. At a02222 root all four double-child column vectors are identical, and V_R equals TWICE that integer vector.
+
+### P76.3. The three pair equations force private columns
+
+For every distinct pair R,S,
+
+    V_R+V_S+e_(H_0)
+
+has exactly three nonzero coordinates, each equal to3. Reducing the three pair equations modulo3 gives V_R congruent V_S and then
+
+    2V_R+e_(H_0)=0 mod3,
+    V_R=e_(H_0) mod3.
+
+Since V_R is nonnegative with total4, it has the form
+
+    V_R=e_(H_0)+3e_(H_R).
+
+Here H_R cannot equal H_0: a pair vector would then have its H_0 coordinate at least5. Also H_R and H_S cannot coincide for different roots: their pair vector would have a coordinate at least6. Thus the three H_R are pairwise distinct and all differ from H_0.
+
+The vector e_(H_0)+3e_(H_R) is not twice an integer vector. This excludes every02222 root. All three full roots are11222.
+
+### P76.4. One of the two11222 column types is impossible
+
+At a11222 root, the two singleton candidates and every double's two candidates together have vector e_(H_0)+3e_(H_R). There are exactly two possibilities:
+
+- A: both singleton labels are in H_R; every double has one H_R label and one H_0 label.
+- B: one singleton is in H_0 and one in H_R; every double has both labels in H_R.
+
+Type B is impossible. Select that root's THREE double children as an original legal triple. Its entire actual projection lies in H_R together with the one possible public label y. Pair it with a cheapest triple at another full root S. The latter has three private H_S labels and exactly one private H_0 label z_S, in addition to possible y. The union is confined to H_R,H_S,H_0, but H_0 contains at most {y,z_S}, only two fine labels. It cannot contain a ternary tree. This contradicts the original legal-pair premise.
+
+Thus all three roots have type A.
+
+### P76.5. Five distinct private-column labels at each original full root
+
+At each R let its two singleton private labels be h_1,h_2. At each of its three double owners i let the private labels be h_i in H_R and z_i in H_0. All are actual at their stated owners. Cheapest-triple saturation already gives h_1!=h_2 and every double h_i different from them.
+
+If two double owners i,j had the same H_R label, select those two children and one singleton child as an original legal triple at R. Its H_R projection has at most two labels. Pair it with a cheapest triple at another root S. The whole union lies in H_R,H_S,H_0, and H_R cannot be a ternary branch. The other two columns alone cannot supply a ternary tree. Contradiction.
+
+Hence R has FIVE distinct actual H_R labels at its five distinct owners. Also, for different roots R,S, every z_i at R differs from every z_j at S: include their double children in a cheapest pair and use the nine-label distinctness. The z_i may coincide within one root. None equals y.
+
+### P76.6. One fixed actual probability
+
+At each of the fifteen actual H_R points (five per full root), put mass1/20. At each of the nine actual H_0 double-owner points (three per full root), put mass1/36. Even if two of the latter have the same global fine label, they are different actual points because their original child owners differ.
+
+The total mass is15/20+9/36=1. This defines nu once, before any numerical phase query. It is supported on the unchanged actual source.
+
+In divisor order (1,5,7,25,35,49,175,245,1225), simultaneous cylinder caps are
+
+    (1,1/3,1/4,7/90,1/4,1/12,1/20,1/12,1/20).    (PS76)
+
+Indeed each full root carries5/20+3/36=1/3. Each private H_R column carries1/4 and the common H_0 column also carries9/36=1/4. A double owner carries1/20+1/36=7/90; a singleton owner carries1/20. A root/private-column cylinder has mass1/4 while a root/H_0 cylinder has mass1/12. A private-column fine label has mass1/20. A H_0 fine label occurs at only one full root, and at most its three double owners, hence has mass at most1/12. Child-column cylinders and actual atoms have mass at most1/20. The same fine bounds apply after fixing a root.
+
+Using the original ordered-LCM coefficients (1,3,3,5,9,5,15,15,25), the independent-maxima envelope from(PS76) is
+
+    1+3/3+3/4+5*(7/90)+9/4+5/12+15/20+15/12+25/20
+    =163/18.
+
+This envelope alone exceeds9. It is NOT the claimed result.
+
+### P76.7. The original49,7,35 queries force a saving
+
+Fix an arbitrary original phase query I_d for EVERY d dividing1225, including I_1=1. Each compatible pair intersection is one cylinder at the original LCM; incompatible intersections are empty. Keep all original phases fixed throughout the following exhaustive cases.
+
+1. If the modulus49 query lies in a private column H_R, its fine-label mass is at most1/20. Each of the FIVE ordered pairs with LCM49 is contained in that same queried fine label, so all five have bound1/20 in place of1/12. The saving is5*(1/12-1/20)=1/6. If its column is outside the four supported columns, these terms are zero and the saving is even larger.
+
+2. Otherwise the49 query lies in H_0. If the7 query specifies any different column, the ordered pairs(7,49) and(49,7) are empty. The independent envelope charged at most1/12 to each, so the saving is1/6.
+
+3. It remains that both the49 and7 queries specify H_0. If the35 query specifies a different column, the pairs(7,35) and(35,7) are empty, saving2*(1/4)=1/2. If its column is H_0, its mass is at most1/12 after its root is fixed, including zero at the gap or an absent root. Thus(1,35),(35,1),(35,35) each have bound1/12 instead of1/4, saving3*(1/4-1/12)=1/2.
+
+Every query therefore saves at least1/6 from the same envelope under the SAME nu. Hence
+
+    integral (sum_(d|1225) I_d)^2 d nu
+       <=163/18-1/6=80/9<9.
+
+Taking the supremum over all original phase queries gives the stated Gamma bound. The proof keeps the actual numerical moduli49,7,35: it does not choose their maximizing cylinders independently or change the law after seeing a query.
+
+### P76.8. Scope
+
+This supplies the ENTIRE stated public-singleton / three-active-full-root02222-or11222 branch at cut capacity76; the gap fibre shapes and the location of public y inside individual fibres remain arbitrary. All exclusions use original legal pairs and complete-fibre containment. No flow, maximum value, minimum-cut saturation, or standalone five-tree premise is needed after that containment is available.
+
+The result is local to this exact branch. It does not by itself supply other one-inactive-root shapes, the complete cut74--76 window, or the unrestricted outside-cofactor/common-law lift.
+
+### P76.9. Exact finite arithmetic control
+
+[one_inactive_public_singleton_arithmetic_check](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.py) ([exact data](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.json)) exhaust the210 nonnegative seven-column vectors of total4, all120 ordered compatible three-root vector triples, all81 original ordered divisor pairs, and27 coarse49/7/35 column cases. They reproduce normalization, the envelope163/18 and uniform saving to80/9 using exact fractions. The program imports no source-construction helper, keeps explicit exception checks under Python-O, and requires --output. It exits0 with PASS under:
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.json
+
+This finite control verifies only the stated vector and LCM arithmetic. Actualness at original owners, the B-type exclusion, private-label distinctness, and the bridge from literal queries to the cases are the ordinary arguments above, not an exhaustive enumeration of sources.
+
+### P76.10. Complete actual-source control
+
+[one_inactive_public_singleton_actual_control](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.py) ([exact data](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.json)) contain one79-point original source with all19 occupied owners. The gap's four full fibres each contain the ten labels in columns4 and5 at fine digits0,...,4. Full root r=1,2,3 has at child c its private H_r point with label r+7c, the public label y=0, and, for c=2,3,4, the private H_0 label7r. Thus a private H_0 fine label repeats at all three double owners of its root and differs across roots. This exercises the root-fine cap1/12 rather than silently assuming distinct fine labels at different owners.
+
+The control checks all480 original legal pairs, an actual standalone five-tree, absence of an individually robust root, the actual24-point law, all1767 original numerical cylinders, and27 literal phase queries representing the column-case distinctions. It builds the complete1222-edge original network including unused private nodes, and checks an explicit cut of capacity76 with crossing capacities21,7 and24 copies of2. No minimum-cut value is asserted. The full original source, law, literal CRT coordinates, cut edges, cylinder tables and query phases are present in the JSON for independent replay.
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.json
+
+The run exits0 with PASS. This is a complete-source control of the construction; the ordinary argument and finite query-case proof above supply the general quantifier, not these27 sample numerical phase layouts.
+
+## One inactive root with public prefix cost zero or one
+
+Ordinary actual-source mathematics; no Lean or unrestricted covering claim.
+
+Retain the complete original literal4555 source and numerical network of
+the below80/two-inactive theorem. Suppose an original cut has capacity at
+most77 and exactly one inactive occupied root. Normalize its original
+public/private prefix antichains and private subtrees as in that theorem.
+If its public prefix token cost is at most one, then one fixed law on the
+unchanged actual source has
+
+    Gamma_1225 <=2865/319<9.
+
+The cut need not be minimum and its flow need not saturate. Public cost k
+means the original antichain cost in units7: a fine label costs1 and a
+whole column costs3. The result leaves the k>=2 one-inactive branches open.
+
+### OC77.1. Normalization and inherited complete-fibre consumers
+
+If normalization moves another root sink-side, the resulting actual cut
+has at least two inactive occupied roots and capacity at most77, so the
+below80 theorem supplies it. Otherwise there are three active roots.
+Every root has original n equal4 or5, q=n-2, active a=n-delta with
+0<=delta<=2, sorted private costs z between0 and3, total Z, least-q sum p,
+and forward contribution
+
+    A=7delta+2Z<=20.
+
+The original capacity is
+
+    c=21+7k+sum_r A_r<=77.
+
+The original complete-fibre containment is F_(r,c) subset P union P_(r,c)
+at active children, with no containment asserted at inactive children.
+Every original pair of cheapest legal restrictions gives
+
+    p_r+p_s >=9-k.
+
+We reuse the following actual-source consumers, with their original
+whole-fibre conditions:
+
+* If sum_all_children min(3,|F_(r,c)|)<=9 at one original root, the
+  below80 complete-root consumer supplies2865/319.
+* Any whole legal projection with at most three labels supplies249/28.
+* Four full-root complete fibres F_i subset {y,z_i}, with the fifth
+  arbitrary nonempty, supply5795/647 by the below80 four-owner consumer.
+* The complete three-full-root public-singleton/02222-or11222 branch
+  is supplied by P76 above
+  with bound80/9, using only original pair premises and one fixed law.
+
+### OC77.2. Public cost zero
+
+The complete-fibre/cut bridge is exactly the previously proved bound
+
+    L_r=sum_all_children min(3,|F_(r,c)|) <= Z_r+3delta_r.
+
+If some active root has delta_r>=1, then
+
+    L_r<=floor((20-7delta_r)/2)+3delta_r<=9.
+
+If all three delta_r are zero, the budget gives2sum Z_r<=56, so sum Z_r<=28.
+At least one Z_r<=9, and that root is supplied. In fact this k0 argument
+works through capacity80, where sum Z_r<=29 still suffices. Inactive child
+fibres remain arbitrary and are only counted by their truncated value3.
+
+### OC77.3. Public cost one: the exact root-cost lower bounds
+
+Now P is one numerical fine-label candidate y, and sum A_r<=49. Every
+pair satisfies p_r+p_s>=8. If any p_r<=2, its whole cheapest legal
+projection lies in the public candidate plus at most two private leaves,
+so has at most three labels and is supplied. Assume all p_r>=3.
+
+The sorted integer inequality gives
+
+    Z>=p+(a-q)ceil(p/q).
+
+Since n-q=2 and a=n-delta, it follows that
+
+    A>=2p+4ceil(p/q)+delta(7-2ceil(p/q)).
+
+For the only possible root types q=2,3 and private costs at most3, the
+following consequences hold:
+
+| least private cost p | minimum A | additional partial-root bound |
+|---:|---:|---:|
+|3|10|A>=15 if delta>=1; a fully active gap has A>=14|
+|4|16|A>=19 if delta>=1|
+|5|18|only a fully active full root can have A<=20|
+|6|20|only a fully active full root can have A<=20|
+|>=7|>20|excluded|
+
+For p>=7, only q=3 could occur because p<=3q. Then ceil(p/q)=3 and
+the bound is at least2p+12>20. The other rows are direct substitutions
+in the displayed bound; for q=2 the lower bounds are no smaller.
+
+### OC77.4. A root of private cost three
+
+If the least p is3, the other two roots have p>=5 and hence A>=18 each.
+The root with p3 therefore has A<=13. The table forces it to be a fully
+active full root, with Z<=6. Its first three sorted costs sum3, and the
+five-cost total is at most6. The only possibilities are11111 or11112:
+first-three003 would force total at least9, and012 would force at least7.
+
+Four original children thus have private cost1. Their whole fibres lie
+in {y,z_i}; the fifth complete fibre is arbitrary. The four-owner
+consumer supplies this entire branch.
+
+### OC77.5. All least private costs are at least four
+
+If some p>=5, its contribution is at least18 and the other two at least16,
+forcing sum A>=50>49. Thus all three p equal4. A partial root would have
+A>=19 and again violate the total bound. Consequently every root is fully
+active. Its A is even and at least16; one value at least18 would force
+total at least50. Hence all A are16 and all Z are8.
+
+At a full root the sorted private costs are exactly02222 or11222. At a
+gap root the only possibility is2222. To see this, sort the first q costs:
+a full root's least-three sum4 can be022 or112 at total8;013 already forces
+total10. A gap's least-two sum4 can only be22 at total8;13 forces total10.
+
+The gap possibility is impossible. For every cheapest original legal
+restriction at every active root, its private candidates have total4.
+Any pair of such restrictions, together with the public label y, gives a
+nine-candidate cover of an actual nine-leaf ternary tree. Therefore all
+nine candidates are distinct and actual, with three in each of three
+columns. The same exchange argument as in the three-full-root theorem
+shows that every root has one fixed private column-count vector V_r.
+This also holds at a2222 gap: every pair of its four doubles is a legal
+cheapest restriction, and comparing pairs with one shared partner forces
+all double-child column vectors to coincide. Its V_r is therefore twice
+an integer vector.
+
+For the three active roots, the three pair equations say
+
+    V_r+V_s+e_(col(y)) has entries0 or3.
+
+Subtracting equations modulo3 and using sum V_r=4 gives
+
+    V_r=e_(col(y))+3e_(H_r),
+
+where H_r is different from col(y) and from the other roots' H_s. In
+particular V_r is not even. This rules out the2222 gap, just as it rules
+out02222 full roots. Thus the gap is the one inactive root, and all three
+active full roots are11222. The inherited complete branch theorem gives
+one actual law with bound80/9. It does not use the gap as a law component.
+
+### OC77.6. Scope
+
+Every normalized one-inactive-root case with c<=77 and public cost0 or1
+is now supplied. The largest bound used here is2865/319. Together with
+the below80 theorem, this narrows the C75/C76 root-cap obstruction work
+to one-inactive normalized cuts with public cost at least2. It does not
+assert those remaining cuts are impossible or supplied, and it does not
+settle the whole cut74 class or an unrestricted outside-cofactor lift.
+
+### OC77.7. Exact controls and profile count
+
+[one_inactive_cost77_control](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_cost77_control.py) ([exact data](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_cost77_control.json)) enumerates the sorted normalized
+necessary profiles, retaining whether the inactive root is full or gap.
+There are62 profiles:34 at k0,13 at k1,5 at k2,8 at k3 and2 at k4;
+none at k>=5. The present theorem supplies all47 k0/k1 profiles, with
+the proof above treating whole branches rather than assuming those cost
+profiles are realizable. These are counts within the stated local cut
+classification, not a fraction of Erdős #7 solved.
+
+The extreme three11222-root dependency has two explicit controls:
+[one_inactive_public_singleton_arithmetic_check](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.py) ([exact data](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_arithmetic_check.json)) checks210
+column vectors,120 ordered compatible triples, all81 ordered LCM pairs
+and27 coarse query cases. The complete actual-source control
+[one_inactive_public_singleton_actual_control](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.py) ([exact data](../../../frontier/cover-geometry/height-two-small-anchors/one_inactive_public_singleton_actual_control.json)) supplies79
+actual points,19 owners, all480 original legal pairs, a standalone
+five-tree,24 law atoms and1767 original numerical cylinders. Its full
+1222-edge network has an explicit cut76; minimum capacity is not claimed.
+The27 literal numerical queries are representative controls, not an
+exhaustion of all phase queries. Universal query control is provided by
+the proof in P76 above.
+
+Both dependency programs were independently replayed with
+`python3 -I -S -B -O` to separate replay JSON files and exited0.
+These controls and the ordinary source proof do not establish Lean
+formalization or the unrestricted covering conjecture.
