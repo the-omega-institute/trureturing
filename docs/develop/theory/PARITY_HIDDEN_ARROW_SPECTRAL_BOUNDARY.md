@@ -59709,3 +59709,354 @@ $\mathcal E_{Q,C_*}(q)+\mathcal E_{Q,C_*}(s_0)=O_{J,r}(Q^{-1})$，而 $V_Qe^{-2\
 Poisson 点过程的 Poisson 对 Poisson 信息公式提供相关归属，但其第一个概率律也须是 Poisson，不能直接作为本章依赖直方图的误差界。上述有限质量身份已在正文给出所需推导；原始来源与适用边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章是普通数学推导，未作 Lean 核验证明，不主张检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 192. 完整乘积的共同近共振与原选取输出的平滑参考障碍
+
+第 190 章否定了一个正项 Fourier 上界的均值充分判据。本章保留未展开的全部补群及完整复相位，证明近共振仍在原选取后验的输出中出现。关键是原物理窗口的每个群都位于同一计数线上；补群中的低方差坐标仍受共同包含概率约束。一个小方差的中心化相位估计因此可以直接控制完整特征函数。
+
+**定理 192.1（完整补群、选取输出及参考密度的实际障碍）。** 固定原始 $\beta\in(3/4,1)$ 和 $c>3c_q/2$。保留原振幅、补偿、取整、完整窗口与物理输出。存在固定 $W\ge1$、$s_*=1/(64\sqrt W)>0$ 及原数据事件 $F_Q\subset\mathcal R_Q$，使充分大时，在实际 pair、平稳依赖 path 两种实验中分别一致有
+
+$$
+\inf_{S_{\rm true}}\mathbb P_{S_{\rm true}}(F_Q)\ge\frac12.
+\tag{192.1}
+$$
+
+对每份 $x\in F_Q$，存在原分母一有理弧中已经包含的分子
+$1\le p_x\le\lceil128\pi q^{3/2}\rceil\le N$，使整个 $|s|\le s_*$ 区间满足
+
+$$
+|H_{K,p_x,1}(0,s)|\ge\frac34,\qquad
+|\Phi_x^{\rm lat}(0,2\pi p_x\mathcal B+s)|\ge\frac12,\qquad
+|\Phi_x^{\rm sel}(0,2\pi p_x\mathcal B+s)|\ge\frac12.
+\tag{192.2}
+$$
+
+这里 $H_K$ 是 (153.39) 中未展开的精确补群因子；两个 $\Phi$ 分别为完整归一化整数 Gaussian 比较律、原完整大小 $q$ 选取后验的输出变换。两者使用同一物理标量、实际中心和同一残差 $G$。$g_x$ 是第 153 章原完整连续大方差群参考律，保留其全部精确低群、非中心项及残差。对 $L=\mathrm{lat},\mathrm{sel}$ 均有
+
+$$
+|\Phi_x^L(0,2\pi p_x\mathcal B+s)-\widehat g_x(2\pi p_x\mathcal B+s)|
+\ge\frac13,\qquad |s|\le s_*,
+\tag{192.3}
+$$
+$$
+\|f_x^L-g_x\|_{L^1(\mathbb R)}\ge\frac13\qquad(x\in F_Q).
+\tag{192.4}
+$$
+
+因此，完整补群及复相位求和不能使这一区间上的绝对 Fourier 比较消失。结论还给出实际原数据律下、概率至少 $1/2$ 的参考密度 $L^1$ 障碍。它不反驳原物理方差熵结论；后者涉及归一化实倾斜的二阶对数导数，见本章最后的范围说明。区间 $3c_q/2<c<2c_q$ 是一个明确的非空子区间，但本证明不要求固定 $c$ 的上界。
+
+### 192.2 The exact original count tuple and three conditional laws
+
+Use lambda=Q^3, phi=((1+r)log(1+r)+(1-r)log(1-r))/2, c_q=phi(1-beta)/beta, log q=c_q lambda+O(1), log M=(c_q+phi)lambda+O(1). The original floors are those in (68.2); in particular q=floor(M exp(-z_0)), k_0=floor((1+r)lambda/2), l_0=lambda-k_0. Put
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+ \mathcal B=B^2\sqrt\delta=q/Q^{11/4},\quad
+ \rho=\sigma\mathcal B\asymp e^{-c\lambda}.
+ \tag{192.5}
+$$
+
+The immutable original definition68.1–5 in Chapter 68 is decisive for the complement's coordinates: on its actual truncation/isolation event the COMPLETE selected window consists of groups with counts(k_0+jQ,l_0+jP_n), |j|<=K_M, with deterministic K_M<=C_0Q^2. Let I be all its nonempty groups. The expanded occupied block C is only a subset of I. K=I\C is NOT a set of newly introduced off-line count groups. It contains the other existing window groups, including all low-variance groups.
+
+Labels outside this window do occur in the full-q posterior and common calibration. They are not extra summands invented in the physical scalar. Their exact contribution to the selected count law is the elementary symmetric coefficient below. This distinction prevents confusing “outside the proof block” with “outside the original physical tuple.”
+
+With every candidate likelihood L_i>0 present, the exact marginal law of the COMPLETE physical tuple is
+
+$$
+ P_x(R=n)=
+ \frac{\displaystyle\prod_{j\in I}{C_j\choose n_j}L_j^{n_j}\,
+       e_{q-\sum_{j\in I}n_j}(L_{\rm out})}
+      {e_q(L_{\rm all})}.
+ \tag{192.6}
+$$
+
+An out-of-range elementary symmetric coefficient is0. The denominator is strictly positive because0<q<M and all likelihoods are positive. Thus(192.6) retains every outside label, the selected total, all legal tuples and their exact normalizer. It is obtained by summing the original size-q subset weights over outside choices, not by deleting or newly conditioning any physical coordinate. The surprise is minus the logarithm of this marginal law on its support.
+
+Let p_i be the original common logistic calibration, sum_all p_i=q. For a window group write m_j=C_jp_j, d_j=C_jp_j(1-p_j), w_j=d_j/mathcal B, and let mu_j=E_{P_x}R_j be the exact mean from(192.6). The calibrated product Q_x has independent R_j~Bin(C_j,p_j) for j in I. This independence is an auxiliary posterior comparison at FIXED x, not independence of observed pair/path rows. Its selected marginal density h_x=dP_x/dQ_x satisfies the inherited original-law statement
+
+$$
+ a_x:=\|h_x-1\|_{L^2(Q_x)}=O_{\mathbb P}(Q^{-5/2}),\qquad
+ |\mu_j-m_j|\le a_x\sqrt{d_j}\quad(j\in I).
+ \tag{192.7}
+$$
+
+The simultaneous inequality is(142.8) and uses the exact full-q density. There is no union over groups in it.
+
+Keep J={j in I:d_j>=Q^3600}, E=I\J, the original physical core H, and the original occupied block C subset J. Q_x^lat is the retained normalized integer-Gaussian comparison on J and the EXACT binomial law on E. Its count-law total absolute variation from Q_x is at most
+
+$$
+ \varepsilon_Q=CQ^{-444}
+ \tag{192.8}
+$$
+
+on the inherited regularity event, after absorbing the convention for total variation in C; this is the zeroth component of(153.47). For every subset D of I, its marginal comparison has the same bound. This follows by summing the signed measure over the other coordinates. Hence no factor counting subsets is introduced.
+
+ALL three laws evaluate the same function
+
+$$
+ T(n)=\mathcal B^{-1}\sum_{j\in I}(n_j-\mu_j)^2
+                          -V_{\rm phys}/\sqrt\delta,\qquad Y=T(R)+\sigma G.
+ \tag{192.9}
+$$
+
+Only the two auxiliary comparison measures vary. Neither mu nor the scalar nor G is replaced when a comparison is made.
+
+### 192.3 A single paid original-data localization for the whole array
+
+The authenticated regularity inputs used already inChapters 87, 111, 142, 153 and 190 give p_j in[1/4,3/4] over I, the original truncation/isolation event, C containing group0 with d_0>=d_*=q exp(-kappa lambda), kappa=c_q/1000, and uniform tightness of sum_J w_j^2. The E contribution is at most C Q^(7202)/mathcal B^2=o(1), because |I|=O(Q^2) and d_j<Q^3600 there. Thus sum_I w_j^2 is uniformly tight, for each original raw experiment uniformly in deterministic support. No new block or supply is being asserted.
+
+Choose one fixed finite W>=1 so that the limsup of the worst-support tail probability of sum_I w_j^2>W is below1/8 for BOTH experiments. Eventually the tail is at most1/4. Let F_Q intersect R_Q with these inherited whole-array events, a_x<=1/16, sum_I w_j^2<=W, and the valid bound(192.8). The failures other than the W-tail are o(1), support-uniform. Therefore(192.1) holds eventually. In particular we use probability1/2, not an unjustified probability1-o(1) for a fixed localization of a tight quantity.
+
+This is one intersection under the actual raw law. No favorable split or proof field is conditioned on; no independence of its events is used; no regularity failure is multiplied by inverse sigma. The same F_Q works for the complement, the whole product, the exact selected posterior and the reference.
+
+On F_Q the exact calibration and positive probabilities give
+
+$$
+ \sum_{j\in I}C_j\le4q,\quad \sum_{j\in I}d_j\le q,\quad
+ V_I:=\sum_{j\in I}d_jC_j^2\le16q^3,\quad
+ \sum_{j\in I}w_j^2\le W.
+ \tag{192.10}
+$$
+
+Indeed sum_I C_jp_j<=q, p_j>=1/4, and d_j<=C_jp_j. These are bounds on the empirical counts, not deterministic substitutions for them. All subset versions follow with the SAME array and constants.
+
+### 192.4 Compensation and the common integer phase over EVERY physical group
+
+Let a_s=log((1+r)/(1-epsilon_M)), b_s=log((1-r)/(1+epsilon_M)), epsilon_M=rq/(M-q). The inherited exact likelihood relation is
+
+$$
+ \log(L_j/L_0)=j\Delta_Q,\quad \Delta_Q=Qa_s+P_nb_s,\quad
+ |\Delta_Q|\le C_rQq/M.
+ \tag{192.11}
+$$
+
+This includes the finite-q compensation, whose first term is r(1-alpha_L)Qq/M. The unchanged Liouville remainder is much smaller. We reuseChapter 167 and (190.10)–(190.11), with no new amplitude condition.
+
+Write pi_j=mu_j/C_j for the exact per-label posterior inclusion in a nonempty group. The exact two-label exchange under the full e_q normalizer gives
+pi_j-pi_0=tanh(j Delta_Q/2)P_x(I_j+I_0=1).
+It follows for the ENTIRE I, since |j|<=C_0Q^2, that
+
+$$
+ |\pi_j-\pi_0|\le D_Q,\qquad D_Q=C_1Q^3q/M,\qquad
+ \mu_j=C_j\pi_j\quad(j\in I).
+ \tag{192.12}
+$$
+
+Here C_1 absorbs the original fixed truncation constant C_0 rather than only the occupied-block radius. The formula holds for every configuration of all outside likelihoods. Outside labels can change pi_0 arbitrarily; they do not create an additional free direction among the window groups at this scale.
+
+Take the SAME deterministic pigeonhole budget as Chapter 190,
+H_Q=ceil(128pi q^(3/2)). There are integers1<=p_x<=H_Q and k_x with
+|2p_x pi_0-k_x|<=H_Q^-1. The H_Q+1 fractional parts of0,2pi_0,...,2H_Q pi_0 in H_Q half-open intervals prove this, including rational/atomic pi_0. Choose the least qualifying p_x and a deterministic nearest integer k_x. This is a function of the complete array. No independent phase law or smaller-field measurability is asserted.
+
+Define the actual real remainders
+
+$$
+ e_j=2p_x\mu_j-k_xC_j,\qquad
+ |e_j|\le C_j(H_Q^{-1}+2H_QD_Q)\quad(j\in I).
+ \tag{192.13}
+$$
+
+Since C_j and every possible R_j are integers, k_xC_jR_j is an integer. Equations(192.10–13) show
+
+$$
+ 2\pi\left(\sum_I d_je_j^2\right)^{1/2}
+ \le8\pi q^{3/2}H_Q^{-1}
+       +16\pi q^{3/2}H_QD_Q
+ \le\tfrac18
+ \tag{192.14}
+$$
+
+eventually. The first term is at most1/16 and the second is O(Q^3q^4/M), which tends to zero because
+
+$$
+ \log(Q^3q^4/M)=(3c_q-\phi)\lambda+O(\log Q),\qquad
+ \phi-3c_q=\phi(4\beta-3)/\beta>0.
+ \tag{192.15}
+$$
+
+This is the weighted compensation scale for the full product. It is not merely the unweighted likelihood error. The SAME p_x,k_x and exact mu_j occur in every coordinate and every subsequent factor.
+
+None of the original groups in K breaks this common scalar at the scale(192.14): the low groups satisfy the same bound and pay less d-weight. The common likelihood gap is generally nonzero, but in this restricted beta range its full weighted effect tends to zero after multiplication by the attained harmonic. This conclusion uses no polynomial lower bound for a geometric minor.
+
+### 192.5 A whole-interval estimate with live quadratic centers
+
+We now estimate the expectation of the exact complex factor, instead of its positive Gaussian upper envelope. Fix x in F_Q, and for any subset D of I put, under the product Q_x,
+
+$$
+ L_D=-2\pi\sum_{j\in D}e_j(R_j-m_j),\qquad
+ U_D=\mathcal B^{-1}\sum_{j\in D}(R_j-\mu_j)^2.
+ \tag{192.16}
+$$
+
+By independence under this auxiliary count product and(192.14), E_Q L_D=0 and sqrt(Var_Q L_D)<=1/8, SIMULTANEOUSLY for every D. This is a pointwise statement at x, not a raw-data independence assertion.
+
+For completeness, the needed quadratic variance is calculated without a Gaussian approximation. For R~Bin(C,p), m=Cp, d=Cp(1-p), h=m-mu, let X=R-m. The independent centered Bernoulli expansion gives EX^2=d, EX^3=d(1-2p), EX^4=3d^2+d(1-6p(1-p)). Expanding (X+h)^2 therefore gives exactly
+
+$$
+ \operatorname{Var}_Q((R-\mu)^2)
+ =2d^2+d(1-6p(1-p))+4hd(1-2p)+4h^2d.
+ \tag{192.17}
+$$
+
+Thus no center is set to zero. By |h_j|<=a_x sqrt(d_j), independence of the group counts, and Cauchy–Schwarz,
+
+$$
+ \operatorname{Var}_Q U_D
+ \le2W+v_Q+4a_x\sqrt{Wv_Q}+4a_x^2W
+ \le16W,\qquad v_Q=q/\mathcal B^2=Q^{11/2}/q\longrightarrow0 .
+ \tag{192.18}
+$$
+
+The last inequality holds eventually because W>=1, a_x<=1 and v_Q<=W. We used sum d_j^(3/2)<=sqrt((sum d_j^2)(sum d_j)), so it also holds for any D. The subset D need not have a lower variance or a large occupancy.
+
+Set s_*=1/(64sqrt W). By the L2 triangle inequality, with all covariances between L_D and U_D retained,
+
+$$
+ \|L_D+s(U_D-E_QU_D)\|_{L^2(Q_x)}
+   \le\tfrac18+4|s|\sqrt W\le\tfrac3{16},
+                    \qquad |s|\le s_*.
+ \tag{192.19}
+$$
+
+For a real centered Z, |E exp(iZ)|>=1-E|exp(iZ)-1|>=1-E|Z|>=1-||Z||_2. Consequently
+
+$$
+ \left|E_{Q_x}\exp\{-4\pi ip_x\sum_D\mu_jR_j+isU_D\}\right|
+       \ge\tfrac{13}{16}\quad (|s|\le s_*).
+ \tag{192.20}
+$$
+
+Indeed the integer term k_xC_jR_j disappears exactly, and the remaining deterministic phase is
+exp(-2pi i sum_D e_jm_j+is E_QU_D). It has not been declared zero; only its modulus is1. Formula(192.20) treats the linear resonance and the live quadratic offset jointly. No independence between these two statistics is assumed.
+
+This proves a full fixed-length interval, not a singleton. It also exhibits why the quadratic offset cannot wash out this particular interval: its centered second moment is uniformly bounded on the paid actual event. This calculation is not a generic variance argument for an unbounded positive mean; it is an explicit lower estimate for this very complex factor with small centered phase.
+
+### 192.6 Exact complement, full theta sum and selected-law transfer
+
+For b=1, the rational factor exp(2pi ip_x R_j^2) equals1 on EVERY integer tuple, for binomials and normalized integer Gaussians alike. Therefore the exact complement from(153.39) is
+
+$$
+ H_{K,p_x,1}(0,s)
+  =E_{Q_x^{lat},K}\exp\{-4\pi ip_x\sum_K\mu_jR_j
+                    +(is/\mathcal B)\sum_K(R_j-\mu_j)^2\}.
+ \tag{192.21}
+$$
+
+Taking D=K in(192.20), and applying the marginal version of(192.8) to this unit-modulus function, gives |H_K|>=13/16-epsilon_Q>=3/4 eventually. This compares exactly normalized probability laws; no theta normalization has been discarded. All small-variance E factors stay as the original finite binomial sums.
+
+For D=I, the complete Q_x transform of the original Y is exactly
+exp(i[2pi p_x sum_I mu_j^2-t V_phys/sqrt(delta)]) times the expression in(192.20), times exp(-(sigma t)^2/2), with t=2pi p_x mathcal B+s. The common physical intercept is present in that phase. Because c>3c_q/2,
+
+$$
+ H_Q\rho\longrightarrow0,\quad
+ H_Q/N\longrightarrow0,\quad \sigma s_*\longrightarrow0,\quad
+ s_*\le S\ \hbox{eventually}.
+ \tag{192.22}
+$$
+
+These use the original cutoffs log N=c lambda+O_c(Q+log Q), log S=kappa lambda+O_c(Q+log Q) and their fixed positive numerator-tail margin. The noise modulus is eventually at least15/16 uniformly on this interval. Thus
+|Phi_x^Q(0,t)|>=195/256>3/4.
+
+The unit-modulus common-kernel comparisons give, for EVERY real t at the SAME x,
+
+$$
+ |\Phi_x^{sel}(0,t)-\Phi_x^Q(0,t)|\le E_Q|h_x-1|\le a_x,\qquad
+ |\Phi_x^{lat}(0,t)-\Phi_x^Q(0,t)|\le\varepsilon_Q.
+ \tag{192.23}
+$$
+
+Hence each transform in(192.2) is at least1/2 on F_Q. Evaluating an all-t deterministic bound at t_x is legitimate: we do not condition on a frequency selected by the hidden counts and then retain an invalid kernel. These are comparisons of bounded characteristic functions only. They are not used to transfer surprise moments, squared conditional means or varentropy.
+
+To make the relation to the original marked Gauss expansion explicit, for real u near0 define
+Phi_x^lat(u,t)=E_lat[exp(uW_lat)exp(itY)]/E_lat[exp(uW_lat)],
+where W_lat=s_lat+G^2/2 and s_lat is the EXACT centered count surprise. Put tau=1-u,
+xi_j=(2pi sqrt(d_j)/b)(h_j-2p mu_j), eta=2pi p rho/b and a_j=(mu_j-m_j)/sqrt(d_j). The retained(153.39) is the exact sum over h in Z^C of
+
+$$
+ \Psi_{p,b,h}(u,s)=
+ \left[\prod_C b^{-1}\sum_{z\bmod b}e^{2\pi i(pz^2-(h_j\bmod b)z)/b}\right]
+ c_C(u)z_{p,b,h}
+ e^{is(\sum_Cw_ja_j^2-V_{\rm phys}/\sqrt\delta)}
+ \prod_C\left(\frac{\tau}{\tau-2isw_j}\right)^{1/2}
+$$
+$$
+ {}\times\exp\left[-\frac12\sum_C
+       \frac{(\xi_j-2sw_ja_j)^2}{\tau-2isw_j}
+                -\frac{(\eta+\sigma s)^2}{2\tau}\right]
+ H_{K,p,b}(u,s).
+$$
+
+Here c_C(u)=prod_C sqrt(2pi d_j/tau)/sum_n exp[-tau(n-m_j)^2/(2d_j)], and
+z_{p,b,h}=exp[(2pi ip/b)(sum_I mu_j^2-B^2V_phys)] exp[i sum_C xi_jm_j/sqrt(d_j)].
+The full complement is normalized under its exact real tilted count law, and includes its rational quadratic phase. All these quantities remain in the identity. At b=1 EVERY finite Gauss coefficient equals1; it is not replaced by a generic absolute bound. Equation(192.2) says that the modulus of the COMPLETE sum_h Psi(0,s) is at least1/2 here. Consequently cancellations within that sum, even after retaining H_K, do not suppress this arc.
+
+For finite Q the positive real normalization is nonzero; tau>0 ensures convergence of the integer-Gaussian sums. The E sums are finite and the SAME real residual factor is exp[-(eta+sigma s)^2/(2tau)]. Real differentiation through marks0,1,2 is justified by these tails, as in the inherited exact identity. No logarithm of a potentially zero complex theta function is used.
+
+### 192.7 Actual nonzero-arc mass, harmonic volume and the reference obstruction
+
+The continuous-J reference g_x replaces only the comparison's J coordinates by their continuous Gaussian integrals, with actual m_j,d_j,mu_j and exact E factors, original scalar/intercept and SAME G. This is the SAME auxiliary reference as Chapter 153, not a newly observed independent phase. Its central j=0 factor has modulus at most
+(1+4t^2w_0^2)^(-1/4): completing its Gaussian square leaves a noncentral exponential with nonpositive real part. All other normalized factors have modulus at most1. Since |t|>=pi mathcal B on our interval and d_0>=d_*,
+
+$$
+ |\widehat g_x(t)|\le(2\pi d_*)^{-1/2}=o(1)
+ \quad\hbox{uniformly for }t=2\pi p_x\mathcal B+s,\ |s|\le s_*.
+$$
+
+The same scalar, group0 and noise are used. For all large Q this is at most1/6; the triangle inequality proves(192.3). At any one of these attained t, Fourier duality against the bounded function exp(ity) gives(192.4). The selected density f_x^sel exists because the original sigma is positive. No sign of the density difference or posterior variance has been inferred from its transform modulus.
+
+For an exact all-arc comparison define, for L=lat or sel,
+
+$$
+ \mathcal D_Q^L(x)=\sum_{b\le\mathfrak b}
+ \sum_{\substack{0<|p|\le N\\ \gcd(p,b)=1}}
+ \int_{-S}^{S}
+  |\Phi_x^L(0,2\pi(p/b)\mathcal B+s)
+              -\widehat g_x(2\pi(p/b)\mathcal B+s)|\,ds .
+$$
+
+The original arcs are disjoint. All numerators, denominators and their exponential volume are still present. We take the modulus AFTER the full dual-mode sum, including complementary factors and finite normalizations. On F_Q one of these summands alone contributes at least2s_*/3, so
+
+$$
+ \inf_{S_{\rm true}}E_{S_{\rm true}}[1_{R_Q}\mathcal D_Q^L]
+       \ge s_*/3=\frac1{192\sqrt W}>0
+       \quad\hbox{in each actual experiment}.
+ \tag{192.24}
+$$
+
+Likewise the all-arc sum of |Phi^L(0,t)| has mean at least s_*/2, and the all-arc complement-only sum has mean at least3s_*/4. These last two sums use the same cutoffs and their naturally corresponding integrands. They need no hypothetical random denominator.
+
+The full upper harmonic volume exp(c lambda+O_c(Q+log Q)) has not been omitted: a lower bound from ONE actually included positive integral is enough, whatever the total volume. Our count-law comparison errors in(192.23) are evaluated pointwise and over a single interval of length2s_*; they are not multiplied by all harmonics. No subevent estimate is subtracted from an enlarged barred expectation.
+
+Define the exact marked analogue by adding the absolute derivatives of orders1 and2 of Phi_x^lat(u,t)-hat g_{x,u}(t) to the integrand in D_Q^lat. It is at least D_Q^lat, so(192.24) also obstructs that criterion. The normalized derivatives are precisely
+E[(W-EW)e^{itY}] and E[((W-EW)^2-Var W)e^{itY}]; they retain the joint G mark and common normalization. The argument does NOT assert separate lower bounds for either of these signed derivatives. It disproves a small simultaneous absolute criterion already at its zeroth component.
+
+A further genuine auxiliary-law implication is
+inf_S E_S[1_R ||f_x^L-g_x||_1]>=1/6, and
+inf_S P_S(||f_x^L-g_x||_1>=1/3)>=1/2 eventually.
+This uses(192.1),(192.4), not a formal fixed-array example. If total variation distance is defined as half this L1 norm, its corresponding constants are halved. This does not refute the physical profile.
+
+The obstruction is therefore more specific than “there might be cancellations”: merely restoring H_K and summing the dual phases cannot make the exact absolute Fourier comparison small in this regime. Even unmarked L1 convergence to the unchanged smooth reference is impossible there. A proof of the physical functional, if true, would have to handle its nonlinear cancellation without demanding that auxiliary density comparison.
+
+
+### 192.8 物理泛函仍需独立控制
+
+第 163 章在 $0<c<\gamma=99c_q/200$ 内的物理结论保持原范围。第 190 章的正项包络下界也保持其原事件和常数；本章的 $W$ 可以更大，因为它局部化完整数组。
+
+对原选取后验，令 $s_x$ 是完整组计数惊奇量的精确中心化版本，$W_x=s_x+G^2/2$，并令 $f_{x,u}$ 为同一物理输出在归一化实倾斜 $\exp(uW_x)$ 下的密度。精确身份为
+
+$$
+V_{{\rm post},x}(y)-V_{{\rm prior},x}
+=\frac12+\left.\partial_u^2\log f_{x,u}(y)\right|_{u=0}.
+$$
+
+特征函数或密度的零阶差异下界不控制这个二阶对数导数，也不控制其中的条件均值平方。微观振荡因子是否在归一化标记中相消，本章未证；不能把 (192.4) 改称物理方差熵反例。第一、第二标记各自的正下界也未证明。$\gamma<c\le3c_q/2$、$\beta\le3/4$、严格条件的端点及最优阈值均不由本章判定。
+
+(192.24) 中的总和保留全部原有理弧；若只在 $\mathcal R_Q$ 上定义比较数组，将该非负总和在事件外延拓为零。下界由一个已包含的实际区间取得，因此无需乘上全部谐波体积；上界问题仍须支付该体积。所有实际事件在同一原数据律下相交，不以逆噪声放大坏事件，也没有把路径行改为独立观测。
+
+### 192.9 归属与新增关系
+
+第 68 章定义完整物理窗口；第 142 章提供精确选取均值与校准乘积均值的同时比较；第 153 章给出完整补群、有限 Gauss 系数、归一化格点比较及无逆噪声的原律回接；第 167、190 章提供补偿尺度与共同整数相位。本章的新增关系是完整数组上的活二次中心方差估计、整段复因子的下界，以及经同一有界观测核转回原选取输出后的 $L^1$ 障碍。
+
+格点特征函数的 theta 表达和整数周期性是经典性质。相关原始来源及其不提供经验相位概率律的边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章为普通数学推导，未作 Lean 核验证明，不主张检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）

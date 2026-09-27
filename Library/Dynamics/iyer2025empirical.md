@@ -6324,3 +6324,24 @@ Lasse Leskelä，*Information divergences and likelihood ratios of Poisson proce
 Cauchy–Schwarz、Poisson 指数矩、阶乘估计、熵链式身份和均值投影归于经典工具。原两步重置、核心联合信息界与本章新增尾部连接分别归属，不把重新组合自动称为文献原创，也不声称 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 谱边界卷第 192 章补充：完整乘积共振与平滑参考障碍
+
+对应 [谱边界卷第 192 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 repo-derived：将原完整计数窗口、共同后验包含概率和整数重数的近周期关系，接到保留实际中心的二项二次型方差估计，得到整个固定频率偏移区间上的精确补群、完整格点乘积和原选取输出特征函数下界。在固定 $\beta>3/4$、$c>3c_q/2$ 下，原实际 pair/path 各自具有支持一致、概率至少 $1/2$ 的事件，使选取输出与既有平滑参考的 $L^1$ 距离至少 $1/3$。该参考比较障碍不构成物理方差熵反例。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian Distributions via Theta Functions*，[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)，[固定版本原始 TeX](https://arxiv.org/src/1801.02373v2)。核对其 theta 定义、复离散 Gaussian 定义，以及标为 explicitmoments 的特征函数命题和所给完整证明。其记号为 $\mathbf e(z)=\exp(2\pi z)$，矩阵参数位于实部正定的 Siegel 右半空间，并排除归一化 theta 的零除子。特征函数身份为
+
+$$
+\mathbb E e^{iv^{\mathsf T}X}
+=\frac{\theta(u+iv/(2\pi),B)}{\theta(u,B)}.
+$$
+
+证明在绝对收敛格点和中代入线性参数平移，再作局部 Taylor 展开。本章归一化整数 Gaussian 的源参数是 $B=\operatorname{diag}(1/(2\pi d_j))$、$u_j=m_j/(2\pi d_j)$；二者实值且 $B$ 正定，因此归一化分母为严格正实数。实温度 $\tau>0$ 同时乘到两者上；二次 Fourier 因子只作相应虚参数平移，不改变实部正定性。本章不假设复分子非零，也不取其对数。低方差群保留精确二项有限和。
+
+整数线性相位 $\exp(2\pi i k^{\mathsf T}n)$ 对每个格点都是一，故格点周期性不提供任意相位下的一致衰减。原模型必须另外证明经验中心可以达到相应近周期、支付加权误差和原实际事件概率；这部分由第 192 章承担，而非该固定参数 theta 身份。
+
+原文累积量证明的一处求和写为 $\mathbb N^g$，而定义分布和前面的特征函数证明使用 $\mathbb Z^g$；本章使用后者。均值、协方差的全局参数化、最大熵存在性、数值示例及复参数可识别性结论均非本章前提。原文也明确指出这些统计 theta 表达已有计算机科学文献来源；不把经典身份列为本章新意。
+
+原窗口、有限选择补偿和格点比较依次沿用第 68、142、153、167、190 章。新内容是完整复因子的实际概率下界及其原选取输出含义，不是新的 theta 恒等式，也不是物理阈值或 Lean 认证。
+
+## 追加锚（本行以下为增补区）
