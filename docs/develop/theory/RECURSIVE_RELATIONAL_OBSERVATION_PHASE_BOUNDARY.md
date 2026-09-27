@@ -106733,3 +106733,495 @@ $$
 本节复用《波粒事件观察》第40节的单调紧性机制及第318—322节的完整历史接口。Dini 定理的标准表述可见 [Encyclopedia of Mathematics](https://encyclopediaofmath.org/index.php?title=Dini_theorem&oldid=32779)。承重连接是：实际来源赋予低钟历史以概率，统一控制这些概率便能代替全部形式路径的确定性排除；带条件正漂移与增量控制时，还能把这种完成条件加强为两种观察费用的定量比较。
 
 ## 追加锚（本行以下为增补区）
+
+## 324. 非整数幂的临界总调用矩与零误差费用发散
+
+非整数 $\beta$ 的严格两侧矩边界已在第315—316节确定。本节补上总调用的临界点：同一准确共同策略不可能具有统一有限的 $\beta/2$ 阶总调用矩。新增关系来自有限停止尾的正系数结构；在 Bernoulli 自然参数中作插值，可以把单个零增益端点的小尾传到随调用预算缩小的整个参数带，再与非整数幂的有限差分相冲突。
+
+这一结论将第315、316、318节以及第321.6节此前保留的“准确总调用临界矩仅有界是否可能”结算为不可能。原严格次临界构造、临界统一尾上界及一般的有界但不一致可积反例仍然成立。只参考调用的临界矩不由本节结算；近似临界费用虽确定趋于无穷，其精确发散阶仍未确定。
+
+### 324.1 同一来源下的有限停止正系数
+
+沿用原双来源、双目标请求及完整旧信息合同，固定
+
+$$
+B\in\{2,4\},\qquad
+1\le C\le1024/225,\qquad
+\varepsilon=1/16,\qquad
+\beta>0,\quad\beta\notin\mathbb N,
+\qquad a=\beta/2.
+\tag{324.1}
+$$
+
+策略与实际未知参数无关；私随机免费，所有真实旧请求均计入总调用 $M$。第318节允许任意实概率行的完整历史表也属于本节的策略类，不要求其控制概率可计算。表的每次动作都是返回或一次真实请求，不许可不计费的永久内部停滞。
+
+只需固定任务目标请求并限制到原合法子族 $c=1$。两种来源此时独立同律，成功率为
+
+$$
+p(h)=\frac{1-h/C}{B},\qquad
+0<h\le1/4,\qquad p_0=p(0)=1/B\in(0,1).
+\tag{324.2}
+$$
+
+按真实请求次序用一条新鲜 $\operatorname{Bernoulli}(p(h))$ 流供应程序所选择的来源，同时保留来源标签及全部控制历史，不改变输出律或总调用数。固定总调用预算 $n$，对提前返回的路径补足未实际请求的潜在来源位，并先对私随机积分，得到
+
+$$
+q_n(p):=\Pr_p(M>n)
+=\sum_{w\in\{0,1\}^n}
+b_{n,w}\,p^{|w|}(1-p)^{n-|w|},
+\qquad 0\le b_{n,w}\le1.
+\tag{324.3}
+$$
+
+系数与 $p$ 无关。补足只是有限事件的概率表示，不增加实际调用。对有限输出事件 $A$，子概率
+
+$$
+f_n(p)=\Pr_p(M\le n,A)
+\tag{324.4}
+$$
+
+也有次数至多 $n$ 的有限叶表示。因此 $q_n$ 与 $f_n$ 连续，且 $q_n$ 具有 Bernstein 非负系数。
+
+对带内部私记忆的有效程序，第318.8节的完整历史投影保持上述来源—回答—输出叶及调用数。特别地，有限调用后永久内部运行不能在端点突然取得正质量：固定有限来源字后，产生这种停滞的私随机集合与 $p$ 无关；若它有正质量，因每个有限字在全部 $p\in(0,1)$ 都有正概率，任意原合法正世界就已违反几乎必有限执行。对有限调用数和来源字取可数并，排除这种情形。因此式（324.3）没有用免费内部发散替代原来的返回合同。
+
+### 324.2 统一临界矩会延伸到零增益端点
+
+**引理324.1（同一策略的端点延伸）。** 固定任意 $\eta\in(0,1/4]$。若同一策略在 $c=1$ 的正域满足
+
+$$
+\sup_{0<h\le\eta}\mathbb E_hM^a\le K<\infty,
+\tag{324.5}
+$$
+
+则该策略在来源率 $p_0$ 下也几乎必有限返回，并有 $\mathbb E_0M^a\le K$。若原正域输出准确，端点输出律是目标的 $h=0$ 极限。此外，
+
+$$
+\epsilon_n:=n^a q_n(p_0)\longrightarrow0.
+\tag{324.6}
+$$
+
+**证明。** 截断矩具有准确的有限尾差公式
+
+$$
+\mathbb E_p(M\wedge n)^a
+=\sum_{k=0}^{n-1}
+\big((k+1)^a-k^a\big)q_k(p).
+\tag{324.7}
+$$
+
+固定 $n$，式（324.3）使右侧关于 $p$ 连续。令 $h\downarrow0$，得到 $\mathbb E_0(M\wedge n)^a\le K$；再令 $n\to\infty$，非负单调收敛给 $\mathbb E_0M^a\le K$。因 $a>0$，端点无限调用概率为零。完整历史表没有内部停滞；实际程序的这种停滞已由第324.1节排除，故端点执行也几乎必返回。
+
+Markov 界在正域及端点统一给 $q_n\le Kn^{-a}$。对每个有限输出事件，用式（324.4）的连续性，先固定 $n$ 令 $h\downarrow0$，再让两侧调用尾随 $n\to\infty$ 消失，即得完整输出律连续。
+
+最后，
+
+$$
+n^a q_n(p_0)
+\le\mathbb E_0\!\left[M^a\mathbf1_{\{M>n\}}\right]
+\longrightarrow0.
+\tag{324.8}
+$$
+
+这里仅使用端点一个随机变量的可积性，没有要求整个参数矩族一致可积。证毕。
+
+该端点是分析同一策略的辅助概率模型，没有被加入原任务的执行要求。引理说明有限统一预算会自动约束它，而不是先行要求程序在域外准确。
+
+### 324.3 自然参数插值把端点小尾传到统计尺度
+
+令
+
+$$
+\vartheta=\log\frac p{1-p},\qquad
+\Lambda(\vartheta)=\log(1+e^\vartheta),\qquad
+\vartheta_0=\log\frac{p_0}{1-p_0}.
+\tag{324.9}
+$$
+
+按成功次数合并式（324.3），可写成
+
+$$
+q_n(\vartheta)
+=e^{-n\Lambda(\vartheta)}
+\sum_{r=0}^n c_{n,r}e^{r\vartheta},
+\qquad c_{n,r}\ge0.
+\tag{324.10}
+$$
+
+记号 $q_n(\vartheta)$ 表示在对应 Bernoulli 率下的同一尾概率。
+
+**引理324.2（正系数的端点插值）。** 若某个 $a>0$ 满足
+
+$$
+q_n(p(h))\le K n^{-a}\quad(0<h\le\eta,\ n\ge1),
+\qquad
+\epsilon_n=n^aq_n(p_0)\longrightarrow0,
+\tag{324.11}
+$$
+
+则对任意固定 $H>0$，
+
+$$
+\boxed{
+\eta_n(H):=
+\sup_{0\le h\le\min\{\eta,H/\sqrt n\}}
+n^a q_n(p(h))
+\longrightarrow0.}
+\tag{324.12}
+$$
+
+**证明。** 先增大 $K$，使它同时控制全部 $\epsilon_n$；在引理324.1的使用情形中，端点 Markov 界已给同一个 $K$。对 $0<\lambda<1$ 和
+
+$$
+\vartheta_\lambda=(1-\lambda)\vartheta_0+\lambda\vartheta_1,
+$$
+
+有限正项和的 Hölder 不等式给
+
+$$
+\begin{aligned}
+q_n(\vartheta_\lambda)
+&\le q_n(\vartheta_0)^{1-\lambda}q_n(\vartheta_1)^\lambda\\
+&\quad\cdot
+\exp\!\left(
+n\big[(1-\lambda)\Lambda(\vartheta_0)
++\lambda\Lambda(\vartheta_1)
+-\Lambda(\vartheta_\lambda)\big]\right).
+\end{aligned}
+\tag{324.13}
+$$
+
+$\lambda=0,1$ 由端点恒等式处理。若 $q_n(\vartheta_0)=0$，则正系数及 $p_0\in(0,1)$ 使全部系数为零，故整条尾多项式恒零，无需对零取对数。
+
+因为 $\Lambda''(\vartheta)=p(1-p)\le1/4$，有
+
+$$
+0\le
+(1-\lambda)\Lambda(\vartheta_0)+\lambda\Lambda(\vartheta_1)
+-\Lambda(\vartheta_\lambda)
+\le\frac18\lambda(1-\lambda)(\vartheta_1-\vartheta_0)^2.
+\tag{324.14}
+$$
+
+闭区间 $p([0,\eta])$ 位于 $(0,1)$ 内，因此存在有限 $D>0$，使
+
+$$
+0\le\vartheta_0-\vartheta(h)\le Dh
+\qquad(0\le h\le\eta).
+\tag{324.15}
+$$
+
+取 $L=2DH$，并在每个充分大的 $n$ 选择
+
+$$
+\vartheta_1(n)=\vartheta_0-L/\sqrt n.
+\tag{324.16}
+$$
+
+它对应某个 $h_1(n)\in(0,\eta]$，始终取自原合法 $c=1$ 正域。若 $h\le H/\sqrt n$，则
+
+$$
+\lambda=
+\frac{\vartheta_0-\vartheta(h)}{L/\sqrt n}
+\in[0,1/2].
+\tag{324.17}
+$$
+
+外点的统一界为 $q_n(\vartheta_1(n))\le Kn^{-a}$。式（324.13）—（324.17）遂给
+
+$$
+n^aq_n(p(h))
+\le e^{L^2/8}\epsilon_n^{1-\lambda}K^\lambda
+\le e^{L^2/8}\sqrt{K\epsilon_n}
+\longrightarrow0.
+\tag{324.18}
+$$
+
+界对该整个参数带一致。有限个尚未使外点落入合法域的 $n$ 不影响极限。证毕。
+
+这一步利用的是同一工厂在同一调用预算下的有限来源结构。一般参数化随机变量族不必有式（324.10），所以第315节有界但不一致可积的概率反例不能反驳引理324.2。插值也没有使用 $p>p_0$ 的世界。
+
+### 324.4 局部尾和与有限停止导数
+
+**引理324.3（局部截断高矩）。** 假设式（324.12）成立。对整数 $m>a$，置
+
+$$
+T_n^{\mathrm{loc}}(H)=
+\sup_{0\le h\le\min\{\eta,H/\sqrt n\}}
+\mathbb E_h(M\wedge n)^m.
+$$
+
+则
+
+$$
+\boxed{n^{a-m}T_n^{\mathrm{loc}}(H)\longrightarrow0.}
+\tag{324.19}
+$$
+
+**证明。** 对每个固定世界，准确尾差公式给
+
+$$
+\mathbb E_h(M\wedge n)^m
+=\sum_{k=0}^{n-1}
+\big((k+1)^m-k^m\big)q_k(p(h)).
+\tag{324.20}
+$$
+
+若 $1\le k\le n$ 且 $h\le\min\{\eta,H/\sqrt n\}$，也有 $h\le\min\{\eta,H/\sqrt k\}$，故
+
+$$
+q_k(p(h))\le k^{-a}\eta_k(H).
+\tag{324.21}
+$$
+
+利用 $(k+1)^m-k^m\le C_m k^{m-1}$，得到
+
+$$
+T_n^{\mathrm{loc}}(H)
+\le1+C_m\sum_{k=1}^{n-1}k^{m-1-a}\eta_k(H).
+\tag{324.22}
+$$
+
+给定 $\zeta>0$，选固定 $k_0$ 使 $k\ge k_0$ 时 $\eta_k(H)\le\zeta$。固定前缀乘以 $n^{a-m}$ 趋零；其余部分用 $m>a$ 下的幂次和估计，归一化后的上极限至多为常数乘 $\zeta$。让 $\zeta\downarrow0$，得到式（324.19）。证毕。
+
+每个世界的有限尾和先按式（324.20）成立，再代入在同一参数带同时有效的上界。这里没有把逐尺度分属不同世界的费用下界相加。
+
+为连接输出的变化，固定有限输出事件 $A$，令
+
+$$
+g_n(h)=\Pr_h(M\le n,A).
+$$
+
+第315.2节的有限停止预算给
+
+$$
+\left|g_n^{(2m)}(h)\right|
+\le D_{B,C,m}\mathbb E_h(M\wedge n)^m.
+\tag{324.23}
+$$
+
+其依赖仅是有限时域的停止得分估计。具体地，置 $\tau=M\wedge n$，将私随机带在开始时揭示；来源币仍独立，$\tau$ 是有界停止时刻。停止路径的对数似然一阶导数为
+
+$$
+S_\tau=\sum_{i=1}^{\tau}\frac{X_i-p}{p(1-p)}.
+\tag{324.24}
+$$
+
+在固定紧子区间内，增量有界且条件均值为零；二阶及更高阶对数似然导数的绝对值由常数乘 $\tau$ 控制。$2m$ 阶似然导数的 Bell 展开每项受 $|S_\tau|^b\tau^d$ 控制，其中 $b+2d\le2m$。离散鞅矩不等式给
+
+$$
+\mathbb E|S_\tau|^{2m}\le C_m\mathbb E\tau^m.
+\tag{324.25}
+$$
+
+对各项使用 Hölder，并在 $\tau>0$ 上利用 $\Pr(\tau>0)\le\mathbb E\tau^m$，其期望均由常数乘 $\mathbb E\tau^m$ 控制。当 $\tau=0$ 时正阶似然导数为零。输出指示变量不超过一，因此同样控制有限输出子概率的导数；最后 $p(h)$ 仿射只带来常数链式因子 $(BC)^{-2m}$，即得式（324.23）。全部运算先固定有限 $n$，没有直接对无限停止分布微分。
+
+### 324.5 非整数目标排除统一临界矩
+
+**定理324.4（总调用临界矩不可达）。** 对非整数 $\beta>0$，每个在原双来源族中准确且逐世界几乎必有限回答的共同策略，以及每个 $\eta\in(0,1/4]$，固定任务请求并取 $c=1$ 后都有
+
+$$
+\boxed{
+\sup_{0<h\le\eta}\mathbb E_{h,c=1}M^{\beta/2}=\infty.}
+\tag{324.26}
+$$
+
+结论同时适用于第318节的完整实概率策略表和原有效程序。
+
+**证明。** 反设该上确界为有限 $K$。引理324.1给端点有限 $a$ 矩和式（324.6）；Markov 界给式（324.11）。引理324.2和324.3遂分别给局部尾及局部截断高矩的小量。
+
+取整数 $m>a$，置 $R=2m$，并选事件 $A=\{(X,Z)=(1,0)\}$。准确目标为
+
+$$
+G(h)=\frac{1-h/C}{2B}-\varepsilon h^\beta,
+\qquad
+0\le G(h)-g_n(h)\le q_n(p(h)).
+\tag{324.27}
+$$
+
+定义 $R$ 阶有限差分
+
+$$
+\Delta_t^Ru(h)=
+\sum_{j=0}^R(-1)^{R-j}\binom Rj u(h+jt).
+\tag{324.28}
+$$
+
+取 $t_n=n^{-1/2}$、$H=R+1$。对充分大的 $n$，所有差分点及其之间的积分区间均属于原合法正域，并包含在 $0\le h\le H/\sqrt n$ 中。有限多项式的迭代微积分、式（324.23）及引理324.3给
+
+$$
+\begin{aligned}
+|\Delta_{t_n}^Rg_n(t_n)|
+&\le t_n^R
+\sup_{t_n\le h\le(R+1)t_n}|g_n^{(R)}(h)|\\
+&\le D_{B,C,m}n^{-m}T_n^{\mathrm{loc}}(R+1)
+=o(n^{-a}).
+\end{aligned}
+\tag{324.29}
+$$
+
+引理324.2和式（324.27）还给
+
+$$
+|\Delta_{t_n}^R(G-g_n)(t_n)|
+\le2^R
+\sup_{0\le h\le(R+1)/\sqrt n}q_n(p(h))
+=o(n^{-a}).
+\tag{324.30}
+$$
+
+另一方面，$R\ge2$ 消去 $G$ 的仿射部分。因为 $\beta$ 非整数且 $R>\beta$，
+
+$$
+d_{\beta,R}
+=|(\beta)_R|
+\int_{[0,1]^R}
+(1+s_1+\cdots+s_R)^{\beta-R}
+\,ds_1\cdots ds_R>0,
+\tag{324.31}
+$$
+
+其中 $(\beta)_R=\beta(\beta-1)\cdots(\beta-R+1)$。故准确目标满足
+
+$$
+|\Delta_{t_n}^RG(t_n)|
+=\varepsilon d_{\beta,R}t_n^\beta
+=\varepsilon d_{\beta,R}n^{-a},
+\tag{324.32}
+$$
+
+与式（324.29）、（324.30）矛盾。证毕。
+
+本证明对抽象表的每一步都只使用参数无关的有限行概率、完整来源历史及有限停止，不要求实概率行有效可计算。因此抽象类的排除是直接证明的结论，而非从有效代码的排除反推而来。若合同另要求输出 $X$ 为指定来源首枚实际回答，它只是进一步限制策略，排除仍成立。
+
+结合第315节的严格次临界构造，非整数 $\beta$ 的准确统一有限**总调用**矩范围恰为
+
+$$
+\boxed{0<s<\beta/2.}
+\tag{324.33}
+$$
+
+若 $\beta$ 为正整数，式（324.31）的相应下降阶乘可以为零，以上矛盾不成立；原整数幂的指数尾准确构造及全部固定正阶有限矩结论保持。
+
+### 324.6 近似临界费用必须发散
+
+沿用第318—321节同一误差、身份与总调用计费合同中的
+
+$$
+\mathcal C_s^{\mathrm{pol}}(\delta),
+\qquad
+\mathcal C_s^{\mathrm{alg}}(\delta).
+$$
+
+**推论324.5（零误差极限的临界发散）。** 对非整数 $\beta$、$a=\beta/2$，
+
+$$
+\boxed{
+\mathcal C_a^{\mathrm{pol}}(0)
+=\mathcal C_a^{\mathrm{alg}}(0)
+=\infty,}
+\tag{324.34}
+$$
+
+且在扩展实数意义下，
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{pol}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{alg}}(\delta)
+=\infty.}
+\tag{324.35}
+$$
+
+每个固定 $\delta>0$ 的两类费用仍有限，并按第321.6节相等。
+
+**证明。** 定理324.4使每个准确抽象策略的统一临界总调用矩都为无穷，所以其下确界也为无穷。有效程序具有保持费用的抽象代表，故有效准确费用同为无穷。这是费用无穷，不是声称准确工厂不存在。
+
+定理318.4在相同抽象费用合同中给
+
+$$
+\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{pol}}(\delta)
+=\mathcal C_a^{\mathrm{pol}}(0).
+\tag{324.36}
+$$
+
+代入式（324.34）得抽象侧发散；有效类包含于抽象类，故
+$\mathcal C_a^{\mathrm{alg}}(\delta)\ge\mathcal C_a^{\mathrm{pol}}(\delta)$，也必发散。每个正误差的有限性及同值复用第316、321节。证毕。
+
+因此第316节临界窗口现在具有更强的定性下界：费用随准确度提高必趋于无穷。原 $O(\log(1/\delta))$ 上界仍有效，但本节没有给出对数下界或其他具体发散速率，不能将该上界改写为匹配的 $\Theta$ 阶。共同策略完成解决的是是否能保持同一个有限预算；自然参数插值解决的是准确共同策略在临界预算下不可能存在。二者相接才得到式（324.35）。
+
+### 324.7 正条件漂移下的临界钟矩
+
+考虑第323节固定于完整实际取得历史的非负边标定，记累计取得钟为 $T$。该标定不额外向控制器透露未知参数信息。为免与式（324.1）的来源常数 $C$ 混淆，将钟增量界记为 $C_{\mathrm{clk}}$。
+
+**推论324.6（可比较取得钟的临界边界）。** 假设存在共同常数 $0<\mu\le C_{\mathrm{clk}}<\infty$，使每个实际世界、完整历史和可选来源动作满足
+
+$$
+0\le c_{\mathrm{clk}}(h,a,y)\le C_{\mathrm{clk}},
+\qquad
+\sum_y\kappa_\theta(y\mid h,a)c_{\mathrm{clk}}(h,a,y)\ge\mu.
+\tag{324.37}
+$$
+
+则非整数 $\beta$ 下，准确共同策略具有统一有限 $s$ 阶取得钟矩的可达范围同样恰为
+
+$$
+\boxed{0<s<\beta/2.}
+\tag{324.38}
+$$
+
+若按相同输出合同定义最优钟费用 $\mathcal D_s^{\mathrm{pol}}$ 与 $\mathcal D_s^{\mathrm{alg}}$，则在 $a=\beta/2$ 处，
+
+$$
+\mathcal D_a^{\mathrm{pol}}(0)
+=\mathcal D_a^{\mathrm{alg}}(0)=\infty,
+\qquad
+\lim_{\delta\downarrow0}\mathcal D_a^{\mathrm{pol}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal D_a^{\mathrm{alg}}(\delta)
+=\infty.
+\tag{324.39}
+$$
+
+**证明。** 定理323.6给每个 $s>0$ 的共同常数 $\alpha_{\mathrm{clk}}>0$ 和 $A_s<\infty$，满足
+
+$$
+\mathbb ET^s\le C_{\mathrm{clk}}^s\mathbb EM^s,
+\qquad
+\mathbb EM^s\le\alpha_{\mathrm{clk}}^{-s}\mathbb ET^s+A_s.
+\tag{324.40}
+$$
+
+其中 $\alpha_{\mathrm{clk}}$ 是式（323.13）中名为 $a$ 的漂移比较常数，与本节临界指数 $a=\beta/2$ 不同。
+
+若准确统一临界钟矩有限，式（324.40）第二项会使准确统一临界总调用矩有限，违反定理324.4。严格 $s<a$ 时，用第315节已有准确构造，再由式（324.40）第一项取得有限统一钟矩。$s>a$ 的有限矩也会蕴含有限 $a$ 矩，因为对非负 $t$ 有 $t^a\le1+t^s$，故同样被排除。
+
+逐策略比较在同一抽象类或有效类中取下确界，给
+
+$$
+\mathcal C_s(\delta)
+\le\alpha_{\mathrm{clk}}^{-s}\mathcal D_s(\delta)+A_s.
+\tag{324.41}
+$$
+
+若临界近似钟费用在某个 $\delta_j\downarrow0$ 序列上有共同有限上界，对应的总调用费用也会有共同有限上界，与推论324.5矛盾。因此得到式（324.39）。证毕。
+
+若只需临界不可能性的方向，第323.5节的共同截断条件漂移已足够，因为它仍给式（324.40）的第二项；严格次临界可达性的钟上界则还要有相应的反向费用控制。本推论不适用于任意裸钟、仅逐路径发散的钟或只具无条件正均值的钟，也不把免费私随机、内部算术和其他未计费等待自动包含在取得钟内。
+
+### 324.8 文献关系与保留边界
+
+HNP 的兼容 Bernstein 包络及非整数 Hölder 速率提供第315节临界统一尾的可达性；其 §7 将有限分数矩的精确刻画与 Besov 边界问题列为进一步研究，并未给本节所用的端点必要性定理。Nacu–Peres 的整数矩可微性命题另外要求矩尾一致趋零，不能用来把统一有界矩改称为一致可积。[^critical_endpoint_sources]
+
+后续论文确实解决过这些旧文献中的其他问题。例如 Mendo 对 $p^r$、$0<r<1$ 给逐点有限均值工厂，明确解决 Nacu–Peres 关于 $\sqrt p$ 的逐点提问，并将辅助随机变量视为免费。这里的源端点是退化的 $p=0$；本节的零增益对应非退化 $p_0=1/B$，不能直接交换两个问题的尺度。[^critical_endpoint_mendo]
+
+2026年的 debiased Bernoulli factory 对 $\rho>3$ 的 $C^\rho[0,1]$ 函数给非自适应构造：输入数 $L$ 与来源币结果独立，其质量为 $n^{-\lambda}$ 的归一化，$1<\lambda<(\rho-1)/2$。它复用 HNP 的包络速率，并不提供本节临界 $\rho/2$ 阶矩的必要充分条件。[^critical_endpoint_debiased] 本节的排除依靠式（324.13）的正系数插值与有限停止预算，不以“旧问题在当前仍未解决”或文献原创性断言为前提。
+
+本节保留以下边界。式（324.26）是每个零邻域上的矩上确界无穷，不排除每个固定正 $h$ 的临界矩分别有限，也不证明该矩沿所有 $h\downarrow0$ 单调发散。一般有限分数矩的完整函数空间刻画没有在此建立。
+
+只参考调用数尤其需要另行处理：当任务调用不受预算限制时，事件“参考调用超过 $n$”可依赖任意多任务位；即使 $c=1$，它也不自动具有式（324.3）的 degree-$n$ 正多项式表示。因此第315—316节的参考临界矩与参考近似费用缺口没有被总调用结果填平。区别在于允许比较的共同有限观察量，不在于将两个同律来源改名。
+
+[^critical_endpoint_sources]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3), Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5)。相关原文为 pp.3–4 的有限 Bernstein 正系数/兼容包络，以及 p.28 的 §7 分数矩与 Besov 问题。该文同时供应并计数 p 币与公平币；本节必要性证明直接使用免费私随机合同，不从其双币费用中省略假设。Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5), Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549)；Proposition 22 使用矩尾一致衰减，Proposition 23 给统一均值下的 Lipschitz 结论，§8 Question 3 是进一步问题。本文矩尾计算采用准确差分权重 $n^s-(n-1)^s$。
+
+[^critical_endpoint_mendo]: Luis Mendo, *An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series*, [arXiv:1612.08923v5](https://arxiv.org/pdf/1612.08923v5)。p.2 规定辅助随机变量免费；Theorem 2 给 $\mathbb E_pN=f(p)/p$，对 $f(p)=p^r$ 得 $p^{r-1}$；Theorem 3 的信息下界另有 fast factory 假设。这里引用其已解决范围与成本合同，不将退化端点的逐点结论当作本节的统一预算结论。
+
+[^critical_endpoint_debiased]: Jere Koskela, Toni Karvonen, Krzysztof Łatuszyński and Dario Spanò, *A debiased Bernoulli factory and unbiased estimation of a probability*, [arXiv:2510.01941v2](https://arxiv.org/pdf/2510.01941v2)，版本日期2026-09-01，正文日期2026-09-02。Theorem 1 重述 HNP Theorem 8；Theorem 2 对 $\rho>3$ 给 [0,1] 值无偏估计构造，输入数分布见 §2。由其 $n^{-\lambda}$ 质量直接算得 $\mathbb EL^s<\infty$ 当且仅当 $s<\lambda-1$；该构造保证的阶数严格低于 $(\rho-3)/2$。§5 另列更轻尾及端点推广问题。
+
+## 追加锚（本行以下为增补区）
