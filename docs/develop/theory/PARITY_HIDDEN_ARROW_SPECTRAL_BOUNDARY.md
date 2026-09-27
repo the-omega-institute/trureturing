@@ -61178,3 +61178,428 @@ Adell、Lekuona、Yu 的有限二项—Poisson 积分身份与 Jensen 不等式�
 本章为普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 195. 任意负实场紧区间上的总量无零邻域：双侧 Stieltjes 约束与完整轮廓
+
+第 171 章在一个小的固定负场矩形中给出完整有限谱振幅。本章用双侧 Stieltjes 估计，把能量鞍点在任意固定负实场紧区间上约束于同一个有界负能量段；再支付整个能量轮廓、有限连接段和补入的正电荷半线。得到的复邻域宽度不随原层级缩小，原始总量具有非零有限谱预测式，相对误差为 $O(\delta)$。
+
+这一邻域可从第 186 章的浅负场区域连到一个实际能量鞍点；在后者处，行列式在零点的 Taylor 级数已经不收敛。证明仍使用有限谱预解式及同一物理噪声，并在振幅下界成立后支付原始计数返回。没有用经验谱的确定极限替换有限数组。
+
+本章给出的是原始总量的零点排除区及实场下的实际电荷集中。端点与内部贡献达到相同尺度的振荡区域、该区域中的相位反演及非零零点标签仍未得到。第 179 章既有零点结论保留其原适用范围。
+
+### 195.1 Original experiment and the finite predictor
+
+Use the same actual selected counts, with
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+ D=\sum_j(x_j+e_j),\quad E=\sum_jx_j^2,
+ \quad H_y=V+\sqrt\delta y,\quad a=(2V)^{-1}+\eta.
+$$
+The target remains
+$$
+ N_P^-(H/\sqrt\delta,y)=\sum_{D<0}P_x(n)
+ e^{aD^2+(H/\sqrt\delta)D-(E-H_y)^2/(2\delta\sigma^2)},
+ \tag{195.1}
+$$
+with the literal coefficient
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ \frac{[z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)}
+ {[z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_j n_j.
+ \tag{195.2}
+$$
+No floor, outside label, center, sign convention or actual residual is changed. The inherited full-box approximation inserts exp(ell_sel-epsilon D^2), where epsilon=B^2/(2d_c), ell_sel=(1/2)log(d_all/d_c); its O(q^-1/2) remainder is paid below, not declared zero. Put b_ch=a-epsilon. It is distinct from the residual reserve beta_res.
+
+Throughout, eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, sigma>0 tends to zero, and ONLY the original strict reserve limsup log(1/sigma)/Q^3<c_q/2 is used. Work on the inherited common tight class M>=16 with |y|<=Y. Thus V,V_H lie in[M^-1,M], lambda_j=v_j/delta<=M, C2,H=delta^-1 sum_H v_j^2 lies in[M^-1,M^2], a retained block has at least1/(M delta) variances at least delta/M, ||e_H||<=M delta^5, and n_g<=M delta^-4. Enlarge the fixed class once for rank-one interlacing as in Chapters 171 and 179. Low tuples L have exact probabilities p_L, charges c_L, energies u_L, sum p_L=1, and
+$$
+ \ell_Q=\max_L(|c_L|+u_L)\le P(Q)e^{-b_{Low}Q^3}.
+ \tag{195.3}
+$$
+Every low is retained. All estimates are simultaneous on one array and all displayed physical outputs. Exhausting the classes gives actual pair and actual path statements separately, uniformly over the original deterministic size-q supports and inherited compact output/separator scopes. There is no deterministic empirical-profile limit.
+
+For real negative energy s initially define
+$$
+ S(s)=\sum_H\frac{v_j}{1-2s\lambda_j},\quad
+ L_Q(s)=-\frac\delta2\sum_H\log(1-2s\lambda_j),
+ \quad m_e(s)=-2s\sum_H\frac{\lambda_je_j}{1-2s\lambda_j},
+$$
+$$
+ \mu_L(s)=c_L+m_e(s),\quad
+ \alpha(s)=\frac1{2S(s)}-b_{ch},\quad
+ q_*(s)=1-2b_{ch}S(s)=2S(s)\alpha(s),\quad
+ \chi(s)=\frac1{4\alpha(s)}=\frac{S(s)}{2q_*(s)}.
+ \tag{195.4}
+$$
+Logs and square roots start positive real where q_*>0. The exact full-charge energy action, already identified in Chapter 171, is
+$$
+ \mathcal J_L(s,H)=\frac{\sigma^2s^2}{2}+s(u_L-H_y)+L_Q(s)
+ +s\sum_H\frac{e_j^2}{1-2s\lambda_j}
+ -\frac\delta2\log q_*(s)-\frac{\delta\mu_L(s)^2}{2S(s)}
+ +\frac{[H+\sqrt\delta\mu_L(s)/S(s)]^2}{4\alpha(s)}.
+ \tag{195.5}
+$$
+In particular the physical noise, noncentral vector, selection precision and determinant prefactor remain inside (195.5). An O(delta) action term is not omitted: after division by delta it can change the phase by order one.
+
+### 195.2 Explicit compact-negative-field theorem
+
+**定理 195.1（任意固定负实场紧区间的原始总量无零邻域）。** Fix any constants 0<kappa<=1 and L>=1. These are independent of Q, eta and sigma. Define
+$$
+ u=\min\{(16M)^{-1},\ \kappa/(2^{12}M^4)\},\quad
+ d_0=(4M^3)^{-1},\quad q_0=(8M^4)^{-1},
+$$
+$$
+ T=2+\frac{64L^2M}{d_0q_0^2},\qquad
+ q_{min}=\frac{u}{16M^2},\qquad
+ A_{min}=\frac{u}{64M^3},\qquad
+ A_{max}=M[1+2M(T+1)].
+ \tag{195.6}
+$$
+Further set
+$$
+ \beta=\frac1{2M[1+2M(T+1)]},\quad k=\frac{\beta^2}{4M},
+$$
+$$
+ C=2^{200}(12!)^2(1+M+Y+L+T+u^{-1}+q_{min}^{-1})^{200},
+$$
+$$
+ d=\min\{u/8,(64M)^{-1},q_{min}/(128M^3)\},\quad
+ r_s=\min\{d/8,k/(2^{12}C)\},\quad v_0=r_s/8,
+$$
+$$
+ g_F=\frac1{32M}\log(1+4\beta^2v_0^2),\quad
+ g_+=\frac{\kappa^2}{256A_{max}},
+$$
+$$
+ \theta_0=\min\{\kappa/32,1,kr_s/(2^{12}C),
+                 kg_F/(2^{16}C^2),g_+/(2^{12}C)\}.
+ \tag{195.7}
+$$
+These fixed constants are deliberately loose, but each is explicit and strictly positive. The usable domain is the open stadium
+$$
+ \mathcal U_{\kappa,L}=\{H:\operatorname{dist}(H,[-L,-\kappa])<\theta_0\}.
+ \tag{195.8}
+$$
+All constructions have a surrounding margin, obtained below by using the real interval[-2L,-kappa/2] and charge/energy neighborhoods wider than(195.8).
+
+For every low tuple there is a unique real root c_L(x) of mathcal J_L,s=0, x in[-2L,-kappa/2], and
+$$
+ -T<c_L(x)<-u,\qquad \mathcal J_{L,ss}(c_L(x),x)\ge k.
+ \tag{195.9}
+$$
+Here c_L(x) denotes an ENERGY root only in this section and subsequent formulas with an argument; the low charge remains c_L without an argument. To avoid any ambiguity below, write s_L(H) for its complex continuation. The proved analytic branches on(195.8) define
+$$
+ K_L(H)=\mathcal J_{L,ss}(s_L(H),H),\quad
+ F_L^{all}(H)=\mathcal J_L(s_L(H),H),
+$$
+$$
+ \mathcal P_Q(H)=\sum_Lp_L K_L(H)^{-1/2}
+                       e^{F_L^{all}(H)/\delta},\qquad
+ \mathcal N_Q(H)=\sigma e^{\ell_{sel}}\mathcal P_Q(H).
+ \tag{195.10}
+$$
+The square roots continue from the positive real ones. The sum is exact, not an optimization over lows. On(195.8), with fixed constants depending on M,Y,kappa,L,
+$$
+ c\sigma e^{-C'/\delta}\le|\mathcal N_Q(H)|\le C'\sigma e^{C'/\delta},
+$$
+$$
+ N_P^-(H/\sqrt\delta,y)=\mathcal N_Q(H)[1+\varepsilon_Q(H)],
+ \qquad \sup|\varepsilon_Q|\le C'\delta+o(\delta^A)
+ \quad(A>0\text{ fixed}).
+ \tag{195.11}
+$$
+Thus the ORIGINAL total is zero-free throughout this domain, including every closed Jordan subdomain and its boundary for all sufficiently large Q. The analytic logarithm of its ratio to(195.10) is O(delta), an unscaled function/phase error. This is a zero-free theorem, not a phase inverse or a nonzero-root location theorem.
+
+### 195.3 New two-sided confinement, without a small spectral expansion
+
+For s=-v<0 the exact identities give
+$$
+ V_H-S(-v)\ge\frac{2v}{M(1+2vM)},\quad
+ S(-v)\ge\frac{V_H}{1+2vM},\quad
+ S'(s)=2\sum_H\frac{v_j\lambda_j}{(1-2s\lambda_j)^2},
+$$
+$$
+ \chi'(s)=\frac{S'(s)}{2q_*(s)^2}>0.
+ \tag{195.12}
+$$
+No determinant Taylor series is used. For every fixed v>=1 the first lower bound is at least d0. For s<=-T, eventual eta smallness therefore gives q_*(s)>=q0. For -T-1<=s<=-u/2, it gives q_*>=q_min, S>=1/[M(1+2M(T+1))], and
+$$
+ A_{min}\le\alpha(s)\le A_{max}.
+ \tag{195.13}
+$$
+For example at v=u/2 the variance loss is at least u/(2M); dividing by V<=M and paying 2eta S leaves at least u/(4M^2), stronger than q_min. High/full variance discrepancies and epsilon have their inherited exponentially small or O(delta^5) sizes. Since u is fixed, all these eventual inequalities hold for every admitted sequence; no relative eta/sigma rate has been introduced.
+
+Use a centered, zero-low auxiliary action ONLY to bound root locations, denoted mathcal J_c. Its derivative is
+$$
+ \mathcal J_{c,s}=G(s)+x^2\chi'(s),\qquad
+ G(s)=\sigma^2s-H_y+S(s)-\frac\delta2\frac{q_*'(s)}{q_*(s)}.
+ \tag{195.14}
+$$
+The exact predictor(195.5),(195.10) never drops actual e or lows. On the fixed interval and its small complex neighborhoods their effect on the derivative is o(1), uniformly in x. Indeed Cauchy--Schwarz gives sqrt(delta)m_e=O_{M,T}(delta^5), since sum lambda_j^2=C2,H/delta. The e-square term is O_{M,T}(delta^10); all low differences are O_{M,T,kappa,L}(ell_Q) with fixed derivative orders. Divisions by q_min and S_min are fixed constants.
+
+At s=-u, S'>=1/M and eventually 0<q_*<=4uM^3. The latter follows from V_H-S<=2uC2,H<=2uM^2 and 1/V<=M; the negative eta contribution only helps this upper bound. Consequently, for |x|>=kappa/2,
+$$
+ x^2\chi'(-u)\ge\frac{\kappa^2}{128u^2M^7}\ge 2^{17}M.
+ \tag{195.15}
+$$
+Meanwhile G(-u)>=-3M eventually: sigma<=1, H_y<=2M, S>=0, and -delta q_*'/(2q_*)>=0 because b_ch>0 and S'>0. Thus mathcal J_L,s(-u,x)>M for every low and every enlarged real field x, eventually.
+
+At s=-T, the elementary inequality S'(-T)<=S(-T)/T<=M/T and q_*>=q0 gives
+$$
+ x^2\chi'(-T)\le\frac{2L^2M}{Tq_0^2}\le d_0/32
+                    \qquad(|x|\le2L).
+ \tag{195.16}
+$$
+Also S(-T)-H_y<=-d0+o(1), the noise term sigma^2(-T) is nonpositive, and the delta logarithmic derivative in G is o(1) with a fixed denominator q0. Hence mathcal J_L,s(-T,x)<-d0/2 eventually. This is the second confinement sign. In particular it does not require sigma bounded below, or balancing a large negative tilt against an inverse-sigma term.
+
+For real s with q_*>0, differentiation of the convergent positive tilted Gaussian integral is exact:
+$$
+ \mathcal J_{L,ss}(s,x)=\sigma^2+\delta^{-1}
+            \operatorname{Var}_{s,x,L}(E_G)>0.
+ \tag{195.17}
+$$
+Its covariance is
+$$
+ \Sigma_s=C_s+\frac{2b_{ch}}{q_*(s)}C_s\mathbf1\mathbf1^TC_s,
+ \quad C_s=\operatorname{diag}\left(\frac{v_j}{1-2s\lambda_j}\right).
+ \tag{195.18}
+$$
+The rank-one term is positive. The Gaussian formula Var(||X-e||^2)=2tr Sigma_s^2+4(mean-e)^T Sigma_s(mean-e), and the retained block of C_s, give a lower bound stronger than k throughout[-T,-u]. This proves strict uniqueness, (195.9), and the absence of a real energy fold for the required branch, from the sign change and strict monotonicity. The argument is uniform over the entire negative-field compact; it is not a union of assumed nondegenerate local charts.
+
+For each finite array the real convergence boundary s_c, q_*(s_c)=0, is unique and lies in(-u/2,0) eventually. As s tends to minus infinity, mathcal J_s tends to minus infinity because sigma>0; as s approaches s_c from the left its variance term diverges positively. These observations give the global real root as well, but the usable uniform theorem rests on the explicit compact signs(195.15),(195.16), not on those nonuniform endpoint limits.
+
+### 195.4 Lawful global Gaussian regrouping and the live charge saddle
+
+Let Y_j be the same independent high Gaussians of variance v_j used in the original-count comparator of Chapter 169. Put D_G=c_L+sum Y_j, E_G=u_L+sum(Y_j-e_j)^2, and r=-D_G. The original faithful negative comparator G_- is its r>0 integral, with selection insertion and the unchanged physical likelihood. Define G_all and G_+ by integrating r over the whole line and r<=0 respectively. Exactly G_-=G_all-G_+.
+
+Start energy inversion on ANY real line c<=-u/2. The positive tilted charge law has variance S(c), mean mu_L(c), and after insertion its exponent is
+$$
+ -\alpha(c)r^2-[H/\sqrt\delta+\mu_L(c)/S(c)]r
+                         -\mu_L(c)^2/(2S(c)).
+ \tag{195.19}
+$$
+For complex s=x+iv, Cauchy--Schwarz yields
+$$
+ |S(s)|^2\le S(x)\Re S(s),\quad
+ \Re(1/S(s))\ge1/S(x),\quad
+ \Re\alpha(s)\ge\alpha(x)>0\quad(x\le-u/2).
+ \tag{195.20}
+$$
+The first inequality follows by writing each summand as a positive real tilted weight divided by 1-2iv lambda_j/(1-2x lambda_j), then applying weighted Cauchy--Schwarz. Also Re S(s)>0. Thus S,alpha,q_* have no zeros in this simply connected half-plane. Their logs are fixed by their positive-real values, and every diagonal determinant pole is outside it. No path crosses s_c.
+
+The complete Gaussian integral in(195.19) has coefficient ONE. For real parameters this is direct integration. For complex parameters with Re alpha>0 it follows by a finite displacement to the Gaussian stationary line, with closing pieces tending to zero; alternatively both sides are analytic continuations of that convergent Gaussian identity in the same half-plane. This identity is exact, so it does not introduce an artificial finite charge endpoint, an erfc denominator, or a guessed cycle coefficient. Gaussian inversion then gives
+$$
+ G_{all}(H/\sqrt\delta,y)=\frac{\sigma e^{\ell_{sel}}}{i\sqrt{2\pi\delta}}
+      \sum_Lp_L\int_{c-i\infty}^{c+i\infty}
+                         e^{\mathcal J_L(s,H)/\delta}\,ds.
+ \tag{195.21}
+$$
+Equivalently use sigma e^ell_sel/sqrt(2pi delta) times the dv integral. The upward ds=i dv is essential; no factor i or raw sigma is suppressed. Absolute interchange is legal on this convergent negative line, proved also by the whole-contour bound in Section 195.6. It is not a Fubini claim on the supercritical line s=0.
+
+The actual tilted charge center at the same real energy root is
+$$
+ \bar\rho_L(x)=-\frac{x+\sqrt\delta\mu_L(c_L(x))/S(c_L(x))}
+                         {2\alpha(c_L(x))}>0.
+ \tag{195.22}
+$$
+For x in[-2L,-kappa/2], eventually
+$$
+ \kappa/(8A_{max})\le\bar\rho_L(x)\le 2L/A_{min}.
+ \tag{195.23}
+$$
+These are fixed positive bounds, not a formal spectral scaling. Section 195.7 proves concentration of the original real posterior there.
+
+One can also identify the joint conditional-energy/charge critical point without confusing its small prefactor correction with(195.9). Let F_L^{cond}(s,w) be Chapters 182 and 184's exact conditional action, including its rank-one determinant logarithm and the charge insertion. For real s with alpha>0, the unique maximizer of F_L^{cond}(s,w)-xw over w in R is(195.22), with c_L(x) there replaced by s. Let M_L(s,x) be that maximum value. Exact Gaussian integration gives
+$$
+ \mathcal J_L(s,x)=M_L(s,x)-\frac\delta2\log(2\alpha(s)V_H).
+ \tag{195.24}
+$$
+The energy derivative of M_L is the conditional energy derivative at its maximizing w. Its second derivative is
+$$
+ M_{L,ss}=F_{L,ss}^{cond}+
+            \frac{(F_{L,sw}^{cond})^2}{2\alpha}>0.
+ \tag{195.25}
+$$
+Thus the same confinement signs, allowing the O(delta) logarithmic derivative in(195.24), give a unique joint real critical point on the branch; its energy coordinate differs from s_L(x) by O(delta). Its profiled charge curvature is
+$$
+ \frac{d^2}{dw^2}F_L^{cond}(s_L^{cond}(w),w)
+       =-2\alpha-\frac{(F_{L,sw}^{cond})^2}{F_{L,ss}^{cond}}
+       \le-2A_{min}.
+ \tag{195.26}
+$$
+All means remain real in this argument. The exact low mixture contributes the exponentially small variance term from Chapter 182 rather than disappearing; it cannot close this fixed gap. On a fixed neighborhood of this critical charge, Chapters 182 and 184's real/complex conditional estimates apply after enlarging their fixed class to contain T+1. Their proof uses resolvents on a bounded negative energy interval and the retained block, so no change of sequence hypotheses is involved. The finite curvature factor perturbs the log-profile derivative by O(delta), and its relative inversion remainder contributes O(delta^2) to the action. The exact faithful profile therefore has a unique stationary maximum in that neighborhood with curvature bounded above by -A_min, eventually. Global dominance and exclusion of other comparable real-charge regions are proved by the total tail estimate below; we need not assert that every exponentially subdominant local extremum of the density is absent.
+
+The final amplitude is(195.10), not a substitution of this joint maximum for the full finite energy action. In particular the correction in(195.24) is retained exactly in(195.5). Distinct per-low energy roots are legal because inversion is an exact linear sum over lows; no two per-low optima are claimed to be one common random realization or one simultaneous optimum.
+
+### 195.5 A uniform complex saddle tube, with finite branches
+
+On distance d neighborhoods of[-T,-u], each diagonal resolvent has a fixed lower denominator, S is bounded away from zero, and q_* stays at least q_min/2 in modulus. For the last statement use |q_*'|<=4M^3 on a surrounding left strip and the definition of d; the other claims follow directly from the positive-real tilted denominators. Derivatives of order j of a diagonal resolvent are j! times products of at most j powers of2lambda and j+1 resolvents. Determinant derivatives have delta sum lambda_j^j<=M^{j+1}; no naked dimension factor occurs. Noncentral sums use the Cauchy--Schwarz estimate after(195.14). For j<=10 these facts bound the required mixed derivatives of(195.5) by C in(195.7), on |H|<=2L+1 and the stated energy neighborhoods. Noise contributes at most fixed polynomials because sigma<=1. The logarithmic determinant itself is bounded by integrating its derivative from zero along the negative real axis, then within the small disks; delta log q_* is bounded using q_min. No inverse sigma enters.
+
+At each real x, linearize mathcal J_L,s on the energy circle of radius r_s about c_L(x). The linear term has modulus at least kr_s; the energy Taylor remainder is at most Cr_s^2 and a field change costs at most C|H-x|. The constants(195.7) make both smaller than fixed fractions of the linear term. Rouché gives one root s_L(H), with
+$$
+ |s_L(H)-c_L(x)|\le 2C|H-x|/k,\qquad
+ \Re K_L(H)\ge k/2.
+ \tag{195.27}
+$$
+Use a larger field margin than theta0 here. The real root derivative is bounded by C/k. Hence if two anchor disks overlap, their roots lie in one of the same uniqueness disks after the slack in(195.7). They coincide. This patches a single holomorphic branch throughout the stadium and its margin, not a formal root selected independently at each field. Reality fixes K_L^{1/2}>0 on the real interval and its continuation has positive real part. All contours remain in Re s<-u/2.
+
+Compare each actual low with the auxiliary c_L=u_L=0 reference KEEPING actual e. The bounded derivatives, nonzero curvature and finite implicit equation give, with fixed derivative orders on an inner margin,
+$$
+ |s_L-s_0|+|K_L-K_0|+|F_L^{all}-F_0^{all}|
+                  \le C'\delta^{-m}\ell_Q
+ \tag{195.28}
+$$
+for a fixed m (m=8 is more than sufficient). Dividing the exponent difference by delta still gives a superpolynomially small quantity. Sum exact positive p_L BEFORE comparison to obtain
+$$
+ \mathcal P_Q(H)=K_0(H)^{-1/2}e^{F_0^{all}(H)/\delta}
+                           [1+\xi_Q(H)],\quad
+ |\xi_Q|\le C'\delta^{-9}\ell_Q.
+ \tag{195.29}
+$$
+This proves nonvanishing of the low sum on the complex domain. Real positivity alone was not used to infer it. The near-one log in(195.29) and positive-real curvature branch fix a nonzero analytic amplitude; bounded actions give the lower bound in(195.11) for mathcal N_Q before any approximation error is divided by it.
+
+### 195.6 Complete energy contour and finite connectors
+
+For a real anchor x and any one low, tilt on its real root c=c_L(x). Conditional on the SAME real charge D_G, the high covariance is
+$$
+ C_c-C_c\mathbf1\mathbf1^TC_c/S(c).
+ \tag{195.30}
+$$
+The quadratic and linear charge insertions do not alter this conditional covariance. Interlacing leaves at least1/(2M delta) eigenvalues of this covariance divided by delta above beta, eventually. For real conditional means the exact quadratic-energy characteristic modulus is consequently at most
+$$
+ D_Q(v)=(1+4\beta^2v^2)^{-1/(8M\delta)}.
+ \tag{195.31}
+$$
+The noncentral modulus factor is at most one. A complex field H=x+i theta contributes a charge mark exp(i theta D_G/sqrt(delta)) of modulus one. Therefore for ANY real-charge event A the modulus of its joint transform at(c+iv,H), normalized by its positive real tilted mass, is bounded by D_Q(v) times the real tilted probability of A. This is a joint bound conditioned on one charge; it is not a product of unrelated marginal optimizations, and complex squares have not been treated as positive.
+
+The noise multiplies(195.31) by exp(-sigma^2v^2/(2delta)). Dropping it in an upper bound gives integral D_Q=O(sqrt(delta)). Peeling half of the large power shows the integral over |v|>=v0 is at most C'sqrt(delta)exp(-2g_F/delta). A fixed polynomial loss can be absorbed in half this gap. This pays the WHOLE infinite vertical tail uniformly in the physical noise. It also establishes absolute convergence for the tilted inversion and the restricted-charge versions of it.
+
+Only the central segment is moved through s_L(H). Join its endpoints back to c+-iv0 by short straight connectors inside the same resolvent disk, leaving the infinite tails on their original vertical line. At real H the endpoints have a strict action loss from(195.31). At complex H the energy root displacement costs at most2C|theta|/k and its action cost at most a further factor C; the condition theta0<=kg_F/(2^16 C^2) pays the connectors. Likewise
+$$
+ |\Re F_L^{all}(x+i\theta)-F_L^{all}(x)|\le C'|\theta|
+ \tag{195.32}
+$$
+with C' bounded by a fixed small multiple of C. The choices in(195.7) pay this envelope-to-amplitude difference from both g_F and g_+. No original infinite ray is rotated across q_*=0; no assumed contour at complex charge infinity is needed.
+
+On the central segment s=s_L(H)+iv, Taylor expansion and(195.27) give a quadratic real loss at least kv^2/8 after a fixed local restriction already contained in v0. Derivatives through order8 are bounded. Scaling v=sqrt(delta)u, the odd cubic term integrates to zero on the symmetric segment, while its square and the quartic term contribute O(delta); higher terms and the local exterior have the usual Gaussian bounds directly from the same derivative estimates. For example split at |u|=delta^-1/12, expand there, and use the quadratic loss outside. This proves a uniform relative O(delta) remainder, rather than invoking a fixed-integrand source theorem for a varying array.
+
+The raw upward contour Gaussian is i sqrt(2pi delta/K_L). Its i cancels the1/i in(195.21). Thus the energy coefficient is +1 and
+$$
+ G_{all}(H/\sqrt\delta,y)=\mathcal N_Q(H)
+                    [1+O(\delta)+O(e^{-c/\delta})].
+ \tag{195.33}
+$$
+Here the whole charge Gaussian already has its exact coefficient one by(195.19)--(195.21). Low errors may be summed without cancellation loss by(195.29). Equations(195.31),(195.32) and the paid finite connectors precede the division by the nonzero amplitude. Merely continuing an additive identity would not prove(195.33).
+
+### 195.7 Added half-line, every real-charge tail, and original-law return
+
+At the SAME real root the Gaussian law of r has mean bar rho_L/sqrt(delta) and variance1/(2alpha). Since |x|>=kappa/2 and sqrt(delta)mu_L/S=o(1),
+$$
+ \Pr_{c_L(x),x,L}\{r\le0\}
+ \le\exp\left[-\frac{[x+\sqrt\delta\mu_L/S]^2}
+                         {4\alpha\delta}\right]
+ \le e^{-4g_+/\delta}.
+ \tag{195.34}
+$$
+Apply the restricted form of(195.31) BEFORE energy inversion. Its integral contributes O(sqrt(delta)); the inversion prefactor is sigma/sqrt(2pi delta). Sum the exact lows afterward and compare through(195.29),(195.32). It follows that
+$$
+ |G_+(H/\sqrt\delta,y)|/|\mathcal N_Q(H)|\le C'e^{-c/\delta}.
+ \tag{195.35}
+$$
+This controls the entire added half-line and its endpoint, not a meromorphic endpoint expansion. Combining the exact identity G_-=G_all-G_+ with(195.33),(195.35) proves the total faithful estimate. There is no unaccounted finite cutoff R, terminal endpoint phase, or missing middle segment in this representation on(195.8).
+
+For any fixed v>0, the same restricted Fourier argument for |sqrt(delta)r-bar rho_L(x)|>=v uses the real Gaussian bound2exp(-A_min v^2/delta). Low centers differ by a superpolynomially small amount. After returning to the original counts, for real x in[-L,-kappa] one obtains
+$$
+ \Pr_{P,x,y}\{|\sqrt\delta(-D)-\bar\rho_0(x)|>v\mid D<0\}
+       \le C_v e^{-c_v/\delta}+o(\delta^A).
+ \tag{195.36}
+$$
+The notation denotes the actual original selected posterior with the same likelihood and field. The reference bar rho_0 keeps actual e. All real-charge regions outside any fixed neighborhood of this positive center are paid, including the far tail. Constants in(195.36) may depend on v; no fixed complex-width small-v concentration theorem is claimed.
+
+For clarity, the original-count input used for both the total and cut events is Chapters 169 and 179's established fixed-H-disk estimate
+$$
+ |N_P^-(H/\sqrt\delta,y)-G_-(H/\sqrt\delta,y)|
+ \le\sigma P(Q)\exp[-\beta_{res}Q^3+C_L/(\eta\delta)].
+ \tag{195.37}
+$$
+It applies on every fixed disk, so the larger but fixed L in this theorem is within its proved quantifiers. The full-q coefficient error in(195.2) is paid using (Re h)D<=eta D^2+C_L/(eta delta), under the same-output positive envelope at2eta. High-cell density/displacement errors keep their exponential Q^3 reserve; h adds a polynomial factor. Likelihood comparisons use the original log-width/Young inequalities and score marks for widths[sigma/2,2sigma], never bare inverse-sigma differentiation. Lows are summed only after uniform bounds. Floors, equality conventions, sign strips, lattice1/B and outside labels remain in the original return. For(195.36), both event cut locations are polynomially bounded r of order delta^-1/2 by(195.23), so the retained cell-boundary strip estimate applies.
+
+Excluded full tuples cost P(Q)e^-cQ^4. The inequality D^2<=2n_g E+2(sum|e_j|)^2 on the SAME full tuple pays the insertion by exp(CQ^(7/2)+C_L/(eta delta)). Only this crude excluded step loses raw sigma and uses the original strict noise reserve to recover the stated bound. No smaller physical sigma or stronger rate is required. These are original-law payments, not a claim that the Gaussian comparator itself is the experiment.
+
+Only now divide(195.37) by the already proved lower bound |mathcal N_Q|>=c sigma exp(-C'/delta). The ratio is at most
+$$
+ P(Q)e^{-\beta_{res}Q^3+C_L/(\eta\delta)+C'/\delta}
+                            =o(\delta^A)\quad(A>0).
+ \tag{195.38}
+$$
+Indeed eta>=sqrt(delta) eventually implies (eta delta)^-1<=Q^(3/4), whereas delta^-1=Q^(1/2). The raw sigma cancels AFTER the total lower bound. This proves(195.11),(195.36) for every admitted arbitrarily-slow t sequence. Original pair/path and support/output quantifiers are inherited separately on the same tight classes; no independent choice of favorable arrays was used.
+
+By(195.11),(195.29), the ratio N_P^-/mathcal N_Q lies in a disk about1 of radius O(delta)<1/2. Its analytic logarithm is the near-one branch and has modulus O(delta). Rouché on any closed Jordan contour inside the domain gives zero original zeros because mathcal N_Q is nonzero. This is an actual no-zero count with a proved contour denominator. It does not count an unproved oscillatory family.
+
+### 195.8 A realized connected domain reaching beyond determinant Taylor convergence
+
+We now specify a single choice showing that the theorem is more than Chapter 171's local rectangle. Retain Chapter 186's explicit b_*>0 and Chapter 171's h_-=xi^(3/2)/(2^12 M^8), xi=2^-20 M^-20. Choose
+$$
+ \kappa=\min\{b_*/8,h_-/8,1/8\},\qquad
+ L=2^{20}M^{20}(1+Y).
+ \tag{195.39}
+$$
+The real interval[-b_*/2,-b_*/4] is compactly inside D_L and inside[-L,-kappa]. Intersect its complex neighborhood from(195.8) with distance b_*/32 from that interval to obtain an explicit nonempty complex sector wholly inside D_L. The theorem also covers the intervening negative real fields to Chapter 171's center, and far deeper fields. It has ONE branch(195.9),(195.27) and ONE predictor(195.10) across that connected interval. On its nonempty intersection with Chapter 171's rectangle the actions and roots are identical by real uniqueness and analytic patching, and the Gaussian roots have the same positive-real normalization. No fitted logarithmic integer is introduced.
+
+For a structural beyond-Taylor witness take the fixed energy anchor c_d=-3M/4 and the centered placement field
+$$
+ H_{d,Q}=-\sqrt{-G(c_d)/\chi'(c_d)},
+ \tag{195.40}
+$$
+where G retains the actual physical sigma,y,finite selection coefficient and full spectrum from(195.14). This auxiliary centered value only PLACES a field, exactly as Chapter 171's center did; the amplitude always uses(195.5), with actual e and every low. We verify that it is realized in(195.8), rather than postulating a saddle there.
+
+At c_d, (195.12) gives V_H-S>=d0. The positive O(delta) logarithmic derivative and sqrt(delta)y tend to zero, while sigma^2 c_d<=0. Thus G(c_d)<=-d0/2 eventually; also |G(c_d)|<=4M eventually since sigma<=1. On this negative compact, q_*>=q0 and q_*<=1 eventually, S'<=2M^2, and
+$$
+ \chi'(c_d)\le M^2/q_0^2=64M^{10},\qquad
+ \chi'(c_d)\ge[ M(1+2M^2)^2]^{-1}\ge(9M^5)^{-1}.
+$$
+Consequently the deliberately weaker bounds
+$$
+ 2^{-10}M^{-8}\le |H_{d,Q}|\le2^{10}M^8
+ \tag{195.41}
+$$
+hold eventually. Chapter 186's b_*<=kappa_186 r_*/4<=1/(512M^8) implies the kappa in(195.39) is smaller than one quarter of the lower bound in(195.41); L is larger than twice its upper bound. Thus H_d lies well inside the negative real interval of our domain for the SAME array. Actual-e/low corrections shift its energy root by o(1), so s_L(H_d)=c_d+o(1), uniformly in lows. On the field disk of radius min{theta0/2,Mk/(256C)} about H_d, their real parts stay between -7M/8 and -5M/8 eventually, by the root derivative bound2C/k. At the real center itself the roots and conditional roots below are real; that center suffices for the determinant-series divergence witness.
+
+The conditional energy saddle at the actual charge center(195.22) differs from the whole-charge energy root by O(delta). To check this without a false equality, the conditional identity(195.24) says that at the whole-charge root the conditional energy derivative is (delta/2)(log(2alpha V_H))'. Conditional energy curvature has a fixed retained-block lower bound, so its root moves by O(delta). Thus it too lies in the displayed deep negative interval. Every retained conditional eigenvalue lambda>=1/M then has |2s lambda|>1. The logarithmic determinant Taylor series at zero diverges on that block. The total theorem nevertheless holds there by finite resolvents and the global Fourier bound, without a small-sixth-order/quartic ratio assumption.
+
+Furthermore(195.23),(195.36) show an actual original positive charge rho of fixed nonzero size, and eta|U|^2=delta D^2 stays bounded away from zero with high posterior probability. This is an original-total nonquartic regime, not the canceled full-line saddle from Chapter 174's positive-field box: the added half-line is exponentially SMALL here by(195.34),(195.35), so the interior contribution survives in G_- and in the original counts.
+
+If one asks only about the shallow D_L segment, no assertion is needed that its charge already has a divergent Taylor series. The proof instead connects that realized segment to the deep witness(195.40) on the same uniform negative-field domain. Outside D_L, Chapter 186's particular cutoff estimate is not reused; (195.31)--(195.35) pay the entire charge integral and its complement afresh. This avoids pretending a fixed cutoff bound had a larger field domain.
+
+### 195.9 Branch compatibility and the unchanged oscillatory gap
+
+The exact high covariance rank-one identity connecting(195.5) to Chapters 182 and 184's conditional action is
+$$
+ \det(I-2sA_c/\delta)=\prod_H(1-2s\lambda_j)\,S(s)/V_H,
+ \qquad A_c=\operatorname{diag}(v_j)-vv^T/V_H.
+ \tag{195.42}
+$$
+It is an identity of the same finite Gaussian law. Together with(195.24), it identifies the charge Gaussian determinant, the conditional energy determinant and their logs on the negative real convergence domain. Every square root is positive there. Chapter 184's corrected upward ds orientation and common sigma e^ell_sel/sqrt(2pi V_H) normalization are retained. The full-charge action has a different curvature logarithm from the conditional action, so their energy roots are not falsely equated at finite delta.
+
+On the actual nonempty profile overlap with Chapter 179 supplied by Chapter 184, g is the SAME faithful integral. Its normalized log B(w)=delta log(g(w/sqrt(delta))/g(0)) starts at B(0)=0 and agrees exactly there; no log(sigma) term is discarded. This is sufficient to match profile and positive Gaussian branch conventions. The new negative-field amplitude matches Chapter 171 exactly on the actual common field domain proved above. Neither identity asserts that the endpoint factor H-B'(0) has been carried through zero with Chapter 179's phase branch. That endpoint log and its oriented competing cycle are not part of our one-amplitude predictor. No zero label or integer phase shift is transported by real positivity.
+
+The relation newly established is proper confinement and total relative dominance on EVERY fixed negative-field compact, including a connected path to a genuinely beyond-Taylor spectral saddle. Chapter 171 proved one small anchored rectangle and real-root existence without these uniform compact confinement/tail comparisons. Chapter 182 proved real curvature and windows; Chapter 184 proved a conditional-profile tube; Chapter 186 paid a cutoff attachment. Equations(195.12)--(195.16), followed by(195.27)--(195.38), turn those finite-law relations into the larger ORIGINAL-TOTAL sector, with all missing tails and amplitude division controlled. The proof is not merely parameter substitution into Chapter 171's small-xi hypotheses: the lower and upper root signs, spectral block after arbitrary bounded negative tilt, and fixed complex width were established anew with(195.6),(195.7).
+
+In this sector the endpoint/complement is exponentially smaller, so it supplies no new equal-amplitude zeros. Approaching the oscillatory region can destroy the gap in(195.34) or require leaving the fixed negative-axis neighborhood; this is a boundary of the present sufficient dominance estimate, not a physical obstruction. We have not transported Chapter 179's endpoint/interior cycle decomposition into a new comparable-amplitude domain, inverted its phase there, or paid a Rouché boundary for nonzero roots. All actual h0,d and previous unscaled location assertions retain their original scope. There is no attained original-total refutation, maximal domain claim, global zero-free half-plane claim, independent-family certification or global-originality claim.
+
+
+
+### 195.10 来源、对应与适用边界
+
+第 169 章给出原始完整选择计数的加法返回及条件能量接口；第 171 章给出整电荷 Gaussian 重组和小矩形；第 174 章说明整线分解中的大项相消；第 179 章给出既有 Taylor 域内的连续有限相位。第 182、184 章分别提供实际低群混合的实曲率及条件能量复管，第 186 章提供浅负场截断域。复用这些结果时，本章保持相同数组、选择插入、非中心项、精确低群、原始噪声和端点约定；完整电荷作用量与条件作用量的曲率对数不同，其能量鞍点只在所证尺度上相近，不宣称有限层完全相同。
+
+本章新增的是式 (195.12)–(195.16) 的双侧能量约束，以及它与共同电荷条件 Fourier 包络、有限复连接段、精确低群非消失和原计数返回组合而成的总量相对定理。任意固定 $\kappa,L$ 的结论不允许未经估计便令它们随 $Q$ 变化。固定负轴邻域不等于整个左半平面；其内部补入半线指数小，也不能推出区域外不存在相消零点。
+
+William D. Kirwin 的 *Higher Asymptotics of Laplace's Approximation*，arXiv:0810.1700v2，给出实 Laplace 展开的假设与局部化结构参照。其 Theorem 2.1 及 Lemma 2.3 所需的内部非退化极小值、外部正作用量间隙与可积支配必须分别核对。该实变量结论不直接提供本章随数组及噪声变化的复域、循环系数或统一相对余项。这里只复用经典方法及其假设纪律；式 (195.27)–(195.38) 直接证明所需复轮廓与原始概率律估计。详细版本和来源适用边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。
+
+以上是普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）
