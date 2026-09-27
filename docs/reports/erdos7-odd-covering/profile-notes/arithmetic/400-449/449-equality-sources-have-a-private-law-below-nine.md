@@ -10,7 +10,7 @@ This result allows incidence five at every full root. It uses actual private poi
 
 The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
-The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The asymmetric-root theorem AC77 below controls the complete77/63 class with2078/231. The remaining general fixed-head cut window is74/63 through76/63; specified profiles within that window are separately controlled.
+The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The asymmetric-root theorem AC77 below controls the complete77/63 class with2078/231. The RC76 theorem below controls the complete75/63 and76/63 classes with3572/397. The remaining general fixed-head class is74/63; its uniform-root-cap capacity obstruction is stated precisely in RC76.3.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -10872,3 +10872,165 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 These are ordinary proofs and exact finite certificates, without new Lean verification.
+
+## Every original maximum-flow75 or76 source has a common law below nine
+
+Ordinary actual-source mathematics. No Lean, arbitrary-height or unrestricted
+covering conclusion. All original fibres and incidence edges remain in place.
+
+### RC76.1. A three-inactive-root cut through82 is always supplied
+
+Retain a complete original literal4555 source and all original legal-pair
+ternary-tree premises. Suppose one actual network cut has three inactive
+occupied roots and capacity at most82. Then ONE law on the original source has
+
+    Gamma_1225 <=2865/319<9.
+
+Normalize the cut exactly as in B80: inactive-root subtrees stay sink-side,
+remove private islands, use public/private prefix antichains and replace an
+active child's private raw cost at least8 by its incoming7 edge. No126 bridge
+can cross. These moves do not increase capacity or delete source points. They
+cannot make the fourth root inactive, since the four original source-root
+edges alone cost84. There remains one active original root with n=4 or5,
+legal size q=n-2, delta inactive children, total private token cost Z and
+public token cost k. The residual budget is
+
+    7(delta+k)+2Z <=19.
+
+Hence delta+k<=2, each active child's private cost is at most3 and at least
+q original children remain active. Cost3 can be one whole private column;
+the argument does not replace it by three selected labels.
+
+#### No public prefix
+
+For k0, complete-fibre containment and the unchanged inactive children give
+
+    L_R=sum_all_original_children min(3,|F_c|) <= Z+3delta.
+
+At delta=0,1,2 the residual budget bounds this by respectively9,9,8. The
+complete-root clipped-cardinality consumer B80.2 therefore applies. The
+minimum records a statistic; it does not truncate the complete fibres.
+
+#### One public fine label
+
+For k1, P is one numerical label y. If delta1, the budget gives Z<=2, so
+any legal restriction among the active children has complete projection
+contained in y plus at most two private fine labels. Its whole projection
+has size at most three, invoking IA.1, B3 or H2 with bound at most249/28.
+
+If delta0, the private total is at most6. Let p be the sum of the cheapest
+q private costs. At a gap root p>=3 would force
+
+    Z>=p+2ceil(p/2)>=7,
+
+a contradiction. Thus its cheapest complete legal projection has size at
+most1+p<=3. At a full root p>=4 would force Z>=4+2ceil(4/3)=8. For p<=2
+use the same at-most-three-label consumer. At p3, sorted five-cost lists
+of total at most6 are only11111 and11112: first triple003 would force
+total at least9 and012 would force at least7. Both remaining shapes
+have four whole fibres contained in {y,z_i}; the fifth is arbitrary.
+B80.3 supplies5795/647, which is below2865/319.
+
+#### Two public fine labels
+
+For k2, delta0 and Z<=2. The public antichain consists of two fine labels,
+not a whole column. The cheapest original legal restriction has private
+cost at mostfloor(qZ/n)<=1, for either(n,q)=(5,3) or(4,2). Its whole
+projection therefore has at most three labels and is supplied. These
+three cases exhaust the normalized budget.
+
+### RC76.2. Complete connection for original maxima75 and76
+
+Now also retain the standalone five-tree premise used by the one-inactive
+public3/4 consumers. Suppose the ORIGINAL integer-capacity network has
+maximum flow M=75 or76. Modify only the four original source-root capacities:
+
+    M75: rho=113/6;       M76: rho=39/2.
+
+If the modified network supports mass M, the existing SA.8 coherent and
+noncoherent estimates apply to ONE such actual flow, normalized once, and
+give respectively674/75 and683/76, both strictly below nine.
+
+Otherwise max-flow/min-cut gives an actual modified cut of capacity<M.
+Let c be its original integer capacity and t its number of inactive occupied
+roots. Original maximality gives c>=M, and its modified capacity is exactly
+
+    c-(21-rho)t.
+
+For t0 it is unchanged and cannot fail. For t4 the four modified source-root
+edges alone cost4rho>=M, so it cannot fail. Integer arithmetic leaves:
+
+| M | t1 original c | t2 original c | t3 original c |
+|---:|---|---|---|
+|75|75..77|75..79|75..81|
+|76|76..77|76..78|76..80|
+
+Every t2 case is supplied by B80. Every t3 case is supplied by RC76.1.
+For t1, normalization may create another inactive root, in which case B80
+applies. Otherwise its public-cost inventory has62 necessary profiles
+through77. Public0/1 are supplied by OC77/P76, public2 by TP2, the eight
+nonpartial public3/4 profiles by the NP34 fourteen-private-point theorem,
+and the partial-public3 and11113 profiles by the UF14 unrestricted-fifth-child
+theorem. These are common laws on the ORIGINAL source. The t1 largest
+bound is3572/397. Abstract profile necessity is sufficient for this case
+split; actual realizability of every listed profile is not assumed.
+
+The largest bound among all branches above is3572/397. Therefore BOTH
+complete original maximum-flow classes75 and76 satisfy
+
+    Gamma_1225 <=3572/397=9-1/397.
+
+This connection depends on the stated ordinary source theorems. It does
+not turn their proofs or finite certificates into Lean results.
+
+### RC76.3. Why the same uniform-root-cap route does not close maximum74
+
+The tempting choice rho=109/6 would give the formal conditional estimate
+
+    1+(373+12rho)/74 =665/74<9.
+
+But its modified network cannot support mass74: the four source-root
+capacities total4rho=218/3<74. The cut immediately after the source,
+with all four roots inactive, is ALWAYS a failing cut. It has original
+capacity84 and is outside the three-inactive supplier above. Omitting
+this t4 cut would invalidate the argument.
+
+More generally, feasibility of a uniform root cap at M74 requires
+
+    rho>=74/4=37/2,
+
+whereas the displayed SA.8 estimate is strictly below nine only if
+
+    rho<(8*74-373)/12=73/4.
+
+Since37/2>73/4, no uniform rho can fulfill both conditions in this
+particular bound. This is a limitation of this certificate, not a
+counterexample to the original source theorem or Erdős #7. The new
+three-inactive through82 supplier is valid independently, but it does
+not settle the whole maximum74 class.
+
+For a general mass M, combining source capacity4rho>=M with the
+strict coherent inequality373+12rho<8M requires
+
+    373+3M<8M, equivalently M>373/5=74.6.
+
+This is the exact feasibility boundary of this uniform-root-cap
+certificate. At M74 and the smallest feasible caprho=37/2, the
+coherent charge bound is595, while strict below nine needs charge
+less than592. An improvement strictly greater than three raw units,
+or a different argument, is required; no such improvement is proved
+here.
+
+### RC76.4. Exact arithmetic control
+
+The [necessary-profile control](../../../frontier/cover-geometry/height-two-small-anchors/three_inactive82_rootcap_control.py) and its [data](../../../frontier/cover-geometry/height-two-small-anchors/three_inactive82_rootcap_control.json)
+enumerate all89 normalized necessary sorted profiles through82,
+including all15 at capacity82, and check the consumer assigned in
+RC76.1. This is a necessary-profile control, not an assertion that
+all abstract profiles are actual sources. It also verifies all three
+cut-range tables, the failing four-source capacity for M74 and the
+common M75/M76 ceiling3572/397. Independent generation of all labelled child-cost assignments yields exactly the same89 sorted profiles. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/three_inactive82_rootcap_control.py --output /tmp/e7_three_inactive82_replay.json
+```
