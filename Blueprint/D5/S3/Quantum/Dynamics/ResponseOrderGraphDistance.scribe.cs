@@ -64,7 +64,8 @@ internal sealed class ResponseOrderGraphDistanceDocument : IScribeDocumentDefini
         Formula entry(Formula a, Formula b) => Seq(h, Underscore, Grp(a, Sp, b));
         Formula powEntry(Formula k) => Seq(Grp(Seq(h, Caret, Grp(k))), Underscore, Grp(j, Sp, i));
         Formula symmetry = Seq(Forall, Sp, i, Comma, Sp, j, Comma, Sp, entry(i, j), Sp, Eq, Sp, entry(j, i));
-        Formula nonneg = Seq(Forall, Sp, i, Sp, Neq, Sp, j, Comma, Sp, D(0), Sp, Leq, Sp, entry(i, j));
+        Formula nonneg = Seq(Forall, Sp, i, Comma, Sp, j, Comma, Sp, i, Sp, Neq, Sp, j, Sp, Rightarrow, Sp,
+            D(0), Sp, Leq, Sp, entry(i, j));
         Formula early = Seq(Forall, Sp, n, Sp, Lt, Sp, dist, Comma, Sp, powEntry(n), Sp, Eq, Sp, D(0));
         Formula first = Seq(D(0), Sp, Lt, Sp, powEntry(dist));
         return Disp(Seq(
