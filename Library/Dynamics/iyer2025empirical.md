@@ -5654,3 +5654,15 @@ Nico M. Temme，*Uniform Asymptotic Methods for Integrals*，[arXiv:1308.1547v1]
 Paul Cuff、Jian Ding、Oren Louidor、Eyal Lubetzky、Yuval Peres、Allan Sly，*Glauber Dynamics for the mean-field Potts Model*，[arXiv:1204.4503v2](https://arxiv.org/abs/1204.4503v2)，2012-06-11。PDF 3,605,812 字节，SHA256 `5a59fb6d9219f4ae45765664fea300f0acd6dc1a0e8e50bdf392025e78fd9595`。该文完整图 Potts Gibbs 测度、单点 Glauber 转移与混合时间定义是定理的模型前提。Section 1.1 的 (1.1) 及 Theorems 1–4 区分动力学阈值和热力学阈值；Theorem 2 使用 $\beta(n)=\beta_s-\xi(n)$ 及 $n^{2/3}\xi(n)$ 描述混合时间与 cutoff，Section 1.2 解释局部自由能极小值消失的 spinodal 含义。该模型没有本章带噪能量观测及原计数选择条件，故仅作结构比较，未迁移任何混合定理。来源的模型、定理条件与自由能解释已核对，完整混合证明未承担本章推导。
 
 本章保持原有限噪声曲率因子 $\chi_{Q,\sigma}=2C_2/(2C_2+\sigma^2)$，以在零电荷处误差为零的上界支付边界层。直接负号分子保留 $\sigma/h$ 尺度；增长外场只在同一联合估计中付出 $\exp(Ct^2)$，由原计数比较的 $\exp(-bQ^3)$ 裕量支付。最后对同一负号条件律使用第 143 章的全计数盒选择包络，误差为 $O_{\mathbb P}(\delta^5+q^{-1/2}+\delta^6/\eta^3)$，不含逆少数相概率。两场的精确负号分子比还给出正文 (144.43a) 的指数矩结论。局部极限与条件抽样文献沿用第 143 章的版本及范围；模型内连接是本章的推导内容，不宣称全局原创或完整相图。
+
+## 谱边界第 145 章补充：稀疏类别 Poisson 比较与合法标签池放大
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 145 章在原固定幅度、$\beta\in(1/2,1)$、原取整序列及完整选择后验下，将加权方差熵结论推进到每个固定 $c>0$ 的 $\rho_Q\asymp\exp(-cQ^{3/2})$。预选的 $m=\lceil\log Q\rceil$ 个不交真实标签对只用于证明：实际数据中至少一个池落在具有固定正概率的有利矩形。随后对每个固定池，在其自身合法外部条件域下界定“坏且有利”的交集，再取有限并。不存在将事后选中的隐藏分配重新当作固定池条件律的步骤。
+
+Federico Pianoforte、Riccardo Turin，*Multivariate Poisson and Poisson process approximations with applications to Bernoulli sums and U-statistics*，[arXiv:2105.01599v2](https://arxiv.org/abs/2105.01599v2)。核对原始 TeX 的整数向量 $\ell^1$ Wasserstein 距离、Theorem 1.1 的可积整数向量／独立 Poisson 目标／同空间耦合及 size-bias 缺陷条件，以及 Section 3.1 的类别向量假设、独立情形推论与相关应用证明。事件指标在整数 $\ell^1$ 距离下为 1-Lipschitz，因此该 Wasserstein 距离支配事件全变差。独立类别向量推论的误差为 $\sum_t(\sum_jp_{t,j})^2$；其维数依赖在求和中显式出现，不要求 Poisson 总均值保持有界。
+
+第 145 章先条件于完整奇偶记录，再将被选中类别的每个时间槽写成取值于 $0,e_1,\ldots,e_{2m}$ 的独立类别向量。路径原始行并不独立，不能直接套用该推论；条件化后的槽位独立性来自原核的精确因子分解。逐槽比较给出 $O(m^2Q^3/M)$，奇偶频数偏差与目标均值校正另付 $O(Q^3M^{-1/3}+mM^{-1/3})$。该比较只作用于有界的“存在有利池”事件，不替换完整后验、经验中心、惊异矩或共用残差。
+
+原始归档 17,295 字节，SHA256 `6050a143ed440fa652d8407ce0eece086cddba261c79055d0d55b0eaad97858a`；所核对 TeX 53,893 字节，SHA256 `83dc7d594e3f53a7b47e3d4d7a5a175d9bc935d66c61cbd6b603d87c9be92c9c`。该版本依赖情形证明中有一处显示式将前文 size-bias 恒等式的 $\ell_i-1$ 写为 $\ell_i-i$；这里保留这一原文缺陷的适用边界，不依赖该段。正文 (145.10) 直接计算单槽事件全变差 $p(1-e^{-p})\le p^2$，经独立最大耦合与求和得到所需界，因而不以未核验的一般 Stein 证明补足模型论证。
+
+经典 Poisson 近似与 Stirling 不作为新内容。本章的模型内推导在于：将真实槽位联合律、有利池存在性、每个固定池的合法算术交集和同一全数组的三标签删除校准接合；再用原始相对一行／两行律证明 $|j|\le Q^{13/8}$ 上的同时占据下界，支付扩大频率带内的两阶实温度标记、位移双格能量及全部输出尾部。Gauss／Poisson、theta、Weyl 及条件导数文献保留既有归属与限制。有限检索不证明全局原创性或更强结果不存在；结论不扩张至增长 $c$、必要性、零噪声或原始环境期望收敛。
