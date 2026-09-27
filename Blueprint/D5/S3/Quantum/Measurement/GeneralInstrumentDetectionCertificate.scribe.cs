@@ -57,7 +57,8 @@ internal sealed class GeneralInstrumentDetectionCertificateDocument : IScribeDoc
             complete, Sp, Rightarrow, RowBreak, Grp(),
             Open, Sub("D", F.Id("d")), Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp, Exists, Sp, G, Sp, Gt, Sp, D(0),
             Comma, Sp, bound, Close, Sp, Land, RowBreak, Grp(),
-            Forall, Sp, G, Sp, Gt, Sp, D(0), Comma, Sp, bound, Sp, Rightarrow, Sp, decay, Sp, Land, RowBreak,
+            Forall, Sp, G, Sp, Gt, Sp, D(0), Comma, Sp, bound, Sp, Rightarrow, Sp, Open, decay, Close, Sp, Land,
+            RowBreak,
             Grp(), summable, Dot));
     }
 

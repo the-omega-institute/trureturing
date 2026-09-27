@@ -208,11 +208,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
   have htrace : ∀ (a b : Fin d → ℂ) (A : Matrix (Fin d) (Fin d) ℂ),
       (vecMulVec a b * A).trace = b ⬝ᵥ (A *ᵥ a) := by
     intro a b A
-    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.vecMulVec_apply, dotProduct,
-      Matrix.mulVec, Finset.mul_sum]
-    rw [Finset.sum_comm]
-    refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
-    ring
+    rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm, dotProduct_mulVec]
   tfae_have 1 → 2 := hFzero
   tfae_have 2 → 1 := by
     intro hF0
