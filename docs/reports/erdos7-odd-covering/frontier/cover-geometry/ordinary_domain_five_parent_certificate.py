@@ -81,7 +81,7 @@ Alo,Aup=H['five_head'];Blo,Bup=H['five_outside']
 ck('finite_head_over_outside',all(a>=b for a,b in zip(Alo,Bup)))
 gamma=F(203129722400814193208791597,20692505911553620784640000000);alpha=F(2673,110656)
 ck('source_status',source['status']=='PASS')
-ck('source_hash_pin',hashlib.sha256(source_bytes).hexdigest()=='8bf5da7b70697b67e5f3df8b2787cbcac087841342423d028372ba4ebe903d2f')
+ck('source_hash_pin',hashlib.sha256(source_bytes).hexdigest()=='224cb239ae065f18b7ca1e0ce94883275125554ee668c48c6810e9375810dccf')
 ck('source_reserve',F(source['head_gate'])==gamma)
 ck('source_projection',F(source['projection_alpha'])==alpha)
 for q in (13,17,19):ck('source_omission_mass',F(source['unqueried_coordinate_mass_caps'][str(q)])==Z[q])

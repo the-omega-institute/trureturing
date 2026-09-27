@@ -5,7 +5,7 @@
 The missing-anchor audit left a finite interface obligation: coordinatewise
 Haar averaging had to be upgraded to the mixed original-cylinder events used
 by one common transported submeasure. The standard-library checker
-[`verify_product_prefix_transport.py`](../frontier/cover-geometry/verify_product_prefix_transport.py)
+[`verify_product_prefix_transport.py`](../frontier/cover-geometry/verify-product-prefix-transport/verify_product_prefix_transport.py)
 discharges that finite lemma for the three interfaces used by the current
 source rows, including the dual missing-((3,5)) anchor map.
 
@@ -37,7 +37,7 @@ separate optimization over target marginals is used.
 The exact run is:
 
 ```text
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify_product_prefix_transport.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify-product-prefix-transport/verify_product_prefix_transport.py
 ```
 
 The three profiles pass with source/target state counts \((45,175)\),

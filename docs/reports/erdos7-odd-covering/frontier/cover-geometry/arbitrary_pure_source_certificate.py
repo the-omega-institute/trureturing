@@ -24,10 +24,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODELS = {
     'root_one': ('root_one_all_stars_certificate.py',
-                 '826126df7f1a7c9f3d792ee8c206c5543609a6df97d4cd31d8b07a0425d8248a',
+                 'a86134709bd37246d3b8e192cdc295a5bd4a03eb3cc71fe4e0b6f1fa47d497b1',
                  1 << 21, 1 << 24, F(11, 500)),
     'matching': ('matching_endpoint_certificate.py',
-                 '69153d040ad621ac0ffb671bbf218d1d527a323a3284e79db852fcba16016324',
+                 '79782bff4bcdf38b0c50d1d5defce93d3c1b642554fcc5defca1009ab0b365dd',
                  1 << 23, 1 << 27, F(7, 10000)),
 }
 CHECKS = []

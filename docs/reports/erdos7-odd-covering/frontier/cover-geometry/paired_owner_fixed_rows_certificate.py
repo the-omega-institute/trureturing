@@ -12,9 +12,9 @@ from functools import lru_cache
 import argparse, hashlib, itertools, json, sys
 sys.set_int_max_str_digits(0)
 PINS={
- 'four_parent_tail_fixed_schedule.json':'fa79d1c28aea101da734ac687fe9ddb6e39bc6bd212a206183e049d1e929f758',
- 'ordinary_domain_five_parent_certificate.json':'e46183469f280d262da37a9c33005e724690fc20b0106202c42c9913ed8d8ec0',
- 'joint_square_pair_225_star_certificate.json':'cbdc3903174d5640ea6518160abaaa9ac567424f9f8afc717128e1202f378be5',
+ 'four_parent_tail_fixed_schedule.json':'091d221e0cd6738162d01e20f348bf62556e1296225085bfbb61f4ae58108294',
+ 'ordinary_domain_five_parent_certificate.json':'dcb6f975b020c293631092bc79c88794d254423885f660709544aa27770b3668',
+ 'joint_square_pair_225_star_certificate.json':'eb93f38e57540d8050a7287d8d51af7123f282e7f5b3815386f9770450eda3fc',
 }
 COUNTS={}
 def check(ok,label):

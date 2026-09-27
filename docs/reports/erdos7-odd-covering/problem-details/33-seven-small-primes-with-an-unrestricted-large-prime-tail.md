@@ -447,12 +447,12 @@ comparison is confined to the inspected statements, not a claim of
 exhaustive literature novelty.
 
 The standalone
-[arithmetic program](../frontier/cover-geometry/seven_head_dense_tail_certificate.py)
+[arithmetic program](../frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.py)
 reads the inherited Chapter 31 certificate, selects its exact
 seven-prime row, checks the kernel-cap product, computes the Haar
 second moment and rational tail allowance, and records the input
 SHA-256 in its
-[output](../frontier/cover-geometry/seven_head_dense_tail_certificate.json).
+[output](../frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.json).
 It also checks the second seed's moment and continuation arithmetic;
 that seed's density theorem remains an attributed premise. The
 program does not execute the inherited geometry or certify the
@@ -460,7 +460,7 @@ external analytic premise. Run from the repository root after the two
 certificates are installed side by side:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven_head_dense_tail_certificate.py --output /tmp/seven-head-dense-tail-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven-block-certificate/seven_head_dense_tail_certificate.py --output /tmp/seven-head-dense-tail-certificate.json
 ```
 
 The unrestricted problem still permits configurations satisfying

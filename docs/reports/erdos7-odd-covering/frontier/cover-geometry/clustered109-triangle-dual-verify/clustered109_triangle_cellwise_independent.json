@@ -1,0 +1,4152 @@
+{
+  "status": "PASS",
+  "checks": 7329132,
+  "new_lean_verification": false,
+  "optimizer_used": false,
+  "program_sha256": "4793190aab28869de2c820027fad239a1c6f6d562a38ff827f306375ed254bc7",
+  "old_witness_sha256": "907c8b8f2a7636179893a4cdf1646be1eaf35c9da68dc0472f2c0308f0ea934e",
+  "triangle_witness_sha256": "e75533b376e774c1f8f256da45329d5c30f0b5d60ee21dbcebfc97bd2b12ca5e",
+  "source_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
+  },
+  "all_actual_states": 2125830,
+  "source_mass": "305684996597/646498195200",
+  "old_positive_residual_states": 439677,
+  "new_positive_residual_states": 527598,
+  "old_upper": "137369473106053580189352384914833705064657203/76396069665266798221025771520000000000000000000",
+  "triangle_upper": "1088173796151219990317964628257532877763063673/572970522489500986657693286400000000000000000000",
+  "triangle_upper_decimal": 0.0018991793703857767,
+  "joint_central_factor": "153832/151875",
+  "joint_central_triangle_upper": "1088173796151219990317964628257532877763063673/565681380357097108200096000000000000000000000000",
+  "joint_central_triangle_upper_decimal": 0.0019236514298283773,
+  "target": "193/100000",
+  "target_margin": "17659312253516913931383414494467122236936327/572970522489500986657693286400000000000000000000",
+  "lifted_target_margin": "3591267937977428508220651742467122236936327/565681380357097108200096000000000000000000000000",
+  "old_rows": 157341,
+  "removed_rows": 6,
+  "retained_rows": 157335,
+  "retained_groups": 509,
+  "triangle_rows": 5,
+  "triangle_weight_denominator": 1000000000000,
+  "triangle_weight_sum": 1000000000000,
+  "triangle_budget": "1084133/201247200",
+  "debit_denominator": 62851558753818838519971840000000000000000000,
+  "root_corrections": [
+    {
+      "physical_roots": [
+        0,
+        1
+      ],
+      "replacement_minus_deleted_density": "19191771878981657/4472160000000000000"
+    },
+    {
+      "physical_roots": [
+        0,
+        2
+      ],
+      "replacement_minus_deleted_density": "-18870401891465393/33541200000000000000"
+    },
+    {
+      "physical_roots": [
+        0,
+        3
+      ],
+      "replacement_minus_deleted_density": "-192693095817683/598950000000000000"
+    },
+    {
+      "physical_roots": [
+        1,
+        0
+      ],
+      "replacement_minus_deleted_density": "-52884039775046017/22360800000000000000"
+    },
+    {
+      "physical_roots": [
+        1,
+        1
+      ],
+      "replacement_minus_deleted_density": "-13708408464543247/3194400000000000000"
+    },
+    {
+      "physical_roots": [
+        1,
+        2
+      ],
+      "replacement_minus_deleted_density": "-26866978085549687/33541200000000000000"
+    },
+    {
+      "physical_roots": [
+        1,
+        3
+      ],
+      "replacement_minus_deleted_density": "-24237091673505169/33541200000000000000"
+    }
+  ],
+  "cell_results": [
+    {
+      "cell": [
+        0,
+        6
+      ],
+      "states": 0,
+      "source_numerator": 0,
+      "positive_residual_states": 0,
+      "upper_numerator": 0,
+      "triangle_upper_numerator": 0,
+      "triangle_positive_residual_states": 0
+    },
+    {
+      "cell": [
+        0,
+        7
+      ],
+      "states": 256,
+      "source_numerator": 12945852920,
+      "positive_residual_states": 76,
+      "upper_numerator": 133682239715193265465293868965311346824379342366124769280000,
+      "triangle_upper_numerator": 59115572150899697157502448667549244947875173402045317120000,
+      "triangle_positive_residual_states": 28
+    },
+    {
+      "cell": [
+        0,
+        8
+      ],
+      "states": 256,
+      "source_numerator": 12945852920,
+      "positive_residual_states": 76,
+      "upper_numerator": 59611943400028851075819080022987267988851986895126036480000,
+      "triangle_upper_numerator": 13451412444457839880792039410879577828169001171810385920000,
+      "triangle_positive_residual_states": 24
+    },
+    {
+      "cell": [
+        0,
+        9
+      ],
+      "states": 256,
+      "source_numerator": 12945852920,
+      "positive_residual_states": 67,
+      "upper_numerator": 52541323602956937289917989494788255882601532970812866560000,
+      "triangle_upper_numerator": 9298993039314053142210175753810653753066693596255354880000,
+      "triangle_positive_residual_states": 17
+    },
+    {
+      "cell": [
+        0,
+        10
+      ],
+      "states": 9604,
+      "source_numerator": 139054755840,
+      "positive_residual_states": 4123,
+      "upper_numerator": 2595167983852434312422884715919132391720511672683004436480000,
+      "triangle_upper_numerator": 3123877789004118689103818796273639730131271655240398848000000,
+      "triangle_positive_residual_states": 4462
+    },
+    {
+      "cell": [
+        0,
+        11
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2341,
+      "upper_numerator": 1429052854405121906090961749379473339715367456404046479360000,
+      "triangle_upper_numerator": 1871652432482182788895872613364918959141433479726617231360000,
+      "triangle_positive_residual_states": 2701
+    },
+    {
+      "cell": [
+        0,
+        12
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2457,
+      "upper_numerator": 1310950293655751085142005032736972379441440768441122979840000,
+      "triangle_upper_numerator": 1787382641302744351103220938884119527715226882483611402240000,
+      "triangle_positive_residual_states": 2839
+    },
+    {
+      "cell": [
+        0,
+        13
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2819,
+      "upper_numerator": 1978760862177727360252420417232438874946772004979280609280000,
+      "triangle_upper_numerator": 2553723135805207553255099245705123064654957355351877386240000,
+      "triangle_positive_residual_states": 3174
+    },
+    {
+      "cell": [
+        0,
+        14
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2484,
+      "upper_numerator": 1481805212947191038919598829213710655611810470058691788800000,
+      "triangle_upper_numerator": 1923684882547139623373055684588762499535427730784831569920000,
+      "triangle_positive_residual_states": 2835
+    },
+    {
+      "cell": [
+        0,
+        15
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2189,
+      "upper_numerator": 1287153727783698692127735457757104187638402526369182187520000,
+      "triangle_upper_numerator": 1474836260440348522358964380765550700895624108776993259520000,
+      "triangle_positive_residual_states": 2412
+    },
+    {
+      "cell": [
+        0,
+        16
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2121,
+      "upper_numerator": 1101717113262488280794691440538623647363170331522051276800000,
+      "triangle_upper_numerator": 1302516443706021606268615911700203795941247734386423234560000,
+      "triangle_positive_residual_states": 2312
+    },
+    {
+      "cell": [
+        0,
+        17
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2103,
+      "upper_numerator": 929388048829962311401362296936212486108501801319117783040000,
+      "triangle_upper_numerator": 1101140618760547889126575717685006073365597217655166730240000,
+      "triangle_positive_residual_states": 2282
+    },
+    {
+      "cell": [
+        0,
+        18
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2201,
+      "upper_numerator": 1243096921778673738709186051815079969744382599665657446400000,
+      "triangle_upper_numerator": 1429627234850028279979568780832430119457773640385427210240000,
+      "triangle_positive_residual_states": 2396
+    },
+    {
+      "cell": [
+        0,
+        19
+      ],
+      "states": 9604,
+      "source_numerator": 185406341120,
+      "positive_residual_states": 2152,
+      "upper_numerator": 1036036774405898389042947450057834736756002676553670328320000,
+      "triangle_upper_numerator": 1219327708580028402279707446118328525074285316028927672320000,
+      "triangle_positive_residual_states": 2366
+    },
+    {
+      "cell": [
+        1,
+        6
+      ],
+      "states": 512,
+      "source_numerator": 25891705840,
+      "positive_residual_states": 502,
+      "upper_numerator": 95248985465763347238680070014624073587212657183392300072960000,
+      "triangle_upper_numerator": 93861121500152746433007569115129500025912947582075436072960000,
+      "triangle_positive_residual_states": 502
+    },
+    {
+      "cell": [
+        1,
+        7
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3586,
+      "upper_numerator": 118983035038634735038141491318603934368755254259106691645440000,
+      "triangle_upper_numerator": 114648013873104348301005487964874072898383890511296856883200000,
+      "triangle_positive_residual_states": 3503
+    },
+    {
+      "cell": [
+        1,
+        8
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3629,
+      "upper_numerator": 97790129020980403536153489524906719888709020509943972331520000,
+      "triangle_upper_numerator": 93796643303294675315416160197474118554842149595851784192000000,
+      "triangle_positive_residual_states": 3548
+    },
+    {
+      "cell": [
+        1,
+        9
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3516,
+      "upper_numerator": 90492225496579953220486087113837054872177772406631385169920000,
+      "triangle_upper_numerator": 86211667660035762743142899726446579074027238587582174658560000,
+      "triangle_positive_residual_states": 3422
+    },
+    {
+      "cell": [
+        1,
+        10
+      ],
+      "states": 20480,
+      "source_numerator": 244868674050,
+      "positive_residual_states": 3987,
+      "upper_numerator": 1269695334877299532178645457015289062172704893684474511360000,
+      "triangle_upper_numerator": 1560818557291864926346625504872812016824678706650459955200000,
+      "triangle_positive_residual_states": 4507
+    },
+    {
+      "cell": [
+        1,
+        11
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4006,
+      "upper_numerator": 2054066581710580430740282007431409653490798312858535198720000,
+      "triangle_upper_numerator": 2506170243787665651344663469775211796067016972888457707520000,
+      "triangle_positive_residual_states": 4516
+    },
+    {
+      "cell": [
+        1,
+        12
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 3667,
+      "upper_numerator": 1576951860040081134451512489588041661439260748211032719360000,
+      "triangle_upper_numerator": 2008259857814445140270393162565697282506431935199621775360000,
+      "triangle_positive_residual_states": 4224
+    },
+    {
+      "cell": [
+        1,
+        13
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4643,
+      "upper_numerator": 2461148731508378883334414135286702254703311824145525800960000,
+      "triangle_upper_numerator": 3085857920746703989284431197170625774207013776806166855680000,
+      "triangle_positive_residual_states": 5216
+    },
+    {
+      "cell": [
+        1,
+        14
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 3832,
+      "upper_numerator": 1922013178702134087537002305257349050277240178124106629120000,
+      "triangle_upper_numerator": 2346500560475179848926723360527446647982979673230756577280000,
+      "triangle_positive_residual_states": 4331
+    },
+    {
+      "cell": [
+        1,
+        15
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4251,
+      "upper_numerator": 1778619207417348424607738780169195598605567798433393704960000,
+      "triangle_upper_numerator": 2038278466922358408484711700346237752354389602941231923200000,
+      "triangle_positive_residual_states": 4619
+    },
+    {
+      "cell": [
+        1,
+        16
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4246,
+      "upper_numerator": 1807941089616804356169251853225207450587910638494109859840000,
+      "triangle_upper_numerator": 2095161125771966694066731791458424887026031683181802782720000,
+      "triangle_positive_residual_states": 4608
+    },
+    {
+      "cell": [
+        1,
+        17
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4486,
+      "upper_numerator": 1770795996459158529105283139117276750975761720743399260160000,
+      "triangle_upper_numerator": 2067702546888811693897101821310410845455633603888783851520000,
+      "triangle_positive_residual_states": 4912
+    },
+    {
+      "cell": [
+        1,
+        18
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4327,
+      "upper_numerator": 1878151591354957760085956641909634939790098777847969546240000,
+      "triangle_upper_numerator": 2165562513288113308057844636051782501124366050000668426240000,
+      "triangle_positive_residual_states": 4720
+    },
+    {
+      "cell": [
+        1,
+        19
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4377,
+      "upper_numerator": 1859696220159200966257862779273899489237696498131832668160000,
+      "triangle_upper_numerator": 2177694570602793709588653155971578396461135806186836295680000,
+      "triangle_positive_residual_states": 4775
+    },
+    {
+      "cell": [
+        2,
+        6
+      ],
+      "states": 512,
+      "source_numerator": 25891705840,
+      "positive_residual_states": 512,
+      "upper_numerator": 94749627869540060368795468356363536687162689762894383022080000,
+      "triangle_upper_numerator": 93344213777910104469475110844584003925543054648156719022080000,
+      "triangle_positive_residual_states": 512
+    },
+    {
+      "cell": [
+        2,
+        7
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3615,
+      "upper_numerator": 95537768188119017358896899755841461458055702330280077557760000,
+      "triangle_upper_numerator": 91405793442316110449567600938620478595674189403936855162880000,
+      "triangle_positive_residual_states": 3526
+    },
+    {
+      "cell": [
+        2,
+        8
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3555,
+      "upper_numerator": 93795637155840494458677667256693179120678189313787932835840000,
+      "triangle_upper_numerator": 89584568250484653566331356652174536082619153624781719633920000,
+      "triangle_positive_residual_states": 3457
+    },
+    {
+      "cell": [
+        2,
+        9
+      ],
+      "states": 3888,
+      "source_numerator": 95328553320,
+      "positive_residual_states": 3544,
+      "upper_numerator": 94025241642234806498475561111788897032638668486611012485120000,
+      "triangle_upper_numerator": 89840243819803476340996265503166296404640218661283535912960000,
+      "triangle_positive_residual_states": 3438
+    },
+    {
+      "cell": [
+        2,
+        10
+      ],
+      "states": 20480,
+      "source_numerator": 244868674050,
+      "positive_residual_states": 4621,
+      "upper_numerator": 1405250528780637080400921139870459026973884217255347118080000,
+      "triangle_upper_numerator": 1830020895507433687586515575279323315101388878463682846720000,
+      "triangle_positive_residual_states": 5278
+    },
+    {
+      "cell": [
+        2,
+        11
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 3628,
+      "upper_numerator": 1985753621127860404279370282552600884077998817515088445440000,
+      "triangle_upper_numerator": 2337653594358240778644166353257328528569127091019430297600000,
+      "triangle_positive_residual_states": 4050
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 3688,
+      "upper_numerator": 1736676483978453576209920800586583230878476733004626493440000,
+      "triangle_upper_numerator": 2117144795787199885179710509904649100289132368168661975040000,
+      "triangle_positive_residual_states": 4167
+    },
+    {
+      "cell": [
+        2,
+        13
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4159,
+      "upper_numerator": 2056695697104300517420154115992753238727233212673046118400000,
+      "triangle_upper_numerator": 2480765585479553545308104153492121961772304316750190837760000,
+      "triangle_positive_residual_states": 4665
+    },
+    {
+      "cell": [
+        2,
+        14
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 3650,
+      "upper_numerator": 1746690782698027207328426874755712156734412383695746170880000,
+      "triangle_upper_numerator": 2138362835984638033711501372273910166728385745604629954560000,
+      "triangle_positive_residual_states": 4143
+    },
+    {
+      "cell": [
+        2,
+        15
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4267,
+      "upper_numerator": 1825658427379722608092821369269373194090176226052230676480000,
+      "triangle_upper_numerator": 2131378055346779117858600286615877367088201071643214970880000,
+      "triangle_positive_residual_states": 4632
+    },
+    {
+      "cell": [
+        2,
+        16
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4232,
+      "upper_numerator": 1689692884403902147697781910304745919562427586365659873280000,
+      "triangle_upper_numerator": 1975920729995066422009456977809235505685943112146261934080000,
+      "triangle_positive_residual_states": 4624
+    },
+    {
+      "cell": [
+        2,
+        17
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4270,
+      "upper_numerator": 1683045497758877898772987874135607311894775085223872266240000,
+      "triangle_upper_numerator": 1984830964567232227822273115878232226122853397725153361920000,
+      "triangle_positive_residual_states": 4698
+    },
+    {
+      "cell": [
+        2,
+        18
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4482,
+      "upper_numerator": 2012934653597870558913553446598644893291135567405037158400000,
+      "triangle_upper_numerator": 2349392843197521008540436089322045783973160860349909237760000,
+      "triangle_positive_residual_states": 4861
+    },
+    {
+      "cell": [
+        2,
+        19
+      ],
+      "states": 20480,
+      "source_numerator": 326491565400,
+      "positive_residual_states": 4169,
+      "upper_numerator": 1556292742775263622808804738496094284063858884455899299840000,
+      "triangle_upper_numerator": 1846762198376055039309389890030867123445245008130355036160000,
+      "triangle_positive_residual_states": 4541
+    },
+    {
+      "cell": [
+        4,
+        0
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 8869,
+      "upper_numerator": 1769392287147324226582566143737367180861149694650294272000000,
+      "triangle_upper_numerator": 3742732587235419881833100598745677306197087650622314905600000,
+      "triangle_positive_residual_states": 13470
+    },
+    {
+      "cell": [
+        4,
+        1
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 8510,
+      "upper_numerator": 1762845927255487027508204857556426991358114228049873141760000,
+      "triangle_upper_numerator": 3670426469504714527727820201644238021080716373336665620480000,
+      "triangle_positive_residual_states": 12949
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 8039,
+      "upper_numerator": 1300995774468910979371307172104017110307996494680135761920000,
+      "triangle_upper_numerator": 3106138192883648750553805396067553226281736061742399160320000,
+      "triangle_positive_residual_states": 12565
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 7836,
+      "upper_numerator": 1612979147644229354988128892355361870234081758023542046720000,
+      "triangle_upper_numerator": 3340405144417261643540414711581438107436297502008967823360000,
+      "triangle_positive_residual_states": 12051
+    },
+    {
+      "cell": [
+        4,
+        4
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 8067,
+      "upper_numerator": 1683890217468342961261855550465619786002310098294978641920000,
+      "triangle_upper_numerator": 3408364333050745933649003150700497068960555656921881640960000,
+      "triangle_positive_residual_states": 11975
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "states": 7776,
+      "source_numerator": 78822633708,
+      "positive_residual_states": 4943,
+      "upper_numerator": 20044609880544937056364309215321237104596326510732189941760000,
+      "triangle_upper_numerator": 23192715642571505841368771844994739483214252108837643714560000,
+      "triangle_positive_residual_states": 5812
+    },
+    {
+      "cell": [
+        4,
+        7
+      ],
+      "states": 17493,
+      "source_numerator": 143380952064,
+      "positive_residual_states": 5225,
+      "upper_numerator": 3812946644840329951206587118151348318929771673541070274560000,
+      "triangle_upper_numerator": 7042246844567813666865832881296055393100997710365348495360000,
+      "triangle_positive_residual_states": 7318
+    },
+    {
+      "cell": [
+        4,
+        8
+      ],
+      "states": 17493,
+      "source_numerator": 143380952064,
+      "positive_residual_states": 5544,
+      "upper_numerator": 4320028068322655446999259371826417385951185275458776924160000,
+      "triangle_upper_numerator": 7550449193217338703811462494106282800968462177073034444800000,
+      "triangle_positive_residual_states": 7471
+    },
+    {
+      "cell": [
+        4,
+        9
+      ],
+      "states": 17493,
+      "source_numerator": 143380952064,
+      "positive_residual_states": 5438,
+      "upper_numerator": 4233227976952356547354690887842015830605746694764769361920000,
+      "triangle_upper_numerator": 7488617833852346304583423295196708411927798905180543139840000,
+      "triangle_positive_residual_states": 7465
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "states": 49152,
+      "source_numerator": 187019722890,
+      "positive_residual_states": 12234,
+      "upper_numerator": 1841522144627412333956574039429896033515582645852377231360000,
+      "triangle_upper_numerator": 2306681751821570201027922567019328357426870062140694118400000,
+      "triangle_positive_residual_states": 13725
+    },
+    {
+      "cell": [
+        4,
+        11
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 11421,
+      "upper_numerator": 3172945375894048506685106794044218991377433469751752458240000,
+      "triangle_upper_numerator": 3786182943707214666908553092219992078473105799667614679040000,
+      "triangle_positive_residual_states": 12568
+    },
+    {
+      "cell": [
+        4,
+        12
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 10994,
+      "upper_numerator": 3125563297924466420298208802559467314156061407762059264000000,
+      "triangle_upper_numerator": 3631433949610039216863413598340908148914814682967353671680000,
+      "triangle_positive_residual_states": 11953
+    },
+    {
+      "cell": [
+        4,
+        13
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 10156,
+      "upper_numerator": 2435029947971474628112722888430490470883564373309625221120000,
+      "triangle_upper_numerator": 2989385525522451930089265424204142017113032484118958899200000,
+      "triangle_positive_residual_states": 11340
+    },
+    {
+      "cell": [
+        4,
+        14
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9413,
+      "upper_numerator": 2669883445594439143965541756428500005281180354279125237760000,
+      "triangle_upper_numerator": 3206596411080458560931577525300721260087512941972416675840000,
+      "triangle_positive_residual_states": 10513
+    },
+    {
+      "cell": [
+        4,
+        15
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9542,
+      "upper_numerator": 1663458695377121639464185402252302715772328897955784949760000,
+      "triangle_upper_numerator": 2150335668485323157022144831902747236545224485191935508480000,
+      "triangle_positive_residual_states": 10889
+    },
+    {
+      "cell": [
+        4,
+        16
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9714,
+      "upper_numerator": 1646099597951525656933153573660581383591627851948356894720000,
+      "triangle_upper_numerator": 2101593145386454382657430116641753651846309419116390891520000,
+      "triangle_positive_residual_states": 11089
+    },
+    {
+      "cell": [
+        4,
+        17
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9042,
+      "upper_numerator": 1368921736994380680353288435872352232892545337223661158400000,
+      "triangle_upper_numerator": 1787625492629188075147213212165527796450805295208365506560000,
+      "triangle_positive_residual_states": 10440
+    },
+    {
+      "cell": [
+        4,
+        18
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9172,
+      "upper_numerator": 1479084381930510088088802205292808834035576665329846681600000,
+      "triangle_upper_numerator": 1913235241103007919201311345722503784153471087161868451840000,
+      "triangle_positive_residual_states": 10644
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "states": 49152,
+      "source_numerator": 249359630520,
+      "positive_residual_states": 9082,
+      "upper_numerator": 1407785201293936164489423779261144904323822198917987614720000,
+      "triangle_upper_numerator": 1818255077358401633350189995289861685899192923830026076160000,
+      "triangle_positive_residual_states": 10473
+    },
+    {
+      "cell": [
+        5,
+        0
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 6185,
+      "upper_numerator": 2971310983585073756932747252446755192859774124713027010560000,
+      "triangle_upper_numerator": 5874813502712297140890032939514873028753870321430220963840000,
+      "triangle_positive_residual_states": 9062
+    },
+    {
+      "cell": [
+        5,
+        1
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 6957,
+      "upper_numerator": 3742494790193878227233391183264241326892099113748918763520000,
+      "triangle_upper_numerator": 6897942207880331194100447700427443044678248907615084544000000,
+      "triangle_positive_residual_states": 9881
+    },
+    {
+      "cell": [
+        5,
+        2
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 7743,
+      "upper_numerator": 3802123895708362617727052194050820783386576969449077309440000,
+      "triangle_upper_numerator": 6865224861490206975283010539108296265673040278216098283520000,
+      "triangle_positive_residual_states": 10477
+    },
+    {
+      "cell": [
+        5,
+        3
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 6614,
+      "upper_numerator": 3229545906770927747441918346624564893283472069994728488960000,
+      "triangle_upper_numerator": 6219379374817128632100746340712342557204395750905909739520000,
+      "triangle_positive_residual_states": 9377
+    },
+    {
+      "cell": [
+        5,
+        4
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9493,
+      "upper_numerator": 5007236152425162614910623216031654001639725583592829419520000,
+      "triangle_upper_numerator": 7989886718316494329654107725399178356815236368671375687680000,
+      "triangle_positive_residual_states": 12434
+    },
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "states": 7776,
+      "source_numerator": 157645267416,
+      "positive_residual_states": 5035,
+      "upper_numerator": 65813205773281136255428103870685890991888269768664136089600000,
+      "triangle_upper_numerator": 71581478596768735151316737170231301748360907770741819801600000,
+      "triangle_positive_residual_states": 5722
+    },
+    {
+      "cell": [
+        5,
+        7
+      ],
+      "states": 17493,
+      "source_numerator": 286761904128,
+      "positive_residual_states": 5287,
+      "upper_numerator": 6718973297431638433589928872583166013413840640079387033600000,
+      "triangle_upper_numerator": 13082807683427315498645386267881149566190312571729635082240000,
+      "triangle_positive_residual_states": 7712
+    },
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "states": 17493,
+      "source_numerator": 286761904128,
+      "positive_residual_states": 4995,
+      "upper_numerator": 6756508064370340797237066937947953575204986714694282936320000,
+      "triangle_upper_numerator": 13178642807616173930180551727265453881580189149129212231680000,
+      "triangle_positive_residual_states": 7464
+    },
+    {
+      "cell": [
+        5,
+        9
+      ],
+      "states": 17493,
+      "source_numerator": 286761904128,
+      "positive_residual_states": 5126,
+      "upper_numerator": 6874662941903190721289808460691741537842602930795402362880000,
+      "triangle_upper_numerator": 13260002481493063666650387703714874793833329803232188825600000,
+      "triangle_positive_residual_states": 7543
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "states": 49152,
+      "source_numerator": 374039445780,
+      "positive_residual_states": 8703,
+      "upper_numerator": 2608396479375417335839894433318794755845344030133731983360000,
+      "triangle_upper_numerator": 3375634324596074499754896349470676046840585786457382133760000,
+      "triangle_positive_residual_states": 10049
+    },
+    {
+      "cell": [
+        5,
+        11
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9259,
+      "upper_numerator": 4440726288532874976770348465975372750145175716690205900800000,
+      "triangle_upper_numerator": 5344627052122383740817457481863991915193107158910388142080000,
+      "triangle_positive_residual_states": 10343
+    },
+    {
+      "cell": [
+        5,
+        12
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9292,
+      "upper_numerator": 3757327884376958037397709828252839495321779412781564559360000,
+      "triangle_upper_numerator": 4697379528648652848431811788787101273663422713054990336000000,
+      "triangle_positive_residual_states": 10550
+    },
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 8728,
+      "upper_numerator": 3676026305589655753728807909585267047391002683610547978240000,
+      "triangle_upper_numerator": 4622275457276231772331288393726469236969202978896494428160000,
+      "triangle_positive_residual_states": 9987
+    },
+    {
+      "cell": [
+        5,
+        14
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 8312,
+      "upper_numerator": 3134469766010463610229761457974528892759583363558339379200000,
+      "triangle_upper_numerator": 4025171086879966570481882902633458579509641474153513943040000,
+      "triangle_positive_residual_states": 9646
+    },
+    {
+      "cell": [
+        5,
+        15
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 7752,
+      "upper_numerator": 2994057712167154904873234084856095296166101152500009041920000,
+      "triangle_upper_numerator": 3831441847652520437313246065082542346692518401779620085760000,
+      "triangle_positive_residual_states": 8995
+    },
+    {
+      "cell": [
+        5,
+        16
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9558,
+      "upper_numerator": 2973838387452072742956232527141412737310233132724005273600000,
+      "triangle_upper_numerator": 3788443102034972728591574732470669805957387206394845102080000,
+      "triangle_positive_residual_states": 10961
+    },
+    {
+      "cell": [
+        5,
+        17
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9399,
+      "upper_numerator": 2874988115903978026723763942544192039745821929947182366720000,
+      "triangle_upper_numerator": 3680674640322999886149199900081665118215971735268010229760000,
+      "triangle_positive_residual_states": 10752
+    },
+    {
+      "cell": [
+        5,
+        18
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 9180,
+      "upper_numerator": 2935863519625627359054693810807539697757976773656543559680000,
+      "triangle_upper_numerator": 3780115990563004247949806224132853628821740773986245017600000,
+      "triangle_positive_residual_states": 10600
+    },
+    {
+      "cell": [
+        5,
+        19
+      ],
+      "states": 49152,
+      "source_numerator": 498719261040,
+      "positive_residual_states": 8162,
+      "upper_numerator": 2270392445205018837845198148142087028051120192708873256960000,
+      "triangle_upper_numerator": 2983884150624481785675795186918167887931908879190449029120000,
+      "triangle_positive_residual_states": 9490
+    }
+  ],
+  "branch_coefficients": [
+    "43835045642491684457099351772674313071/27508560378947320780800000000000000000000",
+    "178070961224828139406692457737259755967/52376298961515698766643200000000000000000000",
+    "36375530090402686502640149105657042081/249410947435789041745920000000000000000000",
+    "1182266024889929643064329528835584218839/740750513884293453985382400000000000000000000",
+    "872774778445694335665024373007268337643/14815010277685869079707648000000000000000000",
+    "26537799313698274167911724603509026409/21885810637490488413204480000000000000000000",
+    "60668487918711516516697944853293519023/1302726823660148119833600000000000000000000",
+    "46558542905819362482985663836726510677/63599791596126205645209600000000000000000000",
+    "927032937627968051378388373570698911053/35774882772820990675430400000000000000000000",
+    "19526821718112085118750542850741139611/33670477903831520635699200000000000000000000",
+    "39118916387131319254188143199131291737/1870582105768417813094400000000000000000000"
+  ],
+  "branch_positive_states": [
+    284662,
+    26862,
+    39646,
+    19511,
+    25606,
+    19078,
+    25082,
+    19278,
+    24512,
+    19104,
+    24257
+  ],
+  "branch_states": [
+    1210560,
+    122880,
+    139878,
+    76800,
+    86328,
+    76800,
+    86328,
+    76800,
+    86328,
+    76800,
+    86328
+  ],
+  "branch_slopes": [
+    "-1362030586989136676847901443981015817/65144650449646391500800000000000000000000",
+    "-35332354603528585146375181416586237/8226173972595654028800000000000000000000",
+    "-1089516488292870316333309667744438437/408317362639747918156800000000000000000000",
+    "-8616113491784155173533198762553601/9708244985840160291840000000000000000000",
+    "-146209661709098762204758211555150389/251272223162921795788800000000000000000000"
+  ],
+  "outside_envelope": "1139196294955611689798131518186998704517/590710138663710888345600000000000000000000",
+  "outside_envelope_decimal": 0.001928519963332053,
+  "lifted_outside_envelope": "1139196294955611689798131518186998704517/583195318981428384000000000000000000000000",
+  "lifted_outside_envelope_decimal": 0.0019533700938225277,
+  "outside_margin": "874272665350324708876481813001295483/590710138663710888345600000000000000000000",
+  "lifted_outside_margin": "-13629329321454908678131518186998704517/583195318981428384000000000000000000000000",
+  "outside_below_target": true,
+  "lifted_outside_below_target": false,
+  "outside_corner_families": {
+    "capped": {
+      "maximum": "1139196294955611689798131518186998704517/590710138663710888345600000000000000000000",
+      "corners": [
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "1139196294955611689798131518186998704517/590710138663710888345600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "18/17"
+          ],
+          "value": "73568570140529692079996770954462048129247/38159874957675723387125760000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "16/15",
+            "0"
+          ],
+          "value": "3310018010071241282118267467692676721023047/1717194373095407552420659200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "16/15",
+            "18/17"
+          ],
+          "value": "3308960036959114243474953837273863652808243/1717194373095407552420659200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "12/11",
+            "0",
+            "0"
+          ],
+          "value": "49055944233215827512144223858075989335791/25475546773798452121190400000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "12/11",
+            "0",
+            "18/17"
+          ],
+          "value": "17507368752182710920872752763633488609369351/9094770198246047407264972800000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "12/11",
+            "16/15",
+            "0"
+          ],
+          "value": "472617782894812129671697351406193683847563753/245558795352643279996154265600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "12/11",
+            "16/15",
+            "18/17"
+          ],
+          "value": "472466492739777963145703502256303415092846781/245558795352643279996154265600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "2137525551032608018451517398482743300747517/1111125770826440180978073600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "0",
+            "0",
+            "18/17"
+          ],
+          "value": "7265259332664187777719869167919938472468989/3777827620809896615325450240000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "0",
+            "16/15",
+            "0"
+          ],
+          "value": "1911581713396968179594836124303180129980063/994165163371025425085644800000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "0",
+            "16/15",
+            "18/17"
+          ],
+          "value": "885571093909975560664035034808621432177033/460710685464621538454323200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "12/11",
+            "0",
+            "0"
+          ],
+          "value": "3963683649015386541231684441939724220222431/2063519288677674621816422400000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "12/11",
+            "0",
+            "18/17"
+          ],
+          "value": "471527064077796831880576599440936913451752317/245558795352643279996154265600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "12/11",
+            "16/15",
+            "0"
+          ],
+          "value": "471445890663675766688709626229026404846343593/245558795352643279996154265600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "10/9",
+            "12/11",
+            "16/15",
+            "18/17"
+          ],
+          "value": "471294600508641600162715777079136136091626621/245558795352643279996154265600000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "747709882818028380722086044745707508051993/392822242211367740749824000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "0",
+            "0",
+            "18/17"
+          ],
+          "value": "12706953668025988433107020864603865704937421/6677978117593251592747008000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "0",
+            "16/15",
+            "0"
+          ],
+          "value": "6018037652283846091900401836705302672456811/3163252792544171807090688000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "0",
+            "16/15",
+            "18/17"
+          ],
+          "value": "114305686334468629393591657832742293389161269/60101803058339264334723072000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "12/11",
+            "0",
+            "0"
+          ],
+          "value": "11862110956490562718464777920411232036756671/6241508959580620769691648000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "12/11",
+            "0",
+            "18/17"
+          ],
+          "value": "604771541913381816108007943561485448451808961/318316956938611659254274048000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "12/11",
+            "16/15",
+            "0"
+          ],
+          "value": "16325990562167071753200870413743239307009536607/8594557837342514799865399296000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "0",
+            "12/11",
+            "16/15",
+            "18/17"
+          ],
+          "value": "16320695406740875924791085693497079900594442587/8594557837342514799865399296000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "73837684606723394739429638876879999111433707/38889401978925406334232576000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "0",
+            "0",
+            "18/17"
+          ],
+          "value": "1254833318666128800692628113195716953631673479/661119833641731907681953792000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "0",
+            "16/15",
+            "0"
+          ],
+          "value": "1254614774858879779022217031471342507386342299/661119833641731907681953792000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "0",
+            "16/15",
+            "18/17"
+          ],
+          "value": "1254207455210710869144541283760099476123642759/661119833641731907681953792000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "12/11",
+            "0",
+            "0"
+          ],
+          "value": "958418268176337185818907577365024220563013551/505562225726030282345023488000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "12/11",
+            "0",
+            "18/17"
+          ],
+          "value": "397263790331013081231991319389250057150149667/209623361886402799996717056000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "12/11",
+            "16/15",
+            "0"
+          ],
+          "value": "16284974334077299048796300032542384541966831007/8594557837342514799865399296000000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "6/5",
+            "10/9",
+            "12/11",
+            "16/15",
+            "18/17"
+          ],
+          "value": "16279679178651103220386515312296225135551736987/8594557837342514799865399296000000000000000000000"
+        }
+      ]
+    },
+    "root_balanced": {
+      "maximum": "1139196294955611689798131518186998704517/590710138663710888345600000000000000000000",
+      "corners": [
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "1139196294955611689798131518186998704517/590710138663710888345600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "19"
+          ],
+          "value": "19417124515416090487194039738357748351/10126459519949329514496000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "17",
+            "0"
+          ],
+          "value": "64426182760994272529461979137618765842509/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "0",
+            "17",
+            "19"
+          ],
+          "value": "4270262197485527138725910982066623530141/2244698526922101375713280000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "13",
+            "0",
+            "0"
+          ],
+          "value": "12753245427403981867876837714567377630601/6734095580766304127139840000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "13",
+            "0",
+            "19"
+          ],
+          "value": "21131325779436181296936958055405825087537/11223492634610506878566400000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "13",
+            "17",
+            "0"
+          ],
+          "value": "12651644217108863110070534234759345567609/6734095580766304127139840000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "0",
+            "13",
+            "17",
+            "19"
+          ],
+          "value": "62885971286832950101779356767177314947651/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "7038153875422288366762566707617616380309/3741164211536835626188800000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "0",
+            "0",
+            "19"
+          ],
+          "value": "8995876440012747121755683708848447790341/4810068271975931519385600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "0",
+            "17",
+            "0"
+          ],
+          "value": "62835378827325001511831582969518387107821/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "0",
+            "17",
+            "19"
+          ],
+          "value": "6940347669845959562584252062544330468603/3741164211536835626188800000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "13",
+            "0",
+            "0"
+          ],
+          "value": "62175423203350638321753792404736509418317/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "13",
+            "0",
+            "19"
+          ],
+          "value": "6867019267182141430353386444235232947547/3741164211536835626188800000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "13",
+            "17",
+            "0"
+          ],
+          "value": "3627495126580884972513075000335079359021/1980616347284207096217600000000000000000000"
+        },
+        {
+          "bits": [
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "0",
+            "11",
+            "13",
+            "17",
+            "19"
+          ],
+          "value": "61295167353163679084148960599076936212963/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "20002120716247723273885929704111870310521/11223492634610506878566400000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "0",
+            "0",
+            "19"
+          ],
+          "value": "59634112350031804373084474705716198041169/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "0",
+            "17",
+            "0"
+          ],
+          "value": "59498356097267576032626271713295450616603/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "0",
+            "17",
+            "19"
+          ],
+          "value": "1159335417618749227138293280523059563259/660205449094735698739200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "13",
+            "0",
+            "0"
+          ],
+          "value": "58838400473293212842548481148513572927099/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "13",
+            "0",
+            "19"
+          ],
+          "value": "3897743378305456492931677782792944002447/2244698526922101375713280000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "13",
+            "17",
+            "0"
+          ],
+          "value": "58330394421817619053516963749473412612139/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "7",
+            "0",
+            "13",
+            "17",
+            "19"
+          ],
+          "value": "1655946989231607245855532838367257134907/962013654395186303877120000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "0",
+            "0",
+            "0"
+          ],
+          "value": "2076997625424849735254307304683919367/1197172547691787400380416000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "0",
+            "0",
+            "19"
+          ],
+          "value": "58043308416362533355454078537615819306481/33670477903831520635699200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "0",
+            "17",
+            "0"
+          ],
+          "value": "11581510432719661002999175109039014376383/6734095580766304127139840000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "0",
+            "17",
+            "19"
+          ],
+          "value": "6392811373876326618491395682063962110169/3741164211536835626188800000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "13",
+            "0",
+            "0"
+          ],
+          "value": "5204326958147631074992553180037563108401/3060952536711956421427200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "13",
+            "0",
+            "19"
+          ],
+          "value": "6319482971212508486260530063754864589113/3741164211536835626188800000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "13",
+            "17",
+            "0"
+          ],
+          "value": "5158144589831668003262415234670275807041/3060952536711956421427200000000000000000000"
+        },
+        {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "parameters": [
+            "7",
+            "11",
+            "13",
+            "17",
+            "19"
+          ],
+          "value": "8052477241348140369616179024964802998151/4810068271975931519385600000000000000000000"
+        }
+      ]
+    }
+  },
+  "cellwise_coefficients": [
+    "16488155199159623331567206542492760224361/10341996989937330009600000000000000000000000",
+    "18178171888991075203881912335365897037/5323086685997155152000000000000000000000000",
+    "735869443426293609425036320253413771543/5027359647886202088000000000000000000000000",
+    "43438750515015028304107313788373685137/27086182592693007168000000000000000000000000",
+    "10381447764762907352101372057310995223/175558590878565787200000000000000000000000",
+    "204763674461240465081804273529803836919/168057451086481612656000000000000000000000000",
+    "2618154965558419213840115713627518804551/56019150362160537552000000000000000000000000",
+    "43096624123922204443786430641792191997/58604649609644870054400000000000000000000000",
+    "5832869321553760046904556024330574959/224252485751192104800000000000000000000000",
+    "401742126519405653693599644750793439/689466465995822000640000000000000000000000",
+    "804129624556948003935975781753114589/38303692555323444480000000000000000000000"
+  ],
+  "cellwise_slopes": [
+    "-379715881633206509961823290211804213/18098494732390327516800000000000000000000",
+    "-1307400167982862073437115177073554701/303365245038161680281600000000000000000000",
+    "-4591005467849332959522548311344953/1715418958458504499200000000000000000000",
+    "-156520724384367628966963953266821597/175813948828934610163200000000000000000000",
+    "-383226188607183190707024892383163/656634729519830476800000000000000000000"
+  ],
+  "cellwise_upper": "1313524882329336358999444875403424036729/680394538811666448000000000000000000000000",
+  "cellwise_upper_decimal": 0.0019305341348322032,
+  "cellwise_margin": "-363422422820114359444875403424036729/680394538811666448000000000000000000000000",
+  "cellwise_below_target": false,
+  "cellwise_corners": [
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "1313524882329336358999444875403424036729/680394538811666448000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "value": "2611960233482264879864800645669261030333/1360789077623332896000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "value": "8253773952925643761593582563693843233867/4309165412473887504000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "value": "16411980875067371215004600794849635194609/8618330824947775008000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "value": "5159410041542952943707626942692206491291/2721578155246665792000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "value": "5129230979190137267439448732417032405041/2721578155246665792000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "value": "10805131907488251976178899127201979483281/5745553883298516672000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "value": "3580473517877435923574618746281092878177/1915184627766172224000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "value": "97376515742061696896263219573647311727029/51709984949686650048000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "value": "96803113557358199047167833578419004088279/51709984949686650048000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "value": "10732656902237762083492044423034800415781/5745553883298516672000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "value": "1185438394264646430893000170519566618559/638394875922057408000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "value": "47788707737174119771375160477069504135077/25854992474843325024000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "value": "23751003322411185423413733739727675157851/12927496237421662512000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "value": "15799135308737733566319250197967483380859/8618330824947775008000000000000000000000000"
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "value": "7851784138976908629068342932714716053867/4309165412473887504000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "7686131118697119423726778727202011877617/4309165412473887504000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "value": "15276695206610322539270993121865972482109/8618330824947775008000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "value": "2078431131873718066815602840002046239691/1175226930674696592000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "value": "45438783808870048545395569482430863453827/25854992474843325024000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "value": "4306403483650094082438497433662659003549/2462380235699364288000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "value": "4279098617711832280100621910080358639799/2462380235699364288000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "value": "8150169957702739780579420576416521008139/4700907722698786368000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "value": "89078467350026639737278240345353423450779/51709984949686650048000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "value": "4275342767114169842715559703305296546049/2462380235699364288000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "value": "4248037901175908040377684179722996182299/2462380235699364288000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "value": "4684189183551354134325891263319848393791/2721578155246665792000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "value": "4654010121198538458057713053044674307541/2721578155246665792000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "value": "4887949880093561630195214174994606889453/2872776941649258336000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "value": "2428047101582794763733846365407628232539/1436388470824629168000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "value": "327821406841211545859695621742739909869/194398439660476128000000000000000000000000"
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "value": "23261839966449724315140614765934615571/13885602832891152000000000000000000000000"
+    }
+  ],
+  "central_cap_rows": [
+    {
+      "cell": [
+        0,
+        6
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        7
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "59115572150899697157502448667549244947875173402045317120000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        8
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "13451412444457839880792039410879577828169001171810385920000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        9
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "9298993039314053142210175753810653753066693596255354880000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        10
+      ],
+      "cap_ratio": "1876/1875",
+      "branch_numerators": [
+        "3123877789004118689103818796273639730131271655240398848000000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        11
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1871652432482182788895872613364918959141433479726617231360000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        12
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1787382641302744351103220938884119527715226882483611402240000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        13
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2553723135805207553255099245705123064654957355351877386240000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        14
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1923684882547139623373055684588762499535427730784831569920000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        15
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1474836260440348522358964380765550700895624108776993259520000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        16
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1302516443706021606268615911700203795941247734386423234560000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        17
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1101140618760547889126575717685006073365597217655166730240000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        18
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1429627234850028279979568780832430119457773640385427210240000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        0,
+        19
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1219327708580028402279707446118328525074285316028927672320000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        6
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "93861121500152746433007569115129500025912947582075436072960000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        7
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "114648013873104348301005487964874072898383890511296856883200000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        8
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "93796643303294675315416160197474118554842149595851784192000000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        9
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "86211667660035762743142899726446579074027238587582174658560000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        10
+      ],
+      "cap_ratio": "1876/1875",
+      "branch_numerators": [
+        "1560818557291864926346625504872812016824678706650459955200000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        11
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2506170243787665651344663469775211796067016972888457707520000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        12
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2008259857814445140270393162565697282506431935199621775360000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        13
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "3085857920746703989284431197170625774207013776806166855680000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        14
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2346500560475179848926723360527446647982979673230756577280000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        15
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2038278466922358408484711700346237752354389602941231923200000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        16
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2095161125771966694066731791458424887026031683181802782720000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        17
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2067702546888811693897101821310410845455633603888783851520000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        18
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2165562513288113308057844636051782501124366050000668426240000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        1,
+        19
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2177694570602793709588653155971578396461135806186836295680000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        6
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "93344213777910104469475110844584003925543054648156719022080000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        7
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "91405793442316110449567600938620478595674189403936855162880000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        8
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "89584568250484653566331356652174536082619153624781719633920000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        9
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "89840243819803476340996265503166296404640218661283535912960000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        10
+      ],
+      "cap_ratio": "1876/1875",
+      "branch_numerators": [
+        "1830020895507433687586515575279323315101388878463682846720000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        11
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2337653594358240778644166353257328528569127091019430297600000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2117144795787199885179710509904649100289132368168661975040000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        13
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2480765585479553545308104153492121961772304316750190837760000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        14
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2138362835984638033711501372273910166728385745604629954560000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        15
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2131378055346779117858600286615877367088201071643214970880000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        16
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1975920729995066422009456977809235505685943112146261934080000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        17
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1984830964567232227822273115878232226122853397725153361920000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        18
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2349392843197521008540436089322045783973160860349909237760000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        2,
+        19
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1846762198376055039309389890030867123445245008130355036160000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        0
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2500732111359559846247503393234836215084111368766037688320000",
+        "35864433274254003684052224877923040385787467221434040320000",
+        "215186599645524022104313349267538242314724803328604241920000",
+        "26913658810992921975332437598878032179897869867997921280000",
+        "269136588109929219753324375988780321798978698679979212800000",
+        "20017919348262592198624996945149342520644481767103856640000",
+        "240215032179151106383499963341792110247733781205246279680000",
+        "12728104631381805522183720922999140171371826877821419520000",
+        "203649674102108888354939534767986242741949230045142712320000",
+        "11488866619697656611017189568410243092204638045418291200000",
+        "206799599154557818998309412231384375659683484817529241600000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        1
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2616999838769447233328976497263450636561992664697182617600000",
+        "32603471558442798276011381727896064827618248994702622720000",
+        "195620829350656789656068290367376388965709493968215736320000",
+        "17356613837634540852534990553933110312306692196177346560000",
+        "173566138376345408525349905539331103123066921961773465600000",
+        "23073437668341811564322019488831699526412831108864081920000",
+        "276881252020101738771864233865980394316953973306368983040000",
+        "10245143827502640427900950087039756807290982761474949120000",
+        "163922301240042246846415201392636108916655724183599185920000",
+        "8429339097694701025177722703040145143300465271489822720000",
+        "151728103758504618453199008654722612579408374886816808960000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2064384415719491105249904811462150076572481099174960824320000",
+        "38859311487648442390231250128806264172186250535500513280000",
+        "233155868925890654341387500772837585033117503213003079680000",
+        "23685664594255824202145104743764601513460849315735142400000",
+        "236856645942558242021451047437646015134608493157351424000000",
+        "13434653191491826346294573939989563582937902559713361920000",
+        "161215838297901916155534887279874762995254830716560343040000",
+        "10839606766441135237799413423444212566796486430450974720000",
+        "173433708263058163804790614775107401068743782887215595520000",
+        "7909077878679549516014010110733302296955203355363573760000",
+        "142363401816231891288252181993199441345193660396544327680000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2284343850518098871378485770561663706649654019530783784960000",
+        "49303015340353881324783160696730747779921475826053283840000",
+        "295818092042123287948698964180384486679528854956319703040000",
+        "21272401907785487617459511371476354693995622086160875520000",
+        "212724019077854876174595113714763546939956220861608755200000",
+        "14160845417683677349149460411005880091149084482748416000000",
+        "169930145012204128189793524932070561093789013792980992000000",
+        "11555876055732602404287590258839784393004543422596055040000",
+        "184894016891721638468601444141436550288072694761536880640000",
+        "5073835902826483825503166911214025727748735383588372480000",
+        "91329046250876708859057004401852463099477236904590704640000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        4
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2135941003068477565019398682304407465867171449572246159360000",
+        "59636940247066866760710269652831932651024347786127278080000",
+        "357821641482401200564261617916991595906146086716763668480000",
+        "30623263040086411389977447911117978415482352671861309440000",
+        "306232630400864113899774479111179784154823526718613094400000",
+        "14138701022214345971050307054891569358804727208525824000000",
+        "169664412266572151652603684658698832305656726502309888000000",
+        "9435159514574727110636130700376919607822836761607536640000",
+        "150962552233195633770178091206030713725165388185720586240000",
+        "9153054198699627237390128430735277735182011305163489280000",
+        "164754975576593290273022311753234999233276203492942807040000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2790600895598180996421266640029118718768924864238016921600000",
+        "0",
+        "12427912688114981515633627098274712485519748860963696803840000",
+        "0",
+        "4250345340275312836164461803195163074014161357581988659200000",
+        "0",
+        "2374726960966727468463961736136159525318641399028122910720000",
+        "0",
+        "821162728726845871399323403177215550759922760204995788800000",
+        "0",
+        "527967028889457153286131164182370128832852866820822630400000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        7
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2640604314457849832684650806287970701480079444280971264000000",
+        "0",
+        "2172005544159678186914435229530088469259749133628552806400000",
+        "0",
+        "808754547530854174783846869843690959273062028750472806400000",
+        "0",
+        "738440452457349235313817067141603022306488679387432878080000",
+        "0",
+        "378554099050665531410620448253529273322464134233849856000000",
+        "0",
+        "303887886911416705758462460239172967459154290084068884480000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        8
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2522668976622769547583362209906237749605615875134433443840000",
+        "0",
+        "2643840351240041502289467175100769659386209362688181370880000",
+        "0",
+        "913080364347497635640108724675848610892523217777895833600000",
+        "0",
+        "693454393035638704221441115763038345647291152174959165440000",
+        "0",
+        "462622722718904739179295762862994371353763160564390952960000",
+        "0",
+        "314782385252486574897787505797394064083059408733173678080000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        9
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2384642526515470346610688594143113191421155528009979412480000",
+        "0",
+        "2990422738769898012034498142249094695591768361704546795520000",
+        "0",
+        "770821835269034069259717851763065864103726738151383859200000",
+        "0",
+        "649660655536251126740997365869949458030606941847775477760000",
+        "0",
+        "384171553526051744787682015037682789052946486338214952960000",
+        "0",
+        "308898524235641005149839326133802413727594849128642641920000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "cap_ratio": "153832/151875",
+      "branch_numerators": [
+        "1233404649632479842072166391841402904148687512402669117440000",
+        "43486988787014345831011203051455773673845289753055621120000",
+        "260921932722086074986067218308734642043071738518333726720000",
+        "20012374030214718797380997754373416183574438172942561280000",
+        "200123740302147187973809977543734161835744381729425612800000",
+        "18634514422335366592456479525534275843051591890484305920000",
+        "223614173068024399109477754306411310116619102685811671040000",
+        "8009397810434172390079043074208637893427515614726471680000",
+        "128150364966946758241264689187338206294840249835623546880000",
+        "8964400846309859738642569075059738389158328501980078080000",
+        "161359215233577475295566243351075291004849913035641405440000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        11
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1888295179873229497285625239259762305968900443148315525120000",
+        "90477669509659362636426658920031117015128133427385630720000",
+        "542866017057956175818559953520186702090768800564313784320000",
+        "38844466507003840851203501184190737876296294361085132800000",
+        "388444665070038408512035011841907378762962943610851328000000",
+        "27725471346627797834407043091464398622587738318870118400000",
+        "332705656159533574012884517097572783471052859826441420800000",
+        "13577020005813916829807644847060621736421094882924298240000",
+        "217232320093022669276922317552969947782737518126788771840000",
+        "12948130425491022307930589731834004481381577547402035200000",
+        "233066347658838401542750615173012080664868395853236633600000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        12
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1799495676150489088740194714083136655435526928070851543040000",
+        "77865016349855955812837830632267530943069746022492979200000",
+        "467190098099135734877026983793605185658418476134957875200000",
+        "38235492281621492405950615802113538421694799589382225920000",
+        "382354922816214924059506158021135384216947995893822259200000",
+        "30171258851081681396999998049274148395151830134989946880000",
+        "362055106212980176763999976591289780741821961619879362560000",
+        "12752602101070752251000837871253521146803255931130347520000",
+        "204041633617132036016013405940056338348852094898085560320000",
+        "13540639112129335502099109345093477137185662877461135360000",
+        "243731504018328039037783968211682588469341931794300436480000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        13
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1737705111644715127389929648060472245492747289519245721600000",
+        "50051788839984565984904318494102968388639147092264714240000",
+        "300310733039907395909425910964617810331834882553588285440000",
+        "28225368876107797916822236899590567654175045186693611520000",
+        "282253688761077979168222368995905676541750451866936115200000",
+        "18326051437577201711814872520353798617151673480683520000000",
+        "219912617250926420541778470244245583405820081768202240000000",
+        "10473064427322429424239498672385313938927546841037864960000",
+        "167569030837158870787831978758165023022840749456605839360000",
+        "9187266863561796908120848452331738406270821913352683520000",
+        "165370803544112344346175272141971291312874794440348303360000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        14
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "2024834398386338310171918732704645667018932582861383680000000",
+        "33250588354463111832459167436201665322594677293646807040000",
+        "199503530126778670994755004617209991935568063761880842240000",
+        "25033589923963604525097101197589431614507677068528189440000",
+        "250335899239636045250971011975894316145076770685281894400000",
+        "23209961541745726902449414206765010335799740980569702400000",
+        "278519538500948722829392970481180124029596891766836428800000",
+        "11496908018981373477789801226801708531319342687817891840000",
+        "183950528303701975644636819628827336501109483005086269440000",
+        "9287445720205316805374079043452947823842511150599208960000",
+        "167174022963695702496733422782153060829165200710785761280000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        15
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1165821688512942955404408583919564074807814446475101962240000",
+        "49387405902224699697723256365745363967350436530131271680000",
+        "296324435413348198186339538194472183804102619180787630080000",
+        "17635756651811827392915579117117601411420084317825269760000",
+        "176357566518118273929155791171176014114200843178252697600000",
+        "12968531035505523772073189107387763127073100565463203840000",
+        "155622372426066285264878269288653157524877206785558446080000",
+        "8654988242093292265278998076989248062271884060488171520000",
+        "138479811873492676244463969231827968996350144967810744320000",
+        "6793847995248390782363560917358624248934932585816637440000",
+        "122289263914471034082544096512455236480828786544699473920000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        16
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1147872783501642856278407651043555163382404065915520942080000",
+        "45170189486865233134665122203061125230721212572773416960000",
+        "271021136921191398807990733218366751384327275436640501760000",
+        "15094080021940017754249561056930623114578556436923596800000",
+        "150940800219400177542495610569306231145785564369235968000000",
+        "14607105817065703864535150756826225219200430655560253440000",
+        "175285269804788446374421809081914702630405167866723041280000",
+        "9295683042439222760504900146533700468626596553953771520000",
+        "148730928679027564168078402344539207498025544863260344320000",
+        "6503956204847040103793746116879995882749210760305213440000",
+        "117071211687246721868287430103839925889485793685493841920000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        17
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "992831167968899108646127404427037564090460638584835358720000",
+        "28060876619925787014259153923909326244321436191305564160000",
+        "168365259719554722085554923543455957465928617147833384960000",
+        "18806588674857713811784674893920413753888746809815121920000",
+        "188065886748577138117846748939204137538887468098151219200000",
+        "13689675180247174418144298769647736615971587332958453760000",
+        "164276102162966093017731585235772839391659047995501445120000",
+        "6196618914004644678999000321224374046610316755497779200000",
+        "99145902624074314863984005139589984745765068087964467200000",
+        "5694074421899019920672706156408708555648019379184353280000",
+        "102493339594182358572108710815356754001664348825318359040000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        18
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1055593465963962182743289566050414613116913373342191779840000",
+        "31407145830135361110858004224113481982351243257640796160000",
+        "188442874980812166665148025344680891894107459545844776960000",
+        "16905520979482916598380221818973675689056164433143726080000",
+        "169055209794829165983802218189736756890561644331437260800000",
+        "14279661142226498502480604990725388844947776439962501120000",
+        "171355933706717982029767259888704666139373317279550013440000",
+        "8986714703076168727666148110989963129220579093465006080000",
+        "143787435249218699642658369775839410067529265495440097280000",
+        "5969540986976146168276890912017101915758434944378552320000",
+        "107451737765570631028984036416307834483651828998813941760000"
+      ]
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "cap_ratio": "82/81",
+      "branch_numerators": [
+        "1024995722608291502815717173720449775584357422800606412800000",
+        "30396085990199654416397454358219690437064293842332876800000",
+        "182376515941197926498384726149318142622385763053997260800000",
+        "15763511069781860479803814761877122678359680432733798400000",
+        "157635110697818604798038147618771226783596804327337984000000",
+        "11468139163840952252693788054669448469527318427770388480000",
+        "137617669966091427032325456656033381634327821133244661760000",
+        "8947316980227429206128465127676099412631288321505361920000",
+        "143157071683638867298055442042817590602100613144085790720000",
+        "5573575434595442555402396147369958298675890439284817920000",
+        "100324357822717965997243130652659249376166027907126722560000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        0
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4146521549952031444246069337064158174848299979073102315520000",
+        "66063677277906952407840445497533868809807174443122032640000",
+        "396382063667441714447042672985203212858843046658732195840000",
+        "31187815272922359924195498117666796128826386996707328000000",
+        "311878152729223599241954981176667961288263869967073280000000",
+        "24211520318686710176472507891122356013768823299945594880000",
+        "290538243824240522117670094693468272165225879599347138560000",
+        "18282725586931850545708730229679475469866163005201940480000",
+        "292523609390909608731339683674871607517858608083231047680000",
+        "15643376036421177844828367799184279139637388963355688960000",
+        "281580768655581201206910620385317024513473001340402401280000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        1
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "5158354068072976334649591665567238867296651474787532308480000",
+        "76621816634685792899218693223400043712282549679628124160000",
+        "459730899808114757395312159340400262273695298077768744960000",
+        "21058669883623531110672512275177945652085575109698519040000",
+        "210586698836235311106725122751779456520855751096985190400000",
+        "35283361005278345924411853511645014404311881739674255360000",
+        "423400332063340151092942242139740172851742580876091064320000",
+        "16082419787945471920956335693159378641248466193998970880000",
+        "257318716607127550735301371090550058259975459103983534080000",
+        "12605538167421260382385039201807991845547361628932833280000",
+        "226899687013582686882930705632543853219852509320790999040000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        2
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4630994373524453439760159420637029760580559990288340090880000",
+        "83404018624613864710891543803578626178030605336513904640000",
+        "500424111747683188265349262821471757068183632019083427840000",
+        "61645348006029498775312153220205857235182381122290155520000",
+        "616453480060294987753121532202058572351823811222901555200000",
+        "30516278818287287637965996972038713443889338283869798400000",
+        "366195345819447451655591963664464561326672059406437580800000",
+        "19776663194558450682572321553631475854409791604851015680000",
+        "316426611112935210921157144858103613670556665677616250880000",
+        "12599401609573873427415221019774385682301684381799710720000",
+        "226789228972329721693473978355938942281430318872394792960000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        3
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4453780847131690364126454887586198859872517164605597614080000",
+        "71187963959366963111086405972690758418475499382746808320000",
+        "427127783756201778666518435836144550510852996296480849920000",
+        "26540957531361214131895170368026019016457565013814149120000",
+        "265409575313612141318951703680260190164575650138141491200000",
+        "36711649748756264675756858981645017003979188148434206720000",
+        "440539796985075176109082307779740204047750257781210480640000",
+        "16331122908062801947109350475956907619859943331956490240000",
+        "261297966529004831153749607615310521917759093311303843840000",
+        "11602721629157741940007453285072080454324652257695989760000",
+        "208848989324839354920134159131297448177843740638527815680000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        4
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "5257448518010310504270066719785003186135547242759615119360000",
+        "63340022240417062526357865662249022688346605024047267840000",
+        "380040133442502375158147193973494136130079630144283607040000",
+        "58056267242618416251786395810731423798691502703212625920000",
+        "580562672426184162517863958107314237986915027032126259200000",
+        "55654773578658326251983683718946992579943193148284928000000",
+        "667857282943899915023804204627363910959318317779419136000000",
+        "27893763723838456405553619419217594919379111018405068800000",
+        "446300219581415302488857910707481518710065776294481100800000",
+        "23828056059297358355772956504598754363523682250921082880000",
+        "428905009067352450403913217082777578543426280516579491840000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4318403691004229015186898761361296753008102270850284093440000",
+        "0",
+        "38149538830876898733001067813273448271849510535850899865600000",
+        "0",
+        "12760867551339971973046757351819043269394884317051394457600000",
+        "0",
+        "9888518763770184129095876558572027003382159369296281600000000",
+        "0",
+        "3807369826666630967320619036829622281792554775196666429440000",
+        "0",
+        "2656779933110820333665517648375864168933696502496293355520000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        7
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4268129298749594469423934118028729010269026210169506856960000",
+        "0",
+        "4301966257212532569795759932155496760058463045910101360640000",
+        "0",
+        "1734870754787592177273426530054672621293827626914121318400000",
+        "0",
+        "1334524326388358858216601766932366053330997979953319772160000",
+        "0",
+        "820805561911811026564650454793910521786645352710720716800000",
+        "0",
+        "622511484377426397371013465915974599451352356071865057280000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4432762921825252746720639153943288279989873601498000588800000",
+        "0",
+        "4237936375100199343227246628031536825553775078453790310400000",
+        "0",
+        "1764357144530038731037878169905371466431402288639061196800000",
+        "0",
+        "1336425919178243734795111377483782170957713836898855813120000",
+        "0",
+        "743044248453373343455393982950469164400753312087314268160000",
+        "0",
+        "664116198529066030944282414951005974246671031552190054400000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        9
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "4173357843048306629635192908612561823635758868927102320640000",
+        "0",
+        "4884009877733867714828441588978072424673244555394549350400000",
+        "0",
+        "1582793175861147569409226660105850451774979881332160921600000",
+        "0",
+        "1312813439422029687189493312613089757511520901372571156480000",
+        "0",
+        "710610407234369257974518035718709637980351677129482567680000",
+        "0",
+        "596417738193342807613515197686590698257473919076322508800000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "cap_ratio": "1876/1875",
+      "branch_numerators": [
+        "1816397294030839878974542966287016353880924467145122816000000",
+        "87349646647859628091098798330686211965599068838254673920000",
+        "524097879887157768546592789984117271793594413029528043520000",
+        "24563404284622681209542655110862896639503067687022919680000",
+        "245634042846226812095426551108628966395030676870229196800000",
+        "19978742624607357128285719776950858746719417344363520000000",
+        "239744911495288285539428637323410304960633008132362240000000",
+        "13268388465264891608347427569683828799134352350946467840000",
+        "212294215444238265733558841114941260786149637615143485440000",
+        "10121357835261522675161682256019899624910404076021514240000",
+        "182184441034707408152910280608358193248387273368387256320000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        11
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2582532615254783399743124403493212506846878064526321254400000",
+        "137095907143146241330140872039964550934524430355420610560000",
+        "822575442858877447980845232239787305607146582132523663360000",
+        "57836810666474014648969498980039742331483995425070448640000",
+        "578368106664740146489694989800397423314839954250704486400000",
+        "41921615163498383706705622985729674998351663566255554560000",
+        "503059381961980604480467475828756099980219962795066654720000",
+        "20270510730673258517217687745934553740484498827748802560000",
+        "324328171690772136275483003934952859847751981243980840960000",
+        "14559920525654637244463615516590378820601369778278727680000",
+        "262078569461783470400345079298626818770824656009017098240000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        12
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2183282994156942185509643519791841395006416167250203443200000",
+        "109593781641694795277298923114103080429409359347800637440000",
+        "657562689850168771663793538684618482576456156086803824640000",
+        "48376471749925401280248326882019864167753241225993093120000",
+        "483764717499254012802483268820198641677532412259930931200000",
+        "35435454930336103827801547083949649714389709667549511680000",
+        "425225459164033245933618565007395796572676516010594140160000",
+        "24410159108537552319970682272267301893151881890664611840000",
+        "390562545736600837119530916356276830290430110250633789440000",
+        "17850802884797891720916973724970012175537218898148229120000",
+        "321314451926362050976505527049460219159669940166668124160000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2556404029817112106257663432231909118000601237538275328000000",
+        "139903612358025341657085011464013290735048778617510133760000",
+        "839421674148152049942510068784079744410292671705060802560000",
+        "24025770140314253168055845000372530993223912136934686720000",
+        "240257701403142531680558450003725309932239121369346867200000",
+        "24273865454789455433633175166332627100413533089542144000000",
+        "291286385457473465203598101995991525204962397074505728000000",
+        "16717372039980637169009551675144006848962578346296442880000",
+        "267477952639690194704152826802304109583401253540743086080000",
+        "11710899674607986163948522663294577587371447130435747840000",
+        "210796194142943750951073407939302396572686048347843461120000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        14
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1792463416120579005864015999973056985316999207024397680640000",
+        "103607277495965572568990801549610204444023585292611911680000",
+        "621643664975793435413944809297661226664141511755671470080000",
+        "46626351872540319375587558173340192140787123394292776960000",
+        "466263518725403193755875581733401921407871233942927769600000",
+        "28367796941734886913421902969097124885532905806229667840000",
+        "340413563300818642961062835629165498626394869674756014080000",
+        "18913094140497641175481836735623510698119544704369131520000",
+        "302609506247962258807709387769976171169912715269906104320000",
+        "16013836687298505981357483621185565481887304067807969280000",
+        "288249060371373107664434705181340178673971473220543447040000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        15
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2292411550141405078925099627760474927019038084034891776000000",
+        "77876909048171355782176463733678992358797187144214118400000",
+        "467261454289028134693058782402073954152783122865284710400000",
+        "35903315061143498689996340444365380859762874849551319040000",
+        "359033150611434986899963404443653808597628748495513190400000",
+        "13008732120579058046674582652836863805284491719415070720000",
+        "156104785446948696560094991834042365663413900632980848640000",
+        "12687801592372257088136049396714752438619956338772705280000",
+        "203004825477956113410176790347436039017919301420363284480000",
+        "11271017045446381958835212214066592777856354435717529600000",
+        "202878306818034875259033819853198670001414379842915532800000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        16
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2080048752606309216960862221341421232901896976119235051520000",
+        "70811346824691499540293617837395992771959463100738437120000",
+        "424868080948148997241761707024375956631756778604430622720000",
+        "37439990246037589461503556409489893433117981492639334400000",
+        "374399902460375894615035564094898934331179814926393344000000",
+        "21936008321331806970256167536051112687012643239409090560000",
+        "263232099855981683643074010432613352244151718872909086720000",
+        "14631844654104223118555200748912660796147746010781286400000",
+        "234109514465667569896883211982602572738363936172500582400000",
+        "14050819034332855112807867108574110390621060413463592960000",
+        "252914742617991392030541607954333987031179087442344673280000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        17
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2095127251942154344897742252143742413414927058796250398720000",
+        "60419633386861158002294265790374181049994367107303505920000",
+        "362517800321166948013765594742245086299966202643821035520000",
+        "34167334802795868220611176307170736640848954894091223040000",
+        "341673348027958682206111763071707366408489548940912230400000",
+        "23286802507879829201701613402496059333935872295700889600000",
+        "279441630094557950420419360829952712007230467548410675200000",
+        "15328559943958920874491221324979965841950050697355755520000",
+        "245256959103342733991859541199679453471200811157692088320000",
+        "11760806325911760543168584803648270723548863220340654080000",
+        "211694513866411689777034526465668873023879537966131773440000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        18
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "2255470685589001361124785143224051940379013130290872647680000",
+        "59652680784484901677500786912249756632273141319086899200000",
+        "357916084706909410065004721473498539793638847914521395200000",
+        "29228988165965109110990747295397007909364801793764556800000",
+        "292289881659651091109907472953970079093648017937645568000000",
+        "19150297778934154345722615614156835194547098344126709760000",
+        "229803573347209852148671387369882022334565180129520517120000",
+        "17141930309126585201585608945017899788849958716059156480000",
+        "274270884946025363225369743120286396621599339456946503680000",
+        "12904788593457706312645684064439113214433750425457950720000",
+        "232286194682238713627622313159904037859807507658243112960000"
+      ]
+    },
+    {
+      "cell": [
+        5,
+        19
+      ],
+      "cap_ratio": "1",
+      "branch_numerators": [
+        "1835248289419497543651111786386076876237203531733539880960000",
+        "43370494638845782173828908373775480499167322269591142400000",
+        "260222967833074693042973450242652882995003933617546854400000",
+        "22530816143161624316282942447892789558905966951603404800000",
+        "225308161431616243162829424478927895589059669516034048000000",
+        "14443557717272589731910203352885924930955455834336460800000",
+        "173322692607271076782922440234631099171465470012037529600000",
+        "14108920568874694907750563935349660445864202192487710720000",
+        "225742729101995118524009022965594567133827235079803371520000",
+        "8925553745414337862219812868441090072129267999129927680000",
+        "160659967417458081519956631631939621298326823984338698240000"
+      ]
+    }
+  ],
+  "scope": "One exact feasible triangle-replacement dual for the same actual109 all-field source and complete remaining509 fee groups including fullmode8. New triangle group has budgetc and valid independent-label layout rows. All actual states recomputed by dense reverse integer transport. New eleven-branch sums and both global-corner envelopes independently computed. The ordinary measure-level argument from693, with the new mod15 fee preserved, is required for arbitrary root-balanced outside product references. A false below-target field reports only failure of this certificate, never an achievable gate. No exact optimum, further cluster, or unrestricted covering claim."
+}

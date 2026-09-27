@@ -282,7 +282,7 @@ be large; no small cutoff or uniform bound as the head grows is claimed.
 ## Exact scalar and original-family verification
 
 The companion
-[incidence_bicyclic.py](../frontier/cover-geometry/incidence_bicyclic.py)
+[incidence_bicyclic.py](../frontier/cover-geometry/incidence-bicyclic/incidence_bicyclic.py)
 checks every scalar comparison with Fraction,
 including all ten degree cases, the two degree-monotonicity comparisons,
 and both non-pure-pair bounds against f(b_17). It uses explicit exceptions
@@ -318,5 +318,5 @@ The [retained exact output](../certificates/source_norms/cover-geometry/incidenc
 is reproduced from the repository root by
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence_bicyclic.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence-bicyclic/incidence_bicyclic.py --check
 ```

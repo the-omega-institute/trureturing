@@ -125,9 +125,9 @@ fees use \(\alpha_pc_p\le1\). Thus each budget is a union bound on one
 realized source measure.
 
 The exact rational checks are reproduced by
-[`missing7_core_certificates.py`](../frontier/cover-geometry/missing7_core_certificates.py):
+[`missing7_core_certificates.py`](../frontier/cover-geometry/spine-book-certificate/missing7_core_certificates.py):
 
-    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing7_core_certificates.py
+    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/spine-book-certificate/missing7_core_certificates.py
 
 ## Gluing and scope
 

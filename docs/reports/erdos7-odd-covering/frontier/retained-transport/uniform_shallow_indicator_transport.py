@@ -14,13 +14,13 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'frontier/moments-survival/uniform_ap_survival_denominator.py': '181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180',
-    'frontier/cover-geometry/uniform_square_and_raw81_neighborhood.py': '3d47bd0d7ff5f5c4f8114d02538073de8bc87e455265817e9e9d80ca4bc5a62c',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'frontier/moments-survival/uniform_ap_survival_denominator.py': '50cb4e8eae092ac38aa12d291c5d587f7ee71557cc9dcec683a4c82224750b22',
+    'frontier/cover-geometry/uniform_square_and_raw81_neighborhood.py': 'bcc5326d84386886ec5a204ff781803d31118d30f6147d1fc7c393d208e76d71',
     'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
     'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
-    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '9aecea9f4424bdfd26be82ebb643d72dffe35b5a57d80e6730faaf471eebe986',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '475e060fda48d619f1ecb9ff512bc8fde200521c07429901f4daeafda0f23667',
     'frontier/cover-geometry/complete_off_face_omitted_tails.py': '33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d',
     'frontier/cover-geometry/quantitative_forced27.py': '23551c4ae4b01624be33175524899b97f34464ea4b6383dda56ecc408128a947',
     'frontier/source-budgets/source_mass_compatibility.py': 'f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645',

@@ -2,7 +2,7 @@
   "schema": "recursive-pair-forward-kernels-v1",
   "sources": {
     "staged_two_parent_attachment.json": {
-      "sha256": "2312048ed43413f9a64e37ddd94faa9958e78b67bc5f8fbee4fc4605d3fb933c",
+      "sha256": "e49774a88828d1c007d038355a1b4e17c6af4873746cb737e302abf94299952f",
       "producer_sha256": "7e8ab9bd5071e6434928083864a362c5634b18345caf38228f9b05af5f179186"
     }
   },

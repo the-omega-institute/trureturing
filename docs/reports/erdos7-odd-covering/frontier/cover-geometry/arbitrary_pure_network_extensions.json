@@ -3,8 +3,8 @@
   "status": "PASS",
   "source": {
     "path": "arbitrary_pure_source_certificate.json",
-    "sha256": "485f49b8016c0aeb4b05559cab629bbccf3a96f5ae2b288079f666457a5de86d",
-    "producer_sha256": "48c5266bcd91f681ee5b5f5b44130e6af2f4671a4a79b2877757279bbccb4eb7",
+    "sha256": "755e3c5c6fece241dc2b6f26fd05e6a0cc0b6577539cd5a10ef6d2b9e89a227f",
+    "producer_sha256": "c254b0b6976f09971ec6ce0e4235981c90ef3aa2e3b33cbb5d9c0e9a016e93f4",
     "kernel_sha256": "37746bb202c88bce2646507b34ee3ada1d64bed0da7641b9a177e201d3d54476"
   },
   "scope": {

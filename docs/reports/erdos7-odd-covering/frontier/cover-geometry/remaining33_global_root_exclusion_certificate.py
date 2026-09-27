@@ -20,9 +20,9 @@ def ck(k,b):
  if not b:raise ArithmeticError(k)
  CHECKS[k]=True
 raw=(D/'actual_pair_activation_certificate.json').read_bytes()
-ck('base_pin',sha256(raw).hexdigest()=='2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f')
+ck('base_pin',sha256(raw).hexdigest()=='339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44')
 base=json.loads(raw);raw635=(D/'conditional30_fixedstar_augmented_certificate.json').read_bytes();v635=json.loads(raw635)
-ck('certificate635_pin',sha256(raw635).hexdigest()=='eb45a79b8943ac56b72153c72472bf40b098366574deb249840ea28f504a9345')
+ck('certificate635_pin',sha256(raw635).hexdigest()=='0373db3191d5055c8e40e948096bec16c50ba6772201e923e937e6e622f4e12b')
 c=F(1084133,201247200);g=1-c;alpha=F(2673,110656)
 r={q:F(1,q-1)for q in Q};a={q:F(1,q*(q-2))for q in Q};A={q:1-r[q]for q in Q}
 ck('continuation_binding',c==F(base['constants']['continuation_c'])==F(v635['constants']['c'])and alpha==F(v635['constants']['alpha']))

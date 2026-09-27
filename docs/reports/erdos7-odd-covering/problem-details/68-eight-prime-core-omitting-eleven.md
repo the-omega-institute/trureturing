@@ -137,10 +137,10 @@ After deleting all attached blockers, the surviving source mass is at least
  >\frac1{2200000}.
 \]
 The exact rational computation is reproduced by
-[`missing11_core_certificate.py`](../frontier/cover-geometry/missing11_core_certificate.py).
+[`missing11_core_certificate.py`](../frontier/cover-geometry/missing11-core-certificate/missing11_core_certificate.py).
 From the repository root, run:
 
-    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing11_core_certificate.py
+    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing11-core-certificate/missing11_core_certificate.py
 
 ## Gluing and scope
 

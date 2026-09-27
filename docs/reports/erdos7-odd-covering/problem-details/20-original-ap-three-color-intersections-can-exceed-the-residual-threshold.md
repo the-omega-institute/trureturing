@@ -115,8 +115,8 @@ The integer check is \(79\cdot9255389299-14\cdot52156725189=981601975>0\).
 
 ## 3. Reproduction from the original labels
 
-The [program](../frontier/cover-geometry/k5_three_color_ap_control.py)
-and [exact data](../frontier/cover-geometry/k5_three_color_ap_control.json)
+The [program](../frontier/cover-geometry/k5-three-color-ap-control/k5_three_color_ap_control.py)
+and [exact data](../frontier/cover-geometry/k5-three-color-ap-control/k5_three_color_ap_control.json)
 retain all 510 literal modulus/residue pairs. The program factors those
 labels anew, reads their local residues and parent colors, and checks
 uniqueness and complete exponent coverage. Its second count retains each
@@ -145,7 +145,7 @@ not a covering counterexample.
 From the repository root, using only Python's standard library:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_three_color_ap_control.py --output /tmp/k5-three-color-ap.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-three-color-ap-control/k5_three_color_ap_control.py --output /tmp/k5-three-color-ap.json
 ```
 
 ## 4. What remains necessary for a blocked parent fibre

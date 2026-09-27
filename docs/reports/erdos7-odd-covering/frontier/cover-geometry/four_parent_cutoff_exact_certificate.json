@@ -4,11 +4,11 @@
   "new_lean_verification": false,
   "baseline": "1a724966729c",
   "source_sha256": {
-    "order_matched_owner_network_certificate.json": "9988d52c1c56a776e159295a8b98ed3b389e484a7946edb5b435aca8709adb4c",
-    "induced_square_pair_boundary_certificate.json": "1e48eef19d525c7071498d15b4ba25445c7b431f01633d081156fb39c40d772e"
+    "order_matched_owner_network_certificate.json": "69e29ad257c34e4124ff4800a09b5215398c75d6f2f2f128ea04d9bfb6eefad2",
+    "induced_square_pair_boundary_certificate.json": "a7f3febc8902436c6cdbf881e150fbfbee1d82cb2a2f64571dc7c3d40fdc5233"
   },
   "row_selection": "exact minimum among orders2..8 and first N=0..198 smooth-prefix nonunit patterns withD>=5r; fixed per owner",
-  "producer_sha256": "8044afc729f5686b6131819ebb8f60994a6bb4ee4ae468854080b6fc6c488ccf",
+  "producer_sha256": "1ffcb547013f8bd85c6186a556ea134fa41c481e08785eca565210b45b10a55d",
   "check_count": 7341,
   "checks": {
     "pinned647 input": 1,

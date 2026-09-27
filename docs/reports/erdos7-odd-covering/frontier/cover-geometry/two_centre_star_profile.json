@@ -2295,12 +2295,12 @@
         "SD15",
         "SD16"
       ],
-      "path": "docs/reports/erdos7-odd-covering/profile-notes/arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md"
+      "path": "docs/reports/erdos7-odd-covering/profile-notes/arithmetic/550-599/569-complete-suffix-debits-close-the-six-prime-query-target.md"
     },
     "engine_name": "two_centre_star_scan.cpp",
     "engine_sha256": "2456948a85b7499320e5bd9162176c59ce4b1bdb4983399d75d52f09771b0b14",
     "producer_name": "two_centre_star_profile.py",
-    "producer_sha256": "c144149d6416506c65b89e197534d04999b1e557e7b4debdea45bffea03b2116"
+    "producer_sha256": "2e85eb5f7885ffd9994fca61f2eb44c87514a3e247b6a29f1b8482de3da8201b"
   },
   "uniform": {
     "Haar_survivor_lower_bound": "2488465975171529051/2403540259968514867200",

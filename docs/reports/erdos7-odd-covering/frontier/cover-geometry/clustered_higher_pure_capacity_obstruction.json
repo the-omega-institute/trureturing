@@ -6,8 +6,8 @@
   "input_sha256": {
     "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
     "clustered_exact_actual_source.json": "31d7d2b20a4a72805222c7c7782506d3b9babd37c36f7cfb0d287260ba4b1905",
-    "clustered_actual_boundary_gate_witness.json": "887cd5d78038e2375ebd63d6d43c4c1e954f848f76d4fc145bc0f44b210c32a1",
-    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4"
+    "clustered_actual_boundary_gate_witness.json": "ec9fb4afefc446e65b63b93538d81994874161f01eec4719b90fa3ff4e7079fe",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
   },
   "verifier_sha256": "a4610272a1be92a08b483b907ffcc19f4c08bad3b355185777d4eeedf70c38c7",
   "source_mass": "305684996597/646498195200",

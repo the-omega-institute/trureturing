@@ -283,7 +283,7 @@ novelty has not been verified.
 ## Exact regressions and source boundary
 
 The companion
-[incidence_unicyclic.py](../frontier/cover-geometry/incidence_unicyclic.py)
+[incidence_unicyclic.py](../frontier/cover-geometry/incidence-unicyclic/incidence_unicyclic.py)
 checks (U4) and every rational bound (U7)--(U9) exactly. It also rebuilds
 two literal original families, their grouped incidence graphs, the unique
 cycle, any path from 3, every pruned domain, every actual allowed tuple
@@ -313,5 +313,5 @@ The retained exact output is
 From the repository root, replay it with
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence_unicyclic.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/incidence-unicyclic/incidence_unicyclic.py --check
 ```

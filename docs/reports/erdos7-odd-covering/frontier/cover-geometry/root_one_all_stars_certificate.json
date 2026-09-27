@@ -925,7 +925,7 @@
   "haar_lower": "161668913207534646111/284215417083910946816000",
   "haar_strict": "1/1900",
   "network_consequence": {
-    "source_sha256": "238e10ff2318c7c77f60d533da6901788d53fc882632b8766c448c5f76fb269a",
+    "source_sha256": "a05891afe39e8a6c1e46a3110cd5de7cb7431dfe7ffa37230c3c5ea2e2a7d850",
     "scope": "Exactly Report616 outside-owner and ordinary-domain conditions, attached to the fixed reference ten-prime head and the present restricted head phase class; no arbitrary-head-prime transfer asserted.",
     "total_fee_upper": "20665363/7987200000",
     "exact_extendible_head_lower": "239619882604533868877319/461850052761355288576000000",
@@ -934,7 +934,7 @@
     "full_density_lower": "1/(2100 Q_off)"
   },
   "metadata": {
-    "source_sha256": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f",
+    "source_sha256": "339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44",
     "source": "actual_pair_activation_certificate.json",
     "input_sha256": "9e83e7386dcb7f5e378b78c0b7cd72566aa10476f78627eb56332c022241f809",
     "input_bytes": 2413468,
@@ -1201,7 +1201,7 @@
   "predicates": 37,
   "finite_evaluations": 830471,
   "elapsed_seconds": 7.143098165979609,
-  "producer_sha256": "826126df7f1a7c9f3d792ee8c206c5543609a6df97d4cd31d8b07a0425d8248a",
+  "producer_sha256": "a86134709bd37246d3b8e192cdc295a5bd4a03eb3cc71fe4e0b6f1fa47d497b1",
   "kernel_sha256": "3bccea124c2762f527fed7519b12e9f9584df80455d1a4f30f69a0e0897f563b",
   "new_lean_verification": false
 }

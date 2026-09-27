@@ -21,8 +21,8 @@ CORE=(3,5)+QS
 EDGES=tuple(combinations(range(5),2))
 STAR=(0,2,0,2,0,10)
 PINS={
- 'actual_pair_activation_certificate.json':'2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f',
- 'unanchored_square_source_certificate.json':'b8c38f05cbcd65607e25bc138ecc5a20961cd5bb786b18ad41df5583986bb1a4',
+ 'actual_pair_activation_certificate.json':'339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44',
+ 'unanchored_square_source_certificate.json':'6320d071867d337678c6e1ff860966a24be50afbb832bbc00c2b3615e54858b9',
 }
 W3=[F() if l==3 else F(1,5) for l in range(6)]
 W5=[F() if m==5 else F(1,19) for m in range(20)]

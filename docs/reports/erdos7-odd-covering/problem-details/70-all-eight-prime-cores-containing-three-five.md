@@ -116,12 +116,12 @@ with $H=4.52038763906137\cdot10^{-4}$. Every first-omission branch has a
 larger margin.
 
 The exact rational producer is
-[`all_three_five_eight_core_certificate.py`](../frontier/cover-geometry/all_three_five_eight_core_certificate.py),
+[`all_three_five_eight_core_certificate.py`](../frontier/cover-geometry/spine-book-certificate/all_three_five_eight_core_certificate.py),
 with its generated
-[`JSON`](../frontier/cover-geometry/all_three_five_eight_core_certificate.json).
+[`JSON`](../frontier/cover-geometry/spine-book-certificate/all_three_five_eight_core_certificate.json).
 Run:
 
-    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/all_three_five_eight_core_certificate.py \
+    python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/spine-book-certificate/all_three_five_eight_core_certificate.py \
       --output /tmp/eight-prime-profile-budget.json
 
 The input geometry and ordinary source helpers are SHA-pinned by the

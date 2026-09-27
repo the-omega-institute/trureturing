@@ -31,9 +31,9 @@ checks=Counter()
 def check(name,truth):
     if not truth:raise ArithmeticError(name)
     checks[name]+=1
-check('pinned647 input',sha256(OLD.read_bytes()).hexdigest()=='9988d52c1c56a776e159295a8b98ed3b389e484a7946edb5b435aca8709adb4c')
+check('pinned647 input',sha256(OLD.read_bytes()).hexdigest()=='69e29ad257c34e4124ff4800a09b5215398c75d6f2f2f128ea04d9bfb6eefad2')
 PAIR=ROOT/'induced_square_pair_boundary_certificate.json'
-check('pinned648 input',sha256(PAIR.read_bytes()).hexdigest()=='1e48eef19d525c7071498d15b4ba25445c7b431f01633d081156fb39c40d772e')
+check('pinned648 input',sha256(PAIR.read_bytes()).hexdigest()=='a7f3febc8902436c6cdbf881e150fbfbee1d82cb2a2f64571dc7c3d40fdc5233')
 head_gate=F(next(s for s in json.loads(PAIR.read_text())['scopes'] if s['scope']=='twenty')['worst']['gate'])
 heap=[(1,(0,0,0,0))];seen={(0,0,0,0)};patterns=[]
 while len(patterns)<LENGTH:

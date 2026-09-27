@@ -24,10 +24,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PINS = {
-    'arbitrary_pure_source_certificate.py': '48c5266bcd91f681ee5b5f5b44130e6af2f4671a4a79b2877757279bbccb4eb7',
-    'matching_endpoint_certificate.py': '69153d040ad621ac0ffb671bbf218d1d527a323a3284e79db852fcba16016324',
+    'arbitrary_pure_source_certificate.py': 'c254b0b6976f09971ec6ce0e4235981c90ef3aa2e3b33cbb5d9c0e9a016e93f4',
+    'matching_endpoint_certificate.py': '79782bff4bcdf38b0c50d1d5defce93d3c1b642554fcc5defca1009ab0b365dd',
     'pure_source_template_pair_orbits.py': '3d2e86d09654f936a18d0e488fcb99abeb20114737df454bb396350fc960d1ca',
-    'actual_pair_activation_certificate.json': '2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f',
+    'actual_pair_activation_certificate.json': '339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44',
 }
 QS = (7, 11, 13, 17, 19)
 EDGES = tuple(combinations(range(5), 2))

@@ -226,7 +226,7 @@ original alpha_q and do not use the invalid replacement.
 
 ## 6. Verification and remaining arithmetic obligation
 
-The [standalone checker](../../frontier/cover-geometry/shallow_tail_truncation.py)
+The [standalone checker](../../frontier/cover-geometry/shallow-tail-truncation/shallow_tail_truncation.py)
 retains original labels and complete tails, tests local sharp
 models and actual whole even covers, and compares the cutoff
 distribution, mean bounds, and selected-source quantities with

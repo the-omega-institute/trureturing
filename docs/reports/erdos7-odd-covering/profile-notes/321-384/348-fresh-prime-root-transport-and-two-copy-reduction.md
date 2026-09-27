@@ -19,7 +19,7 @@ two-copy families on at most six odd primes excluding3. The
 [direct capped construction](#a-direct-capped-law-improves-the-two-copy-query-and-density-bounds)
 has a [joint pure-anchor estimate](#retaining-the-actual-pure-anchor-masses)
 with query bound5.149795473527814... and density below88, both under one
-law. [Report569](../arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md)
+law. [Report569](../arithmetic/550-599/569-complete-suffix-debits-close-the-six-prime-query-target.md)
 strengthens the query bound to5.003067549838209... and closes the NC1
 target below. Its weighted projection consumer allows arbitrary deeper
 ternary phases once the first six exponent levels have at most two
@@ -237,7 +237,7 @@ Set delta_i=1/4 for 5<=i<=39. Write
     a_i=(3p_i−1)/(p_i−1)^2,  b_i=1/[4(p_i−1)^2],  F_4=4,
     F_i=F_(i−1)(1+4a_i/3)/(1−16b_i F_(i−1)/3).
 
-The [exact rational checker](../../frontier/cover-geometry/multiplicity_two_sieve.py)
+The [exact rational checker](../../frontier/cover-geometry/multiplicity-two-sieve/multiplicity_two_sieve.py)
 checks all 35 denominators are positive. Lemma 6.2 then implies mu_i>0
 and f_i<=F_i throughout. At p_39=167 it verifies
 
@@ -284,7 +284,7 @@ numerical moduli; a modulus used only once can go in either family.
 Write V_A for the A-survivor and V=V_A intersect V_B. The split and all
 residues are fixed before the construction or any query. This result
 uses the uniform seven-prime common law of
-[report467](../arithmetic/467-the-same-core-law-has-a-smaller-density-cap-and-tail-cutoff.md),
+[report467](../arithmetic/450-499/467-the-same-core-law-has-a-smaller-density-cap-and-tail-cutoff.md),
 whose source attribution and verification limits remain in force. It is
 an ordinary quantitative deduction, not new Lean verification or a
 claim of literature priority. The root transport above alone does not
@@ -438,10 +438,10 @@ certificate with r>257/51 throughout this declared-carrier domain.
 Even a successful(TC6) counterexample
 would refute the intermediate query target, not settle Erdős#7.
 
-The [partial-comb checker](../../frontier/cover-geometry/two_copy_comb_transfer.py)
+The [partial-comb checker](../../frontier/cover-geometry/two-copy-comb-transfer/two_copy_comb_transfer.py)
 constructs the actual distinct CRT labels for supplied A,B and H,
 compares their full survivor mask with(TC2), and verifies(TC3) and the
-displayed rational constants. Its [retained controls](../../frontier/cover-geometry/two_copy_comb_transfer.json)
+displayed rational constants. Its [retained controls](../../frontier/cover-geometry/two-copy-comb-transfer/two_copy_comb_transfer.json)
 exercise different phases, missing labels and higher cofactor powers.
 The arbitrary-height common-law deduction is the proof above; finite
 controls do not prove its universal quantifiers. Default execution
@@ -493,7 +493,7 @@ asserted.
 
 ## 5. Reproducible construction checks
 
-The [prime-flat constructor](../../frontier/cover-geometry/p_flat_constructor.py) implements
+The [prime-flat constructor](../../frontier/cover-geometry/p-flat-constructor/p_flat_constructor.py) implements
 section 2 with an odd-only default and an explicit even-fixture option.
 It checks the complete input and output periods, root normalization,
 literal CRT conditions, original-label provenance, modulus distinctness,
@@ -507,7 +507,7 @@ without pretending to supply the unknown odd input. Invalid input
 coverage, duplicate moduli, nonfresh primes, non-flat input and even
 input through the odd-only interface are rejected.
 
-The [fresh-root constructor](../../frontier/cover-geometry/fresh_root_constructor.py)
+The [fresh-root constructor](../../frontier/cover-geometry/p-flat-constructor/fresh_root_constructor.py)
 implements section 1 and checks every original event bit against its
 transported event on a single common carrier, including conditional
 fibre bijections and the complete joint event histogram. It retains
@@ -515,7 +515,7 @@ that carrier even when deleting a high branch reduces the natural
 output period. Its scope includes q<t, q=t, q=t+1, q=t+2 and q>t+2;
 only the displayed sufficient range promises at most two pure-q classes.
 
-The [composition check](../../frontier/cover-geometry/fresh_root_composition_check.py)
+The [composition check](../../frontier/cover-geometry/p-flat-constructor/fresh_root_composition_check.py)
 runs both constructions on one actual even-cofactor input: periods
 56 -> 40 -> 600, ending with 14 distinct moduli and exact reciprocal
 excess 443/600. Copy it with its two sibling programs to reproduce it
@@ -531,7 +531,7 @@ the auxiliary CRT root from the original prime support. All three
 entrypoints pass under Python's isolated, no-site, optimized mode;
 checks use explicit exceptions rather than optimization-sensitive asserts.
 
-The [old-q memory constructor](../../frontier/cover-geometry/old_q_memory_construct.py)
+The [old-q memory constructor](../../frontier/cover-geometry/old-q-memory-construct/old_q_memory_construct.py)
 checks the additional support condition and preserves the complete
 conditional source law after shifting the old q digits. Its five
 fixtures check 198,428 input/output/common-carrier points, 46,200
@@ -733,8 +733,8 @@ two. This improves the earlier(TC5) continuation reserve for the same
 class of inputs; it supplies neither an unrestricted seven-prime query
 bound below565/51 nor a resolution of Erdős#7.
 
-The [exact budget consumer](../../frontier/cover-geometry/two_copy_capped_query.py)
-and [rational data](../../frontier/cover-geometry/two_copy_capped_query.json)
+The [exact budget consumer](../../frontier/cover-geometry/two-copy-capped-query/two_copy_capped_query.py)
+and [rational data](../../frontier/cover-geometry/two-copy-capped-query/two_copy_capped_query.json)
 compute(CP5)–(CP6), the complete final hinge, both bounds in(CP1), and
 the continuation reserve. The program accepts four alternative stage
 thresholds and a query threshold, rejecting invalid caps or a schedule
@@ -743,7 +743,7 @@ this calculator's finite work, not the theorem's original heights.
 It does not enumerate original families or rerun source geometry.
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two-copy-capped-query/two_copy_capped_query.py
 ```
 
 ## Retaining the actual pure-anchor masses
@@ -877,21 +877,21 @@ Together with the same-law density cap below88, this gives full Haar
 survivor mass greater than49/8800>1/180. The original fixed phases,
 full labels and permitted old multiplicity two are retained.
 
-The existing [consumer](../../frontier/cover-geometry/two_copy_capped_query.py)
+The existing [consumer](../../frontier/cover-geometry/two-copy-capped-query/two_copy_capped_query.py)
 with `--joint-anchor` computes the four full prefix ledgers, their exact
 tail hinges and the common bounds in
-[these data](../../frontier/cover-geometry/two_copy_pure_anchor.json).
+[these data](../../frontier/cover-geometry/no-mod3-through2/two_copy_pure_anchor.json).
 It is a numerical consumer of(PA2)–(PA4); the interpolation and actual
 source comparison are the ordinary proof above. The earlier default
 calculation remains available and keeps its original output contract.
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py --joint-anchor
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two-copy-capped-query/two_copy_capped_query.py --joint-anchor
 ```
 
 ## Necessary query carriers and actual pure labels for the remaining lower target
 
-[Report569](../arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md)
+[Report569](../arithmetic/550-599/569-complete-suffix-debits-close-the-six-prime-query-target.md)
 now excludes the NC1 lower witness throughout the stated two-copy
 domain: complete-suffix deletion and joint cap/loss credits give one
 actual full-height query law with norm at most5.003068<257/51 on the
@@ -1063,15 +1063,15 @@ the prime product indices2,3. The needed old-prefix P3 is recovered
 from F4-mean+4W-3P1-2P2. These operations omit the absent row and
 recompute the remaining charges without enumerating original families.
 
-The [deficit consumer](../../frontier/cover-geometry/two_copy_pure_deficit.py)
-and [exact results](../../frontier/cover-geometry/two_copy_pure_deficit.json)
+The [deficit consumer](../../frontier/cover-geometry/no-mod3-through2/two_copy_pure_deficit.py)
+and [exact results](../../frontier/cover-geometry/no-mod3-through2/two_copy_pure_deficit.json)
 calculate(NC2),(NC4)–(NC10) from the retained PA ledger. The input is
 bound to that ledger's SHA-256; an alternate input must have the same
 bytes. The actual-label implications and carrier transport are the
 ordinary arguments above, with no additional Lean verification.
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_pure_deficit.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/no-mod3-through2/two_copy_pure_deficit.py
 ```
 
 ## A lower witness must retain an almost untouched pure-5 root
@@ -1142,8 +1142,8 @@ Higher pure-5 classes can still occur in this root, with total union
 mass below that threshold. The root need not be entirely free of
 originals, and(RC4) is not sufficient for a lower certificate.
 
-The [root-cap consumer](../../frontier/cover-geometry/two_copy_root_cap.py)
-and [four-corner data](../../frontier/cover-geometry/two_copy_root_cap.json)
+The [root-cap consumer](../../frontier/cover-geometry/no-mod3-through2/two_copy_root_cap.py)
+and [four-corner data](../../frontier/cover-geometry/no-mod3-through2/two_copy_root_cap.json)
 use the pinned PA ledger. For the remaining multiplier N, the exact
 hinge correction is sigma times
 
@@ -1155,7 +1155,7 @@ convolution checks the same four new corner budgets. The source
 comparison and(RC4) are ordinary proofs, without new Lean verification.
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_root_cap.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/no-mod3-through2/two_copy_root_cap.py
 ```
 
 ## Constant-cap tuning has an exact certificate optimum
@@ -1258,16 +1258,16 @@ Both programs retain every tail through the full geometric first
 moment and convolve only the finite atoms below each hinge threshold.
 Threshold zero has C=1 and its hinge equals the full mean.
 
-The [positive-grid program](../../frontier/cover-geometry/two_copy_positive_cap_grid.py)
-and [result](../../frontier/cover-geometry/two_copy_positive_cap_grid.json),
-and the [zero-containing grid program](../../frontier/cover-geometry/two_copy_zero_cap_grid.py)
-and [result](../../frontier/cover-geometry/two_copy_zero_cap_grid.json),
+The [positive-grid program](../../frontier/cover-geometry/two-copy-positive-cap-grid/two_copy_positive_cap_grid.py)
+and [result](../../frontier/cover-geometry/two-copy-positive-cap-grid/two_copy_positive_cap_grid.json),
+and the [zero-containing grid program](../../frontier/cover-geometry/two-copy-zero-cap-grid/two_copy_zero_cap_grid.py)
+and [result](../../frontier/cover-geometry/two-copy-zero-cap-grid/two_copy_zero_cap_grid.json),
 are the completed exact calculations used here. The rounding argument
 extends their finite arithmetic conclusion to(CT3). This is an ordinary
 proof with exact computational evidence, without Lean verification.
 
-[Report537](../arithmetic/537-two-copy-lower-witnesses-require-nested-pure-five-prefixes.md) strengthens NC/RC using actual root and cell probabilities: both25 originals must share one surviving5-root, and both125 originals must share a live25-cell inside it. Three exact positive-mass same-law kernel comparisons exclude the other layouts. The remaining nested geometry still permits disjoint mixed-prefix packing approaching the full raw1/12 charge, so a uniform overlap rebate cannot close its query gap.
+[Report537](../arithmetic/500-549/537-two-copy-lower-witnesses-require-nested-pure-five-prefixes.md) strengthens NC/RC using actual root and cell probabilities: both25 originals must share one surviving5-root, and both125 originals must share a live25-cell inside it. Three exact positive-mass same-law kernel comparisons exclude the other layouts. The remaining nested geometry still permits disjoint mixed-prefix packing approaching the full raw1/12 charge, so a uniform overlap rebate cannot close its query gap.
 
-[Report544](../arithmetic/544-missing-original-slots-restore-a-common-law-debit.md) refines the same PA law by retaining the actual mixed-source debit and choosing legal phases in missing comparison slots. Every two-copy Q-family with at least two of the full labels55,77,385 occurring at most once has complete query norm below5.037421<257/51. More generally, for each actual35 class a strict all-laws lower witness needs both copies at at least two of these full labels to miss that class in their old phases. A weighted missing-label criterion retains the entire exponent tail. The actual law, original phases and single normalization are unchanged; the arbitrary two-copy and unrestricted targets remain unresolved.
+[Report544](../arithmetic/500-549/544-missing-original-slots-restore-a-common-law-debit.md) refines the same PA law by retaining the actual mixed-source debit and choosing legal phases in missing comparison slots. Every two-copy Q-family with at least two of the full labels55,77,385 occurring at most once has complete query norm below5.037421<257/51. More generally, for each actual35 class a strict all-laws lower witness needs both copies at at least two of these full labels to miss that class in their old phases. A weighted missing-label criterion retains the entire exponent tail. The actual law, original phases and single normalization are unchanged; the arbitrary two-copy and unrestricted targets remain unresolved.
 
-[Report560](../arithmetic/560-reordered-pa-pure-union-savings.md) extends CT to all24 fixed orders of the four later primes. The unrefined constant-cap optimum becomes5.145721167033602, still above257/51. Retaining actual pure unions under a reordered law separately certifies at most one modulus17 occurrence. The increasing-order optimum CT3 is unchanged within its original scope.
+[Report560](../arithmetic/550-599/560-reordered-pa-pure-union-savings.md) extends CT to all24 fixed orders of the four later primes. The unrefined constant-cap optimum becomes5.145721167033602, still above257/51. Retaining actual pure unions under a reordered law separately certifies at most one modulus17 occurrence. The increasing-order optimum CT3 is unchanged within its original scope.

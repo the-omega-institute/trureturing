@@ -185,7 +185,7 @@ mass is therefore zero, as for the earlier-parent region in 350.
 
 ## 6. Independent arithmetic fixtures and their boundary
 
-The [exact AP checker](../../frontier/cover-geometry/synchronized_parent_rescue.py) checks
+The [exact AP checker](../../frontier/cover-geometry/synchronized-parent-rescue/synchronized_parent_rescue.py) checks
 three explicit finite AP lists:
 
 - At `p=3`, active parent `58 mod63` has 12 private residues in period

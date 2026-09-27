@@ -63,7 +63,7 @@ DENSITY = F(3458, 405)
 LAYOUTS = 16 ** 5
 GRID_DENOMINATOR = 12 * 6 * 10 * 12 * 16 * 18
 EXPECTED_GATE = F(2488465975171529051, 22392201998694528000)
-REPORT569 = ('docs/reports/erdos7-odd-covering/profile-notes/arithmetic/'
+REPORT569 = ('docs/reports/erdos7-odd-covering/profile-notes/arithmetic/550-599/'
              '569-complete-suffix-debits-close-the-six-prime-query-target.md')
 MODE_NAMES = (
     'no_3_no_5', 'no_3_with_5', 'with_3_no_5_first_layer',

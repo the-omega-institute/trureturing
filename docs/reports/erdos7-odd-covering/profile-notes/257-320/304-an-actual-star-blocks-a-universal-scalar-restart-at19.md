@@ -161,7 +161,7 @@ reveal. A method that retains that information is outside the obstruction.
 
 ## Verification and remaining scope
 
-The [companion](../../frontier/cover-geometry/scalar19_capacity_star_obstruction.py) consumes
+The [companion](../../frontier/cover-geometry/scalar19-capacity-star-obstruction/scalar19_capacity_star_obstruction.py) consumes
 the committed star certificate through the existing artifact reader and
 reuses its coordinate floors. It computes the new seven-prime product,
 all finite capacities, the forward controls and their strict comparison.
@@ -169,7 +169,7 @@ The [result](../../certificates/source_norms/cover-geometry/scalar19_capacity_st
 retains exact rational intervals and controls.
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/scalar19_capacity_star_obstruction.py --check
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/scalar19-capacity-star-obstruction/scalar19_capacity_star_obstruction.py --check
 ```
 
 Independent rational checks eliminate the radicals by positive squared

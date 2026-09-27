@@ -5,11 +5,11 @@
   "complete": true,
   "source_sha256": {
     "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
-    "clustered_higher_pure_capacity_obstruction.json": "ae2f90ae8f3c109cf4354dbe74377f0b1597a6b81901e85c8419934504b9530e",
-    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4"
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
   },
-  "witness_sha256": "412b31f6cb360efe624e9fa755a69715256621793ebb42082992f4b61cecc98d",
-  "program_sha256": "95cadfecb95a472c17465cfbb7b3b5b512312fa6386aead7e3259a33bdd4db44",
+  "witness_sha256": "907c8b8f2a7636179893a4cdf1646be1eaf35c9da68dc0472f2c0308f0ea934e",
+  "program_sha256": "edc32a8aff0e0fb8319e448da05a882b618d74ea97412cacdb5412bf1c7aca56",
   "numpy_version": "2.4.3",
   "grid_denominator": 1000000000000,
   "dual_rows": 157341,

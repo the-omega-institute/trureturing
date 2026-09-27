@@ -205,7 +205,7 @@ this repeated-layer congruence example. Its passing result therefore does
 not contradict this counterexample.
 
 The independent checker
-[srct_repeated_layer_counterexample.py](../frontier/cover-geometry/srct_repeated_layer_counterexample.py)
+[srct_repeated_layer_counterexample.py](../frontier/cover-geometry/srct-repeated-layer-counterexample/srct_repeated_layer_counterexample.py)
 enumerates actual residues and divisor capacities for the core and the
 two-layer instance. It also checks a core-supported TAKE under eight repeated
 layers, using exact CRT fiber multiplicities; that control distinguishes the
@@ -222,7 +222,7 @@ $27$ by $243$ or to excluding the projected label instead of the actual label.
 ## Reproduction and boundary
 
     python3 -I -O docs/reports/erdos7-odd-covering/verify_srct_exact_two_e7_implication.py
-    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/srct_repeated_layer_counterexample.py
+    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/srct-repeated-layer-counterexample/srct_repeated_layer_counterexample.py
 
 Both programs use explicit failures that remain active with Python
 optimization enabled. They retain no external source code or finite
@@ -711,7 +711,7 @@ argument above is ordinary mathematics, without new Lean declarations.
 
 Independent direct-count regressions and the actual values are reproduced by
 
-    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify_repeated_prime_transport.py
+    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify-repeated-prime-transport/verify_repeated_prime_transport.py
 
 The checker performs 925 checks: 120 parent/child/height cases for one-prime
 transport and coprime support, 144 simultaneous-height cases, invariance and

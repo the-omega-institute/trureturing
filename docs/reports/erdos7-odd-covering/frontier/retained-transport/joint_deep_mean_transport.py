@@ -14,7 +14,7 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/joint_deep_mean_transport.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/cover-geometry/pure_three_root_spill.py': '983968544c404112fe6d6c62a0ba82d32ce7ea3a06e727c9975f30ee5858bdfe',
+    'frontier/cover-geometry/pure_three_root_spill.py': 'dfd550f04f9f1fe09f71168b55e62da5e2ce6e90d4cca21d00289413cd270b97',
     'frontier/cover-geometry/quantitative_forced27.py': '23551c4ae4b01624be33175524899b97f34464ea4b6383dda56ecc408128a947',
     'frontier/retained-transport/deep_five_mean_transport.py': 'd47b692dfdaaafb08b864fe26eca18b476c09e0bb546c2ef5efffacee8ef211a',
     'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',

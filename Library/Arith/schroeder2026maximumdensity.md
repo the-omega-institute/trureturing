@@ -216,7 +216,7 @@ Those comparisons and unrestricted Erdős #7 remain unresolved.
 ## Reproducible parity and threshold controls
 
 The original research program
-[odd_star_threshold_bridge.py](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/odd_star_threshold_bridge.py)
+[odd_star_threshold_bridge.py](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/odd-star-threshold-bridge/odd_star_threshold_bridge.py)
 implements MD3–MD5 with exact integers and fractions. It constructs instances
 from supplied positive weights and independently tests the source subset-sum
 answer against the target star minimum. The default run checks 462 inputs:

@@ -8,14 +8,14 @@ calculation only**. It is not a core theorem and does not settle the
 unrestricted Erdős--Selfridge problem.
 
 The producer
-[`missing_anchor_source_certificate.py`](../frontier/cover-geometry/missing_anchor_source_certificate.py)
+[`missing_anchor_source_certificate.py`](../frontier/cover-geometry/spine-book-certificate/missing_anchor_source_certificate.py)
 and its pinned output
-[`missing_anchor_source_certificate.json`](../frontier/cover-geometry/missing_anchor_source_certificate.json)
+[`missing_anchor_source_certificate.json`](../frontier/cover-geometry/spine-book-certificate/missing_anchor_source_certificate.json)
 reuse the Chapter 30 ordinary geometry, the Chapter 31 source helper, and the
 six-child conditional-kernel rows. Run:
 
 ```text
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/missing_anchor_source_certificate.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/spine-book-certificate/missing_anchor_source_certificate.py
 ```
 
 The checker verifies the four input SHA-256 values before evaluating exact

@@ -2,11 +2,11 @@
   "schema": "staged-two-parent-attachment-v1",
   "sources": {
     "central_high_support_augmentation.json": {
-      "sha256": "0cfa07bd80c2f5f5b753669c7a13be74a3c0c89d1bb6e822cdba8d26636bdc4c",
+      "sha256": "6c5d77daf00faea415347cbd776155e42fa11b5cc800e453357a3afe860420c7",
       "producer_sha256": "e4466a57f5ad969b6a9f71c3bfbf1b6209303517c1f57bfe1ca12ffd62907898"
     },
     "two_parent_entry_attachment.json": {
-      "sha256": "a133ebca1f0cbecc4f360e28ebdc3e9949f19fcba4f05984cd309f25284aad8f",
+      "sha256": "80f3f80a2c101540f74eac62236265733697a74837a867432ff6330a0c37545b",
       "producer_sha256": "e4f43fbb80ba3fc463f136c9a2de88a02ddba7afa14ea665fab49ef51697741b"
     }
   },

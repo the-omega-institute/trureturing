@@ -14,8 +14,8 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained135_heavy_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/retained-transport/selected_deletion_mask_heavy_comparison.py': '7292f7ea3b0b8494c729436e31ec2badae119bf71ce1c3a9d37dd818d17f3711',
-    'certificates/source_norms/retained-transport/selected_deletion_mask_heavy_comparison.json': 'f41035f5bf87afa18a9bd6f815ea1d082f693f266244f2b16ecd076aafe10e85',
+    'frontier/retained-transport/selected_deletion_mask_heavy_comparison.py': '8a1fe65a65355f7079a89f4b3004017120135ca50c64343d1c9dfa7e4f2127e8',
+    'certificates/source_norms/retained-transport/selected_deletion_mask_heavy_comparison.json': '925bf7f83f57df3dec099a91605021614b2b39270603907f73aceecbeb7d895f',
     'profile-notes/193-256/222-deep-five-deletion-retains-the-selected-observation-masks.md': '75f2e13689ba09637307ef2eea60d055d8bd4312dd2ebe7062d6fef8664f123c',
 }
 BRANCHES = ('nested', 'disjoint')

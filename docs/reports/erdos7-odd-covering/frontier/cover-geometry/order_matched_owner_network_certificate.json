@@ -5,7 +5,7 @@
   "new_lean_verification": false,
   "source": {
     "path": "arbitrary_pure_network_extensions.json",
-    "sha256": "ae50c6a2f6edc9bd30db3531882bf13c0b0b11f1760e7ebcd711e56f11c285fa"
+    "sha256": "973ea4f9f59c61c9918203ce48591c55d243c31607a337bc953574a60a2eb014"
   },
   "producer_sha256": "0216c979207e18dfbfd8ff385e83daf43a52e90413b36ba35960c8d46c8a77de",
   "prefix_count": 958,

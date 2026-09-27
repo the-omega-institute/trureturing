@@ -375,16 +375,16 @@ uncovered density.
 ## 7. Certificate and remaining scope
 
 The standard-library Python program
-[k5_coupled_first_root_certificate.py](../frontier/cover-geometry/k5_coupled_first_root_certificate.py)
+[k5_coupled_first_root_certificate.py](../frontier/cover-geometry/k5-coupled-first-root-certificate/k5_coupled_first_root_certificate.py)
 and its
-[exact rational data](../frontier/cover-geometry/k5_coupled_first_root_certificate.json)
+[exact rational data](../frontier/cover-geometry/k5-coupled-first-root-certificate/k5_coupled_first_root_certificate.json)
 contain the domain calculation, all fifteen residual checks, both support
 polynomial algorithms, the derivative margins, and the four-case and
 32768-vertex inequalities. Run from the repository root with assertions
 enabled:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_coupled_first_root_certificate.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-coupled-first-root-certificate/k5_coupled_first_root_certificate.py
 ```
 
 The default output is the JSON file beside the program; `--output PATH`
@@ -394,8 +394,8 @@ not verify the external measure-theoretic theorem or elaborate Lean.
 
 ### Finite controls on complete original parent fibres
 
-The [actual-AP control program](../frontier/cover-geometry/k5_coupled_first_root_ap_controls.py)
-and its [full data](../frontier/cover-geometry/k5_coupled_first_root_ap_controls.json)
+The [actual-AP control program](../frontier/cover-geometry/k5-coupled-first-root-ap-controls/k5_coupled_first_root_ap_controls.py)
+and its [full data](../frontier/cover-geometry/k5-coupled-first-root-ap-controls/k5_coupled_first_root_ap_controls.json)
 check two complete families at \(Q_H=3^H\cdot5005\), for \(H=2,4\).
 Every nonunit divisor occurs once. Old child labels use \(0\bmod d\);
 parent-pure labels use \(1\bmod3^a\). The label \(3^a5\) has the CRT
@@ -432,7 +432,7 @@ family and the block-only family. The data retain each literal label,
 residue, parent-fibre count and Haar normalization. Reproduce with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_coupled_first_root_ap_controls.py --output /tmp/k5-coupled-first-root-ap-controls.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-coupled-first-root-ap-controls/k5_coupled_first_root_ap_controls.py --output /tmp/k5-coupled-first-root-ap-controls.json
 ```
 
 These finite controls verify the fibre and weighting interfaces; the

@@ -522,8 +522,8 @@ specified head. Removing that restriction remains open for this route.
 ## 7. Exact arithmetic and its boundary
 
 The standalone
-[certificate program](../frontier/cover-geometry/joint_root_dense_tail_certificate.py)
-and [rational results](../frontier/cover-geometry/joint_root_dense_tail_certificate.json)
+[certificate program](../frontier/cover-geometry/joint-root-dense-tail-certificate/joint_root_dense_tail_certificate.py)
+and [rational results](../frontier/cover-geometry/joint-root-dense-tail-certificate/joint_root_dense_tail_certificate.json)
 use the identity, for integer $T\ge1$,
 
 \[
@@ -541,7 +541,7 @@ conditions. It uses only the Python standard library, accepts no oracle
 attachment, and refuses execution with assertions disabled.
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/joint_root_dense_tail_certificate.py \
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/joint-root-dense-tail-certificate/joint_root_dense_tail_certificate.py \
   --output /tmp/joint-root-dense-tail.json
 ```
 

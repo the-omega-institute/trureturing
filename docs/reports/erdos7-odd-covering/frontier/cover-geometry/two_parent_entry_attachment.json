@@ -13,7 +13,7 @@
   },
   "source": {
     "file": "twelve_vertex_attachment_kernel.json",
-    "sha256": "4d83eb4b250698b897d9f58253fb2a0093b8611de5e5d1ee78cb50a5d2cc18d3",
+    "sha256": "45ee32b005fd8f5e8010c537a7e04241040c0066abf2277dd4b69bdeff1e1085",
     "producer_sha256": "2e846b6f859c4dbec9f1da7a5f876d2bffcef98698c6bf10fab0e469553e0efa"
   },
   "parent_label_prefix": [

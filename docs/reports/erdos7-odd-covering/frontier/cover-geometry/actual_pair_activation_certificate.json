@@ -2,7 +2,7 @@
   "schema": "actual-pair-activation-certificate-v1",
   "source": {
     "file": "central_high_support_augmentation.json",
-    "sha256": "0cfa07bd80c2f5f5b753669c7a13be74a3c0c89d1bb6e822cdba8d26636bdc4c",
+    "sha256": "6c5d77daf00faea415347cbd776155e42fa11b5cc800e453357a3afe860420c7",
     "producer_sha256": "e4466a57f5ad969b6a9f71c3bfbf1b6209303517c1f57bfe1ca12ffd62907898",
     "inherited_checks": 37,
     "inherited_head_scan_rerun": false
@@ -31,7 +31,7 @@
   },
   "branch_source": {
     "file": "staged_two_parent_attachment.json",
-    "sha256": "2312048ed43413f9a64e37ddd94faa9958e78b67bc5f8fbee4fc4605d3fb933c",
+    "sha256": "e49774a88828d1c007d038355a1b4e17c6af4873746cb737e302abf94299952f",
     "producer_sha256": "7e8ab9bd5071e6434928083864a362c5634b18345caf38228f9b05af5f179186",
     "inherited_checks": 473,
     "inherited_entry_enumerator_rerun": false
@@ -11950,5 +11950,5 @@
     "separated_roles_combined_support160_and_branches": true
   },
   "predicate_evaluations": 43317,
-  "producer_sha256": "fe0bff7dceec1f2435c91218f371a12b523bec062e91466ad6e6fafd4a21cce6"
+  "producer_sha256": "338ae8941fb83901d7d09e550b3354eb52350e75d95292b470abf836f5ed7a0b"
 }

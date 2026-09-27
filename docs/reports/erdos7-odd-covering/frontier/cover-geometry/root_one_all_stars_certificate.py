@@ -19,8 +19,8 @@ TIDX={t:i for i,t in enumerate(TEMPLATES)}
 CELLS=tuple((l,m) for l,m in product(range(5),range(20)) if m!=10 and (l//3,m//5)!=(0,0))
 HS=1<<21;CS=1<<24;CENTRAL_DEN=58400
 # The source-data pin is checked against the exact published bytes below.
-SOURCE_SHA='2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f'
-NETWORK_SHA='238e10ff2318c7c77f60d533da6901788d53fc882632b8766c448c5f76fb269a'
+SOURCE_SHA='339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44'
+NETWORK_SHA='a05891afe39e8a6c1e46a3110cd5de7cb7431dfe7ffa37230c3c5ea2e2a7d850'
 CHECKS=[]
 def check(name,test,units=1):
  if not test:raise ArithmeticError(name)

@@ -42,10 +42,10 @@ def read_pin(name, expected):
 
 head, head_hash = read_pin(
     'unqueried_head_four_parent_certificate.json',
-    '8bf5da7b70697b67e5f3df8b2787cbcac087841342423d028372ba4ebe903d2f')
+    '224cb239ae065f18b7ca1e0ce94883275125554ee668c48c6810e9375810dccf')
 policy, policy_hash = read_pin(
     'ordinary_domain_five_parent_certificate.json',
-    'e46183469f280d262da37a9c33005e724690fc20b0106202c42c9913ed8d8ec0')
+    'dcb6f975b020c293631092bc79c88794d254423885f660709544aa27770b3668')
 gamma = F(head['head_gate'])
 alpha = F(head['projection_alpha'])
 g = F(200163067, 201247200)

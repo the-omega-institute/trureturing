@@ -1,5 +1,6 @@
 using StrataLint.EngineeringScope;
 using System.Diagnostics;
+using System.Xml.Linq;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -71,18 +72,17 @@ public sealed class EngineeringScopeProgramTests
             }
             using var output = new StringWriter();
             using var error = new StringWriter();
-            var ambientCandidate = Environment.GetEnvironmentVariable("CANDIDATE_SHA");
-            Environment.SetEnvironmentVariable("CANDIDATE_SHA", "ambient-candidate");
-            int exit;
-            try
+            // Capture the CLI boundary: its native test child inherits OS streams,
+            // so in-process StringWriters cannot contain the intentional rejection.
+            var environment = new Dictionary<string, string>(DotnetFixtureProfile.Create(root))
             {
-                exit = Program.Run(["--repository", root], TestResultEvidence.Load, output, error);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("CANDIDATE_SHA", ambientCandidate);
-            }
-            Assert.True(exit == expected, output + "\n" + error);
+                ["CANDIDATE_SHA"] = "ambient-candidate",
+            };
+            var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
+            var result = EngineeringProcess.Capture(root, executable, ["--repository", root], environment);
+            output.Write(result.StandardOutput);
+            error.Write(result.StandardError);
+            Assert.True(result.Exit == expected, output + "\n" + error);
             if (!prebuild)
             {
                 Assert.Empty(output.ToString());
@@ -92,6 +92,16 @@ public sealed class EngineeringScopeProgramTests
             Assert.Single(output.ToString().Split('\n'), line => line.StartsWith("ENGINEERING_TEST_PROJECT ", StringComparison.Ordinal));
             Assert.DoesNotContain("ENGINEERING_TEST_RETRY", output.ToString(), StringComparison.Ordinal);
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+            var trx = Assert.Single(Directory.GetFiles(Path.Combine(root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories));
+            var test = Assert.Single(XDocument.Load(trx).Descendants(), element => element.Name.LocalName == "UnitTestResult");
+            Assert.Equal("Probe.Runs", (string?)test.Attribute("testName"));
+            Assert.Equal(passes ? "Passed" : "Failed", (string?)test.Attribute("outcome"));
+            if (!passes)
+            {
+                var message = Assert.Single(test.Descendants(), element => element.Name.LocalName == "Message");
+                Assert.Contains("Assert.True() Failure", message.Value, StringComparison.Ordinal);
+                Assert.Contains("Failed Probe.Runs", output.ToString(), StringComparison.Ordinal);
+            }
             if (expected == 0)
             {
                 var original = CommonExecutionEvidence.ValidateTests(root);

@@ -11,8 +11,8 @@
     "not_claimed": "Arbitrary STAR/central first-root/mask geometry, unrestricted prime support, unrestricted Erdos7, optimality or new Lean verification."
   },
   "dependencies": {
-    "actual_pair_activation_certificate.json": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f",
-    "unanchored_square_source_certificate.json": "b8c38f05cbcd65607e25bc138ecc5a20961cd5bb786b18ad41df5583986bb1a4"
+    "actual_pair_activation_certificate.json": "339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44",
+    "unanchored_square_source_certificate.json": "6320d071867d337678c6e1ff860966a24be50afbb832bbc00c2b3615e54858b9"
   },
   "constants": {
     "c": "1084133/201247200",
@@ -43417,5 +43417,5 @@
   "check_count": 7464,
   "new_lean_verification": false,
   "LP_solved_by_producer": false,
-  "producer_sha256": "48e29f746e801b56a113d5cf919fb1e94b2bfa0d61b0ff724033ec4df13b20d0"
+  "producer_sha256": "1bf6f41e983e9744f0a66dfd9f421675e6093cf0d5810f9003bcb8d506890bbc"
 }

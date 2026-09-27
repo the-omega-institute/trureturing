@@ -77,7 +77,7 @@
 
 ## 6. 可执行范围
 
-[标准库程序](../../frontier/cover-geometry/sat_prefix_reductions.py)（`--base <report-base> --check`） 以纯 stdout 核验7,395个完整剩余CRT纤维，显式检查每个被消数位的全部扩张，并对19个 private witness 完成137次逐原标签成员关系核对。程序读取正式 `frontier/cover-geometry/hn_majorant_reduction.py`，重算后通过 `certificate_io.read_artifact_bytes` 对齐正式 multipart canonical；不依赖 scratch 证书，不新增重复快照。
+[标准库程序](../../frontier/cover-geometry/sat-prefix-reductions/sat_prefix_reductions.py)（`--base <report-base> --check`） 以纯 stdout 核验7,395个完整剩余CRT纤维，显式检查每个被消数位的全部扩张，并对19个 private witness 完成137次逐原标签成员关系核对。程序读取正式 `frontier/cover-geometry/hn_majorant_reduction.py`，重算后通过 `certificate_io.read_artifact_bytes` 对齐正式 multipart canonical；不依赖 scratch 证书，不新增重复快照。
 
 这些是标准工具的精确迁移、一个保标签质量接口和运输失败判据；有限诊断不作为新增 Lean 实例准入。未解义务仍是找到对目标候选族有效、同时控制原标签约束与指定来源质量的约化，或对具体消元补齐其费用及概率运输证书。
 
@@ -338,9 +338,9 @@ All target phases are zero. The integer 1 is visibly uncovered, so the reduction
 
 A finite automaton for a supplied L still gives a terminating method. This does not provide a polynomial-time algorithm in the binary input length: a modulus or its LCM may have exponentially many residue states. The result concerns exact counting; it supplies no approximation-hardness conclusion and no unproved separation such as FP != #P. It also does not require, or prove, self-simulation or Gödel independence.
 
-The [companion program](../../frontier/cover-geometry/zero_phase_counting_reduction.py) constructs these exact numerical inputs and recovers #IS from a supplied exact survivor count. Its optional finite check compares numerical-modulus inclusion-exclusion with a separate graph independent-set enumeration, including isolated vertices and the empty family. Finite checks validate the implementation only; the proof above carries the unbounded graph and arithmetic quantifiers. No new Lean proof or historical originality is claimed.
+The [companion program](../../frontier/cover-geometry/zero-phase-counting-reduction/zero_phase_counting_reduction.py) constructs these exact numerical inputs and recovers #IS from a supplied exact survivor count. Its optional finite check compares numerical-modulus inclusion-exclusion with a separate graph independent-set enumeration, including isolated vertices and the empty family. Finite checks validate the implementation only; the proof above carries the unbounded graph and arithmetic quantifiers. No new Lean proof or historical originality is claimed.
 
-The program takes `--graph <input.json>` with an explicit `vertices=[0,...,n-1]` list and an `edges` list. Adding `--survivor-count <integer>` applies the recovery formula to a supplied exact count. Run `python3 -B -I -S -O zero_phase_counting_reduction.py --check` for the finite diagnostic; the retained [check result](../../frontier/cover-geometry/zero_phase_counting_reduction.json) contains 9,904 active checks across all 1,100 labeled simple graphs through five vertices and 59,810 inclusion–exclusion terms. These checks verify the implementation, while the ordinary proof supplies the unbounded statement.
+The program takes `--graph <input.json>` with an explicit `vertices=[0,...,n-1]` list and an `edges` list. Adding `--survivor-count <integer>` applies the recovery formula to a supplied exact count. Run `python3 -B -I -S -O zero_phase_counting_reduction.py --check` for the finite diagnostic; the retained [check result](../../frontier/cover-geometry/zero-phase-counting-reduction/zero_phase_counting_reduction.json) contains 9,904 active checks across all 1,100 labeled simple graphs through five vertices and 59,810 inclusion–exclusion terms. These checks verify the implementation, while the ordinary proof supplies the unbounded statement.
 
 ## 13. Exact cylinder extendibility with one forbidden class per prime-power height
 

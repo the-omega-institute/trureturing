@@ -191,7 +191,7 @@ also retains CA11's factors 1/2 and 1 respectively.
 
 ## 4. Exact checks and remaining scope
 
-The [standalone checker](../../frontier/cover-geometry/mean_partial_matching.py) verifies
+The [standalone checker](../../frontier/cover-geometry/mean-partial-matching/mean_partial_matching.py) verifies
 first-cover selections, whole first-use cylinders, their antichains,
 MP3--MP4, and the mean bound using exact rational arithmetic. Maximum
 matching by augmenting paths is independently compared with all

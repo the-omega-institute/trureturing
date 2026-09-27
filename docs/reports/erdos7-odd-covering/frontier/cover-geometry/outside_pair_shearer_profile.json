@@ -2,7 +2,7 @@
   "source_sha256": {
     "outside_pair_shearer_profile.py": "5feeeefe1465189c00bb5a8b59e6e3e26f49af1da81711ad1032e3d0f3f8151e",
     "outside_pair_shearer_scan.cpp": "23d3cf0311989ed16ff6809a76401b18d22eb420610e095c9bc3f48db50a10ca",
-    "two_centre_star_profile.py": "c144149d6416506c65b89e197534d04999b1e557e7b4debdea45bffea03b2116",
+    "two_centre_star_profile.py": "2e85eb5f7885ffd9994fca61f2eb44c87514a3e247b6a29f1b8482de3da8201b",
     "multi_joint_square_profile.py": "95389a628bf46c5145ea12feef7d027a137d2170bffa32ebf833ba4da9e0e4ba",
     "outside_square_pair_core_profile.py": "d1d766c5d7499f186c6efdeabee723f17af46d625bb9191d9b8242c12b08959e"
   },

@@ -10,7 +10,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "126f6f4ad16a0abb452e9634f85d13cada04ba4aa639253b62679e51bb1c892a",
+      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "ee5dc9768f39bb1bc2f2506799e3f5bb9d5d2c30955c08095a7778aec9ed422b",
       "frontier/source-budgets/nonunit_tail_floors.json": "ef2ff992fd12c6b7c850e8d8313d68663b58cf51d25648d65dbd00b2cd1a0797",
       "frontier/source-budgets/nonunit_persistent_floors.json": "b5cdfaef1663646f691434b77babcaac8d81c46b93a802e3e18a8dc0f7451c69",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
@@ -21,7 +21,7 @@
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "e432441add72f7f443eb5e18feca4246a155a4864efc356fbe7af8fa3fcb4f85",
+      "sha256": "6ba12bc038cd42251617813a378f5b21d602bdf220ad5d986ade59ea136212f8",
       "byte_count": 32636
     }
   },

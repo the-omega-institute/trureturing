@@ -1,8 +1,8 @@
 {
   "schema": "induced-square-pair-boundary-v1",
   "status": "EXACT_HEAD_GATES_TWELVE_AND_TWENTY",
-  "source_certificate_sha256": "53e8521c3f7efbb6d1d84ec18995ed254777d011574799d0de079d31c621577b",
-  "producer_sha256": "d9a249960def107105e33faf91ebb92ab103ba2dd239e829b89726539499a65a",
+  "source_certificate_sha256": "7cbdccbc48bb4bd41bc51e2bdd4f2a66922ebc3d8814ddf9194e1f7421b0ad4c",
+  "producer_sha256": "76c0e29b93da74ac4a96296d88eb0eacd0d48059627f5bd1777e02f55cff2633",
   "phase_scope": "Both scopes keep all646 fifteen square-star phase freedoms and its literal head/central conventions; forty linear-star incidences remain. Twelve scope leaves28pair incidences; twenty scope leaves20. Arbitrary higher pure phases and finite query depths. A full network requires its separately valid total source-unit fee below the exact head gate.",
   "constants": {
     "g": "200163067/201247200",

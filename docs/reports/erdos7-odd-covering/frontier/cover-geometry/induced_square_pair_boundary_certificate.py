@@ -22,7 +22,7 @@ raw=args.source_certificate.read_bytes();v=json.loads(raw);checks=Counter()
 def ck(name,predicate):
  if not predicate:raise ArithmeticError(name)
  checks[name]+=1
-ck('published646_source',sha256(raw).hexdigest()=='53e8521c3f7efbb6d1d84ec18995ed254777d011574799d0de079d31c621577b')
+ck('published646_source',sha256(raw).hexdigest()=='7cbdccbc48bb4bd41bc51e2bdd4f2a66922ebc3d8814ddf9194e1f7421b0ad4c')
 Q=(7,11,13,17,19);co=list(map(F,v['complete512_coefficients']))
 g=F(v['constants']['g']);alpha=F(v['constants']['alpha']);old_budget=F(v['constants']['full_network_fee'])
 A=dict(zip(Q,map(F,v['coordinate_floor_factors'])))

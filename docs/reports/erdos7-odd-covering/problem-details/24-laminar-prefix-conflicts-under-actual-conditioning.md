@@ -342,8 +342,8 @@ example without changing the actual survivor law. This is not a
 uniform fee improvement for a class of blocks.
 
 The standard-library program
-[laminar_conflict_conditioning_control.py](../frontier/cover-geometry/laminar_conflict_conditioning_control.py)
-and its [exact data](../frontier/cover-geometry/laminar_conflict_conditioning_control.json)
+[laminar_conflict_conditioning_control.py](../frontier/cover-geometry/laminar-conflict-conditioning-control/laminar_conflict_conditioning_control.py)
+and its [exact data](../frontier/cover-geometry/laminar-conflict-conditioning-control/laminar_conflict_conditioning_control.json)
 retain every original label and the complete coordinate domains. They
 check the 32 induced polynomials of each graph by both deletion
 recurrence and direct independent-set summation, and check every old
@@ -358,7 +358,7 @@ The program requires Python 3.10 or later and rejects optimized `-O`
 execution. From the repository root, reproduce its exact data with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/laminar_conflict_conditioning_control.py --output /tmp/laminar-conflict-conditioning-control.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/laminar-conflict-conditioning-control/laminar_conflict_conditioning_control.py --output /tmp/laminar-conflict-conditioning-control.json
 ```
 
 ## 6. Source scope and retained boundaries

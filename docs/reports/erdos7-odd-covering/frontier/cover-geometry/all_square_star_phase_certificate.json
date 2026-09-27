@@ -2,8 +2,8 @@
   "schema": "all-square-star-phases-complete-network-v1",
   "status": "POSITIVE_ALL48_LAYOUTS",
   "scope": "Literal ten-prime head and fixed central pure/15 conventions; arbitrary phases of all15 square-star originals. One global cell-dependent single-root table still absorbs40linear stars and40pairs. Arbitrary higher pure phases, finite heights and all other head originals remain as640. Full declared625 network only. No unrestricted Erdos7 or new Lean claim.",
-  "source_certificate_sha256": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
-  "producer_sha256": "a03d0fe88440c6cb0a4c0cd382a1996bdfe4b2bae5e42bc2966456173326da57",
+  "source_certificate_sha256": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4",
+  "producer_sha256": "492749bc9eff060c62b9a2473a887d4fa27abcfd7285a8092789c917d8bb55cf",
   "inventory": {
     "freed_square_stars": [
       147,

@@ -202,7 +202,7 @@ violates this requirement is not an irredundant whole-cover example.
 
 ## 5. Exact fixtures and scope controls
 
-The standalone [checker](../../frontier/cover-geometry/singleton_cofactor_ideal.py) uses
+The standalone [checker](../../frontier/cover-geometry/singleton-cofactor-ideal/singleton_cofactor_ideal.py) uses
 five whole irredundant, comparable-disjoint **even** covers from 362:
 53 original APs on periods 12, 144, 960, 120 and 180, totalling 1416
 base carrier points. Only the period-12 palette is divisor-closed.

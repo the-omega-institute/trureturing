@@ -24,7 +24,7 @@ def main():
     if args.dependency_directory:
         sys.path.insert(0,str(args.dependency_directory))
     checker = load('j_quadratic_checker',args.base/'frontier/j-geometry/j_face_joint_quadratic_heads.py')
-    proposals = load('j_quadratic_solver',args.base/'frontier/cover-geometry/propose_j_face_joint_selected_heads.py')
+    proposals = load('j_quadratic_solver',args.base/'frontier/cover-geometry/propose-j-face-joint-selected-heads/propose_j_face_joint_selected_heads.py')
     solver = [None]
 
     def propose(lp, objective):

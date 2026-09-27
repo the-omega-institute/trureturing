@@ -244,7 +244,7 @@ this particular choice of five APs.
 
 ## 6. Reproducible mathematical scope
 
-The [standard-library checker](../../frontier/cover-geometry/hsw11_pure3_reallocation.py)
+The [standard-library checker](../../frontier/cover-geometry/hsw11-family/hsw11_pure3_reallocation.py)
 loads the literal HSW constructor. It compares every one of the
 82,944 masks under two algorithms: direct row predicates and marking
 Cartesian rectangles. It checks all local root injections, all original

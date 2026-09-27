@@ -23,7 +23,7 @@ checks=Counter()
 def ck(name,predicate):
  if not predicate:raise ArithmeticError(name)
  checks[name]+=1
-ck('published640_source',sha256(raw).hexdigest()=='dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4')
+ck('published640_source',sha256(raw).hexdigest()=='36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4')
 v=json.loads(raw);Q=(7,11,13,17,19);co=list(map(F,v['combined512_coefficients']));g=F(v['constants']['g']);alpha=F(v['constants']['alpha'])
 ck('complete512_nonnegative',len(co)==512 and min(co)>=0)
 ck('actual_continuation_constants',g==F(200163067,201247200) and alpha==F(2673,110656))

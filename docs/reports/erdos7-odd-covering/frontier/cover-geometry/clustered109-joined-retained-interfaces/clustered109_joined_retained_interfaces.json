@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "scope": "Exact retained-field source interfaces, not a33-gate or positive primal conclusion.",
+  "fields": [
+    {
+      "field": "allone",
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-allone-joined-input/clustered109_joined_allone_joined_input.json",
+      "sha256": "a79af7791de6394662a1c54a7c9e9a33ff3fed400749e3e3adeea4d8ddb74284",
+      "old_gate": "-102747178320681648015183928043/1862325532039825870617600000000",
+      "source_mass": "305684996597/646498195200",
+      "selected_fee": "13741199492267/1740572064000",
+      "seconds": 3.3542307920288295
+    },
+    {
+      "field": "sign",
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-sign-joined-input/clustered109_joined_sign_joined_input.json",
+      "sha256": "7fe5057b119f0a16a260b6c07324e3fdd5ff777ad20b4e57d6ecda2b02547b10",
+      "old_gate": "-193459418637765538178368619920769/3410538824342267777724364800000000",
+      "source_mass": "4658484373519/45254873664000",
+      "selected_fee": "456428513909/257129964000",
+      "seconds": 3.6098709998186678
+    },
+    {
+      "field": "smooth20",
+      "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/clustered109-joined-smooth20-joined-input/clustered109_joined_smooth20_joined_input.json",
+      "sha256": "51e821c756a792680369fec1b2f611bbb7a15aeb40884d2d3874142cb2a6f830",
+      "old_gate": "-144080606382238388538083616714136738243/2600879387835285656214620759654400000000",
+      "source_mass": "706731553882185319/6779024915300352000",
+      "selected_fee": "84965735573627896951/47453174407102464000",
+      "seconds": 4.021451709093526
+    }
+  ],
+  "exact_source_states": 2125830,
+  "checks": 1321259,
+  "seconds": 13.018125833012164,
+  "program_sha256": "6d8439c382d5ba6682e9453106de9a4816bb5a8fe167b38663edb02e6cc10b84",
+  "peak_rss_bytes": 1044037632
+}

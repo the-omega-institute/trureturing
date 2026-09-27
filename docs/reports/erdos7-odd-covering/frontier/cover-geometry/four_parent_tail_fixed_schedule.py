@@ -22,8 +22,8 @@ def ck(name,ok):
  if not ok:raise ArithmeticError(name)
  checks[name]+=1
 PINS={
- 'ordinary_domain_five_parent_certificate.json':'e46183469f280d262da37a9c33005e724690fc20b0106202c42c9913ed8d8ec0',
- 'joint_square_pair_225_star_certificate.json':'cbdc3903174d5640ea6518160abaaa9ac567424f9f8afc717128e1202f378be5',
+ 'ordinary_domain_five_parent_certificate.json':'dcb6f975b020c293631092bc79c88794d254423885f660709544aa27770b3668',
+ 'joint_square_pair_225_star_certificate.json':'eb93f38e57540d8050a7287d8d51af7123f282e7f5b3815386f9770450eda3fc',
 }
 data={}
 for name,pin in PINS.items():

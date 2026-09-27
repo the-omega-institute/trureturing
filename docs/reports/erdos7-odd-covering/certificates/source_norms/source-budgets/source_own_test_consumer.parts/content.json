@@ -89,7 +89,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "ff4ee2e18ff55ff1dc782bc38da997586eee0690b2f9f3f5684506a8241fb88a",
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "46e7fb1c55f8f469b49267f34d19043e5433356db4e2f12891c2fd76d47e7d04",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
@@ -98,9 +98,9 @@
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
       "profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md": "2bd45308ba5e7e9ee95a04d93eb193710fde7de7495897cd21a2e555fa4d779f",
       "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
-      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
-      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
-      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
+      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "e28742bc046a272275677d4a3d7e2c32e147a8132af1a7f8747aaac3428dbcf9",
+      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "23894367d171d518b9e185dc9b1d5754c411c20871cb99c0f98e383cb848fbfe",
+      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "c2c224340d89ffb64a0493a9ae4bf1ef38eb5750e5ccb4eff303a4245e0030f9",
       "frontier/source-budgets/source_mean_sharpness.py": "4da14b44c9821073a0f1ea2bdc8b5ab0fbafc3bc589f979f3b14daa9fff946af",
       "profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md": "a9e0d552636453ce771577ea541c05c006eae6b7374a2094c9eb411421e95c78"
     }

@@ -115,9 +115,9 @@ The pure exclusions already have probability zero. The joint complement therefor
 
 ### Exact checks and scope
 
-[predecessor_support_two.py](../frontier/cover-geometry/predecessor_support_two.py) (scalar checks) uses exact fractions and explicit exceptions. It checks each Gram bound on all 465 pairs of nonempty subsets of five coordinates, separately for r=5,7,11; every maximum equals the stated K(r). It also checks all three exact prime-order fees and the final reserve.
+[predecessor_support_two.py](../frontier/cover-geometry/predecessor-support-two/predecessor_support_two.py) (scalar checks) uses exact fractions and explicit exceptions. It checks each Gram bound on all 465 pairs of nonempty subsets of five coordinates, separately for r=5,7,11; every maximum equals the stated K(r). It also checks all three exact prime-order fees and the final reserve.
 
-[predecessor_support_two.py](../frontier/cover-geometry/predecessor_support_two.py) (actual-family checks) independently constructs actual original CRT residues and the complete normalized joint law, using exact cell compression by original cylinder predicates. Its five fixtures cover:
+[predecessor_support_two.py](../frontier/cover-geometry/predecessor-support-two/predecessor_support_two.py) (actual-family checks) independently constructs actual original CRT residues and the complete normalized joint law, using exact cell compression by original cylinder predicates. Its five fixtures cover:
 
 - 7 before 5 with exact predecessors {3} and {7}, original exponent repetitions and a genuine completely killed fibre;
 - 5 before 7, including a support pair with 3 on only one side and a shared nonternary coordinate;
@@ -232,7 +232,7 @@ If 3,5,7 or11 is absent, its actual cost is zero, while the displayed positive c
 
 ### exact verification
 
-The [exact checker](../frontier/cover-geometry/predecessor_support_four.py)
+The [exact checker](../frontier/cover-geometry/predecessor-support-four/predecessor_support_four.py)
 uses only standard-library exact fractions and explicit exceptions active
 under `python3 -B -I -S -O`.
 
@@ -331,6 +331,6 @@ and
 From the repository root:
 
 ```sh
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor_support_two.py --check
-python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor_support_four.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor-support-two/predecessor_support_two.py --check
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/predecessor-support-four/predecessor_support_four.py --check
 ```

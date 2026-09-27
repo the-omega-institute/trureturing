@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "06dfe1b20c2d4e08a61585bc654efc00c4d3461030917699a29996d387655482",
+  "logical_sha256": "69b21dbe7b00a1abe0f0b5a5dfb58b06b4e6ca622c4b148d60ee306421d0fd62",
   "parts_directory": "uniform_k_neighborhood_cost.parts",
   "root": {
     "path": "content.json",
-    "sha256": "82d7968d76a35f9d3c90b2ad2b60c3b3350c850724c45ec3b806744621b75733",
+    "sha256": "0ef837e2291941f326922f8b448bc5aad0ed7f55e0db4ebba84d495c31b420c7",
     "kind": "object"
   }
 }

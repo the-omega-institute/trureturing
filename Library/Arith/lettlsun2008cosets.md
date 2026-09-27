@@ -339,10 +339,10 @@ The family therefore disproves strip exclusion from the listed structural hypoth
 
 ### A strict consumer and exact controls
 
-The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_divisor_shell_reserves.py) constructs CRT residues and actual residue bitmasks from the formulas. The [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_divisor_shell_reserves.json) are reproduced by
+The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py) constructs CRT residues and actual residue bitmasks from the formulas. The [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.json) are reproduced by
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_divisor_shell_reserves.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py
 ```
 
 Checks remain active under Python-O. Twelve parameter triples were checked, with periods
@@ -390,7 +390,7 @@ All tend to zero. Thus no uniform positive relative saving follows from these pa
 
 The exact effective gain in(D) separates forced occupancy from occupancy large enough to change the supplier minimum. An all-odd contradiction still requires a row set whose same-cover effective gains exceed the old cut slack, or further restrictions that provide an equally sufficient bound. Whole-class containment cannot recover the missing partial private intersections with zero-demand rows.
 
-The fixed1225-head results in[Report449](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/449-equality-sources-have-a-private-law-below-nine.md) and these original-label global cuts preserve different parts of the problem. The head law has not been lifted through every original outside-cofactor constraint; the global cut has not been shown to be violated for every distinct odd inventory. No unrestricted noncoverage conclusion, polyhedral independence from every earlier subset cut, or literature-originality claim follows from this increment.
+The fixed1225-head results in[Report449](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md) and these original-label global cuts preserve different parts of the problem. The head law has not been lifted through every original outside-cofactor constraint; the global cut has not been shown to be violated for every distinct odd inventory. No unrestricted noncoverage conclusion, polyhedral independence from every earlier subset cut, or literature-originality claim follows from this increment.
 
 ## Global top shadows and original top-shell pair capacities
 
@@ -573,14 +573,14 @@ Its private witnesses, in that order, are3,18,4,20,36,12,48,0,24. This is the p=
 
 ### Exact reproduction and evidence boundary
 
-The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.json), retains literal original labels and one uniform residue source per control. It checks the18-class inventory, every listed private witness, complete coverage counts, all class/lower/top slice identities, original-pair CRT capacities, private-region saving bounds, and top-shell intersection identities. The data include all2415 uncovered residues of the noncover, its six uncovered top7-neighbors, every displayed singleton ratio, and the period60 even-control comparisons. The odd top-shadow assertions are guarded by the oddness premise; the even control only records their actual truth values. All whole-cover controls still check the actual suppliers and shell-pair inequality.
+The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.json), retains literal original labels and one uniform residue source per control. It checks the18-class inventory, every listed private witness, complete coverage counts, all class/lower/top slice identities, original-pair CRT capacities, private-region saving bounds, and top-shell intersection identities. The data include all2415 uncovered residues of the noncover, its six uncovered top7-neighbors, every displayed singleton ratio, and the period60 even-control comparisons. The odd top-shadow assertions are guarded by the oddness premise; the even control only records their actual truth values. All whole-cover controls still check the actual suppliers and shell-pair inequality.
 
 Positive whole-cover controls are the complete residue partitions modulo3,25 and225. Their numerical moduli are REPEATED; they are not candidates for Erdős #7. They check the conditional collision and phase-excess conclusions, p-1 distinct actual suppliers, same-support pair counts and(TS8). For the full selected private union the top-shell pair inequalities are exact:1=1 for p=3 and6=6 for p=5 in the relevant controls. The ordinary proofs use numerical distinctness only to record distinct lower indices at fixed support, so these repeated-label controls legitimately exercise the stronger common-source identities without pretending to witness a distinct odd cover.
 
 Reproduce the controls with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py
 ```
  These are exact finite controls and ordinary proofs; none is Lean verification or a proof that every unrestricted distinct-odd inventory violates a necessary inequality.
 
@@ -698,10 +698,10 @@ Use the actual classes0 mod15015,6 mod15,7 mod35,33 mod55,39 mod65. Their common
 
 This is a NONCOVER with exactly13080 uncovered residues. For example, modifying0 only in a nonzero top3 phase keeps its top5 phase zero; it leaves the full-period target and belongs to none of the four suppliers, all of which require a nonzero top5 phase. Therefore this control supplies no odd whole cover. It shows that numerical distinctness and complete supply along one selected prime do not themselves force positive-mass Hall cost. The required further input must use full coverage or compatible information from other directions.
 
-The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.json), checks these statements. Reproduce them with:
+The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.json), checks these statements. Reproduce them with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py
 ```
 
 The program also checks the actual distinct even L60 whole cover and a complete residue partition modulo25 (repeated moduli), keeping their scopes explicit. These are ordinary proofs and exact finite controls, not Lean verification.
@@ -808,7 +808,7 @@ This cap uses disjoint original ownership, not separately minimized pair capacit
 
 In the Q0,Q1 family, the unique private target chooses just the first original supplier in each phase. Its restricted owner-pair service is1/L, exactly phi demand, instead of |Q0||Q1|/L. In the small period444675 instance, the FULL owner pair budget is74/5775, strictly below the raw16/1155=80/5775. The selected private budget is1/444675 instead of2/444675.
 
-For the reused actual even period60 whole cover, the selected p=5 target1 mod5 has one private point. Ascending-original-modulus ownership reduces the full pair capacity from2/5 to1/10, while its private demand remains1/60. This is an exact capacity improvement in an actual whole cover, not a contradiction and not evidence of an odd cover. The complete repeated-modulus25 partition retains capacity6=binom(4,2), as expected. The [owner-budget program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.py) and [exact owner data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.json) check these owner inequalities and literal counts.
+For the reused actual even period60 whole cover, the selected p=5 target1 mod5 has one private point. Ascending-original-modulus ownership reduces the full pair capacity from2/5 to1/10, while its private demand remains1/60. This is an exact capacity improvement in an actual whole cover, not a contradiction and not evidence of an odd cover. The complete repeated-modulus25 partition retains capacity6=binom(4,2), as expected. The [owner-budget program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py) and [exact owner data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.json) check these owner inequalities and literal counts.
 
 ### Two-prime directions require one joint supplier rectangle
 
@@ -845,13 +845,13 @@ are disjoint as the ordered direction pair varies (keep s,t in the fixed label o
 
 ### Exact mixed-direction controls
 
-The [mixed-direction program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.py), with [exact mixed data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.json), checks(OB3) by literal residue enumeration, checks disjoint direction regions for each original unordered label pair, and counts actual joint supplier rectangles using one original owner partition. Under python3 -I -S -B -O it verifies21 formula instances for the six-label odd noncover,38 for the actual even period60 whole cover, and225 for the complete repeated-modulus15 partition. The respective nonzero intersection counts are14,31,120. Noncover private points missing any demanded phase are explicitly counted outside the feasible-region integral; they are never assigned zero demand. These controls do not supply an odd distinct whole cover.
+The [mixed-direction program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py), with [exact mixed data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.json), checks(OB3) by literal residue enumeration, checks disjoint direction regions for each original unordered label pair, and counts actual joint supplier rectangles using one original owner partition. Under python3 -I -S -B -O it verifies21 formula instances for the six-label odd noncover,38 for the actual even period60 whole cover, and225 for the complete repeated-modulus15 partition. The respective nonzero intersection counts are14,31,120. Noncover private points missing any demanded phase are explicitly counted outside the feasible-region integral; they are never assigned zero demand. These controls do not supply an odd distinct whole cover.
 
 Reproduce the two control sets with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.py
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py
 ```
 
 ## Actual owner-positive top shadows
@@ -921,12 +921,12 @@ without any new covering argument. A strict improvement of this numerical ceilin
 
 These are ordinary conditional deductions, not Lean verification. They do not establish the unrestricted joint demand/capacity gap.
 
-The [exact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.py) and [data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.json) use the seven-label odd distinct noncover above and the complete repeated-modulus15 cover. On the former, the raw same-support{3} shadow pair sum16/385 drops to the owned sum3/77. With ascending-modulus ownership, the labels0 mod15,0 mod33,7 mod21 have Z33=D33 minus D15, removing exactly1/385 from that sum. OS1 is NOT applied to this noncover. Its owner-shell capacity remains74/5775, from the same actual partition. On the repeated15 cover, OS2 gives105 and OS3 gives1 for p=3 and6 for p=5, equal to their bounds. This whole-cover control deliberately repeats numerical moduli and is not an Erdős #7 candidate.
+The [exact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py) and [data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.json) use the seven-label odd distinct noncover above and the complete repeated-modulus15 cover. On the former, the raw same-support{3} shadow pair sum16/385 drops to the owned sum3/77. With ascending-modulus ownership, the labels0 mod15,0 mod33,7 mod21 have Z33=D33 minus D15, removing exactly1/385 from that sum. OS1 is NOT applied to this noncover. Its owner-shell capacity remains74/5775, from the same actual partition. On the repeated15 cover, OS2 gives105 and OS3 gives1 for p=3 and6 for p=5, equal to their bounds. This whole-cover control deliberately repeats numerical moduli and is not an Erdős #7 candidate.
 
 Reproduce with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py
 ```
 
 ## Private shell saturation leaves an overlap-separator obligation
@@ -1026,14 +1026,14 @@ At primes (3,5,7,11,13), L=15015. The expansion has 12292 actual APs on nine dis
 
 Literal AP progression enumeration gives exactly one uncovered residue, 14692 private residues, and 322 overlap residues. Every expanded AP has a private point. The control verifies all 15015 pointwise multiplicities against PS4 and 572988 actual private-prime-line membership assertions. Its output keeps the nineteen pattern rows and compact counts, not a 12292-row class table.
 
-The [compact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.py) and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.json) are reproduced by:
+The [compact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py) and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.json) are reproduced by:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py
 ```
 
 The program uses only the standard library; its checks remain active under -O. These are ordinary finite calculations and a general CRT proof, not Lean verification.
 
-The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
+The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
 
 Thus the remaining precise alternatives are still unresolved: either find an actual odd-DISTINCT PS1 noncover, or prove that numerical distinctness prevents an overlap separator between nonempty private and uncovered regions. The latter would make PS1 sufficient for whole coverage in that class, hence equivalent to whole coverage there; it would not by itself exclude odd distinct whole covers. A separate proof that no nonempty irredundant odd-distinct family can satisfy PS1 would imply the desired noncoverage theorem. These are different obligations and must not be conflated.

@@ -331,10 +331,10 @@ its parent-3 branch when both literal moduli 5 and 15 are present with
 different mod-5 residues.
 
 The standard-library program
-[head_tail_extension_certificate.py](../frontier/cover-geometry/head_tail_extension_certificate.py)
-and its [exact data](../frontier/cover-geometry/head_tail_extension_certificate.json)
+[head_tail_extension_certificate.py](../frontier/cover-geometry/head-tail-extension-certificate/head_tail_extension_certificate.py)
+and its [exact data](../frontier/cover-geometry/head-tail-extension-certificate/head_tail_extension_certificate.json)
 consume the explicitly supplied
-[Chapter 23 certificate](../frontier/cover-geometry/conditional_kernel_block_certificate.json).
+[Chapter 23 certificate](../frontier/cover-geometry/conditional-kernel-block-certificate/conditional_kernel_block_certificate.json).
 The program records that input's SHA256, checks both endpoints of the
 uniform-radius quadratic, and verifies the extension inequality at each
 of the 160 inherited cutoffs. It retains every resulting fee margin.
@@ -358,5 +358,5 @@ explicit arguments; optimized `-O` execution is rejected. From the
 repository root run:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/head_tail_extension_certificate.py --inherited docs/reports/erdos7-odd-covering/frontier/cover-geometry/conditional_kernel_block_certificate.json --output /tmp/head-tail-extension-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/head-tail-extension-certificate/head_tail_extension_certificate.py --inherited docs/reports/erdos7-odd-covering/frontier/cover-geometry/conditional-kernel-block-certificate/conditional_kernel_block_certificate.json --output /tmp/head-tail-extension-certificate.json
 ```

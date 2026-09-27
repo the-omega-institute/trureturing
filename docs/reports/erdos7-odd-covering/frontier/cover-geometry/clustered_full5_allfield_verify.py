@@ -24,7 +24,7 @@ def rss():
 def prepare(base,candidate,D):
  names=('clustered_global_phase_fixture.json','clustered_higher_pure_capacity_obstruction.json','remaining33_global_root_exclusion_certificate.json')
  pins={n:sha256((base/n).read_bytes()).hexdigest() for n in names};js=[json.loads((base/n).read_text()) for n in names]
- ck(pins[names[0]]=='4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6');ck(pins[names[2]]=='dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4')
+ ck(pins[names[0]]=='4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6');ck(pins[names[2]]=='36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4')
  orig=js[0]['actual_originals'];high=js[1]['first_tested_success'];added=high['added_higher_pure_originals']
  ck(len(orig+added)==len({o['modulus'] for o in orig+added})==109)
  ck({(o['modulus'],o['residue']) for o in added}=={(27,4),(81,13),(243,40),(729,121),(125,2),(625,27),(3125,152),(15625,777)})

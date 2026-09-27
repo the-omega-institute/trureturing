@@ -392,13 +392,13 @@ coordinate are already part of the once-owned spine family.
 
 ## 5. Exact arithmetic and inherited verification boundary
 
-The accompanying [spine_book_certificate.py](../frontier/cover-geometry/spine_book_certificate.py)
-and its [exact output](../frontier/cover-geometry/spine_book_certificate.json)
+The accompanying [spine_book_certificate.py](../frontier/cover-geometry/spine-book-certificate/spine_book_certificate.py)
+and its [exact output](../frontier/cover-geometry/spine-book-certificate/spine_book_certificate.json)
 check all 29 displayed
 page costs and residuals, the exact finite sum and analytic-tail
 constant, (BK13), and every one of the 13 core rows at all 32 basic
 vertices. It imports only the pinned project helper
-[six_prime_prefix_certificate.py](../frontier/cover-geometry/six_prime_prefix_certificate.py),
+[six_prime_prefix_certificate.py](../frontier/cover-geometry/finite-prefix-sources/six_prime_prefix_certificate.py),
 not the source author's verifier.
 It reads the already certified 72 geometry batches with 51,840 integer
 queries, verifies their existing hashes, and does not regenerate

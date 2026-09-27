@@ -52996,8 +52996,8 @@
       ],
       "local_interval_source": {
         "producer": "root_one_all_stars_certificate.py",
-        "producer_sha256": "826126df7f1a7c9f3d792ee8c206c5543609a6df97d4cd31d8b07a0425d8248a",
-        "coefficient_source_sha256": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f",
+        "producer_sha256": "a86134709bd37246d3b8e192cdc295a5bd4a03eb3cc71fe4e0b6f1fa47d497b1",
+        "coefficient_source_sha256": "339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44",
         "local_interval_suffix_sha256": "8b83164faee76539f01cbebb56104bce799b6d613b203fddf729eb917eb48400",
         "local_scale": 2097152,
         "coefficient_scale": 16777216,
@@ -105472,8 +105472,8 @@
       ],
       "local_interval_source": {
         "producer": "matching_endpoint_certificate.py",
-        "producer_sha256": "69153d040ad621ac0ffb671bbf218d1d527a323a3284e79db852fcba16016324",
-        "coefficient_source_sha256": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f",
+        "producer_sha256": "79782bff4bcdf38b0c50d1d5defce93d3c1b642554fcc5defca1009ab0b365dd",
+        "coefficient_source_sha256": "339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44",
         "local_interval_suffix_sha256": "eb7726e56a833b02b8cd76b7abb3ca4b0d8446cae93e9f59d6b81cad19f98462",
         "local_scale": 8388608,
         "coefficient_scale": 134217728,
@@ -106207,7 +106207,7 @@
       "evaluations": 1
     }
   ],
-  "producer_sha256": "48c5266bcd91f681ee5b5f5b44130e6af2f4671a4a79b2877757279bbccb4eb7",
+  "producer_sha256": "c254b0b6976f09971ec6ce0e4235981c90ef3aa2e3b33cbb5d9c0e9a016e93f4",
   "kernel_sha256": "37746bb202c88bce2646507b34ee3ada1d64bed0da7641b9a177e201d3d54476",
   "orbit_generator_sha256": "3d2e86d09654f936a18d0e488fcb99abeb20114737df454bb396350fc960d1ca",
   "new_lean_verification": false,

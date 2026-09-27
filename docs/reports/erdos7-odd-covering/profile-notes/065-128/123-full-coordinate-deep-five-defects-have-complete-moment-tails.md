@@ -284,7 +284,7 @@ using the old un-clipped endpoint constants.
 
 Run
 
-    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/deep_five_full_coordinate_defect.py --check
+    python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/deep-five-full-coordinate-defect/deep_five_full_coordinate_defect.py --check
 
 The helper exports cylinder_coefficient, cylinder_bound, moment_tail
 and complete_moment. Its certificate uses five actual finite original

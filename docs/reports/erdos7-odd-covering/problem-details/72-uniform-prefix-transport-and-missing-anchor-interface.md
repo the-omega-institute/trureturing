@@ -124,7 +124,7 @@ an actual first prime \(r_1\ge7\). The third transports both source anchors to
 \(r_0\ge5,r_1\ge7\), so it is the missing-3 interface.
 
 The finite checker
-[`verify_prefix_transport.py`](../frontier/cover-geometry/verify_prefix_transport.py)
+[`verify_prefix_transport.py`](../frontier/cover-geometry/verify-prefix-transport/verify_prefix_transport.py)
 checks fixed-map prefix injectivity and the averaged identity for representative
 profiles \((3,5)\to(5,7)\), \((3,5)\to(3,7)\), and a later-coordinate map.
 The check is exact finite evidence for (T1)--(T2), not a replacement for the

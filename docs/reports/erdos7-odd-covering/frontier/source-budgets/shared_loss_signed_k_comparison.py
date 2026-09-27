@@ -12,9 +12,9 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/shared_loss_signed_k_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': 'f5b6d2df57ee047a3d47660812e8fc3ff0a81239db15881634b4ad0b01633b0f',
-    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_1_50.json': '72de469bb9a4aec09c8135626bb6a9897bff4f98f42878a0d803e90cae03e2d7',
-    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_obstruction_1_27.json': '6cf21cbc8d195cfcdb5fa1495f6c9409b14c4f6a9c17e6864a27c41ca6ec1928',
+    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': '5835b366a5c3c29e5b5da8a03e93ffe025860f0a626c4956d936f5fc4d4d9c71',
+    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_1_50.json': '64df3956bfaab5f9ecfd43e88cdf4ac1936b9f49bef18c7b0e0dac70d4932737',
+    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_obstruction_1_27.json': '93f2d07f6cf8e9225af075c03c04c45da8f4bf0648ff7c684d53827c40fc4cb0',
     'frontier/comparison-bounds/joint_concentration_loss_budget.py': '9b67c8a9b430ac2457f51a80274817011eb2cd4c94cb40c26e351b26753ba028',
     'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json': 'ebd0dc133c9d3c04efd087ac28e020a326d21bd4e43563e0fcce880d6f6c7751',
 }

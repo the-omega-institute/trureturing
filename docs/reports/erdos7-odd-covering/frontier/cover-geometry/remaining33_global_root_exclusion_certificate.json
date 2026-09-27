@@ -6566,10 +6566,10 @@
     }
   },
   "checks": 23394,
-  "producer_sha256": "5dfab6ca010dcced3a29b28189239c0c4eab2a5e9ee3d5bd7baeed3908bf166c",
+  "producer_sha256": "54976d07ba8354b6978904135461d9bbee609bafcd899811e6fc66dc4be5afff",
   "dependencies": {
-    "actual_pair_activation_certificate.json": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f",
-    "conditional30_fixedstar_augmented_certificate.json": "eb45a79b8943ac56b72153c72472bf40b098366574deb249840ea28f504a9345"
+    "actual_pair_activation_certificate.json": "339c5951c03f77c540b967d75a729775d8c4d60df95737a3d46547493af65b44",
+    "conditional30_fixedstar_augmented_certificate.json": "0373db3191d5055c8e40e948096bec16c50ba6772201e923e937e6e622f4e12b"
   },
   "new_lean_verification": false
 }
