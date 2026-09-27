@@ -92,11 +92,14 @@ answered? Existing work gives this picture several mathematical entry points.
   selection and spatial reading while changing whether a temporal composition is legal.
   It does not identify the model's time labels with physical time.
 
-The recovery criterion links both counterexamples. The two quantum states share local readings but differ as joint states; the two archives share
-a spatial reading but differ on a temporal operation's legality. Recovering
-either target requires readings that separate its witness pair. This condition
-alone supplies no executable or efficient reconstruction. Relating these models to proof dependencies or physical spacetime still requires maps
-and checks of the relations, operations and error bounds they preserve.
+Both counterexamples hide different target values behind equal readings.
+Separating one pair need not make recovery possible.
+Recovery requires separating **every pair with different target values**:
+the target must be constant on each observation fiber. On a nonempty state
+space, this condition ensures a recovery function exists but supplies no
+algorithm or cost bound.
+Connections to proof dependencies or physical spacetime require maps and checks
+of the relations, operations and error bounds they preserve.
 
 For further reading,
 [proof topology, involutive logic and observational escape](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)
