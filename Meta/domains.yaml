@@ -134,6 +134,9 @@ domains:
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  PolynomialSigns:
+    stratum: S3
+    definition: Real polynomial sign conditions, real-root cell sampling, and finite algebraic projection.
   PrimeForms:
     stratum: S3
     definition: Representations of prime numbers by integral quadratic forms.
