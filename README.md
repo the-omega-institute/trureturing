@@ -71,9 +71,9 @@ An epigraph for that exploration:
 ## From questions to knowledge
 
 Choose questions whose answers could supply missing premises, expose overlooked
-distinctions or connect existing results. Search existing proofs and literature;
-state what would support or overturn a route, then design tests that distinguish
-alternatives. Keep reusable results with their assumptions.
+distinctions or connect results. Search existing proofs and literature.
+Specify supporting and refuting outcomes before designing discriminating tests.
+Keep results with their assumptions; check those against your objects before reuse.
 
 > The last line of the ledger is always the first line of the next round.
 
