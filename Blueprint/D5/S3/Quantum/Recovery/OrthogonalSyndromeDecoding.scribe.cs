@@ -39,13 +39,5 @@ internal sealed class OrthogonalSyndromeDecodingDocument : IScribeDocumentDefini
             StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("transported-syndrome-recovery"),
-                DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.transported_syndrome_recovery"),
-                H("transported syndrome recovery"),
-            StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations."))),
                 DescribeRole.Theorem))));
 }

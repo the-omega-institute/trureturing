@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/OrthogonalSyndromeChannel
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: Orthogonal syndrome encoding and its explicit full-space decoder are canonical CPTP channels and expose a multiplicative logical algebra. -/
 
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
@@ -291,26 +292,6 @@ theorem positive_syndrome_encoder (S : s → Matrix n d ℂ)
   refine ⟨encoder, fun rho => ?_⟩
   simpa only [Matrix.conjTranspose_conjTranspose, ← hB] using he rho
 
-/-- Both canonical channels are constructed, and their actual composition is the identity on every logical matrix. -/
-theorem reversible_syndrome_channels (S : s → Matrix n d ℂ)
-    (hS : OrthogonalSyndromes S) (v : d) (sigma : Matrix s s ℂ)
-    (hpos : sigma.PosSemidef) (htrace : Matrix.trace sigma = 1) :
-    ∃ encoder : QuantumChannel d n, ∃ decoder : QuantumChannel n d,
-      ∀ rho : Matrix d d ℂ,
-        decoder.toCompletelyPositiveMap
-          (encoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix rho)) =
-        CStarMatrix.ofMatrix rho := by
-  obtain ⟨encoder, he⟩ := positive_syndrome_encoder S hS sigma hpos htrace
-  obtain ⟨decoder, _, hd⟩ := full_syndrome_decoder S hS v
-  refine ⟨encoder, decoder, fun rho => ?_⟩
-  have hencode : encoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix rho) =
-      CStarMatrix.ofMatrix (syndromeEncoding S sigma rho) := by
-    apply CStarMatrix.ofMatrix.symm.injective
-    exact he rho
-  rw [hencode]
-  apply CStarMatrix.ofMatrix.symm.injective
-  exact hd sigma htrace rho
-
 #print axioms logical_representation_mul
 #print axioms logical_representation_star
 #print axioms logical_representation_on_copy
@@ -325,6 +306,5 @@ theorem reversible_syndrome_channels (S : s → Matrix n d ℂ)
 #print axioms encoding_kraus_action
 #print axioms gram_syndrome_encoder
 #print axioms positive_syndrome_encoder
-#print axioms reversible_syndrome_channels
 
 end D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel

@@ -13,8 +13,7 @@ internal sealed class KrausLeftInverseNecessityDocument : IScribeDocumentDefinit
             "identity_kraus_commute",
             "identity_kraus_scalar",
             "left_inverse_error_products",
-            "left_inverse_normalized_trace_condition",
-            "nonzero_defect_excludes_left_inverse"
+            "left_inverse_normalized_trace_condition"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausLeftInverseNecessity." + name),

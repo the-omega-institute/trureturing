@@ -3,9 +3,11 @@
    mirror-B: D5/B/S3/Quantum/Recovery/SpectralRecoveryCorrectness
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
+   utility: none
    digest: Any actual finite Kraus left inverse proves correctness of the computed spectral transpose recovery, yielding the full three-way finite-representation criterion. -/
 
 import D5.S3.Quantum.Recovery.FiniteKrausReversibility
+import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute
 
@@ -150,7 +152,8 @@ theorem canonical_spectral_left_inverse (E : s → Matrix n d ℂ)
       (∀ X : Matrix d d ℂ, CStarMatrix.ofMatrix.symm
         (recovery.toCompletelyPositiveMap
           (CStarMatrix.ofMatrix (∑ a, E a * X * (E a)ᴴ))) = X) := by
-  obtain ⟨r, A, hA, hleft⟩ := (finite_kraus_left_inverse_iff E hTP v).mpr hE
+  obtain ⟨r, A, hA, hleft⟩ := scalar_products_construct_left_inverse E hTP v
+    (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
   obtain ⟨recovery, hr⟩ := spectral_transpose_candidate E v
   have haction : ∀ Y : Matrix n n ℂ, CStarMatrix.ofMatrix.symm
       (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix Y)) = spectralRecoveryAction E v Y := by
@@ -168,7 +171,8 @@ theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
     (∀ X : Matrix d d ℂ, spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X) := by
   constructor
   · intro hE
-    obtain ⟨r, A, hA, hleft⟩ := (finite_kraus_left_inverse_iff E hTP v).mpr hE
+    obtain ⟨r, A, hA, hleft⟩ := scalar_products_construct_left_inverse E hTP v
+      (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
     exact computed_recovery_of_kraus_left_inverse E hTP A hA hleft v
   · intro hspec
     let Q := ∑ a, E a * (E a)ᴴ

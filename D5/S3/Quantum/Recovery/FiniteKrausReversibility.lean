@@ -3,9 +3,9 @@
    mirror-B: D5/B/S3/Quantum/Recovery/FiniteKrausReversibility
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
-   digest: Scalar error products construct a finite normalized Kraus left inverse, and characterize exact reversibility in the finite Kraus representation. -/
+   utility: none
+   digest: Scalar error products construct a finite normalized Kraus left inverse. -/
 
-import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 import Mathlib.Analysis.Matrix.PosDef
 
@@ -19,10 +19,9 @@ there is no division by a zero probability. The only local mixing calculation
 is rectangular: the existing repository Kraus-mixing result has square Kraus
 matrices and cannot directly type this input/output pair.
 
-The final iff quantifies over all finite Kraus representations. It does not
-silently assume the representation theorem for the separately bundled
-all-amplification CP interface. The forward construction nevertheless returns
-an actual channel in that canonical interface.
+The construction quantifies over finite Kraus representations. It does not
+assume a representation theorem for the separately bundled all-amplification
+CP interface.
 
 The criterion and construction are classical Knill--Laflamme and Nayak--Sen
 results. No new correction criterion is claimed.
@@ -36,7 +35,6 @@ namespace D5.S3.Quantum.Recovery.FiniteKrausReversibility
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 open D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 open D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 open D5.S3.Quantum.Recovery.KrausCompletion
@@ -249,37 +247,6 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
       _ = ∑ b, A₀ b * (∑ a, E a * X * (E a)ᴴ) * (A₀ b)ᴴ := Equiv.sum_comp e _
       _ = X := hrec X
 
-/-- The normalized-trace error products exactly characterize finite-Kraus left inversion. -/
-theorem finite_kraus_left_inverse_iff (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) :
-    (∃ r : ℕ, ∃ A : Fin r → Matrix d n ℂ,
-      (∑ b, (A b)ᴴ * A b) = 1 ∧
-      ∀ X : Matrix d d ℂ,
-        (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X) ↔
-    (∀ a b, (E a)ᴴ * E b =
-      (Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) := by
-  constructor
-  · rintro ⟨r, A, hA, hleft⟩ a b
-    exact left_inverse_normalized_trace_condition E A hA hleft v a b
-  · intro hE
-    exact scalar_products_construct_left_inverse E hTP v
-      (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
-
-/-- The constructed inverse inhabits the repository's canonical all-amplification quantum channel interface. -/
-theorem canonical_recovery_of_scalar_products (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) (c : Matrix s s ℂ)
-    (hE : ∀ a b, (E a)ᴴ * E b = c a b • (1 : Matrix d d ℂ)) :
-    ∃ recovery : QuantumChannel n d, ∀ X : Matrix d d ℂ,
-      CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap
-          (CStarMatrix.ofMatrix (∑ a, E a * X * (E a)ᴴ))) = X := by
-  obtain ⟨r, A, hA, hrec⟩ := scalar_products_construct_left_inverse E hTP v c hE
-  obtain ⟨recovery, haction⟩ := finite_kraus_quantum_channel A hA
-  refine ⟨recovery, fun X => ?_⟩
-  rw [haction, hrec]
-
 #print axioms scalar_products_construct_left_inverse
-#print axioms finite_kraus_left_inverse_iff
-#print axioms canonical_recovery_of_scalar_products
 
 end D5.S3.Quantum.Recovery.FiniteKrausReversibility

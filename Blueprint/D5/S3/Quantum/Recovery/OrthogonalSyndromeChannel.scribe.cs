@@ -23,8 +23,7 @@ internal sealed class OrthogonalSyndromeChannelDocument : IScribeDocumentDefinit
                 "encoding_kraus_gram",
                 "encoding_kraus_action",
                 "gram_syndrome_encoder",
-                "positive_syndrome_encoder",
-                "reversible_syndrome_channels"
+                "positive_syndrome_encoder"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeChannel." + name),

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/SpectralTransposeRecovery
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
+   utility: none
    digest: The actual finite spectral pseudoinverse constructs a normalized transpose recovery candidate for every Kraus family, including zero branches. -/
 
 import D5.S3.Quantum.Recovery.KrausCompletion
@@ -134,8 +135,13 @@ theorem spectral_support_on_kraus (E : s → Matrix n d ℂ) (a : s) :
         simp only [Q, Matrix.conjTranspose_mul, Matrix.mul_sum,
           Matrix.sum_mul, Matrix.mul_assoc]
       _ = 0 := by rw [hzero, Matrix.zero_mul]
-  have hz := (sum_gram_eq_zero_iff (fun b => ((1 - P) * E b)ᴴ)).mp
+  have hnonneg : (0 : s → Matrix n n ℂ) ≤
+      (fun b => ((((1 - P) * E b)ᴴ)ᴴ) * ((1 - P) * E b)ᴴ) :=
+    fun b => (Matrix.posSemidef_conjTranspose_mul_self _).nonneg
+  have hz := (Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp
     (by simpa only [Matrix.conjTranspose_conjTranspose] using hsum)
+  have hz : ∀ b, ((1 - P) * E b)ᴴ = 0 :=
+    fun b => Matrix.conjTranspose_mul_self_eq_zero.mp (congrFun hz b)
   have ha := Matrix.conjTranspose_eq_zero.mp (hz a)
   exact (sub_eq_zero.mp (by
     simpa only [Matrix.sub_mul, Matrix.one_mul] using ha)).symm

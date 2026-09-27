@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/KrausLeftInverseNecessity
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: Actual finite Kraus left inversion forces scalar error products, by a positive commutator defect. -/
 
 import D5.S3.Quantum.Reduction.IsometricCompression
@@ -51,8 +52,12 @@ theorem identity_kraus_commute (F : s → Matrix d d ℂ)
         abel
       _ = 0 := by simp_rw [hF]; simp
   have hz : ∀ b, (F b * X - X * F b)ᴴ = 0 := by
-    apply (sum_gram_eq_zero_iff (fun b => (F b * X - X * F b)ᴴ)).mp
-    simpa only [Matrix.conjTranspose_conjTranspose] using hsum
+    have hnonneg : (0 : s → Matrix d d ℂ) ≤
+        (fun b => ((F b * X - X * F b)ᴴ)ᴴ * (F b * X - X * F b)ᴴ) :=
+      fun b => (Matrix.posSemidef_conjTranspose_mul_self _).nonneg
+    have hzero := (Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp
+      (by simpa only [Matrix.conjTranspose_conjTranspose] using hsum)
+    exact fun b => Matrix.conjTranspose_mul_self_eq_zero.mp (congrFun hzero b)
   exact sub_eq_zero.mp (Matrix.conjTranspose_eq_zero.mp (hz a))
 
 /-- Scalar coefficients are explicitly the chosen diagonal entries. -/
@@ -132,22 +137,9 @@ theorem left_inverse_normalized_trace_condition (E : s → Matrix n d ℂ)
   rw [hc]
   exact hz
 
-/-- A single nonzero normalized-trace defect excludes every finite Kraus left inverse. -/
-theorem nonzero_defect_excludes_left_inverse (E : s → Matrix n d ℂ)
-    (j₀ : d) (a c : s)
-    (hbad : (E a)ᴴ * E c ≠
-      (Matrix.trace ((E a)ᴴ * E c) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) :
-    ¬ ∃ A : t → Matrix d n ℂ,
-      (∑ b, (A b)ᴴ * A b) = 1 ∧
-      ∀ X : Matrix d d ℂ,
-        (∑ b, A b * (∑ k, E k * X * (E k)ᴴ) * (A b)ᴴ) = X := by
-  rintro ⟨A, hA, hleft⟩
-  exact hbad (left_inverse_normalized_trace_condition E A hA hleft j₀ a c)
-
 #print axioms identity_kraus_commute
 #print axioms identity_kraus_scalar
 #print axioms left_inverse_error_products
 #print axioms left_inverse_normalized_trace_condition
-#print axioms nonzero_defect_excludes_left_inverse
 
 end D5.S3.Quantum.Recovery.KrausLeftInverseNecessity

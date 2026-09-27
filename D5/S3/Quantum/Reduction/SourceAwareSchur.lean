@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Reduction/SourceAwareSchur
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: Schur reduction preserves bilinear source response and gauge kernels only with the transformed source, and graph lifting retains the actual Gram metric. -/
 
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
@@ -162,7 +163,7 @@ theorem projected_nilpotency_defect {R : Type*} [Ring R]
     _ = _ := by noncomm_ring
 
 /-- A rational four-state witness rules out an unconditional projected-nilpotency claim. -/
-theorem projected_nilpotency_counterexample :
+example :
     let Q : Matrix (Fin 4) (Fin 4) ℚ :=
       !![0, 0, 0, 0; 1, 0, 0, 0; 1, 0, 0, 0; 0, 1, -1, 0]
     let P : Matrix (Fin 4) (Fin 4) ℚ :=
@@ -191,6 +192,5 @@ theorem projected_nilpotency_counterexample :
 #print axioms intertwined_gram_selfadjoint
 #print axioms riccati_residual
 #print axioms projected_nilpotency_defect
-#print axioms projected_nilpotency_counterexample
 
 end D5.S3.Quantum.Reduction.SourceAwareSchur

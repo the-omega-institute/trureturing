@@ -16,9 +16,7 @@ internal sealed class IsometricCompressionDocument : IScribeDocumentDefinition
                 "commutator_defect",
                 "compressed_gram_add_leakage",
                 "instrument_mass_balance",
-                "sum_gram_eq_zero_iff",
                 "compressed_instrument_iff",
-                "zero_leakage_iff_intertwines",
                 "word_intertwines",
                 "branch_intertwines"
         }.Select(name => Describe.Lean(

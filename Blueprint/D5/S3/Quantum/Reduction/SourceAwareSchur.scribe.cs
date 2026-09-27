@@ -18,8 +18,7 @@ internal sealed class SourceAwareSchurDocument : IScribeDocumentDefinition
                 "riccati_intertwines",
                 "intertwined_gram_selfadjoint",
                 "riccati_residual",
-                "projected_nilpotency_defect",
-                "projected_nilpotency_counterexample"
+                "projected_nilpotency_defect"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Reduction/SourceAwareSchur." + name),

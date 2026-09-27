@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Reduction/IsometricCompression
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: Isometric compression has an exact positive leakage defect and preserves every finite zero-leakage operator word. -/
 
 import Mathlib
@@ -129,15 +130,6 @@ theorem instrument_mass_balance (U : Matrix n d ℂ) (W : Matrix m e ℂ)
         Matrix.mul_assoc]
     _ = 1 := by rw [hK, Matrix.mul_one, hU]
 
-/-- There is no cancellation between positive leakage Gram matrices. -/
-theorem sum_gram_eq_zero_iff (R : s → Matrix m d ℂ) :
-    (∑ i, (R i)ᴴ * R i) = 0 ↔ ∀ i, R i = 0 := by
-  have hnonneg : (0 : s → Matrix d d ℂ) ≤
-      (fun i => (R i)ᴴ * R i) :=
-    fun i => (Matrix.posSemidef_conjTranspose_mul_self (R i)).nonneg
-  rw [Fintype.sum_eq_zero_iff_of_nonneg hnonneg]
-  simp only [funext_iff, Pi.zero_apply, Matrix.conjTranspose_mul_self_eq_zero]
-
 /-- A compressed normalized instrument is normalized exactly when every Kraus map has zero leakage. -/
 theorem compressed_instrument_iff (U : Matrix n d ℂ) (W : Matrix m e ℂ)
     (hU : Uᴴ * U = 1) (hW : Wᴴ * W = 1) (K : s → Matrix m n ℂ)
@@ -145,7 +137,15 @@ theorem compressed_instrument_iff (U : Matrix n d ℂ) (W : Matrix m e ℂ)
     (∑ i, (Wᴴ * (K i * U))ᴴ * (Wᴴ * (K i * U))) = 1 ↔
       ∀ i, normal W (K i * U) = 0 := by
   have hbalance := instrument_mass_balance U W hU hW K hK
-  rw [← sum_gram_eq_zero_iff]
+  have hzero :
+      (∑ i, (normal W (K i * U))ᴴ * normal W (K i * U)) = 0 ↔
+      ∀ i, normal W (K i * U) = 0 := by
+    have hnonneg : (0 : s → Matrix d d ℂ) ≤
+        (fun i => (normal W (K i * U))ᴴ * normal W (K i * U)) :=
+      fun i => (Matrix.posSemidef_conjTranspose_mul_self _).nonneg
+    rw [Fintype.sum_eq_zero_iff_of_nonneg hnonneg]
+    simp only [funext_iff, Pi.zero_apply, Matrix.conjTranspose_mul_self_eq_zero]
+  rw [← hzero]
   constructor
   · intro h
     rw [h] at hbalance
@@ -154,13 +154,6 @@ theorem compressed_instrument_iff (U : Matrix n d ℂ) (W : Matrix m e ℂ)
         simpa using hbalance))
   · intro h
     simpa only [h, add_zero] using hbalance
-
-/-- Zero leakage is the concrete intertwining identity, not merely a probability statement. -/
-theorem zero_leakage_iff_intertwines (U : Matrix n d ℂ) (W : Matrix m e ℂ)
-    (K : Matrix m n ℂ) :
-    normal W (K * U) = 0 ↔ K * U = W * (Wᴴ * (K * U)) := by
-  simp only [normal, support, Matrix.sub_mul, Matrix.one_mul,
-    Matrix.mul_assoc, sub_eq_zero]
 
 /-- Intertwining persists through every finite operator word, including the empty history. -/
 theorem word_intertwines {ι : Type*} (U : Matrix n d ℂ)
@@ -195,9 +188,7 @@ theorem branch_intertwines (U : Matrix n d ℂ) (A : Matrix n n ℂ)
 #print axioms commutator_defect
 #print axioms compressed_gram_add_leakage
 #print axioms instrument_mass_balance
-#print axioms sum_gram_eq_zero_iff
 #print axioms compressed_instrument_iff
-#print axioms zero_leakage_iff_intertwines
 #print axioms word_intertwines
 #print axioms branch_intertwines
 

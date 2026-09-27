@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/TwoSyndromePhaseDefect
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: A two-syndrome phase mixture loses unit visibility unless its phases agree. -/
 
 import Mathlib
@@ -65,12 +66,11 @@ theorem unit_visibility_iff_phases_equal (p u v : ℂ)
     rw [hMix, hu]
 
 /-- Equally weighted opposite phases erase the coherence exactly. -/
-theorem opposite_phase_erasure :
+example :
     phaseMix (1 / 2) 1 (-1) = 0 := by
   norm_num [phaseMix]
 
 #print axioms weighted_phase_defect
 #print axioms unit_visibility_iff_phases_equal
-#print axioms opposite_phase_erasure
 
 end D5.S3.Quantum.Recovery.TwoSyndromePhaseDefect
