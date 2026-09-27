@@ -67,11 +67,8 @@ theorem carry_reveals_low_digits (k : ℕ) (x y : ℤ_[p]) :
         Nat.div_eq_of_lt (by omega)]
     · rw [map_zero, map_one]
       intro h
-      have := congrArg ZMod.val h
-      rw [ZMod.val_zero, ZMod.val_one'' (by
-        have : 1 < p ^ (k + 1) := by omega
-        omega)] at this
-      exact zero_ne_one this
+      have hone : p ^ (k + 1) = 1 := ZMod.one_eq_zero_iff.mp h.symm
+      omega
 
   have hp2 : 2 ≤ p := hp.out.two_le
   set P := p ^ k with hP

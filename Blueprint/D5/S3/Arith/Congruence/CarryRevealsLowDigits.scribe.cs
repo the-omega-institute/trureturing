@@ -29,7 +29,8 @@ internal sealed class CarryRevealsLowDigitsDocument : IScribeDocumentDefinition
                 "The protocol reads the sensor after 0, 1, ..., N unit translations.",
                 "digitProtocol", DescribeRole.Definition),
             Node("carry", "Carry revelation and the sharp horizon", TheoremFormula(),
-                "Write q_{k+1}(x) = b p^k + r with b < p and r < p^k. Then q_{k+1}(x + n) is the residue of "
+                "Here q_{k+1}(x) is read as a natural number below p^{k+1}, so q_{k+1}(x) = b p^k + r with b < p "
+                    + "and r < p^k. Then q_{k+1}(x + n) is the residue of "
                     + "b p^k + r + n modulo p^{k+1}, and its digit of order k is the digit of the quotient of "
                     + "b p^k + r + n by p^k, that is (b + floor((r + n)/p^k)) mod p. For n <= p^k - 1 the sum r + n "
                     + "is below 2 p^k, so at most one carry reaches the digit: none when r = 0, and exactly at "
@@ -42,30 +43,38 @@ internal sealed class CarryRevealsLowDigitsDocument : IScribeDocumentDefinition
 
     private static Formula TheoremFormula()
     {
-        Formula r = F.Id("r"), b = F.Id("b");
-        Formula split = Seq(Sub("q", Seq(K, Plus, D(1))), Open, X, Close, Sp, Eq, Sp, b, Sp, Pw, Plus, r, Comma, Sp,
-            b, Sp, Lt, Sp, F.Id("p"), Comma, Sp, r, Sp, Lt, Sp, Pw);
-        Formula carry = Seq(Sub("d", K), Open, X, Plus, N, Close, Sp, Eq, Sp, Open, b, Plus, Lfloor, Frac,
-            Grp(Seq(r, Plus, N)), Grp(Pw), Rfloor, Close, Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("p"),
-            Sp, F.Text, Grp(Sp, F.Id("for"), Sp), N, Sp, Leq, Sp, Pw, Minus, D(1));
-        Formula firstChange = Seq(F.Text, Grp(F.Id("first"), Sp, F.Id("change"), Sp, F.Id("at"), Sp), N, Sp, Eq,
-            Sp, Pw, Minus, r, Sp, F.Text, Grp(Sp, F.Id("if"), Sp), r, Sp, Gt, Sp, D(0), Comma, Sp,
-            F.Text, Grp(F.Id("no"), Sp, F.Id("change"), Sp, F.Id("if"), Sp), r, Sp, Eq, Sp, D(0));
-        Formula kernel = Seq(Sub("W", Seq(K, Comma, Pw, Minus, D(1))), Open, X, Close, Sp, Eq, Sp,
-            Sub("W", Seq(K, Comma, Pw, Minus, D(1))), Open, Y, Close, Sp, Iff, Sp,
-            Sub("q", Seq(K, Plus, D(1))), Open, X, Close, Sp, Eq, Sp, Sub("q", Seq(K, Plus, D(1))), Open, Y, Close);
-        Formula sharp = Seq(K, Sp, Geq, Sp, D(1), Comma, Sp, Nn, Sp, Lt, Sp, Pw, Minus, D(1), Sp, Rightarrow, Sp,
-            Sub("W", Seq(K, Comma, Nn)), Open, D(0), Close, Sp, Eq, Sp, Sub("W", Seq(K, Comma, Nn)), Open, D(1),
-            Close, Sp, Land, Sp, Sub("q", Seq(K, Plus, D(1))), Open, D(0), Close, Sp, Neq, Sp,
-            Sub("q", Seq(K, Plus, D(1))), Open, D(1), Close);
-        Formula setting = Seq(F.Id("p"), Sp, F.Text, Grp(Sp, F.Id("prime"), Sp), Comma, Sp, K, Sp, InMacro, Sp,
+        Formula r = F.Id("r"), b = F.Id("b"), p = F.Id("p");
+        Formula q = Sub("q", Seq(K, Plus, D(1)));
+        Formula qx = Seq(q, Open, X, Close);
+        Formula d = Sub("d", K);
+        Formula dxn = Seq(d, Open, X, Plus, N, Close);
+        Formula dx = Seq(d, Open, X, Close);
+        Formula setting = Seq(p, Sp, F.Text, Grp(Sp, F.Id("prime"), Sp), Comma, Sp, K, Sp, InMacro, Sp,
             Mathbb, Grp(F.Id("N")), Comma, Sp, X, Comma, Sp, Y, Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Underscore,
-            Grp(F.Id("p")), Comma, Sp);
+            Grp(p), Comma, Sp, b, Sp, Eq, Sp, Lfloor, Frac, Grp(qx), Grp(Pw), Rfloor, Comma, Sp,
+            r, Sp, Eq, Sp, qx, Sp, Operatorname, Grp(F.Id("mod")), Sp, Pw, Sp, Rightarrow);
+        Formula carry = Seq(Forall, Sp, N, Sp, Leq, Sp, Pw, Minus, D(1), Comma, Sp, dxn, Sp, Eq, Sp,
+            Open, b, Plus, Lfloor, Frac, Grp(Seq(r, Plus, N)), Grp(Pw), Rfloor, Close, Sp,
+            Operatorname, Grp(F.Id("mod")), Sp, p);
+        Formula noChange = Seq(Open, r, Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp, Forall, Sp, N, Comma, Sp,
+            D(1), Sp, Leq, Sp, N, Sp, Leq, Sp, Pw, Minus, D(1), Sp, Rightarrow, Sp, dxn, Sp, Eq, Sp, dx, Close);
+        Formula firstChange = Seq(Open, r, Sp, Gt, Sp, D(0), Sp, Rightarrow, Sp,
+            d, Open, X, Plus, Open, Pw, Minus, r, Close, Close, Sp, Neq, Sp, dx, Sp, Land, Sp,
+            Forall, Sp, N, Comma, Sp, D(1), Sp, Leq, Sp, N, Sp, Lt, Sp, Pw, Minus, r, Sp, Rightarrow, Sp,
+            dxn, Sp, Eq, Sp, dx, Close);
+        Formula kernel = Seq(Open, Sub("W", Seq(K, Comma, Pw, Minus, D(1))), Open, X, Close, Sp, Eq, Sp,
+            Sub("W", Seq(K, Comma, Pw, Minus, D(1))), Open, Y, Close, Sp, Iff, Sp,
+            qx, Sp, Eq, Sp, q, Open, Y, Close, Close);
+        Formula sharp = Seq(Forall, Sp, Nn, Comma, Sp, K, Sp, Geq, Sp, D(1), Sp, Rightarrow, Sp, Nn, Sp, Lt, Sp,
+            Pw, Minus, D(1), Sp, Rightarrow, Sp,
+            Sub("W", Seq(K, Comma, Nn)), Open, D(0), Close, Sp, Eq, Sp, Sub("W", Seq(K, Comma, Nn)), Open, D(1),
+            Close, Sp, Land, Sp, q, Open, D(0), Close, Sp, Neq, Sp, q, Open, D(1), Close);
         return Disp(Seq(
-            setting, split, Sp, Rightarrow, RowBreak, Grp(),
-            carry, Comma, RowBreak, Grp(),
-            firstChange, Comma, RowBreak, Grp(),
-            kernel, Comma, RowBreak, Grp(),
+            setting, RowBreak, Grp(),
+            carry, Sp, Land, RowBreak, Grp(),
+            noChange, Sp, Land, RowBreak, Grp(),
+            firstChange, Sp, Land, RowBreak, Grp(),
+            kernel, Sp, Land, RowBreak, Grp(),
             sharp, Dot));
     }
 
