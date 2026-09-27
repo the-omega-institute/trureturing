@@ -45,45 +45,32 @@ internal sealed class ResponseOrderGraphDistanceDocument : IScribeDocumentDefini
         return Seq([.. items]);
     }
 
-    private static Formula Typed(Formula value, Formula type) => Seq(value, Colon, Sp, type);
-    private static Formula And(Formula left, Formula right) => Seq(left, Sp, Land, Sp, right);
-    private static Formula BindAll(Formula variable, Formula body) =>
-        Seq(Forall, Sp, variable, Comma, Sp, body);
-    private static Formula Power(Formula value, Formula exponent) =>
-        Seq(Grp(value), Caret, Grp(exponent));
 
     private static Formula GraphFormula()
     {
-        Formula d = F.Id("d"), h = F.Id("H");
-        Formula fin = Call("Fin", d);
-        Formula matrix = Call("Matrix", fin, fin, Mathbb, Grp(F.Id("R")));
-        Formula graph = Call("SimpleGraph", fin);
+        Formula h = F.Id("H"), i = F.Id("i"), j = F.Id("j");
+        Formula adj = Seq(Call("couplingGraph", h), Dot, Call("Adj", i, j));
         return Disp(Seq(
-            Forall, Sp, Typed(d, Operatorname), Comma, Sp,
-            Typed(h, matrix), Sp, Rightarrow, Sp,
-            Typed(Call("couplingGraph", h), graph), Dot));
+            adj, Sp, Iff, Sp, i, Sp, Neq, Sp, j, Sp, Land, Sp, Open, D(0), Sp, Lt, Sp,
+            h, Underscore, Grp(i, Sp, j), Sp, Lor, Sp, D(0), Sp, Lt, Sp, h, Underscore, Grp(j, Sp, i), Close, Dot));
     }
 
     private static Formula TheoremFormula()
     {
         Formula d = F.Id("d"), h = F.Id("H"), i = F.Id("i"), j = F.Id("j"), n = F.Id("n");
-        Formula fin = Call("Fin", d);
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula matrix = Call("Matrix", fin, fin, real);
         Formula graph = Call("couplingGraph", h);
         Formula dist = Call("dist", graph, i, j);
-        Formula symmetry = BindAll(i, BindAll(j,
-            Seq(h, Underscore, Grp(i), j, Sp, Eq, Sp, h, Underscore, Grp(j), i)));
-        Formula nonneg = BindAll(i, BindAll(j, Seq(i, Neq, j, Sp, Rightarrow, Sp,
-            D(0), Sp, Le, Sp, h, Underscore, Grp(i), j)));
-        Formula early = BindAll(n, Seq(n, Lt, dist, Sp, Rightarrow, Sp,
-            Power(h, n), Sp, j, Sp, i, Sp, Eq, Sp, D(0)));
-        Formula first = Seq(D(0), Sp, Lt, Sp, Power(h, dist), Sp, j, Sp, i);
+        Formula entry(Formula a, Formula b) => Seq(h, Underscore, Grp(a, Sp, b));
+        Formula powEntry(Formula k) => Seq(Grp(Seq(h, Caret, Grp(k))), Underscore, Grp(j, Sp, i));
+        Formula symmetry = Seq(Forall, Sp, i, Comma, Sp, j, Comma, Sp, entry(i, j), Sp, Eq, Sp, entry(j, i));
+        Formula nonneg = Seq(Forall, Sp, i, Sp, Neq, Sp, j, Comma, Sp, D(0), Sp, Leq, Sp, entry(i, j));
+        Formula early = Seq(Forall, Sp, n, Sp, Lt, Sp, dist, Comma, Sp, powEntry(n), Sp, Eq, Sp, D(0));
+        Formula first = Seq(D(0), Sp, Lt, Sp, powEntry(dist));
         return Disp(Seq(
-            Forall, Sp, Typed(d, Operatorname), Comma, Sp,
-            Typed(h, matrix), Comma, Sp, symmetry, Comma, Sp, nonneg, Comma, Sp,
-            Typed(i, fin), Comma, Sp, Typed(j, fin), Comma, Sp, i, Neq, j, Comma, Sp,
-            Call("Reachable", graph, i, j), Sp, Rightarrow, RowBreak, Grp(),
-            And(early, first), Dot));
+            h, Sp, InMacro, Sp, real, Caret, Grp(d, Sp, Times, Sp, d), Comma, Sp, symmetry, Comma, Sp, nonneg,
+            Comma, RowBreak, Grp(),
+            i, Sp, Neq, Sp, j, Comma, Sp, Call("Reachable", graph, i, j), Sp, Rightarrow, Sp,
+            Open, early, Close, Sp, Land, Sp, first, Dot));
     }
 }
