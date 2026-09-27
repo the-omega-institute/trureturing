@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "root_records": {
+    "full": 72,
+    "gap": 55
+  },
+  "partial_inventory": {
+    "0": [],
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": []
+  },
+  "partial_lower_minimum": {
+    "0": 55,
+    "1": 51,
+    "2": 45,
+    "3": 37,
+    "4": 33,
+    "5": 29,
+    "6": 25,
+    "7": 21,
+    "8": 17
+  },
+  "partial_lower_survivors": {
+    "0": [
+      [
+        [
+          0,
+          5,
+          18
+        ],
+        [
+          0,
+          5,
+          18
+        ],
+        [
+          1,
+          4,
+          19
+        ]
+      ]
+    ],
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": []
+  },
+  "all_active_count_by_public": {
+    "0": 8,
+    "1": 0,
+    "2": 2,
+    "3": 0,
+    "4": 1,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+  },
+  "scope": "Exhaustive necessary integer cut-budget inventory only; actual-source implication in accompanying proof; not Lean."
+}
