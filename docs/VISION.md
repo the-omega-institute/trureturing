@@ -185,11 +185,12 @@ Existing work offers several connected routes:
   data and allowed operations.
 
 The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-applies to nonempty local record sets on a finite tree. Each recorded variable
-must occur on a connected subtree, and neighbors must allow exactly the same
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
 joint assignments on their full overlap. Every allowed local record extends
-to the union of the local variable sets, satisfying every local constraint.
+across all recorded variables, satisfying every local constraint.
 Do all completions of a fixed local record agree on the target value?
+Additional global constraints can exclude every extension.
 Unique completion, original-history recovery and computational cost require
 further results.
 

@@ -164,12 +164,12 @@ formal coverage.
 three windows on Boolean variables require `x=y`, `y=z` and `x≠z`. Every
 overlap allows both values, yet no triple satisfies all three constraints.
 
-A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-applies to nonempty local record sets on a finite tree: each recorded variable
-must occur on a connected subtree, and neighbors must allow exactly the same
-joint assignments on their full overlap. Then any allowed local record extends
-to a record on the union of the local variable sets, satisfying every local
-constraint.
+The [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Additional global constraints can exclude every extension.
 
 Uniqueness, original-history recovery, computational cost, and reconstruction
 with resolution and error bounds require further results. Links to physical
