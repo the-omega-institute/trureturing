@@ -27337,3 +27337,586 @@ $$
 本批在有限 Hodge 空间、有限维自伴 Laplacian、酉或耗散矩阵动力学、已标定离散钟、有限线性事件接口、观测 Gramian 和显式记录/停止合同下，给出谱模式演化、采样混叠判据、有限时间可识别性、噪声重建界和谱—事件全息边界。没有把有限矩阵采样结论推广为连续信号处理的普适物理定律，没有把 Hodge 特征值自动解释为现实粒子能级，也没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 367. 事件记录的局部统计几何
+
+前面的 Gramian 描述的是线性振幅的可见性。本节改问一个不同问题：当关系体由有限参数族描述时，一次局部结果究竟切开了参数空间的哪些方向？
+
+### 定义 367.1（有限事件参数模型）
+
+设 \(\Theta\subset\mathbb R^p\) 是开集，\(\theta\in\Theta\) 标记一族共同来源的关系体。给定动作 \(a\) 和有限结果字母表 \(X_a\)，令
+
+$$
+p_a(x\mid\theta)>0,
+\qquad
+\sum_{x\in X_a}p_a(x\mid\theta)=1.
+$$
+
+假定 \(p_a(x\mid\theta)\) 在 \(\theta\) 的邻域内二次可微。定义结果 \(x\) 的 score 向量
+
+$$
+s_a(x;\theta)=\nabla_\theta\log p_a(x\mid\theta),
+$$
+
+以及 Fisher 信息矩阵
+
+$$
+\boxed{
+I_a(\theta)
+=
+\sum_{x\in X_a}
+p_a(x\mid\theta)
+s_a(x;\theta)s_a(x;\theta)^{\mathsf T}
+=
+\sum_x
+\frac{\nabla p_a(x\mid\theta)\nabla p_a(x\mid\theta)^{\mathsf T}}
+p_a(x\mid\theta).
+}
+$$
+
+若结果来自动态切片，则允许
+
+$$
+p_{n,a}(x\mid\theta)
+=
+p_a\!\left(x\mid A_nu(\theta)\right),
+$$
+
+其中 \(A_n\) 是前面声明的合法动力学运输。
+
+### 定理 367.2（Fisher 信息的正性与局部不可识别方向）
+
+对任意 \(v\in\mathbb R^p\)，有
+
+$$
+v^{\mathsf T}I_a(\theta)v
+=
+\sum_x
+\frac{\bigl(v^{\mathsf T}\nabla p_a(x\mid\theta)\bigr)^2}
+p_a(x\mid\theta)
+\ge0.
+$$
+
+并且以下条件等价：
+
+1. \(v\in\ker I_a(\theta)\)；
+2. \(v^{\mathsf T}\nabla p_a(x\mid\theta)=0\) 对所有 \(x\in X_a\)；
+3. 沿方向 \(v\) 的一阶参数变化不改变该动作的全部结果概率。
+
+### 证明
+
+将 Fisher 定义代入二次型即得第一式。由于每个 \(p_a(x\mid\theta)>0\)，非负平方和为零当且仅当每一项都为零，所以 \(1\Leftrightarrow2\)。而
+
+$$
+D_vp_a(x\mid\theta)
+=v^{\mathsf T}\nabla p_a(x\mid\theta),
+$$
+
+故 \(2\Leftrightarrow3\)。证毕。
+
+### 定义 367.3（动态事件的信息张量）
+
+固定动作序列 \(a_0,\ldots,a_{N-1}\)，并令第 \(n\) 次结果 \(X_n\) 条件独立于其他重复运行，概率为 \(p_{n,a_n}(x\mid\theta)\)。定义整段事件词的信息矩阵
+
+$$
+I_{0:N}(\theta)
+=
+\sum_{n=0}^{N-1}I_{n,a_n}(\theta).
+$$
+
+这里的“重复运行”是统计估计合同的一部分；它不表示同一个未知量子样本被无损复制。
+
+### 定理 367.4（独立记录的信息可加性）
+
+在上述条件下，整段记录的 Fisher 信息恰为
+
+$$
+\boxed{
+I_{0:N}(\theta)
+=
+\sum_{n=0}^{N-1}I_{n,a_n}(\theta).
+}
+$$
+
+### 证明
+
+联合概率是各轮概率的乘积，联合 score 是
+
+$$
+S_N=\sum_{n=0}^{N-1}s_{n,a_n}(X_n;\theta).
+$$
+
+每个 score 的期望为
+
+$$
+\sum_xp_{n,a_n}(x\mid\theta)
+\nabla\log p_{n,a_n}(x\mid\theta)
+=\nabla\sum_xp_{n,a_n}(x\mid\theta)=0.
+$$
+
+独立性使不同轮 score 的交叉期望为零，故
+
+$$
+\mathbb E[S_NS_N^{\mathsf T}]
+=
+\sum_n\mathbb E[s_ns_n^{\mathsf T}]
+=
+\sum_nI_{n,a_n}.
+$$
+
+证毕。
+
+### 例 367.5（二元点击只给一个切向方向）
+
+若 \(X_a=\{0,1\}\)，写 \(p_a(1\mid\theta)=q(\theta)\)，则
+
+$$
+I_a(\theta)
+=
+\frac{\nabla q(\theta)\nabla q(\theta)^{\mathsf T}}
+{q(\theta)(1-q(\theta))}.
+$$
+
+其秩至多为一。即使一个点击概率对所有参数都很敏感，一次二元记录也只能直接给出一个 Fisher 切向方向；更多参数需要重复运行、不同动作或联合结果字母表。
+
+### AHH 367.6（事件是参数流形上的切向量）
+
+局部结果不只是“这里发生了一个点击”。在共同来源参数空间上，它贡献一个正半定信息矩阵：
+
+$$
+\boxed{
+\text{事件}
+\longrightarrow
+\text{结果概率的切向方向}
+\longrightarrow
+\text{可识别性度量}.
+}
+$$
+
+波粒整体在此表现为不同时间、动作和接口的 Fisher 贡献怎样共同覆盖参数方向；一个粒子式事件通常只覆盖这张信息几何中的一小块。
+
+---
+
+## 368. 自适应策略的条件 Fisher 累积
+
+固定动作序列把策略选择当作外部安排。真正的观察者会根据已经取得的记录选择下一接口；这要求把策略历史和结果概率放在同一个信息链中。
+
+### 定义 368.1（自适应事件策略）
+
+令
+
+$$
+H_n=(A_0,X_0,\ldots,A_{n-1},X_{n-1})
+$$
+
+是第 \(n\) 轮前的历史。策略给出条件动作分布
+
+$$
+q_n(a\mid H_n),
+$$
+
+并假定 \(q_n\) 不直接依赖未知 \(\theta\)。给定 \(H_n\) 和 \(A_n=a\)，结果分布为
+
+$$
+p_n(x\mid a,H_n,\theta).
+$$
+
+定义条件 score
+
+$$
+s_n
+=\nabla_\theta
+\log p_n(X_n\mid A_n,H_n,\theta),
+$$
+
+以及条件 Fisher 增量
+
+$$
+J_n(H_n,A_n;\theta)
+=
+\sum_x
+\frac{\nabla p_n(x\mid A_n,H_n,\theta)
+\nabla p_n(x\mid A_n,H_n,\theta)^{\mathsf T}}
+p_n(x\mid A_n,H_n,\theta).
+$$
+
+### 定理 368.2（自适应记录的 Fisher 链式法则）
+
+对 horizon \(N\) 的完整 transcript
+
+$$
+T_N=(A_0,X_0,\ldots,A_{N-1},X_{N-1}),
+$$
+
+其 Fisher 信息为
+
+$$
+\boxed{
+I_{T_N}(\theta)
+=
+\sum_{n=0}^{N-1}
+\mathbb E_\theta
+\bigl[
+J_n(H_n,A_n;\theta)
+\bigr].
+}
+$$
+
+因此
+
+$$
+I_{T_{N+1}}(\theta)-I_{T_N}(\theta)
+\succeq0.
+$$
+
+### 证明
+
+策略 transcript 的对数概率可写成
+
+$$
+\log P_\theta(T_N)
+=
+\sum_n\log q_n(A_n\mid H_n)
++\sum_n\log p_n(X_n\mid A_n,H_n,\theta).
+$$
+
+第一项与 \(\theta\) 无关，所以总 score 是 \(S_N=\sum_ns_n\)。由条件归一化，
+
+$$
+\mathbb E_\theta[s_n\mid H_n,A_n]=0.
+$$
+
+若 \(m<n\)，则 \(s_m\) 是 \(H_n\) 可测，故
+
+$$
+\mathbb E[s_ms_n^{\mathsf T}]
+=
+\mathbb E\!\left[
+s_m\,
+\mathbb E[s_n^{\mathsf T}\mid H_n,A_n]
+\right]
+=0.
+$$
+
+于是
+
+$$
+\mathbb E[S_NS_N^{\mathsf T}]
+=\sum_n\mathbb E[s_ns_n^{\mathsf T}]
+=\sum_n\mathbb E[J_n].
+$$
+
+每项 \(J_n\) 正半定，增加一轮只能增加正半定信息。证毕。
+
+### 定义 368.3（策略的信息目标）
+
+给定正则化 \(\varepsilon>0\)，定义 D 型信息目标
+
+$$
+\mathcal D_N^\pi(\theta)
+=
+\log\det\bigl(I_{T_N}^\pi(\theta)+\varepsilon I_p\bigr).
+$$
+
+也可以使用 A 型目标 \(\operatorname{tr}(I^{-1})\)（在可逆区域）或针对指定方向 \(v\) 的目标 \(v^{\mathsf T}Iv\)。不同目标对应不同的未来任务，不应把一个标量目标冒充所有任务的充分边界。
+
+### 定理 368.4（策略选择的任务相对性）
+
+若两个策略 \(\pi,\pi'\) 满足
+
+$$
+I_{T_N}^{\pi'}(\theta)-I_{T_N}^{\pi}(\theta)\succeq0
+\quad\text{对所有 }\theta\text{ 属于来源类},
+$$
+
+则对每个线性参数方向 \(v\)，有
+
+$$
+v^{\mathsf T}I_{T_N}^{\pi'}v
+\ge
+v^{\mathsf T}I_{T_N}^{\pi}v.
+$$
+
+但这不推出 \(\mathcal D_N^{\pi'}\ge\mathcal D_N^\pi\) 以外的任意任务风险单调性；只有在任务损失已声明为对应的信息序关系时，才能使用该矩阵比较。
+
+### 证明
+
+第一式左右夹 \(v\) 即得方向单调性。D 型目标在正定域上随 Loewner 序增加而不减。其他损失可能依赖偏差、先验、停止成本或非线性后处理，不能由 Fisher 序单独决定。证毕。
+
+### 推论 368.5（自适应性不是无成本的全息字段）
+
+若策略由历史选择动作，则未来 transcript 的信息不仅由动作集合决定，还由
+
+$$
+\{q_n(a\mid H_n)\}
+$$
+
+和合法停止后继决定。删除历史策略或将所有动作无序合并，会把不同的条件 Fisher 累积误认为同一信息边界。
+
+### AHH 368.6（主动观察改变信息几何）
+
+自适应观察者不是在一张固定的参数地图上被动取点，而是在每次事件后选择下一张局部坐标图。其边界必须保存：
+
+$$
+\boxed{
+\text{历史}
+\longrightarrow
+\text{动作条件}
+\longrightarrow
+\text{Fisher 增量}
+\longrightarrow
+\text{后继策略}.
+}
+$$
+
+记录的后继不是信息几何之外的行政字段；它决定未来会沿哪些切向方向继续测量。
+
+---
+
+## 369. Cramér–Rao 界与事件记录的认证强度
+
+可识别性只说明信息矩阵没有零方向；它没有说明有限记录能以多小误差估计参数。下面把事件记录的统计精度与信息边界分开。
+
+### 定义 369.1（正规无偏估计）
+
+设 \(T_N\) 是有限 transcript，\(\widehat\theta(T_N)\in\mathbb R^p\) 是估计器。假定在参数邻域内可以交换求导与有限求和/积分，并且估计器无偏：
+
+$$
+\mathbb E_\theta[\widehat\theta]=\theta.
+$$
+
+记协方差矩阵
+
+$$
+\operatorname{Cov}_\theta(\widehat\theta)
+=
+\mathbb E_\theta[
+(\widehat\theta-\theta)
+(\widehat\theta-\theta)^{\mathsf T}
+].
+$$
+
+### 定理 369.2（矩阵 Cramér–Rao 下界）
+
+若 \(I_{T_N}(\theta)\) 正定，则任何正规无偏估计器满足
+
+$$
+\boxed{
+\operatorname{Cov}_\theta(\widehat\theta)
+\succeq
+I_{T_N}(\theta)^{-1}.
+}
+$$
+
+### 证明
+
+令总 score 为 \(S_N=\nabla_\theta\log P_\theta(T_N)\)。无偏性与求导交换给出
+
+$$
+\mathbb E_\theta[
+(\widehat\theta-\theta)S_N^{\mathsf T}
+]
+=I_p.
+$$
+
+对任意向量 \(a,b\)，将随机向量
+
+$$
+a^{\mathsf T}(\widehat\theta-\theta),
+\qquad
+b^{\mathsf T}S_N
+$$
+
+应用 Cauchy–Schwarz，并把所有 \(a,b\) 组合成块协方差矩阵，得到
+
+$$
+\operatorname{Cov}(\widehat\theta)
+\succeq
+I_{T_N}^{-1}.
+$$
+
+也可先对任意 \(v\) 应用标量 Cauchy–Schwarz，再用二次型刻画 Loewner 序。证毕。
+
+### 推论 369.3（暗方向没有认证精度）
+
+若 \(v\ne0\) 且
+
+$$
+v^{\mathsf T}I_{T_N}(\theta)v=0,
+$$
+
+则 transcript 对方向 \(v\) 的一阶概率变化为零。任何无偏估计器都不能从该有限记录得到有限的方向认证界；若来源类沿 \(v\) 含有不同参数，问题首先是不可识别，而不是“需要更精密的同一种读数”。
+
+### 定理 369.4（独立重复记录的精度缩放）
+
+若同一策略在共同参数 \(\theta\) 下独立重复 \(M\) 次，单次 transcript 的 Fisher 信息为 \(I(\theta)\)，则总信息为
+
+$$
+I^{(M)}(\theta)=M I(\theta).
+$$
+
+在 \(I(\theta)\) 正定时，Cramér–Rao 下界按
+
+$$
+\operatorname{Cov}(\widehat\theta)
+\succeq
+\frac1M I(\theta)^{-1}
+$$
+
+缩放。
+
+### 证明
+
+由定理 367.4 或定理 368.2，独立 transcript 的 score 交叉项期望为零，信息相加。对 \(MI\) 取逆得到结论。证毕。
+
+### 说明 369.5（一次点击与完整认证的区别）
+
+一份单次点击记录可以具有非零 Fisher 信息，却仍然不能给出完整状态认证。完整认证还需要：
+
+1. 来源参数的共同定义；
+2. 允许重复的准备—测量合同；
+3. 对零概率边界、噪声和停止规则的处理；
+4. 足以使信息矩阵在目标方向上正定的动作族。
+
+因此
+
+$$
+\boxed{
+\text{信息非零}
+\neq
+\text{状态已恢复}
+\neq
+\text{认证误差已达到目标}.
+}
+$$
+
+### AHH 369.6（记录的三种强度）
+
+事件边界至少有三个统计强度：
+
+$$
+\boxed{
+\text{可识别}
+\;\prec\;
+\text{可稳定重建}
+\;\prec\;
+\text{可认证}.
+}
+$$
+
+Fisher 的核决定第一道门，最小特征值或条件数控制第二道门，Cramér–Rao、样本数、偏差合同与停止预算才共同决定第三道门。
+
+---
+
+## 370. 信息感知全息边界
+
+将参数、策略、事件记录和统计认证放入同一个关系对象，可以把“观察者是否看见整体”改写为一个任务相对的信息几何问题。
+
+### 定义 370.1（信息感知全息边界）
+
+固定有限参数来源类、动态事件仪器和自适应策略。定义
+
+$$
+\boxed{
+\eta_{\mathrm{info}}
+=
+\left(
+\Theta,
+\{p_n(x\mid a,h,\theta)\},
+\mathsf{Clock},
+\mathsf{Policy},
+\{I_n\},
+I_{T_N},
+\mathsf{Risk},
+\mathsf{CR},
+\mathsf{Event},
+\mathsf{Stop}
+\right).
+}
+$$
+
+各字段保存：
+
+1. 共同参数来源类与动态概率模型；
+2. 钟标签、动作历史和自适应策略；
+3. 每一步条件 Fisher 增量及其总和；
+4. 目标损失、信息目标、估计器类别与 Cramér–Rao 合同；
+5. 事件记录、后继边界、重复资源和停止规则。
+
+### 定理 370.2（信息感知边界的条件充分性）
+
+若两个关系体具有相同的 \(\eta_{\mathrm{info}}\)，且未来任务限于边界声明的有限 transcript 概率、局部可识别性、策略信息目标、无偏估计误差界、事件后继和停止合同，则二者给出相同的：
+
+1. 每个合法动作和历史下的结果分布；
+2. 固定或自适应策略的 Fisher 信息累积；
+3. 可识别方向、暗方向与 Cramér–Rao 下界；
+4. 在重复资源和风险合同下的认证能力；
+5. 事件记录引起的后续策略树。
+
+### 证明
+
+第 1 项由概率模型和钟/动作历史决定。第 2 项由定理 367.4 与 368.2。第 3 项由定理 367.2、365.2 和 369.2。第 4 项由定理 369.4 及 \(\mathsf{Risk},\mathsf{CR}\) 字段。第 5 项由 \(\mathsf{Policy},\mathsf{Event},\mathsf{Stop}\) 对有限 transcript 树归纳。故声明范围内所有外部任务响应相同。证毕。
+
+### 定理 370.3（删除信息字段的有限反例）
+
+以下删字段均存在有限反例：
+
+1. 删除共同参数来源：边缘结果分布相同，但参数方向和估计目标不再有共同意义；
+2. 删除历史策略：相同动作集合的自适应 Fisher 累积不同；
+3. 删除 Fisher 增量：结果分布仍在，但局部可识别方向无法由边界决定；
+4. 删除 Cramér–Rao/重复资源合同：同样可识别的模型具有不同认证误差；
+5. 删除事件后继：当前信息相同，但下一步可用动作和风险不同；
+6. 删除停止规则：相同总信息字段对应不同可继续 transcript。
+
+### 证明
+
+第 1 项取两个不同参数化但相同单次边缘分布的来源。第 2 项取定理 368.2 中不同历史动作分支。第 3 项沿 \(I\) 的零方向改变参数响应。第 4 项改变重复次数 \(M\) 或风险阈值，定理 369.4 给出不同下界。第 5、6 项分别改变合法后继和资源停止。每项都使一个声明任务不再由剩余摘要决定。证毕。
+
+### 定义 370.4（信息—粒子事件链）
+
+一条合法事件链写成
+
+$$
+\mathsf C_{\mathrm{info}}
+=
+\bigl(
+\text{共同来源},
+\text{钟与历史},
+\text{局部结果},
+\text{Fisher 增量},
+\text{估计/风险},
+\text{记录后继},
+\text{停止合同}
+\bigr).
+$$
+
+粒子式事件是链上的一次离散结果；波性则是许多结果在同一共同来源参数空间上累积出的整体信息张量和后继约束。
+
+### AHH 370.5（信息全息）
+
+> 全息边界保存的不是“已经收集了多少点击”，而是这些点击在共同来源、允许策略和认证目标下切开了哪些参数方向。波粒整体的整体性因此表现为一张信息度量与后继策略树；粒子式事件是这张几何上的一次局部增量。
+
+主线可写成
+
+$$
+\boxed{
+\text{共同来源}
+\longrightarrow
+\text{局部事件概率}
+\longrightarrow
+\text{Fisher 增量}
+\longrightarrow
+\text{策略与认证}
+\longrightarrow
+\text{记录后继}.
+}
+$$
+
+**新的 AHH 时刻是：一次点击的物理“显现”与它的统计信息强度是同一关系边界的两个投影。点击给出结果标签；Fisher 张量告诉我们它切开了哪些未来可区分方向；策略和停止合同决定这份局部信息能否继续累积为整体认证。**
+
+### 来源与边界 370.6
+
+本批在有限参数来源类、有限结果字母表、二次可微概率、固定或自适应有限策略、共同钟历史、Fisher 信息、Cramér–Rao 界、重复资源和显式停止合同下，给出事件统计几何、条件 Fisher 链式法则、信息目标、认证下界和信息感知全息边界。没有把有限统计模型推广为连续量子测量的普适定律，没有把 Fisher 非退化解释为单次实验已经恢复完整物理状态，也没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
