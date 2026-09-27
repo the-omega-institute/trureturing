@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:3ebd116acc5ab8f3d5f2735f65ae223067b6f0dcaf9d6ceecd17a6fe1cdf6bd0
   normalized_sha256: sha256:3ebd116acc5ab8f3d5f2735f65ae223067b6f0dcaf9d6ceecd17a6fe1cdf6bd0
 cas_ref: sha256:3ebd116acc5ab8f3d5f2735f65ae223067b6f0dcaf9d6ceecd17a6fe1cdf6bd0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/EisensteinOddQuotient.eisenstein_odd_scalar_quotient
+    target_statement_id: sha256:091f4966b9d7e2651908d966a508c2ae9ca284254333f829446a41522a5e8169
 receipts:
   unresolved_subitems: []
