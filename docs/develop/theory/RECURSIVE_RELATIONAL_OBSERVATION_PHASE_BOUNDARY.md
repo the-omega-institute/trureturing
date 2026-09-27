@@ -102084,3 +102084,332 @@ $$
 [^phase_integer_moment_hnp]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, DOI [10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)。使用 [arXiv 0808.1936v3](https://arxiv.org/pdf/0808.1936v3) 的 Definition 5、Theorem 8及相容Bernstein包络接口：非整数 $\alpha>0$、$f:[0,1]\to(0,1)$、$f\in C^\alpha$ 时，存在精确工厂满足 $\Pr_p(N>n)\le A\max\{\sqrt{p(1-p)/n},1/n\}^{\alpha}$。本节只在非整数 $\beta$ 时取 $\alpha=\beta$；正整数由解析工厂处理。本节的必要性由有限词微分、有限时域鞅矩及差分极限给出，不把原文关于更一般矩条件的讨论当作已经解决的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 312. 多来源响应的微分预算与坐标保持
+
+第309—311节的调用矩障碍使用了来源成功概率及其仿射增益坐标。若任意非线性改名，普通二阶导数会出现额外项。本节明确保留来源概率坐标的仿射结构，证明有限停止记录的梯度、Hessian与源别费用之间的关系，并给出在重新选取坐标后仍成立的表达。
+
+这些结论约束的是同一来源族上的共同模拟程序。它们不把响应的导数解释为物理时空曲率，也不把可表达的预算矩阵宣称为可实现的采样协议。本节给出纸面证明，没有新增Lean核验声明。
+
+### 312.1 共同来源、可预测请求与有限回答
+
+**定义 312.1（多来源概率接口）。** 固定有限个来源，标签为 $j=1,\ldots,d$。未知参数 $p=(p_1,\ldots,p_d)$ 位于开集 $\mathcal U\subset(0,1)^d$，一次运行中的实际参数固定。每次请求来源 $A_i$ 由既有记录和参数无关私随机性选择；给定请求前历史，新输出具有 $\operatorname{Bernoulli}(p_{A_i})$ 律。不同请求使用各来源尚未取得的新鲜输入。
+
+程序只观察这些币、自己的来源选择和共同随机控制产生的记录。耗时、等待与内部计算不提供额外未知参数信息。对每个 $p\in\mathcal U$，程序几乎必以有限请求和有限内部运行回答。记总请求数为 $M$，来源 $j$ 的实际请求数为 $N_j$，输出事件为 $E$，其目标概率为 $g(p)$。本节不要求参数域为自由乘积；局部微分仅沿留在 $\mathcal U$ 内的线段进行。
+
+将完整私种子放入初始数学过滤，令 $R_i=\mathbf1_{\{M\ge i\}}$。未有限回答的分支按 $M=\infty$ 作数学填充；这些分支在所声明参数世界中概率为零，不被当作实际成功或免费记录。请求标签和指标在下一枚币出现前可测。对固定总请求截断 $n$，定义
+
+$$
+N_{j,n}=\sum_{i=1}^nR_i\mathbf1_{\{A_i=j\}},
+\qquad \sum_jN_{j,n}=M\wedge n,
+\qquad g_n(p)=\Pr_p(M\le n,E).
+\tag{312.1}
+$$
+
+每片有限来源—结果词的概率为
+
+$$
+a_w\prod_{j=1}^d p_j^{s_j(w)}(1-p_j)^{t_j(w)},\qquad a_w\ge0,
+\tag{312.2}
+$$
+
+其中私种子权重 $a_w$ 不依赖未知参数。深度至多 $n$ 的词数有限，所以 $g_n$ 是多变量多项式。自适应来源选择已经进入词的固定控制权重；微分时不再把控制规则当作另一个显式参数函数。
+
+### 312.2 有限停止记录的信息和二阶响应
+
+令 $e_j$ 为标准基向量，定义
+
+$$
+\begin{aligned}
+\xi_i&=\frac{X_i}{p_{A_i}}-\frac{1-X_i}{1-p_{A_i}},\\
+S_n&=\sum_{i=1}^nR_i e_{A_i}\xi_i,\\
+J_n&=\sum_{i=1}^nR_i e_{A_i}e_{A_i}^{\mathsf T}
+\left(\frac{X_i}{p_{A_i}^2}+
+\frac{1-X_i}{(1-p_{A_i})^2}\right).
+\end{aligned}
+\tag{312.3}
+$$
+
+在有限停止词上，它们分别是对数似然的梯度和负Hessian。单个请求只涉及一个来源参数，所以 $J_n$ 为对角正半定矩阵。
+
+**定理 312.2（有限叶的两种微分预算）。** 令
+
+$$
+C_n(p)=\operatorname{diag}\left(
+\frac{\mathbb E_pN_{j,n}}{p_j(1-p_j)}\right).
+\tag{312.4}
+$$
+
+则
+
+$$
+\boxed{-C_n(p)\preceq\operatorname{Hess}g_n(p)\preceq C_n(p),}
+\tag{312.5}
+$$
+
+且对每个方向 $v\in\mathbb R^d$，
+
+$$
+\boxed{(v^{\mathsf T}\nabla g_n(p))^2
+\le g_n(p)(1-g_n(p))\,v^{\mathsf T}C_n(p)v.}
+\tag{312.6}
+$$
+
+**证明。** 请求前 $A_i,R_i$ 已知，新币的得分条件均值为零，条件二阶矩为 $1/[p_{A_i}(1-p_{A_i})]$。有限时域的鞅增量在不同时间二阶正交，同一次增量仅有一个非零坐标。因此
+
+$$
+\mathbb E_pS_n=0,\qquad
+\mathbb E_pS_nS_n^{\mathsf T}=\mathbb E_pJ_n=C_n(p).
+\tag{312.7}
+$$
+
+逐词微分式（312.2），得到
+
+$$
+\begin{aligned}
+\nabla g_n&=\mathbb E_p[\mathbf1_{\{M\le n,E\}}S_n],\\
+\operatorname{Hess}g_n
+&=\mathbb E_p[\mathbf1_{\{M\le n,E\}}
+(S_nS_n^{\mathsf T}-J_n)].
+\end{aligned}
+\tag{312.8}
+$$
+
+两个被相减的期望矩阵都正半定，且各自至多为 $C_n$，其差就在 $-C_n$ 和 $C_n$ 之间。这证明式（312.5），常数为一。
+
+再令 $Z_n=\mathbf1_{\{M\le n,E\}}$。由于 $\mathbb E S_n=0$，有
+
+$$
+v^{\mathsf T}\nabla g_n
+=\mathbb E[(Z_n-g_n)v^{\mathsf T}S_n].
+$$
+
+Cauchy–Schwarz和式（312.7）即给式（312.6）。整个证明没有假定请求次数、来源顺序或最终输出相互独立。证毕。
+
+当 $0<g_n<1$ 时，式（312.6）等价于输出二元Fisher信息矩阵 $\nabla g_n\nabla g_n^{\mathsf T}/[g_n(1-g_n)]$ 不超过 $C_n$。当 $g_n=0$ 或一时，用原方向不等式解释，它迫使梯度为零，不引入除零量。Fisher预算和Hessian预算是不同条件；控制一阶可区分性本身不保证控制二阶响应。
+
+### 312.3 统一源别预算的极限
+
+**定理 312.3（光滑目标的统一源别必要界）。** 假设目标 $g\in C^2(\mathcal U)$，并存在同一个有限非负向量 $a$，使
+
+$$
+\mathbb E_pN_j\le a_j
+\quad\text{对全部 }p\in\mathcal U、j.
+\tag{312.9}
+$$
+
+令 $D_a(p)=\operatorname{diag}(a_j/[p_j(1-p_j)])$，则
+
+$$
+-D_a(p)\preceq\operatorname{Hess}g(p)\preceq D_a(p),
+\tag{312.10}
+$$
+
+$$
+(v^{\mathsf T}\nabla g(p))^2
+\le g(p)(1-g(p))\,v^{\mathsf T}D_a(p)v.
+\tag{312.11}
+$$
+
+**证明。** 总均值不超过 $A=\sum_ja_j$，所以
+
+$$
+0\le g(p)-g_n(p)\le\Pr_p(M>n)\le\frac A{n+1}.
+\tag{312.12}
+$$
+
+因此 $g_n\to g$ 一致，且 $C_n\preceq D_a$。在任意局部紧邻域内，$D_a$ 连续有界，有限叶Hessian的算子范数也一致有界。
+
+固定 $p,v$，取足够小 $t>0$ 使线段 $p+sv$、$|s|\le t$ 留在 $\mathcal U$ 内。有限差分积分式给
+
+$$
+\begin{aligned}
+&g_n(p+tv)-2g_n(p)+g_n(p-tv)\\
+&\quad=\int_{-t}^{t}(t-|s|)
+ v^{\mathsf T}\operatorname{Hess}g_n(p+sv)v\,ds.
+\end{aligned}
+\tag{312.13}
+$$
+
+其绝对值至多是将被积Hessian替换成 $D_a$ 后的积分。先固定 $t$ 令 $n\to\infty$，再除以 $t^2$ 并令 $t\downarrow0$；右侧由 $D_a$ 的连续性收敛，左侧由目标的 $C^2$ 性收敛。这得到式（312.10），不需要有限叶Hessian逐点收敛。
+
+为传递一阶不等式，在稍大的紧邻域内取共同Hessian界 $L$。令 $\epsilon_n=\sup_{\mathcal U}|g_n-g|$。对单位方向 $v$，Taylor积分式给
+
+$$
+|v^{\mathsf T}(\nabla g_n(p)-\nabla g(p))|
+\le\frac{2\epsilon_n}{t}+Lt.
+\tag{312.14}
+$$
+
+先令 $n\to\infty$，再令 $t\downarrow0$，得到局部一致的梯度收敛。把它代入式（312.6）并用 $C_n\preceq D_a$ 即得式（312.11）。证毕。
+
+上述 $C^2$ 是目标的明确假设，不由统一有限均值自动推出。第309节的一元一般必要性为 $C^{1,1}$，没有宣称二阶经典导数处处连续。
+
+一阶还可进一步使用实际点态预算
+
+$$
+C(p)=\operatorname{diag}\left(
+\frac{\mathbb E_pN_j}{p_j(1-p_j)}\right),
+\tag{312.15}
+$$
+
+因为 $C_n(p)\to C(p)$ 单调，而梯度已经收敛。二阶不能照此偷换：证明式（312.10）先在邻域积分，未证明Hessian逐点收敛。若另外假设各 $p\mapsto\mathbb E_pN_j$ 在该点连续，则直接用 $C_n\preceq C$ 重复式（312.13）的论证，才可在该点以 $C$ 替代 $D_a$。
+
+### 312.4 共同费用与不可相加的最坏来源
+
+源别预算上界不是已支付费用。即使每次来源 $j$ 的成本至少为 $w_j>0$，也只能直接得到
+
+$$
+\mathbb E_pT\ge\sum_jw_j\mathbb E_pN_j,
+\tag{312.16}
+$$
+
+不能因 $\mathbb E_pN_j\le a_j$ 就推出 $\mathbb E_pT\ge\sum_jw_ja_j$。一个仅请求一次的程序也可以申报上界 $a_1=100$，而实际成本仍为一。
+
+分别取最紧上界仍不能消除共同实现问题。取两个来源、参数域 $\mathcal U=(0,1)^2$ 和单位成本，固定正整数 $L$，先读来源一的 $X$；若 $X=0$ 再读来源一 $L$ 次，若 $X=1$ 再读来源二 $L$ 次，最后输出首枚 $X$。同一个有限程序满足
+
+$$
+\mathbb E_pN_1=1+L(1-p_1),\qquad
+\mathbb E_pN_2=Lp_1,
+\tag{312.17}
+$$
+
+所以
+
+$$
+\sup_p\mathbb E_p(N_1+N_2)=1+L,
+\qquad
+\sup_p\mathbb E_pN_1+\sup_p\mathbb E_pN_2=1+2L.
+\tag{312.18}
+$$
+
+两个来源的分别最坏世界不能相加成一个实际世界。
+
+**定理 312.4（共同加权费用的必要下界）。** 固定 $w_j>0$，设目标 $g\in C^2(\mathcal U)$，并定义同一程序的共同最坏费用
+
+$$
+W=\sup_{p\in\mathcal U}\mathbb E_p\sum_jw_jN_j<\infty.
+\tag{312.19}
+$$
+
+令
+
+$$
+K_w(p,v)=\max_j\frac{v_j^2}{w_jp_j(1-p_j)}.
+\tag{312.20}
+$$
+
+则
+
+$$
+|v^{\mathsf T}\operatorname{Hess}g(p)v|\le WK_w(p,v),
+\tag{312.21}
+$$
+
+$$
+(v^{\mathsf T}\nabla g(p))^2
+\le g(p)(1-g(p))WK_w(p,v).
+\tag{312.22}
+$$
+
+**证明。** 在有限叶上直接按同一个世界和同一个预算计算，
+
+$$
+\begin{aligned}
+v^{\mathsf T}C_n(p)v
+&=\sum_j\mathbb E_pN_{j,n}\frac{v_j^2}{p_j(1-p_j)}\\
+&\le K_w(p,v)\sum_jw_j\mathbb E_pN_{j,n}
+\le WK_w(p,v).
+\end{aligned}
+\tag{312.23}
+$$
+
+令 $w_{\min}=\min_jw_j>0$，则总均值不超过 $W/w_{\min}$。有限叶概率一致收敛，局部Hessian一致有界。沿固定方向用式（312.13），再利用 $K_w(p+sv,v)$ 的连续性，得到式（312.21）。局部梯度收敛同式（312.14），传递式（312.6）得到式（312.22）。没有将各来源的上确界相加。证毕。
+
+对 $v\ne0$，$K_w(p,v)>0$，故可以把这两条不等式除以它，给出 $W$ 的必要下界。例如在 $0<g(p)<1$ 的点，
+
+$$
+W\ge
+\frac{\max\left\{
+|v^{\mathsf T}\operatorname{Hess}g(p)v|,
+(v^{\mathsf T}\nabla g(p))^2/[g(p)(1-g(p))]
+\right\}}{K_w(p,v)}.
+\tag{312.24}
+$$
+
+对任意点和方向的这些下界取上确界仍合法。边界概率取零或一时只用方向不等式，避免除零。若实际路径费用 $T\ge\sum_jw_jN_j$，则同一右侧也约束 $\sup_p\mathbb E_pT$。正收费仍须结合定义312.1的完整旧币信息合同，不能允许额外含参时长后继续沿用纯币下界。
+
+### 312.5 来源概率仿射结构的坐标保持
+
+**定义 312.5（来源坐标诱导的仿射Hessian）。** 对一个 $C^2$ 局部坐标变换 $p=p(\theta)$，令其可逆Jacobian为 $J_{ja}=\partial_ap_j$，并令 $G(\theta)=g(p(\theta))$。定义
+
+$$
+\Gamma^c_{ab}=\sum_j(J^{-1})^c_j\partial_a\partial_bp_j,
+\qquad
+(H^{\nabla}G)_{ab}
+=\partial_a\partial_bG-\sum_c\Gamma^c_{ab}\partial_cG.
+\tag{312.25}
+$$
+
+这里选定的是来源成功概率坐标中系数为零的平直仿射联络。该来源结构属于接口的一部分；没有声称它由某个信息度量唯一决定。
+
+**定理 312.6（微分预算的坐标保持）。** 有
+
+$$
+H^{\nabla}G=J^{\mathsf T}(\operatorname{Hess}_pg)J,
+\qquad \nabla_\theta G=J^{\mathsf T}\nabla_pg.
+\tag{312.26}
+$$
+
+因此定理312.3在新坐标中给
+
+$$
+-J^{\mathsf T}D_aJ\preceq H^{\nabla}G
+\preceq J^{\mathsf T}D_aJ,
+\tag{312.27}
+$$
+
+一阶信息预算也按同样的矩阵合同变换保持。
+
+**证明。** 链式法则给
+
+$$
+\partial_a\partial_bG
+=\sum_{j,k}(\partial_j\partial_kg)
+(\partial_ap_j)(\partial_bp_k)
++\sum_j(\partial_jg)\partial_a\partial_bp_j.
+\tag{312.28}
+$$
+
+又有 $\partial_cG=\sum_k(\partial_kg)J_{kc}$。代入式（312.25），Jacobian与其逆矩阵相消，联络项准确等于式（312.28）的最后一项。相减得到第一式，第一阶链式法则给第二式。Loewner序在矩阵合同变换下保持，遂得式（312.27）。证毕。
+
+这不是停止记录统计模型的Amari mixture connection声明。实际信息矩阵 $C(p)$ 含有 $\mathbb E_pN_j$ 的参数依赖，本文没有证明它的统计联络等于上述选定结构。这也不是Fisher度量的Levi-Civita Hessian：即使一源预算 $a>0$ 固定，其度量 $a/[p(1-p)]$ 的Levi-Civita系数为
+
+$$
+\frac12\partial_p\log\frac a{p(1-p)}
+=\frac{2p-1}{2p(1-p)},
+\tag{312.29}
+$$
+
+一般不为零。若一些 $a_j=0$，预算张量还可能退化，不能无条件称为正定Riemann度量。
+
+**反例 312.7（普通二阶导数的坐标伪差）。** 一个程序只请求一枚币并原样输出，故 $g(p)=p$、$\mathbb EN=1$、$g''(p)=0$。在 $\theta\in(-1/100,1/100)$ 上取
+
+$$
+p(\theta)=\frac12+\theta+10\theta^2.
+\tag{312.30}
+$$
+
+它取值于 $(0,1)$ 且导数为正。在 $\theta=0$，$G'=1$、$G''=20$、$J=1$、$\Gamma=p''/p'=20$，一次调用信息预算拉回后为 $J^2/[p(1-p)]=4$。若错误地用普通 $G''$ 代替协变量，就出现假的要求 $20\le4$；正确表达为 $G''-\Gamma G'=0$，与原来源坐标一致。这个直接计算证明联络项不能省略。
+
+### 312.6 静态边界中必须保留的来源关系
+
+有限输出表若只给一个参数点的读数，没有说明它随共同来源族怎样变化。同一个精确程序却必须在整段未知参数上使用相同控制规则；其可预测请求使输出的一阶区分与二阶变化都受到实际取得信息的预算约束。
+
+本节由此把固定输出集合、共同来源族、合法请求及取得费用连成同一个可核对结构。坐标变化可以重新表达这些关系，却不会产生新的可请求来源；$\theta_a$ 不能仅因成为一个坐标就被当作可独立调用的Bernoulli仪器。非对角拉回矩阵也不赠送新的控制权限。
+
+一源增益 $h$ 与成功概率之间的变换是仿射的，联络项为零，所以第309节可以直接用 $h$ 的二阶导数。任意非线性命名则必须保留式（312.25）的补偿项。这说明所需不变性来自明确的来源结构与变换规则，不能只凭“曲率”或“几何”一词取得。
+
+Fisher和Hessian约束都是必要条件。本节没有证明满足它们就有精确工厂，没有给最优费用或可达到的预算矩阵，也没有解决一般高阶、全局共同实现或物理钟匹配问题。有限词微分、鞅正交、Cauchy–Schwarz、有限差分和坐标链式法则是上述证明实际使用的成熟工具；这些综合推导不附带文献原创性声明。
+
+## 追加锚（本行以下为增补区）
