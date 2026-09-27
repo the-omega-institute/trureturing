@@ -583,3 +583,125 @@ Reproduce the controls with:
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_shadow_shell_pairs.py
 ```
  These are exact finite controls and ordinary proofs; none is Lean verification or a proof that every unrestricted distinct-odd inventory violates a necessary inequality.
+
+## Source-local phase assignment and a stronger top-shell pair demand
+
+Keep the same original classes, global top-digit decomposition, private regions and uniform probability mu as in(TS1)–(TS8). Fix a prime p and D subset{t:p in T_t}. Everything below is evaluated at the SAME actual x in U_D. The argument uses whole coverage to supply changed top phases; the odd-hyperplane theorem is not used in this refinement. It does not remove omitted-private V or change mu to a supported head law.
+
+### The local incidence data contain more than a number of bins
+
+For each alternative a!=y_p define the available-support set
+
+    N_x(a)={T_s : s covers x^(p,a)}.
+
+Equivalently, retain original labels s with x in E_(s,p,H_p-1), theta_(s,p)=a, and then project to their top support. At a private x these formulations agree: any label covering the changed point must fix the global top p-digit and agree with x on every other coordinate it fixes. No original label or residue may be independently changed between alternatives.
+
+Whole coverage makes every N_x(a) nonempty. If any is empty, x^(p,a) is a literal uncovered residue and is recorded as such; there is no finite assignment cost at that x. In particular an infeasible assignment must NOT be given cost zero and integrated as though it were a whole-cover source.
+
+Let
+
+    sigma_p(x)=|union_(a!=y_p) N_x(a)|.
+
+Replacing global sigma_p in the pointwise balanced-bin argument by sigma_p(x) is a direct localization of(TS8), not a separate substantial theorem. It still discards which alternatives can use which bins.
+
+For a feasible source define
+
+    phi_p(x)=min sum_A binom(n_A,2),
+
+where the minimum ranges over assignments a |-> A_a in N_x(a), and n_A counts alternatives assigned to A. Each alternative is assigned once, not split fractionally. Since there are finitely many actual alternatives and labels, this minimum is attained. It is an ordinary finite convex assignment problem; one can realize it as a min-cost flow using support slots of incremental costs0,1,2,... .
+
+Then
+
+    phi_p(x) >= Pi(p-1,sigma_p(x)) >= Pi(p-1,sigma_p).
+
+There is a stronger subset certificate. For any nonempty set J of alternative phases put N_x(J)=union_(a in J)N_x(a). Then
+
+    phi_p(x) >= Pi(|J|,|N_x(J)|).                       (PA1)
+
+Indeed any legal assignment places the alternatives in J among those bins; their equal-bin pairs are included among all equal-bin pairs. Maximizing(PA1) over J detects bottlenecks that the total local bin count misses. This is the Hall-type content: different phase subsets need not have access to all available bins.
+
+One may also certify a lower bound without finding an optimal assignment. Give each actual support A a nonnegative integer k_A. For every feasible x,
+
+    phi_p(x) >= sum_(a!=y_p) min_(A in N_x(a)) k_A
+                         - sum_A k_A(k_A+1)/2.          (PA2)
+
+For every integer occupancy n_A>=0,
+
+    binom(n_A,2) - k_A n_A + k_A(k_A+1)/2
+      =(n_A-k_A)(n_A-k_A-1)/2 >=0.
+
+Sum this identity and use k_(A_a)>=min_(A in N_x(a))k_A for each phase. The maximum of zero and the displayed RHS is also a valid lower bound. No exact duality theorem is needed for this certificate. The k_A may be fixed in advance, or represented as explicit functions of x before integration; neither choice changes the original source law.
+
+### Original supplier pairs pay the source-local demand
+
+Choose any minimizing assignment at one feasible x. For each assigned support choose an ORIGINAL label s covering x^(p,a) with that support. Distinct phases force distinct original labels. Two selected labels assigned to the same A have different p-phases and match the same x at every other coordinate in A. Thus their unordered pair belongs to R_p from(TS7), and x lies in both original top p-shells. Different pairs of chosen labels are different original pairs.
+
+Consequently, pointwise,
+
+    phi_p(x) <= sum_((s,t) in R_p)
+                   1_(E_(s,p,H_p-1) intersect E_(t,p,H_p-1))(x).
+
+Integrating over the SAME selected private union, assuming whole coverage, gives
+
+    integral_(U_D) phi_p(x) dmu(x)
+      <= sum_((s,t) in R_p)
+             mu(U_D intersect E_(s,p,H_p-1) intersect E_(t,p,H_p-1))
+      <= sum_((s,t) in R_p) ((p-2)/P_(T_s)) c_st.       (PA3)
+
+The final capacities are precisely the original-label CRT capacities from(TS2),(TS7). A source-local minimizer only proves a lower bound on how many actual pairs must be present. It does not choose a new probability measure, redistribute ownership between different actual sources, or choose residues after queries. There is no need to make the same minimizing assignment at different x; the inequality holds at every x against the fixed original pair-incidence sets before integrating.
+
+More generally(PA3) applies to any explicitly selected W subset U_D on which every p-alternative really is covered, with U_D replaced by W. For a noncover with missing phases elsewhere, this is an integral over W ONLY. An assertion about the full U_D is not recovered by dropping infeasible points.
+
+The refinement strengthens the LHS of(TS8); its final unrestricted pair-capacity RHS is unchanged. To contradict a whole cover, one still needs a lower bound on the source mass of actual phase bottlenecks together with a sufficiently small joint original pair budget. Neither arbitrary support diversity nor all common-shadow capacities have been controlled here. This is not a proof of unrestricted odd noncoverage or a head-law lift.
+
+### Six original odd labels realize a strict0/1/3 hierarchy
+
+Use the literal classes
+
+    0 mod135, 1 mod5, 12 mod15, 18 mod45, 14 mod35, 44 mod55.
+
+Their period is L=10395=3^3*5*7*11 and their common lower modulus is N=9. The six displayed residues0,1,12,18,14,44 respectively are private witnesses, so every original class is essential to its represented union; all numerical moduli are odd and distinct. The family is a NONCOVER: exact enumeration finds6856 uncovered residues. No divisor-closure claim is made.
+
+Select target0 mod135, prime p=5, and its actual private point x=0. The four global top supports containing5 are
+
+    {3,5}, {5}, {5,7}, {5,11}.
+
+Thus the original global coefficient is Pi(4,4)=0. The actual changed top5 points and available original suppliers at x=0 are:
+
+|alternative top5 phase|actual modified residue|supplier modulus|available supports|
+|---|---|---|---|
+|1|8316|5|{5}|
+|2|6237|15|{5}|
+|3|4158|45|{5}|
+|4|2079|35 or55|{5,7} or{5,11}|
+
+The local union has three bins, so merely localizing the count gives Pi(4,3)=1. But phases1,2,3 are ALL forced into the single support{5}. Therefore phi_5(0)=3, attained by assigning phase4 to either other support. The subset J={1,2,3} proves3 directly by(PA1); setting k_{5}=2 and the other support weights to zero proves the same value by(PA2).
+
+This is a strict hierarchy at ONE actual common source:
+
+    global balanced-bin bound0
+      < local balanced-bin bound1
+      < actual phase-assignment bound3.
+
+The target has77 private points. Exactly17 of them have every alternative top5 phase supplied;60 have a missing phase4 and provide direct uncovered-neighbor witnesses. Among the feasible17 points, one has local-bin bound1 and sixteen have bound2; all have assignment cost3. Under the ORIGINAL uniform probability,
+
+    integral_W Pi(4,sigma_5(x)) dmu=1/315,
+    integral_W phi_5(x) dmu=17/3465,
+    sum_(R_5)mu(W intersect E_s intersect E_t)=17/3465,
+    sum_(R_5)((5-2)/P_(T_s))c_st=1/3.
+
+Here W is explicitly the17 feasible private points, not the full77-point private region. The example witnesses a strict source-local improvement and exact restricted pair accounting; it does NOT violate(PA3), because17/3465<=1/3. The full-private phi integral is left undefined in the data, with all60 missing-phase points listed.
+
+### A feasible zero-cost star marks the remaining scope
+
+Use the actual classes0 mod15015,6 mod15,7 mod35,33 mod55,39 mod65. Their common period is15015=3*5*7*11*13; their moduli are odd and distinct. The first class has the unique private point0. Its four alternative top5 phases are supplied by the other four original classes, whose supports are respectively{3,5},{5,7},{5,11},{5,13}. Thus every phase is supplied on the entire selected private region, yet the local union has four bins and phi_5(0)=0. The original uniform integral and pair-capacity RHS are both zero.
+
+This is a NONCOVER with exactly13080 uncovered residues. For example, modifying0 only in a nonzero top3 phase keeps its top5 phase zero; it leaves the full-period target and belongs to none of the four suppliers, all of which require a nonzero top5 phase. Therefore this control supplies no odd whole cover. It shows that numerical distinctness and complete supply along one selected prime do not themselves force positive-mass Hall cost. The required further input must use full coverage or compatible information from other directions.
+
+The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.json), checks these statements. Reproduce them with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_phase_assignment.py
+```
+
+The program also checks the actual distinct even L60 whole cover and a complete residue partition modulo25 (repeated moduli), keeping their scopes explicit. These are ordinary proofs and exact finite controls, not Lean verification.
