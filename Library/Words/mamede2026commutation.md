@@ -4,7 +4,7 @@ authors: Ricardo Mamede, Jose Luis Santos, Diogo Soares
 year: 2026
 title: Maximum number of one-element commutation classes of a permutation
 doi: 10.48550/arXiv.2601.09395
-claim: Lemmas 2.4 and 3.1 give exterior support and extremal orientation; Lemma 3.6 gives a source-word shape, and Proposition 3.8 gives deletion injectivity.
+claim: Lemmas 2.4 and 3.1 give exterior support and extremal orientation; Lemmas 3.2 and 3.4 give uniqueness at an extremal endpoint; Lemma 3.6 gives a source-word shape, and Proposition 3.8 gives deletion injectivity.
 strata_touched:
   - D5/S1/Words/Permutations/MamedeAdjacentWords
   - D5/S1/Words/Permutations/MamedeSourceAction
@@ -12,6 +12,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeShapeExtraction
   - D5/S1/Words/Permutations/MamedeDeletionEquiv
   - D5/S1/Words/Permutations/MamedeExtremalOrientation
+  - D5/S1/Words/Permutations/MamedeEndpointUniqueness
 license: citation-only
 triage: anchor
 ---
@@ -22,7 +23,7 @@ triage: anchor
 
 DOI [10.48550/arXiv.2601.09395](https://doi.org/10.48550/arXiv.2601.09395)
 identifies [arXiv:2601.09395v1](https://arxiv.org/html/2601.09395v1).
-The cited scope is Definition 3.1, Lemmas 2.4 and 3.1, Lemma 3.6 (first
+The cited scope is Definition 3.1, Lemmas 2.4, 3.1, 3.2 and 3.4, Lemma 3.6 (first
 orientation), and Proposition 3.8. The conditional converse below is a new formal claim, not a
 result asserted by those source passages.
 
@@ -102,3 +103,26 @@ The nonoscillating source-admissibility implication still requires strict
 internal endpoint extraction, the other endpoint equations, nonoscillation
 under reversal, and whole-fiber uniqueness when `j<i`. The extremal theorem
 does not assume or establish `i<=j`, and does not settle Conjecture 5.1.
+
+## Extremal endpoint uniqueness
+
+`MamedeEndpointUniqueness.extremal_endpoint_unique` compares two reduced
+consecutive words with equal permutation products. If their first letters
+are the same common minimum or maximum, the words are equal; the same holds
+for their last letters. The theorem assumes the generator bounds for both
+words and compares endpoints on the same side. It does not assume an
+oscillation or compare a first endpoint with a last endpoint.
+
+This is a formalization of the combined endpoint statement in Lemmas 3.2
+and 3.4. Lemma 3.2 identifies reduced consecutive words with an extremal
+endpoint as oscillations, and Lemma 3.4 gives uniqueness at each such
+endpoint. Omitting the oscillation premise does not claim new published
+mathematics. The proof alternates forced initial descents with reflected
+ascents, using induction on word length; reversal supplies the right
+endpoint cases.
+
+For Proposition 3.7's `j<i` argument, this result can determine the prefix
+and suffix after their separate permutation products have been recovered.
+That recovery still needs the all-fiber source shape without `i<=j` and
+the disjoint-support argument for the central excursion. No whole-fiber
+uniqueness or source-admissibility implication follows yet.

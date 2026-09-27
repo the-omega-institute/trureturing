@@ -37,6 +37,13 @@ from any nonempty reduced consecutive word. It supplies the extremal part of
 the source adapter; strict internal endpoints and the `j<i` uniqueness step
 remain unproved. This intermediate result does not change KPI.
 
+`MamedeEndpointUniqueness.extremal_endpoint_unique` proves that two reduced
+consecutive words with the same product and the same first (or the same
+last) letter are equal when that letter is a minimum of both words or a
+maximum of both words. This formalizes the endpoint uniqueness ingredient
+of Lemmas 3.2 and 3.4. It does not yet identify all words in a `j<i` fiber,
+and does not change KPI.
+
 ## Gap
 
 The reflected orientation, oscillating and involutive branches, and a global
