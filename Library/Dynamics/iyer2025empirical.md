@@ -6249,3 +6249,25 @@ Jay Bartroff、Larry Goldstein 与 Ümit Işlak，*Bounded size biased couplings
 原文一般定理将更强尾界归于 Arratia–Baxendale；未核对该被引原始证明，不将其作为本章输入。$Y_{\ne}$ 配置证明末尾印出的 $\mathcal L(Y(N_{\ne}))=\mathcal L(Y_{\ge}^s)$ 与该处目标记号不一致；不把修正后的等式当作本文前提，也不据此否定整篇定理。本章直接证明所需的条件实倾斜界和原始总数集中，未从文章标题、补集操作或未证的有界耦合取得实际律结论。
 
 上述检索与核对仅界定已检查版本的迁移范围；不宣称全球原创或检索穷尽。标准化波动的对数加权绝对值可按本章给定界转移，仍不等于全数据后验熵或完整惊异度的转移；本章不解决 $E_2$。
+
+## 谱边界卷第 188 章补充：实际稀有计数组的无上限相对熵
+
+对应 [谱边界卷第 188 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：第 183 章的同一实际总数条件分配、第 185 章的无均值上限联合全变差和第 187 章的实际指数包络，在此通过新增的联合点概率界接合。结果针对一或两个预先指定的完整原始群，以各实际实验自己的精确均值为独立 Poisson 参考参数，给出 $O(Q^{-3/2}\log Q)$ 相对熵误差。有限参数条件、极小与零均值处理均在正文写明；不覆盖增长维数、全部数据的后验熵或共同层同步。
+
+Ioannis Kontoyiannis、Peter Harremoës、Oliver Johnson，*Entropy and the Law of Small Numbers*，[arXiv:math/0211020v2](https://arxiv.org/abs/math/0211020v2)，[固定版本原始 TeX](https://arxiv.org/src/math/0211020v2)。其 Proposition 1 对可能依赖的 Bernoulli 指标给出
+
+$$
+D\!\left(\mathcal L\!\left(\sum_iX_i\right)\middle\|
+\operatorname{Pois}\!\left(\sum_ip_i\right)\right)
+\le\sum_ip_i^2+\sum_iH(X_i)-H(X_1,\ldots,X_n).
+$$
+
+证明用求和的数据处理、联合到乘积律的散度恒等式以及 Bernoulli 到 Poisson 的散度界。右端总相关项对占位指标及依赖 path 不自动为零；在本模型实际达到的中心信号群上，平方和项还可具有 $q/\lambda^2$ 量级，故该界自身不支付本章无均值上限的目标。
+
+同文 Theorem 1 的较强界 $\lambda^{-1}\sum_i p_i^3/(1-p_i)$ 要求独立 Bernoulli 指标。所核对的 Proposition 2、Proposition 3 及卷积条件投影证明保留其独立性与 scaled-Fisher/log-Sobolev 前提；中间卷积引理的显示陈述未重复写出的独立性仍是其卷积证明的条件，不能移植为依赖行指标定理。其引用的 Bobkov–Ledoux 原始 Corollary 4 未独立核对，不承担本章证明。
+
+固定 v2 的 Proposition 2 有限支持证明含字面不一致：写 $P^\varepsilon=(1-\varepsilon)\mathrm{Po}_\lambda+\varepsilon P$，随后却称 $\varepsilon\downarrow0$ 时趋于 $P$，并把尾部系数写作 $\varepsilon$；在已指定 $P(k)=0$ 的地方还写 $P^\varepsilon(k)/P(k)=\varepsilon$。这些行不作隐式修补或本章证明步骤，也不据此否定整条定理。本章的估计由正文的格点平滑与正似然残差直接推出。
+
+文献范围是固定版本所述命题、定理及上述证明接口。其它检索线索不承担定理主张，也不据此声称文献穷尽或全球原创性。经典工具与本模型的新增综合推导分别归属。
+
+## 追加锚（本行以下为增补区）

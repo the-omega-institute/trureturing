@@ -58052,3 +58052,532 @@ The comparisons are with a moving independent Poisson vector of the exact origin
 这里的非有界可观测量仅涉及一或两个预先选定群的标准化波动。全数据后验熵、完整似然惊异度、增长维数、随层增长的实参数半径、依数据选择群和趋近参数端点都需要额外证明。该定理也不赋予移动均值的收敛性，不能替代 $E_2$ 的无限共同楼层同步条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 188. 无均值上限的联合 Poisson 相对熵：实际条件分配的局部平滑
+
+第 185、187 章已经控制一或两个完整原始群的联合全变差与实际指数尾。本章补上移动参考律所需的局部信息：实际联合点概率不超过相应 Poisson 波动体积的倒数乘一个固定常数。这个尺度消去大均值带来的对数项，使相对熵在均值可以指数增长时仍趋于零。
+
+**定理 188.1（精确实际均值下的联合相对熵）。** 固定 $J\Subset D$ 和原始截止 $C_0$，取一或两个互异、确定的合法完整原始群，保留原始振幅、取整、计数线、支持与观察时长。分别对实际 pair 和平稳依赖 path、每个大小为 $q$ 的确定支持，以该实验自己的实际均值 $\mu_v=\mathbb E C_v$ 为参数，一致有
+
+$$
+D\!\left(\mathcal L(C_1,\ldots,C_d)\,\middle\|\,
+\bigotimes_{v=1}^d\operatorname{Pois}(\mu_v)\right)
+=O_{J,r,C_0}(Q^{-3/2}\log Q)\longrightarrow0,
+\qquad d\in\{1,2\}.
+\tag{188.1}
+$$
+
+这里不设新的均值上限或正下界。零均值坐标为确定零；极小正均值由单独的交叉熵界支付。显式有限参数上界见 (188.30)。证明新增的实际律界是
+
+$$
+\Pr\{C=c\}\le K\prod_{v=1}^d(1+\mu_v)^{-1/2},
+\tag{188.2}
+$$
+
+并且对所选坐标的每个非空子集也成立。其证明在同一实际总数条件下平滑信号标签分配，再与实际条件背景卷积。相对熵估计直接控制正的似然残差，不从全变差反推相对熵，也不假定整个信号数组的散度已经受控。
+
+### 188.2 原始实验与精确继承界
+
+
+All logarithms are natural. Keep the original history, amplitude and floors:
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0,
+$$
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_1=q,\quad s_0=M-q,\quad
+\epsilon=rq/s_0,\quad T=2M\lambda.                           \tag{188.3}
+$$
+
+Fix J=[beta_0,beta_1] compactly inside D=(beta_*,1), where beta_*>1/2 is the original Section 68.25 threshold. Each parity class C_+,C_- has size M. For any deterministic S subset C_+ with |S|=q, the kernel is
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+
+The path starts uniformly and uses T transitions. The pair experiment consists of T independent stationary adjacent pairs. These are the original correctly oriented experiments. The groups are deterministic functions of the parameters, not selected from the observed data.
+
+Take d=1 or2 distinct lawful integers j_v on the original internal arcs, with
+
+$$
+k_v=(K_v,B_v)=(k_0+Qj_v,l_0+Pj_v),\qquad
+K_v,B_v\ge0,\qquad K_v+B_v\le C_0\lambda.                    \tag{188.4}
+$$
+
+We can and do take C_0>=1 by increasing the fixed bounding constant if necessary. The argument covers the whole cutoff line, hence all of the specified arcs. Chapter 175's injectivity identifies each complete score group exactly with its count-pair group at sufficiently late layers:
+
+$$
+C_v=C_{1,v}+C_{0,v},\qquad
+C_{i,v}=\sum_{x\in\mathcal A_i}
+  {\bf1}\{(N_{x,+},N_{x,-})=k_v\},\quad
+\mathcal A_1=S,\quad \mathcal A_0=C_+\setminus S.
+$$
+
+Write $\mathbf C_i=(C_{i,v})_{v=1}^d$ for the class-count vector and $\mathbf C=\mathbf C_1+\mathbf C_0$ for the complete vector. Thus 0<=C_v<=M. For either experiment write mu_v=E C_v for its own exact mean. Put
+
+$$
+\nu_1=(a\lambda,b\lambda),\qquad
+\nu_0=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2),
+$$
+$$
+f_{i,v}=\prod_{\sigma=+,-}\Pr\{\operatorname{Pois}(\nu_{i,\sigma})
+                                      =k_{v,\sigma}\},\qquad
+m_{i,v}=s_i f_{i,v},\quad m_v=m_{1,v}+m_{0,v}.
+$$
+
+These f and m quantities are comparison masses and means; they are never substituted for mu in the theorem's reference law. Define
+
+$$
+\Delta(t)=10^6(t+Tt^2)e^{10^6Tt^2}+12\,2^{-T},\quad
+\delta_1=\Delta((1+C_0)/(2M)),\quad
+\delta_S=\Delta(3q/(2M)),\quad B_*=2/\sqrt{ab}.
+$$
+
+The inherited one-row estimate and original score identity give
+
+$$
+|\mu_v-m_v|\le\delta_1m_v,\qquad
+s_0f_{0,v}\le6qf_{1,v},\qquad
+m_v\le7qf_{1,v}\le7B_*q/\lambda.                         \tag{188.5}
+$$
+
+In particular, once delta_1<=1/2, mu_v<=14qf_{1,v}. The second inequality in (188.5) follows from the SAME count line and compensation: f_{0,v}=e^{-W(K_v,B_v)}f_{1,v}, where
+
+$$
+W(K,B)=K\log\frac{1+r}{1-\epsilon}
+          +B\log\frac{1-r}{1+\epsilon},\quad
+|W(K_v,B_v)-z_0|\le\rho_Q,
+$$
+$$
+\rho_Q=(-\log(1-r))(C_0+1)\lambda(\vartheta-P/Q)
+                              +2C_0\epsilon\lambda.
+$$
+
+If rho_Q<=1, the original q floor implies s_0e^{-z_0}<=2q and hence the claimed factor6. This is the actual-family relation that lets signal smoothing control the scale of the complete count; it is not available for arbitrary unrelated target pairs.
+
+Use the explicit parameter-only Chapter 185 bound
+
+$$
+\varepsilon_Q=\min\left\{1,
+\frac{6+B_*}{\lambda}
++216(1+C_0/b)B_*\frac q{\sqrt{s_0}}
++\frac{\delta_S}{2}+\frac2{q\lambda}
++\frac{6B_*q}{s_0\lambda}
++\frac{7B_*\delta_1q}{\lambda}\right\}.                   \tag{188.6}
+$$
+
+For both actual experiments and every selected subset of the d coordinates,
+
+$$
+d_{TV}\left(\mathcal L(C),\bigotimes_v\operatorname{Pois}(\mu_v)\right)
+\le\varepsilon_Q=O_{J,r,C_0}(\lambda^{-1}).                 \tag{188.7}
+$$
+
+TV here is half the l1 mass difference. Sufficient inherited conditions are q>=1, s_0>=2, q<=M/2, epsilon<=1/2, b lambda>=2, both Delta arguments<=1/200, delta_1<1, s_0^{-1/2}<=b/2, (1+C_0/b)lambda/sqrt(s_0)+C_0 lambda/s_0<=1, rho_Q<=1 and complete-group identification. They all hold uniformly at late original layers.
+
+Let Z_v=(C_v-mu_v)/sqrt(1+mu_v). Chapter 187 proves on this SAME actual law
+
+$$
+\mathbb E\exp\left(\sum_v|Z_v|\right)\le B_1.             \tag{188.8}
+$$
+
+For an entirely explicit constant, set R=4sqrt2 and
+
+$$
+c_R=e^{-4R}/4,\quad K_R=e^2(4/c_R+1),\quad
+B_0=1/b,\quad B_{\mathrm{at}}=2/b,\quad A_0=1+2C_0/b,\quad c_b=b^2/28,
+$$
+$$
+V_R=B_{\mathrm{at}}R(e^R+1),\quad \eta_R=4\sqrt{V_R+1},\quad
+D_R=A_0e^{2A_0\eta_R},
+$$
+$$
+M_R=4K_R\exp\{R^2e^R/2+12B_0D_R^2e^{2R}R^2\}+4K_R+4,
+\qquad B_1=2e^2M_R.                                      \tag{188.9}
+$$
+
+Chapter 187's sufficient additional conditions for (188.8) are
+
+$$
+\lambda\ge\max\{4/b,\eta_R,2\eta_R/b,4R/c_b,
+                              4D_Re^R R B_0\},\quad
+(1+T)e^{-c_Rq}\le1,\quad \delta_1\le1/2,
+\quad \delta_1\sqrt{14B_*q/\lambda}\le1.                  \tag{188.10}
+$$
+
+The enormous but fixed constants in (188.9) are not numerically evaluated. Their finiteness is sufficient. The new proof uses the actual bound (188.8), not just a Poisson reference envelope.
+
+Finally, write H_{i,sigma} for the original number of departures from class i with next parity sigma. The exact Chapter 183 disintegration says that, conditional on the SAME four totals H, the four label lists are independent uniform lists in their respective classes. The two sign count vectors in a class are therefore independent multinomial allocations of H_{i,+},H_{i,-} labels among s_i rows. The totals themselves retain their original dependence. Chapter 187 gives
+
+$$
+\Pr\{\max_\sigma|H_{1,\sigma}-q\nu_{1,\sigma}|>x\}
+\le4\exp\left\{-\frac{x^2}{2(3q\lambda+x)}\right\}.       \tag{188.11}
+$$
+
+For the path, this follows by splitting edge indicators into three residue classes; each subsequence is jointly independent by the exact reset P_S^2=Pi and successive conditioning. Hölder combines the three subsequences without asserting their mutual independence. This proof and the exact conditional-label proof are inherited, not new Poisson assumptions about path rows.
+
+### 188.3 删除所选原子后的格点平滑
+
+We first prove a new estimate for the conditional allocations. Fix d=1 or2 distinct targets k_v in the nonnegative integer lattice, each coordinate bounded by C_0 lambda. In this section take
+
+$$
+w_+,w_-\in[b\lambda/2,2\lambda],\quad \lambda\ge1,
+\quad D_0=\max\{2,C_0\},\quad
+C_1=8\sqrt{D_0}/b,
+$$
+$$
+W_0=8(1+D_0)C_1^2,\qquad c_0=b/(8\pi^2).                 \tag{188.12}
+$$
+
+Let X have independent Poisson coordinates of means w_+,w_-. Denote its target masses by f_v(w), their sum by F, and its law conditional on avoiding all the targets by X^circ.
+
+For 0<=k<=C_0 lambda and w in the displayed band,
+
+$$
+\Pr\{\operatorname{Pois}(w)=k\}
+\le\frac{C_1}{\sqrt\lambda}
+       \exp\left\{-\frac{(k-w)^2}{4D_0\lambda}\right\}.    \tag{188.13}
+$$
+
+Proof. Put I_w(k)=k log(k/w)-k+w, with 0 log0=0. Since I_w''(t)=1/t>=1/(D_0 lambda) along the segment from k to w, integration from its minimum at w gives I_w(k)>=(k-w)^2/(2D_0 lambda), including k=0 by continuity. If k>=w/2, Stirling's lower bound gives a prefactor at most 2/sqrt(b lambda), which is at most C_1/sqrt(lambda). If k<w/2, the elementary factorial bound k!>=(k/e)^k, including the convention at0, gives mass<=e^{-I_w(k)}. Here |k-w|>=b lambda/4, so
+
+$$
+I_w(k)\ge\frac{(k-w)^2}{4D_0\lambda}
+                           +\frac{b^2\lambda}{64D_0}.
+$$
+
+With alpha=b^2/(64D_0), sqrt(alpha lambda)e^{-alpha lambda}<=1, and alpha^{-1/2}=C_1. This absorbs the last exponential into the required prefactor. QED.
+
+Multiplying (188.13) in the two coordinates and summing at most two targets proves
+
+$$
+f_v(w)\le\frac{C_1^2}{\lambda}
+          e^{-|k_v-w|^2/(4D_0\lambda)},\quad
+F\le2C_1^2/\lambda,\quad
+\sum_v f_v(w)(4\lambda+|k_v-w|^2)\le W_0.                \tag{188.14}
+$$
+
+For the last bound set x=|k_v-w|^2/(4D_0 lambda) and use e^{-x}<=1 and xe^{-x}<=1. In particular F<=1/16 whenever lambda>=32C_1^2.
+
+We claim that the characteristic function of X^circ obeys
+
+$$
+|\varphi_\circ(\theta)|\le
+\exp\{-c_0\min(\lambda|\theta|^2,1)\},\qquad
+                          \theta\in[-\pi,\pi]^2,           \tag{188.15}
+$$
+
+provided
+
+$$
+\lambda\ge\max\{32C_1^2,\ 4\pi^2W_0/b,\ 32\pi^2C_1^2/b\}.
+                                                                  \tag{188.16}
+$$
+
+Here and below |.| denotes the Euclidean norm in these Fourier calculations. To prove (188.15), take independent X,X' of the unconditioned law. With
+
+$$
+x(\theta)=\sum_\sigma w_\sigma(1-\cos\theta_\sigma),\qquad
+g(\theta)=\mathbb E[1-\cos(\theta\cdot(X-X'))]=1-e^{-2x(\theta)},
+$$
+
+we have b lambda|theta|^2/pi^2<=x(theta)<=lambda|theta|^2. The contribution removed when either row lies in the target set is nonnegative and at most W_0|theta|^2. Indeed a union bound over the two rows followed by 1-cos t<=t^2/2 bounds it by
+
+$$
+\sum_v f_v(w)\mathbb E[(\theta\cdot(k_v-X'))^2]
+\le |\theta|^2\sum_v f_v(w)(|k_v-w|^2+w_++w_-).
+$$
+
+It is also at most 4F<=8C_1^2/lambda, since 1-cos t<=2. If lambda|theta|^2<=1, the base gap g is at least b lambda|theta|^2/(2pi^2), using 1-e^{-2x}>=x/2 for 0<=x<=1. The first removal bound and (188.16) leave at least b lambda|theta|^2/(4pi^2). If lambda|theta|^2>1, monotonicity and b/pi^2<1 give base gap at least b/(2pi^2). The second removal bound leaves at least b/(4pi^2). Dividing this remaining expectation by (1-F)^2<=1 yields
+
+$$
+1-|\varphi_\circ(\theta)|^2
+\ge\frac b{4\pi^2}\min(\lambda|\theta|^2,1).
+$$
+
+The inequality sqrt(1-y)<=e^{-y/2} proves (188.15). In particular, conditioning away these rare row types does not destroy aperiodic smoothing on the two-dimensional lattice. The weighted bound in (188.14), not rarity alone, controls the small-frequency loss.
+
+For l independent rows of this outside-target law, Fourier inversion and (188.15) imply, whenever l>=s/2,
+
+$$
+\sup_z\Pr\{X_1^\circ+\cdots+X_l^\circ=z\}
+\le\frac2{c_0s\lambda}+e^{-c_0s/2}
+\le\frac{K_0}{s\lambda},\qquad K_0=2/c_0+1,             \tag{188.17}
+$$
+
+provided s lambda e^{-c_0s/2}<=1. For completeness, integrate the modulus over the torus with factor (2pi)^{-2}; the integrand is at most e^{-c_0 l lambda|theta|^2}+e^{-c_0 l}. The first integral is bounded by the Gaussian integral over R^2, which is at most 2/(c_0 s lambda), and the second by e^{-c_0s/2}. This is a uniform point bound, with no moving-target local limit theorem left unproved.
+
+### 188.4 固定两个总数后的联合点概率界
+
+Fix a positive integer s and positive integer totals n_+,n_- with w_sigma=n_sigma/s in the band of Section 188.3. In each sign, allocate n_sigma independent uniform labels among the s rows, with independent signs. Let U_v count rows of target type k_v. The following is the new conditional allocation estimate:
+
+$$
+\sup_c\Pr\{U=c\mid n\}
+\le K_{\rm alloc}\prod_{v=1}^d(1+s f_v(w))^{-1/2},
+\quad K_{\rm alloc}=8K_1+1,\quad K_1=3e^2K_0.             \tag{188.18}
+$$
+
+Besides (188.16), sufficient conditions are s lambda>=1 and
+
+$$
+s\lambda e^{-c_0s/2}\le1,\qquad
+3e^2s\lambda(1+s)2^{-s}\le1.                            \tag{188.19}
+$$
+
+Proof. Begin with s independent product-Poisson rows of means w. Conditional on their two sums being n, they have EXACTLY the two uniform multinomial allocation laws. Before conditioning, the vector A of target counts is categorical multinomial with probabilities f_1,...,f_d,1-F.
+
+Its joint maximum atom satisfies
+
+$$
+\sup_c\Pr\{A=c\}\le8\prod_v(1+s f_v)^{-1/2}.            \tag{188.20}
+$$
+
+To see this without inferring a joint law from marginals, the one-row categorical characteristic function is psi(u)=1-F+sum_v f_ve^{iu_v}. Its squared-modulus gap includes the nonnegative terms
+
+$$
+1-|\psi(u)|^2\ge2(1-F)\sum_v f_v(1-\cos u_v).
+$$
+
+Since F<=1/16<1/2, raising its modulus to s bounds it by exp(-s sum_v f_v(1-cos u_v)/2). Lattice Fourier inversion now factors into one circle integral per coordinate. For y>=0,
+
+$$
+\frac1{2\pi}\int_{-\pi}^{\pi}e^{-y(1-\cos t)}dt
+\le\frac2{\sqrt{1+y}}.
+$$
+
+This follows from 1-cos t>=2t^2/pi^2 and the Gaussian integral, combining the resulting bound with the trivial bound1 near y=0. Each factor with y=sf_v/2 is at most 2sqrt2/sqrt(1+sf_v). For d<=2 their product is at most the right side of (188.20).
+
+Write h=sum_v c_v. If h<=s/2, conditioning on A=c leaves s-h rows independently distributed as X^circ, and the h marked rows contribute the fixed total sum_v c_vk_v. Although the identities of the marked rows are random, this description of their SUM is unchanged by their positions. Thus (188.17) bounds the conditional probability of the two required totals by K_0/(s lambda). Meanwhile Stirling's upper bound n!<=e sqrt(n)(n/e)^n gives
+
+$$
+\Pr\{\operatorname{Pois}(n_+)=n_+\}
+\Pr\{\operatorname{Pois}(n_-)=n_-\}
+\ge\frac{e^{-2}}{\sqrt{(1+n_+)(1+n_-)}}
+\ge\frac{e^{-2}}{3s\lambda}.                            \tag{188.21}
+$$
+
+The last inequality uses n_sigma<=2s lambda and s lambda>=1. Bayes' formula therefore gives Pr(U=c|n)<=K_1 Pr(A=c); (188.20) pays this case. If c is infeasible its probability is zero and the conclusion still holds.
+
+If h>s/2, then, under the unconditioned rows,
+
+$$
+\Pr\{\textstyle\sum_v A_v>s/2\}
+\le2^s F^{s/2}\le2^{-s},
+$$
+
+using F<=1/16. Crude division by (188.21), followed by (188.19), bounds each conditional atom in this case by (1+s)^{-1}. Since f_v<=1 and d<=2,
+
+$$
+(1+s)^{-1}\le\prod_v(1+s f_v)^{-1/2}.
+$$
+
+Combining the two cases proves (188.18). This treatment includes every possible h, not only low-order marks or a truncated factorial expansion. QED.
+
+### 188.5 回到同一实际信号与背景混合
+
+Use (188.18) only in the signal class s=q. Define the actual-total event
+
+$$
+G=\{\max_\sigma|H_{1,\sigma}/q-\nu_{1,\sigma}|\le1\}.
+$$
+
+For lambda>=max(1,2/b), its w_sigma=H_{1,sigma}/q lie in [b lambda/2,2lambda], with positive integer totals. On the segment between nu_1 and w, the partial derivatives of log f_v are k_{v,sigma}/w_sigma-1, of absolute value at most A_0=1+2C_0/b. Hence
+
+$$
+f_v(w)\ge e^{-2A_0}f_{1,v},\qquad
+1+\mu_v\le14e^{2A_0}(1+q f_v(w)),                       \tag{188.22}
+$$
+
+where (188.5) pays the change to the exact actual complete-group mean. With d<=2, (188.18) and (188.22) give the conditional signal-vector bound
+
+$$
+\sup_c\Pr\{\mathbf C_1=c\mid H\}
+\le14e^{2A_0}K_{\rm alloc}\prod_v(1+\mu_v)^{-1/2}
+\quad\text{on }G.
+$$
+
+Conditional on ALL four original totals, the signal vector and the background vector are independent by the exact label-list disintegration. Their conditional sum is the actual complete-group vector. Convolution with the actual conditional background distribution cannot increase the maximum atom of the signal vector. This statement uses one common realization H: the background mixture has not been selected or assembled independently of the actual signal experiment. Integrating over H on G preserves the displayed deterministic bound.
+
+For its complement, (188.11) at x=q and lambda>=1 gives
+
+$$
+\Pr(G^c)\le4e^{-q/(8\lambda)}.
+$$
+
+Since mu_v<=M, product_v(1+mu_v)^{-1/2}>=(1+M)^{-1}. Thus, under the further explicit condition
+
+$$
+4(1+M)e^{-q/(8\lambda)}\le1,                             \tag{188.23}
+$$
+
+the entire exceptional-total contribution to each atom is at most product_v(1+mu_v)^{-1/2}. We obtain (188.2) with
+
+$$
+\boxed{K=14e^{2A_0}K_{\rm alloc}+1.}                    \tag{188.24}
+$$
+
+The same argument applies directly to every nonempty subset of the d target types, using the same upper constants. A marginal point bound is not obtained by summing an infinite number of the full-vector point bounds.
+
+All new conditions hold uniformly at late original layers. The unchanged floors give
+
+$$
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O(1),\quad
+q/\sqrt M\le C_J e^{-\phi(1-1/(2\beta_0))\lambda}.
+$$
+
+Thus q grows exponentially, log M=O_J(lambda), and (188.16), (188.19) with s=q, and (188.23) all follow. These also verify the earlier conditions (188.10). The first term in (188.6) is O(lambda^{-1}); all terms involving q/sqrt(s_0), delta_S, delta_1q/lambda are exponentially small, as proved in Chapter 185 from the same scales. Consequently (188.7) retains its uniform O(lambda^{-1}) rate. None of these conditions restricts mu or changes a denominator, floor, horizon or amplitude.
+
+### 188.6 移动参考律的正似然残差
+
+We now prove the distributional interface rather than invoking an entropy-continuity theorem. Let P be the actual law of any nonempty selected subset with all means at least eta, where 0<eta<=e^{-1}; let R_mu be the independent-Poisson reference of its SAME means. Use p(c), r_mu(c) for the two mass functions and put
+
+$$
+a_\mu=\prod_v(1+\mu_v)^{-1/2},\quad
+W(c)=\log\frac{a_\mu}{r_\mu(c)},\quad
+S(c)=\sum_v\frac{|c_v-\mu_v|}{\sqrt{1+\mu_v}}.
+$$
+
+For d<=2 the following deterministic bound holds:
+
+$$
+W(c)\le8(1+\log(1/\eta))(1+S(c)^2).                    \tag{188.25}
+$$
+
+Here is a proof that covers the moving means explicitly. In one coordinate, if mu>=1 and k>=1, Stirling's upper bound yields
+
+$$
+\log\frac{(1+\mu)^{-1/2}}{\Pr\{\operatorname{Pois}(\mu)=k\}}
+\le I_\mu(k)+1+\tfrac12\log\frac{k}{1+\mu}.
+$$
+
+The elementary inequality log x<=x-1 gives I_mu(k)<=(k-mu)^2/mu<=2Z^2, where Z=(k-mu)/sqrt(1+mu). Also log(k/(1+mu))<=|Z|. Therefore the left side is at most 2+3Z^2. For k=0 it equals mu-(1/2)log(1+mu)<=mu<=2Z^2, so the same bound holds.
+
+If eta<=mu<1, write L=log(1/eta). Since log k!<=k^2 for every integer k>=0, and k<=1+sqrt2|Z|,
+
+$$
+\log\frac{(1+\mu)^{-1/2}}{\Pr\{\operatorname{Pois}(\mu)=k\}}
+\le1+Lk+k^2\le(4+2L)(1+Z^2).
+$$
+
+For example k^2<=2+4Z^2 and 1+sqrt2|Z|<=2(1+Z^2) prove the last inequality. Adding at most two such bounds, including the mu>=1 case, proves (188.25).
+
+Let epsilon be any upper bound on TV(P,R_mu), with epsilon<=1. On the set where p>r_mu, put delta(c)=p(c)-r_mu(c). The scalar inequality x-1>=log x for x>1 gives
+
+$$
+p\log(p/r_\mu)\le(p-r_\mu)(1+\log(p/r_\mu)).
+$$
+
+The negative terms of KL can be discarded for an upper bound. Using (188.2), then (188.25), gives
+
+$$
+D(P\|R_\mu)
+\le(1+\log K)\varepsilon
++8(1+\log(1/\eta))\sum_{p>r_\mu}\delta(c)(1+S(c)^2).
+$$
+
+Indeed log(p/r_mu)<=log K+W(c); the common fluctuation-scale factor a_mu cancels the large log(mean) term. Since sum delta=TV(P,R_mu)<=epsilon and 0<=delta<=p, Cauchy–Schwarz and the actual bound (188.8) imply
+
+$$
+\sum\delta(c)(1+S(c)^2)
+\le\sqrt{\varepsilon\,\mathbb E_P(1+S^2)^2}
+\le\sqrt{29B_1\varepsilon}.
+$$
+
+The constant uses 1+2S^2+S^4<=29e^S. Thus
+
+$$
+\boxed{D(P\|R_\mu)\le(1+\log K)\varepsilon
++8(1+\log(1/\eta))\sqrt{29B_1\varepsilon}.}              \tag{188.26}
+$$
+
+All actual distributions at a finite original layer have finite support, and r_mu is positive for positive means, so these sums and the discarded negative terms are well defined. Equation (188.26) is a direct KL estimate. It is not a claim that TV alone controls KL, and not an identification of a Shannon entropy difference with KL.
+
+### 188.7 极小均值、零均值与完整有限参数界
+
+If mu_v=0, nonnegativity and E C_v=0 imply C_v=0 almost surely. The corresponding Poisson coordinate is also identically zero. Removing this coordinate leaves KL unchanged; no logarithm of a zero reference probability is evaluated on positive actual mass.
+
+For a positive mean mu<eta<=e^{-1}, the exact cross-entropy identity is
+
+$$
+\mathbb E[-\log\Pr\{\operatorname{Pois}(\mu)=C\}]
+=\mu+\mu\log(1/\mu)+\mathbb E\log C!.                   \tag{188.27}
+$$
+
+This uses the actual E C=mu, with no mean calibration error. Since mu<=1, C<=1+sqrt2|Z|<=2(1+|Z|). Equation (188.8) and (1+x)^4<=24e^{1+x} for x>=0 give
+
+$$
+\mathbb E C^4\le384e B_1.
+$$
+
+Also Pr(C>0)<=mu. Consequently
+
+$$
+\mathbb E\log C!\le\mathbb E C^2
+\le\sqrt{\mathbb E C^4\Pr(C>0)}
+\le\sqrt{384eB_1\mu}.
+$$
+
+The function x(1+log(1/x)) increases on (0,1], so (188.27) is at most
+
+$$
+\eta(1+\log(1/\eta))+\sqrt{384eB_1\eta}.                \tag{188.28}
+$$
+
+To combine the coordinates lawfully, let A denote those with means at least eta and B those with means strictly between0 and eta, after zero coordinates have been removed. Exact factorization of the REFERENCE gives
+
+$$
+D(P_{A,B}\|R_A R_B)
+=D(P_A\|R_A)+\mathbb E[-\log R_B(C_B)]-H(C_B\mid C_A)
+\le D(P_A\|R_A)+\sum_{v\in B}\mathbb E[-\log R_v(C_v)]. \tag{188.29}
+$$
+
+The conditional Shannon entropy is finite and nonnegative because the actual vector is finitely supported. This identity assumes no independence between the actual A and B coordinates. If A is empty its KL term is0. If B is empty the extra term is0.
+
+At sufficiently late layers 0<epsilon_Q<=e^{-1}; it is positive because (188.6) includes a positive term. Apply (188.26) with eta=epsilon=epsilon_Q to the retained subset, use (188.28) on at most two tiny coordinates and (188.29). The promised explicit bound is
+
+$$
+\boxed{\begin{split}
+D\left(\mathcal L(C)\,\middle\|\,\bigotimes_v\operatorname{Pois}(\mu_v)\right)
+\le{}&(1+\log K)\varepsilon_Q
++8(1+\log(1/\varepsilon_Q))\sqrt{29B_1\varepsilon_Q}\\
+&+2\varepsilon_Q(1+\log(1/\varepsilon_Q))
++2\sqrt{384eB_1\varepsilon_Q}.
+\end{split}}                                                   \tag{188.30}
+$$
+
+All constants and sufficient finite conditions are specified by (188.6), (188.9), (188.10), (188.12), (188.16), (188.19) with s=q, (188.23), (188.24), the inherited conditions stated after (188.7), lambda>=max(1,2/b), and epsilon_Q<=e^{-1}. They hold uniformly at late layers by the original scales. Since epsilon_Q=O(lambda^{-1}), the right side is O(lambda^{-1/2}log lambda)=O(Q^{-3/2}log Q), proving (188.1).
+
+No lower bound on a positive mean and no upper cap is needed. In particular the estimate includes the attained exponentially large examples already proved in Chapter 185: if the allowed arc includes0 then j=0 has mu asymptotic to q/(pi lambda sqrt(ab)); j=1 has the same leading order when the cutoff has room. In inward root neighborhoods, lawful floor indices j_n=floor(uQ_n^2) with strict rate-function room also give exponential means. These are inherited examples showing that the theorem's uncapped regime is attained; no new arithmetic existence premise is used.
+
+### 188.8 新增信息与适用边界
+
+The actual-family point estimate (188.2) is the additional information absent from bounded-test TV and the exponential envelope alone. Its scale is exactly the reciprocal volume of the selected Poisson fluctuations. Subtracting its log scale from the Poisson surprise leaves a quadratic standardized-deviation bound for means at least1. For smaller means, the explicit log(1/eta) price is controlled by removing the tiniest coordinates with (188.27)–(188.29). The final bound therefore stays small when log mu itself is of order lambda.
+
+No full signal-array divergence has been paid. Chapter 185's inherited TV comparison uses the full signal array in TV; this chapter uses that result only for (188.7). The new local bound works directly under the actual law, conditional on the common original totals, and then integrates the actual conditional signal/background convolution. It never replaces the signal path by independent unconditioned rows or treats different conditional backgrounds as sharing a signal realization without proof. The only independent Poisson rows introduced here represent the already conditioned uniform allocation law through an exact identity.
+
+The smoothing proof controls every allocation mark count, including the very high-mark event by an explicit binomial tail and the conditioning denominator. The exceptional original-total event is paid at the point-mass scale (188.23), which is much stronger than merely discarding an event of small TV probability. The proof of (188.26) bounds the actual positive likelihood residual against the SAME moving reference; the tiny-coordinate payment uses exact actual means. These are the live interfaces in the proof.
+
+This does not settle full-data posterior entropy, reconstruction information, the entropy of every group simultaneously, increasing dimension, data-selected groups or beta moving to the endpoints of D with the layer. No result about E2, sparse common-layer root synchronization or its emptiness follows. No unproved tail transfer is taken from TV. The earlier arithmetic and distributional results retain their original scope.
+
+
+### 188.9 归属与范围
+
+Stirling 界、格点 Fourier 反演、Poisson 条件化产生多项分配、相对熵链式分解与 Cauchy–Schwarz 均为成熟工具。模型内新增部分是删除至多两个目标原子后的加权平滑界、同一实际总数下的联合局部界，以及它们与精确均值参考律连接所得的无上限相对熵估计。相关文献及依赖假设见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章只涉及所述一或两个预先指定计数组；增长维数、全部数据的后验信息及共同层同步问题仍需另证。
+
+## 追加锚（本行以下为增补区）
