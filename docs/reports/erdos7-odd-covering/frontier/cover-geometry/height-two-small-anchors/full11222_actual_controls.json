@@ -1,0 +1,505 @@
+{
+  "result": "PASS",
+  "source_count": 3,
+  "original_pair_tests": 1440,
+  "paired_trees": 234,
+  "numerical_cylinders": 21204,
+  "controls": [
+    {
+      "name": "matching8",
+      "distinct_labels": 8,
+      "maximum_column": 5,
+      "actual_points": 176,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_private_entry_cut": 79,
+      "cut_not_claimed_minimum": true,
+      "puncture": {
+        "anchors": [
+          {
+            "anchor": [
+              0,
+              1,
+              2
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "3": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              3
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "4": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              4
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                2
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "4": 26
+            },
+            "deleted_anchor_mass": "0"
+          }
+        ],
+        "paired_trees": 78,
+        "psi_caps": [
+          "1",
+          "1/3",
+          "2/5",
+          "5/54",
+          "1/5",
+          "2/15",
+          "1/18",
+          "1/15",
+          "1/54"
+        ],
+        "numerical_cylinders": 1767,
+        "positive_R_fine_masses": {
+          "(1, 0)": "2/15"
+        },
+        "marked_label": [
+          1,
+          0
+        ],
+        "marked_numerical49_residue": 1,
+        "marked_degree": 1,
+        "marked_mass": "2/15"
+      },
+      "eta_owner_max": "1/4",
+      "lambda_caps": [
+        "3/4",
+        "1/4",
+        "3/10",
+        "5/72",
+        "3/20",
+        "1/10",
+        "1/24",
+        "1/20",
+        "1/72"
+      ],
+      "pi_caps": [
+        "1/4",
+        "1/4",
+        "5/32",
+        "1/16",
+        "5/32",
+        "1/32",
+        "1/32",
+        "1/32",
+        "1/32"
+      ],
+      "nu_caps": [
+        "1",
+        "1/4",
+        "3/10",
+        "5/72",
+        "5/32",
+        "21/160",
+        "1/24",
+        "1/20",
+        "1/32"
+      ],
+      "common_root_query_bound": "44/5",
+      "lambda_positive_marked_fine": "1/10",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "path6",
+      "distinct_labels": 6,
+      "maximum_column": 4,
+      "actual_points": 190,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_private_entry_cut": 79,
+      "cut_not_claimed_minimum": true,
+      "puncture": {
+        "anchors": [
+          {
+            "anchor": [
+              0,
+              1,
+              2
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "3": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              3
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "3": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              4
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "4": 26
+            },
+            "deleted_anchor_mass": "0"
+          }
+        ],
+        "paired_trees": 78,
+        "psi_caps": [
+          "1",
+          "1/3",
+          "2/5",
+          "5/54",
+          "1/5",
+          "2/15",
+          "1/18",
+          "1/15",
+          "1/54"
+        ],
+        "numerical_cylinders": 1767,
+        "positive_R_fine_masses": {
+          "(1, 0)": "1/15"
+        },
+        "marked_label": [
+          1,
+          0
+        ],
+        "marked_numerical49_residue": 1,
+        "marked_degree": 2,
+        "marked_mass": "1/15"
+      },
+      "eta_owner_max": "1/3",
+      "lambda_caps": [
+        "3/4",
+        "1/4",
+        "3/10",
+        "5/72",
+        "3/20",
+        "1/10",
+        "1/24",
+        "1/20",
+        "1/72"
+      ],
+      "pi_caps": [
+        "1/4",
+        "1/4",
+        "1/6",
+        "1/12",
+        "1/6",
+        "1/24",
+        "1/24",
+        "1/24",
+        "1/24"
+      ],
+      "nu_caps": [
+        "1",
+        "1/4",
+        "3/10",
+        "1/12",
+        "1/6",
+        "1/10",
+        "1/24",
+        "1/20",
+        "1/24"
+      ],
+      "common_root_query_bound": "44/5",
+      "lambda_positive_marked_fine": "1/20",
+      "numerical_cylinders": 7068
+    },
+    {
+      "name": "adjacent7",
+      "distinct_labels": 7,
+      "maximum_column": 5,
+      "actual_points": 176,
+      "original_pair_tests": 480,
+      "individually_robust_roots": [],
+      "standalone": true,
+      "explicit_private_entry_cut": 79,
+      "cut_not_claimed_minimum": true,
+      "puncture": {
+        "anchors": [
+          {
+            "anchor": [
+              0,
+              1,
+              2
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "3": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              3
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "3": 26
+            },
+            "deleted_anchor_mass": "0"
+          },
+          {
+            "anchor": [
+              0,
+              1,
+              4
+            ],
+            "complete_projection": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "paired_trees": 26,
+            "deletion_counts": {
+              "4": 26
+            },
+            "deleted_anchor_mass": "0"
+          }
+        ],
+        "paired_trees": 78,
+        "psi_caps": [
+          "1",
+          "1/3",
+          "2/5",
+          "5/54",
+          "1/5",
+          "2/15",
+          "1/18",
+          "1/15",
+          "1/54"
+        ],
+        "numerical_cylinders": 1767,
+        "positive_R_fine_masses": {
+          "(1, 0)": "1/15"
+        },
+        "marked_label": [
+          1,
+          0
+        ],
+        "marked_numerical49_residue": 1,
+        "marked_degree": 2,
+        "marked_mass": "1/15"
+      },
+      "eta_owner_max": "2/7",
+      "lambda_caps": [
+        "3/4",
+        "1/4",
+        "3/10",
+        "5/72",
+        "3/20",
+        "1/10",
+        "1/24",
+        "1/20",
+        "1/72"
+      ],
+      "pi_caps": [
+        "1/4",
+        "1/4",
+        "5/28",
+        "1/14",
+        "5/28",
+        "1/28",
+        "1/28",
+        "1/28",
+        "1/28"
+      ],
+      "nu_caps": [
+        "1",
+        "1/4",
+        "3/10",
+        "1/14",
+        "5/28",
+        "1/10",
+        "1/24",
+        "1/20",
+        "1/28"
+      ],
+      "common_root_query_bound": "44/5",
+      "lambda_positive_marked_fine": "1/20",
+      "numerical_cylinders": 7068
+    }
+  ],
+  "scope": "Complete nonrobust matching8/path6/adjacent7 actual sources, original pair tests and one common normalized law with positive shared fine support. Query bound uses separately verified root64 certificate; not exhaustive source enumeration, minimum-cut certification or Lean verification."
+}

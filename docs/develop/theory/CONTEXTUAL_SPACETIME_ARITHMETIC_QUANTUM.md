@@ -73543,3 +73543,279 @@ $$
 这里的主轴仅指编码 Bloch 线性部分的最大左奇异方向。定理不把它解释为额外的经典记忆或一般测量指针，不断言原最优因子分别幺元，也不确定完整有限预算曲线。所有渐近式针对固定 $a,\theta$，没有主张在随 $q$ 变化的倾斜上限族上一致。
 
 ## 追加锚（本行以下为增补区）
+
+## 343. 接近酉编码平台时的线性代价与二阶预算饱和
+
+第340节确定了零预算附近的二次收益。本节考察定义339.1的同一个解码纠缠破坏任务，但从下方接近酉编码所需的预算。平台上的因子分类使所有最优方案定位到酉编码附近；完全正性随后把预算缺口与两个方向的总伸缩损失联系起来。
+
+**定理 343.1（平台左端的实际最优误差）。** 固定 $0<a\le1$，令 $\eta=a/\sqrt3$。当 $\delta\downarrow0$ 时，
+
+$$
+\widehat C_a^{\rm D}\bigl(\eta(1-\delta)\bigr)
+=\frac a3+\frac a9\delta+O(\delta^2).
+\tag{343.1}
+$$
+
+因此该最优值在 $R=\eta$ 的左导数为 $-1/(3\sqrt3)$。在平台的右侧最优值恒为 $a/3$，故右导数为零。
+
+对预算 $R=\eta(1-\delta)$ 下的任意实际最优因子，写编码、解码为
+
+$$
+x\longmapsto c+Ax,
+\qquad y\longmapsto d+Ly,
+\qquad T=LA.
+$$
+
+令编码奇异值为 $\sigma_1\ge\sigma_2\ge\sigma_3$，并置 $r_i=1-\sigma_i$。则对全部这种最优因子一致有
+
+$$
+r_3=\delta+O(\delta^2),
+\qquad r_1+r_2=\delta+O(\delta^2),
+\qquad 0\le r_1+r_2-r_3=O(\delta^2),
+\tag{343.2}
+$$
+
+以及
+
+$$
+|c_y|=O(\delta^2),
+\qquad
+0\le\eta(1-\delta)-r(\mathcal E)=O(\delta^2).
+\tag{343.3}
+$$
+
+原复合的平移 $d+Lc$ 恰为零，且
+
+$$
+\left\|T-\frac13I\right\|_F=O(\delta),
+\qquad
+T_{jj}=\frac13-\frac29\delta+O(\delta^2)
+\quad(j=1,2,3).
+\tag{343.4}
+$$
+
+这些结论不要求最优因子随预算连续或可微，也不预设两个原因子分别幺元。
+
+证明。先给出实际可达上界。固定平衡单位向量 $n$，令 $P=nn^{\mathsf T}$、$Q=I-P$，并取 $O\in SO(3)$ 满足 $On=e_y$。使用零平移因子
+
+$$
+A=O\left[(1-\delta/2)Q+(1-\delta)P\right],
+\qquad L=\frac13O^{\mathsf T}.
+\tag{343.5}
+$$
+
+对 $0\le\delta\le1$，编码的正对角规范满足完全正条件：两个较大奇异值之和为 $2-\delta=1+(1-\delta)$。解码的三个奇异值之和为一，所以它完全正且纠缠破坏。所用规范和八面体判据均见第339节引用的 Ruskai 文献。
+
+实际编码的 $y$ 行为 $(1-\delta)n^{\mathsf T}$，残差恰为 $\eta(1-\delta)$。复合为
+
+$$
+T=\frac13\left[(1-\delta/2)Q+(1-\delta)P\right].
+$$
+
+平衡性使三个列误差相等，故这个同一方案的误差满足
+
+$$
+\begin{aligned}
+e^2
+&=\frac{a^2}{4}
+\left[\frac23\left(\frac23+\frac\delta6\right)^2
++\frac13\left(\frac23+\frac\delta3\right)^2\right]\\
+&=\frac{a^2}{9}+\frac{2a^2}{27}\delta+\frac{a^2}{72}\delta^2.
+\end{aligned}
+\tag{343.6}
+$$
+
+开平方给出式（343.1）的上界。
+
+接着处理全部原因子。按第293、335节，分别去掉两个因子的平移，仍保持完全正性和解码纠缠破坏性，编码残差不增，线性部分保持 $A,L$。若原复合平移为 $h=d+Lc$，正负六态成对给出
+
+$$
+e(\mathcal D\mathcal E)^2
+\ge e(T)^2+\frac{\|h\|^2}{4}.
+\tag{343.7}
+$$
+
+去平移后的同预算方案仍在当前解码受限任务中。对原最优方案而言，式（343.7）因此迫使 $h=0$，并使去平移后的方案也最优。后面关于 $A,L$ 的约束可在这些幺元化因子上使用，而实际残差始终保留原来的 $c_y$。
+
+最优因子对属于紧集。由式（343.6）和第339节的全局下界，任意 $\delta\downarrow0$ 的最优序列，其收敛子列都达到预算 $\eta$ 下的误差 $a/3$。第339节的平台分类使极限恰为
+
+$$
+c=d=0,\qquad A=O,\qquad L=O^{\mathsf T}/3,
+\qquad O\in SO(3),\quad |O_{yj}|=1/\sqrt3.
+\tag{343.8}
+$$
+
+由紧性反证，这种到平台因子集的定位对全体最优者一致。特别地，$\sigma_i\to1$，$T\to I/3$，且 $L-A^{\mathsf T}/3\to0$，全部一致。
+
+对足够小的 $\delta$，编码矩阵可逆且行列式正。取正旋转奇异值分解
+
+$$
+A=U\Sigma V^{\mathsf T},
+\qquad \Sigma=\operatorname{diag}(\sigma_1,\sigma_2,\sigma_3),
+\qquad U,V\in SO(3),
+\qquad C=V^{\mathsf T}LU.
+\tag{343.9}
+$$
+
+因为幺元化的编码完全正，$0<\sigma_i\le1$。其标准完全正不等式还给出
+
+$$
+\sigma_1+\sigma_2\le1+\sigma_3,
+\qquad r_3\le r_1+r_2.
+\tag{343.10}
+$$
+
+幺元化的解码纠缠破坏，所以 $\|C\|_*=\|L\|_*\le1$。记
+
+$$
+S=r_1+r_2+r_3,
+\qquad \xi=1-\operatorname{Tr}C\ge0.
+\tag{343.11}
+$$
+
+这里迹不超过核范数。即使奇异值重复，$C\to I/3$ 仍对任意上述分解一致成立，因为
+
+$$
+C-\frac13I
+=V^{\mathsf T}\left(L-\frac13A^{\mathsf T}\right)U
++\frac13(\Sigma-I).
+\tag{343.12}
+$$
+
+因此小预算缺口下全部 $C_{ii}\ge1/6$。
+
+原编码的实际残差给出
+
+$$
+\eta(1-\delta)
+\ge |c_y|+a\max_j|A_{yj}|
+\ge |c_y|+\eta\|A^{\mathsf T}e_y\|_2
+\ge |c_y|+\eta\sigma_3.
+\tag{343.13}
+$$
+
+从而 $r_3\ge\delta$。结合完全正性，
+
+$$
+S\ge2r_3\ge2\delta.
+\tag{343.14}
+$$
+
+这一步同时使用同一个实际编码的预算与完全正条件。
+
+先由迹误差得到粗尺度。原复合平移已为零，而
+
+$$
+e\ge\frac a6(3-\operatorname{Tr}T)
+=\frac a3+\frac a6(1-\operatorname{Tr}T).
+\tag{343.15}
+$$
+
+第一式来自最大列范数不小于三列在各自输入轴上投影的平均。又有精确恒等式
+
+$$
+1-\operatorname{Tr}T
+=\xi+\sum_iC_{ii}r_i.
+\tag{343.16}
+$$
+
+使用 $C_{ii}\ge1/6$、$\xi\ge0$ 和式（343.6）的上界，得到
+
+$$
+S=O(\delta),\qquad \xi=O(\delta)
+\tag{343.17}
+$$
+
+对所有实际最优因子一致。
+
+为把余项收紧到二阶，令 $t=\|T-I/3\|_F$。由 $V^{\mathsf T}TV=C\Sigma$，
+
+$$
+C-\frac13I
+=\left(V^{\mathsf T}TV-\frac13I\right)\Sigma^{-1}
++\frac13(\Sigma^{-1}-I).
+$$
+
+各奇异值有统一正下界，故存在固定常数 $K$ 使
+
+$$
+\left\|C-\frac13I\right\|_F\le K(t+S).
+\tag{343.18}
+$$
+
+因此式（343.16）蕴含
+
+$$
+1-\operatorname{Tr}T
+\ge\xi+\frac S3-KS(t+S).
+\tag{343.19}
+$$
+
+另一方面，六态误差的 Frobenius 下界及一个精确平方展开给出
+
+$$
+\begin{aligned}
+e^2&\ge\frac{a^2}{12}\|I-T\|_F^2\\
+&=\frac{a^2}{9}
++\frac{a^2}{9}(1-\operatorname{Tr}T)
++\frac{a^2}{12}t^2.
+\end{aligned}
+\tag{343.20}
+$$
+
+将式（343.17）、（343.19）代入，并与达到上界式（343.6）比较、消去共同的常数项与线性项，便得到某个统一常数 $K_1$ 满足
+
+$$
+\frac\xi9+\frac{S-2\delta}{27}+\frac{t^2}{12}
+\le K_1\delta t+K_1\delta^2.
+\tag{343.21}
+$$
+
+左边三个量都非负。用 Young 不等式吸收 $K_1\delta t$ 的一半 $t^2$ 项，可得
+
+$$
+t=O(\delta),\qquad
+\xi=O(\delta^2),\qquad
+S-2\delta=O(\delta^2).
+\tag{343.22}
+$$
+
+特别地，式（343.18）进一步给出 $C-I/3=O(\delta)$。所以式（343.16）现在成为
+
+$$
+1-\operatorname{Tr}T
+=\frac{2\delta}{3}+O(\delta^2).
+\tag{343.23}
+$$
+
+式（343.15）随即给出 $e\ge a/3+a\delta/9-O(\delta^2)$，与实际构造的上界相合，证明式（343.1）。将 $R=\eta(1-\delta)$ 代回即得所述左导数；右侧平台由第339节给出。
+
+还需核对各项一致性结论。由 $\delta\le r_3\le S/2$ 和式（343.22），得到 $r_3=\delta+O(\delta^2)$，进而 $r_1+r_2=\delta+O(\delta^2)$。完全正性保证其差非负，式（343.22）又将其界为 $O(\delta^2)$，即式（343.2）。
+
+再由式（343.13），
+
+$$
+|c_y|\le\eta(r_3-\delta),
+\qquad
+0\le\eta(1-\delta)-r(\mathcal E)
+\le\eta(r_3-\delta).
+\tag{343.24}
+$$
+
+这证明式（343.3）；它允许原编码有非零的其它平移分量。
+
+最后写 $B=T-I/3$。已有 $\|B\|_F=O(\delta)$，所以对每个固定输入轴，非零向量范数的展开为
+
+$$
+\|(I-T)e_j\|_2=\frac23-B_{jj}+O(\delta^2).
+\tag{343.25}
+$$
+
+每个列误差不超过最优最大误差 $a/3+a\delta/9+O(\delta^2)$，故
+$B_{jj}\ge-2\delta/9-O(\delta^2)$。式（343.23）还给出 $\operatorname{Tr}B=-2\delta/3+O(\delta^2)$；对其余两个对角元使用刚得到的下界，便得到每个 $B_{jj}$ 的相反上界。这证明式（343.4）。全部局部邻域、常数和误差界由同一个紧性定位选取，因此对全体最优因子一致。证毕。
+
+本节仍使用 Ruskai，[*Qubit Entanglement Breaking Channels*，式（3）、（5）、定理4](https://arxiv.org/abs/quant-ph/0302032v3)的完全正规范与纠缠破坏判据，以及第339节的平台因子分类。新增的任务估计把三个非负损失保留在式（343.21）中：解码迹的缺口、超过最低要求的编码总收缩，以及复合偏离平台矩阵的平方距离。它们共同给出实际最优值的线性首项和所有原因子的二阶预算饱和。
+
+与零预算端的二次收益不同，平台左端的误差代价从一次项开始。这里没有确定式（343.1）的二次系数，没有分类各个最优因子的完整一阶矩阵，也没有求出 $0<R<\eta$ 的完整最优曲线。结论只属于固定六态、量子比特中间接口和解码纠缠破坏的同一任务。
+
+## 追加锚（本行以下为增补区）
