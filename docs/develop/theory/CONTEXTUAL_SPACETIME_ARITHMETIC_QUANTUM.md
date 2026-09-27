@@ -64155,3 +64155,412 @@ $$
 对等半径，已知 $\kappa_a=a/(2\sqrt2)$。一般不等半径时，式（296.3）确定的是精确恢复端点的一阶系数；它没有把整条有限预算曲线求出，也没有证明最优角点唯一、误差权重全正或最优 $\Omega$ 必非零。有限预算下恢复矩阵不对称，与它在端点是否具有非零的一阶反对称部分，是不同的命题。
 
 ## 追加锚（本行以下为增补区）
+
+## 297. 同一残差预算下的半群替换与平方阶代价
+
+**定理 297.1（保预算的半群替换）。** 对正半径六态模型，记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$\eta=A^{-1/2}$、$a_{\max}=\max_i a_i$。固定 $R>0$。若一对实际二维 CPTP 编码、解码的残差不超过 $R$，最坏恢复误差为 $e$，则存在另一对同维实际通道，其残差仍不超过 $R$，复合恢复是一个幺元、时间齐次 CPTP 半群的时间一通道，且恢复误差 $e'$ 满足
+
+$$
+e'\le e+\frac{a_{\max}^2 A}{R}e^2.
+\tag{297.1}
+$$
+
+因此对 $0<R<\eta$，无限制最优误差与定义293.2的微分可分最优误差满足
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)
+\le \frac{a_{\max}^2 A}{R}
+\bigl(F_a^{(2)}(R)\bigr)^2.
+\tag{297.2}
+$$
+
+特别地，当 $R\uparrow\eta$ 时，
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)=O\bigl((\eta-R)^2\bigr).
+\tag{297.3}
+$$
+
+这加强了第296节的差距余项，但其证明不需要先求端点切向优化问题。对于三个半径都等于 $a$ 的情形，平方阶不能再统一提高：
+
+$$
+\lim_{R\uparrow a/\sqrt3}
+\frac{\widehat G_a(R)-F_a^{(2)}(R)}{(a/\sqrt3-R)^2}
+=\frac1{8\sqrt2\,a}>0.
+\tag{297.4}
+$$
+
+证明。先用第281节把原实际方案共同支配为一个幺元恢复 $\mathcal N$，并保留同一残差上界。记其 Bloch 矩阵为 $T$、误差为 $e_0\le e$，则 $r_*(T)\le R$，而
+
+$$
+\|I-T\|_{\rm op}^2
+\le\|I-T\|_F^2
+\le4A e_0^2.
+\tag{297.5}
+$$
+
+以下对同一个 $T$ 同时控制替换后的残差与误差。
+
+采用标准通道半群构造
+
+$$
+\mathcal P_t=\exp\bigl(t(\mathcal N-\mathrm{id})\bigr)
+=e^{-t}\sum_{k=0}^{\infty}\frac{t^k}{k!}\mathcal N^k,
+\qquad t\ge0.
+\tag{297.6}
+$$
+
+泊松权重非负且和为一，所以它是幺元 CPTP 半群，Bloch 矩阵为 $P_t=\exp(t(T-I))$。这一半群构造及其对原通道的二阶近似是既有方法：Wolf–Cirac，*Dividing Quantum Channels*（2008），[引理1与定理16证明中的式（27）](https://arxiv.org/abs/math-ph/0611057v3)。下面只将它接入当前两个共同预算；不把一般 Markov 近似作为新定理。
+
+每个 $P_t$ 都把单位 Bloch 球映入自身，故 $\|P_t\|_{\rm op}\le1$。令 $d=\|T-I\|_{\rm op}$，对矩阵指数使用带积分余项的二阶展开：
+
+$$
+P_1-T=\int_0^1(1-t)P_t(T-I)^2\,dt.
+$$
+
+于是
+
+$$
+\|P_1-T\|_{\rm op}\le\frac{d^2}{2}
+\le2A e_0^2.
+\tag{297.7}
+$$
+
+这里利用半群的收缩性，因而无需在余项中加入指数放大因子。
+
+对任意两个实矩阵 $B,C$，当前两个任务量满足
+
+$$
+\begin{aligned}
+|r_*(B)-r_*(C)|&\le a_{\max}\|B-C\|_{\rm op},\\
+|e(B)-e(C)|&\le\frac{a_{\max}}2\|B-C\|_{\rm op},
+\end{aligned}
+\tag{297.8}
+$$
+
+其中 $r_*(B)=\min_{\|n\|=1}\max_i a_i|n^{\mathsf T}Be_i|$，$e(B)=\frac12\max_i a_i\|(B-I)e_i\|$。第一式先对每个固定 $n$ 用三角不等式，再取最小值；第二式逐列用反三角不等式后取最大值。它们不需要最优方向唯一。
+
+记 $P=P_1$、$\beta=d^2/2$、$r_P=r_*(P)$。式（297.7）与原预算给出 $r_P\le R+a_{\max}\beta$。由于矩阵指数可逆且各半径正，$r_P>0$。取
+
+$$
+c=\min\{1,R/r_P\},\qquad Q=cP.
+\tag{297.9}
+$$
+
+则 $0<c\le1$，并由残差的正齐次性得到 $r_*(Q)=c r_P\le R$。若 $c<1$，还有
+
+$$
+1-c=\frac{r_P-R}{r_P}
+\le\frac{a_{\max}\beta}{R};
+\tag{297.10}
+$$
+
+若 $c=1$，同一上界仍成立。还可直接控制泊松替换本身的误差，而不为式（297.7）的全部距离支付误差代价。积分恒等式
+
+$$
+P-I=\int_0^1P_t(T-I)\,dt
+$$
+
+与每个 $P_t$ 的收缩性共同给出，对每个 $i$，
+
+$$
+\|(P-I)e_i\|_2
+\le\int_0^1\|P_t(T-I)e_i\|_2\,dt
+\le\|(T-I)e_i\|_2,
+\qquad e(P)\le e_0.
+\tag{297.11}
+$$
+
+因此只有随后乘以 $c$ 的预算校正需要计入可能增加的恢复误差。
+
+还须保证这次预算校正保持同一个时间齐次半群类。令 $\mathcal Z(X)=\operatorname{Tr}(X)I/2$ 为完全退极化通道，$\lambda=-\log c\ge0$。因为 $\mathcal N$ 保迹且幺元，$\mathcal N\mathcal Z=\mathcal Z\mathcal N=\mathcal Z$，所以两个生成元 $\mathcal N-\mathrm{id}$ 与 $\lambda(\mathcal Z-\mathrm{id})$ 交换。由此
+
+$$
+\mathcal Q_t
+=\exp\bigl(t(\mathcal N-\mathrm{id})
+          +t\lambda(\mathcal Z-\mathrm{id})\bigr)
+=\mathcal P_t\exp\bigl(t\lambda(\mathcal Z-\mathrm{id})\bigr)
+\tag{297.12}
+$$
+
+仍是幺元 CPTP 半群；其 Bloch 矩阵为 $e^{-\lambda t}P_t$，在时间一恰为 $Q$。这一步直接给出固定生成元，没有以两个一般微分可分通道的任意复合替代证明。
+
+对 $Q$ 取达到 $r_*(Q)$ 的单位方向，酉旋转到编码虚轴并采用逆酉解码。第281节保证这给出一对完整 $M_2$ 上的实际通道，其共同恢复正是 $\mathcal Q_1$，残差不超过 $R$。式（297.8）、（297.10）、（297.11）与 $\beta\le2A e_0^2$ 于是给出
+
+$$
+\begin{aligned}
+e(Q)&\le e(P)+\frac{a_{\max}}2(1-c)\|P\|_{\rm op}\\
+&\le e_0+\frac{a_{\max}^2}{2R}\beta\\
+&\le e_0+\frac{a_{\max}^2 A}{R}e_0^2
+\le e+\frac{a_{\max}^2 A}{R}e^2.
+\end{aligned}
+$$
+
+这证明式（297.1）。将原方案取为达到无限制最优值的方案，就得式（297.2）的上界；严格正下界来自定理293.3。
+
+写 $R=\eta(1-\delta)$。各向同性恢复 $(1-\delta)I$ 与相应酉编码给出
+
+$$
+F_a^{(2)}(R)\le\frac{a_{\max}}2\delta.
+$$
+
+当 $0<\delta\le1/2$ 时，式（297.2）因此进一步给出明确读数
+
+$$
+\widehat G_a(R)-F_a^{(2)}(R)
+\le\frac{a_{\max}^4 A}{2\eta}\delta^2.
+\tag{297.13}
+$$
+
+由于半径固定，$\delta=(\eta-R)/\eta$，这就是式（297.3）。
+
+最后，等半径时第277、293节的精确公式在端点附近给出
+
+$$
+\begin{aligned}
+F_a^{(2)}(\eta(1-\delta))&=\frac{a\delta}{2\sqrt2},\\
+\widehat G_a(\eta(1-\delta))
+&=\frac{a\delta}{2\sqrt3}
+\sqrt{1+\frac{2}{(1+\sqrt{1-\delta})^2}}\\
+&=\frac{a\delta}{2\sqrt2}
+ +\frac{a\delta^2}{24\sqrt2}+O(\delta^3).
+\end{aligned}
+\tag{297.14}
+$$
+
+再用 $\eta^2=a^2/3$，便得式（297.4）。证毕。
+
+式（297.1）的常数不是最优常数；该替换界对所有正半径和所有正预算成立，式（297.2）的严格正差距则限于 $0<R<\eta$。一般不等半径的二阶差距是否具有正极限，以及其最优系数，仍未由本节决定。$R=0$ 不在替换界的范围内，不能把其中的 $1/R$ 当作零预算端点的估计。
+
+## 追加锚（本行以下为增补区）
+
+## 298. 端点最优生成元的唯一性、两方向耗散与对偶轴
+
+**定义 298.1（端点锥与对偶量）。** 沿用第296节的正半径、$\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=(\alpha_1,\alpha_2,\alpha_3)$ 与 $\eta=A^{-1/2}$。对实矩阵 $M$ 写
+
+$$
+S=\frac{M+M^{\mathsf T}}2,\qquad
+\Omega=\frac{M^{\mathsf T}-M}2,\qquad
+\mathcal C(S)=(\operatorname{Tr}S)I-2S.
+\tag{298.1}
+$$
+
+于是 $M=S-\Omega$。定义
+
+$$
+\begin{aligned}
+D_a=\max_M\ &b^{\mathsf T}Mb,\\
+\text{约束为 }&\mathcal C(S)\succeq0,
+\qquad\|Me_i\|_2\le\alpha_i\quad(i=1,2,3).
+\end{aligned}
+\tag{298.2}
+$$
+
+在三维中，$\mathcal C(S)\succeq0$ 已蕴含 $S\succeq0$：若 $d_1\le d_2\le d_3$ 为 $S$ 的特征值，则 $d_3\le d_1+d_2$，从而 $d_1\ge d_3-d_2\ge0$。
+
+**定理 298.2（对偶证书与全部端点最优方向）。** 第296节的系数满足
+
+$$
+\kappa_a=\frac{A}{2D_a},
+\qquad
+D_a=\min_{Z\succeq0}
+\sum_{i=1}^3\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2.
+\tag{298.3}
+$$
+
+两边的最优值都达到。将倒数半径排序为 $\alpha_1\le\alpha_2\le\alpha_3$ 并记
+
+$$
+C_2=\max\left\{\frac1{\sqrt{2A}},
+\frac1{2\sqrt{\alpha_1^2+\alpha_2^2}}\right\},
+$$
+
+则有严格界
+
+$$
+\frac\eta2<\kappa_a<C_2.
+\tag{298.4}
+$$
+
+对第296节正角点归一化后的每个最优 $(S,\Omega)$，其特征值满足
+
+$$
+0<d_1\le d_2<d_3=d_1+d_2.
+\tag{298.5}
+$$
+
+式（298.3）的对偶最优矩阵唯一，且为
+
+$$
+Z_*=\lambda vv^{\mathsf T},\qquad\lambda>0,\quad\|v\|_2=1.
+\tag{298.6}
+$$
+
+这个无向轴 $\mathbb Rv$ 是所有上述最优 $S$ 的共同最大特征方向，并可选取 $v_i>0$。更强地，第296节正角点规范下的最优 $(S,\Omega)$ 本身唯一，正角点是唯一活跃角点：
+
+$$
+b_\sigma^{\mathsf T}Sb_\sigma<A
+\quad\bigl(\sigma\in\{(1,\pm1,\pm1)\},\ \sigma\ne(1,1,1)\bigr).
+\tag{298.6a}
+$$
+
+这里的唯一性是在固定正角点规范之后；恢复所有符号方向时，仍须作相应的符号共轭。
+
+证明。对 $M=S-\Omega$，简记 $h(M)=h_a(S,\Omega)=\max_i\|Me_i\|_2/\alpha_i$。正角点之外有三个其他反足角点类。先说明第296节的其他角点上界可以从求最优值的约束中删去。保留 $b^{\mathsf T}Sb=A$、锥条件与列范数预算，考虑最小化 $h_a(S,\Omega)$。可行集非空，且有界目标的子水平集紧，所以最小值达到。
+
+若某个达到点有 $g(S)=\max_\sigma b_\sigma^{\mathsf T}Sb_\sigma>A$，选一个达到最大值的角点符号矩阵 $D$，将 $S,\Omega$ 同时共轭为 $DSD,D\Omega D$，再乘以 $A/g(S)<1$。锥条件与加权列范数在符号共轭下不变，新矩阵又满足正角点等式，但目标值严格下降，矛盾。因此每个最优点自动满足其他角点上界，删去这些约束不改变最优值与最优点。
+
+齐次缩放随后把这个最小化问题与式（298.2）互相对应：若归一化最小值为 $h_*=2\kappa_a$，则 $M_{\max}=M_{\rm norm}/h_*$，反过来 $M_{\rm norm}=(A/D_a)M_{\max}$。因此 $D_a=A/h_*$，给出 $\kappa_a=A/(2D_a)$。最大化问题的可行集闭且由列界有界，故 $D_a$ 达到；取足够小的正数 $\varepsilon$ 和 $M=\varepsilon I$ 可见 $D_a>0$。
+
+先证明严格下界。对任意满足 $b^{\mathsf T}Mb=A$ 的矩阵，记 $h=h_a(S,\Omega)$，逐列 Cauchy–Schwarz 给出
+
+$$
+A=\sum_i\alpha_i b^{\mathsf T}Me_i
+\le\sqrt A\sum_i\alpha_i\|Me_i\|_2
+\le h A\sqrt A.
+\tag{298.7}
+$$
+
+所以 $h\ge\eta$。若取等，因为每个 $\alpha_i>0$，每列都必须取到自己的范数界，且正向平行于 $b$。于是唯一的等号矩阵是
+
+$$
+M_0=\frac{bb^{\mathsf T}}A.
+\tag{298.8}
+$$
+
+它的对称部分特征值为 $0,0,1$，违反锥条件。最优值达到便保证 $2\kappa_a>\eta$。
+
+严格上界复用第292节的共同竞争构造。该节给出 $n=b/\sqrt A$、在 $n^\perp$ 上正定且迹为一的 $B$，使
+
+$$
+H=nn^{\mathsf T}+B,
+\qquad\frac12\max_i a_i\|He_i\|_2=K<C_2.
+\tag{298.9}
+$$
+
+$H$ 的特征值为 $1,b_1,b_2$，其中 $b_1,b_2>0$、$b_1+b_2=1$。所以 $\mathcal C(H)\succeq0$，且 $b^{\mathsf T}Hb=A$。这给出端点可行点，因而 $\kappa_a\le K<C_2$，证明式（298.4）。
+
+现在排除任意最优 $S$ 的奇异性。若 $S$ 奇异，锥条件迫使其谱为 $0,d,d$。归一化 $b^{\mathsf T}Sb=A$ 又保证 $d\ge1$。设零特征方向为 $u$，并在任意坐标平面与 $u^\perp$ 的交线上取单位向量 $x$。因为反对称项的二次型为零，
+
+$$
+x^{\mathsf T}Mx=x^{\mathsf T}Sx=d,
+\qquad\|Mx\|_2\ge d.
+$$
+
+若 $h=h_a(S,\Omega)$，则与第292节相同的平面列界给出
+
+$$
+h\ge\frac d{\sqrt{\alpha_i^2+\alpha_j^2}}.
+$$
+
+同时，对称与反对称部分在 Frobenius 内积下正交，故
+
+$$
+h^2A\ge\|M\|_F^2
+=\|S\|_F^2+\|\Omega\|_F^2\ge2d^2.
+$$
+
+合并得到 $h/2\ge dC_2\ge C_2$，与式（298.4）矛盾。因此每个最优 $S$ 都正定。
+
+其次，每个最优点都必须在锥边界上。否则 $\mathcal C(S)\succ0$，将 $M$ 与式（298.8）的 $M_0$ 作足够小的凸混合，仍保持锥条件和正角点等式；加权列范数的凸性及 $h_a(M_0)=\eta<2\kappa_a$ 却使目标严格下降，矛盾。故 $\mathcal C(S)$ 奇异。结合 $S\succ0$，只能有 $d_3=d_1+d_2>d_2$；另两个锥特征值为 $2d_2,2d_1>0$。因此 $\mathcal C(S)$ 的核恰为一维，证明式（298.5）。
+
+下面建立对偶及其唯一性。对任意 $Z\succeq0$ 和式（298.2）的可行 $M$，有
+
+$$
+\begin{aligned}
+b^{\mathsf T}Mb
+&\le b^{\mathsf T}Mb+\operatorname{Tr}(Z\mathcal C(S))\\
+&=\left\langle bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z,M\right\rangle_F\\
+&\le\sum_i\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2.
+\end{aligned}
+\tag{298.10}
+$$
+
+最后一步逐列取欧氏球的支撑函数。将锥约束以乘子 $Z\succeq0$ 加入拉格朗日式，再对三个独立列球取上确界，恰好得到式（298.3）的右侧，没有额外保留的对称性约束：$M$ 本来就是任意实矩阵。
+
+取 $0<\varepsilon<\min_i\alpha_i$，矩阵 $M=\varepsilon I$ 同时使 $\mathcal C(S)\succ0$ 及全部列范数约束严格成立。因此 Slater 条件给出强对偶与对偶达到。这里使用标准半定规划对偶理论；每个列球等价于如下块半正定约束：
+
+$$
+\begin{pmatrix}
+\alpha_i&(Me_i)^{\mathsf T}\\
+Me_i&\alpha_i I_3
+\end{pmatrix}\succeq0.
+$$
+
+在所选 $M=\varepsilon I$ 处，这三个块矩阵均正定。所需强对偶与互补松弛可见 Watrous，*The Theory of Quantum Information*，[§1.2.3，定理1.18与命题1.19](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。对偶可行值有限，例如 $Z=0$；这也核对了达到结论所需的有界性条件。
+
+对任意一对原、对偶最优点，式（298.10）两端相等，故
+
+$$
+\operatorname{Tr}(Z\mathcal C(S))=0.
+\tag{298.11}
+$$
+
+两个矩阵均半正定，这迫使 $\operatorname{ran}Z\subseteq\ker\mathcal C(S)$。因此每个对偶最优矩阵都形如 $\lambda vv^{\mathsf T}$，其中 $v$ 为该 $S$ 的最大特征方向。它不能为零：$Z=0$ 的目标值为 $A\sqrt A$，而 $\kappa_a>\eta/2$ 与式（298.3）的第一式给出 $D_a<A\sqrt A$。所以 $\lambda>0$。
+
+固定任意一个原最优点，其一维核就使所有对偶最优矩阵都落在同一射线上 $\lambda vv^{\mathsf T}$。在这条射线上，对偶目标为
+
+$$
+f(\lambda)=\sum_i\alpha_i
+\left\|\alpha_i b+\lambda(e_i-2v_i v)\right\|_2.
+\tag{298.12}
+$$
+
+至少有一个向量 $e_i-2v_i v$ 不平行于 $b$：否则正交反射矩阵 $I-2vv^{\mathsf T}$ 的全部列都在同一条直线上，与它的秩三矛盾。对应那一项是沿非共线仿射直线的欧氏范数，关于 $\lambda$ 严格凸；其权重 $\alpha_i$ 正，其余项凸，所以 $f$ 严格凸。这证明最优 $\lambda$ 唯一，进而对偶矩阵唯一。
+
+固定这个非零 $Z_*$，对每个原最优点使用式（298.11），就得到同一个核方向 $\mathbb Rv$。归一化只作正数缩放，不改变这个方向，因此式（298.5）及共同轴结论适用于第296节正角点规范下的全部最优点。
+
+再证明这个轴可以严格取正。对单位向量 $v$，式（298.12）的第 $i$ 个范数的平方为
+
+$$
+\alpha_i^2 A+\lambda^2+2\lambda\alpha_i^2
+-4\lambda\alpha_i v_i(b\cdot v).
+\tag{298.13}
+$$
+
+把 $v$ 换成逐坐标绝对值向量，保持单位长度，并使每个 $v_i(b\cdot v)$ 都不减。若非零坐标中有两种符号，则至少一项严格增大，式（298.13）及全部正权重使对偶目标严格下降，矛盾。因此可选 $v_i\ge0$。若有某个 $v_i=0$，令 $v(\varepsilon)=(v+\varepsilon e_i)/\sqrt{1+\varepsilon^2}$。对每个坐标 $j$，
+
+$$
+\left.\frac{d}{d\varepsilon}\left[v_j(\varepsilon)\bigl(b\cdot v(\varepsilon)\bigr)\right]\right|_{\varepsilon=0}
+=\delta_{ij}(b\cdot v)+\alpha_i v_j.
+$$
+
+这些导数全部非负；因为 $b\cdot v>0$，第 $i$ 个严格为正，每个原本非零坐标对应的导数也严格为正。此时所有范数原本均非零：第 $j$ 列在零坐标 $i$ 上为 $\alpha_j\alpha_i+\lambda\delta_{ij}>0$。所以目标一阶严格下降，仍矛盾。由此 $v_i>0$ 对每个坐标成立。
+
+令
+
+$$
+G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{298.14}
+$$
+
+若 $Ge_i\ne0$，原、对偶取等的逐列支撑条件唯一确定式（298.2）中最优矩阵的这一列：
+
+$$
+Me_i=\alpha_i\frac{Ge_i}{\|Ge_i\|_2}.
+\tag{298.15}
+$$
+
+至多有一列 $Ge_i$ 为零，因为零列的第 $i$ 个坐标要求
+
+$$
+\alpha_i^2+\lambda-2\lambda v_i^2=0,
+\qquad v_i^2>1/2.
+$$
+
+若没有零列，所有最优列已经唯一。若恰有第 $i$ 列为零，任意两个最优矩阵之差只能写成 $\Delta M=x e_i^{\mathsf T}$。它们的对称部分都满足 $\mathcal C(S)v=0$，因此
+
+$$
+x_i v-v_i x-e_i(x\cdot v)=0.
+\tag{298.16}
+$$
+
+对 $j\ne i$，这给出 $x_j=x_i v_j/v_i$，所以 $x=(x_i/v_i)v$。式（298.16）的第 $i$ 个坐标再给出 $x\cdot v=0$，故 $x=0$。因此原最大化问题的最优矩阵在这一情形也唯一，齐次归一化后的最优 $(S,\Omega)$ 随之唯一。
+
+最后，若还有一个非正角点达到 $A$，对应的符号矩阵 $D$ 会把最优矩阵共轭成另一个正角点归一化的最优矩阵；其最大特征方向为 $Dv$。共同轴结论要求 $Dv=\pm v$。因为每个 $v_i>0$，这只可能发生在 $D=I$ 或 $D=-I$；它们表示同一对正负角点，不是式（298.6a）列出的其他三个角点。故其余角点都严格小于 $A$，证明全部结论。证毕。
+
+在第296节的 Lindblad 构造中，三个规范耗散系数为 $(\operatorname{Tr}S-2d_i)/4$。式（298.5）使它们恰有两个严格为正、一个为零；正角点规范下，零系数所在的主轴由唯一对偶矩阵确定，整个归一化一阶 Bloch 生成元也唯一。这是当前任务端点最优性的限制，不是一般量子比特生成元的分类。它没有证明两个正耗散系数相等或 Hamiltonian 项为零，也不把端点一阶唯一性升级为所有有限预算下实际最优通道唯一。
+
+## 追加锚（本行以下为增补区）
