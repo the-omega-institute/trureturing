@@ -4,6 +4,13 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
+    // Optional work counters, never evidence or a callback at an acceptance boundary.
+    internal static readonly AsyncLocal<Dictionary<string, int>?> AcceptanceCounts = new();
+    private static void ObserveAcceptance(string kind)
+    {
+        if (AcceptanceCounts.Value is { } counts) counts[kind] = counts.GetValueOrDefault(kind) + 1;
+    }
+
     // One read-only validation against one snapshot. Hashes never cross an
     // execution callback, import copy, or write to any of the inspected paths.
     internal sealed class ValidationScope(RepositorySnapshot snapshot, ReportValidation? successfulReport = null)
@@ -12,6 +19,7 @@ internal static partial class CommonExecutionEvidence
         private readonly Dictionary<(string Report, string Archive), LeanAxiomReport> reports = [];
         private IReadOnlyList<RegisteredCommonCheck>? checks;
         internal RepositorySnapshot Snapshot { get; } = snapshot;
+        internal ReportValidation SuccessfulReport { get; } = successfulReport ?? new(snapshot);
 
         internal static ValidationScope Create(string root) => new(CommonExecutionEvidence.Snapshot(root));
 
@@ -52,9 +60,7 @@ internal static partial class CommonExecutionEvidence
             }
             var identity = (Hash(path), Hash(archive));
             if (!reports.TryGetValue(identity, out var report))
-                reports.Add(identity, report = successfulReport is null
-                    ? RawLeanReportArtifact.ReadFile(path, Snapshot, validateMaterials: true)
-                    : successfulReport.Read(path, Snapshot, identity));
+                reports.Add(identity, report = SuccessfulReport.Read(path, Snapshot, identity));
             return report;
         }
     }
@@ -70,6 +76,7 @@ internal static partial class CommonExecutionEvidence
             if (!ReferenceEquals(snapshot, current))
                 throw new InvalidOperationException("report validation belongs to another snapshot");
             if (last is { } accepted && accepted.Identity == identity) return accepted.Report;
+            ObserveAcceptance("report");
             var report = RawLeanReportArtifact.ReadFile(path, current, validateMaterials: true);
             // Publish only after all source bindings and ZIP statement materials passed.
             // The reader retains its archive bytes in memory, independent of this path.

@@ -7,8 +7,6 @@ from contextlib import contextmanager
 from functools import lru_cache
 import os
 from pathlib import Path
-import shutil
-import stat
 import subprocess
 import sys
 import tempfile
@@ -36,6 +34,10 @@ ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
+
+
+class PublicationFailure(RuntimeError):
+    """A failed output operation must not request artifact repair/re-extraction."""
 
 
 def activity(kind, count):
@@ -369,7 +371,7 @@ def batch(request_file, result_file):
         elif kind == 'validate':
             try:
                 validate(*args[1:], verified_materials=verified_materials,
-                         template_inputs=template_inputs(args[0]))
+                         template_inputs=template_inputs(args[0]), publish_report=not any(statuses))
                 statuses.append(0)
             except ROW_ERRORS as error:
                 print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
@@ -389,6 +391,8 @@ def batch(request_file, result_file):
 
 def aggregate(root, output, artifacts, verified_materials=None, *, template_inputs=None, row_statuses=None):
     root, output = Path(root), Path(output)
+    if verified_materials is None:
+        verified_materials = {}
     if template_inputs is None:
         template_inputs = selection.Selection(root)
     config = public.read_json((state(root) / 'inputs.json').read_bytes())
@@ -396,9 +400,8 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.aggregate.', dir=output.parent) as directory, \
-            tempfile.TemporaryFile(dir=output.parent) as material_spool:
+            tempfile.TemporaryFile(dir=output.parent) as spool, materials.CompressedMaterials(spool) as material_spool:
         directory = Path(directory)
-        material_offsets = {}
         rows = []
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
@@ -420,51 +423,20 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                     row_statuses.append(0)
                 origins[name] = origin
                 rows.extend(current)
-                with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
-                    for entry in archive.infolist():
-                        with archive.open(entry) as reader:
-                            if entry.filename in material_offsets:
-                                offset, size = material_offsets[entry.filename]
-                                material_spool.seek(offset)
-                                seen = 0
-                                for block in iter(lambda: reader.read(materials.BUFFER_BYTES), b''):
-                                    seen += len(block)
-                                    if seen > size or block != material_spool.read(len(block)):
-                                        raise ValueError('statement material address collision')
-                                if seen != size:
-                                    raise ValueError('statement material address collision')
-                            else:
-                                material_spool.seek(0, os.SEEK_END)
-                                offset = material_spool.tell()
-                                shutil.copyfileobj(reader, material_spool, materials.BUFFER_BYTES)
-                                material_offsets[entry.filename] = (offset, material_spool.tell() - offset)
+                material_spool.add(public.member(report, '.materials.zip'))
         if row_statuses is not None and any(row_statuses):
             return
         report = directory / public.RAW
         report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
-        with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
-                             compresslevel=6, allowZip64=True) as archive:
-            for name, (offset, size) in sorted(material_offsets.items()):
-                info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
-                info.compress_type = zipfile.ZIP_DEFLATED
-                info.create_system = 3
-                info.external_attr = (stat.S_IFREG | 0o644) << 16
-                material_spool.seek(offset)
-                with archive.open(info, 'w') as writer:
-                    remaining = size
-                    while remaining:
-                        block = material_spool.read(min(materials.BUFFER_BYTES, remaining))
-                        if not block:
-                            raise ValueError('truncated private material spool')
-                        writer.write(block)
-                        remaining -= len(block)
+        material_spool.write(public.member(report, '.materials.zip'))
         public.write_sidecars(report, config['coordinates'], origins)
-        # The native aggregate facet validates the completed bundle before
-        # exposing it. Do not repeat that complete pass inside its builder.
+        # Lake's completion boundary checks the actual assembled artifact before
+        # exposing its public facet, then shares that acceptance with publication.
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
         activity('aggregate', 1)
+        print(f'LEAN_INSPECTOR_MATERIAL_WORK copied_compressed_bytes={material_spool.copied_bytes} recompressed_bytes=0')
         print(f'LEAN_INSPECTOR_AGGREGATE modules={len(rows)} declarations={sum(len(row["declarations"]) for row in rows)}')
 
 
@@ -478,7 +450,7 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     return rows, origin
 
 
-def validate(kind, root, *args, verified_materials=None, template_inputs=None):
+def validate(kind, root, *args, verified_materials=None, template_inputs=None, publish_report=True):
     if template_inputs is None:
         template_inputs = selection.Selection(root)
     with tempfile.TemporaryDirectory(prefix='.validate.', dir=state(root)) as directory:
@@ -490,28 +462,43 @@ def validate(kind, root, *args, verified_materials=None, template_inputs=None):
         elif kind == 'report':
             report = public.unpack(args[0], directory)
             config = public.read_json((state(root) / 'inputs.json').read_bytes())
-            rows = public.validate_bundle(report, config['coordinates'], root, verified_materials)
+            scope = public._ReportValidation(verified_materials)
+            rows = public.validate_bundle(report, config['coordinates'], root, _scope=scope)
             if [row['module'] for row in rows] != config['modules']:
                 raise ValueError('native aggregate membership mismatch')
             for row in rows:
                 row_binding([row], root, row['module'], state(root) / 'inputs' / (row['module'] + '.json'),
                             template_inputs=template_inputs)
+            if publish_report and (destination := os.environ.get('STRATALINT_INSPECTOR_PUBLISH_REPORT')):
+                try:
+                    publish_validated(root, report, destination, config['coordinates'], scope)
+                except ROW_ERRORS + (subprocess.CalledProcessError,) as error:
+                    raise PublicationFailure(str(error)) from error
         else:
             raise ValueError('unknown native artifact kind')
+
+
+def publish_validated(root, report, destination, inputs, scope=None):
+    # Completion's Lake coordinates are an earlier observation. Publication
+    # still binds current inputs, independently of reusable report interpretation.
+    if scope is not None:
+        inputs = public.coordinates(root)
+    activity_file = os.environ.get('STRATALINT_INSPECTOR_ACTIVITY')
+    mode = None
+    if activity_file:
+        records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
+        mode = 'produced' if records else 'cached'
+        print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
+    with phase('publish'):
+        public.publish(report, Path(destination), inputs, root, mode=mode, _scope=scope)
+    print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 
 def publish(root, destination):
     inputs = public.coordinates(root)
     with tempfile.TemporaryDirectory(prefix='.publish.', dir=state(root)) as directory:
         report = public.unpack(state(root) / 'report.zip', directory)
-        activity_file = os.environ.get('STRATALINT_INSPECTOR_ACTIVITY')
-        mode = None
-        if activity_file:
-            records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
-            mode = 'produced' if records else 'cached'
-            print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        public.publish(report, Path(destination), inputs, root, mode=mode)
-    print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
+        publish_validated(root, report, destination, inputs)
 
 
 def main():
@@ -525,6 +512,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+    except PublicationFailure as error:
+        print(f'lean-inspector-publication: {error}', file=sys.stderr)
+        raise SystemExit(2)
     except (OSError, UnicodeError, ValueError, KeyError, TypeError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
         print(f'lean-inspector-native: {error}', file=sys.stderr)
         raise SystemExit(1)

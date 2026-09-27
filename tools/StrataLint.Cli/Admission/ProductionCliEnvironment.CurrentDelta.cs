@@ -52,7 +52,11 @@ internal sealed partial class ProductionCliEnvironment
             var selectedIds = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray();
             if (!reportRequired && manifest.Any(check => selectedIds!.Contains(check.Id) && check.ReportInputs.Length != 0))
                 throw new InvalidDataException("selected current checks require Lean report evidence");
-            var report = !reportRequired ? null : !delta && commonRound is null
+            // A selected stage may produce/transport the report solely for delta.
+            // Only the current consumers declared by the registry need its objects.
+            var consumesReport = delta || commonRound is null || selectedIds is null
+                || manifest.Any(check => selectedIds.Contains(check.Id) && check.ReportInputs.Length != 0);
+            var report = !consumesReport ? null : !delta && commonRound is null
                 ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true)
                 : validation.Report(options.CandidateLeanReport!);
             var policy = RepositoryPolicyLoader.Load(current) switch
@@ -60,7 +64,9 @@ internal sealed partial class ProductionCliEnvironment
                 PolicyLoadOutcome.Accepted accepted => accepted.Policy,
                 PolicyLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
             };
-            var lean = report is null ? null : LeanClosureValidator.Validate(current, report) switch
+            var consumesClosure = delta || commonRound is null || selectedIds is null
+                || manifest.Any(check => selectedIds.Contains(check.Id) && CommonExecutionEvidence.RequiresLeanClosure(check));
+            var lean = report is null || !consumesClosure ? null : LeanClosureValidator.Validate(current, report) switch
             {
                 LeanValidationOutcome.Accepted accepted => accepted.Capability,
                 LeanValidationOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),

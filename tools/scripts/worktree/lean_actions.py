@@ -18,6 +18,7 @@ import time
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
 from cache_material import files, sha
+from lean_actions_report import prefer_report, report_seed, snapshot_key
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
@@ -87,7 +88,7 @@ def output_archive_paths(layer, paths):
     print(key + "=" + json.dumps(paths, separators=(",", ":")))
 
 
-def actions_keys(root: pathlib.Path) -> dict:
+def actions_keys(root: pathlib.Path, *, report_preference=False) -> dict:
     """Build Actions snapshot keys and enforce the write policy.
 
     Actions transport identity belongs to this module; lean_cache.py only
@@ -123,6 +124,8 @@ def actions_keys(root: pathlib.Path) -> dict:
         prefix = f"lean-{layer}-seed-v1-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
                          "path": "build/lean-cache/" + layer, "stage": layer + "-seed"}
+    if report_preference:
+        prefer_report(root, result["current"])
     result["release_prefix"] = f"lean-cache-v2-{revision}-{system}-{machine}-"
     return result
 
@@ -477,11 +480,12 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, se
             retained = stage_seed(root, staged / "data", registry, donor=donor)
             judge_donor = judge_donor or retained
             inventory = files(staged / "data")
+    key = snapshot_key(spec, staged / "data", inventory) if layer == "current" else spec["key"]
     manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
-                "key": spec["key"], "files": inventory}
+                "key": key, "files": inventory}
     (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
     sizes = [(item, (staged / "data" / item["path"]).stat().st_size) for item in inventory]
-    metrics = {"file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
+    metrics = {"key": key, "file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
                "largest_files": [{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
     if observations is not None:
@@ -649,11 +653,14 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
                     if not save_minutes:
                         raise ValueError("snapshot publication left no cache save window")
                 ready = True
-                receipt(layer, "snapshot", key=spec["key"], elapsed_seconds=round(time.monotonic() - started, 3), **metrics)
+                receipt(layer, "snapshot", elapsed_seconds=round(time.monotonic() - started, 3),
+                        **dict(metrics, key=metrics.get("key", spec["key"])))
         except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
             receipt(layer, "save-disabled" if committed else "save-failed", reason=str(error))
         finally:
             values = {layer + "_ready": ready}
+            if layer == "current" and ready:
+                values["current_key"] = metrics["key"]
             if deadline is not None:
                 values["save_timeout_minutes"] = save_minutes if ready else 1
             output(values)
@@ -745,7 +752,8 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
                 receipt(layer, "miss", reason="Actions supplied no cache",
                         elapsed_seconds=round(time.monotonic() - started, 3))
                 continue
-            if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
+            suffix = r"(?:report-[0-9a-f]{64}-)?[0-9]+-[0-9]+" if layer == "current" else r"[0-9]+-[0-9]+"
+            if not re.fullmatch(re.escape(spec["restore_prefix"]) + suffix, key):
                 raise ValueError("Actions seed is outside the selected partition")
             manifest = json.loads((cached / "manifest.json").read_text())
             if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1"
@@ -771,62 +779,6 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
     # A dependency-only hit cannot suppress the project Release fallback.
     if "project" in layers:
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")
-
-
-def report_seed(root):
-    """Ask the normal producer whether a transported full report can be reused.
-
-    The seed manifest declares the report paths; this adapter neither infers
-    producer inputs nor treats a cache hit or prior check as current success.
-    Publication and the second input/material validation belong to inspect.sh.
-    """
-    seed = root / "build/ci/current-check-seed"
-    try:
-        checks = json.loads((seed / "checks.json").read_text())
-        if (checks.get("version") != 2 or checks.get("stage") != "current"
-                or not re.fullmatch(r"[0-9a-f]{64}", checks.get("candidate", ""))
-                or not re.fullmatch(r"[0-9a-f]{32}", checks.get("round", ""))):
-            return None
-        reports = set()
-        suffixes = ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")
-        producer_path = seed / "producer-report.json"
-        if producer_path.exists():
-            producer = json.loads(producer_path.read_text())
-            relative = ".lake/build/stratalint/raw-lean-report.json"
-            if (set(producer) != {"version", "candidate", "round", "report", "materials"}
-                    or producer["version"] != 1 or producer["report"] != relative
-                    or not re.fullmatch(r"[0-9a-f]{64}", producer["candidate"])
-                    or not re.fullmatch(r"[0-9a-f]{32}", producer["round"])):
-                return None
-            declared = [material["path"] for material in producer["materials"]]
-            if len(declared) != len(suffixes) or set(declared) != {relative + suffix for suffix in suffixes}:
-                return None
-            reports.add(relative)
-        else:
-            # Legacy seeds carry only the original report of each check unit.
-            for unit in checks["units"]:
-                relative = unit.get("report")
-                if not isinstance(relative, str) or not re.fullmatch(
-                        r"build/ci/check-material/[0-9a-f]{64}/[0-9a-f]{32}/[0-9a-f]{32}/report/raw-lean-report\.json", relative):
-                    continue
-                declared = {material["path"] for material in unit["materials"]}
-                if all(relative + suffix in declared for suffix in suffixes):
-                    reports.add(relative)
-    except (OSError, ValueError, TypeError, KeyError, AttributeError):
-        return None
-    for relative in sorted(reports):
-        report = seed / relative
-        result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
-            "--repository", str(root), "--report", str(report), "--diagnostics"],
-            cwd=root, check=True, capture_output=True, text=True)
-        outcome = json.loads(result.stdout)
-        if type(outcome.get("needs_lake")) is not bool:
-            raise ValueError("report producer returned no cache resource decision")
-        if result.stderr:
-            print(result.stderr, end="", file=sys.stderr, flush=True)
-        if not outcome["needs_lake"]:
-            return str(report)
-    return None
 
 
 def main():
@@ -917,7 +869,8 @@ def main():
     try:
         archive_paths = native_archive_paths(args.repository, args.layers) if args.command == "keys" else {}
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
-        keys = actions_keys(args.repository)
+        keys = actions_keys(args.repository, report_preference=args.command == "keys" and "current" in args.layers
+                            and (not args.stage or "lean-report" in plan["execution"]["steps"]))
         if args.snapshot_directory:
             stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry,
                            current=current, seed_manifest=args.seed_manifest)

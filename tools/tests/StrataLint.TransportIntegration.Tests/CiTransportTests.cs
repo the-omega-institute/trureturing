@@ -14,6 +14,41 @@ namespace StrataLint.TransportIntegration.Tests;
 [Collection("StrataLint.TransportIntegration.Tests process boundary")]
 public sealed partial class CiTransportTests
 {
+    [Fact]
+    public void StageTransportAndDeltaEachAcceptRequiredRecordsOnce()
+    {
+        using var fixture = new ExecutionFixture();
+        Prepare(fixture, current: true);
+        var root = fixture.Root;
+        var commit = Git(root, "rev-parse", "HEAD");
+        var priorRecord = CommonExecutionEvidence.AcceptanceCounts.Value;
+        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        try
+        {
+            CommonExecutionEvidence.AcceptanceCounts.Value = counts;
+            foreach (var stage in new[] { "build", "engineering", "current" })
+            {
+                foreach (var command in new[] { "transport-pack", "transport-verify" })
+                {
+                    counts.Clear();
+                    Assert.Equal(0, Run(command, root, stage, commit, "17", "2",
+                        command == "transport-pack" ? Path.Combine(root, "build/" + stage + ".tgz") : null));
+                    Assert.Equal(stage == "current" ? 1 : 0, counts.GetValueOrDefault("report"));
+                    Assert.Equal(stage == "current" ? 1 : 0, counts.GetValueOrDefault("current-checks"));
+                    Assert.Equal(stage == "engineering" ? 1 : 0, counts.GetValueOrDefault("engineering-checks"));
+                    Assert.Equal(stage == "engineering" ? 1 : 0, counts.GetValueOrDefault("tests"));
+                }
+            }
+            counts.Clear();
+            CommonExecutionEvidence.ValidateCommon(root);
+            Assert.Equal(new[] { "current-checks", "engineering-checks", "report", "tests" }, counts.Keys.Order(StringComparer.Ordinal));
+            Assert.All(counts.Values, value => Assert.Equal(1, value));
+        }
+        finally
+        {
+            CommonExecutionEvidence.AcceptanceCounts.Value = priorRecord;
+        }
+    }
 
     [Theory]
     [InlineData("build")]

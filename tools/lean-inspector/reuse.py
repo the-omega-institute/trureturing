@@ -107,14 +107,20 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
+def receipt_record(data):
+    """Decode the seal; callers must bind its inputs and bundle independently."""
+    receipt = publication.read_json(data)
+    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
+    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+        raise ValueError('reuse receipt lacks complete entry success')
+    return receipt
+
+
 def read_receipt(report, captured):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
-    receipt = publication.read_json(path.read_bytes())
-    materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
-        raise ValueError('reuse receipt lacks complete entry success')
+    receipt = receipt_record(path.read_bytes())
     if receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):

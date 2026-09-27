@@ -488,6 +488,7 @@
         "tools/scripts/worktree/cache_deadline.py",
         "tools/scripts/worktree/cache_material.py",
         "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py",
         "tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py",
@@ -642,7 +643,8 @@
         "tools/tests/StrataLint.Lean.Tests/Native/*.py"
       ],
       "execution_excludes": [
-        "tools/scripts/worktree/lean_actions.py"
+        "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py"
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
@@ -825,7 +827,11 @@
         "tools/tests/StrataLint.ScriptTests/Fixtures/**",
         ".gitignore",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "lean-report-inputs.json"
+        "lean-report-inputs.json",
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/publication.py",
+        "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/test_reuse.py"
       ],
       "execution_excludes": [
         "tools/scripts/agent/openproblem/README.md",
@@ -908,6 +914,7 @@
         "tools/scripts/worktree/lean-cache-ensure.sh",
         "tools/scripts/worktree/lean-cache-run.sh",
         "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
@@ -1917,6 +1924,7 @@
         "tools/scripts/worktree/cache_deadline.py",
         "tools/scripts/worktree/cache_material.py",
         "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py"
       ],
@@ -1978,6 +1986,7 @@
         "tools/scripts/worktree/cache_deadline.py",
         "tools/scripts/worktree/cache_material.py",
         "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py"
       ],
@@ -2079,6 +2088,7 @@
         "tools/scripts/worktree/cache_material.py",
         "tools/scripts/worktree/lean-cache-input.sh",
         "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_actions_report.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py"
       ],
