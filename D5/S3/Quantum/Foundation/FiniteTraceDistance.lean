@@ -488,7 +488,7 @@ theorem traceDistance_le_one (rho sigma : DensityState ι) : traceDistance rho s
   rw [sub_eq_add_neg]
   linarith
 
-private theorem trace_norm_jordan_mass (A : Matrix ι ι ℂ) (hA : A.IsHermitian) :
+theorem trace_norm_jordan_mass (A : Matrix ι ι ℂ) (hA : A.IsHermitian) :
     traceNorm A = (Matrix.trace (posPart A)).re + (Matrix.trace (negPart A)).re := by
   have h := congrArg (fun B : Matrix ι ι ℂ => (Matrix.trace B).re)
     (CFC.posPart_add_negPart A hA)

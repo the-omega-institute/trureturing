@@ -306,6 +306,55 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertEqual(result.returncode, 0,
             '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
 
+    def test_binding_driver_errors_keep_context_and_budget(self):
+        # A fixture driver exercises the real native exception boundary; these
+        # records make no declaration-admission claim.
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+open Lean Meta
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  let context ← readThe Core.Context
+  unless context.maxHeartbeats == Core.getMaxHeartbeats {} do
+    throwError "changed production heartbeat limit"
+  match ← IO.getEnv "FIXTURE_REPORT_FAILURE" with
+  | some "heartbeat" =>
+    IO.addHeartbeats (context.maxHeartbeats + 1)
+    Core.checkMaxHeartbeats "native-report-regression"
+  | some "ordinary" => throwError "ordinary fixture failure"
+  | _ => pure ()
+  return names.map fun _ => Json.mkObj [("fixture", toJson true)]
+''')
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.ensure()
+        built = subprocess.run(['make', 'lean',
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
+            cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        for mode in ['success', 'ordinary', 'heartbeat']:
+            with self.subTest(mode=mode):
+                self.env['FIXTURE_REPORT_FAILURE'] = mode
+                output = self.root / (mode + '.spool.json')
+                result = self.run_lake('env', str(executable), '--output', str(output),
+                    '--material-spool', str(self.root / (mode + '.materials')),
+                    'D5.Alone', 'D5/Alone.lean',
+                    'sha256:' + publication.digest(self.root / 'D5/Alone.lean'), success=None)
+                message = result.stdout + result.stderr
+                self.assertEqual(result.returncode, 0 if mode == 'success' else 1, message)
+                self.assertEqual(output.exists(), mode == 'success', message)
+                if mode != 'success':
+                    self.assertIn('information-template-join:', message)
+                    self.assertNotIn('invalid MessageData.lazy', message)
+                if mode == 'ordinary':
+                    self.assertIn('ordinary fixture failure', message)
+                if mode == 'heartbeat':
+                    self.assertIn('native-report-regression', message)
+                    self.assertIn('maximum number of heartbeats (200000)', message)
+
 
 class NativePackageConsumerTests(NativeReleaseSupport):
     def test_native_pack_unpack_reuses_complete_rows(self):
