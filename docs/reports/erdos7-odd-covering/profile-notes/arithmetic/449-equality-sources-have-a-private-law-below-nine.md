@@ -131,8 +131,64 @@ The controls also distinguish these boundaries:
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/equality_source_private_law.py
 ```
 
+## Large cuts give a different law without an incidence restriction
+
+The same actual-child network also controls sufficiently large cuts using
+its original capacities alone. Keep gamma=2/7 and write t for its maximum
+flow, equivalently its minimum cut. Decompose a flow of value t>0 into
+source-to-sink paths, put its mass on the actual child/leaf bridges and
+normalize by t. This gives ONE probability nu on F before any query is
+selected. Each path uses one actual bridge; no unsupported point is added.
+
+The source/root, root/child and common-seven edges give
+
+    q_5,q_7 <= 1/(3t),    q_25,q_49 <= 1/(9t).
+
+For the mixed cylinders, use the private child tree when it is needed:
+
+    q_35 <= 1/(3t),       q_175 <= 2/(21t),
+    q_245 <= 1/(9t),      q_1225 <= 2/(63t).
+
+The first and third bounds follow by containment in a pure5 or pure49
+cylinder, respectively. A mod175 cylinder uses one child's private
+first-seven edge, and a mod1225 cylinder uses its private second-seven
+edge. None requires an upper bound on how many children meet a root/column
+cylinder. The same normalized flow supplies all eight bounds.
+
+The unit label still has q_1=1. Applying the complete ordered-LCM envelope
+to all nine independent original query labels gives
+
+    Gamma_1225(nu)
+      <= 1 + [6/3 + 10/9 + 9/3
+                    + 15*(2/21+1/9) + 25*(2/63)]/t
+       = 1 + 10/t.                                      (LC1)
+
+Thus any such network with t>=79/63 supplies
+
+    Gamma_1225(nu)<=709/79<9.                            (LC2)
+
+This is a direct use of the existing flow and LCM bounds, not a new
+formalized theorem or a statement about every supported law. It requires
+no literal tree premise beyond whatever is used to establish the cut
+value. In the occupancy4555 setting of447, the stated tree premises give
+t>=65/63. All network capacities, including the actual bridges, are
+integer multiples of1/63; so t=k/63 for an integer k. The source edges
+also give t<=4/3=84/63. The private-law theorem above handles k=65,
+and LC2 handles k>=79. Consequently the only remaining possible cut
+values for that source class are k=66,...,78. This lists thirteen
+unresolved values, not a claim that each is attained or that each source
+at those values fails. Any source already containing the private
+structure above is handled regardless of its cut value.
+
 ## Remaining source and arithmetic gaps
 
-All sources with a literal65/63 equality cut are now controlled without an incidence-at-most-two assumption. Their sharp cuts force actual support structure sufficient for a different law. Sources with larger network minimum cuts are not thereby controlled: their high root/column incidence can still invalidate the earlier mixed-cap estimate. Some may contain the private structure, but its existence has not been proved for every remaining source.
+All sources with a literal65/63 equality cut are now controlled without an incidence-at-most-two assumption. Their sharp cuts force actual support structure sufficient for a different law.
+For occupancy4555, the large-cut estimate also handles every cut at
+least79/63. General high-incidence sources in the remaining range66/63
+through78/63 are not thereby controlled: their high root/column incidence
+can still invalidate the earlier mixed-cap estimate. Some may contain
+the private structure, but its existence has not been proved for every
+remaining source. Other occupancy patterns retain their own stated
+premises and are not classified by this thirteen-value reduction.
 
 The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
