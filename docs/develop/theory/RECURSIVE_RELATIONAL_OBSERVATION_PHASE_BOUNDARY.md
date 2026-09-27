@@ -83161,3 +83161,528 @@ $$
 本节不把已知二元预算推广为所有来源的层析复杂度或任意两态可判别性，也不由副本数直接推出物理历时。若要计算时间成本，还须指定制备速率、每份处理时间及并行规则。
 
 ## 追加锚（本行以下为增补区）
+
+## 268. Ando固定数据纤维中的唯一混合来源与无界奇异度
+
+§266在二维参考空间给出了奇异度恰为二的唯一来源。输入始终是qubit、方向空间始终是 $\operatorname{diag}(D,-D)$，这些限制仍不足以把面约化步数统一限制为二。本节构造任意参考维数 $n$ 的固定完整数据：来源纤维只有一个秩 $n$ 的成员，其标准奇异度恰为 $n$。
+
+关键下界不只展示一条较长的约化链，而是分类每一个可能的合法证书。旧核方向的交叉项在尾部参考主块中消失，等对角块条件遂迫使下一证书只排除一个新的核方向。由此得到所有约化链的最短步数。
+
+本节使用§263、§266的Ando纤维与标准面约化定义。所得步数给固定实例的有效Hölder误差指数，但不单独证明该指数最优。
+
+### 268.1 单Jordan块产生的固定来源合同
+
+设参考空间为 $E=\mathbb C^n$，$n\ge1$，标准正交基为 $e_1,\ldots,e_n$，并约定 $e_0=0$。定义幂零移位
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(2\le j\le n),
+\qquad M=I+tJ.
+\tag{268.1}
+$$
+先令 $t>0$，假定存在Hermitian正定矩阵 $Q$ 满足
+$$
+Q+M^\dagger QM=I_n.
+\tag{268.2}
+$$
+下一节证明固定 $t=1/4$ 对所有 $n$ 都有这样的 $Q$。
+
+定义
+$$
+Z=2QM,\qquad F_*=Q,
+$$
+$$
+T_*=
+\begin{pmatrix}
+Q&QM\\
+M^\dagger Q&M^\dagger QM
+\end{pmatrix}
+=
+\begin{bmatrix}I\\M^\dagger\end{bmatrix}
+Q
+\begin{bmatrix}I&M\end{bmatrix}.
+\tag{268.3}
+$$
+由（268.2），这是原来的Ando填充
+$$
+T_*=T_Z(Q)
+=\begin{pmatrix}Q&Z/2\\Z^\dagger/2&I_n-Q\end{pmatrix},
+\tag{268.4}
+$$
+没有放宽非对角数据或两个对角块之和。$M$ 可逆，故 $Q$ 与 $I_n-Q=M^\dagger QM$ 都严格正。Gram形式给
+$$
+T_*\succeq0,\qquad \operatorname{rank}T_*=n,\qquad
+\operatorname{Tr}T_*=n.
+\tag{268.5}
+$$
+定义
+$$
+q_j=(-Me_j,e_j)=(-e_j-te_{j-1},e_j),
+\qquad j=1,\ldots,n.
+\tag{268.6}
+$$
+这些向量由其下半部分可知线性独立，且
+$$
+N:=\ker T_*=\ker\begin{bmatrix}I&M\end{bmatrix}
+=\operatorname{span}\{q_1,\ldots,q_n\}.
+\tag{268.7}
+$$
+$T_*$ 在 $N^\perp$ 上严格正。
+
+在固定输入 $Y$ 本征基下，归一化来源及其完整数据为
+$$
+\boxed{
+\Omega_*=\frac1nT_*,
+\qquad
+\rho_*=\operatorname{Tr}_H\Omega_*=\frac1nI_n,
+\qquad
+K_*=\mathscr K(\Omega_*)=\frac1nZ=\frac2nQM.
+}
+\tag{268.8}
+$$
+其中 $\dim H=2$、$\mathscr K(X)=2X_{+-}$。这是实际 $2\otimes n$ 接口上的密度态。$n\ge2$ 时其秩为 $n>1$，故是混合来源。
+
+### 268.2 对全部维数统一有效的正定参数
+
+在Hermitian矩阵的实向量空间上使用通常算子范数，线性映射使用对应诱导范数。记
+$$
+\mathcal E_t(X)=t(J^\dagger X+XJ)+t^2J^\dagger XJ.
+\tag{268.9}
+$$
+因为 $\|J\|\le1$，
+$$
+X+M^\dagger XM=2X+\mathcal E_t(X),
+\qquad
+\|\mathcal E_t\|\le2t+t^2.
+\tag{268.10}
+$$
+固定
+$$
+t=\frac14,\qquad
+\|\mathcal E_t/2\|\le\frac9{32}<1.
+\tag{268.11}
+$$
+所以以下Neumann级数在算子范数中收敛：
+$$
+Q=
+\frac12\left(\operatorname{Id}+\frac12\mathcal E_t\right)^{-1}(I_n)
+=\frac12\sum_{k=0}^\infty
+\left(-\frac12\mathcal E_t\right)^k(I_n).
+\tag{268.12}
+$$
+每一项Hermitian；该矩阵是（268.2）的唯一Hermitian解。其距离 $I_n/2$ 有统一界
+$$
+\left\|Q-\frac12I_n\right\|
+\le\frac12\frac{9/32}{1-9/32}
+=\frac9{46}.
+\tag{268.13}
+$$
+于是
+$$
+\boxed{
+\frac7{23}I_n\preceq Q\preceq\frac{16}{23}I_n
+\qquad\text{对所有 }n\ge1.
+}
+\tag{268.14}
+$$
+这给出所需正定性，参数和谱区间均不依赖 $n$。
+
+$J$ 为实矩阵，级数各项实对称，故 $Q$ 也实对称。$t=1/4$ 时，（268.2）还是一个有理系数的可逆有限维线性系统，所以 $Q$ 的所有条目均为有理数。这里提供的是明确存在性和正定界，不是求解复杂度或数值稳定性保证。
+
+下面关于唯一性、证书和最短性的证明只使用 $t>0$、（268.2）与 $Q\succ0$；因而既适用于统一族，也适用于后面另行认证的有理实例。
+
+### 268.3 全部正半定填充只有一个成员
+
+**定理268.1（唯一填充）。** 若 $t>0$、$Q\succ0$ 满足（268.2），并取 $Z=2QM$，则
+$$
+\boxed{\mathcal F(Z)=\{Q\}.}
+\tag{268.15}
+$$
+相应实际数据 $(\rho_*,K_*)$ 的合法来源也只有 $\Omega_*$。
+
+**证明。** 任意具有相同 $Z$ 的Hermitian填充都写成
+$$
+T=T_*+\operatorname{diag}(D,-D),
+\qquad D=D^\dagger.
+\tag{268.16}
+$$
+假设 $T\succeq0$。对 $q_1=(-e_1,e_1)$，
+$$
+q_1^\dagger Tq_1=0.
+\tag{268.17}
+$$
+正半定矩阵将零二次型向量送到零，所以 $Tq_1=0$。又 $T_*q_1=0$，读取
+$\operatorname{diag}(D,-D)q_1=0$ 的下半部分便得 $De_1=0$。
+
+设已证明 $De_i=0$，$1\le i<j$。Hermitian性同时消去相应行。因此
+$$
+\begin{aligned}
+q_j^\dagger Tq_j
+&=(e_j+te_{j-1})^\dagger D(e_j+te_{j-1})
+-e_j^\dagger De_j\\
+&=0.
+\end{aligned}
+\tag{268.18}
+$$
+再次由PSD性得 $Tq_j=0$；减去 $T_*q_j=0$ 并读取下半部分，得到 $De_j=0$。归纳至 $n$ 得 $D=0$。
+
+该论证允许任意复Hermitian的 $D$，没有对竞争态增加实性、纯性或秩限制。将整个填充乘以 $1/n$，正性和唯一性保留；反向将实际来源乘以 $n$ 又回到同一个Ando纤维，所以得到实际来源唯一性。$\square$
+
+### 268.4 保持原始切片的显式 $n$ 步证书
+
+在联合Hermitian矩阵空间中定义
+$$
+\mathcal C=\{X:X\succeq0\},
+\qquad
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{268.19}
+$$
+固定Ando切片为 $T_*+L$。实际密度态切片为 $\Omega_*+L$；由于 $T_*=n\Omega_*$，它们使用相同的消去证书条件
+$$
+Y\in L^\perp,\qquad
+\langle Y,T_*\rangle=0
+\quad\Longleftrightarrow\quad
+Y\in L^\perp,\qquad
+\langle Y,\Omega_*\rangle=0.
+\tag{268.20}
+$$
+内积为 $\operatorname{Re}\operatorname{Tr}(XY)$。由§266，
+$L^\perp$ 恰为上下两个对角块相等的Hermitian联合矩阵。
+
+令
+$$
+N_j=\operatorname{span}\{q_1,\ldots,q_j\},\qquad
+N_0=\{0\},\qquad P_j=P_{N_j^\perp},
+$$
+$$
+\mathcal C_j
+=\{X\succeq0:\operatorname{supp}X\subseteq N_j^\perp\}.
+\tag{268.21}
+$$
+第一步取
+$$
+Y_1=q_1q_1^\dagger.
+\tag{268.22}
+$$
+其上下对角块相等，$Y_1\succeq0$，且 $\langle Y_1,T_*\rangle=0$，所以它把 $\mathcal C_0$ 严格约化为 $\mathcal C_1$。
+
+对 $1\le j<n$，取
+$$
+w_j=\left(0,\ te_{j+1}+\frac{t^2}{2}e_j\right),
+$$
+$$
+Y_{j+1}
+=q_{j+1}q_{j+1}^\dagger+q_jw_j^\dagger+w_jq_j^\dagger.
+\tag{268.23}
+$$
+第一项的上下对角块之差为
+$$
+t(e_je_{j+1}^\dagger+e_{j+1}e_j^\dagger)+t^2e_je_j^\dagger.
+\tag{268.24}
+$$
+后两项的差恰为其相反数。因此 $Y_{j+1}\in L^\perp$。由于 $T_*q_j=T_*q_{j+1}=0$，还满足
+$$
+\langle Y_{j+1},T_*\rangle=0.
+\tag{268.25}
+$$
+在当前面上，
+$$
+\boxed{
+P_jY_{j+1}P_j
+=(P_jq_{j+1})(P_jq_{j+1})^\dagger\succeq0.
+}
+\tag{268.26}
+$$
+核向量独立，保证 $P_jq_{j+1}\ne0$。所以 $Y_{j+1}$ 属于当前面的对偶锥，并且
+$$
+\mathcal C_j\cap\{Y_{j+1}\}^\perp=\mathcal C_{j+1}.
+\tag{268.27}
+$$
+这里不要求后续 $Y_{j+1}$ 在原全空间上正半定；其压缩正性正好是§266要求的当前面对偶条件。
+
+第 $n$ 步后，支撑为 $N^\perp$，$T_*$ 在该支撑上严格正，相对Slater条件成立。故标准奇异度满足
+$$
+d_S\le n.
+\tag{268.28}
+$$
+每一步都保持原来的 $L$ 与固定全部数据，没有向切片加入额外方程。
+
+### 268.5 尾块不变协方差的秩一约束
+
+下面的初等引理将排除一张证书同时约化多个剩余核方向。
+
+**引理268.2（单Jordan块的不变正协方差）。** 设
+$M_r=I_r+tJ_r$、$t>0$。若复Hermitian矩阵 $C\succeq0$ 满足
+$$
+M_rCM_r^\dagger=C,
+\tag{268.29}
+$$
+则
+$$
+\boxed{C=c\,e_1e_1^\dagger,\qquad c\ge0.}
+\tag{268.30}
+$$
+
+**证明。** $r=1$ 时直接成立。若 $r\ge2$，比较（268.29）的 $(r-1,r)$ 元：$M_r$ 最后一行为 $e_r^\dagger$，倒数第二行为 $e_{r-1}^\dagger+te_r^\dagger$，所以
+$$
+C_{r-1,r}+tC_{rr}=C_{r-1,r}.
+\tag{268.31}
+$$
+由 $t>0$ 得 $C_{rr}=0$。PSD性强制 $C$ 的最后一行和最后一列全部为零。剩余主块满足相同的 $r-1$ 阶方程，归纳得到结论。$\square$
+
+### 268.6 任意合法证书都只能前进一层
+
+固定 $0\le j<n$，假设当前面为 $\mathcal C_j$。考虑任意严格约化证书 $Y$，它满足
+$$
+P_jYP_j\succeq0,\qquad
+Y\in L^\perp,\qquad
+\langle Y,T_*\rangle=0.
+\tag{268.32}
+$$
+本节将证明其下一面只能是 $\mathcal C_{j+1}$。
+
+记 $S=P_jYP_j$。因为 $T_*$ 支撑于 $N^\perp\subseteq N_j^\perp$，
+$$
+\operatorname{Tr}(ST_*)=\operatorname{Tr}(YT_*)=0.
+\tag{268.33}
+$$
+两个PSD算子的迹乘积为零，故 $S$ 的像位于 $T_*$ 的核；又 $S$ 已支撑于 $N_j^\perp$，因此
+$$
+\operatorname{ran}S\subseteq N\cap N_j^\perp.
+\tag{268.34}
+$$
+
+令 $V_j$ 为以 $q_{j+1},\ldots,q_n$ 为列的矩阵。$P_jV_j$ 满列秩：若 $P_jV_jc=0$，则 $V_jc\in N_j$，与全部 $q_i$ 线性独立矛盾。它的列空间正好是 $N\cap N_j^\perp$。所以存在 $C\succeq0$，阶数为 $n-j$，使
+$$
+S=P_jV_jCV_j^\dagger P_j.
+\tag{268.35}
+$$
+此处无需列正交；对满列秩矩阵 $W=P_jV_j$，可用左逆写
+$C=W^+S(W^+)^\dagger$ 来验证正性与该表示。
+
+置
+$$
+B=Y-V_jCV_j^\dagger,\qquad R_j=I-P_j.
+\tag{268.36}
+$$
+由（268.35），$P_jBP_j=0$。展开 $I=P_j+R_j$ 给精确分解
+$$
+\boxed{
+B=R_jB+BR_j-R_jBR_j.
+}
+\tag{268.37}
+$$
+因此每项至少一端落在旧核 $N_j$ 中。
+
+为核对这些交叉项对数据条件的影响，定义前缀参考空间
+$$
+E_j=\operatorname{span}\{e_1,\ldots,e_j\},
+\qquad E_0=\{0\},
+\tag{268.38}
+$$
+并令 $\Pi_j$ 为 $E_j^\perp$ 上的参考投影。由 $q_i=(-e_i-te_{i-1},e_i)$，
+$$
+N_j\subseteq E_j\oplus E_j.
+\tag{268.39}
+$$
+所以上半或下半单独嵌入的每个尾参考向量都与 $N_j$ 正交。将（268.37）上下两个对角块分别作尾部双侧压缩，得到
+$$
+\Pi_jB_{++}\Pi_j=0,\qquad
+\Pi_jB_{--}\Pi_j=0.
+\tag{268.40}
+$$
+这一步分别消去了两个尾主块，因而没有遗漏旧核与新方向之间的交叉项。
+
+现在使用 $Y\in L^\perp$：$Y_{++}=Y_{--}$。结合（268.36）、（268.40），$V_jCV_j^\dagger$ 的上下对角尾主块必须相等。$V_j$ 下半部分是尾参考基的嵌入，上半部分为该嵌入乘以 $-M$。压缩到 $E_j^\perp$ 时，第一列中落在 $e_j$ 上的分量被删除，剩余矩阵精确为
+$M_{n-j}=I_{n-j}+tJ_{n-j}$。因此等对角约束成为
+$$
+\boxed{
+M_{n-j}CM_{n-j}^\dagger=C.
+}
+\tag{268.41}
+$$
+由引理268.2，$C=c\,e_1e_1^\dagger$、$c\ge0$。代入（268.35），得到任意合法证书的当前压缩形式
+$$
+\boxed{
+P_jYP_j
+=c(P_jq_{j+1})(P_jq_{j+1})^\dagger.
+}
+\tag{268.42}
+$$
+若 $c=0$，证书在整个当前面上为零，不能严格约化。因此严格约化要求 $c>0$。对当前面中的 $X\succeq0$，该证书的零配对恰好要求额外消去 $q_{j+1}$，所以
+$$
+\mathcal C_j\cap\{Y\}^\perp=\mathcal C_{j+1}.
+\tag{268.43}
+$$
+
+以上分类对 $j=0$ 同样成立，先强制任何合法链的第一面为 $\mathcal C_1$；再逐步应用，强制全部后续面依次为
+$\mathcal C_2,\ldots,\mathcal C_n$。因此它覆盖所有可能约化链，而非只分析（268.23）给出的特定证书。
+
+### 268.7 精确奇异度与极值向量空间
+
+**定理268.3（固定Ando切片的奇异度恰为参考维数）。** 对（268.1）—（268.3）中任意 $t>0$ 和正定解 $Q$，固定Ando切片与实际归一化来源切片都满足
+$$
+\boxed{d_S=n.}
+\tag{268.44}
+$$
+尤其 $t=1/4$ 给出任意参考维数的实际例族。
+
+**证明。** §268.4给合法 $n$ 步链，故 $d_S\le n$。§268.6证明任何严格链都必须依次经过 $\mathcal C_j$。当 $j<n$ 时，当前联合支撑维数为 $2n-j>n$，唯一可行矩阵 $T_*$ 仍只有秩 $n$，不在该面的相对内部。故相对Slater不可能提前成立，得到 $d_S\ge n$。归一化切片使用相同证书和相同支撑，奇异度不变。$\square$
+
+该构造还有一个区别于面约化深度的固定特征：数值半径极值向量始终只张成一维。可行性给 $w(Z)\le1$；由 $Me_1=e_1$ 和（268.2），
+$$
+2e_1^\dagger Qe_1=1,\qquad e_1^\dagger Ze_1=1,
+\tag{268.45}
+$$
+所以 $w(Z)=1$。
+
+若单位向量 $x$ 满足 $x^\dagger Zx=e^{i\theta}$，§263的极值零二次型关系给
+$$
+(x,-e^{-i\theta}x)\in\ker T_*.
+\tag{268.46}
+$$
+用（268.7）消去这个向量，得到
+$$
+Mx=e^{i\theta}x.
+\tag{268.47}
+$$
+$M=I+tJ$ 只有特征值一，且特征空间为 $\mathbb Ce_1$。反向 $e_1$ 已达到数值半径，故
+$$
+\boxed{W_{\mathrm{ext}}=\mathbb Ce_1\quad\text{对全部 }n.}
+\tag{268.48}
+$$
+因此唯一性及任意高奇异度可以与一维极值向量空间同时出现。
+
+一次矩阵谱因子也直接记录同一Jordan结构：
+$$
+P(\zeta)=Q^{1/2}(I+\zeta M),
+$$
+$$
+P(\zeta)^\dagger P(\zeta)
+=I+\frac12(\zeta Z+\overline\zeta Z^\dagger),
+\qquad |\zeta|=1.
+\tag{268.49}
+$$
+其行列式为
+$$
+\det P(\zeta)=\det(Q^{1/2})(1+\zeta)^n.
+\tag{268.50}
+$$
+在 $\zeta=-1$ 处，行列式有 $n$ 重零点，而矩阵本身的核仍只有一维，因为 $I-M=-tJ$ 的核为 $\mathbb Ce_1$。这是当前构造的精确性质，不是关于任意谱因子零点重数与奇异度的一般等式。
+
+### 268.8 一个奇异度恰为三的全有理来源
+
+为给出较小的明确反例，取 $n=3$、$t=1/2$，并定义
+$$
+M=
+\begin{pmatrix}
+1&1/2&0\\
+0&1&1/2\\
+0&0&1
+\end{pmatrix},
+\qquad
+Q=\frac1{256}
+\begin{pmatrix}
+128&-32&8\\
+-32&128&-30\\
+8&-30&127
+\end{pmatrix}.
+\tag{268.51}
+$$
+$256Q$ 的每行对角元减去其余绝对值之和依次为 $88,66,89$，严格对角占优与Hermitian性给 $Q\succ0$。直接相乘，
+$$
+QM=\frac1{256}
+\begin{pmatrix}
+128&32&-8\\
+-32&112&34\\
+8&-26&112
+\end{pmatrix},
+$$
+$$
+M^\dagger QM=\frac1{256}
+\begin{pmatrix}
+128&32&-8\\
+32&128&30\\
+-8&30&129
+\end{pmatrix}
+=I_3-Q.
+\tag{268.52}
+$$
+所以（268.2）精确成立。这里的 $t=1/2$ 不使用§268.2为统一族选择的 $t=1/4$；正性由本例自己的有理矩阵证书承担，其余定理只要求 $t>0$ 与 $Q\succ0$。
+
+相应Ando矩阵为
+$$
+Z=2QM=
+\begin{pmatrix}
+1&1/4&-1/16\\
+-1/4&7/8&17/64\\
+1/16&-13/64&7/8
+\end{pmatrix}.
+\tag{268.53}
+$$
+按 $(+,1),(+,2),(+,3),(-,1),(-,2),(-,3)$ 排列联合基，实际来源是
+$$
+\boxed{
+\Omega_*=\frac1{768}
+\begin{pmatrix}
+128&-32&8&128&32&-8\\
+-32&128&-30&-32&112&34\\
+8&-30&127&8&-26&112\\
+128&-32&8&128&32&-8\\
+32&112&-26&32&128&30\\
+-8&34&112&-8&30&129
+\end{pmatrix}.
+}
+\tag{268.54}
+$$
+它具有（268.3）的Gram形式再除以三，所以正半定、秩三、迹一，完整数据为
+$$
+\rho_*=\frac13I_3,\qquad K_*=\frac13Z.
+\tag{268.55}
+$$
+其全部合法来源纤维唯一，标准奇异度恰为三。
+
+三条核向量为
+$$
+q_1=(-e_1,e_1),\quad
+q_2=(-e_2-\tfrac12e_1,e_2),\quad
+q_3=(-e_3-\tfrac12e_2,e_3).
+\tag{268.56}
+$$
+证书可具体取 $Y_1=q_1q_1^\dagger$，以及
+$$
+Y_2=q_2q_2^\dagger+q_1w_1^\dagger+w_1q_1^\dagger,
+\qquad
+w_1=(0,\tfrac12e_2+\tfrac18e_1),
+$$
+$$
+Y_3=q_3q_3^\dagger+q_2w_2^\dagger+w_2q_2^\dagger,
+\qquad
+w_2=(0,\tfrac12e_3+\tfrac18e_2).
+\tag{268.57}
+$$
+它们始终具有相等对角块、消去完整固定切片，并在对应当前面上正。§268.6的任意证书分类同时证明不存在两步完成的链。
+
+### 268.9 固定实例误差界与未证明的锐性
+
+对每个固定 $n$ 的上述例族，§266所引Lourenço对称锥误差界给 $d_{\mathrm{PPS}}\le d_S=n$。使用同一完整 $2\otimes n$ 接口，对任意合法竞争态 $\Xi$ 记
+$$
+\varepsilon=
+\left\|\operatorname{Tr}_H\Xi-\frac1nI_n\right\|_1
++\left\|\mathscr K(\Xi)-\frac1nZ\right\|_1.
+\tag{268.58}
+$$
+范数均未除以二。由于来源唯一，对 $0\le\varepsilon\le1$ 存在固定常数 $C_n<\infty$，使
+$$
+\boxed{
+\|\Xi-\Omega_*\|_1\le C_n\varepsilon^{\,2^{-n}}.
+}
+\tag{268.59}
+$$
+这里使用的是§266已经核对的数据残差、固定仿射切片和PSD范数有界性；不需要另将候选限制为同边缘或同秩。
+
+标准奇异度 $d_S=n$ 证明了Ando特殊切片的约化深度随参考维数无界，尤其排除了统一上界二。它没有证明全部 $n$ 维Ando切片的最大奇异度一定等于 $n$，也没有仅凭步数证明（268.59）的指数最优。常数的显式值、跨维数一致性及该族的最优局部指数均需另行估计。
+
+所用标准面约化与误差界来源承接§266：Bruno F. Lourenço，Amenable cones: error bounds without constraint qualifications，[arXiv:1712.06221v2](https://arxiv.org/pdf/1712.06221v2)，标准奇异度定义见PDF第5—6页，合法证书链见第16页，$d_{\mathrm{PPS}}\le d_S$ 见第17页 Proposition 24，固定有界误差界见第27页 Proposition 38。当前构造的唯一性、证书分类与步数则由本节矩阵证明承担，不据此宣称外部文献原创性。
+
+本节还没有给寻找任意数据的最短证书链的算法效率，也没有把固定参考空间的奇异度直接移到增加未观测环境后的另一个切片。共同核、标准最少步骤和最优恢复指数仍是不同对象，各自需要相应证据。
+
+## 追加锚（本行以下为增补区）
