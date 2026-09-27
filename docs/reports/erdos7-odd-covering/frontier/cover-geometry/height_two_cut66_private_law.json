@@ -1,0 +1,137 @@
+{
+  "relaxed_profile_checks": 10800,
+  "min_by_eligible_count": {
+    "0": 84,
+    "1": 70,
+    "2": 72,
+    "3": 71,
+    "4": 65
+  },
+  "partial_four_eligible_min": 68,
+  "lower_profiles_at_most66": [
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "top_units": 0,
+      "public_units": 3,
+      "private_min_units": 22,
+      "lower_numerator": 65
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "top_units": 0,
+      "public_units": 4,
+      "private_min_units": 19,
+      "lower_numerator": 66
+    }
+  ],
+  "compatible_cut66_profile": [
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "top_units": 0,
+      "public_units": 4,
+      "private_min_units": 19,
+      "lower_numerator": 66
+    }
+  ],
+  "compatible_cut67_profiles": [
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "top_units": 0,
+      "public_units": 3,
+      "private_units": 23
+    },
+    {
+      "active": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "top_units": 0,
+      "public_units": 5,
+      "private_units": 16
+    }
+  ],
+  "cut67_k5_p_attainers": [
+    [
+      2,
+      2,
+      2,
+      2
+    ]
+  ],
+  "cut67_k5_full_shape": [
+    [
+      0,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "private_p_attainers": [
+    [
+      2,
+      3,
+      3,
+      3
+    ]
+  ],
+  "sorted_child_shapes": {
+    "4": [
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "5": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  "common_law_lcm_envelope": "141/16",
+  "margin_below9": "3/16",
+  "literal_private_law_atoms": 19,
+  "literal_cylinder_checks": 1767,
+  "literal_caps": {
+    "1": "1",
+    "5": "1/4",
+    "7": "1/4",
+    "25": "1/16",
+    "35": "1/4",
+    "49": "1/16",
+    "175": "1/16",
+    "245": "1/16",
+    "1225": "1/16"
+  },
+  "literal_ordered_lcm_pairs": 81,
+  "literal_centered_lower": "141/16",
+  "scope": "Necessary relaxed cut profiles and a canonical nineteen-point private-law pattern; actual private-column forcing is proved in companion text. The private subset is not claimed to satisfy the tree premises, and no source realization follows from the profile enumeration."
+}
