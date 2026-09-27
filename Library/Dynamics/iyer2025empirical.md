@@ -3949,3 +3949,66 @@ Huang，*Rational points near planar curves and Diophantine approximation*，
 
 所查来源直接覆盖抽象有效测度工具，没有直接给出本模型全部原取整、
 完整组、双实验及同步包络的对应。该范围不构成全球原创认证。
+
+### 第 98 章：局部二阶矩与首个信息方差响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 98 章
+在完整严格半指数噪声区间、每个固定输出紧区间上，确定精确后验信息方差
+相对原精确先验方差的主损失及首个输出相关修正。
+主损失保留实际噪声方差，下一阶系数为
+$(2\gamma/\nu)(2/\sqrt3-1)$。信息量用自然对数；
+改用 bit 时，方差及其修正均除以 $(\ln2)^2$。
+以下通用求导与展开方法属于已有理论。
+
+Dytso、Cardone，*A General Derivative Identity for the Conditional Expectation
+with Focus on the Exponential Family*，
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，版本 2021-08-30。
+原 PDF 第 2–3 页定理 1 保留 Markov 链、条件 score 乘积可积、
+通道密度导数可积及输出绝对连续条件；
+定理 2 在开输出域的连续指数族、解析充分统计及条件矩假设 A1–A5 下，
+给条件期望导数与条件协方差恒等式。
+本章每个有限实际纤维的 Gaussian 通道满足这些条件，
+直接有 $\partial_y\mathbb E[U\mid y]=\operatorname{Cov}(U,T\mid y)/\sigma^2$。
+该一般公式不提供指数消失噪声下的一致估计。
+正文使用相关的经典归一化指数族求导，对潜在 Gaussian 方差作精确倾斜，
+继而显式计算条件二阶矩与均值平方的消去；没有把一般求导恒等式当作新定理。
+
+Tudor、Yoshida，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+*High order asymptotic expansion for Wiener functionals*，
+条件 [A1]–[A3]、命题 1、定理 1 提供带权局部展开的成熟方法。
+其固定维归一化向量的一致 Sobolev 矩、Gamma 因子余项及指标条件
+不能直接用于未缩放且方差增长的完整信息量。
+本章从有限乘积特征函数给出所需前四阶密度导数的 O(delta) 余项，
+未宣称已核验原离散阵列的任意阶 Wiener 展开条件。
+
+Mansanarez、Poly、Swan，*Edgeworth expansion on Wiener chaos*，
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，版本 2025-10-27，
+原定理 1.2 对方差为一的固定 Wiener chaos 元素给带符号 Edgeworth 密度的 TV 界，
+误差由 Gamma 方差的规定幂控制，展开系数可用 Hermite 矩表示。
+这直接覆盖中心二次参考的通用带符号逼近，
+但 TV 界本身既不给导数范数余项，也不给局部无界二阶信息矩的传递。
+正文另证所需导数界及实际后验的带权局部比较。
+
+Herry、Malicet、Poly，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+*Superconvergence phenomenon in Wiener chaoses*，推论 10(a)
+覆盖有限 chaos 和在低阶项 L2 消失及 Gaussian 极限下的密度导数收敛。
+它提供参考正则性的通用来源，但不直接给本章曲率所需 O(delta) 速率，
+也不包含实际选中计数律。原文已注明的 score 分部积分符号疑点
+不作证明前提；正文从有限 Gaussian 积分逐项确定所用符号。
+
+Bonis 的 arXiv:1905.13615v2 定理 1、式 (9)，以及
+Serov–Zubkov 的 arXiv:1207.3838v2 任意参数 binomial CDF 夹逼，
+继续提供第 92、94 章同一量化耦合的固定阶控制。
+核心内标准化 Bernoulli 满足统一固定矩条件，
+严格噪声裕量允许使用足够高但固定的矩阶。
+不将 p=1/2 专用结论未经证明推广至一般 p，也不以实际路径行独立为前提。
+
+本章实际桥梁是：在减去原精确完整先验方差之后，传递局部中心二阶密度；
+以平方权重的联合切片导数先支付外部信息量与能量的相关；
+用独立块移除精确非中心项；最后控制归一化误差和同一个噪声残差的混合矩。
+Gaussian 倾斜、Hermite 代数、核恒等式及 Edgeworth 方法各有经典归属。
+结果仅含固定紧区间上的数据概率展开，不给常数阶方差极限、
+全实线一致性、全数据期望、一般条件化方差单调性或半指数端点结论。
+所核对来源未直接给出该完整模型桥梁；这不是全球原创认证。
