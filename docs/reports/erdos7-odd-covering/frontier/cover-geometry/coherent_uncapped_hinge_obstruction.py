@@ -7,7 +7,7 @@ not reconstruct Report467's source selector or prove a Lean theorem.
 """
 from fractions import Fraction as F
 from itertools import product
-from math import prod, isqrt
+from math import prod, isqrt, lcm
 import argparse
 import json
 
@@ -146,6 +146,204 @@ def rank_continuation_check(r_infty, actual_hinge):
                       'unnormalized_joint_survivor_lower', 'AH9_actual_hinge_threshold')},
     }
 
+def ternary_coloured_check(profiles, event_mass, r_infty):
+    """Check one fixed colour formula and its all-threshold cylinder majorant."""
+    exponents = profiles[1:]
+    colour = tuple(sum(3 ** i * e for i, e in enumerate(v)) % CURRENT
+                   for v in exponents)
+    label_index = {v: i for i, v in enumerate(exponents)}
+    profile_index = {v: i for i, v in enumerate(profiles)}
+    ideals = tuple(tuple(label_index[e] for e in product(*(range(t + 1) for t in v))
+                         if any(e)) for v in profiles)
+    retained = tuple(i for i, v in enumerate(exponents)
+                     if all(j == i or colour[j] != colour[i]
+                            for j in ideals[profile_index[v]]))
+    retained_set = set(retained)
+    require(len(retained) == 536, 'ternary colour minimal labels')
+    q2 = prod(p ** 2 for p in P)
+    haar_counts, event_counts = [0] * 24, [0] * 24
+    for v, ideal in zip(profiles, ideals):
+        active = {colour[i] for i in ideal}
+        reduced = {colour[i] for i in ideal if i in retained_set}
+        require(active == reduced, 'ternary reduction preserves actual union')
+        n = prod(p * (p - 1) if e == 0 else p - 1 if e == 1 else 1
+                 for p, e in zip(P, v))
+        haar_counts[len(active)] += n
+        if prod(e + 1 for e in v) >= THRESHOLD:
+            event_counts[len(active)] += n
+    event_total = sum(event_counts)
+    require(sum(haar_counts) == q2 and F(event_total, q2) == event_mass,
+            'ternary same-source cell partition')
+    masses = tuple((1 - MIX) * F(n, q2) + MIX * F(ne, event_total)
+                   for n, ne in zip(haar_counts, event_counts))
+    require(sum(masses) == 1 and masses[0] > 0, 'ternary probability and live fibre')
+    h = sum((w * F(max(0, 2 * c - CURRENT), CURRENT)
+             for c, w in enumerate(masses)), F(0))
+    threshold = F(49516, 334125)
+    require(h == F(898342963018123305464329, 2535373939370931457423625)
+            and h > threshold, 'ternary actual hinge threshold obstruction')
+    originals = []
+    for i in retained:
+        v, c = exponents[i], colour[i]
+        d = prod(p ** e for p, e in zip(P, v))
+        residue = d * ((c * pow(d, -1, CURRENT)) % CURRENT)
+        point, period = 0, 1
+        for r, m in [(p ** e, p ** 3) for p, e in zip(P, v)] + [(c, CURRENT)]:
+            point += period * (((r - point) * pow(period, -1, m)) % m)
+            period *= m
+        require(d > 1 and all(point % (p ** 3) == p ** e for p, e in zip(P, v)),
+                'ternary private exact old valuations and no pure23')
+        originals.append((i, CURRENT * d, residue, point))
+    require(len({m for _, m, _, _ in originals}) == len(retained),
+            'ternary distinct numerical labels')
+    membership_checks = 0
+    for i, _, _, point in originals:
+        hits = []
+        for j, modulus, residue, _ in originals:
+            membership_checks += 1
+            if point % modulus == residue:
+                hits.append(j)
+        require(hits == [i], 'ternary literal private point')
+    endpoints = []
+    for j in range(CURRENT):
+        delta = F(j, CURRENT)
+        live = sum((w * (1 - F(c, CURRENT)) / (1 - min(F(c, CURRENT), delta))
+                    for c, w in enumerate(masses)), F(0))
+        numerator = r_infty + (r_infty + 1) / ((1 - delta) * (CURRENT - 1))
+        require(live > 0, 'ternary threshold has positive live mass')
+        endpoints.append((delta, live, numerator / live))
+    best_delta, best_live, best_bound = min(endpoints, key=lambda row: row[2])
+    require(best_delta == F(11, 23)
+            and best_bound == F(35929581952530320495737057385,
+                                1047991562150140478176100352)
+            and best_bound > 27, 'ternary all-endpoint majorant obstruction')
+    exact = {
+        'actual_union_hinge': h, 'AH9_hinge_threshold': threshold,
+        'hinge_minus_threshold': h - threshold,
+        'half_threshold_cylinder_majorant': (r_infty + (r_infty + 1) / 11) / (1 - h),
+        'best_delta': best_delta, 'best_live_mass': best_live,
+        'minimum_cylinder_majorant': best_bound,
+        'minimum_cylinder_majorant_minus27': best_bound - 27,
+        'dead_fibre_mu_mass': masses[CURRENT],
+    }
+    return {
+        'scope': 'fixed703 old law and old centre0; this uniform-cylinder query majorant fails for every delta in [0,1); not an actual query lower bound, not a covering counterexample; no Lean claim',
+        'colour_formula': 'sum_i 3^i e_i mod23, i=0..6 in increasing old-prime order',
+        'original_class': 'old residue0 mod product_p p^e; current residue colour(e) mod23',
+        'reduction': 'retain exactly the coordinatewise minimal nonzero exponent vectors within each colour',
+        'initial_labels': len(exponents), 'retained_labels': len(retained),
+        'removed_labels': len(exponents) - len(retained),
+        'retained_exponents_and_colours': [list(exponents[i]) + [colour[i]] for i in retained],
+        'profile_union_equivalence_checks': len(profiles),
+        'private_witness_period': period, 'private_witnesses': len(retained),
+        'literal_membership_checks': membership_checks,
+        'private_rule': 'CRT(p^e mod p^3 for every p; colour(e) mod23)',
+        'actual_union_histogram': [
+            {'active_colours': c, 'mu_mass': str(w)} for c, w in enumerate(masses)],
+        'threshold_endpoints': [
+            {'delta': str(d), 'live_mass': str(s), 'cylinder_majorant': str(b)}
+            for d, s, b in endpoints],
+        'all_threshold_scope': 'ordinary linear-fractional endpoint proof covers every delta in [0,1), including intervals between checked endpoints and delta>22/23; alpha=1 rows remain dead',
+        'exact': {key: str(value) for key, value in exact.items()},
+        'decimals': {key: float(exact[key]) for key in
+                     ('actual_union_hinge', 'minimum_cylinder_majorant',
+                      'minimum_cylinder_majorant_minus27', 'dead_fibre_mu_mass')},
+    }
+
+def ternary_actual_query_check(profiles, event_mass, ternary):
+    """Exact joint cylinder maxima; the note proves the complete-height tails."""
+    q2 = prod(p ** 2 for p in P)
+    event_count = event_mass * q2
+    require(event_count.denominator == 1, 'ternary integer event count')
+    event_count = event_count.numerator
+    common = lcm(*range(12, 24))
+    denominator = 5 * q2 * event_count * common
+    colour = {e: sum(3 ** i * r for i, r in enumerate(e)) % CURRENT
+              for e in profiles if any(e)}
+    cells = []
+    for v in profiles:
+        active = {colour[e] for e in product(*(range(r + 1) for r in v)) if any(e)}
+        n = prod((p * (p - 1), p - 1, 1)[r] for p, r in zip(P, v))
+        event = prod(r + 1 for r in v) >= THRESHOLD
+        numerator = n * (3 * event_count + 2 * q2 * event)
+        numerator *= common // (CURRENT - min(len(active), 11))
+        cells.append([numerator if c not in active else 0 for c in range(CURRENT)])
+    live_numerator = sum(map(sum, cells))
+    live = F(live_numerator, denominator)
+    require(live == F(ternary['exact']['best_live_mass']), 'same ternary live law')
+    divisions = 0
+
+    def transform(values):
+        nonlocal divisions
+        dimensions = [3] * len(P)
+        for axis, p in enumerate(P):
+            stride = prod(dimensions[axis + 1:])
+            updated = [0] * (2 * len(values))
+            for block in range(len(values) // (3 * stride)):
+                for offset in range(stride):
+                    at = block * 3 * stride + offset
+                    a, b, c = values[at], values[at + stride], values[at + 2 * stride]
+                    require(a % (p * (p - 1)) == 0 and b % (p - 1) == 0,
+                            'exact Haar multiplicity division')
+                    divisions += 1
+                    rows = (a + b + c, a // (p - 1), b + c,
+                            a // (p * (p - 1)), b // (p - 1), c)
+                    for j, value in enumerate(rows):
+                        updated[block * 6 * stride + j * stride + offset] = value
+            values, dimensions[axis] = updated, 6
+        return values
+
+    def phase_maxima(values):
+        dimensions = [6] * len(P)
+        for axis in range(len(P)):
+            stride = prod(dimensions[axis + 1:])
+            updated = [0] * (len(values) // 2)
+            for block in range(len(values) // (6 * stride)):
+                for offset in range(stride):
+                    at = block * 6 * stride + offset
+                    rows = (values[at], max(values[at + stride], values[at + 2 * stride]),
+                            max(values[at + 3 * stride], values[at + 4 * stride],
+                                values[at + 5 * stride]))
+                    for j, value in enumerate(rows):
+                        updated[block * 3 * stride + j * stride + offset] = value
+            values, dimensions[axis] = updated, 3
+        return values
+
+    old = phase_maxima(transform(list(map(sum, cells))))
+    require(old[0] == live_numerator, 'old full-unit query mass')
+    current = [0] * len(profiles)
+    for c in range(CURRENT):
+        maxima = phase_maxima(transform([row[c] for row in cells]))
+        current = list(map(max, current, maxima))
+    weights = [prod(p if e == 2 else p - 1 for p, e in zip(P, v)) for v in profiles]
+    tail_denominator = prod(p - 1 for p in P)
+    old_sum = sum(a * w for a, w in zip(old, weights))
+    current_sum = sum(b * w for b, w in zip(current, weights))
+    actual_query = F(22 * old_sum + 23 * current_sum,
+                     22 * tail_denominator * live_numerator) - 1
+    reserve = 1 - (1 + actual_query) / 28
+    require(actual_query == F(48819613325418098388618839835627526373,
+                              8863151607393243786151717247542886400),
+            'ternary exact all-height query value')
+    require(actual_query < 27 and reserve > 0, 'ternary arbitrary29 continuation')
+    exact = {
+        'delta': F(11, 23), 'live_mass': live,
+        'old_nonunit_raw': F(old_sum, tail_denominator * denominator) - live,
+        'all23_raw': F(23 * current_sum, 22 * tail_denominator * denominator),
+        'R_new': actual_query, '27_minus_R_new': 27 - actual_query,
+        'normalized29_survivor_lower': reserve,
+        'unnormalized_joint_survivor_lower': live * reserve,
+    }
+    return {
+        'scope': 'exact same-law joint-cylinder maxima; ordinary uniform-depth-tail proof supplies all heights; fixed ternary-coloured23 head plus arbitrary distinct29-bearing originals only, no extra old-only or23-only blockers; no Lean or unrestricted#7 claim',
+        'prime_axis_cylinder_types': 6, 'joint_cylinder_types_per_transform': 6 ** len(P),
+        'old_sum_transform_count': 1, 'current_root_transform_count': CURRENT,
+        'exact_division_checks': divisions, 'common_integer_denominator': denominator,
+        'exact': {key: str(value) for key, value in exact.items()},
+        'decimals': {key: float(exact[key]) for key in
+                     ('R_new', '27_minus_R_new', 'normalized29_survivor_lower')},
+    }
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output')
@@ -227,6 +425,9 @@ def main():
     result['rank_colored'] = rank_colored_check(profiles, event_mass, hinge)
     result['rank_colored']['continuation23_29'] = rank_continuation_check(
         r_infty, F(result['rank_colored']['actual_union_hinge']))
+    result['ternary_coloured'] = ternary_coloured_check(profiles, event_mass, r_infty)
+    result['ternary_coloured']['actual_complete_query'] = ternary_actual_query_check(
+        profiles, event_mass, result['ternary_coloured'])
     rendered = json.dumps(result, indent=2, ensure_ascii=False) + '\n'
     if args.output:
         with open(args.output, 'w', encoding='utf-8') as handle:

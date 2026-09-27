@@ -24,6 +24,11 @@ complete next query budget: any additional finite family of distinct
 29-bearing moduli supported on these old primes and23 leaves strictly
 positive survivor probability. This continuation forbids additional old-only
 or23-only blockers.
+A second, ternary-coloured irredundant head defeats the uniform cylinder
+majorant at every clipping threshold. Keeping its actual joint cylinder
+masks instead gives the exact complete query value5.508155054540077...
+and a positive arbitrary29 continuation. These two fixed-head repairs
+identify the missing joint information; they do not settle arbitrary heads.
 All deductions here are ordinary mathematics with exact finite checks, not
 new Lean verification.
 
@@ -490,6 +495,264 @@ The arbitrary-height and all29-family assertions rely on the ordinary
 cylinder and original-label argument above, not finite enumeration of
 those families. No Lean verification is claimed.
 
+## Another irredundant colouring defeats this entire cylinder-cap comparison
+
+The uniform-cylinder estimate used in the rank-coloured continuation does
+not certify every old-coherent irredundant head from the same numerical
+AH9 interface. The SAME old law
+CU1 supports the following finite example, without any pure23 original.
+Its actual half-threshold hinge exceeds CU24, and even optimizing the
+clipping threshold over every0<=delta<1 leaves the particular uniform-
+cylinder query majorant above27. This is a failure of that upper estimate,
+not a lower bound on the actual new query norm and not a covering example.
+The following joint-cylinder calculation repairs this same example: its
+actual complete query norm is only5.508155054540077...<27.
+
+Index the old primes increasingly as p_0,...,p_6. For every nonzero
+e in{0,1,2}^7 put
+
+    d(e)=product_(i=0..6)p_i^e_i,
+    c(e)=sum_(i=0..6)3^i*e_i mod23,
+    A_e={x=0 mod d(e), y=c(e) mod23}.              (CU25)
+
+These are2186 distinct numerical labels23*d(e), all with old centre0.
+Retain only exponent vectors which are coordinatewise minimal among the
+nonzero vectors of their own colour. Exactly536 labels remain.
+
+This reduction preserves the entire actual union. Every removed vector e
+has a same-colour minimal f<=e; then A_e is contained in A_f. Conversely
+the retained family is a subfamily. It is irredundant: for each retained e,
+take the integer CRT point
+
+    x=p_i^e_i mod p_i^3 for every i, y=c(e) mod23. (CU26)
+
+Its old valuations are exactly e. Another retained original A_f could
+contain that point only if f<=e and c(f)=c(e), which would contradict
+minimality unless f=e. Thus every retained original has an actual private
+integer. No class with d=1 was introduced, and the old-only original
+family remains empty, so CU1 retains the same full old survivor support.
+
+For v_i=min(v_(p_i)(x),2), the actual current union is
+
+    alpha(v)=|{c(e):0<e<=v}|/23.                  (CU27)
+
+The finite source-cell calculation is explicit. Let Q2=product_i p_i^2
+and let n(v) be the product of p_i(p_i-1), p_i-1 or1 according as v_i is
+0,1 or2. If E_count sums n(v) over product_i(v_i+1)>=32, then
+
+    mu(v)=(3/5)n(v)/Q2
+          +(2/5)1_(product_i(v_i+1)>=32)n(v)/E_count.
+
+Summing these exact masses over the attainable-colour counts gives
+
+    h_(1/2)(alpha)
+      =898342963018123305464329/2535373939370931457423625
+      =0.354323655800066...>49516/334125,          (CU28)
+
+with positive gap
+
+    126994375662937750830895063/616095867267136344153940875.
+
+The retained result stores every one of the24 exact masses
+w_j=mu{alpha=j/23}; it also records all536 retained exponent/colour tuples.
+The bound is for the same CU1 law before and after removing the redundant
+labels, since the actual union is unchanged.
+
+The failure is not confined to delta=1/2. To test this comparison over a
+larger parameter range, define its live measure directly for0<=delta<1:
+
+    xi_delta(dx,dy)
+      =mu(dx) H23(dy)1_(y notin B_x)/(1-min(alpha(x),delta)),
+    s_delta=E_mu[(1-alpha)/(1-min(alpha,delta))].
+
+The same old-marginal and cylinder estimates as CU19--CU20 give
+
+    R_(P union{23})(xi_delta/s_delta)<=B_delta,
+    B_delta=[R+(R+1)/(22(1-delta))]/s_delta,       (CU29)
+
+where R is the exact old query value CU5. Allowing delta>1/2 here needs
+no extrapolation of a quadratic clipping estimate: both inequalities
+follow directly from the displayed live density. The delta=0 endpoint
+is ordinary restriction of mu times Haar23. Rows with alpha=1 have zero
+live mass for every delta<1.
+
+It suffices to compare the23 thresholds delta=j/23, j=0,...,22. To see
+this for the whole continuum, write t=1-delta, beta=1-alpha and
+C=(R+1)/22. On an interval between consecutive alpha breakpoints, put
+
+    a=mu{beta>=t}, b=E_mu[beta*1_(beta<t)].
+
+These coefficients are constant in that open interval, and
+
+    s_delta=a+b/t,
+    B_delta=(R*t+C)/(a*t+b),
+    dB_delta/dt=(R*b-C*a)/(a*t+b)^2.              (CU30)
+
+The denominator is positive because mu{alpha=0}>0. The derivative has
+constant sign, so each interval's minimum lies at an endpoint or the
+whole interval is constant. The expressions are continuous at the
+breakpoints. For delta>22/23 all nondead rows already have live mass one;
+s_delta=1-w_23 is constant and B_delta increases strictly. Consequently
+the finite endpoint minimum is the minimum over every0<=delta<1.
+
+The exact endpoint calculation gives its minimum at delta=11/23:
+
+    s_(11/23)=394841535459971666944/613545359208904926375,
+    min_(0<=delta<1) B_delta
+      =35929581952530320495737057385/1047991562150140478176100352
+      =34.28422828024914...>27.                   (CU31)
+
+Its excess over27 is
+
+    7633809774476527584982347881/1047991562150140478176100352.
+
+Here w_23=21597899555960513066847/110233649537866585105375>0:
+some old fibres are completely forbidden, although the old law is positive
+on them. The family also has genuinely surviving fibres, including the
+old valuation-zero cell; no whole-cover conclusion follows.
+
+Thus actual old coherence, irredundancy and the same AH9 law do not ensure
+CU24 or make CU29 strong enough to certify the next query target, even
+with its best threshold. The inequality R_new<=B_delta does NOT imply
+R_new>=27 when B_delta>27. The exact joint-cylinder calculation below supplies the needed improvement
+for this very law and this very head; it does not prove an arbitrary-head
+continuation theorem. The
+rank-coloured positive conclusion CU17--CU24 is unchanged.
+
+The existing verifier's `ternary_coloured` result reconstructs CU25,
+checks union equality on all2187 old valuation cells, and checks287296
+literal private-point/class memberships for the536 retained originals.
+It stores the exact alpha histogram and all23 endpoint values, and checks
+the rational gaps CU28/CU31. The continuum conclusion uses CU30, not a
+sampled numerical optimization. This is ordinary mathematics with exact
+finite verification, not new Lean certification.
+
+## Exact all-height query accounting for the same ternary-coloured live law
+
+For the ternary-coloured family, fix delta=11/23 and keep the SAME live
+measure xi_delta from CU29. The following finite calculation computes its
+complete query norm exactly. It does not replace that law by separately
+chosen query laws. Here the complete query norm sums the maximum cylinder
+mass over every nonunit modulus supported on P union{23}. Any resolved
+finite-period query norm is bounded by this complete compatible-law value.
+
+For v in{0,1,2}^7 and c in{0,...,22}, let C(v)={c(e):0<e<=v} and write
+
+    r(v,c)=mu(v)*1_(c notin C(v))/(23-min(|C(v)|,11)). (CU32)
+
+This is the xi_delta mass of the joint old valuation cell and23 first-digit
+cylinder. Its sum is the s_(11/23) already computed in CU31.
+
+At one old prime p, every cylinder through depth two has one of six types.
+Its conditional masses across the valuation cells0,1,2 are the rows
+
+    T_p = [1,             1,         1]
+          [1/(p-1),       0,         0]
+          [0,             1,         1]
+          [1/(p*(p-1)),   0,         0]
+          [0,             1/(p-1),   0]
+          [0,             0,         1].
+
+The rows respectively mean the unit query, a nonzero or zero residue
+modulo p, and a unit, exact-valuation-one or zero residue modulo p^2.
+All residues of a stated type have equal mass because the density depends
+only on the truncated valuations and on the23 first digit.
+
+For a joint row choice j=(j_0,...,j_6), set
+
+    A_j(c)=sum_v r(v,c)*product_i T_(p_i)[j_i,v_i].
+
+These are actual joint cylinder masses, retaining every old/current
+correlation. For e in{0,1,2}^7, let J(e) allow row0 when e_i=0, rows1--2
+when e_i=1, and rows3--5 when e_i=2. Define
+
+    a_e=max_(j in J(e)) sum_c A_j(c),
+    b_e=max_(j in J(e),c) A_j(c),
+    w_e=product_(i:e_i=2) p_i/(p_i-1).             (CU33)
+
+For a query without23, its current coordinate is summed BEFORE maximizing
+the old phase, giving a_e. For a query containing23, both the old phase
+and current first digit are maximized, giving b_e. These finite maxima
+are over one jointly selected cylinder, not products of marginal maxima.
+
+The density is constant inside each full old depth-two/current-depth-one
+atom. Raising an old exponent from2 to h>=2 therefore multiplies the
+corresponding maximal cylinder mass by p_i^(-(h-2)); all deeper choices
+are equally distributed inside their depth-two ancestor. The full old
+tail sums to p_i/(p_i-1). Raising the23 exponent from1 to h>=1 similarly
+contributes23^(-(h-1)), whose complete sum is23/22. Hence the exact
+all-height identity is
+
+    R_(P union{23})(xi_delta/s_delta)
+      = [sum_e w_e*(a_e+(23/22)*b_e)]/s_delta -1.   (CU34)
+
+The subtraction removes only the old full-unit query, of unnormalized
+mass s_delta, which occurs in the a_(0,...,0) term. The b term retains
+the old unit for every positive23 exponent. All terms are nonnegative
+before this single subtraction, so increasing finite exponent boxes and
+geometric sums justify the complete-height equality.
+
+For exact integer evaluation, let M=product_i p_i^2,
+E_count=sum_(event cells)n(v), and L=lcm(12,13,...,23). A common denominator
+for all r(v,c) is D=5*M*E_count*L. The numerator of an allowed cell is
+
+    n(v)*(3*E_count+2*M*1_event(v))*L/(23-min(|C(v)|,11)).
+
+At every transform axis, division by p-1 or p(p-1) is exact: all terms
+with that coordinate fixed in valuation cell1 or0 retain the respective
+factor p-1 or p(p-1) from n(v). Transforming and summing other coordinates
+preserves that common factor. The remaining geometric tail factors may
+be summed with a common denominator product_i(p_i-1).
+
+Thus one old sum over23 roots and one transform for each of the23 roots
+suffice, each with6^7 joint cylinder types. Taking the current-root maximum
+pointwise before the old type-group maxima gives exactly b_e; no floating
+point maximum or equality decision is needed. The all-height justification
+above is ordinary mathematics; a successful exact finite computation is
+not a Lean proof.
+
+Exact integer evaluation gives
+
+    R_(P union{23})(xi_(11/23)/s_(11/23))
+      =48819613325418098388618839835627526373
+        /8863151607393243786151717247542886400
+      =5.508155054540077...<27.                    (CU35)
+
+Thus the same law whose uniform-cylinder majorant is at least34.2842 has
+an actual complete query value below5.509. The difference comes from
+retaining the actual joint survival masks inside each cylinder before
+maximization; no law is reselected for a different query.
+
+The original-label union bound CU22 now applies with CU35. After this
+fixed536-class ternary-coloured23 head, any finite distinct29-bearing
+family d*29^k, k>=1, d supported on P union{23}, arbitrary finite exponents
+and fixed residues, leaves survivor probability at least
+
+    190485480074199483837477525848030406427
+      /248168245007010826012248082931200819200
+      =0.767565890909283...>0.                    (CU36)
+
+This probability is under the ONE normalized law xi_(11/23)/s_(11/23)
+times Haar29. The unnormalized reserve under xi_(11/23) times Haar29 is
+
+    190485480074199483837477525848030406427
+      /385629325571564855781271020855705600000
+      =0.49396004775277214...>0.
+
+Neither number is a full Haar density. No additional old-only or23-only
+blockers are allowed in this continuation. The same law and lower bound
+work for each finite29 family; its surviving set and uncovered integer
+may depend on that family. Neither this fixed-head computation nor the
+failure of the coarser comparison resolves unrestricted Erdős#7.
+
+The existing verifier's `ternary_coloured.actual_complete_query` block
+performs the24 integer transforms, checks every division and the one
+unit subtraction, and evaluates the rational quantities in CU35--CU36.
+An independent implementation processes the prime axes in reverse order
+and reproduces both raw query blocks, the live mass and the final query
+value. The finite checks implement CU34; its all-height and arbitrary-
+family quantifiers use the ordinary cylinder and original-label proofs.
+
 ## Precisely which proposed bridge fails
 
 There cannot be a theorem using only the three displayed AH9 properties,
@@ -521,8 +784,9 @@ is bounded by one, and report473's good set can bound it strictly below one
 in the specified seven-old-prime/23 coherent case. That is a different
 quantity from the uncapped H in the proposed Nyx interpolation. It needs an
 explicit rewritten consumer and quantitative tail budget. CU18--CU24
-supply that continuation for the fixed rank-coloured head; they do not
-bound the actual hinge for an arbitrary head. No unrestricted support,
+instead use the actual union for the fixed rank head; CU32--CU36 retain
+joint query masks for the fixed ternary head. Neither establishes a
+continuation from the clipped majorant alone. No unrestricted support,
 arbitrary-head or all-stage gain is established by this note.
 
 ## Reproduction and references
