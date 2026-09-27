@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c222535cd483e1b174a54342b18d3f79633629b4b3a10591f4ed335d821a1440
   normalized_sha256: sha256:c222535cd483e1b174a54342b18d3f79633629b4b3a10591f4ed335d821a1440
 cas_ref: sha256:c222535cd483e1b174a54342b18d3f79633629b4b3a10591f4ed335d821a1440
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.asymmetric_family_deficiency
+    target_statement_id: sha256:0405d81102a05c0d34def6372d2dd871f1fd72c2af899799d149a192bbbdcac2
 receipts:
   unresolved_subitems: []
