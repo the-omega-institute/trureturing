@@ -10,9 +10,9 @@ This result allows incidence five at every full root. It uses actual private poi
 
 The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
-The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The asymmetric-root theorem AC77 below controls the complete77/63 class with2078/231. The RC76 theorem below controls the complete75/63 and76/63 classes with3572/397. The remaining general fixed-head class is74/63; its uniform-root-cap capacity obstruction is stated precisely in RC76.3.
+The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The asymmetric-root theorem AC77 below controls the complete77/63 class with2078/231. The RC76 theorem below controls the complete75/63 and76/63 classes with3572/397. The RC74 theorem below supplies the complete74/63 class with bound99227/11026=9-7/11026. Together these results give one common law below nine for every original literal4555 height-two source under the stated pair and standalone premises. RC76.3 retains the obstruction to its particular uniform-root-cap construction; RC74 resolves the source class by a different common mixture.
 
-These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
+These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not classify other occupancy patterns, extend through arbitrary heights, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
 ## Exact description of the equality sources
 
@@ -7379,7 +7379,7 @@ If the existing root-cap61/3 test supports value77, its common mixture gives2078
 
 AC.7 and AC.8 handle the first and third types; TA handles(2,77); IA handles the two three-inactive types. The three alternative bounds691/77,503/56,1385/154 are all smaller than2078/231. This proves(AC77).
 
-The theorem is confined to the fixed finite literal4555 height-two actual-source model. It does not close the remaining general cut74,75,76 strata, supply the arbitrary original outside-cofactor/common-law lift, extend through all heights or residual branches, or settle unrestricted Erdős #7. Its proof is ordinary mathematics; no Lean compilation or kernel verification is claimed here.
+The theorem is confined to the fixed finite literal4555 height-two actual-source model. AC77 alone does not supply cut74,75,76; those strata are supplied by RC76 and RC74 below. It does not supply the arbitrary original outside-cofactor/common-law lift, extend through all heights or residual branches, or settle unrestricted Erdős #7. Its proof is ordinary mathematics; no Lean compilation or kernel verification is claimed here.
 
 ### AC.10. Exact actual-source controls and the necessity of the exact-cut premise
 
@@ -7415,17 +7415,17 @@ All checks remain active under `-O`. These finite controls verify the stated ins
 
 Under the original literal4555 and standalone premises, every source of minimum-cut value65/63 through73/63 is controlled by the source classifications above. The complete maximum77 class has bound2078/231 by AC77; every78/63 source has bound233/26 by sharp saturated-block transport; every cut at least79/63 is controlled by the large-cut estimate. Each conclusion concerns one supported probability fixed before all original numerical phase queries.
 
-The later RC76 theorem supplies the complete75/63 and76/63 source classes with bound3572/397. The remaining general fixed-head stratum is74/63. H185, T318 and BL18 below provide local transport, a conditional common law and a selected-block alternative; simultaneous treatment of all remaining mass18 blocks is still required. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
+RC76 supplies the complete75/63 and76/63 source classes with bound3572/397. RC74 supplies the complete74/63 class with bound99227/11026=9-7/11026: its fixed mixture handles all original queries simultaneously, using H185, T318, GE74 and a new shared-row capacity reduction. Thus all original maximum-flow strata in this fixed literal4555 height-two class have a common law below nine. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
 
 The neighborhood criterion, GP selected-block lowerings, OM occupation criterion and five-block avoidance bridge retain their own precise conclusions. Coordinatewise integral lowerings do not establish simultaneous integral safety, and OM5 is not proved for every actual source. Neither is now required to remain an unresolved prerequisite for the maximum77 common law: AC77 supplies that law by the root-cap61/3 branch or the IA/TA/asymmetric alternatives. The root-cap61/3 test itself is not asserted to hold on every source. A small hitting family remains insufficient to rule out a good fractional law.
 
 The individual GF, PS, FD, TN, IG and IFP source proofs are retained with their stronger or more specific bounds. They preserve whole private-prefix fibres, original owner multiplicities and the fourth-column exception; they do not saturate a nonminimum original cut78. AC.8 also covers the four profiles not supplied by these individual arguments: full11222/full22222, gap1223/full22222, gap2222/full12223 and gap2223/full12222.
 
-These are fixed-head1225 results. An actual full odd-covering residual must additionally preserve every original outside-cofactor constraint under one common lift, as in439. A head law does not provide that lift, and439 rules out a uniform complete-Gamma bound below nine for arbitrary free cofactors. All-height transport and a bound for the actual original test family's same-law deletion correlations remain necessary arithmetic obligations. No unrestricted noncoverage conclusion or Lean kernel verification follows from AC77 alone.
+These are fixed-head1225 results. An actual full odd-covering residual must additionally preserve every original outside-cofactor constraint under one common lift, as in439. A head law does not provide that lift, and439 rules out a uniform complete-Gamma bound below nine for arbitrary free cofactors. All-height transport and a bound for the actual original test family's same-law deletion correlations remain necessary arithmetic obligations. No unrestricted noncoverage conclusion or Lean kernel verification follows from these fixed-head results.
 
 ## Small complete anchors supply additional common laws below nine
 
-These ordinary actual-source proofs supply new conditional common laws and seven necessary cut-cost shapes. They do not assert Lean verification, realizability of every necessary shape, or closure of the entire remaining cut74--76 window. All complete fibres, owners and original numerical phase labels are retained.
+These ordinary actual-source proofs supply new conditional common laws and seven necessary cut-cost shapes. They do not assert Lean verification, realizability of every necessary shape, or closure of cut74--76 from the small-anchor suppliers alone; RC76 and RC74 give the complete source-class conclusions. All complete fibres, owners and original numerical phase labels are retained.
 
 ### SA.1. Original actual-source premises
 
@@ -7671,7 +7671,7 @@ Together with the full-root three-singleton theorem in SA.4 (bound503/56), the s
 
 In public-token-cost1 rows the public prefix is exactly one fine leaf y. Whole source containment gives the displayed {y,zi} constraints for the three private-cost1 children; the full private-cost0 child has entire nonempty fibre {y}. Other active cost2 or cost3 children are allowed arbitrary fibres by the corresponding supplier.
 
-These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, and FP1 supplies full/public1/private11111. Together with F11222 below, which supplies full/private11222, they give all nine C76 t=3 shapes and ten of the fourteen C75 t=3 shapes. The subsequent H2, F1122 and F12222 suppliers also cover full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81, completing this specified C75 t=3 list. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
+These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, and FP1 supplies full/public1/private11111. Together with F11222 below, which supplies full/private11222, they give all nine C76 t=3 shapes and ten of the fourteen C75 t=3 shapes. The subsequent H2, F1122 and F12222 suppliers also cover full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81, completing this specified C75 t=3 list. The complete cut75/76 classes are supplied by RC76 and cut74 by RC74; these small-anchor arguments alone do not classify every one-/two-inactive cut. The outside-cofactor/common-law lift remains unresolved.
 
 ### SA.9. Exact controls on complete original sources
 
@@ -7850,7 +7850,7 @@ The checks remain active under Python -O. The program imports the adjacent actua
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.json
 ```
 
-This supplies one more complete t3 support shape in the root-cap reduction. FP1 below supplies full/public1/private11111 and F11222 supplies full/private11222, completing the C76 t3 shape list. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
+This supplies one more complete t3 support shape in the root-cap reduction. FP1 below supplies full/public1/private11111 and F11222 supplies full/private11222, completing the C76 t3 shape list. This individual supplier does not classify all one-/two-inactive cuts. The complete cut75/76 classes are supplied by RC76 and cut74 by RC74.
 
 ## A public singleton and five private candidates at a full root
 
@@ -8334,7 +8334,7 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.json
 ```
 
-This supplies the final previously missing C76 three-inactive-root shape. The H2 and F1122 suppliers below additionally supply full/private11223, gap/private1233 and gap/private2223 at capacity81. The complete F12222 theorem below supplies full/private12222, finishing this specified C75 three-inactive-root list. The one-/two-inactive-root branches, entire cut74--76 classes and arbitrary outside-cofactor lift remain open.
+This supplies the final previously missing C76 three-inactive-root shape. The H2 and F1122 suppliers below additionally supply full/private11223, gap/private1233 and gap/private2223 at capacity81. The complete F12222 theorem below supplies full/private12222, finishing this specified C75 three-inactive-root list. The complete cut75/76 classes are supplied by RC76 and cut74 by RC74, without requiring this supplier to classify every one-/two-inactive cut. The arbitrary outside-cofactor lift remains open.
 
 ## Every complete monochromatic anchor supplies a common law below nine
 
@@ -8717,7 +8717,7 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/whole_monochromatic_anchor_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/whole_monochromatic_anchor_actual_controls.json
 ```
 
-Together with F11222 and the complete F12222 theorem below, these suppliers cover all formerly missing shapes in the specified C75 and C76 three-inactive-root lists. The other one-/two-inactive-root branches, complete cut74--76 classes and arbitrary outside-cofactor/common-law lift remain open.
+Together with F11222 and the complete F12222 theorem below, these suppliers cover all formerly missing shapes in the specified C75 and C76 three-inactive-root lists. The complete cut75/76 classes are supplied by RC76 and cut74 by RC74. These individual suppliers retain their stated support hypotheses, and the arbitrary outside-cofactor/common-law lift remains open.
 
 ## Mass19 transport, terminal synchronization and conditional balance consumers
 
@@ -8885,7 +8885,7 @@ we have S<=3/7. Finite minimax therefore gives one distribution over whole flows
 
 If four-block avoidance fails, there is an inclusion-minimal hitting family H of size1 through4: every flow's bad set meets H. For each B in H, minimality supplies a flow whose bad set meets H only at B. This describes the obstruction; it does not exclude it. In particular singleton hitting families have not been ruled out here.
 
-The existence of F and four-block avoidance are separate instance conditions; F can be empty as TB.8 shows. The remaining source nearcut classifications and the outside-cofactor/common-law lift remain unproved. The results above do not assert closure of the full maximum74--76 window or of unrestricted Erdos #7.
+The existence of F and four-block avoidance are separate instance conditions; F can be empty as TB.8 shows. These terminal-balance results alone do not close the full maximum74--76 window; RC76 and RC74 supply those source classes by other arguments. The outside-cofactor/common-law lift and unrestricted Erdos #7 remain unresolved.
 
 ### TB.7. Exact arithmetic controls
 
@@ -8969,7 +8969,7 @@ Introduce three cap variables for the maxima, or equivalently use nonnegative we
 
 where F_M(E) is the finite family of integral maximum flows on that same original source. To verify the expression, maximize each weighted terminal/block sum at a coordinate attaining its respective maximum; this recovers the primal objective. Swap the min and max on the compact convex polytopes. For fixed weights the objective is linear in the flow, so an integral extreme point attains its minimum. The root weights can be charged on source-root edges, column weights on column-sink edges, and omega_(r,G) on every original child-to-(r,c,G)-prefix edge. Each atom path pays each of its three weights exactly once.
 
-For each fixed weight triple, the inner problem is one joint minimum-cost maximum-flow problem; the outer maximization over weight triples remains. All costs are evaluated on a whole flow of the same original network. It does not assert that Theta_M always crosses the sufficient threshold. A complete74--76 proof still needs such an estimate or an alternative actual-support law for its failures. The outside-cofactor/common-law lift remains a separate unrestricted obligation.
+For each fixed weight triple, the inner problem is one joint minimum-cost maximum-flow problem; the outer maximization over weight triples remains. All costs are evaluated on a whole flow of the same original network. It does not assert that Theta_M always crosses the sufficient threshold. RC76 and RC74 provide alternative actual-support laws closing the74--76 source classes without proving this coarse-cap criterion universally. The outside-cofactor/common-law lift remains a separate unrestricted obligation.
 
 ## Nine distinct full12222 labels admit a common matching law
 
@@ -9594,7 +9594,7 @@ The [general actual-source program](../../../frontier/cover-geometry/height-two-
 
 Together they check2400 original pairs,234 actual normalized or whole-column-punctured trees,60078 numerical cylinders and6952 root/category caps. Every component is constructed before its numerical queries and supported on the unchanged original fibres. Four controls have positive fine-label overlap between the off-root and root-supported components. In the dual-puncture control the same fine label receives3/40 from lambda and1/32 from pi, attaining the safe17/160 bound. In the four-by-four control an original-R fine label receives psi mass1/4 and positive eta mass, so accidental disjointness cannot justify the fine cap.
 
-The complete classification F12222.3--F12222.8 proves the theorem over the source family. These five sources check the actual constructions and shared-label accounting; they are not an exhaustive enumeration of sources. Together with the previous suppliers, F12222 supplies the last shape in the specified C75/C76 three-inactive-root lists. The one-/two-inactive branches, complete cut74--76 classes and arbitrary outside-cofactor/common-law lift remain open.
+The complete classification F12222.3--F12222.8 proves the theorem over the source family. These five sources check the actual constructions and shared-label accounting; they are not an exhaustive enumeration of sources. Together with the previous suppliers, F12222 supplies the last shape in the specified C75/C76 three-inactive-root lists. RC76 and RC74 supply the complete cut75/76 and cut74 classes respectively; the arbitrary outside-cofactor/common-law lift remains open.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full12222_matching_query_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full12222_matching_query_controls.json
@@ -9605,7 +9605,7 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full12222_general_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full12222_general_actual_controls.json
 ```
 
-This supplies the last full12222 shape in the C75 three-inactive-root list. Together with the previous source suppliers, both specified C75 and C76 three-inactive-root lists are now supplied. The one-/two-inactive-root branches, complete cut74--76 classes and outside-cofactor/common-law lift remain open; unrestricted #7 is not settled.
+This supplies the last full12222 shape in the C75 three-inactive-root list. Together with the previous source suppliers, both specified C75 and C76 three-inactive-root lists are now supplied. RC76 and RC74 supply the complete cut75/76 and cut74 classes respectively. The outside-cofactor/common-law lift remains open; unrestricted #7 is not settled.
 
 ## Any actual cut below80 with at least two inactive roots supplies one law
 
@@ -10352,7 +10352,7 @@ Certificate data: [two_public_same_column_query_certificate.json](../../../front
 
 The program exits0 with PASS, uses explicit exceptions under-O, and requires --output. It retains every upper vector and all maximizing coarse layouts. This verifies the finite arithmetic after the stated actual-source cap and owner bridges; it is not an exhaustive source enumeration or a Lean proof.
 
-This closes the specified five one-inactive/public-cost2 profiles through77. Other public costs, the whole remaining cut74--76 window, and the unrestricted outside-cofactor lift are separate obligations.
+This closes the specified five one-inactive/public-cost2 profiles through77. Other public costs are outside this individual supplier. RC76 and RC74 supply the complete cut75/76 and cut74 source classes respectively; the unrestricted outside-cofactor lift remains a separate obligation.
 
 ### TP2.8. Complete same-column source control
 
@@ -11547,8 +11547,8 @@ at most35/2 by another balanced half-integral value74 flow. That replacement
 can change other block masses. In particular this theorem alone does not
 produce a flow avoiding every T3-bad mass18/column21 obstruction, nor an
 occupation mixture keeping each such obstruction below a useful threshold.
-The complete maximum74 common-law branch remains open until a simultaneous
-argument or a different actual-source supplier is provided.
+RC74 below supplies the complete maximum74 branch with one fixed common
+mixture. BL18 by itself does not establish that simultaneous conclusion.
 
 ### BL18.4. Complete actual-source control
 
@@ -12024,8 +12024,9 @@ or create new dangerous configurations. The strict decrease of this ONE
 linear objective is not a monotone decrease of the number of all dangerous
 blocks, and does not yet yield a universal occupation mixture. The safe
 transport normal form gives an independent jointly terminating repair family;
-its terminal actual-support traps still require a bridge to this global
-minimum-cost alternative or a separate source supplier.
+its terminal actual-support traps remain a limitation of those moves. RC74
+supplies a separate common-law construction and does not require solving the
+five outstanding general three-inactive83 profiles.
 
 ## Current maximal mass18 entries admit global capacity reductions
 
@@ -12232,8 +12233,9 @@ half-integral. Even the half-integral choices can change other block masses
 and external vectors; entry feasibility alone does not imply all the
 H185/T318 consumer hypotheses.
 Subsequent regularization must also preserve the entry improvement that is
-being consumed. Thus this simultaneous capacity feasibility is new global
-information, not yet a complete common-query law below9 for maximum74.
+being consumed. Thus this simultaneous capacity feasibility alone is not a complete
+common-query law below9. RC74 below combines it with a shared-row reduction
+and controlled regularization to supply the complete maximum74 class.
 
 ### GE74.8. Complete actual-source control with two genuinely maximal entries
 
@@ -12276,4 +12278,251 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
   --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
   --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
   --output /tmp/e7_balanced74_bad_entry_global_replay.json
+```
+
+## One common law below nine for the complete original maximum74 class
+
+Ordinary actual-source mathematics, not Lean verification. This result concerns
+the original fixed-head1225, height-two literal4555 problem. It does not supply
+the arbitrary-height or original outside-cofactor arithmetic lift.
+
+### RC74.1. Statement and previously established interfaces
+
+Let E be one complete actual literal4555 source satisfying all original
+cross-root legal-pair and standalone premises. Suppose its original network
+with capacities21,7,6,2,126,7,21 has maximum74. Then E supports ONE probability
+law, fixed before all original numerical phase queries, with
+
+    Gamma_1225 <= 9-7/11026 <9.                      (M74)
+
+The existing balanced-cap dichotomy first either supplies the source or
+provides a half-integral value74 flow with all four root totals37/2. Indeed,
+a failure after lowering all root capacities21 to37/2 has an original cut in
+the ranges one-inactive<=76, two-inactive<=78, or three-inactive<=81; all have
+already established actual-source suppliers. Their bounds are at most3572/397,
+which is smaller than(M74). Hence assume such a balanced half-integral flow.
+
+Also finish immediately by the existing suppliers if the source has a
+one-inactive cut<=77 or a three-inactive cut<=82. In the remaining proof these
+two cut families are absent. Consequently:
+
+* GE74 permits lowering any CURRENT maximal mass18 entry from2 to1 while
+  retaining a half-integral balanced value74 flow.
+* Every nontight balanced cut has capacity at least75. A cut74.5 would have
+  one or three inactive roots and original capacity77 or82, respectively.
+
+For a coherent numerical query at(r,i,G,j), write a,b,d for its root, public
+column and root/column block masses; r_i,c_j,x_ij for the selected block's row,
+column and entry masses; z_i for same-root off-G child mass; and y_j for
+other-root G fine mass. Its nonunit charge is
+
+    K=3a+3b+9d+20r_i+20c_j+25x_ij+5z_i+5y_j.       (Q)
+
+Each K is a LINEAR functional of the whole atom flow; normalization at mass74
+gives the ordered-query envelope1+max K/74. The previously established TB.4
+noncoherent bound is587. The LC2 bound for d<=17.5 is591 and depends only on
+the unchanged coarse masses and original caps, so remains valid after the
+local rational replacements used below.
+
+### RC74.2. Reducing a double-bad row prefix by one unit
+
+Suppose one current mass18/public21 block has two maximal half-integral
+entries at the same flagged row i*, with fine labels j1,j2. Explicitly,
+
+    r_i*=6, z_i*=1/2,
+    x_i*,j1=x_i*,j2=2,
+    c_j1=c_j2=7, y_j1=y_j2=0.                      (DB1)
+
+We prove that its ACTUAL private child/G-prefix capacity6 may be lowered to5
+while preserving balanced value74. A half-integral flow then exists.
+
+It is enough to show no balanced minimum cut crosses this prefix: every
+nontight cut has margin at least1. Suppose an exact balanced cut74 crosses
+it. Its child is source-side and prefix sink-side. Positive ancestor flow
+forces the selected root source-side. Every selected child has total at
+most6+1/2<7, so every selected child is source-side. As in GE74, all selected
+off-G actual support lies in the public forward-cut cylinders because its
+total1/2 cannot saturate any private edge of capacity2 or6.
+
+Positive flow from the sink-side flagged prefix to j1,j2 forces both public
+fine nodes sink-side; then the public G-column node is sink-side. If any
+public G fine node h were source-side, its forward edge would carry7. All
+other-root G mass totals3, so its selected-root contribution would be at
+least4. The label h differs from j1,j2. But those two internal columns
+already contain14 of the selected block's18 units. Therefore ALL remaining4
+selected G units would have to be at h. The flagged row itself has6 units,
+only4 of them at j1,j2, so its remaining2 would be positive flow from its
+sink-side prefix to the source-side public h node. Such a path has positive
+backward cut flow, impossible.
+
+Thus there is NO public G source-side fine node. All18 selected G units cross
+the private forward boundary, whose capacity is18 by exact flow-cut equality.
+There are no selected child or off-G private boundary edges. The number t
+of inactive roots is even because the balanced cut has integral capacity74;
+with the selected root active, t=0 or2. Moving the selected root and its
+entire private forest sink-side gives an ORIGINAL cut of capacity at most
+
+    74+(5/2)t-18+21=77+(5/2)t.
+
+This is precisely one-inactive<=77 or three-inactive<=82, excluded in the
+current branch. No tight cut crosses the flagged prefix, as required. The
+one-unit capacity reduction therefore preserves value74.
+
+This proof uses the TWO actual internal columns of mass7 and their common
+flagged row. It does not infer a row-prefix reduction from a single bad entry.
+
+### RC74.3. A response to one bad block that stays uniformly bounded
+
+Starting from any half-integral balanced flow g, let R(g) simultaneously apply
+H185 to all its blocks of mass37/2. Those blocks have distinct roots and
+distinct public columns, so the replacements preserve each other's external
+vectors, every coarse block mass and all original caps. The resulting law
+may be rational. Define the ONE whole-flow mixture
+
+    H(g)=(13/25)g+(12/25)R(g).                     (R1)
+
+Every original query has charge at most593 under H(g). For a coherent query
+whose block has mass37/2, the raw bound is595 and the H185 bound is3545/6;
+their weighted value is exactly
+
+    (13/25)*595+(12/25)*(3545/6)=593.              (R2)
+
+Mass18 blocks have raw bound593 and are disjoint in root and column from
+the H185 replacements, so their fine/external data are unchanged. Smaller
+blocks retain their LC2 bound591. Noncoherent queries retain587. This proves
+the uniform bound for ALL queries, not only the selected ones.
+
+Now designate a bad block of an initial flow f. If it has exactly one maximal
+entry e, use GE74 to obtain g with that entry cap lowered to1. The query at
+that fixed e has charge at most580 under H(g). If its block in g has mass18.5,
+then z=0, x<=1 and the other original caps give raw charge<=570, so(R1) gives
+
+    (13/25)*570+(12/25)*(3545/6)=580.              (R3)
+
+If its block mass in g is at most18, it is not replaced by H185; its entry
+cap1 remains true in R(g). Even if other replacements alter its external
+fine or child vectors, the common original caps give
+
+    K<=8a+3b+4d+285<=568.                         (R4)
+
+Here r_i<=6, c_j+y_j<=7, z_i<=a-d and x_ij<=1 are used together. The block's
+coarse masses remain unchanged, and a=18.5,b<=21,d<=18. Thus no lost external
+correlation is assumed in(R4).
+
+If instead the initial bad block has two maximal entries, use RC74.2 to
+obtain g with their shared private row cap reduced to5. BOTH of those fixed
+queries have charge at most2913/5=582.6 under H(g). If the block in g has
+mass18.5, then z=0 and row<=5 give raw charge<=575; hence
+
+    (13/25)*575+(12/25)*(3545/6)=2913/5.           (R5)
+
+If its block mass is at most18, that block is not replaced, its row cap5
+remains true, and the cap calculation gives
+
+    K<=8a+3b+4d+290<=573.                         (R6)
+
+Again any changed external y,z still satisfy the very caps used in this
+inequality. These responses need not preserve any other original block
+mass relative to f. Each response is one full supported flow with all
+queries bounded593, and with EVERY old bad query of its designated block
+bounded2913/5. The singleton response's bound580 is stronger.
+
+### RC74.4. Preparing one baseline and counting its actual bad queries
+
+Take the initial balanced half-integral f and apply H185 to its mass18.5
+blocks and T318 to its T3-good-support mass18 blocks. Call this baseline f0.
+All these heavy blocks have distinct roots and distinct public columns, so
+the replacements commute and leave every unmodified mass18 block's internal
+and external vectors unchanged.
+
+For f0 all queries except a specified set B have charge at most1183/2=591.5:
+
+* mass18.5 queries have bound3545/6;
+* T3-good mass18 queries have bound8277/14;
+* mass18 queries with public total at most20.5 have bound591.5;
+* in a remaining mass18/public21 block, the unmodified half-integral local
+  score has step5/2. Its maximal value625/2 occurs only at(GE1); every other
+  such query has charge at most590.5;
+* smaller blocks and noncoherent queries have the respective bounds591,587.
+
+Thus B consists exactly of the still-unmodified T3-bad mass18/public21
+queries satisfying(GE1), each with charge593. Each such block has exactly
+one flagged row because its half-integral outside mass is1/2; at most two
+of its internal columns can have mass7 because its total is18. The blocks
+occupy distinct public columns of mass21, so at most THREE blocks contribute
+to B. This counts one actual coherent CRT query per entry, not independently
+chosen incompatible phase readings.
+
+For each of these k<=3 blocks form its complete response H_l by RC74.3.
+Every H_l has all-query bound593 and improves every B query in its designated
+block to at most2913/5. No assertion is needed about which other blocks
+H_l changes or about new bad configurations of H_l.
+
+### RC74.5. A fixed convex mixture handles all blocks simultaneously
+
+Set w=15/149 and define one flow
+
+    F=(1-kw)f0+w*sum_(l=1..k) H_l.               (MIX74)
+
+Since k<=3, the baseline weight is at least104/149. This is one supported
+flow of total74 fixed before any query is chosen. All capacities and source
+ownership constraints persist by convexity. The query charges are linear.
+
+For a query in B, its own block response saves at least
+
+    593-2913/5=52/5.
+
+The baseline and all other responses have bound593 at that query. Hence its
+charge under F is at most
+
+    593-(15/149)*(52/5)=592-7/149.                 (MIX1)
+
+For a query outside B, use baseline bound591.5 and response bound593. Its
+charge is at most
+
+    591.5+(3*15/149)*(593-591.5)=592-7/149.        (MIX2)
+
+If k=0 the baseline alone already has the stronger bound591.5. Equations
+(MIX1)--(MIX2) cover EVERY original query of the same flow. Dividing by74
+and including the unit term proves
+
+    Gamma_1225<=1+(592-7/149)/74=9-7/11026.
+
+Together with the previously supplied balanced-cap failures and small-cut
+branches, this proves(M74) for the entire original maximum74 class. The
+argument does not require eliminating all bad blocks in one integral flow,
+nor solving the remaining general three-inactive83 support classification.
+It constructs the required one common probability directly.
+
+### RC74.6. Complete actual mixed-law control
+
+The [common-law control program](../../../frontier/cover-geometry/height-two-small-anchors/maximum74_common_law_control.py) and [exact data](../../../frontier/cover-geometry/height-two-small-anchors/maximum74_common_law_control.json) reuse the canonical GE74 fixture data, rather than copying its entire source table. On that272-point
+source it rechecks all480 original legal pairs, the standalone premise,
+all655 live original network edges and the matching original cut74. The
+initial law has precisely the two maximal coherent queries at the flagged
+row's A,B entries, each of charge593. Its double-entry response also lowers
+the actual private-prefix row capacity from6 to5.
+
+Neither of these particular flows has an18.5 block, so the H185 response
+mixture is identical to the response itself. With one bad block, the common
+law uses baseline weight134/149 and response weight15/149. Enumerating ALL
+1225 coherent centers gives maximum87697/149, achieved at the same two old
+bad queries. Combining with the existing noncoherent bound587 yields the
+actual common envelope98723/11026, smaller than the universal99227/11026.
+The program emits the exact mixed atom law and checks query linearity at
+every coherent center. It does not re-enumerate the noncoherent layouts.
+
+This is an actual realization of the same-law construction, not an exhaustive
+source search. The universal H185 compatibility and the at-most-three-block
+case are established by RC74.1--RC74.5, with the separately checked exact
+response-envelope arithmetic. No Lean/kernel closure is claimed here.
+
+Reproduce the complete-source control with explicit project inputs:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/maximum74_common_law_control.py \
+  --fixture-json docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_bad_entry_global_control.json \
+  --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
+  --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
+  --output /tmp/e7_maximum74_common_law_replay.json
 ```
