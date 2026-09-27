@@ -5694,3 +5694,17 @@ Renan Gross，*Noise sensitivity from fractional query algorithms and the axis-a
 原始归档 476,635 字节，SHA256 `97504ef766713ea797a8652756c631ea9ff0c77afcb23e830da845b5fb7a4b5d`；主 TeX 101,043 字节，SHA256 `a2357a001103efc408bb013a7ca65fffed6064733474c7695b5c7c5a3441a732`。该版本轴向更新显示式把增量前状态误写为新时刻状态；插值平方展开把交叉项写成负号，而该项在所取期望下为零。这里保留这两个源文边界，不使用它们作为已验证恒等式。
 
 经典条件分布、Poisson 近似、Stirling 与 Gauss／Poisson 求和不列作新理论。本章新增的模型内组合是总数可测的稀有池选择、无池数放大的隐藏拆分控制、原始相对行律给出的 $\lfloor Q\sqrt R\rfloor$ 占据块，以及同一数组上两阶实温度标记、有符号惊异矩、非线性条件均值平方、完整选择律与全部输出的回接。原有 Weyl、theta 与条件导数文献的限制保持：没有独立经验相位、复 theta 无零点前提或整后验 Gaussian 替换。结论限于逐序列次二次对数尺度；有限搜索不证明全局原创性或二次尺度结果不存在。
+
+## 谱边界第 148 章补充：有限共存的首项 Laplace 修正
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 148 章在原始完整选择计数律上证明 $\log(N_P^I/N_P^B)=\Lambda+C_I-C_B+o(t^{-2})$。这里 $C_B=2\ell_y'(0)/h^2$，$C_I=F^{(4)}(r_-)/(8K^2)+5F^{(3)}(r_-)^2/(24K^3)$，均取同一实现的精确有限噪声剖面。条件包括 $\eta\to0$、$t=\eta/\sqrt\delta\to\infty$ 任意缓慢、有界竞争坐标、紧输出范围，以及原严格噪声余量。有限经验参数 $m^2=2V^4/C_2$ 无须收敛；$t^2(C_I-C_B)+37/(8m^2)\to0$。实际等质量外场比精确 $\Lambda=0$ 外场低 $37/(8m^2r_Wt^2)+o((r_Wt^2)^{-1})$。
+
+William D. Kirwin，*Higher Asymptotics of Laplace’s Approximation*，[arXiv:0810.1700v2](https://arxiv.org/abs/0810.1700v2)，版本日期 2010-06-05。核对开篇对内部与边界极小点的区分、Theorem 1.1、Theorem 2.1 的假设及系数定义，以及附录一维首个修正系数。Theorem 1.1 要求区域包含作为内点的唯一非退化极小点、$f\in C^{N+2}$、$g\in C^N$，以及某个正参数下 Laplace 积分收敛。Theorem 2.1 改用径向渐近展开、主项正性和极小点之外的分离条件。论文明确不处理边界极小点。
+
+其一维常振幅系数经极小值到极大值的符号转换，给出本章 $C_I$ 中的四阶项和三阶平方项。这是经典系数的归属；固定函数定理不能自动提供变化数组、收缩曲率、移动内部阱与指数窄噪声的共同余项。本章直接建立精确 Fourier 前因子的高阶导数和可积余项，不依赖逐个 $Q$ 套用固定函数定理。原 PDF 为 320,051 字节，SHA256 `fbd709d2f4fa3d08076ecc1213b42646095869ddb7b03ef9d5fe7e7743e4e7af`。文字抽取存在 CFF Type1 字体解码警告；抽取的高阶余项指数及附录高阶排版不作为数学输入。一般定理的完整证明未作为已核验或直接应用的结果。
+
+Gergő Nemes，*An explicit formula for the coefficients in Laplace’s method*，[arXiv:1207.5222v2](https://arxiv.org/abs/1207.5222v2)，版本日期 2013-04-04。核对引言、完整 Theorem 1.1 及其证明概要，以及 Section 2 到 (2.4) 的系数推导。该文归于 Erdélyi 的 Theorem 1.1 要求唯一端点极小值、每个端点邻域之外的正间隙、端点附近 $f'$ 与 $g$ 的连续性、具有正主指数的 $f,g$ 渐近展开、可逐项求导的 $f$ 展开，以及充分大参数下的绝对收敛。证明概要以 $f(x)-f(a)$ 换元、逆转局部级数并用 Watson 引理，另行控制剩余积分区间。Section 2 解释 Perron／Wojdyło 系数表示。
+
+本章的剖面随 $Q$ 变化，$h$ 未必趋于无穷，且另一内部阱同时贡献质量，因此不直接套用该固定端点定理。以 $x=hr$ 归一化后，本章证明共同包络及 $O(t^{-4})$ 的边界积分余项；$\int_0^\infty x^2e^{-x}\,dx=2$ 与由此得到的端点系数属于经典计算。原 PDF 为 206,643 字节，SHA256 `6d828445701d81369f3cce02747838ada8a7b159b16452619964ebc83d698840`。抽取存在字体编码警告；后续势多项式结果及所引书籍中的完整渐近证明未作为本章的定理级替代。
+
+第 148 章的仓内推导是变化剖面的精确导数控制、同一实倾斜上的 $O(\delta^4)$ 非中心相对密度比较、相对于两个小区域各自质量的计数与完整选择误差，以及不求导未知计数余项的等质量外场反演。Borgs–Kotecký 的轮廓／Peierls 和格子条件未在本模型中建立；Temme 与 Fernandez–Spence–Fokas 的适用边界保留第 144、146 章的说明。Siripraparat–Neammanee 的异质 Bernoulli 总方差局部界与 Arratia–Goldstein–Langholz 的条件乘积表示按第 143 章使用。有限检索不证明全局原创性；以上是普通数学推导，尚未经过 Lean 形式化认证。
