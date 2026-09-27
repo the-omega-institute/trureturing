@@ -57288,3 +57288,346 @@ The argument does not infer a failure from an enormous mean. Near the typical si
 结论不涵盖从已观察数据中选择群、任意离开原计数直线的目标、趋向 $1/2$ 的参数边界或任意增长维数。指数大均值的实际构造与 $E_2$ 所要求的无限多公共楼层上的双正有界均值属于不同断言；本章既不证明也不反驳后者。第 180、183 章各自已有估计保留原范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 186. Taylor 域外的总电荷截断：实尾部、复连接段与作用量失配
+
+第 184 章建立了有限宽复电荷管中的精确能量轮廓，但其有限路径恒等式还没有支付通向无穷远的实电荷尾部。本章用第 182 章的实际混合分支选取能量倾斜为 $-M$ 的截断，在不展开行列式的情况下控制完整实尾部与终端复连接段，得到原始总量的有限轮廓表示。所有误差保留同一物理噪声因子，并相对于预先证明非零的 $g(0)\sqrt\delta$ 归一化。
+
+所得结果没有给出 Taylor 域外的新电荷循环系数或零点标签。相反，深实分支的一段固定宽邻域具有严格正的归一化驻相作用量差；端点与单鞍点的单位系数振幅在那里不能相等。因此，新的等振幅路线需要离开该邻域，并补上中间复轮廓及竞争鞍点的估计。它是特定路线的限制，不是原始总量无零点的结论。
+
+### 186.1 同一有限实验与精确条件轮廓
+
+
+Keep the original selected-count law on one realized array. Write
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ H_y=V+\sqrt\delta\,y,\quad a=(2V)^{-1}+\eta.
+$$
+The negative-sign total at the spectral field scale is
+$$
+ N_P^-(H/\sqrt\delta,y)=\sum_{D<0}P_x(n)
+ \exp\{aD^2+(H/\sqrt\delta)D-(E-H_y)^2/(2\delta\sigma^2)\}.
+ \tag{186.1}
+$$
+The exact full-q coefficient is still
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ \frac{[z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)}
+ {[z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_jn_j.
+ \tag{186.2}
+$$
+Use eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, sigma>0 tending to zero with ONLY the inherited strict log(1/sigma)/Q^3 reserve. All statements are uniform on the inherited common tight classes M>=16, |y|<=Y, and permitted compact physical outputs/separators. Actual pair and actual path laws are separate, each with the inherited uniform probability over deterministic size-q supports. We do not require a deterministic empirical-profile limit, a new eta/noise rate, or a change in the physical residual.
+
+Let V_H be the high variance and put C=diag(v_j), v=(v_j) on that set,
+$$
+ A_c=C-vv^T/V_H,\quad B_c=A_c/\delta,\quad
+ q_c=v/(V_H\sqrt\delta),\quad
+ f_L=-c_Lv/V_H-e_H,\quad b_L(w)=f_L-wq_c.
+ \tag{186.3}
+$$
+Every low tuple L and its exact probability p_L, charge c_L and energy u_L is retained; sum p_L=1 and ell_Q=max_L(|c_L|+u_L)<=P(Q)exp(-b_Low Q^3). The letter c_L always means LOW CHARGE here. We denote real energy saddles by s_L^real. Set b_ch=a-epsilon, where the retained selection insertion is exp(ell_sel-epsilon D^2), epsilon=B^2/(2d_c), ell_sel=(1/2)log(d_all/d_c). The O(q^-1/2) coefficient approximation error remains in the original-law return; (186.2) is never replaced by an exact equality to that insertion.
+
+Use the exact conditional energy action
+$$
+ J_L(s,w)=\sigma^2s^2/2+s(u_L-H_y)
+ -\frac\delta2\log\det(I-2sB_c)
+ +s\,b_L(w)^T(I-2sB_c)^{-1}b_L(w),
+$$
+$$
+ F_L(s,w)=J_L(s,w)+b_{ch}w^2
+                    -(w+\sqrt\delta c_L)^2/(2V_H),\qquad
+ \mathscr F(s,\rho)=\delta\log\sum_Lp_Le^{F_L(s,\rho)/\delta}
+ \quad(s,\rho\text{ real}).
+ \tag{186.4}
+$$
+Complex squares are bilinear. The determinants/logs start positive real on negative real energy s. The faithful profile and its total are exactly the retained ones:
+$$
+ g(w/\sqrt\delta)=\frac{e^{\ell_{sel}}}{\sqrt{2\pi V_H}}
+ \sum_Lp_L e^{[b_{ch}w^2-(w+\sqrt\delta c_L)^2/(2V_H)]/\delta}I_L(w),
+$$
+$$
+ I_L(w)=\mathbb E\exp\{-(u_L+\|Z+b_L(w)\|^2-H_y)^2/(2\delta\sigma^2)\},
+ \quad Z\sim N(0,A_c),\quad
+ G_-(H/\sqrt\delta)=\delta^{-1/2}\int_0^\infty g(\rho/\sqrt\delta)e^{-H\rho/\delta}\,d\rho.
+ \tag{186.5}
+$$
+For real charges this is a genuine conditional Gaussian formula; Chapter 184 gives its specified complex continuation and relative energy expansion. No replacement experiment is introduced.
+
+### 186.2 实现中的截断与显式作用量余量
+
+We reuse Chapter 182's proved real mixture branch, not a generic nondegeneracy assumption:
+$$
+ a_Q=8M^6[\eta+\sqrt\delta(1+Y)+\delta],\quad
+ R_*=8M^3(1+2M^2),\quad
+ \mathscr F_s(s,\rho_Q(s))=0\quad(-M\le s\le-a_Q).
+ \tag{186.6}
+$$
+There is exactly one positive root, rho_Q decreases in s, rho_Q(-a_Q)=O(sqrt(eta)), and every root is below R_*. Define
+$$
+ \rho_- =\rho_Q(-a_Q),\quad r_1=\rho_Q(-M/2),\quad
+ r_2=\rho_Q(-3M/4),\quad R=\rho_Q(-M).
+ \tag{186.7}
+$$
+These are exact finite-array quantities. The cutoff R is not chosen by fitting a zero. Set the following deliberately loose class constants:
+$$
+ k_E=\frac{2}{M^3(1+2M^2)^2},\quad
+ L_*=2^{40}(1+M+R_*+Y)^{40},
+$$
+$$
+ r_*=[8M^2(1+M^2)]^{-1},\quad
+ \kappa=[16M^2(1+M^2)]^{-1},\quad
+ \Gamma=\frac{\kappa r_* M k_E}{64L_*}>0,
+$$
+$$
+ b_* =\min\{\Gamma/(1+R_*),\,\kappa r_*/4\},\qquad
+ \mathcal D_L=\{H:|H|<L,\ \Re H>-b_*\},\quad L>0\text{ fixed}.
+ \tag{186.8}
+$$
+L can be any fixed positive class constant; the original-count return below is restricted to this fixed disk. The comparator tail estimate itself has no restriction on Im H. None of these constants shrinks with Q.
+
+Let A(rho)=mathscr F(s_Q(rho),rho), with s_Q the inverse of (186.6). The required quantitative consequences are
+$$
+ r_1\ge r_*,\quad
+ R-r_1\ge\frac{Mk_E}{2L_*},\quad
+ r_2-r_1\ge\frac{Mk_E}{4L_*},
+$$
+$$
+ A(R)\le-32\Gamma,\qquad
+ \max_L F_L(-M,R)\le-24\Gamma
+ \quad\text{eventually}.
+ \tag{186.9}
+$$
+Here and below eventuality is uniform on the fixed classes and all original admitted sequences. It does not add a sequence assumption. We prove (186.9), since merely asserting a favorable cutoff would not pay the tail.
+
+Write S(s)=sum_H v_j/(1-2sv_j/delta). The exact rank-one formula gives
+$$
+ F_{L,\rho}(s,\rho)=
+ -(S(s)^{-1}-2b_{ch})\rho
+ -\sqrt\delta\{c_L+m_e(s)\}/S(s),
+\quad
+ m_e(s)=-2s\sum_H\frac{(v_j/\delta)e_j}{1-2sv_j/\delta}.
+ \tag{186.10}
+$$
+For -M<=s<=-M/2, the retained Stieltjes bound gives V_H-S(s)>=1/(1+M^2), S between fixed positive class bounds, and hence S^-1-2b_ch>=4kappa eventually. Actual m_e and lows tend uniformly to zero faster than needed here. Since each real charge on this interval is at least r_*, (186.10) implies F_L,rho<=-3kappa rho. Positive real mixture weights give the same inequality for mathscr F_rho and for A' on that part of the branch.
+
+For completeness the lower charge bound uses the exact real energy derivative, not a spectral limit. At s=-M/2, the tilted conditional trace is at most S(s), so H_y-delta tr(B_c(I-2sB_c)^-1)>=1/[2(1+M^2)] eventually. The negative noise contribution only increases the charge needed to solve J_s=0. Its quadratic coefficient in rho is at most M^4, and its actual center is O(delta^5+ell_Q). Thus every per-low positive root, and the exact mixture root between them, exceeds r_* eventually. The constants in (186.8) are weaker than this quadratic bound.
+
+The real mixture energy curvature is at least k_E by Chapter 182. Its mixed derivative mathscr F_srho is positive on the branch and at most L_*. To check the upper bound, differentiate (186.4): resolvents on -M<=s<=0 have norm at most1, ||q_c||<=M^2, ||b_L||<=2M^2(1+R_*), and each trace derivative contains a positive power of B_c, with delta tr(B_c^j)<=M^j(1+M) for fixed j>=1. The log-sum correction is bounded by a fixed power of delta^-1 times ell_Q, hence is less than1 eventually; the number of lows does not enter because their probabilities sum to1. L_* dominates these first and mixed second derivative bounds. Therefore -rho_Q'(s)=mathscr F_ss/mathscr F_srho>=k_E/L_*. Integration over the two energy intervals proves the spacing inequalities in (186.9).
+
+On the full branch [-M,-a_Q], Chapter 182's precision bound S^-1-2b_ch>=a_Q/(3M^3), rho>=c_M sqrt(a_Q), and the smaller actual mean and low terms in (186.10) show A'<=0 eventually. Indeed sqrt(delta)m_e(s)=O_M(delta^5) uniformly, whereas a_Q rho is bounded below by a fixed multiple of eta^(3/2); the low terms are exponentially small. At its lower charge end A(rho_-)=o(1) as an upper bound. Directly, the cancellation of the first determinant trace against H_y in (186.4) gives an upper bound C[a_Q^2+a_Q sqrt(delta)(1+Y)+a_Q delta+eta rho_-^2]+o(1); s b_L^T R_s b_L<=0 for real negative s, and the selection correction can only lower the quadratic upper bound. Since rho_-^2=O(a_Q), this tends to zero. Consequently A(r_1)<=Gamma eventually. Integrating A'<=-3kappa rho from r_1 to R gives a drop of at least96Gamma. This proves the first action inequality in (186.9) with room to spare. Uniformly |F_L-mathscr F|<=C ell_Q on this compact real set, by factoring out the reference-low exponential. This proves the second inequality. Actual e, sigma and low weights have all remained in the action.
+
+At s=-M every retained conditional eigenvalue lambda>=1/M satisfies |2s lambda|>=2. Thus this cutoff is beyond the convergence disk of the determinant expansion at zero. The argument above uses full resolvents, exact rank-one charge precision and a real profile drop. It does not enlarge a small-sixth-order/quartic constant.
+
+### 186.3 整个实电荷尾部的统一估计
+
+**定理 186.1（完整实电荷尾部的非微扰支付）。** For any real rho>=R use the one fixed energy line c=-M. This line is legal for the conditional determinant at every such charge: all its positive poles lie to the right, and the tilted Gaussian is genuine. Let T=B_c(I-2cB_c)^-1 and mu=(I-2cB_c)^-1 b_L(rho). On this line the exact modulus of the conditional transform, divided by its positive real value at c, is
+$$
+ e^{-\sigma^2v^2/(2\delta)}
+ \det(I+4v^2T^2)^{-1/4}
+ \exp\{-2v^2\mu^TT(I+4v^2T^2)^{-1}\mu/\delta\}.
+ \tag{186.11}
+$$
+The last factor is at most1 for every real mean, however large rho is. No small-charge bound is used. The retained block of at least1/(M delta) eigenvalues has tilted eigenvalues at least1/[M(1+2M^2)]. Therefore (186.11) is at most (1+c_M v^2)^(-1/(4M delta)), whose integral is at most C_M sqrt(delta). This integral estimate follows by using log(1+c v^2)>=c'v^2 for |v|<=1 and its fixed positive gap plus polynomial decay for |v|>=1. It needs no inverse sigma.
+
+Fourier inversion after this real exponential tilt gives
+$$
+ I_L(\rho)=\frac{\sigma}{\sqrt{2\pi\delta}}
+       \int_{\mathbb R}e^{J_L(c+iv,\rho)/\delta}\,dv,
+ \qquad
+ |I_L(\rho)|\le C_M\sigma e^{J_L(c,\rho)/\delta}.
+ \tag{186.12}
+$$
+The equivalent upward ds integral has prefactor sigma/(i sqrt(2pi delta)); ds=i dv cancels it exactly. The same orientation is used throughout. At finite sigma>0 the line shift also follows by contour closing with the physical Gaussian damping; (186.11) then yields constants uniform as sigma tends to zero. We never cross the auxiliary all-charge precision root q_star using an all-line charge integral. Conditional energy inversion has no such denominator.
+
+The exact rank-one formula makes F_L(c,rho) a quadratic in rho, at this FIXED energy c. Its quadratic coefficient is -alpha_M, with alpha_M=1/(2S(-M))-b_ch>=2kappa. Taylor expansion of this quadratic is an identity, not a cumulant truncation:
+$$
+ F_L(-M,R+x)=F_L(-M,R)+F_{L,\rho}(-M,R)x-\alpha_M x^2.
+ \tag{186.13}
+$$
+For H with Re H>=-b_* and x>=0, (186.8)--(186.10) imply
+$$
+ F_L(-M,R+x)-\Re H(R+x)
+ \le-23\Gamma-2\kappa R x-2\kappa x^2.
+ \tag{186.14}
+$$
+Indeed the field costs at most b_*R<=Gamma at the cutoff, and b_*<=kappa r_*/4 leaves more than the displayed slope margin. This is one charge and one energy bound on the SAME array; no separately optimized marginal estimates are combined.
+
+Summing exact positive p_L after (186.12),(186.14), including the bounded e^ell_sel/sqrt(2pi V_H), gives the whole tail estimate
+$$
+ T_R(H):=\delta^{-1/2}\int_R^\infty
+                   g(\rho/\sqrt\delta)e^{-H\rho/\delta}\,d\rho,
+\qquad
+ |T_R(H)|\le C_{M,Y}\sigma\sqrt\delta\,e^{-20\Gamma/\delta}
+ \quad(\Re H\ge-b_*).
+ \tag{186.15}
+$$
+In detail the remaining x integral is at most delta/(2kappa R) times exp(-23Gamma/delta); R>=r_* makes its prefactor fixed. The charge Jacobian is delta^-1/2. Thus the raw sigma in (186.15) has survived both integrations; it has not been recovered by dividing a noise-independent bound. There is no bound on Im H in (186.15), since the original charge tail stays real. This theorem is about the TOTAL's actual omitted tail, not a regional-zero substitute.
+
+### 186.4 终端连接段与总量的有限轮廓表示
+
+Let T_Q be Chapter 184's proved capsule of fixed width epsilon_* around [rho_-,R], with its surrounding analytic margin. Eventually0 is inside it. Use its exact nonzero profile and normalized logarithm
+$$
+ \mathcal B(w)=\delta\log[g(w/\sqrt\delta)/g(0)],\qquad \mathcal B(0)=0.
+ \tag{186.16}
+$$
+The logarithm agrees EXACTLY with Chapter 179 on their actual overlap. No raw-sigma term is dropped: Chapter 184 gives
+$$
+ g(w/\sqrt\delta)=\frac{\sigma e^{\ell_{sel}}}{\sqrt{2\pi V_H}}
+ e^{\mathcal A_Q(w)/\delta}(1+\mathcal R_Q(w)),\quad
+ |\mathcal R_Q|\le C\delta,
+$$
+$$
+ \mathcal B(w)=\mathcal A_Q(w)-\mathcal A_Q(0)
+ +\delta[\log(1+\mathcal R_Q(w))-\log(1+\mathcal R_Q(0))].
+ \tag{186.17}
+$$
+The predictor mathcal A_Q retains every finite low exponential, saddle curvature factor and actual e and sigma. The common delta log(sigma e^ell_sel/sqrt(2pi V_H)) cancels only in the normalized ratio (186.16). The error in the last line of (186.17) is O(delta^2) with fixed derivatives; the error in the first line is a relative function error O(delta).
+
+An explicit convenient bound variable is
+$$
+ C_Q=1+\max_{\operatorname{dist}(w,[\rho_-,R])\le\varepsilon_*/2}
+       \sum_{j=1}^3|\mathcal B^{(j)}(w)|.
+ \tag{186.18}
+$$
+This is a finite-array quantity specified by the known exact profile integral, not by unknown total zeros. Chapter 184's fixed-margin resolvent and Cauchy estimates prove 1<=C_Q<=C_{M,Y}. Thus taking minima with C_Q below is quantitative and nondegenerate for every admitted sequence; it is not a condition left unverified. No numerical evaluation of (186.18) is asserted or performed. It can be replaced by any of Chapter 184's uniform upper derivative bounds.
+
+From Chapter 182's real energy expansion at R, g(0) asymptotic to sigma up to fixed positive factors, bounded energy curvature and (186.9),
+$$
+ \mathcal B(R)=A(R)+O_{M,Y}(\delta)\le-24\Gamma
+ \quad\text{eventually}.
+ \tag{186.19}
+$$
+The O(delta) in this particular inequality is used only against a FIXED strict action gap. It is not discarded when computing a phase or an amplitude.
+
+For the fixed L in (186.8) choose
+$$
+ v_Q=\min\{\varepsilon_*/4,\ \Gamma/[4(C_Q+L+1)]\}>0.
+ \tag{186.20}
+$$
+It has a fixed positive lower bound on the class. For real |v|<=v_Q, the straight terminal connector from R+iv to R lies inside the capsule. On it, (186.18),(186.19) and Re H>=-b_* give
+$$
+ \Re[\mathcal B(R+iu)-H(R+iu)]\le-22\Gamma
+       \quad(|u|\le v_Q,\ H\in\mathcal D_L).
+ \tag{186.21}
+$$
+The field perturbation in u costs at most L|u| and the profile perturbation costs at most C_Q|u|. The cutoff field cost is at most Gamma. These are explicit connector payments, not a homotopy name.
+
+**定理 186.2（总量的有限复轮廓表示）。** Let P be any finite piecewise smooth path within the capsule from0 to R+iv, |v|<=v_Q, with its inherited orientation. Such paths exist: [0,R] followed by a vertical segment is one, and small complex perturbations give a nonempty family. Cauchy's theorem on this simply connected nonzero-profile domain, with the specified connector, gives the exact identity before estimating
+$$
+ G_-(H/\sqrt\delta)=\delta^{-1/2}\int_P
+       g(w/\sqrt\delta)e^{-Hw/\delta}\,dw
+ +\delta^{-1/2}\int_{R+iv}^{R}g(w/\sqrt\delta)e^{-Hw/\delta}\,dw+T_R(H).
+ \tag{186.22}
+$$
+The energy contours under any compact path P are Chapter 184's proved legal contours; a finite subcover gives domination for interchanging its finite path integration with those integrals. This uses the stated energy orientation and exact low nonvanishing. No contour at complex charge infinity is assumed.
+
+Since c sigma<=g(0)<=C sigma, the connector in (186.22) costs at most C sigma delta^-1/2 exp(-22Gamma/delta). Absorbing its fixed delta^-1 factor into a fraction of the strict exponential gap, and combining (186.15), proves
+$$
+ \left|G_-(H/\sqrt\delta)-\delta^{-1/2}\int_P
+          g(w/\sqrt\delta)e^{-Hw/\delta}\,dw\right|
+ \le C\sigma\sqrt\delta e^{-16\Gamma/\delta}
+                  \qquad(H\in\mathcal D_L).
+ \tag{186.23}
+$$
+The error is independent of the internal geometry of P: the difference consists only of the terminal connector and real tail. This closes a previously missing TOTAL-charge attachment in Chapter 184, which gave only the finite identity and left its real tail unpaid. The cutoff is beyond Taylor, and the field domain includes an actual neighborhood of Chapter 179's coexistence fields. It is not a second separated-real dominance rectangle and does not assert the total is zero-free.
+
+For the finite-spectral predictor one may insert (186.17) into the P integral, but must retain the honest additional bound
+$$
+ \frac{C\delta\sigma e^{\ell_{sel}}}{\sqrt{2\pi V_H\delta}}
+ \int_P\left|e^{[\mathcal A_Q(w)-Hw]/\delta}\right|\,|dw|.
+ \tag{186.24}
+$$
+Equation (186.24) is an absolute path-envelope bound. It is NOT silently divided by the possibly cancelling finite integral. A new contributing-cycle theorem would have to bound this envelope by its stated nonzero amplitudes, or use the exact mathcal B directly with an actual steepest contour.
+
+### 186.5 原始实验回接及已有零点图的真实交叠
+
+The Chapter 169/179 fixed-H-disk return applies unchanged:
+$$
+ |N_P^-(H/\sqrt\delta,y)-G_-(H/\sqrt\delta,y)|
+ \le\sigma P(Q)e^{-\beta_{res}Q^3+C_L/(\eta\delta)}\quad(|H|\le L).
+ \tag{186.25}
+$$
+Here beta_res>0 is the inherited residual reserve, distinct from b_ch. The literal full-q coefficient (186.2) contributes its O(q^-1/2) error under the same-output positive envelope using (Re h)D<=eta D^2+C_L/(eta delta). Central high-cell density/displacement errors keep their exponential Q^3 reserves. Likelihood comparisons use the original log-width/Young and score-mark bounds at widths[sigma/2,2sigma], never a bare inverse-sigma derivative. The exact lows are summed only after uniform bounds; sign/equality strips, floors, lattice endpoints, noncentral centers and outside labels remain. Excluded original full tuples cost exp(-cQ^4); the full-tuple inequality D^2<=2n_gE+2(sum|e_j|)^2 pays the exp(CQ^(7/2)+C_L/(eta delta)) insertion. Only that crude excluded step invokes the same strict noise reserve to pay a lost sigma. No stronger reserve is introduced.
+
+Combining (186.23),(186.25) gives a theorem for the actual original TOTAL, with the explicit finite contour of (186.22):
+$$
+ N_P^-(H/\sqrt\delta,y)=\delta^{-1/2}\int_Pg(w/\sqrt\delta)e^{-Hw/\delta}\,dw+E_Q(H),
+$$
+$$
+ \frac{|E_Q(H)|}{g(0)\sqrt\delta}
+ \le C e^{-16\Gamma/\delta}
+ +P(Q)\delta^{-1/2}e^{-\beta_{res}Q^3+C_L/(\eta\delta)}=o(\delta^A)
+ \quad(A>0\text{ fixed}).
+ \tag{186.26}
+$$
+The denominator g(0)sqrt(delta)>=c sigma sqrt(delta)>0 is proved BEFORE division. Since eta>=sqrt(delta) eventually, (eta delta)^-1<=Q^(3/4), while delta^-1=Q^(1/2); both errors in (186.26) tend to zero faster than every fixed power. This works for arbitrarily slow t. It is a normalized additive representation, NOT a relative error to the total near its unknown zeros. On a region with q=H-mathcal B'(0) nonzero and bounded, the known endpoint normalization A_E=g(0)sqrt(delta)/q also absorbs this error; that algebra alone supplies no endpoint cycle outside Chapter 179.
+
+The overlap is realized. Chapter 179's base coexistence fields have H=O(eta^(3/2))+o(1), their saddle charges are O(sqrt(eta)), and their finite base contours have the same scale. Eventually all those contours lie within Chapter 184's disk |w|<epsilon_*/4, while their fields lie in |H|<min(L,b_*)/2. The retained Chapter 179 phase inverse supplies actual endpoint/saddle counting contours and nonzero amplitude boundaries there, with t^2->infinity and hence actual labels. On these boundaries (186.26) is negligible relative to Chapter 179's endpoint amplitude and therefore also to its proved Rouche denominator. No new labels are created or relabeled in this argument: both the exact profile log and its Gaussian branches are those of Chapter 179 on that overlap. This demonstrates applicability to an existing total-zero chart, rather than postulating a chart intersection.
+
+All quantities in (186.26) use one array and one physical output. The proof is uniform on the common tight class. Exhausting that class yields actual pair and actual path probability statements separately and uniformly over the original deterministic supports, with the inherited output/separator compact scopes. No extra empirical limiting law or simultaneous optimization across different realizations is used. No new o(1) unscaled d(h-h0) location theorem is asserted; Chapter 179's existing O(t^-2) theorem is preserved exactly with its actual h0,d.
+
+### 186.6 深实分支邻域中的振幅失配
+
+**命题 186.3（深实分支附近的两项振幅失配）。** The exact normalized stationary action difference is
+$$
+ W(w)=\mathcal B(w)-w\mathcal B'(w),\qquad H=\mathcal B'(w).
+ \tag{186.27}
+$$
+This relation concerns the same exact profile; it is not yet a cycle decomposition. We prove a fixed positive gap on [r_2,R] and a specified complex neighborhood. Chapter 182 gives mathcal B''<0 on[rho_-,R]. On[r_1,R], its exact Schur bound, the deep precision bound in (186.10), and its O(delta) curvature correction strengthen this to mathcal B''<=-3kappa eventually. At rho_-, Chapter 179's actual overlap gives W(rho_-)=O(eta^2)=o(1): the linear coefficient cancels in W, and rho_-=O(sqrt(eta)) in its weighted analytic expansion. Thus
+$$
+ W'(\rho)=-\rho\mathcal B''(\rho)>0,\qquad
+ W(r_2)\ge-\Gamma+3\kappa r_*(r_2-r_1)\ge16\Gamma
+ \quad\text{eventually}.
+ \tag{186.28}
+$$
+The last inequality uses (186.9), with substantial slack. It continues throughout[r_2,R]. Also, on this interval mathcal B'(rho)-a1<=-2kappa r_* eventually, where a1=mathcal B'(0)=o(1); the finite energy prefactor changes A' by O(delta) and (186.10) supplies the strict negative slope.
+
+Define an explicit realized complex neighborhood
+$$
+ d_Q=\min\{\varepsilon_*/4,\ \Gamma/[4(1+R_*)C_Q],
+                      \kappa r_*/(4C_Q),\ \kappa/(4C_Q)\},
+\quad
+ \mathcal V_Q=\{w:\operatorname{dist}(w,[r_2,R])<d_Q\}.
+ \tag{186.29}
+$$
+It is nonempty with a uniform fixed positive width. The derivative bounds (186.18), W'=-w mathcal B'', and (186.28) give throughout it
+$$
+ \Re W(w)\ge8\Gamma,\quad
+ |\mathcal B'(w)-a1|\ge\kappa r_*,\quad
+ \Re[-\mathcal B''(w)]\ge2\kappa.
+ \tag{186.30}
+$$
+The charge-curvature square root can therefore be chosen positive on the real interval. The local endpoint logarithm exists because q=mathcal B'(w)-a1 lies in a left half-plane there; choosing its argument near +pi or -pi is possible locally. Neither choice is declared to be the transported Chapter 179 endpoint branch.
+
+If one writes the endpoint and one-saddle expressions with their usual unit magnitudes, their exact ratio in this chart obeys
+$$
+ \left|\frac{g(0)e^{W(w)/\delta}\sqrt{2\pi/[-\mathcal B''(w)]}}
+ {g(0)\sqrt\delta/[\mathcal B'(w)-a1]}\right|
+ \ge c_{M,Y}\delta^{-1/2}e^{8\Gamma/\delta}.
+ \tag{186.31}
+$$
+Uniform upper derivative bounds and (186.30) justify every factor and denominator in (186.31). Therefore the equal-amplitude route of these TWO expressions cannot enter V_Q. This is stronger than observing that the real log has a sign problem: even either local bypass choice for log q leaves an exponentially large magnitude mismatch. It does not depend on fitting an integer phase label. Finite width/log corrections of order delta log(delta) in the action cannot cancel a fixed8Gamma gap.
+
+This is NOT an attained obstruction of the original total. We have not proved those two charge coefficients in V_Q, excluded other contributing saddles there, or continued a zero curve until it hits its boundary. A route can leave the narrow capsule and acquire the necessary complex action rotation. Original finite support still gives an entire original normalizer; that fact neither contradicts (186.31) nor proves an outside route. The statement only excludes a proposed endpoint/saddle balance inside the specific deep neighborhood using the same exact profile.
+
+### 186.7 复电荷延拓仍缺的中段估计
+
+After (186.30), following the real branch inside its narrow complex capsule cannot establish that continuation. The finite-cut theorem suggests a different route: leave a deep cutoff and terminal connector fixed, and deform the MIDDLE charge contour into a lower complex sector until W has real part of order delta log(delta), while matching Chapter 179 on its upper-frequency side. The point of (186.23)--(186.26) is that the real tail and attachment no longer need a global complex-infinity contour theorem. Their bound is already uniform on the displayed field domain.
+
+What remains unproved is the middle deformation with its usable analytic profile and actual descending geometry outside the capsule. The conditional action (186.4) is quadratic in complex charge before energy profiling, but Chapter 184's centered noncentral sign proof uses a real tilted mean at each real anchor. For a complex displacement comparable to the charge, the real-mean sign in (186.11) no longer applies without a new complex energy contour estimate. A formal continuation of the energy equation does not establish an admissible contour or nonvanishing of the exact low sum there. Even if an analytic saddle branch survives, a charge contour through it must keep all other pieces below the endpoint/saddle amplitudes and account for any additional saddles. The endpoint q=H-a1 may require a bypass; positivity of g on real charges does not carry its logarithm or coefficient through q=0.
+
+The global saddle-contour results discussed in the accompanying Library attribution require additional domain and path hypotheses. The results here are the total-tail and connector bounds and the exact capsule-balance exclusion. No actual contributing beyond-Taylor zero branch, no attained original-law cycle obstruction, no global phase inverse or new no-extra count has been proved. The beyond-Taylor contributing zero continuation remains open. The method limitation does not imply physical nonexistence. The new total-tail and connector estimates are (186.15),(186.21)--(186.26), with the realized overlap and original-law error; (186.30),(186.31) explain why they alone do not settle the zero geometry.
+
+
+### 186.8 来源与适用范围
+
+高斯倾斜、秩一逆矩阵、Schur 补、Stieltjes 型精度估计和有限域内的 Cauchy 变形均为经典工具。新增连接在于：以同一实现中的能量分支选择截断，保存原始噪声因子支付无限实尾部，再将已证复管中的有限路径接回原始完整总量。全局最陡下降文献要求的解析域、无穷远衰减、邻接鞍点和绝对可积性，不能由有限配分函数的整性自动获得；具体文献范围见 Library 对应条目。
+
+本章保留精确低频混合、完整 $q$ 选择系数、经验均值、原始取整和同一输出。条件在共同紧类上统一，之后分别回接实际 pair 与实际依赖 path 的支持一致概率。它不要求新的经验谱极限、额外噪声速率或更快的 $\eta/\sqrt\delta\to\infty$。归一化加性误差不能除以未知零点附近的总量；第 179 章的既有零点和计数结果保持原范围。
+
+## 追加锚（本行以下为增补区）

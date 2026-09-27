@@ -6231,3 +6231,11 @@ Louis H. Y. Chen 与 Aihua Xia，*Stein's method, Palm theory and Poisson proces
 Nickos Papadatos，*On corrected Poisson approximations for sums of independent indicators*，[arXiv:2304.10314v2](https://arxiv.org/abs/2304.10314v2)，沿用第 180 章的文献归属。其独立指示变量 Poisson 界将因子 $(1-e^{-\theta})/\theta$ 归于既有 Chen–Stein 工作，包括 Barbour–Eagleson 与 Barbour–Hall。第 185 章使用稍弱的 $\theta^{-1}\sum_i p_i^2$，并给出完整标量差分证明及共同条件 Multinomial 标记核的提升；这一经典标量界不算本章新结论。Barbour 的 arXiv:0902.0879v1 条件占据构造仍按第 183 章说明其独立球、平移 Poisson 及方差条件边界。
 
 本章新增的是原始信号全数组、只改变背景的共同实现、精确得分质量比及均值一致类别界之间的连接。它不借用点过程度量替代向量全变差，不假定路径行独立，不由单一均值接近代替联合概率证明。文献比较限于上述版本及已核对内容，不宣称全球原创、检索穷尽或 Lean 核验。
+
+## 谱边界卷第 186 章补充：总电荷尾部与有限复轮廓连接
+
+对应 [谱边界卷第 186 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：在第 182、184 章的实际混合分支与复能量管上，选择能量倾斜为 $-M$ 的实现截断，证明整个实电荷尾部及终端复连接段的统一指数界，并用完整选择系数回接原始总量。精确归一化对数保留低频混合和物理噪声；误差相对于非零的 $g(0)\sqrt\delta$ 控制，不宣称总量在抵消区域的相对误差。
+
+T. Bennett、C. J. Howls、G. Nemes 与 A. B. Olde Daalhuis，*Globally Exact Asymptotics for Integrals with Arbitrary Order Saddles*，[arXiv:1710.10073v2](https://arxiv.org/abs/1710.10073v2)，版本日期 2018 年 2 月 8 日；正文另列编辑部收稿日 2017 年 10 月 27 日。核对第 2 节的解析域、角区间 (7)、邻接与方向指标 (8)，第 3 节围绕 (20)–(22) 的轮廓变形与绝对可积条件，第 5.1 节的简单鞍点表示，以及附录 C 的逆映射拓扑和方向证明。原文要求函数在扫过域的闭包解析、相应相位模在无穷远发散、相关最陡路径通向无穷远而非奇点，并有非空有限的邻接鞍点集；余项还要求各邻接路径上的绝对积分及扫过域内无分母零点。这些条件不能由局部能量鞍点或作用量相等替代。已存提取含字形与 NUL 缺陷，空警告文件不表示提取完美；未核对的角余项范围不作输入。
+
+本章不直接移植该文的全局循环系数，而是在已证有限解析域内支付尾部与连接段。深实分支上的振幅失配仅排除指定端点/单鞍点表达式的局部平衡，未确立那里的实际电荷系数、全部竞争鞍点或原始零点不存在。复中段继续延拓仍是开放证明义务；不宣称全球原创、检索穷尽或形式核验。
