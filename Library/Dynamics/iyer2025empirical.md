@@ -6027,3 +6027,17 @@ $$
 $$
 
 在原稀疏根分母上，正的对数 Fourier 衰减使根重现宽度的上包络可求和；这是根坐标中的边界，不是参数坐标中的断言，也不推出 $E_2$ 为空。上述文献范围与本章初等联合判据的证明依赖区分保留；无全局检索完整性或原创性声明。
+
+## 谱边界第 169 章补充：完整谱条件能量与相对窗口质量
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 169 章保留完整有限谱、选择系数、非中心位移、所有低频组合和原物理噪声，在固定非零重标电荷区间证明条件能量的相对鞍点公式，并返回原完整选择计数律的稀有窗口。它没有证明该场尺度上的总电荷轮廓或振荡零点。
+
+Bernard Bercu、Jean-François Bony、Vincent Bruneau，*Spectrum of the product of Toeplitz matrices with application in probability*，[arXiv:0712.1302v1](https://arxiv.org/abs/0712.1302v1)，2007-12-10。原 PDF 为 209,617 字节，SHA256 `d843e4467b8a5e5b819b1c551a0ab81c4499c8c51643e0751e258bbc6f8edea0`。核对引言、Lemma 2.1、Theorems 2.3–2.4、Example 2.6，以及第 3 节至 Corollary 3.1、Remark 3.2。原文假设连续实 Toeplitz 符号 $f,g$ 且 $g\ge0$，Gaussian 过程中心化、平稳，协方差为 Toeplitz$(g)$。它先控制极端特征值，再以完整对数谱变换得到实大偏差原理；率函数的仿射延拓受谱极端控制，Example 2.6 区分极端谱点与乘积符号的值域。
+
+这些条件不能把当前条件高频协方差识别为 Toeplitz 乘积，原文也没有给出非中心三角阵列在衰减物理噪声下的复相对密度或零点定理。迁移的是同时保留对数谱变换与可用谱域的结构；本章式 (169.14)–(169.16)、(169.29)–(169.34) 对原有限数组直接证明对应关系，未从原文推定其秩一非中心项。
+
+Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，*Bose-Einstein Condensation of a Gaussian Random Field in the Thermodynamic Limit*，[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)，版本日期 2012-01-30；所保留 PDF 标题页同时显示 September 6, 2021。原 PDF 为 640,657 字节，SHA256 `c1c39f1d9a5b6565fce475f553cd19b08be3f7e6bb99b4b930aedc6abf9f3282`。核对标题、引言和第 II 节至式 (23)，包括精确模式律、Laplace 乘积、Bromwich 域以及式 (19) 的不同极限次序。
+
+原文研究周期盒中的中心齐次 Gaussian 场，假设唯一主导的零 Fourier 模式、具有指定低频幂律的极限径向谱，并采用固定强度的热力学极限。当前完整选择计数律未满足这些已验前提。原文的 $\epsilon$ 区分实、复场，与本章有限外部选择系数不同；其反演轮廓位于 Laplace 奇点右侧，变形须保留解析域，式 (19) 的有限红外修正依赖极限次序。这些事实支持完整经验谱及支持域检查，不证明本章总电荷轮廓或凝聚转变，后续未核对的凝聚推导未被采用。
+
+Gaussian 配方、行列式／Sherman–Morrison 身份、谱交错及鞍点方法的经典归属保留。本章模型综合的边界是条件能量复邻域、带原噪声的相对返回与有限谱解释；实大偏差原理不替代相对振荡估计，局部窗口不替代总幅度。所引用版本的提取文本及其字形限制未被当作额外定理，有限来源核对不声称检索穷尽或全球原创。
