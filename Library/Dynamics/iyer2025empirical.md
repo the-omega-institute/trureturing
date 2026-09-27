@@ -6421,3 +6421,15 @@ William D. Kirwin，*Higher Asymptotics of Laplace's Approximation*，[arXiv:081
 物理结论只断言：原 $\beta>4/5$ 下，对 $c_1=7c_q/4,c_2=2c_q$，同一原始数组上，两个通道的积分修正偏差之最大值以概率趋于一有固定正下界，最大加权剖面误差也有固定下界；pair/path 分别对确定性支持一致。它不指定一个对所有支持统一失败的指数，不反驳每个指数，不否定紧邻 $\gamma=99c_q/200$ 的正区间。有限来源核对不构成全球原创性判断，普通推导不冒充 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 197. 完整直方图信息首项与移动均值下的 Charlier 展开
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 197 章。Adell–Lekuona–Yu，arXiv:1001.2897v1（[原始版本](https://arxiv.org/abs/1001.2897v1)），原文标识 `thm4` 的定理及完整积分／中心矩证明提供有限 binomial 相对熵界。固定概率或固定均值的印刷渐近不自动提供移动概率、指数增长均值或原依赖向量的结论。
+
+Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Numbers*，arXiv:0906.0690v1（[原始版本](https://arxiv.org/abs/0906.0690v1)），Poisson–Charlier 定义、命题 `Charlierexpo`、`prop:radon`、定理 `thm:chisquare` 及完整相关证明已核对。其 chi-square 首项定理固定输入和参考均值；随后 KL 与一半 chi-square 的近似不作为本章统一余项的来源。截断正交展开未必非负的限制保留，附录确定均值例子的下降阶乘上标也未被导入。
+
+第 197 章直接建立真实正似然的有限上界、全部 Charlier 次数的 Gaussian 复积分余项、近零似然区域的熵误差及单侧指数矩。模型内新增关系把这些界接回同一实际总量下的信号／背景直方图，支付移动大均值下的近比例形状、原路径时间依赖、全信息尾及精确均值参考变更，再由实际总量方差亏损取得匹配下界。完整原始直方图的 KL 首项为 $F_Q^2/16$，即 $Q^{-5}/[32\pi(b+a\vartheta^2)]$；pair/path 分别在紧参数区间与确定性支持上一致。
+
+完整组识别、一／两行相对概率、实际总量分解和集中、条件化信息、加权尾与同阶方差亏损分别复用第 175、180、183、187、189、191、193、194 章。线质量归一化复用 `PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md` (44.9) 与 `PARITY_HIDDEN_ARROW_WINDOW_PHASES.md` (52.12)–(52.15)。不从本结果推出全数据熵、后验熵、同步 E2、下一阶系数或统计实验等价；不主张全球原创性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）

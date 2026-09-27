@@ -62054,3 +62054,561 @@ Dytso–Poor–Shamai 的 *A General Derivative Identity for the Conditional Mea
 Poisson 求和、固定 Gaussian 矩与 Hilbert 空间正交投影是经典工具。这里没有经验相位均匀分布假设，也没有把 theta 身份当作实际相位衰减定理。一个固定高噪声指数的完整分类、$\beta\le4/5$、各端点、邻近 $\gamma$ 的正区间及全部微观信息的匹配上界仍未解决。本章为普通数学推导，未作 Lean 核验，不主张检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 197. 完整原始直方图的信息首项：共同实现、全部 Charlier 次数与精确均值
+
+第 194 章给出完整计数线相对精确均值独立 Poisson 律的信息阶 $\Theta(Q^{-5})$。本章确定其首项系数。信号的类别排斥造成总量方差亏损；背景贡献相同量级的均值，将相对亏损稀释为原信号线质量的一半。要把这一机制变成原始完整直方图的熵结论，需要在同一实现上支付背景条件化与比例形状误差，并控制移动大均值下真实似然的全部 Charlier 次数。
+
+**定理 197.1（完整直方图相对熵的精确首项）。** 保留原振幅、补偿、时间长度、取整及完整无计数截断的组直方图。对原 pair 实验或平稳 path 实验 $\mathcal E$，令
+
+$$
+\mathcal D_Q^{\mathcal E}(\beta,S)
+=D\!\left(\mathcal L^{\mathcal E}_{\beta,S}((C_j)_{j\in J_Q})
+\,\middle\|\,\bigotimes_{j\in J_Q}\operatorname{Pois}(\mu_j^{\mathcal E})\right),
+\qquad \mu_j^{\mathcal E}=\mathbb E^{\mathcal E}_{\beta,S}C_j.
+$$
+
+则对每个固定紧区间 $J\Subset D=(\beta_*,1)$，两种实验分别满足
+
+$$
+\sup_{\beta\in J}\ \sup_{S\subset C_+,\ |S|=q}
+\left|Q^5\mathcal D_Q^{\mathcal E}(\beta,S)
+-\frac1{32\pi(b+a\vartheta^2)}\right|\longrightarrow0.
+\tag{197.1}
+$$
+
+这里 $a,b,\vartheta$ 为下文保留的原始常数。若 $F_Q$ 是原信号 product-Poisson 行落在完整计数线上的概率，则等价地
+
+$$
+\mathcal D_Q^{\mathcal E}=\frac{F_Q^2}{16}+o_J(F_Q^2).
+\tag{197.2}
+$$
+
+误差对上述原参数及每个规定大小的确定性真实支持一致，不限制各组均值，包含全部尾坐标和零均值坐标。两种实验的首个非零系数相同，但不由此识别二者的完整统计实验。以下通过信息上、下界分别证明系数；条件信息上界不被误用于下界。
+
+### 197.2 The unchanged model and finite support
+
+Retain
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+Put $h_r=-\log(1-r)$, $t_n=\vartheta-P/Q$, so $0<t_n<2\,10^{-Q^5}$. The exact floors and horizon are
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_0=M-q,\quad \epsilon=rq/s_0,\quad T=2M\lambda.
+                                                               \tag{197.3}
+$$
+For $J=[\beta_0,\beta_1]\Subset D=(\beta_*,1)$, the original domain has $\beta_*>1/2$. Uniformly on $J$,
+$$
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O(1),\quad
+q/M=e^{-\phi\lambda+O(1)},\quad
+q^2/M=e^{\phi(1/\beta-2)\lambda+O(1)}.                  \tag{197.4}
+$$
+Thus $q,s_0$ grow exponentially, whereas $q^2/M$ decreases exponentially. These facts use the original domain, not an added sparsity assumption.
+
+Both parity classes have size $M$. For any deterministic $S\subset C_+$, $|S|=q$,
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+The path starts uniformly and uses $T$ transitions; the pair experiment uses $T$ independent stationary adjacent pairs. Compensation gives stationarity and the exact reset $P_S^2=\Pi$.
+
+Write $\mathbf k_j=(K_j,B_j)=(k_0,l_0)+j(Q,P)$,
+$$
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},\qquad
+C_j=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=\mathbf k_j\}}.
+                                                               \tag{197.5}
+$$
+Chapter 175's global score injectivity identifies these as COMPLETE groups even outside a count cutoff. Its operative argument uses transcendence of the original amplitude and distinct zeros/poles of the rational score-ratio function; no remote count-pair collisions are omitted.
+
+The countable target reduces exactly to the finite set
+$$
+A_Q=\left\{j\in\mathbb Z:
+\max(\lceil-k_0/Q\rceil,\lceil-l_0/P\rceil)\le j
+\le\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor\right\}.
+                                                               \tag{197.6}
+$$
+Outside $A_Q$, $K_j+B_j>T$, so $C_j=\mu_j=0$. Any other zero-mean coordinate is deterministic zero as well. Both laws on the countable vector append only deterministic zeros. Every actual vector has $\sum C_j\le M$ and finite support, so all actual entropies and log-reference expectations below are finite. Positive reference intensities used during the proof are intermediate choices; exact-mean projection is paid explicitly.
+
+Choose the single proof constant
+$$
+\gamma=(e-1)/2,\quad c_M=\phi/\beta_0,\quad
+C=4(\gamma+4c_M+4),\quad \alpha_Q=e^{(\gamma-C/4)\lambda}.
+                                                               \tag{197.7}
+$$
+Let $I_C=\{j\in J_Q:K_j+B_j\le C\lambda\}$. This is a proof decomposition only. Define
+$$
+f_j(w)=e^{-w_+-w_-}\frac{w_+^{K_j}w_-^{B_j}}{K_j!B_j!},\quad
+\nu_1=(a\lambda,b\lambda),\quad
+\nu_0=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2),
+$$
+$$
+f_j=f_j(\nu_1),\quad g_j=f_j(\nu_0),\quad
+F=\sum_{I_C}f_j,\quad F_0=\sum_{I_C}g_j,\quad
+m_j=qf_j+s_0g_j.
+                                                               \tag{197.8}
+$$
+For tail indices the same formula defines $m_j$. The full signal line mass is $F_Q=\sum_{J_Q}f_j$. We will show $F_Q-F$ is exponentially small.
+
+### 197.3 Original-law payments available below the coefficient scale
+
+We specify the reused estimates rather than infer them from TV.
+
+First, let $\mathcal N_1$ be the ENTIRE signal row count array, and let $R^{\rm arr}$ have independent Poisson entries of means $a\lambda,b\lambda$ in every signal row. Put $p_0=q/(2M)$. Chapter 194 proves
+$$
+D(\mathcal L^{\mathcal E}(\mathcal N_1)\|R^{\rm arr})\le d_{\mathcal E},
+\quad d_{\rm pair}=-p_0-\log(1-p_0),
+\quad d_{\rm path}=\frac{T(p_0^2+p_0\epsilon^2)}{1-p_0}+2(p_0+1/T).
+                                                               \tag{197.9}
+$$
+Its actual path proof records the word $(X_t,\chi(X_{t+1}))$ when $X_t\in S$, and zero otherwise. Conditional on the past words, the chance of a nonzero next word equals $2p_0$ after a positive marked word, zero after a negative one, and lies in $[p_0(1-\epsilon),p_0]$ after zero. The label and sign factors are the same conditional factors as for iid words. Bernoulli KL is at most $(z-p_0)^2/[p_0(1-p_0)]$. The preceding marked event has exact stationary probability $p_0$, giving expected step cost $(p_0^2+p_0\epsilon^2)/(1-p_0)$. Chain rule pays the complete temporal word, not independent path rows. The iid word count array is multinomial; its likelihood against the Poisson array depends only on its marked total and has maximum log ratio at most $2(p_0+1/T)$. This proves the path inequality by data processing and log-ratio decomposition. For pairs the array divergence is the scalar binomial divergence, with the finite bound in (197.9). By (197.4), both costs are exponentially small.
+
+Next let $H=(H_{i,\sigma})_{i=1,0;\,\sigma=+,-}$ be the SAME four original departure totals. Conditional on $H$, the two sign lists in each class are independent uniform allocations among that class's labels; the two class histograms $U,V$ are conditionally independent. This is the exact Chapter 183 disintegration: conditional on the three-class trajectory, every compatible concrete path has mass
+$(2M)^{-T-1}\prod_{t<T}(1+b_{G_t}\chi_{G_{t+1}})$, independent of the label choices. Integrating over class trajectories with fixed totals preserves the list law. The pair statement is also exact. No independence is asserted for the four totals.
+
+For the background class, $s=s_0$, $\Delta=H_0/s-\nu_0$, $G=\{\max|\Delta_\sigma|\le1\}$, the actual bounds are
+$$
+\mathbb E|\Delta|^2\le10\lambda/s,\quad
+\mathbb E\sum|\Delta_\sigma|\le\sqrt{20\lambda/s},\quad
+\Pr(G^c)\le4e^{-s/(8\lambda)}.                         \tag{197.10}
+$$
+Chapter 187's proof uses joint independence within each third-edge subsequence from $P_S^2=\Pi$, then Hölder between them. This retains the actual totals and endpoints.
+
+For completeness the adjustable background information bound is given here with its finite conditions. Put
+$$
+D_0=\max(2,C),\ A=8\sqrt{D_0}/b,\ h_0=\sqrt{Q^2+P^2},\quad
+S_Q=2+\sqrt{8\pi D_0\lambda}/h_0,
+$$
+$$
+F_*=A^2S_Q/\lambda,\quad W_*=4A^2(1+2D_0)S_Q,\quad
+c_{\rm bg}=r^2/(128D_0),\quad
+\bar F=F_*e^{-c_{\rm bg}\lambda},\quad\bar W=W_*e^{-c_{\rm bg}\lambda}.
+$$
+Chapter 193's displaced-line estimate, for $w\in[b\lambda/2,2\lambda]^2$, is
+$$
+\sum_{I_C}f_j(w)\le F_*e^{-\operatorname{dist}(w,\mathbf k_0+\mathbb R(Q,P))^2/(8D_0\lambda)},
+$$
+$$
+\sum_{I_C}f_j(w)(4\lambda+|\mathbf k_j-w|^2)
+\le W_*e^{-\operatorname{dist}(w,\mathbf k_0+\mathbb R(Q,P))^2/(8D_0\lambda)}.
+                                                               \tag{197.11}
+$$
+The exact floor gives $\nu_0-\mathbf k_0=(-d,d)$, $d=(r+\epsilon)\lambda/2-\xi$, $\xi=a\lambda-k_0\in[0,1)$. Thus this distance is at least $r\lambda/4$ throughout $G$, for the finite lower bound on $\lambda$ below. Consequently the two sums there are bounded by $\bar F,\bar W$; both are exponentially small up to polynomial factors.
+
+Use the freely positive smoothing cutoffs $\kappa=\tau=Q^{-20}$, and define
+$$
+c_0=b/(8\pi^2),\quad\delta=2\bar W/(b\lambda),\quad
+\mathscr L_s=4\pi s\lambda e^{1/(3bs\lambda)},\quad
+\chi_s=4\pi s\lambda e^{-c_0s\tau/4},
+$$
+$$
+a_s=\frac1{3bs\lambda}+
+\log\left(\frac1{(1-\kappa)(1-\delta-\tau)}+\chi_s\right),
+$$
+$$
+A_0=1+2C/b,\quad C_{\rm rem}=2C/b^2,\quad
+A_t=2/b^2+4C_{\rm rem}^2,\quad C_{\rm cal}=4C^2/b+4,\quad A_f=1+C\log(C/b).
+$$
+Then define the SUM
+$$
+\begin{split}
+\mathcal B_Q^{(197.20)}(s)={}&a_s+2(\bar F+1/s)+\mathscr L_se^{-s\kappa}\log\mathscr L_s\\
+&+5e^{2A_0}A_t\bar W/\lambda
++2C_{\rm cal}A_0e^{2A_0}\lambda\bar F\sqrt{20\lambda/s}\\
+&+4s(1+A_f\lambda)e^{-s/(8\lambda)}.
+\end{split}                                                \tag{197.12}
+$$
+Sufficient finite conditions are
+$$
+\begin{gathered}
+\lambda\ge\max(1,2/b,4(1+\sqrt2)/r),\quad
+\bar F\le\min(1/16,b/(16\pi^2)),\quad\bar W/\lambda\le b/(4\pi^2),\\
+e^2\bar F\le\kappa\le1/2,\quad0<\tau\le1,\quad\delta+\tau\le1/2,
+\quad\bar F+1/s\le1/2,\\
+s\ge\max(4,4C/b,2C_{\rm cal}\lambda),\quad s\lambda\ge1.
+\end{gathered}                                                \tag{197.13}
+$$
+All hold uniformly eventually even with $Q^{-20}$, since $\bar F,\bar W/\lambda$ decay exponentially and $s_0$ grows exponentially. In particular $s_0Q^{-20}$ grows exponentially. The operative conditional estimate is
+$$
+\mathbb E_H D(\mathcal L(V\mid H)\|R_b)\le\mathcal B_Q^{(197.20)}(s_0)
+=O_J(Q^{-20})+O_J(e^{-c_J\lambda}),\qquad
+R_b=\bigotimes_{I_C}\operatorname{Pois}(s_0g_j).          \tag{197.14}
+$$
+Here and below positive exponential constants can depend on $J,r$.
+
+The free cutoffs in (197.14) require checking, not merely changing an old constant. Under fixed good totals $sw_\sigma$, represent the allocation as product-Poisson rows conditioned on their two sums. Remove every target atom from an unmarked row. Its characteristic function has the global bound $e^{-c_0\min(\lambda|\theta|^2,1)}$ by the two removal budgets in (197.11). On $V_\theta=\sum w_\sigma\theta_\sigma^2\le\tau$, its modulus is at most $e^{-(1-\delta-\tau)V_\theta/2}$. Fourier inversion for at least $s(1-\kappa)$ unmarked rows, divided by the exact Poisson conditioning probability at its integer mean, bounds the conditional mark likelihood by $e^{a_s}$. Outside the small-frequency region the remainder is $\chi_s$, which is superexponentially small. There is no positive lower bound on $\tau$ in this proof. The exceptional iid mark total beyond $s\kappa$ has probability at most $e^{-s\kappa}$ because $\kappa\ge e^2\bar F$; its conditioned likelihood is at most $\mathscr L_s$. The categorical-to-Poisson maximum contributes $2(\bar F+1/s)$.
+
+Changing intensities from $w=\nu_0+\Delta$ to $\nu_0$ adds exactly
+$s\sum f_j(\nu_0)(e^{\ell_j}\ell_j-e^{\ell_j}+1)+\sum(g_j^H-sf_j(w))\ell_j$, where $\ell_j=\log(f_j(w)/f_j(\nu_0))$, $g_j^H=\mathbb E(V_j\mid H)$. On $G$, the squared derivative sum is at most $A_t\bar W|\Delta|^2/\lambda^2$, $|\ell_j|\le2A_0$, and the conditional binomial row comparison gives $|g_j^H-sf_j(w)|\le2C_{\rm cal}\lambda f_j(w)$. Equation (197.10) gives the middle terms of (197.12). On $G^c$, fixed-core cross-entropy is at most $s(1+A_f\lambda)$, giving the last term. These are the Chapter 189 indicators of $G,G,G^c$ respectively. This explains all terms, all exceptional totals, and the uniform smaller cutoff in (197.14).
+
+Finally the Chapter 180 one/two-row relative errors needed here are
+$$
+\theta_h=\frac{(1+C)h}{2M},\qquad
+\delta_h=10^6(\theta_h+T\theta_h^2)e^{10^6T\theta_h^2}+12\,2^{-T},
+\quad h=1,2.                                             \tag{197.15}
+$$
+For $\theta_2\le1/200$, every prescribed tuple on $h$ distinct positive rows with each count total at most $C\lambda$ differs relatively from its product-Poisson row probability by at most $\delta_h=O_C(\lambda/M)$. The actual pair PGF and finite-rank path PGF are distinct; the proof bounds the path's analytic multiplier, not an independent-row replacement. Summing these positive inequalities over disjoint target pairs introduces no dimension factor.
+
+### 197.4 A same-realization comparison with proportional mark shapes
+
+Write $b_j=s_0g_j$ and retain the exact scalar
+$$
+\rho=\frac{s_0e^{-z_0}}q,\qquad b'_j=\rho q f_j.
+                                                               \tag{197.16}
+$$
+Do not replace $\rho$ by one at the reference construction stage. On $I_C$, the exact identity is
+$$
+\log\frac{g_j}{e^{-z_0}f_j}
+=-jh_rQt_n+K_j\log(1-\epsilon)+B_j\log(1+\epsilon).
+$$
+Since $|j|\le(C+1)\lambda/Q$, $\epsilon\le1/2$, all its values $t_j=\log(b_j/b'_j)$ obey
+$$
+|t_j|\le u_Q:=(C+1)\lambda h_rt_n+2C\lambda\epsilon.
+                                                               \tag{197.17}
+$$
+The floor in (197.3) gives $\rho=(1-q/M)(Me^{-z_0}/q)$, with $1\le Me^{-z_0}/q<1+1/q$. Thus $\rho\to1$ uniformly, and eventually $1/2\le\rho\le2$.
+
+Let $g_j^{\rm act}=\mathbb EV_j$. The one-row relative estimate (197.15) gives $|g_j^{\rm act}-b_j|\le\delta_1b_j$. Direct change of Poisson reference, averaged over the ACTUAL totals, yields
+$$
+\begin{split}
+\mathbb E_HD(P_{V|H}\|R_{b'})-\mathbb E_HD(P_{V|H}\|R_b)
+&=\sum_j\{g_j^{\rm act}t_j+b'_j-b_j\}\\
+&=\sum_j b_j(t_j+e^{-t_j}-1)+\sum_j(g_j^{\rm act}-b_j)t_j\\
+&\le E_{\rm shape}:=s_0F_0\left(\tfrac12e^{u_Q}u_Q^2+\delta_1u_Q\right).
+\end{split}                                                \tag{197.18}
+$$
+This pays approximate proportionality at the full moving mean. It is not a coordinatewise approximation followed by an unpaid sum. Since $s_0F_0\le\rho e^{u_Q}qF$, its dominant compensation term is at most a constant times $qF\lambda^2\epsilon^2=O(F\lambda^2q^3/M^2)$, exponentially small by (197.4). The $\delta_1u_Q$ term and decimal-tail terms are also exponentially small. Thus $E_{\rm shape}=O_J(e^{-c_J\lambda})$, after enlarging constants to absorb polynomial factors.
+
+Let $A$ be the histogram of $q$ independent rows, each marking category $j\in I_C$ with probability $f_j$, and unmarked with probability $1-F$. Data processing in (197.9) gives $D(P_U\|A)\le d_{\mathcal E}$. Conditional convexity on the actual posterior weights of $H$ given $U$, and $U\perp V\mid H$, give
+$$
+\begin{split}
+D(P_{U,V}\|A\otimes R_{b'})
+&=D(P_U\|A)+\mathbb E_UD(P_{V|U}\|R_{b'})\\
+&\le d_{\mathcal E}+\mathbb E_HD(P_{V|H}\|R_{b'})
+\le\eta_Q,
+\end{split}
+\qquad
+\eta_Q=d_{\mathcal E}+\mathcal B_Q^{(197.20)}(s_0)+E_{\rm shape}.
+                                                               \tag{197.19}
+$$
+This is a SUM of information payments. In particular $\eta_Q=O_J(Q^{-20})+O_J(e^{-c_J\lambda})$. There is no replacement of the common background mixture by independent marginal realizations.
+
+Let $B^{\rm vec}$ be the convolution of $A$ and an independent vector with law $R_{b'}$. Addition in (197.19) gives
+$$
+D(P_{C_{I_C}}\|B^{\rm vec})\le\eta_Q.                 \tag{197.20}
+$$
+Both reference components have the EXACT same mark shape $\pi_j=f_j/F$. Their totals are respectively $\operatorname{Bin}(q,F)$ and $\operatorname{Pois}(\rho qF)$. Given their totals the marks are independent with common probabilities $\pi_j$; given the sum total they still have the same multinomial shape. Thus, with
+$$
+R_* =\bigotimes_{I_C}\operatorname{Pois}((1+\rho)qf_j),\qquad
+B^{\rm tot}=\operatorname{Bin}(q,F)*\operatorname{Pois}(\rho qF),\quad
+\nu=(1+\rho)qF,
+$$
+the likelihood $B^{\rm vec}/R_*$ is precisely $B^{\rm tot}(N)/\operatorname{Pois}(\nu)(N)$, where $N$ is the total. Hence
+$$
+D(B^{\rm vec}\|R_*)=D(B^{\rm tot}\|\operatorname{Pois}(\nu)).
+                                                               \tag{197.21}
+$$
+Equation (197.21) is a reference identity only. Equation (197.20), followed by the weighted transfer below, is what connects it to the actual histogram.
+
+### 197.5 Uniform entropy expansion for the smoothed binomial total
+
+**引理 197.2（移动均值下的全部次数熵展开）。** We prove the scalar statement with an entire-degree remainder. Let
+$$
+B=\operatorname{Bin}(n,p)*\operatorname{Pois}(\rho np),\quad
+R=\operatorname{Pois}(\nu),\quad\nu=(1+\rho)np,
+\quad v=np^2/\nu=p/(1+\rho),\quad\alpha=p/\sqrt\nu.
+$$
+Uniformly for $\rho\in[1/2,2]$, $\nu\ge1$, $n\ge2$, as $p\downarrow0$,
+$$
+\boxed{\quad D(B\|R)=\frac{p^2}{4(1+\rho)^2}+O(p^{5/2}).\quad} \tag{197.22}
+$$
+The constant is absolute; one may restrict throughout to $0<p\le1/16$. The following proof also gives
+$\chi^2(B\|R)=v^2/2+O(p^4)$, a bounded likelihood maximum, and $\mathbb E_B\log^2(B/R)=O(p^2)$. Those extra estimates will pay the actual-law transfer. The case here has $n=q,p=F$, with $\nu$ exponentially large, but no upper bound on $\nu$ is used.
+
+First the scalar binomial-to-Poisson likelihood is
+$$
+L_{n,p}(m)=\frac{(n)_m}{n^m}(1-p)^{n-m}e^{np},\quad 0\le m\le n,
+$$
+and zero beyond $n$. Consecutive ratios equal $(1-m/n)/(1-p)$, so a maximum occurs at $m\le np+1$. Monotonicity of $\log(1-x)$ bounds its factorial sum by $n\int_0^{m/n}\log(1-x)\,dx-\log(1-m/n)$. After adding the other terms, the coefficient of $n$ is maximized at $m/n=p$, with maximum zero. Thus, when $p+1/n\le1/2$,
+$$
+\sup_m\log L_{n,p}(m)\le2(p+1/n).                    \tag{197.23}
+$$
+Convolution with the same Poisson law makes its likelihood a conditional expectation of this likelihood under the reference. Hence for $L=B/R$,
+$$
+0<L\le e^{2(p+1/n)}\le e^{8p}\le2                 \tag{197.24}
+$$
+for all sufficiently small $p$, since $\nu\ge1$, $\rho\le2$ imply $1/n\le3p$. Positivity follows from the added positive-mean Poisson variable. This is a finite bound valid in the moving regime.
+
+Define the unnormalized Charlier polynomials by
+$$
+e^{-\nu t}(1+t)^x=\sum_{k\ge0}C_k(x;\nu)t^k/k!.
+$$
+For $N\sim R$, the expectation of the product of the generating functions at $s,t$ is $e^{\nu st}$. Comparing coefficients gives
+$$
+\mathbb E_R C_k(N;\nu)C_l(N;\nu)=\mathbf1_{\{k=l\}}k!\nu^k.
+                                                               \tag{197.25}
+$$
+They form a complete orthogonal system in $L^2(R)$. Indeed, if $g\in L^2(R)$ is orthogonal to all polynomials, then $G(z)=\sum_{m\ge0}g(m)R(m)z^m$ is entire by Cauchy–Schwarz and the Poisson exponential series, uniformly on compact sets. All its derivatives at one are zero, because they are the inner products with falling factorials. Therefore $G\equiv0$, so $g=0$. This verifies the completeness needed for Parseval, not just orthogonality.
+
+For the TRUE law $B$, its exact centered generating function is
+$$
+H(t)=\mathbb E_B[e^{-\nu t}(1+t)^N]=(1+pt)^n e^{-npt}
+=\sum_{k\ge0}c_kt^k.
+$$
+Consequently $\mathbb E_B C_k=k!c_k$. By (197.24), $L\in L^2(R)$, and (197.25) and completeness yield
+$$
+\chi^2(B\|R)=\sum_{k\ge1}\frac{k!c_k^2}{\nu^k}.        \tag{197.26}
+$$
+There is no truncation of a possibly negative approximate density in this identity.
+
+Here is a global bound on every omitted degree. For entire $G(z)=\sum d_kz^k$, angular integration on each circle and then monotone convergence give
+$$
+\|G\|_{\mathcal F}^2:=\pi^{-1}\int_{\mathbb C}|G(z)|^2e^{-|z|^2}\,dA(z)
+=\sum_{k\ge0}k!|d_k|^2,                               \tag{197.27}
+$$
+with either side allowed initially to be infinite. Uniform convergence on each circle justifies the angular step. Apply this to $G_m(z)=(1+\alpha z)^m e^{-m\alpha z}$. The elementary inequality $|1+w|\le e^{\operatorname{Re}w+|w|^2/2}$ gives
+$$
+|G_m(z)|\le e^{m\alpha^2|z|^2/2},\qquad
+G_m'(z)=-m\alpha^2zG_{m-1}(z)e^{-\alpha z}.
+$$
+Integrating the derivative along the segment from zero to $z$, for $n\ge2$, gives
+$$
+G_n(z)-1+vz^2/2
+=-vz^2\int_0^1t\{G_{n-1}(tz)e^{-\alpha tz}-1\}\,dt.
+$$
+The same derivative integral bounds $|G_{n-1}(u)-1|$ by
+$(v|u|^2/2)e^{v|u|^2/2+\alpha|u|}$. Combining with
+$|e^{-\alpha u}-1|\le\alpha|u|e^{\alpha|u|}$ proves the global estimate
+$$
+|G_n(z)-1+vz^2/2|
+\le\frac{v|z|^2}{2}\left(\frac{v|z|^2}{2}+\alpha|z|\right)
+e^{v|z|^2/2+2\alpha|z|}.                               \tag{197.28}
+$$
+For $v,\alpha\le1/8$, its squared Gaussian integral is bounded by
+$$
+K(v^4+v^2\alpha^2),                                   \tag{197.29}
+$$
+where a permissible finite absolute $K$ is obtained by integrating a fixed multiple of $(|z|^8+|z|^6)e^{-7|z|^2/8+|z|/2}$. This is an ordinary convergent integral estimate. Since $\nu\ge1$, $v\le p$, $\alpha\le p$, the bound is $O(p^4)$. In particular (197.27) controls the entire infinite series in (197.26), including all degrees that could grow with $Q$.
+
+The constant, linear and quadratic coefficients of $G_n=H(z/\sqrt\nu)$ are $1,0,-v/2$. Thus, in $L^2(R)$,
+$$
+L-1=A_2+R_2,\qquad
+A_2=-\frac v2\frac{C_2(N;\nu)}\nu,\qquad
+\|R_2\|_2^2\le Kp^4,
+$$
+$$
+\langle A_2,R_2\rangle=0,\qquad
+\chi^2(B\|R)=v^2/2+O(p^4).                            \tag{197.30}
+$$
+The normalized polynomial is $C_2(N;\nu)/\nu=((N-\nu)^2-N)/\nu$. Its fourth moment is uniformly bounded for $\nu\ge1$. To see this without an asymptotic normal approximation, the centered Poisson mgf is $\exp[\nu(e^t-1-t)]$. Each fixed even centered moment of order $2m$ is a polynomial in $\nu$ with nonnegative coefficients and degree at most $m$, obtained by multiplying series whose smallest positive degree is two. In particular the centered eighth moment is at most a fixed constant times $\nu^4$ for $\nu\ge1$; the displayed expression for $C_2/\nu$ then proves the claim. Hence $\mathbb E_RA_2^4\le Kp^4$.
+
+It remains to justify the factor one-half in entropy. Let $y=L-1$, $f(x)=x\log x-x+1$, and $\eta=\sqrt p$. On $|y|\le\eta$, Taylor's theorem gives $|f(1+y)-y^2/2|\le K\eta y^2$. On the entire range $0\le L\le2$, this difference is at most $Ky^2$; the ratios extend continuously at $L=0,1$. From $y=A_2+R_2$, the union $\{|y|>\eta\}\subset\{|A_2|>\eta/2\}\cup\{|R_2|>\eta/2\}$, Cauchy–Schwarz and (197.30) imply
+$$
+\mathbb E_R[y^2\mathbf1_{\{|y|>\eta\}}]
+\le K(p^4/\eta^2+p^4/\eta+p^4).
+$$
+For example the mixed part is at most
+$(\mathbb E_RA_2^4)^{1/2}\Pr(|R_2|>\eta/2)^{1/2}\le Kp^4/\eta$.
+Therefore
+$$
+\left|D(B\|R)-\tfrac12\chi^2(B\|R)\right|\le Kp^{5/2}.
+$$
+Together with (197.30) this proves (197.22). It treats likelihoods arbitrarily close to zero; no positive lower bound on $L$ or bounded-mean assumption is hidden in the expansion.
+
+Finally, the function $x(\log x)^2/(x-1)^2$ is bounded on $0<x\le2$, with its removable value at one and finite limit at zero. Consequently
+$$
+\mathbb E_B(\log L)^2=\mathbb E_R[L(\log L)^2]\le K\chi^2(B\|R)\le Kp^2.
+                                                               \tag{197.31}
+$$
+Equations (197.24),(197.30),(197.31) supply the signed, exponentially weighted control required for the next step. QED.
+
+### 197.6 Entropy-accurate transfer to the actual full histogram
+
+Use Section 197.5 with $n=q,p=F$. Eventually $\nu=(1+\rho)qF\ge1$, $q\ge2$, $1/2\le\rho\le2$, and $F$ is arbitrarily small, as shown below. Let
+$h=\log(B^{\rm vec}/R_*)$, a function only of the reference total by (197.21). Equations (197.22),(197.24),(197.31) imply
+$$
+h\le8F,\quad \mathbb E_{B^{\rm vec}}h=D(B^{\rm vec}\|R_*)=O(F^2),\quad
+\mathbb E_{B^{\rm vec}}h^2\le KF^2.
+$$
+For $0<t\le1$, Taylor's inequality
+$e^x\le1+x+x^2e^{\max(x,0)}/2$, applied to $t(h-\mathbb Eh)$, yields
+$$
+\log\mathbb E_{B^{\rm vec}}e^{t(h-\mathbb Eh)}\le Kt^2F^2.
+                                                               \tag{197.32}
+$$
+The negative part of $h$ can be unbounded. Its second moment is paid by (197.31), while its positive part is bounded by (197.24), so (197.32) requires no unproved two-sided exponential envelope.
+
+Let $P_I$ be the ACTUAL core histogram law. Entropy variational inequality and (197.20),(197.32) give
+$$
+\mathbb E_{P_I}h\le\mathbb E_{B^{\rm vec}}h+\eta_Q/t+KtF^2.
+$$
+The exact log-ratio identity, not a KL triangle inequality, now proves
+$$
+\begin{split}
+D(P_I\|R_*)
+&=D(P_I\|B^{\rm vec})+\mathbb E_{P_I}h\\
+&\le\frac{F^2}{4(1+\rho)^2}+KF^{5/2}+(1+1/t)\eta_Q+KtF^2.
+\end{split}                                                \tag{197.33}
+$$
+All expectations are legitimate: the actual core has finite support, and the reference convolution has positive mass at every nonnegative vector. Take $t=F$. Since $F\asymp Q^{-5/2}$, the term $\eta_Q/F=O(Q^{-35/2})+O(e^{-c_J\lambda}/F)$ is $o(F^2)$. Thus (197.33) has the desired precision under the actual law even though its means are exponentially large.
+
+The tail payment remains on the actual common realization. Put $\mathcal T_C=A_Q\setminus I_C$, and use $R_T=\bigotimes_{\mathcal T_C}\operatorname{Pois}(m_j)$ only there. Chapter 191 proves
+$$
+\mathbb E[-\log R_T(C_{\mathcal T_C})]\le
+\mathcal T_Q:=M\left[1+\log(M/q)+\lambda+\frac{32}{b\lambda}\right]\alpha_Q.
+                                                               \tag{197.34}
+$$
+Here is its information payment. For each actual positive row, the exact reset and Cauchy–Schwarz between its even and odd departure lists give $\mathbb Ee^{N_x/2}\le e^{\gamma\lambda}$. Therefore $\Pr(N_x>C\lambda)\le\alpha_Q$ and $\mathbb E[N_x^2\mathbf1_{\{N_x>C\lambda\}}]\le32\alpha_Q$; pairs obey the same bounds. For a target total $u=K_j+B_j$,
+$-\log f_j\le\lambda+u^2/(b\lambda)$, by $K_j!B_j!\le u^u$ and $\log z\le z$. Since $m_j\ge qf_j$, $C_j\le M$, the term $-C_j\log m_j+\log(C_j!)$ is at most $C_j[\log(M/q)+\lambda+u^2/(b\lambda)]$. Each original row belongs to at most one tail category, so summing these weights is bounded by the sum of the actual weighted row tails. Also $\sum_{\mathcal T_C}m_j\le M\alpha_Q$. These facts prove (197.34) without multiplying by the number of tiny-mean coordinates. The same reference Poisson total tail gives $0\le F_Q-F\le\alpha_Q$.
+
+The joint chain identity and nonnegative conditional entropy give
+$$
+D(P\|R_*\otimes R_T)
+=D(P_I\|R_*)+\mathbb E[-\log R_T(C_{\mathcal T_C})]-H(C_{\mathcal T_C}\mid C_{I_C})
+\le D(P_I\|R_*)+\mathcal T_Q.
+$$
+On the full finite index set $A_Q$, let $\widetilde m_j=(1+\rho)qf_j$ in the core and $\widetilde m_j=m_j$ on its tail. Exact-mean projection is the identity
+$$
+D(P\|R_{\widetilde m})=D(P\|R_\mu)
++\sum_{A_Q}\{\mu_j\log(\mu_j/\widetilde m_j)-\mu_j+\widetilde m_j\}.
+                                                               \tag{197.35}
+$$
+Every bracket is nonnegative. At $\mu_j=0$, $C_j=0$ almost surely, and the bracket equals $\widetilde m_j$. No tail count or zero reference coordinate is silently dropped. Restoring the deterministic zeros outside $A_Q$ gives the exact countable target.
+
+The resulting useful finite-parameter upper bound, with an absolute constant $K$ from Sections 197.5–197.6, is
+$$
+\boxed{\quad
+\mathcal D_Q^{\mathcal E}
+\le\frac{F^2}{4(1+\rho)^2}+KF^{5/2}+KF^3+(1+F^{-1})\eta_Q+\mathcal T_Q.
+\quad}                                                     \tag{197.36}
+$$
+All terms are ADDED. The stated conditions (197.13),(197.15), those of (197.9), $\epsilon\le1/2$, $F$ sufficiently small, $\rho\in[1/2,2]$, $(1+\rho)qF\ge1$, hold uniformly eventually. The proof constant (197.7) makes $\mathcal T_Q$ exponentially small. Thus, since $\rho\to1$,
+$$
+\limsup_{Q\to\infty}\ \sup_{\beta\in J,S}
+\frac{\mathcal D_Q^{\mathcal E}}{F^2}\le\frac1{16}.
+                                                               \tag{197.37}
+$$
+The exact means have not been replaced by reference means in this conclusion. Projection only decreased the upper bound; the next lower bound uses the SAME exact mean directly.
+
+### 197.7 Sharp actual-law lower coefficient
+
+Let $Z_C=\sum_{I_C}C_j$, $Z=\sum_{J_Q}C_j$, $\mu=\mathbb EZ$. Retain
+$$
+m=qF+s_0F_0,\quad S_2=qF^2+s_0F_0^2,\quad
+\zeta_Q=\delta_2+2\delta_1+\delta_1^2,
+$$
+$$
+E_\mu=\delta_1m+M^2\alpha_Q,\qquad
+E_v=\zeta_Qm^2+3M^3\alpha_Q.
+$$
+Summing (197.15) over rows and ordered distinct rows, using disjointness of targets, gives
+$|\mathbb EZ_C-m|\le\delta_1m$ and
+$|\mathbb E(Z_C)_2-(m^2-S_2)|\le\delta_2m^2$.
+Here $S_2$ subtracts exactly the same-row categorical exclusion, including all signal/background cross terms in the other sum. By (197.34)'s probability tail, $\Pr(Z\ne Z_C)\le M\alpha_Q$, and $0\le Z_C\le Z\le M$. Therefore the exact full law satisfies
+$$
+|\mu-m|\le E_\mu,\qquad
+|\operatorname{Var}Z-\mu+S_2|\le E_v.                  \tag{197.38}
+$$
+These are Chapter 194's full no-cutoff estimates with explicit errors, repeated here to fix precisely the input to the sharper entropy test.
+
+Equations (197.16)–(197.17) imply
+$R_Q=s_0F_0/(qF)\to1$ uniformly. Thus
+$$
+m=(2+o_J(1))qF,\quad S_2=(1+o_J(1))qF^2,
+\quad\frac{\zeta_Qm^2}{qF^2}=O_J(\lambda q/M)=o_J(1).
+$$
+The choice (197.7) gives $M^3\alpha_Q\le e^{-(c_M+4)\lambda}$. The signal line lower bound makes $qF^2$ grow exponentially times a polynomial factor. Hence $\mu\to\infty$ uniformly, and the attained variance deficit is
+$$
+\Delta_Q:=\frac{\mu-\operatorname{Var}Z}{\mu}
+=\left(\frac12+o_J(1)\right)F.                        \tag{197.39}
+$$
+This is calculated from actual joint row probabilities, not transferred from a TV or Gaussian approximation.
+
+For $N\sim\operatorname{Pois}(\mu)$, $\mu\ge1$, define
+$X=(N-\mu)^2/\mu-1$. The exact Poisson moments give
+$\mathbb EX=0$, $\mathbb EX^2=2+1/\mu$. Also $\mathbb E|X|^3\le K$ uniformly: the centered sixth moment is bounded by a constant times $\mu^3$, by the same elementary generating-series argument used in Section 197.5. Since $X\ge-1$, Taylor's formula with its integral remainder gives, for $0\le t\le1$,
+$$
+\left|\mathbb Ee^{-tX}-1-\tfrac12t^2(2+1/\mu)\right|\le Kt^3.
+$$
+Taking the logarithm yields the UNIFORM reference expansion
+$$
+\log\mathbb Ee^{-tX}=t^2(1+1/(2\mu))+O(t^3).          \tag{197.40}
+$$
+This one-sided exponential test is integrable for every moving $\mu$; it is not a formal quadratic approximation to an unbounded likelihood.
+
+Apply the entropy variational inequality to the actual aggregate with test
+$-t[(Z-\mu)^2/\mu-1]$. Its actual expectation is exactly $t\Delta_Q$. The test is bounded above and has finite actual expectation since $Z\le M$. Under the exact-mean Poisson vector the full aggregate has law $\operatorname{Pois}(\mu)$, so data processing and (197.40) give
+$$
+\mathcal D_Q^{\mathcal E}\ge t\Delta_Q-t^2(1+1/(2\mu))-Kt^3.
+                                                               \tag{197.41}
+$$
+A wholly finite lower bound is obtained by replacing $\Delta_Q$ with $(S_2-E_v)/(m+E_\mu)$ and $1/\mu$ with $1/(m-E_\mu)$, whenever $m-E_\mu\ge1$ and $S_2>E_v$. Those conditions hold uniformly eventually.
+
+Set $t=F/4$. Equation (197.39) in (197.41) gives
+$$
+\mathcal D_Q^{\mathcal E}\ge F^2/16+o_J(F^2).
+                                                               \tag{197.42}
+$$
+This proves the matching coefficient from the actual full-vector law. Together with (197.37), it shows $\mathcal D_Q^{\mathcal E}/F^2\to1/16$ uniformly. In particular the possible information decrease from exact-mean projection, the background mixture, or discarded conditional entropy has not been assigned a sign in a lower-bound argument; its effect is bounded by a separate attained lower test.
+
+### 197.8 Original lattice normalization, floors and endpoints
+
+We supply the normalization explicitly and attribute the underlying line local limit to Chapters 44 and 52 of the original model. Let $\xi=a\lambda-k_0\in[0,1)$, $x_j=j/\sqrt Q$. Then
+$$
+K_j=a\lambda+\sqrt\lambda x_j-\xi,\qquad
+B_j=b\lambda+(P/Q)\sqrt\lambda x_j+\xi.
+$$
+On every fixed $|x_j|\le R$, Stirling's formula and Taylor expansion of
+$I_c(k)=k\log(k/(c\lambda))-k+c\lambda$ give, uniformly in $\xi\in[0,1)$,
+$$
+\lambda f_j\longrightarrow
+\frac1{2\pi\sqrt{ab}}\exp\left[-\tfrac12(a^{-1}+\vartheta^2/b)x_j^2\right].
+                                                               \tag{197.43}
+$$
+For example the logarithmic remainder is $O_R(\lambda^{-1/2})$, and the factorial prefactors converge uniformly because both counts divided by $\lambda$ stay away from zero. The decimal error $P/Q-\vartheta$ vanishes; the original floor is bounded uniformly rather than discarded by changing the center.
+
+All these indices are legal and in $I_C$ eventually: the lower legal endpoint is of order $-Q^2$, while the upper core endpoint is of order $(C-1)Q^2/(1+P/Q)$. Dividing by $\sqrt Q$ sends both beyond every fixed window. The Gaussian envelope underlying (197.11), now at $\nu_1$, gives the uniform normalized tail
+$$
+\limsup_{Q\to\infty}Q^{5/2}
+\sum_{j\in I_C:\ |x_j|>R}f_j\le K e^{-cR^2}\qquad(R\ge2).
+                                                               \tag{197.44}
+$$
+Indeed $|\mathbf k_j-\nu_1|^2=h_0^2(j-u_Q')^2+\rho_Q'^2$, with $u_Q'=O(Q^{-1})$; dividing its scalar Gaussian lattice sum by $\sqrt Q$ bounds it by a Gaussian integral and one mesh term. This includes all low-count/end-point targets through the original global envelope. The remaining full-line tail has mass at most $\alpha_Q$ by (197.34), so it contributes zero at this normalization.
+
+The mesh is $1/\sqrt Q$, and $Q^{5/2}/\lambda=1/\sqrt Q$. Thus (197.43), a Riemann sum, and (197.44) give
+$$
+Q^{5/2}F\longrightarrow
+\frac1{2\pi\sqrt{ab}}\int_{\mathbb R}
+e^{-(a^{-1}+\vartheta^2/b)x^2/2}\,dx
+=\frac1{\sqrt{2\pi(b+a\vartheta^2)}}.                 \tag{197.45}
+$$
+The same limit holds for $F_Q$, and it is positive. This proves all uses of $F\asymp Q^{-5/2}$, including the uniform growing aggregate mean. It also checks the floor and endpoint uniformity of the normalization already present in `PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md` (44.9). No beta/support dependence enters the limiting integrand; the fixed proof cutoff only depends on the compact interval. Substituting (197.45) into (197.37),(197.42) proves (197.1) and (197.2).
+
+The mechanism can now be stated precisely. In the proportional-shape reference, signal categorical exclusion contributes relative aggregate variance deficit $F/(1+\rho)$. Poisson background contributes a comparable mean, with $\rho\to1$, and dilutes that deficit to $F/2$. The actual signal temporal information and background conditional information are smaller than the $F^2$ scale after the proved weighted transfer. The uniform likelihood calculation makes entropy one-half of the leading chi-square term, yielding $F^2/16$. These statements are consequences of the preceding bounds; they do not assume equivalence of Gaussian histogram experiments.
+
+
+### 197.9 来源、复用与适用边界
+
+第 175 章提供全计数范围内的完整分数组识别；第 180 章提供实际一行、两行概率的相对误差；第 183、187、189 章分别提供同一原总量下的精确标签分解、总量集中及条件化信息估计；第 191、193、194 章提供信息加权的完整尾、偏移计数线界、信号时间信息与实际总量方差亏损。原信号线质量的 Gaussian 归一化已见 `PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md` (44.9) 和 `PARITY_HIDDEN_ARROW_WINDOW_PHASES.md` (52.12)–(52.15)，本章在保留取整和端点的条件下明确回接，未将它计作新系数。
+
+Adell–Lekuona–Yu，arXiv:1001.2897v1，原文标识 `thm4` 的定理及其完整积分／中心矩证明提供有限 binomial 熵界。其固定概率或固定均值渐近不能直接用于本章移动的概率与指数增长的均值，更不直接控制依赖直方图。
+
+Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Numbers*，arXiv:0906.0690v1，提供 Poisson–Charlier 定义、原文标识 `Charlierexpo`、`prop:radon` 的命题及 `thm:chisquare` 定理的完整相关证明。该定理固定输入与参考均值；其后印出的 KL 为 chi-square 一半的近似不提供本章所需统一余项。来源还指出截断 Charlier 展开未必非负。本章 (197.24) 使用真实正似然，(197.27)–(197.30) 控制全部次数，随后用明确截断事件支付熵中二分之一的系数；不援引附录中确定均值例子的下降阶乘上标，各系数直接从精确生成函数推得。
+
+Charlier 正交、Gaussian 复积分和熵变分法属于经典工具。新增原模型推导是 (197.18)–(197.20) 的共同实现与全均值形状支付、(197.32)–(197.36) 低于主阶的熵传递，以及 (197.40)–(197.42) 的尖锐实际方差检验。有限文献核对不构成全球原创性判断；本章为普通数学推导，未作 Lean 认证。全数据熵、后验熵、同步 E2 及下一阶系数均未由本结果判定。
+
+## 追加锚（本行以下为增补区）
