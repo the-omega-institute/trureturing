@@ -25,7 +25,7 @@ run_cmd do
     objectArenaName := root ++ `perronArena
     theoremName := owner ++ `affinity_perronVector
     statementIdentity :=
-      "sha256:91e316660e659b414bda7c2d6c99979b0b6decf8ec8d9d50dfa44c5fc1350e10"
+      "sha256:9ed1ad776efde1232b2798c622de2916ea1f264a34150d7904c30b9e0edeb915"
     registrationModuleName := root }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[rootRow, perronRow], source := #[rootRow, perronRow],
@@ -171,8 +171,6 @@ def perronArena : Arena where
     (etaPlus etaMinus z : ℝ)
     (_hetaPlus : etaPlus = classAffinity b 1)
     (_hetaMinus : etaMinus = classAffinity b (-1))
-    (_hetaPlus0 : 0 < etaPlus) (_hetaPlus1 : etaPlus ≤ 1)
-    (_hetaMinus0 : 0 < etaMinus) (_hetaMinus1 : etaMinus ≤ 1)
     (_hz0 : 0 < z)
     (_hzroot : z ^ 2 * (1 + z) ^ 2 =
       (z + etaPlus ^ 2) * (z + etaMinus ^ 2)),
@@ -231,17 +229,15 @@ theorem parityClass_neg_one_zeroProfile :
   norm_num
 
 theorem perronActual_law : perronArena.Law perronActual := by
-  intro d hd b hb hzeroPlus hzeroMinus etaPlus etaMinus z hetaPlus hetaMinus
-    hetaPlus0 hetaPlus1 hetaMinus0 hetaMinus1 hz0 hzroot
+  intro d hd b hb hzeroPlus hzeroMinus etaPlus etaMinus z hetaPlus hetaMinus hz0 hzroot
   exact affinity_perronVector hd b hb hzeroPlus hzeroMinus etaPlus etaMinus z
-    hetaPlus hetaMinus hetaPlus0 hetaPlus1 hetaMinus0 hetaMinus1 hz0 hzroot
+    hetaPlus hetaMinus hz0 hzroot
 
 theorem perronVectorRejected_law : ¬ perronArena.Law perronVectorRejected := by
   intro h
   have hfalse := h (d := 1) (by omega) (fun _ => 0) (by intro x; norm_num)
     (by simp) (by simp) 1 1 1 parityClass_one_zeroProfile.symm
     parityClass_neg_one_zeroProfile.symm (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   have := hfalse.1 plusVertex
   norm_num [perronVectorRejected, realize] at this
 
@@ -250,7 +246,6 @@ theorem perronActionRejected_law : ¬ perronArena.Law perronActionRejected := by
   have hfalse := h (d := 1) (by omega) (fun _ => 0) (by intro x; norm_num)
     (by simp) (by simp) 1 1 1 parityClass_one_zeroProfile.symm
     parityClass_neg_one_zeroProfile.symm (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   have := hfalse.2 plusVertex
   norm_num [perronActionRejected, perronActual, realize, affinityPerronVector,
     classU, classV, plusVertex, parity] at this

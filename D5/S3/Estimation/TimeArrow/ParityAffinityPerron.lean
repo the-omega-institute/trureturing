@@ -138,6 +138,8 @@ theorem affinityEquation_unique_root {etaPlus etaMinus : ℝ}
 
 #print axioms affinityEquation_unique_root
 
+set_option maxHeartbeats 400000 in
+-- The rank-four evaluation and the coefficient identities require extra elaboration work.
 /-- The four-vector built from a positive affinity root is positive and is an eigenvector of the
 geometrically symmetrized parity kernel. -/
 theorem affinity_perronVector {d : ℕ} (hd : 1 ≤ d) (b : (Fin d → ℤˣ) → ℝ)
@@ -147,8 +149,6 @@ theorem affinity_perronVector {d : ℕ} (hd : 1 ≤ d) (b : (Fin d → ℤˣ) �
     (etaPlus etaMinus z : ℝ)
     (hetaPlus : etaPlus = classAffinity b 1)
     (hetaMinus : etaMinus = classAffinity b (-1))
-    (hetaPlus0 : 0 < etaPlus) (hetaPlus1 : etaPlus ≤ 1)
-    (hetaMinus0 : 0 < etaMinus) (hetaMinus1 : etaMinus ≤ 1)
     (hz0 : 0 < z)
     (hzroot : z ^ 2 * (1 + z) ^ 2 =
       (z + etaPlus ^ 2) * (z + etaMinus ^ 2)) :
@@ -233,6 +233,20 @@ theorem affinity_perronVector {d : ℕ} (hd : 1 ≤ d) (b : (Fin d → ℤˣ) �
     rw [hPower] at hCardTotal
     linarith
   have hMne : (2 : ℝ) ^ (d - 1) ≠ 0 := pow_ne_zero _ (by norm_num)
+  -- the class affinities are positive: each class is nonempty and every square root is positive
+  have hetaPos : ∀ p : ℝ, ((parityClass (d := d) p).card : ℝ) = (2 : ℝ) ^ (d - 1) →
+      0 < classAffinity b p := by
+    intro p hp
+    have hne : (parityClass (d := d) p).Nonempty := by
+      rw [← Finset.card_pos]
+      have : (0 : ℝ) < ((parityClass (d := d) p).card : ℝ) := by rw [hp]; positivity
+      exact_mod_cast this
+    unfold classAffinity
+    refine div_pos (Finset.sum_pos (fun x _ => Real.sqrt_pos.2 ?_) hne) (by positivity)
+    have hx := abs_lt.mp (hb x)
+    nlinarith
+  have hetaPlus0 : 0 < etaPlus := hetaPlus ▸ hetaPos 1 hCardPlus
+  have hetaMinus0 : 0 < etaMinus := hetaMinus ▸ hetaPos (-1) hCardMinus
   have hClassIdentities : ∀ p : ℝ,
       ((parityClass (d := d) p).card : ℝ) = (2 : ℝ) ^ (d - 1) →
       (∑ x ∈ parityClass p, b x = 0) →

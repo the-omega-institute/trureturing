@@ -120,8 +120,8 @@ internal sealed class ParityAffinityPerronDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "Assume d is positive, the profile has absolute value below one, and its sum vanishes on "
-                            + "each parity class. Let eta_+ and eta_- be the two class affinities, each positive and "
-                            + "at most one, and let z be a positive root of the affinity equation.")),
+                            + "each parity class. Let eta_+ and eta_- be the two class affinities, and let z be a positive "
+                            + "root of the affinity equation.")),
                     Paragraph(Text(
                         "The frozen proper-coordinate law at the empty coordinate set gives zero total parity, so "
                             + "both classes have 2^(d-1) vertices. The zero sums then give the two squared norms and "
@@ -194,8 +194,6 @@ internal sealed class ParityAffinityPerronDocument : IScribeDocumentDefinition
             zeroPlus, Sp, Land, Sp, zeroMinus, Sp, Land, Sp,
             EtaPlus, Sp, Eq, Sp, Sub(F.Id("eta"), Plus), Open, B, Close, Sp, Land, Sp,
             EtaMinus, Sp, Eq, Sp, Sub(F.Id("eta"), Minus), Open, B, Close, Sp, Land, Sp,
-            D(0), Sp, Lt, Sp, EtaPlus, Sp, Leq, Sp, D(1), Sp, Land, Sp,
-            D(0), Sp, Lt, Sp, EtaMinus, Sp, Leq, Sp, D(1), Sp, Land, Sp,
             D(0), Sp, Lt, Sp, Z, Sp, Land, Sp, RootEquation(Z), Sp, Rightarrow, RowBreak, Grp(),
             Open, Forall, Sp, X, Comma, Sp, D(0), Sp, Lt, Sp, Call("h", X), Close,
             Sp, Land, Sp, Open, Forall, Sp, X, Comma, Sp, eigen, Close));
