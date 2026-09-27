@@ -1,10 +1,10 @@
-# Paired local angle demand and flat transverse gap
+# Paired local angle demand and flat transverse gaps
 
 ## Abstract
 
-Local angle demand and a flat-branch length gap for paired hyper-ideal lengths.
+Local angle demand and flat-branch length gaps for paired hyper-ideal lengths.
 
-Use the local order (12,13,14,34,24,23) and the exact cosine function from FourCycleEnvelopes. The tuple is (r,a,b,o,a,b). The first result assumes three genuine angle ranges; the second uses the raw cosine inequalities of a transverse flat choice.
+Use the local order (12,13,14,34,24,23) and the exact cosine function from FourCycleEnvelopes. The tuple is (r,a,b,o,a,b). The angle result assumes three genuine angle ranges. The two flat length results use raw cosine inequalities.
 
 **Theorem 1.1 (A strict demand without a common transverse width).**
 
@@ -38,8 +38,25 @@ The squared gap follows from the axial cosine; the direction follows from the di
 
 These are implications between raw cosine values. They do not construct a flat tetrahedron, a face pairing, or a global zero-curvature assignment.
 
+**Theorem 1.3 (One transverse raw cosine forces the length gap).**
+
+$$\forall r \in \mathrm{Real}, a \in \mathrm{Real}, b \in \mathrm{Real}, o \in \mathrm{Real},\; \left(1 < r \land \left(1 < a \land \left(1 < b \land \left(1 < o \land cosine\left(a, b, r, a, b, o\right) \le -1\right)\right)\right)\right) \Rightarrow \left(b < a \land sqrt\left((r+1)\cdot (o+1)\right) \le a-b\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.flat_transverse_gap_of_chosen` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For r,a,b,o>1, the single raw-cosine inequality cosine(a,b,r,a,b,o)<=-1 forces a>b and sqrt((r+1)(o+1))<=a-b. No axial or opposite transverse cosine premise is needed.
+
+The negative selected numerator forces a>b and L>0. Its numerator-square factorization then forces M<=0, which gives the squared gap and its positive branch.
+
+This is an implication for raw cosine values and positive real lengths; it does not construct a flat tetrahedron or a global zero-curvature assignment.
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.flat_transverse_gap`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.flat_transverse_gap_of_chosen`
 - Truth anchor: `D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.paired_angle_demand`
 - Dependency: [D5/S3/Geometry/Hyperideal/FourCycleEnvelopes](FourCycleEnvelopes.md)
