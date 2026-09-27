@@ -2,7 +2,7 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
+[Vision](docs/VISION.md) · [Film](#film) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
 [Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [First run](#first-run) ·
@@ -25,6 +25,14 @@ formalization. Each proof establishes its exact statement under declared
 assumptions. The [vision and research guide](docs/VISION.md) connects this work
 to open directions.
 
+## Film
+
+[![TRURETURING — Truth Is Discovered: download Film 001](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg)](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4)
+
+**TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
+[Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
+[Film source and releases](https://github.com/the-omega-institute/trureturing-film).
+
 ## Truth and computation
 
 Our philosophical starting point is that **truth is discovered, not created
@@ -43,9 +51,8 @@ The repository makes part of this geometry precise. Its
 uses reachability in a dependency graph to define open sets. Its
 [recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
 says that, on a nonempty state space, a target admits a recovery function from
-an observation exactly when that target is constant on each observation
-fiber. Here a fiber is the set of states giving the same observation; the
-existence of a recovery function alone gives no algorithm or cost bound.
+an observation exactly when any two states with the same observation have the
+same target value. Existence alone supplies no algorithm or cost bound.
 
 ## Start your journey
 
@@ -70,10 +77,10 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Choose questions whose answers could supply missing premises, expose overlooked
-distinctions or connect existing results. Search existing proofs and literature;
-state what would support or overturn a route, then design tests that distinguish
-alternatives. Keep reusable results with their assumptions.
+Identify any missing premises, distinctions or connections for your target;
+choose questions addressing them. Search existing proofs and literature.
+Specify supporting and refuting outcomes before designing discriminating tests.
+Keep results with their assumptions; check those against your objects before reuse.
 
 > The last line of the ledger is always the first line of the next round.
 
@@ -81,8 +88,9 @@ Proofs supply premises; counterexamples refute claims within their stated scope.
 When identical readings hide different target values, no function of those
 readings recovers the target in both cases.
 [Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
-Evaluate on questions unused in method design, against a stated baseline
-with matched information and resources.
+
+Evaluate research selection against stated baselines on questions excluded
+from method design, matching information and resources.
 
 ![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
@@ -139,7 +147,23 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 ## Toward holographic spacetime
 
 We study **holographic spacetime geometry** by asking when partial records
-of time and space support reconstruction and action.
+of time and space support reconstruction and
+[temporal composition](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean).
+
+[Local agreement can fail globally](D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean):
+three windows on Boolean variables require `x=y`, `y=z` and `x≠z`. Every
+overlap allows both values, yet no triple satisfies all three constraints.
+
+The [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Additional global constraints can exclude every extension.
+
+Uniqueness, original-history recovery, computational cost, and reconstruction
+with resolution and error bounds require further results. Links to physical
+spacetime or holographic duality remain research questions.
 
 Theory inputs study
 [event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
@@ -150,35 +174,10 @@ composition, shared sources and targets; and
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
-The [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-adds an inactive event at time `2`, preserving the current spatial readout
-but blocking composition before an archive at time `1`: every left event
-must precede every right event.
-
-A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-applies to nonempty local record sets on a finite tree: each recorded variable
-must occur on a connected subtree, and neighbors must allow exactly the same
-joint assignments on their full overlap. Then any allowed local record extends
-to a record on the union of the local variable sets, satisfying every local
-constraint.
-
-Uniqueness, original-history recovery, computational cost, and reconstruction
-with resolution and error bounds require further results. Links to physical
-spacetime or holographic duality remain research questions.
-
-## A continuing research program
-
-The [research directions](docs/VISION.md#research-directions) ask:
-
-- Can AI choose questions that yield reusable knowledge?
-- Which maps connect proof dependencies and observational distinctions?
-- Which historical relations support reconstruction and legal composition?
-
-The guide states what would advance each question.
-
 ## Information escape
 
-We are developing an **information-escape judge** around four questions:
+A **readout** is a way of observing a state. We are developing an
+**information-escape judge** around four questions:
 
 - **Where did information escape?** Name the objects, assumptions and
   observations under which distinct states remain indistinguishable.
@@ -190,10 +189,19 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state. Fix a catalog of registered theorem
-occurrences and their readouts on one shared state space. Remove one occurrence
-while keeping the others fixed. Its **unique captures** are the pairs of distinct
-states that were distinguishable before removal and indistinguishable afterward. The
+The current rule checks declared-template bindings; its findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Module selection for this rule is
+separate from the mathematical comparison below.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
+
+Fix a catalog of registered theorem occurrences and their readouts on one
+shared state space. Remove one occurrence while keeping the others fixed.
+Its **unique captures** are the pairs of distinct states that were
+distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
@@ -204,15 +212,6 @@ when it has a unique capture. The rate is the fraction of ordered distinct-state
 pairs left indistinguishable. Zero unique capture does not mean worthlessness:
 another occurrence can carry the same distinction. This comparison supplies
 neither a universal value score nor a historical novelty judgment.
-
-The judge is **under development**. Its declared-template findings are
-**Observe warnings that do not block admission**
-([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
-Other admission checks still apply. Module selection for this rule is
-separate from the fixed-catalog comparison above.
-The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
-describes a wider design whose implementation remains incomplete.
 
 [Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
@@ -296,6 +295,15 @@ Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 Start with one of the examples above. Reproduce it, improve its explanation,
 report a mismatch between prose and a statement, or explore a precise open
 question. Contributions in English and Chinese are welcome.
+
+### A continuing research program
+
+The [research directions](docs/VISION.md#research-directions) specify evidence
+of progress for each question:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
 
 The [contribution guide](docs/CONTRIBUTING.md) walks you through forks, isolated
 worktrees, checks and pull requests to `dev`.
