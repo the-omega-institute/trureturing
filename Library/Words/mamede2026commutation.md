@@ -64,11 +64,13 @@ rightmost-first permutation action. The new
 support bounds. The endpoint-based strengthening omits the nonoscillating
 singleton existential and separate nonfixed endpoint clauses required by
 `exactSourceHypotheses`; it is a repository-derived Lean result, not a result
-attributed to the cited paper. The paper derives endpoint identities after
-choosing a nonoscillating word, whereas this result assumes the identities
-directly; the two source predicates are not simply ordered. The paper-to-Lean
-translation remains subject to independent source review. Conjecture 5.1
-remains open; KPI is 0.
+attributed to the cited paper. The paper derives endpoint identities from a
+chosen nonoscillating word, whereas the endpoint-only Lean shape theorem
+assumes those identities directly: `exactSourceHypotheses` implies
+`endpointExteriorFixedSource` by projection, while the endpoint-only predicate
+omits nonoscillation and the explicit nonfixed endpoint clauses. The
+paper-to-Lean translation remains subject to independent source review.
+Conjecture 5.1 remains open; KPI is 0.
 
 The repository-derived `source_deletion_equiv` combines the all-source shape
 result with a new forward deletion proof and the conditional lifting result.
@@ -78,7 +80,8 @@ of `deletedExcursion`. For every shaped source, the forward word is
 `imageWord`, and its length drops by the positive, fixed length of
 `deletedExcursion`. The forward proof establishes consecutiveness and
 reducedness; the first `j` in the word recovers the prefix, including when
-the suffix contains `j`. Proposition 3.8 of the paper supports the deletion
-injection, but does not state this conditional equivalence or its converse.
+the suffix contains `j`. The forward deletion/injection is supported by
+Proposition 3.8 of the paper; the conditional converse and resulting
+equivalence are repository-derived.
 This result does not settle the reflected orientation, oscillation and
 involution cases, or the global count in Conjecture 5.1.
