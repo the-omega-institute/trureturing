@@ -705,3 +705,151 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/ori
 ```
 
 The program also checks the actual distinct even L60 whole cover and a complete residue partition modulo25 (repeated moduli), keeping their scopes explicit. These are ordinary proofs and exact finite controls, not Lean verification.
+
+## Arithmetic inventory, phase bottlenecks and actual owner budgets
+
+These ordinary deductions retain one literal original class family, its actual private regions, global top phases and the uniform law on its original period. The quantitative obstruction to unrestricted Erdős #7 remains unproved. The noncovering families below disprove only proposed deductions from expressly weaker hypotheses, not the odd-covering conjecture. No Lean verification is claimed.
+
+### What numerical distinctness actually controls
+
+Fix a global top support A. Put
+
+    M_A=product_(p in A)p^(H_p-1),
+    N_A=product_(q outside A)q^(H_q-1).
+
+Every original label with top support A has
+
+    bar_m_s=M_A d_s, d_s divides N_A.
+
+Distinct original moduli give distinct d_s. Hence there are at most product_(q outside A)H_q such labels. In particular a nontrivial same-support collision requires that A omit a prime q with H_q>=2; merely saying A is proper is weaker. If every global exponent is one, no same-support collision is possible, recovering the already cited square-free obstruction through(TS1). This is arithmetic bookkeeping of the original inventory, not a new proof of the public square-free theorem.
+
+An explicit upper bound on the unweighted common-shadow capacity at A is
+
+    sum_(s<t, T_s=T_t=A, theta_s!=theta_t)c_st
+      <= 1/(2M_A) * [ product_(q outside A) F(q,H_q)
+                           - product_(q outside A) G(q,H_q) ],
+
+where
+
+    F(q,h)=sum_(j=0)^(h-1)(2j+1)/q^j,
+    G(q,h)=sum_(j=0)^(h-1)1/q^j.
+
+Proof: c_st<=1/lcm(bar_m_s,bar_m_t), enlarge to every pair of distinct divisors d,e of N_A, count ordered pairs and subtract the diagonal. The double divisor sum factors prime by prime; exactly2j+1 ordered exponent pairs have maximum j. All inequalities retain their upper-bound direction. This bound does not preserve every phase and lower-shadow compatibility and need not be attained.
+
+When all outside heights equal2, the two products contain1+3/q and1+1/q respectively. No uniform constant follows as the outside prime inventory grows. The following actual family shows that this is not solely an artifact of including composite or repeated lower indices.
+
+### Distinct prime lower indices can carry arbitrarily large raw pair capacity
+
+Let Q0,Q1 be disjoint nonempty finite sets of odd primes at least5, Q=Q0 union Q1, and let
+
+    L=3 product_(q in Q)q^2.
+
+For each q in Q0 take the class0 mod3q. For each q in Q1 take the unique residue a_q mod3q with a_q=0 modq and a_q=1 mod3. Also take1 modq^2 for every q in Q. Finally take one target a_* modL with a_*=2 mod3 and a_*=0 modq^2 for every q in Q.
+
+All moduli are odd, greater than one and numerically distinct. The global top supports of the3q classes are all A={3}; their lower indices are the distinct primes q, and their top3 phases are0 or1. The q^2 classes have support{q}; the final target has full top support. For q in Q0 and r in Q1,
+
+    c_qr=1/(qr),
+
+so the actual cross-phase A-capacity is EXACTLY
+
+    sum_(q in Q0,r in Q1)c_qr
+      =(sum_(q in Q0)1/q)(sum_(r in Q1)1/r).
+
+Every lower-shadow intersection is from this SAME original uniform source: all lower residues are zero for the3q labels. The familiar divergence of the prime reciprocal sum permits disjoint finite Q0,Q1 making this quantity arbitrarily large. The construction does not combine separately optimized phase configurations.
+
+Every class has an actual private witness. For a3q class choose its stated top3 phase, q^2-coordinate zero, and every other r^2-coordinate2. For a1 modq^2 class choose top3 phase2, its q^2-coordinate1 and every other r^2-coordinate zero. The full-period target is private at a_*. CRT supplies each stated witness, and q>=5 makes the chosen zero,one,two coordinates distinct as needed.
+
+Nevertheless this is a NONCOVER: top3 phase2 with every q^2-coordinate2 is uncovered. Thus oddness, numerical distinctness, irredundancy and the precise lower-index shape do not supply the missing whole-cover premise.
+
+At the target's unique private point a_*, both alternate top3 phases ARE covered: the phase0 suppliers are all original Q0 labels, and the phase1 suppliers are all original Q1 labels. The feasible local assignment has one bin and phi_3(a_*)=1. But there are |Q0||Q1| raw original supplier pairs through that same point. Therefore
+
+    integral_(U_*)phi_3 dmu=1/L,
+    sum_(R_3)mu(U_* intersect E_s intersect E_t)=|Q0||Q1|/L.
+
+The ratio of raw restricted pair service to the minimum assignment demand can grow arbitrarily, even with actual p-local coverage on the WHOLE selected private region. This does not preclude a proof using full coverage in all directions, but it rules out controlling that ratio by numerical distinctness and p-local coverage alone.
+
+A small exact instance takes Q0={5,11}, Q1={7}. Its literal classes are
+
+    296450 mod444675,
+    0 mod15, 0 mod33, 7 mod21,
+    1 mod25, 1 mod49, 1 mod121.
+
+The period is444675. Exact enumeration finds355727 uncovered residues and verifies private witnesses296450,15,33,7,26,50,122 in this order. The target has one private point with phi_3=1, two raw same-support supplier pairs, and full raw pair-capacity RHS16/1155.
+
+### The zero-demand boundary
+
+The feasible zero-cost star in the preceding phase-assignment section already shows that oddness, original numerical distinctness and complete supply in one selected prime do not force positive Hall demand. That control and its evidence are not duplicated here. Full coverage or compatible information from additional directions must provide the missing premise.
+
+### A fixed actual owner partition removes gratuitous supplier multiplicity
+
+Choose a fixed total order of ORIGINAL labels, for example ascending numerical modulus. Define
+
+    O_s=C_s minus union_(r earlier than s)C_r.
+
+These actual owner sets are disjoint and partition the represented covered union. They do not alter any class, residue or source law. For p in T_s let tau_(s,p)x replace only the global top p-digit by theta_(s,p), and put
+
+    F_(s,p)=E_(s,p,H_p-1) intersect tau_(s,p)^(-1)(O_s).
+
+The definition uses the SAME owner partition for all x and all directions. At a selected private x with all p-alternatives covered, each alternative point has exactly one actual owner. Privacy makes that owner a top-p supplier, so exactly one F_(s,p) holds for each alternate phase. Consequently its chosen same-support pairs still pay phi_p(x).
+
+The sharpened capacity bound is
+
+    integral_(U_D)phi_p dmu
+      <= sum_((s,t) in R_p)mu(U_D intersect F_(s,p) intersect F_(t,p))
+      <= sum_((s,t) in R_p)mu(F_(s,p) intersect F_(t,p))
+      <= sum_((s,t) in R_p)((p-2)/P_(T_s))c_st.        (OB1)
+
+The full-U_D form retains the whole-cover premise; the explicitly feasible-subset form is also valid. At an arbitrary source point there are at most p-1 chosen top-p suppliers, hence
+
+    sum_((s,t) in R_p)mu(F_(s,p) intersect F_(t,p))
+      <= binom(p-1,2).                                (OB2)
+
+This cap uses disjoint original ownership, not separately minimized pair capacities. It can be much smaller than the raw CRT sum. However the universal cap alone cannot force a contradiction: pointwise phi_p<=binom(p-1,2) too. Further arithmetic control must exploit the actual owner sets or combine compatible demands. The O_s include previous-class exclusions, so their capacities need not have the simple two-class CRT formula; evaluating them has retained, not eliminated, the joint difficulty.
+
+In the Q0,Q1 family, the unique private target chooses just the first original supplier in each phase. Its restricted owner-pair service is1/L, exactly phi demand, instead of |Q0||Q1|/L. In the small period444675 instance, the FULL owner pair budget is74/5775, strictly below the raw16/1155=80/5775. The selected private budget is1/444675 instead of2/444675.
+
+For the reused actual even period60 whole cover, the selected p=5 target1 mod5 has one private point. Ascending-original-modulus ownership reduces the full pair capacity from2/5 to1/10, while its private demand remains1/60. This is an exact capacity improvement in an actual whole cover, not a contradiction and not evidence of an odd cover. The complete repeated-modulus25 partition retains capacity6=binom(4,2), as expected. The [owner-budget program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.py) and [exact owner data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.json) check these owner inequalities and literal counts.
+
+### Two-prime directions require one joint supplier rectangle
+
+Let p!=q and select D so every target reaches both global top heights. At the SAME private x choose actual suppliers s_p(a) for every alternate p-phase and s_q(b) for every alternate q-phase. Labels within either direction are distinct. The two label sets are also disjoint: a label that covers a p-change must fix p to a value different from x_p; it therefore cannot cover a q-change, which retains x_p. Thus there are(p-1)(q-1) distinct ordered ORIGINAL cross-direction pairs through x.
+
+For an original p-supplier s and q-supplier t put A=T_s, B=T_t, and let c_st be their original lower-shadow CRT capacity, with no equal-support assumption. The mixed-shell intersection is zero unless
+
+* theta_(s,r)=theta_(t,r) for r in(A intersect B) minus{p,q};
+* if p belongs to B, theta_(s,p)!=theta_(t,p);
+* if q belongs to A, theta_(s,q)!=theta_(t,q).
+
+When these conditions hold, direct counting in the SAME product source gives
+
+    mu(E_(s,p,H_p-1) intersect E_(t,q,H_q-1))
+      =c_st * (p-1)^[p notin B] * (q-1)^[q notin A]
+                    /P_(A union B).                    (OB3)
+
+The factors at p and q are one fixed allowed phase when the other label also fixes that coordinate, and respectively p-1 or q-1 allowed phases otherwise. All remaining fixed top coordinates have their common required value. The lower-shadow CRT condition can independently make c_st zero. Identical labels automatically have zero mixed-shell intersection.
+
+Counting cross-direction suppliers before integrating proves
+
+    (p-1)(q-1)u_D
+      <= sum_(s:p in T_s, t:q in T_t)
+            mu(U_D intersect E_(s,p,H_p-1) intersect E_(t,q,H_q-1))
+      <= sum_(s:p in T_s, t:q in T_t) [the capacity in(OB3)]. (OB4)
+
+This is a joint moment consequence of actual pointwise supply, not the product of two averaged inequalities. The same fixed owner partition gives a further valid replacement E by F in the joint demand and its upper bound. One must use that ONE partition for both directions; independently optimizing the two owner laws supplies no common rectangle certificate.
+
+For several demanded primes J, fix ONE selected family D subset intersection_(p in J){t:p in T_t}, and use that SAME U_D for every direction. A single original label cannot be a top-shell supplier in two different directions at the same x: its one-prime defect directions are disjoint. Thus for a fixed unordered original pair{s,t}, the regions
+
+    E_(s,p) intersect E_(t,q), p!=q in J,
+
+are disjoint as the ordered direction pair varies (keep s,t in the fixed label order). Summing their capacities is therefore an actual union budget for that original pair. It does not provide separate capacity copies for separately optimized p,q tests. The sum of demands is sum_(p<q in J)(p-1)(q-1)u_D on one common private union. This describes which original pair/rectangle incidences a multi-direction argument must retain. No quantitative estimate forcing that joint budget below demand has been proved here, and no omitted-private V term is removed from the complete column identities.
+
+### Exact mixed-direction controls
+
+The [mixed-direction program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.py), with [exact mixed data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.json), checks(OB3) by literal residue enumeration, checks disjoint direction regions for each original unordered label pair, and counts actual joint supplier rectangles using one original owner partition. Under python3 -I -S -B -O it verifies21 formula instances for the six-label odd noncover,38 for the actual even period60 whole cover, and225 for the complete repeated-modulus15 partition. The respective nonzero intersection counts are14,31,120. Noncover private points missing any demanded phase are explicitly counted outside the feasible-region integral; they are never assigned zero demand. These controls do not supply an odd distinct whole cover.
+
+Reproduce the two control sets with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.py
+```
