@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Primes/FibonacciPrimeToIndexValuation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Primes/FibonacciPrimeToIndexValuation
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
