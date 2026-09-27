@@ -19,6 +19,11 @@ separate reductions fail. The ordinary proofs and exact finite
 controls below do not establish unrestricted Erdős #7, literature
 priority, or new Lean verification.
 
+Section10 raises the private-hull closure threshold from the original
+label to its largest original multiple. Moving the parent to one actual
+descendant phase converts that group's joint replacement obligation
+into a repair budget for the parent's complete private region.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -640,3 +645,194 @@ separates two concrete facts: more flexible actual guards can enable
 a contraction, while another divisor-closed irredundant family can
 resist every size of the entire same-prime centered-relocation class.
 A whole-cover condition forcing an improving operation remains missing.
+
+## 10. Descendant-assisted private-hull closure and phase-group repair budgets
+
+These are conditional necessary consequences of a genuine distinct-odd
+whole cover minimizing first its number of classes and then its modulus
+sum, as in Report350(EB1). They retain one fixed original family, its
+complete private regions, numerical labels and all prime-power heights.
+They do not assert that a legal improving repair must occur in every
+hypothetical cover, and do not infer such a cover from a noncover control.
+No Lean verification or literature-priority claim is made.
+
+### Exact removal and repair of one original phase group
+
+Let the original classes be A_m=a_m mod m, m in D, with full period Q.
+Write P_d for the COMPLETE private region of an original d. Minimum
+cardinality makes the family irredundant, so P_d is nonempty and any
+original classes with comparable distinct numerical moduli are disjoint.
+
+Fix d in D and a residue c mod d induced by a proper original multiple
+of d. Define
+
+    J_c={M in D: d|M, M>d, a_M=c mod d},
+    r=|J_c|>=1.
+
+Comparable disjointness gives c!=a_d mod d. Replace the old class at d
+by C=c mod d, and remove ALL classes with labels in J_c. Every removed
+child is contained in C. For an old point covered by A_d but not private
+to d, some other old class covers it. That other label cannot be in J_c,
+since every such child is disjoint from A_d, so the other owner is
+retained. Conversely every point of P_d belongs to no retained original
+and misses C because c!=a_d. Therefore the exact old-union loss is
+
+    U_old minus U_after = P_d.                          (DR1)
+
+The statement permits overlaps among the removed children: C covers their
+entire union, including all points having several child owners. The only
+remaining repair obligation is P_d because parent and children are disjoint.
+Under the whole-cover premise, the new family's full hole set is exactly
+P_d. For a noncover, DR1 concerns old-union loss only; old holes that C
+also fills must not be added to the repair obligation.
+
+Let B be any finite AP family covering P_d, with distinct odd nonunit
+numerical moduli, each in the maximal allowed palette
+
+    (odd integers >1) minus (D minus J_c).
+
+Thus a repair may use either an originally unused numerical modulus or
+a just-freed child label in J_c. It may not duplicate the retained new
+parent label d or any other retained original. After adding B, the
+family again covers all integers. Its number of classes is n-r+|B|,
+and when |B|=r its modulus sum differs from the old sum by
+`sum_(B in B)mod(B)-sum_(M in J_c)M`. The two extremal objectives imply
+
+    |B|>=r,
+    |B|=r ==> sum_(B in B)mod(B)>=sum_(M in J_c)M.     (DR2)
+
+This converts a particular exact joint replacement problem into a repair
+budget for ONE complete private region. It does not replace a general
+joint liability by a union of private regions; the comparable-disjointness
+argument above is what makes this particular reduction legitimate.
+
+### A larger private-hull closure threshold
+
+Choose w_d in P_d and define the existing complete private hull
+
+    Gamma_d=gcd(Q,{x-w_d:x in P_d modulo Q}).
+
+Report385(PH3--PH4) gives d|Gamma_d|Q and
+`P_d subset w_d mod e iff e|Gamma_d`, for e|Q. Define
+
+    M_d=max{M in D:d|M}.
+
+Then the stronger closure consequence is
+
+    1<e<M_d, e|Gamma_d ==> e in D.                    (DR3)
+
+If M_d=d this is the existing PH5 statement. Otherwise suppose e is
+unused and choose an original M divisible by d with M>e. Remove just
+A_d and A_M, add `a_M mod d` and `w_d mod e`, and retain every other
+original. The new d-class covers the entire old M-class; the new e-class
+covers P_d. Every nonprivate old d-point has an unchanged other owner,
+because A_M and A_d were disjoint. Hence the replacement preserves the
+whole old union, uses two distinct allowed labels d,e, and lowers the
+modulus sum by M-e>0 at unchanged cardinality. This contradicts EB1.
+
+No requirement says M/d is a prime power, that d is prime-free relative
+to one selected prime, or that the two new phases share a common CRT
+center. The argument permits every original height and composite ratio.
+Equivalently, every missing odd e<M_d must distinguish at least two
+actual private points of d modulo e. The earlier PH5 tested this only
+for e<d.
+
+### A crowded descendant phase constrains the whole private hull
+
+If r=|J_c|>=2, DR2 has two immediate arithmetic consequences:
+
+    every nonunit divisor e of Gamma_d lies in D;      (DR4)
+    no M in J_c divides Gamma_d.                      (DR5)
+
+For DR4, an unused e dividing Gamma_d would provide the single repair
+class `w_d mod e`, yielding |B|=1<r. The value e=d is already present
+and is not a proposed repair. For DR5, a child label M in J_c dividing
+Gamma_d is freed by the phase-group removal, so `w_d mod M` is an
+allowed single repair, again giving |B|=1<r.
+
+In particular, if Gamma_d>d and Gamma_d itself is an original label,
+its original phase modulo d cannot be shared by another proper original
+multiple of d. Otherwise its phase group would violate DR5.
+
+There is also an explicit simultaneous phase restriction when Gamma_d
+is absent from D: every J_c has size at most one. Every actual child
+phase lies in
+
+    S_d={c mod d: c!=a_e mod e for every original e|d, e>1}.
+
+The child class is disjoint from each such divisor class, which proves
+this inclusion with every original prefix retained. Therefore
+
+    Gamma_d notin D ==> # {M in D:d|M,M>d} <= |S_d|.  (DR6)
+
+The map sending each proper multiple M to a_M mod d is injective here.
+For a normalized prime d=p, |S_d|=p-1. After simultaneously normalizing the original prime classes by CRT,
+for composite d the prime classes force S_d to consist of units, and the original d-class removes its own
+unit residue, so |S_d|<=phi(d)-1. Additional divisor classes can lower
+|S_d| further. These bounds concern the same actual original phases,
+not independently selected root assignments.
+
+### A strict finite consumer beyond the old PH5 tests
+
+Take the following ten actual original APs:
+
+    0 mod3, 0 mod5, 0 mod7, 0 mod11,
+    1 mod15, 16 mod21, 1 mod35, 12 mod55, 67 mod77, 3 mod385.
+
+Their full period is1155. The numerical inventory is distinct, odd,
+nonunit and divisor-closed; all prime classes are normalized. Every
+class has a private residue, and all comparable pairs are disjoint.
+The COMPLETE private hulls are Gamma_d=d except
+
+    Gamma_35=105.
+
+For d=35, every divisor e of105 with 1<e<35 is already in D:
+3,5,7,15,21. Hence every old PH5 test passes, for every original label.
+But105 is absent while35<105<385 and35|385, so DR3 detects a genuine
+additional missing obligation.
+
+The explicit allowed replacement is
+
+    remove 1 mod35 and 3 mod385;
+    insert 3 mod35 and 71 mod105.
+
+All private points of35 are71 modulo105. The new35 class contains the
+entire old385 class. The ten class count is unchanged, while the modulus
+sum drops from614 to334. Complete enumeration gives793 originally
+covered residues and811 after replacement, with no lost residue. The
+joint liability of the two removed originals contains12 residues and
+is exactly the disjoint union of their two private regions, as required
+by their disjointness. Integer2 is uncovered both before and after.
+Thus this is an ordinary strict test comparison on a NONCOVER, not an
+extremal whole cover or an odd covering counterexample.
+
+The independent standard-library control in
+[descendant-private-hull program](../../../frontier/cover-geometry/composite-parent-contraction/descendant_private_hull.py) computes each entire private
+region, all its hull differences, every old PH5 test, and old/new
+membership on every residue modulo1155. Its exact result is
+[descendant-private-hull data](../../../frontier/cover-geometry/composite-parent-contraction/descendant_private_hull.json).
+
+Normal and optimized execution give identical result bytes:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/descendant_private_hull.py --output /tmp/e7_descendant_private_hull.json
+```
+
+### Remaining whole-cover obligation
+
+DR3--DR6 strengthen the phase and palette constraints enforced by the
+two extremal objectives. They expose repairs that use an unused or
+freed numerical modulus, outside Report450(13.8)'s fixed-parent-label,
+common-center relocation family. That noncover obstruction does not
+refute these deductions or test all their repair classes.
+
+The new conditions remain conditional. If every Gamma_d=d, their hull
+consequences reduce to existing divisor closure and create no repair.
+No argument here forces a missing divisor below M_d, a crowded phase
+containing a hull divisor, or a cheap multi-class repair of P_d in every
+hypothetical cover. Obtaining one of those concrete violations from
+whole coverage and numerical distinctness is the outstanding positive
+bridge. A single private witness or sampled gcd cannot certify the
+needed whole-private-region containment: its gcd is only an upper
+multiple of the true Gamma_d until all private points or a structural
+containment proof are supplied.

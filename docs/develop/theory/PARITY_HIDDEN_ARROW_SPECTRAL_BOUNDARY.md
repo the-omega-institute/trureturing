@@ -17480,3 +17480,434 @@ $R$ 除以 $(\ln2)^2$，能量坐标 $y$ 不变。
 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 100 章后续增补区）
+
+## 101. 全输出加权收敛与平均后验信息方差
+
+**定义 101.1（先验信道内的平均）。** 保持定义 98.1、100.1 的完整计数向量、
+精确先验后验 $\mathsf P_x$、原标量 $T$、所有取整及同一观测
+$Y=T+\sigma_MG$。继续要求
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2.
+\tag{101.1}
+$$
+
+采用 (100.2) 的固定核心及 (100.3) 的观测系数
+$A,\nu_0,\kappa_3,\Lambda=\nu_0+\sigma_M^2,C_x$。
+记 $f_x$ 为精确先验信道的 Gaussian 混合输出密度，
+$m_x=\mathbb E_xY$，并置
+
+$$
+D_x(y)=V_{{\rm post},x}(y)-V_{{\rm prior},x}
++A^2/\Lambda-C_xy,
+\qquad
+R_*(y)=\frac{29}{6}-3\sqrt2+
+\left(3\sqrt2+\frac8{\sqrt3}-9\right)\frac{y^2}{\nu}.
+\tag{101.2}
+$$
+
+星号区分此确定性多项式与计数向量。本章信息量为自然对数，信息方差为
+nats 的平方。以下积分在给定数据 $x$ 的同一个先验信道内进行；
+它不是对罕见原始数据环境取无界量的期望。
+
+**定理 101.2（全输出加权极限）。** 在 (101.1) 的完整严格噪声区间内，
+
+$$
+\int_{\mathbb R}|D_x(y)-R_*(y)|f_x(y)\,dy\longrightarrow0,
+\tag{101.3}
+$$
+
+从而
+
+$$
+\int_{\mathbb R}V_{{\rm post},x}(y)f_x(y)\,dy
+-V_{{\rm prior},x}+\frac{A^2}{\Lambda}-C_xm_x
+\longrightarrow\frac8{\sqrt3}-\frac{25}{6}.
+\tag{101.4}
+$$
+
+两式均为原实际数据概率收敛，对规定大小的固定支持一致，pair/path
+两种原实验分别成立：每个固定 $\eta>0$ 下，误差超过 $\eta$ 的概率
+对支持及实验取上确界后趋零。此外，
+
+$$
+m_x=O_{\mathbb P}(Q^{-5/2}),\qquad C_xm_x=o_{\mathbb P}(1).
+\tag{101.5}
+$$
+
+所以 (101.4) 的精确均值项可在证明此速率后删除。
+有限观测系数 $A^2/\Lambda$ 仍须保留。
+
+证明不能直接积分 (100.5)：固定紧区间外的小概率仍可能乘上发散的中心。
+下面先构造全实线的中心方差密度比较，再单独控制参考信道的尾部。
+
+**精确平均恒等式。** 置 $S_x=-\ln\mathsf P_x(R)$、$W=S_x+G^2/2$。
+Bayes 恒等式说明给定 $Y=y$ 后的后验信息量与 $W$ 只差输出常数。
+观测之前 $S_x,G$ 独立，且 $\operatorname{Var}(G^2)=2$，故全方差公式给出
+
+$$
+\int V_{{\rm post},x}(y)f_x(y)\,dy
+=V_{{\rm prior},x}+\frac12
+-\operatorname{Var}_x\bigl(\mathbb E_x[W\mid Y]\bigr).
+\tag{101.6}
+$$
+
+有限后验与 Gaussian 矩保证各项有限。本式不假设给定输出后残差仍独立。
+
+**三个全局比较界。** 对 $(U,Y)$ 的联合律 $\mu$ 及其输出密度 $f$，记
+$\mathcal V_{\mu,U}(y)=f(y)\operatorname{Var}_\mu(U\mid Y=y)$。
+全变差范数中的固定因子并入常数。下列界不要求输出密度有正下界。
+
+首先，在同一概率空间、同一观测下，条件中心化是 $L^2$ 正交投影的补算子，故
+
+$$
+\|\mathcal V_U-\mathcal V_V\|_1
+\le(\|U\|_2+\|V\|_2)\|U-V\|_2.
+\tag{101.7}
+$$
+
+证明是条件中心化后平方差分解及 Cauchy–Schwarz；两目标均可先减去任意全局常数。
+其次，若两种 $(U,Y)$ 联合律的变差距离为 $\epsilon$，
+且两边 $\|U\|_4\le M_4$，则任意 $b>0$ 下
+
+$$
+\|\mathcal V_{\mu,U}-\mathcal V_{\mu',U}\|_1
+\le C\{b^2\epsilon+M_4^3/b\}.
+\tag{101.8}
+$$
+
+将 $U$ 截在 $[-b,b]$，被截部分的 $L^2$ 范数至多 $M_4^2/b$，
+由 (101.7) 支付两次截断。对有界目标，写
+$q=f\mathbb E[U\mid Y]$、
+$\mathcal V=f\mathbb E[U^2\mid Y]-q^2/f$。
+在凸锥 $|q|\le bf$ 上，$q^2/f$ 两偏导绝对值不超过 $2b,b^2$；
+在 $(0,0)$ 连续延拓，沿两对 $(q,f)$ 间线段积分。
+结合 $\|q-q'\|_1\le b\epsilon$ 及二阶矩密度的
+$b^2\epsilon$ 界，即得 (101.8)，也容许联合律本身奇异。
+
+最后，设在同一联合空间上 $P=LQ$、$0\le L\le C$、
+$\mathbb E_QL=1$、$a=\|L-1\|_{2,Q}$、$\|U\|_{4,Q}\le M_4$。
+则
+
+$$
+\|\mathcal V_{P,U}-\mathcal V_{Q,U}\|_1\le C'aM_4^2.
+\tag{101.9}
+$$
+
+确实，令 $\bar L=\mathbb E_Q[L\mid Y]$、$m=\mathbb E_Q[U\mid Y]$、
+$u=\mathbb E_Q[(L-1)(U-m)\mid Y]$。条件方差直接展开为
+
+$$
+\mathcal V_{P,U}-\mathcal V_{Q,U}
+=f_Q\mathbb E_Q[(L-1)(U-m)^2\mid Y]-f_Qu^2/\bar L,
+\tag{101.10}
+$$
+
+在 $\bar L=0$ 时末项取零。首项积分至多 $4aM_4^2$。
+在 $\bar L\ge1/2$ 上，Jensen 及 $L$ 有界给
+$\int f_Qu^2/\bar L\le2\mathbb E_Q[(L-1)^2(U-m)^2]
+\le CaM_4^2$，这里 $\|L-1\|_4^2\le Ca$。
+在 $\bar L<1/2$ 上，条件加权 Cauchy–Schwarz 给
+$u^2/\bar L\le\mathbb E_Q[L(U-m)^2\mid Y]$，
+而该输出事件概率至多 $4a^2$；再次 Cauchy–Schwarz 即付出 $CaM_4^2$。
+这一步支付了低密度比输出上的条件均值平方项。
+
+**实际矩与选中律。** 在原一致良好数据事件上，沿用校准乘积律
+$\mathsf Q_x$，置 $s_Q=-\ln\mathsf Q_x(R)-\mathbb E_Q[-\ln\mathsf Q_x(R)]$。
+(68.47) 的逐组中心四阶矩和独立中心和的展开给
+
+$$
+\|s_Q\|_{4,Q}\le CQ,\quad V_Q\le CQ^2,\quad
+0\le L_x\le C,\quad a_x=\|L_x-1\|_2\le CQ^{-5/2}.
+\tag{101.11}
+$$
+
+这与 (98.5)–(98.6) 使用相同完整向量密度。
+由于 $t(\ln t)^2/(t-1)^2$ 在 $[0,C]$ 连续延拓后有界，
+$\mathbb E_P(\ln L_x)^2\le Ca_x^2$。
+能量矩另行核对：对 $U_j=(R_j-C_jp_j)/B$，中心 Bernoulli 八阶展开中
+每个非零划分块至少含两个指标，含 $k$ 个指标的块至多贡献方差乘 $B^{-(k-2)}$，故
+
+$$
+\mathbb E_QU_j^8\le C(v_j^4+B^{-2}v_j^3+B^{-4}v_j^2+B^{-6}v_j).
+\tag{101.12}
+$$
+
+利用 $\sum v_j^2=O(\delta)$、$V=O(1)$、$B$ 指数增长，独立中心和给
+$\mathbb E_Q[\delta^{-1/2}\sum(U_j^2-v_j)]^4\le C$。
+精确中心差 $e_j=(\mu_j-C_jp_j)/B$ 满足 $\|e\|\le a_x\sqrt V$；
+线性项四阶矩至多
+$C\delta^{-2}[(\sum e_j^2v_j)^2+B^{-2}\sum e_j^4v_j]=o(1)$，
+截距仍为 $\delta^{-1/2}\|e\|^2$。因此
+
+$$
+\mathbb E_QT^4\le C,\qquad \mathbb E_PT^4\le C,\qquad
+\mathbb E_PY^4\le C\quad(\sigma_M\le1).
+\tag{101.13}
+$$
+
+实际矩来自非负密度支配，未通过 TV 或弱收敛传矩。
+同样的高阶耦合与系数界给后续混合、中心和非中心 Gaussian 输出的四阶矩界。
+精确均值满足
+
+$$
+|m_x|\le\delta^{-1/2}a_x^2V+a_x\|T\|_{2,Q}=O(a_x).
+\tag{101.14}
+$$
+
+因 $C_x=O(\delta^{-1/2})=O(Q^{1/4})$，其均值乘积为 $O(Q^{-9/4})$，
+得到 (101.5)。对 $s_Q+G^2/2$ 用 (101.9)，
+再以 (101.7) 支付 $-\ln L_x$ 的目标变化。
+先验方差之差也由中心四阶矩给 $|V_{{\rm prior},x}-V_Q|\le Ca_xQ^2$。
+于是全局中心方差密度之差为
+
+$$
+\bigl\|[\mathcal V_{P,S_x+G^2/2}-V_{{\rm prior},x}f_P]
+-[\mathcal V_{Q,s_Q+G^2/2}-V_Qf_Q]\bigr\|_1
+\le Ca_xQ^2=o(1).
+\tag{101.15}
+$$
+
+此外条件 Jensen 与 Cauchy–Schwarz 给
+
+$$
+\int|A^2/\Lambda-C_xy|\,|f_P-f_Q|\,dy
+\le Ca_x(\delta^{-1}+\delta^{-1/2}\|Y\|_{2,Q})=o(1).
+\tag{101.16}
+$$
+
+巨大信息均值已在估计前消去，且没有把多项式误差除以噪声。
+
+**同一元组、同一残差的全局传递。** 在第 98 章的同一个量化耦合上，
+令 $B_s=S_H+O_s$，其中 $S_H=\frac12\sum_H(Z_j^2-1)$，
+$O_s$ 包含所有外部中心信息量，满足
+$\|s_Q-B_s\|_2\le CQ^{-98}$、$\|B_s\|_4+\|O_s\|_4\le CQ$。
+先仅替换核心能量为 $T_m$，仍保留精确中心和截距。
+(98.7) 的完整严格噪声区间耦合给，对任意固定 $p,N$，
+
+$$
+d=(T-T_m)/\sigma_M,\qquad \|d\|_p=o(Q^{-N}).
+\tag{101.17}
+$$
+
+在共同潜变量／输出空间上，两律
+$Q(d\xi)\varphi_\sigma(y-T(\xi))dy$ 与
+$Q(d\xi)\varphi_\sigma(y-T_m(\xi))dy$ 的 TV 至多 $C\mathbb E|d|$。
+还必须支付残差目标变化：在 $y=T_m+\sigma G$ 上，
+
+$$
+\frac{(y-T)^2-(y-T_m)^2}{2\sigma^2}=-Gd+d^2/2.
+\tag{101.18}
+$$
+
+其 $L^2$ 范数由 (101.17) 小于任意固定负幂，交叉律上的目标四阶范数为 $O(Q)$。
+先对固定的第一个目标用 (101.8)，取 $b=Q^{10}$，再用 (101.7)
+支付 (101.18)，成本为 $O(Q^{-7})$ 加超多项式小量。
+随后以 $B_s$ 替换 $s_Q$，条件方差及先验方差均只支付 $O(Q^{-97})$。
+
+移除外部能量必须保留其与 $O_s$ 的相关性。
+第 94、98 章的 128 坐标正则化给核心 $(S_H,T_H^G)$ 联合密度
+
+$$
+\iint|\partial_t p_H(z,t)|\,dz\,dt\le C\delta^{-1/2}.
+\tag{101.19}
+$$
+
+每个交错大半块也保留此界：各自选取靠近空间位置 $0,1$ 的 128 个坐标，
+沿用相同逆行列式矩及散度界，再卷积其余坐标。
+条件于所有外部变量及同一个 $G$，
+$(B_s+G^2/2,Y_m)$ 与 $(B_s+G^2/2,Y_H)$ 只平移同一核心密度的能量坐标，
+第一坐标包含相关的 $O_s$。因此其 TV 至多
+
+$$
+\epsilon_O\le C\delta^{-1/2}\mathbb E|E_O|
+\le C\delta^{-1}(1+a_x)V_O=O(Q^{-199.5}).
+\tag{101.20}
+$$
+
+再次用 (101.8)、$b=Q^{10}$，以及乘 $O(Q^2)$ 的输出质量误差，成本均为 $o(1)$。
+只有到此时外部信息量才独立于核心与输出，故精确消去
+
+$$
+\operatorname{Var}(B_s+G^2/2\mid Y_H=y)-\operatorname{Var}(B_s)
+=\operatorname{Var}(S_H+G^2/2\mid Y_H=y)-|H|/2.
+\tag{101.21}
+$$
+
+最后写 $T_H^G=T_0+D$，其中 $T_0=\sum_Hw_j(Z_j^2-1)$，
+$\|D\|_p=O(Q^{-5/2})$。将核心分成两个交错大半块，
+条件于一个半块与 $G$，用另一半块的 (101.19) 支付前者的能量扰动；
+然后交换。目标信息量坐标不变，得到
+
+$$
+d_{\rm TV}\bigl((S_H+G^2/2,Y_H),(S_H+G^2/2,Y_0)\bigr)
+\le C\delta^{-1/2}Q^{-5/2}=O(Q^{-9/4}),
+\quad Y_0=T_0+\sigma G.
+\tag{101.22}
+$$
+
+此时外部大方差已经消去，目标四阶范数仅为 $C\sqrt{|H|}$，
+$|H|=O(Q^{1/2}\sqrt{\ln Q})$。取 (101.8) 中 $b=Q$，成本为
+
+$$
+C\{Q^2Q^{-9/4}+|H|^{3/2}/Q\}
+=O(Q^{-1/4}[1+(\ln Q)^{3/4}])=o(1).
+\tag{101.23}
+$$
+
+先验核心方差乘输出质量误差也趋零。这解释了不能提前带着完整 $Q$ 阶信息量
+执行最后一次 TV 比较。
+两输出密度变差为 $\epsilon$ 且二阶矩有界时，
+$\int |y||f-g|\le C\sqrt\epsilon$；
+所以加入有限残余系数的成本至多
+$C(\delta^{-1}\epsilon+\delta^{-1/2}\sqrt\epsilon)$，在 (101.22) 及此前各步都趋零。
+令 $g$ 为 $Y_0$ 密度，并置
+
+$$
+D_0(y)=\operatorname{Var}(S_H+G^2/2\mid Y_0=y)-|H|/2
++A^2/\Lambda-C_xy.
+$$
+
+上述步骤证明
+
+$$
+\|f_xD_x-gD_0\|_1\to0,
+\qquad \int(1+y^2)|f_x-g|\,dy\to0.
+\tag{101.24}
+$$
+
+第二式的平方权重由 (101.13) 的四阶矩及
+$|f_x-g|\le f_x+g$ 下的 Cauchy–Schwarz 得到。
+
+**参考尾部及相对展开。** 精确 Gaussian 二次型矩母函数、
+$\max w_j\le C\sqrt\delta$ 给
+
+$$
+\ln\mathbb Ee^{tY_0}\le Ct^2\quad(|t|\le c/\sqrt\delta),
+\qquad
+\mathbb P(|Y_0|>h)\le2e^{-c'h^2}\quad(1\le h\le c''/\sqrt\delta).
+\tag{101.25}
+$$
+
+前式展开 $-tw-\frac12\ln(1-2tw)$ 并求和，另加 $\sigma^2t^2/2$；
+后式取 Chernoff 参数。它也给每个固定阶输出绝对矩的一致界。
+固定足够大的 $D$，取 $h_\delta=\sqrt{D\ln(1/\delta)}$，
+使尾概率至多 $C\delta^{20}$。对 $U=S_H+G^2/2$，
+
+$$
+\int_{|y|>h_\delta}g(y)\operatorname{Var}(U\mid Y_0=y)\,dy
+\le\|U\|_4^2\mathbb P(|Y_0|>h_\delta)^{1/2}\to0.
+$$
+
+这里 $\|U\|_4^2\le C|H|=O(\delta^{-1}\sqrt{\ln(1/\delta)})$。
+其他项 $|H|/2,A^2/\Lambda,C_xy,R_*(y)$ 由相同尾界及固定矩逐项支付，故
+
+$$
+\int_{|y|>h_\delta}g(y)(|D_0(y)|+|R_*(y)|)\,dy\to0.
+\tag{101.26}
+$$
+
+中间区间则须将 (100.12) 提升到任意高但固定的 Fourier 阶数。
+对每个固定 $r\ge3$，精确累积量为
+
+$$
+\kappa_r=2^{r-1}(r-1)!\sum_Hw_j^r=O_r(\delta^{r/2-1}).
+\tag{101.27}
+$$
+
+对数特征函数及其指数保留所有 $\delta$ 阶数小于固定 $N$ 的单项式。
+在 $|t|\le\delta^{-\eta_N}$、$\eta_N>0$ 足够小的区域，
+Taylor 余项由 $C_N\delta^NP_N(|t|)e^{-ct^2}$ 控制。
+其余频率由 (100.13) 的相同块主控支付，带任意固定导数权重仍超多项式小。
+所以对 $0\le j\le4$，
+
+$$
+\left\|g^{(j)}-
+\left[p_\Lambda\left(1+\frac{\kappa_3P_3}{6}
++\frac{\kappa_4P_4}{24}+\frac{\kappa_3^2P_6}{72}
++E_{\delta,N}\right)\right]^{(j)}\right\|_\infty
+\le C_{N,j}\delta^N.
+\tag{101.28}
+$$
+
+$P_3,P_4,P_6$ 是第 100 章多项式；$E_{\delta,N}$ 次数固定，
+全部系数为 $O_N(\delta^{3/2})$，因为其余累积量单项式阶数至少为 $3/2$。
+在 $|y|\le h_\delta$ 上 $p_\Lambda(y)\ge c\delta^{B_D}$，
+其中 $B_D$ 固定。选择固定 $N>B_D+5$，则 $g/p_\Lambda$ 在此有正下界，
+(100.14) 的对数导数展开在这个区间成立，余项加强为
+
+$$
+O\bigl(\delta^{3/2}(1+|y|^{d_N})\bigr)
++O\bigl(\delta^{N-B_D}(1+h_\delta^{d_N})\bigr).
+\tag{101.29}
+$$
+
+同理 $R_2'=2y/\Lambda^2+O(\sqrt\delta(1+|y|^{d_N}))$
+加相同高阶误差，$R_j$（$j\le4$）有固定多项式界。
+这些相对导数估计由四阶导数反演而来，不从 TV 展开求导。
+
+代回包含同一残差的精确倾斜式 (100.10)，有限噪声抵消 (100.15)
+仍精确成立。相对于 (100.16) 的观测多项式 $\mathcal R_x$，误差至多
+
+$$
+C(\sqrt\delta+\sigma_M^2)(1+|y|^{d'_N})+o(1)
+\quad(|y|\le h_\delta),
+\tag{101.30}
+$$
+
+末项在该区间一致，次数固定。
+现在对多项式误差用 (101.25) 的一致矩积分，而非取区间上的最大值，
+故无需额外的 $\sigma_M^2(\ln Q)^C\to0$ 条件。
+有界系数乘积的极限仍由第 100 章给出，且 $\mathbb E_gY_0^2=\Lambda$，
+结合 (101.26) 得
+
+$$
+\int g(y)|D_0(y)-R_*(y)|\,dy\to0.
+\tag{101.31}
+$$
+
+**实际回接与平均常数。** 由三角不等式，(101.24)、(101.31) 及
+$|R_*(y)|\le C(1+y^2)$ 得 (101.3)。同时
+$\mathbb E_xY^2-\Lambda\to0$，而 $\Lambda\to\nu$，所以
+
+$$
+\int f_xR_*\to
+\frac{29}{6}-3\sqrt2+3\sqrt2+\frac8{\sqrt3}-9
+=\frac8{\sqrt3}-\frac{25}{6}.
+$$
+
+积分 $D_x$ 的定义恰为 (101.4) 左侧，证明完成。
+全程先在一致良好环境上估计，紧的随机常数先限制再释放；
+未以坏数据事件的概率乘未受控的无界矩。
+
+**推论 101.3（回归方差与核心不变性）。** 在同样范围内，(101.6) 等价给出
+
+$$
+\operatorname{Var}_x\bigl(\mathbb E_x[S_x+G^2/2\mid Y]\bigr)
+=\frac{A^2}{\Lambda}-C_xm_x+\frac{14}{3}-\frac8{\sqrt3}
++o_{\mathbb P}(1).
+\tag{101.32}
+$$
+
+这不是另加的 Gaussian 回归假设。对命题 100.3 允许的其他固定核心，
+(100.19) 及 $\mathbb E_x|Y|=O_{\mathbb P}(1)$ 给
+
+$$
+\left|\Delta\frac{A^2}{\Lambda}\right|
++|\Delta C_x|\,\mathbb E_x|Y|=o_{\mathbb P}(1),
+$$
+
+故全输出加权极限与平均常数不变；任意更小核心不在该断言范围内。
+
+本章评价同一先验定义的函数在实际固定支持数据下的概率。
+没有把固定支持条件输出律换成 $f_x$，没有无界原始数据期望结论，
+没有每个实输出的一致近似或增长实际输出区间的上确界结论。
+参考中间区间只是已付出尾界的证明工具。
+零噪声、严格区间端点及阈值必要性仍不在结论中。
+换成 bits 时所有信息方差、有限方差扣除、极限常数及加权残余均除以
+$(\ln2)^2$，能量坐标不变。全方差、截断、Gaussian 倾斜与 Edgeworth
+方法是成熟工具；本章新增内容是原离散选中信道上的全局传递和可积尾部闭合，
+文献范围见 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 101 章后续增补区）
