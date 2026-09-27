@@ -853,3 +853,187 @@ Reproduce the two control sets with:
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_joint_owner_budget.py
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_top_mixed_shell_pairs.py
 ```
+
+## Actual owner-positive top shadows
+
+Keep the original uniform mu, lower law beta, original congruence classes and global top decomposition X=B×Q. Fix the SAME original-label order and owner partition O_s=C_s minus union_(r earlier than s)C_r used in(OB1)–(OB4). Define the owned lower shadow
+
+    Z_s=projection_B(O_s) subset D_s,
+    c^own_st=beta(Z_s intersect Z_t).
+
+These are actual projections of one owner partition. A Z_s need not be one residue class, so replacing its measure by the original two-class CRT capacity is only an upper bound, not an equality.
+
+### Conditional odd-cover refinement
+
+Assume whole coverage and fix any selected top-touching private family D. At a lower source z projected from U_D, the hyperplanes H_s for labels with z in Z_s still cover Q: every actual point(z,y) has an original owner s, and z belongs to that owner's Z_s. All these hyperplanes are proper, because an active empty-support original class would also cover the selected private point.
+
+Apply the same proper-hyperplane odd-prime theorem to this owner-positive cover. It supplies two distinct-phase labels with the same nonempty support and BOTH owned lower shadows containing z. Thus
+
+    U_D subset union_(s<t,T_s=T_t!=empty,theta_s!=theta_t)
+                      projection_B^(-1)(Z_s intersect Z_t).
+
+The previous private-region exclusion still applies on every such lower fibre, since the original endpoint hyperplanes each have density1/P_A and a selected private point cannot lie in an unselected endpoint's ORIGINAL class. Consequently
+
+    u_D <= sum_(s<t,T_s=T_t=A!=empty,theta_s!=theta_t)
+       [1-(2-1_(s in D)-1_(t in D))/P_A] c^own_st,
+    c^own_st <= c_st.                                  (OS1)
+
+This refines TS4 while sharing exactly the owner partition used by the top-shell and mixed-direction budgets. No owner sets or residues are optimized separately between the inequalities. The oddness theorem is used only where stated; a noncover or an even family does not inherit(OS1).
+
+### One owner-positive label per support and phase in each lower fibre
+
+At a fixed z, two active labels with the same support and phase define identical hyperplanes. The later one's entire fibre slice is covered by the earlier original class. Therefore the later label owns no point in that fibre. In particular
+
+    sum_(s:T_s=A,theta_s=theta)1_(Z_s)(z) <=1.
+
+Let K_A^own(z) count owner-positive labels with support A. It counts distinct phases and is at most P_A. Hence
+
+    sum_(s<t,T_s=T_t=A,theta_s!=theta_t)c^own_st
+      =integral_B binom(K_A^own(z),2) dbeta(z)
+      <=binom(P_A,2).                                  (OS2)
+
+This removes repeated copies of the SAME support-phase hyperplane created by distinct lower indices. It does not make different phase or support events independent. Under original numerical distinctness, the stronger arithmetic inventory bound still applies: nontrivial same-support pairs require an omitted prime with global exponent at least2.
+
+Under the original uniform law, nonempty owner fibres contain at least one top cell and at most the original hyperplane's R/P_A cells. Thus
+
+    P_A mu(O_s) <= beta(Z_s) <= R mu(O_s), R=|Q|.
+
+The upper factor R can be large, so this alone gives no adequate bound for(OS1). A source-local pair appearing in(OS1) may differ in several top coordinates; owned positivity does not make it a one-prime shell pair at the selected private point. The exact mixed-direction incidence requirements and the omitted-private V term remain necessary where applicable.
+
+### A tempting owner-mass cap is insufficient by itself
+
+For a fixed p, the exact owner transport gives
+
+    mu(F_(s,p))=(p-1)mu(O_s), p in T_s.
+
+Each owned point of s has exactly p-1 preimages obtained by changing its top p-digit, all in E_(s,p). At any point of F_(s,p), at most p-2 other chosen p-suppliers can form same-support pairs with s. Summing incident pair capacities and dividing by two gives
+
+    sum_((s,t) in R_p)mu(F_(s,p) intersect F_(t,p))
+      <= binom(p-1,2) Omega_p,
+    Omega_p=sum_(s:p in T_s)mu(O_s).                    (OS3)
+
+This can be strictly smaller than the earlier absolute cap when Omega_p<1. However it CANNOT on its own violate the assignment demand: pointwise phi_p<=binom(p-1,2), and for selected D with every target reaching p one has u_D<=Omega_p. Thus
+
+    integral_(U_D)phi_p dmu <=binom(p-1,2)u_D
+                            <=binom(p-1,2)Omega_p
+
+without any new covering argument. A strict improvement of this numerical ceiling is not a contradiction. An effective next bound must preserve which support or original owner is forced to supply which private region, or connect(OS1) to the SAME cross-direction owner budgets. No estimate forcing the required strict demand/capacity gap from unrestricted oddness and whole coverage has been established here.
+
+These are ordinary conditional deductions, not Lean verification. They do not establish the unrestricted joint demand/capacity gap.
+
+The [exact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.py) and [data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.json) use the seven-label odd distinct noncover above and the complete repeated-modulus15 cover. On the former, the raw same-support{3} shadow pair sum16/385 drops to the owned sum3/77. With ascending-modulus ownership, the labels0 mod15,0 mod33,7 mod21 have Z33=D33 minus D15, removing exactly1/385 from that sum. OS1 is NOT applied to this noncover. Its owner-shell capacity remains74/5775, from the same actual partition. On the repeated15 cover, OS2 gives105 and OS3 gives1 for p=3 and6 for p=5, equal to their bounds. This whole-cover control deliberately repeats numerical moduli and is not an Erdős #7 candidate.
+
+Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owned_top_shadows.py
+```
+
+## Private shell saturation leaves an overlap-separator obligation
+
+The odd-DISTINCT case is not resolved here: no actual counterexample or general converse theorem has been established. The repository's existing private-point fan and shell results prove necessity under whole coverage, not sufficiency. There is, however, an explicit all-odd irredundant NONCOVER satisfying every private shell requirement once numerical moduli may repeat. Its construction below uses nineteen Boolean patterns and works for any five distinct odd primes. Thus the local condition is not equivalent to whole coverage for arbitrary original AP families; numerical distinctness is an essential remaining hypothesis in the precise question.
+
+### 1. Exact predicate and a separator characterization
+
+Let the finite original AP family have period
+
+    L=product_p p^H_p,
+    X=product_p Z/p^H_p,
+    c(x)=number of original classes containing x.
+
+Write H={c=0}, P={c=1}, and M={c>=2}. A private point x in P has a unique original owner t.
+
+The STRONG all-depth shell predicate used here is:
+
+    for every x in P and every p dividing m_t,
+    every point with the same non-p CRT coordinates as x is covered.   (PS1)
+
+This is an actual incidence requirement, not a weighted count. In target-owner prefix language, it requires coverage of all changes whose first p-adic disagreement with x is at any r<v_p(m_t), with every subsequent p-digit allowed. The p-coordinate values with unchanged owner prefix already lie in the owner class. If p does not divide m_t, its entire p-line also stays inside that class. Therefore (PS1) is exactly the assertion that every complete prime-coordinate line through EVERY private point is covered.
+
+Define the Cartesian graph Gamma on X: two distinct points are adjacent when they differ in just one entire prime-power CRT coordinate. Then
+
+    (PS1)  iff  no edge of Gamma joins P to H.                          (PS2)
+
+Equivalently, every covered vertex adjacent to a hole has multiplicity at least two. This proof does not use oddness or distinctness: an edge to H cannot change a coordinate omitted by the private owner's modulus, and the remaining edges are precisely those required by PS1.
+
+Consequently each connected component of the induced graph Gamma[X minus M] lies wholly in P or wholly in H. If the family is nonempty and irredundant, P is nonempty. If in addition Gamma[X minus M] is connected, PS1 forces H to be empty. In particular, PS1 implies whole coverage for a nonempty pairwise-disjoint family: then M is empty and the full Cartesian graph is connected.
+
+For overlapping families this proof leaves a concrete gap: the overlap region M can separate the private region from the holes. To turn private shell saturation into a global theorem, one must control that SAME actual overlap separator using the original arithmetic. Individual private-row counts do not supply this control.
+
+There is a weaker interpretation in which just one p-digit is changed and all other digits are held fixed. Its graph is the product of one K_p for each individual digit. The same no-P-to-H-edge characterization applies in that graph, but the weaker predicate need not be iterated through an intermediate overlap point, since that point is not private. The counterexample below is squarefree, so the two predicates coincide there and no such distinction is used to weaken the control.
+
+### 2. A nineteen-pattern construction
+
+Use five Boolean coordinates. A star is free, and a displayed 0 or 1 fixes that coordinate. The following family covers every Boolean word except 00000. Each row has exactly the private word displayed in the second column:
+
+|pattern|its unique private Boolean word|
+|---|---|
+|`**001`|`11001`|
+|`**010`|`11010`|
+|`*0*10`|`10110`|
+|`*0101`|`10101`|
+|`0*1*0`|`01110`|
+|`000*1`|`00011`|
+|`001**`|`00111`|
+|`01*0*`|`01101`|
+|`010**`|`01011`|
+|`01111`|`01111`|
+|`10*00`|`10100`|
+|`100**`|`10011`|
+|`10111`|`10111`|
+|`11000`|`11000`|
+|`11011`|`11011`|
+|`11100`|`11100`|
+|`11101`|`11101`|
+|`11110`|`11110`|
+|`11111`|`11111`|
+
+These are a finite truth-table certificate: the nineteen private words and the twelve multiply covered words exhaust all thirty-one nonzero words. Every weight-one word is multiply covered. Every private word has weight at least two, so changing any single coordinate cannot give 00000. Therefore EVERY neighbor of EVERY private word is covered, while 00000 is not covered.
+
+This displays the separator in PS2: the hole's five neighbors all lie in M. The private region exists beyond that overlap boundary. The nineteen-pattern assertion can be checked directly on all thirty-two words; it does not rely on a SAT verdict.
+
+### 3. Actual odd congruence classes, with their real private points
+
+Choose any five distinct odd primes p_1,...,p_5 and L=product_i p_i. For an actual residue x define
+
+    beta_i(x)=0 if x=0 mod p_i, and 1 otherwise.
+
+For every pattern w, expand it into the following literal original APs. For every fixed zero coordinate, choose residue zero. For every fixed one coordinate, independently choose one actual nonzero residue r_i in {1,...,p_i-1}. The star coordinates impose no condition. CRT gives one original AP for each resulting choice:
+
+    m_w=product_(i:w_i!=*) p_i,
+    a_(w,r)=the CRT residue with those fixed coordinate values.       (PS3)
+
+There are no identical AP copies: a full point determines at most one residue choice within each pattern, and different patterns with the same fixed support disagree on a zero/nonzero condition. Numerical moduli nevertheless REPEAT, both from nonzero-phase expansion and from patterns with the same support.
+
+The exact multiplicity identity is
+
+    c_actual(x)=number of Boolean patterns containing beta(x).       (PS4)
+
+Indeed, a pattern containing beta(x) has exactly one expanded AP containing x, using x's actual nonzero residues; a pattern not containing beta(x) has none. Hence the ONLY actual uncovered residue is x=0 mod L.
+
+Each expanded AP has an actual private point. Take its pattern's private Boolean word from the table, retain the AP's fixed residue choices, and choose zero or any nonzero residue in its free coordinates according to that word. CRT realizes all choices simultaneously. Identity PS4 then gives multiplicity exactly one. This proves irredundancy of EVERY expanded class, rather than just the existence of one private point per pattern.
+
+Now start at any actual private point. Its Boolean image is a private word. Changing one prime coordinate either preserves that Boolean image or changes one Boolean bit. In the former case the actual point remains covered by PS4. In the latter the changed Boolean word is a covered neighbor from the preceding section, so PS4 again gives actual coverage. Therefore EVERY point on EVERY complete prime line through EVERY actual private point is covered. The phase changes are simultaneous properties of one fixed family; neither residues nor suppliers are chosen anew to satisfy a separate optimization.
+
+This proves an explicit infinite structural family of finite odd irredundant noncovers satisfying PS1. It does NOT give distinct-modulus examples. Selecting just one residue from each repeated-modulus group does not preserve PS4 or PS1 and is not an admissible repair.
+
+### 4. Compact exact control and remaining scope
+
+At primes (3,5,7,11,13), L=15015. The expansion has 12292 actual APs on nine distinct numerical moduli. Their multiplicities by numerical modulus are
+
+    105:12, 165:4, 273:6, 715:10, 1001:22,
+    1365:12, 2145:2, 5005:72, 15015:12152.
+
+Literal AP progression enumeration gives exactly one uncovered residue, 14692 private residues, and 322 overlap residues. Every expanded AP has a private point. The control verifies all 15015 pointwise multiplicities against PS4 and 572988 actual private-prime-line membership assertions. Its output keeps the nineteen pattern rows and compact counts, not a 12292-row class table.
+
+The [compact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.py) and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.json) are reproduced by:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private_shell_saturation_odd_lift.py
+```
+
+The program uses only the standard library; its checks remain active under -O. These are ordinary finite calculations and a general CRT proof, not Lean verification.
+
+The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
+
+Thus the remaining precise alternatives are still unresolved: either find an actual odd-DISTINCT PS1 noncover, or prove that numerical distinctness prevents an overlap separator between nonempty private and uncovered regions. The latter would make PS1 sufficient for whole coverage in that class, hence equivalent to whole coverage there; it would not by itself exclude odd distinct whole covers. A separate proof that no nonempty irredundant odd-distinct family can satisfy PS1 would imply the desired noncoverage theorem. These are different obligations and must not be conflated.
