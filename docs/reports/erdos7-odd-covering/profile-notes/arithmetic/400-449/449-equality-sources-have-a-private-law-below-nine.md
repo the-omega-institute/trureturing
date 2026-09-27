@@ -11268,3 +11268,179 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 The support-uniform transport theorem follows from H185.2's cut proof. The finite controls verify its arithmetic and the concrete obstruction; they are not an enumeration of all complete sources or new Lean verification.
+
+## T3-good actual support repairs the mass18 half-integral obstruction
+
+Ordinary exact mathematics; no Lean result. The support condition below is an
+additional check on each whole original root/column block, not a conclusion
+about arbitrary complete literal4555 sources.
+
+### T318.1. Local statement
+
+Let E be an actual support in a5-by7 matrix. Assume T3-goodness:
+
+    every three different literal rows have at least three different
+    fine-label neighbors in their actual union.
+
+For a gap root, retain its missing literal row as an empty row; the displayed
+condition then includes every original pair of its four occupied children.
+Let z_i,y_j be nonnegative multiples of1/2, with sum z_i=1/2 and sum y_j<=3.
+Suppose E supports a HALF-INTEGRAL matrix x0 of mass18 with
+
+    r_i<=6, r_i+z_i<=7, c_j+y_j<=7, x_ij<=2.
+
+Then E supports another matrix of the SAME mass, with these SAME external
+vectors and all the SAME original caps, for which simultaneously at every cell
+
+    S_ij =20r_i+20c_j+25x_ij+5z_i+5y_j <=2175/7<623/2.  (T318)
+
+The new matrix can be rational. No original incidence is removed; a law may
+assign zero to an actual incidence. The gap and full-root meanings of T3-good
+are stated explicitly, and the property must hold for the actual E.
+
+### T318.2. Higher local maximum is already safe
+
+There is exactly one flagged row i*, with z_i*=1/2. Its internal row cap remains6.
+All column capacities7-y_j are half-integral. If the local maximum is larger
+than18, it is at least37/2. Choose a supported mass37/2 matrix and scale it by
+36/37. The unscaled score is at most625/2. The unchanged external contribution
+5z_i+5y_j is at most35/2. The scaled score is therefore at most
+
+    (36/37)*(625/2)+(1/37)*(35/2)=22535/74<2175/7.
+
+It remains to consider exact local maximum18.
+
+### T318.3. Every bad entry can be lowered by half a unit
+
+The universal score bound is625/2. In the given half-integral x0 every score is
+a multiple of5/2. Equality625/2 occurs only at a cell with
+
+    i=i*, y_j=0, r_i=6, c_j=7, x_ij=2.              (bad)
+
+Call such a cell bad. Every other initial score is at most310. There are at
+most TWO bad cells: they lie in the same flagged row and in distinct columns
+of internal mass7, while the whole block has mass18.
+
+Fix one bad cell (i*,j). We prove no exact minimum cut crosses its entry edge.
+For a cut write a for sink-side rows, b for source-side columns, c for the
+number of crossing actual entry edges, and Y for the sum of2y over its
+source-side columns. An exact cut has
+
+    12a+14b+4c-Y=36,    0<=Y<=6.
+
+Forward cut arcs saturate; backward cut arcs carry zero under x0. If this cut
+crossed our entry, i* would be source-side and j sink-side. All source-side
+contributions to j would be crossing entries of mass2. Let t count them.
+The a outside rows can contribute at most2a, so
+
+    2t <=7<=2t+2a.
+
+The exact cut's full necessary inventory is
+
+    b=0,Y=0: (a,c)=(0,9),(1,6),(2,3),(3,0);
+    b=1,Y=2: (a,c)=(0,6),(1,3),(2,0);
+    b=1,Y=6: (a,c)=(0,7),(1,4),(2,1);
+    b=2,Y=0: (a,c)=(0,2);
+    b=2,Y=4: (a,c)=(0,3),(1,0);
+    b=3,Y=6: (a,c)=(0,0).
+
+For a=0, the outside column mass would be even, contradicting c_j=7.
+For a=1, necessarily t=3, and the only cases with enough crossing entries are:
+
+* b=0,c=6. Since the flagged row has mass6 and no inside columns, it owns
+  three crossing entries, including j. The other three inside rows have only
+  three actual entry edges altogether; two of them point to j. Their joint
+  actual neighborhood has at most two labels. This violates T3-goodness.
+* b=1,c=3. Every crossing entry points to j. The flagged row has only that
+  entry and the one inside-column entry, so its mass is at most4, contradiction.
+* b=1,c=4. Besides the three entries at j there is one additional crossing
+  entry. To have row mass6, the flagged row must own that extra entry as well
+  as its j entry and the inside-column entry. The other three inside rows
+  therefore have actual neighborhoods contained in{j,the inside column}.
+  This violates T3-goodness.
+
+For a=2 we need t>=2. The only inventory case with enough crossing entries is
+b=0,c=3. But the flagged row's mass6 forces all three crossing entries to be
+its own, so only one can point to j. Then column j has mass at most2+4=6,
+contradiction. Cases a>=3 have no crossing entries and cannot contain the
+selected entry. This exhausts the inventory.
+
+Thus no minimum cut crosses the bad entry. Lower only its capacity from2 to
+3/2. All tight cuts remain unchanged; all nontight cuts had half-integral
+capacity at least37/2 and lose at most1/2. The modified network still supports
+mass18. After doubling, an integral flow gives a HALF-INTEGRAL mass18 matrix
+x^(i*,j) on the same support. At this specific cell its score is at most
+
+    120+140+25*(3/2)+5/2 =300.
+
+Every other cell still has the ordinary bound625/2. The construction preserves
+z and y exactly and can be done for each of the at most two original bad cells.
+
+### T318.4. One mixture controls every cell simultaneously
+
+If there are no bad cells, keep x0. Otherwise let B be their fixed initial set
+and b=|B|, with1<=b<=2. Define ONE matrix before any cell is queried:
+
+    xbar = (5/7)x0 + (2/(7b)) sum_(e in B) x^e.
+
+It retains support, all capacities, mass18 and the external vectors. At a
+cell not initially bad, its score is at most
+
+    (5/7)*310 + (2/7)*(625/2)=2175/7.
+
+At an initially bad cell e, its own repaired component saves at least25/2,
+and hence its mixed score is at most
+
+    625/2 - (2/(7b))*(25/2) <=625/2-25/14=2175/7.
+
+This proves(T318). No independent cellwise optimization is mistaken for one
+matrix: the displayed finite convex mixture is the common matrix.
+
+### T318.5. Consequence for a balanced value74 source law
+
+Suppose the original actual network has a half-integral value74 flow with all
+four root totals37/2, and EVERY one of its mass18 blocks is T3-good on its
+ENTIRE actual block support. The latter assumption is separate from the
+original cross-root legal-pair premises.
+
+Mass18 and mass37/2 blocks have different roots and different public columns.
+Apply(T318) at every mass18 block and the mass37/2 transport(H185) at every
+mass37/2 block, keeping every external vector and every coarse block total.
+These replacements are jointly feasible because their root and column supports
+do not overlap. Thus one supported value74 law is fixed for every query.
+
+The coherent nonunit charges are bounded by
+
+    d<=35/2: 591;
+    d=18:    561/2+2175/7=8277/14;
+    d=37/2: 285+1835/6=3545/6.
+
+The existing TB.4 bound for noncoherent queries remains587. The largest bound
+is8277/14<592. Normalizing the ONE resulting law therefore gives
+
+    Gamma_1225 <=1+(8277/14)/74=9313/1036=9-11/1036<9.
+
+This closes the balanced value74 branch under the specified T3-goodness test.
+It does not prove that this test can always be achieved. The unique local
+mass18 obstruction described in the companion result is T3-bad, as its rows
+1,2,3 have joint neighborhood{A,B}. Handling actual sources whose balanced
+laws necessarily have a bad mass18 block still requires a new source bridge.
+
+### T318.6. Exact arithmetic and a nontrivial local control
+
+The [exact checker](../../../frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.json) enumerate all14 necessary exact18 cut types and the five possible bad-entry cut cases before the support contradictions. They check the half-unit capacity decrease and the fixed5/7 mixture arithmetic.
+
+A retained thirteen-entry actual local support has A,B at all five rows and C at rows0,1,2. Its ten three-row unions all contain at least three labels. With y_B=2,y_F=1,z_0=1/2 and zero other flags, the initial mass18 matrix is:
+
+    row0: A2,B2,C2; row1: A2,B1,C2; row2: A2,C2;
+    row3: A1,B2; row4: zero.
+
+The cell row0/A initially has score625/2. Moving half a unit from row0/A to row4/A preserves all fine-column totals and original capacities, and the prescribed common mixture has maximum4285/14<=2175/7 over every one of the35 local queries. All4096 cuts before and all4096 after lowering only the row0/A entry capacity to3/2 have minimum18. Independent direct enumeration reproduces these two minima and the initial/repair/mixture maxima625/2,290,4285/14. The control retains the full support, both external vectors, all three matrices and their complete score tables. It is a local transport instance, without a complete-original-blocker claim.
+
+Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.py --output /tmp/e7_mass18_t3_good_replay.json
+```
+
+The source-uniform conclusion uses the cut and mixture proof above, not an enumeration of all support graphs. No Lean verification is claimed.
