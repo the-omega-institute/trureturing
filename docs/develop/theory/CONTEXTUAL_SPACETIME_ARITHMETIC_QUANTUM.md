@@ -64155,3 +64155,3894 @@ $$
 对等半径，已知 $\kappa_a=a/(2\sqrt2)$。一般不等半径时，式（296.3）确定的是精确恢复端点的一阶系数；它没有把整条有限预算曲线求出，也没有证明最优角点唯一、误差权重全正或最优 $\Omega$ 必非零。有限预算下恢复矩阵不对称，与它在端点是否具有非零的一阶反对称部分，是不同的命题。
 
 ## 追加锚（本行以下为增补区）
+
+## 297. 同一残差预算下的半群替换与平方阶代价
+
+**定理 297.1（保预算的半群替换）。** 对正半径六态模型，记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$\eta=A^{-1/2}$、$a_{\max}=\max_i a_i$。固定 $R>0$。若一对实际二维 CPTP 编码、解码的残差不超过 $R$，最坏恢复误差为 $e$，则存在另一对同维实际通道，其残差仍不超过 $R$，复合恢复是一个幺元、时间齐次 CPTP 半群的时间一通道，且恢复误差 $e'$ 满足
+
+$$
+e'\le e+\frac{a_{\max}^2 A}{R}e^2.
+\tag{297.1}
+$$
+
+因此对 $0<R<\eta$，无限制最优误差与定义293.2的微分可分最优误差满足
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)
+\le \frac{a_{\max}^2 A}{R}
+\bigl(F_a^{(2)}(R)\bigr)^2.
+\tag{297.2}
+$$
+
+特别地，当 $R\uparrow\eta$ 时，
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)=O\bigl((\eta-R)^2\bigr).
+\tag{297.3}
+$$
+
+这加强了第296节的差距余项，但其证明不需要先求端点切向优化问题。对于三个半径都等于 $a$ 的情形，平方阶不能再统一提高：
+
+$$
+\lim_{R\uparrow a/\sqrt3}
+\frac{\widehat G_a(R)-F_a^{(2)}(R)}{(a/\sqrt3-R)^2}
+=\frac1{8\sqrt2\,a}>0.
+\tag{297.4}
+$$
+
+证明。先用第281节把原实际方案共同支配为一个幺元恢复 $\mathcal N$，并保留同一残差上界。记其 Bloch 矩阵为 $T$、误差为 $e_0\le e$，则 $r_*(T)\le R$，而
+
+$$
+\|I-T\|_{\rm op}^2
+\le\|I-T\|_F^2
+\le4A e_0^2.
+\tag{297.5}
+$$
+
+以下对同一个 $T$ 同时控制替换后的残差与误差。
+
+采用标准通道半群构造
+
+$$
+\mathcal P_t=\exp\bigl(t(\mathcal N-\mathrm{id})\bigr)
+=e^{-t}\sum_{k=0}^{\infty}\frac{t^k}{k!}\mathcal N^k,
+\qquad t\ge0.
+\tag{297.6}
+$$
+
+泊松权重非负且和为一，所以它是幺元 CPTP 半群，Bloch 矩阵为 $P_t=\exp(t(T-I))$。这一半群构造及其对原通道的二阶近似是既有方法：Wolf–Cirac，*Dividing Quantum Channels*（2008），[引理1与定理16证明中的式（27）](https://arxiv.org/abs/math-ph/0611057v3)。下面只将它接入当前两个共同预算；不把一般 Markov 近似作为新定理。
+
+每个 $P_t$ 都把单位 Bloch 球映入自身，故 $\|P_t\|_{\rm op}\le1$。令 $d=\|T-I\|_{\rm op}$，对矩阵指数使用带积分余项的二阶展开：
+
+$$
+P_1-T=\int_0^1(1-t)P_t(T-I)^2\,dt.
+$$
+
+于是
+
+$$
+\|P_1-T\|_{\rm op}\le\frac{d^2}{2}
+\le2A e_0^2.
+\tag{297.7}
+$$
+
+这里利用半群的收缩性，因而无需在余项中加入指数放大因子。
+
+对任意两个实矩阵 $B,C$，当前两个任务量满足
+
+$$
+\begin{aligned}
+|r_*(B)-r_*(C)|&\le a_{\max}\|B-C\|_{\rm op},\\
+|e(B)-e(C)|&\le\frac{a_{\max}}2\|B-C\|_{\rm op},
+\end{aligned}
+\tag{297.8}
+$$
+
+其中 $r_*(B)=\min_{\|n\|=1}\max_i a_i|n^{\mathsf T}Be_i|$，$e(B)=\frac12\max_i a_i\|(B-I)e_i\|$。第一式先对每个固定 $n$ 用三角不等式，再取最小值；第二式逐列用反三角不等式后取最大值。它们不需要最优方向唯一。
+
+记 $P=P_1$、$\beta=d^2/2$、$r_P=r_*(P)$。式（297.7）与原预算给出 $r_P\le R+a_{\max}\beta$。由于矩阵指数可逆且各半径正，$r_P>0$。取
+
+$$
+c=\min\{1,R/r_P\},\qquad Q=cP.
+\tag{297.9}
+$$
+
+则 $0<c\le1$，并由残差的正齐次性得到 $r_*(Q)=c r_P\le R$。若 $c<1$，还有
+
+$$
+1-c=\frac{r_P-R}{r_P}
+\le\frac{a_{\max}\beta}{R};
+\tag{297.10}
+$$
+
+若 $c=1$，同一上界仍成立。还可直接控制泊松替换本身的误差，而不为式（297.7）的全部距离支付误差代价。积分恒等式
+
+$$
+P-I=\int_0^1P_t(T-I)\,dt
+$$
+
+与每个 $P_t$ 的收缩性共同给出，对每个 $i$，
+
+$$
+\|(P-I)e_i\|_2
+\le\int_0^1\|P_t(T-I)e_i\|_2\,dt
+\le\|(T-I)e_i\|_2,
+\qquad e(P)\le e_0.
+\tag{297.11}
+$$
+
+因此只有随后乘以 $c$ 的预算校正需要计入可能增加的恢复误差。
+
+还须保证这次预算校正保持同一个时间齐次半群类。令 $\mathcal Z(X)=\operatorname{Tr}(X)I/2$ 为完全退极化通道，$\lambda=-\log c\ge0$。因为 $\mathcal N$ 保迹且幺元，$\mathcal N\mathcal Z=\mathcal Z\mathcal N=\mathcal Z$，所以两个生成元 $\mathcal N-\mathrm{id}$ 与 $\lambda(\mathcal Z-\mathrm{id})$ 交换。由此
+
+$$
+\mathcal Q_t
+=\exp\bigl(t(\mathcal N-\mathrm{id})
+          +t\lambda(\mathcal Z-\mathrm{id})\bigr)
+=\mathcal P_t\exp\bigl(t\lambda(\mathcal Z-\mathrm{id})\bigr)
+\tag{297.12}
+$$
+
+仍是幺元 CPTP 半群；其 Bloch 矩阵为 $e^{-\lambda t}P_t$，在时间一恰为 $Q$。这一步直接给出固定生成元，没有以两个一般微分可分通道的任意复合替代证明。
+
+对 $Q$ 取达到 $r_*(Q)$ 的单位方向，酉旋转到编码虚轴并采用逆酉解码。第281节保证这给出一对完整 $M_2$ 上的实际通道，其共同恢复正是 $\mathcal Q_1$，残差不超过 $R$。式（297.8）、（297.10）、（297.11）与 $\beta\le2A e_0^2$ 于是给出
+
+$$
+\begin{aligned}
+e(Q)&\le e(P)+\frac{a_{\max}}2(1-c)\|P\|_{\rm op}\\
+&\le e_0+\frac{a_{\max}^2}{2R}\beta\\
+&\le e_0+\frac{a_{\max}^2 A}{R}e_0^2
+\le e+\frac{a_{\max}^2 A}{R}e^2.
+\end{aligned}
+$$
+
+这证明式（297.1）。将原方案取为达到无限制最优值的方案，就得式（297.2）的上界；严格正下界来自定理293.3。
+
+写 $R=\eta(1-\delta)$。各向同性恢复 $(1-\delta)I$ 与相应酉编码给出
+
+$$
+F_a^{(2)}(R)\le\frac{a_{\max}}2\delta.
+$$
+
+当 $0<\delta\le1/2$ 时，式（297.2）因此进一步给出明确读数
+
+$$
+\widehat G_a(R)-F_a^{(2)}(R)
+\le\frac{a_{\max}^4 A}{2\eta}\delta^2.
+\tag{297.13}
+$$
+
+由于半径固定，$\delta=(\eta-R)/\eta$，这就是式（297.3）。
+
+最后，等半径时第277、293节的精确公式在端点附近给出
+
+$$
+\begin{aligned}
+F_a^{(2)}(\eta(1-\delta))&=\frac{a\delta}{2\sqrt2},\\
+\widehat G_a(\eta(1-\delta))
+&=\frac{a\delta}{2\sqrt3}
+\sqrt{1+\frac{2}{(1+\sqrt{1-\delta})^2}}\\
+&=\frac{a\delta}{2\sqrt2}
+ +\frac{a\delta^2}{24\sqrt2}+O(\delta^3).
+\end{aligned}
+\tag{297.14}
+$$
+
+再用 $\eta^2=a^2/3$，便得式（297.4）。证毕。
+
+式（297.1）的常数不是最优常数；该替换界对所有正半径和所有正预算成立，式（297.2）的严格正差距则限于 $0<R<\eta$。一般不等半径的二阶差距是否具有正极限，以及其最优系数，仍未由本节决定。$R=0$ 不在替换界的范围内，不能把其中的 $1/R$ 当作零预算端点的估计。
+
+## 追加锚（本行以下为增补区）
+
+## 298. 端点最优生成元的唯一性、两方向耗散与对偶轴
+
+**定义 298.1（端点锥与对偶量）。** 沿用第296节的正半径、$\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=(\alpha_1,\alpha_2,\alpha_3)$ 与 $\eta=A^{-1/2}$。对实矩阵 $M$ 写
+
+$$
+S=\frac{M+M^{\mathsf T}}2,\qquad
+\Omega=\frac{M^{\mathsf T}-M}2,\qquad
+\mathcal C(S)=(\operatorname{Tr}S)I-2S.
+\tag{298.1}
+$$
+
+于是 $M=S-\Omega$。定义
+
+$$
+\begin{aligned}
+D_a=\max_M\ &b^{\mathsf T}Mb,\\
+\text{约束为 }&\mathcal C(S)\succeq0,
+\qquad\|Me_i\|_2\le\alpha_i\quad(i=1,2,3).
+\end{aligned}
+\tag{298.2}
+$$
+
+在三维中，$\mathcal C(S)\succeq0$ 已蕴含 $S\succeq0$：若 $d_1\le d_2\le d_3$ 为 $S$ 的特征值，则 $d_3\le d_1+d_2$，从而 $d_1\ge d_3-d_2\ge0$。
+
+**定理 298.2（对偶证书与全部端点最优方向）。** 第296节的系数满足
+
+$$
+\kappa_a=\frac{A}{2D_a},
+\qquad
+D_a=\min_{Z\succeq0}
+\sum_{i=1}^3\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2.
+\tag{298.3}
+$$
+
+两边的最优值都达到。将倒数半径排序为 $\alpha_1\le\alpha_2\le\alpha_3$ 并记
+
+$$
+C_2=\max\left\{\frac1{\sqrt{2A}},
+\frac1{2\sqrt{\alpha_1^2+\alpha_2^2}}\right\},
+$$
+
+则有严格界
+
+$$
+\frac\eta2<\kappa_a<C_2.
+\tag{298.4}
+$$
+
+对第296节正角点归一化后的每个最优 $(S,\Omega)$，其特征值满足
+
+$$
+0<d_1\le d_2<d_3=d_1+d_2.
+\tag{298.5}
+$$
+
+式（298.3）的对偶最优矩阵唯一，且为
+
+$$
+Z_*=\lambda vv^{\mathsf T},\qquad\lambda>0,\quad\|v\|_2=1.
+\tag{298.6}
+$$
+
+这个无向轴 $\mathbb Rv$ 是所有上述最优 $S$ 的共同最大特征方向，并可选取 $v_i>0$。更强地，第296节正角点规范下的最优 $(S,\Omega)$ 本身唯一，正角点是唯一活跃角点：
+
+$$
+b_\sigma^{\mathsf T}Sb_\sigma<A
+\quad\bigl(\sigma\in\{(1,\pm1,\pm1)\},\ \sigma\ne(1,1,1)\bigr).
+\tag{298.6a}
+$$
+
+这里的唯一性是在固定正角点规范之后；恢复所有符号方向时，仍须作相应的符号共轭。
+
+证明。对 $M=S-\Omega$，简记 $h(M)=h_a(S,\Omega)=\max_i\|Me_i\|_2/\alpha_i$。正角点之外有三个其他反足角点类。先说明第296节的其他角点上界可以从求最优值的约束中删去。保留 $b^{\mathsf T}Sb=A$、锥条件与列范数预算，考虑最小化 $h_a(S,\Omega)$。可行集非空，且有界目标的子水平集紧，所以最小值达到。
+
+若某个达到点有 $g(S)=\max_\sigma b_\sigma^{\mathsf T}Sb_\sigma>A$，选一个达到最大值的角点符号矩阵 $D$，将 $S,\Omega$ 同时共轭为 $DSD,D\Omega D$，再乘以 $A/g(S)<1$。锥条件与加权列范数在符号共轭下不变，新矩阵又满足正角点等式，但目标值严格下降，矛盾。因此每个最优点自动满足其他角点上界，删去这些约束不改变最优值与最优点。
+
+齐次缩放随后把这个最小化问题与式（298.2）互相对应：若归一化最小值为 $h_*=2\kappa_a$，则 $M_{\max}=M_{\rm norm}/h_*$，反过来 $M_{\rm norm}=(A/D_a)M_{\max}$。因此 $D_a=A/h_*$，给出 $\kappa_a=A/(2D_a)$。最大化问题的可行集闭且由列界有界，故 $D_a$ 达到；取足够小的正数 $\varepsilon$ 和 $M=\varepsilon I$ 可见 $D_a>0$。
+
+先证明严格下界。对任意满足 $b^{\mathsf T}Mb=A$ 的矩阵，记 $h=h_a(S,\Omega)$，逐列 Cauchy–Schwarz 给出
+
+$$
+A=\sum_i\alpha_i b^{\mathsf T}Me_i
+\le\sqrt A\sum_i\alpha_i\|Me_i\|_2
+\le h A\sqrt A.
+\tag{298.7}
+$$
+
+所以 $h\ge\eta$。若取等，因为每个 $\alpha_i>0$，每列都必须取到自己的范数界，且正向平行于 $b$。于是唯一的等号矩阵是
+
+$$
+M_0=\frac{bb^{\mathsf T}}A.
+\tag{298.8}
+$$
+
+它的对称部分特征值为 $0,0,1$，违反锥条件。最优值达到便保证 $2\kappa_a>\eta$。
+
+严格上界复用第292节的共同竞争构造。该节给出 $n=b/\sqrt A$、在 $n^\perp$ 上正定且迹为一的 $B$，使
+
+$$
+H=nn^{\mathsf T}+B,
+\qquad\frac12\max_i a_i\|He_i\|_2=K<C_2.
+\tag{298.9}
+$$
+
+$H$ 的特征值为 $1,b_1,b_2$，其中 $b_1,b_2>0$、$b_1+b_2=1$。所以 $\mathcal C(H)\succeq0$，且 $b^{\mathsf T}Hb=A$。这给出端点可行点，因而 $\kappa_a\le K<C_2$，证明式（298.4）。
+
+现在排除任意最优 $S$ 的奇异性。若 $S$ 奇异，锥条件迫使其谱为 $0,d,d$。归一化 $b^{\mathsf T}Sb=A$ 又保证 $d\ge1$。设零特征方向为 $u$，并在任意坐标平面与 $u^\perp$ 的交线上取单位向量 $x$。因为反对称项的二次型为零，
+
+$$
+x^{\mathsf T}Mx=x^{\mathsf T}Sx=d,
+\qquad\|Mx\|_2\ge d.
+$$
+
+若 $h=h_a(S,\Omega)$，则与第292节相同的平面列界给出
+
+$$
+h\ge\frac d{\sqrt{\alpha_i^2+\alpha_j^2}}.
+$$
+
+同时，对称与反对称部分在 Frobenius 内积下正交，故
+
+$$
+h^2A\ge\|M\|_F^2
+=\|S\|_F^2+\|\Omega\|_F^2\ge2d^2.
+$$
+
+合并得到 $h/2\ge dC_2\ge C_2$，与式（298.4）矛盾。因此每个最优 $S$ 都正定。
+
+其次，每个最优点都必须在锥边界上。否则 $\mathcal C(S)\succ0$，将 $M$ 与式（298.8）的 $M_0$ 作足够小的凸混合，仍保持锥条件和正角点等式；加权列范数的凸性及 $h_a(M_0)=\eta<2\kappa_a$ 却使目标严格下降，矛盾。故 $\mathcal C(S)$ 奇异。结合 $S\succ0$，只能有 $d_3=d_1+d_2>d_2$；另两个锥特征值为 $2d_2,2d_1>0$。因此 $\mathcal C(S)$ 的核恰为一维，证明式（298.5）。
+
+下面建立对偶及其唯一性。对任意 $Z\succeq0$ 和式（298.2）的可行 $M$，有
+
+$$
+\begin{aligned}
+b^{\mathsf T}Mb
+&\le b^{\mathsf T}Mb+\operatorname{Tr}(Z\mathcal C(S))\\
+&=\left\langle bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z,M\right\rangle_F\\
+&\le\sum_i\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2.
+\end{aligned}
+\tag{298.10}
+$$
+
+最后一步逐列取欧氏球的支撑函数。将锥约束以乘子 $Z\succeq0$ 加入拉格朗日式，再对三个独立列球取上确界，恰好得到式（298.3）的右侧，没有额外保留的对称性约束：$M$ 本来就是任意实矩阵。
+
+取 $0<\varepsilon<\min_i\alpha_i$，矩阵 $M=\varepsilon I$ 同时使 $\mathcal C(S)\succ0$ 及全部列范数约束严格成立。因此 Slater 条件给出强对偶与对偶达到。这里使用标准半定规划对偶理论；每个列球等价于如下块半正定约束：
+
+$$
+\begin{pmatrix}
+\alpha_i&(Me_i)^{\mathsf T}\\
+Me_i&\alpha_i I_3
+\end{pmatrix}\succeq0.
+$$
+
+在所选 $M=\varepsilon I$ 处，这三个块矩阵均正定。所需强对偶与互补松弛可见 Watrous，*The Theory of Quantum Information*，[§1.2.3，定理1.18与命题1.19](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。对偶可行值有限，例如 $Z=0$；这也核对了达到结论所需的有界性条件。
+
+对任意一对原、对偶最优点，式（298.10）两端相等，故
+
+$$
+\operatorname{Tr}(Z\mathcal C(S))=0.
+\tag{298.11}
+$$
+
+两个矩阵均半正定，这迫使 $\operatorname{ran}Z\subseteq\ker\mathcal C(S)$。因此每个对偶最优矩阵都形如 $\lambda vv^{\mathsf T}$，其中 $v$ 为该 $S$ 的最大特征方向。它不能为零：$Z=0$ 的目标值为 $A\sqrt A$，而 $\kappa_a>\eta/2$ 与式（298.3）的第一式给出 $D_a<A\sqrt A$。所以 $\lambda>0$。
+
+固定任意一个原最优点，其一维核就使所有对偶最优矩阵都落在同一射线上 $\lambda vv^{\mathsf T}$。在这条射线上，对偶目标为
+
+$$
+f(\lambda)=\sum_i\alpha_i
+\left\|\alpha_i b+\lambda(e_i-2v_i v)\right\|_2.
+\tag{298.12}
+$$
+
+至少有一个向量 $e_i-2v_i v$ 不平行于 $b$：否则正交反射矩阵 $I-2vv^{\mathsf T}$ 的全部列都在同一条直线上，与它的秩三矛盾。对应那一项是沿非共线仿射直线的欧氏范数，关于 $\lambda$ 严格凸；其权重 $\alpha_i$ 正，其余项凸，所以 $f$ 严格凸。这证明最优 $\lambda$ 唯一，进而对偶矩阵唯一。
+
+固定这个非零 $Z_*$，对每个原最优点使用式（298.11），就得到同一个核方向 $\mathbb Rv$。归一化只作正数缩放，不改变这个方向，因此式（298.5）及共同轴结论适用于第296节正角点规范下的全部最优点。
+
+再证明这个轴可以严格取正。对单位向量 $v$，式（298.12）的第 $i$ 个范数的平方为
+
+$$
+\alpha_i^2 A+\lambda^2+2\lambda\alpha_i^2
+-4\lambda\alpha_i v_i(b\cdot v).
+\tag{298.13}
+$$
+
+把 $v$ 换成逐坐标绝对值向量，保持单位长度，并使每个 $v_i(b\cdot v)$ 都不减。若非零坐标中有两种符号，则至少一项严格增大，式（298.13）及全部正权重使对偶目标严格下降，矛盾。因此可选 $v_i\ge0$。若有某个 $v_i=0$，令 $v(\varepsilon)=(v+\varepsilon e_i)/\sqrt{1+\varepsilon^2}$。对每个坐标 $j$，
+
+$$
+\left.\frac{d}{d\varepsilon}\left[v_j(\varepsilon)\bigl(b\cdot v(\varepsilon)\bigr)\right]\right|_{\varepsilon=0}
+=\delta_{ij}(b\cdot v)+\alpha_i v_j.
+$$
+
+这些导数全部非负；因为 $b\cdot v>0$，第 $i$ 个严格为正，每个原本非零坐标对应的导数也严格为正。此时所有范数原本均非零：第 $j$ 列在零坐标 $i$ 上为 $\alpha_j\alpha_i+\lambda\delta_{ij}>0$。所以目标一阶严格下降，仍矛盾。由此 $v_i>0$ 对每个坐标成立。
+
+令
+
+$$
+G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{298.14}
+$$
+
+若 $Ge_i\ne0$，原、对偶取等的逐列支撑条件唯一确定式（298.2）中最优矩阵的这一列：
+
+$$
+Me_i=\alpha_i\frac{Ge_i}{\|Ge_i\|_2}.
+\tag{298.15}
+$$
+
+至多有一列 $Ge_i$ 为零，因为零列的第 $i$ 个坐标要求
+
+$$
+\alpha_i^2+\lambda-2\lambda v_i^2=0,
+\qquad v_i^2>1/2.
+$$
+
+若没有零列，所有最优列已经唯一。若恰有第 $i$ 列为零，任意两个最优矩阵之差只能写成 $\Delta M=x e_i^{\mathsf T}$。它们的对称部分都满足 $\mathcal C(S)v=0$，因此
+
+$$
+x_i v-v_i x-e_i(x\cdot v)=0.
+\tag{298.16}
+$$
+
+对 $j\ne i$，这给出 $x_j=x_i v_j/v_i$，所以 $x=(x_i/v_i)v$。式（298.16）的第 $i$ 个坐标再给出 $x\cdot v=0$，故 $x=0$。因此原最大化问题的最优矩阵在这一情形也唯一，齐次归一化后的最优 $(S,\Omega)$ 随之唯一。
+
+最后，若还有一个非正角点达到 $A$，对应的符号矩阵 $D$ 会把最优矩阵共轭成另一个正角点归一化的最优矩阵；其最大特征方向为 $Dv$。共同轴结论要求 $Dv=\pm v$。因为每个 $v_i>0$，这只可能发生在 $D=I$ 或 $D=-I$；它们表示同一对正负角点，不是式（298.6a）列出的其他三个角点。故其余角点都严格小于 $A$，证明全部结论。证毕。
+
+在第296节的 Lindblad 构造中，三个规范耗散系数为 $(\operatorname{Tr}S-2d_i)/4$。式（298.5）使它们恰有两个严格为正、一个为零；正角点规范下，零系数所在的主轴由唯一对偶矩阵确定，整个归一化一阶 Bloch 生成元也唯一。这是当前任务端点最优性的限制，不是一般量子比特生成元的分类。它没有证明两个正耗散系数相等或 Hamiltonian 项为零，也不把端点一阶唯一性升级为所有有限预算下实际最优通道唯一。
+
+## 追加锚（本行以下为增补区）
+
+## 299. 不等半径的一阶旋转必要性与两类最优恢复的共同极限
+
+**定理 299.1（最优切向旋转的精确消失条件）。** 固定正半径六态模型，令 $M_*=S_*-\Omega_*$ 为第298节正角点规范下唯一的归一化端点最优矩阵。则
+
+$$
+\Omega_*=0
+\quad\Longleftrightarrow\quad
+a_1=a_2=a_3.
+\tag{299.1}
+$$
+
+因此，只要三个半径不全相等，在固定任务输入、输出坐标下，最优的一阶 Lindblad 生成矩阵 $\Omega_*-S_*$ 就必须含有非零反对称部分。
+
+证明。沿用第298节的 $\alpha_i=1/a_i$、$b=\alpha$、$A=\sum_i\alpha_i^2$ 与唯一对偶矩阵 $Z_*=\lambda vv^{\mathsf T}$，其中 $\lambda>0$，$v_i>0$。令
+
+$$
+G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{299.2}
+$$
+
+先假设 $\Omega_*=0$，并将 $M_*$ 正数缩放为式（298.2）的达到点 $M$。此时 $M$ 对称正定，其最大特征值单重，对应严格正向量 $v$；它的特征值还满足最大者等于其余两者之和。
+
+每个非零列 $Ge_i$ 都由对偶支撑条件给出
+
+$$
+Me_i=\beta_i Ge_i,
+\qquad\beta_i=\frac{\alpha_i}{\|Ge_i\|_2}>0.
+\tag{299.3}
+$$
+
+$G$ 不能有零列。否则第298节已经保证至多一个零列，设为第 $i$ 列。对其余每列 $j$，式（299.3）与 $G_{ij}=0$ 给出 $M_{ij}=0$；由 $M$ 对称，第 $i$ 列的非对角元也全为零。这使 $M$ 在坐标 $i$ 与其余坐标之间分块，而一个具有单重最大特征值的对称分块矩阵，其最大特征向量不能在两个块上都有非零分量。这与 $v_i>0$ 对所有坐标成立矛盾。
+
+于是式（299.3）对全部列成立。由 $G$ 与 $M$ 都对称，
+
+$$
+G_{ij}(\beta_i-\beta_j)=0.
+\tag{299.4}
+$$
+
+以非零非对角元为边的 $M$ 坐标图必须连通；否则同样得到分块与严格正单重最大特征向量的矛盾。这个图与 $G$ 的坐标图相同，因此式（299.4）强迫所有 $\beta_i$ 等于同一正数 $\beta$，即 $M=\beta G$。
+
+因为 $v$ 是 $G$ 的特征向量，且
+
+$$
+Gv=(b\cdot v)b-\lambda v,
+$$
+
+又有 $b\cdot v>0$，所以 $b$ 平行于 $v$。严格正号规范给出 $v=b/\sqrt A$。于是 $G$ 沿 $v$ 的特征值为 $A-\lambda$，其余两个为 $\lambda$。锥边界条件使
+
+$$
+A-\lambda=2\lambda,
+\qquad\lambda=A/3.
+\tag{299.5}
+$$
+
+全部列都取到范数界，因此
+
+$$
+\alpha_i^2
+=\beta^2\frac{A^2}{9}
+\left(1+\frac{3\alpha_i^2}{A}\right).
+\tag{299.6}
+$$
+
+函数 $x\mapsto x/(1+3x/A)$ 在 $x>0$ 上严格递增，故式（299.6）对三个坐标成立只能使 $\alpha_1=\alpha_2=\alpha_3$，也就是三个半径相等。
+
+反过来，等半径时令 $n=(1,1,1)/\sqrt3$，则
+
+$$
+S_* =\frac12 I+\frac12nn^{\mathsf T},
+\qquad\Omega_*=0
+\tag{299.7}
+$$
+
+满足正角点归一化与锥条件，目标值为第296节已确定的 $2\kappa_a=a/\sqrt2$。唯一性因而保证它就是端点达到点。证毕。
+
+**定理 299.2（实际最优恢复的一阶共同形状）。** 固定正半径，令 $R_\delta=\eta(1-\delta)$、$\delta\downarrow0$。对每个 $\delta$，任取一个实际最优恢复矩阵 $T_\delta$，它可以来自无限制问题 $F_a^{(2)}$，也可以来自微分可分问题 $\widehat G_a$。允许随 $\delta$ 在这两类之间选择。
+
+对充分小的 $\delta$，$T_\delta$ 可逆，其四角残差公式中的最大角点在整体正负号之外唯一。取该角点的符号矩阵 $D_\delta$，使它在共轭后的正角点规范中对应 $b$，则
+
+$$
+\frac{I-D_\delta T_\delta D_\delta}{\delta}
+\longrightarrow M_*=S_*-\Omega_*.
+\tag{299.8}
+$$
+
+该结论对实际最优恢复的选择一致成立。因此两种恢复类虽在每个 $0<R<\eta$ 的有限预算上具有不同的最优误差，却在端点具有同一个规范化一阶矩阵。若半径不全相等，则还满足
+
+$$
+\frac1\delta
+\left\|\frac{T_\delta-T_\delta^{\mathsf T}}2\right\|_F
+\longrightarrow\|\Omega_*\|_F>0.
+\tag{299.9}
+$$
+
+特别地，两类问题的所有实际最优恢复在充分接近端点时都不对称。
+
+证明。第285、293节分别保证两类实际最优恢复本身幺元；第296节给出它们共同的最优误差渐近式 $e_\delta=\kappa_a\delta+o(\delta)$。三个半径严格为正，因此列误差界一致地给出
+
+$$
+\|I-T_\delta\|_F^2\le4A e_\delta^2=O(\delta^2).
+\tag{299.10}
+$$
+
+所以 $T_\delta\to I$，并在充分小的 $\delta$ 下可逆。选取一个达到四角最大值的角点；暂时允许不唯一。相应符号共轭保持通道条件、各列误差、残差和全部奇异值。若符号矩阵行列式为负，改用其整体负号得到相同共轭和正向旋转，因而没有引入非物理的反射操作。
+
+记 $\widetilde T_\delta=D_\delta T_\delta D_\delta$、$M_\delta=(I-\widetilde T_\delta)/\delta$。式（299.10）使 $M_\delta$ 一致有界。沿任意趋零序列取收敛子列，写极限为 $M=S-\Omega$。第296节的完全正切向计算使 $S,\Omega$ 满足端点锥条件；误差公式给出
+
+$$
+\frac12h_a(S,\Omega)=\kappa_a.
+\tag{299.11}
+$$
+
+每个原实际方案预算可行，第281节因而给出 $r_*(T_\delta)\le R_\delta$。第296节对有界归一化矩阵的一致四角展开随后保证
+
+$$
+g(S)\ge A.
+\tag{299.12}
+$$
+
+由于共轭前选取的是一个真正达到逆矩阵角点最大值的角点，对每个符号 $\sigma$ 都有
+
+$$
+\|\widetilde T_\delta^{-\mathsf T}b\|_2^2
+\ge\|\widetilde T_\delta^{-\mathsf T}b_\sigma\|_2^2.
+$$
+
+两边展开到一阶，再取子列极限，得到 $b^{\mathsf T}Sb=g(S)$。而第296节的齐次比值定义与式（299.11）给出
+
+$$
+\kappa_a=\frac12h_a(S,\Omega)
+\ge\kappa_a\frac{g(S)}A\ge\kappa_a.
+$$
+
+因为 $\kappa_a>0$，所以 $g(S)=A$，且此极限正是正角点规范下的端点最优矩阵。第298节的唯一性强迫 $M=M_*$。任意子列极限相同，便证明式（299.8）。若一致性失败，可以选取一列违反某个固定误差阈值的实际最优恢复，再用相同的有界子列论证得到矛盾；因此收敛对全部最优选择一致。
+
+第298节还给出严格角点间隙
+
+$$
+\gamma=\min_{\substack{\sigma\in\{(1,\pm1,\pm1)\}\\\sigma\ne(1,1,1)}}
+\left(A-b_\sigma^{\mathsf T}S_*b_\sigma\right)>0.
+\tag{299.13}
+$$
+
+由式（299.8）与一致的逆矩阵展开，规范后的正角点平方范数比每个其他角点大至少 $\delta\gamma$，只要 $\delta$ 足够小。这证明原实际角点最大值在整体正负号之外唯一，也说明先前任取达到角点没有留下新的极限歧义。
+
+最后，从式（299.8）取反对称部分，得到
+
+$$
+\frac{\widetilde T_\delta-\widetilde T_\delta^{\mathsf T}}{2\delta}
+\longrightarrow\Omega_*.
+$$
+
+正交共轭保持 Frobenius 范数，故式（299.9）成立。对不等半径，定理299.1保证极限严格为正，从而在端点邻域排除两类问题中的全部对称最优恢复。证毕。
+
+这里的旋转必要性相对于任务固定的输入、输出坐标而言。改用随参数旋转的参考系可能改变生成元的反对称项，同时也改变恢复误差所比较的参考关系；本节没有把这种改坐标当作原任务中的无代价消去。共同一阶极限也不蕴含整个有限预算最优通道唯一，或两类最优矩阵之间具有平方阶距离界。
+
+## 追加锚（本行以下为增补区）
+
+## 300. 任意正半径的精确二阶误差与严格平方阶差距
+
+**定义 300.1（端点二阶系数）。** 固定正半径六态，沿用第298、299节的正角点规范。记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=\alpha$、$\eta=A^{-1/2}$，唯一端点最优矩阵为 $M_*=S_*-\Omega_*$。令
+
+$$
+0<d_1\le d_2<d_3=d_1+d_2
+$$
+
+为 $S_*$ 的特征值，$v$ 为严格正的单位最大特征向量，$Z_*=\lambda vv^{\mathsf T}$ 为唯一对偶矩阵，$\lambda>0$。定义向量 $\omega$ 使 $\Omega_*x=\omega\times x$，并记
+
+$$
+\begin{aligned}
+J_a&=\|M_*^{\mathsf T}b\|_2^2
+   +2b^{\mathsf T}(M_*^{\mathsf T})^2b,\\
+L_a&=\frac{3A-J_a}{2},\qquad
+\mu_a=\frac1{2D_a},\qquad
+\zeta_a=\frac\lambda{2D_a},\\
+\Gamma_a&=\mu_a L_a+\zeta_a(v\cdot\omega)^2,\\
+\Theta_a&=\zeta_a d_1d_2>0.
+\end{aligned}
+\tag{300.1}
+$$
+
+**定理 300.2（两种恢复类的精确二阶展开）。** 对任意固定正半径，令 $R_\delta=\eta(1-\delta)$。当 $\delta\downarrow0$ 时，
+
+$$
+\begin{aligned}
+F_a^{(2)}(R_\delta)
+&=\kappa_a\delta+\Gamma_a\delta^2+o(\delta^2),\\
+\widehat G_a(R_\delta)
+&=\kappa_a\delta+(\Gamma_a+\Theta_a)\delta^2+o(\delta^2).
+\end{aligned}
+\tag{300.2}
+$$
+
+因此一般不等半径也具有严格为正的精确平方阶差距：
+
+$$
+\lim_{R\uparrow\eta}
+\frac{\widehat G_a(R)-F_a^{(2)}(R)}{(\eta-R)^2}
+=\frac{\lambda d_1d_2}{2D_a\eta^2}>0.
+\tag{300.3}
+$$
+
+证明不要求有限预算最优通道随预算可微，也不要求全部轴误差约束的乘子严格为正。
+
+证明。先给出共同的一致展开。对 $M=S-\Omega$ 在 $M_*$ 的一个固定小邻域内，置 $T=I-\delta M$，并令
+
+$$
+K(M)=\frac12(\Omega S-S\Omega-\Omega^2).
+\tag{300.4}
+$$
+
+直接展开正平方根可得
+
+$$
+(T^{\mathsf T}T)^{1/2}
+=I-\delta S+\delta^2K(M)+O(\delta^3).
+\tag{300.5}
+$$
+
+余项在这个邻域内一致，因为所有矩阵有界，且 $T^{\mathsf T}T$ 一致接近单位矩阵。$S$ 的最大特征值在邻域内保持单重，其与第二特征值之差有严格正下界。因此可对 $(I-(T^{\mathsf T}T)^{1/2})/\delta$ 的最大特征值使用一致的一阶 Rayleigh 扰动展开，余项为 $O(\delta^2)$；再乘回 $\delta$，得到最小奇异值的 $O(\delta^3)$ 余项。这个估计只使用单重最大特征值的间隙，不要求 $S$ 的另两个特征值不同。
+
+记 $d_1(S)\le d_2(S)<d_3(S)$、单位最大特征向量 $v_S$，并令 $\Omega x=\omega_M\times x$。在 $S$ 的本征标架内，交换子 $\Omega S-S\Omega$ 的对角元为零，且 $-\Omega^2=\|\omega_M\|^2I-\omega_M\omega_M^{\mathsf T}$。所以
+
+$$
+\operatorname{Tr}K(M)-2v_S^{\mathsf T}K(M)v_S
+=(v_S\cdot\omega_M)^2.
+$$
+
+若 $s_1\ge s_2\ge s_3$ 为 $T$ 的奇异值，并记 $c(S)=\operatorname{Tr}S-2d_3(S)$，则
+
+$$
+\begin{aligned}
+s_1+s_2-s_3-1
+&=-\delta c(S)+\delta^2(v_S\cdot\omega_M)^2+O(\delta^3),\\
+s_1s_2-s_3
+&=-\delta c(S)
+ +\delta^2\bigl((v_S\cdot\omega_M)^2+d_1(S)d_2(S)\bigr)
+ +O(\delta^3).
+\end{aligned}
+\tag{300.6}
+$$
+
+求第二式时，只需要另外两个奇异值的和与积，故没有在它们重合时选取不可微的单独本征方向。
+
+邻近单位通道且行列式为正时，幺元完全正性中唯一可能在当前一阶方向上取等的面是 $s_1+s_2\le1+s_3$；其他 Pauli 概率的一阶系数由 $d_1,d_2>0$ 保证严格为正。微分可分性则再要求 $s_1s_2\le s_3$。这些是既有幺元通道正规形与可分性条件，分别见 Choi–Li（2023），[定理2.2与定理4.1](https://doi.org/10.26421/QIC23.7-8-2)，及 Wolf–Cirac（2008），[定理24](https://arxiv.org/abs/math-ph/0611057v3)。本节使用的是近单位幺元可逆范围。
+
+再展开残差。由于第299节保证规范后的正角点最终唯一活跃，
+
+$$
+\|T^{-\mathsf T}b\|_2^2
+=A+2\delta b^{\mathsf T}Sb
+ +\delta^2\left(\|M^{\mathsf T}b\|_2^2
+               +2b^{\mathsf T}(M^{\mathsf T})^2b\right)
+ +O(\delta^3).
+\tag{300.7}
+$$
+
+该余项同样一致。
+
+现在证明两个二阶下界。分别取任一类问题的实际最优恢复，并按第299节作符号共轭，写成 $T_\delta=I-\delta M_\delta$。该节保证 $M_\delta\to M_*$，但此处不假定其收敛速度为 $O(\delta)$。由预算可行性与
+
+$$
+\frac1{R_\delta^2}
+=\frac A{(1-\delta)^2}
+=A+2A\delta+3A\delta^2+O(\delta^3),
+$$
+
+式（300.7）给出
+
+$$
+b^{\mathsf T}S_\delta b-A
+\ge\delta L_a+o(\delta).
+\tag{300.8}
+$$
+
+令
+
+$$
+k_0=(v\cdot\omega)^2,
+\qquad k_1=(v\cdot\omega)^2+d_1d_2.
+\tag{300.9}
+$$
+
+完全正问题由式（300.6）的第一式得到 $c(S_\delta)\ge\delta k_0+o(\delta)$；微分可分问题由第二式得到 $c(S_\delta)\ge\delta k_1+o(\delta)$。而固定极限向量 $v$ 的 Rayleigh 商总满足
+
+$$
+v^{\mathsf T}\mathcal C(S_\delta)v
+\ge\lambda_{\min}(\mathcal C(S_\delta))
+=c(S_\delta),
+\tag{300.10}
+$$
+
+其中 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$。这一步避免把未知二阶位移 $M_\delta-M_*$ 除以 $\delta$ 后擅自认定有界。
+
+第298节的最优对偶矩阵还给出对任意实矩阵 $M=S-\Omega$ 都成立的支撑不等式
+
+$$
+\frac12h_a(S,\Omega)
+\ge\frac{b^{\mathsf T}Mb+\lambda v^{\mathsf T}\mathcal C(S)v}{2D_a}
+=\kappa_a+\mu_a(b^{\mathsf T}Sb-A)
+          +\zeta_a v^{\mathsf T}\mathcal C(S)v.
+\tag{300.11}
+$$
+
+它只是对三个列球逐列使用支撑函数，不要求此处的 $M$ 本身满足端点锥条件。将式（300.8）—（300.10）代入，并使用 $\mu_a,\zeta_a>0$，最后乘以 $\delta$，便分别得到式（300.2）的下界，系数为 $\mu_aL_a+\zeta_a k_0$ 与 $\mu_aL_a+\zeta_a k_1$。
+
+为构造匹配上界，只需一个有限线性规划。令 $m_i=M_*e_i$，并记活跃轴集合
+
+$$
+I_* =\{i:a_i\|m_i\|_2=2\kappa_a\}.
+$$
+
+$S_*\succ0$ 使 $M_*$ 可逆，因此每个 $m_i\ne0$。对 $k=k_0$ 或 $k=k_1$，在实矩阵 $H$ 与实数 $t$ 上最小化 $t$，约束为
+
+$$
+\begin{gathered}
+a_i\frac{\langle m_i,He_i\rangle}{\|m_i\|_2}\le2t
+\quad(i\in I_*),\\
+b^{\mathsf T}Hb\ge L_a,
+\qquad v^{\mathsf T}\mathcal C(\operatorname{sym}H)v\ge k.
+\end{gathered}
+\tag{300.12}
+$$
+
+取 $H=sI$、$s$ 足够大，再取足够大的 $t$，可使所有约束严格成立。下面给出一个有限对偶值，故此线性规划有有限且达到的最小值，并满足强对偶；这里使用普通有限维线性规划对偶，不要求非线性最优解可微。
+
+其对偶变量为 $\beta_i\ge0$（$i\in I_*$）、$\mu'\ge0$ 与 $\zeta'\ge0$，满足
+
+$$
+\sum_{i\in I_*}\beta_i=\frac12,
+\qquad
+\sum_{i\in I_*}\beta_i a_i
+\frac{m_i}{\|m_i\|_2}e_i^{\mathsf T}
+=\mu'bb^{\mathsf T}+\zeta'(I-2vv^{\mathsf T}).
+\tag{300.13}
+$$
+
+对偶目标为 $\mu'L_a+\zeta'k$。设 $G_*=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}$，第298节的列支撑条件给出一组可行乘子
+
+$$
+\mu'=\mu_a,\qquad\zeta'=\zeta_a,
+\qquad\beta_i=\frac{\alpha_i\|G_*e_i\|_2}{2D_a}.
+\tag{300.14}
+$$
+
+若 $G_*e_i\ne0$，该列必取到范数界，所以 $i\in I_*$；零列的乘子为零。因此式（300.14）没有给未列入规划的轴分配非零乘子。
+
+更强地，任何对偶可行乘子都具有相同的 $\mu',\zeta'$。把式（300.13）与 $M_*$ 取 Frobenius 内积，利用活跃轴等式和 $\mathcal C(S_*)v=0$，得到 $\kappa_a=\mu'A$，故 $\mu'=1/(2D_a)>0$。随后令 $Z=(\zeta'/\mu')vv^{\mathsf T}$。由式（300.13），它在第298节对偶中的目标值为
+
+$$
+\sum_i\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2
+=\frac{\sum_i\beta_i}{\mu'}=D_a.
+$$
+
+因此它也是该对偶的达到点；唯一性使 $Z=Z_*$，从而 $\zeta'=\zeta_a$。强对偶便说明式（300.12）的最小值精确为
+
+$$
+t_k=\mu_aL_a+\zeta_a k.
+\tag{300.15}
+$$
+
+取一个达到矩阵 $H_k$。对充分大的固定正常数 $C$，构造
+
+$$
+T_\delta=I-\delta M_*-\delta^2H_k-C\delta^3I.
+\tag{300.16}
+$$
+
+式（300.12）分别保证残差预算与所需谱条件的二阶系数正确。剩余误差都是 $O(\delta^3)$。加入 $-C\delta^3I$ 后，式（300.6）中的两个左侧各减少 $C\delta^3+O(\delta^4)$，而式（300.7）的正角点平方范数增加 $2CA\delta^3+O(\delta^4)$。因而可以选定一个足够大的 $C$ 同时控制这些余项：当 $k=k_0$ 时得到完全正且预算可行的通道，当 $k=k_1$ 时再满足 $s_1s_2\le s_3$，得到微分可分通道。
+
+这些比较中的三阶主变化可以直接在邻近单位矩阵处求导；$C$ 先固定，再令 $\delta$ 足够小。其余完全正面有由 $d_1,d_2>0$ 给出的严格一阶余量，行列式也保持正，所以没有遗漏其他通道条件。第281节的最小残差方向、酉编码旋转与逆酉解码把同一个 $T_\delta$ 实现成一对完整 $M_2$ 上的实际通道，同时达到所需预算与恢复误差。
+
+非活跃轴的首阶误差有严格间隙，活跃轴的列范数则在 $m_i\ne0$ 处可微，因此式（300.12）、（300.15）还给出
+
+$$
+e(T_\delta)=\kappa_a\delta+t_k\delta^2+O(\delta^3).
+\tag{300.17}
+$$
+
+这与前面的两个下界匹配，证明式（300.2）。相减后使用 $\eta-R=\eta\delta$，得到式（300.3）。证毕。
+
+等半径时，$S_*=(I+nn^{\mathsf T})/2$、$\Omega_*=0$、$d_1=d_2=1/2$、$\lambda=1/a^2$、$D_a=3\sqrt2/a^3$，而 $J_a=3A$。所以 $\Gamma_a=0$、$\Theta_a=a/(24\sqrt2)$，式（300.3）还原第297节的 $1/(8\sqrt2a)$。一般半径的系数由同一个唯一端点原、对偶解决定；本节仍不求出整条有限预算曲线，也不声称实际最优通道在端点具有唯一二阶矩阵。
+
+## 追加锚（本行以下为增补区）
+
+## 301. 端点生成元的固定角点方向、横向旋转与曲率符号
+
+**定理 301.1（最优生成元的固定方向与旋转轴）。** 固定正半径六态模型，沿用第298节正角点规范下唯一的端点矩阵 $M_*=S_*-\Omega_*$、$b=(1/a_1,1/a_2,1/a_3)$ 与唯一对偶矩阵 $Z_*=\lambda vv^{\mathsf T}$。选择 $\|v\|_2=1$、$v_i>0$，并定义 $\omega\in\mathbb R^3$ 使 $\Omega_*x=\omega\times x$。则
+
+$$
+M_*b=b,
+\qquad v\cdot\omega=0.
+\tag{301.1}
+$$
+
+不等半径时，第299节所必需的非零一阶旋转，其轴因而总在 $v^\perp$ 内。在第296节采用的主轴 Lindblad 表示中，$v$ 是耗散系数为零的方向。两个结论都包括对偶列支撑中出现零列的情形。
+
+证明。记 $A=\|b\|_2^2$，将归一化最优矩阵正数缩放为第298节最大化问题的达到点
+
+$$
+Q=\frac{D_a}{A}M_*,
+\qquad G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{301.2}
+$$
+
+互补松弛与列支撑给出
+
+$$
+(Q+Q^{\mathsf T})v=\operatorname{Tr}(Q)v,
+\qquad
+Qe_i=\frac{\alpha_i}{\|Ge_i\|_2}Ge_i
+\quad\text{当 }Ge_i\ne0.
+\tag{301.3}
+$$
+
+因为 $G$ 对称，逐列展开乘积可得
+
+$$
+QG
+=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}.
+\tag{301.4}
+$$
+
+零列对应的项是 $(Qe_i)(Ge_i)^{\mathsf T}=0$，不要求 $Qe_i=0$。因此 $QG$ 对称，亦即 $QG=GQ^{\mathsf T}$。这一步统一保留了全部零乘子情形。
+
+令 $B=b\cdot v>0$、$\ell=\operatorname{Tr}(Q)$、$w=Qv$。式（301.3）给出 $Q^{\mathsf T}v=\ell v-w$ 与 $v\cdot w=\ell/2$，而 $Gv=Bb-\lambda v$。把 $QG=GQ^{\mathsf T}$ 作用到 $v$，两侧分别为
+
+$$
+QGv=BQb-\lambda w,
+$$
+
+以及
+
+$$
+\begin{aligned}
+GQ^{\mathsf T}v
+&=\ell(Bb-\lambda v)-Gw\\
+&=\ell Bb-b(b\cdot w)-\lambda w,
+\end{aligned}
+$$
+
+其中最后一步使用 $2v\cdot w=\ell$ 抵消 $v$ 方向的项。于是
+
+$$
+BQb=(\ell B-b\cdot w)b.
+\tag{301.5}
+$$
+
+由于 $B>0$，$Qb$ 与 $b$ 平行；再由 $b^{\mathsf T}Qb=D_a$ 得
+
+$$
+Qb=\frac{D_a}{A}b.
+$$
+
+正数缩放后即为 $M_*b=b$。
+
+为证明旋转约束，令 $K=Q-Q^{\mathsf T}$、$P=I-vv^{\mathsf T}$。展开同一个对称乘积等式，得到
+
+$$
+0=QG-GQ^{\mathsf T}
+=Qb\,b^{\mathsf T}-b(Qb)^{\mathsf T}+\lambda PKP.
+\tag{301.6}
+$$
+
+这里使用 $Qv=(\ell v+Kv)/2$ 与 $v^{\mathsf T}K=-(Kv)^{\mathsf T}$。已证的 $Qb\parallel b$ 使前两项抵消，因此 $PKP=0$。在以 $v$ 为第三轴的任意正向正交标架内，这意味着 $K$ 在前两轴平面上的反对称块为零；等价地，$\Omega_Q=(Q^{\mathsf T}-Q)/2$ 的旋转轴向量满足 $v\cdot\omega_Q=0$。再正数缩放回 $M_*$，得到式（301.1）。证毕。
+
+**定理 301.2（无限制端点曲率的精确符号）。** 在第300节的记号下，任意固定正半径都有
+
+$$
+\Gamma_a=-\frac{\|\Omega_*b\|_2^2}{D_a}\le0,
+\qquad
+\Theta_a=\frac{\lambda d_1d_2}{2D_a}>0.
+\tag{301.7}
+$$
+
+而且
+
+$$
+\Gamma_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{301.8}
+$$
+
+因此，对每个固定的不等正半径模型，当 $\delta>0$ 充分小时，无限制实际最优误差严格低于其端点一阶切线：
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)<\kappa_a\delta.
+\tag{301.9}
+$$
+
+证明。由 $M_*b=b$ 与 $M_*^{\mathsf T}=M_*+2\Omega_*$，
+
+$$
+M_*^{\mathsf T}b=b+2\Omega_*b,
+\qquad
+b^{\mathsf T}(M_*^{\mathsf T})^2b
+=b^{\mathsf T}M_*^2b=A.
+$$
+
+反对称性给出 $b\cdot\Omega_*b=0$，故定义300.1中的量满足
+
+$$
+J_a=3A+4\|\Omega_*b\|_2^2.
+\tag{301.10}
+$$
+
+再将定理301.1的 $v\cdot\omega=0$ 代入该定义，得到
+
+$$
+\Gamma_a=\frac{3A-J_a}{4D_a}
+=-\frac{\|\Omega_*b\|_2^2}{D_a}.
+$$
+
+$\Theta_a$ 的表达与严格正性直接由第300节给出。
+
+若 $\Omega_*b=0$，则 $\omega\times b=0$，故 $\omega$ 平行于 $b$。但 $v\cdot\omega=0$ 且 $v\cdot b>0$，所以 $\omega=0$，即 $\Omega_*=0$。反方向显然成立。结合定理299.1，$\Omega_*=0$ 恰好等价于三个半径相等，证明式（301.8）。最后，对不等半径使用定理300.2的 $o(\delta^2)$ 余项与 $\Gamma_a<0$，得到式（301.9）。证毕。
+
+这些关系来自任务最优解的共同列支撑与耗散锥互补条件。它们不要求全部列约束具有严格正乘子，也不是一般量子比特生成元的分类。式（301.7）本身尚未确定一般半径下受限系数 $\Gamma_a+\Theta_a$ 的符号；端点的固定方向也不意味着有限预算最优通道具有完全相同的特征向量。
+
+## 追加锚（本行以下为增补区）
+
+## 302. 轴向不等半径的显式端点解与两侧二阶分离
+
+**定理 302.1（一个具有零对偶列的完整参数区间）。** 取正半径
+
+$$
+a_1=a_2=a,\qquad a_3=\frac a k,
+\qquad 0<a\le1,
+\qquad k\ge k_0:=\sqrt{\frac{3+\sqrt{17}}2}.
+\tag{302.1}
+$$
+
+记 $r=\sqrt{k^2+2}$、$B=1+k^2$，并取正交标架
+
+$$
+u=\frac{(1,1,0)}{\sqrt2},\qquad
+w=\frac{(1,-1,0)}{\sqrt2},\qquad z=e_3.
+$$
+
+第298节正角点规范下的唯一归一化端点矩阵，在 $(u,w,z)$ 标架中为
+
+$$
+M_*=\begin{pmatrix}
+\dfrac{r^2}{2B}&0&\dfrac{k\sqrt2}{2B}\\
+0&\dfrac{kr}{2B}&0\\
+0&0&1
+\end{pmatrix},
+\qquad
+\kappa_a=\frac{ar}{4\sqrt B}.
+\tag{302.2}
+$$
+
+这里下标 $a$ 在 $\kappa_a$ 中仍代表整个三半径模型。其对偶最优矩阵为
+
+$$
+Z_*=\lambda vv^{\mathsf T},\qquad
+\lambda=\frac{kr}{a^2},\qquad
+v=\frac{z+n}{\|z+n\|_2},\qquad
+n=\frac{(1,1,k)}r,
+\tag{302.3}
+$$
+
+而
+
+$$
+D_a=\frac{2r\sqrt B}{a^3}.
+\tag{302.4}
+$$
+
+对偶支撑矩阵 $G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}$ 满足 $Ge_3=0$。当 $k>k_0$ 时，端点原问题的第三条列范数约束严格不取等；当 $k=k_0$ 时它取等，但对应的上述对偶列仍为零。
+
+证明。此时 $b=(1,1,k)/a$、$A=r^2/a^2$。在 $(u,w,z)$ 标架中，直接使用式（302.3）可得
+
+$$
+G=\frac1{a^2}\operatorname{diag}(r^2,kr,0).
+\tag{302.5}
+$$
+
+原坐标 $e_1,e_2$ 分别为 $(u+w)/\sqrt2,(u-w)/\sqrt2$，所以
+
+$$
+\|Ge_1\|_2=\|Ge_2\|_2=\frac{r\sqrt B}{a^2},
+\qquad Ge_3=0.
+$$
+
+因此式（302.3）的对偶目标恰为式（302.4）。
+
+构造第298节最大化问题的候选矩阵
+
+$$
+Q=\frac1{ar\sqrt B}
+\begin{pmatrix}
+r^2&0&k\sqrt2\\
+0&kr&0\\
+0&0&2B
+\end{pmatrix}.
+\tag{302.6}
+$$
+
+其前两条原坐标列都满足 $\|Qe_i\|_2=1/a=\alpha_i$，而第三列满足
+
+$$
+\|Qe_3\|_2^2
+=\frac{2(1+2k^2)}{a^2B}.
+\tag{302.7}
+$$
+
+将它与 $\alpha_3^2=k^2/a^2$ 比较，恰好得到
+
+$$
+k^4-3k^2-2\ge0.
+\tag{302.8}
+$$
+
+因为 $k>0$，这等价于 $k\ge k_0$；严格性也按同样方式对应。
+
+矩阵 $Q$ 是式（302.2）的 $M_*$ 的正数倍。令 $S_*=(M_*+M_*^{\mathsf T})/2$。其三个特征值可以写成
+
+$$
+d_w=\frac{kr}{2B},\qquad
+d_-=\frac{4+3k^2-kr}{4B},\qquad
+d_+=\frac{4+3k^2+kr}{4B}.
+\tag{302.9}
+$$
+
+其中 $d_w,d_->0$，且 $d_+=d_w+d_-$。于是 $\mathcal C(S_*)\succeq0$，其核为最大特征轴 $v$；这也可在 $(u,z)$ 二维块中直接核对。正数缩放后同样有 $\mathcal C(\operatorname{sym}Q)\succeq0$。所以 $Q$ 在整个区间式（302.1）内原问题可行。
+
+直接相乘还给出
+
+$$
+M_*b=b,
+\qquad Q=\frac{D_a}{A}M_*.
+\tag{302.10}
+$$
+
+因此 $b^{\mathsf T}Qb=D_a$，恰好达到式（302.3）给出的对偶值。弱对偶便证明原、对偶都最优，且 $\kappa_a=A/(2D_a)$，得到式（302.2）。唯一性由定理298.2给出；这里最优值的认证本身只用了这一对显式可行矩阵与相等的原、对偶目标。
+
+同时，$S_*$ 在原坐标中的非对角元为
+
+$$
+(S_*)_{12}=\frac{r(r-k)}{4B}>0,
+\qquad
+(S_*)_{13}=(S_*)_{23}=\frac{k}{4B}>0.
+\tag{302.11}
+$$
+
+故正角点确实是唯一活跃角点，且 $b^{\mathsf T}S_*b=A$。这也直接核对了所给矩阵的正角点归一化。式（302.5）、（302.7）、（302.8）证明全部零列与严格松弛结论。证毕。
+
+**定理 302.2（共同切线两侧的精确二阶误差）。** 在定理302.1的参数区间，令 $\eta=a/r$、$R_\delta=\eta(1-\delta)$。则第300节的二阶系数具有显式表达
+
+$$
+\begin{aligned}
+\Gamma_a
+&=-\frac{ak^2r}{16B^{5/2}}<0,\\
+\Theta_a
+&=\frac{ak^2r(4+3k^2-kr)}{32B^{5/2}}>0,\\
+\Gamma_a+\Theta_a
+&=\frac{ak^2r(2+3k^2-kr)}{32B^{5/2}}>0.
+\end{aligned}
+\tag{302.12}
+$$
+
+因此，当 $\delta>0$ 充分小时，两个实际最优误差严格位于共同一阶切线两侧：
+
+$$
+F_a^{(2)}(R_\delta)
+<\kappa_a\delta
+<\widehat G_a(R_\delta).
+\tag{302.13}
+$$
+
+证明。由式（302.2），$\Omega_*=(M_*^{\mathsf T}-M_*)/2$ 的旋转轴沿 $w$，并有
+
+$$
+\|\omega\|_2^2=\frac{k^2}{8B^2},
+\qquad
+\|\Omega_*b\|_2^2=\frac{k^2r^2}{8a^2B^2}.
+\tag{302.14}
+$$
+
+因为 $v,b$ 都在 $(u,z)$ 平面内，$v\cdot\omega=0$。由 $M_*b=b$，有
+
+$$
+b^{\mathsf T}(M_*^{\mathsf T})^2b=A,
+\qquad
+M_*^{\mathsf T}b=b+2\Omega_*b.
+$$
+
+反对称性使 $b\cdot\Omega_*b=0$，故定义300.1中的量满足
+
+$$
+J_a=3A+4\|\Omega_*b\|_2^2.
+\tag{302.15}
+$$
+
+代入第301节简化后的系数，得到
+
+$$
+\Gamma_a=-\frac{\|\Omega_*b\|_2^2}{D_a}
+=-\frac{ak^2r}{16B^{5/2}}.
+$$
+
+式（302.9）的两个较小特征值之积为 $d_wd_-$，不需要预先判断这两者的大小。因此
+
+$$
+\Theta_a=\frac{\lambda}{2D_a}d_wd_-
+=\frac{ak^2r(4+3k^2-kr)}{32B^{5/2}}.
+$$
+
+相加得到式（302.12）的第三式。利用 $kr<k^2+1$，其括号严格大于 $1+2k^2>0$，所以两个二阶系数的符号都严格。最后用定理300.2的 $o(\delta^2)$ 余项，得到式（302.13）。证毕。
+
+这个区间说明，全部轴误差约束具有严格正乘子并非端点唯一性、精确二阶展开或严格平方阶差距的必要条件。结论只确定该轴向不等半径族的端点行为，没有给出它的整条有限预算曲线，也不把式（302.12）的符号推广到未包含在式（302.1）中的半径组合。
+
+## 追加锚（本行以下为增补区）
+
+## 303. 端点最优解的正半定对偶支撑与实衰减谱
+
+**定理 303.1（对偶支撑的正性与主轴角界）。** 固定正半径六态模型，沿用第298、301节的 $M_*=S_*-\Omega_*$、$b$、$A=\|b\|_2^2$、$Z_*=\lambda vv^{\mathsf T}$，其中 $\lambda>0$、$\|v\|_2=1$、$v_i>0$。令
+
+$$
+G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},
+\qquad
+\theta=\arccos\frac{b\cdot v}{\sqrt A}.
+\tag{303.1}
+$$
+
+则 $G\succeq0$，并有
+
+$$
+0<\lambda\le A\cos(2\theta),
+\qquad 0\le\theta<\frac\pi4.
+\tag{303.2}
+$$
+
+$G$ 奇异恰当且仅当其恰有一条原坐标列为零；此时 $G$ 的秩为二，核就是该坐标轴，且式（303.2）中的非严格不等式取等。若没有零列，则 $G\succ0$ 且该不等式严格。另有
+
+$$
+\theta=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{303.3}
+$$
+
+证明。记 $Q=(D_a/A)M_*$。第301节已经证明
+
+$$
+QG=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}\succeq0,
+\tag{303.4}
+$$
+
+而第298节保证 $S_Q=(Q+Q^{\mathsf T})/2\succ0$。取 $G$ 的任一实特征向量 $z\ne0$，其特征值记为 $g$。则
+
+$$
+0\le z^{\mathsf T}QGz
+=g\,z^{\mathsf T}Qz
+=g\,z^{\mathsf T}S_Qz.
+$$
+
+最后的二次型严格为正，故 $g\ge0$。$G$ 对称，遂得 $G\succeq0$。
+
+$S_Q\succ0$ 也使 $Q$ 可逆：若 $Qx=0$，则 $x^{\mathsf T}S_Qx=x^{\mathsf T}Qx=0$，所以 $x=0$。如果 $G$ 的所有列均非零，列支撑条件给出
+
+$$
+Q=GH,
+\qquad H=\operatorname{diag}\left(\frac{\alpha_i}{\|Ge_i\|_2}\right)\succ0.
+\tag{303.5}
+$$
+
+于是 $G$ 可逆，再由半正定性得 $G\succ0$。反过来，一条零列显然使 $G$ 奇异，而第298节已证明至多存在一条这样的列。因此 $G$ 奇异恰好对应恰有一条零列。
+
+还需核对其核的维数。矩阵 $\lambda I+bb^{\mathsf T}$ 正定，且 $G$ 只从它减去秩一矩阵 $2\lambda vv^{\mathsf T}$。如果 $\ker G$ 至少二维，可以在该核中选一个非零 $x\perp v$，但此时
+
+$$
+0=x^{\mathsf T}Gx
+=\lambda\|x\|_2^2+(b\cdot x)^2>0,
+$$
+
+矛盾。故奇异时的核恰好一维；若 $Ge_i=0$，这个核就是 $\mathbb Re_i$。
+
+现在令 $n=b/\sqrt A$。取一个包含 $n,v$ 的二维平面，在其中写 $v=\cos\theta\,n+\sin\theta\,m$，其中 $m\perp n$、$\|m\|_2=1$。若 $\theta=0$，任选这样的 $m$。对应二维块为
+
+$$
+\begin{pmatrix}
+A-\lambda\cos(2\theta)&-\lambda\sin(2\theta)\\
+-\lambda\sin(2\theta)&\lambda\cos(2\theta)
+\end{pmatrix},
+\tag{303.6}
+$$
+
+其余正交方向上的系数为 $\lambda$。因此
+
+$$
+\det G=\lambda^2\bigl(A\cos(2\theta)-\lambda\bigr).
+\tag{303.7}
+$$
+
+半正定性给出式（303.2）的系数界。因为 $b\cdot v>0$，原本 $0\le\theta<\pi/2$；再由 $\lambda>0$ 得 $\cos(2\theta)>0$，所以 $\theta<\pi/4$。等号条件与奇异性由式（303.7）直接对应。
+
+最后，若 $\theta=0$，则 $b$ 在 $S_*$ 的最大特征轴上，写 $S_*b=d_3b$。由第301节的 $M_*b=b$，
+
+$$
+\Omega_*b=(d_3-1)b.
+$$
+
+反对称性使两边与 $b$ 取内积后得到 $d_3=1$，故 $\Omega_*b=0$。此时 $\omega$ 平行于 $b$，而定理301.1给出 $v\cdot\omega=0$。由于 $v$ 平行于 $b$，这迫使 $\omega=0$。再由定理299.1，三个半径相等。反过来，等半径的显式最优解满足 $v=b/\sqrt A$，故 $\theta=0$。证毕。
+
+**定理 303.2（非零旋转与严格实衰减谱同时成立）。** 在定理303.1的条件下，$M_*$ 的三个特征值全是严格正实数，其中一个等于 $1$。因此最优一阶 Bloch 生成矩阵 $-M_*=\Omega_*-S_*$ 的谱全为严格负实数。对每个 $t>0$，端点最优生成元所给半群 $e^{-tM_*}$ 的 Bloch 特征值全部落在 $(0,1)$ 内。
+
+若 $G\succ0$，$M_*$ 还相似于一个正定对称矩阵，因而可对角化。$G$ 奇异时，本节只断言谱的实正性，不附加可对角化结论。
+
+证明。先设 $G\succ0$。式（303.4）此时正定，因为三个 $Ge_i$ 张成全空间，且所有权重严格为正。由此
+
+$$
+G^{-1/2}QG^{1/2}
+=G^{-1/2}(QG)G^{-1/2}\succ0
+\tag{303.8}
+$$
+
+是正定对称矩阵。它与 $Q$ 相似，故 $Q$ 可对角化且谱为严格正实数。$M_*$ 是 $Q$ 的正数倍，结论随之成立。
+
+若 $G$ 奇异，按定理303.1记唯一零列为第 $i$ 列，并将该坐标写在最后。此时
+
+$$
+G=\begin{pmatrix}G_0&0\\0&0\end{pmatrix},
+\qquad G_0\succ0.
+$$
+
+另外两列的支撑条件使 $Q$ 具有块上三角形式
+
+$$
+Q=\begin{pmatrix}G_0H_0&x\\0&q_{ii}\end{pmatrix},
+\qquad H_0\succ0\ \text{为对角矩阵},
+\qquad q_{ii}=e_i^{\mathsf T}S_Qe_i>0.
+\tag{303.9}
+$$
+
+矩阵 $G_0H_0$ 相似于正定对称矩阵 $H_0^{1/2}G_0H_0^{1/2}$，所以它的两个特征值都严格实正。块上三角矩阵的第三个特征值为 $q_{ii}>0$。这证明奇异情形下 $Q$，进而 $M_*$ 的全部谱结论；这一论证不需要排除第三个特征值与前两个重合。
+
+第301节的 $M_*b=b$ 给出特征值 $1$。最后，对矩阵指数使用谱映射，$e^{-tM_*}$ 的特征值为 $e^{-t\rho_j}$，其中 $\rho_j>0$，故全部在 $(0,1)$ 内。该半群的 CPTP 性由第296节的最优切向生成元构造保证；本节只进一步确定它的 Bloch 谱。证毕。
+
+不等半径时，第299节仍保证 $\Omega_*\ne0$。本节说明，这个必要的 Hamiltonian 部分与完整一阶生成矩阵具有实谱可以同时成立；两者分别描述矩阵的反对称部分与整体谱。结论不把该量子通道归为经典过程，也不声称有限预算最优恢复必具有同一谱结构。
+
+## 追加锚（本行以下为增补区）
+
+## 304. 端点生成元的全参数残差比较与同一半群的预算界
+
+**定理 304.1（固定方向的精确收缩与严格残差增益）。** 固定正半径六态模型，沿用第298、301、303节正角点规范下的唯一端点矩阵 $M_*=S_*-\Omega_*$、$b$、$A=\|b\|_2^2$、$\eta=A^{-1/2}$。令
+
+$$
+T_t=e^{-tM_*},\qquad
+y_t=e^{tM_*^{\mathsf T}}b-e^t b,
+\qquad t\ge0.
+\tag{304.1}
+$$
+
+则 $T_t$ 是第296节构造的同一个幺元 CPTP 半群的 Bloch 矩阵，且
+
+$$
+T_t b=e^{-t}b,\qquad b\cdot y_t=0,
+\tag{304.2}
+$$
+
+$$
+r_*(T_t)
+\le\frac1{\|e^{tM_*^{\mathsf T}}b\|_2}
+=\frac{\eta e^{-t}}
+{\sqrt{1+e^{-2t}\|y_t\|_2^2/A}}
+\le\eta e^{-t}.
+\tag{304.3}
+$$
+
+若三个半径不全相等，则对每个 $t>0$，最后一个不等式都严格，因而
+
+$$
+r_*(T_t)<\eta e^{-t}.
+\tag{304.4}
+$$
+
+若三个半径相等，则对每个 $t\ge0$ 有 $r_*(T_t)=\eta e^{-t}$。因此在任意一个正参数处出现等式 $r_*(T_t)=\eta e^{-t}$，就足以判定三个半径相等。
+
+证明。第301节已经给出 $M_*b=b$，所以矩阵指数直接给出式（304.2）的第一式。另一方面，
+
+$$
+b^{\mathsf T}e^{tM_*^{\mathsf T}}b
+=(e^{tM_*}b)^{\mathsf T}b=e^t A,
+$$
+
+故 $b\cdot y_t=0$。将这个正交分解取平方范数，得到
+
+$$
+\|e^{tM_*^{\mathsf T}}b\|_2^2=e^{2t}A+\|y_t\|_2^2.
+\tag{304.5}
+$$
+
+第281节式（281.10）的角点公式适用于可逆的 $T_t$，并且 $b$ 是其中一个角点。因此
+
+$$
+r_*(T_t)=
+\left(\max_\sigma
+\|T_t^{-\mathsf T}b_\sigma\|_2\right)^{-1}
+\le\|e^{tM_*^{\mathsf T}}b\|_2^{-1}.
+$$
+
+结合式（304.5）即得式（304.3）。这里没有假定正角点在所有参数处都达到最大值。
+
+现在证明严格性不会在某个正参数处消失。固定 $t>0$，定义整函数
+
+$$
+g_t(z)=
+\begin{cases}
+\dfrac{e^{tz}-e^t}{z-1},&z\ne1,\\
+te^t,&z=1.
+\end{cases}
+\tag{304.6}
+$$
+
+第303节保证 $M_*^{\mathsf T}$ 的所有特征值都是严格正实数。在这些实数上 $g_t$ 严格为正，故谱映射使 $g_t(M_*^{\mathsf T})$ 可逆。由于
+
+$$
+e^{tM_*^{\mathsf T}}-e^t I
+=g_t(M_*^{\mathsf T})(M_*^{\mathsf T}-I),
+\tag{304.7}
+$$
+
+即使矩阵存在非平凡 Jordan 块，仍有
+
+$$
+y_t=0\quad\Longleftrightarrow\quad M_*^{\mathsf T}b=b.
+\tag{304.8}
+$$
+
+再用 $M_*^{\mathsf T}=M_*+2\Omega_*$ 及 $M_*b=b$，右侧等价于 $\Omega_*b=0$。若 $\Omega_*b=0$，则 $\omega$ 平行于 $b$；定理301.1的 $v\cdot\omega=0$ 与 $v\cdot b>0$ 随后迫使 $\omega=0$。结合定理299.1及等半径的显式解，这恰好等价为三个半径相等。不等半径时 $y_t\ne0$ 对所有 $t>0$ 成立，式（304.3）的最后一个不等式遂严格。
+
+等半径时，第299节的显式解为
+
+$$
+M_*=\frac12(I+nn^{\mathsf T}),\qquad n=b/\sqrt A.
+$$
+
+于是 $e^{tM_*}$ 对称，算子范数为 $e^t$，而在 $b$ 上达到此范数。所有角点的范数同为 $\sqrt A$，所以角点最大值恰为 $e^t\sqrt A$。这证明等半径的等式，也完成其余等价结论。证毕。
+
+**定理 304.2（由端点数据构造的全预算上界）。** 令 $d_1=\lambda_{\min}(S_*)>0$，$\kappa_a$ 为第296节的端点系数。对每个 $0<R<\eta$，都有严格不等式
+
+$$
+\widehat G_a(R)
+<\frac{\kappa_a}{d_1}
+\left[1-\left(\frac R\eta\right)^{d_1}\right].
+\tag{304.9}
+$$
+
+上界由同一个固定生成元 $-M_*$ 的半群给出；编码输出的酉坐标选择可以随预算改变。
+
+证明。对任意向量 $x$，写 $x_t=e^{-tM_*}x$。由反对称部分不贡献二次型，
+
+$$
+\frac{d}{dt}\|x_t\|_2^2
+=-2x_t^{\mathsf T}S_*x_t
+\le-2d_1\|x_t\|_2^2.
+$$
+
+积分得 $\|T_t\|_{\rm op}\le e^{-d_1t}$。因此对每个原坐标轴，
+
+$$
+\begin{aligned}
+\|(I-T_t)e_i\|_2
+&=\left\|\int_0^tT_sM_*e_i\,ds\right\|_2\\
+&\le\frac{1-e^{-d_1t}}{d_1}\|M_*e_i\|_2.
+\end{aligned}
+\tag{304.10}
+$$
+
+使用 $\frac12\max_i a_i\|M_*e_i\|_2=\kappa_a$，同一通道的恢复误差满足
+
+$$
+e(T_t)\le\frac{\kappa_a}{d_1}(1-e^{-d_1t}).
+\tag{304.11}
+$$
+
+取 $t_R=\log(\eta/R)>0$。定理304.1使 $r_*(T_{t_R})\le R$。再按第281节选择达到该残差的单位方向，酉旋转到编码虚轴，并采用逆酉解码。这一对完整 $M_2$ 上的实际通道具有同一个复合恢复 $T_{t_R}$，故属于定义293.2的比较类；式（304.11）先给出式（304.9）对应的非严格上界。
+
+若半径不全相等，则 $r_*(T_{t_R})<R$，而 $r_*(T_0)=\eta>R$。残差关于 $t$ 连续，所以存在 $0<t'<t_R$ 使 $r_*(T_{t'})=R$。函数 $\kappa_a(1-e^{-d_1t})/d_1$ 关于 $t$ 严格递增，故在这个较小参数处的实际方案满足
+
+$$
+\widehat G_a(R)
+\le e(T_{t'})
+\le\frac{\kappa_a}{d_1}(1-e^{-d_1t'})
+<\frac{\kappa_a}{d_1}
+\left[1-\left(\frac R\eta\right)^{d_1}\right].
+$$
+
+这一步只用连续性，不要求 $r_*(T_t)$ 单调，也不要求预算对应的参数唯一。
+
+最后处理等半径 $a_i=a$。令 $x=\sqrt{R/\eta}\in(0,1)$，则 $d_1=1/2$、$\kappa_a=a/(2\sqrt2)$，式（304.9）的右侧为
+
+$$
+B_R=\frac a{\sqrt2}(1-x).
+$$
+
+在参数 $t_R$ 处，同一半群沿 $n=b/\sqrt A$ 的收缩因子为 $x^2$，在 $n^\perp$ 上为 $x$。每个坐标轴沿 $n$ 的平方分量为 $1/3$，故该实际方案的误差满足
+
+$$
+e(T_{t_R})^2
+=\frac{a^2}{12}(1-x)^2\bigl[2+(1+x)^2\bigr].
+$$
+
+直接相减得到
+
+$$
+B_R^2-e(T_{t_R})^2
+=\frac{a^2}{12}(1-x)^3(3+x)>0.
+\tag{304.12}
+$$
+
+定理304.1已保证此处残差恰为 $R$，所以 $\widehat G_a(R)\le e(T_{t_R})<B_R$。这证明等半径情形也严格，完成式（304.9）的全范围结论；这里不要求该等半径半群在所有预算处都是最优。证毕。
+
+**定理 304.3（全部端点半群的严格预算顺序）。** 对任意正半径，令 $d_1,d_3$ 分别为 $S_*$ 的最小与最大特征值。则对任意 $t,s\ge0$，
+
+$$
+e^{-d_3s}r_*(T_t)
+\le r_*(T_{t+s})
+\le e^{-d_1s}r_*(T_t).
+\tag{304.13}
+$$
+
+因此 $t\mapsto r_*(T_t)$ 在 $[0,\infty)$ 上连续且严格递减，从 $\eta$ 趋于 $0$；每个 $0<R<\eta$ 恰有一个正参数达到该预算。这不要求达到最大值的角点在整个参数区间保持不变。
+
+证明。对每个角点令 $z_\sigma(t)=e^{tM_*^{\mathsf T}}b_\sigma$。其平方范数满足
+
+$$
+2d_1\|z_\sigma(t)\|_2^2
+\le\frac{d}{dt}\|z_\sigma(t)\|_2^2
+=2z_\sigma(t)^{\mathsf T}S_*z_\sigma(t)
+\le2d_3\|z_\sigma(t)\|_2^2.
+$$
+
+积分后对有限个角点取最大值，得到
+
+$$
+e^{d_1s}\max_\sigma\|z_\sigma(t)\|_2
+\le\max_\sigma\|z_\sigma(t+s)\|_2
+\le e^{d_3s}\max_\sigma\|z_\sigma(t)\|_2.
+$$
+
+这些数都严格为正。使用角点公式取倒数，即为式（304.13）。由于 $d_1>0$，$s>0$ 时右侧严格小于 $r_*(T_t)$。初值为 $\eta$，极限为零；连续性与介值定理给出预算参数的存在唯一性。证毕。
+
+这些结论描述端点最优生成元所产生的整条可行半群及其比较界。它们不把该半群宣称为所有有限预算处的最优恢复，不保证式（304.9）优于每个已有上界，也不把必要的 Hamiltonian 部分解释为整体谱中必有振荡频率。
+
+## 追加锚（本行以下为增补区）
+
+## 305. 奇异对偶分支的显式判定、可对角化性与全参数角点
+
+**定义 305.1（逐坐标的奇异支撑候选）。** 固定正半径六态模型，记 $b=(\alpha_1,\alpha_2,\alpha_3)$、$\alpha_i=1/a_i$、$A=\|b\|_2^2$、$r=\sqrt A$。对一个候选坐标 $i$，将其写在最后，记其余两个坐标组成的正向量为 $p\in\mathbb R^2$，并令 $z=\alpha_i>0$。定义
+
+$$
+\begin{aligned}
+G_0&=zrI_2+\frac r{r+z}pp^{\mathsf T},\\
+H&=\operatorname{diag}\left(
+\frac{p_j}{r\sqrt{z^2+p_j^2}}\right)_{j=1,2},
+\qquad K=G_0H,\\
+q&=\frac1r\sum_{j=1}^2p_j\sqrt{z^2+p_j^2},
+\qquad u=\frac{(qI_2-K)p}{z},\\
+Q_i&=\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad E_i=(\operatorname{Tr}K+q)I_2-K-K^{\mathsf T}.
+\end{aligned}
+\tag{305.1}
+$$
+
+这里 $G_0,H,K,q,u,E_i$ 都依赖于候选坐标 $i$；公式中的块矩阵最后按原坐标顺序放回。候选通过的条件定义为
+
+$$
+\|u\|_2^2+q^2\le z^2.
+\tag{305.2}
+$$
+
+这个条件只包含正半径的代数运算与平方根。下面证明 $E_i\succ0$ 对每个正半径候选自动成立，因此无需另作半正定判定。
+
+**定理 305.2（奇异对偶分支的完全显式判定）。** 第303节的最优支撑矩阵 $G$ 奇异，当且仅当三个候选中有一个满足式（305.2）；满足者至多一个，而且通过的坐标必须满足 $\alpha_i>\max_{j\ne i}\alpha_j$。因此只需检查唯一最大倒数半径的坐标；若最大值并不唯一，则 $G\succ0$。若坐标 $i$ 的候选通过，则
+
+$$
+\begin{aligned}
+\lambda&=zr,
+&v&=\frac{b+re_i}{\sqrt{2r(r+z)}},\\
+Z_*&=\lambda vv^{\mathsf T},
+&G&=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},\\
+D_a&=Aq,
+&\kappa_a&=\frac1{2q},
+&M_*&=\frac{Q_i}{q}.
+\end{aligned}
+\tag{305.3}
+$$
+
+$Ge_i=0$，其余两个对偶列非零且对应原问题列约束取等。第 $i$ 条原问题列约束严格不取等，当且仅当式（305.2）的不等式严格。若三个候选全不通过，则 $G\succ0$，而三个原问题列范数约束全部取等。
+
+证明。先对任意候选坐标验证构造的恒等式。令 $L=r+z$，则 $\|p\|_2^2=(r-z)L$。取式（305.3）的 $\lambda,v$ 后，直接计算得到
+
+$$
+G=\begin{pmatrix}G_0&0\\0&0\end{pmatrix},
+\qquad G_0\succ0,
+\qquad G_0p=r^2p.
+\tag{305.4}
+$$
+
+更具体地，$G_0$ 沿 $p$ 的特征值为 $r^2$，在其正交方向的特征值为 $zr$。平方后也可写成
+
+$$
+G_0^2=r^2(z^2I_2+pp^{\mathsf T}).
+\tag{305.5}
+$$
+
+所以第 $j$ 条非零原坐标列满足 $\|Ge_j\|_2=r\sqrt{z^2+p_j^2}$。由 $H$ 的定义，$Q_i$ 的前两列恰为
+
+$$
+Q_i e_j=p_j\frac{Ge_j}{\|Ge_j\|_2},
+\qquad \|Q_i e_j\|_2=p_j.
+\tag{305.6}
+$$
+
+最后一列的范数平方则为 $\|u\|_2^2+q^2$。此外，$u$ 的定义直接给出
+
+$$
+Q_i b=q b.
+\tag{305.7}
+$$
+
+下面验证候选满足完整耗散锥条件，并证明 $E_i$ 自动正定。写
+
+$$
+h=\operatorname{Tr}H,
+\qquad w=p^{\mathsf T}Hp,
+\qquad \ell=\operatorname{Tr}Q_i.
+$$
+
+由式（305.1）与 $H$ 的对角形式，
+
+$$
+q=z^2h+w,\qquad
+\operatorname{Tr}K=zrh+\frac rLw,
+\qquad
+u=\left(zh+\frac wL\right)p-rHp.
+\tag{305.8}
+$$
+
+将这些式子代入，得到
+
+$$
+(K+K^{\mathsf T})p+Lu=\ell p,
+\qquad u\cdot p+2qL=\ell L.
+\tag{305.9}
+$$
+
+这正是 $(Q_i+Q_i^{\mathsf T})v=\ell v$，即 $\mathcal C(\operatorname{sym}Q_i)v=0$。由于 $v$ 的最后一个坐标非零，这个对称矩阵由其左上块 $E_i$ 唯一写成
+
+$$
+\mathcal C(\operatorname{sym}Q_i)
+=\begin{pmatrix}
+E_i&-E_ip/L\\
+-p^{\mathsf T}E_i/L&p^{\mathsf T}E_ip/L^2
+\end{pmatrix}.
+\tag{305.10}
+$$
+
+对任意 $x\in\mathbb R^2$、$s\in\mathbb R$，其二次型为
+
+$$
+\begin{pmatrix}x\\s\end{pmatrix}^{\mathsf T}
+\mathcal C(\operatorname{sym}Q_i)
+\begin{pmatrix}x\\s\end{pmatrix}
+=\left(x-\frac sL p\right)^{\mathsf T}
+E_i\left(x-\frac sL p\right).
+$$
+
+因此完整锥条件等价于 $E_i\succeq0$。
+
+事实上，这个锥条件对每个候选都自动成立。写 $H=\operatorname{diag}(h_1,h_2)$。式（305.8）的 $u$ 可逐分量改写为：对 $\{j,k\}=\{1,2\}$，
+
+$$
+u_j=p_j\left(zh_k+\frac{p_k^2}{r+z}(h_k-h_j)\right).
+\tag{305.10a}
+$$
+
+而
+
+$$
+\frac{h_j}{h_k}
+=\frac{p_j\sqrt{z^2+p_k^2}}{p_k\sqrt{z^2+p_j^2}}
+<\sqrt{1+\frac{z^2}{p_k^2}}.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\frac{u_j}{p_jh_k}
+&=z+\frac{p_k^2}{r+z}\left(1-\frac{h_j}{h_k}\right)\\
+&>z-\frac{z^2}
+{(r+z)\left(\sqrt{1+z^2/p_k^2}+1\right)}>0.
+\end{aligned}
+\tag{305.10b}
+$$
+
+这里 $r+z>z$，故最后一个严格不等式成立。这还说明 $u>0$ 对每个正半径候选本身都成立，不依赖其是否通过锥条件。
+
+由 $G_0$ 的正条目、$H$ 的正对角元及刚证出的 $u>0$，$S_i=\operatorname{sym}Q_i$ 的全部条目严格为正。式（305.9）已经给出 $S_i v=(\ell/2)v$，其中 $v$ 的每个坐标严格为正。令 $V=\operatorname{diag}(v)$。由 $S_iv=(\ell/2)v$，直接展开二次型得到
+
+$$
+y^{\mathsf T}V\mathcal C(S_i)Vy
+=2\sum_{j<k}(S_i)_{jk}v_jv_k(y_j-y_k)^2.
+$$
+
+每个系数严格为正，所以该二次型非负，且取零恰好要求 $y$ 的三个分量相同。$V$ 可逆，因而
+
+$$
+\mathcal C(S_i)\succeq0,
+\qquad \ker\mathcal C(S_i)=\mathbb Rv.
+\tag{305.10c}
+$$
+
+因为 $v$ 的最后一个坐标非零，任何非零 $(x,0)$ 都不在这个核内。故 $x^{\mathsf T}E_ix>0$ 对所有 $x\ne0$ 成立，即 $E_i\succ0$。这里没有使用候选的最后一列范数条件；该条件是剩下的唯一可行性检验。
+
+现在假设候选通过。式（305.6）、（305.10）与最后一列的范数判据使 $Q_i$ 在第298节的最大化问题中可行。式（305.7）给出的原目标为 $b^{\mathsf T}Q_i b=Aq$。与此同时，式（305.3）的 $Z_*\succeq0$ 在对偶问题中可行，其目标为
+
+$$
+\sum_j\alpha_j\|Ge_j\|_2
+=r\sum_{j=1}^2p_j\sqrt{z^2+p_j^2}
+=r^2q=Aq.
+\tag{305.11}
+$$
+
+原、对偶可行值相等，弱对偶便使二者都最优。由第298节的唯一性与归一化关系，得到式（305.3）的全部公式；特别地 $M_*=(A/D_a)Q_i=Q_i/q$。第303节保证此处奇异支撑恰有该零列，式（305.6）及最后一列的范数公式给出全部活跃性结论。
+
+反过来，设实际最优 $G$ 奇异。第303节使其唯一零列为某个 $Ge_i=0$。令 $z=\alpha_i$。由
+
+$$
+zb+\lambda e_i=2\lambda v_i v,
+\qquad 2\lambda v_i^2=z^2+\lambda,
+\tag{305.12}
+$$
+
+对第一个等式取平方范数并代入第二个，得到 $z^2A=\lambda^2$。因为 $\lambda>0$，所以 $\lambda=zr$，而严格正号规范进一步给出式（305.3）的 $v$。因此实际支撑矩阵就是式（305.4）的候选矩阵。
+
+对偶目标式（305.11）使 $D_a=Aq$。最优列支撑条件唯一确定另外两列为式（305.6）；第301节的固定方向恒等式则给出 $Qb=(D_a/A)b=q b$。这个等式的最后坐标确定 $Q_{ii}=q$，前两个坐标确定剩余列为 $u=(qI_2-K)p/z$。所以实际原最优矩阵恰为 $Q_i$，其最后一列范数可行性迫使式（305.2）成立。
+
+候选通过还迫使 $z$ 严格大于 $p$ 的两个分量。因为它要求 $q^2\le z^2$，而
+
+$$
+r^2(q^2-z^2)
+=p_1^4+p_2^4-z^4
+ +2p_1p_2\sqrt{(z^2+p_1^2)(z^2+p_2^2)}.
+\tag{305.12a}
+$$
+
+若 $z\le\max\{p_1,p_2\}$，右侧严格为正，矛盾。因此只有唯一最大倒数半径的坐标可能通过；存在最大值并列时，三个候选都不通过。
+
+若两个不同坐标的候选同时通过，它们都给出最优对偶矩阵。第298节的唯一性会使二者为同一矩阵，却又使同一个 $G$ 有两条零列，与第303节矛盾。因此通过者至多一个。若全部不通过，已证必要性排除奇异 $G$，第303节给出 $G\succ0$；三个非零列随后都由支撑取等条件饱和。证毕。
+
+**定理 305.3（奇异支撑分支的正列与可对角化性）。** 若定理305.2的某个候选通过，则式（305.1）中的 $u$ 两个分量都严格为正，$K$ 的四个条目严格为正。归一化端点矩阵 $M_*=Q_i/q$ 的谱由一个单重特征值 $1$ 及两个位于 $(0,1)$ 内的实特征值组成，并且 $M_*$ 可对角化。
+
+结合第303节的正定支撑情形，对任意正半径，端点最优矩阵 $M_*$ 都可对角化；本节不把其余特征值小于 $1$ 的结论推广到正定支撑分支。
+
+证明。$G_0$ 的全部条目严格为正，$H$ 的对角元严格为正，所以 $K$ 逐项严格为正。前面已对每个正半径候选证明 $u>0$，不依赖于范数判据是否通过。
+
+由 $Kp+zu=qp$ 及 $u>0$，有 $Kp<qp$ 逐项成立。设 $P=\operatorname{diag}(p_1,p_2)$，则非负矩阵 $P^{-1}KP$ 的每个行和都严格小于 $q$。算子无穷范数给出 $K$ 的所有特征值绝对值严格小于 $q$。另一方面，
+
+$$
+H^{1/2}KH^{-1/2}=H^{1/2}G_0H^{1/2}\succ0
+$$
+
+是对称正定矩阵，所以 $K$ 的两个特征值都严格实正，且 $K$ 可对角化。
+
+块矩阵还满足显式相似关系
+
+$$
+Q_i
+\begin{pmatrix}I_2&p/z\\0&1\end{pmatrix}
+=
+\begin{pmatrix}I_2&p/z\\0&1\end{pmatrix}
+\begin{pmatrix}K&0\\0&q\end{pmatrix}.
+\tag{305.15}
+$$
+
+它来自 $Kp/z+u=qp/z$。右侧块对角矩阵可对角化，其特征值 $q$ 与 $K$ 的两个特征值不同。因此 $Q_i$，进而 $M_*=Q_i/q$，均可对角化，并具有所述谱。与第303节的正定支撑证明合并，就覆盖全部正半径模型。证毕。
+
+**定理 305.4（奇异支撑半群的唯一角点与严格预算顺序）。** 在定理305.3的奇异支撑情形，令 $T_t=e^{-tM_*}$。对每个 $t>0$，正角点在整体正负号之外都是残差公式中的唯一最大角点，并有
+
+$$
+r_*(T_t)=\frac1{\|e^{tM_*^{\mathsf T}}b\|_2}.
+\tag{305.16}
+$$
+
+函数 $t\mapsto r_*(T_t)$ 在 $[0,\infty)$ 上连续且严格递减，从 $\eta$ 趋于 $0$。因此每个 $0<R<\eta$ 恰好对应一个正参数 $t$ 使 $r_*(T_t)=R$。
+
+证明。定理305.3使 $M_*$ 逐项非负，且在被放到最后的坐标 $i$ 对应列上，三个分量都严格为正。因此对 $t>0$，矩阵 $B_t=e^{tM_*^{\mathsf T}}$ 逐项非负，而第 $i$ 行的三个条目都严格为正：对角项至少来自指数级数中的 $I$，另外两项已经在 $tM_*^{\mathsf T}$ 中严格为正。
+
+对任意角点 $b_\sigma$，逐坐标三角不等式给出
+
+$$
+|B_t b_\sigma|\le B_t b.
+\tag{305.17}
+$$
+
+若 $\sigma$ 既非全正也非全负，第 $i$ 行中至少有一项正号与一项负号，且其系数及所有 $b_j$ 都严格为正，所以该行的三角不等式严格。右侧逐坐标严格为正，故
+
+$$
+\|B_t b_\sigma\|_2<\|B_t b\|_2.
+$$
+
+角点公式于是证明唯一性及式（305.16）。
+
+再令 $x_t=B_t b$。它的所有分量都严格为正，而 $M_*^{\mathsf T}$ 逐项非负且对角元全部严格为正。因此
+
+$$
+\frac{d}{dt}x_t=M_*^{\mathsf T}x_t>0
+$$
+
+逐项成立，$\|x_t\|_2$ 从 $\|b\|_2$ 开始严格递增。式（305.16）也在 $t=0$ 给出共同角点值的倒数 $\eta$，所以残差连续且严格递减。定理304.1的上界 $r_*(T_t)\le\eta e^{-t}$ 保证其极限为零；这个上界也可直接由 $M_*b=b$ 与 Cauchy–Schwarz 得到。介值定理与严格单调性给出每个正预算参数的存在唯一性。证毕。
+
+第302节的轴向族由此得到一致的特例：取 $p=(1,1)/a$、$z=k/a$，则 $q=2\sqrt{1+k^2}/(a\sqrt{k^2+2})$，式（305.3）恢复该节的 $\kappa_a$ 与 $M_*$；式（305.2）的最后列条件化为 $k^4-3k^2-2\ge0$。一般不等半径仍直接使用式（305.2），不需要预先假定另外两个半径相等。若三个候选均失败，本节只把模型归入正定对偶分支，并未给出该分支的闭式最优矩阵。
+
+## 追加锚（本行以下为增补区）
+
+## 306. 轴向族剩余区间的闭式端点解与全参数角点
+
+**定理 306.1（正定对偶区间的显式解）。** 取
+
+$$
+a_1=a_2=a,\qquad a_3=a/k,
+\qquad 0<a\le\min\{1,k\},
+\qquad 0<k<k_0:=\sqrt{\frac{3+\sqrt{17}}2}.
+\tag{306.1}
+$$
+
+定义无量纲参数
+
+$$
+\begin{aligned}
+A_0&=2+k^2,&r&=\sqrt{A_0},&B&=1+k^2,\\
+C&=3+2/k^2-k^2,&
+t&=\frac{1+\sqrt{1+2C}}C,&s&=2+t,\\
+\beta&=\sqrt{\frac{2+k^2t^2}{A_0}},&
+m&=\frac{2+k^2t}{A_0},&
+W&=2+2t+Bt^2,\\
+h&=\frac{s}{r\sqrt W},&
+q&=\frac{2(1+Bt)}{r\sqrt W}.&&
+\end{aligned}
+\tag{306.2}
+$$
+
+此处 $C>0$，$t$ 是方程 $Ct^2-2t-2=0$ 的唯一正根。再令
+
+$$
+\begin{aligned}
+b_0&=(1,1,k),\qquad
+N=\sqrt{2(1+\beta)^2+k^2(t+\beta)^2},\\
+v&=\frac{(1+\beta,1+\beta,k(t+\beta))}{N},
+\qquad \lambda_0=\frac{A_0\beta}{s},\\
+G_0&=b_0b_0^{\mathsf T}+\lambda_0I-2\lambda_0vv^{\mathsf T},\\
+H_0&=h\operatorname{diag}(1,1,t),
+\qquad Q_0=G_0H_0.
+\end{aligned}
+\tag{306.3}
+$$
+
+则第298节的唯一正角点端点解为
+
+$$
+M_* =\frac{Q_0}{q},\qquad
+Z_* =\frac{\lambda_0}{a^2}vv^{\mathsf T},\qquad
+D_a=\frac{A_0q}{a^3},\qquad
+\kappa_a=\frac{a}{2q}
+=\frac{ar\sqrt W}{4(1+Bt)}.
+\tag{306.4}
+$$
+
+对应的支撑矩阵为 $G_0/a^2\succ0$。它及 $M_*$ 的每个条目都严格为正；三个原问题列范数约束全部取等。
+
+证明。以下先在无量纲 $b_0$ 下证明原、对偶可行与目标相等，再恢复尺度 $a$。
+
+首先证明 $G_0\succ0$。记 $n=b_0/r$、$n'=H_0b_0/(h\beta r)$。两者都是单位向量，且
+
+$$
+n\cdot n'=m/\beta>0,
+\qquad v=\frac{n+n'}{\|n+n'\|_2}.
+\tag{306.5}
+$$
+
+因此若 $\theta$ 是 $n$ 与 $v$ 的夹角，就有 $\cos(2\theta)=m/\beta$。而
+
+$$
+sm-\beta^2=\frac{2+2Bt}{A_0}>0,
+$$
+
+故 $\lambda_0=A_0\beta/s<A_0\cos(2\theta)$。与式（303.6）相同的二维分块计算说明：$G_0$ 在包含 $n,v$ 的平面上迹为 $A_0>0$、行列式为 $\lambda_0(A_0\cos(2\theta)-\lambda_0)>0$，其余正交方向的特征值为 $\lambda_0>0$。所以 $G_0\succ0$。当 $n=v$ 时，任选包含该轴的二维平面，计算仍成立。
+
+还需证明非对角元也为正。由
+
+$$
+N^2=2A_0\beta(\beta+m),
+$$
+
+直接代入式（306.3）得到
+
+$$
+\begin{aligned}
+(G_0)_{12}
+&=\frac{t\beta+(2Bt-k^2)/A_0}{s(\beta+m)},\\
+(G_0)_{13}=(G_0)_{23}
+&=\frac{k\left[\beta+(2+k^2t)/A_0\right]}{s(\beta+m)}=\frac{k}{s}.
+\end{aligned}
+\tag{306.6}
+$$
+
+第二行显然严格为正。若 $k^2\ge1$，则 $C\le4$，把 $1$ 代入 $Cx^2-2x-2$ 得非正值，故其唯一正根 $t\ge1$。于是 $2Bt-k^2\ge2+k^2>0$。若 $0<k^2\le1$，令 $x=k^2$，则
+
+$$
+Cx^2-2x-2
+=3x^2-x^3-2
+=(x-1)(2+2x-x^2)\le0.
+$$
+
+所以 $t\ge k^2$，进而 $2Bt-k^2\ge k^2(1+2k^2)>0$。第一行也严格为正。结合 $G_0\succ0$ 给出的正对角元，$G_0$ 逐项严格为正，$Q_0=G_0H_0$ 亦然。
+
+接着验证耗散锥条件。记 $\beta_H=h\beta$，并令 $\gamma=1/(hN)$，则
+
+$$
+v=\gamma(H_0+\beta_HI)b_0,
+\qquad b_0^{\mathsf T}H_0^2b_0=A_0\beta_H^2,
+\qquad \lambda_0\operatorname{Tr}H_0=A_0\beta_H.
+\tag{306.7}
+$$
+
+写 $B_v=b_0\cdot v$、$C_v=b_0\cdot H_0v$、$V=v\cdot H_0v$。式（306.7）给出 $C_v=\beta_H B_v$。展开 $Q_0+Q_0^{\mathsf T}$ 在 $v$ 上的作用，便有
+
+$$
+\begin{aligned}
+(Q_0+Q_0^{\mathsf T})v
+&=C_vb_0+B_vH_0b_0-2\lambda_0Vv\\
+&=(B_v/\gamma-2\lambda_0V)v
+=(\operatorname{Tr}Q_0)v.
+\end{aligned}
+\tag{306.8}
+$$
+
+最后一步使用 $B_v/\gamma=b_0^{\mathsf T}H_0b_0+A_0\beta_H$ 及式（306.7）的迹等式。
+
+令 $S_0=\operatorname{sym}Q_0$、$\ell=\operatorname{Tr}Q_0$。它逐项严格为正，且 $S_0v=(\ell/2)v$，其中 $v$ 逐坐标严格为正。矩阵 $\operatorname{diag}(v)^{-1}S_0\operatorname{diag}(v)$ 的所有行和均为 $\ell/2$。因此其算子无穷范数为 $\ell/2$，$S_0$ 的每个特征值都不超过 $\ell/2$。这证明
+
+$$
+\mathcal C(S_0)=\ell I-2S_0\succeq0,
+\qquad \mathcal C(S_0)v=0.
+\tag{306.9}
+$$
+
+现在核对三个列范数。设 $t_1=t_2=1$、$t_3=t$，由式（306.3）的范数展开可得
+
+$$
+\frac{\|G_0e_i\|_2^2}{(b_0)_i^2}
+=A_0\left(1-\frac{2t_i}{s}\right)
+ +\frac{\lambda_0^2}{(b_0)_i^2}.
+\tag{306.10}
+$$
+
+对前两列，右侧为 $A_0W/s^2=1/h^2$。对第三列，由 $Ct^2=2t+2$，
+
+$$
+\frac W{t^2}=C+B=4+2/k^2,
+$$
+
+故式（306.10）的右侧为 $1/(t^2h^2)$。于是
+
+$$
+\|Q_0e_1\|_2=\|Q_0e_2\|_2=1,
+\qquad \|Q_0e_3\|_2=k.
+\tag{306.11}
+$$
+
+三个列都满足支撑取等条件，且全部列范数约束饱和。
+
+最后计算目标值。反射 $I-2vv^{\mathsf T}$ 把式（306.5）的 $n'$ 送到 $-n$，所以
+
+$$
+\begin{aligned}
+Q_0b_0
+&=\left(b_0^{\mathsf T}H_0b_0-\lambda_0h\beta\right)b_0\\
+&=\frac{2h(1+Bt)}s b_0=q b_0.
+\end{aligned}
+\tag{306.12}
+$$
+
+因此原目标为 $A_0q$。令 $Z_0=\lambda_0vv^{\mathsf T}\succeq0$，利用式（306.9）的互补关系和式（306.11）的列支撑取等关系，
+
+$$
+\sum_i(b_0)_i\|G_0e_i\|_2
+=\langle G_0,Q_0\rangle_F
+=b_0^{\mathsf T}Q_0b_0+
+\operatorname{Tr}(Z_0\mathcal C(S_0))
+=A_0q.
+\tag{306.13}
+$$
+
+弱对偶遂认证这对显式矩阵最优。实际倒数半径为 $b=b_0/a$；相应最大化矩阵为 $Q_0/a$、对偶矩阵为 $Z_0/a^2$，目标为 $A_0q/a^3$。应用第298节的归一化和唯一性，得到式（306.4）及全部结论。证毕。
+
+**定理 306.2（整个轴向族的固定角点）。** 对任意 $k>0$ 与 $0<a\le\min\{1,k\}$，端点最优生成元的半群 $T_\tau=e^{-\tau M_*}$ 在每个 $\tau>0$ 都以正角点为唯一最大角点，整体正负号视为同一个角点类。因此
+
+$$
+r_*(T_\tau)=\frac1{\|e^{\tau M_*^{\mathsf T}}b\|_2}
+\qquad(\tau\ge0).
+\tag{306.14}
+$$
+
+$M_*$ 的特征值 $1$ 单重，其余两个都在 $(0,1)$ 内。
+
+证明。当 $0<k<k_0$ 时，定理306.1使 $M_*$ 逐项严格为正。故 $e^{\tau M_*^{\mathsf T}}$ 在每个 $\tau>0$ 逐项严格为正。对混合符号角点逐行用严格三角不等式，便得到与定理305.4相同的严格角点比较。
+
+又由 $M_*b=b$，将 $M_*$ 按 $\operatorname{diag}(b)$ 作相似变换，就得到一个所有条目严格为正、每行和为一的矩阵。标准 Perron–Frobenius 结论使特征值 $1$ 单重，其余特征值的模严格小于一；第303节已经保证全部特征值为严格正实数。这里使用的是正矩阵的既有谱性质，不把它作为新的矩阵理论结果。
+
+当 $k\ge k_0$ 时，第302节的显式零列解与第305节的奇异支撑结论给出同样的角点和谱性质，包括临界点 $k=k_0$。在 $\tau=0$ 所有角点范数相同，式（306.14）仍成立，但此时不声称角点唯一。证毕。
+
+**命题 306.3（轴向分块与临界矩阵连续性）。** 在定理306.1的正定支撑区间，按正交基
+
+$$
+u=(1,1,0)/\sqrt2,\qquad w=(1,-1,0)/\sqrt2,\qquad z=e_3
+$$
+
+书写，端点矩阵具有更简洁的形式
+
+$$
+[M_*]_{(u,w,z)}=
+\frac1{2(1+Bt)}
+\begin{pmatrix}
+2+A_0t&0&\sqrt2kt\\
+0&A_0\beta&0\\
+\sqrt2k&0&2Bt
+\end{pmatrix}.
+\tag{306.15}
+$$
+
+三个特征值为
+
+$$
+1,\qquad \frac{A_0t}{2(1+Bt)},\qquad
+\frac{A_0\beta}{2(1+Bt)}.
+\tag{306.16}
+$$
+
+证明。将式（306.3）代入 $Q_0/q$，按上述基变换并使用 $Ct^2=2t+2$，得到式（306.15）。其中 $w$ 块直接给出第三个特征值，$u,z$ 块以 $(\sqrt2,k)$ 为特征值 $1$ 的特征向量；由该块的迹减去 $1$，得到第二个特征值。两者均严格为正，而
+
+$$
+2(1+Bt)-A_0t=2+k^2t>0.
+$$
+
+写 $x=k^2$，再用根方程可得
+
+$$
+[2(1+Bt)]^2-(A_0\beta)^2
+=(8+10x)t+(2+3x+4x^2)t^2>0.
+$$
+
+因此另两个特征值都严格小于一；这也直接核对了定理306.2在本区间的谱结论。证毕。
+
+在 $k=1$ 时，$t=\beta=m=1$、$q=\sqrt2$，式（306.15）还原等半径的 $M_*=(I+nn^{\mathsf T})/2$，其中 $n=(1,1,1)/\sqrt3$。在 $k\uparrow k_0$ 时，$C\downarrow0$、$t\to\infty$，整个矩阵而不只是端点系数具有极限
+
+$$
+\lim_{k\uparrow k_0}[M_*]_{(u,w,z)}=
+\begin{pmatrix}
+A_0/(2B)&0&\sqrt2k/(2B)\\
+0&kr/(2B)&0\\
+0&0&1
+\end{pmatrix}_{k=k_0}.
+\tag{306.17}
+$$
+
+它正是第302节在临界点的奇异支撑解；同时 $q\to2\sqrt{1+k_0^2}/\sqrt{2+k_0^2}$，端点系数也连续衔接。这补齐的是整个轴向族的端点最优矩阵和该固定生成元的角点结构；一般有限预算下的最优恢复曲线仍未由这些公式确定。
+
+**定理 306.4（整个轴向族的严格正受限曲率）。** 对任意 $k>0$ 与 $0<a\le\min\{1,k\}$，第300节的受限二阶系数满足
+
+$$
+\Gamma_a+\Theta_a>0.
+\tag{306.18}
+$$
+
+因此对这个固定模型，当 $\delta>0$ 充分小时，
+
+$$
+\widehat G_a\bigl(\eta(1-\delta)\bigr)>\kappa_a\delta.
+\tag{306.19}
+$$
+
+若 $k\ne1$，同一邻域内还同时有 $F_a^{(2)}(\eta(1-\delta))<\kappa_a\delta$，故两类曲线从共同端点切线的两侧接近端点。
+
+证明。对 $k\ge k_0$，结论已由第302节的显式系数给出。以下只需处理 $0<k<k_0$。沿用定理306.1的参数，另写 $x=k^2$、$L=1+(1+x)t$。由式（306.15），反对称部分只在 $u,z$ 平面上非零，而 $b$ 位于该平面。因此
+
+$$
+\|\Omega_*b\|_2^2
+=\frac{A_0x(t-1)^2}{8a^2L^2}.
+\tag{306.20}
+$$
+
+对称部分在 $w$ 轴上的特征值为 $A_0\beta/(2L)$，在 $u,z$ 平面上的两个特征值为
+
+$$
+e_\pm=\frac{2+(4+3x)t\pm A_0\beta}{4L}.
+\tag{306.21}
+$$
+
+这里判别式使用恒等式
+
+$$
+(2-xt)^2+2x(t+1)^2=A_0^2\beta^2.
+$$
+
+由于 $e_+=e_-+A_0\beta/(2L)$，且已有正定性保证 $e_->0$，最大的特征值是 $e_+$，另两个的乘积为
+
+$$
+d_1d_2
+=\frac{A_0\beta\left[2+(4+3x)t-A_0\beta\right]}{8L^2}.
+\tag{306.22}
+$$
+
+将式（306.20）、（306.22），以及 $\lambda=A_0\beta/(a^2(2+t))$、$D_a=A_0q/a^3$，代入第301节的系数公式，得到
+
+$$
+\begin{aligned}
+\Gamma_a+\Theta_a
+&=\frac{a}{16qL^2}\,\mathcal B(x,t),\\
+\mathcal B(x,t)
+&=\frac{2+xt^2}{2+t}
+\left[2+(4+3x)t-A_0\beta\right]
+ -2x(t-1)^2.
+\end{aligned}
+\tag{306.23}
+$$
+
+下面证明括号中的 $\mathcal B$ 严格为正。
+
+若 $0<x\le1$，根方程及定理306.1中的比较给出 $x\le t\le1$，而 $\beta\le1$。于是
+
+$$
+2+(4+3x)t-A_0\beta
+\ge(4+3x)t-x\ge3(1+x)t.
+$$
+
+又因 $(2+xt^2)/(2+t)\ge2/3$，有
+
+$$
+\mathcal B(x,t)
+\ge2(1+x)t-2x(1-t)^2
+\ge2(1+x)x-2x=2x^2>0.
+\tag{306.24}
+$$
+
+若 $x\ge1$，则 $t\ge1$，且 $\beta\le t$。因此
+
+$$
+2+(4+3x)t-A_0\beta\ge2+2(1+x)t=2L.
+$$
+
+由此
+
+$$
+\begin{aligned}
+\mathcal B(x,t)
+&\ge\frac2{2+t}
+\left[(2+xt^2)L-x(t-1)^2(t+2)\right]\\
+&=\frac2{2+t}
+\left[2-2x+(2+5x)t+xt^2+x^2t^3\right]>0.
+\end{aligned}
+\tag{306.25}
+$$
+
+最后一个不等式使用 $t\ge1$：其中前三项之和至少为 $4+3x>0$，其余两项也严格为正。两种情形覆盖整个正定支撑区间，故式（306.18）对全部轴向参数成立。
+
+第300节的 $o(\delta^2)$ 余项随后给出式（306.19）。若 $k\ne1$，三个半径不全相等，第301节的严格负无限制曲率给出另一侧的不等式。这里的邻域可以依赖于固定的 $a,k$；本结论不把轴向族的曲率正性推广到一般三个不同半径。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 307. 正定支撑分支的二参数代数重建
+
+**定义 307.1（列权重单纯形与候选矩阵）。** 固定正半径六态模型，记 $b=(1/a_1,1/a_2,1/a_3)$、$A=\|b\|_2^2$，并令 $w_i=b_i^2/A$。对开单纯形中的点
+
+$$
+x_i>0,\qquad x_1+x_2+x_3=1,
+$$
+
+定义
+
+$$
+\begin{aligned}
+\beta&=\sqrt{\sum_iw_ix_i^2},&
+m&=\sum_iw_ix_i,\\
+c_i&=x_i^2\left(1-2x_i+\frac{\beta^2}{w_i}\right),&
+v&=\frac{\operatorname{diag}(x)b+\beta b}
+{\|\operatorname{diag}(x)b+\beta b\|_2},\\
+\lambda&=A\beta,&
+G_x&=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},\\
+Q_x&=G_x\operatorname{diag}(x),&
+S_x&=\operatorname{sym}Q_x.
+\end{aligned}
+\tag{307.1}
+$$
+
+再记三个实数及其组合
+
+$$
+g_{ij}=(S_x)_{ij}v_iv_j\quad(i<j),
+\qquad
+\mathcal T_x=g_{12}g_{13}+g_{12}g_{23}+g_{13}g_{23}.
+\tag{307.2}
+$$
+
+称 $x$ 可准入，当且仅当
+
+$$
+c_1=c_2=c_3=:c,
+\qquad \mathcal T_x\ge0.
+\tag{307.3}
+$$
+
+这里三个 $c_i$ 自动严格为正，因为 $\beta^2\ge w_ix_i^2$，故括号内至少为 $(1-x_i)^2>0$。另外 $\beta^2<m$，因为每个 $0<x_i<1$。
+
+**定理 307.2（正定支撑的精确代数刻画）。** 第303节的实际最优支撑矩阵 $G$ 正定，当且仅当式（307.3）有一个可准入点；这个点存在时唯一。对它有 $\mathcal T_x>0$，并可重建
+
+$$
+\begin{aligned}
+Z_*&=A\beta vv^{\mathsf T},&G&=G_x,\\
+D_a&=\frac{A^{3/2}(m-\beta^2)}{\sqrt c},&
+\kappa_a&=\frac{\sqrt c}{2\sqrt A(m-\beta^2)},\\
+M_*&=\frac{G_x\operatorname{diag}(x)}{A(m-\beta^2)}.
+\end{aligned}
+\tag{307.4}
+$$
+
+所以第305节的奇异支撑判据未通过时，完整端点解等价于开单纯形内两个标量等式及一个标量不等式的唯一可准入解；无需在这一表述中继续把原、对偶矩阵的全部条目当作独立未知量。
+
+证明。先对任意开单纯形点建立恒等式，不预设可准入性。令 $X=\operatorname{diag}(x)$、$n=b/\sqrt A$、$n'=Xb/(\beta\sqrt A)$。两个向量都是单位向量，且 $n\cdot n'=m/\beta>0$。由定义，$v=(n+n')/\|n+n'\|_2$。反射 $R_v=I-2vv^{\mathsf T}$ 因而满足
+
+$$
+R_vXb=-\beta b,\qquad R_vb=-Xb/\beta.
+\tag{307.5}
+$$
+
+若 $\theta$ 是 $v$ 与 $n$ 的夹角，则 $\cos(2\theta)=m/\beta$。因为 $\beta^2<m$，有 $\lambda=A\beta<A\cos(2\theta)$。式（303.6）的二维块计算遂给出
+
+$$
+G_x\succ0.
+\tag{307.6}
+$$
+
+这个结论对每个单纯形点都成立，不依赖式（307.3）。式（307.5）又给出
+
+$$
+Q_xb=A(m-\beta^2)b.
+\tag{307.7}
+$$
+
+接着验证共同核方向。写 $v=\gamma(X+\beta I)b$、$B=b\cdot v$、$C=b\cdot Xv$、$V=v\cdot Xv$。由 $b^{\mathsf T}X^2b=A\beta^2$，有 $C=\beta B$；而 $B/\gamma=A(m+\beta)$。因此
+
+$$
+\begin{aligned}
+(Q_x+Q_x^{\mathsf T})v
+&=Cb+BXb-2\lambda Vv\\
+&=(B/\gamma-2\lambda V)v
+=(\operatorname{Tr}Q_x)v.
+\end{aligned}
+\tag{307.8}
+$$
+
+最后一个等式使用 $\operatorname{Tr}X=1$、$\lambda=A\beta$。所以 $\mathcal C(S_x)v=0$，其中 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$。
+
+这一核恒等式将锥可行性精确化为式（307.3）的标量条件。令 $V_0=\operatorname{diag}(v)$。对每个 $y\in\mathbb R^3$，
+
+$$
+y^{\mathsf T}V_0\mathcal C(S_x)V_0y
+=2\sum_{i<j}g_{ij}(y_i-y_j)^2.
+\tag{307.9}
+$$
+
+这里 $g_{ij}$ 暂不要求非负。左侧矩阵的任一二阶主子式均为 $4\mathcal T_x$。因此 $\mathcal C(S_x)$ 左上二阶主子式为 $4\mathcal T_x/(v_1^2v_2^2)$。记其余两个特征值为 $\rho_1,\rho_2$；因为单位向量 $v$ 在核中，该主子式也等于 $v_3^2\rho_1\rho_2$，包括额外零特征值的情形。另一方面，
+
+$$
+\rho_1+\rho_2
+=\operatorname{Tr}\mathcal C(S_x)
+=\operatorname{Tr}Q_x>0,
+$$
+
+因为 $G_x\succ0$ 且 $X\succ0$。故 $\rho_1,\rho_2$ 都非负恰好等价于其乘积非负，也就是
+
+$$
+\mathcal C(S_x)\succeq0
+\quad\Longleftrightarrow\quad\mathcal T_x\ge0.
+\tag{307.10}
+$$
+
+现假设 $x$ 可准入。由 $G_x=bb^{\mathsf T}+\lambda R_v$ 和式（307.5），逐列计算得到
+
+$$
+\frac{\|G_xe_i\|_2^2}{b_i^2}
+=A\left(1-2x_i+\frac{\beta^2}{w_i}\right).
+\tag{307.11}
+$$
+
+取 $s=1/\sqrt{Ac}$、$Q=sQ_x$，则
+
+$$
+\|Qe_i\|_2=b_i\qquad(i=1,2,3).
+\tag{307.12}
+$$
+
+各列还沿着 $G_xe_i$ 的正方向。因此三条列球约束全部可行且满足支撑取等；式（307.10）保证耗散锥可行，式（307.8）保证与 $Z=\lambda vv^{\mathsf T}$ 的互补关系。原目标为
+
+$$
+b^{\mathsf T}Qb=sA^2(m-\beta^2),
+$$
+
+并与对偶列支撑值相等。第298节的弱对偶关系证明 $Q,Z$ 同时最优。代入 $s$，再按 $M_*=(A/D_a)Q$ 归一化，就得到式（307.4）。支撑矩阵为正定的 $G_x$，因此可准入点必属于实际正定支撑分支。
+
+反过来，设实际最优支撑 $G\succ0$。第303节给出
+
+$$
+Q=GH,\qquad
+H=\operatorname{diag}(h_i),\qquad
+h_i=\frac{b_i}{\|Ge_i\|_2}>0,
+\qquad Qb=qb,\quad q=D_a/A.
+\tag{307.13}
+$$
+
+写 $s=\operatorname{Tr}H$、$\beta_H=\|Hb\|_2/\sqrt A$、$m_H=b^{\mathsf T}Hb/A$。由 $Qb=qb$ 得 $R_vHb$ 平行于 $b$。它与 $v$ 的内积等于 $-v\cdot Hb<0$，而 $v\cdot b>0$，故该比例系数为负。反射保范数，因而
+
+$$
+R_vHb=-\beta_Hb,\qquad
+v=\frac{Hb+\beta_Hb}{\|Hb+\beta_Hb\|_2},
+\qquad q=Am_H-\lambda\beta_H.
+\tag{307.14}
+$$
+
+令 $v=\gamma(H+\beta_HI)b$。与式（307.8）相同的展开给出 $b\cdot Hv=\beta_H(b\cdot v)$，以及
+
+$$
+(Q+Q^{\mathsf T})v
+=\bigl(A(m_H+\beta_H)-2\lambda(v\cdot Hv)\bigr)v.
+$$
+
+将它与实际互补关系 $(Q+Q^{\mathsf T})v=(\operatorname{Tr}Q)v$ 比较，得到
+
+$$
+\lambda s=A\beta_H.
+\tag{307.15}
+$$
+
+取 $x_i=h_i/s$，则 $\beta_H=s\beta$，从而 $\lambda=A\beta$，式（307.14）中的 $v$ 正是定义307.1的向量。于是实际 $G$ 等于 $G_x$。全部列范数约束取等，将式（307.11）代入 $h_i\|Ge_i\|_2=b_i$，得到
+
+$$
+c_i=\frac1{As^2}
+$$
+
+对三个坐标同时成立。实际耗散锥可行，再由式（307.10）可得 $\mathcal T_x\ge0$，所以这个 $x$ 可准入。
+
+最后，第298节使实际原、对偶最优矩阵均唯一。对每个可准入点，$G$ 可逆且 $H=G^{-1}Q$，故 $H$ 也唯一，进而 $x_i=h_i/\operatorname{Tr}H$ 唯一。该节还使实际 $\mathcal C(\operatorname{sym}Q)$ 的秩为二，因此上述两个非零特征值的乘积严格为正；式（307.10）的主子式关系遂给出 $\mathcal T_x>0$。证毕。
+
+**命题 307.3（无限制曲率的列权重方差表达）。** 对定理307.2的唯一可准入点，令
+
+$$
+u_i=x_i(1-x_i),\qquad
+f=\sum_iw_iu_i=m-\beta^2,\qquad
+\mathcal V_x=\sum_iw_i(u_i-f)^2.
+\tag{307.16}
+$$
+
+则第301节的旋转位移及无限制曲率满足
+
+$$
+\Omega_*b=\frac{(\operatorname{diag}(u)-fI)b}{2f},
+\qquad
+\Gamma_a=-\frac{\sqrt c\,\mathcal V_x}{4\sqrt A\,f^3}
+=-\kappa_a\frac{\mathcal V_x}{2f^2}.
+\tag{307.17}
+$$
+
+证明。式（307.5）与 $\lambda=A\beta$ 给出 $G_xb=A(I-X)b$，其中 $X=\operatorname{diag}(x)$。将它与式（307.7）代入 $M_*^{\mathsf T}-M_*=2\Omega_*$，得到
+
+$$
+2\Omega_*b
+=\frac{XG_xb-G_xXb}{Af}
+=\frac{(X(I-X)-fI)b}{f}.
+$$
+
+这证明第一个等式，并给出 $\|\Omega_*b\|_2^2=A\mathcal V_x/(4f^2)$。再用第301节的 $\Gamma_a=-\|\Omega_*b\|_2^2/D_a$ 和式（307.4），即得式（307.17）。证毕。
+
+这里得到的是正定支撑分支的有限代数刻画和唯一重建，并未给出两个标量等式的一般根式解。条件 $\mathcal T_x\ge0$ 仍须检查；本节没有证明所有满足列范数等式的单纯形点自动满足它，也没有由正定性推出 $G_x$ 逐条目为正或半群的最大角点在所有参数上固定。
+
+## 追加锚（本行以下为增补区）
+
+## 308. 整个奇异支撑分支的精确曲率与符号分离
+
+**定理 308.1（奇异支撑的半径分离与两条曲率）。** 固定正半径六态模型。若第305节的候选坐标通过奇异支撑判据，将该坐标写在最后，沿用该节的 $p=(p_1,p_2)$、$z$、$r=\sqrt{p_1^2+p_2^2+z^2}$、$q$、$K$、$u$、$E$，并记
+
+$$
+U=p_1^2,\qquad V=p_2^2,\qquad L=r+z,
+\qquad
+\Delta=(z^2+U)(z^2+V)=z^2r^2+UV,
+\qquad t=\sqrt{UV/\Delta}.
+\tag{308.1}
+$$
+
+则
+
+$$
+z^2>U+V,\qquad 0<t<\frac13,
+\tag{308.2}
+$$
+
+而第300节的两条端点二阶系数具有精确表达
+
+$$
+\begin{aligned}
+\Gamma_a&=-\frac{UV(1-t)}{2r^2q^3}<0,\\
+\Gamma_a+\Theta_a
+&=\frac{UV(1-t)}{2r^2q^3}
+\left(\frac1t-\frac zL\right)>0.
+\end{aligned}
+\tag{308.3}
+$$
+
+特别地，
+
+$$
+\frac{\Gamma_a+\Theta_a}{-\Gamma_a}
+=\frac1t-\frac zL>\frac52,
+\qquad
+\Gamma_a+\Theta_a>\frac{5UV}{6r^2q^3}.
+\tag{308.4}
+$$
+
+这里不要求 $p_1=p_2$，也包括最后一列范数恰好饱和的奇异支撑临界点。式（308.4）仅给出明确的比较界，不声称其中常数最优。
+
+证明。先将范数判据转成无量纲限制。由 $U,V,z>0$ 可知 $0<t<1$。第305节的 $q$ 公式给出
+
+$$
+\begin{aligned}
+q^2
+&=\frac{U(z^2+U)+V(z^2+V)+2\sqrt{UV\Delta}}{r^2}\\
+&=U+V+\frac{2\Delta(t-t^2)}{r^2}
+=U+V+\frac{2z^2t}{1+t}.
+\end{aligned}
+\tag{308.5}
+$$
+
+最后一步使用 $\Delta(1-t^2)=z^2r^2$。通过的候选满足 $\|u\|_2^2+q^2\le z^2$，从而 $q^2\le z^2$。式（308.5）的最后一项严格为正，故 $z^2>U+V$。又由 $UV\le(U+V)^2/4$，以及 $y\mapsto y/(z^2r^2+y)$ 的单调性，
+
+$$
+t\le\frac{U+V}{r^2+z^2}<\frac13.
+\tag{308.6}
+$$
+
+第二个严格不等式正是 $U+V<z^2$ 的结果。这证明式（308.2）。
+
+下面计算曲率。记
+
+$$
+H=\operatorname{diag}(h_1,h_2),\qquad
+h_1=\frac{p_1}{r\sqrt{z^2+U}},\qquad
+h_2=\frac{p_2}{r\sqrt{z^2+V}}.
+\tag{308.7}
+$$
+
+第305节给出
+
+$$
+Q=\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad M_*=Q/q,\qquad
+D_a=r^2q,\qquad \lambda=zr,
+\qquad v=\frac{(p,L)}{\sqrt{2rL}}.
+\tag{308.8}
+$$
+
+由于 $K=G_0H$、$G_0p=r^2p$、$Kp+zu=qp$，
+
+$$
+2q\Omega_*b
+=\begin{pmatrix}(r^2H-qI_2)p\\ u\cdot p\end{pmatrix},
+\qquad
+u\cdot p=z(Vh_1+Uh_2).
+\tag{308.9}
+$$
+
+第二个等式可由
+$q=z^2(h_1+h_2)+Uh_1+Vh_2$ 代入 $zu=qp-Kp$ 得到。令
+
+$$
+\begin{aligned}
+\mathcal N
+&=\|(r^2H-qI_2)p\|_2^2+(u\cdot p)^2\\
+&=UV(r^2+z^2)(h_1-h_2)^2\\
+&\quad+z^2\left[V(z^2+V)h_1^2
++U(z^2+U)h_2^2+2UVh_1h_2\right].
+\end{aligned}
+\tag{308.10}
+$$
+
+将前两个分量写为 $p_1[V(h_1-h_2)-z^2h_2]$ 与
+$p_2[U(h_2-h_1)-z^2h_1]$ 后平方展开，即得第二式。
+
+这个平方和实际上大幅简化。写 $q_1=z^2+U$、$q_2=z^2+V$，则
+
+$$
+h_1h_2=\frac t{r^2},\qquad
+h_1^2+h_2^2=\frac{z^2(U+V)+2UV}{r^2\Delta}.
+\tag{308.11}
+$$
+
+代入式（308.10），得到
+
+$$
+\begin{aligned}
+\frac{\mathcal N}{UV}
+&=\frac{(r^2+z^2)[z^2(U+V)+2UV]+z^2(q_1^2+q_2^2)}{r^2\Delta}-2t\\
+&=2(1-t).
+\end{aligned}
+\tag{308.12}
+$$
+
+最后一步仅需把 $q_1,q_2$ 展开，并使用 $r^2=U+V+z^2$，分式的分子恰为 $2r^2\Delta$。由此
+
+$$
+\|\Omega_*b\|_2^2=\frac{UV(1-t)}{2q^2}.
+\tag{308.13}
+$$
+
+第301节的 $\Gamma_a=-\|\Omega_*b\|_2^2/D_a$ 立即给出式（308.3）的第一式。
+
+令 $d_1,d_2$ 为 $S_*=\operatorname{sym}M_*$ 的两个较小特征值。第298节给出第三个特征值 $d_3=d_1+d_2$，故 $\mathcal C(S_*)$ 的谱为 $2d_1,2d_2,0$，单位核向量为 $v$。其左上二阶主子式一方面是 $\det E/q^2$，另一方面是 $4d_1d_2v_3^2$。由 $v_3^2=L/(2r)$，
+
+$$
+d_1d_2=\frac{r\det E}{2Lq^2}.
+\tag{308.14}
+$$
+
+接着由 $E=(\operatorname{Tr}K+q)I_2-K-K^{\mathsf T}$ 计算行列式：
+
+$$
+\begin{aligned}
+\det E
+&=-V(z^2+U)h_1^2-U(z^2+V)h_2^2
++2(UV+zr^2L)h_1h_2\\
+&=\frac{2UV(t-1)}{r^2}+2zLt.
+\end{aligned}
+\tag{308.15}
+$$
+
+为核对第一式，可写 $K_{11}=r(r-V/L)h_1$、$K_{22}=r(r-U/L)h_2$、
+$K_{12}+K_{21}=rp_1p_2(h_1+h_2)/L$，再使用
+$\det E=q^2-(K_{11}-K_{22})^2-(K_{12}+K_{21})^2$。
+第二式则使用 $V(z^2+U)h_1^2=U(z^2+V)h_2^2=UV/r^2$ 和式（308.11）。
+
+第301节的 $\Theta_a=\lambda d_1d_2/(2D_a)$ 与式（308.12）至（308.15）遂给出
+
+$$
+\Gamma_a+\Theta_a
+=\frac{\mathcal F}{4r^2q^3},
+\qquad
+\mathcal F=\frac{zr^2}{L}\det E-2UV(1-t).
+\tag{308.16}
+$$
+
+将行列式代入，并使用 $z^2r^2=UV(1-t^2)/t^2$，
+
+$$
+\begin{aligned}
+\mathcal F
+&=-2UV(1-t)\left(1+\frac zL\right)+2z^2r^2t\\
+&=2UV(1-t)\left(\frac1t-\frac zL\right).
+\end{aligned}
+\tag{308.17}
+$$
+
+这正是式（308.3）的第二式。由于 $r>z>0$，有 $0<z/L<1/2$；再结合 $t<1/3$，
+
+$$
+\frac1t-\frac zL>3-\frac12=\frac52,
+\qquad 1-t>\frac23.
+$$
+
+因此两条曲率严格异号，并得到式（308.4）的两个严格下界。证毕。
+
+由第300节的两条二阶展开，对于上述任一固定模型，当 $\delta>0$ 充分小时，
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)
+<\kappa_a\delta
+<\widehat G_a\bigl(\eta(1-\delta)\bigr).
+\tag{308.18}
+$$
+
+这个邻域允许依赖于固定的半径，不据此宣称跨退化半径的统一邻域。
+
+本节把第302节的奇异轴向例子扩展到了第305节的整个奇异支撑分支，并给出两条曲率的精确比例。结合第306节，严格正受限曲率覆盖全部轴向模型及全部奇异支撑模型；一般三个不同半径的正定支撑分支仍需另行判定。本节不把端点二阶结论延伸为整条有限预算曲线的显式解。
+
+## 追加锚（本行以下为增补区）
+
+## 309. 正定支撑模型的根式参数化与唯一标量根
+
+**定理 309.1（从列权重反求半径权重）。** 对开单纯形中任意点 $x=(x_1,x_2,x_3)$，记
+
+$$
+x_i>0,\qquad \sum_i x_i=1,
+\qquad e_2=x_1x_2+x_1x_3+x_2x_3,
+\qquad e_3=x_1x_2x_3,
+$$
+
+$$
+B=2e_2^2-3e_3,
+\qquad
+c(x)=\frac{B+\sqrt{B^2-8e_3^2}}2.
+\tag{309.1}
+$$
+
+这些根式均为实数，并且
+
+$$
+c(x)>\max_i x_i^2(1-2x_i).
+\tag{309.2}
+$$
+
+令
+
+$$
+d_i=c(x)-x_i^2+2x_i^3,
+\qquad
+\beta^2=\left(\sum_i\frac{x_i^2}{d_i}\right)^{-1},
+\qquad
+w_i=\frac{\beta^2x_i^2}{d_i}.
+\tag{309.3}
+$$
+
+则 $w_i>0$、$\sum_iw_i=1$、$\sum_iw_ix_i^2=\beta^2$，而且第307节的三个列范数表达同时满足
+
+$$
+x_i^2\left(1-2x_i+\frac{\beta^2}{w_i}\right)=c(x).
+\tag{309.4}
+$$
+
+反过来，给定这个 $x$，取任何严格正且满足 $\sum_iw_i=1$ 的权重，并定义 $\beta^2=\sum_iw_ix_i^2$。若它们使第307节的三个 $c_i$ 相等，就必由式（309.3）给出。因此列权重 $x$ 唯一决定半径的归一化权重 $w$。
+
+证明。先暂不使用根式定义，令
+
+$$
+\alpha_i=x_i^2(1-2x_i),\qquad a=\max_i\alpha_i,
+\qquad \Phi(c)=\sum_i\frac{x_i^4}{c-\alpha_i}
+\quad(c>a).
+\tag{309.5}
+$$
+
+函数 $\Phi$ 连续且严格递减，在 $c\downarrow a$ 时趋于无穷，在 $c\to\infty$ 时趋于零。故恰有一个 $c_*>a$ 满足 $\Phi(c_*)=1$。
+
+该根可以精确识别。若 $\{i,j,k\}=\{1,2,3\}$，由 $x_1+x_2+x_3=1$，
+
+$$
+\alpha_i-e_3=-x_i(x_i-x_j)(x_i-x_k).
+\tag{309.6}
+$$
+
+取 $x_i$ 为三个坐标的中位数，右侧非负，故 $a\ge e_3>0$。另一方面，标准平方和恒等式给出
+
+$$
+e_2^2-3e_3
+=\frac12\left[(x_1x_2-x_1x_3)^2
+ +(x_1x_2-x_2x_3)^2+(x_1x_3-x_2x_3)^2\right]\ge0.
+\tag{309.7}
+$$
+
+这里使用 $x_1+x_2+x_3=1$ 将三个乘积的交叉项之和写为 $e_3$。因此 $B\ge3e_3$，从而 $B^2-8e_3^2\ge e_3^2>0$。二次多项式
+
+$$
+c^2-Bc+2e_3^2
+\tag{309.8}
+$$
+
+有两个严格正实根 $c_-<c_+$，其中 $c_+\ge2e_3$，而由两根之积得 $c_-\le e_3$。
+
+现在给 $\Phi(c_*)=1$ 清除分母。对任意 $c$ 的直接多项式恒等式为
+
+$$
+\prod_i(c-\alpha_i)
+-\sum_i x_i^4\prod_{j\ne i}(c-\alpha_j)
+=(c-e_3)(c^2-Bc+2e_3^2).
+\tag{309.9}
+$$
+
+等式可以逐次幂展开，并以 $e_2,e_3$ 与 $\sum_i x_i=1$ 整理核对。由于 $c_*>a\ge e_3$，它既不是根 $e_3$，也不是不超过 $e_3$ 的根 $c_-$；所以它必为 $c_+$，即式（309.1）的 $c(x)$。这同时证明式（309.2），无需猜测根的分支或容许非正分母。
+
+由 $d_i>0$，式（309.3）显然给出严格正且和为一的权重。而 $\Phi(c(x))=1$ 使
+
+$$
+\sum_iw_ix_i^2
+=\beta^2\sum_i\frac{x_i^4}{d_i}
+=\beta^2.
+$$
+
+再由 $\beta^2/w_i=d_i/x_i^2$，得到式（309.4）。
+
+反过来，设严格正归一化权重满足列范数等式，公共值记为 $c$，并按第307节定义 $\beta^2=\sum_iw_ix_i^2$。这些等式给出
+
+$$
+c-\alpha_i=\frac{\beta^2x_i^2}{w_i}>0,
+\qquad
+\sum_i\frac{x_i^4}{c-\alpha_i}
+=\frac1{\beta^2}\sum_iw_ix_i^2=1.
+$$
+
+因此 $c>a$ 且 $\Phi(c)=1$，唯一性迫使 $c=c(x)$。归一化 $\sum_iw_i=1$ 再唯一确定 $\beta^2$ 和全部 $w_i$，恰为式（309.3）。证毕。
+
+**定理 309.2（自动锥可行的完整正定分支参数化）。** 对定理309.1生成的每个 $x,w$，记 $u_i=x_i(1-x_i)$、$f=\sum_iw_iu_i$。则对任意不同的 $i,j$，
+
+$$
+f>x_ix_j.
+\tag{309.10}
+$$
+
+选择任意尺度
+
+$$
+A\ge\frac1{\min_iw_i},\qquad
+b_i=\sqrt{Aw_i},\qquad a_i=\frac1{\sqrt{Aw_i}}.
+\tag{309.11}
+$$
+
+这些半径均在 $(0,1]$ 内。第307节由 $b,x$ 构造的 $G_x$ 每个条目都严格为正，而且 $\mathcal C(S_x)\succeq0$ 的核恰为 $\mathbb Rv$。因此每个开单纯形点都自动通过该节的标量锥条件，按式（307.4）给出对应半径模型的唯一正定支撑端点最优解。
+
+反过来，每个正定支撑的正半径模型都由这一构造得到。在保持坐标标号的归一化权重空间上，$x\mapsto w$ 为单射，其像恰为正定支撑模型的权重集合。
+
+证明。先证明式（309.10）。固定一对坐标，并将其写为 $y,z$，剩余坐标写为 $x$；本段的 $x,y,z$ 是三个正标量，和为一。把公共值记为 $c=c(x_1,x_2,x_3)$，并令
+
+$$
+R_0=\sum_i\frac{x_i^2}{d_i}>0.
+$$
+
+由式（309.3），$w_i=x_i^2/(d_iR_0)$，且 $\sum_i x_i^4/d_i=1$。因此
+
+$$
+\frac{R_0}{x}(f-yz)
+=\frac{x[x(1-x)-yz]}{d_x}
+ +\frac{y^3}{d_y}+\frac{z^3}{d_z}.
+\tag{309.12}
+$$
+
+这里 $d_x,d_y,d_z$ 分别表示对应坐标的 $d_i$。若 $x(1-x)\ge yz$，右侧显然严格为正。若 $yz>x(1-x)$，利用已证 $c\ge2e_3=2xyz$，
+
+$$
+\begin{aligned}
+d_x-x^4-xyz
+&=c-x^2+2x^3-x^4-xyz\\
+&\ge x\bigl[yz-x(1-x)^2\bigr]>0.
+\end{aligned}
+\tag{309.13}
+$$
+
+最后一步使用 $yz>x(1-x)>x(1-x)^2$。又因 $0<y,z<1$，
+
+$$
+\frac{y^3}{d_y}+\frac{z^3}{d_z}
+>\frac{y^4}{d_y}+\frac{z^4}{d_z}
+=1-\frac{x^4}{d_x}.
+$$
+
+式（309.12）的第一项严格大于 $-xyz/d_x$，从而整个右侧严格大于
+
+$$
+1-\frac{x^4+xyz}{d_x}>0.
+$$
+
+这证明式（309.10）对每一对坐标均成立。
+
+现在恢复第307节的矩阵记号。因为定理309.1已经给出 $\beta^2=\sum_iw_ix_i^2$，该节的无条件候选恒等式可直接使用：$G_x\succ0$、$\mathcal C(S_x)v=0$，且 $f=m-\beta^2>0$。展开 $v$ 的归一化因子可得，当 $\{i,j,k\}=\{1,2,3\}$ 时，
+
+$$
+(G_x)_{ij}
+=b_ib_j\frac{f+\beta x_k-x_ix_j}{\beta+m}>0.
+\tag{309.14}
+$$
+
+严格正性由式（309.10）与全部参数的正性得到。对角元由 $G_x\succ0$ 严格为正，故 $G_x$ 逐条目严格为正；$Q_x=G_x\operatorname{diag}(x)$ 与 $S_x=\operatorname{sym}Q_x$ 也逐条目严格为正。
+
+令 $V_0=\operatorname{diag}(v)$。共同核恒等式给出第307节的二次型
+
+$$
+h^{\mathsf T}V_0\mathcal C(S_x)V_0h
+=2\sum_{i<j}(S_x)_{ij}v_iv_j(h_i-h_j)^2.
+\tag{309.15}
+$$
+
+每个系数严格为正，因此它非负，且取零恰好要求 $h_1=h_2=h_3$。$V_0$ 可逆，故 $\mathcal C(S_x)\succeq0$，其核恰为 $\mathbb Rv$。这直接证明锥可行性及秩二，而非从数值样本推断标量判据。
+
+定理309.1已使全部列范数等式成立，所以第307节的可准入条件全部满足。定理307.2遂给出正定支撑的唯一最优解及其重建公式。式（309.11）的尺度限制等价于全部 $b_i\ge1$，因此确为所述物理半径。
+
+反过来，对任一实际正定支撑模型，定理307.2给出唯一列权重 $x$，并使三个列范数表达相等。定理309.1的逆向结论恢复原本的归一化半径权重 $w_i=b_i^2/\|b\|_2^2$；其尺度 $A=\|b\|_2^2$ 满足式（309.11）。因此参数化无遗漏。
+
+若两个单纯形点生成相同 $w$，取同一个满足式（309.11）的 $A$，它们就为同一模型给出两个可准入点。定理307.2的唯一性使两点相同，证明单射。证毕。
+
+**定理 309.3（所有端点半群的固定角点与主特征值）。** 对任意正半径六态模型，在正角点规范下，第298节的唯一端点矩阵 $M_*$ 的特征值 $1$ 都是单重的，其余两个特征值均在 $(0,1)$ 内。对每个 $\tau>0$，正角点是该矩阵生成的半群残差中的唯一最大角点，整体正负号视为同一类。因此
+
+$$
+r_*(e^{-\tau M_*})
+=\frac1{\|e^{\tau M_*^{\mathsf T}}b\|_2}
+\qquad(\tau\ge0).
+\tag{309.16}
+$$
+
+证明。奇异支撑分支已由定理305.3、305.4证明。以下只需处理正定支撑分支。由定理309.2，该分支每个实际最优 $G$ 逐条目严格为正，而 $M_*$ 是 $G\operatorname{diag}(x)$ 的正数倍，故也逐条目严格为正。
+
+因此 $e^{\tau M_*^{\mathsf T}}$ 在每个 $\tau>0$ 逐条目严格为正。对任意混合符号角点 $b_\sigma$，逐行的严格三角不等式给出
+
+$$
+\left|e^{\tau M_*^{\mathsf T}}b_\sigma\right|
+<e^{\tau M_*^{\mathsf T}}b
+$$
+
+逐坐标成立，进而其欧氏范数严格更小。第281节的角点公式给出式（309.16）及唯一性。在 $\tau=0$ 时所有角点范数相同，等式仍成立，但此时不声称角点唯一。
+
+再由 $M_*b=b$，矩阵 $\operatorname{diag}(b)^{-1}M_*\operatorname{diag}(b)$ 逐条目严格为正且每行和为一。标准正矩阵的 Perron–Frobenius 结论使其特征值 $1$ 单重，其余特征值的模严格小于一；第303节已经证明所有特征值都为严格正实数，故另外两个都落在 $(0,1)$。这里使用的是正矩阵的既有谱性质，新增结论是它对整个任务最优端点族的适用性。证毕。
+
+本节的根式从列权重直接生成半径权重及其最优端点矩阵，不再需要独立检查第307节的锥不等式。对于事先指定的三个半径，反求 $x$ 仍可能需要求解方程；本节没有将这个逆问题宣称为已得到一般根式解。固定角点结论描述同一个端点生成元的可行半群，不将其宣称为整条有限预算最优曲线，也未在这里确定一般三个不同半径的正定支撑模型的受限二阶曲率符号。
+
+## 追加锚（本行以下为增补区）
+
+## 310. 任意正半径模型的严格正受限曲率
+
+**定理 310.1（两类最优恢复曲线的通用端点符号）。** 对任意固定正半径六态模型，第300节的受限端点二阶系数满足
+
+$$
+\Gamma_a+\Theta_a>0.
+\tag{310.1}
+$$
+
+若三个半径不全相等，则对于充分小的 $\delta>0$，
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)
+<\kappa_a\delta
+<\widehat G_a\bigl(\eta(1-\delta)\bigr).
+\tag{310.2}
+$$
+
+三个半径全相等时，受限曲线仍严格位于该切线上方，而无限制二阶系数为零。邻域可以依赖于固定的半径，不宣称跨退化参数的统一余项或统一邻域。
+
+在正定支撑分支，取第307、309节的唯一单纯形点 $x$ 及其权重 $w$，并记
+
+$$
+p=x_1x_2+x_1x_3+x_2x_3,
+\qquad q=x_1x_2x_3,
+\qquad h=c/q,
+\qquad m=\sum_iw_ix_i,
+\qquad \beta^2=\sum_iw_ix_i^2.
+\tag{310.3}
+$$
+
+其中 $\beta>0$、$c=c(x)$。该分支的精确系数为
+
+$$
+\Gamma_a+\Theta_a
+=\kappa_a\,
+\frac{\mathcal L(h,p,\beta)}
+{2(h+2)(h^2-1)(\beta+m)},
+\tag{310.4}
+$$
+
+$$
+\mathcal L(h,p,\beta)
+=2\beta(h+1)\bigl[h-(2h+1)p\bigr]
+ +h\bigl[h+1-2(h+3)p+6p^2\bigr].
+\tag{310.5}
+$$
+
+证明。奇异支撑分支已由第308节给出精确正系数。以下证明正定支撑分支的公式与严格正性。
+
+先把共同列支撑化为一个 Gram 恒等式。令
+
+$$
+n=b/\sqrt A,\qquad X=\operatorname{diag}(x),
+\qquad G_0=G/A=nn^{\mathsf T}+\beta R_v,
+\qquad R_v=I-2vv^{\mathsf T},
+\qquad Q_0=G_0X,
+\qquad f=m-\beta^2.
+\tag{310.6}
+$$
+
+这里 $n_i^2=w_i$、$\|n\|_2=1$，且 $M_*=Q_0/f$。第307节的反射恒等式给出 $R_vn=-Xn/\beta$，所以
+
+$$
+G_0^2
+=nn^{\mathsf T}-nn^{\mathsf T}X-Xnn^{\mathsf T}+\beta^2I.
+\tag{310.7}
+$$
+
+当 $i\ne j$ 时，其 $ij$ 元为 $n_in_j(1-x_i-x_j)$。因此 $Q_0^{\mathsf T}Q_0=XG_0^2X$ 的非对角元为 $qn_in_j$；三个对角元则由共同列范数等式为 $cw_i$。从而
+
+$$
+Q_0^{\mathsf T}Q_0
+=(c-q)\operatorname{diag}(w)+qnn^{\mathsf T},
+\qquad \|Q_0\|_F^2=c.
+\tag{310.8}
+$$
+
+另一方面，第307节的两个固定方向恒等式给出
+
+$$
+Q_0n=fn,\qquad
+Q_0^{\mathsf T}n=X(I-X)n.
+$$
+
+将式（310.8）作用到 $n$，并逐坐标消去严格正的 $n_i$，得到
+
+$$
+f\,x_i(1-x_i)=(c-q)w_i+q.
+\tag{310.9}
+$$
+
+三个等式相加，使用 $\sum_i x_i(1-x_i)=2p$，有
+
+$$
+f=\frac{c+2q}{2p}.
+\tag{310.10}
+$$
+
+第309节给出 $c\ge2q$ 及 $c^2-(2p^2-3q)c+2q^2=0$。故 $h\ge2$，而
+
+$$
+q=\frac{2p^2h}{(h+1)(h+2)},
+\qquad
+f=\frac{ph}{h+1}.
+\tag{310.11}
+$$
+
+由式（310.9），$w_i=[fx_i(1-x_i)-q]/(c-q)$。将其乘以 $x_i$ 后求和，并使用
+$\sum_i x_i^2-\sum_i x_i^3=p-3q$，得到
+
+$$
+\begin{aligned}
+m&=\frac{f(p-3q)-q}{c-q}
+=\frac{h(h+1-6p)}{2(h^2-1)},\\
+\beta^2=m-f
+&=\frac{h\left[h+1-2(h+2)p\right]}{2(h^2-1)}.
+\end{aligned}
+\tag{310.12}
+$$
+
+这些是同一实际最优解的等式，未把不同模型各自可达的参数拼接起来。
+
+下面计算受限系数。记
+
+$$
+\mathcal V=\sum_iw_i\left(x_i(1-x_i)-f\right)^2,
+\qquad s_1=\operatorname{Tr}Q_0,
+\qquad s_2=\operatorname{Tr}(Q_0^2).
+\tag{310.13}
+$$
+
+由式（310.8），
+
+$$
+\operatorname{Tr}\bigl((\operatorname{sym}Q_0)^2\bigr)
+=\frac{c+s_2}{2}.
+$$
+
+而 $S_*=(\operatorname{sym}Q_0)/f$ 的最大特征值等于另外两个之和。因此两个较小特征值的乘积为
+
+$$
+d_1d_2=\frac{s_1^2-c-s_2}{4f^2}.
+\tag{310.14}
+$$
+
+结合第301、307节的曲率表达，
+
+$$
+\Gamma_a+\Theta_a
+=\frac{\kappa_a}{2f^2}\mathcal K,
+\qquad
+\mathcal K=\frac\beta2(s_1^2-c-s_2)-\mathcal V.
+\tag{310.15}
+$$
+
+给出这些迹与方差的具体展开，便可核对其因式。定义 $m_j=\sum_iw_ix_i^j$，所以 $m_1=m$、$m_2=\beta^2$。每个 $x_i$ 满足 $x_i^3-x_i^2+px_i-q=0$，故
+
+$$
+m_3=\beta^2-pm+q,
+\qquad m_4=m_3-p\beta^2+qm,
+\qquad
+\mathcal V=(p+q)m-p\beta^2-q-f^2.
+\tag{310.16}
+$$
+
+由 $v=(X+\beta I)n/\sqrt{2\beta(\beta+m)}$，记
+
+$$
+V_1=v^{\mathsf T}Xv
+=\frac{m_3+2\beta^3+\beta^2m}{2\beta(\beta+m)},
+\qquad
+V_2=v^{\mathsf T}X^2v
+=\frac{m_4+2\beta m_3+\beta^4}{2\beta(\beta+m)}.
+\tag{310.17}
+$$
+
+直接展开 $Q_0=(nn^{\mathsf T}+\beta I-2\beta vv^{\mathsf T})X$，得到
+
+$$
+\begin{aligned}
+s_1&=m+\beta-2\beta V_1,\\
+s_2&=m^2+\beta^2(1-2p)+4\beta^2V_1^2
+ -2\beta^2m-4\beta^2V_2.
+\end{aligned}
+\tag{310.18}
+$$
+
+第二式的交叉项使用 $v^{\mathsf T}Xn=\beta(v\cdot n)$ 与
+$(v\cdot n)^2=(\beta+m)/(2\beta)$；因此其中来自 $nn^{\mathsf T}X$ 与 $\beta X$ 的 $2\beta^3$，恰与另一交叉项中的 $-2\beta^3$ 抵消。
+
+将式（310.11）、（310.12）、（310.16）至（310.18）代入式（310.15），保留 $\beta>0$ 而用式（310.12）替换 $\beta^2$，整理为
+
+$$
+\mathcal K
+=\frac{h^2p^2\,\mathcal L(h,p,\beta)}
+{(h+1)^2(h+2)(h^2-1)(\beta+m)}.
+\tag{310.19}
+$$
+
+再以 $f^2=h^2p^2/(h+1)^2$ 约去共同因子，正好得到式（310.4）。全部分母严格为正；这些恒等式不要求三个坐标互不相等。
+
+最后确定分子的符号。开单纯形给出 $0<p\le1/3$，写 $d=1/3-p\ge0$。则
+
+$$
+\begin{aligned}
+h-(2h+1)p&=\frac{h-1}{3}+(2h+1)d,\\
+h+1-2(h+3)p+6p^2
+&=\frac{h-1}{3}+2(h+1)d+6d^2.
+\end{aligned}
+\tag{310.20}
+$$
+
+因为 $h\ge2$、$\beta>0$，式（310.5）的两项均严格为正，故 $\mathcal L>0$。由此证明整个正定支撑分支的严格正受限曲率。结合第308节，便覆盖全部正半径模型，得到式（310.1）。
+
+三个半径不全相等时，第301节给出 $\Gamma_a<0$，再由第300节的两条二阶展开得到式（310.2）。全等半径时，$x_i=1/3$、$p=1/3$、$h=2$、$\beta=m=1/3$，式（310.4）给出 $\Gamma_a+\Theta_a=\kappa_a/12>0$，同时 $\Gamma_a=0$，与已有等半径系数一致。证毕。
+
+本节确定的是任意固定正半径模型在共同端点切线附近的二阶方向。一般有限预算的精确最优曲线、端点以外的整体凸性，以及由端点最优生成元形成的半群是否在其他预算处仍最优，均未由这一符号结论确定。
+
+## 追加锚（本行以下为增补区）
+
+## 311. 端点最优固定生成元在有限预算下的严格次优例子
+
+**定理 311.1（固定最优生成元的二阶超额）。** 取正半径模型
+
+$$
+a_1=a_2=a,\qquad a_3=a/\sqrt2,\qquad 0<a\le1,
+$$
+
+并令 $M_*$ 为正角点规范下唯一的端点最优矩阵。记
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\beta=\sqrt{\frac{\varphi+2}{2}},\qquad
+L=1+3\varphi.
+\tag{311.1}
+$$
+
+对每个 $0<\delta<1$，令 $\tau(\delta)>0$ 为使固定半群 $T_\tau=e^{-\tau M_*}$ 恰好达到残差预算 $R_\delta=\eta(1-\delta)$ 的唯一参数。则该半群的恢复误差满足
+
+$$
+\begin{aligned}
+e(T_{\tau(\delta)})-\widehat G_a(R_\delta)
+&=C_a\delta^2+o(\delta^2),\\
+C_a&=\frac{\kappa_a}{2L^2}
+\left[3+\varphi-2\beta(\varphi-1)\right]>0.
+\end{aligned}
+\tag{311.2}
+$$
+
+因此，对每个固定 $a$，当 $\delta>0$ 充分小时，端点最优固定生成元产生的该半群严格劣于同一残差预算下的实际受限最优恢复。这个结论只针对该固定生成元，不排除随预算改变生成元或采用其他无限小可分通道。
+
+证明。在第306节的轴向族中取 $k=\sqrt2$。其根方程为 $2t^2-2t-2=0$，故参数 $t=\varphi$，而该节的 $\beta$ 正是式（311.1）的量。按正交基
+
+$$
+u=(1,1,0)/\sqrt2,\qquad w=(1,-1,0)/\sqrt2,\qquad z=e_3,
+$$
+
+端点矩阵为
+
+$$
+[M_*]_{(u,w,z)}
+=\frac1L
+\begin{pmatrix}
+1+2\varphi&0&\varphi\\
+0&2\beta&0\\
+1&0&3\varphi
+\end{pmatrix}.
+\tag{311.3}
+$$
+
+在该标架中，$b=(\sqrt2,0,\sqrt2)/a$、$A=4/a^2$，且 $M_*b=b$。原坐标列仍由 $e_1=(u+w)/\sqrt2$、$e_2=(u-w)/\sqrt2$、$e_3=z$ 给出；不把加权列约束随标架改变。直接计算得到
+
+$$
+\|M_*e_1\|_2^2=\|M_*e_2\|_2^2
+=\frac{5\varphi^2}{L^2},
+\qquad
+\|M_*e_3\|_2^2=\frac{10\varphi^2}{L^2}.
+\tag{311.4}
+$$
+
+因此三列的一阶误差都达到相同值，且
+
+$$
+\kappa_a=\frac{a\sqrt5\,\varphi}{2L}.
+\tag{311.5}
+$$
+
+先将半群参数与实际残差预算对齐。第306节的固定角点结论给出
+
+$$
+r_*(T_\tau)=\frac1{\|e^{\tau M_*^{\mathsf T}}b\|_2}.
+\tag{311.6}
+$$
+
+第304节的严格预算顺序保证 $\tau(\delta)$ 的存在唯一性。记 $U_\Omega=\|\Omega_*b\|_2^2$。由式（311.3），
+
+$$
+U_\Omega=\frac{(\varphi-1)^2}{a^2L^2}.
+\tag{311.7}
+$$
+
+又由 $M_*^{\mathsf T}b=b+2\Omega_*b$、$b\cdot\Omega_*b=0$ 及
+$b^{\mathsf T}(M_*^{\mathsf T})^2b=A$，固定矩阵的指数展开给出
+
+$$
+\frac{\|e^{\tau M_*^{\mathsf T}}b\|_2^2}{A}
+=1+2\tau+\left(2+\frac{4U_\Omega}{A}\right)\tau^2+O(\tau^3).
+\tag{311.8}
+$$
+
+取平方根再取倒数，式（311.6）变为
+
+$$
+1-\frac{r_*(T_\tau)}\eta
+=\tau-\left(\frac12-\frac{2U_\Omega}{A}\right)\tau^2+O(\tau^3).
+$$
+
+其在零点的导数为一，局部反演得到
+
+$$
+\tau(\delta)
+=\delta+\left(\frac12-\frac{2U_\Omega}{A}\right)\delta^2+O(\delta^3).
+\tag{311.9}
+$$
+
+下面展开这个同一通道的恢复误差。写 $m_i=M_*e_i$，并定义
+
+$$
+\rho_i=\frac{\langle m_i,M_*m_i\rangle}{\|m_i\|_2^2}.
+\tag{311.10}
+$$
+
+因为各 $m_i$ 非零，
+
+$$
+\|(I-e^{-\tau M_*})e_i\|_2
+=\tau\|m_i\|_2-\frac{\tau^2}{2}
+\frac{\langle m_i,M_*m_i\rangle}{\|m_i\|_2}
++O(\tau^3).
+\tag{311.11}
+$$
+
+式（311.4）使三列的加权首项都为 $\kappa_a\tau$，故取有限个列误差的最大值后有
+
+$$
+e(T_\tau)
+=\kappa_a\tau-\frac{\kappa_a}{2}
+\min_i\rho_i\,\tau^2+O(\tau^3).
+\tag{311.12}
+$$
+
+这一步不要求最大列在所有参数处固定；有限个余项可取共同界。
+
+代入式（311.3）并使用 $\varphi^2=\varphi+1$，得到
+
+$$
+\rho_1=\rho_2
+=\frac{24+42\varphi+8\beta^3}{10\varphi^2L},
+\qquad
+\rho_3=\frac{4+32\varphi}{10L}.
+\tag{311.13}
+$$
+
+例如对第一列，分子来自 $u,z$ 块的
+$(1+2\varphi)^3+(1+2\varphi)\varphi+(1+2\varphi)+3\varphi$，以及 $w$ 块的 $(2\beta)^3$；前四项之和为 $24+42\varphi$。另外
+
+$$
+\rho_3-\rho_1
+=\frac{12+26\varphi-8\beta^3}{10\varphi^2L}>0.
+\tag{311.14}
+$$
+
+严格性可由 $\varphi>3/2$、$\beta<3/2$ 直接看出。因此式（311.12）的最小值为 $\rho_1$。再代入式（311.9），并使用第301节的
+$\Gamma_a=-2\kappa_aU_\Omega/A$，得到该固定半群在精确预算下的二阶系数
+
+$$
+S_a=\Gamma_a+\frac{\kappa_a}{2}(1-\rho_1).
+\tag{311.15}
+$$
+
+需要将它与实际受限最优值的系数比较。第306节给出该模型的
+
+$$
+\frac\lambda A=\frac\beta{\varphi+2}=\frac1{2\beta},
+\qquad
+d_1d_2=\frac{\beta(1+5\varphi-2\beta)}{L^2}.
+\tag{311.16}
+$$
+
+这里 $d_1,d_2$ 是 $\operatorname{sym}M_*$ 的两个较小特征值；乘积不依赖两者的顺序。由第301节及 $\kappa_a=A/(2D_a)$，
+
+$$
+\Theta_a=\kappa_a\frac\lambda A d_1d_2
+=\frac{\kappa_a(1+5\varphi-2\beta)}{2L^2}.
+\tag{311.17}
+$$
+
+将式（311.13）代入式（311.15）并减去 $\Gamma_a+\Theta_a$，用
+$\varphi^2=\varphi+1$ 与 $\beta^2=(\varphi+2)/2$ 整理，恰得
+
+$$
+S_a-(\Gamma_a+\Theta_a)
+=\frac{\kappa_a}{2L^2}
+\left[3+\varphi-2\beta(\varphi-1)\right].
+\tag{311.18}
+$$
+
+括号内严格为正：被比较的 $3+\varphi$ 和 $2\beta(\varphi-1)$ 都为正，而
+
+$$
+(3+\varphi)^2-4\beta^2(\varphi-1)^2
+=4+9\varphi>0.
+\tag{311.19}
+$$
+
+第300节为实际受限最优值提供
+$\widehat G_a(R_\delta)=\kappa_a\delta+(\Gamma_a+\Theta_a)\delta^2+o(\delta^2)$。
+与固定半群的展开相减，即为式（311.2）；严格正系数保证在充分小的正预算差内误差严格更大。
+
+最后核对操作意义。$T_\tau$ 是第296、306节给出的同一个幺元 CPTP 半群。按第281节选择达到式（311.6）的编码方向，配合相应酉旋转及逆酉解码，可在同一对完整量子比特通道中同时实现所用残差与复合恢复误差。因此这里比较的是同一个实际方案与同预算最优值，不是分别取得的两个不相容读数。证毕。
+
+端点最优性确定了最有效的一阶方向，但不使固定该方向的整条半群自动保持最优。式（311.2）给出了这一点的明确模型和严格二阶差距；它没有确定偏离端点以后真正最优的整条通道路径。
+
+## 追加锚（本行以下为增补区）
+
+## 312. 固定端点半群的精确二阶损失与奇异分支等号分类
+
+**定理 312.1（支撑加权的二阶超额）。** 固定正半径六态模型，沿用第298至301节的唯一正角点端点解 $M_*=S_*-\Omega_*$、$G$、$Z_*=\lambda vv^{\mathsf T}$、$D_a$、$\kappa_a$，并记 $A=\|b\|_2^2$、$\alpha_i=1/a_i$。定义活跃列集合、支撑权重及列方向衰减率为
+
+$$
+I=\{i:a_i\|M_*e_i\|_2=2\kappa_a\},\qquad
+\pi_i=\frac{\alpha_i\|Ge_i\|_2}{D_a},\qquad
+\rho_i=\frac{\langle M_*e_i,M_*^2e_i\rangle}{\|M_*e_i\|_2^2}.
+\tag{312.1}
+$$
+
+所有列都非零，$\pi_i\ge0$、$\sum_i\pi_i=1$，且 $\pi_i>0$ 蕴含 $i\in I$。令 $T_t=e^{-tM_*}$，对 $0<\delta<1$，令 $t(\delta)$ 是使 $r_*(T_{t(\delta)})=\eta(1-\delta)$ 的唯一参数。那么对每个固定模型，在 $\delta\downarrow0$ 时，
+
+$$
+e(T_{t(\delta)})-\widehat G_a\bigl(\eta(1-\delta)\bigr)
+=\mathcal E_a\delta^2+o(\delta^2),
+\tag{312.2}
+$$
+
+$$
+\mathcal E_a
+=\frac{\kappa_a}{2}
+\left(\sum_i\pi_i\rho_i-\min_{i\in I}\rho_i\right)\ge0.
+\tag{312.3}
+$$
+
+等号 $\mathcal E_a=0$ 恰当且仅当每个正支撑权重对应的 $\rho_i$ 都等于活跃列中的最小值。特别地，当 $G\succ0$ 时，等号恰好要求 $\rho_1=\rho_2=\rho_3$。
+
+证明。第298节给出 $S_*\succ0$，因此 $M_*$ 可逆，式（312.1）的所有分母非零。最优对偶目标为 $D_a=\sum_i\alpha_i\|Ge_i\|_2>0$，故权重归一化；列支撑取等条件给出其支集包含于 $I$。
+
+先证明一个由同一对最优原、对偶矩阵决定的恒等式：
+
+$$
+\sum_i\pi_i\rho_i
+=1-\frac{2\lambda}{A}d_1d_2,
+\tag{312.4}
+$$
+
+其中 $d_1,d_2$ 是 $S_*$ 的两个较小特征值。由 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$ 及 $G=bb^{\mathsf T}+\mathcal C(Z_*)$，对任意实矩阵 $N$ 有
+
+$$
+b^{\mathsf T}Nb
+=\langle G,N\rangle_F-\operatorname{Tr}\bigl(Z_*\mathcal C(\operatorname{sym}N)\bigr).
+\tag{312.5}
+$$
+
+取 $N=M_*^2$。由 $M_*b=b$，左侧等于 $A$。对每个非零支撑列，最优列方向和尺度关系给出
+
+$$
+Ge_i=\frac{D_a\|Ge_i\|_2}{A\alpha_i}M_*e_i,
+\qquad \|M_*e_i\|_2=\frac{A\alpha_i}{D_a}.
+$$
+
+因此 $\langle Ge_i,M_*^2e_i\rangle
+=A\pi_i\rho_i$；零支撑列两侧都为零。遂有 $\langle G,M_*^2\rangle_F=A\sum_i\pi_i\rho_i$。
+
+另一方面，第301节给出 $d_3=d_1+d_2$、$S_*v=d_3v$ 及 $v\cdot\omega=0$，其中 $\Omega_*x=\omega\times x$。所以
+
+$$
+\begin{aligned}
+\operatorname{Tr}(M_*^2)&=d_1^2+d_2^2+d_3^2-2\|\omega\|_2^2,\\
+v^{\mathsf T}M_*^2v&=d_3^2-\|\omega\|_2^2,\\
+\operatorname{Tr}\bigl(Z_*\mathcal C(\operatorname{sym}M_*^2)\bigr)
+&=-2\lambda d_1d_2.
+\end{aligned}
+\tag{312.6}
+$$
+
+把这些等式代入式（312.5），便得式（312.4）。这里没有将 $M_*$ 当作对称矩阵。
+
+接着在同一实际预算下展开固定半群。第305、309节覆盖全部正半径，并保证
+$r_*(T_t)=\|e^{tM_*^{\mathsf T}}b\|_2^{-1}$；第304节保证预算参数唯一。令 $U=\|\Omega_*b\|_2^2$。由 $M_*^{\mathsf T}b=b+2\Omega_*b$ 及 $M_*b=b$，与第311节相同的固定矩阵展开给出
+
+$$
+t(\delta)=\delta+\left(\frac12-\frac{2U}{A}\right)\delta^2+O(\delta^3).
+\tag{312.7}
+$$
+
+对每一列展开矩阵指数和欧氏范数，有
+
+$$
+\frac{a_i}{2}\|(I-T_t)e_i\|_2
+=\frac{a_i\|M_*e_i\|_2}{2}
+\left(t-\frac{\rho_i}{2}t^2\right)+O(t^3).
+$$
+
+不在 $I$ 中的列与最大的首项系数有严格正间隙；列数有限，所以它们在充分小的正 $t$ 处不影响最大误差。对 $I$ 中的列取最大值得
+
+$$
+e(T_t)=\kappa_at-\frac{\kappa_a}{2}
+\min_{i\in I}\rho_i\,t^2+O(t^3).
+\tag{312.8}
+$$
+
+代入式（312.7），并使用第301节的
+$\Gamma_a=-2\kappa_aU/A$ 与
+$\Theta_a=\kappa_a(\lambda/A)d_1d_2$，再减去第300节实际受限最优值的二阶展开，得到
+
+$$
+\mathcal E_a
+=\frac{\kappa_a}{2}\left(1-\min_{i\in I}\rho_i\right)-\Theta_a.
+$$
+
+以式（312.4）消去 $\Theta_a$，即为式（312.3）。非负性及等号条件直接来自支撑于 $I$ 的概率权重。$G\succ0$ 时三个权重都严格为正，且三列全部活跃，故等号等价于三个衰减率相等。
+
+按第281节，同一个 $T_t$ 配合达到残差的酉输出坐标选择及逆酉解码，同时实现上述预算与误差；其复合恢复属于所比较的无限小可分类。式（312.2）比较的是同一个方案的两个读数。证毕。
+
+**定理 312.2（整个奇异支撑分支的二阶等号分类）。** 当最优支撑 $G$ 奇异时，令唯一零列对应的坐标最后排列，并沿用第305节的 $p_1,p_2,z,r,L=r+z,q,K,u$。则
+
+$$
+\mathcal E_a=0\quad\Longleftrightarrow\quad p_1=p_2.
+\tag{312.9}
+$$
+
+因此，零支撑列以外的两个半径不相等时，固定端点半群在每个充分接近端点的非零预算差处都严格次优。这一结论包括最后一列范数约束刚好取等的阈值。
+
+证明。第305节给出
+
+$$
+M_*=\frac1q\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad K>0,\quad u>0,
+\qquad \pi_1,\pi_2>0,\quad \pi_3=0,
+$$
+
+其中 $K>0$ 表示每个条目严格为正。前两列始终活跃。若第三列也活跃，其衰减率为
+
+$$
+\rho_3=1+\frac{u^{\mathsf T}Ku}{q(q^2+\|u\|_2^2)}>1.
+\tag{312.10}
+$$
+
+而式（312.4）使 $\pi_1\rho_1+\pi_2\rho_2<1$，因为 $\lambda,d_1,d_2$ 都严格为正。因此活跃列中的最小衰减率总是 $\min\{\rho_1,\rho_2\}$，不受第三列是否取等影响。由定理312.1，$\mathcal E_a=0$ 恰好等价于 $\rho_1=\rho_2$。
+
+剩下只需确定这两个率何时相等。记
+
+$$
+U=p_1^2,\qquad V=p_2^2,\qquad
+s_1=\frac{p_1}{\sqrt{z^2+U}},\qquad
+s_2=\frac{p_2}{\sqrt{z^2+V}},\qquad \tau=s_1s_2.
+$$
+
+由第305节的 $K=G_0H$、$G_0^2=r^2(z^2I+pp^{\mathsf T})$，得到
+
+$$
+K^{\mathsf T}K=
+\begin{pmatrix}U&\sqrt{UV}\,\tau\\\sqrt{UV}\,\tau&V\end{pmatrix}.
+$$
+
+将它用于 $\rho_j=(K^{\mathsf T}K^2)_{jj}/(qp_j^2)$，可得
+
+$$
+\rho_1=\frac{s_1}{q}\left[z+\frac{U+V\tau}{L}\right],\qquad
+\rho_2=\frac{s_2}{q}\left[z+\frac{V+U\tau}{L}\right].
+\tag{312.11}
+$$
+
+两式相减，并使用 $1-s_1^2=z^2/(z^2+U)$、$1-s_2^2=z^2/(z^2+V)$，得到
+
+$$
+q(\rho_1-\rho_2)
+=z(s_1-s_2)
++\frac{z^2\left[U\sqrt{U(z^2+U)}-V\sqrt{V(z^2+V)}\right]}
+{L(z^2+U)(z^2+V)}.
+\tag{312.12}
+$$
+
+函数 $x\mapsto\sqrt{x/(z^2+x)}$ 与
+$x\mapsto x\sqrt{x(z^2+x)}$ 在 $x>0$ 上都严格递增。故右侧两项在 $U\ne V$ 时均与 $U-V$ 同号，在 $U=V$ 时均为零。因此 $\rho_1=\rho_2$ 恰好等价于 $p_1=p_2$，证明式（312.9）。严格正二阶超额随后结合式（312.2）给出充分小正预算差处的严格次优性。证毕。
+
+这里的等号只消除了二阶超额。它不保证误差曲线在有限预算区间内完全重合；当 $\mathcal E_a=0$ 时，更高阶差距和有限预算的真正最优通道仍需另行确定。正定支撑分支在本节只得到式（312.3）的精确判据，没有将三个 $\rho_i$ 相等进一步分类为半径条件。
+
+## 追加锚（本行以下为增补区）
+
+## 313. 正定支撑分支的严格列率顺序与二阶最优性完整分类
+
+**定理 313.1（列率严格保持单纯形坐标的顺序）。** 在第307、309节的正定对偶支撑分支，令 $x$ 为唯一的开单纯形参数，$\rho_i$ 为式（312.1）的列方向衰减率。对任意不同指标 $i,j$，有
+
+$$
+\operatorname{sign}(\rho_i-\rho_j)
+=\operatorname{sign}(x_i-x_j).
+\tag{313.1}
+$$
+
+因此固定端点半群的二阶超额系数在该分支满足
+
+$$
+\mathcal E_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{313.2}
+$$
+
+证明。沿用第310节的归一化与参数：$n_i^2=w_i$、$X=\operatorname{diag}(x)$、$G_0=G/A$、$Q_0=G_0X$、$M_*=Q_0/f$，以及
+
+$$
+p=\sum_{i<j}x_ix_j,\quad q=x_1x_2x_3,\quad
+h=c/q\ge2,\quad m=\sum_iw_ix_i,\quad
+\beta^2=\sum_iw_ix_i^2,\quad f=m-\beta^2>0.
+$$
+
+记 $u_i=x_i(1-x_i)$。第310节的 Gram 恒等式与固定方向关系为
+
+$$
+Q_0^{\mathsf T}Q_0=(c-q)\operatorname{diag}(w)+qnn^{\mathsf T},
+\qquad Q_0^{\mathsf T}n=\operatorname{diag}(u)n,
+\qquad fu_i=(c-q)w_i+q.
+\tag{313.3}
+$$
+
+所以 $\|M_*e_i\|_2^2=cw_i/f^2$，并且
+
+$$
+\rho_i
+=\frac{(c-q)(Q_0)_{ii}+qu_i}{cf}.
+\tag{313.4}
+$$
+
+确实，式（313.3）右乘 $Q_0$ 后的第 $ii$ 元为
+$w_i[(c-q)(Q_0)_{ii}+qu_i]$；按 $M_*=Q_0/f$ 的三个尺度因子，再除以列范数平方，就得到式（313.4）。
+
+由 $v=(X+\beta I)n/\sqrt{2\beta(\beta+m)}$ 及 $G_0=nn^{\mathsf T}+\beta I-2\beta vv^{\mathsf T}$，
+
+$$
+(Q_0)_{ii}
+=x_i\left[\beta+w_i\left(1-\frac{(x_i+\beta)^2}{\beta+m}\right)\right].
+$$
+
+消去 $w_i=(fu_i-q)/(c-q)$，于是
+
+$$
+\rho_i=\frac{N(x_i)}{cf(\beta+m)},
+\tag{313.5}
+$$
+
+其中是同一个多项式
+
+$$
+N(z)=(c-q)\beta(\beta+m)z
++fz^2(1-z)\bigl[\beta+m-(z+\beta)^2\bigr]
++qz\bigl[(z+\beta)^2-z(\beta+m)\bigr].
+\tag{313.6}
+$$
+
+下面只需比较这个多项式在三个单纯形坐标处的值。每个 $x_i$ 满足 $x_i^3-x_i^2+px_i-q=0$。将式（313.6）除以这个三次式，并用 $\beta^2=m-f$ 约去平方，余式为 $A_2z^2+A_1z+A_0$，其中
+
+$$
+\begin{aligned}
+A_2={}&-2\beta fp+\beta q-fp+fq-mq+q,\\
+A_1={}&\beta cm+\beta fp+2\beta fq-\beta mq
+ -cf+cm+f^2p+fp^2-pq,\\
+A_0={}&-q(\beta f+f^2+fp-q).
+\end{aligned}
+\tag{313.7}
+$$
+
+这些余式系数保留了同一模型的 $c,q,f,m,\beta$。再代入第310节的
+
+$$
+c=hq,\qquad q=\frac{2p^2h}{(h+1)(h+2)},\qquad
+f=\frac{ph}{h+1},\qquad
+m=\frac{h(h+1-6p)}{2(h^2-1)},
+$$
+
+记
+
+$$
+K_0=\frac{hp^2}{(h-1)(h+1)^2(h+2)},\qquad
+T=hp(2\beta+1)(h-1),
+$$
+
+并令
+
+$$
+J=2\beta(h-1)(h+1)^2+h^2(h+1)-2hp(h+2).
+\tag{313.8}
+$$
+
+代入式（313.7）直接整理得到
+
+$$
+A_2=-K_0J,\qquad A_1+A_2=-K_0T.
+\tag{313.9}
+$$
+
+因此对 $\{i,j,k\}=\{1,2,3\}$，使用 $x_i+x_j=1-x_k$，有精确的差值公式
+
+$$
+\rho_i-\rho_j
+=\frac{K_0}{cf(\beta+m)}
+(x_i-x_j)(Jx_k-T).
+\tag{313.10}
+$$
+
+只需证明 $Jx_k-T>0$。由 $p\le1/3$、$h\ge2$，
+
+$$
+\begin{aligned}
+2J-(2\beta+1)(h^2-1)(h+2)
+&=2\beta h(h^2-1)+h^3+h+2-4hp(h+2)\\
+&\ge2\beta h(h^2-1)
++\frac{(h-1)(3h^2-h-6)}3>0.
+\end{aligned}
+\tag{313.11}
+$$
+
+最后一式严格为正，因为 $\beta>0$、$h\ge2$，且 $3h^2-h-6\ge4$。这也证明 $J>0$，并使
+
+$$
+\frac TJ
+<\frac{2ph}{(h+1)(h+2)}
+=\frac qp
+=\frac1{x_1^{-1}+x_2^{-1}+x_3^{-1}}
+<\min_i x_i.
+\tag{313.12}
+$$
+
+故式（313.10）中除 $x_i-x_j$ 外的因子都严格为正，证明式（313.1）。这个推导也包括两个或三个坐标相等的情形，不除以任何坐标差。
+
+第312节已经证明：在正定支撑分支，$\mathcal E_a=0$ 恰好要求三个 $\rho_i$ 相等。式（313.1）使其等价于 $x_1=x_2=x_3=1/3$。第309节的唯一权重重构随后给出 $w_i=1/3$，即三个正倒数半径相等。反过来，等半径的唯一解具有这个均匀单纯形参数，三个衰减率相等。因此式（313.2）成立。证毕。
+
+**推论 313.2（任意正半径的二阶等号范围）。** 在全部正半径六态模型中，令 $t(\delta)$ 为达到残差预算 $\eta(1-\delta)$ 的唯一半群参数。标量恢复误差之差满足
+
+$$
+e(e^{-t(\delta)M_*})-\widehat G_a\bigl(\eta(1-\delta)\bigr)
+=o(\delta^2)\qquad(\delta\downarrow0),
+$$
+
+恰当且仅当模型属于下列情形之一：
+
+- 三个半径相等；
+- 在某次坐标置换后，$a_1=a_2=a$、$a_3=a/k$，其中
+  $k\ge\sqrt{(3+\sqrt{17})/2}$。
+
+这里半径仍满足原六态模型的物理范围。除此之外，存在严格正系数 $\mathcal E_a$ 使式（312.2）成立，固定半群因而在每个充分小的正预算差处严格次优。
+
+证明。正定支撑分支由定理313.1完全处理。奇异支撑分支由定理312.2要求非零支撑的两个坐标半径相等。第305节又保证零支撑坐标具有唯一最大的倒数半径，所以经坐标置换可写成上述轴向族。第302、305节的显式阈值使该轴向模型恰在 $k\ge\sqrt{(3+\sqrt{17})/2}$ 时进入奇异支撑分支，且包含阈值本身。反向逐项使用这些结论即得等价性。其余模型的系数严格正，再用式（312.2）的余项结论即可。证毕。
+
+这是固定端点生成元在二阶精度下的完整分类。第二类等号模型的更高阶差距、一般有限预算的最优恢复路径，以及允许生成元随预算改变时的最优性，仍未由这一分类决定。
+
+## 追加锚（本行以下为增补区）
+
+## 314. 必要旋转使端点半群在正时间进入可分条件的严格内部
+
+**定理 314.1（全部正时间的严格奇异值间隙）。** 固定正半径六态模型，令 $M_*=S_*-\Omega_*$ 为第298、301节的唯一正角点端点矩阵，$d_1\le d_2<d_3=d_1+d_2$ 为 $S_*$ 的特征值，$v$ 为其单位最大特征向量。对 $t>0$，令 $s_1(t)\ge s_2(t)\ge s_3(t)>0$ 为 $T_t=e^{-tM_*}$ 的奇异值。则
+
+$$
+s_3(t)^2\ge\det T_t=e^{-2d_3t}.
+\tag{314.1}
+$$
+
+在任意一个正 $t$ 处取等，恰当且仅当三个半径相等。因此不等半径时，对每个 $t>0$ 都有
+
+$$
+s_1(t)s_2(t)<s_3(t).
+\tag{314.2}
+$$
+
+这是第293节所用幺元可逆微分可分条件的严格不等式；它不声称严格满足该条件的通道就是预算最优通道。
+
+证明。对 $y(s)=e^{sM_*}y_0$，
+
+$$
+\frac{d}{ds}\|y(s)\|_2^2
+=2y(s)^{\mathsf T}S_*y(s)
+\le2d_3\|y(s)\|_2^2.
+$$
+
+故 $\|e^{tM_*}\|_{\rm op}\le e^{d_3t}$。最小奇异值等于逆矩阵算子范数的倒数，所以
+$s_3(t)\ge e^{-d_3t}$。又因 $\operatorname{Tr}M_*=\operatorname{Tr}S_*=2d_3$，矩阵指数的行列式给出式（314.1）。
+
+现在设在某个 $t_0>0$ 取等。单位球紧，存在单位向量 $y_0$ 使
+$\|e^{t_0M_*}y_0\|_2=e^{d_3t_0}$。沿这条轨道，
+
+$$
+\frac{d}{ds}\left(e^{-2d_3s}\|y(s)\|_2^2\right)
+=-2e^{-2d_3s}y(s)^{\mathsf T}(d_3I-S_*)y(s)\le0.
+\tag{314.3}
+$$
+
+起点与终点相等，使非负的连续耗散被积函数在整个 $[0,t_0]$ 上为零。由于 $d_1,d_2>0$，最大特征值 $d_3=d_1+d_2$ 单重，所以 $y(s)$ 始终位于 $\mathbb Rv$。指数矩阵可逆，轨道从不为零；在 $s=0$ 求导便迫使 $M_*v\in\mathbb Rv$。由 $S_*v=d_3v$ 及反对称性，得到 $\Omega_*v=0$。
+
+第301节同时给出 $v\cdot\omega=0$，其中 $\Omega_*x=\omega\times x$。$\Omega_*v=0$ 使 $\omega$ 平行于 $v$，所以 $\omega=0$。第299节于是迫使三个半径相等。反过来，等半径时 $M_*=(I+nn^{\mathsf T})/2$，其最小半群奇异值恰为 $e^{-t}$，而行列式为 $e^{-2t}$，所以每个正参数处都取等。
+
+最后，$\det T_t>0$，且等于三个奇异值的乘积。因 $s_3(t)>0$，式（314.1）的严格形式等价于式（314.2）。证毕。
+
+**定理 314.2（严格可分间隙的首个非零阶）。** 定义坐标不变的量
+
+$$
+\Xi_a=(\Omega_*v)^{\mathsf T}(d_3I-S_*)(\Omega_*v).
+\tag{314.4}
+$$
+
+则对每个固定模型，在 $t\downarrow0$ 时，
+
+$$
+\log\frac{s_3(t)^2}{\det T_t}
+=\frac{\Xi_a}{6}t^3+O(t^4),
+\qquad
+\frac{s_3(t)^2}{\det T_t}
+=1+\frac{\Xi_a}{6}t^3+O(t^4).
+\tag{314.5}
+$$
+
+$\Xi_a>0$ 恰当且仅当三个半径不全相等。特别地，不等半径端点生成元虽满足耗散锥的等号，其固定半群在每个正时间严格满足可分奇异值条件，而相应间隙从三阶开始。
+
+证明。这里直接使用既有的短时间半群范数定理，而不将三次衰减的一般机制作为新结论。Achleitner、Arnold 与 Carlen，*The hypocoercivity index for the short time behavior of linear time-invariant ODE systems*，Journal of Differential Equations 371 (2023)，[arXiv v5 定理2.7及式（2.9）](https://arxiv.org/abs/2109.10784v5)，DOI [10.1016/j.jde.2023.06.027](https://doi.org/10.1016/j.jde.2023.06.027)，给出了下述适用情形：若 $B$ 的对称部分 $B_H\succeq0$，其 hypocoercivity index 为一，则
+
+$$
+\|e^{-tB}\|_{\rm op}
+=1-c_Bt^3+O(t^4),\qquad
+c_B=\frac1{12}\min_{\substack{x\in\ker B_H\\\|x\|_2=1}}
+(Bx)^{\mathsf T}B_H(Bx).
+\tag{314.6}
+$$
+
+将它接到本模型，取
+
+$$
+B=d_3I-M_*=(d_3I-S_*)+\Omega_*,\qquad
+B_H=D:=d_3I-S_*,\qquad B_A=\Omega_*.
+\tag{314.7}
+$$
+
+这里 $D\succeq0$、$\ker D=\mathbb Rv$，而 $D$ 在 $v^\perp$ 上正定。对不等半径，第299、301节给出 $\Omega_*v\ne0$。于是 $D$ 本身不正定，但
+
+$$
+D+\Omega_*D\Omega_*^{\mathsf T}\succ0.
+\tag{314.8}
+$$
+
+具体地，若它在 $x$ 上的二次型为零，第一项使 $x\in\mathbb Rv$。第二项随后等于 $x$ 沿 $v$ 的系数平方乘以 $\Xi_a$，而 $\Xi_a>0$；故 $x=0$。这正是所引文献定义2.1在 $m=1$ 处的正定条件，而 $m=0$ 不成立，所以 index 恰为一。
+
+所引定理允许复向量；实矩阵在实、复欧氏空间上的算子范数相同，复单位核向量 $e^{i\theta}v$ 也都给出相同二次型值。因此可直接使用这里的实空间表述。又因 $Bv=\Omega_*v$，实单位核向量 $\pm v$ 的二次型值均为 $\Xi_a$。因此该定理在本模型上精确给出
+
+$$
+e^{-d_3t}\|e^{tM_*}\|_{\rm op}
+=1-\frac{\Xi_a}{12}t^3+O(t^4).
+\tag{314.9}
+$$
+
+这里精确地有 $s_3(t)^2/\det T_t=\|e^{-tB}\|_{\rm op}^{-2}$。取对数便得到式（314.5）的第一式；再取指数得到第二式。
+
+最后，$\Omega_*v\perp v$，所以 $D$ 在该方向上的正定性说明 $\Xi_a=0$ 恰好要求 $\Omega_*v=0$。定理314.1证明中已将这个条件等价为三个半径相等。等半径时不使用 index 一的定理：直接由显式半群可知比值恒为一，$\Xi_a=0$，故式（314.5）仍成立。证毕。
+
+能量估计与 hypocoercivity 短时间范数定理都是既有结果。本节给出的是它们在唯一端点解上的精确作用：必要的旋转把轨道带离最大耗散轴，使生成元处的等号不再沿有限时间半群保留。这个可分性间隙与第312、313节的恢复误差超额是两个不同读数；三阶奇异值间隙本身不证明三阶恢复误差差距，也不决定有限预算最优通道。
+
+## 追加锚（本行以下为增补区）
+
+## 315. 内部预算最优恢复的可分边界与固定端点半群的全预算次优性
+
+**定理 315.1（每个内部预算最优恢复都在可分边界上）。** 对任意固定正半径六态模型及 $0<R<\eta$，每个达到实际受限最优值 $\widehat G_a(R)$ 的复合恢复通道都幺元，其 Bloch 矩阵 $T$ 可逆、$\det T>0$，而排序奇异值满足
+
+$$
+0<s_3\le s_2\le s_1\le1,\qquad s_1s_2=s_3.
+\tag{315.1}
+$$
+
+等价地，$s_3(T)^2=\det T$。若 $s_1<1$，该最优恢复的 Choi 矩阵正定；若 $s_1=1$，则 $s_2=s_3$，且其在独立的输入、输出酉共轭下等价于退相干通道。结论作用于实际最优复合通道，不要求原编码、解码分别幺元。
+
+证明。第293节已经证明每个实际最优恢复都幺元。先排除奇异 Bloch 矩阵。Wolf 与 Cirac 的[定理24及式（51）](https://arxiv.org/abs/math-ph/0611057v3)，在幺元通道的对角正规形上给出两种可能：Bloch 秩小于二，或矩阵可逆且 $s_3^2\ge\det T>0$。这正是第293节所用的分类；不能把可逆情形的不等式直接延伸为允许 Bloch 秩二的判据。
+
+若一个允许恢复 $T$ 奇异，则其像包含于某条直线 $\mathbb Ru$，其中 $u$ 取单位向量；$T=0$ 时任取一条直线。记 $P=uu^{\mathsf T}$。正交投影的最近点性质使
+
+$$
+\|(I-P)e_i\|_2\le\|(I-T)e_i\|_2
+\quad(i=1,2,3),\qquad e(P)\le e(T).
+\tag{315.2}
+$$
+
+矩阵 $P$ 是沿 $u$ 的完全退相干通道。对 $0<\varepsilon<1$，取
+
+$$
+T_\varepsilon=P+\varepsilon(I-P).
+\tag{315.3}
+$$
+
+它的奇异值为 $1,\varepsilon,\varepsilon$，是幺元 CPTP 且微分可分的有限参数退相干半群成员。选任意单位 $n\perp u$，就有 $T_\varepsilon^{\mathsf T}n=\varepsilon n$，所以
+
+$$
+r_*(T_\varepsilon)\le\varepsilon\max_i a_i|n_i|
+\le\varepsilon\max_i a_i.
+$$
+
+因 $R>0$，可取足够小的正 $\varepsilon$ 使其在预算 $R$ 下可行。同时
+
+$$
+e(T_\varepsilon)=(1-\varepsilon)e(P)<e(T),
+\tag{315.4}
+$$
+
+其中 $e(P)>0$ 来自正半径三轴张成整个空间，直线投影不可能在所有输入上为恒等。这给出同预算的严格改进，故奇异恢复不能最优。上述通道与所用残差方向按第281节由同一对实际编码、解码实现。
+
+因此最优矩阵可逆，所引分类给出 $\det T>0$ 及 $s_3^2\ge\det T$，也就是 $s_1s_2\le s_3$。CPTP 的迹距离压缩又给出 $s_1\le1$。
+
+下面核对严格可分条件自动蕴含完全正内点。由于 $\det T>0$，左右两个正向正交变换可把 $T$ 化为对角矩阵 $\operatorname{diag}(s_1,s_2,s_3)$；这些变换对应独立的输入、输出酉操作，保持 Choi 秩。标准幺元 Pauli 正规形的四个概率是
+
+$$
+\frac{1+s_1+s_2+s_3}{4},\quad
+\frac{1+s_1-s_2-s_3}{4},\quad
+\frac{1-s_1+s_2-s_3}{4},\quad
+\frac{1-s_1-s_2+s_3}{4}.
+\tag{315.5}
+$$
+
+若 $s_1s_2<s_3$，最后一个分子为
+$(1-s_1)(1-s_2)+(s_3-s_1s_2)>0$。第二个分子为 $(1-s_3)+(s_1-s_2)>0$，因为 $s_3=1$ 会迫使三个奇异值全为一而违反严格条件。第三个分子为 $(1-s_1)+(s_2-s_3)$，只能在 $s_1=1,s_2=s_3$ 时为零，但这种情况同样违反严格条件。第一个显然严格正。因此四个概率都正，$J(T)\succ0$。此处直接使用已在第285、293节引用的标准 Pauli 正规形，不另假设 Choi 内点。
+
+最后在严格条件下应用第285节的局部完全正边界论证。需要核对的不是一般凸平均保留微分可分性，而是该证明所需的每次扰动都能留在同一个开邻域。
+
+反设 $s_3(T)^2>\det T>0$。前面的 Pauli 概率比较已给出 $J(T)\succ0$。在代表幺元、保迹映射的实 Bloch 矩阵空间中，取包含 $T$ 的开邻域 $\mathcal U$，使每个矩阵均 Choi 正定、正行列式，并满足严格奇异值条件。Choi 矩阵、行列式及奇异值的连续性保证这种邻域存在。由第293节引用的 Wolf–Cirac 幺元可逆判据，$\mathcal U$ 内每个矩阵都是允许的微分可分 CPTP 恢复通道。
+
+选一个使 $|n\cdot Te_i|\le R\alpha_i$ 的单位方向 $n$。沿用式（285.3）的逐列板层投影矩阵
+
+$$
+Z(n)e_i=e_i-n\operatorname{sgn}(n_i)(|n_i|-R\alpha_i)_+,
+\qquad
+\mu(n)=\max_i a_i|n_i|,\qquad m(n)=\frac{\mu(n)-R}{2}>0.
+\tag{315.5a}
+$$
+
+这里 $\mu(n)\ge\eta>R$，并且 $e(T)\ge m(n)$。若不等式严格，取充分小的 $\lambda>0$，则
+$T_\lambda=(1-\lambda)T+\lambda Z(n)$ 留在 $\mathcal U$，同时保留原方向的残差约束。范数凸性给出
+$e(T_\lambda)\le(1-\lambda)e(T)+\lambda m(n)<e(T)$，与最优性矛盾。只对实际靠近 $T$ 的矩阵使用物理性，不要求 $Z(n)$ 自身完全正。因此必须有 $e(T)=m(n)$。
+
+令 $I=\{i:a_i|n_i|=\mu(n)\}$。对 $i\in I$，板层中的最小列误差已经达到总误差，欧氏投影唯一性使 $Te_i=Z(n)e_i$。再作一次任意小的正权重混合，得到 $\overline T\in\mathcal U$：它的活跃列不变，而全部非活跃列的误差严格小于 $m(n)$。误差仍为 $m(n)$，故它也最优。
+
+若 $I$ 不含全部三轴，按第285节的显式构造任意小地移动单位方向，使每个活跃 $a_i|n_i|$ 都严格下降：非活跃坐标部分不为零时缩小活跃部分并放大非活跃部分以保持单位范数；非活跃坐标全为零时，向一个非活跃坐标轴作小角旋转。记新方向为 $n(t)$。
+
+新矩阵的活跃列取 $Z(n(t))e_i$，非活跃列取 $\overline Te_i$ 到新板层 $|n(t)\cdot x|\le R\alpha_i$ 的欧氏投影。板层投影关于单位法向量连续，所以新矩阵趋于 $\overline T$；充分小的 $t>0$ 使它仍在 $\mathcal U$。活跃列误差严格下降，非活跃列则靠已固定的严格余量与连续性保持较小误差。所有列仍满足同一方向的残差约束，于是得到更好的允许通道，再次矛盾。
+
+若全部三轴活跃，则 $|n_i|=\eta\alpha_i$，且
+
+$$
+T=Z(n)=I-(1-R/\eta)nn^{\mathsf T}.
+$$
+
+其本征值为 $1,1,R/\eta$，对应的 Pauli 概率中有 $(R/\eta-1)/4<0$，所以它不是 CPTP，也产生矛盾。
+
+因此最优恢复不可能满足严格的奇异值条件。允许类在此范围满足 $s_3(T)^2\ge\det T$，故只能取等。上述每个更好矩阵及其方向都按第281节由同一对完整二维编码、解码实现，比较的仍是实际预算最优值。
+
+
+再看等号面上的 Choi 秩。代入 $s_3=s_1s_2$，式（315.5）的四个分子分别变为
+$(1+s_1)(1+s_2)$、$(1+s_1)(1-s_2)$、$(1-s_1)(1+s_2)$、$(1-s_1)(1-s_2)$。若 $s_1<1$，四项均严格正；若 $s_1=1$，则谱为 $(1,s_2,s_2)$，即独立输入、输出酉操作下等价的退相干形式。这完成全部结论。证毕。
+
+**定理 315.2（不等半径固定端点半群的全预算次优性）。** 若三个半径不全相等，则对每个 $0<R<\eta$，令 $t_R>0$ 是使固定端点半群 $T_t=e^{-tM_*}$ 的残差恰为 $R$ 的唯一参数，有
+
+$$
+\widehat G_a(R)<e(T_{t_R}).
+\tag{315.6}
+$$
+
+更强地，对每个满足 $r_*(T_t)\le R$ 的有限参数 $t$，都有 $\widehat G_a(R)<e(T_t)$。
+
+证明。第304节保证 $t_R$ 的存在唯一性。每个正参数的半群成员都是可逆、正行列式的幺元 CPTP 通道，第314节使其严格满足 $s_3(T_t)^2>\det T_t$。所以凡在预算 $R$ 下可行的成员，都不满足定理315.1要求的等号条件。
+
+该半群成员的两个成本按第281节由同一对实际通道同时实现，故 $\widehat G_a(R)\le e(T_t)$。若等号成立，它本身就是实际最优恢复，与定理315.1矛盾。因此不等式严格；取 $t=t_R$ 即得式（315.6）。证毕。
+
+**推论 315.3（近端点固定半群最优性恰为等半径）。** 对每个固定正半径模型，唯一端点最优生成元形成的固定半群在所有充分接近 $\eta$ 的较小预算上均达到实际受限最优值，恰当且仅当三个半径相等。
+
+证明。不等半径由定理315.2排除。等半径时，端点半群在残差比 $q=R/\eta$ 下具有沿 $n$ 的奇异值 $q$ 和沿 $n^\perp$ 的两个奇异值 $\sqrt q$。它的恢复误差恰为第293节式（293.7）的已知精确最优值，该式覆盖整个 $1/4\le q\le1$。所以等半径在这一已知区间内达到最优。证毕。
+
+这里排除的是由唯一端点生成元固定产生的半群，不排除随预算改变生成元的其他半群，也不排除其他无限小可分通道。第313节中的奇异轴向二阶等号族仍保留 $o(\delta^2)$ 的超额结论；本节额外证明每个内部预算处误差都严格更大，却没有给出该族近端点差距的首个非零阶或精确系数。第314节的三阶奇异值间隙仍不能直接当作三阶恢复误差差距。定理315.1确定了实际最优恢复必须满足的奇异值边界，没有把这条边界上的取向和最优奇异值全部求出。
+
+## 追加锚（本行以下为增补区）
+
+## 316. 二阶等号轴向族的显式三阶可行改进
+
+第313节的奇异轴向族使固定端点半群的二阶误差超额为零。第315节仍在每个内部预算排除了其最优性。本节直接构造同预算的更好通道，并给出严格正的三阶改进系数；所求出的系数属于这个显式改进方案，不是实际最优曲线的三阶系数。
+
+**定理 316.1（径向归一化的三阶恢复收益）。** 取第302节的参数
+
+$$
+a_1=a_2=a,\qquad a_3=a/k,\qquad
+0<a\le1,\qquad k\ge k_0=\sqrt{\frac{3+\sqrt{17}}2},
+$$
+
+记 $B=1+k^2$、$r=\sqrt{k^2+2}$、$\eta=a/r$，并令 $M_*$ 为式（302.2）的固定端点矩阵。对 $T_t=e^{-tM_*}$ 定义
+
+$$
+c(t)=\frac{s_3(T_t)^2}{\det T_t},\qquad U_t=c(t)T_t,
+\tag{316.1}
+$$
+
+其中 $s_3$ 是最小奇异值。每个 $t\ge0$ 的 $U_t$ 都是幺元 CPTP 且微分可分，并精确位于奇异值边界 $s_1(U_t)s_2(U_t)=s_3(U_t)$。
+
+对 $R_\delta=\eta(1-\delta)$，设 $t_\delta$ 是 $r_*(T_{t_\delta})=R_\delta$ 的唯一参数。对充分小的正 $\delta$，存在唯一趋于零的正参数 $\tau_\delta$，使 $r_*(U_{\tau_\delta})=R_\delta$。这两条曲线在相同实际残差预算下满足
+
+$$
+e(T_{t_\delta})-e(U_{\tau_\delta})
+=\frac{ak^4r}{384B^{7/2}}\,\delta^3+O(\delta^4).
+\tag{316.2}
+$$
+
+因此
+
+$$
+\liminf_{\delta\downarrow0}
+\frac{e(T_{t_\delta})-\widehat G_a(R_\delta)}{\delta^3}
+\ge\frac{ak^4r}{384B^{7/2}}>0.
+\tag{316.3}
+$$
+
+这里 $e$ 始终是原三轴六态模型的最坏迹距离误差，所有渐近式都对固定 $a,k$ 而言，包括临界参数 $k=k_0$。
+
+证明。先说明式（316.1）的物理性，这一步只是标准幺元 Pauli 正规形和第293节所引 Wolf–Cirac 判据的直接应用。对任意正行列式的可逆实矩阵 $T$，写其排序奇异值为 $s_1\ge s_2\ge s_3>0$，并令 $c=s_3/(s_1s_2)$。则 $cT$ 的排序奇异值满足
+
+$$
+u_1=\frac{s_3}{s_2}\le1,\qquad
+u_2=\frac{s_3}{s_1}\le u_1,\qquad
+u_3=\frac{s_3^2}{s_1s_2}=u_1u_2.
+\tag{316.4}
+$$
+
+正行列式使左右奇异向量变换可取为正向旋转。相应 Pauli 概率恰为四个非负数 $(1\pm u_1)(1\pm u_2)/4$，故给出完整量子比特上的幺元 CPTP 通道。它又满足可逆微分可分条件的等号，所以属于允许类。将此应用于 $T_t$，得到全部有限参数下 $U_t$ 的物理性。$t=0$ 时 $c(0)=1$、$U_0=I$。这一缩放是 Bloch 矩阵的缩放，定义的新通道仍保持恒等算子；不是把保迹超算子整体乘以 $c$。
+
+下面求同预算参数。第314节给出
+
+$$
+c(t)=1+\gamma t^3+O(t^4),\qquad
+\gamma=\frac{\Xi_a}{6}.
+\tag{316.5}
+$$
+
+在当前轴向标架 $(u,w,z)$ 中，反对称部分只作用于 $u,z$ 平面，其旋转强度平方为 $k^2/(8B^2)$；最大对称特征轴 $v$ 也在该平面。$d_3I-S_*$ 在该平面中垂直于 $v$ 的方向上具有特征值 $d_w=kr/(2B)$。所以
+
+$$
+\Xi_a=\frac{k^2}{8B^2}\frac{kr}{2B}
+=\frac{k^3r}{16B^3},\qquad
+\gamma=\frac{k^3r}{96B^3}>0.
+\tag{316.6}
+$$
+
+式（316.5）确可在零点附近按通常解析函数求导和局部反解。为核对这一点，把
+
+$$
+K(t)=\frac{e^{tM_*^{\mathsf T}}e^{tM_*}-I}{2t}
+\tag{316.7}
+$$
+
+在 $t=0$ 解析延拓为 $S_*$。其最大特征值 $d_3$ 单重，特征多项式的单根隐函数论证使相应特征值支在零点附近解析；对小正 $t$，它给出 $e^{tM_*^{\mathsf T}}e^{tM_*}$ 的最大特征值。因此 $c(t)=e^{2d_3t}/\|e^{tM_*}\|_{\rm op}^2$ 有相同的局部解析延拓。
+
+第305节的固定角点公式给出
+
+$$
+f(t):=\frac{r_*(T_t)}\eta
+=\frac{\|b\|_2}{\|e^{tM_*^{\mathsf T}}b\|_2},
+\qquad f(0)=1,\qquad f'(0)=-1.
+\tag{316.8}
+$$
+
+导数使用 $M_*b=b$。残差定义对正标量齐次，所以 $r_*(U_t)/\eta=c(t)f(t)$。这个解析函数在零点的导数也为 $-1$，故局部严格下降，并有唯一的小正预算反解。由 $f(t_\delta)=1-\delta$ 和 $c(\tau_\delta)f(\tau_\delta)=1-\delta$，式（316.5）给出
+
+$$
+t_\delta=\delta+O(\delta^2),\qquad
+\tau_\delta-t_\delta=\gamma t_\delta^3+O(t_\delta^4).
+\tag{316.9}
+$$
+
+于是矩阵指数展开得到
+
+$$
+U_{\tau_\delta}
+=T_{t_\delta}+\gamma t_\delta^3(I-M_*)+O(t_\delta^4).
+\tag{316.10}
+$$
+
+现在必须在原输入坐标中比较最大列误差，不能把 $(u,w,z)$ 当成另一个输入三轴模型。写
+
+$$
+p=\frac{r^2}{2B},\qquad h=\frac{kr}{2B},\qquad
+ g=\frac{k\sqrt2}{2B},\qquad
+[M_*]_{(u,w,z)}=\begin{pmatrix}p&0&g\\0&h&0\\0&0&1\end{pmatrix}.
+\tag{316.11}
+$$
+
+原坐标为 $e_1=(u+w)/\sqrt2$、$e_2=(u-w)/\sqrt2$。对 $i=1,2$，直接计算得
+
+$$
+\|M_*e_i\|_2=\frac r{2\sqrt B},\qquad
+\langle M_*e_i,e_i\rangle-\|M_*e_i\|_2^2
+=\frac{kr}{4B}>0.
+\tag{316.12}
+$$
+
+交换前两轴的对称性使其误差对两条通道曲线始终相等。若 $k>k_0$，第三轴的一阶误差严格较小，故在充分小的正参数下，最大误差恰由前两轴取得。
+
+临界点 $k=k_0$ 不能使用这一严格一阶余量。对任一列，记
+
+$$
+\rho_i=\frac{\langle M_*e_i,M_*^2e_i\rangle}{\|M_*e_i\|_2^2}.
+$$
+
+则
+
+$$
+\frac{a_i}{2}\|(I-T_t)e_i\|_2
+=\frac{a_i\|M_*e_i\|_2}{2}
+\left(t-\frac{\rho_i}{2}t^2\right)+O(t^3).
+\tag{316.13}
+$$
+
+式（316.11）和 $0<p,h<1$ 给出
+
+$$
+\rho_1=\rho_2=\frac{p^3+h^3}{p^2+h^2}<1,
+\qquad
+\rho_3=1+\frac{g^2p}{1+g^2}>1.
+\tag{316.14}
+$$
+
+在临界点三个一阶系数相等，因此第三列从二阶起就严格小于前两列。式（316.10）的三阶扰动不改变这条二阶严格比较。故包括临界点在内，两条曲线的最大误差都可用任一前两列计算。
+
+最后，对非零向量 $m_i=M_*e_i$，将式（316.10）代入欧氏范数的一阶变化。由于 $(I-T_t)e_i=t m_i+O(t^2)$，得到
+
+$$
+\begin{aligned}
+e(T_{t_\delta})-e(U_{\tau_\delta})
+&=\gamma t_\delta^3\frac a2
+\frac{\langle m_i,e_i\rangle-\|m_i\|_2^2}{\|m_i\|_2}
++O(t_\delta^4)\\
+&=\gamma\frac{ak}{4\sqrt B}\,t_\delta^3+O(t_\delta^4).
+\end{aligned}
+\tag{316.15}
+$$
+
+代入式（316.6）、（316.9）即得式（316.2）。每个 $U_{\tau_\delta}$ 及其残差最小方向按第281节由同一对完整二维编码、解码实现。因此 $\widehat G_a(R_\delta)\le e(U_{\tau_\delta})$，从而得到式（316.3）。证毕。
+
+本节把第314节的三阶奇异值间隙转成了一个经过物理性与同预算检查的三阶误差改进。第313节仍只为原固定半群的实际最优超额提供 $o(\delta^2)$ 上阶信息；本节没有证明该超额为 $O(\delta^3)$，也没有认定径向归一化曲线就是最优曲线。标准 Pauli 正规形、可分判据、简单特征值的局部解析性及范数微分是既有工具，新增推导是它们在这条二阶等号族上给出的明确可达收益。
+
+## 追加锚（本行以下为增补区）

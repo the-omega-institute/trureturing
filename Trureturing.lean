@@ -50,3 +50,4 @@ import D5.S3.Quantum.PointerBasis
 import D5.S3.Quantum.CloningMachine
 import D5.S3.Zeros.ZetaIdentities
 import D5.S3.Zeros.ZetaUpgrade
+import D5.S3.QuadraticForms.ActualSignature

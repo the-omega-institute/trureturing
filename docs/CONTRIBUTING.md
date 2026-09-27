@@ -153,8 +153,8 @@ Make and Bash, with these tools on `PATH`:
   selected by [global.json](../global.json) using its declared roll-forward
   policy. The
   repository's Lean wrapper also uses .NET.
-- **Python** available as `python3` for the CI/preflight scripts, which require
-  the standard-library `tomllib` module.
+- **Python 3.11+** as `python3` for CI/preflight scripts, which import
+  standard-library `tomllib`.
 
 The shell examples below use macOS/Linux conventions. Install the SDK version
 specified in [global.json](../global.json), even when its roll-forward policy

@@ -154,7 +154,164 @@ arithmetic obligation is a constraint on actual original q_p/h_p, a WSS
 witness, or a new global distribution theorem. Rephrasing the same unknown
 in multiple spaces does not supply such a result.
 
-## 7. Exact Zeckendorf predictive states at the original prime-square scale
+## 7. Predictive spacetime completion and the original square-level drift
+
+The WSS owner's SJC section reads Katz's Section 4 exact Lie-kernel sequence
+on printed page 3 together with the actual repository task-quotient theory.
+The relevant repository inputs are
+`docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3,
+at inspected dev b603c498c3cdc76478bfb37c2e3c4ea29edb86ed, and the draft
+`docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2,
+at candidate commit29c5504b11a1685c220e0ad2a9705a987fc6cff4 in PR8891.
+The former distinguishes update closure from task sufficiency and requires
+actual joint images. The latter's automatic symplectic and thermal results
+require their stated positive-energy hypotheses. Their interpretation as a
+physical model is not an arithmetic premise.
+
+SJC keeps v=phi^2 and its prime-to-p residue order r, which is different from
+the Fibonacci rank. The full preimage of the residue orbit modulo p^2 has
+canonical multiplicative coordinates (j,z) in Z/r x F_p. The fixed update
+is exactly (j,z) mapping to (j+1,z-q_p). A fiber rephasing adds a telescoping
+difference to this drift and preserves its cycle sum -r*q_p. The torsion
+section is a group section only: characteristic p^2 prevents a unital ring
+section of the reduction map or its replacement by characteristic-p dual
+numbers. The fixed polynomial X^2-3X+1 selects the actual lift among p
+comparison lifts; choosing the zero-drift lift is not a WSS construction.
+
+Two exact delayed traces have matrix [[2,1],[3,4]], determinant five, and
+recover the entire state modulo every p^a for p>5. The returned trace alone
+has zero first-order defect; the next trace reads -5r*q_p after division by p.
+These are ordinary finite-ring proofs, not extra Lean conclusions of the
+existing trace-Gram source. The real flow generating multiplication by v
+is symplectic but has indefinite quadratic energy, so positive Gibbs and
+positive-energy compression cannot be imported from PR8891 without new
+hypotheses.
+
+This is a task-relative completion of information discarded by reduction.
+The integers with the usual absolute-value metric are already complete;
+the p-adic topology has its own completion Z_p. The integer WSS formula
+itself requires no new arithmetic or set-theoretic axiom. The drift and its
+higher precision remain the actual q_p and h_p. No new prime-family
+existence, exclusion, or cross-prime equidistribution follows from this
+choice of coordinates.
+
+## 8. Cyclotomic norm calibration
+
+Tyler Ross, Zhongyan Shen and Tianxin Cai, *The p-adic Valuations of Mobius
+Duals of Lucas Sequences*, arXiv:2512.03481v1.
+https://arxiv.org/html/2512.03481v1
+
+The Introduction, Theorem 2.2(c), and Proposition 3.2 give the precise source
+scope used for calibration. The regular Lucas-sequence cyclotomic and
+entry-point valuations are explicitly credited there to Carmichael and
+classical valuation theory; the paper extends them to irregular sequences.
+No new integer WSS example is supplied by these statements.
+
+SJC independently derives, for the prime-to-p period r of phi^2, the integer
+G_r=Psi_r(3), where Psi_r is the real r-cyclotomic polynomial, and proves
+v_p(G_r)=h_p using the canonical torsion trace. Its elementary height bound
+is 1<G_r<5^(EulerPhi(r)/2). This is a classical cyclotomic-norm interface,
+not a claimed new WSS family. This unramified-at-p coefficient field of
+conductor r must not be confused with the ramified p-power coefficient
+fields used for the conditional Maass families in SGN and HCR.
+
+## 9. The published squarefree criterion and the stronger norm estimate
+
+The complete primary HTML of Ross-Shen-Cai was rechecked, including its
+conclusion, Corollary 5.1. That corollary explicitly states equivalence
+between absence of WSS primes and squarefreeness of every Fibonacci Mobius
+dual M_n^F except n=6. The WSS owner's SJC.9 proves the exact change of
+index between that source and its own norm: G_r=M_(iota(r))^F, where
+r odd gives iota(r)=2r, r=2 modulo4 gives iota(r)=r/2, and4|r gives
+iota(r)=r. Thus the source's exceptional index6 is G_3=4. The resulting
+squarefree characterization is cited prior work, not a new discovery.
+
+SJC.9 also records all prime valuations, including the small primes2,3,5.
+For p>5 an inherited factor at r=r_p*p^a has valuation exactly one;
+only the primitive r=r_p factor can have the initial depth h_p. Consequently
+any repeated prime divisor of G_r for r>=4 is an original WSS prime,
+without an additional coprimality assumption on that divisor and r.
+
+SJC.10 is a separate elementary estimate for the actual positive norm.
+Writing R=rad(r), s=r/R and a=phi^(-2s), the Mobius logarithm is shown to
+have sign -mu(R) and magnitude less than -log(1-a). This yields the uniform
+bound phi^(EulerPhi(r)-1)<G_r<phi^(EulerPhi(r)+1) and the exact integer
+upper bound B(r)=L_(EulerPhi(r))-1 for mu(R)=1, or L_(EulerPhi(r)+1)
+for mu(R)=-1. The latter upper bound is attained at every odd prime index.
+This signed estimate is proved in the dossier rather than attributed to
+Ross-Shen-Cai or Katz; its independent priority has not been established.
+
+SJC.11 deduces the quotient-independent implication p^2>B(r_p) => q_p!=0
+and the joint depth budget for primes having the same actual period r.
+It does not prove that a new unbounded prime family satisfies this condition.
+The fixed113 example demonstrates an improvement over the former height
+bound, not a newly discovered non-WSS prime. No WSS existence, complete
+squarefreeness theorem, spectral nonvanishing or Lean certification follows
+from the size estimate. The remaining obligation is stated in SJC.12.
+
+## 10. SIC dimension towers and a fixed-field obstruction
+
+Gary McConnell, *Some new infinite families of non-p-rational real quadratic
+fields*, arXiv:2406.14632v1, June 20, 2024.
+https://arxiv.org/abs/2406.14632
+https://arxiv.org/html/2406.14632v1
+
+The exact source scope is Theorems 2.1-2.2, definition (2.1), and Lemma 3.3.
+The construction originates in SIC-POVM questions but constructs real
+quadratic fields with a varying squarefree discriminant parameter D. It
+does not construct a WSS prime in a fixed preselected golden field.
+
+TBN.1 in the existing WSS owner imposes that fixed-field condition. It
+proves D(d)=5 for a square dimension d>=4 only at d=4, using the golden
+Pell classification and L_(2n)=L_n^2-2*(-1)^n. DCE.4 subsequently extends
+the exclusion to EVERY pure odd-prime-power seed p^a with a>=2. The odd
+index case uses the published D=3 Lebesgue-Nagell theorem; the even case
+uses coprime factors L_n-1 and L_n+1. This excludes construction inputs,
+not the rational prime p from the original WSS set.
+
+TBN.2-TBN.6 use the actual companion blocks
+B_j=L_(2*3^j)+1=Psi_(3^(j+1))(3), j>=1. Every prime factor is split,
+has Fibonacci rank2*3^(j+1), and occurs with its original h_p. Different
+blocks are coprime. The product modulo4 and5 and modulo3^(j+2) gives the
+three simultaneous balances. These specialize the existing GP3 strategy
+to a different Lucas block, not the earlier L_(3^j)^2+1 block.
+
+The classical regular valuation source has also appeared as Ross-Shen-Cai,
+*The p-adic Valuations of Mobius Duals of Lucas Sequences*, The Fibonacci
+Quarterly, published online July 21, 2026, DOI10.1080/00150517.2026.2656703:
+https://www.tandfonline.com/doi/full/10.1080/00150517.2026.2656703
+The publisher metadata and abstract were checked; the detailed theorem
+locators above refer to the separately read primary arXiv version. No
+claim that its full journal text was inspected is made here.
+
+## 11. Global perfect-power input and actual common-depth exclusion
+
+The dedicated source note `Library/notes/bugeaud2006lebesguenagell.md`
+records the published theorem and the exact D=3 table locator. DCE.1-DCE.2
+uses that external theorem to prove
+
+`gcd{h_p:p|L_(3^j)^2+3}=1` for every j>=1.
+
+The factor exponents are the actual h_p by TBN3. The conclusion excludes
+every common-divisor depth pattern, including common odd divisors beyond
+three. For every fixed integer e>=2 it produces infinitely many distinct
+split primes of ranks2*3^s whose depths are not divisible by e. This does
+not choose between depth one and a larger depth in any unknown prime.
+
+DCE.3 strengthens the coverage budget uniformly in H: all depths at least
+H>=2 require at least two prime factors and total multiplicity at least
+2H+1. Equality gives two depths H,H+1. The smallest all-WSS pattern must
+therefore be P^2 Q^3, with Q=19 modulo40 and the displayed ternary class
+for P. The fourth fixed block has an actual factor with h_p<=4 by an exact
+size comparison, without factoring that block. It is not a newly found
+non-WSS prime or a proof that every block has a simple factor.
+
+No novelty is claimed for the external exponential theorem or its formal
+instantiation. The new ordinary deductions narrow block-depth patterns;
+heterogeneous depths such as2,3 remain unexcluded. The existing Scribe
+reference records this arithmetic context without changing the Lean
+trace-image theorem, its formulas, or its certification status.
+## 12. Exact Zeckendorf predictive states at the original prime-square scale
 
 This section keeps the original Fibonacci numbers and the same WSS problem
 family. It connects the least-significant-first residue transducer to the
@@ -162,7 +319,7 @@ completed-future viewpoint and to an explicitly specified probability law.
 The state count concerns an autonomous finite-state input reader. Reading
 time supplied by an external clock is a different resource model.
 
-### 7.1 Actual words, tasks, and the observable state
+### 12.1 Actual words, tasks, and the observable state
 
 Fix an integer M>=2. A finite binary word w=b_0...b_(n-1) is read from its
 least significant position, with value
@@ -198,7 +355,7 @@ Two prefixes have the same task-complete future if every finite suffix
 produces the same corresponding output. This includes the empty suffix.
 It is stronger than equality of the current output.
 
-### 7.2 A constructive supply of every legal arithmetic probe
+### 12.2 A constructive supply of every legal arithmetic probe
 
 **Theorem ZP1.** At any incoming boundary bit and any consecutive weight
 row (u,v), every coefficient pair (A,B) modulo M is realized by a finite
@@ -226,7 +383,7 @@ prefixing0^T resets a possibly nonzero boundary without changing the value
 or clock. This proves unbounded controllability by actual legal words,
 not by arbitrary coefficient queries that were never realizable.
 
-### 7.3 The exact future kernel over composite residue rings
+### 12.3 The exact future kernel over composite residue rings
 
 A row (u,v) is unimodular if eu+fv=1 for some e,f modulo M. Every actual
 consecutive Fibonacci row is unimodular by consecutive coprimality.
@@ -269,7 +426,7 @@ explicit Bezout certificates. Boundary separation and the counting
 consequences below are the ordinary deductions just displayed. This
 scope is not enlarged by calling every consequence kernel-certified.
 
-### 7.4 Exact minimal autonomous memory, not merely an upper bound
+### 12.4 Exact minimal autonomous memory, not merely an upper bound
 
 **Theorem ZP3.** With the stated orientation and padding convention, the
 minimal COMPLETE deterministic observer has exactly
@@ -328,7 +485,7 @@ model. Least-significant reading can require either more or fewer states,
 depending on rho(M). Merely forgetting to charge for a clock would change
 the comparison again.
 
-### 7.5 A specified probability process preserves the same exact quotient
+### 12.5 A specified probability process preserves the same exact quotient
 
 **Theorem ZP4.** Feed the reader with the legal golden Markov digit source
 
@@ -390,7 +547,7 @@ is proved sufficient for a different, explicitly finite arithmetic task.
 The Parry source is also different from a uniform distribution on fixed-
 length finite legal words, which has endpoint-conditioned probabilities.
 
-### 7.6 WSS becomes a two-regime exact memory growth law
+### 12.6 WSS becomes a two-regime exact memory growth law
 
 Let p>5 be prime and h_p=v_p(F_(p-(5/p))). The classical initial-depth
 valuation formula and the exact rank imply
@@ -424,7 +581,7 @@ external clock, one may update a residue and boundary with a time-dependent
 transition using2M live states. That clock carries the missing arithmetic
 phase; the autonomous lower bound must not be cited for the uncharged model.
 
-### 7.7 Finite completion versus infinite-prefix topology
+### 12.7 Finite completion versus infinite-prefix topology
 
 **Corollary ZP6.** No continuous map from the infinite legal digit space
 K to the discrete set Z/M agrees with value modulo M on every finite
@@ -450,7 +607,7 @@ Conversely, an infinite-prefix topology and a time-complete task interface
 are different observations. The existing abstract predictive-memory
 quotient does not by itself compute this arithmetic kernel; ZP1-ZP3 do.
 
-### 7.8 Source and formalization boundary
+### 12.8 Source and formalization boundary
 
 The actual current sources inspected are ZeckendorfResidueTransducer,
 PredictiveMemoryMinimalQuotient and the golden hard-core Markov discussion
@@ -489,7 +646,7 @@ and topology results above are complete ordinary proofs and are not
 additional kernel-certified declarations. No source or conclusion assumes
 h_p=1.
 
-## 8. Probability-state completion: terminal rank and two-read tomography
+## 13. Probability-state completion: terminal rank and two-read tomography
 
 Section7 classified individual deterministic states. It did not assert
 that mixtures on those distinct states have different future laws. This
@@ -498,7 +655,7 @@ of TWO successive arithmetic readings removes it. The number of readings
 per specified experiment is separated from the number of experiments,
 word lengths, and statistical samples needed to learn their probabilities.
 
-### 8.1 The exact terminal response and its closed input update
+### 13.1 The exact terminal response and its closed input update
 
 Fix M=p^s with p prime and s>=1, and a known incoming digit boundary.
 Let D_s be the projective Fibonacci orbit: the distinct unit-scaling
@@ -538,7 +695,7 @@ scales the whole equality by a unit and does not change its zero set.
 Illegal input is handled by the known boundary and the rejecting state.
 No hidden-state reconstruction is assumed in this update.
 
-### 8.2 All prime-power probability blind directions
+### 13.2 All prime-power probability blind directions
 
 For a row mass write its unnormalized finite Fourier transform as
 
@@ -593,7 +750,7 @@ PT3 retains every sum over coincident low-conductor directions. Replacing
 it by separate equations muhat_d(t)=0 would incorrectly discard those
 cancellations when different directions coincide modulo a lower p-power.
 
-### 8.3 At prime precision: a constructive inverse and a stability identity
+### 13.3 At prime precision: a constructive inverse and a stability identity
 
 For M=p let m_d=sum_r mu(d,r). Distinct projective directions have
 nonzero determinant over F_p. Put
@@ -632,7 +789,7 @@ of the invisible row totals. It is a finite linear-algebra statement;
 physical measurement noise and how the response table is estimated must
 be specified separately.
 
-### 8.4 Two same-trajectory reads recover the entire probability law
+### 13.4 Two same-trajectory reads recover the entire probability law
 
 We now ENLARGE the task by permitting two exact, non-destructive tests of
 whether the current residue is zero, on the same arithmetic run. Between
@@ -695,7 +852,7 @@ uniform-residue law, the joint distribution has masses1/7 at11 and6/7 at00.
 Under the second, it has masses1/7 at10 and01 and5/7 at00. Both individual
 read marginals are Bernoulli(1/7), but the joint laws differ.
 
-### 8.5 The observation budget is not the algebraic rank
+### 13.5 The observation budget is not the algebraic rank
 
 For the preceding two-direction uniform-residue example at M>=3, the
 joint total-variation distance is exactly2/M, where total variation has
@@ -722,7 +879,7 @@ recovers PT8 in principle; no uniform sample-efficiency claim follows.
 Neither an independent-copy assumption nor a reset operation is silently
 added to the repository's single-nonresettable-trajectory observation model.
 
-### 8.6 Original WSS depth in linear probability dimension
+### 13.6 Original WSS depth in linear probability dimension
 
 For p>5 write R=rho(p), h=h_p and let L_0=1. Applying the classical
 rank-depth formula of Section7 to PT4 gives
@@ -762,7 +919,7 @@ correlated point probabilities as p varies, without assuming the unknown
 rank-lifting breakpoint. No new WSS occurrence or unbounded exclusion
 family is concluded here.
 
-### 8.7 Research and formalization scope
+### 13.7 Research and formalization scope
 
 This continues the current spacetime work on task-relative state,
 probability, joint observations and finite-word Zeckendorf arithmetic.
