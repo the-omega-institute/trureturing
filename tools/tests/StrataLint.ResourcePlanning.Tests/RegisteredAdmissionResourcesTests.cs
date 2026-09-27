@@ -13,6 +13,28 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     private const string RegisteredReportContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void DeclaredTemplateNativeEvidenceProvisionsLeanInEngineering(string mode)
+    {
+        var plan = Plan("tools/tests/StrataLint.DeclaredTemplate.Tests/FourierBridgeSourceEvidenceTests.cs", "", mode);
+        var result = Python(basis.Path, """
+            import json, pathlib, sys
+            source, root = map(pathlib.Path, sys.argv[1:3])
+            sys.path.insert(0, str(source / 'tools/scripts/workflow'))
+            import ci_plan
+            print(json.dumps(ci_plan.stage_requirements(root, json.loads(sys.argv[3]), 'engineering')))
+            """, plan.ToJsonString());
+        Assert.True(result.Exit == 0, result.Text);
+        var requirements = JsonNode.Parse(result.Text)!;
+        Assert.Contains("test-declared-template", Strings(plan["stages"]!["engineering"]!["resources"]!));
+        Assert.Contains("lake", Strings(requirements["tools"]!));
+        Assert.Contains("elan", Strings(requirements["cache_layers"]!));
+        Assert.Contains("lean-toolchain", Strings(requirements["materials"]!));
+        Assert.Equal("stage-start", requirements["cache_activation"]!["elan"]!.GetValue<string>());
+    }
+
+    [Theory]
     [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "push")]
     [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
