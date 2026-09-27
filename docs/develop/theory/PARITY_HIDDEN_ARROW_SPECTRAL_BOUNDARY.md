@@ -64056,3 +64056,531 @@ Ayla Gafni，*Counting rational points near planar curves*，arXiv:1401.4958v1 �
 当分母达到 $\sqrt q$ 量级时，这一分离估计本身不再趋零；这不证明实际高分母事件出现，也不反驳原物理命题。$E_{\rm high}$ 的真实概率及其补集是否有非消失概率仍未解决，条件性的积分亏损和加权剖面后果不被提升为新的物理反驳。固定参数正区间的原目标保持不变。本文为普通数学推导，未作 Lean 认证；有限来源核对不支持全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 202. 有限样本精确条件校准：全部有限 Poisson 均值与不变的临界功效
+
+第 200 章的同样本方差均值比可以进一步按观测总量作精确条件校准。本章将零假设扩展到任意有限总均值，包括零，并证明条件分位数在原模型实际到达的增长维数范围内仍保留完整直方图的临界检验信息。
+
+**定理 202.1（精确水平与完整直方图的渐近功效界）。** 固定 $0<\alpha<1$。每层观察 $m\ge2$ 次独立完整直方图，其完整总计数为 $Z_1,\ldots,Z_m$。零假设由同一个固定 product-Poisson 向量的独立重复组成，坐标强度任意非负、可数，总强度 $t<\infty$；允许 $t=0$。令 $N=\sum_iZ_i$，在给定 $N=s$ 的等概率 $m$ 格 multinomial 律下，对第 200 章统计量 $D_m$ 的上尾作 (202.12)–(202.14) 的精确分位数与边界随机化。
+
+随机化检验对每个有限层、每个这样的向量恰有拒绝概率 $\alpha$；严格上尾的非随机化版本拒绝概率不超过 $\alpha$。总量为零或一时，前者为独立的 $\alpha$ 硬币，后者不拒绝。检验无须未知均值、支持、信号标签或训练样本。
+
+对原 pair 与平稳 path 实验分别成立：在每个固定 $J\Subset D$ 及所有合法确定性支持上一致地，若 $mF_Q^2\to\tau\in(0,\infty)$，两个版本的功效均趋于
+
+$$
+\Pi_\alpha(\tau)=\Phi\left(\Phi^{-1}(\alpha)+\sqrt{\tau/8}\right).
+\tag{202.1}
+$$
+
+任何使用全部重复直方图、在扩大零假设族上具有有限水平或一致渐近水平 $\alpha$ 的检验，其极限上功效均不超过此值。这给出逐替代序列和紧参数范围内的渐近 maximin 功效界，不主张有限样本一致最强性。
+
+证明中的新条件近似保留总和约束。令 $d=m-1$，$H_{m,s}$ 为正总量 $s$ 下标准化 Pearson 下偏离统计量的精确条件分布函数，则有绝对常数 $C<\infty$ 使
+
+$$
+\sup_x|H_{m,s}(x)-\Phi(x)|
+\le \min\left\{1,C\left(\frac{d^{3/2}}{\sqrt{s}}+\frac1{\sqrt d}\right)^{1/4}\right\}.
+\tag{202.2}
+$$
+
+当 $s\ge m^4$ 时右端为 $O(m^{-1/8})$。原模型已有的均值下界保证实际观测总量以趋于一的概率处于此范围；小总量直接使用有限离散校准，不要求正态近似。全计数线、零／微小均值尾坐标、原取整与补偿、完整 path 依赖全部保留；独立性只指各次完整实验之间。
+
+### 202.2 Original objects and the inherited interfaces
+
+For completeness, retain the original layer construction
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad\lambda=Q^3.
+$$
+
+The fixed original amplitude $r\in(0,1)$ satisfies
+
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\qquad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+
+For beta in the original domain $D=(\beta_*,1)$, keep exactly
+
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_0=M-q,\quad\epsilon=rq/s_0,\quad T=2M\lambda.
+\tag{202.3}
+$$
+
+There are two parity classes of size $M$. For a deterministic support $S\subset C_+$ of size $q$, the original transition kernel is
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+
+The pair experiment is $T$ independent stationary adjacent pairs. The path experiment starts uniformly and uses $T$ consecutive transitions of this same kernel. The compensation gives $P_S^2=\Pi$; it does not remove neighboring-edge dependence.
+
+Write
+
+$$
+(K_j,B_j)=(k_0,l_0)+j(Q,P),\quad
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},
+$$
+$$
+C_j=\sum_{x\in C_+}{\bf1}_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}},
+\qquad Z=\sum_{j\in J_Q}C_j.
+\tag{202.4}
+$$
+
+Chapter 175 identifies these as COMPLETE original score groups using global score injectivity at the original amplitude. The line labels use the known layer/amplitude, not beta or the unknown support. There is no selected window. For an actual finite horizon only
+
+$$
+j\in J_Q,\qquad j\le\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor
+\tag{202.5}
+$$
+
+can occur, since $K_j+B_j=\lambda+j(Q+P)\le T$. This is a finite set; every other coordinate is deterministically zero. Also $Z\le M$. A zero exact mean at any remaining coordinate likewise forces that coordinate to be zero.
+
+Let $P_Q=P_{Q,\beta,S}^{\mathcal E}$, $\mathcal E\in\{\mathrm{pair},\mathrm{path}\}$, be the actual full histogram law and $\mu_j=E_{P_Q}C_j$, $\mu_\bullet=\sum_j\mu_j$. Its exact-mean reference is $R_\mu=\bigotimes_j\operatorname{Pois}(\mu_j)$. It dominates $P_Q$ on their common countable-vector space, keeping zero and tiny means. The repeated alternative is $P_Q^{\otimes m}$: the SAME beta/support/horizon within each layer, and independent entire repetitions. Uniformity allows beta/support to vary between layers.
+
+The original full-line signal mass is
+
+$$
+F_Q=\sum_{j\in J_Q}e^{-\lambda}
+\frac{(a\lambda)^{K_j}(b\lambda)^{B_j}}{K_j!B_j!},\qquad
+F_Q\sim c_FQ^{-5/2},\quad c_F=[2\pi(b+a\vartheta^2)]^{-1/2}.
+\tag{202.6}
+$$
+
+The floor-uniform normalization and full-line tail control in (202.6) are inherited Chapter 197 results, not a new local-limit claim here. No approximation to the original floors is made in defining the test or the laws.
+
+### 202.3 Exact enlarged null and the conditional test
+
+Let $\mathcal X_Q$ be the nonnegative integer vectors on $J_Q$ with finite aggregate. Define the enlarged null
+
+$$
+\mathcal R_Q^{\rm all}=\left\{R_\eta=\bigotimes_{j\in J_Q}\operatorname{Pois}(\eta_j):
+\eta_j\ge0,\quad t=\sum_j\eta_j<\infty\right\}.
+\tag{202.7}
+$$
+
+The vector $\eta$ is fixed and shared across the $m$ independent repetitions. It may have arbitrary countable shape, zero coordinates, arbitrarily tiny positive coordinates and ANY finite aggregate mean $t\ge0$. The null does not randomize or change its mean vector between repetitions. Coordinates outside an alternative's finite-horizon set may be positive under (202.7); this legitimate null enlargement only strengthens the level requirement.
+
+Finite partial aggregate sums are Poisson with means increasing to $t$. Monotone convergence gives finite full aggregate almost surely, because its expectation is $t<\infty$. The generating functions on $[0,1]$ converge to $\exp(t(z-1))$. Thus under (202.7), exactly and independently,
+
+$$
+Z_1,\ldots,Z_m\sim\operatorname{Pois}(t).
+\tag{202.8}
+$$
+
+For $t>0$, direct division of the joint mass by the mass of $N=\sum_i Z_i\sim\operatorname{Pois}(mt)$ shows
+
+$$
+\Pr\{(Z_i)=(z_i)\mid N=s\}
+=\frac{s!}{m^s\prod_i z_i!},\quad z_i\ge0,\quad\sum_i z_i=s.
+\tag{202.9}
+$$
+
+This is $\operatorname{Mult}(s;1/m,\ldots,1/m)$. At $t=0$, only $s=0$ occurs; (202.9) with $s=0$ is the same deterministic vector. We may define (202.9) also at null-impossible conditioning values without changing any claim.
+
+For $m\ge2$, put $d=m-1$. At a positive observed total $s=N$, define
+
+$$
+X_{m,s}=\frac m s\sum_{i=1}^m(Z_i-s/m)^2,\qquad
+D_{m,s}=\frac{d-X_{m,s}}{\sqrt{2d}}.
+\tag{202.10}
+$$
+
+At $s=0$, set $D_{m,0}=0$. At positive total this is EXACTLY Chapter 200's adaptive statistic
+
+$$
+D_m=\sqrt{\frac{m-1}{2}}\left(1-\frac{S_m^2}{\bar Z}\right),\quad
+S_m^2=\frac1{m-1}\sum_i(Z_i-\bar Z)^2,\quad\bar Z=N/m.
+\tag{202.11}
+$$
+
+The factors $m$ and $m-1$ have not been replaced by asymptotic equivalents.
+
+Let $H_{m,s}$ denote the exact finite-support CDF of (202.10) under (202.9), using the point mass at zero when $s=0$. Fix $0<\alpha<1$, and let $c=c_{m,s,\alpha}$ be the smallest support point with $H_{m,s}(c)\ge1-\alpha$. Write
+
+$$
+A_{m,s}=\Pr_{(202.9)}(D_{m,s}>c),\quad
+p_{m,s}=\Pr_{(202.9)}(D_{m,s}=c)>0,\quad
+\gamma_{m,s}=\frac{\alpha-A_{m,s}}{p_{m,s}}.
+\tag{202.12}
+$$
+
+Minimality gives $A_{m,s}\le\alpha\le A_{m,s}+p_{m,s}$, hence $0\le\gamma_{m,s}\le1$. With an independent $U\sim\operatorname{Unif}[0,1]$, the exact test is
+
+$$
+\varphi^{\rm ex}_{Q,m,\alpha}
+={\bf1}_{\{D_m>c_{m,N,\alpha}\}}
++{\bf1}_{\{D_m=c_{m,N,\alpha}\}}{\bf1}_{\{U\le\gamma_{m,N}\}}.
+\tag{202.13}
+$$
+
+The conservative nonrandomized test is
+
+$$
+\varphi^{\rm con}_{Q,m,\alpha}={\bf1}_{\{D_m>c_{m,N,\alpha}\}}.
+\tag{202.14}
+$$
+
+By (202.12), conditional rejection in (202.13) is exactly $A+\gamma p=\alpha$. Conditional rejection in (202.14) is $A\le\alpha$. Averaging over every possible total proves, for EVERY finite layer and every $R_\eta\in\mathcal R_Q^{\rm all}$,
+
+$$
+E_{R_\eta^{\otimes m}\otimes U}\varphi^{\rm ex}=\alpha,
+\qquad E_{R_\eta^{\otimes m}}\varphi^{\rm con}\le\alpha.
+\tag{202.15}
+$$
+
+At $s=0$, $c=0$, $p=1$, $\gamma=\alpha$. At $s=1$, (202.10) is also identically zero, and the same rule applies. In particular, equality of level at $t=0$ uses randomization; the nonrandomized rule has rejection probability zero there. We do NOT claim its size approaches alpha uniformly over all small means. If $m=1$ is desired, define (202.13) to be the independent alpha coin and (202.14) to be zero; (202.15) continues to hold. The sharp regime below has $m\to\infty$.
+
+Equations (202.9),(202.12) are an exact finite definition of the critical function; they do not assert an efficient algorithm for evaluating its potentially enormous finite sum. Only observed aggregates, $m$, alpha and independent test randomization are used. Knowledge of the layer/amplitude identifies the original groups, but no $\mu_j,t,\beta,S$ or hidden class is used by the procedure.
+
+### 202.4 Conditional moments and the preserved sum constraint
+
+For $s\ge1$, realize (202.9) by independent labels $U_1,\ldots,U_s$, uniform on $\{1,\ldots,m\}$. Let
+
+$$
+H_s=\sum_{a<b}{\bf1}_{\{U_a=U_b\}}.
+$$
+
+Since $\sum_iZ_i^2=s+2H_s$, direct expansion yields
+
+$$
+X_{m,s}=m-s+\frac{2m}sH_s.
+\tag{202.16}
+$$
+
+Every collision has probability $1/m$. Two distinct collision indicators are independent if their label pairs are disjoint. If they share one label, joint collision probability is $1/m^2$, again giving covariance zero. Consequently
+
+$$
+E H_s=\binom{s}{2}/m,\qquad
+\operatorname{Var}H_s=\binom{s}{2}\frac1m\left(1-\frac1m\right),
+$$
+$$
+E X_{m,s}=d,\quad\operatorname{Var}X_{m,s}=2d(1-1/s),
+\quad E D_{m,s}=0,\quad\operatorname{Var}D_{m,s}=1-1/s.
+\tag{202.17}
+$$
+
+These are conditional moments under (202.9), not a declaration that cells are independent or a normal approximation. The degeneracy at $s=1$ is explicit. The separate definition handles $s=0$.
+
+For the quantitative comparison, write ${\bf1}$ for the all-one vector, and define
+
+$$
+V=\sqrt m(e_U-m^{-1}{\bf1}),\qquad
+\Pi_m=I-m^{-1}{\bf1}{\bf1}^{\mathsf T}.
+$$
+
+Then
+
+$$
+EV=0,\quad E(VV^{\mathsf T})=\Pi_m,\quad
+\|V\|^2=d,\quad V\in{\bf1}^{\perp}.
+\tag{202.18}
+$$
+
+With independent copies, $Y_s=s^{-1/2}\sum_{a=1}^sV_a$ has coordinates $\sqrt{m/s}(Z_i-s/m)$, so $\|Y_s\|^2=X_{m,s}$. Let $G\sim N(0,\Pi_m)$. This is a standard Gaussian ON the $d$-dimensional sum-zero subspace, with $\|G\|^2\sim\chi_d^2$. The comparison never uses independent unconstrained Gaussian cells in $\mathbb R^m$.
+
+### 202.5 An explicit growing-cell conditional normal bound
+
+We prove (202.2) with one absolute finite constant $C$; constants below are independent of $m,s$. For a scalar function $h\in C^3(\mathbb R)$ with bounded value and first three derivatives, first prove
+
+$$
+\left|E h(D_{m,s})-E h\left(\frac{d-\chi_d^2}{\sqrt{2d}}\right)\right|
+\le C\frac{d^{3/2}}{\sqrt s}\left(\|h''\|_\infty+\|h'''\|_\infty\right).
+\tag{202.19}
+$$
+
+Here and below conditional expectation refers to (202.9).
+
+Replace the $s$ vectors $V_a$ one at a time by independent $G_a\sim N(0,\Pi_m)$. At an individual step, let $B=s^{-1/2}\sum_{a\ne k}W_a$ be the sum of the other vectors, each categorical or Gaussian. They are centered, independent, and have the same covariance. We need uniform moments for this mixed partial sum.
+
+For either kind of vector,
+
+$$
+E\|W_a\|^6\le15d^3,
+\tag{202.20}
+$$
+
+because the categorical norm is $\sqrt d$, and for a $d$-dimensional standard Gaussian its sixth norm moment is $d(d+2)(d+4)\le15d^3$. The Gaussian formula follows by expanding the third power of the sum of $d$ independent squared standard normals, whose second/fourth/sixth moments are $1,3,15$.
+
+Expand $\|\sum W_a\|^6$ as the product of three sums of inner products. In each summand there are six vector positions. If any index occurs only once, conditional expectation with respect to that centered vector makes the term zero. Thus surviving terms contain at most three distinct indices; there are at most $C s^3$ such terms, since the six-position equality patterns form a fixed finite set. Each absolute expected term is at most $C d^3$: bound inner products by the product of norms, and apply Hölder of total order six, using (202.20). Dividing by $s^3$ gives
+
+$$
+E\|B\|^6\le C d^3,\quad E\|B\|^3\le C d^{3/2},
+\quad E\|B\|\le\sqrt d.
+\tag{202.21}
+$$
+
+The last bound follows from its covariance trace at most $d$. These estimates cover $s=1$, when $B=0$.
+
+Define $f(x)=h((d-\|x\|^2)/\sqrt{2d})$. Differentiating along a vector $u$ gives
+
+$$
+|D^3f(x)[u,u,u]|
+\le C\left(\frac{\|h'''\|_\infty\|x\|^3}{d^{3/2}}
++\frac{\|h''\|_\infty\|x\|}{d}\right)\|u\|^3.
+\tag{202.22}
+$$
+
+Indeed the inside function has derivative $-\sqrt{2/d}\langle x,u\rangle$, second derivative $-\sqrt{2/d}\|u\|^2$, and third derivative zero. Taylor-expand $f(B+W/\sqrt s)$ at $B$ through order two. The expectations of its constant, linear and quadratic terms agree for $W=V_k$ and $W=G_k$, by independence from $B$, centering and the common covariance. Taylor's integral remainder is bounded using (202.22) along the segment and $\|B+vW/\sqrt s\|\le\|B\|+\|W\|/\sqrt s$, $0\le v\le1$.
+
+For clarity, the cubic-norm part of its expectation is at most
+
+$$
+\frac{C\|h'''\|_\infty}{d^{3/2}s^{3/2}}
+\left(E\|B\|^3 E\|W\|^3+s^{-3/2}E\|W\|^6\right)
+\le C\|h'''\|_\infty d^{3/2}(s^{-3/2}+s^{-3}),
+$$
+
+where $(x+y)^3\le4(x^3+y^3)$ was used. The linear-norm part is at most
+
+$$
+\frac{C\|h''\|_\infty}{ds^{3/2}}
+\left(E\|B\| E\|W\|^3+s^{-1/2}E\|W\|^4\right)
+\le C\|h''\|_\infty d(s^{-3/2}+s^{-2}).
+$$
+
+Since $d,s\ge1$, each replacement costs at most
+$C d^{3/2}s^{-3/2}(\|h''\|_\infty+\|h'''\|_\infty)$.
+Summing all $s$ replacements proves (202.19). The final Gaussian sum has exactly covariance $\Pi_m$, as required.
+
+To compare its squared norm with a scalar normal, let $g_1,\ldots,g_d$ be independent standard normals and put $A_i=(1-g_i^2)/\sqrt2$. These variables have mean zero, variance one and uniformly finite third absolute moment. For example $E|1-g^2|^3\le E(1+g^2)^3=28$. A scalar Taylor replacement of $d^{-1/2}\sum_i A_i$ by the normalized sum of $d$ standard normals cancels the first two terms at every step and gives
+
+$$
+\left|E h\left(\frac{d-\chi_d^2}{\sqrt{2d}}\right)-E h(N_0)\right|
+\le C d^{-1/2}\|h'''\|_\infty,\qquad N_0\sim N(0,1).
+\tag{202.23}
+$$
+
+This is a growing-dimension estimate proved by the displayed moment and Taylor bound, not an application of a fixed-dimension chi-square theorem.
+
+Finally choose a decreasing $C^3$ cutoff $g$, equal to one on $( -\infty,0]$ and zero on $[1,\infty)$, with bounded first three derivatives. One explicit construction is one minus the normalized integral of $u^3(1-u)^3$ on $[0,1]$, extended constantly outside. For $0<\rho\le1$, $h_{x,\rho}(y)=g((y-x)/\rho)$ sandwiches ${\bf1}_{(-\infty,x]}$ between smooth cutoffs shifted by $\rho$, with $\|h^{(k)}\|_\infty\le C\rho^{-k}$. Equations (202.19),(202.23) and the bounded normal density imply, uniformly in $x$,
+
+$$
+|H_{m,s}(x)-\Phi(x)|
+\le C\left(\rho+A_{m,s}^{\rm err}\rho^{-3}\right),\qquad
+A_{m,s}^{\rm err}=d^{3/2}s^{-1/2}+d^{-1/2}.
+\tag{202.24}
+$$
+
+The superscript distinguishes this error parameter from the upper-tail mass in (202.12). If $A_{m,s}^{\rm err}\le1$, choose $\rho=(A_{m,s}^{\rm err})^{1/4}$; otherwise use the trivial bound one. This proves (202.2). In particular, for all $s\ge m^4$,
+
+$$
+\sup_x|H_{m,s}(x)-\Phi(x)|\le\delta_m,\qquad
+\delta_m:=\min\{1,C_0m^{-1/8}\}
+\tag{202.25}
+$$
+
+for an absolute constant $C_0$. More generally the proof covers $m\to\infty$, $s/m^3\to\infty$. No rate on tiny totals is needed; the exact test already handles them.
+
+### 202.6 Discrete quantiles and ties
+
+Suppose a finite-support distribution function $H$ has distance at most $\delta$ from $\Phi$. By taking a left limit, both $H(x)$ and $H(x-)$ are within $\delta$ of $\Phi(x)$. Thus EVERY atom has mass at most $2\delta$. At its lower $(1-\alpha)$-quantile $c$,
+
+$$
+H(c-)\le1-\alpha\le H(c)
+\quad\Longrightarrow\quad
+|\Phi(c)-(1-\alpha)|\le\delta.
+\tag{202.26}
+$$
+
+Let $z=z_{1-\alpha}$. Once $\delta$ is smaller than both normal mass increments from $z$ to $z\pm1$, the quantile lies in $[z-1,z+1]$. On that interval the normal density has a positive minimum, so the mean value theorem gives $|c-z|\le C_\alpha\delta$. Applying (202.25) yields, uniformly for all $s\ge m^4$,
+
+$$
+|c_{m,s,\alpha}-z_{1-\alpha}|\le C_\alpha\delta_m,
+\qquad \Pr_{(202.9)}(D_{m,s}=c_{m,s,\alpha})\le2\delta_m.
+\tag{202.27}
+$$
+
+Alpha is fixed in $(0,1)$. No uniformity as alpha approaches an endpoint is claimed. Formula (202.27) proves negligible discrete ties on the required domain without declaring the exact conditional distribution continuous.
+
+### 202.7 Attained original totals and the SAME-law probability payment
+
+Here are the precise inherited interfaces. On $J=[\beta_0,\beta_1]\Subset D$, write $c_- =\phi(1/\beta_1-1)>0$. Chapters 197, 198 and 200 give, uniformly in beta, support and separately pair/path,
+
+$$
+\mu_\bullet=(2+o_J(1))qF_Q,\qquad
+\log\mu_\bullet=\phi(1/\beta-1)Q^3-\tfrac52\log Q+O_J(1),
+$$
+$$
+\mu_\bullet\ge\exp(c_-Q^3/2)\quad\text{eventually}.
+\tag{202.28}
+$$
+
+For $mF_Q^2\le K$, the SAME original model has full-vector reference laws $\mathsf B_Q,\mathsf R_Q$ with
+
+$$
+\|P_Q^{\otimes m}-\mathsf B_Q^{\otimes m}\|_{\rm TV}\le\Delta_P=\sqrt{m\varepsilon_Q},
+\quad\|R_\mu^{\otimes m}-\mathsf R_Q^{\otimes m}\|_{\rm TV}\le\Delta_R=\sqrt{m\omega_Q},
+$$
+$$
+\varepsilon_Q=O_J(Q^{-20})+O_J(e^{-c_JQ^3}),\quad
+\omega_Q=O_J(e^{-c_JQ^3}),\quad
+E_{\mathsf R_Q^{\otimes m}}\left(\frac{d\mathsf B_Q^{\otimes m}}{d\mathsf R_Q^{\otimes m}}\right)^2\le e^{C_JK}.
+\tag{202.29}
+$$
+
+These statements are not inferred from scalar KL. Their paid construction keeps the same signal realization, actual jointly dependent class totals, conditional uniform label lists, background smoothing, complete tiny-mean tail, and weighted exact-mean projection. The signal-word information payment covers the entire signal array. The underlying conditional information payment is a sum, with its complete indicator encoding; both are part of Chapter 198's operative proof inputs. Chapter 198 pays the weighted reference change before tensorization. Only the explicit convolution reference in (202.29) has the asserted squared-likelihood bound; we never infer an actual-law L2 bound.
+
+Chapter 200's exact estimation identity and event transfer give the adaptive likelihood representation and distributional limit, with $V_Q=mF_Q^2/8$:
+
+$$
+\ell_{Q,m}=\log\frac{dP_Q^{\otimes m}}{dR_\mu^{\otimes m}}
+=\sqrt{V_Q}\,D_m-V_Q/2+o_{\Pr}(202.1)
+\tag{202.30}
+$$
+
+under both laws on compact positive critical scales. At $mF_Q^2\to\tau>0$,
+
+$$
+D_m\Rightarrow N(\sqrt{\tau/8},1)\text{ under }P_Q^{\otimes m},
+\quad
+\ell_{Q,m}\Rightarrow N(-\tau/16,\tau/8)\text{ under }R_\mu^{\otimes m}.
+\tag{202.31}
+$$
+
+The original results include uniformity over the stated alternatives and compact positive critical intervals. They paid same-sample estimation at exponentially large means, the zero denominator, full-vector likelihood transfer, near-zero likelihood tails, and exact mean changes. They are operative ordinary proof inputs.
+
+For clarity, (202.29) itself proves for every measurable event $E$ in the repeated-histogram space
+
+$$
+P_Q^{\otimes m}(E)
+\le\Delta_P+e^{C_JK/2}\sqrt{R_\mu^{\otimes m}(E)+\Delta_R}.
+\tag{202.32}
+$$
+
+The first TV comparison bounds actual probability by $\Delta_P+\mathsf B_Q^{\otimes m}(E)$. Cauchy–Schwarz under $\mathsf R_Q^{\otimes m}$ and its reference L2 bound give the square-root term; the second TV comparison finishes it. All laws refer to the SAME beta/support/horizon. This transfers probabilities, not unbounded expectations. Independent test randomization can be appended to every law; the TV bounds and reference likelihood are unchanged.
+
+Fix $0<\tau_-\le mF_Q^2\le\tau_+<\infty$. By (202.6), $m\asymp Q^5$, uniformly across this interval. Therefore (202.28) implies $m\mu_\bullet\ge2m^4$ eventually, uniformly. This is a consequence of established original bounds, not a stronger hypothesis. Under $R_\mu^{\otimes m}$, $N\sim\operatorname{Pois}(m\mu_\bullet)$; Chebyshev gives
+
+$$
+R_\mu^{\otimes m}\{N<m^4\}\le\frac4{m\mu_\bullet}.
+$$
+
+With $K=\tau_+$, (202.32) gives the actual bound
+
+$$
+P_Q^{\otimes m}\{N<m^4\}
+\le b_Q:=\Delta_P+e^{C_J\tau_+/2}
+\left(\frac4{m\mu_\bullet}+\Delta_R\right)^{1/2}=o_J(1).
+\tag{202.33}
+$$
+
+Since $m=O(Q^5)$, $\Delta_P=O_J(Q^{-15/2})+o_J(1)$ and $\Delta_R$ is exponentially small up to a polynomial factor; no stronger original approximation rate is requested.
+
+The conditional-null tie bound also transfers faithfully. For
+$E=\{N\ge m^4,D_m=c_{m,N,\alpha}\}$, (202.27) and conditioning under the exact-mean null give $R_\mu^{\otimes m}(E)\le2\delta_m$. Thus
+
+$$
+P_Q^{\otimes m}(E)\le\Delta_P+e^{C_J\tau_+/2}\sqrt{2\delta_m+\Delta_R}=o_J(1).
+\tag{202.34}
+$$
+
+Adding (202.33) shows that all actual threshold ties are negligible. Crucially, the actual conditional histogram or aggregate vector was NEVER declared multinomial. Only the null has (202.9); (202.32) pays the actual event comparison.
+
+### 202.8 Sharp power of the exact and conservative tests
+
+Let $z=z_{1-\alpha}$, $r_m=C_\alpha\delta_m$, and $\varphi^z={\bf1}_{\{D_m>z\}}$. On $N\ge m^4$, (202.27) implies that either test (202.13),(202.14) can differ from $\varphi^z$ only if $|D_m-z|\le r_m$. This includes all boundary choices and randomized ties. Hence, pointwise after appending the independent coin if needed,
+
+$$
+|\varphi^{\rm ex}-\varphi^z|\le{\bf1}_{\{N<m^4\}}+{\bf1}_{\{|D_m-z|\le r_m\}},
+$$
+
+and the same inequality holds for $\varphi^{\rm con}$. No moment of an unbounded statistic is transported by this step.
+
+For an explicit formulation of the remaining inherited convergence error, put
+
+$$
+\eta_Q=\sup_{\substack{\beta\in J,\ S\text{ lawful},\ \mathcal E\in\{\mathrm{pair},\mathrm{path}\}\\
+\tau_-\le mF_Q^2\le\tau_+}}\ \sup_x
+\left|P_Q^{\otimes m}(D_m\le x)-\Phi(x-\sqrt{V_Q})\right|.
+\tag{202.35}
+$$
+
+Chapter 200 implies $\eta_Q\to0$. To spell out the uniform step, a violating sequence has a subsequence on which $mF_Q^2$ converges in the compact interval. Its uniform actual likelihood/score result gives a continuous normal limit along that sequence. Monotonicity on a finite grid plus two tail cutoffs upgrades distributional convergence to uniform CDF convergence, contradicting the violation. Thus (202.35) does not silently add an unproved rate to an inherited weak limit.
+
+The normal density is bounded by $1/\sqrt{2\pi}$. Taking left limits in (202.35) gives
+
+$$
+P_Q^{\otimes m}\{|D_m-z|\le r_m\}
+\le2\eta_Q+\frac{2r_m}{\sqrt{2\pi}}.
+$$
+
+Moreover $|E_P\varphi^z-\Pi_\alpha(mF_Q^2)|\le\eta_Q$. Combining with (202.33) proves the useful explicit calibration payment
+
+$$
+\boxed{
+\left|E_{P_Q^{\otimes m}}\varphi^{\diamond}_{Q,m,\alpha}
+-\Pi_\alpha(mF_Q^2)\right|
+\le b_Q+3\eta_Q+\frac{2C_\alpha\delta_m}{\sqrt{2\pi}}=o_J(1),
+\quad\diamond\in\{\mathrm{ex},\mathrm{con}\}.
+}
+\tag{202.36}
+$$
+
+For the randomized version the expectation includes $U$. This bound is uniform over the alternatives and compact positive critical scales in (202.35). It separates the new quantitative conditional error $\delta_m=O(m^{-1/8})$, the paid same-law small-total event $b_Q$, and the inherited uniform score-limit error $\eta_Q$, for which no numerical rate is newly asserted.
+
+In particular both tests attain (202.1) for every positive finite limiting critical scale. The test itself never uses $F_Q$ or $\tau$; they describe its power and the required number of repetitions. The equality of pair/path power follows from their separately paid original interfaces. No support prior or class-label oracle appears.
+
+### 202.9 Full-histogram optimality in the enlarged finite-sample family
+
+Consider ANY sequence of randomized tests $\psi_{Q,m}:\mathcal X_Q^m\to[0,1]$ with
+
+$$
+\sup_{R_\eta\in\mathcal R_Q^{\rm all}}E_{R_\eta^{\otimes m}}\psi_{Q,m}\le\alpha
+\tag{202.37}
+$$
+
+at each finite layer. Such tests may inspect every histogram coordinate. Independent randomization is represented by its conditional rejection probability. The conclusion also holds if the right side is $\alpha+o(1)$ uniformly; our constructed randomized test satisfies exact equality and the conservative test satisfies (202.37).
+
+For EVERY original alternative, at EVERY finite horizon, its own $R_\mu$ belongs to (202.7): $\mu_j\ge0$ and $\mu_\bullet\le M<\infty$. There is no longer even an eventual lower-mean membership condition. Zero/tiny means and all tail coordinates are retained. This null is a lawful least-favorable witness for the power bound, not information given to the test.
+
+Let $L=dP_Q^{\otimes m}/dR_\mu^{\otimes m}$. For any $k>0$, the elementary inequality $(L-k)\psi\le(L-k)_+$ and the exact identity $E_RL=1$ give
+
+$$
+E_P\psi\le1-E_R\min(L,k)+kE_R\psi.
+\tag{202.38}
+$$
+
+Fix an original alternative sequence in the stated compact scope with $mF_Q^2\to\tau>0$, and put $V=\tau/8$. Under its exact-mean null, (202.31) gives $\log L\Rightarrow G\sim N(-V/2,V)$. The inherited likelihood proof pays any finite-layer $-\infty$ values. The function $x\mapsto\min(e^x,k)$, extended by zero at $-\infty$, is bounded and continuous for this limit. Thus only bounded convergence in distribution is needed in (202.38), not unbounded likelihood uniform integrability inferred from TV.
+
+Choose $\log k=-V/2+\sqrt V z_{1-\alpha}$, so $\Pr(G>\log k)=\alpha$. Completing the square in the normal density gives $Ee^G=1$ and
+
+$$
+1-E\min(e^G,k)+k\alpha
+=E[e^G{\bf1}_{\{G>\log k\}}]
+=1-\Phi(z_{1-\alpha}-\sqrt V)
+=\Pi_\alpha(\tau).
+\tag{202.39}
+$$
+
+Equations (202.37)–(202.39) imply
+
+$$
+\limsup E_{P_Q^{\otimes m}}\psi_{Q,m}\le\Pi_\alpha(\tau).
+\tag{202.40}
+$$
+
+This is a full-histogram upper bound using the actual likelihood limit, its lawful null witness and a paid threshold, not a marginal-variance heuristic. The same subsequence argument as for (202.35) makes the upper bound uniform over beta/support, both experiments, and compact positive intervals of $mF_Q^2$. Combined with (202.36), it proves the sharp adaptive envelope pointwise along every alternative sequence and uniformly. For each sequence $mF_Q^2\to\tau$, the infimum power over those alternatives tends to (202.1), so the same tests also attain the asymptotic maximin envelope. No unique finite-sample least-favorable vector or finite-sample UMP assertion is needed.
+
+The enlarged null nuisance has arbitrary coordinate shape and any finite aggregate mean, common across repetitions. Conditioning removes that aggregate mean exactly for level, while the proved conditional quantile limit preserves the same first-order testing information. Beta/support remain arbitrary deterministic alternatives and are not estimated. The conclusion concerns binary testing of these histogram experiments, not sufficiency for every other statistical problem.
+
+
+### 202.10 来源与边界
+
+给定总量消去 Poisson 未知均值、离散分位数随机化、Pearson 离散度、Taylor 替换与 Neyman–Pearson 比较均为经典方法。本章的新连接是显式支付增长格数的条件误差，将条件分位数与原模型实际总量相接，再由同一完整实验的概率比较保留渐近功效界。
+
+Frédéric Ouimet，*A precise local limit theorem for the multinomial distribution*，arXiv:2001.08512v1 的设定、主定理、bulk 外引理、概率推论及相关证明提供对照。该版本固定概率向量且要求正的剩余格概率，Stirling/Taylor 余项含格概率倒数，bulk 外界的常数亦依赖维数与概率；其第 3 节应用说明保留了相应维数依赖问题。因此不将该局部极限定理直接用于随 $m$ 增长、各格概率 $1/m$ 的场景。(202.19)–(202.25) 在总和为零的子空间内直接证明本章所需界。
+
+精确水平适用于所有有限均值，渐近功效与最优性只在固定 $\alpha\in(0,1)$、正有限临界尺度及规定原参数紧集内主张。不要求非随机化检验在均值趋零时逼近精确水平，也不声称有限求和的计算效率、任意巨大重复次数的统一误差、未知支持恢复、全数据充分性、后验熵、时间箭头或 E2 结算。第 198、200 章的既有结论保持其原范围。以上为普通数学推导，未作 Lean 认证；定向来源核对不构成全球原创性判断。
+
+## 追加锚（本行以下为增补区）

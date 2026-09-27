@@ -6477,3 +6477,15 @@ Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Num
 第 178 章完整锚点有限差分与第 199 章共同粗条件场、带标记选取律返回是模型内前置。大于新截断的实际选定最短格向量事件仍未估计；没有新的物理反驳或完整固定指数分类。普通数学结论不构成 Lean 认证或全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 202. 全部有限 Poisson 均值下的精确条件检验与临界功效
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 202 章。Poisson 总量条件化、离散边界随机化、Pearson 离散度检验、Taylor 替换和 Neyman–Pearson 功效比较均属经典统计方法。本章直接证明维数显式的条件 multinomial 界，并用原完整实验的已付概率比较，把有限样本精确水平与渐近完整直方图功效界连接起来。
+
+Frédéric Ouimet，*A precise local limit theorem for the multinomial distribution*，arXiv:2001.08512v1（[原始版本](https://arxiv.org/abs/2001.08512v1)）是对照来源。该版本的设定、主定理、bulk 外引理、概率推论和相关完整证明已核对。其固定概率向量、正剩余格与常数依赖不能直接承担本章增长格数、各格概率 $1/m$ 的误差界；第 3 节的应用说明也不提供所需一致性。正文以保持总和约束的 categorical/Gaussian 替换、六阶矩控制和光滑截断自行支付该桥梁，不将上述来源作为未验证的增长维数黑箱。
+
+新增原模型结论：随机化检验对任意可数形状、全部有限总强度（含零）的固定 product-Poisson 重复零假设精确保持水平；非随机化严格上尾版本保守。两者在正有限临界尺度保持 $\Phi(\Phi^{-1}(\alpha)+\sqrt{\tau/8})$，并达到使用全部直方图的渐近功效界。真实 path 内部依赖、完整计数线及零／微小均值尾坐标均未删除。
+
+不主张有限样本一致最强性、有效率的临界函数计算、任意统计任务的充分性或全球原创性。结论未作 Lean 认证。
+
+## 追加锚（本行以下为增补区）
