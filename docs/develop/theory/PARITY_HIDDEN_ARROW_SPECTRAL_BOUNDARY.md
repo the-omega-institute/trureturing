@@ -42284,3 +42284,442 @@ Cellarosi–Osman 的 *Bounds for Smooth Theta Sums with Rational Parameters* �
 本章的逐序列结论不声称对所有未指定收敛模数的次立方序列一致收敛。$R\asymp Q^3$、零噪声、必要阈值、锐性与原环境期望收敛仍未由本章解决；充分估计的失效也不构成原始信道的反例。有限文献核对不构成全球原创性证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 152. 原始有限计数的复零点与实条件响应
+
+第 148、150 章分别控制实际两区域质量与实场响应。本章把这些结果接到同一有限计数和的复零点上：先用一个精确的实场平移建立带指数标记的区域矩界，再对整函数作紧复域上的展开。该平移保留全部计数、中心、支持和观测，只改变同一权重中的外场。
+
+在实际等区域质量外场附近，每个固定奇数 $\pi i$ 位置对应一个简单零点。有限位移同时包含区域均值差的虚部修正与区域方差差的实部修正；与第 150 章独立给出的实条件敏感度峰相比，两个相对于实际等质量中心的实位移之比趋于 $12/\pi^2$。结论保留 $\eta\to0$、$t=\eta/\sqrt\delta\to\infty$ 的任意慢速率和原始噪声严格指数余量，属于普通数学推导，未作 Lean 形式化认证。
+
+### 152.1 原始有限和与紧复域上的零点结论
+
+**定理 152.1（原始选择计数的局部复零点及有限位移）。** A uniform original-count exponential-mark bound follows from an exact shift to a nearby real field. This avoids any assumption about a complex energy saddle or a complex logarithm of the partition function.
+
+Let h0=h_equal^P(y,xi) be Chapter 148's ACTUAL selected equal-region-mass field for an allowed separator xi. At that real field, condition on D<0, write R_c=-D, and let b,i be its actual boundary and interior means, v_B,v_I the corresponding variances, d=i-b, and Delta_v=v_I-v_B. All these are finite selected-count quantities at the same data realization and physical output. Define the entire function
+$$
+ \Phi_Q(z;y,\xi)=
+ e^{bz/d}\frac{N_P^-(h_0+z/d,y)}{N_P^-(h_0,y)}.
+ \tag{152.1}
+$$
+The denominator is positive and d>0. For every fixed M<infinity,
+$$
+ \sup_{|z|\le M}
+ \left|\Phi_Q(z)-\frac12\left[
+ 1+\frac{v_Bz^2}{2d^2}
+       +e^{-z}\left(1+\frac{v_Iz^2}{2d^2}\right)\right]\right|
+       =O_{\mathrm{Prob}}(t^{-3})=o_{\mathrm{Prob}}(t^{-2}).
+ \tag{152.2}
+$$
+The O bound holds uniformly on each inherited tight-constant good-data class. It is a genuine locally uniform analytic expansion on every fixed compact in the z plane. In particular it is stronger than a real function-value or fixed-moment assertion.
+
+For each fixed integer k, put z_k=(2k+1)pi*i, with the i in this expression the imaginary unit, not the interior mean. There is exactly one zero, counted with multiplicity, in any sufficiently small fixed scaled disk about z_k, for sufficiently large levels on the good events. It is therefore simple, and its complex FIELD location is
+$$
+ h_k=h_0+\frac{z_k}{d}
+             +\frac{\Delta_v z_k^2}{2d^3}
+             +O_{\mathrm{Prob}}\!\left(\frac1{d t^3}\right).
+ \tag{152.3}
+$$
+All statements are simultaneous for any fixed finite set of k. The proof also excludes zeros on every fixed compact subset of the scaled plane disjoint from the odd-pi*i sites, and counts zeros in bounded domains whose boundary avoids those sites. No growing-k assertion is made.
+
+Here is the predictive exact-profile form. All subscript W quantities below are evaluated at the EXACT finite noisy-profile field Lambda(h_W,y)=0, and
+$$
+ c_W=(C_I-C_B)(h_W,y),\qquad
+ a_{I,W}=\frac{F'''(r_W;h_W,y)}{2K_W^2},\qquad
+ g_W=a_{I,W}-1/h_W.
+$$
+Then
+$$
+ h_k=h_W+\frac{z_k}{r_W}+\frac{c_W}{r_W}
+             -\frac{z_k g_W}{r_W^2}
+             +\frac{z_k^2}{2K_Wr_W^3}
+             +o_{\mathrm{Prob}}\!\left(\frac1{r_Wt^2}\right).
+ \tag{152.4}
+$$
+This retains both the imaginary gap correction and the real variance correction, as well as the real equal-mass correction. The finite-profile quantities are not replaced by limiting quartic values when defining the center.
+
+The original objects and their probability scope are as follows. Q denotes the original level, Q_x the auxiliary product COUNT law, and P_x the actual full-q selected count law:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ Q_x(n)=\prod_j {C_j\choose n_j}p_j^{n_j}(1-p_j)^{C_j-n_j},
+ \quad v_j=C_jp_j(1-p_j)/B^2,
+$$
+$$
+ V=\sum_jv_j,\quad C_2=\delta^{-1}\sum_jv_j^2,\quad
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+$$
+$$
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad a=(2V)^{-1}+\eta.
+ \tag{152.5}
+$$
+The finite entire sum in this contribution is exactly
+$$
+ N_P^-(h,y)=\sum_{D(n)<0}P_x(n)
+       \exp\{aD(n)^2+hD(n)-(T(n)-y)^2/(2\sigma^2)\}.
+ \tag{152.6}
+$$
+Every original count multiplicity, floor, low tuple, outside label, full center mu and noncentral e is retained. No substitution of Q_x for P_x, total-count constraint D=0, or unconditioned partition function is made.
+
+Retain eta=eta_Q>0 tending to zero, t=eta/sqrt(delta) tending to infinity ARBITRARILY slowly, and sigma>0 tending to zero subject only to
+$$
+ \limsup\frac{\log(1/\sigma)}{Q^3}<c_q/2,\qquad
+ \log q=c_qQ^3+O(1),\qquad c_q=\phi(1-\beta)/\beta.
+ \tag{152.7}
+$$
+Write m=sqrt(2V^4/C2), w0=sqrt(2/3), r_sc=m sqrt(eta/delta), h_sc=eta r_sc. The empirical m need not converge deterministically. For xi in a fixed compact [xi0,xi1] contained in(0,w0), set B_xi={0<R_c<=xi r_sc} and I_xi={R_c>xi r_sc}; N_P^B,N_P^I are their raw sums in(152.6). Their sum is exactly N_P^- and is separator-independent. The prior full support and the inherited count return give positivity of each region. Their exact ratio decreases strictly in real h, because its log derivative is -i+b<0. The theorem in Chapter 148 supplies the unique local equal-mass field h0 and its finite correction.
+
+Precisely, for each fixed M,R and separator compact, the suprema in(152.2), multiplied by t^2, tend to zero in ORIGINAL actual-data probability uniformly over deterministic size-q supports, separately in the pair and path experiments. The analogous supremum of r_Wt^2 times the residual in(152.4), for any fixed finite k set, tends to zero with the same scope. The stronger O in(152.2)--(152.3) means bounded constants on each tight-constant common class, followed by exhaustion of those classes. All field choices are covered simultaneously on one actual realization; a data-dependent h0 or h_W is not treated as independent. This is an assertion for each admissible sequence, not a universal rate over all sequences.
+
+### 152.2 精确有限剖面与实场输入
+
+For clarity the exact comparator quantities in(152.4) are specified before use. Choose l,zeta with log(1/sigma)<=lQ^3 eventually, l<c_q/2 and 2zeta<c_q-l, and retain the high set H={j:C_j>=exp(zeta Q^3)}. Every low tuple is retained exactly in the count return. Let V_H=sum_H v_j, C_H=diag(v_j), b_H=(v_j), d_H=b_H/V_H, and A0=C_H-b_Hb_H^T/V_H. Conditional on its charge r, the centered Gaussian high vector has mean r d_H and covariance A0. Its energy plus Gaussian noise of variance delta sigma^2 has exact transform
+$$
+ \mathcal K(w,R_0)=-\tfrac12\log\det(I-2wA_0)
+        +R_0 w d_H^T(I-2wA_0)^{-1}d_H
+        +\tfrac12\delta\sigma^2w^2.
+ \tag{152.8}
+$$
+Here R_0 is squared charge. At the FULL physical H_y=V+sqrt(delta)y, let f_r^0(H_y) be the resulting density and define
+$$
+ g_y^0(r)=e^{\gamma r^2}f_r^0(H_y),\quad
+ \gamma=\eta-\{(2V_H)^{-1}-(2V)^{-1}\},\quad
+ \ell_y(R_0)=\log g_y^0(\sqrt{R_0}).
+ \tag{152.9}
+$$
+Only this analytic comparator is centered; the original finite law(152.6) keeps e. For real h,
+$$
+ F(r;h,y)=\ell_y(r^2)-\ell_y(0)-hr,\quad
+ F_r(r_-;h,y)=0,\quad K=-F_{rr}(r_-;h,y)>0,\quad A=F(r_-;h,y),
+$$
+$$
+ \Lambda=A+\log h+\tfrac12\log(2\pi/K),\quad
+ C_B=2\ell_y'(0)/h^2,\quad
+ C_I=F''''/(8K^2)+5(F''')^2/(24K^3).
+ \tag{152.10}
+$$
+The branch is Chapter 146's unique real local maximum in its fixed neighborhood of w0 r_sc. All derivatives of F in C_I are charge derivatives at that branch; ell' is a squared-charge derivative. Its exact finite sigma, high-block defect and full empirical V are retained. We never continue this saddle or its logarithm into a complex field.
+
+The real statements in Chapters 148 and 150 used below, uniformly on each fixed bounded Lambda window, are
+$$
+ N_P^B(h,y)=\frac{M_0(y)}h[1+C_B+o(t^{-2})],\quad
+ N_P^I(h,y)=\frac{M_0(y)}h e^\Lambda[1+C_I+o(t^{-2})],
+$$
+$$
+ M_0(y)=\sigma\sqrt{\delta/V_H}\,g_y^0(0)\asymp\sigma,\quad
+ r_-/r_{\rm sc}\longrightarrow w_0,\quad K/(2\eta)\longrightarrow1,
+ \tag{152.11}
+$$
+and the genuine finite derivative identities
+$$
+ r_h=-1/K,\quad K_h=F'''/K,\quad
+ \Lambda_h=-r_-+1/h-F'''/(2K^2)=-r_-[1+O(t^{-2})].
+ \tag{152.12}
+$$
+Every fixed moment of X=hR_c within B and Z=sqrt K(R_c-r_-) within I is bounded, on the ORIGINAL selected real laws. Their first two precise moments are
+$$
+ b=h^{-1}[1+2C_B+o(t^{-2})],\quad
+ v_B=h^{-2}[1+6C_B+o(t^{-2})],
+$$
+$$
+ i=r_-+\frac{F'''}{2K^2}+o(1/(\sqrt Kt^2)),\quad
+ v_I=K^{-1}[1+O(t^{-2})+o(t^{-2})].
+ \tag{152.13}
+$$
+The statement about every fixed moment includes absolute moments by bounding them with adjacent even powers; it is not an exponential-moment assertion by itself.
+
+These inputs include
+$$
+ h_0=h_W+c_W/r_W+o(1/(r_Wt^2)),\quad
+ h_0r_{\rm sc}\asymp t^2,\quad
+ d\asymp r_{\rm sc},\quad K_0d^2\asymp t^2,
+ \tag{152.14}
+$$
+where K0=K(h0,y). The profile derivative bounds give F'''/K^(3/2)=O(t^-1). All real inputs are applied to the SAME data and full physical likelihood; none permits extrapolation to an unbounded Lambda range.
+
+### 152.3 同一原始计数律的实场平移与指数矩
+
+Fix M<infinity. For any real u with |u|<=M set h_u=h0-u/d. From(152.14),
+$$
+ h_u/h_0=1+O_M(t^{-2})>0,\quad
+ |\Lambda(h_u,y)|\le L_M,\quad
+ |r_-(h_u)-r_-(h_0)|\le C_M/(K_0d),\quad
+ K(h_u)/K_0=1+O_M(t^{-2}).
+ \tag{152.15}
+$$
+These follow by integrating the exact derivatives(152.12) along an interval of length M/d. That interval lies inside the real branch neighborhood because its scaled kappa length is O_M(t^-2). The constant L_M is fixed, so Chapters 148 and 150 apply there with no change of noise or eta assumptions. The actual empirical d is between fixed class multiples of r_sc; the estimates hold simultaneously for every such d.
+
+The real region mass ratios are bounded above AND below:
+$$
+ C_M^{-1}\le N_P^J(h_u,y)/N_P^J(h_0,y)\le C_M,
+                     \qquad J=B,I,\quad |u|\le M.
+ \tag{152.16}
+$$
+Indeed(152.11) cancels the identical h-independent M0; h0/h_u is bounded, C_B,C_I=O(t^-2), and the interior exponential ratio is exp(Lambda(h_u)-Lambda(h0)) with bounded exponent by(152.15). Each denominator is its OWN region mass, comparable to sigma/h0. There is no inverse positive-sign or minority-probability factor.
+
+For any nonnegative function f of the original tuple the following identity is EXACT:
+$$
+ E_{P,J,h_0}\{f\,e^{uR_c/d}\}
+  =\frac{N_P^J(h_u,y)}{N_P^J(h_0,y)}E_{P,J,h_u}f.
+ \tag{152.17}
+$$
+This is obtained by multiplying the same finite weights exp(-h0 R_c), without changing their prior, centers, observation, support or separator. It is not analytic continuation of a real theorem or a claim that fixed polynomial moments determine a moment-generating function.
+
+Let mu_B=b, mu_I=i, and put s_B=1/h0, s_I=1/sqrt K0. The real bounds(152.13)--(152.16), followed by the exact identity(152.17) with u=M, prove, for every fixed integer p>=0,
+$$
+ E_{P,J,h_0}\left[
+ \left|\frac{R_c-\mu_J}{s_J}\right|^p
+       \exp\{M|R_c-\mu_J|/d\}\right]\le C_{M,p},
+                 \qquad J=B,I.
+ \tag{152.18}
+$$
+Here is the centering check needed for this implication. Since R_c>=0 and mu_J>=0,
+exp(M|R_c-mu_J|/d)<=exp(Mmu_J/d)exp(MR_c/d).
+The first factor is bounded: b/d=O(t^-2) and i/d=1+O(t^-2). In B, h0(R_c-b) has bounded moments under h_M because h0/h_M is bounded and h0 b=O(1). In I, write
+$$
+ \sqrt{K_0}(R_c-i)=
+ \sqrt{K_0/K(h_M)}\,Z_M+
+              \sqrt{K_0}\{r_-(h_M)-i\}.
+ \tag{152.19}
+$$
+The last shift is O_M(t^-1): (152.15) pays the saddle change and(152.13) pays i-r_-(h0). All fixed moments of Z_M are bounded under the SAME original selected real law. Equations(152.16)--(152.19) give(152.18), including p=3. Thus the absolute third moments with exponential marks have their correct local scales, not merely some crude polynomial-Q bound.
+
+For B the bounded interval itself also makes exp(MR_c/d) uniformly bounded. For I it does not; the exact shifted-law identity is essential. This identifies the logical addition beyond Chapter 150's unmarked or polynomial-moment convergence. Neither real positivity alone nor a power-series summation of all fixed moments is being used.
+
+### 152.4 指数标记下的计数、非中心与尾部回接
+
+For completeness we verify that the shift bridge retains the original quantitative returns with complex marks, rather than hide a large-tail cost inside(152.17). For |z|<=M the modulus of exp[-z(R_c-mu_J)/d] is bounded by C_M exp(MR_c/d). The latter is exactly the real shift h_M. All following statements therefore take place on the real field strip(152.15), on ONE realized original energy/charge array.
+
+The literal selected-law density is
+$$
+ P_x(n)=L_x(k)Q_x(n),\quad BD=k-m_J,\quad
+ L_x(k)=\frac{[w^{q-k}]\prod_{l\notin J}(1-p_l+p_lw)}
+                  {[w^q]\prod_l(1-p_l+p_lw)}.
+ \tag{152.20}
+$$
+Here J in the products denotes the union of original count groups, not the B/I region index, k=sum_j n_j and m_J=sum_j C_jp_j. The outside Bernoulli labels supply q-k. Let d_c be their variance, epsilon=B^2/(2d_c)=O(delta^5). The whole-tuple bound in Chapter 143 is
+$$
+ 0\le L_x\le1+C(\delta^5+q^{-1/2}),\qquad
+ |L_x-1|\le C(\delta^5+q^{-1/2}+\epsilon D^2).
+ \tag{152.21}
+$$
+Full support is retained; this is not a separate full-q Gaussian approximation.
+
+The common classes have c<=V,C2<=C, v_*<=Cdelta, n_g<=Cdelta^-4 and a block of at least c/delta variances comparable to delta. Noncentrality obeys ||e||<=Cdelta^5 and (sum|e_j|)^2<=Cdelta^6. At the SAME centered real energy saddle, the resolvent interpolation in Section 148.5 from mean r d_H to r d_H-e_H gives
+$$
+ \sup_{|r|\le M_1\sqrt{\eta/\delta},|y|\le R}
+          |f_r^e(H_y)/f_r^0(H_y)-1|\le C_{M_1}\delta^4.
+ \tag{152.22}
+$$
+The proof bounds its real exponent change by Cdelta^4 and its normalized Fourier-prefactor change by Cdelta^(9/2), using the same variance-block envelope at every interpolated mean. The vertical resolvent uses the REAL energy saddle; no complex field enters it. Multiplication by the present complex mark costs only its modulus. On this moderate charge compact that modulus is bounded uniformly since d is comparable to sqrt(eta/delta); thus(152.22) remains an O_M(delta^4) relative-to-unmarked-region error. With local polynomial marks one integrates their bounded moments under h_M. This is the quantitative actual-e control, and t^2delta^4=eta^2delta^3 tends to zero.
+
+For centered AND actual-e Gaussian charge profiles, the global density bound from Chapter 146 is
+$$
+ \frac{g_y^\circ(\sqrt{\eta/\delta}\,u)}{g_y^\circ(0)}
+ \le C\exp\left[t^2\left\{u^2-
+                   \frac{c u^4}{1+\eta u^2}\right\}\right],
+                         \qquad |u|\ge M_1.
+ \tag{152.23}
+$$
+A circle denotes either specified profile. For fixed large M1, then small eta, the braces are <=-B0 u^2 for any prescribed fixed B0. The added mark is at most exp(C_M|u|); it is absorbed into this SAME bound. Local Gaussian well tails use exp(-cZ^2+C_M|Z|/t); endpoint tails use exp(-cX+C_M X/t^2). For example, truncate local integration at |Z|<=t^(1/10) and X<=t^(1/4); beyond those growing cutoffs within the fixed local neighborhoods these envelopes give superpolynomially small t tails. On the separator gap the mark is bounded and the action loss is exp(-ct^2). Consequently every fixed polynomial times the exponential mark has omitted tails smaller than every fixed inverse power of t after normalization by its region's own mass. The scaled Jacobians cost powers of t, not powers of Q. This is important for arbitrarily slow t.
+
+For the high-count cell lift, uniformly in EVERY exact low tuple, retain
+$$
+ |\log(\text{lifted density}/\phi_C)|\le\mathcal E_Q,\quad
+ |D-D_G|\le\mathcal E_Q,\quad
+ |T-T_G|/\sigma\le\mathcal E_Q,\quad
+ \mathcal E_Q=P(Q)e^{-bQ^3}.
+ \tag{152.24}
+$$
+Here T_G uses full V and e. The complex linear mark changes across a cell by a factor whose absolute error is bounded by C_M mathcal E_Q/d times its positive exponential envelope. Local polynomial marks have the same derivative payment as Chapter 150. The effective REAL field h_M satisfies h_M/h0=1+O_M(t^-2), so
+$$
+ h_MD\le\eta D^2+h_M^2/(4\eta),\qquad h_M^2/(4\eta)=O_M(t^2).
+ \tag{152.25}
+$$
+The joint energy-Fourier bound of Chapter 137 at a_+=(2V)^-1+2eta controls normalized likelihood-score and fixed charge insertions with cost sigma P(Q)exp(C_Mt^2). For b0=(T-T_G)/sigma and u0=(T_G-y)/sigma, the likelihood log change is -b0u0-b0^2/2. Young's inequality absorbs it into a nearby real noise width, and the exact log-width score pays that change. There is no inverse-sigma derivative. The resulting absolute cell error, with this exponential mark and any fixed local polynomial, is
+$$
+ \sigma P_p(Q)\exp[-bQ^3+C_{M,p}t^2].
+ \tag{152.26}
+$$
+The positive strict payments remain c_q/2-l, c_q-2zeta-l and the high Stirling margin. Low tuples and their original probabilities are summed only after this uniform estimate, without selecting a different tuple or center.
+
+For excluded tuples, D^2<=2n_gE+2(sum e_j)^2 and(152.25) give, by completing the square in this SAME E,
+$$
+ e^{aD^2+h_MD-(E-H_y)^2/(2\delta\sigma^2)}
+ \le e^{C_Mt^2+2a_+(\sum e_j)^2+2a_+n_gH_y+
+                       4a_+^2n_g^2\delta\sigma^2}
+       e^{-(E-H_y)^2/(4\delta\sigma^2)}.
+ \tag{152.27}
+$$
+The prefactor logarithm is O(Q^(7/2))+O_M(t^2); the excluded binomial tail is P(Q)exp(-cQ^4). Fixed count/local polynomials cost at most exp(C_pQ^3), and division by sigma costs only O(Q^3) under(152.7). Hence excluded contributions remain exp(-c'Q^4) after region normalization. This pays extreme finite-count charges even though exp(MR_c/d) is unbounded there. A finite polynomial moment alone would not do so.
+
+Each region denominator is comparable to sigma/h0, by(152.11),(152.15)--(152.16). Factors h0,d and their needed inverses are polynomially bounded in Q, while t^2=o(Q^(1/2)); thus(152.26) remains exponentially small after normalization and multiplication by t^2. Cut disagreement at D=0 occupies width mathcal E_Q with mark bounded near one. At the separator it has the additional exp(-ct^2) loss, with bounded exponential mark and only fixed powers of t from local polynomials. The charge lattice spacings h0/B and sqrt K0/B are exponentially small. No inverse minority or inverse complex normalizer has been introduced.
+
+Finally, at h_M, integrate(152.21) with each local polynomial. Using the same-region two higher moments gives the bounds
+$$
+ E_{Q,B,h_M}(1+|X|^p)|L_x-1|
+ \le C_{M,p}\{\delta^5+q^{-1/2}+\delta^6/\eta^3\},
+$$
+$$
+ E_{Q,I,h_M}(1+|Z|^p)|L_x-1|
+ \le C_{M,p}\{\delta^5+q^{-1/2}+\eta\delta^4+\delta^5/\eta\}.
+ \tag{152.28}
+$$
+Transforming back to h0 with the exact unnormalized real shift multiplies these by bounded OWN-region mass ratios. The same argument applies to complex marks by modulus. Each bound times t^2 tends to zero; the nontrivial products are delta^5/eta, eta^3delta^3 and eta delta^4. Actual selection normalizers stay positive and comparable to one. Thus the complete region-relative exponential-mark comparison has error bounded by
+$$
+ C_{M,p}\{\delta^4+\delta^5+q^{-1/2}
+          +\delta^6/\eta^3+\eta\delta^4+\delta^5/\eta\}
+       +P_p(Q)e^{-bQ^3+C_{M,p}t^2}+o(t^{-A})
+       =o(t^{-2}),
+ \tag{152.29}
+$$
+where any fixed A>2 may be used for the profile tails by choosing the fixed tail bounds accordingly. This is a bound relative to the positive REAL region masses, not relative to a complex numerator that may vanish. The real-shift identity proves(152.18) directly on the original finite law; (152.22)--(152.29) exhibit its full original-model tail and comparison payments. All are simultaneous for the empirical d and field choices.
+
+### 152.5 实际区域中心矩给出的整函数展开
+
+Because(152.6) is a finite sum, it is entire in h and has real coefficients in its exponential representation. For real h0, N_P^-(h0)>0. At the equal-mass field, the actual conditional region weights are EXACTLY one half. Therefore
+$$
+ \Phi_Q(z)=\tfrac12\{M_B(z)+e^{-z}M_I(z)\},\qquad
+ M_J(z)=E_{P,J,h_0}e^{-z(R_c-\mu_J)/d}.
+ \tag{152.30}
+$$
+This is an exact finite identity on the whole complex plane. The common factor removed from N_P^- is precisely N_P^-(h0)exp(-bz/d), which is nonzero everywhere; no additional phase normalization or complex logarithm is hidden.
+
+For every complex w,
+$$
+ |e^w-1-w-w^2/2|\le |w|^3e^{|w|}/6.
+ \tag{152.31}
+$$
+Apply this with w=-z(R_c-mu_J)/d. Exact centering eliminates the linear term. By(152.18),
+$$
+ M_B(z)=1+\frac{v_Bz^2}{2d^2}+O_M((h_0d)^{-3})
+          =1+\frac{v_Bz^2}{2d^2}+O_M(t^{-6}),
+$$
+$$
+ M_I(z)=1+\frac{v_Iz^2}{2d^2}+O_M((\sqrt{K_0}d)^{-3})
+          =1+\frac{v_Iz^2}{2d^2}+O_M(t^{-3}).
+ \tag{152.32}
+$$
+All estimates hold uniformly for |z|<=M and the original probability/parameter sets. The means and variances here are EXACT selected-count ones, so(152.32) has no hidden approximation error from replacing them by a Gaussian. Equations(152.30)--(152.32) prove(152.2).
+
+The analytic remainder is the difference of entire functions. On any smaller compact, Cauchy's integral formula bounds each fixed z derivative of that remainder by the same O(t^-3), using(152.2) on a slightly larger disk. This is a legitimate analytic consequence of a proved complex-uniform bound, not differentiation of a real C0 approximation. No zero-free premise is needed to use Cauchy's formula for these entire functions.
+
+### 152.6 简单零点的计数与有限位移
+
+Let f0(z)=(1+exp(-z))/2. Its zeros are exactly z_k=(2k+1)pi*i and f0'(z_k)=1/2. Write the displayed correction in(152.2) as
+$$
+ q_Q(z)=\frac{z^2}{4d^2}(v_B+e^{-z}v_I).
+ \tag{152.33}
+$$
+On every fixed disk, q_Q and its first derivative are O(t^-2), because v_I/d^2=O(t^-2), v_B/d^2=O(t^-4). The remainder is O(t^-3).
+
+Take a fixed finite set of sites, and disjoint fixed disks of radius rho<pi around them. The minimum modulus of f0 on their boundaries is strictly positive. Equation(152.2) makes |q_Q+remainder| smaller than that minimum eventually. Rouché's theorem then gives exactly ONE zero in each disk, counting multiplicity. Thus each zero is simple. The theorem applies to entire functions on neighborhoods of the closed disks, and its strict boundary inequality has just been verified.
+
+Let the zero in the k disk be z_k+u_k. The same nondegenerate f0 bound first gives |u_k|<=C t^-2. Expanding the explicit f0 and q_Q at the fixed site, while using the already proved uniform remainder, gives
+$$
+ 0=\tfrac12u_k-\frac{\Delta_v z_k^2}{4d^2}
+                      +O(u_k^2+t^{-2}|u_k|+t^{-3}).
+ \tag{152.34}
+$$
+Consequently
+$$
+ u_k=\frac{\Delta_v z_k^2}{2d^2}+O(t^{-3}).
+ \tag{152.35}
+$$
+The signs in(152.34) are worth making explicit: exp(-z_k)=-1, so q_Q(z_k)=(v_B-v_I)z_k^2/(4d^2), whereas f0'(z_k)=+1/2. Equation(152.35) follows with the PLUS coefficient Delta_v. Since z_k^2 is negative real and Delta_v>0 eventually, this moves the zero to the negative real side relative to h0. Dividing by the real d proves(152.3), with absolute field residual O(1/(d t^3)).
+
+More generally, on any fixed compact set avoiding every z_k, |f0| has a positive minimum; (152.2) excludes zeros there. If Omega is a bounded domain with piecewise smooth boundary and no z_k on its boundary, the same argument counts exactly as many zeros of Phi_Q in Omega as there are z_k there, including multiplicity. Uniformity holds for every fixed such domain and for the preceding finite collections, compact outputs and separator compacts. A boundary passing through a limiting site is intentionally excluded from this formulation.
+
+Complex conjugation is exact for(152.6). The unique labels satisfy h_{-k-1}=conjugate(h_k). For example, for any fixed A with pi<A<3pi, the scaled disk |z|<A contains exactly the first conjugate pair and no other zeros eventually. A disk of radius less than pi contains none eventually. These are LOCAL conclusions in the proved scaled domain, not a global nearest-zero, circle or phase-diagram theorem.
+
+### 152.7 保留虚部修正的精确剖面坐标
+
+Now convert the ACTUAL quantities in(152.3), without losing the requested scale. From Chapters 148 and 150, applied at h0 and then compared to h_W using the exact field derivatives,
+$$
+ h_0-h_W=c_W/r_W+o(1/(r_Wt^2)),\quad
+ r_-(h_0)-r_W=O(r_W/t^4)+o(r_W/t^4),
+$$
+$$
+ b=1/h_W+o(r_W/t^2),\quad
+ i=r_W+a_{I,W}+o(r_W/t^2),\quad
+ d=r_W+g_W+o(r_W/t^2),
+$$
+$$
+ \Delta_v=K_W^{-1}[1+o(1)],\quad g_W=O(r_W/t^2).
+ \tag{152.36}
+$$
+For the saddle shift, r_h=-1/K and K_Wr_W^2 is comparable to t^2. In the mean formula the stronger error o(1/(sqrt K t^2)) from Chapter 150 is o(r_W/t^3), already smaller than needed. The boundary's 2C_B/h correction is O(r_W/t^4). The changes of a_I and K over h0-h_W have still smaller relative scales by Chapter 150's genuine derivatives. None of these assertions comes from differentiating an unknown error.
+
+Ordinary algebra in(152.36) gives
+$$
+ d^{-1}=r_W^{-1}-g_W/r_W^2+o(1/(r_Wt^2)),\qquad
+ \Delta_v/d^3=(K_Wr_W^3)^{-1}+o(1/(r_Wt^2)).
+ \tag{152.37}
+$$
+Substituting(152.36)--(152.37) into(152.3) proves the exact-profile expression(152.4). The imaginary correction -z_k g_W/r_W^2 is the same scale as the real corrections and cannot be dropped.
+
+Only after(152.4) is established may one interpret its coefficients by their empirical limits. The exact derivative scalings from Chapters 148 and 150 give
+$$
+ t^2c_W=-37/(8m^2)+o(1),\quad
+ t^2g_W/r_W=-15/(4m^2)+o(1),\quad
+ t^2/(K_Wr_W^2)=3/(4m^2)+o(1).
+ \tag{152.38}
+$$
+The middle identity is the difference of t^2 a_I/r=-3/(2m^2)+o(1) and t^2/(hr)=9/(4m^2)+o(1). Hence a further finite-empirical coefficient form is
+$$
+ h_k=h_W+\frac{z_k}{r_W}
+       +\frac{-37+30z_k+3z_k^2}{8m^2r_Wt^2}
+       +o_{\mathrm{Prob}}(1/(r_Wt^2)).
+ \tag{152.39}
+$$
+The large finite eta, noise and output corrections are still inside the EXACT h_W and r_W. Neither is replaced by its leading quartic approximation. In particular(152.39) is not a window expansion about bare kappa_c. Every coefficient uses the same full empirical array and requires no deterministic m limit.
+
+The original sum and its zeros are independent of the separator. The centering h0 and actual d in(152.1) are separator-dependent coordinates only. Uniformly over permissible xi, their maps to w=r_W(h-h_W) differ by o(1) and the same fixed site disks overlap with unique zero counts. Equivalently, apply the proved expansion in the separator-independent w coordinate using(152.36)--(152.37); it has f0 as its limit. Thus the root with label k is the same zero for every such separator, and (152.4) supplies a common prediction with the same uniform residual. No independent re-selection of a realization is involved.
+
+### 152.8 首对复零点与实条件敏感度峰
+
+For the first conjugate pair, z0=pi*i and z_{-1}=-pi*i. Equations(152.3),(152.36)--(152.37) give
+$$
+ \operatorname{Re}h_0^{\mathrm{zero}}-h_{\rm equal}^P
+       =-\frac{\pi^2}{2K_Wr_W^3}
+                   +o_{\mathrm{Prob}}(1/(r_Wt^2)).
+ \tag{152.40}
+$$
+The superscript distinguishes the upper-half-plane zero from the real equal-mass field h0. The conjugate zero has the same real part. Section 150.8 proves a locally unique maximum h_pk of the NEGATIVE-SIGN conditional susceptibility, with
+$$
+ h_{\rm pk}-h_{\rm equal}^P
+       =-\frac6{K_Wr_W^3}+o_{\mathrm{Prob}}(1/(r_Wt^2)).
+ \tag{152.41}
+$$
+We reuse that proved marked-third/fourth-cumulant result; zero locations alone would not prove a peak or its uniqueness.
+
+Both displacements are negative. On each common data class,
+$$
+ \frac{r_Wt^2}{K_Wr_W^3}
+       =\frac{t^2}{K_Wr_W^2}
+       =\frac3{4m^2}+o(1)
+ \tag{152.42}
+$$
+is bounded above and bounded away from zero. The errors in(152.40)--(152.41) are therefore small relative to the SAME nonzero leading scale. Division is justified and gives
+$$
+ \frac{h_{\rm pk}-h_{\rm equal}^P}
+      {\operatorname{Re}h_0^{\mathrm{zero}}-h_{\rm equal}^P}
+          \longrightarrow\frac{12}{\pi^2}
+ \tag{152.43}
+$$
+uniformly in the original probability/parameter scope. This ratio is relative to the ACTUAL equal-region-mass field. It is not the ratio of displacements from h_W: the common c_W correction would survive that different comparison.
+
+For explicit reference, relative to h_W the first zero has real displacement
+-(37+3pi^2)/(8m^2r_Wt^2)+o(1/(r_Wt^2)), while Chapter 150's peak has displacement
+-73/(8m^2r_Wt^2)+o(1/(r_Wt^2)). The leading imaginary location is pi/r_W, with the retained correction +15pi/(4m^2r_Wt^2). These statements are consequences of the exact-profile formulas and do not discard slow-noise shifts.
+
+The equal-weight two-phase cancellation, Rouché stability and generic relation between zeros and competing means/variances are classical finite-phase geometry. The model-specific contribution is the original-count exponential-mark bridge, its quantitative return on the tiny-output coexistence fiber, and the resulting finite-profile zero positions linked to the separately established real response on that SAME realization. No Lee-Yang circle, global nearest pair, global zero-free region, thermodynamic analyticity radius, dynamics, or unconditioned susceptibility claim is made.
+
+### 152.9 方法归属与未覆盖范围
+
+两相振幅的等模与奇数相位差、Rouché 稳定性、指数族实场平移和局部累积量展开是经典工具。Biskup–Borgs–Chayes–Kleinwaks–Kotecký 的一般相变零点理论要求非退化相函数、适当区域上的解析非零有限体积近似，以及复分配函数与导数的指数误差；本模型没有因此取得格点轮廓或全局相图假设。本章只使用经典 Rouché 定理，并在 (152.30)–(152.35) 中直接核对所需的边界下界与解析余项上界。
+
+这里新增的模型接口是 (152.17)–(152.29)：以实际区域自身的正质量归一化，控制原始完整选择计数的指数标记，再回接到同一经验数组和物理输出上的复零点。第 150 章的峰存在性与唯一性由第三、第四累积量另行证明；复零点的位置本身不替代该实响应证明。文献版本、原始条件及提取边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章对固定有限编号集和固定缩放复域成立，不包含随 $Q$ 增长的零点编号、全局最近零点、Lee–Yang 圆定理、整个复平面零点排除、热力学解析半径、动力学亚稳态或未条件化敏感度。有限噪声与经验系数留在精确中心中，未把结论改写为围绕极限四次剖面的窄窗口展开。有限文献检索不构成全球原创性证明。
+
+## 追加锚（本行以下为增补区）
