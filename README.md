@@ -27,7 +27,7 @@ to open directions.
 
 ## Film
 
-[![TRURETURING — Truth Is Discovered: download Film 001](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg)](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4)
+<p><a href="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4"><img src="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg" width="1920" height="1080" alt="TRURETURING — Truth Is Discovered: download Film 001"></a></p>
 
 **TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
 [Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
@@ -92,7 +92,7 @@ readings recovers the target in both cases.
 Evaluate research selection against stated baselines on questions excluded
 from method design, matching information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
+<p><img src="docs/assets/inquiry-cycle.svg" width="360" height="560" alt="Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions."></p>
 
 *A schematic of inquiry, not runtime behavior or dependency data.* Checked
 results return as premises; dashed returns carry unresolved questions, even
@@ -104,7 +104,8 @@ and limits of local observation.
 
 ## Three places to look
 
-**01 · Refute a conjecture.**
+### 01 · Refute a conjecture.
+
 For positive integers n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
 Greathouse conjectured for OEIS A175406 that
 `a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
@@ -115,7 +116,8 @@ What characterizes the inputs where it fails? Witness minimality and priority
 are not claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
-**02 · Find what observations cannot tell you.**
+### 02 · Find what observations cannot tell you.
+
 The [local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
 gives two-qubit states with identical reduced states on both qubits: the pure
 Bell state `(|00⟩+|11⟩)/√2` and the equal `00`/`11` mixture. An added joint
@@ -128,7 +130,8 @@ to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This ident
 precisely which directions the local description omits.
 [Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
 
-**03 · Build a result that holds beyond the examples.**
+### 03 · Build a result that holds beyond the examples.
+
 Write a natural number n as its unique sum of nonadjacent Fibonacci weights
 `F₂ = 1, F₃ = 2, F₄ = 3, …`. Replace each weight Fᵢ by φⁱ, where φ is the
 golden ratio, to obtain β(n). How far does this coordinate fail to preserve
@@ -213,7 +216,7 @@ pairs left indistinguishable. Zero unique capture does not mean worthlessness:
 another occurrence can carry the same distinction. This comparison supplies
 neither a universal value score nor a historical novelty judgment.
 
-[Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
+[Example 02](#02--find-what-observations-cannot-tell-you) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
 adding this readout?
 
