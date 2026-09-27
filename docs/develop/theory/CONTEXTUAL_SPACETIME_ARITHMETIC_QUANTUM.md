@@ -69090,3 +69090,221 @@ $$
 由此，同一模型的三类最优恢复出现不同阶的严格代价：无限制恢复到微分可分恢复的差是第300节的 $\Theta_a\delta^2+o(\delta^2)$；从微分可分恢复到单个齐次生成元的差是本节的 $\lambda\Xi_a\delta^3/(12D_a)+o(\delta^3)$。后一个系数在每个固定不等半径模型上严格为正，但本节不据此宣称退化半径上的统一常数或统一邻域，也没有求出整条有限预算曲线。
 
 ## 追加锚（本行以下为增补区）
+
+## 323. 接近等半径时的旋转响应与三阶代价消失率
+
+第322节的三阶代价对每个固定不等半径模型严格为正，而等半径模型的这一差距为零。本节计算它接近对称模型时的消失率。这里先取预算端点极限，再让半径趋于相等；这两个极限的顺序属于结论的一部分。
+
+**定理 323.1（对称点附近的端点响应）。** 固定 $0<a<1$ 与非零向量 $u\in\mathbb R^3$，满足 $u_1+u_2+u_3=0$。令
+
+$$
+a_i(\varepsilon)=\frac{a}{1+\varepsilon u_i},
+\qquad
+n_0=\frac1{\sqrt3}(1,1,1)^{\mathsf T},
+\qquad P=n_0n_0^{\mathsf T},\qquad U=\operatorname{diag}(u).
+\tag{323.1}
+$$
+
+当实数 $\varepsilon$ 的绝对值充分小时，这些半径属于 $(0,1)$，模型位于第307节的正定支撑分支。其正角点规范下的端点最优矩阵与旋转部分满足
+
+$$
+M_*(\varepsilon)
+=\frac{I+P}{2}
+ +\frac\varepsilon2(I+P)U+O(\varepsilon^2),
+\qquad
+\Omega_*(\varepsilon)
+=\frac\varepsilon4(UP-PU)+O(\varepsilon^2).
+\tag{323.2}
+$$
+
+取最大耗散特征值的正单位特征向量 $v_*(\varepsilon)$，则
+
+$$
+v_*(\varepsilon)
+=n_0+\frac{3\varepsilon}{2}Un_0+O(\varepsilon^2).
+\tag{323.3}
+$$
+
+这些展开的余项为固定 $a,u$ 下的有限维矩阵或向量范数余项。
+
+证明。设 $b_i=1/a_i(\varepsilon)$、$A=\sum_i b_i^2$，并记第307节的标准化半径权重 $w_i=b_i^2/A$。直接展开给出
+
+$$
+A=\frac{3+\varepsilon^2\|u\|_2^2}{a^2},
+\qquad
+w_i=\frac13+\frac{2\varepsilon}{3}u_i+O(\varepsilon^2),
+\qquad
+n:=\frac b{\sqrt A}=n_0+\varepsilon Un_0+O(\varepsilon^2).
+\tag{323.4}
+$$
+
+需要先证明对应的单纯形坐标 $x$ 随 $w$ 光滑变化。第309节的正向根式映射 $x\mapsto w$ 在 $x_0=(1/3,1/3,1/3)$ 附近实解析：该点的根式判别式、全部分母及 $\beta$ 都严格为正。现在计算它在单纯形切空间上的导数。
+
+共同列方程为
+
+$$
+c_i=x_i^2\left(1-2x_i+\frac{\beta^2}{w_i}\right)=c,
+\qquad \beta^2=\sum_iw_ix_i^2.
+\tag{323.5}
+$$
+
+在 $x_i=w_i=1/3$ 处，$\beta^2=1/9$。对任意切向变化 $\dot x,\dot w$，两者分量和均为零，因此 $\dot{\beta^2}=0$，而
+
+$$
+\dot c_i=\frac29\dot x_i-\frac19\dot w_i.
+\tag{323.6}
+$$
+
+三个 $\dot c_i$ 相等，求和又为零，故它们都为零，并有 $\dot w=2\dot x$。这个导数在二维切空间上可逆。标准实解析逆函数定理于是给出对称点附近的唯一实解析逆映射，并结合式（323.4）得到
+
+$$
+x_i=\frac13+\frac\varepsilon3u_i+O(\varepsilon^2).
+\tag{323.7}
+$$
+
+由第309节的实际模型对应，这个局部逆解正是任务的唯一正定支撑端点解。该结论还证明所有充分接近等半径的当前模型都属于这一分支；不以半径接近为由直接假定支撑类型。
+
+沿用第310节的归一化记号
+
+$$
+X=\operatorname{diag}(x),\qquad
+m=\sum_iw_ix_i,\qquad
+f=m-\beta^2,\qquad
+G_0=nn^{\mathsf T}+\beta(I-2vv^{\mathsf T}),
+\qquad M_*=G_0X/f.
+\tag{323.8}
+$$
+
+归一化恒等式与分量和为零给出
+
+$$
+m=\frac13+O(\varepsilon^2),\qquad
+\beta=\frac13+O(\varepsilon^2),\qquad
+f=\frac29+O(\varepsilon^2).
+\tag{323.9}
+$$
+
+第307节对核方向的显式公式为
+
+$$
+v=\frac{(X+\beta I)n}{\sqrt{2\beta(\beta+m)}}.
+\tag{323.10}
+$$
+
+将式（323.4）、（323.7）、（323.9）代入，分母为 $2/3+O(\varepsilon^2)$，分子为 $2n_0/3+\varepsilon Un_0+O(\varepsilon^2)$，从而得到式（323.3）。该方向是 $S_*=\operatorname{sym}M_*$ 的简单最大特征方向，见第298、307节。
+
+令 $q=Un_0$，则 $n_0^{\mathsf T}q=0$。有
+
+$$
+nn^{\mathsf T}=P+\varepsilon(n_0q^{\mathsf T}+qn_0^{\mathsf T})+O(\varepsilon^2),
+$$
+
+$$
+vv^{\mathsf T}=P+\frac{3\varepsilon}{2}(n_0q^{\mathsf T}+qn_0^{\mathsf T})+O(\varepsilon^2).
+$$
+
+因此 $G_0$ 中的一阶变化恰好抵消：
+
+$$
+G_0=\frac13(I+P)+O(\varepsilon^2).
+\tag{323.11}
+$$
+
+再代入 $X=(I+\varepsilon U)/3+O(\varepsilon^2)$ 与式（323.9），便得到式（323.2）的第一式。由于约定为 $M_*=S_*-\Omega_*$，取 $\Omega_*=(M_*^{\mathsf T}-M_*)/2$，得到第二式。证毕。
+
+**定理 323.2（两种非对称代价的二次消失）。** 在定理323.1的同一模型族中，令 $\Gamma(\varepsilon)$ 为第301节的无限制二阶系数，$\Xi(\varepsilon)$ 为第320节的生成元三阶缺口系数，并定义
+
+$$
+C_{\rm hom}(\varepsilon)
+=\lim_{\delta\downarrow0}
+\frac{\widehat H_{a(\varepsilon)}(\eta(\varepsilon)(1-\delta))
+-\widehat G_{a(\varepsilon)}(\eta(\varepsilon)(1-\delta))}{\delta^3}.
+\tag{323.12}
+$$
+
+这里 $\eta(\varepsilon)=A(\varepsilon)^{-1/2}$；当 $\varepsilon\ne0$ 足够小时，内部极限由第322节给出。则
+
+$$
+\Xi(\varepsilon)
+=\frac{\|u\|_2^2}{96}\varepsilon^2+O(\varepsilon^3),
+\tag{323.13}
+$$
+
+$$
+\Gamma(\varepsilon)
+=-\frac{a\|u\|_2^2}{48\sqrt2}\varepsilon^2+O(\varepsilon^3),
+\qquad
+C_{\rm hom}(\varepsilon)
+=\frac{a\|u\|_2^2}{3456\sqrt2}\varepsilon^2+O(\varepsilon^3).
+\tag{323.14}
+$$
+
+特别地，任意这样的非零固定扰动方向都有
+
+$$
+\lim_{\varepsilon\to0,\ \varepsilon\ne0}
+\frac{C_{\rm hom}(\varepsilon)}{-\Gamma(\varepsilon)}
+=\frac1{72}.
+\tag{323.15}
+$$
+
+证明。对称点的耗散矩阵为 $S_*(0)=(I+P)/2$，最大特征值为 $d_3(0)=1$，另外两个特征值为 $1/2$。由式（323.2）、（323.3）及 $Pq=0$，
+
+$$
+\Omega_*(\varepsilon)v_*(\varepsilon)
+=\frac\varepsilon4q+O(\varepsilon^2),
+\qquad
+d_3(\varepsilon)I-S_*(\varepsilon)
+=\frac12(I-P)+O(\varepsilon).
+\tag{323.16}
+$$
+
+代入 $\Xi=(\Omega_*v_*)^{\mathsf T}(d_3I-S_*)(\Omega_*v_*)$，得到
+
+$$
+\Xi(\varepsilon)
+=\frac{\varepsilon^2}{32}\|q\|_2^2+O(\varepsilon^3)
+=\frac{\varepsilon^2}{96}\|u\|_2^2+O(\varepsilon^3).
+\tag{323.17}
+$$
+
+接着核对任务尺度。在 $\varepsilon=0$，端点矩阵的每一列范数为 $1/\sqrt2$，故
+
+$$
+\kappa(0)=\frac{a}{2\sqrt2},\qquad
+D(0)=\frac{A(0)}{2\kappa(0)}=\frac{3\sqrt2}{a^3},
+\qquad
+\lambda(0)=A(0)\beta(0)=\frac1{a^2}.
+\tag{323.18}
+$$
+
+这些参数在当前分支实解析。又因为 $b(\varepsilon)=\sqrt3(n_0+\varepsilon q)/a$，
+
+$$
+\Omega_*(\varepsilon)b(\varepsilon)
+=\frac{\varepsilon}{4a}u+O(\varepsilon^2).
+\tag{323.19}
+$$
+
+第301节的精确恒等式是 $\Gamma=-\|\Omega_*b\|_2^2/D$。结合式（323.18）、（323.19），得到式（323.14）的第一式。第322节则给出
+
+$$
+C_{\rm hom}(\varepsilon)
+=\frac{\lambda(\varepsilon)\Xi(\varepsilon)}{12D(\varepsilon)}.
+\tag{323.20}
+$$
+
+使用式（323.13）、（323.18），其二阶系数为
+
+$$
+\frac{a^{-2}}{12(3\sqrt2/a^3)}\frac{\|u\|_2^2}{96}
+=\frac{a\|u\|_2^2}{3456\sqrt2}.
+$$
+
+这证明式（323.14）的第二式。因为 $u\ne0$，两个二次首项都非零，取比值便得式（323.15）。证毕。
+
+这里比较的是不同预算阶次的系数：$\Gamma$ 乘以 $\delta^2$，$C_{\rm hom}$ 乘以 $\delta^3$。式（323.15）没有把两种实际误差差距宣称为固定比例。式（323.12）先在每个固定非零 $\varepsilon$ 下取 $\delta\downarrow0$，然后才研究 $\varepsilon\to0$；本节没有证明交换极限、任意联合缩放的同一渐近式，或对接近等半径的全部模型统一的预算邻域。
+
+本节使用的实解析逆函数定理与简单特征值扰动是标准工具。新计算确定了任务最优端点在对称点的一阶矩阵响应，并由同一实际模型求出旋转缺口与两种最优值系数的二次消失率。它不把一般量子比特动力学的相干或各向异性强度等同于当前六态任务的这些系数。
+
+## 追加锚（本行以下为增补区）
