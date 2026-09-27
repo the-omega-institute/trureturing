@@ -1,7 +1,7 @@
 using System.Text;
 using StrataLint.TestSupport;
 
-namespace StrataLint.ScriptTests;
+namespace StrataLint.WorkflowScript.Tests;
 
 public sealed class ScriptHarnessScratchTests
 {
