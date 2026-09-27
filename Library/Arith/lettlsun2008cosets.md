@@ -1737,3 +1737,195 @@ c++ -std=c++17 -O2 docs/reports/erdos7-odd-covering/frontier/cover-geometry/priv
 The unresolved #7 step is a uniform obstruction to actual odd distinct
 whole-cover families. Injectivity of an exact observation and feasibility
 of its lower-bound inequalities do not supply that obstruction.
+
+## Common original phases can obstruct all tight rows
+
+An exact prime average can identify the original labels while leaving
+their phases in that prime direction free. These phases must work at
+every actual cofactor simultaneously. The following ordinary
+coloring application gives a joint obstruction and an exact defect
+inside the tight-row region. It does not prove a new unrestricted
+noncoverage range, and no Lean verification or literature priority is
+claimed.
+
+### From actual row slack to a shared phase constraint
+
+Fix one original family and Q=p^H B, with H>=1 and gcd(p,B)=1. For
+each original d_i=p^(e_i)m_i define its actual cofactor and prime events
+
+    C_i={y mod B : y=a_i mod m_i},
+    A_i={u mod p^H : u=a_i mod p^(e_i)},
+    c(u,y)=sum_i 1_(A_i)(u)1_(C_i)(y).
+
+Let S_p(y) be the fraction of missing p-coordinate values in the full
+row at y, and E_p(y) the average of (c-1)_+ on that same row. Counting
+excess and holes gives
+
+    E_p(y)-S_p(y)=M_p(y)-1.
+
+If y belongs to C_i intersect C_j and the actual prime prefixes A_i,A_j
+are compatible, their intersection has measure p^(-max(e_i,e_j)).
+Multiplicity is at least two there, hence
+
+    S_p(y)>=p^(-max(e_i,e_j))-(M_p(y)-1).             (CB3)
+
+This uses one actual row and needs no covering hypothesis. Define a
+graph on the original numerical labels by putting an edge ij when
+there is an actual cofactor witness y_ij in C_i intersect C_j with
+
+    M_p(y_ij)-1<p^(-max(e_i,e_j)).                   (CB4)
+
+Whole coverage would force incompatible prime prefixes at every edge.
+Different edge witnesses can have different cofactors, but the prime
+phase of one original class cannot vary between them.
+
+A clique with sum_i p^(-e_i)>1 therefore certifies noncoverage: its
+prime cylinders cannot all be pairwise disjoint, and a compatible
+pair gives a positive lower bound in CB3 at its fixed witness. This
+is the usual disjointness/Kraft argument. If all vertices of a
+subgraph have one height h, their residues modulo p^h must instead
+give a proper p^h-coloring of that entire subgraph. Bounding its clique
+sizes does not in general establish such a coloring.
+
+These statements also give quantitative bounds. If fixed witnesses
+on a finite obstruction graph have positive gaps gamma_ij in CB3,
+some violated edge implies a full-period hole density at least
+min_ij gamma_ij/B. When an edge condition holds on a larger set of
+cofactors, its CB3 bound can be integrated on that actual set, using
+the same original uniform law.
+
+Explicitly, choose any cofactor set T and any subset of original labels
+all at one height 1<=h<=H, with s=p^h. Other original labels can have arbitrary
+heights. Define
+
+    w_ij(T)=(1/B) sum_(y in T intersect C_i intersect C_j)
+                       (1+1/s-M_p(y))_+.
+
+Let G_T have exactly the edges with w_ij(T)>0. If G_T is not
+s-colorable, then
+
+    Pr(hole and cofactor in T)>=min_(ij in G_T)w_ij(T)>0. (CB4a)
+
+For any actual original phases, some edge has equal phases. Its prime
+cylinders coincide, so CB3 and S_p>=0 imply the positive-part integrand
+bound on every common cofactor. Integrating gives CB4a. The weights
+use the same complete-family M_p and original Haar source throughout;
+they do not arise from separately optimized laws.
+
+### A complete arithmetic obstruction with every clique budget valid
+
+For any odd p and H>=1, put s=p^H. Let W_s be the join of a complete
+graph on s-2 central vertices and a five-cycle of rim vertices. Its
+largest clique has s vertices; a coloring needs s+1 colors, since
+the central vertices use s-2 distinct colors and the rim needs three
+additional colors. Every edge lies in a largest clique. There are
+exactly five largest cliques, each containing all central vertices
+and one rim edge.
+
+Realize this complete compatibility graph with actual congruences.
+For every nonedge {i,j}, choose a separate odd prime ell_ij different
+from p, and impose conflicting residues0 and1 at its two endpoints.
+Give each vertex its own further odd tag prime t_i with residue0.
+All these primes are distinct. Let m_i be the product of the primes
+assigned to i and b_i their CRT residue. For C_i=b_i mod m_i,
+
+    C_i intersects C_j iff ij is an edge of W_s.
+
+Every actual active set is therefore a clique. Conversely every
+clique is an exact active set: satisfy its nonedge-coordinate
+conditions, set its tags to0, and set every other tag to1. The
+conditions are compatible because two members of a clique never
+share a conflicting coordinate. CRT supplies one actual cofactor
+point. This accounts for the COMPLETE cofactor domain, not a chosen
+subgraph of additional unrecorded conflicts.
+
+Take the original moduli d_i=p^H m_i with arbitrary phases alpha_i
+modulo s and cofactor phases b_i. The tag primes make the numerical
+moduli distinct and incomparable. They are all odd and nonunit.
+The exact singleton active patterns give a private integer for each
+original class under every phase assignment. The complete marginal is
+
+    M_p(y)=#{i:y in C_i}/s<=1.
+
+The tight rows M_p=1 are exactly the five largest-clique active
+patterns. Each row separately admits a cover by assigning its s
+active originals all s phases. Every clique of the COMPLETE tight-row
+conflict graph has total prime weight at most one. The graph itself
+is W_s, however, and its coloring obstruction shows that no common
+assignment of original phases covers all tight rows.
+
+For each largest clique K_j, put
+
+    R_j=intersection_(i in K_j) C_i,
+    mu_B(R_j)=1/lcm(m_i : i in K_j).
+
+No other vertex can be active there, since it would enlarge a largest
+clique. The five regions are pairwise disjoint. Every phase assignment
+leaves at least one missing phase on at least one region. Thus
+
+    Pr(hole and cofactor in union_j R_j)
+       >=(1/s) min_j 1/lcm(m_i : i in K_j).           (CB5)
+
+This is sharp over all original phase choices. Assign distinct
+central phases and alternate the remaining two phases around the
+rim, placing its unique equal-phase edge at a region of smallest
+mass. Every other tight region is covered exactly once. The chosen
+one has precisely one missing phase, attaining CB5. This argument
+retains arbitrary H, the full original numerical labels and one
+phase per label throughout.
+
+### Exact finite control and the unrestricted boundary
+
+The [tight-row program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py)
+and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.json)
+use p=3,H=1, nonedge primes5,7,11,13,17 and tags19,23,29,31,37,41.
+The actual cofactors and phases are
+
+    m=(19,805,4147,2635,2849,9061),
+    b=(0,0,0,1581,925,5084),
+    d=3m=(57,2415,12441,7905,8547,27183).
+
+The cofactor period is50708377254535 and the original period is
+152125131763605. No enumeration of that full period is claimed.
+The program checks all15 pairwise generalized-CRT conditions,
+constructs all22 exact clique active patterns including the empty
+one, and checks the complete list of five tight patterns. All729
+original phase assignments are evaluated using literal congruences
+at representatives of their fifteen p-fibre points. Every tight
+row is independently coverable; every common assignment leaves
+at least one of the fifteen points uncovered. The minimum is one,
+attained by30 assignments. Exact CRT masses give the sharp minimum
+over the ENTIRE tight region,
+
+    1/1471442973.
+
+An attaining phase vector is (0,1,2,1,2,2), giving literal original
+residues (0,805,8294,4216,6623,5084) at the six displayed moduli.
+It leaves zero missing phases on four tight regions and one on the
+fifth. Normal and optimized
+runs have identical result bytes, and all checks remain active with
+Python optimization enabled:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py --output /tmp/e7_tight_row_phase_obstruction.json
+```
+
+The generalized-CRT clique criterion is already used in
+[Report433](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/433-chordal-overlap-certificates-and-their-exact-finite-limits.md).
+Coloring and Kraft bounds here are applications of existing
+mathematics, not new general graph theorems. The quantitative result
+concerns joint phase choices on the specified actual tight region.
+
+Other cofactor rows in this construction have M_p=0,1/s,...,(s-1)/s.
+It does not satisfy the whole-table lower bound M_p>=1, or that bound
+for every support prime. Its overall noncoverage also follows from
+the elementary density bound and its antichain inventory. What the
+control separates is precise: every tight row is separately coverable
+and every clique budget on their COMPLETE conflict graph passes,
+yet a common phase assignment still leaves the exact positive defect
+CB5. It does not enlarge the known unrestricted noncoverage range.
+
+The missing #7 bridge is a theorem forcing a common-phase obstruction
+or sufficient integrated CB3 defect in every hypothetical extremal
+odd family. Exact marginal lower bounds, distinctness, irredundancy
+and divisor closure have not been shown here to force it.
