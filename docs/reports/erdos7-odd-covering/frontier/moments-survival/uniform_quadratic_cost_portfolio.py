@@ -15,10 +15,10 @@ INDICES = (41, 42, 43, 44, 45, 47, 48, 49, 50, 51)
 JOINT_INDICES = tuple(i for i in INDICES if i != 47)
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/moments-survival/complete_off_face_quadratic_cost.py': 'f3f4065f5334810da2af00f0f8d29463024ec53e2d7f32d0ffa5d02cc74436da',
-    'frontier/moments-survival/uniform_factorial_neighborhood.py': 'f88deae1854a1fc5af0a40a0a3bbf5918c813959145c5d45dcb8cd91a5c31d3c',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
-    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238',
+    'frontier/moments-survival/complete_off_face_quadratic_cost.py': '8a8c7cdc9fceab8f80df5c50f5fa2a8cc1f748a40d65a0697efe3dfe046d1810',
+    'frontier/moments-survival/uniform_factorial_neighborhood.py': 'af7d43165ad402f57f3037ee9fb9dd2c47c560e1925c63b517436f70e48da474',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '41cf0ee10fc00ef29278ee8329085cb20c365a73008313c10b1bc888f737af6c',
+    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'faf6b22a757a191b323df3f7a0c9db83ec5963edc496bf33446f5cf6788fe117',
 }
 
 

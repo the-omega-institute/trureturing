@@ -8,6 +8,37 @@ namespace StrataLint.StageIntegration.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/LeanInformationAudit/Enrollment.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/native.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/native_image.c", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/Inspector.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/materials.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/publication.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/worktree/lean-cache-run.sh", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/worktree/cache_material.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/report/lean-report-selection.py", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/report/lean-report-input.sh", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/StrataLint.Lean/packages.lock.json", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "D5/S3/Fourier/IntegerCharacterCoercivity.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Reg/D5/S3/Fourier/IntegerCharacterCoercivity.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Reg/D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Reg/Support/DependentFamily.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "lean-toolchain", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "lake-manifest.json", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "lakefile.toml", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Reg/lake-manifest.json", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Reg/lakefile.toml", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/lakefile.lean", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector-interface/lake-manifest.json", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "README.md", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "docs/develop/theory/native-input-control.md", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "D5/README.md", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/lean-inspector/tests/test_native.py", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/workflow/truth_release.py", false)]
     [InlineData("StrataLint.Lean.Tests", "tools/lean-inspector/native_image.c", true)]
     [InlineData("StrataLint.Lean.Tests", "Makefile", true)]
     [InlineData("StrataLint.Lean.Tests", "README.md", false)]
@@ -43,6 +74,8 @@ public sealed partial class CurrentExecutionContractTests
         });
         // Use the real execution declaration with synthetic compile inputs and
         // runner results, so only the consumed file changes between executions.
+        if (project == "StrataLint.DeclaredTemplate.Tests")
+            RegisterRuntimeSourceOwners(fixture, declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"

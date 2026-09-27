@@ -179,7 +179,7 @@ pool and cannot be used as a necessary bound for arbitrary reallocation.
 
 ## 5. Reproducible scope
 
-The [standard-library checker](../../frontier/cover-geometry/hsw11_private_region_capacity.py)
+The [standard-library checker](../../frontier/cover-geometry/hsw11-family/hsw11_private_region_capacity.py)
 reads the literal sibling HSW constructor, verifies the relevant normal
 and closing interfaces, and checks all 82,944 digit tuples. It compares
 all four local root choices for each private mask, sums the full height

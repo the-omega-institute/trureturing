@@ -367,8 +367,8 @@ its first term plus its integral, yields
 \]
 
 No original-height truncation or unproved estimate on prime density is
-used. The [producer](../frontier/cover-geometry/anchored_four_record_potential_certificate.py)
-and [exact data](../frontier/cover-geometry/anchored_four_record_potential_certificate.json)
+used. The [producer](../frontier/cover-geometry/anchored-four-record-potential-certificate/anchored_four_record_potential_certificate.py)
+and [exact data](../frontier/cover-geometry/anchored-four-record-potential-certificate/anchored_four_record_potential_certificate.json)
 reproduce all fees, potentials, record inequalities, complete moments and
 this tail. The producer reuses Chapter 37's SHA-pinned mass and moment
 helper. It additionally checks all 5040 orders of the seven tracked

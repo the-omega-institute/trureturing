@@ -1,0 +1,316 @@
+{
+  "scope": "Exact finite arithmetic and common-law counterexample; not Lean, not failure of existential G-law target.",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "period": 315,
+  "family": [
+    [
+      3,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      15,
+      9
+    ],
+    [
+      21,
+      12
+    ],
+    [
+      35,
+      2
+    ],
+    [
+      45,
+      25
+    ],
+    [
+      63,
+      4
+    ],
+    [
+      105,
+      18
+    ],
+    [
+      315,
+      133
+    ]
+  ],
+  "private_points": {
+    "3": 5,
+    "5": 6,
+    "7": 15,
+    "9": 10,
+    "15": 9,
+    "21": 12,
+    "35": 72,
+    "45": 25,
+    "63": 4,
+    "105": 18,
+    "315": 133
+  },
+  "survivor": [
+    0,
+    3,
+    7,
+    13,
+    27,
+    30,
+    34,
+    40,
+    42,
+    45,
+    48,
+    49,
+    52,
+    58,
+    60,
+    63,
+    79,
+    87,
+    88,
+    90,
+    93,
+    94,
+    97,
+    102,
+    103,
+    105,
+    108,
+    112,
+    124,
+    132,
+    135,
+    139,
+    147,
+    150,
+    153,
+    157,
+    165,
+    168,
+    175,
+    178,
+    184,
+    187,
+    192,
+    195,
+    198,
+    202,
+    207,
+    210,
+    213,
+    214,
+    220,
+    223,
+    229,
+    237,
+    238,
+    240,
+    252,
+    255,
+    258,
+    259,
+    265,
+    268,
+    270,
+    273,
+    277,
+    283,
+    292,
+    297,
+    300,
+    303,
+    304,
+    310,
+    312,
+    313
+  ],
+  "interval": [
+    "31/100",
+    "63/200"
+  ],
+  "all_height_tail_weights": {
+    "1": "46189/34560",
+    "3": "46189/34560",
+    "5": "46189/27648",
+    "7": "323323/207360",
+    "9": "46189/23040",
+    "15": "46189/27648",
+    "21": "323323/207360",
+    "35": "323323/165888",
+    "45": "46189/18432",
+    "63": "323323/138240",
+    "105": "323323/165888",
+    "315": "323323/110592"
+  },
+  "zero_counts": {
+    "1": 74,
+    "3": 39,
+    "5": 20,
+    "7": 15,
+    "9": 13,
+    "15": 15,
+    "21": 9,
+    "35": 4,
+    "45": 5,
+    "63": 3,
+    "105": 3,
+    "315": 1
+  },
+  "maximum_query_affine_coefficients": {
+    "1": [
+      "1",
+      "0"
+    ],
+    "3": [
+      "39/74",
+      "35/74"
+    ],
+    "5": [
+      "10/37",
+      "27/37"
+    ],
+    "7": [
+      "15/74",
+      "59/74"
+    ],
+    "9": [
+      "13/74",
+      "61/74"
+    ],
+    "15": [
+      "15/74",
+      "59/74"
+    ],
+    "21": [
+      "9/74",
+      "65/74"
+    ],
+    "35": [
+      "2/37",
+      "35/37"
+    ],
+    "45": [
+      "5/74",
+      "69/74"
+    ],
+    "63": [
+      "3/74",
+      "71/74"
+    ],
+    "105": [
+      "3/74",
+      "71/74"
+    ],
+    "315": [
+      "1/74",
+      "73/74"
+    ]
+  },
+  "complete_query_affine_coefficients": [
+    "389986969/122757120",
+    "457317289/24551424"
+  ],
+  "unused_query_affine_coefficients": [
+    "179309209/122757120",
+    "229387177/24551424"
+  ],
+  "mixed_query_affine_coefficients": [
+    "20/37",
+    "239/37"
+  ],
+  "max_density": "302337/2960",
+  "KL_upper": "3311643/1480000",
+  "unused_plus_KL_upper": "815274929767/122757120000",
+  "positive_gap_from_new_shallow_budget": "33093201/906500000",
+  "positive_gap_from_old_shallow_budget": "480331699/943500000",
+  "complete_query_interval": [
+    "7325525113/818380800",
+    "44410467967/4910284800"
+  ],
+  "comparison_Haar": {
+    "complete": "429339997/122757120",
+    "unused": "198755677/122757120",
+    "mixed": "43/74"
+  },
+  "checks": {
+    "all_nonunit_numerical_divisors_occupied": true,
+    "distinct_odd_nonunit_labels": true,
+    "survivor_has_74_points_and_zero": true,
+    "private_3": true,
+    "private_5": true,
+    "private_7": true,
+    "private_9": true,
+    "private_15": true,
+    "private_21": true,
+    "private_35": true,
+    "private_45": true,
+    "private_63": true,
+    "private_105": true,
+    "private_315": true,
+    "zero_is_maximizer_1_lower": true,
+    "zero_is_maximizer_1_upper": true,
+    "zero_is_maximizer_3_lower": true,
+    "zero_is_maximizer_3_upper": true,
+    "zero_is_maximizer_5_lower": true,
+    "zero_is_maximizer_5_upper": true,
+    "zero_is_maximizer_7_lower": true,
+    "zero_is_maximizer_7_upper": true,
+    "zero_is_maximizer_9_lower": true,
+    "zero_is_maximizer_9_upper": true,
+    "zero_is_maximizer_15_lower": true,
+    "zero_is_maximizer_15_upper": true,
+    "zero_is_maximizer_21_lower": true,
+    "zero_is_maximizer_21_upper": true,
+    "zero_is_maximizer_35_lower": true,
+    "zero_is_maximizer_35_upper": true,
+    "zero_is_maximizer_45_lower": true,
+    "zero_is_maximizer_45_upper": true,
+    "zero_is_maximizer_63_lower": true,
+    "zero_is_maximizer_63_upper": true,
+    "zero_is_maximizer_105_lower": true,
+    "zero_is_maximizer_105_upper": true,
+    "zero_is_maximizer_315_lower": true,
+    "zero_is_maximizer_315_upper": true,
+    "seven_mixed_labels": true,
+    "mixed_affine_formula": true,
+    "unused_increases_on_interval": true,
+    "total_increases_on_interval": true,
+    "mixed_increases_on_interval": true,
+    "density_cap": true,
+    "all_members_have_positive_full_survivor_density": true,
+    "spike_log_less_than_93_over_20": true,
+    "ordinary_log_less_than_27_over_25": true,
+    "unused_plus_entropy_less_than_20_over_3": true,
+    "e_less_than_68_over_25": true,
+    "e_to_20_over_3_less_than_800": true,
+    "Lambda_greater_than_800": true,
+    "new_shallow_budget_exceeded": true,
+    "old_shallow_budget_exceeded": true,
+    "counterexample_not_to_complete_query_target": true,
+    "comparison_haar_mixed_is_below_old_budget": true,
+    "comparison_haar_log_density_less_than_3_over_2": true,
+    "comparison_haar_in_G": true
+  },
+  "check_count": 57
+}

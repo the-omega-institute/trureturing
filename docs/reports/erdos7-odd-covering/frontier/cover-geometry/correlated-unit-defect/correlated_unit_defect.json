@@ -1,0 +1,575 @@
+{
+  "schema": "correlated-unit-defect-result-v1",
+  "input_sha256": "ca3fa3812a76d82e116eade4bf7a44690903fce03c7d8a34c4a4e3eaf29c054f",
+  "families": [
+    {
+      "name": "one_cell",
+      "class_count": 8,
+      "periods": {
+        "R": 529,
+        "S": 899
+      },
+      "pure_carrier_sizes": {
+        "R": 506,
+        "S": 840
+      },
+      "hole_sizes": {
+        "R": 23,
+        "S": 30
+      },
+      "all_unit_survivor_count": 424350,
+      "lambda": "18450/20677",
+      "actual_phase_rows": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 23,
+          "S": 1,
+          "rho_R": "0",
+          "rho_S": "1",
+          "rho_joint": "0",
+          "account": "R",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 1,
+          "S": 29,
+          "rho_R": "1",
+          "rho_S": "0",
+          "rho_joint": "0",
+          "account": "S",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 1,
+          "S": 31,
+          "rho_R": "1",
+          "rho_S": "0",
+          "rho_joint": "0",
+          "account": "S",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 667,
+          "residue": 2,
+          "selector": "A",
+          "old": 1,
+          "R": 23,
+          "S": 29,
+          "rho_R": "9/205",
+          "rho_S": "7/205",
+          "rho_joint": "0",
+          "account": "M",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 69,
+          "residue": 4,
+          "selector": "A",
+          "old": 3,
+          "R": 23,
+          "S": 1,
+          "rho_R": "28/615",
+          "rho_S": "1",
+          "rho_joint": "28/615",
+          "account": "R",
+          "scaled_charge": "616/615"
+        },
+        {
+          "modulus": 87,
+          "residue": 4,
+          "selector": "A",
+          "old": 3,
+          "R": 1,
+          "S": 29,
+          "rho_R": "1",
+          "rho_S": "22/615",
+          "rho_joint": "22/615",
+          "account": "S",
+          "scaled_charge": "616/615"
+        },
+        {
+          "modulus": 2001,
+          "residue": 1,
+          "selector": "A",
+          "old": 3,
+          "R": 23,
+          "S": 29,
+          "rho_R": "28/615",
+          "rho_S": "22/615",
+          "rho_joint": "1/615",
+          "account": "M",
+          "scaled_charge": "616/615"
+        },
+        {
+          "modulus": 46023,
+          "residue": 1,
+          "selector": "A",
+          "old": 3,
+          "R": 529,
+          "S": 29,
+          "rho_R": "28/14145",
+          "rho_S": "22/615",
+          "rho_joint": "1/14145",
+          "account": "M",
+          "scaled_charge": "616/14145"
+        }
+      ],
+      "old_521_mixed_accounts": {
+        "1": "1",
+        "3": "24/23"
+      },
+      "obstructed_ancestor_set": [
+        1,
+        3
+      ],
+      "uniform_scaled_defect": "38808/42025",
+      "generated_scaled_defect": "616/378225",
+      "charged_scaled_defect": "38808/42025",
+      "old_activation_patterns": [
+        {
+          "old_residue": 0,
+          "active_moduli": [],
+          "pure_R_survivor_count": 506,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "41962/42025"
+        },
+        {
+          "old_residue": 1,
+          "active_moduli": [
+            69,
+            87,
+            2001,
+            46023
+          ],
+          "pure_R_survivor_count": 483,
+          "pure_S_survivor_count": 810,
+          "marginal_R_survival": "587/615",
+          "marginal_S_survival": "593/615",
+          "joint_pure_survival": "566/615",
+          "defect": "1/378225",
+          "raw_joint_mixed_load": "8/4715",
+          "actual_survival": "113/123",
+          "proxy_survival": "7978292/8699175"
+        },
+        {
+          "old_residue": 2,
+          "active_moduli": [],
+          "pure_R_survivor_count": 506,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "41962/42025"
+        }
+      ],
+      "augmented_accounts": {
+        "R": {
+          "1": "0",
+          "3": "616/615"
+        },
+        "S": {
+          "1": "0",
+          "3": "616/615"
+        },
+        "M": {
+          "1": "38808/42025",
+          "3": "4928/4715"
+        }
+      },
+      "payments": {
+        "R": {
+          "row_sums": {
+            "1": "0",
+            "3": "616/615"
+          },
+          "column_sums": {
+            "1": "1/615",
+            "3": "1"
+          }
+        },
+        "S": {
+          "row_sums": {
+            "1": "0",
+            "3": "616/615"
+          },
+          "column_sums": {
+            "1": "1/615",
+            "3": "1"
+          }
+        },
+        "M": {
+          "row_sums": {
+            "1": "38808/42025",
+            "3": "4928/4715"
+          },
+          "column_sums": {
+            "1": "936249/966575",
+            "3": "1"
+          }
+        }
+      },
+      "eta": "614/615",
+      "theta": "1/3696",
+      "conditional_strict_Haar_coefficient": "41/45853315200"
+    },
+    {
+      "name": "generated_queries",
+      "class_count": 9,
+      "periods": {
+        "R": 23,
+        "S": 899
+      },
+      "pure_carrier_sizes": {
+        "R": 22,
+        "S": 840
+      },
+      "hole_sizes": {
+        "R": 1,
+        "S": 57
+      },
+      "all_unit_survivor_count": 18423,
+      "lambda": "801/899",
+      "actual_phase_rows": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 23,
+          "S": 1,
+          "rho_R": "0",
+          "rho_S": "1",
+          "rho_joint": "0",
+          "account": "R",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 1,
+          "S": 29,
+          "rho_R": "1",
+          "rho_S": "0",
+          "rho_joint": "0",
+          "account": "S",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "selector": "A",
+          "old": 1,
+          "R": 1,
+          "S": 31,
+          "rho_R": "1",
+          "rho_S": "0",
+          "rho_joint": "0",
+          "account": "S",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 69,
+          "residue": 1,
+          "selector": "A",
+          "old": 3,
+          "R": 23,
+          "S": 1,
+          "rho_R": "280/6141",
+          "rho_S": "1",
+          "rho_joint": "280/6141",
+          "account": "R",
+          "scaled_charge": "6160/6141"
+        },
+        {
+          "modulus": 87,
+          "residue": 1,
+          "selector": "A",
+          "old": 3,
+          "R": 1,
+          "S": 29,
+          "rho_R": "1",
+          "rho_S": "659/18423",
+          "rho_joint": "659/18423",
+          "account": "S",
+          "scaled_charge": "18452/18423"
+        },
+        {
+          "modulus": 93,
+          "residue": 1,
+          "selector": "A",
+          "old": 3,
+          "R": 1,
+          "S": 31,
+          "rho_R": "1",
+          "rho_S": "205/6141",
+          "rho_joint": "205/6141",
+          "account": "S",
+          "scaled_charge": "5740/6141"
+        },
+        {
+          "modulus": 667,
+          "residue": 2,
+          "selector": "A",
+          "old": 1,
+          "R": 23,
+          "S": 29,
+          "rho_R": "87/2047",
+          "rho_S": "70/2047",
+          "rho_joint": "0",
+          "account": "M",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 713,
+          "residue": 2,
+          "selector": "A",
+          "old": 1,
+          "R": 23,
+          "S": 31,
+          "rho_R": "87/2047",
+          "rho_S": "196/6141",
+          "rho_joint": "0",
+          "account": "M",
+          "scaled_charge": "0"
+        },
+        {
+          "modulus": 6003,
+          "residue": 1,
+          "selector": "A",
+          "old": 9,
+          "R": 23,
+          "S": 29,
+          "rho_R": "280/6141",
+          "rho_S": "659/18423",
+          "rho_joint": "10/6141",
+          "account": "M",
+          "scaled_charge": "6160/6141"
+        }
+      ],
+      "old_521_mixed_accounts": {
+        "1": "29/15",
+        "3": "0",
+        "9": "1"
+      },
+      "obstructed_ancestor_set": [
+        1
+      ],
+      "uniform_scaled_defect": "7127736/4190209",
+      "generated_scaled_defect": "322168/113135643",
+      "charged_scaled_defect": "322168/113135643",
+      "old_activation_patterns": [
+        {
+          "old_residue": 0,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        },
+        {
+          "old_residue": 1,
+          "active_moduli": [
+            69,
+            87,
+            93,
+            6003
+          ],
+          "pure_R_survivor_count": 21,
+          "pure_S_survivor_count": 783,
+          "marginal_R_survival": "5861/6141",
+          "marginal_S_survival": "17171/18423",
+          "joint_pure_survival": "16388/18423",
+          "defect": "523/113135643",
+          "raw_joint_mixed_load": "10/6141",
+          "actual_survival": "16388/18423",
+          "proxy_survival": "16358/18423"
+        },
+        {
+          "old_residue": 2,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        },
+        {
+          "old_residue": 3,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        },
+        {
+          "old_residue": 4,
+          "active_moduli": [
+            69,
+            87,
+            93
+          ],
+          "pure_R_survivor_count": 21,
+          "pure_S_survivor_count": 783,
+          "marginal_R_survival": "5861/6141",
+          "marginal_S_survival": "17171/18423",
+          "joint_pure_survival": "16388/18423",
+          "defect": "523/113135643",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "16388/18423",
+          "proxy_survival": "16388/18423"
+        },
+        {
+          "old_residue": 5,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        },
+        {
+          "old_residue": 6,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        },
+        {
+          "old_residue": 7,
+          "active_moduli": [
+            69,
+            87,
+            93
+          ],
+          "pure_R_survivor_count": 21,
+          "pure_S_survivor_count": 783,
+          "marginal_R_survival": "5861/6141",
+          "marginal_S_survival": "17171/18423",
+          "joint_pure_survival": "16388/18423",
+          "defect": "523/113135643",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "16388/18423",
+          "proxy_survival": "16388/18423"
+        },
+        {
+          "old_residue": 8,
+          "active_moduli": [],
+          "pure_R_survivor_count": 22,
+          "pure_S_survivor_count": 840,
+          "marginal_R_survival": "1",
+          "marginal_S_survival": "1",
+          "joint_pure_survival": "1",
+          "defect": "0",
+          "raw_joint_mixed_load": "0",
+          "actual_survival": "1",
+          "proxy_survival": "113135120/113135643"
+        }
+      ],
+      "augmented_accounts": {
+        "R": {
+          "1": "0",
+          "3": "6160/6141",
+          "9": "0"
+        },
+        "S": {
+          "1": "0",
+          "3": "35672/18423",
+          "9": "0"
+        },
+        "M": {
+          "1": "322168/113135643",
+          "3": "0",
+          "9": "6160/6141"
+        }
+      },
+      "payments": {
+        "R": {
+          "row_sums": {
+            "1": "0",
+            "3": "6160/6141",
+            "9": "0"
+          },
+          "column_sums": {
+            "1": "19/6141",
+            "3": "1",
+            "9": "0"
+          }
+        },
+        "S": {
+          "row_sums": {
+            "1": "0",
+            "3": "35672/18423",
+            "9": "0"
+          },
+          "column_sums": {
+            "1": "17249/18423",
+            "3": "1",
+            "9": "0"
+          }
+        },
+        "M": {
+          "row_sums": {
+            "1": "322168/113135643",
+            "3": "0",
+            "9": "6160/6141"
+          },
+          "column_sums": {
+            "1": "322168/113135643",
+            "3": "19/6141",
+            "9": "1"
+          }
+        }
+      },
+      "eta": "6122/6141",
+      "theta": "1/3696",
+      "conditional_strict_Haar_coefficient": "89/99681120000"
+    }
+  ],
+  "scope": "Actual finite phase/account/proxy controls with one joint law per family. Source constants are premises of the separate ordinary bridge; no source producer, geometry, optimizer, Lean run or claim beyond all522 certificates."
+}

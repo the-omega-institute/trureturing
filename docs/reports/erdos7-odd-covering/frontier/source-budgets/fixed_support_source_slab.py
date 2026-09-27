@@ -18,7 +18,7 @@ PINS = {
     'frontier/source-budgets/full_linear_carrier_frontier.py': '98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888',
     'frontier/source-budgets/source_barrier_saturation.py': '6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64',
     'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
-    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '1e1b972b2756007c1f259232d4d03c49b527d5e88242b98e4300f48c3fa08f2f',
+    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': 'c02f40a2361a6de1d221d573dd0673b942d8f407df3998617f314d1c71b60dae',
 }
 DELTA, PMAX, R_CUTOFF = F(1, 18), F(1, 20), F(1, 2500)
 ROOT = (0, 0, 1, 1, 1)

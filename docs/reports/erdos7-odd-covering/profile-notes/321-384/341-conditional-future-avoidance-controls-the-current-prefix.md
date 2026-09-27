@@ -169,7 +169,7 @@ Hence P7 would require
 
 if this were a whole cover, while its actual a_J is zero. Without a whole-cover premise, P6 directly gives a strictly positive uncovered prefix mass exp(-B)/5. The exact mass is E2 divided by5. This diagnostic shows a strict gain over CP2 without repeated residual events; it is not a new unrestricted noncoverage theorem.
 
-The [standard-library checker](../../frontier/cover-geometry/hn_current_prefix.py) reconstructs all inputs, verifies 146 rational prime constraints, checks 21,316 private-witness congruences, and separately checks the general arithmetic pullback on 279 old/prefix fibres using 415,800 individual membership comparisons. The latter fixture includes both coincident residual events and different residues at the same residual modulus. All checks use explicit exceptions and remain active with `python3 -I -S -O`. The [canonical certificate](../../certificates/source_norms/cover-geometry/hn_current_prefix.json) records the exact inputs and results. Run `python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hn_current_prefix.py --check`; a copied entrypoint accepts `--base /path/to/erdos7-odd-covering`. Exponential bounds are consequences of the cited theorem and elementary inequalities, not claims of finite numerical verification.
+The [standard-library checker](../../frontier/cover-geometry/hn-current-prefix/hn_current_prefix.py) reconstructs all inputs, verifies 146 rational prime constraints, checks 21,316 private-witness congruences, and separately checks the general arithmetic pullback on 279 old/prefix fibres using 415,800 individual membership comparisons. The latter fixture includes both coincident residual events and different residues at the same residual modulus. All checks use explicit exceptions and remain active with `python3 -I -S -O`. The [canonical certificate](../../certificates/source_norms/cover-geometry/hn_current_prefix.json) records the exact inputs and results. Run `python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hn-current-prefix/hn_current_prefix.py --check`; a copied entrypoint accepts `--base /path/to/erdos7-odd-covering`. Exponential bounds are consequences of the cited theorem and elementary inequalities, not claims of finite numerical verification.
 
 ## Private-witness and other literature boundary
 
@@ -299,7 +299,7 @@ presentation without changing the source measure. It supplies no
 uniform majorant, no uniform budget, and no solution of the unrestricted
 covering problem.
 
-The [standalone checker](../../frontier/cover-geometry/hn_majorant_reduction.py) first reruns the
+The [standalone checker](../../frontier/cover-geometry/hn-majorant-reduction/hn_majorant_reduction.py) first reruns the
 existing339 source producer and compares its complete result with the
 canonical multipart-aware certificate. It then checks51,076 private
 witness congruences against all226 original classes, all50,850 ordered
@@ -308,7 +308,7 @@ union reduction. The [canonical certificate](../../certificates/source_norms/cov
 map and the exact HN contradiction coefficients. Every check remains
 active under `python3 -I -S -O`; no new Lean declaration is asserted.
 
-Run `python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hn_majorant_reduction.py --check`; a copied entrypoint accepts `--base /path/to/erdos7-odd-covering`.
+Run `python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hn-majorant-reduction/hn_majorant_reduction.py --check`; a copied entrypoint accepts `--base /path/to/erdos7-odd-covering`.
 
 ## Conditional Haar queries can use only conflicting residues
 
@@ -426,7 +426,7 @@ presentation where literal HN failed. The exact-union reduction already
 proved noncoverage of this same family. No additional unrestricted
 family is excluded by this diagnostic.
 
-The same [majorant checker](../../frontier/cover-geometry/hn_majorant_reduction.py) reconstructs all210 literal CRT pairs from the producer's
+The same [majorant checker](../../frontier/cover-geometry/hn-majorant-reduction/hn_majorant_reduction.py) reconstructs all210 literal CRT pairs from the producer's
 21 residual rows, checks the201 conflict edges, and compares CQ5 with
 an independent deletion recurrence for all240 induced types. It also
 checks all2431 residual CRT points and all11 current conditional digit

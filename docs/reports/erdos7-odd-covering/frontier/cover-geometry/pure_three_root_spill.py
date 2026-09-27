@@ -21,7 +21,7 @@ PINS = {
     'frontier/source-budgets/source_cost_endpoint_attainment.py': '9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2',
     'frontier/source-budgets/sharp_source_mass_endpoints.py': '79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9',
     'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d',
-    'frontier/cover-geometry/pure_three_projected_defect.py': '4314b3a05b007df295374ff7fff700c482a4883adbb19094f6c3e12f2a89e16b',
+    'frontier/cover-geometry/pure-three-projected-defect/pure_three_projected_defect.py': '8842b846adee9de93022a3d0b73202b28ac0f8dc728932339fbde95913b9ba83',
 }
 
 
@@ -182,7 +182,7 @@ def calculate(base):
     source = module('root_spill_source', base/'verify_joint_frontier.py')
     constructor = module('root_spill_constructor', base/'frontier/source-budgets/sharp_source_mass_endpoints.py')
     parent = module('root_spill_parent', base/'frontier/source-budgets/source_cost_endpoint_attainment.py')
-    projection = module('root_spill_projection119', base/'frontier/cover-geometry/pure_three_projected_defect.py')
+    projection = module('root_spill_projection119', base/'frontier/cover-geometry/pure-three-projected-defect/pure_three_projected_defect.py')
     tail = module('root_spill_tail66', base/'frontier/endpoint-bounds/endpoint_linear_neighborhood.py')
     sigma_checks = []
     for sigma in (F(0), F(1, 100), F(1, 27), F(2, 27), F(1, 3), F(49, 100)):

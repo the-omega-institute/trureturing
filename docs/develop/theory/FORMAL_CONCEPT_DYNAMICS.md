@@ -35564,3 +35564,1375 @@ $$
 反过来，两个标签本身没有提供同读数异目标的对象，也没有提供无适用标签的对象；例如常目标的恢复器对任意读数都存在，而取 $\Phi=X\times\{0,1\}$ 时任意总赋值都忠实。此处是数学边界模型，不是关于某个人群的经验断言。具体应用须分别给出上述见证或相应的全称充分性、忠实性证明。由于这些推导始终把 $T$ 与 $\Phi$ 作为输入，它们没有推出应以另一目标或适用关系替换该输入的规范结论。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 533. 共同焦点下固定操作的可识别族：正随机实现的完整分类
+
+### 定义 533.1（共同焦点与关系角色的分别）
+
+本章以“共同焦点”指若干不同关系所共同指向的参照，以“角色”指对象与该参照发生关系的方式；共享参照不在定义上把这些方式合并。此区别的历史参照为亚里士多德《形而上学》Γ.2：健康之物可以保存健康、产生健康、作为健康的征候或能够承受健康；医疗之物可以具有医术、天性适于医术或是医术的功能。他用这些区别说明“是”虽有多义，却都关联于一个起点，而非仅仅同名；其中有些是实体，有些是实体的属性、生成、毁灭、缺失等。他进一步主张，同一科学不仅研究具有一个共同概念的事物，也研究关联于同一共同本性的事物，故存在者之为存在者属于同一科学；科学主要研究其他事物所依赖并由之得名的首要者，因而哲学家须把握实体的原理与原因。这里的共同关联包含统一科学与实体优先的实质主张。引文据 Aristotle, *Metaphysics*, Γ.2，[W. D. Ross 英译](https://classics.mit.edu/Aristotle/metaphysics.4.iv.html)；关于 *pros hen*“关联于一”与实体的首要意义，参见 [*Aristotle’s Metaphysics*, §3](https://plato.stanford.edu/entries/aristotle-metaphysics/#RoleSubsStudBeinQuaBein)，实质修订于 2025-01-24。
+
+以下把“共同参照是否足以决定不同关系之间的操作后果”限定为一个有限随机模型的问题。模型中的焦点状态集不是亚里士多德实体概念的定义；输入、焦点与输出的箭头也不由“健康”或“医疗”这些共同名称推出。保存、产生与征候的历史例子在这里不被赋予具体医学因果律。
+
+### 定义 533.2（固定标签的双通道实现与共同数据）
+
+固定有限带标签集合 $X,H,Y$，其大小分别为 $m,r,n$，其中 $m,n\ge r\ge2$；固定各集合的坐标顺序。记 $\mathbf1_d$ 为 $d$ 维全一列向量，$\Delta_d=\{u\in\mathbb R_{\ge0}^d:\mathbf1_d^Tu=1\}$。列随机矩阵指逐项非负且每列和为一的矩阵。固定严格正的概率列向量 $\mu\in\Delta_m$、$\pi\in\Delta_r$。
+
+一个实现是矩阵对 $(P,S)$，满足
+
+$$
+\begin{gathered}
+P\in\mathbb R_{>0}^{r\times m},\qquad
+S\in\mathbb R_{>0}^{n\times r},\qquad
+\operatorname{rank}P=\operatorname{rank}S=r,\\
+\mathbf1_r^TP=\mathbf1_m^T,\qquad
+\mathbf1_n^TS=\mathbf1_r^T,\qquad P\mu=\pi.
+\end{gathered}
+$$
+
+同一实现的联合律与端点通道分别规定为
+
+$$
+\Pr(x,h,y)=\mu_xP_{hx}S_{yh},\qquad M=SP.
+$$
+
+因此 $P$ 是从 $X$ 到 $H$ 的条件通道，$S$ 是从 $H$ 到 $Y$ 的条件通道，$\pi$ 是操作插入前的焦点边缘。这个共同联合律同时给出两类关系的衔接，不从两个各自可实现的边缘关系拼出未经规定的共同实现。
+
+设至少存在一个上述实现生成固定数据 $(M,\mu,\pi)$。其完整实现类定义为
+
+$$
+\mathcal F(M,\mu,\pi)=
+\left\{(P',S'):
+\begin{array}{l}
+P'\in\mathbb R_{>0}^{r\times m},\quad
+S'\in\mathbb R_{>0}^{n\times r},\\
+\operatorname{rank}P'=\operatorname{rank}S'=r,\\
+\mathbf1_r^TP'=\mathbf1_m^T,\quad
+\mathbf1_n^TS'=\mathbf1_r^T,\\
+S'P'=M,\quad P'\mu=\pi
+\end{array}
+\right\}.
+$$
+
+其中的 $X,H,Y,\mu,\pi,M$ 始终固定，不再加入已知零项、特定参数族或已知内部通道等限制。
+
+### 假设 533.3（方向、插入操作与模块保持）
+
+模型预先指定方向 $X\to H\to Y$ 及定义 533.2 的条件分解。一个允许的固定操作由列随机矩阵 $K\in\mathbb R_{\ge0}^{r\times r}$ 表示，$K_{h'h}$ 的含义是把操作前的固定标签 $h$ 送到操作后的固定标签 $h'$ 的概率。允许零项及重置操作，不要求 $K$ 严格正、可逆或预先满足 $K\pi=\pi$。
+
+模块保持假设规定：插入 $K$ 后，两个通道仍为该实现原有的 $P,S$，扩展联合律和端点后果为
+
+$$
+\Pr_K(x,h,h',y)=\mu_xP_{hx}K_{h'h}S_{yh'},
+\qquad Q_K(P,S)=SKP.
+$$
+
+每个竞争实现使用同一个 $K$、同一组焦点标签及同一操作含义。若某个可逆矩阵 $T$ 被用于比较分解，同步把 $K$ 改为 $TKT^{-1}$ 是另外的操作运输问题，不属于这里的固定操作比较。上述方向与模块保持是现代数学重构的假设，不是从共同焦点的名称或端点观察恢复出的因果事实；把此模型用于经验系统还须分别给出这些假设的依据。
+
+### 定义 533.4（固定操作后果的识别）
+
+称数据 $(M,\mu,\pi)$ 识别固定操作 $K$ 的端点后果，当且仅当 $Q_K$ 在全部 $\mathcal F(M,\mu,\pi)$ 上恒定。此处要求完整端点通道相同，因而同时决定每个输入标签的输出律；仅仅决定按 $\mu$ 平均的输出律是较弱目标。
+
+这是本卷第 108 节的观察纤维准则在该实现空间上的用法；一般的目标识别与纤维包含关系亦见[查询族识别准则](../../../D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)及[干预目标因子化准则](../../../D5/S3/ConceptDynamics/RefinementFactorization/InterventionTargetFactorization.lean)。这里的目标为固定 $K$ 的 $Q_K$，观察为 $(SP,P\mu)$，$\mu$ 和全部标签是固定参数。后果可识别不等于内部角色通道 $P,S$ 已被识别，也不赋予取得焦点读数、制造 $K$ 或执行 $K$ 的能力。
+
+### 定理 533.5（共同焦点边缘下可识别固定操作的完整分类）
+
+在定义 533.2 的非空完整实现类与假设 533.3 下，对任意固定列随机矩阵 $K$，下列两项等价：数据 $(M,\mu,\pi)$ 识别 $K$ 的端点后果；存在实数
+
+$$
+-\min_{1\le i\le r}\frac{\pi_i}{1-\pi_i}\ \le\ \alpha\ \le\ 1
+$$
+
+使
+
+$$
+K=\alpha I_r+(1-\alpha)\pi\mathbf1_r^T.
+\tag{533.1}
+$$
+
+这样的 $\alpha$ 唯一，共同端点后果由数据直接恢复为
+
+$$
+Q_K=\alpha M+(1-\alpha)(M\mu)\mathbf1_m^T.
+\tag{533.2}
+$$
+
+若 $K$ 不属式（533.1）的操作族，则每个 $(P,S)\in\mathcal F(M,\mu,\pi)$ 的任意邻域内都有共同数据相同、固定操作后果不同的竞争实现。因此，共同焦点边缘与完整端点观察决定的恰是这一整族操作后果；它们没有决定任意固定焦点操作的可迁移后果。式（533.1）在 $0\le\alpha\le1$ 时是恒等操作与重置到 $\pi$ 的凸混合，但完整范围还含负 $\alpha$；式（533.2）在负参数时仍是合法通道，因为它等于 $SKP$。
+
+**证明。** 固定任一 $(P,S)\in\mathcal F(M,\mu,\pi)$。满秩使 $P:\mathbb R^m\to\mathbb R^r$ 满射、$S:\mathbb R^r\to\mathbb R^n$ 单射，故 $\operatorname{rank}M=r$。取左逆 $L\in\mathbb R^{r\times n}$ 与右逆 $R\in\mathbb R^{m\times r}$，使 $LS=I_r$、$PR=I_r$；它们仅用于代数消去，不要求非负。
+
+先使用满秩分解的经典基变换事实，其非负分解表述见 Laurberg et al., *Theorems on Positive Data: On the Uniqueness of NMF* (2008), [§3, doi:10.1155/2008/764206](https://doi.org/10.1155/2008/764206)。在这里，若 $S'P'=SP$，则 $\operatorname{im}S'=\operatorname{im}M=\operatorname{im}S$；$S,S'$ 的列都是这个像空间的基。因此存在唯一 $A\in\operatorname{GL}_r(\mathbb R)$ 使 $S'=SA$，再由 $S$ 单射消去得 $P=AP'$。置 $T=A^{-1}$，于是
+
+$$
+P'=TP,\qquad S'=ST^{-1}.
+\tag{533.3}
+$$
+
+由 $P,P'$ 的列和，
+
+$$
+(\mathbf1_r^TT-\mathbf1_r^T)P=0.
+$$
+
+右乘 $R$ 得 $\mathbf1_r^TT=\mathbf1_r^T$；共同焦点边缘给出 $T\pi=TP\mu=P'\mu=\pi$。因此全部分解变换属于
+
+$$
+G_\pi=\{T\in\operatorname{GL}_r(\mathbb R):
+\mathbf1_r^TT=\mathbf1_r^T,\ T\pi=\pi\}.
+$$
+
+反过来，只要 $T\in G_\pi$ 且 $TP,ST^{-1}$ 逐项严格正，式（533.3）就是合法竞争实现：其乘积为 $M$，其焦点边缘为 $\pi$，其秩保持为 $r$，而
+
+$$
+\mathbf1_r^TTP=\mathbf1_m^T,\qquad
+\mathbf1_n^TST^{-1}=\mathbf1_r^TT^{-1}=\mathbf1_r^T.
+$$
+
+$T$ 是分解之间的代数变换，不要求它或 $T^{-1}$ 非负或列随机；需要严格正且列随机的是变换后两个通道。随机分解中这一非负性区别亦见 Christopher Adams, *Stochastic Matrix Factorization*, [§§2–3, arXiv:1609.05772v1](https://arxiv.org/abs/1609.05772v1)。
+
+因为 $P,S$ 的全部有限个条目严格正，映射 $T\mapsto TP$、$T\mapsto ST^{-1}$ 在 $I_r$ 处连续，故 $G_\pi$ 中存在包含 $I_r$ 的相对开邻域 $U$，其中每个 $T$ 都给出严格正的竞争实现。严格正性在此提供的是所有满足两项线性约束的充分小可逆扰动，而非一条特选扰动曲线。
+
+若 $K$ 的后果恒定，则对每个 $T\in U$ 有
+
+$$
+ST^{-1}KTP=SKP.
+$$
+
+左乘 $L$、右乘 $R$，得到 $T^{-1}KT=K$，即
+
+$$
+KT=TK\qquad(T\in U).
+\tag{533.4}
+$$
+
+为求这一局部交换条件的全部解，令 $W=\ker(\mathbf1_r^T)$。由于 $\mathbf1_r^T\pi=1$，每个 $z\in\mathbb R^r$ 唯一分解为
+
+$$
+z=(\mathbf1_r^Tz)\pi+
+\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+\qquad\mathbb R^r=\mathbb R\pi\oplus W.
+$$
+
+在此直和下，$T\in G_\pi$ 恰有块式
+
+$$
+T=\begin{pmatrix}1&0\\0&D\end{pmatrix},
+\qquad D\in\operatorname{GL}(W).
+$$
+
+所以 $U$ 包含每个充分接近 $I_W$ 的 $D$ 所对应的变换。$K$ 的列和条件则恰给出
+
+$$
+K=\begin{pmatrix}1&0\\v&C\end{pmatrix},
+\qquad v\in W,\quad C\in\operatorname{End}(W).
+$$
+
+式（533.4）因而等价于 $v=Dv$ 与 $CD=DC$。取充分小非零 $t$ 及 $D=(1+t)I_W$，第一式给出 $v=0$。令 $d=\dim W=r-1\ge1$；若 $d=1$，$C$ 自为标量。若 $d\ge2$，固定 $W$ 的一组基，对每个 $i\ne j$ 取基矩阵 $E_{ij}$。$D=I_W+tE_{ij}$ 在充分小非零 $t$ 时落入上述邻域，故 $CD=DC$ 给出 $CE_{ij}=E_{ij}C$。逐项写成
+
+$$
+C_{ai}\delta_{jb}=\delta_{ai}C_{jb}.
+$$
+
+取 $a\ne i,b=j$ 得 $C_{ai}=0$，故全部非对角项为零；取 $a=i,b=j$ 得 $C_{ii}=C_{jj}$。于是 $C=\alpha I_W$。这里使用的是与初等剪切矩阵交换强制标量的经典步骤，亦见 [Matrix.mem_range_scalar_of_commute_transvectionStruct](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Transvection.lean#L228)；本证明中的邻域条件通过非零 $t$ 消去给出它所需的全部基矩阵交换关系。
+
+回到原坐标，对任意 $z$ 有
+
+$$
+Kz=(\mathbf1_r^Tz)\pi+
+\alpha\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+$$
+
+即式（533.1）。$W\ne\{0\}$ 保证 $\alpha$ 唯一；特别地，$K\pi=\pi$ 是必要性推出的结论，并非对允许操作预加的限制。
+
+现确定非负性的准确范围。$r\ge2$ 与 $\pi$ 严格正给出 $0<\pi_i<1$。当 $i\ne j$ 时，$K_{ij}=(1-\alpha)\pi_i$，故全部非对角项非负当且仅当 $\alpha\le1$；对角项为
+
+$$
+K_{ii}=\pi_i+\alpha(1-\pi_i),
+$$
+
+故全部对角项非负当且仅当
+
+$$
+\alpha\ge\max_i\left(-\frac{\pi_i}{1-\pi_i}\right)
+=-\min_i\frac{\pi_i}{1-\pi_i}.
+$$
+
+式（533.1）的列和对每个实数 $\alpha$ 都是一，故这两个不等式既必要又充分，且两端点均包含在内。
+
+反向，若 $K$ 有式（533.1）的形式及上述范围，则对任意 $(P',S')\in\mathcal F(M,\mu,\pi)$，
+
+$$
+\begin{aligned}
+S'KP'
+&=\alpha S'P'+(1-\alpha)S'\pi\mathbf1_r^TP'\\
+&=\alpha M+(1-\alpha)(S'P'\mu)\mathbf1_m^T\\
+&=\alpha M+(1-\alpha)(M\mu)\mathbf1_m^T.
+\end{aligned}
+$$
+
+这既证明充分性，也证明恢复式（533.2）。
+
+最后证明非族操作的局部不可识别性。若 $K$ 不是式（533.1）的形式，则在上述块式中，或者 $v\ne0$，或者 $v=0$ 而 $C$ 非标量。第一种情形取 $B=I_W$，第二种情形取一个满足 $CB\ne BC$ 的基矩阵 $B=E_{ij}$；这样的基矩阵存在，否则刚才的逐项论证使 $C$ 成为标量。令 $N$ 在直和下为 $\operatorname{diag}(0,B)$，便有
+
+$$
+N\pi=0,\qquad \mathbf1_r^TN=0,\qquad KN-NK\ne0.
+$$
+
+对每个充分小非零 $\varepsilon$，$T_\varepsilon=I_r+\varepsilon N$ 可逆且属于 $U$，因此
+
+$$
+(P_\varepsilon,S_\varepsilon)
+=(T_\varepsilon P,ST_\varepsilon^{-1})
+\in\mathcal F(M,\mu,\pi),
+\qquad(P_\varepsilon,S_\varepsilon)\longrightarrow(P,S).
+$$
+
+其操作后果差恰为
+
+$$
+\begin{aligned}
+S_\varepsilon KP_\varepsilon-SKP
+&=ST_\varepsilon^{-1}(KT_\varepsilon-T_\varepsilon K)P\\
+&=\varepsilon ST_\varepsilon^{-1}(KN-NK)P\ne0.
+\end{aligned}
+$$
+
+若末项为零，左乘 $T_\varepsilon L$、右乘 $R$ 就会得到 $KN-NK=0$，矛盾。每个充分小非零扰动都保留共同数据而改变该固定后果，证明所述任意邻域结论。证毕。
+
+### 命题 533.6（同焦点、同方向与同边缘下重置后果仍可不同）
+
+令 $X=H=Y=\{1,2\}$，所有标签及角色类型固定，取
+
+$$
+\mu=\pi=\begin{pmatrix}1/2\\1/2\end{pmatrix},\qquad
+P=S=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},
+$$
+
+$$
+P'=\begin{pmatrix}11/16&5/16\\5/16&11/16\end{pmatrix},\qquad
+S'=\begin{pmatrix}5/6&1/6\\1/6&5/6\end{pmatrix}.
+$$
+
+两实现具有相同数据
+
+$$
+M=\begin{pmatrix}5/8&3/8\\3/8&5/8\end{pmatrix},
+\qquad P\mu=P'\mu=\pi,
+$$
+
+而同一个“重置到标签 $1$”的操作
+
+$$
+K=\begin{pmatrix}1&1\\0&0\end{pmatrix}
+$$
+
+产生不同的端点通道
+
+$$
+SKP=\begin{pmatrix}3/4&3/4\\1/4&1/4\end{pmatrix},\qquad
+S'KP'=\begin{pmatrix}5/6&5/6\\1/6&1/6\end{pmatrix}.
+$$
+
+因此，即使焦点集合、两类关系的方向、类型、操作含义和焦点边缘都已固定，共同端点资料仍可遗失这些关系经焦点衔接所需的操作信息。在相同 $\pi$ 下，定理 533.5 的负端点 $\alpha=-1$ 则给出可识别的标签交换操作；重置到一个固定标签与重置到共同分布 $\pi$ 也属于不同操作。
+
+**证明。** 四个通道逐项严格正且每列和为一，其行列式依次为 $1/2,1/2,3/8,2/3$，故均满秩。两个 $P$ 矩阵还各自每行和为一，因而保持均匀 $\mu$。直接相乘得 $SP=S'P'=M$。由于 $KP=KP'=K$，两种操作后果分别把 $S,S'$ 的第一列重复两次，得到显示的不同通道。操作 $K$ 不满足 $K\pi=\pi$，亦不在定理 533.5 的族中。
+
+此处的分解变换及其逆为
+
+$$
+T=\begin{pmatrix}7/8&1/8\\1/8&7/8\end{pmatrix},\qquad
+T^{-1}=\begin{pmatrix}7/6&-1/6\\-1/6&7/6\end{pmatrix},
+\qquad P'=TP,\quad S'=ST^{-1}.
+$$
+
+$T^{-1}$ 的负条目没有妨碍两个新通道严格正，具体体现了定理中对代数变换与合法通道的分别。最后，均匀 $\pi$ 的参数范围为 $[-1,1]$，且
+
+$$
+-I_2+2\pi\mathbf1_2^T=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+该操作的共同后果为 $-M+2(M\mu)\mathbf1_2^T=\begin{pmatrix}3/8&5/8\\5/8&3/8\end{pmatrix}$。它不在 $0\le\alpha\le1$ 的凸混合段内，故不能删除负参数部分。整个构造只比较同一现代模型中的关系实现，没有把健康征候等同于产生健康的关系，也没有从端点数据判定经验因果方向。证毕。
+
+## 追加锚（本行以下为增补区）
+
+
+## 534. 亚里士多德式事实—目标—因果方向的有限资源关系
+
+### 定义 534.1（共同高斯因果实现与比较空间）
+
+固定参数 $0<\rho<1$、$\sigma=\sqrt{1-\rho^2}$、$h>0$，并令 $a=h/\rho$。对每次全新重置 $t$，在同一个乘积噪声空间上取相互独立的标准正态变量 $(U_{0t},U_{1t},U_{2t})$。未知参数 $\theta\in\{+1,-1\}$ 在整个实验中固定。两种结构模型为
+
+$$
+\begin{array}{lll}
+M_+:&X_t=U_{0t},&H_t=\rho X_t+\sigma U_{1t},\quad Y_t=\rho H_t+\sigma U_{2t},\\
+M_-:&Y_t=U_{0t},&H_t=\rho Y_t+\sigma U_{1t},\quad X_t=\rho H_t+\sigma U_{2t}.
+\end{array}
+$$
+
+在没有干预时，$(X_t,H_t,Y_t)$ 的共同协方差矩阵为
+
+$$
+\Sigma=
+\begin{pmatrix}
+1&\rho&\rho^2\\
+\rho&1&\rho\\
+\rho^2&\rho&1
+\end{pmatrix}.
+$$
+
+这里的同一噪声空间只是比较两种模型的耦合；观察者只能得到规定的观测记录，不能访问未观测的 $U_{it}$，也不能把两个模型的潜在样本同时取得。
+
+### 假设 534.2（操作、历史与逐点许可）
+
+每轮以操作 $\operatorname{do}(X_t=u_t,Y_t=v_t)$ 替换两个端点方程而保留 $H$ 方程，并且只揭示 $H_t$。私有随机带 $R$ 取值于标准 Borel 空间，独立于 $\theta$ 与所有重置噪声；它包括终端随机化所需的全部随机性。第 $t$ 轮的 $(u_t,v_t)$ 是 $R$ 与此前动作—结果历史的 Borel 函数，终端判决也可使用完整历史和 $R$。不存在当前重置噪声、干预前同一单位的额外读数、额外结果或依赖 $\theta$ 的时序访问。
+
+给定有限预算 $B\ge0$，定义
+
+$$
+A_B=\{(u,v):u\ge a,\ v\ge a,\ u^2+v^2\le B\}.
+$$
+
+许可是逐个 $(R,\text{历史})$ 路径的许可：每个可能输入上动作都必须落在 $A_B$。等价地，指定的观测核在两种模型下的条件均值都至少为 $h$，且端点平方和不超过 $B$；该条件不对动作彩票、轮次平均或 $\theta$ 的后验取平均。
+
+这一区分只作受限的现代重构：亚里士多德《后分析篇》I.2 要求知识以原因作为原因并涉及不能否则，I.13 要求近接原因及互逆推理中的中项，并明确普遍理由并不保证对特殊事实的知识。因此下述均值目标和方向检验不被定义为 *episteme*，也不把历史天文学或医学例子当作现代经验前提。[Aristotle, *Posterior Analytics* I.2, I.13, G. R. G. Mure 英译](https://classics.mit.edu/Aristotle/posterior.1.i.html)；[Stanford Encyclopedia of Philosophy, “Aristotle’s Logic”, §6.1，实质修订 2022-11-22](https://plato.stanford.edu/entries/aristotle-logic/#AriSci)。
+
+### 定义 534.3（记录、方向风险与目标推荐风险）
+
+令 $n\ge1$ 为固定轮数。对任一满足假设 534.2 的策略 $\pi$，记完整记录为
+
+$$
+L[n]=(R,(u_t,v_t,H_t)_{t=1}^n).
+$$
+
+若 $B\ge2a^2$，定义方向判决的精确有限资源风险
+
+$$
+R_n(B,h)=\inf_{\pi,\delta}\max_{\theta\in\{+1,-1\}}
+\mathbb P_\theta^\pi\bigl(\delta(L[n])\ne\theta\bigr),
+$$
+
+其中 $\delta$ 遍历所有可测的终端随机判决（其随机性已包含于 $R$）。再给定推荐预算 $C\ge0$，允许终端输出可测的 $w=(s,t)$，满足 $s^2+t^2\le C$，但不把推荐当作额外执行的干预。令
+
+$$
+\mu_+(w)=\rho s,\qquad \mu_-(w)=\rho t,
+$$
+
+并定义目标推荐失败风险
+
+$$
+F_n(B,C,h)=\inf_{\pi,w}\max_{\theta\in\{+1,-1\}}
+\mathbb P_\theta^\pi\bigl(\mu_\theta(w)<h\bigr),
+$$
+
+其中训练阶段仍严格使用同一 $A_B$ 和同一记录类。
+
+### 命题 534.4（被动共同律与干预条件核）
+
+在定义 534.1 的被动情形，两种模型的 $(X,H,Y)$ 都服从 $N(0,\Sigma)$，故被动联合资料对 $\theta$ 不可区分。给定任意历史、$R$ 和当前逐点许可动作 $(u_t,v_t)\in A_B$，新鲜重置保证
+
+$$
+H_t\mid(\text{历史},R,u_t,v_t),\theta=+1\sim N(\rho u_t,\sigma^2),
+$$
+
+$$
+H_t\mid(\text{历史},R,u_t,v_t),\theta=-1\sim N(\rho v_t,\sigma^2).
+$$
+
+**证明。** 在 $M_+$ 中，$(X,H,Y)$ 是独立标准正态向量的线性像，均值为零；直接计算给出
+$\operatorname{Var}X=\operatorname{Var}H=\operatorname{Var}Y=1$、$\operatorname{Cov}(X,H)=\operatorname{Cov}(H,Y)=\rho$、$\operatorname{Cov}(X,Y)=\rho^2$。在 $M_-$ 中交换端点得到同一协方差矩阵，且同样是联合高斯。因此相同均值和协方差给出相同的完整高斯律，而非仅有相同矩。
+
+执行 $\operatorname{do}(X_t=u_t,Y_t=v_t)$ 后，$M_+$ 的中间方程成为 $H_t=\rho u_t+\sigma U_{1t}$，$M_-$ 成为 $H_t=\rho v_t+\sigma U_{1t}$。新鲜的 $U_{1t}$ 与过去、$R$ 和当前动作独立，故这些式子是对每个历史输入都定义的正则条件核，不依赖在零概率历史上选择条件期望的版本。证毕。
+
+### 命题 534.5（可行集合的精确分离）
+
+$A_B=\varnothing$ 当且仅当 $B<2a^2$。当 $B\ge2a^2$，对任意 $(u,v)\in A_B$，令
+
+$$
+ m=\rho\frac{u+v}{2},\qquad
+ k=\frac{\rho(u-v)}{2\sigma}.
+$$
+
+则 $|k|\le k_*$，其中
+
+$$
+ d_* =\sqrt{B-a^2}-a,\qquad k_* =\frac{\rho d_*}{2\sigma}.
+$$
+
+等号由 $(u,v)=(\sqrt{B-a^2},a)$ 及其交换取得。
+
+**证明。** 非空性由 $u,v\ge a$ 与 $u^2+v^2\le B$ 的最小平方和立即给出。若 $u\ge v\ge a$，则
+$u\le\sqrt{B-v^2}\le\sqrt{B-a^2}$，故 $u-v\le\sqrt{B-a^2}-a$；交换 $u,v$ 处理另一情形。证毕。
+
+### 定理 534.6（全自适应策略的精确方向前沿）
+
+对每个整数 $n\ge1$、$0<\rho<1$、$h>0$ 及有限 $B$，在假设 534.2 与定义 534.3 的完整 Borel 随机策略类上有：
+
+1. 当 $B<2a^2$ 时许可类为空，不赋予其风险值。
+2. 当 $B\ge2a^2$ 时，令 $d_*,k_*$ 如命题 534.5，则
+
+$$
+R_n(B,h)=\Phi(-\sqrt n\,k_*).
+$$
+
+该下确界由逐轮固定动作和阈值判决达到。对 $0<\varepsilon<1/2$，满足 $R_n(B,h)\le\varepsilon$ 的最小预算为
+
+$$
+B_{\min}=a^2+\left[a+\frac{2\sigma\Phi^{-1}(1-\varepsilon)}{\rho\sqrt n}\right]^2.
+$$
+
+**证明。** 对任一固定策略 $\pi$，标准 Borel 随机化定理把全部非预见随机策略表示为独立种子 $R$ 与逐轮 Borel 映射；把终端随机化一并放入 $R$ 不损失策略类。由命题 534.4，在动作确定后标准化
+
+$$
+Z_t=\frac{H_t-m_t}{\sigma}
+$$
+
+的条件律为 $N(\theta k_t,1)$，其中 $|k_t|\le k_*$，并且 $k_t$ 可依赖 $R$ 及先前完整历史。
+
+先构造一个不含 $\theta$ 的完整记录模拟器。若 $k_*>0$，给定输入 $T_1,\ldots,T_n$，在内部独立抽取 $R$ 及 $W_t\sim N(0,1)$，递归地由模拟历史计算策略动作，得到对应的 $m_t,k_t$，再置
+
+$$
+ Z_t=\frac{k_t}{k_*}T_t+
+ \sqrt{1-\left(\frac{k_t}{k_*}\right)^2}\,W_t,
+ \qquad H_t=m_t+\sigma Z_t.
+$$
+
+系数允许为负。把 $R$、每个动作和每个 $H_t$ 全部输出，所得 Markov 核记为 $K_\pi$。对 $\theta=\pm1$，若输入 $T_t$ 独立服从 $N(\theta k_*,1)$，则在给定模拟过去时 $T_t$ 仍新鲜，故 $Z_t\sim N(\theta k_t,1)$；归纳于轮次 $t$ 得
+
+$$
+\operatorname{Law}_\theta^\pi(L[n])
+=K_\pi\bigl(N(\theta k_*,1)^{\otimes n}\bigr),
+$$
+
+核 $K_\pi$ 对两个 $\theta$ 相同，且只复现实际方向下的律，不声称保留隐藏的跨方向反事实耦合。若 $k_*=0$，命题 534.5 强制每个许可动作为 $(a,a)$，两方向的完整记录律相同，直接取相同律的核，避免除以 $k_*$。
+
+对任意策略和判决，最大错误不小于等先验平均错误。把判决经 $K_\pi$ 拉回后得到产品实验 $N(\pm k_*,1)^{\otimes n}$ 上的随机检验。其对数似然比为 $2k_*\sum_{t=1}^nT_t$，等先验最小错误为
+$\Phi(-\sqrt n\,k_*)$，所以这是同一策略类的统一下界；等先验只是下界工具，不是模型附加的先验。
+
+反向取每轮 $(u_t,v_t)=(\sqrt{B-a^2},a)$，则 $k_t=k_*$ 且 $Z_t$ 独立服从 $N(\theta k_*,1)$。判决 $\delta=+1$ 当且仅当 $\sum_tZ_t\ge0$，两方向错误概率都等于 $\Phi(-\sqrt n\,k_*)$，达到下界。$k_*=0$ 时完整记录同律，独立公平硬币达到 $1/2$。最后由高斯尾函数严格单调性解出 $\sqrt{B-a^2}\ge a+2\sigma\Phi^{-1}(1-\varepsilon)/(\rho\sqrt n)$，得到所示 $B_{\min}$。证毕。
+
+**证明附引。** 这里的核归纳与任意自适应历史的全记录支配可与 Song, *Pre-Disclosure Experiment Menus*, v1, Theorem 2.1 的递归核机制比较；高斯组合的参数形式与 Dong–Roth–Su, *Gaussian Differential Privacy*, Theorem 3.2、Corollary 3.3 相容。那些结果是一般中间工具；本定理的内容是带逐点因果许可、共同实现和目标约束的这一特定前沿，而非把通用自适应定理改名重述。[Song, arXiv:2608.22905v1](https://arxiv.org/html/2608.22905v1)；[Dong, Roth and Su, arXiv:1905.02383](https://arxiv.org/html/1905.02383)。
+
+### 命题 534.7（边界、事实成功与单端点权限）
+
+在定理 534.6 的模型中：
+
+1. $B=2a^2$ 时唯一动作是 $(a,a)$，均值目标达到但完整记录与 $\theta$ 无关，故任意有限 $n$ 都有 $R_n=1/2$。
+2. $B>2a^2$ 时可选动作产生不同方向律，且 $R_n>0$ 对每个有限 $n,B$ 仍成立；当 $n\to\infty$ 时定理中的最优风险趋于 $0$。同一预算下也存在无信息策略，例如每轮取 $(a,a)$。
+3. 对任一有限许可动作，若 $w_+=u_t,w_-=v_t$，则
+
+$$
+\mathbb P_\theta(H_t\ge h\mid\text{历史},R,u_t,v_t)
+=\Phi\!\left(\frac{\rho w_\theta-h}{\sigma}\right)<1.
+$$
+
+在对应端点恰取 $a$ 时该概率为 $1/2$，而非概率一的事实成功；高斯满支撑排除了有限预算下的几乎处处保证。知道结构律和 $\theta$ 仍不等于预先知道某次新鲜重置的特殊实现。
+4. 若每轮只准干预一个端点，则在相反方向中 $H$ 保持零均值的新鲜律；$h>0$ 使这种更窄权限类不可行。
+
+**证明。** 前三项直接由命题 534.4 的正态核、$A_B$ 的边界及定理 534.6 的严格正高斯尾得到。第四项中，$M_-$ 下只干预 $X$ 不改变 $H=\rho Y+\sigma U_1$ 的零均值，$M_+$ 下只干预 $Y$ 同理；故至少有一个方向不能满足正的均值目标。这里“均值目标”与“实际特殊事实”分离，也正是 I.13 关于普遍理由和已观察特殊事实的边界在此模型中的有限对应。证毕。
+
+### 定理 534.8（推荐目标何时需要方向信息）
+
+对 $B\ge2a^2$，定义 $F_n$ 如定义 534.3。则
+
+$$
+F_n(B,C,h)=
+\begin{cases}
+1,&0\le C<a^2,\\
+R_n(B,h),&a^2\le C<2a^2,\\
+0,&C\ge2a^2.
+\end{cases}
+$$
+
+中间区间的成功推荐集合
+
+$$
+G_+=\{(s,t):s^2+t^2\le C,\ s\ge a\},\qquad
+G_- =\{(s,t):s^2+t^2\le C,\ t\ge a\}
+$$
+
+非空且不相交；因而达到目标的推荐必须解出方向。$C\ge2a^2$ 时 $(a,a)$ 同时属于两集合，方向信息不再是该均值目标的必要条件。该结论只谈推荐失败风险；若部署阶段仍继承逐点许可 $A_B$，$C<2a^2$ 的推荐不因此取得可执行的鲁棒授权。
+
+**证明。** 当 $C<a^2$ 时，任意 $w$ 都有 $s<a$ 且 $t<a$，两方向均失败，故风险为 $1$。当 $a^2\le C<2a^2$ 时，$G_+,G_-$ 非空，且若一点评价同时满足 $s,t\ge a$ 则 $s^2+t^2\ge2a^2>C$，所以二者不交。给定任意策略和推荐，定义解码器：若 $s\ge a$ 输出 $+1$，否则若 $t\ge a$ 输出 $-1$，其余任意。由于成功集合不交，在真实方向下推荐成功必然使解码器正确，故方向错误概率不超过推荐失败概率，取下确界得 $R_n\le F_n$。
+
+反向，对任意方向判决 $\delta$，在 $\delta=+1$ 时推荐 $(a,0)$，在 $\delta=-1$ 时推荐 $(0,a)$；这两个点平方范数均为 $a^2$，且推荐失败事件恰为判决错误，故 $F_n\le R_n$。当 $C\ge2a^2$，恒定推荐 $(a,a)$ 同时满足两方向，风险为零。证毕。
+
+### 命题 534.9（动作彩票平均许可不保持定理 534.6）
+
+考虑不同的、更弱的合同：只要求在动作彩票抽取前、给定过去时
+$\mathbb E_\theta[H_t\mid\text{过去}]=h$，但仍要求每个实际动作满足 $u_t^2+v_t^2\le B$。取 $B=4a^2$，每轮独立公平抽取 $S_t\in\{+1,-1\}$，分别选择
+
+$$
+S_t=+1:(u_t,v_t)=(2a,0),\qquad
+S_t=-1:(u_t,v_t)=(0,2a).
+$$
+
+则两模型都满足该较弱均值合同，而每个实际动作在一个模型中违反原先的鲁棒均值许可。保留 $S_t$ 于记录，便有
+
+$$
+H_t=h+\theta hS_t+\sigma U_{1t},
+\qquad
+\frac{S_t(H_t-h)}{\sigma}\ \stackrel{\mathrm{i.i.d.}}\sim
+N\!\left(\theta\frac h\sigma,1\right).
+$$
+
+因此以 $\sum_tS_t(H_t-h)\ge0$ 判决时，两方向错误均为
+
+$$
+\Phi\!\left(-\sqrt n\,\frac h\sigma\right),
+$$
+
+严格小于定理 534.6 在 $B=4a^2$ 下的
+
+$$
+\Phi\!\left(-\sqrt n\,\frac{h(\sqrt3-1)}{2\sigma}\right).
+$$
+
+这只是较弱合同中的一个可达到风险反例，不声称该扩大策略类的精确极小风险。
+
+**证明。** 条件于过去，$S_t$ 独立公平，故在 $M_+$ 中均值为 $(2h+0)/2=h$，在 $M_-$ 中均值为 $(0+2h)/2=h$。但路径 $(2a,0)$ 在 $M_-$、路径 $(0,2a)$ 在 $M_+$ 的原逐点均值分别为零。乘以 $S_t$ 后，$S_tU_{1t}$ 仍为独立标准正态，显示的正态律与阈值错误率随即成立。定理 534.6 在 $B=4a^2$ 时有 $d_*=a(\sqrt3-1)$，且 $\rho a=h$；因 $1>(\sqrt3-1)/2$，高斯尾严格比较成立。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 535. 家族相似与目的边界：实际交叠中的两种共同信息下界
+
+### 定义 535.1（实际对象、固定目的与情境取得）
+
+设 $A$ 为有限非空的实际对象集，固定映射
+
+$$
+c:A\to K,\qquad q:A\to L,\qquad T:A\to Y,
+\qquad K=c(A),\quad L=q(A),\quad Y=T(A).
+$$
+
+所有有限集合赋予离散可测结构。$c$ 是辅助信息的取得端可读的情境，$q$ 是接收端已观察到的旧读数，$T$ 是本次比较始终保持的目标。假定局部一致性
+
+$$
+\forall x,x'\in A,\qquad
+c(x)=c(x')\ \land\ q(x)=q(x')\ \Longrightarrow\ T(x)=T(x').
+\tag{535.1}
+$$
+
+记实际联合支撑及各读数下的活动情境为
+
+$$
+S=\{(c(x),q(x)):x\in A\},\qquad
+K_\ell=\{k\in K:(k,\ell)\in S\}\quad(\ell\in L).
+$$
+
+式（535.1）使 $t:S\to Y$ 由 $t(c(x),q(x))=T(x)$ 良定义。允许不同对象具有相同的 $(c,q)$；不将 $A$ 默认为 $S$，也不补入 $K\times L\setminus S$ 中没有实际对象的组合。
+
+对每个非空标准 Borel 空间 $Z$，允许任意 Markov 核 $W:K\to\operatorname{Prob}(Z)$，记 $W_k=W(\cdot\mid k)$。它产生实际实验
+
+$$
+E_W(x)=\delta_{q(x)}\otimes W_{c(x)}\quad(x\in A),\qquad
+\Gamma_c=\{E_W:Z\text{ 非空标准 Borel},\ W:K\to\operatorname{Prob}(Z)\}.
+\tag{535.2}
+$$
+
+选择通道时可以使用固定的 $S,t$，运行时辅助取得只读 $c(x)$，不能再读 $q(x)$、$T(x)$ 或对象身份 $x$。编码器私有随机位已被边缘化进 $W_k$，没有额外揭示；若要把随机种子也交给观察者，必须把它计入输出并重新规定通道。接收端看到的是 $(q(x),z)$。
+
+这一目的限定只对应维特根斯坦《哲学研究》§§65–69 的一个局部问题。§§65–67 用游戏与纤维交叠反对未经考察就要求同名使用必有一个贯穿全部情形的本质；§68 允许给“数”等概念划定边界，也允许未封闭的使用；§69 明说可以“für einen besondern Zweck”划界，却不因此才使概念通常可用。本章将一个特定目的固定为 $T$，考察取得约束下的精确信息边界；这不是全部语言意义的模型，不将家族相似定义为图连通，也不推出所有概念都没有共同性质。下文的最小信息要求是附加的比较问题，既不是日常有用性的必要条件，也不是存在某个目的充分边界的必要条件。[Wittgenstein, *Philosophische Untersuchungen*, §§65–69，德文原文](https://www.wittgensteinproject.org/w/index.php/Philosophische_Untersuchungen#65)；[Stanford Encyclopedia of Philosophy, “Ludwig Wittgenstein”, §3.4，实质修订 2026-09-17](https://plato.stanford.edu/entries/wittgenstein/#LangGameFamiRese)。
+
+### 定义 535.2（逐态恢复、实际实验序与最小性）
+
+称 $E_W$ 对 $T$ 充分，当且仅当存在 Markov 解码核 $D:L\times Z\to\operatorname{Prob}(Y)$，使
+
+$$
+\forall x\in A,\qquad
+\int_Z D(\{T(x)\}\mid q(x),z)\,W_{c(x)}(dz)=1.
+\tag{535.3}
+$$
+
+解码器允许独立的私有随机化，但不观察编码器未揭示的随机位。条件是每个实际对象上的概率一恢复，不使用先验。有限 $A$ 上，若另取对每个 $x$ 都严格正的先验，平均错误为零与式（535.3）等价，因为有限和中的非负错误项都必须为零；若先验给某个实际对象零质量，则平均条件不再要求该对象恢复正确。
+
+更一般地，$A$ 上的实验 $E$ 是一族取值于某个非空标准 Borel 空间 $\mathcal E$ 的概率律 $(E_x)_{x\in A}$。对输出空间为 $\mathcal F$ 的另一实验 $F$，定义
+
+$$
+F\preceq E
+\iff
+\exists G:\mathcal E\to\operatorname{Prob}(\mathcal F)\text{ Markov},\quad
+\forall x\in A,\quad F_x=\int_{\mathcal E}G(\cdot\mid e)E_x(de).
+\tag{535.4}
+$$
+
+同一个 $G$ 必须适用于所有实际对象，不能额外依赖 $x$。此序左端信息较少，允许模拟器使用整个源输出并随机化；特别地，源为 $E_W$ 时允许使用已经看到的 $q$，不要求它只作用于辅助坐标，也不预加逐输出保持 $q$ 的限制。记 $E\simeq F$ 表示互相支配。有限统计量 $h:A\to B$ 也用 $h$ 表示其 Dirac 实验；确定性统计量的实际纤维与因子化对应沿用第 7、532 章。对一般实验，目标充分性写作 $T\preceq E$；对 $U$ 的充分性同理写作 $U\preceq E$，其中有限目标的核因子化正是概率一恢复。
+
+记充分族
+
+$$
+\mathcal F_T=\{E\in\Gamma_c:E\text{ 对 }T\text{ 充分}\}.
+$$
+
+$E_\circ$ 是最小充分实验，意指 $E_\circ\in\mathcal F_T$ 且 $E_\circ\preceq E$ 对每个 $E\in\mathcal F_T$ 成立；若存在，它在 $\simeq$ 下唯一。$E_\circ$ 是极小充分实验，则只要求
+
+$$
+\forall F\in\mathcal F_T,\qquad
+F\preceq E_\circ\ \Longrightarrow\ E_\circ\preceq F.
+$$
+
+“最小”与“极小”分别对应 least 与 minimal，不以辅助字母表的大小或一个标量风险替代。实验 $B$ 是 $\mathcal F_T$ 的共同下界，是指 $B\preceq E$ 对每个 $E\in\mathcal F_T$ 成立；最大共同下界还须支配所有同一比较范围内的共同下界。
+
+式（535.4）采用 Blackwell 的参数无关后处理序；有限通道的标准表述及决策比较等价见 Bertschinger–Rauh, *The Blackwell relation defines no lattice*, Definitions 1–3、Theorem 4。本章直接以核因子化为序的定义，对任意标准 Borel 输出的下述推导不依赖把有限矩阵定理外推为无限输出定理。[arXiv:1401.3146v1](https://arxiv.org/html/1401.3146v1)。
+
+### 定义 535.3（全局相容、实际交叠与局部和全局闭包）
+
+在 $K$ 上定义
+
+$$
+\begin{aligned}
+R(k,k')&\iff
+\forall\ell\in L,\quad
+k,k'\in K_\ell\ \Longrightarrow\ t(k,\ell)=t(k',\ell),\\
+O(k,k')&\iff\exists\ell\in L,\quad k,k'\in K_\ell,\\
+H&=R\cap O.
+\end{aligned}
+\tag{535.5}
+$$
+
+$R$ 自反、对称但不必传递；没有共同读数时相容条件真空成立。$O$ 记录实际共同出现，不能从两个边缘像推得某个共同组合。令 $C$ 为 $K$ 上包含 $H$ 的最小等价关系；令 $C_\ell$ 为 $K_\ell$ 上包含 $R|_{K_\ell\times K_\ell}$ 的最小等价关系。$C$ 的路径可以逐边更换见证交叠的旧读数，$C_\ell$ 的路径则始终留在 $K_\ell$，但其每条边仍须满足在所有实际读数上定义的 $R$。因此不能仅检验当前 $\ell$ 下两个目标相等就添加一条边。
+
+定义有限统计量
+
+$$
+\begin{aligned}
+\mathcal U&=\bigsqcup_{\ell\in L}\bigl(\{\ell\}\times(K_\ell/C_\ell)\bigr),
+&U(x)&=(q(x),[c(x)]_{C_{q(x)}}),\\
+\mathcal V&=L\times(K/C),
+&V(x)&=(q(x),[c(x)]_C).
+\end{aligned}
+\tag{535.6}
+$$
+
+$V$ 由有限确定性编码 $k\mapsto[k]_C$ 实现，故属于 $\Gamma_c$。$U$ 是实际对象上的抽象统计量；其公式使用当前 $q$ 选择商关系，尚不意味着存在只读 $c$ 的通道与之等价。$R$ 是成对相容关系，$C_\ell,C$ 是两种等价闭包，$\ker_A U,\ker_A V$ 才是相应确定性实验在实际对象上的观察等价；这些关系的定义域与作用不能互换。
+
+### 定理 535.4（整个随机充分族的两种最大共同下界）
+
+在定义 535.1—535.3 下，$\mathcal F_T$ 非空，并有以下结论。
+
+1. 在 $A$ 上所有标准 Borel 输出实验中，$U$ 是 $\mathcal F_T$ 的最大共同下界，即
+
+$$
+\forall E\in\mathcal F_T,\quad U\preceq E,
+\qquad
+\forall F,\quad
+\bigl(\forall E\in\mathcal F_T,\ F\preceq E\bigr)\Longrightarrow F\preceq U.
+\tag{535.7}
+$$
+
+这里 $F$ 可以不保留 $q$。$U$ 本身对 $T$ 充分；在 $\Gamma_c$ 内，对 $T$ 充分和对 $U$ 充分是同一个实验条件。
+
+2. 对任意非空标准 Borel 空间 $Z$ 及任意 $W:K\to\operatorname{Prob}(Z)$，有完整分类
+
+$$
+\bigl(\forall E\in\mathcal F_T,\ E_W\preceq E\bigr)
+\iff
+\bigl(\forall k,k'\in K,\ kCk'\Longrightarrow W_k=W_{k'}\bigr)
+\iff E_W\preceq V.
+\tag{535.8}
+$$
+
+因此 $V$ 是限于 $\Gamma_c$ 的最大共同下界，但不保证充分。
+
+3. 最小充分允许实验存在的准确条件是
+
+$$
+\mathcal F_T\text{ 有最小元}
+\iff C\subseteq R.
+\tag{535.9}
+$$
+
+即没有一条 $H$ 路径连接不相容的两个情境。条件成立时 $V$ 最小且 $U\simeq V$；条件不成立时，$U$ 虽充分，却没有与之等价的 $\Gamma_c$ 成员。只允许确定性编码与允许全部标准 Borel 随机编码，最小充分实验存在的条件相同。
+
+**证明。** 先固定实际比较序的一项归约。设 $E_F\preceq E_W$，其中两实验的辅助空间分别为 $Z',Z$，而一个任意模拟核为 $G:L\times Z\to\operatorname{Prob}(L\times Z')$。对每个源读数 $\ell$，取其输出辅助坐标的边缘
+
+$$
+G_\ell(B\mid z)=G(L\times B\mid\ell,z)
+\quad(B\subseteq Z'\text{ 可测}).
+$$
+
+这是定义在全部 $z$ 上的 Markov 核，且由实际行等式取边缘得
+
+$$
+\forall(k,\ell)\in S,\qquad
+F_k(B)=\int_ZG_\ell(B\mid z)W_k(dz).
+\tag{535.10}
+$$
+
+反之，给定满足式（535.10）的核族 $G_\ell$，令模拟器在输入 $(\ell,z)$ 上输出 $\delta_\ell\otimes G_\ell(\cdot\mid z)$，就得到原定义中的 $E_F\preceq E_W$。因为 $L$ 有限，该拼接可测。这个归约不是对原 $G$ 作条件化，不涉及在零概率输出上相除，也不要求原 $G$ 在每个输入点保持第一坐标；它证明总能换成一个保留已见 $\ell$ 的模拟器。后文若只在全测集上指定某个核或解码器，则在其余输入上统一取输出空间中一个固定点的 Dirac 律，将它扩成处处定义的核。
+
+现给出零误差分离这一中间事实。对任意 $Z,W$，
+
+$$
+E_W\in\mathcal F_T
+\iff
+\forall k,k'\in K,\quad \neg R(k,k')\Longrightarrow W_k\perp W_{k'}.
+\tag{535.11}
+$$
+
+右端的互相奇异指存在可测集 $B$ 使 $W_k(B)=1,W_{k'}(B)=0$，不是指某个拓扑支撑不相交。若 $\neg R(k,k')$，取共同实际读数 $\ell$，使 $y=t(k,\ell)\ne t(k',\ell)=y'$。式（535.3）及被积函数位于 $[0,1]$ 给出
+
+$$
+D(\{y\}\mid\ell,z)=1\quad W_k\text{-几乎处处},\qquad
+D(\{y'\}\mid\ell,z)=1\quad W_{k'}\text{-几乎处处}.
+$$
+
+这两个可测集合不交，因为一个概率律不能同时给不同单点质量一。故 $W_k\perp W_{k'}$。
+
+为证反向，取一个有限共同支配测度及可测 Radon–Nikodym 密度
+
+$$
+\mu=\sum_{k\in K}W_k,\qquad f_k=\frac{dW_k}{d\mu}.
+$$
+
+可取 $f_k\ge0$，且在一个 $\mu$-零集之外所有密度有限并满足 $\sum_k f_k=1$。对每个不相容对，奇异性给出 $f_kf_{k'}=0$ 几乎处处：在分离集上一个密度为零，在其补集上另一个为零。由于 $K$ 有限，把所有这些例外与密度恒等式的例外并入同一个可测零集 $N$。于是对每个 $z\notin N$，集合
+
+$$
+I(z)=\{k\in K:f_k(z)>0\}
+$$
+
+非空且任意两元素都 $R$-相容。固定 $K$ 的一个线性次序。在输入 $(\ell,z)$ 上，若 $z\notin N$ 且 $I(z)\cap K_\ell\ne\varnothing$，选其中第一个元素 $k_0$，输出 $t(k_0,\ell)$；其余情形输出固定 $y_0\in Y$。这是有限个可测判定给出的可测函数。候选元素都共享 $\ell$ 且两两 $R$-相容，故其目标值相同。对任一实际 $(k,\ell)$，有 $W_k(N)=0$ 及 $W_k(\{f_k=0\})=0$，所以 $k\in I(z)\cap K_\ell$ 几乎处处，输出恰为 $t(k,\ell)$。这证明式（535.11），并同时证明私有随机解码器不扩大充分类。
+
+这个冲突分离条件在有限输出下就是零误差侧信息编码的特征图条件；确定性情形退化为第 532 章的编码纤维包含于 $R$。经典起点为 Witsenhausen, *The zero-error side information problem and chromatic numbers*, IEEE Transactions on Information Theory 22(5), 592–593 (1976), [doi:10.1109/TIT.1976.1055607](https://doi.org/10.1109/TIT.1976.1055607)；这里特征图编码的具体表述参照可得全文 Charpenay–le Treust–Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definition III.1 与 Theorem III.4，[arXiv:2211.03649v2](https://arxiv.org/html/2211.03649v2)。上面的有限支配测度论证把所需分离同时落实到本章允许的全部标准 Borel 输出，不以有限输出枚举替代该范围。
+
+式（535.1）保证恒等情境编码 $k\mapsto k$ 充分，故 $\mathcal F_T\ne\varnothing$。若取消式（535.1），两个相同 $(c,q)$ 而目标不同的实际对象具有完全相同的实验律，任何同一解码器都不可能分别概率一输出两个不同目标；所以这也正是存在允许充分修复所需的局部前提。
+
+证明第一项。对任一 $E_W\in\mathcal F_T$，沿用上述密度和同一个公共零集。在有效的 $(\ell,z)$ 上，$I(z)\cap K_\ell$ 中所有元素通过 $R|_{K_\ell\times K_\ell}$ 的边直接相连，故属于同一个 $C_\ell$ 类。用同一个首元素规则输出 $(\ell,[k_0]_{C_\ell})$，在无效输入上输出固定 $u_0\in\mathcal U$，便是从 $E_W$ 恢复 $U$ 的可测确定性核。于是 $U\preceq E_W$ 对整个随机充分族成立。
+
+在 $K_\ell$ 内，每条 $R$ 边保持 $t(\cdot,\ell)$，因而沿 $C_\ell$ 的每条有限路径也保持它。故映射
+
+$$
+(\ell,[k]_{C_\ell})\longmapsto t(k,\ell)
+$$
+
+良定义并恢复 $T$。这证明 $U$ 充分，也证明对 $U$ 充分的允许实验必对 $T$ 充分；刚构造的恢复核给出反向。
+
+还须证明 $U$ 支配任意共同下界，而不只支配确定性下界。令 $F=(F_x)_{x\in A}$ 是任意标准 Borel 输出实验，且对每个 $E\in\mathcal F_T$ 都有 $F\preceq E$。恒等情境实验 $x\mapsto(q(x),c(x))$ 属于 $\mathcal F_T$，所以其相同行在任一后处理下仍相同；因此
+
+$$
+c(x)=c(x'),\ q(x)=q(x')\quad\Longrightarrow\quad F_x=F_{x'}.
+\tag{535.12}
+$$
+
+这一步处理了实际对象的重复表示。接着，对不同的相容情境 $kRk'$，取唯一非单点块为 $\{k,k'\}$、其余为单点的分划，发送其块标签。每一块内元素都 $R$-相容，该确定性实验由式（535.11）充分。若 $k,k'\in K_\ell$，此实验在两条实际 $(k,\ell),(k',\ell)$ 行上相同，其后处理 $F$ 也相同。结合式（535.12），沿任意 $C_\ell$ 路径传播行相等，得到
+
+$$
+U(x)=U(x')\quad\Longrightarrow\quad F_x=F_{x'}.
+\tag{535.13}
+$$
+
+对每个 $u\in U(A)=\mathcal U$ 选择代表对象 $x_u$，从输入 $u$ 输出概率律 $F_{x_u}$。有限输入上的这一核可测；式（535.13）使选择无关并给出 $F\preceq U$。证明没有给 $F$ 添加 $q$ 坐标，也没有限制它的输出字母表，第一项成立。
+
+证明第二项的必要性。若 $E_W$ 是共同下界，对任一不同的 $H$ 相邻情境 $k,k'$，取它们的实际共同读数 $\ell$，再取刚才只合并此对的充分实验。其在这两行上的律相同，故后处理所得
+
+$$
+\delta_\ell\otimes W_k=\delta_\ell\otimes W_{k'}.
+$$
+
+取辅助坐标边缘得到 $W_k=W_{k'}$。沿 $C$ 的路径传播即得式（535.8）中间条件。这里需要 $O$ 所保证的实际共同读数；真空相容而没有交叠的一对不能直接强迫这项律相等。
+
+反向，每条 $C_\ell$ 路径都是 $H$ 路径，故 $C_\ell\subseteq C$。因此
+
+$$
+(\ell,[k]_{C_\ell})\longmapsto(\ell,[k]_C)
+$$
+
+是良定义的确定性后处理，给出 $V\preceq U$；第一项说明 $V$ 是共同下界。如果 $W$ 在每个 $C$ 类上恒定，从 $V$ 的输出 $(\ell,B)$ 保留 $\ell$，并按该类任一代表 $k_B$ 的律 $W_{k_B}$ 抽样，即模拟 $E_W$。这对全部 $(\ell,B)\in\mathcal V$ 定义了核，且在每条实际行上正确，故 $E_W\preceq V$。最后，由 $V$ 为共同下界和序的传递性，$E_W\preceq V$ 又推出 $E_W$ 为共同下界。完整分类及最大性成立。
+
+证明第三项。若 $C\subseteq R$，编码 $k\mapsto[k]_C$ 只合并相容情境，由式（535.11）充分；其实际实验 $V$ 已是共同下界，故最小。反之，若某个 $E_W$ 最小充分，第二项强迫 $W_k=W_{k'}$ 对所有 $kCk'$ 成立。若还有 $\neg R(k,k')$，充分性又要求 $W_k\perp W_{k'}$。同一个概率律不可能与自身奇异，矛盾。因此 $C\subseteq R$ 必须成立。
+
+当这个条件成立时，同一 $C$ 类中共享 $\ell$ 的两情境必 $R$-相容，故在 $K_\ell$ 内直接属于同一 $C_\ell$ 类。对每个实际 $V$ 值 $(\ell,B)$，在 $B\cap K_\ell$ 任选 $k$，输出 $(\ell,[k]_{C_\ell})$，便给出 $V$ 到 $U$ 的确定性后处理；在非实际值上取固定回退值即可。结合 $V\preceq U$ 得 $U\simeq V$。若条件失败却存在 $E_W\simeq U$，则 $E_W$ 由第一项充分且低于所有充分允许实验，成为最小元，与必要性矛盾。
+
+若比较范围只含确定性充分编码，恒等编码和每个相容对的合并编码仍在其中。对一个确定性最小元逐条重复第二项的必要性论证，同样强迫其标签在 $C$ 类上相等，再由充分性推出 $C\subseteq R$；满足此条件的有限确定性 $V$ 已低于全部随机充分实验。因此确定性与随机类的存在条件完全相同。
+
+这也准确接回第 532 章：其共同锚使 $O=K\times K$，于是 $C$ 是 $R$ 的等价闭包，$C\subseteq R$ 恰为自反对称关系 $R$ 的传递性。命题 532.6 的无锚域 $A_0$ 则只有 $a,c$ 实际交叠且互不相容，故 $H$ 没有非对角边，$C$ 为对角关系，仍有最小实际实验；不能仅凭该域 $R$ 不传递否定最小性。一般的允许 meet 讨论见第 130、443 章；这里式（535.7）和（535.8）分别识别两种比较范围的具体最大共同下界。Bertschinger–Rauh 的 Theorem 19 说明一般 Blackwell 实验序不是格，并不排除本充分族具有式（535.7）的特殊结构。[arXiv:1401.3146v1, §5](https://arxiv.org/html/1401.3146v1)。
+
+最后将存在条件与已有安全计算判据作精确对应。仅在此对应中，任选概率律 $\pi$，满足
+
+$$
+\pi(k,\ell)>0\iff(k,\ell)\in S,
+\qquad\sum_{(k,\ell)\in S}\pi(k,\ell)=1.
+$$
+
+令随机变量 $(\mathsf K,\mathsf L)$ 服从 $\pi$，并令
+
+$$
+\mathsf U=u(\mathsf K,\mathsf L),\qquad
+u(k,\ell)=(\ell,[k]_{C_\ell}),\qquad
+\operatorname{Law}(M\mid\mathsf K=k,\mathsf L=\ell)=W_k.
+$$
+
+$\pi$ 对实际单元满支撑，绝不要求 $S=K\times L$。消息 $M$ 只读 $\mathsf K$，所以 $M\perp(\mathsf L,\mathsf U)\mid\mathsf K$ 自动成立。对 $\mathsf U$ 正确恢复再加接收端隐私
+
+$$
+M\perp\mathsf K\mid(\mathsf L,\mathsf U)
+\tag{535.14}
+$$
+
+等价于该消息实验与 $U$ 互相支配。具体地，正确恢复给出 $U\preceq E_W$；由于 $\pi$ 在每个实际单元上为正，式（535.14）恰说在每个固定 $(\ell,u)$ 的实际纤维上所有 $W_k$ 相等，从而按该公共律模拟消息并附上 $\ell$，得到 $E_W\preceq U$。反之，$E_W\preceq U$ 强迫这些行相等，故有式（535.14）；恢复方向提供正确性。标准 Borel 消息在有限条件变量下的条件律可逐格给出，无需给零质量的非实际单元添加约束。第一项及第三项遂把“存在这种安全计算消息”与“存在最小充分允许实验”对应起来。
+
+在 Data, *Secure Computation of Randomized Functions*, Definitions 1–3、Theorem 1 中，取其输入 $X=\mathsf K$、侧信息 $Y=\mathsf L$、输出 $Z=\mathsf U$，并取确定性输出核 $p_{Z\mid XY}(\cdot\mid k,\ell)=\delta_{u(k,\ell)}$；这个输出核在 $(k,\ell)\in S$ 上按所示公式指定，在非实际单元可统一取固定 $\delta_{u_0}$，而不增添任何正概率单元。其 $Z$ 在此是计算目标，不能与本章辅助空间 $Z$ 混同。该文相邻关系添上对角后变为
+
+$$
+kJk'\iff\exists\ell,\quad
+k,k'\in K_\ell\ \land\ [k]_{C_\ell}=[k']_{C_\ell}.
+$$
+
+其等价闭包正是 $C$：$H\subseteq J$，而每条 $J$ 边本身可在某个 $K_\ell$ 内展开成 $H$ 路径，故 $J\subseteq C$。列单色条件是每个 $C$ 类在同一实际列 $\ell$ 上有相同的 $u(k,\ell)$。若该条件成立，$U$ 决定 $T$ 使 $kCk'$ 的每个共同列目标相等，故 $C\subseteq R$；反之，若 $C\subseteq R$，同类且共列的两点直接 $R$-相连，其 $C_\ell$ 类相同，列单色成立。Data 的定理及发送等价类标签的单消息构造因而给出式（535.9）的已有安全计算路线；其证明中的消息律沿闭包相等，正是这里应归属给既有理论的机制。[Deepesh Data, arXiv:1601.06562v2](https://arxiv.org/html/1601.06562v2)，ISIT 2016，[doi:10.1109/ISIT.2016.7541860](https://doi.org/10.1109/ISIT.2016.7541860)。
+
+这项对应须先识别整个充分族的 $U$；若直接把输出取为原目标 $T$ 并要求 $M\perp\mathsf K\mid(\mathsf L,T)$，则额外禁止了超出 $(q,T)$ 的所有情境披露，条件更强，命题 535.6 给出严格区别。Data–Prabhakaran, *Secure Computation of Randomized Functions: Further Results*, 条件（3）—（5）也分别列出只读发送端输入、正确计算与接收端隐私；其 Theorems 1–2 与 Remark 1 讨论带隐私和不带隐私的速率，不能以其中一个标量最优速率代替式（535.7）—（535.8）的实际实验序分类。[arXiv:1705.07081](https://arxiv.org/html/1705.07081)。证毕。
+
+### 命题 535.5（无共同锚的六行支撑与连续多个极小充分实验）
+
+令 $A$ 恰含下列六个对象，一次性给定它们的 $(c,q,T)$：
+
+$$
+\begin{array}{c|ccc}
+x&c(x)&q(x)&T(x)\\\hline
+a_u&a&u&0\\
+b_u&b&u&0\\
+b_v&b&v&0\\
+c_v&c&v&0\\
+a_w&a&w&0\\
+c_w&c&w&1
+\end{array}
+\tag{535.15}
+$$
+
+对每个 $p\in[0,1]$，取二元辅助空间 $\{0,1\}$ 及通道
+
+$$
+W_a^p=\delta_0,\qquad
+W_b^p=(1-p)\delta_0+p\delta_1,\qquad
+W_c^p=\delta_1,
+\qquad E_p=E_{W^p}.
+\tag{535.16}
+$$
+
+则每个 $E_p$ 都充分，且在允许任意标准 Borel 输出的整个 $\mathcal F_T$ 中极小；并有
+
+$$
+\forall p,r\in[0,1],\qquad E_r\preceq E_p\iff r=p.
+\tag{535.17}
+$$
+
+所以这是连续多个两两不可比较、互不等价的极小充分实验，其中 $p=0,1$ 是确定性端点。该支撑无共同锚，没有最小充分允许实验，而且作为实际实验
+
+$$
+U\simeq(q,T),\qquad V\simeq q.
+\tag{535.18}
+$$
+
+前一等价类没有 $\Gamma_c$ 中的代表，后一实验在 $w$ 上不充分；式（535.18）不是编码器之间的全局恒等式。
+
+**证明。** 每个实际 $(k,\ell)$ 只有一行，局部一致性成立。只有 $a,c$ 不相容，冲突由 $w$ 见证；$a,b$ 在 $u$ 交叠且相容，$b,c$ 在 $v$ 交叠且相容。因此 $H$ 包含路径 $a-b-c$，$C$ 是全关系而不包含于 $R$。三个活动情境集分别为 $\{a,b\},\{b,c\},\{a,c\}$，没有一个读数被全部情境共享。式（535.16）的 $a,c$ 两律奇异，由式（535.11）每个 $E_p$ 充分；也可直接在 $u,v$ 恒输出 $0$，在 $w$ 输出所见辅助位。
+
+为证全输出类中的极小性，任取 $E_F\in\mathcal F_T$，其辅助输出空间为任意非空标准 Borel 空间 $Z'$，并假设 $E_F\preceq E_p$。由式（535.10）的归约，存在按源读数选择的核 $G_u,G_v,G_w:\{0,1\}\to\operatorname{Prob}(Z')$。在 $u$ 的两条实际行上有
+
+$$
+F_a=G_u(\cdot\mid0),\qquad
+F_b=(1-p)F_a+pM,
+\quad M=G_u(\cdot\mid1).
+$$
+
+在 $v$ 的两条实际行上有
+
+$$
+F_c=G_v(\cdot\mid1),\qquad
+F_b=(1-p)N+pF_c,
+\quad N=G_v(\cdot\mid0).
+$$
+
+此处 $M,N$ 是概率律，由处处定义的核取得；当系数为零时也没有除法或未定义条件律。于是对所有可测 $B\subseteq Z'$ 同时成立
+
+$$
+F_b(B)\ge(1-p)F_a(B),\qquad
+F_b(B)\ge pF_c(B).
+\tag{535.19}
+$$
+
+充分性在实际读数 $w$ 上强迫 $F_a\perp F_c$。取可测分离集 $B_0$，使 $F_a(B_0)=1,F_c(B_0)=0$。对任意可测 $B$，分别在 $B\cap B_0$ 与 $B\setminus B_0$ 上使用式（535.19），得
+
+$$
+\begin{aligned}
+F_b(B)
+&\ge (1-p)F_a(B\cap B_0)+pF_c(B\setminus B_0)\\
+&=(1-p)F_a(B)+pF_c(B).
+\end{aligned}
+$$
+
+故 $F_b-(1-p)F_a-pF_c$ 是非负测度，其总质量为 $1-(1-p)-p=0$，只能为零；所以
+
+$$
+F_b=(1-p)F_a+pF_c.
+\tag{535.20}
+$$
+
+由可测映射 $s(z')=0$（$z'\in B_0$）及 $s(z')=1$（$z'\notin B_0$），三律依次推前为 $\delta_0,(1-p)\delta_0+p\delta_1,\delta_1$。保留原来观察到的 $q$ 并输出 $s(z')$，便得到 $E_p\preceq E_F$。因此 $E_p$ 极小，证明范围包含每个标准 Borel 竞争通道，并非只检验二元或确定性竞争者。
+
+若取 $E_F=E_r$，式（535.19）在辅助输出的单点 $\{0\}$ 上给出 $1-r\ge1-p$，在 $\{1\}$ 上给出 $r\ge p$，故 $r=p$；反向是恒等后处理。全部论证只用非负系数，没有除以 $p$ 或 $1-p$，所以也覆盖两个端点。在 $p=0$ 时式（535.20）就是 $F_b=F_a$，在 $p=1$ 时就是 $F_b=F_c$。
+
+具体计算局部类：$C_u$ 只有块 $\{a,b\}$，$C_v$ 只有块 $\{b,c\}$，$C_w$ 则是 $\{a\},\{c\}$ 两块。因此 $U$ 的实际纤维为
+
+$$
+\{a_u,b_u\},\quad\{b_v,c_v\},\quad\{a_w\},\quad\{c_w\},
+$$
+
+与 $(q,T)$ 恰相同，有限实际像上的互相重命名证明前一等价。$C$ 只有一个类，所以 $V$ 与 $q$ 互相确定，且 $q(a_w)=q(c_w)$ 而目标不同。定理 535.4 已给出最小元不存在以及 $U$ 不可由允许通道实现到实验等价。还可直接看出：若 $E_W\preceq U$，前两个 $U$ 纤维强迫 $W_a=W_b$ 和 $W_b=W_c$；若同时充分，$w$ 又强迫 $W_a\perp W_c$，矛盾。
+
+最后，当 $0<p<1$ 时，$E_p$ 不与任何确定性情境编码等价。若某个确定性充分 $Q_z$ 满足 $Q_z\preceq E_p$，式（535.20）给出
+
+$$
+\delta_{z(b)}=(1-p)\delta_{z(a)}+p\delta_{z(c)},
+$$
+
+而充分性要求 $z(a)\ne z(c)$，右端在两个不同单点各有正质量，不能是 Dirac 律。因此随机化确实添加了确定性情形没有的极小等价类，却仍未产生最小元。这不声称式（535.16）穷尽了全部极小实验。证毕。
+
+### 命题 535.6（最小充分性不等于只披露当前目标）
+
+令实际域恰为四行
+
+$$
+\begin{array}{c|ccc}
+x&c(x)&q(x)&T(x)\\\hline
+d_{au}&a&u&0\\
+d_{bu}&b&u&0\\
+d_{av}&a&v&0\\
+d_{bv}&b&v&1
+\end{array}
+\tag{535.21}
+$$
+
+则 $R=C=\operatorname{diag}_{\{a,b\}}$，最小充分允许实验由 $(q,c)$ 给出。任一充分允许实验在 $q=u$ 时也必能概率一辨认情境，尽管那两行的目标相同；没有充分允许实验与 $(q,T)$ 等价。
+
+**证明。** $v$ 的两行目标不同，故 $a,b$ 不相容；因此 $R,H,C$ 都只有对角对，每个 $C_\ell$ 类也是单点。定理 535.4 给出 $V\simeq(q,c)$ 最小且 $U\simeq V$。对任一充分编码 $W$，式（535.11）要求 $W_a\perp W_b$。取相应可测分离集即可在 $u$ 也辨认 $a,b$，因为只读情境的同一个 $W_a,W_b$ 跨读数使用，不能在 $u$ 改成相同律而在 $v$ 改回不同律。
+
+若某个充分 $E_W$ 与 $(q,T)$ 等价，后处理方向 $E_W\preceq(q,T)$ 在 $d_{au},d_{bu}$ 的相同输入 $(u,0)$ 上只能输出同一个律，故 $\delta_u\otimes W_a=\delta_u\otimes W_b$，即 $W_a=W_b$，与奇异性矛盾。对实际四行赋任何严格正先验，要求消息满足 $M\perp\mathsf K\mid(\mathsf L,T)$ 同样会在 $(u,0)$ 上强迫两律相等；所以相对于原目标的这项完美隐私条件不可行，而最小充分实验仍存在。这说明定理 535.4 的安全计算对应必须用派生目标 $U$，不可悄然以原目标隐私取代最小性。这里的额外披露是同一取得约束下被迫发生的可区分性，并不从数学事实推出该披露在任何实际用途中的许可。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 536. 可见随机种子与极小概念：同一实际支撑上的完整比较
+
+第 535 章把一个目的所需的精确区分，与辅助信息实际上怎样取得分开。本章再固定观察者能否看到编码时的全部随机选择。在同一组实际对象、同一个目标和同一种后处理序下，这一差别会改变极小充分实验。下面给出任意有限多个叶情境的完整分类，并把任意充分通道与全部公开随机化实验作双向比较。第 535.5 项已给出两个叶情境时的连续多个私有极小元；本章补足它未声称的穷尽性，以及公开规范形和任意通道的跨类关系，不重述第 535.4 项的两种共同下界定理。下文 $m=2$ 时的 $a_1,a_2$ 对应第 535.5 项的 $a,c$，参数向量 $(1-t,t)$ 对应该项的二元随机参数 $t$。
+
+### 定义 536.1（固定实际支撑与全部随机位的可见性）
+
+固定整数 $m\ge2$。情境集为 $K=\{b,a_1,\ldots,a_m\}$，其中 $b$ 称为中心，$a_i$ 称为叶。所有读数 $u_i$（$1\le i\le m$）和 $v_{ij}$（$1\le i<j\le m$）两两不同。实际对象集 $A$ 恰有下列 $(c,q,T)$ 行，每行一个对象：
+
+$$
+\begin{aligned}
+&(b,u_i,0),\ (a_i,u_i,0) &&(1\le i\le m),\\
+&(a_i,v_{ij},0),\ (a_j,v_{ij},1) &&(1\le i<j\le m).
+\end{aligned}
+\tag{536.1}
+$$
+
+因此 $|A|=2m+2\binom m2=m(m+1)$，$K=c(A)$，$L=q(A)$，$Y=T(A)=\{0,1\}$。每个读数只有两个活动情境；实际支撑没有补成 $K\times L$。编码端只读情境 $c(x)$。对任意非空标准 Borel 空间 $Z$ 和核 $W:K\to\operatorname{Prob}(Z)$，记
+
+$$
+\nu=W_b,\qquad \mu_i=W_{a_i},\qquad
+E_W(x)=\delta_{q(x)}\otimes W_{c(x)}.
+\tag{536.2}
+$$
+
+观察者看到 $(q,z)$。充分性指存在可随机化的解码核 $D:L\times Z\to\operatorname{Prob}(Y)$，使每个实际对象满足
+
+$$
+\int_Z D(\{T(x)\}\mid q(x),z)W_{c(x)}(dz)=1.
+\tag{536.3}
+$$
+
+没有先验平均的替代条件。沿用第 535 章的序：$F\preceq E$ 当且仅当存在一个不额外依赖实际对象的 Markov 核，将每条 $E_x$ 送到 $F_x$；左端信息较少。核可以读取源输出里的 $q$。互相支配写作 $E\simeq F$，$E\prec F$ 表示 $E\preceq F$ 且反向不成立。最小元须低于同一充分族的每个成员；极小元只要求低于自身的充分成员均与自身等价。以下分类均按实际实验的等价类理解。
+
+式（535.10）在这里提供一个可直接使用的归约。若 $E_F\preceq E_W$，从任意模拟核 $G:L\times Z\to\operatorname{Prob}(L\times Z')$ 取辅助输出的边缘，便得到
+
+$$
+G_\ell(B\mid z)=G(L\times B\mid\ell,z),\qquad
+F_k=\int_ZG_\ell(\cdot\mid z)W_k(dz)
+\quad\text{对每个实际 }(k,\ell).
+\tag{536.4}
+$$
+
+反之，把这些核拼成 $(\ell,z)\mapsto\delta_\ell\otimes G_\ell(\cdot\mid z)$ 就是一个全局核；$L$ 有限，故可测。这里没有假定原模拟器逐点保持 $q$，而是从实际行等式取边缘后，换得一个保持 $q$ 的代表。所有下文按读数构造的模拟器都由此归并为同一个状态无关核。
+
+在支撑（536.1）上，不同叶情境在相应 $v_{ij}$ 上目标相反，中心与任一叶的共同读数则只有 $u_i$，目标同为零。因此式（535.11）恰化为
+
+$$
+E_W\text{ 充分}\quad\Longleftrightarrow\quad
+\mu_i\perp\mu_j\quad(i\ne j).
+\tag{536.5}
+$$
+
+中心律 $\nu$ 没有其他充分性约束。互相奇异是可测分离条件，不是拓扑支撑不交。
+
+称全部这些充分 $E_W$ 组成私有允许族 $\mathcal F_{\mathrm{priv}}$：它允许编码器把自己的随机位隐藏在 $W_k$ 中，也允许输出更多内容。公开充分族 $\mathcal F_{\mathrm{pub}}$ 则要求辅助输出具有表示
+
+$$
+(R,f(R,k)),\qquad R\sim\rho,\qquad
+f:\mathcal R\times K\to Z\text{ 可测},
+\tag{536.6}
+$$
+
+其中 $\mathcal R,Z$ 是任意非空标准 Borel 空间，$\rho$ 对每个实际状态都是同一个概率律，且给定 $(R,k)$ 后 $f$ 是确定性的。整个 $R$ 被观察者看到；没有留在 $f$ 内的隐藏编码随机位。解码器和模拟器仍可使用自己的随机化。这是 $\mathcal F_{\mathrm{priv}}$ 的子族，两类并不互斥。“公开／私有”只描述编码种子的可见性，不表示隐私保证，也不借用某种通信复杂度中的额外约定。种子自身与状态独立，不表示它与消息合看时仍不提供状态信息。
+
+### 引理 536.2（三种质量与共同叶分划）
+
+对任意充分 $E_W$，令 $\eta_i=\nu+\mu_i$，取非负 Radon–Nikodym 密度 $h_i=d\nu/d\eta_i$、$g_i=d\mu_i/d\eta_i$，定义
+
+$$
+\begin{aligned}
+\lambda_i&=\int_{\{g_i>0\}}h_i\,d\eta_i,
+&\beta_i&=\int_{\{h_i>0\}}g_i\,d\eta_i,\\
+\kappa_i&=\int_Z\min(h_i,g_i)\,d\eta_i,
+&d_i&=\max\{\lambda_i,\beta_i\}.
+\end{aligned}
+\tag{536.7}
+$$
+
+$\lambda_i$ 是 $\nu$ 相对于 $\mu_i$ 的绝对连续部分的总质量；$\beta_i$ 是反方向的绝对连续质量；$\kappa_i$ 是最大共同子测度 $\nu\wedge\mu_i$ 的质量。它们不依赖密度版本，并且
+
+$$
+0\le\kappa_i\le\min\{\lambda_i,\beta_i\}\le d_i\le1,
+\qquad \sum_{i=1}^m\lambda_i\le1,
+\qquad \sum_{i=1}^m\kappa_i\le1.
+\tag{536.8}
+$$
+
+还存在可测分划 $Z=D_0\sqcup D_1\sqcup\cdots\sqcup D_m$，满足
+
+$$
+\mu_i(D_i)=1,\qquad
+\nu|_{D_i}=\nu^{\mathrm{ac}(\mu_i)},\qquad
+\nu(D_i)=\lambda_i,\qquad
+\nu(D_0)=1-\sum_i\lambda_i.
+\tag{536.9}
+$$
+
+证明：在单对测度中，$\nu|_{\{g_i>0\}}\ll\mu_i$，因为 $\mu_i(B)=0$ 强迫 $g_i=0$ 在 $B$ 上 $\eta_i$ 几乎处处。其余部分集中在 $\mu_i$ 的零集 $\{g_i=0\}$ 上，故是奇异部分。Lebesgue 分解的唯一性识别出 $\lambda_i$；交换两律就得到 $\beta_i$。测度 $\min(h_i,g_i)\eta_i$ 同时不超过两律。若 $H\le\nu,\mu_i$，则 $H\ll\eta_i$，其密度同时不超过 $h_i,g_i$，从而 $H\le\min(h_i,g_i)\eta_i$。这证明共同子测度的最大性及前三个量的内在定义，也给出逐坐标不等式。
+
+为取得同一分划，使用 $\eta=\nu+\sum_i\mu_i$，记 $n=d\nu/d\eta$、$w_i=d\mu_i/d\eta$。叶律两两奇异，故 $w_iw_j=0$ 在 $\eta$ 几乎处处成立。把有限个这样的例外、密度非负有限及 $n+\sum_iw_i=1$ 的例外合入一个可测 $\eta$-零集 $N$，令
+
+$$
+D_i=\{z\notin N:w_i(z)>0\}\quad(1\le i\le m),
+\qquad D_0=Z\setminus\bigcup_iD_i.
+\tag{536.10}
+$$
+
+这些 $D_i$ 两两不交且 $\mu_i(D_i)=1$。与单对密度的论证相同，$\nu|_{D_i}\ll\mu_i$，$\nu|_{Z\setminus D_i}\perp\mu_i$，所以由同一个 Lebesgue 分解唯一性，$\nu|_{D_i}$ 正是式（536.7）定义的绝对连续部分。于是 $\sum_i\lambda_i=\nu(\bigcup_iD_i)\le1$；共同子测度质量的总和也不超过一。证毕。
+
+这些质量不是常数支配系数 $\sup\{c\ge0:\nu\ge c\mu_i\}$；绝对连续部分可以只占 $\mu_i$ 所承载区域的一部分，也可以有变化的密度。符号 $\nu\wedge\mu_i$ 在此只指测度的最大共同子测度，不表示 Blackwell 实验序中的格交，更不依赖另选一个拓扑后的“支撑交集”。
+
+### 引理 536.3（一般二态实验与对称擦除的双向比较）
+
+令 $P,Q$ 是任意非空标准 Borel 空间 $Z$ 上的概率律。二态实验 $(P,Q)$ 分别在状态 $0,1$ 输出这两律；$B_t$（$0\le t\le1$）在每个状态以概率 $t$ 输出擦除符号 $\star$，以概率 $1-t$ 无误输出该状态。记
+
+$$
+C=P\wedge Q,\qquad
+\alpha=P^{\mathrm{ac}(Q)}(Z),\qquad
+\gamma=Q^{\mathrm{ac}(P)}(Z).
+$$
+
+按同一状态无关 Markov 后处理序，有
+
+$$
+(P,Q)\preceq B_t\quad\Longleftrightarrow\quad t\le C(Z),
+\qquad
+B_t\preceq(P,Q)\quad\Longleftrightarrow\quad t\ge\max\{\alpha,\gamma\}.
+\tag{536.11}
+$$
+
+证明第一式。若 $K$ 把 $B_t$ 送到 $(P,Q)$，则 $tK(\cdot\mid\star)$ 是两律的共同子测度，故 $t\le C(Z)$。反之，$t=0$ 时在已揭示的状态 $0,1$ 上分别抽样 $P,Q$ 即可，零概率的擦除输入任取一个概率律。当 $0<t<1$ 且 $t\le c=C(Z)$ 时，令 $H=(t/c)C$；这是质量 $t$ 的共同子测度。令
+
+$$
+K(\cdot\mid\star)=H/t,\qquad
+K(\cdot\mid0)=(P-H)/(1-t),\qquad
+K(\cdot\mid1)=(Q-H)/(1-t).
+$$
+
+三者都是概率律，所得状态行恰为 $P,Q$。最后，$t=1$ 时判据强迫 $C(Z)=1$，于是 $P=Q=C$；从唯一实际出现的 $\star$ 抽样这个公共律即可。
+
+证明第二式。若 $K$ 把 $(P,Q)$ 送到 $B_t$，令 $e_0(z)=K(\{0\}\mid z)$。因为状态 $1$ 不能输出 $0$，有 $\int e_0\,dQ=0$，所以 $e_0=0$ 在 $Q$ 几乎处处，进而在 $P^{\mathrm{ac}(Q)}$ 几乎处处也为零。因此
+
+$$
+1-t=\int e_0\,dP\le P^{\mathrm{s}(Q)}(Z)=1-\alpha.
+$$
+
+交换状态得到 $t\ge\gamma$。这解释了必要条件为什么使用两个方向的绝对连续质量：能够无误宣布某个状态的输出，只能来自该状态相对另一状态的奇异部分。
+
+反之，取 $\xi=P+Q$，$p=dP/d\xi$，$q=dQ/d\xi$，并取不交的可测集
+
+$$
+H_0=\{p>0,q=0\},\qquad H_1=\{q>0,p=0\}.
+$$
+
+它们分别满足 $P(H_0)=1-\alpha$、$Q(H_1)=1-\gamma$，且 $Q(H_0)=P(H_1)=0$。若 $t<1$ 且判据成立，这两个质量都至少为 $1-t>0$。在 $H_0$ 上以概率 $(1-t)/(1-\alpha)$ 输出 $0$，在 $H_1$ 上以概率 $(1-t)/(1-\gamma)$ 输出 $1$；其他概率全部输出 $\star$。分母为正，概率不超过一，两集不交，故得到一个处处定义的可测核，其两条状态行就是 $B_t$。若 $t=1$，恒输出 $\star$。特别地，$t=0$ 的第二个判据恰要求 $P\perp Q$，上述构造此时完整揭示状态。证毕。
+
+这只是 Lebesgue 分解与共同子测度的经典测度论应用；证明在任意标准 Borel 输出上给出了所需的核，不把有限矩阵结论直接当作无限输出结论。
+
+### 定理 536.4（私有极小元的穷尽及任意通道之下的剩余单纯形）
+
+令
+
+$$
+\Delta_{m-1}=\{p\in[0,1]^m:\sum_ip_i=1\}.
+$$
+
+对 $p\in\Delta_{m-1}$，定义辅助空间 $\{1,\ldots,m\}$ 上的规范通道
+
+$$
+W^{p}_{a_i}=\delta_i,\qquad W^{p}_b=\sum_ip_i\delta_i,
+\qquad E_p=E_{W^p}.
+\tag{536.12}
+$$
+
+每个 $E_p$ 充分。对任意充分 $E_W$ 及任意 $p\in\Delta_{m-1}$，有
+
+$$
+\begin{aligned}
+E_p\preceq E_W
+&\quad\Longleftrightarrow\quad p_i\ge\lambda_i\quad(1\le i\le m),\\
+E_W\preceq E_p
+&\quad\Longleftrightarrow\quad \nu=\sum_ip_i\mu_i.
+\end{aligned}
+\tag{536.13}
+$$
+
+全部 $E_p$ 都是 $\mathcal F_{\mathrm{priv}}$ 的极小元，不同参数的 $E_p$ 两两不可比，并穷尽该族的全部极小等价类。因此任意 $E_W$ 支配的私有极小类恰由
+
+$$
+\{p\in\Delta_{m-1}:p\ge\lambda\}
+=\lambda+\left(1-\sum_i\lambda_i\right)\Delta_{m-1}
+\tag{536.14}
+$$
+
+参数化；此集总非空，是一个平移、缩放后的剩余单纯形，一般不是原单纯形的一个面。任意 $E_W$ 本身极小，当且仅当 $\nu=\sum_ip_i\mu_i$ 对某个 $p\in\Delta_{m-1}$ 成立；这时 $p$ 唯一。$m\ge2$ 时，私有充分族没有最小元。
+
+证明：叶 Dirac 律两两奇异，先得 $E_p$ 充分。若 $E_p\preceq E_W$，在读数 $u_i$ 上使用式（536.4）的核 $K_i$。叶行要求
+
+$$
+K_i(\{i\}\mid z)=1\quad\mu_i\text{ 几乎处处}.
+$$
+
+同一等式因绝对连续性也在 $\nu^{\mathrm{ac}(\mu_i)}$ 几乎处处成立。中心行则给出
+
+$$
+p_i=\int K_i(\{i\}\mid z)\nu(dz)\ge\lambda_i.
+$$
+
+为证充分性，取引理 536.2 的共同分划，记 $s=\sum_i\lambda_i$。若 $s<1$，在 $D_i$ 上输出 $i$，在 $D_0$ 上按概率向量
+
+$$
+\left(\frac{p_i-\lambda_i}{1-s}\right)_{i=1}^m
+$$
+
+抽样。非负性和总和为一来自 $p\ge\lambda$。这个分离核不需要读取 $q$，把每个叶律送到 $\delta_i$，把中心律送到 $p$。若 $s=1$，则 $p=\lambda$；$D_0$ 对所有行都为零，那里任取一个标签即可，无须相除。第一式成立。
+
+若反向 $E_W\preceq E_p$，在 $u_i$ 上的核必须把源标签 $i$ 送到 $\mu_i$；对中心行因而有测度不等式 $\nu\ge p_i\mu_i$。取同一个不交叶分划，对任意可测 $B$ 得
+
+$$
+\nu(B)\ge\sum_i\nu(B\cap D_i)
+\ge\sum_ip_i\mu_i(B\cap D_i)=\sum_ip_i\mu_i(B).
+$$
+
+右端质量为一，所以非负差测度的总质量为零，必有 $\nu=\sum_ip_i\mu_i$。反之，若这个等式成立，从标签 $i$ 抽样 $\mu_i$ 即把 $E_p$ 送到 $E_W$；按 $D_i$ 分离又把 $E_W$ 送回 $E_p$。这两个核同样不需要读取 $q$。混合权重由 $p_i=\nu(D_i)$ 唯一确定，包括 $p_i=0$ 的情形。
+
+现在任取充分 $E_W\preceq E_p$，第二式强迫这个混合等式，所以也有 $E_p\preceq E_W$；这证明每个 $E_p$ 在整个标准 Borel 允许族中极小。以 $E_W=E_r$ 代入第二式，Dirac 叶律使中心混合权重必须为 $p=r$，故不同参数不可比。
+
+对任意充分 $E_W$，式（536.8）保证总能选到 $p\ge\lambda$ 且 $\sum_ip_i=1$；第一式给出一个 $E_p\preceq E_W$。若 $E_W$ 极小，它必须与这个 $E_p$ 等价，再由第二式得到混合条件。因此没有遗漏其他极小等价类，式（536.14）也随之成立。特别地，当 $s=1$ 时只剩 $p=\lambda$ 这一类；但仅有唯一一个受支配的极小类，不强迫 $E_W$ 自身极小，仍须满足混合等式。最后，至少两个不同的单纯形顶点给出不同极小类；若最小元存在，它低于这两个极小元，便须同时与二者等价，矛盾。证毕。
+
+### 定理 536.5（全可见种子的有限规范形与公开极小前沿）
+
+令
+
+$$
+Q_m=\{r\in[0,1]^m:\sum_ir_i\le1\},\qquad r_0=1-\sum_ir_i.
+$$
+
+对 $r\in Q_m$，定义公开规范实验 $P_r$：种子 $I\in\{0,1,\ldots,m\}$ 与状态独立，$\Pr(I=i)=r_i$；所有叶情境 $a_j$ 在每个种子上都发送标签 $j$，中心在 $I=i\ge1$ 时发送标签 $i$，在 $I=0$ 时发送新标签 $0$。辅助输出是完整的 $(I,\text{标签})$，再与原 $q$ 一同观察。叶标签两两不同，所以每个 $P_r$ 都由式（536.5）充分。
+
+每个公开充分实验都与唯一的 $P_r$ 等价，并且
+
+$$
+P_s\preceq P_r\quad\Longleftrightarrow\quad
+s_i\ge r_i\quad(1\le i\le m).
+\tag{536.15}
+$$
+
+公开极小类恰为 $\sum_ir_i=1$ 的 $P_r$；$P_0$ 是公开充分族的最大元，$m\ge2$ 时该族没有最小元。
+
+证明规范形。对一个式（536.6）的充分实验，记 $f_i(R)=f(R,a_i)$、$f_b(R)=f(R,b)$。标准 Borel 空间的对角线可测，故各相等集合 $\{f_i=f_j\}$、$\{f_b=f_i\}$ 可测。若 $\rho\{f_i=f_j\}>0$，将 $\rho$ 限制到这个集合，再沿 $R\mapsto(R,f_i(R))$ 推前，就得到叶 $i,j$ 两个输出律的非零共同子测度，违反它们的奇异性。因此每个相等集合都是 $\rho$-零集。因 $m$ 有限，其并是一个共同零集 $N$，在 $\mathcal R\setminus N$ 上所有叶输出同时不同。
+
+在那里令
+
+$$
+S_i=\{R\notin N:f_b(R)=f_i(R)\}\quad(1\le i\le m),
+\qquad S_0=\mathcal R\setminus\bigcup_iS_i,
+\qquad r_i=\rho(S_i).
+\tag{536.16}
+$$
+
+这些集合组成可测分划；$N$ 被收入 $S_0$，不影响其概率。因为一个中心值至多等于一个叶值，$S_i$ 两两不交，故 $r\in Q_m$。
+
+从原辅助输出 $(R,z)$ 模拟规范输出时，先读取 $R$ 所在的 $S_I$；若 $z=f_j(R)$，输出标签 $j$，否则输出 $0$。在 $N$ 上或多个叶相等的输入上任取固定回退规则，例如选最小下标。有限次可测相等判定保证这个映射可测。每条实际叶行给出标签 $j$，中心行在 $S_i$ 上给出标签 $i$，在 $S_0\setminus N$ 上给出 $0$，所得律恰为 $P_r$。
+
+反向，对每个 $r_i>0$ 的分块取概率律
+
+$$
+\rho_i(B)=\frac{\rho(B\cap S_i)}{r_i}.
+\tag{536.17}
+$$
+
+收到规范输出 $(i,j)$ 时，先按 $\rho_i$ 抽样 $R$；若 $j\ge1$，输出 $(R,f_j(R))$；若 $j=0$，输出 $(R,f_b(R))$。对中心在 $i\ge1$ 的实际输出，必有 $j=i$，且 $f_i=f_b$ 在 $S_i$ 上成立，所以这个规则也恢复中心律。叶 $a_j$ 则在每个分块恢复 $(R,f_j(R))$。将各分块按 $r_i$ 混合就恢复原来的整个种子及消息联合律。零质量分块和不可达输入可以统一改用输出空间中一个固定点的 Dirac 律；从未对单个种子取条件概率。有限输入上的抽样核可测。两个方向均可附回 $q$，故证明的是实际实验等价，不是两个编码函数逐点相同。
+
+接着比较规范形。在 $u_i$ 的中心、叶 $i$ 两行上，$P_r$ 唯一共同的符号是 $(I,\text{标签})=(i,i)$，两行在那里均有质量 $r_i$；其余输出能无误识别是哪一行。因此这一二态实验与 $B_{r_i}$ 等价：正向把共同符号送到 $\star$，其余符号送到相应状态；反向把 $\star$ 送到 $(i,i)$，对各已揭示状态按其余输出的归一化限制律抽样。$r_i=1$ 时只有共同符号实际出现，$r_i=0$ 时擦除输入不可达，均可任意填补未使用的核值，不做零分母运算。在 $v_{ij}$ 上，两叶的标签始终不同，故是完全可分的二态实验。
+
+引理 536.3 对两擦除实验给出 $B_{s_i}\preceq B_{r_i}$ 当且仅当 $s_i\ge r_i$。各 $u_i$ 提供式（536.15）的必要性，各 $v_{ij}$ 无额外限制；充分性则将这些局部核按式（536.4）拼接。于是互相模拟强迫 $s=r$，规范参数唯一。
+
+若 $\sum_ir_i<1$，增大一个坐标而保持总和不超过一，得到严格更低的公开充分实验；若 $\sum_ir_i=1$，$s\ge r$ 和 $s\in Q_m$ 只能给出 $s=r$。这证明极小前沿。所有 $s\in Q_m$ 都满足 $s\ge0$，所以 $P_s\preceq P_0$。两个不同单纯形顶点是不可比的公开极小类，排除最小元，论证与定理 536.4 相同。证毕。
+
+### 定理 536.6（任意充分通道与全部公开实验的完整跨类序）
+
+令 $E_W$ 是定义 536.1 的任意充分实验，$\lambda,\beta,\kappa,d$ 如式（536.7），令 $r\in Q_m$。则
+
+$$
+\boxed{\quad E_W\preceq P_r\iff r\le\kappa,\qquad
+P_r\preceq E_W\iff r\ge d.\quad}
+\tag{536.18}
+$$
+
+向量不等式均逐坐标理解。因此 $E_W$ 之下的公开等价类、以及其上的公开等价类分别为
+
+$$
+\begin{aligned}
+\{[P_r]:P_r\preceq E_W\}
+&=\{[P_r]:r\ge d,\ \sum_ir_i\le1\},\\
+\{[P_r]:E_W\preceq P_r\}
+&=\{[P_r]:0\le r\le\kappa\}.
+\end{aligned}
+\tag{536.19}
+$$
+
+前者非空当且仅当 $\sum_id_i\le1$，后者总包含 $P_0$。$E_W$ 的等价类中存在公开代表当且仅当
+
+$$
+\kappa_i=d_i\quad\text{对全部 }i;
+\tag{536.20}
+$$
+
+成立时该代表的规范参数唯一，为 $P_\kappa$。两个实验的严格与不可比情形完整地写为
+
+$$
+\begin{aligned}
+E_W\prec P_r
+&\iff r\le\kappa\ \text{且 }r\not\ge d,\\
+P_r\prec E_W
+&\iff r\ge d\ \text{且 }r\not\le\kappa,\\
+E_W\simeq P_r
+&\iff r=\kappa=d,\\
+E_W\text{ 与 }P_r\text{ 不可比}
+&\iff r\not\le\kappa\ \text{且 }r\not\ge d.
+\end{aligned}
+\tag{536.21}
+$$
+
+证明：在每个实际读数 $u_i$ 上，$E_W$ 的两律是 $(\nu,\mu_i)$，$P_r$ 则与 $B_{r_i}$ 等价。引理 536.3 的第一式恰给出 $r_i\le\kappa_i$，第二式恰给出 $r_i\ge\max(\lambda_i,\beta_i)=d_i$。这些必要条件是逐读数从任何全局核边缘化得到的，未限制原全局核的形式。
+
+反向，若相应的逐坐标判据成立，引理 536.3 在每个 $u_i$ 给出同方向的局部核。在每个 $v_{ij}$，$E_W$ 的两叶律互相奇异，$P_r$ 的两叶输出也互相奇异；从任一源实验的分离集识别叶行，再抽样目标的对应行律，即得到所需局部核。读数只有有限个，将它们按输入 $q$ 拼成一个 Markov 核，附回该 $q$，便在（536.1）的每一实际行上得到正确目标律。核使用的是已经观察到的读数，不使用隐藏状态，也没有添加支撑外的等式义务。这同时证明两方向的充分性。
+
+第一集合有成员时必有 $\sum_id_i\le1$；反之取 $r=d$ 即可。因 $\sum_i\kappa_i\le1$，第二集合中的每个向量自动属于 $Q_m$。若两个方向同时成立，则 $d\le r\le\kappa$，再由 $\kappa\le d$ 得到 $r=\kappa=d$；反之这个等式直接给出等价。剩余三种情形是两个判据的其余真假组合，故无遗漏。证毕。
+
+这里 $\lambda,\beta,\kappa$ 的作用不同：$\lambda$ 决定可从 $E_W$ 取得哪些私有极小类，$d$ 决定它能模拟哪些公开实验，$\kappa$ 决定哪些公开实验能模拟它。这些量给出了本定理的全部公开比较，并不声称分类了任意两个私有通道之间的所有比较。
+
+### 推论 536.7（两个单纯形前沿只在顶点相遇）
+
+对定理 536.4 的全部 $p\in\Delta_{m-1}$，包括任意面的边界，有
+
+$$
+\lambda_i(E_p)=\kappa_i(E_p)=p_i,\qquad
+\beta_i(E_p)=d_i(E_p)=\mathbf1_{\{p_i>0\}}.
+\tag{536.22}
+$$
+
+因此，对任意 $r\in Q_m$，
+
+$$
+E_p\preceq P_r\iff r\le p,
+\qquad
+P_r\preceq E_p\iff p=r=e_j\text{ 对某个单纯形顶点 }e_j.
+\tag{536.23}
+$$
+
+尤其当 $p$ 不是顶点时，$E_p\prec P_p$；丢弃 $P_p$ 的种子坐标得到的正是 $E_p$，且 $E_p$ 是 $P_p$ 唯一支配的私有极小类。这时没有任何充分公开实验低于 $E_p$。私有极小前沿和公开极小前沿虽然都由 $\Delta_{m-1}$ 参数化，其代表实验的等价类只在 $m$ 个顶点相同；公开极小实验未必在整个私有允许族中极小。
+
+证明：$\nu=\sum_jp_j\delta_j$、$\mu_i=\delta_i$，所以中心相对叶的绝对连续部分和共同子测度均为 $p_i\delta_i$。若 $p_i>0$，整个 $\delta_i$ 都绝对连续于 $\nu$；若 $p_i=0$，它与 $\nu$ 奇异。这证明式（536.22）。代入定理 536.6 得第一比较式。第二方向要求 $r_i\ge1$ 对每个正坐标 $p_i$ 成立，而 $\sum_ir_i\le1$；所以正坐标只能有一个，必为 $p_j=r_j=1$，其余均为零，反之显然成立。
+
+当 $p$ 非顶点时，第一方向取 $r=p$ 成立而第二方向失败，得到严格支配。$P_p$ 的种子只取 $1,\ldots,m$，因为 $\sum_ip_i=1$；忘掉 $I$ 后叶 $a_j$ 恒发送 $j$，中心按 $p$ 发送标签，正好是 $E_p$。若另一个私有极小类 $E_s$ 低于 $P_p$，第一比较式强迫 $p\le s$，两者总和同为一，故 $s=p$。
+
+最后，记 $J=\{i:p_i>0\}$。非顶点意味着 $|J|\ge2$，因而 $\sum_id_i=|J|>1$，由式（536.19）没有公开充分实验低于它。这覆盖全部正维面的相对内部及其非顶点边界；不需要全部坐标为正。式（536.23）还要求任何支配 $E_p$ 的 $P_r$ 在 $p_i=0$ 的坐标上满足 $r_i=0$。当 $J=\{j\}$ 时，$E_{e_j}\simeq P_{e_j}$；$P_r$ 支配它恰在 $r_i=0$（$i\ne j$）、$0\le r_j\le1$ 时成立，其中 $r_j<1$ 为严格支配，$r_j=1$ 为等价。在 $u_j$ 对应的二态实验上，$r_j=1$ 是完全擦除，$r_j=0$ 是完全揭示，故两个端点均已包含。证毕。
+
+### 例 536.8（相同私有下前沿，仍有不同的公开比较）
+
+取 $m=2$，辅助空间为七个不同点 $z_{10},z_{11},z_{12},z_{20},z_{21},z_{22},o$，令 $\delta_{ij}$ 表示 $z_{ij}$ 上的 Dirac 律。固定两个不交叶律
+
+$$
+\mu_i=\frac1{10}\delta_{i0}+\frac1{10}\delta_{i1}+\frac45\delta_{i2}
+\quad(i=1,2).
+$$
+
+只改变中心律，定义三个充分实验 $E^{\mathrm A},E^{\mathrm B},E^{\mathrm C}$：
+
+$$
+\begin{aligned}
+\nu_{\mathrm A}&=\frac15\mu_1+\frac15\mu_2+\frac35\delta_o,\\
+\nu_{\mathrm B}&=\frac1{10}(\delta_{10}+\delta_{11}+\delta_{20}+\delta_{21})+\frac35\delta_o,\\
+\nu_{\mathrm C}&=\frac15\delta_{10}+\frac15\delta_{20}+\frac35\delta_o.
+\end{aligned}
+\tag{536.24}
+$$
+
+三者均在每个叶区域上放置中心质量 $1/5$，所以都有 $\lambda=(1/5,1/5)$，受它们支配的私有极小类完全相同：
+
+$$
+\{E_{(t,1-t)}:1/5\le t\le4/5\}.
+\tag{536.25}
+$$
+
+这个线段是 $\Delta_1$ 的真子线段，两个端点都不是 $\Delta_1$ 的顶点，具体说明式（536.14）一般不是原单纯形的面。
+
+各质量直接由点质量相加及逐点取小值得到：
+
+| 中心律 | $\lambda$ | $\beta$ | $\kappa$ | $d$ |
+| --- | --- | --- | --- | --- |
+| $\nu_{\mathrm A}$ | $(1/5,1/5)$ | $(1,1)$ | $(1/5,1/5)$ | $(1,1)$ |
+| $\nu_{\mathrm B}$ | $(1/5,1/5)$ | $(1/5,1/5)$ | $(1/5,1/5)$ | $(1/5,1/5)$ |
+| $\nu_{\mathrm C}$ | $(1/5,1/5)$ | $(1/10,1/10)$ | $(1/10,1/10)$ | $(1/5,1/5)$ |
+
+具体而言，$\nu_{\mathrm A}$ 在每个叶的三个正质量点上都为正，所以反方向绝对连续质量为一；其在该叶上的限制是 $\mu_i/5\le\mu_i$，共同质量为 $1/5$。$\nu_{\mathrm B}$ 只占据每个叶的前两个点，那里中心与叶质量逐点相等，合计 $1/5$，故反方向质量和共同质量均为 $1/5$。$\nu_{\mathrm C}$ 只占据每个叶的第一个点，叶在那里只有 $1/10$，中心有 $1/5$，所以反方向质量和共同质量均为 $1/10$。这也使所有表项的方向清楚可见。
+
+$E^{\mathrm A}$ 之下没有充分公开实验，因为 $d_1+d_2=2$；$E^{\mathrm B}$ 与 $E^{\mathrm C}$ 之下的公开参数却恰为
+
+$$
+\{r\in Q_2:r_1\ge1/5,\ r_2\ge1/5\}.
+\tag{536.26}
+$$
+
+另一方面，支配 $E^{\mathrm A}$ 或 $E^{\mathrm B}$ 的公开参数均为 $[0,1/5]^2$，支配 $E^{\mathrm C}$ 的则是严格较小的 $[0,1/10]^2$。例如取 $r^\circ=(1/5,1/5)$，两个方向的判据分别给出
+
+$$
+E^{\mathrm A}\prec P_{r^\circ}\simeq E^{\mathrm B}\prec E^{\mathrm C}.
+\tag{536.27}
+$$
+
+第一对说明相同 $\lambda$ 不决定有没有公开实验位于其下；后两者有相同 $\lambda$ 和 $d$，但 $P_{r^\circ}$ 能模拟 $E^{\mathrm B}$ 而不能模拟 $E^{\mathrm C}$，说明公开上方的比较还需要 $\kappa$。取 $(1/10,1/10)$ 则确实得到一个能模拟 $E^{\mathrm C}$ 的公开实验。这些区别发生在同一个实际支撑和同一对叶律上，不来自换目标、换先验或添加不存在的行。
+
+### 536.9 来源范围与概念含义
+
+《哲学研究》§§65–67 要求考察具体使用中的交错相似，而不先认定同一名称背后必有一个贯穿全部使用的本质；§§68–69 允许为特定目的划出精确边界，同时否认概念只有经过这种划界才在通常使用中有用。这里沿用第 535 章的这条有限对应：固定目的 $T$ 后研究足够的区分，是一个可另行提出的精确问题，不是对日常语言有用性的先决要求。随机种子、概率一恢复和 Blackwell 后处理序都是本章增加的数学结构，不归于维特根斯坦的原文。家族相似也没有被定义成图连通。[Wittgenstein, *Philosophische Untersuchungen*, §§65–69](https://www.wittgensteinproject.org/w/index.php/Philosophische_Untersuchungen#65)；[Stanford Encyclopedia of Philosophy, “Ludwig Wittgenstein”, §3.4](https://plato.stanford.edu/entries/wittgenstein/#LangGameFamiRese)。
+
+公开选择与隐藏选择的区别已有一般理论。Arthur Américo、Mário S. Alvim、Annabelle McIver 的 *An Algebraic Approach for Reasoning About Information Flow*，Definitions 2–3，用带分支标签的输出与不带标签的混合分别定义 visible choice 和 hidden choice；Theorems 5.2–5.3、Corollary 1 给出可见选择下后验脆弱性的仿射公式、隐藏选择的界及相关比较。其 §2 的安全精化记号 $C_1\sqsubseteq_\circ C_2$ 表示存在 $D$ 使 $C_1D=C_2$，对应本章的信息序 $C_2\preceq C_1$，方向须换算。该文讨论有限通道，这些一般结果不是本章新增的结论，也不能替代这里任意标准 Borel 输出上的证明。[arXiv:1801.08090v4](https://arxiv.org/html/1801.08090v4)。
+
+Zichang Wang 的 *Complementary Information Sources*，§2.2 与 Lemma 2，在有限状态、标准 Borel 信号及紧信息源集合的框架中，以独立于状态的信息源抽签并揭示来源标签，定义 tagged mixture，并证明其决策价值对抽签律仿射。这是来源可见混合的直接相关文献。[arXiv:2609.29066v1，2026-09-24](https://arxiv.org/html/2609.29066v1)。这类可见分支选择允许被选中的通道本身仍随机；只揭示来源标签，不等于揭示编码器的所有随机位。定义 536.1 另要求给定整个 $R$ 与情境后输出确定，因此规范形定理的公开范围不能由一般 tagged mixture 的名称替代。
+
+仓内 [《递归关系观察与波粒事件》§393.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md) 已区分可见独立种子下平均风险和平均成本的仿射等式、正概率分支上的最坏路径成本最大值，以及最坏状态风险的上界；该条明确替代旧 §§325.3–325.4 的相应表述。[《数学与神话匹配》§437.2、§§448–449](MATH_MYTH_MATCH.md) 已分别区分共同子测度质量和有方向的绝对连续质量，并比较翻转与擦除实验。这里复用这些一般工具与区别，接到第 535 章的实际支撑和按读数模拟归约上；上述文献与既有章节提供的是这些明确范围内的先行成分。本章的工作是在（536.1）的支撑上给出私有极小元的穷尽、全可见种子的规范形，以及任意充分通道与公开族的完整双向比较，是在这里逐项证明的支撑特定综合，不据所列来源范围宣称全球原创。
+
+这组结果的概念含义是具体的：目标和实际对象不变时，观察者能否看见产生一个标签的随机选择，会改变哪些充分区分还能进一步删减。对非顶点 $p$，$P_p$ 在全可见种子的范围内已极小；允许把种子隐藏后，同一标签机制降为严格较少信息的 $E_p$，而仍逐态完成原目标。这种差别由实际模拟关系承担，不是由“信息较少”这一名称或一个平均分数决定。它既不证明所有概念都服从本章支撑，也不推出普遍相对主义，更不从可见性增加可区分性推出应当公开随机种子；披露是否合宜仍需要模型以外的用途和规范理由。
+
+## 追加锚（本行以下为增补区）

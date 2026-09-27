@@ -194,7 +194,7 @@ domain, not a conclusion about the complete global comparison.
 
 ## Verification and remaining boundary
 
-[pure_three_projected_defect.py](../../frontier/cover-geometry/pure_three_projected_defect.py)
+[pure_three_projected_defect.py](../../frontier/cover-geometry/pure-three-projected-defect/pure_three_projected_defect.py)
 checks the complete coefficients, the concentrated formulas, and
 four finite actual source/cofactor configurations using the existing
 original-label constructor. Their deep pure3 carriers lie in cell1,
@@ -209,7 +209,7 @@ experiments test the source identities; arbitrary heights and changing
 residues are covered by(PD2)--(PD3) and monotone convergence.
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure_three_projected_defect.py --check
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-three-projected-defect/pure_three_projected_defect.py --check
 ```
 
 Forced27 concentration, the entire109 mean correction and the complete

@@ -3511,3 +3511,315 @@ DOI 10.1214/aop/1176989136，是元数据检索所指的相关文献；
 不主张每个输出、无界对数余项期望、零噪声、临界 $Q^3$ 对数噪声或高效编码。
 有限文献核对未提供直接替代这组实际条件桥梁的原定理，
 不构成不存在性或全球原创性认证。
+
+## 原文对照：第 91 章的固定切点复现限制
+
+[理论卷第 91 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+分析第 81、83 章已经构造的原共同规模单元。
+逐层局部存在定理直接复用；本章新增的是精确 Gamma 修正的严格负号、
+有限固定切点环形窗口的空 limsup，以及首个上方交点规则的单侧相位与等均值限制。
+这些限制保持原合法分母、count floor、共同规模相位和实际 pair/path 均值桥。
+它们没有解决整个双根同步集合 $E_2$ 的空性或非空性。
+
+**切线方法的经典背景与分母边界。** Victor Beresnevich、Evgeniy Zorin，
+*Explicit bounds for rational points near planar curves and metric Diophantine approximation*，
+[arXiv:1002.2803v1](https://arxiv.org/abs/1002.2803v1)，
+[原 TeX](https://arxiv.org/e-print/1002.2803v1)。
+原 Theorems 1–2（源标签 t:01、t:02）在统一正曲率类的闭包内给局部下计数和覆盖；
+其第二定理证明使用 Minkowski 线性形式及整数平移，属于有理切线构造的成熟背景。
+所数互素三元组允许 $0<q\le X$，覆盖版为 $c_0X<q\le X$，
+误差是 $\delta/X$，不是固定 $q=X$ 的结论。
+原假设包括 $\delta X^2|J|\ge8C_1$、$X\delta\ge C_2$、$|J|\le1/2$，
+以及所列 $X\gg|J|^{-3}$ 或另一二次尺度条件。
+在本模型取 $X=N$、$\delta\asymp N^{-1/2}$，固定父区间在晚期可以满足尺寸要求，
+但 Minkowski 输出只保证一个区间内的分母。
+它未保证该分母整除原 $N$；改为最近的 $N$ 分母网格会产生 $N^{-1}$ 阶误差，
+超过本题的 $N^{-3/2}$ 归一化条带宽度。因此不承担固定原层的下命中前提。
+
+**固定分母的算法文献。** Nicolas Brisebarre、Guillaume Hanrot，
+*Integer points close to a transcendental curve: an algorithmic approach*，
+[arXiv:2606.04858v1](https://arxiv.org/abs/2606.04858v1)，
+[原 TeX](https://arxiv.org/e-print/2606.04858v1)。
+原 Problem probgen 固定正整数 $u,v,w$，对在复邻域解析的超越函数寻找
+
+$$
+\left|f(X/u)-Y/v\right|<1/w.
+$$
+
+这允许在问题定义中固定 $u=v=N$，与按分母求和的计数不同。
+但 Algorithm algo:2variables 的保证是成功时返回包含所有解的候选列表；
+列表可以为空，算法还保留短向量不足及消元 resultant 为零的失败分支。
+主定理 thm:cplx2D 是固定函数、固定区间下随输入分母与多项式度数变化的复杂度结论，
+原证明明确保留两个辅助多项式互素的启发式假设。
+它不给正解数，也不给指定原层上的无限嵌套分支。
+本章没有运行该算法，不把随 $Q$ 变化的隐式 Gamma 曲线代入固定函数的复杂度结论，
+亦未证明它满足另一个有限阶整函数定理的全局假设。
+
+**本章使用与不使用的结论。** 均值定理、积分曲率、最近剩余类取整、
+Stirling／Binet 展开和有限集合的 limsup 推理均是经典工具。
+模型内新联系是：原取整使 $A_Q'<0$，从而产生必须抵消的负 Gamma 修正；
+同一规模中的 $-3\ln Q$ 预因子又强迫复现指标位于切点左侧，
+与右侧首交点的取整规则共同给出 $\omega=O_d(Q^{-2})$。
+有理截距排除仅适用于该规则或等正均值子目标；
+没有构造原曲线上的有理斜率／有理截距点，也没有排除不等均值的全部同步可能。
+文献核对给出上述具体适用边界，不作为不存在性或全球原创性认证。
+
+## 原文对照：第 92 章的指数分辨率与二项量化耦合
+
+[理论卷第 92 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将精确条件熵中心下的第三阶覆盖扩展到
+$\limsup\ln(1/\sigma_M)/Q^3<c_q/2$，仍要求 $\ln(1/\sigma_M)\to\infty$。
+该系数是所证充分条件，不是噪声阈值锐性结论。
+经典二项耦合支付唯一的逆噪声误差；外部计数能量通过二维联合平移移除，
+其与外部信息量的依赖一直保留到最终条件中心化。
+
+**直接使用的有限 Wasserstein 定理。** Thomas Bonis，
+*Stein's method for normal approximation in Wasserstein distances with application to the multivariate Central Limit Theorem*，
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，
+[原 TeX](https://arxiv.org/e-print/1905.13615v2)。
+2020 年 5 月 11 日版本的 32 页 PDF 第 1 页设定 iid、中心化、单位协方差；
+第 5 页 Theorem 1、式 (9) 对 $m\ge2$ 给有限 $W_m$ 界：
+常数只依赖阶数 $m$，分子由四阶矩矩阵范数和 $(m+2)$ 阶矩显式控制，
+分母为 $\sqrt n$。原 body.tex 的 CTLmain、Wpmainthm 标签核对相同陈述。
+在一维代入标准化 Bernoulli，成功概率位于 $[1/4,3/4]$ 时所有这些矩一致有界，
+故直接取得 $C_m/\sqrt n$，不需密度、非格点或精确成功概率 $1/2$。
+一维单调量化同时最小化各固定阶凸运输代价，给正文同一个耦合的 $L^2,L^4$ 控制。
+这个精确阶及量化方法完全归属经典结果。
+
+**二项原文的交叉核对。** Alexander A. Serov、Andrew M. Zubkov，
+*A Full Proof of Universal Inequalities for the Distribution Function of the Binomial Law*，
+[arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)，
+[原 TeX](https://arxiv.org/e-print/1207.3838v2)。
+2012 年 8 月 31 日版本第 2 页的定理对全部 $n$、$p\in(0,1)$、
+$k=0,\ldots,n-1$ 给
+$C_{n,p}(k)\le F_{n,p}(k)\le C_{n,p}(k+1)$；
+内部 $C$ 为二项相对熵有符号平方根处的标准正态 CDF，
+端点单独定义为 $C(0)=(1-p)^n$、$C(n)=1-p^n$。
+第 2–5 页给完整 beta 积分及单调性证明，原 0542008.tex 中核对了定理和端点。
+紧 $p$ 区间内，有符号根的 Taylor 展开和量化夹逼给
+$|X-Z|\le C(1+Z^2)/\sqrt n$ 于 $|Z|\le c\sqrt n$，
+其外以 $|X|\le C\sqrt n$ 和正态尾控制各固定矩。
+这提供独立的二项专用核对，但正文已直接使用 Bonis 的有限定理。
+
+Serov–Zubkov 将原不等式归于 Alfers–Dinges 的 1984 年文献；
+该早期原文未独立取得，归属依据为这里核对的完整证明及其引用。
+所取 TeX 的介绍性 Moivre–Laplace 显示式多出一个 $\Phi(x)$ 因子，
+其后单独显示的 Stirling 公式省去 $(n/e)$ 的指数 $n$；
+紧接的二项系数计算使用 $n^n$。这两处未用显示式不承担本章前提，
+不把提取成功等同于每个印刷公式正确。
+
+**不作统一估计依据的后来版本。** Bonis，
+*Improved rates of convergence for the multivariate Central Limit Theorem in Wasserstein distance*，
+[arXiv:2305.14248v4](https://arxiv.org/abs/2305.14248v4)，
+2024 年 4 月 29 日版本第 3 页 Corollary 1 另用截断增量协方差条件，
+并含依赖底层分布的渐近余项；更强的非格点收益要求非零绝对连续分量。
+Bernoulli 没有该分量，且分布依赖余项不能直接当作随数据变化的 $p_j$ 的一致界。
+本章用前述更早的显式有限定理，未借此推导未给出的统一性。
+
+Carter–Pollard，*Tusnady's Inequality Revisited*，
+[arXiv:math/0508606v1](https://arxiv.org/abs/math/0508606v1)，
+DOI [10.1214/009053604000000733](https://doi.org/10.1214/009053604000000733)，
+第 1–5 页 Theorems 1–2 的原对象是 $\operatorname{Bin}(n,1/2)$，有其所列
+$n\ge28$ 及内部指标范围和尾部处理。实际 $p_j\to1/2$ 不能替代精确对称假设。
+这些成熟结果说明精确量化阶并非新发明；实际参数对应由 Bonis 定理完成。
+
+**组合范围。** 第 90 章已归属的 Kontoyiannis–Verdú、Chen–Effros–Kostina、
+Gavalakis–Kontoyiannis 和 Hu–Lu–Nualart 分别承担经典排序／编码与密度机制。
+它们不直接提供当前随数据、噪声变化的实际条件后验结论。
+本章先比较联合可观测量和中心一阶矩密度，再于最终参考使用条件 $C/Q$ 密度界；
+未在保留外部真实能量的中间通道虚报独立性。
+文献核对有版本和范围限制，不作为全球原创性证明。
+
+## 原文对照：第 93 章的代数根与傅里叶障碍
+
+[理论卷第 93 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+使用原 $Q_n=10^{e_n}$ 的素因子限制排除代数无理率根的多项式过渡带，
+并在根坐标中限制正有限均值复现集合所能承载的傅里叶衰减。
+两根同步的存在或不存在未被解决。
+
+**实际应用的子空间定理版本。** Boris Adamczewski、Yann Bugeaud，
+*On the complexity of algebraic numbers I. Expansions in integer bases*，
+Annals of Mathematics 165 (2007), 547–565，
+[DOI:10.4007/annals.2007.165.547](https://doi.org/10.4007/annals.2007.165.547)，
+[期刊原文](https://annals.math.princeton.edu/wp-content/uploads/annals-v165-n2-p04.pdf)。
+Section 4、印刷第 554–555 页给绝对值、向量范数和射影高度的完整归一化，
+Theorem E 给所用 $p$-进子空间定理，并归属于 Evertse。
+每个赋值处的形式须线性无关，系数允许是 $K$ 外的代数数，解仍在 $K^m$ 中。
+因此正文可取 $K=\mathbb Q$ 而在无穷处使用代数无理系数 $\xi$。
+本原整数对的高度是欧氏范数，有限赋值处范数为一；
+原分母约分后只有素因子 $2,5$，精确给出正文的受限分母下界。
+该一般逼近机制是经典定理的直接应用，不作新数论定理申报。
+原文自身的数字复杂度定理和正规性猜想没有承担本文前提。
+
+Jan-Hendrik Evertse，*An improvement of the quantitative Subspace theorem*，
+Compositio Mathematica 101(3) (1996), 225–311，
+[原文](https://www.numdam.org/item/CM_1996__101_3_225_0.pdf)。
+核对了前九个 PDF 页的标题、范围和允许 $K$ 外代数系数的说明。
+扫描公式未被现有文本提取完整恢复，故正文精确不等式采用上项已完整核对的
+Theorem E，不声称从缺失的扫描显示式中读出了它，也未审计长篇定量证明。
+
+D. Ridout 的历史原文 *Rational approximations to algebraic numbers*，
+Mathematika 4 (1957), 125–131，
+[DOI:10.1112/S0025579300001182](https://doi.org/10.1112/S0025579300001182)，
+及 *The p-adic generalization of the Thue-Siegel-Roth theorem*，
+Mathematika 5 (1958), 40–48，
+[DOI:10.1112/S0025579300001339](https://doi.org/10.1112/S0025579300001339)，
+提供成熟结果的历史归属。所查 Wiley 路径返回 403，Cambridge 的页面及所列 PDF
+返回访问页 HTML，未取得完整原定理；它们不是正文独立核验的承重来源。
+正文使用前述可访问且完整陈述的 Theorem E。
+
+**实际应用的傅里叶收敛结论。** Andrew Pollington、Sanju Velani、
+Agamemnon Zafeiropoulos、Evgeniy Zorin，
+*Inhomogeneous Diophantine Approximation on $M_0$-sets with restricted denominators*，
+[arXiv:1906.01151v1](https://arxiv.org/abs/1906.01151v1)，
+[原 TeX](https://arxiv.org/e-print/1906.01151v1)。
+原稿 Beyond lacunarity 节的 mainCONV 定理与 Lemma lem2 直接给正文使用的收敛侧：
+若整数倍分母处的傅里叶系数上确界可求和，而目标窗长度也可求和，
+则相应上极限集测度为零。此处不需稀疏性或目标函数单调性。
+原始有限 majorant 界及 Borel–Cantelli 证明均已核对。
+原另一个稀疏计数定理中的对数衰减指数 $A>2$ 不应套到本收敛侧：
+原 $\ln N_n$ 的增长使任何 $A>0$ 已足够求和。
+
+该文的发散／下计数结论针对固定标量、固定测度及其明确条件，
+不提供同一原层上随 $p,d$ 变化的精确对偶相位、单侧方向和剩余类共同命中的下界。
+本章只直接采用收敛结论，配合实际均值给出的必要根邻近窗。
+所得零傅里叶维数在根坐标中成立，不借非线性根映射冒领 $\beta$ 坐标的同一结论。
+
+**核对边界。** 最初的 Annals p06 定位返回 Granville–Soundararajan 的另一篇原文，
+标题核对后未采用；p04 才是本章使用的原文。
+有限的论文检索和版本核对不构成全球原创性认证。
+本章贡献是成熟工具在原实际模型中的定量对应，以及其对熵过渡项与可行研究路线的限制；
+不把测度工具换成新概率先验，不从数论下界推断可变分母的有效统一常数。
+
+## 原文对照：第 94 章的逐输出平滑与紧区间覆盖
+
+[理论卷第 94 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将指数分辨率范围内的精确熵中心三阶覆盖加强为每个固定紧输出区间的一致式。
+其关键前提是逐输出未归一化测度、中心一阶矩密度及可观测量位移的定量控制，
+再以正密度下界条件化。输出积分误差本身不提供这种上确界控制。
+
+**高固定阶量化的来源。** 第 92 章核对的 Bonis
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，Theorem 1、式 (9)，
+直接给每个固定运输阶 $m\ge2$ 的有限界。
+标准化 Bernoulli 且 $p\in[1/4,3/4]$ 时所需矩一致有界，
+所以同一单调量化可在任意高但固定的阶数支付指数小的坏位移事件。
+阶数可依赖严格噪声间隙，不能让它随规模增长而忽略原常数的依赖。
+Serov–Zubkov 的紧参数量化核对及其未用印刷公式缺陷仍保持第 92 章所列范围。
+
+**正态密度与逆导数矩。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)，2013 年 8 月 29 日版本。
+55 页 PDF 第 10 页 Theorem 3.1 要求 $F\in\mathbb D^{2,s}$、
+$\mathbb E|F|^{2p}<\infty$、$\mathbb E\|DF\|^{-2r}<\infty$，
+其中 $p,r,s>1$、$1/p+1/r+1/s=1$；其散度表示给密度及一致／Hölder 界。
+第 3.2、4、5 节的导数与向量比较另有各自非退化假设。
+第 94 章使用这一成熟演算机制，但为自己的二维信息量／能量对
+明确证明秩、行列式小值概率、逆矩及带权导数；没有将标量定理直接当成向量定理。
+固定块的全积分导数界经另一个独立块卷积后才变成切片上确界。
+
+**直接涵盖正态参考密度的超收敛。** Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+[原 TeX](https://arxiv.org/e-print/2303.02628v3)，2024 年 3 月 19 日版本。
+40 页 PDF 第 3 页 Theorems 1–2 对固定 Wiener chaos 内趋标准正态的序列
+给密度及其导数的强收敛。第 9–10 页 Theorem 9、Corollary 10(a)
+处理有限 chaos 和：最高阶投影趋标准正态且全序列 $L^2$ 有界保证负导数矩控制；
+若低阶余项在 $L^2$ 中趋零、全变量趋标准正态，则得到正态密度超收敛。
+原 super-fmt.tex 的 main-negative-moments-sum-chaos 与
+cor:densitysumofchaos:remainder 条目核对相同条件。
+
+第 94 章的正态核心参考归一化后是二阶 chaos 加趋零的一阶及常数余项，
+因此参考密度收敛被该经典结果直接涵盖，正文 Fourier 估计给本证明需要的具体分块界。
+该定理没有给原离散二项计数在指数小噪声下的逐输出替换误差，
+也没有给完整后验中心信息量的一阶矩密度控制；这些仍由正文桥接。
+原文还给 $G+(n+1)^{-1}G^2$ 的反例，说明有限 chaos 和趋正态
+若未核对最高阶投影条件，并不自动具有连续密度。
+
+**不能直接用于实际二项能量的二次型定理。** 同三位作者，
+*Regularity of laws via Dirichlet forms — Application to quadratic forms in independent and identically distributed random variables*，
+[arXiv:2303.09488v2](https://arxiv.org/abs/2303.09488v2)，
+[原 TeX](https://arxiv.org/e-print/2303.09488v2)，2024 年 6 月 20 日版本。
+34 页 PDF 第 2 页 Theorem A 与精确 Theorem 2.10 要求 iid 中心单位方差输入，
+输入位于 $\mathbb D^\infty$ 且 carré du champ 有某个有限负矩；
+系数算子对角为零，$\operatorname{tr}A^2=1$，
+$\mathcal R_{128q+18}(A)>d$ 且 influence 足够小，方得到 $W^{q,1}$ 正则性。
+原 reg-ptrf.tex 的 small-ball-gamma 假设、前置零对角设定及
+regularity-quadratic-form 定理核对这些要求。
+二项量化图像不满足该输入正则性，而当前能量是对角二次型；
+故该结果只提供相关方法视角，不能直接承接实际后验。
+
+**计数与边界。** 第 90、92 章已归属的源编码排序、Gamma 的
+Edgeworth／Cornish–Fisher 展开与负半对数项仍为经典内容。
+本章使用新证的 $o(1/Q)$ 紧区间条件 CDF 误差，
+通过总变差为二的计数核和截止并列质量界得到常数精度。
+精确条件熵没有被其主阶近似替换，也没有宣称阈值锐性、全输出一致性、
+熵响应或条件方差的自动扩展。
+
+文献核对限于所列原版与关系检索；部分 PDF 数学字形提取不完整，
+Herry–Malicet–Poly 的承重条件据原 TeX 核对。
+一个元数据检索响应为 HTTP 429，不计作已取得文献。
+该检索范围不证明全球原创性；正文的新增结论为原模型中上述关系的完整组合。
+
+## 原文对照：第 95 章的有效 Baire 输入与根数位障碍
+
+[理论卷第 95 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+构造原边缘通用集中的可计算参数，并证明有限均值复现根的有符号长数位块。
+一般可计算 Baire 选择是既有结果；需要在本模型中补齐的是它的有效输入：
+完整得分组等号判定、原取整、实际 pair/path 均值的严格有限证书，以及搜索终止性。
+
+**有效 Baire 的精确表示条件。** Vasco Brattka、Matthew Hendtlass、Alexander P. Kreuzer，
+*On the Uniform Computational Content of the Baire Category Theorem*，
+[arXiv:1510.01913v1](https://arxiv.org/abs/1510.01913v1)，
+[原 TeX](https://arxiv.org/e-print/1510.01913v1)。
+原文定义 $\mathrm{BCT}_0$ 于可计算 Polish 空间，输入为以负信息表示的
+无处稠密闭集序列；负信息是其开补集的有理球枚举。
+原 fact:BCT0-BCT1 明确陈述 $\mathrm{BCT}_0$ 可计算。
+Cauchy 表示及负信息表示按该原版核对；没有使用正信息或跳跃版本，
+也没有加入极限、泛性或真值 oracle。
+
+第 95 章对每个固定有理均值带、符号及下限层，枚举通过严格原窗条件和
+两种完整实际均值条件的 floor 单元内部有理区间。
+第 88 章的原层完整单元可用性使该开集稠密，因此它的补集具备所需负名字。
+可计算 floor 边界点的补集同样可枚举。
+一般的剩余性没有提供这个输入，不能独自保证一个可计算点。
+正文显式嵌套构造还输出原合法层及误差日程；没有把每个正实目标都说成
+无需目标名字即可沿可计算子序列实现，那会违背可数性。
+
+原文将 $\mathrm{BCT}_0$ 的可计算性追溯至 Brattka，
+*Computable versions of Baire's category theorem*，MFCS 2001，LNCS 2136，
+224–235，Theorem 6。该早期原文只核对到书目信息，未单独取得完整证明；
+承重陈述取自已读的 2015 年原版。
+同一 v1 后面的 comeager 定义／推论中存在 $X,\mathbb N^{\mathbb N},2^{\mathbb N}$
+的环境空间记号不一致；本章不用该段把 Cantor 空间结论搬到区间，
+所用定义和可计算性事实明确针对可计算 Polish 空间。
+
+**原模型的有限算法边界。** 第 68 章已经按 Baker–Wüstholz 原定理证明
+固定 $r$ 超越。由此原 $k_0,q$ 取整不在整数边界，完整得分等号化为
+有理多项式恒等判定。pair 均值是有限多项式，path 均值由原平稳
+$2M\times2M$ 标记转移矩阵幂精确给出；不以独立行或 Poisson 均值替代。
+这些证书可枚举，再由第 88 章实际相对均值与整单元下计数保证搜索终止。
+未知的渐近起始层不作为算法输入。
+这里没有新的一般可计算性定理，也没有对天文尺度有限数组实际运行该算法的主张。
+
+**正规数与前缀频率。** Verónica Becher、Pablo Ariel Heiber、Theodore A. Slaman，
+*A polynomial-time algorithm for computing absolutely normal numbers*，
+[作者原文](https://math.berkeley.edu/~slaman/papers/poly.pdf)，
+2013 年 3 月 4 日版本，13 页。
+Section 2.1 固定标准数位和 $b$-进区间；Definition 2.1 定义简单正规与正规；
+Section 2.3 的 Definition 2.3、Lemma 2.4 给数位频率偏差及其判据。
+本章只用这些经典定义，不应用该文构造绝对正规数的高效算法，
+也不据此推断原率函数的逆像保持正规性。
+
+原实际均值展开中的 $-3\ln Q$ 项使正根落在下方格点右侧、负根落在上方格点左侧，
+距离为 $3\ln Q/(Q|I'(x)|)+O(Q^{-1})$。
+由 $Q=10^{e_n}$ 得位置 $2e_n+1$ 开始、长度
+$e_n-\log_{10}e_n+O(1)$ 的零／九块。
+这些块占截止前缀的比例趋于 $1/3$，故相关数位频率上极限至少为 $1/3$，
+偏差至少为 $7/30$。任意长数位块本身不足以排除正规性；比例估计承担该结论。
+第 93 章的超越性和本章的可计算性与这一结论相容，但各自需要自己的证明。
+
+**适用范围。** 两符号日程可以不同；$E_2$ 非空或为空仍未判定，
+构造所得参数是否避开 $E_2$ 也未判定。
+根的非正规性不自动成为 $\beta$ 坐标的非正规性。
+本章不宣称实用复杂度、期望熵收敛、参数随机化或全球原创性。
+有限关系检索与上述原版条件核对，只支持所列经典归属和模型内对应。

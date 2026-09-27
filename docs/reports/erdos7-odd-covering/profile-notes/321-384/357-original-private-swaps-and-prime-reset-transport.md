@@ -408,7 +408,7 @@ local examples cannot settle this global obligation.
 The general assertions follow from the finite proofs above and independent
 review. Repository searches found the prior source identities and matching
 bounds in 350, 354 and 355, but not the reset inequalities. This is not a
-claim of literature novelty. The [exact checker](../../frontier/cover-geometry/private_swap_reset.py)
+claim of literature novelty. The [exact checker](../../frontier/cover-geometry/private-swap-reset/private_swap_reset.py)
 checks actual finite AP membership, swaps, source changes, and reset
 congestion. Its three full-cover fixtures contain 27 original APs and
 have complete periods 12, 144 and 960, totaling 1,116 checked points.

@@ -1,0 +1,546 @@
+{
+  "schema": "erdos7-stationary-phase-sharing-boundary-v1",
+  "primes": [
+    5,
+    7,
+    11,
+    13
+  ],
+  "pure_old_digit": 1,
+  "normalized_new_pure_digit": 2,
+  "scope": "1190 is sharp on the reduced nozero digit cube; unrestricted stationary old phases attain 1185 and limiting conditional survival 79/99. The universal J target remains unsettled.",
+  "joint_reduction_threshold": "c < 2; preserve the sign of sum w(x)(g(x)+1_(g(x)>0)-c)",
+  "nozero_cells": 1485,
+  "pair_area_sum": 274,
+  "triple_area_sum": 28,
+  "quadruple_area": 1,
+  "reduced_overlap_credit": 8,
+  "unrestricted_overlap_credit": 3,
+  "four_vertex_graph_checks": 64,
+  "families": {
+    "reduced": {
+      "mixed_patterns": [
+        {
+          "mask": 3,
+          "digits": [
+            3,
+            3
+          ]
+        },
+        {
+          "mask": 5,
+          "digits": [
+            4,
+            3
+          ]
+        },
+        {
+          "mask": 6,
+          "digits": [
+            4,
+            4
+          ]
+        },
+        {
+          "mask": 7,
+          "digits": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "mask": 9,
+          "digits": [
+            4,
+            3
+          ]
+        },
+        {
+          "mask": 10,
+          "digits": [
+            5,
+            4
+          ]
+        },
+        {
+          "mask": 11,
+          "digits": [
+            3,
+            5,
+            6
+          ]
+        },
+        {
+          "mask": 12,
+          "digits": [
+            5,
+            5
+          ]
+        },
+        {
+          "mask": 13,
+          "digits": [
+            4,
+            6,
+            6
+          ]
+        },
+        {
+          "mask": 14,
+          "digits": [
+            6,
+            4,
+            4
+          ]
+        },
+        {
+          "mask": 15,
+          "digits": [
+            3,
+            6,
+            6,
+            6
+          ]
+        }
+      ],
+      "nozero_survivors": 1190,
+      "union_additions_by_support_size": {
+        "2": 266,
+        "3": 28,
+        "4": 1
+      },
+      "zero_mask_coefficients": [
+        1190,
+        469,
+        274,
+        98,
+        145,
+        54,
+        32,
+        11,
+        117,
+        44,
+        26,
+        9,
+        14,
+        5,
+        3,
+        1
+      ],
+      "finite_heights": [
+        {
+          "heights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "complete_core_period": 5005,
+          "original_moduli": 15,
+          "nonzero_digit_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "survivor_count": 2492,
+          "pure_survivor_count": 2880,
+          "conditional_survival": "623/720",
+          "below_1190_over_1485": false
+        },
+        {
+          "heights": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "complete_core_period": 25050025,
+          "original_moduli": 80,
+          "nonzero_digit_weights": [
+            6,
+            8,
+            12,
+            14
+          ],
+          "survivor_count": 10699809,
+          "pure_survivor_count": 13161205,
+          "conditional_survival": "10699809/13161205",
+          "below_1190_over_1485": false
+        },
+        {
+          "heights": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "complete_core_period": 125375375125,
+          "original_moduli": 255,
+          "nonzero_digit_weights": [
+            31,
+            57,
+            133,
+            183
+          ],
+          "survivor_count": 52113718176,
+          "pure_survivor_count": 64864962448,
+          "conditional_survival": "250546722/311850781",
+          "below_1190_over_1485": false
+        },
+        {
+          "heights": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "complete_core_period": 627503752500625,
+          "original_moduli": 624,
+          "nonzero_digit_weights": [
+            156,
+            400,
+            1464,
+            2380
+          ],
+          "survivor_count": 259566918109409,
+          "pure_survivor_count": 323759639626353,
+          "conditional_survival": "259566918109409/323759639626353",
+          "below_1190_over_1485": false
+        }
+      ],
+      "literal_height_one": {
+        "height": 1,
+        "original_moduli": [
+          [
+            13,
+            1
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            143,
+            5
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            91,
+            82
+          ],
+          [
+            77,
+            4
+          ],
+          [
+            1001,
+            433
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            65,
+            29
+          ],
+          [
+            55,
+            14
+          ],
+          [
+            715,
+            149
+          ],
+          [
+            35,
+            3
+          ],
+          [
+            455,
+            383
+          ],
+          [
+            385,
+            193
+          ],
+          [
+            5005,
+            2008
+          ]
+        ],
+        "literal_residue_checks": 5005,
+        "survivor_count": 2492,
+        "pure_survivor_count": 2880
+      }
+    },
+    "unrestricted": {
+      "mixed_patterns": [
+        {
+          "mask": 3,
+          "digits": [
+            2,
+            2
+          ]
+        },
+        {
+          "mask": 5,
+          "digits": [
+            3,
+            2
+          ]
+        },
+        {
+          "mask": 6,
+          "digits": [
+            3,
+            3
+          ]
+        },
+        {
+          "mask": 7,
+          "digits": [
+            2,
+            3,
+            5
+          ]
+        },
+        {
+          "mask": 9,
+          "digits": [
+            4,
+            2
+          ]
+        },
+        {
+          "mask": 10,
+          "digits": [
+            4,
+            3
+          ]
+        },
+        {
+          "mask": 11,
+          "digits": [
+            2,
+            4,
+            5
+          ]
+        },
+        {
+          "mask": 12,
+          "digits": [
+            4,
+            4
+          ]
+        },
+        {
+          "mask": 13,
+          "digits": [
+            3,
+            5,
+            5
+          ]
+        },
+        {
+          "mask": 14,
+          "digits": [
+            5,
+            3,
+            3
+          ]
+        },
+        {
+          "mask": 15,
+          "digits": [
+            4,
+            6,
+            6,
+            6
+          ]
+        }
+      ],
+      "nozero_survivors": 1185,
+      "union_additions_by_support_size": {
+        "2": 271,
+        "3": 28,
+        "4": 1
+      },
+      "zero_mask_coefficients": [
+        1185,
+        469,
+        273,
+        98,
+        145,
+        54,
+        32,
+        11,
+        117,
+        44,
+        26,
+        9,
+        14,
+        5,
+        3,
+        1
+      ],
+      "finite_heights": [
+        {
+          "heights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "complete_core_period": 5005,
+          "original_moduli": 15,
+          "nonzero_digit_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "survivor_count": 2486,
+          "pure_survivor_count": 2880,
+          "conditional_survival": "1243/1440",
+          "below_1190_over_1485": false
+        },
+        {
+          "heights": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "complete_core_period": 25050025,
+          "original_moduli": 80,
+          "nonzero_digit_weights": [
+            6,
+            8,
+            12,
+            14
+          ],
+          "survivor_count": 10658481,
+          "pure_survivor_count": 13161205,
+          "conditional_survival": "10658481/13161205",
+          "below_1190_over_1485": false
+        },
+        {
+          "heights": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "complete_core_period": 125375375125,
+          "original_moduli": 255,
+          "nonzero_digit_weights": [
+            31,
+            57,
+            133,
+            183
+          ],
+          "survivor_count": 51897928602,
+          "pure_survivor_count": 64864962448,
+          "conditional_survival": "1996074177/2494806248",
+          "below_1190_over_1485": true
+        },
+        {
+          "heights": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "complete_core_period": 627503752500625,
+          "original_moduli": 624,
+          "nonzero_digit_weights": [
+            156,
+            400,
+            1464,
+            2380
+          ],
+          "survivor_count": 258479266715489,
+          "pure_survivor_count": 323759639626353,
+          "conditional_survival": "258479266715489/323759639626353",
+          "below_1190_over_1485": true
+        }
+      ],
+      "literal_height_one": {
+        "height": 1,
+        "original_moduli": [
+          [
+            13,
+            1
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            143,
+            4
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            91,
+            81
+          ],
+          [
+            77,
+            3
+          ],
+          [
+            1001,
+            432
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            65,
+            54
+          ],
+          [
+            55,
+            13
+          ],
+          [
+            715,
+            148
+          ],
+          [
+            35,
+            2
+          ],
+          [
+            455,
+            382
+          ],
+          [
+            385,
+            192
+          ],
+          [
+            5005,
+            3009
+          ]
+        ],
+        "literal_residue_checks": 5005,
+        "survivor_count": 2486,
+        "pure_survivor_count": 2880
+      }
+    }
+  },
+  "literal_residue_checks_total": 10010,
+  "attained_unrestricted_limit": "79/99"
+}

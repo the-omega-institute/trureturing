@@ -390,15 +390,15 @@ of its three domains nor a finite enumeration of graph shapes is used.
 
 ##### Exact certificates and original-arithmetic controls
 
-The [fee certificate](../frontier/cover-geometry/four_vertex_block_fees.py)
-retains [all exact rows](../frontier/cover-geometry/four_vertex_block_fees.json).
+The [fee certificate](../frontier/cover-geometry/four-vertex-block-fees/four_vertex_block_fees.py)
+retains [all exact rows](../frontier/cover-geometry/four-vertex-block-fees/four_vertex_block_fees.json).
 It checks 1793 four-vertex rows and 528 edge/cycle rows under the revised
 fees. Its support sums use nonempty subset masks and rational arithmetic;
 all three budget vertices in a row share one cutoff.
 
-The [original-class control program](../frontier/cover-geometry/four_vertex_block_extension_controls.py)
+The [original-class control program](../frontier/cover-geometry/four-vertex-block-extension-controls/four_vertex_block_extension_controls.py)
 retains full prime-power coordinates and every original residue and modulus.
-Its [exact results](../frontier/cover-geometry/four_vertex_block_extension_controls.json)
+Its [exact results](../frontier/cover-geometry/four-vertex-block-extension-controls/four_vertex_block_extension_controls.json)
 compare all 18 vertex, block and whole-system conditional count vectors
 against independent CRT enumeration:
 
@@ -417,8 +417,8 @@ separately averaged block counts would not give the correct joint count.
 Both standard-library programs run with assertions enabled:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/four_vertex_block_fees.py
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/four_vertex_block_extension_controls.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/four-vertex-block-fees/four_vertex_block_fees.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/four-vertex-block-extension-controls/four_vertex_block_extension_controls.py
 ```
 
 Their finite examples test the exact recursion and probability convention;

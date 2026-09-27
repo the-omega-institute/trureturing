@@ -1,0 +1,185 @@
+{
+  "p_vectors": [
+    [
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      22
+    ],
+    [
+      [
+        4,
+        3,
+        3,
+        3
+      ],
+      23
+    ]
+  ],
+  "private_shapes": {
+    "A": [
+      [
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "B": [
+      [
+        1,
+        2,
+        2,
+        3
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "C": [
+      [
+        1,
+        2,
+        2,
+        2
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    ]
+  },
+  "p_vector_tests": 331776,
+  "cost3_edge_types": [
+    "three leaf edges",
+    "one first-prefix edge"
+  ],
+  "Hall_A_family_tests": 91390,
+  "Hall_A_admissible": 31115,
+  "Hall_BC_family_tests": 3375,
+  "Hall_BC_admissible": 3150,
+  "A_B_uniform_law": {
+    "occupancy": [
+      4,
+      5,
+      5,
+      5
+    ],
+    "atoms": 19,
+    "cylinder_checks": 1767,
+    "ordered_lcm_pairs": 81,
+    "caps": {
+      "1": "1",
+      "5": "5/19",
+      "7": "5/19",
+      "25": "1/19",
+      "35": "5/19",
+      "49": "1/19",
+      "175": "1/19",
+      "245": "1/19",
+      "1225": "1/19"
+    },
+    "envelope": "159/19",
+    "margin": "12/19"
+  },
+  "C_uniform_law": {
+    "occupancy": [
+      4,
+      5,
+      5,
+      4
+    ],
+    "atoms": 18,
+    "cylinder_checks": 1767,
+    "ordered_lcm_pairs": 81,
+    "caps": {
+      "1": "1",
+      "5": "5/18",
+      "7": "5/18",
+      "25": "1/18",
+      "35": "5/18",
+      "49": "1/18",
+      "175": "1/18",
+      "245": "1/18",
+      "1225": "1/18"
+    },
+    "envelope": "79/9",
+    "margin": "2/9"
+  },
+  "public_three_leaf_actual_source": {
+    "actual_points": 70,
+    "seven_projection_size": 28,
+    "public_column_actual_leaves": 3,
+    "standalone_columns": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "selected_pair_tests": 480,
+    "original_ternary_five_tests": 10000,
+    "max_flow_numerator_over63": 67,
+    "witness_law_atoms": 19
+  },
+  "scope": "Cost-shape and Hall enumeration, exact CRT law caps, plus one actual source with all literal tests and exact min cut. General actual-leaf and column forcing is proved in companion text, not inferred from these fixtures. No original odd covering realization or outside-cofactor lift is asserted."
+}

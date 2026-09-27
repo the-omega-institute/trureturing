@@ -291,8 +291,8 @@ the conflict certificate to the block law or identify the two laws.
 All 102 absorbing-state masses differ. Expected resampling counts are
 29/77 for the canonical algorithm and 17/42 for the block algorithm.
 
-The self-contained [exact program](../frontier/cover-geometry/canonical_resampling_law_comparison.py)
-and [data](../frontier/cover-geometry/canonical_resampling_law_comparison.json)
+The self-contained [exact program](../frontier/cover-geometry/canonical-resampling-law-comparison/canonical_resampling_law_comparison.py)
+and [data](../frontier/cover-geometry/canonical-resampling-law-comparison/canonical_resampling_law_comparison.json)
 construct both kernels from the literal AP conditions and solve their
 absorption equations over rational numbers. They check normalization,
 flow equations, all induced Shearer polynomials, the transition witness

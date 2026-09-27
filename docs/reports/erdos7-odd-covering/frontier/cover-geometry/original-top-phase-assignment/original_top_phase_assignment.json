@@ -1,0 +1,6419 @@
+{
+  "scope": "Original uniform mu throughout. Infeasible phase assignment is null with explicit missing-phase witnesses, never zero. Full private integral only claimed when all phases have actual suppliers. Ordinary exact controls, not Lean or unrestricted #7.",
+  "controls": [
+    {
+      "name": "six_distinct_odd_local_Hall_noncover",
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 135,
+          "residue": 0,
+          "private_witness": 0
+        },
+        {
+          "label": 1,
+          "modulus": 5,
+          "residue": 1,
+          "private_witness": 1
+        },
+        {
+          "label": 2,
+          "modulus": 15,
+          "residue": 12,
+          "private_witness": 12
+        },
+        {
+          "label": 3,
+          "modulus": 45,
+          "residue": 18,
+          "private_witness": 18
+        },
+        {
+          "label": 4,
+          "modulus": 35,
+          "residue": 14,
+          "private_witness": 14
+        },
+        {
+          "label": 5,
+          "modulus": 55,
+          "residue": 44,
+          "private_witness": 44
+        }
+      ],
+      "period": 10395,
+      "lower_modulus": 9,
+      "whole_cover": false,
+      "numerically_distinct": true,
+      "all_moduli_odd": true,
+      "uncovered_count": 6856,
+      "selected_target_label": 0,
+      "selected_target_modulus": 135,
+      "prime": 5,
+      "private_count": 77,
+      "global_support_count": 4,
+      "global_coefficient": 0,
+      "feasible_private_count": 17,
+      "infeasible_private_count": 60,
+      "feasible_subset_integral_phi": "17/3465",
+      "feasible_subset_integral_local_bin": "1/315",
+      "feasible_subset_integral_hall_subset": "17/3465",
+      "restricted_feasible_subset_actual_pair_sum": "17/3465",
+      "full_original_pair_capacity_rhs": "1/3",
+      "full_private_phi_integral": null,
+      "source_zero": {
+        "source": 0,
+        "assignment": {
+          "feasible": true,
+          "missing_phases": [],
+          "phi": 3,
+          "local_support_count": 3,
+          "local_bin_bound": 1,
+          "hall_subset_bound": 3,
+          "hall_witness": {
+            "phases": [
+              1,
+              2,
+              3
+            ],
+            "support_count": 1
+          },
+          "integer_weight_certificate": {
+            "weights": [
+              {
+                "support": [
+                  5
+                ],
+                "weight": 2
+              }
+            ],
+            "phase_minimum_sum": 6,
+            "penalty": 3,
+            "lower_bound": 3
+          }
+        },
+        "neighbors": [
+          {
+            "phase": 1,
+            "residue": 8316,
+            "actual_supplier_labels": [
+              1
+            ],
+            "actual_supplier_moduli": [
+              5
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 6237,
+            "actual_supplier_labels": [
+              2
+            ],
+            "actual_supplier_moduli": [
+              15
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 4158,
+            "actual_supplier_labels": [
+              3
+            ],
+            "actual_supplier_moduli": [
+              45
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 2079,
+            "actual_supplier_labels": [
+              4,
+              5
+            ],
+            "actual_supplier_moduli": [
+              35,
+              55
+            ],
+            "supports": [
+              [
+                5,
+                7
+              ],
+              [
+                5,
+                11
+              ]
+            ]
+          }
+        ]
+      },
+      "private_rows": [
+        {
+          "source": 0,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 3,
+            "local_bin_bound": 1,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8316,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6237,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4158,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2079,
+              "actual_supplier_labels": [
+                4,
+                5
+              ],
+              "actual_supplier_moduli": [
+                35,
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ],
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 135,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8451,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6372,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4293,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2214,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 270,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8586,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6507,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4428,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2349,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 405,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8721,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6642,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4563,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2484,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 540,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8856,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6777,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4698,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2619,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 675,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8991,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6912,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4833,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2754,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 810,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9126,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7047,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4968,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 2889,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 945,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9261,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7182,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5103,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3024,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 1080,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9396,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7317,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5238,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3159,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 1215,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9531,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7452,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5373,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3294,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 1350,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9666,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7587,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5508,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3429,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 1485,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9801,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7722,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5643,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3564,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 1620,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 9936,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7857,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5778,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3699,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 1755,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 10071,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 7992,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 5913,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3834,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 1890,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 10206,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8127,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6048,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 3969,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 2025,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 10341,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8262,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6183,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4104,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2160,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 81,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8397,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6318,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4239,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2295,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 216,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8532,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6453,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4374,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2430,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 351,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8667,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6588,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4509,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2565,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 486,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8802,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6723,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4644,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2700,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 621,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 8937,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6858,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4779,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 2835,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 756,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9072,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 6993,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 4914,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 2970,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 891,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9207,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7128,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5049,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 3105,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1026,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9342,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7263,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5184,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 3240,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1161,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9477,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7398,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5319,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 3375,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1296,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9612,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7533,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5454,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 3510,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1431,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9747,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7668,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5589,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 3645,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1566,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 9882,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7803,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5724,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 3780,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1701,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 10017,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 7938,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5859,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 3915,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1836,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 10152,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8073,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 5994,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4050,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 1971,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 10287,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8208,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6129,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4185,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2106,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 27,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8343,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6264,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4320,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2241,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 162,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8478,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6399,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4455,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2376,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 297,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8613,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6534,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 4590,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2511,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 432,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8748,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6669,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4725,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2646,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 567,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 8883,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6804,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 4860,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2781,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 702,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9018,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 6939,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 4995,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 2916,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 837,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9153,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7074,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5130,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3051,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 972,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9288,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7209,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5265,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3186,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1107,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9423,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7344,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5400,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3321,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1242,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9558,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7479,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5535,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3456,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1377,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9693,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7614,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5670,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3591,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1512,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9828,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7749,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 5805,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3726,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1647,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 9963,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 7884,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 5940,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3861,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1782,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 10098,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8019,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 6075,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 3996,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 1917,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 10233,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8154,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 6210,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4131,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2052,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 10368,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8289,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 6345,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4266,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2187,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 108,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8424,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 6480,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4401,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2322,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 243,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8559,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 6615,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4536,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2457,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 378,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8694,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 6750,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4671,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2592,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 513,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8829,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 6885,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4806,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2727,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 648,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 8964,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7020,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 4941,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2862,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 783,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9099,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7155,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5076,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 2997,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 918,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9234,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7290,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5211,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3132,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1053,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9369,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7425,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5346,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3267,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1188,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9504,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 7560,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5481,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3402,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1323,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9639,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 7695,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5616,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3537,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1458,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9774,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7830,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5751,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3672,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1593,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9909,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 7965,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5886,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3807,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1728,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 10044,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8100,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6021,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 3942,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1863,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 10179,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8235,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6156,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4077,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 1998,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 10314,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8370,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6291,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4212,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2133,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 54,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8505,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6426,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4347,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2268,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 189,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 8640,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6561,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4482,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2403,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 324,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8775,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6696,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4617,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2538,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 459,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 8910,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6831,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4752,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2673,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 594,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 9045,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6966,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 4887,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2808,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 729,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9180,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7101,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5022,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 2943,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 864,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9315,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7236,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5157,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3078,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 999,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9450,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 3,
+            "local_support_count": 2,
+            "local_bin_bound": 2,
+            "hall_subset_bound": 3,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3
+              ],
+              "support_count": 1
+            },
+            "integer_weight_certificate": {
+              "weights": [
+                {
+                  "support": [
+                    5
+                  ],
+                  "weight": 2
+                }
+              ],
+              "phase_minimum_sum": 6,
+              "penalty": 3,
+              "lower_bound": 3
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7371,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5292,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3213,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1134,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "source": 9585,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7506,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5427,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3348,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1269,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9720,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7641,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5562,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3483,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1404,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9855,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7776,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5697,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3618,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1539,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 9990,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 7911,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5832,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3753,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1674,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 10125,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8046,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 5967,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3888,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1809,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        },
+        {
+          "source": 10260,
+          "assignment": {
+            "feasible": false,
+            "missing_phases": [
+              4
+            ],
+            "phi": null,
+            "integer_weight_certificate": null
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 8181,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                5
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 6102,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 4023,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                45
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 1944,
+              "actual_supplier_labels": [],
+              "actual_supplier_moduli": [],
+              "supports": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "distinct_odd_feasible_zero_Hall_star",
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 15015,
+          "residue": 0,
+          "private_witness": 0
+        },
+        {
+          "label": 1,
+          "modulus": 15,
+          "residue": 6,
+          "private_witness": 6
+        },
+        {
+          "label": 2,
+          "modulus": 35,
+          "residue": 7,
+          "private_witness": 7
+        },
+        {
+          "label": 3,
+          "modulus": 55,
+          "residue": 33,
+          "private_witness": 33
+        },
+        {
+          "label": 4,
+          "modulus": 65,
+          "residue": 39,
+          "private_witness": 39
+        }
+      ],
+      "period": 15015,
+      "lower_modulus": 1,
+      "whole_cover": false,
+      "numerically_distinct": true,
+      "all_moduli_odd": true,
+      "uncovered_count": 13080,
+      "selected_target_label": 0,
+      "selected_target_modulus": 15015,
+      "prime": 5,
+      "private_count": 1,
+      "global_support_count": 5,
+      "global_coefficient": 0,
+      "feasible_private_count": 1,
+      "infeasible_private_count": 0,
+      "feasible_subset_integral_phi": "0",
+      "feasible_subset_integral_local_bin": "0",
+      "feasible_subset_integral_hall_subset": "0",
+      "restricted_feasible_subset_actual_pair_sum": "0",
+      "full_original_pair_capacity_rhs": "0",
+      "full_private_phi_integral": "0",
+      "source_zero": {
+        "source": 0,
+        "assignment": {
+          "feasible": true,
+          "missing_phases": [],
+          "phi": 0,
+          "local_support_count": 4,
+          "local_bin_bound": 0,
+          "hall_subset_bound": 0,
+          "hall_witness": {
+            "phases": [
+              1
+            ],
+            "support_count": 1
+          }
+        },
+        "neighbors": [
+          {
+            "phase": 1,
+            "residue": 6006,
+            "actual_supplier_labels": [
+              1
+            ],
+            "actual_supplier_moduli": [
+              15
+            ],
+            "supports": [
+              [
+                3,
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 12012,
+            "actual_supplier_labels": [
+              2
+            ],
+            "actual_supplier_moduli": [
+              35
+            ],
+            "supports": [
+              [
+                5,
+                7
+              ]
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 3003,
+            "actual_supplier_labels": [
+              3
+            ],
+            "actual_supplier_moduli": [
+              55
+            ],
+            "supports": [
+              [
+                5,
+                11
+              ]
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 9009,
+            "actual_supplier_labels": [
+              4
+            ],
+            "actual_supplier_moduli": [
+              65
+            ],
+            "supports": [
+              [
+                5,
+                13
+              ]
+            ]
+          }
+        ]
+      },
+      "private_rows": [
+        {
+          "source": 0,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 0,
+            "local_support_count": 4,
+            "local_bin_bound": 0,
+            "hall_subset_bound": 0,
+            "hall_witness": {
+              "phases": [
+                1
+              ],
+              "support_count": 1
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 6006,
+              "actual_supplier_labels": [
+                1
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  3,
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 12012,
+              "actual_supplier_labels": [
+                2
+              ],
+              "actual_supplier_moduli": [
+                35
+              ],
+              "supports": [
+                [
+                  5,
+                  7
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 3003,
+              "actual_supplier_labels": [
+                3
+              ],
+              "actual_supplier_moduli": [
+                55
+              ],
+              "supports": [
+                [
+                  5,
+                  11
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 9009,
+              "actual_supplier_labels": [
+                4
+              ],
+              "actual_supplier_moduli": [
+                65
+              ],
+              "supports": [
+                [
+                  5,
+                  13
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "distinct_even_L60_whole",
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 2,
+          "residue": 1,
+          "private_witness": 3
+        },
+        {
+          "label": 1,
+          "modulus": 4,
+          "residue": 2,
+          "private_witness": 18
+        },
+        {
+          "label": 2,
+          "modulus": 3,
+          "residue": 1,
+          "private_witness": 4
+        },
+        {
+          "label": 3,
+          "modulus": 6,
+          "residue": 2,
+          "private_witness": 20
+        },
+        {
+          "label": 4,
+          "modulus": 5,
+          "residue": 1,
+          "private_witness": 36
+        },
+        {
+          "label": 5,
+          "modulus": 10,
+          "residue": 2,
+          "private_witness": 12
+        },
+        {
+          "label": 6,
+          "modulus": 20,
+          "residue": 8,
+          "private_witness": 48
+        },
+        {
+          "label": 7,
+          "modulus": 15,
+          "residue": 0,
+          "private_witness": 0
+        },
+        {
+          "label": 8,
+          "modulus": 30,
+          "residue": 24,
+          "private_witness": 24
+        }
+      ],
+      "period": 60,
+      "lower_modulus": 2,
+      "whole_cover": true,
+      "numerically_distinct": true,
+      "all_moduli_odd": false,
+      "uncovered_count": 0,
+      "selected_target_label": 4,
+      "selected_target_modulus": 5,
+      "prime": 5,
+      "private_count": 1,
+      "global_support_count": 3,
+      "global_coefficient": 1,
+      "feasible_private_count": 1,
+      "infeasible_private_count": 0,
+      "feasible_subset_integral_phi": "1/60",
+      "feasible_subset_integral_local_bin": "1/60",
+      "feasible_subset_integral_hall_subset": "1/60",
+      "restricted_feasible_subset_actual_pair_sum": "1/60",
+      "full_original_pair_capacity_rhs": "2/5",
+      "full_private_phi_integral": "1/60",
+      "source_zero": null,
+      "private_rows": [
+        {
+          "source": 36,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 1,
+            "local_support_count": 3,
+            "local_bin_bound": 1,
+            "hall_subset_bound": 1,
+            "hall_witness": {
+              "phases": [
+                0,
+                4
+              ],
+              "support_count": 1
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 0,
+              "residue": 0,
+              "actual_supplier_labels": [
+                7
+              ],
+              "actual_supplier_moduli": [
+                15
+              ],
+              "supports": [
+                [
+                  3,
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 12,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                10
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 48,
+              "actual_supplier_labels": [
+                6
+              ],
+              "actual_supplier_moduli": [
+                20
+              ],
+              "supports": [
+                [
+                  2,
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 24,
+              "actual_supplier_labels": [
+                8
+              ],
+              "actual_supplier_moduli": [
+                30
+              ],
+              "supports": [
+                [
+                  3,
+                  5
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "repeated_modulus_25_partition",
+      "classes": [
+        {
+          "label": 0,
+          "modulus": 25,
+          "residue": 0,
+          "private_witness": 0
+        },
+        {
+          "label": 1,
+          "modulus": 25,
+          "residue": 1,
+          "private_witness": 1
+        },
+        {
+          "label": 2,
+          "modulus": 25,
+          "residue": 2,
+          "private_witness": 2
+        },
+        {
+          "label": 3,
+          "modulus": 25,
+          "residue": 3,
+          "private_witness": 3
+        },
+        {
+          "label": 4,
+          "modulus": 25,
+          "residue": 4,
+          "private_witness": 4
+        },
+        {
+          "label": 5,
+          "modulus": 25,
+          "residue": 5,
+          "private_witness": 5
+        },
+        {
+          "label": 6,
+          "modulus": 25,
+          "residue": 6,
+          "private_witness": 6
+        },
+        {
+          "label": 7,
+          "modulus": 25,
+          "residue": 7,
+          "private_witness": 7
+        },
+        {
+          "label": 8,
+          "modulus": 25,
+          "residue": 8,
+          "private_witness": 8
+        },
+        {
+          "label": 9,
+          "modulus": 25,
+          "residue": 9,
+          "private_witness": 9
+        },
+        {
+          "label": 10,
+          "modulus": 25,
+          "residue": 10,
+          "private_witness": 10
+        },
+        {
+          "label": 11,
+          "modulus": 25,
+          "residue": 11,
+          "private_witness": 11
+        },
+        {
+          "label": 12,
+          "modulus": 25,
+          "residue": 12,
+          "private_witness": 12
+        },
+        {
+          "label": 13,
+          "modulus": 25,
+          "residue": 13,
+          "private_witness": 13
+        },
+        {
+          "label": 14,
+          "modulus": 25,
+          "residue": 14,
+          "private_witness": 14
+        },
+        {
+          "label": 15,
+          "modulus": 25,
+          "residue": 15,
+          "private_witness": 15
+        },
+        {
+          "label": 16,
+          "modulus": 25,
+          "residue": 16,
+          "private_witness": 16
+        },
+        {
+          "label": 17,
+          "modulus": 25,
+          "residue": 17,
+          "private_witness": 17
+        },
+        {
+          "label": 18,
+          "modulus": 25,
+          "residue": 18,
+          "private_witness": 18
+        },
+        {
+          "label": 19,
+          "modulus": 25,
+          "residue": 19,
+          "private_witness": 19
+        },
+        {
+          "label": 20,
+          "modulus": 25,
+          "residue": 20,
+          "private_witness": 20
+        },
+        {
+          "label": 21,
+          "modulus": 25,
+          "residue": 21,
+          "private_witness": 21
+        },
+        {
+          "label": 22,
+          "modulus": 25,
+          "residue": 22,
+          "private_witness": 22
+        },
+        {
+          "label": 23,
+          "modulus": 25,
+          "residue": 23,
+          "private_witness": 23
+        },
+        {
+          "label": 24,
+          "modulus": 25,
+          "residue": 24,
+          "private_witness": 24
+        }
+      ],
+      "period": 25,
+      "lower_modulus": 5,
+      "whole_cover": true,
+      "numerically_distinct": false,
+      "all_moduli_odd": true,
+      "uncovered_count": 0,
+      "selected_target_label": 0,
+      "selected_target_modulus": 25,
+      "prime": 5,
+      "private_count": 1,
+      "global_support_count": 1,
+      "global_coefficient": 6,
+      "feasible_private_count": 1,
+      "infeasible_private_count": 0,
+      "feasible_subset_integral_phi": "6/25",
+      "feasible_subset_integral_local_bin": "6/25",
+      "feasible_subset_integral_hall_subset": "6/25",
+      "restricted_feasible_subset_actual_pair_sum": "6/25",
+      "full_original_pair_capacity_rhs": "6",
+      "full_private_phi_integral": "6/25",
+      "source_zero": {
+        "source": 0,
+        "assignment": {
+          "feasible": true,
+          "missing_phases": [],
+          "phi": 6,
+          "local_support_count": 1,
+          "local_bin_bound": 6,
+          "hall_subset_bound": 6,
+          "hall_witness": {
+            "phases": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "support_count": 1
+          }
+        },
+        "neighbors": [
+          {
+            "phase": 1,
+            "residue": 5,
+            "actual_supplier_labels": [
+              5
+            ],
+            "actual_supplier_moduli": [
+              25
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 2,
+            "residue": 10,
+            "actual_supplier_labels": [
+              10
+            ],
+            "actual_supplier_moduli": [
+              25
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 3,
+            "residue": 15,
+            "actual_supplier_labels": [
+              15
+            ],
+            "actual_supplier_moduli": [
+              25
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "phase": 4,
+            "residue": 20,
+            "actual_supplier_labels": [
+              20
+            ],
+            "actual_supplier_moduli": [
+              25
+            ],
+            "supports": [
+              [
+                5
+              ]
+            ]
+          }
+        ]
+      },
+      "private_rows": [
+        {
+          "source": 0,
+          "assignment": {
+            "feasible": true,
+            "missing_phases": [],
+            "phi": 6,
+            "local_support_count": 1,
+            "local_bin_bound": 6,
+            "hall_subset_bound": 6,
+            "hall_witness": {
+              "phases": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "support_count": 1
+            }
+          },
+          "neighbors": [
+            {
+              "phase": 1,
+              "residue": 5,
+              "actual_supplier_labels": [
+                5
+              ],
+              "actual_supplier_moduli": [
+                25
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 2,
+              "residue": 10,
+              "actual_supplier_labels": [
+                10
+              ],
+              "actual_supplier_moduli": [
+                25
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 3,
+              "residue": 15,
+              "actual_supplier_labels": [
+                15
+              ],
+              "actual_supplier_moduli": [
+                25
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            },
+            {
+              "phase": 4,
+              "residue": 20,
+              "actual_supplier_labels": [
+                20
+              ],
+              "actual_supplier_moduli": [
+                25
+              ],
+              "supports": [
+                [
+                  5
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

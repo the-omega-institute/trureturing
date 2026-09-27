@@ -1,0 +1,214 @@
+{
+  "schema": "linear-schedule-credit-originals-v1",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "originals": [
+    {
+      "modulus": 3,
+      "residue": 0,
+      "private_witness": 9
+    },
+    {
+      "modulus": 5,
+      "residue": 0,
+      "private_witness": 10
+    },
+    {
+      "modulus": 7,
+      "residue": 0,
+      "private_witness": 14
+    },
+    {
+      "modulus": 11,
+      "residue": 0,
+      "private_witness": 88
+    },
+    {
+      "modulus": 13,
+      "residue": 0,
+      "private_witness": 26
+    },
+    {
+      "modulus": 15,
+      "residue": 1,
+      "private_witness": 16
+    },
+    {
+      "modulus": 17,
+      "residue": 0,
+      "private_witness": 17
+    },
+    {
+      "modulus": 19,
+      "residue": 0,
+      "private_witness": 152
+    },
+    {
+      "modulus": 21,
+      "residue": 2,
+      "private_witness": 23
+    },
+    {
+      "modulus": 33,
+      "residue": 2,
+      "private_witness": 101
+    },
+    {
+      "modulus": 35,
+      "residue": 3,
+      "private_witness": 73
+    },
+    {
+      "modulus": 39,
+      "residue": 2,
+      "private_witness": 158
+    },
+    {
+      "modulus": 51,
+      "residue": 1,
+      "private_witness": 103
+    },
+    {
+      "modulus": 55,
+      "residue": 4,
+      "private_witness": 59
+    },
+    {
+      "modulus": 57,
+      "residue": 1,
+      "private_witness": 58
+    },
+    {
+      "modulus": 65,
+      "residue": 7,
+      "private_witness": 137
+    },
+    {
+      "modulus": 77,
+      "residue": 1,
+      "private_witness": 232
+    },
+    {
+      "modulus": 85,
+      "residue": 2,
+      "private_witness": 257
+    },
+    {
+      "modulus": 91,
+      "residue": 4,
+      "private_witness": 277
+    },
+    {
+      "modulus": 95,
+      "residue": 4,
+      "private_witness": 194
+    },
+    {
+      "modulus": 105,
+      "residue": 13,
+      "private_witness": 118
+    },
+    {
+      "modulus": 119,
+      "residue": 5,
+      "private_witness": 124
+    },
+    {
+      "modulus": 133,
+      "residue": 5,
+      "private_witness": 404
+    },
+    {
+      "modulus": 143,
+      "residue": 3,
+      "private_witness": 146
+    },
+    {
+      "modulus": 165,
+      "residue": 19,
+      "private_witness": 184
+    },
+    {
+      "modulus": 187,
+      "residue": 6,
+      "private_witness": 193
+    },
+    {
+      "modulus": 195,
+      "residue": 22,
+      "private_witness": 412
+    },
+    {
+      "modulus": 209,
+      "residue": 7,
+      "private_witness": 634
+    },
+    {
+      "modulus": 221,
+      "residue": 8,
+      "private_witness": 892
+    },
+    {
+      "modulus": 231,
+      "residue": 8,
+      "private_witness": 239
+    },
+    {
+      "modulus": 247,
+      "residue": 6,
+      "private_witness": 3217
+    },
+    {
+      "modulus": 255,
+      "residue": 7,
+      "private_witness": 262
+    },
+    {
+      "modulus": 273,
+      "residue": 11,
+      "private_witness": 284
+    },
+    {
+      "modulus": 285,
+      "residue": 34,
+      "private_witness": 604
+    },
+    {
+      "modulus": 323,
+      "residue": 3,
+      "private_witness": 326
+    },
+    {
+      "modulus": 357,
+      "residue": 41,
+      "private_witness": 2183
+    },
+    {
+      "modulus": 385,
+      "residue": 43,
+      "private_witness": 43
+    },
+    {
+      "modulus": 399,
+      "residue": 20,
+      "private_witness": 419
+    },
+    {
+      "modulus": 429,
+      "residue": 5,
+      "private_witness": 1721
+    },
+    {
+      "modulus": 455,
+      "residue": 53,
+      "private_witness": 53
+    }
+  ]
+}

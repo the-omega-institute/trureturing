@@ -11,9 +11,38 @@ You do not need to write a new proof to make a useful contribution. Public-facin
 documentation defaults to English.
 
 [Project entrance](../README.md) ·
-[Use Claude Code or Codex](#use-claude-code-or-codex) ·
+[Choose a starting point](#choose-a-starting-point) ·
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
+
+## Choose a starting point
+
+- **Connect a question to a research direction.** Use the
+  [research directions](VISION.md#research-directions) to identify an observation, missing relation
+  or reusable lemma that could advance an existing line. State what would
+  support or refute the proposed step, search the library first, and explain
+  what the result would enable next. New evidence should also update the
+  relevant explanation; preserve the distinction between a philosophical
+  commitment, a model, an experiment and a checked theorem.
+- **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
+  from explanation to Lean statement. Clarify terminology, fix a link or improve
+  a translation while preserving the result's assumptions and scope.
+- **Reproduce.** Run the [WDigits example](../README.md#first-run). For an
+  experiment, follow its own instructions and report the input, environment and
+  output. A computed sample and a theorem answer different questions.
+- **Fix.** Bring a minimal reproduction of a build failure, misleading
+  explanation or tool defect. A small, focused fix is a useful first PR.
+- **Explore.** Start from a [problem dossier](../Problems/) or
+  [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
+  search for existing results before writing a proof.
+
+To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
+with the source path or declaration, the commit from `git rev-parse HEAD`, your
+OS and relevant tool versions, the smallest input and command that reproduce
+it, the expected outcome and the actual output or exit code. For a mathematical
+mismatch, quote the statement and identify the missing hypothesis or give the
+counterexample. Include necessary diagnostics; omit credentials and session
+transcripts. A precise explanation question is welcome too.
 
 ## Use Claude Code or Codex
 
@@ -110,35 +139,6 @@ need a mathematical skill. A contribution request you can paste:
 4. Follow [Open a pull request](#open-a-pull-request) to target `dev` and inspect
    the required remote checks. Local checks and an agent's confidence do not
    replace those results or independent review.
-
-## Choose a starting point
-
-- **Connect a question to a research direction.** Use the
-  [research directions](VISION.md#research-directions) to identify an observation, missing relation
-  or reusable lemma that could advance an existing line. State what would
-  support or refute the proposed step, search the library first, and explain
-  what the result would enable next. New evidence should also update the
-  relevant explanation; preserve the distinction between a philosophical
-  commitment, a model, an experiment and a checked theorem.
-- **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
-  from explanation to Lean statement. Clarify terminology, fix a link or improve
-  a translation while preserving the result's assumptions and scope.
-- **Reproduce.** Run the [WDigits example](../README.md#first-run). For an
-  experiment, follow its own instructions and report the input, environment and
-  output. A computed sample and a theorem answer different questions.
-- **Fix.** Bring a minimal reproduction of a build failure, misleading
-  explanation or tool defect. A small, focused fix is a useful first PR.
-- **Explore.** Start from a [problem dossier](../Problems/) or
-  [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
-  search for existing results before writing a proof.
-
-To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
-with the source path or declaration, the commit from `git rev-parse HEAD`, your
-OS and relevant tool versions, the smallest input and command that reproduce
-it, the expected outcome and the actual output or exit code. For a mathematical
-mismatch, quote the statement and identify the missing hypothesis or give the
-counterexample. Include necessary diagnostics; omit credentials and session
-transcripts. A precise explanation question is welcome too.
 
 ## Prerequisites
 

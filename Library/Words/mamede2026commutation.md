@@ -9,6 +9,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeAdjacentWords
   - D5/S1/Words/Permutations/MamedeSourceAction
   - D5/S1/Words/Permutations/MamedeConditionalConverse
+  - D5/S1/Words/Permutations/MamedeShapeExtraction
 license: citation-only
 triage: anchor
 ---
@@ -36,12 +37,34 @@ The conditional result requires one **actual singleton reduced source word** wit
 first-orientation shape. It proves that every singleton reduced word of the
 target permutation factors around `descending(j,i)` with the same support
 bounds and lifts to a strictly longer singleton reduced source word. The
-source-shape premise is not derived from the other permutation hypotheses in
-the Lean development. No reflected orientation, cardinality equality,
+source-shape premise is derived for every singleton source word by the separate
+`source_shape_for_every_singleton` theorem under `endpointExteriorFixedSource`,
+which omits the nonoscillating existential and separate nonfixed clauses of
+`exactSourceHypotheses`.
+No reflected orientation, cardinality equality,
 oscillation branch, induction, Conjecture 5.1, or KPI conclusion follows from
 this conditional statement.
 
 The nonfixed endpoint clauses and nonoscillating singleton existential in
 `exactSourceHypotheses` retain the paper's context, but the two conditional
 proofs do not use them once the actual shaped singleton is supplied. The
-existential does not establish `sourceShape` for that singleton.
+existential alone does not assert `sourceShape`; the separate Lean theorem
+establishes it using the endpoint equations, exterior fixed points, and an
+actual reduced consecutive source word.
+
+The new `source_forced_runs` theorem applies to **each** singleton reduced
+source word under `endpointExteriorFixedSource`. Its three separate factorizations
+force a descent from `j` to `m`, an ascent from `m` to `M`, and a descent from
+`M` to `i`, with one-sided prefix/suffix bounds. Every generator lies in
+`[m,M]`. The theorem follows the endpoint strands and the repository's
+rightmost-first permutation action. The new
+`source_shape_for_every_singleton` theorem aligns the shared occurrences of
+`m` and `M`, producing one `fullExcursion` and both strict `sourceShape`
+support bounds. The endpoint-based strengthening omits the nonoscillating
+singleton existential and separate nonfixed endpoint clauses required by
+`exactSourceHypotheses`; it is a repository-derived Lean result, not a result
+attributed to the cited paper. The paper derives endpoint identities after
+choosing a nonoscillating word, whereas this result assumes the identities
+directly; the two source predicates are not simply ordered. The paper-to-Lean
+translation remains subject to independent source review. Conjecture 5.1
+remains open; KPI is 0.

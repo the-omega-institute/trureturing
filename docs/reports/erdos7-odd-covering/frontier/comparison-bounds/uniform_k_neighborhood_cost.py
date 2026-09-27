@@ -14,9 +14,9 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
-    'frontier/source-budgets/shared_budget_affine_tail.py': 'bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd',
-    'frontier/source-budgets/actual_five_slot_source_modulus.py': '4dd89f4919d2150fa27ba405e586f6bfe74f76b6037b934441ca7ff5357afa86',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '9aecea9f4424bdfd26be82ebb643d72dffe35b5a57d80e6730faaf471eebe986',
+    'frontier/source-budgets/shared_budget_affine_tail.py': '45edf2b53e18190ffc88eee0f58101e399176a16cc442b382f87a8a507dda8a9',
+    'frontier/source-budgets/actual_five_slot_source_modulus.py': '7170deaf8cdf187624a92a215de8d5e12939d4a2518bf4b9214e31c85d09aaab',
 }
 COORDINATES = ('E5-g*q5', 'E15-g*q15', 'E27', 'Ege4', 'E5deep', 'E15deep', 'omega')
 PROBES = frozenset(((0, 1, 2, 0, 2, 1, 2), (1, 0, 0, 0, 0, 1, 1),
