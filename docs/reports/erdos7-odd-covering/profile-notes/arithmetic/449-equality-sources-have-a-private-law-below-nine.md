@@ -1889,11 +1889,251 @@ missing near-block supplier. No Lean verification is claimed.
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_sharp_block_transport.py
 ```
 
+## Mass20 transport from an actual neighborhood condition
+
+The arbitrary-support obstruction above disappears under the following additional support condition. This is an ordinary mathematical theorem, not Lean verification. It treats an optional column of capacity6 explicitly because one outside atom can reserve one unit of a public-leaf budget.
+
+Let E be an allowed subset of a5x7 array. Every row has capacity6, every entry capacity2, and every column capacity7 except for at most one flagged column F, whose capacity is6. Assume E supports a nonnegative rational matrix of total20 and that every three distinct rows have at least three neighbors in their union.
+
+Then there is a rational matrix y supported in E, with the same capacities and total, such that at every one of the35 cells
+
+    S_ij(y) = 20 r_i(y) + 20 c_j(y) + 25 y_ij <= 6200/21 < 300.
+
+No total-neighborhood>=5 assumption is needed. Zero entries have their literal score20r_i+20c_j and are included in the bound.
+
+### Maxflow at least21
+
+The standard transportation network has source->row capacity6, allowed row->column capacity2, and column->sink capacity7 or6 as specified. Its maximum M is integral. If M>=21, choose an integral flow of mass21 and multiply it by20/21. Before scaling every score is at most310; afterwards it is at most6200/21. Scaling also preserves the flagged column cap6. This branch does not use the sharp295 mass21 theorem.
+
+### Maxflow exactly20 and cut types
+
+For a minimum cut let I be the source-side rows, J the source-side columns, a=5-|I|, b the number of ordinary columns in J, f in{0,1} indicate whether F belongs to J, and c count allowed edges from I to the complement of J. In the unflagged problem set f=0. Then
+
+    6a + 7b + 6f + 2c = 20.
+
+Cut equality implies that all outside rows have mass6, all inside columns are filled to their specified capacity, all c crossing entries equal2, and all backward outside-row->inside-column entries are zero. Feasibility therefore remains a concrete constraint in every case below.
+
+For f=0 the possible(a,b,c) are
+
+    (0,0,10), (1,0,7), (2,0,4), (3,0,1), (0,2,3), (1,2,0).
+
+For f=1 they are
+
+    (0,0,7), (1,0,4), (2,0,1), (0,2,0).
+
+We construct a bound at most1175/4 in every feasible case.
+
+### No inside flagged column: f=0
+
+Type(1,2,0) is impossible: the four inside rows have all their neighbors in the two inside columns, contradicting the three-row hypothesis.
+
+For type(0,2,3), the three crossing edges meet three different rows. Otherwise at least three rows have all their neighbors in the two inside columns. Keep those entries2. Each of the two inside columns has at least four neighbors because it must carry7, and distributing7 uniformly among its neighbors gives entries<=7/4. Every row mass is at most2+2*(7/4)=11/2. Every outside column has mass at most6, including F if present. Scores in the two inside columns are at most
+
+    20*(11/2) + 20*7 + 25*(7/4) = 1175/4.
+
+Outside positive cells have score<=280; zero cells have score<=250.
+
+For type(0,0,10), every allowed entry is2. Every column mass is even and at most its capacity7 or6, hence is at most6. All scores are<=290.
+
+For type(1,0,7), four inside rows carry seven forced entries2 and one outside row v has mass6. Write d_i for inside row degrees and D_j for crossing column degrees. Feasibility gives d_i<=3 and D_j<=3.
+
+If no crossing edge has both d_i=3 and D_j=3, keep any feasible flow. Inside rows with d_i<=2 have mass<=4 and score<=270. A row with d_i=3 meets only columns D_j<=2, whose total mass after the outside row is at most6, giving score<=290. In the outside row a column with D_j<=2 gives score<=290; a column with D_j=3 allows an outside entry t<=1 and its score is240+45t<=285. Zero cells have score<=260.
+
+Otherwise let a degree3 inside row h meet a degree3 column A. A is the only degree3 crossing column: if B were another, h must meet B (otherwise its other two edges together with the six incidences in A,B exceed the seven edges). Then h's third edge is the only edge outside A,B; the other three inside rows have all neighbors in A,B, a contradiction. The outside row can send at most1 to A and at most2 elsewhere; its total6 implies at least three neighbors other than A. Send2 to any three such neighbors and zero elsewhere. Now every column has mass<=6, so all scores are<=290. This obeys F's cap whether or not F=A.
+
+For type(2,0,4), the three inside rows have four forced entries. Their neighborhood has size>=3, so crossing column degrees are<=2 with at most one degree2 column. The two outside rows need total12. Clip each residual column allowance to4, which is valid because there are only two outside rows. All allowances are4 except that a degree2 ordinary column has allowance3, or a degree2 flagged column has allowance2. There is at most one exceptional odd allowance3. Lower it to2 if present. All other network capacities are even; a cut using the odd arc previously had odd capacity at least13, so after this reduction it still has capacity at least12. All other cuts are unchanged. Divide the resulting even capacities by2, take an integral maxflow of value6, and multiply by2. Restoring the inside entries gives column masses<=6 and scores<=290.
+
+For type(3,0,1), one inside entry2 is in a column A, and the three outside rows need total18. Clip their residual column allowances to6. If A is ordinary its allowance is5; lower it to4. This preserves value18 since cuts using this sole odd arc previously had odd capacity at least19. If A=F its allowance is already4, so no reduction is needed. Every other allowance is6. Divide capacities by2, take an integral flow of value9, and multiply by2. Restoring the forced entry gives all columns mass<=6 and all scores<=290.
+
+### Inside flagged column: f=1
+
+For type(0,0,7), the flagged column has mass6 and every ordinary-column entry is one of the seven forced entries2. All ordinary column masses are even and<=7, hence<=6. The original feasible flow already has all scores<=290.
+
+For type(1,0,4), four inside rows have four crossing edges. No ordinary column A can contain three of them: the fourth edge is in a different column (four entries in A would violate its capacity), and after excluding its row the other three inside rows have all neighbors in{F,A}, a contradiction. Thus every crossing column has degree<=2. The single outside row adds at most2 per ordinary column, giving total mass<=6; F already has mass6. The original feasible flow has all scores<=290.
+
+Type(2,0,1) is impossible: the three inside rows have all neighbors in F and the column of the unique crossing edge.
+
+For type(0,2,0), all allowed edges lie in two ordinary columns and F, which require masses7,7,6. The ordinary columns each have at least four neighbors, and F at least three. Distribute each column uniformly over all its neighbors. The resulting entries are respectively<=7/4,7/4,2, and every row has mass<=11/2. Ordinary-column scores are<=1175/4 and flagged-column scores<=280. Zero scores are<=250.
+
+This completes all minimum-cut cases. Since1175/4<6200/21, the stated uniform bound follows.
+
+### Positive support and the local consumer
+
+The theorem constructs a matrix supported in E. If x is any original mass20 law with the same caps, take
+
+    z = (7/8)y + (1/8)x.
+
+Its score is at most
+
+    (7/8)*(6200/21) + (1/8)*310 = 3565/12 < 300.
+
+Every originally positive entry stays positive. If the initial positive support is exactly E, the mixture's positive support is also exactly E.
+
+For a consumer whose coherent raw charge is a fixed coarse contribution at most316 plus this local score, the resulting charge is at most
+
+    316 + 3565/12 = 7357/12 < 614.
+
+That last implication assumes the consumer has proved both the coarse contribution bound and the three-row neighborhood condition on the actual allowed support E. This local theorem does not establish either premise for general literal sources and does not by itself prove general cut77 or an outside-cofactor lifting.
+
+### Stronger unflagged bound
+
+If every column has capacity7, the M>=21 branch can use the sharp295 theorem above before scaling. Its score is then at most5900/21<1175/4. All M=20 cases already have bound1175/4. Thus the unflagged conclusion strengthens to
+
+    S_ij<=1175/4.                                      (NT1)
+
+A quarter-original mixture has score at most
+
+    (3/4)*(1175/4)+(1/4)*310=4765/16<300.
+
+The total number of neighboring columns need not be at least five; the stated three-row condition suffices. The universal proofs are the cut arguments, not the finite controls below.
+
+### Exact construction controls
+
+The [mass20 constructor](../../frontier/cover-geometry/height_two_mass20_three_row_transport.py) and [exact results](../../frontier/cover-geometry/height_two_mass20_three_row_transport.json) implement the optional-flag theorem with bound6200/21 and its7/8-new plus1/8-original mixture. They reuse the existing integral-flow code. This program keeps the uniform6200/21 branch even when no column is flagged. The stronger unflagged theorem(NT1) is the mathematical combination above with the preceding sharp295 construction; the program does not provide a separate entry point implementing that improvement.
+
+There are72 named fixture runs and864 bounded two-column controls. The fixtures exercise all eight feasible minimum-cut20 types and the maximum-at-least21 branch. In eight complete-support runs, a supplied everywhere-positive rational mass20 law is retained as the actual1/8 term; every mixed entry is checked against that supplied input. The program also rejects an invalid supplied initial total. All checks remain active under Python-O and use exact rational arithmetic. These are constructor controls, not an exhaustive classification of actual sources.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_mass20_three_row_transport.py
+```
+
+## A cut77 bridge for one common column and four exclusive private columns
+
+This restricted actual-source theorem uses the preceding coarse-block reduction, the sharp295 mass21 theorem and(NT1). It does not establish general cut77.
+
+### Exact source class and conclusion
+
+Let the four occupied five-roots have occupancy(5,5,5,4), with the fifth root empty. Fix five distinct first-seven columns P,G_0,G_1,G_2,G_3. Suppose EVERY actual fibre under root r is contained in P union G_r. There can be arbitrary actual leaves and child incidences within those two columns. Assume literal ternary-five/five-ary-seven product blocking. The usual standalone-five-tree premise may also be imposed, but the deduction below needs only blocking and an integral actual flow of value77 under Report449's network caps.
+
+Then the source supports one rational probability with
+
+    Gamma_1225 <= 691/77 <9.
+
+This statement concerns the specified actual two-column-per-root support restriction. In particular, it does not replace the general source's pairwise joint tree premise by an unjustified individual-root tree premise.
+
+### How the joint tree tests yield a private-neighborhood condition
+
+Put q_r=3 at full roots and2 at the gap root. Select any q_r actual children at r and q_s actual children at another occupied root s. By adjoining empty children and the empty root, literal product blocking says that their combined seven projection contains a ternary height-two tree.
+
+That projection is contained in only the three distinct columns P,G_r,G_s. Hence each of these three columns must contain at least three distinct leaves. Only root r can supply G_r in this selected pair, so the selected q_r children have at least three private neighbors in G_r. Since the selections were arbitrary, this holds for every q_r-child selection at every root.
+
+At a full root it is exactly the three-row-neighborhood property. At the gap root pad by its empty fifth row: every set of three literal rows includes at least two actual rows, which already supply at least three private neighbors. Thus every private block, padded to5x7, has the needed property.
+
+The conclusion about the COMMON column is different: its three leaves may be supplied jointly by the two selected roots. Nothing here asserts that each root separately has three common leaves.
+
+### First remove a near-full common block using an actual edge
+
+Start with an integral flow of total77. A coherent near20 obstruction has root mass a=21, block mass d=20 and public column mass b in{20,21}. If this block is in P, its root r has total private mass1 in G_r.
+
+Its20 common units occupy at least four child rows, because each child/common prefix has cap6. At most two rows have no private neighbor, by the three-row-neighborhood property. Therefore there is a common-positive child c with an actual private edge(c,h) in G_r. Choose one unit from any positive common atom in that child and move it to this actual private point.
+
+Every constraint remains valid:
+
+* The child and root totals are unchanged.
+* The private G_r row and entry had at most1 before the move, since the entire private block had mass1. They become at most2, within row6 and entry2.
+* No other root uses G_r. Its column and leaf totals had at most1 and become at most2, within21 and7.
+* All common-column and common-leaf totals only decrease.
+
+The common block drops20 to19 and the private block grows1 to2. No other block increases. There is at most one20 common block because the whole common column has mass at most21. Thus after at most one such integral move, no common near20 obstruction remains. A common full21 block is instead covered by the existing mass21 repair.
+
+### Repair the remaining disjoint blocks
+
+Every remaining near20 obstruction lies in a private G_r. Its public column is exclusive to r, hence b=d=20. Its root has a=21, so the total mass outside the block is1; in the integral flow each child has outside mass at most1. Consequently the within-block row cap6 is sufficient for the full child cap7.
+
+Apply the three-row-neighborhood mass20 lemma on the ENTIRE actual private support, allowing previously unused actual edges. It produces S_ij=20r_i+20c_j+25x_ij<=1175/4. If desired, mix one quarter of the initial block with three quarters of this matrix to retain all initially positive entries. The bound becomes4765/16.
+
+There is no flagged column cap: no other root uses G_r. The replacement preserves total20, all local caps and every coarse block mass. Different private blocks use distinct roots and public columns, so the changes are jointly feasible. Full21 blocks are repaired by the sharp295 construction, with quarter-original mixture giving S<=1195/4. Their isolated roots/columns are disjoint from the near20 blocks.
+
+For a private near20 coherent centre, the exact formula has constant303 and only the external child contribution z_i<=1:
+
+    K=303+20r_i+20c_j+25x_ij+5z_i
+      <=308+4765/16=9693/16<614.
+
+Full21 blocks have K<=2455/4<614. All remaining coherent blocks have the previously established coarse exclusion bound at most613. The sharpened noncoherent argument in Report449 gives K<=614 for every other phase layout, since coarse masses remain integral and full21 blocks retain their fine score bound.
+
+Thus the ONE repaired flow has every nonunit layout charge at most614. Normalizing its unchanged total77 and restoring the unit contribution proves Gamma<=1+614/77=691/77.
+
+### Exact control and remaining boundary
+
+The164-point actual source constructed below lies in this class. It passes480 selected tests,10000 literal product tests and the standalone tree predicate, has a matching actual flow/cut77, and forces root0/G_0 to remain20 under EVERY maximum flow. Its three-row private-neighborhood property therefore does not force internal mass21. Direct fractional replacement nevertheless gives the stronger complete-LCM upper674/77.
+
+For a general source, other roots may use G_r, and root r may have actual points outside P union G_r. Then the private-neighborhood inference and the simple one-unit transfer above both need new arguments. Neither is supplied by the bare pairwise tree premise alone. The general cut77 near20 problem remains open here.
+
+### General conditional consumer, including a column used by another root
+
+The following consumer does NOT assume the common/private source decomposition. Let F be any actual source admitting an integral value77 flow under the same height-two network caps. Call a coarse root/column block dangerous when its root mass is21, its block mass is20 and its public column mass is20 or21. Assume that, for EVERY dangerous block of this selected integral flow, the block's ENTIRE ACTUAL5x7 support E has at least three neighbors in the union of every three rows. It is enough to verify this property for the dangerous blocks; no such hypothesis is needed for full21 blocks or other blocks.
+
+The mass20 flagged-column extension supplies a rational matrix of total20 on E, row caps6, entry caps2, ordinary column caps7 and, if needed, one designated column cap6, with every local score at most6200/21. The proof is the finite minimum-cut classification for6a+7b+6epsilon+2c=20; when a21 flow exists, scaling it by20/21 already gives6200/21. The preceding proof covers all ten cut types, including both impossible cases; the capacity6 constraint is retained throughout.
+
+For a dangerous block, exactly one unit lies outside the block in its root. Thus each row's external child mass z_i is at most1. Its public column has either zero or one external unit. By integrality, when it has one, that unit lies in a single fine column j*, so the permitted INTERNAL fine-column caps are6 at j* and7 at every other column. This is the precise source of the flagged local constraint.
+
+Use the flagged matrix when necessary, then take7/8 of it plus1/8 of the initial block. This gives
+
+    S_ij <= (7/8)*(6200/21)+(1/8)*310 =3565/12.
+
+It preserves every initially positive entry; it may additionally use previously zero ACTUAL edges. Exact preservation of the initial positive support is not claimed when E is larger.
+
+All dangerous blocks and all full21 blocks have pairwise distinct roots and public columns: two such blocks in the same root or column would have combined mass at least40>21. Replace all of them simultaneously, using the sharp295 quarter-mixture for full21 blocks. Every coarse block total remains unchanged. Every atom outside the replaced blocks stays fixed, including the external unit defining each flag and the external child units. Thus the local allowance calculations remain valid simultaneously; the replacements do not consume one another's reserved external budgets.
+
+At a coherent centre in a dangerous block, let f_i and g_j be its internal row and column masses, x_ij its entry, and z_i,y_j its external row and public-leaf contributions. Its exact charge is
+
+    K =3a+3b+9d+20f_i+20g_j+25x_ij+5z_i+5y_j
+      <=316+3565/12=7357/12<614,
+
+because a=21, d=20, b<=21 and0<=z_i,y_j<=1. A full21 centre has K<=2455/4<614. For any other coherent block, either a<=20 (giving K<=613 by the joint slack inequality) or d<=19 (giving K<=612 directly from the original caps). Every noncoherent layout still has K<=614 by the previously established argument: it only uses the retained caps, unchanged integer coarse masses and the full21 local score bound.
+
+Consequently this one rational actual flow gives Gamma<=691/77. The exact remaining structural obligation for arbitrary literal4555 sources is now:
+
+    Find a value77 integral flow whose every dangerous block has the
+    actual three-row-neighborhood property, or repair the remaining
+    bad-neighborhood blocks by another joint actual-source construction.
+
+The common/private source class proved above supplies one genuine source-domain sufficient condition, after its explicit one-unit transfer removes a dangerous common block. The general literal pair tests alone have not been shown to imply the needed per-block property.
+
+
+## A literal cut77 source can force a good-neighborhood block to stay20
+
+The following actual source separates three different obligations: filling a block to21, repairing its internal weights, and changing its root mass. Failure of the first does not imply failure of the other two.
+
+Use occupancy(5,5,5,4,0), common first-seven column P=0, and exclusive private columns G_r=r+1. Every occupied child contains all seven leaves in P. The private points are:
+
+* Root0: every child has leaves A=0 and B=1 in G_0; children0,1,2 also have respectively C=2,D=3,E=4.
+* Root1: child c has private leaf c, and child0 also has leaf5.
+* Root2: child c has private leaf c.
+* Root3: its four children have private leaf sets{0},{1,2},{3,4},{5,6}.
+
+There are164 actual points. A network cut consists of P's cap21 arc, the two G_0 public-leaf cap7 arcs for A,B, and21 private-leaf cap2 arcs: the three exceptional G_0 points and the18 private points of the other roots. Its capacity is21+14+42=77. An explicit actual flow achieves77, so this is the minimum cut.
+
+Every maximum flow, including every real-valued one, saturates all these cut arcs and has zero backward cut flow. G_0 is exclusive to root0, so its total mass is forced to
+
+    7+7+2+2+2=20.
+
+Every three root0 children nevertheless have at least three distinct private neighbors, and the union contains five leaves. Thus even this genuine literal source does not allow its internal block to be raised to21. This refutes that particular supplier claim; it does not refute(NT1), which only reallocates mass20.
+
+One integral77 flow has private G_0 row entries(2,2,2),(2,2,2),(1,1,2),(1,1),(1,1), with the third entries in C,D,E. Replace each A/B incidence by7/5 and leave the three exceptional entries2. Keep every outside atom unchanged. This retains exactly the initial43 positive actual atoms. It gives a common law with complete LCM upper674/77<9.
+
+There is also an external integral reroute: move one unit from actual point(0,0,0,0) to already-positive point(2,4,0,4). Root0 falls from21 to20, root2 rises from19 to20, and the G_0 block remains20. The resulting flow has no root21/block20 pair. It therefore meets(SH1) and has an all-layout upper691/77<9, even though its separate-cylinder LCM envelope is9. This source consequently does not obstruct external rerouting.
+
+| One actual law | Maximum coherent raw charge | Nonunit separate-cylinder LCM envelope | Normalized LCM envelope |
+| --- | ---: | ---: | ---: |
+| Initial integral |618|621|698/77|
+| Internal fractional repair |579|597|674/77|
+| External integral reroute |610|616|9|
+
+The last column is an upper bound formed from separate cylinder maxima, not a claim that all those maxima are attained by one phase layout. The stronger(SH1) bound for the last row uses the phase-compatibility argument.
+
+The [actual-source control](../../frontier/cover-geometry/height_two_cut77_forced_twenty.py) and [exact data](../../frontier/cover-geometry/height_two_cut77_forced_twenty.json) construct the164 points, check all480 selected pair tests and10000 literal product-blocking tests, the standalone five-tree, every one of1307 network capacities and conservation, all1225 coherent centres, the cut and all three laws. Its minimum-cut argument applies to every maximum flow; the finite flow replay is an existence witness. This is not an original odd covering or a resolution of general cut77.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_forced_twenty.py
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. No corresponding neighborhood or rerouting supplier has been proved for every literal source.
 The partial-full-root70/63 profile above is controlled by(PF1), without
 settling every cut70 source. General high-incidence sources in the remaining
 range70/63 through77/63 are not thereby controlled: their high root/column incidence
