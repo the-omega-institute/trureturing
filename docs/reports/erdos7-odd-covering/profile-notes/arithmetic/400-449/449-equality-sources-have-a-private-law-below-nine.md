@@ -11743,3 +11743,286 @@ Reproduce the canonical inventory with:
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.py --output /tmp/e7_inactive_80_83_replay.json
 ```
+
+## Safe half-unit transports decrease one common balanced74 potential
+
+Ordinary exact mathematics, not Lean verification. Throughout use one fixed
+actual literal4555 source, root totals37/2, original private/public caps
+7,6,2,7,21, and a half-integral value74 flow. All actual incidences, including
+zero-flow ones, remain available. Rational local H185/T318 replacements are
+postponed until these global transports have finished.
+
+### SC74.1. Fixed-other-root complement repair
+
+Select an actual block(r,G) of mass18. Its root's total off-G mass is1/2.
+For g!=G let A_g be the ENTIRE actual fine-label projection of root r into g.
+After fixing every other-root atom, put
+
+    R_g=21-o_g, R_gh=7-o_gh,
+    C_g=min(R_g, sum_(h in A_g) R_gh), C=sum_(g!=G) C_g.
+
+All these quantities are nonnegative multiples of1/2, and the existing
+outside half-unit proves C>=1/2. If C>=1, allocate one unit across the actual
+outside labels, within all R_g,R_gh, and lift each chosen label to an actual
+child carrying it. This can be done in half-unit increments. Replace the
+old outside half-unit by this one-unit law, and delete one positive half-unit
+from any selected G atom. Then the root still totals37/2 and its G block is
+35/2. Every selected G row is at most6; the ENTIRE new outside mass is1,
+so every selected-root child is at most7. The outside private-prefix and
+atom bounds hold because their masses are at most1. Public capacities hold
+by construction, and all other-root atoms remain fixed.
+
+Conversely, lowering d below18 with all other-root atoms fixed requires
+outside mass greater than1/2, so C>1/2, hence C>=1. Thus this is the exact
+fixed-other-root fractional-improvement criterion.
+
+### SC74.2. A safe cross-root half-unit circulation
+
+The old outside mass is at one actual point p=(r,rho,H,k), of mass1/2.
+Take another root's positive atom q=(s,c,H,l), s!=r. Require
+
+    l=k OR the old full public(H,k) mass is at most13/2.       (SC1)
+
+Suppose this same original child(s,c) has an ACTUAL G-neighbor j whose
+current entry mass is less than2. Add1/2 at p and at(s,c,G,j), and remove1/2
+at q and at an appropriate positive selected-root G atom x. If the public
+(G,j) leaf is full at7, choose x at that same fine label; otherwise any
+positive selected-root G atom works. The same-label choice always exists:
+all other roots together have at most21-18=3 units in G, so a full public
+leaf contains at least4 units from the selected root.
+
+This is one feasible half-integral circulation on the complete source:
+
+* Both affected root totals and the two public coarse-column totals remain
+  unchanged. The donor child total remains unchanged.
+* The selected root's outside atom rises only to1. All its children remain
+  at most6+1=7, regardless of which selected G atom is removed.
+* The donor's ENTIRE old G mass is at most3. Its G private row rises to at
+  most7/2<6. Its selected G entry was half-integral and less than2, so the
+  entry remains at most2 after addition.
+* Condition(SC1) handles the recipient H fine leaf. The selected G removal
+  handles a full destination G fine leaf; a nonfull half-integral fine leaf
+  has at least1/2 residual capacity. All other fine loads only decrease or
+  remain unchanged.
+
+The four changed coarse blocks are exactly
+
+    rG:18 ->35/2;  rH:1/2 ->1;
+    sG:at most3 ->at most7/2;  sH:d ->d-1/2.       (SC2)
+
+Thus the only NEW block of mass18 can be sH, and only when it previously
+had mass37/2.
+
+### SC74.3. A common-flow termination potential
+
+Call an actual support T3-bad when some three literal rows have at most two
+fine-label neighbors, retaining the empty fifth row at the gap root. This
+support property never changes when the flow changes.
+
+Let N18 count EVERY T3-bad-support block of mass18, regardless of its public
+column total. Let N185 count every block of mass37/2, regardless of support.
+Use the nonnegative integer potential
+
+    V=N18+N185.
+
+Each root has at most one block counted in V, so V<=4. Apply either repair
+only to a T3-bad-support block of mass18. The complement repair decreases
+N18 by one, leaves all other-root block totals unchanged, and cannot create
+a heavy block in the selected root, whose outside total becomes1.
+
+In the cross-root repair(SC2), the selected old N18 block disappears.
+The only possible new N18 block comes from an old N185 block at sH; when
+that happens N185 decreases by one. No new N185 block can be created.
+Therefore BOTH repair types decrease V by at least one. A sequence of
+these repairs stops after at most four steps, and all steps concern one
+successively updated flow on one unchanged actual source.
+
+Counting only d18 blocks with public total21 would be incorrect here:
+the complement repair can raise another public column from20.5 to21 and
+make its PRE-EXISTING d18 block dangerous. Counting that block in N18
+before and after the update resolves this issue. Changes of external fine
+vectors similarly cannot create a new counted block without changing its
+coarse mass or fixed actual support.
+
+If every dangerous T3-bad d18/column21 block met one of the two repair
+conditions whenever selected, this process would end with none. The final
+half-integral flow would then satisfy the existing sufficient common-law
+consumer: T3-good18 blocks use T318; d18 blocks with column<=20.5 use the
+earlier safe bound; all18.5 blocks use H185. Those rational local repairs
+are made only now, simultaneously on their disjoint heavy root/column
+blocks. The resulting law has Gamma<=1331/148<9.
+
+This last all-dangerous-block accessibility assumption is NOT proved for
+every complete source. The next paragraph records exactly what the two
+specified repair families yield when they stop.
+
+### SC74.4. Explicit terminal obstruction for these repair families
+
+If a selected dangerous block admits neither repair, then C=1/2. Precisely
+one outside column H has C_H=1/2. The entire actual selected-root complement
+is contained in zero-residual public prefixes Q together with one critical
+prefix P_* of residual1/2. The critical prefix is a whole column with
+other-root mass41/2, or a fine leaf with other-root mass13/2. Choose Q as
+an antichain of saturated whole columns and saturated fine leaves, disjoint
+from G and P_*.
+
+Here the selected column is21, so the other roots put exactly3 units in G.
+They have total111/2. If Q has p whole columns and l fine leaves, disjoint
+mass accounting gives
+
+    21p+7l+41/2+3<=111/2, hence3p+l<=4 (critical column);
+    21p+7l+13/2+3<=111/2, hence3p+l<=6 (critical leaf).
+
+For every positive donor q satisfying(SC1), every actual G incidence at its
+original child must already carry2. Otherwise the cross-root repair applies.
+Since ALL other-root G mass is only3, there is at most one such saturated
+entry over all other roots. Consequently, among eligible original donor
+children, at most one can have any actual G neighbor, and that child's
+entire actual G neighborhood is one label carrying2.
+
+There are at least four eligible donor children. In the critical-leaf case,
+13/2 other-root units at the recipient fine leaf require four entries of
+capacity2. In the critical-column case, if the recipient fine leaf is full,
+the same argument applies; otherwise every positive other-root H atom is
+eligible, and41/2 units in H require at least four child/H prefixes of cap6.
+Thus at least three eligible children have NO actual G neighbor. They may
+belong to different original roots; no legal restriction at one root is
+inferred merely from their combined count.
+
+This is a complete finite normal form for the two specified transport
+families. It does not rule out the displayed terminal actual-support traps,
+nor assert that the global BL18 lowering can always be decomposed into
+these safe repairs.
+
+### SC74.5. Whole-source controls
+
+The [complete-source checker](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_safe_transport_control.py) and its [exact data](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_safe_transport_control.json) use the BL18 source
+constructor and the existing original network/pair-premise checkers. In its
+first source the gap's first two G rows have exactly two common fine labels;
+the missing literal row makes this an actual T3-bad block. The272-point
+source has an explicit matching original cut74 and a balanced value74 flow
+with d18,b21. Its fixed-other-root complement has C=1/2, but the displayed
+four-atom cross-root repair lowers the block to17.5, preserves all public
+coarse totals and changes potential(N18,N185) from(1,0) to(0,0).
+
+A second273-point complete source adds one actual off-G point. Its C=15/2
+allows the own-root complement repair; every other-root atom remains fixed
+and the same potential decrease holds. This second source is certified to
+carry balanced value74; no original-maximum74 assertion is made for it.
+Both cases pass all480 original legal pair tests, the standalone premise,
+every original edge capacity, all four fixed root totals and exact
+half-integrality. Exact sources and before/after atom laws are emitted.
+These controls illustrate both repair families; they do not exclude all
+terminal traps or prove the accessibility hypothesis of SC74.3.
+
+Independent reconstruction of the saved sources and atom flows, without the
+author helpers, verifies all960 pair tests, the capacities and root masses,
+both complement capacities and the two potential decreases. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_safe_transport_control.py \
+  --base-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py \
+  --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
+  --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
+  --output /tmp/e7_balanced74_safe_transport_replay.json
+```
+
+## Joint selected-block minimization yields a controlled inactive-root cut
+
+Ordinary actual-network mathematics, not Lean verification. This is a cut
+alternative for a specified minimum-cost objective; it is NOT a theorem
+that individually or jointly lowering selected masses solves the common-law
+problem.
+
+### MP74.1. Hypotheses and conclusion
+
+Use a complete actual literal4555 source with original maximum74 and a
+half-integral balanced value74 flow f, all root totals37/2. Select k>=1
+blocks of f, each of mass18 and public-column total21. They occupy distinct
+roots and distinct public columns. Hence k<=3, since four such public
+columns would have total84>74.
+
+Suppose f minimizes the SUM of these k fixed block masses over all balanced
+value74 flows on this same source. Then the original source has one of:
+
+* a one-inactive-root cut of capacity at most77;
+* a two-inactive-root cut of capacity at most80;
+* a three-inactive-root cut of capacity at most83.
+
+The first two cut families and the three-inactive capacities through82 have
+independent actual-source suppliers. The remaining three-inactive83 boundary
+has five necessary private shapes identified separately: gap1333, gap2233,
+full11233, full12223, full22222. No supplier for those five shapes is asserted
+here.
+
+### MP74.2. The highest selected-root potential level
+
+Put cost1 on every child-to-G-prefix edge belonging to one of the selected
+blocks, and cost0 elsewhere. Their total cost is exactly the sum of the
+selected block masses. A minimum-cost residual graph admits an integer
+potential pi with positive-edge rise at least its cost and unsaturated-edge
+rise at most its cost. This is the same full-network convention as BL18.
+
+Let alpha be the largest potential of a selected original root. Let J be
+the selected roots at that potential and j=|J|. Every selected root has
+off-designated-column mass1/2; its child totals are all at most13/2<7.
+Hence every child potential is at most its root potential, and any child
+carrying positive flow has exactly that root potential.
+
+Take X={v:pi(v)<alpha+1}. Every selected root and all its children belong
+to X. A positive path through any top-level selected block proves that the
+source belongs to X and the sink does not. No positive edge crosses X
+backwards. Every zero-cost forward edge is saturated.
+
+For a selected root below the top level, a crossing cost1 edge has potential
+rise at least2, since its tail is at mostalpha-1 and its head at leastalpha+1.
+It too must be saturated. Thus the only possible slack comes from selected
+prefix edges at the j highest roots. Let Q count these edges. Each highest
+selected block contributes its entire18 units across its selected prefix
+edges, and each such edge has capacity6. Consequently
+
+    cap_balanced(X)=74+6Q-18j.                     (MP1)
+
+Let t be the number of occupied roots outside X. The displayed capacity is
+integral, whereas the only noninteger arc capacities are the root capacities
+37/2; thus t is even. All k selected roots lie inside X, giving t<=4-k.
+In particular t is0 or2, and k>=3 forces t=0.
+
+### MP74.3. Moving the entire highest-root forests
+
+Move all j highest selected roots and their complete private descendant
+forests to the sink side. Public nodes retain their sides. As in BL18, the
+only new incoming boundary edges can be the j source-root arcs. The Q
+selected prefix edges of total capacity6Q disappear from the boundary.
+In original capacities the resulting cut X' therefore satisfies
+
+    cap_original(X')<=74+6Q-18j+(5/2)t-6Q+21j
+                     =74+3j+(5/2)t.               (MP2)
+
+It has exactly j+t inactive occupied roots.
+
+For j=1, t=0 or2 gives one-inactive<=77 or three-inactive<=82. For j=2,
+t=0 gives two-inactive<=80. For j=3, t=0 gives three-inactive<=83.
+
+The remaining numerical case j=2,t=2 cannot occur. Here k=2, because every
+selected root belongs to X. Equation(MP1) gives cap_balanced(X)=38+6Q.
+The two inactive source-root arcs already contribute37, and the selected
+prefix edges contribute6Q. Every other possible forward arc has integral
+capacity at least2: there are no other inactive source-root arcs. The
+remaining forward capacity would have to be exactly1, impossible. This
+excludes the all-four-inactive apparent alternative and proves the result.
+
+### MP74.4. The precise remaining joint obligation
+
+If the source has no unsupplied three-inactive83 shape, then any specified
+nonempty set of current dangerous mass18/column21 blocks admits another
+balanced half-integral value74 flow lowering their total mass below18k,
+unless a supplied cut has already finished that source.
+
+The replacement may increase other selected masses, alter unselected blocks,
+or create new dangerous configurations. The strict decrease of this ONE
+linear objective is not a monotone decrease of the number of all dangerous
+blocks, and does not yet yield a universal occupation mixture. The safe
+transport normal form gives an independent jointly terminating repair family;
+its terminal actual-support traps still require a bridge to this global
+minimum-cost alternative or a separate source supplier.
