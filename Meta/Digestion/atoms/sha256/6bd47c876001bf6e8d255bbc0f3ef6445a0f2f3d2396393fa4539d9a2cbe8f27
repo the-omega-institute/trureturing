@@ -1,0 +1,82 @@
+**引理 62.3（$t=0$ 的准确负向最大值）。** 对 $p\in[d,\varepsilon]$，有
+
+$$
+J_\varepsilon(p):=
+\max_{0\le q\le1}
+[\lambda(p;q,0)+\varepsilon(1-q)]
+=
+\begin{cases}
+\varepsilon,&d\le p\le p_0,\\
+F_\varepsilon(p),&p_0\le p\le\varepsilon.
+\end{cases}
+\tag{62.11}
+$$
+
+后一段的达到点为
+
+$$
+q_* =\frac{B-\varepsilon}{2B},
+\qquad
+F_\varepsilon(p)\ge\varepsilon,
+\qquad F_\varepsilon'(p)=1-\frac{\varepsilon^2}{B^2}\ge0.
+\tag{62.12}
+$$
+
+**证明。** 当 $t=0$ 时，加权主块的迹是
+$T_0=p-\varepsilon+\varepsilon q$，秩二特征方程的常数项是 $-b^2q(1-q)$。因此负向值为
+
+$$
+\frac{p+\varepsilon-\varepsilon q+
+\sqrt{T_0^2+4b^2q(1-q)}}2.
+$$
+
+先设 $p\le p_0$。使用 $\varepsilon=2d-d^2$，有
+
+$$
+\varepsilon(\varepsilon-p)-b^2
+=2d(1-d)(p_0-p)\ge0.
+$$
+
+于是准确平方差满足
+
+$$
+\frac{(\varepsilon-p+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}
+=b^2q^2+[\varepsilon(\varepsilon-p)-b^2]q\ge0.
+\tag{62.13}
+$$
+
+$\varepsilon-p+\varepsilon q\ge0$，故可取平方根，给出负向值不超过 $\varepsilon$；$q=0$ 达到 $\varepsilon$。
+
+再设 $p\ge p_0$，等价于 $B\ge\varepsilon$。令 $u=b^2/B$、$\mu=p+u=F_\varepsilon(p)$。直接核得
+
+$$
+\varepsilon^2-4b^2=d^2B,
+\qquad
+u(\mu-\varepsilon)=b^2q_*^2.
+$$
+
+第二式左端的 $u>0$，所以 $\mu\ge\varepsilon$。准确平方差为
+
+$$
+\begin{aligned}
+&\frac{(2\mu-p-\varepsilon+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}\\
+&\qquad=b^2q^2+(\varepsilon u-b^2)q+u(\mu-\varepsilon)
+=b^2(q-q_*)^2.
+\end{aligned}
+\tag{62.14}
+$$
+
+根号上界的右侧满足
+$2\mu-p-\varepsilon+\varepsilon q\ge\varepsilon-p\ge0$，因此可以取平方根，得到值不超过 $\mu$，并在合法的 $q_*\in[0,1/2)$ 达到。$p=p_0$ 时 $B=\varepsilon$、$q_*=0$，上面的恒等式也给 $F_\varepsilon(p_0)=\varepsilon$，所以两段接合。
+
+求导给
+
+$$
+F'(p)=1-\frac{d^2[B+4(1-p)]}{B^2}
+=1-\frac{\varepsilon^2}{B^2},
+$$
+
+因为 $d^2[B+4(1-p)]=\varepsilon^2$。$\square$
+

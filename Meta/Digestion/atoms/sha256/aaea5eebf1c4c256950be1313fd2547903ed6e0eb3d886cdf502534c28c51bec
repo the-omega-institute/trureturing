@@ -1,0 +1,15 @@
+### 166.2 CDF、密度与分位数的闭式
+
+在 $\ell\le x\le u_\Delta$ 上定义反函数坐标
+
+$$
+s_\Delta(x)=
+4-\sqrt{9+
+\frac{(8x-3)^2-9}{4\Delta}}.
+\tag{166.6}
+$$
+
+它取值于 $[0,1]$，且
+$s_\Delta(\ell)=1$、
+$s_\Delta(u_\Delta)=0$。
+

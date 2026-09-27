@@ -1,0 +1,37 @@
+**证明。** 记 $\mu=F_\varepsilon(p)$、$u=\mu-p=b^2/B>0$，并置
+
+$$
+k=\mu-\varepsilon+\varepsilon(q+t).
+$$
+
+引理 62.3 给 $k\ge0$，且 $k-T=u+pt>0$。直接展开，并使用
+
+$$
+\gamma^2-\beta^2=-\varepsilon p
++2d\sqrt{\varepsilon p(1-p)},
+$$
+
+得到准确分解
+
+$$
+\begin{aligned}
+k(k-T)-Q
+={}&b^2(q-q_*)^2\\
+&+t\left[L_\varepsilon(p)+2d\sqrt{\varepsilon p(1-p)}\,q\right]
++\varepsilon p t^2.
+\end{aligned}
+\tag{62.17}
+$$
+
+在声明条件下右侧非负。由于 $k\ge0$ 且 $k>T$，$k$ 位于二次函数 $z(z-T)-Q$ 的递增区域 $z\ge\max\{0,T\}$；式（62.17）因此给 $k\ge\lambda(p;q,t)$。这也处理 $k=0$ 的边界：此时 $T<0$，而非负乘积条件强制 $Q=0$，故 $\lambda=0$。
+
+于是所有 $q,t$ 都满足
+
+$$
+\lambda(p;q,t)+\varepsilon(1-q-t)\le\mu.
+$$
+
+$t=0,q=q_*$ 由引理 62.3 达到 $\mu$，证明式（62.16）。$\square$
+
+这个证书明确控制整个 tester 参数方形，不将 $t=0$ 最优先验化。
+

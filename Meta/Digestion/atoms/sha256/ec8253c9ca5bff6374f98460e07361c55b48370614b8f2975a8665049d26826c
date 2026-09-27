@@ -1,0 +1,16 @@
+**命题 232.2（互不扰动保证记录相同，交换更新进一步保证最终状态相同）。** 若
+
+$$
+d\circ U=d,\qquad c\circ V=c,
+$$
+
+则两种次序的有序记录相同。因为 $d(Ux)=d(x)$、$c(Vx)=c(x)$，两者都等于 $(c(x),d(x))$。若另外有 $V\circ U=U\circ V$，则连同最终状态的完整结果也相同：
+
+$$
+\big((c(x),d(Ux)),V(Ux)\big)
+=
+\big((c(Vx),d(x)),U(Vx)\big).
+$$
+
+这对应项目 [MutualNondisturbanceOrderIndependence](../../../D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.lean) 的 `mutual_nondisturbance_order_independence`，其中 `observeC,observeD,updateC,updateD` 分别取 $c,d,U,V$。两个更新都是恒等映射，是更强的特殊情形；项目 [PureReadoutOrderIndependence](../../../D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.lean) 的 `pure_readout_order_independence` 同时给出其逆否方向：在这套确定模型中真的观察到记录差别，就不能让两项更新都保持恒等。
+

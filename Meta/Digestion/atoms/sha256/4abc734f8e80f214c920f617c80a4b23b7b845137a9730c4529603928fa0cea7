@@ -1,0 +1,13 @@
+### 157.3 实际可达谱与稳定目标保留代数坐标
+
+沿用第154、155节的初始化嵌入和实际转移
+
+$$
+\mathcal E_\omega(Z)=Z\otimes\omega_K,\qquad
+\mathcal R_n=\mathcal F^n\mathcal E_\omega,\qquad
+\mathscr V=
+\operatorname{span}_{\mathbb C}
+\{\mathcal F^j\mathcal E_\omega(Z):j\ge0,\ Z\in\mathcal L(M_{\mathrm{in}})\}.
+\tag{157.9}
+$$
+

@@ -1,0 +1,32 @@
+**命题 1.12（全目标锐模）。** 内点线性常数虽在端点附近发散，全部目标仍共享一个常数一的平方根模。先由 $|c|\le r(p)$ 和式(TM.88)得
+$$
+\operatorname{dist}_D(R(p,c),F_{p_0})^2
+\le\delta^2+\bigl(r(p)-r(p_0)\bigr)^2.
+\tag{TM.95}
+$$
+
+若 $|c|\le r(p_0)$，左侧就是 $\delta^2$；否则 $r(p)>r(p_0)$，正部之差不超过 $r(p)-r(p_0)$，所以这一步涵盖全部情形。
+
+令 $u=\max(p,p_0)$、$v=\min(p,p_0)$，则 $0\le v\le u\le1$、$\delta=u-v$。展开平方给出恒等式
+$$
+\begin{aligned}
+\delta-\left[\delta^2+(r(u)-r(v))^2\right]
+&=2\left(\sqrt{uv(1-u)(1-v)}-v(1-u)\right)\ge0,\\
+uv(1-u)(1-v)-v^2(1-u)^2
+&=v(1-u)(u-v)\ge0.
+\end{aligned}
+\tag{TM.96}
+$$
+
+第二行比较了第一行根号内的数与 $[v(1-u)]^2$；两者非负，故平方根的单调性证明第一行的不等式，包括 $u=1$ 或 $v=0$ 的端点。结合式(TM.95)得到
+$$
+\boxed{
+\operatorname{dist}_D(R(p,c),F_{p_0})
+\le\sqrt{|p-p_0|}
+\quad\forall p,p_0\in[0,1],\quad |c|\le\sqrt{p(1-p)}.
+}
+\tag{TM.97}
+$$
+
+式(TM.93)、(TM.94)已经说明：这一覆盖全部目标的界，其常数一与最大正 Hölder 指数 $1/2$ 都不能改进。固定紧内区间的线性界与全区间的平方根界同时成立，各自描述不同的统一范围。
+

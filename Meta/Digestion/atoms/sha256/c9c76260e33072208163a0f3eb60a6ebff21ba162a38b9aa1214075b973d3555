@@ -1,0 +1,51 @@
+### 236.4 一个正则单纯形补投影块
+
+以下固定 $N\ge3$，令 $n=N-1$，在 $\mathbb C^N$ 中取
+$$
+V=\mathbf1^\perp,\qquad\mathbf1=(1,\ldots,1),
+\qquad\dim V=n.
+\tag{236.MP.20}
+$$
+对标准基 $e_j$，定义
+$$
+u_j=\sqrt{\frac N{N-1}}
+\left(e_j-\frac1N\mathbf1\right),
+\qquad U_j=|u_j\rangle\langle u_j|.
+\tag{236.MP.21}
+$$
+每个 $u_j\in V$ 且范数为一。若 $P_V$ 为 $V$ 的正交投影，$u_j=\sqrt{N/(N-1)}P_Ve_j$，因此
+$$
+\sum_jU_j
+=\frac N{N-1}P_V\left(\sum_j|e_j\rangle\langle e_j|\right)P_V
+=\frac N{N-1}I_V.
+\tag{236.MP.22}
+$$
+此外不同向量的内积为 $-1/(N-1)$，给出正则单纯形的标准紧框架。
+
+取补投影
+$$
+Q_j=I_V-U_j,
+\qquad\operatorname{rank}Q_j=N-2,
+\qquad\sum_jQ_j=\frac{N(N-2)}{N-1}I_V.
+\tag{236.MP.23}
+$$
+定义候选输入效应
+$$
+E_j=\frac{N-1}{N(N-2)}Q_j.
+\tag{236.MP.24}
+$$
+各效应正半定且总和为 $I_V$，故分支
+$$
+\mathcal S_j^{\rm simp}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{236.MP.25}
+$$
+构成实际 CPTP 记录通道。每个分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，秩恰为 $N-2$，总秩恰为 $N(N-2)$。
+
+具体地，取 $\operatorname{im}Q_j$ 的正交基 $u_{j,1},\ldots,u_{j,N-2}$，Kraus 可取
+$$
+C_{j,a}=\sqrt{\frac{N-1}{N(N-2)}}
+|r_j\rangle\langle u_{j,a}|.
+\tag{236.MP.26}
+$$
+同一标签内的这些 Kraus 非零且 Hilbert–Schmidt 正交，验证了所报精确分支秩。
+

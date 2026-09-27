@@ -1,0 +1,50 @@
+### 34.1 两种线程载体
+
+先取有限状态载体 $Y$ 与自映射 $F:Y\to Y$。恒等读出下，正向未来线程为
+
+$$
+I_F^+:=\{(F^n y)_{n\ge0}:y\in Y\},
+\qquad
+\operatorname{ev}_0^+:I_F^+\to Y,
+\quad
+\operatorname{ev}_0^+((y_n)_n)=y_0.
+$$
+
+过去兼容线程为
+
+$$
+I_F^-:=\{u:\mathbb N\to Y:\forall n,\ F(u_{n+1})=u_n\},
+\qquad
+\operatorname{ev}_0^-:I_F^-\to Y.
+\tag{34.1}
+$$
+
+正向线程的零坐标恢复初态，因此
+
+$$
+I_F^+\cong Y.
+\tag{34.2}
+$$
+
+过去线程的零坐标只能落在周期核心
+
+$$
+\operatorname{Per}(F):=\{y:\exists n>0,\ F^n y=y\}.
+$$
+
+在有限载体上，`BackwardOrbitCore.backward_orbit_eval_zero_bijective` 与 `pastCoreEquiv` 给出
+
+$$
+I_F^-\cong\operatorname{Per}(F).
+\tag{34.3}
+$$
+
+仓内 `IdentityFuturePastGap.identity_future_completion_exceeds_past_core` 进一步给出：若 $F$ 非双射，则
+
+$$
+\operatorname{Nat.card}(\operatorname{Per}(F))
+<\operatorname{Nat.card}(Y),
+$$
+
+且过去线程严格少于正向 identity completion。未来可区分的瞬态初态不会因为存在一个兼容过去线程而获得过去坐标。
+

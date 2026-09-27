@@ -1,0 +1,41 @@
+**定理173.4（局部判别下界与极小端点）。** 有
+
+$$
+\boxed{e\ge\frac{3-d_K}{4}\ge\frac12.}
+\tag{173.10}
+$$
+
+而 $e=1/2$ 当且仅当存在同一份局部 instrument，使
+
+$$
+\boxed{\sigma_{00}=\sigma_{11}=P_\Xi.}
+\tag{173.11}
+$$
+
+此时 $\sigma_{10}=\sigma_{01}=0$。
+
+**证明。** 对等权 Bell 输入，用目标纯态的投影作检验。实际输出与目标的重叠为
+
+$$
+\frac14\sum_{j=0}^1\langle\Xi|\sigma_{jj}|\Xi\rangle
+\le\frac14\sum_j\operatorname{Tr}\sigma_{jj}.
+$$
+
+写 $E=\mathcal D_0^*(I_R)$，则 $0\preceq E\preceq I_K$，正确标签的迹之和为
+
+$$
+\operatorname{Tr}(E\kappa_0)+\operatorname{Tr}((I-E)\kappa_1)
+=1+\operatorname{Tr}[E(\kappa_0-\kappa_1)]\le1+d_K.
+$$
+
+最后一步是迹零 Hermitian 矩阵的正部迹公式，也即等先验二元判别的 Helstrom 界。目标投影检验给误差至少为一减上述重叠，得到（173.10）。
+
+若最优误差为 $1/2$，其达到者的两个数
+$\langle\Xi|\sigma_{jj}|\Xi\rangle$ 必须都等于一，因为各自至多为
+$\operatorname{Tr}\sigma_{jj}\le1$。正性于是强制
+$\sigma_{jj}=P_\Xi$，而每个输入分支总迹为一又使错误块为零。
+
+反之，若（173.11）成立，解码后的通道正是
+$X\mapsto\operatorname{diag}(X)\otimes P_\Xi$。qubit 去相干通道是
+$(\operatorname{id}+\operatorname{Ad}_Z)/2$，与恒等通道的半 diamond 距离为 $1/2$：酉通道距离至多一给上界，输入 $|+\rangle$ 达到。结合下界得到等号。证毕。
+

@@ -1,0 +1,21 @@
+**引理198.2（冻结操作的统一导数展开）。** 上述邻域可固定选择，使全部
+$h\in I$、$\Gamma\in\mathcal K$ 且 $A_j$ 位于该邻域时，
+
+$$
+e_\epsilon(h,\Gamma)
+=\lambda+\epsilon[\mathcal N(\Gamma)+h\mathcal P(\Gamma)]
++O_{C^1(h)}(\epsilon^2).
+\tag{198.4}
+$$
+
+记号表示余项及其关于 $h$ 的一阶导数均不超过
+$C_I\epsilon^2$，常数与 instrument 无关。特别地，
+
+$$
+\partial_he_\epsilon(h,\Gamma)
+=\epsilon\mathcal P(\Gamma)+O(\epsilon^2),
+\tag{198.5}
+$$
+
+主系数与 $h$ 无关。
+

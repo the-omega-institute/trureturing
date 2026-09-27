@@ -1,0 +1,47 @@
+**定理 181.2（折扣响应的收敛、方程与尾界）。** 上述级数在范数下绝对收敛，并满足
+
+$$
+\boxed{
+\mathsf R_{\lambda,T}(H)
+=(I-\lambda T)^{-1}H,
+}
+\tag{181.1}
+$$
+
+以及对截断响应
+
+$$
+\mathsf R^{(N)}_{\lambda,T}(H)
+=\sum_{n=0}^{N}\lambda^nT^nH
+$$
+
+的尾误差
+
+$$
+\boxed{
+\left\|
+\mathsf R_{\lambda,T}(H)-\mathsf R^{(N)}_{\lambda,T}(H)
+\right\|
+\le
+\frac{\|H\|(\lambda\|T\|)^{N+1}}
+{1-\lambda\|T\|}.
+}
+\tag{181.2}
+$$
+
+### 证明
+
+由次乘法性，级数各项范数至多为
+
+$$
+\|H\|(\lambda\|T\|)^n.
+$$
+
+几何级数收敛，尾和给出（181.2）。逐项作用 $I-\lambda T$ 后，除首项 $H$ 外相邻项望远镜抵消，得到
+
+$$
+(I-\lambda T)\mathsf R_{\lambda,T}(H)=H.
+$$
+
+因为 $\lambda\|T\|<1$，Neumann 级数同时给出 $I-\lambda T$ 的逆，故得（181.1）。证毕。
+

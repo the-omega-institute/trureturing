@@ -1,0 +1,67 @@
+**定理 148.2（截止事件到达 renewal resolvent）。** 对 $s>0$，若 $T$ 不可约且 $\pi_1>0$，则
+
+$$
+\boxed{
+\boldsymbol{\mathcal U}_w(dt)
+=
+\sum_{m\ge1}\boldsymbol\mu_m(dt)
+}
+\tag{148.1}
+$$
+
+在有界时间区间上具有有限质量，且其 Laplace 变换为
+
+$$
+\boxed{
+\widehat{\boldsymbol{\mathcal U}}_w(s)
+=
+[I-D(s)T]^{-1}D(s)w
+=
+D(s)[I-TD(s)]^{-1}w.
+}
+\tag{148.2}
+$$
+
+此外，对每个 $t\ge0$，
+
+$$
+\boxed{
+\mathbb E[N(t)]
+=
+\mathbf1^{\mathsf T}\boldsymbol{\mathcal U}_w([0,t]).
+}
+\tag{148.3}
+$$
+
+### 证明
+
+第 $m$ 次事件的 Laplace 向量为
+
+$$
+\widehat{\boldsymbol\mu}_m(s)
+=[D(s)T]^{m-1}D(s)w.
+$$
+
+当 $s>0$ 时，$D(s)$ 在慢列上严格收缩；不可约性保证该损失可从每个状态到达，所以 $D(s)T$ 的谱半径严格小于一。因而 Neumann 级数收敛，并给出
+
+$$
+\sum_{m\ge1}[D(s)T]^{m-1}D(s)w
+=[I-D(s)T]^{-1}D(s)w.
+$$
+
+恒等式
+
+$$
+[I-AB]^{-1}A=A[I-BA]^{-1}
+$$
+
+取 $A=D(s)$、$B=T$，得到第二个表示。
+
+对任一样本路径，$S_m$ 非降且趋于无穷，因此
+
+$$
+N(t)=\sum_{m\ge1}\mathbf1_{\{S_m\le t\}}
+$$
+
+几乎处处成立。取期望并按扇区求和，得到式（148.3）。证毕。
+

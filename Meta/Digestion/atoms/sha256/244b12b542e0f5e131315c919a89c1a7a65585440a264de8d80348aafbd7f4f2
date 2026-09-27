@@ -1,0 +1,60 @@
+### 200.4 冻结规范构造的完整参考系数
+
+下面计算 $R_h(\Gamma^*(h))$。沿用第188节四维偶块，在参考权重
+$q=1/2$，令 $P=\frac12\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$。
+顶块基点、来源耦合及底块系数分别为
+
+$$
+A=P-\tfrac14I,\qquad
+C_0=P-\tfrac m2I,\qquad D_0=P-m^2I.
+$$
+
+顶块最高根为 $3/4$、另一根为 $-1/4$。
+最高单位向量 $u=(1,1)^{\mathsf T}/\sqrt2$ 满足
+$C_0u=zu$、$D_0u=(1-m^2)u$。
+噪声耦合修正为
+$C_1=-\operatorname{diag}(T_0,T_1)/2$，其中
+
+$$
+T_0=\beta m(-1-4n^2),\qquad
+T_1=\beta Rm(-1+4n^2),\qquad T_0+T_1=T_s.
+$$
+
+消去底块的 Schur 展开给有效顶块
+$A+\epsilon H_1+\epsilon^2H_2+O(\epsilon^3)$，其中
+
+$$
+\begin{aligned}
+H_1={}&-hA-\tfrac12\operatorname{diag}(L_0^*,L_1^*)
++\tfrac{4h}{3}C_0^2,\\
+H_2={}&\tfrac h2\operatorname{diag}(L_0^*,L_1^*)
++\tfrac{4h}{3}(C_1C_0+C_0C_1-hC_0^2)\\
+&+\tfrac{16h^2}{9}C_0D_0C_0
+-\tfrac{16h\Phi_h}{9}C_0^2.
+\end{aligned}
+\tag{200.15}
+$$
+
+故固定 $q=1/2$ 的二阶系数为
+
+$$
+\frac{hL_s}{4}-\frac{2hzT_s}{3}-\frac{4h^2z^2}{3}
++\frac{16h^2z^2(1-m^2)}9
+-\frac{16hz^2\Phi_h}{9}
++\frac{L_d^2}{16}.
+\tag{200.16}
+$$
+
+最后一项来自两个顶块本征方向的混合，其基点谱间隙为一。
+完整参考优化仍须计入：基点参考曲率为 $-3/2$，
+一阶系数对参考权重的导数为 $-3L_d/4$。
+移动参考最大点因此再增加
+
+$$
+-\frac{(-3L_d/4)^2}{2(-3/2)}=\frac{3L_d^2}{16}.
+\tag{200.17}
+$$
+
+这将（200.16）末项改为 $L_d^2/4$，严格得到（200.3）的 $Q_0$：
+$R_h(\Gamma^*(h))=Q_0(h)$。
+

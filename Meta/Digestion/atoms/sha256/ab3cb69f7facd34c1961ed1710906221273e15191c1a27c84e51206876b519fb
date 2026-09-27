@@ -1,0 +1,67 @@
+### 194.5 从带权缺陷到完整 instrument 距离
+
+对每个正旗标 Kraus 作正交分解
+
+$$
+K_{j,\alpha}=\alpha_{j,\alpha}I+E_{j,\alpha},
+\qquad
+\alpha_{j,\alpha}=\frac{a+d}{2},
+\qquad
+\operatorname{Tr}E_{j,\alpha}=0.
+$$
+
+定义
+
+$$
+p_j=\sum_\alpha|\alpha_{j,\alpha}|^2,\qquad
+\eta_j=\sum_\alpha\|E_{j,\alpha}\|_{\mathrm{HS}}^2,\qquad
+\eta=\eta_0+\eta_1.
+$$
+
+共同 TP 的迹及上述正交分解给
+$2(p_0+p_1)+\eta=2$，所以 $p_0+p_1\le1$、$0\le\eta\le2$。
+此外
+
+$$
+\eta
+=\sum\left(|b|^2+|c|^2+\frac12|a-d|^2\right)
+\le\frac D\ell.
+\tag{194.13}
+$$
+
+展开 Kraus 作用。对于任意参考系统，夹乘映射
+$X\mapsto AXB$ 的完全迹范数不超过
+$\|A\|\,\|B\|$；再用 Cauchy–Schwarz 得
+
+$$
+Q_j:=\|\Gamma_{j,+}-p_j\operatorname{id}\|_\diamond
+\le2\sqrt{p_j\eta_j}+\eta_j,
+\qquad
+Q_0+Q_1\le2\sqrt\eta+\eta.
+\tag{194.14}
+$$
+
+这里直接控制了全部参考上的映射差，没有以 Choi 重叠替代操作距离。
+在来源态上作同一目标投影，还给
+$|p_j-U_j|\le Q_j$。因而
+
+$$
+\begin{aligned}
+\sum_j\|\Gamma_{j,+}-\tfrac12\operatorname{id}\|_\diamond
+&\le2(Q_0+Q_1)+D+|t|\\
+&\le8\sqrt{\frac{D+t^2}{\ell}}.
+\end{aligned}
+\tag{194.15}
+$$
+
+最后一步使用（194.13）、$\eta\le2$、$D\le1$ 与 $\ell\le1/2$。
+结合（194.11），正旗标距离至多为
+
+$$
+8\sqrt{32(A+B+K_0)}\,\frac{\epsilon}{\ell}.
+$$
+
+负旗标由 $Z$ 共轭得到，diamond 范数在此共轭下不变，故（194.3）成立。
+
+这个估计量化了第192节的刚性：来源权重比噪声大得越多，保留来源关系的共同操作就越接近恒等保持。误差中的次阶改善受 $\epsilon^2/\ell$ 控制，而操作本身允许偏离的尺度是 $\epsilon/\ell$。这两个尺度属于同一带权来源、同一操作权限及完整参考任务，不借用固定满秩展开的非一致余项。
+

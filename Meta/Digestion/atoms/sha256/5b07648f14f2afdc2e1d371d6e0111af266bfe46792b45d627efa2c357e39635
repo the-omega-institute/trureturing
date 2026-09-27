@@ -1,0 +1,83 @@
+**定义 17.1（固定振幅、复合泊松坐标与相界）。** 沿用定义 16.1 的状态空间、
+奇偶类、两个观测实验与方向风险。固定 $`r\in(0,1)`$，令 $`d\to\infty`$、
+$`n=2^d=2M`$、$`\ell=\log M`$，取整数 $`q=q_d`$、$`s=s_d`$ 满足
+
+```math
+q=M^{1-\beta+o(1)},\qquad \frac12<\beta<1,\qquad
+\lambda=\frac{s}{n},\qquad
+\frac{\lambda}{\ell}\longrightarrow\alpha\in(0,\infty).
+\tag{17.1}
+```
+
+每个真实支持 $`S\subset C_+`$ 的大小恰为 $`q`$，在整个观测期间固定。
+背景补偿仍记作定义 16.1 的 $`a=rq/(M-q)`$，采样系数另记为 $`\alpha`$。
+于是
+
+```math
+b_S(x)=
+\begin{cases}
+r,&x\in S,\\[0pt]
+-a,&x\in C_+\setminus S,\\[0pt]
+0,&x\in C_-,
+\end{cases}
+\qquad
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{n},\qquad
+K_{S,+}=P_S,\quad K_{S,-}=P_S^{\mathsf T}.
+\tag{17.2}
+```
+
+两个真实核均以均匀平稳分布启动。独立对实验每次独立抽取其平稳相邻对；
+路径实验观察连续 $`s`$ 次转移。记 $`\mathbb P_{S,\varepsilon}^{\mathcal E}`$
+为相应概率律，$`U_{\mathcal E}`$ 为均匀参考律，且
+
+```math
+R_{\mathcal E}(d,s,q,r)
+=\inf_\psi\max_{\substack{S\subset C_+,\ |S|=q\\ \varepsilon\in\{+,-\}}}
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{\psi\ne\varepsilon\},
+\qquad \mathcal E\in\{\mathrm{pair},\mathrm{path}\}.
+\tag{17.3}
+```
+
+规则可知道 $`d,s,q,r`$，不知道真实支持和方向；允许随机化。
+
+定义以下函数，其中上确界取遍实数 $`\theta`$：
+
+```math
+\begin{aligned}
+g_r(\theta)&=\frac{(1+r)^\theta+(1-r)^\theta}{2}-1,\\[0pt]
+h_r(\theta)&=\frac{(1+r)^\theta-(1-r)^\theta}{2},\\[0pt]
+I_{\alpha,r}(x)&=\sup_{\theta\in\mathbb R}
+ \{\theta x-\alpha g_r(\theta)\},\\[0pt]
+c_r&=2g_r'(2)-r^2,\qquad
+\alpha_0=\frac1{c_r},\qquad
+\alpha_1=\frac1{\phi(r)}.
+\end{aligned}
+\tag{17.4}
+```
+
+当 $`\alpha_0\lt \alpha\lt \alpha_1`$ 时，以 $`x_{\alpha,r}`$
+表示满足 $`I_{\alpha,r}(x)=1`$、$`x\ge\alpha\phi(r)`$ 的根，并置
+
+```math
+B_r(\alpha)=
+\begin{cases}
+\displaystyle\frac12+\frac{\alpha r^2}{2},
+ &0<\alpha\le\alpha_0,\\[0pt]
+x_{\alpha,r},&\alpha_0<\alpha<\alpha_1,\\[0pt]
+1,&\alpha\ge\alpha_1.
+\end{cases}
+\tag{17.5}
+```
+
+根的存在唯一性与两处分支的相接性在定理 17.3 中证明。
+以单坐标对数似然及零假设尾尺度优化稀疏检验，是既有稀疏混合框架，
+参见 [Cai–Wu 的一般稀疏混合研究](../../../Library/Dynamics/caiwu2014sparse.md)。
+[Kotekal 的推论 1–2、式 (10)](../../../Library/Dynamics/kotekal2022sparse.md)
+进一步直接用零假设对数似然的良速率函数给出独立污染混合的相界。
+对本章的独立复合泊松比较坐标，其矩条件与连续性条件成立；
+将 $`I_{\alpha,r}`$ 代入该式即得 (17.5) 的标量曲线。
+下面保留率函数与优化的直接计算；上述独立混合结论不替代
+(17.3) 的固定基数支持和实际马尔可夫概率律。
+下述有限秩传递、补偿似然倾斜与方向风险结论属于本仓推导（repo-derived），
+上述统计方法属于已有方法（literature-attested），不作全球原创性断言。
+

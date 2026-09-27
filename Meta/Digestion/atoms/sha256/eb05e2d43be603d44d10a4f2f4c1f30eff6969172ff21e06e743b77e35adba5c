@@ -1,0 +1,47 @@
+**命题 3.5（精确半 diamond 距离）。** 记 $\|\cdot\|_1$ 为迹范数，$\|\cdot\|_2$ 为 Hilbert–Schmidt 范数，$\|\cdot\|_{\rm op}$ 为算子范数，$d_\diamond(\mathcal E,\mathcal F)=\tfrac12\|\mathcal E-\mathcal F\|_\diamond$。该距离对全部联合输入及最终联合效果取最坏值，对应共同实验空间中没有额外对称性限制的测试权限。
+
+定义 $r\times r$ Hermitian 矩阵与权重矩阵
+
+$$
+(C_T)_{aa}=0,\qquad (C_T)_{ab}=k_T(E_a-E_b)\quad(a\ne b),
+\qquad
+\Delta_r=\{p\in\mathbb R_{\ge0}^r:\sum_ap_a=1\},
+\qquad D_p=\operatorname{diag}(\sqrt{p_1},\ldots,\sqrt{p_r}).
+\tag{TM.268}
+$$
+
+**精确公式。**
+
+$$
+\boxed{
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+=\frac12\max_{p\in\Delta_r}\|D_pC_TD_p\|_1.
+}
+\tag{TM.269}
+$$
+
+**证明。** 写 $\Phi=\mathcal A_T^H-\mathcal P_H$。它保持 Hermitian 共轭。对任意迹范数一的联合算子 $X$，增添二维辅助空间，构造 $Y=\tfrac12\left(\begin{smallmatrix}0&X\\X^\dagger&0\end{smallmatrix}\right)$。有 $\|Y\|_1=1$，且输出 $Y$ 的迹范数等于输出 $X$ 的迹范数。对 $Y$ 作正负部分分解，其两个正部分的迹之和为一；三角不等式说明一般算子的输出范数不超过密度输入的最坏值。再纯化任意联合混合态，部分迹对 Hermitian 输出的迹范数收缩，故联合纯态已足够。辅助空间可有限增大，不影响取全部参考的上确界。
+
+对联合纯态 $|\Psi\rangle$，令 $|\Psi_a\rangle=(\Pi_a\otimes I)|\Psi\rangle$，$p_a=\|\Psi_a\|^2$。非零 $|e_a\rangle=|\Psi_a\rangle/\sqrt{p_a}$ 两两正交，且
+
+$$
+(\Phi\otimes\operatorname{id})(|\Psi\rangle\langle\Psi|)
+=\sum_{a\ne b}k_T(E_a-E_b)\sqrt{p_ap_b}\,|e_a\rangle\langle e_b|.
+\tag{TM.270}
+$$
+
+该输出在这些向量张成的空间上恰有矩阵 $D_pC_TD_p$，其余方向为零，所以迹范数相等。零概率给零行列，不除以零。反过来，对任意 $p$，在每个扇区取单位向量 $v_a$，系统纯态 $\sum_a\sqrt{p_a}v_a$ 就实现相同矩阵，无需参考。连续函数在紧单纯形上达到最大值。证毕。
+
+参考不增加这份通道差的最坏值，不意味着这些系统纯态都能由 $\rho^{\otimes n}$ 制备，也不授予仪器权限。常数相位可移除：令 $R_T=\operatorname{diag}(e^{-iE_aT/2})$，有
+
+$$
+S_T=R_T^\dagger C_TR_T,\qquad
+(S_T)_{aa}=0,\qquad
+(S_T)_{ab}=\operatorname{sinc}((E_a-E_b)T/2)\quad(a\ne b),
+\qquad
+\|D_pC_TD_p\|_1=\|D_pS_TD_p\|_1.
+\tag{TM.271}
+$$
+
+这里 $D_p$ 与 $R_T$ 交换。$S_T$ 的对角项仍为零，不能误换成 sinc 相关矩阵的对角项一。
+

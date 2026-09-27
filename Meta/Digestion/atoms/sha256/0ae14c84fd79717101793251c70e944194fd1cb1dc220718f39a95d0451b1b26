@@ -1,0 +1,11 @@
+**定义 23.5。** 对同一 $S,P,\widehat L,E,F,\sigma$，定义两个独立时域的核：
+
+$$
+\begin{aligned}
+s\equiv_S t&\iff\forall m,n\in\mathbb N\ \forall p\in P,\quad
+E(F^{[m]}s,\sigma^{[n]}p)=E(F^{[m]}t,\sigma^{[n]}p),\\
+p\equiv_P q&\iff\forall m,n\in\mathbb N\ \forall s\in S,\quad
+E(F^{[m]}s,\sigma^{[n]}p)=E(F^{[m]}s,\sigma^{[n]}q).
+\end{aligned}
+$$
+

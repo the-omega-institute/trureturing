@@ -1,0 +1,10 @@
+### 47.4 全层精确有限误差模与共同见证
+
+在 $q\le1$ 时定义
+$$
+\omega_{\rho,A}(h)=
+\sup_{\substack{a,b\in K_A\\\|a-b\|_\infty\le h}}
+\|\mathcal E(a)-\mathcal E(b)\|_\rho,
+\qquad 0\le h\le A.
+$$
+

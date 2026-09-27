@@ -1,0 +1,67 @@
+### 296.4 阶乘矩给出的对数系数与尾项
+
+令实际成功次数 $J=\sum_{i=1}^K Y_i$。对 $0\le i\le K$，定义经验坐标
+$$
+c_i=C(1-Bi/K)
+\tag{296.9}
+$$
+和实系数
+$$
+\beta_i=
+1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}
+\sum_{m=1}^{d}\frac{B^m}{m}
+\frac{(i)_m}{(K)_m}.
+\tag{296.10}
+$$
+$(i)_m=i(i-1)\cdots(i-m+1)$，当 $i<m$ 时按零解释。
+$d\le K$，分母非零。公式仅含已知参数和有限算术，不对非正的 $c_i$ 取对数。$\beta_i$ 尚不是决定概率，可以越界。
+
+二项分布的阶乘矩给
+$$
+\mathbb E_p\frac{(J)_m}{(K)_m}=p^m.
+$$
+因此
+$$
+\mathbb E_c\beta_J
+=
+1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}\sum_{m=1}^{d}\frac{(Bp(c))^m}{m}
+=L(c)+R_d(c),
+\tag{296.11}
+$$
+其中
+$$
+R_d(c)=\frac1{D\kappa}
+\sum_{m>d}\frac{(1-c/C)^m}{m}\ge0.
+$$
+对全部真实 $c\ge kl>k^3$，令
+$$
+z_*=1-k^3/C_*\in(0,1),\qquad
+T_k=\frac{C_*}{(11/4)\kappa k^3},
+$$
+便有
+$$
+0\le R_d(c)\le T_k z_*^{d+1}
+\le T_k\exp[-\zeta_k|\log z_*|K].
+\tag{296.12}
+$$
+这里没有以点态系数的最坏大小估计期望。
+
+另有两个点态事实。因为每个求和项非负，
+$$
+\beta_i\le U_k:=
+1+\frac{\log C_*}{(11/4)\kappa}.
+\tag{296.13}
+$$
+并且只要 $c_i>0$，无放回全成功概率不超过有放回全成功概率，给
+$$
+0\le\frac{(i)_m}{(K)_m}\le(i/K)^m.
+$$
+将有限和放大到收敛的无限和，得到
+$$
+\boxed{\beta_i\ge L(c_i)\quad(c_i>0).}
+\tag{296.14}
+$$
+这个下界不要求 $m/K$ 很小。
+

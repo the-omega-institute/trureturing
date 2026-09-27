@@ -1,0 +1,28 @@
+**命题 1.7（行为商的任务最小性）。** 把允许实验明确固定为“任意 $E_0$ 酉操作的恒等扩展，随后读取第一系统 $Z$”，定义 $\rho\sim\sigma$ 当且仅当全部这些实验的结果分布相同。任意连续的允许酉操作仍合成为某个 $V\in U(2)$，故该定义也包含所有有限酉操作词后再读取 $Z$ 的任务。则
+$$
+\rho\sim\sigma
+\quad\Longleftrightarrow\quad
+(r_x,r_y,r_z)_\rho=(r_x,r_y,r_z)_\sigma
+\quad\Longleftrightarrow\quad
+\rho=\sigma\qquad(\rho,\sigma\in\mathcal D_0).
+\tag{TM.65}
+$$
+
+同态显然给出相同响应。反向只需式(TM.64)的三项实验：二值 $Z$ 分布确定其期望，三个期望确定 Bloch 三元组，再由式(TM.61)恢复密度矩阵。若两态不同，至少一个坐标不同，对应实验便将它们区分。因此，没有两个不同的 $\mathcal D_0$ 态能在保留全部所声明行为的同时被永久合并。
+
+更具体地，若另一摘要 $s:\mathcal D_0\to B$ 能够恢复所有这些实验的分布，记其中三项期望的恢复函数为 $g_x,g_y,g_z$，则
+$$
+(r_x,r_y,r_z)(\rho)=\bigl(g_x(s(\rho)),g_y(s(\rho)),g_z(s(\rho))\bigr).
+\tag{TM.66}
+$$
+
+所以每份这样的任务充分摘要都能恢复 Bloch 表示。这是关于观察核与行为商的最小性；它不声称三个任意实数容器在集合论上不能重编码成更少容器，也不声称存在有限比特精确存储全部状态的方法。若限制允许酉操作、测量权限或精度，行为等价关系可能变粗，需要按新任务重新计算。
+
+本节由此把“体／边”具体化为一个可以检验的缺口和补全：同一零能量整体中的部分联合关系，在指定当前边界上完全隐藏；允许的守能联合操作可将其运输到未来局部读数；补入足够的相干坐标后，表示支持该操作族的精确更新。守恒约束决定合法活动的层，动态充分性则决定边界是否记录了这一层内部会被后续操作使用的区别。两者不能相互替代。
+
+仓内已有更一般的预测充分性接口。固定快照 `237012b49d0d4729a86f7e9dd252d94df1de8dd0` 的 `D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.lean:46`，`all_future_statistics_sufficiency` 在去迹 Hermitian 实向量空间中证明：预测投影相同，当且仅当全部指定读数经给定 Heisenberg 线性算子任意有限次迭代后的内积相同。其量词涉及一个给定算子的迭代；本节任意 $U(2)$ 操作族的具体充分性另由式(TM.64)的三项实验核对，不把范围不同的接口自动混同。
+
+历史候选快照 `29c5504b11a1685c220e0ad2a9705a987fc6cff4`中，`docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md:2117` 的第13.7节已经给出受限态族 $\rho_{a,b,c}=\tfrac14(I+aX\otimes I+bY\otimes Z+cZ\otimes Z)$ 的真实 CPTP 编码、解码与动态交织：通过指定 CNOT 将一个逻辑量子位与固定混合因子编码为两个物理量子位，再经逆酉与偏迹恢复逻辑态。该族不同于本节的零能量支撑族，来源状态也须按这个候选快照识别；它已经承担“受限态族可有精确量子充分表示”的既有机制，本节不据此另开重复的普遍压缩前沿。
+
+另在固定快照 `32cb094685048f37f719e20bcf313657a553135b`，`D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean:81` 的 `dynamic_closure_is_least` 给出指定总操作族下保留原观察的最小动态闭包接口；`D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.lean:42` 的 `reduced_irreversibility_is_canonical_record_access_defect` 处理联合记录保留相干区别、迹掉记录后的不可恢复性及重新访问记录后的恢复。后者本身没有断言上述 Hamiltonian 的守能性质。本节定位为这些已有机制的有限矩阵应用说明与接口连接，未新增 Lean 核验，不将既有定理的应用、本节的显式分解和综合包装成已形式化的新定理或原创性结论。
+

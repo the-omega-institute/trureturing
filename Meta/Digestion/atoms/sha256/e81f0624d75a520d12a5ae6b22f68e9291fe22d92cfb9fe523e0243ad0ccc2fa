@@ -1,0 +1,36 @@
+### 13.2 联合分支更新的闭合
+
+对合法实验 \(a\) 和正概率结果 \(y\)，假设共同来源给出
+
+$$
+\beta(h\cdot a,y)=B_{a,y}(\beta(h)),\qquad
+r(h\cdot a,y)=R_{a,y}(r(h)).
+\tag{13.4}
+$$
+
+并且动作合法性、策略选择以及输出核分别能从 \(r\)、\(\Psi\) 和 \(\beta\)（或 \(\Psi\)）恢复。若实际联合像对
+
+$$
+\Psi_{a,y}(b,u)=\bigl(B_{a,y}(b),R_{a,y}(u)\bigr)
+$$
+
+闭合，则
+
+$$
+\Psi(h\cdot a,y)=\Psi_{a,y}(\Psi(h)).
+\tag{13.5}
+$$
+
+对 transcript 长度归纳，式（13.5）推出：任意 \(\Psi\)-adaptive policy 的联合合法性与未来输出律只依赖 \(\Psi(h)\)。令 \(\bar D_a\subseteq\operatorname{ran}\Psi\) 为由残余和联合边界恢复的合法域；若输出核还依赖 \(\beta\)--\(r\) 的联合相关，该相关必须已经纳入 \(r\) 或直接纳入 \(\Psi\)。更明确地，对固定 policy \(\pi_n\)，令 \(L_0((b,u),\varepsilon)=1\)，并在实际支持上定义
+
+$$
+L_{n+1}\bigl((b,u),y::w\bigr)
+=\mathbf 1_{\{(b,u)\in\bar D_a\}}\,
+K_{a}(y\mid b,u)
+L_n\bigl(\Psi_{a,y}(b,u),w\bigr),
+\qquad a=\pi_n(b,u),
+\tag{13.6}
+$$
+
+非法分支质量取零。对 \(\Psi(h)=\Psi(h')\) 的两份历史，按 \(n\) 归纳得全部有限 transcript 律相同。式（13.6）应按分支理解：若 \(K_a(y\mid b,u)=0\)，则该 transcript 分支的质量定义为零；只有在 \(K_a(y\mid b,u)>0\) 时才调用 \(\Psi_{a,y}\) 的条件更新。随机策略若依赖随机源，必须把该源并入 \(r\) 或 \(\Psi\)。
+

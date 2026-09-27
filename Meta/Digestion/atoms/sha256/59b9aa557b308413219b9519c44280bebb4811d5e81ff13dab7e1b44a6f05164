@@ -1,0 +1,9 @@
+**三个射线分支均与早期接收矛盾。** 仍反设 $`r_1=2`$。定义二维空间 $`P=\operatorname{span}\{p_\alpha:\alpha=1,2\}`$。由（29.37）—（29.38）及第二终端来源系数，
+
+$$
+V_0P=\mathbb Cu\otimes F,\qquad
+V_1P=\mathbb Cv\otimes F,\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\tag{29.52}
+$$
+

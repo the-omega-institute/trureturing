@@ -34,3 +34,4 @@ The arena law requires downward closure of the arbitrary-language iteration-dept
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration.depthOriginRealization`
 - Dependency: [D5/S1/Words/HughesIterationDepthNoGap](../../../S1/Words/HughesIterationDepthNoGap.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](RegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

@@ -1,0 +1,74 @@
+## ST11．同一范数决定极点留数与能级几何响应
+
+### 定理 ST11.1：简单极点留数
+
+设 $E$ 为 $H$ 的简单本征值且 $E\notin\operatorname{spec}C$。取非零 $v\in\ker S(E)$，记 $P_V:\mathcal H\to V$ 为坐标投影。则
+
+$$
+\boxed{
+\operatorname*{Res}_{z=E}
+P_V(zI-H)^{-1}P_V^\dagger
+=\frac{vv^\dagger}{v^\dagger G(E)v}.
+}
+\tag{ST11.1}
+$$
+
+**证明。** 归一化的完整本征向量为 $\psi=L_Ev/\sqrt{v^\dagger Gv}$。谱分解中 $(zI-H)^{-1}$ 的该留数为 $\psi\psi^\dagger$，左右投影即可。注意这里使用 $zI-H$；使用 $H-zI$ 时留数符号相反。∎
+
+### 定理 ST11.2：参数化 Hellmann–Feynman 公式的下降
+
+设 $H(u)$ 为 $C^1$ Hermitian 矩阵族，$E(u)$ 是简单本征值分支，且在所论区域始终不属于 $C(u)$ 的谱。令 $v(u)\ne0$ 满足 $S(E(u),u)v(u)=0$。则
+
+$$
+\boxed{
+\frac{dE}{du}
+=\frac{v^\dagger(\partial_u S)v}{v^\dagger Gv}
+=\frac{(L_Ev)^\dagger(\partial_u H)(L_Ev)}{\|L_Ev\|^2}.
+}
+\tag{ST11.2}
+$$
+
+其中 $\partial_u S$ 在固定 $E$ 下取偏导。
+
+**证明。** 在 $S v=0$ 上微分，左乘 $v^\dagger$，含 $dv/du$ 的项消失：
+
+$$
+v^\dagger(\partial_u S)v+\frac{dE}{du}v^\dagger(\partial_E S)v=0.
+$$
+
+用(ST10.2)得第一个等号。固定 $E$ 时，$S=L_E^\dagger(H-EI)L_E$，且 $\partial_uL_E$ 的上块为零。由 $(H-EI)L_E=(S,0)^{\mathsf T}$，求导中的两个 $\partial_uL_E$ 项消失，得到
+
+$$
+\partial_u S=L_E^\dagger(\partial_u H)L_E.
+$$
+
+这给出第二个等号。∎
+
+若 $u$ 是已经定义好的度量、曲率或钟耦合扰动，式(ST11.2)给出相应能级响应。仍须从实际模型定义 $H(u)$；不能仅通过将 $u$ 命名为“几何”就得到引力场方程。$\partial_uH$ 的实验与能动量解释也需由原作用量确定。
+
+### 例 ST11.3：省略范数会改变隐藏能量响应
+
+取
+
+$$
+H=\begin{pmatrix}0&b\\b&c\end{pmatrix},\quad b,c>0,
+\qquad E_-=\frac{c-\sqrt{c^2+4b^2}}2,
+\quad r=\frac b{c-E_-}.
+$$
+
+则 $L_{E_-}(1)=(1,-r)^{\mathsf T}$，
+
+$$
+Z=\frac1{1+r^2},\qquad
+\frac{\partial E_-}{\partial c}=\frac{r^2}{1+r^2}=1-Z.
+\tag{ST11.3}
+$$
+
+在 $b=c=\Delta>0$ 时，$r=\varphi^{-1}$，隐藏权重为
+
+$$
+1-Z=\frac12\left(1-\frac1{\sqrt5}\right).
+$$
+
+省略分母会得到错误的 $\varphi^{-2}$。黄金数在这里来自一个明确二阶特征方程；参数关系 $b=c$ 是模型选择，不是所有量子系统必须遵守的规律。
+

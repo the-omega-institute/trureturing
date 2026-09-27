@@ -1,0 +1,22 @@
+**定义 298.1（端点锥与对偶量）。** 沿用第296节的正半径、$\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=(\alpha_1,\alpha_2,\alpha_3)$ 与 $\eta=A^{-1/2}$。对实矩阵 $M$ 写
+
+$$
+S=\frac{M+M^{\mathsf T}}2,\qquad
+\Omega=\frac{M^{\mathsf T}-M}2,\qquad
+\mathcal C(S)=(\operatorname{Tr}S)I-2S.
+\tag{298.1}
+$$
+
+于是 $M=S-\Omega$。定义
+
+$$
+\begin{aligned}
+D_a=\max_M\ &b^{\mathsf T}Mb,\\
+\text{约束为 }&\mathcal C(S)\succeq0,
+\qquad\|Me_i\|_2\le\alpha_i\quad(i=1,2,3).
+\end{aligned}
+\tag{298.2}
+$$
+
+在三维中，$\mathcal C(S)\succeq0$ 已蕴含 $S\succeq0$：若 $d_1\le d_2\le d_3$ 为 $S$ 的特征值，则 $d_3\le d_1+d_2$，从而 $d_1\ge d_3-d_2\ge0$。
+

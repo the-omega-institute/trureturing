@@ -1,0 +1,6 @@
+**$XZXYX$。** 普通第3轮给 $G_3=P$，其后继为 $X$。$G_4\subset U$ 的后继为 $Y$，所以 $G_4=T$。由 $U=P\oplus T$ 及 $V_1G_2=Q\otimes Z$，得到 $Q_4=Q_5=Q$；普通第3轮也给 $Q_3=Q$。
+
+于是 $H_3\subset P\oplus Q$、$H_4\subset T\oplus Q$，两者均满投影到 $Q$。实际零位像 $V_0H_3=T\otimes X$、$V_0H_4=G_5\otimes Y$ 再次使这两个平面正交，与 $P\perp T$ 下的共同满投影冲突。
+
+### 132.5 两个严格投影夹逼与两个重复空间对
+

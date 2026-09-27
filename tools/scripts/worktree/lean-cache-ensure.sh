@@ -12,6 +12,8 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   }
   cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
 else
+  # Reused MSBuild nodes can hold these output pipes after the producer exits.
+  export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
 # Optional read-only source inventory supplied by PR preflight. The native

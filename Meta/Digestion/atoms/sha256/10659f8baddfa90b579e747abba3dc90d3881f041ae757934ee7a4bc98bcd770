@@ -1,0 +1,79 @@
+#### 47.9.3 分次缩放与精确剩余尾距离
+
+对任意环境数组 \(T\in\mathcal B_\rho\)，记
+\[
+\tau_N(T)=\sup_{n+k\ge N}\rho^{n+k}|T(n,k)|,
+\qquad
+L_\rho(T)=\lim_{N\to\infty}\tau_N(T).
+\tag{47.34}
+\]
+\(\tau_N(T)\) 非负、不增且有界，故此极限存在且有限；
+\(L_\rho(T)=0\) 当且仅当 \(T\in\mathcal B_{\rho,0}\)。
+这里是尾幅度，不是概率或热力学熵。
+
+对数学缩放参数 \(\tau\ge0\)，定义
+\[
+(\mathsf D_\tau a)_i=e^{-(i+1)\tau}a_i,\qquad
+(\mathsf U_\tau T)(n,k)=e^{-(n+k+1)\tau}T(n,k).
+\tag{47.35}
+\]
+**分次相容恒等式。**
+\[
+\boxed{\mathcal E(\mathsf D_\tau a)=\mathsf U_\tau\mathcal E(a).}
+\tag{47.36}
+\]
+证明按列归纳。首列由定义成立。若此前各列成立，(47.1) 中移位项
+\(T(n+1,k)\) 的缩放因子是 \(e^{-(n+k+2)\tau}\)；每个乘积项的指数之和为
+\[
+(n+j+1)+(k-j+1)=n+k+2.
+\]
+所以所有项有同一因子，下一列也成立。每个递推和有限，证明不交换无穷运算。该恒等式在每个有限窗口与完整实际数组上同时成立。
+
+当 \(\tau>0\) 时，
+\(\mathsf D_\tau a\in K_{A_\tau}\)，其中
+\(A_\tau=e^{-\tau}A<A\)，而在本节固定的临界 \(\rho\) 下
+\[
+q_\tau=\rho\lambda(A_\tau)<\rho\lambda(A)=1.
+\]
+对固定 \(\tau>0\)，取有限前缀
+\(b^{\tau,M}=(\mathsf D_\tau a)^{<M}\in\mathcal F_A^{\mathbb R}\)。
+已证次临界截断界 (47.22) 应用于半径 \(A_\tau\)，给
+\[
+\|\mathsf U_\tau T-\mathcal E(b^{\tau,M})\|_\rho
+\le2A_\tau q_\tau^M\longrightarrow0
+\quad(M\to\infty),\qquad T=\mathcal E(a).
+\tag{47.37}
+\]
+因此对每个实际 \(T\in\mathcal I_{A,\rho}\) 及每个 \(\tau>0\)，
+\(\mathsf U_\tau T\in\overline{\mathcal J_{A,\rho}^{\mathbb R}}\)。
+这一步的有限来源确实来自同一缩放后的边界，不是任意环境坐标截断。
+
+现在在全部环境空间中证明精确尾距离极限。对任意
+\(S\in\mathcal B_{\rho,0}\)，三角不等式给
+\[
+\tau_N(T)\le\|T-S\|_\rho+\tau_N(S).
+\]
+令 \(N\to\infty\)，得 \(L_\rho(T)\le\|T-S\|_\rho\)。
+另一方面，对任意 \(\tau>0\)，
+\[
+\tau_N(\mathsf U_\tau T)
+\le e^{-(N+1)\tau}\|T\|_\rho\longrightarrow0,
+\]
+故 \(\mathsf U_\tau T\in\mathcal B_{\rho,0}\)，已有下界适用。
+固定 \(N\ge1\)，按 \(n+k<N\) 与 \(n+k\ge N\) 分开，得到
+\[
+L_\rho(T)\le\|T-\mathsf U_\tau T\|_\rho
+\le
+\max\{(1-e^{-N\tau})\|T\|_\rho,\ \tau_N(T)\}.
+\tag{47.38}
+\]
+头部用 \(n+k+1\le N\)，尾部用 \(0\le1-e^{-(n+k+1)\tau}\le1\)。
+先令 \(\tau\downarrow0\)，再令 \(N\to\infty\)，上下界相合，故
+\[
+\boxed{
+\lim_{\tau\downarrow0}\|T-\mathsf U_\tau T\|_\rho=L_\rho(T)
+\quad(T\in\mathcal B_\rho).
+}
+\tag{47.39}
+\]
+

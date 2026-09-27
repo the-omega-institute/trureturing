@@ -1,0 +1,34 @@
+**证明。** 先设 $B>0$。任取一个纯态分解
+$$
+\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|.
+$$
+令 $e_j$ 为该纯态的输入—参考纠缠熵。对每一纯分量，§244的完整方向优化及定理245.1给
+$$
+g(|\psi_j\rangle\langle\psi_j|)
+\le G(e_j)\le U+\delta e_j.
+\tag{245.18}
+$$
+通道线性与迹范数凸性于是给
+$$
+\begin{aligned}
+g(\Omega)
+&\le\sum_j\lambda_j
+ g(|\psi_j\rangle\langle\psi_j|)\\
+&\le U+\delta\sum_j\lambda_j e_j.
+\end{aligned}
+\tag{245.19}
+$$
+这个不等式对每个分解都成立，左侧不依赖分解。因 $\delta>0$，对右侧所有平均熵取下确界正好得到（245.17）。该步骤不需要选出达到下确界的分解。
+
+若 $B=0$，则 $D=U$，完整 diamond 上界本身给 $g(\Omega)\le U$，而 $\delta=0$，故同式成立。$\square$
+
+当 $\delta>0$ 且 $g(\Omega)\ge D-\epsilon$，立刻得到
+$$
+\boxed{
+E_F(\Omega)\ge
+\max\left\{0,1-\frac\epsilon\delta\right\}.
+}
+\tag{245.20}
+$$
+这是对全部有限参考维数和全部混合态的下界；没有先假定最优态带旗标、只有两项分解，或单侧熵已经等于形成纠缠。
+

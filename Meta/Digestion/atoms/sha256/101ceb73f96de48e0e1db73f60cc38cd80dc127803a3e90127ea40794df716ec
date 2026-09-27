@@ -1,0 +1,41 @@
+**定理271.3（标准奇异度恰为最长链长）。** 固定Ando切片 $T_*+L$ 及归一化实际来源切片均满足
+$$
+\boxed{d_S=m.}
+\tag{271.32}
+$$
+
+**证明。** 上界由（271.19）成立。对任意严格约化链，令第 $j$ 步已消去的支撑方向为 $W_j$，当前面支撑为 $W_j^\perp$，且 $W_0=\{0\}$。对该链已执行的 $0\le j\le m$ 步归纳证明
+$$
+W_j\subseteq\mathcal N_j.
+\tag{271.33}
+$$
+零步成立。若 $j<m$、（271.33）在第 $j$ 步成立且该链继续执行，下一张证书为 $Y$，其实际压缩为
+$$
+S'=P_{W_j^\perp}YP_{W_j^\perp}\succeq0.
+\tag{271.34}
+$$
+因为 $\mathcal N_j^\perp\subseteq W_j^\perp$，进一步压缩到 $\mathcal N_j^\perp$ 仍然PSD；$Y\in L^\perp$ 与 $\langle Y,T_*\rangle=0$ 也仍成立。因此（271.31）适用，即使进一步压缩为零。
+
+若 $x\in\mathcal N_{j+1}^\perp$，则 $x\in\mathcal N_j^\perp\subseteq W_j^\perp$，并有
+$$
+x^\dagger S'x=x^\dagger Yx
+=x^\dagger P_jYP_jx=0.
+\tag{271.35}
+$$
+由 $S'\succeq0$，得 $S'x=0$。故 $\operatorname{ran}S'\subseteq\mathcal N_{j+1}$，下一面消去的空间满足
+$$
+W_{j+1}=W_j+\operatorname{ran}S'
+\subseteq\mathcal N_{j+1}.
+\tag{271.36}
+$$
+这完成对任意链的归纳。
+
+当 $j<m$ 时，
+$$
+\dim\mathcal N_j=\sum_b\min(j,r_b)<N=\dim\mathcal N.
+\tag{271.37}
+$$
+因此 $W_j$ 尚未包含完整核，当前支撑维数 $2N-\dim W_j$ 大于 $N$。唯一可行矩阵 $T_*$ 的秩为 $N$，不在当前面的相对内部；相对Slater不能成立。故任何合法链都至少需要 $m$ 步。
+
+归一化把偏移 $T_*$ 换成 $T_*/N$，方向空间仍是 $L$。证书的零配对条件、当前支撑及最短步数均不变，故实际来源切片也有相同奇异度。$\square$
+

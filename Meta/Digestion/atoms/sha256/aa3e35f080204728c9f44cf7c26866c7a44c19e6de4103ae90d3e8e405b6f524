@@ -1,0 +1,38 @@
+**定义 47.1（允许通信的固定状态摘要合同）。** 固定 $d\ge2$，取数据基 $e_1,\ldots,e_d$ 和控制基 $e_c$，令 $c:V\to\mathbb F_2$ 同时表示控制坐标函数。写
+
+$$
+\begin{gathered}
+V=\mathbb F_2^d\oplus\mathbb F_2,
+\qquad W=\ker c=\operatorname{span}\{e_1,\ldots,e_d\},
+\qquad z=(w,c(z)),\\
+\mathcal C=\{(z,z):z\in V\},\qquad T(z,z)=z,\\
+\tau_j(z)=z+e_j\quad(j\in\{1,\ldots,d,c\}),
+\qquad N_i(z)=c(z)e_i\quad(1\le i\le d).
+\end{gathered}
+\tag{47.1}
+$$
+
+左右两端只持有当前源的确定性摘要 $u:V\twoheadrightarrow U$、$v:V\twoheadrightarrow Q$，值域取各自实际像。共同源的准备合同仍是 $\mathcal C$；可供操作访问的持久信息只有这两份摘要，不能重新读取未保存的原态。要求
+
+$$
+\begin{gathered}
+D(u(z),v(z))=z\quad(z\in V),\\
+u\circ\tau_j=\bar\tau_{j,U}\circ u,
+\qquad v\circ\tau_j=\bar\tau_{j,Q}\circ v.
+\end{gathered}
+\tag{47.2}
+$$
+
+因此基平移必须零通信地逐侧更新。对重写 $N_i$ 则允许通信，但结束时必须分别写入 $u(N_i z)$、$v(N_i z)$，不能改换摘要定义或仅让某一端知道完整新状态来替代这两个指定输出。解码器 $D$ 表示联合恢复能力，不是额外免费参与计算的控制器。
+
+每个具名动作是两端共同给定的输入，正确性对全部 $z$ 和每个动作分别量化。动作标签不以免费、依赖未知源的选择方式传递信息；旧动作、旧通信、公共时钟及来源相关控制器状态均不作为免费输入。固定摘要跨操作不变。在一次操作内保留旧摘要，通信完成后同步提交新摘要；临时计算空间不计为持久记忆，但不得把临时消息或其他源相关状态带入下一次操作。
+
+持久存储计为 $S=\log_2|U|+\log_2|Q|$ 个本地位。先研究无冗余的容量等式
+
+$$
+|U|\,|Q|=2^{d+1},\qquad S=d+1.
+\tag{47.3}
+$$
+
+第47.6节再解除这个等式，在所有满足平移局部闭合的容量上求资源前沿。此处的容量是各端固定状态集的大小，不是仅对实际联合像取一次对数。
+

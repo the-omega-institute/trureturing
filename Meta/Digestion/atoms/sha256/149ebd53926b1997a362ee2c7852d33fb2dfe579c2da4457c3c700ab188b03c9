@@ -1,0 +1,36 @@
+### 231.6 同一候选的无参考最优误差为三分之一
+
+任意输入态写成
+$$
+\rho_s=\frac{I+s\cdot\sigma}{2},\qquad s\in\mathbb R^3,\quad\|s\|\le1.
+\tag{231.TR.28}
+$$
+由（231.TR.24），trine 候选在该输入上的半迹距离为
+$$
+\frac12\|\mathcal S^{\rm tr}(\rho_s)-\mathcal R(\rho_s)\|_1
+=\frac16\sum_{j=1}^3|n_j\cdot s|.
+\tag{231.TR.29}
+$$
+绝对值和可写成
+$$
+\sum_j|n_j\cdot s|
+=\max_{\epsilon_j\in\{-1,1\}}
+\left(\sum_j\epsilon_jn_j\right)\cdot s.
+\tag{231.TR.30}
+$$
+三个符号相同时，向量和为零；否则向量和为某个 $\pm2n_j$，因为 $n_1+n_2+n_3=0$。因此
+$$
+\max_{\epsilon_j\in\{-1,1\}}
+\left\|\sum_j\epsilon_jn_j\right\|=2.
+\tag{231.TR.31}
+$$
+于是（231.TR.29）至多为 $1/3$。取 $s=n_1$，三个内积为 $1,-1/2,-1/2$，达到等号。
+
+另一方面，第三节的低秩标签事件论证给全部预算三候选的无参考误差至少为 $1/3$。故
+$$
+\boxed{U_3=\delta_0(\mathcal R,\mathcal S^{\rm tr})=\frac13
+<\frac12=D_3.}
+\tag{231.TR.32}
+$$
+这同时比较了两个优化问题，而不只是某个非最优候选的两个误差读数。
+

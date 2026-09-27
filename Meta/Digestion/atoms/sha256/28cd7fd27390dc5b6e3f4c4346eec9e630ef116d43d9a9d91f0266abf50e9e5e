@@ -1,0 +1,19 @@
+### 21.6 推论：真实细分的决策收益与信息时间
+
+给定均匀相位分布，只观察 $O_n(X)$。对阈值事件 $P_\theta=\{X\leq\theta\}$，最小判错概率记为 $B_n(\theta)$。若 $\theta\in[q_j,q_{j+1}]$，则
+\[
+B_n(\theta)=\min\{\theta-q_j,q_{j+1}-\theta\}.
+\]
+所以
+\[
+\sup_\theta B_n(\theta)=D_n/2,\qquad
+\int_0^1 B_n(\theta)\,d\theta=\frac14\sum_j(q_{j+1}-q_j)^2.
+\tag{21.7}
+\]
+由第 21.4 节，设新增切点在旧单元内产生正长度 $u,v$，则平均阈值错误率恰好下降 $uv/2$，柱集熵恰好增加
+\[
+(u+v)\left[-\frac u{u+v}\log\frac u{u+v}
+-\frac v{u+v}\log\frac v{u+v}\right].
+\tag{21.8}
+\]
+

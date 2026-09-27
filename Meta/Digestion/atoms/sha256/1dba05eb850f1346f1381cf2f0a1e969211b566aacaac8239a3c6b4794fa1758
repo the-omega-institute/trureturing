@@ -1,0 +1,16 @@
+**theorem 22.3: 最大不变核与有限层稳定；Claim status: open.** 对确定更新 $F:S\to S$ 和当前读出 $q$，完整未来商的核是当前观察核中最大的前向不变关系：它既包含在 $\ker q$ 中，又满足
+
+$$
+(s,t)\sim\Longrightarrow(Fs,Ft)\sim,
+$$
+
+并且任何同时具有这两项性质的关系都包含在它里面。仓内 `CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point` 给出这一最大不变核表述。因而有限 horizon 商的稳定，只能在已有的有限分离深度、有限状态或其他明确条件下推出；没有这些条件，
+
+$$
+\bigcap_N\ker\Gamma_{\mathcal T,\le N}
+$$
+
+仍可能严格小于任何一个有限层核。
+
+即使所有有限层都彼此相容，也还要检查逆极限线程是否来自同一个实际配置，以及更新是否在实际来源像上闭合。第 17 节的实际来源像条件不能由形式上的逆极限存在自动替代。
+

@@ -1,0 +1,18 @@
+**命题 224.1（一个足够的边际递减条件）。** 仍采用有限变量与同一个归一化联合律。设 $A$ 是已经持有的读数，$B$ 是另外一组读数，$E$ 是准备新增的一份读数，$H$ 是目标。如果
+
+$$
+E\ \perp\!\!\!\perp\ B\mid(H,A),
+$$
+
+则
+
+$$
+I(H;E\mid A)-I(H;E\mid A,B)
+=I(E;B\mid A)-I(E;B\mid H,A)
+=I(E;B\mid A)\ge0.
+$$
+
+第一步由条件熵展开得到，第二步使用指定的条件独立，最后使用条件互信息非负。它说明：在这些条件下，已有 $A,B$ 时再接收 $E$ 的增量，不超过只有 $A$ 时接收 $E$ 的增量。项目 [ConditionalIndependentInformationSubmodularity](../../../D5/S3/Entropy/Submodularity/ConditionalIndependentInformationSubmodularity.lean) 的 `conditional_independent_information_submodular` 使用这一结构：其旧指标集 $S$ 的输出元组对应 $A$，新增于 $T\setminus S$ 的元组对应 $B$，`Hidden` 对应 $H$，`Output e` 对应 $E$；独立前提发生在具有正质量的 $(A,H)$ 条件切片上。
+
+若一整族报告在给定 $H$ 后联合条件独立，这为上述每个选取提供足够条件，故 $F(S)=I(H;Y_S)$ 具有相应的次模边际递减关系。这里只需所比较变量的指定切片条件；全族条件独立是便利的充分条件，不能冒充必要条件，也不能由每对报告的若干边缘统计替代。
+

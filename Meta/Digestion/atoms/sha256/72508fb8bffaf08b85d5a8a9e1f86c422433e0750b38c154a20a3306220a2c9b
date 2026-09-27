@@ -1,0 +1,29 @@
+**定义 255.1（原尾窗上的联合极限）。** 固定 $\gamma\in(0,\infty)$，沿用第249节的实际任务、处理器、共轭及两个分别成立的全域预算，令
+
+$$
+\delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,
+\qquad 0<e_s=o(s),\qquad
+\frac{\eta_s^2}{4dse_s}\longrightarrow\gamma.
+\tag{255.1}
+$$
+
+令 $c=\pi^2/4$，并沿用
+
+$$
+A(z)=c+(h-z)^2,\quad
+g(z)=1+\frac{z^2-\sqrt{z^4+4}}2,\quad
+D_\gamma(z)=1-\gamma g(z),\quad
+\mathcal Z_\gamma=\{z\in[0,h]:D_\gamma(z)>0\}.
+\tag{255.2}
+$$
+
+两项代价仍在原尾窗 $T_s(\delta_s)$ 上计算：
+
+$$
+P_s=e_s^2\sup_{T_s(\delta_s)}I_Q,\qquad
+Q_s=\frac{e_s}{2ds}\int_{T_s(\delta_s)}I_Q\,du.
+\tag{255.3}
+$$
+
+对满足第244.9式任一低内部代价条件的允许准备族，考察 $(P_s,Q_s)$ 的有限共同极限及有限共同聚点。这里同一个 $s$ 的两项读数必须来自同一个准备；不将不同族的两个分别最优值拼成一个实现。
+

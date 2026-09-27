@@ -1,0 +1,24 @@
+**推论220.3（容量代价与距离平方的二次差别）。** 在同一合法正谱侧，沿用第217节的精确关系
+$$
+E_{\le2}(p)-E(p)=\epsilon D_{\mathrm{cap}}(p)\lambda(p)^2,
+\qquad D_{\mathrm{cap}}(0)=\frac{\beta(R-1)}8.
+$$
+则
+$$
+\boxed{
+\frac{E_{\le2}-E}{\epsilon D_{\mathrm{cap}}d_2^2}
+=1+\frac8{9\beta^2R^2}h^2
++O\!\left(h^2\|p\|_1\right).
+}
+\tag{220.33}
+$$
+若 $h>0$ 且 $p\to0$，还得到
+$$
+\boxed{
+\frac1{h^2}
+\left[\frac{E_{\le2}-E}{\epsilon d_2^2}-D_{\mathrm{cap}}(p)\right]
+\longrightarrow\frac{R-1}{9\beta R^2}.
+}
+\tag{220.34}
+$$
+

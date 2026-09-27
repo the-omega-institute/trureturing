@@ -1,0 +1,89 @@
+**定理197.1（远端响应及其极小点）。** 令 $(x_h,y_h)$ 为第190节圆盘问题的唯一极小点。当 $h\to\infty$ 时，
+
+$$
+\boxed{
+x_h=\frac{g\delta}{2h}
++\frac{\beta\Sigma g\delta}{4h^2}+O(h^{-3}),
+\qquad
+y_h=1-\frac{g^2\delta^2}{8h^2}+O(h^{-3}),
+}
+\tag{197.1}
+$$
+
+$$
+\boxed{
+\Phi_h
+=\Phi_\infty
+-\frac{g^2\delta^2}{16h}
+-\frac{\beta\Sigma g^2\delta^2}{32h^2}
++O(h^{-3}).
+}
+\tag{197.2}
+$$
+
+当 $g=0$ 时，$h\ge\beta R$ 已有 $x_h=0,y_h=1,\Phi_h=\Phi_\infty$，所以这两式仍成立。
+
+**证明。** 先设 $g>0$。写
+
+$$
+\Phi_h=A(x_h,y_h)+hM(y_h),\qquad
+M(y)=\frac{(1-y)(7-y)}{12}.
+$$
+
+可行点 $(0,1)$ 给 $\Phi_h\le\Phi_\infty$，而
+$M(y)\ge(1-y^2)/4$。设 $B=1-y_h^2$，利用 $x_h\le\sqrt B$，得到
+
+$$
+\frac{h-\beta R}{4}B
+\le a x_h\le a\sqrt B.
+$$
+
+因此 $h>\beta R$ 时，$\sqrt B\le4a/(h-\beta R)$，特别地 $x_h=O(h^{-1})$、$y_h\to1$。
+
+同一区间内，无约束极小点的第二坐标 $4h/(h+3\beta R)>1$，故圆盘约束必须取等号。且 $g>0$ 时 $x_h>0$：沿圆周从 $(0,1)$ 增加 $x$，目标的一阶增量为 $-a x$。所以可写 $y_h=\sqrt{1-x_h^2}$，并对圆周目标求导。
+
+在这条圆周上，目标相对远端值为
+
+$$
+-a x-\frac{\beta\Sigma}{8}x^2
++hM\bigl(\sqrt{1-x^2}\bigr).
+\tag{197.3}
+$$
+
+驻点方程为
+
+$$
+0=-a-\frac{\beta\Sigma}{4}x_h
++h\frac{x_h(4-y_h)}{6y_h}.
+\tag{197.4}
+$$
+
+置 $t=1/h$。该方程除以 $h$ 后，在 $(x,t)=(0,0)$ 附近是解析方程，关于 $x$ 的导数为 $1/2$。隐函数定理给唯一解析解；上述 $x_h\to0$ 保证实际极小点最终就在此解支上。展开
+
+$$
+\frac{x(4-\sqrt{1-x^2})}{6\sqrt{1-x^2}}
+=\frac x2+\frac{x^3}{3}+O(x^5)
+$$
+
+并逐次比较 $t,t^2$ 的系数，得
+
+$$
+x_h=2at+\beta\Sigma a t^2+O(t^3).
+$$
+
+再由 $y_h=\sqrt{1-x_h^2}$ 得（197.1）。另一方面，
+
+$$
+M\bigl(\sqrt{1-x^2}\bigr)
+=\frac{x^2}{4}+\frac{x^4}{12}+O(x^6).
+$$
+
+将 $x_h=2at+\beta\Sigma a t^2+O(t^3)$ 代入（197.3），有
+
+$$
+\Phi_h-\Phi_\infty
+=-a^2t-\frac{\beta\Sigma a^2}{2}t^2+O(t^3),
+$$
+
+即（197.2）。$g=0$ 的结论由第190节的精确平台直接得到。证毕。
+

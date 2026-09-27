@@ -1,0 +1,10 @@
+**定理 17.1（同 zeta 的实际 Jordan 反例）。** (a) 两点各一自环给矩阵 $A=I_2$，另加从第一点到第二点的不可返回边给
+$$
+J=I_2+N,\qquad N=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad N^2=0.
+$$
+$J^n=I+nN$，所以两者全部正幂迹同为二、$\det(I-zA)=\det(I-zJ)=(1-z)^2$；但不相似，因为 $SI_2S^{-1}=I_2\ne J$。幂式由二项式中二次及以上幂零，或直接归纳得出。此为 `PowerTraceSimilarityCountermodel.power_traces_do_not_determine_similarity` 的零／幂零机制加单位后的实际图消费者，不宣称反例机制首次出现。
+
+(b) 取同端口 $H=e_1^{\mathsf T},B=e_2$，有 $HA^nB=0$，$HJ^nB=n$，生成函数分别零与 $z/(1-z)^2$。后式可由 $\sum z^n=(1-z)^{-1}$ 形式求导乘 $z$ 得到。$J$ 的可达向量 $e_2,Je_2=e_1+e_2$ 张成全空间，观测行 $H,HJ=(1,1)$ 独立，故可达可观；$A$ 在该端口下不最小。
+
+(c) 令每条实际边的费用和时长均为一，则全部参数下两图矩阵为 $aI_2,aJ$，其中 $a=e^{-\beta-s}\ne0$。zeta 同为 $(1-za)^{-2}$，开放参数为零与 $na^n$，生成函数为零与 $za/(1-za)^2$。因此不是未实现的数值巧合，而且这个非正规 Jordan 过程不能被强行对角化。
+

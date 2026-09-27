@@ -1,0 +1,19 @@
+#### 8.7.1 单模数来源、输出和噪声合同
+
+固定 $m\ge2$，未知来源 $p$ 在概率单纯形 $\Delta_m$ 内。删除余数 $i$ 后的精确剩余质量为 $y_i=1-p_i$，空操作质量为一。观察每格有任意确定性噪声，$|\widehat y_i-y_i|\le\varepsilon$；空读数同样可带界内噪声，但总质量一是事先给定的合同。全部观测不要求恰好属于某个合法来源的无噪声像。
+
+估计器也必须输出一个概率向量。则最坏坐标误差的 minimax 风险恰为
+$$
+\boxed{\mathcal R_{\Delta_m}(\varepsilon)
+=\left(1-\frac1m\right)\min\{2\varepsilon,1\}.}
+\tag{ER8.SO.1}
+$$
+这里对每个已知半径 $\varepsilon\ge0$，定义
+$$
+\mathcal R_E(\varepsilon)=\inf_{\mathcal A:\,\operatorname{input}\to E}
+\sup_{p\in\Delta_m}\sup_{\|\eta\|_\infty\le\varepsilon}
+\|\mathcal A(F(p)+\eta)-p\|_\infty,
+\qquad F(p)=(1,1-p_1,\ldots,1-p_m).
+$$
+输出域 $E$ 分别取 $\Delta_m$ 或 $\mathbb R^m$。总质量一是已知条件，不是靠带噪空读数重新估计。它不同于任意实向量输出时的 $\min\{\varepsilon,1/2\}$。特别地，对 $m\ge3$ 和 $0<\varepsilon\le1/2$，要求输出仍是概率律使风险严格大于 $\varepsilon$。
+

@@ -1,0 +1,74 @@
+### 159.4 独立纯初始化与全部持久维数
+
+比较态 $\Xi$ 不作为免费资源提供。取真实档案支撑 $S_t$，其中
+
+$$
+\dim S_t=1,2,3,4,4,\ldots
+\quad(t=0,1,2,3,\ldots),
+\qquad S_{t+1}\subseteq S_t\otimes B.
+\tag{159.25}
+$$
+
+对 $0\le t<L$，取对应维数的启动扇区 $K_t$ 和等距同构
+$J_t:S_t\to K_t$。全部持久空间为
+
+$$
+K=\left(\bigoplus_{t=0}^{L-1}K_t\right)\oplus K_{\mathrm{run}},
+\qquad
+\boxed{\dim K=1+2+3+4(L-3)+4=4L-2.}
+\tag{159.26}
+$$
+
+初态是与来源和参考独立的一维 $K_0$ 中固定纯态。
+
+启动全域通道按第156.5节的真实支撑压缩构造。具体地，设 $P_t$ 为
+$K_t\otimes B$ 中实际 $S_{t+1}$ 像的投影，令 $B_t$ 为该像到下一接收扇区的等距，并在正交补取零，使
+$B_t^*B_t=P_t$。前 $L-1$ 步的目标等距为 $J_{t+1}$；最后一步的目标等距为规范编码
+$F_L:S_L\to Q\otimes R$。任选目标扇区密度矩阵 $\tau_t$，定义
+
+$$
+\widehat{\mathcal C}_t(X)
+=B_tXB_t^*
++\operatorname{Tr}[(I-P_t)X]\tau_t.
+\tag{159.27}
+$$
+
+这些映射均在整个输入扇区上 CPTP，并在实际支撑上精确压缩。
+
+对最后一个启动步骤，在 $\widehat{\mathcal C}_{L-1}$ 之后接两个接收侧通道：先重置 $Q$，
+
+$$
+\mathcal P_0(X_{QR})
+=|0\rangle\langle0|_Q\otimes\operatorname{Tr}_Q X,
+\tag{159.28}
+$$
+
+再施加（159.10）的 $\mathcal N$。记所得最后一步为
+$\mathcal C_{L-1}=\mathcal N\mathcal P_0\widehat{\mathcal C}_{L-1}$；
+对较早步骤取 $\mathcal C_t=\widehat{\mathcal C}_t$。
+
+将这些启动通道与（159.14）的运行通道合并为一台固定全域通道：先投影到输入持久扇区，分别执行该扇区的全域通道，再嵌入对应目标扇区。以 $P_s^K$ 表示持久扇区投影，可写为
+
+$$
+\mathcal C(X)=
+\sum_{s\in\{0,\ldots,L-1,\mathrm{run}\}}
+\operatorname{Ad}_{\iota_{d(s)}}\!
+\left[
+\mathcal C_s\!\left(
+(P_s^K\otimes I_B)X(P_s^K\otimes I_B)
+\right)
+\right],
+\tag{159.29}
+$$
+
+各输入块经自然识别视为 $K_s\otimes B$ 上的算子，且
+
+$$
+d(t)=t+1\ (t<L-1),\qquad
+d(L-1)=\mathrm{run},\qquad
+d(\mathrm{run})=\mathrm{run}.
+$$
+
+因为每个块通道保迹、输入扇区投影和为恒等，（159.29）是整个
+$K\otimes B$ 上的 CPTP 通道。实际运行每一轮只有一个确定持久扇区；启动完成后永久使用同一 $\mathcal C_{\mathrm{run}}$。没有未计入（159.26）的持续标志或外部轮次控制。
+

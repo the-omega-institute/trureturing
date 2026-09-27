@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>StrataLint.EngineeringScope</RootNamespace>
+    <AssemblyName>StrataLint.CiArtifacts</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+  </ItemGroup>
+</Project>

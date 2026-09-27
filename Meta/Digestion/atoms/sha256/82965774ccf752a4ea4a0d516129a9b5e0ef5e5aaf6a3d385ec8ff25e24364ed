@@ -1,0 +1,46 @@
+### 297.3 为有限概率表示保留严格风险余量
+
+记
+$$
+\kappa=-\log k,\quad
+\eta=\log(l/k^2)/\kappa,\quad
+\bar\eta=\min\{\eta,1/2\},\quad D=3-\bar\eta/2.
+$$
+取得一个经认证的正有理数 $\theta$，满足
+$$
+\bar\eta/4\le\theta\le\bar\eta.
+\tag{297.2}
+$$
+例如，计算 $\bar\eta$ 的正区间上下界，使上界不超过下界两倍，再取下界的一半。由于 $g=l-k^2>0$，对数连续且可计算，这个认证过程终止；需要的绝对精度为 $O_k(g)$，费用计入参数计算。
+
+取
+$$
+K=\max\left\{K_0,\
+\left\lceil\underline a^{-1}
+\log\frac{36\overline E}{\theta}\right\rceil\right\}.
+\tag{297.3}
+$$
+若该实数取整不能直接由当前区间决定，将该量认证到宽度至多一的区间，再对其有理上端点向上取整即可，不需要判断某个实数是否恰为整数。
+由（297.1），理想合法概率表 $a_0,\ldots,a_K$ 的比较差至少为
+$$
+1/3+\bar\eta/18-\theta/36
+\ge1/3+\bar\eta/36.
+\tag{297.4}
+$$
+参数关系 $\theta\asymp_k g$ 保证
+$K=O_k(\log(1/g))$。
+
+如果另一合法表 $\widetilde a$ 满足
+$$
+\max_i|\widetilde a_i-a_i|\le\theta/144,
+\tag{297.5}
+$$
+则对任何实际 Bernoulli 参数 $p$，响应概率改变至多
+$\theta/144$：二项基函数非负且和为一。两真实参数的比较差至多损失
+$\theta/72$，所以新的比较差仍至少为
+$$
+1/3+\bar\eta/36-\theta/72
+\ge1/3+\bar\eta/72>1/3.
+$$
+原风险合同因而仍成立，且这一论证覆盖全部连续 $r$。
+

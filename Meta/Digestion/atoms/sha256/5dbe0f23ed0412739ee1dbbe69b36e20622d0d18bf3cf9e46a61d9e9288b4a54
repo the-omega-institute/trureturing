@@ -1,0 +1,183 @@
+**定理 21.1（三步的精确最小固定 CPTP 容量）。** 对上述任意已知非退化来源，
+
+$$
+\boxed{
+d_{\mathrm{CPTP},1}(a,b)=2,\qquad
+d_{\mathrm{CPTP},2}(a,b)=3,\qquad
+d_{\mathrm{CPTP},3}(a,b)=4.
+}
+\tag{21.1}
+$$
+
+因此，第三步是固定 CPTP 合同与同一固定酉、逐步同一纯空白、无额外丢弃环境合同的首个严格容量差：后者由定理9.2需要五维，前者只需四维。以下构造使用同一个固定接收门，其丢弃端口在前三轮依次为确定纯态 $`|0\rangle,|1\rangle,|0\rangle`$；这些端口不携带来源数据，但并非每轮都为同一个纯空白。
+
+证明。先给三步四维构造。取 $`K=\mathbb C^4`$ 的正交单位基
+ $`u,v,w,t`$，接收初态为 $`w`$。置
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+y=\frac{-\overline b\,u+\overline{a}^{2}v}{c}.
+\tag{21.2}
+$$
+
+有 $`c>0`$，且 $`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的一组正交单位基。具体地，两者范数均为一，而
+ $`\langle z,y\rangle=(-\overline{a}^{2}\overline b+\overline b\,\overline{a}^{2})/c^2=0`$。
+这里保留全部复振幅，没有把 $`a,b`$ 假定为正实数。
+
+取每轮新环境 $`E=\mathbb C^2`$，定义
+ $`V:K\otimes\mathcal B\to K\otimes E`$
+在下列八个输入基向量上的作用：
+
+$$
+\begin{aligned}
+V(t\otimes|0\rangle)&=u\otimes|1\rangle,
+&V(z\otimes|0\rangle)&=z\otimes|0\rangle,\\
+V(t\otimes|1\rangle)&=v\otimes|1\rangle,
+&V(u\otimes|1\rangle)&=w\otimes|0\rangle,\\
+V(y\otimes|0\rangle)&=w\otimes|1\rangle,
+&V(w\otimes|0\rangle)&=t\otimes|0\rangle,\\
+V(v\otimes|1\rangle)&=t\otimes|1\rangle,
+&V(w\otimes|1\rangle)&=y\otimes|0\rangle.
+\end{aligned}
+\tag{21.3}
+$$
+
+输入中，新位为零时的四个接收向量是 $`t,y,z,w`$，新位为一时的四个接收向量是 $`t,v,u,w`$；两组分别正交归一。输出中，环境为一时的接收向量是 $`u,v,w,t`$，环境为零时是 $`z,w,t,y`$，也分别正交归一。因此（21.3）把一组八维正交单位基送到另一组，唯一确定一个全域酉。定义同一个接收通道
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger).
+\tag{21.4}
+$$
+
+它在整个 $`K\otimes\mathcal B`$ 上 CPTP，运行时不调用步数来更换门。
+
+**三步的实际联合态。** 将活动记忆写在接收器前方。对初始记忆基态 $`|i\rangle_M`$，记接收后的纯联合向量为 $`\Psi_n^i\in M\otimes K`$。前三轮满足
+
+$$
+\begin{aligned}
+\Psi_1^0&=m_0\otimes t,
+&\Psi_1^1&=m_1\otimes y,\\
+\Psi_2^0&=a\,m_0\otimes u+b\,m_1\otimes v,
+&\Psi_2^1&=m_0\otimes w,\\
+\Psi_3^0&=c\,m_0\otimes z+ab\,m_1\otimes w,
+&\Psi_3^1&=a\,m_0\otimes t+b\,m_1\otimes y.
+\end{aligned}
+\tag{21.5}
+$$
+
+同时，各轮环境的纯向量分别为
+
+$$
+\eta_1=|0\rangle,
+\qquad \eta_2=|1\rangle,
+\qquad \eta_3=|0\rangle,
+\tag{21.6}
+$$
+
+且与其余全部系统成乘积。
+
+逐步验证如下。首轮只使用（21.3）中的 $`w\otimes|0\rangle`$ 与 $`w\otimes|1\rangle`$，两者都输出环境零，给（21.5）第一行。第二轮的两个发射后向量为
+
+$$
+a\,m_0\otimes t\otimes|0\rangle
++b\,m_1\otimes t\otimes|1\rangle,
+\qquad
+m_0\otimes y\otimes|0\rangle.
+\tag{21.7}
+$$
+
+其中全部接收输入都由（21.3）送到环境一，得到第二行。第三轮的两个发射后向量为
+
+$$
+\begin{aligned}
+&m_0\otimes(a^2u+bv)\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle\\
+&\hspace{2em}=c\,m_0\otimes z\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle,\\
+&a\,m_0\otimes w\otimes|0\rangle
++b\,m_1\otimes w\otimes|1\rangle.
+\end{aligned}
+\tag{21.8}
+$$
+
+全部接收输入都输出环境零，给第三行。以上每轮对两个初始基态使用相同的环境向量；线性性因而同时覆盖任意初始相干及任意参考纠缠。对混态可取纯化再偏迹。若仅为数学验证保留所有环境，则前三个终端的累计环境分别为 $`|0\rangle`$、$`|01\rangle`$、$`|010\rangle`$；实际运行立即丢弃各轮环境，并不将它们作为额外接收记忆。
+
+**完整参考下的本地逆解码。** 对终端 $`n\in\{1,2,3\}`$，在接收器旁准备（21.6）的前 $`n`$ 个已知环境纯态，按逆时间顺序使用同一个 $`V^\dagger`$。每次只作用于当前接收器和该轮重新准备的环境，恢复对应发出位；最后丢弃回到初态的接收寄存器。这是一份只访问接收器的合法解码。
+
+更明确地，令 $`\mathsf V_n`$ 是按正时间顺序把同一个 $`V`$ 依次作用于 $`K`$ 和档案中第 $`1,\ldots,n`$ 个位置的酉，已处理位置随后视为环境，记
+ $`\boldsymbol\eta_n=\eta_1\otimes\cdots\otimes\eta_n`$。
+定义整个 $`K`$ 上的通道
+
+$$
+\mathcal D_n(X)=
+\operatorname{Tr}_K\!\left[
+\mathsf V_n^\dagger
+\bigl(X\otimes|\boldsymbol\eta_n\rangle
+\langle\boldsymbol\eta_n|\bigr)
+\mathsf V_n
+\right].
+\tag{21.9}
+$$
+
+其输出为完整 $`\mathcal B^{\otimes n}`$ 档案，因而（21.9）在全域 CPTP，无需依实际输入另选延拓。
+
+每个较早的接收门只作用于 $`K`$ 和已发出的位置，与后续只作用于活动记忆及新位置的来源发射可交换。因此可以先完成全部来源发射，再运行 $`\mathsf V_n`$；这只是重排作用于不同系统的门，不给接收器访问活动记忆的权限。由（21.5）—（21.6），对全部 $`J,\rho_{JM}`$ 有
+
+$$
+(\operatorname{id}_{JM}\otimes\operatorname{Ad}_{\mathsf V_n})
+\bigl(\Omega_n(\rho)\otimes|w\rangle\langle w|_K\bigr)
+=\sigma_n(\rho)\otimes
+|\boldsymbol\eta_n\rangle\langle\boldsymbol\eta_n|,
+\qquad 1\le n\le3,
+\tag{21.10}
+$$
+
+其中按标记系统作固定张量因子置换。代入（21.9）并逆转酉，就精确恢复 $`\Omega_n(\rho)`$。终端新准备的环境只含已知的确定纯态，不是取回运行中丢弃的系统。
+
+**四维下界及首个严格差。** 为证明一般非退化振幅下的下界，取允许的 Bell 输入
+ $`(|0\rangle_J|0\rangle_M+|1\rangle_J|1\rangle_M)/\sqrt2`$。
+不作接收时，三步目标在档案与 $`JM`$ 的切口可写为
+
+$$
+\begin{aligned}
+|\Omega_3\rangle=\frac1{\sqrt2}\bigl[
+&|0\rangle_Jm_0\otimes(a^2|000\rangle+b|010\rangle)
++ab\,|0\rangle_Jm_1\otimes|001\rangle\\
+&+a\,|1\rangle_Jm_0\otimes|100\rangle
++b\,|1\rangle_Jm_1\otimes|101\rangle
+\bigr].
+\end{aligned}
+\tag{21.11}
+$$
+
+四个档案向量非零且有互不相交的计算基支撑，故线性独立。由于 $`b\ne0`$，$`m_0,m_1`$ 线性独立，四个对应的 $`JM`$ 向量也线性独立。因此此纯目标的 Schmidt 秩为四。
+
+任何 $`D`$ 维接收器的联合 $`JMK`$ 态可分解为纯态之和，每个纯态在 $`JM:K`$ 切口的 Schmidt 秩至多 $`D`$。仅在 $`K`$ 上施加解码 Kraus 算子不会增加这些秩；若最终输出恰为一个纯态，所有非零分支必须与该纯态共线。因此能够恢复（21.11）就必须有 $`D\ge4`$。这里使用的是 Bell 参考与活动记忆的联合四维切口，没有把单个二维活动记忆误当成可承载 Schmidt 秩四的系统。四维构造达到此界。
+
+同样的 Bell 输入在首步给 Schmidt 秩二，第二步的三项展开为
+
+$$
+\frac1{\sqrt2}\bigl[
+a\,|0\rangle_Jm_0\otimes|00\rangle
++b\,|0\rangle_Jm_1\otimes|01\rangle
++|1\rangle_Jm_0\otimes|10\rangle
+\bigr],
+\tag{21.12}
+$$
+
+其 Schmidt 秩为三。故前两步容量至少分别为二、三；定理9.2的同一纯空白固定酉构造分别达到这两个数值，也属于允许的 CPTP 接收合同。结合三步构造，得到（21.1）。定理9.2给三步固定纯空白酉容量为五，遂得到所述首个严格分离。证明完毕。
+
+这份具体通道不能继续精确服务第四个终端。由（21.5），初始来源为一时，第四次发射后的接收输入只含 $`t\otimes|0\rangle`$、$`t\otimes|1\rangle`$ 和 $`y\otimes|0\rangle`$，全部输出环境一。初始来源为零时，第四轮环境一的唯一分量来自 $`cb\,m_1\otimes z\otimes|1\rangle`$ 中的 $`b^2m_1\otimes v\otimes|1\rangle`$，输出为 $`b^2m_1\otimes t\otimes|1\rangle_E`$。因此
+
+$$
+\Pr\{E_4=1\mid i=0\}=|b|^4<1,
+\qquad
+\Pr\{E_4=1\mid i=1\}=1.
+\tag{21.13}
+$$
+
+对 Bell 输入，这给参考的计算基标签与第四轮环境之间的相关性。若能仅由接收器恢复完整纯目标，则解码后的纯目标必须与剩余环境成乘积；局部解码不改变参考—环境边缘，与（21.13）矛盾。此失败只针对（21.3）的具体通道，没有判定四步固定 CPTP 的最小容量。
+
+前三步的容量收益不依赖丢弃来源信息：这三轮环境均与数据及参考独立，承担的是可丢弃的确定阶段输出。将这些输出都强制成同一纯空白且禁止额外丢弃环境，会回到第9节的另一份合同。
+

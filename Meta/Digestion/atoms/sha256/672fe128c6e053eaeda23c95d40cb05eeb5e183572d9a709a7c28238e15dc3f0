@@ -1,0 +1,2 @@
+**注 2.28。** This theorem does not assert that every arbitrary name of $M$ has exactly the Turing degree of $R$. A valid name can encode additional irrelevant information in its rational approximations. The precise assertion is the oracle-relative computability equivalence and the two uniform operators. The presentation is fixed and computable; if it is instead supplied through another oracle, that access must remain an explicit input to the forward construction.
+

@@ -1,0 +1,73 @@
+### 266.5 二维例族中首步无法暴露完整核
+
+回到§262，在固定 $H\otimes S$、$S=\mathbb C^2$ 上取
+$$
+0<a<1,\qquad
+Z_a=\begin{pmatrix}1&a\\-a&1-2a^2\end{pmatrix},
+\qquad
+F_a=\frac12\begin{pmatrix}1&-a\\-a&1\end{pmatrix},
+$$
+$$
+T_a=T_{Z_a}(F_a),\qquad\Omega_a=\frac12T_a.
+\tag{266.27}
+$$
+固定数据为 $\rho_a=I_2/2$、$K_a=Z_a/2$。§262已证明该来源唯一、秩为二，并给出
+$$
+N=\ker\Omega_a=\operatorname{span}\{q_0,q_1\},
+$$
+$$
+q_0=(e_0,-e_0),\qquad
+q_1=(ae_0+e_1,ae_0-e_1).
+\tag{266.28}
+$$
+$q_0,q_1$ 正交。$\Omega_a$ 在 $N^\perp$ 上的两项本征值为
+$(1+a^2)/2,(1-a^2)/2$，均严格正。
+
+固定切片的方向空间仍为（266.14）的 $L$，其正交补为
+$$
+\boxed{
+L^\perp=
+\left\{
+\begin{pmatrix}A&B\\B^\dagger&A\end{pmatrix}:
+A=A^\dagger
+\right\}.
+}
+\tag{266.29}
+$$
+确实，与每个 $\operatorname{diag}(D,-D)$ 正交等价于上下两个对角块相等。
+
+考察任意非零首步证书 $Y\succeq0$，要求
+$$
+Y\in L^\perp,\qquad
+\langle Y,A_{\rho_a,K_a}\rangle=0.
+\tag{266.30}
+$$
+由于 $\Omega_a-A_{\rho_a,K_a}\in L$，这等价于
+$\langle Y,\Omega_a\rangle=0$。两个PSD矩阵迹乘积为零，推出 $Y$ 的支撑包含于 $N$。所以可以写
+$$
+Y=\alpha q_0q_0^\dagger
++\beta q_0q_1^\dagger
++\overline\beta q_1q_0^\dagger
++\gamma q_1q_1^\dagger,
+\quad \alpha,\gamma\in\mathbb R,\quad\beta\in\mathbb C.
+\tag{266.31}
+$$
+记
+$$
+X_{01}=|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|.
+$$
+（266.31）的上下对角块之差恰为
+$$
+4a\,\operatorname{Re}\beta\,|e_0\rangle\langle e_0|
++2a\gamma X_{01}.
+\tag{266.32}
+$$
+由 $a>0$ 和等对角条件，$\gamma=0$、$\operatorname{Re}\beta=0$。又因为 $q_0,q_1$ 正交且非零，对该支撑作可逆对角缩放后，$Y\succeq0$ 等价于相应二阶系数矩阵正半定。其一个对角元 $\gamma$ 为零，PSD性强制 $\beta=0$。
+
+因此全部非零首步证书只有
+$$
+\boxed{Y=\alpha q_0q_0^\dagger,\qquad\alpha>0.}
+\tag{266.33}
+$$
+它们确实属于 $L^\perp$，且消去固定仿射切片；但只能约化到支撑 $q_0^\perp$ 的三维PSD面，不能同时排除 $q_1$。唯一可行态 $\Omega_a$ 在该面上仍秩亏，故一步尚未恢复相对Slater条件。原四维锥内也没有严格正定可行态。
+

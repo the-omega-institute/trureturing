@@ -1,0 +1,6 @@
+**定义 381.2（数学文献与实际使用范围）。** Mori，Hazime，“Transport, Collective Motion, and Brownian Motion”，*Progress of Theoretical Physics* 33(3)，1965，423—455，DOI [10.1143/PTP.33.423](https://doi.org/10.1143/PTP.33.423)；Zwanzig，Robert，“Memory Effects in Irreversible Thermodynamics”，*Physical Review* 124(4)，1961，983—992，DOI [10.1103/PhysRev.124.983](https://doi.org/10.1103/PhysRev.124.983)。本批核对这两篇经典的书目信息，没有核读原论文全文，不借其名称为本文所有公式和解释作整体背书。
+
+Wang，Fan；Benner，Peter；Heiland，Jan，[*Partial Observation of Linear Systems with the Mori-Zwanzig Formalism*](https://arxiv.org/abs/2606.23341v1)，arXiv:2606.23341v1，2026。本批核读其前四节，具体使用第 3 节线性仿射分块公式和第 4 节谐振子；将其作为预印本引用，没有独立复现后面的数值实验，也没有把关于一般非线性算子的形式推导升级为本批已验证的无条件定理。
+
+Lin，Yen Ting；Tian，Yifeng；Anghel，Marian；Livescu，Daniel，[*Data-driven learning for the Mori-Zwanzig formalism: a generalization of the Koopman learning framework*](https://arxiv.org/abs/2101.05873v3)，arXiv:2101.05873v3，2021。本批使用该版本第 3.2 节的分块解释和确定性噪声说明、第 3.3 节对精确取得隐藏贡献的困难，以及第 3.7 节关于离散观测的区别。没有核验其所有谱展开、涨落耗散关系、附录推导或数值学习结果；本文有限维离散恒等式与误差界由正文自身给出的条件和推导承担。
+

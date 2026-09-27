@@ -1,0 +1,60 @@
+### 240.5 单纯形候选与同接口、同谱的不同参考需求
+
+对§239的单纯形候选，$N\ge d+1$、$R=d+1$，活跃投影为
+$$
+\Pi_j=|u_j\rangle\langle u_j|,
+\qquad
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\frac{d+1}{d}I_d.
+\tag{240.26}
+$$
+其余原标签保留零投影。因 $\gcd(d,d+1)=1$，定理240.3立即给
+$$
+\boxed{
+\varepsilon(\rho)=1-\frac{d+1}{Nd}
+\quad\Longleftrightarrow\quad \rho=I_d/d;
+\qquad r_{\min}=d.
+}
+\tag{240.27}
+$$
+也可直接从几何读取这个事实：与秩一投影 $|u_j\rangle\langle u_j|$ 对易的 Hermitian 矩阵使 $u_j$ 成为本征向量；两个非正交本征向量的本征值必须相同。全部单纯形向量两两非正交且张成输入空间，故矩阵只能为标量。
+
+这证明每个 $h<d$ 都严格达不到该固定候选的完整最坏误差。它没有把这份候选的必要参考维数自动传给全部同预算最优候选。
+
+更强的区分来自同一接口、同一总秩、甚至相同分支 Choi 谱的两份候选。固定 $d=2,N=4,R=4$ 及相同的全部输出向量 $r_j$。令
+$$
+Q_z=|0\rangle\langle0|,
+\qquad Q_x=|+\rangle\langle+|,
+\qquad |+\rangle=(|0\rangle+|1\rangle)/\sqrt2.
+$$
+比较两组实际投影：
+$$
+\begin{aligned}
+\mathsf A&=(Q_z,Q_z,I_2-Q_z,I_2-Q_z),\\
+\mathsf B&=(Q_z,I_2-Q_z,Q_x,I_2-Q_x).
+\end{aligned}
+\tag{240.27a}
+$$
+两组之和都为 $2I_2$，每个分支秩都为一。按（240.3），实际效应均为 $E_j=\Pi_j/2$；每个分支 Choi 矩阵的唯一非零本征值都为 $1/2$，整个 Choi 矩阵的非零谱也同为四个 $1/2$。两份固定候选的完整误差都等于 $1/2$。
+
+族 $\mathsf A$ 共同对角化，存在一维共同约化子空间，所以 $r_{\min}=1$。族 $\mathsf B$ 中，与 $Q_z$ 对易的密度矩阵是计算基对角矩阵，再与 $Q_x$ 对易便迫使两对角元相同，因此唯一达到边缘为 $I_2/2$，$r_{\min}=2$。
+
+其无参考误差也能直接计算。任意输入密度矩阵写成
+$$
+\rho=\frac12
+\begin{pmatrix}
+1+r_z&r_x-ir_y\\
+r_x+ir_y&1-r_z
+\end{pmatrix},
+\qquad r_x^2+r_y^2+r_z^2\le1.
+$$
+族 $\mathsf A$ 的标签概率相对于均匀目标的总变差为 $|r_z|/2$，最大值为 $1/2$。族 $\mathsf B$ 的相应总变差为
+$$
+\frac{|r_z|+|r_x|}{4}\le\frac{\sqrt2}{4},
+\tag{240.27b}
+$$
+由 $r_x=r_z=1/\sqrt2$、$r_y=0$ 的纯态取得等号。故
+
+| 同接口候选 | 完整误差 | 无参考误差 | 最小参考维数 |
+|---|---:|---:|---:|

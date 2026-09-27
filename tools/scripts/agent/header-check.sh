@@ -145,6 +145,36 @@ __main() {
   fi
 
   [ $# -gt 0 ] || { echo "usage: header-check.sh <lean-file>..." >&2; return 2; }
+  local _selfdir _owner artifactlimit
+  _selfdir=$(cd "$(dirname "$0")" && pwd)
+  _owner=$(cd "$_selfdir/../../.." 2>/dev/null && pwd)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+  if ! artifactlimit=$(/usr/bin/python3 - "$_owner" 2>/dev/null <<'PYEOF'
+import re
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8", newline="") as stream:
+        text = stream.read()
+except (OSError, UnicodeError):
+    raise SystemExit(1)
+
+matches = re.findall(
+    r"^[ \t]*internal[ \t]+const[ \t]+int[ \t]+ArtifactHardLineLimit"
+    r"[ \t]*=[ \t]*([0-9]+)[ \t]*;[ \t]*$",
+    text,
+    re.MULTILINE,
+)
+if len(matches) != 1:
+    raise SystemExit(1)
+print(matches[0])
+PYEOF
+  ); then
+    echo "  ✗ 无法从 $_owner 读出唯一完整的 ArtifactHardLineLimit 数值声明 —— fail closed"
+    return 1
+  fi
+  case "$artifactlimit" in
+    ''|*[!0-9]*) echo "  ✗ 无法从 $_owner 读出唯一完整的 ArtifactHardLineLimit 数值声明 —— fail closed"; return 1 ;;
+  esac
   for f in "$@"; do
     if [ ! -f "$f" ]; then echo "  ✗ $f  <- 文件不存在"; bad=1; continue; fi
     local first; first=$(head -1 "$f")
@@ -169,18 +199,33 @@ __main() {
       grep -q "^   $k:" "$f" || { echo "  ✗ $f  <- 头部缺键 '$k:'"; ok=0; }
     done
     [ "$ok" = 1 ] || { bad=1; continue; }
-    # ---- SL-003 容量:行数硬线 800(硬编码,见下);目录文件数上限从 RepositoryRules.Structure.cs 派生 ----
+    # ---- SL-003 容量:行数硬线与目录文件数上限均由 RepositoryRules.Structure.cs 持有 ----
     # 2026-08-28 二次勘正:此处原为 `wc -l` + `>= 800`,**两个方向都错**。
     #   ① 真判据是 `lineCount > ArtifactHardLineLimit`(`CapacityPolicy.cs:50`),
-    #      即 **800 行合法、801 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
+    #      即 **恰好硬线上限合法、上限+1 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
     #   ② 真算法是 `text.Split('\n').Length - (text.EndsWith('\n') ? 1 : 0)`
     #      (`RepositoryRules.Structure.cs:112-113`)。对**末尾无换行**的文件,
     #      它比 `wc -l` **多数一行** —— 那个方向是**放行真红**,比误拦危险得多。
-    local lines; lines=$(/usr/bin/python3 -c "
-import sys;t=open(sys.argv[1],encoding='utf-8',errors='replace').read()
-print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
-    if [ "$lines" -gt 800 ]; then
-      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 800(判据 >800;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
+    local lines
+    if ! lines=$(/usr/bin/python3 - "$f" 2>/dev/null <<'PYEOF'
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8", errors="replace", newline="") as stream:
+        text = stream.read()
+except OSError:
+    raise SystemExit(1)
+print(len(text.split("\n")) - (1 if text.endswith("\n") else 0))
+PYEOF
+    ); then
+      echo "  ✗ $f  <- 无法按 C# CountArtifactLines 口径计数 —— fail closed"
+      bad=1; continue
+    fi
+    case "$lines" in
+      ''|*[!0-9]*) echo "  ✗ $f  <- 行数读数不是非负整数 —— fail closed"; bad=1; continue ;;
+    esac
+    if [ "$lines" -gt "$artifactlimit" ]; then
+      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
       bad=1; continue
     fi
     local dir dn; dir=$(dirname "$f")

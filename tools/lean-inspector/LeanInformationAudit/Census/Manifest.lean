@@ -1,5 +1,6 @@
 import LeanInformationAudit.Census.Coverage
 import LeanInformationAudit.Census.Report
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit.CensusManifest
 
@@ -132,7 +133,7 @@ def bindBuckets (listName reportName : Name) (rows report : Array StatementKey) 
   let scope := listName.getPrefix
   let minBits ← natConstant (scope ++ `prefixBits) "bucket_prefix_bits"
   let bound ← natConstant (scope ++ `leafBound) "bucket_leaf_bound"
-  let repository ← IO.currentDir
+  let repository ← Repository.root
   let configured ← IO.Process.output { cmd := "python3", args := #[
     (repository / "tools/lean-inspector/Census/Certificate/config.py").toString] }
   unless minBits ≤ 256 && bound > 0 && configured.exitCode == 0 &&

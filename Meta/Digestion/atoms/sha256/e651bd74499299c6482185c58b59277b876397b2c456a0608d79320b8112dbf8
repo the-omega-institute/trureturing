@@ -1,0 +1,42 @@
+### 218.6 纯来源重制备族的精确距离
+
+令输入空间 $\mathcal H_{\mathrm{in}}$ 二维，$P=|p\rangle\langle p|$ 为任意秩一投影，$P^\perp=I-P$。本小节允许任意固定有限维输出量子空间，其中含指定单位向量 $|r\rangle$，置 $\sigma_r=|r\rangle\langle r|$。结果标签 $Q$ 为经典二元标签。
+
+对 $0\le q\le1$，定义
+$$
+E_0(q)=(1-q)P,\qquad
+E_1(q)=I-(1-q)P=qP+P^\perp,
+$$
+$$
+\mathcal R_q(X)
+=
+|0\rangle\langle0|^Q\otimes
+\operatorname{Tr}[E_0(q)X]\sigma_r
++
+|1\rangle\langle1|^Q\otimes
+\operatorname{Tr}[E_1(q)X]\sigma_r.
+\tag{218.22}
+$$
+这是一个明确定义的重制备记录通道族。原联合端点任务的纯来源最优通道由第208、213、216节给出此形式；此处先独立研究整个 $q\in[0,1]$ 区间，不把原任务的局部结论扩大到全区间。这里的 $q$ 是效果权重，区别于第213节的约化目标函数 $q(p,t)$。
+
+竞争者为任意合法经典记录通道
+$$
+\mathcal S(X)
+=\sum_{j=0}^1|j\rangle\langle j|^Q\otimes\Psi_j(X),
+\qquad \Psi_j\ \mathrm{CP},\quad \Psi_0+\Psi_1\ \mathrm{TP}.
+\tag{218.23}
+$$
+各 $\Psi_j$ 可输出任意量子态。令 $J_j$ 为其未归一化 Choi 矩阵，定义
+$$
+\begin{aligned}
+d_2(q)
+&=\min_{\operatorname{rank}J_0+\operatorname{rank}J_1\le2}
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond,\\
+d_{11}(q)
+&=\min_{\operatorname{rank}J_0\le1,\ \operatorname{rank}J_1\le1}
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond.
+\end{aligned}
+\tag{218.24}
+$$
+两处最优化均只对（218.23）中的合法 CPTP 记录通道进行。集合紧且非空，最小值取得。
+

@@ -1,0 +1,39 @@
+### 207.1 闭比例区间与端点参数
+
+固定
+
+$$
+\beta>0,\qquad\gamma>0,\qquad R>1,\qquad 0<H<\infty,
+\qquad I=[0,H].
+\tag{207.1}
+$$
+
+保持第188、189节的同一接收端任务、不可访问系统 $M$、共同 CPTP 约束
+以及全部外部参考。置 $\delta=R-1$、$\Sigma=R+1$，
+并沿用第206节的圆盘极小点 $m(h),n(h)$、互补乘子 $\rho(h)$、
+余量 $B_*(h)$ 和系数 $\Phi_h,Z(h),Q(h),a_{\mathrm{eff}}(h),\theta(h)$。
+同一圆盘问题在 $h=0$ 直接给
+
+$$
+\boxed{
+m(0)=0,\qquad
+\nu:=n(0)=\min\left\{\frac\gamma{2\beta},\frac12\right\},\qquad
+\rho(0)=\frac\delta2(\gamma-\beta)_+,\qquad
+B_*(0)=1-4\nu^2.
+}
+\tag{207.2}
+$$
+
+第206节的全部互补关系仍成立，包括
+
+$$
+\rho B_*=0,\qquad
+h(2-m)=3(\beta R+\rho)m,\qquad
+\gamma\delta=2n(\beta\delta+2\rho).
+\tag{207.3}
+$$
+
+严格凸圆盘目标的唯一极小点在 $I$ 连续，标量根关系也使 $\rho$ 连续。
+这些参数有统一上界；本节不使用 $m$ 的正下界。
+当 $\gamma=\beta$ 时，$\rho(0)=B_*(0)=0$ 同时发生，仍在当前范围内。
+

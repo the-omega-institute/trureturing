@@ -1,0 +1,53 @@
+**引理156.2（发射后接收支撑正交）。** 两份 $\chi_j$ 在 $R\otimes B$ 上的 Schmidt 支撑是正交的二维子空间。因此存在一个全空间酉
+
+$$
+U:R\otimes B\longrightarrow R\otimes B
+$$
+
+同时满足
+
+$$
+(I_M\otimes U)|\chi_j\rangle
+=|\Xi\rangle_{MR}|j\rangle_B,
+\qquad j=0,1.
+\tag{156.10}
+$$
+
+**证明。** 实对称二阶矩阵满足 $AYA=(\det A)Y$。按照上述 vectorization 约定，$Y^{\mathsf T}=-Y$，故
+
+$$
+\operatorname{Tr}_R|\psi_0\rangle\langle\psi_1|
+=-AYA=-(\det A)Y.
+\tag{156.11}
+$$
+
+右侧的计算基对角元全为零，由（156.1）得到
+
+$$
+\operatorname{Tr}_{RB}|\chi_0\rangle\langle\chi_1|
+=\mathcal E\!\left(-AYA\right)=0.
+\tag{156.12}
+$$
+
+在 $\rho_*$ 的同一个本征基中写
+
+$$
+\rho_*=\sum_{r=0}^1\lambda_r|u_r\rangle\langle u_r|,
+\qquad
+|\chi_j\rangle
+=\sum_{r=0}^1\sqrt{\lambda_r}|u_r\rangle_M|v_{j,r}\rangle_{RB}.
+$$
+
+因 $\lambda_r>0$，式（156.12）逐矩阵元给出
+$\langle v_{1,s},v_{0,r}\rangle=0$ 对所有 $r,s$ 成立。每个固定 $j$ 的两向量本已正交归一，所以四个 $v_{j,r}$ 组成四维 $RB$ 的一组正交基。定义
+
+$$
+U|v_{j,r}\rangle=|\overline{u_r}\rangle_R|j\rangle_B.
+\tag{156.13}
+$$
+
+右侧也是完整正交基；这直接定义全空间酉。又因
+$|\Xi\rangle=\sum_r\sqrt{\lambda_r}|u_r\rangle|\overline{u_r}\rangle$，即得（156.10）。证毕。
+
+特别地，$U$ 在 $j=0$ 分支是第11节的平稳纯化吸收器。此处同时指定其在正交补空间上的作用，使 $j=1$ 分支输出另一个正交位标签。
+

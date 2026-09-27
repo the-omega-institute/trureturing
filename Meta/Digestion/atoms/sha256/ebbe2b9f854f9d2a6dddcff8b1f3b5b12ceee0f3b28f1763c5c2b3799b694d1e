@@ -1,0 +1,224 @@
+**定理 266.2（统一二参数信息阶）。** 存在固定常数 $c>0$、$\eta_0>0$，使对所有 $0<\eta<\eta_0$ 和 $0\le\Delta\le b/2$，
+
+$$
+\boxed{
+c\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr)
+\le F_{\rm ent}(\eta,\Delta)
+\le F(\eta,\Delta)
+\le6\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr).
+}
+\tag{266.3}
+$$
+
+此外，对所有 $0<\eta\le1$，零摆幅端点精确满足
+
+$$
+F_{\rm ent}(\eta,0)=F(\eta,0)=\sqrt\eta.
+\tag{266.4}
+$$
+
+证明。 先证明上界。沿用第264节的 SLD 与行列式计算，
+
+$$
+I_Q=4|\boldsymbol u'|^2,
+\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z'',
+\qquad z''\ge-\eta.
+\tag{266.5}
+$$
+
+令 $z_{\max}=\sup_{\mathbb R}z$；不要求此上确界取到。非负函数 $z_{\max}-z$ 的二阶导数至多为 $\eta$，所以
+
+$$
+z'^2\le2\eta(z_{\max}-z)\le2\eta\Delta.
+\tag{266.6}
+$$
+
+对（266.5）在 $[-h,h]$ 上积分，
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt{2\eta\Delta}.
+\tag{266.7}
+$$
+
+端点弦长至多为 $2b$。第262节的三角核恒等式及其平方积分 $h/6$ 因而给出
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+
+\sqrt{\frac{\eta h^2}{3}
++\frac{h\sqrt{2\eta\Delta}}{3}}.
+\tag{266.8}
+$$
+
+置
+
+$$
+S=\Delta+\sqrt\eta,\qquad h=(\eta S)^{-1/6}.
+\tag{266.9}
+$$
+
+由于 $S\ge\sqrt\eta$ 且 $S\ge\Delta$，
+
+$$
+\eta h^2\le(\eta S)^{1/3},
+\qquad
+h\sqrt{2\eta\Delta}\le\sqrt2\,(\eta S)^{1/3}.
+\tag{266.10}
+$$
+
+代入可得
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac{1+\sqrt2}{3}}\right)^2(\eta S)^{1/3}
+<6\bigl((\eta\Delta)^{1/3}+\sqrt\eta\bigr).
+\tag{266.11}
+$$
+
+这里的上界对全部 $0<\eta\le1$ 有效，只使用有限窗口积分。
+
+当 $\Delta=0$ 时，$z$ 恒定。令 $\boldsymbol w=(u_x,u_y)$，则 $|\boldsymbol w|=R=\sqrt{b^2-z^2}$ 也恒定。若 $R=0$，曲线恒定；否则（266.5）给出 $|\boldsymbol w''|\le\sqrt\eta$，故
+
+$$
+|\boldsymbol w'|^2=-\boldsymbol w\cdot\boldsymbol w''
+\le R\sqrt\eta\le b\sqrt\eta.
+\tag{266.12}
+$$
+
+于是 $I_Q\le4b\sqrt\eta=\sqrt\eta$。第265节的赤道匀速旋转
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad \omega^2=\sqrt\eta/b
+\tag{266.13}
+$$
+
+具有整函数矩阵元、零布居摆幅，且信息精确等于 $\sqrt\eta$。这同时证明（266.4），并为任意允许 $\Delta$ 给出同一个下界。
+
+下面在较大摆幅区间建立第二项的统一下界。保留第264节的固定光滑函数 $F,G,B$ 及常数 $k,J_G,m_B,K_0,A_1,A_2$，并记 $D_0=kJ_G$。选取固定 $\gamma>0$，使
+
+$$
+\frac{4\gamma^2}{m_B}\le\frac14.
+\tag{266.14}
+$$
+
+再固定 $K\ge1$，使
+
+$$
+5D_0^{1/3}\gamma^{2/3}K^{-2/3}\le\frac14.
+\tag{266.15}
+$$
+
+对 $\Delta>0$，令
+
+$$
+r=\gamma\sqrt\Delta,\qquad
+v=\gamma\sqrt{\eta\Delta},\qquad
+T=(D_0/v)^{1/3},\qquad
+L=\frac{4v}{\eta m_B}.
+\tag{266.16}
+$$
+
+使用同一个相位及正、负加速度构造：
+
+$$
+\phi(t)=F(t/T),
+\qquad
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{266.17}
+$$
+
+两个脉冲的积分依次为 $v$、$-v$，所以 $z$ 从零单调增加到一个常值，并且
+
+$$
+0\le z(t)\le5Tv+vL
+=5D_0^{1/3}\gamma^{2/3}(\eta\Delta)^{1/3}
++\frac{4\gamma^2}{m_B}\Delta.
+\tag{266.18}
+$$
+
+若 $\Delta\ge K\sqrt\eta$，则（266.14）—（266.15）给出
+
+$$
+0\le z(t)\le\Delta/2\le b/4.
+\tag{266.19}
+$$
+
+因此摆幅约束保留了固定比例的余量。
+
+取 $w=\sqrt{b^2-z^2}e^{-i\phi}$，再按（264.15）组成密度矩阵 $\rho^{(0)}$，其两个特征值精确为 $3/4,1/4$。现在须使第264节的矩阵余量估计对这两个参数统一成立，而不是逐个固定 $\Delta$ 后才选择阈值。首先
+
+$$
+r\le r_{\max}:=\gamma\sqrt{b/2},
+\qquad
+T\ge\left(\frac{D_0}{\gamma\sqrt{\eta b/2}}\right)^{1/3}.
+\tag{266.20}
+$$
+
+因此 $T\to\infty$ 对全部 $0<\Delta\le b/2$ 统一成立。相位支撑内的（264.18）只含固定的 $D_0$ 与轮廓常数；相位支撑外的（264.20）可统一用 $r_{\max}$ 代替 $r$。特别地，可一次选择 $\eta_0>0$，使所有这些参数对均有 $g\le1/4$，相位支撑内满足 $|w''|\le2K_0/T^2$，支撑外满足
+
+$$
+|w''|^2\le(\eta+g)/4.
+\tag{266.21}
+$$
+
+具体地，支撑外 $g\ge0$ 时使用
+$|w''|^2\le2A_2^2r_{\max}^4\eta^2+2A_1^2g^2$，而 $\sup g=k/T^4$ 一致趋零；$g<0$ 时使用
+$|w''|^2\le(A_2r_{\max}^2+A_1/4)^2\eta^2$ 及 $\eta+g\ge3\eta/4$。这些条件均由同一个充分小的 $\eta_0$ 保证。（266.19）已独立确保所用幅度导数界的适用范围。于是第264节的行列式和迹计算逐式给出
+
+$$
+C_\eta-(\rho^{(0)})''(t)\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{266.22}
+$$
+
+中心相位导数为 $1/T$。同处的 SLD 计算给出
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac{\gamma}{D_0}\right)^{2/3}
+(\eta\Delta)^{1/3}.
+\tag{266.23}
+$$
+
+为得到整函数矩阵元，仍先以高斯核平滑实角函数 $\chi=\arcsin(z/b)$ 和 $\phi$，再以三角函数重建密度。对于每一个固定参数对 $(\eta,\Delta)$，全实轴 $C^2$ 逼近及（266.22）使我们可选取充分小的平滑宽度，同时保留原矩阵上界与至少一半的中心信息。特征值由重建恒等式精确保留。
+
+摆幅约束也在这一步精确保留：由（266.19），
+
+$$
+0\le\chi(t)\le\arcsin\!\left(\frac{\Delta}{2b}\right).
+\tag{266.24}
+$$
+
+高斯正平均保持这个区间，且正弦函数在该区间单调，故重建后的 $z_\epsilon=b\sin\chi_\epsilon$ 仍包含于 $[0,\Delta/2]$。因此，在 $\Delta\ge K\sqrt\eta$ 时，
+
+$$
+F_{\rm ent}(\eta,\Delta)\ge
+\kappa(\eta\Delta)^{1/3},
+\qquad
+\kappa=\frac{3b^2}{2}
+\left(\frac{\gamma}{D_0}\right)^{2/3}>0.
+\tag{266.25}
+$$
+
+所有轮廓、$\gamma,K,\kappa,\eta_0$ 均独立于参数对；只有最后的平滑宽度允许依赖它。
+
+当 $\Delta<K\sqrt\eta$ 时，
+$\sqrt\eta+(\eta\Delta)^{1/3}\le(1+K^{1/3})\sqrt\eta$，赤道曲线已给出所需下界。在互补区间，取赤道下界与（266.25）的较大者，至少是目标和式的 $\min\{1,\kappa\}/2$ 倍。因此可取
+
+$$
+c=\min\left\{
+\frac1{1+K^{1/3}},
+\frac{\min\{1,\kappa\}}2
+\right\}>0.
+\tag{266.26}
+$$
+
+这完成统一下界及定理的证明。证毕。
+

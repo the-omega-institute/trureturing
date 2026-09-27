@@ -1,0 +1,64 @@
+**定理 405.3（四态信息完备记录不能由有限局部树确定性精确恢复）。** 对每个固定正整数 $n\ge1$，定义 405.1 的任何有限局部协议都不能满足全部叶子的确定性精确恢复条件。此结论包括任意有限局部工作空间、粗粒化 CP 分支和反复访问；它只排除每个有限协议取得确定性精确恢复，不给出所有有限协议成功概率上确界的严格小于一界，也不给出近似恢复或无限轮次界。
+
+证明。反设存在这样的协议。直接复用定理 390.2 的秩一 Choi 正性论证：对 $|\Omega\rangle=\sum_{i=1}^4|i\rangle\otimes|i\rangle$，各 $\mathfrak J(\mathcal T_w)\succeq0$ 之和等于 $|\Omega\rangle\langle\Omega|$，故存在
+
+$$
+\mathcal T_w=p_w\operatorname{id}_S,\qquad
+p_w\ge0,\qquad \sum_wp_w=1.
+$$
+
+这包括 $p_w=0$ 的叶子。若终端标签已合并，先按定义 405.1 保留实际取得而后遗忘的经典历史，给这些历史使用原来相同的控制及反馈；对应 CP 分支仍为上述有限正分解的项。不把未观测 Kraus 标签加入历史。
+
+对任意前缀 $h$，记 $w\succeq h$ 为延伸它的终端历史。剩余有限子树完整列出全部结果，非叶 instrument 的总和保迹，末端酉反馈也保迹。因此对任意正半定输入 $X$，前缀概率权重满足
+
+$$
+\begin{aligned}
+\Pr(h\mid X)
+ &=\sum_{w\succeq h}\operatorname{Tr}[\mathcal T_w(X)]
+   =p_h\operatorname{Tr}X,\\
+p_h&=\sum_{w\succeq h}p_w,\qquad
+p_\varnothing=1,\qquad p_h=\sum_{y:\,hy\text{ 为子节点}}p_{hy}
+       \quad(h\text{ 非叶}).
+\end{aligned}
+$$
+
+对非归一化 $X$，$\Pr(h\mid X)$ 在此表示同一线性概率权重。这只是迹与概率的等式，不把前缀量子映射等同于使用不同末端反馈的叶子映射之和。若 $p_h>0$，$q_{y\mid h}=p_{hy}/p_h$ 与输入无关；若 $p_h=0$，全部后继叶子权重为零，实际准备输入上的正输出具有零迹，因而为零。不给零前缀定义条件概率。
+
+特别取输入 $|i\rangle\langle i|$，各持有者的源态恰为共同标签 $i$ 下的 $r_i$。以通常的 Pauli 矩阵 $X,Y,Z$ 记局部算子，有
+
+$$
+P_1+P_2=I_2,\qquad P_1-P_2=Z,\qquad
+2P_3-I_2=X,\qquad 2P_4-I_2=Y.
+$$
+
+$I_2,X,Y,Z$ 是 $\operatorname{Herm}(\mathbb C^2)$ 的实基，所以每位持有者的四个源投影都满足引理 405.2 的局部张成条件。它们是信息完备的态族，并不是四结果归一化 POVM。前缀概率的输入无关性给出该引理的另一个前提。于是在每个 $p_w>0$ 的叶子，保留的记录向量为
+
+$$
+\sqrt{p_w}\bigotimes_{a=1}^n V_{a,w}r_i.
+$$
+
+对系统矩阵单位 $E_{ij}=|i\rangle\langle j|$，迹掉全部可访问及不可访问的局部记录输出得到
+
+$$
+\begin{aligned}
+\mathcal M_w(E_{ij})
+ &=p_w\prod_{a=1}^n
+      \langle V_{a,w}r_j|V_{a,w}r_i\rangle\,E_{ij}\\
+ &=p_w\langle r_j|r_i\rangle^nE_{ij}.
+\end{aligned}
+$$
+
+故 $\mathcal M_w=p_w\Phi_n$，其中 $\Phi_n(X)=C_0^{\circ n}\circ X$ 正是命题 400.2 的约化通道。保留下来的局部记忆和垃圾可能改变载体，却没有改变这些 Gram 系数。
+
+有限个非负 $p_w$ 之和为一，至少有一个正叶子。由 $C_{0,12}=\langle1|0\rangle=0$ 和 $n\ge1$，该叶子满足
+
+$$
+\mathcal T_w(E_{12})=U_w\,0\,U_w^\dagger=0,
+\qquad
+p_w\operatorname{id}_S(E_{12})=p_wE_{12}\ne0,
+$$
+
+与叶子等式矛盾。$E_{12}$ 在此是检验线性映射的矩阵单位，不被主张为可单独准备的密度矩阵；全部态上的恢复等式线性延拓到全部矩阵，故这个检验合法。零深度树也有唯一正叶子，其反馈前映射就是 $\Phi_n$，受到同一矛盾约束。所有分支映射等式张量上 $\operatorname{id}_A$ 后仍成立，因而论证保持任意未操作参考及纠缠输入的量词。证毕。
+
+分支无信息框架的来源是 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，§II.A（PDF 第 3 页）。该文 Theorem 1（第 4 页）允许对完整纯环境实现任意 CP 分解，Proposition 2（第 4–5 页）的标量效果判据针对单个 Kraus 算子；它们不直接提供这里受限记录访问下的有限树结论，也不使任意粗粒化 CP 映射成为等距通道。本定理的额外推导是：全部终端分支的无信息性经完整后继求和约束每个前缀，再由局部信息完备性保持源记录内积。
+

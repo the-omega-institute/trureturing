@@ -1,0 +1,12 @@
+**引理 4.3.4（同一总质量的局部化区间）。** 允许 $M=0$，不定义归一化律也可以进行以下计算。对同一可计算参考概率、递减 clopen $K_s\downarrow K$ 及总质量名，固定 clopen 查询 $C$，令
+$$
+m_C=\mu(K\cap C),\qquad f_s=\mu(K_s),\qquad
+u_s^{\mathrm{raw}}=\mu(K_s\cap C),\qquad \ell_t=v_M(t)-2^{-t}.
+$$
+为使本引理的标量不与概率律 $\nu_s$ 混淆，下文简记 $u_s=u_s^{\mathrm{raw}}$。则
+$$
+\max\{0,\ell_t-(f_s-u_s)\}\le m_C\le u_s,
+\qquad
+0\le u_s-\max\{0,\ell_t-(f_s-u_s)\}\le f_s-\ell_t.
+$$
+

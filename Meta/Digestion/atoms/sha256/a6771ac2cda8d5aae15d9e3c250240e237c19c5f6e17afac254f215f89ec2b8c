@@ -1,0 +1,12 @@
+**命题 420.3（带近似损失的行动保证）。** 给定非空 $C\subseteq\Theta$，若对所有 $\theta\in C,a\in A$ 都有 $|L(\theta,a)-\widehat L(\theta,a)|\le\eta$，且行动 $a_*$ 在每个候选的近似损失下都满足
+
+$$
+\widehat L(\theta,a_*)-\min_{a\in A}\widehat L(\theta,a)\le\delta,
+$$
+
+则它在每个候选的真实损失下的后悔值至多 $\delta+2\eta$。
+
+证明：对每个固定候选，$L(\theta,a_*)\le\widehat L(\theta,a_*)+\eta$，而 $\min_a\widehat L(\theta,a)\le\min_aL(\theta,a)+\eta$，相减即得。统一性必须覆盖同一 $C$ 上的全部行动；只在观察者选中的行动处近似准确，不足以控制最优比较项。证毕。
+
+因此“没有穷尽终极真理就不能行动”并不是这些结构的结论。可行动的根据可以是对明确任务足够的共同约束，以及诚实承担的误差；它不要求先把不同宗教的全部本体论裁成一种，也不把行动顺利自动提升为本体论已获证明。
+

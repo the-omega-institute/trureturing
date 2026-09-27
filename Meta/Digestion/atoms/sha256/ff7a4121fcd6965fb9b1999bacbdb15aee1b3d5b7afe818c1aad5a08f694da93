@@ -1,0 +1,45 @@
+## 75. 三个实际零位块的完整纤维与三种无分叉尾词排除
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯初态 $k$、七维持久接收空间 $K$、固定全域 CPTP 接收通道，以及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入 $K$，来源与参考不可由接收器访问。固定 Stinespring 位块 $V_0,V_1$ 都是等距，且像相互正交。整个章节假设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F.
+$$
+
+实际早期 $H_2,G_2$ 均二维，且正交单位向量 $u,v,w$ 给
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+0\ne w\in H_2\cap G_2.
+\tag{75.1}
+$$
+
+各 $H_n,G_n,Q_n$ 在 $n\ge3$ 时均二维，不把第二轮一位像称为二维 $Q_2$。实际同轮满投影合同为
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n
+\qquad(n\ge3).
+\tag{75.2}
+$$
+
+因此 $H_n\cap G_n=0$，且 $H_n+G_n=G_n\oplus Q_n$。
+
+令 $S_0=H_1+\cdots+H_5$。所有实际零位尾像属于 $K\otimes F$，而初態满足 $V_0k=p\otimes\eta_1\notin K\otimes F$。固定 $V_0$ 的单射性给 $k\notin S_0$，故
+
+$$
+\dim S_0\le6.
+\tag{75.3}
+$$
+
+这一步没有把 $k$ 与 $S_0$ 判为正交，也没有把尾域当作含初态的六维全域接收器。
+

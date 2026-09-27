@@ -1,0 +1,64 @@
+### 50.13 对每个 rho 构造严格低于二的候选
+
+选择一个奇整数 $q\ge3$ 满足
+$$
+\boxed{64q^6\rho^{q-3}\le1.}
+\tag{50.32}
+$$
+等价地，正量取三次根给
+$$
+\rho^{q/3-1}\le\frac1{4q^2}.
+\tag{50.33}
+$$
+第50.14节将给出这种 $q$ 的明确上界。
+
+取原始比值 $\omega_q=e^{2\pi i/q}$。利用（50.30），只需考虑
+$1\le m\le(q-1)/2$。将其分为两段。
+
+若 $m\le q/6$，则
+$\sin(\pi m/q)\le1/2$，且 $\rho^{2m-1}\le\rho$，故
+$$
+2(1+\rho^{2m-1})\sin\frac{\pi m}{q}
+\le1+\rho<2.
+\tag{50.34}
+$$
+若 $m>q/6$，则
+$\rho^{2m-1}\le\rho^{q/3-1}\le1/(4q^2)$。奇数阶的最后位置为 $(q-1)/2$，所以
+$$
+\sin\frac{\pi m}{q}\le\cos\frac{\pi}{2q}
+\le1-\frac1{2q^2}.
+$$
+最后一个不等式可由
+$1-\cos x=2\sin^2(x/2)$ 与
+$\sin y\ge2y/\pi$（$0\le y\le\pi/2$）直接得到。于是第二段满足
+$$
+\begin{aligned}
+2(1+\rho^{2m-1})\sin\frac{\pi m}{q}
+&\le2\left(1+\frac1{4q^2}\right)
+\left(1-\frac1{2q^2}\right)\\
+&=2-\frac1{2q^2}-\frac1{4q^4}<2.
+\end{aligned}
+\tag{50.35}
+$$
+定义
+$$
+\boxed{
+U=\max\left\{1+\rho,
+2-\frac1{2q^2}-\frac1{4q^4}\right\}<2,
+}
+$$
+$$
+\boxed{
+\delta=2-U
+=\min\left\{1-\rho,
+\frac1{2q^2}+\frac1{4q^4}\right\}>0.
+}
+\tag{50.36}
+$$
+两段合并给出了同一个实际候选的全周期证书：
+$$
+\boxed{F_\rho(\omega_q)\le U=2-\delta<2.}
+\tag{50.37}
+$$
+早期位置的权重可以大，但弦长有统一余量；接近中央位置的弦长余量只有平方阶，而那里的额外权重已经指数衰减。证明控制了所有位置，不只考察中央最大弦长。
+

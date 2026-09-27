@@ -243,3 +243,4 @@ The shared sensitivity theorem checks independent support for the guard and both
 - Dependency: [D5/S3/ConceptDynamics/ExperimentDesign/PositiveFirstExperimentIdentification](../ExperimentDesign/PositiveFirstExperimentIdentification.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/GuardedEqualityRegistrationTemplates](GuardedEqualityRegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

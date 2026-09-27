@@ -1,0 +1,72 @@
+### 146.3 同一个全域七维 CPTP 通道
+
+使用第11节的平稳纯化吸收步骤。为明确其全域性，可直接这样构造固定酉
+$U_*:R\otimes B\to R\otimes B$。
+
+对 $\rho_*$ 取谱分解
+$\rho_* =\sum_{j=0}^1\lambda_j|v_j\rangle\langle v_j|$，$\lambda_j>0$。
+$|\Xi\rangle=\sum_j\sqrt{\lambda_j}|v_j\rangle_M|\overline v_j\rangle_R$。
+将一次真实发射作用于 $M$，并重排为 $M,R,B$，得到
+
+$$
+(T\otimes I_R)|\Xi\rangle
+=\sum_{j=0}^1\sqrt{\lambda_j}|v_j\rangle_M|z_j\rangle_{RB}.
+$$
+
+来源平稳性保证 $z_0,z_1$ 正交归一。规定
+$U_*z_j=|\overline v_j\rangle_R|0\rangle_B$，再任选输入正交补的正交基，映到
+$|\overline v_0\rangle|1\rangle,|\overline v_1\rangle|1\rangle$，便得到整个四维空间上的一个固定酉。它满足
+
+$$
+(I_M\otimes U_*)(T\otimes I_R)|\Xi\rangle
+=|\Xi\rangle\otimes|0\rangle_B,
+\tag{146.16}
+$$
+
+其中始终按标记系统重排。该操作只访问 $R$ 与最新位 $B$，不访问活动 $M$。
+
+现在令
+
+$$
+K=K_0\oplus K_1\oplus K_{\rm run},\qquad
+K_0=\mathbb Ce,\quad K_1=\mathbb C^2,\quad
+K_{\rm run}=Q\otimes R,\qquad \dim K=1+2+4=7.
+\tag{146.17}
+$$
+
+记三个正交块的自然嵌入为 $\iota_0,\iota_1,\iota_{\rm run}$，投影为 $P_0,P_1,P_{\rm run}$。在 $K\otimes B$ 上定义四个 Kraus 算子，每个算子在未指明的输入块上为零：
+
+$$
+\begin{aligned}
+L_0(e\otimes|s\rangle)&=\iota_1|s\rangle,\\
+L_1(\iota_1|s\rangle\otimes|t\rangle)
+&=\iota_{\rm run}F_2|s,t\rangle,\\
+L_{{\rm run},j}(\iota_{\rm run}\zeta\otimes|t\rangle)
+&=\iota_{\rm run}(I_Q\otimes I_R\otimes\langle j|)
+ (I_Q\otimes U_*)(\zeta\otimes|t\rangle),
+\qquad j=0,1.
+\end{aligned}
+\tag{146.18}
+$$
+
+于是
+
+$$
+L_0^*L_0=P_0\otimes I_B,\qquad
+L_1^*L_1=P_1\otimes I_B,\qquad
+\sum_{j=0}^1L_{{\rm run},j}^*L_{{\rm run},j}
+=P_{\rm run}\otimes I_B.
+$$
+
+四项之和为 $I_{K\otimes B}$，故
+
+$$
+\mathcal C(Y)=L_0YL_0^*+L_1YL_1^*
++\sum_{j=0}^1L_{{\rm run},j}YL_{{\rm run},j}^*
+\tag{146.19}
+$$
+
+是全域 CPTP 通道。
+
+取独立纯初态 $e\in K_0$，每轮都使用（146.19）。第一轮转存第一位到 $K_1$；第二轮把完整两位档案经同一个 $F_2$ 送入 $K_{\rm run}$；以后永久处于运行块，使用 $I_Q\otimes U_*$ 并丢弃当轮环境。实际每时刻只占一个确定块，故 Kraus 分块没有删除来源数据的块间相干。阶段标签占用的全部空间已经计入七维，运行中不调用外部轮次控制。
+

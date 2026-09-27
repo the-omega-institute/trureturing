@@ -1,0 +1,37 @@
+**定理 44.3（离散压缩响应）。** 交换子展开给
+$$
+[P,S^k]=\sum_{j=0}^{k-1}S^j[P,S]S^{k-1-j},
+\qquad
+\|QS^kF^*\|\le k b^{k-1}\ell\quad(k\ge1).
+$$
+交换子求和由 $[P,XY]=[P,X]Y+X[P,Y]$ 归纳成立；又 $Q[P,S^k]F^*=-QS^kF^*$，从而每项范数至多 $b^{k-1}\ell$。置 $E_n=FS^nF^*-A^n$。由 $FF^*=I_E$ 及 $A=FSF^*$，端点 $E_0=E_1=0$。对 $n\ge2$ 插入 $P+Q$，得到
+$$
+E_n=AE_{n-1}+FSQ\,S^{n-1}F^*,\qquad E_1=0.
+$$
+因此
+$$
+\|E_n\|\le b\|E_{n-1}\|+(n-1)b^{n-2}\delta,
+$$
+归纳中 $E_1=0$，而 $b\binom{n-1}{2}b^{n-3}\delta+(n-1)b^{n-2}\delta=\binom n2 b^{n-2}\delta$，故得到
+$$
+\boxed{\|FS^nF^*-A^n\|
+\le {n\choose2}b^{n-2}\delta,\qquad n\ge2.}
+$$
+两次跨越观察子空间产生 $\ell^2=\delta$；普通单侧交织界只有 $O(\sqrt\delta)$。
+
+该系数对每个固定整数 $n\ge2$，在 $\varepsilon\downarrow0$ 时渐近锐；不声称对随 $\varepsilon$ 增长的 $n$ 有一致相对锐性。固定 $0<a<b<1$，取
+$$
+S_\varepsilon=
+\begin{pmatrix}b-\varepsilon&\varepsilon\\
+\varepsilon&b-\varepsilon\end{pmatrix},
+\quad F=(1,0),\quad
+0<2\varepsilon<b-a.
+$$
+其谱为 $b,b-2\varepsilon$，且 $A=b-\varepsilon,\ \delta=\varepsilon^2$。于是
+$$
+FS_\varepsilon^nF^*-A^n
+=\frac{b^n+(b-2\varepsilon)^n}{2}-(b-\varepsilon)^n
+={n\choose2}b^{n-2}\varepsilon^2+O(\varepsilon^3).
+$$
+$n=2$ 为精确等号；$C_\varepsilon=-h^{-1}\log S_\varepsilon>0$ 满足原模型。
+

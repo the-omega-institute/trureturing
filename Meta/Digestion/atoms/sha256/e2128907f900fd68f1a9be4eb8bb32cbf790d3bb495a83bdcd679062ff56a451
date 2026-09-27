@@ -1,0 +1,63 @@
+### 275.2 离开单位圆的本征值产生连续同数据族
+
+设 $\lambda\in\operatorname{spec}(M)$ 且 $|\lambda|\ne1$。取单位左特征向量，即
+$$
+M^\dagger u=\bar\lambda u,\qquad \|u\|=1.
+\tag{275.7}
+$$
+置
+$$
+\sigma=\operatorname{sign}(|\lambda|^2-1),
+\qquad D=\sigma uu^\dagger,
+\qquad \beta=\bigl||\lambda|^2-1\bigr|>0.
+\tag{275.8}
+$$
+对参数 $\delta>0$ 定义
+$$
+T_\delta=T+\delta\operatorname{diag}(D,-D).
+\tag{275.9}
+$$
+对角和、非对角块和总迹均与原矩阵相同。下面证明一个明确的小参数区间保持PSD。
+
+令 $q=\lambda_{\min}(Q)>0$，并取
+$$
+\delta_0=
+\begin{cases}
+\min\{q/2,\ \beta q/(4|\lambda|^2)\},&\lambda\ne0,\\
+q/2,&\lambda=0.
+\end{cases}
+\tag{275.10}
+$$
+在 $0<\delta\le\delta_0$ 时，$Q+\delta D\succeq(q/2)I$。由（275.7），
+$$
+DM=\lambda D,\qquad M^\dagger D=\bar\lambda D.
+\tag{275.11}
+$$
+使用可逆剪切
+$$
+R=\begin{pmatrix}I&-M\\0&I\end{pmatrix},
+\tag{275.12}
+$$
+直接相乘得到
+$$
+R^\dagger T_\delta R
+=\begin{pmatrix}
+Q+\delta D&-\delta\lambda D\\
+-\delta\bar\lambda D&\delta\beta uu^\dagger
+\end{pmatrix}.
+\tag{275.13}
+$$
+其对上块的Schur补是
+$$
+\left[\delta\beta
+-\delta^2|\lambda|^2u^\dagger(Q+\delta D)^{-1}u\right]uu^\dagger.
+\tag{275.14}
+$$
+若 $\lambda\ne0$，方括号中的系数至少为
+$$
+\delta\beta-\frac{2\delta^2|\lambda|^2}{q}
+\ge\frac{\delta\beta}{2}>0.
+\tag{275.15}
+$$
+若 $\lambda=0$，二次项为零，系数就是 $\delta\beta>0$。因此 $T_\delta\succeq0$，且其秩为 $n+1$。
+

@@ -1,0 +1,21 @@
+**命题 16.67（四态任务不能独自认证十六态局部对）。** 取命题15.16的模型 $E=\mathbb Z/4\mathbb Z$、$C=H=\mathbb Z/2\mathbb Z$，令 $g(0)=g(1)=0$、$g(2)=g(3)=1$。记 $\operatorname{hi}(x)$ 为模四代表 $0,1,2,3$ 的高位。则 $D=\{0,2\}$、$\chi(2)=1$，且
+
+$$
+\widehat Q\cong\mathbb Z/4\mathbb Z,\qquad
+[(x,h)]\longmapsto\rho=x+2h\pmod4.
+\tag{16.51}
+$$
+
+任务初始化为 $\rho=0$，更新为 $\rho'=\rho+u+v+2k$，解码为 $\operatorname{hi}(\rho)$。两端分别保存 $(a,\rho)$、$(b,\rho)$，更新己方位置并解码己方位置与 $\operatorname{hi}(\rho)$。各局部有十六态，任务有四态；精确共同标签有八值。实际对有三十二个，匹配 $\rho$ 的对有六十四个。精确同源条件为
+
+$$
+\rho_A=\rho_B=\rho,\qquad a+b\equiv\rho\pmod2;
+\qquad
+c_A=(a\bmod2,\rho),\quad c_B=((\rho-b)\bmod2,\rho).
+\tag{16.52}
+$$
+
+在“己方位置、任务相位”坐标中，$A=(0,0)$ 与 $B=(1,0)$ 是两个单独可达、任务相位相同而不能同源的状态。任务扩张是非分裂的 $0\to\mathbb Z/2\mathbb Z\xrightarrow{h\mapsto2h}\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z\to0$。
+
+证明。$D$ 与 $\chi$ 的值由命题15.16的恒定差计算取得。式(16.51)的同态核是 $\{(0,0),(2,1)\}=K$，且满射，故给所示同构。$\operatorname{hi}(x+2h)=g(x)+h$，更新由来源平移得到。定理16.61–16.63与命题16.64给可达性、最小值与共同标签计数；每个标签的支持矩形为 $2\times2$，有四个来源。来源 $(0,0,0)$ 实现所列 $A$ 状态，来源 $(3,1,0)$ 实现所列 $B$ 状态；合并后二位置和为奇数，违反式(16.52)。任何同态 $\alpha:\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z$ 都满足 $\alpha(2)=2\alpha(1)=0$，不能等于 $\chi(2)=1$，故由定理16.65非分裂。证毕。
+

@@ -1,0 +1,25 @@
+**约定 39.17（本节的证明归属）。** 本节把既有紧选择、概率延拓和有限通道结果应用于声明联合来源的完成问题，四世界计算及双尾会计为 `repo-derived` 普通数学推导。Stacks 与 Fremlin 所用结论为 `literature-attested`；不主张一般逆极限或数据处理理论的新颖性，不把这些普通应用声明为新增形式化结果。表39.3列明供应对象及不能替代的前提。
+
+| 表39.3项 | 供应对象 | 在本节的精确用途与边界 |
+|---|---|---|
+| 39.3a 紧选择 | 恢复卷引理33.3，主卷定理46.4；Stacks 0A2R | 非空紧空间及连续连接给相容选择，不需满射；不是任意指定有限候选的延伸算法。 |
+| 39.3b 完成概率 | 恢复卷定理33.4；Fremlin 418Q、411H | 本节以39.2.2逐项核对非满射有限 Radon 序列，取 Borel 限制；不直接套用前者的满射柱内容证明。 |
+| 39.3c 完成几何 | 恢复卷定理33.6、33.9、33.11及推论33.12，式（33.15）、（33.19）–（33.20）、（33.23）–（33.26） | 复用有限柱连续函数逼近、Borel 事件逼近和共同半径证明；来源、目标、支撑的相容保持由（39.8）–（39.12）承担。 |
+| 39.3d 有限收缩 | [DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean)，`total_variation_channel_le` | 有限实函数与非负行随机通道；供应确定投影及有限共同后处理收缩，不建立来源可行性或概率完成。 |
+| 39.3e 有限等号 | [DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)，`total_variation_channel_eq_iff_no_sign_mixing`；命题37.8 | 在确定核上的符号同向条件给（39.21）；没有新的通用等号机制。 |
+| 39.3f 来源流 | 定理37.10及（37.17）–（37.18） | 实际合法时以 $A_l$ 为世界载体，逐项匹配亏损容量、合法接收关联及共同来源平衡；非法实际支撑使用（39.21）–（39.23），不原样引用合法供给构造。 |
+| 39.3g 有限耦合 | [FiniteCouplingPushforwardLift.lean](../../../D5/S3/ConceptDynamics/CausalMoments/FiniteCouplingPushforwardLift.lean)，`liftCoarseCoupling_marginals`、`liftCoarseCoupling_expectation` | 有理有限析取保持两个原边缘及配对读数，处理零纤维；不自动保留任意合法支撑、档案耦合或固定机制。 |
+| 39.3h 状态线程 | [InverseLimitCompletion.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean)，`stateThread_bijective_iff_complete_and_separates`；主卷定义91.1、定理91.2 | 类型层完备性与分离性、实际像与纤维提升；不提供独立指定原域上的概率提升。 |
+| 39.3i 档案与延续 | 命题5.3、9.16、定义13.1–定理13.4、约定15.1、第35.1–35.3节、命题38.4及38.6 | 共同来源、完整已获记录、合法联合仪器及同核延续；固定来源边缘不能替代已获关联，预测、准备与过程接口分别有条件。 |
+| 39.3j 联合过程 | 机器学习卷定理17.3、命题17.7 | 联合输出—后继核合同及后续记录反例，不是概率完成定理。 |
+| 39.3k 有限载体边界 | [FiniteCofilteredLimit.lean](../../../D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean)，`finite_cofiltered_limit_nonempty` | 明确要求对象载体有限，不能直接用于无限点的实概率多面体。 |
+| 39.3l 有限事件边界 | [Metric.lean](../../../D5/S3/TotalVariation/Metric.lean)，`total_variation_eq_sup_event_gap` | 等质量有限函数的事件差公式，不是无限 Borel 柱 TV。 |
+| 39.3m 特定层级边界 | [ProjectivePrimalConvergence.lean](../../../D5/S3/Weil/Budget/ProjectivePrimalConvergence.lean)，`projective_primal_convergence` | 特定圆周矩／预算层级且假设全可行类非空，不能替代本节的应用检查。 |
+| 39.3n 已假设收敛边界 | [ProjectiveStrongDuality.lean](../../../D5/S3/Observer/Budget/ProjectiveStrongDuality.lean)，`projective_strong_duality` | 明确以 `projectiveConverges` 为前提，不能用来消除尚未证明的原始收敛义务。 |
+
+本节的完成距离、有限抵消及后续共同核结论均附着于同一个实际律和声明的联合来源合同。双尾界、原来源提升及合法准备分别仍是额外假设；受限供应关系不构成文献优先权证明。
+
+[^rroctx39_stacks]: The Stacks Project, [Lemma 5.14.6, tag 0A2R](https://stacks.math.columbia.edu/tag/0A2R)：余滤图中每个空间非空、拟紧、Hausdorff，映射连续，则逆极限非空；无满射条件。本节用于紧概率多面体及共同半径子集，不提供可测最优选择算法。
+
+[^rroctx39_fremlin]: D. H. Fremlin, *Measure Theory*, [418Q，Chapter 41，PDF 第116页](https://www1.essex.ac.uk/maths/people/fremlin/chap41.pdf#page=116)：Radon 概率空间序列及 inverse-measure-preserving、almost continuous 连接函数，在实际线程空间上给唯一相容 Radon 概率。该书[411H，PDF 第5页](https://www1.essex.ac.uk/maths/people/fremlin/chap41.pdf#page=5)的 Radon 空间要求完全、局部确定、Hausdorff、局部有限及紧集内正则。有限离散幂集概率满足全部条件，包括零质量及非满射连接；本节只使用所得概率的 Borel 限制及柱生成的 Borel 唯一性。
+

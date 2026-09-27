@@ -1,0 +1,49 @@
+#### 47.11.2 次临界：实际有限读取的充分合同
+
+本部分重新取 $0<\rho<1/\lambda(A)$，沿用
+$$
+q=\rho\lambda(A)<1,\qquad
+C_\rho(A)=\sup_{k\ge0}\rho^ku_k'(A)<\infty.
+$$
+由于 $u_0'(A)=1$，有 $C_\rho(A)\ge1$。来源仍为完整 $K_A$。这是（47.8）已证的稳定范围，区别于本节前一部分的临界权重。
+
+选择整数 $N\ge0$ 和误差容限 $\eta\ge0$。接口实际返回前 $N$ 个系数读数
+$y_0,\ldots,y_{N-1}$，并在同一份实际误差合同或同一个联合事件下满足
+$$
+|y_i-a_i|\le\eta\qquad(0\le i<N).
+\tag{47.47}
+$$
+不要求读数或误差独立，不把分别的概率承诺当作未经证明的同时事件。令工作副本与分析中的真实前缀分别为
+$$
+\widetilde a_i=
+\begin{cases}\operatorname{clip}_{[-A,A]}(y_i),&i<N,\\0,&i\ge N,\end{cases}
+\qquad
+z_i=\begin{cases}a_i,&i<N,\\0,&i\ge N.\end{cases}
+$$
+原始读数、来源、动作、精度及执行记录保留在档案中；裁剪只改变工作副本。$z$ 用于分析，算法无需取得这个未知精确前缀。
+
+由于 $a_i\in[-A,A]$，裁剪不增加相对它的误差，故
+$\|z-\widetilde a\|_\infty\le\eta$。既有前缀尾界与同立方体 Lipschitz 界给
+$$
+\begin{aligned}
+\|\mathcal E(a)-\mathcal E(\widetilde a)\|_\rho
+&\le\|\mathcal E(a)-\mathcal E(z)\|_\rho
+ +\|\mathcal E(z)-\mathcal E(\widetilde a)\|_\rho\\
+&\le2Aq^N+C_\rho(A)\eta.
+\end{aligned}
+\tag{47.48}
+$$
+重建的是有限支撑边界的实际完整递归像，不是把输出数组的未读三角补零。
+
+给定 $\varepsilon>0$，选择
+$$
+N\in\mathbb N,\quad2Aq^N\le\varepsilon/2,\qquad
+0\le\eta\le\frac{\varepsilon}{2C_\rho(A)}.
+\tag{47.49}
+$$
+$0<q<1$ 保证有限 $N$ 存在。若条件在 $N=0$ 已成立，允许空读取，此时 $\widetilde a=z=0$、读数误差项实际为零。在 (47.47) 的同一条件下，重建误差至多 $\varepsilon$。
+
+这是充分误差合同，不保证设备能取得所需 $\eta$，不提供采样数、置信度、位复杂度或运行成本。无限目标可由有限数据与递归/有理行公式描述并按坐标求值；这不表示已逐项输出无限多个数。该方法不称最优，亦未与临界下界组成已经闭合的最优算法理论。
+
+这里的次临界上界是 (47.8)、(47.22) 的直接应用，不另计为新数学定理。它与临界二来源下界一起说明指定接口的稳定性变化，但没有给出全局最优查询算法，也没有把有限数学描述等同于有限成本取得全部实值。
+

@@ -1,0 +1,15 @@
+**引理261.1（纯源暴露与固定正谱隙）。** 有
+$$
+\boxed{
+L_\psi\succeq I_{H\otimes E}-P_\psi,
+\qquad \ker L_\psi=\mathbb C\psi.
+}
+\tag{261.8}
+$$
+并且
+$$
+\|A_\psi\|\le\frac1p,\qquad
+\|B_\psi\|\le\frac1p.
+\tag{261.9}
+$$
+

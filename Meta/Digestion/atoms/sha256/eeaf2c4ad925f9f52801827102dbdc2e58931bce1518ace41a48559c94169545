@@ -1,0 +1,76 @@
+### 280.4 固定临界角与差分矩阵的完整谱
+
+现在取另一个固定角度
+$$
+\theta_c=2\arcsin(t/2),\qquad |1-e^{i\theta_c}|=t.
+\tag{280.21}
+$$
+它独立于 $n,\delta$。对记录 $(w,\eta)=(0,-1)$，分子矩阵为
+$$
+A=B^\dagger Q_nB,\qquad
+B=I_n-e^{i\theta_c}M_n.
+\tag{280.22}
+$$
+写 $a_0=1-e^{i\theta_c}$、$z=t e^{i\theta_c}/a_0$，则 $|a_0|=t$、$|z|=1$。取
+$$
+D=\operatorname{diag}(1,z^{-1},\ldots,z^{-(n-1)}),
+$$
+有 $D^\dagger BD=a_0(I_n-J_n)$。因此 $B$ 的奇异值恰为 $t(I_n-J_n)$ 的奇异值；这一步没有要求 $D$ 与 $Q_n$ 交换。
+
+为完整核对所用的标准有限差分谱，令
+$$
+L=(I_n-J_n)^\dagger(I_n-J_n).
+$$
+其对角为 $1,2,\ldots,2$，相邻非对角为 $-1$。对 $j=1,\ldots,n$，定义
+$$
+\alpha_j=\frac{(2j-1)\pi}{2n+1},\qquad
+v_k^{(j)}=\cos((k-1/2)\alpha_j),\quad 1\le k\le n.
+\tag{280.23}
+$$
+延拓值满足 $v_0^{(j)}=v_1^{(j)}$、$v_{n+1}^{(j)}=0$。余弦递推给
+$$
+-v_{k-1}^{(j)}+2v_k^{(j)}-v_{k+1}^{(j)}
+=(2-2\cos\alpha_j)v_k^{(j)}.
+\tag{280.24}
+$$
+边界条件正好对应 $L$ 的首行与末行，包括 $n=1$。这些向量非零，且 $n$ 个本征值严格递增，故枚举了完整谱。因此，按递增顺序，
+$$
+s_j(B)=2t\sin\frac{(2j-1)\pi}{4n+2}.
+\tag{280.25}
+$$
+
+由 $2x/\pi\le\sin x\le x$（$0\le x\le\pi/2$），在 $t=1/4$ 下得到
+$$
+\frac{j}{6n}\le s_j(B)\le\frac{\pi j}{4n}.
+\tag{280.26}
+$$
+令 $\lambda_1\le\cdots\le\lambda_n$ 为 $A$ 的本征值。Loewner界
+$q_-B^\dagger B\preceq A\preceq q_+B^\dagger B$ 及本征值的极小极大表述给
+$$
+c_0(j/n)^2\le\lambda_j\le C_0(j/n)^2,
+\qquad c_0:=\frac7{828},\quad C_0:=\frac{\pi^2}{23}<1.
+\tag{280.27}
+$$
+此外，$\|B\|\le2t$ 给
+$$
+0<\lambda_j\le4t^2q_+=\frac4{23}<\frac12.
+\tag{280.28}
+$$
+这里出现的是全部 $n$ 个模式的二次尺度，不只是最小本征值的估计。
+
+其他三个记录块保持统一谱隙。事实上
+$$
+\sin\theta_c=t\sqrt{1-t^2/4}\le t,
+$$
+$$
+|1+e^{i\theta_c}|=\sqrt{4-t^2},\qquad
+|1\pm i e^{i\theta_c}|=\sqrt{2\mp2\sin\theta_c}.
+$$
+每个模长减去 $t$ 后均至少为 $\sqrt{2-2t}-t>0$。因此这些 $3n$ 个理想概率均满足
+$$
+p_j\ge\frac{b_C}{n},\qquad
+b_C:=\frac{q_-}{4}(\sqrt{2-2t}-t)^2>0.
+\tag{280.29}
+$$
+所有常数均独立于维数。
+

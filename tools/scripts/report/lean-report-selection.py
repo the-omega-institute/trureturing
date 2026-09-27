@@ -115,7 +115,13 @@ class Selection:
             path_set(value, 'producer_scopes.' + scope)
         if 'report_execution' in self.data:
             execution = self.data['report_execution']
-            fields(execution, REPORT_EXECUTION, 'report_execution')
+            fields(execution, (*REPORT_EXECUTION, 'toolchain'), 'report_execution')
+            if execution['toolchain'] != 'lean-toolchain':
+                fail('report_execution.toolchain', 'requires the registered lean-toolchain pin')
+            if dict(pattern='lean-toolchain', optional=False) not in self.data['config_inputs']['include']:
+                fail('config_inputs', 'execution toolchain must be a required registered input')
+            if 'lean-toolchain' not in self.expand('config_inputs'):
+                fail('config_inputs', 'execution toolchain cannot be excluded')
             for field, supported in REPORT_EXECUTION.items():
                 value = execution[field]
                 if (not isinstance(value, list) or any(not isinstance(item, str) for item in value)

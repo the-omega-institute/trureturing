@@ -1,0 +1,62 @@
+**命题 84.3（删除噪声校正的精确边界与实际反例）。** 令
+
+$$
+R_M^0(y)=\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M
+                      -\frac\gamma{\nu\sqrt\delta}y,\qquad
+ d_M=\frac{\sigma_M^2}{\sqrt\delta},\qquad
+ k_M=\frac{\gamma d_M}{\nu(\nu+\sigma_M^2)}.
+\tag{84.27}
+$$
+
+则对原完整噪声范围始终有
+
+$$
+\int f_x(y)|R_M^0(y)+k_My-\mathcal H(y)|dy\longrightarrow0.
+\tag{84.28}
+$$
+
+$R_M^0$ 本身具有 (84.2) 的同一二次剖面，当且仅当 $\sigma_M^2=o(\sqrt\delta)$。
+若 $d_M\to d<\infty$，其剖面为 $\mathcal H(y)-\gamma d y/\nu^2$。
+若 $d_M\to\infty$，则对每个固定 $K<\infty$，
+
+$$
+\Pr_x(|R_M^0(Y)|\le K)\longrightarrow0.
+\tag{84.29}
+$$
+
+例如合法噪声 $\sigma_M=Q^{-1/16}$ 满足 $L_M=(\ln Q)/16=o(Q^3)$，
+而 $d_M=Q^{1/8}\to\infty$；它是原实际模型中常数阶余量不紧的反例。
+
+证明。精确系数差为
+$A_M^\sigma-\gamma/(\nu\sqrt\delta)=-k_M$，直接给 (84.28)。
+记其积分误差为 $E_M(x)\to0$，两次三角不等式给
+
+$$
+\left|\int f_x|R_M^0-\mathcal H|-k_M\mathbb E_x|Y|\right|\le E_M(x).
+\tag{84.30}
+$$
+
+实际加权密度收敛给 $\mathbb E_x|Y|\to\sqrt{2\nu/\pi}>0$，
+而 $k_M\to0$ 恰等价于 $d_M\to0$，于是得充要条件及有限比率情形。
+若 $k_M\to\infty$，由实际二阶矩紧性，
+
+$$
+\mathbb E_x|R_M^0(Y)/k_M+Y|
+ \le\frac{\mathbb E_x|\mathcal H(Y)|+E_M(x)}{k_M}\longrightarrow0.
+\tag{84.31}
+$$
+
+所以对 $\eta>0$，
+
+$$
+\Pr_x(|R_M^0(Y)|\le K)
+ \le\Pr_x(|Y|\le\eta+K/k_M)
+    +\eta^{-1}\mathbb E_x|R_M^0(Y)/k_M+Y|.
+\tag{84.32}
+$$
+
+先取规模极限，再令 $\eta\downarrow0$；极限 Gaussian 在零点无原子，得到 (84.29)。
+这是实际条件概率的逃逸结论，没有从参考方差发散推断不紧。
+噪声比率振荡时仍适用 (84.28)，可分别取有限比率或发散比率子列。
+完整分母覆盖任意慢的噪声衰减；固定阶 Taylor 截断不具有这一保证。证毕。
+

@@ -1,0 +1,117 @@
+**定理 397.1（效果界及其显式反演）。** 给定 $0\preceq E\preceq I_d$，定义
+
+$$
+a=\min_{z\in\mathbb T^d}\frac{z^\dagger Ez}{d},
+\qquad 0\le a\le1,
+\qquad
+G_a(q)=\left(\sqrt{(1-a)(1-q)}+\sqrt{aq}\right)^2
+\quad(0\le q\le a).
+$$
+
+对定义 395.1 的任意协议及命题 395.2 的任意上述细分，令
+
+$$
+x=\frac{\operatorname{Tr}(EC)}{dt},
+\qquad q=\min\{a,x\}.
+$$
+
+则有必要条件
+
+$$
+\frac{f_{\mathrm{actual}}}{t}\le\frac{f_\star}{t}\le G_a(q),
+\qquad
+\boxed{\ \delta\ge2\bigl(1-G_a(q)\bigr).\ }
+$$
+
+若进一步 $0\le\delta<2a$，则
+
+$$
+r_a(\delta)=
+ \left[\sqrt{a(1-\delta/2)}-\sqrt{(1-a)\delta/2}\right]^2>0,
+\qquad
+\boxed{\ t\le\frac{\operatorname{Tr}(EC)}{d\,r_a(\delta)}.\ }
+$$
+
+证明。相位集合紧致保证 $a$ 的最小值取得；$0\preceq E\preceq I_d$ 与 $\|z\|_2^2=d$ 给出 $a\in[0,1]$。令 $\ell_j=\|v_j\|_1$，取逐坐标匹配相位的 $z_j\in\mathbb T^d$，使 $z_j^\dagger v_j=\ell_j$。置
+
+$$
+N=\sum_j\ell_j^2=d^2f_\star,
+\qquad c_j=\frac{\ell_j}{\sqrt N}.
+$$
+
+因为 $\|v_j\|_1\ge\|v_j\|_2$ 且 $\sum_j\|v_j\|_2^2=dt>0$，所以 $N\ge dt>0$，以上归一化合法。以正交标签 $|j\rangle$ 定义两个辅助单位向量
+
+$$
+|V\rangle=\frac1{\sqrt{dt}}\sum_j|j\rangle\otimes v_j,
+\qquad
+|Z\rangle=\frac1{\sqrt d}\sum_j c_j|j\rangle\otimes z_j.
+$$
+
+标签正交、$\sum_jc_j^2=1$ 及 $\|z_j\|_2^2=d$ 给出 $\|V\|_2=\|Z\|_2=1$，并且
+
+$$
+\langle Z|V\rangle
+ =\frac{\sum_jc_j\ell_j}{d\sqrt t}
+ =\frac{\sqrt N}{d\sqrt t}
+ =\sqrt{f_\star/t}.
+$$
+
+令 $\widetilde E=I_{\mathrm{label}}\otimes E$，记
+
+$$
+\alpha=\langle Z|\widetilde E|Z\rangle
+ =\sum_jc_j^2\frac{z_j^\dagger Ez_j}{d}\ge a,
+\qquad
+b=\langle V|\widetilde E|V\rangle
+ =\frac{\operatorname{Tr}(EM)}{dt}\le x.
+$$
+
+其中 $\alpha,b\in[0,1]$；$x\ge0$，但 $x$ 不必小于 $1$，这正是定义 $q$ 时需要截断的原因。迹不等式来自
+$\operatorname{Tr}(E(C-M))=\operatorname{Tr}(E^{1/2}(C-M)E^{1/2})\ge0$。
+
+用 $\widetilde E+(I-\widetilde E)=I$ 分裂内积，再分别应用 Cauchy–Schwarz，得到
+
+$$
+\begin{aligned}
+\sqrt{f_\star/t}
+ &=|\langle Z|V\rangle|\\
+ &\le\left|\langle\widetilde E^{1/2}Z|
+                  \widetilde E^{1/2}V\rangle\right|
+    +\left|\langle(I-\widetilde E)^{1/2}Z|
+                  (I-\widetilde E)^{1/2}V\rangle\right|\\
+ &\le\sqrt{\alpha b}+\sqrt{(1-\alpha)(1-b)}.
+\end{aligned}
+$$
+
+所需的二元概率单调性可直接由角度看出。对 $u\in[0,1]$ 写 $\theta_u=\arcsin\sqrt u\in[0,\pi/2]$，则
+
+$$
+\sqrt{uv}+\sqrt{(1-u)(1-v)}=\cos(\theta_u-\theta_v).
+$$
+
+若 $b<a$ 且 $\alpha\ge a$，则
+$0\le\theta_a-\theta_b\le\theta_\alpha-\theta_b\le\pi/2$，所以右端在 $\alpha=a$ 时最大。并且在 $0\le b\le a$ 内，$G_a(b)=\cos^2(\theta_a-\theta_b)$ 随 $b$ 单调增加。若 $x<a$，有 $b\le x<a$，故上面的内积界不超过 $\sqrt{G_a(x)}$。若 $x\ge a$，则 $q=a$、$G_a(q)=1$，而单位向量内积至多为 $1$，同样得到界；特别地，$b\ge a$ 必属于这一情形。于是
+$f_\star/t\le G_a(q)$，再用命题 395.2 得到 $\delta\ge2(1-G_a(q))$。
+
+为明确反演的方向，置 $h=\delta/2$、$A=\arcsin\sqrt a$、$B=\arcsin\sqrt q$。有 $0\le B\le A\le\pi/2$，而误差必要条件意味着
+
+$$
+\cos^2(A-B)\ge1-h,
+\qquad
+\sin^2(A-B)\le h.
+$$
+
+当 $0\le h<a$ 时，$H=\arcsin\sqrt h<A$。由于正弦在 $[0,\pi/2]$ 单调增加，上式等价于 $A-B\le H$，也就是 $B\ge A-H>0$。因此
+
+$$
+q\ge\sin^2(A-H)
+ =\left[\sqrt{a(1-h)}-\sqrt{(1-a)h}\right]^2
+ =r_a(\delta)>0.
+$$
+
+反向代入也给出相同的标量等价；没有在平方时遗失符号，因为 $A-H>0$。最后 $x\ge q\ge r_a(\delta)$，乘以 $dt$ 并除以正数 $d\,r_a(\delta)$ 就得到成功率上界。证毕。
+
+端点由同一域约定处理：$a=0$ 时 $q=0$、$G_0(0)=1$，第一条界只是 $\delta\ge0$，而 $0\le\delta<2a$ 是空域；$a=1$ 时 $G_1(q)=q$，在 $0\le\delta<2$ 上 $r_1(\delta)=1-\delta/2>0$。对 $a>0$，$\delta=0$ 给出 $r_a(0)=a$ 与 $t\le\operatorname{Tr}(EC)/(da)$。若 $\operatorname{Tr}(EC)=0$，第一条界直接给出 $\delta\ge2a$，无需在禁止的域内除以零。
+
+取 $E=Q_C$ 时，$a=\mu(C)/d$ 且 $\operatorname{Tr}(Q_CC)=0$，因而第 396 节的支撑下界也包含于本效果界。那里保留的几何证明进一步显示了全体分支为何共同受支撑限制。这里的辅助向量及效果只比较同一组实际分支的数据，既不提供新增操作，也不将必要条件提升为 diamond 误差的充分条件。
+

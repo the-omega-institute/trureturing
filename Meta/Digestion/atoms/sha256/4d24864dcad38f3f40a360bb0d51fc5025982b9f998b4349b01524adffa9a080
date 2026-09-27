@@ -1,0 +1,44 @@
+**第四步：为每个目标配出峰值与积分。** 给定（255.4）中的 $(P,Q)$ 及见证 $z$，有 $P\ge p_0$、$q_0\le Q\le P$。因为 $D\le1$，$p_0\ge q_0$。若 $P=q_0$，则 $P=Q=p_0=q_0$，原背景族即够。其余情形置
+
+$$
+\lambda=\frac{Q-q_0}{P-q_0}\in[0,1],\qquad
+H_s=\max\{P,\sup\bar i_s^0\}+\varepsilon_s\longrightarrow P,
+\quad \varepsilon_s\downarrow0.
+\tag{255.27}
+$$
+
+在 $E_s$ 上选一个光滑峰包 $0\le\psi_s\le1$，其支撑紧含于 $\operatorname{int}E_s$，于某内点 $t_s^*$ 等于一，支撑的相对长度趋零。令
+
+$$
+b_s(t)=\bigl[\lambda+(1-\lambda)\psi_s(t)^2\bigr]
+\bigl(H_s-i_s^0(t)\bigr).
+\tag{255.28}
+$$
+
+于是 $0\le b_s\le H_s-i_s^0$，且 $b_s(t_s^*)=H_s-i_s^0(t_s^*)$。因为 $H_s-i_s^0>0$，它有所需光滑平方表示：$\lambda>0$ 时直接取正平方根；$\lambda=0$ 时取 $w_s=\psi_s\sqrt{H_s-i_s^0}$。
+
+在 $E_s$ 的各个紧区间使用第三步，并将分割领圈的总长度选到趋零，保留 $t_s^*$。在 $E_s$ 外不作扰动。背景与剖面的一致峰值界、指定点的信息值给出
+
+$$
+\sup\widetilde i_s\longrightarrow P.
+\tag{255.29}
+$$
+
+由（255.9）、（255.11）和背景因子上界，
+
+$$
+\kappa_s\int_{E_s}i_s^0\,dt\to q_0,\qquad
+\kappa_s\int_{E_s}b_s\,dt\to\lambda(P-q_0).
+\tag{255.30}
+$$
+
+峰包支撑与各领圈的积分贡献趋零，故最终光滑准备满足
+
+$$
+\kappa_s\int_0^1\widetilde i_s\,dt
+\longrightarrow q_0+\lambda(P-q_0)=Q.
+\tag{255.31}
+$$
+
+这同时覆盖两个端面。若 $Q=q_0<P$，只需在趋零宽度内制造峰值；若 $Q=P$，取 $\lambda=1$，在占比趋于一的区域填满信息余量，包括占正比例的等待段。这里没有把等待段误作免费而不可改变的固定间隔。
+

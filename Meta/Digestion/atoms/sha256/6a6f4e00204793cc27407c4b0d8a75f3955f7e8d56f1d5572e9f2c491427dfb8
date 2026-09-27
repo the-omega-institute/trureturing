@@ -1,0 +1,64 @@
+**定理 196.3（半代数成本与唯一正二次首项）。** 函数 $(a,t,R)\mapsto\mathfrak P_2(a,t;R)$ 在定义195.1的参数域上是半代数函数。存在一个正的有限函数 $\kappa(a,t)$，使每个固定的 $0<a<1$、$2a-1<t<1$ 都满足
+$$
+\mathfrak P_2(a,t;R)
+=B(a,t)+\kappa(a,t)R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{196.14}
+$$
+$\kappa$ 关于 $(a,t)$ 联合半代数；若 $a,t$ 都是实代数数，则 $\kappa(a,t)$ 也是实代数数。
+
+证明。 先把（196.8）写成有限实代数条件。处理器 $\mathcal G:M_6\to M_3$ 的未归一化 Choi 矩阵 $J_{\mathcal G}$ 为 $18\times18$ Hermitian 矩阵，满足
+$$
+J_{\mathcal G}\succeq0,\qquad
+\operatorname{Tr}_{\rm out}J_{\mathcal G}=I_6.
+\tag{196.15}
+$$
+以实对称部分和虚反对称部分作实坐标，全部主子式非负表达半正定性，保迹条件为线性方程。通道等式只需在信号矩阵空间的固定九元 Hermitian 基上检查；矩阵单位和 Pauli 矩阵的实、虚部系数为有理数，故（196.8）的其余约束成为有限个具有有理系数的实多项式等式或严格不等式。
+
+令 $z$ 汇集这些有限变量，$\mathcal A(a,t,R,z)$ 表示可行性，并记
+$$
+D(z)=1-|x|^2>0,\qquad
+N(z)=|v|^2D(z)+(x\cdot v)^2.
+\tag{196.16}
+$$
+目标值为 $N/D$。在参数域内，$p=\mathfrak P_2(a,t;R)$ 等价于以下一阶实数公式：
+$$
+\begin{aligned}
+&\forall z:\ \mathcal A(a,t,R,z)\ \Longrightarrow\ N(z)\ge pD(z),\\
+&\forall\varepsilon>0\ \exists z:\
+\mathcal A(a,t,R,z)\ \land\ N(z)<(p+\varepsilon)D(z).
+\end{aligned}
+\tag{196.17}
+$$
+第一行给出下界，第二行要求可行值任意接近该下界；它不要求最小值取得。非空性和有限性由定理196.2保证。所有乘去分母的步骤都发生在 $D>0$ 的可行域内。
+
+对（196.17）使用 Tarski–Seidenberg 实数量词消去，得到具有有理系数的无量词多项式符号公式，所以成本函数的图是半代数集。所用标准结果及系数保持可参见 Saugata Basu，*Algorithms in Real Algebraic Geometry: A Survey*，arXiv:1409.1534v1，第2.1节定理2.1及第2.5.2节定理2.27；其第1.1节同时采用实数域与实代数数域作为实闭域实例。严格可行约束和下确界未取得都不妨碍这一量词消去。
+
+现固定 $a,t$，令
+$$
+g(R)=\frac{\mathfrak P_2(a,t;R)-B(a,t)}{R^2}.
+\tag{196.18}
+$$
+这是正半径上的半代数函数。定理195.2保证它在充分小半径内夹在两个固定的严格正常数之间。它在零的右极限必存在：若下极限与上极限不同，选一个严格位于二者之间的数 $c$，则 $\{R:g(R)<c\}$ 与 $\{R:g(R)>c\}$ 都在零点累积。每个实直线上的半代数集都是有限个区间和点的并，所以这两个互斥集合都必须包含一个 $(0,\eta)$，矛盾。这里的一维结构直接来自有限多个实多项式零点对直线的划分，无须额外正则性。于是
+$$
+\kappa(a,t):=\lim_{R\downarrow0}g(R)\in(0,\infty),
+\tag{196.19}
+$$
+并得到（196.14）。该余项对每个固定的 $a,t$ 陈述，不断言参数间一致性。
+
+$\kappa$ 的图也能用一阶公式定义。以 $\Gamma_P(a,t,R,p)$ 表示（196.17）及参数域条件，则 $k=\kappa(a,t)$ 等价于
+$$
+\begin{gathered}
+\forall\varepsilon>0\ \exists\eta>0\ \forall R,p:\\
+\bigl[\Gamma_P(a,t,R,p)\land R<\eta\bigr]
+\ \Longrightarrow\
+-\varepsilon R^2<p-B(a,t)-kR^2<\varepsilon R^2.
+\end{gathered}
+\tag{196.20}
+$$
+$\Gamma_P$ 已包含 $R>0$，且每个允许的 $a,t$ 都有任意小的允许半径，故此公式不空洞。$B$ 的分母在参数域内为正，可安全消去。再次使用实数量词消去，得到 $\kappa$ 的联合半代数性。
+
+最后固定实代数的 $a,t$。（196.20）经量词消去后，以实代数系数的有限多项式符号条件刻画唯一单点 $\{\kappa(a,t)\}$。若该点不是实代数数，则这些非零多项式都不在该点为零；有限多个符号会在其某个开邻域内同时不变，与公式只刻画单点矛盾。因此该点是某个非零实代数系数多项式的根，进而对 $\mathbb Q$ 代数。
+
+这确定了二次首项的存在与数域性质，没有给出 $\kappa$ 的数值、最小多项式或低成本计算方法，也不改变原优化中的下确界与最小值之别。证毕。
+

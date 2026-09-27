@@ -1,0 +1,20 @@
+**命题 39.5（两个单调极限的差）。** 在定义39.1下，置
+$$
+\tau_l=\operatorname{TV}(P_l,Q_l),\qquad
+\tau_\infty=\operatorname{TV}(P_\infty,Q_\infty),\qquad
+g_l=d_l-\tau_l,\quad g_\infty=d_\infty-\tau_\infty.
+\tag{39.16}
+$$
+则 $\tau_l\uparrow\tau_\infty$，且
+$$
+0\le\tau_l\le d_l\le1,\qquad
+0\le\tau_\infty\le d_\infty\le1,\qquad
+\boxed{g_\infty=\lim_l g_l=\sup_l d_l-\sup_l\tau_l.}
+\tag{39.17}
+$$
+差 $g_l$ 一般既不递增也不递减，不能以 $\sup_l g_l$ 代替其极限。若 $\tau_\infty>0$，则 $\tau_l$ 最终正且 $d_l/\tau_l\to d_\infty/\tau_\infty$，但没有一般的比值上确界公式。
+
+证明。在标签逆极限上应用39.2.4的柱 TV 检查及投影收缩，得 $\tau_l$ 的单调收敛。对每个可行律经 $\lambda_l$ 或 $\lambda_\infty$ 推前，TV 收缩给标签下界；概率 TV 至多一。定理39.3使两个单调数列都收敛，相减即得（39.17），正分母的比值结论由商的极限法则得到。命题39.9–39.11给出差的两个变化方向及比值上确界失败的具体实现。$\square$
+
+若 $\tau_\infty=0$，各层标签距离也为零，比值没有定义，加法费用仍有意义。此时 $Q_\infty=P_\infty$；只有另加实际合法性，$\rho_\infty$ 才属于 $\mathcal L_\infty$ 并给 $d_\infty=0$，所得 $0/0$ 仍未定义。合法性不能遗漏：取恒等世界塔 $W_l=\{0,1\}$，单点标签、单点来源，实际律 $\delta_0$，合法集 $A_l=\{1\}$，目标为唯一标签律。每层及完成层唯一合法候选为 $\delta_1$，所以 $\tau_l=\tau_\infty=0$，$d_l=d_\infty=1$。这直接由不交点质量的 TV 为一证明；定理39.3容许该比较律，要求实际合法供给的流解释则不容许。
+

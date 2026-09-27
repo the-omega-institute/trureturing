@@ -1,0 +1,29 @@
+### 34.1 线程双射的两个独立条件
+
+设 $X$ 是实际来源，$B_\ell$ 是一列有限层读出，限制箭头为 $r_{\ell}^{\ell'}:B_{\ell'}\to B_\ell$. 状态到线程的映射记为
+
+$$
+\Theta:X\to\varprojlim_\ell B_\ell,
+\qquad
+\Theta(x)=(q_\ell x)_\ell.
+\tag{34.1}
+$$
+
+要把这条映射称为原状态的无损完成表达，需要分开证明：
+
+$$
+\operatorname{ThreadComplete}:
+\operatorname{im}\Theta=\varprojlim_\ell B_\ell,
+\tag{34.2}
+$$
+
+以及
+
+$$
+\operatorname{SeparatesStates}:
+\Theta(x)=\Theta(y)\Rightarrow x=y.
+\tag{34.3}
+$$
+
+两者合起来才给双射。仓内 `InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates` 精确采用这两个条件；它不自动供应拓扑、概率或可计算的恢复算法。
+

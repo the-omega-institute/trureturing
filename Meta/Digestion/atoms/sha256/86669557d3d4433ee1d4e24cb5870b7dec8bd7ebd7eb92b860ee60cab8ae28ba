@@ -1,0 +1,81 @@
+### 46.5 两个输入都留在幅度立方体时的精确模量
+
+本小节假设 $A>0$，且 $0\le h\le A$。两份输入都必须留在同一个 $K_M(A)$。先给控制每个单项式所需的完整乘积引理。
+
+**乘积引理。** 对任意 $d\ge1$，若 $r_i,s_i\in[-A,A]$ 且 $|r_i-s_i|\le h$，则
+$$
+\boxed{
+\left|\prod_{i=1}^{d}r_i-\prod_{i=1}^{d}s_i\right|
+\le A^d-(A-h)^d.
+}
+\tag{46.18}
+$$
+证明。$h=0$ 时两列逐项相同。一般地先考虑两个非零乘积异号。至少有一对因子 $r_j,s_j$ 异号，因此 $|r_j|+|s_j|=|r_j-s_j|\le h$。余下因子绝对值至多 $A$，故
+$$
+\left|\prod r_i-\prod s_i\right|
+=\left|\prod r_i\right|+\left|\prod s_i\right|
+\le hA^{d-1}
+\le A^d-(A-h)^d.
+$$
+最后一步由
+$$
+A^d-(A-h)^d
+=h\sum_{j=0}^{d-1}A^{d-1-j}(A-h)^j
+\ge hA^{d-1}
+$$
+得到，且 $d=1$ 时成立。
+
+其余情况两个乘积同号或至少一个为零。置 $p_i=|r_i|,q_i=|s_i|$，交换两列后可令 $\prod p_i\ge\prod q_i$。绝对值的反三角不等式给 $|p_i-q_i|\le h$，所以 $q_i\ge(p_i-h)_+$。于是
+$$
+\left|\prod r_i-\prod s_i\right|
+=\prod p_i-\prod q_i
+\le\prod p_i-\prod(p_i-h)_+.
+$$
+右侧在 $[0,A]^d$ 上逐坐标不减。为完整核对，固定其余坐标，置
+$$
+P=\prod_{i\ne j}p_i,\qquad Q=\prod_{i\ne j}(p_i-h)_+,
+\qquad 0\le Q\le P.
+$$
+该坐标为 $t$ 时的函数是 $tP-(t-h)_+Q$；在 $t\le h$ 时斜率为 $P$，在 $t\ge h$ 时斜率为 $P-Q$，两段均非负且在接点连续。因此最大值在全部 $p_i=A$ 时取得，等于 $A^d-(A-h)^d$。两种情形穷尽，证明引理。空的其余乘积取一，故 $d=1$ 的证明亦完整。$\square$
+
+定义单坐标和全三角的同立方体模量
+$$
+\omega_{n,k,A}(h)
+=\sup_{\substack{a,b\in[-A,A]^{n+k+1}\\\|a-b\|_\infty\le h}}
+|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|,
+$$
+$$
+\omega_{M,A}(h)
+=\sup_{\substack{a,b\in K_M(A)\\\|a-b\|_\infty\le h}}
+\|\mathcal E_M(a)-\mathcal E_M(b)\|_\infty.
+$$
+则有精确公式
+$$
+\boxed{
+\omega_{n,k,A}(h)=u_k(A)-u_k(A-h),\qquad
+\omega_{M,A}(h)=u_M(A)-u_M(A-h),
+\quad 0\le h\le A.
+}
+\tag{46.19}
+$$
+证明。对 $\mathsf P_{n,k}$ 的每个次数 $d$ 单项式应用（46.18）。同一变量可以在乘积中重复出现：引理对每个出现的因子成立，没有要求这些因子是独立变量，更没有概率独立性。总次数为 $d$ 的系数绝对值之和正是 $u_k$ 的 $A^d$ 系数。逐单项式三角不等式于是给上界 $u_k(A)-u_k(A-h)$。
+
+在同一共同角点对 $a=-A\mathbf1,b=-(A-h)\mathbf1$ 上，每个坐标的两个值分别是 $-u_k(A),-u_k(A-h)$，故上界达到。由于 $u_M-u_k$ 系数非负，且 $A\ge A-h\ge0$，有
+$$
+u_k(A)-u_k(A-h)\le u_M(A)-u_M(A-h)
+\qquad(k\le M).
+$$
+取坐标 $(0,M)$ 即得全三角公式；同一输入对使各坐标各自的界同时达到。$h=0$ 时模量为零。$h=A$ 的角点内侧为零边界，公式仍精确。本结果未给出 $A<h\le2A$ 的全部模量，不能无条件把（46.19）外推到那里。
+
+**最优 Lipschitz 常数没有非平凡有限割线达到。** 对 $k\ge1$，由（46.8）的 $A^2$ 项严格正，$u''_k(t)>0$ 对所有 $t\ge0$ 成立。因此对每个 $0<h\le A$，
+$$
+u_k(A)-u_k(A-h)=\int_{A-h}^A u'_k(t)\,dt<h u'_k(A).
+\tag{46.20}
+$$
+任取立方体内不同的 $a,b$，其距离 $d=\|a-b\|_\infty$ 满足 $0<d\le2A$。以中点把线段分为两半，每半的距离 $d/2\le A$。对两半应用（46.19）和（46.20），再用三角不等式，得到
+$$
+|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|
+<dL_k(A).
+$$
+对全三角直接用 $u_M$ 的模量重复该证明，得 $M\ge1$ 时任意不同输入对均严格小于 $dL_M(A)$。因此（46.16）给的是逼近最优值的割线序列，而非一份非零距离最优对。线性端点 $k=0$、$M=0$ 不受这个严格凸性结论约束。
+

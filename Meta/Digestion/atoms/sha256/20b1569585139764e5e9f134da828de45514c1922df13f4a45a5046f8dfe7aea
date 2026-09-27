@@ -1,0 +1,31 @@
+**与平均深度的同尺度比较。** 从 (47.69) 写成
+\[
+\mathbb E[K]
+=\frac{q}{1-q}
+-\frac{\rho}{1-\rho}
++\frac{\rho/\lambda}{1-\rho/\lambda}.
+\]
+固定 \(A\) 时，后两项在 \(\rho\uparrow1/\lambda\) 的邻域有界，因为
+\(1/\lambda<1\) 且 \(1/\lambda^2<1\)。又 \(q=e^{-\epsilon}\)，所以
+\[
+\epsilon\frac{q}{1-q}
+=\frac{\epsilon}{e^\epsilon-1}\longrightarrow1.
+\]
+最后一个极限也可由
+\(e^\epsilon-1=\int_0^\epsilon e^x\,dx\)
+直接夹逼：
+\(e^{-\epsilon}\le\epsilon/(e^\epsilon-1)\le1\)。
+因此
+\[
+\boxed{\epsilon\,\mathbb E_{A,\rho}[K]\longrightarrow1.}
+\tag{47.81}
+\]
+均值在严格内部为正；(47.76) 的第二个极限于是由
+\[
+\frac{C_\rho(A)}{\mathbb E[K]}
+=\frac{\epsilon C_\rho(A)}{\epsilon\mathbb E[K]}
+\]
+直接得到。至此全部极限由一致估计和整数极值证明，不依赖数值拟合。
+
+这个等式比较确定性最坏放大常数与指定标签律的平均深度；它不把最坏放大改解释为实际平均噪声，也不把所选标签律认作观察者的真实来源概率或物理时间。常数与余项依赖固定 \(A>0\)，没有宣称 \(A\downarrow0\) 时的一致结论。
+

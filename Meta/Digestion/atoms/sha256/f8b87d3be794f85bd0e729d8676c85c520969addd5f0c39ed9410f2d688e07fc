@@ -1,0 +1,17 @@
+**引理 55.1。** 对任意厄米 $X$，令
+
+$$
+h(X)=\max_{C,\;0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(XE).
+$$
+
+则
+
+$$
+h(X)=\min\left\{\operatorname{Tr}n:
+N\succeq0,\ N\succeq X,\quad
+\operatorname{Tr}_D N=I_A\otimes n\right\},
+\tag{55.5}
+$$
+
+且最小值达到。这里 $n$ 自动为正算符。
+

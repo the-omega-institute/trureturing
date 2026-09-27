@@ -1,0 +1,42 @@
+**证明。** 令 $|C|=\sqrt{C^\dagger C}$。有限维方阵的极分解部分等距可以延拓成酉算子，故可选 $W:E\to E$ 酉，使 $C=W|C|$。即使 $C$ 奇异或为零，也可作这种延拓。
+
+定义
+$$
+L_W=\begin{pmatrix}I_E&-W\\-W^\dagger&I_E\end{pmatrix},
+\qquad
+J_W=\frac1{\sqrt2}\begin{pmatrix}W\\ I_E\end{pmatrix}.
+\tag{256.12}
+$$
+$J_W$ 是等距映射；$L_W\succeq0$，且
+$$
+\ker L_W=\{(Wv,v):v\in E\}=\operatorname{ran}J_W,
+\qquad
+L_W=2(I-J_WJ_W^\dagger).
+\tag{256.13}
+$$
+因 $T\succeq0$，
+$$
+0\le\operatorname{Tr}(L_WT)
+=\operatorname{Tr}T-2\operatorname{Re}\operatorname{Tr}(W^\dagger C)
+=\operatorname{Tr}T-2\|C\|_1.
+\tag{256.14}
+$$
+另一方面，
+$$
+\begin{pmatrix}W\\I_E\end{pmatrix}
+|C|
+\begin{pmatrix}W^\dagger&I_E\end{pmatrix}
+\succeq0
+\tag{256.15}
+$$
+的非对角块为 $C$，迹为 $2\|C\|_1$，上对角块为 $W|C|W^\dagger=\sqrt{CC^\dagger}$，所以恰为（256.11）。
+
+若另一个 $T$ 也取到最小迹，（256.14）给 $\operatorname{Tr}(L_WT)=0$。由正性，
+$$
+\|L_W^{1/2}T^{1/2}\|_{\mathrm{HS}}^2=0,
+\tag{256.16}
+$$
+故 $\operatorname{supp}T\subseteq\operatorname{ran}J_W$，可以写成 $T=J_WSJ_W^\dagger$，其中 $S\succeq0$。其非对角块为 $WS/2=C$，于是 $S=2|C|$，唯一得到（256.11）。$C=0$ 时最小迹为零，唯一最小解也为零。$\square$
+
+酉延拓 $W$ 的选择不影响（256.11），其表达式只使用 $C$ 及两个正平方根。
+

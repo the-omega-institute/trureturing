@@ -1,0 +1,31 @@
+**定理 20.4（快隐藏变量使有效势能动力学具有统一误差界）。** 对 $\epsilon>0$ 改用
+\[
+ \dot x_\epsilon=-Ax_\epsilon-Bz_\epsilon,\qquad
+ \epsilon\dot z_\epsilon=-B^{\mathsf T}x_\epsilon-Cz_\epsilon,
+ \qquad\dot{\bar x}=-S\bar x,\quad\bar x(0)=x_0.
+\]
+令 $c=\lambda_{\min}(C)>0$、$m=\lambda_{\min}(S)>0$、$\ell=\lambda_{\min}(L)>0$，并置
+\[
+ R_0=\sqrt{2U(x_0,z_0)/\ell},\quad
+ M_0=\|[A\ B]\|R_0,\quad
+ D_0=\|C^{-1}B^{\mathsf T}\|,\quad
+ w_0=z_0+C^{-1}B^{\mathsf T}x_0.
+\]
+则对全部 $t\ge0$，
+\[
+ \|x_\epsilon(t)-\bar x(t)\|
+ \le\frac{\epsilon\|B\|}{c}
+             \left(\|w_0\|+\frac{D_0M_0}{m}\right).
+\]
+
+**证明。** 全能量满足 $dU/dt=-\|\nabla_xU\|^2-\epsilon^{-1}\|\nabla_zU\|^2\le0$，因此 $\|(x_\epsilon,z_\epsilon)\|\le R_0$，且 $\|\dot x_\epsilon\|\le M_0$。令 $w=z_\epsilon+C^{-1}B^{\mathsf T}x_\epsilon$，直接求导得
+\[
+ \dot w=-\epsilon^{-1}Cw+C^{-1}B^{\mathsf T}\dot x_\epsilon,
+\]
+从而
+\[
+ \|w(t)\|\le e^{-ct/\epsilon}\|w_0\|
+          +\frac{\epsilon D_0M_0}{c}(1-e^{-ct/\epsilon}).
+\]
+又有 $\dot x_\epsilon=-Sx_\epsilon-Bw$。两轨迹初始 $x$ 相同，故差为 $-\int_0^te^{-S(t-s)}Bw(s)ds$。对初始层一项用 $e^{-m(t-s)}\le1$ 及 $\int_0^te^{-cs/\epsilon}ds\le\epsilon/c$；对持续项用 $\int_0^te^{-m(t-s)}ds\le1/m$，相加得到一致界。快慢比例、完整能量正定性和有效谱隙共同提供闭合控制；仅有自由能公式没有给出这些动力学前提。证毕。
+

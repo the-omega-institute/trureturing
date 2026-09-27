@@ -1,0 +1,33 @@
+**定理 99.1（任意最优选择的共同极限律）。** 设 $u_j<R$、$u_j\to R$，每次选择任意一对满足式（92.1）的实际最优仪器与初态。令 $K_j=\mathscr K(u_j)$。即使这些装置不收敛到唯一的最近失效仪器，仍有
+
+$$
+\boxed{
+\frac{\mathsf N_j}{K_j}\Rightarrow\operatorname{Exp}(1),
+\qquad
+\frac{\mathbb E\mathsf N_j^a}{K_j^a}
+\longrightarrow\Gamma_{\rm E}(a+1)
+\quad\text{对每个固定 }a>0.
+}
+\tag{99.1}
+$$
+
+特别地，
+
+$$
+\frac{\operatorname{Var}(\mathsf N_j)}{K_j^2}\to1,
+\qquad
+\frac{\sqrt{\operatorname{Var}(\mathsf N_j)}}{\mathbb E\mathsf N_j}\to1.
+\tag{99.2}
+$$
+
+证明。任取一个子列。仪器空间紧性允许再取 $\Gamma_j\to\Gamma_*$；定理 92.1 迫使 $\Gamma_*\in\mathfrak F_R$ 且 $\rho_j\to P_*$。因此定理 97.1 的权重为 $\alpha=\operatorname{Tr}(P_*F_*)=1$。
+
+同一装置满足 $M(\Gamma_j)=K_j$，而定理 93.1 给 $\epsilon_jK_j\to1$。于是
+
+$$
+\frac{\mathsf N_j}{K_j}
+=\frac{\epsilon_j\mathsf N_j}{\epsilon_jK_j}.
+$$
+
+定理 97.1 的分布及矩结论在这个子列上给出式（99.1）。所有子列都有进一步子列趋于同一分布及同一矩值，所以原列也有这些极限。式（99.2）使用一、二阶矩，且本来就有 $\mathbb E\mathsf N_j=K_j$。$\square$
+

@@ -1,0 +1,13 @@
+**推论 43.6（统一条件几何尾也控制时间矩尾）。** 若全部模型共有 $R_{m,\theta}\le q^{\lfloor m/M\rfloor}R_\theta$，其中整数 $M\ge1$、$0<q<1$，置 $C=M/(1-q)$。则
+
+$$
+\boxed{
+0\le Z_{m,\theta}\le
+(m+C)q^{\lfloor m/M\rfloor}R_\theta.
+}
+$$
+
+在定义 40.1 的紧族上，$T_\theta$ 因而连续。定理 41.2 是 $q=1/2$ 的一个共同实现条件。
+
+证明。按长度 $M$ 分块求和得 $T_\theta\le CR_\theta$。正映射保持此序关系，所以 $\mathcal A_\theta^m(T_\theta)\le C R_{m,\theta}$。代入引理 43.2，并用 $R_\theta\le I$，得到共同趋零加权尾，应用定理 43.3。$\square$
+

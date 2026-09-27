@@ -33,6 +33,8 @@ class PartitionFixture:
         write(self.root / "lakefile.toml", 'name = "fixture"\n[leanOptions]\nmaxRecDepth = 1000\n')
         write(self.root / "Trureturing.lean", "import D5.A\n")
         write(self.root / "D5/A.lean", "def a := 1\n")
+        write(self.root / "Meta/FILEMAP.toml", 'files = [{pattern = "Meta/ci-cache-paths.json"}]\n')
+        write(self.root / "Meta/ci-cache-paths.json", (ROOT / "Meta/ci-cache-paths.json").read_text())
 
     def save_manifest(self):
         write(self.root / "lake-manifest.json", json.dumps(self.manifest))

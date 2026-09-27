@@ -1,0 +1,18 @@
+**整数极大值的极限。** 连续函数 \(x e^{-\epsilon x}\) 在 \(x\ge0\) 上的最大值由求导得到，为 \(1/(e\epsilon)\)。所以
+\(\epsilon S(\epsilon)\le1/e\)。
+对 \(0<\epsilon<1\)，取
+\(k_\epsilon=\lfloor1/\epsilon\rfloor\)，则
+\(\epsilon k_\epsilon\to1\)，从而
+\[
+\epsilon S(\epsilon)
+\ge \epsilon k_\epsilon e^{-\epsilon k_\epsilon}
+\longrightarrow e^{-1}.
+\]
+合并上下界，
+\[
+\boxed{\epsilon S(\epsilon)\longrightarrow 1/e.}
+\tag{47.80}
+\]
+将 (47.79) 乘以 \(\epsilon\)，有
+\(\epsilon M_A\to0\)，即得 (47.76) 的第一个极限。
+

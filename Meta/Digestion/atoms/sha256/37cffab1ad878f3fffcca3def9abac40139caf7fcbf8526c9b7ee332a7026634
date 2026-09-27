@@ -1,0 +1,29 @@
+### 257.1 固定数据纤维与距离
+
+沿用§256的明确 $Y$ 输入基，在 $H\otimes E\simeq E\oplus E$ 上定义
+$$
+\mathfrak F(K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}
+\succeq0:
+\operatorname{Tr}P+\operatorname{Tr}Q=1
+\right\}.
+\tag{257.1}
+$$
+参考空间 $E$ 有限维且非零；$K$ 是两份完整算子响应按§256合成的矩阵。设
+$$
+k=\|K\|_1\in[0,1].
+\tag{257.2}
+$$
+由§256，$\mathfrak F(K)$ 非空。它没有额外固定参考边缘或第三条 Pauli 关联。
+
+两态的半迹距离及正半定算子的根保真度分别记为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1,
+\qquad
+\mathsf F(X,Y)=\|\sqrt X\sqrt Y\|_1.
+\tag{257.3}
+$$
+这里 $\mathsf F$ 未平方；当两参数均归一化时，其取值在 $[0,1]$，未归一化时不预设这一上界。
+

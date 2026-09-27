@@ -1,0 +1,27 @@
+**定义 6.1（等先验方向误差）。** 对单峰核 $P_{d,r}$，以均匀分布启动，
+记 $\mathsf Q_{d,r,T}$ 为 $(X_0,\ldots,X_T)$ 的正向律，
+$\mathsf Q^{\leftarrow}_{d,r,T}$ 为其倒序律。
+两方向各以概率 $1/2$ 选取，观察完整的 $T+1$ 个状态。
+最小平均判别错误率为
+
+$$
+e_{d,r}(T)=\frac12\sum_{\boldsymbol x}
+ \min\{\mathsf Q_{d,r,T}(\boldsymbol x),
+        \mathsf Q^{\leftarrow}_{d,r,T}(\boldsymbol x)\}
+=\frac{1-\operatorname{TV}(\mathsf Q_{d,r,T},
+                          \mathsf Q^{\leftarrow}_{d,r,T})}{2}.
+\tag{6.1}
+$$
+
+这里 $T$ 是预先确定的转移数，且判别器知道 $d,r,z$ 及核。
+固定时域的式 (6.1) 与序贯似然阈值的平均停时是不同统计量；
+后者与路径相对熵的关系见
+[Roldán 等（2015），式 (1)–(6)](../../../Library/Dynamics/roldan2015arrow.md)，
+其中式 (4) 的平均停时等式要求似然过程连续，并含超额项。
+本章允许随 $d$ 增大的对数似然跳幅。置
+$H=\{z\}$、$B=C_+\setminus\{z\}$、$Z=C_-$，
+用 $Y_t\in\{H,B,Z\}$ 标记 $X_t$ 所在集合。
+记 $N_{UV}=\#\{0\le t<T:Y_t=U,Y_{t+1}=V\}$、
+$J=N_{ZH}-N_{HZ}$、
+$\Delta_U=\mathbf1_{Y_0=U}-\mathbf1_{Y_T=U}$。
+

@@ -1,0 +1,10 @@
+**推论266.1（认证链给固定纤维误差界）。** 对固定的可实现数据 $(\rho,K)$，若存在满足（266.6）—（266.8）的 $d$ 步链，则存在有限常数 $C$，使每个归一化正半定竞争态 $\Xi$ 在 $0\le\varepsilon\le1$ 时满足
+$$
+\boxed{
+\operatorname{dist}_1\bigl(\Xi,\mathfrak S(\rho,K)\bigr)
+\le C\varepsilon^{\,2^{-d}}.
+}
+\tag{266.25}
+$$
+这里 $\operatorname{dist}_1$ 用未除以二的迹范数。
+

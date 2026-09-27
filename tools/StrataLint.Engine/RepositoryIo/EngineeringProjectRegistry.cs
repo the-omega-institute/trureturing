@@ -39,7 +39,9 @@ internal sealed record EngineeringProjectRegistration(
     [property: JsonRequired] string[]? BuildInputs = null,
     [property: JsonRequired] string[]? ExecutionInputs = null,
     [property: JsonRequired] string[]? ExecutionExcludes = null,
-    [property: JsonRequired] string[]? ExecutionEnvironment = null)
+    [property: JsonRequired] string[]? ExecutionEnvironment = null,
+    [property: JsonRequired, JsonPropertyName("execution_filemap_paths")] string[]? ExecutionFileMapPaths = null,
+    string[]? ExecutionPathInventory = null)
     : EngineeringProjectDeclaration(Path, Assembly, Role, Ci, References, Owner, OwnedTestAssembly, TestPartition);
 
 internal sealed record EngineeringProjectManifest(
@@ -65,16 +67,25 @@ internal sealed class EngineeringProjectRegistry
 
     internal IReadOnlyList<EngineeringProjectRegistration> Projects { get; }
 
-    internal static EngineeringProjectRegistry Read(RepositorySnapshot snapshot) => Read(
-        snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray());
+    internal static EngineeringProjectRegistry Read(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile(ManifestPath, out var manifest))
+            throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
+        return Read(manifest.Text, snapshot.Files.Keys.Select(path => path.Value));
+    }
 
     internal static EngineeringProjectRegistry Read(IReadOnlyList<EngineeringSource> files)
     {
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
-        var registration = Parse(manifest.Content);
-        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true));
-        _ = registry.ProjectInputs(registry.Projects.Select(project => project.Path), files.Select(file => file.Path), []);
+        return Read(manifest.Content, files.Select(file => file.Path));
+    }
+
+    private static EngineeringProjectRegistry Read(string content, IEnumerable<string> paths)
+    {
+        var registration = Parse(content);
+        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, paths, requireAll: true));
+        _ = registry.ProjectInputs(registry.Projects.Select(project => project.Path), paths, []);
         return registry;
     }
 
@@ -132,7 +143,8 @@ internal sealed class EngineeringProjectRegistry
             throw new InvalidDataException($"invalid or duplicate input registration: {registration}");
     }
 
-    private static EngineeringProjectManifest Parse(string text)
+    // Pure schema validation; repository binding belongs to Read.
+    internal static EngineeringProjectManifest Parse(string text)
     {
         try
         {
@@ -149,12 +161,23 @@ internal sealed class EngineeringProjectRegistry
                 if (project.IsTest)
                 {
                     ValidateMaterials(project.ExecutionInputs, project.ExecutionExcludes, project.Path);
+                    ValidateMaterials(project.ExecutionPathInventory ?? [], [], project.Path + ": execution_path_inventory");
+                    if (project.ExecutionPathInventory is { } inventory
+                        && !inventory.SequenceEqual(inventory.Order(StringComparer.Ordinal)))
+                        throw new InvalidDataException($"execution_path_inventory must be ordinally sorted: {project.Path}");
+                    // Policy query addresses may be virtual; only the FILEMAP itself is a byte input.
+                    ValidateInputPaths(project.ExecutionFileMapPaths!, project.Path + ": execution_filemap_paths");
+                    if (project.ExecutionFileMapPaths!.Length != 0
+                        && (!project.ExecutionInputs!.Any(pattern => FileMapGlob.Create(pattern).IsMatch("Meta/FILEMAP.toml"))
+                            || project.ExecutionExcludes!.Any(pattern => FileMapGlob.Create(pattern).IsMatch("Meta/FILEMAP.toml"))))
+                        throw new InvalidDataException($"execution_filemap_paths require FILEMAP runtime input: {project.Path}");
                     if (project.ExecutionEnvironment is null || project.ExecutionEnvironment.Any(name =>
                             string.IsNullOrWhiteSpace(name) || !name.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'))
                         || project.ExecutionEnvironment.Distinct(StringComparer.Ordinal).Count() != project.ExecutionEnvironment.Length)
                         throw new InvalidDataException($"missing or invalid registered execution environment: {project.Path}");
                 }
-                else if (project.ExecutionInputs is not null || project.ExecutionExcludes is not null || project.ExecutionEnvironment is not null)
+                else if (project.ExecutionPathInventory is not null || project.ExecutionInputs is not null || project.ExecutionExcludes is not null
+                    || project.ExecutionEnvironment is not null || project.ExecutionFileMapPaths is not null)
                     throw new InvalidDataException($"execution inputs require a test role: {project.Path}");
                 if (project.References is null || project.References.Any(path => !IsProjectPath(path))
                     || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
@@ -220,11 +243,19 @@ internal sealed class EngineeringProjectRegistry
 
     internal IReadOnlyDictionary<string, IReadOnlyList<EngineeringSource>> Sources(IReadOnlyList<EngineeringSource> files)
     {
-        var sources = files.Where(file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
-            .OrderBy(file => file.Path, StringComparer.Ordinal).ToArray();
-        var byPath = sources.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        var byPath = files.Where(file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
+            .ToDictionary(file => file.Path, StringComparer.Ordinal);
+        return SourcePaths(byPath.Keys).ToDictionary(pair => pair.Key,
+            pair => (IReadOnlyList<EngineeringSource>)pair.Value.Select(path => byPath[path]).ToArray(), StringComparer.Ordinal);
+    }
+
+    internal IReadOnlyDictionary<string, IReadOnlyList<string>> SourcePaths(IEnumerable<string> paths)
+    {
+        var sources = paths.Where(path => path.EndsWith(".cs", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal).ToArray();
+        var byPath = sources.ToDictionary(path => path, StringComparer.Ordinal);
         var covered = new HashSet<string>(StringComparer.Ordinal);
-        var result = new Dictionary<string, IReadOnlyList<EngineeringSource>>(StringComparer.Ordinal);
+        var result = new Dictionary<string, IReadOnlyList<string>>(StringComparer.Ordinal);
         foreach (var project in Projects)
         {
             var includes = project.Include.Select(FileMapGlob.Create).ToArray();
@@ -232,14 +263,14 @@ internal sealed class EngineeringProjectRegistry
             foreach (var pattern in project.Include.Where(pattern => !pattern.Contains('*')))
                 if (!byPath.ContainsKey(pattern))
                     throw new InvalidDataException($"registered Compile input is absent from candidate source: {project.Path}: {pattern}");
-            var members = sources.Where(source => includes.Any(pattern => pattern.IsMatch(source.Path))
-                && !excludes.Any(pattern => pattern.IsMatch(source.Path))).ToArray();
-            covered.UnionWith(members.Select(source => source.Path));
-            covered.UnionWith(sources.Where(source => excludes.Any(pattern => pattern.IsMatch(source.Path))).Select(source => source.Path));
+            var members = sources.Where(source => includes.Any(pattern => pattern.IsMatch(source))
+                && !excludes.Any(pattern => pattern.IsMatch(source))).ToArray();
+            covered.UnionWith(members);
+            covered.UnionWith(sources.Where(source => excludes.Any(pattern => pattern.IsMatch(source))));
             result.Add(project.Path, members);
         }
-        var unregistered = sources.FirstOrDefault(source => !covered.Contains(source.Path));
-        if (unregistered is not null) throw new InvalidDataException($"unregistered engineering source: {unregistered.Path}");
+        var unregistered = sources.FirstOrDefault(source => !covered.Contains(source));
+        if (unregistered is not null) throw new InvalidDataException($"unregistered engineering source: {unregistered}");
         return result;
     }
 
@@ -250,11 +281,16 @@ internal sealed class EngineeringProjectRegistry
         var exclude = excludes.Select(FileMapGlob.Create).ToArray();
         foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
             if (!available.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
+        // Exact declarations need membership checks, not a scan of every repository path.
+        // Compile both pattern sets first so even empty selections reject malformed input.
+        if (includes.All(pattern => !pattern.Contains('*')))
+            return includes.Distinct(StringComparer.Ordinal).Where(path => !exclude.Any(pattern => pattern.IsMatch(path)))
+                .Order(StringComparer.Ordinal).ToArray();
         return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
             && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
     }
 
-    private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
+    internal static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
     {
         foreach (var patterns in new[] { includes, excludes })
         {
@@ -292,7 +328,10 @@ internal sealed class EngineeringProjectRegistry
         if (selected.GroupBy(path => byPath[path].Assembly, StringComparer.Ordinal).Any(group => group.Count() != 1))
             throw new InvalidDataException($"conflicting selected producer assembly registration: {ManifestPath}");
         var current = currentPaths.ToHashSet(StringComparer.Ordinal);
-        var paths = current.Concat(changedPaths).Distinct(StringComparer.Ordinal).ToArray();
+        // Compile declarations are validated to end in .cs; retain both current
+        // and removed source endpoints without matching unrelated repository data.
+        var paths = current.Concat(changedPaths).Where(path => path.EndsWith(".cs", StringComparison.Ordinal))
+            .Distinct(StringComparer.Ordinal).ToArray();
         var inputs = new HashSet<string>(selected, StringComparer.Ordinal);
         foreach (var path in selected)
         {

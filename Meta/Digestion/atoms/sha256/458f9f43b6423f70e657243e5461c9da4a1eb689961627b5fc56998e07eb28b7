@@ -1,0 +1,64 @@
+### 70.1 同一混合族的移动参数
+
+固定 $r>0$，令 $a_\varepsilon=1-r\varepsilon$，取
+
+$$
+0<\varepsilon<\min\{1/r,1/16\}.
+\tag{70.1}
+$$
+
+沿用三个量子比特 $A,B,D$ 的完整 tester 和因果修复合同，张量次序为 $A\otimes B\otimes D$。记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle.
+$$
+
+第 64 节同一压缩混合族此时为
+
+$$
+\begin{aligned}
+r_{0,\varepsilon}&=\sqrt{1-r\varepsilon}\,x
++\sqrt{1-\varepsilon}\,y+\sqrt r\,\varepsilon z,\\
+r_{1,\varepsilon}&=\sqrt{r\varepsilon}\,x'
+-\sqrt{\varepsilon(1-r\varepsilon)}\,z',\\
+R_\varepsilon&=|r_{0,\varepsilon}\rangle\langle r_{0,\varepsilon}|
++|r_{1,\varepsilon}\rangle\langle r_{1,\varepsilon}|.
+\end{aligned}
+\tag{70.2}
+$$
+
+早边缘仍为
+
+$$
+M_\varepsilon=|00\rangle\langle00|
++(1-\varepsilon)|10\rangle\langle10|
++\varepsilon|11\rangle\langle11|,
+\tag{70.3}
+$$
+
+所以归一化缺陷是 $\varepsilon$。在厄米算符空间上记
+
+$$
+\begin{gathered}
+N(X)=\max_{C,E}|\operatorname{Tr}(XE)|,\\
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,
+\end{gathered}
+\tag{70.4}
+$$
+
+并令 $\mathcal C$ 为满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1
+\tag{70.5}
+$$
+
+的因果修复集合。完整事件最优误差为
+
+$$
+e_\varepsilon=\min_{S\in\mathcal C}N(R_\varepsilon-S).
+$$
+

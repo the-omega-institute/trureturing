@@ -36,9 +36,9 @@ public sealed class DefaultCliStartupTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             TemporaryFileSystem.File.WriteAllText(destination, content);
         }
-        ReviewRegressionTests.RunGit(temporary.Path, "init");
-        ReviewRegressionTests.RunGit(temporary.Path, "add", ".");
-        ReviewRegressionTests.RunGit(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
+        TestGit.Run(temporary.Path, "init");
+        TestGit.Run(temporary.Path, "add", ".");
+        TestGit.Run(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
             "commit", "-m", "synthetic query baseline");
 
         var result = RunCli(temporary.Path, "digest-status", "--formalize-candidates");

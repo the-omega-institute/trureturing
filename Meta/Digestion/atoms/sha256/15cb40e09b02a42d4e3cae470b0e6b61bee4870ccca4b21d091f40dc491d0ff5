@@ -1,0 +1,107 @@
+### 69.3 不等长支撑方向与因果约束
+
+因果条件给 $S_{x,z}+S_{x',z'}=0$。用式（69.11）展开并取实部，得到
+
+$$
+\sqrt{\varepsilon a b^2}
+\left[\frac{m_0-k_0}{\alpha}-\frac{m_1-k_1}{\beta}\right]
+=\frac{a-\varepsilon b^2}{\alpha}\operatorname{Re}f_0
+-\frac{b^2-\varepsilon a}{\beta}\operatorname{Re}f_1.
+\tag{69.14}
+$$
+
+设
+
+$$
+r_0=\frac{m_0}{\alpha},\qquad r_1=\frac{m_1}{\beta},
+\qquad D_0=r_0-r_1,\qquad\mu=\frac1{1+\varepsilon}.
+$$
+
+因为 $\alpha,\beta\ge m$、$\sqrt{ab^2}\ge m$，且式（69.14）右侧的两个实数系数绝对值均不超过 $1$，所以
+
+$$
+|D_0|\le\frac{g}{m}
++\frac{L}{\sqrt\varepsilon\sqrt{ab^2}}
+\le\frac{g+3\sqrt g}{m}
+\le\frac{5\sqrt g}{m}.
+\tag{69.15}
+$$
+
+这里 $g\le1$，故 $g\le\sqrt g$；最后的常数保留了余量。又因
+
+$$
+\alpha+\beta=1+\varepsilon,
+\qquad\alpha r_0+\beta r_1=1-\omega,
+$$
+
+可准确解得
+
+$$
+r_0-\mu=-\mu\omega+\beta\mu D_0,
+\qquad r_1-\mu=-\mu\omega-\alpha\mu D_0.
+$$
+
+$\alpha\mu,\beta\mu\le1$，因此
+
+$$
+|r_j-\mu|\le\frac{6\sqrt g}{m}\qquad(j=0,1).
+\tag{69.16}
+$$
+
+记
+
+$$
+A=S_{x,x},\qquad p=\sigma_{11},\qquad p_*=\varepsilon\mu.
+$$
+
+基变换（69.11）直接给
+
+$$
+\begin{aligned}
+A={}&a r_0+\frac{\varepsilon b^2}{\alpha}k_0
++\frac{2\sqrt{\varepsilon ab^2}}{\alpha}\operatorname{Re}f_0,\\
+p={}&\varepsilon b^2r_0+\varepsilon ar_1
++\frac a\alpha k_0+\frac{b^2}\beta k_1\\
+&-2\sqrt{\varepsilon ab^2}
+\left(\frac{\operatorname{Re}f_0}{\alpha}
++\frac{\operatorname{Re}f_1}{\beta}\right).
+\end{aligned}
+\tag{69.17}
+$$
+
+对于第一式，$\varepsilon b^2/\alpha\le1$，且算术—几何均值不等式给 $2\sqrt{\varepsilon ab^2}/\alpha\le1$。式（69.13）、（69.16）于是给
+
+$$
+\begin{aligned}
+\delta_A:=|A-a\mu|
+&\le\frac{6a\sqrt g}{m}+g+3\sqrt{\varepsilon g}\\
+&\le\frac{6\sqrt g}{m}+\frac74\sqrt g
+\le\frac{7\sqrt g}{m}.
+\end{aligned}
+\tag{69.18}
+$$
+
+最后两步用了 $g\le\sqrt g$、$\sqrt\varepsilon\le1/4$ 及 $m\le1/2$。对于第二式，$a/\alpha,b^2/\beta\le1$，且 $\sqrt{ab^2}\le1$，所以
+
+$$
+\begin{aligned}
+\delta_p:=|p-p_*|
+&\le\frac{6\varepsilon\sqrt g}{m}+g
++\frac{2\sqrt\varepsilon}{m}L\\
+&\le g+\frac{12\varepsilon\sqrt g}{m}.
+\end{aligned}
+\tag{69.19}
+$$
+
+由式（69.3）、（69.8），$\sqrt g\le am\varepsilon/256$，故
+
+$$
+\delta_A\le\frac{7a}{256}\varepsilon,
+\qquad
+\delta_p\le\left(\kappa_a+\frac{3a}{64}\right)\varepsilon^2
+<\frac{\varepsilon^2}{16}.
+\tag{69.20}
+$$
+
+其中 $\kappa_a\le a/65536\le1/65536$，所以最后一个严格不等式对全部 $0<a<1$ 成立。
+

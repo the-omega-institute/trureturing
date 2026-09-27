@@ -1,0 +1,33 @@
+**非空完成范数紧目标族。**
+
+固定同一个 $\Theta$。对任意相容目标 $\xi,\zeta$，有限层三角不等式给
+$$
+|e_n(\xi)-e_n(\zeta)|
+\le D(\xi_n,\zeta_n)
+\le\mathsf d_\infty(\xi,\zeta).
+$$
+例如，对所有 $\theta$ 有 $D(\xi_n,q_n\theta)\le D(\xi_n,\zeta_n)+D(\zeta_n,q_n\theta)$；取下确界，再交换 $\xi,\zeta$ 即得。完成距离到固定集合 $\mathcal S_\Theta$ 同样满足
+$$
+|E(\xi)-E(\zeta)|\le\mathsf d_\infty(\xi,\zeta).
+$$
+因此 $e_n$ 与 $E$ 都对目标完成距离 $1$-Lipschitz。
+
+若目标族 $\Xi\ne\varnothing$ 在 $\mathsf d_\infty$ 下紧，则
+$$
+\boxed{
+\sup_{\xi\in\Xi}\bigl(E(\xi)-e_n(\xi)\bigr)\longrightarrow0.
+}
+\tag{45.26}
+$$
+证明。取 $\Xi$ 的有限 $\varepsilon/4$-网 $\xi_1,\ldots,\xi_s$。由（45.19），各网点缺口趋零，选共同 $N$ 使网点缺口都小于 $\varepsilon/2$。任意目标与近网点之间，两次 Lipschitz 估计给
+$$
+E(\xi)-e_n(\xi)
+\le2\mathsf d_\infty(\xi,\xi_i)+E(\xi_i)-e_n(\xi_i)
+<\varepsilon\qquad(n\ge N).
+$$
+这证明额外目标紧性下的一致收敛，但未提供有效有限网或网点收敛期限，故仍不是自动可计算的尾速率。
+
+这里要求的是完成泛函范数所给的紧性。即使来源类固定且紧，所有相容目标的集合也不因而完成范数紧。第45.6节给一个已经弱星紧、但仍完全没有一致尾收敛的明确目标族。
+
+范数紧性是此处一致收敛的充分条件，不声称每一个一致收敛的目标族都必须范数紧。这两项有限网论证是既有紧性／Dini机制在所声明来源检验中的应用。
+

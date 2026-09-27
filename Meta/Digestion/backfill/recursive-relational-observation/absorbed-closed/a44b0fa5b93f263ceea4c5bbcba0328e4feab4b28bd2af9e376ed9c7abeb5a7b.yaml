@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a44b0fa5b93f263ceea4c5bbcba0328e4feab4b28bd2af9e376ed9c7abeb5a7b
+  normalized_sha256: sha256:a44b0fa5b93f263ceea4c5bbcba0328e4feab4b28bd2af9e376ed9c7abeb5a7b
+cas_ref: sha256:a44b0fa5b93f263ceea4c5bbcba0328e4feab4b28bd2af9e376ed9c7abeb5a7b
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/TaskModalGreatest.result
+    target_statement_id: sha256:b4671cca0d6cac9aaa7ee8204dbc108837c3c8977aa75dfb85fb45f92b6cb92f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,20 @@
+**推论 27.18b（最优修正的矩公式）。** 令
+$$
+w_m=bM_{m-1}-aM_m\quad(m\ge1),\qquad w_\infty=0.
+\tag{27.70b}
+$$
+则在 $I_\mu<\infty$ 时，
+$$
+\min_\pi\mathbb E_\pi\tau
+=2I_\mu-a+w_{N_*}
+=2I_\mu-a+\min_{m\in\mathbb N_{\ge1}\cup\{\infty\}}w_m.
+\tag{27.70c}
+$$
+
+证明。由矩的定义，$v_m=w_m-w_{m+1}$；又因 $q^{m-1}\to0$ 且被一控制，支配收敛给出 $w_m\to0$。若 $N_*<\infty$，绝对可和的负系数和望远镜相消为
+$$
+\sum_{m\ge1}\min(0,v_m)=\sum_{m\ge N_*}v_m=w_{N_*}.
+\tag{27.70d}
+$$
+若 $N_*=\infty$，修正为零，即 $w_\infty$。在 $N_*$ 之前 $v_m\ge0$，所以 $w_m$ 不增；自 $N_*$ 起 $v_m<0$，所以 $w_m$ 递增并趋于零。这证明最小值的另一写法。证毕。
+

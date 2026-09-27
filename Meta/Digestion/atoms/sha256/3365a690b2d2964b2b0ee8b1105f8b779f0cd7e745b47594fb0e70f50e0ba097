@@ -1,0 +1,48 @@
+### 57.1 实际来源、早期编码与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器 $K$ 从独立单位初态 $k$ 启动，每轮使用同一个全域 CPTP 通道，前六个终端要求完整参考—活动记忆—原档案的精确恢复。本节研究第二终端可逆附加态纯的合同。为排除第一终端附加态秩二的分支，以下编码资料先在 $r_1=2,r_2=1$ 的反设下引入。
+
+固定一次 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$，两像正交。早期标准编码给四个正交单位接收向量 $p_1,q_1,p_2,q_2$、两个正交单位环境 $f_1,f_2$ 及正交单位 $u,v,w$，满足
+$$
+V_0p_i=u\otimes f_i,\quad V_0q_i=w\otimes f_i,\quad
+V_1p_i=v\otimes f_i\qquad(i=1,2).
+\tag{57.1}
+$$
+置
+$$
+U=\operatorname{span}(u,w)=G_2,\quad
+P_0=\operatorname{span}(p_1,p_2),\quad
+X=\operatorname{span}(p_1,q_1,p_2,q_2),\quad
+F=\operatorname{span}(f_1,f_2).
+$$
+第二终端的零记忆系数空间为
+$$
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{57.2}
+$$
+第一轮真实输出仍有两个严格正的 Schmidt 权重：存在正交单位 $e_1,e_2$ 和 $\lambda_1,\lambda_2>0$，使
+$$
+V_0k=\sum_{i=1}^2\sqrt{\lambda_i}\,p_i\otimes e_i,
+\qquad
+V_1k=\sum_{i=1}^2\sqrt{\lambda_i}\,q_i\otimes e_i.
+\tag{57.3}
+$$
+两个环境组 $e_i$、$f_i$ 未预设相互正交或相同。
+
+对 $\xi=\xi_1f_1+\xi_2f_2\in F$，定义 $p_\xi=\xi_1p_1+\xi_2p_2$、$q_\xi=\xi_1q_1+\xi_2q_2$ 及 $X_\xi=\operatorname{span}(p_\xi,q_\xi)$。单位 $\xi$ 对应单位 $p_\xi$，且
+$$
+V_0X_\xi=U\otimes\xi,\qquad V_1p_\xi=v\otimes\xi.
+\tag{57.4}
+$$
+对纯尾 $3\le n\le6$，有二维 $H_n,G_n,Q_n$，满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{57.5}
+$$
+实际 $H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构；特别 $H_n\cap G_n=0$。第54节给尾环境均在 $F$ 中，故（57.1）及位像正交使
+$$
+v\perp U+G_3+G_4+G_5+G_6,\qquad Q_n\perp U.
+\tag{57.6}
+$$
+

@@ -1,0 +1,122 @@
+**引理 78.2（有界尺度的显式统一界）。** 若 $R\ge0$、$0\le r\le R$、$0<\varepsilon\le1/2$ 且
+
+$$
+9\varepsilon(R+1)\le\frac18,
+$$
+
+则在该族有效的参数范围内，
+
+$$
+\left|
+\frac{e(1-r\varepsilon,\varepsilon)}{\varepsilon}-\gamma_r
+\right|
+\le2280\varepsilon(R+1)^2.
+\tag{78.5}
+$$
+
+$r=0$ 时使用第 71 节的端点 $a=1$ 定义，其余情形均在原参数域内。
+
+证明。首先由式（76.1）及秩一算子的迹范数，
+
+$$
+\begin{aligned}
+\|H_r\|_1
+&\le\sqrt{2(r^2+1)}+2\sqrt{2r}+r+1\\
+&\le(1+2\sqrt2)(r+1)<4(r+1).
+\end{aligned}
+\tag{78.6}
+$$
+
+取达到 $\gamma_r$ 的 $K_r\in\mathcal T$。第 70—73 节的范数下界与 $\gamma_r\le9/8$ 给
+
+$$
+\|H_r-K_r\|_1\le4N(H_r-K_r)\le\frac92.
+$$
+
+所以
+
+$$
+\|K_r\|_{\rm op}\le\|K_r\|_1
+\le4(r+1)+\frac92\le9(R+1)=:M.
+\tag{78.7}
+$$
+
+应用引理 78.1，得到某个 $K_{r,\varepsilon}\in\mathcal D_\varepsilon$，满足
+
+$$
+N(K_{r,\varepsilon}-K_r)
+\le28\varepsilon M^2=2268\varepsilon(R+1)^2.
+$$
+
+而 $\mathcal D_\varepsilon\subset\mathcal T$。因此
+
+$$
+0\le\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)-\gamma_r
+\le2268\varepsilon(R+1)^2.
+\tag{78.8}
+$$
+
+还需在同一范围控制实际过程的一阶余项。实际两列为
+
+$$
+\begin{aligned}
+r_0&=\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
+       +\varepsilon\sqrt r\,z,\\
+r_1&=\sqrt\varepsilon\left(\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\right).
+\end{aligned}
+$$
+
+令
+
+$$
+v=-\frac r2x-\frac12y+\sqrt r\,z,
+\qquad t_0=\sqrt r\,x'-z',
+$$
+
+并写 $r_0=w+\varepsilon v+d$。对 $0\le s\le1/2$，
+
+$$
+\left|\sqrt{1-s}-1+\frac s2\right|
+=\frac{s^2}{2(1+\sqrt{1-s})^2}\le\frac{s^2}{2}.
+$$
+
+本节假设给 $\varepsilon(R+1)\le1/2$，故
+
+$$
+\|v\|\le r+1,\qquad
+\|d\|\le\frac12\varepsilon^2(r+1)^2.
+$$
+
+于是第一列外积满足
+
+$$
+\begin{aligned}
+\|r_0r_0^*-R_0-\varepsilon(vw^*+wv^*)\|_1
+&\le2\|w\|\|d\|+\|\varepsilon v+d\|^2\\
+&\le\left(\sqrt2+\frac{25}{16}\right)
+\varepsilon^2(r+1)^2\\
+&<3\varepsilon^2(r+1)^2.
+\end{aligned}
+\tag{78.9}
+$$
+
+对第二列，置 $d_1=(1-\sqrt{1-r\varepsilon})z'$，则 $\|d_1\|\le r\varepsilon$、$r_1=\sqrt\varepsilon(t_0+d_1)$。因此
+
+$$
+\begin{aligned}
+\|r_1r_1^*-\varepsilon t_0t_0^*\|_1
+&\le\varepsilon\left(2\sqrt{r+1}\,r\varepsilon+r^2\varepsilon^2\right)\\
+&\le\frac52\varepsilon^2(r+1)^2.
+\end{aligned}
+$$
+
+一阶和正是 $H_r=vw^*+wv^*+t_0t_0^*$。合并两项、再用 $N(X)\le2\|X\|_1$，得到
+
+$$
+N(X_{r,\varepsilon}-H_r)
+\le12\varepsilon(R+1)^2.
+\tag{78.10}
+$$
+
+距离函数对自身范数一-Lipschitz，且 $e(1-r\varepsilon,\varepsilon)/\varepsilon=operatorname{dist}_N(X_{r,\varepsilon},\mathcal D_\varepsilon)$。将式（78.8）与（78.10）相加，得到式（78.5）。$\square$
+

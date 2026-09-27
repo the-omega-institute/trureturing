@@ -1,0 +1,17 @@
+### 47.9 临界有限来源的消失尾、正距离与完成
+
+本节固定 \(A>0\) 和临界 \(\rho=1/\lambda(A)\)，沿用第47.7节的有限支撑边界
+\(\mathcal F_A^{\mathbb R},\mathcal F_A^{\mathbb Q}\) 及其实际数组像
+\(\mathcal J_{A,\rho}^{\mathbb R},\mathcal J_{A,\rho}^{\mathbb Q}\)，以及完整像
+\(\mathcal I_{A,\rho}\)。有限支撑修饰边界，数组仍满足全部递归关系，不能替换为补零的有限三角。
+
+记同一个全负来源及其数组为
+\[
+a^\star=-A\mathbf1,\qquad T^\star=\mathcal E(a^\star).
+\]
+(47.2)、(47.13) 给
+\(T^\star(n,k)=-u_k(A)\)、
+\(\rho^ku_k(A)=c_A+b_A\rho^{2k}\)，其中
+\(c_A=A\lambda/(\lambda+1)>0\)、\(b_A=A/(\lambda+1)\)。
+(47.11) 的完整自由来源统一尾界不趋零；下面先证明每个固定有限支撑类具有另外的消失尾界。
+

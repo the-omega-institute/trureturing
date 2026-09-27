@@ -1,0 +1,52 @@
+### 74.4 无界尺度由显式修复统一控制
+
+现在考虑任意 $0<a<1$，置 $s=1-a$。若 $r=s/\varepsilon\ge8$，则 $\varepsilon\le s/8$，第66节的显式修复适用。其小根满足
+
+$$
+\varepsilon<p\le2\varepsilon,\qquad
+p-\varepsilon=\frac{a\varepsilon p}{s-p}
+\le\frac{8a}{3s}\varepsilon^2.
+\tag{74.14}
+$$
+
+最后一式使用 $s-p\ge3s/4$。准确事件上界中的另一因子满足
+
+$$
+2+\frac{2(\sqrt a+\sqrt{\varepsilon s})}
+{\sqrt{1-\varepsilon}+\sqrt{1-p}}<6.
+$$
+
+确实，$\varepsilon\le s/8\le1/8$、$p\le1/4$，故分母大于一，而分子括号中的两项和小于二。总事件的下界与这个修复上界合并，给出对所有这些参数同时成立的估计
+
+$$
+1\le\frac{e(R_{a,\varepsilon})}{\varepsilon}
+\le1+\frac{16a}{r}\le1+\frac{16}{r}.
+\tag{74.15}
+$$
+
+这里直接使用第66节修复，不需要第69节匹配下界所用的附加条件 $\varepsilon\le\sqrt a/16$。
+
+第71节给同一尺度范围内
+
+$$
+1\le\gamma_r\le1+3(u_r-1)\le1+\frac{12}{r},
+\tag{74.16}
+$$
+
+其中
+
+$$
+u_r-1=\frac{4/r}{(1+\sqrt{1-4/r})^2}\le\frac4r.
+$$
+
+因此，两个量同在 $[1,1+16/r]$ 中，遂有
+
+$$
+\left|\frac{e(R_{a,\varepsilon})}{\varepsilon}-\gamma_r\right|
+\le\frac{16}{r}
+\qquad(r\ge8).
+\tag{74.17}
+$$
+
+给定误差容限，先取足够大的有限 $R\ge8$，使 $16/R$ 小于该容限；再对 $0\le r\le R$ 使用（74.13）。所有合法参数的尺度比均属于 $(0,1/\varepsilon)$，已被这两个区域覆盖。故得到（74.3）。各条共同变化路径的结论再由 $\gamma$ 的连续性与无穷端点极限推出。
+

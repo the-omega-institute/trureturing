@@ -1,0 +1,10 @@
+### 60.3 同一证书对参数邻域的充分条件
+
+上述构造还能给同族内可直接检验的参数区域，不将单点结论外推为整个族。保持定理 60.1 的 $S$ 不变，并令
+
+$$
+\alpha(a,\varepsilon)=\sqrt{a(1-\varepsilon)}-\frac35,
+\qquad
+\beta(a,\varepsilon)=\sqrt{(1-a)\varepsilon}-\frac6{25}.
+$$
+

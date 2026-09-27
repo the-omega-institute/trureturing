@@ -1,0 +1,25 @@
+### 305.2 联合条件信息率与固定尺度
+
+给定共同完整过去 \(\mathcal H\) 和即将执行的动作 \(a\)，记新完整记录的条件律为 \(P_{h,a,\mathcal H}\)、\(Q_{a,\mathcal H}\)，要求单向绝对连续。置
+$$
+d_a(h,\mathcal H)
+=D(P_{h,a,\mathcal H}\Vert Q_{a,\mathcal H}),
+\qquad
+c_a(h,\mathcal H)
+=\mathbb E_h[\tau_a(X)\mid\mathcal H,a].
+$$
+假设对全部实际请求前历史，
+$$
+\boxed{d_a(h,\mathcal H)\le I(h)c_a(h,\mathcal H),\qquad 0<I(h)<\infty.}
+\tag{305.3}
+$$
+不需要各次记录独立；共同历史上的条件核及（305.3）足够。零条件平均时长只允许零 KL，这由（305.3）直接约束，不需要除以零。
+
+为以 \(h\) 归一化，还假设固定 \(\rho>0\) 和正常数 \(c_-,c_+\) 满足
+$$
+c_-h^\rho\le I(h)\le c_+h^\rho
+\qquad\text{对充分小 }h>0.
+\tag{305.4}
+$$
+协议、模型、标定、\(\tau_{\max}\)、\(\rho,c_-,c_+,q\) 在极限中全部固定。
+

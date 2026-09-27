@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>StrataLint.NativeTransportIntegration.Tests</RootNamespace>
+    <AssemblyName>StrataLint.NativeTransportIntegration.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj" />
+    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
+    <ProjectReference Include="../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+    <ProjectReference Include="../../StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.NativeReportTestSupport/StrataLint.NativeReportTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj" />
+  </ItemGroup>
+</Project>

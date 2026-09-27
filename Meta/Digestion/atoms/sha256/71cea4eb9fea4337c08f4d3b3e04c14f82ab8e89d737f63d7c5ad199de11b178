@@ -1,0 +1,12 @@
+**引理271.2（不变正协方差只支撑于固定向量）。** 设有限维复空间上的 $J$ 幂零，$t>0$，$M=I+tJ$。若
+$$
+C\succeq0,
+\qquad MCM^\dagger=C,
+\tag{271.20}
+$$
+则
+$$
+\operatorname{ran}C\subseteq\ker J.
+\tag{271.21}
+$$
+

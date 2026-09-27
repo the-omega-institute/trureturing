@@ -1,0 +1,71 @@
+### 148.1 参数与七维向量核心
+
+先取已知正实振幅
+
+$$
+0<p<1,\qquad a=\sqrt{1-p},\qquad b=\sqrt p,\qquad x=a^2=1-p.
+\tag{148.2}
+$$
+
+第144节的固定相位协变随后将同一误差界运输到任意已知复振幅。$p$ 始终表示来源概率 $|b|^2$，不是接收向量或第六轮的环境泄漏概率。
+
+取七维接收空间 $K$ 的正交单位基
+
+$$
+u,v,w,P,e,g,h.
+$$
+
+初态为与来源及参考独立的纯态 $w$。取二维新环境 $E$，正交单位基为 $A,B$。定义
+
+$$
+\begin{aligned}
+c&=\sqrt{a^4+b^2},&
+d&=\sqrt{c^2+b^2},\\
+z&=\frac{a^2u+bv}{c},&
+y_0&=\frac{-bu+a^2v}{c},\\
+q&=\frac{b y_0+a^2e}{c},&
+f&=\frac{-a^2y_0+be}{c},\\
+s&=\frac{-cv+be}{d},&
+r&=\frac{df-cs}{b}.
+\end{aligned}
+\tag{148.3}
+$$
+
+这些是第39节的实振幅核心；其中原接收基向量改记为 $P$，以区别参数 $p$。定义给出
+
+$$
+(z,y_0),\qquad(q,f),\qquad(P,q,s,r)
+\quad\text{各自为正交单位族},
+$$
+
+$$
+q,f\perp z,w,P,\qquad s\perp u,w,P,\qquad cs+br=df,
+$$
+
+$$
+\operatorname{span}\{P,q,s,r\}
+=\operatorname{span}\{u,v,P,e\}.
+\tag{148.4}
+$$
+
+在 $\operatorname{span}\{g,h\}$ 中置
+
+$$
+\begin{aligned}
+\kappa&=\sqrt{a^4d^2+b^2c^2},&
+\lambda&=\sqrt{\kappa^2+b^2d^2},\\
+\xi_4&=\frac{a^2dg+cbh}{\kappa},&
+\zeta_4&=\frac{-cbg+a^2dh}{\kappa}.
+\end{aligned}
+\tag{148.5}
+$$
+
+于是 $(\xi_4,\zeta_4)$ 正交归一。再置
+
+$$
+\omega=\frac{bv+ce}{d},
+\tag{148.6}
+$$
+
+它是 $\operatorname{span}\{v,e\}$ 中正交于 $s$ 的单位向量。全部分母在（148.2）下严格为正。
+

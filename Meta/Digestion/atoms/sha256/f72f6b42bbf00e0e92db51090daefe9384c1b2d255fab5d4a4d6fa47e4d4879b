@@ -1,0 +1,17 @@
+**正超额。** 在 $G$、$X>Y$ 时，使用（300.21）的交换端点形式及
+$Y-\varepsilon\ge h_\star/2-a_\star/2\ge h_\star/4$，有
+$$
+\lambda(X)-\lambda(Y)
+\le\log\frac{X-\varepsilon}{Y-\varepsilon}
+\le\frac{X-Y}{Y-\varepsilon}.
+$$
+结合（300.19）：
+$$
+\boxed{
+(\beta-1)_+\mathbf1_G
+\le\frac A\kappa (X-Y)_+.
+}
+\tag{300.26}
+$$
+$A$ 只依赖 $h_\star$。无需添加裸的点态偏差项，也不需另找一个高比值危险阈值。
+

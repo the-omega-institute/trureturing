@@ -1,0 +1,7 @@
+**Proof.** Given a binary accuracy request $m\ge0$, choose the least $n\ge0$ satisfying
+$$
+\frac{p^{-n}}{p-1}\le2^{-m}.
+\tag{TM.582}
+$$
+Query $(n,b)\in R$ for all $0\le b<p^n$, count the positive answers, and output $a_n$. The tail bound gives $|a_n-M|\le2^{-m}$. $\square$
+

@@ -1,0 +1,4 @@
+**命题 4.3（深度 $m$ 的层级，repo-derived）。** 设 $x=u_1+\cdots+u_m$，$u_i$ 标准正交，$m\ge2$，$0<\lambda<1$。以 $x/\sqrt m$ 为原子的费用为 $\sqrt m\lambda-\tfrac12\lambda^2$；以 $u_1,\dots,u_m$ 为原子分解 $x$ 的费用为 $m(\lambda-\tfrac12\lambda^2)$；二者之差 $\lambda(m-\sqrt m)-\tfrac12(m-1)\lambda^2$ 对 $\lambda<1$ 恒正。
+
+证明。前者由引理 4.1 的等号情形；后者按坐标分离同定理 4.2。差为正当且仅当 $\lambda<2(m-\sqrt m)/(m-1)=2\sqrt m/(\sqrt m+1)$，而右端对 $m\ge2$ 大于 $1$。证毕。
+

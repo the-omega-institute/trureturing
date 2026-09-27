@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fea83566d51fe8adeeab7509b69f98e81d77cb68eef868790c5cad5614f6e513
+  normalized_sha256: sha256:fea83566d51fe8adeeab7509b69f98e81d77cb68eef868790c5cad5614f6e513
+cas_ref: sha256:fea83566d51fe8adeeab7509b69f98e81d77cb68eef868790c5cad5614f6e513
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All clauses are bind-only over the pinned Lean 4.33.0 and Mathlib db584cd6d46c92f209a44c0f1c829460d327499d supplier closure after unfolding the actual full-past history, complete-candidate, signed queue, exact j, guard, and readout definitions. The source update is actual Stream'.cons on legal input and none otherwise. Nat.find, finite-set/cardinality identities, List.Pairwise.eq_of_mem_iff, List.argmax_eq_some_iff and normalization give the exact concrete one-step equations and all-candidate source readout. List.foldl_hom gives the Option full-state word morphism, including none/legal/illegal branches; Option.map_eq_none_iff gives equal legal languages; List.foldl_append and the absorbing none branch give every-prefix legality. At every prefix including the empty prefix and end, the actual full state and the original selected candidate, signed b+1 anchor and all-bit phase agree. The raw hat equation is unconditional, and the actual-history comparison is restricted to common legal words. Equal hats do not imply equal legal languages. No hypothetical source equality or morphism premise remains. No frozen project theorem GID was found for this complete claim; existing D5 constants on the expanded supplier boundary are definitions, not theorem suppliers. This request uses the existing upstream-only bind settlement route and adds no Lean declaration or freeze.
+    previous_atom_id: 1f9b2d5bf3cc26961947fb66e0477cb4f794fb65b2366ce7bdb2890d9c09a31e
+    next_atom_id: 19ede39960740887c4e950418352ab0355c331161e2133756ab21bbc34a4f52e

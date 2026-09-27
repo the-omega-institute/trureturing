@@ -6,6 +6,7 @@
    utility: none
    digest: Wu's exact formula for every positive non-k-gonal-pyramidal number when k is at least nine. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import Mathlib.Analysis.SpecialFunctions.Pow.NthRootLemmas
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Order.Floor.Semiring
@@ -17,7 +18,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -290,7 +291,7 @@ private def branchSignature : PrimitiveSignature (Option Bool) where
   anchorFintype := Fin.fintype 0
   anchorDecidableEq := instDecidableEqFin 0
 
-private def branchArena : PrimitiveLawArena where
+def branchArena : PrimitiveLawArena where
   toArena := Arena.ofFintype (Option Bool)
   signature := branchSignature
   Law realization := ∀ (k n : Nat), 9 ≤ k → 1 ≤ n →
@@ -303,18 +304,18 @@ private def branchArena : PrimitiveLawArena where
 
 private instance : DecidableEq branchArena.State := branchArena.toArena.stateDecidableEq
 
-private def branchRealization (readBranch : Option Bool → Option Bool) :
+def branchRealization (readBranch : Option Bool → Option Bool) :
     PrimitiveRealization branchSignature where
   readout := fun _ => readBranch
   anchor := Fin.elim0
 
-private def identityReadout : PrimitiveRealization branchSignature :=
+def identityReadout : PrimitiveRealization branchSignature :=
   branchRealization (fun branch : Option Bool => branch)
 
 private def constantLowerReadout : PrimitiveRealization branchSignature :=
   branchRealization (fun _ : Option Bool => some false)
 
-private theorem branchSensitivity : FiniteSlotSensitivity branchArena := by
+theorem branchSensitivity : FiniteSlotSensitivity branchArena := by
   have identityLaw : branchArena.Law identityReadout := by
     intro k n hk hn
     have hroot :
@@ -436,24 +437,18 @@ private theorem branchSensitivity : FiniteSlotSensitivity branchArena := by
   · intro i
     exact Fin.elim0 i
 
-private theorem branchVariation : FiniteLawVariation branchArena := by
+theorem branchVariation : FiniteLawVariation branchArena := by
   obtain ⟨r, r', _, _, hr⟩ := branchSensitivity.1 ()
   by_cases hp : branchArena.Law r
   · exact ⟨r, r', hp, hr.mp hp⟩
   · have hp' : branchArena.Law r' := Classical.byContradiction (fun hn => hp (hr.mpr hn))
     exact ⟨r', r, hp', hp⟩
 
-register_information_template branchRealization
+
 
 /- Wu's Conjecture 1: Equation (6) gives the `n`-th positive integer outside the
 positive `k`-gonal-pyramidal image for every `k ≥ 9` and `n ≥ 1`. -/
-information_theorem wu_conjecture_one in branchArena
-  readout via
-    (branchRealization (fun branch : Option Bool => branch))
-  primitives identityReadout
-  variation branchVariation sensitivity branchSensitivity
-  escape from (some true) escape continues (open)
-  : ∀ (k n : Nat), 9 ≤ k → 1 ≤ n →
+theorem wu_conjecture_one : ∀ (k n : Nat), 9 ≤ k → 1 ≤ n →
       Nat.nth (complement k) (n - 1) =
         let h := Nat.floor
           ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹))
@@ -525,23 +520,7 @@ information_theorem wu_conjecture_one in branchArena
   rw [← hcount]
   exact Nat.nth_count hca
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  let some row := TemplateBinding.records env |>.find? (fun row =>
-      row.occurrence.key.theoremName == ``wu_conjecture_one &&
-      row.occurrence.key.registrationModule == env.header.mainModule)
-    | throwError "Wu registration evidence is missing"
-  match row.result with
-  | .declaredValidated _ =>
-      unless row.escape.fromObject.isSome &&
-          row.escape.continuation.any (fun continuation => continuation.kind == "open") &&
-          row.escape.bridgeKind == "legacy" do
-        throwError "Wu registration lacks a validated four-slot escape record"
-  | .declaredUnresolved diagnostic =>
-      throwError "Wu registration is unresolved: {diagnostic}"
-  | .undeclared =>
-      throwError "Wu registration is undeclared"
+
 
 #print axioms wu_conjecture_one
 

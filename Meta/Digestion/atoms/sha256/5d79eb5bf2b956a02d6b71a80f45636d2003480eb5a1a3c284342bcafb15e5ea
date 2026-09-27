@@ -1,0 +1,41 @@
+### 37.5 折扣距离的零核与正误差
+
+若输出距离 $\rho$ 是分离的且有界，$0<\gamma<1$，定义
+
+$$
+ D_\gamma(x,y):=
+ \sup_{n\ge0}\gamma^n
+ \rho(q(F^n x),q(F^n y)).
+ \tag{37.11}
+$$
+
+则严格正权重给出
+
+$$
+D_\gamma(x,y)=0
+ \iff
+ B(x)=B(y)
+ \iff
+ x\equiv^+y.
+ \tag{37.12}
+$$
+
+这只说明零集与精确行为核相同；它不说明每个正距离阈值都能恢复精确等价。若两个行为首次在时刻 $k$ 区分，离散 $0/1$ 输出下距离为 $\gamma^k$，因此不同类可以任意接近。要从 $D_\gamma\le\varepsilon$ 得到精确商，必须另有正分离间隙，例如有限行为商下的类间最小正距离。
+
+此外，Bellman 关系是
+
+$$
+ D_\gamma(x,y)
+ =
+ \max\{\rho(qx,qy),\gamma D_\gamma(Fx,Fy)\},
+ \tag{37.13}
+$$
+
+所以
+
+$$
+D_\gamma(Fx,Fy)\le\gamma^{-1}D_\gamma(x,y).
+$$
+
+这通常是状态更新的扩张界；收缩的是作用在候选距离函数上的 Bellman 算子，而不是 $F$ 本身。CanonicalDiscountedFutureGeometry 与仓内相关距离模块只在各自声明的范围内支持这些结论。
+

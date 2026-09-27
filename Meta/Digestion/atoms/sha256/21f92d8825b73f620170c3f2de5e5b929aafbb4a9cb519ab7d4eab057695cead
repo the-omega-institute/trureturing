@@ -1,0 +1,37 @@
+### 165.1 问题、可达集与精确结论
+
+沿用第159、163节的实对称来源平稳态 $\rho_*$、规范纯化
+$|\Xi\rangle=\operatorname{vec}\sqrt{\rho_*}$ 及接收态
+
+$$
+\Omega_v=\frac12\left(P_v\otimes P_\Xi+
+P_{Zv}\otimes P_{\psi_1}\right),
+\qquad
+|\psi_1\rangle=(I_M\otimes Y_R)|\Xi\rangle,
+\tag{165.1}
+$$
+
+其中 $v\in Q$ 为单位向量，$P_\xi=|\xi\rangle\langle\xi|$，系统顺序按标记排列。置
+
+$$
+\Delta=\det\rho_*>0,\qquad
+q=|\langle v|Z|v\rangle|,\qquad
+s=\sqrt{1-q^2}.
+\tag{165.2}
+$$
+
+第159节的比较入口为
+$\mathcal S_v(X)=\operatorname{Tr}(X)\Omega_v$，目标通道为
+$\mathcal V_*(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。完整参考半 diamond 误差是
+
+$$
+\mathfrak e(v)=
+\min_{\mathcal D:QR\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+\frac12\left\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal S_v-\mathcal V_*
+\right\|_\diamond .
+\tag{165.3}
+$$
+
+这里的 diamond 范数允许任意外部参考；接收端不能操作活动记忆 $M$。
+

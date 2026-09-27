@@ -1,0 +1,37 @@
+**定理 227.3（Bloch 椭球内部的完整谱公式）。**
+
+先假设
+$$
+\det L\ne0,
+\qquad s_0=-L^{-1}u,
+\qquad\|s_0\|<1.
+\tag{227.GD.9}
+$$
+于是 $u+Ls$ 在球面上从不为零。再置
+$$
+n_0=-L^{-T}t,
+\qquad c=a-n_0\cdot Ls_0.
+\tag{227.GD.10}
+$$
+双仿射配对可以精确重写为
+$$
+f(s,n)=c+(n-n_0)\cdot L(s-s_0).
+\tag{227.GD.11}
+$$
+
+**谱结论。** 在（227.GD.9）下，
+$$
+\boxed{\delta=\max(\alpha,\beta).}
+\tag{227.GD.12}
+$$
+更精确地，
+$$
+\begin{array}{c|c}
+\|n_0\|<1&\delta=\alpha>c>\beta\\
+\|n_0\|=1&\delta=\alpha=\beta=c\\
+\|n_0\|>1&\delta=\beta>c>\alpha.
+\end{array}
+\tag{227.GD.13}
+$$
+此处先证明纯实凸几何结论，不需要把任何球面误当作凸集。
+

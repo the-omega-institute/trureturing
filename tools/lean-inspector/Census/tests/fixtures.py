@@ -33,6 +33,10 @@ def main():
         raise SystemExit(1)
     run(["make", "lean-cache-ensure"], directory, "cache", cwd=repository, budget_gb=None)
     run(["make", "lean"], directory, "freshness", cwd=repository, budget_gb=None)
+    from tests.native_fixtures import check_native_environments
+    check_native_environments()
+    run([sys.executable, str(pathlib.Path(__file__).with_name("relocation_fixture.py"))],
+        directory, "native_relocation", cwd=repository, budget_gb=None)
     env = lean_env(repository)
     # Lake checks every retained fixture through the inspector lean_lib glob.
     # Reimporting each fixture in another Environment would repeat that work.

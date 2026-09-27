@@ -1,0 +1,49 @@
+**定理 235.2（确定性界与耦合依赖的分离）。** 对任何 $\gamma\in\Gamma$，都有
+
+$$
+\boxed{
+|\Delta|
+\le
+\sum_{i=1}^{m}g_i\kappa_i
+\quad\gamma\text{-几乎处处}.
+}
+\tag{235.1}
+$$
+
+但是由边缘分布决定的局部半径不能唯一决定尾部风险
+
+$$
+R_\gamma(\tau)
+=
+\gamma\{|\Delta|>\tau\}.
+$$
+
+具体地，取 $m=2$、$g_1=g_2=1$，并令两个边缘都以概率 $1/2$ 取 $\pm\kappa$。若 $\gamma_+$ 满足 $\epsilon_2=\epsilon_1$，而 $\gamma_-$ 满足 $\epsilon_2=-\epsilon_1$，则两种耦合具有完全相同的边缘，却有
+
+$$
+\boxed{
+R_{\gamma_+}(\kappa)=1,
+\qquad
+R_{\gamma_-}(\kappa)=0.
+}
+\tag{235.2}
+$$
+
+### 证明
+
+由三角不等式，
+
+$$
+|\Delta|
+=
+\left|\sum_i g_i\epsilon_i\right|
+\le
+\sum_i g_i|\epsilon_i|
+\le
+\sum_i g_i\kappa_i,
+$$
+
+得到（235.1）。
+
+在 $\gamma_+$ 下，$\Delta=2\kappa$ 或 $-2\kappa$，所以 $|\Delta|>\kappa$ 必然发生。在 $\gamma_-$ 下，$\Delta=0$ 恒成立，所以该事件从不发生。边缘分布在两种情况下都各自以一半概率取正负 $\kappa$。证毕。
+

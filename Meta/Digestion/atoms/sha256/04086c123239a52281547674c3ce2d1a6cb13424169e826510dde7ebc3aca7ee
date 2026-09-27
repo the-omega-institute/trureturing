@@ -1,0 +1,20 @@
+**定理 185.3（中央等号面的复参数化）。** 对 $0<c<1$，全部满足 $C(e_0+e_2-2c e_1)=0$ 的 Hermitian 单位对角相关矩阵，恰为
+$$
+C_c(t)=\begin{pmatrix}
+1&c+it&2c^2-1+2ict\\
+c-it&1&c+it\\
+2c^2-1-2ict&c-it&1
+\end{pmatrix},\qquad t\in\mathbb R,\quad t^2\le1-c^2.
+\tag{185.10}
+$$
+令 $\theta=\arccos c$、$z_\pm=(e^{\pm i\theta},1,e^{\mp i\theta})^{\mathsf T}$，则该线段的两端为秩一相关矩阵 $z_\pm z_\pm^\dagger$，且
+$$
+\tfrac12(z_+z_+^\dagger+z_-z_-^\dagger)=F(c,2c^2-1).
+\tag{185.11}
+$$
+因此定理185.2只强迫中央参数 $t$ 的条件平均为零，不强迫每个中央组件为实矩阵。
+
+证明。 写 $C_{01}=x$。核关系的第0行给出 $C_{02}=2cx-1$，第1行给出 $C_{12}=2c-\bar x$。第2行与 Hermitian 性再给出 $C_{12}=x$，故 $\operatorname{Re}x=c$。写 $x=c+it$ 就得到（185.10）的全部项。
+
+核关系表示第三列为前两列的固定线性组合，所以整个矩阵正半定，当且仅当左上二阶块正半定；例如以列系数矩阵 $R=\left(\begin{smallmatrix}1&0&-1\\0&1&2c\end{smallmatrix}\right)$ 可写成 $C=R^\dagger C_{\{0,1\}}R$。二阶块行列式为 $1-c^2-t^2$，即给出所述参数区间。区间两端 $t=\pm\sin\theta$ 分别得到 $z_\pm z_\pm^\dagger$，其共轭平均为（185.11）。将三符号最优程序的中央分支平分成这两个端点，并共用中央得分，就得到中央组件非实的四符号最优程序，证明最后断言。证毕。
+

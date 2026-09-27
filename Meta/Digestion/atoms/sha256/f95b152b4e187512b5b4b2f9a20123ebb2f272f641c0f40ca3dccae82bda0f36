@@ -1,0 +1,10 @@
+**命题 55.5（逐动作控制载体与总化）。** 令 $C=P(P+1)/2$，采用不交并载体
+$$
+Q=\{\mathrm{Start}\}\sqcup
+\{(b,L,U,E,\phi):0\le b<p,\ 0\le L\le U<P,\ 0\le E\le B,
+\ \phi\in\{\mathrm{Advance},\mathrm{Seek},\mathrm{Read},\mathrm{Done}\}\}.
+\tag{55.12}
+$$
+所有数值字段取整数，故 $|Q|=1+4pC(B+1)$。存在如下固定总表实现定理55.4，所有可达前缀均在 $Q$ 内。表中的 $m$、$a$ 和条件比较均是当前字段的函数，用来说明表项，不是额外保存的寄存器；固定动作、后继及输出表不计作随运行改变的记忆。
+
+- $\mathrm{Start}$ 发出 $R$。收到 $y$ 后存 $(y,0,P-1,0,\phi)$，$P=1$ 时 $\phi=\mathrm{Done}$，否则 $\phi=\mathrm{Advance}$。

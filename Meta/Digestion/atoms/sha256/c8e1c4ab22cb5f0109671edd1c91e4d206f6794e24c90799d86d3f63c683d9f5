@@ -1,0 +1,44 @@
+### 26.4 有限时间窗口何时在有限层停止细化
+
+第25.1节中的有限投影应带有明确类型：
+
+$$
+\operatorname{TP}_N:X\to(\operatorname{Fin}(N+1)\to R),
+\qquad
+\operatorname{TP}_N(x)(i)=r(F^i x),
+$$
+
+并且
+
+$$
+Q_N:X\to S\times(\operatorname{Fin}(N+1)\to R),
+\qquad
+Q_N(x)=(\pi_{\rm sp}(x),\operatorname{TP}_N(x)).
+\tag{26.4}
+$$
+
+若空间标签沿更新保持，即 $\pi_{\rm sp}\circ F=\pi_{\rm sp}$，令 $q_0=(\pi_{\rm sp},r)$，则 $Q_N$ 的 kernel 正好是由 $q_0$ 生成的长度 $N$ 未来关系。若空间标签不保持，不能直接把现有 `finiteFutureRelation` 套在 $q_0$ 上；此时应改用
+
+$$
+K_N=\ker(\pi_{\rm sp})\cap
+\bigcap_{i=0}^{N}\ker(r\circ F^i)
+$$
+
+并单独证明这条关系链稳定，或者把冻结的空间标签扩展进状态载体后再应用有限稳定定理。
+
+在 $X$ 带有限 `Finite` 载体、操作更新和读出满足相应稳定条件时，仓内 `FiniteFutureCongruence.infinite_relation_stabilizes`、`FiniteHistoryStability.finite_history_stability` 和 `FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound` 给出某个深度 $d$，使
+
+$$
+\ker(Q_d)=\ker(Q_{d+1})=\ker(Q_\infty),
+$$
+
+并且所有 $N\ge d$ 保持同一 kernel。这里
+
+$$
+\operatorname{TP}_\infty(x)(k)=r(F^k x)\quad(k\in\mathbb N)
+$$
+
+是完整未来 profile，或等价地把其 kernel 定义为 $\bigcap_N\ker(\operatorname{TP}_N)$。稳定深度给出的是一个有限精确边界存在的条件，不是有限窗口对任意系统自动足够。
+
+`FiniteStabilityClassBound.finite_stability_class_bound` 与 `FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound` 还给出类数差的上界；在这些有限条件下，$Q_d$ 可以作为空间当前投影加有限时间窗口的最小精确联合边界。若动态更新在该 kernel 上闭合，便有唯一的诱导 $\bar F$；再与任一表示 $q_i$ 比较时，互相恢复仍等价于 $\ker(q_i)=\ker(Q_\infty)$，而不是由窗口长度或值域大小单独推出。
+

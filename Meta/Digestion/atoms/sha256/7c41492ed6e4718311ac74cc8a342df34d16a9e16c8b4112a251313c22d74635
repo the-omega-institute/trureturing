@@ -1,0 +1,49 @@
+### 149.1 同一实际来源的 Bell 档案谱
+
+固定已知非退化来源
+
+$$
+T|0\rangle=m_0\otimes|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M\otimes|1\rangle_B,\qquad
+m_0=a|0\rangle+b|1\rangle,
+$$
+
+其中 $ab\ne0$、$|a|^2+|b|^2=1$。置
+
+$$
+p=|b|^2\in(0,1),\qquad
+R_0=|m_0\rangle\langle m_0|,\qquad R_1=|0\rangle\langle0|.
+$$
+
+初始参考 $J$ 与活动记忆 $M$ 取归一化 Bell 态。第 $n$ 轮未接收的完整纯目标写为
+
+$$
+|\Omega_n\rangle
+=\frac1{\sqrt2}\sum_{i=0}^1
+|i\rangle_J|\psi_{i,n}\rangle_{MH_n},\qquad H_n=B^{\otimes n}.
+\tag{149.1}
+$$
+
+令 $\rho_{H_n}=\operatorname{Tr}_{JM}|\Omega_n\rangle\langle\Omega_n|$，并取第141节的实际档案支撑 $S_n=\operatorname{supp}\rho_{H_n}$。对 $n\ge3$，$\dim S_n=4$。本节的最小权重始终指
+
+$$
+\lambda_n=\lambda_{\min}(\rho_{H_n}|_{S_n})>0,
+\tag{149.2}
+$$
+
+不包含完整 $H_n$ 中未到达方向上的零本征值。
+
+沿用第11节的真实活动记忆边缘，写
+
+$$
+\rho_{i,n}=(1-w_{i,n})R_0+w_{i,n}R_1,\qquad v_p=\frac p{1+p},
+$$
+
+其中
+
+$$
+w_{0,n}=v_p-\frac p{1+p}(-p)^{n-1},\qquad
+w_{1,n}=v_p+\frac1{1+p}(-p)^{n-1}.
+\tag{149.3}
+$$
+

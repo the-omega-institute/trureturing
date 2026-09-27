@@ -1,0 +1,12 @@
+**引理 141.4（统一混合与后缀尾）。** 对全部 $k\ge2$ 及整数 $G\ge0$，
+$$
+\sup_s\operatorname{TV}(Q^G(s,\cdot),\widehat\pi)
+\le\varepsilon_G:=(3/4)^{\lfloor G/3\rfloor}.
+\tag{141.8}
+$$
+对整数 $L\ge1$，
+$$
+\widehat\pi\{j\ge L\}\le\varphi^{2-L}.
+\tag{141.9}
+$$
+

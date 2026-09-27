@@ -1,0 +1,45 @@
+### 256.6 任意矩阵估计的显式合法重建
+
+给定任意复矩阵估计 $\widehat K$，假设存在球面真值 $K_0$ 满足已声明误差合同
+$$
+\|\widehat K-K_0\|_1\le\eta.
+\tag{256.42}
+$$
+先作径向缩放
+$$
+\overline K=\frac{\widehat K}{\max\{1,\|\widehat K\|_1\}}.
+\tag{256.43}
+$$
+显然 $\|\overline K\|_1\le1$。若 $\|\widehat K\|_1>1$，反三角不等式给
+$$
+\|\overline K-\widehat K\|_1
+=\|\widehat K\|_1-1\le\eta;
+\tag{256.44}
+$$
+否则该差为零。因此
+$$
+\|\overline K-K_0\|_1\le2\eta.
+\tag{256.45}
+$$
+
+预先任选一个参考密度矩阵 $\tau$，构造
+$$
+\widehat\Omega_Y
+=\Gamma(\overline K)
++(1-\|\overline K\|_1)
+\begin{pmatrix}\tau&0\\0&0\end{pmatrix},
+\qquad
+\widehat\Omega
+=(U_Y\otimes I_E)\widehat\Omega_Y(U_Y^\dagger\otimes I_E).
+\tag{256.46}
+$$
+由定理256.2的构造，$\widehat\Omega$ 总是合法密度矩阵，且其实际数据恰为 $\overline K$。将（256.45）代入定理256.3，得到
+$$
+\boxed{
+\|\widehat\Omega-\Omega_0\|_1
+\le\min\{2,\ 2\eta+4\sqrt\eta\}.
+}
+\tag{256.47}
+$$
+该过程只需核范数、矩阵平方根或奇异值分解及正半定补迹；不需要识别真实参考边缘，也不需要从噪声中稳定提取稀有方向的谱符号。它是从经典矩阵数据构造合法候选的明确数学过程，未被宣称为直接作用于一份未知量子态的物理恢复通道。
+

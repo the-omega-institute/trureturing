@@ -1,0 +1,33 @@
+**五个慢坐标和一个标量约束。**
+
+代入 $V$ 得 $H_1(\epsilon,h,y,t)$。
+在全基点，其关于六个实坐标 $(y,t)$ 的 Hessian 严格正定。
+确实，当 $x=u=v=0$ 时，
+
+$$
+2|b_0|^2+|d_0|^2+|d_1|^2=1-t.
+$$
+
+$(y,t)\mapsto(b_0,d_0,d_1)\in\mathbb C^3$
+是局部实微分同胚：$y$ 给五个球面方向，$t$ 给非零径向方向。
+（211.11）在这六个方向为正定二次型。
+
+$\partial_yH_1=0$ 唯一给解析 $y=Y(\epsilon,h,t)$。
+最终定义
+
+$$
+q(\epsilon,h,t)=H_1(\epsilon,h,Y(\epsilon,h,t),t),
+\qquad
+\mu(\epsilon,h,t)=\partial_tq(\epsilon,h,t).
+\tag{211.13}
+$$
+
+Schur 补给 $q_{tt}(0,h_b,0)>0$，
+固定缩小邻域后保持 $q_{tt}>0$。
+沿完全消去后的候选族，精确目标为
+
+$$
+\mathcal V(\epsilon,h,t)=\frac34+\epsilon q(\epsilon,h,t).
+\tag{211.14}
+$$
+

@@ -1,0 +1,50 @@
+### 284.4 有严格正性余量的两轮模拟器
+
+取
+$$
+c=\frac{33}{32},\qquad c\kappa=\frac{528}{529}<1.
+\tag{284.11}
+$$
+对每个人工参数 $u\in[-c,c]$，定义以下两轮量子装置。它只用于证明，不扩充观察者的实际访问权限。
+
+收到第一经典角度 $\theta_1$ 后，装置均匀产生记录 $r_1$，并制备
+$$
+|\Phi_n\rangle_{R_1M}
+=\frac1{\sqrt n}\sum_{j=1}^n|j\rangle_{R_1}|j\rangle_M.
+\tag{284.12}
+$$
+将 $R_1$ 和 $r_1$ 交给观察者，内部保留 $M,\theta_1,r_1$。观察者可以实施任何已声明的中间操作，再请求实际第二角度 $\theta_2$。
+
+对每个第二记录 $r_2$，定义从 $M$ 到 $R_2$ 的CP映射，其非归一化Choi算子按“输入参考 $R_1$ 在前、输出 $R_2$ 在后”的顺序写为
+$$
+J_{r_2}^{(u)}(\theta_2\mid\theta_1,r_1)
+=\frac{I_{n^2}+uB(r_1,r_2;\theta_1,\theta_2)}{4n}.
+\tag{284.13}
+$$
+由（284.10）—（284.11），
+$$
+J_{r_2}^{(u)}\succeq\frac{I_{n^2}}{4n\cdot529}\succ0.
+\tag{284.14}
+$$
+又因 $\sum_{r_2}B=0$，
+$$
+\sum_{r_2}J_{r_2}^{(u)}=\frac{I_{R_1}\otimes I_{R_2}}n,
+\qquad
+\operatorname{Tr}_{R_2}\sum_{r_2}J_{r_2}^{(u)}=I_{R_1}.
+\tag{284.15}
+$$
+因此四个映射构成真正的CPTP instrument，适用于每个请求角度。若把该映射记为 $\mathcal D_{r_2}^{(u)}$，Choi约定是
+$$
+(\operatorname{id}_{R_1}\otimes\mathcal D_{r_2}^{(u)})
+(|\Phi_n\rangle\langle\Phi_n|)
+=J_{r_2}^{(u)}/n.
+\tag{284.16}
+$$
+乘上第一记录的概率 $1/4$，得到两参考记录块
+$$
+\frac{I_{n^2}+uB(r_1,r_2;\theta_1,\theta_2)}{16n^2}.
+\tag{284.17}
+$$
+
+上述Choi正性、迹归一化和instrument对应属于标准工具。Chiribella、D’Ariano、Perinotti，*A theoretical framework for quantum networks*，[arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2)，第3页Lemma 3与Theorem 1、第4页III.A—B给CP映射、连接与instrument的对应，第7页Theorem 3给正性及因果归一化的网络实现。本节直接写出了（284.12）—（284.16）的实现，不把正的终端算子自动解释为允许任意先后顺序的装置。
+

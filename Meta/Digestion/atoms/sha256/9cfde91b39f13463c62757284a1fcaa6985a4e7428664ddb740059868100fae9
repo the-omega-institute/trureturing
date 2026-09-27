@@ -1,0 +1,72 @@
+**定理 40.8（继承白化与对数界的正间隔统计量）。** 固定历史阶数 $r$ 和共同系数内积。比较两组三元矩阵 $(A,H_e,H_*)$、$(A',H'_e,H'_*)$，其所有矩阵在环境系数空间中都有完全相同的非零支撑 $E$，$m=\dim E>0$；以下矩阵运算均限制在 $E$。实际响应情形写作 $A=\mathsf H_r(a)$、$H_j=\mathsf H_r(a+s_j)$，$j=e,*$ 分别为事件和锚，第二个模型用加撇记号；本定理先只要求矩阵数据条件
+$$
+\begin{gathered}
+\operatorname{spec}(A),\operatorname{spec}(A')\subseteq[\gamma,R_0],\qquad 0<\gamma\le R_0,\\
+uA\preceq H_j\preceq vA,\qquad
+uA'\preceq H'_j\preceq vA',\qquad 0<u\le v<1\quad(j=e,*).
+\end{gathered}
+\tag{40.25}
+$$
+定义同一几何中的 Frobenius 数据差和白化对数
+$$
+\begin{gathered}
+\delta_0=\|A-A'\|_F,\qquad \delta_j=\|H_j-H'_j\|_F,\\
+W_j=A^{-1/2}H_jA^{-1/2},\qquad L_j=-\log W_j,\\
+W'_j=A'^{-1/2}H'_jA'^{-1/2},\qquad L'_j=-\log W'_j,\\
+d_j=\frac{\delta_j}{\gamma}
+ +\frac{2v\sqrt{R_0}}{\gamma^{3/2}}\delta_0,\qquad
+D_j=\frac{d_j}{u},\qquad
+\alpha=-\log v>0,\quad\beta=-\log u.
+\end{gathered}
+\tag{40.26}
+$$
+则 $\|W_j-W'_j\|_F\le d_j$、$\|L_j-L'_j\|_F\le D_j$，且
+$$
+\boxed{
+\left|\frac{\operatorname{tr}L_e}{\operatorname{tr}L_*}
+-\frac{\operatorname{tr}L'_e}{\operatorname{tr}L'_*}\right|
+\le\frac{D_e}{\sqrt m\,\alpha}
+ +\frac{\beta D_*}{\sqrt m\,\alpha^2}.}
+\tag{40.27}
+$$
+
+证明。应用恢复卷定理12.2的代数白化估计，不应用其中另外的矩实现断言。为明确常数，置 $Z=A^{-1/2}$、$Z'=A'^{-1/2}$。该证明的双特征基差商界给
+$$
+\|Z-Z'\|_F\le\frac{\delta_0}{\gamma^{3/2}},\qquad
+\|Z\|_{\rm op},\|Z'\|_{\rm op}\le\gamma^{-1/2},\qquad
+\|H_jZ\|_{\rm op},\|Z'H'_j\|_{\rm op}\le v\sqrt{R_0}.
+\tag{40.28}
+$$
+最后一界使用 $H_j=A^{1/2}W_jA^{1/2}$、$\|W_j\|_{\rm op}\le v$，加撇同理。把差写成
+$$
+W_j-W'_j=(Z-Z')H_jZ+Z'(H_j-H'_j)Z+Z'H'_j(Z-Z'),
+\tag{40.29}
+$$
+逐项应用 $\|XYZ\|_F\le\|X\|_{\rm op}\|Y\|_F\|Z\|_{\rm op}$，得到 $d_j$。
+
+两个白化算子的谱都在 $[u,v]$。恢复卷式（12.7）的双特征基矩阵函数界与定理12.3证明中尚未放宽的对数步骤给
+$$
+\|L_j-L'_j\|_F
+\le\frac{1}{u}\|W_j-W'_j\|_F\le D_j,
+\tag{40.30}
+$$
+因为 $\log$ 在 $[u,v]$ 上的差商至多 $1/u$。这里比较无量纲对数，未除以延迟，因此没有 $h^{-1}$。在环境空间写供应证明时，两个实际支撑投影 $P,P'$ 相同，实际 $\|P-P'\|_F=0$；但供应定义的上界 $d_P=\delta_0/\gamma$ 仍可严格为正，不能把这个有名字的常数改写为零。直接在共同支撑上用（40.30），正是保留实际零投影差的未放宽步骤。此处引用的是恢复卷方程（12.7），不是关于未知初态的命题12.7。
+
+谱映射给 $\alpha I\preceq L_j,L'_j\preceq\beta I$。记 $N=\operatorname{tr}L_e$、$Q=\operatorname{tr}L_*$，加撇同理，则
+$$
+Q,Q'\ge m\alpha,\qquad 0<N,N'\le m\beta,\qquad
+|\operatorname{tr}(L_j-L'_j)|\le\sqrt m\,D_j.
+\tag{40.31}
+$$
+最后一式是 $\langle I,L_j-L'_j\rangle_F$ 的 Cauchy–Schwarz 界，$\|I\|_F=\sqrt m$。故
+$$
+\left|\frac NQ-\frac{N'}{Q'}\right|
+\le\frac{|N-N'|}{Q}+\frac{N'|Q-Q'|}{QQ'}
+\le\frac{D_e}{\sqrt m\,\alpha}
++\frac{\beta D_*}{\sqrt m\,\alpha^2},
+\tag{40.32}
+$$
+证明所述常数。$\square$
+
+式（40.27）首先保证矩阵统计量。只有比较的两个完整世界都另行满足实际共同响应、饱和与合法时间顺序合同，才能由定理40.4分别把它解释为 $s_e/s_*$ 与 $s'_e/s'_*$ 的差；一份拟合的存在不认证实际来源。这里 $v<1$、$u>0$ 及正锚保证的是正事件／锚间隔的稳定界，推论40.5的精确有符号恒等式不自动给负间隔的带噪推广。两个统计量内事件与锚共享基准误差 $\delta_0$；所有重复条目使用同一个联合误差事件，未要求误差独立。逐模型严格正定也不供应统一的 $\gamma,u,\alpha$，弱模态、迟时或弱锚均可使这些裕量退化。
+

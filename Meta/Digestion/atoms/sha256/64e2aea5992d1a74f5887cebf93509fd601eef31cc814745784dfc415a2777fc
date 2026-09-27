@@ -1,0 +1,6 @@
+**证明。** 可逆 $U$ 将正、负定子空间双向对应，保维数及型值，得（21.19）。主子矩阵情形将整个旧正、负定子空间补零嵌入，保所有非零向量的型值及维数，得（21.20）。这是 [Inertia](../../../D5/S3/Weil/ZetaLinear/Inertia.lean) 的 `posIndex_conj_le` 与 [FullRankInertiaPullback](../../../D5/S3/Weil/ZetaLinear/FullRankInertiaPullback.lean) 的 `negIndex_conj_le`、`inertia_conj_eq_of_rightInverse` 的相应应用；后者的矩形保持结论要求显式右逆。
+
+更换冗余生成族但仍生成同一有限测试空间时，合成映射 $S$ 满射并有线性右逆 $J$。任一系数空间中的正定或负定子空间与 $\ker S$ 交为零，所以 $S$ 在该子空间上单射并保型，将其保维映入测试空间。反之，测试空间的任一正定或负定子空间经 $J$ 保维映回系数空间，且 $SJ=I$ 保型。因此两侧的正、负指数分别相等，额外系数冗余只可能改变零度数。一般可逆换基不保持特征值数值、Euclidean 长度或条件数。扩张的零度数也不单调：从 $[0]$ 到 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 时由一降为零，附加零块又可使它增加。
+
+因此对同一实际 $B$ 的可靠负值证书，增加测试不会改变其旧测试值。改变算术对象、归一化或纠正错误求值不属于这个主子矩阵扩张命题。证毕。
+

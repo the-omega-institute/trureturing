@@ -1,0 +1,11 @@
+**命题 16.4（最终发生与平均历时）。** 若 $0<|\omega|\delta<\pi/2$，则最终点击概率为一，且
+
+$$
+\mathbb E\mathsf N=\frac1{\sin^2(\omega\delta)},
+\qquad
+\mathbb E\mathsf T=\frac\delta{\sin^2(\omega\delta)}
+\sim\frac1{\omega^2\delta}\quad(\delta\downarrow0).
+$$
+
+证明。对几何分布求和并用 $\sin u\sim u$。极限描述协议的等待时间，不推出物理钟的单位长度改变。$\square$
+

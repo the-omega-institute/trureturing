@@ -1,0 +1,16 @@
+**引理89.2（边缘支撑与等距像）。** 设 $\omega$ 是 $R\otimes H$ 上的状态，$\rho=\operatorname{Tr}_R\omega$，且 $U=\operatorname{supp}\rho$。则
+
+$$
+\operatorname{supp}\omega\subset R\otimes U.
+\tag{89.3}
+$$
+
+若等距 $T:H\to K\otimes E$ 作用后给环境边缘一个纯态 $|\eta\rangle\langle\eta|$，则
+
+$$
+T(U)\subset K\otimes\mathbb C\eta.
+\tag{89.4}
+$$
+
+这里不要求 $\omega$ 为乘积态或纯态。
+

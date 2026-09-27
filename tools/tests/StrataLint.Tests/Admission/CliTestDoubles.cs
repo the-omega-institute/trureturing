@@ -129,17 +129,3 @@ internal sealed class StubCliEnvironment(
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
 }
-
-internal sealed class BufferedConsole : ICliConsole
-{
-    private readonly StringBuilder output = new();
-    private readonly StringBuilder error = new();
-
-    internal string Output => output.ToString();
-
-    internal string Error => error.ToString();
-
-    public void WriteOutput(string value) => output.Append(value);
-
-    public void WriteError(string value) => error.Append(value);
-}

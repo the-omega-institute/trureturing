@@ -2,6 +2,11 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 cd "$ROOT"
+if [[ "${1:-}" != --ci-output-child ]]; then
+  exec python3 -B tools/scripts/ci_output.py --stage "${1:-}" \
+    --log "build/ci/logs/${1:-input}/console.log" -- /bin/bash "$0" --ci-output-child "$@"
+fi
+shift
 stage="${1:-}"
 PLAN_PATH="${CI_PLAN_PATH:-}"
 CHANGES_PATH="${CI_CHANGES_PATH:-}"

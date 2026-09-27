@@ -1,0 +1,4 @@
+**定义。** 设 $\Omega$ 为任意固定剖分的一组闭长度盒，全部局部长度落在同一个紧集 $\mathcal C\Subset\mathcal L$，并且 $\Omega\subset\mathcal L(\mathcal T)$。记 $R_\sigma:\mathbb R^E\to\mathbb R^6$ 为按出现读取局部长度的线性映射，$D=\operatorname{diag}(d(e))$。令 $G_\sigma=\operatorname{Hess}\operatorname{cov}(R_\sigma l)$。
+
+超理想共体积的 Hessian 在真实几何域中正定是已知输入。由连续性和紧性，存在 $0<\mu\le M<\infty$，使 $\mu I\preceq G_\sigma\preceq MI$ 对全部允许局部长度成立。此处没有通过检查若干数值 Hessian 就宣称得到了可计算的统一常数。
+

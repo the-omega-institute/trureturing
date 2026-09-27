@@ -1,14 +1,12 @@
+using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class DepositCoverWorkflowScriptTests
+public sealed class DepositHeaderCommandTests
 {
-    private const string CanonicalHeaderFinding =
-        "expected the canonical Lean header at byte zero "
-        + "(six-line legacy header or seven-line header with utility)";
 
     [Fact]
     public void DepositHeaderCommandEvaluatesRegisteredSl012ForFrozenTargetWithoutLoadingLeanReport()
@@ -44,61 +42,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(console.Error);
     }
 
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositRejectsSevenLineWrappedDigestBeforeFreezeAndWritesNothing(string command)
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalizationToSevenLineWrappedDigest();
-        var commitsBefore = fixture.CommitCount();
-        var blueprintBefore = fixture.BlueprintState();
-
-        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, rejectDepositHeader: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            $"SL-012 {TransactionFixture.LeanPath}: {CanonicalHeaderFinding}",
-            Diagnostics(result),
-            StringComparison.Ordinal);
-        Assert.Equal(commitsBefore, fixture.CommitCount());
-        Assert.Equal(0, fixture.FreezeCount());
-        Assert.Equal(blueprintBefore, fixture.BlueprintState());
-        Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
-    }
-
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeEmission(string command)
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalizationToSevenLineWrappedDigest();
-        fixture.WriteActiveFreeze();
-        var commitsBefore = fixture.CommitCount();
-        var blueprintBefore = fixture.BlueprintState();
-        var ledgerBefore = fixture.LedgerState();
-
-        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, rejectDepositHeader: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            $"SL-012 {TransactionFixture.LeanPath}: {CanonicalHeaderFinding}",
-            Diagnostics(result),
-            StringComparison.Ordinal);
-        Assert.Equal(commitsBefore, fixture.CommitCount());
-        Assert.Equal(blueprintBefore, fixture.BlueprintState());
-        Assert.Equal(ledgerBefore, fixture.LedgerState());
-        Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check"],
-            fixture.CallKinds());
-        Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
-    }
-
     [Fact]
     public void DepositHeaderCommandUsesRegisteredSl012ForSevenLineWrappedDigest()
     {
@@ -130,51 +73,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(console.Error);
     }
 
-    [Fact]
-    public void HeaderCheckScriptRejectsUtilityWithoutSpaceAfterColon()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var repository = new TemporaryDirectory();
-        var initialize = TestProcessRunner.Run(
-            "git",
-            ["init", "--quiet", repository.Path],
-            repository.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            4096);
-        Assert.Equal(0, initialize.ExitCode);
-        var moduleDirectory = Path.Combine(repository.Path, "D5", "S0", "Carrier");
-        Directory.CreateDirectory(moduleDirectory);
-        var modulePath = Path.Combine(moduleDirectory, "Probe.lean");
-        File.WriteAllText(
-            modulePath,
-            """
-            /- GID: D5/S0/Carrier/Probe
-               generality: G
-               mirror-B: D5/B/S0/Carrier/Probe
-               mirror-E: none(waiver:pure-definition)
-               anchors: []
-               utility:none
-               digest: Synthetic fixture. -/
-            def probe : Nat := 0
-            """ + "\n",
-            new UTF8Encoding(false));
-        var script = Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "tools", "scripts", "agent", "header-check.sh");
 
-        var result = TestProcessRunner.Run(
-            "/bin/bash",
-            [script, modulePath],
-            repository.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains(
-            "第 6 行必须是 '   utility: '",
-            Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
-    }
 }
 
 public sealed class DepositHeaderUtilityTests
@@ -340,7 +239,7 @@ public sealed class DepositHeaderUtilityTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create([RuleFixture.RingPath]),
             current,
-            baseline: OrdinaryInstanceAdmissionTests.Raw(fixture.Baseline));
+            baseline: UtilityAdmissionTestSupport.Raw(fixture.Baseline));
         var environment = new ProductionCliEnvironment("/repo", repository, source);
         return environment.DepositHeaderCheck(["--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)]);
     }

@@ -1,0 +1,43 @@
+**半核心的对数密度导数有更高矩。** 令 $F$ 为任一半核心和，含其确定截距，置
+
+$$
+\begin{aligned}
+D_F&=\|\nabla F\|^2=4\sum_{j\in B}w_j^2(Z_j-c_j)^2,\\
+M_B&=2\sum_{j\in B}w_j(Z_j^2-1-c_jZ_j),\\
+H_B&=\frac{M_B}{D_F}
+ +\frac{16\sum_{j\in B}w_j^3(Z_j-c_j)^2}{D_F^2}.
+\end{aligned}
+\tag{87.17}
+$$
+
+对向量场 $\nabla F/D_F$ 作有限维 Gaussian 分部积分，得到
+$\mathbb E h'(F)=\mathbb E[H_Bh(F)]$。
+除法先以 $D_F+\epsilon$ 正则化。在至少 $n\ge c/\delta$ 个中心坐标上，
+$D_F\ge c\delta\sum_{i=1}^n(Z_i-c_i)^2$；
+非中心卡方的 Laplace 变换不大于中心卡方的变换。
+负矩的 Mellin 积分因此给每个固定 $k$、充分大的 $n$
+
+$$
+\mathbb E D_F^{-k}\le(c\delta)^{-k}2^{-k}
+ \frac{\Gamma(n/2-k)}{\Gamma(n/2)}\le C_k.
+\tag{87.18}
+$$
+
+整数 $k$ 可直接用 Gamma 比值的乘积表示；所需实数阶由更大整数阶控制。
+$M_B$ 是固定次数的中心多项式，固定阶矩有界；
+(87.17) 第二项至多为 $4\max_jw_j/D_F$。
+Hölder 给 $\mathbb E|H_B|^p\le C_p$，也正当化正则化极限。
+于是半核心密度及其正态卷积 $h_{B,\sigma}$ 满足
+
+$$
+\frac{h_B'}{h_B}(y)=-\mathbb E[H_B\mid F=y],
+\qquad
+\int\left|\frac{h_{B,\sigma}'}{h_{B,\sigma}}\right|^p
+               h_{B,\sigma}\le C_p.
+\tag{87.19}
+$$
+
+零密度处任取零值；卷积后的密度处处正。第二式由条件 Jensen 得到，
+不是 $\sigma^{-p}$ 的粗界。负号与对数密度导数的定义一致。
+这里使用的是经典密度分部积分机制，并已核对本移动非中心二次型的统一负矩条件。
+

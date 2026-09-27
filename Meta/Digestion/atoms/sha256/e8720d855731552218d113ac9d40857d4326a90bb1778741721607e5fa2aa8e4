@@ -1,0 +1,16 @@
+### 40.6 局部到全局的最小证明义务
+
+对一个声称由局部关系恢复全局结构的具体模型，应按以下顺序检查：
+
+1. 实际来源是否满射到接口，或断言是否明确限制在实际像；
+2. 局部因子是否在真实交叠上相容；
+3. 若有连续结构，域是否开、是否覆盖、局部因子是否连续；
+4. transition 是否满足方向约定和 cocycle；
+5. 声称全局 frame 时，是否证明 coboundary 或等价的 holonomy 平凡条件；
+6. 历史、合法性、记录、参考和权限是否随 transition 一起运输；
+7. completion 或无穷路径是否另有实际来源存在性，而不是只有每个有限窗口相容。
+
+其中第 1—3 项对应局部 gluing 的直接条件；第 4—5 项是 transition/frame 的额外域与 holonomy 条件，不能由 `global_frame_iff_transition_coboundary` 在任意未声明的 overlap 图上自动补出。仓内 `LocalDescentGlobalCompatibility.local_descent_requires_global_gluing_checks` 是把局部下降接回全局检查的直接形式化支点。第 6—7 项还要把历史和实际来源接回观察者过程与 completion。缺少任何一项时，最多得到局部表示或形式边界响应，不能声称空间、时间、边界和记忆已经互相恢复。
+
+本节是对既有形式化声明的普通数学综合，没有新增 Lean 声明；局部到全局的统一构造仍按上述义务逐模型开放。
+

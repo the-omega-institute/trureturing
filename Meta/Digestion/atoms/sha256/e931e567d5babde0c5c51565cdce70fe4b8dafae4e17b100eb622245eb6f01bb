@@ -1,0 +1,53 @@
+#### 5.1.11 通用 solenoid：相容圆周层、实流与隐藏同余在同一对象中
+
+本项目已有一个成熟的连接例，不必另造容器。按既有 `UniversalSolenoid` 定义，令 $\mathbb T=\mathbb R/\mathbb Z$，
+
+$$
+\Sigma=
+\{(\theta_m)_{m\ge1}\in\mathbb T^{\mathbb N_{>0}}:
+n\theta_{mn}=\theta_m\text{ 对所有 }m,n\ge1\}.
+\tag{TM.347}
+$$
+
+这里每一层本身是连续圆周，不是有限离散名字。相容条件是圆周乘法覆盖的连接关系；它们给乘积中的闭条件，所以 $\Sigma$ 紧致 Hausdorff。可见投影是 $\operatorname{pr}_1(\theta)=\theta_1$。已有实流为
+
+$$
+\iota(t)_m=t/m\pmod1,
+\qquad \operatorname{pr}_1\iota(t)=t\pmod1.
+\tag{TM.348}
+$$
+
+每个坐标连续，所以实流连续。其稠密性还可直接由有限坐标证明：给定 $\theta\in\Sigma$ 和有限指标集，取这些指标的共同倍数 $M$，为 $\theta_M$ 选实代表 $x$，令 $t=Mx$；相容关系使 $\iota(t)$ 在全部这些坐标上与 $\theta$ 完全相等。因此每个基本柱邻域都命中实流。实线连通，连续像连通，连通子集的闭包连通，故 $\Sigma$ 连通。这与既有 `continuous_realFlow`、`denseRange_realFlow` 及连通实例一致。
+
+同一个可见投影的核则由相容同余数据给出。设
+
+$$
+\widehat{\mathbb Z}_{\rm comp}
+=\{(a_m):a_m\in\mathbb Z/m\mathbb Z,
+a_{mn}\bmod m=a_m\}.
+\tag{TM.349}
+$$
+
+映射 $a\mapsto(a_m/m\pmod1)_m$ 单射，像恰为 $\ker\operatorname{pr}_1$：如果 $\theta_1=0$，则 $m\theta_m=0$，每个 $\theta_m$ 是唯一模 $m$ 余数对应的 $m$ 阶扭点；相容性正好成为余数约化关系。投影满射由式（TM.348）给出。因而在这里明确的群层上有
+
+$$
+0\longrightarrow\widehat{\mathbb Z}_{\rm comp}
+\longrightarrow\Sigma\xrightarrow{\operatorname{pr}_1}\mathbb T
+\longrightarrow0.
+\tag{TM.350}
+$$
+
+这正是既有 `CongruenceData` 与 `congruence_solenoid_short_exact` 的元素级短正合接口。本节不把这份声明升级成未经核对的额外拓扑同构，也不从连通性擅自推出道路连通性。
+
+既有 `SolenoidCharacter` 还分类了 $\Sigma$ 到 $\mathbb T$ 的连续加法特征：它们由有理数索引。若 $r=a/b$，则
+
+$$
+\chi_{a/b}(\theta)=a\theta_b,
+\qquad \chi_{a/b}(\iota(t))=(a/b)t\pmod1.
+\tag{TM.351}
+$$
+
+表达不依赖分数表示，因为 $a/b=c/d$ 时 $ad=bc$，在共同坐标 $bd$ 上有 $a\theta_b=ad\theta_{bd}=bc\theta_{bd}=c\theta_d$。每个连续特征都具有且只具有这种形式，是所引既有分类结果，而非本节凭公式声称的新结论。
+
+于是，可见连续相位、隐藏的相容同余、连续实流及有理特征频率确实存在于同一个已声明对象中。有限离散核不能单独承担整个连通空间；圆周层的连接关系与全部相容条件共同组织整体。这里的“频率”是特征沿选定实流的斜率，没有将其认作未经建模的物理波、能量或时钟速率。
+

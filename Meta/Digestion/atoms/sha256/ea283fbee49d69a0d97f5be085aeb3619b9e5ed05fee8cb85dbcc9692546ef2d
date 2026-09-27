@@ -1,0 +1,16 @@
+## 24. 闭合范围、文献归属与实际核验
+
+本文完成的构造链是：给定满足第 21.3 条的非负系数，按双陪集运输构造 P；令 Q=u_K I；实际验证 A=PQ、B=QP；按有限排序构造 psi_A、psi_B；按三半边重组构造 phi_U、phi_V；用共享半边给出原时间 F 及其逆；逐坐标证明拼接、连续、满射、恢复及 H 等变；最后以第 23 节的局部恒等式说明有限表怎样决定全部双边历史。第 18.4 条的 D_8 例子在这条链内，已无另待求解的路径双射、边界余循环或逆编码。
+
+第 20 节的基本二分图编码是 literature-attested 的构件，本文补齐自身数据契约；第 21 节的固定子群因子充要判据、确定整数构造、精确计数及矩阵推广，以及第 22 节对既有 D_8 障碍例的正面完成，按 repo-derived 记录。没有把这些组合陈述声明为全球首创。有限运输所用的贪心分配在正文直接证明，不使用未证明的整性或选择假设。
+
+[^rrosft4-bipartite]: Johan Kopra, *Direct prime subshifts and canonical covers*, online 27 April 2022, Ergodic Theory and Dynamical Systems 43 (2023), 1922–1941, [DOI:10.1017/etds.2022.33](https://doi.org/10.1017/etds.2022.33)，§3 的二分图编码、Theorem 3.2 对 Nasu 分解的引用及 Definition 3.3。该文回溯 Masakazu Nasu, *Topological conjugacy for sofic systems*, ETDS 6 (1986), 265–280, DOI:10.1017/S0143385700003448。本文在自己的类型与群坐标约定下完整重证所需基本编码；没有声称查验了 Nasu 原文的全部证明。
+
+Epperlein, *Eventual conjugacy of free inert G-SFTs*, online 25 May 2026, [DOI:10.1017/etds.2026.10309](https://doi.org/10.1017/etds.2026.10309)，Question 1.3、Theorems 4.5–4.6 和 6.2 区分原时间群共轭与充分高次时间群共轭；本文只对明确子群因子类别完成原时间构造，没有将惰性独自当作这些系数条件。Bilich–Dor-On–Ruiz, *Shift equivalence relations through the lens of C*-correspondences*, published 4 September 2026, [DOI:10.1007/s00208-026-03544-z](https://doi.org/10.1007/s00208-026-03544-z)，Definitions 3.2–3.3、Theorem 3.5、Remark 3.8 是具体路径证书的文献接口；本文的滞后一兼容等式由自身公式直接验证。
+
+文献检索覆盖 subgroup/double-coset/group-ring strong shift equivalence 及 bipartite codes。仅将上述文献作为外部锚；搜索没有定位到同一完整系数分类，不足以推出原创性。
+
+有限核验仅使用整数运算且不使用随机抽样。核验穷尽 C_2、C_3、S_3、D_8、Q_8 的全部子群及 b=0,1,2，共 78 个子群预算案例；从左陪集容量独立枚举 1593 个可能的 p，与定理 21.3 直接生成的 120 个 a 比较，两侧集合与命题 21.5 计数一致，所有生成 a 的平方偏差为零。在 S_3、D_8 上分别核验一个反演元标量例与一个二顶点运输例，共四组编码；穷尽两方向各 334304 个实际扩张三边窗口，检查相邻输出和中心恢复；另核验 16016 个等变两边输入及 1324 个兼容路径输入。
+
+这些有限结果不能替代全称证明。第 22.4 条表明本文的子群类别不含全部惰性呈示；一般 SFT 或自由惰性群作用的未知共轭存在性，没有因这里的正面构造而全部得到判定。这里闭合的是明列输入类别，以及已给出非负因子或有限窗口表后的每一项构造义务。
+

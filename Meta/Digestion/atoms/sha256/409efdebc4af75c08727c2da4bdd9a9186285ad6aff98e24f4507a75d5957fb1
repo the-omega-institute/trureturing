@@ -1,0 +1,36 @@
+**命题 504.2（分数覆盖上界在整个子集族达到）。** 对上述目标族及 $0<r\le\alpha$，
+
+$$
+M=\alpha,\qquad s=\left\lceil\frac nq\right\rceil,
+\qquad\tau=\frac nq,
+\qquad\rho=\frac{q(1-\alpha)}n,
+\qquad\rho_r=1-\alpha.
+$$
+
+因此
+
+$$
+\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+=\frac{2n}{q}=2\tau.
+$$
+
+证明：每个标签在某些状态下为零，而公共符号的共同质量为 $\alpha$，所以 $l=\alpha\delta_\circ$。容量迫使 $R=\delta_\circ$，到每个目标的距离均为 $1-\alpha$。
+
+每个最小值见证集合为 $A_S=S^c\cup\{\circ\}$。其标签部分有 $q$ 个元素，因此整数覆盖至少需要 $\lceil n/q\rceil$ 项。把全部标签分成大小不超过 $q$ 的这么多组，再将不足 $q$ 的组补成一个 $q$ 元子集，便取得合法覆盖；公共符号自动被覆盖。
+
+为求分数覆盖，在每个状态上赋相同权重
+
+$$
+w_S=\binom{n-1}{q-1}^{-1}.
+$$
+
+每个标签恰属于 $\binom{n-1}{q-1}$ 个排除集合，其覆盖权重正好为一；总权重为 $\binom nq/\binom{n-1}{q-1}=n/q>1$，故公共符号也被覆盖。反向，在每个标签上赋 $z_x=1/q$，公共符号赋零；每个 $A_S$ 上的坐标权重和正好为一，第 503.1 项的弱对偶给出下界 $n/q$。于是 $\tau=n/q$。
+
+最后对所有标签置换平均候选中心。TV 凸性使最坏距离不增，因此可设 $R(\circ)=t$、每个标签的质量为 $(1-t)/n$。若 $t\le\alpha$，仅 $q$ 个被排除坐标的正差就有 $q(1-t)/n\ge q(1-\alpha)/n$；若 $t\ge\alpha$，再加公共坐标的正差，得到
+
+$$
+t-\alpha+\frac{q(1-t)}n\ge\frac{q(1-\alpha)}n.
+$$
+
+取 $t=\alpha$ 时，允许标签上的差非正，距离恰为此下界。得到 $\rho$，代入两个联合误差公式即可。证毕。
+

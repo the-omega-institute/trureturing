@@ -1,0 +1,49 @@
+**命题 40.6（基准移位投影与一个正间隔的饱和判据）。** 仍在定义40.1的实际模型中，取任意 $r\ge0$、$E_r\ne0$ 和实际 $a\ge0$，暂不假设饱和。按（40.9）定义 $D,D_a,A_a,F_a$，按（40.10）定义 $W_{r,a}$。此时 $F_a$ 一般只是余等距，且
+$$
+F_aF_a^*=I_{E_r},\qquad
+P_a:=F_a^*F_a=P_{V_r^{(a)}},\qquad
+V_r^{(a)}:=e^{-aC_{\mathcal R}/2}V_r.
+\tag{40.16}
+$$
+对任意一个实际正间隔 $s>0$，置 $S=e^{-sC_{\mathcal R}}$，有
+$$
+\boxed{\Delta_{a,s}:=W_{r,a}(2s)-W_{r,a}(s)^2
+=F_aS(I-P_a)SF_a^*\succeq0,}
+\tag{40.17}
+$$
+并且
+$$
+\boxed{
+\Delta_{a,s}=0\ \Longleftrightarrow\ V_r=\mathcal R
+\ \Longleftrightarrow\
+\operatorname{rank}\mathsf H_{r+1}(a)=\operatorname{rank}\mathsf H_r(a).}
+\tag{40.18}
+$$
+
+证明。$D_a$ 满射到 $E_r$，故 $A_a$ 正定并有 $F_aF_a^*=I$。$F_a^*F_a$ 自伴且幂等，像为 $\operatorname{ran}D_a^*=e^{-aC_{\mathcal R}/2}V_r$，证明（40.16）。尤其投影通常不是到未经移位的 $V_r$。白化因子化仍给 $W_{r,a}(s)=F_aSF_a^*$、$W_{r,a}(2s)=F_aS^2F_a^*$。
+
+式（40.17）直接取自恢复卷定理13.4的式（13.10）及其残差平方证明。精确代入为：该供应的历史阶数取零，与此处 $r$ 无关；隐藏空间取 $\mathcal R$、边界取 $E_r$，$J=V=F_a^*$，Gram 矩阵 $H=J^*J=I_{E_r}$。其 $K'(s)=W_{r,a}(s)$、$B_s=W_{r,a}(s)$、$Q_s=\Delta_{a,s}$，残差平方正是 $F_aS(I-P_a)SF_a^*$。仅使用这条代数恒等式和正性，不移入该供应的初态 minimax 结论或授权新的准备。
+
+为判定等号，将主卷定理137.13的阶数取一，取真实 $S$、输入 $F_a^*$ 的三个矩
+$$
+M_0=I_{E_r},\quad M_1=W_{r,a}(s),\quad M_2=W_{r,a}(2s),\qquad
+\widehat H_1=\begin{pmatrix}I&W_{r,a}(s)\\W_{r,a}(s)&W_{r,a}(2s)\end{pmatrix},
+\quad\widehat H_0=I.
+\tag{40.19}
+$$
+$M_1$ 正定，因为 $S>0$ 且 $F_a^*$ 单射，故该供应的移位块正性成立。以 $W=W_{r,a}(s)$ 作供应证明中的 Schur 合同变换，有
+$$
+\begin{pmatrix}I&0\\-W&I\end{pmatrix}
+\widehat H_1
+\begin{pmatrix}I&-W\\0&I\end{pmatrix}
+=\begin{pmatrix}I&0\\0&\Delta_{a,s}\end{pmatrix}.
+\tag{40.20}
+$$
+因此 $\Delta_{a,s}=0$ 等价于 $\operatorname{rank}\widehat H_1=\operatorname{rank}\widehat H_0$。主卷定理137.13针对任一实际实现的证明于是给 $S$-不变性：$\operatorname{ran}F_a^*=V_r^{(a)}$ 在 $S$ 下不变。自伴性使它约化 $S$；恢复卷命题10.6的唯一正对数 $C_{\mathcal R}=-s^{-1}\log S$ 及有限谱函数演算又使它在 $C_{\mathcal R}$ 下不变。它包含 $e^{-aC_{\mathcal R}/2}B^*U$，而这批移位输入的全部 $C_{\mathcal R}$-生成空间为
+$$
+\operatorname{span}_{j\ge0} C_{\mathcal R}^j e^{-aC_{\mathcal R}/2}B^*U
+=e^{-aC_{\mathcal R}/2}\mathcal R=\mathcal R.
+\tag{40.21}
+$$
+最后一步使用指数在有限有效空间上可逆。故 $V_r^{(a)}=\mathcal R$，也就 $V_r=\mathcal R$。反向饱和给 $P_a=I_{\mathcal R}$，使残差为零；最后一个等价由定理40.3承担。$\square$
+

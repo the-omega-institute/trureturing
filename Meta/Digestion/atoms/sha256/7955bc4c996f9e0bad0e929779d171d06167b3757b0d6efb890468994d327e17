@@ -1,0 +1,7 @@
+**定义 2.32。** Let $A\subseteq\mathbb N$ be co-c.e., and put
+$$
+D_n=[p^n]_{n+1}\qquad(n\ge0).
+\tag{TM.589}
+$$
+Enumerate $D_n$ as forbidden exactly when $n$ enters the c.e. complement of $A$, and let $E_A$ be the remaining closed set. The cylinders $D_n$ are pairwise disjoint and use exactly one possible cylinder at each positive depth.
+

@@ -1,0 +1,1 @@
+- D5/S0/Computability/ClosureUndecidable.lean 的 closure_reading_unreachable：对代码行为外延不变且非平凡的闭合谓词，调用 Mathlib 的 ComputablePred.rice₂ 得不可计算判定；empty_ledger_reading_unreachable 是具体实例。其前件不能从“名字叫闭合”或“分辨率严格增长”取得。

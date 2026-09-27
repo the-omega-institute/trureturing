@@ -1,0 +1,12 @@
+**证明。** 对 $U$ 取商 $\pi:K\to K/U$。由（55.2），
+$$
+Z=(\pi\otimes I_E)V_0K,\qquad\dim Z\le3.
+\tag{55.11}
+$$
+$V_1$ 在 $U,G_3,G_5$ 上分别使用 $A,B,C$，所以 $U\cap G_3=U\cap G_5=0$。因此
+$$
+M=\pi(G_3+G_5),\qquad m=\dim M\in\{2,3\},
+\quad M\otimes A\subset Z.
+\tag{55.12}
+$$
+

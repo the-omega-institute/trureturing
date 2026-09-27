@@ -1,0 +1,15 @@
+**推论164.2（共同约束群中最大者的连续性）。** 若已声明一个固定闭子群 $G_{\mathrm c}\subseteq\mathbb T^s$，满足
+
+$$
+G_t\subseteq G_{\mathrm c}\quad(t\in P),
+\qquad
+G_{t_0}=G_{\mathrm c},
+$$
+
+则任意 $t_k\to t_0$ 都有
+
+$$
+G_{t_k}\xrightarrow{d_H}G_{\mathrm c}.
+\tag{164.9}
+$$
+

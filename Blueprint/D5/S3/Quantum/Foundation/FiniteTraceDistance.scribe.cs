@@ -16,6 +16,8 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula matrix = Call("Matrix", m, n, r), square = Call("Matrix", n, n, r);
         Formula csquare = Call("Matrix", n, n, complex), state = Call("DensityState", n);
+        Formula unitary = Call("unitaryGroup", n, complex);
+        Formula reTraceUA = Call("re", Call("trace", Mul(Call("val", F.Id("U")), a)));
         Formula TN(Formula x) => Call("traceNorm", x);
         Formula D(Formula x, Formula y) => Call("traceDistance", x, y);
         Formula Apply(Formula x) => Call("mapState", c, x);
@@ -43,6 +45,13 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                 Item("traceNorm_neg", "Negation invariance", NormForAll(Eqn(
                     TN(Sub(Num(0), a)), TN(a)))),
                 Item("traceNorm_nonneg", "Nonnegative trace norm", NormForAll(Le(Num(0), TN(a)))),
+                Item("traceNorm_eq_max_re_tr_U", "Unitary maximum formula", All(
+                    [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
+                    new Formula.Logic(
+                        new Formula.BindMany(FormulaQuantifier.Exists, [Bound("U", unitary)],
+                            Eqn(reTraceUA, TN(a))),
+                        FormulaLogicOperator.And,
+                        All([Bound("U", unitary)], Le(reTraceUA, TN(a)))))),
                 Item("traceNorm_add_le", "Trace norm triangle inequality", All(
                     [Bound("n", F.Id("FiniteType")), Bound("A", csquare), Bound("B", csquare)],
                     Le(TN(Add(a, b)), Add(TN(a), TN(b))))),
@@ -85,7 +94,7 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
             definition ? DescribeRole.Definition : DescribeRole.Theorem);
     private static AssessedProvenance Provenance(string name) => name switch
     {
-        "traceNorm" or "traceNorm_neg" or "traceNorm_nonneg" or "traceNorm_add_le"
+        "traceNorm" or "traceNorm_neg" or "traceNorm_nonneg" or "traceNorm_eq_max_re_tr_U" or "traceNorm_add_le"
             or "traceNorm_of_posSemidef" => AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/Quantum/wilde2017quantum")),
         _ => AssessedProvenance.FromRepo()
@@ -95,6 +104,7 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
         "traceNorm" => "This is the real part of the trace of the positive square root of the Gram matrix.",
         "traceNorm_neg" => "Negation leaves the Gram matrix unchanged.",
         "traceNorm_nonneg" => "The positive square root is positive semidefinite and has nonnegative real trace.",
+        "traceNorm_eq_max_re_tr_U" => "A unitary attains the trace norm as the real trace of its product with A, and every unitary gives a value at most the trace norm. Here val denotes the underlying matrix. The formula holds in every finite complex square dimension, including the empty type.",
         "traceNorm_add_le" => "The retained SVD proof identifies the norm as the maximum real trace over unitaries; trace additivity gives the bound.",
         "traceNorm_of_posSemidef" => "For a positive semidefinite matrix, the Gram matrix is its square and its positive square root is the original matrix.",
         "act" => "The matrix coordinate equivalence transports the actual completely positive map.",

@@ -1,0 +1,33 @@
+## 115. 二重纤维的单环境二维乘积剩余空间只能有两条尾射线
+
+沿用第101、103、112节的七维实际六终端合同，固定非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+假设完整零位通常纤维维数为二。记位像为 $R_i=\operatorname{ran}V_i$。已有结果给
+
+$$
+S=\mathbb Cp+G_2+\cdots+G_6
+=\mathbb Cp+G_2+\cdots+G_5,\qquad \dim S=5,
+$$
+
+$$
+Q=S^\perp,\quad\dim Q=2,\qquad
+R_1=(Q\otimes F)\oplus N,\quad
+N\subset S\otimes F,\quad\dim N=3.
+\tag{115.1}
+$$
+
+$N$ 的通常纤维为零。本节只处理剩余乘积向量恰张成同一环境上的二维空间：
+
+$$
+N_{\mathrm{prod}}=D\otimes\zeta,\qquad
+D\subset S,\quad\dim D=2,\quad \|\zeta\|=1.
+\tag{115.2}
+$$
+
+另一种由两个不同环境乘积线组成的二维形态不在本节范围内。
+

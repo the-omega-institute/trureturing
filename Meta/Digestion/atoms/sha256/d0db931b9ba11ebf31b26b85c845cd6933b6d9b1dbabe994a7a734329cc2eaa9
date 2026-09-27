@@ -1,0 +1,12 @@
+**命题 3.5（精确半 diamond 距离）。** 记 $\|\cdot\|_1$ 为迹范数，$\|\cdot\|_2$ 为 Hilbert–Schmidt 范数，$\|\cdot\|_{\rm op}$ 为算子范数，$d_\diamond(\mathcal E,\mathcal F)=\tfrac12\|\mathcal E-\mathcal F\|_\diamond$。该距离对全部联合输入及最终联合效果取最坏值，对应共同实验空间中没有额外对称性限制的测试权限。
+
+定义 $r\times r$ Hermitian 矩阵与权重矩阵
+
+$$
+(C_T)_{aa}=0,\qquad (C_T)_{ab}=k_T(E_a-E_b)\quad(a\ne b),
+\qquad
+\Delta_r=\{p\in\mathbb R_{\ge0}^r:\sum_ap_a=1\},
+\qquad D_p=\operatorname{diag}(\sqrt{p_1},\ldots,\sqrt{p_r}).
+\tag{TM.268}
+$$
+

@@ -1,0 +1,73 @@
+### 206.1 同一个圆盘问题的互补表示
+
+固定
+
+$$
+\beta>0,\qquad\gamma>0,\qquad R>1,\qquad
+I=[a,H],\quad 0<a\le H<\infty.
+\tag{206.1}
+$$
+
+令 $\delta=R-1$、$\Sigma=R+1$。
+所有误差仍采用第188、189节的共同接收端 CPTP 任务与全部外部参考。
+取充分小 $\epsilon>0$，使 $h\epsilon\le1/2$ 对全部 $h\in I$ 成立，
+并满足原来源合法性 $R\epsilon\le\beta/(\beta^2+\gamma^2)$。
+
+若无约束驻点
+
+$$
+m_0(h)=\frac{2h}{h+3\beta R},\qquad n_0=\frac\gamma{2\beta}
+$$
+
+满足 $m_0(h)^2+n_0^2\le1/4$，定义 $\rho(h)=0$。
+否则，令 $\rho(h)>0$ 为唯一解
+
+$$
+\left(\frac{2h}{h+3\beta R+3\rho}\right)^2
++\left(\frac{\gamma\delta}{2(\beta\delta+2\rho)}\right)^2
+=\frac14.
+\tag{206.2}
+$$
+
+置
+
+$$
+\begin{gathered}
+m(h)=\frac{2h}{h+3\beta R+3\rho(h)},\qquad
+n(h)=\frac{\gamma\delta}{2(\beta\delta+2\rho(h))},\\
+B_*(h)=1-4m(h)^2-4n(h)^2.
+\end{gathered}
+\tag{206.3}
+$$
+
+于是整个 $I$ 上有
+
+$$
+\boxed{
+\rho\ge0,\quad B_*\ge0,\quad\rho B_*=0,\quad
+h(2-m)=3(\beta R+\rho)m,\quad
+\gamma\delta=2n(\beta\delta+2\rho).
+}
+\tag{206.4}
+$$
+
+式（206.2）左侧对 $\rho\ge0$ 严格下降并趋零，
+故所需正根存在且唯一。
+这些量由同一个严格凸圆盘极小化问题决定，
+在整个 $I$ 连续，且 $m,n$ 有统一正下界。
+接触处的连续性也可直接由（206.2）严格单调及
+正根趋向零得到；这里不要求 $m,n,\rho$ 在接触处可微。
+
+记同一一阶极小值为
+
+$$
+\Phi_h=\frac{7h}{12}-\frac{\beta\delta}{8}
+-\frac{4h}{3}m+\left(\frac h3+\beta R\right)m^2
++\frac\delta2(\beta n^2-\gamma n).
+\tag{206.5}
+$$
+
+当 $0<\gamma<\beta$ 时，以上统一包含第203节的 $h_b$ 两侧；
+当 $\gamma\ge\beta$ 时，每个正 $h$ 均在活跃区。
+两种情形都在下述同一定理的范围内。
+

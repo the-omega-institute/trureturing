@@ -1,0 +1,2 @@
+**证明。** 对命题 23.1 的系统转置两轴：令 $S'=P$、$P'=S$、$F'=\sigma$、$\sigma'=F$，并定义 $E'(p,s)=E(s,p)$。于是 $E'((F')^{[n]}p,(\sigma')^{[n]}s)=E(F^{[n]}s,\sigma^{[n]}p)$。命题 23.1 中的状态等价恰好变成此系统的协议等价，因此 $a\approx_{P'}b$ 而 $\sigma'(a)\not\approx_{P'}\sigma'(b)$。同样不存在相容的协议商更新。$\square$
+

@@ -1,0 +1,11 @@
+### 48.1 待检验的统一低秩延拓命题
+
+对通道 $\Phi:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^d)$ 和初态 $\sigma_0$，记 $\sigma_t=\Phi^t(\sigma_0)$。所考察的是如下统一命题：存在仅依赖 $d,r$ 的阈值 $L(d,r)$，使
+
+$$
+\operatorname{rank}\sigma_t\le r\quad(0\le t\le L(d,r))
+\quad\Longrightarrow\quad
+\operatorname{rank}\sigma_t\le r\quad(t\ge0).
+\tag{48.1}
+$$
+

@@ -1,0 +1,19 @@
+**定理158.7（钟表时间中的误差占比分布）。** 对任意连续 $\varphi:[0,1]\to\mathbb R$，
+
+$$
+\boxed{
+\lim_{T\to\infty}\frac1T\int_0^T\varphi(\widetilde e(t))\,dt
+=
+\frac{\displaystyle\int_G c(z)\varphi(h(z))\,d\mu_G(z)}
+{\displaystyle\int_G c(z)\,d\mu_G(z)}.
+}
+\tag{158.18}
+$$
+
+因此时间占比分布是
+
+$$
+\nu_c=h_*\left(\frac{c\,\mu_G}{\int_Gc\,d\mu_G}\right).
+\tag{158.19}
+$$
+

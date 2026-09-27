@@ -1,0 +1,104 @@
+**定理 223.4（任意记录秩 $(1,2)$ 通道的精确预算二距离）。** 采用定义 222.1 的实际 CPTP 记录通道
+
+$$
+\mathcal R(X)=P_0^Q\otimes K_0XK_0^\dagger
++P_1^Q\otimes(AXA^\dagger+BXB^\dagger),
+$$
+
+其中 $K_0\ne0$、$A,B$ 线性独立，且
+
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I.
+$$
+
+令 $d_2$ 是到同输入、同量子输出、同两经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失；令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+d_2=\min\!\left(
+\min_{|c_0|^2+|c_1|^2=1}\|c_0A+c_1B\|_\infty^2,
+\ \|K_0^\dagger K_0\|_\infty
+\right)
+=\min(\delta_{\rm rot},q_0).
+}
+$$
+
+若 $\delta_{\rm rot}\le q_0$，取达到最小删除值的两 Kraus 酉混合 $(M,N)$，令
+
+$$
+H=(I-M^\dagger M)^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm rot}(X)
+=P_0^Q\otimes K_0HXHK_0^\dagger
++P_1^Q\otimes NHXHN^\dagger
+$$
+
+是一份最近通道，记录秩为 $(1,1)$。若 $q_0<\delta_{\rm rot}$，令
+
+$$
+G=A^\dagger A+B^\dagger B,
+\qquad H_0=G^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm label}(X)
+=P_1^Q\otimes
+\left(AH_0XH_0A^\dagger+BH_0XH_0B^\dagger\right)
+$$
+
+是一份最近通道，记录秩为 $(0,2)$。这些构造各自的完整半 diamond 误差都可由一个无参考纯输入与一个合法输出事件达到。不要求最近通道唯一。
+
+**证明。** 定理 222.2 已给出全范围上界
+
+$$
+d_2\le\min(\delta_{\rm rot},q_0),
+\qquad 0<\delta_{\rm rot}<1.
+$$
+
+严格小于一来自共同 TP 和结果零非零：若结果一 Choi 的小正根为 $w_-$，则
+
+$$
+\delta_{\rm rot}\le w_-
+\le1-\frac{\|K_0\|_{HS}^2}{2}<1.
+$$
+
+因此旋转删除的 $H$ 存在；当 $q_0<\delta_{\rm rot}$ 时还有 $q_0<1$，故 $G=I-K_0^\dagger K_0>0$，$H_0$ 也存在。第 219 节对全部效应范数小于一的共同右修复结论给出上面两份候选及对应完整 diamond 上界。统一右 Gram 归一化 $K_i\mapsto K_iS^{-1/2}$ 的构造已有成熟先例，可见 C. Lancien 与 A. Winter，*Approximating quantum channels by completely positive maps with small Kraus rank*，[arXiv:1711.00697v3](https://arxiv.org/abs/1711.00697v3)，第 12 页式 (21)–(23)，[Quantum 8, 1320 (2024)](https://doi.org/10.22331/q-2024-04-30-1320)。该处给出无参考迹范数误差控制；这里使用的全效应范围、完整半 diamond 锐上界由第 219 节承担。可逆右乘不改变 Kraus 矩阵族的线性独立性，故其记录秩分别严格为 $(1,1)$、$(0,2)$。若 $q_0=1$，直接使用较小的旋转删除值，不在该端点调用 $G^{-1/2}$。
+
+下面证明每个预算候选均有匹配下界。若候选结果一的 Choi 秩至多一，将其写为 $C(\cdot)C^\dagger$，包括 $C=0$。
+
+首先，取达到 $\gamma_{\rm out}$ 的单位输出 $r$。行 $r^\dagger C$ 有单位核向量 $v$，所以候选在输入 $P_v$ 上对事件“标签一且量子输出为 $r$”给零概率。目标事件概率满足
+
+$$
+\langle v,\Gamma^*(P_r)v\rangle
+\ge\lambda_{\min}(\Gamma^*(P_r))
+=\gamma_{\rm out}.
+$$
+
+其次，取达到 $\gamma_{\rm in}$ 的单位输入 $v$。选择单位 $r$ 垂直于 $Cv$；若该向量为零，任选单位 $r$。候选对同类事件仍给零概率，目标概率满足
+
+$$
+\langle r,\Gamma(P_v)r\rangle
+\ge\lambda_{\min}(\Gamma(P_v))
+=\gamma_{\rm in}.
+$$
+
+这两种合法检验分别给同一候选的完整半 diamond 距离下界；无需在同一个实验中同时达到它们。由定理 223.3，该候选的距离至少为
+
+$$
+\max(\gamma_{\rm out},\gamma_{\rm in})=\delta_{\rm rot}.
+$$
+
+若候选结果一 Choi 秩为二，总秩预算迫使其结果零块缺失。取 $K_0^\dagger K_0$ 的最大本征向量为输入，只检验标签零，得到下界 $q_0$。两类穷尽全部预算内候选，故
+
+$$
+d_2\ge\min(\delta_{\rm rot},q_0).
+$$
+
+结合上界得到精确距离。对旋转候选，选择达到 $\max(\gamma_{\rm out},\gamma_{\rm in})$ 的一个端口检验，并将候选自身的结果一 Kraus 取为 $C=NH$。上述构造给一份无参考纯输入和一个事件，概率差至少为 $\delta_{\rm rot}$；同一候选的完整半 diamond 上界又不超过它，因此该事件恰好达到完整误差。对整标签候选，最大标签零概率的输入直接给差值 $q_0$，同理达到完整误差。整个推导先给任意参考都适用的上界，再以无参考下界匹配，不预设辅助参考无用。证毕。
+

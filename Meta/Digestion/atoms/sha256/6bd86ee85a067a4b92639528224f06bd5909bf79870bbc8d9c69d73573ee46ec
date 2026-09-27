@@ -1,0 +1,61 @@
+**定理 44.6（全时间响应）。** 令 $L=\|QCP\|$。有限维乘积法则给
+$$[P,e^{-sC}]=-\int_0^s e^{-(s-v)C}[P,C]e^{-vC}\,dv.$$
+左右接 $Q,F^*$，用 $Q[P,e^{-sC}]F^*=-Qe^{-sC}F^*$，得到
+$$
+\|Qe^{-sC}F^*\|\le s e^{-c_0s}L.
+$$
+对 $e^{-(t-s)C_c}Fe^{-sC}F^*$ 求导，使用 $C_cF=FCP$，导数恰为 $-e^{-(t-s)C_c}FCQe^{-sC}F^*$。积分得
+$$
+Fe^{-tC}F^*-e^{-tC_c}
+=-\int_0^t e^{-(t-s)C_c}FCQe^{-sC}F^*\,ds,
+$$
+故
+$$
+\|Fe^{-tC}F^*-e^{-tC_c}\|
+\le \tfrac12t^2e^{-c_0t}L^2.
+$$
+同时，对 $e^{-(t-s)C_c}e^{-sG}$ 求导，导数为 $e^{-(t-s)C_c}(C_c-G)e^{-sG}$，积分和两边的 $c_0$ 衰减给
+$$
+\|e^{-tC_c}-e^{-tG}\|
+\le te^{-c_0t}\|C_c-G\|.
+$$
+合并得到
+$$
+\boxed{
+\|Fe^{-tC}F^*-e^{-tG}\|
+\le
+\frac{\delta\,b^{t/h}}{2a^2}
+\left(\frac{t^2}{h^2}+\frac th\right),\qquad t\ge0.
+}
+$$
+这是连续时间可用界，不宣称其常数最优；整数时刻应使用上面的更锐离散界。特别地，$t=0$ 时两响应均为 $I_E$，而 $t=h$ 时
+$$
+Fe^{-hC}F^*=A=e^{-hG},
+$$
+故误差精确为零。上面的三角估计没有保留 $t=h$ 处的抵消。另一方面，
+$$
+\left.\frac{d}{dt}\left(Fe^{-tC}F^*-e^{-tG}\right)\right|_{t=0}
+=G-C_c
+$$
+一般非零，所以不能把该连续响应误差普遍替换成固定模型下的 $O(t^2\delta)$ 小时间界。
+
+若模型族共用 $a>0$ 和 $b<1$，置 $\beta=-\log b>0$，则还有统一全时间界
+$$
+\boxed{
+\sup_{t\ge0}\|Fe^{-tC}F^*-e^{-tG}\|
+\le\frac{\delta}{2a^2}
+\left(\frac{4}{e^2\beta^2}+\frac{1}{e\beta}\right).
+}
+$$
+证明。令 $x=t/h\ge0$，则 $b^{t/h}=e^{-\beta x}$。分别使用
+$$
+\sup_{x\ge0}x^2e^{-\beta x}=\frac4{e^2\beta^2},
+\qquad
+\sup_{x\ge0}xe^{-\beta x}=\frac1{e\beta},
+$$
+再以上确界的次可加性应用于前式即可。这个常数不宣称最优；共同谱界固定时，它给出随 $\delta\to0$ 的全时间一致压缩响应收敛，不提供隐藏态或物理时钟恢复。
+例如 $F=(1,0)$、$S=\begin{pmatrix}s&\varepsilon\\\varepsilon&s\end{pmatrix}$，$0<\varepsilon<\min(s,1-s)$，有
+$$C_c-G=-\frac1{2h}\log(1-\varepsilon^2/s^2)>0.$$
+因此固定此模型、$t\downarrow0$ 时误差含非零线性项，明确排除 $O(t^2\delta)$。对每个整数时刻，定理44.3的界仍可更精细。
+
+

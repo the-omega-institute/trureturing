@@ -1,0 +1,1 @@
+| `D5/S3/Observer/Approximation/IntertwiningDefectPropagation.lean` 中 `intertwining_defect_telescope`、`norm_intertwining_defect_le` | 连续线性映射的交换缺陷展开及带算子范数的传播界 | 非线性 Bellman 最大值算子的直接定理；式（TM.460）另外用不扩张性证明 

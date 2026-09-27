@@ -1,0 +1,12 @@
+#### 3.1.1 Pudlák 的有限一致性定理确实包含可有效构造的多项式证明序列
+
+主要依据为 Pavel Pudlák, *Reflection principles, propositional proof systems, and theories*, arXiv:2007.14835v1，2020 年 7 月 29 日；使用 PDF 自身页码。[EPAC PDF](https://iuuk.mff.cuni.cz/~koucky/EPAC/papers/TechRep-Pudlak-ArXiv-2007.14835.pdf) 与 [arXiv PDF](https://arxiv.org/pdf/2007.14835v1) 均提供这一固定版本。
+
+第 23 页 §4.3 先定义 $\operatorname{Con}_T(x)$：不存在长度小于等于 $x$ 的 $T$ 中矛盾证明；$\bar n$ 为值等于 $n$、长度为 $O(\log n)$ 的闭算术项。因此 $\operatorname{Con}_T(\bar n)$ 的公式长度也是 $O(\log n)$。
+
+同页 Theorem 4.8 的明确条件及结论是：若 $T$ 是有限公理化的 sequential theory，则存在多项式时间可计算的 $T$ 证明序列 $\{D_n\}$，其中 $D_n$ 证明 $\operatorname{Con}_T(\bar n)$，$n=1,2,\ldots$；并且在 $S^1_2$ 中可证明这些 $D_n$ 均为相应句子的 $T$ 证明。原文还紧接说明，1986、1987 年的构造给出相对于 $n$ 的多项式证明长度，其构造可在多项式时间内完成。第 24 页使用定理时再次明确写作 “in time polynomial in $n$”。
+
+这里 sequential 是关于理论能够编码有限序列的专门性质，不是泛指“推理按步骤执行”。论文第 6 页 §2.3 的通篇工作背景是 $S^1_2$ 的有限扩张，采用标准 Hilbert 式一阶证明演算；使用其结果时，以满足此背景的有限公理化 sequential 理论为明确充分范围。不能从“有递归”或“可写程序”推出任意关系系统满足定理条件。
+
+Theorem 4.8 的证明存在结论本身没有显式要求一致性；若还要声称这些有限一致性句子在标准自然数中为真，则须另外假定 $T$ 一致。不一致理论也可证明这些句子，这当然不使句子变真。
+

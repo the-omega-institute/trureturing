@@ -1,0 +1,20 @@
+**定义 1.1（带接口的关系过程）。** 一个关系过程载体由
+\[
+\mathfrak R=(S,\mathsf A,\mathsf D,\mathsf T,\mathsf O,\mathsf C,\mathsf P)
+\]
+组成。
+
+这里 \(S\) 是实际配置的集合；\(\mathsf A\) 是带类型的操作接口；\(\mathsf D(a)\subseteq S\) 是操作 \(a\) 的合法域；\(\mathsf T_a:\mathsf D(a)\to S\) 是后继；\(\mathsf O_a:\mathsf D(a)\to Y_a\) 是输出；\(\mathsf C\) 是已经取得且仍可访问的记录；\(\mathsf P\) 是权限、参考和校准等会影响合法接续的配置。随机过程把 \(\mathsf T_a,\mathsf O_a\) 换成同一来源上的联合核，量子过程把它们换成声明过的仪器或通道。
+
+配置必须来自共同来源的实际像。例如
+\[
+S\subseteq
+C^{\rm archive}\times M^{\rm work}\times R^{\rm ref}\times P^{\rm access}
+\]
+只是值域记号；真正允许的配置是某个
+\[
+\Omega\longrightarrow
+C^{\rm archive}\times M^{\rm work}\times R^{\rm ref}\times P^{\rm access}
+\]
+的像。把各部分分别可实现的值拼成一个元组，需要另证联合来源与合法性。
+

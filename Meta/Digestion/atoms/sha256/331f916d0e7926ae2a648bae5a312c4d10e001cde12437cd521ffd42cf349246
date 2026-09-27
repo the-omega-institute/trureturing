@@ -1,0 +1,36 @@
+**定义 42.1（被动接收的准备与访问合同）。** 固定
+$$
+\begin{gathered}
+\alpha=(\sqrt5-1)/2,\qquad \phi=\alpha^{-1},\qquad
+0<\alpha<1,\qquad \alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,\\
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,
+\qquad P_j^{\rm mem}=|m_j\rangle\langle m_j|\in\mathcal L(M),\\
+T:M\to B\otimes M,\qquad T|j\rangle=|j\rangle\otimes m_j,\\
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\quad T_0=I_M,\quad
+T_{n+1}=(I_{H_n}\otimes T)T_n,\\
+E(X)=\operatorname{Tr}_B(TXT^*)=X_{00}P_0^{\rm mem}+X_{11}P_1^{\rm mem},\qquad
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*).
+\end{gathered}
+\tag{42.1}
+$$
+输出在前、活动记忆在后。上标 $\mathrm{mem}$ 明确区分记忆准备投影与后文 $H_n$ 上的支撑投影 $P_n$；它们不能互换。Q命题130.1和本卷（41.2）给固定空白酉
+$$
+R_{\rm rot}=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+W=(|0\rangle\langle0|\otimes R_{\rm rot}+|1\rangle\langle1|\otimes I_M)
+\operatorname{SWAP},\qquad W(|0\rangle\otimes\psi)=T\psi.
+\tag{42.2}
+$$
+每个新空白均是与当时整个联合系统独立的纯态 $|0\rangle$。整个运行使用同一个 $W$，保留同一个活动 $M$，不插入重选来源、复位或生成器反馈。
+
+联合任务以任意固定有限维参考 $J$ 及一次合法准备 $\theta\in\mathcal D(J\otimes M)$ 开始，保存
+$$
+\Omega_n(\theta)=(I_J\otimes T_n)\theta(I_J\otimes T_n^*)
+\in\mathcal D(J\otimes H_n\otimes M).
+\tag{42.3}
+$$
+这里声明的全输入类包含所有这样的密度，并允许实际准备一个 $JM$ Bell 对。接收器只访问已发出系统和它自己的、起初独立的寄存器 $K$，不访问 $J$ 或活动 $M$。若改用受限物理来源类，存在性可限制到该类；四维必要性则须先核对该类是否实际允许下文的 Bell 见证，不能从抽象全输入类移入一项非法准备。
+
+接收酉序列只依赖已知装置、基、相位及发射计数 $n$，不依赖未知输入或接收测量结果。同一序列适用于每个事先指定的有限终端时域。由旧档案外生选定有限时域时，保留选择标签，逐实际条件来源核对相同的空白独立性和生成合同；无界经典标签另需正则条件 cq 表示。接收测量决定的任意在线停止、向 $M$ 反馈以及无限终端解码不在此合同内。
+
+熵应用另固定初态为 $P_0^{\rm mem}$，不是 $|0\rangle\langle0|$，也不是平稳混合态。若有限联合态的 $M$ 边缘纯且等于 $P_0^{\rm mem}$，则它必为 $\theta_J\otimes P_0^{\rm mem}$：令 $P=I_J\otimes P_0^{\rm mem}$，由正性和 $\operatorname{Tr}((I-P)\theta)=0$ 得 $(I-P)\theta^{1/2}=0$，故 $\theta=P\theta P$；记忆支撑一维给出分解。这是第41.5节的同一准备事实。保留更大的旧经典档案时使用定义36.4的实际条件纯根准备，而非只凭边缘相同替换来源。全文使用自然对数；$n$ 只计发射，不是物理持续时间。
+

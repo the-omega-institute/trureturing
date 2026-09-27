@@ -1,0 +1,29 @@
+**定理 73.2（空间分离与典型输出定理）。** 对每个固定合法原幅度与
+$\beta\in(1/2,1)$，两种实际实验分别满足：
+
+```math
+\log^+(1/\sigma_M)=o(Q^3)
+\quad\Longrightarrow\quad
+\overline D_M^A(\mathscr X)\longrightarrow0,
+```
+
+```math
+\log^+(1/\sigma_M)=o(Q)
+\quad\Longrightarrow\quad
+\overline D_M^B(\mathscr X)\longrightarrow0.
+```
+
+式 (73.3)。
+
+两条收敛均为原始数据概率收敛，既在先验数据律下成立，也一致于所有大小 $q$ 的确定支持，
+后者仍评价同一先验定义的数据函数。
+对每个固定 $t>0$，相应的条件输出坏集概率满足
+
+```math
+P_{Y\mid x}\{D_M^a(x,Y)>t\}\le\overline D_M^a(x)/t.
+```
+
+式 (73.4)。
+
+故这是典型输出的条件 CDF 结论。第二条未扩展到第一条的全部噪声范围。
+

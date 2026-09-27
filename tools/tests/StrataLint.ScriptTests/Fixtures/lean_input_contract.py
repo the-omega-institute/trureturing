@@ -35,7 +35,7 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
             self.assertEqual(2, result.returncode, result.stdout + result.stderr)
             self.assertEqual("", result.stdout)
 
-    def test_actions_snapshots_share_partition_and_pr_cannot_save(self):
+    def test_actions_snapshots_share_partition_and_pr_writes_stay_isolated(self):
         def keys(run, attempt, event, ref, success="true"):
             environment = {"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
                            "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref,
@@ -63,8 +63,11 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
         write(self.root / "D5/A.lean", "def a := 2\n")
         second = keys("13", "2", "pull_request", "refs/pull/42/merge")
         self.assertTrue(first["save_allowed"])
-        self.assertFalse(second["save_allowed"])
+        self.assertTrue(second["save_allowed"])
         self.assertFalse(keys("14", "1", "push", "refs/heads/dev", "false")["save_allowed"])
+        self.assertFalse(keys("16", "1", "pull_request", "refs/pull/42/head")["save_allowed"])
+        self.assertFalse(keys("17", "1", "pull_request", "refs/pull/0/merge")["save_allowed"])
+        self.assertFalse(keys("18", "1", "pull_request", "refs/heads/dev")["save_allowed"])
         self.manifest["packages"][0]["rev"] = OTHER
         self.save_manifest()
         upgraded = keys("15", "1", "push", "refs/heads/dev")

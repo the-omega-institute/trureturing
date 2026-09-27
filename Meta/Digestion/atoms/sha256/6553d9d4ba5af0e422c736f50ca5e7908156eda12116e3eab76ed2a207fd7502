@@ -1,0 +1,27 @@
+**引理 40.2（实际 Gram 因子化、共同支撑与采样可达空间）。** 在定义40.1下，对每个有限 $s\ge0$，
+$$
+\boxed{\mathsf H_r(s)=B_r e^{-sC}B_r^*.}
+\tag{40.4}
+$$
+因此
+$$
+\begin{aligned}
+\ker\mathsf H_r(s)&=\ker B_r^*,\\
+\operatorname{ran}\mathsf H_r(s)&=\operatorname{ran}B_r=:E_r,\\
+\operatorname{rank}\mathsf H_r(s)&=\operatorname{rank}B_r=\dim V_r.
+\end{aligned}
+\tag{40.5}
+$$
+同时有
+$$
+\operatorname{span}_{j\ge0}T^jB^*U
+=\operatorname{span}_{j\ge0}C^jB^*U=\mathcal R.
+\tag{40.6}
+$$
+
+证明。$B_r^*(u_0,\ldots,u_r)=\sum_{j=0}^rT^jB^*u_j$，故（40.4）的 $(i,j)$ 块为 $BT^ie^{-sC}T^jB^*=K(s+(i+j)h)$；这里使用自伴性及同一 $C$ 的函数相互交换。对任意系数向量 $v$，其二次型为 $\|e^{-sC/2}B_r^*v\|^2$。有限 $s$ 时指数可逆，因而核正是 $\ker B_r^*$；自伴算子的像等于核的正交补，得共同支撑与秩，且 $\operatorname{ran}B_r^*=V_r$。
+
+在 $C$ 的有限实谱上，$c\mapsto e^{-hc}$ 单射。有限谱插值给多项式 $p,q$，使 $T=p(C)$、$C=q(T)$。两方向逐次代入生成跨度，得到（40.6）。这也是恢复卷第10.1—10.2节采样正算子的使用域；谱插值只识别数学子空间，不授权免费实施任意多项式实验动作。$\square$
+
+共同支撑在未饱和时也自动成立；它本身不使压缩与指数或对数交换。
+

@@ -1,0 +1,20 @@
+**命题 2.3（相容效果的执行合同）。** 仅有 $[F,H]=0$ 是代数相容性。下面给出足以把任意这样的二元效果变成实际测量的额外工具：一个二维指针 $P$，其 $H_P=0$；可制备纯空白 $|0\rangle_P$；可实现所需的保持系统与指针总能量的联合酉；可读指针的 $|0\rangle,|1\rangle$ 基。设 $0\le F\le I$ 且 $[F,H]=0$，定义
+$$
+A=\sqrt{I-F},\qquad B=\sqrt F,\qquad
+U_F=A\otimes|0\rangle\langle0|-B\otimes|0\rangle\langle1|
++B\otimes|1\rangle\langle0|+A\otimes|1\rangle\langle1|.
+\tag{TM.120}
+$$
+
+按指针分块，$U_F=\left(\begin{smallmatrix}A&-B\\B&A\end{smallmatrix}\right)$。因为 $A,B$ 都是 $F$ 的函数，二者交换，并满足 $A^2+B^2=I$；故相乘给 $U_F^\dagger U_F=U_FU_F^\dagger=I$。又因 $F$ 在能量块内，其平方根也逐块作用，所以 $[A,H]=[B,H]=0$，从而 $[U_F,H\otimes I_P]=0$。零 Hamiltonian 指针的任意状态都对能量相位不变，但纯空白的制备仍是一项独立资源。
+
+对纯输入，$U_F(|\psi\rangle\otimes|0\rangle)=A|\psi\rangle\otimes|0\rangle+B|\psi\rangle\otimes|1\rangle$；由线性性，对全部密度态测量指针后得到未归一化分支
+$$
+\mathcal M_0(\rho)=A\rho A,\qquad
+\mathcal M_1(\rho)=B\rho B,\qquad
+\Pr(1\mid\rho)=\operatorname{Tr}(B\rho B)=\operatorname{Tr}(F\rho).
+\tag{TM.121}
+$$
+
+两分支之和保迹，因此确是一份量子仪器。该构造给的是已有测量扩张思想的一份显式二元实现；它不证明任意仅具有某个有限控制菜单的装置都能执行 $U_F$，也不把制备、联合控制、指针读出和重复使用所需的复位视作免费。全效果族合同必须由这些资源或另一份实际实施证明承担，不能由效果矩阵的存在代替。
+

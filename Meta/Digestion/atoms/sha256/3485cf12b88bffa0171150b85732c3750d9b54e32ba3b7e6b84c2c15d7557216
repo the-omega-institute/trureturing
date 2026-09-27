@@ -1,0 +1,63 @@
+### 250.5　固定七维参考中的罕见扇区交换
+
+谱隙条件不能仅凭固定 $\theta$ 或固定非平行轴而省去。固定任意 $0<\theta<1$ 与当前 $A,B,b_0$，参考空间分为
+$$
+E=E_0\oplus L\oplus E_p\oplus L',
+\qquad
+\dim E_0=2,\quad\dim L=2,\quad\dim E_p=1,\quad\dim L'=2.
+\tag{250.33}
+$$
+总维数为七。在每个二维平面 $T=E_0,L,L'$ 上，按同一输入基选择标准 Bell 向量 $\Phi_T$；令 $e_p$ 为 $E_p$ 中的单位向量，并记 $P_+=|u,+\rangle\langle u,+|$。
+
+对
+$$
+0<h<\min\{\theta,1-\theta\},
+\tag{250.34}
+$$
+定义两份实际源态
+$$
+\begin{aligned}
+\Omega_h={}&(\theta-h)P_{\Phi_{E_0}}+hP_{\Phi_L}
+ +(1-\theta-h)P_+\otimes P_{e_p}
+ +hP_+\otimes\frac{I_{L'}}2,\\
+\Omega'_h={}&(\theta-h)P_{\Phi_{E_0}}+hP_{\Phi_{L'}}
+ +(1-\theta-h)P_+\otimes P_{e_p}
+ +hP_+\otimes\frac{I_L}2.
+\end{aligned}
+\tag{250.35}
+$$
+各项嵌入其标明的正交参考扇区，权重非负且总和为一。这两态都符合§248正常形，故都有
+$$
+E_F=\theta,\qquad g=U+\delta\theta.
+\tag{250.36}
+$$
+它们的参考边缘完全相同：在 $E_0$ 上为 $(\theta-h)I_{E_0}/2$，在 $E_p$ 上为 $(1-\theta-h)P_{e_p}$，在 $L,L'$ 上各为 $hI_2/2$。因此实际参考支撑始终是同一个七维空间。
+
+两份量子旗标却分别为
+$$
+Q_h=P_{E_0}+P_L,
+\qquad Q'_h=P_{E_0}+P_{L'},
+\qquad
+\boxed{\|Q_h-Q'_h\|=1.}
+\tag{250.37}
+$$
+对每个 $w=a,b$，两份响应之差只出现在 $L,L'$ 上，其矩阵分别为
+$$
+\frac h2(A_w^{\mathsf T}-\sqrt A I_2),
+\qquad
+-\frac h2(A_w^{\mathsf T}-\sqrt A I_2).
+\tag{250.38}
+$$
+由于 $A_w$ 的本征值是 $\pm\ell$，有精确读数差
+$$
+\boxed{
+\|R_w(\Omega_h)-R_w(\Omega'_h)\|
+=\frac h2(\ell+\sqrt A)\longrightarrow0,
+\qquad w=a,b.
+}
+\tag{250.39}
+$$
+罕见产品平面上的响应最小奇异值为 $h\sqrt A/2$，所以两态的共同最小响应谱隙至多为该值，随 $h$ 趋于零。
+
+因此，在固定维数七、固定 $\theta$ 和固定轴参数的饱和态类上，即使每对比较还具有完全相同的参考边缘，也不存在不包含谱隙等条件、仅随两份响应算子范数误差趋零而趋零的统一旗标算子范数误差界。这里定位的是罕见方向上的子空间恢复：两份联合态本身满足 $\|\Omega_h-\Omega'_h\|_1\le4h\to0$，并没有保持有限迹距离分离；两份量子旗标的权重也同为 $\theta$。
+

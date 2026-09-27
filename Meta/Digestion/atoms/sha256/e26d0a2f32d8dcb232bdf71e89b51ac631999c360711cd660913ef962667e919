@@ -1,0 +1,17 @@
+**定义 31.1（截止前点击效果）。** 固定第 18 节的同一重复仪器，沿用 $\mathcal N,\mathcal C_x,\mathcal A,F,R$，假设 $R\ne0$。令
+
+$$
+B=\sum_x\mathcal C_x^*(I),\qquad
+H_m=I-\mathcal A^m(I),\qquad H_0=0,
+\qquad h_m(\rho)=\operatorname{Tr}(\rho H_m).
+$$
+
+$H_m$ 表示前 $m$ 轮之内已经首次点击，$R$ 表示最终点击；两者不是第 19 节的剩余尾项 $R_m=\mathcal A^m(R)$。记 $P_m$ 为 $H_m$ 的支撑投影，$G_m=H_m^{1/2}$；逆算子只在支撑上取逆，其余方向补零。$P_0=G_0=0$。条件来源要求 $h_m(\rho)>0$，并定义
+
+$$
+\tau_m(\rho)=\frac{G_m\rho G_m}{h_m(\rho)},
+\qquad \mathcal S_m(X)=G_mXG_m.
+$$
+
+截止轮数在本协议开始前给定。若在读到中途结果后改变截止规则，必须按新规则重新计算其成功效果；本节不把两套条件事件自动等同。
+

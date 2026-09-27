@@ -1,0 +1,62 @@
+### 289.2 规范矩阵第二副对角线的统一正余量
+
+暂把 $t$ 作为参数，定义矩阵空间上的线性算子
+$$
+\mathcal A(Y)=\frac{J^\dagger Y+YJ}{2},\qquad
+\mathcal B(Y)=\frac{J^\dagger YJ}{2}.
+$$
+规范方程等价于
+$$
+(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q=I/2.
+\tag{289.2}
+$$
+在矩阵算子范数所诱导的映射范数下，$\|\mathcal A\|\le1$、$\|\mathcal B\|\le1/2$。取实际 $t=1/4$ 后，
+$$
+\|t\mathcal A+t^2\mathcal B\|\le9/32<1,
+\qquad
+\|(\operatorname{Id}+t\mathcal A+t^2\mathcal B)^{-1}\|\le32/23.
+\tag{289.3}
+$$
+这是标准Neumann逆估计，下面只把它用来控制明确的有限截断误差。
+
+设
+$$
+Q^{[2]}=I/2-\frac t4(J+J^\dagger)
++\frac{t^2}{8}(J^2+(J^\dagger)^2).
+\tag{289.4}
+$$
+将它代入（289.2），零、一、二次项准确相消，残差为
+$$
+\begin{aligned}
+\mathcal E
+&:=(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q^{[2]}-I/2\\
+&=\frac{t^3}{16}
+\left[J^3+(J^\dagger)^3-J^\dagger J^2-(J^\dagger)^2J\right]\\
+&\quad+\frac{t^4}{16}J^\dagger\left[J^2+(J^\dagger)^2\right]J.
+\end{aligned}
+\tag{289.5}
+$$
+因 $\|J\|\le1$，
+$$
+\|\mathcal E\|\le t^3/4+t^4/8,
+\qquad
+\|Q-Q^{[2]}\|\le\frac{32}{23}\left(\frac1{256}+\frac1{2048}\right)
+=\frac9{1472}.
+\tag{289.6}
+$$
+该残差包含全部高阶贡献，不要求矩阵阶数固定。实矩阵数据和（289.3）的逆表示也说明 $Q$ 为实对称矩阵。
+
+对 $0\le i\le n-3$，$Q^{[2]}_{i,i+2}=t^2/8=1/128$。每个矩阵元的误差不超过算子范数误差，所以
+$$
+\boxed{
+\frac5{2944}\le Q_{i,i+2}\le\frac{41}{2944}.
+}
+\tag{289.7}
+$$
+特别地，对 $n\ge3$，
+$$
+\sum_{i=0}^{n-3}Q_{i,i+2}\ge\frac{5(n-2)}{2944}.
+\tag{289.8}
+$$
+正余量来自实际规范方程的受控误差，而不是对若干数值矩阵的外推。
+

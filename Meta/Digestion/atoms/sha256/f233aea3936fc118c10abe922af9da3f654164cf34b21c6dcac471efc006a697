@@ -1,0 +1,54 @@
+### 141.1 实际档案支撑与来源嵌入
+
+固定非退化已知来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\qquad |a|^2+|b|^2=1,
+$$
+
+以及发射等距 $T|i\rangle=|i\rangle_B\otimes m_i$，其中 $B=\mathbb C^2$。令 $H_n=B^{\otimes n}$，$H_0=\mathbb C$，$T^{(n)}:M\to H_n\otimes M$ 为实际累计发射。
+
+取初始活动记忆与二维参考 $R$ 的 Bell 态。经固定因子重排，把第 $n$ 轮的未接收联合纯态记为
+
+$$
+|\Omega_n\rangle\in(R\otimes M)\otimes H_n.
+$$
+
+定义实际档案支撑
+
+$$
+S_n=\operatorname{supp}
+\left(\operatorname{Tr}_{RM}|\Omega_n\rangle\langle\Omega_n|\right)
+\subseteq H_n,\qquad s_n=\dim S_n.
+\tag{141.1}
+$$
+
+这一定义同时保留实际来源、完整参考与活动记忆。来源的档案列满足
+
+$$
+T^{(n)}|i\rangle=\sum_{j=0}^1\chi_{ij}^{n}\otimes m_j,\qquad
+\chi_{ij}^{n+1}
+=\sum_{k=0}^1(m_k)_j\,\chi_{ik}^{n}\otimes|j\rangle.
+\tag{141.2}
+$$
+
+对于 $n\ge1$，$S_n$ 是这些实际列的张成。原因是 $|i\rangle_R\otimes m_j$ 线性独立，故它们在 Bell 输出中的档案系数张成恰为 Schmidt 支撑。第一轮有两个非零首末扇区，第二轮有三个，第三轮起有四个；不同扇区的词支撑不交。非退化条件保证这些扇区此后均非零，因而
+
+$$
+s_0=1,\qquad s_1=2,\qquad s_2=3,\qquad s_n=4\quad(n\ge3).
+\tag{141.3}
+$$
+
+递推（141.2）给出实际包含 $S_{n+1}\subseteq S_n\otimes B$。令
+
+$$
+F_n:S_{n+1}\longrightarrow S_n\otimes B
+\tag{141.4}
+$$
+
+为这一包含的等距映射。若 $\iota_n:S_n\hookrightarrow H_n$ 是自然嵌入，则它由
+$(\iota_n\otimes I_B)F_n=\iota_{n+1}$ 唯一确定，右侧使用 $H_{n+1}=H_n\otimes B$。尤其 $F_0:S_1\to\mathbb C\otimes B$ 就是第一位档案的自然识别。
+
+$F_n$ 固定于实际来源，不是另外自由选择的输入子空间。任何允许初始态及参考所产生的第 $n$ 轮档案，也都支撑于同一个 $S_n$。
+

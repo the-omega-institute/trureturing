@@ -1,0 +1,44 @@
+## ST12．由不变图子空间构造真正的有效量子理论
+
+### 假设 ST12.1
+
+给定 $X:V\to W$，满足矩阵 Riccati 方程
+
+$$
+B^\dagger+CX=X(A+BX).
+\tag{ST12.1}
+$$
+
+定义
+
+$$
+L=\begin{pmatrix}I\\X\end{pmatrix},\quad
+G=I+X^\dagger X,\quad K=A+BX,\quad
+U=LG^{-1/2},\quad\Pi=UU^\dagger.
+$$
+
+这等价于 $\operatorname{Ran}L$ 为 $H$ 的不变图子空间。一个预选谱子空间能用这样的 $X$ 表示，当且仅当其到 $V$ 的投影为同构；这是一项横截性条件。本文不假设任意截断都满足它，也不把任意不变子空间自动称为低能子空间。其与严格 Schrieffer–Wolff/子空间旋转构造的关系见[ST10-SW]。
+
+### 定理 ST12.2：等距重建与自伴有效 Hamiltonian
+
+有
+
+$$
+HL=LK,\quad GK=K^\dagger G,\quad U^\dagger U=I,
+$$
+
+$$
+\boxed{
+h:=U^\dagger HU=G^{1/2}KG^{-1/2}=h^\dagger,
+\qquad HU=Uh.
+}
+\tag{ST12.2}
+$$
+
+从而对全部实数 $t$，
+
+$$
+\boxed{e^{-itH/\hbar}U=Ue^{-ith/\hbar}.}
+\tag{ST12.3}
+$$
+

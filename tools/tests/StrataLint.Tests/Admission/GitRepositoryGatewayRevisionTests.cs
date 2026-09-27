@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed class GitRepositoryGatewayRevisionTests
 {
+    [Fact]
+    public void CurrentSnapshotOwnsOnePayloadBufferAndSurvivesDiskReplacement()
+    {
+        using var repository = new TemporaryDirectory();
+        TestGit.Run(repository.Path, "init");
+        var path = Path.Combine(repository.Path, "payload.txt");
+        File.WriteAllText(path, "warm reader\n");
+        _ = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var payload = Enumerable.Repeat((byte)'x', 4 * 1024 * 1024).ToArray();
+        File.WriteAllBytes(path, payload);
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var snapshot = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        File.WriteAllText(path, "replacement\n");
+        var entry = Assert.Single(snapshot.Entries);
+        Assert.Equal("payload.txt", entry.Path);
+        Assert.Equal(payload, entry.Bytes.ToArray());
+        Assert.True(allocated < payload.Length + payload.Length / 2,
+            $"Reading one {payload.Length}-byte file allocated {allocated} bytes.");
+    }
+
     private const string FirstOid = "1111111111111111111111111111111111111111";
     private const string SecondOid = "2222222222222222222222222222222222222222";
 
@@ -36,13 +59,13 @@ public sealed class GitRepositoryGatewayRevisionTests
     public void ReadRevisionRoundTripsCommittedBlobBytes()
     {
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(
             repository.Path,
             "config",
             "user.email",
             "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(
             repository.Path,
             "config",
             "user.name",
@@ -62,10 +85,10 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "script.sh"),
             "#!/bin/sh\nexit 0\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "update-index", "--chmod=+x", "script.sh");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "batch fixture");
-        var revision = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "update-index", "--chmod=+x", "script.sh");
+        TestGit.Run(repository.Path, "commit", "-m", "batch fixture");
+        var revision = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.WriteAllText(
             Path.Combine(repository.Path, "first.txt"),
             "working tree change\n",
@@ -90,8 +113,8 @@ public sealed class GitRepositoryGatewayRevisionTests
         InitializeRepository(repository.Path);
         File.WriteAllText(Path.Combine(repository.Path, "old.txt"), "retained bytes\n");
         File.WriteAllText(Path.Combine(repository.Path, "deleted.txt"), "deleted bytes\n");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "snapshot fixture");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "snapshot fixture");
         File.Move(Path.Combine(repository.Path, "old.txt"), Path.Combine(repository.Path, "new.txt"));
         File.Delete(Path.Combine(repository.Path, "deleted.txt"));
 
@@ -104,12 +127,12 @@ public sealed class GitRepositoryGatewayRevisionTests
     public void ReadCurrentChangesReportsOnlyWorkingTreeDeltaFromHead()
     {
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repository.Path, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), "baseline\n", new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "working changes fixture");
+        TestGit.Run(repository.Path, "add", "tracked.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "working changes fixture");
         var gateway = new GitRepositoryGateway(repository.Path);
 
         Assert.Empty(gateway.ReadCurrentChanges().Entries);
@@ -136,9 +159,9 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "tracked.txt"),
             "baseline\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
-        var head = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", "tracked.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var head = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.WriteAllText(
             Path.Combine(repository.Path, "tracked.txt"),
             "changed\n",
@@ -160,8 +183,8 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "tracked.txt"),
             "baseline\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+        TestGit.Run(repository.Path, "add", "tracked.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
 
         var exception = Assert.Throws<InvalidOperationException>(
             () => new GitRepositoryGateway(repository.Path).Prepare(null));
@@ -178,9 +201,9 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "tracked.txt"),
             "baseline\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", "tracked.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.WriteAllText(
             Path.Combine(repository.Path, "tracked.txt"),
             "candidate\n",
@@ -189,8 +212,8 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "added.txt"),
             "added\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
 
         var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
 
@@ -214,25 +237,25 @@ public sealed class GitRepositoryGatewayRevisionTests
             Path.Combine(repository.Path, "root.txt"),
             "root\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "root.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "root");
-        var root = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", "root.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "root");
+        var root = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.WriteAllText(
             Path.Combine(repository.Path, "candidate.txt"),
             "candidate\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "candidate.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
-        ReviewRegressionTests.RunGit(repository.Path, "branch", "candidate");
-        ReviewRegressionTests.RunGit(repository.Path, "checkout", "-b", "sibling", root);
+        TestGit.Run(repository.Path, "add", "candidate.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "branch", "candidate");
+        TestGit.Run(repository.Path, "checkout", "-b", "sibling", root);
         File.WriteAllText(
             Path.Combine(repository.Path, "sibling.txt"),
             "sibling\n",
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "sibling.txt");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "sibling");
-        var sibling = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
-        ReviewRegressionTests.RunGit(repository.Path, "checkout", "candidate");
+        TestGit.Run(repository.Path, "add", "sibling.txt");
+        TestGit.Run(repository.Path, "commit", "-m", "sibling");
+        var sibling = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "checkout", "candidate");
 
         var prepared = new GitRepositoryGateway(repository.Path).Prepare(sibling);
         Assert.Equal(sibling, prepared.Revision);
@@ -345,13 +368,13 @@ public sealed class GitRepositoryGatewayRevisionTests
 
     private static void InitializeRepository(string path)
     {
-        ReviewRegressionTests.RunGit(path, "init");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(path, "init");
+        TestGit.Run(
             path,
             "config",
             "user.email",
             "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(
             path,
             "config",
             "user.name",

@@ -1,0 +1,413 @@
+**定理136.1（大侧起步交替尾词排除）。** 合同（136.1）—（136.2）不可能。结论同时排除 $\eta_1=A$、$\eta_1=B$ 和不属于这两条射线的第三首环境。
+
+本节只排除此分支，不据此宣布所有七维候选均已排除。
+
+### 136.1 三维完整一位块与早期平面的定位
+
+实际早期向量满足
+
+$$
+\begin{gathered}
+V_0k=p\eta_1,\qquad V_1k=q\eta_1,\\
+V_0p=uA,\qquad V_1p=vA,\qquad V_0q=wA,\\
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\end{gathered}
+\tag{136.3}
+$$
+
+这里 $p,q$ 正交归一，$u,v,w$ 正交归一。尾递推为
+
+$$
+\begin{array}{c|c|c}
+\text{实际空间}&V_0\text{ 的实际像}&V_1\text{ 的实际像}\\ \hline
+H_1&G_2A&\\
+H_2&G_3B&\\
+H_3&G_4A&\\
+H_4&G_5B&\\
+H_5&G_6A&\\
+G_2&&Q_3B\\
+G_3&&Q_4A\\
+G_4&&Q_5B\\
+G_5&&Q_6A
+\end{array}
+\tag{136.4}
+$$
+
+对 $n\ge3$，$H_n\subset G_n\oplus Q_n$，$G_n\perp Q_n$，且两项投影在 $H_n$ 上均为同构。这里没有使用 $V_1G_6$。
+
+第99.3节对实际尾词（136.2）的局部维数结论给
+
+$$
+\dim(G_3+G_5)\ge3.
+$$
+
+而 $G_3,G_5\subset M$，所以
+
+$$
+G_3+G_5=M,\qquad V_1M=U^\perp\otimes A.
+\tag{136.5}
+$$
+
+故完整的一位输入 $A$ 块恰为 $M$，输入 $B$ 块恰为 $M^\perp$。由 $V_1p=vA$ 得 $p\in M$。
+
+若 $\eta_1=B$，六轮环境是 $B,A,B,A,B,A$，第47.5节已给维数至少八。以下只需 $\eta_1\ne B$。若 $\eta_1=A$，完整零位纤维给 $p\in U$；若首环境为第三方向，沿 $A,B$ 分量比较给 $p\in P$。两种情形都得到
+
+$$
+P=\mathbb Cp,\qquad q\in U^\perp.
+\tag{136.6}
+$$
+
+令 $E=G_2+G_4$。由（136.4）—（136.5）及 $A\perp B$，有 $E\subset U\cap M^\perp$，因而 $2\le\dim E\le3$。若 $\dim E=2$，则 $G_2=G_4$，固定 $V_0$ 给 $H_1=H_3$；但 $p\in H_1\cap M$，而 $H_3$ 在 $G_3\subset M$ 与 $Q_3\subset M^\perp$ 之间为双投影同构的图，故 $H_3\cap M=0$，矛盾。因此
+
+$$
+\begin{gathered}
+\dim E=3,\qquad U=\mathbb Cp\oplus E,\\
+D=M\cap p^\perp,\quad\dim D=2,\qquad
+K=\mathbb Cp\oplus D\oplus E\oplus Q,\\
+U^\perp=D\oplus Q,\qquad M^\perp=E\oplus Q,
+\end{gathered}
+\tag{136.7}
+$$
+
+以上各直和均为正交直和。
+
+由 $H_1\perp H_2,H_4$、$q\perp E$ 及实际早期式（136.3），有
+
+$$
+q\perp v,\qquad q\perp Q_4.
+$$
+
+$v,Q_4\subset U^\perp$，而 $U^\perp$ 三维、$Q_4$ 二维，因此
+
+$$
+Q_4=U^\perp\cap q^\perp,\qquad v\in Q_4,
+\qquad p\in G_3.
+\tag{136.8}
+$$
+
+最后一项来自 $V_1p=vA$、$V_1G_3=Q_4A$ 及固定单射性。
+
+### 136.2 一个必须存在的公共纤维分量
+
+两个二维面 $G_2,G_4$ 张成三维 $E$，故 $H_1\cap H_3$ 一维。取其中非零 $z$。因为 $H_3\cap M=0$，而 $p\in M$，写
+
+$$
+z=\alpha p+\beta q
+$$
+
+时必有 $\beta\ne0$。又 $H_1\subset E^\perp$，$q\in D\oplus Q$，所以
+
+$$
+P_{M^\perp}z=\beta P_Qq\in Q.
+$$
+
+$H_3$ 对其 $Q_3\subset M^\perp$ 分量的投影单射，保证此向量非零。于是
+
+$$
+P_Qq\ne0,\qquad Q\subset Q_3.
+\tag{136.9}
+$$
+
+这两项使用的是同一个实际交向量，没有把完整公共纤维 $Q$ 与某个二维实际平面 $Q_3$ 混同。
+
+为后文记
+
+$$
+Z=H_2+H_4.
+$$
+
+由（136.5）及零位递推，$V_0Z=M\otimes B$，故 $\dim Z=3$。而 $P_EZ=G_2+G_4=E$，所以 $Z$ 是某个线性映射 $T:E\to U^\perp$ 的图。实际早期式及第四轮的双投影同构给
+
+$$
+Tu=\frac b{a^2}v,\qquad Tw=0,\qquad T(G_4)=Q_4.
+$$
+
+结合 $E=G_2+G_4$、$v\in Q_4$，可得
+
+$$
+T(E)=Q_4.
+\tag{136.10}
+$$
+
+### 136.3 首环境为大侧方向 $A$ 不可能
+
+设 $\eta_1=A$。由 $V_1k=qA$ 和（136.5），有 $k\in M$。再由 $q\perp v$、$V_1p=vA$，得 $k\perp p$，即 $k\in D$。
+
+另一方面，$V_0k=pA$ 与 $V_0H_4=G_5B$ 正交，所以 $k\perp H_4$。因为 $k\perp G_4\subset E$，而 $P_{Q_4}H_4=Q_4$，有 $k\perp Q_4$。式（136.8）遂给
+
+$$
+k\in D\cap\mathbb Cq.
+$$
+
+但（136.9）说明 $q$ 有非零 $Q$ 分量，故这个交为零，与 $k$ 为单位向量矛盾。
+
+### 136.4 第三首环境与同一实际 $w$ 列
+
+剩下设
+
+$$
+\eta_1=cA+dB,\qquad cd\ne0,\qquad |c|^2+|d|^2=1.
+\tag{136.11}
+$$
+
+完整纤维给 $q\in Q$。因 $q$ 单位且 $Q$ 一维，由（136.8）可得
+
+$$
+Q=\mathbb Cq,\qquad Q_4=D,\qquad v\in D.
+\tag{136.12}
+$$
+
+取单位向量 $r\in D$、$e\in E$，使
+
+$$
+G_3=\operatorname{span}(p,r),\qquad
+Q_3=\operatorname{span}(q,e).
+\tag{136.13}
+$$
+
+定义完整一位块中的单位逆像 $f,\ell$：
+
+$$
+V_1f=qA,\qquad V_1\ell=qB.
+$$
+
+由 $q\perp Q_4$、$Q\subset Q_3$ 及（136.5），有
+
+$$
+f\in M\cap G_3^\perp\subset D,
+\qquad \ell\in G_2\subset E,
+\qquad k=cf+d\ell.
+\tag{136.14}
+$$
+
+$V_0(H_1+H_3)=E\otimes A$，而 $p\perp E$，故 $k\perp H_1+H_3$。又 $f\perp G_3,Q_3$，所以 $f\perp H_3$，进而 $\ell\perp H_3$。$\ell\perp G_3$ 与 $P_{Q_3}H_3=Q_3$ 给 $\ell\perp Q_3$。同样，$w\in H_2\perp H_3$、$w\perp G_3$ 给
+
+$$
+\ell,w\in G_2\cap Q_3^\perp.
+\tag{136.15}
+$$
+
+先处理 $G_2\not\perp Q_3$。因为 $q\perp G_2$、$Q_3=\operatorname{span}(q,e)$，$G_2\cap Q_3^\perp$ 恰为一维，故 $\ell\parallel w$。于是 $V_0\ell=r_0B$，其中 $r_0$ 为某个单位接收向量。固定 $V_0$、（136.11）及 $f\perp\ell$ 给
+
+$$
+\langle k,\ell\rangle
+=\overline d
+=\langle p(cA+dB),r_0B\rangle
+=\overline d\,\langle p,r_0\rangle.
+$$
+
+这里内积对第二变量线性。因 $d\ne0$，有 $r_0=p$，故
+
+$$
+V_0\ell=pB,\qquad V_0f=pA,\qquad V_1f=qA.
+\tag{136.16}
+$$
+
+这直接重复第136.3节的矛盾，令其中的初始向量为 $f$ 即可。等价地，以独立纯态 $f$ 启动同一个接收通道，第一轮得到相同的两个实际接收输出 $p,q$ 和纯环境 $A$；任意来源输入的相干叠加及其参考系统均保持，随后五轮使用原来的同一通道。因此这是合法的六终端替代启动，不只是两条孤立向量方程的重标记。
+
+以下只剩
+
+$$
+G_2\perp Q_3.
+\tag{136.17}
+$$
+
+此时 $E=\operatorname{span}(u,w,e)$ 为正交单位基。由于 $H_2\perp H_3$、$u\perp G_3,Q_3$，实际 $a^2u+bv\in H_2$ 给 $v\perp H_3$，再由 $v\perp Q_3$ 得 $v\perp G_3$。因此可取（136.13）的 $r$ 使
+
+$$
+D=\operatorname{span}(v,r)
+$$
+
+也是正交单位基。由 $V_1p=vA$、$V_1G_3=DA$，存在 $|\zeta|=1$，使
+
+$$
+V_1r=\zeta rA.
+\tag{136.18}
+$$
+
+### 136.5 保留任意来源基的两行关系
+
+按第78.2节的固定对角换基，可把 $a,b$ 取为正实数；此操作同时共轭固定接收通道，保持来源 $m_1=|0\rangle$、任意初态及完整六终端合同。以下令
+
+$$
+\begin{gathered}
+x=a^2,\qquad y=b^2,\qquad x+y=1,\\
+t_0=1,\qquad t_j=1-yt_{j-1},\qquad
+\lambda_j=x\frac{t_{j-1}}{t_j},\\
+t_1=x,\qquad t_2=x^2+y,\qquad
+\kappa=\frac{\sqrt y}{x}.
+\end{gathered}
+\tag{136.19}
+$$
+
+令 $G=(g_0,g_1)$、$J=(j_0,j_1)$ 为实际第三轮的两组列等距，具体由同一实际来源列规定：
+
+$$
+\begin{gathered}
+V_0\left(\frac{a^2u+bv}{\sqrt{t_2}}\right)=g_0B,
+\qquad V_0w=g_1B,\\
+V_1u=j_0B,\qquad V_1w=j_1B.
+\end{gathered}
+\tag{136.20}
+$$
+
+其像分别为 $G_3,Q_3$。写
+
+$$
+G=p\alpha+r\beta,\qquad J=q\sigma+e\tau,
+\tag{136.21}
+$$
+
+其中 $\alpha,\beta,\sigma,\tau$ 为两分量行向量，矩阵
+
+$$
+\begin{pmatrix}\alpha\\\beta\end{pmatrix},
+\qquad
+\begin{pmatrix}\sigma\\\tau\end{pmatrix}
+$$
+
+均为任意酉矩阵；没有把实际来源基与 $p,r$ 或 $q,e$ 的几何基预先对齐。
+
+同一个单位输入 $w$ 在（136.20）中的零、一位像都带环境 $B$。将它分别与初始等式 $V_0k=p\eta_1$、$V_1k=q\eta_1$ 配对，利用 $d\ne0$，得到
+
+$$
+\alpha_1=\langle p,g_1\rangle
+=\langle q,j_1\rangle=\sigma_1.
+\tag{136.22}
+$$
+
+下标 $1$ 表示第二来源列。这个等式使用实际初始向量、同一个 $w$ 和同一个固定接收通道，不能只从尾部平面维数推得。
+
+定义
+
+$$
+\begin{gathered}
+\Lambda=\operatorname{diag}(\sqrt{\lambda_3},\sqrt{\lambda_2}),
+\qquad \Gamma=(I-\Lambda^2)^{1/2},\\
+\Lambda_4=\operatorname{diag}(\sqrt{\lambda_4},\sqrt{\lambda_3}),
+\qquad \Gamma_4=(I-\Lambda_4^2)^{1/2}.
+\end{gathered}
+\tag{136.23}
+$$
+
+这些矩阵均为正、可逆的对角矩阵。实际来源的归一化第三轮零记忆列为
+
+$$
+h_3=G\Lambda+J\Gamma.
+\tag{136.24}
+$$
+
+令 $\mathcal G_4$ 为由 $V_0h_3=\mathcal G_4A$ 规定的列等距，像为 $G_4$；令 $J_4$ 由 $V_1G=J_4A$ 规定。实际第四轮零记忆列为
+
+$$
+h_4=\mathcal G_4\Lambda_4+J_4\Gamma_4.
+$$
+
+来源递推给 $\Gamma_4=\kappa\Lambda\Lambda_4$。又 $h_4$ 位于图 $Z=\operatorname{graph}(T)$ 中，$\mathcal G_4$ 的像在 $E$，$J_4$ 的像在 $D$，所以
+
+$$
+T\mathcal G_4=\kappa J_4\Lambda
+=\kappa(v\alpha+\zeta r\beta)\Lambda.
+\tag{136.25}
+$$
+
+### 136.6 图的模长刚性与两列矛盾
+
+由（136.10）、（136.12）、（136.17），在正交基 $u,w,e$ 与 $v,r$ 下可写
+
+$$
+Tu=\kappa v,\qquad Tw=0,\qquad Te=\chi v+\rho r,
+\tag{136.26}
+$$
+
+其中 $\chi,\rho\in\mathbb C$，不预设其相位。
+
+$H_3\perp Z$。由（136.21）、（136.24）比较 $h_3$ 的 $E,D$ 分量，并使用图正交补关系 $P_Eh_3=-T^*P_Dh_3$，得到
+
+$$
+\tau\Gamma=-\overline\rho\,\beta\Lambda.
+\tag{136.27}
+$$
+
+两侧行向量均非零，故 $\rho\ne0$。进一步有
+
+$$
+H_1+H_3
+=\operatorname{span}\{p,q,r-\overline\rho e\}.
+$$
+
+$V_0$ 在这个三维空间中把 $p,q$ 分别送到 $uA,wA$，并把整个空间送到 $E\otimes A$。因此存在 $|\xi|=1$，使
+
+$$
+V_0(r-\overline\rho e)
+=\xi\sqrt{1+|\rho|^2}\,eA.
+$$
+
+式（136.24）遂给
+
+$$
+\mathcal G_4=u\alpha\Lambda+w\sigma\Gamma
+ +\xi\sqrt{1+|\rho|^2}\,e\beta\Lambda.
+\tag{136.28}
+$$
+
+把（136.26）、（136.28）代入（136.25），分别比较正交方向 $v,r$ 的行系数。由于 $\beta\Lambda\ne0$，得到
+
+$$
+\chi=0,\qquad
+\rho\xi\sqrt{1+|\rho|^2}=\kappa\zeta.
+$$
+
+所以
+
+$$
+|\rho|^2(1+|\rho|^2)=\kappa^2=\frac y{x^2},
+\qquad
+|\rho|^2=\frac yx.
+\tag{136.29}
+$$
+
+第二式由第一式在正半轴上的唯一性及 $x+y=1$ 得到，保留了所有复相位自由度。
+
+现在对（136.27）右乘 $\Gamma^{-1}$ 并取行范数。由 $\|\tau\|=\|\beta\|=1$、（136.29）及
+
+$$
+\frac{\lambda_2}{1-\lambda_2}=\frac{x^2}{y},
+\qquad
+\frac{\lambda_3}{1-\lambda_3}=\frac{t_2}{y},
+\tag{136.30}
+$$
+
+设 $h=|\beta_0|^2$，便有
+
+$$
+1=\frac yx\left(h\frac{t_2}{y}
+ +(1-h)\frac{x^2}{y}\right).
+$$
+
+由于 $t_2-x^2=y$，这强制 $h=x$。两个任意酉矩阵的行列范数关系及（136.27）于是给
+
+$$
+|\alpha_1|^2=|\beta_0|^2=x,
+$$
+
+$$
+|\sigma_1|^2=|\tau_0|^2
+=\frac yx\,|\beta_0|^2\,
+ \frac{\lambda_3}{1-\lambda_3}=t_2.
+\tag{136.31}
+$$
+
+但（136.22）要求这两个模平方相同，而
+
+$$
+t_2-x=x^2+y-x=y^2>0.
+\tag{136.32}
+$$
+
+矛盾。第三首环境的最后一种情形也被排除；结合第136.3、136.4节及首环境 $B$ 的既有排除，定理136.1得证。
+
+本节的新约束是实际初始同一 $w$ 列的等式（136.22）与固定图递推（136.25）共同强制的矛盾。证明使用前六轮实际合同、第99.3节尾部维数结论及第47.5节已证特例，不增加第七轮输入，不把来源主角谱单独当成足够的实现条件，也不声称 Lean kernel 已核验本文。
+

@@ -71,7 +71,7 @@ internal sealed class JudgeSeedFixture : IDisposable
         test_partition = (string?)null,
         root_namespace = assembly, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
         build_inputs = Array.Empty<string>(), execution_inputs = (string[]?)null,
-        execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
+        execution_excludes = (string[]?)null, execution_environment = (string[]?)null, execution_filemap_paths = (string[]?)null,
     };
 
     internal void NativePushCandidate()
@@ -400,7 +400,8 @@ internal sealed class JudgeSeedFixture : IDisposable
 
     private static string Tail(string text) => text.Length > 12000 ? text[^12000..] : text;
 
-    internal Invocation ReadFakeSdkMaterial() => Python("print(json.dumps(judge.seed_registration(root, root / 'extra-sdk')[3]))");
+    internal Invocation ReadFakeSdkMaterial(string resolved = "10.0.103", bool success = true) =>
+        Python($"print(json.dumps(judge.seed_registration(root, root / 'extra-sdk', '{resolved}')[3]))", success);
 
     private void Record(string name, Invocation result, int? csc)
     {

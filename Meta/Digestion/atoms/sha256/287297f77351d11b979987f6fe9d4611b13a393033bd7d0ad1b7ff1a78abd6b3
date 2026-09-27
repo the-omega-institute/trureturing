@@ -1,0 +1,47 @@
+**定理 44.11（维数消去的短区间比值界）。**
+
+对 $0\le r\le2$，
+$$
+\boxed{
+|R(r)-r|
+\le\frac{r|r-1|}{2a^2\tau}\delta
+\le\frac{r|r-1|}{2a^2(-\log b)}\delta.
+}
+$$
+第一个界保留实际已校准的 $\tau$，比只使用 $-\log b$ 更精细。
+
+证明。先对任意正定 $X,Y\succeq uI$、$u>0$，使用对数的 resolvent 积分及逆矩阵差恒等式：
+$$
+\begin{aligned}
+\|\log X-\log Y\|
+&\le\int_0^\infty
+\|(Y+vI)^{-1}-(X+vI)^{-1}\|\,dv\\
+&\le\|X-Y\|\int_0^\infty(u+v)^{-2}\,dv
+=\frac{\|X-Y\|}{u}.
+\end{aligned}
+$$
+这是算子范数估计，不只引用标量对数的 Lipschitz 常数。对每个 $r\ge0$，谱演算及余等距性给
+$$
+W(rh)=FS^rF^*\succeq a^rI,\qquad A^r\succeq a^rI.
+$$
+由于 $\log(A^r)=r\log A$，
+$$
+\begin{aligned}
+|R(r)-r|
+&=\frac{|\operatorname{tr}(\log W(rh)-\log A^r)|}{\mathcal T}\\
+&\le\frac{m}{\mathcal T a^r}\|FS^rF^*-A^r\|\\
+&\le\frac{r|r-1|}{2a^2\tau}\delta.
+\end{aligned}
+$$
+最后一步使用第44.5节分数幂界，$a^r$ 与其 $a^{r-2}$ 相消；再以 $\tau\ge-\log b$ 得第二个界。维数通过 $\mathcal T=m\tau$ 精确消去。端点 $r=0,1,2$ 使用第44.5节的直接端点结论，不从发散积分取值。
+
+符号由同一分数幂序及对数算子单调性给出：
+$$
+\boxed{
+R(r)\ge r\quad(0<r<1),\qquad
+R(r)\le r\quad(1<r\le2),
+\qquad R(0)=0,\ R(1)=1.
+}
+$$
+具体地，$FS^rF^*\preceq A^r$ 时 $-\log(FS^rF^*)\succeq-r\log A$；另一段反向。所有比较都固定同一个 $F_{(t_0)}$，不将不同基准或不同历史阶数的响应混入一次估计。
+

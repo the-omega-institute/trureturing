@@ -1,0 +1,139 @@
+**引理264.1（成对谱核必须留下负部）。** 对任意Hermitian参考算子 $D$，令
+$$
+m=\|D\|_1,\qquad d=\|D\|,\qquad
+n=\nu(P_\psi+H_D).
+\tag{264.12}
+$$
+则
+$$
+\boxed{\quad
+m\le\left(\frac2p+1\right)n.
+\quad}
+\tag{264.13}
+$$
+该结论包括 $D$ 在 $\operatorname{supp}\rho$ 之外的任意方向。
+
+**证明。** 若 $D=0$，结论成立。以下设 $d>0$。
+
+首先证明
+$$
+n\ge m-d.
+\tag{264.14}
+$$
+$H_D$ 的正谱与负谱成对出现，因此
+$$
+\operatorname{Tr}(H_D)_-=\operatorname{Tr}(H_D)_+=m,
+\qquad
+\|(H_D)_-\|=d.
+\tag{264.15}
+$$
+令 $\Pi_-$ 为 $H_D$ 的严格负谱投影，$Q$ 为
+$\operatorname{ran}\Pi_-\cap\psi^\perp$ 的正交投影。则
+$Q\preceq\Pi_-$，而 $\Pi_--Q$ 的秩至多为一。因 $Q\psi=0$，
+$$
+\begin{aligned}
+-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
+&=\operatorname{Tr}\bigl(Q(H_D)_-\bigr)\\
+&=m-\operatorname{Tr}\bigl((\Pi_--Q)(H_D)_-\bigr)\\
+&\ge m-d.
+\end{aligned}
+\tag{264.16}
+$$
+由负部变分公式得到（264.14）。这也给出了此处所需的秩一正更新负谱交错估计的完整证明。
+
+选取 $D$ 的单位本征向量 $e$ 及其本征值 $\lambda$，使 $|\lambda|=d$。写
+$$
+D_0=\lambda|e\rangle\langle e|,
+\qquad
+H_0=\operatorname{diag}(D_0,-D_0),
+\qquad
+H_1=H_D-H_0.
+\tag{264.17}
+$$
+因所选方向属于 $D$ 的谱分解，余下参考谱的核范数为 $m-d$。所以
+$$
+\operatorname{Tr}(H_1)_+=m-d.
+\tag{264.18}
+$$
+令 $n_0=\nu(P_\psi+H_0)$。再次使用变分公式，对每个 $0\preceq Q\preceq I$，
+$$
+\begin{aligned}
+-\operatorname{Tr}\bigl(Q(P_\psi+H_0)\bigr)
+&=-\operatorname{Tr}\bigl(Q(P_\psi+H_D)\bigr)
++\operatorname{Tr}(QH_1)\\
+&\le n+\operatorname{Tr}(H_1)_+.
+\end{aligned}
+\tag{264.19}
+$$
+取最大值得
+$$
+n_0\le n+(m-d).
+\tag{264.20}
+$$
+
+接着从纯源的Schmidt权证明
+$$
+n_0\ge pd.
+\tag{264.21}
+$$
+$H_0$ 在 $H\otimes\mathbb Ce$ 上有本征值 $-d,+d$；记对应负本征值的单位向量为 $s$。它是 $|y_+\rangle\otimes e$ 或 $|y_-\rangle\otimes e$ 中的一个。
+
+理想源在整条参考方向 $e$ 之外的质量是
+$$
+r=
+\left\|
+\bigl(I_H\otimes(I_E-|e\rangle\langle e|)\bigr)\psi
+\right\|^2
+=1-\langle e,\rho e\rangle
+\ge1-\|\rho\|=p.
+\tag{264.22}
+$$
+因此 $r>0$。令
+$$
+z=
+\frac{\bigl(I_H\otimes(I_E-|e\rangle\langle e|)\bigr)\psi}
+{\sqrt r},
+\qquad
+\alpha=\langle s,\psi\rangle.
+\tag{264.23}
+$$
+$s,z$ 是正交单位向量，$H_0z=0$。将 $P_\psi+H_0$ 压缩到它们张成的二维空间，得到
+$$
+C=
+\begin{pmatrix}
+|\alpha|^2-d&\alpha\sqrt r\\
+\overline\alpha\sqrt r&r
+\end{pmatrix}.
+\tag{264.24}
+$$
+其行列式为 $-dr<0$，所以恰有一个正本征值 $\mu_+$ 和一个负本征值 $\mu_-$。又有
+$$
+C\preceq
+\begin{pmatrix}
+|\alpha|^2&\alpha\sqrt r\\
+\overline\alpha\sqrt r&r
+\end{pmatrix},
+\qquad
+\mu_+\le|\alpha|^2+r\le1.
+\tag{264.25}
+$$
+故
+$$
+-\mu_-=\frac{dr}{\mu_+}\ge dr\ge dp.
+\tag{264.26}
+$$
+取该压缩负本征向量的秩一投影作为（264.11）的候选，便有
+$n_0\ge-\mu_-$，证明（264.21）。这里没有将参考空间截断到理想支撑；即使 $e$ 含参考核外分量，（264.22）仍成立。
+
+合并三项估计，
+$$
+pd\le n_0\le n+(m-d)\le2n.
+\tag{264.27}
+$$
+再由 $m-d\le n$，
+$$
+m\le d+n\le\left(\frac2p+1\right)n.
+\tag{264.28}
+$$
+证毕。$\square$
+

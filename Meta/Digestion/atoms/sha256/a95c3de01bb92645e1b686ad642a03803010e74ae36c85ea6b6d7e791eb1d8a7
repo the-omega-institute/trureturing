@@ -1,0 +1,55 @@
+**定理 133.2（时间函数的有限矩充分性）。** 对式（133.1）的全部续接，极限标记对象只需保留有限数据
+
+$$
+\boxed{
+\bigl((c_k)_{k=0}^{m},(\ell_k)_{k=0}^{m},P_0,\zeta,\omega_R^Q,\omega_R^P\bigr).
+}
+\tag{133.2}
+$$
+
+更具体地，
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\operatorname{Tr}(Q_*X)\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0)
++
+\operatorname{Tr}(P_*X)\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+}
+\tag{133.3}
+$$
+
+参考系统版本为
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathcal K_{\Lambda_\bullet})(\omega_{RA})
+=
+\omega_R^Q\otimes\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0)
++
+\omega_R^P\otimes\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+}
+\tag{133.4}
+$$
+
+### 证明
+
+将式（133.1）代入定理 131.2，并交换有限求和与积分：
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-t}\Lambda_t(\zeta)\,dt
+&=\int_0^\infty e^{-t}\sum_{k=0}^{m}f_k(t)\Lambda^{(k)}(\zeta)\,dt\\
+&=\sum_{k=0}^{m}\ell_k\Lambda^{(k)}(\zeta).
+\end{aligned}
+$$
+
+时间零项同理给出
+
+$$
+\Lambda_0(P_0)=\sum_{k=0}^{m}c_k\Lambda^{(k)}(P_0).
+$$
+
+代回式（131.2）得到式（133.3）；参考系统版本由式（131.3）同样得到。证毕。
+

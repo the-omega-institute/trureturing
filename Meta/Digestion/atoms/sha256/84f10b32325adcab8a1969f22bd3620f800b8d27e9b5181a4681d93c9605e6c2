@@ -1,0 +1,53 @@
+### 276.1 一般正定图来源及完整竞争类
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$，以及
+$$
+Q=Q^\dagger\succ0,
+\qquad M\in M_n(\mathbb C).
+\tag{276.1}
+$$
+输入qubit空间 $H$ 使用固定 $Y$ 本征基；本节简写 $|+\rangle=|y_+\rangle$、$|-\rangle=|y_-\rangle$。定义
+$$
+G=[I_n,M],
+\qquad
+T(Q,M)=G^\dagger QG
+=\begin{pmatrix}
+Q&QM\\M^\dagger Q&M^\dagger QM
+\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T(Q,M)>0,
+\qquad \Omega(Q,M)=T(Q,M)/c.
+\tag{276.2}
+$$
+因为 $G$ 满行秩且 $Q$ 正定，$T$ 正半定、秩为 $n$；所以 $\Omega$ 是实际的 $2\otimes n$ 联合密度态。这里不要求 $M$ 可逆，也不预先约束其谱。
+
+完整数据仍为
+$$
+\mathcal D(\Xi)=\bigl(\operatorname{Tr}_H\Xi,\mathscr K(\Xi)\bigr),
+\qquad \mathscr K(\Xi)=2\Xi_{+-}.
+\tag{276.3}
+$$
+对于（276.2），
+$$
+\rho_*=(Q+M^\dagger QM)/c,
+\qquad K_*=2QM/c.
+\tag{276.4}
+$$
+在该固定真值处，完整数据误差为
+$$
+\varepsilon_*(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho_*\|_1
++\|\mathscr K(\Xi)-K_*\|_1.
+\tag{276.5}
+$$
+竞争者为同一 $H\otimes E$ 上任意密度态，包括不同秩与不同边缘的来源。态距离和完整数据误差都用未除以二的迹范数；无下标范数为算子范数。
+
+令 $\Gamma_H$ 表示固定输入基下的部分转置，采用未加倍负性
+$$
+\operatorname{Neg}(\Xi)
+=\frac{\|\Xi^{\Gamma_H}\|_1-1}{2}
+=\operatorname{Tr}(\Xi^{\Gamma_H})_-.
+\tag{276.6}
+$$
+

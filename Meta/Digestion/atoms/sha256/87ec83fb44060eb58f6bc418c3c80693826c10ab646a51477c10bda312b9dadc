@@ -1,0 +1,32 @@
+**theorem 22.1: 固定任务下的观察者塔；Claim status: open.** 固定 $\mathcal T$ 时，定义
+
+$$
+B_0=S,\qquad q_{n+1}=C_{\mathcal T}(q_n).
+\tag{22.1}
+$$
+
+每一层都保留前一层的读出，因为
+
+$$
+q_n\preceq C_{\mathcal T}(q_n).
+\tag{22.2}
+$$
+
+若 $q_n\preceq r_n$，则同一任务下的完成化也保持这个细化顺序：
+
+$$
+C_{\mathcal T}(q_n)\preceq C_{\mathcal T}(r_n).
+\tag{22.3}
+$$
+
+完成后的状态已经记录了同一任务的全部未来响应，所以再次完成只改变载体的编码方式：
+
+$$
+C_{\mathcal T}(C_{\mathcal T}(q))\simeq C_{\mathcal T}(q).
+\tag{22.4}
+$$
+
+仓内 `PredictionCompletionIdempotence.prediction_completion_idempotent` 与 `CanonicalCompletionIdempotence.canonical_completion_idempotence` 给出相应的固定任务幂等性；`BehaviorCompletionFunctoriality.behavior_completion_is_functorial` 和 `BehaviorCompletionUniqueStability.behavior_completion_has_unique_induced_update` 说明运输、更新和唯一诱导在该等价下相容。因此，从第一个已经完备的层起，塔只发生规范等价，不再产生新的同一任务响应。
+
+这里的“稳定”是相对于 $(\mathcal T,\text{更新},\text{读出})$ 的稳定。它不表示这个载体已经能够回答尚未加入任务族的所有问题。
+

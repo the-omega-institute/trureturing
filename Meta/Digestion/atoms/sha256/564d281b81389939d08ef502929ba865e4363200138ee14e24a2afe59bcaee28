@@ -1,0 +1,77 @@
+### 48.10 临界指数律、矩与联合尺度
+
+继续固定 \(A>0\)，取 \(q=e^{-\varepsilon}\)、
+\(p=e^{-\varepsilon}/\lambda^2\)。此时 \(p\) 与一保持统一正距离，故
+\[
+\varepsilon Z\longrightarrow c_A,\qquad
+w\longrightarrow1,\qquad 1-w=O_A(\varepsilon).
+\tag{48.32}
+\]
+若 \(G_q\) 的质量为 \((1-q)q^k\)，则对每个 \(x\ge0\)
+\[
+\Pr(\varepsilon G_q>x)
+=q^{\lfloor x/\varepsilon\rfloor+1}
+\longrightarrow e^{-x}.
+\]
+另一混合分支的总概率趋零，故由（48.31）
+\[
+\varepsilon K\Rightarrow E,
+\qquad E\sim\operatorname{Exp}(1).
+\tag{48.33}
+\]
+分布收敛本身不保证矩收敛；这里直接计算矩。几何级数给
+\[
+\mathbb EG_q=\frac q{1-q},\qquad
+\mathbb EG_q^2=\frac{q(1+q)}{(1-q)^2}.
+\]
+利用混合公式，\(p\) 分支的前两阶矩有界，得到
+\[
+\varepsilon\mathbb EK\longrightarrow1,\qquad
+\varepsilon^2\mathbb EK^2\longrightarrow2,\qquad
+\varepsilon^2\operatorname{Var}(K)\longrightarrow1.
+\tag{48.34}
+\]
+
+下面证明同一标签中 \(D,K\) 的联合结论，而非拼接两个边缘极限。记
+\[
+W=K-\mathbb E[K\mid D]=K-rD+b.
+\]
+则 \(\mathbb E[W\mid D]=0\)、\(\mathbb EW^2=R\)，从而
+\[
+K-r_0D=W+(r-r_0)D-b.
+\]
+交叉项因条件均值为零而消失，因此
+\[
+\mathbb E[(K-r_0D)^2]
+=R+\mathbb E[((r-r_0)D-b)^2].
+\tag{48.35}
+\]
+几何次数律给
+\[
+\mathbb ED=\frac1{1-t},\qquad
+\mathbb ED^2=\frac{1+t}{(1-t)^2}.
+\]
+由（48.27），\(r-r_0=O_A(\varepsilon)\)、
+\(\mathbb ED^2=O_A(\varepsilon^{-2})\)，而 \(b\) 有界。
+故（48.35）第二项为 \(O_A(1)\)，第一项为 \(O_A(\varepsilon^{-1})\)。结论是
+\[
+\boxed{\varepsilon^2\mathbb E_\varepsilon[(K-r_0D)^2]\longrightarrow0.}
+\tag{48.36}
+\]
+这里的 \(L^2\) 陈述就是上述逐律二阶矩趋零。每个期望均在对应 \(\varepsilon\) 的标签律下计算；这一表述不要求事先把整族随机变量放在同一概率空间。
+
+由 Markov 不等式，上述残差在当前概率律下依概率趋零。将向量写为 \((\beta\varepsilon K,\varepsilon K)+(-\beta\varepsilon(K-r_0D),0)\)，结合（48.33）、（48.36）及 \(r_0=\beta^{-1}\)，得到联合弱收敛
+\[
+\boxed{(\varepsilon D,\varepsilon K)\Rightarrow(\beta E,E).}
+\tag{48.37}
+\]
+由于 \(E>0\) 几乎处处，连续映射定理还给
+\[
+\frac{D}{K}\longrightarrow\beta\quad\text{依概率，在 }K>0\text{ 上}.
+\tag{48.38}
+\]
+精确地，可先在 \(K=0\) 时将比值任意定义为零；因为
+\(\Pr(K=0)=A/Z\to0\)，这个定义不影响极限，条件于 \(K>0\) 的版本也成立。比值结论来自同一联合律及分母极限严格正，不能只用两个期望的比值来替代证明。
+
+这些是从严格内部得到的尺度极限，并未构造 \(t=1\) 的临界标签概率。指数极限也说明深度并不集中在均值附近：其变异系数趋于一。
+

@@ -1,0 +1,107 @@
+### 47.17 均值、协方差与二参数信息矩阵
+
+由（47.67）许可的逐项微分，
+\[
+\nabla\psi=(\mathbb E[\mathsf D],\mathbb E[K]).
+\]
+直接对（47.59）求导得
+\[
+\boxed{
+\mathbb E[\mathsf D]
+=1+\frac{A\rho}{\Delta}
+=\frac{(1-\rho)^2}{\Delta}
+=\frac1{1-t}.
+}
+\tag{47.68}
+\]
+固定 \(A\) 对 \(\rho\) 求导，并用（47.55）分解分母，得
+\[
+\boxed{
+\mathbb E[K]
+=-\frac{\rho}{1-\rho}
++\frac{\lambda\rho}{1-\lambda\rho}
++\frac{\rho/\lambda}{1-\rho/\lambda}.
+}
+\tag{47.69}
+\]
+（47.62）的几何级数求导独立给出
+\[
+\operatorname{Var}(\mathsf D)=\frac{t}{(1-t)^2}.
+\]
+再对（47.65）取期望，得到等价且全正的均值表示
+\[
+\boxed{
+\mathbb E[K]
+=\frac{\rho+t}{(1-\rho)(1-t)},
+\qquad
+\frac{\mathbb E[\mathsf D]}{\mathbb E[K]}
+=\frac{1-\rho}{\rho+t}.
+}
+\tag{47.70}
+\]
+严格内部 \(A,\rho>0\) 时 \(\mathbb E[K]>0\)，比值合法。
+
+为证明 Hessian 恒等式，不只引用抽象模型名称。逐标签有
+\[
+\partial_\theta p=(d-\mathbb E[\mathsf D])p,
+\qquad
+\partial_\eta p=(k-\mathbb E[K])p.
+\]
+（47.67）保证相应一阶／二阶矩可逐项求导，于是
+\[
+\boxed{
+\nabla^2\psi=
+\begin{pmatrix}
+\operatorname{Var}(\mathsf D)&\operatorname{Cov}(\mathsf D,K)\\
+\operatorname{Cov}(\mathsf D,K)&\operatorname{Var}(K)
+\end{pmatrix}.
+}
+\tag{47.71}
+\]
+同时，对数概率的两分量导数为
+\((d-\mathbb E[\mathsf D],\,k-\mathbb E[K])\)，其二阶期望正好为（47.71）。因此这确实是**此选定二参数标签族、自然参数坐标下**的 Fisher 信息矩阵；更换参数需按 Jacobian 运输，不能把矩阵条目当作不依赖坐标的数值。
+
+明确微分给
+\[
+\boxed{
+\operatorname{Var}(\mathsf D)
+=\frac{A\rho(1-\rho)^2}{\Delta^2},
+\qquad
+\operatorname{Cov}(\mathsf D,K)
+=\frac{A\rho(1-\rho^2)}{\Delta^2},
+}
+\tag{47.72}
+\]
+\[
+\boxed{
+\operatorname{Var}(K)
+=-\frac{\rho}{(1-\rho)^2}
++\frac{\lambda\rho}{(1-\lambda\rho)^2}
++\frac{\rho/\lambda}{(1-\rho/\lambda)^2}.
+}
+\tag{47.73}
+\]
+条件分解给独立检查：
+\[
+\boxed{
+\operatorname{Cov}(\mathsf D,K)
+=\frac{1+\rho}{1-\rho}\operatorname{Var}(\mathsf D),
+}
+\tag{47.74}
+\]
+因为对 \(K\) 的条件残差与 \(\mathsf D\) 正交；具体地
+\(\mathbb E[\mathsf D K]
+=\mathbb E[\mathsf D\,\mathbb E(K\mid\mathsf D)]\)，再用（47.65）并减去均值乘积即可。全方差恒等式同样给
+\[
+\operatorname{Var}(K)
+=\frac{\rho(2\mathbb E[\mathsf D]-1)}{(1-\rho)^2}
++\left(\frac{1+\rho}{1-\rho}\right)^2
+\operatorname{Var}(\mathsf D),
+\]
+与（47.73）一致；所有项由二阶矩有限性合法。
+
+Fisher 矩阵在严格内部正定。若某实线性组合
+\(a\mathsf D+bK\) 的方差为零，它在所有正概率标签上必须相同。三点
+\((K,\mathsf D)=(0,1),(1,1),(1,2)\)
+均具有正概率；比较前两点给 \(b=0\)，再比较后两点给 \(a=0\)。故非零参数方向的方差严格正。这个论证只支持本二参数族内部的可区分性，不推出外部观察者的统计可识别性。
+

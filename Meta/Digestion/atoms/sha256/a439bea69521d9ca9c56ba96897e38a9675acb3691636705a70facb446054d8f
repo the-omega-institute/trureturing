@@ -1,0 +1,18 @@
+**证明。** 取线性满射 $C:X\to\mathbb C^{2n-\dim E}$，使 $\ker C=E$。在 $F$ 的固定基中，对 $z=z_0e_0+z_1e_1$ 定义
+
+$$
+M(z):K\longrightarrow\mathbb C^{2n-\dim E},
+\qquad M(z)y=C(y\otimes z).
+$$
+
+矩阵 $M(z)$ 的每个元素都是 $z_0,z_1$ 的齐次一次式，而
+
+$$
+[z]\in\mathcal Z(E)
+\iff\ker M(z)\ne0
+\iff\operatorname{rank}M(z)<n.
+\tag{100.6}
+$$
+
+若每条射线的秩都小于 $n$，支持集就是整个射影直线。否则某条射线上一个 $n$ 阶子式非零，该子式是一个非零齐次多项式。所有秩亏射线均为这个多项式的零点；在复射影直线上，非零齐次多项式只有有限个零点。因此 $\mathcal Z(E)$ 有限。证明完毕。
+

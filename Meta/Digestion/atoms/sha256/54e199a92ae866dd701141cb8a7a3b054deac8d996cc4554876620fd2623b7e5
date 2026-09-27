@@ -1,0 +1,10 @@
+**定义 261.2（逐项接到项目源码）。** 项目 [WeightedResidualCoverage](../../../D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage.lean)以一个有限残余集合、自然数权重和布尔覆盖关系为输入。这里将它的 `Residual` 取为 $D_0$ 中的条件，`Definition` 取为措施，`separates(a,u)` 取为 $u\in E_a$ 的判定值，`chosen` 取 $S$。原模块的关系是“某个所选定义分离这个残余”；此处的修复解释只有在定义 261.1 的桥成立时才接得上。
+
+固定 $w:D_0\to\mathbb N$，令 $F(S)$ 为已修复条件的权重和，$L(S)$ 为尚未修复条件的权重和。该模块的 `weightedGain_add_uncoveredWeight` 逐项给出
+
+$$
+F(S)+L(S)=\sum_{u\in D_0}w(u).
+$$
+
+它把同一初始目标中的每一项分到已覆盖或未覆盖的一侧，因此重叠措施不会把同一项修复重复记入收益。这是有限加权覆盖的通常结构，不是善与恶在整个宇宙中具有一个守恒总量的主张。
+

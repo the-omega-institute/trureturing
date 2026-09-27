@@ -1,0 +1,8 @@
+**命题 2.5（记录重叠的干涉因子）。**
+
+$$
+I=|a|^2+|b|^2+2\operatorname{Re}(a\bar b\,\mu),
+\qquad |\mu|\le1.
+\tag{AP.11}
+$$
+

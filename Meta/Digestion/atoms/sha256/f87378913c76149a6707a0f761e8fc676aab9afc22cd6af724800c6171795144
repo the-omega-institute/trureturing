@@ -1,0 +1,37 @@
+**反例 4（逐个读数合法不表示联合自洽）。** 对每个实向量 $p$，每个删除行或列都满足
+
+$$
+\sum_{b=0}^2F_{a,b}p=2F_{a,*}p\quad(a=0,1,2),\qquad
+\sum_{a=0}^2F_{a,b}p=2F_{*,b}p\quad(b=0,1,2).
+\tag{ER9.MS.15}
+$$
+
+因为一次删除后剩余每格被另一个坐标的三个删除中的两个保留。这六个恒等式不要求质量一或非负。对 $y^*$，六个对应残差都是
+
+$$
+\sum_b y^*_{a,b}-2y^*_{a,*}
+=\sum_a y^*_{a,b}-2y^*_{*,b}=-\varepsilon/3.
+\tag{ER9.MS.16}
+$$
+
+所以当 $\varepsilon>0$，$y^*$ 虽每格在 $[0,1]$，仍不在 $F(\mathbb R^9)$ 中，更不在 $F(\Delta_9)$ 中；当 $\varepsilon=0$ 则等于 $Fu$。
+
+自洽输入合同另定义为
+
+$$
+R_E^{\rm con}(\varepsilon)=\inf_{T:\mathbb R^{16}\to E}
+\sup_{\substack{a,p\in\Delta_9\\\|F(a-p)\|_\infty\le\varepsilon}}
+\|T(Fa)-p\|_\infty.
+$$
+
+这里输入必须是某个实际概率 $a$ 的精确响应。用固定质量反演从 $Fa$ 恢复 $a$ 并输出它，三个输出域都合法，且 $\|a-p\|_\infty\le2\varepsilon$。第 9.2 节取 $a=b_\varepsilon$ 和两个来源 $p_\pm$，在 $[0,1/6]$ 都合法，给匹配共同输入下界。因此
+
+$$
+R_{\mathbb R^9}^{\rm con}(\varepsilon)=R_H^{\rm con}(\varepsilon)
+=R_{\Delta_9}^{\rm con}(\varepsilon)=2\varepsilon
+\quad(0\le\varepsilon\le1/6).
+\tag{ER9.MS.17}
+$$
+
+同一两源期望证明也适用于随机输出。自洽合同约束了整个输入的联合像，不能用逐个读数的数值范围或真来源质量来代替。
+

@@ -1,0 +1,36 @@
+#### 1.1.3 首次有限覆盖的最后一步没有分辨率增量
+
+假设旧集合 $H\ne\varnothing$。由
+$R_d(a;H)\le |H|$ 和 $k\ge1$，有
+$$
+H'=\varnothing
+\iff
+\left[
+m\mid L
+\quad\text{且}\quad
+H\subseteq\{h:h\equiv a\pmod m\}
+\right].
+\tag{TM.359}
+$$
+证明：若 $H'$ 为空，式（TM.355）给
+$k|H|=R_d(a;H)\le|H|$，故 $k=1$，也就是 $m\mid L$；
+此时 $d=m$、$L'=L$，而 $R_m(a;H)=|H|$ 恰好表示全部旧幸存者属于新类。反向由定义立即成立。
+
+给定有限有序同余类
+$(a_1\bmod m_1),\ldots,(a_N\bmod m_N)$，从
+$L_0=1$、$H_0=\mathbb Z/\mathbb Z$ 开始，置
+$L_j=\operatorname{lcm}(m_1,\ldots,m_j)$，令 $H_j$ 为前 $j$ 个类尚未覆盖的模 $L_j$ 剩余。若每一步均严格增加 LCM，则
+$$
+L_j>L_{j-1}\ \ (1\le j\le N)
+\quad\Longrightarrow\quad
+H_j\ne\varnothing\ \ (0\le j\le N).
+\tag{TM.360}
+$$
+这是从式（TM.356）出发的有限归纳。若模数全奇，则还得到
+$|H_j|\ge2^j$，但式（TM.357）仍允许密度下降。
+
+因此，任何首次完成覆盖的最后一步必有
+$L_N=L_{N-1}$，即该步只增加约束而不增加模数分辨率。此结论需要“此前尚未覆盖”的前提；已有覆盖后追加一个新模数当然可以增加 LCM，追加类只是冗余的。
+
+由此，删去或合并全部零分辨率增量层，可能恰好删去使有限覆盖闭合的步骤。模数互不相同并不意味着 LCM 每步严格增长，例如先出现模 $9$、后出现模 $3$，后一步就是新模数而非新分辨率。
+

@@ -1,0 +1,11 @@
+**定理 8.3（重建后的来源移位）。** (a) 令 $\sigma a=(a_{n+1})_n$，则
+$$
+U_r=\mathcal E_\infty\sigma^r\beta_\infty,\qquad
+S_{M,r}=\mathcal E_M\circ(a_0,\ldots,a_{M+r}\mapsto a_r,\ldots,a_{M+r})\circ\beta_{M+r}.
+$$
+它们分别给全数组和有限三角的来源重编号，$S_{M,r}:\mathcal A_{M+r}\to\mathcal A_M$。Context 命题43.14拥有此运输；互逆关系直接消去中间 $\beta\mathcal E$，给 $U_rU_s=U_{r+s}$ 和 $S_{M,r}S_{M+r,s}=S_{M,r+s}$，零移位是恒等。
+
+(b) 只允许从原起点取得前缀时，深度 $M+r$ 足够且一般必要：只改变 $a_{M+r}$，此前缀较浅数据不变，而输出边界第 $M$ 项改变。若另有直接访问子块 $a_r,\ldots,a_{r+M}$ 的端口，则只需该块；这是不同取得模型，不能拿它抹掉前缀成本。
+
+(c) 来源移位不是原始行平移。取首三项 $(1,2,3)$，有 $T(0,1)=1,T(1,1)=1,T(0,2)=-2$。重建移位首列为 $(2,3,\ldots)$，故 $(U_1T)(0,1)=3-2^2=-1$；原始行平移 $\widetilde T(n,k)=T(n+1,k)$ 却给 $\widetilde T(0,1)=1$。其新位置 $(0,0)$ 的关系要求 $3=1+2^2=5$，矛盾。此为 Context 命题43.14的同一反例，不用不合法平移替代重建。
+

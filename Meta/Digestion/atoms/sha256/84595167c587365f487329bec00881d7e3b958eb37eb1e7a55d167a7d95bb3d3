@@ -1,0 +1,16 @@
+**定理 10.5（动态完成提升判据）。** 存在 \(U:S\to S\) 使
+
+$$
+\iota\circ U=U_\infty\circ\iota
+\tag{10.9}
+$$
+
+当且仅当
+
+$$
+U_\infty(\operatorname{ran}\iota)\subseteq\operatorname{ran}\iota.
+\tag{10.10}
+$$
+
+若 \(\iota\) 分离配置，则 \(U\) 唯一；若 \(\iota\) 还是满射，则任意满足式（10.8）的层更新都有唯一全局提升，并且 \(\iota\) 给出共轭。
+

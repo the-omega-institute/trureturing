@@ -47,10 +47,13 @@ internal static class FileMapSymlinkPolicy
         FileMapDocuments.RequireCanonicalBytes(bytes, location);
         var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
         var tables = new List<(TomlTable Table, string Location)>();
-        foreach (var document in documents)
+        for (var index = 0; index < documents.Length; index++)
         {
-            if (!document.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L))
-                throw Invalid(document.Path, "symlink declarations require schema_version 2, 3 or 4");
+            var document = documents[index];
+            if (!document.Table.TryGetValue("schema_version", out var version)
+                || version is not (2L or 3L or 4L or 5L))
+                throw Invalid(document.Path,
+                    "symlink declarations require schema_version 2, 3, 4 or 5");
             if (!document.Table.TryGetValue("files", out var rawFiles) && document.Table.ContainsKey("include")) continue;
             var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
             tables.AddRange(files.Select((table, index) => (table, $"{document.Path}:files[{index}]")));

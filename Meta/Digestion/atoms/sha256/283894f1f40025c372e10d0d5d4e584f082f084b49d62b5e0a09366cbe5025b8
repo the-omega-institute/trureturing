@@ -1,0 +1,42 @@
+**定理 69.1。** 对每个固定 $0<a<1$，令
+
+$$
+m=\min(a,1-a),\qquad
+\kappa_a=\left(\frac{am}{256}\right)^2>0.
+\tag{69.3}
+$$
+
+则
+
+$$
+e(R_{a,\varepsilon})>\varepsilon+\kappa_a\varepsilon^2
+\qquad\left(0<\varepsilon\le\frac{\sqrt a}{16}\right).
+\tag{69.4}
+$$
+
+与第 66 节的修复上界合并，在共同区间
+
+$$
+0<\varepsilon\le\min\left(\frac{\sqrt a}{16},\frac{1-a}{8}\right)
+\tag{69.5}
+$$
+
+上有一个完全显式的双侧估计
+
+$$
+\kappa_a\varepsilon^2
+<e(R_{a,\varepsilon})-\varepsilon
+\le\frac{16a}{1-a}\varepsilon^2.
+\tag{69.6}
+$$
+
+因此
+
+$$
+e(R_{a,\varepsilon})-\varepsilon=\Theta_a(\varepsilon^2)
+\qquad(\varepsilon\downarrow0)
+\tag{69.7}
+$$
+
+对每个固定 $a\in(0,1)$ 成立。两个常数和允许区间依赖 $a$；这不是包含 $a\downarrow0$ 或 $a\uparrow1$ 的一致估计。对称情形第 68 节的下界常数 $1/1024$ 比式（69.3）在 $a=1/2$ 的值更强。
+

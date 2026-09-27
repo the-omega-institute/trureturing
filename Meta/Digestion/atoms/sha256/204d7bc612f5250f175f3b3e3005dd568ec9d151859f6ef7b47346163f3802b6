@@ -1,0 +1,30 @@
+### 49.2 投影概率上界的可达性及其范围
+
+式（49.5）在每个 $1\le D\le4$、每个固定探针 $w$ 下都有一份真正的共同编码达到等号。其构造也适用于一般端点维数 $r$ 和 $D\le r$。
+
+选端点空间 $E$ 的 $D$ 个坐标基向量，记它们的支撑投影为 $P$，并选其中一个单位基向量 $|e_0\rangle$。编码丢弃钟 $C$，把 $PE$ 等距送入 $D$ 维接收器；每个未选端点基向量均复位为 $|e_0\rangle$ 对应的代码态。解码等距嵌回 $PE$，并准备钟基态 $|\ell_*\rangle$，其中 $w_{\ell_*}=\max w$。恢复后的端点通道具有 Kraus 算子
+
+$$
+K_0=P,\qquad K_j=|e_0\rangle\langle e_j|\quad(e_j\perp PE),
+\qquad \sum_jK_j^*K_j=I_E.
+\tag{49.10}
+$$
+
+对任一 $r$ 维最大纠缠态 $|\Phi_U\rangle=(I\otimes U)|\Phi_r\rangle$，其端点恢复投影概率是
+
+$$
+\sum_j\left|\langle\Phi_U|(I\otimes K_j)|\Phi_U\rangle\right|^2
+=\frac1{r^2}\sum_j|\operatorname{Tr}(U^*K_jU)|^2
+=\frac{D^2}{r^2}.
+\tag{49.11}
+$$
+
+这里 $\operatorname{Tr}K_0=D$，其余 Kraus 的迹为零。钟探针的投影概率是 $w_{\ell_*}$，故完整投影概率对每个相位都等于
+
+$$
+\frac{D^2}{r^2}\max_\ell w_\ell.
+\tag{49.12}
+$$
+
+特别地，$r=4$ 时达到（49.5）的上界。编码和解码只用固定坐标与已选 $\ell_*$，完全不依赖实际相位。这个结论只说明投影概率不等式本身准确；一般情形中，某个探针投影差达到下界，并不等于该装置的完整半迹误差达到下界。
+

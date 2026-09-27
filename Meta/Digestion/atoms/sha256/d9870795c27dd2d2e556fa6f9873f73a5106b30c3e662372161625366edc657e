@@ -1,0 +1,31 @@
+**定理280.1（零模式与临界谱带的维数一致预算）。** 对（280.1）—（280.10）的实际来源和访问合同，对全部 $n\ge1$、$0<\delta\le1/2$，有
+$$
+\boxed{
+N_n(0,\delta)\asymp\frac1{\delta/n+\delta^2},
+\qquad
+N_n(\theta_c,\delta)\asymp
+\frac1{n\delta^2}+\delta^{-3/2}.
+}
+\tag{280.36}
+$$
+比较常数独立于 $n,\delta$。更明确地，令 $C_*:=1+2\log(3/2)$，则
+$$
+\frac1{9C_A(\delta/n+\delta^2)}
+\le N_n(0,\delta)
+\le\frac{C_*}{c_A(\delta/n+\delta^2)},
+$$
+$$
+\frac1{9C_C}\left(\frac1{n\delta^2}+\delta^{-3/2}\right)
+\le N_n(\theta_c,\delta)
+\le\frac{C_*}{c_C}\left(\frac1{n\delta^2}+\delta^{-3/2}\right),
+\tag{280.37}
+$$
+其中所有常数由（280.20）、（280.35）给出。
+
+**证明。** 两个输出都与其扰动交换，且不同，故（280.13）适用。对齐方向代入（280.20）；临界方向代入（280.35），并使用
+$$
+\frac1{T_C(n,\delta)}=\frac{1+n\sqrt\delta}{n\delta^2}
+=\frac1{n\delta^2}+\delta^{-3/2}.
+$$
+这就给出全部显式界。下界已经允许完整输出的集体POVM；上界的共同本征基测量按实际记录条件执行，再作经典似然比检验，因此在规定访问内可取得。$\square$
+

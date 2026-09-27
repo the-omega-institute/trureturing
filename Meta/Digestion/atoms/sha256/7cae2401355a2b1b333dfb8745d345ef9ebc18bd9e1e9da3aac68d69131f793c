@@ -1,0 +1,12 @@
+**命题 42.14（相干复制不产生全局熵）。** 在固定时域把空白记录 $A$ 相干写入为
+$|w\rangle_H|0\rangle_A\mapsto|w\rangle_H|w\rangle_A$。纯根的完整态变成
+$$
+|\Upsilon_n\rangle_{HAM}
+=\sum_{w\in W_n}\sqrt{p_n(w)}\,|w\rangle_H|w\rangle_A m_{\ell(w)},
+\qquad S(HAM)=0.
+\tag{42.52}
+$$
+$n=0$ 使用空词和 $m_0$。对 $H$ 偏迹得到（42.45）的 $AM$ 版本，故 $S(A)=H(Y)$。若在复制之前已对 $M$ 偏迹，则复制后的 $HA$ 联合态熵为 $S(\rho_n)$，并非必为零。
+
+证明。不同 $w$ 的复制基像正交，故复制是等距并保持纯向量范数；可用有限空白酉延拓实现。偏迹 $H$ 消去不同词交叉项，留下所写纯条件记忆的 cq 块。若输入为混合 $\rho_n$，等距保持其非零谱，故联合熵为 $S(\rho_n)$。这是 Q89及 [CoherentCopyCorrelationTax.vonNeumannEntropy_coherentCopyState](../../../D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean) 的直接应用；同文件 `coherent_copy_correlation_tax` 还把复制系统的互信息分解为记录熵加相干差，未将它认作热力学成本。这里 $\chi_n$ 量化约化访问所失去的相干，不是总熵的产生。$\square$
+

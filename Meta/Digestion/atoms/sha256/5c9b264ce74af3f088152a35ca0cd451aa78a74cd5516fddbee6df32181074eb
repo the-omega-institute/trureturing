@@ -1,0 +1,58 @@
+**显式结论与保真度约定。**
+
+来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B},\qquad
+|a|^2+|b|^2=1,\quad ab\ne0.
+\tag{40.1}
+$$
+
+接收器 $K=\mathbb C^2$ 从纯态 $e$ 启动，每轮重复同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。固定一份全域 Stinespring 等距
+$V:K\otimes\mathcal B\to K\otimes E$。
+只取来源初态 $|0\rangle_M$，接收联合态记为 $\sigma_n$，未接收的完整纯目标记为
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$。
+
+令 $f_n(\mathcal C)$ 为终端 $n$ 的最佳局部解码根保真度；所以
+$f_n^2$ 是最佳解码后对纯目标投影的概率。置
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\qquad Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{40.2}
+$$
+
+最大值取得，但下面的逐装置论证不依赖寻找这个最大点。
+
+记
+
+$$
+p=|b|^2,\qquad
+r=\sqrt{(1-p)^2+p},\qquad
+g=1-\frac{1-p}{r}\in(0,1).
+\tag{40.3}
+$$
+
+真实记忆边缘满足
+
+$$
+\begin{aligned}
+\rho_2&=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\\
+\rho_3&=(1-p(1-p))|m_0\rangle\langle m_0|
++p(1-p)|0\rangle\langle0|.
+\end{aligned}
+$$
+
+令
+
+$$
+\mu=\min\{\lambda_{\min}(\rho_2),\lambda_{\min}(\rho_3)\}
+=\frac{1-\sqrt{1-4p^2(1-p)(1-p+p^2)}}2>0.
+\tag{40.4}
+$$
+
+后一等号使用 $\det\rho_3=(1-p+p^2)\det\rho_2\le\det\rho_2$ 和迹一二阶矩阵的最小特征值公式。
+

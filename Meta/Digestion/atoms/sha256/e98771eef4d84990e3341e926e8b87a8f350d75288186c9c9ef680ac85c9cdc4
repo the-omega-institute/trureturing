@@ -1,0 +1,56 @@
+**定理 226.5（真实完整半 diamond 距离）。**
+
+对于目标（226.WP.3），将（226.WP.16）缩放 $1/8$，并在定理 226.2中取
+$$
+\Lambda=\Gamma/8,\qquad \alpha=1/8,\qquad \deg p=2.
+$$
+因此任意结果1 Choi 秩至多一的 CPTP 记录竞争者都满足
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac18.
+\tag{226.WP.18}
+$$
+这对任意 $3\times2$ 单 Kraus $C_1$ 成立。
+
+若总秩至多二的竞争者结果1秩为二，它的结果0必为零。单独读取标签0的最大概率差为
+$$
+q_0=\|K_0^\dagger K_0\|_\infty
+=1-\lambda_{\min}(G)/8
+\ge1-\frac{9/5}{8}
+=\frac{31}{40}>\frac18.
+\tag{226.WP.19}
+$$
+两种情况穷尽全部预算候选，故 $d_2\ge1/8$。
+
+另一方面，删除结果1的 $M/\sqrt8$，取
+$$
+H=(I_2-M^\dagger M/8)^{-1/2},
+$$
+并将保留的 $K_0,N/\sqrt8$ 共同右乘 $H$，得到
+$$
+\mathcal S_*(X)=
+|0\rangle\langle0|\otimes K_0HXHK_0^\dagger
++
+|1\rangle\langle1|\otimes\frac18NHXHN^\dagger.
+\tag{226.WP.20}
+$$
+$H$ 可逆，两个保留 Kraus 非零，故结果 Choi 秩为 $(1,1)$。又
+$$
+H(K_0^\dagger K_0+N^\dagger N/8)H
+=H(I_2-M^\dagger M/8)H=I_2,
+$$
+所以它是合法 CPTP 记录通道。删除效应范数为
+$$
+\delta=\|M^\dagger M/8\|_\infty=\frac18<1.
+$$
+第 219 节的全缺失范数右 Gram 修复定理于是给出完整半 diamond 上界 $1/8$。结合（226.WP.18），该候选的真实误差恰为 $1/8$，并达到全体预算候选的最近距离，证明（226.WP.1）。结果0的真实分支及修复分支始终包含在上下界比较中。
+
+原来的两种标量端口证书均严格小于 $1/8$，故本例同时满足
+$$
+\boxed{
+\max(\gamma_{\mathrm{out}},\gamma_{\mathrm{in,tail}})
+<d_2=\delta_{\mathrm{rot}}=\frac18.
+}
+\tag{226.WP.21}
+$$
+唯一最优删除系数方向是 $M$ 这一既有事实，没有被用来限制任意竞争者，也不能据此宣称最近通道本身唯一。
+

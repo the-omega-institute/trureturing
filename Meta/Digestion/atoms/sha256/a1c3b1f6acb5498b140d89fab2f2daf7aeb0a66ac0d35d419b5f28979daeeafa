@@ -1,0 +1,172 @@
+**定理 2.1（真子坐标全白、两步独立时的信息阈值）。** 令
+
+$$
+F_M(r)=\frac{\phi(r)+(M-1)\phi(r/(M-1))}{2M}\quad(0\le r\le1),
+\qquad
+c_d=F_M(1)
+=\frac{\log2+(M-1)\phi(1/(M-1))}{2M}.
+$$
+
+在核族 $\mathcal K_d^0$ 中有以下结论。
+
+(i) 对任意固定真子集 $S\subsetneq\{1,\ldots,d\}$，
+整个过程 $((X_t)_S)_{t\ge0}$ 是均匀独立同分布过程；完整链满足
+$P^2=\Pi$，其中 $\Pi(x,y)=1/n$。特别地，所有这些核的特征多项式均为
+$(z-1)z^{n-1}$。
+
+(ii) 对任意 $c\in[0,\log2)$，定义信息预算下的不可逆率上确界
+
+$$
+\Sigma_d(c)=\sup\{\sigma(P):P\in\mathcal K_d^0,\ I(P)\le c\}.
+$$
+
+则
+
+$$
+\boxed{\quad \Sigma_d(c)<\infty\ \Longleftrightarrow\ c<c_d.\quad}
+$$
+
+在 $0<c<c_d$ 时，存在唯一 $r_c\in(0,1)$ 使 $F_M(r_c)=c$，并有显式界
+
+$$
+\sigma(P)\le g(r_c)\qquad
+\bigl(P\in\mathcal K_d^0,\ I(P)\le c\bigr).
+$$
+
+在 $c=0$ 时唯一的核是 $\Pi$，其不可逆率为零。
+
+(iii) 临界值自身可由严格正核实现为发散序列的恒定信息：
+存在 $P_k\in\mathcal K_d^0$ 满足
+
+$$
+I(P_k)=c_d\quad\text{对每个 }k,\qquad
+\sigma(P_k)\longrightarrow+\infty.
+$$
+
+(iv) 当 $d\to\infty$ 时，
+
+$$
+c_d=\frac{\log2}{2^d}
++\frac{1}{2^d(2^d-2)}+O(2^{-4d}).
+$$
+
+**证明。** 先求本族的精确表达式。若 $S$ 是真子集，固定 $y_S=z$ 后，
+在至少一个未观测坐标上翻转符号使 $\chi(y)$ 相消，所以对每个完整状态 $x$，
+
+$$
+\sum_{y:y_S=z}P_a(x,y)=2^{-|S|}.
+$$
+
+因此下一时刻的子坐标向量条件于全部过去仍为均匀分布。
+由平稳初始分布归纳得到任意长度的独立乘积分布。这一论证针对每个固定 $S$；
+它不把不同 $S$ 的联合记录当成同一个受限观察。
+
+将核视为作用于实函数的算子，有
+
+$$
+Pf=\mathbb E f+\ a\,\mathbb E(\chi f).
+$$
+
+写 $A=P-\Pi$，则 $\Pi A=A\Pi=0$，且 $A^2=mA$。
+在 $m=0$ 时 $A^2=0$，所以 $P^2=\Pi$；常数方向上的特征值为 $1$，
+均值零子空间上的算子平方为零，给出 (i) 的特征多项式。
+这里不要求 $P$ 可对角化。
+
+为计算 $I$ 与 $\sigma$，记
+
+$$
+\ell(u)=\frac12\log(1-u^2),\qquad
+\log(1+a(x)\chi(y))=\ell(a(x))+\chi(y)h(a(x)).
+$$
+
+在均匀乘积测度上，
+
+$$
+I(P)=\mathbb E\phi(a)=\mathbb E\phi(b).
+$$
+
+又
+
+$$
+\sigma(P)=
+\mathbb E_{x,y}\!\left[(1+a(x)\chi(y))
+  \bigl(\log(1+a(x)\chi(y))-\log(1+a(y)\chi(x))\bigr)\right].
+$$
+
+第一个对数的贡献是 $\mathbb E\ell(a)+\mathbb E[a h(a)]$；
+第二个对数的贡献是
+$\mathbb E\ell(a)+\mathbb E[a\chi]\,\mathbb E[\chi h(a)]$。
+因为 $h$ 为奇函数、$a=\chi b$ 且 $\mathbb E[a\chi]=m$，得到
+
+$$
+\boxed{\quad
+I(P)=\mathbb E\phi(b),\qquad
+\sigma(P)=\mathbb E[(b-m)h(b)]
+=\operatorname{Cov}(b,h(b)).
+\quad} \tag{2.1}
+$$
+
+尤其在 $\mathcal K_d^0$ 内，
+
+$$
+\sigma(P)=\mathbb E g(b). \tag{2.2}
+$$
+
+这些计算也说明：在更大的定义 1.1 核族内，
+$\sigma=0$ 当且仅当 $b$ 为常数，因为对独立均匀状态 $x,y$，
+
+$$
+2\operatorname{Cov}(b,h(b))
+=\mathbb E_{x,y}\bigl[(b(x)-b(y))(h(b(x))-h(b(y)))\bigr],
+$$
+
+右边逐项非负，且 $h$ 严格递增。
+
+下面证明临界界。对任意坐标 $x_*$，设 $|b(x_*)|=r$。
+同一奇偶类的其余 $M-1$ 个数的和为 $-b(x_*)$。
+由 $\phi''(u)=1/(1-u^2)>0$、偶性及 Jensen 不等式，
+
+$$
+I(P)\ge
+\frac{\phi(r)+(M-1)\phi(r/(M-1))}{2M}
+=F_M(r). \tag{2.3}
+$$
+
+另一奇偶类的贡献非负。$F_M$ 在 $[0,1]$ 上连续，在 $(0,1)$ 上严格递增，
+且 $F_M(0)=0$。若 $I(P)\le c<c_d$，式 (2.3) 对每个坐标都给出
+$|b(x)|\le r_c<1$。$g$ 是偶函数并在 $[0,1)$ 上递增，
+故 (2.2) 给出 $\sigma(P)\le g(r_c)$。
+若 $c=0$，$\phi$ 的唯一零点为零，所以 $b=0$、$P=\Pi$。
+
+为证明临界发散，令 $r\uparrow1$，在 $C_+$ 上取
+
+$$
+b_1=r,\qquad b_2=\cdots=b_M=-\frac{r}{M-1}.
+$$
+
+该类均值为零，其对总信息的贡献恰为 $F_M(r)$。
+由于 $c_d-F_M(r)\downarrow0$，对足够靠近 $1$ 的 $r$，
+存在唯一 $s_r\in(0,1)$ 满足
+
+$$
+\phi(s_r)=2\bigl(c_d-F_M(r)\bigr).
+$$
+
+$M$ 为偶数，因此可在 $C_-$ 上放置 $M/2$ 个 $s_r$ 与 $M/2$ 个 $-s_r$。
+此类也均值为零，总信息严格等于 $c_d$，且所有 $|b|<1$。
+但
+
+$$
+\sigma(P_r)\ge \frac{g(r)}{2M}\longrightarrow+\infty.
+$$
+
+这证明 (iii)，也给出 (ii) 中所有 $c\ge c_d$ 的发散。
+最后，用 $\phi(u)=u^2/2+O(u^4)$ 展开 $F_M(1)$，得到
+
+$$
+c_d=\frac{\log2}{2M}+\frac1{4M(M-1)}
++O\!\left(\frac1{M(M-1)^3}\right),
+$$
+
+代入 $M=2^{d-1}$ 即为 (iv)。$\square$
+

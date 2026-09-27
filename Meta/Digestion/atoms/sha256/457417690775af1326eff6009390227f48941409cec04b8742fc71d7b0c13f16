@@ -1,0 +1,44 @@
+### 17.2 相容线程与实际来源
+
+相容状态线程是满足
+
+$$
+r_i^{i'}(x_{i'})=x_i
+$$
+
+的族 $x=(x_i)_i$；协议线程同理满足 $\ell_j^{j'}(p_{j'})=p_j$。在这些线程上，式（17.1）使所有有限层评价一致，因此可以定义形式极限评价
+
+$$
+E_\infty(x,p):=E_{ij}(x_i,p_j),
+\tag{17.3}
+$$
+
+若状态和协议指标集分别是有向的（任意两层都有共同细化层），则对任意两组选定层可送到共同细化层，并由式（17.1）比较。因此只要选取的 $i,j$ 在这些有向系统中可共同比较，右端不变。
+
+但形式极限线程的存在不等于它来自原始共同来源。令
+
+$$
+\iota:S\to\varprojlim_i X_i
+$$
+
+是实际配置的线程读出。若每层还有更新 $u_i:X_i\to X_i$，并满足
+
+$$
+r_i^{i'}\circ u_{i'}=u_i\circ r_i^{i'},
+$$
+
+则才可在相容线程上定义
+
+$$
+U_\infty((x_i)_i):=(u_i(x_i))_i.
+$$
+
+要把这个阶段更新提升回 $S$，至少需要
+
+$$
+U_\infty(\operatorname{ran}\iota)\subseteq\operatorname{ran}\iota.
+\tag{17.4}
+$$
+
+若 $\iota$ 分离实际配置，提升唯一；若 $\iota$ 满射，则闭合条件自动成立。式（17.4）是“有限层都相容”与“同一整体中确有该配置”之间的缺口，不能用逐层自然性代替。仓内 `IndependentDescentCriterion.inverse_limit_descent_and_independent_converse`、`LocalDescentGlobalCompatibility.escaping_thread_not_in_global_image` 和既有完成化卷的实际像条件分别承担这三个边界。
+

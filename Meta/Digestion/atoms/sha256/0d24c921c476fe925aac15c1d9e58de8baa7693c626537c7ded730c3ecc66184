@@ -1,0 +1,49 @@
+### 267.5 输出相对熵的二次上界与集体测量下界
+
+两输出交换且具有共同严格正支撑，故相对熵就是（267.27）的经典相对熵。沿用§253从 $\ln u\le u-1$ 得到的估计，
+$$
+D_{\mathrm{nat}}(\sigma_h\|\sigma_0)
+\le\sum_{w,s,k}
+\frac{(p_{w,s,k}^{(h)}-p_{w,s,k})^2}{p_{w,s,k}}.
+\tag{267.29}
+$$
+代入概率后，其系数可以完全求出：
+$$
+\begin{aligned}
+\sum_{w,s,k}
+\frac{(p_{w,s,k}^{(h)}-p_{w,s,k})^2}{p_{w,s,k}}
+&=2\delta^2\sum_{k=\pm}\frac{r_k^2}{1-4r_k^2}\\
+&=2\delta^2\left[
+\left(\frac34+\frac{\sqrt5}{3}\right)
++\left(\frac34-\frac{\sqrt5}{3}\right)\right]\\
+&=3\delta^2.
+\end{aligned}
+\tag{267.30}
+$$
+因此
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_h\|\sigma_0)\le3\delta^2.
+}
+\tag{267.31}
+$$
+
+Helstrom公式、自然对数Pinsker不等式及相对熵张量加性均直接承接§253。若 $n$ 份输出的平均成功率达到 $2/3$，则
+$$
+\frac49
+\le\|\sigma_h^{\otimes n}-\sigma_0^{\otimes n}\|_1^2
+\le2nD_{\mathrm{nat}}(\sigma_h\|\sigma_0)
+\le6n\delta^2.
+\tag{267.32}
+$$
+从而
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\ge\frac{2}{27\delta^2}
+=\frac1{55296h^8}.
+}
+\tag{267.33}
+$$
+这一下界对全部规定输出上的任意联合POVM成立；自适应终端处理也不能越过同一最优二元测量界。
+

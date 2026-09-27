@@ -1,5 +1,5 @@
 using StrataLint.Engine;
-using static StrataLint.Tests.UtilityAdmissionTestSupport;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
 namespace StrataLint.Tests;
 
@@ -123,10 +123,10 @@ public sealed class UtilityAdmissionObservationTests
             UtilityAdmissionTestSupport.UtilityRuleId,
             implementationContext).Diagnostics);
 
-        Assert.Empty(DeclaredTemplateUnregisteredTests.Findings(
-            DeclaredTemplateUnregisteredTests.Build(selected: false, malformed: true)));
+        Assert.Empty(DeclaredTemplateUnregisteredFixture.Findings(
+            DeclaredTemplateUnregisteredFixture.Build(selected: false, malformed: true)));
         Assert.Contains(RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
-            DeclaredTemplateUnregisteredTests.Build()).Diagnostics,
+            DeclaredTemplateUnregisteredFixture.Build()).Diagnostics,
             diagnostic => diagnostic.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
                 && diagnostic.AdmissionEffect == AdmissionEffect.Observe);
     }

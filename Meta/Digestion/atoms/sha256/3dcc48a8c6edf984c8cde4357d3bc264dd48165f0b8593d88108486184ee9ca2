@@ -1,0 +1,34 @@
+**定理 11.3（隐藏调度与相位误差的精确类型图）。** 在顶点集
+
+$$
+V_D=\{(t,\nu):0\le t<n,\ \nu\in B_D(t)\}
+\tag{TM.1107}
+$$
+
+上定义图 $H_{D,\varepsilon}$：同一 $t$ 的不同奇偶相邻；不同 $t,t'$ 的全部类型之间连边，当且仅当 $d_n(t,t')\le\varepsilon$。则
+
+$$
+\boxed{\Lambda_{j,h}(\varepsilon)=\chi(H_{D,\varepsilon}).}
+\tag{TM.1108}
+$$
+
+即使标签允许区分同一类型背后的调度和旧因果状态，也不能低于此色数。
+
+证明。记 $\mathcal B_t=\{s:d_P(s,S_t)\le\varepsilon\}$。第8.1节的圆周几何给出
+$\mathcal B_t\cap\mathcal B_{t'}\ne\varnothing$ 当且仅当 $d_n(t,t')\le\varepsilon$。对任一可行编码，令 $A_{t,\nu}$ 是所有实现类型 $(t,\nu)$ 的调度与旧状态所可能发出的标签集合。这是非空集合；由于标签先于末读，改变同一前缀中的 $u$ 不改变相应标签。
+
+若相邻的两个类型的支持集共享某个标签，则分别选取实现该标签的实际调度。不同前缀时取两相位球的一个交点，同一前缀时取共同中心作为 $\widehat S$；对每个类型都取 $u=(-b-\nu)\bmod2$。两份实际实现的末读均为 $Y=0$，收到的相位和标签也相同，而来源不同：不同 $t$ 对应不同二点纤维，同一 $t$ 的两个奇偶对应相反的 $u$。共同解码器因此矛盾。故相邻类型的标签支持集必须不交。从每个非空支持集各取一个标签，所得函数就是正常染色；全局标签数至少是色数。这里比较的是合同分别要求正确的两个实现，并未假设一条实际历史同时发生两种奇偶。
+
+反过来，给定图的正常染色 $c$，采集端从已取得的 $(t,\nu)$ 发出 $c(t,\nu)$。对一个合规输入 $(\widehat S,Y,\lambda)$，至少存在一个真实类型满足 $\widehat S\in\mathcal B_t$ 且 $c(t,\nu)=\lambda$。若存在两个，它们或者是同一前缀的不同奇偶，或者相位球在 $\widehat S$ 处相交；两种情形都相邻，不应同色。因此类型唯一，再取
+
+$$
+u=(Y-b-\nu)\bmod2,\qquad R=2t+u
+\tag{TM.1109}
+$$
+
+即完成统一恢复。$\square$
+
+该证明中的有限图着色机制属于零错误旁信息问题的经典关系；文献对应为 H. S. Witsenhausen, *The zero-error side information problem and chromatic numbers (Corresp.)*, IEEE Transactions on Information Theory **22**(5), 592–593 (1976), [doi:10.1109/TIT.1976.1055607](https://doi.org/10.1109/TIT.1976.1055607)。此处使用的是上面已经逐方向证明的单次有限模型，不从该文献引出截止公式或下节的混合需求闭式。
+
+仓内 `D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean` 的 `minimum_repair_labels_eq_chromatic_eq_fiber_diversity` 所用边关系是“确定读出相等且目标不同”。本定理的边来自相位球交叠，标签又必须先于误差取得；交叠不具有传递性，因而不满足直接用一个确定观察纤维代替此图的条件。
+

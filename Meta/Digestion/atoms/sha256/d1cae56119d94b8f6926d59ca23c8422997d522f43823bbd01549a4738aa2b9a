@@ -1,0 +1,10 @@
+**证明。** 置 $r=|\langle\eta_2,\eta_{n+1}\rangle|$，环境取单位代表。实际 $V_0p=u\otimes\eta_2$、$u\in G_2$ 单位，以及 $V_0H_n=G_2\otimes\eta_{n+1}$，给
+$$
+\|P_{H_n}p\|=r.
+$$
+实际 $V_1p=v\otimes\eta_2$、$V_1G_n=Q_{n+1}\otimes\eta_{n+1}$ 给
+$$
+\|P_{G_n}p\|=r\|P_{Q_{n+1}}v\|\le r.
+$$
+又 $p\in S$、$Q_n=Q\perp S$，所以 $P_{H_n}p=P_{H_n}P_{G_n}p$。若 $r>0$，右侧的输入非零，且 $H_n\cap G_n=0$ 使正交投影严格缩短其范数，得到 $r<\|P_{G_n}p\|\le r$，矛盾。故 $r=0$。证明完毕。
+

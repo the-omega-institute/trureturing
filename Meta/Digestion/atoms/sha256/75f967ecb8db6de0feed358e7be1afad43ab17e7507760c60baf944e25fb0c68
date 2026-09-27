@@ -1,0 +1,13 @@
+**命题 44.16（缩放源的归一化与生成元缺口）。** 缺少共同正谱下界 $a>0$，绝对缺陷不能控制以下两项。 固定 $h>0$，取
+$$
+S_\varepsilon=\varepsilon\operatorname{diag}(1,2),
+\quad F=2^{-1/2}(1,1),\quad0<\varepsilon<1/2.
+$$
+则
+$$
+A=3\varepsilon/2,\quad \delta=\varepsilon^2/4\to0,
+\quad \frac{\Delta}{A^2}=\frac19,
+\quad C_c-G=\frac{\log(9/8)}{2h}>0.
+$$
+每个实例仍有严格正谱下界，但随 $\varepsilon\downarrow0$ 不存在适用于整个模型族的共同 $a>0$。这是对上述两个具体目标的反例，不泛称排除了所有“归一化时钟”定义。
+

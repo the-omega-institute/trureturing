@@ -1,0 +1,15 @@
+**条件三：权重归一化与内点。** 定义
+$$
+\rho_*=\left(\frac Q\ell+\frac P{\sqrt A}\right)M,
+\qquad
+\theta_*:=\operatorname{Tr}(Q\rho_*).
+\tag{255.10}
+$$
+要求
+$$
+\operatorname{Tr}\rho_*=1,
+\qquad0<\theta_*<1.
+\tag{255.11}
+$$
+以下证明 $M$ 与 $J,Q,P$ 自动交换，因此 $\rho_*$ 是正半定矩阵。这里的 $\theta_*$ 完全由给定数据计算，尚未借用任何未知源的形成纠缠。
+

@@ -1,0 +1,14 @@
+**定义 31.1（固定端点的分拆族）。** 固定非平凡有限群 H，q=|H|≥2，n≥1，u=Σ_h h，z=q1_H-u。令 P(n) 为 n 的非增正整数分拆集合。对 λ∈P(n)，令
+
+$$
+N_\lambda=\operatorname{diag}(J_{\lambda_1}(0),J_{\lambda_2}(0),\ldots),
+\qquad
+\boxed{A_\lambda=q^3nJ_nu+qzN_\lambda.}
+$$
+
+这里 J_a(0) 是 a 阶上超对角线为一的幂零 Jordan 块；J_n 无参数时仍指全一矩阵。端点 A_λ 仅依赖 H、n、λ，**不依赖另一端 μ、不依赖所选路径，也不在比较时重新增大均匀项**。比较分拆时把它们补零到长度 n，并定义
+
+$$
+d_\infty(\lambda,\mu)=\max_{1\le i\le n}|\lambda_i-\mu_i|.
+$$
+

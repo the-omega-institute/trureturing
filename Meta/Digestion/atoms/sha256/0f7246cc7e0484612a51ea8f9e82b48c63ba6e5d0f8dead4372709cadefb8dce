@@ -1,0 +1,12 @@
+**命题 384.2（确定性系统中的普遍概率闭包必为确定性）。** 在有限非空 $X$ 上，令 $\tau:X\to X$ 是确定性更新，$q:X\to O$ 满射。存在同一个随机核 $Q$，使对所有初始分布 $\mu$ 有
+
+$$
+q_*(\tau_*\mu)=(q_*\mu)Q,
+$$
+
+当且仅当存在 $\sigma:O\to O$ 使 $q\circ\tau=\sigma\circ q$。一旦存在，$Q(o,\cdot)=\delta_{\sigma(o)}$，而 $\sigma$ 和 $Q$ 均唯一。
+
+证明：对每个 $x$ 代入 $\delta_x$，即有 $Q(q(x),\cdot)=\delta_{q(\tau(x))}$。两个具有相同当前读数的状态必须给出相同的下一步读数，因而可以定义 $\sigma(q(x))=q(\tau(x))$。反向由对点质量公式取混合得到；满射性给出全部输出上的唯一性。
+
+项目 [DistributionIndependentClosure](../../../D5/S3/Observer/ProbabilisticClosure/DistributionIndependentClosure.lean) 的 `distribution_independent_closure_criterion` 还将这个条件与有限观察细化的零深度联系起来。这里保持其有限非空状态与满射读数的公开陈述条件。概率并非通用的补洞方法：当失败来自同一读数掩盖不同确定性后继时，要求一个核适用于所有初始分布，会把这个失败原样暴露出来。
+

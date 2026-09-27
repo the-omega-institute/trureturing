@@ -1,0 +1,46 @@
+#### 5.2.1 有向观察核的一致缩小
+
+设 $X$ 是非空紧 Hausdorff 空间，$I$ 是非空有向预序集。对每个 $i\in I$，给定到 Hausdorff 空间 $X_i$ 的连续满射
+
+$$
+q_i:X\longrightarrow X_i.
+$$
+
+若 $i\le j$，存在连接映射 $r_{ji}$，满足 $q_i=r_{ji}q_j$。设全部 $q_i$ 共同分离点，即
+
+$$
+(\forall i\in I,\ q_i(x)=q_i(x'))\Longrightarrow x=x'.
+$$
+
+记观察核和对角线为
+
+$$
+E_i=\{(x,x'):q_i(x)=q_i(x')\},\qquad
+\Delta_X=\{(x,x):x\in X\}.
+$$
+
+则对于任一包含整个 $\Delta_X$ 的开集 $U\subseteq X^2$，存在 $i_0$，使
+
+$$
+E_i\subseteq U\qquad(i\ge i_0).
+\tag{TM.449}
+$$
+
+证明：$X_i$ 为 Hausdorff，故 $E_i$ 闭；相容性给出 $j\ge i\Rightarrow E_j\subseteq E_i$。反设没有任何 $E_i$ 包含于 $U$。紧集 $K=X^2\setminus U$ 上的闭集 $E_i\cap K$ 全非空，而且任意有限个阶段有共同上界，故这些闭集具有有限交性质。紧致性给出一点属于全部 $E_i\cap K$。共同分离性使该点属于 $\Delta_X$，与 $K\cap\Delta_X=\varnothing$ 矛盾。找到一个阶段后，其全部细化阶段仍满足同一包含关系。
+
+若 $X$ 进一步为紧度量空间，令
+
+$$
+\eta_i=\max\{d(x,x'):(x,x')\in E_i\}.
+$$
+
+这里最大值存在，因为 $E_i$ 是非空紧集。对任意 $\varepsilon>0$，取 $U=\{d(x,x')<\varepsilon\}$，由式（TM.449）得到
+
+$$
+\eta_i\longrightarrow0
+\quad\text{沿有向集 }I\text{ 收敛}.
+\tag{TM.450}
+$$
+
+这是观察纤维直径的统一收敛；没有另行给出达到精度 $\varepsilon$ 所需阶段的有效算法或成本界。
+

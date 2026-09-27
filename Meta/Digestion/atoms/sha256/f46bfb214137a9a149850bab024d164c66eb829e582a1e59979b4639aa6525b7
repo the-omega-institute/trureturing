@@ -1,0 +1,19 @@
+#### 47.9.3 分次缩放与精确剩余尾距离
+
+对任意环境数组 \(T\in\mathcal B_\rho\)，记
+\[
+\tau_N(T)=\sup_{n+k\ge N}\rho^{n+k}|T(n,k)|,
+\qquad
+L_\rho(T)=\lim_{N\to\infty}\tau_N(T).
+\tag{47.34}
+\]
+\(\tau_N(T)\) 非负、不增且有界，故此极限存在且有限；
+\(L_\rho(T)=0\) 当且仅当 \(T\in\mathcal B_{\rho,0}\)。
+这里是尾幅度，不是概率或热力学熵。
+
+对数学缩放参数 \(\tau\ge0\)，定义
+\[
+(\mathsf D_\tau a)_i=e^{-(i+1)\tau}a_i,\qquad
+(\mathsf U_\tau T)(n,k)=e^{-(n+k+1)\tau}T(n,k).
+\tag{47.35}
+\]

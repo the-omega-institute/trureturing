@@ -1,0 +1,23 @@
+**定理259.2（纤维直径）。** 在（259.1）、（259.5）下，令
+$$
+G=(\rho+K)\#(\rho-K).
+\tag{259.21}
+$$
+则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak S(\rho,K)}d(\Omega,\Xi)
+=\operatorname{Tr}G.
+}
+\tag{259.22}
+$$
+最大值由同一数据下的两个来源
+$$
+\boxed{
+\Omega_\pm
+=\frac12\begin{pmatrix}\rho\pm G&K\\K&\rho\mp G\end{pmatrix}
+}
+\tag{259.23}
+$$
+取得。
+

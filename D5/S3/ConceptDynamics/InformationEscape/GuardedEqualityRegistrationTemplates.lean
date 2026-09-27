@@ -7,7 +7,7 @@
    digest: A varying Boolean guard and two typed equality readouts retain the full arena with independent slot sensitivity. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

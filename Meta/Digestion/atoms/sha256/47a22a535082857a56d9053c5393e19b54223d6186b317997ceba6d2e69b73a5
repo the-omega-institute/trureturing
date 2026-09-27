@@ -1,0 +1,46 @@
+### 251.5 两份响应直接恢复参考边缘及第三个关联
+
+现在可以去掉§250恢复式中作为额外输入的参考边缘。由（251.9），
+$$
+|R_a|\big|_{E_{\mathrm{ent}}}
+=\frac{\theta\ell}{2}V(I_2\otimes\sigma_M)V^\dagger,
+\qquad
+|R_a|\big|_{E_s}=q_s\sqrt A\,\tau_s.
+\tag{251.35}
+$$
+因此
+$$
+\boxed{
+\rho_E=\operatorname{Tr}_H\Omega
+=\left(\frac Q\ell+\frac P{\sqrt A}\right)|R_a|.
+}
+\tag{251.36}
+$$
+这些因子在各正常形块上交换，右侧是归一化正半定矩阵，并在 $E_0^\perp$ 上为零。$Q,P$ 已由两份响应确定，所以（251.36）不需要第三份矩阵读数；$\theta=\operatorname{Tr}(Q\rho_E)$ 也随之恢复。
+
+再置
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0},
+\qquad
+R_Y=-\frac{i\ell^2}{4\sqrt A\,b_0}\,C\rho_E.
+\tag{251.37}
+$$
+前两式直接由（251.2）线性求解。第三式在量子块中使用 $Y^{\mathsf T}=-Y$ 及
+$$
+C\big|_{E_{\mathrm{ent}}}
+=-\frac{4i\sqrt A\,b_0}{\ell^2}V(Y\otimes I_M)V^\dagger;
+\tag{251.38}
+$$
+在产品块中，$r_s$ 位于 $X,Z$ 平面，故 $Y$ 关联与 $C$ 均为零。逐块得到 $R_Y=\mathcal R_Y(\Omega)$，其中 $\mathcal R_Y(T)=\operatorname{Tr}_H[(Y\otimes I)T]$。最终
+$$
+\boxed{
+\Omega=\frac12\bigl(
+I_2\otimes\rho_E+X\otimes R_X+Y\otimes R_Y+Z\otimes R_Z
+\bigr).
+}
+\tag{251.39}
+$$
+式（251.37）保留 $b_0$ 的符号。由定理251.2，所得态是全部归一化正半定填充中的唯一一个。
+

@@ -1,0 +1,2 @@
+**Zero-mass endpoint.** If $M=0$, then $S$ contains every positive depth. The first $n$ canonical cylinders are disjoint, have total mass $1-2^{-n}$, and are unions of depth-$n$ cylinders. Exactly one depth-$n$ cylinder remains. These remaining cylinders form a nested sequence, whose intersection is a single point. The raw enumeration effectively supplies the first $n$ canonical cylinders, so this point is computable. Thus every zero-mass complement in this sparse binary class is a computable singleton. General effectively closed null sets do not satisfy this restriction.
+

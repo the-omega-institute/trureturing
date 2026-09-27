@@ -1,0 +1,31 @@
+**定义 405.1（每位持有者一份源记录的有限局部接口）。** 沿用定义 392.1 的四个记录向量，写成
+
+$$
+r_1=|0\rangle,\qquad r_2=|1\rangle,\qquad
+r_3=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+r_4=\frac{|0\rangle+i|1\rangle}{\sqrt2},\qquad
+P_i=|r_i\rangle\langle r_i|.
+$$
+
+固定任意正整数 $n\ge1$。输入仍是单个 $S=\mathbb C^4$ 上的任意未知态，并可与任意有限维参考 $A$ 纠缠。按定义 400.1 先完成全部 $n$ 份记录的制备：
+
+$$
+J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n},\qquad
+\rho_{ASR}=(\operatorname{id}_A\otimes J_n)\rho_{AS}
+                  (\operatorname{id}_A\otimes J_n)^\dagger.
+$$
+
+此后第 $a$ 位持有者持有第 $a$ 个物理源量子比特，记录的局部分割始终是 $R=(\mathbb C^2)^{\otimes n}$。占据的联合张成空间 $E_n=\operatorname{span}\{r_i^{\otimes n}\}$ 沿用原定义；以 $E_n$ 为坐标空间不授予新的局部张量分解、跨持有者压缩或联合测量权限。
+
+允许的记录操作是一棵有限树。每个非叶节点由一位持有者在其有限维可访问工作空间上执行有限结果 instrument，各分支完全正、总和保迹；下一位操作方和操作选择可依赖已经取得的经典信息。允许自适应经典通信、粗粒化结果、私有经典或量子记忆、重复访问同一持有者以及丢弃局部寄存器。初始辅助态与整个输入及参考独立，且在持有者之间为乘积态。禁止额外共享纠缠和量子通信。在整棵记录树结束前不操作 $S$；叶子结果只控制最后的系统酉算子 $U_w$，$A$ 始终不被操作。
+
+以 $w$ 表示实际经典结果历史。若实际取得的标签后来被遗忘，可在数学求和中保留这些标签，而后续控制与反馈仍取原协议规定的相同值。粗粒化 CP 分支的未观测 Kraus 指标不因此成为可读取的经典结果。记叶子在反馈前的系统映射为 $\mathcal M_w$，反馈后为
+
+$$
+\mathcal T_w(X)=U_w\mathcal M_w(X)U_w^\dagger.
+$$
+
+确定性精确恢复要求对全部叶子求和得到 $\sum_w\mathcal T_w=\operatorname{id}_S$。后选择则须先声明接受集合 $W_{\mathrm s}$，要求 $\sum_{w\in W_{\mathrm s}}\mathcal T_w=t\operatorname{id}_S$，其中 $0\le t\le1$。这里都是全部四维矩阵上的线性映射等式；张量上 $\operatorname{id}_A$ 后，任意联合输入的接受输出为 $t\rho_{AS}$。只恢复指定经典基态、限制到某个码子空间或丢弃参考，是不同的任务。
+
+有限性逐协议要求：允许零深度树、单结果通道、零 CP 结果、提前终止与不等叶深；不在所有候选协议之间预设统一深度、记忆维数或最小正分支概率。有限局部 instrument 的自适应复合与结果粗粒化采用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2（PDF 第 5–6 页）的操作区分。本定义另将每棵树、每次结果集和局部工作空间限定为有限；该文区分的无界轮次与闭包不包含在下述定理的量词中。
+

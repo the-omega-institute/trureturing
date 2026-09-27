@@ -1,0 +1,47 @@
+#### 5.2.3 实值任务的一致近似与选择的边界
+
+对连续 $V:X\to\mathbb R$，定义纤维振幅
+
+$$
+\operatorname{osc}_{E_i}(V)
+=\max_{(x,x')\in E_i}|V(x)-V(x')|.
+$$
+
+对任意 $\varepsilon>0$，集合 $\{|V(x)-V(x')|<\varepsilon\}$ 是对角线开邻域，故式（TM.449）给出
+
+$$
+\operatorname{osc}_{E_i}(V)\longrightarrow0.
+\tag{TM.452}
+$$
+
+每条非空纤维紧，故可定义
+
+$$
+m_i(y)=\min_{q_i(x)=y}V(x),\qquad
+M_i(y)=\max_{q_i(x)=y}V(x),\qquad
+v_i(y)=\frac{m_i(y)+M_i(y)}2.
+$$
+
+逐纤维比较即得
+
+$$
+\|V-v_iq_i\|_\infty
+\le\frac12\operatorname{osc}_{E_i}(V).
+\tag{TM.453}
+$$
+
+这是集合映射上的一致估计，不声称上述 $v_i$ 连续，也不提供连续代表点。若 $X$ 为紧度量空间，记
+
+$$
+\omega_V(u)=\sup_{d(x,x')\le u}|V(x)-V(x')|.
+$$
+
+则 $\omega_V(u)\to0$，且 $\operatorname{osc}_{E_i}(V)\le\omega_V(\eta_i)$。任取右逆 $s_i:X_i\to X$，有
+
+$$
+\|V-(V\circ s_i)q_i\|_\infty\le\omega_V(\eta_i).
+\tag{TM.454}
+$$
+
+任意右逆只是集合选择；其连续性、可测性和可计算性须另证。
+

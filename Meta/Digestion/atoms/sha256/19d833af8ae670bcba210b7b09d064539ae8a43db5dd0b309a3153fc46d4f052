@@ -1,0 +1,36 @@
+**定理 31.3（有限截止的量子 Doob 仪器）。** 剩余 $m\ge1$ 轮时，对支撑于 $P_m$ 的输入定义
+
+$$
+\mathcal N^{[m]}(X)
+=G_{m-1}\mathcal N(G_m^{-1}XG_m^{-1})G_{m-1},
+\qquad
+\mathcal C_x^{[m]}(X)
+=\mathcal C_x(G_m^{-1}XG_m^{-1}).
+$$
+
+未点击输出位于 $P_{m-1}\mathcal H$，点击输出位于原空间 $\mathcal H$；用结果标志直和可统一输出类型。这些完全正分支满足
+
+$$
+(\mathcal N^{[m]})^*(I_{P_{m-1}})
++\sum_x(\mathcal C_x^{[m]})^*(I)=I_{P_m}.
+$$
+
+对原空间全部算子，有
+
+$$
+\mathcal N^{[m]}\mathcal S_m=\mathcal S_{m-1}\mathcal N,
+\qquad
+\mathcal C_x^{[m]}\mathcal S_m=\mathcal C_x.
+$$
+
+这里 $I_{P_0}$ 是零空间上的零算子。最后一轮的未点击分支恒为零。
+
+证明。新 Kraus 算子是 $G_{m-1}Q_\alpha G_m^{-1}$ 与 $L_{x\beta}G_m^{-1}$。其效果之和为
+
+$$
+G_m^{-1}\bigl(\mathcal A(H_{m-1})+B\bigr)G_m^{-1}
+=G_m^{-1}H_mG_m^{-1}=I_{P_m}.
+$$
+
+引理 31.2 使 $G_{m-1}Q_\alpha P_m=G_{m-1}Q_\alpha$、$L_{x\beta}P_m=L_{x\beta}$。将 $G_m^{-1}G_m=P_m$ 代入即可逐 Kraus 验证交织式，不要求 $P_m$ 对原未点击算子不变。当 $m=1$，左侧未点击 Kraus 的 $G_0$ 为零。$\square$
+

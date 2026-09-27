@@ -1,0 +1,80 @@
+### 286.3 任意全输入测量的单块可分辨率上界
+
+以下 $F(\rho,\omega)=\|\sqrt\rho\sqrt\omega\|_1$ 为根保真度，$d=\|\rho-\omega\|_1/2$ 为半迹距离，$\|\cdot\|_2$ 为Hilbert–Schmidt范数。
+
+首先控制实际来源的大小。由 $V^\dagger V=I+MM^\dagger$、$\|M\|\le5/4$ 和 $\|Q\|\le16/23$，
+$$
+\|\Omega_n\|\le\frac{41}{23n}<\frac2n,
+\qquad
+\operatorname{Tr}\Omega_n^2\le\frac2n,
+\qquad
+\|\Omega_\delta\|_2\le\sqrt{2/n}.
+\tag{286.7}
+$$
+同时
+$$
+\|\Omega_\delta-\Omega_n\|_2^2
+=\delta^2\left(\operatorname{Tr}\Omega_n^2-\frac1{2n}\right)
+\le\frac{3\delta^2}{2n}.
+\tag{286.8}
+$$
+对任一实际相位对，乘积差写成两个逐因子替换项。Hilbert–Schmidt范数的张量乘法与三角不等式给
+$$
+\begin{aligned}
+\|\Omega_\delta^{\otimes2}-\Omega_n^{\otimes2}\|_2
+&\le\|\Omega_\delta-\Omega_n\|_2
+(\|\Omega_\delta\|_2+\|\Omega_n\|_2)\\
+&\le\frac{2\sqrt3\delta}{n}.
+\end{aligned}
+$$
+不同相位对只是对这一差作相同酉共轭，取平均由范数凸性保持此界。因此
+$$
+\|\sigma_{\delta,r}-\sigma_{0,r}\|_2^2
+\le\frac{12\delta^2}{n^2}.
+\tag{286.9}
+$$
+
+当 $\varepsilon>0$ 时，令 $A=\sqrt{\sigma_{\delta,r}}$、$B=\sqrt{\sigma_{0,r}}$、$X=A-B$。平方根差满足标准Sylvester恒等式
+$$
+AX+XB=\sigma_{\delta,r}-\sigma_{0,r}.
+$$
+分别在 $A$ 的左本征基和 $B$ 的右本征基展开，则
+$$
+X_{ij}=\frac{(\sigma_{\delta,r}-\sigma_{0,r})_{ij}}{a_i+b_j}.
+$$
+由（286.6），分母至少为 $2q\sqrt\varepsilon/n$。于是
+$$
+\|X\|_2^2
+\le\frac{n^2}{4\varepsilon q^2}
+\|\sigma_{\delta,r}-\sigma_{0,r}\|_2^2
+\le\frac3{q^2}\frac{\delta^2}{\varepsilon}.
+\tag{286.10}
+$$
+这里使用左右两个不同本征基，不要求两态交换。又因 $F\ge\operatorname{Tr}(AB)$，
+$$
+1-F^2\le2(1-F)\le2-2\operatorname{Tr}(AB)=\|X\|_2^2.
+\tag{286.11}
+$$
+
+另一条不要求谱隙的界来自实际混合来源：每份的半迹距离至多 $\delta$，两份逐因子替换及共同相位平均给 $d(\sigma_{\delta,r},\sigma_{0,r})\le2\delta$。标准保真度—迹距不等式因而给
+$$
+1-F^2\le2d\le4\delta.
+\tag{286.12}
+$$
+把（286.10）与（286.12）取较小者，并使用
+$$
+\min\{A,B/x\}\le\frac{A+B}{1+x}\quad(x>0),
+\qquad 4+3/q^2<40,
+$$
+得到统一的块响应界
+$$
+\boxed{
+1-F(\sigma_{\delta,r},\sigma_{0,r})^2
+\le40\frac{\delta^2}{\varepsilon+\delta}.
+}
+\tag{286.13}
+$$
+当 $\varepsilon=0$ 时直接使用（286.12），所以端点也包含在内。
+
+保真度张量乘法、迹距数据处理、等先验二元判别及其与保真度的界是标准工具，沿用§283所引 Watrous，*The Theory of Quantum Information*，[原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4、Theorem 3.33。平方根差估计的有限维推导已在上面写出；这些工具只承担当前来源估计的中间步骤。
+

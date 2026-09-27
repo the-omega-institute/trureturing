@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Actual direct and skew fixed-cut factors preserve classical avoidance and ordinary descents.
+Actual direct and skew fixed-cut factorization, with ordinary descent definitions.
 
-These are source-attested supporting contracts for the classical separable permutation decomposition in Proposition 2.1 and the descent correspondence in Theorem 2.3 of the cited source. They do not resolve Conjecture 5.2. All permutations are bijections of Fin(n); Contains uses increasing position embeddings and exact relative value comparisons. In the formulas, Perm(n) means Equiv.Perm(Fin(n)); Bool has the values false and true; ite(e,x,y) selects x when e is true and y otherwise. Permutations are evaluated at zero-based positions, and subtype factors are evaluated through their underlying permutations.
+These are source-attested supporting contracts for the classical separable permutation decomposition in Proposition 2.1 of the cited source. The descent definitions support the enumeration proof corresponding to Theorem 2.3. These contracts do not resolve Conjecture 5.2. All permutations are bijections of Fin(n); Contains uses increasing position embeddings and exact relative value comparisons. In the formulas, Perm(n) means Equiv.Perm(Fin(n)); Bool has the values false and true; ite(e,x,y) selects x when e is true and y otherwise. Permutations are evaluated at zero-based positions, and subtype factors are evaluated through their underlying permutations.
 
 **Definition 1.1 (The literal avoidance class).**
 
@@ -102,19 +102,7 @@ $$\forall n\in\mathbb{N},\forall p\in\operatorname{Perm}\left(n\right),\operator
 
 The sum runs over every position in Fin(n). Thus descents counts ordinary adjacent descents; in particular a singleton has zero descents.
 
-**Theorem 1.9 (The exact boundary weight).**
-
-$$\forall m,k\in\mathbb{N},(0<m\land0<k)\Rightarrow\forall e\in Bool,\forall a\in\operatorname{Perm}\left(m\right),\forall b\in\operatorname{Perm}\left(k\right),\operatorname{descents}\left(\operatorname{blockSum}\left(e, a, b\right)\right)=\operatorname{descents}\left(a\right)+\operatorname{descents}\left(b\right)+\operatorname{ite}\left(e, 1, 0\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/CutFactorization.descents_block_sum` (`✓ std3`). ∎
-
-*Citation.* Shishuo Fu, Zhicong Lin, and Jiang Zeng (2019). *On two unimodal descent polynomials*. DOI: [10.48550/arXiv.1507.05184](https://doi.org/10.48550/arXiv.1507.05184). URL: <https://arxiv.org/abs/1507.05184v2>.
-
-*Commentary.*
-
-For arbitrary positive m,k and factors a,b, the number of descents is des(a)+des(b)+boundary(e), where boundary(false)=0 and boundary(true)=1. The proof partitions adjacent positions into left interior, boundary, and right interior. It applies when either factor is a singleton and when the factor lengths differ.
-
-The greatest-cut choice, its right-factor sign condition, weighted enumeration, generating-function equations, and real-rootedness remain separate obligations. No FirstFreeze or open-problem resolution claim is made by this support unit.
+GreatestCutEnumeration proves the greatest-cut choice, its right-factor sign condition, and weighted enumeration. The ordinary descent normalization is an internal step of that proof: direct sums add descents and skew sums add one boundary descent. Generating-function equations and real-rootedness remain separate obligations. The actual blockSum constructor is also used in the fixed-bottom A398542 minimum decomposition. This support unit carries no open-problem resolution claim.
 
 ## References
 
@@ -125,6 +113,5 @@ The greatest-cut choice, its right-factor sign condition, weighted enumeration, 
 - Truth anchor: `D5/S1/Words/Patterns/Separable/CutFactorization.blockSum`
 - Truth anchor: `D5/S1/Words/Patterns/Separable/CutFactorization.descentAt`
 - Truth anchor: `D5/S1/Words/Patterns/Separable/CutFactorization.descents`
-- Truth anchor: `D5/S1/Words/Patterns/Separable/CutFactorization.descents_block_sum`
 - Truth anchor: `D5/S1/Words/Patterns/Separable/CutFactorization.fixed_cut_factorization`
 - Dependency: [D5/S1/Words/Patterns/Separable/ProperCut](ProperCut.md)

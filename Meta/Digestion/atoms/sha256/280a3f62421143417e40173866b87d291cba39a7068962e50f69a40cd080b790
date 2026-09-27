@@ -1,0 +1,40 @@
+**定理 128.1（无参考输入的标记观察等价）。** 对密度矩阵 $\rho,\sigma$，以下条件等价：
+
+$$
+\mathbf M_\infty(E)(\rho)=\mathbf M_\infty(E)(\sigma)
+\quad\text{对所有 Borel 集 }E;
+\tag{128.1}
+$$
+
+$$
+\operatorname{Tr}(P_*\rho)=\operatorname{Tr}(P_*\sigma).
+\tag{128.2}
+$$
+
+等价地，全部有界连续时间测试函数及其点击后继输出都相同，当且仅当两输入具有相同的慢扇区人口。
+
+对一般 Hermitian 输入差值 $\Delta$，全部标记响应为零的充要条件是
+
+$$
+\boxed{
+\operatorname{Tr}(Q_*\Delta)=0,
+\qquad
+\operatorname{Tr}(P_*\Delta)=0.
+}
+\tag{128.3}
+$$
+
+### 证明
+
+若式（128.2）成立，由迹为一且 $Q_*+P_*=I$，两态的 $Q_*$ 人口也相等；代入式（126.1）即可得到式（128.1）。
+
+反过来，取 $E=(0,\infty)$，有 $\alpha(E)=0$、$\beta(E)=1$，从而
+
+$$
+\mathbf M_\infty(E)(\rho)=\operatorname{Tr}(P_*\rho)\zeta.
+$$
+
+两边相等给出式（128.2）。对一般 Hermitian 差值，取 $E=\{0\}$ 与 $E=(0,\infty)$，分别得到两个迹条件；反向代入式（126.1）显然成立。证毕。
+
+若只假定所有有界连续测试函数的响应相同，也可取 $f(t)=e^{-t}$；其两个系数为 $f(0)=1$ 与 $\int_0^\infty e^{-2t}dt=1/2$，因而能区分两个不同的慢扇区人口。这说明这里的 Borel 集表述与连续测试函数表述给出同一个观察商。
+

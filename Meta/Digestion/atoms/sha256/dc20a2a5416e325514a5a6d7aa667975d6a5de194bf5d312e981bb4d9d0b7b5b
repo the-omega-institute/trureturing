@@ -1,0 +1,67 @@
+**定理 191.2（局部二维满秩程序精确达到）。** 对每个 $t\in J_a$，存在一个二维满秩的解析局部精确程序，在 $t$ 达到 $I_r(t)$。
+
+证明。 令 $h_0=(1+t)/2$、$\ell_0=1-h_0$，并取
+$$
+A_0=\frac{at}{h_0},\qquad B_0=2a\sqrt{\frac{\ell_0}{h_0}},\qquad
+\frac{B_0}{\sqrt{1-A_0^2}}<\lambda<1.
+\tag{191.2}
+$$
+由 $h_0>a$ 得 $A_0^2+B_0^2=a^2/h_0^2<1$，所以这个 $\lambda$ 区间非空。定义
+$$
+\beta=\frac{B_0}{\lambda},\qquad
+K=\begin{pmatrix}A_0&\beta\\0&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1).
+\tag{191.3}
+$$
+$A_0^2+\beta^2<1$，故 $K$ 是严格压缩算子。与第190节相同，从二维程序空间到四维环境取等距映射
+$$
+W_0=\begin{pmatrix}I\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I-K^\dagger K}\end{pmatrix}.
+\tag{191.4}
+$$
+用信号基控制这些等距映射，再对环境取迹，得到固定 CPTP 处理器。
+
+令 $X$ 为 Pauli 矩阵，取仿射程序曲线
+$$
+\rho_u=\frac12(I+x(u)X+uZ),\qquad
+x(u)=\frac{\lambda(1-tu)}{\sqrt{1-t^2}},\qquad
+k=\frac{\lambda^2}{1-t^2}.
+\tag{191.5}
+$$
+其满秩物理区间为 $(b_-,b_+)$，其中
+$$
+b_\pm=\frac{kt\pm\sqrt{1-\lambda^2}}{1+kt^2}.
+\tag{191.6}
+$$
+事实上，$\rho_u\succ0$ 等价于
+$$
+q(u):=1-u^2-k(1-tu)^2>0.
+\tag{191.7}
+$$
+这个二次函数的根为（191.6），且 $q(t)=(1-\lambda^2)(1-t^2)>0$，故 $b_-<t<b_+$。取 $U=(b_-,b_+)\cap J_a$，它是包含 $t$ 的非空开区间。
+
+处理器的 Schur 系数由 $\operatorname{Tr}(\rho_uW_j^\dagger W_i)$ 给出。由于 $ZK=K$、程序矩阵为实对称矩阵，
+$$
+C_{02}=u,\qquad
+C_{01}=C_{12}=A_0\frac{1+u}{2}+\frac{\beta x(u)}2=a.
+\tag{191.8}
+$$
+因此处理器在全部 $U$ 精确生成目标通道。这个恒等式也表明整个闭弦 $[b_-,b_+]$ 都位于 $F(a,u)$ 的 CP 区间 $[2a^2-1,1]$；不过它不包含 $J_a$ 的完整上尾。具体地，$q(1)=-k(1-t)^2<0$，而 $q(t)>0$、$t<1$，所以 $b_+<1$。
+
+对 Bloch 向量 $(x(u),0,u)$，满秩 SLD 公式为
+$$
+I_Q(\rho_u)=1+(x')^2+\frac{(u+xx')^2}{1-u^2-x^2}.
+\tag{191.9}
+$$
+将可读下界移到左边，完成平方可得
+$$
+I_Q(\rho_u)-I_r(u)
+=\frac{[(1-u^2)x'+ux]^2}{(1-u^2)(1-u^2-x^2)}
+=\frac{k(u-t)^2}{(1-u^2)q(u)}.
+\tag{191.10}
+$$
+它在 $t$ 恰为零，在 $U\setminus\{t\}$ 严格为正。程序在 $U$ 始终满秩且解析，所以这是规则达到。证毕。
+
+例如，当 $0<a<1/2$、$t=0$ 时，可取 $2a<\lambda<1$，有 $K=\left(\begin{smallmatrix}0&2a/\lambda\\0&0\end{smallmatrix}\right)$、$\rho_u=(I+\lambda X+uZ)/2$，物理区间为 $|u|<\sqrt{1-\lambda^2}$。此时（191.10）成为 $\lambda^2u^2/[(1-u^2)(1-u^2-\lambda^2)]$，直接显示在零点达到及其邻域的正额外成本。这是本定理的参数特化，不改变全区间二维下界的覆盖假设。
+

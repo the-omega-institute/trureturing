@@ -1,0 +1,24 @@
+**227.7.1 可用非退化矩阵对在同一输出维数中稠密。**
+
+$a,t,u,L$ 的各坐标都是 $A,B$ 实虚矩阵元的实二次多项式。因而
+$$
+\mathcal P(A,B)=\det L\,
+\left(\|\operatorname{adj}(L)u\|^2-(\det L)^2\right)
+\tag{227.GD.28}
+$$
+为实多项式。$\mathcal P\ne0$ 恰保证 $L$ 可逆且 $\|L^{-1}u\|\ne1$。
+
+它不是恒零多项式。对二维输出取
+$$
+A=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad B=\begin{pmatrix}0&2\\3&0\end{pmatrix}.
+$$
+在（227.GD.4）、（227.GD.5）的固定约定下，直接有
+$$
+u=(0,0,-2),\qquad
+L=\operatorname{diag}(7/2,-1/2,-1/2),
+\qquad s_0=(0,0,-4).
+\tag{227.GD.29}
+$$
+所以 $\mathcal P\ne0$。当 $m>2$，在其余输出行补零保留同一例。非零实多项式的零集无内点，故满足所需非退化条件的矩阵对在每个 $m\ge2$ 的整个矩阵对空间中稠密。
+

@@ -1,0 +1,50 @@
+**命题190.1（圆盘极小点）。** 对每个 $h\ge0$，（190.1）具有唯一极小点 $(x_h,y_h)$。若
+
+$$
+\left(\frac g\beta\right)^2
++\left(\frac{4h}{h+3\beta R}\right)^2\le1,
+\tag{190.4}
+$$
+
+则
+
+$$
+x_h=\frac g\beta,\qquad
+ y_h=\frac{4h}{h+3\beta R},
+$$
+
+$$
+\boxed{
+\mathcal C(h)
+=-\frac{\delta(\beta^2+g^2)}{8\beta}
++\frac{7h}{12}
+-\frac{4h^2}{3(h+3\beta R)}.
+}
+\tag{190.5}
+$$
+
+否则存在唯一 $\lambda>0$ 满足
+
+$$
+\left(\frac{g\delta}{\beta\delta+8\lambda}\right)^2
++\left(\frac{4h}{h+3\beta R+12\lambda}\right)^2=1,
+\tag{190.6}
+$$
+
+且两项中的分式分别是 $x_h,y_h$。
+
+**证明。** 目标对 $x,y$ 的二阶导数分别为
+$\beta\delta/4>0$、$\beta R/2+h/6>0$，故严格凸，紧凸域上极小点存在且唯一。无约束驻点就是（190.4）的两分量；两者非负，若位于圆盘内便是所求。
+
+否则对约束 $x^2+y^2\le1$ 引入乘子 $\lambda$。驻点条件给（190.6）的两分式；分量为零的退化情形也满足非负约束的一阶条件。左侧在 $\lambda=0$ 大于一，随 $\lambda$ 严格下降并趋零，故唯一正解存在。凸性保证该点为全局极小点。代入无约束点得到（190.5）。证毕。
+
+当 $g<\beta$，记 $s=\sqrt{1-g^2/\beta^2}$，条件（190.4）等价于
+
+$$
+0\le h\le\frac{3\beta R s}{4-s}.
+\tag{190.7}
+$$
+
+严格不等式时，第188节达到该一阶值的恢复器满足
+$1-x_h^2-y_h^2>0$，所以额外的跳跃 Kraus 算子确实非零。
+

@@ -1,0 +1,54 @@
+### 46.1 档案的端点与相位态分解
+
+定义 $M_*$ 个严格正的有理权重
+
+$$
+a_\ell=\frac1W\sum_{n=N}^{M_*}
+2^{-(n-1)}\binom{n-1}{\ell},
+\qquad 0\le\ell\le M_*-1,
+\qquad \sum_\ell a_\ell=1,
+\tag{46.2}
+$$
+
+其中不可达二项系数取零。令
+
+$$
+|\psi_\theta\rangle_C
+=\sum_{\ell=0}^{M_*-1}\sqrt{a_\ell}\,e^{i\ell\theta}|\ell\rangle_C,
+\qquad
+|\Phi_\theta\rangle_{MJ}
+=\frac{|0,0\rangle+e^{i\theta}|1,1\rangle}{\sqrt2}.
+\tag{46.3}
+$$
+
+这里 $J$ 是下文档案中的末态寄存器，外部参考另记为 $R$。
+
+第42节的同荷跨长度向量满足
+
+$$
+\|b_{ij,k}^{\mathcal I}\|^2
+=\frac1W\sum_{n=N}^{M_*}2^{-n}\binom{n-1}{k-j}
+=\frac12a_{k-j}.
+\tag{46.4}
+$$
+
+因此，全部共同档案支撑上存在一份已知的满射等距 $U_{\rm ar}$，把归一化向量 $b_{ij,k}^{\mathcal I}/\|b_{ij,k}^{\mathcal I}\|$ 送到
+$|i\rangle_I\otimes|j\rangle_J\otimes|k-j\rangle_C$。其像为
+$\mathbb C^2_I\otimes\mathbb C^2_J\otimes\mathbb C^{M_*}_C$，维数 $4M_*$。
+
+由（42.6）逐项代入，任意初始联合态 $\rho_{RM_0}$ 的完整来源输出经这份档案换坐标后恰为
+
+$$
+\boxed{
+\rho_{RI}\otimes
+|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi_\theta\rangle\langle\psi_\theta|_C.
+}
+\tag{46.5}
+$$
+
+这里 $M_0$ 的基被同名搬到 $I$，$M$ 是最终活动记忆。证明对初始基态 $|i\rangle$ 给
+$|i\rangle_I\otimes|\Phi_\theta\rangle_{MJ}\otimes|\psi_\theta\rangle_C$，线性性保持任意输入叠加及参考，再延拓到混合态。$U_{\rm ar}$ 不依赖实际相位，不是长度测量；每个 $b_{ij,k}^{\mathcal I}$ 中的长度相干保持完整。
+
+式（46.5）用于构造编码，并不是把原容量问题改成没有端点与参考的单个相位态任务。任意编码器仍可在三个档案因子之间联合操作；后面的下界不限制它采用上述张量分解式编码。
+

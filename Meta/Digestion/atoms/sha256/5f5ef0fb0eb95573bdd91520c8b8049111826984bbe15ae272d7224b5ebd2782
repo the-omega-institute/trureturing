@@ -1,0 +1,28 @@
+### 25.4 相对时间的恢复与绝对原点的缺失
+
+在 `TemporalComposition` 与 `ProductPaths` 的有限实例中，带标签因果边、严格时间坐标和父节点接口可以共同恢复局部空间—时间结构：`temporal_guard_iff`、`edge_time`、`path_time` 及其 path 分解分别把合法接续、边时间和路径时间联系起来。单独的时间数值不能恢复因果边，单独的当前空间读数也不能恢复全部时间合法性。
+
+另一方面，`shift_attributes`、`shift_causal`、`q_shift` 和 `background_shift` 表明统一平移保持因果关系与指定当前读出；`guard_of_large_shift` 与 `exists_shift` 表明足够大的平移可以建立相对顺序。因此在没有外部原点或参考时钟的模型中，接口至多恢复
+
+$$
+\tau(y)-\tau(x)
+$$
+
+这类相对量，不能从不变的联合读出中恢复一个绝对时间零点。若任务需要绝对原点，必须把校准事件、参考记录或边界条件作为额外接口输入。
+
+本节把空间—时间恢复收束为一条可检验链：
+
+$$
+\boxed{
+\text{有限时间投影}
+\longrightarrow
+\text{联合边界 }Q_N
+\longrightarrow
+\text{目标纤维恒定}
+\longrightarrow
+\text{指定时间域可恢复}.
+}
+$$
+
+所有“充分”“互相恢复”和“相对时间”都限定在声明的实际像与协议族上；本节没有新增 Lean 声明，正文推导的 claim status 保持 open。
+

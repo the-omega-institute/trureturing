@@ -1,0 +1,66 @@
+**共同坐标。**
+
+令 $`k\in K`$ 为独立纯接收初态，$`V_i x=V(x\otimes|i\rangle)`$。前两轮可取接收器正交单位向量 $`p,q`$ 及正交单位向量 $`u,v,w`$，使
+
+$$
+V_0k=p\otimes\eta_1,\qquad
+V_1k=q\otimes\eta_1,
+\tag{30.1}
+$$
+
+$$
+V_0p=u\otimes\eta_2,\qquad
+V_1p=v\otimes\eta_2,\qquad
+V_0q=w\otimes\eta_2.
+\tag{30.2}
+$$
+
+接收后的来源两列及系数支撑满足
+
+$$
+\Psi_1^0=m_0p,\quad\Psi_1^1=m_1q,
+\qquad
+H_1=\operatorname{span}\{p,q\},\quad G_1=\mathbb Cp,
+\tag{30.3}
+$$
+
+$$
+\Psi_2^0=a m_0u+b m_1v,\quad\Psi_2^1=m_0w,
+\quad
+H_2=\operatorname{span}\{a^2u+bv,w\},\quad
+G_2=\operatorname{span}\{u,w\}.
+\tag{30.4}
+$$
+
+对纯终端 $`n`$ 写 $`\Psi_n^i=|0\rangle_Mx_n^i+|1\rangle_My_n^i`$，定义 $`H_n=\operatorname{span}\{x_n^0,x_n^1\}`$、$`G_n=\operatorname{span}\{y_n^0,y_n^1\}`$、$`C_n=H_n+G_n`$。则
+
+$$
+\dim H_n=\dim G_n=2\quad(n=2,3,4,5),\qquad
+\dim C_2=3,\quad\dim C_3=\dim C_4=\dim C_5=4.
+\tag{30.5}
+$$
+
+对第三至第五轮，存在二维 $`Q_n`$ 满足
+
+$$
+V_0(H_{n-1})=G_n\otimes\eta_n,\qquad
+V_1(G_{n-1})=Q_n\otimes\eta_n,
+\qquad G_n\perp Q_n,
+\tag{30.6}
+$$
+
+$$
+C_n=G_n\oplus Q_n,\qquad
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{30.7}
+$$
+
+两个投影在二维 $`H_n`$ 上均为同构，这是来源的两个非零系数及两个输入系数对独立性给出的事实。对应实际输入支撑为
+
+$$
+D_n=(H_{n-1}\otimes|0\rangle)\oplus
+(G_{n-1}\otimes|1\rangle),\qquad
+V(D_n)=C_n\otimes\eta_n\quad(n=3,4,5).
+\tag{30.8}
+$$
+

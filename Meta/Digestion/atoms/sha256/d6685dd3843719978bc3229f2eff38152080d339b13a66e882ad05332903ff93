@@ -1,0 +1,26 @@
+**定义 58.9（带真实相位的复制骨架）。** 对原始低位标签 $\eta\in[0,P)$ 取一棵有限二元阈值树。节点 $n$ 的整数区间为 $[l_n,u_n)$，非单点节点取 $l_n<c_n<u_n$，两孩子为 $[l_n,c_n)$ 和 $[c_n,u_n)$，单点即叶。每个首读数字 $b\in\{0,\ldots,p-1\}$ 复制同一骨架，叶 $\{\eta\}$ 的输出固定为初态 $bP+\eta$。首读后先处于 $[0,P)$，虚拟父阈值取 $a_0=P$、累计等待取零。递归地令
+$$
+\delta_n=[c_{\mathrm{parent}(n)}-c_n]^+_P,\qquad
+E_n=E_{\mathrm{parent}(n)}+\delta_n,
+\tag{58.17}
+$$
+根使用上述虚拟父数据。$E_n\equiv-c_n\pmod P$。二元读取时初态 $bP+\eta$ 的物理来源为 $[bP+\eta+E_n]_M$，其两个实际数字为
+$$
+\gamma_n(b)=[b+\lfloor E_n/P\rfloor]_p,\qquad
+[\gamma_n(b)+1]_p,
+\tag{58.18}
+$$
+分别对应 $\eta<c_n$ 与 $\eta\ge c_n$。$E_n,b,c_n$ 在此是指定有限表的静态索引，不是运行中的附加寄存器。
+
+令 $\chi_p=2$（$p$ 偶）或 $3$（$p$ 奇），并定义相邻对着色
+$$
+\operatorname{col}(a)=
+\begin{cases}
+a\bmod2,&p\text{ 偶},\\
+a\bmod2,&p\text{ 奇且 }0\le a\le p-2,\\
+2,&p\text{ 奇且 }a=p-1.
+\end{cases}
+\tag{58.19}
+$$
+同色的相邻数字对 $\{a,[a+1]_p\}$ 两两不交。一个未共享到其他逻辑节点的普通节点可以按此用 $\chi_p$ 个二元读取态及各自长度 $\delta_n$ 的等待链，内部费用为 $\chi_p(\delta_n+1)$。
+

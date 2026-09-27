@@ -1,0 +1,23 @@
+**必要性证明。** 对任意可行三元组，定义非负差额
+\[
+\Delta=1+\varepsilon L-wP.
+\]
+直接按实际矩展开，得到具有逐项非负右端的恒等式
+\[
+\boxed{
+\Delta=\sum_i u_i p(x_i)+\sum_i v_i(1-p(x_i))
++\sum_{k=1}^{N-1}\bigl(\varepsilon|p_k|-p_ke_k\bigr).
+}
+\tag{18.4}
+\]
+非负性分别来自 $p(x_i)\in\{0,1\}$、正权重及 $|e_k|\leq\varepsilon$。当 $w=w_\varepsilon$ 时 $\Delta=0$，故每个右端项都为零。由于 $p_k\neq0$，所有非恒定矩误差被强制为
+\[
+e_k=\varepsilon d_k.
+\tag{18.5}
+\]
+对实际观测差泛函作用 $\ell_i$，插值的节点取值给出
+\[
+wc_i+u_i-v_i=\sum_k[\ell_i]_ke_k=\varepsilon r_i,
+\]
+从而 $v_i-u_i=b_i(\varepsilon)$。式 (18.4) 还强制 $u_i=0$（$i\in J$）及 $v_i=0$（$i\notin J$）。结合非负性，正负部分被唯一确定，且 $b_i/c_i\geq0$。式 (18.1) 与 $P>0$ 随即给出全部 $\varepsilon A_i\leq1$。这排除了用另一组可行权重绕过初始构造的符号障碍。
+

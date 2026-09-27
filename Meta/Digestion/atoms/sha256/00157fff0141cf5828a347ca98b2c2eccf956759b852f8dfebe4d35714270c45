@@ -1,0 +1,11 @@
+**证明：充分性。** 写 $E_a^\dagger E_c=c_{ac}I_d$，固定逻辑单位基向量 $v$，令 $B$ 的第 $a$ 列为 $E_av$。则 $c=B^\dagger B\ge0$，且原通道保迹给出 $\operatorname{tr}c=1$。选酉矩阵 $V$ 使 $V^\dagger cV=\operatorname{diag}(\lambda_j)$，并令 $F_j=\sum_aV_{aj}E_a$。矩阵乘法给出
+
+$$
+F_j^\dagger F_k=\lambda_j\delta_{jk}I_d,\qquad
+\sum_jF_jXF_j^\dagger=\sum_aE_aXE_a^\dagger.
+$$
+
+当 $\lambda_j=0$ 时，$F_j^\dagger F_j=0$ 迫使 $F_j=0$。仅对 $J=\{j:\lambda_j>0\}$ 定义 $S_j=F_j/\sqrt{\lambda_j}$。它们是正交综合征副本，$\sum_{j\in J}\lambda_j=1$。因此原通道成为定义10.1中 $\sigma=\operatorname{diag}(\lambda_j)_{j\in J}$ 的编码。使用定理10.2的支持内解码，并用定理11.3的显式复位补足支持外部分，得到(12.4)。所有矩阵族有限，零本征值算子被消去而没有参与除法。∎
+
+本判据及综合征构造属于经典量子纠错和可逆量子操作理论。[QREC-KL][QREC-NS] 本命题直接在有限 Kraus 表示上量化。若起点改为仅用任意放大正性定义的抽象完全正映射，则需另用有限维 Kraus 表示定理连接两种表述。
+

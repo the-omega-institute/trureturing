@@ -69,7 +69,28 @@ internal sealed class CounterfactualKernelStrictlyFinerDocument
                         "The strictness witness consists of two deterministic Boolean models "
                             + "whose outcome counts agree under every intervention while their "
                             + "unit-level counterfactual tables differ. Hence the converse "
-                            + "kernel inclusion fails."))),
+                            + "kernel inclusion fails.")),
+                    Paragraph(Text(
+                        "The source-family registrations retain Int and CF on the original "
+                            + "DeterministicBoolSCM carrier, with their original table output "
+                            + "types. Their complete laws include the existential separation "
+                            + "and, for strictness, universal kernel inclusion. The audit checks "
+                            + "source correspondence and sensitivity with other roles fixed: "
+                            + "constant CF destroys separation, while injective outcome-table "
+                            + "encoding in the Int slot removes collisions.")),
+                    Paragraph(Text(
+                        "The Int readout is both allSingleWorldMarginals and interventionMarginal, "
+                            + "and CF is counterfactualJoint. The no-effect and flip-effect models "
+                            + "occupy one marginal fiber but disagree on that target. The existing "
+                            + "identifiability and sufficiency results therefore refute a decoder "
+                            + "from Int to CF. Forward refinement uses the global collapse proof; "
+                            + "the separating pair alone does not establish refinement.")),
+                    Paragraph(Text(
+                        "These conclusions concern deterministic Boolean models and counts "
+                            + "over the uniform two-unit exogenous population. The source-family "
+                            + "residual remains explicitly open; this does not negate the proved "
+                            + "target-specific loss or claim that arbitrary proof dependencies "
+                            + "ensure fidelity or eventual discovery of every defect."))),
                 DescribeRole.Theorem))));
 
     private static Formula InterventionCollapseFormula()

@@ -177,12 +177,12 @@ def transport(args):
                "--run-id", args.run_id, "--run-attempt", args.run_attempt]
     if args.command == "pack":
         command.extend(["--archive", str(args.archive)])
-        seed_archive = args.seed_archive
-        if (seed_archive is None and args.stage == "current"
+        seed_manifest = args.seed_manifest
+        if (seed_manifest is None and args.stage == "current"
                 and os.environ.get("STRATALINT_CACHE_WRITES") == "true"):
-            seed_archive = args.archive.with_name("ci-current-seed.tar.gz")
-        if seed_archive is not None:
-            command.extend(["--seed-archive", str(seed_archive)])
+            seed_manifest = args.archive.with_name("ci-current-seed.json")
+        if seed_manifest is not None:
+            command.extend(["--seed-manifest", str(seed_manifest)])
     # The runner is the upstream candidate runtime. Validation precedes the
     # downstream stage; the non-adversarial runtime bootstrap does not rebuild.
     subprocess.run(command, cwd=args.repository, check=True)
@@ -233,7 +233,8 @@ def stage_input(args):
     if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
         raise ValueError("delta requires the validated plan's explicit immutable base")
     requirements = ci_plan.stage_requirements(root, value, stage)
-    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
+    result = {"required": requirements["required"], "work_required": bool(value["resources"]),
+              "cache_layers": " ".join(requirements["cache_layers"]),
               "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
               "artifact_required": requirements["required"],
               "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}
@@ -257,6 +258,25 @@ def stage_input(args):
     return result
 
 
+def summary(root, stage):
+    value = json.loads((root / "build/ci" / (stage + "-result.json")).read_text())
+    steps = value.get("steps", [])
+    text = (f"CI_RESULT stage={stage} status={value['status']} exit={value['exit']} "
+            f"steps={len(steps)}\n")
+    for key in ("test_projects_executed", "test_projects_reused"):
+        if value.get(key) is not None:
+            text += f"{key}={value[key]}\n"
+    if value.get("error"):
+        text += f"error: {value['error']}\n"
+    for step in steps:
+        if step.get("status") == "failed":
+            text += "error: " + json.dumps(step, ensure_ascii=False) + "\n"
+    print(text, end="")
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as stream:
+            stream.write("```text\n" + text + "```\n")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
@@ -275,7 +295,7 @@ def main():
     parser.add_argument("--allow-direct", action="store_true")
     parser.add_argument("--dispatch", action="store_true")
     parser.add_argument("--archive", type=pathlib.Path)
-    parser.add_argument("--seed-archive", type=pathlib.Path)
+    parser.add_argument("--seed-manifest", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
     args = parser.parse_args()
@@ -302,12 +322,7 @@ def main():
         elif args.command == "checkout": checkout(args.repository, args.commit)
         elif args.command in ("pack", "restore", "verify"): transport(args)
         elif args.command == "advisory": advisory(args.repository, args.head)
-        else:
-            text = (args.repository / "build/ci" / (args.stage + "-result.json")).read_text()
-            if os.environ.get("GITHUB_STEP_SUMMARY"):
-                with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as stream:
-                    stream.write("```json\n" + text + "\n```\n")
-            print(text)
+        else: summary(args.repository, args.stage)
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         if args.command == "stage-input" and args.stage in ("build", "engineering", "current", "delta"):

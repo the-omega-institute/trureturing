@@ -1,0 +1,31 @@
+**定理155.7（有限相位网的全时域证书）。** 假设已经给出有限集合
+
+$$
+Z_\eta=\{z^{(1)},\ldots,z^{(m)}\}\subseteq G
+$$
+
+及其经过证明的覆盖界
+
+$$
+\forall z\in G\quad\min_{1\le k\le m}d_G(z,z^{(k)})\le\eta.
+\tag{155.18}
+$$
+
+令 $h_\eta=\max_k h(z^{(k)})$。则
+
+$$
+h_\eta\le h_G\le h_\eta+C_{\mathrm{ph}}\eta,
+\tag{155.19}
+$$
+
+并且对每个 $N\ge3$，
+
+$$
+\boxed{
+\max\{M_{N-1},h_\eta\}
+\le E_\infty
+\le\max\{M_{N-1},h_\eta+C_{\mathrm{ph}}\eta+\zeta_N\}.
+}
+\tag{155.20}
+$$
+

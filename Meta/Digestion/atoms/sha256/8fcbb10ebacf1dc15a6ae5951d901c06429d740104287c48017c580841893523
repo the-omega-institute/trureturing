@@ -1,0 +1,31 @@
+**命题 16.66（最小任务状态仍有集合乘积坐标）。** 不论式(16.44)是否分裂，固定任一集合截面 $\tau:B_0\to E$，满足 $[\tau(y)]=y$、$\tau(0)=0$。每个 $q\in\widehat Q$ 唯一写为 $[(\tau(y),r)]$，其中 $(y,r)\in B_0\times H$。对代表元 $q=[(x,h)]$，相应坐标及闭合律为
+
+$$
+\begin{gathered}
+y=[x],\qquad r=h+\chi(x-\tau(y)),\qquad \mathrm{Init}=(0,0),\\
+t=u+v,\qquad y'=y+[t],\qquad
+r'=r+k+\chi\bigl(\tau(y)+t-\tau(y')\bigr),\\
+\mathrm{Decode}(y,r)=g(\tau(y))+r.
+\end{gathered}
+\tag{16.49}
+$$
+
+更新中的 $\chi$ 参数总在 $D$ 中；连续更新与标记相加相容，使用恰好 $|B_0||H|=|\widehat Q|$ 个可达状态。不分裂阻止的是按指定原钟群与位置商的加性分离，不阻止精确闭合预测或这种集合编码。
+
+证明。$x-\tau([x])\in D$，由模 $K$ 关系得到表示存在。其 $y$ 被 $\sigma(q)$ 唯一确定，固定第一坐标后 $H$ 坐标由定理16.62证明中的 $K\cap(\{0\}\times H)=\{0\}$ 唯一确定。改变 $(x,h)$ 的代表元时，$h$ 的变化与 $\chi(x-\tau(y))$ 的变化相消。反向，每个 $(y,r)$ 对应 $[(\tau(y),r)]$，所以这确为集合双射。
+
+更新先得到 $[(\tau(y)+t,r+k)]$，再换成 $\tau(y')$ 代表便给式(16.49)。$[\tau(y)+t-\tau(y')]=y+[t]-y'=0$，保证表达式有定义。若再接总位置增量 $t_2$ 及钟增量 $k_2$，记 $y''=y'+[t_2]$，两个进位之和为
+
+$$
+\begin{aligned}
+&\chi\bigl(\tau(y)+t-\tau(y')\bigr)
+ +\chi\bigl(\tau(y')+t_2-\tau(y'')\bigr)\\
+&\hspace{2em}=\chi\bigl(\tau(y)+t+t_2-\tau(y'')\bigr).
+\end{aligned}
+\tag{16.50}
+$$
+
+故连续更新等于合并标记的更新；零标记给恒等，初态及每次解码由代表表达式正确。每个任务类可达，所以全部集合坐标可达。
+
+此处使用的截面进位是 [TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §6.1的已知坐标构造。具体取该节 $(K,G,Q,\iota,q)=(H,\widehat Q,B_0,\iota,\sigma)$，截面为 $s(y)=[(\tau(y),0)]$，则进位的 $H$ 坐标是 $\chi(\tau(y)+\tau(z)-\tau(y+z))$。已有 [截面进位构造](../../../D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.lean)的 `kernelCarry`、`section_carry_cocycle` 取加法交换群 $X=\widehat Q$、$B=B_0$、商同态 $\sigma$ 及右逆 $s$，经 $\iota:H\cong\ker\sigma$ 运输到 $H$；归一化另外由 $\tau(0)=0$ 保证。对一个标记，其核坐标为 $k+\chi(t-\tau([t]))$，与上述两坐标进位相加恰为式(16.49)。标准截面构造在这里只承担任务状态运输这一步。证毕。
+

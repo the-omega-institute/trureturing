@@ -1,0 +1,51 @@
+### 111.3 秩零与秩一的准确纤维
+
+若 $B_\lambda=0$，则 $E$ 包含整个 $Q\otimes F$。将实际乘积生成式投影到 $S\otimes F$，得到的一维余空间仍为乘积生成，故
+
+$$
+E=(Q\otimes F)\oplus\mathbb C(r\otimes\zeta).
+$$
+
+其通常纤维维数二，唯一异常射线 $\zeta$ 上维数三。
+
+若 $\operatorname{rank}B_\lambda=1$，写
+
+$$
+\lambda(q\otimes z)=\ell(q)\beta(z),
+\qquad 0\ne\ell\in Q^*,\quad0\ne\beta\in F^*.
+$$
+
+取 $q_0\in\ker\ell\setminus\{0\}$、$q_1\in Q$ 且 $\ell(q_1)=1$、$\rho\in\ker\beta\setminus\{0\}$。令 $D_z=\{r:r\otimes z\in M\}$、$m_z=\dim D_z$。
+
+投影 $E\to M$ 满射，因为 $\lambda$ 在 $Q\otimes F$ 上非零，能补偿任何给定 $M$ 分量。$E$ 的乘积生成向量投影后仍为同一环境上的乘积向量，并张成 $M$；而 $M$ 的不同支持纤维代数直和。因此每个支持纤维都须由这些投影张成。环境 $\rho$ 上的 $Q$ 部分不能补偿 $\lambda$，遂有
+
+$$
+\lambda|_{D_\rho\otimes\rho}=0.
+$$
+
+选择乘积基 $r_j\otimes z_j$，$j=1,2$，两接收因子独立，环境因子允许共线。置
+
+$$
+h_j=\begin{cases}
+r_j-\dfrac{\lambda(r_j\otimes z_j)}{\beta(z_j)}q_1,&\beta(z_j)\ne0,\\
+r_j,&\beta(z_j)=0.
+\end{cases}
+$$
+
+便得到
+
+$$
+E=(\mathbb Cq_0\otimes F)
+\dotplus\mathbb C(q_1\otimes\rho)
+\dotplus\mathbb C(h_1\otimes z_1)
+\dotplus\mathbb C(h_2\otimes z_2).
+$$
+
+显示的四个接收因子独立，故完整逐方向纤维为
+
+$$
+\dim\{y:y\otimes z\in E\}=1+m_z+\mathbf1_{[z]=[\rho]}.
+$$
+
+特别地，$E$ 的通常纤维为一。$M=D\otimes\rho$ 只留下一个二维以上后继支持，已经由第71节排除。其余代数可能是两个后继支持、纤维尺寸三和二，或者三个不同后继支持、各为二维。下面用实际六轮合同排除最后一种。
+

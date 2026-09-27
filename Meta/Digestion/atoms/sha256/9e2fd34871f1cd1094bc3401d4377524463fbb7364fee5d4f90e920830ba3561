@@ -1,0 +1,208 @@
+**定理 69.2（实际对角尺度上的近似与联合弱极限）。** 在上述两个噪声选择下，
+原平稳独立对与连续路径实验都满足：对任意固定 $\varepsilon,\eta>0$，
+
+```math
+\mathbb P_{\mathrm{data}}
+ \left\{\mathbb P\bigl(|T_M^{\mathrm{sm}}-T_M|>\varepsilon
+                         \mid\mathscr X_M\bigr)>\eta\right\}\to0,
+\qquad
+\sup_{|S|=q}\mathbb P_S\{|T_M^{\mathrm{sm}}-T_M|>\varepsilon\}\to0.
+```
+
+式 (69.4)。
+
+第一式在均匀大小 $q$ 支持先验下，内层为精确后验及独立测量噪声；
+第二式为各确定支持的无条件抽样律。
+对第 49、51、54 章已建立的同一旧联合组束 $\mathcal B_M$，
+将对角坐标 $T_M$ 换成 $T_M^{\mathrm{sm}}$ 后联合极限不变：
+
+```math
+(T_M^{\mathrm{sm}},\mathcal B_M)\Longrightarrow(N_2,\mathcal B),
+\qquad N_2\sim N(0,2g_0),\qquad N_2\perp\mathcal W_\rho.
+```
+
+式 (69.5)。
+
+其中旧端点、偶极、固定紧区间上的剖面、桥、Fourier 场和定义 54.1 的有限截距保持原范围，
+并由同一个旧实 Gaussian 随机测度 $\mathcal W_\rho$ 驱动。
+条件 BL 收敛在先验数据概率意义下成立，无条件收敛一致于固定支持。
+
+**证明。** 给出本章需要的实际有限估计及新增的尾部精度。
+在全行计数截断内，原一、二行生成函数的系数比较给实际行概率与相应独立 Poisson
+比较概率之间相对误差 $O(\lambda^3/M)$；其路径版本来自 (68.12) 的秩二矩阵，未假设实际行独立。
+全行截断失败概率可取 $CM^{1-D_0}$，其中 $D_0$ 为任意充分大的固定数。
+以 $C_j$ 表示计数线元组的占据数，以 $f_j$ 表示信号 Poisson 点概率，记
+
+```math
+\overline C_j=qf_j\{1+(1-q/M)e^{\tau-W_j}\},\quad
+u_j=\overline C_j/B^2,\quad d_j=C_jp_j(1-p_j),\quad v_j=d_j/B^2.
+```
+
+式 (69.6)。
+
+精确改变测度关系给 $\overline C_j=2qf_j(1+O(\chi_M))$，
+其中 $\chi_M=C(q/M+\epsilon\lambda+\lambda(\alpha-P/Q)+q^{-1})$ 指数小。
+实际一、二行比较和 $d_j\le C_j/4$ 给
+
+```math
+\mathbb E C_j=\overline C_j(1+O(\lambda^3/M)),\quad
+\operatorname{Var}C_j\le C(\overline C_j+\lambda^3M^{-1}\overline C_j^2),
+```
+
+```math
+\mathbb E v_j\le C\nu_j,\qquad
+\mathbb E(v_jv_l)\le C\nu_j\nu_l\ (j\ne l),\qquad
+\mathbb E v_j^2\le C(\nu_j^2+B^{-2}\nu_j).
+```
+
+式 (69.7)。
+
+这些期望是实际数据上的方差时钟读数。
+固定标记紧集上的 Stirling 展开与上述集中给
+$v_j=\delta\rho(x_j)(1+o_{\mathbb P}(1))$ 一致成立。
+在两计数均至少为各自均值一半的范围，$\nu_j\le C\delta e^{-c x_j^2}$；
+其余截断线点的总贡献为 $Q^Ce^{-c\lambda}$。
+Riemann 和及尾界于是给
+
+```math
+V_M\to\gamma,\qquad \delta^{-1}\sum_jv_j^2\to g_0,\qquad
+\sum_jx_j^{2p}v_j\to\int x^{2p}\rho(x)\,dx
+```
+
+式 (69.8)。
+
+每个 $p$ 在取极限前固定；没有增长次数的一致性。
+共同校准还给全体方差 $d_{\mathrm{all}}\sim q/2$、
+所选方差 $d_J=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$、补集方差 $d_{J^c}\sim q/2$。
+
+给定数据，在同一个辅助乘积律 $\mathsf Q$ 中令
+
+```math
+U_j=B^{-1}\sum_{i\in J_j}(\zeta_i-p_i),\qquad
+ e_j=B^{-1}\sum_{i\in J_j}(\pi_i-p_i),\qquad
+ e_M=\frac{\sqrt{3d_J^2+d_J}}q+q^{-1/2}.
+```
+
+式 (69.9)。
+
+完整辅助标签总数条件于 $q$ 后恰为原后验 $\mathsf P$。
+第 35 章的 Bernoulli 局部极限定理及精确校准给完整所选向量的单次比较
+
+```math
+\tau_M:=d_{\mathrm{TV}}(\mathsf P_J,\mathsf Q_J)
+ \le C(d_J/q+q^{-1/2}),\qquad
+\|e\|_2\le C\sqrt{V_M}e_M,\qquad |e_j|\le C\sqrt{v_j}e_M.
+```
+
+式 (69.10)。
+
+TV 按事件上确界定义，$e_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+中心估计由条件密度比的常数项抵消及 Cauchy–Schwarz 得到；
+对任意一组数据可测 Hilbert 系数 $f_i$，同一论证给
+$\|\sum f_i(\pi_i-p_i)\|\le C(\sum p_i(1-p_i)\|f_i\|^2)^{1/2}e_M$。
+故上述群组范数界没有逐组并集损失。
+所有矩计算留在 $\mathsf Q$ 中，只将误差事件经 (69.10) 转入实际后验。
+
+关键是对角尺度要求被删平方质量为 $o_{\mathbb P}(\sqrt\delta)$。
+令地板误差 $\xi_0=\{a\lambda\}$。线点相对 Poisson 均值的位移为
+$x_j\sqrt\lambda-\xi_0$ 与 $(P/Q)x_j\sqrt\lambda+\xi_0$。
+对 $\mu\asymp\lambda$、$|z|\le\mu/2$，Stirling 给
+
+```math
+\log\mathbb P\{\operatorname{Poi}(\mu)=\mu+z\}
+=-\tfrac12\log(2\pi\mu)-\frac{z^2}{2\mu}
+ +O(\mu^{-1}+|z|/\mu+|z|^3/\mu^2).
+```
+
+式 (69.11)。
+
+在 $|x_j|\le\lambda^{1/8}$ 上，两坐标合计余项一致为
+$O(\lambda^{-1/2}(1+|x_j|)^3+(\alpha-P/Q)(1+|x_j|)^2)=o(1)$。
+因此可取 $\nu_j\le C\delta e^{-\kappa x_j^2/4}$；
+更远截断线点之和为 $Q^Ce^{-c\lambda^{1/4}}$。
+抽出半个 Gaussian 因子后，整个格点和满足
+
+```math
+\delta\sum_{|j\delta|>R_c}e^{-\kappa(j\delta)^2/4}
+ \le e^{-\kappa R_c^2/8}\delta\sum_{j\in\mathbb Z}e^{-\kappa(j\delta)^2/8}
+ \le C Q^{-\kappa D_*/8}.
+```
+
+式 (69.12)。
+
+故 $L_M^{(0)}=\sum_{j\notin\mathcal K_M}v_j$ 在完整确定截断线上满足
+
+```math
+\mathbb E_{\mathrm{data}}L_M^{(0)}
+ \le C Q^{-\kappa D_*/8}+Q^Ce^{-c\lambda^{1/4}},
+\qquad \delta^{-1/2}\mathbb E L_M^{(0)}\to0.
+```
+
+式 (69.13)。
+
+任意固定 $D_*>2/\kappa$ 都足够，本章所选值留有余量，不声称最优。
+辅助律中被删平方和的期望为
+$L_M^{(0)}+\sum_{j\notin\mathcal K_M}e_j^2\le L_M^{(0)}+CV_Me_M^2$。
+于是对每个 $h>0$，在好数据上
+
+```math
+\mathsf P\left\{\delta^{-1/2}\sum_{j\notin\mathcal K_M}A_j^2>h
+                       \mid\mathscr X_M\right\}
+ \le\tau_M+h^{-1}\delta^{-1/2}(L_M^{(0)}+CV_Me_M^2)=o_{\mathbb P}(1).
+```
+
+式 (69.14)。
+
+这是先用辅助矩界 Markov，再转移有界事件；不把辅助期望当成实际期望。
+
+全行截断成功时有精确同向量恒等式
+
+```math
+T_M^{\mathrm{sm}}-T_M
+=-\delta^{-1/2}\sum_{j\notin\mathcal K_M}A_j^2
+ +2\sigma_M\delta^{-1/2}\sum_{j\in\mathcal K_M}A_j\xi_j
+ +\sigma_M^2\delta^{-1/2}\sum_{j\in\mathcal K_M}\xi_j^2.
+```
+
+式 (69.15)。
+
+两处同一个 $V_M$ 精确抵消。
+原平方总质量 $\mathcal Q_M\to\gamma$ 在实际后验条件概率、先验数据概率意义下成立：
+在辅助律中，$\operatorname{Var}\sum_jU_j^2\le2\sum_jv_j^2+B^{-2}V_M=o_{\mathbb P}(1)$，
+精确中心位移由 $2\|U\|_2\|e\|_2+\|e\|_2^2$ 控制，再只转移相应事件即可。
+给定任意实际电荷，(69.15) 第二项关于独立测量噪声的方差精确为
+$4\sigma_M^2\delta^{-1}\sum_{\mathcal K_M}A_j^2$。
+在 $\mathcal Q_M\le K$ 的事件上用 Chebyshev，其失败概率至多
+$4\sigma_M^2\delta^{-1}K/h^2$；先固定 $K>\gamma+1$，实际定位失败概率趋零。
+第三项非负，其噪声期望为
+
+```math
+\sigma_M^2\delta^{-1/2}m_M
+ \le C\sigma_M^2\delta^{-3/2}(1+R_c).
+```
+
+式 (69.16)。
+
+对多项式噪声，第二项方差系数为 $Q^{-7/2}$，第三项期望为
+$O(Q^{-13/4}\sqrt{\log Q})$；指数噪声更小。
+结合 (69.14)，截断失败只付概率，得到 (69.4) 第一式。
+误差概率有界，故也在先验平均下趋零。
+保持奇偶类的站点置换在大小 $q$ 支持上可迁，将原数据和标签一起置换保持所有组统计量不变；
+使用同一按 $j$ 编号的噪声，误差事件也不变。
+它在任意固定支持下的概率精确等于其先验平均，给出第二式。
+
+最后，原旧组束与 $T_M$ 的联合极限先在同一辅助律中由混合线性—二次 CLT 建立，
+再经共同有限秩核近似加入旧截距；$N_2$ 与全场的独立性已在这一步证明。
+对任意有界单位 Lipschitz 联合测试 $f$，实际同一随机实现上有
+
+```math
+\left|\mathbb E[f(T_M^{\mathrm{sm}},\mathcal B_M)-f(T_M,\mathcal B_M)
+                    \mid\mathscr X_M]\right|
+ \le\varepsilon+2\mathbb P(|T_M^{\mathrm{sm}}-T_M|>\varepsilon\mid\mathscr X_M).
+```
+
+式 (69.17)。
+
+先取规模极限再令 $\varepsilon\downarrow0$，得到条件 Slutsky 及 (69.5)。
+联合弱极限定理中出现的旧潜在坐标并不自动成为下述解码实验允许观测的坐标。证毕。
+

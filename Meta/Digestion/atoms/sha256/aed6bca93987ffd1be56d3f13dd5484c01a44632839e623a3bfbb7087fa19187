@@ -1,0 +1,38 @@
+## ST15．移动的保留空间产生连接、曲率和跃迁代价
+
+### 假设 ST15.1
+
+在一个参数开集内，$X=X(\lambda)$ 为 $C^2$ 矩阵族，$U=LG^{-1/2}$。先固定一个物理上已标定的环境 Hilbert 基，使用普通导数。定义
+
+$$
+\mathcal A_i=iU^\dagger\partial_iU,\quad
+N_i=(I-\Pi)\partial_iU,\quad
+\mathcal Q_{ij}=N_i^\dagger N_j.
+$$
+
+$\mathcal A_i$ 为 Hermitian；参数 $\lambda$ 可以是耦合、动量或已标定背景参数，不能默认就是物理时空坐标。
+
+### 定理 ST15.2：隐藏图的量子几何张量
+
+有
+
+$$
+\boxed{
+\mathcal Q_{ij}
+=G^{-1/2}(\partial_iX)^\dagger
+(I_W+XX^\dagger)^{-1}(\partial_jX)G^{-1/2}.
+}
+\tag{ST15.1}
+$$
+
+相应连接曲率为
+
+$$
+\boxed{
+\mathcal F_{ij}:=\partial_i\mathcal A_j-\partial_j\mathcal A_i
+-i[\mathcal A_i,\mathcal A_j]
+=i(\mathcal Q_{ij}-\mathcal Q_{ji}).
+}
+\tag{ST15.2}
+$$
+

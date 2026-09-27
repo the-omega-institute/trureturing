@@ -1,0 +1,28 @@
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
+[assembly: InternalsVisibleTo("StrataLint.BuildIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.CheckIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Engine.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ExecutionTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.NativeTransportIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.PlanningIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.PreflightTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.ReleaseIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ResourcePlanning.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RoutingTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.Scribe.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
+[assembly: InternalsVisibleTo("StrataLint.StageIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.TransportIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.TransportTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.CliTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RuleTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.Rules.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Digestion.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.DigestionTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.DeclaredTemplateTestSupport")]

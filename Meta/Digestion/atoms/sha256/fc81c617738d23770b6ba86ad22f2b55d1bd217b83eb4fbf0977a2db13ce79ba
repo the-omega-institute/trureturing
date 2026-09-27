@@ -1,0 +1,113 @@
+## ST15．移动的保留空间产生连接、曲率和跃迁代价
+
+### 假设 ST15.1
+
+在一个参数开集内，$X=X(\lambda)$ 为 $C^2$ 矩阵族，$U=LG^{-1/2}$。先固定一个物理上已标定的环境 Hilbert 基，使用普通导数。定义
+
+$$
+\mathcal A_i=iU^\dagger\partial_iU,\quad
+N_i=(I-\Pi)\partial_iU,\quad
+\mathcal Q_{ij}=N_i^\dagger N_j.
+$$
+
+$\mathcal A_i$ 为 Hermitian；参数 $\lambda$ 可以是耦合、动量或已标定背景参数，不能默认就是物理时空坐标。
+
+### 定理 ST15.2：隐藏图的量子几何张量
+
+有
+
+$$
+\boxed{
+\mathcal Q_{ij}
+=G^{-1/2}(\partial_iX)^\dagger
+(I_W+XX^\dagger)^{-1}(\partial_jX)G^{-1/2}.
+}
+\tag{ST15.1}
+$$
+
+相应连接曲率为
+
+$$
+\boxed{
+\mathcal F_{ij}:=\partial_i\mathcal A_j-\partial_j\mathcal A_i
+-i[\mathcal A_i,\mathcal A_j]
+=i(\mathcal Q_{ij}-\mathcal Q_{ji}).
+}
+\tag{ST15.2}
+$$
+
+**证明。** $\partial_iU=(\partial_iL)G^{-1/2}+L\partial_iG^{-1/2}$。投影到法向时第二项为零。对下块嵌入 $E_W:w\mapsto(0,w)$，块计算与 Woodbury 恒等式给出
+
+$$
+E_W^\dagger(I-\Pi)E_W
+=I-X(I+X^\dagger X)^{-1}X^\dagger
+=(I+XX^\dagger)^{-1}.
+$$
+
+这证明(ST15.1)。再令 $K_i=U^\dagger\partial_iU=-i\mathcal A_i$。展开 $\partial_iK_j-\partial_jK_i+[K_i,K_j]$，用 $\partial_iU=UK_i+N_i$ 消掉切向项，剩余 $\mathcal Q_{ij}-\mathcal Q_{ji}$，乘以 $i$ 即得(ST15.2)。∎
+
+对任意参数系数与内部向量族，$\sum_{ij}v_i^\dagger\mathcal Q_{ij}v_j=\|\sum_jN_jv_j\|^2\ge0$。因此 $g_{ij}^{\mathrm{par}}=\operatorname{Re}\operatorname{tr}\mathcal Q_{ij}$ 半正定。它是参数可辨识几何；其号型一般不是洛伦兹号型，不能将它直接等同于本卷第29节的时空度量。该子丛机制的广义几何背景见[ST10-Subbundle]。
+
+### 定理 ST15.3：不变谱子空间的间隙控制
+
+再假设 $H(\lambda)U(\lambda)=U(\lambda)h(\lambda)$。令保留与正交补中完整 Hamiltonian 的谱距离为 $\Delta>0$，它与 ST10 的隐藏块距离 $\delta$ 是不同对象。则
+
+$$
+\boxed{
+\|N_i\|_F\le
+\frac{\|(I-\Pi)(\partial_iH)U\|_F}{\Delta}.
+}
+\tag{ST15.3}
+$$
+
+因而
+
+$$
+\|\mathcal F_{ij}\|
+\le\frac{2}{\Delta^2}
+\|(I-\Pi)(\partial_iH)U\|_F
+\|(I-\Pi)(\partial_jH)U\|_F.
+\tag{ST15.4}
+$$
+
+**证明。** 微分交织式并投影到补空间，得到 Sylvester 方程
+
+$$
+H_\perp N_i-N_i h=-(I-\Pi)(\partial_iH)U.
+$$
+
+分别选择 $H_\perp,h$ 的正交本征基，每个矩阵元被相应能量差除，绝对值分母至少为 $\Delta$。对平方求和即得 Frobenius 界；再用(ST15.2)及 $\|N\|\le\|N\|_F$。没有把任意交错谱下的该 Frobenius 论证误当成同常数的算子范数逆 Sylvester 定理。∎
+
+### 定理 ST15.4：移动编码的生成元与确切控制项
+
+沿光滑时间路径，编码内方程的 Hermitian 生成元是
+
+$$
+\boxed{h_{\mathrm{mov}}=U^\dagger HU-i\hbar U^\dagger\dot U
+=h-\hbar\mathcal A_t.}
+\tag{ST15.5}
+$$
+
+相对于完整 Schrödinger 方程，它的法向残差为
+
+$$
+D_t=(I-\Pi)HU-i\hbar N_t.
+$$
+
+对应传播子的等距交织误差至多 $\hbar^{-1}\int\|D_t\|dt$。
+
+**证明。** 将 $\psi=Uv$ 代入 $i\hbar\dot\psi=H\psi$ 并左乘 $U^\dagger$ 得到(ST15.5)。剩余法向部分为 $D_t$。对两个时变酉传播子采用与 ST14 相同的微分积分恒等式。∎
+
+即使 $HU=Uh$ 逐时刻成立，$N_t$ 仍可能非零。此时上述粗界是 $\int\|N_t\|dt$，减慢沿同一路径的运动并不会自动缩小这个路径长度界；更锐的绝热定理还需能隙、光滑性和振荡抵消分析。
+
+若允许加入实际控制 Hamiltonian
+
+$$
+\boxed{H_{\mathrm{cd}}=i\hbar[\dot\Pi,\Pi],}
+\tag{ST15.6}
+$$
+
+则对逐时刻不变子空间有 $(I-\Pi)H_{\mathrm{cd}}U=i\hbar N_t$，所以法向残差严格为零。且 $U^\dagger H_{\mathrm{cd}}U=0$，$\|H_{\mathrm{cd}}\|=\hbar\|N_t\|$。
+
+**证明。** 由 $\Pi^2=\Pi$ 得 $\Pi\dot\Pi\Pi=0$，且微分 $\Pi U=U$ 给出 $\dot\Pi U=N_t$。因此(ST15.6)作用在 $U$ 上为 $i\hbar N_t$。$\dot\Pi$ 对子空间/补空间只有非对角块，块范数即给出最后的等式。该控制有实际作用强度和实现条件，不能被当作免费的观察者坐标选择；一般无跃迁驱动机制见[ST10-Driving]。∎
+

@@ -80,7 +80,9 @@ private theorem config_partition_recurrence {R : Type*} [CommSemiring R] {n : Na
     · simp [hb, Fin.prod_univ_succ]
     · simp [hb]
 
-private theorem det_sparse_front {R : Type*} [CommRing R] {n : Nat}
+/-- First-row expansion of a determinant whose first row and first column vanish beyond the
+second entry. -/
+theorem det_sparse_front {R : Type*} [CommRing R] {n : Nat}
     (A : Matrix (Fin (n + 2)) (Fin (n + 2)) R)
     (hr : ∀ j : Fin n, A 0 j.succ.succ = 0)
     (hc : ∀ i : Fin n, A i.succ.succ 0 = 0) :

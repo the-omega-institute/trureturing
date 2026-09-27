@@ -1,0 +1,64 @@
+### 45.2 一步线性逆与完整联合正像
+
+本卷式（41.45）及 Q131.1供应一步全算子通道；恢复卷定义30.11、定理30.12供应一般相位阻尼逆。下面核对这个既有逆用于本装置、完整复算子和有限参考的条件。
+
+首先以一般已知参数 $0<c\le1$ 写
+
+$$
+\mathcal D_c(X)=
+\begin{pmatrix}X_{00}&cX_{01}\\cX_{10}&X_{11}\end{pmatrix}.
+$$
+
+本装置有 $\Gamma_1=\mathcal D_c$，其中 $c=\sqrt\alpha$。令
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+a=\frac{1+c}{2c},\qquad b=\frac{1-c}{2c},
+$$
+$$
+L_c=a\,\operatorname{id}-b\,\operatorname{Ad}_Z,
+\qquad\operatorname{Ad}_Z(X)=ZXZ.
+$$
+
+因为 $a-b=1$、$a+b=c^{-1}$，$L_c$ 保持对角元并将非对角元除以 $c$。逐矩阵单位比较给
+
+$$
+L_c\mathcal D_c=\mathcal D_c L_c=\operatorname{id}_{\mathcal L(\mathbb C^2)}.
+\tag{45.4}
+$$
+
+这是全部复算子上的等式，因而也可张量任意有限参考恒等映射。不仅是对角概率或某一个来源上的等式。
+
+对全部 $Y\in\mathcal L(J\otimes\mathbb C^2)$，恒等与酉共轭保持迹范数，三角不等式给
+
+$$
+\|(\operatorname{id}_J\otimes L_c)(Y)\|_1
+\le(a+b)\|Y\|_1=c^{-1}\|Y\|_1.
+\tag{45.5}
+$$
+
+记 $\rho_\pm=|\pm\rangle\langle\pm|$。$L_c(\rho_+)$ 的矩阵为
+
+$$
+\frac12\begin{pmatrix}1&c^{-1}\\c^{-1}&1\end{pmatrix},
+$$
+
+特征值为 $(1\pm c^{-1})/2$，迹范数恰为 $c^{-1}$。它是计算线性算子范数的合法测试，不是声称 $\rho_+$ 已属于阻尼后的实际像。结合所有有限参考上的上界，得到完整范数
+
+$$
+\boxed{\|L_c\|_\diamond=c^{-1}.}
+\tag{45.6}
+$$
+
+即使只比较真实像中的态对，该放大常数也不能改小：
+
+$$
+D(\mathcal D_c\rho_+,\mathcal D_c\rho_-)=c,
+\qquad D(\rho_+,\rho_-)=1.
+\tag{45.7}
+$$
+
+共同张量任意独立密度 $\tau_J$ 不改变这些迹范数。因此在任意固定有限参考类型中都可实现相同尖锐比值；若要实际开展这一尖锐性实验，仍需允许对应的共同相位准备。
+
+这些公式直接应用恢复卷定义30.11、定理30.12 的逆表示。$c=1$ 为恒等；$c=0$ 丢失非对角方向而没有线性逆，不在结论范围内。
+

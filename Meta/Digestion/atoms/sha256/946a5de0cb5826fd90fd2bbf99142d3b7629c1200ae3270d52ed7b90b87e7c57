@@ -1,0 +1,51 @@
+### 293.5 无偏记录使一阶误差在决定概率中相消
+
+导数的Lipschitz界蕴含对任意实数 $z,c$，
+$$
+\left|F_\varepsilon(z)-F_\varepsilon(c)
+-F_\varepsilon'(c)(z-c)\right|
+\le\frac{M_k}{2}(z-c)^2.
+\tag{293.16}
+$$
+若实际估计量 $\widehat c$ 无偏，则取期望时线性项准确为零，得到
+$$
+\boxed{
+\left|\mathbb E_cF_\varepsilon(\widehat c)-F_\varepsilon(c)\right|
+\le\frac{M_k}{2}\operatorname{Var}_c\widehat c.
+}
+\tag{293.17}
+$$
+这只是标准一阶Taylor余项估计在当前实际决策中的使用；改善依赖（293.4）—（293.15）同时提供全实轴合法概率、与 $g$ 无关的导数控制和正比较余量。
+
+完整 $n=1$ 输入继续测量反对称投影。对 $K$ 个块的点击均值 $\overline Y$，取未经截断的
+$$
+\widehat c=1-4\overline Y,
+\qquad\mathbb E_c\widehat c=c,
+\qquad\operatorname{Var}_c\widehat c\le4/K.
+\tag{293.18}
+$$
+随后以概率 $F_\varepsilon(\widehat c)$ 输出零。该随机化对估计可能取到的全部实数都有定义。实际决定概率与 $F_\varepsilon(c)$ 的差至多 $2M_k/K$；成对比较中的总损失至多 $4M_k/K$。
+
+所以取
+$$
+K_F=\left\lceil\frac{1152M_k}{\eta}\right\rceil
+\tag{293.19}
+$$
+就使总损失不超过 $\eta/288$。由（293.15）及风险恒等式（291.3），实际风险不超过 $1/3$。
+
+先reset访问使用实际记录均值
+$$
+\widehat c=\overline V/a_n^2,
+\qquad\mathbb E_c\widehat c=c,
+\qquad
+\operatorname{Var}_c\widehat c
+\le\frac8{Ka_n^4}\le\frac{32}{3K},
+\tag{293.20}
+$$
+其中 $a_n\ge15/16$。同样保留无偏估计，不截断，而将全部取值交给已定义的 $F_\varepsilon$。决定概率误差至多 $16M_k/(3K)$，成对比较总损失至多 $32M_k/(3K)$。因此
+$$
+K_R=\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\tag{293.21}
+$$
+对全部 $n\ge1$ 一致达到（293.3）。两种方案都只使用真实观测记录与独立随机数，不接入准确 $c$、实际 $r$ 或隐藏相位。
+

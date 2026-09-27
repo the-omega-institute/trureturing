@@ -1,0 +1,95 @@
+### 144.1 固定对角变换给出装置双射
+
+沿用第140、142节的合同与记号。来源为
+
+$$
+T_{a,b}|0\rangle=(a|0\rangle+b|1\rangle)_M\otimes|0\rangle_B,
+\qquad
+T_{a,b}|1\rangle=|0\rangle_M\otimes|1\rangle_B,
+\qquad |a|^2+|b|^2=1.
+$$
+
+$\varepsilon_{D,N}(a,b)$ 是容量不超过 $D$ 的独立纯启动固定 CPTP 接收器，在全部前 $N$ 个终端、全部来源输入及参考上的最佳最坏半迹恢复误差。所有持久控制计入容量，接收通道每轮相同，仅终端解码器可以依赖终端。
+
+写
+
+$$
+a=Ae^{i\alpha},\qquad b=Be^{i\beta},\qquad A=|a|,\quad B=|b|.
+\tag{144.1}
+$$
+
+若某个坐标为零，其相位任取；两坐标不会同时为零。定义两个固定对角酉
+
+$$
+U=\operatorname{diag}(1,e^{i(\alpha-\beta)})\quad\text{作用于 }M,
+\qquad
+E=\operatorname{diag}(e^{-i\alpha},e^{i(\alpha-\beta)})
+\quad\text{作用于发出位 }B.
+\tag{144.2}
+$$
+
+逐列代入得到
+
+$$
+\boxed{T_{A,B}=(U\otimes E)T_{a,b}U^*.}
+\tag{144.3}
+$$
+
+第一输入列的两个系数分别成为 $A,B$，第二输入列的系数仍为 $1$；此等式同样覆盖 $A=0$ 或 $B=0$。
+
+对任意矩阵酉 $V$，记 $\operatorname{Ad}_V(X)=VXV^*$。给复来源 $(a,b)$ 的任意允许装置
+
+$$
+\mathfrak A=(\mathcal C,\mathcal D_1,\ldots,\mathcal D_N),
+$$
+
+保持同一接收初态和同一空间 $K$，为正振幅来源 $(A,B)$ 定义
+
+$$
+\begin{gathered}
+\mathcal C_+=\mathcal C\circ
+\operatorname{Ad}_{I_K\otimes E^*},\\
+\mathcal D_{n,+}=\operatorname{Ad}_{E^{\otimes n}}\circ\mathcal D_n.
+\end{gathered}
+\tag{144.4}
+$$
+
+实际接收器只在每次最新发出位上加同一个固定 $E^*$，再使用原接收通道；终端解码后在档案上加 $E^{\otimes n}$。这些都是允许的接收侧操作。记忆酉 $U$ 仅用于下述两份来源之间的数学协变及输入双射，装置没有因此取得访问活动记忆 $M$ 的权限。
+
+对任意参考 $R$ 和任意输入 $\rho_{RM}$，置
+
+$$
+\rho^+_{RM}=\operatorname{Ad}_{I_R\otimes U}(\rho_{RM}).
+$$
+
+记 $\mathfrak A_+$ 为（144.4）的装置。由（144.3）逐轮归纳，实际接收态及未经接收的完整目标分别满足
+
+$$
+\sigma_n^{(A,B),\mathfrak A_+}(\rho^+)
+=\operatorname{Ad}_{I_R\otimes U\otimes I_K}
+\bigl(\sigma_n^{(a,b),\mathfrak A}(\rho)\bigr),
+\tag{144.5}
+$$
+
+$$
+\Omega_n^{(A,B)}(\rho^+)
+=\operatorname{Ad}_{I_R\otimes U\otimes E^{\otimes n}}
+\bigl(\Omega_n^{(a,b)}(\rho)\bigr).
+\tag{144.6}
+$$
+
+每轮来源产生的 $E$ 被（144.4）的输入位 $E^*$ 消去；记忆上的 $U$ 在相邻来源步骤之间按（144.3）相消。这给（144.5）的归纳，而保留全部发出位给（144.6）。
+
+同一终端解码后，（144.5）的恢复态也按（144.6）的同一个酉变换。半迹距离的酉不变性因此给每个 $n$、每份输入的精确误差等式。$\rho\mapsto\rho^+$ 是全部参考完整输入的双射，故两装置的最坏前 $N$ 终端误差相等。
+
+装置对应也可逆：
+
+$$
+\mathcal C=\mathcal C_+\circ\operatorname{Ad}_{I_K\otimes E},
+\qquad
+\mathcal D_n=\operatorname{Ad}_{(E^*)^{\otimes n}}\circ\mathcal D_{n,+}.
+\tag{144.7}
+$$
+
+两方向均保持独立纯启动、固定性、容量和全域 CPTP 性。对装置优化即得：
+

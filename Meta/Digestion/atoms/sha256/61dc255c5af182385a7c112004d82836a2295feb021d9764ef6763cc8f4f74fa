@@ -1,0 +1,27 @@
+**定理 44.4（正二阶余项）。**
+
+令
+$$
+S_0=PSP+QSQ,\quad V=S-S_0,\quad
+R_u=(S+uI_R)^{-1},\quad R_u^0=(S_0+uI_R)^{-1}
+\quad(u\ge0).
+$$
+两条逆差恒等式 $R_u-R_u^0=-R_u^0VR_u=-R_uVR_u^0$ 相互代入，得到二阶 resolvent 恒等式
+$$
+R_u-R_u^0
+=-R_u^0VR_u^0+R_u^0VR_uVR_u^0.
+$$
+定义 $D(u)=FR_uF^*-(A+uI_E)^{-1}$。
+压缩到 $P$ 后首项消失；余项半正定，而且
+$$
+0\le FR_uF^*-(A+uI_E)^{-1},\qquad
+\|FR_uF^*-(A+uI_E)^{-1}\|
+\le\frac{\delta}{(a+u)^3}.
+$$
+更具体地，余项为
+$$
+(A+uI_E)^{-1}FSQ\,R_u\,QSF^*(A+uI_E)^{-1},
+$$
+其半正定性及范数界直接来自 $R_u\succeq0$、$\|R_u\|\le(a+u)^{-1}$ 和 $\|FSQ\|=\sqrt\delta$。
+$FSQ:R\to E$ 与 $QSF^*:E\to R$ 互为伴随；两边的 $(A+uI_E)^{-1}$ 自伴。故该式为 $X^*R_uX$，其中 $X=QSF^*(A+uI_E)^{-1}$，正性不要求这些因子交换。$S_0\succeq aI$ 是两个角各自的下界，因此所有逆存在，三个逆因子共同给 $(a+u)^{-3}$。这一个 $D(u)$ 将同时供应对数及两段分数幂。
+

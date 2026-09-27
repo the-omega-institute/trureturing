@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.fullClaim; result=D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result; claim=D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.fullClaim
    digest: A repeated real root does not obstruct the all-order alternating reduced-numerator factor. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import Mathlib.FieldTheory.RatFunc.Basic
 import Mathlib.RingTheory.Polynomial.Vieta
 import Mathlib.Algebra.Polynomial.Splits
@@ -14,7 +15,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.FinCases
 import D5.S3.ConceptDynamics.InformationEscape.AgohCoefficientReadoutTemplate
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -373,7 +374,7 @@ private theorem altered_not_law (changed : Fin 3) :
   simpa [actualRealization, alteredRealization, coefficientRealization, coefficientSignature]
     using atChanged
 
-private theorem coefficient_bridge : LegacyPrimitiveRealization coefficientArena
+theorem coefficient_bridge : LegacyPrimitiveRealization coefficientArena
     (let counterexample := actualCode; Not fullClaim) actualRealization := by
   constructor
   constructor
@@ -384,10 +385,10 @@ private theorem coefficient_bridge : LegacyPrimitiveRealization coefficientArena
     have h := (claim _ certificate.nonzero certificate.splits).mp certificate.allOrders
     exact h.elim certificate.notMonomial certificate.notSimple
 
-private theorem coefficient_variation : FiniteLawVariation coefficientArena := by
+theorem coefficient_variation : FiniteLawVariation coefficientArena := by
   exact ⟨actualRealization, alteredRealization 0, coefficient_law, altered_not_law 0⟩
 
-private theorem coefficient_sensitivity : FiniteSlotSensitivity coefficientArena := by
+theorem coefficient_sensitivity : FiniteSlotSensitivity coefficientArena := by
   classical
   constructor
   · intro i
@@ -408,13 +409,7 @@ private theorem coefficient_sensitivity : FiniteSlotSensitivity coefficientArena
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem result in coefficientArena
-  readout via
-    (@coefficientRealization CoefficientCode
-      (fun code index => actualCoefficientReadout code index))
-  primitives actualRealization.toPrimitiveBundle realization coefficient_bridge
-  variation coefficient_variation sensitivity coefficient_sensitivity
-  escape from (actualCode) escape continues (open)
+
 
 end
 end D5.S3.ArithSums.AgohAlternatingNumeratorRefutation

@@ -1,0 +1,7 @@
+**排除共同射线下的剩余系数。** 沿用（29.12）的正交分解 $`K=U\oplus W`$，由（29.3）有 $`P_UH_3=A`$，且此投影在 $`H_3`$ 上单射，因此 $`H_3\cap W=0`$。对 $`q\in Q`$ 简记 $`q_\xi=q\otimes\xi`$。由（27.4）及共同环境定义，
+
+$$
+fz_\xi=s,\qquad fw_\xi=t,\qquad
+gu_\xi=r,\qquad gw_\xi=j.
+$$
+

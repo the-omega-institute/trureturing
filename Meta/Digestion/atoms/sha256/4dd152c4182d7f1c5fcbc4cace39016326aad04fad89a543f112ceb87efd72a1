@@ -1,0 +1,42 @@
+**定义 307.1（列权重单纯形与候选矩阵）。** 固定正半径六态模型，记 $b=(1/a_1,1/a_2,1/a_3)$、$A=\|b\|_2^2$，并令 $w_i=b_i^2/A$。对开单纯形中的点
+
+$$
+x_i>0,\qquad x_1+x_2+x_3=1,
+$$
+
+定义
+
+$$
+\begin{aligned}
+\beta&=\sqrt{\sum_iw_ix_i^2},&
+m&=\sum_iw_ix_i,\\
+c_i&=x_i^2\left(1-2x_i+\frac{\beta^2}{w_i}\right),&
+v&=\frac{\operatorname{diag}(x)b+\beta b}
+{\|\operatorname{diag}(x)b+\beta b\|_2},\\
+\lambda&=A\beta,&
+G_x&=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},\\
+Q_x&=G_x\operatorname{diag}(x),&
+S_x&=\operatorname{sym}Q_x.
+\end{aligned}
+\tag{307.1}
+$$
+
+再记三个实数及其组合
+
+$$
+g_{ij}=(S_x)_{ij}v_iv_j\quad(i<j),
+\qquad
+\mathcal T_x=g_{12}g_{13}+g_{12}g_{23}+g_{13}g_{23}.
+\tag{307.2}
+$$
+
+称 $x$ 可准入，当且仅当
+
+$$
+c_1=c_2=c_3=:c,
+\qquad \mathcal T_x\ge0.
+\tag{307.3}
+$$
+
+这里三个 $c_i$ 自动严格为正，因为 $\beta^2\ge w_ix_i^2$，故括号内至少为 $(1-x_i)^2>0$。另外 $\beta^2<m$，因为每个 $0<x_i<1$。
+

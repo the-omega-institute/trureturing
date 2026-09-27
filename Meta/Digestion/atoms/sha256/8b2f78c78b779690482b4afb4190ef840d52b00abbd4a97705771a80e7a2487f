@@ -1,0 +1,55 @@
+### 48.8 固定幅度下的临界双尺度
+
+本节及随后临界概率极限均固定 \(A>0\)。令
+\[
+\rho_0=\lambda^{-1},\qquad
+\rho=\rho_0e^{-\varepsilon},\qquad
+\varepsilon\downarrow0,
+\qquad \beta=\frac As.
+\]
+在边界
+\[
+r_0=\frac{1+\rho_0}{1-\rho_0}=\frac sA=\beta^{-1},
+\qquad \frac{\rho_0}{(1-\rho_0)^2}=\frac1A.
+\tag{48.26}
+\]
+函数 \(t(\varepsilon)\) 在零附近光滑，且
+\[
+t(0)=1,\qquad
+\frac{d\log t}{d\varepsilon}=-r(\rho),
+\]
+故
+\[
+1-t=r_0\varepsilon+O_A(\varepsilon^2),\qquad
+r=r_0+O_A(\varepsilon).
+\tag{48.27}
+\]
+代入 \(v,R\)，得到
+\[
+v\sim\frac{A^2}{s^2}\varepsilon^{-2},\qquad
+R\sim\frac2s\varepsilon^{-1}.
+\tag{48.28}
+\]
+因此
+\[
+\varepsilon^2 I_{(\theta,\eta)}
+\longrightarrow
+\begin{pmatrix}\beta^2&\beta\\\beta&1\end{pmatrix},
+\qquad
+\det I\sim\frac{2A^2}{s^3}\varepsilon^{-3}.
+\tag{48.29}
+\]
+极限矩阵非零且秩为一；其非零特征值为 \(1+\beta^2\)。记原矩阵两特征值为 \(\Lambda_+\ge\Lambda_->0\)。二维对称矩阵特征值连续性先给
+\[
+\Lambda_+\sim\left(1+\frac{A^2}{s^2}\right)\varepsilon^{-2}.
+\]
+再由 \(\Lambda_-\Lambda_+=\det I\)，得到
+\[
+\boxed{
+\Lambda_-\sim
+\frac{2A^2}{s(s^2+A^2)}\varepsilon^{-1}.
+}
+\tag{48.30}
+\]
+所以两方向都发散，但阶数不同；经 \(\varepsilon^2\) 缩放后只保留较强的一层。这些特征值结论固定使用 \((\log A,\log\rho)\) 坐标。常数依赖 \(A\)，没有宣称在 \(A\downarrow0\) 的联合极限中一致。
+

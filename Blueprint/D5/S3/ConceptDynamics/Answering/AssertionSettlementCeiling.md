@@ -18,7 +18,7 @@ An assertion record carries a clause-shape classification fixed at inventory tim
 
 Settlement applies five ordered rules: not-formalized for a not-formalizable record without a Lean statement, conditional for compiled P with an undischarged premise, proved for compiled P with none, refuted for a compiled negation, and open otherwise. Each outcome is characterized exactly by the first rule it matches, so every record receives one outcome and no record receives two.
 
-This is the formal shape of Step 5 of the codex-formal-answer skill. It fixes how evidence maps to an outcome; it does not decide whether any particular Lean statement is the user's P, which remains the statement-echo judgment of Step 3.
+This is the formal shape of Step 5 of the formal-thinking-and-answer skill. It fixes how evidence maps to an outcome; it does not decide whether any particular Lean statement is the user's P, which remains the statement-echo judgment of Step 3.
 
 **Lemma 1.2 (A failed build settles nothing).**
 
@@ -82,7 +82,7 @@ $$\forall K \in Type, W \in Type, R \in K \to Evidence, w \in W, d \in \operator
 
 A draft is a list of competent-reader takeaways, each naming the assertion key it is about and the claim a reader would take away. The register maps each key to the evidence of its unique active record, and the renderer emits the draft only when every takeaway is permitted by the settled outcome of its key.
 
-The theorem fixes the shape of Step 7 of the codex-formal-answer skill. The mapping from prose to takeaways is a worker judgment outside this model; the model guarantees only that whatever the worker maps is bounded by the register.
+The theorem fixes the shape of Step 7 of the formal-thinking-and-answer skill. The mapping from prose to takeaways is a worker judgment outside this model; the model guarantees only that whatever the worker maps is bounded by the register.
 
 **Theorem 1.7 (Every emitted formal claim is compiled).**
 

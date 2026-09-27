@@ -1,0 +1,8 @@
+**定义 418.1（与随机停止分开的固定实验族）。** 现在固定有限个彼此独立的观察坐标，使用同一个有限观察字母表 $Y$。两个假设在第 $i$ 个坐标上的非负概率质量为 $p_i,q_i$，均归一化。设亲和度 $\rho_i=\sum_y\sqrt{p_i(y)q_i(y)}>0$，$B=-\sum_i\log\rho_i$。等先验、零一损失下的最佳固定样本错误记为 $e_B$。项目 [FiniteSuiteErrorSqueeze](../../../D5/S3/Estimation/ErrorExponents/FiniteSuiteErrorSqueeze.lean) 将独立积律、两点检验与 Hellinger—TV 比较接合，给出
+
+$$
+\frac{1-\sqrt{1-e^{-2B}}}{2}\le e_B\le\frac{e^{-B}}2.
+$$
+
+这里 $B$ 累加的是同一个独立实验族的亲和度预算，不能直接将自适应停止后、长度被选择过的记录当成未经条件化的独立积律。另一个项目模块 [FiniteSuiteOptimalErrorIdentity](../../../D5/S3/Estimation/ErrorExponents/FiniteSuiteOptimalErrorIdentity.lean) 以归一化实数行给出最优代数错误表达；要把它读成概率，还必须补上非负性。本节明确使用非负归一化概率行。
+

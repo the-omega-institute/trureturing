@@ -1,0 +1,18 @@
+**定理 40.3（实际相邻秩平台同时认证两个阶数）。** 固定任意实际年龄 $a\ge0$，其数值不必已知。若 $\operatorname{rank}\mathsf H_r(a)=d$，则 $V_r=\mathcal R$，等价于 $B_r|_{\mathcal R}$ 单射。对 $r\ge1$，
+$$
+\operatorname{rank}\mathsf H_r(a)=\operatorname{rank}\mathsf H_{r-1}(a)
+\quad\Longrightarrow\quad V_{r-1}=V_r=\mathcal R.
+\tag{40.7}
+$$
+特别地，对所选任意 $r\ge0$，
+$$
+\boxed{V_r=\mathcal R\ \Longleftrightarrow\
+\operatorname{rank}\mathsf H_{r+1}(a)=\operatorname{rank}\mathsf H_r(a).}
+\tag{40.8}
+$$
+当 $d\ge1$ 时，$r\ge d-1$ 是充分视界；若可见互异谱率数为 $q\ge1$，$r\ge q-1$ 也是充分视界。这些上界是数学条件，不自动是实验者已知的维数或率数。
+
+证明。由（40.5），秩为 $d$ 恰使 $V_r\subseteq\mathcal R$ 具有全维数；又 $\ker(B_r|_{\mathcal R})=\mathcal R\cap V_r^\perp$。相邻秩相等使嵌套子空间 $V_{r-1}\subseteq V_r$ 相等，而 $TV_{r-1}\subseteq V_r$。这个 $T$-不变空间包含 $B^*U$，所以由（40.6）等于 $\mathcal R$。反向，饱和后再加一个延迟不扩张空间，给（40.8）。这是主卷第126.4节及命题137.10、定理137.13的真实 Krylov 平坦机制在 $T$ 上的应用。第126.4节以 $m$ 个向量层计数，这里为 $m=r+1$；未饱和的链每次至少增长一维，给 $r\ge d-1$。对 $q$ 个可见谱值，谱投影在 $T|_{\mathcal R}$ 上均可用次数至多 $q-1$ 的插值多项式表示，因此这 $q$ 层已经生成 $\mathcal R$，给第二视界。$\square$
+
+不同偏移但同一阶数的 $\mathsf H_r(s),\mathsf H_r(t)$ 秩总相等，不能替代相邻嵌套阶数的平台。这里每个块的实际实现由（40.4）供应。对抽象数组，主卷定理137.2—137.5的移位零关系以及定理137.13的偶数正平坦条件仍须核验；命题137.3的前缀 $(1,1,1,2)$ 已有两个正块和普通秩平台，却违反移位核包含，没有自伴实现。不能从它的秩反推一个实际来源。
+

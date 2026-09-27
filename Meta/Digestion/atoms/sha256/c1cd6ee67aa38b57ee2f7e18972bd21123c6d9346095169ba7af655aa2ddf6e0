@@ -1,0 +1,37 @@
+### 54.5 与完整两轮问题的边界
+
+完整两轮接口 $A_1\to B_1$、$A_2\to B_2$ 的确定性因果梳满足
+
+$$
+\begin{gathered}
+S\succeq0,\qquad
+\operatorname{Tr}_{B_2}S=I_{A_2}\otimes S_1,\\
+S_1\succeq0,\qquad
+\operatorname{Tr}_{B_1}S_1=I_{A_1}.
+\end{gathered}
+\tag{54.23}
+$$
+
+这里采用张量次序 $B_2\otimes A_2\otimes B_1\otimes A_1$。其全部 tester 归一化算符与事件为
+
+$$
+\begin{gathered}
+C=I_{B_2}\otimes T,\qquad T\succeq0,\\
+\operatorname{Tr}_{A_2}T=I_{B_1}\otimes\tau,
+\qquad\tau\succeq0,\quad\operatorname{Tr}\tau=1,
+\qquad0\preceq E\preceq C.
+\end{gathered}
+\tag{54.24}
+$$
+
+式（54.23）为确定性梳的标准递归条件，见 [Chiribella–D’Ariano–Perinotti，arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2) 定理 5（PDF 第 11 页）；式（54.24）为同文 tester 条件在两轮的展开。
+
+若静态候选仅满足 $R\succeq0$、$\operatorname{Tr}_{B_1B_2}R=I_{A_1A_2}$，仍可用式（54.24）定义 $\Delta,D$。整个事件 $E=C$ 继续证明
+
+$$
+\inf_{S\text{ 满足式（54.23）}}D(R,S)\ge\Delta(R).
+\tag{54.25}
+$$
+
+但定理 54.2 的压缩论证本身没有给出这里的反向不等式：对 $\operatorname{Tr}_{B_2}R$ 压缩可产生早期 Choi 边缘，却还须证明能把它延拓为正的完整 $S$，同时保留足够的 $B_2$ 关联并达到同一事件误差界。这个正延拓步骤没有包含在式（54.9）–（54.12）中。
+

@@ -1,0 +1,70 @@
+**定理 260.4（有限采样的有效共同上界及收敛误差）。** 设 $I=[a,b]$，$\rho\in C^3$，并已知
+
+$$
+\sup_{t\in I}\|\rho'''(t)\|_{\rm op}\le M.
+\tag{260.11}
+$$
+
+非空有限采样集 $\{v_j\}_{j=1}^m\subset I$ 的填充半径为 $h$。假设 Hermitian 估计矩阵满足
+
+$$
+\|H_j-\rho''(v_j)\|_{\rm op}\le\varepsilon.
+\tag{260.12}
+$$
+
+记 $d=\varepsilon+Mh$，并令
+
+$$
+\nu_d(H)=
+\min\left\{\operatorname{Tr}C:
+C\succeq0,\ C\succeq H_j+dI\ (1\le j\le m)\right\}.
+\tag{260.13}
+$$
+
+则每个最优 $C$ 都是实际曲线在 $I$ 上的共同上界，并有
+
+$$
+\boxed{
+\nu_I(\rho)\le\nu_d(H)
+\le\nu_I(\rho)+n(2\varepsilon+Mh).
+}
+\tag{260.14}
+$$
+
+另外，直接使用未加偏移的有限矩阵问题也给出
+
+$$
+\nu_d(H)\le\nu(H)+n(\varepsilon+Mh).
+\tag{260.15}
+$$
+
+证明。 对任意 $t\in I$，取最近采样点 $v_j$。由（260.11）、（260.12）及 Hermitian 算子范数误差，
+
+$$
+\rho''(t)
+\preceq\rho''(v_j)+MhI
+\preceq H_j+(\varepsilon+Mh)I
+\preceq C.
+\tag{260.16}
+$$
+
+因此（260.13）中的可行解也对实际连续区间可行，给出（260.14）的左侧。反之，取（260.2）的最优解 $C_*$。由 $H_j\preceq\rho''(v_j)+\varepsilon I\preceq C_*+\varepsilon I$，可知
+
+$$
+C_*+(2\varepsilon+Mh)I
+\tag{260.17}
+$$
+
+对（260.13）可行，得到右侧。若 $C_H$ 是（260.8）的最优解，则 $C_H+dI$ 对偏移后的问题可行，得到（260.15）。证毕。
+
+（260.14）中的两个估计误差项不能在一般 Hermitian 读数下合并成一个。例如实际 $\rho$ 为常值、$M=0$，而每个读数都是 $H_j=\varepsilon I$，则 $\nu_I(\rho)=0$，但偏移后的认证值为 $2n\varepsilon$。这说明了本认证程序中该误差系数的必要性；若另加无偏或迹约束，须重新分析对应的估计类。
+
+若另满足定理260.2的端点条件，即 $\rho$ 在 $[a,b]$ 的一个开邻域上为 $C^2$ 密度曲线，并有有效端点上界 $B_a\ge I_Q(\rho_a)$、$B_b\ge I_Q(\rho_b)$，则得到
+
+$$
+\sup_I I_Q\le2\nu_d(H)+B_a+B_b.
+\tag{260.18}
+$$
+
+任意可测子集 $T\subset I$ 上的积分再乘以 $|T|$ 即被控制。局部形式适用于满足 $[u-r,u+r]\subset I$ 的名义点：此时 $I_Q(\rho_u)\le2\nu_d(H)+r^{-2}$。若目标集合 $T$ 中每一点都满足这一包含关系，则该界控制 $\sup_T I_Q$，并相应控制其积分。在固定曲线和已知 $M$ 下，当认证误差与网格半径同时趋零时，（260.14）使这个有限矩阵认证值收敛到真正的连续共同上界值。没有已知的变化模或误差界时，不能把这一结论用于第256节的无限制准备类。
+

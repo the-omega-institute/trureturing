@@ -1,0 +1,22 @@
+**定理 13.1（联合 profile 的最小性）。** 在式（13.1）下，
+
+$$
+\boxed{\ker\Phi_J=\ker\Psi=\ker\beta\cap\ker r.}
+\tag{13.2}
+$$
+
+因此，任何摘要 \(q:H\to Q\) 若能因子化全部联合 profile，存在 \(F:\operatorname{ran}q\to\operatorname{ran}\Phi_J\) 使 \(\Phi_J=F\circ q\)，则
+
+$$
+\ker q\subseteq\ker\Psi.
+\tag{13.3}
+$$
+
+也就是说，\(q\) 至少必须细化 \(\Psi\)。在前述联合 profile 已能由 \(q\) 因子化的充分性条件下，若再有 \(\Psi\) 能由 \(q\) 因子化（即 \(\ker\Psi\subseteq\ker q\)），两边核相等，因而在实际像上由唯一双射互相恢复。
+
+**证明。** 有序对相等当且仅当两个坐标分别相等，所以
+\(\ker\Phi_J=\ker\Phi_\beta\cap\ker\Phi_r
+=\ker\beta\cap\ker r\)。若 \(\Phi_J=F\circ q\)，则 \(q(h)=q(h')\) 蕴含 \(\Phi_J(h)=\Phi_J(h')\)，得到式（13.3）。核相等时应用实际像上的商因子化即可。证毕。
+
+不能把“\(\beta\) 能分离”和“\(r\) 能分离”替换成一个未经检验的逐坐标实验选择。两个坐标同时变化时，不同实验的输出差可能抵消；式（13.1）直接使用完整 profile，避免了这个量词错误。
+

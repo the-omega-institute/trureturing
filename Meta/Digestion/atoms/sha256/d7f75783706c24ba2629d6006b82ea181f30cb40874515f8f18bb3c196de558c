@@ -1,0 +1,13 @@
+**定义 9.1（独立状态对实验）。** 对已知核 $P\in\mathcal K_d^0$，记
+$Q_P(x,y)=P(x,y)/n$、$Q_P^\top(x,y)=Q_P(y,x)$。
+观察 $m$ 个独立状态对，两假设分别为 $Q_P^{\otimes m}$ 和
+$(Q_P^\top)^{\otimes m}$，等先验错误率记为 $e_P^{\rm pair}(m)$。
+置
+
+$$
+U_p=\sum_{x\in C_p}\sqrt{1+b(x)},\qquad
+V_p=\sum_{x\in C_p}\sqrt{1-b(x)},\qquad
+\rho_P=\sum_{x,y}\sqrt{Q_P(x,y)Q_P(y,x)}.
+\tag{9.1}
+$$
+

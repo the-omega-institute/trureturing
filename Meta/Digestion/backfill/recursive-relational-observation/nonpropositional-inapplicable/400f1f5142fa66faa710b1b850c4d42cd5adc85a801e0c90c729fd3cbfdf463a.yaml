@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:400f1f5142fa66faa710b1b850c4d42cd5adc85a801e0c90c729fd3cbfdf463a
+  normalized_sha256: sha256:400f1f5142fa66faa710b1b850c4d42cd5adc85a801e0c90c729fd3cbfdf463a
+cas_ref: sha256:400f1f5142fa66faa710b1b850c4d42cd5adc85a801e0c90c729fd3cbfdf463a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only closure of the complete Proposition 138.2, with alpha,beta,gamma real and gamma nonzero, and only natural iterates of T with the y readout. No frozen project GID covering the complete concrete atom was found in the audited D5 statement-shape and generic-carrier searches. At pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, Real.sq_sqrt and sq_nonneg give the actual square image and both directions of the two-readout image; mul_nonneg gives alpha squared times s nonnegative; mul_pow gives Psi T = M Psi after matrix-coordinate evaluation; Function.Semiconj.iterate_right gives all-future transport, Function.iterate_zero and Function.iterate_one give the reverse two-readout projection, and mul_left_cancel₀ with gamma nonzero recovers the square. The decoder d(w)=(o(w),(o(U(w))-beta*o(w))/gamma factors Psi through any readout-preserving stable representation by substitution and mul_div_cancel_left₀. Restricted to range rho it lands in Z, is onto by the square-root image, and commutes with update and readout; Set.rangeFactorization_surjective and Function.Surjective.injective_comp_right give uniqueness there, while Set.eqOn_range states only image agreement for unrestricted codomains. The Z to D and D to Z maps are inverse by mul_div_cancel_left₀ and mul_div_cancel₀. Gamma has either nonzero sign; alpha=0, beta=0 and s=0 are allowed. All clauses use existing upstream facts and normalization; no new Lean declaration is admissible under CLAUDE 3.2. This receipt makes no project Lean truth claim and does not close the chain parent.
+    previous_atom_id: ca5c136448fc67b4def1bb4e0b4f53dbbf80cf1adef2784a9bbd1aa18a95421f
+    next_atom_id: e32a535119e815e09c0e021280ae58a15fdb02aba0bb7a85f409855575130ce0

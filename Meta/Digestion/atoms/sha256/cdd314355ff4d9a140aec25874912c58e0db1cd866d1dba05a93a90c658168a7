@@ -1,0 +1,12 @@
+**约定 41.8（既有供应与此消费者的量词边界）。** Q 命题130.1、131.1拥有固定发射装置与输出／记忆通道；Q 定理13.3拥有受控极分解方法；Q 命题125.2、125.4拥有局部态完成与表示限制。恢复卷命题31.9拥有局部范数与完成范数比较的方法，本节只显式保留有限左参考并计算同一装置的尾。本卷引理10.6、命题10.7—10.9、定义12.1与定理12.2供应不同有限维输入输出收缩、外部参考和共同恢复预算；第13、35节及定义36.4、命题36.6供应完整档案和合法联合准备／访问的类型。这些供应结论均保留原条件。
+
+有限读出纤维的非空紧性可由 [PhysicalFiber 的 finite_dimensional_physical_fiber](../../../D5/S3/Quantum/Fibers/PhysicalFiber.lean) 在正性、归一化及固定线性读出的前提下供应；[CompactLocalRealization 的 compact_local_realization](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean)处理紧空间中的闭局部记录相容。本节（41.37）使用同一个合法来源类上的统一定量尾，不重建一般紧性或逆极限定理。已有 [FiniteTraceDistance.traceDistance_contract](../../../D5/S3/Quantum/Foundation/FiniteTraceDistance.lean) 的类型为相同指标载体上的 `QuantumChannel i i`，不将其称为任意维数或 diamond 恢复的形式供应；此处所需的不同有限输入输出收缩由本卷引理10.6的证明承担。
+
+Q 第145—149节仍是固定纯根来源下未知左滤波、条件报告及有限历史复现的任务；Q 第146节的 $(1-\sqrt\alpha)/2$ 是其 CP 噪声阈值，不因数字相同就成为本节未知源恢复的证明。本节为这些既有模型和成熟方法的普通数学应用；（41.6）—（41.10）的精确常数由所列条件态计算、实际解码器及两态下界共同承担，不从一般信息—扰动估计套出。[^rroctx41_background] 这里不作外部文献优先性断言，也不把源卷证明等同于新增形式核验。
+
+[^rroctx41_fidelity]: John Watrous，*The Theory of Quantum Information*，Cambridge University Press，2018，[作者全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.22及Corollary 3.23，式（3.145）—（3.149）：有限维纯化和交叉偏迹的根保真度恒等式。A. Uhlmann，*The “transition probability” in the state space of a \*-algebra*，Reports on Mathematical Physics **9**（1976），273–279，[doi:10.1016/0034-4877(76)90060-4](https://doi.org/10.1016/0034-4877(76)90060-4)，其式（1）采用根保真度的平方。本节未将平方约定混入（41.4）。
+
+[^rroctx41_extension]: Sam Staton、Ned Summers，*Quantum de Finetti Theorems as Categorical Limits, and Limits of State Spaces of C\*-algebras*，[arXiv:2207.05832v2](https://arxiv.org/abs/2207.05832v2)，Theorems 2.24及4.1的塔为同一个 $C^*$ 代数的齐次张量幂。这里含固定左因子 $\mathcal L(J)$ 的具体延拓由（41.34）—（41.42）及 Q125.2的方法直接完成，不扩大这些外部定理的字面类型。
+
+[^rroctx41_background]: Dennis Kretschmann、Dirk Schlingemann、Reinhard F. Werner，*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*，[arXiv:quant-ph/0605009](https://arxiv.org/abs/quant-ph/0605009)，Theorem 3为一般信息—扰动背景，采用 Heisenberg 通道及完全有界范数的约定；本节的精确最优值不依赖该定理的估计常数。
+

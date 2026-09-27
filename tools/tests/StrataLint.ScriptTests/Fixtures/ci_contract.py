@@ -93,8 +93,9 @@ class Contracts(CacheFixture, unittest.TestCase):
         self.env["GITHUB_EVENT_NAME"] = "pull_request"
         self.git("init", "-q")
         (self.root / "Meta").mkdir(exist_ok=True)
-        (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 4
+        (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 5
 resources = []
+evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 [residence_policy]
 case_id = "fixture"
 desired = "registered"
@@ -180,7 +181,7 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base, "work_required": "false"}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
@@ -252,14 +253,15 @@ runtime_disposition = "committed-source"
                         if change == "delete": old.unlink()
                         else: old.rename(root / "docs/renamed.md")
                         patterns = ["*", "Meta/**", "docs/**", *("retired/*", "retired/old.txt")[:match_count]]
-                        current = prefix.replace("schema_version = 2\n", "schema_version = 4\n" + resources)
+                        evidence = 'evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }\n'
+                        current = prefix.replace("schema_version = 2\n", "schema_version = 5\n" + resources + evidence)
                         for pattern in patterns:
                             require = '["filemap"]' if pattern.startswith("retired/") else "[]"
                             current += "[[files]]" + row.replace('pattern = "**"',
                                 'pattern = "' + pattern + '"\nrequire = ' + require)
                         (root / "Meta/FILEMAP.toml").write_text(current)
                         git("add", "-A")
-                        git("commit", "-qm", "schema four candidate")
+                        git("commit", "-qm", "schema five candidate")
                         head = git("rev-parse", "HEAD")
                         env = dict(self.env, GITHUB_EVENT_NAME="pull_request" if mode == "pr" else "push",
                                    GITHUB_OUTPUT=str(root / "outputs"), GITHUB_EVENT_PATH=str(root / "event.json"))
@@ -320,16 +322,17 @@ runtime_disposition = "committed-source"
         with self.assertRaisesRegex(ValueError, "same candidate snapshot"):
             planner.load_filemap(root)
 
-        delegated_root = b'''schema_version = 4
+        delegated_root = b'''schema_version = 5
 include = ["FILEMAP.fixture.toml"]
 resources = []
+evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 [residence_policy]
 case_id = "RESIDENCE-FIXTURE"
 desired = "registered"
 known_violation_count = 0
 status = "compliant"
 '''
-        delegated_fragment = b'''schema_version = 4
+        delegated_fragment = b'''schema_version = 5
 [[files]]
 pattern = "fixture/**"
 require = []
@@ -490,19 +493,24 @@ runtime_disposition = "committed-source"
         self.assertEqual("producer\n", (self.root / "calls").read_text())
         self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", result.stdout)
 
-    def test_pull_request_cannot_publish_snapshot(self):
+    def test_pull_request_publishes_only_own_snapshot(self):
         (self.root / ".lake/build").mkdir(parents=True)
         (self.root / ".lake/build/output").write_text("project")
         self.dependency_files()
-        for event, ref in (("pull_request", "refs/pull/42/merge"), ("pull_request_target", "refs/heads/dev")):
+        for event, ref, allowed in (("pull_request", "refs/pull/42/merge", True),
+                                    ("pull_request_target", "refs/heads/dev", False)):
             with self.subTest(event=event):
                 shutil.rmtree(self.root / "build/lean-cache", ignore_errors=True)
                 result = self.run_tool(CACHE, "snapshot", env=dict(self.env, GITHUB_EVENT_NAME=event,
                     GITHUB_REF=ref, GITHUB_SHA="a" * 40, CANDIDATE_SHA="a" * 40, STRATALINT_CACHE_WRITES="true"))
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 for layer in ("dependency", "project"):
-                    self.assertIn(layer + "_ready=false", result.stdout)
-                    self.assertFalse((self.root / "build/lean-cache" / layer / "manifest.json").exists())
+                    self.assertIn(layer + "_ready=" + str(allowed).lower(), result.stdout)
+                    # dependency/project snapshots publish their registered
+                    # directories directly; only judge/execution layers have
+                    # a manifest under build/lean-cache.
+                    target = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
+                    self.assertTrue(target.is_dir())
 
     def test_pull_request_restores_seed_with_writes_disabled(self):
         _, key = self.seed()
@@ -529,7 +537,7 @@ runtime_disposition = "committed-source"
                 return subprocess.CompletedProcess(command, 0)
             return run(command, **options)
         args = owner.argparse.Namespace(repository=self.root, stage="engineering", commit=REV,
-            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None)
+            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_manifest=None)
         with mock.patch.dict(os.environ, dict(self.env, NUGET_PACKAGES=str(self.root / "absent-packages"))), \
              mock.patch.object(owner.subprocess, "run", side_effect=invoke), \
              mock.patch.object(owner, "extract") as extract:
@@ -551,15 +559,15 @@ runtime_disposition = "committed-source"
                                                ("engineering", "true", False), ("current", "false", True)):
                 with self.subTest(stage=stage, writable=writable, explicit=explicit):
                     args.stage = stage
-                    args.seed_archive = self.root / "explicit-seed.tgz" if explicit else None
+                    args.seed_manifest = self.root / "explicit-seed.json" if explicit else None
                     os.environ["STRATALINT_CACHE_WRITES"] = writable
                     owner.transport(args)
                     command = calls[-1][0]
-                    expected = args.seed_archive or (self.root / "ci-current-seed.tar.gz"
+                    expected = args.seed_manifest or (self.root / "ci-current-seed.json"
                         if stage == "current" and writable == "true" else None)
-                    self.assertEqual(expected is not None, "--seed-archive" in command)
+                    self.assertEqual(expected is not None, "--seed-manifest" in command)
                     if expected is not None:
-                        self.assertEqual(str(expected), command[command.index("--seed-archive") + 1])
+                        self.assertEqual(str(expected), command[command.index("--seed-manifest") + 1])
             with mock.patch.object(owner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "dotnet")):
                 with self.assertRaises(subprocess.CalledProcessError):
                     owner.transport(args)

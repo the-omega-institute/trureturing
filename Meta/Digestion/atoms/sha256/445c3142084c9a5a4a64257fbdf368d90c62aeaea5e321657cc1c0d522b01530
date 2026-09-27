@@ -1,0 +1,22 @@
+**命题 3.2（保留及遗忘时刻记录）。** 时间仍可访问时，完整输出用以时间为经典结果的 instrument 表达。对 Borel 集 $B\subseteq\mathbb R$，令
+
+$$
+\mathfrak J_\nu^H(B)(X)=\int_B U_tXU_t^\dagger\,d\nu(t),
+\qquad
+\mathfrak J_\nu^H(\mathbb R)=\mathcal C_\nu^H.
+\tag{TM.260}
+$$
+
+对密度输入，记录事件 $B$ 的概率是 $\nu(B)$，相应条件态由上述积分归一化。这是一份算子值测度，不必把连续标签 $|t\rangle$ 当成普通有限维密度矩阵中的正交向量。若允许按记录选择可测效果族 $0\le E_t\le I$，通过概率是 $\int\operatorname{Tr}(E_tU_t\rho U_t^\dagger)\,d\nu(t)$，一般不能只从 $\mathcal C_\nu^H(\rho)$ 恢复。
+
+若同时授予根据准确 $t$ 执行 $U_t^\dagger$ 的控制权，记录可用于逐次恢复。对任意外部参考 $R$ 及联合输入 $\rho_{SR}$，
+
+$$
+\int (U_t^\dagger\otimes I_R)
+ (U_t\otimes I_R)\rho_{SR}(U_t^\dagger\otimes I_R)
+ (U_t\otimes I_R)\,d\nu(t)=\rho_{SR}.
+\tag{TM.261}
+$$
+
+读到数字本身不是逆演化装置。仅有粗粒化时间、存在读数误差或不能执行逆酉时，须使用实际条件时间分布和控制误差；准确连续记录本身也是理想化信息资源。更完整的观察者若仍能取得时间、随机种子或相关环境，关于遗忘记录后边缘的去相位结论不自动描述他的全部信息。
+

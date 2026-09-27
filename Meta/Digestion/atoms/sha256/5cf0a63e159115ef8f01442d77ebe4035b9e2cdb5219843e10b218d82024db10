@@ -1,0 +1,48 @@
+**证明。** 对整数 $0\le j\le n$，置 $x=j/n$。二项分布的类型界为
+$$
+\frac1{n+1}e^{-nD_{\mathrm B}(x\|\theta)}
+\le\Pr_\theta[K=j]
+\le e^{-nD_{\mathrm B}(x\|\theta)}.
+\tag{249.25}
+$$
+这里可直接核对所需界。参数取 $x=j/n$ 且 $0<j<n$ 时，二项概率在 $j$ 右侧的相邻比为 $j/(j+1)<1$，在左侧的比为 $(n-j+1)/(n-j)>1$；相邻比随指标递减，所以 $j$ 是众数。它的概率因而介于 $1/(n+1)$ 与一之间。$j=0,n$ 时相应分布退化，众数概率为一。将参数 $x$ 换回 $\theta$，恰好乘以 $e^{-nD_{\mathrm B}(x\|\theta)}$，得到（249.25）。
+
+记 $r_n=k_n/n$，并令
+$$
+m_n=\min_{x\in\{0,1/n,\ldots,1\}}
+\left[D_{\mathrm B}(x\|\theta)+(r_n-x)_+\ln2\right].
+\tag{249.26}
+$$
+由有限期望式（249.14），每一项再乘以 $e^{-n(r_n-x)_+\ln2}$。保留最小指数的一项给下界，全部 $n+1$ 项求和给上界：
+$$
+\frac{e^{-nm_n}}{n+1}\le F_{n,k_n}\le(n+1)e^{-nm_n}.
+\tag{249.27}
+$$
+因此
+$$
+\left|-\frac1n\ln F_{n,k_n}-m_n\right|
+\le\frac{\ln(n+1)}n\longrightarrow0.
+\tag{249.28}
+$$
+$r_n\to R$，正部惩罚对 $r_n$ 的变化一致 Lipschitz；相对熵在 $[0,1]$ 上连续，网格又趋于稠密。所以 $m_n$ 收敛到（249.23）的连续最小值，证明变分式。
+
+为求分段，先观察 $R\le\theta$ 时取 $x=\theta$ 就得到零，且所有项非负。再设 $R>\theta$。在内部 $0<x<1$，
+$$
+\frac{\partial}{\partial x}D_{\mathrm B}(x\|\theta)
+=\ln\frac{x(1-\theta)}{\theta(1-x)}.
+\tag{249.29}
+$$
+减去 $x\ln2$ 后，唯一驻点为 $x=\theta'$；该函数严格凸，驻点即其全局最小点。
+
+当 $\theta<R\le\theta'$，$x\ge R$ 区间内相对熵在 $R$ 处最小；$x\le R$ 区间内 $D_{\mathrm B}(x\|\theta)-x\ln2$ 递减，也在 $R$ 处最小。故最优点为 $x=R$，值为 $D_{\mathrm B}(R\|\theta)$。
+
+当 $R\ge\theta'$，在惩罚区间内取 $x=\theta'$ 已达到最小值。恒等式
+$$
+D_{\mathrm B}(x\|\theta)-x\ln2
+=D_{\mathrm B}(x\|\theta')-\ln(1+\theta)
+\tag{249.30}
+$$
+给出该值为 $R\ln2-\ln(1+\theta)$。若 $R\le1$，无惩罚区间 $x\ge R$ 的最小值为 $D_{\mathrm B}(R\|\theta)$；将其写成 $R\ln2+[D_{\mathrm B}(R\|\theta)-R\ln2]$，方括号内不小于该严格凸函数在 $\theta'$ 处的值，所以不会得到更低结果。若 $R>1$，整个 $[0,1]$ 都属于惩罚区间，同一结论仍成立。
+
+在 $R=\theta$ 处相对熵为零，在 $R=\theta'$ 处由（249.30）两式相等，故分段连续。$\square$
+

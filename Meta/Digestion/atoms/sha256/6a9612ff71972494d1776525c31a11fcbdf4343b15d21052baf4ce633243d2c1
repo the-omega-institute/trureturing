@@ -1,0 +1,35 @@
+**证明。** 正向使用式(TM.110)及 $P_H(F)=F$。反向令 $D=P_H(\rho-\sigma)$。它是迹为零的 Hermitian 块对角矩阵。如果 $D\ne0$，其特征值不可能全非正或全非负，否则迹为零会迫使全部特征值为零。取 $Q_+$ 为 $D$ 的严格正特征空间投影。$D$ 与 $H$ 交换，故 $D$ 的谱投影也与 $H$ 交换；于是 $Q_+$ 是允许效果，而且 $\operatorname{Tr}(Q_+(\rho-\sigma))=\operatorname{Tr}(Q_+D)>0$，与全部效果概率相同矛盾。故 $D=0$。证明覆盖退化的 $H$；若 $H$ 是纯数量矩阵，则 $P_H$ 是恒等映射，全部效果可用时没有非平凡观察纤维。
+
+同一结论也可从效果的实张成看出：对任意 $A\in\mathcal C_H$，取 $\alpha>\|A\|_{\mathrm{op}}$，$F=(I+A/\alpha)/2$ 是相容效果，且 $A=\alpha(2F-I)$。因此完整相容效果保留每个简并能量块内的全部矩阵坐标，并非仅保留能量测量的概率。
+
+若所有可用末端效果只限为 $F=f(H)$，其中在谱上 $0\le f(E)\le1$，则恰好只需
+$$
+q_{\rm en}(\rho)=\bigl(\operatorname{Tr}(\Pi_E\rho)\bigr)_{E\in\mathcal E},\qquad
+\operatorname{Tr}(f(H)\rho)=\sum_E f(E)q_{{\rm en},E}(\rho).
+\tag{TM.112}
+$$
+
+这份能量概率向量对该效果族是精确充分的；取 $f=\mathbf1_{\{E\}}$ 也证明其必要性。若进一步允许的操作仅为 $[U,H]=0$ 的酉，则 $U$ 与每个 $\Pi_E$ 以及每个 $f(H)$ 交换，能量概率在操作后不变，所以这个受限接口对全部此类有限操作词仍然充分。当能谱非简并时，完整块 pinching 与能量概率向量保留相同的可区分信息；一般简并块中则有额外内部方向，不能在要求完整相容观察充分性的同时将其删去。
+
+对完整 pinching，有更强的动态交织：
+$$
+[U,H]=0
+\quad\Longrightarrow\quad
+P_H(U\rho U^\dagger)=U P_H(\rho)U^\dagger.
+\tag{TM.113}
+$$
+
+证明是将 $U\Pi_E=\Pi_EU$ 逐项代入式(TM.109)。所以 $q(\rho)=P_H(\rho)$ 的像上存在精确更新 $q\mapsto UqU^\dagger$。它给出任务商和合法后续更新，不给出从 $P_H(\rho)$ 恢复未知原态 $\rho$ 的逆通道；不同能量块之间的相干仍可能已经合并。
+
+一个直接的简并见证是B卷第1.2节所用 $H=Z\otimes I+I\otimes Z$ 的零能量块。令
+$$
+|\psi_\pm\rangle=(|01\rangle\pm|10\rangle)/\sqrt2,\qquad
+\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|,\qquad
+F_+=|\psi_+\rangle\langle\psi_+|.
+\tag{TM.114}
+$$
+
+两态的能量读数都以概率一为零，但 $[F_+,H]=0$ 且 $\operatorname{Tr}(F_+\rho_+)=1$、$\operatorname{Tr}(F_+\rho_-)=0$。这说明完整相容效果族能区分更多状态；它不反驳仅 $f(H)$ 效果族的充分性，因为 $F_+$ 在二维零能量块上不是数量矩阵，故不属于该较小效果族。
+
+任意有限 $H$ 的谱差不必有共同周期。若用时间平均解释 $P_H$，可直接在谱块上取长时间 Cesàro 平均：不同能量的因子 $e^{-it(E-E')}$ 平均趋于零，相同能量因子恒为一；也可对时间演化群的紧闭包取 Haar 平均。不能在没有整比谱差条件时将任意 $H$ 的演化先设为一个给定周期的相位圈。这里的谱块证明本身不需要选择这样的周期。
+

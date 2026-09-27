@@ -1,0 +1,67 @@
+**定理 17.11（最小记忆的实际像与同源判据）。** 在定义17.10下，最小可达局部状态数与最小实际联合状态数同时可达，分别为
+
+$$
+M_A=\frac{N}{d_B},\qquad M_B=\frac{N}{d_A},\qquad J_{\min}=N.
+\tag{17.64}
+$$
+
+达到构造取 $W_A,W_B$。其自然满射 $\rho_i:W_i\to Q_\ell$ 给出钟类匹配空间 $F=W_A\times_{Q_\ell}W_B$，同源实际像由 $j(z)=(z+K_A,z+K_B)$ 给出。它们满足
+
+$$
+j(S)\subseteq F,\qquad |j(S)|=N,\qquad
+|F|=\frac{N|D|}{d_A d_B},\qquad
+j(S)=F\ \Longleftrightarrow\ D=D_A\oplus D_B.
+\tag{17.65}
+$$
+
+对任意代表元 $x,y\in S$，实际性与完整钟类匹配分别等价于
+
+$$
+\begin{aligned}
+(x+K_A,y+K_B)\in j(S)&\ \Longleftrightarrow\ y-x\in K_A+K_B,\\
+(x+K_A,y+K_B)\in F&\ \Longleftrightarrow\ y-x\in\Gamma.
+\end{aligned}
+\tag{17.66}
+$$
+
+每个实际对都唯一恢复来源；使每个钟类匹配对均有来源的充要条件是沿轴分裂。各端最小载体嵌入己方坐标与完整钟类的乘积，其像在 $q=(v_0,h_0)+\Gamma$ 上的纤维恰为
+
+$$
+\begin{aligned}
+\iota_A:W_A&\hookrightarrow L_A\times Q_\ell,
+&\iota_A((v,h)+K_A)&=(p_Av,(v,h)+\Gamma),\\
+\iota_B:W_B&\hookrightarrow L_B\times Q_\ell,
+&\iota_B((v,h)+K_B)&=(p_Bv,(v,h)+\Gamma),\\
+\iota_A(W_A)_q&=p_Av_0+p_A(D),
+&\iota_B(W_B)_q&=p_Bv_0+p_B(D).
+\end{aligned}
+\tag{17.67}
+$$
+
+纤维大小依次为 $|D|/d_B,|D|/d_A$，不预设它们填满各自轴。式(17.65)–(17.67)通过可达状态的商同构转移到任意一对各自达到局部最小值的预测器；任意历史竞争者都受式(17.64)的下界约束。
+
+证明。把定义15.10–15.11及定理15.12的删原钟任务应用于此切法，其两个未来核正是 $K_A,K_B$。所用的既有商构造在这里为
+
+$$
+\operatorname{Init}_i=0+K_i,\qquad
+\operatorname{Update}_i(z+K_i,u)=z+u+K_i,\qquad
+\operatorname{Decode}_i(z+K_i)=o_i(z).
+\tag{17.68}
+$$
+
+全部来源可达，故全部商状态可达。若两段历史到达任意竞争者的同一状态，确定性更新与精确解码迫使它们在每个共同续接下同输出。因而“取产生该状态的历史的来源终点，再取 $K_i$ 类”给出 $W_i^{\mathrm{reach}}\twoheadrightarrow S/K_i$，即式(15.40)的历史满射。它不要求存在反向的 $S\to W_i^{\mathrm{reach}}$。对同一历史产生的联合状态，该满射对也满射到 $j(S)$。由于 $K_A\cap K_B=\{0\}$，$j$ 单射；结合商的阶即得式(17.64)，且式(17.68)同时达到三项。
+
+每个 $\rho_i$ 的纤维是 $\Gamma/K_i$ 的陪集。用 $|Q_\ell|=N/|D|$ 计数，得到式(17.65)中的 $|F|$。两个代表陪集相交恰好要求 $y-x\in K_A+K_B$；若 $y-x=k_A+k_B$，则 $z=x+k_A=y-k_B$ 是共同来源。它唯一，因为两个核的交为零。钟类匹配只要求差落在 $\Gamma$。图同态 $d\mapsto(d,-\chi(d))$ 单射且可加，故 $K_A+K_B=\Gamma$ 等价于 $D_A+D_B=D$；两轴交为零，亦等价于 $d_A d_B=|D|$。
+
+式(17.67)良定义。若同端两类在该映射下相等，来源差既在 $\Gamma$ 又保持己方坐标，故在 $K_i$，证明单射。固定 $q$ 的来源恰为 $(v_0,h_0)+\Gamma$，其己方坐标依次遍历所列仿射像；$p_A|_D,p_B|_D$ 的核分别为 $D_B,D_A$，得到纤维数。在这些实际像上，输入 $u=(u_V,u_H)$ 的闭合更新及解码为
+
+$$
+(a,q)\longmapsto(a+p_Au_V,q+(u+\Gamma)),\qquad
+(b,q)\longmapsto(b+p_Bu_V,q+(u+\Gamma)),
+\tag{17.69}
+$$
+
+解码分别为 $(a,L(q))$、$(b,L(q))$。实际匹配对的来源也可直接恢复为 $v=a+b$、$h=L(q)-f(v)$；实际性保证 $h\in H$ 及该来源具有标签 $q$。
+
+若一个竞争者达到有限局部最小值，上述可达状态满射必为双射，并保持初始化、更新和输出。故两个这样的双射把同一历史的实际对恰好送到 $j(S)$，也把它们的完整钟类匹配送到 $F$，给出所称转移。证毕。
+

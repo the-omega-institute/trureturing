@@ -1,0 +1,4 @@
+**定义 486.2（已有定性的逆向判据与定量缺口）。** 项目 [FiniteBayesRiskDominanceCriterion](../../../D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.lean) 的 finite_bayes_risk_dominance_iff_postprocessing，对有限非空状态和行随机实验，把精确后处理的存在等价于全部有限行动、全部概率先验和实值损失下的 Bayes 风险支配。它使用实值成本的下确界，与 finiteBayesRisk 对非负成本使用的扩展非负实数表示有区别。
+
+这个现有结果说明，全体决策问题能够辨别精确替代关系；它没有在所引声明中给出本批所需的数值 $r\rho$。这里继续使用项目 deficiency_risk_bound 的已知方向：对归一化先验与取值在 $[0,1]$ 的损失，来源的最优风险不超过目标风险加模拟误差。下一节构造一项符合这些条件的任务，使下界达到 $r\rho$，无需把已有单向界擅自读成一个尚未给出的定量逆定理。
+

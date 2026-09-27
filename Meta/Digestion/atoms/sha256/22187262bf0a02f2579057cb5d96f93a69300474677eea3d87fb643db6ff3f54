@@ -1,0 +1,23 @@
+## 定理 383.2（向量 Holonomy 与密度共轭必须分开）
+
+闭走法 $\gamma$ 的向量不动条件是 $U_\gamma x=x$，而密度不变条件是
+
+$$
+U_\gamma\rho U_\gamma^\dagger=\rho .
+$$
+
+后者只说明 $\rho$ 在共轭作用下不变，不能替代前者的共同向量条件，也不能保证 $\ker K_G\ne0$ 的向量实现。规范变换把 $U_\gamma$ 共轭为 $G_rU_\gamma G_r^\dagger$，因此保留其谱和共轭类。
+
+### 证明
+
+沿闭走法 $\gamma=e_k\cdots e_1$ 相乘边运输，变换后的中间顶点因 $G_{v_j}^\dagger G_{v_j}=I$ 逐一消去，留下
+
+$$
+U'_\gamma
+=(G_rU_{e_k}G_{v_{k-1}}^\dagger)\cdots
+(G_{v_1}U_{e_1}G_r^\dagger)
+=G_rU_\gamma G_r^\dagger .
+$$
+
+因此向量固定空间只作 $G_r$ 的酉像，密度共轭固定性则按同一等式保持。两种条件仍有严格区别：单顶点带一条闭环、$U_\gamma=-I$ 时，$U_\gamma x=x$ 强迫 $x=0$，而任意密度矩阵都满足 $(-I)\rho(-I)^\dagger=\rho$。∎
+

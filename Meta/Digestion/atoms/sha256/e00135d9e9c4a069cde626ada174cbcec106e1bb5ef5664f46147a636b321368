@@ -1,0 +1,123 @@
+**定理137.1（XZYYY 禁阻）。** 同一实际合同不能具有
+
+$$
+([\eta_2],\ldots,[\eta_6])=(X,Z,Y,Y,Y).
+\tag{137.2}
+$$
+
+### 137.1 小側一位像决定首轮的位置
+
+反设（137.2）成立。普通第3轮给 $G_3=P$。若 $G_4=G_5=P$，两份零位像同为 $P\otimes Y$，所以 $H_3=H_4$，并且 $(H_3,G_3)=(H_4,G_4)$。这违反非退化来源的
+
+$$
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0,\qquad
+x=|a|^2,\quad y=|b|^2,\quad t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+因此 $G_4,G_5$ 至少一个不同于 $P$。选这样的 $G_i$；它位于三维 $M$，所以 $P+G_i=M$。$P=G_3$ 与所选平面的已执行后继均为 $Y$，故
+
+$$
+V_1M\subset K\otimes Y.
+\tag{137.3}
+$$
+
+真实 $V_1p=v\otimes X$ 非零，因此 $p\notin M$。首轮完整零位纤维只有大方向 $X$ 容许该位置：$Y$ 的纤维为 $M$，任何第三方向的纤维为 $P\subset M$。于是
+
+$$
+[\eta_1]=X,\qquad p\in U\setminus M,\qquad q\in F_X.
+\tag{137.4}
+$$
+
+### 137.2 同一个初始一位输出落在两个二维平面的交中
+
+实际 $G_2\subset U$ 的后继为普通 $Z$，而 $P=G_3$ 的后继为 $Y$，所以
+
+$$
+V_1G_2=Q\otimes Z,\qquad V_1P=Q_4\otimes Y.
+$$
+
+不同的输出环境使 $G_2\cap P=0$，两份二维平面遂张成四维 $U$：
+
+$$
+V_1U=(Q\otimes Z)\dotplus(Q_4\otimes Y).
+\tag{137.5}
+$$
+
+这里仅为代数直和，不把 $Z,Y$ 当成正交。真实 $p\in U$ 使 $v\otimes X$ 属于（137.5）。$X$ 与 $Z,Y$ 都不同，所以按基 $Z,Y$ 展开 $X$ 时两个系数均非零；逐环境坐标比较即得
+
+$$
+0\ne v\in Q\cap Q_4.
+\tag{137.6}
+$$
+
+实际零位像 $V_0H_1=G_2\otimes X$ 与 $V_0H_3=G_4\otimes Y$ 正交，所以 $H_1\perp H_3$。当前第3轮普通，故 $H_3\subset P\oplus Q$ 并满投影到 $Q$。真实 $q\in H_1$ 又正交于 $P$，于是 $q\perp Q$。结合（137.1）、（137.4），
+
+$$
+q\in\mathbb Cr,\qquad q\perp U,\qquad q\perp v.
+\tag{137.7}
+$$
+
+### 137.3 真实首态把 p 与 u 的正交传回来
+
+保留真实早期列
+
+$$
+V_0k=p\otimes X,\qquad V_1k=q\otimes X,
+$$
+
+$$
+V_0p=u\otimes X,\qquad V_1p=v\otimes X,\qquad
+V_0q=w\otimes X,
+$$
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{137.8}
+$$
+
+相同射线上的环境代表相位不影响下面的零内积关系。由 $q\perp v$，同一个 $V_1$ 使 $k\perp p$。再用同一个 $V_0$ 的前两份实际像，得到
+
+$$
+p\perp u.
+\tag{137.9}
+$$
+
+这一步使用真实首态 $k$ 连接两个位块，不能由分别任选的两个边界表代替。
+
+### 137.4 另一早期列使 p 同时正交于 w
+
+式（137.7）使 $q$ 正交于 $u,w\in U$ 以及 $v\in Q$，所以 $q\perp H_2$。实际零位像为
+
+$$
+V_0q=w\otimes X,\qquad V_0H_2=P\otimes Z.
+$$
+
+因为 $\langle X,Z\rangle\ne0$，上述正交使
+
+$$
+w\perp P.
+\tag{137.10}
+$$
+
+写实际 $V_1w=z\otimes Z$，其中非零 $z\in Q$。式（137.10）及 $V_1P=Q_4\otimes Y$ 给
+
+$$
+z\otimes Z\perp Q_4\otimes Y.
+$$
+
+普通 $Z$ 与 $Y$ 的内积非零，所以 $z\perp Q_4$，特别由（137.6）有 $z\perp v$。同一个 $V_1w=z\otimes Z$ 与 $V_1p=v\otimes X$ 因而正交，得到
+
+$$
+p\perp w.
+\tag{137.11}
+$$
+
+合并（137.9）、（137.11），有 $p\perp G_2$。但 $V_1p=v\otimes X$、$V_1G_2=Q\otimes Z$ 且 $\langle X,Z\rangle\ne0$，迫使 $v\perp Q$，与（137.6）的非零 $v\in Q$ 矛盾。
+
+两种小侧平面分支均已排除，定理137.1得证。全链只读取真实首态、两个早期列与已执行后继，没有添加第七轮，也没有要求两个接收块预先正交。该结果排除 $XZYYY$，不单独结算其余剩余尾词；一般容量区间仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

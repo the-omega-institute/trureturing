@@ -1,0 +1,16 @@
+**关系结论 202.3（平均、条件集合、联合来源的分工）。** 对声明的未来任务，边界所能保证的内容分层如下：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{边界记录}&\text{可回答的任务}&\text{遗漏时的失败}\\
+\hline
+\bar p,\bar\rho_{\Phi,\mu}&\text{给定先验的平均事件后期望}&\text{不能给出最坏界}\\
+ p^- ,p^+ ,\mathsf C_\Phi(\mathfrak R)&\text{单步条件后继的鲁棒区间}&\text{稀有分支误差无界}\\
+\mathfrak J_\Phi&\text{带隐藏来源的联合后续控制}&\text{矩形化引入不可能配对}\\
+\Gamma_{\mathfrak P}&\text{条件集合向未来传播的误差证书}&\text{低估后续增益}\\
+\end{array}
+}
+\tag{202.3}
+$$
+

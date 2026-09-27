@@ -1,0 +1,38 @@
+### 26.1 带类型的部分标记接续与完整未来 profile
+
+令 $X$ 为实际状态像，$A$ 为合法操作类型，$L$ 为包含合法性、读数、记录、费用和失败原因的标签类型。一个确定性部分标记接续关系写成
+
+$$
+\mathcal R\subseteq X\times A\times L\times X.
+$$
+
+对固定 $x,a$，若存在 $(x,a,\ell,x')\in\mathcal R$，则操作 $a$ 合法、标签为 $\ell$ 并把状态推进到 $x'$；若不存在这样的元组，定义结果为一个带失败原因的标签。若系统允许多个后继，则把下述单值结果替换成带类型的结果集合或分布，核的定义不变。
+
+对操作词 $w\in A^*$，递归得到完整响应
+
+$$
+\operatorname{Obs}_{\mathcal R,\varepsilon}(x)=\text{初始记录},
+$$
+
+$$
+\operatorname{Obs}_{\mathcal R,wa}(x)
+ =\text{把 }\operatorname{Obs}_{\mathcal R,w}(x)\text{ 的后继状态接入 }a\text{ 后得到的带标签响应}.
+$$
+
+这里的响应必须保留任务声明要求的失败、记录和费用；只留下后继工作态会把不同过程错误地合并。定义共同未来核
+
+$$
+\boxed{
+ x\approx_{\mathcal R}y
+ \iff
+ \forall w\in A^*,\quad
+ \operatorname{Obs}_{\mathcal R,w}(x)
+ =\operatorname{Obs}_{\mathcal R,w}(y).
+}
+\tag{26.1}
+$$
+
+它是“面对所有允许的未来接续都不可区分”的关系版本。若 $x\approx_{\mathcal R}y$，则对任意首操作 $a$，两者要么具有相同的失败标签，要么具有相同的首标签且后继再次处于 $\approx_{\mathcal R}$ 中；否则把该后继词接在 $a$ 后面即可区分二者。因此，(26.1) 是可以继续沿操作词拼接的动态核，而不是只比较当前显示值的静态核。
+
+仓内 `CongruenceKernel.congruence_kernel_laws`、`FiniteStableDepth.finite_state_has_stable_depth` 与 `FiniteHistoryPermanentStability.finite_history_relation_stable_forever` 分别提供核的接续律、有限状态下的稳定深度和稳定后永久保持的支点；本节只把它们组织到统一的带标签关系中，没有新增 Lean 声明。
+

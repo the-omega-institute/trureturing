@@ -1,0 +1,4 @@
+- [RRO 主文，定理 33.9–33.10](https://github.com/the-omega-institute/trureturing/blob/85565d32fc6d30521579532de103c92e9f17b824/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 已在黄金情形区分初始根律、位置平稳律与最大熵结论，并引用 W. Parry 的经典工作 [*Intrinsic Markov chains* (1964)](https://doi.org/10.1090/S0002-9947-1964-0161372-1)。本节下述权重直接从仓内已给转移公式推导，Parry 原始全文的独立核对不在这里的证据范围内。
+
+本节新增的连接对象是：在回返块坐标中声明稀疏禁柱，将其延拓查询、概率质量与可计算性双向运输回合法数字空间。前置普通数学结果是 C卷第2.9.1节、C卷第2.9.2节、C卷第2.9.3节、C卷第2.9.4节、C卷第2.9.5节、C卷第2.9.6节、C卷第2.9.7节 与 C卷第2.9.8节；这里使用其常数进制 $b_n=k$ 情形。
+

@@ -482,9 +482,9 @@ public sealed partial class WorktreeCommandTests
                 Assert.Equal(0, foreign.ExitCode);
                 var metadata = GitWorktreeDirectory.Read(foreignTarget)!;
                 if (failure == "foreign-unlocked" && File.Exists(Path.Combine(metadata, "locked")))
-                    ReviewRegressionTests.RunGit(workingDirectory, "worktree", "unlock", foreignTarget);
+                    TestGit.Run(workingDirectory, "worktree", "unlock", foreignTarget);
                 if (failure == "foreign-locked" && !File.Exists(Path.Combine(metadata, "locked")))
-                    ReviewRegressionTests.RunGit(workingDirectory, "worktree", "lock", "--reason", ForeignLock, foreignTarget);
+                    TestGit.Run(workingDirectory, "worktree", "lock", "--reason", ForeignLock, foreignTarget);
                 File.WriteAllText(Path.Combine(foreignTarget, "keep.txt"), "concurrent work\n");
                 throw new TimeoutException("simulated concurrent creator");
             }

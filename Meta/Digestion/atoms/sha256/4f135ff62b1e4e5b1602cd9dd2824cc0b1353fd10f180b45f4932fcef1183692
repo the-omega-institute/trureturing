@@ -1,0 +1,1 @@
+| `D5/S3/Observer/Conditioning.lean:30`、`:37`、`:58`、`:98`、`:108` | `IsRecordMeasurement`、`unreadState`、`unreadState_trace`、`unreadState_idempotent`、`unreadState_fixed_iff` | 有限完备正交自伴记录投影及其 pinching 已有 Lean 定义、迹保持、幂等和无跨块固定点接口；谱投影代入不构成新的通用 pinching 定理 

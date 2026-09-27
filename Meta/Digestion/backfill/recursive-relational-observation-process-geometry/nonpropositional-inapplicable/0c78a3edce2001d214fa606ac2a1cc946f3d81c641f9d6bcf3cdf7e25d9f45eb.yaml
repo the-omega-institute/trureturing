@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c78a3edce2001d214fa606ac2a1cc946f3d81c641f9d6bcf3cdf7e25d9f45eb
+  normalized_sha256: sha256:0c78a3edce2001d214fa606ac2a1cc946f3d81c641f9d6bcf3cdf7e25d9f45eb
+cas_ref: sha256:0c78a3edce2001d214fa606ac2a1cc946f3d81c641f9d6bcf3cdf7e25d9f45eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure, no applicable frozen project GID. The actual partial countdown has Nat states, root 0, tick legal iff n>0, constant Unit label and successor n-1. Its exact behavior is present on a path iff length<=n. Residual after legal p is countdown(n-length p), by Quiver.Path.length_comp and natural-number normalization. Set.finite_Iic, Set.Finite.image and Set.Finite.subset bound every individual residual set. Function.Semiconj.iterate_right and Nat.succ_iterate supply paths of every length; legality separates different countdowns, and Infinite.of_injective gives infinite global residual union. The same family therefore has no one finite controller by the family criterion. No infinite Fintype specialization.
+    previous_atom_id: 515ab2d5a9ce47218c9eb890d1fe3b872c31d2a932a6eab8b1fea62ae4003fea
+    next_atom_id: 8c179209308acbbee88b59cf9ce1079de5344e1c4a65f5e1c7d5ab32ac9c7e57

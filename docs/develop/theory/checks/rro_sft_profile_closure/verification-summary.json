@@ -1,0 +1,206 @@
+{
+  "method": "exact integer arithmetic and exact rational ranks; no floats",
+  "family_checks": {
+    "families": 4,
+    "matrices": 32,
+    "ordered_pairs": 272,
+    "elementary_steps": 384,
+    "rank_profiles": 32,
+    "mixed_direction_steps": 24,
+    "se_equalities": 960
+  },
+  "same_depth_examples": [
+    {
+      "group": "C2",
+      "dimension": 8,
+      "t": [
+        4,
+        4
+      ],
+      "v": [
+        4,
+        1
+      ],
+      "same_depth": 4,
+      "exact_distance": 3,
+      "t_profile": [
+        4,
+        4
+      ],
+      "v_profile": [
+        4,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "group": "C3",
+      "dimension": 8,
+      "t": [
+        4,
+        4
+      ],
+      "v": [
+        4,
+        1
+      ],
+      "same_depth": 4,
+      "exact_distance": 3,
+      "t_profile": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "v_profile": [
+        4,
+        4,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "group": "D8",
+      "dimension": 6,
+      "t": [
+        3,
+        3
+      ],
+      "v": [
+        3,
+        1
+      ],
+      "same_depth": 3,
+      "exact_distance": 2,
+      "t_profile": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "v_profile": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "group": "S3",
+      "dimension": 6,
+      "t": [
+        3,
+        3
+      ],
+      "v": [
+        3,
+        1
+      ],
+      "same_depth": 3,
+      "exact_distance": 2,
+      "t_profile": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "v_profile": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "overlap_checks": {
+    "forward_legal_three_edge_words": 4096,
+    "inverse_legal_three_edge_words": 4096,
+    "group_coordinate_cases": 32768,
+    "equivariance_cases": 262144
+  },
+  "grid_checks": {
+    "full_grid_inputs": 33032,
+    "chain_lengths": [
+      1,
+      2,
+      3
+    ],
+    "scope": "exhaustive binary half-edge scalar cases; not arbitrary matrices"
+  },
+  "involution_matrix_checks": {
+    "integer_matrix_inputs": 27,
+    "nonuniform_endpoints": 18,
+    "matrix_sizes": [
+      1,
+      2,
+      3
+    ]
+  },
+  "scope": "finite regression tests, not a universal proof or Lean certificate",
+  "sentinel": "ALL_SFT_PROFILE_AND_PATH_CLOSURE_CHECKS_PASSED",
+  "script_sha256": "9cdc795db44d43dada4dcfde037818480ce5caed1c268a78b4ba5181c47efdf4"
+}

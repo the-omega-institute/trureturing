@@ -1,0 +1,24 @@
+**共同射线下的六维饱和。** 置 $`H_\xi=H\otimes\mathbb C\xi`$、$`G_\xi=G\otimes\mathbb C\xi`$。在 $`S_0,S_1`$ 上分别写
+$$
+V_0x=f(x)\otimes\eta,\qquad V_1y=g(y)\otimes\eta.
+$$
+$`f,g`$ 各为等距，其像正交，故 $`\dim S_0+\dim S_1\le6`$。它们满足
+$$
+\begin{array}{lll}
+fH_\xi=A,& fH_3=G_4,&fH_4=G_5,\\
+gG_\xi=B_3,&gA=Q_4,&gG_4=Q_5.
+\end{array}
+\tag{29.11}
+$$
+若 $`\dim S_1=2`$，则 $`G_\xi=A=G_4`$；（29.11） 的单射性又给 $`H_\xi=H_3`$，从而
+$`\dim C_3=\dim(H_\xi+G_\xi)=3`$，矛盾。
+若 $`\dim S_0=2`$，则 $`H_\xi=H_3=H_4`$，故 $`A=G_4`$、$`C_4=C_3`$、$`Q_4=B_3`$。再由 （29.11） 得 $`G_\xi=A`$，产生相同矛盾。因此两个维数都至少三，且总和至多六，即 （29.6）。
+
+记
+$$
+U=fS_0=A+G_4+G_5,\qquad
+W=gS_1=B_3+Q_4+Q_5.
+\tag{29.12}
+$$
+则 $`K=U\oplus W`$，二者维数均为三。
+

@@ -126,7 +126,7 @@ internal sealed partial class ProductionCliEnvironment
                 return new CommandResult(false, string.Empty, "USAGE: StrataLint route MANIFEST|-\n");
             }
 
-            var registry = LoadRegistry();
+            var fileMap = LoadPolicy();
             var manifestBytes = arguments[0] == "-"
                 ? ReadStandardInput()
                 : ReadRepositoryFile(arguments[0]);
@@ -137,9 +137,9 @@ internal sealed partial class ProductionCliEnvironment
             }
 
             var manifest = ((ManifestLoadOutcome.Loaded)manifestOutcome).Syntax;
-            return RouteEngine.Route(registry.Policy, manifest) switch
+            return RouteEngine.Route(fileMap.Policy, manifest) switch
             {
-                RouteOutcome.Routed routed => RenderRoute(registry.Policy, routed),
+                RouteOutcome.Routed routed => RenderRoute(fileMap.Policy, routed),
                 RouteOutcome.Rejected rejected => new CommandResult(
                     false,
                     string.Empty,

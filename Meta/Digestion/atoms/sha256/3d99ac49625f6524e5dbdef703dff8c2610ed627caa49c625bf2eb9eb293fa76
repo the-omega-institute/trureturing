@@ -1,0 +1,30 @@
+### 51.4 两种源与目标收敛必须分开
+
+对任意 $T,S\in B_\rho$，逐来源三角不等式、取有限最小值并交换目标给出
+$$
+|e_N(T)-e_N(S)|\le\|T-S\|_\rho,\qquad
+|d_A(T)-d_A(S)|\le\|T-S\|_\rho.
+\tag{51.15}
+$$
+设目标族 $\mathcal T\subset B_\rho$ **非空且在 $\|\cdot\|_\rho$ 下紧**。取其有限开 $\varepsilon/4$-网 $T_1,\ldots,T_s$；由逐点的 $e_N(T_i)\uparrow d_A(T_i)$，可取共同 $N$ 使每个网点缺口小于 $\varepsilon/2$。对任意 $T\in\mathcal T$ 取 $\|T-T_i\|_\rho<\varepsilon/4$，两次（51.15）得
+$$
+d_A(T)-e_N(T)\le2\|T-T_i\|_\rho+d_A(T_i)-e_N(T_i)<\varepsilon.
+$$
+单调性使所有更大 $N$ 仍成立，因此
+$$
+\boxed{\sup_{T\in\mathcal T}\bigl(d_A(T)-e_N(T)\bigr)\longrightarrow0.}
+\tag{51.16}
+$$
+这只给存在性的目标族一致性；没有有效网、网点收敛期限或算法停止条件，也没有把来源到完整范数的连续性偷换进来。
+
+现在固定一个环境目标 $T$，令 $N_j\to\infty$、$\eta_j\ge0$、$\eta_j\to0$，并选择
+$$
+f_{N_j}^T(a^{(j)})\le e_{N_j}(T)+\eta_j.
+\tag{51.17}
+$$
+紧可度量的 $X_A$ 保证任意子列有乘积收敛子列；取任意这样的 $a^{(j_\ell)}\to a_*$。对固定 $m$，当 $\ell$ 足够大时 $N_{j_\ell}\ge m$，于是
+$$
+f_m^T(a^{(j_\ell)})\le e_{N_{j_\ell}}(T)+\eta_{j_\ell}\le d_A(T)+\eta_{j_\ell}.
+$$
+有限坐标连续性给 $f_m^T(a_*)\le d_A(T)$，再对 $m$ 取上确界即得 $\|E(a_*)-T\|_\rho\le d_A(T)$，所以每个乘积聚点都是最优源。这里不推出原序列收敛、输出范数收敛，也不声称每个有限优化器都有小的完整误差。
+

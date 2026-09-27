@@ -1,0 +1,17 @@
+## 命题 387.2（相位重标定导数与恒定性）
+
+令 $\varphi:\mathbb R\to\mathbb R$ 是 $C^1$ 严格递增双射，且 $\varphi'(t)>0$。设 $\theta(t)=\omega t+\theta_0$，$\widetilde\theta(\tau)=\theta(\varphi^{-1}(\tau))$。则
+
+$$
+\frac{d\widetilde\theta}{d\tau}\bigg|_{\tau=\varphi(t)}
+=\frac{\omega}{\varphi'(t)}.
+$$
+
+并且 $\widetilde f(\tau)=f(\varphi^{-1}(\tau))$ 恒定，当且仅当 $f$ 恒定。
+
+### 证明
+
+逆函数定理给 $(\varphi^{-1})'(\varphi(t))=1/\varphi'(t)$；链式法则因此给出 $d\widetilde\theta/d\tau=\omega/\varphi'(t)$。若把重标定后的相位简记为 $\theta$，这就是 $d\theta/d\tau=\omega/\varphi'(t)$。由于 $\varphi$ 是双射，$\{\varphi^{-1}(\tau):\tau\in\mathbb R\}=\mathbb R$，故一个函数在原变量上恒定，当且仅当其与该双射复合后恒定。∎
+
+对线性校准 $\tau=at+b$（$a>0$），周期和频率按 $T_\tau=aT_t$、$\omega_\tau=\omega_t/a$ 变换。非线性重标定可改变固定数值周期的形式，却不改变事件与结果的对应关系；这不是由换坐标推出物理时间膨胀。有限相同样本也不能证明连续响应在全域恒定或具有某个全局周期。
+

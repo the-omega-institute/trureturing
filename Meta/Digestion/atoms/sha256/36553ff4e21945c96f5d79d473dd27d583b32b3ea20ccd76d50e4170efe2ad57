@@ -1,0 +1,28 @@
+### 218.1 距离所比较的确切接口
+
+输入量子空间 $\mathcal H_{\mathrm{in}}$ 为二维；输出是经典结果标签 $Q_{\mathrm{out}}$ 和二维量子输出 $\mathcal H_{\mathrm{out}}$。正旗标条件记录通道为
+$$
+\mathcal R_+(X)
+=\sum_{j=0}^1|j\rangle\langle j|^{Q_{\mathrm{out}}}
+\otimes\Gamma_{j,+}(X).
+\tag{218.2}
+$$
+它是共同 CPTP instrument 的记录形式。采用未归一化 Choi 约定，固定因子重排后
+$$
+\mathsf J(\mathcal R_+)=J_0\oplus J_1,\qquad
+\operatorname{Tr}\mathsf J=2.
+\tag{218.3}
+$$
+
+令 $\mathfrak C_2$ 为所有同输入、同输出、保留经典结果标签的合法 CPTP 记录通道，且其总 Choi 秩至多二。它不要求每个结果分别非零或分别秩一。
+
+对实际最优条件记录通道 $\mathcal R_+^\sharp(p)$，定义
+$$
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R_+^\sharp(p)-\mathcal S\|_\diamond.
+\tag{218.4}
+$$
+$\mathfrak C_2$ 非空且紧：CPTP、经典标签块和秩上界都是有限维闭条件，Choi 迹固定为二。因此该最小值取得。此处 diamond 范数包含任意外部参考。
+
+记 $\lambda_2^\sharp(p)$ 为实际最优 $J_1$ 的第二大本征值；在秩一相区它取零。此量由 Choi 矩阵决定，不依赖 Kraus 表示。
+

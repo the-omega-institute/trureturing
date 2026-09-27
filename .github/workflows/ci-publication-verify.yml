@@ -6,10 +6,9 @@ on:
     paths:
       - '.github/workflows/ci-*.yml'
       - '.github/workflows/lean-cache-publish.yml'
-      - '.github/workflows/truth-release-publish.yml'
       - 'tools/scripts/workflow/**'
       - 'tools/scripts/worktree/**'
-      - 'tools/StrataLint.EngineeringScope/TruthReleaseSelection.cs'
+      - 'tools/StrataLint.ReleaseSelection/**'
       - 'tools/Trureturing.Truth/Release/TruthReleasePushRunSelector.cs'
       - 'Meta/ReportProducers/**'
       - 'Makefile'
@@ -59,7 +58,7 @@ jobs:
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.keys.outputs.dependency_path }}
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
@@ -67,7 +66,7 @@ jobs:
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.keys.outputs.project_path }}
+          path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional validated seeds
@@ -85,43 +84,3 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
-
-  truth:
-    name: verify truth source transport
-    # Temporarily disabled while the truth verification runner is unavailable.
-    if: ${{ false }}
-    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
-    timeout-minutes: 150
-    permissions:
-      contents: read
-      actions: read
-    env:
-      STRATALINT_CACHE_WRITES: 'false'
-    steps:
-      - name: Prepare the self-hosted macOS toolchain PATH
-        run: |
-          printf '%s\n' '/opt/homebrew/opt/coreutils/libexec/gnubin' '/opt/homebrew/opt/gnu-tar/libexec/gnubin' '/opt/homebrew/bin' >> "$GITHUB_PATH"
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Install Python for the self-hosted truth runtime
-        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
-        with:
-          version: '0.10.12'
-          python-version: '3.12'
-          activate-environment: true
-          working-directory: ${{ runner.temp }}
-          enable-cache: false
-      - env:
-          CANDIDATE_SHA: ${{ github.sha }}
-        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: global.json
-      - run: make -C tools dotnet
-      - name: Verify this protected source and its successful push report
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: make truth-release-verify SOURCE_REF="$GITHUB_REF" SOURCE_COMMIT="$GITHUB_SHA" OUT="$RUNNER_TEMP/truth-release-verification"

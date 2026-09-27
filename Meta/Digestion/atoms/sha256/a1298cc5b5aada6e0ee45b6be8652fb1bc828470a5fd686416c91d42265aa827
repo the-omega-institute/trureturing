@@ -1,0 +1,4 @@
+**定义 403.1（实际历史上的未来规律）。** 给定一组历史 $\mathcal H$ 与已指定的未来规律映射 $F:\mathcal H\to\mathcal L$。这里 $\mathcal L$ 可以是固定长度记录的概率律，也可以是明确给定的无限未来概率律空间；它不是尚未建立的真实世界规律。令 $h\sim h'$ 当且仅当 $F(h)=F(h')$，把 $F(\mathcal H)$ 作为预测状态的实际像。
+
+一个统计量 $T:\mathcal H\to Z$ 对这个未来任务充分，意指存在 $G$ 使 $F=G\circ T$。项目 [CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 与 [PredictiveStateUniversalMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.lean) 的对应正是：$T$ 的实际像上存在唯一映射到 $F$ 的实际像，且把每个 $T(h)$ 送到 $F(h)$。
+

@@ -1,0 +1,12 @@
+#### 47.9.1 固定有限支撑的消失尾
+
+定义
+$$
+\mathcal B_{\rho,0}
+=\left\{T\in\mathcal B_\rho:
+\lim_{L\to\infty}
+\sup_{n+k\ge L}\rho^{n+k}|T(n,k)|=0\right\}.
+\tag{47.26}
+$$
+这是加权坐标下的 $c_0(\mathbb N^2)$；有限三角穷尽全部有限坐标集。
+

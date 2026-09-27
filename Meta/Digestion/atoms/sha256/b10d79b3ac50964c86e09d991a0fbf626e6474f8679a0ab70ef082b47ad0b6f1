@@ -1,0 +1,10 @@
+- 如果只允许受限策略族，开关见证也必须在该权限内合法。缩小策略量词后，归一化只约束该族能够接出的分支，不能无条件推出全部自由动作列之间的前缀等式。
+
+上述因果分解与梳实现采用已有数学结构。式（52.6）的事件切换、推论 52.4 的有限测试、命题 52.6—52.8 的缺陷与反馈放大、定理 52.9 和推论 52.10 的因果修复及命题 52.13 的条件响应更新按本节证明使用；其作用是把精确静态响应、顺序概率实现和指定边界的闭环合同接到同一模型中。
+
+相关原始文献与范围如下：
+
+1. Giulio Chiribella、Giacomo Mauro D'Ariano、Paolo Perinotti，*Theoretical framework for quantum networks*，Physical Review A 80, 022339 (2009)，[arXiv:0904.4483v2](https://arxiv.org/pdf/0904.4483v2)。Theorem 3、式（25），PDF 第 7 页；Theorem 5、式（40），PDF 第 11 页，给出递归正性、归一化与顺序量子网络的实现及确定性梳的充要条件。上下文几何卷定义 11.5、定理 11.6 已按这些结果给出接口，定理 11.10 给出合法逐轮仪器的历史树归一化。
+2. Haim Permuter、Tsachy Weissman、Andrea Goldsmith，*Finite State Channels with Time-Invariant Deterministic Feedback*，[arXiv:cs/0608070v1](https://arxiv.org/pdf/cs/0608070v1)，2006。§II 式（5），PDF 第 4 页，定义因果条件化乘积；Lemma 1、式（12）—（14），PDF 第 5—6 页，给输入—输出联合链式分解；Lemma 3，PDF 第 6 页，给归一化。这里使用这些概率结构，不将其后续平稳有限状态信道的容量结论用于任意静态表。
+3. Satinder Singh、Michael R. James、Matthew R. Rudary，*Predictive State Representations: A New Theory for Modeling Dynamical Systems*，UAI 2004，作者稿 [arXiv:1207.4167](https://arxiv.org/pdf/1207.4167)。PDF 第 2 页定义动作—观察测试、历史与历史条件预测；第 5 页给出条件预测的比值更新及式（3）的线性 PSR 更新。完整未来响应采用这一预测状态结构，并保留本节固定时域与完整响应的范围。
+

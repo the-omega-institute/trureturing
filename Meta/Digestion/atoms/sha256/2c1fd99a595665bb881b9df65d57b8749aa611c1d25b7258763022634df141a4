@@ -1,0 +1,13 @@
+**定理 42.2（对比度是操作不变量，非矩阵命名的产物）。** 在 $\operatorname{supp}\sigma$ 上定义 $r=\|\sigma^{-1/2}\Delta\sigma^{-1/2}\|$。则
+\[
+ r=\inf\{a\ge0:-a\sigma\preceq\Delta\preceq a\sigma\}
+  =\sup_{0\preceq E\preceq I,\ \operatorname{Tr}\sigma E>0}
+       \frac{|\operatorname{Tr}\Delta E|}{\operatorname{Tr}\sigma E}.
+\]
+对任意 CPTP 映射，$r(\Lambda\mathsf W)\le r(\mathsf W)$ 且 $I(\Lambda\mathsf W)\le I(\mathsf W)$。统计等价保持 $r$、$I$ 和第 39.2 节的 $Q_\sigma(\Delta)$。奇偶合并在统计等价类上良定义，故
+\[
+ \mathfrak G(\mathsf W_1,\mathsf W_2)
+ :=I(\mathsf W_1\boxast\mathsf W_2)-I(\mathsf W_1)I(\mathsf W_2)
+\]
+也是统计等价不变量。
+

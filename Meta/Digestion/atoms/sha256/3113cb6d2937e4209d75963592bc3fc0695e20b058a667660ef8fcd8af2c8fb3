@@ -1,0 +1,24 @@
+**命题 44.21（真实残差及正锚分母的确定性包络）。** 在已知实际非零支撑 $E$、$m=\dim E$ 上，令 $A=W(h)$、$W_2=W(2h)$。假设同支撑 Hermitian 估计在一个声明的联合误差事件上同时满足
+$$\|\widetilde A-A\|\le e_1,\qquad\|\widetilde W_2-W_2\|\le e_2.$$
+置
+$$\widetilde\Delta=\widetilde W_2-\widetilde A^2,\quad
+\widetilde\delta=\|\widetilde\Delta\|,\quad
+q_\Delta=e_2+(2b+e_1)e_1.$$
+则
+$$\boxed{\max\{0,\widetilde\delta-q_\Delta\}\le\delta
+\le\overline\delta:=\widetilde\delta+q_\Delta.}$$
+证明。无交换性假设也有
+$$A^2-\widetilde A^2=A(A-\widetilde A)+(A-\widetilde A)\widetilde A.$$
+$\|A\|\le b$、$\|\widetilde A\|\le b+e_1$，故平方差范数至多 $(2b+e_1)e_1$。加 $W_2$ 的误差给 $\|\Delta-\widetilde\Delta\|\le q_\Delta$，再用范数反三角不等式及 $\delta\ge0$。不要求 $\widetilde\Delta$ 半正定。任何独立认证的 $\|A\|$ 上界可替换 $b$；实际正收缩允许安全值 $1$。它是依赖矩阵误差证书的真实残差上下界，不认证支撑或带噪饱和。
+
+若 $\widetilde A>0$ 且有实际 Frobenius 对数误差
+$$\|\log A-\log\widetilde A\|_F\le D_1,\qquad
+\widetilde\tau=\operatorname{tr}(-\log\widetilde A)/m,$$
+则 $|\operatorname{tr}X|=|\langle I,X\rangle_F|\le\sqrt m\|X\|_F$ 给
+$$|\tau-\widetilde\tau|\le D_1/\sqrt m.$$
+要求一个真实正下界 $\underline\tau>0$，例如正数 $\widetilde\tau-D_1/\sqrt m$；若独立认证共同 $b<1$，也可取
+$$\underline\tau=\max\{-\log b,\widetilde\tau-D_1/\sqrt m\}>0.$$
+计算测量比值还须另有 $\widetilde\tau>0$。配合独立实际有效源证书 $S\succeq\underline aI>0$，定义
+$$\boxed{K_{\rm err}=\frac{\overline\delta}{2\underline a^2\underline\tau}.}$$
+它控制定理44.11的真实系数 $\delta/(2\underline a^2\tau)$。$K_{\rm err}$ 不是源核 $K$ 或历史阶数 $k$。若无法取得这些正裕量，结论仍是未履行前提的条件结论，数值阈值不能补上证书。所有复用的基准误差属于同一联合事件，未假设独立。证毕。
+

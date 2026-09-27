@@ -1,0 +1,26 @@
+### 47.19 同一临界尺度：最坏放大与平均深度
+
+本节固定 \(A>0\)，从次临界侧令
+\(\rho\uparrow1/\lambda(A)\)。所有幅度导数都是对 \(A\) 求导；所有渐近中的 \(A\) 保持固定。使用前面已经证明的最优常数
+\[
+C_\rho(A)=\sup_{k\ge0}\rho^ku'_k(A),
+\qquad
+q=\rho\lambda,\qquad
+\epsilon=-\log q>0.
+\]
+则有
+\[
+\boxed{
+\lim_{\rho\uparrow1/\lambda}\epsilon C_\rho(A)
+=\frac{c_A}{e s},
+\qquad
+\lim_{\rho\uparrow1/\lambda}
+\frac{C_\rho(A)}{\mathbb E_{A,\rho}[K]}
+=\frac{c_A}{e s},
+\quad
+c_A=\frac{A\lambda}{\lambda+1},\quad s=\sqrt{A^2+4A}.
+}
+\tag{47.76}
+\]
+第二个极限的期望只属于前面显式归一化的标签律，临界点自身没有该概率律。
+

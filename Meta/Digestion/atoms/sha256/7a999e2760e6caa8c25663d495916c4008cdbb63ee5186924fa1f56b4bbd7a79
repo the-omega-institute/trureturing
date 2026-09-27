@@ -1,0 +1,87 @@
+**定理 202.2（转动处理器给出的显式二次上界）。** 在定义202.1的参数域内，
+$$
+\limsup_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\frac{\Lambda}{v_*^2}<\infty.
+\tag{202.4}
+$$
+其中充分小的正 $\delta$ 均保持半径合法。这个上界由固定二维程序输入与三维环境的实际 CPTP 处理器族给出。
+
+证明。 令环境标准基为 $e_0,e_1,e_2$，取充分小的实设计参数 $s$，并定义
+$$
+\begin{aligned}
+&W_0=(e_0,e_1),\\
+&W_2=\left(e_0,-(1-2s^2)e_1+2s\sqrt{1-s^2}\,e_2\right),\\
+&f_s=se_1+\sqrt{1-s^2}\,e_2,\qquad
+v=(A_0,\beta_*)^T,\quad v^\perp=(-\beta_*,A_0)^T,\\
+&W_1=e_0v^T+f_s(v^\perp)^T.
+\end{aligned}
+\tag{202.5}
+$$
+各 $W_i:\mathbb C^2\to\mathbb C^3$ 都为等距映射。用信号基控制它们，再对环境取偏迹，得到对全部联合输入定义的固定 CPTP 处理器 $\mathcal G_s$；每个 $s$ 的处理器不随运行参数 $u$ 变化。直接求重叠得到
+$$
+W_0^\dagger W_1=W_2^\dagger W_1
+=\begin{pmatrix}A_0&\beta_*\\-s\beta_*&sA_0\end{pmatrix},
+\qquad
+W_2^\dagger W_0=\operatorname{diag}(1,-1+2s^2).
+\tag{202.6}
+$$
+准备实仿射 Bloch 曲线
+$$
+r_s(u)=\bigl(x_s(u),0,z_s(u)\bigr),\qquad
+x_s(u)=\frac{x_*(u)+\gamma s}{1-s^2},\qquad
+z_s(u)=\frac{u-s^2}{1-s^2}.
+\tag{202.7}
+$$
+实际 Schur 系数取 $\operatorname{Tr}(\rho W_j^\dagger W_i)$。由于程序实对称，（202.6）的两个相邻系数都为
+$$
+A_0(h+s\ell)+\frac{\beta_*(1-s)x_s(u)}2=a,
+\qquad h=\frac{1+z_s(u)}2,\quad\ell=\frac{1-z_s(u)}2;
+\tag{202.8}
+$$
+另一个系数为 $s^2+(1-s^2)z_s(u)=u$。因此在程序物理的每个 $u\in J_a$ 上，对所有信号输入精确产生 $\mathcal T_u$。
+
+满秩条件的分子是
+$$
+\begin{aligned}
+D_s(u)
+&=(1-s^2)^2-[x_*(u)+\gamma s]^2-(u-s^2)^2\\
+&=q_*(u)-2\gamma x_*(u)s-[2(1-u)+\gamma^2]s^2.
+\end{aligned}
+\tag{202.9}
+$$
+$D_0$ 的上根 $b$ 是单根，故隐函数定理给出实解析的邻近上根 $b(s)$，满足
+$$
+b(0)=b,\qquad
+b'(0)=\frac{2\gamma x_*(b)}{q_*'(b)}=-v_*<0.
+\tag{202.10}
+$$
+所以负 $s$ 将上端点一阶向外推。名义点与下端点在临界时已有严格物理余量；第201.3节还给出 $b_-^*<2a-1<t-R_0$，故这些余量在小扰动下保持。
+
+计算名义成本时，全部状态处于名义点的满秩邻域。对任意实平面 Bloch 曲线 $(x,0,z)$，SLD 公式可改写为
+$$
+I_Q=\frac{(z')^2}{1-z^2}
++\frac{[(1-z^2)x'+zz'x]^2}
+{(1-z^2)(1-z^2-x^2)},
+\tag{202.11}
+$$
+其中撇号对运行参数 $u$ 求导。对（202.7），第一项为
+$$
+\frac1{(1-u)(1+u-2s^2)}.
+\tag{202.12}
+$$
+在 $u=t$，第二项的分子括号于 $s=0$ 为零，其对 $s$ 的一阶导数为 $t\gamma$；分母于零为 $(1-t^2)q_*(t)>0$。因此名义成本 $Q_s$ 满足
+$$
+Q_s-I_r(t)=\Lambda s^2+o(s^2).
+\tag{202.13}
+$$
+此处用了 $x_*'(t)=-t x_*(t)/(1-t^2)$，以及（202.12）相对 $I_r(t)$ 的二次系数 $2/[(1-t)(1+t)^2]$。
+
+对小的 $\delta>0$，利用（202.10）选择负 $s=s(\delta)$，使
+$$
+b(s)=b+\delta+\delta^2,
+\qquad s(\delta)=-\frac{\delta}{v_*}+O(\delta^2).
+\tag{202.14}
+$$
+上端点严格超过 $t+R_0+\delta$，下端点的固定余量仍在，故程序具有包含半径 $R_0+\delta$ 闭区间的合法开延拓。代入（202.13）即得（202.4）。这是一族确定的处理器与程序准备，没有参数依赖的后选择。证毕。
+

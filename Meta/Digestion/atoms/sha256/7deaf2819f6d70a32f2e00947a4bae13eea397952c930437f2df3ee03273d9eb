@@ -1,0 +1,56 @@
+**定理 153.2（有限扇区核的可识别性）。** 若观察者能够：
+
+1. 对两个线性无关的初始人口向量 $w^{(0)},w^{(1)}$ 分别取得完整状态值响应 $\boldsymbol{\mathfrak U}_{w^{(j)}}(z,dt)$；
+2. 在状态空间上作足以区分线性无关 $\rho_0,\rho_1$ 的精确层析；
+3. 已知两种扇区时间测度 $\nu_0,\nu_1$；
+
+则可以唯一恢复转移矩阵 $T$。在任意 $s>0$ 上，恢复出的第两次事件向量满足
+
+$$
+\widehat{\boldsymbol\mu}_2(s;w)
+=
+D(s)T D(s)w.
+$$
+
+把 $w^{(0)},w^{(1)}$ 作为一组基向量，组成矩阵 $W=[w^{(0)}\ w^{(1)}]$，则
+
+$$
+\boxed{
+T
+=
+D(s)^{-1}
+\begin{bmatrix}
+\widehat{\boldsymbol\mu}_2(s;w^{(0)})
+&
+\widehat{\boldsymbol\mu}_2(s;w^{(1)})
+\end{bmatrix}
+W^{-1}
+D(s)^{-1}.
+}
+\tag{153.1}
+$$
+
+### 证明
+
+由 $\rho_0,\rho_1$ 的实线性无关性，状态层析把每个状态值系数唯一分解成两个标量分量。因此由定理 151.2 的系数反演，完整状态值截止响应给出每个 $\boldsymbol\mu_m$，尤其给出 $\boldsymbol\mu_2$ 的 Laplace 向量。
+
+矩阵值核定义给出
+
+$$
+\widehat K(s)=D(s)T,
+\qquad
+\widehat{\boldsymbol\nu}_w(s)=D(s)w,
+$$
+
+所以
+
+$$
+\widehat{\boldsymbol\mu}_2(s;w)
+=
+\widehat K(s)\widehat{\boldsymbol\nu}_w(s)
+=
+D(s)T D(s)w.
+$$
+
+两种初始向量组成基，右乘 $W^{-1}$ 得到 $D(s)T D(s)$；$D(s)$ 的两个对角元均正，左右乘其逆即得式（153.1）。如果只给一个初始向量，式（153.1）只有一个矩阵作用值，不能一般确定 $T$ 的全部两列。证毕。
+

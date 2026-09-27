@@ -1,0 +1,32 @@
+**定理220.1（正来源方向的尖锐二次距离修正）。** 置
+$$
+c_* =\frac4{9\beta^2R^2},\qquad
+\|p\|_1=|\epsilon|+|h|+|\nu|.
+$$
+存在固定联合小箱及常数 $C$，使其中全部合法物理参数满足
+$$
+\boxed{
+\left|d_2(p)-\lambda(p)(1-c_*h^2)\right|
+\le C\lambda(p)h^2\|p\|_1.
+}
+\tag{220.3}
+$$
+在正谱侧 $\Delta(p)>0$，相应地有
+$$
+\frac{d_2(p)}{\lambda(p)}
+=1-\frac4{9\beta^2R^2}h^2
++O\!\left(h^2\|p\|_1\right).
+\tag{220.4}
+$$
+特别地，沿任意 $p\to0$、$\epsilon>0,h>0,\Delta(p)>0$ 的合法路径，
+$$
+\boxed{
+\frac{1-d_2(p)/\lambda(p)}{h^2}
+\longrightarrow\frac4{9\beta^2R^2}.
+}
+\tag{220.5}
+$$
+这些陈述不要求正 detuning、$h$ 与 $\epsilon$ 之间有相对速率条件。非正谱侧有 $\lambda=d_2=0$，使用未除法形式（220.3）。纯来源 $h=0$ 上仍精确有 $d_2=\lambda$；正小 $h$ 且 $\lambda>0$ 时严格有 $0<d_2<\lambda$。
+
+证明由后面的两个合法界完成：旋转输出事件给距离下界；删除小谱并恢复 TP 给距离上界。两者在联合端点的二次系数相同，而不需要认定某个有限参数候选恰为最近通道。
+

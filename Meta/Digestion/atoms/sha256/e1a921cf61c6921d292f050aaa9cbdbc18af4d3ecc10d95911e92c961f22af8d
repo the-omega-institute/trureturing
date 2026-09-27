@@ -1,0 +1,42 @@
+**充分性。** 假设 \(W_N(A)\ge1\)。记
+\(p_{n,k}=-T_{A,N}(n,k)\ge0\)、\(p_k=p_{0,k}\)。有限依赖给
+\(p_k=u_k(A)\) 对 \(k<N\) 成立；因此这些初始项满足
+\(p_k\ge A\rho^k\)。首行递推可改写为
+\[
+p_k=p_{1,k-1}
++A\sum_{i=1}^{\min(k,N)}p_{k-i}\quad(k\ge1).
+\]
+对 \(k\ge N\)，若此前各项满足所需界，则
+\[
+p_k\ge A\sum_{i=1}^{N}p_{k-i}
+\ge A^2\rho^k\sum_{i=1}^{N}\rho^{-i}
+=A\rho^kW_N(A)
+\ge A\rho^k.
+\]
+故由归纳，\(p_k\ge A\rho^k\) 对所有 \(k\ge0\) 成立。首行的加权误差因此满足
+\[
+\begin{aligned}
+0\le\rho^k[u_k(A)-p_k]
+&\le c_A+b_A\rho^{2k}-A\rho^{2k}\\
+&=c_A+(b_A-A)\rho^{2k}<c_A.
+\end{aligned}
+\tag{48.8}
+\]
+严格性来自 \(b_A<A\)，包括每个有限 \(k\)。当 \(N=1\) 时，基步为 \(p_0=A\)，归纳从 \(k=1\) 开始，仍覆盖全部首行。
+
+现在取 \(n\ge1\)，写 \(m=n+k\)。若 \(m<N\)，有限依赖说明当前前缀与全负边界完全给出同一坐标，误差为零。若 \(m\ge N\)，由 \(0\le p_{n,k}\le u_k(A)\) 得
+\[
+\begin{aligned}
+\rho^{n+k}[u_k(A)-p_{n,k}]
+&\le\rho^m u_k(A)\\
+&\le\rho^m u_{m-1}(A)\\
+&=c_A(\rho+\rho^{2m})\\
+&\le c_A\bigl[\rho+(1-\rho)^2\bigr]
+<c_A.
+\end{aligned}
+\tag{48.9}
+\]
+第二步用 \(k\le m-1\) 以及 \(u_j(A)\) 随非负整数 \(j\) 增加：这也可由其非负系数公式逐项比较得到。等式使用
+\(b_A=c_A\rho\)；倒数第二步使用（48.7）。最后
+\(\rho+(1-\rho)^2=1-\rho+\rho^2<1\)。结合（48.5），得到范数恰为 \(c_A\)。每个有限坐标的加权误差都严格小于 \(c_A\)，而整个上确界仍等于 \(c_A\)。
+

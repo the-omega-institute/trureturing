@@ -50,16 +50,23 @@ from `Tuple.sort`. These are the fixed-cut ingredients of the classical
 decomposition in Proposition 2.1 and the greatest-cut construction in the
 proof of Theorem 2.3; the fixed-cut theorem does not select a greatest cut.
 
-For arbitrary positive factor lengths, `descents_block_sum` proves that
-ordinary adjacent descents add under direct sum and gain exactly one
-under skew sum. This is the local descent correspondence used in
-Theorem 2.3. A singleton factor has zero descents. The theorem allows
-singletons in either factor. The greatest-cut decomposition below establishes
+Inside `GreatestCutEnumeration.result`, ordinary adjacent descents are
+normalized directly at the weighted reconstruction step: they add under
+direct sum and gain exactly one under skew sum. This uses the retained
+`descentAt` and `descents` definitions, the two block evaluation formulas,
+and `Fin.sum_univ_add`. It is the local descent correspondence used in
+Theorem 2.3, not a standalone formalization claim. A singleton factor has
+zero descents; the normalization allows singletons in either factor and
+unequal positive lengths. The greatest-cut decomposition below establishes
 its right-factor convention separately.
 
 This is a formal proof of a known classical bridge, not a newly solved
-open problem. It is supporting draft work for repository issue #9208;
-there is no standalone FirstFreeze or typed open-problem resolution claim.
+open problem. It supplies the classical decomposition for repository issue
+#9208. The actual `blockSum` constructor is also used by
+`A398542MinimumRecurrence.joinUpper` for the forced value blocks of the
+upper-minimum decomposition. ProperCut and CutFactorization belong to that
+module's project import closure; their admission is supporting content,
+with no typed open-problem resolution claim of their own.
 Conjecture 5.2's full real-rootedness assertion remains unresolved here.
 
 `GreatestCutEnumeration.result` gives an equivalence between actual avoiders

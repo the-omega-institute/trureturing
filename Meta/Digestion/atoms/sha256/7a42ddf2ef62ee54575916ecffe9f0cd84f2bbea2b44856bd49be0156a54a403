@@ -1,0 +1,15 @@
+**问题 52.1（固定设计类和外部原题）。** Eftekhari–Yap–Wakin–Rozell 的 *Stabilizing Embedology*，Physical Review E 97, 022222 (2018)，结论部分明确询问能否通过测量函数设计提高稳定秩。本批使用其有限基函数族 $H$ 和二延迟差矩阵的稳定秩定义，固定圆周状态 $x(\varphi)=(\cos\varphi,\sin\varphi)$、一步旋转 $\theta=\pi/6$。只考虑有限的成对谐波族
+\[
+ H(\varphi)=(a_kc_k(\varphi))_{k\in K},\quad
+ c_k(\varphi)=(\cos k\varphi,\sin k\varphi),\quad
+ K\subset\mathbb N_{>0},\quad a_k>0,
+\]
+其中 $K$ 非空、频率互异，输出维数为 $2|K|$。定义
+\[
+ X_H(\varphi)=\begin{pmatrix}H(\varphi)^T\\H(\varphi-\theta)^T\end{pmatrix},\qquad
+ R_H=\inf_{\varphi\not\equiv\psi}
+ \frac{\|X_H(\varphi)-X_H(\psi)\|_F^2}
+      {\|X_H(\varphi)-X_H(\psi)\|_{\rm op}^2}.
+\]
+只有单射的 $H$ 被纳入以下设计比较。设计整个 $H$ 不等于在固定 $H$ 内改变随机标量系数 $\alpha$；观察全部基函数也不等于只观察 $h_\alpha=\alpha^TH$。本批不宣称两个延迟满足原论文随机标量嵌入定理的数值充分门槛。[^tcs10-eftekhari]
+

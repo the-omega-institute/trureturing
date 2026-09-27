@@ -1,0 +1,10 @@
+**定义 113.1（公开宣告的明确前提）。** 设当前允许状态为 $A\subseteq X$，实际状态 $x_\circ\in A$。对固定的原状态谓词 $P\subseteq X$，一次真实宣告要求 $x_\circ\in P$，更新后承载空间取为
+
+$$
+A'=A\cap P,
+$$
+
+各人的可及关系也限制在 $A'$ 内。将它解释为现实中的公开宣告，还假定消息真实、受信任，且其公开接收方式与更新规则在该群体中得到共同认可；每个人分别听见相同声响不自动履行这些条件。项目[允许域内的宣告与共同知识](../../../D5/S3/ConceptDynamics/PublicAnnouncement/AdmissibleAnnouncementCommonKnowledge.lean)以 `descriptiveCondition` 实现这一限制，并保留实际状态属于旧域且满足宣告的前提。
+
+在新模型中，从 $x_\circ$ 出发的任意有限可及链都留在 $A'$，故其终点仍满足这个固定的 $P$。这是源码 `true_public_announcement_is_common_knowledge_on_admitted_domain` 所给结论。它说明满足条件的公开信息如何成为共同知识，没有证明一场现实交流已经真实、可信或被共同理解。
+

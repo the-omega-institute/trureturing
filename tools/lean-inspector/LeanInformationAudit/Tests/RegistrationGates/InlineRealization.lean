@@ -144,40 +144,43 @@ private def replaceSource (path : System.FilePath) (bytes : ByteArray) : IO Unit
   IO.FS.writeBinFile temporary bytes
   IO.FS.rename temporary path
 
-run_meta LeanInformationAudit.Tests.withPrivateSources do
-  let env ← getEnv
-  let root := env.header.mainModule
-  let helper := `LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper
-  let helperPath := TemplateAudit.sourcePath helper
-  let inputs ← TemplateBinding.moduleInputs env root
-  unless inputs.any (·.path == helperPath) do
-    throwError "inline proof helper absent from module inputs"
-  let snapshot ← TemplateBinding.exportSnapshot
-  let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
-    |>.map (·.occurrence.key)
-  let wires ← TemplateBinding.reportJson #[(root, registered)]
-  let some wire := wires[0]? | throwError "inline registration report missing"
-  unless (wire.getObjVal? "inputs").toOption.isNone do
-    throwError "report retains untraced source hashes"
-  logInfo m!"INLINE_PROVENANCE_REPORT={wire.compress}"
-  unless wire.compress == LeanInformationAudit.Tests.InlineProvenanceWire.canonical do
-    throwError ("[FAIL] INLINE_PROVENANCE_WIRE_MISMATCH: set InlineProvenanceWire.canonical to " ++
-      "the JSON after INLINE_PROVENANCE_REPORT= in this module's build log" : String)
-  let path : System.FilePath := helperPath
-  let original ← IO.FS.readBinFile path
-  try
-    replaceSource path (original ++ "\n-- changed after native import\n".toUTF8)
-    let rejected ← try
-      discard <| TemplateBinding.moduleInputs env root
-      pure false
-    catch error =>
-      let reason ← error.toMessageData.toString
-      pure (reason == s!"incomplete_closure:E7.native_source:{helper}" ||
-        reason == "incomplete_closure:E7.native_input_changed")
-    unless rejected do throwError "changed inline proof helper source was accepted"
-  finally
-    replaceSource path original
-    unless (← IO.FS.readBinFile path) == original do
-      throwError "inline proof helper source restoration failed"
+run_meta do
+  let outputRoot ← Repository.root
+  LeanInformationAudit.Tests.withPrivateSources do
+    let env ← getEnv
+    let root := env.header.mainModule
+    let helper := `LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper
+    let helperPath := TemplateAudit.sourcePath helper
+    let inputs ← TemplateBinding.moduleInputs env root
+    unless inputs.any (·.path == helperPath) do
+      throwError "inline proof helper absent from module inputs"
+    let snapshot ← TemplateBinding.exportSnapshot
+    let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
+      |>.map (·.occurrence.key)
+    let wires ← TemplateBinding.reportJson #[(root, registered)]
+    let some wire := wires[0]? | throwError "inline registration report missing"
+    unless (wire.getObjVal? "inputs").toOption.isNone do
+      throwError "report retains untraced source hashes"
+    IO.FS.writeFile (outputRoot / ".lake/build/inline-provenance-evidence.json") (wire.compress ++ "\n")
+    logInfo m!"INLINE_PROVENANCE_REPORT={wire.compress}"
+    unless wire.compress == LeanInformationAudit.Tests.InlineProvenanceWire.canonical do
+      throwError ("[FAIL] INLINE_PROVENANCE_WIRE_MISMATCH: set InlineProvenanceWire.canonical to " ++
+        "the JSON after INLINE_PROVENANCE_REPORT= in this module's build log" : String)
+    let path : System.FilePath := helperPath
+    let original ← IO.FS.readBinFile path
+    try
+      replaceSource path (original ++ "\n-- changed after native import\n".toUTF8)
+      let rejected ← try
+        discard <| TemplateBinding.moduleInputs env root
+        pure false
+      catch error =>
+        let reason ← error.toMessageData.toString
+        pure (reason == s!"incomplete_closure:E7.native_source:{helper}" ||
+          reason == "incomplete_closure:E7.native_input_changed")
+      unless rejected do throwError "changed inline proof helper source was accepted"
+    finally
+      replaceSource path original
+      unless (← IO.FS.readBinFile path) == original do
+        throwError "inline proof helper source restoration failed"
 
 end LeanInformationAudit.Tests.InlineRealization

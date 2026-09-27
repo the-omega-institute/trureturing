@@ -36,7 +36,6 @@ public sealed partial class FrozenSurfaceRuleTests
         "tools/scripts/lean-report-pair.sh",
         ".github/workflows/ci-push.yml",
         "Directory.Build.props",
-        "tools/Directory.Build.targets",
         "Directory.Packages.props",
         "global.json",
         "lean-toolchain",

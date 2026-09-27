@@ -1,0 +1,53 @@
+**命题 41.6（共同恢复预算的可达见证与来源边界）。** 在定义41.1的固定装置中，下述实例各按其实际准备合同成立。
+
+第一，$n=1$ 的输出通道为
+$$
+\Gamma_1(X)=\begin{pmatrix}X_{00}&\sqrt\alpha X_{01}\\
+                         \sqrt\alpha X_{10}&X_{11}\end{pmatrix},
+\qquad \epsilon_1=1-\sqrt\alpha>0.
+\tag{41.45}
+$$
+不存在输入密度使 $\Gamma_1(X)=|+\rangle\langle+|$。因而任意相容目标族不一定属于同一实际来源像；例如各层全加乘积纯态构成相容族，却已在第一层被排除。证明是（41.1）的直接偏迹：内积 $\langle m_1,m_0\rangle=\sqrt\alpha$ 给非对角乘子。目标强迫 $X_{00}=X_{11}=1/2$、$X_{01}=1/(2\sqrt\alpha)>1/2$，从而 $\det X=1/4-1/(4\alpha)<0$，违反正性。另一方面，（41.11）给 $a_2=\alpha^2,b_2=0$ 以及 $a_3=\alpha^3,b_3=\alpha^2$，同时展示奇异端点和尾界的起点；这些公式不定义零时域保真度或解码器。
+
+第二，若准备合同固定已知纯源 $P_0=|m_0\rangle\langle m_0|$，则它的任意联合扩展都分解为 $\theta_J\otimes P_0$，故档案到 $M$ 的替换通道 $Y\mapsto\operatorname{Tr}(Y)P_0$ 给零来源恢复误差。为证明分解，置 $P=I_J\otimes P_0$。$\operatorname{Tr}((I-P)\theta)=0$ 和 $\theta\ge0$ 给 $(I-P)\theta^{1/2}=0$，因而 $\theta=P\theta P$；$P_0$ 的像一维，所以 $\theta=\theta_J\otimes P_0$。$q_n(\theta)$ 的 $J$ 边缘仍为 $\theta_J$，张量恒等参考后的替换确实恢复它。这里 $P_0$ 不是计算基态 $|0\rangle\langle0|$；这个结论也不推广到任意已知纠缠联合单例。即使联合目标事先已知，只在 $M$ 端替换也只产生与不可访问 $J$ 的乘积态，不能重建该纠缠目标。因此（41.8）的未知全输入最优值不能冒充 Q130 固定纯根任务的最优值。
+
+第三，假定允许实际准备具有共同相位校准的 $|+\rangle,|-\rangle$。以 $\theta_0=\rho_+$、$\Theta=\{\rho_-\}$，或二者共同张量同一独立 $J$ 态，则
+$$
+E_*=1,\qquad e_n=c_n,\qquad E_*-e_n=\epsilon_n\quad(n\ge1).
+\tag{41.46}
+$$
+证明由正交输入及（41.19）给出；共同张量一个密度不改变迹范数，因为该因子的迹范数为一。这证明（41.33）的统一来源距离亏损不能普遍缩小；准备许可是该尖锐性实例的前提。
+
+第四，令 $J=\mathbb C^2$，取真实 Bell 准备
+$$
+|\Phi_\pm\rangle=(|00\rangle\pm|11\rangle)/\sqrt2,\qquad
+\theta_\pm=|\Phi_\pm\rangle\langle\Phi_\pm|,
+\qquad X_{\rm P}=|0\rangle\langle1|+|1\rangle\langle0|.
+\tag{41.47}
+$$
+两态分开的 $J,M$ 边缘均为 $I/2$，但 $X_{\rm P}\otimes X_{\rm P}$ 的确定性奇偶分别为 $+1,-1$。由（41.7），
+$$
+(\operatorname{id}_J\otimes\mathcal D_n\Gamma_n)(\theta_\pm)
+=(1-\kappa_n)\theta_\pm+\kappa_n\theta_\mp.
+\tag{41.48}
+$$
+证明只需 $I_J\otimes Z$ 将 $\Phi_+$ 与 $\Phi_-$ 互换。因此解码后终端联合奇偶测试的错误概率精确为 $\kappa_n$。这个 tester 读取允许的联合参考；解码器本身仍不访问 $J$，也未另外产生非平凡的同时经典预测输出。仅比较分开边缘会漏掉此处全部奇偶关系。
+
+第五，若实际准备合同允许未额外记录混合标签的家庭
+$$
+\theta_p=(1-p)\theta_++p\theta_-,\qquad 1/2\le p\le1,
+\qquad \theta_0=\theta_+,\qquad
+\Theta=\{\theta_p:1/2\le p\le1\},
+\tag{41.49}
+$$
+则这是一个非单例紧合法类，同一 $p$ 供应整个发射历史，并有
+$$
+D(\theta_+,\theta_p)=p,\qquad
+d_n(\theta_p)=pc_n,\qquad
+E_*=1/2,\quad e_n=c_n/2,\quad E_*-e_n=\epsilon_n/2.
+\tag{41.50}
+$$
+证明。Bell 两态正交，故第一距离为 $p$。将参考和首位输出联合分块，$q_n(\theta_+)-q_n(\theta_-)$ 只在
+$(|0\rangle_J|0\rangle_{B_1})\otimes K_n$ 与
+$(|1\rangle_J|1\rangle_{B_1})\otimes K_n$ 的直和上非零，在这个支撑上恰为（41.19）的交叉块矩阵，故其半迹范数为 $c_n$。来源与输出差均随 $p$ 线性缩放，给第二距离；在 $[1/2,1]$ 上取最小值即得其余等式。参数映射连续，紧性与非空性亦直接成立。各态的分开边缘相同，变化的是联合关系。Bell 准备和随机化仍是资源假设；若 $p$ 或随机分支标签已被实际记录，必须把它们留在完整来源／观察者中重新评价距离，不能删去标签来制造（41.49）的约化家庭。$\square$
+

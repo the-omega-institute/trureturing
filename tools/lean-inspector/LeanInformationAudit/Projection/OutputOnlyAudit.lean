@@ -1,4 +1,5 @@
-import Lean
+import LeanInformationAuditInterface.OutputSyntax
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit
 open Lean Lean.Elab.Command
@@ -24,7 +25,8 @@ audit rejects environment mutation, declaration staging, command elaboration,
 runtime inputs, and module loaders. The writer is audited with `writeFile` as its
 only runtime capability.
 
-Residual: definitions owned by Lean/Init/Std/Mathlib remain opaque boundary
+The owned implementation includes the stable Interface package. D5/Reg content
+and definitions owned by Lean/Init/Std/Mathlib remain opaque boundary
 nodes. The explicit lists close the known current-reference and module-loader
 channels at that boundary, but this is not an OS sandbox or a claim that every
 future Lean-core capability is classified. Owned unsafe, extern, implemented_by,
@@ -39,15 +41,6 @@ inductive ArtifactKind where
 
 structure AnalysisExportPlan where
   artifacts : List (ArtifactKind × String)
-
-syntax (name := sealInformationTheoryCmd) "#seal_information_theory" : command
-
-syntax (name := stageInformationAnalysisCmd)
-  "#stage_information_analysis" ident ident : command
-
-syntax (name := exportInformationAnalysisCmd)
-  "#export_information_analysis" ident ident (" output " str)?
-    (" analysis_output " str)? (" ascii_output " str)? : command
 
 /-- Seal syntax is deliberately discarded before publication. -/
 def terminalSealCommand (publication : CommandElabM Unit) : CommandElab :=
@@ -113,7 +106,7 @@ def exportEnvironmentMutationDenylist : List Name :=
 private def ownedByInspector (env : Environment) (name : Name) : Bool :=
   let owner := (env.getModuleIdxFor? name).map fun index =>
     env.allImportedModuleNames[index.toNat]!
-  (`LeanInformationAudit).isPrefixOf (owner.getD env.header.mainModule)
+  Repository.isInspectorModule (owner.getD env.header.mainModule)
 
 private def scannedRuntimeCapability (env : Environment) (name : Name) : Bool :=
   let scanned := [(`IO), (`System), (`Lean.FS)].any (·.isPrefixOf name) ||

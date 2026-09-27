@@ -1,0 +1,4 @@
+### 55.8 来源范围
+
+完整 tester 与实现定理采用 [Chiribella–D’Ariano–Perinotti, arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2)，定义 11、引理 8、定理 11–12，PDF 第 17–18 页。有限维半定规划强对偶条件可见 [Gutoski, arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4)，附录 A 的 Fact 6；该文定理 4 给一般策略上界质量。式（55.5）的单向对偶及本反例的证明均已在上文展开，未以数值最优值作为证明前提。
+

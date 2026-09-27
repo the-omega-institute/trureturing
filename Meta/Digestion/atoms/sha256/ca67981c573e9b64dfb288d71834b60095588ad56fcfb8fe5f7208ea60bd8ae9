@@ -1,0 +1,57 @@
+**定理 58.4（前驱、空槽、实际后缀质量的联合必要界）。** 对每个整数 $t\ge2$，同时有
+$$
+A_t+Z_t\le\alpha m_t+B_t,\qquad
+J_t\le J_t^*\le pm_t-Z_t.
+\tag{58.6}
+$$
+因此
+$$
+\begin{aligned}
+w&\ge r-1+\sum_{t\ge2}
+\max\left\{0,\left\lceil\frac{J_t^*+Z_t}{p}\right\rceil,
+                  \left\lceil\frac{A_t+Z_t-B_t}{\alpha}\right\rceil\right\},\\
+|Q|&\ge C_A+2e+\sum_{t\ge2}
+\max\left\{0,\left\lceil\frac{J_t^*+Z_t}{p}\right\rceil,
+                  \left\lceil\frac{A_t+Z_t-B_t}{\alpha}\right\rceil\right\}.
+\end{aligned}
+\tag{58.7}
+$$
+每个有限截断仍是有效下界。把 $J_t^*$ 换成 $J_t$ 仍成立；把 $B_t$ 换成 $S_r$ 只会削弱界。进一步丢弃 $Z_t$ 得到
+$$
+\begin{gathered}
+m_t\ge\max\left\{0,\left\lceil J_t^*/p\right\rceil,
+                         \left\lceil(A_t-S_r)/\alpha\right\rceil\right\},\\
+w\ge r-1+\sum_{t\ge2}\max\left\{0,\left\lceil J_t^*/p\right\rceil,
+                         \left\lceil(A_t-S_r)/\alpha\right\rceil\right\};
+\end{gathered}
+\tag{58.8}
+$$
+这里同样可使用 $J_t$。
+
+证明。每个被 $A_t$ 计入的槽都指向 $F_t$，但 $F_t$ 还可以收到等待短于 $t$ 的槽。因而 $A_t\le\sum_{q\in F_t}A_q$。在定理58.2的第二式上对 $F_t$ 求和，即得第一条联合不等式。
+
+证明质量界时，固定的是实际**目标槽** $(q,d)$。在这个槽上收集所有到达访问 $(x,i)$，包括由所有不同前驱槽、不同历史及不同读取深度进入者；不能为各前驱分别使用一次容量一。给每个活动槽的至多两条实际下一槽边固定不同的二进制标号。一次当前槽访问之后，沿实际执行直到最后终止槽的完整边词，其长度恰为 $N_x-i$。
+
+这些完整词在固定目标槽上两两不同。若不同初态有相同词，固定表沿该词经过相同槽并到同一个固定输出，违反精确解码。同一初态在不同读取索引处再访该槽时，剩余读取数不同，故完整词长不同。它们还前缀自由：一条完整词的末端已是终止槽，同起点、同一前缀的另一条词也已经到该终止槽，不能继续产生下一读取边。此论证包含所有进入方式，没有假定历史到槽单射，也没有排除控制图中的环。
+
+若该槽是终止槽，仅有一个初态的一次最终访问，唯一词为空词，其后缀质量直接为 $2^0=1$。否则完整词都非空。对有限前缀码，取不小于全部词长的整数 $K$；每条长度 $\ell$ 的词有 $2^{K-\ell}$ 个长度 $K$ 的延长词，前缀自由使这些集合互不相交，故 $\sum2^{-\ell}\le1$。因此在每个使用槽上
+$$
+\sum_{(x,i):(q(x,i),d(x,i))=(q,d)}2^{-(N_x-i)}\le1.
+\tag{58.9}
+$$
+经典有限二元 Kraft 数值界的来源仍是第57.2节所列固定版本 `ffec542f612d6e8858eb4b08715aed884285a2b0` 的 `D5.S0.Computability.KraftInequality.finite_binary_kraft_inequality`，以及 `D5.S0.Computability.Coding.PrefixFreeCode` 的 `IsPrefixFree`、`uniquelyDecodable_of_isPrefixFree`、`kraft_inequality_of_isPrefixFree`。后两个接口要求不含空词；上面的终止槽单独处理恰满足该边界。控制访问到这个前缀码的映射由本证明承担。
+
+长到达访问只是上述全体访问的子集。把它们按实际目标 $(q,d)$ 一次性分组，再对 $q\in F_t$ 的使用槽求和，得到
+$$
+J_t^*\le\sum_{q\in F_t}V_q=pm_t-Z_t.
+$$
+又因 $N_x\le h$，逐访问有 $2^{i-h}\le2^{-(N_x-i)}$，故 $J_t\le J_t^*$。终止于此次长到达的空词访问已经包括在此求和中。
+
+最后，一个实际 $W$ 态沿固定后继到达的下一 $R$ 态唯一，因此不同读取目标不能共享 $W$ 态。到 $q$ 的最长实际等待路径含 $L_q$ 个不同 $W$ 态，否则会陷入确定等待环。于是
+$$
+w\ge\sum_{q\ne q_0}L_q=(r-1)+\sum_{t\ge2}m_t.
+$$
+对（58.6）中的同一个整数 $m_t$ 取上整，并用 $|Q|\ge M+r+w$ 与 $C_A=M+2r_0-1$，即得（58.7）。实际控制器有限且全部输入终止，所有这些尾和实际只有有限个非零层。$\square$
+
+在每层以 $S_r$ 代替 $B_t$ 是合法松弛：它在每层给出一个独立成立的弱不等式，没有宣称同时花费多份剩余；丢失的是（58.5）及空槽与剩余所属目标的共同约束。精确后缀质量描述实际执行，若在单点之后补充读取，祖先访问的 $N_x-i$ 会增大、相应权重会下降，故不能把未经证明的单点补齐当成保持 $J_t^*$ 的操作。以上各式均是依赖控制器的必要界，尚不是只含 $p,k$ 的容量公式。
+

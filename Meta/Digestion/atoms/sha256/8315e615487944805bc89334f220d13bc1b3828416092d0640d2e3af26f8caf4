@@ -1,0 +1,21 @@
+#### 8.10.4 参数对应与直接使用的范围
+
+固定 $(L,M)$ 时，在 `target_family_minimal_quotient` 中取状态域 $X=\mathcal P(X_L)$，或明确指定的实际来源子域；指标 $I$ 是全部合法带标签部分查询，目标值域分别为 $\mathbb N$ 与布尔值，目标函数分别为 $R_{T,a}$ 与 $b_C$。任意充分摘要的值域取它的实际像 $O$；ER8.FH.7 与 ER8.FB.9 分别识别目标共同核为直方图核与反链核。于是一般核包含给最小因子，而具体反演和分类仍由第 8.1、8.3 节证明。若摘要还依赖历史，则应先把该历史纳入来源域，不能假定它已经是 $H$ 的函数。
+
+对《上下文时空算术与机器学习》定理 2.2、3.2 的部分动作接口，状态取 $(M,H)$，动作 $e=(m,a)$ 的定义域是 $m\in M$，后继为 $(M\setminus\{m\},H\setminus(a\bmod m))$，摘要为 $(M,N_D)$ 或 $(M,\mathcal K_M)$。保留 $M$ 使合法域在摘要纤维上饱和；ER8.FH.8 或 ER8.FB.10 给后继下降。输出只取所声明的计数或布尔读数。若任务包含费用，可取明确的仅依赖合法标签的费用，或另外证明实际费用在纤维上恒定；本章没有把任意档案和费用自动压入这些商。
+
+若采用 `controlled_behavior_universal_property` 的全动作接口，先固定初始 $M_0$。其有限状态载体取全部 $M\subseteq M_0,H\subseteq X_L$，再加吸收失败态；控制字母为全部初始模数的余数标签。合法动作按上段执行，非法或重复动作进入失败态。读出区分失败，并在其他状态保留 $M$ 与指定当前读数。实现载体 $W$ 取上述摘要的实际像及失败态；这样 $Y\to W$ 满射，读出和更新的交换关系由已证公式成立。受限历史域还须对合法后继封闭。该普适性质的状态空间包含变化的控制域；固定 $M$ 的类数只计其中一个控制域的状态商。`dynamic_closure_is_least` 可取同一载体，保留原接口 `Refines(coarse,fine)` 的方向；单更新的 `FiniteFutureCongruence` 与 `MinimalPredictiveCompletionQuotient` 不直接充当这个多动作实例。
+
+对两份来源切断／击中对偶，取有限 `Source` 为 $\mathcal A_M$，定义 $\operatorname{provable}(A)\iff\exists r\in S:E_r\subseteq A$。这个谓词单调。移除 $C$ 后不存在这样的证明，当且仅当 $C$ 击中每个 $E_r$。所有不同的 $E_r$ 基数相同，故它们恰给存在支持的包含极小元；空支持和空边另按定义处理。随后才限制 $C$ 每模数至多一个标签。原接口的无约束最小击中基数不替代此合法最小值。
+
+在 `joint_residue_image_eq_compatible_pairs` 与 `Nat.chineseRemainder'` 中，ER8.FH.10 的参数是正模数 $d,m\mid L$ 和余数 $b,a$。相容前提为模 $\gcd(d,m)$ 相等；`Nat.chineseRemainder'_lt_lcm` 给模 LCM 内的代表，`Nat.mod_lcm` 给相容类唯一性，且 $\operatorname{lcm}(d,m)\mid L$。这一共同像仍须由实际 $H$ 供应格内数量。两两互素时才逐次取得第 8.5–8.6 节所用的整个 CRT 乘积；它不是来源边缘独立的断言。
+
+矩阵恒等式的参数为实标量、CRT 乘积的有限行列指标及 $B=\bigotimes_i(J/(m_i-1)-I)$。矩阵范数取无穷算子范数，向量范数取最大坐标范数，对应于 `Matrix.Norms.Operator` 的 `linfty_opNorm_def`、`linfty_opNorm_mulVec` 及 `linfty_opNorm_eq_opNorm`。恒等式 $J^2=m_iJ$ 给每个因子互逆；`mul_kronecker_mul`、`one_kronecker_one` 与乘积重编号给张量逆式，包括空张量边界。行绝对和、共同锐见证、零和移心及非负基线由第 8.5–8.6 节给出；这些常数以所指定的范数为条件。
+
+有理 LP 若通过 `equality_farkas` 或 `inequality_farkas` 表述，可将自由变量写成两个非负变量之差，对每条响应加入正负两侧单位上界，并保留或精确消去零和等式。ER8.LP.1 已直接给弱对偶与达到见证，不依赖另一个未展开的求解结论。所有非目标删除系数须先按原始标签平均后再提升。
+
+本卷已有 TM.355 的固定分辨率支路取 $m\mid L$、提升因子为一；ER8.FH.21 取 $m=tL$、$d=L$、提升因子为 $t$，旧 $R_L(a)$ 正是成员示性位。已有 TM.359 保留严格提升不能首次删空的边界。历史摘要最小性的复用限于全部合法续接、确定性更新、实际可达像与无隐藏旁路；可逆群轨道模型还需可执行逆路径，不能对不可逆同余删除直接援引。
+
+
+直接上游矩阵和同余来源为钉版 Mathlib 的 [Normed](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/Normed.lean)、[Kronecker](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Kronecker.lean) 与 [ModEq](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/ModEq.lean)。历史接口定位为 [有效分辨率 §§1.1.1–1.1.5](https://github.com/the-omega-institute/trureturing/blob/625f417c1fbab0084ceab6dd7de75ebddca84532/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md)、[运输、记忆与完成化 §2.1](https://github.com/the-omega-institute/trureturing/blob/625f417c1fbab0084ceab6dd7de75ebddca84532/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) 及 [上下文时空算术与机器学习 §§2–3](https://github.com/the-omega-institute/trureturing/blob/625f417c1fbab0084ceab6dd7de75ebddca84532/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)。
+

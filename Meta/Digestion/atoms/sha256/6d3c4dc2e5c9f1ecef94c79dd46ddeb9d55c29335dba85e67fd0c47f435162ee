@@ -1,0 +1,90 @@
+**（四）精确代数输入下的半代数性与有效性。** 固定一个源、维数和深度，并假定每个源坐标的实部和虚部都是精确编码的实代数数。则可达 Choi 集、精确成功集合和
+
+$$
+F_n(\delta,p)=\left\{(T,p):T\in\mathcal A_n,\ T^*(I)=pI,
+ \|T-p\operatorname{id}\|_\diamond\le\delta p\right\}
+$$
+
+都有在实代数数域上的有效半代数描述；$p_n$ 是可有效计算的实代数数；$[0,2]$ 上 $\eta_n(\delta)$ 的图是有效半代数集，并且每个精确编码的代数 $\delta$ 所对应的 $\eta_n(\delta)$ 是可有效计算的实代数数。
+
+证明。把有限递归逐层展开为实多项式等式与不等式：张量积、酉性、单纯形条件、重心条件和有限持有者析取都只含有限次加法与乘法。对 Hermitian 矩阵 $H=A+iB$，其中 $A$ 实对称、$B$ 实斜对称，使用实化矩阵
+
+$$
+\begin{pmatrix}A&-B\\B&A\end{pmatrix}
+$$
+
+的所有主子式非负来精确表达 $H\succeq0$；这保留零特征值和奇异密度，不引入逆矩阵或平方根。实部、虚部、部分迹以及 Choi 等式同样是多项式条件。半代数集合在投影下保持半代数性；对实闭域上的量词消去和代数点的符号判定，使用 Basu--Pollack--Roy, *On the Combinatorial and Algebraic Complexity of Quantifier Elimination*, Journal of the ACM 43(6) (1996), pp.1002--1045, Theorems 1.3.1--1.3.2, pp.1004--1005。
+
+剩下的是钻石范数的精确桥接。对任意复线性
+
+$$
+F:\mathcal L(\mathbb C^d)\longrightarrow\mathcal L(\mathbb C^d),
+$$
+
+有
+
+$$
+\|F\|_\diamond
+=\sup_{m\ge1}\|F\otimes\operatorname{id}_m\|_{1\to1}
+=\|F\otimes\operatorname{id}_d\|_{1\to1}.
+$$
+
+这一定义适用于 $F=T-p\operatorname{id}$，即使 $F$ 不是完全正的。秩一输入 $uv^*$ 的左右 Schmidt 支持可以不同；分别对左右支持使用两个参考等距嵌入仍保持迹范数，所以参考维数 $d$ 的约化对该一般线性映射仍成立。
+
+令 $X$ 为输入、$Y$ 为输出，并置
+
+$$
+J_W(F)=\operatorname{Swap}\,C(F)\,\operatorname{Swap}^*
+=\sum_{i,j}F(E_{ij})\otimes E_{ij}
+$$
+
+作用在 $Y\otimes X$ 上。对每个 $e\ge0$，以下条件等价于 $\|F\|_\diamond\le e$：存在 $Y_0,Y_1\succeq0$（作用在 $Y\otimes X$ 上）和 $t_0,t_1\ge0$，满足
+
+$$
+\begin{pmatrix}
+Y_0&-J_W(F)\\
+-J_W(F)^*&Y_1
+\end{pmatrix}\succeq0,
+$$
+
+$$
+ t_bI_X-\operatorname{Tr}_Y(Y_b)\succeq0\quad(b=0,1),
+\qquad
+\frac{t_0+t_1}{2}\le e.
+$$
+
+这里没有把钻石范数除以 $d$，也没有采用半钻石范数约定。输入先行 Choi 约定给出
+
+$$
+\operatorname{Tr}_Y C(T)=(T^*(I_Y))^{\mathsf T},
+$$
+
+所以 $\operatorname{Tr}_Y C(T)=pI_X$ 正好就是标量成功条件（转置不改变标量矩阵）。
+
+上述等价性正是 John Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, p.3, Theorem 6 (p.10) 及 §3.2 (pp.11--12) 的完全有界范数半定规划：其原问题为
+
+$$
+\max\ \operatorname{Re}\operatorname{Tr}(J_W(F)^*X_{\rm block})
+$$
+
+在
+
+$$
+\rho_0,\rho_1\succeq0,\quad
+\operatorname{Tr}\rho_b=1,\quad
+\begin{pmatrix}
+I_Y\otimes\rho_0&X_{\rm block}\\
+X_{\rm block}^*&I_Y\otimes\rho_1
+\end{pmatrix}\succeq0
+$$
+
+下取得同一未减半的钻石范数。原问题以 $\rho_b=I/d$、$X_{\rm block}=0$ 严格可行；对偶问题取足够大的正 $Y_b$ 及更大的 $t_b$ 也严格可行，故两端最优值均取得。弱对偶给出上式的充分性，取得的对偶最优值给出必要性，包括 $e=0$ 与等号情形；当 $F=0$ 时零对偶见证直接成立。式中的 $1/2$ 是两个对偶界的平均，不是对钻石范数作二分。
+
+在上式中代入 $F=T-p\operatorname{id}$ 与 $e=\delta p$，再把半正定条件改写成有限个主子式不等式，即得到 $F_n(\delta,p)$ 的有效半代数公式。对 $p_n$，用可行性公式及
+
+$$
+\forall s\,\bigl(\operatorname{Feasible}(s)\Rightarrow s\le p\bigr)
+$$
+
+刻画最大值，不预设可行 $p$ 的集合是区间。取得性使最大值集合为单点；量词消去与实根隔离遂给出该点的代数编码。对 $\eta_n$，同样以 $p$ 可行且所有可行成功率不超过 $p$ 的公式刻画图。实代数系数由整数多项式和有理隔离区间编码，故所有所述符号判定和代数数运算均有效。这里的有效性是有限维、固定深度的代数可计算性；没有推出优化的复杂度界、整棵递归的单一半定规划、任意实输入的有效性、参数族在未加假设下的半代数性或无界深度结论。证毕。
+

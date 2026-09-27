@@ -1,0 +1,108 @@
+**引理 405.2（共同标签乘积族的有限前缀保持）。** 设有限非空标签集 $I$ 对每个持有者 $a\in\{1,\ldots,m\}$ 给出有限维非零复 Hilbert 空间 $H_a$ 中的归一化向量 $s_{a,i}$，$m\ge1$。假设逐个局部算子张成条件成立：
+
+$$
+\operatorname{span}_{\mathbb R}
+ \{|s_{a,i}\rangle\langle s_{a,i}|:i\in I\}
+ =\operatorname{Herm}(H_a)\qquad(1\le a\le m).
+$$
+
+对乘积准备 $\bigotimes_a s_{a,i}$ 使用定义 405.1 的有限局部树和独立乘积辅助态，但将各源空间换成 $H_a$。假设每个实际经典前缀 $h$ 的概率 $p_h$ 对共同标签 $i$ 都相同。将初始辅助态分别作局部纯化，并保留每步局部 Stinespring 膨胀中原本不可访问的输出，则对每个 $p_h>0$，从原始源空间到保留输出的线性映射具有形式
+
+$$
+L_h=\sqrt{p_h}\bigotimes_{a=1}^m V_{a,h},\qquad
+V_{a,h}:H_a\longrightarrow
+\mathcal A_{a,h}\otimes\mathcal G_{a,h},\qquad
+V_{a,h}^\dagger V_{a,h}=I_{H_a}.
+$$
+
+这里 $\mathcal A_{a,h}$ 是仍可访问的局部记忆，$\mathcal G_{a,h}$ 是只为表示而保留的不可访问寄存器；以后操作在旧 $\mathcal G_{a,h}$ 上恒等。上式在整个原始源乘积空间上成立，且每个正前缀保持各局部内积：
+
+$$
+\langle V_{a,h}s_{a,j}|V_{a,h}s_{a,i}\rangle
+ =\langle s_{a,j}|s_{a,i}\rangle.
+$$
+
+零概率前缀的保留映射在原始源空间上为零，不为其指定归一化等距映射。共同标签 $i$ 无须遍历独立局部标签的所有元组，也不要求这些相关乘积准备的投影张成全局算子空间。
+
+证明。先给出每步使用的局部算子事实。若 $E\in\operatorname{Herm}(H_a)$ 且 $\langle s_{a,i}|E|s_{a,i}\rangle=q$ 对全部 $i$ 成立，则 $E-qI$ 与全部源投影的实迹配对为零。由张成条件，它与每个 Hermitian 算子的实迹配对都为零，特别是
+
+$$
+\operatorname{Tr}[(E-qI)^2]=0.
+$$
+
+Hermitian 算子的本征值为实数，平方和为零迫使 $E=qI$。这里的信息完备性只指算子张成；这一标准含义见 D’Ariano–Perinotti–Sacchi，[*Informationally complete measurements and groups representation*, quant-ph/0310013v2](https://arxiv.org/abs/quant-ph/0310013v2)，§2、式 (4)（PDF 第 3 页）。本引理的投影是源态族，并未要求它们的和为恒等算子，也未将它们称为归一化 POVM。
+
+对每个局部初始混合辅助态 $\eta_a$ 选择纯化 $|\alpha_a\rangle$，把纯化寄存器放入该持有者的不可访问因子。原辅助态的乘积性使这些纯化仍可取为持有者之间的乘积。根节点满足 $p_\varnothing=1$，且
+
+$$
+V_{a,\varnothing}x=x\otimes|\alpha_a\rangle,
+\qquad L_\varnothing=\bigotimes_a V_{a,\varnothing}.
+$$
+
+这包括混合局部辅助态，且没有增加物理可访问资源。
+
+在任一实际节点，对一个已声明结果 $y$ 的局部 CP 映射取有限 Kraus 表示
+
+$$
+\mathcal E_y(X)=\sum_kK_{y,k}XK_{y,k}^\dagger,
+\qquad
+B_yx=\sum_kK_{y,k}x\otimes|k\rangle.
+$$
+
+则
+
+$$
+\operatorname{Tr}_{k}(B_yXB_y^\dagger)=\mathcal E_y(X),
+\qquad B_y^\dagger B_y=\sum_kK_{y,k}^\dagger K_{y,k}.
+$$
+
+新 $|k\rangle$ 因子只记入不可访问的膨胀输出，不宣布为测量结果。真正留供以后使用的私有量子或经典记忆属于 $\mathcal E_y$ 的可访问输出，不被当作垃圾移走。每次以后操作都张量上旧不可访问因子的恒等映射；部分迹与作用在可访问因子上的 CP 映射交换，故如此逐步保留全部垃圾、最后再迹掉，恰好重现原协议的顺序 CP 分支。被实际丢弃的系统不会在后续步骤重新成为控制资源。
+
+现对树作归纳。设结论在正前缀 $h$ 成立，下一步由持有者 $a$ 操作。记
+
+$$
+\widehat B_y=B_y\otimes I_{\mathcal G_{a,h}},\qquad
+E=V_{a,h}^\dagger\widehat B_y^\dagger\widehat B_yV_{a,h}
+       \in\operatorname{Herm}(H_a),
+$$
+
+其中张量因子的重排只用于把新垃圾与旧垃圾放在同一不可访问因子。条件于共同标签 $i$ 和此前缀时，其他持有者的归一化编码因子都有单位范数，因此
+
+$$
+\langle s_{a,i}|E|s_{a,i}\rangle
+ =\frac{p_{hy}}{p_h}=:q_{y\mid h},\qquad 0\le q_{y\mid h}\le1.
+$$
+
+假设使右侧与 $i$ 无关，局部算子事实给出 $E=q_{y\mid h}I_{H_a}$。这是拉回到原始源空间 $H_a$ 的效果等式，不断言物理效果在整个扩大后的可访问记忆空间上也是标量。
+
+若 $q=q_{y\mid h}>0$，置
+
+$$
+V_{a,hy}=q^{-1/2}\widehat B_yV_{a,h},\qquad
+V_{b,hy}=V_{b,h}\quad(b\ne a).
+$$
+
+直接计算 $V_{a,hy}^\dagger V_{a,hy}=q^{-1}E=I_{H_a}$，从而
+
+$$
+L_{hy}=\sqrt{p_hq}\bigotimes_bV_{b,hy}
+      =\sqrt{p_{hy}}\bigotimes_bV_{b,hy}.
+$$
+
+若 $q=0$，则
+
+$$
+(\widehat B_yV_{a,h})^\dagger(\widehat B_yV_{a,h})=0,
+\qquad \widehat B_yV_{a,h}=0.
+$$
+
+所以这一子分支在整个原始源空间上为零，其所有后继仍为零；这不要求 $\widehat B_y$ 在未占据的扩大空间上为零。只在正前缀作除法，每个零前缀都沿根到它的路径遇到一个这样的首次零子分支，因而无需给零前缀定义归一化映射。有限归纳覆盖全部节点，也覆盖重复访问、适应性改变操作方与不同终止深度。等距性质立即给出所述内积等式。证毕。
+
+本引理中保留垃圾是必要的论证步骤。例如对量子比特和 $0<q\le1$，重置分支
+
+$$
+\mathcal E(X)=q\operatorname{Tr}(X)|0\rangle\langle0|
+$$
+
+的效果为 $\mathcal E^*(I)=qI$：由 $\operatorname{Tr}\mathcal E(X)=q\operatorname{Tr}X$ 可直接读出。但它把 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$ 送到相同输出，故约化 CP 映射不是缩放等距通道。保留膨胀 $B|\psi\rangle=\sqrt q\,|0\rangle\otimes|\psi\rangle$ 后，$B^\dagger B=qI$，除以 $\sqrt q$ 才得到等距映射；迹掉第二因子则还原重置分支。后续只操作第一个因子的权限并未因此扩大。
+

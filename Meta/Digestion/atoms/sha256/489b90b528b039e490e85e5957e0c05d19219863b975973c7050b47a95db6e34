@@ -1,0 +1,20 @@
+**定理306.1（共同单次时钟边缘下的统一取得阶）。** 存在同一个不知 \(h\) 的协议，对全部允许参数有 \(\mathcal R(r,h)\le1/3\)，并且
+$$
+\mathbb E_{j,r,h}N\le A\mathcal O(h),\qquad
+\mathbb E_{j,r,h}T\le A\mathcal O(h)
+\quad\text{对每个合法 }(j,r,h).
+\tag{306.5}
+$$
+反之，任何满足全部同参数风险及有限答案合同的协议，在每个固定 \(h\) 上均有
+$$
+\sup_{j,r}\mathbb E_{j,r,h}N\ge a\mathcal O(h),\qquad
+\sup_{j,r}\mathbb E_{j,r,h}T\ge a\mathcal O(h).
+\tag{306.6}
+$$
+还对每个合法正参数世界有准确关系
+$$
+\mathbb ET=\frac32\,\mathbb EN,
+\tag{306.7}
+$$
+允许两边同时为无穷。由此同一个未知增益协议在每个实际 \(h\) 上达到最坏 \((j,r)\) 期望成本的 \(\Theta(\mathcal O(h))\)。上界逐世界成立；下界在固定 \(h\) 后对 \(j,r\) 取最坏值，不声称每个单独 \((j,r)\) 都有同阶必要成本。
+

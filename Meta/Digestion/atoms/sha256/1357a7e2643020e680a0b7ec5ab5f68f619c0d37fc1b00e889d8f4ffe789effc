@@ -1,0 +1,10 @@
+**命题 2.21（多项式不变量接口）。** 任意 Hermitian 实坐标的复值多项式，都可用有序矩阵元重写：对 $i<j$，实部和虚部分别为 $(z_{ij}+z_{ji})/2$、$(z_{ij}-z_{ji})/(2i)$；对角坐标本身为实数。将这样一个多项式在 $G_H$ 上平均，Haar 字符正交性逐项消去非零权重的单项式。因此若 $f$ 已经不变，其平均就是自身，并有
+$$
+\mathbb C[\operatorname{Herm}(d)]^{G_H}
+=\operatorname{span}_{\mathbb C}\{M_\alpha:\alpha\in S_H\}
+=\mathbb C[M_\beta:\beta\in\mathcal B_H].
+\tag{TM.180}
+$$
+
+左侧表示定义在 Hermitian 实空间上的复值实多项式，不是删去共轭变量后的上三角全纯多项式环。限制到正性、迹一的密度态域仍给分离接口；这些约束没有被当作额外可自由变化的输入。用 $\operatorname{Re}M_\beta,\operatorname{Im}M_\beta$ 作为实读数即可表达相应实不变量；共轭成对的生成元可在核实后去除重复。式(TM.180)是成熟环面不变量论在当前实际表示中的实例，不另作为一般有限生成定理申报。
+

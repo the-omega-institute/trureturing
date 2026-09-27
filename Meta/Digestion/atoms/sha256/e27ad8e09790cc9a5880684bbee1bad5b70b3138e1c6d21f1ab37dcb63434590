@@ -1,0 +1,121 @@
+**定理 177.4（经典记忆也达到全参数双维最优）。** 对每个充分近一的 $r<1$，定义177.3中存在明确的正 $\delta$，使该经典双态记忆满足精确单步最优、全视界风险 $H(r)$ 及标准遗忘条件（173.1），包括全部并列最大点。其 $02$ 终端系数在每个视界都精确等于持续端点比特的系数，而不只是匹配最大点。结合维数一下界，当前合同中的最小记忆维数二可以由经典记忆达到。
+
+此外，存在与（177.19）具有相同单步系统边缘通道及记忆边缘通道的另一经典双态处理器，其全视界风险严格大于 $H(r)$。这两个边缘相同并不确定联合处理器的续接行为。
+
+证明。 首先核对合法性。由 $r<x<1$ 得 $r<\rho<1$，所以（177.17）中的分母为正，且 $\kappa>0$。不等式
+$$
+1-\rho^2\le2(1-\rho\cos\alpha)
+\tag{177.20}
+$$
+等价于 $|\rho-e^{i\alpha}|^2\ge0$，故 $\kappa\le1$。矩阵 $G_s$ 的一阶、二阶主子式非负，行列式由（177.17）恰为零，因而它是半正定相关矩阵。若 $K_{s,a}$ 为 $\mathcal Q_s$ 的 Kraus 算符，则（177.19）的 Kraus 算符可取
+$$
+\sqrt{x}K_{s,a}\otimes|s\rangle\langle s|,
+\qquad
+\sqrt\delta\,|j\rangle\langle j|\otimes|-s\rangle\langle s|.
+\tag{177.21}
+$$
+其伴随乘积之和是单位算符，故处理器在任意联合输入上 CPTP。
+
+端点关系 $2r^2c=3r^2-1$ 又给出
+$$
+\beta^2=\frac{x(x^2-r^2)}{2(x-c)},\qquad
+r^2-\beta^2
+=\frac{\delta(x^2+x+1-3r^2)}{2(x-c)}>0.
+\tag{177.22}
+$$
+严格正号使用 $x>r$ 及 $r^2+r+1-3r^2=(1-r)(2r+1)>0$。因此 $0<\beta<r$，并且 $\beta\to r$ 当 $\delta\downarrow0$。
+
+同一系统重复使用时，一条路径只要有一次翻转，其系统非对角元就被完全去相位，后续 Schur 通道不能重建。只有两条从不翻转的路径贡献相干。长度 $N$ 的保持路径包括 $N$ 次保持事件，因而其 $02$ 权重为
+$$
+x^N\rho^N e^{isN\alpha}=r^N e^{isN\alpha}.
+\tag{177.23}
+$$
+这里最后一次更新也决定最后一次系统通道，与（177.2）中仅后续更新影响路径系数的时序不同。平均两个初始标签后，终端相关矩阵精确为
+$$
+F_N=\begin{pmatrix}
+1&\beta^N&r^N\cos(N\alpha)\\
+\beta^N&1&\beta^N\\
+r^N\cos(N\alpha)&\beta^N&1
+\end{pmatrix}.
+\tag{177.24}
+$$
+
+现在给出同时控制全部视界的正参数。记 $\mathcal M_r=\operatorname*{arg\,max}_{N\ge1}B_N(r)$，选择近一区间使 $\sup_NB_N=H$。由于 $B_N\le r^N$、$H>0$，最大点集非空且有限。定义
+$$
+K_r=\min\{K\in\mathbb N:K\ge2,\ 2r^K<H(r)\},
+\tag{177.25}
+$$
+以及有限正数
+$$
+g_r=\min\left(\{B_1(r),H(r)\}
+\cup\{H(r)-B_N(r):1\le N<K_r,\ N\notin\mathcal M_r,\ N\ne1\}\right).
+\tag{177.26}
+$$
+第二个集合为空时省略它。所有最大视界都小于 $K_r$。取
+$$
+\delta=\min\left\{\frac{1-r}{4},\frac{g_r r(1-r)}{12K_r}\right\}>0.
+\tag{177.27}
+$$
+由 $\delta\le(1-r)/2$ 得 $2(x-c)\ge1-r$；式（177.22）的分子括号至多为三，故
+$$
+r-\beta\le\frac{3\delta}{r(1-r)}\le\frac{g_r}{4K_r},
+\qquad
+d_N:=r^N-\beta^N\le N(r-\beta)<\frac{g_r}{4}\quad(1\le N<K_r).
+\tag{177.28}
+$$
+
+源与（177.24）的差为式（174.18）的 Schur 乘子，其中 $d=d_N$、$w=r^N(e^{iN\phi}-\cos(N\alpha))$。由持续端点比特的风险公式，允许相位上 $\sup_\phi|w|=2B_N$。若 $d_N\le B_N$，则（174.19）的圆盘估计与均衡 $02$ 输入给出完整参考风险的精确等号
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\delta})=B_N.
+\tag{177.29}
+$$
+式（177.28）保证它同时适用于 $N=1$ 与全部 $N\in\mathcal M_r$，从而单步风险为 $\mathcal R_1$，每个最大视界的风险都为 $H$。
+
+其他视界可将与持续端点比特的差拆成两条相邻边，得到
+$$
+d_{\rm ref}(\mathcal P_{r,N}^{\delta},\mathcal P_{r,N}^{\rm bit})\le d_N,
+\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\delta})\le B_N+d_N.
+\tag{177.30}
+$$
+当 $N<K_r$ 且不是单步或最大视界时，（177.26）、（177.28）使此界严格小于 $H$。当 $N\ge K_r$ 时，它至多 $2r^N\le2r^{K_r}<H$。因此同一个（177.27）精确实现全部风险要求，不需要逐个最大视界求隐函数。
+
+在标准新鲜输入接线中，丢弃系统输出后，保迹性使参考算符块只受对称翻转矩阵作用，其非平稳特征值为 $1-2\delta$。取忽略输入并制备均匀记忆的通道 $E_{r,N}$，对任意初始联合态与惰性参考可得
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-2\delta)^N\longrightarrow0.
+\tag{177.31}
+$$
+这里 $0<\delta<1/4$。此计算与第171节的参考算符块证明相同，因为每条更新分支中的系统通道都保迹。故经典比特满足标准 KW 遗忘条件。维数一下界仍由定理169.4给出。
+
+最后构造边缘相同但续接不同的处理器。令
+$$
+\mathcal A_s=x\mathcal Q_s+\delta\Delta,
+\qquad
+\widetilde\Lambda_\delta(X)=\sum_s\mathcal A_s(X_{ss})
+\otimes\bigl[x|s\rangle\langle s|+\delta|-s\rangle\langle-s|\bigr].
+\tag{177.32}
+$$
+它也是 CPTP，且在全部联合输入上都有
+$$
+\operatorname{Tr}_K\widetilde\Lambda_\delta
+=\operatorname{Tr}_K\Lambda_\delta,
+\qquad
+\operatorname{Tr}_S\widetilde\Lambda_\delta
+=\operatorname{Tr}_S\Lambda_\delta.
+\tag{177.33}
+$$
+第一个等式直接来自 $\mathcal A_s$ 的定义，第二个使用条件通道保迹。两者的单步系统风险、经典记忆转移及标准遗忘率相同。
+
+但是 $\mathcal A_s$ 的 $02$ 系数为 $r e^{is\alpha}$，而（177.32）的标签更新与系统通道独立。因此其第 $N$ 步系数为 $r^NZ_{N,\delta}(\alpha)$，其中 $Z$ 是式（173.7）的对称翻转路径期望。取任何最大视界 $n\ge2$；它满足 $n\alpha<\pi/2$。每条符号路径的余弦至少为 $\cos(n\alpha)$，具有正概率的一次翻转路径则严格大于它，故 $Z_{n,\delta}(\alpha)>\cos(n\alpha)$。端点相位与均衡 $02$ 输入于是给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^n,\widetilde{\mathcal P}_{r,n})
+\ge\frac{r^n}{2}
+\sqrt{\sin^2(n\alpha)+[Z_{n,\delta}(\alpha)-\cos(n\alpha)]^2}
+>H(r).
+\tag{177.34}
+$$
+这证明最后的边缘与续接断言。证毕。
+
+经典记忆通道与标准遗忘框架的来源仍为 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C及§V。当前两个处理器都只保留经典标签；区别在于系统去相位与标签翻转是否属于同一次联合事件。定理177.2的局部障碍要求（177.2）的先按标签施加通道再更新的分解，（177.19）不具有该分解。式（177.33）并不修复这项缺失的联合关系。由此，在当前近一参数合同下，维数二的精确最优不需要相干记忆；第176节的相干实现及其擦除相干后的读数差仍成立。这里没有对参数趋近一给出统一的正遗忘率，也不要求有限时间内严格重置。
+

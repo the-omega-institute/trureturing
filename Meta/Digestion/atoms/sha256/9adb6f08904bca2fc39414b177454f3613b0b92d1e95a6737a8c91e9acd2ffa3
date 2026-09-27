@@ -1,0 +1,48 @@
+### 276.5 两个单位相位与一个正定相干权重
+
+现在固定 $E=\mathbb C^2$ 及标准基 $e_1,e_2$，定义
+$$
+M_{\mathrm E}=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+Q_r=\begin{pmatrix}1&r\\r&1\end{pmatrix},
+\qquad 0<r<1.
+\tag{276.22}
+$$
+$Q_r$ 的本征值为 $1\pm r$，所以正定。记
+$$
+\Omega_{\mathrm E}(r)=\Omega(Q_r,M_{\mathrm E}).
+\tag{276.23}
+$$
+直接计算给
+$$
+Q_r+M_{\mathrm E}^\dagger Q_rM_{\mathrm E}=2I_2,
+\qquad c=4,
+$$
+$$
+\rho_{\mathrm E}=I_2/2,
+\qquad
+K_{\mathrm E}(r)
+=\frac12\begin{pmatrix}1&-r\\r&-1\end{pmatrix}.
+\tag{276.24}
+$$
+来源的联合秩为二。
+
+$M_{\mathrm E}$ 的两个本征值为 $1,-1$，两条Jordan链都长一。由定理275.3，
+$$
+\boxed{
+\Omega_{\mathrm E}(r)\text{ 的完整数据纤维唯一},
+\qquad d_{S,\mathrm E}=1,
+\qquad\alpha_{\mathrm E}=\frac12.
+}
+\tag{276.25}
+$$
+这些指数针对固定 $r$ 处的全部合法竞争态；限制为精确共同边缘后仍尖锐。
+
+另一方面，
+$$
+M_{\mathrm E}^\dagger Q_rM_{\mathrm E}
+=\begin{pmatrix}1&-r\\-r&1\end{pmatrix}\ne Q_r.
+\tag{276.26}
+$$
+式（276.20）和（276.12）因此给出NPT纠缠。这里 $M_{\mathrm E}$ 本身已经是对角酉矩阵；检验（276.7）的加权相似矩阵，才得到该来源的可分性答案。
+

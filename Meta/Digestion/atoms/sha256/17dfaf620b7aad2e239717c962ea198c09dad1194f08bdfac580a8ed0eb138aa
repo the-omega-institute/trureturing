@@ -1,0 +1,9 @@
+**命题 5.1。** 在这些条件下，$Q$ 满射。若观察族联合分离点，即
+
+$$
+\bigl(\forall i,\ q_i(x)=q_i(x')\bigr)\Longrightarrow x=x',
+\tag{TM.313}
+$$
+
+则 $Q:X\to L$ 是同胚。
+

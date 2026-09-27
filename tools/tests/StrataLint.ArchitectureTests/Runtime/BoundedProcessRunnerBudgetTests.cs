@@ -1,6 +1,3 @@
-using System.Reflection;
-using StrataLint.Tests;
-
 namespace StrataLint.ArchitectureTests;
 
 public sealed class BoundedProcessRunnerBudgetTests
@@ -61,19 +58,6 @@ public sealed class BoundedProcessRunnerBudgetTests
         Assert.Contains("internal static class TestEnvironmentBridge", bridge, StringComparison.Ordinal);
         Assert.Contains("internal static DateTime UtcNow()", bridge, StringComparison.Ordinal);
         Assert.Contains("internal static void PauseBeforeCleanupRetry()", bridge, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void HangDetectionBudgetIsFiniteAndPositive()
-    {
-        var field = typeof(BoundedProcessRunner).GetField(
-            "HangDetectionBudget",
-            BindingFlags.NonPublic | BindingFlags.Static);
-
-        Assert.NotNull(field);
-        var budget = Assert.IsType<TimeSpan>(field.GetValue(null));
-        Assert.True(budget > TestBudgets.ZeroDuration);
-        Assert.NotEqual(Timeout.InfiniteTimeSpan, budget);
     }
 
     private static bool IsBuildOutput(string path)

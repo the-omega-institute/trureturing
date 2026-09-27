@@ -1,0 +1,67 @@
+**定理 98.1（对数轮数的条件筛选与离散几何近似）。** 沿用定理 97.1，另假定 $\alpha>0$。固定 $L>0$，对充分大的 $j$ 定义
+
+$$
+b_j=\left\lceil L\log(1/\epsilon_j)\right\rceil,
+\qquad
+\widehat\rho_j=
+\frac{\mathcal N_{\Gamma_j}^{b_j}(\rho_j)}
+{s_{\Gamma_j,\rho_j}(b_j)}.
+\tag{98.1}
+$$
+
+这些条件态均在正概率事件上定义，并满足
+
+$$
+\boxed{
+\epsilon_j b_j\to0,\qquad
+s_{\Gamma_j,\rho_j}(b_j)\to\alpha,\qquad
+\|\widehat\rho_j-\sigma_{\Gamma_j}\|_1
+=O\!\left(\epsilon_j^{L|\log q|}\right).
+}
+\tag{98.2}
+$$
+
+从而 $\widehat\rho_j\to P_*$。条件于前 $b_j$ 轮未点击，剩余调用数满足更强的离散分布比较：
+
+$$
+\boxed{
+\operatorname{TV}\!\left(
+\mathcal L(\mathsf N_j-b_j\mid\mathsf N_j>b_j),
+\operatorname{Geom}(\epsilon_j)
+\right)
+=O\!\left(\epsilon_j^{L|\log q|}\right).
+}
+\tag{98.3}
+$$
+
+几何分布在 $1,2,\ldots$ 上取值。其参数始终是当前同一装置的 $\epsilon_j$，没有提前把装置替换成失效端点。
+
+证明。$b_j\to\infty$ 且 $\epsilon_jb_j\to0$，因此 $r_j^{b_j}\to1$。式（96.4）给
+
+$$
+\mathcal N_{\Gamma_j}^{b_j}(\rho_j)
+=a_jr_j^{b_j}\sigma_{\Gamma_j}+R_j,
+\qquad \|R_j\|_1\le Cq^{b_j}
+\le C\epsilon_j^{L|\log q|}.
+$$
+
+取迹后，分母趋于 $\alpha>0$，故充分大时有统一正下界。归一化相减给
+
+$$
+\widehat\rho_j-\sigma_{\Gamma_j}
+=\frac{R_j-\operatorname{Tr}(R_j)\sigma_{\Gamma_j}}
+{s_{\Gamma_j,\rho_j}(b_j)},
+$$
+
+从而得到式（98.2）的迹范数界。再用 $\sigma_{\Gamma_j}\to P_*$。
+
+对每个固定 $j$，装置在所有初态上终止，全部首次点击轮数效果构成总和为 $I$ 的可数 POVM。任意轮数集合 $A$ 对应一个 $0\preceq E_A\preceq I$ 的效果，故两初态产生的完整剩余等待律总变差至多是初态半迹距离：
+
+$$
+\operatorname{TV}(\mathcal L_\tau\mathsf N,\mathcal L_\sigma\mathsf N)
+\le\frac12\|\tau-\sigma\|_1.
+\tag{98.4}
+$$
+
+完整活动记忆与齐次重复保证，在前 $b_j$ 轮未点击后，真实剩余协议恰是从 $\widehat\rho_j$ 重新开始同一仪器。用 $\sigma_{\Gamma_j}$ 作比较时，第 96 节给准确几何律。代入式（98.4）即得式（98.3）。$\square$
+

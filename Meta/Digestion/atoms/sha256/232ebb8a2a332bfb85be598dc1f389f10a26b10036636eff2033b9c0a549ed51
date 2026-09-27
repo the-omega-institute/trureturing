@@ -1,0 +1,74 @@
+### 56.4 负向余量的局部界
+
+由式（56.6）、（56.9），取
+
+$$
+N\succeq0,\quad N\succeq S-R_\varepsilon,
+\quad\operatorname{Tr}_D N=I_A\otimes n,
+\quad\operatorname{Tr}n\le\varepsilon+\eta.
+$$
+
+令 $Y=N-S+R_\varepsilon\succeq0$。在 $Q_-$ 上，
+
+$$
+\operatorname{Tr}(YQ_-)=\operatorname{Tr}n-\varepsilon\le\eta.
+\tag{56.13}
+$$
+
+所以 $Y_{yy}\le\eta$。对 $A=1,B=0$ 的完整 $D$ 块取迹，得到
+
+$$
+n_{00}=s-(1-\varepsilon)
++\operatorname{Tr}(Y|_{A=1,B=0})
+\le s-1+\varepsilon+\eta.
+\tag{56.14}
+$$
+
+因为 $N_{xx}\le n_{00}$，式（56.12）、（56.14）给出局部取消
+
+$$
+\begin{aligned}
+Y_{xx}
+&=N_{xx}-S_{xx}+1\\
+&\le n_{00}-S_{xx}+1\\
+&\le(s-S_{xx})+\varepsilon+\eta
+\le\varepsilon+2\eta.
+\end{aligned}
+\tag{56.15}
+$$
+
+于是
+
+$$
+|Y_{xy}|\le\sqrt{(\varepsilon+2\eta)\eta},
+\qquad
+|N_{xy}|\le n_{00}\le s-1+\varepsilon+\eta.
+\tag{56.16}
+$$
+
+在恒等式 $R_{xy}=S_{xy}-N_{xy}+Y_{xy}$ 中使用式（56.11）、（56.16），得到
+
+$$
+\begin{aligned}
+\sqrt{1-\varepsilon}
+&\le2s-1+\varepsilon+\eta
++\sqrt{(\varepsilon+2\eta)\eta}\\
+&\le\frac{1+\varepsilon^2}{1+\varepsilon}
++\frac{4\sqrt{\varepsilon\eta}}{1+\varepsilon}
++\frac{2\varepsilon\eta}{1+\varepsilon}
++\eta+\sqrt{(\varepsilon+2\eta)\eta}.
+\end{aligned}
+$$
+
+故假设（56.9）要求
+
+$$
+g_\varepsilon:=\sqrt{1-\varepsilon}
+-\frac{1+\varepsilon^2}{1+\varepsilon}
+\le
+\frac{4\sqrt{\varepsilon\eta}}{1+\varepsilon}
++\frac{2\varepsilon\eta}{1+\varepsilon}
++\eta+\sqrt{(\varepsilon+2\eta)\eta}.
+\tag{56.17}
+$$
+

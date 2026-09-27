@@ -1,0 +1,15 @@
+### 154.3 从有限块收缩到完整参考余项
+
+使用第153节未归一化的、输出在前的 Choi 约定 $J(\cdot)$。从二维输入到 $M\otimes K$ 的 Choi 矩阵阶数为 $4D$。定义有限常数
+
+$$
+B=
+\max_{0\le t<L}
+\left\|
+J\!\left(
+\mathcal F^t(I_{\mathscr V}-P)\mathcal E_\omega
+\right)
+\right\|_{\mathrm{HS}}.
+\tag{154.13}
+$$
+

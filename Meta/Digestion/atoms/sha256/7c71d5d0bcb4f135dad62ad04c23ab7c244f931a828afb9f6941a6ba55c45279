@@ -1,0 +1,41 @@
+**推论198.3（有限噪声唯一恢复阈值）。**
+对全部充分小正 $\epsilon$，存在唯一
+$\ell_\epsilon\in[0,1/2]$ 使
+
+$$
+\mathscr E(\ell_\epsilon,\epsilon)=\frac34,
+$$
+
+并有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+O(\epsilon^2),\qquad
+h_\epsilon:=\frac{\ell_\epsilon}{\epsilon}=h_c+O(\epsilon).
+}
+\tag{198.12}
+$$
+
+同时，在完整来源区间 $[0,1/2]$ 上，
+
+$$
+\boxed{
+\ell<\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)<\frac34,\qquad
+\ell>\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)>\frac34.
+}
+\tag{198.13}
+$$
+
+**证明。** 第195节保证完整来源区间上的等值集合非空，且每个等值点都满足
+$\ell/\epsilon=h_c+O(\epsilon)$，常数对全部等值点一致。
+充分小参数处，它们因此全部落入固定区间 $I$。
+定理198.1保证该区间内至多有一个等值点，故全区间恰有一个。位置估计同时继承第195节。
+纯来源端点的一阶系数 $\Phi_0<0$，固定满秩端点的一阶系数
+$\Phi_\infty>0$；充分小噪声时，两端误差因此异号于 $3/4$。
+完整最优误差连续且没有其他等值点，遂给（198.13）。证毕。
+
+这个完整分界不要求误差在整个来源区间单调。
+第195节的熵两项渐近（195.7）直接适用于该唯一阈值。
+

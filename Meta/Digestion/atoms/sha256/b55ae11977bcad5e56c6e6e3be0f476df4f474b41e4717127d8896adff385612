@@ -1,0 +1,38 @@
+**命题 3.20（无理时钟的高频近共振）。** 令 $\alpha=\tau_2/\tau_1$ 无理，取整数 $n\ge1,m$，并置
+$$
+\Delta_n=\frac{2\pi n}{\tau_1},\qquad
+\epsilon_{n,m}=n\alpha-m.
+$$
+前两个原子的相位精确为一，因此
+$$
+\chi(\Delta_n)
+=1-p_2+p_2e^{-2\pi i\epsilon_{n,m}},
+\qquad
+|\chi(\Delta_n)|^2
+=1-4p_2(1-p_2)\sin^2(\pi\epsilon_{n,m}).
+\tag{TM.436}
+$$
+对每个正整数 $Q$，将 $0,\alpha,\ldots,Q\alpha$ 的小数部分放入 $Q$ 个等长区间，得到整数
+$1\le n_Q\le Q$、$m_Q$ 满足
+$|n_Q\alpha-m_Q|\le1/Q$。
+由于 $\alpha$ 无理，任意有限集合的正整数 $n$ 与整数的距离
+$\operatorname{dist}(n\alpha,\mathbb Z)$ 都有正的最小值，故这些 $n_Q$ 必有趋无穷的子序列。沿该子序列，
+$\Delta_{n_Q}\to\infty$ 且 $|\chi(\Delta_{n_Q})|\to1$。
+
+于是对任意 $g>0$ 及任意固定有限 $k\ge1$，式（TM.435）给出
+$$
+\sup_{\Delta\ge g}
+d_\diamond\!\left(
+(\mathcal C_\nu^{H_\Delta})^k,\mathcal P_{H_\Delta}
+\right)=\frac12 .
+\tag{TM.437}
+$$
+每个固定 $\Delta>0$ 的误差仍随 $k\to\infty$ 趋零；上确界中的生成元随 $k$ 和所要求的逼近精度变化。特别地，
+$$
+\lim_{k\to\infty}\sup_{\Delta\ge g}d_\diamond=\frac12,
+\qquad
+\sup_{\Delta\ge g}\lim_{k\to\infty}d_\diamond=0 .
+\tag{TM.438}
+$$
+因此不存在只依赖 $r$ 和这份三原子时钟律的统一几何收缩率，甚至只额外指定正能隙下界 $g$ 仍然不够。上述反例固定 $r=2$，使用趋无穷的能隙，不依赖 $\Delta\to0$ 的近简并。
+

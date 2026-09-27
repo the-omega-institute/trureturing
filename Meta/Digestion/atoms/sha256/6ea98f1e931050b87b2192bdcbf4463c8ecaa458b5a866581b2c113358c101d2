@@ -1,0 +1,29 @@
+**定理 16.2（形式 determinant–Euler 恒等式）。** (a) 在 $\mathbb C[[z]]$ 中定义零常数迹对数及正指数 zeta：
+$$
+\mathscr L(z)=\sum_{n\ge1}\frac{z^n}{n}\operatorname{tr}W^n,\qquad
+\zeta(z)=\exp\mathscr L(z).
+$$
+常数项分别零、一，故形式指数、逆和后续形式对数有定义。
+
+(b) 有 $\zeta(z)=\det(I-zW)^{-1}$。
+
+证明。令 $f(z)=\det(I-zW)$，$f(0)=1$。行列式微分的伴随矩阵公式在形式环上给
+$$
+-\frac{f'(z)}{f(z)}=\operatorname{tr}\bigl(W(I-zW)^{-1}\bigr)=\sum_{n\ge1}z^{n-1}\operatorname{tr}W^n.
+$$
+第一式可逐行微分行列式多项式，再用 $\operatorname{adj}(I-zW)=f(z)(I-zW)^{-1}$ 验证；第二式用形式几何逆。逐系数积分，取常数零，得 $-\log f=\mathscr L$；形式指数给结论。$\square$
+
+(c) 有形式 Euler 乘积
+$$
+\zeta(z)=\prod_{p\ {\rm primitive}}(1-z^{\ell(p)}a(p))^{-1},\qquad
+\operatorname{tr}W^n=\sum_{\ell(p)\mid n}\ell(p)a(p)^{n/\ell(p)}.
+$$
+证明。对长度 $n$ 的循环边词，保持词不变的旋转构成 $\mathbb Z/n\mathbb Z$ 的子群。将这些旋转提升为整数周期，其中包含 $n$，最小正周期 $\ell$ 整除 $n$，词是首 $\ell$ 边的 $n/\ell$ 次重复；具名边包含端点，重复段边界处的起点相同，故根段是闭词。最小性使根段原始，周期子群也给其唯一性，至多差循环旋转。原始长度 $\ell$ 的 $r$ 次重复有恰 $\ell$ 个不同的带起点线性边词，旋转 $\ell$ 步就重复，而更小旋转不保持原始根。因此在迹中贡献 $\ell a(p)^r$，不是 $r\ell a(p)^r$。定理14.2枚举全部带起点闭词，得迹公式。代入后 $n=r\ell$ 的系数成为 $a(p)^rz^{r\ell}/r$，故
+$$
+\mathscr L=\sum_p\sum_{r\ge1}\frac{(z^{\ell(p)}a(p))^r}{r}
+=-\sum_p\log(1-z^{\ell(p)}a(p)).
+$$
+每个给定长度只有有限具名词，所以逐系数仅有限项；形式重排合法，取指数得乘积。$\square$
+
+(d) $z$ 的非负整数幂记录长度；任意实数历时不能未经新定义就代替这个形式变量。若图无闭轨，所有正幂迹零，zeta 为一，即使仍有开放路径。无边图也包括在内。动力学 zeta 此处用正指数，负指数给 determinant，即其倒数。有限符号动力系统 zeta 的成熟背景归 Bowen–Lanford，*Zeta functions of restrictions of the shift transformation* (1970), 43–49，DOI [10.1090/pspum/014/9985](https://doi.org/10.1090/pspum/014/9985)；本节版本由上述形式系数证明承担。
+

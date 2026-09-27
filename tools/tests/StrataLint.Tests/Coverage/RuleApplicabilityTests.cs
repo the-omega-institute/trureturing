@@ -89,10 +89,10 @@ public sealed class RuleApplicabilityTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
-    private static ValidatedPolicy Policy() => RegistryLoadAssert.Accepted(
-        RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+    private static ValidatedPolicy Policy() => PolicyLoadAssert.Accepted(
+        RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
     private static string Header(string gid, string generality) => $"""
         /- GID: {gid}

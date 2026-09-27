@@ -1,0 +1,26 @@
+**定理174.1（有限启动的真实谷底升高）。** 对每个有限整数
+$L\ge3$，
+
+$$
+\boxed{
+e_L(\pi/4)=h_L(i)
+\ge1-\frac{\Gamma_L}{4}
+>\frac34.
+}
+\tag{174.25}
+$$
+
+更简单的显式证书为
+
+$$
+\boxed{
+e_L(\pi/4)
+\ge\frac34+
+\frac{54}{2353}
+\min_{j=0,1}
+\left[w_j\left(\frac43-w_j\right)\right]
+>\frac34.
+}
+\tag{174.26}
+$$
+

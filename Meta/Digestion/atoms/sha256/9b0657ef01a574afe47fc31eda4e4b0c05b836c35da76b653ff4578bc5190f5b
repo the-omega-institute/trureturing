@@ -1,0 +1,48 @@
+**命题 3.21（黄金时钟的 Fibonacci 界）。** 取 $\tau_1=\tau>0,\tau_2=\phi\tau$，其中
+$\phi=(1+\sqrt5)/2$。记 $F_0=0,F_1=1$、
+$F_{N+2}=F_{N+1}+F_N$。已有黄金残差恒等式为
+$$
+\phi F_N-F_{N+1}
+=-\left(-\frac1\phi\right)^N
+=(-1)^{N+1}\phi^{-N}.
+\tag{TM.439}
+$$
+该式直接来自既有声明，不需要重新证明或新增包装。对 $N\ge2$，置
+$$
+\Delta_N=\frac{2\pi F_N}{\tau},
+\qquad H_N=\operatorname{diag}(0,\Delta_N).
+$$
+第一时刻的相位恰为一；第二时刻的相位由式（TM.439）精确给出。因此
+$$
+|\chi(\Delta_N)|^2
+=1-4p_2(1-p_2)\sin^2(\pi\phi^{-N}),
+\tag{TM.440}
+$$
+且
+$$
+d_\diamond\!\left(
+(\mathcal C_\nu^{H_N})^k,\mathcal P_{H_N}
+\right)
+=\frac12
+\left[1-4p_2(1-p_2)\sin^2(\pi\phi^{-N})\right]^{k/2}.
+\tag{TM.441}
+$$
+因为 $F_N\to\infty$、$\phi^{-N}\to0$，对每个固定有限 $k$，右侧趋于 $1/2$，而能隙趋于无穷。若三权重均为 $1/3$，方括号内系数为
+$1-\frac89\sin^2(\pi\phi^{-N})$。
+
+还可直接保留有限尺度下的下界。由
+$\sin^2(\pi\phi^{-N})\le\pi^2\phi^{-2N}$ 及
+$(1-x)^k\ge1-kx$ 对 $x\in[0,1]$、整数 $k\ge1$ 成立，
+$$
+d_\diamond\!\left(
+(\mathcal C_\nu^{H_N})^k,\mathcal P_{H_N}
+\right)
+\ge\frac12
+\sqrt{\max\{0,\,
+1-4\pi^2p_2(1-p_2)k\phi^{-2N}\}}.
+\tag{TM.442}
+$$
+这里先对式（TM.441）的平方使用 Bernoulli 不等式，再开平方，避免将非整数 $k/2$ 直接套入整数版本。若 $k\phi^{-2N}$ 保持很小，剩余误差保持接近 $1/2$。
+
+黄金递推在这个模型中承担的是一份可计算的近共振证书：整数关系越来越接近完整整周，精确别名始终不存在，有限重复却可以任意缓慢。这连接了递推、字符相位和稳定性，不将黄金常数认作普遍最优时钟，也不将它与素数性质等同。
+

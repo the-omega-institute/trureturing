@@ -1,0 +1,15 @@
+**引理91.1（四维已见后继刚性）。** 在（91.2）的合同中，若四个已见后继 $[\eta_3],\ldots,[\eta_6]$ 同时出现 $A,B$，则
+
+$$
+\dim R_-=4,\qquad 4\le\dim R\le5.
+\tag{91.6}
+$$
+
+而且对 $2\le i,j\le5$，
+
+$$
+[\eta_{i+1}]=[\eta_{j+1}]
+\quad\Longrightarrow\quad G_i=G_j.
+\tag{91.7}
+$$
+

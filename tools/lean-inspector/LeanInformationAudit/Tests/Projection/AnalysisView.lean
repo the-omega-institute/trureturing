@@ -96,7 +96,7 @@ run_cmd do
       let counts ← prepareAnalysisQualifiedCounts counts (← get)
       pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord }, system)
       : ProjectionM _).run #[]
-  for declaration in declarations do liftCoreM <| addDecl declaration
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   let json ← liftTermElabM <| serializeAnalysisArtifact root #[record] system
   let .ok artifact := Json.parse json | throwError "fixture JSON"
   let classes := (artifact.getObjValAs? (Array Json)

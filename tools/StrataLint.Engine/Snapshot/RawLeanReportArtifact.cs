@@ -589,7 +589,7 @@ internal static class RawLeanReportArtifact
 
     private static Dictionary<string, (RepoPath Path, RepositoryFile File)> ExpectedModules(
         RepositorySnapshot snapshot) => snapshot.Files
-        .Where(static item => LeanClosureValidator.IsManagedLean(item.Key.Value))
+        .Where(static item => LeanClosureValidator.IsReportLean(item.Key.Value))
         .ToDictionary(
             static item => ModuleName(item.Key.Value),
             static item => (item.Key, item.Value),

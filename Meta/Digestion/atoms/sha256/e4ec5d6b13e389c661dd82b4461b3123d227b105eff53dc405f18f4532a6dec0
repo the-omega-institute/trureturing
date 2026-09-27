@@ -1,0 +1,73 @@
+**定理 167.3（关键双标签接口的全视界唯一行为）。** 在定义167.1的条件下，即使不假设完整通道一阶匹配，仍有
+$$
+\boxed{
+\sup_{N\ge0}
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+\longrightarrow0.
+}
+\tag{167.21}
+$$
+上确界包含所有整数视界，距离包含输入的任意有限参考系统。它只约束 $02$ 双标签输入接口，不宣称所有三标签输入上都有同样的全视界唯一性。
+
+证明。 由（167.4），可以在 $\mathcal F_r$ 的 Schur 基中选择标签与向量相位，使对应酉矩阵满足 $U_r\to I$。说明这种选择为何不需要参数连续性：若无法把基向量逐一对齐到计算基，则可取一条与所有置换、相位对齐均有正距离的序列。酉群紧性给出极限基，而（167.4）要求该极限基的对角代数恰好等于计算基对角代数，其三个最小投影只能是 $P_0,P_1,P_2$ 的置换，与所取正距离矛盾。对齐后逐列选相位，即得 $U_r\to I$。
+
+令
+$$
+\widetilde{\mathcal F}_r
+=\operatorname{Ad}_{U_r^\dagger}\circ\mathcal F_r\circ\operatorname{Ad}_{U_r},
+\qquad
+\widetilde G_r
+=\operatorname{Ad}_{U_r^\dagger}\circ G_r\circ\operatorname{Ad}_{U_r}.
+\tag{167.22}
+$$
+前者在原计算基下为 Schur 通道。由于 $G_r$ 有界且 $U_r\to I$，$\widetilde G_r-G_r\to0$；恒等算子在共轭下不变，所以严格有 $\widetilde{\mathcal F}_r=\mathrm{Id}+\varepsilon\widetilde G_r$。由（167.7），其 $02$ 系数 $b_r$ 满足
+$$
+b_r=1-(1+k_*)\varepsilon+o(\varepsilon).
+\tag{167.23}
+$$
+这里对齐的是有界生成元，因而不需要 $\|U_r-I\|=o(\varepsilon)$ 一类额外速率假设。
+
+$\mathcal T_r$ 在同一方向的系数为 $s_r=r^{1+k_*}=1-(1+k_*)\varepsilon+O(\varepsilon^2)$。因此
+$$
+|b_r-s_r|=o(\varepsilon),\qquad
+q_r:=\max\{|b_r|,s_r\}\le1-c_0\varepsilon
+\tag{167.24}
+$$
+对某个固定 $c_0>0$ 及全部充分接近一的 $r$ 成立。对任意 $N\ge1$，标量幂的 telescoping 给出
+$$
+|b_r^N-s_r^N|
+\le|b_r-s_r|Nq_r^{N-1}
+\le\frac{|b_r-s_r|}{1-q_r}\longrightarrow0,
+\tag{167.25}
+$$
+最后一个上界与 $N$ 无关，其中用到 $Nq^{N-1}\le\sum_{j=0}^{N-1}q^j\le(1-q)^{-1}$。
+
+对 $02$ 输入，这两个 Schur 通道的幂只在该相干系数上不同。式（161.11）的单边块范数论证给出同样的全参考精确距离
+$$
+d_{\rm ref}\bigl(\widetilde{\mathcal F}_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+=\frac12|b_r^N-s_r^N|.
+\tag{167.26}
+$$
+也可直接由二阶正块矩阵的非对角块迹范数至多为 $1/2$ 得到上界，再由无参考的平衡输入达到等号。$N=0$ 时距离为零。
+
+最后，输入与输出的酉共轭差不随迭代次数累积：
+$$
+\mathcal F_r^N
+=\operatorname{Ad}_{U_r}\circ\widetilde{\mathcal F}_r^N\circ
+\operatorname{Ad}_{U_r^\dagger}.
+$$
+通道前后复合对全参考距离收缩，因此对全部 $N\ge0$，
+$$
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\widetilde{\mathcal F}_r^N\circ\iota_{02}\bigr)
+\le d_{\rm ref}(\operatorname{Ad}_{U_r},\mathrm{Id})
++d_{\rm ref}(\operatorname{Ad}_{U_r^\dagger},\mathrm{Id})
+\longrightarrow0.
+\tag{167.27}
+$$
+此式已包含旋转后输入向第三标签的分量，无需假设原 $02$ 子空间被 $\mathcal F_r$ 精确保持。合并（167.25）—（167.27），得到（167.21）。证毕。
+
+定理167.2—167.3由全视界最优性反推弱变化尺度、稳定坐标及关键输入接口的唯一长期行为。第165节的精确局部代价仍成立；本节移除的是对候选族局部接近程度的预设，并不确定其余相干方向的自由度。这里的坐标对齐始终相对于定义161.1给定的校准基；对整个实验作同一酉共轭，会将校准基、源族、预测器及结论中的投影一同共轭。
+

@@ -1,0 +1,21 @@
+- $O_\eta$ 是这些行的接收器输出方向张成空间。
+
+本核心满足
+
+$$
+\begin{aligned}
+D_A&=\operatorname{span}\{w,z,u\}
+\subseteq \operatorname{span}\{u,v,w,g,h\}=O_B,\\
+D_B&=\operatorname{span}\{p,q,f,s\}
+\subseteq \operatorname{span}\{p,q,s,r\}=O_A.
+\end{aligned}
+\tag{43.10}
+$$
+
+这里 $D_A,D_B$ 未声明彼此正交；原输入位已经被遗忘。关键是交叉包含
+
+$$
+D_A\subseteq O_B,\qquad D_B\subseteq O_A.
+\tag{43.11}
+$$
+
