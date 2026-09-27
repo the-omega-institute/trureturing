@@ -1,0 +1,25 @@
+**定义 248.1（分别受限的近实预算）。** 沿用第243—247节的实际任务及 $b,\sigma,d,r_0$，其中 $d=\sqrt{D_*}$、$r_0=bd/\sigma$。本节始终分别要求两个全域预算
+
+$$
+I_R^C(\rho_u)\le\eta_s,\qquad J(\rho_u)\le\zeta_s,
+\qquad \delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,
+\tag{248.1}
+$$
+
+并考察尺度
+
+$$
+0<e_s=o(s),\qquad \eta_s=o(s),\qquad
+\frac{\eta_s}{\sqrt{s e_s}}\longrightarrow\infty.
+\tag{248.2}
+$$
+
+定义
+
+$$
+C_{\rm near}=\frac{\pi^2}{4}+\frac{b^2}{\sigma^2}.
+\tag{248.3}
+$$
+
+这里总预算只是两项给定预算的合成读数；不能把两个分别成立的不等式替换为单个合成约束。
+

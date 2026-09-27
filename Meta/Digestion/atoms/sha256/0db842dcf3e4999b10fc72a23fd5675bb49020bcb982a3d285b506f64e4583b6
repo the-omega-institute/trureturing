@@ -1,0 +1,76 @@
+### 275.7 任意正定上块的匹配同边缘下界
+
+上界尚需一个与同一真值对应的下界。先在规范多相位坐标中，为每条链选择§268的正定解
+$$
+Q_b^{\mathrm c}+(I+tJ_{r_b})^\dagger Q_b^{\mathrm c}(I+tJ_{r_b})=I_{r_b},
+\qquad t=1/4,
+$$
+$$
+Q_{\mathrm c}=\bigoplus_bQ_b^{\mathrm c},
+\qquad T_{\mathrm c}=T(Q_{\mathrm c},M).
+\tag{275.53}
+$$
+因为每个块的相位与其共轭相消，
+$$
+Q_{\mathrm c}+M^\dagger Q_{\mathrm c}M=I_n,
+\qquad\operatorname{Tr}T_{\mathrm c}=n.
+\tag{275.54}
+$$
+
+选一条长度 $m$ 的最长链。§269在该无相位块上给出同边缘PSD竞争族，态变化为 $\Theta(h)$，非对角数据变化为 $\Theta(h^{2m})$。对该块施加输入酉矩阵
+$$
+U_b=\operatorname{diag}(\lambda_b,1),
+\tag{275.55}
+$$
+将上非对角块乘以 $\lambda_b$，便得到所需带相位真值及其竞争族。该操作保持块正性、迹、参考边缘及所有迹范数。其他规范块保持不变，得到联合PSD矩阵族 $T_{{\mathrm c},h}$，其总迹为 $n$，对角块之和仍为 $I_n$，并满足
+$$
+\|T_{{\mathrm c},h}-T_{\mathrm c}\|_1=\Theta(h),
+\qquad
+\|2(T_{{\mathrm c},h}-T_{\mathrm c})_{+-}\|_1=\Theta(h^{2m}).
+\tag{275.56}
+$$
+各式中的上下界常数有限且严格正。该族在同一个完整参考空间内实际实现，不要求把其他块也扰成满秩。
+
+现在回到任意给定的 $Q\succ0$。取
+$$
+\alpha=\frac{\lambda_{\min}(Q)}{2\|Q_{\mathrm c}\|}>0,
+\qquad Q_{\mathrm r}=Q-\alpha Q_{\mathrm c}\succeq\frac{\lambda_{\min}(Q)}2I\succ0.
+\tag{275.57}
+$$
+graph构造对上块线性，故
+$$
+T(Q,M)=\alpha T_{\mathrm c}+T(Q_{\mathrm r},M).
+\tag{275.58}
+$$
+定义真实竞争矩阵
+$$
+\widehat T_h=\alpha T_{{\mathrm c},h}+T(Q_{\mathrm r},M)\succeq0,
+\qquad \widehat\Omega_h=\frac1c\widehat T_h.
+\tag{275.59}
+$$
+其总迹仍为 $c$，因为第一项的扰动迹为零；它的两对角块之和仍与 $T(Q,M)$ 相同。因此 $\widehat\Omega_h$ 是精确共同边缘 $\rho$ 的合法来源，而且
+$$
+\widehat T_h-T(Q,M)
+=\alpha(T_{{\mathrm c},h}-T_{\mathrm c}).
+\tag{275.60}
+$$
+固定正余项不会抵消这个差。由（275.56），
+$$
+\boxed{
+\|\widehat\Omega_h-\Omega\|_1=\Theta(h),
+\qquad
+\varepsilon_\Omega(\widehat\Omega_h)=\Theta(h^{2m}).
+}
+\tag{275.61}
+$$
+误差中的边缘项精确为零。
+
+将此族逆过滤回原始坐标。相同边缘使过滤分母恒定，所得族仍精确同边缘；（275.22）—（275.23）的双向界保持两种误差阶。两种坐标下都因此对任何 $\gamma>1/(2m)$ 满足
+$$
+\frac{\|\widehat\Omega_h-\Omega\|_1}
+{\varepsilon_\Omega(\widehat\Omega_h)^\gamma}
+\longrightarrow+\infty.
+\tag{275.62}
+$$
+这排除了同一真值处的所有更大局部指数，包括精确共同边缘子合同。
+

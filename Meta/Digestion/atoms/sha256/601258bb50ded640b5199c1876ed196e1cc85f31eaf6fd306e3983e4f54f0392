@@ -1,0 +1,22 @@
+**定理 19.3（条件等待时间与唯一瞬态解）。** 若 $r_\rho>0$，首次点击轮数在最终点击条件下满足
+
+$$
+\mathbb P(\mathsf N>n\mid\mathsf N<\infty)
+=\frac{\operatorname{Tr}(\rho R_n)}{r_\rho},
+\qquad
+\mathbb E[\mathsf N\mid\mathsf N<\infty]
+=\frac{\operatorname{Tr}(\rho T)}{r_\rho}
+\le\frac M{1-q}.
+$$
+
+$T$ 是满足 $X-\mathcal A(X)=R$ 且 $0\le X\le cR$ 对某有限 $c$ 成立的唯一算子。此支撑与有界性条件不能直接删去。
+
+证明。第 19.1 条识别分子事件；对条件分布使用尾和公式并交换非负和与迹即得期望。若 $X$ 是所述解，则
+
+$$
+X=\sum_{n=0}^{k-1}\mathcal A^nR+\mathcal A^kX,
+\qquad 0\le\mathcal A^kX\le cR_k\longrightarrow0,
+$$
+
+故 $X=T$。若存在非零固定效果 $F$，$T+bF$ 对 $b>0$ 也满足同一方程，却不满足被 $R$ 控制的条件，因为 $F$ 在 $\mathcal D$ 上为恒等、$R$ 在其上为零。$\square$
+

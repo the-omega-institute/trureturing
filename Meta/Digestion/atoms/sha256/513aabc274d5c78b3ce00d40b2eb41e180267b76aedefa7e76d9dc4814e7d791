@@ -1,0 +1,21 @@
+**证明。** 输入转置不混合参考块，所以
+$$
+\Omega(t)^{\Gamma_H}
+=\bigoplus_b\frac{n_b}{N}\Omega_b(t)^{\Gamma_H}.
+\tag{273.13}
+$$
+核范数在直和上可加，且各权重非负，故
+$$
+\begin{aligned}
+\operatorname{Neg}(\Omega(t))
+&=\frac12\left(\sum_b\frac{n_b}{N}
+\|\Omega_b(t)^{\Gamma_H}\|_1-1\right)\\
+&=\sum_b\frac{n_b}{N}
+\frac{\|\Omega_b(t)^{\Gamma_H}\|_1-1}{2}.
+\end{aligned}
+\tag{273.14}
+$$
+最后一步使用 $\sum_b n_b/N=1$。$\square$
+
+这条恒等式使用已由（273.5）构造出的整体密度态，不把若干重叠边缘的一致性当作存在共同来源的证明。
+

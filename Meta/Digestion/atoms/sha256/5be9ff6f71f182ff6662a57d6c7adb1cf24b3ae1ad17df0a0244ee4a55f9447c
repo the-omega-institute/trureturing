@@ -1,0 +1,62 @@
+**定理 6.2（路径似然的单电流表达）。** 令 $q=q_r$，并置
+
+$$
+A=\log\frac{1+r}{1-q},\qquad B_0=\log(1+q),\qquad
+C=-\log(1-r),\qquad \mathcal A=A+B_0+C.
+\tag{6.2}
+$$
+
+每条完整轨迹的方向对数似然比恰为
+
+$$
+\log\frac{\mathsf Q_{d,r,T}(\boldsymbol x)}
+              {\mathsf Q^{\leftarrow}_{d,r,T}(\boldsymbol x)}
+=\mathcal A J+A\Delta_H-B_0\Delta_Z.
+\tag{6.3}
+$$
+
+特别地，$(J,Y_0,Y_T)$ 保留完整轨迹对这两个方向假设的全部似然信息。
+此外有有限参数误差界
+
+$$
+\left|2e_{d,r}(T)-\mathsf Q_{d,r,T}(N_{ZH}=0)\right|
+\le\frac2n+\frac{T(1-r)}{2n}+B_0+
+       \frac{(1-r)(1-q)}{1+r}.
+\tag{6.4}
+$$
+
+证明。均匀初始质量在路径比中相消。
+同一集合内两状态间的正反转移比为一；三个有向跨集合边
+$H\to B$、$B\to Z$、$Z\to H$ 的对数比分别为 $A,B_0,C$。
+记对应净计数为 $J_{HB},J_{BZ},J$。
+一条有限路径在每个集合上的流量平衡给出
+
+$$
+J_{HB}-J=\Delta_H,\qquad
+J_{BZ}-J_{HB}=\Delta_B,
+\qquad \Delta_H+\Delta_B=-\Delta_Z.
+\tag{6.5}
+$$
+
+将它们代入 $AJ_{HB}+B_0J_{BZ}+CJ$ 即得 (6.3)。
+这里使用的是有限马尔可夫网络的标准循环分解思想，参见
+[Schnakenberg（1976），第 VIII–IX 节](../../../Library/Dynamics/schnakenberg1976network.md)；
+本族的精确系数与下面的误差界由上述转移概率直接确定。
+
+以正向律取期望，若以 $S$ 记 (6.3) 的左边，则
+$2e=\mathbb E\min(1,e^{-S})$。
+平稳性给出端点命中 $H$ 的概率至多为 $2/n$，而
+
+$$
+\mathbb E N_{HZ}=\frac{T(1-r)}{2n}.
+\tag{6.6}
+$$
+
+排除端点命中 $H$ 及 $N_{HZ}>0$ 这两个事件后，
+$S=\mathcal A N_{ZH}-B_0\Delta_Z$。
+若 $N_{ZH}=0$，$\min(1,e^{-S})$ 与一相差至多 $B_0$；
+若 $N_{ZH}\ge1$，该量至多为
+$e^{-\mathcal A+B_0}=(1-r)(1-q)/(1+r)$。
+在排除事件上两被比较量均在 $[0,1]$ 中。
+由并集界及 Markov 不等式得到 (6.4)。$\square$
+

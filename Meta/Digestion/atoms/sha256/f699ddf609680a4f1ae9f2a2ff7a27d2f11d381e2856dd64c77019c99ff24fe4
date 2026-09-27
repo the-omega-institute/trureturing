@@ -1,0 +1,23 @@
+**命题 57.2（精确后缀质量及全局深度质量）。** 对每个实际读取槽 $v=(q,a)$，有
+$$
+\sum_{(x,i):\,(q(x,i),a(x,i))=v}2^{-(N_x-i)}\le1,
+\qquad
+\sum_{(x,i):\,(q(x,i),a(x,i))=v}2^{i-h}\le1.
+\tag{57.7}
+$$
+因而定义目标读取态的全局深度质量
+$$
+K_q:=\sum_{(x,i):\,q(x,i)=q}2^{i-h}
+     =\sum_{H:q_H=q}n_H2^{i_H-h}\quad(q\ne q_0)
+\tag{57.8}
+$$
+时，总有 $K_q\le p$。$K_q$ 是带权访问质量，与前驱槽数 $A_q$ 不同。
+
+证明。固定当前槽以后，其下一段等待与目标读取态由固定表决定；来源当前位于一个长度 $P$ 的数字块，平移后的下一数字至多有两种。给每个实际活动槽的一条或两条出边作固定的二进制标号，从当前槽到最终终止槽的完整后续边词就是二元词，长度为 $N_x-i$。
+
+这些词对槽的不同访问互异。不同初态若产生相同词，固定控制表将把二者送入同一终止态，与固定初态解码矛盾。同一初态若多次访问这个槽，不同访问的剩余读取数不同，故词长不同。它们还必须前缀自由：一条完整词走到终止槽后，同一起点、相同前缀的另一条路径也已终止，不能再延长。因此访问到后缀词是单射，且所得有限词集前缀自由；这一步并没有假定历史到当前槽单射。
+
+若当前槽是终止槽，只有一个初态的一次最终访问，对应唯一空词，质量直接等于一。其余情形没有空词，可以使用已有的有限二元前缀码 Kraft 不等式，得到第一式。又因 $N_x\le h$，逐项有 $2^{i-h}\le2^{-(N_x-i)}$，得到第二式；对一个 $q$ 的至多 $p$ 个槽求和即得（57.8）的界。$\square$
+
+这里经典 Kraft 数值界归于固定版本 `ffec542f612d6e8858eb4b08715aed884285a2b0` 的 [KraftInequality](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S0/Computability/KraftInequality.lean) 中 `D5.S0.Computability.KraftInequality.finite_binary_kraft_inequality`，其前提是唯一可解码性；[PrefixFreeCode](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S0/Computability/Coding/PrefixFreeCode.lean) 中 `D5.S0.Computability.Coding.PrefixFreeCode.IsPrefixFree`、`uniquelyDecodable_of_isPrefixFree`、`kraft_inequality_of_isPrefixFree` 给前缀自由接口。后两条还要求空词不在码中，`isPrefixFree_eq_singleton_nil` 说明含空词的前缀码只能是空词单例。底层归属为 `InformationTheory.kraft_mcmillan_inequality`；不另造未提供的 mathlib 版本地址。从本控制合同构造忠实的后缀码是上面的普通证明义务，不因引用已有 Kraft 声明而自动取得 Lean 核验。
+

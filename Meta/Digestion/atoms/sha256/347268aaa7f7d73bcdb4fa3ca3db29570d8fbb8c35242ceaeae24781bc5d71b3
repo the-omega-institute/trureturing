@@ -1,0 +1,44 @@
+### 22.2 定理：构造局部参数区间及全部错误区域
+
+固定无理 $\alpha\in(0,1)$ 和整数 $n\geq0$。对 $1\leq k\leq n$ 令 $c_k=1-\{k\alpha\}$，并令
+\[
+g_n=\min\bigl(\{1-\alpha\}\cup\{c_k:1\leq k\leq n\}
+\cup\{|c_i-c_j|:1\leq i<j\leq n\}\bigr),\qquad
+r_n=\frac{g_n}{2(n+1)}.
+\]
+有限集合中全部元素严格为正，故 $r_n>0$。对全部 $0\leq\delta\leq r_n$，有 $\alpha+\delta<1$，且
+\[
+\boxed{E_n(\alpha,\alpha+\delta)
+=\bigsqcup_{k=1}^n[c_k-k\delta,c_k),\qquad
+\lambda(E_n)=\frac{n(n+1)}2\delta.}
+\tag{22.2}
+\]
+对第 $k$ 个区域内的每个相位，实际有符号读出差为
+\[
+\boxed{s_j(\alpha+\delta,x)-s_j(\alpha,x)
+=\mathbf1_{\{j=k-1\}}-\mathbf1_{\{j=k\}},\quad 0\leq j<n.}
+\tag{22.3}
+\]
+当 $k=n$ 时只有最后一位增加一；当 $k<n$ 时实际出现相邻 $01\to10$，其余位不变。$n=0$ 时错误集为空。
+
+**证明。** 无理性使每个 $k\alpha$ 非整数；若两个 $c_k$ 相等，则某个非零整数倍的 $\alpha$ 是整数，矛盾。参数区间满足 $0\leq k\delta<g_n$，所以切点不越过零，实际 $k\alpha$ 的整数部分保持不变，且各扫过区间两两不交。直接展开取整进位得到
+\[
+D_k(x):=\lfloor x+k(\alpha+\delta)\rfloor-\lfloor x+k\alpha\rfloor
+=\mathbf1_{[c_k-k\delta,c_k)}(x),\quad D_0=0.
+\]
+相邻累计整数相减给 $s_j(\alpha+\delta,x)-s_j(\alpha,x)=D_{j+1}-D_j$。区间不交保证至多一个 $D_k$ 非零，故得到式 (22.3)。在区间并集之外所有 $D_k$ 为零；在每个区间内第 $k-1$ 位实际改变，故错误集恰为该并集。有限测度可加性及 $\sum_{k=1}^n k=n(n+1)/2$ 给出测度公式。
+
+`MechanicalSlopeSensitivity.local_slope_disagreement_law` 构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。声明同时保留定量接口：任何不超过 $1-\alpha$、全部 $c_k$ 及两两切点距离的共同下界 $g$，都给出同一个所构造半径的下界 $r_n\geq g/[2(n+1)]$。半径仅为明确的充分半径，没有被宣称最大。
+
+**推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
+\[
+\lambda(H_n=1)=n\delta,\qquad
+\lambda(H_n=2)=\frac{n(n-1)}2\delta,\qquad
+\lambda(H_n=0)=1-\frac{n(n+1)}2\delta,
+\]
+\[
+\int_0^1 H_n(x)\,dx=n^2\delta.
+\tag{22.4}
+\]
+**证明。** 最后一个扫过区间长度为 $n\delta$，此前每个区域改变两位，且没有其他错误区域。各区域的长度直接给出全部公式。
+

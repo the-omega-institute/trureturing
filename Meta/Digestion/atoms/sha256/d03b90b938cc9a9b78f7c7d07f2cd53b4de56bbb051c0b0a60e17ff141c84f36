@@ -1,0 +1,19 @@
+### 65.1 结论
+
+沿用第 64 节三个量子比特上的混合候选，令
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+r_0&=\sqrt a\,x+cy+\sqrt\varepsilon b\,z,\\
+r_1&=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|r_0\rangle\langle r_0|+|r_1\rangle\langle r_1|,
+\qquad0<a<1.
+\end{aligned}
+\tag{65.1}
+$$
+
+完整 tester 合同、因果修复集合及最优事件响应误差 $e(R)$ 均保持不变。早边缘仍给 $\Delta(R_{a,\varepsilon})=\varepsilon$。
+

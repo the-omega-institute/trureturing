@@ -1,0 +1,19 @@
+### 106.5 ABCAB 的首轮向量禁阻
+
+若 $G_2=G_5$，同一当前环境 $A$ 给 $H_1=H_4$，违反引理106.2。因此 $G_2\ne G_5$。它们均在当前零位纤维 $A$ 中，并且一位后继均为 $B$。由（106.2）、（106.3）和二维性，只有
+$$
+[A]=[E^\perp],\qquad[B]=[E]
+\tag{106.11}
+$$
+才允许这两个实际平面不同。第三条 $C$ 不同于这对。
+
+$V_1p=v\otimes A$ 中 $v\in Q$，而 $V_1G_4=Q_5\otimes A=Q\otimes A$，所以 $p\in G_4$。由于 $G_4$ 的当前环境为 $C\ne E^\perp$，（106.4）给 $p\in P$。因此 $p\perp Q_3$，因为 $Q_3\subset Q\oplus\mathbb Cu_*$。
+
+固定 $V_1$ 在 $G_2,G_4$ 上分别使用正交环境 $B=E,A=E^\perp$，故 $G_2\perp G_4$。真实 $V_0p=u\otimes A$、$u\in G_2$，以及 $V_0H_3=G_4\otimes C$，于是给 $p\perp H_3$。
+
+另一方面，$V_1G_3=Q_4\otimes C=Q\otimes C$，所以
+$$
+\|P_{G_3}p\|=|\langle A,C\rangle|>0.
+$$
+严格正来自 $C\ne B=A^\perp$。由 $p\perp Q_3$ 与（106.7），有 $P_{H_3}p=P_{H_3}P_{G_3}p$。$P_{G_3}|_{H_3}$ 是同构，其伴随 $P_{H_3}|_{G_3}$ 也单射，右侧不可能为零，与 $p\perp H_3$ 矛盾。
+

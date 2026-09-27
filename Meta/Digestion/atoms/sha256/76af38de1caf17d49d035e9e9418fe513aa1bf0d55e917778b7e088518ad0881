@@ -1,0 +1,7 @@
+**引理 62.4（全 tester 证书）。** 若 $p\in[p_0,\varepsilon]$ 且 $L_\varepsilon(p)\ge0$，则
+
+$$
+h(S_p-R_\varepsilon)=F_\varepsilon(p).
+\tag{62.16}
+$$
+

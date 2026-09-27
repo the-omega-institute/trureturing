@@ -1,0 +1,15 @@
+**定义 62.1（固定来源的矩预算类）。** 本批固定
+
+$$
+0<\beta\le1,\qquad p=1+\beta,\qquad K\ge1,
+\qquad r=\frac{\beta}{1+\beta}=1-\frac1p.
+$$
+
+等待律 $P$ 属于 $\mathcal P_{p,K}$，是指其首次点击轮数 $\mathsf N\in\{1,2,\ldots\}\cup\{\infty\}$ 满足
+
+$$
+\mathbb E_P\mathsf N^p\le K.
+$$
+
+所以 $P(\mathsf N=\infty)=0$，且均值 $\mu_P\le K^{1/p}$。这里的预算只约束声明的初始来源，不自动约束换成其他初态或条件于某次未点击以后的状态。
+

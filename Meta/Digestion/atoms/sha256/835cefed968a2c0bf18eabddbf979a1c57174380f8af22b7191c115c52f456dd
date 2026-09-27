@@ -1,0 +1,26 @@
+### 56.1 实际合同与主结论
+
+固定第54、55节的实际合同：非退化来源 $ab\ne0$，七维接收器独立纯启动，同一个全域 CPTP 接收通道服务前六个完整参考终端，$r_1=2,r_2=1$。沿用二维 $U=G_2=\operatorname{span}(u,w)$、二维环境 $F$、四维早期输入 $X$，以及
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{56.1}
+$$
+$u,v,w$ 正交单位。对单位 $\xi\in F$，有单位 $p_\xi\in X_\xi$，满足
+$$
+V_0X_\xi=U\otimes\xi,\qquad V_1p_\xi=v\otimes\xi.
+\tag{56.2}
+$$
+各纯尾系数空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n\quad(3\le n\le6),
+\tag{56.3}
+$$
+各 $H_n,G_n,Q_n$ 二维，$H_n\subset G_n\oplus Q_n$ 到 $G_n,Q_n$ 的正交投影均为同构。第54节给全部尾环境在 $F$ 内，故旧块与不同输入位正交使
+$$
+v\perp U+G_3+G_4+G_5+G_6,\qquad Q_n\perp U.
+\tag{56.4}
+$$
+同一个 $V$ 的两位像正交；同环境方向中的两份接收像因而正交。
+

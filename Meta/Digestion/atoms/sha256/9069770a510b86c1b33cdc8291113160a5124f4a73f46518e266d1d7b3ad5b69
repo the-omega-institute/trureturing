@@ -1,0 +1,44 @@
+### 216.5 包络恒等式与临界法向导数
+
+回到固定 $t$ 的部分驻点族（216.9）。TP 图及其局部坐标没有显式 $h$ 依赖，$h$ 只通过 $\ell=\epsilon h$ 进入目标。全部被消元变量都驻定，因此求 $\mathcal V_h$ 时，它们随 $h$ 的运动项为零。由（216.18）、（216.24），对正小 $\epsilon$ 有
+$$
+\epsilon q_h(\epsilon,0,\nu,t)
+=\epsilon\chi\!\left(\frac34+\epsilon q(\epsilon,0,\nu,t)\right).
+$$
+除以 $\epsilon$ 得到整个固定 $t$ 族上的精确恒等式
+$$
+\boxed{
+q_h(\epsilon,0,\nu,t)
+=\chi\!\left(\frac34+\epsilon q(\epsilon,0,\nu,t)\right).
+}
+\tag{216.25}
+$$
+$\lambda$ 始终有正下界，两边联合解析；该恒等式也有零噪声解析延拓。
+
+现在才对 $t$ 求导。由 $\mu=q_t$ 和 $\chi'(\lambda)=-1-\lambda^{-2}$，
+$$
+\boxed{
+\mu_h(\epsilon,0,\nu,t)
+=-\epsilon(1+\lambda^{-2})\mu(\epsilon,0,\nu,t).
+}
+\tag{216.26}
+$$
+这一步要求前述恒等式在整个带符号 $t$ 族成立；仅知道最终最优器在 $h=0$ 重制备，不能据此进行这一求导。
+
+实际临界图由
+$$
+\mu(\epsilon,h,\nu_b(\epsilon,h),0)=0,\qquad \mu_\nu<0
+\tag{216.27}
+$$
+定义。沿其纯来源点，$\mu=0$，故（216.26）给 $\mu_h=0$。对（216.27）求 $h$ 导数：
+$$
+0=\mu_h+\mu_\nu\,\partial_h\nu_b
+\quad\Longrightarrow\quad
+\partial_h\nu_b(\epsilon,0)=0.
+$$
+再用（216.1）得
+$$
+N_H(x,0)=\beta\,\partial_h\nu_b(x/\beta,0)=0
+$$
+对充分小正 $x$ 成立。联合实解析性把此恒等式延拓到原点邻域中的整个 $x$ 轴，证明（216.2）。证毕。
+

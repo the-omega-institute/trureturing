@@ -1,0 +1,37 @@
+**定理 62.1（整个参数区间的准确最优修复）。** 对每个 $0<\varepsilon\le1/16$，有
+
+$$
+d<p_0<p_*<\varepsilon.
+\tag{62.3}
+$$
+
+方程
+
+$$
+F_\varepsilon(p)=G_\varepsilon(p)
+\tag{62.4}
+$$
+
+在 $(p_0,p_*)$ 内恰有一个解 $\bar p_\varepsilon$，并且
+
+$$
+e_\varepsilon=
+F_\varepsilon(\bar p_\varepsilon)
+=G_\varepsilon(\bar p_\varepsilon).
+\tag{62.5}
+$$
+
+交点处具有统一的严格证书下界
+
+$$
+L_\varepsilon(\bar p_\varepsilon)>\frac{\varepsilon^2}{34}>0.
+\tag{62.6}
+$$
+
+修复 $S_{\bar p_\varepsilon}$ 达到最优值，而且所有最优修复的早输出边缘参数均满足
+
+$$
+\sigma_{11}=\bar p_\varepsilon.
+\tag{62.7}
+$$
+

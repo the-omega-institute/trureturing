@@ -1,0 +1,28 @@
+### 35.3 多切面的加权近似
+
+对有限切面族 $I$、正权重 $w_i$ 和离散读出距离，可定义
+
+$$
+D_{I,\gamma}(x,y)
+:=\sup_{i\in I,\ n\ge0}
+ w_i\gamma^n d_i(q_i(F^n x),q_i(F^n y)).
+\tag{35.5}
+$$
+
+仓内 `DiscountedPrimeTimeUltrametric.discounted_prime_time_distance_strong_triangle` 给出有限正权重、$0<\gamma\le1$ 时的强三角不等式。其零核是所有选定切面、所有未来时刻都相同的联合 kernel；这与第27节的交核判据一致。若权重族或协议族扩展，零核只会收缩，但数值距离是否有统一上界和取得成本，仍须逐项声明。
+
+因此，精简统一结构应保持三层区别：
+
+$$
+\boxed{
+\text{精确未来核}
+\quad\subseteq\quad
+\text{近似距离的零集/商}
+\quad\subseteq\quad
+\text{给定容差的近似纤维}.
+}
+\tag{35.6}
+$$
+
+第一层决定可组合的精确边界；第二层在正折扣下与第一层有相同零核；第三层只提供带误差的分辨率，必须另配误差传播和合法域裕度。本节对应仓内 `CanonicalDiscountedFutureGeometry` 与 `DiscountedPrimeTimeUltrametric`；没有新增 Lean 声明，理论结论 Claim status 为 open。
+

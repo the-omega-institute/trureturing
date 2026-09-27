@@ -1,0 +1,10 @@
+**推论168.3（忠实表示与物理恢复不等价）。** 当
+$0<\kappa<1$ 时，$\mathcal N_{\mathrm{loc}}$ 在线性算子空间上单射，但不存在 CPTP 通道
+$\mathcal R$ 使
+
+$$
+\mathcal R\mathcal N_{\mathrm{loc}}
+=\operatorname{id}.
+\tag{168.17}
+$$
+

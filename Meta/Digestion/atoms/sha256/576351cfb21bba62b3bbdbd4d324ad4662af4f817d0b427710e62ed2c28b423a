@@ -1,0 +1,47 @@
+**推论 394.1（Fourier 恢复及不可访问副本的分界）。** 若归一化记录相互正交，且可以访问完整量子记录，则 $C=I_d$，可由有限记录测量与酉反馈实现 $\eta(I_d)=1$；但一个指定成功结果的概率至多为 $1/d$。
+
+另设 $d\ge2$，实际耦合还保留一组不可访问的正交记录 $f_i\in F$：
+
+$$
+J_F|i\rangle=|i\rangle\otimes|r_i\rangle_E\otimes|f_i\rangle_F,
+\qquad \langle f_j|f_i\rangle=\delta_{ij}.
+$$
+
+只测量 $E$ 并按结果对 $S$ 作酉反馈时，对全部未知输入的总精确成功概率只能为零。这不与上一段相矛盾，因为其完整记录访问前提已经改变。
+
+证明。在正交记录基中，取 $k=0,\ldots,d-1$ 及
+
+$$
+(z^{(k)})_j=e^{2\pi i(j-1)k/d},\qquad
+|m_k\rangle=\frac1{\sqrt d}\sum_{j=1}^d
+ \overline{(z^{(k)})_j}|r_j\rangle.
+$$
+
+几何级数说明 $m_k$ 构成记录空间的正交基，且
+$\langle m_k|r_j\rangle=(z^{(k)})_j/\sqrt d$。记录投影测量 $|m_k\rangle\langle m_k|$ 的系统分支因此为
+
+$$
+\mathcal M_k(X)=\frac1d
+\operatorname{diag}(z^{(k)})X\operatorname{diag}(z^{(k)})^\dagger.
+$$
+
+以 $\operatorname{diag}(\overline{z^{(k)}})$ 反馈，得到 $\mathcal T_k=\operatorname{id}_S/d$；将 $d$ 个结果都列为成功，便得总概率 $1$。一个指定结果的界则由定理 391.1 的 $z^\dagger I_dz=d$ 给出。$d=1$ 时同一构造只有一个结果。
+
+对于不可访问副本，任意 $E$ 上效果 $D_y$ 给出的系统分支系数变为
+
+$$
+\langle r_j|D_y|r_i\rangle\langle f_j|f_i\rangle
+=\delta_{ij}\langle r_i|D_y|r_i\rangle.
+$$
+
+故每个分支、每次酉反馈及任意成功分支之和都只依赖输入的对角元。取不同系统基向量 $|i\rangle,|j\rangle$，令
+
+$$
+|\psi_\pm\rangle=(|i\rangle\pm|j\rangle)/\sqrt2,\qquad
+\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|.
+$$
+
+$\rho_+$ 与 $\rho_-$ 的对角元相同但矩阵不同，故任何允许协议的成功输出对两者相同。若该输出同时为 $t\rho_+$ 与 $t\rho_-$，便有 $t(\rho_+-\rho_-)=0$，迫使 $t=0$。证毕。
+
+该推论与第 88 节的残留记录重叠边界相接：完整访问正交记录时能确定恢复，而定义 392.1 的非正交四路径记录在较窄的测量—酉反馈接口中连正的总精确成功率也没有。决定这一区别的是共同 Gram 支撑和允许的操作，不能单凭“记录越可区分”就给可恢复性排序。联合可逆、一个指定成功结果可逆、全部成功结果的总概率，以及完整记录的可访问性，分别承担不同的数学条件。
+

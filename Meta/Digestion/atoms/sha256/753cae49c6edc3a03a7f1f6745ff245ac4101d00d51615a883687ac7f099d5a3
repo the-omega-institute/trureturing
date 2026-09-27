@@ -1,0 +1,7 @@
+**定理104.3（二秩超平面不可能）。** 在（104.1）及 $k\notin S$ 的实际分支中，
+
+$$
+\boxed{\operatorname{rank}B_\lambda\le1.}
+\tag{104.9}
+$$
+

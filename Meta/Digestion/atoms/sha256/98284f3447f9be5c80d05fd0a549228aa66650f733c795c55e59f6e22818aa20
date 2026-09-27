@@ -1,0 +1,16 @@
+### 180.5 一个显式可行族的二阶误差
+
+记
+
+$$
+\Delta w=w_1-w_0>0,\qquad
+\widehat r_L=\frac12-\frac{\beta\Delta w}{8},\qquad
+\widehat t_L=-\frac{\gamma\Delta w}{2}.
+\tag{180.14}
+$$
+
+这些参数对全部 $L\ge3$ 合法：$\Delta w<1/2$、$\beta<1/8$、
+$\gamma<1/8$ 给
+$\widehat r_L>63/128$ 且
+$|\widehat t_L|<1/32<\min\{\widehat r_L,1-\widehat r_L\}$。
+

@@ -1,0 +1,38 @@
+**定义 52.1（原聚簇序列的相位系数）。** 保持定义 39.1 的同一固定振幅、
+$`\beta\in(1/2,1)`$ 和原序列 $`\lambda=Q^3`$，以及第 49、51 章的
+同一完整后验标签向量。记
+
+```math
+\xi_M=a\lambda-\lfloor a\lambda\rfloor,\qquad
+v=b+a\alpha^2,\qquad c_3=b-a\alpha^3,\qquad c_4=b+a\alpha^4,
+\qquad d(\xi)=(1+\alpha)\xi,
+```
+
+式 (52.1)。
+
+并定义
+
+```math
+\mathcal C(\xi)
+=-\frac{d(\xi)^2}{2v}-\frac{c_3d(\xi)}{2v^2}
+  +\frac{c_4}{8v^2}-\frac{5c_3^2}{24v^3},\qquad 0\le\xi\le1.
+```
+
+式 (52.2)。
+
+保留 $`\gamma=(2\sqrt{2\pi v})^{-1}`$、$`\delta=Q^{-1/2}`$、
+$`V_M=B_M^{-2}\sum_{i\in J}p_i(1-p_i)`$ 和
+$`\mathcal Q_M=\sum_t A_t^2`$。取确定中心的两个统计量为
+
+```math
+T_M^\circ=\frac{\mathcal Q_M-\gamma}{\sqrt\delta},\qquad
+\mathcal Z_M^\circ(u)
+=\sum_{|k|\le N_M(u)}(1+k^2)^{-1/2}|\widehat\mu_M(k)|^2
+ -2\mathfrak L Y_M^2-2s_M(u)\gamma.
+```
+
+式 (52.3)。
+
+其中 $`s_M(u)=u/\sqrt\delta`$、$`N_M(u)=\lfloor e^{s_M(u)}/h_M\rfloor`$
+仍如定义 51.1。上标圆圈仅表示这里的两个中心被替换；组电荷仍使用精确后验中心。
+

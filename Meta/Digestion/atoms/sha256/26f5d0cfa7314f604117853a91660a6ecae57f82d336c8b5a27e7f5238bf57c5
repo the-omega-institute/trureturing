@@ -1,0 +1,93 @@
+**引理182.1（旗标平均后的正确块）。** 令
+$f_j=\langle\Xi|\widetilde\sigma_{jj}|\Xi\rangle$。有一致展开
+
+$$
+\boxed{
+\widetilde\sigma_{jj}
+=\frac12P_\Xi+
+\epsilon\left[
+a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)
+\right]+O(\epsilon^2)
+}
+\tag{182.10}
+$$
+
+以及
+
+$$
+\boxed{
+\begin{aligned}
+f_j={}&\frac12+
+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[
+-\beta c_ja_j-\frac{b_j^2}{2}-\frac{u_1^2}{2}
++\kappa u_1b_j+\gamma c_jb_j
++\kappa\gamma c_ju_1
+\right]\epsilon^2
++O(\epsilon^3).
+\end{aligned}
+}
+\tag{182.11}
+$$
+
+**证明。** 按（182.4）的先后顺序展开，得到
+
+$$
+\begin{aligned}
+\widetilde K_{j,\nu}
+=\frac1{\sqrt2}\Bigl\{
+&I+\epsilon(a_jI+s_\nu b_jY+i s_\nu u_1H)\\
+&+\epsilon^2\Bigl[
+-\frac{a_j^2+b_j^2+u_1^2}{2}I
+-s_\nu a_jb_jY+i s_\nu u_1a_jH+i u_1b_jHY
+\Bigr]\Bigr\}
++O(\epsilon^3).
+\end{aligned}
+\tag{182.12}
+$$
+
+所有带单个 $s_\nu$ 的一阶项在均匀旗标平均中消失，立即得到（182.10）。
+
+为求目标重叠，定义两个恢复振幅
+
+$$
+A_{j,\nu}=\operatorname{Tr}(\rho\widetilde K_{j,\nu}),\qquad
+B_{j,\nu}=\operatorname{Tr}(\rho\widetilde K_{j,\nu}Y).
+$$
+
+由 $\operatorname{Tr}(\rho Y)=0$ 及（182.3），
+
+$$
+\begin{aligned}
+A_{j,\nu}
+&=\frac1{\sqrt2}\left[
+1+a_j\epsilon+
+\left(-\frac{a_j^2+b_j^2+u_1^2}{2}+\kappa u_1b_j\right)\epsilon^2
+\right]+O(\epsilon^3),\\
+B_{j,\nu}
+&=\frac{s_\nu}{\sqrt2}(b_j+\kappa u_1)\epsilon+O(\epsilon^2).
+\end{aligned}
+$$
+
+将它们代入精确重叠
+
+$$
+\frac12\sum_\nu\left[
+(1-\beta c_j\epsilon)|A_{j,\nu}|^2
++\beta c_j\epsilon|B_{j,\nu}|^2
++2s_\nu\gamma c_j\epsilon
+\operatorname{Re}(\overline{A_{j,\nu}}B_{j,\nu})
+\right]
+$$
+
+即得（182.11）。固定有界参数下，平方根的谱与零有统一距离，所以矩阵 Taylor 余项可一致控制。证毕。
+
+特别地，（182.10）给
+
+$$
+(I-P_\Xi)\widetilde\sigma_{jj}P_\Xi=O(\epsilon^2).
+\tag{182.13}
+$$
+
+这一步使用了同一旗标在输入条件态与反馈中的符号关联。
+

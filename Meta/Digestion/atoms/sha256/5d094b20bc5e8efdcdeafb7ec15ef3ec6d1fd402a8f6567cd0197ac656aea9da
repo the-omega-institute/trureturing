@@ -1,0 +1,4 @@
+**命题 1.13（phase reachability and the finite-layer boundary）。** For any phase $p\pmod P$, run $a$, and residue $r$, a legal LSD prefix realizes $(a,r,p)$ at some sufficiently large length congruent to $p$. At one prescribed finite length, the reachable residues can form a proper subset.
+
+**Proof.** Choose a large length $n\equiv p\pmod P$ and prescribe exactly $a$ final ones, preceded by a zero. Their residue contribution depends only on $a$ and $p$. Correct this contribution to $r$ by placing at most $L-1$ isolated ones at earlier positions divisible by $P$, with gaps at least $k$ and a zero separating them from the final run. Increasing $n$ within its phase supplies enough space without changing the prescribed final contribution. This realizes every label. At the exact layer $n=0$, only run $0$ and residue $0$ are reachable, which proves the finite-layer distinction. $\square$
+

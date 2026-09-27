@@ -1,0 +1,73 @@
+### 257.5 对任意矩阵数据达到上界
+
+设 $0<k<1$。记
+$$
+D_L=\sqrt{KK^\dagger},\qquad D_R=\sqrt{K^\dagger K},
+\qquad
+a=\frac{1+\sqrt{1-k^2}}k>1.
+\tag{257.27}
+$$
+则
+$$
+a+a^{-1}=\frac2k,\qquad
+a-a^{-1}=\frac{2\sqrt{1-k^2}}k.
+\tag{257.28}
+$$
+定义两份联合态
+$$
+\boxed{
+\Omega_+=\frac12
+\begin{pmatrix}aD_L&K\\K^\dagger&a^{-1}D_R\end{pmatrix},
+\qquad
+\Omega_-=\frac12
+\begin{pmatrix}a^{-1}D_L&K\\K^\dagger&aD_R\end{pmatrix}.
+}
+\tag{257.29}
+$$
+
+为验证正性，取 $K=WD_R$ 的任意酉极分解延拓。于是
+$$
+\Omega_+
+=\frac12
+\begin{pmatrix}\sqrt a\,W\\a^{-1/2}I_E\end{pmatrix}
+D_R
+\begin{pmatrix}\sqrt a\,W^\dagger&a^{-1/2}I_E\end{pmatrix}
+\succeq0;
+\tag{257.30}
+$$
+对 $\Omega_-$ 交换 $a$ 与 $a^{-1}$ 即可。这个分解允许 $K$ 奇异。两态的迹均为
+$$
+\frac12(a+a^{-1})k=1,
+\tag{257.31}
+$$
+且非对角块均为 $K/2$，故属于 $\mathfrak F(K)$。
+
+它们的差恰为块对角矩阵：
+$$
+\Omega_+-\Omega_-
+=\frac{a-a^{-1}}2
+\begin{pmatrix}D_L&0\\0&-D_R\end{pmatrix}.
+\tag{257.32}
+$$
+由于 $\operatorname{Tr}D_L=\operatorname{Tr}D_R=k$，
+$$
+\boxed{
+d(\Omega_+,\Omega_-)
+=\frac k2(a-a^{-1})
+=\sqrt{1-k^2}.
+}
+\tag{257.33}
+$$
+此外，取（257.30）对应的两个 Gram 因子 $G_+,G_-$，可直接算得
+$$
+G_+^\dagger G_-=D_R.
+\tag{257.34}
+$$
+由（257.4），这对态也达到根保真度下界：
+$$
+\mathsf F(\Omega_+,\Omega_-)=k.
+\tag{257.35}
+$$
+
+当 $k=0$ 时，$K=0$。任选参考密度矩阵 $\tau$，取 $\operatorname{diag}(\tau,0)$ 与 $\operatorname{diag}(0,\tau)$，两态正交，半迹距离为一、根保真度为零。当 $k=1$ 时，§256已证明纤维是单点 $\Gamma(K)$，其直径为零；同态根保真度为一。
+

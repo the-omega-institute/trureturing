@@ -1,0 +1,17 @@
+**定义 211.1（点态校准的信息曲率）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$。考虑第187节的所有有限维固定 CPTP 程序：准备态 $\rho_u$ 在 $J_a$ 上为 $C^1$，同一个处理器对全部信号输入、全部 $u\in J_a$ 精确产生 $\mathcal T_u$，并满足 $I_Q(\rho_t)=I_r(t)$。仍取点态 SLD 信息量，令
+$$
+ \kappa(\rho,t)=\liminf_{\substack{u\to t\\u\ne t}}
+       \frac{I_Q(\rho_u)-I_r(u)}{(u-t)^2},
+ \qquad I_r(u)=\frac1{1-u^2}.
+\tag{211.1}
+$$
+允许 $\kappa=+\infty$。记
+$$
+ h=\frac{1+t}{2},\quad \ell=1-h,\quad
+ c_t=(1-t)(1+t)^2,\qquad
+ V_*(a,t)=\frac14\left(
+    \sqrt{1-\frac{a^2}{h}}+\sqrt{h-\frac{a^2}{h}}\right)^2.
+\tag{211.2}
+$$
+由于 $a<h<1$，两个根号均严格为正，且 $0<V_*<1$。
+

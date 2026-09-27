@@ -1,0 +1,21 @@
+### 261.5 任意经典估计的合法共同填充
+
+给定同一参考空间上的任意经典矩阵估计
+$$
+\widehat\rho=\widehat\rho^\dagger,\qquad
+\widehat K\in\mathcal L(E).
+\tag{261.38}
+$$
+不要求 $\widehat\rho$ 本身为密度矩阵，也不要求两份估计能够精确共同实现。在全部联合密度矩阵上定义目标
+$$
+J(\Xi)=
+\|\operatorname{Tr}_H\Xi-\widehat\rho\|_1
++\|\mathscr K(\Xi)-\widehat K\|_1,
+$$
+$$
+\widehat\Omega\in
+\operatorname*{arg\,min}_{\Xi\succeq0,\ \operatorname{Tr}\Xi=1}J(\Xi).
+\tag{261.39}
+$$
+有限维密度态集合非空且紧致，$J$ 连续，故最小解存在。范数的凸性与两个数据映射的线性还表明，这是一个数学上定义明确的凸优化问题。任意选取的最小解都自动为合法共同来源。
+

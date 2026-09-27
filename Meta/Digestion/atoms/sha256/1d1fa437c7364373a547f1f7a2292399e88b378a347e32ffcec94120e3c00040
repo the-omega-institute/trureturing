@@ -1,0 +1,21 @@
+**定理187.3（纯来源的闭式最优恢复）。** 设
+$0\le w_0<w_1<1/\chi$，并且
+
+$$
+\boxed{\alpha_1+\sqrt{\alpha_0\alpha_1}\ge\frac{\chi}{\beta}.}
+\tag{187.16}
+$$
+
+则
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+}
+\tag{187.17}
+$$
+
+这是一条精确有限参数等式。特别地，若 $|\gamma|<\beta$，则
+$\chi/\beta<2$，所以固定 $R>1$ 下全部充分小正 $w_0=\epsilon,w_1=R\epsilon$ 满足其条件。
+

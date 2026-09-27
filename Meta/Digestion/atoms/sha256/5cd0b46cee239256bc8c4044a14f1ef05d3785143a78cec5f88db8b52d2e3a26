@@ -1,0 +1,18 @@
+**证明。** 前缀自由使停止词事件恰为对应柱，满测给总概率一。$\{\tau\ge i\}$ 由前 $i-1$ 个字母决定，与第 $i$ 个非负信息增量 $-\log p_{X_i}$ 独立。非负 Tonelli 给
+$$
+\mathbb E I_\tau=\sum_{i\ge1}\mathbb E[\mathbf1_{\tau\ge i}(-\log p_{X_i})]
+=h\sum_{i\ge1}\Pr(\tau\ge i)=h\mathbb E\tau.
+$$
+若 $K_h=\infty$，所需不等式已成立；否则它严格正，定义可数分布 $Q(w)=e^{-h|w|}/K_h$。有限均值使 $I_\tau$ 和 $h\tau$ 可积，且
+$$
+\left|\log\frac{P_W(W)}{Q(W)}\right|\le I_\tau+h\tau+|\log K_h|.
+$$
+所以可数相对熵积分有意义，并精确等于 $-\mathbb E I_\tau+h\mathbb E\tau+\log K_h=\log K_h$。非负性也可直接由 $-\log x\ge1-x$、$x=Q(w)/P_W(w)$ 求期望取得，右边期望为零；这里 $Q/P_W$ 可积且均值一。故 $\log K_h\ge0$。若预算熵和小于一，$K_h(F)$ 不超过它，与有限均值的结论矛盾。证毕。
+
+对 $r_0>1$ 的多项式缺口预算，足够延迟使熵和至多 $\sum_{n\ge L}n^{-r_0}<1$，而定理 6.4.2 仍给满测存在。一个可判实例是
+$$
+p=(1/2,1/4,1/4),\quad h=\log\sqrt8,\qquad
+b_n=0\ (n<2),\quad b_n=\left\lfloor\frac{(\sqrt8)^n}{n^2}\right\rfloor\ (n\ge2).
+$$
+预算由整数式 $\operatorname{isqrt}(8^n\mathbin{//}n^4)$ 精确计算：对正实数 $x$，$\lfloor\sqrt x\rfloor=\operatorname{isqrt}(\lfloor x\rfloor)$。$p(w)\ge1/b_n$ 是有理比较，检查全部较短前缀即可决定首次进入码成员。定理 6.4.2 给满测；$\sum_{n\ge2}n^{-2}<\sum_{n\ge2}1/(n(n-1))=1$ 给所有合法满测码无穷均值。$n=2,\ldots,12$ 的预算依次为 $2,2,4,7,14,29,64,143,327,765,1820$；这些有限值不承担满测证明。
+

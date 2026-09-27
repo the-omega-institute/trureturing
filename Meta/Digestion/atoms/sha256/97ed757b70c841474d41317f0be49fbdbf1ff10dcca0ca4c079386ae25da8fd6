@@ -1,0 +1,257 @@
+**定理 415.1（五射线族的完整三分支确定恢复与精确端点）。** 对每个 $r>0$，若 $b\in W_2$ 是第413节给出的任一归一化平衡见证，即
+
+$$
+\|b\|=1,\qquad
+|\langle b|q_i\rangle|^2=\frac13\quad(1\le i\le5),
+$$
+
+则令
+
+$$
+D e_\ell=\omega^\ell e_\ell\quad(\ell=0,1,2),
+\qquad b^{(a)}=D^a b\quad(a=0,1,2).
+$$
+
+这些向量构成 $W_2$ 的正交归一平坦基。令
+
+$$
+P_a=|b^{(a)}\rangle\langle b^{(a)}|,\qquad
+P_- =|e_-\rangle\langle e_-|,
+$$
+
+并在完整 $R_2$ 上定义
+
+$$
+Q_0=P_0+P_-,\qquad Q_1=P_1,\qquad Q_2=P_2.
+$$
+
+则 $Q_0+Q_1+Q_2=I_{R_2}$，且
+
+$$
+\operatorname{rank}(Q_0),\operatorname{rank}(Q_1),\operatorname{rank}(Q_2)=(2,1,1).
+$$
+
+以
+
+$$
+\mathcal I_a(Z)=Q_aZQ_a\qquad(a=0,1,2)
+$$
+
+作三结果完整仪器，并接受全部三个实际标签。定义
+
+$$
+z_{ai}=\sqrt3\,\langle b^{(a)}|q_i\rangle,\qquad
+K_a=\frac1{\sqrt3}\operatorname{diag}(z_{a1},\ldots,z_{a5}),\qquad
+U_a=\operatorname{diag}(\overline{z_{a1}},\ldots,\overline{z_{a5}}).
+$$
+
+则 $|z_{ai}|=1$，并且对每个实际 $a$、全部系统矩阵 $X$ 及每个有限维未操作参考 $A$，都有
+
+$$
+\mathcal M_a(X)=K_aXK_a^\dagger,\qquad
+U_a\mathcal M_a(X)U_a^\dagger=\frac13X,
+$$
+
+$$
+(\operatorname{id}_A\otimes
+ \operatorname{Ad}_{U_a}\circ\mathcal M_a)(X_{AS})
+=\frac13X_{AS}.
+$$
+
+特别地，三实际结果的确定接受和为恒等映射，每个实际分支的概率为 $1/3$。
+
+对同一完整接口，准确的总精确恢复值为
+
+$$
+\boxed{\displaystyle
+\eta(G(r))=
+\begin{cases}
+1,&\frac12\le r^2\le2,\\[2pt]
+0,&r^2<\frac12\ \text{或}\ r^2>2.
+\end{cases}}
+$$
+
+在闭区间内，任何确定性 $n=2$ 协议至少需要三个具有非零诱导系统分支的实际标签；上述仪器达到这个下界。区间外不存在 $n=2$ 的正成功协议，因而在固定 $n=2$ 下不存在有限的确定性实际标签最小值。这里的三标签计数只数实际经典结果，不数同一结果内部的 Kraus 指标；它也不等同于第413节所述的记录次数 $m(\boldsymbol x(r))$。
+
+证明。先证循环轨道的正交性和全部重叠的平坦性。由 $|b_\ell|^2=1/3$ 及 $\omega^3=1$，对 $a\ne c$ 有
+
+$$
+\langle b^{(a)}|b^{(c)}\rangle
+ =\sum_{\ell=0}^2 |b_\ell|^2\omega^{(c-a)\ell}
+ =\frac13(1+\omega^{c-a}+\omega^{2(c-a)})=0.
+$$
+
+每个 $b^{(a)}$ 都是单位向量，故它们是 $W_2$ 的正交归一基。对两极和纬线，直接保留循环下标的符号得到
+
+$$
+\begin{aligned}
+\sqrt3\,\langle b^{(a)}|q_1\rangle
+ &=\sqrt3\,\overline{b_0},\\
+\sqrt3\,\langle b^{(a)}|q_2\rangle
+ &=\sqrt3\,\omega^{-2a}\overline{b_2}
+   =\sqrt3\,\omega^{a}\overline{b_2},\\
+\sqrt3\,\langle b^{(a)}|q_{3+j}\rangle
+ &=\frac{\sqrt3}{1+r^2}
+ \left(\overline{b_0}
+ +\sqrt2\,r\,\omega^{\,j-a}\overline{b_1}
+ +r^2\omega^{\,2(j-a)}\overline{b_2}\right).
+\end{aligned}
+$$
+
+最后一行是 $b$ 在纬线指标 $j-a\pmod3$ 上的原始重叠，故第413节的平衡条件使每个 $z_{ai}$ 都是单位模。这里两极的 $\omega^{-2a}=\omega^a$ 相位和纬线的 $j-a$ 循环符号均来自 $D=\operatorname{diag}(1,\omega,\omega^2)$ 的同一取向。
+
+$P_0,P_1,P_2$ 是 $W_2$ 上的秩一投影并满足
+
+$$
+DP_aD^\dagger=P_{a+1\pmod3}.
+$$
+
+这是 $W_2$ 内部的循环协变秩一投影测量。完整 $R_2$ 上的 $Q_a$ 则有不等秩 $(2,1,1)$，不能把它们说成一个单一酉轨道；$Q_0$ 额外包含反对称线 $P_-$，正是为了完成原始四维记录空间的单位分解。由正交完备性，
+
+$$
+Q_0+Q_1+Q_2=P_-+\sum_{a=0}^2P_a=I_{R_2},
+$$
+
+所以 $\{\mathcal I_a\}$ 是完整仪器。
+
+每个 $q_i$ 都在 $W_2$，故 $P_-q_i=0$。对矩阵单位 $E_{ij}=|i\rangle\langle j|$，实际结果 $a$ 的记录迹给出
+
+$$
+\mathcal M_a(E_{ij})
+ =\langle q_j|Q_a|q_i\rangle E_{ij}
+ =\langle q_j|P_a|q_i\rangle E_{ij}
+ =\frac{z_{ai}\overline{z_{aj}}}{3}E_{ij}.
+$$
+
+因此 $\mathcal M_a(X)=K_aXK_a^\dagger$。特别地，$a=0$ 的第二个正交方向 $P_-$ 在所有已制备输入上诱导零分支，但它仍在 $Q_0$ 内，未被删除，也未成为可观察的隐藏结果；同一实际 $U_0$ 负责 $Q_0$ 的全部谱分量。由
+
+$$
+U_aK_a=\frac1{\sqrt3}I_S
+$$
+
+立即得到
+
+$$
+U_a\mathcal M_a(X)U_a^\dagger=\frac13X.
+$$
+
+把这一等式张量上任意未操作的参考恒等映射即得 $X_{AS}/3$，所以三条实际分支相加为 $X$。两个原始记录因子都保留在完整仪器中，且其完备性包括反对称方向；反对称方向只是相对于制备像 $W_2$ 的数学补空间，在这些物理输入上诱导零分支，并未被当作额外可观察结果。
+
+对 $\eta$ 的值，闭区间内上述三个实际标签全部接受，故总校正映射为 $\operatorname{id}_S$，从而 $\eta(G(r))\ge1$；完整仪器的保迹性给出 $\eta(G(r))\le1$，所以 $\eta(G(r))=1$。若 $r^2<1/2$ 或 $r^2>2$ 而 $\eta(G(r))>0$，第390节的总成功刻画会给出一个正成功的完整记录协议，第411节的见证等价再给出 $W_2$ 中的正平衡见证，这与第413节的必要三角条件矛盾。因此区间外 $\eta(G(r))=0$。这只使用已有的 $\eta$ 与第413节的五射线 $n=2$ 必要性，没有把归一化见证水平冒充为任一协议的总成功权重。
+
+现在证明实际标签的下界，并先处理拒绝集合。设任意完整仪器在同一原始接口下达到确定性接受恢复，记其诱导系统分支为 $\mathcal M_y$，接受校正分支为
+$\mathcal T_y=\operatorname{Ad}_{U_y}\circ\mathcal M_y$，并满足
+
+$$
+\sum_{y\in Y_{\mathrm s}}\mathcal T_y=\operatorname{id}_S.
+$$
+
+完整记录仪器在系统上的未校正和是 $\Phi_{G(r)}$，所以对任意正矩阵 $X\succeq0$，
+
+$$
+\sum_{y\in Y}\operatorname{Tr}\mathcal M_y(X)
+ =\operatorname{Tr}X.
+$$
+
+酉共轭保持迹，而接受和为恒等，故
+
+$$
+\sum_{y\in Y_{\mathrm s}}\operatorname{Tr}\mathcal M_y(X)
+ =\sum_{y\in Y_{\mathrm s}}\operatorname{Tr}\mathcal T_y(X)
+ =\operatorname{Tr}X.
+$$
+
+相减得到拒绝分支迹的总和为零。每个拒绝分支在正输入上都是正半定输出，非负迹之和为零遂迫使
+
+$$
+\operatorname{Tr}\mathcal M_y(X)=0,\qquad
+\mathcal M_y(X)=0
+\quad(X\succeq0,\ y\notin Y_{\mathrm s}).
+$$
+
+再由复线性和任意矩阵的四个正半定部分分解，$\mathcal M_y$ 在全部系统矩阵上为零。这个结论只针对由制备 $J_2$ 诱导的系统 CP 映射；它不把原始记录仪器 $\mathcal I_y$ 在未制备的任意记录输入上的作用判为零。
+
+对接受分支作任意有限 Kraus 分解
+
+$$
+\mathcal M_y(X)=\sum_\kappa K_{y\kappa}XK_{y\kappa}^\dagger.
+$$
+
+以未归一化最大纠缠向量
+$|\Omega\rangle=\sum_i|i\rangle\otimes|i\rangle$ 写 Choi 矩阵，则
+
+$$
+\sum_{y\in Y_{\mathrm s},\kappa}
+ |U_yK_{y\kappa}\rangle\!\rangle
+ \langle\!\langle U_yK_{y\kappa}|
+ =|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+右端是秩一正半定矩阵，左端各项也正半定，因此每个非零向量
+$|U_yK_{y\kappa}\rangle\!\rangle$ 都落在
+$\mathbb C|I_S\rangle\!\rangle$。于是存在标量 $c_{y\kappa}$ 使
+
+$$
+U_yK_{y\kappa}=c_{y\kappa}I_S,\qquad
+p_y:=\sum_\kappa|c_{y\kappa}|^2.
+$$
+
+所以
+
+$$
+\mathcal T_y=p_y\operatorname{id}_S,\qquad
+\mathcal M_y(X)=p_y\,U_y^\dagger XU_y.
+$$
+
+若 $p_y=0$，该实际分支就是零映射；若 $p_y>0$，它的 Choi 矩阵秩恰为一。这里同一 $U_y$ 贯穿该实际结果的所有隐藏 Kraus 指标，不能为不同指标分别选择反馈。
+
+另一方面，$\Phi_{G(r)}$ 的 Choi 秩为三。事实上
+
+$$
+q_1=e_0,\qquad q_2=e_2,\qquad
+q_{3+j}=\frac{e_0+\sqrt2\,r\,\omega^j e_1+r^2\omega^{2j}e_2}
+ {1+r^2},
+$$
+
+而 $r>0$ 使任一纬线向量的 $e_1$ 系数非零，故这些 $q_i$ 张成恰为三维的 $W_2$。矩阵 $G(r)$ 是它们按
+$G_{ij}=\langle q_j|q_i\rangle$ 排列的 Gram 矩阵。按现有的行／bra 约定，$\Phi_{G(r)}(E_{ij})=G_{ij}E_{ij}$，所以其 Choi 矩阵满足
+
+$$
+J(\Phi_{G(r)})=\sum_{i,j}G_{ij}\,|ii\rangle\langle jj|=V G(r)V^\dagger,
+\qquad V|i\rangle=|ii\rangle.
+$$
+
+这里 $V$ 是等距嵌入，故
+
+$$
+\operatorname{rank}J(\Phi_{G(r)})=\operatorname{rank}G(r)=3.
+$$
+
+拒绝映射已全部为零，所以
+
+$$
+\Phi_{G(r)}=\sum_{y\in Y_{\mathrm s}}\mathcal M_y.
+$$
+
+正半定 Choi 矩阵的秩满足和的秩不超过各项秩之和，故非零实际接受标签数 $N_{\mathrm{act}}$ 满足
+
+$$
+3=\operatorname{rank}_{\mathrm{Choi}}\Phi_{G(r)}
+ \le\sum_{y\in Y_{\mathrm s}}
+       \operatorname{rank}_{\mathrm{Choi}}\mathcal M_y
+ \le N_{\mathrm{act}}.
+$$
+
+于是 $N_{\mathrm{act}}\ge3$，而前面的三结果仪器在可行闭区间达到等号。这里的秩是 Gram/Choi 秩，不是超算子作为线性变换的秩；也没有使用或声称任意量子通道的混合酉秩都等于 Choi 秩。
+
+最后，$s_i(r)$、$C(r)$ 及 $G(r)=C(r)^{\circ2}$ 的矩阵元随 $r>0$ 连续，而上面的张成论证说明 $\operatorname{rank}G(r)=3$ 对所有 $r>0$ 恒定。因而
+
+$$
+\eta(G(r))=
+\mathbf 1_{[\,1/\sqrt2,\sqrt2\,]}(r)
+$$
+
+是在连续、恒定 Choi 秩族上的精确零误差总成功函数，并在
+$r=1/\sqrt2$ 与 $r=\sqrt2$ 处发生精确跳变；端点本身属于成功区间。此处的“最优”只指第389—390节的全矩阵、全参考、有限仪器精确恢复，不推出近似恢复、实验现象或鲁棒性结论。环境辅助校正的接口沿用 Gregoratti–Werner，*Quantum Lost and Found*, [arXiv:quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1), Theorem 1 与 Proposition 2；Choi 秩与混合酉秩的区分参见 Girard 等，*On the mixed-unitary rank of quantum channels*, [arXiv:2003.14405v1](https://arxiv.org/abs/2003.14405v1), pp.1–3, [DOI:10.1007/s00220-022-04412-y](https://doi.org/10.1007/s00220-022-04412-y)。
+证毕。
+

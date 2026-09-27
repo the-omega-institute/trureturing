@@ -1,0 +1,56 @@
+#### 1.1.7 全部整数被可数覆盖，完成对象仍有正测度幸存
+
+枚举整数为 $z_1,z_2,\ldots$，每个整数至少出现一次。对 $n\ge1$ 定义
+$$
+C_n=\{x\in\widehat{\mathbb Z}:
+       x\equiv z_n\pmod{3^n}\}
+=z_n+3^n\widehat{\mathbb Z}.
+\tag{TM.366}
+$$
+模数 $3^n$ 全部互异、为大于一的奇数，前 $n$ 项的
+LCM 恰为 $3^n$，所以每步严格增加分辨率。
+
+令 $\mu$ 为 $\widehat{\mathbb Z}$ 的归一化 Haar 概率测度。
+模 $3^n$ 的 $3^n$ 个纤维互为平移并构成分划，因此
+$$
+\mu(C_n)=3^{-n},\qquad
+\mu\!\left(\bigcup_{n\ge1}C_n\right)
+\le\sum_{n\ge1}3^{-n}=\frac12.
+\tag{TM.367}
+$$
+故
+$$
+K_{\mathrm{int}}=\widehat{\mathbb Z}\setminus\bigcup_{n\ge1}C_n
+\quad\text{满足}\quad
+\mu(K_{\mathrm{int}})\ge\frac12,
+\qquad K_{\mathrm{int}}\ne\varnothing.
+\tag{TM.368}
+$$
+每个 $C_n$ 开闭，故 $K_{\mathrm{int}}$ 闭且紧。另一方面，每个嵌入的普通整数 $z$ 都等于某个 $z_n$，从而属于 $C_n$。因此
+$$
+K_{\mathrm{int}}\cap\mathbb Z=\varnothing,
+\qquad
+\mathbb Z\subseteq\bigcup_{n\ge1}C_n .
+\tag{TM.369}
+$$
+这里把 $\mathbb Z$ 视作它在 $\widehat{\mathbb Z}$ 中的典范嵌入。正测度闭集与全部普通整数不相交不矛盾：整数嵌入虽然稠密，但不是这个紧完成对象的全部点。
+
+每个有限前缀仍有许多幸存者。由有限并的同一测度界，
+$$
+\frac{|H_N|}{3^N}
+\ge1-\sum_{n=1}^N3^{-n}
+=\frac{1+3^{-N}}2,
+\qquad
+|H_N|\ge\frac{3^N+1}{2}.
+\tag{TM.370}
+$$
+这个下界也可直接从提升计数得到：此时旧模数为 $3^{N-1}$，
+新模数为 $3^N$，所以 $k=3,d=3^{N-1}$，新类在旧剩余中至多选中一个点。于是 $|H_N|\ge3|H_{N-1}|-1$，从
+$|H_0|=1$ 归纳得相同结论。
+
+因此，任意有限阶段都有普通整数幸存者，而所有阶段一起却没有普通整数幸存者；全体阶段的相容幸存实现位于完成对象中。这个例子保留式（TM.365）的全部有限等价性，揭示的是无限量词下必须声明全局实现的载体。
+
+此构造为可数无限覆盖，不是有限互异奇数模数覆盖。它不解决有限 Erdős 第 7 问，也不把“每步严格增加 LCM”有限归纳成“存在一个普通整数永远幸存”。
+
+已发布的 docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md 的外部章节9（提交 0b499abf718df8517cc05b8554d20467389014a4）给出了以全部奇素数为模数、覆盖全部整数而 profinite 幸存集合非空且 Haar 测度为零的版本；本节以单个素数的幂增加精度，保留至少一半的幸存质量，二者共同区分相容实现、普通整数实现与极限质量。
+

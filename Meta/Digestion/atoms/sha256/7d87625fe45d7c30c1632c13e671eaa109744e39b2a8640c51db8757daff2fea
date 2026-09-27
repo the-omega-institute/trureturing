@@ -1,0 +1,9 @@
+### 244.4 容差下的精确最小纯态纠缠
+
+对给定缺额 $\epsilon\ge0$，要求实际探针达到
+$$
+f_p(\rho)\ge D_p-\epsilon.
+\tag{244.24}
+$$
+令 $E_{\min}(\epsilon;p,c)$ 为所有满足该式的纯联合探针的最小纠缠熵，$r_{\min}(\epsilon;p,c)$ 为其最小 Schmidt 秩。
+

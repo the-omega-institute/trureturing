@@ -1,0 +1,17 @@
+**命题 10.1（同边缘、异未来的共同过程）。** 存在同一系统—环境操作，使两种来源具有相同的系统与环境边缘，却在同一后续操作下产生正交的系统输出。
+
+证明。取量子比特 $S,E$，$\rho_\pm=|\pm\rangle\langle\pm|$、$\omega_E=I/2$，并令
+
+$$
+U=I_S\otimes|0\rangle\langle0|_E+Z_S\otimes|1\rangle\langle1|_E.
+$$
+
+输入 $\rho_\pm\otimes\omega_E$ 后的中间态为
+
+$$
+\chi_\pm=\tfrac12\rho_\pm\otimes|0\rangle\langle0|
++\tfrac12\rho_\mp\otimes|1\rangle\langle1|.
+$$
+
+两边缘均为 $I/2$；但 $U^2=I$，再作用同一 $U$ 后恢复 $\rho_\pm\otimes I/2$。检验 $\rho_+$ 分别给出概率一与零。区别由联合关联携带。带记忆过程的操作性框架参见 Pollock 等，*Non-Markovian quantum processes: complete framework and efficient characterisation*, [arXiv:1512.00589](https://arxiv.org/abs/1512.00589)。本命题只使用给出的两比特构造。$\square$
+

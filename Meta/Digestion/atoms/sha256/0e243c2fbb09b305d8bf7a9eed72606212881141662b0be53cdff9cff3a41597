@@ -1,0 +1,12 @@
+**Proof.** Given $(d,b)$, use the preceding lemma to compute a rational $q$ with
+$$
+\left|q-\mu(E\cap[b]_d)\right|<\delta_d/3.
+\tag{TM.573}
+$$
+If $(d,b)\notin R$, its cylinder mass is zero and $q<\delta_d/2$. If $(d,b)\in R$, its mass is at least $\delta_d$ and $q>\delta_d/2$. Therefore the rational comparison
+$$
+(d,b)\in R\quad\Longleftrightarrow\quad q>\delta_d/2
+\tag{TM.574}
+$$
+is decisive; equality cannot occur for such an approximation. $\square$
+

@@ -1,0 +1,54 @@
+**引理61.2（非常值尾的接收支撑分解）。** 在 $AAB$ 或 $ABA$ 两种模式下，置
+$$
+L_0=A_0+G_4+G_5+G_6,\qquad
+L_1=B_0+Q_4+Q_5+Q_6.
+\tag{61.8}
+$$
+则
+$$
+K=L_0\oplus L_1,\qquad
+\dim L_0=4,\qquad\dim L_1=3,
+\qquad L_0\perp L_1.
+\tag{61.9}
+$$
+进一步，若 $R_\Gamma\xi_\alpha=\alpha$、$R_\Gamma\xi_\beta=\beta$，则
+$$
+\begin{array}{c|c|c|c}
+\text{环境模式}&\text{重复零位接收空间}&\text{实际零记忆空间}&\text{重复一位接收空间}\\ \hline
+AAB&G_4=A_0&H_3=H\otimes\mathbb C\xi_\alpha&Q_5=Q_4\\
+ABA&G_5=A_0&H_4=H\otimes\mathbb C\xi_\beta&Q_6=Q_4
+\end{array}
+\tag{61.10}
+$$
+
+**证明。** （61.1）使 $A_0\perp Q_n$、$B_0\perp G_n$。又因任意两个尾环境的内积均非零，（61.2）和跨位正交给所有 $G_n\perp Q_m$。这证明 $L_0\perp L_1$。
+
+在 $AAB$ 中，$V_1A_0$ 使用 $\alpha$，$V_1G_5$ 使用 $\beta$，故 $A_0\cap G_5=0$；在 $ABA$ 中同理有 $A_0\cap G_4=0$。因此两种模式均满足 $\dim L_0\ge4$，从而 $\dim L_1\le3$。
+
+若 $\dim L_1=2$，则 $Q_4=Q_5=Q_6=B_0$。在 $AAB$ 中，固定 $V_1$ 与旧块给
+$$
+A_0=G_4=G\otimes\mathbb C\xi_\alpha.
+$$
+继而固定 $V_0$ 给
+$$
+H_3=H\otimes\mathbb C\xi_\alpha.
+$$
+非零 $w\otimes\xi_\alpha$ 因而属于 $H_3\cap G_3$，矛盾。
+
+在 $ABA$ 中，固定 $V_1$ 与旧块给
+$$
+G_4=G\otimes\mathbb C\xi_\beta,\qquad
+G_5=A_0=G\otimes\mathbb C\xi_\alpha.
+$$
+继而固定 $V_0$ 给 $H_4=H\otimes\mathbb C\xi_\beta$，非零 $w\otimes\xi_\beta$ 属于 $H_4\cap G_4$，同样矛盾。
+
+所以 $\dim L_1\ge3$。结合正交与 $\dim K=7$，得到（61.9）。
+
+在 $AAB$ 中，$V_1(A_0+G_4)$ 使用 $\alpha$，$V_1G_5$ 使用 $\beta$；两个像交零。所以
+$$
+\dim(A_0+G_4)+2\le\dim L_0=4.
+$$
+因而 $G_4=A_0$。将（61.1）、（61.2）同一环境的像比较，依次得到 $H_3=H\otimes\mathbb C\xi_\alpha$ 及 $Q_5=Q_4$。
+
+在 $ABA$ 中，$V_1(A_0+G_5)$ 使用 $\alpha$，$V_1G_4$ 使用 $\beta$。同理得到 $G_5=A_0$，继而 $H_4=H\otimes\mathbb C\xi_\beta$、$Q_6=Q_4$。证明完毕。
+

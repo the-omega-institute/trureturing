@@ -1,0 +1,11 @@
+**定理 243.3（贝叶斯精化的方差单调性）。** 令模型按先验 $\lambda$ 产生精化信号 $Y'$，再经模型无关随机核产生粗化信号 $Y$。于是 $M\to Y'\to Y$ 构成马尔可夫链。对任意平方可积目标 $Z=\Phi(M)$，有
+
+$$
+\boxed{
+\mathbb E[\operatorname{Var}(Z\mid Y')]
+\le
+\mathbb E[\operatorname{Var}(Z\mid Y)].
+}
+\tag{243.2}
+$$
+

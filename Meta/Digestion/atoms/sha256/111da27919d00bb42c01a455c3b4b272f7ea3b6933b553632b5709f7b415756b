@@ -1,0 +1,12 @@
+**定义 203.1（正分支集合与有限凸包）。** 令 $\mathfrak R$ 为有限维密度算子空间中的非空集，令 $\Phi$ 为完全正迹不增映射。记
+
+$$
+\mathfrak R_+=\{\rho\in\mathfrak R:p_\Phi(\rho)>0\},
+\qquad
+\mathsf C_\Phi(\mathfrak R_+)
+=
+\left\{\frac{\Phi(\rho)}{p_\Phi(\rho)}:\rho\in\mathfrak R_+\right\}.
+$$
+
+在本节，$\operatorname{co}$ 表示有限凸组合；若来源集是紧的，有限维 Carathéodory 定理保证每个凸包点都可由至多 $d^2+1$ 个密度算子表示，其中 $d=\dim\mathcal H$。
+

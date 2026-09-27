@@ -1,0 +1,128 @@
+## 425. 五射线近似恢复的统一有限树间隙与内部参数一致性
+
+操作约定。固定已知实数 $r>0$ 且 $1/2<r^2<2$，在固定计算基中取
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=R_B=\mathbb C^2,&R&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\\
+J&:S\longrightarrow S\otimes R,&J|i\rangle&=|i\rangle\otimes q_i
+\quad(1\le i\le5).
+\end{aligned}
+$$
+
+Alice、Bob 分别持有原始因子 $R_A,R_B$。记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&
+P_-&=|e_-\rangle\langle e_-|,&P_W&=I_R-P_-.
+\end{aligned}
+$$
+
+所有记录仪器均在完整四维 $R$ 上完备；$W$ 只表示准备像所在的数学子空间，不改变两个物理因子或其访问权限。
+
+允许每棵各自有限的局部操作树。每个非终端节点由一方在当前有限维局部工作空间上执行有限实际结果的完全正仪器，各分支迹不增、总和保迹。允许与未知输入和未操作参考独立的初始乘积辅助态、有限维私有量子及经典记忆、双向经典通信、同一方连续或重复操作、局部重置与丢弃、粗粒 CP 结果、曾取得而后来遗忘的实际结果、提前停止、不等叶深、零分支、单结果通道及零深度树。后续操作只使用当时实际可用的信息；量子记忆中的局部控制包含在该方的 CP 映射内。禁止共享纠缠、量子通信，以及终端反馈之前对 $S$ 的任何操作。这一局部仪器、条件复合与粗粒化接口沿用第 416、421 节及 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3。不同协议之间不预设共同的深度、分支数、局部记忆或输出维数上界。
+
+真实终端历史记为 $\ell$，最终实际标签记为 $y=y(\ell)$。遗忘的实际结果只在数学求和中保留，不能重新成为可用控制；一个 CP 结果内部的隐藏 Kraus 指标不是取得的结果。若记录分支为 $\mathcal I_\ell$，则迹掉包括剩余私有记忆在内的全部记录输出，定义
+
+$$
+\begin{aligned}
+\mathcal M_\ell(X)
+ &=\operatorname{Tr}_{O_{A,\ell}\otimes O_{B,\ell}}
+   \bigl[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)\bigr],\\
+\mathcal M_y(X)&=\sum_{\ell:\,y(\ell)=y}\mathcal M_\ell(X),\\
+\mathcal T(X)&=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger
+\qquad(X\in\mathcal L(S)).
+\end{aligned}
+$$
+
+接受集合 $Y_{\mathrm s}$ 预先固定，每个实际标签只指定一个作用于整个 $S$ 的终端酉算子 $U_y$。同一 $y$ 内的全部真实历史、隐藏 Kraus 项及以下的代数谱项和复制项均共用原来的 $U_y$。全部失败历史保留在完整仪器中。协议、接受规则与反馈可以依赖已知 $r$，但同一个协议必须适用于全部未知系统输入和每个有限维未操作参考。
+
+以迹对偶定义 $\mathcal T^*$，以未除以二的钻石范数度量误差：
+
+$$
+\|\Lambda\|_\diamond
+ =\sup_{m\ge1}\ \sup_{X\ne0}
+ \frac{\|(\operatorname{id}_{\mathbb C^m}\otimes\Lambda)(X)\|_1}{\|X\|_1},
+\qquad X\in\mathcal L(\mathbb C^m\otimes S).
+$$
+
+本节要求精确的输入无关接受条件与相对误差条件
+
+$$
+\mathcal T^*(I_S)=pI_S,\qquad
+\|\mathcal T-p\operatorname{id}_S\|_\diamond\le\delta p,
+\qquad p\ge0,\quad\delta\ge0.
+$$
+
+当 $p>0$ 时，$\mathcal T/p$ 为量子通道，且对每个有限维未操作参考 $F$ 和全部联合矩阵 $X$，
+
+$$
+\|(\operatorname{id}_F\otimes\mathcal T)(X)-pX\|_1
+ \le\delta p\|X\|_1.
+$$
+
+允许空接受集合及 $p=0$。不以随输入变化的接受概率或只检验某些状态的误差代替上述条件。
+
+使用固定计算基中的标准 Pauli 矩阵 $\sigma=(\sigma_x,\sigma_y,\sigma_z)$，置
+
+$$
+\begin{aligned}
+\mathbb D&=\{a\in\mathbb R^3:|a|\le1\},&
+\rho(a)&=\frac{I_2+a\cdot\sigma}{2},&Q(a,b)&=\rho(a)\otimes\rho(b),\\
+d(a,b)&=\operatorname{Tr}(P_-Q(a,b))=\frac{1-a\cdot b}{4},&
+C(a,b)&=\frac{a_z^2+b_z^2}{2},&L(a,b)&=a_zb_z.
+\end{aligned}
+$$
+
+这里 $\rho(a),\rho(b)$ 表示累计输入效果的归一化坐标，不是操作后的条件态；$C$ 是二阶矩函数，不表示 concurrence。若 $|x|=|y|=1$，选择具有这些 Bloch 向量的单位自旋子 $\xi,\zeta$，令
+
+$$
+\begin{aligned}
+v&=\xi\otimes\zeta,&k_i&=\langle v|q_i\rangle,&
+K_v&=\operatorname{diag}(k_1,\ldots,k_5),\\
+f_i(r,x,y)&=|k_i|^2
+ =\frac{(1+x\cdot u_i(r))(1+y\cdot u_i(r))}{4},&
+a_r(x,y)&=\sum_{i=1}^5f_i(r,x,y),\\
+e_r(x,y)&=a_r(x,y)-\frac15\left(\sum_{i=1}^5\sqrt{f_i(r,x,y)}\right)^2.
+\end{aligned}
+$$
+
+其中 $u_i(r)$ 为 $s_i$ 的 Bloch 向量。$K_v$ 的无关整体相位不影响这些量。记五个 $f_i$ 相等的纯对集合为 $K_{\mathrm s}(r)$。
+
+定义以下只依赖 $r$ 的常数：
+
+$$
+\begin{aligned}
+\kappa&=\frac{\sqrt{4+2(r^2+r^{-2})}}3,&
+h&=\frac1{3(1+\kappa)},&g&=\frac{\kappa}{1+\kappa}=3\kappa h,\\
+U&=\frac1{3\kappa},&Z&=1-4h,&H&=\frac{Z(1-\kappa)}{2\kappa},\\
+\tau&=\frac H4,&\varepsilon&=\frac{H^2}{8192}=\frac{\tau^2}{512},&
+G&=\frac{H^3}{49152\kappa}=\frac{\varepsilon H}{6\kappa},\\
+B_0&=\frac{2Z}{g}+3,&
+\eta&=\min\left\{\frac\tau8,\frac{g-\varepsilon}{2},
+ \frac{H}{8B_0},\frac{G}{32(1+1/(3\kappa))}\right\}.
+\end{aligned}
+$$
+
+$U$ 是定理 416.1 的精确可分恢复值，$G$ 与定理 423.1 的精确有限树间隙相同；这里没有把 $U$ 定义为近似可分恢复最优值。对纯对定义
+
+$$
+\begin{aligned}
+\Xi_r(x,y)=\max\biggl\{&\left|\frac{a_r(x,y)}5-h\right|,
+ |d(x,y)-g|,|C(x,y)-Z|,\\
+ &|x_zy_z+Z|,|x_z+y_z|\biggr\},\\
+e_*(r)&=\min_{\substack{|x|=|y|=1\\\Xi_r(x,y)\ge\eta(r)}}e_r(x,y),
+\qquad
+\delta_r=\min\left\{1,\frac{e_*(r)G(r)}{40}\right\}.
+\end{aligned}
+$$
+
+上述最小值的定义域非空且最小值严格为正，将在证明中给出。对代数细分后的纯接受叶，称 $\Xi_r<\eta$ 为好接受叶，称 $\Xi_r\ge\eta$ 为坏接受叶。这只是估计中的分类，不产生新的实际结果或反馈权限。
+

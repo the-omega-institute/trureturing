@@ -1,0 +1,34 @@
+### 100.3 奇异性必须由已经执行的像承担
+
+现在恢复同一非退化来源、七维持久接收器、独立纯初态及前六个完整参考—活动记忆—原档案终端合同。取第89节的固定替代酉及其位块 $V_0,V_1$，环境空间 $F$ 二维。实际早期列及后续空间满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0H_1=G_2\otimes\eta_2,\qquad
+V_1p=v\otimes\eta_2,
+$$
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n
+\quad(3\le n\le6).
+\tag{100.7}
+$$
+
+定义两个已经使用的输入域及其实际像
+
+$$
+I_0=\mathbb Ck+H_1+H_2+H_3+H_4+H_5,
+$$
+
+$$
+I_1=\operatorname{span}(k,p)+G_2+G_3+G_4+G_5,
+\qquad E_i=V_i(I_i).
+\tag{100.8}
+$$
+
+于是 $E_0\perp E_1$、$\dim E_i\le7$，而全部空间都来自同一份实际执行。
+

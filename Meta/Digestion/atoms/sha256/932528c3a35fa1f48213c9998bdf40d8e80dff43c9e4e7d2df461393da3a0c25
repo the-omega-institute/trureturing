@@ -1,0 +1,37 @@
+**命题 2.41。** Every member of $\mathcal B$ occurs in the raw presentation $\mathcal P$. Thus $\mathcal B$ contains at most one cylinder at each depth.
+
+**Proof.** Suppose a canonical cylinder $D$ at depth $d$ is absent from the presentation. Any raw cylinder meeting it must be contained in it: a strict raw ancestor would contradict its canonical minimality. Thus the raw cylinders meeting $D$ are proper descendants and cover $D$. Compactness supplies a finite subcover. If $N$ is the largest relative depth used, its total mass is at most
+
+$$
+\sum_{r=1}^{N}w_{d+r}<w_d=\mu(D),
+$$
+
+contradicting that it covers $D$. $\square$
+
+The same argument gives an ancestor criterion without any positive-mass assumption:
+
+$$
+\boxed{
+E\cap[s]\ne\varnothing
+\quad\Longleftrightarrow\quad
+\text{no announced forbidden cylinder of depth at most }|s|
+\text{ contains }[s].
+}
+$$
+
+Indeed, if $[s]$ were covered with no forbidden ancestor, compactness and the same strict finite-descendant bound would give a contradiction. This is a final-inventory criterion. It does not turn the absence of a future announcement into a decidable event.
+
+Let
+
+$$
+S=\{n\ge1:\mathcal B\text{ contains a depth-}n\text{ cylinder}\}.
+$$
+
+Disjointness gives the canonical mass identity
+
+$$
+\boxed{1-M=\sum_{n\in S}w_n.}
+$$
+
+Raw redundant descendants must not be counted a second time in this sum.
+

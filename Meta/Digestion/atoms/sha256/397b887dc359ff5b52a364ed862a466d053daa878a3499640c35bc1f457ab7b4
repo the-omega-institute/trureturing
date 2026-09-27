@@ -1,0 +1,32 @@
+## 136. 七维一维公共纤维中大侧起步的交替尾词也不可能
+
+固定非退化已知来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，全部持久系统计入七维 $K$，每轮使用同一个全域 CPTP 接收通道，并在前六个终端精确恢复完整参考—活动记忆—原档案联合态。沿第89节固定替换等距，令 $V_0,V_1:K\to K\otimes F$ 为互相正交的两个位像，$\dim F=2$。本节沿用第123、129节的一维公共纤维、两条尾环境射线及完整 $4/3$ 零位分裂：
+
+$$
+\begin{gathered}
+A\perp B,\qquad
+R_0=(U\otimes A)\oplus(M\otimes B),\\
+R_1=(U^\perp\otimes A)\oplus(M^\perp\otimes B),\\
+\dim U=4,\qquad \dim M=3,\qquad
+P=U\cap M,\quad \dim P=1,\\
+S=U+M,\quad \dim S=6,\qquad Q=S^\perp,\quad\dim Q=1.
+\end{gathered}
+\tag{136.1}
+$$
+
+$A,B$ 表示固定正交单位环境代表；同一射线各次出现的相位吸收进对应实际接收向量。只假设第2至第6轮的尾词是
+
+$$
+(\eta_2,\eta_3,\eta_4,\eta_5,\eta_6)=(A,B,A,B,A).
+\tag{136.2}
+$$
+
+首环境 $\eta_1$ 尚未限定。尤其不把（136.2）当成六轮全部正交交替。
+

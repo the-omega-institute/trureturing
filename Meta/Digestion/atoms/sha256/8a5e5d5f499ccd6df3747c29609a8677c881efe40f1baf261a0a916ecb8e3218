@@ -1,0 +1,21 @@
+**命题 7.2（严格需要两步的矩阵例子）。** 令
+
+$$
+A=\begin{pmatrix}1&1&0\\0&0&1\\1&1&1\end{pmatrix},\quad
+M=\begin{pmatrix}1&1\\1&1\end{pmatrix},\quad B=[2],
+$$
+
+以及
+
+$$
+U_1=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix},\quad
+V_1=\begin{pmatrix}1&1&0\\0&0&1\end{pmatrix},\quad
+U_2=\begin{pmatrix}1\\1\end{pmatrix},\quad V_2=\begin{pmatrix}1&1\end{pmatrix}.
+$$
+
+则 ell(A,B)=2。
+
+**证明。** 直接相乘得到 A=U_1V_1、M=V_1U_1=U_2V_2、B=V_2U_2，给出两步链。若存在一步 A=UV、B=VU，因为 B 是 1×1 方阵，U、V 的尺寸必须为 3×1 与 1×3，所以 A 的有理秩至多一。实际 A 的前两行线性无关，且第三行为前两行之和，秩恰为二，矛盾。A≠B 又排除零步。证毕。
+
+此例也见所引论文 Example 5.8；这里给出了无需调用其结论的矩阵乘积与秩证明。[^rrosft-bdr]
+

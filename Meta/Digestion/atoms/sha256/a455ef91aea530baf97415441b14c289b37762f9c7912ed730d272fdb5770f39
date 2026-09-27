@@ -1,0 +1,29 @@
+**第二轮环境必须正交于共同尾环境。** 反设 $`\langle\eta_2,\eta\rangle\ne0`$。$`V_0(K)\perp V_1(K)`$，结合（30.2）、（30.18）给
+
+$$
+G_2\perp W,\qquad v\perp U,
+\quad\text{所以}\quad G_2\subset U,\ v\in W.
+\tag{30.19}
+$$
+
+而 $`G_3,G_4\subset U`$，所以 $`G_\Sigma=U`$，$`g:U\to W`$ 为满等距。
+
+若 $`G_3\ne G_4`$，两个二维子空间张成三维 $`U`$。由（30.7），$`P_UH_3=G_3`$、$`P_UH_4=G_4`$，故 $`P_UH_\Sigma=U`$。于是三维 $`H_\Sigma`$ 是线性映射 $`T:U\to W`$ 的图，并有
+
+$$
+T(G_3)=Q_3=gG_2,\qquad T(G_4)=Q_4=gG_3,
+\qquad\operatorname{im}T=g(G_2+G_3).
+\tag{30.20}
+$$
+
+因 $`0\ne w\in H_2\cap G_2\subset H_\Sigma\cap U`$，有 $`\ker T\ne0`$，故 $`\operatorname{rank}T\le2`$。（30.20）及 $`g`$ 单射迫使 $`G_2=G_3`$，从而 $`w\in G_3\cap\ker T`$；但（30.7）使 $`T|_{G_3}`$ 单射，矛盾。
+
+若 $`G_3=G_4`$，固定 $`V_0`$ 与共同环境直接给 $`H_2=H_3`$。由（30.4）、（30.19），$`P_UH_2=G_2`$，而（30.7）给 $`P_UH_3=G_3`$，所以 $`G_2=G_3`$，再次违反第二、第三终端支撑秩差。因此
+
+$$
+\eta_2\perp\eta,\qquad H_1\perp H_\Sigma,\qquad p\perp G_\Sigma.
+\tag{30.21}
+$$
+
+后两个正交性由（30.2）、（30.6）及固定等距直接得到。
+

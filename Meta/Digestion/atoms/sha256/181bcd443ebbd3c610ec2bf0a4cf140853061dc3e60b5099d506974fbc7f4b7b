@@ -1,0 +1,28 @@
+**定义 43.1（只统计有限点击的时间矩）。** 令
+
+$$
+E_{n,\theta}=\sum_x E_{n,x,\theta}
+=\mathcal A_\theta^{n-1}(B_\theta),
+\qquad
+M_{m,\theta}=\sum_{n=1}^m nE_{n,\theta}.
+$$
+
+本节以探测轮数为时间单位；实际历时的矩还需钟标定及相应加权尾合同。本节将记录函数 $Y$ 定义为：有限轮次点击时取 $Y=\mathsf N$，永不点击时取 $Y=0$。其期望为
+
+$$
+\mathbb E_{\theta,\rho}Y
+=\operatorname{Tr}(\rho T_\theta),
+\qquad
+T_\theta=\sum_{n\ge1}nE_{n,\theta}
+=\sum_{k\ge0}R_{k,\theta}.
+$$
+
+每个单独有限维模型的 $T_\theta$ 有限，由第 19.2 条保证；共同有界性尚未假设。这个量是有限点击子概率律的一阶矩。永不点击分支的零值属于统计约定；有限截止只能读到尚未点击。若把永不点击的等待值定义为 $+\infty$，只要该事件有正概率，相应扩展期望就是无穷，不能与这里的 $T_\theta$ 混用。
+
+置加权迟到效果
+
+$$
+Z_{m,\theta}=T_\theta-M_{m,\theta}
+=\sum_{n>m}nE_{n,\theta}\ge0.
+$$
+

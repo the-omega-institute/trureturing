@@ -1,0 +1,37 @@
+**证明。** （202.7）保证充分小参数处属于某个固定 $K$ 的近优类。
+由（202.4），五项非负平方的和趋于零，故每项均趋于零。
+由于 $I$ 远离零，其各正系数具有统一正下界；
+这给（202.9）以及（202.8）的第一式。
+
+记
+
+$$
+W_\epsilon=\sum_{j,\alpha}
+\left|\frac c\epsilon+itd\right|^2.
+$$
+
+Cauchy–Schwarz 给
+
+$$
+\left|\frac P\epsilon+itD\right|
+\le\sqrt{DW_\epsilon}\longrightarrow0.
+\tag{202.10}
+$$
+
+由（202.6），$D\to4m(h)^2$，所以得到 $P$ 的极限。
+另外，三角不等式给
+
+$$
+\left|\frac{\sqrt C}{\epsilon}-t\sqrt D\right|
+\le\sqrt{W_\epsilon}\longrightarrow0.
+\tag{202.11}
+$$
+
+两侧由（202.5）一致有界，平方后即得 $C$ 的极限。证毕。
+
+因此完整二阶最优性要求具体的标签偏置及相位相关的占据列反馈。
+式（202.8）中的 $C$ 是给定占据输入 $|0\rangle$ 时，
+接收端输出进入 $|1\rangle$ 的总概率；$P$ 是同一操作的 Choi 交叉矩。
+这些量的约束属于同一实际 instrument，
+不是把分别可达的最佳值拼成一个未实现的共同最优值。
+

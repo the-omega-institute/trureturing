@@ -1,0 +1,124 @@
+**证明。** 反设第二至第六轮环境为 $A,B,C,B,C$，其中三条射线线性无关。所有子空间与位块沿用实际同一固定通道。
+
+置
+$$
+\begin{aligned}
+r&=\dim(H_2+H_4)=\dim(G_3+G_5),\\
+s&=\dim(H_3+H_5)=\dim(G_4+G_6),\\
+t&=\dim(G_2+G_4)=\dim(Q_3+Q_5).
+\end{aligned}
+\tag{64.19}
+$$
+各等式由相同环境下固定等距的单射性得到。已用位像按三条独立环境分解给
+$$
+2+r+s\le7,\qquad1+r+t\le7.
+\tag{64.20}
+$$
+同环境 $B$ 的跨位正交给
+$$
+G_3+G_5\perp Q_3+Q_5.
+$$
+实际 $H_3,H_5$ 各到其两个同轮接收因子满投影，所以
+$$
+r\le s,\qquad t\le s.
+\tag{64.21}
+$$
+如果 $r=s=2$，则 $H_2=H_4$、$G_3=G_5$、$H_3=H_5$，使实际第3、第5终端的主角行列式相同，与 $\delta_5-\delta_3>0$ 矛盾。因此（64.20）、（64.21）只能有 $r=2,s=3$。
+
+$t$ 不能为二：否则 $G_2=G_4$，与 $H_2=H_4$ 共同把非零 $w\in H_2\cap G_2$ 放入 $H_4\cap G_4=0$。故 $t=3$。记
+$$
+T=G_3=G_5,\quad S=Q_3+Q_5,\quad
+R=G_4+G_6,\quad D=H_3+H_5.
+$$
+则 $\dim(T,S,R,D)=(2,3,3,3)$，$T\perp S$，且 $P_S:D\to S$ 是同构。因此 $D\cap T=0$。此外 $Q_4=Q_6$，因为两次相同输入 $T$ 在固定一位块上使用相同环境 $C$。
+
+零位像已饱和：
+$$
+V_0K=(G_2\otimes A)\dotplus(T\otimes B)\dotplus(R\otimes C).
+\tag{64.22}
+$$
+第60节给首轮环境也在三维 $F_2$ 中。比较 $V_0k=p\otimes\eta_1$ 的环境坐标：若 $A$ 系数非零，则 $p\in G_2$，但固定 $V_1$ 在非零 $p$ 上既使用 $A$ 又使用 $B$，矛盾；若 $B$ 系数非零，则 $p\in T$，固定 $V_1$ 又既使用 $A$ 又使用 $C$，矛盾。因此
+$$
+\eta_1\parallel C,\qquad p\in R,\qquad k\in D.
+\tag{64.23}
+$$
+由于 $D\cap T=0$，$k\notin T$。首轮一位像给新的 $q\otimes C$；若 $q\in Q_4$，固定 $V_1$ 的单射性将强制 $k\in T$，矛盾。因此 $q\notin Q_4$，一位像也准确饱和为
+$$
+V_1K=(\mathbb Cv\otimes A)\dotplus(S\otimes B)
+\dotplus((\mathbb Cq+Q_4)\otimes C).
+\tag{64.24}
+$$
+
+还必须有 $A\perp C$。反设内积非零，$V_1p=v\otimes A$ 与 $V_0H_3=G_4\otimes C$ 的跨位正交给 $v\perp G_4$。但 $H_2=H_4$ 中的单位向量
+$$
+z=\frac{a^2u+bv}{\sqrt{|a|^4+|b|^2}}
+$$
+满足 $\|P_{G_4}z\|\le\kappa=|a|^2/\sqrt{|a|^4+|b|^2}$，与实际第4终端的严格下界 $\sigma_4>\kappa$ 矛盾。
+
+因此反设下整个六轮环境词必为 $CABCBC$，且 $A\perp C$，并满足（64.22）—（64.24）。下面继续核对 $B,C$ 的关系与实际来源递推。
+
+先证明 $C$ 还必须正交于 $B$。
+
+记 $N=\mathbb Cq+Q_4$，由（64.24）它三维。若 $\langle B,C\rangle\ne0$，跨位正交和同环境正交给
+$$
+(R+T)\perp(S+N).
+$$
+固定 $V_1$ 在 $T$、$G_4$ 上分别使用 $C$、$B$，因此 $T\cap G_4=0$。因为 $G_4\subset R$，有 $\dim(R+T)\ge4$，所以 $\dim(S+N)\le3$。两个三维空间遂相同：$S=N$。
+
+另一方面，已证 $A\perp C$，故（64.22）的固定零位等距给 $H_1\perp D$。于是非零单位 $q\in H_1$ 与 $D$ 正交。但 $q\in N=S$，且 $P_SD=S$，迫使 $q\perp S$，矛盾。
+
+所以 $B\perp C$。最终必要条件为
+$$
+\eta_1,\ldots,\eta_6=(C,A,B,C,B,C),
+\qquad C\perp\operatorname{span}(A,B),
+$$
+此时不需要再限定 $A,B$ 的内积。
+
+最后使用实际第四轮与严格主角隙排除剩余形状。
+
+前面尚未使用实际来源列的递推。现在 $C\perp A,B$，固定 $V_1$ 在 $U=G_2$ 和 $T$ 上分别使用 $B,C$，所以 $U\perp T$。固定 $V_0$ 又将 $H_1,H_2$ 分别送为 $U\otimes A,T\otimes B$，故
+$$
+H_1\perp H_2=H_4.
+\tag{64.25}
+$$
+这里不需要 $A\perp B$。
+
+在环境 $C$ 的零、一位域上去掉共同环境，分别记所得等距为
+$$
+f:D\to R,\qquad g:T+\mathbb Ck\to\mathbb Cq+Q_4.
+$$
+由固定通道的跨位正交，$fD\perp g(T+\mathbb Ck)$。吸收共同环境射线的相位后，首轮满足 $fk=p,gk=q$。
+
+设第 $n$ 个实际纯终端的两列按活动记忆展开为 $x_n^j|0\rangle+y_n^j|1\rangle$，$j=0,1$。有 $\operatorname{span}_j x_n^j=H_n$、$\operatorname{span}_j y_n^j=G_n$。来源 $m_0=a|0\rangle+b|1\rangle,m_1=|0\rangle$ 的实际第四轮递推为
+$$
+x_4^j=a f x_3^j+g y_3^j,\qquad j=0,1.
+\tag{64.26}
+$$
+若所选纯环境代表相差相位，右边整体只多一个非零单位标量，不改变以下正交论证。
+
+由（64.25），$p,q$ 都正交于 $x_4^j$。代入（64.26），用 $p=fk,q=gk$ 和跨位像正交，得到
+$$
+0=\langle p,x_4^j\rangle=a\langle k,x_3^j\rangle,\qquad
+0=\langle q,x_4^j\rangle=\langle k,y_3^j\rangle.
+$$
+所以
+$$
+k\perp H_3,\qquad k\perp T,\qquad
+D=H_3\oplus\mathbb Ck.
+\tag{64.27}
+$$
+
+实际第三终端 $(H_3,T)$ 的两个主角余弦平方为 $\lambda_3,\lambda_2$，其中
+$$
+\lambda_2=\kappa^2=\frac{|a|^4}{|a|^4+|b|^2},\qquad
+\lambda_3>\lambda_2.
+$$
+取单位向量 $h_-\in H_3$，使 $\|P_T h_-\|=\kappa$。二维空间 $\operatorname{span}(h_-,k)$ 和二维 $H_5$ 都包含于三维 $D$，故其交集有非零向量。取其中单位向量 $h=\alpha h_-+\beta k$；（64.27）给 $|\alpha|^2+|\beta|^2=1$，并且
+$$
+\|P_T h\|=|\alpha|\|P_T h_-\|\le\kappa.
+\tag{64.28}
+$$
+然而 $T=G_5$，实际第五终端的最小主角余弦满足 $\sigma_5>\kappa$，所以每个单位 $h\in H_5$ 都必须有 $\|P_T h\|\ge\sigma_5>\kappa$。这与（64.28）矛盾。
+
+因此 ABCBC 不可能。证明完毕。
+

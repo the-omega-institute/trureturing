@@ -1,0 +1,15 @@
+**证明。** $\mathcal N\operatorname{Ad}_Z=\mathcal N$，目标满足
+$\mathcal V\operatorname{Ad}_Z=\operatorname{Ad}_{Z_{Q_{\mathrm{out}}}}\mathcal V$。
+因此把解码器后接 $Z_{Q_{\mathrm{out}}}$ 共轭，其误差与原值相同：这等价于对通道差同时作输入与输出的酉变换。平均这两份解码器，diamond 范数的凸性保证误差不增，而平均结果在 $Q_{\mathrm{out}}$ 上对角。其两个对角块正是（173.2）的 CP 映射。反之每份这样的 instrument 都定义合法解码器。证毕。
+
+对一份共同 instrument，写
+
+$$
+\sigma_{kj}=(\operatorname{id}_M\otimes\mathcal D_k)(\xi_j),
+\qquad k,j\in\{0,1\}.
+\tag{173.3}
+$$
+
+四份矩阵均半正定，且对每个 $j$ 有
+$\sum_k\operatorname{Tr}\sigma_{kj}=1$。它们必须由同一对 $\mathcal D_0,\mathcal D_1$ 产生；只给各矩阵的边缘、正性和迹，通常不能刻画共同可达性。
+

@@ -1,0 +1,33 @@
+### 304.5 两源模型的精确信息系数
+
+固定第303节同一合法 \(B,C,\kappa,g\)，沿 \(j=0,r=1\)。两来源都是
+$$
+P_h^{(1)}=\operatorname{Bernoulli}\!\left(\frac{1-h/C}{B}\right),
+\qquad Q^{(1)}=\operatorname{Bernoulli}(1/B).
+$$
+因此每个来源的单次 KL 完全相同，适应性选择来源不改变它。置 \(s=C^2(B-1)\)，准确表达式为
+$$
+\begin{aligned}
+d(h)
+&=\frac{C-h}{BC}\log(1-h/C)\\
+&\quad+\frac{C(B-1)+h}{BC}
+\log\left(1+\frac{h}{C(B-1)}\right).
+\end{aligned}
+\tag{304.17}
+$$
+令 \(x=h/C\)。作为 \(x\) 的函数，它的二阶导为
+$$
+\frac{d^2}{dx^2}d(Cx)
+=\frac1{(1-x)(B-1+x)}.
+$$
+其在零点的一阶导和函数值都为零。Taylor 展开给出
+$$
+\boxed{
+d(h)=\frac{h^2}{2C^2(B-1)}
++\frac{(B-2)h^3}{6C^3(B-1)^2}
++O(h^4)
+=\frac{h^2}{2s}+O(h^3).}
+\tag{304.18}
+$$
+在固定允许 \(B,C\) 上有效；在 \(B\in\{2,4\}\)、\(C\in[1,C_\star]\)、\(h\le1/2\) 的范围内，余项常数也可一致选取。\(B=2\) 时三阶项为零，仍满足所需二次尺度。\(\rho=2\) 的（304.3）因此成立。
+

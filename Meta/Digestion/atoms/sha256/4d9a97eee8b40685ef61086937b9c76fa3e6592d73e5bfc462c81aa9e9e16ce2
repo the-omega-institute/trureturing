@@ -1,0 +1,55 @@
+### 283.3 对称二项程序的准确二阶亏损
+
+令
+$$
+L_z(k)=p_z(k)/p_0(k).
+$$
+在参考分布下取 $B$ 个独立公平符号 $s_i\in\{\pm1\}$，令 $k$ 为正号数量。二项似然比只依赖 $k$，并可写成
+$$
+L_z=\frac12\left[\prod_{i=1}^B(1+zs_i)+\prod_{i=1}^B(1-zs_i)\right].
+\tag{283.13}
+$$
+由符号独立及 $\mathbb Es_i=0$，
+$$
+\mathbb E_0L_z^2
+=\frac{(1+z^2)^B+(1-z^2)^B}{2}.
+$$
+所以精确的 $\chi^2$ 距离是
+$$
+\boxed{
+\chi^2(p_z\Vert p_0)
+=\sum_{j\ge1}\binom B{2j}z^{4j}.
+}
+\tag{283.14}
+$$
+只有不超过 $B$ 的项参与。用 $\binom B{2j}\le B^{2j}/(2j)!$ 得
+$$
+\chi^2(p_z\Vert p_0)\le\cosh(Bz^2)-1.
+\tag{283.15}
+$$
+当 $B\delta\le1$ 时，$z^2=2\delta-\delta^2\le2\delta$，故 $0\le u:=Bz^2\le2$。逐项比较幂级数给
+$$
+\cosh u-1\le\frac{u^2}{4}(\cosh2-1),
+\qquad\cosh2-1<3.
+$$
+从而
+$$
+\boxed{
+\chi^2(p_z\Vert p_0)\le3(B\delta)^2,
+\qquad B\delta\le1.
+}
+\tag{283.16}
+$$
+
+记根保真度为 $f_B=\sum_k\sqrt{p_0(k)p_z(k)}$。因为
+$$
+1-f_B=\tfrac12\mathbb E_0(\sqrt{L_z}-1)^2
+\le\tfrac12\mathbb E_0(L_z-1)^2,
+$$
+得到
+$$
+1-f_B^2\le\chi^2(p_z\Vert p_0).
+\tag{283.17}
+$$
+所有程序概率在当前参数范围严格为正，故 $f_B>0$。
+

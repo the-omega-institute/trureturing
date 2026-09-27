@@ -1,0 +1,17 @@
+### 258.3 Ando 定理给出的精确可实现性
+
+对有限维复矩阵 $T$，数值半径定义为
+$$
+w(T)=\max_{\|x\|=1}|\langle x,Tx\rangle|.
+\tag{258.12}
+$$
+所用标准 Ando 定理的精确形式是
+$$
+w(X)\le\frac12
+\iff
+\exists\,F,G\succeq0:\quad F+G=I,\quad
+\begin{pmatrix}F&X\\X^\dagger&G\end{pmatrix}\succeq0.
+\tag{258.13}
+$$
+此非严格不等式版本直接见 Farenick、Kavruk 与 Paulsen，*C*-algebras with the weak expectation property and a multivariable analogue of Ando's theorem on the numerical radius*，[arXiv:1107.0418v2](https://arxiv.org/abs/1107.0418v2)，2012年3月19日版本，PDF第1页引言。该文PDF第14页参考文献[2]列明原始来源：T. Ando，*Structure of operators with numerical radius one*，Acta Sci. Math. (Szeged) **34**（1973），11–15。本节引用（258.13）作为已证明的外部定理，不把它作为新结果。
+

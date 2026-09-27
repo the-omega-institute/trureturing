@@ -1,0 +1,71 @@
+### 243.6 同谱通道并排后的指数参考差异
+
+固定§241的量子比特四标签接口，令
+$$
+P_z=|0\rangle\langle0|,
+\qquad P_x=|+\rangle\langle+|.
+$$
+在相同的四个记录位置及固定纯输出上，比较
+$$
+\begin{aligned}
+\boldsymbol\Pi^{\parallel}
+&=(P_z,I_2-P_z,P_z,I_2-P_z),\\
+\boldsymbol\Pi^{\times}
+&=(P_z,I_2-P_z,P_x,I_2-P_x).
+\end{aligned}
+\tag{243.30}
+$$
+两组投影和均为 $2I_2$，对应 $d=2,N=4,R=4$，候选各分支效应均为 $\Pi_j/2$。第一组的生成代数是计算基对角代数 $\mathbb C\oplus\mathbb C$，两个不可约块维数都为一。第二组生成整个 $M_2(\mathbb C)$：$P_z,P_x$ 给出 $I_2,\sigma_z,\sigma_x$，再通过乘积得到 $\sigma_y$。因此
+$$
+\begin{array}{c|cc}
+&r_{\min}&E_{\min}\\ \hline
+\mathcal S_{\parallel}&1&0\\
+\mathcal S_{\times}&2&1
+\end{array}
+\tag{243.31}
+$$
+熵单位为比特。非平行的任意两轴也生成 $M_2$；这里选择正交轴只是固定一个明确实例。
+
+将每份候选分别独立并排 $k$ 次，$k\ge1$，目标在两族中始终为同一个 $\mathcal R^{\otimes k}$，全部标签词及每个标签词的量子输出也相同。组合参数为
+$$
+d_k=2^k,\qquad N_k=4^k,\qquad R_k=4^k,
+\qquad D_*^{(k)}=1-2^{-k}.
+\tag{243.32}
+$$
+每个标签词上的投影都是秩一，实际输入效应为 $2^{-k}\Pi_{\boldsymbol j}$，所以每个候选分支的 Choi 矩阵都只有一个非零本征值 $2^{-k}$。两族全部分支秩和分支谱相同，整体候选 Choi 谱也相同。
+
+差映射的谱同样不能区分它们。每个标签词的差 Choi 矩阵，在固定纯输出支撑上对应
+$$
+\left(2^{-k}\Pi_{\boldsymbol j}-4^{-k}I_{2^k}\right)^{\mathsf T},
+$$
+其非零谱为
+$$
+\left\{
+2^{-k}-4^{-k}\ \text{一次},
+\quad -4^{-k}\ \text{重复 }2^k-1\text{ 次}
+\right\}.
+\tag{243.33}
+$$
+输出正交补上只补零本征值。因此两族的整体差 Choi 谱也相同。
+
+但定理243.2给出精确资源差异：
+$$
+\boxed{
+\begin{aligned}
+r_{\min}(\mathcal S_{\parallel}^{\otimes k})&=1,
+&E_{\min}(\mathcal S_{\parallel}^{\otimes k})&=0,\\
+r_{\min}(\mathcal S_{\times}^{\otimes k})&=2^k,
+&E_{\min}(\mathcal S_{\times}^{\otimes k})&=k.
+\end{aligned}
+}
+\tag{243.34}
+$$
+在第二族中，组合代数为 $M_{2^k}(\mathbb C)$，唯一取等输入边缘为 $I_{2^k}/2^k$，所以这些下界覆盖所有跨 $k$ 份输入相关的纯探针。第一族可用共同计算基的产品输入，不使用外部纠缠。
+
+这两族不仅具有相同 $d_k,N_k,R_k$、目标、输出和完整距离，也具有相同候选及差映射 Choi 谱，却需要指数不同的精确参考维数。与此同时，§240的算术下界在此只有
+$$
+\frac{d_k}{\gcd(d_k,R_k)}=1,
+\tag{243.35}
+$$
+不能区分两族。差异由同一输入空间上的联合生成代数承担。
+

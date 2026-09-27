@@ -1,0 +1,14 @@
+**推论164.5（长期观察分布的参数极限）。** 在定理164.4的条件下，第158节各固定装置的经验误差极限分布满足
+
+$$
+\boxed{
+\nu_{t_k}=(h_{t_k})_*\mu_{G_{t_k}}
+\Longrightarrow
+\bigl(\widetilde h(t_0,\cdot)|_H\bigr)_*\mu_H.
+}
+\tag{164.13}
+$$
+
+若 $H=G_{t_0}$，右侧正是 $\nu_{t_0}$，同时
+$E_\infty(t_k)\to E_\infty(t_0)$。
+

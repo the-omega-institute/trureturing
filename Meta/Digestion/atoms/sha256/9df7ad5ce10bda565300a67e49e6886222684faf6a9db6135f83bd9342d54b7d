@@ -1,0 +1,73 @@
+### 244.1 固定共同输出与实际设置标签翻转
+
+输入为量子比特 $H=\mathbb C^2$，经典输出标签为 $(a,s)$，其中 $a\in\{0,1\}$、$s\in\{+1,-1\}$。固定单位 Bloch 轴 $n,m\in\mathbb R^3$，本节首先限制
+$$
+n\cdot m=c\in[0,1),
+\qquad A=\frac{1+c}{2},\qquad K=\frac{1-c}{2}.
+\tag{244.1}
+$$
+所以 $A+K=1$、$A\ge K>0$。这里 $c$ 是带既定符号标签的实际内积，没有在推导中把 $m$ 改成 $-m$。平行端点 $c=1$ 在下文另行处理。
+
+所有量子重置输出为同一个固定纯态 $P=|r_0\rangle\langle r_0|$。原始候选与均匀目标为
+$$
+\begin{aligned}
+\mathcal S(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\operatorname{Tr}(E_{a,s}X)P,\\
+E_{0,s}&=\frac{I_2+s\,n\cdot\sigma}{4},
+\qquad E_{1,s}=\frac{I_2+s\,m\cdot\sigma}{4},\\
+\mathcal R(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\frac14\operatorname{Tr}(X)P.
+\end{aligned}
+\tag{244.2}
+$$
+这里 $\sigma$ 是 Pauli 矩阵三元组。两组效应各自求和为 $I_2/2$，因此原设置标签在这个通道内部以均匀概率产生，且其边缘概率与输入态无关。当前比较没有另向观察者提供一份原设置控制档案。
+
+令 $p\in[0,1]$ 为已标定的翻转概率。经典 CPTP 后处理 $\mathcal C_p$ 以概率 $1-p$ 保留 $a$，以概率 $p$ 把它改为 $1-a$，保持 $s$ 与共同量子输出不变。翻转选择与输入、参考独立，其种子不在可取得输出内。定义
+$$
+\mathcal S_p=\mathcal C_p\circ\mathcal S,
+\qquad
+\mathcal R_p=\mathcal C_p\circ\mathcal R=\mathcal R.
+\tag{244.3}
+$$
+后处理后的效应直接为
+$$
+\begin{aligned}
+E^{(p)}_{0,s}&=(1-p)E_{0,s}+pE_{1,s}
+=\frac{I_2+s\,a_p\cdot\sigma}{4},\\
+E^{(p)}_{1,s}&=pE_{0,s}+(1-p)E_{1,s}
+=\frac{I_2+s\,b_p\cdot\sigma}{4},\\
+a_p&=(1-p)n+pm,
+\qquad b_p=pn+(1-p)m.
+\end{aligned}
+\tag{244.4}
+$$
+每个效应正且四者之和为 $I_2$，所以这是实际 CPTP 通道，并非只对概率表达式作形式替换。
+
+置
+$$
+\beta=1-2p,\qquad q=|\beta|,\qquad B=q^2K,
+\qquad \ell=\sqrt{A+B}.
+\tag{244.5}
+$$
+两条有效轴等长，且
+$$
+\|a_p\|^2=\|b_p\|^2=\ell^2
+=1-2p(1-p)(1-c),
+\qquad a_p\cdot b_p=A-B\ge0.
+\tag{244.6}
+$$
+为同时保留两条轴的关系，取正交单位向量
+$$
+u=\frac{n+m}{2\sqrt A},\qquad
+v=\frac{n-m}{2\sqrt K}.
+\tag{244.7}
+$$
+那么
+$$
+a_p=\sqrt A\,u+\beta\sqrt K\,v,
+\qquad
+b_p=\sqrt A\,u-\beta\sqrt K\,v.
+\tag{244.8}
+$$
+共享方向不随翻转概率改变，设置差方向则乘以 $\beta$。$p=1$ 只交换设置名称，是可逆后处理；$p=1/2$ 才完全消去这两个设置的记录差异。
+

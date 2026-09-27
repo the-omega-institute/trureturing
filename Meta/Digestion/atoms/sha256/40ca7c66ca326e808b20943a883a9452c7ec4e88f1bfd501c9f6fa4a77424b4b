@@ -1,0 +1,70 @@
+**引理277.3（小输出谱的统一尺度）。** 存在 $\theta_0>0$ 和固定常数 $c_a,C_a,b>0$，使对所有 $0\le\theta\le\theta_0$，$I_n-H_0(\theta)$ 的最小本征值 $a_\theta$ 满足
+$$
+c_a\theta^{2n}\le a_\theta\le C_a\theta^{2n},
+\qquad 0\le a_\theta\le1/2.
+\tag{277.26}
+$$
+在两输出的共同本征基中，理想输出恰有一个可能趋零的概率
+$$
+p_0=\frac{a_\theta}{4n},
+\tag{277.27}
+$$
+其余 $4n-1$ 个概率都至少为 $b$。$\theta>0$ 时全部理想有效输出概率严格正。
+
+**证明。** 令
+$$
+B_\theta=I_n-e^{i\theta}M.
+$$
+由（277.18），$I_n-H_0(\theta)=B_\theta^\dagger QB_\theta$。在零点，$B_0=-tJ$ 的最大 $n-1$ 个奇异值都是 $t$，最小奇异值为零。又有
+$$
+\|B_\theta-B_0\|\le(1+t)|1-e^{i\theta}|\le(1+t)\theta.
+\tag{277.28}
+$$
+奇异值的算子范数扰动界使充分小角度下的最大 $n-1$ 个奇异值 $s_1,\ldots,s_{n-1}$ 都位于 $[t/2,2t]$。当 $n=1$ 时，这组奇异值为空，乘积按一解释。
+
+因为 $M$ 上三角且对角全为一，
+$$
+|\det B_\theta|=|1-e^{i\theta}|^n
+=\prod_{j=1}^n s_j(B_\theta).
+\tag{277.29}
+$$
+取小角区间包含于 $[0,1]$。其上有 $2\theta/\pi\le|1-e^{i\theta}|\le\theta$，所以
+$$
+\frac{(2\theta/\pi)^n}{(2t)^{n-1}}
+\le s_n(B_\theta)
+\le\frac{\theta^n}{(t/2)^{n-1}}.
+\tag{277.30}
+$$
+该式也包含 $\theta=0$ 与 $n=1$。
+
+设 $q_{\min},q_{\max}$ 为 $Q$ 的最小、最大本征值。由
+$$
+q_{\min}B_\theta^\dagger B_\theta
+\preceq B_\theta^\dagger QB_\theta
+\preceq q_{\max}B_\theta^\dagger B_\theta,
+\tag{277.31}
+$$
+得到（277.26）的双向阶。$n\ge2$ 时，其余 $n-1$ 个本征值至少为 $q_{\min}(t/2)^2$。另外三个记录块在零点严格正；连续性使其在一个共同小角区间上保持统一正下界。再缩小 $\theta_0$，可使 $a_\theta\le1/2$，并使这一最小本征值与其余谱分离。除以 $4n$ 即得到所需 $b$。
+
+在 $0<\theta\le\theta_0$ 内，$1-e^{i\theta}\ne0$，故 $B_\theta$ 可逆；所有理想概率都正。$\square$
+
+对每个已知角度，共同本征基可随角度选取。记 $q_j$ 为竞争输出在该基中的概率，式（277.11）给
+$$
+q_j=(1-\delta)p_j+\frac{\delta}{4n}.
+\tag{277.32}
+$$
+特别地，
+$$
+q_0=\frac{a_\theta+\delta(1-a_\theta)}{4n},
+\qquad
+\frac{\delta}{8n}\le q_0-p_0\le\frac{\delta}{4n}.
+\tag{277.33}
+$$
+由（277.26），存在固定 $c_s,C_s>0$，使
+$$
+c_s(\theta^{2n}+\delta)
+\le p_0+q_0\le C_s(\theta^{2n}+\delta).
+\tag{277.34}
+$$
+其余概率满足 $p_j\ge b$、$q_j\ge b/2$，且所有 $j$ 均有 $|q_j-p_j|\le\delta/(4n)$。这些界在 $0\le\theta\le\theta_0$、$0<h\le h_*$ 上统一。
+

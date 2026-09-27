@@ -1,0 +1,23 @@
+### 151.3 第六终端的有限参数双侧界
+
+沿用第148节参数，并明确写成 $p,x$ 的函数：
+
+$$
+\begin{aligned}
+c&=\sqrt{x^2+p},&
+d&=\sqrt{c^2+p},\\
+\kappa&=\sqrt{x^2d^2+pc^2},&
+\lambda&=\sqrt{\kappa^2+pd^2},\\
+\mu&=\frac{\sqrt p(c\kappa-xd^2)}{\kappa},&
+\nu&=d\left(x+\frac{cp}{\kappa}\right).
+\end{aligned}
+\tag{151.9}
+$$
+
+这些数在 $0<p<1$ 时为正，并满足
+
+$$
+\mu^2+\nu^2=\lambda^2.
+\tag{151.10}
+$$
+

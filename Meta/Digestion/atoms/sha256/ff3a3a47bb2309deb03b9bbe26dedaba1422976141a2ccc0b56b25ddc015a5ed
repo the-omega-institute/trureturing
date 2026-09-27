@@ -1,0 +1,44 @@
+### 89.4 精确的 Kraus 秩二存在性归约
+
+替代通道（89.8）的全域最小 Kraus 秩恰为二。取 $F$ 的正交单位基 $f_0,f_1$，令
+
+$$
+K_i=(I_K\otimes\langle f_i|)W:
+K\otimes B\longrightarrow K\qquad(i=0,1).
+$$
+
+则
+
+$$
+\widetilde{\mathcal C}(X)=K_0XK_0^*+K_1XK_1^*,\qquad
+\sum_{i=0}^1K_i^*K_i=I_{14},
+$$
+
+$$
+K_iK_j^*=\delta_{ij}I_7.
+\tag{89.13}
+$$
+
+最后一式来自 $WW^*=I_{14}$。因此两个 Kraus 算子均非零且线性无关。也可直接从全域输入、输出维数看出不可能只有一个 Kraus 算子：若 $K^*K=I_{14}$，则 $K:\mathbb C^{14}\to\mathbb C^7$ 必须秩十四，矛盾。故最小 Kraus 秩为二。
+
+反向，任意从十四维到七维的全域 CPTP 通道，如果最小 Kraus 秩为二，则两 Kraus 算子给出的 Stinespring 等距目标恰为 $K\otimes\mathbb C^2$，维数也是十四，因而该等距本身就是酉。因此下列存在性完全等价：
+
+$$
+\begin{gathered}
+\text{存在一般七维全域 CPTP 接收器满足前六个完整终端合同}\\
+\Longleftrightarrow\\
+\text{存在全域最小 Kraus 秩恰为二的七维接收器满足同一合同}\\
+\Longleftrightarrow\\
+\text{存在固定酉 }W:K\otimes\mathbb C^2\to K\otimes\mathbb C^2,
+\text{ 每轮丢弃输出量子比特并满足同一合同。}
+\end{gathered}
+\tag{89.14}
+$$
+
+这是一条替代实现的存在性归约。原全域通道在 $U$ 以外仍可具有更大的 Kraus 秩；本节没有断言它本身等于（89.8）。归约也没有构造七维解或排除全部固定酉解，所以一般容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{89.15}
+$$
+

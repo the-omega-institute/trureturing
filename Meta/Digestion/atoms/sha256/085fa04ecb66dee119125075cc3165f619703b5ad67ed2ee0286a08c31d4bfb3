@@ -1,0 +1,12 @@
+**Proof.** Compose the transducer with the $L$-state binary residue automaton. The product states are $(q,r)$. If a transducer transition emits a chunk $v$, update
+$$
+r\longmapsto2^{|v|}r+\operatorname{val}_{\mathrm{bin}}(v)\pmod L.
+\tag{TM.534}
+$$
+Incorporate any initial output into the initial residue. If state $q$ has terminal output $\omega(q)$, declare $(q,r)$ accepting precisely when
+$$
+2^{|\omega(q)|}r+\operatorname{val}_{\mathrm{bin}}(\omega(q))\equiv0\pmod L.
+\tag{TM.535}
+$$
+A state without terminal output is nonaccepting. Thus terminal chunks require an acceptance test, not additional states. The product is a partial deterministic automaton with at most $SL$ trim states, and its language is exactly $\mathcal A_{k,L}$. Apply the preceding state-count theorem. $\square$
+

@@ -1,0 +1,74 @@
+### 205.4 唯一 Choi 聚点与完整参考系数
+
+在纯来源最优面 $A_0=A_1=1/2$、$C_0=C_1=0$ 上，$P=0$，
+（205.11）只剩非负平方。等号强制
+
+$$
+b=i2na\quad(j=0),\qquad
+b=-i2na\quad(j=1),\qquad d=2ma,\qquad c=0.
+$$
+
+因此整个 Choi 对唯一，由
+
+$$
+K_0^*=\begin{pmatrix}1/\sqrt2&i\sqrt2n\\0&\sqrt2m\end{pmatrix},\qquad
+K_1^*=\begin{pmatrix}1/\sqrt2&-i\sqrt2n\\0&\sqrt2m\end{pmatrix}
+\tag{205.12}
+$$
+
+实现。两份结果 Choi 都为秩一，共同 TP 使用 $m^2+n^2=1/4$。
+这是一般多 Kraus 平方的等号结论，不是优化前的秩假设。
+记此对为 $\Gamma^*(h)$。
+
+第191节在当前有限区间统一给实际最优器
+
+$$
+C=O_I(\epsilon^2),\qquad A_j-1/2=O_I(\epsilon),\qquad
+x:=\frac{A_0-A_1}{2\epsilon}=O_I(1).
+\tag{205.13}
+$$
+
+非负基点缺陷与冻结首项展开使任意 Choi 聚点位于纯最优面并满足
+$L_h\le\Phi_h$。式（205.11）迫使它等于 $\Gamma^*(h)$。
+后者连续，故紧性给所有最优器的一致收敛，特别是
+
+$$
+D_0+D_1=4m(h)^2+o_I(1).
+\tag{205.14}
+$$
+
+未对稀少输入列预设收敛速度。
+
+第198、200节的解析谱论证只需 $A_j\approx1/2$、正紧 $h$ 区间、
+简单最高根及唯一参考最大点，因此仍给
+
+$$
+e_\epsilon(h,\Gamma)
+=\lambda(\Gamma)+\epsilon L_h(\Gamma)
++\epsilon^2R_h(\Gamma)+O_I(\epsilon^3).
+\tag{205.15}
+$$
+
+系数 $R_h$ 连续；秩一 Choi 不妨碍在环境实坐标中建立该展开。
+冻结（205.12）时，正确偶块的一阶噪声矩正是（205.6）的 $L_0,L_1$，
+耦合修正的两项为
+
+$$
+T_0=m(-\beta-2\gamma n),\qquad
+T_1=Rm(-\beta+2\gamma n),\qquad T_0+T_1=T_s.
+$$
+
+按第200.4节同一 Schur 展开，固定参考权重 $q=1/2$ 的二阶系数为
+$Z(h)-3L_d^2/16$。完整参考的基点曲率是 $-3/2$，
+一阶参考导数是 $-3L_d/4$，所以移动最大点补回 $3L_d^2/16$。
+因此
+
+$$
+R_h(\Gamma^*(h))=Z(h),\qquad
+R_h(\Gamma)=Z(h)+o_I(1)
+\tag{205.16}
+$$
+
+对全部实际最优器一致。这里保留一般 $\gamma,n$，没有调用内点关系
+$\gamma=2\beta n$。
+

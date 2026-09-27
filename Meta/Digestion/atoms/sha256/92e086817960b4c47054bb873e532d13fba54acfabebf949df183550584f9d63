@@ -1,0 +1,26 @@
+**定义 56.1（增长频率上的放大余项）。** 保持定义 54.1 的原始模型、
+固定幅度、固定 $`\beta\in(1/2,1)`$、$`\lambda=Q^3`$ 及同一组精确中心标签。
+记 $`\delta=Q^{-1/2}`$。取确定性序列及固定紧区间
+
+```math
+s_M\longrightarrow\infty,\qquad R_M=e^{s_M},\qquad
+r_M=R_M\delta\longrightarrow0,\qquad I=[t_0,t_1]\subset\mathbb R.
+```
+
+式 (56.1)。
+
+用定义 54.1 的有限截距 $`\mathcal J_M`$，定义
+
+```math
+\mathcal U_M(t)=e^{(s_M+t)/2}
+ \left\{\mathcal Z_M((s_M+t)\sqrt\delta)
+       -\mathcal J_M-2(s_M+t)\sqrt\delta\,T_M\right\},\qquad t\in I.
+```
+
+式 (56.2)。
+
+所有充分大的 $`M`$ 都使取值点位于任意预先固定的 $`(0,U)`$ 内。
+截距必须是 $`b_*\mathcal Q_M+\sum_{j\ne k}H(x_j,x_k)A_jA_k`$；
+若另取只有相同弱极限的有限截距，仍须额外控制它与此截距的差为
+$`o_{\mathbb P}(R_M^{-1/2})`$。
+

@@ -1,0 +1,54 @@
+### 282.4 对齐方向与临界方向给匹配上界
+
+先取对齐方向 $\theta=0$。§280证明理想分子恰有一个零本征值，其余本征值具有维数一致的正下界。零坐标对 $1-F$ 的贡献精确为
+$$
+\frac{(\sqrt s-\sqrt\epsilon)^2}{8n}
+=\frac{\Delta^2}{8n(\sqrt s+\sqrt\epsilon)^2}.
+\tag{282.20}
+$$
+由 $\epsilon\le s$，它位于 $\Delta^2/(32ns)$ 与 $\Delta^2/(8ns)$ 之间。其余坐标由统一谱隙给总损失 $O(\Delta^2)$。
+
+相反方向的常规下界也保留。§280的 $\operatorname{Tr}Z_n/n\ge15/16$ 给
+$$
+d(\widetilde\sigma_0(0),\widetilde\sigma_1(0))
+=\frac{\Delta}{4n}(\|H_0(0)\|_1+\|H_1(0)\|_1)
+\ge\frac{15\Delta}{64}.
+\tag{282.21}
+$$
+因此 $1-F^2\ge d^2$ 提供 $\Delta^2$ 下界。合并得到
+$$
+1-F_{\mathrm{align}}^2
+\asymp\frac{\Delta^2}{ns}+\Delta^2.
+\tag{282.22}
+$$
+
+再取固定临界方向 $\theta_c=2\arcsin(1/8)$。§280给其中一个记录的完整升序谱
+$$
+c_0(j/n)^2\le\lambda_j\le C_0(j/n)^2,
+\qquad 0<\lambda_j\le4/23,
+\qquad 1\le j\le n.
+\tag{282.23}
+$$
+因为 $1-\lambda_j\ge19/23$，式（282.14）—（282.15）使每项损失与 $\Delta^2/[n(s+\lambda_j)]$ 双向可比。故该记录贡献的阶为
+$$
+\frac{\Delta^2}{n}\sum_{j=1}^n\frac1{s+(j/n)^2}
+\asymp\frac{n\Delta^2}{1+n\sqrt s}.
+\tag{282.24}
+$$
+这里使用§280的有限倒数和估计，当前 $s<1/2$ 满足其参数条件。另外三个记录均有统一谱隙，总贡献为 $O(\Delta^2)$；因 $n/(1+n\sqrt s)$ 有绝对正下界，该余项被（282.24）吸收。因此
+$$
+1-F_{\mathrm{crit}}^2
+\asymp\frac{n\Delta^2}{1+n\sqrt s}.
+\tag{282.25}
+$$
+
+令 $x=n\sqrt s$。若 $x\le1$，对齐方向的损失至少为固定常数乘 $\Delta^2/(ns)$，而
+$$
+R_{\mathrm{noise}}=\frac{\Delta^2}{ns}(1+x).
+$$
+若 $x\ge1$，临界方向的损失至少为固定常数乘 $\Delta^2/\sqrt s$，而
+$$
+R_{\mathrm{noise}}=\frac{\Delta^2}{\sqrt s}(1+1/x).
+$$
+两种情形都可以选取一个已知的固定角度，使单次保真度损失至少为 $cR_{\mathrm{noise}}$。逐份读取记录、测量相应已知参考本征基，再作经典似然比检验，按§280的固定副本界，只需 $C/R_{\mathrm{noise}}$ 份。角度由已知 $n,\delta,r$ 决定，整数取整可吸收于统一常数，因为 $R_{\mathrm{noise}}<1$。
+

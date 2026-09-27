@@ -1,0 +1,17 @@
+### 241.3 单纯形投影的显式谱隙
+
+现在固定§239的单纯形候选 $\mathcal S^{\triangle}$：$d\ge2$、$N\ge d+1$、$R=d+1$，活跃投影为 $\Pi_j=|u_j\rangle\langle u_j|$，$1\le j\le d+1$，其中
+$$
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\alpha I_d,
+\qquad \alpha=\frac{d+1}{d}.
+\tag{241.15}
+$$
+其余原标签使用零投影。记
+$$
+\kappa=\frac{d+1}{Nd^2},
+\qquad D_*=1-\frac{d+1}{Nd}.
+\tag{241.16}
+$$
+

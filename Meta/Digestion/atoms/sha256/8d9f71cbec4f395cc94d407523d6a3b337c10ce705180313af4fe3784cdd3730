@@ -1,0 +1,124 @@
+### 175.2 基点收益的全部等号情形
+
+因为 $\mathcal D_0+\mathcal D_1$ 保迹，$F_0$ 正是从常值基点
+$\xi_*^\varphi$ 恢复纯化 $\Xi$ 的重叠。第163节的精确重叠公式给
+
+$$
+F_0(\mathcal D,\varphi)
+\le1-\frac29\bigl(1-|\sin2\varphi|\bigr)
+\le1.
+\tag{175.9}
+$$
+
+在 $|\sin2\varphi|=1$ 时可以达到一。因此
+
+$$
+\max_{\mathcal K}F_0=1.
+$$
+
+令等号集为
+
+$$
+\mathcal Z=
+\{(\mathcal D,\varphi)\in\mathcal K:F_0(\mathcal D,\varphi)=1\}.
+\tag{175.10}
+$$
+
+它非空且紧；其中的相位只能为
+$\varphi=\pi/4$ 或 $3\pi/4$，模 $\pi$。
+
+先考察 $\varphi=\pi/4$。按第174节的接收端酉与旗标换基，基点态变为
+
+$$
+\frac12\sum_{r=0}^1P_{q_r}^Q\otimes P_\Xi.
+\tag{175.11}
+$$
+
+固定旗标 $r$ 后，写两个输出分支的 Kraus 为
+$K_{j,r,\alpha}:R\to R_{\mathrm{out}}$。同一个解码器的保迹性给
+
+$$
+\sum_{j,\alpha}K_{j,r,\alpha}^\dagger K_{j,r,\alpha}=I_R
+\quad\text{对每个 }r.
+\tag{175.12}
+$$
+
+识别固定的输入、输出计算基后，$F_0=1$ 等价于
+
+$$
+\frac12\sum_{r,j,\alpha}
+\left|\operatorname{Tr}(\rho K_{j,r,\alpha})\right|^2=1.
+\tag{175.13}
+$$
+
+另一方面，（175.12）给
+
+$$
+\frac12\sum_{r,j,\alpha}
+\operatorname{Tr}\!\left(\rho
+K_{j,r,\alpha}^\dagger K_{j,r,\alpha}\right)=1.
+\tag{175.14}
+$$
+
+对任意 $K$，令 $c=\operatorname{Tr}(\rho K)$，则
+
+$$
+\operatorname{Tr}(\rho K^\dagger K)-|c|^2
+=\operatorname{Tr}\!\left[
+\rho(K-cI)^\dagger(K-cI)
+\right]\ge0.
+\tag{175.15}
+$$
+
+由于 $\rho$ 严格正定，等号成立当且仅当 $K=cI$。
+（175.13）—（175.14）使这些非负差的总和为零，故逐旗标、逐结果、逐 Kraus 都有
+
+$$
+K_{j,r,\alpha}=c_{j,r,\alpha}I.
+\tag{175.16}
+$$
+
+置
+
+$$
+p_{j,r}=\sum_\alpha|c_{j,r,\alpha}|^2,
+\qquad
+p_j=\frac12\sum_rp_{j,r}.
+$$
+
+于是 $p_{0,r}+p_{1,r}=1$，并且 $p_0+p_1=1$。
+
+第174节的条件态（174.10）在 $\Xi$ 上的重叠为
+$1-\beta w_j$；其与 $\psi$ 的非对角项不贡献该重叠。由（175.16），在整个等号集的此类相位上，
+
+$$
+G(\mathcal D,\pi/4,R)
+=-\beta(p_0+Rp_1).
+\tag{175.17}
+$$
+
+另一类相位具有相同结论。具体地，令
+$J=-iY=U_{\pi/2}$。因 $JZ=-ZJ$，编码满足
+
+$$
+\mathfrak E(J\sigma J^\dagger)
+=(J_Q\otimes I_{MR})\mathfrak E(\sigma)
+(J_Q^\dagger\otimes I_{MR}).
+\tag{175.18}
+$$
+
+所以从 $\pi/4$ 到 $3\pi/4$ 的基点及扰动都只需同一个接收端局部酉变换。它可吸收到解码器中，不改变（175.12）的保迹预算或（175.17）的损失系数。
+
+因此
+
+$$
+\boxed{
+\max_{(\mathcal D,\varphi)\in\mathcal Z}
+G(\mathcal D,\varphi,4)=-\beta.
+}
+\tag{175.19}
+$$
+
+上界由 $p_0+4p_1\ge1$ 得到。取好相位、执行接收端解掩码、保持 $R$，并恒输出原标签 $0$，即有
+$p_0=1$，达到该上界。
+

@@ -1,0 +1,7 @@
+**命题 209.2（分离问题族使两边恢复成为状态互逆）。** 在定义 208.1 的往返恢复条件下，若源侧问题族共同区分 $X$，目标侧问题族共同区分 $Y$，则
+
+$$
+k\circ h=\operatorname{id}_X,\qquad
+h\circ k=\operatorname{id}_Y.
+$$
+

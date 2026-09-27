@@ -1,0 +1,13 @@
+### 156.4 比较二周期的最优解码误差严格分离
+
+定义共同比较目标
+
+$$
+W_*|j\rangle=|j\rangle_Q|\Xi\rangle_{MR},
+\qquad
+\mathcal W_* =\operatorname{Ad}_{W_*}.
+\tag{156.21}
+$$
+
+分别优化仅作用于 $K_A$ 或 $K_B$、输出 $Q\otimes R$ 的全部 CPTP 解码器，得到比较误差 $e_A^*,e_B^*$。
+

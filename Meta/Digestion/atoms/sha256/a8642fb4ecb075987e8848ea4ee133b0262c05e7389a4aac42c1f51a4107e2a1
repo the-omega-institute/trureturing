@@ -1,0 +1,53 @@
+#### 5.2.5 非线性 Bellman 缺陷的累加
+
+令 $P_i v=vq_i$。考虑细算子 $T_t$、粗算子 $\bar T_{i,t}$ 及其实际递推
+
+$$
+V_t=T_tV_{t+1},\qquad
+\bar V_{i,t}=\bar T_{i,t}\bar V_{i,t+1}.
+$$
+
+假设细算子对一致范数不扩张，并且在递推实际使用的每个续值上满足
+
+$$
+\|T_tP_i\bar V_{i,t+1}
+-P_i\bar T_{i,t}\bar V_{i,t+1}\|_\infty
+\le\varepsilon_{i,t},
+$$
+
+$$
+\|V_H-P_i\bar V_{i,H}\|_\infty\le\varepsilon_{i,H}.
+$$
+
+则插入 $T_tP_i\bar V_{i,t+1}$ 并用三角不等式，得到
+
+$$
+\|V_t-P_i\bar V_{i,t}\|_\infty
+\le\|V_{t+1}-P_i\bar V_{i,t+1}\|_\infty+\varepsilon_{i,t}.
+$$
+
+归纳给出
+
+$$
+\|V_0-P_i\bar V_{i,0}\|_\infty
+\le\sum_{t=0}^{H}\varepsilon_{i,t}.
+\tag{TM.460}
+$$
+
+共同动作的确定性 Bellman 算子确实不扩张：每一动作的续值差不超过输入函数的一致距离，取同一动作集的最大值保留该上界。无需在所有有界粗函数上统一控制缺陷，但必须控制实际使用的续值；仅在一个无关测试函数上检查交换关系不足以进行这项归纳。
+
+折扣情形中，若 $T$ 为 $\beta$-收缩，$0\le\beta<1$，且 $V^*=TV^*$、$\bar V^*=\bar T\bar V^*$ 为有界不动点，那么由
+
+$$
+\|TP_i\bar V^*-P_i\bar T\bar V^*\|_\infty\le\varepsilon
+$$
+
+推出
+
+$$
+\|V^*-P_i\bar V^*\|_\infty\le\frac{\varepsilon}{1-\beta}.
+\tag{TM.461}
+$$
+
+证明是在同一个三角不等式中得到 $e\le\beta e+\varepsilon$。如还要断言不动点存在，可在全部有界函数的完备一致范数空间上，以有界奖励和合法的折扣 Bellman 算子应用收缩定理；不得在未经证明完备或未经证明算子保持的函数类上直接引用它。
+

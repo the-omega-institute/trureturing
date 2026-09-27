@@ -1,0 +1,93 @@
+### 205.6 每个结果各一个 Kraus 的精确 TP 匹配族
+
+取任意有界实函数 $x(h),\omega(h)$，暂不最优化。令
+
+$$
+a_0=\sqrt{\frac{1/2+\epsilon x}{1+4m^2\omega^2\epsilon^2}},\qquad
+ a_1=\sqrt{\frac{1/2-\epsilon x}{1+4m^2\omega^2\epsilon^2}},
+$$
+
+$$
+p_\epsilon=
+\begin{pmatrix}
+a_0\\-i2m\omega\epsilon a_0\\a_1\\-i2m\omega\epsilon a_1
+\end{pmatrix},\qquad
+r_*=\begin{pmatrix}i\sqrt2n\\\sqrt2m\\-i\sqrt2n\\\sqrt2m\end{pmatrix}.
+\tag{205.21}
+$$
+
+两向量均为单位向量，且 $p_0^\dagger r_*=0$。
+因此 $\chi_\epsilon=p_\epsilon^\dagger r_*=O_I(\epsilon)$，充分小参数处可定义
+
+$$
+\boxed{
+r_\epsilon=
+\frac{r_*-p_\epsilon\chi_\epsilon}{\sqrt{1-|\chi_\epsilon|^2}}.
+}
+\tag{205.22}
+$$
+
+这是将同一基点第二列投影到当前第一列的正交补并归一化，严格满足
+
+$$
+ p_\epsilon^\dagger r_\epsilon=0,\qquad
+ \|p_\epsilon\|=\|r_\epsilon\|=1.
+$$
+
+按结果顺序，将这两向量分成两个二行块，定义
+
+$$
+K_0=\begin{pmatrix}
+(p_\epsilon)_1&(r_\epsilon)_1\\
+(p_\epsilon)_2&(r_\epsilon)_2
+\end{pmatrix},\qquad
+K_1=\begin{pmatrix}
+(p_\epsilon)_3&(r_\epsilon)_3\\
+(p_\epsilon)_4&(r_\epsilon)_4
+\end{pmatrix}.
+\tag{205.23}
+$$
+
+于是 $K_0^\dagger K_0+K_1^\dagger K_1=I$ 精确成立。
+正旗标使用这两个结果 Kraus，负旗标按 $Z$ 反射。
+这是一份共同 instrument，不需要额外跳跃，也不访问 $M$。
+
+全部分母有统一正下界；$r_\epsilon-r_*=O_I(\epsilon)$，
+所以 Choi 对以 $O_I(\epsilon)$ 接近 $\Gamma^*(h)$。
+相对于原目标 $m(h),n(h)$，有
+
+$$
+\begin{gathered}
+U_0=O_I(\epsilon^2),\qquad U_1=O_I(\epsilon^2),\qquad
+V=O_I(\epsilon^2),\qquad M_j-m=O_I(\epsilon),\\
+\frac{A_0-A_1}{2\epsilon}=x+O_I(\epsilon^2),\qquad
+\frac C{\epsilon^2}=4m^2\omega^2+o_I(1),\qquad
+\frac P\epsilon=-4im^2\omega+o_I(1).
+\end{gathered}
+\tag{205.24}
+$$
+
+反馈关系使用 $c/\epsilon=-i2m\omega a$ 以及投影后的
+$d=2ma+O_I(\epsilon)$，所以 $c/\epsilon+i\omega d=O_I(\epsilon)$。
+这些估计直接来自构造，没有先假定它最优。
+
+代入同一冻结完整参考展开和（205.18），得到
+
+$$
+\boxed{
+e_\epsilon^{x,\omega}(h)
+=\frac34+\epsilon\Phi_h+
+\epsilon^2\left[Z+x^2+a_{\mathrm{act}}x
++m^2(\omega^2-2\vartheta\omega)\right]
++o_I(\epsilon^2).
+}
+\tag{205.25}
+$$
+
+有限二维二次式的唯一极小点为
+$x=-a_{\mathrm{act}}/2$、$\omega=\vartheta$，最小值正是（205.8）的
+$Q_{\mathrm{act}}$。同一个精确 TP 构造同时达到两项最小值；
+受正乘子加权的 Kraus 偏差均为 $O_I(\epsilon^2)$，
+只在完整误差中贡献更高阶项。
+该上界与（205.20）匹配，证明定理205.1。
+

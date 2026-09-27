@@ -1,0 +1,109 @@
+**推论153.4（显式对偶与独立于解码器的下界证书）。** 继续使用 $O_n=M_{\rm out}\otimes S_n$、$X=J(\mathcal D)$，将（153.9）写成
+
+$$
+J_n(X)=\mathscr A_n(X)-J_{\rm tar},
+\qquad
+J_{\rm tar}=J(\operatorname{Ad}_{\widetilde T_n}).
+$$
+
+其中 $\mathscr A_n$ 为把解码器 Choi 矩阵映到实际恢复通道 Choi 矩阵的线性映射，其在 Hermitian 矩阵实向量空间上的 Hilbert–Schmidt 伴随由
+
+$$
+\langle W,\mathscr A_n(X)\rangle
+=\langle\mathscr A_n^*(W),X\rangle,
+\qquad \langle A,B\rangle=\operatorname{Tr}(AB)
+$$
+
+定义，配对中的矩阵均 Hermitian。定理153.3的最优值也等于以下对偶最大值：
+
+$$
+\boxed{
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Tr}Z-\langle W,J_{\rm tar}\rangle,\\
+\text{满足}\quad&\rho\succeq0,\qquad\operatorname{Tr}\rho=1,\\
+&0\preceq W\preceq I_{O_n}\otimes\rho,\\
+&\mathscr A_n^*(W)\succeq I_{S_n}\otimes Z,\\
+&Z\in\operatorname{Herm}(K).
+\end{aligned}
+}
+$$
+
+这里 $\rho$ 作用于二维 Choi 输入因子，$W$ 作用于 $O_n\otimes M_{\rm in}$；$Z$ 不要求半正定。该最大值取得。任一可行三元组 $(\rho,W,Z)$ 都给出对全部合法终端解码器有效的误差下界。
+
+**证明。** 在（153.10）中保持 $X,Y\succeq0$ 为变量的正锥约束，为另外两个半正定约束引入乘子 $W,\rho\succeq0$，为 $\operatorname{Tr}_{S_n}X=I_K$ 引入自由 Hermitian 乘子 $Z$。拉格朗日函数取
+
+$$
+\begin{aligned}
+L={}&t+\langle Z,I_K-\operatorname{Tr}_{S_n}X\rangle\\
+&-\langle W,Y-\mathscr A_n(X)+J_{\rm tar}\rangle
+-\langle\rho,tI_{M_{\rm in}}-\operatorname{Tr}_{O_n}Y\rangle\\
+={}&(1-\operatorname{Tr}\rho)t
++\langle\mathscr A_n^*(W)-I_{S_n}\otimes Z,X\rangle\\
+&+\langle I_{O_n}\otimes\rho-W,Y\rangle
++\operatorname{Tr}Z-\langle W,J_{\rm tar}\rangle.
+\end{aligned}
+$$
+
+对自由实变量 $t$ 及正锥中的 $X,Y$ 取下确界。其值有限恰要求
+
+$$
+\operatorname{Tr}\rho=1,\qquad
+\mathscr A_n^*(W)-I_{S_n}\otimes Z\succeq0,\qquad
+I_{O_n}\otimes\rho-W\succeq0,
+$$
+
+有限时的值正是所报目标。因此这是（153.10）的拉格朗日对偶，目标的符号与偏迹张量次序均由上式确定。
+
+取 $\rho=I_{M_{\rm in}}/2$、$W=0$、$Z=0$，即得对偶可行点。定理153.3已验证原 SDP 严格可行且最优值有限；Slater 定理给零对偶间隙及该对偶最大值取得。这里不要求整个对偶可行域紧。
+
+下界性质也可直接核验。对任意合法解码器 Choi 矩阵 $X$，由 $X\succeq0$ 和 $\operatorname{Tr}_{S_n}X=I_K$，
+
+$$
+\operatorname{Tr}Z
+=\langle I_{S_n}\otimes Z,X\rangle
+\le\langle W,\mathscr A_n(X)\rangle.
+$$
+
+而 $0\preceq W\preceq I_{O_n}\otimes\rho$、$\operatorname{Tr}\rho=1$ 是一份原始二维输入及参考上的归一化检验条件，故
+
+$$
+\boxed{
+\operatorname{Tr}Z-\langle W,J_{\rm tar}\rangle
+\le\langle W,J_n(X)\rangle
+\le\frac12\|\Delta_X\|_\diamond,
+}
+$$
+
+其中
+$\Delta_X=(\operatorname{id}_{M_{\rm out}}\otimes\mathcal D_X)\mathcal R_n
+-\operatorname{Ad}_{\widetilde T_n}$。
+这给全部解码器的同一下界。证毕。
+
+上述检验条件的物理含义可按固定 Choi 约定明确写出。取二维参考 $R$，制备单位向量
+
+$$
+|\psi_\rho\rangle
+=(I_{M_{\rm in}}\otimes\sqrt\rho)
+\sum_{i=0}^1|i\rangle_{M_{\rm in}}|i\rangle_R.
+$$
+
+其输入边缘为 $\rho^{\mathsf T}$，参考边缘为 $\rho$，而非把两者未经转置认作相同矩阵。由 $0\preceq W\preceq I_{O_n}\otimes\rho$，在 $\rho$ 的支撑上存在效果 $0\preceq Q\preceq I$ 使
+
+$$
+W=(I_{O_n}\otimes\sqrt\rho)Q(I_{O_n}\otimes\sqrt\rho).
+$$
+
+可用 $\rho$ 在其支撑上的逆平方根构造 $Q$，再在正交补上取零。于是对任意通道 $\Phi:\mathcal L(M_{\rm in})\to\mathcal L(O_n)$，
+
+$$
+\langle W,J(\Phi)\rangle
+=\operatorname{Tr}\!\left[
+Q(\Phi\otimes\operatorname{id}_R)
+(|\psi_\rho\rangle\langle\psi_\rho|)
+\right].
+$$
+
+所以 $\langle W,J_n(X)\rangle$ 是同一输入和同一效果下两个输出概率之差，至多其半迹距离，进而至多半 diamond 距离。这里的效果作用于完整输出与参考，是完整恢复合同的数学检验；实际解码器仍仅作用于 $K$，没有获得操作活动记忆或参考的权限。
+
+对七维接收器和 $n\ge3$，这份下界证书的变量分别为 $2\times2$ 的 $\rho$、$16\times16$ 的 $W$ 和 $7\times7$ 的 $Z$。其系数 $\mathscr A_n$ 仍来自已经固定的实际接收器。满足这些约束的精确证书可以排除该接收器的所有解码器，不由此排除其他七维物理接收通道。
+

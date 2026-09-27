@@ -1,0 +1,13 @@
+**定理 37.1（否定交换确定与可能的边界）。** 补集均相对于 $\Omega$。对任意 $P,Q\subseteq\Omega$，有
+
+$$
+\begin{aligned}
+L_q(P^{\mathrm c})&=\Omega\setminus U_q(P),\\
+U_q(P^{\mathrm c})&=\Omega\setminus L_q(P),\\
+L_q(P\cap Q)&=L_q(P)\cap L_q(Q),\\
+U_q(P\cup Q)&=U_q(P)\cup U_q(Q).
+\end{aligned}
+$$
+
+此外 $L_q(L_q(P))=L_q(P)$、$U_q(U_q(P))=U_q(P)$。对同一个固定读数反复使用这些算子，不会继续增加区分能力。
+

@@ -1,0 +1,82 @@
+### 303.4 分离停止窗口与适应必要性
+
+沿 \(j=0,r=1\)，任务和参考都是同一枚币
+$$
+P_h^{(1)}=\operatorname{Bernoulli}\!\left(\frac{1-h/C}{B}\right).
+$$
+记该世界的全协议律为 \(P_h\)，\(m(h)=\mathbb E_hN\)，并置
+$$
+d_\star=C^2(B-1).
+$$
+相对零增益币 \(Q^{(1)}=\operatorname{Bernoulli}(1/B)\)，
+$$
+D(P_h^{(1)}\Vert Q^{(1)})
+\le\chi^2(P_h^{(1)}\Vert Q^{(1)})
+=\frac{h^2}{d_\star}.
+\tag{303.12}
+$$
+因而长度至多 \(n\) 的完整记录，含种子、来源、停止及输出的有限投影，满足
+$$
+D(P_h^{[n]}\Vert Q^{[n]})\le nh^2/d_\star.
+\tag{303.13}
+$$
+这里可先对预取的 \(n\) 枚同分布币及共同种子作有限长度链式 KL，再投影到有限调用事件；不假设 \(Q\) 几乎必然停止，也没有对非终止零增益律套用第302节要求双边有限停止的完整停止等式。
+
+若（303.5）不成立，则存在 \(0<c<1/48\)，使对所有充分小 \(h\)
+$$
+m(h)\le c\,d_\star h^{-2}\log\log(1/h).
+\tag{303.14}
+$$
+这也覆盖先假设左侧 limsup 严格小于 \(1/48\) 后选中间常数的标准逻辑；若期望沿任意趋零子序列为无穷大，则无须此反证。
+
+取
+$$
+h_n=e^{-n^2},\qquad
+b_n=\left\lceil12c\,d_\star h_n^{-2}
+\log\log(1/h_n)\right\rceil
+=\left\lceil24c\,d_\star e^{2n^2}\log n\right\rceil,
+\qquad a_n=b_{n-1}.
+\tag{303.15}
+$$
+对充分大 \(n\)，\(b_n\) 严格增加，且
+$$
+a_nh_n^2/d_\star\longrightarrow0.
+$$
+Pinsker 与（303.11）、（303.13）因此给出
+$$
+P_{h_n}(N\le a_n)
+\le Q(N\le a_n)+\sqrt{a_nh_n^2/(2d_\star)}
+\le\frac13+\frac1{12}=\frac5{12}.
+\tag{303.16}
+$$
+（303.14）、Markov 与 \(b_n\) 的定义给出
+$$
+P_{h_n}(N>b_n)\le\frac1{12}.
+$$
+所以两两不交的停止窗口事件
+$$
+A_n=\{a_n<N\le b_n\}
+$$
+满足
+$$
+p_n=P_{h_n}(A_n)\ge\frac12.
+\tag{303.17}
+$$
+令 \(q_n=Q(A_n)\)。在有限长度 \(b_n\) 上对事件 \(A_n\) 作二元数据处理，并用二元熵至多 \(\log2\)，得到
+$$
+p_n\log(1/q_n)-\log2
+\le\operatorname{kl}(p_n,q_n)
+\le b_nh_n^2/d_\star.
+$$
+因 \(p_n\ge1/2\)，
+$$
+q_n\ge\frac14\exp[-2b_nh_n^2/d_\star]
+\ge c_1n^{-48c}
+\tag{303.18}
+$$
+对所有充分大 \(n\) 成立，其中取整带来的指数余量趋于零。由于 \(48c<1\)，右侧之和发散；左侧是两两不交事件的概率和，甚至不超过 \(Q(N<\infty)\le1/3\)，矛盾。这证明（303.5）。
+
+对固定 \(\kappa,g\)，\(h^2\mathcal O(h)=w_hH/\kappa^2\) 在 \(h\downarrow0\) 时趋于有限正数 \(CH/\kappa^2\)。若某协议的每世界期望始终至多常数倍 \(\mathcal O(h)\)，（303.5）左侧就为零，故不可能。
+
+这个必要性证明使用当前 Bernoulli 模型的有限记录换测度、两条合法风险边和分离停止窗口，因此直接承担当前平均风险与未知干扰参数的合同。
+

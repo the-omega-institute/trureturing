@@ -1,0 +1,51 @@
+**定理 108.4（相同临界装置和时间律下，终端态可趋向任意预定量子态）。** 在式（107.1）的同一分支构造中，另取 $\widetilde k_t=t^{3/2}$，记得到的装置为 $\widetilde\Gamma_t^\tau$，以及
+
+$$
+\widetilde\epsilon_t=\widetilde k_t+(1-\widetilde k_t)\sin^2t,
+\qquad
+\widetilde u_t=\delta(\widehat\Gamma_{-t})+\widetilde k_t.
+$$
+
+对充分小的 $t>0$，所有预先固定的密度矩阵参数 $\tau$ 同时满足
+
+$$
+\widetilde\Gamma_t^\tau\in\mathfrak B_{\widetilde u_t},
+\qquad \widetilde u_t=R-\kappa t+o(t)<R,
+\qquad \widetilde\Gamma_t^\tau\longrightarrow\Gamma_+.
+\tag{108.7}
+$$
+
+它们对全部初态具有相同的首次点击时间律；但对共同初态 $P$，其终端通道满足
+
+$$
+\boxed{
+\widetilde\Xi_t^\tau(P)\longrightarrow\tau
+\quad\text{且该收敛对全部密度矩阵 }\tau\text{ 一致}.
+}
+\tag{108.8}
+$$
+
+特别地，取 $\tau=P_0,\tau'=P_1$，单轮完整距离为 $t^{3/2}\to0$，终端输出距离却趋于一；只用共同时间记录作恢复的最坏半迹距离误差下界趋于 $1/2$。
+
+证明。式（107.1）的完全正性、完整性及第 107—108 节的有限几何求和，均只要求 $0<k_t<1$ 与 $r_t=(1-k_t)\cos^2t<1$；将 $k_t$ 换成 $\widetilde k_t$ 后同样成立。只有涉及参数阶数的渐近式需要重新计算。
+
+由于 $t^{3/2}=o(t)$，与无附加分支的旋转仪器之完整距离准确为 $\widetilde k_t$，所以定理 103.2 给式（108.7）的共同半径及装置极限。另一方面，$\sin^2t=o(\widetilde k_t)$，故
+
+$$
+\widetilde w_t:=\frac{\widetilde k_t}{\widetilde\epsilon_t}
+=\left[1+\frac{(1-\widetilde k_t)\sin^2t}{\widetilde k_t}\right]^{-1}
+\longrightarrow1.
+$$
+
+终端态准确为 $(1-\widetilde w_t)P_0+\widetilde w_t\tau$，所以
+
+$$
+D(\widetilde\Xi_t^\tau(P),\tau)
+=(1-\widetilde w_t)D(P_0,\tau)
+\le1-\widetilde w_t\longrightarrow0,
+$$
+
+其界不依赖 $\tau$。两端点的距离及恢复误差结论分别由同一距离公式与三角不等式得到。$\square$
+
+这里没有从相同记录中恢复不同的未知态。不同的 $\tau$ 是事先指定的不同仪器；它们给出相同的时间读数，却把不同的量子状态交给未来。相同的临界装置极限也没有使这些终端通道趋于同一个通道，因为终端化包含越来越长的实际执行。
+

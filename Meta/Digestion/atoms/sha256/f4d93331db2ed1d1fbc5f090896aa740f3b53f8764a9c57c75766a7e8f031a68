@@ -1,0 +1,51 @@
+**推论 263.3（谱下界阈值和两个极限）。** 令
+
+$$
+\alpha_c=\frac{1-1/\sqrt2}{2}.
+\tag{263.18}
+$$
+
+若 $\alpha_c\le\alpha<1/2$，则对所有 $0<\eta\le1$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=8(1/2-\alpha)\sqrt\eta.
+\tag{263.19}
+$$
+
+尤其在第262节的谱下界 $\alpha=1/4$ 下，
+
+$$
+F_{\rm com}(1/4,\eta)=2\sqrt\eta.
+\tag{263.20}
+$$
+
+若 $0<\alpha<\alpha_c$，则对所有充分小的正 $\eta$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=\frac{\sqrt\eta}{\sqrt{\alpha(1-\alpha)}}.
+\tag{263.21}
+$$
+
+对于每个固定 $0<\eta\le1$，另外有
+
+$$
+\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)
+=2(1+\eta).
+\tag{263.22}
+$$
+
+证明。 第一种情形中 $2b^2\le1/4$，故 $z_*=0$，代入（263.3）得到（263.19）。第二种情形中 $\sqrt{2b^2-1/4}<b$，而 $bq\to b$，所以充分小的 $\eta$ 时 $z_*^2=2b^2-1/4$。使用 $1/4-b^2=\alpha(1-\alpha)$ 即得（263.21）。对于固定 $0<\eta<1$，当 $\alpha\downarrow0$，有 $b\to1/2$ 且 $z_*=bq$ 最终成立。代入（263.3）并使用 $1-q^2=4\eta/(1+\eta)^2$，得到（263.22）；当 $\eta=1$ 时，$q=z_*=0$，由（263.3）直接得到对所有 $0<\alpha<1/2$ 均成立的 $F_{\rm com}(\alpha,1)=8b$，故 $\alpha\downarrow0$ 时极限为 $4$。证毕。
+
+式（263.22）恢复了第261节同一满秩上界的无限制对易上确界，但任意固定正 $\alpha$ 下的信息在 $\eta\downarrow0$ 时仍趋于零。因此两个依次取极限的次序不同：
+
+$$
+\lim_{\eta\downarrow0}\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)=2,
+\qquad
+\lim_{\alpha\downarrow0}\lim_{\eta\downarrow0}F_{\rm com}(\alpha,\eta)=0.
+\tag{263.23}
+$$
+
+这两个读数把第261节的跳变具体定位到未固定的谱下界。它们不改变第262节在固定谱下界上的非交换阶优势，也没有给出一般非交换类的精确最优系数。全部构造仍属于本节定义的全实轴密度曲线类；原处理器的附加约束没有在此实现。
+

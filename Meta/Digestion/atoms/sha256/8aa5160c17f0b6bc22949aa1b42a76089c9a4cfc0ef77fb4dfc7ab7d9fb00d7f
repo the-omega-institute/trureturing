@@ -1,0 +1,74 @@
+**定理 10.2（全核族的交叉乘积与似然正交）。** 对任意
+$P_b,P_c\in\mathcal K_d^0$，有
+
+$$
+P_bP_c=\Pi.
+\tag{10.2}
+$$
+
+在定义 10.1 的两种实验中，对每个 $s\ge0$ 都有相同的内积公式
+
+$$
+\mathbb E_{\mathsf U^E_s}[L^{\epsilon,E}_{b,s}L^{\epsilon,E}_{c,s}]
+=(1+\mathbb E[bc])^s\quad(\epsilon\in\{+,-\}),\qquad
+\mathbb E_{\mathsf U^E_s}[L^{+,E}_{b,s}L^{-,E}_{c,s}]=1.
+\tag{10.3}
+$$
+
+因此，正向与反向的中心化似然所张成的子空间在 $L^2(\mathsf U^E_s)$ 中正交。
+
+对同一 $r\in(0,1)$，以 $b_z$ 表示峰位为 $z\in C_+$ 的正单峰，置
+$k=M-1$、$\alpha=r^2/(2k)$、
+$\overline L_s^\epsilon=M^{-1}\sum_{z\in C_+}L_{b_z,s}^\epsilon$。则
+
+$$
+\mathbb E[L_{b_z,s}^\epsilon L_{b_w,s}^\epsilon]
+=\begin{cases}(1+\alpha)^s,&z=w,\\
+(1-\alpha/k)^s,&z\ne w,
+\end{cases}
+\qquad
+V_s:=\mathbb E(\overline L_s^\epsilon-1)^2
+=\frac{(1+\alpha)^s+k(1-\alpha/k)^s}{M}-1,
+\tag{10.4}
+$$
+
+且 $\mathbb E(\overline L_s^+-\overline L_s^-)^2=2V_s$。
+这里各期望都在各自实验的均匀参考律下取。
+
+证明。令 $A_b=P_b-\Pi$。作为函数算子，
+$A_bf=\chi b\,\mathbb E(\chi f)$。
+两个奇偶类上的零和约束给出 $\mathbb E b=\mathbb E(\chi b)=0$，
+故 $\Pi A_c=A_b\Pi=A_bA_c=0$，证明 (10.2)。
+
+对于路径的同向内积，逐边乘积给出转移矩阵
+
+$$
+K_{bc}(x,y)=nP_b(x,y)P_c(x,y)
+=\frac{f(x)+g(x)\chi(y)}n,
+\qquad f=1+bc,\quad g=\chi(b+c).
+\tag{10.5}
+$$
+
+由于 $\mathbb E g=0$，每列之和都是 $1+\mathbb E(bc)$。
+以 $\pi^\top=n^{-1}\mathbf1^\top$ 记均匀行向量，得到
+
+$$
+\mathbb E_{\mathsf U^{\mathrm{path}}_s}[L_{b,s}^+L_{c,s}^+]
+=\pi^\top K_{bc}^{s}\mathbf1=(1+\mathbb E[bc])^s.
+$$
+
+反向与反向的情形由参考律在路径倒序下不变得到。
+异向内积的矩阵为 $H_{bc}(x,y)=nP_b(x,y)P_c(y,x)$。
+由 (10.2)，其每行之和为 $n(P_bP_c)(x,x)=1$，
+所以 $\pi^\top H_{bc}^{s}\mathbf1=1$。
+这类逐边乘积的矩阵求和与
+[马尔可夫亲和递推](../../../Library/Dynamics/daskalakis2018testing.md)
+采用相同的路径求和步骤；这里的列和、行和恒等式来自共同奇偶结构。
+
+对于独立状态对，直接积分单对乘积分别得到
+$1+\mathbb E(bc)$ 和 $1+\mathbb E b\,\mathbb E c=1$，再用独立性取 $s$ 次幂。
+每个似然的参考期望为一，故中心化后的异向内积为零。
+最后，单峰向量满足
+$\mathbb E b_z^2=\alpha$、$\mathbb E(b_zb_w)=-\alpha/k$（$z\ne w$）。
+代入并展开均值的平方即得 (10.4) 及最后一式。$\square$
+

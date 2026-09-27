@@ -1,0 +1,15 @@
+#### 1.1.6 有限覆盖在整数与 profinite 完成对象上等价
+
+对任意固定有限同余族，令 $L$ 为全部模数的 LCM、$H$ 为其模 $L$ 幸存集合。每个剩余类都有整数代表，各覆盖条件都只依赖模 $L$ 读数。因此
+$$
+\begin{aligned}
+\text{该有限族覆盖 }\mathbb Z
+&\iff H=\varnothing\\
+&\iff\text{该有限族的柱集覆盖 }\widehat{\mathbb Z}.
+\end{aligned}
+\tag{TM.365}
+$$
+最后一步使用 profinite 整数的模 $L$ 映射满射；若 $H\ne\varnothing$，其整数代表同时见证整数不覆盖，也给出 profinite 不覆盖。反过来任何 profinite 幸存点的模 $L$ 读数，也由一个普通整数实现全部这些有限条件。
+
+等价性的关键是条件族固定有限。它不允许把任意无限相容幸存线程直接当作普通整数。
+

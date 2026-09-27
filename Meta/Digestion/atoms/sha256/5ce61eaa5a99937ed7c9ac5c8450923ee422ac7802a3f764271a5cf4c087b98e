@@ -1,0 +1,181 @@
+**定理134.1（XXZYY 禁阻）。** 同一实际合同不能具有五位尾词
+
+$$
+([\eta_2],\ldots,[\eta_6])=(X,X,Z,Y,Y).
+\tag{134.3}
+$$
+
+### 134.1 第一个大平面与整个四维一位像
+
+反设（134.3）成立。普通第4轮给 $G_4=P$，其后继为 $Y$；$G_2\subset U$ 的后继为正交的 $X$。所以 $G_2\perp P$，二维性使
+
+$$
+G_2=T.
+\tag{134.4}
+$$
+
+于是
+
+$$
+V_1U=(Q_3\otimes X)\oplus(Q_5\otimes Y).
+$$
+
+实际 $G_3\subset U$ 的后继为普通 $Z$，故 $V_1G_3=Q\otimes Z$。$Z$ 在正交 $X,Y$ 上的两个坐标均非零，逐环境分量读取这个完整二维块，得到
+
+$$
+Q_3=Q_5=Q,\qquad V_1U=Q\otimes F.
+\tag{134.5}
+$$
+
+同一个 $V_1$ 将 $G_2,G_3$ 分别送到 $Q\otimes X,Q\otimes Z$，所以它们两两交零并张成 $U$，且两个平面等倾斜，双向投影范数的系数为
+
+$$
+\rho=|\langle X,Z\rangle|\in(0,1).
+\tag{134.6}
+$$
+
+当前第2、3轮环境都为 $X$，零位像又使 $H_1,H_2$ 具有同样的等倾斜系数。
+
+### 134.2 真实首轮零位向量不能属于大纤维
+
+假设 $p\in U$。真实 $V_1p=v\otimes X$，由（134.5）得到 $v\in Q$，并且固定单射性给 $p\in G_2=T$。
+
+由于 $p\in U\setminus P$，其真实首轮零位环境只能为 $X$：其他环境的完整零位纤维为 $M$ 或 $P$，与 $U$ 的交都为 $P$。因此 $q\in F_X=U^\perp$，特别 $q\perp G_2$。
+
+令
+
+$$
+f=\frac{a^2u+bv}{\sqrt{|a|^4+|b|^2}},\qquad
+H_2=\operatorname{span}(f,w),
+$$
+
+其中 $u,v,w$ 是同一实际正交单位组，$G_2=\operatorname{span}(u,w)$。由 $H_1,H_2$ 等倾斜以及 $q\perp G_2$，有
+
+$$
+|\langle p,w\rangle|^2
+=\|P_{H_1}w\|^2=\rho^2.
+$$
+
+另一方面，$p\in G_2$ 使 $p\perp v$，相反方向的等倾斜投影给
+
+$$
+\rho^2=\|P_{H_2}p\|^2
+=|\langle p,w\rangle|^2+
+\frac{|a|^4}{|a|^4+|b|^2}|\langle p,u\rangle|^2.
+$$
+
+$a\ne0$ 迫使 $p\perp u$，所以单位 $p$ 与 $w$ 共线，得到 $\rho=1$，违（134.6）。因此
+
+$$
+p\notin U.
+$$
+
+完整零位首像只有 $Y$ 纤维允许这个位置，所以
+
+$$
+[\eta_1]=Y,\qquad p\in M\setminus U,\qquad q\in M^\perp.
+\tag{134.7}
+$$
+
+### 134.3 第5轮平面必须回到共同核
+
+若 $G_5\ne P$，则 $G_5\subset M$ 与 $P$ 共同张成三维 $M$。两者均具有实际后继 $Y$，所以
+
+$$
+V_1M\subset K\otimes Y.
+$$
+
+但（134.7）给 $p\in M$，而真实 $V_1p=v\otimes X$ 非零，环境为不同的 $X$，矛盾。因此
+
+$$
+G_5=P.
+\tag{134.8}
+$$
+
+第4轮普通，故 $Q_4=Q$，并且
+
+$$
+H_4\subset P\oplus Q,\qquad P_QH_4=Q.
+\tag{134.9}
+$$
+
+两个实际零位像为
+
+$$
+V_0H_2=G_3\otimes X,\qquad V_0H_4=P\otimes Y,
+$$
+
+所以 $H_2\perp H_4$。又 $u\in G_2=T$ 正交于（134.9）的两个接收块，因此 $u\perp H_4$。由真实 $a^2u+bv\in H_2$、$b\ne0$，得到 $v\perp H_4$。
+
+$v\in F_X=Q\oplus\mathbb Cr$，而 $r\perp P,Q$。将 $v\perp H_4$ 用于（134.9）的满投影，便有 $P_Qv=0$，故 $v\in\mathbb Cr$。再由（134.5）及实际 $V_1p=v\otimes X$，可知 $V_1p$ 正交于 $V_1U$，从而 $p\perp U$。连同 $p\in S$，得到
+
+$$
+p\in\mathbb Cr,\qquad v\in\mathbb Cr,\qquad
+M=P\oplus\mathbb Cr.
+\tag{134.10}
+$$
+
+最后一项使用 $p\in M$、$p\ne0$ 与三维性。于是（134.7）还给
+
+$$
+q\in M^\perp=T\oplus Q.
+\tag{134.11}
+$$
+
+没有在（134.1）中预设的接收块正交关系，现在由真实 $p,v$ 推导出来。
+
+### 134.4 完整零位前像的 Q 投影只有一维
+
+定义两个完整零位环境块的真实前像
+
+$$
+K_X=V_0^{-1}(U\otimes X),\qquad
+K_Y=V_0^{-1}(M\otimes Y).
+$$
+
+完整位像的正交环境分解给
+
+$$
+K=K_X\oplus K_Y,\qquad \dim K_X=4,\quad \dim K_Y=3.
+\tag{134.12}
+$$
+
+实际 $V_0H_1=G_2\otimes X$、$V_0H_2=G_3\otimes X$，而（134.4）—（134.6）给 $G_2+G_3=U$。因此
+
+$$
+H_1+H_2=K_X.
+\tag{134.13}
+$$
+
+利用真实 $p,v\in\mathbb Cr$ 和 $a\ne0$，早期平面之和准确为
+
+$$
+H_1+H_2
+=\operatorname{span}\{r,q,a^2u+bv,w\}
+=\mathbb Cr+T+\mathbb Cq.
+$$
+
+式（134.11）使 $q=q_T+q_Q$，其中 $q_T\in T,q_Q\in Q$。该空间由（134.12）、（134.13）必须四维，所以 $q_Q\ne0$，并且
+
+$$
+K_X=\mathbb Cr\oplus T\oplus\mathbb Cq_Q.
+$$
+
+在原接收内积下取正交补，得到
+
+$$
+K_Y=P\oplus\bigl(Q\cap q_Q^\perp\bigr),\qquad
+\dim P_QK_Y=1.
+\tag{134.14}
+$$
+
+但实际 $V_0H_4=P\otimes Y$，所以 $H_4\subset K_Y$；（134.9）又要求 $P_QH_4=Q$ 二维，直接违反（134.14）。
+
+反设排除，定理134.1得证。论证只读取第2至5轮的一位输入及真实零位输出，没有为 $G_6$ 添加后继。结合第132节，两个异常方向均在三尾中的正交二加一分支，现在只保留
+
+$$
+XZYYY,\qquad YXYXZ,\qquad YXXXZ,\qquad YXZXY.
+$$
+
+这些词的实际共同实现仍未构造或排除；一般容量区间保持 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

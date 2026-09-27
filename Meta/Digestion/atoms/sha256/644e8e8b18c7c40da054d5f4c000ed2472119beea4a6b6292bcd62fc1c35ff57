@@ -1,0 +1,54 @@
+**命题 268.4（统计恢复与 SLD 信息保持）。** 对任意固定辅助态 $\tau$ 和固定酉矩阵 $W$，编码
+
+$$
+\mathcal E(\rho)=W(\rho\otimes\tau)W^*
+\tag{268.12}
+$$
+
+为量子信道，且有与参数无关的量子信道
+
+$$
+\mathcal D(\sigma)=\operatorname{Tr}_{\rm anc}(W^*\sigma W)
+\tag{268.13}
+$$
+
+满足 $\mathcal D\mathcal E(\rho)=\rho$。对光滑满秩原模型，整个 SLD 量子 Fisher 信息矩阵在该编码下保持不变，即使 $\tau$ 不满秩。
+
+证明。 附加固定密度矩阵、酉共轭及偏迹都是完全正保迹操作；$\operatorname{Tr}\tau=1$ 直接给出恢复恒等式。原 POVM $\{E_a\}$ 对应扩充 POVM $\{W(E_a\otimes I)W^*\}$，且
+
+$$
+\operatorname{Tr}\bigl[\mathcal E(\rho)W(E_a\otimes I)W^*\bigr]
+=\operatorname{Tr}(\rho E_a).
+\tag{268.14}
+$$
+
+反方向可由 $\mathcal E$ 的对偶信道将扩充测量拉回原模型，因此两个模型的测量分布可以互相实现。
+
+若原模型的第 $i$ 个 SLD 是 $L_i$，则在固定支撑 $\mathbb C^d\otimes\operatorname{supp}\tau$ 上，$L_i\otimes I$ 满足乘积模型的 SLD 方程：
+
+$$
+\frac{(\rho\otimes\tau)(L_i\otimes I)
++(L_i\otimes I)(\rho\otimes\tau)}2
+=(\partial_i\rho)\otimes\tau.
+\tag{268.15}
+$$
+
+零支撑块可任意补为零，不影响信息。于是
+
+$$
+\operatorname{Re}\operatorname{Tr}
+\bigl[(\rho\otimes\tau)(L_i\otimes I)(L_j\otimes I)\bigr]
+=\operatorname{Re}\operatorname{Tr}(\rho L_iL_j).
+\tag{268.16}
+$$
+
+固定酉共轭同时变换状态及 SLD，迹不变，因此编码后仍有相同信息矩阵。证毕。
+
+特别地，第267节曲线的 $I_Q=5/4$ 在上述八维实基底扩充后仍精确保持。辅助熵下界描述的是固定乘积辅助态所需的混合度，不是物理能耗或热力学功下界，也不表示编码损失了原模型的信息。
+
+本节的表示论机制已有标准来源。Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，第4.2.2节命题4.8给出平方为负单位的反酉算子的二维配对形式，第4.2.3节说明两个这种反酉结构的张量积成为共轭。定理268.2将这一既有机制与共同交换子、辅助态的各个谱块组合；辅助谱判据与熵结论由上面的逐块证明给出，不宣称反酉配对机制的原创性。
+
+这也须与 Miyazaki–Matsumoto，[arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，附录A.3式（136）的纯态 embedding quantum simulator 编码区别开。该文明确说明那种将态矢量与其共轭同时编码的操作不是完全正映射，且其信息矩阵可以改变。式（268.12）附加固定混合态并作固定酉变换，具有（268.13）的信道恢复，不借用该纯态编码的可实现性或信息结论。
+
+全部最小性结论仅针对定义268.1，并使用定理268.2列出的标量交换子与负平方共同反酉对称假设。本节未给出任意通道、相关辅助系统或近似模拟的最小维数与最小熵。扩充后的维数及谱已经改变，不能把它代入第265节固定二维、固定谱、固定矩阵上界的优化类。
+

@@ -1,0 +1,19 @@
+**定理 57.6（整数尾计数）。** 对每个整数 $t\ge2$，定义
+$$
+J_t:=\sum_Hn_H2^{i_H-h}\mathbf1_{\delta_H\ge t},
+\qquad
+m_t:=\#\{q\ne q_0:L_q\ge t\}.
+\tag{57.16}
+$$
+则
+$$
+J_t\le pm_t,\qquad
+w\ge r-1+\sum_{t=2}^{P}\left\lceil J_t/p\right\rceil.
+\tag{57.17}
+$$
+证明。延迟至少 $t$ 的历史只进入满足 $L_q\ge t$ 的目标，每个目标所收全局深度质量至多 $p$，所以 $J_t\le pm_t$。又有精确的整数层分解
+$$
+\sum_qL_q=(r-1)+\sum_{t\ge2}m_t.
+$$
+使用（57.6），保留 $2\le t\le P$，并对每个整数 $m_t$ 分别取上整，即得下界。实际图中的等待没有被减去 $P$ 或 $M$。$\square$
+

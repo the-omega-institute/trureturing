@@ -1,0 +1,143 @@
+**定理265.3（二维完整数据四次根界）。** 对 $H\otimes\mathbb C^2$ 上任意归一化正半定态 $\Xi$，
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le
+\min\left\{2,\,
+\left(9+3\sqrt5+\sqrt{13}\right)\varepsilon(\Xi)^{1/4}\right\}
+\le
+\min\{2,20\varepsilon(\Xi)^{1/4}\}.
+}
+\tag{265.20}
+$$
+
+**证明。** 记
+$$
+R=\operatorname{Tr}_H\Xi-\rho_0,\qquad
+E_K=\mathscr K(\Xi)-K_0,\qquad
+\varepsilon=\|R\|_1+\|E_K\|_1.
+\tag{265.21}
+$$
+令 $G$ 为 $\Xi-\Omega_0$ 的左上二阶块。误差有精确分解
+$$
+\Xi-\Omega_0=L(G)+N,
+\qquad
+L(G)=\operatorname{diag}(G,-G),
+$$
+$$
+N=
+\begin{pmatrix}
+0&E_K/2\\
+E_K^\dagger/2&R
+\end{pmatrix}.
+\tag{265.22}
+$$
+块范数估计给
+$$
+\|N\|_1\le\|E_K\|_1+\|R\|_1=\varepsilon,
+\qquad
+\|N\|\le\varepsilon.
+\tag{265.23}
+$$
+写
+$$
+G=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix},
+\qquad x,y\in\mathbb R,\quad z\in\mathbb C.
+\tag{265.24}
+$$
+正性与归一化保证 $0\preceq\Xi\preceq I$。下面只用正半定形式的柯西不等式
+$$
+|a^\dagger\Xi b|^2
+\le(a^\dagger\Xi a)(b^\dagger\Xi b)
+\le(a^\dagger\Xi a)\|b\|^2.
+\tag{265.25}
+$$
+
+首先，$q_0^\dagger L(G)q_0=0$ 且 $\Omega_0q_0=0$，所以
+$$
+0\le q_0^\dagger\Xi q_0=q_0^\dagger Nq_0\le2\varepsilon.
+\tag{265.26}
+$$
+直接相乘还有
+$$
+q_0^\dagger L(G)v_1=2z,
+\qquad
+q_0^\dagger L(G)v_0=2x.
+\tag{265.27}
+$$
+利用 $\|v_1\|^2=2$、$\|v_0\|^2=5/2$ 以及 $\Omega_0q_0=0$，分别得到
+$$
+\begin{aligned}
+2|z|
+&\le|q_0^\dagger\Xi v_1|+|q_0^\dagger Nv_1|\\
+&\le2\sqrt{\varepsilon}+2\varepsilon,
+\end{aligned}
+$$
+$$
+\begin{aligned}
+2|x|
+&\le|q_0^\dagger\Xi v_0|+|q_0^\dagger Nv_0|\\
+&\le\sqrt5\sqrt{\varepsilon}+\sqrt5\varepsilon.
+\end{aligned}
+\tag{265.28}
+$$
+因此第一核向量控制
+$$
+|z|\le\sqrt{\varepsilon}+\varepsilon,
+\qquad
+|x|\le\frac{\sqrt5}{2}
+\left(\sqrt{\varepsilon}+\varepsilon\right).
+\tag{265.29}
+$$
+其中 $z$ 的全部复数分量都已受控。
+
+第二核向量满足
+$$
+q_1^\dagger L(G)q_1=2\operatorname{Re}z,
+\qquad
+q_1^\dagger L(G)v_1=2y.
+\tag{265.30}
+$$
+由于 $\Omega_0q_1=0$ 且 $\|q_1\|^2=5/2$，
+$$
+0\le q_1^\dagger\Xi q_1
+\le2|z|+\frac52\varepsilon
+\le2\sqrt{\varepsilon}+\frac92\varepsilon.
+\tag{265.31}
+$$
+再次使用（265.25），得到
+$$
+\begin{aligned}
+2|y|
+&\le|q_1^\dagger\Xi v_1|+|q_1^\dagger Nv_1|\\
+&\le\sqrt{4\sqrt{\varepsilon}+9\varepsilon}
++\sqrt5\varepsilon.
+\end{aligned}
+\tag{265.32}
+$$
+
+当 $0\le\varepsilon\le1$ 时，上述各式蕴含
+$$
+|z|\le2\varepsilon^{1/2},\qquad
+|x|\le\sqrt5\varepsilon^{1/2},
+$$
+$$
+|y|\le\frac{\sqrt{13}}2\varepsilon^{1/4}
++\frac{\sqrt5}2\varepsilon.
+\tag{265.33}
+$$
+使用 $\|G\|_1\le|x|+|y|+2|z|$、$\|L(G)\|_1=2\|G\|_1$，以及
+$\varepsilon,\varepsilon^{1/2}\le\varepsilon^{1/4}$，便有
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le2\|G\|_1+\|N\|_1\\
+&\le
+\left(9+3\sqrt5+\sqrt{13}\right)\varepsilon^{1/4}.
+\end{aligned}
+\tag{265.34}
+$$
+当 $\varepsilon\ge1$ 时，归一化状态的迹距上界二已经强于该估计。常数 $9+3\sqrt5+\sqrt{13}<20$，故（265.20）成立。$\square$
+
+特别地，$\varepsilon=0$ 强制 $\Xi=\Omega_0$。所以这个带噪上界也独立恢复了参考真值的精确唯一性。
+

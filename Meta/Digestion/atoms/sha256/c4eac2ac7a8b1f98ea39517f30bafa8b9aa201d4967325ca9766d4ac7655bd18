@@ -1,0 +1,22 @@
+## 130. 一重 AABBB 的真实首态与满纤维冲突
+
+沿用第129节的一重四维／三维双尾合同。两条环境 $A,B$ 正交，完整零位纤维分别为 $U,M$，满足
+
+$$
+\dim U=4,\qquad\dim M=3,\qquad
+\dim(U\cap M)=1,
+$$
+
+$$
+S_0=U+M,\quad\dim S_0=6,\qquad Q=S_0^\perp,\quad\dim Q=1.
+\tag{130.1}
+$$
+
+全部空间属于同一个七维接收器、同一个非退化来源及前六个完整参考终端。固定全域等距的位像为
+
+$$
+R_0=(U\otimes A)\oplus(M\otimes B),\qquad
+R_1=(U^\perp\otimes A)\oplus(M^\perp\otimes B).
+\tag{130.2}
+$$
+

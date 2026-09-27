@@ -1,0 +1,14 @@
+**定义 84.1（指定暗态修复距离与自由失效距离）。** 固定纯态 $P$。在同一完整接口上定义
+
+$$
+d_P(\Gamma)=
+\inf_{\widetilde\Gamma:\,\widetilde{\mathcal N}(P)=P}
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond,
+\qquad
+d_{\mathrm{fail}}(\Gamma)=
+\inf_{\widetilde\Gamma\in\mathfrak F}
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond.
+$$
+
+前者要求把指定 $P$ 变成暗态；后者允许任何来源产生永久未点击。故总有 $d_{\mathrm{fail}}(\Gamma)\le d_P(\Gamma)$。本节的 $\Gamma$ 随参数变化，$d_{\mathrm{fail}}(\Gamma)$ 不等同于固定 $\Gamma_0$ 的半径 $R$。
+

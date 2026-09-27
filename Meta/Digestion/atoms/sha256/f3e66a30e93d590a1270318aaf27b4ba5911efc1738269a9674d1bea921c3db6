@@ -1,0 +1,6 @@
+### 231.8 标准结构与来源
+
+Trine 结构可见 S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，§3.1.b、式（33）及其后文字，[PDF 第10页](https://arxiv.org/pdf/0810.1970v1#page=10)，明确给 $\widehat\pi_i=(2/3)|\psi_i\rangle\langle\psi_i|$。同文 §3.3、式（64）—（65），[PDF 第18页](https://arxiv.org/pdf/0810.1970v1#page=18)，写出了与（231.TR.21）相同的赤道三态及其 $2/3$ 权重。其判据是态区分的测量优化；本文的目标、总 Kraus 预算及通道误差由上文单独证明，不将该文的测量结论改报成本节的精确容量曲线。
+
+Hermitian 泛函的完整范数、归一化 Choi 秩下界及全部事件核界都已在正文给出直接证明。仓内现有两标签预算结果与低 Kraus 事件振幅核机制提供相邻接口；本次定向检索未在 D5 量子声明及钉版 Mathlib 相应目录定位到这条完整三标签预算曲线。本稿不据此声称文献原创性。
+

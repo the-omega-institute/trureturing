@@ -1,0 +1,6 @@
+### 29.8 已有所有者与未完成边界
+
+D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean 的 strong_lumpability_descent_tfae 已证明推前概率律在实际观察纤维上恒定与实际像上的核存在等价。其类型是 $q:X\to B$、$K:X\to\operatorname{PMF}(X)$，本节不能只改变核的值域便直接套用。具体适配取扩充状态集 $Z=Y\times\{0,\ldots,d_{\max}\}\times X$，观察为 $\widetilde q(y,d,x)=(y,d,q(x))$，从任一 $(y,d,x)$ 出发的扩充核为 $\widetilde K_a(y',d',x'\mid y,d,x)=J_a(y',d',x'\mid x)$。旧标签集合非空，固定一对旧标签就把扩充核在 $\widetilde q$ 纤维上的恒定性与 (29.4) 双向对应；因此可在 $Z$ 上复用该声明。D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean 的 descent_defect_zero_iff_strongly_lumpable 与 strongly_lumpable_iff_exact_quotient_kernel 给出有限零缺陷和精确核的相应接口；没有将这些直接应用另列为新增 Lean 定理。
+
+本节保留的综合推导是累计时钟多项式运输、条件化与动态恢复的两个交换式、联合签名细化及两个不同恢复任务的独立性。其精确核、动作合同、实际来源和初始像条件均需由具体系统供给。连续或无界时钟支持、未知核的有限样本认证、近似细化的稳定误差、一般预测表示的全局最小性和物理时空解释均未由此解决。Claim status: open；没有执行新增形式化。
+

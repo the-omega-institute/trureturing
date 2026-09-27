@@ -1,0 +1,12 @@
+**定义 53.2（可确认达标的有限阶段）。** 定义候选集合的集合
+
+$$
+\begin{aligned}
+W_0&=\{B\in\mathcal B_q:B\subseteq K\},\\
+W_{n+1}&=W_n\cup\{B\in\mathcal B_q:\exists a\in A(B),\quad
+\forall o\in q(R(B,a)),\ B_{a,o}\in W_n\}.
+\end{aligned}
+$$
+
+本定义将“完成”规定为可以根据已有信息停止，并保证此时实际状态在 $K$ 中。它不是“在某个自己未察觉的时刻曾经过 $K$”，也不要求停止后永远停留在 $K$。这两种别的目标各需要不同模型。
+

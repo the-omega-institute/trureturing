@@ -1,0 +1,46 @@
+### 44.1 被动联合边界和策略转录
+
+设有限实际来源为 $S$，实验族为 $E$，每个实验 $e$ 有响应类型 $Y_e$ 和读出
+
+$$
+\rho_e:S\to Y_e.
+$$
+
+把同一来源上的全部被动读出合成
+
+$$
+J:S\to\prod_{e\in E}Y_e,
+\qquad
+J(s)=(\rho_e(s))_{e\in E}.
+\tag{44.1}
+$$
+
+一个确定的深度 $N$ 策略由历史选择器
+
+$$
+\pi_t:\prod_{u<t}Y_{\pi_u}\to E,
+\qquad 0\le t<N,
+$$
+
+给出；其实际转录为
+
+$$
+\tau_\pi(s)=
+\bigl(\rho_{\pi_0}(s),\ldots,
+\rho_{\pi_{N-1}}(s)\bigr).
+\tag{44.2}
+$$
+
+归纳可构造唯一函数 $\bar\tau_\pi$ 使
+
+$$
+\boxed{
+\tau_\pi=\bar\tau_\pi\circ J.
+}
+\tag{44.3}
+$$
+
+第一步由 $J$ 的相应坐标给出；若前 $t$ 个响应相同，选择器给出同一实验，下一坐标仍由 $J$ 给出。因而任何只使用这组被动实验的自适应转录，都不会切开 $J$ 的纤维。
+
+若目标 $T:S\to Z$ 不满足 $T=g\circ J$ 的因式分解，则不存在这类策略的转录 $\tau_\pi$ 能精确识别 $T$。仓内 `PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound` 和 `ExperimentBoundary.PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary` 给出这一上界；`ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber` 则把加入一个新协议真正带来新分辨率精确化为“存在同一当前纤维而新协议值不同”的成对见证。
+

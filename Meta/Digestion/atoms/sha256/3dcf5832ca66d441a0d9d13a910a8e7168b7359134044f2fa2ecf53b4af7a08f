@@ -1,0 +1,8 @@
+**推论 57.4（末端等距不改最优值）。** 若 $J:E\to D$ 为等距，则
+
+$$
+\mathfrak r_D((I_{AB}\otimes J)R_E(I_{AB}\otimes J^*))
+=\mathfrak r_E(R_E).
+\tag{57.9}
+$$
+

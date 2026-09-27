@@ -1,0 +1,2 @@
+**推论 1.3。** The complete minimal DFA for $\mathcal A_{k,L}$ has $kL^k+1$ states. For $L=1$, the trim and complete counts are respectively $k$ and $k+1$.
+

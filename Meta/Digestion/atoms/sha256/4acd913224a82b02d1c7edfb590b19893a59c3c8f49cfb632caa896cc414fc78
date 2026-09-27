@@ -1,0 +1,61 @@
+**一个整体成功算子的近似上界。**
+
+令 $\pi$ 为平稳分布，$\mu_e=\pi_iP_{ij}$ 为边 $e=(i,j)$ 的平稳频率。Markov 混合的二阶矩估计给某个只依赖 $P$ 的 $C_2>0$，使全部初始状态 $i$ 都满足
+$$
+\mathbb E_i\|c(X_0,\ldots,X_n)-n\mu\|^2\le C_2n.
+\tag{33.10}
+$$
+例如可对引理31.4的历史扰动估计的每个边坐标取常量实测试向量，再把 $s$ 个平方界相加，取 $C_2=sC_{\rm hist}$。该二阶矩界包含非平稳初始状态的均值偏移。
+
+取 $R=2\sqrt{C_2}/\epsilon$。在每个长度层只保留满足
+$$
+\|c-n\mu\|\le R\sqrt N
+\tag{33.11}
+$$
+的可达向量 $b_{n,ij,c}$，令 $\mathcal W_{\rm good}$ 为所有长度、端点和这些计数向量的**整体线性张成**，$P_{\rm good}$ 为其正交投影。由 （33.10）、$n\le2N$ 和 Markov 不等式，每个初始状态在每个长度层的漏出概率至多
+$2C_2/R^2=\epsilon^2/2$。对相干来源，各长度层正交，故总漏出概率是这些数的等权平均；没有为了计算该范数而实施长度测量。
+
+不同初始状态的档案位于不同首边标签扇区，$P_{\rm good}$ 保持这些扇区。因此误差输入算子没有交叉项，严格有
+$$
+\mathcal T_{\theta;N,W}^*
+[I_M\otimes(I-P_{\rm good})]
+\mathcal T_{\theta;N,W}
+\preceq\frac{\epsilon^2}{2}I_M.
+\tag{33.12}
+$$
+该界对全部相位相同，并可张量任意参考。
+
+对固定 $n,i,j$，所有可达计数满足
+$$
+Dc=e_j-e_i,\qquad\mathbf1^Tc=n.
+$$
+它们处于一个 $r$ 维仿射空间中，且相异整数计数的间距至少一。将半径 $R\sqrt N$ 的球与该仿射空间相交，再用半径 $1/3$ 的不交球比较，可得该层保留的计数个数至多
+$(3R\sqrt N+1)^r$；空交集贡献零，$r=0$ 时最多一个。于是
+$$
+\dim\mathcal W_{\rm good}
+\le m^2W(3R+1)^rN^{r/2}.
+\tag{33.13}
+$$
+
+取等距 $F:\mathcal W_{\rm good}\to K_{\rm good}$，并加一维旗标。用**一个**成功 Kraus 算子 $FP_{\rm good}$ 定义全域通道
+$$
+\mathcal E(X)=FP_{\rm good}XP_{\rm good}F^*
++\operatorname{Tr}[(I-P_{\rm good})X]|\perp\rangle\langle\perp|.
+\tag{33.14}
+$$
+将 $F$ 在所选子空间的正交补上以零延拓。对任意固定档案态 $\tau$，解码明确取为
+
+$$
+\mathcal D(Y)=F^*YF+\langle\perp|Y|\perp\rangle\tau.
+$$
+
+它在整个接收寄存器上完全正且保迹。特别地，若 $P_n$ 表示选中子空间在长度 $n$ 层的投影，（33.14） 的成功项包含全部
+$FP_nXP_{n'}F^*$，包括 $n\ne n'$；所以成功分支保留跨长度相干。
+
+对任意参考输入取纯化，令完整纯目标为 $|\Psi\rangle$、漏出质量为 $d\le\epsilon^2/2$。解码后的成功分支恰为
+$P_{\rm good}|\Psi\rangle\langle\Psi|P_{\rm good}$，其目标重叠为 $(1-d)^2$；失败项为正。因此完整联合半迹误差至多
+$$
+\sqrt{1-(1-d)^2}\le\sqrt{2d}\le\epsilon.
+$$
+额外纯化参考可再偏迹丢弃。编码维数至多 （33.13） 加一，证明 （33.3） 的近似侧上界。所有常数与 $W$ 无关。
+

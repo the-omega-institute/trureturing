@@ -1,0 +1,1 @@
+| [FarkasAlternative.equality_farkas](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Analytic/Convexity/FarkasAlternative.lean)、`inequality_farkas` | 提供一般线性对偶基础；不能省去本文原始可行见证与精确对偶恒等式。 

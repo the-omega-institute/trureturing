@@ -1,0 +1,21 @@
+### 42.1 同字符跨长度合并后的精确容量
+
+对端点 $i,j$ 和长度 $n$，令 $C_n(i,j)$ 为可达总荷集合，并置
+
+$$
+C_{\mathcal I}(i,j)=\bigcup_{n\in\mathcal I}C_n(i,j).
+\tag{42.3}
+$$
+
+对 $c\in C_{\mathcal I}(i,j)$，定义一个跨长度向量
+
+$$
+b_{ij,c}^{\mathcal I}
+=\frac1{\sqrt W}
+\sum_{n\in\mathcal I}
+\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\g(\gamma)=c}}
+\sqrt{p(\gamma)}\,|n,\gamma\rangle,
+\qquad p(\gamma)=\prod_{e\in\gamma}P_e.
+\tag{42.4}
+$$
+

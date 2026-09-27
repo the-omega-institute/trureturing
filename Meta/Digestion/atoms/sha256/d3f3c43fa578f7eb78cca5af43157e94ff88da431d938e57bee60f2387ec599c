@@ -1,0 +1,8 @@
+**定义 236.1（干预 provenance 合同）。** 令 $U$ 是未记录来源，$A$ 是动作，$Y$ 是结果。观察合同给出 $P(Y\mid A=a,H=h)$；干预合同给出
+
+$$
+I_a(\,\cdot\mid h)=P(Y\in\cdot\mid \operatorname{do}(A=a),H=h).
+$$
+
+干预 provenance 包括动作干预支持、来源到干预结果的稳定性假设，以及把观察核连接到 $I_a$ 的识别条件。动作的观察支持不等于干预支持。
+

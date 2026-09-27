@@ -1,0 +1,75 @@
+**证明。** 记
+
+$$
+u=\max_f Z_f(P),\qquad l=\min_fZ_f(P).
+\tag{52.20}
+$$
+
+常动作词策略的质量为一，所以 $0\le l\le1\le u$，且 $\Delta(P)=\max\{u-1,1-l\}$。任何 $Q\in\mathcal C_T$ 在每个策略下质量均为一；取事件 $E=Y_{1:T}$，得 $D_{\mathrm{fb}}(P,Q)\ge\Delta(P)$。
+
+以下构造达到下界的 $Q$。对每个深度 $t$，前缀变量为 $h_t=(a_{1:t},y_{1:t})$。从叶层向根定义非负表
+
+$$
+S_T(h_T)=M_T(h_T)=P(y_{1:T}\mid a_{1:T}),\qquad
+\begin{aligned}
+S_{t-1}(h_{t-1})&=\max_{a_t}\sum_{y_t}S_t(h_{t-1},a_t,y_t),\\
+M_{t-1}(h_{t-1})&=\min_{a_t}\sum_{y_t}M_t(h_{t-1},a_t,y_t).
+\end{aligned}
+\tag{52.21}
+$$
+
+在一个固定父历史上，先选动作，再对所有输出分支求和；各后继分支的后续控制可以独立选择。因此对剩余深度归纳，这两个递推分别给出最大、最小续接质量，根值为 $S_0=u$、$M_0=l$。使用完整动作—输出前缀不扩大确定策略族：在同一实际策略下，过去动作由输出前缀和策略自身确定。
+
+取每层一个固定输出 $y_t^\ast\in Y_t$。从根向前构造 $C_t^+$，初值 $C_0^+=u$，并令
+
+$$
+C_t^+(h,a,y)
+=S_t(h,a,y)
++\mathbf1_{\{y=y_t^\ast\}}
+\left(C_{t-1}^+(h)-\sum_zS_t(h,a,z)\right).
+\tag{52.22}
+$$
+
+若 $C_{t-1}^+\ge S_{t-1}$，则括号由上递推非负，故 $C_t^+\ge S_t$，且对每个动作 $a$ 有 $\sum_yC_t^+(h,a,y)=C_{t-1}^+(h)$。根处不变量成立，因而所有层成立。
+
+再从根构造 $C_t^-$，初值 $C_0^-=l$。令 $d_t(h,a)=\sum_zM_t(h,a,z)$，并取
+
+$$
+C_t^-(h,a,y)=
+\begin{cases}
+\dfrac{C_{t-1}^-(h)}{d_t(h,a)}\,M_t(h,a,y),&d_t(h,a)>0,\\
+0,&d_t(h,a)=0.
+\end{cases}
+\tag{52.23}
+$$
+
+归纳假设 $0\le C_{t-1}^-\le M_{t-1}$ 给出
+$0\le C_{t-1}^-(h)\le M_{t-1}(h)\le d_t(h,a)$。
+因此非零分母时比例在 $[0,1]$，得到 $0\le C_t^-\le M_t$；零分母时父质量也为零。两种情形均满足 $\sum_yC_t^-(h,a,y)=C_{t-1}^-(h)$。
+
+令叶表 $C^\pm=C_T^\pm$。于是 $C^-\le P\le C^+$ 逐项成立，两族表各自满足因果前缀递归，每个反馈下的总质量分别为 $l,u$。若 $u=l$，两者必均为一，原表已经满足定理 52.3，取 $Q=P$。若 $u>l$，取
+
+$$
+\theta=\frac{1-l}{u-l},\qquad
+Q=C^-+\theta(C^+-C^-).
+\tag{52.24}
+$$
+
+由于 $0\le\theta\le1$，所得 $Q$ 非负，位于 $C^-$ 与 $C^+$ 之间。各层也作同一凸组合，给出因果前缀递归，根质量为 $l+\theta(u-l)=1$，故 $Q\in\mathcal C_T$。
+
+对任意策略 $f$ 与事件 $E$，用下标 $f$ 表示沿该策略代入，逐项夹逼及非负性给出
+
+$$
+\begin{aligned}
+\sum_{y\in E}(P_f(y)-Q_f(y))
+&\le\sum_{y\in E}(C_f^+(y)-Q_f(y))
+\le\sum_y(C_f^+(y)-Q_f(y))=u-1,\\
+\sum_{y\in E}(Q_f(y)-P_f(y))
+&\le\sum_{y\in E}(Q_f(y)-C_f^-(y))
+\le\sum_y(Q_f(y)-C_f^-(y))=1-l.
+\end{aligned}
+\tag{52.25}
+$$
+
+于是 $D_{\mathrm{fb}}(P,Q)\le\Delta(P)$，与先前的普遍下界相合。$\square$
+

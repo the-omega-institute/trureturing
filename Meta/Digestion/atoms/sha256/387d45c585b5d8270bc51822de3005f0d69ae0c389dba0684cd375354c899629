@@ -1,0 +1,34 @@
+**引理 2.44（effective extraction under unique expansion）。** Given the computable radix sequence and a Cauchy name for $r=F(S)$, the support $S$ can be extracted uniformly whenever this expansion is unique.
+
+Here uniqueness is among all numerical $0/1$ support expansions for these weights, not merely among supports compatible with a particular event inventory. An alternative numerical expansion need not be realizable by that same inventory.
+
+**Proof.** Suppose its digits through depth $n-1$ have been computed. Let
+
+$$
+y_n=r-\sum_{j<n}\mathbf1_S(j)w_j.
+$$
+
+The two digit possibilities satisfy
+
+$$
+\mathbf1_S(n)=0\Longrightarrow y_n\le t_n,
+\qquad
+\mathbf1_S(n)=1\Longrightarrow y_n\ge w_n.
+$$
+
+Dovetail the strict real comparisons
+
+$$
+y_n<w_n\quad\text{and}\quad y_n>t_n.
+$$
+
+The first certifies digit zero, and the second certifies digit one. Such comparisons are semidecidable from Cauchy names. For a valid expansion they cannot both hold. If neither holds, then necessarily
+
+$$
+t_n=w_n=y_n,
+$$
+
+which supplies the two alternative support expansions from the ambiguity lemma. Under uniqueness this is excluded, so one comparison eventually succeeds. Proceed inductively. $\square$
+
+The search does not decide whether the radix sequence is eventually binary and does not ask for its last nonbinary index.
+

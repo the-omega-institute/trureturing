@@ -1,0 +1,31 @@
+**定理187.1（纯来源上的精确标量优化）。** 令
+$\omega_j=\omega_+(w_j)$。有
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\max_{0\preceq E\preceq I}
+\frac{a_0(E)a_1(E)}{a_0(E)+a_1(E)},
+}
+\tag{187.2}
+$$
+
+其中
+
+$$
+a_0(E)=\operatorname{Tr}(E\omega_0),\qquad
+a_1(E)=\operatorname{Tr}((I-E)\omega_1).
+$$
+
+分母为零时比值取零。等价地，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\min_{q\in[0,1]}
+\frac{q^2+(1-q)^2+
+\|q^2\omega_0-(1-q)^2\omega_1\|_1}{2}.
+}
+\tag{187.3}
+$$
+

@@ -1,0 +1,26 @@
+**定理109.3（两尾纤维为四加二）。** 在本节六维、一重通常纤维、两条实际尾射线的合同中，交换 $A,B$ 后必有
+
+$$
+\boxed{f(A)=4,\qquad f(B)=2.}
+$$
+
+其余方向全部满足 $f=1$。存在接收单线 $P$ 以及
+$D_A,D_B\subset S_0\cap P^\perp$，使
+
+$$
+\dim D_A=3,\qquad\dim D_B=1,
+$$
+
+$$
+S_0=P\oplus(D_A\dotplus D_B),
+$$
+
+$$
+\boxed{
+E_0=(P\otimes F)\oplus
+\bigl((D_A\otimes A)\dotplus(D_B\otimes B)\bigr).
+}
+$$
+
+此外，两条实际尾射线正交。
+

@@ -1,0 +1,18 @@
+**定理293.1（平滑决策与无偏记录的临界取得上界）。** 在（293.1）—（293.3）的来源、权限和风险合同下，完整 $n=1$ 输入及全部维数的先reset访问分别满足
+$$
+\boxed{
+N_{\rm av}^{\rm full}(1,\delta;w)
+\le2\left\lceil\frac{1152M_k}{\eta}\right\rceil,
+}
+\tag{293.22}
+$$
+$$
+\boxed{
+N_{\rm av}^{\rm reset}(n,\delta;w)
+\le2\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\quad(n\ge1).
+}
+\tag{293.23}
+$$
+对每个固定允许的 $k$，当 $g=l-k^2\downarrow0$ 时，两种访问均有实际充分预算 $O_k(g^{-1})$，reset常数与 $n$ 无关。
+

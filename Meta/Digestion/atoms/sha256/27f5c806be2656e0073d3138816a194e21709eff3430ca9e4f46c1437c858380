@@ -1,0 +1,40 @@
+**定理 16.61（和校准的最小闭合状态）。** 在定义16.60下，$\widehat Q$ 恰为只钟任务的全部未来行为商，且
+
+$$
+|\widehat Q|=\frac{|E||H|}{|D|},\qquad
+W_A=E\times\widehat Q,\quad W_B=E\times\widehat Q.
+\tag{16.32}
+$$
+
+上述两个局部空间全部可达，分别实现 $o_A,o_B$ 的最小状态数 $|E||\widehat Q|$；只钟任务的最小状态数为 $|\widehat Q|$。这些下界覆盖定义16.60允许的全部历史依赖候选。
+
+令 $q_0=[(0,0)]$，$\delta([(x,h)])=g(x)+h$，$t=u+v$。达到下界的固定状态律为
+
+$$
+\begin{aligned}
+\mathrm{Init}_{\ell}&=q_0,&
+\mathrm{Update}_{\ell}(q;(u,v,k))&=q+[(t,k)],&
+\mathrm{Decode}_{\ell}(q)&=\delta(q),\\
+\mathrm{Init}_A&=(0,q_0),&
+\mathrm{Update}_A((a,q);(u,v,k))&=(a+u,q+[(t,k)]),&
+\mathrm{Decode}_A(a,q)&=(a,\delta(q)),\\
+\mathrm{Init}_B&=(0,q_0),&
+\mathrm{Update}_B((b,q);(u,v,k))&=(b+v,q+[(t,k)]),&
+\mathrm{Decode}_B(b,q)&=(b,\delta(q)).
+\end{aligned}
+\tag{16.33}
+$$
+
+证明。定理15.12的补偿分类在 $f(a,b)=g(a+b)$ 下只需考察总位置 $x=a+b$。两点 $(x,h),(x',h')$ 的全部未来校准输出相同，恰好是
+
+$$
+\forall t\in E,\quad g(x+t)+h=g(x'+t)+h'
+\quad\Longleftrightarrow\quad
+x'-x\in D,\quad h'-h=-\chi(x'-x).
+\tag{16.34}
+$$
+
+未来原钟增量在两边相消，每个 $t$ 由 $(t,0,0)$ 实现。因此该等价关系正是模 $K$ 相等，且 $|K|=|D|$。$\delta$ 良定义是因为 $g(x+d)+h-\chi(d)=g(x)+h$。式(16.33)随来源平移交换，初始解码为 $g(0)$。任取 $q=[(x,h)]$，来源 $(a,x-a,h)$ 达到任意 $A$ 状态 $(a,q)$；来源 $(x-b,b,h)$ 达到任意 $B$ 状态 $(b,q)$。己方位置不同时空续接已区分，位置相同而 $q$ 不同时式(16.34)给一个共同未来标记区分。
+
+最小性所用的是定理15.12及 [TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §2.1–2.3的封闭未来商机制：此处作用群与实际轨道都是 $S$，初态稳定子为 $\{0\}$，类型顶点只有一个。对任意候选，两个历史若到达同一完整内部状态，确定性更新与精确解码使它们所有共同续接的任务输出相同。因此从候选可达状态到这里的任务商、或相应局部空间，按“取产生它的历史的当前来源类”给出良定义满射。每个来源可达保证满射性，故上述状态数下界也适用于不经 $S\to W$ 因子分解的历史摘要。证毕。
+

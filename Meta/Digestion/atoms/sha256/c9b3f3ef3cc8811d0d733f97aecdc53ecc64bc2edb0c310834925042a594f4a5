@@ -1,0 +1,37 @@
+**定义 21.1（内在中心与归一化 Hamming 风险）。** 沿用
+[定义 18.1](PARITY_HIDDEN_ARROW.md#18-增补十五固定振幅稀疏支持恢复与方向分离)
+的补偿核、均匀平稳起点、实际独立对与连续路径实验，以及
+$`H_{\mathcal E,q}^{\mathrm k},H_{\mathcal E,\mathrm u}^{\mathrm k}, H_{\mathcal E,q}^{\mathrm o},H_{\mathcal E,\mathrm u}^{\mathrm o}`$。
+其中恰好 $`q`$ 元输出的损失为 $`|T\triangle S|/(2q)`$，任意子集输出的损失为
+$`|T\triangle S|/q`$；上标分别表示方向已知与未知。固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$，取
+
+```math
+n=2^d=2M,\qquad \ell=\log M,\qquad
+q=M^{1-\beta+o(1)}\in\mathbb N,\qquad
+\lambda=\frac{s}{n},\qquad a=\frac{rq}{M-q},\qquad
+\tau_M=\log\frac Mq.
+\tag{21.1}
+```
+
+样本数 $`s`$ 为非负整数，支持 $`S\subset C_+`$ 的大小恰为 $`q`$，在整个观测期间固定。
+规则知道 $`d,s,q,r`$，不知道 $`S`$；方向未知时也不知道生成核是否转置。
+置
+
+```math
+\begin{aligned}
+g(\theta)&=\frac{(1+r)^\theta+(1-r)^\theta}{2}-1,\\[0pt]
+\phi&=g'(1)=\frac{(1+r)\log(1+r)+(1-r)\log(1-r)}2\gt0,\\[0pt]
+v&=g''(1)=\frac{(1+r)\log^2(1+r)+(1-r)\log^2(1-r)}2\gt0,\\[0pt]
+\alpha_A&=\frac\beta\phi,\qquad V_A=\alpha_Av,\qquad
+c_M=\frac{\lambda-\tau_M/\phi}{\sqrt\ell},\qquad
+\mathcal L(c)=\Phi\!\left(-\frac{c\phi}{\sqrt{V_A}}\right),
+\end{aligned}
+\tag{21.2}
+```
+
+其中 $`\Phi`$ 为标准正态分布的下分布函数。
+独立高斯稀疏序列中相应的 Hamming 临界轮廓已有
+[Abraham–Castillo–Roquain 定理 7](../../../Library/Dynamics/abraham2024sharp.md)。
+以下定理针对 (21.1) 的补偿核实际观测律，其推导使用一行、两行的相对概率估计与完整后验。
+

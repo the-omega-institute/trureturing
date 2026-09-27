@@ -1,0 +1,27 @@
+**定义 274.1（加权充分块与共轭配对）。** 设 $\{\rho_s:s\in S\}$ 是有限维复 Hilbert 空间上的非空密度矩阵族。将输入空间限制到所有状态支撑的共同张成，并采用 Koashi–Imoto 的极大分解
+
+$$
+\mathcal H=\bigoplus_{j\in J}\mathcal H_j\otimes\mathcal K_j,
+\qquad
+\rho_s=\bigoplus_{j\in J}p_j(s)\rho_j(s)\otimes\omega_j.
+\tag{274.1}
+$$
+
+这里 $J$ 有限，$d_j=\dim\mathcal H_j$，$\omega_j$ 是与 $s$ 无关的辅助密度矩阵，并已限制到其正支撑。令
+
+$$
+A_j(s)=p_j(s)\rho_j(s).
+$$
+
+当 $p_j(s)=0$ 时直接令 $A_j(s)=0$，不赋予任意所选 $\rho_j(s)$ 额外条件。极大性具体要求：每个加权族 $\{A_j(s):s\in S\}$ 的共同复线性交换子是标量；不同块之间不存在酉矩阵 $U$ 和正常数 $c$，使 $A_j(s)=cUA_k(s)U^*$ 对全部 $s$ 成立。这是 Koashi–Imoto 定义1式（90）—（92）的有限维表述。
+
+固定每个 $\mathcal H_j$ 的基底。若 $d_j=d_k$ 且存在酉矩阵 $U$，满足
+
+$$
+A_j(s)=U\overline{A_k(s)}U^*
+\quad\text{对全部 }s,
+\tag{274.2}
+$$
+
+称 $j,k$ 可以共轭配对，允许 $j=k$。自配对块按共同反酉的平方为 $+I$ 或 $-I$ 分成 $J_+$、$J_-$。非自配对的无序对记为 $\mathcal P$。下述定理同时保证这些配对没有歧义。熵采用自然对数。
+

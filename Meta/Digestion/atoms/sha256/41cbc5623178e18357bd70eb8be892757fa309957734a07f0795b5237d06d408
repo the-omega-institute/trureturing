@@ -1,0 +1,33 @@
+## 135. 正交二加一分支的 YXZXY 被首轮向量与严格等倾斜排除
+
+沿用第132节的同一实际七维六终端合同。非退化来源、独立纯接收初态、固定全域接收通道和全部参考—活动记忆—原档案终端均保持不变。两个异常环境及第三个普通方向满足
+
+$$
+X\perp Y,\qquad Z\ne X,Y,
+$$
+
+$$
+\mathcal G_0(X)=U,\quad\dim U=4,\qquad
+\mathcal G_0(Y)=M,\quad\dim M=3,\qquad
+U\cap M=P,\quad\dim P=2,
+$$
+
+$$
+S=U+M,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{135.1}
+$$
+
+普通方向的完整零位、一位纤维为 $P,Q$；两个异常一位纤维为 $F_X=U^\perp$、$F_Y=M^\perp$。所有一位接收因子均正交于 $P$。定义
+
+$$
+T=U\cap P^\perp,\qquad U=P\oplus T,\qquad \dim T=2,
+$$
+
+$$
+\mathbb Cr=S\cap U^\perp,\qquad \|r\|=1,\qquad
+F_X=Q\oplus\mathbb Cr,
+\tag{135.2}
+$$
+
+以及同一个实际五维尾像 $E=V_1S$。
+

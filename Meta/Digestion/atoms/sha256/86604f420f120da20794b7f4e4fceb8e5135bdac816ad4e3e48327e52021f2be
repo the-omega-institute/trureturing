@@ -1,0 +1,17 @@
+**推论206.2（统一的三阶近优刚性）。**
+对任意固定 $K_3<\infty$，在全部满足
+$0\le e_\epsilon-E_\epsilon\le K_3\epsilon^3$
+的对称化 instrument 上，一致有
+
+$$
+\boxed{
+\begin{gathered}
+U_0+V=O_{I,K_3}(\epsilon^2),\qquad
+\rho U_1=O_{I,K_3}(\epsilon^2),\qquad
+M_{\mathrm{def}}=O_{I,K_3}(\epsilon^2),\\
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}=O_{I,K_3}(\epsilon),\\
+(x+a_{\mathrm{eff}}/2)^2+W_\theta=O_{I,K_3}(\epsilon).
+\end{gathered}}
+\tag{206.20}
+$$
+

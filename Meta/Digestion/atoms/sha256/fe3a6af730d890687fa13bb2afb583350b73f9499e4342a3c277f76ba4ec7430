@@ -1,0 +1,29 @@
+### 304.7 经典序贯对应与结论范围
+
+Kaufmann、Cappé、Garivier，
+[*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)，JMLR 17（2016），第7页 Lemma 1 给几乎必然有限停时的逐来源期望次数加权 KL 与停止事件二元 KL 界；第24—25页 Lemma 18、19及式(18)给似然与期望背景。本节对有限内部时间和有限曝光截断作标准链式计算，再对有限终止事件取单调极限。原协议在参照律下不终止，不会使这些有界截断失去有限性。
+
+Jamieson、Malloy、Nowak、Bubeck 的
+[*lil’ UCB: An Optimal Exploration Algorithm for Multi-Armed Bandits*](https://arxiv.org/pdf/1312.7308)，第3页 Theorem 1 重述 Farrell 的结论：iid \(N(\Delta,1)\)，未知非零符号，逐参数单独错误至多 \(\delta<1/2\)，则
+$$
+\limsup_{\Delta\to0}
+\frac{\mathbb E_\Delta T}
+{\Delta^{-2}\log\log(\Delta^{-2})}
+\ge2-4\delta.
+$$
+对应原文为 R. H. Farrell，
+[*Asymptotic Behavior of Expected Sample Size in Certain One Sided Tests*](https://doi.org/10.1214/aoms/1177703731)，Annals of Mathematical Statistics 35(1)，36—72（1964）。
+
+两个合同的系数对应可以直接核对：在未知符号问题中，将有限决定事件分别沿 \(\Delta\to0^+\)、\(\Delta\to0^-\) 取极限，两种错误界使零均值律满足
+$$
+Q(T<\infty)\le2\delta.
+$$
+正态单次 KL 为 \(\Delta^2/2\)，所以 \(2(1-q)\) 对应 \(2-4\delta\)。正态输出有共同 Lebesgue 支配测度，有限链式计算与前面的条件密度合同一致。
+当前两源模型的增益只取正值，并按同一未知参数下的两假设错误求平均；其零信号质量由第303节两条合法风险边证明为至多三分之一，不能从未知符号单独错误合同直接代入。第304.5节以准确的 Bernoulli KL 完成了这一映射。
+
+定理304.1固定整个协议、模型族和尺度参数，结论是趋零子序列上的 limsup。它不提供每个小参数上的双侧匹配阶，也不提供 \(\kappa,g,h\) 同时变化时的任意对角保证。推论304.3的 \(4/3\) 不是已证明的最佳常数；第303节每个增益上的达到界及已知尺度必要界不受改变。
+
+有限内部运行步数在本节只是构造可测有限记录的工具，必要界计算实际来源调用。它不自动成为钟表时长、内部计算、存储或并行历时的下界。未计费额外来源、参数相关控制或不保留共同私种子的条件比较，也不自动满足本节合同。
+
+本节复用成熟的有限链式相对熵、二元数据处理、Pinsker 和停止窗口方法。仓内新增连接是将非终止零信号参照的有限回答质量、按第一分布实际期望曝光计费的事件界及显式参数尺度放进同一个合同，并接回现有两源模型。这里没有声称新的标准序贯不等式、文献核定的原创性、最佳常数、Lean 形式验证或实际仪器实验。
+

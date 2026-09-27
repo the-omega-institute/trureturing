@@ -1,0 +1,36 @@
+**定理153.3（完整参考最优解码 SDP）。** 固定实际接收器后，第 $n$ 个终端的最优误差恰为
+
+$$
+\boxed{
+\begin{aligned}
+\text{最小化}\quad&t,\\
+\text{满足}\quad&X\succeq0,\qquad
+\operatorname{Tr}_{S_n}X=I_K,\\
+&Y\succeq0,\qquad Y-J_n(X)\succeq0,\\
+&tI_{M_{\rm in}}-\operatorname{Tr}_{O_n}Y\succeq0.
+\end{aligned}
+}
+\tag{153.10}
+$$
+
+其中 $Y\in\operatorname{Herm}(O_n\otimes M_{\rm in})$。该半定规划最小值取得，且与其拉格朗日对偶之间没有间隙。
+
+**证明。** 对每个合法 $X$，引理153.2的最小 $t$ 恰为（153.4）的半 diamond 距离。再对解码器 Choi 变量取最小值，即为（153.10）；全部矩阵约束仿射，故这是凸 SDP。
+
+为核对严格可行性，取全混合输出解码器
+
+$$
+X_0=\frac{I_{S_n}}{s_n}\otimes I_K\succ0.
+$$
+
+取 $r>\max\{0,\lambda_{\max}(J_n(X_0))\}$，令
+$Y_0=rI_{O_n\otimes M_{\rm in}}$。则 $Y_0\succ0$、$Y_0-J_n(X_0)\succ0$。再取 $t_0>2s_nr$，有
+$t_0I_{M_{\rm in}}-\operatorname{Tr}_{O_n}Y_0\succ0$。等式约束也成立，所以该 SDP 严格可行。
+
+目标有限且非负：由 $Y\succeq0$ 和偏迹上界，$t\ge0$；合法两通道的半 diamond 距离至多一，又给有限上界。Slater 定理遂保证零对偶间隙及对偶最优值取得。
+
+还可直接核对原最小值取得。限制一条最小化序列的 $t\le t_0$ 后，解码器 Choi 集紧，且
+$\operatorname{Tr}Y\le2t_0$ 使半正定 $Y$ 有界。全部约束闭，故可取收敛子列达到最小值。证毕。
+
+（153.10）中的偏迹必须覆盖整个输出 $O_n=M_{\rm out}\otimes S_n$，不能只迹掉档案因子。目标通道的 Choi 矩阵也按（153.5）取未归一化版本，没有额外除以输入维数二。
+

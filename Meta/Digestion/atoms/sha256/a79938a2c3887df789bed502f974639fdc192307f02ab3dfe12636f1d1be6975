@@ -1,0 +1,21 @@
+**定义 392.1（四路径相关矩阵与见证）。** 取
+
+$$
+R_0=\begin{pmatrix}
+1&0\\
+0&1\\
+1/\sqrt2&1/\sqrt2\\
+1/\sqrt2&i/\sqrt2
+\end{pmatrix},\qquad C_0=R_0R_0^\dagger,
+$$
+
+$$
+B=\begin{pmatrix}
+-1/\sqrt2&-1/\sqrt2&1&0\\
+-1/\sqrt2&-i/\sqrt2&0&1
+\end{pmatrix},\qquad
+W=B^\dagger B,\qquad \nu=3-2\sqrt2.
+$$
+
+$C_0$ 是已知的四维、秩二记录例子：Buscemi–Chiribella–D’Ariano 的 [quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，式 (9)（PDF 第 3 页）给出了对应相关矩阵。其 Heisenberg 通道约定与这里的 Schrödinger 约定相对偶；按定义 389.1 的 ket 行坐标，使用该矩阵的逐项复共轭。本节用这个已知例子承载总成功权重的支撑障碍与定量见证。
+

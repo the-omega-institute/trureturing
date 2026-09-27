@@ -1,0 +1,12 @@
+**定理 ER9.SH.1（联合来源的小噪声锐风险）。** 对上述完整合同，
+
+$$
+R_{\mathbb R^9}(\varepsilon)=2\varepsilon\quad(0\le\varepsilon\le1/6),
+\qquad
+R_H(\varepsilon)=R_{\Delta_9}(\varepsilon)=\frac{20}{9}\varepsilon
+\quad(0\le\varepsilon\le1/7).
+\tag{ER9.SH.1}
+$$
+
+因而在 $[0,1/7]$ 上，输出质量一的绝对代价为 $2\varepsilon/9$，随后再要求非负不增加全局 minimax 值。对 $\varepsilon>0$，这项代价相对于实输出风险的比例为 $1/9$；在零噪声时三种风险与绝对代价都为零，这个比例没有定义。本结论比较全局值，不声称每个固定输入的 $H$ 中心和概率中心相同。证明在以下各节给出。
+

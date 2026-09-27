@@ -1,0 +1,44 @@
+## 定理 ST40.1：同时实现任意规定逻辑动力学与移动编码的物理Hamiltonian
+
+在ST37及ST39的一条时间路径上，给定连续逻辑Hermitian矩阵$h_L(t)$、常数$\hbar>0$和$\Delta>0$。定义
+
+$$
+\boxed{
+H_{\rm phys}(t)=i\hbar K(t)+\pi_t(h_L(t))+\Delta(I-P_t).
+}
+\tag{ST40.1}
+$$
+
+逻辑酉$V_L$由$i\hbar\dot V_L=h_LV_L$的同类Dyson级数构造。令
+
+$$
+V(t)=G(t)\left[\pi_0(V_L(t))+e^{-i\Delta t/\hbar}(I-P_0)\right].
+\tag{ST40.2}
+$$
+
+则$V$酉，满足$i\hbar\dot V=H_{\rm phys}V$、$V(0)=I$，且
+
+$$
+\boxed{\mathcal D_{\pi_t}\circ\operatorname{Ad}_{V(t)}\circ\mathcal N_0
+=\operatorname{Ad}_{V_L(t)}.}
+\tag{ST40.3}
+$$
+
+**证明。** $K$反Hermitian，故$H_{\rm phys}$Hermitian。方括号在$P_0$和其补空间上分别酉，因此整体酉。求导并用(ST39.4)验证Schrödinger方程。令$\widetilde Q_t=GQ_0G^\dagger$，它与$\pi_t(M_d)$交换，并有$\operatorname{tr}(F_{11}(t)\widetilde Q_t)=1$。于是输出为
+
+$$
+\widetilde Q_t\,\pi_t(V_L\rho V_L^\dagger).
+$$
+
+应用(ST36.4)，或者使用$\Theta_t$下的偏迹，即得到(ST40.3)。实际运输后的综合征态无需恰好等于预先参数化的$\sigma_t$，只需它仍在综合征因子且迹一。∎
+
+这是主动控制的明确数学实现；原系统若不提供$H_{\rm phys}$，不能把它视为自然出现。所增加的几何项满足可直接读出的上界
+
+$$
+\|i\hbar K\|\le\hbar\left(\frac1d\sum_{ij}\|\dot F_{ij}\|+\|\dot P\|\right).
+$$
+
+它不包含真实设备的控制带宽、能耗或局域可实现性。无跃迁驱动的普遍思想归于既有工作。[ST19-Berry]
+
+若一条闭路上$\pi_T=\pi_0$且$h_L=0$，则$G(T)$与全部逻辑矩阵单位交换。在$E_0\cong F_0\otimes\mathbb C^d$中，闭路作用具有$V_F\otimes I_d$的形式：综合征可以发生非平凡运输，逻辑通道仍为恒等。这个结论使用了整个逻辑代数的运输，不能只由$P_T=P_0$推出。
+

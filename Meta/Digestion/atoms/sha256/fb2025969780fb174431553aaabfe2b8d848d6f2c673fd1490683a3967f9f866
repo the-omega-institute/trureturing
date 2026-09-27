@@ -1,0 +1,9 @@
+**证明。** 此时 $r_2=c$，逐词关系为 $p(w)=\sqrt{\widehat p(w)}c^{|w|/2}$。对有限子族直接作 Cauchy–Schwarz：
+$$
+\sum_w\sqrt{\widehat p(w)}c^{|w|/2}
+\le\left(\sum_w\widehat p(w)\right)^{1/2}
+    \left(\sum_w c^{|w|}\right)^{1/2}
+\le\sqrt{\frac c{1-c}}.
+$$
+第一和由辅助柱不交控制，第二和由不同正长度及几何级数控制。可数版由有限子集的非负和极限得到，正是定理 4.6.2 的同一专门化。证毕。
+

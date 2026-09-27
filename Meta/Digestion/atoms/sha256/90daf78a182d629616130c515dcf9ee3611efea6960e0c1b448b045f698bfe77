@@ -1,0 +1,75 @@
+**定理 183.2（偏向较小参数时的三个最优区间）。** 对 $0<b\le1$，有
+$$
+R^*(b)=\frac{1-b}{2}-G(b),
+\qquad
+G(b)=
+\begin{cases}
+c,&0<b\le b_-,\\[2pt]
+\displaystyle\frac{q^2+bc}{b-c+2q},&b_-<b<b_+,\\[6pt]
+0,&b_+\le b\le1.
+\end{cases}
+\tag{183.3}
+$$
+第一个区间可用均衡 $02$ 输入，读到 $|+\rangle$ 时猜 $H_1$；最后一个区间始终猜 $H_0$ 即最优。中间区间令
+$$
+s_*:=\frac{q-c}{b-c+2q},\qquad t_*:=1-s_*=
+\frac{b+q}{b-c+2q}.
+\tag{183.4}
+$$
+此时 $0<s_*<1$，输入 $\sqrt{t_*}|+\rangle+\sqrt{s_*}|1\rangle$，并以
+$|\eta_*\rangle=\sqrt{t_*}|+\rangle-\sqrt{s_*}|1\rangle$ 的投影为猜 $H_1$ 的效应，即达到（183.3）。全部最优值都无需参考系统；端点可以存在额外的最优决策，不要求最优实现唯一。
+
+证明。 加权通道差 $\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}$ 的 Schur 符号为
+$$
+M=\begin{pmatrix}-b&-q&z\\-q&-b&-q\\z&-q&-b\end{pmatrix},
+\qquad z=\frac D2-bv=b+2c.
+\tag{183.5}
+$$
+其输出的迹恒为 $-b$，故给定输入的误判率为 $\pi_1$ 减去加权输出正部的迹。由（182.7）及纯化，只需对人口 $p$ 最大化 $\operatorname{Tr}(D_pMD_p)_+$。
+
+为求该最大值，可以将 $p_0,p_2$ 对称化，但须保留相干旗标。令 $U$ 交换能级 $0,2$，将任意纯输入 $|\Psi\rangle$ 替换成
+$$
+\frac{|\Psi\rangle|0\rangle_F+(U\otimes I)|\Psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{183.6}
+$$
+新输入的人口为 $((p_0+p_2)/2,p_1,(p_0+p_2)/2)$。对输出旗标去相干后，得到两个等权且酉等价的 Hermitian 块，迹范数之和等于原输入的迹范数。去相干不增加 Hermitian 迹范数，所以未去相干的新输出至少一样好；又因迹固定，正部迹也至少一样大。再由（182.7），可用同人口的信号纯态达到新值。
+
+因此取 $p_1=s$、$p_0=p_2=(1-s)/2$。在 $|-\rangle$ 方向，矩阵 $D_pMD_p$ 的特征值为 $-(b+c)(1-s)\le0$，其中
+$b+c=[D+2b(1-v)]/4>0$；对称块为
+$$
+B_s=\begin{pmatrix}
+c(1-s)&-q\sqrt{s(1-s)}\\
+-q\sqrt{s(1-s)}&-bs
+\end{pmatrix}.
+\tag{183.7}
+$$
+它至多有一个严格正特征值。
+
+当 $c\ge q$ 时，$cI-B_s$ 的对角元非负，且行列式为
+$$
+s\bigl[c^2-q^2+s(bc+q^2)\bigr]\ge0.
+\tag{183.8}
+$$
+所以正部迹至多为 $c$；$s=0$ 达到该值。此条件恰为 $b\le b_-$。
+
+当 $-ba^2<c<q$ 时，令 $L=b-c+2q>b+q>0$、$g=(q^2+bc)/L>0$。下面给出对任意人口都有效的上界。令 $r=(1,-1,1)^{\mathsf T}$，则
+$$
+M-g rr^{\mathsf T}\preceq0.
+\tag{183.9}
+$$
+确实，反对称特征值为 $-2(b+c)<0$；对称块为
+$\left(\begin{smallmatrix}2(c-g)&\sqrt2(g-q)\\\sqrt2(g-q)&-b-g\end{smallmatrix}\right)$，其行列式为
+$2[g(b-c+2q)-(bc+q^2)]=0$，而 $g-c=(q-c)^2/L>0$，故两对角元非正。由（183.9），
+$$
+D_pMD_p\preceq gD_prr^{\mathsf T}D_p,
+\qquad \operatorname{Tr}(D_pMD_p)_+\le g.
+\tag{183.10}
+$$
+最后一个不等式来自 $\operatorname{Tr}X_+=\max_{0\le E\le I}\operatorname{Tr}(EX)$ 及 $\lVert D_pr\rVert^2=1$。
+
+取（183.4）的 $s_*,t_*$，则
+$c t_*+q s_*=q t_*-b s_*=g$。因此 $|\eta_*\rangle$ 是（183.7）的特征值 $g$ 所属单位向量。另一个对称特征值非正，反对称特征值亦非正，故所给测量达到正部迹 $g$。该中间条件恰为 $b_-<b<b_+$。
+
+当 $c\le-ba^2=-q^2/b$ 时，（183.5）的对称块
+$\left(\begin{smallmatrix}2c&-\sqrt2q\\-\sqrt2q&-b\end{smallmatrix}\right)$ 两对角元非正、行列式 $-2(bc+q^2)\ge0$；反对称特征值也为负，故 $M\preceq0$，所有输入的增益均为零。此条件恰为 $b\ge b_+$。公式在两处分界连续相接。最后，$h_0=(1+u_0)/2>a>a^2$，故 $2+u_0+u_1-4a^2>D$；结合分母次序得到所述阈值范围。证毕。
+

@@ -1,0 +1,48 @@
+**定理 191.2（串联误差的乘积望远镜界）。** 有
+
+$$
+\boxed{
+\left\|R^{[k]}-\widehat R^{[k]}\right\|
+\le
+\sum_{i=1}^{k}
+\left(\prod_{j=i+1}^{k}g_j\right)
+\delta_i
+\left(\prod_{j=1}^{i-1}\widehat g_j\right),
+}
+\tag{191.1}
+$$
+
+其中
+
+$$
+\widehat R^{[k]}
+=\widehat R_k\circ\cdots\circ\widehat R_1.
+$$
+
+### 证明
+
+乘积望远镜恒等式为
+
+$$
+R_k\cdots R_1-\widehat R_k\cdots\widehat R_1
+=
+\sum_{i=1}^{k}
+R_k\cdots R_{i+1}
+(R_i-\widehat R_i)
+\widehat R_{i-1}\cdots\widehat R_1.
+$$
+
+逐项取算子范数，使用次乘法性以及 $g_j,\widehat g_j$ 的定义，即得（191.1）。证毕。
+
+若全部阶段的两种增益都不超过 $G$，则
+
+$$
+\left\|R^{[k]}-\widehat R^{[k]}\right\|
+\le
+G^{k-1}\sum_{i=1}^{k}\delta_i.
+$$
+
+但这只是统一粗界；式（191.1）保留了每个局部误差在因果链中的具体放大位置。前段误差会经过更多后续阶段，后段误差则不会被同样的尾部增益放大。
+
+---
+

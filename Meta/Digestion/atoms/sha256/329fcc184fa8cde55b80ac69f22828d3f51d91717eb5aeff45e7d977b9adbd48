@@ -1,0 +1,50 @@
+**命题 76.4（共享原 floor 的精确同步判据）。** $E_2$ 对平稳对与连续路径实验相同，
+且是 Borel 集。固定紧区间 $J\Subset(\beta_*,1)$，沿用
+$\chi_{Q,j}=2e^{-z_0}f_j$，对 $H>0$、$j>0$、$k<0$ 定义
+
+$$
+\mathcal L_{Q,j,k}(H)=\{L\in\mathbb Z:
+ |L\ln2+\ln\chi_{Q,j}|\le H,
+ |L\ln2+\ln\chi_{Q,k}|\le H\}.
+\tag{76.7}
+$$
+
+只保留原区间 $\mathcal J_{Q,L}$ 与 $J$ 相交的 $L$。
+令 $A^{(2)}_{Q,H}(J)$ 为所有这些原区间与 $J$ 的交之并，则
+
+$$
+E_2\cap J=\bigcup_{H\in\mathbb N}\limsup_n A^{(2)}_{Q_n,H}(J).
+\tag{76.8}
+$$
+
+证明。第 74 章统一相对比较使两种实际均值与同一个 $2^L\chi_{Q,j}$ 相同到 $1+o(1)$。
+同步正有限极限使 (76.7) 两项最终落在一个固定范围内。
+反过来，无穷多次满足同一 $H$ 使两个实际均值同时处于同一个正紧区间，
+抽取共同子序列即可取得两个正有限极限。
+这也证明两种实验的集合相同；不要求其整数 floor 中心完全相同。
+有限层为半开区间有限并，可数操作给 Borel 性。证毕。
+
+共享整数条件在未限制参数位置前等价于
+
+$$
+\left\lceil\max\left\{\frac{-H-\ln\chi_{Q,j}}{\ln2},
+                         \frac{-H-\ln\chi_{Q,k}}{\ln2}\right\}\right\rceil
+\le
+\left\lfloor\min\left\{\frac{H-\ln\chi_{Q,j}}{\ln2},
+                         \frac{H-\ln\chi_{Q,k}}{\ln2}\right\}\right\rfloor.
+\tag{76.9}
+$$
+
+只核对 $|\ln\chi_{Q,j}-\ln\chi_{Q,k}|\le2H$ 不能替代整数交集与参数位置条件。
+其比值还有精确阶乘表达式
+
+$$
+\frac{\chi_{Q,j}}{\chi_{Q,k}}
+ =(a\lambda)^{Q(j-k)}(b\lambda)^{P(j-k)}
+       \frac{k_k!\,l_k!}{k_j!\,l_j!},
+\tag{76.10}
+$$
+
+其中 $a,b$、$k_j,l_j$ 仍取原固定幅度与原计数线。
+该式保留共同实现中的算术关系，不将两个边缘命中率相乘。
+

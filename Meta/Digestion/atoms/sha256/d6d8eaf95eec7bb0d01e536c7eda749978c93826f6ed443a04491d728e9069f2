@@ -1,0 +1,45 @@
+#### 2.8.1 Presentation, extension, and canonical forbidden depths
+
+For a finite binary word $s$, write $[s]$ for its clopen cylinder in
+
+$$
+X=\{0,1\}^{\mathbb N}\cong\mathbb Z_2,
+\qquad \mu([s])=2^{-|s|}.
+\tag{TM.652}
+$$
+
+The root is the empty word and has depth zero. Fix a computably enumerable event presentation $\mathcal P$ containing at most one final forbidden cylinder at each positive depth. Repeated announcements of that same cylinder are harmless. No depth-zero cylinder is permitted, and a small-depth event may arrive arbitrarily late. Set
+
+$$
+U=\bigcup_{C\in\mathcal P}C,
+\qquad E=X\setminus U,
+\qquad M=\mu(E),
+\qquad R=\{s:E\cap[s]\ne\varnothing\}.
+\tag{TM.653}
+$$
+
+The final complement $E$ is effectively closed. The depth restriction implies $U\ne X$: if the cylinders covered the compact space $X$, some finite subfamily would cover it, while for any finite set $F$ of positive depths,
+
+$$
+\mu\left(\bigcup_{h\in F}C_h\right)
+\le\sum_{h\in F}2^{-h}<1.
+\tag{TM.654}
+$$
+
+Thus $E$ is always nonempty, including when $M=0$.
+
+Let $\mathcal B$ be the canonical shortest forbidden-prefix basis,
+
+$$
+\mathcal B
+=\{[s]: |s|\ge1,\ [s]\subseteq U,\ [s^-]\not\subseteq U\},
+\tag{TM.655}
+$$
+
+where $s^-$ deletes the last digit. These cylinders are pairwise disjoint and cover $U$. Define their depth support
+
+$$
+S=\{h\ge1:\text{some }[s]\in\mathcal B\text{ has }|s|=h\}.
+\tag{TM.656}
+$$
+

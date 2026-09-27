@@ -1,0 +1,20 @@
+**定理 52.9（有限时域的精确因果修复误差）。** 保留定义 52.1 的有限动作、输出与自由控制合同。令 $\mathcal C_T$ 为满足定理 52.3 的因果概率表全体，定义
+
+$$
+D_{\mathrm{fb}}(P,Q)=
+\max_{\substack{f\text{ 为确定性因果策略}\\ E\subseteq Y_{1:T}}}
+\left|
+\sum_{y\in E}\bigl(P(y\mid a^f(y))-Q(y\mid a^f(y))\bigr)
+\right|.
+\tag{52.18}
+$$
+
+原表的反馈响应可以不归一化，因此这里比较事件质量，不把它称为两个概率分布的总变差。则
+
+$$
+\min_{Q\in\mathcal C_T}D_{\mathrm{fb}}(P,Q)=\Delta(P).
+\tag{52.19}
+$$
+
+该最小值可以由对完整有限表的前后递推达到。
+

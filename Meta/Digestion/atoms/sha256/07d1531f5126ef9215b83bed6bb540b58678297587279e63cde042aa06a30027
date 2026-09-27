@@ -1,0 +1,4 @@
+## 40. 局部接口、transition cocycle 与全局恢复
+
+**本批导航。** 本节把局部边界的拼接进一步分成三个层次：读出因子在交叠上的一致、局部坐标或 frame 的 transition 数据、以及沿路径运输时的 holonomy。它接回仓内 `LocalFactorOverlapCompatibility`、`ContinuousLocalFactorGluing`、`GlobalFrameCoboundaryCriterion`、`HistoricalCongruence` 与 `CumulativeInverse`，但不把这些分别已证的支点冒充一条“全局时空统一”定理。
+

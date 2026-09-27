@@ -1,0 +1,17 @@
+**定义 1.2（同一物理接收边界）。** 对固定 \(n,\Theta,c\)，允许编码和解码通道
+\[
+\mathcal E_n:\mathcal L(H_n)\to\mathcal L(K),\qquad
+\mathcal D_n:\mathcal L(K)\to\mathcal L(H_n)
+\]
+依赖 \(n,\Theta,c\) 和已知装置，但不能依赖实际 \(\vartheta\)、未知输入或不可访问的参考。要求
+\[
+(\operatorname{id}_J\otimes(\mathcal D_n\mathcal E_n)
+ \otimes\operatorname{id}_M)\Omega_{\vartheta,n}(\rho)
+=\Omega_{\vartheta,n}(\rho)
+\quad(\vartheta\in\Theta,\ \rho\in\mathcal D(J\otimes M)).
+\tag{1.4}
+\]
+两个通道均在整个声明载体上完全正且保迹。最小化的资源 \(k_n(\Theta,c)\) 是 \(\dim K\)；所有跨越编码、解码间隔而保留输入相关信息的接收系统都包含在 \(K\) 中，包括经典标签。\(J\) 和活动 \(M\) 原样保留，接收器无权访问它们。量词是每个允许相位下的完整联合态恢复，不只恢复相位平均后的档案边缘。
+
+被动顺序接收允许每步仅操作接收寄存器与最新发出位，把该发出位清回独立纯空白后丢弃；在每个事先指定的有限终端提供式（1.4）的解码。发射计数、已知权重表、门描述、空白、路由、实际历时和输出端口另行计量，\(k_n\) 不计它们为免费取得的来源信息。原已获记录保持不变。
+

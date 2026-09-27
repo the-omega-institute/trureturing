@@ -1,0 +1,41 @@
+### 96.2 选择通常秩方向与 Schur 补
+
+先选一条秩恰为 $r$ 的射线作为无穷远，并固定环境坐标使它为 $[1:0]$。这是同一个铅笔的固定参数变换；共同输入核为零与所有射影秩读数不变。此时 $\operatorname{rank}B_1=r$。
+
+再用固定可逆行、列变换把 $B_1$ 化为
+$\operatorname{diag}(I_r,0_k)$。这一步只用于秩的代数证明，不把非酉变换解释为接收器的物理操作。写变换后的 $B_0$ 为
+$$
+B_0=
+\begin{pmatrix}T&B\\C&D\end{pmatrix}.
+$$
+在有限参数 $[z]=[\lambda:1]$ 上，
+$$
+P(\lambda)=
+\begin{pmatrix}
+T-\lambda I_r&B\\
+C&D
+\end{pmatrix}.
+\tag{96.2}
+$$
+
+对于 $T-\lambda I_r$ 可逆的全部 $\lambda$，Schur 补给
+$$
+\operatorname{rank}P(\lambda)
+=r+\operatorname{rank}\bigl(D-C(T-\lambda I_r)^{-1}B\bigr).
+$$
+通常秩 $r$ 是全部参数下的最大秩，故括号内矩阵在这些 $\lambda$ 上为零。它是恒零的有理矩阵函数。取无穷远处的 Laurent 展开，即得到
+$$
+D=0,\qquad CT^jB=0\quad(j=0,1,2,\ldots).
+\tag{96.3}
+$$
+具体地，$(T-\lambda I)^{-1}
+=-\sum_{j\ge0}\lambda^{-j-1}T^j$ 对充分大的 $|\lambda|$ 收敛，常数项与各负次幂系数逐个为零。
+
+因为 $D=0$，若 $Bx=0$ 则输入 $(0,x)$ 同时被两个系数消去。共同输入核为零迫使 $x=0$。因此
+$$
+B:\mathbb C^k\longrightarrow\mathbb C^r
+\quad\text{单射，特别 }k\le r.
+\tag{96.4}
+$$
+这已证明 $2k\le n$。
+

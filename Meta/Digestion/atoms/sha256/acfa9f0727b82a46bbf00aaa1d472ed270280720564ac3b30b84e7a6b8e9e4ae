@@ -1,0 +1,21 @@
+## 106. 二重纤维剩余空间的乘积生成维数至少为二
+
+沿用第89、101、103节的七维接收器、独立纯初态、同一固定全域接收通道，以及前六个完整参考—活动记忆—原档案终端合同。来源固定为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+设保留实际轨迹的固定酉替代具有通常纯环境纤维维数二。沿用位等距 $V_0,V_1$、共同二维环境 $F$ 和 $R_i=\operatorname{ran}V_i$。第101节给
+$$
+R_0\subset S\otimes F,\quad \dim S=5,\quad Q=S^\perp,\quad\dim Q=2,
+$$
+$$
+R_1=(Q\otimes F)\oplus N,\qquad N\subset S\otimes F,\quad\dim N=3,
+$$
+其中 $N$ 的通常乘积纤维维数为零。令
+$$
+T_N=\operatorname{span}\{y\in S:\exists z\ne0,\ y\otimes z\in N\}.
+$$
+

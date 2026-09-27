@@ -1,0 +1,2 @@
+* **state-family completion**：测试集上的残差趋于零，例如
+  $\sup_{t\in T}\|P_{V_n}^{\perp}t\|\to0$（有界测试集的直观写法；仓内形式化支点使用 $\operatorname{ENNReal}$ 上确界）；

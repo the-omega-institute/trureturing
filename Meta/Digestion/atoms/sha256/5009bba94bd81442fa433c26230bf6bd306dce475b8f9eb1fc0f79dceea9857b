@@ -1,0 +1,12 @@
+**边界。** 第 26 节闭合了第 24 节 P4 过渡的一个明确受限版本，并由第 28 节给出真实非空的七度混合族。第 16 节在纯四边环族允许高边十二度，仍比第 26 节的统一十八度要求更强；两项结果各有其邻接范围。任意最小度数七或八的给定剖分，以及最低六度的完整 CFMP 猜想，均未由这些条件覆盖。剩余义务仍包括更密集的低边图、共享对边信息和最大体积角结构中的平坦四面体排除。
+
+## 30. 文献输入与数学边界
+
+本卷的外部问题锚点是 Costantino–Frigerio–Martelli–Petronio 的 *Triangulations of 3-manifolds, hyperbolic relative handlebodies, and Dehn filling*，arXiv:math/0402339，Conjecture 0.8。原命题允许部分截断四面体；本卷保留第 1 节全部边界分量亏格至少二的严格超理想子情形。已知流形双曲化与给定同一剖分的几何实现须分别对待。
+
+局部六变量公式、长度域和单调性继续使用 Xinrong Zhao, *Combinatorial Ricci Flows and Hyperbolic Structures on a Class of Compact 3-Manifolds with Boundary*, arXiv:2601.15174v2，Lemma 2.2、Proposition 2.4、Lemma 3.4。该版本的 Theorem 1.1 给出一般最低九度结果。共同长度上的共体积及几何识别使用此前已注明的 Luo–Yang、Feng–Ge–Hua 工作。本卷未把这些既有输入计作新发现，也未由有限文献检索宣称优先权。
+
+引理 25.1 的受控邻边上界 $70/99$ 和引理 25.2 的高色邻边上界 $25/\sqrt{726}$ 都是混合坐标比较的直接实例及端点代数化简。其余角度预算、七度实现、边链环循环推导及混合流形族由前述命题给出。完整 CFMP、任意最低八度剖分和无附加条件的最低六度情形仍未解决。
+
+## 31. 六度过渡边星的正对边余量
+

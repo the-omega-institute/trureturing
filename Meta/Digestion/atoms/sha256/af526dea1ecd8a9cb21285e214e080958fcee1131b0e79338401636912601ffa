@@ -1,0 +1,12 @@
+### 21.5 推论：实现词数、全局相位误差与前缀度量
+
+实际实现的长度 $n$ 词恰好有 $n+1$ 个。令 $D_n=\max_j(q_{j+1}-q_j)$，对所有基于长度 $n$ 词的实值估计函数定义
+\[
+\mathcal R_n^{\rm phase}=\inf_f\sup_{x\in[0,1)}|x-f(O_n(x))|.
+\]
+则
+\[
+\boxed{\mathcal R_n^{\rm phase}=D_n/2\geq\frac1{2(n+1)}.}
+\tag{21.6}
+\]
+

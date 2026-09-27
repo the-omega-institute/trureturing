@@ -1,0 +1,9 @@
+**引理146.2（共同规范纯化的线性概率距离）。** 对所有 $0<p<1$，
+
+$$
+\delta_0\le\sqrt2\,p^{3/2},\qquad
+\delta_1\le\sqrt2\,p,\qquad
+\delta\le\sqrt2\,p.
+\tag{146.11}
+$$
+

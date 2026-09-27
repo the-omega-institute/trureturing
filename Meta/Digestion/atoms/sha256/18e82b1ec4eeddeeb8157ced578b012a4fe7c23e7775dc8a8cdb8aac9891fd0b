@@ -1,0 +1,7 @@
+**命题 18.1。** 在上述同一个盒中，
+
+$$\boxed{-DK(l)=\sum_\sigma R_\sigma^{\mathsf T}G_\sigma R_\sigma,
+\qquad \mu D\preceq-DK(l)\preceq MD.}$$
+
+其中 $DK$ 表示曲率映射的导数，$D$ 单独出现时表示度数矩阵。若同一全局边多次出现在同一四面体，所有出现仍被分别读取。
+

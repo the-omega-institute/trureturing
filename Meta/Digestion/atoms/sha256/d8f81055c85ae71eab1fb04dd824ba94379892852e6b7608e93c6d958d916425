@@ -1,0 +1,42 @@
+**命题162.4（正历时的归一化权重界）。** 以
+$\|\alpha-\beta\|_{\mathrm{TV}}=\tfrac12\int|d\alpha-d\beta|$
+约定概率测度的全变差距离，则
+
+$$
+\|w_t\mu_G-w_u\mu_G\|_{\mathrm{TV}}
+\le\frac{\|c_t-c_u\|_\infty}{m},
+\tag{162.13}
+$$
+
+以及
+
+$$
+\boxed{
+W_1(\nu_t^c,\nu_u^c)
+\le\|h_t-h_u\|_\infty
++\frac{\|c_t-c_u\|_\infty}{m}.
+}
+\tag{162.14}
+$$
+
+所以已标定时间占比的极限分布同样弱连续。
+
+**证明。** 设 $\delta=\|c_t-c_u\|_\infty$。有
+$|\bar c_t-\bar c_u|\le\delta$，以及
+
+$$
+\begin{aligned}
+\int_G\left|
+\frac{c_t}{\bar c_t}-\frac{c_u}{\bar c_u}
+\right|d\mu_G
+&\le
+\frac{\delta}{\bar c_t}
++\frac{|\bar c_t-\bar c_u|}{\bar c_t}\\
+&\le\frac{2\delta}{m}.
+\end{aligned}
+$$
+
+取一半即为（162.13）。先在同一权重 $w_t\mu_G$ 下改变读出，再改变权重；第一步的 $W_1$ 成本至多为 $\|h_t-h_u\|_\infty$。第二步因输出区间直径为一，其 $W_1$ 成本至多为权重测度的全变差距离。三角不等式给（162.14）。证毕。
+
+（162.13）的全变差结论只比较同一群上的权重，不声称移动读出后的分布在全变差下连续。例如读出恒为参数 $t$ 时，输出测度为 $\delta_t$，其 Wasserstein 距离连续，而两个不同参数的全变差距离仍为一。
+

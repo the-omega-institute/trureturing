@@ -1,0 +1,16 @@
+**引理155.2（共同相位群及真实通道极限）。** $G$ 是紧群，且对任意 $N\ge0$，
+
+$$
+\overline{\{g^n:n\ge N\}}=G.
+\tag{155.5}
+$$
+
+每个 $z\in G$ 都能由某个 $n_k\to\infty$ 的实际轮次子列实现，并且
+
+$$
+\mathcal R_{n_k}\longrightarrow\mathcal R_z.
+\tag{155.6}
+$$
+
+因而每个 $\mathcal R_z$ 都是从原始二维输入到 $M\otimes K$ 的 CPTP 通道。
+

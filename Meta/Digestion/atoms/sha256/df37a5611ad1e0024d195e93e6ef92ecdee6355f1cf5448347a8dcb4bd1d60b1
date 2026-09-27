@@ -1,0 +1,16 @@
+**推论212.3（值的一阶光滑与二阶跳跃）。**
+在正噪声接触邻域内，完整最优值 $E$ 对 $(\epsilon,h)$ 为 $C^1$，
+其梯度局部 Lipschitz；但在切换线上不具有连续的 $h$ 二阶导数。
+准确地，左右单侧二阶导数满足
+
+$$
+\boxed{
+E_{hh}\big|_{\rm 右}-E_{hh}\big|_{\rm 左}
+=\epsilon\frac{q_{th}^2}{q_{tt}}
+=2\epsilon C(\epsilon,b(\epsilon))>0,
+}
+\tag{212.12}
+$$
+
+其中 $q$ 的导数在 $(\epsilon,b(\epsilon),0)$ 取值。
+

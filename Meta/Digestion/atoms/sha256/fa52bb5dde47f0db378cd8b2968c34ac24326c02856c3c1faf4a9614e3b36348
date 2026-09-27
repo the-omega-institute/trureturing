@@ -1,0 +1,42 @@
+### 57.1 固定合同
+
+本节把标准的 Schmidt 纯化与末端数据处理工具用于完整量子 tester 下的因果修复比较；纯化存在性和末端数据处理在此承担已有工具的角色。
+
+固定有限维非零端口 $A,B$，分别表示晚输入与早输出。令
+
+$$
+M\succeq0\quad\text{作用于 }A\otimes B,
+\qquad\operatorname{Tr}_B M=I_A.
+\tag{57.1}
+$$
+
+晚输出空间 $D$ 上的一个扩展是
+
+$$
+R\succeq0\quad\text{作用于 }A\otimes B\otimes D,
+\qquad\operatorname{Tr}_D R=M.
+\tag{57.2}
+$$
+
+因此 $\operatorname{Tr}_{BD}R=I_A$，它是一个全局静态通道的 Choi 算符。因果归一化修复集合为
+
+$$
+\mathcal S_D=
+\{S\succeq0:\operatorname{Tr}_D S=I_A\otimes\sigma,
+\ \sigma\succeq0,\operatorname{Tr}\sigma=1\}.
+\tag{57.3}
+$$
+
+采用吸收全转置后的 tester 配对，所有反馈归一化算符是 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$。事件遍历全部 $0\preceq F\preceq C\otimes I_D$，包括任意量子参考、记忆与最终测量。记
+
+$$
+\begin{aligned}
+D_D(R,S)&=\max_{C,F}|\operatorname{Tr}((R-S)F)|,\\
+\mathfrak r_D(R)&=\min_{S\in\mathcal S_D}D_D(R,S),\\
+\delta(M)&=\max_C|\operatorname{Tr}(MC)-1|.
+\end{aligned}
+\tag{57.4}
+$$
+
+因为 $\operatorname{Tr}(R(C\otimes I_D))=\operatorname{Tr}(MC)$，全部扩展具有相同的每个反馈总响应及相同的归一化缺陷 $\delta(M)$。所用集合有限维且紧，式（57.4）的极值达到。
+

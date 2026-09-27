@@ -1,0 +1,43 @@
+#### 5.1.10 圆周幂观察：高频本身不等于更细分辨率
+
+把圆周写成乘法群 $S^1$。对正整数 $k$ 定义 $h_k(z)=z^k$。其核是 $k$ 阶单位根群 $\mu_k$。对非空有限频率集合 $K\subset\mathbb N_{>0}$，联合读数满足
+
+$$
+\ker(h_K)=\bigcap_{k\in K}\mu_k=\mu_g,
+\qquad g=\gcd(K),\qquad h_K(z)=(z^k)_{k\in K}.
+\tag{TM.343}
+$$
+
+证明：$g$ 整除每个 $k$，故 $z^g=1$ 推出所有 $z^k=1$。反向由有限 Bézout 恒等式 $g=\sum_{k\in K}a_kk$ 得 $z^g=\prod_k(z^k)^{a_k}=1$。因此联合读数分离圆周点恰在 $g=1$ 时成立，并有显式恢复
+
+$$
+\sum_{k\in K}a_kk=1
+\quad\Longrightarrow\quad
+z=\prod_{k\in K}(z^k)^{a_k}.
+\tag{TM.344}
+$$
+
+负指数在圆周上合法且连续。这给联合像上的连续逆，故 $h_K:S^1\to h_K(S^1)$ 为同胚；没有宣称全部自由输出元组都有共同原像。
+
+例如 $4$ 和 $9$ 都不是素数，但 $9-2\cdot4=1$，所以
+
+$$
+u=z^4,\quad v=z^9
+\quad\Longrightarrow\quad z=vu^{-2},
+\qquad
+h_{\{4,9\}}(S^1)=\{(u,v)\in S^1\times S^1:u^9=v^4\}.
+\tag{TM.345}
+$$
+
+相容方程的必要性直接成立；反向若 $u^9=v^4$，令 $z=vu^{-2}$，则 $z^4=v^4u^{-8}=u$，且 $z^9=v^9u^{-18}=v$。这里 gcd 为一保证的是恢复与联合分离；它不像互素有限模数的 CRT 那样让整个自由乘积成为联合像。共同来源的类型不能混用。
+
+单个频率越来越高并不自动细化旧观察。准确地说，
+
+$$
+h_\ell\text{ 可经 }h_k\text{ 因子化}
+\quad\Longleftrightarrow\quad k\mid\ell.
+\tag{TM.346}
+$$
+
+若 $k\mid\ell$，取幂 $\ell/k$ 即得因子化；反向要求 $\mu_k\subseteq\mu_\ell$，对原始 $k$ 阶单位根检查即得整除。因此倍频 $h_\ell$ 可以是 $h_k$ 的更粗后处理：$z$ 与多出的相位被合并。数字上的“更高”不是观察偏序中的“更细”；增加一份具有互补核的读数才可能解除混叠。
+

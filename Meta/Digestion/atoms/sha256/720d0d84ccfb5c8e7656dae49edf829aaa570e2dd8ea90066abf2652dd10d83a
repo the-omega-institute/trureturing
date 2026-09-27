@@ -1,0 +1,8 @@
+### 11.6 与既有形式接口的对应及适用边界
+
+一般最小像因子化由 [RealizedImageKernelFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean) 的 `realized_image_unique_factorization_iff_reverse_kernel` 提供；本节 (11.4)、(11.7) 实际计算了这一族的核，而不是仅重新命名该判据。[RetainedResidueRecoveryCriterion](../../../D5/S3/ConceptDynamics/ResidueCoding/RetainedResidueRecoveryCriterion.lean) 的 `retained_residue_recovery_iff_product_capacity` 使用正的两两互素保留模数和有界整数来源；这里路径有效模数通常不互素，来源是循环群，故使用最小公倍数与实际像，而不套用模数乘积容量。[ObserverMorphismComposition](../../../D5/S3/Observer/Naturality/ObserverMorphismComposition.lean) 规定状态正向、协议反向的评价复合；这里边词保持不变，(11.9) 明确给出状态侧运输。
+
+本节的有限图、全相位实际来源、无相位守卫和已知仿射规则都承担作用。限制初始支持可减少实际类数；增加隐藏权限或联合参考会扩大所需边界；只知道几条边缘相位律不能代替同一个 $t$ 的连续运输。无限模塔也不由本节的有限停止推出实际线程存在：要恢复原来源仍需 [InverseLimitCompletion](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 中分别声明的 `ThreadComplete` 和 `SeparatesStates`。
+
+新增内容是这一受限网络的普通数学推导，未作 Lean 核验，也未声明文献原创优先权。它给出的统一关系是具体的：顶点与边提供空间接法，已知边词给时序记录，$D_v$ 给最小未来边界，$k_\gamma$ 给恢复旧边界所需的最小附加记忆；这些表达的可恢复性由 (11.9)--(11.15) 的实际像和纤维决定。
+

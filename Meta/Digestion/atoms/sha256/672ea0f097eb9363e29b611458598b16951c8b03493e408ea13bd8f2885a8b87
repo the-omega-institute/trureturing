@@ -1,0 +1,12 @@
+**引理199.2（临界最优器的共同斜率）。** 当
+$\epsilon\downarrow0$、$h\to h_c$ 时，全部
+$\Gamma\in\mathcal A_\epsilon(h)$ 都满足
+
+$$
+\boxed{\mathcal P(\Gamma)\longrightarrow\Phi'_{h_c}>0.}
+\tag{199.6}
+$$
+
+即对任意 $\epsilon_n\downarrow0$、$h_n\to h_c$ 和任意选择的相应最优器，
+上述斜率极限相同；不要求最优器本身具有唯一极限。
+

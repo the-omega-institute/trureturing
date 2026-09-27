@@ -1,0 +1,32 @@
+**定义 192.1（归一额外成本与固定比较区间）。** 固定 $0<a<1$，仍考虑精确生成全部 $\mathcal T_u$、$u\in J_a=(2a-1,1)$ 的有限维固定程序。定义
+$$
+D(u)=I_Q(\rho_u)-I_r(u),\qquad
+e(u)=\frac{I_Q(\rho_u)}{I_r(u)}-1=(1-u^2)D(u),
+\qquad I_r(u)=\frac1{1-u^2}.
+\tag{192.1}
+$$
+由固定均衡 $02$ 读出，$D,e\ge0$。取第189节的比较区间
+$$
+I_a=[u_-,u_+],\qquad
+u_- =\frac{3a-1}{2},\quad u_0=a,\quad u_+=\frac{1+a}{2},
+\qquad |I_a|=1-a.
+\tag{192.2}
+$$
+沿用（189.3）的三个实系数 $\alpha_-,\alpha_0,\alpha_+$，即令 $h_i=(1+u_i)/2$、$\ell_i=1-h_i$ 后满足
+$$
+\sum_i\alpha_i h_i=0,\qquad
+\sum_i\alpha_i\ell_i=1,\qquad
+\sum_i\alpha_i\sqrt{h_i\ell_i}=0.
+\tag{192.3}
+$$
+令
+$$
+C_a=\max(|\alpha_-|,|\alpha_+|)>0,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+$$
+$$
+\Gamma(a)=\frac{\mu_a^2(1-a)(1-u_+^2)}{4C_a^2}>0.
+\tag{192.4}
+$$
+$C_a>0$ 由第189.1节 $|\alpha_-|+|\alpha_+|>0$ 得到。
+

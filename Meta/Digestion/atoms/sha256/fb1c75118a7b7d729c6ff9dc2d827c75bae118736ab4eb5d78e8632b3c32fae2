@@ -1,0 +1,34 @@
+**引理 77.2（原修复值的半代数性）。** $e(a,\varepsilon)$ 的图是有理系数半代数集。
+
+证明。引入非负实变量 $A,B,E,C$，满足
+
+$$
+A^2=a,\quad B^2=1-a,\quad E^2=\varepsilon,\quad C^2=1-\varepsilon.
+$$
+
+这些条件唯一指定相应正平方根，式（77.2）的向量成为 $Ax+EBz+Cy$ 与 $Bx'-EAz'$，全部矩阵元均为有理系数多项式。
+
+修复的约束为
+
+$$
+S\succeq0,\qquad
+\operatorname{Tr}_D S=I_A\otimes\sigma,\qquad
+\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{77.3}
+$$
+
+再对 $X=R_{a,\varepsilon}-S$ 使用第 55 节的两个符号对偶，上界 $N(X)\le t$ 等价于存在厄米矩阵 $P_\pm,n_\pm$，使
+
+$$
+\begin{gathered}
+P_\pm\succeq0,\qquad P_\pm\succeq\pm X,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes n_\pm,
+\qquad\operatorname{Tr}n_\pm\le t.
+\end{gathered}
+\tag{77.4}
+$$
+
+每个复厄米矩阵以实部和虚部作为实变量。正性可用全部厄米主子式的非负性表达，等价地也可实化为实对称半定矩阵；因而式（77.3）—（77.4）是有限有理多项式条件。
+
+$\mathcal C$ 是非空紧集：正性与偏迹归一化给 $\operatorname{Tr}S=2$，而其余条件闭合。因此连续目标的极小值达到。对偶最优值也由第 55 节保证达到，所以在上述可行性公式中投影掉矩阵见证，准确得到 $t\ge e(a,\varepsilon)$。再排除同参数下的所有更小可行 $t$，正如式（76.7），得到函数图的有理半代数定义。$\square$
+

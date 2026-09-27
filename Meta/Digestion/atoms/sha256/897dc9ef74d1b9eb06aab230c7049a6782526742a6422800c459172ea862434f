@@ -1,0 +1,49 @@
+**定理 113.1（最坏均值的精确主项）。** 在本批固定模型中，存在正整数 $m$，使
+
+$$
+\boxed{
+\mathscr K(R-h)
+=\frac{1+\sqrt5}{32}\,h^{-2}
+\bigl(1+O(h^{1/m})\bigr)
+\qquad(h\downarrow0).
+}
+\tag{113.1}
+$$
+
+因此第 104 节未定的首系数准确为
+
+$$
+\boxed{c=\kappa^2=\frac\phi{16}=\frac{1+\sqrt5}{32}.}
+\tag{113.2}
+$$
+
+证明。第 104.1 条已给幂指数二和下界
+
+$$
+\liminf_{h\downarrow0}h^2\mathscr K(R-h)\ge\kappa^2.
+$$
+
+对每个充分小的 $0<h<R$，选择实际最大化仪器 $\Gamma_h\in\mathfrak B_{R-h}$，使 $M(\Gamma_h)=\mathscr K(R-h)$。第 88—93 节保证最大值取得，且这些最大化仪器趋近最近失效集合。令 $\epsilon_h=1-r(\Gamma_h)$。校准约束与定理 112.3 给
+
+$$
+h\le R-\delta(\Gamma_h)
+\le(\kappa+o(1))\sqrt{\epsilon_h}.
+$$
+
+另一方面，第 93 节与推论 104.2 给一致的同装置关系
+
+$$
+\epsilon_h M(\Gamma_h)\longrightarrow1.
+$$
+
+于是
+
+$$
+h^2\mathscr K(R-h)
+=\frac{h^2}{\epsilon_h}
+\bigl[\epsilon_h M(\Gamma_h)\bigr]
+\le(\kappa+o(1))^2(1+o(1)).
+$$
+
+与下界匹配得到式（113.2）。第 104.1 条已有的实代数主项展开再给式（113.1）的分数次余项；这里未声称已经确定最小可能的 $m$ 或次主项系数。$\square$
+

@@ -1,0 +1,92 @@
+**定理50.1（非正交二周期环境的累计支撑下界）。** 对 $N\ge3$，任意这种接收器满足
+$$
+\boxed{D\ge\left\lceil\frac{3N}{2}\right\rceil.}
+\tag{50.1}
+$$
+
+证明。对两份来源列写
+$$
+\Psi_n^i=m_0A_n^i+m_1B_n^i,
+$$
+并令
+$$
+P=\operatorname{span}\{A_n^i:1\le n\le N\},\qquad
+Q=\operatorname{span}\{B_n^i:1\le n\le N\}.
+$$
+令 $V_i x=V(x\otimes|i\rangle)$。每个 $A_n^i\otimes\eta_n$ 属于 $V_0K$，每个 $B_m^j\otimes\eta_m$ 属于 $V_1K$。两个全域像正交，而每对实际环境内积非零，因此
+$$
+P\perp Q.
+$$
+
+记单轮子空间
+$$
+G_n=\operatorname{span}\{A_n^0,A_n^1\},\qquad
+H_n=\operatorname{span}\{aA_n^0+B_n^0,aA_n^1+B_n^1\},\qquad
+Q_n=\operatorname{span}\{B_n^0,B_n^1\}.
+$$
+首步 $G_1=\mathbb Cp$、$H_1=\operatorname{span}(p,q)$，其中 $p\in P,q\in Q$ 是正交单位向量；$\dim G_n=\dim H_n=2$ 对 $n\ge2$ 成立。逐步有
+$$
+V_0H_n=G_{n+1}\otimes\eta_{n+1},\qquad
+V_1G_n=Q_{n+1}\otimes\eta_{n+1}.
+$$
+第一式在 $P$ 上的输入投影满足 $P_PH_n=G_n$，因为 $a\ne0$。这些维数可从 $\dim H_1=2$ 直接归纳：$V_0$ 单射给 $\dim G_{n+1}=\dim H_n$，而 $H_n$ 到 $G_n$ 的投影满秩且两者均由两个向量生成，故 $n\ge2$ 时都恰为二维。进一步，$n\ge3$ 时 $\dim Q_n=2$，所以四个 $A_n^i,B_n^i$ 线性独立；这也与完整参考 Bell 档案的 Schmidt 秩四在纯可逆编码下保持一致。
+
+定义累计奇偶空间
+$$
+E_m=G_2+G_4+\cdots+G_{2m},\qquad
+O_m=G_1+G_3+\cdots+G_{2m-1},
+$$
+及 $e_m=\dim E_m,o_m=\dim O_m$，只使用指标不超过 $N$ 的项。
+
+同一偶数轮环境给
+$$
+\dim(H_1+H_3+\cdots+H_{2m-1})=e_m.
+$$
+该输入空间在 $P$ 上的投影是 $O_m$，且包含非零 $q\in H_1\cap Q$。因此其投影核至少一维，得到
+$$
+e_m\ge o_m+1.\tag{50.2}
+$$
+同一奇数轮环境又给
+$$
+\dim(H_2+H_4+\cdots+H_{2m})
+=\dim(G_3+G_5+\cdots+G_{2m+1})\le o_{m+1}.
+$$
+其 $P$ 投影是 $E_m$，故
+$$
+o_{m+1}\ge e_m.\tag{50.3}
+$$
+由 $o_1=1$、$e_1=2$ 归纳可得
+$$
+e_m\ge m+1,\qquad o_m\ge m.\tag{50.4}
+$$
+
+只要累计空间中的最大终端指标不超过 $N-1$，$V_1$ 将 $E_m$ 送入 $Q\otimes A$，将 $O_l$ 送入 $Q\otimes B$。不同环境射线给
+$$
+E_m\cap O_l=0.\tag{50.5}
+$$
+同一等距还给
+$$
+\dim Q\ge\max(e_m,o_l).\tag{50.6}
+$$
+
+若 $N=2m+1$，取截至 $N-1$ 的 $E_m,O_m$。式（50.4）—（50.6）给
+$$
+\dim P\ge2m+1,\qquad \dim Q\ge m+1,
+$$
+故 $D\ge3m+2=\lceil3N/2\rceil$。
+
+若 $N=2m\ge4$，取截至 $N-1$ 的 $E_{m-1},O_m$。此时 $e_{m-1}\ge m,o_m\ge m$，故
+$$
+\dim P\ge2m,\qquad \dim Q\ge m,
+$$
+得到 $D\ge3m=\lceil3N/2\rceil$。证明完毕。
+
+定理50.1在五终端给出 $D\ge8$。对 $N\ge6$，它比第41节正交交替构造的 $\lceil3N/2\rceil-1$ 上界高一维，因此非正交二周期纯环境不能改善该既有构造的容量。下面对二步回归子类给出精确值，并进一步排除六终端的九维等号情形。
+
+记 $V_i x=V(x\otimes|i\rangle)$，初态为 $k$。前两轮资料为
+$$
+V_0k=pA,\quad V_1k=qA,
+\qquad V_0p=uB,\quad V_1p=vB,\quad V_0q=wB.
+$$
+$p,q$ 正交归一，$u,v,w$ 正交归一。两步回归指 $w\parallel k$。若 $w=\zeta k$，则重选同一环境射线的单位代表 $B'=\zeta B$，并将所有偶数轮对应的接收系数按该坐标选择重标，首个 $w$ 便成为 $k$。这是同一个 $V$ 的坐标变化，不是在非正交环境上实施独立相位的环境酉；物理接收通道保持相同。以下使用这一共同相位约定，写 $w=k$。
+

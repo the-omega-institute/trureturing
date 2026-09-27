@@ -1,0 +1,46 @@
+### 76.6 任意可逆 A 都有同样的锐例
+
+上述反例不依赖 $A$ 的两个奇异值相同。对任意可逆 $A$，取引理76.1中 $A^*A$ 的正交单位特征基及特征值 $\mu,\nu>0$，仍记
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+在三维接收基 $(u_0,u_1,u_2)$ 中定义
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu&0&0\\
+0&0&0\\
+0&\mu\sqrt{s/\Delta}&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu&0&0\\
+0&0&\nu\sqrt{s/\Delta}
+\end{pmatrix},
+\tag{76.13}
+$$
+再按（76.1）在实际 $Q\otimes J$ 的正交单位基中定义 $M$。
+
+此时
+$$
+X=\operatorname{diag}(\mu,0,\mu^2s/\Delta),\qquad
+Y=\operatorname{diag}(0,\nu,\nu^2s/\Delta),
+\qquad
+L_1L_0^*=\sqrt{\mu\nu}\,|u_1\rangle\langle u_0|.
+$$
+两个 $u_2$ 环境方向上的 $MM^*$ 对角元分别为
+$$
+\frac{\mu s+\nu^2}{\Delta}=1,\qquad
+\frac{\mu^2+\nu s}{\Delta}=1,
+$$
+且其交叉块为零。因此同样直接得到
+$$
+I-MM^*=hh^*,\qquad
+h=\frac{\sqrt\mu\,u_1\otimes e_0-\sqrt\nu\,u_0\otimes e_1}{\sqrt s},
+\qquad \|h\|=1.
+\tag{76.14}
+$$
+纤维算子 $L(z)$ 的第一列是 $\sqrt\mu\,z_0u_0+\sqrt\nu\,z_1u_1$，后两列分别是 $\mu\sqrt{s/\Delta}\,z_0u_2$ 与 $\nu\sqrt{s/\Delta}\,z_1u_2$。非零 $z$ 使第一列及后两列中至少一列非零，故每条非零纤维仍恰为秩二。引理76.1的实际坐标恒等式保证它保持的是 $Az\otimes z$ 纤维，而不是把一般 $A$ 偷换成单位算子。
+

@@ -1,0 +1,35 @@
+**定理 50.2（截止后的完整仪器与终端通道）。** 一轮扩展仪器可写成
+
+$$
+\text{继续}:q\mathcal N,\qquad
+\text{点击 }x:\Lambda_x\mathcal C_x,\qquad
+\text{截止}:Y\longmapsto\eta\operatorname{Tr}[\mathcal N(Y)]|\partial\rangle\langle\partial|.
+$$
+
+它是完整 CP 仪器，且以概率一终止。最终通道为
+
+$$
+\boxed{
+\Psi_\eta(Y)=
+\left[\sum_{n\ge1,x}q^{n-1}
+ \Lambda_x\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}[(I-G_\eta)Y],
+\qquad
+G_\eta=\sum_{n\ge1}q^{n-1}E_n.
+}
+$$
+
+其中 $0\le G_\eta\le I$ 是截止前实际点击的效果。
+
+证明。三类分支均 CP；其迹之和为
+
+$$
+q\operatorname{Tr}\mathcal N(Y)
++\sum_x\operatorname{Tr}\mathcal C_x(Y)
++\eta\operatorname{Tr}\mathcal N(Y)=\operatorname{Tr}Y.
+$$
+
+连续 $m$ 轮仍未终止的概率为 $q^m\operatorname{Tr}\mathcal N^m(\rho)\le q^m$，故终止概率为一。首次点击在第 $n$ 轮须先经历 $n-1$ 次未点击且硬币均允许继续，因而分支权重为 $q^{n-1}$。这些分支的迹给 $G_\eta$；其余质量进入正交旗标，得到保迹终端通道。$\square$
+
+这里的 $\partial$ 只表示本次被截止，没有认证原始仪器永不点击。它与第 38 节的未解决旗标使用相同输出位置，便于比较；含义仍由实际运行协议决定。
+

@@ -1,0 +1,4 @@
+**定义 456.1（新增综合所连接的结构）。** 本批使用的项目入口为 Estimation 下的五个模块：DecisionRisk 中的 GarblingIncreasesBayesRisk、BoundedRiskSimulatorTransport、FiniteBayesRiskDominanceCriterion，以及 SequentialDecisionRisk 中的 FiniteDeficiencyRiskTransfer、FiniteDeficiencyTriangle。其作用分别是精确后处理与风险单调性、固定模拟器的逐状态误差、有限情形的全任务逆向判据、最佳模拟误差向最佳风险的转移，以及同一中间实验上的误差合成。
+
+新增承重关系在第 448—453 节：将风险曲线、实际模拟器与达到误差下界的任务接到同一对翻转／擦除机制，算出双向替代区域；再把这套比较接到真实的条件独立联合、具有相同边缘的模拟联合，以及多次独立擦除与复制记录，分别得到明确的决策差异。经典实验比较、TV 期望控制、核复合和几何等待分布作为这些推导的前置，不申报为新创的通用理论。本批是项目结构上的普通数学综合与哲学解释，不作外部数学原创申报。
+

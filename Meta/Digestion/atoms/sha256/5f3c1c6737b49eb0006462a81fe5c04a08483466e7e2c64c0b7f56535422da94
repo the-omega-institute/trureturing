@@ -1,0 +1,4 @@
+**推论 1.22（scope of block quotient preservation）。** When complete blocks and terminal tails are both retained as continuation tests, expansion gives the common test correspondence required by the continuation-intertwining theorem in A卷第2.17节. Identify concatenation of encoded tests by concatenating their expanded words and taking the unique decomposition again whenever the concatenation is legal. With the composed raw transitions, costs, and roofs, the corresponding quotient is preserved.
+
+**Proof.** Unique decomposition makes expansion a bijection, independent of the starting state. The specified concatenation makes it composition-preserving. Retaining the raw legality condition gives equivalence of the domains of action. The preceding proposition supplies transition intertwining and the required observation, cost, and raw-duration identities; the state map is the identity on the represented raw states. $\square$
+

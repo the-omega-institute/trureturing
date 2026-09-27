@@ -1,0 +1,66 @@
+**定理32.4（精确与固定正误差的全环面增长阶）。** 对 primitive
+$P$，令 $r=\operatorname{rank}G(\ker_{\mathbb Z}A)$。当 $n\to\infty$ 时，
+
+$$
+N_n\asymp_{P,g}n^r.
+\tag{32.23}
+$$
+
+所以对每个固定 $0<\epsilon<1$，
+
+$$
+\boxed{
+k_n^{(0)}(\mathbb T^q)\asymp_{P,g}n^r,\qquad
+k_n^{(\epsilon)}(\mathbb T^q)
+\asymp_{P,g,\epsilon}n^{r/2}.
+}
+\tag{32.24}
+$$
+
+证明。先作上界。固定端点 $i,j$ 后，任意两个 $n$ 步路径的计数差在
+$\ker_{\mathbb Z}A$，所以相应荷差落在维数 $r$ 的实空间
+$G(\ker_{\mathbb R}A)$。每个荷的范数不超过
+$n\max_e\|g_e\|$，不同整数荷的欧氏距离至少为一。因此
+$C_n(i,j)$ 是一个 $r$ 维仿射子空间内、半径 $O(n)$ 球中的一分离集。
+以半径 $1/3$ 的互不交小球比较该仿射空间的体积，得到
+$|C_n(i,j)|=O(n^r)$。再对最多 $m^2$ 个端点对求和。若 $r=0$，每个非空扇区只有一个荷，结论同样成立。
+
+下界须产生实际可实现的荷，不能只数实仿射切片。取引理32.1中的严格正整数循环计数 $c$，置 $L=\mathbf1^{\mathsf T}c>0$。固定顶点
+$i$。primitive 性给整数 $N$，使每个长度 $t\ge N$ 都有
+$i\to i$ 支持闭走法。对 $t=N,\ldots,N+L-1$ 各选一份闭走法计数
+$r_t$。当 $n\ge N$ 时，令
+
+$$
+k=\left\lfloor\frac{n-N}{L}\right\rfloor,\qquad
+t=n-kL\in\{N,\ldots,N+L-1\},\qquad
+q_n=kc+r_t.
+\tag{32.25}
+$$
+
+它满足 $\mathsf Dq_n=0$、$\mathbf1^{\mathsf T}q_n=n$，且对所有充分大的
+$n$，每条边都有 $(q_n)_e\ge\kappa n$，其中 $\kappa>0$ 是固定常数。
+
+从整数核中选 $z_1,\ldots,z_r$，使
+$Gz_1,\ldots,Gz_r$ 实线性无关；（32.4）保证可选。取足够小的固定
+$\delta>0$，则对所有整数系数 $|\ell_a|\le\delta n$，向量
+
+$$
+q_n+\sum_{a=1}^r\ell_a z_a
+\tag{32.26}
+$$
+
+每个坐标均严格为正，仍平衡且总长为 $n$。其支持包含原图全部边，故由
+Euler 回路实现为从 $i$ 开始的 $n$ 步闭走法。线性无关性使不同
+$(\ell_1,\ldots,\ell_r)$ 给不同总荷，于是
+
+$$
+|C_n(i,i)|\ge(2\lfloor\delta n\rfloor+1)^r
+=\Omega(n^r).
+\tag{32.27}
+$$
+
+$r=0$ 时用一条实际路径即可。上下界给（32.23）。精确容量由定理32.3给出；固定正误差容量由商环面的 $r$ 维分离数与定理31.6给出。证明完毕。
+
+零误差侧区分全部相干字符，固定正误差侧的有效分辨尺度为
+$n^{-1/2}$；同一商维数控制两侧，但增长指数相差一倍。这是对具体边标签模型及完整联合合同的结论。
+

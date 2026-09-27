@@ -1,0 +1,18 @@
+**定义 4.6.1（同一 iid 律及按词长计费的库存）。** 固定已知有限字母表 $A$，$|A|\ge2$，及严格正、归一化概率向量 $p=(p_a)_{a\in A}$。在 $Y=A^{\mathbb N_0}$ 上取同一 iid 律 $\mu_p$，记
+$$
+p(w)=\mu_p([w])=\prod_{i<|w|}p_{w_i},\qquad p(\varnothing)=1.
+$$
+最终禁词族 $\mathcal P$ 在每个正词长至多一个词，不含空词；可有限或无限，可重复报告同一词。设
+$$
+U=\bigcup_{w\in\mathcal P}[w],\qquad E=Y\setminus U.
+$$
+算法额外使用完整 c.e. 呈示和统一可计算的 $p_a$ 实数名，严格正性及归一化为承诺。对查询 $v$，“无禁祖先”指最终不存在 $w\in\mathcal P$ 满足 $w\preceq v$，包含 $w=v$ 的情形；有限阶段尚未看到祖先不构成这一承诺的证书。
+
+对实数 $q>1$，用自然对数定义
+$$
+c_q=\sum_{a\in A}p_a^q,\qquad
+r_q=c_q^{1/(q-1)},\qquad
+H_q(p)=\frac{\log c_q}{1-q}=-\log r_q.
+$$
+由于至少两个 $p_a$ 严格为正且和为一，每个 $p_a<1$，故 $0<c_q<\sum_a p_a=1$，进而 $0<r_q<1$。
+

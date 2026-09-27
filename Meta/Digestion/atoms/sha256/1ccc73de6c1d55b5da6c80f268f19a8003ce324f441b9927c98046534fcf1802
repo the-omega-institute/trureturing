@@ -1,0 +1,98 @@
+**定理 2.1（同源相位族的精确接收容量）。** 在定义1.1—1.3的同一来源与权限下，
+\[
+\boxed{k_0=1,\qquad k_n(\Theta,c)=d_n(\Theta,c)\quad(n\ge1).}
+\tag{2.1}
+\]
+特别地，若 \(\Theta\) 是无限集合，则
+\[
+\boxed{k_n(\Theta,c)=\sum_{i,j=0}^1|\mathcal Q_n^{ij}|.}
+\tag{2.2}
+\]
+来源不必允许不同相位之间的相干叠加。式（2.1）的下界适用于全部满足（1.4）的 CPTP 编解码。
+
+证明。定义实际档案列
+\[
+\chi_{ij}^{n}(\vartheta)
+=\sum_{w\in\mathcal W_n^{ij}}A(w)e^{i\vartheta Q_c(w)}|w\rangle.
+\tag{2.3}
+\]
+逐步展开等距，得到
+\[
+T_{\vartheta,n}|i\rangle
+=\sum_{j=0}^1\chi_{ij}^{n}(\vartheta)\otimes m_j.
+\tag{2.4}
+\]
+因为 \(m_0,m_1\) 线性独立，所有来源块的档案支撑恰为
+\[
+S_n(\vartheta)=\operatorname{span}\{\chi_{ij}^{n}(\vartheta):i,j\in\{0,1\}\}.
+\]
+对每个首末扇区及实际出现的荷，置
+\[
+g_{ijq}=\sum_{\substack{w\in\mathcal W_n^{ij}\\Q_c(w)=q}}A(w)|w\rangle.
+\tag{2.5}
+\]
+这些向量非零，不同 \((i,j,q)\) 的支撑不交，因而线性独立。式（2.3）变成 \(\chi_{ij}^{n}(\vartheta)=\sum_qe^{iq\vartheta}g_{ijq}\)。于是共同线性包
+\[
+W_n=\operatorname{span}_{\vartheta\in\Theta}S_n(\vartheta)
+\tag{2.6}
+\]
+的维数正是（1.6）。即使 \(\Theta\) 无限，这也只是有限个字符的线性代数：若评价行张成不是全秩，其消去向量恰给字符的线性依赖。
+
+接着证明单个实际编解码必须在整个 \(W_n\) 上可逆，而非仅在各个相位下分别可逆。对任意 \(\vartheta,\varphi\in\Theta\)，取
+\[
+z_t=e^{ic_t(\varphi-\vartheta)},\qquad D(z)=\operatorname{diag}(1,z),
+\qquad P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+\]
+内积第一变量共轭线性时，四个同首末扇区内积组成的 \(2\times2\) 矩阵为
+\[
+F_n(\vartheta,\varphi)_{ij}
+=\langle\chi_{ij}^{n}(\vartheta),\chi_{ij}^{n}(\varphi)\rangle,
+\qquad
+F_n=D(z_1)P D(z_2)\cdots P D(z_n).
+\tag{2.7}
+\]
+每个词的首位给第一项 \(D(z_1)\)，之后的转移振幅平方给 \(P\)，新位的相位给相应 \(D(z_t)\)，逐词求和即得。故
+\[
+\det F_n=(-\alpha^2)^{n-1}\prod_{t=1}^n z_t\ne0.
+\tag{2.8}
+\]
+至少一个扇区内积非零，所以任意两份 \(S_n(\vartheta),S_n(\varphi)\) 都不正交。
+
+令 \(\mathcal L=\mathcal D_n\mathcal E_n\)，并在 \(JM\) 准备 Bell 态。其实际输出是纯态
+\[
+|\Psi_\vartheta\rangle
+=\frac1{\sqrt2}\sum_{i,j}\chi_{ij}^{n}(\vartheta)
+ \otimes|i\rangle_J\otimes m_j,
+\tag{2.9}
+\]
+这里只为书写把档案置于左侧。由于 \(|i\rangle\otimes m_j\) 线性独立，\(H_n\mid JM\) 的左 Schmidt 支撑就是 \(S_n(\vartheta)\)。式（1.4）保留这份联合纯态；对其 Schmidt 展开逐个夹取右侧矩阵单位，得到
+\[
+\mathcal L(X)=X\qquad(X\in\mathcal L(S_n(\vartheta))).
+\tag{2.10}
+\]
+
+取同一个通道 \(\mathcal L\) 的 Stinespring 等距 \(V:H_n\to H_n\otimes E\)。式（2.10）意味着存在单位向量 \(e_\vartheta\in E\)，使
+\[
+Vx=x\otimes e_\vartheta\qquad(x\in S_n(\vartheta)).
+\tag{2.11}
+\]
+具体地，纯态输出先使每个单位向量的像为该向量与环境的乘积；再对同一子空间中的两个基向量及其叠加使用（2.10），环境向量就必须相同。这是精确不扰动与参考保持的标准机制，亦见 Koashi—Imoto 的不扰动态族分解。[^phase_ki]
+
+若 \(x\in S_n(\vartheta),y\in S_n(\varphi)\) 的内积非零，等距性给
+\[
+\langle x,y\rangle
+=\langle Vx,Vy\rangle
+=\langle x,y\rangle\langle e_\vartheta,e_\varphi\rangle.
+\]
+所以 \(\langle e_\vartheta,e_\varphi\rangle=1\)，即两环境向量相同。（2.8）对任意相位对均成立，故所有 \(e_\vartheta\) 是同一向量。线性性于是强迫
+\[
+Vw=w\otimes e\quad(w\in W_n),\qquad
+\mathcal L|_{\mathcal L(W_n)}=\operatorname{id}.
+\tag{2.12}
+\]
+这没有增设可制备相位叠加的假设；共同线性包上的恒等性是同一物理通道与实际支撑非正交关系的后果。
+
+因此 \(\mathcal E_n\) 在 \(\mathcal L(W_n)\) 上单射。比较复线性维数，\((\dim W_n)^2\le(\dim K)^2\)，得到所需下界。反向取 \(W_n\) 到 \(\mathbb C^{\dim W_n}\) 的等距，把补空间用固定态替换；解码在编码像上用逆等距，在补空间同样用固定态替换。与[上下文几何卷命题42.5](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#424-全域通道延拓与原权限内的终端运输)相同的 Kraus 完成使两映射在全域 CPTP，复合在 \(\mathcal L(W_n)\) 上恒等，故达到下界。\(n=0\) 的档案一维。
+
+若 \(\Theta\) 无限，不同整数指数的有限线性组合在其上为零时，乘以足够高的 \(e^{i\vartheta}\) 次幂即得到在无限多个不同点为零的普通多项式，故全部系数为零。各字符线性独立，得到（2.2）。证明完毕。
+

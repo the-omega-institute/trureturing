@@ -1,0 +1,55 @@
+### 168.6 联合可逆性及其操作边界
+
+联合编码仍有一个作用于整个 $MQR$ 的 CPTP 左逆。由于
+$\operatorname{Tr}(\rho_*Y)=0$，$\psi_0,\psi_1$ 正交。令
+
+$$
+P=P_{\psi_0}+P_{\psi_1}
+\quad\text{作用于 }M\otimes R.
+$$
+
+对联合输入 $X$，定义
+
+$$
+\begin{aligned}
+\Lambda_{\mathrm{joint}}(X)
+={}&\sum_{j=0}^1
+Z^j
+\bigl(\langle\psi_j|_{MR}X|\psi_j\rangle_{MR}\bigr)
+Z^j\\
+&+
+\operatorname{Tr}\!\left[
+((I_{MR}-P)\otimes I_Q)X
+\right]\omega_0,
+\end{aligned}
+\tag{168.19}
+$$
+
+其中 $\omega_0$ 是任意固定逻辑密度矩阵，系统按标记置换。第一行测量两个联合正交支撑并纠正逻辑 $Z$，第二行在其正交补上作固定态替换。该映射全域完全正且保迹，并满足
+
+$$
+\boxed{
+\Lambda_{\mathrm{joint}}\mathfrak E
+=\operatorname{id}.
+}
+\tag{168.20}
+$$
+
+由（168.2）逐块代入即可验证。恒等式也保留任意逻辑参考。
+
+因此同一对逻辑输入在联合编码中仍完全可区分：
+
+$$
+D(\mathfrak E(P_+),\mathfrak E(P_-))=1,
+\qquad
+D(\mathcal N_{\mathrm{loc}}(P_+),
+  \mathcal N_{\mathrm{loc}}(P_-))=\kappa.
+\tag{168.21}
+$$
+
+第一式既可由正交块直接计算，也可由编码与左逆的两次迹距离收缩得到。这给出一个明确的边界见证：被局部接口压缩的相干区分保存在联合关系中，不能由接收端单独的 CPTP 后处理恢复。
+
+$\Lambda_{\mathrm{joint}}$ 访问了 $M$ 与 $R$ 的联合支撑，所以它是数学上的联合解码，不能被列为物理接收器的允许操作。第159节的真实来源发射加固定接收步骤可以释放隐藏标签并实现逻辑旋转；那一步包含新的来源作用与新发射位，不是仅对已有 $Q,R$ 做一次免费逆映射。
+
+本节没有证明完整运行通道的全部外围模都来自 $\mathfrak E$，也没有证明有限启动残差最终消失。是否存在一个描述全空间吸引行为的联合渐近逻辑投影，以及它是否保留原始输入的残余关联，仍是独立问题。以上结果为解析纸面证明，不作数值谱计算或 Lean 核验声明。
+

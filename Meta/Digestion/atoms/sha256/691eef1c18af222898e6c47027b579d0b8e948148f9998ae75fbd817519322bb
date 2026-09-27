@@ -1,0 +1,27 @@
+**定理 241.2（精确识别的覆盖等价）。** 对有限模型类和有限允许干预族，以下条件等价：
+
+1. $I\cup J$ 能唯一确定 $\Phi$；
+2. $\mathcal P_I\subseteq\operatorname{Cov}(J)$；
+3. 每一对当前答案不同的模型，都至少被 $J$ 中一个干预分离。
+
+### 证明
+
+若存在 $(M,M')\in\mathcal P_I$ 不在覆盖集内，则它们在 $I$ 和 $J$ 的所有接口读数都相同而目标不同，故不能识别。
+
+反之，若所有 $\mathcal P_I$ 中的模型对都被某个 $a\in J$ 分离，则任何满足 $O_{I\cup J}(M)=O_{I\cup J}(M')$ 的模型对不可能属于 $\mathcal P_I$。于是相等接口必推出相等目标值，应用定理 239.2。证毕。
+
+若每个干预 $a$ 有成本 $c_a>0$，则最小精确干预预算是
+
+$$
+\boxed{
+\min_{J\subseteq\mathcal A}
+\left\{
+\sum_{a\in J}c_a:
+\mathcal P_I\subseteq\operatorname{Cov}(J)
+\right\}.
+}
+\tag{241.1}
+$$
+
+它是关系覆盖，而不是按照动作标签数目平均取样。
+

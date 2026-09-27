@@ -1,0 +1,38 @@
+**定理 168.3（接近弱记录极限时的有限参数风险相等）。** 存在 $r_1<1$，使对所有 $r\in(r_1,1)$ 及所有 $h\in[0,h_0]$，
+$$
+\boxed{W_r(\mathcal F_{h,r})=W_r(\mathcal T_r)>L.}
+\tag{168.14}
+$$
+此式是这组候选预测器之间的精确比较，不断言它们达到有限 $r$ 的无约束 minimax 值 $\mathcal J(r)$。
+
+证明。 令 $a=-\log r\downarrow0$。式（161.20）等价于
+$$
+\cos\alpha(r)=\frac{3e^a-e^{3a}}2
+=1-\frac32a^2-2a^3+O(a^4).
+$$
+结合 $\alpha(r)/a\to\sqrt3$ 与余弦的 Taylor 展开，得到
+$$
+\frac{\alpha(r)}a=\sqrt3+\frac2{\sqrt3}a+O(a^2).
+\tag{168.15}
+$$
+在 $(t_*,\sqrt3)$ 邻域定义光滑函数
+$$
+f(x,b)=\frac{e^{-x}}2
+\sqrt{1+e^{-2k_*x}-2e^{-k_*x}\cos(bx)}.
+\tag{168.16}
+$$
+它给出 $\mathcal T_r$ 在实际端点相位 $\phi=\alpha(r)$、缩放视界 $x=Na$ 上的精确距离。由 $k_*t_* =\log2$、$\sqrt3t_* =\pi/3$，直接求导得
+$$
+f(t_*,\sqrt3)=L,\qquad
+\partial_x f(t_*,\sqrt3)=0,\qquad
+\partial_b f(t_*,\sqrt3)=\frac{t_*e^{-t_*}}4>0.
+\tag{168.17}
+$$
+取最接近 $t_*/a$ 的正整数 $N_a$，则 $N_aa=t_*+O(a)$。二元 Taylor 展开、（168.15）及（168.17）给出
+$$
+f\left(N_aa,\frac{\alpha(r)}a\right)
+=L+\frac{t_*e^{-t_*}}{2\sqrt3}a+O(a^2)>L
+\tag{168.18}
+$$
+对所有充分小的正 $a$ 成立。此时 $N_a\alpha(r)$ 接近 $\pi/3$，所用端点始终是原合同允许的实际相位。故 $W_r(\mathcal T_r)>L$；代入（168.4），得到对全部 $h\in[0,h_0]$ 同时成立的（168.14）。证毕。
+

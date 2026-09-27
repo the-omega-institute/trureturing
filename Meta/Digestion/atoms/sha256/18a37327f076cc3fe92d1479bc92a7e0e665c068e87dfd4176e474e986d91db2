@@ -1,0 +1,27 @@
+### 129.6 ABAAB 的同一个早期一位向量
+
+此词给
+
+$$
+G_4=X,\qquad G_2=G_5=Y,\qquad X\perp Y,
+$$
+
+并由实际零位像得到
+
+$$
+H_1=H_4,\qquad H_2\perp H_4.
+\tag{129.9}
+$$
+
+再次对 $X=G_4\subset U$ 与 $G_3\subset M$ 的共同后继 $A$ 使用引理129.2，得 $p\in X\cup G_3$。若 $p\in X$，则 $0\ne p\in H_1=H_4$ 违反 $H_4\cap G_4=0$，所以只能 $p\in G_3$。
+
+同一个 $V_1$ 给
+
+$$
+v\otimes A=V_1p\in V_1G_3=Q_4\otimes A,
+\qquad v\in Q_4.
+\tag{129.10}
+$$
+
+另一方面 $H_4\subset X\oplus Q_4$，其中 $Q_4\subset U^\perp$。真实 $u,w\in G_2=Y$ 因而都正交于 $H_4$。（129.9）又使非零系数的 $a^2u+bv\in H_2$ 正交于 $H_4$，从 $b\ne0$ 得 $v\perp H_4$。这与（129.10）、$v\ne0$ 及 $H_4$ 满投影到 $Q_4$ 矛盾。本词排除。
+

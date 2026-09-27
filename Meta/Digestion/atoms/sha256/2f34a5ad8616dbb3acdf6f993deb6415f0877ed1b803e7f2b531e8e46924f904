@@ -1,0 +1,91 @@
+### 207.2 独立噪声与来源变量中的完整参考解析
+
+把 $\epsilon$ 与 $t=\sqrt\ell$ 暂视为独立变量，令 $r=1-t^2$。
+第189节的四维匹配偶块写成
+
+$$
+\mathsf H(\epsilon,t,v,\Gamma)=
+\begin{pmatrix}
+(1-t^2)M_v(F_0,F_1)&
+t\sqrt{1-t^2}\,\mathsf C_v(T_0,T_1)\\
+t\sqrt{1-t^2}\,\mathsf C_v(T_0,T_1)^\dagger&
+t^2M_v(G_0,G_1)
+\end{pmatrix},
+\tag{207.5}
+$$
+
+其中
+
+$$
+\begin{gathered}
+u_v=(\sqrt v,\sqrt{1-v})^{\mathsf T},\qquad
+M_v(X_0,X_1)=P_{u_v}-\operatorname{diag}(vX_0,(1-v)X_1),\\
+\mathsf C_v(T_0,T_1)=P_{u_v}-\operatorname{diag}(vT_0,(1-v)T_1).
+\end{gathered}
+$$
+
+$F_j,G_j,T_j$ 为第189节的当前矩，均关于 $\epsilon$ 仿射，
+系数由 Choi 条目线性决定。
+在参考权重 $v$ 的固定内区间中，该矩阵对
+$(\epsilon,t,v,\Gamma)$ 的环境实坐标解析。
+$t\mapsto-t$ 是固定块酉共轭 $\operatorname{diag}(I_2,-I_2)$。
+
+在 $\epsilon=t=0$，矩阵为 $M_v(A_0,A_1)\oplus0_2$。
+对 $A_j$ 接近 $1/2$ 的固定小邻域，完整参考最高根的唯一最大点及最大值为
+
+$$
+v=q:=\frac{A_1}{A_0+A_1},\qquad
+\lambda=1-\frac{A_0A_1}{A_0+A_1}.
+\tag{207.6}
+$$
+
+在 $A_0=A_1=1/2,v=1/2$，四个本征值是
+$3/4,-1/4,0,0$，最高根与其余谱的间隙为 $3/4$。
+基点参考谱函数为
+
+$$
+f_0(v)=\frac14+
+\sqrt{\frac1{16}+\frac34v(1-v)},\qquad
+f_0''(1/2)=-\frac32.
+\tag{207.7}
+$$
+
+最高根间隙、参考最大点附近的严格负曲率，以及该点固定邻域以外
+相对于最大值的正差距，都对上述固定 $A$ 邻域统一保持。
+其余 Choi 坐标位于紧集。
+简单谱扰动与参考临界点隐函数定理因此给出统一解析的最高根和最大参考权重。
+全局值差保证延拓后的参考临界点仍取得全部参考权重中的最大值。
+
+酉共轭及最大点唯一性使这两个解析分支均为 $t$ 的偶函数。
+其收敛幂级数只含 $t^{2k}$，故可改写为 $\ell=t^2$ 的解析函数。
+于是，在独立变量 $(\epsilon,\ell)$ 中直接有
+
+$$
+\begin{aligned}
+e(\ell,\epsilon,\Gamma)={}&\lambda
++\epsilon\mathcal N(\Gamma)+\ell\mathcal P(\Gamma)\\
+&+\epsilon^2R_{20}(\Gamma)+\epsilon\ell R_{11}(\Gamma)
++\ell^2R_{02}(\Gamma)
++O((|\epsilon|+|\ell|)^3).
+\end{aligned}
+\tag{207.8}
+$$
+
+所需系数及其 Choi 一阶导数在固定环境邻域上一致有界。
+环境延拓只用于 Taylor 估计；实际操作始终满足共同 CPTP。
+代入 $\ell=h\epsilon$、$0\le h\le H$，得到
+
+$$
+\boxed{
+e_\epsilon(h,\Gamma)
+=\lambda+\epsilon L_h(\Gamma)+\epsilon^2R_h(\Gamma)
++O_H(\epsilon^3),\qquad
+R_h=R_{20}+hR_{11}+h^2R_{02}.
+}
+\tag{207.9}
+$$
+
+这里 $L_h=\mathcal N+h\mathcal P$ 正是第200节的冻结首项。
+该展开在 $h=0$ 直接成立，也没有对 $\sqrt h$ 求导；
+闭区间常数来自同一个双参数解析邻域。
+

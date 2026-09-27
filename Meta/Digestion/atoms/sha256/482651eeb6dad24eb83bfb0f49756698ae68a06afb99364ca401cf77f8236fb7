@@ -1,0 +1,43 @@
+### 183.1 由缩放矩阵定义解析角度
+
+沿用第181节的 Schmidt 坐标和常数
+
+$$
+\rho=\operatorname{diag}(r,\ell),\quad
+r+\ell=1,\quad r\ell=\Delta=\frac19,\quad
+\kappa=r-\ell=\frac{\sqrt5}{3},
+$$
+
+$$
+\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle,\qquad
+\psi=(I\otimes Y)\Xi,\qquad
+\beta=\frac{288}{2353},\quad\gamma=\frac{42}{2353}.
+$$
+
+对两个等权旗标 $s=\pm1$，输入为
+
+$$
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+接收端施加共同角度的条件酉
+$U_s(t)=\cos t\,I-is\sin t\,X$，然后丢弃旗标。记平均输出为
+$\sigma(w,t)$，其目标距离为 $d(w,t)=D(\sigma(w,t),P_\Xi)$。
+第181节已经给出精确二维矩阵
+
+$$
+d(w,t)=\lambda_{\max}H(w,t),\qquad
+H(w,t)=
+\begin{pmatrix}
+r(u-q)&\sqrt\Delta\,v\\
+\sqrt\Delta\,v&\ell(u+q)
+\end{pmatrix},
+\tag{183.1}
+$$
+
+$$
+u=\beta w+(1-2\beta w)\sin^2t,\quad
+v=\beta w+\sin^2t,\quad q=\gamma w\sin2t.
+$$
+

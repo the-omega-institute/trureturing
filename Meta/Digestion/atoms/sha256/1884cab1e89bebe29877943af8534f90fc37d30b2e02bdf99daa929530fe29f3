@@ -1,0 +1,30 @@
+**定义 77.1（纤维内平均信息）。** 保持第 75 章的原实验、完整计数目标和精确标量
+$T=t_x(R)$；$Y=T+\sigma_MG$，其中 $G$ 是独立标准正态，
+$L_M=\ln(1/\sigma_M)\to\infty$ 且 $L_M=o(Q^3)$。
+$p_x(n\mid y)$、$f_x(y)$、$h_x=H_2(P_x)$ 均保持原定义。
+记 $w_n(y)=\varphi_{\sigma_M}(y-t_x(n))$，定义
+
+$$
+\begin{aligned}
+\mathsf h_M(x)&=-\int f_x(y)\ln f_x(y)\,dy,\\
+I_M(x)&=\sum_nP_x(n)\int w_n(y)\ln\frac{w_n(y)}{f_x(y)}\,dy,\\
+\overline H_M(x)&=\int H_2(p_x(\cdot\mid y))f_x(y)\,dy.
+\end{aligned}
+\tag{77.1}
+$$
+
+前两项使用自然单位，第三项使用 bits。这些都是指定均匀大小 $q$ 支持先验下的纤维量。
+它们可以作为数据函数在确定支持的原始数据律下求概率；定义本身不改为点质量先验。
+令原空间剖面与方差常数为
+
+$$
+\rho(t)=\frac{e^{-\kappa t^2/2}}{4\pi\sqrt{ab}},\qquad
+\kappa=a^{-1}+\alpha^2/b,\qquad
+ g_0=\int_{\mathbb R}\rho(t)^2dt
+ =\frac1{16\pi^2ab}\sqrt{\frac\pi\kappa},\qquad \nu=2g_0>0.
+\tag{77.2}
+$$
+
+$a=(1+r)/2$、$b=(1-r)/2$ 和 $\alpha$ 均为原固定参数。
+以 $\varphi_\nu$ 表示方差为 $\nu$ 的中心正态密度，区别于按标准差标记的测量核。
+

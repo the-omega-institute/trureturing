@@ -1,0 +1,62 @@
+#### 8.3.3 极小合法删空证书及闭合更新
+
+把所有动作标签记为
+
+$$
+\mathcal A_M=\coprod_{m\in M}\{m\}\times\mathbb Z/m\mathbb Z.
+$$
+
+对每个 $r\in S_D(H)$，令
+
+$$
+E_r=\{(m,r\bmod m):m\in M\}.
+$$
+
+一份合法 $C\subseteq\mathcal A_M$ 删空，恰当且仅当它击中每个 $E_r$：
+
+$$
+b_C(H)=0\iff\forall r\in S_D(H),\quad C\cap E_r\ne\varnothing.
+\tag{ER8.FB.7}
+$$
+
+所以这是有限超图的击中集关系，附加“一模数至多一个标签”的合法性约束。定义
+
+$$
+\mathcal K_M(S)=
+\operatorname{Min}_{\subseteq}\{C:C\text{ 合法且 }b_C(S)=0\}.
+\tag{ER8.FB.8}
+$$
+
+这是一份反链：只保留不可再删除动作的删空证书。有限性与合法性对子集封闭保证
+
+$$
+b_C(S)=0\iff\exists K\in\mathcal K_M(S),\quad K\subseteq C.
+\tag{ER8.FB.9}
+$$
+
+因此两个支持布尔未来等价，当且仅当它们的 $\mathcal K_M$ 相同。该反链与全部布尔响应具有相同的核，因此它给出该任务的最粗精确状态商。一般目标族最小商接口列于第 8.10 节；以下另给实际证书表示和显式分类。
+
+这份反链具有直接闭合更新。设执行 $e=(m,a)$，定义兼容筛选
+
+$$
+\mathcal K\downarrow e
+=\{K\setminus\{e\}:K\in\mathcal K,
+\ \forall(n,b)\in K,\ n=m\Longrightarrow b=a\}.
+$$
+
+即排除含有同模数冲突标签的旧证书，余下证书去掉已经执行的动作。则
+
+$$
+\boxed{
+\mathcal K_{M'}(S_{D'}(H'))
+=\operatorname{Min}_{\subseteq}(\mathcal K_M(S_D(H))\downarrow e).
+}
+\tag{ER8.FB.10}
+$$
+
+证明：对任意剩余合法 $T$，更新后删空等价于原来执行 $T\cup\{e\}$ 删空；由 ER8.FB.9 等价于某个旧极小证书包含在 $T\cup\{e\}$ 中。该证书不能使用冲突余数，其去掉 $e$ 后包含在 $T$ 中。反向同理，再取包含极小元得到精确反链。
+
+若 $\mathcal K=\{\varnothing\}$，当前已空；若 $\mathcal K=\varnothing$，没有任何合法续接能删空，所有读数恒为一。不能只保存“存在删空证书”这个单一比特：标签和证书之间的包含关系控制下一步的成功与否。
+
+反链表示不承诺一般情况下长度很小，也不承诺构造其所有成员的最优算法或复杂度。它给的是确切的有限关系和更新公式。
+

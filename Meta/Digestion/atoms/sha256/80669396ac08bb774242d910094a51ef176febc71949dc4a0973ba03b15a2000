@@ -1,0 +1,19 @@
+**引理159.2（同一真实来源上的旋转编码轨道）。** 有通道恒等式
+
+$$
+\boxed{
+\mathcal F_{\mathrm{run}}\mathfrak E
+=\mathfrak E\operatorname{Ad}_U.
+}
+\tag{159.16}
+$$
+
+**证明。** 在（159.11）的第 $s$ 项上，来源与 $U_{\mathrm{abs}}$ 按（159.9）产生
+
+$$
+Z^s\sigma Z^s\otimes|\Xi\rangle\langle\Xi|_{MR}
+\otimes|s\rangle\langle s|_B.
+$$
+
+$D_{\mathrm{old}}$ 将 $Q$ 恢复为 $\sigma$。两项相加后，旧位为与 $\sigma$ 及 $\Xi$ 独立的 $I_B/2$。再旋转 $Q$、迹掉 $B$，并施加 $\mathcal N$，恰得 $\mathfrak E(U\sigma U^*)$。恒等式对所有输入算子线性成立，故张量任意参考后也成立。证毕。
+

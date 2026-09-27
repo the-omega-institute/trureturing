@@ -1,0 +1,12 @@
+**命题 104.2（最大可维持范围）。** 上述序列递减，并在有限步后稳定为 $V$。它满足
+
+$$
+V=S\cap\operatorname{CPre}(V).
+$$
+
+其中每个状态都有一个行动，把全部可能后继留在 $V$；从 $V$ 开始，每次采用这样的行动，全部相容的无限历程都留在 $S$。任何 $H\subseteq S$ 若也满足 $H\subseteq\operatorname{CPre}(H)$，则 $H\subseteq V$。
+
+证明。受控前驱对集合包含单调，$V_1\subseteq V_0$，归纳得整个序列递减。有限状态集只容许有限次严格删除，故稳定；稳定等式给出每个状态的保留行动，沿历程归纳得始终在 $V$。最后从 $H\subseteq V_0$ 开始，使用 $H\subseteq\operatorname{CPre}(H)$ 逐层推出 $H\subseteq V_n$，因而包含于稳定值。证毕。
+
+这正是项目[最大安全可控域](../../../D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.lean)的有限集合读法：该源码以最大不动点刻画“属于某个可控不变子集”的状态。它不表示每个行动都安全，也不要求状态本身不变。行动的存在、持续执行与实际观察权限仍是使用条件；只知道今天处于 $S$，没有自动知道今天处于 $V$。
+

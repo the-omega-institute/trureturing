@@ -1,0 +1,1 @@
+| `D5/S3/ConceptDynamics/Topology/CircleDoubleCoverHistoryLift.lean`，`circle_double_cover_history_lift`，第 36 行起 | 圆周平方覆盖的唯一路径提升、无连续全局截面、完整一圈由 $1$ 提升到 $-1$ | 不处理环境结型；不自动给出一般图任务的记忆最小性 

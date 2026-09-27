@@ -1,0 +1,43 @@
+### 30.2 何时逆极限就是实际完整边界
+
+完整实际边界为
+
+$$
+I_\infty:=\operatorname{im}(\operatorname{TP}_\infty).
+$$
+
+总有一个限制映射
+
+$$
+\Lambda:I_\infty\to\varprojlim_m I_m,
+\qquad
+\Lambda(u)=(u\!\upharpoonright_m)_m.
+$$
+
+在任意系统中，$\Lambda$ 的单射只使用函数逐坐标相等；满射则是额外的来源实现性质。若存在一个相容族的每个有限前缀都可由某个状态实现，但这些状态不能统一为同一个实际来源，逆极限会包含一个只在有限层相容的虚拟点。
+
+在仓内 `ItineraryCompletion` 的有限状态假设下，`itineraryLimitEquiv` 给出
+
+$$
+\boxed{
+I_\infty\cong\varprojlim_m I_m.
+}
+\tag{30.2}
+$$
+
+它的证明依赖有限载体以及 `CompatibleItineraryFamily.realized` 的逐层实际性；不能把 (30.2) 外推到没有这些条件的任意无限关系。`itinerary_completion` 还同时给出 kernel 商、实际完整 itinerary 和兼容有限族之间的动态半共轭，并存在一个有限深度 $d$ 使 $I_\infty$ 与 $I_d$ 已经双射。
+
+因此要区分三种断言：
+
+$$
+\boxed{
+\begin{array}{ll}
+\text{逐层相容：}&u_m\text{ 满足层间限制};\\
+\text{实际完成：}&(u_m)_m\text{ 来自同一实际状态的完整 profile};\\
+\text{有限终止：}&\exists d,\ I_\infty\cong I_d.
+\end{array}}
+\tag{30.3}
+$$
+
+第一项是逆极限的语法，第二项是来源存在性，第三项是有限状态下的稳定性。三者不能互换。
+

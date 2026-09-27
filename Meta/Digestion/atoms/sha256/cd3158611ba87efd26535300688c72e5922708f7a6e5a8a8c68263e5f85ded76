@@ -1,0 +1,20 @@
+**引理55.3（排除 AAAB）。** 不可能存在单位向量 $A\in F$、$B\not\parallel A$，使
+$$
+\eta_3=\eta_4=\eta_5=A,\qquad\eta_6=B.
+$$
+这一排除只使用 $A\in F$ 及 $B\not\parallel A$，不使用 $A\perp B$。
+
+**证明。** 令 $L=U+G_3+G_4$。若 $\dim L=2$，则 $U=G_3=G_4$。因第三、第四轮环境相同，$V_0H_2=G_3\otimes A=G_4\otimes A=V_0H_3$；单射性给 $H_2=H_3$，于是 $C_2=C_3$，违反三维与四维的秩差。因此 $\dim L\ge3$。
+
+固定 $V_1$ 将 $L$ 送入 $K\otimes A$，将 $G_5$ 送入 $K\otimes B$。两环境射线不同，所以 $G_5\cap L=0$。因此
+$$
+R:=U+G_3+G_4+G_5=L+G_5,
+\qquad \dim R=\dim L+2\ge5.
+$$
+
+因 $A\in F$，旧块包含 $U\otimes A$；第三至第五轮零位像又包含 $G_3\otimes A,G_4\otimes A,G_5\otimes A$，所以 $R\otimes A\subset V_0K$。同时 $V_1L=Q\otimes A$，其中 $\dim Q=\dim L\ge3$。两个位像正交且环境相同，故 $R\perp Q$。于是
+$$
+7=\dim K\ge\dim R+\dim Q=2\dim L+2\ge8,
+$$
+矛盾。证明完毕。
+

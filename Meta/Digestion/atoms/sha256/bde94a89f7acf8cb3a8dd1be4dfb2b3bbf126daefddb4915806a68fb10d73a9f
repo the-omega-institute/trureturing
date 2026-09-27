@@ -1,0 +1,17 @@
+### 249.5 最优重叠的精确大偏差指数
+
+固定 Bell 输出率 $R\ge0$，令
+$$
+k_n=\lceil nR\rceil.
+\tag{249.21}
+$$
+以下指数使用自然对数。定义二元相对熵
+$$
+D_{\mathrm B}(x\|\theta)
+=x\ln\frac{x}{\theta}
++(1-x)\ln\frac{1-x}{1-\theta},
+\qquad 0\le x\le1,
+\tag{249.22}
+$$
+端点按连续延拓解释。
+

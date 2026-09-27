@@ -1,0 +1,51 @@
+### 140.1 固定同一装置的有限终端误差
+
+记完整复振幅参数空间为
+
+$$
+\Theta=\{\theta=(a,b)\in\mathbb C^2:|a|^2+|b|^2=1\}.
+$$
+
+允许端点 $ab=0$。每轮来源等距为
+
+$$
+T_\theta|0\rangle=(a|0\rangle+b|1\rangle)_M\otimes|0\rangle_B,
+\qquad
+T_\theta|1\rangle=|0\rangle_M\otimes|1\rangle_B.
+\tag{140.1}
+$$
+
+固定容量预算 $D\ge1$ 和有限期限 $N\ge1$，取 $K=\mathbb C^D$。一份装置由一个固定全域 CPTP 接收通道及一族终端解码器组成：
+
+$$
+\mathfrak A=(\mathcal C,\mathcal D_1,\ldots,\mathcal D_N),
+\qquad
+\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K),
+\qquad
+\mathcal D_n:\mathcal L(K)\to\mathcal L(B^{\otimes n}).
+\tag{140.2}
+$$
+
+接收器从独立纯态 $e_0\in K$ 启动。任意其他独立纯初态可由固定接收基变换送到 $e_0$，同时共轭 $\mathcal C$ 和各 $\mathcal D_n$；因此固定 $e_0$ 不损失装置。每一轮重复同一个 $\mathcal C$，允许新环境立即丢弃，全部持久控制计入 $K$，来源活动记忆与外部参考均不可访问。仅 $\mathcal D_n$ 可以随终端改变。
+
+对参考 $R$ 与输入 $\rho_{RM}$，记 $\sigma^{\theta,\mathfrak A}_n(\rho)$ 为前 $n$ 轮接收后的 $RMK$ 态，$\Omega^\theta_n(\rho)$ 为同一来源未经接收的 $RM B_1\cdots B_n$ 态。定义
+
+$$
+\begin{aligned}
+\mathcal E_{D,N}(\theta;\mathfrak A)
+=\max_{1\le n\le N}\ \sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma^{\theta,\mathfrak A}_n(\rho)
+-\Omega^\theta_n(\rho)
+\right\|_1,\\
+\varepsilon_{D,N}(\theta)
+=\inf_{\mathfrak A}\mathcal E_{D,N}(\theta;\mathfrak A).
+\end{aligned}
+\tag{140.3}
+$$
+
+同一个 $\mathfrak A$ 同时服务所有 $1\le n\le N$ 和全部参考完整输入；误差中的接收态与目标态采用同一份 $\theta$。装置可以针对已知 $\theta$ 设计，定义没有要求一台装置同时适用于所有来源参数。
+
+容量小于 $D$ 的装置可嵌入 $K$，并在未访问的正交补上补成全域通道。故（140.3）也恰是容量不超过 $D$ 的最优误差。
+

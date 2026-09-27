@@ -1,0 +1,58 @@
+**引理 225.2（显式矩形例的全局单位主输出向量）。**
+
+固定输入基 $f_0,f_1$ 和输出基 $e_0,e_1,e_2$，令
+$$
+M=e_0f_0^\dagger,
+\qquad
+N=\frac{e_1f_0^\dagger+e_0f_1^\dagger+e_2f_1^\dagger}{\sqrt2},
+$$
+$$
+\Gamma(X)=MXM^\dagger+NXN^\dagger.
+\tag{225.CT.9}
+$$
+对单位输入 $v=xf_0+yf_1$，置
+$$
+\boxed{
+ r([v])=
+ \frac{e_0+x\overline y\,e_1+|y|^2e_2}{\sqrt{1+|y|^2}}.
+}
+\tag{225.CT.10}
+$$
+它在单位球面上连续，并且在 $(x,y)\mapsto(e^{i\theta}x,e^{i\theta}y)$ 下不变。因此确实下降为 $\mathbb {CP}^1$ 上的连续向量映射。
+
+令 $p=|x|^2$、$q=|y|^2$，有 $p+q=1$。首先
+$$
+\|r([v])\|^2
+=\frac{1+pq+q^2}{1+q}=1.
+\tag{225.CT.11}
+$$
+其次，记
+$$
+a=Mv=xe_0,
+\qquad
+b=Nv=\frac{ye_0+xe_1+ye_2}{\sqrt2}.
+$$
+直接计算得到
+$$
+a^\dagger r([v])=\frac{\overline x}{\sqrt{1+q}},
+\qquad
+b^\dagger r([v])=\frac{\sqrt2\,\overline y}{\sqrt{1+q}}.
+\tag{225.CT.12}
+$$
+故
+$$
+\Gamma(P_v)r([v])
+=a\,a^\dagger r([v])+b\,b^\dagger r([v])
+=\frac{(p+q)e_0+x\overline y\,e_1+qe_2}{\sqrt{1+q}}
+=r([v]).
+\tag{225.CT.13}
+$$
+于是对所有单位输入，
+$$
+\boxed{
+\langle r([v]),\Gamma(P_v)r([v])\rangle=1.
+}
+\tag{225.CT.14}
+$$
+该例每个纯输入输出的其余本征值为 $|x|^2/2,0$，所以（225.CT.10）也是处处简单的主输出本征向量；距离证明只需要（225.CT.11）至（225.CT.14），不需要先证明完整谱公式。
+

@@ -1,0 +1,47 @@
+## ST19．保持单步结果概率的量子仪器补全
+
+### 定义 ST19.1：输入与输出编码、仪器漏出
+
+设 $U:V\to\mathcal H$、$W:V'\to\mathcal H'$ 为等距映射，$V,V'$ 非零。允许输入与输出编码不同，记 $P'=WW^\dagger$。完整有限仪器为
+
+$$
+\mathcal I_a(\omega)=\sum_\ell K_{a\ell}\omega K_{a\ell}^\dagger,
+\qquad \sum_{a,\ell}K_{a\ell}^\dagger K_{a\ell}=I_{\mathcal H}.
+$$
+
+定义压缩算子与漏出算子
+
+$$
+k_{a\ell}=W^\dagger K_{a\ell}U,\qquad
+R_{a\ell}=(I-P')K_{a\ell}U,
+$$
+
+$$
+\Lambda_a=\sum_\ell R_{a\ell}^\dagger R_{a\ell},\qquad
+\Lambda=\sum_a\Lambda_a,\qquad \lambda=\|\Lambda\|.
+\tag{ST19.1}
+$$
+
+块分解立即给出 $0\le\Lambda\le I_V$，所以 $0\le\lambda\le1$。该量是在给定输入编码上的最坏单步漏出概率；它没有预设真实多轮状态始终留在编码内。
+
+### 定理 ST19.2：按结果复位的 CPTP 补全
+
+为每个结果选择一个固定密度矩阵 $\tau_a$ 于 $V'$，令
+
+$$
+\boxed{
+\widehat{\mathcal I}_a(\rho)
+=\sum_\ell k_{a\ell}\rho k_{a\ell}^\dagger
++\operatorname{tr}(\Lambda_a\rho)\tau_a.
+}
+\tag{ST19.2}
+$$
+
+则这是一个归一量子仪器，且对所有输入态逐结果满足
+
+$$
+\operatorname{tr}\widehat{\mathcal I}_a(\rho)
+=\operatorname{tr}\mathcal I_a(U\rho U^\dagger).
+\tag{ST19.3}
+$$
+

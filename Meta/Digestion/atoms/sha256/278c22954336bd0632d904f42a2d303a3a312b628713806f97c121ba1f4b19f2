@@ -1,0 +1,44 @@
+**二阶权重先通过实际总数条件化。** 令
+$\mathcal S=-\ln\mathsf Q_x(R)$、$\widetilde h=\mathbb E_{\mathsf Q_x}\mathcal S$、
+$s=\mathcal S-\widetilde h$、$V_Q=\mathbb E_{\mathsf Q_x}s^2$。
+(82.4)—(82.5) 已给整个原窗口上的
+
+$$
+\mathbb E_{\mathsf Q_x}s^4\le CQ^4,\quad V_Q\le CQ^2,\quad
+0\le L_x\le C,\quad a_x=O_{\mathbb P}(Q^{-5/2}),\quad
+\|S-h-s\|_{2,P_x}\le C(Qa_x+a_x^2).
+\tag{87.5}
+$$
+
+这些矩界包括空组和过渡组；对单组二项信息量减去
+$\tfrac12\ln(n+1)$ 使用全点上下界及 Bernoulli 八阶中心矩，再展开独立中心和即可。
+原 $Q^5$ 阶平均信息已经消去，路径行独立性没有被引入。
+记 $b_x=S-h-s$。Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\mathbb E_{\mathsf Q_x}|(L_x-1)(s^2-V_Q)|&\le Ca_xQ^2,\\
+\mathbb E_{P_x}|2sb_x+b_x^2|
+ &\le C\{Q^2(a_x+a_x^2)+a_x^4\},\\
+|\mathcal V_{{\rm prior},x}-V_Q|
+ &\le C\{Q^2(a_x+a_x^2)+a_x^4\}=o_{\mathbb P}(1).
+\end{aligned}
+\tag{87.6}
+$$
+
+这是未归一化的实际矩比较，不是由 TV 传递平方信息量。
+定义带符号输出密度
+
+$$
+\begin{aligned}
+q_x(y)&=\mathbb E_{P_x}[(S-h)\varphi_{\sigma_M}(y-T)],\\
+c_x(y)&=\mathbb E_{P_x}[\{(S-h)^2-\mathcal V_{{\rm prior},x}\}
+                                      \varphi_{\sigma_M}(y-T)].
+\end{aligned}
+\tag{87.7}
+$$
+
+每个正测量核的积分等于一，故 (87.6) 将 $c_x$ 与
+$\mathbb E_{\mathsf Q_x}[(s^2-V_Q)\varphi_{\sigma_M}(\,\cdot-T)]$
+的 $L^1$ 误差控制为 $o_{\mathbb P}(1)$，没有除以噪声。
+

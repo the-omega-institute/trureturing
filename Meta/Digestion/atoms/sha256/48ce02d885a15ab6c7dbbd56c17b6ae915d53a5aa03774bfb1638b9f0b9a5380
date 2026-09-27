@@ -1,0 +1,33 @@
+**命题179.1（纯化恢复的精确局部归约）。** 有
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\min_{\Gamma:QR\to R_{\mathrm{out}}\ {\rm CPTP}}
+\max_{j=0,1}
+D\left(
+(\operatorname{id}_M\otimes\Gamma)(\omega_j'),P_\Xi
+\right).
+}
+\tag{179.6}
+$$
+
+**证明。** 对任意模拟器，丢弃输出旗标 $Q$，迹距离收缩给右侧下界。
+反过来，对任意 $\Gamma$，在其输出上附加独立的 $I_Q/2$。目标同样为
+$I_Q/2\otimes P_\Xi$，与固定态作张量积保持迹范数，故两个分支的距离不变。最后逆转接收端坐标酉，得到原接口上的合法模拟器。两方向都不操作 $M$，也不查询原输入。证毕。
+
+进一步，输入（179.3）在旗标上对角。固定旗标后，
+$\Gamma$ 给出两个 CPTP 映射
+$\Gamma_\nu:R\to R_{\mathrm{out}}$，并且
+
+$$
+\sigma_j
+=\frac12\sum_{\nu=0}^1
+(\operatorname{id}_M\otimes\Gamma_\nu)(\eta_{j,\nu}).
+\tag{179.7}
+$$
+
+反之，先读旗标再执行对应 $\Gamma_\nu$，可实现任意这样的映射对。
+两个原输入必须共用同一对 $\Gamma_0,\Gamma_1$；
+不能为 $j=0,1$ 分别选择局部恢复通道。
+

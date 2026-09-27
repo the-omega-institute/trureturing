@@ -1,0 +1,21 @@
+**推论204.3（三阶近优操作的统一速率）。**
+对任意固定有限 $K_3\ge0$，若
+
+$$
+0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)\le K_3\epsilon^3,
+$$
+
+则在全部这类对称化 instrument 上一致有
+
+$$
+\boxed{
+\begin{gathered}
+U+V=O_{I,K_3}(\epsilon^2),\qquad
+M_{\mathrm{def}}=O_{I,K_3}(\epsilon^2),\\
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}=O_{I,K_3}(\epsilon),\\
+\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+W
+=O_{I,K_3}(\epsilon).
+\end{gathered}}
+\tag{204.14}
+$$
+

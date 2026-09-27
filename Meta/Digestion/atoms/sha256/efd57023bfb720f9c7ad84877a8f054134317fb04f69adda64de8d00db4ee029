@@ -1,0 +1,2 @@
+**证明。** 同纤维的两点共用 $Q_b$，故 $\operatorname{TV}(L_x,L_{x'})\le\operatorname{TV}(L_x,Q_b)+\operatorname{TV}(Q_b,L_{x'})\le2e(Q)$。取最大值，再对 $Q$ 取下确界，得下界。每个非空纤维取代表 $x_b$，令 $Q_b=L_{x_b}$，则每项误差至多 $\delta(q,L)$，得上界。有限个概率单纯形的乘积紧致，$e(Q)$ 连续，所以这里下确界也确实达到。于是 $e_{\min}=0$ 当且仅当 $\delta=0$，也就是 $L$ 在每个纤维上恒定。项目 [StochasticDescentLumpability](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 对应这一零缺陷关系；本节使用实际像，避免把源码一般下降构造在未实现标签上的零行误读成概率行。$\square$
+

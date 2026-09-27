@@ -1,0 +1,40 @@
+**命题180.2（丢旗标后固定标签的最佳偏置）。** 在这一子族中，唯一最优参数与误差为
+
+$$
+\boxed{
+r_*=\frac{\sqrt{\alpha_1}}{\sqrt{\alpha_0}+\sqrt{\alpha_1}},
+\qquad
+e_L^{\mathrm{bias}}
+=1-\frac{\alpha_0\alpha_1}
+{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+}
+\tag{180.10}
+$$
+
+对每个有限 $L\ge3$，
+
+$$
+\boxed{e_L^{\mathrm{bias}}<e_L^{\mathrm{unif}}.}
+\tag{180.11}
+$$
+
+**证明。** 最大化
+$A_0A_1/(A_0+A_1)$，等价于最小化
+
+$$
+\frac1{r\alpha_0}+\frac1{(1-r)\alpha_1}.
+$$
+
+该函数严格凸，导数为零等价于
+$r/(1-r)=\sqrt{\alpha_1/\alpha_0}$，由此得到（180.10）。
+均匀标签对应 $r=1/2$，其误差是
+$1-\alpha_0\alpha_1/[2(\alpha_0+\alpha_1)]$。
+因为 $\alpha_0\ne\alpha_1$，
+
+$$
+(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2
+<2(\alpha_0+\alpha_1),
+$$
+
+所以最佳偏置严格改善它。证毕。
+

@@ -1,0 +1,34 @@
+**定义 296.1（端点切向预算）。** 对正半径六态，记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$\eta=A^{-1/2}$，并令
+
+$$
+\Sigma=\{(1,\pm1,\pm1)\},\qquad
+b_\sigma=\operatorname{diag}(\alpha_1,\alpha_2,\alpha_3)\sigma,
+\qquad b=(\alpha_1,\alpha_2,\alpha_3).
+\tag{296.1}
+$$
+
+对实对称矩阵 $S$ 与实反对称矩阵 $\Omega$，定义
+
+$$
+g(S)=\max_{\sigma\in\Sigma}b_\sigma^{\mathsf T}Sb_\sigma,
+\qquad
+h_a(S,\Omega)=\max_i a_i\|(S-\Omega)e_i\|_2.
+\tag{296.2}
+$$
+
+令 $\kappa_a$ 为以下单个凸优化问题最优值的一半：最小化 $\rho$，约束为
+
+$$
+\begin{gathered}
+S=S^{\mathsf T}\succeq0,\qquad
+2S\preceq(\operatorname{Tr}S)I,\qquad
+\Omega^{\mathsf T}=-\Omega,\\
+b^{\mathsf T}Sb=A,\qquad
+b_\sigma^{\mathsf T}Sb_\sigma\le A\quad(\sigma\in\Sigma),\\
+\|(S-\Omega)e_i\|_2\le\rho\alpha_i\quad(i=1,2,3).
+\end{gathered}
+\tag{296.3}
+$$
+
+它只含半正定约束、线性等式与不等式、二阶锥约束。没有假定某个角点是唯一活跃角点，也没有假定三条误差约束都严格承担最优值。
+

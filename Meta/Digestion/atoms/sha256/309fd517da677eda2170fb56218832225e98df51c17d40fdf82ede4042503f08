@@ -1,0 +1,10 @@
+**定义 18.4（一般仪器的确定暗空间）。** 令 $\mathcal D_0=\mathcal H$，递归定义
+
+$$
+\mathcal D_{n+1}=
+\left(\bigcap_{x,\beta}\ker L_{x\beta}\right)
+\cap\left(\bigcap_\alpha Q_\alpha^{-1}(\mathcal D_n)\right).
+$$
+
+它要求当前点击振幅为零，且每个不可读未点击分支仍进入下一层暗方向。
+

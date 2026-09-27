@@ -1,0 +1,45 @@
+**证明。** 取
+
+$$
+S_\lambda=\mu(|u\rangle\langle u|+|v\rangle\langle v|+|y\rangle\langle y|)
++p|h\rangle\langle h|
++\lambda c(|u\rangle\langle y|+|y\rangle\langle u|).
+$$
+
+在列向量 $u,y$ 所定的合同变换下，相关系数矩阵是
+
+$$
+\begin{pmatrix}\mu&\lambda c\\\lambda c&\mu\end{pmatrix}\succeq0.
+$$
+
+其余两项亦正，故 $S_\lambda\succeq0$。$u,y$ 的 $D$ 坐标不同，交叉项的 $D$ 偏迹为零；$u,v$ 的 $00,11$ 交叉项相消。于是
+
+$$
+\operatorname{Tr}_D S_\lambda
+=\mu|00\rangle\langle00|+p|01\rangle\langle01|
++\mu|10\rangle\langle10|+p|11\rangle\langle11|
+=I_A\otimes\operatorname{diag}(\mu,p).
+$$
+
+这是因果修复。其差算符与 $\lambda$ 无关：
+
+$$
+R_\lambda-S_\lambda=P-N,
+\qquad P=p(|u\rangle\langle u|+|v\rangle\langle v|),
+\quad N=\eta|y\rangle\langle y|+p|h\rangle\langle h|.
+$$
+
+对同一任意完整 tester $C,E$，$P,N\succeq0$ 及 $0\preceq E\preceq C\otimes I_D$ 给
+
+$$
+0\le\operatorname{Tr}(PE)\le p(C_{00,00}+\varepsilon C_{11,11})\le p(1+\varepsilon)=\varepsilon,
+$$
+
+$$
+0\le\operatorname{Tr}(NE)\le\eta C_{10,10}+pC_{01,01}\le\eta+p=\varepsilon.
+$$
+
+因此配对差的绝对值至多 $\varepsilon$。总事件给普遍下界 $e\ge\Delta=\varepsilon$，故等式成立。
+
+特别地，$\lambda=0$ 总能同系数修复；此时 $D$ 已经典化，但各 $D$ 条件块仍含有 $AB$ 的非对角相干。本命题是该明确族的结论。
+

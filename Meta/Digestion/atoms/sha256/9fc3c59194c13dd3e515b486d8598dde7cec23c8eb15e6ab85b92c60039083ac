@@ -1,0 +1,71 @@
+**推论202.2（二阶渐近最优恢复器的刚性）。**
+若一族对称化 instrument 在 $h\in I$ 上一致满足
+
+$$
+e_\epsilon(h,\Gamma_\epsilon(h))-E_\epsilon(h)
+=o_I(\epsilon^2),
+\tag{202.7}
+$$
+
+则一致有
+
+$$
+\boxed{
+\begin{gathered}
+\frac{A_0-A_1}{\epsilon}+a_{\mathrm{eff}}(h)\longrightarrow0,\\
+\frac{C}{\epsilon^2}-4t^2m(h)^2\longrightarrow0,\qquad
+\frac{P}{\epsilon}+4it\,m(h)^2\longrightarrow0.
+\end{gathered}}
+\tag{202.8}
+$$
+
+同时
+
+$$
+U=o_I(\epsilon),\qquad V=o_I(\epsilon),\qquad
+\sum_j|M_j-m(h)|^2=o_I(\epsilon),\qquad
+\sum_{j,\alpha}\left|\frac c\epsilon+itd\right|^2=o_I(1).
+\tag{202.9}
+$$
+
+对任意变化的 $h_\epsilon\in I$，相应逐序列结论也成立，
+各比较目标均在当前 $h_\epsilon$ 处取值；
+不要求 $h_\epsilon$ 自身收敛。
+
+**证明。** （202.7）保证充分小参数处属于某个固定 $K$ 的近优类。
+由（202.4），五项非负平方的和趋于零，故每项均趋于零。
+由于 $I$ 远离零，其各正系数具有统一正下界；
+这给（202.9）以及（202.8）的第一式。
+
+记
+
+$$
+W_\epsilon=\sum_{j,\alpha}
+\left|\frac c\epsilon+itd\right|^2.
+$$
+
+Cauchy–Schwarz 给
+
+$$
+\left|\frac P\epsilon+itD\right|
+\le\sqrt{DW_\epsilon}\longrightarrow0.
+\tag{202.10}
+$$
+
+由（202.6），$D\to4m(h)^2$，所以得到 $P$ 的极限。
+另外，三角不等式给
+
+$$
+\left|\frac{\sqrt C}{\epsilon}-t\sqrt D\right|
+\le\sqrt{W_\epsilon}\longrightarrow0.
+\tag{202.11}
+$$
+
+两侧由（202.5）一致有界，平方后即得 $C$ 的极限。证毕。
+
+因此完整二阶最优性要求具体的标签偏置及相位相关的占据列反馈。
+式（202.8）中的 $C$ 是给定占据输入 $|0\rangle$ 时，
+接收端输出进入 $|1\rangle$ 的总概率；$P$ 是同一操作的 Choi 交叉矩。
+这些量的约束属于同一实际 instrument，
+不是把分别可达的最佳值拼成一个未实现的共同最优值。
+

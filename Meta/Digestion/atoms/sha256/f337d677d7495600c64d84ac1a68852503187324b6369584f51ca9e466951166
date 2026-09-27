@@ -1,0 +1,10 @@
+### 233.5 取等强制投影和条件
+
+假设 $D_R=1-R/(dN)$，取第二节保证存在的最优候选 $\mathcal S$。记
+$$
+J=J_{\mathcal S},\qquad Q=\operatorname{supp}J,
+\qquad H=J-\frac1NP_{\rm tar}.
+\tag{233.FF.24}
+$$
+下文 $H$ 是通道差的 Hermitian Choi 矩阵，不是一个 Hilbert 空间。
+

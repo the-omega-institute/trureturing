@@ -1,0 +1,38 @@
+**命题 166.3（半距门槛在每个参数处都精确）。** 令 $P_i=|i\rangle\langle i|$、$Q=P_0+P_1$，并定义块去相干通道
+$$
+\mathcal B(A)=QAQ+P_2AP_2.
+\tag{166.13}
+$$
+则 $m(\mathcal B)=p(\mathcal B)=5$，但对全部 $0<r<1$，
+$$
+\boxed{W_r(\mathcal B)=\frac12.}
+\tag{166.14}
+$$
+所以定理166.2中的严格不等号不能改成非严格不等号，也不能将门槛提高。
+
+证明。 $\mathcal B^2=\mathcal B$，其像为一个完整二阶矩阵块及一个标量块，维数为 $2^2+1^2=5$。令 $\operatorname{Ad}_U(A)=UAU^\dagger$。有
+$$
+\mathcal B=\frac12\left(\mathrm{Id}+
+\operatorname{Ad}_{\operatorname{diag}(1,1,-1)}\right),
+\qquad
+\Delta=\frac12\left(\mathcal B+
+\operatorname{Ad}_{\operatorname{diag}(1,-1,1)}\circ\mathcal B\right).
+\tag{166.15}
+$$
+两个通道的 diamond 距离至多为二，故这两个等式给出
+$$
+\|\mathrm{Id}-\mathcal B\|_\diamond\le1,
+\qquad
+\|\Delta-\mathcal B\|_\diamond\le1.
+$$
+第一个范数以 $02$ 两标签的平衡叠加作输入达到半迹距离 $1/2$，第二个范数则由 $01$ 平衡叠加达到同一值，故两个上界都是等式。
+
+对任意 $N\ge1$，写 $s=r^N$、$\theta=N\phi$ 和 $U_\theta=\operatorname{diag}(e^{i\theta},1,1)$。逐矩阵元计算得
+$$
+\mathcal M_{r,\phi}^{N}-\mathcal B
+=(1-s)(\Delta-\mathcal B)
++s\,\operatorname{Ad}_{U_\theta}\circ(\mathrm{Id}-\mathcal B).
+\tag{166.16}
+$$
+右端第一项只改变 $01$ 相干，第二项只含连接 $\{0,1\}$ 与 $\{2\}$ 的相干，并给 $02$ 项正确相位。由 diamond 范数的三角不等式及输出酉共轭不变性，右端范数至多为 $(1-s)+s=1$。结合 $\mathcal B^N=\mathcal B$，得到 $W_r(\mathcal B)\le1/2$。当 $N\to\infty$ 时真实通道趋于 $\Delta$，而 $d_{\rm ref}(\Delta,\mathcal B)=1/2$，故下界也成立。证毕。
+

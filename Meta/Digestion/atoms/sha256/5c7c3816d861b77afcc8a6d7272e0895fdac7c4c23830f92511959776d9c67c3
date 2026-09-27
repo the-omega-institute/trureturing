@@ -1,0 +1,94 @@
+**定理 164.2（全 CPTP 预测器的近似赤道刚性）。** 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，$X,Y$ 为 $P\mathbb C^3$ 上的 Pauli 矩阵，定义赤道圆盘
+$$
+\mathscr D=
+\left\{\frac12(P+xX+yY):x,y\in\mathbb R,\ x^2+y^2\le1\right\}.
+\tag{164.4}
+$$
+在定义164.1的条件下，对全部 $\rho\in\mathscr D$ 和全部整数 $N\ge1$，
+$$
+D\bigl(\mathcal F(\rho),\mathcal F_*(\rho)\bigr)
+\le\eta_r(\mathcal F),
+\qquad
+D\bigl(\mathcal F^N(\rho),\mathcal F_*^N(\rho)\bigr)
+\le N\eta_r(\mathcal F).
+\tag{164.5}
+$$
+于是每个视界都满足
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F)\bigr]_+,
+}
+\qquad [u]_+=\max\{u,0\}.
+\tag{164.6}
+$$
+这里 $\mathcal F$ 不必为 Schur 通道，也不必保持 $\mathscr D$；保持该圆盘的是比较通道 $\mathcal F_*$。
+
+证明。 对无迹 Hermitian 矩阵 $A$，正、负特征值的绝对值之和各为 $\|A\|_1/2$，故
+$$
+\|A\|_2^2\le2\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.7}
+$$
+若 $A$ 是三维矩阵且非零，设其正、负特征值数目为 $p_+,p_-\ge1$，则 $p_++p_-\le3$。Cauchy–Schwarz 给出
+$$
+\|A\|_2^2
+\ge\left(\frac{\|A\|_1}{2}\right)^2
+\left(\frac1{p_+}+\frac1{p_-}\right)
+\ge\frac32\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.8}
+$$
+零矩阵时同样成立。这两步仅使用有限维 Schatten 范数的初等关系，三维常数用于下面的预测误差估计。
+
+先取圆盘边界上的纯态
+$$
+\rho_\theta=\frac12(P+\cos\theta\,X+\sin\theta\,Y).
+$$
+令 $\sigma_\pm=\mathcal M_{r,\pm\alpha(r)}(\rho_\theta)$、$\tau=\mathcal F(\rho_\theta)$。由定理162.2中的端点表达式，其中点为 $\tau_*=\mathcal F_*(\rho_\theta)$，且
+$$
+\sigma_\pm=\tau_*\pm\frac q2 V_\theta,
+\qquad
+V_\theta^2=P,\quad \operatorname{Tr}(V_\theta)=0.
+\tag{164.9}
+$$
+交换两个端点的标签不影响此式。记 $\delta=\delta_r(\mathcal F)$。单步全输入距离上界特别给出
+$$
+D(\tau,\sigma_\pm)\le\mathcal R_1(r)+\delta=\frac q2+\delta.
+\tag{164.10}
+$$
+对两个无迹 Hermitian 差矩阵应用式（164.7），再取平均。Hilbert–Schmidt 平行四边形恒等式及 $\operatorname{Tr}P=2$ 给出
+$$
+\|\tau-\tau_*\|_2^2+\frac{q^2}{2}
+=\frac12\bigl(\|\tau-\sigma_+\|_2^2+\|\tau-\sigma_-\|_2^2\bigr)
+\le2\left(\frac q2+\delta\right)^2.
+\tag{164.11}
+$$
+因此 $\|\tau-\tau_*\|_2^2\le2q\delta+2\delta^2$。差矩阵 $\tau-\tau_*$ 也是三维无迹 Hermitian 矩阵；式（164.8）遂给出
+$$
+D(\tau,\tau_*)^2
+\le\frac23\|\tau-\tau_*\|_2^2
+\le\frac43(q\delta+\delta^2)=\eta_r(\mathcal F)^2.
+\tag{164.12}
+$$
+此估计已包含向第三标签的泄漏与非对角响应，不把 $\tau$ 预先压回二维子空间。$\mathscr D$ 是这些 $\rho_\theta$ 的凸包，通道线性性和迹范数凸性将同一上界延伸至整个圆盘，得到式（164.5）的第一式。
+
+定理162.2给出 $\mathcal F_*(P/2)=P/2$、$\mathcal F_*(X)=r\cos\alpha\,X$ 与 $\mathcal F_*(Y)=r\cos\alpha\,Y$，故 $\mathcal F_*$ 保持 $\mathscr D$。对非交换线性映射仍成立的 telescoping 恒等式为
+$$
+\mathcal F^N-\mathcal F_*^N
+=\sum_{j=0}^{N-1}
+\mathcal F^{N-1-j}\circ(\mathcal F-\mathcal F_*)\circ\mathcal F_*^j.
+\tag{164.13}
+$$
+将其作用于 $\rho\in\mathscr D$，每个比较输入 $\mathcal F_*^j(\rho)$ 仍在同一圆盘内。CPTP 通道对态差的迹距离收缩，所以每一项的半迹范数至多为 $\eta_r(\mathcal F)$，求和即得第二式。
+
+最后取无参考平衡输入 $\rho_0=(|0\rangle+|2\rangle)(\langle0|+\langle2|)/2$。式（162.13）和（162.14）表明
+$$
+\sup_\phi
+D\bigl(\mathcal M_{r,\phi}^N(\rho_0),\mathcal F_*^N(\rho_0)\bigr)
+=\mathcal E_N(r).
+$$
+三角不等式与刚证出的迭代估计给出 $\mathcal F$ 在该输入上的最坏误差至少为 $\mathcal E_N(r)-N\eta_r(\mathcal F)$；全输入、全参考距离包含这个实验，且误差非负，故式（164.6）成立。证毕。
+
+式（164.5）约束的是赤道圆盘上的系统态输出，不声称 $d_{\rm ref}(\mathcal F,\mathcal F_*)\le\eta_r(\mathcal F)$。全视界下界由同一个圆盘内的比较轨道承担；实际 $\mathcal F$ 的轨道可以离开该圆盘。
+

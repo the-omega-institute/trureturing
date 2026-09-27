@@ -1,0 +1,16 @@
+**定义 167.1（无局部预设的最优族与双标签接口）。** 沿用定义165.1的源族、风险及渐近最优族 $\mathscr A$。以下只假设三维 CPTP 族 $\mathcal F_r$ 在某个 $(r_0,1)$ 上定义，且
+$$
+W_r(\mathcal F_r)\longrightarrow L,
+\qquad
+L=\frac{\sqrt3}{4}e^{-t_*},\quad
+t_* =\frac\pi{3\sqrt3},\quad
+k_* =\frac{\log2}{t_*}.
+\tag{167.1}
+$$
+不附加单步最优、相对局部误差上界、参数连续性或式（166.2）的一阶匹配条件。仍记 $\varepsilon=1-r$、$E_{ij}=|i\rangle\langle j|$、$P_i=E_{ii}$、$P=P_0+P_2$，并取 $X=E_{02}+E_{20}$、$Y=-iE_{02}+iE_{20}$。令 $J:\mathbb C^2\to\mathbb C^3$ 为将标准基送到 $|0\rangle,|2\rangle$ 的等距映射，定义输入通道
+$$
+\iota_{02}(A)=JAJ^\dagger.
+\tag{167.2}
+$$
+对输入维数为二、输出维数为三的通道，$d_{\rm ref}$ 仍按全部有限参考系统上的半迹距离上确界定义。
+

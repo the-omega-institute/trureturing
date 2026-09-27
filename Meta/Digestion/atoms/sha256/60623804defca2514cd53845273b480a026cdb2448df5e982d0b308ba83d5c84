@@ -1,0 +1,22 @@
+**命题 5.4.2（按稀有字母数递推的精确证书）。** 取整数 $d\ge3$、$a\ge b\ge1$，置
+$$
+D=a+(d-1)b,\qquad p=\frac1D(a,b,\ldots,b).
+$$
+把深度 $n$、已执行该层删除后的活词按其中稀有字母数 $r$ 分类，记数为 $C_n(r)$。初始化 $C_0(0)=1$，其余及越界下标的计数为零。扩展到下一层而尚未删除时，
+$$
+\widetilde C_n(r)=C_{n-1}(r)+(d-1)C_{n-1}(r-1).
+$$
+令 $r_n$ 为 $\widetilde C_n(r)>0$ 的最小下标，并设 $C_n(r_n)=\widetilde C_n(r_n)-1$，其他类不变。再令
+$$
+R_0=1,\qquad R_n=DR_{n-1}-a^{n-r_n}b^{r_n}.
+$$
+则有限最优幸存质量及全族无限余量满足
+$$
+M_N^{\mathrm{fin}}:=1-B_N(p)=\frac{R_N}{D^N},\qquad
+\eta(p)\ge\frac{(D-a)R_N-a^{N+1}}{(D-a)D^N}.
+$$
+因此以下纯整数不等式证明 $\eta(p)>1/Q$：
+$$
+Q\bigl((D-a)R_N-a^{N+1}\bigr)>(D-a)D^N.
+$$
+

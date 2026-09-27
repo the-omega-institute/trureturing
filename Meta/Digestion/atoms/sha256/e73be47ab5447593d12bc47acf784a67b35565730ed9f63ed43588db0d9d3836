@@ -1,0 +1,45 @@
+### 163.1 固定来源与接收端局部恢复问题
+
+沿用第159节的来源、实对称平稳态 $\rho_*$、规范纯化
+$|\Xi\rangle=\operatorname{vec}\sqrt{\rho_*}$、运行寄存器
+$K_{\mathrm{run}}=Q\otimes R$ 与混合编码 $\mathfrak E$。记
+
+$$
+\Delta=\det\rho_*>0,\qquad P_\xi=|\xi\rangle\langle\xi|.
+\tag{163.1}
+$$
+
+对任意单位向量 $v\in Q$，定义接收态及两个实参数
+
+$$
+\Omega_v=\mathfrak E(P_v)
+=\frac12\left(
+P_v\otimes P_\Xi+
+P_{Zv}\otimes P_{\psi_1}
+\right),
+\qquad
+|\psi_1\rangle=(I_M\otimes Y_R)|\Xi\rangle,
+$$
+
+$$
+t(v)=\langle v|Z|v\rangle\in[-1,1],
+\qquad
+s(v)=\sqrt{1-t(v)^2}
+=\frac12\|P_v-P_{Zv}\|_1.
+\tag{163.2}
+$$
+
+系统顺序按标记排列。$s(v)$ 是两个掩码标签的迹距离，$s=1$ 时它们正交可读，$s=0$ 时它们相同。定义最佳平稳纯化恢复重叠
+
+$$
+f(v)=
+\max_{\mathcal D:\mathcal L(QR)\to\mathcal L(R_{\mathrm{out}})
+\ {\rm CPTP}}
+\langle\Xi|
+(\operatorname{id}_M\otimes\mathcal D)(\Omega_v)
+|\Xi\rangle.
+\tag{163.3}
+$$
+
+解码器只能作用于接收端 $Q,R$。这个量度量恢复一份指定纯化的能力；原输入及其外部参考的完整恢复误差仍用第159节的 $\mathfrak e(v)$ 表示，两者不是同一个优化目标。
+

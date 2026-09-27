@@ -1,0 +1,12 @@
+**命题 25.3（小初态误差可在稀有分支达到最大条件误差）。** 对每个 $0<\varepsilon<1$，存在两态与同一分支，使 $D(\rho,\sigma)=\varepsilon$，两分支概率均为 $\varepsilon$，而条件后继半迹距离为一。
+
+证明。取正交基 $c,0,1$，令
+
+$$
+\rho=(1-\varepsilon)|c\rangle\langle c|+\varepsilon|0\rangle\langle0|,
+\quad
+\sigma=(1-\varepsilon)|c\rangle\langle c|+\varepsilon|1\rangle\langle1|.
+$$
+
+以 $P=|0\rangle\langle0|+|1\rangle\langle1|$ 定义分支 $\Phi(X)=PXP$，补分支为 $|c\rangle\langle c|X|c\rangle\langle c|$。直接计算得到三项读数，且定理 25.2 的加权界取等号。故去掉分支概率因子后不存在趋于零的统一条件误差界。$\square$
+

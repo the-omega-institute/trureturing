@@ -1,0 +1,61 @@
+**定理 68.2（校准损耗后的成本与加权尾界）。** 在定义 68.1 的证书条件下，实际成本势 $T=\lim_mT_m$ 在算子范数中存在。所有初态最终点击，而且
+
+$$
+\boxed{
+I\le T\le\frac Bc,\qquad
+\sup_\rho\mathbb E_\rho\mathsf N
+=\|T\|_\infty\le\frac bc.
+}
+$$
+
+进一步，令 $r=1-c/b\in[0,1)$。对任意初态 $\rho$、整数 $m\ge0$，有
+
+$$
+\boxed{
+\mathbb E_\rho[(\mathsf N-m)_+]
+\le\frac{\operatorname{Tr}(\rho B)}c\,r^m.
+}
+$$
+
+其中 $r^0=1$，包括 $r=0$ 的情形。该结论先建立实际成本有限，无须预先假定实际仪器最终点击。
+
+证明。在完整输出上取效果：未点击块为 $B/b$，所有点击块为零。它介于零与恒等之间。因此对任意输入态，两个完整输出在该效果上的概率差至多为 $\delta$，从而
+
+$$
+\|(\mathcal A-\widehat{\mathcal A})(B)\|_\infty\le\delta b,
+\qquad
+B-\mathcal A(B)\ge cI. \tag{68.1}
+$$
+
+正性给 $B\ge cI$，故 $0<c\le b$。将式 (68.1) 依次作用 $\mathcal A^j$ 并相加，得到
+
+$$
+cT_m\le B-\mathcal A^m(B)\le B.
+$$
+
+有限维递增正算子序列 $T_m$ 有界，故在范数中收敛到 $T\le B/c$。对每个初态，尾和公式与单调收敛给
+
+$$
+\mathbb E_\rho\mathsf N
+=\sum_{j\ge0}\operatorname{Tr}\bigl(\rho\mathcal A^j(I)\bigr)
+=\operatorname{Tr}(\rho T)<\infty.
+$$
+
+因此永不点击的概率为零。又因 $B\le bI$，有
+
+$$
+\mathcal A(B)\le B-cI\le(1-c/b)B=rB,
+\qquad \mathcal A^m(B)\le r^mB.
+$$
+
+对收敛级数移项，并使用 $T\le B/c$，
+
+$$
+\sum_{j=m}^\infty\mathcal A^j(I)
+=\mathcal A^m(T)
+\le\frac{\mathcal A^m(B)}c
+\le\frac{r^mB}c.
+$$
+
+与 $\rho$ 取迹即为加权尾界。全状态最大均值等于正算子 $T$ 的最大本征值。$\square$
+

@@ -1,0 +1,9 @@
+**命题 5.2（边界干涉的记录重叠因子）。** 忽略记录系统时
+
+$$
+p_\pm(\phi)=\frac12\bigl(1\pm\operatorname{Re}(e^{i\phi}\kappa)\bigr),
+\qquad \mathcal V=|\kappa|.
+$$
+
+证明。投影到 $+$ 的记录向量为 $(d_L+e^{i\phi}d_R)/2$，取范数平方得到概率；负号同理。相位变化时的极值为 $(1\pm|\kappa|)/2$，代入可见度定义即得。$\square$
+

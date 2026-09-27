@@ -1,0 +1,60 @@
+### 279.8 固定CPTP编码、解码与模型范围
+
+令编码参考空间
+$$
+\widehat E=\bigoplus_{j=0}^{\lfloor k/2\rfloor}
+\operatorname{Sym}^{\ell_j}\mathbb C^2.
+$$
+其总维数为
+$$
+D_k=\sum_{j=0}^{\lfloor k/2\rfloor}(k-2j+1)
+=\left(\lfloor k/2\rfloor+1\right)
+\left(\lceil k/2\rceil+1\right)
+=\left\lfloor\frac{(k+2)^2}{4}\right\rfloor.
+\tag{279.40}
+$$
+设 $\Pi_j$ 是Schur空间第 $j$ 个扇区投影，$\widehat\Pi_j$ 是 $\widehat E$ 的对应投影。参考编码通道为
+$$
+\mathcal E(Y)
+=\bigoplus_j
+\operatorname{Tr}_{\mathbb C^{m_j}}
+\left(\Pi_j UYU^\dagger\Pi_j\right),
+\tag{279.41}
+$$
+解码通道为
+$$
+\mathcal D(\widehat Y)
+=U^\dagger\left[
+\bigoplus_j
+(\widehat\Pi_j\widehat Y\widehat\Pi_j)
+\otimes\frac{I_{m_j}}{m_j}
+\right]U.
+\tag{279.42}
+$$
+投影分块、偏迹、补入固定迹一态以及酉共轭均为CP操作；求和后的迹保持，故两者都是在完整输入算子空间上定义的CPTP通道。它们与 $Q,M$ 无关。量子输入 $H$ 不参与编码，联合通道使用 $\operatorname{id}_H\otimes\mathcal E$ 或 $\operatorname{id}_H\otimes\mathcal D$。
+
+精确解码的模型是所有满足
+$$
+(I_H\otimes U_\pi)\Xi(I_H\otimes U_\pi^\dagger)=\Xi
+\qquad(\pi\in S_k)
+\tag{279.43}
+$$
+的联合态。Schur引理使每个这样的态具有唯一分块形式
+$$
+(I_H\otimes U)\Xi(I_H\otimes U^\dagger)
+=\bigoplus_jR_j\otimes\frac{I_{m_j}}{m_j},
+\qquad
+R_j\succeq0,\qquad \sum_j\operatorname{Tr}R_j=1,
+\tag{279.44}
+$$
+其中 $R_j$ 可以保留输入 $H$ 与第 $j$ 表示空间的全部关联。编码得到 $\bigoplus_jR_j$，解码逐块补回同一个重数态，所以
+$$
+(\operatorname{id}_H\otimes\mathcal D\mathcal E)(\Xi)=\Xi.
+\tag{279.45}
+$$
+特别地，式（279.36）的图来源在这个模型内。
+
+式（279.41）必须保留所有扇区权重；既不把每个块单独归一化后等权拼回，也不丢弃经典扇区标记。编码与解码的现有原理是舍去、补回已知的无信息重数态，见本节末所引压缩文献。式（279.44）把这一原理直接用于可与外部输入关联的置换不变联合态。
+
+精确性不延伸到违反（279.43）的任意联合态。它也不重构相等失败分支，或原始重排以前的全部 $k$ 份来源。这里无损的是相等成功后、指定置换不变模型中的联合来源。
+

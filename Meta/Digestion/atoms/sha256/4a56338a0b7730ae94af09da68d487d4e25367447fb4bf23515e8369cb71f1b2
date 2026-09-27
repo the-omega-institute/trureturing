@@ -1,0 +1,207 @@
+**定理133.1（二重双尾不可能）。** 在上述合同中，五个尾环境不能只有两条不同射线。
+
+反设只有两尾。已有定理使其正交，并使完整位像按同一环境对分块。按尺寸命名大侧 $A$ 与小侧 $B$：
+
+$$
+R_0=(U\otimes A)\oplus(M\otimes B),\qquad
+R_1=(U^\perp\otimes A)\oplus(M^\perp\otimes B),
+$$
+
+$$
+\dim U=4,\quad\dim M=3,\quad
+P=U\cap M,\quad\dim P=2,\quad
+S=U+M,\quad\dim S=5.
+\tag{133.1}
+$$
+
+所有一位接收因子都正交于 $P$。首轮真实 $p$ 属于 $U$、$M$ 或 $P$，分别对应首环境 $A$、$B$ 或第三条射线。
+
+第131节排除第二轮从三维小侧开始。因此以下只须处理 $[\eta_2]=A$。三维小侧不能分叉；四维大侧发生分叉时，两份不同后继的实际二维平面正交并填满 $U$。这两个事实的证明只用维数与实际 $V_1$，与第129.1节完全相同，不使用一重交维数。
+
+于是大侧开始的十个必要词仍是
+
+$$
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,
+\ AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+\tag{133.2}
+$$
+
+其中 $AAAAB,AAABA,AAABB,ABBBB$ 的早期 $w$ 或四轮共同环境禁阻，以及 $AABAA$ 的真实 $q$ 首轮回接，逐项满足第129.3节的局部证明。那五个证明没有使用 $U\cap M$ 的维数，因此直接排除这五词。下面完整处理其余五词，避免套用一重引理129.2。
+
+### 133.1 二重交中新增的共同后继分支
+
+在大侧分叉的词中，记大侧后继为 $A$ 的平面为 $X$，后继为 $B$ 的平面为 $Y$，则
+
+$$
+U=X\oplus Y,\quad X\perp Y,\qquad
+V_1X\subset K\otimes A,\quad
+V_1Y\subset K\otimes B.
+\tag{133.3}
+$$
+
+若另一个实际 $T\subset M$ 为二维且后继为 $A$，完整一位 $A$ 纤维三维使
+
+$$
+\dim(X+T)\le3.
+\tag{133.4}
+$$
+
+若 $X\ne T$，则交一维、和三维，像填满 $U^\perp\otimes A$，真实 $V_1p=v\otimes A$ 遂使 $p\in X+T$。
+
+此外，$T=P$ 会使 $T\subset U$，而（133.3）中属于 $U$ 且一位环境为 $A$ 的输入只能在 $X$ 中，故 $T=P$ 必迫 $T=X$。所以在 $X\ne T$ 分支中总有 $T\ne P$，并且
+
+$$
+U\cap(X+T)=X.
+\tag{133.5}
+$$
+
+确切地说，$U\cap T\subset P$；若它二维，就有 $T=P$，刚已排除，因此 $U\cap T=X\cap T$ 恰一维，得到（133.5）。同理，若还满足 $X\ne P$，则
+
+$$
+M\cap(X+T)=T.
+\tag{133.6}
+$$
+
+首轮零位纤维因而将真实 $p$ 限制为 $p\in X\cup T$。只有 $X=P$ 时出现额外分支：此时 $X+T=M$，可能只知 $p\in M$。以下显式处理该分支。
+
+### 133.2 AABAB：共同核心分支仍违反两个满投影
+
+当前实际关系为
+
+$$
+G_2=X,\quad G_3=G_5=Y,\quad G_4=T\subset M,
+$$
+
+$$
+H_2=H_4,\qquad H_1\perp H_2.
+\tag{133.7}
+$$
+
+若 $X=T$，非零早期 $w\in H_2\cap X$ 落入后期 $H_4\cap G_4=0$，矛盾。故 $X\ne T$。
+
+若 $X\ne P$，则（133.5）、（133.6）使 $p\in X\cup T$。早期 $H_2$ 满投影到 $X=G_2$，同一个 $H_4=H_2$ 又满投影到 $T=G_4$；两种位置均与 $0\ne p\in H_1\perp H_2$ 冲突。
+
+只剩 $X=P$。此时 $X+T=M$，所以 $p\in M$。由 $p\perp H_4$、$Q_4\subset M^\perp$ 及 $H_4$ 满投影到 $T$，得到 $p\perp T$。
+
+另一方面 $H_2\perp H_3$，因为其零位像分别为 $Y\otimes A,T\otimes B$。早期 $u,w\in X=P$ 正交于 $Y$，也正交于 $Q_3\subset U^\perp$，故都正交于 $H_3\subset Y\oplus Q_3$。真实 $a^2u+bv\in H_2$、$b\ne0$ 于是给 $v\perp H_3$，继而 $v\perp Q_3$。
+
+实际 $V_1p=v\otimes A$ 与 $V_1P=V_1G_2=Q_3\otimes A$ 因而正交，得 $p\perp P$。$P+T=M$，所以非零 $p\in M$ 同时正交于整个 $M$，矛盾。
+
+### 133.3 ABAAA：末轮给出的第二个一位投影
+
+此词为
+
+$$
+G_2=Y,\quad G_3=T\subset M,\quad G_4=G_5=X,
+$$
+
+$$
+H_3=H_4,\qquad H_1\perp H_3.
+\tag{133.8}
+$$
+
+若 $X=T$，相同空间对 $(H_3,G_3)=(H_4,G_4)$ 违反实际来源的 $\delta_3\ne\delta_4$。若 $X\ne T$ 且 $X\ne P$，则 $p\in X\cup T$；同一个 $H_3=H_4$ 对二者都满投影，和（133.8）矛盾。
+
+只剩 $X=P$。此时 $p\in X+T=M$。$H_3$ 当前为 $B$，所以 $Q_3\subset M^\perp$；$p\perp H_3$ 和满投影给 $p\perp T$。
+
+第2、第5个输入平面的零位输出环境分别为 $B,A$，即 $V_0H_2=T\otimes B$、$V_0H_5=G_6\otimes A$，所以 $H_2\perp H_5$。当前第5轮为 $A$，有
+
+$$
+H_5\subset P\oplus Q_5,\qquad Q_5\subset U^\perp.
+$$
+
+早期 $u,w\in Y\perp P$ 因而正交于 $H_5$。真实 $a^2u+bv\in H_2$ 给 $v\perp H_5$，继而 $v\perp Q_5$。同一个 $V_1p=v\otimes A$ 与 $V_1P=V_1G_4=Q_5\otimes A$ 遂给 $p\perp P$。结合 $p\perp T$、$P+T=M$，再次矛盾。
+
+这里使用的是已执行零位像 $V_0H_5=G_6\otimes A$，没有使用未执行的 $V_1G_6$。
+
+### 133.4 ABAAB：一维首轮投影不能成为完整共同平面
+
+此词给
+
+$$
+G_2=G_5=Y,\quad G_3=T\subset M,\quad G_4=X,
+$$
+
+$$
+H_1=H_4,\qquad H_2\perp H_4.
+\tag{133.9}
+$$
+
+若 $X=P$，则后期 $P_PH_4=P$ 二维，因为 $G_4=P$ 且所有一位接收因子正交于 $P$。真实首轮 $H_1=\operatorname{span}(p,q)$ 却满足 $q\perp P$，故 $P_PH_1$ 至多一维，立即矛盾。
+
+所以 $X\ne P$。如果 $X=T$，它们是同时包含于 $U,M$ 的二维平面，必等于 $P$，与刚得结论冲突。因此 $X\ne T$，式（133.5）、（133.6）给 $p\in X\cup T$。
+
+$p\in X$ 会使非零 $p\in H_1=H_4$ 落入 $H_4\cap G_4=0$，故 $p\in T=G_3$。同一个 $V_1$ 于是给 $v\in Q_4$。但 $u,w\in Y$ 正交于 $H_4\subset X\oplus Q_4$，而早期 $a^2u+bv\in H_2\perp H_4$，故 $v\perp H_4$。这违反非零 $v\in Q_4$ 与后期满投影。
+
+### 133.5 AABBB：二重共同核心使后期空间对重复
+
+采用第130.1—130.2节至式（130.9）的局部推导。该段只用 $U_4,M_3$、环境正交和真实早期列，不使用一重共同核心或六维 $S_0$，所以这里仍严格得到
+
+$$
+X=G_2,\quad Y=G_3,\quad U=X\oplus Y,\quad X\perp Y,
+$$
+
+$$
+[\eta_1]=B,\quad p\in M,\quad p\perp U,\qquad
+G_4=G_5=T=M\cap p^\perp,\quad H_3=H_4.
+\tag{133.10}
+$$
+
+为明确这段回接：$p\in U$ 会由 $H_1\perp H_2$、$v\perp U$ 和 $p\perp Y$ 迫 $p=0$，所以首轮为 $B$；$G_4,G_5\perp p$ 迫它们相同；$H_2\perp H_3$ 与 $u,w\perp H_3$ 给 $v\perp Q_3$，同一个 $V_1$ 再使 $p\perp X$，得到 $p\perp U$。
+
+现在 $P\subset U\cap M$ 二维，且 $p\perp U$，故 $P\subset T$，由二维性得 $T=P$。$X$ 的一位后继为 $A$，$T$ 的后继为 $B$，所以 $X\perp P$。于是 $Y=U\cap X^\perp=P$。因此
+
+$$
+(H_3,G_3)=(H_4,G_4)=(H_3,P),
+$$
+
+违反非退化来源的 $\delta_3\ne\delta_4$。本词排除。
+
+### 133.6 ABABA：共同二维核心压低交替跨度
+
+令
+
+$$
+E=G_2+G_4\subset U,\qquad O=G_3+G_5\subset M.
+$$
+
+第99.3节的局部实际证明给
+
+$$
+\dim O\ge3,\qquad 2\le\dim E\le\dim O.
+$$
+
+所以 $O=M$、$\dim O=3$。两份实际一位像分别沿正交环境 $B,A$，故 $E\perp M$。由于 $P\subset M$ 二维，
+
+$$
+E\subset U\cap P^\perp,\qquad \dim E\le4-2=2.
+$$
+
+因此 $G_2=G_4=E$，相同零位像给 $H_1=H_3$，特别 $p\in H_3$。
+
+早期 $H_2$ 与后期 $H_4$ 是同一个二维 $E$ 上的图，图映射分别为
+
+$$
+T_2u=(b/a^2)v,\quad T_2w=0,\qquad
+T_4:E\longrightarrow Q_4\ \text{同构}.
+$$
+
+$v,Q_4\subset U^\perp$，而 $\dim(H_2+H_4)=\dim O=3$，所以 $\operatorname{rank}(T_4-T_2)=1$。若 $v\notin Q_4$，差映射的核只能为零，秩便为二，矛盾。故 $v\in Q_4$。
+
+真实 $V_1p=v\otimes A$ 与 $V_1G_3=Q_4\otimes A$ 遂使 $p\in G_3$，违反非零 $p\in H_3$ 与后期零交 $H_3\cap G_3=0$。
+
+### 133.7 双尾分支完整排除的范围
+
+第131节排除小侧启动，本节穷尽大侧启动的十词，故二重共同纤维的双尾合同全部不可能，定理133.1成立。所用严格来源差值为
+
+$$
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0,\qquad
+x=|a|^2,\quad y=|b|^2,\quad t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+因此二重共同纤维的候选必须使用三条尾射线；其中小异常方向必须实际进入尾部，且普通方向不能作为第二轮。该三尾分支仍须满足同一来源的其他实际续接条件。一重分支的剩余交替尾词也未在本节排除。一般容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

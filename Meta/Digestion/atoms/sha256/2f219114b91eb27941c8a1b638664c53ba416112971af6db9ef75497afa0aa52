@@ -1,0 +1,13 @@
+**证明。** 下界是（282.19）。上界由（282.22）—（282.25）的分段选择和实际似然检验得到。全部概率来自正定混合来源与迹保持相位通道，没有未实现的概率表或未计入的后选择。$\square$
+
+当 $r=1$，有 $s=\Delta=\delta$，恢复§281的 $\Theta((\delta/n+\delta^{3/2})^{-1})$。若固定 $n$ 和 $\epsilon>0$，再令 $\delta\downarrow0$，预算变为 $\Theta(\delta^{-2})$。在联合范围中，更精确地有
+$$
+N_{\mathrm{noise}}\asymp
+\begin{cases}
+ns/\Delta^2,&n\sqrt s\le1,\\
+\sqrt s/\Delta^2,&n\sqrt s\ge1.
+\end{cases}
+\tag{282.28}
+$$
+例如 $\epsilon/\delta\to\infty$ 且 $n\sqrt\epsilon\to\infty$ 时，$r$ 仍在已声明区间内，故预算为 $\Theta(\sqrt\epsilon/\delta^2)$。这里噪声把原零概率抬到 $\epsilon/(4n)$，实际差分信号为 $\Delta/(4n)$；二者分别进入保真度分母与分子。
+

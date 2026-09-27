@@ -1,0 +1,15 @@
+**定理198.1（统一严格正差商）。** 存在只依赖固定模型及 $I$ 的
+$c,\epsilon_0>0$，使全部 $0<\epsilon\le\epsilon_0$ 及
+$a\le h_1<h_2\le b$ 满足
+
+$$
+\boxed{
+F_\epsilon(h_2)-F_\epsilon(h_1)
+\ge c\epsilon(h_2-h_1).
+}
+\tag{198.2}
+$$
+
+即归一化最优误差
+$(F_\epsilon(h)-3/4)/\epsilon$ 在该固定邻域具有一致严格正差商。这里不要求最优恢复器唯一，也不要求最优值关于 $h$ 可微。
+

@@ -1,0 +1,23 @@
+**命题 406.2（缺少局部算子张成时的单记录反例）。** 将定义 405.1 的第四个源向量改成 $\widetilde r_4=|{-}\rangle=(|0\rangle-|1\rangle)/\sqrt2$，其余三个不变，写相应记录制备为 $\widetilde J_1$。这四个源投影只张成 $\operatorname{span}_{\mathbb R}\{I_2,X,Z\}$，但一份记录已经允许两个结果的确定性精确恢复。因而仅有局部访问限制与记录族的非正交性，不足以推出定理 405.3 那样的障碍。
+
+证明。前两个投影给出 $I_2,Z$，第三和第四个分别为 $(I_2+X)/2$ 与 $(I_2-X)/2$，所以张成空间恰为所述三维空间，不包含 $Y$。令唯一持有者测量正交基
+
+$$
+|y_\sigma\rangle=\frac{|0\rangle+\sigma i|1\rangle}{\sqrt2},
+\qquad \sigma\in\{+1,-1\},\qquad
+\langle y_\sigma|=\frac{(1,-\sigma i)}{\sqrt2}.
+$$
+
+两个向量的范数为一且彼此正交。它们与四个修改后源态的重叠为 $z_\sigma/\sqrt2$，其中
+
+$$
+z_\sigma=\left(1,-\sigma i,
+                 \frac{1-\sigma i}{\sqrt2},
+                 \frac{1+\sigma i}{\sqrt2}\right),
+\qquad |(z_\sigma)_i|=1\quad(1\le i\le4).
+$$
+
+故系统分支 $K_\sigma=\operatorname{diag}(z_\sigma)/\sqrt2$ 经反馈 $U_\sigma=\operatorname{diag}(\overline{z_\sigma})$ 后满足 $U_\sigma K_\sigma=I_4/\sqrt2$，每个校正映射为 $\operatorname{id}_S/2$。两结果求和为恒等映射，与任意有限参考的联合态也被精确恢复。
+
+这里的局部效果 $|y_\sigma\rangle\langle y_\sigma|=(I_2+\sigma Y)/2$ 并非标量，却对四个实坐标源态都具有期望 $1/2$；直接用上述重叠的模平方即可验证。引理 405.2 中从恒定期望推出标量拉回效果的步骤因此失去前提。原四态族内含非正交对，修改后的族也内含非正交对，但后者已有确定性协议，所以非正交性本身不能代替局部算子张成条件。此反例不主张信息完备性是每一种恢复障碍的必要条件，也不主张每个非信息完备记录族都可恢复。证毕。
+

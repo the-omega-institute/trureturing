@@ -1,0 +1,24 @@
+**命题 1.16（multiplicative independence）。** If $k\ne\ell$, then $\lambda_k$ and $\lambda_\ell$ are multiplicatively independent. Each $\lambda_k$ is also multiplicatively independent of $2$.
+
+**Proof.** For an integer $a>0$, put $\gamma=\lambda_k^a$ and $K=\mathbb Q(\gamma)$. Any $K$-conjugate $\alpha$ of $\lambda_k$ is a $\mathbb Q$-conjugate and satisfies
+$$
+\alpha^a=\gamma,
+\qquad |\alpha|=\lambda_k>1.
+\tag{TM.546}
+$$
+The unique conjugate outside the unit circle is $\lambda_k$, so $\alpha=\lambda_k$. Characteristic-zero separability implies
+$$
+[\mathbb Q(\lambda_k):K]=1,
+\qquad \mathbb Q(\lambda_k^a)=\mathbb Q(\lambda_k).
+\tag{TM.547}
+$$
+If $\lambda_k^a=\lambda_\ell^b$ for positive integers $a,b$, the two fields coincide. Irreducibility gives their degrees as $k$ and $\ell$, hence $k=\ell$.
+
+The monic polynomial $\psi_k$ has constant term $-1$, so $\lambda_k$ is an algebraic unit. An equality $\lambda_k^a=2^b$ with $a,b>0$ would give
+$$
+N_{\mathbb Q(\lambda_k)/\mathbb Q}(\lambda_k)^a
+=2^{bk},
+\tag{TM.548}
+$$
+whose left side is $\pm1$ and whose right side exceeds $1$. This is impossible. Since all numbers considered exceed $1$, every nontrivial multiplicative dependence would yield an equality with positive exponents of one of these forms. $\square$
+

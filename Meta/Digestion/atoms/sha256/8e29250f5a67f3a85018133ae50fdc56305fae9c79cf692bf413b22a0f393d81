@@ -1,0 +1,36 @@
+**定理 25.2（分支误差的概率加权界）。** 定义 25.1 下，
+
+$$
+|p-q|\le D(\rho,\sigma),
+\qquad
+\max\{p,q\}\,D(\rho_\Phi,\sigma_\Phi)\le D(\rho,\sigma).
+$$
+
+因此，若真实分支概率 $p\ge p_*>0$ 且 $D(\rho,\sigma)\le\varepsilon<p_*$，则估计分支也具有正概率，并有
+
+$$
+D(\rho_\Phi,\sigma_\Phi)\le\varepsilon/p_*.
+$$
+
+证明。$0\le B\le I$，所以迹零 Hermitian 差的正负部分分解给出 $|\operatorname{Tr}[(\rho-\sigma)B]|\le\|\rho-\sigma\|_1/2$。把失败分支压到一个正交标志，得到保迹完全正映射
+
+$$
+\widehat\Phi(X)=\Phi(X)\oplus\operatorname{Tr}[(I-B)X].
+$$
+
+正保迹映射对 Hermitian 输入收缩迹范数：若 $X=X_+-X_-$ 为 Jordan 分解，三角不等式给出输出范数至多 $\operatorname{Tr}X_++\operatorname{Tr}X_-=\|X\|_1$。故
+
+$$
+\|\Phi(\rho)-\Phi(\sigma)\|_1+|p-q|
+\le\|\rho-\sigma\|_1.
+$$
+
+另一方面，
+
+$$
+p(\rho_\Phi-\sigma_\Phi)
+=\Phi(\rho)-\Phi(\sigma)+(q-p)\sigma_\Phi,
+$$
+
+所以 $p\|\rho_\Phi-\sigma_\Phi\|_1$ 不超过上一式左端；交换两态得到同样的 $q$ 界，因而得到最大值形式。最后 $q\ge p-\varepsilon>0$，再除以 $p_*$。$\square$
+

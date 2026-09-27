@@ -1,0 +1,11 @@
+**定理 249.1（精确 Bell 产额尾部）。**
+$$
+\boxed{
+P_{\mathrm{exact}}(n,k)
+=\Pr_\theta[K\ge k]
+=\sum_{j=k}^{n}\binom nj\theta^j(1-\theta)^{n-j}.
+}
+\tag{249.10}
+$$
+当 $k>n$，空和为零；$k=0$ 时约定空 Bell 目标恒成功，概率为一。
+

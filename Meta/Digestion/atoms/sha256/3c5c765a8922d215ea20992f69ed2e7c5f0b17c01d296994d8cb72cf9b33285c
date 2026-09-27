@@ -1,0 +1,18 @@
+**命题 389.3（罕见事件的后验对微小绝对似然差异可以敏感）。** 取两个等先验参数 $\theta_0,\theta_1$，观察字母为 $y,\neg y$。对 $0<\varepsilon<1$，模型 $M_\varepsilon$ 指定
+
+$$
+L_{\theta_0}(y)=\varepsilon,\quad L_{\theta_1}(y)=\varepsilon^2;
+$$
+
+模型 $N_\varepsilon$ 则交换这两个似然，其余质量给 $\neg y$。两个模型在每一参数行上的全变差距离均为 $\varepsilon-\varepsilon^2\to0$，但观察到 $y$ 后，对 $\theta_0$ 的后验分别是
+
+$$
+\frac1{1+\varepsilon},\qquad \frac{\varepsilon}{1+\varepsilon}.
+$$
+
+二者差值趋向一。
+
+证明：两点概率分布的全变差距离等于其中一个坐标差的绝对值；后验由归一化公式直接计算。两个模型中 $y$ 的边缘概率都为 $(\varepsilon+\varepsilon^2)/2$，随 $\varepsilon\to0$ 趋向零。
+
+这个例子说明，没有额外的正概率下界或相对似然控制，观测模型在绝对误差上接近，不保证条件后验一致接近。它不说明每个罕见事件都无信息；恰恰相反，在精确给定的模型里该事件可以强烈区分参数。问题在于这种强推断对模型误差承担了什么条件。
+

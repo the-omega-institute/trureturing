@@ -1,0 +1,98 @@
+**定理 162.4（单步最优限制的弱记录极限）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个 $t\ge0$，
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal E_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=g(t):=e^{-t}
+\sin\!\left(\min\left\{\frac{\sqrt3\,t}{2},\frac\pi2\right\}\right).
+\tag{162.19}
+$$
+该收敛在每个有限 $t$ 区间上一致。并且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal E_N(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right].
+}
+\tag{162.20}
+$$
+若 $N^\dagger(r)$ 为任一达到 $\sup_{N\ge1}\mathcal E_N(r)$ 的整数，则
+$$
+\lim_{r\uparrow1}(1-r)N^\dagger(r)
+=\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right).
+\tag{162.21}
+$$
+式（162.20）的常数严格大于定理161.6中的 $(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+证明。 定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 以及 $r^{\lfloor t/\varepsilon\rfloor}\to e^{-t}$，后者在有限 $t$ 区间上一致。由式（161.20），
+$$
+1-c=\frac{\varepsilon^2(3-2\varepsilon)}
+{2(1-\varepsilon)^3}=O(\varepsilon^2).
+\tag{162.22}
+$$
+对 $N=\lfloor t/\varepsilon\rfloor$，在 $0\le t\le T$ 上有
+$$
+0\le1-c^N\le N(1-c)=O(T\varepsilon),
+\tag{162.23}
+$$
+故 $c^N\to1$ 一致。将式（162.4）写成
+$$
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\left|e^{i\min\{N\alpha,\pi\}}-c^N\right|
+\tag{162.24}
+$$
+并使用复数模长的 Lipschitz 性，即得有限区间上一致的极限
+$$
+\frac{e^{-t}}2|e^{i\min\{\sqrt3t,\pi\}}-1|
+=g(t).
+$$
+$N=0$ 时该式也按定义为零，因而包含 $t=0$。
+
+对所有 $N\ge1$，式（162.24）给出统一尾界
+$$
+0\le\mathcal E_N(1-\varepsilon)
+\le (1-\varepsilon)^N
+\le e^{-\varepsilon N}.
+\tag{162.25}
+$$
+和定理161.6一样，有限区间上一致收敛、网格间距趋零及该尾界把最大值问题化为 $\max_{t\ge0}g(t)$。令 $a=\sqrt3/2$；在 $0<t<\pi/(2a)$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)).
+$$
+其唯一零点为 $t^\dagger=a^{-1}\arctan a$，此前导数为正，此后为负；在剩余区间 $g(t)=e^{-t}$ 严格下降。唯一最大值为
+$$
+g(t^\dagger)
+=\frac{a}{\sqrt{1+a^2}}e^{-t^\dagger}
+=\sqrt{\frac37}\,e^{-(2/\sqrt3)\arctan(\sqrt3/2)}.
+$$
+固定 $1/\sqrt3<r<1$ 时，$\mathcal E_1(r)>0$ 而 $\mathcal E_N(r)\to0$，所以整数最大点存在。统一尾界和极限的唯一最大点给出式（162.21）。
+
+最后比较定理161.6的函数 $f(t)$。当 $0<t\le\pi/(2\sqrt3)$ 时，写 $x=\sqrt3t/2\in(0,\pi/4]$，有 $g(t)=e^{-t}\sin x>e^{-t}\sin x\cos x=f(t)$。当 $t\ge\pi/(2\sqrt3)$ 时，$f(t)=e^{-t}/2$，而 $g(t)\ge e^{-t}/\sqrt2>f(t)$。在 $f$ 的正最大点代入即得两最大值的严格差。证毕。
+
+为解释上述严格代价，使用通道复合对加法的分配律。在定义162.1的非退化区间内，最优预测器满足
+$$
+\mathcal F_*^N
+=2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N\in\{-1,1\}}
+\mathcal M_{r,\epsilon_N\alpha}\circ\cdots\circ
+\mathcal M_{r,\epsilon_1\alpha}.
+\tag{162.26}
+$$
+其 $(0,2)$ 乘子为 $r^Nc^N$；若在开始时仅抽一次等权端点相位，并在所有步骤保持它，所得平均终端通道的该乘子则为 $r^N\cos(N\alpha)$。二者在 $N=2$ 时的通道距离恰为
+$$
+\frac{r^2}{2}\sin^2\alpha>0.
+\tag{162.27}
+$$
+因此单步上相同的混合预测合同，在独立重抽与保持共同参数两种续接下给出不同的多步通道。
+
+事实上，逐次展开 $\bigl((\mathcal M_{r,\alpha}+\mathcal M_{r,-\alpha})/2\bigr)^N$ 即得式（162.26）。其相位因子的平均是
+$$
+2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N}
+e^{i\alpha(\epsilon_1+\cdots+\epsilon_N)}
+=\left(\frac{e^{i\alpha}+e^{-i\alpha}}2\right)^N=c^N.
+$$
+固定共同端点的平均因子为 $(e^{iN\alpha}+e^{-iN\alpha})/2=\cos(N\alpha)$。在 $N=2$，二者之差为 $c^2-\cos(2\alpha)=\sin^2\alpha$，再用式（161.11）即得（162.27）。
+
+这两种混合是比较预测合同的数学构造，不改变定义161.1的实际源：每个实际 $\phi$ 固定，环境单元逐步新鲜。静态随机参数产生特征函数退相干已有明确文献：C. M. Kropf、C. Gneiting、A. Buchleitner，*Effective Dynamics of Disordered Quantum Systems*，[Phys. Rev. X 6, 031023 (2016)](https://doi.org/10.1103/PhysRevX.6.031023)，第II A节式(1)—(3)保持每个实现的 Hamiltonian 不变再作平均，第V节式(24)—(25)给出由参数分布特征函数控制的非对角元。式（162.26）的独立乘积平均与固定共同参数平均使用这一成熟的随机参数区分；该文的 Hamiltonian 系综平均不替代本节无参数先验的 minimax 优化。
+
+定理162.2说明任何单步最优的三维 CPTP 模型在赤道圆盘上都被迫给出同一种迭代，因此严格差距不只是选择 Schur 预测器的偶然结果。定理162.4给出的最坏视界常数约为 $0.2871395757$，而逐视界重新选择预测通道的常数约为 $0.2365518148$；前者仅在“必须先达到单步最优”的约束下最优，不是所有平稳预测模型的无约束最优值。固定 $r<1$ 时，两种误差仍随 $N\to\infty$ 趋零；逐视界严格差距不意味着关于全部视界的一致正差距。允许额外持久记忆、随步数改变通道、取得校准数据或中间控制，会改变优化域。平均与复合不交换也可发生在经典未知参数模型中；本节的量子内容在于该已校准记录源的全输入、全参考距离和全 CPTP 最优类的精确界，不由此推出普遍的量子与经典分界。
+

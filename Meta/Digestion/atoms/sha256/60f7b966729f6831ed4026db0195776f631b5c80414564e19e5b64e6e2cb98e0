@@ -1,0 +1,52 @@
+### 288.2 同一规范来源的两个正交零方向
+
+在参考基 $e_0,e_1$ 中，固定
+$$
+M=\begin{pmatrix}1&1/4\\0&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix},
+\qquad Q+M^\dagger QM=I_2.
+\tag{288.2}
+$$
+这正是前述规范族的 $n=2$ 成员。仍令 $D=\operatorname{diag}(Q,I-Q)/2$、$\tau=I_4/4$，并记
+$$
+R=D\otimes\tau+\tau\otimes D.
+\tag{288.3}
+$$
+张量因子按 $H_1H_2E_1E_2$ 重排；中间荷扇区按输入 $|01\rangle,|10\rangle$ 识别为两份 $\mathbb C^2\otimes\mathbb C^2$ 的直和。
+
+§285的理想中间图像为
+$$
+Cx=\begin{pmatrix}I\otimes M^\dagger\\M^\dagger\otimes I\end{pmatrix}x.
+$$
+在同一扇区定义另一列算子
+$$
+Kx=\begin{pmatrix}-(M\otimes I)x\\(I\otimes M)x\end{pmatrix}.
+\tag{288.4}
+$$
+由于不同张量因子上的算子交换，
+$$
+C^\dagger K
+=-(I\otimes M)(M\otimes I)+(M\otimes I)(I\otimes M)=0.
+\tag{288.5}
+$$
+因此 $K$ 的全部像都在旧核投影 $P_2$ 的范围内。
+
+令 $e_{ij}=e_i\otimes e_j$，取归一化向量
+$$
+u=\frac{Ke_{00}}{\sqrt2}
+=\frac1{\sqrt2}\begin{pmatrix}-e_{00}\\e_{00}\end{pmatrix},
+$$
+$$
+v=\frac{Ke_{11}}{\sqrt{17/8}}
+=\frac1{\sqrt{17/8}}
+\begin{pmatrix}-e_{01}/4-e_{11}\\e_{10}/4+e_{11}\end{pmatrix}.
+\tag{288.6}
+$$
+$Ke_{00}$ 的范数平方为二，$Ke_{11}$ 的范数平方为 $17/8$；两者在每个直和分量的参考支撑互不重叠，所以 $u\perp v$。于是
+$$
+P_u=|u\rangle\langle u|,\qquad P_v=|v\rangle\langle v|,
+\qquad P_u+P_v\preceq P_2.
+\tag{288.7}
+$$
+这两个投影都与共同相位作用对易，在完全共同相位的理想块上准确零点击。它们属于完整输入—参考空间，不是仅对两个输入qubit作测量。
+

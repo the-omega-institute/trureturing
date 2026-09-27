@@ -38,11 +38,10 @@ universe. It supplies no algorithm enumerating or deciding every truth.
 Computation still constructs counterexamples, searches for proofs and checks
 them. What truth is and how its proofs are obtained remain different questions.
 
-In practice, returning a result means making it available as a premise. A
+Return a result to shared knowledge for reuse as a premise, with inspectable
+objects, conditions and evidence. A
 theorem can be reused where its assumptions hold; a counterexample refutes a
 claim within its stated scope and can suggest which conditions to investigate next.
-An AI's output can support further reasoning when it returns to shared
-knowledge with inspectable objects, conditions and evidence.
 
 [Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) outlines
 a discipline: beauty and intuition guide questions, logic tests
@@ -74,7 +73,7 @@ answered? Existing work gives this picture several mathematical entry points.
   The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
   distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
   and `11`. They have the same two single-qubit reduced states. A
-  [joint expectation](../README.md#three-places-to-look) separates this pair without
+  [joint expectation](../README.md#02--find-what-observations-cannot-tell-you) separates this pair without
   establishing recovery of arbitrary joint states.
 
 - **Space and history.** Does a current spatial reading preserve the historical

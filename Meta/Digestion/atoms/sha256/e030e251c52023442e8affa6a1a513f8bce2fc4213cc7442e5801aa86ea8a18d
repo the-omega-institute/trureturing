@@ -1,0 +1,20 @@
+**命题 2.42。** For this fixed computable presentation,
+
+$$
+R\equiv_T S.
+$$
+
+The reduction from $S$ to $R$ is uniform in the presentation. The reverse reduction is independent of the presentation.
+
+**Proof.** Given a depth-$d$ word $s$ and an oracle deciding $S$, find the finitely many canonical depths in $S\cap\{1,\ldots,d\}$. Wait for the raw cylinder at each of these depths. Every wait terminates, because each canonical cylinder is a raw member. The word $s$ is nonextendible precisely when one of these finitely many cylinders is its ancestor. Conversely, using an extension oracle, inspect all words $s$ of depth $n$ and test
+
+$$
+[s]\in\mathcal B
+\quad\Longleftrightarrow\quad
+s\notin R\ \text{and}\ s^-\in R.
+$$
+
+This finite search decides whether $n\in S$. $\square$
+
+No time bound for the arrival of the relevant canonical cylinders is implied.
+

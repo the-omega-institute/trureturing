@@ -1,0 +1,30 @@
+**定理 224.3（结构偏差的显式增量）。** 假设所有截断均未触及 $1$。令不含失配的统计上界为
+
+$$
+\widehat R^+_{\delta,0}
+=
+\sum_i v_{\beta_i}v_{\alpha_i}+v_{\alpha_\infty},
+$$
+
+其中 $v_{\beta_i}=\widehat\beta_i+r_{\beta_i}$、$v_{\alpha_i}=\widehat\alpha_i+r_{\alpha_i}$。则
+
+$$
+\boxed{
+\widehat R^+_{\delta,\kappa}
+-
+\widehat R^+_{\delta,0}
+=
+\sum_i
+\left(
+v_{\beta_i}\kappa_{\alpha_i}
++
+v_{\alpha_i}\kappa_{\beta_i}
++
+\kappa_{\beta_i}\kappa_{\alpha_i}
+\right)
++
+\kappa_{\alpha_\infty}.
+}
+\tag{224.2}
+$$
+

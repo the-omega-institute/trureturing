@@ -1,0 +1,14 @@
+**命题179.1（纯化恢复的精确局部归约）。** 有
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\min_{\Gamma:QR\to R_{\mathrm{out}}\ {\rm CPTP}}
+\max_{j=0,1}
+D\left(
+(\operatorname{id}_M\otimes\Gamma)(\omega_j'),P_\Xi
+\right).
+}
+\tag{179.6}
+$$
+

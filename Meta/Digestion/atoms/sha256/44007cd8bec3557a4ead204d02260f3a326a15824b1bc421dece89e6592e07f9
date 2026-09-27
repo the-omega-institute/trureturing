@@ -1,0 +1,34 @@
+**定理 8.1（精确计数未来商）。** 在第 8.1.1 节协议下，对任意 $H,H'\subseteq X_L$，
+$$
+H\equiv_M H'
+\quad\Longleftrightarrow\quad
+\forall c\pmod D,\ N_c(H)=N_c(H').
+\tag{ER8.FH.5}
+$$
+
+**充分性。** 因每个 $m\mid D$，一个点是否被任一允许类删除只取决于其模 $D$ 余数。故
+$$
+R_{T,a}(H)
+=\sum_{c\bmod D}N_c(H)
+  \prod_{m\in T}\bigl(1-\mathbf1_{c\equiv a_m\ (m)}\bigr).
+\tag{ER8.FH.6}
+$$
+相同直方图给相同的全部读数。
+
+**必要性。** 固定 $c\bmod D$。对每个 $T\subseteq M$，选择相容的余数 $a_m=c\bmod m$，记相应读数为 $R_T^c(H)$。则
+$$
+\boxed{N_c(H)=\sum_{T\subseteq M}(-1)^{|T|}R_T^c(H).}
+\tag{ER8.FH.7}
+$$
+为验证，逐个 $x\in H$ 展开其在右侧的贡献。置 $I_m(x)=\mathbf1_{x\equiv c\ (m)}$，该贡献为
+$$
+\sum_{T\subseteq M}(-1)^{|T|}\prod_{m\in T}(1-I_m(x))
+=\prod_{m\in M}\bigl[1-(1-I_m(x))\bigr]
+=\prod_{m\in M}I_m(x).
+$$
+最后一个乘积为一，当且仅当每个 $m\in M$ 都整除 $x-c$，等价于 $D\mid x-c$。求和即得 ER8.FH.7。这里反演的是有限布尔格上的包含排除；不要求模数两两互素，也不把相容余数组合误当自由乘积。
+
+每个 ER8.FH.7 所需查询都属于同一协议：各模数只用一次，选取任意子集，余数允许独立指定。相容余数特选是合法查询，不是对两个不同实现分别取最优值。未来读数相同遂逐格恢复相同 $N_c$，证毕。
+
+边界也包含在证明中。$M=\varnothing$ 时 $D=1$，唯一格为 $|H|$，ER8.FH.7 只有空集项。模数 $1$ 可以在 $M$ 中：使用它会删尽，但协议仍允许不使用它。$L=1$、空集合和全体集合均不需排除。
+

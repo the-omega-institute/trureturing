@@ -1,0 +1,13 @@
+**定理203.1（接触端点的一致二阶展开）。** 在 $I=[a,h_b]$ 上，
+
+$$
+\boxed{
+\mathscr E(h\epsilon,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+}
+\tag{203.5}
+$$
+
+特别地，$h=h_b$ 的完整最优二阶系数就是（203.4）在该点的值，
+没有额外的二阶边界代价。
+

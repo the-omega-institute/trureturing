@@ -1,0 +1,97 @@
+### 246.4 一族真正混合的二维参考达到态
+
+下面给出同一曲线的混合态达到构造，证明（246.10）的取等并非只能依靠纯态。
+
+先设 $B>0$，因此 $c<1$。取
+$$
+u=\frac{n+m}{2\sqrt A},\qquad
+v=\frac{n-m}{2\sqrt K}.
+\tag{246.14}
+$$
+两者为正交单位轴。以 $u\cdot\sigma$ 的本征基作为输入 $|0\rangle,|1\rangle$，并选择相对相位，使 $v\cdot\sigma$ 在该基中对应 $\sigma_x$。参考也取正交基 $|0\rangle,|1\rangle$。有效轴算子因此为
+$$
+a_p\cdot\sigma=\sqrt A\,\sigma_z+\beta\sqrt K\,\sigma_x,
+\qquad
+b_p\cdot\sigma=\sqrt A\,\sigma_z-\beta\sqrt K\,\sigma_x.
+\tag{246.15}
+$$
+
+对 $C\in[0,1]$，定义
+$$
+\boxed{
+\Omega_C=\frac12\bigl(|00\rangle\langle00|+|11\rangle\langle11|\bigr)
++\frac C2\bigl(|00\rangle\langle11|+|11\rangle\langle00|\bigr).
+}
+\tag{246.16}
+$$
+这里首个指标是输入，第二个是参考。它的谱为
+$$
+\frac{1+C}{2},\quad\frac{1-C}{2},\quad0,\quad0.
+\tag{246.17}
+$$
+所以它是合法密度矩阵，$C<1$ 时是秩二混合态，$C=1$ 时为最大纠缠纯态。输入边缘与参考边缘均为 $I_2/2$，故整个族的总参考支撑恰为二维。
+
+在选定乘积基中，该矩阵为实。双自旋翻转
+$$
+\widetilde\Omega_C=(\sigma_y\otimes\sigma_y)
+\overline{\Omega_C}
+(\sigma_y\otimes\sigma_y)
+\tag{246.18}
+$$
+交换 $|00\rangle$、$|11\rangle$ 并给两者同一负号，因此 $\widetilde\Omega_C=\Omega_C$。Wootters 公式中的正矩阵于是为
+$$
+\left(\sqrt{\Omega_C}\,\widetilde\Omega_C\sqrt{\Omega_C}\right)^{1/2}
+=\left(\Omega_C^2\right)^{1/2}=\Omega_C.
+\tag{246.19}
+$$
+其有序本征值就是（246.17），所以 concurrence 恰为
+$$
+\max\left\{0,\frac{1+C}{2}-\frac{1-C}{2}\right\}=C.
+\tag{246.20}
+$$
+直接应用原文形成纠缠公式，得到
+$$
+\boxed{
+E_F(\Omega_C)=\mathcal E(C):=
+H_2\left(\frac{1+\sqrt{1-C^2}}2\right).
+}
+\tag{246.21}
+$$
+$\mathcal E$ 连续严格递增，将 $[0,1]$ 映到 $[0,1]$。
+
+现在独立计算实际距离。由（246.16）逐项偏迹，
+$$
+\operatorname{Tr}_H[(\sigma_z\otimes I_2)\Omega_C]
+=\frac12\sigma_z,
+\qquad
+\operatorname{Tr}_H[(\sigma_x\otimes I_2)\Omega_C]
+=\frac C2\sigma_x.
+\tag{246.22}
+$$
+所以报告标签 $(a,s)$ 的参考差块分别为
+$$
+\begin{aligned}
+Z_{0,s}&=\frac s8\left(\sqrt A\,\sigma_z+\beta\sqrt K\,C\sigma_x\right),\\
+Z_{1,s}&=\frac s8\left(\sqrt A\,\sigma_z-\beta\sqrt K\,C\sigma_x\right).
+\end{aligned}
+\tag{246.23}
+$$
+每个块还张量乘共同纯输出 $P$，不改变迹范数。各 Pauli 方向正交，故
+$$
+\|Z_{a,s}\|_1=\frac14\sqrt{A+BC^2}.
+\tag{246.24}
+$$
+四个经典记录块求和后乘以半迹距离系数，得到
+$$
+\boxed{
+g(\Omega_C)=\frac12\sqrt{A+BC^2}
+=G(\mathcal E(C))=G(E_F(\Omega_C)).
+}
+\tag{246.25}
+$$
+最后一个对应使用（246.5）中的 $t=\sqrt{1-C^2}$。
+
+因此每个 $0\le e<1$ 都有真正混合的二维参考态达到（246.10），而 $e=1$ 的该族端点为纯态。尤其 $C=0$ 时，$\Omega_0$ 是显式可分混合态，形成纠缠为零、响应为 $U$，但输入边缘熵仍为一。固定混合态的单侧熵不能用来替代探针的形成纠缠资源。
+
+$B=0$ 时可直接沿共同轴 $u$ 取相同族；式（246.21）保持成立，实际响应恒为 $D=U$，无需定义退化的 $v$ 方向。
+

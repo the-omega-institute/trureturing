@@ -1,0 +1,30 @@
+**定理 27.3（交换条件恢复完整未来的约束）。** 令完整行程及其有限实际像为
+
+$$
+\iota(s)=(q(D^js))_{j\ge0},\qquad T=\iota(S),\qquad K=|T|,
+\qquad \sigma(t)_j=t_{j+1}.
+\tag{27.16}
+$$
+
+尾移 $\sigma:T\to T$ 总定义。对任意 $n\ge0$，交换实现的最小总状态数恰为 $K$。交换可逆实现存在当且仅当 $\sigma$ 单射，等价地双射；存在时最小总状态数也为 $K$。两种达到构造均可取满射准备。此外
+
+$$
+K=N_n\quad\Longleftrightarrow\quad R_n=R_{n+1}.
+\tag{27.17}
+$$
+
+这里完整行程与尾移的对应归属 [FutureItineraryShift](../../../D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.lean) 的 `future_itinerary_shift`；稳定有限商与完整商的对应归属 [GradedPredictionShift](../../../D5/S3/ObserverMemory/Refinement/GradedPredictionShift.lean) 的 `stableCompletionEquiv`。来源族的残余并见 [PROCESS_GEOMETRY 定理6.2(c)](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)。[ReachableBehaviorMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.lean) 的 `finite_state_minimality` 要求一个指定初态及从它出发的可达性；本定理不把它当作全部准备状态的下界，而作如下直接计数。
+
+证明。$\iota(Ds)=\sigma\iota(s)$，所以 $T$ 对尾移封闭。交换给 $F^jI(s)=I(D^js)$；将式(27.11)的 $j=0$ 用于来源 $D^js$，得到
+
+$$
+g(F^jI(s))=q(D^js)\qquad\text{对所有 }j\ge0.
+\tag{27.18}
+$$
+
+因而即使原任务只要求零时刻，交换条件也强制全部未来正确。若 $I(s)=I(t)$，则两来源完整行程相等；每个不同行程至少需要一个不同初始状态，故 $|M|\ge|I(S)|\ge K$，任意额外状态或历史都不能降低此数。反向，取 $M=T,I=\iota,F=\sigma,g(t)=t_0$，便是 $K$ 状态的满射准备交换实现。
+
+若候选 $F$ 是置换，令 $P=I(S)$。交换使 $F(P)\subseteq P$；有限性及 $F$ 单射使 $F|_P$ 双射。把 $p\in P$ 送到它的完整输出行程，得到满射 $b:P\to T$，且 $bF=\sigma b$。任给 $t\in T$，先取 $p$ 使 $b(p)=t$，再取 $p'\in P$ 使 $F(p')=p$，则 $\sigma b(p')=t$。所以 $\sigma$ 满射，在有限 $T$ 上即双射。这个证明容许多个状态有同一行为，也容许 $M\setminus P$ 非空；复制行为状态或添加未用状态都不能绕过必要性。反向，$\sigma$ 双射时上述 $T$ 构造已经可逆，仍达到 $K$。
+
+最后，取前 $n+1$ 个符号给满射 $\pi_n:T\to W_n$。若 $R_n=R_{n+1}$，定理27.2的稳定性使 $sR_nt$ 蕴含 $D^jsR_nD^jt$ 对每个 $j$ 成立，从每次的首坐标得 $\iota(s)=\iota(t)$。故 $\pi_n$ 单射，$K=N_n$。反向，$K=N_n$ 使此有限满射成为双射，故 $R_n=\ker\iota$；而 $\ker\iota\subseteq R_{n+1}\subseteq R_n$，两核相等。证毕。
+

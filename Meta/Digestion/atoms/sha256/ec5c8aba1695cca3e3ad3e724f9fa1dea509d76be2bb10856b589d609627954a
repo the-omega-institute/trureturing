@@ -1,0 +1,11 @@
+**推论 208.3（矩形化对最大化鲁棒值是保守的）。** 对任意来源集 $\mathfrak J\subseteq\mathfrak J^{\square}$，
+
+$$
+\boxed{
+V^*(\mathfrak J^{\square})
+\le
+V^*(\mathfrak J).
+}
+\tag{208.3}
+$$
+

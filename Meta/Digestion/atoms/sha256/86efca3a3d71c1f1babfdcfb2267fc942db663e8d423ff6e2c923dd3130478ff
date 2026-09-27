@@ -1,0 +1,42 @@
+### 286.2 漂移只填充中间相位扇区的缺口
+
+令 $\mathcal G$ 表示单份输入的Haar相位平均，参考不变，置
+$$
+D_\delta=\mathcal G(\Omega_\delta)
+=\frac1n\begin{pmatrix}
+(1-\delta)Q+\delta I_n/2&0\\
+0&(1-\delta)(I_n-Q)+\delta I_n/2
+\end{pmatrix},
+\qquad D=D_0.
+\tag{286.3}
+$$
+令 $\sigma_{\delta,1}$ 为两份完全共同相位的平均原输入态，$\sigma_{\delta,r}$ 为（286.2）的真实块态。共同相位平均消去不同总荷扇区间的块。外侧两个扇区只含对角项；中间 $|01\rangle,|10\rangle$ 扇区间的非对角项恰乘以 $\mathbb E e^{\pm i\xi}=r$。因此
+$$
+\boxed{
+\sigma_{\delta,r}
+=r\sigma_{\delta,1}+\varepsilon D_\delta\otimes D_\delta.
+}
+\tag{286.4}
+$$
+这是一条准确的矩阵等式。相对相位律的其他Fourier系数不进入当前两份qubit输入的平均态。它不把真实相位分布改成一份可被观察者读取的混合标签。
+
+记
+$$
+R=D\otimes\tau_n+\tau_n\otimes D.
+$$
+白噪声项对相位不变，故实际扰动展开为
+$$
+\sigma_{\delta,r}
+=(1-\delta)^2\sigma_{0,r}
++\delta(1-\delta)R+\delta^2\tau_n^{\otimes2}.
+\tag{286.5}
+$$
+特别地，因 $D_\delta\succeq qI_{2n}/n$，
+$$
+\sigma_{0,r}\succeq\frac{\varepsilon q^2}{n^2}I_{4n^2},
+\qquad
+\sigma_{\delta,r}\succeq\frac{\varepsilon q^2}{n^2}I_{4n^2}.
+\tag{286.6}
+$$
+$\varepsilon>0$ 时，§285的理想核不再是零概率子空间。式（286.6）同时给出全矩阵上的谱填充尺度；它不是只对某个选定测量的经典背景作估计。
+
