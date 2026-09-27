@@ -76,11 +76,18 @@ internal sealed class FourCycleGramRadiusDocument : IScribeDocumentDefinition
         return result;
     }
 
-    private static Formula Add(Formula left, Formula right) => F.Seq(left, F.Plus, right);
-    private static Formula Sub(Formula left, Formula right) => F.Seq(left, F.Minus, right);
-    private static Formula Mul(params Formula[] terms) =>
-        F.Seq(terms.SelectMany((term, i) =>
-            i == 0 ? new[] { term } : new[] { F.Cdot, term }).ToArray());
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula Sub(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+    private static Formula Mul(params Formula[] terms)
+    {
+        if (terms.Length == 0) throw new ArgumentException("Empty product.");
+        var result = terms[0];
+        for (var i = 1; i < terms.Length; i++)
+            result = new Formula.Binary(result, FormulaBinaryOperator.Multiply, terms[i]);
+        return result;
+    }
     private static Formula Div(Formula numerator, Formula denominator) =>
         new Formula.Fraction(numerator, denominator);
     private static Formula Pow(Formula value) => new Formula.Power(value, F.D(2));
