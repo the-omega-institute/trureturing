@@ -216,7 +216,7 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             Forall, Sp, omega, Colon, Sp,
             new Formula.TypeArrow(Nat, Action), Comma, Sp,
             Call("InfiniteComm", F.Id("T"), F.Id("w"), initial, omega), Sp,
-            Lt, Sp, Infty);
+            Neq, Sp, Infty);
         Formula uniformlyBounded = Seq(
             b, Colon, Sp,
             Exists, Sp, bound, InMacro, Sp, Nat, Comma, Sp,
@@ -236,7 +236,7 @@ internal sealed class ActionGraphCommunicationBoundDocument : IScribeDocumentDef
             Forall, Sp, State, Comma, Sp, Action, Colon, Sp,
             Operatorname, Grp(F.Id("Type")), Comma, Sp,
             Typeclass("Fintype", State), Comma, Sp,
-            Typeclass("Nonempty", State), Comma, RowBreak,
+            Typeclass("Nonempty", State), Comma, RowBreak, Grp(),
             Typeclass("Fintype", Action), Comma, Sp,
             Typeclass("Nonempty", Action), Comma, Sp,
             initialSet, Colon, Sp, SetOf(State), Comma, RowBreak,
