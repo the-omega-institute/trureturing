@@ -1,0 +1,14 @@
+**命题 778.1（参数观察的连续下降）。** 给 $\mathcal M_r$ 赋予概率单纯形的子空间拓扑，则 $F_r:\Theta_r\to\mathcal M_r$ 是连续满射、闭映射与商映射。若 $T:\Theta_r\to Y$ 连续，并满足
+
+$$
+F_r(\theta)=F_r(\theta')\Longrightarrow T(\theta)=T(\theta'),
+$$
+
+则存在唯一连续 $\overline T:\mathcal M_r\to Y$，使 $T=\overline T\circ F_r$。
+
+证明：$\Theta_r$ 紧，$\mathcal M_r$ 是有限维欧氏空间的子空间，因而 Hausdorff。紧空间到 Hausdorff 空间的连续满射为闭商映射；纤维上常值使 $\overline T(P)$ 可由任一前像定义，商拓扑保证连续性，满射保证唯一性。证毕。
+
+这里与项目 [CompactHausdorffDescent](../../../D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.lean) 的 `compact_hausdorff_automatic_quotient` 逐项对应：紧域取 $\Theta_r$，Hausdorff 底空间取实际像 $\mathcal M_r$，商映射取 $F_r$，额外目标取 $T$。满射是向实际像的满射，不是对整个概率单纯形宣称 $r$ 状态总够用。
+
+这一关系支持一种具体的表达统一：多个参数描述只要产生相同观察，就被放在同一纤维。但一个潜在分量的权重、某条通道乃至来源熵，未必在纤维上常值。第 761 节已有同律而不同通道的连续族；本批还会给出同律、同一最优互信息而不同来源熵的全部表示。因而商空间可以准确表达共同观察内容，却不能单凭它给每个观察选出唯一的本体参数。
+

@@ -1,0 +1,10 @@
+**命题 829.1（同一联合实现中的信息差）。** 对任意有限联合律 $(H,X,Y)$，若 $X\perp Y\mid H$，则
+
+$$
+I(H;X,Y)-I(X;Y)=I(H;X\mid Y)+I(H;Y\mid X)\ge0.
+$$
+
+证明：条件独立给出 $H(X,Y\mid H)=H(X\mid H)+H(Y\mid H)$。将左侧写成各边缘熵与条件熵，再按 $H(X,Y)-H(Y)=H(X\mid Y)$ 及其对称式分组，恰得到右边两项。非负性为有限条件互信息的性质。证毕。
+
+这与项目 MarkovDataProcessing 中的 `conditional_mutual_information_eq_zero_iff_conditional_product` 以及条件互信息差式相连接：把第一坐标分别设为 $Y$ 和 $X$，即可核对两项何时因条件乘积而为零。这里的变量都必须取自同一个归一化非负联合律；分别在不同表示中达到的等号，不能拼成当前联合实现的等号。本批读取接口并作普通熵展开，未编译相应实例。
+

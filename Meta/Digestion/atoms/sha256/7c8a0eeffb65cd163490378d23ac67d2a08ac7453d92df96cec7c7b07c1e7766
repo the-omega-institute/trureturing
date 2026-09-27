@@ -1,0 +1,39 @@
+**定理 662.2（固定底量的最佳集合距离常数）。** 令 $\mathcal K_t=\{R\in\Delta(X):tR\le l\}$。在全部原始概率行上，使
+
+$$
+\operatorname{dist}_{\rm TV}(R,\mathcal K_t)\le C_t\Phi_t(R)
+$$
+
+成立的最小非负常数恰为
+
+$$
+\boxed{
+C_t=
+\begin{cases}
+0,&t\le\min_x l_x,\\[1mm]
+\displaystyle\frac1t\max\left(1,\frac{k_t}d\right),&t>\min_x l_x.
+\end{cases}}
+$$
+
+证明：第 645 节已给出精确距离 $H/t$，其中 $H=\sum_x(tR_x-l_x)_+$。若正标签偏差的支撑为 $J$、基数为 $k>0$，则
+
+$$
+\sum_{i\in J}e_i<t\sum_{i\in J}R_i\le t,
+$$
+
+所以 $k\le k_t$。写 $B=(a_\circ)_++P\ge0$、$Z=\sum_i z_i$，则 $H=B+Z$、$\Phi_t=B+\operatorname{Top}_d(z)$。若 $k\le d$，有 $\Phi_t=H$；若 $k>d$，有 $\operatorname{Top}_d(z)\ge(d/k)Z$，从而 $\Phi_t\ge(d/k)H$。$k=0$ 时也有 $\Phi_t=H$。这些关系给出所列上界。
+
+若每个 $l_x\ge t$，所有概率行都满足 $tR_x\le t\le l_x$，故整个单纯形都是最优集合，距离与障碍恒为零，最小非负常数是零。
+
+现在设 $t>\min_xl_x$。当 $k_t\le d$，前述推导对所有行给出 $\Phi_t=H$；选择一个 $l_x<t$ 的坐标并将全部概率放在那里，就得到 $H>0$，故 $1/t$ 不能减小。这个论证也覆盖 $k_t=0$：此时可超额的只能是公共坐标。
+
+当 $k_t>d$，取一组底量最小的 $k_t$ 个标签为 $J$，令其总底量为 $E_{k_t}<t$。选择
+
+$$
+0<H<t-E_{k_t},\qquad H/k_t<L,
+$$
+
+并在 $J$ 上令 $tR_i=e_i+H/k_t$。其余坐标需容纳的总质量为 $t-E_{k_t}-H\ge0$，不大于它们的总底量 $M-E_{k_t}$；故可以在各自底量之下填入这些质量。这样恰有 $J$ 产生超额，公共项与超上限项均为零，各正截断坐标相等。于是 $\Phi_t=dH/k_t$、距离为 $H/t$，比值达到 $k_t/(td)$。证毕。
+
+这完成第 646、658 节在 $t\le M-b$ 范围留下的固定底量问题。在 $t=M$，全部标签底量和为 $M-b<M$，所以 $k_M=n$，公式返回第 646 节的 $n/(Md)$。成熟的正负质量搬移与排序估计在这里承担具体常数的推导，不被重新命名为独立的新一般理论。
+

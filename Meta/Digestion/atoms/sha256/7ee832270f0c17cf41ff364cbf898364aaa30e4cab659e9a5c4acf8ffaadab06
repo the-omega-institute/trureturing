@@ -1,0 +1,30 @@
+**命题 666.1（逐状态权衡的锐利性）。** 固定 $S_0$，取 $0<H<cD$，令
+
+$$
+R_\circ=R^*_\circ=b,\qquad
+R_i-R_i^*=
+\begin{cases}
+H/p,&i\in S_0,\\
+-H/d,&i\notin S_0.
+\end{cases}
+$$
+
+则 $R$ 是合法概率行，各标签残余严格在 $(0,L)$ 内，而且
+
+$$
+\operatorname{TV}(R,Q_{S_0})=cD-H,\qquad
+\rho(R)=cD+H/\chi,\qquad
+\operatorname{TV}(R,R^*)=H.
+$$
+
+证明：总搬入与搬出质量均为 $H$；$H<cD=dD/n$ 保证较小残余 $D/n-H/d>0$、较大残余 $D/n+H/p<D/p$。对任意状态 $T$，记 $j=|T\cap S_0|$，则在这个符号区间内
+
+$$
+\operatorname{TV}(R,Q_T)
+=cD+\left(\frac pd-\frac{jn}{pd}\right)H.
+$$
+
+$j$ 最大为 $p$，在 $T=S_0$ 达到，给出 $cD-H$。最小值为 $\max(0,p-d)$；当 $p\le d$ 可取与 $S_0$ 不交的 $T$，当 $p\ge d$ 可取包含全部补集标签的 $T$。相应最大距离分别为 $cD+(p/d)H$ 与 $cD+(d/p)H$，统一为 $cD+H/\chi$。证毕。
+
+因 $H$ 可以任意小，第 665 节的系数 $\chi$ 不能统一减小。这一系数来自两组标签能怎样交叠，公共底量和各标签底量保证构造的合法性，却没有在该局部比例中出现。哪些参数控制方向、哪些参数控制方向可走多远，在解释模型时应分开。
+

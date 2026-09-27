@@ -1,0 +1,22 @@
+**定义 783.1（单次有限生成的三个目标）。** 在第 777 节观察域上，对所有有限乘积混合表示分别取
+
+$$
+r_*(P)=\min|\operatorname{supp}H|,\qquad
+G(P)=\inf H(H),\qquad
+C(P)=\inf I(H;Z),\qquad Z=(X_1,\ldots,X_m).
+$$
+
+所有熵采用自然对数，$0\log0=0$。三个优化都固定同一观察律 $P$；各自最优的完整联合实现可以不同，不能预先设为同一个表示。显然
+
+$$
+0\le C(P)\le G(P)\le\log r_*(P)\le\log N.
+$$
+
+其中 $C\le G$ 来自每个表示中的 $I(H;Z)\le H(H)$，$G\le\log r_*$ 来自选取一个最少状态表示；没有使用分别最优的量可以同时达到这一未经证明的前提。
+
+两观察时，$C(P)$ 是 Wyner 共同信息的变分量；本批通过 Kumar、Li、El Gamal 的 [*Exact Common Information*, arXiv:1402.0062v1](https://arxiv.org/abs/1402.0062v1)引言读取其单字母表达式，未直接读取 Wyner 1975 年原文全文。相同论文第 2 节将 $\min H(H)$ 称为 common entropy，并区别它与一次精确生成所需的最小平均前缀码长；两者不能因名称相近就等同。本批的 $G$ 正是该有限两观察量，采用 nat 单位。$m>2$ 时以上式子是本卷明确规定的多观察推广，不将全部推广归给 Wyner 原论文。
+
+多观察推广也已有文献：Xu、Liu、Chen 的 [*Wyner's Common Information: Generalizations and A New Lossy Source Coding Interpretation*, arXiv:1301.2237v1](https://arxiv.org/abs/1301.2237v1)第 III-A 节定义 1、式 (19)—(20)，在固定联合观察边缘且给定来源后全部坐标独立的条件下取 $\inf I(X;W)$。本卷限定有限观察字母与有限离散来源，使用相同的变分结构；没有在这里承接该文更一般字母域或有损编码的全部结论。
+
+本批研究单次分布上的变分问题；独立重复、块长趋于无穷及最小编码率另有量词与操作条件，不在这三个定义中自动完成。
+

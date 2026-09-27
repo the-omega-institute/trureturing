@@ -1,0 +1,12 @@
+**定义 777.1（有限乘积混合模型）。** 固定正整数 $m,r$、非空有限观察集合 $\mathcal X_1,\ldots,\mathcal X_m$，记 $\mathcal Z=\prod_i\mathcal X_i$、$N=|\mathcal Z|$。令
+
+$$
+\Theta_r=\Delta_r\times\prod_{h=1}^r\prod_{i=1}^m\Delta(\mathcal X_i),
+\qquad
+F_r(\lambda,q)(z)=\sum_{h=1}^r\lambda_h\prod_{i=1}^m q_{ih}(z_i),
+\qquad
+\mathcal M_r=F_r(\Theta_r).
+$$
+
+每个因子是归一化非负概率向量，允许零权重与零条件概率。于是 $\mathcal M_r$ 表示“至多 $r$ 个正权重状态”的联合律；额外零权重不增加实际来源规模。两观察时它就是非负秩至多 $r$ 的概率矩阵集合，多观察时用相同的乘积项定义非负张量秩。
+

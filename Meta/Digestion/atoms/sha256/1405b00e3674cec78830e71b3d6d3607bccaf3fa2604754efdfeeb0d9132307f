@@ -1,0 +1,18 @@
+**证明。** 若较小权重坐标装有正质量，而较大权重坐标尚未达到 $L$，把二者之间可移的质量向较大权重移动不会减小 $q\cdot u$。依次填满前 $k$ 个坐标，再把 $E-kL$ 放到下一坐标，取得第一式。对任意 $u\in A_{E,L}$ 与 $\theta$，有
+
+$$
+q\cdot u=E\theta+\sum_i(q_i-\theta)u_i
+\le E\theta+L\sum_i(q_i-\theta)_+.
+$$
+
+若 $E/L$ 非整数，选 $\theta=q_{(k+1)}$ 即达到第一式；若 $E=kL>0$，选 $q_{(k+1)}\le\theta\le q_{(k)}$；若 $E=0$，选 $\theta=1$。并列权重不会改变值。证毕。
+
+把 $\eta=1-\theta$ 代入第 705 节，得到下一节使用的完整值证书：
+
+$$
+\mu_{\mathcal F}(E)=\max_{\substack{q\in P_{\mathcal F}\\0\le\eta\le1}}
+\left[\eta E-L\sum_i(\eta+q_i-1)_+\right].
+$$
+
+容量并没有消失。它作为阈值以上坐标的扣除项留在公式中；忽略此项会把只能容纳 $L$ 的标签误当成无限容器。
+

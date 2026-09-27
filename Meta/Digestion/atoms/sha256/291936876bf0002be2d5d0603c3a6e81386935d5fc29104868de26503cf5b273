@@ -1,0 +1,37 @@
+**定理 680.2（均匀候选的最优性判据）。** 对任意 $M<t\le1$，令 $E=t-M>0$，并沿用
+
+$$
+R^{(t)}=\frac1t(b,e_1+E/n,\ldots,e_n+E/n).
+$$
+
+则 $R^{(t)}$ 最小化 $\Phi_t^{\mathcal F}$，当且仅当 $\mathcal F$ 平衡；成立时最小值为 $cE$。
+
+证明：中心残余为 $a_\circ=0$、$a_i=E/n\in(0,L)$，所以每个状态的值都是 $cE$。若有平衡权重，将 $f_S$ 加权平均，记 $N=\sum_i(-a_i)_+$、$P=\sum_i(a_i-L)_+$，得到
+
+$$
+\begin{aligned}
+\Phi_t^{\mathcal F}(R)
+&\ge(a_\circ)_++c\sum_i(a_i)_++\frac pn P\\
+&=cE+\bigl[(a_\circ)_+-ca_\circ\bigr]+cN+\frac pn P
+\ge cE.
+\end{aligned}
+$$
+
+其中 $\sum_i a_i=E-a_\circ$，且方括号对两个符号的公共偏差都非负。中心达到下界。
+
+反之，令关联矩阵 $A_{iS}=\mathbf1_{i\in S}$。非负解 $Aw=u$ 自动满足 $\sum_Sw_S=1$：对标签求和，得到 $p\sum_Sw_S=p$。若不存在这样的解，有限 Farkas 二择给出向量 $y$，使每个 $\sum_{i\in S}y_i\ge0$，而 $u\cdot y<0$，即 $\sum_i y_i<0$。置
+
+$$
+h_i=y_i-\frac1n\sum_jy_j.
+$$
+
+则 $\sum_i h_i=0$，且每个 $\sum_{i\in S}h_i>0$。取足够小的 $\delta>0$，令 $a_\circ=0$、$a_i=E/n+\delta h_i$，全部标签残余仍在 $(0,L)$ 内，所对应的 $R$ 合法。此时
+
+$$
+f_S(a)=cE-\delta\sum_{i\in S}h_i<cE
+$$
+
+对有限族中的全部状态同时成立，故均匀候选不是最优。证毕。
+
+这里复用的是成熟的线性替代关系；项目的具体矩阵接口及参数对应见第 695 节。新的研究内容在于它怎样准确判定当前部分状态族，而不是把 Farkas 二择另作 MMM 的一般发现。
+

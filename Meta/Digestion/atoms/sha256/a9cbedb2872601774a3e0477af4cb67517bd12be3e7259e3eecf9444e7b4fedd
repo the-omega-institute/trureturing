@@ -1,0 +1,19 @@
+**定理 691.1（固定公共质量的部分族系数）。** 在排除覆盖下，$t<b$ 的固定公共切片为空，$t=b$ 时是一个已最优单点。对 $b<t\le M$，令 $h=t-b$，并定义
+
+$$
+\beta_t^\circ=\max_{\substack{\varnothing\ne J\subseteq I\\\sum_{i\in J}e_i<h}}
+\beta_{\mathcal F}(J),
+$$
+
+空指标时取零。到 $\mathcal K_t^\circ$ 的精确距离仍为 $H/t$，最佳系数是
+
+$$
+\boxed{
+C_t^{\mathcal F,\circ}=\begin{cases}
+0,&h\le\min_i e_i,\\[1mm]
+\displaystyle\frac1{t(1-\beta_t^\circ)},&h>\min_i e_i.
+\end{cases}}
+$$
+
+证明：标签可分配总质量为 $h$，总底量为 $M-b\ge h$。第 690 节的上界与支撑构造全部限在标签内，公共坐标固定为 $b/t$；只需把支撑可行条件中的 $t$ 换成 $h$。截断和回填也只在标签内进行，故不改变切片，距离继续为 $H/t$。零情形和单点情形与第 663 节相同。证毕。
+
