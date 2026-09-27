@@ -75,6 +75,12 @@ internal sealed class SharedControlBitStorageBoundDocument : IScribeDocumentDefi
                             + "ZMod 2 subspace. Stability under the control rewrites then forces "
                             + "that subspace either into the data hyperplane or to be the whole state space.")),
                     Paragraph(Text(
+                        "Conversely, every subspace of the data hyperplane, together with the whole "
+                            + "state space, is realized by its finite quotient code. Translations descend "
+                            + "by quotient addition, while each linear control rewrite vanishes on the data "
+                            + "hyperplane and therefore descends as well. Equality of quotient values is "
+                            + "exactly membership of the state difference in the chosen subspace.")),
+                    Paragraph(Text(
                         "For two jointly faithful noninjective codes, their kernel subspaces meet "
                             + "only at zero. The dimension formula for a sum and intersection, "
                             + "together with quotient cardinality, gives the displayed storage product bound.")),
@@ -223,34 +229,62 @@ internal sealed class SharedControlBitStorageBoundDocument : IScribeDocumentDefi
         Formula bound = Seq(h, Sp, Leq, Sp, d);
         Formula suffix = Subscripted(F.Id("suffixCode"), bound);
         Formula prefix = Subscripted(F.Id("prefixCode"), bound);
+        Formula dataHyperplane = Call("range", Call("inl", Bit(), Data(d), Bit()));
+        Formula quotient = Call("mkQ", subspace);
+        Formula subspaceAllowed = Parenthesized(Seq(
+            Parenthesized(Seq(subspace, Sp, Subseteq, Sp, dataHyperplane)), Sp, Lor, Sp,
+            Parenthesized(Seq(subspace, Sp, Eq, Sp, Call("top")))));
+        Formula quotientEquality = Parenthesized(Seq(
+            Forall, Sp, Typed(z, State(d)), Comma, Sp, Typed(zp, State(d)), Comma, Sp,
+            Parenthesized(Seq(At(quotient, z), Sp, Eq, Sp, At(quotient, zp))), Sp, Iff, Sp,
+            Parenthesized(Seq(
+                Parenthesized(Seq(z, Sp, Minus, Sp, zp)), Sp, InMacro, Sp, subspace))));
         Formula kernel = Seq(
             Exists, Sp, Typed(subspace, Call("Submodule", Bit(), State(d))), Comma, RowBreak,
             Parenthesized(Seq(
                 Forall, Sp, Typed(z, State(d)), Comma, Sp, Typed(zp, State(d)), Comma, Sp,
-                At(u, z), Sp, Eq, Sp, At(u, zp), Sp, Iff, Sp,
-                z, Sp, Minus, Sp, zp, Sp, InMacro, Sp, subspace)), Sp, Land, RowBreak,
+                Parenthesized(Seq(At(u, z), Sp, Eq, Sp, At(u, zp))), Sp, Iff, Sp,
+                Parenthesized(Seq(
+                    Parenthesized(Seq(z, Sp, Minus, Sp, zp)), Sp, InMacro, Sp, subspace)))),
+            Sp, Land, RowBreak,
+            subspaceAllowed);
+        Formula realizability = Seq(
+            Forall, Sp, Typed(subspace, Call("Submodule", Bit(), State(d))), Comma, RowBreak,
+            subspaceAllowed, Sp, Rightarrow, RowBreak,
             Parenthesized(Seq(
-                subspace, Sp, Subseteq, Sp,
-                Call("range", Call("inl", Bit(), Data(d), Bit())), Sp, Lor, Sp,
-                subspace, Sp, Eq, Sp, Call("top"))));
+                Parenthesized(Call("DynamicallyClosed", quotient)), Sp, Land, RowBreak,
+                quotientEquality)));
         Formula noninjective = Seq(
             Parenthesized(Seq(Neg, Sp, Call("Injective", u))), Sp, Land, Sp,
             Parenthesized(Seq(Neg, Sp, Call("Injective", v))));
         Formula storage = Seq(
             Parenthesized(noninjective), Sp, Rightarrow, Sp,
-            Power(D(2), Seq(d, Sp, Plus, Sp, D(2))), Sp, Leq, Sp,
-            Call("ncard", Call("range", u)), Sp, Cdot, Sp,
-            Call("ncard", Call("range", v)));
+            Parenthesized(Seq(
+                Power(D(2), Parenthesized(Seq(d, Sp, Plus, Sp, D(2)))), Sp, Leq, Sp,
+                Parenthesized(Seq(
+                    Call("ncard", Call("range", u)), Sp, Cdot, Sp,
+                    Call("ncard", Call("range", v)))))));
         Formula attainment = Seq(
             Forall, Sp, Typed(h, Nat()), Comma, Sp,
-            D(1), Sp, Leq, Sp, h, Sp, Land, Sp,
-            h, Sp, Leq, Sp, d, Sp, Minus, Sp, D(1), Sp, Rightarrow, RowBreak,
-            Call("DynamicallyClosed", suffix), Sp, Land, Sp,
-            Call("DynamicallyClosed", prefix), Sp, Land, RowBreak,
-            Call("Injective", LambdaOf(z, State(d), Pair(At(suffix, z), At(prefix, z)))), Sp, Land, RowBreak,
-            Call("ncard", Call("range", suffix)), Sp, Cdot, Sp,
-            Call("ncard", Call("range", prefix)), Sp, Eq, Sp,
-            Power(D(2), Seq(d, Sp, Plus, Sp, D(2))));
+            Parenthesized(Seq(
+                Parenthesized(Seq(D(1), Sp, Leq, Sp, h)), Sp, Land, Sp,
+                Parenthesized(Seq(
+                    h, Sp, Leq, Sp, Parenthesized(Seq(d, Sp, Minus, Sp, D(1))))))),
+            Sp, Rightarrow, RowBreak,
+            Parenthesized(Seq(
+                Parenthesized(Call("DynamicallyClosed", suffix)), Sp, Land, Sp,
+                Parenthesized(Call("DynamicallyClosed", prefix)), Sp, Land, RowBreak,
+                Parenthesized(Call("Injective",
+                    LambdaOf(z, State(d), Pair(At(suffix, z), At(prefix, z))))), Sp, Land, RowBreak,
+                Parenthesized(Seq(
+                    Parenthesized(Seq(
+                        Call("ncard", Call("range", suffix)), Sp, Cdot, Sp,
+                        Call("ncard", Call("range", prefix)))), Sp, Eq, Sp,
+                    Power(D(2), Parenthesized(Seq(d, Sp, Plus, Sp, D(2)))))))));
+        Formula assumptions = Parenthesized(Seq(
+            Call("DynamicallyClosed", u), Sp, Land, Sp,
+            Call("DynamicallyClosed", v), Sp, Land, Sp,
+            Call("Injective", LambdaOf(z, State(d), Pair(At(u, z), At(v, z))))));
 
         return Disp(Seq(
             Forall, Sp, Typed(d, Nat()), Comma, Sp,
@@ -261,11 +295,9 @@ internal sealed class SharedControlBitStorageBoundDocument : IScribeDocumentDefi
             OpenBracket, Call("Finite", Beta), CloseBracket, Comma, RowBreak,
             Typed(u, Arrow(State(d), Alpha)), Comma, Sp,
             Typed(v, Arrow(State(d), Beta)), Comma, RowBreak,
-            Call("DynamicallyClosed", u), Sp, Land, Sp,
-            Call("DynamicallyClosed", v), Sp, Land, Sp,
-            Call("Injective", LambdaOf(z, State(d), Pair(At(u, z), At(v, z)))), Sp,
-            Rightarrow, RowBreak,
+            assumptions, Sp, Rightarrow, RowBreak,
             Parenthesized(kernel), Sp, Land, RowBreak,
+            Parenthesized(realizability), Sp, Land, RowBreak,
             Parenthesized(storage), Sp, Land, RowBreak,
             Parenthesized(attainment), Dot));
     }

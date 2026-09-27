@@ -45,9 +45,10 @@ def suffixCode {d h : ℕ} (hd : h ≤ d) :
     ((Fin d → ZMod 2) × ZMod 2) → ((Fin (d - h) → ZMod 2) × ZMod 2) :=
   fun z ↦ ((fun i ↦ z.1 ⟨h + i, by omega⟩), z.2)
 
-/-- Dynamical closure classifies every local kernel, forces the product lower
-bound for two noninjective jointly faithful codes, and the complementary
-prefix/suffix codes attain that bound. -/
+/-- Dynamical closure classifies every local kernel, every permitted kernel is
+realized by its quotient code, the product lower bound holds for two
+noninjective jointly faithful codes, and complementary prefix/suffix codes
+attain that bound. -/
 theorem shared_control_bit_storage_bound
     (d : ℕ) (hd : 2 ≤ d) {α β : Type} [Finite α] [Finite β]
     (u : ((Fin d → ZMod 2) × ZMod 2) → α)
@@ -58,6 +59,11 @@ theorem shared_control_bit_storage_bound
       (∀ z z', u z = u z' ↔ z - z' ∈ H) ∧
         (H ≤ LinearMap.range
             (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)) ∨ H = ⊤)) ∧
+    (∀ H : Submodule (ZMod 2) ((Fin d → ZMod 2) × ZMod 2),
+      (H ≤ LinearMap.range
+          (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)) ∨ H = ⊤) →
+        DynamicallyClosed H.mkQ ∧
+          ∀ z z', H.mkQ z = H.mkQ z' ↔ z - z' ∈ H) ∧
     ((¬Injective u ∧ ¬Injective v) →
       2 ^ (d + 2) ≤ (Set.range u).ncard * (Set.range v).ncard) ∧
     ∀ h : ℕ, 1 ≤ h → ∀ hupper : h ≤ d - 1,
@@ -266,8 +272,49 @@ theorem shared_control_bit_storage_bound
         rw [Nat.card_eq_fintype_card, ZMod.card]
       _ = 2 ^ (d + 1 - Module.finrank (ZMod 2) H) := by
         rw [H.finrank_quotient, ambientFinrank]
+  have quotientRealization : ∀ H : Submodule (ZMod 2) V, (H ≤ W ∨ H = ⊤) →
+      DynamicallyClosed H.mkQ ∧
+        ∀ z z', H.mkQ z = H.mkQ z' ↔ z - z' ∈ H := by
+    intro H hH
+    constructor
+    · intro f hf
+      rcases hf with ⟨i, rfl⟩ | rfl | ⟨i, rfl⟩
+      · refine ⟨fun q ↦ q + H.mkQ ((Pi.single i 1, 0) : V), ?_⟩
+        funext z
+        exact H.mkQ.map_add z ((Pi.single i 1, 0) : V)
+      · refine ⟨fun q ↦ q + H.mkQ ((0, 1) : V), ?_⟩
+        funext z
+        exact H.mkQ.map_add z ((0, 1) : V)
+      · let N : V →ₗ[ZMod 2] V :=
+          (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)).comp
+            ((LinearMap.single (ZMod 2) (fun _ : Fin d ↦ ZMod 2) i).comp
+              (LinearMap.snd (ZMod 2) (Fin d → ZMod 2) (ZMod 2)))
+        have Npreserves : H ≤ H.comap N := by
+          intro x hx
+          change N x ∈ H
+          rcases hH with hHW | rfl
+          · have hxW := hHW hx
+            have hxControl : x.2 = 0 := by
+              change x ∈ LinearMap.range
+                (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)) at hxW
+              rw [LinearMap.range_inl] at hxW
+              exact hxW
+            dsimp [N]
+            rw [LinearMap.snd_apply, hxControl, Pi.single_zero]
+            exact H.zero_mem
+          · exact Submodule.mem_top
+        refine ⟨H.mapQ H N Npreserves, ?_⟩
+        funext z
+        change H.mkQ (N z) = H.mapQ H N Npreserves (H.mkQ z)
+        exact (LinearMap.congr_fun
+          (Submodule.mapQ_mkQ H H N (h := Npreserves)) z).symm
+    · intro z z'
+      simpa only [Submodule.mkQ_apply] using
+        (Submodule.Quotient.eq H :
+          (Submodule.Quotient.mk z : V ⧸ H) = Submodule.Quotient.mk z' ↔ z - z' ∈ H)
   obtain ⟨Hu, huCoset, huClass⟩ := kernelData u hu
-  refine ⟨⟨Hu, huCoset, huClass⟩, ?_, ?_⟩
+  refine ⟨⟨Hu, huCoset, huClass⟩, ?_, ?_, ?_⟩
+  · simpa only [W] using quotientRealization
   · rintro ⟨hnu, hnv⟩
     obtain ⟨Hv, hvCoset, hvClass⟩ := kernelData v hv
     have infKernel : Hu ⊓ Hv = ⊥ := by

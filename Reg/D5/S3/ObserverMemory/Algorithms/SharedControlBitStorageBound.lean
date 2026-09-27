@@ -37,6 +37,11 @@ def arena : Arena where
       (∀ z z', u z = u z' ↔ z - z' ∈ H) ∧
         (H ≤ LinearMap.range
             (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)) ∨ H = ⊤)) ∧
+    (∀ H : Submodule (ZMod 2) ((Fin d → ZMod 2) × ZMod 2),
+      (H ≤ LinearMap.range
+          (LinearMap.inl (ZMod 2) (Fin d → ZMod 2) (ZMod 2)) ∨ H = ⊤) →
+        DynamicallyClosed H.mkQ ∧
+          ∀ z z', H.mkQ z = H.mkQ z' ↔ z - z' ∈ H) ∧
     ((¬Injective (R.readout () ⟨d, α⟩ u) ∧ ¬Injective v) →
       2 ^ (d + 2) ≤ (Set.range u).ncard * (Set.range v).ncard) ∧
     ∀ h : ℕ, 1 ≤ h → ∀ hupper : h ≤ d - 1,
@@ -54,7 +59,7 @@ run_cmd do
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
-    statementIdentity := "sha256:dbb3c6f32956b7d446a554c2fc62a8f9701d5b474a7e1f6c8fb47d5a934299da"
+    statementIdentity := "sha256:0784cf503dfe5b78a65875009000f173bf6ffa84e7614fb47b4041a701fe3e3e"
     registrationModuleName := root }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
@@ -100,7 +105,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
     intro value
     cases value
     exact ⟨0, rfl⟩)
-  have lower := (law 2 (by decide) u v hu hv hjoint).2.1
+  have lower := (law 2 (by decide) u v hu hv hjoint).2.2.1
     ⟨hcollapsed, hvNoninjective⟩
   rw [huRange, hvRange, Set.ncard_univ, Set.ncard_univ] at lower
   norm_num [V, Nat.card_eq_fintype_card, Fintype.card_prod, Fintype.card_fun,
@@ -139,8 +144,8 @@ register_information_theorem shared_control_bit_storage_bound in arena
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "fn", "arg", "domain", "fn", "arg",
-        "arg", "arg"]
+        "body", "body", "body", "arg", "arg", "fn", "arg", "domain", "fn",
+        "arg", "arg", "arg"]
       stateBinder := 6 }] })
   escape continues (open)
 
