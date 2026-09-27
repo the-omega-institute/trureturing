@@ -38,30 +38,82 @@ partial def project (slots : Array Nat) (scope : Nat) (e : Expr)
   | .mvar _ | .fvar _ => throwError "unclassified_form:source.open_expression"
   | _ => return e
 
+/-- Expand only lexical let references, from their original raw values. The target
+scope stays fixed while a value is interpreted in its strictly earlier context.
+`extraDepth` lifts free coordinates under the occurrence's internal binders;
+new binders inside the value keep their own de Bruijn indices. No definitions,
+proofs or dictionaries become independently variable parameters. -/
+partial def expandLets (context : Array SourceBinder) (scope : Nat) (e : Expr)
+    (localDepth : Nat := 0) (extraDepth : Nat := 0) (depth : Nat := 0) : M Expr := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.source_depth"
+  let child := fun x => expandLets context scope x localDepth extraDepth (depth + 1)
+  let bound := fun x => expandLets context scope x (localDepth + 1) extraDepth (depth + 1)
+  match e with
+  | .bvar i =>
+    if i < localDepth then return e
+    let i := i - localDepth
+    unless i < context.size do throwError "unclassified_form:source.open_coordinate"
+    let ordinal := context.size - 1 - i
+    if let some value := context[ordinal]!.value then
+      return ← expandLets (context.extract 0 ordinal) scope value 0
+        (localDepth + extraDepth) (depth + 1)
+    return .bvar (localDepth + extraDepth + scope - 1 - ordinal)
+  | .app f a => return .app (← child f) (← child a)
+  | .lam n t b bi => return .lam n (← child t) (← bound b) bi
+  | .forallE n t b bi => return .forallE n (← child t) (← bound b) bi
+  | .letE n t v b nd => return .letE n (← child t) (← child v) (← bound b) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | .mvar _ | .fvar _ => throwError "unclassified_form:source.open_expression"
+  | _ => return e
+
+/-- Capture-avoiding projection with a raw inverse check after source-determined
+local-let transport. Apply to domains and outputs as well as observations. -/
+def transport (context : Array SourceBinder) (slots : Array Nat) (e : Expr) : M Expr := do
+  let expanded ← expandLets context context.size e
+  let projected ← project slots context.size expanded
+  unless (← project slots context.size projected true).equal expanded do
+    throwError "unclassified_form:source.inverse_mapping"
+  return projected
+
 def atPath (source : Expr) (path : Array String) : M (Array SourceBinder × Expr) := do
   if path.size > 256 then throwError "incomplete_closure:E8.source_path"
   let mut e := source
   let mut context := #[]
+  let mut anchorPath := #[]
   for step in path do
     debit
+    anchorPath := anchorPath.push step
     e ← match e, step with
       | .app f _, "fn" => pure f
       | .app _ a, "arg" => pure a
       | .forallE _ d _ _, "domain" | .lam _ d _ _, "domain" => pure d
       | .forallE n d b bi, "body" =>
-        context := context.push { name := n, info := bi, domain := d }
+        context := context.push { path := anchorPath, name := n, info := bi, domain := d }
         pure b
       | .lam n d b bi, "body" =>
-        context := context.push { name := n, info := bi, domain := d, isLambda := true }
+        context := context.push { path := anchorPath, name := n, info := bi, domain := d, isLambda := true }
         pure b
       | .letE _ t _ _ _, "type" => pure t
       | .letE _ _ v _ _, "value" => pure v
       | .letE n t v b nd, "body" =>
-        context := context.push { name := n, info := .default, domain := t, value := some v, nondep := nd }
+        context := context.push {
+          path := anchorPath, name := n, info := .default,
+          domain := t, value := some v, nondep := nd }
         pure b
       | .proj _ _ b, "body" | .mdata _ b, "body" => pure b
       | _, _ => throwError "unclassified_form:source.absent_occurrence"
   return (context, e)
+
+/-- Replace one explicit raw occurrence, without entering definitions or binders. -/
+partial def replaceAt (e : Expr) (path : List String) (value : Expr) : M Expr := do
+  debit
+  match path, e with
+  | [], _ => return value
+  | "fn" :: rest, .app f a => return .app (← replaceAt f rest value) a
+  | "arg" :: rest, .app f a => return .app f (← replaceAt a rest value)
+  | _, _ => throwError "unclassified_form:source.state_operand_path"
 
 partial def inContext (context : Array SourceBinder) (k : Array Expr → M α)
     (i : Nat := 0) (locals : Array Expr := #[]) : M α := do
@@ -80,9 +132,23 @@ structure ReadoutScope where
   state : Expr
   output : Expr
   projected : Expr
+  rawContext : Array SourceBinder := #[]
+  rawObservation : Expr := default
+
+structure DefinitionEntry where
+  path : Array String
+  owner : Name
+  name : Name
+  type : Expr
+  value : Expr
 
 structure Scope where
+  /-- The theorem's raw type remains the binding root even when a named claim
+  definition is entered for lexical source observations. -/
   source : Expr
+  /-- One-step replacement preserves the surrounding raw theorem structure. -/
+  expanded : Expr
+  definition : Option DefinitionEntry
   levels : List Name
   selection : SourceSelection
   telescope : Array SourceBinder
@@ -99,6 +165,51 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
   let owner := (RegistrationReifier.declaringModuleOf (← getEnv) info.name).getD
     (← getEnv).header.mainModule
   unless selection.owner == owner do throwError "unclassified_form:source.owner"
+  let definition : Option DefinitionEntry ← match selection.definition with
+    | none => pure none
+    | some selected => do
+      unless selected.owner == owner do throwError "unclassified_form:source.definition_owner"
+      let definitionInfo ← getConstInfo selected.name
+      let definitionOwner := (RegistrationReifier.declaringModuleOf (← getEnv) selected.name).getD
+        (← getEnv).header.mainModule
+      unless definitionOwner == owner do
+        throwError "unclassified_form:source.definition_owner"
+      let .defnInfo declaration := definitionInfo
+        | throwError "unclassified_form:source.definition_kind"
+      debit
+      if definitionInfo.isUnsafe ||
+          (Compiler.getImplementedBy? (← getEnv) selected.name).isSome ||
+          (getExternAttrData? (← getEnv) selected.name).isSome then
+        throwError "forbidden_dependency:source.definition_safety"
+      unless definitionInfo.type == mkSort .zero do
+        throwError "unclassified_form:source.definition_type"
+      unless definitionInfo.levelParams.length == info.levelParams.length do
+        throwError "unclassified_form:source.definition_universes"
+      let reference := mkConst selected.name (info.levelParams.map Level.param)
+      let occurrence ← if selected.path.isEmpty then pure info.type
+        else if selected.path == #["arg"] && info.type.isAppOfArity ``Not 1 then
+          pure info.type.getAppArgs[0]!
+        else throwError "unclassified_form:source.definition_path"
+      unless occurrence.equal reference do
+        throwError "unclassified_form:source.definition_reference"
+      for readout in selection.readouts do
+        unless selected.path.size < readout.path.size &&
+            readout.path.extract 0 selected.path.size == selected.path do
+          throwError "unclassified_form:source.definition_readout_path"
+      let value := declaration.value.instantiateLevelParams definitionInfo.levelParams
+        (info.levelParams.map Level.param)
+      let type := definitionInfo.type.instantiateLevelParams definitionInfo.levelParams
+        (info.levelParams.map Level.param)
+      pure (some {
+        path := selected.path
+        owner := definitionOwner
+        name := selected.name
+        type := type
+        value := value })
+  let source := match definition with
+    | none => info.type
+    | some entry => if entry.path.isEmpty then entry.value
+      else mkApp info.type.getAppFn entry.value
   let mut telescope := #[]
   let mut e := info.type
   while let .forallE n d b bi := e do
@@ -111,28 +222,78 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     throwError "unclassified_form:source.selection_size"
   if (selection.readouts.map (·.path)).toList.eraseDups.length != selection.readouts.size then
     throwError "unclassified_form:source.duplicate_occurrence"
+  let occurrences ← selection.readouts.mapM fun selected => atPath source selected.path
+  let coordinateContext := occurrences[0]!.1
   let mut previous : Option Nat := none
   let mut coordinates := #[]
   for i in slots do
     debit
-    unless i < telescope.size && previous.all (· < i) do
+    unless i < coordinateContext.size && previous.all (· < i) do
       throwError "unclassified_form:source.coordinate_order"
-    let b := telescope[i]!
-    inContext (telescope.extract 0 i) fun locals => do
+    let b := coordinateContext[i]!
+    -- Exact source ancestry, never equality of names or binder domains alone.
+    for (context, _) in occurrences do
+      debit (b.path.size + 1)
+      unless context[i]?.any (fun other => other.path == b.path) do
+        throwError "unclassified_form:source.captured_coordinate"
+    inContext (coordinateContext.extract 0 i) fun locals => do
       let domain := b.domain.instantiateRev locals
       if b.info == .instImplicit || domain == mkSort .zero ||
           (← isProp domain) || (← dictionary domain) then
         throwError "unclassified_form:source.dictionary_or_proof_coordinate"
-    let domain ← project (slots.filter (· < i)) i b.domain
+    if b.value.isSome then throwError "unclassified_form:source.let_coordinate"
+    let domain ← transport (coordinateContext.extract 0 i) (slots.filter (· < i)) b.domain
     coordinates := coordinates.push { b with domain }
     previous := some i
-  let readouts ← selection.readouts.mapM fun selected => do
-    let (context, observation) ← atPath info.type selected.path
-    for i in slots do
-      unless selected.path.size > i &&
-          (selected.path.extract 0 (i + 1)).all (· == "body") &&
-          context[i]? == telescope[i]? do
-        throwError "unclassified_form:source.captured_coordinate"
+  let readouts ← (selection.readouts.zip occurrences).mapM fun (selected, context, observation) => do
+    if selected.functionOperand || selected.stateOperand.isSome then
+      unless selected.stateBinder == 0 && !(selected.functionOperand && selected.stateOperand.isSome) &&
+          !(selected.functionOperand && selected.booleanPredicate) do
+        throwError "unclassified_form:source.operand_mode"
+      let (state, body) ← inContext context fun locals => do
+        let term := observation.instantiateRev locals
+        if selected.functionOperand then
+          let .forallE _ domain output .default := (← inferType term)
+            | throwError "unclassified_form:source.function_operand"
+          unless !output.hasLooseBVars && !(← isProp domain) && !(← isType term) do
+            throwError "unclassified_form:source.function_operand"
+          let typeArgument ← withLocalDeclD `state domain fun state => isType state
+          if typeArgument then throwError "unclassified_form:source.function_operand"
+          return (domain.abstract locals, mkApp (observation.liftLooseBVars 0 1) (.bvar 0))
+        else
+          let path := selected.stateOperand.get!
+          unless !path.isEmpty && path.size ≤ 256 do
+            throwError "unclassified_form:source.state_operand_path"
+          let (inside, operand) ← atPath observation path
+          unless inside.isEmpty do throwError "unclassified_form:source.state_operand_scope"
+          let operand := operand.instantiateRev locals
+          unless !(← isProof operand) && !(← isType operand) do
+            throwError "unclassified_form:source.state_operand_data"
+          let state ← inferType operand
+          let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
+          return (state.abstract locals, body)
+      let extended := context.push {name := `state, info := .default, domain := state}
+      let body ← if selected.booleanPredicate then
+          inContext extended fun locals => do
+            let term := body.instantiateRev locals
+            unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
+            return (← mkDecide term).abstract locals
+        else pure body
+      let output ← inContext extended fun locals => do
+        let term := body.instantiateRev locals
+        unless !(← isProof term) && !(← isType term) do
+          throwError "unclassified_form:source.observation_data"
+        return (← inferType term).abstract locals
+      let state ← transport context slots state
+      let output ← transport extended slots output
+      let projected ← transport extended (slots.push context.size) body
+      return {
+        context := extended
+        observation := body
+        state, output, projected
+        rawContext := context
+        rawObservation := observation : ReadoutScope }
+    if selected.booleanPredicate then throwError "unclassified_form:source.operand_mode"
     unless selected.stateBinder < context.size && slots.all (· < selected.stateBinder) do
       throwError "unclassified_form:source.state_binder"
     let stateBinder := context[selected.stateBinder]!
@@ -142,13 +303,27 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
       unless !(← isProof term) && !(← isType term) do
         throwError "unclassified_form:source.observation_data"
       return (← inferType term).abstract locals
-    let output ← project slots context.size output
-    let state ← project slots selected.stateBinder stateBinder.domain
-    let projected ← project (slots.push selected.stateBinder) context.size observation
-    unless (← project (slots.push selected.stateBinder) context.size projected true).equal observation do
-      throwError "unclassified_form:source.inverse_mapping"
-    return { context, observation, state, output, projected : ReadoutScope }
-  return { source := info.type, levels := info.levelParams, selection, telescope, coordinates, readouts }
+    let output ← transport context slots output
+    let state ← transport (context.extract 0 selected.stateBinder) slots stateBinder.domain
+    let projected ← transport context (slots.push selected.stateBinder) observation
+    return { context, observation, state, output, projected, rawContext := context, rawObservation := observation : ReadoutScope }
+  let mut reconstructedSource := source
+  for (selected, context, observation) in selection.readouts.zip occurrences do
+    if selected.booleanPredicate then
+      let reified ← inContext context fun locals => do
+        let term := observation.instantiateRev locals
+        unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
+        return (← mkEq (← mkDecide term) (mkConst ``Bool.true)).abstract locals
+      reconstructedSource ← replaceAt reconstructedSource selected.path.toList reified
+  return {
+    source := info.type
+    expanded := reconstructedSource
+    definition := definition
+    levels := info.levelParams
+    selection := selection
+    telescope := telescope
+    coordinates := coordinates
+    readouts := readouts }
 
 private partial def packedType (domains : Array SourceBinder) (i : Nat)
     (parameters : Array Expr) : M Expr := do
@@ -206,8 +381,23 @@ BinderInfo is checked explicitly since Lean defeq alone ignores it. -/
 partial def reconstruct (source law : Expr) (depth : Nat := 0) : M Unit := do
   debit
   if depth > 256 then throwError "incomplete_closure:E8.reconstruction_depth"
-  let law ← whnf law
+  let law ← withConfig (fun c => { c with zeta := false }) <| whnf law
+  -- `whnf` exposes Not as an implication. Keep its source polarity and inspect
+  -- the full proposition underneath, including binder modes ignored by defeq.
+  if source.isAppOfArity ``Not 1 then
+    let .forallE _ domain body .default := law
+      | throwError "unclassified_form:source.statement_reconstruction"
+    unless body.equal (mkConst ``False) do
+      throwError "unclassified_form:source.statement_reconstruction"
+    reconstruct source.getAppArgs[0]! domain (depth + 1)
+    return
   match source, law with
+  | .letE n d v b _, .letE _ d' v' b' _ =>
+    reconstruct d d' (depth + 1)
+    unless ← isDefEq v v' do throwError "unclassified_form:source.let_reconstruction"
+    fun fuel => withLetDecl n d v fun x =>
+      (reconstruct (b.instantiate1 x) (b'.instantiate1 x) (depth + 1)).run fuel
+  | .letE .., _ => throwError "unclassified_form:source.missing_let"
   | .forallE n d b bi, .forallE _ d' b' bi' =>
     unless bi == bi' do
       throwError "unclassified_form:source.telescope_reconstruction"
