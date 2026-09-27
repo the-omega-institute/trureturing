@@ -81107,3 +81107,378 @@ $$
 这里给出的是明确矩阵族、全部填充的精确求解及归一化来源的核验；不据此宣称一般非正规矩阵的完整唯一性分类或文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 263. Ando填充的共同核、全部仿射自由度与唯一来源秩界
+
+§262说明，数值半径的极值向量没有张成整个空间，也不排除唯一填充。要给出完整判据，需要保留全部可行联合块矩阵的共同核。本节证明：从任意最大秩填充读取这个共同核，将其两个分量投影回参考空间，就能精确确定纤维的仿射维数与唯一性。
+
+这一结论是标准半正定面理论在Ando填充中的具体应用。矩阵Fejér–Riesz定理还给出一个锐的统一秩上界：在 $n$ 维参考支撑上，唯一填充的秩不超过 $n$。回到固定边缘来源，这意味着唯一来源的秩不超过其参考边缘的秩。
+
+### 263.1 可行纤维与最大秩填充
+
+设 $S$ 为 $n\ge1$ 维复Hilbert空间，固定 $Z\in\mathcal L(S)$。定义
+$$
+T_Z(F)=\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_S-F\end{pmatrix},
+\qquad
+\mathcal F(Z)=\{F=F^\dagger:T_Z(F)\succeq0\}.
+\tag{263.1}
+$$
+以下假设 $\mathcal F(Z)\ne\varnothing$。对角压缩给 $0\preceq F\preceq I_S$，所以 $\mathcal F(Z)$ 是有限维实向量空间 $\operatorname{Herm}(S)$ 中的非空紧凸集。
+
+选择使 $T_Z(F)$ 秩最大的一个填充 $F_*$，记
+$$
+T_*=T_Z(F_*),\qquad N=\ker T_*.
+\tag{263.2}
+$$
+最大秩元素存在，因为实际可取的秩构成非空有限整数集。定义
+$$
+\boxed{
+W=\operatorname{span}_{\mathbb C}\{u,v:(u,v)\in N\}\subseteq S,
+\qquad U=W^\perp.
+}
+\tag{263.3}
+$$
+这里把核向量的上、下两个分量分别投影到同一个参考空间，再取共同张成；没有要求这两个分量互为相位倍数。
+
+标准背景可参见 S. Sremac、H. Woerdeman、H. Wolkowicz，*Complete Facial Reduction in One Step for Spectrahedra*，[arXiv:1710.07410v1](https://arxiv.org/abs/1710.07410v1)，PDF第5页Theorem 2.2及其随后关于凸集最小面的说明：半正定锥的面由最大秩元素的支撑或核刻画。该文使用实对称矩阵；以下直接证明当前复Hermitian切片的结论，尤其不把两种标量域的维数公式混用。
+
+### 263.2 最大秩元素的核恰为共同核
+
+**定理263.1（共同核）。** 有
+$$
+\boxed{
+N=\bigcap_{F\in\mathcal F(Z)}\ker T_Z(F).
+}
+\tag{263.4}
+$$
+因此 $N,W,U$ 都与最大秩填充的具体选择无关。
+
+**证明。** 对任意两个正半定矩阵 $A,B$，
+$$
+\ker(A+B)=\ker A\cap\ker B.
+\tag{263.5}
+$$
+确实，若 $(A+B)x=0$，则两个非负二次型之和为零，所以各为零；正半定矩阵将零二次型向量送到零，故 $Ax=Bx=0$。反向包含直接成立。
+
+对任意可行 $F$，平均填充仍可行，且
+$$
+T_Z\left(\frac{F+F_*}{2}\right)
+=\frac{T_Z(F)+T_*}{2}.
+\tag{263.6}
+$$
+由（263.5），其核为 $\ker T_Z(F)\cap N$。如果 $N$ 不包含于 $\ker T_Z(F)$，交集维数就严格小于 $\dim N$，平均填充的秩将严格大于 $T_*$ 的秩，与选择矛盾。因此 $N\subseteq\ker T_Z(F)$ 对所有可行 $F$ 成立。反向包含由 $F_*$ 自身属于集合得到。$\square$
+
+### 263.3 精确仿射维数与完整唯一性判据
+
+将 $\operatorname{Herm}(U)$ 嵌入 $\operatorname{Herm}(S)$：在 $W$ 上补零，且跨 $W,U$ 的块均为零。
+
+**定理263.2（全部仿射自由度）。** 有
+$$
+\boxed{
+\operatorname{aff}_{\mathbb R}\mathcal F(Z)
+=F_*+\operatorname{Herm}(U).
+}
+\tag{263.7}
+$$
+因此
+$$
+\boxed{
+\dim_{\mathbb R}\operatorname{aff}\mathcal F(Z)
+=(n-\dim_{\mathbb C}W)^2,
+}
+\tag{263.8}
+$$
+且
+$$
+\boxed{
+\mathcal F(Z)\text{ 为单点}\iff W=S.
+}
+\tag{263.9}
+$$
+
+**证明。** 先取任意可行 $F$，令 $D=F-F_*$。共同核定理给
+$$
+\begin{pmatrix}D&0\\0&-D\end{pmatrix}\binom uv=0
+\qquad((u,v)\in N).
+\tag{263.10}
+$$
+因此 $Du=Dv=0$，故 $D|_W=0$。又因 $D$ Hermitian，其像包含于 $U$，从而
+$$
+D=P_UDP_U\in\operatorname{Herm}(U).
+\tag{263.11}
+$$
+这证明（263.7）的一侧包含。
+
+反向，取任意 $D\in\operatorname{Herm}(U)$，记
+$$
+\widetilde D=\operatorname{diag}(D,-D).
+\tag{263.12}
+$$
+由（263.3），$\widetilde D$ 消去 $N$；Hermitian性又保证它保持 $N^\perp$。$T_*$ 在 $N^\perp$ 上严格正。记其最小正本征值为 $\mu>0$；由于 $\operatorname{Tr}T_*=n>0$，这个正支撑非零。
+
+对满足 $|t|\|D\|<\mu$ 的任意实数 $t$，在 $N^\perp$ 上有
+$$
+T_*+t\widetilde D
+\succeq(\mu-|t|\|D\|)I_{N^\perp}\succ0,
+\tag{263.13}
+$$
+而在 $N$ 上它为零。因此
+$$
+F_*+tD\in\mathcal F(Z).
+\tag{263.14}
+$$
+尤其每个这样的方向都可以作足够小的正、负扰动。更强地，任意 $D\in\operatorname{Herm}(U)$ 只要 $\|D\|<\mu$，就有 $F_*+D$ 可行，所以 $F_*$ 周围含有该方向空间中的一个相对开球。这给出仿射包的另一侧包含。
+
+设 $k=\dim_{\mathbb C}U$。复 $k$ 维空间的Hermitian矩阵有 $k$ 个实对角自由度，以及 $k(k-1)/2$ 个复非对角自由度，总实维数为
+$$
+k+2\frac{k(k-1)}2=k^2.
+\tag{263.15}
+$$
+得到（263.8）。非空凸集的仿射维数为零当且仅当它是单点，故得（263.9）。$\square$
+
+这个定理给出仿射包和局部双向可行性，并不把任意大小的 $D\in\operatorname{Herm}(U)$ 都当成可行扰动。全局纤维仍为
+$$
+\left\{F_*+D:D\in\operatorname{Herm}(U),
+T_*+\operatorname{diag}(D,-D)\succeq0\right\}.
+\tag{263.16}
+$$
+也就是说，共同核确定所有可能变化的方向，剩余块正性决定沿这些方向允许走多远。
+
+### 263.4 最大秩假设不能用任意可行点替代
+
+取 $Z=0$。此时
+$$
+\mathcal F(0)=\{F:0\preceq F\preceq I_S\},
+\tag{263.17}
+$$
+其仿射维数为 $n^2$。
+
+若任选一个正交投影 $P$，对应填充为
+$$
+T_0(P)=\operatorname{diag}(P,I_S-P),
+\qquad
+\ker T_0(P)=\ker P\oplus\operatorname{ran}P.
+\tag{263.18}
+$$
+该核的两个分量投影合起来张成整个 $S$。若误把它代入（263.9），就会错误地报告唯一性。
+
+问题在于 $T_0(P)$ 的秩只有 $n$，不是最大秩。真正的最大秩点可取
+$$
+F_*=\frac12I_S,
+\qquad T_* =\frac12I_{S\oplus S}.
+\tag{263.19}
+$$
+这时 $N=W=0$，定理263.2正确给出 $n^2$ 个实仿射自由度。
+
+因此，一个任意可行填充的核只表示该点的退化，不能自动当作整个纤维的共同约束。低秩可行点本身也不认证唯一性。
+
+### 263.5 数值半径极值空间只是共同核投影的一部分
+
+若 $w(Z)=1$，定义
+$$
+W_{\mathrm{ext}}
+=\operatorname{span}_{\mathbb C}
+\{x:\|x\|=1,\ |x^\dagger Zx|=1\}.
+\tag{263.20}
+$$
+对每个这样的 $x$，写 $x^\dagger Zx=e^{i\theta}$。§262的零二次型计算给
+$$
+T_Z(F)\binom{x}{-e^{-i\theta}x}=0
+\quad\text{对全部 }F\in\mathcal F(Z).
+\tag{263.21}
+$$
+因此
+$$
+\boxed{W_{\mathrm{ext}}\subseteq W.}
+\tag{263.22}
+$$
+这就解释了 $W_{\mathrm{ext}}=S$ 为什么足以保证唯一。
+
+包含可以严格。§262的矩阵族
+$$
+Z_a=\begin{pmatrix}1&a\\-a&1-2a^2\end{pmatrix},
+\qquad0<a<1,
+\tag{263.23}
+$$
+只有 $W_{\mathrm{ext}}=\mathbb Ce_0$，但其唯一填充的核含有
+$$
+(e_0,-e_0),\qquad(ae_0+e_1,ae_0-e_1).
+\tag{263.24}
+$$
+这些核向量的分量投影张成整个 $\mathbb C^2$，所以 $W=S$。完整共同核判据保留了极值向量检验没有直接提供的那条联合约束。
+
+### 263.6 标准Fejér–Riesz分解给出低秩填充
+
+本节使用以下标准外部定理：若矩阵Laurent多项式
+$$
+Q(\zeta)=\sum_{j=-m}^{m}Q_j\zeta^j
+\tag{263.25}
+$$
+在全部 $|\zeta|=1$ 上正半定，则存在作用于同一空间的矩阵多项式
+$$
+P(\zeta)=\sum_{j=0}^{m}P_j\zeta^j
+\tag{263.26}
+$$
+使
+$$
+Q(\zeta)=P(\zeta)^\dagger P(\zeta)
+\quad(|\zeta|=1).
+\tag{263.27}
+$$
+不要求 $Q$ 严格正，次数上界仍为 $m$。精确形式见 M. A. Dritschel、J. Rovnyak，*The Operator Fejér–Riesz Theorem*，[arXiv:0903.3639v1](https://arxiv.org/abs/0903.3639v1)，PDF第4页Theorem 2.1。其系数保持作用于同一Hilbert空间这一点，将保证下面没有额外扩大的因子维数。
+
+**定理263.3（每个非空纤维都有低秩成员）。** 若 $\mathcal F(Z)\ne\varnothing$，则存在 $F_0\in\mathcal F(Z)$，使
+$$
+\boxed{\operatorname{rank}T_Z(F_0)\le n.}
+\tag{263.28}
+$$
+
+**证明。** 非空填充先给 $w(Z)\le1$。对任意单位向量 $x$，若 $x^\dagger Zx\ne0$，选择相位使 $e^{-i\theta}x^\dagger Zx=|x^\dagger Zx|$；将 $(x,-e^{-i\theta}x)$ 代入正块，得到
+$$
+1-|x^\dagger Zx|\ge0.
+\tag{263.29}
+$$
+零值情形自动满足同一不等式。
+
+因此矩阵Laurent多项式
+$$
+Q(\zeta)=I_S+\frac12(\zeta Z+\overline\zeta Z^\dagger)
+\tag{263.30}
+$$
+在整个单位圆上正半定。对次数 $m=1$ 应用标准Fejér–Riesz定理，存在 $A,B\in\mathcal L(S)$ 使
+$$
+Q(\zeta)=(A+\zeta B)^\dagger(A+\zeta B).
+\tag{263.31}
+$$
+比较Laurent系数，得到
+$$
+A^\dagger A+B^\dagger B=I_S,
+\qquad A^\dagger B=Z/2.
+\tag{263.32}
+$$
+取 $F_0=A^\dagger A$，则
+$$
+T_Z(F_0)
+=\begin{pmatrix}A^\dagger A&A^\dagger B\\B^\dagger A&B^\dagger B\end{pmatrix}
+=\begin{bmatrix}A&B\end{bmatrix}^{\dagger}
+\begin{bmatrix}A&B\end{bmatrix}\succeq0.
+\tag{263.33}
+$$
+右侧是一个 $n\times2n$ 矩阵的Gram矩阵，秩不超过 $n$。$\square$
+
+该构造也直接表明 $w(Z)\le1$ 足以保证填充存在。若 $w(Z)<1$，取 $w(Z)<\lambda<1$，选择 $Z/\lambda$ 的一个可行填充 $T'$。则
+$$
+\lambda T'+\frac{1-\lambda}{2}I_{S\oplus S}\succ0
+\tag{263.34}
+$$
+是 $Z$ 的严格正填充，所以共同核为零，纤维仿射维数为 $n^2$。而当 $w(Z)=1$ 时，极值向量存在，式（263.21）给非零共同核方向及 $\dim W\ge1$，故仿射维数至多为 $(n-1)^2$。
+
+低秩成员的存在与最大秩判据承担不同职责。定理263.3并不说这个由谱因子得到的成员已经达到最大秩；§263.4正好说明这种混用会导致错误。
+
+### 263.7 唯一填充的锐统一秩上界
+
+**推论263.4（唯一填充秩界）。** 若 $\mathcal F(Z)$ 为单点，则其唯一成员满足
+$$
+\boxed{\operatorname{rank}T_*\le n.}
+\tag{263.35}
+$$
+此统一上界可以达到。
+
+**证明。** 定理263.3给出一个秩不超过 $n$ 的可行填充；唯一性使它就是 $T_*$。
+
+为证明可达到，取 $Z=I_S$。对每个单位向量，数值半径极值核关系强制 $Fx=x/2$，故唯一 $F=I_S/2$。相应矩阵
+$$
+T_* =\frac12\begin{pmatrix}I_S&I_S\\I_S&I_S\end{pmatrix}
+\tag{263.36}
+$$
+的核为 $\{(x,-x):x\in S\}$，秩恰为 $n$。$\square$
+
+该结论限制的是唯一填充的秩，不声称所有可行填充都低秩。例如 $Z=0$ 的最大秩填充有秩 $2n$。
+
+### 263.8 回接实际固定边缘的来源纤维
+
+设实际参考空间为有限维 $E$，固定
+$$
+\rho\succeq0,\qquad\operatorname{Tr}\rho=1,
+\qquad S=\operatorname{supp}\rho,
+\qquad n=\operatorname{rank}\rho.
+\tag{263.37}
+$$
+给定响应 $K$，考虑全部合法来源
+$$
+\mathfrak S(\rho,K)=
+\left\{
+\Omega=\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}\succeq0:
+P+Q=\rho
+\right\}.
+\tag{263.38}
+$$
+以下假设这组实际数据可实现。正性先保证
+$$
+K=P_SKP_S,
+\qquad
+\Omega=(I_H\otimes P_S)\Omega(I_H\otimes P_S)
+\quad\text{对全部 }\Omega\in\mathfrak S(\rho,K).
+\tag{263.39}
+$$
+确实，参考核中的向量使两个对角非负二次型之和为零，故相应的上、下联合向量均被整个正矩阵消去。这同时排除了核外质量与相干。
+
+令
+$$
+Z=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2},
+\qquad D_\rho=\operatorname{diag}(\rho_S^{1/2},\rho_S^{1/2}).
+\tag{263.40}
+$$
+映射
+$$
+\boxed{F\longmapsto\Omega(F)=D_\rho T_Z(F)D_\rho}
+\tag{263.41}
+$$
+并在 $H\otimes S^\perp$ 上补零，给出 $\mathcal F(Z)$ 与 $\mathfrak S(\rho,K)$ 之间的仿射双射。其正性由可逆同余等价，参考边缘为 $\rho$，总迹为一，非对角块恰为 $K/2$。
+
+若 $F_*$ 为最大秩填充，并从其共同核定义 $W,U$，则实际来源的完整仿射包为
+$$
+\boxed{
+\operatorname{aff}_{\mathbb R}\mathfrak S(\rho,K)
+=\Omega(F_*)+
+\left\{
+\begin{pmatrix}
+\rho_S^{1/2}D\rho_S^{1/2}&0\\
+0&-\rho_S^{1/2}D\rho_S^{1/2}
+\end{pmatrix}
+:D\in\operatorname{Herm}(U)
+\right\},
+}
+\tag{263.42}
+$$
+同样对参考核外补零。可逆性保证方向映射单射，因此
+$$
+\boxed{
+\dim_{\mathbb R}\operatorname{aff}\mathfrak S(\rho,K)
+=(\operatorname{rank}\rho-\dim W)^2,
+\qquad
+\mathfrak S(\rho,K)\text{唯一}\iff W=S.
+}
+\tag{263.43}
+$$
+
+此外，同余保持 $H\otimes S$ 上的秩，核外补零不增加秩。所以唯一来源满足
+$$
+\boxed{\operatorname{rank}\Omega\le\operatorname{rank}\rho.}
+\tag{263.44}
+$$
+该上界对任意指定 $\rho$ 都能达到：取 $K=\rho$，则 $Z=I_S$，唯一来源为
+$$
+\Omega=\frac12\begin{pmatrix}\rho&\rho\\\rho&\rho\end{pmatrix}
+=P_+\otimes\rho,
+\tag{263.45}
+$$
+其中 $|+\rangle=(|y_+\rangle+|y_-\rangle)/\sqrt2$，且 $\operatorname{rank}\Omega=\operatorname{rank}\rho$。
+
+### 263.9 判据的取得边界
+
+本节完整描述了给定可实现数据纤维的仿射自由度与唯一性，但判据的输入包含一个最大秩填充，或等价的全部填充共同核。定理没有把取得这个对象变成免费步骤，也没有提供寻找最大秩成员的高效算法。任意可行点、一个低秩谱因子填充或未经认证的数值零本征值，都不能单独替代共同核。
+
+半正定面的支撑结构与Fejér–Riesz分解均为所引标准理论；这里将它们连接到固定边缘来源的实际纤维。结论不据此宣称文献原创性，也没有给出近似共同核、带噪边缘或有限样本下的同型唯一性证书。
+
+## 追加锚（本行以下为增补区）
