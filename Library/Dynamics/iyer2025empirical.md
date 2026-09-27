@@ -6519,3 +6519,13 @@ Frédéric Ouimet，*A precise local limit theorem for the multinomial distribut
 上述成熟方法不作原创声明；原模型的较小阈值概率估计和完整物理连接归为仓内推导。端点、更大区间及较大分母事件仍未在本章结算。未作 Lean 认证或全球原创性认定。
 
 ## 追加锚（本行以下为增补区）
+
+## 206. 条件块检验鞅、精确随时水平与原实验效率
+
+对应 `PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md` 第 206 章。A. Philip Dawid、Steven de Rooij、Glenn Shafer、Alexander Shen、Nikolai Vereshchagin、Vladimir Vovk，*Martingales and p-values as measures of evidence*，[arXiv:0912.4269v1](https://arxiv.org/abs/0912.4269v1) 的原始 TeX 给出包含过滤族与可积性的鞅定义、最大不等式、精确 p-test 与随机化边界以及相互联系。其正向论证引用 Ville；反向构造使用特定过滤族，不允许把任意重复条件 p 值直接认作当前观测过滤族上的鞅。
+
+正文直接证明所需的有限停止界和条件均值一恒等式。每块是若干次独立完整原实验，条件于块总数的 multinomial 分配消去所有固定 Poisson 均值和坐标形状；零／单计数块也保留。增长块长的三、四阶碰撞矩与一侧指数余项支付精确归一化，中心化估计恒等式支付逐块拟合均值，再以全时域最大界连接第 204 章的真实全直方图实验。
+
+经典检验鞅、条件化和 Ville 方法不作新方法声明；新增结果是原模型条件块过程在保有全部有限均值的端点随时水平时，仍具有原实验的一阶信息时钟。布朗零假设极限只统一覆盖总均值至少为一，零均值过程恒为一；精确水平与渐近范围分别陈述。更细的部分块过滤族、期望停止时间和顺序最优性未在本章证明。未作 Lean 认证或全球原创性认定。
+
+## 追加锚（本行以下为增补区）

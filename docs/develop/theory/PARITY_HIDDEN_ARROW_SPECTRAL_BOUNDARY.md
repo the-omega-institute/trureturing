@@ -66064,3 +66064,550 @@ Weighted density convergence and bounded fourth moments give E_xY^2->nu. The ori
 更大正区间、端点 $249c_q/500$、零噪声及随 $Q$ 逼近端点的统一结论仍未证明。第 190、192 章的方法障碍、第 196 章的双指数结论及第 199 章在 $c=2c_q,\beta>4/5$ 下的受限结果保持原适用范围；较大分母事件的实际概率也不由本章支付。以上为普通数学推导，未作 Lean 认证；定向文献比较不构成全球原创性认定。
 
 ## 追加锚（本行以下为增补区）
+
+## 206. 精确条件块鞅：全部有限均值的随时有效性与不损失的一阶信息
+
+第 204 章的运行统计量给出了有界信息时间内的布朗极限。本章按确定长度把完整重复实验分块，在每块总数下使用精确 multinomial 归一化，得到对任意固定有限均值及任意坐标形状均成立的正检验鞅。零总数与单计数块也有明确定义。
+
+**定理 206.1（精确水平与原始实验效率）。** 以下构造在完成块的过滤族上满足 (206.16) 和有限样本的 (206.42)。在原替代及其精确均值 Poisson 参考下，它与第 204 章的全直方图似然共享 (206.39) 的同一布朗路径和信息时钟。逐块拟合均值、随机条件归一化、未完成块和初始区间的误差由 (206.23)–(206.38) 支付；越界规则的有界时域误差与功效由 (206.44) 给出。
+
+这里的更新与拒绝仅发生在完整块的端点。有限样本水平包含零均值，布朗零假设极限另限于总均值至少为一的范围；它不能统一扩展到零均值。阈值 $1/\alpha$ 的精确随时保证与第 204 章较低的时域校准边界具有不同结论。
+
+### 206.1 Original objects and hypotheses
+
+Here are the exact original objects, recalled to fix every quantifier. Let
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{j\le n}10^{e_n-e_j},\quad
+\vartheta=\sum_{j\ge1}10^{-e_j},\quad\lambda=Q^3.
+\tag{206.1}
+$$
+
+The unchanged amplitude $r$ obeys
+$\log(1+r)/[-\log(1-r)]=\vartheta$. Write
+$a=(1+r)/2$, $b=(1-r)/2$, and
+$\phi=a\log(1+r)+b\log(1-r)>0$. For beta in
+$D=(\beta_*,1)$, $\beta_*>1/2$, retain
+
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_0=M-q,\quad\epsilon=rq/s_0,\quad T=2M\lambda.
+\tag{206.2}
+$$
+
+Each parity class has size $M$. Any deterministic $S\subset C_+$ of size $q$ is allowed. The original transition kernel is
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+\tag{206.3}
+$$
+
+One pair experiment consists of $T$ independent stationary adjacent pairs; one stationary path experiment starts uniformly and makes $T$ consecutive transitions of (206.3). The reset $P_S^2=\Pi$ does not make neighboring edges independent. Repetitions here are independent copies of one ENTIRE such experiment at the same beta and support.
+
+The complete groups, identified by Chapter 175, are
+
+$$
+(K_j,B_j)=(k_0,l_0)+j(Q,P),\quad
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},
+$$
+$$
+C_j=\sum_{x\in C_+}{\bf1}_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}},
+\quad Z=\sum_{j\in J_Q}C_j,\quad
+\mu_j=E_{P_Q}C_j,\quad t=\sum_j\mu_j.
+\tag{206.4}
+$$
+
+There is no count cutoff. At each finite original horizon only indices with
+$K_j+B_j=\lambda+j(Q+P)\le T$ can occur. This is a finite set $A_Q$. Coordinates outside it, and coordinates of actual mean zero inside it, are deterministic zero. Thus $P_Q\ll R_\mu:=\bigotimes_{J_Q}\operatorname{Pois}(\mu_j)$. This support fact removes no low-probability tail; the statistic uses the complete aggregate.
+
+Write
+
+$$
+f=F_Q=\sum_{j\in J_Q}e^{-\lambda}
+ \frac{(a\lambda)^{K_j}(b\lambda)^{B_j}}{K_j!B_j!},
+\qquad h=f^2/8,\qquad n_Q(v)=\lfloor v/h\rfloor.
+\tag{206.5}
+$$
+
+The deterministic line mass satisfies $0<f\le1$ and the result of Chapter 197
+$f\sim[2\pi(b+a\vartheta^2)]^{-1/2}Q^{-5/2}$.
+It is known from layer/amplitude constants, not estimated from the data. No efficient evaluation of this infinite sum or of the finite normalizers below is claimed.
+
+For $J=[\beta_0,\beta_1]\Subset D$, all actual means satisfy
+
+$$
+\log t=\phi(1/\beta-1)Q^3-\tfrac52\log Q+O_J(1),
+\qquad t\ge e^{c_JQ^3}\quad\text{eventually},\quad c_J>0.
+\tag{206.6}
+$$
+
+Chapter 204 supplies the following quantitative interfaces, not merely its fixed-time marginals. For $N=\lfloor V/h\rfloor$, $V<\infty$, define the proof-only mean-known score
+
+$$
+W_t(z)=\frac{(z-t)^2-z}{t},\qquad
+M_k(t)=-\frac f4\sum_{i\le k}W_t(Z_i),\qquad
+\mathcal B_Q(v)=M_{n_Q(v)}(t)-n_Q(v)h/2.
+\tag{206.7}
+$$
+
+Under $R_\mu^{\otimes N}$ and $P_Q^{\otimes N}$, respectively, this process converges in (D([0,V])), with the Skorohod $J_1$ topology, to $W(v)-v/2$ and $W(v)+v/2$. Its maximum difference from the actual full-histogram log likelihood and Chapter 204's running adaptive statistic tends to zero in probability. Chapter 204 separately pays the rare null paths on which a full-histogram likelihood is zero before its real-valued likelihood statement. The new process below never has an infinite logarithm.
+
+For every measurable event $E$ on the same first $N$ entire repetitions, Chapter 204 also proves
+
+$$
+P_Q^{\otimes N}(E)
+\le\Delta_P+C_{J,V}\sqrt{R_\mu^{\otimes N}(E)+\Delta_R},
+\tag{206.8}
+$$
+$$
+\Delta_P=\sqrt{N\varepsilon_Q},\quad
+\Delta_R=\sqrt{N\omega_Q},\quad
+\varepsilon_Q=O_J(Q^{-20})+O_J(e^{-c_JQ^3}),\quad
+\omega_Q=O_J(e^{-c_JQ^3}).
+$$
+
+This follows from its SAME-realization full signal-word/background comparison, mean-weighted exact-mean projection, paid full tiny-mean tails, and a reference-only product-likelihood L2 bound. It is not actual-law L2 and not TV transfer of an unbounded expectation. The whole dependent four-total mixture remains in the inherited original proof. The information bound in Chapter 198 is a sum over the complete conditional allocation and retains all three indicators of its encoding. We will apply (206.8) only to bounded probability events.
+
+### 206.2 The exact conditional factor and its filtration
+
+To avoid shadowing the original amplitude probability $b$, denote the block length by $B^{\rm blk}$, abbreviated $B_*$ below. It is unrelated to the target count $B_j$. Choose deterministically
+
+$$
+B_*:=\max\{2,\lceil f^{-1}\rceil\},\qquad d=B_*-1.
+\tag{206.9}
+$$
+
+Thus $B_*\to\infty$, $B_*f\le2$, and $B_*h\to0$. Each block contains $B_*$ whole original experiments. For the moment let $B_*\ge2$ be an arbitrary integer, and let $z=(z_1,\ldots,z_{B_*})\in\mathbb N^{B_*}$, $s=\sum_i z_i$. Set
+
+$$
+X_{B_*,s}(z)=\frac{B_*}{s}\sum_i(z_i-s/B_*)^2\quad(s>0),
+\qquad X_{B_*,0}:=d,
+$$
+$$
+A_{B_*,s}(z)=\frac f4(d-X_{B_*,s}(z)),
+\qquad K_{B_*,s}=E_{\operatorname{Mult}(s;1/B_*,\ldots,1/B_*)}
+ e^{A_{B_*,s}}.
+\tag{206.10}
+$$
+
+At $s=0$, the multinomial law is a point mass at the all-zero vector and $A=0,K=1$. At $s=1$, $X=d$ identically, also giving $A=0,K=1$. At every other finite $s$, the normalizer is the explicit finite positive sum
+
+$$
+K_{B_*,s}=\sum_{z_1+\cdots+z_{B_*}=s}
+ \frac{s!}{B_*^s\prod_i z_i!}
+ \exp\!\left\{\frac f4\left[d-\frac{B_*}{s}
+ \sum_i(z_i-s/B_*)^2\right]\right\}.
+\tag{206.11}
+$$
+
+Let $Z_i$ be the observed full aggregate of repetition $i$. Block $r$ uses the consecutive indices $(r-1)B_*+1,\ldots,rB_*$; let $S_r$ be their sum and $A_r$ their value in (206.10). Define
+
+$$
+E_0=1,\qquad E_r=\prod_{l=1}^r\frac{e^{A_l}}{K_{B_*,S_l}},
+\qquad\mathcal G_r=\sigma(\text{all full histograms in the first }rB_*\text{ repetitions}).
+\tag{206.12}
+$$
+
+The enlarged null is
+
+$$
+\mathcal R_Q^{\rm all}=\left\{R_\eta=\bigotimes_{j\in J_Q}\operatorname{Pois}(\eta_j):
+\eta_j\ge0,\quad 0\le t:=\sum_j\eta_j<\infty\right\}.
+\tag{206.13}
+$$
+
+The vector $\eta$ is fixed across repetitions; it may have arbitrary countable shape, not necessarily the actual original support $A_Q$. Under (206.13) the aggregate is Poisson$t$: finite partial sums have that law with partial total mean, the infinite sum is finite almost surely since its expectation is $t$, and taking increasing partial sums gives the Poisson$t$ limit. Independent entire repetitions therefore give iid aggregates. For $t>0$, division of their joint mass by the Poisson$(B_*t)$ total mass proves exactly
+
+$$
+\mathcal L_{R_\eta}(Z_{(r-1)B_*+1},\ldots,Z_{rB_*}\mid S_r=s,\mathcal G_{r-1})
+=\operatorname{Mult}(s;1/B_*,\ldots,1/B_*).
+\tag{206.14}
+$$
+
+At $t=0$, every aggregate and total is zero almost surely and (206.12) is identically one. The conditional mean calculation in Section 206.3 gives $E A=0$. Because $X\ge0$ for $s>0$, $A\le fd/4$, while its lower bound at fixed $s$ is finite. Jensen and (206.10) imply
+
+$$
+1\le K_{B_*,s}\le e^{fd/4}<\infty.
+\tag{206.15}
+$$
+
+Consequently all factors in (206.12) are finite and strictly positive. By (206.14), their conditional expectation given $(S_r,\mathcal G_{r-1})$ is EXACTLY one. Taking conditional expectation again gives
+
+$$
+E_{R_\eta}(E_r\mid\mathcal G_{r-1})=E_{r-1},\qquad E_{R_\eta}E_r=1.
+\tag{206.16}
+$$
+
+This proves integrability by induction and establishes a common test martingale for every fixed finite mean and shape, at EVERY finite layer. The contemporary total $S_r$ is not asserted known or predictable before the block. The chosen function in (206.10) and its normalization for every possible $s$ are fixed beforehand. The tower calculation, integrating over the new random total, is precisely what makes conditioning legal. No fitted support, beta, labels, training observations, oracle means or test randomization enter.
+
+If repetitions are physically revealed one at a time, the rule commits to updates and decisions only at these endpoints. A constant extension of $E_r$ during an incomplete block is used for the functional display below, with filtration $\mathcal G_{\lfloor n/B_*\rfloor}$. It is not claimed to be a supermartingale under the finer partially revealing filtration. The endpoint crossing event itself is covered by (206.16), regardless of whether someone has viewed unused intermediate data.
+
+### 206.3 Conditional third/fourth moments with growing block length
+
+This section pays the exponentially weighted normalizer. A fixed-order or fixed-dimension limit is not used. All constants $C$ are absolute, independent of $B_*,s,f,t$, unless a subscript is stated.
+
+For $s\ge1$, let $U_1,\ldots,U_s$ be iid uniform labels in $\{1,\ldots,B_*\}$, and write
+
+$$
+\kappa(u,v)={\bf1}_{\{u=v\}}-1/B_*,\quad
+H=\sum_{a<c}\kappa(U_a,U_c),\quad Y=X-d=\frac{2B_*}{s}H.
+\tag{206.17}
+$$
+
+The last identity is the exact collision representation. Every kernel is centered conditional on either argument. Distinct edges have zero covariance, including edges sharing one label. Thus
+
+$$
+EY=0,\qquad EY^2=2d(1-1/s),\qquad
+EA=0,\quad EA^2=d h(1-1/s).
+\tag{206.18}
+$$
+
+At $s=0$, these expectations are zero by definition, without an expression containing $1/s$.
+
+For specificity even the signed third moment is explicit. In the expansion of $H^3$, an index appearing once contributes zero. The only surviving configurations are a single edge repeated three times and a triangle with three distinct edges. Direct conditional summation gives
+
+$$
+E\kappa_{12}^3=\frac{d(B_*-2)}{B_*^3},\qquad
+E(\kappa_{12}\kappa_{23}\kappa_{31})=\frac d{B_*^3}.
+$$
+
+There are $\binom{s}{2}$ terms of the first kind and $6\binom{s}{3}$ of the second. Hence, for every $s\ge1$,
+
+$$
+EY^3=\frac{4d(s-1)(B_*+2s-6)}{s^2},\qquad
+EA^3=-\frac{f^3d(s-1)(B_*+2s-6)}{16s^2}.
+\tag{206.19}
+$$
+
+The formula vanishes at $s=1$ and has the correct sign reversal from $A=-fY/4$. It is not itself an exponential-tail assumption.
+
+For the fourth moment, expand $H^4$ into ordered quadruples of unordered edges, allowing repetitions. A vertex of degree one again annihilates the term by conditioning. At most four vertices survive. There are finitely many equality patterns among eight edge endpoints, so the number with $v$ vertices is at most an absolute constant times $s^v$. Their expectations have the following bounds, which retain the within-cell dependence:
+
+* Two vertices: one edge repeated four times; $E\kappa^4\le E\kappa^2\le1/B_*$.
+* Three vertices: either two doubled edges sharing a vertex, or a triangle with one edge repeated. For the doubled edges, conditional second moments are $d/B_*^2\le1/B_*$, giving a product at most $1/B_*^2$. For a doubled triangle edge, use
+  $E(\kappa_{13}\kappa_{23}\mid U_1,U_2)=\kappa_{12}/B_*$; its expectation is $E\kappa_{12}^3/B_*$, with absolute value at most $1/B_*^2$.
+* Four vertices: the graph is two disjoint doubled edges or a four-cycle. The first has expectation at most $1/B_*^2$. Successive conditional summation for the cycle gives $d/B_*^4\le1/B_*^3$.
+
+These cases exhaust loopless four-edge multigraphs without degree-one vertices. Bounding the expansion term by term therefore gives
+
+$$
+EH^4\le C\left(\frac{s^2}{B_*}+\frac{s^3}{B_*^2}+\frac{s^4}{B_*^2}\right),
+\quad
+EY^4\le C\left(B_*^2+\frac{B_*^3}{s^2}\right),\quad s\ge1.
+\tag{206.20}
+$$
+
+The $B_*^2/s$ contribution is absorbed into $B_*^2$. By Cauchy–Schwarz and (206.18),
+
+$$
+E|A|^3\le C f^3 B_*^{3/2}\sqrt{1+B_*/s^2},\qquad
+EA^4\le C f^4(B_*^2+B_*^3/s^2).
+\tag{206.21}
+$$
+
+In particular when $s\ge B_*/2$, both bounds have their usual orders $f^3B_*^{3/2}$, $f^4B_*^2$, uniformly as the dimension grows. Tiny totals are not excluded from exact validity; they are only treated separately in the asymptotic performance payment.
+
+### 206.4 A one-sided exponential expansion of the exact normalizer
+
+Suppose $fB_*\le2$, as in (206.9). Then $A\le1/2$. For EVERY real $x\le1/2$, Taylor's integral formula gives
+
+$$
+0\le e^x-1-x\le\tfrac12 e^{1/2}x^2,\qquad
+|e^x-1-x-x^2/2|\le\tfrac16 e^{1/2}|x|^3.
+\tag{206.22}
+$$
+
+For negative $x$ the exponential along the segment from zero to $x$ is at most one; for positive $x\le1/2$ it is at most $e^{1/2}$. This proves the uniform remainder even though the negative tail of $A$ can be very long. It is not an unproved two-sided mgf envelope.
+
+Let $x_s=K_{B_*,s}-1\ge0$. Equations (206.18),(206.22) give
+
+$$
+\left|x_s-\tfrac12 dh(1-1/s)\right|\le C E|A|^3,
+\qquad x_s\le C f^2B_*.
+$$
+
+Since $0\le x-\log(1+x)\le x^2/2$ for $x\ge0$, (206.21) proves the finite bound
+
+$$
+\boxed{\left|\log K_{B_*,s}-\tfrac12dh(1-1/s)\right|
+\le C\left[f^3B_*^{3/2}\sqrt{1+B_*/s^2}+f^4B_*^2\right],\quad s\ge1.}
+\tag{206.23}
+$$
+
+At $s=0$, $\log K=0$ exactly. This is a conditional log-normalizer/cumulant estimate with explicit row-order dependence and controlled exponential remainder, not an invocation of a conditional CLT. The conditional variance correction $1-1/s$, the lost degree $d=B_*-1$, and every degenerate total are retained. The exact third cumulant in (206.19) is consistent with (206.23); no unbounded cumulant series is invoked.
+
+### 206.5 Paying one fitted mean per block by an exact centered identity
+
+Work first under ANY null in (206.13) with $t>0$, so the aggregates are iid Poisson$t$. For one block put $s=S$, $U=S-B_*t$, $X=X_{B_*,S}$, and
+
+$$
+M^{\rm block}=-\frac f4\sum_{i=1}^{B_*}W_t(Z_i).
+$$
+
+Expanding $\sum_i(Z_i-t)^2=\sum_i(Z_i-S/B_*)^2+U^2/B_*$, and using $\sum_i(Z_i-S/B_*)^2=(S/B_*)X$, yields the identity
+
+$$
+\boxed{A-M^{\rm block}
+=\frac f4\left[W_{B_*t}(S)+\frac{U}{B_*t}(X-d)\right].}
+\tag{206.24}
+$$
+
+At $S=0$, the sum of squared deviations within the block is zero and $(S/B_*)X=0$ even with our assigned $X=d$. Both sides of (206.24) equal $fB_*t/4$. Thus no division by the observed zero total is concealed. At $S=1$ the conditional fluctuation also vanishes as required.
+
+For Poisson$u$, direct expansion of centered moments gives
+
+$$
+EW_u=0,\qquad EW_u^2=2,\qquad E(Z-u)^2=u.
+\tag{206.25}
+$$
+
+These identities hold for every $u>0$. Conditional on $S$, $E(X-d)=0$, and its variance is $2d(1-1/S)$ at $S>0$, zero at $S=0$. Therefore the two terms on the right of (206.24) are uncorrelated. The difference is centered, and
+
+$$
+E(A-M^{\rm block})^2
+\le\frac{f^2}{16}\left(2+\frac{2d}{B_*t}\right)
+\le C f^2(1+1/t).
+\tag{206.26}
+$$
+
+This follows by bounding the conditional variance by (2d) and using $EU^2=B_*t$. In particular, no independence between the sample mean and sample variance is assumed. Blocks are independent because entire repetitions are independent. For $L=\lfloor N/B_*\rfloor$, the accumulated differences form a centered martingale in block index. The finite $L^2$ maximal inequality gives
+
+$$
+\Pr_t\left\{\max_{0\le r\le L}
+\left|\sum_{l\le r}A_l-M_{rB_*}(t)\right|>u\right\}
+\le \frac{C N f^2}{B_*u^2}(1+1/t).
+\tag{206.27}
+$$
+
+For completeness the maximal inequality follows by applying conditional Jensen at the first crossing to the absolute terminal martingale, integrating its tail, then using Cauchy–Schwarz; it gives $E\max|M_r|^2\le4E|M_L|^2$. This is the finite maximal inequality already proved in Chapter 204, with independent block increments here. Equation (206.27) is the new centered estimation payment. Summing absolute mean-estimation errors would lose this cancellation.
+
+At the critical horizon $N=O(f^{-2})$, its variance payment is $O(1/B_*)$, not order one. Conditional score information per well-populated block is (dh), rather than $B_*h$; the relative loss is $1/B_*$. Both the random and deterministic costs of fitting one block mean are explicitly paid below. No finite-$B_*$ efficiency identity for the actual alternative is inferred merely from these variances.
+
+### 206.6 All blocks, bad totals and incomplete blocks
+
+For quantitative performance let $t\ge1$; exact validity in Section 206.2 still covered all $t\ge0$. Each completed-block total has mean $B_*t$. Exponential Markov with parameter $\log2$, using the Poisson generating function, gives
+
+$$
+\Pr\{S<B_*t/2\}\le e^{-B_*t/8}.
+$$
+
+Indeed its exponent is $B_*t[-1/2+(\log2)/2]\le-B_*t/8$. Hence the event $G$ that all $L$ completed-block totals satisfy $S_l\ge B_*t/2\ge B_*/2$ obeys
+
+$$
+\Pr_t(G^c)\le L e^{-B_*t/8}.
+\tag{206.28}
+$$
+
+On $G$, (206.23) and $1/S_l\le2/(B_*t)$ imply simultaneously for every $r\le L$
+
+$$
+\left|\sum_{l\le r}\log K_{B_*,S_l}-\frac{rB_*h}{2}\right|
+\le \frac{Nh}{2B_*}+\frac{Nh}{B_*t}
+ +C N f^3\sqrt{B_*}+C N f^4B_*.
+\tag{206.29}
+$$
+
+Here the first term is the $B_*-1$ degree correction; the second is the finite-total correction; the last two come from multiplying the conditional remainder by at most $N/B_*$ blocks. There is no replacement of a random mixture by unrelated conditional totals. This is a deterministic bound on one common good event.
+
+We also pay the discarded incomplete block at EVERY prefix. Under Poisson$t$, $t\ge1$,
+
+$$
+EW_t^4\le C.
+\tag{206.30}
+$$
+
+One direct verification uses $W_t=((Z-t)^2-(Z-t)-t)/t$. The centered Poisson generating function is $\exp(t(e^u-1-u))$; its order-$k$ coefficient is a sum over partitions into blocks of size at least two. For $k=2,\ldots,8$ this gives $E(Z-t)^k\le C_k t^{\lfloor k/2\rfloor}$ when $t\ge1$, with the even moments used for the absolute bounds. Thus $E(Z-t)^8\le C t^4$, $E(Z-t)^4\le C t^2$, and $|x+y+z|^4\le27(|x|^4+|y|^4+|z|^4)$ proves (206.30). This is a finite centered-moment expansion.
+
+An increment of $M_k(t)$ has mean zero, variance $h$, and fourth moment at most $Cf^4$. A sum of at most $B_*$ independent such increments has fourth moment at most $Cf^4(B_*+B_*^2)$. Applying the $L^4$ maximal inequality within each block and summing over at most $N/B_*+1$ blocks yields
+
+$$
+\Pr_t\left\{\max_{0\le k\le N}
+|M_k(t)-M_{B_*\lfloor k/B_*\rfloor}(t)|>u\right\}
+\le\frac{C(N+B_*)B_* f^4}{u^4}.
+\tag{206.31}
+$$
+
+The final shorter block uses only observations through $N$. There is no hidden need to sample an additional complete block. The deterministic drift difference within a block is at most $B_*h/2$. Thus both the incomplete last block and every initial/intermediate small block are paid on the same full horizon.
+
+Define, for $0\le v\le V$,
+
+$$
+r_Q(v)=\left\lfloor\frac{n_Q(v)}{B_*}\right\rfloor,\qquad
+\mathcal L^E_Q(v)=\log E_{r_Q(v)},\qquad N=\lfloor V/h\rfloor.
+\tag{206.32}
+$$
+
+For arbitrary finite $N$, $t\ge1$, $B_*\ge2$, $fB_*\le2$, put
+
+$$
+\delta_{N,t}:=\frac{Nh}{2B_*}+\frac{Nh}{B_*t}+\frac{B_*h}{2}
+ +C N f^3\sqrt{B_*}+C N f^4B_*.
+\tag{206.33}
+$$
+
+Combining (206.27)–(206.31) by a union bound proves the explicit uniform maximal bridge
+
+$$
+\boxed{\Pr_t\left\{\max_{0\le k\le N}
+\left|\log E_{\lfloor k/B_*\rfloor}-M_k(t)+kh/2\right|
+>2u+\delta_{N,t}\right\}
+\le L e^{-B_*t/8}
+ +\frac{C N f^2(1+1/t)}{B_*u^2}
+ +\frac{C(N+B_*)B_*f^4}{u^4}.}
+\tag{206.34}
+$$
+
+This proves the missing conditional/exponential and maximal interface. It controls actual block normalizers at every prefix, not just marginal conditional variances. For (206.9), $N=\lfloor V/h\rfloor$, uniformly for every $t\ge1$, the deterministic bound is
+
+$$
+\delta_{N,t}\le C_V(B_*^{-1}+B_*h+f\sqrt{B_*}+f^2B_*)=O_V(\sqrt f),
+\tag{206.35}
+$$
+
+and the three probability terms tend to zero: respectively at most $C_V f^{-1}e^{-B_*/8}$, $C_V/(B_*u^2)$, and $C_V B_*f^2/u^4$. Floors cause only the displayed incomplete-block drift. This uses no stronger original rate than the already proved $f\asymp Q^{-5/2}$.
+
+### 206.7 The functional null and ORIGINAL alternative limits
+
+First, under arbitrary null shape with $t\ge1$, the score in (206.7) has centered independent increments, exact variance $h$, and fourth moment at most $Cf^4\asymp h^2$, uniformly in $t$. Here is the full process argument, to specify why it is not only a list of marginal CLTs.
+
+Taylor expansion of a characteristic function through second order, with third absolute moment at most $Cf^3$, gives independent Gaussian limiting increments on any fixed information-time partition; the accumulated remainder is at most $CNf^3\to0$. The variance clock is $n_Q(v)h\to v$ uniformly. For a string of $l$ increments the fourth moment is at most $C(l f^4+l^2f^4)$. Partition ([0,V]) into intervals of length $\eta$. A union of adjacent intervals contains at most $2\eta/h+2$ increments. The fourth-moment maximal inequality and a union bound give, with an absolute adjustment of $u$,
+
+$$
+\Pr\{w(M_{n_Q(\cdot)},\eta,V)>u\}
+\le C_Vu^{-4}(1+V/\eta)(\eta+h)^2.
+\tag{206.36}
+$$
+
+Also $\Pr(\max_{i\le N}|\Delta M_i|>u)\le CNf^4/u^4\to0$. Polygonal interpolation is therefore tight by the uniform modulus/Arzela–Ascoli criterion, and has the same Gaussian finite-dimensional limits. The maximal jump bound returns the step process to (D([0,V])) with continuous Brownian limit. For the initial interval the $L^2$ maximal inequality gives $\Pr(\sup_{v\le\eta}|M_{n_Q(v)}|>u)\le C(\eta+h)/u^2$. These estimates, and the uniqueness of the continuous Gaussian process with independent increments, prove the process convergence uniformly for $t\ge1$. They reproduce only the elementary triangular-array argument needed to map the new bound; the original-law functional theorem remains Chapter 204's input.
+
+Equations (206.34)–(206.36) imply
+
+$$
+\mathcal L^E_Q\Rightarrow(W(v)-v/2)_{0\le v\le V}
+\quad\text{under every }R_\eta^{\otimes N}\text{ uniformly over arbitrary shapes and }t\ge1.
+\tag{206.37}
+$$
+
+There is no upper bound on $t$. Uniformity means convergence in bounded-Lipschitz distance for a bounded $J_1$ metric, and uniform vanishing probabilities for the displayed maximal remainder. If uniformity failed, a violating triangular sequence would contradict the same finite-dimensional and tightness estimates just established.
+
+In particular (206.37) applies to every exact-actual-mean null on the original compact/support range, by (206.6). Let $E_Q(u)$ be the event that the maximum in (206.34) exceeds a fixed positive tolerance. Equations (206.34),(206.35) prove
+$R_\mu^{\otimes N}(E_Q(u))\to0$ uniformly. Applying the SAME-law event inequality (206.8) to this ONE full-horizon event gives
+
+$$
+P_Q^{\otimes N}(E_Q(u))
+\le\Delta_P+C_{J,V}\sqrt{R_\mu^{\otimes N}(E_Q(u))+\Delta_R}\longrightarrow0.
+\tag{206.38}
+$$
+
+No expectation of $A$, $X$, their maxima, or an exponential is transported by TV. All unbounded calculations in Sections 206.3–206.6 were under the exact null allocation. Its exceptional event is then transferred as an indicator on the common entire-repetition horizon. Chapter 204's original full-likelihood and adaptive-score process theorem, together with (206.38), proves
+
+$$
+\boxed{\mathcal L^E_Q\Rightarrow
+\begin{cases}
+W(v)-v/2,&R_\mu^{\otimes N},\\
+W(v)+v/2,&P_Q^{\otimes N},
+\end{cases}\quad0\le v\le V.}
+\tag{206.39}
+$$
+
+More strongly, the new log process, Chapter 204's observable running adaptive process, and its paid real-valued actual full-histogram likelihood process converge jointly to the SAME drifted Brownian path. Their pairwise sup-norm differences vanish under both hypotheses. Thus the fitted block means do not change the first-order information clock. This is not inferred just from matching marginal variances; (206.24)–(206.38) supply the uniform path comparison.
+
+All of (206.38),(206.39) are uniform over beta in each fixed $J\Subset D$, every deterministic lawful support, and separately original pair/path. The new null bounds contain no support or shape parameter; the only original-law transfer is (206.8), with its already proved uniform original constants. The floor clock remains $n_Q(v)=\lfloor8v/f^2\rfloor$, not a new retuned experiment. Blocks only determine how the repetitions are analyzed. Their information mesh $B_*h\to0$ and their lost degree $1/B_*\to0$ are both paid.
+
+At $v=0$ the log process is zero. Prior to the first endpoint it is identically zero; the comparison with (206.7) over that interval is included in (206.31),(206.34). Hence for either actual hypothesis and every $u>0$,
+
+$$
+\lim_{\eta\downarrow0}\limsup_Q
+\Pr\{\sup_{v\le\eta}|\mathcal L^E_Q(v)|>u\}=0.
+\tag{206.40}
+$$
+
+No positive initial-time cutoff is imposed. Finite-layer $E_r>0$ makes its log always real, even on null observations impossible under the original histogram. The older likelihood's rare minus-infinity event remains separately paid by Chapter 204; it is not identified with a zero value of the new factor.
+
+Exact martingale validity extends to $t=0$ and tiny means, but the Brownian statement (206.37) is separately scoped to $t\ge1$. At $t=0$, $E_r=1$ and the log path is identically zero. For a null sequence with $Nt_Q\to0$, all observed aggregates through $N$ vanish with probability tending to one, yielding the same zero path. Thus a uniform Brownian claim over ALL finite null means would be false. This does not narrow the exact finite guarantee or exclude any original alternative, whose attained mean satisfies (206.6). No varying mean/shape between repetitions or arbitrary dependence between repetitions is included.
+
+### 206.8 A finite anytime stopping rule and its limiting performance
+
+Fix $0<\alpha<1$. At each completed block stop and reject the product-Poisson null the first time
+
+$$
+E_r\ge1/\alpha,\qquad
+\tau_\alpha=B_*\inf\{r\ge1:E_r\ge1/\alpha\};
+\tag{206.41}
+$$
+
+the value is infinity if no crossing occurs. This is an actual stopping rule using observed aggregates, $f$, and the deterministic block length. It requires neither exact actual means nor null nuisance parameters.
+
+Here is its finite-layer guarantee without an assumed optional-stopping slogan. For a finite block horizon $L$, let $\sigma$ be the first crossing index, stopped at $L$. The bounded stopping identity follows by writing the stopped process as $1+\sum_{r=1}^L(E_r-E_{r-1}){\bf1}_{\{\sigma\ge r\}}$; the indicator is $\mathcal G_{r-1}$-measurable, so its expectation is one by (206.16). The stopped nonnegative value is at least $1/\alpha$ on crossing. Consequently
+
+$$
+R_\eta^{\otimes\infty}\{\exists r\le L:E_r\ge1/\alpha\}\le\alpha.
+$$
+
+The increasing union over integer $L$ gives
+
+$$
+\boxed{\sup_{R_\eta\in\mathcal R_Q^{\rm all}}
+ R_\eta^{\otimes\infty}\{\tau_\alpha<\infty\}\le\alpha
+ \quad\text{at EVERY finite layer}.}
+\tag{206.42}
+$$
+
+The supremum here is over fixed nuisance vectors, not over adversarial changes of means during the run. All-zero null data never reject. Every finite or infinite endpoint horizon is covered, with no asymptotic argument and no efficient-normalizer claim. Equation (206.42) is the classical Ville guarantee, here justified in the precise block filtration.
+
+For bounded information horizon $V>0$, observe at most $N=\lfloor V/h\rfloor$ entire repetitions and permit only completed-block rejections. Set $a_\alpha=\log(1/\alpha)>0$. The event is ${\sup_{0\le v\le V}\mathcal L^E_Q(v)\ge a_\alpha\}$. For Brownian motion with drift $c$, Chapter 204's reflection and Gaussian-tilting proof gives
+
+$$
+p_c(a,V)=\Pr\{\max_{v\le V}(W(v)+cv)\ge a\}
+=\Phi\left(\frac{cV-a}{\sqrt V}\right)
+ +e^{2ca}\Phi\left(\frac{-cV-a}{\sqrt V}\right).
+\tag{206.43}
+$$
+
+To recall its operative mechanism: under zero drift the crossed endpoint density for $x<a$ is $\varphi_V(2a-x)$, while every endpoint $x\ge a$ has crossed. Reflection is justified by decreasing discrete stopping grids and Brownian continuity. Tilting each Gaussian increment by $\exp(c\Delta W-c^2\Delta v/2)$ gives drift $c$, so multiplying these endpoint densities by $\exp(cx-c^2V/2)$ and integrating gives (206.43). The formula is continuous in positive $a$; the limiting maximum has no atom at the chosen boundary. The maximum functional is continuous in $J_1$ at continuous paths. Thus (206.39),(206.40), not a fixed-time CLT, pay the crossing event.
+
+The actual bounded-horizon null probability and power are therefore
+
+$$
+\boxed{\begin{aligned}
+R_\mu^{\otimes N}\{\tau_\alpha\le N\}
+&\longrightarrow
+\Phi\left(\frac{-a_\alpha-V/2}{\sqrt V}\right)
+ +\alpha\,\Phi\left(\frac{V/2-a_\alpha}{\sqrt V}\right),\\
+P_Q^{\otimes N}\{\tau_\alpha\le N\}
+&\longrightarrow
+\Phi\left(\frac{V/2-a_\alpha}{\sqrt V}\right)
+ +\alpha^{-1}\Phi\left(\frac{-V/2-a_\alpha}{\sqrt V}\right).
+\end{aligned}}
+\tag{206.44}
+$$
+
+They are uniform on the original compact/support scope, separately pair/path. The null convergence also holds for the larger arbitrary-shape null range $t\ge1$ by (206.37). Both limits lie strictly between zero and one for finite positive $a_\alpha,V$.
+
+The limiting null probability in (206.44) is STRICTLY less than alpha for finite $V$. For a direct check, write its first term as
+$\int_a^\infty e^{-x/2-V/8}\varphi_V(x)\,dx$. The difference between $e^{-a}$ and its second term is
+$\int_a^\infty e^{-x/2-V/8}\varphi_V(2a-x)\,dx$.
+For $a>0,x>a$, $(2a-x)^2<x^2$, so the latter integral is strictly larger. This proves $p_{-1/2}(a,V)<e^{-a}$, entirely on the bounded Brownian horizon.
+
+Chapter 204's smaller horizon-calibrated boundary $a^{\rm hor}_\alpha(V)$, solving $p_{-1/2}(a,V)=\alpha$, is consequently below $\log(1/\alpha)$ and yields larger bounded-horizon power. It does NOT inherit (206.42); Ville at that smaller threshold gives only the larger bound $e^{-a^{\rm hor}_\alpha(V)}$. No finite alpha guarantee for it is asserted here. Nor does this anytime rule retain every terminal Neyman–Pearson envelope: Chapter 204 already proves a strict monitoring cost for a horizon-size-calibrated crossing rule, and the more conservative boundary here adds its displayed cost. The growing block construction itself causes no additional first-order information loss, as (206.34),(206.39) show.
+
+No unbounded-information-time process limit, expected stopping-time convergence, sequential optimality claim, or post-stopping reconstruction statement is added. The infinite endpoint event in (206.42) is an exact martingale guarantee; it is not obtained by extending the bounded-horizon alternative approximation beyond its proved range. Chapter 202's exact finite fixed-horizon conditional level remains unchanged.
+
+
+### 206.9 来源与边界
+
+A. Philip Dawid、Steven de Rooij、Glenn Shafer、Alexander Shen、Nikolai Vereshchagin、Vladimir Vovk，*Martingales and p-values as measures of evidence*，[arXiv:0912.4269v1]$https://arxiv.org/abs/0912.4269v1$ 提供检验鞅与 p-test 的经典关系。其定义包含过滤族及可积性；从 p-test 构造鞅的反向论证使用特定过滤族，并不保证重复计算任意条件 p 值就得到观测过滤族上的鞅。本章直接用 (206.14) 的条件分配律及塔式期望证明鞅身份，以有限停止和递增事件并证明 Ville 界，未把来源所引用的外部证明作为未展开前提。
+
+经典条件化、鞅最大不等式与 Ville 原理不作原创声明。新增连接是增长块长下的三、四阶碰撞矩、适用于整个负尾的一侧指数余项、拟合均值的中心化抵消，以及它们对原完整 path/pair 实验的统一最大误差控制。先在精确零假设下估计，再通过同一实现上的事件比较回接原替代；未以全变差直接传递无界期望。
+
+所有重复使用同一固定均值向量；均值随时间改变、重复实验之间相关、未完成块的更细过滤族鞅身份、无界信息时间过程极限、期望停止时间及顺序最优性均未由本章建立。无限块端点上的有限样本水平来自精确鞅，不来自把有界时域渐近式外推到无限时域。普通数学推导未作 Lean 认证，定向来源核对不构成全球原创性认定。
+
+## 追加锚（本行以下为增补区）
