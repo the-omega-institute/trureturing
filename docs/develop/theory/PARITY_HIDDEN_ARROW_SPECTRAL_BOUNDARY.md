@@ -63784,3 +63784,275 @@ Poisson 离散度检验、Charlier 正交性与 Neyman–Pearson 方法属于经
 这里只论规定直方图二元检验的一阶功效。未知支持恢复、全数据充分性、后验熵、时间箭头与 E2 均未由此判定。第 198 章已知均值的零／无穷临界尺度结论保持原范围；本章不把有界临界尺度的误差乘到任意大的重复次数。普通数学推导与 Lean 认证有别，有限文献核对不支持全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 201. 精确原子校准的分离访问：把临界相位概率推进到平方根分母尺度以下
+
+第 199 章把单个固定噪声指数的物理结论留在实际薄格事件 $E_{\rm mid}$ 的概率边界。本章利用同一全后验校准路径的精确上下步长，先证明不同临界有理邻域的访问时刻必须分离，再以真实二项类别律的单峰性控制这些时刻的总质量。新估计避免把每个有理候选都乘以一个最大原子质量；它控制的是同一个实际校准路径的访问集合。
+
+### 201.1 实际临界事件的新概率界
+
+**定理 201.1（精确校准路径的分离访问界）。** At the ONE fixed original exponent $c=2c_q$, for every original fixed $\beta>4/5$, a newly paid portion of Chapter 199's selected $E_{\rm mid}$ has probability tending to zero. The old low-denominator cutoff is unchanged. The new estimate uses separated visits along the exact atomic calibration path, followed by a binomial mass bound for separated integer sets. It does not sum one maximal atom over every rational candidate.
+
+Keep $\lambda=Q^3$, $c_q=\phi(1-\beta)/\beta>0$, $\log q=c_q\lambda+O(1)$, $\log M=(c_q+\phi)\lambda+O(1)$, and the original fixed amplitude $r$, $\phi=((1+r)\log(1+r)+(1-r)\log(1-r))/2$. All original legal floors remain. Put
+$$
+ \kappa=c_q/1000,\qquad \epsilon=Q^{-40},\qquad
+ R_Q=\lfloor e^{\kappa\lambda/8}\rfloor,\qquad
+ \mathcal P_Q=\lfloor \sqrt q\,Q^{-10}\rfloor.                 \tag{201.1}
+$$
+Here $R_Q$ is precisely Chapter 199's cutoff, not a new choice. The physical core is still denoted $H$; $\mathcal P_Q$ is only a bound on an actual integer phase denominator.
+
+Let $a=z(p_a,k_a)$ be Chapter 199's actual selected shortest primitive vector in
+$$
+ {\cal L}_x=\{z(p,k)=(S_x(2p\pi_0-k),\rho p):(p,k)\in\mathbb Z^2\},
+ \quad S_x^2=\sum_{j\in I}C_j^2d_j,\quad \rho=\sigma\mathcal B,
+ \quad\mathcal B=q/Q^{11/4}.                                  \tag{201.2}
+$$
+The positive $p_a$, primitivity and deterministic tie convention are retained. The original physical scale satisfies $\rho\asymp e^{-2c_q\lambda}$. Write $\theta_a=a_1^2/|a|^2$, and retain exactly
+$$
+ E_{\rm mid}=\{|a|<100S_x\rho/\epsilon,\quad
+               \theta_a\in[3/4,9/10],\quad p_a>R_Q\}.          \tag{201.3}
+$$
+On the original good event $p_a<400q^{3/2}Q^{40}$, as in Chapter 199. No random normal, artificial phase or free denominator replaces this selected integer pair.
+
+Define $E_{\rm band}=E_{\rm mid}\cap\{p_a\le\mathcal P_Q\}$. For the actual pair experiment and the actual stationary-path experiment separately, uniformly over every deterministic legal support $S$,
+$$
+ \mathbb P_S(E_{\rm band})
+ \le b_{\rm cal}(Q)+C Q^{-20}
+      +\exp\{-\kappa\lambda/2+O_r(\log Q)\}=o(1).             \tag{201.4}
+$$
+The support-uniform $b_{\rm cal}=o(1)$ is the already paid supply/coarse-calibration cost of (199.21)–(199.23). Constants may depend on the original fixed amplitude and beta, not on the deterministic support or the hidden calibration configuration. The hypotheses and proof of the conditional estimate underlying (201.4) appear below.
+
+This is a quantitatively new sector: $\mathcal P_Q/R_Q\to\infty$ exponentially, with leading exponent $c_q/2-\kappa/8>0$. More essentially, the mechanism changes. The former global atom union at $\mathcal P_Q$ costs order $\mathcal P_Q^2/\sqrt n=\exp((c_q-\kappa/2)\lambda+O(\log Q))$, which does not vanish. The new bound costs $\mathcal P_Q^2/q+1/\sqrt n$. It pays the law of separated calibration visits and does not obtain its gain by changing a reservoir size, a cutoff constant or an assumed phase distribution.
+
+The still-unpaid event is
+$$
+ E_{\rm high}=E_{\rm mid}\cap\{p_a>\mathcal P_Q\}.              \tag{201.5}
+$$
+Its probability is not bounded here. The physical consequences in Section 201.6 hold off this actual event, with error probability tending to zero. No positive limiting probability of $E_{\rm high}^c$ is asserted. Therefore this chapter gives neither a new fixed-c physical refutation nor the original positive interval above $\gamma=99c_q/200$. Chapter 196's restricted two-exponent obstruction and all older settlements remain unchanged.
+
+### 201.2 Full finite law and the admissible calibration disintegration
+
+For clarity the unchanged selected posterior on the entire original physical window $I$ is
+$$
+ P_x(n)=
+ \frac{\prod_{j\in I}{C_j\choose n_j}L_j^{n_j}\,
+ e_{q-\sum_I n_j}(L_{\rm out})}{e_q(L_{\rm all})},\quad
+ \mu_j=E_{P_x}R_j,\quad
+ T_x(n)=\mathcal B^{-1}\sum_I(n_j-\mu_j)^2-V_{\rm phys}/\sqrt\delta,
+ \quad\delta=Q^{-1/2}.                                      \tag{201.6}
+$$
+All positive weights and the full elementary-symmetric normalizer are retained. Low, outside-core and outside-window groups are never removed from the physical law. The observation and joint centered mark remain
+$$
+ Y=T_x(R)+\sigma G,\qquad
+ Z=s_x+(G^2-1)/2,\qquad
+ s_x=-\log P_x(R)-E_{P_x}[-\log P_x(R)].                      \tag{201.7}
+$$
+The same original Gaussian $G$ is used, independent before observing $Y$. Its residual mark is not replaced by a count-only mark or an independent comparison noise. The phase parameter $\pi_0=\mu_0/C_0$ is an exact full-posterior inclusion, whereas $d_j=C_j p_j(1-p_j)$ uses the common auxiliary logistic probabilities, with $\sum_{\rm all}p_i=q$. Those two roles remain distinct. Define phase events false if the central group does not exist; that failure is covered by the inherited regularity cost.
+
+We use precisely the lawful off-count-line reservoir in Chapter 199, with the full-anchor intermediate theorem (178.20). This is not Chapter 178's later calibration after deleting a high pair. Here is its finite object map, including the fields required for the new use.
+
+Let $c_{\rm sup}>0$ denote the inherited supply constant, distinct from the physical noise exponent $c=2c_q$. Predetermine $m_c=\lfloor e^{\kappa\lambda}\rfloor$ true-label pairs within the legal type ordering. With $k_*=k_0-D_*$, $l_*=l_0$, and the original fixed amplitude dependent integer offset $D_*$, their three eligible allocations are the central pair $((k_*,l_*),(k_*,l_*))$ and the two orientations of $((k_*+1,l_*),(k_*-1,l_*))$. Every allocation preserves the pair's total in both count coordinates. None belongs to the original count line, since the second count would force its line index to zero and the first count differs from $k_0$.
+
+Let $a_s=\log((1+r)/(1-\varepsilon_M))$, $\varepsilon_M=rq/(M-q)$, and $L_*=L_0e^{-D_*a_s}$. A category-zero pair has weights $(L_*,L_*)$, and a category-one pair has $(L_*e^{a_s},L_*e^{-a_s})$. The product $L_*^2$ is conserved, while the sum changes by $2L_*(\cosh a_s-1)$. The offset obeys (178.8) and is fixed before data; neither amplitude nor floor is tuned.
+
+Reveal the parity/type masks and totals, eligibility flags, all ineligible allocations, and all but the first $n=\lfloor c_{\rm sup}m_c/(2\lambda^2)\rfloor$ eligible pairs. Reveal all other proof blocks and the permitted pair arrivals or path terminal factor. This gives the same coarse field $\mathcal F$ as Chapter 199's minimal full-anchor view. Conditional on the masks, the equal true-label weights give independent fair allocation splits. One mixed orientation divided by the central allocation has ratio $k_* /(k_*+1)$. Eligibility acts separately on each factor. Partition by the retained index set and integrate the subsequently revealed factors. Thus the exact remaining category count is
+$$
+ V\mid\mathcal F\sim{\rm Bin}(n,\vartheta_Q),\qquad
+ \vartheta_Q=\frac{2k_*}{3k_*+1}\in[1/2,2/3],\qquad
+ \log n=\kappa\lambda-6\log Q+O_r(1).                        \tag{201.8}
+$$
+This is original raw category randomness, not posterior latent-count randomness. A path retains its predecessor-parity record; no iid row substitution is made. The first-n selection uses flags, not the subsequently hidden category count. Permuting categories or reversing the mixed orientations does not change the multiset of likelihoods, so all full-q coefficients and the calibration statistics considered here depend on the retained randomness only through $V$.
+
+Supply was paid unconditionally in Chapters 178 and 199 using the bounded joint occupancy comparison: one eligible central allocation has comparison probability at least $c_{\rm sup}\lambda^{-2}$, the shortage tail is at most $\exp[-c_{\rm sup}m_c/(8\lambda^2)]$, and the original pair/path joint-comparison cost for the predetermined block is $O(m_c/M+\sqrt{m_c/M})=o(1)$. The comparison is used for supply only. It does not replace the conditional fixed-total fiber by independent Poisson variables. Existing disjoint proof blocks can be completely revealed; no additional reservoir or supply expense is introduced in this argument.
+
+To make all exact coefficients visible, remove the anchor and the $2n$ reservoir labels only in a coefficient notation and let
+$$
+ B(z)=\prod_{\text{all remaining labels}}(1+L_i z),\quad
+ F_0(z)=1+2L_*z+L_*^2z^2,\quad
+ F_1(z)=1+2L_*\cosh(a_s)z+L_*^2z^2,
+$$
+$$
+ E_v(z)=B(z)F_0(z)^{n-v}F_1(z)^v,\qquad
+ P_a(v)=
+ \frac{L_0[z^{q-1}]E_v(z)}
+ {[z^q]E_v(z)+L_0[z^{q-1}]E_v(z)}.                          \tag{201.9}
+$$
+These are exact finite polynomials. The full positive denominator is $e_q$ of the same array after restoring the anchor factor. No labels are physically deleted, no observer receives $V$, and the common total and all outside likelihoods remain in every coefficient. On the actual array $\pi_0=P_a(V)$. The exact auxiliary multiplier and hence $S_x(V)$ are recalibrated for each $v$; they are not held constant in this formula or in the argument below.
+
+The inherited coarse event $G_{\rm cal}\in\mathcal F$ has failure probability at most $b_{\rm cal}(Q)=o(1)$ separately and support-uniformly. It is defined by successful supply and enlarged regularity of the all-category-zero array. Replacing at most $2n=o(q)$ weights changes the auxiliary mean by at most $2n$, so the variance/root bracket from Chapter 178 makes the entire fiber regular, with variance comparable to $q$ and anchor odds in a fixed compact interval. This is simultaneous in every $0\le v\le n$. It avoids conditioning the binomial kernel on an event depending on hidden $V$.
+
+On $G_{\rm cal}$, the following exact inherited finite bounds hold with fixed positive constants:
+$$
+ c_{\rm step}/q\le P_a(v)-P_a(v+1)\le C_{\rm step}/q
+       \quad(0\le v<n),                                    \tag{201.10}
+$$
+$$
+ S_x(v)\ge S_{\min}:=\left(\frac1{50}\sum_{j\in I}C_j^3\right)^{1/2}
+       \ge c q^{3/2}Q^{-9/2}\quad(0\le v\le n).              \tag{201.11}
+$$
+Every $C_j$ and $S_{\min}$ is $\mathcal F$-measurable, but $S_x(v)$ remains live.
+
+The exact-step status matters. Chapter 178 compares two finite ratios by changing one pair and leaving the anchor plus that pair out of the common outside coefficients. The uniform fixed-offset Bernoulli ratio has remainder $O(q^{-2})$, the strict finite contrast gives a main decrement bounded below by a fixed positive multiple of $q^{-1}$, and the two remainders are absorbed for sufficiently large $Q$. This proves (201.10) as an inequality for the exact ratios, uniformly over the whole fiber. We do not differentiate that remainder, accumulate $n$ such errors into an approximate path, or infer curvature from a saddle root. All the other $n-1$ pairs remain in the common outside coefficients in each comparison. Equation (201.11) follows from the coarse compact bounds on the actual $p_j(v)$ and central supply. It is an envelope, not a replacement of an empirical variance by its mean.
+
+### 201.3 Critical cells visited by the same exact path
+
+For a deterministic integer cap $\mathsf B\ge1$, consider on a fixed good coarse field the set $\mathcal V_{\mathsf B}\subset\{0,\ldots,n\}$ of indices for which there exists an actual primitive pair $1\le p\le\mathsf B$, $k\in\mathbb Z$, whose critical ratio, computed with $P_a(v)$ and $S_x(v)$, belongs to $[3/4,9/10]$. This auxiliary event does not impose shortestness; it is used only as an upper envelope for the specified selected event. Membership of the latter retains all its shortestness and amplitude clauses. No candidate is conditioned on as independent of $V$.
+
+The critical-ratio identity itself gives
+$$
+ \frac{\sqrt3}{2}\frac{\rho}{S_x(v)}
+ \le\left|P_a(v)-\frac{k}{2p}\right|
+ \le\frac32\frac{\rho}{S_x(v)}
+ \le w,\qquad w:=\frac{3\rho}{2S_{\min}}.                   \tag{201.12}
+$$
+Thus the exact critical cells, although dependent on the changing $S_x(v)$, lie in $\mathcal F$-measurable intervals of radius $w$ about rational centers. We only enlarge those cells; we do not attach their Lebesgue lengths as probabilities. At the original scale
+$$
+ qw\le Q^{O(1)}e^{-(5/2)c_q\lambda}=o(1).                  \tag{201.13}
+$$
+The lower side of (201.12) is retained in the definition of the selected event, although an upper probability bound may discard it.
+
+Suppose
+$$
+ 2w<c_{\rm step}/q,\qquad 8w\mathsf B^2\le1.                \tag{201.14}
+$$
+Both hold eventually for every $\mathsf B\le\sqrt q$, by (201.13). We claim that any two different members $v,v'$ of $\mathcal V_{\mathsf B}$ are separated by
+$$
+ |v-v'|\ge \frac{q}{4C_{\rm step}\mathsf B^2}.               \tag{201.15}
+$$
+Choose any realizing primitive pair at each of these two indices. If their rational centers agree, (201.12) places both path values within $w$ of that center. But exact monotonicity gives $|P_a(v)-P_a(v')|\ge c_{\rm step}/q>2w$, a contradiction. Thus the two centers differ. Their difference is
+$$
+ \left|\frac{k}{2p}-\frac{k'}{2p'}\right|
+ =\frac{|kp'-k'p|}{2pp'}\ge\frac1{2\mathsf B^2}.             \tag{201.16}
+$$
+The integer determinant is nonzero; no unjustified division of a normal occurs. In particular primitive pairs identify the same center only when they are the same positive-denominator presentation. Even without that observation, equal centers were already ruled out for different path indices.
+
+Subtracting the two radius errors and using (201.14) gives
+$$
+ |P_a(v)-P_a(v')|\ge\frac1{2\mathsf B^2}-2w
+                     \ge\frac1{4\mathsf B^2}.
+$$
+The upper exact step in (201.10), telescoped as an inequality rather than an approximate expansion, is at most $C_{\rm step}|v-v'|/q$. This proves (201.15). It holds for any choices of realizing pairs and in particular when the chosen shortest primitive pair changes with $v$. It is a property of visits by one finite exact path to critical cells, not a count of all free rationals in $[0,1]$.
+
+This use of the upper step is different from (199.24), which bounded how many path atoms a single interval could contain and then multiplied by the global number of rational centers. Here distinct occupied cells force distant indices. We do not need to enumerate the cells, their order, their number or the dependence of the selected denominator on $V$. The live radius is controlled jointly by the same coarse envelope. If at one index there are several candidates, the argument remains true for arbitrary representatives. No favorable choice is subsequently conditioned forward.
+
+### 201.4 Binomial mass on separated indices, with its atom term
+
+For completeness the elementary probability step is proved, including its discrete endpoint cost. Let $b(j)$ be a unimodal probability mass function on $\mathbb Z$, with finite support, extended by zero. Its total variation is
+$$
+ \sum_{j\in\mathbb Z}|b(j+1)-b(j)|=2\max_j b(j).              \tag{201.17}
+$$
+Indeed the terms before a mode telescope upward from zero, and those after it downward to zero; a plateau contributes zero.
+
+If a finite set $\mathcal V$ has distinct points separated by at least an integer $L\ge1$, the right blocks $\{v,\ldots,v+L-1\}$, $v\in\mathcal V$, are disjoint. For each $v$,
+$$
+ b(v)\le \frac1L\sum_{j=v}^{v+L-1}b(j)
+                +\sum_{j=v}^{v+L-2}|b(j+1)-b(j)|.
+$$
+To verify this, compare $b(v)$ to each block value by the telescoping triangle inequality and average. The displayed variation sum overcounts those comparisons, which is the permissible upper direction. Summing over the disjoint blocks and then using (201.17) proves
+$$
+ \sum_{v\in\mathcal V}b(v)\le\frac1L+2\max_j b(j).           \tag{201.18}
+$$
+Blocks extending beyond the original support are harmless because of the zero extension. No hypothesis of random independent membership of $\mathcal V$ was used; it can be any deterministic subset after the coarse field is fixed.
+
+For the exact binomial kernel in (201.8), $b(j+1)/b(j)=(n-j)\vartheta_Q/((j+1)(1-\vartheta_Q))$ decreases in $j$, so it is unimodal. Its maximum atom is at most $C/\sqrt n$, uniformly for $\vartheta_Q\in[1/2,2/3]$. One direct proof is Fourier inversion and
+$$
+ |1-\vartheta+\vartheta e^{it}|^n
+ =(1-4\vartheta(1-\vartheta)\sin^2(t/2))^{n/2}
+ \le e^{-c n t^2}\quad (|t|\le\pi);
+$$
+the integral is bounded by $C/\sqrt n$. This proves an atom estimate for the actual surviving conditional kernel and does not replace it by a continuous Gaussian law.
+
+If $q/(4C_{\rm step}\mathsf B^2)\ge2$, take
+$$
+ L=\left\lfloor\frac{q}{4C_{\rm step}\mathsf B^2}\right\rfloor
+       \ge\frac{q}{8C_{\rm step}\mathsf B^2}.
+$$
+Equations (201.15),(201.18) give the conditional actual-law estimate
+$$
+ {\bf1}_{G_{\rm cal}}\,
+ \mathbb P_S\{V\in\mathcal V_{\mathsf B}\mid\mathcal F\}
+ \le {\bf1}_{G_{\rm cal}}
+       \left(\frac{8C_{\rm step}\mathsf B^2}{q}
+                         +\frac C{\sqrt n}\right).          \tag{201.19}
+$$
+It holds for every good coarse field, with no choice or distributional assumption on that field's full-q coefficients. It keeps the atomic endpoint term. Conditioning further on the data-selected approximant is neither needed nor allowed.
+
+Taking $\mathsf B=\mathcal P_Q$ makes all hypotheses hold eventually. The selected event $E_{\rm band}$ implies $V\in\mathcal V_{\mathcal P_Q}$, with exactly the same $P_a(V),S_x(V),\rho$. Integrate (201.19) over the actual coarse marginal and add only $\mathbb P_S(G_{\rm cal}^c)$. This proves (201.4). The field is defined separately using each deterministic true support solely to prove the uniform raw bound; it is not supplied to an observer and it is not part of the physical conditioning on $Y$.
+
+More generally this argument pays all selected critical sectors below any deterministic cap $\mathsf B=o(\sqrt q)$, with rate $C\mathsf B^2/q+C/\sqrt n+b_{\rm cal}$. The displayed choice in (201.1) gives an explicit polynomial rate without changing any original model parameter. This generality is not used to claim information about the larger selected denominators.
+
+### 201.5 What this proves about the representation, and what it does not
+
+The two resources used together are the upper finite step of the exact calibration and unimodality of its actual raw kernel. Positivity and the lower step first prevent a repeated visit to the same rational cell. Integer separation then forces spacing between distinct visits. The coarse-law average is paid only after that spacing is established simultaneously on the full fiber. This is the missing arithmetic/probability bridge for the sector in (201.4).
+
+No curvature estimate is asserted. The exact polynomial ratio (201.9) was not differentiated, no continuous interpolation was inserted as a probability measure, and no saddle approximation was evaluated at a rationally selected point. The full finite-difference remainder needed for the inherited step was already uniformly absorbed in the exact inequality (201.10). We need no second finite difference, no new multi-deletion approximation and no extra independent category coordinate.
+
+At denominators comparable to $\sqrt q$, the spacing in (201.15) is only constant; at larger denominators it can be below one integer step. Then (201.19) supplies no vanishing bound. This is a limit of this particular separated-visit estimate, not a lower bound for the actual event. It does not show that large critical shortest vectors occur, that the calibration is rational or that the physical statement fails. No formal coefficient counterexample or angular equidistribution assumption is inserted.
+
+The still-open estimate is the actual probability of (201.5), including its shortestness, primitivity, thin-vector inequality, critical angle and the upper denominator restriction inherited from Chapter 199 on good data. Neither a free union through $q^{3/2}$, an arbitrary rational-phase law nor a bound on an unrelated enlarged cardinality expectation settles it. No selected subevent probability is subtracted from an unrelated barred counting expectation. The use below is an ordinary inclusion for the same actual events.
+
+### 201.6 Map through the complete selected marked physical return
+
+There are no new phase observables or larger physical denominator budget in this chapter. Chapter 199's common selected-law estimates apply to the same $a$ and its constructed companion $w$ where available. They retained exact empirical centers, compensation, full-q normalization, low/outside groups and the real normalized marks of orders zero, one and two. For its at-most-two actual phases their uniform clipped Gram errors are $o_P(\delta)$ and centered mark-covariance errors are $o_P(\sqrt\delta)$; multiplication by the amplified macro coefficient $A=O_P(\delta^{-1/2})$ therefore still gives $o_P(1)$. The second normalized mark, log-h correction and SAME Gaussian residual were explicitly transported. Selection of $a$ by the data does not change those already uniform errors.
+
+To specify the nonlinear consequence without weakening it, retain
+$$
+ A=\sum_{j\in H}w_j,\quad
+ \nu_0=2\sum_{j\in H}w_j^2,\quad
+ \kappa_3=8\sum_{j\in H}w_j^3,\quad
+ \Lambda=\nu_0+\sigma^2,\quad
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,\quad
+ K=14/3-8/\sqrt3.                                         \tag{201.20}
+$$
+Here $w_j=d_j/\mathcal B$; every term is empirical on the same array. In particular $A^2/\Lambda$ is not replaced by its deterministic leading mean.
+
+Let $I_x=E_{P_x}[E_{P_x}(Z\mid Y)^2]$, with the same conditional mean square as in (201.7). (199.27), unchanged, states that
+$$
+ \sup_S\mathbb P_S\{I_x-A^2/\Lambda<K+1/1000,\,
+                                    E_{\rm mid}^c\}\to0.
+$$
+Since $E_{\rm high}^c\subset E_{\rm mid}^c\cup E_{\rm band}$, (201.4) proves the new residual implication
+$$
+ \sup_S\mathbb P_S\{I_x-A^2/\Lambda<K+1/1000,\,
+                                    E_{\rm high}^c\}\to0.  \tag{201.21}
+$$
+This combines statements on one actual raw array. It does not assert a positive probability for $E_{\rm high}^c$.
+
+Keep the complete original output profile
+$$
+ D_x(y)=V^{\rm post}_x(y)-V^{\rm prior}_x+A^2/\Lambda-C_xy,
+ \quad
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \quad \overline R=8/\sqrt3-25/6=1/2-K.                    \tag{201.22}
+$$
+The exact marked identity is
+$$
+ D^{\rm int}_x:=\int_{\mathbb R}f_x(y)D_x(y)\,dy
+       =1/2-I_x+A^2/\Lambda-C_xm_x,\qquad m_x=E_{P_x}Y.      \tag{201.23}
+$$
+Its nonlinear mean-square term has not been dropped. The inherited full marked transport gives $C_xm_x=o_P(1)$ and $E_{P_x}Y^2\to\nu$, without inverse-noise multiplication of bad-event probabilities. The exact $C_xm_x$ is retained before the estimate. Consequently (201.21), or equivalently the same event inclusion applied to (199.29)–(199.30), gives separately and uniformly
+$$
+ \sup_S\mathbb P_S\{\overline R-D^{\rm int}_x<1/2000,\,
+                                     E_{\rm high}^c\}\to0, \tag{201.24}
+$$
+$$
+ \sup_S\mathbb P_S\left\{\int_{\mathbb R}
+      f_x(y)|D_x(y)-R_*(y)|\,dy<1/4000,\,
+                                     E_{\rm high}^c\right\}\to0. \tag{201.25}
+$$
+The all-output integral is essential. For a negative consequence, its lower bound follows from the absolute integrated difference, using $\int f_xR_*\to\overline R$; no necessary integrated condition is promoted to a sufficient positive weighted-profile theorem. Every selected normalizer and quotient remains inside these inherited identities. No unmarked-TV shortcut for surprise or squared conditional means is used.
+
+Thus the physical obstruction is now reduced to the more restricted selected event $E_{\rm high}$. A nonvanishing lower probability for its complement is not proved, and no positive probability for the newly bounded band itself is asserted. The primary positive fixed interval for all original beta/amplitudes/floors above $\gamma$, and a complete fixed-$c=2c_q$ restricted classification, both remain OPEN. The established physical range $0<c<\gamma$, the two-exponent obstruction in Chapter 196, and the earlier method-specific envelope and density bounds keep their existing scopes.
+
+
+### 201.7 来源、归属与剩余概率
+
+Ayla Gafni，*Counting rational points near planar curves*，arXiv:1401.4958v1 的原始 TeX 已核对，包括定义、定理 1–2、推论、相关证明与误差失效范围。该文研究共同分母的平面有理点逼近固定曲线，要求连续二阶导数远离零；定理 1 还要求二阶导数的 Hölder 正则性。其允许厚度满足 $\delta_{\rm src}\ge Q_{\rm src}^{-(1+\vartheta)/(3-\vartheta)+\varepsilon_{\rm src}}$，其中 $0<\vartheta<1$。部分引用辅助估计的原始证明未在本次独立核对，正文不迁移依赖它们的定理。
+
+这里的原子索引 $v$ 与有理近似 $k/(2p)$ 不构成该来源的共同分母网格，精确有限比率 $P_a(v)$ 也没有已证的统一曲率条件。即使形式地取高分母 $Q_{\rm src}\asymp q^{3/2}$，本问题的厚度量级仍低于其准入范围。因此该来源用于辨认方法的迁移边界；(201.15)–(201.19) 的整数分离与二项质量估计由正文直接证明。
+
+模型前置是第 178 章的完整锚点有限差分与第 199 章对整条校准纤维的粗条件场、实际类别核和带标记物理返回。本章新增关系把精确步长、候选格的整数分离和同一类别核的单峰性合并，给出对所有确定性 $\mathsf B=o(\sqrt q)$ 的 $C\mathsf B^2/q+C/\sqrt n+b_{\rm cal}$ 上界。供给常数 $c_{\rm sup}$ 与噪声指数分开记号。
+
+当分母达到 $\sqrt q$ 量级时，这一分离估计本身不再趋零；这不证明实际高分母事件出现，也不反驳原物理命题。$E_{\rm high}$ 的真实概率及其补集是否有非消失概率仍未解决，条件性的积分亏损和加权剖面后果不被提升为新的物理反驳。固定参数正区间的原目标保持不变。本文为普通数学推导，未作 Lean 认证；有限来源核对不支持全球原创性判断。
+
+## 追加锚（本行以下为增补区）
