@@ -50,8 +50,7 @@ internal sealed class GeneralInstrumentSurvivalLimitDocument : IScribeDocumentDe
         Formula chain = Seq(
             D(0), Sp, Leq, Sp, Sub("S", N), Comma, Quad, Sp,
             Sub("S", Seq(N, Plus, D(1))), Sp, Leq, Sp, Sub("S", N), Sp, Leq, Sp, F.Id("I"),
-            Comma, Quad, Sp, Eff, Sp, Leq, Sp, Sub("S", N), Comma, Quad, Sp,
-            Sub("S", N), Sp, To, Sp, Eff);
+            Comma, Quad, Sp, Eff, Sp, Leq, Sp, Sub("S", N));
         Formula fixedPoint = Seq(
             D(0), Sp, Leq, Sp, Eff, Sp, Leq, Sp, F.Id("I"), Comma, Quad, Sp,
             Mathcal, Grp(F.Id("A")), Open, Eff, Close, Sp, Eq, Sp, Eff);
@@ -62,8 +61,9 @@ internal sealed class GeneralInstrumentSurvivalLimitDocument : IScribeDocumentDe
             Forall, Sp, RhoF, Comma, Sp, Operatorname, Grp(F.Id("Tr")), Open, RhoF, Sp, Sub("S", N), Close, Sp, To,
             Sp, Operatorname, Grp(F.Id("Tr")), Open, RhoF, Sp, Eff, Close);
         return Disp(Seq(
-            complete, Sp, Rightarrow, Sp, Exists, Sp, Eff, Comma, RowBreak, Grp(),
-            Forall, Sp, N, Comma, Sp, chain, Comma, RowBreak, Grp(),
+            complete, Sp, Rightarrow, Sp, Exists, Sp, Eff, Comma, Sp, Sub("S", N), Sp, To, Sp, Eff, Comma,
+            RowBreak, Grp(),
+            Open, Forall, Sp, N, Comma, Sp, chain, Close, Comma, RowBreak, Grp(),
             fixedPoint, Comma, RowBreak, Grp(),
             maximal, Comma, RowBreak, Grp(),
             trace, Dot));

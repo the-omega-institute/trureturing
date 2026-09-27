@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A general no-click instrument has no definite dark direction exactly when its limit effect vanishes, exactly when the survival defect after d steps is positive definite, and exactly when every initial state eventually clicks.
+A general no-click instrument has no definite dark direction exactly when its limit effect vanishes, exactly when the survival defect after d steps is positive definite, and exactly when Tr(rho F) = 0 for every density matrix rho.
 
 **Theorem 1.1 (Four equivalent forms of the absence of dark directions).**
 

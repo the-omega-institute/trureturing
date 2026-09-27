@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A general instrument has no definite dark direction iff its limit effect vanishes iff every state eventually clicks. -/
+   digest: A general instrument has no definite dark direction iff its limit effect vanishes iff Tr(rho F) = 0 for every density rho. -/
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
 

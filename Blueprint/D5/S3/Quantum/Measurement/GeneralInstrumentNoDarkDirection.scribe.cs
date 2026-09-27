@@ -13,8 +13,8 @@ internal sealed class GeneralInstrumentNoDarkDirectionDocument : IScribeDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A general no-click instrument has no definite dark direction exactly when its limit effect vanishes, "
-            + "exactly when the survival defect after d steps is positive definite, and exactly when every "
-            + "initial state eventually clicks.",
+            + "exactly when the survival defect after d steps is positive definite, and exactly when "
+            + "Tr(rho F) = 0 for every density matrix rho.",
         H("No Definite Dark Direction for General Instruments"),
         Blocks(Describe.Lean(
             DescribeId.Create("general-no-dark-direction"),
