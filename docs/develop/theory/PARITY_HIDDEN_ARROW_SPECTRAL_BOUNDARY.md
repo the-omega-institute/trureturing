@@ -60548,3 +60548,633 @@ Adell、Lekuona 与 Yu 的有限二项—Poisson 信息公式可用于未条件�
 本章为普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 194. 完整计数线的尖锐信息阶：信号时间依赖与类别排斥
+
+第 193 章给出完整直方图的 $O(Q^{-5/2})$ 联合信息上界。本章支付整个信号计数数组的时间依赖，再利用中心化类别似然，将上界收紧到 $O(Q^{-5})$。同一行只能落入一个群的约束在实际完整线总计数中留下严格方差缺口，由此得到匹配下界。两条界都保留背景和全部尾部群。
+
+**定理 194.1（精确实际均值下的完整直方图信息阶）。** 固定紧区间 $J\Subset D=(\beta_*,1)$，保持原始振幅、补偿、取整、历史及观察时长。存在仅依赖 $J,r$ 的常数 $0<c_{J,r}\le C_{J,r}<\infty$，使得在全部充分晚的原始层上，分别对实际 pair 和平稳依赖 path 实验，及每个预先确定的大小 $q$ 支持，一致有
+
+$$
+c_{J,r}Q^{-5}
+\le D\!\left(\mathcal L_S^{\mathcal E}((C_j)_{j\in J_Q})
+ \,\middle\|\,\bigotimes_{j\in J_Q}\operatorname{Pois}(\mu_j^{\mathcal E})\right)
+\le C_{J,r}Q^{-5},
+\qquad \mu_j^{\mathcal E}=\mathbb E_S^{\mathcal E}C_j.
+\tag{194.1}
+$$
+
+$J_Q$ 含原计数线上全部非负目标，比较律使用对应实验的精确实际均值；无计数上截断、均值上限或正均值下限。显式有限上界见 (194.28)，下界见 (194.39)。该结论确定两个实验相同的尖锐阶，不确定领先系数是否存在或相等。第 191、193 章的上界保留其原结论。
+
+### 194.2 Exact model and the finite supporting subspace
+
+All logarithms are natural. Retain
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+Put $h_r=-\log(1-r)>0$ and $t_n=\vartheta-P/Q$; the original decimal tail obeys $0<t_n<2\,10^{-Q^5}$. Keep
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,\quad
+M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+s_0=M-q,\quad \epsilon=rq/s_0,\quad T=2M\lambda.          \tag{194.2}
+$$
+For any fixed $J=[\beta_0,\beta_1]\Subset D$, late layers satisfy
+$$
+\begin{split}
+\log M&=\phi\lambda/\beta+O(1),\\
+\log q&=\phi(1/\beta-1)\lambda+O(1),\\
+q/M&=\exp(-\phi\lambda+O(1)),\\
+q^2/M&=\exp\{\phi(1/\beta-2)\lambda+O(1)\}.
+\end{split}                                                \tag{194.3}
+$$
+All errors here are uniform on $J$. In particular $q^2/M$ decreases exponentially because $\beta_0>\beta_*>1/2$, while $q$ increases exponentially because $\beta_1<1$. This is a crucial original-domain hypothesis, not a free sparsity assumption.
+
+Both parity classes $C_+,C_-$ have size $M$. Fix any deterministic $S\subset C_+$, $|S|=q$, and use the original kernel
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+The path starts uniformly and uses $T$ transitions. Pairs are $T$ independent stationary adjacent pairs. Compensation gives stationarity and $P_S^2=\Pi$, where $\Pi$ is uniform projection.
+
+Define
+$$
+(K_j,B_j)=(k_0,l_0)+j(Q,P),\quad
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},\quad
+C_j=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}},
+\quad \mu_j=\mathbb E C_j.                               \tag{194.4}
+$$
+Chapter 175 proves these are the COMPLETE original score groups, globally in the count pair. To specify the reused argument: the original amplitude is transcendental by the norm lower bound for $(1+r)^Q(1-r)^P-1$, contradicting its original superexponential rational-prefix error. If two scores coincide, with integer differences $u,v$ and rational $c=q/s_0\in(0,1)$, transcendence forces
+$$
+\left(\frac{1+X}{1-cX}\right)^u
+\left(\frac{1-X}{1+cX}\right)^v\equiv1.
+$$
+Orders at the distinct points $-1,1,1/c,-1/c$ force $u=v=0$. There is no remote collision outside a proof cutoff.
+
+Let
+$$
+j_-=\max\{\lceil-k_0/Q\rceil,\lceil-l_0/P\rceil\},\quad
+j_+=\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor,\quad
+A_Q=\{j_-,\ldots,j_+\}.
+$$
+On $J_Q\setminus A_Q$, the row count exceeds $T$, so $C_j=\mu_j=0$. Both countable laws append deterministic zeros to their finite vectors on $A_Q$; this preserves KL. Any additional zero-mean coordinate within $A_Q$ is also deterministically zero. Every actual vector satisfies $\sum_jC_j\le M$. Thus entropy manipulations below have finite actual support, even though Poisson references have unbounded counts.
+
+Fix a sufficiently large constant $C$, only for a proof decomposition, and set
+$$
+I_C=\{j\in J_Q:K_j+B_j\le C\lambda\},\quad
+f_j(w)=e^{-w_+-w_-}\frac{w_+^{K_j}w_-^{B_j}}{K_j!B_j!},
+$$
+$$
+\nu_1=(a\lambda,b\lambda),\quad
+\nu_0=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2),\quad
+F_i=\sum_{j\in I_C}f_j(\nu_i).
+                                                               \tag{194.5}
+$$
+The core reference coordinate means are $m_j=qf_j(\nu_1)+s_0f_j(\nu_0)$. None is an assumed actual mean.
+
+### 194.3 A full signal-array information payment under the actual path
+
+Write $p=q/(2M)$. For $0\le t<T$, observe a signal word
+$$
+Y_t=\begin{cases}(X_t,\chi(X_{t+1})),&X_t\in S,\\0,&X_t\notin S.\end{cases}
+$$
+For pairs use their corresponding endpoints. Let $A^{\rm word}$ be iid words with probabilities $1-p$ at zero and $pa/q,pb/q$ at each signal label with signs $+,-$, respectively.
+
+**引理 194.2（实际信号词的依赖代价）。** The pair word has law $A^{\rm word}$. For the path,
+$$
+D(\mathcal L(Y_0,\ldots,Y_{T-1})\|A^{\rm word})
+\le \Lambda_Q:=\frac{T(p^2+p\epsilon^2)}{1-p}.             \tag{194.6}
+$$
+
+**Proof.** Conditional on the word history through time $t-1$, the next word has zero-letter probability $1-\pi_t$, and probabilities $\pi_ta/q,\pi_tb/q$ on its nonzero letters. The destination parity probabilities from any signal state are exactly $a,b$, and the current label within $S$ is uniform. The latter follows directly from the kernel, constant in the destination label within a parity class; it also follows from the exact class/label disintegration.
+
+At $t=0$, $\pi_0=p$ by stationarity. If the previous word is nonzero with sign $+$, the current state is uniform in $C_+$, so $\pi_t=q/M=2p$. If that sign is $-$, $\pi_t=0$. If the previous word is zero, it asserts only that $X_{t-1}\notin S$ and imposes no condition on the next state. Conditional on the earlier word history and this event, the transition is the mixture of the original kernels from states with $b_S\in[-\epsilon,0]$. Consequently
+$$
+p(1-\epsilon)\le \pi_t\le p.                            \tag{194.7}
+$$
+This is a conditional statement for the actual hidden-state path; it does not posit independent visits.
+
+For these categorical laws the label/sign factors cancel in relative entropy, leaving $d(\operatorname{Bern}(\pi_t)\|\operatorname{Bern}(p))$. The elementary KL-to-chi-square inequality gives
+$$
+d(\operatorname{Bern}(z)\|\operatorname{Bern}(p))
+\le\frac{(z-p)^2}{p(1-p)}.
+$$
+The preceding nonzero-word event has exact stationary probability $p$. On it $|\pi_t-p|=p$; on its complement (194.7) gives $|\pi_t-p|\le p\epsilon$. Hence the expected one-step cost is at most $(p^2+p\epsilon^2)/(1-p)$. The word chain rule, with zero initial cost, proves (194.6) (using $T$ instead of $T-1$ only enlarges the bound). All conditioning retains the terminal state of the path. QED.
+
+Let $\mathcal N_1=(N_{x,+},N_{x,-})_{x\in S}$ be the ENTIRE signal count array, with no row-count truncation. Under the iid word law it is a multinomial array $A^{\rm arr}$. Let $R^{\rm arr}$ have independent Poisson entries with means $a\lambda,b\lambda$ at each signal row. These are also the exact actual individual-entry means.
+
+For $n$ categorical trials with total marked probability $u$, the likelihood ratio to independent Poisson category counts depends only on their total $m$:
+$$
+L_{n,u}(m)=\frac{(n)_m}{n^m}(1-u)^{n-m}e^{nu}
+\quad(0\le m\le n).                                     \tag{194.8}
+$$
+If $u+1/n\le1/2$, then
+$$
+\sup_m\log L_{n,u}(m)\le2(u+1/n).                       \tag{194.9}
+$$
+Indeed consecutive ratios are $(1-m/n)/(1-u)$; a maximum occurs at $m\le nu+1$. Put $v=m/n$. Monotonicity of $\log(1-x)$ bounds the factorial sum by
+$$
+n\int_0^v\log(1-x)\,dx-\log(1-v).
+$$
+After adding the other terms of (194.8), the coefficient of $n$ is
+$-v-(1-v)\log(1-v)+(1-v)\log(1-u)+u$, maximized at $v=u$ with value zero. The remaining term is at most $2v$, proving (194.9). The case $u=0$ is deterministic.
+
+Data processing from words to arrays and the exact log-ratio decomposition now give
+$$
+D(\mathcal L^{\rm path}(\mathcal N_1)\|R^{\rm arr})
+\le d_{\rm path}:=\Lambda_Q+2(p+1/T).                   \tag{194.10}
+$$
+For pairs the sharper bound
+$$
+D(\mathcal L^{\rm pair}(\mathcal N_1)\|R^{\rm arr})
+\le d_{\rm pair}:=-p-\log(1-p)                          \tag{194.11}
+$$
+follows from the finite binomial inequality proved in the next section: conditioning on the marked total gives the same multinomial allocation for both references, so the array divergence is exactly the scalar binomial divergence.
+
+Both $d_{\rm pair}$ and $d_{\rm path}$ are exponentially small, uniformly on $J$. In fact $Tp^2=\lambda q^2/(2M)$, $\epsilon=O(p)$, and (194.3) applies. This pays full signal-array divergence; it is substantially stronger than a TV replacement and has not been assumed from the older TV result.
+
+### 194.4 Centered categorical information in the moving large-mean regime
+
+The following scalar input is an application of the Adell–Lekuona–Yu finite identity, not a new asymptotic theorem.
+
+**引理 194.3（有限二项律的一致信息界）。** For every positive integer $n$ and $0\le u<1$,
+$$
+D(\operatorname{Bin}(n,u)\|\operatorname{Pois}(nu))
+\le g(u):=-u-\log(1-u)
+\le\frac{u^2}{2(1-u)}.                                  \tag{194.12}
+$$
+
+**Proof.** For $0<u<1$, Lemma3 of arXiv:1001.2897v1 gives the exact formula
+$$
+D(n,u)=n\int_{1-u}^1
+ \mathbb E\log\frac{B_{n-1,s}+1}{ns}\,ds.               \tag{194.13}
+$$
+Its operative proof differentiates
+$$
+D(n,u)=n(u+(1-u)\log(1-u))-nu\log n+
+\mathbb E\log\frac{n!}{(n-B_{n,u})!}.
+$$
+Differentiating the finite binomial polynomial gives
+$\frac{d}{du}\mathbb E\psi(B_{n,u})
+=n\mathbb E[\psi(B_{n-1,u}+1)-\psi(B_{n-1,u})]$.
+Integration from zero and $n-B_{n-1,u}\stackrel d=B_{n-1,1-u}+1$ yield (194.13). Thus no external uninspected differentiability theorem is needed.
+
+By Jensen and $\log(1+x)\le x$, the integrand in (194.13) is at most
+$\log(1+(1-s)/(ns))\le(1-s)/(ns)$.
+Its integral is $-u-\log(1-u)$. Finally
+$g(u)=\int_0^u t/(1-t)\,dt\le u^2/[2(1-u)]$.
+At zero both laws are deterministic. These bounds hold at every finite $n,u$, with no remainder depending on a fixed-parameter regime. QED.
+
+Let $A$ be a categorical histogram of $n$ iid rows, with any finite number of target probabilities $f_j>0$, sum $F<1$, and let $R=\bigotimes_j\operatorname{Pois}(nf_j)$. Given the total mark count, both $A,R$ have the same multinomial shape distribution. Therefore
+$$
+D(A\|R)=D(\operatorname{Bin}(n,F)\|\operatorname{Pois}(nF)).
+$$
+Equation (194.8) is also their exact joint likelihood ratio $L=A/R$, with $L=0$ for totals exceeding $n$. From (194.9), $L\le B:=e^{2(F+1/n)}$, if $F+1/n\le1/2$. For $0\le x\le B$, convexity with second derivative $1/x\ge1/B$ gives
+$$
+x\log x-x+1\ge (x-1)^2/(2B).
+$$
+Integrating under $R$ and using (194.12) proves the fully summable bound
+$$
+\chi^2(A\|R)\le 2B D(A\|R)
+\le \frac{B F^2}{1-F}.                                 \tag{194.14}
+$$
+The $L=0$ part of the unbounded Poisson support is included. No formal unbounded-degree series has been truncated.
+
+For ANY law $P\ll A$, the entropy variational inequality with $h=\log(A/R)$ gives
+$$
+\mathbb E_P h\le D(P\|A)+\log\mathbb E_A e^h.
+$$
+This follows by nonnegativity of divergence to the tilted probability $Ae^h/\mathbb E_Ae^h$. Consequently
+$$
+D(P\|R)\le2D(P\|A)+\log(1+\chi^2(A\|R))
+\le2D(P\|A)+\frac{B F^2}{1-F}.                         \tag{194.15}
+$$
+This is a proved change-of-reference inequality, not a triangle inequality for KL.
+
+Apply it to the actual signal core histogram $U=(C_{1,j})_{j\in I_C}$. Under $R^{\rm arr}$ it has exactly the iid-row categorical histogram law $A$, with $n=q,F=F_1$. Data processing of (194.10),(194.11) pays $D(\mathcal L(U)\|A)\le d_{\mathcal E}$, so
+$$
+D\!\left(\mathcal L^{\mathcal E}(U)\,\middle\|\,
+       \bigotimes_{j\in I_C}\operatorname{Pois}(qf_j(\nu_1))\right)
+\le 2d_{\mathcal E}
+ +\frac{e^{2(F_1+1/q)}F_1^2}{1-F_1}.                   \tag{194.16}
+$$
+This holds however large $qF_1$ is. It is precisely the conditional-to-actual signal transfer that a reference-only scalar expansion would leave unpaid.
+
+### 194.5 Background conditioning remains on the same realization
+
+This section uses Chapter 193's displaced-line and conditional-smoothing argument, with explicitly smaller background target mass. It does not discard background groups merely because an individual row is unlikely to hit them.
+
+For $D_0=\max(2,C)$, define
+$$
+A=8\sqrt{D_0}/b,\quad h=\sqrt{Q^2+P^2},\quad
+S_Q=2+\frac{\sqrt{8\pi D_0\lambda}}h,\quad
+F_*=\frac{A^2S_Q}{\lambda},\quad
+W_*=4A^2(1+2D_0)S_Q.
+$$
+Lemma 193.2 proves, for every
+$w\in[b\lambda/2,2\lambda]^2$,
+$$
+\sum_{I_C}f_j(w)\le F_*e^{-\rho(w)^2/(8D_0\lambda)},\qquad
+\sum_{I_C}f_j(w)(4\lambda+|\mathbf k_j-w|^2)
+ \le W_*e^{-\rho(w)^2/(8D_0\lambda)},                  \tag{194.17}
+$$
+where $\rho(w)$ is distance to the exact affine line
+$\mathbf k_0+\mathbb R(Q,P)$. Its proof multiplies scalar Poisson Gaussian envelopes, uses
+$|\mathbf k_j-w|^2=h^2(j-u_w)^2+\rho(w)^2$, absorbs the squared-distance factor into half the Gaussian, and bounds the shifted lattice sum by $2+\sqrt{\pi/\alpha}$. It includes zero target counts and legal endpoints. In particular $F_*,W_*/\lambda=O_{r,C}(Q^{-5/2})$.
+
+The exact floor $\xi=a\lambda-k_0\in[0,1)$ gives
+$\nu_0-\mathbf k_0=(-d,d)$, $d=(r+\epsilon)\lambda/2-\xi$.
+Thus $\rho(\nu_0)\ge r\lambda/2-1$. On the actual good-total band
+$w=\nu_0+\Delta,\ \max|\Delta_\sigma|\le1$, it follows that
+$\rho(w)\ge r\lambda/4$ once
+$\lambda\ge4(1+\sqrt2)/r$. Set
+$$
+c_{\rm bg}=r^2/(128D_0),\qquad
+\bar F=F_*e^{-c_{\rm bg}\lambda},\quad
+\bar W=W_*e^{-c_{\rm bg}\lambda}.                       \tag{194.18}
+$$
+Both sums in (194.17) are then bounded by $\bar F,\bar W$, uniformly on this entire band.
+
+Let $H=(H_{i,\sigma})_{i=1,0;\,\sigma=+,-}$ be the SAME four original departure totals. Conditional on $H$, each sign list in each class is an independent uniform-label allocation, and the class histograms $U,V$ are conditionally independent. This follows by conditioning the original class trajectory: every compatible concrete path has probability
+$(2M)^{-T-1}\prod_{t<T}(1+b_{G_t}\chi_{G_{t+1}})$,
+independent of its label choices. Integrating class trajectories with the same totals leaves the same list law. This is also exact for pairs.
+
+For $s=s_0$, $\Delta=H_0/s-\nu_0$, the actual-total estimates are
+$$
+\mathbb E|\Delta|^2\le10\lambda/s,\quad
+\mathbb E\sum|\Delta_\sigma|\le\sqrt{20\lambda/s},\quad
+\Pr(G^c)\le4e^{-s/(8\lambda)},\quad
+G=\{\max|\Delta_\sigma|\le1\}.                           \tag{194.19}
+$$
+The operative Chapters 183 and 187 proofs use joint independence within each third-edge subsequence, obtained from $P_S^2=\Pi$ and successive conditioning, followed by Hölder across the three subsequences. They do not assert independence of the four totals.
+
+Here is a completely specified background error. Set
+$$
+\kappa=\tau=Q^{-6},\quad c_0=b/(8\pi^2),\quad
+\delta=2\bar W/(b\lambda),
+$$
+$$
+\mathscr L_s=4\pi s\lambda e^{1/(3bs\lambda)},\quad
+\chi_s=4\pi s\lambda e^{-c_0s\tau/4},
+$$
+$$
+a_s=\frac1{3bs\lambda}+
+\log\left(\frac1{(1-\kappa)(1-\delta-\tau)}+\chi_s\right),
+$$
+$$
+A_0=1+2C/b,\quad C_{\rm rem}=2C/b^2,\quad
+A_t=2/b^2+4C_{\rm rem}^2,\quad
+C_{\rm cal}=4C^2/b+4,\quad A_f=1+C\log(C/b).
+$$
+Define
+$$
+\begin{split}
+\mathcal B_Q(s)={}&a_s+2(\bar F+1/s)
+ +\mathscr L_s e^{-s\kappa}\log\mathscr L_s\\
+&+5e^{2A_0}A_t\bar W/\lambda
+ +2C_{\rm cal}A_0e^{2A_0}\lambda\bar F\sqrt{20\lambda/s}\\
+&+4s(1+A_f\lambda)e^{-s/(8\lambda)}.                    \tag{194.20}
+\end{split}
+$$
+Sufficient finite conditions are
+$$
+\begin{gathered}
+\lambda\ge\max(1,2/b,4(1+\sqrt2)/r),\quad
+\bar F\le\min(1/16,b/(16\pi^2)),\quad
+\bar W/\lambda\le b/(4\pi^2),\\
+e^2\bar F\le\kappa\le1/2,\quad 0<\tau\le1,\quad
+\delta+\tau\le1/2,\quad \bar F+1/s\le1/2,\\
+s\ge\max(4,4C/b,2C_{\rm cal}\lambda),\quad s\lambda\ge1.
+\end{gathered}                                                \tag{194.21}
+$$
+All hold uniformly eventually. Then the precise inherited conditional argument, proved below, gives
+$$
+\mathbb E_H D\!\left(\mathcal L(V\mid H)\,\middle\|\,
+       R_0\right)\le\mathcal B_Q(s_0)=O_{J,r,C}(Q^{-6}),
+\quad R_0=\bigotimes_{I_C}\operatorname{Pois}(s_0f_j(\nu_0)).
+                                                               \tag{194.22}
+$$
+
+To verify the free $\kappa,\tau$ used here, fix totals $sw_\sigma$ on $G$. Represent their uniform allocation by independent product-Poisson rows conditioned on their two sums. Removing all target atoms from one row leaves a law $X^\circ$. The squared-characteristic-function gap loses at most
+$\bar W|\theta|^2$, by (194.17), and at most $4\bar F$.
+Thus it obeys the same global bound
+$|\varphi_\circ(\theta)|\le e^{-c_0\min(\lambda|\theta|^2,1)}$
+as in Chapter 193. With $V_\theta=\sum w_\sigma\theta_\sigma^2$, on $V_\theta\le\tau$ the sharpened bound is
+$$
+|\varphi_\circ(\theta)|
+\le e^{-(1-\delta-\tau)V_\theta/2}.
+$$
+The proof uses Taylor bounds for $1-e^{-2\sum w_\sigma(1-\cos\theta_\sigma)}$; the removed squared-distance sum is at most $\delta V_\theta$. There is no lower bound on $\tau$ other than positivity.
+
+For $l\ge s/2$ unmarked rows, Fourier inversion therefore gives
+$$
+\sup_z\Pr(X_1^\circ+\cdots+X_l^\circ=z)
+\le\frac1{2\pi l(1-\delta-\tau)\sqrt{w_+w_-}}
+       +e^{-c_0s\tau/4}.
+$$
+The probability of conditioning the two unconditioned Poisson sums at their integer means is at least
+$e^{-1/(3bs\lambda)}/(2\pi s\sqrt{w_+w_-})$.
+For mark total at most $s\kappa$, their ratio is at most $e^{a_s}$. For every histogram it is at most $\mathscr L_s$.
+The iid mark total is $\operatorname{Bin}(s,F(w))$; because $\kappa\ge e^2F(w)$, its upper tail beyond $s\kappa$ is at most $e^{-s\kappa}$. The actual conditioned probability is at most $\mathscr L_se^{-s\kappa}$. Finally (194.9), with $n=s,u=F(w)$, pays the joint categorical likelihood by $2(\bar F+1/s)$. This proves the first line of (194.20) for the ENTIRE conditioned histogram, including all mark totals.
+
+Changing the Poisson intensities from $w=\nu_0+\Delta$ to fixed $\nu_0$, write $\ell_j=\log(f_j(w)/f_j(\nu_0))$ and $g_j=\mathbb E(V_j\mid H)$. The exact additional divergence is
+$$
+s\sum_j f_j(\nu_0)(e^{\ell_j}\ell_j-e^{\ell_j}+1)
+ +\sum_j(g_j-sf_j(w))\ell_j.
+$$
+Taylor's formula gives
+$\sum_jf_j(\nu_0)\ell_j^2\le A_t\bar W|\Delta|^2/\lambda^2$
+and $|\ell_j|\le A_0\sum|\Delta_\sigma|\le2A_0$ on $G$.
+The exact conditional row law has two independent binomial coordinates. Expanding its log ratio to the product-Poisson mass gives
+$|g_j-sf_j(w)|\le2C_{\rm cal}\lambda f_j(w)$
+under (194.21), also at zero target counts. These are the same finite binomial-ratio and derivative calculations as Section 193.6, now using (194.18). Combining them with (194.19) gives the second line of (194.20). On $G^c$, the fixed-core bound $f_j(\nu_0)\ge e^{-A_f\lambda}$ and $\sum_j V_j\le s$ bound the reference cross-entropy by $s(1+A_f\lambda)$, yielding the last line. Thus exceptional original totals and tiny means are included.
+
+Because $s_0$ is exponentially large, while $\bar F,\bar W/\lambda$ are exponentially small, every term of (194.20) other than the freely chosen $\kappa,\tau$ is exponentially or superexponentially small. Hence (194.22). This reuse supplies no new line-width result; its role is to pay the background below the new signal scale.
+
+Crucially, (194.22) combines with the UNCONDITIONAL signal bound without replacing its background mixture. With $R_1$ the product reference in (194.16), the chain rule and conditional convexity give
+$$
+\begin{split}
+D(\mathcal L(U,V)\|R_1\otimes R_0)
+&=D(\mathcal L(U)\|R_1)+\mathbb E_U D(\mathcal L(V\mid U)\|R_0)\\
+&\le D(\mathcal L(U)\|R_1)
+       +\mathbb E_{H,U}D(\mathcal L(V\mid H,U)\|R_0)\\
+&=D(\mathcal L(U)\|R_1)+\mathbb E_H D(\mathcal L(V\mid H)\|R_0).
+\end{split}                                                \tag{194.23}
+$$
+The middle inequality mixes with the ACTUAL posterior weights of $H$ given $U$; the last equality uses conditional independence of label lists given that same $H$. No unrelated background realization or marginal-to-joint inference is involved. Data processing under $U+V$ now gives the core bound with product means $m_j$.
+
+### 194.6 Every tail coordinate, exact means and the new full-vector upper bound
+
+Set
+$$
+\gamma=(e-1)/2,\quad c_M=\phi/\beta_0,\quad
+C=4(\gamma+4c_M+4),\qquad
+\alpha_Q=e^{(\gamma-C/4)\lambda}.                        \tag{194.24}
+$$
+This is one fixed proof constant depending on $J,r$; eventually $C\le2M$. It also makes the moment-tail errors in the lower bound negligible.
+
+The Chapter 191 argument gives, for either actual experiment and each positive row $x$,
+$$
+\mathbb E e^{N_x/2}\le e^{\gamma\lambda},\qquad
+\Pr(N_x>C\lambda)\le\alpha_Q,\qquad
+\mathbb E[N_x^2\mathbf1_{\{N_x>C\lambda\}}]\le32\alpha_Q.
+                                                               \tag{194.25}
+$$
+For the path, even and odd departure lists are each iid uniform under the exact two-step reset. Cauchy--Schwarz between the two lists yields
+$\log\mathbb E e^{uN_x}\le\lambda(e^{2u}-1)/2$.
+Use $u=1/2$ and $n^2\le32e^{n/4}$ to obtain (194.25). Pairs satisfy the stronger binomial bound. The corresponding $\operatorname{Pois}(\lambda)$ reference total also satisfies (194.25).
+
+Let $\mathcal T_C=A_Q\setminus I_C$ and
+$R_T=\bigotimes_{\mathcal T_C}\operatorname{Pois}(m_j)$.
+The complete information-weighted tail payment is
+$$
+\mathbb E[-\log R_T(C_{\mathcal T_C})]\le
+\mathcal T_Q:=
+M\left[1+\log(M/q)+\lambda+\frac{32}{b\lambda}\right]\alpha_Q.
+                                                               \tag{194.26}
+$$
+Here is the joint reason it holds. For a target pair of total $t$,
+$$
+-\log f_j(\nu_1)\le\lambda+\frac{t^2}{b\lambda}.
+$$
+This follows from $K!B!\le t^t$, the lower intensity $b\lambda$, and $\log z\le z$. Since $m_j\ge qf_j(\nu_1)$ and $C_j\le M$, the contribution $-C_j\log m_j+\log(C_j!)$ is at most
+$$
+C_j\left[\log(M/q)+\lambda+\frac{t_j^2}{b\lambda}\right].
+$$
+On the SAME actual realization a row belongs to at most one tail target. Summing this expression is therefore bounded by the sum of the corresponding weighted tails over the $M$ original rows. Equation (194.25) pays that sum. Also $\sum_{\mathcal T_C}m_j\le M\alpha_Q$ because distinct target pairs are disjoint reference events. This proves (194.26) with no tail-cardinality multiplier or independence assumption.
+
+The joint core/tail entropy identity gives
+$$
+D(P\|R_I\otimes R_T)
+=D(P_I\|R_I)+\mathbb E[-\log R_T(C_T)]-H(C_T\mid C_I),
+$$
+so nonnegative conditional entropy joins (194.16),(194.22),(194.23),(194.26). On the full finite vector, exact-mean projection then gives
+$$
+D(P\|R_m)=D(P\|R_\mu)+
+\sum_{A_Q}\{\mu_j\log(\mu_j/m_j)-\mu_j+m_j\}.            \tag{194.27}
+$$
+All brackets are nonnegative. At $\mu_j=0$, $C_j=0$ almost surely and its bracket is $m_j$. Thus zero/tiny actual means create no missing support or cross-entropy obligation. Restoring deterministic zero coordinates outside $A_Q$ preserves the result.
+
+We have proved the explicit finite-parameter upper bound
+$$
+\boxed{\quad
+D(\mathcal L^{\mathcal E}(C)\|R_\mu)
+\le U_{\mathcal E,Q}:=
+2d_{\mathcal E}
++\frac{e^{2(F_1+1/q)}F_1^2}{1-F_1}
++\mathcal B_Q(s_0)+\mathcal T_Q .
+\quad}                                                       \tag{194.28}
+$$
+In addition to (194.21), sufficient conditions are
+$1\le q\le M/2,\ \epsilon\le1/2,\ p+1/T\le1/2,\ F_1+1/q\le1/2$,
+and the already stated complete-group identification. All hold uniformly eventually.
+
+By (194.17), $F_1=O(Q^{-5/2})$. Equations (194.3),(194.10),(194.11) make $d_{\mathcal E}$ exponentially small; (194.22) gives $O(Q^{-6})$. The exact floors give
+$\log M\le c_M\lambda$ and
+$\log(M/q)\le\phi\lambda+\log2$ eventually, so (194.24),(194.26) are exponentially small. Hence (194.28) is $O_{J,r}(Q^{-5})$, an unconditional full-vector improvement over Chapter 193.
+
+No expected conditional signal KL term has been used as a lower bound after subtracting unknown mutual information. Instead its former $O(F_1)$ payment was bypassed by the actual signal-word comparison and the centered finite-law transfer (194.15). The background remains on its actual conditional realization throughout (194.23).
+
+### 194.7 An attained aggregate variance deficit on the complete line
+
+The matching lower bound must hold for the same full vector. We now establish a lower bound for the SAME actual full vector. It holds at every sufficiently late original layer, not at a separately chosen set of target means.
+
+First the line mass has a uniform positive lower bound. There is an explicit constant
+$$
+c_{\rm line}=\frac{e^{-8/b-2}}{4\pi}>0
+\quad\text{such that}\quad
+c_{\rm line}Q^{-5/2}\le F_1\le F_*=O_{r,C}(Q^{-5/2}).
+                                                               \tag{194.29}
+$$
+For the lower bound take $0\le j\le\lfloor\sqrt Q\rfloor$. These original indices are legal and belong to $I_C$ eventually. Each coordinate differs from its signal intensity by at most $2\sqrt\lambda$, and both its target and intensity lie in $[b\lambda/2,2\lambda]$. For a scalar Poisson rate
+$I_\nu(k)=k\log(k/\nu)-k+\nu$, Taylor's formula and $I_\nu''(k)=1/k$ give $I_\nu(k)\le4/b$ in this range. Stirling's upper factorial bound gives
+$$
+\Pr(\operatorname{Pois}(\nu)=k)
+\ge e^{-I_\nu(k)-1}/\sqrt{4\pi\lambda}
+$$
+for these positive integers. Multiplying yields $f_j(\nu_1)\ge c_{\rm line}/\lambda$. There are at least $\sqrt Q$ such indices. This proves (194.29) without an asymptotic Riemann-sum assumption.
+
+Next compare the background and signal probabilities on this SAME entire fixed core. Put
+$$
+u_Q=(C+1)\lambda h_rt_n+2C\lambda\epsilon,\qquad
+\rho_Q=\frac{s_0e^{-z_0}}q .
+$$
+For $j\in I_C$, $|j|\le(C+1)\lambda/Q$, and the exact ratio is
+$$
+\frac{f_j(\nu_0)}{f_j(\nu_1)}
+=\exp\{-z_0-jh_rQt_n+
+               K_j\log(1-\epsilon)+B_j\log(1+\epsilon)\}.
+$$
+For $\epsilon\le1/2$, the nonconstant part of this exponent has absolute value at most $u_Q$. Consequently, defining $R_Q=s_0F_0/(qF_1)$,
+$$
+\rho_Qe^{-u_Q}\le R_Q\le\rho_Qe^{u_Q},\qquad
+R_Q\longrightarrow1                                    \tag{194.30}
+$$
+uniformly on $J$. Indeed $u_Q\to0$ exponentially or faster, and with $x=Me^{-z_0}$ the floor gives
+$\rho_Q=(1-q/M)(x/q)$, $1\le x/q<1+1/q$.
+Thus background marks need not have small total mean; their total core mean is asymptotic to that of the signal. This is why simply deleting them would be invalid.
+
+Let
+$$
+Z_C=\sum_{j\in I_C}C_j,\quad Z=\sum_{j\in J_Q}C_j,\quad
+\mu=\mathbb E Z,\quad
+m=qF_1+s_0F_0,\quad
+S_2=qF_1^2+s_0F_0^2.                                   \tag{194.31}
+$$
+The symbol $S_2$ is a scalar exclusion weight, not the support $S$. The finite exact means in the target satisfy $\mu=\sum_{A_Q}\mu_j$.
+
+For clarity, retain the explicit one/two-row errors from Chapter 180:
+$$
+\theta_h=\frac{(1+C)h}{2M},\qquad
+\delta_h=10^6(\theta_h+T\theta_h^2)
+                e^{10^6T\theta_h^2}+12\,2^{-T},\quad h=1,2.
+                                                               \tag{194.32}
+$$
+When $\theta_2\le1/200$, the actual probability of every prescribed count tuple on $h$ distinct positive rows, of total at most $Ch\lambda$, differs relatively from its product-Poisson row mass by at most $\delta_h$, for both pair/path and all supports. In particular $\delta_h=O_C(\lambda/M)$.
+
+To state the checked input precisely, original (17.15) gives the exact marked path PGF
+$$
+e_1^{\mathsf T}
+\begin{pmatrix}1+A&B\\A&B\end{pmatrix}^{T}e_1,\quad
+A=\sum p_{x,\sigma}(z_{x,\sigma}-1),\quad
+B=\sum \sigma p_{x,\sigma}(z_{x,\sigma}-1);
+$$
+the pair PGF is $(1+A)^T$, and $Tp_{x,\sigma}=\nu_{i,\sigma}$.
+Chapter 180 bounds the absolute Taylor-coefficient multiplier relative to $e^{TA}$ by (194.32), using the fixed analytic bidisc for the two eigenvalues. Multiplication on positive Poisson coefficients costs at most the multiplier's absolute coefficient sum at radii $k_{x,\sigma}/\nu_{i,\sigma}$; the linear-form absolute sums there are at most $\theta_h$. Zero radii are covered directly or by a decreasing limit. The proof has explicit order dependence, but here only $h=1,2$ is used. The original Theorem 17.2's weaker polynomial-over-$M$ bound would also suffice. Neither result asserts independent actual rows.
+
+Sum these relative inequalities over the finite disjoint target pairs. All summands are nonnegative, so no dimension factor is incurred. Summing over rows and ordered distinct row pairs gives
+$$
+|\mathbb E Z_C-m|\le\delta_1m,\qquad
+|\mathbb E(Z_C)_2-(m^2-S_2)|\le\delta_2m^2.
+                                                               \tag{194.33}
+$$
+Here $m^2-S_2$ removes exactly the same-row terms; it includes signal/background cross pairs on the original common law. Therefore, with
+$$
+\zeta_Q=\delta_2+2\delta_1+\delta_1^2,
+$$
+$$
+\left|(\operatorname{Var}Z_C-\mathbb E Z_C)+S_2\right|
+\le\zeta_Qm^2.                                         \tag{194.34}
+$$
+This is a joint aggregate calculation, not a sum of marginal KL statements.
+
+No tail coordinate is removed from the lower bound. By (194.25) and a union bound,
+$\Pr(Z\ne Z_C)\le M\alpha_Q$.
+Since $0\le Z_C\le Z\le M$, it follows that
+$$
+|\mu-\mathbb E Z_C|\le M^2\alpha_Q,\qquad
+|\mathbb E(Z)_2-\mathbb E(Z_C)_2|\le M^3\alpha_Q.
+$$
+Also $|\mu^2-(\mathbb E Z_C)^2|\le2M^3\alpha_Q$. Define the explicit errors
+$$
+E_\mu=\delta_1m+M^2\alpha_Q,\qquad
+E_v=\zeta_Qm^2+3M^3\alpha_Q.
+$$
+Then the full no-cutoff variable satisfies
+$$
+|\mu-m|\le E_\mu,\qquad
+\left|(\operatorname{Var}Z-\mu)+S_2\right|\le E_v.
+                                                               \tag{194.35}
+$$
+
+Equations (194.29),(194.30) show
+$$
+m=(2+o(1))qF_1,\qquad S_2=(1+o(1))qF_1^2.             \tag{194.36}
+$$
+For the second assertion,
+$S_2=qF_1^2(1+R_Q^2q/s_0)$, and $q/s_0\to0$.
+The error terms in (194.35) are small at the stated scale, not merely at the scale $m^2$:
+$$
+\frac{\zeta_Qm^2}{qF_1^2}
+=O_C(\lambda q/M)=o(1).
+$$
+Moreover, by (194.24), $M^3\alpha_Q\le e^{-(c_M+4)\lambda}$, whereas $qF_1^2$ tends exponentially to infinity times a polynomial factor. Hence
+$$
+\frac{\mu-\operatorname{Var}Z}{\mu}
+ =\left(\frac12+o(1)\right)F_1                         \tag{194.37}
+$$
+uniformly for both actual experiments and all deterministic supports.
+
+This is the attained surviving categorical constraint. The exact-mean Poisson reference has aggregate variance exactly $\mu$, whereas the actual variance has the definite deficit (194.37). Shared-total/temporal effects in the one/two-row law contribute $o(qF_1^2)$ to this calculation. The background contributes its full mean to the denominator in (194.37), but its own exclusion term $s_0F_0^2$ is negligible relative to $qF_1^2$. No Gaussian approximation or unbounded-moment consequence of TV was used.
+
+### 194.8 Turning the actual deficit into a joint KL lower bound
+
+We give the variational payment, including its moving-mean moment bound. If $N\sim\operatorname{Pois}(\mu)$, $\mu\ge1$, set
+$$
+X=(N-\mu)^2/\mu-1.
+$$
+Then $\mathbb E X=0$ and $\mathbb E X^2=2+1/\mu\le3$. These identities follow from the exact Poisson falling-factorial moments $\mathbb E(N)_k=\mu^k$, $k\le4$, which give the centered fourth moment $3\mu^2+\mu$.
+
+Since $X\ge-1$, Taylor's formula with its integral remainder gives, for $0\le t\le1$,
+$$
+e^{-tX}\le1-tX+\tfrac12t^2X^2e^t.
+$$
+Thus
+$$
+\log\mathbb E e^{-tX}\le\tfrac32e^t t^2\le5t^2.
+                                                               \tag{194.38}
+$$
+This is a uniform reference bound even when $\mu$ grows exponentially.
+
+For the actual $Z$ with the SAME mean, put
+$\Delta=(\mu-\operatorname{Var}Z)/\mu$.
+The entropy variational inequality with test
+$-t((Z-\mu)^2/\mu-1)$, together with (194.38), gives
+$$
+D(\mathcal L(Z)\|\operatorname{Pois}(\mu))
+\ge t\Delta-5t^2.
+$$
+The test is bounded above and has a finite actual expectation because $Z\le M$; its reference exponential is bounded by $e^t$. Thus no integrability or entropy-continuity gap occurs.
+
+At finite parameters, if $m-E_\mu\ge1$ and $S_2>E_v$, define
+$$
+\Delta_L=\frac{S_2-E_v}{m+E_\mu}.
+$$
+Equation (194.35) gives $0<\Delta_L\le\Delta\le1$. Taking $t=\Delta_L/10$ proves
+$$
+\boxed{\quad
+D(\mathcal L(C)\|R_\mu)
+\ge D(\mathcal L(Z)\|\operatorname{Pois}(\mu))
+\ge \frac{(S_2-E_v)^2}{20(m+E_\mu)^2}.
+\quad}                                                       \tag{194.39}
+$$
+The first inequality is data processing by the sum of ALL coordinates; under the independent Poisson reference that sum is precisely $\operatorname{Pois}(\sum_j\mu_j)$. It is a lower bound on the actual joint histogram divergence.
+
+Conditions for (194.39) hold uniformly eventually by (194.29),(194.35),(194.36). For example, eventually $E_v\le S_2/2$ and $m+E_\mu\le3qF_1$, so
+$$
+D(\mathcal L(C)\|R_\mu)\ge F_1^2/720
+\ge \frac{c_{\rm line}^2}{720}\,Q^{-5}.                 \tag{194.40}
+$$
+Together with (194.28), this proves (194.1).
+
+The proof has not used an upper bound for a conditional divergence as a lower bound after discarding mutual information. Its lower bound is computed from actual joint one/two-row probabilities, pays the complete tail, retains the exact full mean, and uses a valid entropy test. The pair and path share (194.37) and the matching order (194.1). Equality of any eventual leading KL coefficients is not established.
+
+
+### 194.9 同阶背后的共同实现与边界
+
+主导约束来自类别排斥。信号行命中整条核心线的概率 $F_1$ 为 $\Theta(Q^{-5/2})$；背景行单行概率虽指数小，其总均值仍与信号总均值渐近相等，不能删除。实际全线计数的相对方差缺口为 $(1/2+o(1))F_1$，有效的 Poisson 熵变分测试将它转成 $Q^{-5}$ 阶信息下界。这里不从 Gaussian 协方差启发直接读取 KL 系数。
+
+上界所需的时间依赖是在原路径的信号词过滤下计算的，整个信号数组的 KL 代价指数小。将这一代价传入类别直方图时，式 (194.14)–(194.15) 明确支付参考律变更，未使用不存在的 KL 三角不等式。背景仍按同一个实际 $H$ 混合，式 (194.23) 的权重是 $H$ 给定信号直方图的真实条件律。尾部既在交叉熵中逐行支付，也在下界的一、二阶矩中支付。
+
+尚未确定的是 $Q^5D(\mathcal L(C)\|R_\mu)$ 的极限或其系数。匹配阶不等于渐近等价，也不推出两实验的领先系数相等。本文未给出 Gaussian 等价、全数据后验熵、重构、物理方差熵或同步集 $E_2$ 的构造或排除。参数区间随 $Q$ 趋近 $D$ 的边界、改变振幅或时长、以及全部二维计数对组成的目标族，均不在定理的一致范围内。
+
+### 194.10 来源与新增关系
+
+第 175 章提供全局得分群识别；第 180 章提供原始多行概率的相对系数估计，本章只用一、二行；第 183、187 章提供原条件标签分解及实际总数集中；第 191 章提供完整尾部的信息支付；第 193 章提供允许强度偏移的加权计数线与任意正频率截止下的平滑估计。本章新增关系是信号词时间依赖的全数组信息界、中心化类别似然的实际律迁移，以及全线方差缺口到匹配联合信息下界的连接。
+
+Adell、Lekuona、Yu 的有限二项—Poisson 积分身份与 Jensen 不等式给出 (194.12)，其有限证明适用于同时变化的概率和均值。本文不移植来源的固定参数渐近余项。Kontoyiannis、Harremoës、Johnson 对依赖指标先支付总相关的论证提供方法背景；实际路径代价由 (194.6) 在原模型内证明。经典熵变分、条件凸性和数据处理本身不主张为新结果。完整来源及适用边界见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章为普通数学推导，未作 Lean 核认证，不主张文献检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）

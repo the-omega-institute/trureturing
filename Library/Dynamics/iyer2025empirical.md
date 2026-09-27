@@ -6378,3 +6378,24 @@ Kontoyiannis、Harremoës 与 Johnson，[arXiv:math/0211020v2](https://arxiv.org
 本章复用第 175、183、187–189、191 章。离散 Gaussian 求和和有效线宽是经典方法；新增关系是强度偏移与平方距离权重在原条件分配中的联合支付。不将来源自身的 Poisson 熵、独立行渐近或固定参考公式提升为原模型定理，也不主张全球原创性或 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 谱边界卷第 194 章补充：完整直方图的匹配信息阶
+
+对应 [谱边界卷第 194 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 repo-derived：在原振幅、取整、补偿、历史、时长和完整计数线下，对实际 pair 与平稳依赖 path 分别证明精确实际均值乘积 Poisson 参考下的联合相对熵为 $\Theta_{J,r}(Q^{-5})$。新关系是信号词过滤的全数组信息支付、中心化类别似然迁移、同一实际共同总数下的背景混合，以及完整线总计数的方差缺口给出的下界。领先系数仍未确定。
+
+José A. Adell、Alberto Lekuona、Yaming Yu，*Sharp Bounds on the Entropy of the Poisson Law and Related Quantities*，[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，2010-01-17，[固定版本原始 TeX](https://arxiv.org/src/1001.2897v1)。复用范围为二项定义、Theorems 3、4、有限微分身份、Lemma 3 的积分身份及完整证明、Proposition `propbi` 及证明。有限积分身份给出
+
+$$
+D(\operatorname{Bin}(n,u)\|\operatorname{Pois}(nu))
+=n\int_{1-u}^1\mathbb E\log\frac{B_{n-1,s}+1}{ns}\,ds
+\le -u-\log(1-u)
+\le\frac{u^2}{2(1-u)}.
+$$
+
+条件为任意正整数 $n$、$0\le u<1$，零端点按确定律解释。该有限界不需要固定 $u$ 或固定 $nu$，故适用于本模型的移动参数。原文固定参数渐近及其余项未作为本章前提。类别直方图对独立 Poisson 的似然比只依赖标记总数；本章进一步以有界似然的完整 $\chi^2$ 支付和熵变分，连接到有时间依赖的实际信号数组，未把独立参考结论直接当作实际路径结论。
+
+Ioannis Kontoyiannis、Peter Harremoës、Oliver Johnson，*Entropy and the Law of Small Numbers*，[arXiv:math/0211020v2](https://arxiv.org/abs/math/0211020v2)，[固定版本原始 TeX](https://arxiv.org/src/math/0211020v2)。核对 Proposition 1 及完整证明：依赖指标先支付总相关，再作数据处理。这里的实际词序列代价在 (194.6) 独立推导，不假设为零，也不由单行边缘推出全数组 KL。此前条目所载该来源其他有限支撑或 Fisher information 表述边界保持不变，不作为本章前提。
+
+本章复用第 175、180、183、187、191、193 章。经典离散 Gaussian 质量估计、熵变分、条件凸性、数据处理与二项有限积分不主张为新结果。新内容是这些关系在原共同实现中的信息支付，以及同一完整直方图上下界的匹配。没有从总相关上界、单个边缘、Gaussian 近似或纯 TV 比较推断未支付的 KL 系数；不主张全球原创性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）
