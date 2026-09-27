@@ -9274,3 +9274,427 @@ $$
 本批只描述临界序列的极限可达区域，不给有限 $h$ 的精确状态区域，不分类达到同一极限的内部实现，也不把 terminal channel 丢弃时间后的结论推广为保留完整时间记录的结论。模型仍固定为指定名义仪器、二维活动记忆、两个可读记录和齐次重复；调用轮数仍不是物理秒数。未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 122. 把事件时间和量子后继放进同一个标记对象
+
+第 115 节只保留终端量子输出，因而把首次点击轮数求和掉。若把缩放时间
+
+$$
+\tau_{j,n}=\epsilon_j n
+$$
+
+与第 $n$ 轮点击后的量子输出一起保留，则同一份临界过程产生一个算子值的时间测度，而不是一条单独的时间律。
+
+**定义 122.1（缩放标记测度）。** 沿用第 115 节的指定名义仪器、完整二维活动记忆、两种实际记录和齐次重复合同，取一条趋近同一个最近失效相位的非失效序列，设
+
+$$
+\Gamma_j\longrightarrow\Gamma_*\in\mathfrak F_R,
+\qquad
+\epsilon_j\longrightarrow0,
+\qquad
+\zeta_j\longrightarrow\zeta,
+$$
+
+并写
+
+$$
+P_*=P_{\text{暗}},
+\qquad
+Q_*=I-P_*.
+$$
+
+对每个输入算子 $X$，定义正时间标记的算子值测度
+
+$$
+\boxed{
+\mathbf M_j(X)
+=
+\sum_{n\ge1}\delta_{\epsilon_j n}\otimes
+\mathcal C_j\mathcal N_j^{\,n-1}(X).
+}
+\tag{122.1}
+$$
+
+对有界连续函数 $f:[0,\infty)\to\mathbb C$，定义其测试响应
+
+$$
+\boxed{
+\mathbf M_j[f](X)
+=
+\sum_{n\ge1}f(\epsilon_j n)\mathcal C_j\mathcal N_j^{\,n-1}(X).
+}
+\tag{122.2}
+$$
+
+对 Borel 集 $E\subseteq[0,\infty)$，式（122.1）按集合函数理解为
+
+$$
+\mathbf M_j(E)
+=
+\sum_{\epsilon_j n\in E}
+\mathcal C_j\mathcal N_j^{\,n-1}.
+$$
+
+每个 $\mathbf M_j(E)$ 是完全正、迹不增的映射，并且
+
+$$
+\sum_{n=1}^{m}
+(\mathcal C_j\mathcal N_j^{\,n-1})^*(I)
+=
+I-(\mathcal N_j^*)^m(I)
+\longrightarrow I.
+$$
+
+在有限维映射空间中，这个正项级数还按范数收敛：若记
+$K_{j,n}=\mathcal C_j\mathcal N_j^{\,n-1}$，则
+$\|K_{j,n}\|_\diamond\le\operatorname{Tr}K_{j,n}^*(I)$，而右侧的级数总和为输入空间维数。因此对不交 Borel 集的可数并，$\mathbf M_j$ 按映射范数可数可加；这使上面的集合函数确实是算子值测度，而不是只对有限集合定义的形式和。
+
+所以 $\mathbf M_j([0,\infty))=\Xi_{\Gamma_j}$ 是迹保持通道；对密度输入，取迹后的标量测度总质量为一。若 $f\ge0$，则 $\mathbf M_j[f]$ 是完全正映射；$0\le f\le1$ 时它还迹不增。一般复值 $f$ 只定义一个线性测试响应，不宣称其正性。这里的 $\epsilon_j$ 是内部谱泄漏标度，不是未经标定的物理秒。
+
+在第 115 节的谱投影记号下，置
+
+$$
+r_j=1-\epsilon_j,
+\qquad
+\mathcal P_j(X)=\sigma_j\operatorname{Tr}(G_jX),
+$$
+
+$$
+\mathcal B_j=\mathcal N_j(\operatorname{id}-\mathcal P_j).
+$$
+
+则
+
+$$
+\boxed{
+\mathcal N_j^{\,n-1}
+=
+r_j^{\,n-1}\mathcal P_j
++
+\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j).
+}
+\tag{122.3}
+$$
+
+式（122.3）是线性映射的代数谱分解：它把实际点击映射的传播拆成慢本征项与稳定余项。有限 $j$ 时稳定余项一般不是正映射，也不是可单独读取的仪器分支；两项只有相加后才等于同一个实际事件映射。式（123.2）中的两个正分量是取极限后才出现的标记测度分解。
+
+**引理 122.2（稳定尾的统一几何界）。** 存在 $q\in(0,1)$、$C<\infty$ 和 $j_0$，使得对 $j\ge j_0$ 及所有 $m\ge0$，
+
+$$
+\boxed{
+\|\mathcal B_j^m\|_\diamond\le Cq^m.
+}
+\tag{122.4}
+$$
+
+### 证明
+
+第 115 节的稳定谱与 $1$ 一致分离，且 $\mathcal B_j$ 在固定二维活动记忆所诱导的有限维算子空间中连续趋向边界稳定块 $\mathcal B_*=0$。取一个严格包住所有充分大的 $j$ 的稳定谱的圆周 $|z|=q<1$。有限维 resolvent 在该紧圆周上统一有界，Cauchy 积分公式给出
+
+$$
+\mathcal B_j^m
+=
+\frac1{2\pi i}\int_{|z|=q}z^m(zI-\mathcal B_j)^{-1}\,dz,
+$$
+
+从而得到式（122.4）。证毕。
+
+---
+
+## 123. 时间—后继的算子值弱极限
+
+**定理 123.1（标记弱极限）。** 对每个固定的有界连续函数 $f:[0,\infty)\to\mathbb C$，测试响应作为线性映射在完整 diamond 范数中满足
+
+$$
+\boxed{
+\mathbf M_j[f](X)\longrightarrow
+f(0)\operatorname{Tr}(Q_*X)P_0
++
+\left(\int_0^\infty f(t)e^{-t}\,dt\right)
+\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.1}
+$$
+
+等价地，$\mathbf M_j$ 弱收敛到算子值测度
+
+$$
+\boxed{
+\mathbf M_\infty(X)
+=
+\delta_0\,\operatorname{Tr}(Q_*X)P_0
++
+e^{-t}\,dt\,\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.2}
+$$
+
+### 证明
+
+将式（122.3）代入式（122.2），得到
+
+$$
+\mathbf M_j[f](X)
+=
+a_j(f)\,\zeta_j\operatorname{Tr}(G_jX)
++\mathbf S_j[f](X),
+\tag{123.3}
+$$
+
+其中
+
+$$
+a_j(f)=\epsilon_j\sum_{n\ge1}f(\epsilon_j n)r_j^{\,n-1},
+$$
+
+$$
+\mathbf S_j[f](X)
+=
+\sum_{n\ge1}f(\epsilon_j n)
+\mathcal C_j\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j)(X).
+$$
+
+先处理慢项。对任意固定 $L>0$，在 $0\le\epsilon_j n\le L$ 上，
+
+$$
+(1-\epsilon_j)^{n-1}
+\longrightarrow e^{-\epsilon_j n}
+$$
+
+一致成立；因此有限区间上的和是黎曼和。尾部由
+
+$$
+\epsilon_j\sum_{n>L/\epsilon_j}(1-\epsilon_j)^{n-1}
+\le e^{-L/2}
+$$
+
+控制，充分大的 $j$ 上该界与 $f$ 无关。先令 $j\to\infty$，再令 $L\to\infty$，得到
+
+$$
+a_j(f)\longrightarrow
+\int_0^\infty f(t)e^{-t}\,dt.
+\tag{123.4}
+$$
+
+因为 $G_j\to P_*$、$\zeta_j\to\zeta$，慢项趋向式（123.1）的第二项。
+
+再处理稳定项。由式（122.4），对任意固定 $N$，前 $N$ 项满足
+
+$$
+\sum_{n=1}^{N}
+\bigl(f(\epsilon_j n)-f(0)\bigr)
+\mathcal C_j\mathcal B_j^{\,n-1}(\operatorname{id}-\mathcal P_j)
+\longrightarrow0.
+$$
+
+其余项的范数不超过
+
+$$
+2\|f\|_\infty C'\sum_{n>N}q^{n-1},
+$$
+
+其中 $C'$ 吸收 $\mathcal C_j$ 与 $\operatorname{id}-\mathcal P_j$ 的统一有界范数；可先取 $N$ 很大使其任意小。因此，利用
+
+$$
+\sum_{m\ge0}\mathcal B_j^m(\operatorname{id}-\mathcal P_j)
+=
+\mathcal R_j,
+$$
+有
+
+$$
+\mathbf S_j[f]
+-
+f(0)\mathcal C_j\mathcal R_j
+\longrightarrow0.
+$$
+
+第 115 节的稳定 resolvent 连续性直接给出
+
+$$
+\mathcal C_j\mathcal R_j
+\longrightarrow
+\mathcal C_*(\operatorname{id}-\mathcal P_*).
+$$
+
+第 106 节的边界分支分类于是给
+
+$$
+\mathcal C_*(\operatorname{id}-\mathcal P_*)(X)
+=
+\operatorname{Tr}(Q_*X)P_0.
+\tag{123.5}
+$$
+
+这得到式（123.1）。所有估计在张量任意参考系统后仍成立；输入维数固定时，有限维完全范数与所用线性映射范数等价，所以收敛是完整 diamond 收敛。证毕。
+
+**推论 123.2（终端化只是取 $f=1$ 的边缘）。** 令 $f\equiv1$，则
+
+$$
+\mathbf M_j[1](X)=\Xi_{\Gamma_j}(X)
+\longrightarrow
+\operatorname{Tr}(Q_*X)P_0+\operatorname{Tr}(P_*X)\zeta,
+$$
+
+这正是式（115.3）（定理 115.2）的终端通道极限。若只取标量迹，则首次点击的缩放时间律弱收敛为
+
+$$
+\boxed{
+\mu_\infty^\rho
+=
+\operatorname{Tr}(Q_*\rho)\,\delta_0
++
+\operatorname{Tr}(P_*\rho)e^{-t}\,dt.
+}
+\tag{123.6}
+$$
+
+因此“时间被丢弃”不是说时间关系不存在，而是把同一标记对象作用于常函数 $1$。
+
+**推论 123.3（远离零的有限时间窗）。** 对 $0<a<b<\infty$，令 $I=[a,b]$。则在完整 diamond 范数中
+
+$$
+\boxed{
+\sum_{n:\,a\le\epsilon_j n\le b}
+\mathcal C_j\mathcal N_j^{\,n-1}(X)
+\longrightarrow
+(e^{-a}-e^{-b})\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{123.7}
+$$
+
+### 证明
+
+慢项是截断几何和，其系数趋向 $e^{-a}-e^{-b}$。稳定项由式（122.4）不超过 $Cq^{a/\epsilon_j}$，趋向零。边界端点的取整误差至多一个几何项，亦趋向零。证毕。
+
+这里的快分支已经全部压到缩放时间零；任何固定的正时间窗只看见慢分支。
+
+---
+
+## 124. 晚事件条件化会同时筛选输入扇区和量子后继
+
+**定理 124.1（固定正缩放时间的条件后继）。** 取整数 $n_j\ge1$，满足
+
+$$
+\epsilon_jn_j\longrightarrow s\in(0,\infty).
+$$
+
+若 $X\succeq0$ 且 $p=\operatorname{Tr}(P_*X)>0$，则
+
+$$
+\boxed{
+\frac{\mathcal C_j\mathcal N_j^{\,n_j-1}(X)}
+{\operatorname{Tr}[\mathcal C_j\mathcal N_j^{\,n_j-1}(X)]}
+\longrightarrow\zeta.
+}
+\tag{124.1}
+$$
+
+更一般地，对任意有限参考系统 $R$ 和固定的正迹类联合输入 $\omega_{RA}\succeq0$（以下取密度算子），若
+
+$$
+\omega_R^*
+=
+\operatorname{Tr}_A[
+(I_R\otimes P_*)\omega_{RA}(I_R\otimes P_*)
+],
+\qquad
+p=\operatorname{Tr}\omega_R^*>0,
+$$
+
+则对充分大的 $j$ 条件事件概率为正，且条件后的联合输出在迹范数中满足
+
+$$
+\boxed{
+\frac{(\operatorname{id}_R\otimes\mathcal C_j\mathcal N_j^{\,n_j-1})(\omega_{RA})}
+{\operatorname{Tr}[(\operatorname{id}_R\otimes\mathcal C_j\mathcal N_j^{\,n_j-1})(\omega_{RA})]}
+\longrightarrow
+\frac{\omega_R^*}{p}\otimes\zeta.
+}
+\tag{124.2}
+$$
+
+### 证明
+
+式（122.3）给慢主项
+
+$$
+r_j^{\,n_j-1}\epsilon_j\zeta_j\operatorname{Tr}(G_jX).
+$$
+
+因 $\epsilon_jn_j\to s$，有 $r_j^{n_j-1}\to e^{-s}$，而 $\operatorname{Tr}(G_jX)\to p$。稳定项由式（122.4）为 $O(q^{n_j})=o(\epsilon_j)$。所以分子为
+
+$$
+\epsilon_je^{-s}p\,\zeta+o(\epsilon_j),
+$$
+
+其迹为 $\epsilon_je^{-s}p+o(\epsilon_j)$，得到式（124.1）。
+
+对联合输入，慢项变为
+
+$$
+r_j^{n_j-1}\epsilon_j\,
+\omega_{R,j}^{G}\otimes\zeta_j,
+\qquad
+\omega_{R,j}^{G}
+=
+\operatorname{Tr}_A[
+(I_R\otimes G_j^{1/2})\omega_{RA}(I_R\otimes G_j^{1/2})
+],
+$$
+
+且 $\omega_{R,j}^{G}\to\omega_R^*$。同样的稳定尾估计在参考张量后成立；慢项的迹为 $\epsilon_je^{-s}p+o(\epsilon_j)>0$，归一化并在迹范数中取极限，得到式（124.2）。证毕。
+
+这说明“晚到”不是一次单纯的时间条件化：它把输入筛到边界慢扇区，同时把点击后的量子后继筛到同一个 $\zeta$。若 $\zeta=P_0$，时间仍可揭示输入来自慢扇区的权重；若 $\zeta\ne P_0$，时间条件化和后继输出共同保留这一临界关系。
+
+## 125. AHH：终端边缘、时间标记和后继不是三个对象
+
+**关系结论 125.1（标记对象的边缘一致性）。** 在指定名义仪器、完整二维活动记忆、两种实际记录、齐次重复以及趋近同一个最近失效相位的非失效序列条件下，同一实际仪器序列有三种相互兼容的读法：
+
+$$
+\boxed{
+\begin{aligned}
+\text{时间—后继标记测度}
+&\longrightarrow
+\text{取迹：缩放首次事件时间律},\\
+\text{时间—后继标记测度}
+&\xrightarrow{\ f\equiv1\ }
+\text{终端量子通道},\\
+\text{时间—后继标记测度}
+&\xrightarrow{\text{晚事件条件化}}
+\text{经慢扇区效果条件化的参考系统与点击后继的联合态}.
+\end{aligned}
+}
+$$
+
+AHH 在于：**终端通道的“量子后继自由”与事件时间的“指数慢尾”并不是两个可以独立拼接的结果；它们是同一算子值测度的两个边缘。** 有限 $j$ 的谱余项不被解释成正的“快事件分支”；只有极限标记测度才分解为时间零的 $P_0$ 原子和携带 $\zeta$ 的指数尾。晚事件条件化还会更新参考系统并选择后继。
+
+这也说明三个恢复任务必须分开：
+
+$$
+\boxed{
+\begin{array}{c}
+\text{只读时间}\\
+\text{终端量子输出}\\
+\text{联合时间与后继}
+\end{array}
+\quad
+\text{分别读取同一标记对象的不同边缘与条件层。}
+}
+$$
+
+只读时间可以恢复慢扇区的权重，却不能一般从时间记录恢复 $\zeta$；只读终端输出把快、慢事件的时间位置求和掉。若已知 $P_*$ 且完整识别了极限终端通道，则可以由 $\Lambda(P_*)=\zeta$ 得到后继态，但这仍不恢复事件时间与后继之间的联合标记关系；联合接口同时保留指数时间尺度、时间零原子、参考更新和量子后继。
+
+**来源与边界 125.2。** 本批只使用第 93、106、115 节的有限维谱投影、稳定 resolvent 和原始点击分支分类，在这些已声明接口上新增算子值弱极限与晚事件条件化。弱收敛是针对每个固定有界连续测试函数的完整 diamond 收敛，不是对测试函数取一致上确界。对任意归一化输入，令
+
+$$
+D_j=\{\epsilon_j n:n\ge1\},
+\qquad
+D=\bigcup_jD_j.
+$$
+
+则 $0\notin D$、每个有限 $j$ 的离散时间律满足 $\mu_j(D)=1$，而极限测度满足 $\mu_\infty(D)=0$；在 $d_{\rm TV}=\sup_A|\mu(A)-\nu(A)|$ 约定下，$d_{\rm TV}(\mu_j,\mu_\infty)=1$。因此不声称在总变差或支配总变差的测度范数中收敛。时间仍以 $\epsilon_j n$ 的内部标度表示，物理秒需要额外钟标定。
+
+本批不新增 Lean、消化、覆盖或冻结内容；不推广到无限维记忆、时变控制、非齐次仪器或未声明的完整时间记录认证问题，也不主张文献原创性。
+
+## 追加锚（本行以下为增补区）
