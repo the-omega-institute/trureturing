@@ -63387,3 +63387,400 @@ Florin P. Boca 与 Alexandru Zaharescu，*The correlations of Farey fractions*�
 本章新增原模型关系是允许校准方差随同一隐藏类别改变的 (199.24) 概率支付，以及同一噪声下的不同相位构造和物理积分回接。确定性几何条件不充当额外分布定理，原子项不能因区间很短而省略。较大分母的实际 $E_{\rm mid}$ 概率、完整固定指数分类、紧邻 $99c_q/200$ 的正区间及原任务其他参数范围仍未解决。普通数学推导未作 Lean 认证，有限文献核对不构成全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 200. 未知均值的自适应直方图检验：方差均值比达到完整实验的功效界
+
+第 198 章在精确均值已知时给出完整原直方图的临界重复实验。本章证明，同一批数据估计总均值不损失一阶检验信息。所得统计量仅使用每次完整实验的总计数，无须精确坐标均值、信号／背景标签、训练样本或未知支持；一次 path 实验内部的原始依赖全部保留。
+
+**定理 200.1（复合 Poisson 零假设下的自适应检验）。** 观察相同原层、参数与确定性支持下 $m\ge2$ 次独立完整实验的直方图，记其完整总计数为 $Z_1,\ldots,Z_m$。对固定 $0<\alpha<1$，定义
+
+$$
+\bar Z=\frac1m\sum_{i=1}^m Z_i,\qquad
+S_m^2=\frac1{m-1}\sum_{i=1}^m(Z_i-\bar Z)^2,
+$$
+
+$$
+D_m=\sqrt{\frac{m-1}{2}}\left(1-\frac{S_m^2}{\bar Z}\right),\qquad
+\varphi_{Q,m,\alpha}=\mathbf1_{\{\bar Z>0\}}\mathbf1_{\{D_m>\Phi^{-1}(1-\alpha)\}}.
+\tag{200.1}
+$$
+
+当 $\bar Z=0$ 时规定 $D_m=0$ 且不拒绝。零假设为完整计数线上任意一个固定 product-Poisson 向量的 $m$ 次独立重复：坐标强度任意非负，总强度 $t\in[1,\infty)$ 有限，同一未知强度向量在各次重复间不变。允许可数支撑、零坐标与任意大的总均值。令 $\mathcal R_Q$ 为此向量律族，则
+
+$$
+\sup_{R\in\mathcal R_Q}
+\left|\mathbb E_{R^{\otimes m}}\varphi_{Q,m,\alpha}-\alpha\right|\longrightarrow0
+\qquad(m\longrightarrow\infty).
+\tag{200.2}
+$$
+
+设 $P_Q$ 是原 pair 或平稳 path 的完整直方图实际律，$F_Q$ 是原信号 product-Poisson 行落在完整计数线的概率。对每个固定 $J\Subset D$，在全部合法确定性支持上分别一致地，若 $mF_Q^2\to\tau\in(0,\infty)$，则
+
+$$
+\mathbb E_{P_Q^{\otimes m}}\varphi_{Q,m,\alpha}
+\longrightarrow\Pi_\alpha(\tau)
+=\Phi\left(\Phi^{-1}(\alpha)+\sqrt{\tau/8}\right).
+\tag{200.3}
+$$
+
+任何基于完整重复直方图、在上述复合零假设族上一致渐近水平不超过 $\alpha$ 的随机化检验，沿每条该范围内的原替代序列，其极限上功效均不超过 (200.3)。本检验因此达到逐替代序列的渐近功效界，也达到紧参数范围与全部支持上的渐近 maximin 界。临界尺度可在任意固定正有限紧区间内一致变化；不主张有限样本一致最强检验。
+
+所有原参数、取整、补偿、时间长度、完整计数线与尾坐标保留。各替代律的精确均值仅用于证明最不利零假设属于 $\mathcal R_Q$，不输入检验。结论不覆盖重复间改变或随机混合强度向量的零假设，也不声称总均值趋零时的一致校准。
+
+### 200.2 Exact original model and the operative Chapter 198 interface
+
+Retain
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad\lambda=Q^3.
+$$
+The fixed original amplitude $r\in(0,1)$ obeys
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+With beta in $D=(\beta_*,1)$, retain EVERY floor and compensation:
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,\quad
+M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+s_0=M-q,\quad\epsilon=rq/s_0,\quad T=2M\lambda.             \tag{200.4}
+$$
+There are two parity classes of size $M$. For each deterministic $S\subset C_+$ of size $q$, let
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+The pair experiment consists of $T$ independent stationary adjacent pairs. The path experiment starts uniformly and takes $T$ consecutive transitions of this SAME kernel. The compensation gives $P_S^2=\Pi$, but does not make neighboring transitions independent.
+
+Let
+$$
+(K_j,B_j)=(k_0,l_0)+j(Q,P),\qquad
+J_Q=\{j\in\mathbb Z:K_j,B_j\ge0\},
+$$
+$$
+C_j=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}},\qquad
+Z=\sum_{j\in J_Q}C_j.                                      \tag{200.5}
+$$
+These are the COMPLETE original score groups by Chapter 175's global score injectivity at the original amplitude. The line and its count-pair labels depend on the known layer/amplitude, not on beta or the unknown support. No oracle partition into signal/background rows is used by (200.1).
+
+Write $P_Q=P_{Q,\beta,S}^{\mathcal E}$, $\mathcal E\in\{\mathrm{pair},\mathrm{path}\}$, for this full histogram law, and $\mu_j=\mathbb E_{P_Q}C_j$, $\mu_\bullet=\sum_j\mu_j$. The index set is countable, but only
+$$
+A_Q(\beta)=\left\{j\in J_Q:j\le\left\lfloor\frac{T-\lambda}{Q+P}\right\rfloor\right\}                 \tag{200.6}
+$$
+can occur. Indeed $K_j+B_j=\lambda+j(Q+P)\le T$ is necessary for an observed row. This set is finite, and every remaining coordinate is identically zero under the actual law. Also $Z\le M$. If any coordinate within this set has mean zero it is identically zero as well. Hence
+$$
+P_Q\ll R_\mu:=\bigotimes_{j\in J_Q}\operatorname{Pois}(\mu_j)
+$$
+on the exact common countable-vector space, with zeros retained. No tail coordinate is dropped.
+
+Define the deterministic original line mass
+$$
+f_j=e^{-\lambda}\frac{(a\lambda)^{K_j}(b\lambda)^{B_j}}{K_j!B_j!},\qquad
+F_Q=\sum_{j\in J_Q}f_j.
+$$
+The floor-uniform line local limit, proved in Chapter 197, is
+$$
+F_Q\sim c_FQ^{-5/2},\qquad c_F=[2\pi(b+a\vartheta^2)]^{-1/2}.                \tag{200.7}
+$$
+Chapter 197 proves this by the mesh $j/\sqrt Q$, a uniform Stirling expansion with $a\lambda-k_0\in[0,1)$, a Gaussian line-sum envelope and the full-line tail payment. Endpoints escape every fixed mesh interval. The normalization is not a new result here.
+
+The following are the exact operative inputs from Chapter 198, not consequences inferred from its scalar KL coefficient. On every fixed $J=[\beta_0,\beta_1]\Subset D$, separately pair/path and uniformly in deterministic supports:
+
+1. The actual aggregate satisfies $\mu_\bullet=(2+o_J(1))qF_Q$. In particular, with $c(\beta)=\phi(1/\beta-1)$,
+$$
+\log\mu_\bullet=c(\beta)\lambda-\tfrac52\log Q+O_J(1).                \tag{200.8}
+$$
+2. There are full-vector reference laws $\mathsf B_Q,\mathsf R_Q$, retaining the same paid tail, such that for $mF_Q^2\le K<\infty$,
+$$
+\|P_Q^{\otimes m}-\mathsf B_Q^{\otimes m}\|_{\rm TV}\le\Delta_P:=\sqrt{m\varepsilon_Q},\qquad
+\|R_\mu^{\otimes m}-\mathsf R_Q^{\otimes m}\|_{\rm TV}\le\Delta_R:=\sqrt{m\omega_Q},
+$$
+$$
+\varepsilon_Q=O_J(Q^{-20})+O_J(e^{-c_J\lambda}),\quad
+\omega_Q=O_J(e^{-c_J\lambda}),\qquad
+\mathbb E_{\mathsf R_Q^{\otimes m}}\left(\frac{d\mathsf B_Q^{\otimes m}}{d\mathsf R_Q^{\otimes m}}\right)^2\le e^{C_JK}.       \tag{200.9}
+$$
+Here $c_J>0$ may decrease between occurrences. This is an L2 bound for the EXPLICIT convolution reference only. It is not an actual-law L2 bound.
+3. Put
+$$
+W_t(z)=\frac{(z-t)^2-z}{t},\qquad
+H_m(t)=-\frac1{\sqrt{2m}}\sum_{i=1}^m W_t(Z_i),\quad
+V_Q=mF_Q^2/8.
+$$
+With exact actual mean used ONLY as a proof parameter,
+$$
+\ell_{Q,m}:=\log\frac{dP_Q^{\otimes m}}{dR_\mu^{\otimes m}}
+=\sqrt{V_Q}H_m(\mu_\bullet)-V_Q/2+o_P(1),              \tag{200.10}
+$$
+under both hypotheses, uniformly when $mF_Q^2\le K$. If $mF_Q^2\to\tau\in(0,\infty)$, then
+$$
+\ell_{Q,m}\Rightarrow N(-V/2,V)\text{ under }R_\mu^{\otimes m},\qquad
+\ell_{Q,m}\Rightarrow N(V/2,V)\text{ under }P_Q^{\otimes m},
+\quad V=\tau/8.                                           \tag{200.11}
+$$
+Finite-layer negative-infinite likelihood values are allowed; their reference probability tends to zero. These are the actual full-histogram likelihoods.
+
+The conditions behind (200.9)–(200.11) matter. The signal-word chain rule pays the ENTIRE original signal array. Conditional on the SAME four actual totals, the four label lists are uniform allocations; those totals keep their actual joint distribution. The conditional background smoothing bound has freely positive cutoffs $Q^{-20}$, whose finite conditions hold because the background line mass decays exponentially and the class size grows exponentially. Its error is a SUM, with the underlying conditional-background estimate interpreted as the stated sum. Approximate signal/background mark proportionality is paid by a full mean-weighted information bound. Chapter 198 then proves weighted exact-mean Hellinger control, including tiny-mean tail coordinates, before tensorization. Its independent-convolution Charlier estimate controls all degrees and the near-zero likelihood event; its product L2 bound justifies the reference change of law. Its actual likelihood transfer uses L1 density differences and contiguity, never KL-to-L2 inference. Finally it pays the absolute aggregate-mean change, which is exponentially small because $q^2/M$ decays on $D$. Those steps give precisely (200.9)–(200.11).
+
+The extension to $m$ repetitions means independent copies of the ENTIRE experiment at the same layer, beta and support. Beta/support may vary along a sequence of layers when stating uniformity; within a layer they are fixed across repetitions. No changing-horizon or changing-support sampling scheme is substituted inside a repetition.
+
+### 200.3 Composite null and the nuisance range
+
+Let $\mathcal X_Q$ be the countable set of nonnegative integer sequences on $J_Q$ with finite aggregate. On this space define
+$$
+\mathcal R_Q=\left\{R_\eta=\bigotimes_{j\in J_Q}\operatorname{Pois}(\eta_j):
+\eta_j\ge0,\quad 1\le t:=\sum_{j\in J_Q}\eta_j<\infty\right\}.          \tag{200.12}
+$$
+The null experiment is $R_\eta^{\otimes m}$ for one unknown deterministic $\eta$ shared by every repetition. Arbitrary zero coordinates, arbitrarily small positive coordinates, unbounded finite aggregate means and arbitrary countably supported shapes are admitted. Allowing coordinates beyond an alternative's finite-horizon set enlarges the null; the theorem is valid for that enlargement. If desired, restricting those coordinates to zero gives a smaller null with the same conclusions. No conditional mixture of different means across repetitions is asserted to be Poisson.
+
+To verify the countable construction and aggregate law, take finite initial sets increasing to $J_Q$. Their sums are Poisson with parameters tending to $t$, and their expectations are at most $t$. Monotone convergence gives a finite full sum almost surely. Its generating function for $0\le s\le1$ is the limit $\exp(t(s-1))$. Thus
+$$
+Z\sim\operatorname{Pois}(t),\qquad
+(Z_1,\ldots,Z_m)\sim\operatorname{Pois}(t)^{\otimes m}                 \tag{200.13}
+$$
+EXACTLY, irrespective of the coordinate shape. The product null need not resemble an actual shape. Formula (200.13), not a marginal-to-joint approximation, is why the calibration is uniform over all shapes.
+
+For $J=[\beta_0,\beta_1]\Subset D$, set
+$$
+c_-=\phi(1/\beta_1-1)>0,\qquad c_+=\phi(1/\beta_0-1)>0.
+$$
+Equation (200.8) gives the explicit enclosing original range
+$$
+e^{c_-\lambda/2}\le\mu_\bullet\le e^{2c_+\lambda}                   \tag{200.14}
+$$
+for every sufficiently late layer, uniformly over all original alternatives on $J$. Hence ALL their exact-mean laws $R_\mu$ belong to (200.12) eventually. This is the asymptotic coverage required here; finitely many early layers do not enter any limit. The null interval $[1,\infty)$ itself is independent of beta, its compact interval and the support, and has no upper cap. The calibration below works throughout that larger interval, including means that do not grow at all.
+
+The data in (200.1) are only the full observed aggregates. The proof parameters $t$, $\mu_j$, $\mu_\bullet$, $q$, $\rho$ and the proof cutoff are not fitted or supplied to that test. The input is the full count-line histogram, not oracle signal/background counts. The original complete-group identification ensures that (200.5) is its legitimate aggregate without choosing a data-dependent window.
+
+### 200.4 Elementary uniform Poisson score bounds
+
+Let $Y\sim\operatorname{Pois}(t)$, $t\ge1$, and $X=Y-t$. Its centered mgf is
+$$
+\mathbb Ee^{sX}=\exp\{t(e^s-1-s)\}.
+$$
+Direct coefficient extraction gives
+$$
+\mathbb EX=0,\quad \mathbb EX^2=t,\quad\mathbb EX^3=t,\quad
+\mathbb EX^4=3t^2+t.
+$$
+Since $W_t(Y)=(X^2-X-t)/t$, ordinary expansion gives
+$$
+\mathbb EW_t=0,\qquad \mathbb EW_t^2=2,\qquad
+\mathbb E\left[W_t\frac{Y-t}{\sqrt t}\right]=0.                    \tag{200.15}
+$$
+The last equality is exactly the orthogonality to the normalized Poisson mean score. It identifies the cancellation but is not used as a substitute for the plug-in proof below.
+
+We need a moment bound uniform at arbitrarily large means. In the eighth derivative of the centered mgf, the nonzero terms have at most four factors because each power in $e^s-1-s$ is at least two. More explicitly,
+$$
+\mathbb EX^8=8!\sum_{k=1}^4\frac{t^k}{k!}
+\sum_{\substack{r_1+\cdots+r_k=8\\r_i\ge2}}\frac1{r_1!\cdots r_k!}
+\le K_8t^4\quad(t\ge1),
+$$
+where $K_8$ is the same finite sum with $t^k$ replaced by one. Using $|u+v+w|^4\le27(|u|^4+|v|^4+|w|^4)$,
+$$
+\sup_{t\ge1}\mathbb E W_t^4\le27(K_8+5)<\infty.
+$$
+Thus the centered variance-one variable $-W_t(Y)/\sqrt2$ has a uniformly bounded third absolute moment. This derivation uses fixed scalar moments under the EXACT Poisson null; it is not a substitution of growing order into an original path moment estimate.
+
+For independent $Y_i\sim\operatorname{Pois}(t)$, the characteristic function of one normalized summand is, for each fixed real $u$,
+$$
+\mathbb E\exp\left\{-\frac{iuW_t(Y)}{\sqrt{2m}}\right\}
+=1-\frac{u^2}{2m}+O_u(m^{-3/2}),
+$$
+uniformly for $t\ge1$; Taylor's remainder is bounded by the third absolute moment. Raising this expression to the $m$-th power proves
+$$
+\sup_{t\ge1}\sup_{x\in\mathbb R}
+\left|\Pr_t\{H_m(t)\le x\}-\Phi(x)\right|\longrightarrow0.          \tag{200.16}
+$$
+For completeness, the uniform conclusion is not inferred from a fixed-mean CLT. Along ANY sequence $t_m\ge1$, the uniform characteristic-function remainder gives convergence to the standard normal. Characteristic-function continuity then gives weak convergence along that sequence. Convergence to a continuous distribution implies uniform convergence of distribution functions: choose two tail cutoffs and a finite grid with small normal increments, and use monotonicity between grid points. If the supremum in (200.16) failed, a violating sequence of means and points would contradict this conclusion. This also proves the triangular moving-mean version. No upper restriction on $t_m$ is used.
+
+### 200.5 Exact estimation identity and a finite uniform remainder
+
+Continue under (200.13), writing $\delta=\bar Z-t$, $A=\sum_i(Z_i-\bar Z)^2$. The identity
+$\sum_i(Z_i-t)^2=A+m\delta^2$ gives
+$$
+-t\sum_i W_t(Z_i)=m\bar Z-A-m\delta^2.
+$$
+Consequently on $\bar Z>0$,
+$$
+\boxed{\quad
+D_m=\frac{t}{\bar Z}\sqrt{\frac{m}{m-1}}\,H_m(t)
+ +\frac{m\delta^2-\bar Z}{\bar Z\sqrt{2(m-1)}}.
+\quad}                                                           \tag{200.17}
+$$
+This is an exact finite-sample identity, with the $m$ versus $m-1$ corrections present. It shows why an exponentially large absolute error in the sample mean is harmless: its uncancelled contribution is quadratic and divided by $t\sqrt m$, rather than linear and multiplied by $\sqrt m$.
+
+Let $G=\{|\delta|\le t/2\}$. Since $\mathbb E\delta^2=t/m$,
+$$
+\Pr_t(G^c)\le\frac4{mt},\qquad
+\mathbb EH_m(t)^2=1,\qquad
+\mathbb E\frac{m\delta^2}{t}=1.
+$$
+On $G$, the coefficient in (200.17) differs from one by at most
+$$
+2\sqrt{\frac{m}{m-1}}\frac{|\delta|}{t}
++\left(\sqrt{\frac{m}{m-1}}-1\right).
+$$
+Here the leading plus sign means a SUM. Cauchy–Schwarz, without any independence between $\delta$ and $H_m$, bounds the expectation of this expression times $|H_m|$ by
+$$
+\frac{2\sqrt2}{\sqrt{mt}}+\frac1{m-1}.
+$$
+The absolute expectation on $G$ of the last term of (200.17) is at most
+$3/\sqrt{2(m-1)}$. For every $m\ge2,t\ge1$, their sum is bounded by $10/\sqrt m$. Markov's inequality therefore proves the explicit uniform estimate
+$$
+\boxed{\quad
+\Pr_t\{|D_m-H_m(t)|>u\}
+\le\frac4{mt}+\frac{10}{u\sqrt m},\qquad u>0.
+\quad}                                                           \tag{200.18}
+$$
+The convention at $\bar Z=0$ causes no gap: that event lies in $G^c$, and its exact probability is $e^{-mt}\le e^{-m}$. The bound may exceed one for small $u,m$, which is harmless.
+
+Combining (200.16),(200.18) gives
+$$
+\sup_{t\ge1,x\in\mathbb R}|\Pr_t(D_m\le x)-\Phi(x)|\to0.             \tag{200.19}
+$$
+Indeed bracket $D_m\le x$ by $H_m\le x\pm u$, add the probability in (200.18), and use the normal modulus of continuity. One can take $u=m^{-1/4}$; the explicit substitution cost is at most $4/m+10m^{-1/4}$, apart from the normal modulus and the uniform CLT error in (200.16). This separates a proved finite estimation bound from a claimed rate for the CLT. The latter is only asserted as the uniform limit proved above.
+
+There is also exact conditional centering, explaining the unbiased variance choice. Given $\sum_i Z_i=s>0$, independent Poisson coordinates have the multinomial law with $s$ trials and cell probabilities $1/m$: divide their joint mass by the scalar Poisson mass of their sum. Hence $\mathbb E(A\mid s)=s(1-1/m)$, while $\bar Z=s/m$, so
+$$
+\mathbb E(D_m\mid\textstyle\sum_i Z_i=s)=0.                       \tag{200.20}
+$$
+This conditional identity is not itself a normal approximation. The CLT and denominator control were separately proved in (200.16)–(200.19). No auxiliary sample or oracle total is used.
+
+Equations (200.13),(200.19) and $\Pr(\bar Z=0)\le e^{-m}$ prove (200.2), including arbitrary coordinate shape and means growing faster than any exponential in $Q$. The only null mean restriction is $t\ge1$.
+
+### 200.6 Transfer to the SAME actual repeated experiment
+
+Fix $0<\tau_-\le mF_Q^2\le\tau_+<\infty$. By (200.7), $m\to\infty$; by (200.14), $\mu_\bullet\ge1$ uniformly eventually. Under $R_\mu^{\otimes m}$, the actual full aggregate is exactly Poisson with mean $\mu_\bullet$, so (200.18) applies with this unknown proof parameter.
+
+It remains to transfer a convergence-in-probability statement to the ACTUAL law, which is not the null. This can be paid quantitatively using (200.9). For any event $E$ on the full repeated-histogram space, Cauchy–Schwarz under the explicit reference gives
+$$
+P_Q^{\otimes m}(E)
+\le\Delta_P+\mathsf B_Q^{\otimes m}(E)
+\le\Delta_P+e^{C_J\tau_+/2}\sqrt{\mathsf R_Q^{\otimes m}(E)}
+\le\Delta_P+e^{C_J\tau_+/2}\sqrt{R_\mu^{\otimes m}(E)+\Delta_R}.       \tag{200.21}
+$$
+This is a same-experiment comparison: both references in (200.9) were constructed for the SAME original beta, support, class mixture and horizon. The only squared likelihood here is the already bounded explicit reference likelihood. No actual squared likelihood or unbounded expectation is transported.
+
+Taking $E=\{|D_m-H_m(\mu_\bullet)|>u\}$ yields the new faithful original-law bound
+$$
+\boxed{\quad
+P_Q^{\otimes m}\{|D_m-H_m(\mu_\bullet)|>u\}
+\le\Delta_P+e^{C_J\tau_+/2}
+\left(\frac4{m\mu_\bullet}+\frac{10}{u\sqrt m}+\Delta_R\right)^{1/2}.
+\quad}                                                           \tag{200.22}
+$$
+The right side tends to zero for every fixed $u>0$, uniformly. The zero-sample-mean event is also paid by (200.21) with null probability $e^{-m\mu_\bullet}$. Thus
+$$
+D_m-H_m(\mu_\bullet)\to0
+\quad\text{in probability under BOTH }R_\mu^{\otimes m}\text{ and }P_Q^{\otimes m}.                 \tag{200.23}
+$$
+The distinction between relative and absolute mean estimation is explicit: $\bar Z-\mu_\bullet$ need not tend to zero in absolute value. Formula (200.17) uses $m(\bar Z-\mu_\bullet)^2/\mu_\bullet$, which is tight under the reference and is paid by (200.21) under the actual law. Merely replacing the mean inside a squared fluctuation without that cancellation would not justify (200.23).
+
+Combining (200.10),(200.23) gives the nuisance-free likelihood representation
+$$
+\boxed{\quad
+\ell_{Q,m}=\sqrt{V_Q}\,D_m-V_Q/2+o_P(1)
+\quad\text{under BOTH hypotheses},\qquad V_Q=mF_Q^2/8.
+\quad}                                                           \tag{200.24}
+$$
+The likelihood itself is still the simple actual/reference likelihood from Chapter 198; it is not a composite likelihood ratio. What is new is that its first-order statistic is observable without knowing any means.
+
+By (200.11),(200.24), when $mF_Q^2\to\tau\in(0,\infty)$,
+$$
+D_m\Rightarrow N(0,1)\text{ under }R_\mu^{\otimes m},\qquad
+D_m\Rightarrow N(\sqrt{\tau/8},1)\text{ under }P_Q^{\otimes m}.       \tag{200.25}
+$$
+The division by $\sqrt{V_Q}$ here is legitimate because $\tau>0$. The null assertion also follows directly from the stronger composite result (200.19). Both limiting laws are continuous at $z_{1-\alpha}$, so (200.25) and the paid zero-mean event prove the power (200.3).
+
+Uniformity means the following precise statement: for every fixed $J\Subset D$, $0<\tau_-<\tau_+<\infty$, and $\alpha\in(0,1)$,
+$$
+\sup_{\substack{\beta\in J,\ S\text{ lawful},\ \mathcal E\in\{\mathrm{pair},\mathrm{path}\}\\
+m\in\mathbb N:\ \tau_-\le mF_Q^2\le\tau_+}}
+\left|\mathbb E_{(P_{Q,\beta,S}^{\mathcal E})^{\otimes m}}\varphi_{Q,m,\alpha}
+-\Pi_\alpha(mF_Q^2)\right|\to0.                                  \tag{200.26}
+$$
+For the difference inside the absolute value, the displayed minus sign is part of the formula. To verify the uniformity rather than assume it, a violating sequence has a subsequence on which $mF_Q^2$ converges in $[\tau_-,\tau_+]$. The uniformly paid bounds (200.9),(200.18),(200.22),(200.24) and the uniform Chapter 198 likelihood limit give (200.25) on that sequence, contradicting the violation. Pair/path equality of the power is the conclusion of their separately paid interfaces, not an assumption of independent path rows. Arbitrary support is handled by the original uniform laws, not by averaging over a support prior.
+
+### 200.7 Sharp envelope for every full-histogram test
+
+Let $\psi_{Q,m}:\mathcal X_Q^m\to[0,1]$ be any randomized full-histogram test such that
+$$
+\sup_{R\in\mathcal R_Q}\mathbb E_{R^{\otimes m}}\psi_{Q,m}\le\alpha+o(1).                \tag{200.27}
+$$
+The error is uniform over whatever repetition sequence or compact critical interval is being considered. No restriction to aggregate tests is imposed here. Fix any original alternative sequence in the stated compact beta/support scope with $mF_Q^2\to\tau>0$. Its SAME exact-mean null $R_\mu$ is a lawful member of (200.12) by (200.14). It is used only to prove the bound; the adaptive test does not know it.
+
+Write $L=e^{\ell_{Q,m}}=dP_Q^{\otimes m}/dR_\mu^{\otimes m}$. For every $k>0$, the pointwise inequality $(L-k)\psi\le(L-k)_+$ gives
+$$
+\mathbb E_{P_Q^{\otimes m}}\psi
+\le\mathbb E_{R_\mu^{\otimes m}}(L-k)_+ +k\mathbb E_{R_\mu^{\otimes m}}\psi
+=1-\mathbb E_{R_\mu^{\otimes m}}\min(L,k)+k\mathbb E_{R_\mu^{\otimes m}}\psi.             \tag{200.28}
+$$
+The equality uses the exact identity $\mathbb E_R L=1$. The remaining function $\min(e^x,k)$ is bounded and continuous on $\mathbb R$, with value zero at $-\infty$. Therefore Chapter 198's likelihood limit (200.11), including its paid exceptional mass, suffices to pass to the limit. No unbounded likelihood expectation is inferred from weak convergence or TV.
+
+Let $V=\tau/8$, $G\sim N(-V/2,V)$, and choose
+$$
+\log k=-V/2+\sqrt V\,z_{1-\alpha}.
+$$
+Then $\Pr(G>\log k)=\alpha$. Completing the square in the normal density gives
+$$
+\begin{split}
+1-\mathbb E\min(e^G,k)+k\alpha
+&=\mathbb E[e^G\mathbf1_{\{G>\log k\}}]\\
+&=1-\Phi(z_{1-\alpha}-\sqrt V)
+=\Phi(z_\alpha+\sqrt V).
+\end{split}
+$$
+Here $\mathbb Ee^G=1$ exactly, and the tilted normal is $N(V/2,V)$; this finite Gaussian integral is not a proposed approximation for the original full vector. Equations (200.27),(200.28) prove
+$$
+\boxed{\quad
+\limsup\mathbb E_{P_Q^{\otimes m}}\psi_{Q,m}\le\Pi_\alpha(\tau).
+\quad}                                                           \tag{200.29}
+$$
+This is the Neyman–Pearson inequality proved directly, with its threshold and limiting payment supplied. It also demonstrates why allowing the null's coordinate shape to vary does not give full-histogram tests an unaccounted advantage: the least-favorable witness $R_\mu$ is already in that enlarged null, with every actual zero/tiny mean intact.
+
+For uniform size as in (200.27) over a compact critical interval, the upper bound is uniform too:
+$$
+\limsup_Q\ \sup_{\beta,S,\mathcal E,m}
+\left(\mathbb E_{(P_{Q,\beta,S}^{\mathcal E})^{\otimes m}}\psi_{Q,m}
+-\Pi_\alpha(mF_Q^2)\right)\le0,                                  \tag{200.30}
+$$
+with the same restrictions as (200.26). A violating sequence and a convergent critical-scale subsequence reduce it to (200.29). The selected $R_\mu$ is a lawful least-favorable null for this asymptotic power bound at each alternative. We do not assert a unique globally least-favorable finite-sample vector.
+
+The test (200.1) has uniform null size (200.2) and uniformly attains (200.26). Thus for any sequence $mF_Q^2\to\tau\in(0,\infty)$, its infimum power over the original compact-beta/support alternatives tends to $\Pi_\alpha(\tau)$, while no uniformly level-$\alpha$ full-histogram test can have larger limiting worst-case power. More strongly, (200.29) rules out larger limiting power along any individual alternative sequence. This states both the pointwise-sequence and maximin senses and does not conflate them with finite-sample optimality.
+
+### 200.8 What is adapted, and why no first-order information is lost
+
+The shape nuisance $\eta/t$ can be any countable probability vector, shared by repetitions. Its only effect on the aggregate under the null is none at all: (200.13) is exact. The aggregate-mean nuisance $t$ is estimated by $\bar Z$. The mean score and the quadratic Charlier score are orthogonal by (200.15), but the operative payment is the exact identity (200.17), with finite error (200.18) and actual-law transfer (200.22). These facts justify adaptation even though $\mu_\bullet$ is exponentially large and the absolute error of $\bar Z$ need not vanish.
+
+Beta and the deterministic support remain arbitrary alternatives in the original compact scope. They are fixed within each repeated experiment and are not fitted by the test. The proof references use their values to establish the uniform comparison and the least-favorable null; that is not information supplied to the procedure. Coordinate means may be zero, tiny or large; they are neither estimated nor discarded.
+
+The critical number of repetitions is of order $Q^5$. If $m/Q^5\to c\in(0,\infty)$, then (200.7) gives
+$$
+\tau=\frac{c}{2\pi(b+a\vartheta^2)},\qquad
+\Pi_\alpha(\tau)=\Phi\left(z_\alpha+
+\sqrt{\frac{c}{16\pi(b+a\vartheta^2)}}\right).
+$$
+This formula uses the original amplitude and the unchanged lattice normalization. The procedure (200.1) still needs only the sample aggregates and $m$.
+
+This chapter concerns positive finite critical scale. Chapter 198's known-mean zero/infinite-scale conclusions remain unchanged. We do not infer an adaptive normal limit for arbitrary enormous repetition counts by multiplying (200.9) beyond its paid range, nor claim uniform null calibration as the mean tends to zero. The chosen composite null $t\ge1$ already covers all stated actual alternatives eventually. A different null that randomizes or changes its mean vector between repetitions would require a different analysis.
+
+No assertion is made about estimating the support, recovering the full data, distinguishing the two temporal directions, full-data posterior entropy, or E2. First-order sufficiency here means attainment of this specified asymptotic binary-testing envelope; it is not sufficiency for all statistical tasks or all nuisance enlargements.
+
+
+### 200.9 来源与边界
+
+Poisson 离散度检验、Charlier 正交性与 Neyman–Pearson 方法属于经典统计学。Harremoës–Johnson–Kontoyiannis，*Thinning, Entropy and the Law of Thin Numbers*，arXiv:0906.0690v1 的 Poisson–Charlier 定义、归一化陈述与附录 `Charlierexpo` 证明提供背景；归一化引理在该原文中未附证明，固定输入的 thinning 命题也不直接提供本章的移动未知均值结论。其确定均值下降阶乘上标差异与截断 Charlier 级数未必为正密度的限制继续保留。本章由精确 Poisson 矩母函数直接推导所需固定阶矩，并直接证明一致三角阵极限，未把未核实的一般效率定理作为前提。
+
+新增原模型关系是 (200.17)–(200.18) 的精确估计恒等式与有限一致误差界、(200.21)–(200.24) 对同一实际完整实验的概率传递，以及 (200.28)–(200.30) 适用于全部完整直方图检验的复合零假设功效界。原模型平均数可随层指数增长；样本均值的绝对误差不必消失，证明支付的是二次误差与随机分母。
+
+这里只论规定直方图二元检验的一阶功效。未知支持恢复、全数据充分性、后验熵、时间箭头与 E2 均未由此判定。第 198 章已知均值的零／无穷临界尺度结论保持原范围；本章不把有界临界尺度的误差乘到任意大的重复次数。普通数学推导与 Lean 认证有别，有限文献核对不支持全球原创性判断。
+
+## 追加锚（本行以下为增补区）
