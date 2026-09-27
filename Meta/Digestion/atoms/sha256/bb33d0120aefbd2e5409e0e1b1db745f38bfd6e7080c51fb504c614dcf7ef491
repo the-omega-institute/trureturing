@@ -1,0 +1,66 @@
+**定理 226.2（达到谱下界强制共同 Gram 几何）。** 任意定义213.1程序若在原实际联合支持上满足 $\dim\mathcal H=N(a,S)$，则其第209.3式固定信号对称化后的算子 $E=(I+A)/2$、$V=K^\dagger$ 满足
+
+$$
+E=I-qq^\dagger,\qquad Vq=0,\qquad V^\dagger V=E,
+\tag{226.1}
+$$
+
+其中 $q$ 为一个单位向量。该对 $(E,V)$ 与第213.4节的共同 Gram 模型酉等价。若原曲线具有共同实结构，则可在保持同一曲线、实际支持、精确性和信息曲率的条件下选择一个固定处理器，使这一等价为实正交等价。
+
+这里的刚性指固定对称化后的压缩算子对，不声称未经对称化的原 CPTP 映射逐项唯一。
+
+证明。 第213.2节对每个尖锐点给出一个 $V$ 不变的规范三维空间 $\mathcal H_i$，其中有正交单位向量 $e_i,z_i,f_i$，满足 $Ee_i=e_i$、$Ez_i=z_i$、$Ef_i=0$、$Vf_i=0$。全部不同的零、正、负签名恰有 $N(a,S)$ 个，已经用满整个维数，故它们全是简单特征值，$\ker V$ 一维。可以选定单位核向量 $q$，使每个 $f_i$ 都是 $q$ 的相位倍数。
+
+所有规范空间的谱联合包含全部特征值；每个特征值的特征向量属于至少一个 $\mathcal H_i$，所以这些空间张成 $\mathcal H$。而 $\mathcal H_i=\operatorname{span}\{q,e_i,z_i\}$，其中 $e_i,z_i\perp q$，因此所有 $e_i,z_i$ 张成 $q^\perp$。由 $E$ 在这些向量上的作用立刻得到 $E=I-qq^\dagger$。
+
+全局压缩关系给出 $V^\dagger V=KK^\dagger\preceq E$。规范限制满足 $V_i^\dagger V_i=I-f_if_i^\dagger$，所以在每个 $\operatorname{span}\{e_i,z_i\}$ 上都有 $\|Vx\|=\|x\|$。正算子 $E-V^\dagger V$ 的二次型在这些向量上为零，故它湮灭这些向量，也湮灭 $q$。这些向量张成全空间，遂得（226.1）。此论证只使用 $\mathcal H_i$ 对 $V$ 的不变性，不要求它对 $V^\dagger$ 不变。
+
+对每个稳定特征值 $\lambda\in(-1,1)$，取 $Vx_\lambda=\lambda x_\lambda$。由（226.1），
+
+$$
+(1-\lambda^2)\|x_\lambda\|^2=|q^\dagger x_\lambda|^2>0.
+\tag{226.2}
+$$
+
+因此可唯一缩放使 $q^\dagger x_\lambda=1$，并取 $x_0=q$。对两个这样的向量配对，得到
+
+$$
+(1-\lambda\mu)\langle x_\lambda,x_\mu\rangle=1.
+\tag{226.3}
+$$
+
+这恰是第213.21式的 Gram 矩阵。若出现 $-1$，其单位特征向量为收缩算子的约化方向，与稳定部分正交。相同 Gram 矩阵的基之间有唯一等距，匹配这个单位方向后得到所称酉等价。这里沿用经典部分等距的 Gram 方法；新增限制是由尖锐点等号和维数取等强制整个程序的秩一缺陷。
+
+现设曲线具有共同实结构。每个 $\operatorname{ran}\rho_u$ 在该共轭下不变，故它们张成的实际联合支持也不变；在这一原支持上选共轭固定的正交基，便有 $\overline{\rho_u}=\rho_u$。目标为实 Schur 通道，故对任意复信号算子 $\omega$ 都有
+
+$$
+\overline{\mathcal T_u(\overline\omega)}=\mathcal T_u(\omega).
+\tag{226.4}
+$$
+
+定义共轭处理器 $\mathcal G^\#(X)=\overline{\mathcal G(\overline X)}$。若 $L_j$ 是原处理器的 Kraus 算子，则共轭处理器的 Kraus 算子为 $\overline{L_j}$，所以它仍是复线性 CPTP 映射。对全部复信号输入，
+
+$$
+\mathcal G^\#(\omega\otimes\rho_u)
+=\overline{\mathcal G(\overline\omega\otimes\rho_u)}
+=\overline{\mathcal T_u(\overline\omega)}
+=\mathcal T_u(\omega).
+\tag{226.5}
+$$
+
+故固定平均 $(\mathcal G+\mathcal G^\#)/2$ 仍由同一曲线实现同一目标。它的 Choi 矩阵为实对称正半定矩阵，可以用实向量谱分解选择实 Kraus 算子。取有限多个实际态的严格正权平均，使其在原支持上忠实。对每个信号基输入，纯基态输出在其余方向的概率为零；各实 Kraus 块的非负贡献之和为零，忠实性迫使全部非对角信号块为零，得到实受控等距 $W_i$。
+
+实信号交换平均可具体写成
+
+$$
+\widehat W_0=\frac{W_0\oplus W_2}{\sqrt2},\qquad
+\widehat W_2=\frac{W_2\oplus W_0}{\sqrt2},\qquad
+\widehat W_1=\frac{W_1\oplus W_1}{\sqrt2}.
+$$
+
+置 $B=(\widehat W_0+\widehat W_2)/2$，则
+$A=\widehat W_0^{\mathsf T}\widehat W_2$、$E=B^{\mathsf T}B=(I+A)/2$、$K=B^{\mathsf T}\widehat W_1$ 都为实矩阵，且
+$KK^{\mathsf T}\preceq B^{\mathsf T}B=E$。这就是第209.3式的实压缩对。直和只扩大环境；实际程序态、原支持、点态信息和曲率均未改变。
+
+可取实单位核向量 $q$。实矩阵 $V$ 的简单实特征值各有实特征向量，按 $q^{\mathsf T}x_\lambda=1$ 归一后，其 Gram 矩阵仍为（226.3）。与第213节实模型之间的等距于是为实正交映射；可能存在的约化 $-1$ 方向也选实单位向量匹配。这完成实结构的结论。证毕。
+

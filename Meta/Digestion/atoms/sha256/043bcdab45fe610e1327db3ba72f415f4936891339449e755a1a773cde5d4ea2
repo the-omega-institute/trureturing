@@ -1,0 +1,37 @@
+**定理 181.4（全时长最优常数的变分表达）。** 令 $f(t)$ 为（180.21）的显式曲线，则
+$$
+F_{\max}:=\max_{t>0}f(t)
+\tag{181.12}
+$$
+存在、有限且严格为正，并有
+$$
+\sup_{w\in[0,\delta(r)]}
+\left|(1-r)\mathscr I(r,w)-F_{\max}\right|
+\longrightarrow0.
+\tag{181.13}
+$$
+任何最优整数时长 $N_*(r,w)$ 的归一化值 $(1-r)N_*(r,w)$ 都最终落在一个固定紧区间内；沿任意 $r\uparrow1$、允许的 $w=w(r)$ 及最优时长选择，其聚点均属于 $\operatorname*{arg\,max}_{t>0}f(t)$。反过来，任取该最大点集中的 $t_0$，按 $N(r)=\lfloor t_0/(1-r)\rfloor$ 选择查询时长，就在全部允许 $w$ 上统一达到极限信息率 $F_{\max}/(1-r)$。不要求最大点唯一。
+
+证明。 必须同时控制短时长、紧区间和长时长，不能仅对（180.21）的逐点极限取上确界。令 $s=\gamma N$，其中 $\gamma=-\log r$。翻转一个 Bernoulli 位至多使相位改变 $2N\alpha$，且改变前后的相位绝对值都不超过 $N\alpha$。用余弦导数界 $|\sin z|\le|z|$，得到另一条统一导数界
+$$
+|\partial_p Z_{N,p}|\le2(N-1)N^2\alpha^2\le2N^3\alpha^2.
+\tag{181.14}
+$$
+因为 $\alpha/\gamma$ 有界、$x\ge1/2$、$\varepsilon\le\gamma$，以及 $1-u_N^2\ge1-e^{-2s}$，对 $0<s\le1$ 可用（181.14）证明
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_0s^4.
+\tag{181.15}
+$$
+具体地，左侧不超过常数倍的 $\varepsilon N^5\alpha^4/s$，而 $\alpha\le C\gamma$ 将其界为常数倍的 $(\varepsilon/\gamma)s^4$。对 $s\ge1$，改用（180.10）的一阶粗界，得到
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_\infty s e^{-2s}.
+\tag{181.16}
+$$
+两个常数都可与 $N,w,r$ 无关。这两条界分别在 $s\downarrow0$ 和 $s\to\infty$ 一致趋零。
+
+在任一固定 $0<b\le\varepsilon N\le B_0<\infty$ 的区间上，（180.17）的误差控制统一成立：$N=O(\varepsilon^{-1})$、$\delta=O(\varepsilon^3)$，所以导数误差为 $O(\varepsilon)$。结合三角和（178.17）及 $\alpha/\varepsilon\to\sqrt3$，可得（180.22）及（180.21）在这个区间和全部允许 $w$ 上的统一版本。分母有固定正下界 $1-r^{2N}$，故取平方与商不破坏统一收敛。
+
+显式 $f$ 连续，并由上述尾界满足 $f(t)\to0$，当 $t\downarrow0$ 或 $t\to\infty$；在 $T=\pi/(3\sqrt3)$ 处 $f(T)>0$。因此 $F_{\max}$ 存在且最大点集是 $(0,\infty)$ 内的非空紧集。先把两端的统一尾界压到任意给定误差之下，再在中间紧区间取统一极限，即得（181.13）。
+
+同样的尾界与 $f(T)>0$ 把所有离散最优时长限制在统一紧区间。若其归一化时长沿子列收敛到 $t$，紧区间上的统一极限及（181.13）强迫 $f(t)=F_{\max}$。最后，$\varepsilon\lfloor t_0/\varepsilon\rfloor\to t_0$，代入统一紧区间极限即证明反向可达性。由（180.23），$T$ 自身不是该最大点集的成员；这里仍不提供全局最大点的唯一性或闭式表达。证毕。
+

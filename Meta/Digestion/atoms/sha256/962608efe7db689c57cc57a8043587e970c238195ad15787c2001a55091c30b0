@@ -1,0 +1,29 @@
+**定义 219.1（实精确纤维与正交移位坐标）。** 固定第213节的有限集合 $S$，取其共同处理器 $V=T^{\mathsf T}$、$P=V^{\mathsf T}V=I-qq^{\mathsf T}$，并置 $H=(T+T^{\mathsf T})/2$。对 $a<p<1$，定义
+
+$$
+Y_p=\{\psi\in S^{N-1}:
+ \psi^{\mathsf T}(P-pI)\psi=0,\quad
+ \psi^{\mathsf T}(H-aI)\psi=0\},
+\qquad
+Y_p^+=\{\psi\in Y_p:q^{\mathsf T}\psi>0\}.
+\tag{219.1}
+$$
+
+这里球面与矩阵均取实数。由于 $|q^{\mathsf T}\psi|=\sqrt{1-p}>0$，$Y_p$ 是 $Y_p^+$ 与其反足像的不交并；映射
+$\psi=\sqrt p\,v+\sqrt{1-p}\,q$ 把 $Y_p^+$ 等同于第218节的单位向量矩约束纤维。
+
+当谱节点为互异的 $0,\lambda_1,\ldots,\lambda_{N-1}\in(-1,1)$ 时，可用以下正交坐标实现同一处理器：
+
+$$
+V_1=(0),\quad z_1=(1),\qquad
+V_{j+1}=
+\begin{pmatrix}
+ V_j&\sqrt{1-\lambda_j^2}\,z_j\\[0pt]
+ 0&\lambda_j
+\end{pmatrix},
+\qquad
+z_{j+1}=
+\binom{-\lambda_jz_j}{\sqrt{1-\lambda_j^2}}.
+\tag{219.2}
+$$
+

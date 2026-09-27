@@ -1,0 +1,179 @@
+**定理 305.2（奇异对偶分支的完全显式判定）。** 第303节的最优支撑矩阵 $G$ 奇异，当且仅当三个候选中有一个满足式（305.2）；满足者至多一个，而且通过的坐标必须满足 $\alpha_i>\max_{j\ne i}\alpha_j$。因此只需检查唯一最大倒数半径的坐标；若最大值并不唯一，则 $G\succ0$。若坐标 $i$ 的候选通过，则
+
+$$
+\begin{aligned}
+\lambda&=zr,
+&v&=\frac{b+re_i}{\sqrt{2r(r+z)}},\\
+Z_*&=\lambda vv^{\mathsf T},
+&G&=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},\\
+D_a&=Aq,
+&\kappa_a&=\frac1{2q},
+&M_*&=\frac{Q_i}{q}.
+\end{aligned}
+\tag{305.3}
+$$
+
+$Ge_i=0$，其余两个对偶列非零且对应原问题列约束取等。第 $i$ 条原问题列约束严格不取等，当且仅当式（305.2）的不等式严格。若三个候选全不通过，则 $G\succ0$，而三个原问题列范数约束全部取等。
+
+证明。先对任意候选坐标验证构造的恒等式。令 $L=r+z$，则 $\|p\|_2^2=(r-z)L$。取式（305.3）的 $\lambda,v$ 后，直接计算得到
+
+$$
+G=\begin{pmatrix}G_0&0\\0&0\end{pmatrix},
+\qquad G_0\succ0,
+\qquad G_0p=r^2p.
+\tag{305.4}
+$$
+
+更具体地，$G_0$ 沿 $p$ 的特征值为 $r^2$，在其正交方向的特征值为 $zr$。平方后也可写成
+
+$$
+G_0^2=r^2(z^2I_2+pp^{\mathsf T}).
+\tag{305.5}
+$$
+
+所以第 $j$ 条非零原坐标列满足 $\|Ge_j\|_2=r\sqrt{z^2+p_j^2}$。由 $H$ 的定义，$Q_i$ 的前两列恰为
+
+$$
+Q_i e_j=p_j\frac{Ge_j}{\|Ge_j\|_2},
+\qquad \|Q_i e_j\|_2=p_j.
+\tag{305.6}
+$$
+
+最后一列的范数平方则为 $\|u\|_2^2+q^2$。此外，$u$ 的定义直接给出
+
+$$
+Q_i b=q b.
+\tag{305.7}
+$$
+
+下面验证候选满足完整耗散锥条件，并证明 $E_i$ 自动正定。写
+
+$$
+h=\operatorname{Tr}H,
+\qquad w=p^{\mathsf T}Hp,
+\qquad \ell=\operatorname{Tr}Q_i.
+$$
+
+由式（305.1）与 $H$ 的对角形式，
+
+$$
+q=z^2h+w,\qquad
+\operatorname{Tr}K=zrh+\frac rLw,
+\qquad
+u=\left(zh+\frac wL\right)p-rHp.
+\tag{305.8}
+$$
+
+将这些式子代入，得到
+
+$$
+(K+K^{\mathsf T})p+Lu=\ell p,
+\qquad u\cdot p+2qL=\ell L.
+\tag{305.9}
+$$
+
+这正是 $(Q_i+Q_i^{\mathsf T})v=\ell v$，即 $\mathcal C(\operatorname{sym}Q_i)v=0$。由于 $v$ 的最后一个坐标非零，这个对称矩阵由其左上块 $E_i$ 唯一写成
+
+$$
+\mathcal C(\operatorname{sym}Q_i)
+=\begin{pmatrix}
+E_i&-E_ip/L\\
+-p^{\mathsf T}E_i/L&p^{\mathsf T}E_ip/L^2
+\end{pmatrix}.
+\tag{305.10}
+$$
+
+对任意 $x\in\mathbb R^2$、$s\in\mathbb R$，其二次型为
+
+$$
+\begin{pmatrix}x\\s\end{pmatrix}^{\mathsf T}
+\mathcal C(\operatorname{sym}Q_i)
+\begin{pmatrix}x\\s\end{pmatrix}
+=\left(x-\frac sL p\right)^{\mathsf T}
+E_i\left(x-\frac sL p\right).
+$$
+
+因此完整锥条件等价于 $E_i\succeq0$。
+
+事实上，这个锥条件对每个候选都自动成立。写 $H=\operatorname{diag}(h_1,h_2)$。式（305.8）的 $u$ 可逐分量改写为：对 $\{j,k\}=\{1,2\}$，
+
+$$
+u_j=p_j\left(zh_k+\frac{p_k^2}{r+z}(h_k-h_j)\right).
+\tag{305.10a}
+$$
+
+而
+
+$$
+\frac{h_j}{h_k}
+=\frac{p_j\sqrt{z^2+p_k^2}}{p_k\sqrt{z^2+p_j^2}}
+<\sqrt{1+\frac{z^2}{p_k^2}}.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\frac{u_j}{p_jh_k}
+&=z+\frac{p_k^2}{r+z}\left(1-\frac{h_j}{h_k}\right)\\
+&>z-\frac{z^2}
+{(r+z)\left(\sqrt{1+z^2/p_k^2}+1\right)}>0.
+\end{aligned}
+\tag{305.10b}
+$$
+
+这里 $r+z>z$，故最后一个严格不等式成立。这还说明 $u>0$ 对每个正半径候选本身都成立，不依赖其是否通过锥条件。
+
+由 $G_0$ 的正条目、$H$ 的正对角元及刚证出的 $u>0$，$S_i=\operatorname{sym}Q_i$ 的全部条目严格为正。式（305.9）已经给出 $S_i v=(\ell/2)v$，其中 $v$ 的每个坐标严格为正。令 $V=\operatorname{diag}(v)$。由 $S_iv=(\ell/2)v$，直接展开二次型得到
+
+$$
+y^{\mathsf T}V\mathcal C(S_i)Vy
+=2\sum_{j<k}(S_i)_{jk}v_jv_k(y_j-y_k)^2.
+$$
+
+每个系数严格为正，所以该二次型非负，且取零恰好要求 $y$ 的三个分量相同。$V$ 可逆，因而
+
+$$
+\mathcal C(S_i)\succeq0,
+\qquad \ker\mathcal C(S_i)=\mathbb Rv.
+\tag{305.10c}
+$$
+
+因为 $v$ 的最后一个坐标非零，任何非零 $(x,0)$ 都不在这个核内。故 $x^{\mathsf T}E_ix>0$ 对所有 $x\ne0$ 成立，即 $E_i\succ0$。这里没有使用候选的最后一列范数条件；该条件是剩下的唯一可行性检验。
+
+现在假设候选通过。式（305.6）、（305.10）与最后一列的范数判据使 $Q_i$ 在第298节的最大化问题中可行。式（305.7）给出的原目标为 $b^{\mathsf T}Q_i b=Aq$。与此同时，式（305.3）的 $Z_*\succeq0$ 在对偶问题中可行，其目标为
+
+$$
+\sum_j\alpha_j\|Ge_j\|_2
+=r\sum_{j=1}^2p_j\sqrt{z^2+p_j^2}
+=r^2q=Aq.
+\tag{305.11}
+$$
+
+原、对偶可行值相等，弱对偶便使二者都最优。由第298节的唯一性与归一化关系，得到式（305.3）的全部公式；特别地 $M_*=(A/D_a)Q_i=Q_i/q$。第303节保证此处奇异支撑恰有该零列，式（305.6）及最后一列的范数公式给出全部活跃性结论。
+
+反过来，设实际最优 $G$ 奇异。第303节使其唯一零列为某个 $Ge_i=0$。令 $z=\alpha_i$。由
+
+$$
+zb+\lambda e_i=2\lambda v_i v,
+\qquad 2\lambda v_i^2=z^2+\lambda,
+\tag{305.12}
+$$
+
+对第一个等式取平方范数并代入第二个，得到 $z^2A=\lambda^2$。因为 $\lambda>0$，所以 $\lambda=zr$，而严格正号规范进一步给出式（305.3）的 $v$。因此实际支撑矩阵就是式（305.4）的候选矩阵。
+
+对偶目标式（305.11）使 $D_a=Aq$。最优列支撑条件唯一确定另外两列为式（305.6）；第301节的固定方向恒等式则给出 $Qb=(D_a/A)b=q b$。这个等式的最后坐标确定 $Q_{ii}=q$，前两个坐标确定剩余列为 $u=(qI_2-K)p/z$。所以实际原最优矩阵恰为 $Q_i$，其最后一列范数可行性迫使式（305.2）成立。
+
+候选通过还迫使 $z$ 严格大于 $p$ 的两个分量。因为它要求 $q^2\le z^2$，而
+
+$$
+r^2(q^2-z^2)
+=p_1^4+p_2^4-z^4
+ +2p_1p_2\sqrt{(z^2+p_1^2)(z^2+p_2^2)}.
+\tag{305.12a}
+$$
+
+若 $z\le\max\{p_1,p_2\}$，右侧严格为正，矛盾。因此只有唯一最大倒数半径的坐标可能通过；存在最大值并列时，三个候选都不通过。
+
+若两个不同坐标的候选同时通过，它们都给出最优对偶矩阵。第298节的唯一性会使二者为同一矩阵，却又使同一个 $G$ 有两条零列，与第303节矛盾。因此通过者至多一个。若全部不通过，已证必要性排除奇异 $G$，第303节给出 $G\succ0$；三个非零列随后都由支撑取等条件饱和。证毕。
+

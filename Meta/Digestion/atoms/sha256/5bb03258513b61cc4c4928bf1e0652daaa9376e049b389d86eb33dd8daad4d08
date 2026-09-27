@@ -1,0 +1,159 @@
+**定理 296.2（两种恢复类具有相同端点斜率）。** 令 $F_a^{(2)}$ 为不受动力学限制的最优恢复误差，$\widehat G_a$ 为定义293.2中允许任意实际恢复、但要求其微分可分的最优误差。定义296.1的最小值达到，且
+
+$$
+0<\frac\eta2\le\kappa_a\le\frac{\max_i a_i}{2}.
+\tag{296.4}
+$$
+
+当 $\delta\downarrow0$ 时，
+
+$$
+\begin{aligned}
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)
+&=\kappa_a\delta+o(\delta),\\
+\widehat G_a\bigl(\eta(1-\delta)\bigr)
+&=\kappa_a\delta+o(\delta).
+\end{aligned}
+\tag{296.5}
+$$
+
+因此，尽管第293节保证每个 $0\le R<\eta$ 上两种最优值严格不同，它们的差距满足
+
+$$
+0<\widehat G_a(R)-F_a^{(2)}(R)=o(\eta-R)
+\quad(R\uparrow\eta).
+\tag{296.6}
+$$
+
+式（296.3）至少有一个达到方案还满足
+
+$$
+2\lambda_{\max}(S)=\operatorname{Tr}S.
+\tag{296.7}
+$$
+
+证明。先核对恒等通道处的幺元完全正切向条件。若一族幺元 CPTP Bloch 矩阵满足
+
+$$
+T_\varepsilon=I-\varepsilon(S-\Omega)+o(\varepsilon),
+\qquad S=S^{\mathsf T},\quad\Omega^{\mathsf T}=-\Omega,
+\tag{296.8}
+$$
+
+则必要条件正是 $S\succeq0$ 与 $2S\preceq(\operatorname{Tr}S)I$。为看到完全正条件，先用正向旋转对角化 $S$，记其特征值为 $d_i$。恒等通道的归一化 Choi 矩阵秩一；在其三维核上的一阶压缩，特征值为
+
+$$
+\frac{\operatorname{Tr}S-2d_i}{4}.
+\tag{296.9}
+$$
+
+这直接来自 Pauli 概率在系数 $1-\varepsilon d_i$ 处的一阶展开。反对称项对应 Hamiltonian 无穷小旋转，在该 Choi 核上的压缩为零：酉通道的 Choi 矩阵是一个秩一投影，其导数在原投影的正交补上压缩为零。完全正性因而要求式（296.9）非负。通道对 Bloch 球的收缩性同时给出 $S\succeq0$。
+
+反过来，对任意满足这些条件的 $S,\Omega$，取 $S$ 的正交主轴 $r_i$，令
+
+$$
+\gamma_i=\frac{\operatorname{Tr}S-2d_i}{4}\ge0.
+\tag{296.10}
+$$
+
+Pauli 耗散项 $\sum_i\gamma_i(\sigma_{r_i}\rho\sigma_{r_i}-\rho)$ 的 Bloch 生成矩阵为 $-S$；加上产生 $\Omega$ 的 Hamiltonian 项，便得到幺元 Lindblad 生成矩阵 $\Omega-S$。因此
+
+$$
+T_t=\exp\bigl(t(\Omega-S)\bigr)
+\tag{296.11}
+$$
+
+对 $t\ge0$ 都是幺元、微分可分的 CPTP 通道。这使用标准量子动力学半群结构；一般生成元形式及量子比特的可分性背景可见 Wolf–Cirac，[式（5）与定理24的证明](https://arxiv.org/abs/math-ph/0611057v3)。此处的一阶 Choi 计算只是为了明确其与本预算问题的接口。
+
+再计算两个任务量的一阶展开。对式（296.8），有
+
+$$
+T_\varepsilon^{-\mathsf T}
+=I+\varepsilon(S+\Omega)+o(\varepsilon).
+$$
+
+由于每个角点 $b_\sigma$ 的平方范数都为 $A$，且 $b_\sigma^{\mathsf T}\Omega b_\sigma=0$，第281节的四角公式给出
+
+$$
+r_*(T_\varepsilon)
+=\eta\left(1-\varepsilon\frac{g(S)}A\right)+o(\varepsilon),
+\qquad
+e(T_\varepsilon)=\frac\varepsilon2h_a(S,\Omega)+o(\varepsilon).
+\tag{296.12}
+$$
+
+这里只有有限个角点；即使多个角点同时取最大值，有限最大值的一阶展开仍成立。当归一化矩阵变化有界时，逆矩阵与范数展开的余项也可以统一控制。
+
+考虑齐次比值
+
+$$
+\kappa'_a=
+\inf_{\substack{S\succeq0,\ 2S\preceq(\operatorname{Tr}S)I\\
+\Omega^{\mathsf T}=-\Omega,\ g(S)>0}}
+\frac{A h_a(S,\Omega)}{2g(S)}.
+\tag{296.13}
+$$
+
+齐次缩放可令 $g(S)=A$。选一个取到最大值的角点 $b_\sigma$，令 $D=\operatorname{diag}(\sigma_1,\sigma_2,\sigma_3)$。将 $S,\Omega$ 同时替换为 $DSD,D\Omega D$，保持半正定约束、特征值和各加权列范数，并把这个活跃角点送到 $b$。其余角点约束也只是被置换，必要时差一个整体负号，不改变二次型。因此式（296.13）等于式（296.3）最优值的一半，即 $\kappa'_a=\kappa_a$。若需要用物理旋转解释这个坐标变换，$D$ 与 $-D$ 产生相同的共轭，其中总有一个为正向旋转。这说明四个角点分支无需分别优化；它不要求对通道作凸平均。
+
+取 $S=I,\Omega=0,\rho=\max_i a_i$ 即得一个可行点。另一方面，设 $M=S-\Omega$，列约束给出
+
+$$
+\|M\|_F\le\rho\sqrt A,
+\qquad
+\|S\|_F\le\|M\|_F.
+\tag{296.14}
+$$
+
+由 $b^{\mathsf T}Sb=A$、$\|b\|^2=A$ 得 $\|S\|_{\rm op}\ge1$，故 $\rho\ge\eta$。限制在上述可行点的目标值以下时，式（296.14）还使 $S,\Omega$ 都有界；约束闭，所以最小值达到。这证明式（296.4）。
+
+下面证明最优值的一阶下界。令 $R_\delta=\eta(1-\delta)$。各向同性通道 $(1-\delta)I$ 具有残差 $R_\delta$、误差 $\delta\max_i a_i/2$，故 $F_a^{(2)}(R_\delta)=O(\delta)$。第281节允许选一个幺元最优恢复矩阵 $T_\delta$。因为各 $a_i>0$，三个列误差界强迫
+
+$$
+\|I-T_\delta\|_F=O(\delta).
+\tag{296.15}
+$$
+
+沿任意趋向零的预算序列，令 $M_\delta=(I-T_\delta)/\delta$，再取收敛子列。写其极限为 $M=S-\Omega$。前面的 Choi 切向计算使 $S,\Omega$ 满足式（296.13）的锥约束。式（296.12）的统一展开与 $r_*(T_\delta)\le R_\delta$ 给出 $g(S)\ge A$，而幺元恢复误差公式直接给出子列上的极限
+
+$$
+\lim\frac{F_a^{(2)}(R_\delta)}\delta
+=\frac12 h_a(S,\Omega)
+\ge\kappa_a\frac{g(S)}A
+\ge\kappa_a.
+\tag{296.16}
+$$
+
+取实现下极限的序列即可得到整体下极限界。
+
+上界同时适用于 $\widehat G_a$。取式（296.3）的一个达到点，并使用式（296.11）的半群。因为 $g(S)=A$，其残差与误差满足
+
+$$
+r_*(T_t)=\eta(1-t)+O(t^2),
+\qquad e(T_t)=\kappa_a t+O(t^2).
+\tag{296.17}
+$$
+
+可以选择 $t_\delta=\delta+O(\delta^2)$，使 $r_*(T_{t_\delta})=R_\delta$。具体地，在足够大的固定 $C$ 下，$t=\delta-C\delta^2$ 与 $t=\delta+C\delta^2$ 处的连续残差分别在目标值两侧，故中值定理提供这样的参数。这不要求活跃角点唯一，也不预设最优方向随参数可微。
+
+对这个通道选取达到 $r_*$ 的输出虚轴，采用第281节的酉编码旋转及逆酉解码，就得到同一实际方案，其恢复微分可分，残差恰为 $R_\delta$，误差为 $\kappa_a\delta+O(\delta^2)$。于是
+
+$$
+F_a^{(2)}(R_\delta)
+\le\widehat G_a(R_\delta)
+\le\kappa_a\delta+O(\delta^2).
+\tag{296.18}
+$$
+
+结合式（296.16）便得两个共同极限及式（296.5）；再结合第293节的严格差距，得到式（296.6）。这一步只用微分可分半群提供上界，没有假定任意最优通道本身能被细分。
+
+最后取前述最优矩阵的一条归一化收敛子列。式（296.5）与 $\kappa_a>0$ 使式（296.16）全部取等，故其切向极限有 $g(S)=A$ 并达到比值最小值。第285节保证每个内部预算最优矩阵的奇异值满足 $s_1+s_2=1+s_3$。若 $S$ 的特征值按 $d_1\le d_2\le d_3$ 排序，则
+
+$$
+s_i(T_\delta)=1-\delta d_i+o(\delta).
+$$
+
+代入边界等式得 $d_3=d_1+d_2$，即式（296.7）。再作前面的角点符号共轭，仍保持特征值与目标值，便得到式（296.3）中满足此边界条件的达到点。证毕。
+
+对等半径，已知 $\kappa_a=a/(2\sqrt2)$。一般不等半径时，式（296.3）确定的是精确恢复端点的一阶系数；它没有把整条有限预算曲线求出，也没有证明最优角点唯一、误差权重全正或最优 $\Omega$ 必非零。有限预算下恢复矩阵不对称，与它在端点是否具有非零的一阶反对称部分，是不同的命题。
+

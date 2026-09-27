@@ -1,0 +1,109 @@
+**定理 227.2（一般双点族的严格虚部下界）。** 固定
+$0<a<1/2$、$4a^2(1+a)>1$，置
+
+$$
+c=a+2a^2,\qquad \sigma=\sqrt{1-4a^2},\qquad
+f(p)=2ap-\sigma\sqrt{p(1-p)}.
+\tag{227.3}
+$$
+
+选择 $1/2<p_L<c$ 使 $f(p_L)>a$，并定义
+
+$$
+\delta=\frac{f(p_L)-a}{2},\qquad
+\eta_0=\frac{c-p_L}{2(1-p_L)},\qquad
+m=\min\left\{\eta_0,\frac{\delta}{1+a+\delta}\right\}>0.
+\tag{227.4}
+$$
+
+存在 $r_0<1$，使每个 $r_0<r<1$ 的第225节共同处理器 $T_r$，以及其 $T_r\oplus(+1)$ 扩张，均满足下述性质：每条在 $h_1(r),h_3(r)$ 对应位置都尖锐的全域 $C^1$ 精确复纯态准备，必存在
+$p_*\in(h_1(r),h_3(r))$，使同一个点上有
+
+$$
+\begin{aligned}
+\|\operatorname{Im}\psi(p_*)\|^2&>m,\\
+\|\rho(p_*)-C\rho(p_*)C\|_{\mathrm{HS}}^2
+ &>8(1-h_3(r))m,\\
+I_R^C(\rho(p_*))&>2\sqrt{(1-h_3(r))m}.
+\end{aligned}
+\tag{227.5}
+$$
+
+这些准备的集合非空：第225节给出四维解析实现，其零扩张也属于正单位扩张的准备类。“尖锐”沿用第213节的信息校准与最优曲率两项条件。
+
+证明。 第225节证明 $f(c)>a$，且 $f$ 在 $(1/2,1)$ 严格递增，所以（227.4）可选。缩小 $r$ 的尾邻域，使
+
+$$
+\|T_r-T_*\|<\delta,\qquad
+h_1(r)>\frac{c+p_L}{2},
+\tag{227.6}
+$$
+
+并使第225节的两个强制节点具有相反的第四坐标符号。对任意实单位向量 $w$，若 $w_4=0$、$w_q=\sqrt{1-s}$ 且 $s\ge p_L$，第225.16式的极限矩下界及（227.6）给出
+
+$$
+w^{\mathsf T}T_rw>f(s)-\delta\ge a+\delta.
+\tag{227.7}
+$$
+
+增加一个正单位方向不改变该超平面上的极限最小值，算子范数差也不变，故同一个下界适用。
+
+这里必须把节点唯一性用于复状态。第213.2节的尖锐等号在复空间中同样强制规范三维块；三角不等式取等要求正实比例，并不留下任意相对相位。这个块的谱是 $\{0,\lambda_+(h_i),-r\}$。共同处理器的谱简单，在正 $q$ 规范中，交织等距必须将每个满足 $f^\dagger y_\nu=1$ 的局部稳定特征向量送到唯一满足 $q^\dagger x_\nu=1$ 的共同特征向量。两组特征向量都实，故等距也实。因此每个复尖锐节点仍是第225节唯一的实规范向量。加入 $+1$ 不增加该规范块的选择自由。
+
+（227.1）在全开区间连续。其第四坐标在两个节点为相反符号的实数，故存在内部点 $p_*$ 使 $\operatorname{Re}\psi_4=0$。在该点写 $\psi=\alpha+i\beta$、$t=\|\beta\|^2$，则
+
+$$
+\alpha_q=\sqrt{1-p_*},\quad \beta_q=0,\quad
+\alpha_4=0,\quad \|\alpha\|^2=1-t.
+\tag{227.8}
+$$
+
+反设 $t\le m$。因 $m\le\eta_0<1$，向量
+$\widehat\alpha=\alpha/\sqrt{1-t}$ 有定义；其投影概率为
+
+$$
+p'=\frac{p_*-t}{1-t}>p_L.
+\tag{227.9}
+$$
+
+最后的不等式由
+$p_*-p_L>(c-p_L)/2=(1-p_L)\eta_0\ge(1-p_L)t$ 得到。对 $\widehat\alpha$ 使用（227.7），再用实收缩算子的下界 $\beta^{\mathsf T}T_r\beta\ge-t$，可得
+
+$$
+\begin{aligned}
+a&=\operatorname{Re}(\psi^\dagger T_r\psi)
+  =\alpha^{\mathsf T}T_r\alpha+\beta^{\mathsf T}T_r\beta\\
+ &>(1-t)(a+\delta)-t.
+\end{aligned}
+\tag{227.10}
+$$
+
+整理得到 $t>\delta/(1+a+\delta)$，与 $t\le m$ 矛盾。这证明第一条严格不等式，包括 $\eta_0$ 是较小项的情形。
+
+为把它转为密度矩阵下界，置
+
+$$
+\Delta=\det\operatorname{Gram}(\alpha,\beta)
+=(1-t)t-(\alpha\mathbin{\cdot}\beta)^2.
+\tag{227.11}
+$$
+
+直接展开 $\rho-\overline\rho=2i(\beta\alpha^{\mathsf T}-\alpha\beta^{\mathsf T})$，其至多两个非零特征值为 $\pm2\sqrt\Delta$，故
+
+$$
+\|\rho-\overline\rho\|_{\mathrm{HS}}^2=8\Delta,
+\qquad I_R^C(\rho)=2\sqrt\Delta.
+\tag{227.12}
+$$
+
+又因 $\beta\perp q$，写 $\alpha=\sqrt{1-p_*}\,q+\alpha_\perp$，Cauchy–Schwarz 给出
+
+$$
+\Delta=(1-p_*)t+
+ \bigl(\|\alpha_\perp\|^2t-(\alpha_\perp\mathbin{\cdot}\beta)^2\bigr)
+\ge(1-p_*)t.
+\tag{227.13}
+$$
+
+使用 $p_*<h_3(r)$ 和 $t>m$，便得（227.5）另外两式。证毕。
+

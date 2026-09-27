@@ -1,0 +1,16 @@
+**定理 242.3（分别预算的有限尺度夹界）。** 对同一固定任务，给定 $\eta,\zeta\ge0$、$\delta=\sqrt{\eta^2+\zeta^2}>0$。记 $Q_{\rm joint}(\eta,\zeta),E_{\rm joint}(\eta,\zeta)$ 为分别约束 $\sup I_R^C\le\eta$、$\sup J\le\zeta$ 的两个下确界，$Q_{\rm pure}(\delta),E_{\rm pure}(\delta)$ 为原纯态允许类在 $\sup I_R^C\le\delta$ 下的两个下确界。则
+
+$$
+\begin{aligned}
+Q_{\mathbb R}(\delta)
+&\le Q_{\rm joint}(\eta,\zeta)
+\le Q_{\rm pure}(\delta),\\
+E_{\mathbb R}(\delta)
+&\le E_{\rm joint}(\eta,\zeta)
+\le E_{\rm pure}(\delta).
+\end{aligned}
+\tag{242.12}
+$$
+
+证明。 分别预算类包含于（242.1）的合并预算类，故定理242.2给出两个左界。对任意纯态候选使用第240.8式的固定权重共轭混合，取 $\tau=\eta/\delta$。第240.9式使同一密度分别满足两个预算，第240.10式使两个 Fisher 目标同时不增；其全部任务条件及零预算边按该节保持。对原纯态候选取下确界即得两个右界。此处没有将两种分别可达的最优值当成一个共同实现。证毕。
+

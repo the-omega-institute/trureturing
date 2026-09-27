@@ -1,0 +1,10 @@
+**推论 313.2（任意正半径的二阶等号范围）。** 在全部正半径六态模型中，令 $t(\delta)$ 为达到残差预算 $\eta(1-\delta)$ 的唯一半群参数。标量恢复误差之差满足
+
+$$
+e(e^{-t(\delta)M_*})-\widehat G_a\bigl(\eta(1-\delta)\bigr)
+=o(\delta^2)\qquad(\delta\downarrow0),
+$$
+
+恰当且仅当模型属于下列情形之一：
+
+- 三个半径相等；

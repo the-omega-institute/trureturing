@@ -1,0 +1,73 @@
+- 此后在固定的小窗口内沿另一实侧离开，再接到实际第三规范分支。
+
+在主入弧上，（236.22）给出
+$$
+\sup\|\rho'_u\|_1
+\le\frac{L+o(1)}{T_\eta\varepsilon^2}
++O(\varepsilon^{-5/4}),
+$$
+$$
+\int_{\rm 入弧}\|\rho'_u\|_1^2du
+\le\frac{L^2+o(1)}{T_\eta\varepsilon^2}. \tag{236.23}
+$$
+第二式中，$\partial_p\Gamma$ 的平方积分至多为
+$O(|\log\varepsilon|)$，与主速度的交叉项也是低阶。
+
+半圆期间
+$$
+g(p)=\kappa(1-\eta)\varepsilon^2+o(\varepsilon^2).
+$$
+由（236.21），其最大虚性平方不超过
+$$
+(1-\eta/2)\varepsilon^2
+$$
+对充分小 $\varepsilon$ 成立，故保留了严格资源余量。半圆长度为 $O(\varepsilon)$，在 $d_\varepsilon$ 内完成时，
+$$
+\sup_{\rm 颈部}\|\rho'_u\|_1=O(\varepsilon^{-3/2}),
+\qquad
+\int_{\rm 颈部}\|\rho'_u\|_1^2du=O(\varepsilon^{-1/2}). \tag{236.24}
+$$
+两者都不贡献目标首项。
+
+出鞍后的实弧族有同类估计
+$$
+\|\rho'_u\|_1\le C\bigl(1+(p-p_0)^{-1/2}\bigr).
+$$
+从 $p-p_0\asymp\varepsilon^2$ 开始，在固定窗口内走完，故其峰值平方为 $O(\varepsilon^{-2})$，积分为 $O(|\log\varepsilon|)$。窗口可以预先选在 $K$ 内；其余部分使用规范分支。
+
+于是得到全域光滑、精确的背景曲线，同时满足
+$$
+\sup_KI_Q
+\le\frac{L^2+o(1)}{T_\eta^2\varepsilon^4},
+\qquad
+\int_KI_Q\,du
+\le\frac{L^2+o(1)}{T_\eta\varepsilon^2}. \tag{236.25}
+$$
+
+最后说明解析性及全部任务条件。
+
+对每个固定 $\varepsilon>0$，上述背景始终避开完整二矩的奇点：实弧正则，半圆的剩余矩梯度范数为 $2\sqrt g>0$，规范尾部的正则性由第221、225节的端点计算保证。使用 $x=\sqrt{1-p}$ 紧化后，背景在闭区间上具有严格正的最小矩 Jacobian 奇异值；它可以依赖 $\varepsilon$。
+
+逐坐标多项式逼近、有限 Hermite 节点匹配、归一化，再沿两个矩的球面梯度作解析隐式修正，因而可以同时做到：
+
+$$
+\sup_{J_a}\|\rho^{\rm an}-\rho^{\rm bg}\|_1=o(\varepsilon),
+\qquad
+\sup_K\|(\rho^{\rm an})'-(\rho^{\rm bg})'\|_1\le1,
+$$
+并精确保留任意预先指定的有限阶规范节点数据。Hermite 匹配使节点矩残差的相应阶导数为零；逐次微分隐式修正方程，便知修正的这些阶导数也为零。
+
+虚性的迹范数 Lipschitz 性与（236.21）的余量保证最终曲线满足全域虚性约束。上述 $C^1$ 误差不改变（236.25）的首项。
+
+两个精确矩通过第211.18式处理器的矩阵单位计算保证全部信号输入精确。节点二阶数据保留最优普通双侧曲率；固定处理器只有两个正签名，而第213.19式证明正签名随尖锐位置严格单调，所以不存在额外尖锐点。谱下界又强制实际联合支持恰为四维。
+
+因此
+$$
+\limsup_{\varepsilon\downarrow0}\varepsilon^4Q_s(\varepsilon)
+\le\frac{L^2}{T_\eta^2},
+\qquad
+\limsup_{\varepsilon\downarrow0}\varepsilon^2E_s(\varepsilon)
+\le\frac{L^2}{T_\eta}.
+$$
+令 $\eta\downarrow0$，结合（236.18）即得两个等式。对 $\eta$ 作对角选取，还得到同时达到两个首项的同一曲线族。证毕。
+

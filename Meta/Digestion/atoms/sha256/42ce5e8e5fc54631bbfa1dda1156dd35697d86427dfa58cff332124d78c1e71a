@@ -1,0 +1,179 @@
+**定理 306.1（正定对偶区间的显式解）。** 取
+
+$$
+a_1=a_2=a,\qquad a_3=a/k,
+\qquad 0<a\le\min\{1,k\},
+\qquad 0<k<k_0:=\sqrt{\frac{3+\sqrt{17}}2}.
+\tag{306.1}
+$$
+
+定义无量纲参数
+
+$$
+\begin{aligned}
+A_0&=2+k^2,&r&=\sqrt{A_0},&B&=1+k^2,\\
+C&=3+2/k^2-k^2,&
+t&=\frac{1+\sqrt{1+2C}}C,&s&=2+t,\\
+\beta&=\sqrt{\frac{2+k^2t^2}{A_0}},&
+m&=\frac{2+k^2t}{A_0},&
+W&=2+2t+Bt^2,\\
+h&=\frac{s}{r\sqrt W},&
+q&=\frac{2(1+Bt)}{r\sqrt W}.&&
+\end{aligned}
+\tag{306.2}
+$$
+
+此处 $C>0$，$t$ 是方程 $Ct^2-2t-2=0$ 的唯一正根。再令
+
+$$
+\begin{aligned}
+b_0&=(1,1,k),\qquad
+N=\sqrt{2(1+\beta)^2+k^2(t+\beta)^2},\\
+v&=\frac{(1+\beta,1+\beta,k(t+\beta))}{N},
+\qquad \lambda_0=\frac{A_0\beta}{s},\\
+G_0&=b_0b_0^{\mathsf T}+\lambda_0I-2\lambda_0vv^{\mathsf T},\\
+H_0&=h\operatorname{diag}(1,1,t),
+\qquad Q_0=G_0H_0.
+\end{aligned}
+\tag{306.3}
+$$
+
+则第298节的唯一正角点端点解为
+
+$$
+M_* =\frac{Q_0}{q},\qquad
+Z_* =\frac{\lambda_0}{a^2}vv^{\mathsf T},\qquad
+D_a=\frac{A_0q}{a^3},\qquad
+\kappa_a=\frac{a}{2q}
+=\frac{ar\sqrt W}{4(1+Bt)}.
+\tag{306.4}
+$$
+
+对应的支撑矩阵为 $G_0/a^2\succ0$。它及 $M_*$ 的每个条目都严格为正；三个原问题列范数约束全部取等。
+
+证明。以下先在无量纲 $b_0$ 下证明原、对偶可行与目标相等，再恢复尺度 $a$。
+
+首先证明 $G_0\succ0$。记 $n=b_0/r$、$n'=H_0b_0/(h\beta r)$。两者都是单位向量，且
+
+$$
+n\cdot n'=m/\beta>0,
+\qquad v=\frac{n+n'}{\|n+n'\|_2}.
+\tag{306.5}
+$$
+
+因此若 $\theta$ 是 $n$ 与 $v$ 的夹角，就有 $\cos(2\theta)=m/\beta$。而
+
+$$
+sm-\beta^2=\frac{2+2Bt}{A_0}>0,
+$$
+
+故 $\lambda_0=A_0\beta/s<A_0\cos(2\theta)$。与式（303.6）相同的二维分块计算说明：$G_0$ 在包含 $n,v$ 的平面上迹为 $A_0>0$、行列式为 $\lambda_0(A_0\cos(2\theta)-\lambda_0)>0$，其余正交方向的特征值为 $\lambda_0>0$。所以 $G_0\succ0$。当 $n=v$ 时，任选包含该轴的二维平面，计算仍成立。
+
+还需证明非对角元也为正。由
+
+$$
+N^2=2A_0\beta(\beta+m),
+$$
+
+直接代入式（306.3）得到
+
+$$
+\begin{aligned}
+(G_0)_{12}
+&=\frac{t\beta+(2Bt-k^2)/A_0}{s(\beta+m)},\\
+(G_0)_{13}=(G_0)_{23}
+&=\frac{k\left[\beta+(2+k^2t)/A_0\right]}{s(\beta+m)}=\frac{k}{s}.
+\end{aligned}
+\tag{306.6}
+$$
+
+第二行显然严格为正。若 $k^2\ge1$，则 $C\le4$，把 $1$ 代入 $Cx^2-2x-2$ 得非正值，故其唯一正根 $t\ge1$。于是 $2Bt-k^2\ge2+k^2>0$。若 $0<k^2\le1$，令 $x=k^2$，则
+
+$$
+Cx^2-2x-2
+=3x^2-x^3-2
+=(x-1)(2+2x-x^2)\le0.
+$$
+
+所以 $t\ge k^2$，进而 $2Bt-k^2\ge k^2(1+2k^2)>0$。第一行也严格为正。结合 $G_0\succ0$ 给出的正对角元，$G_0$ 逐项严格为正，$Q_0=G_0H_0$ 亦然。
+
+接着验证耗散锥条件。记 $\beta_H=h\beta$，并令 $\gamma=1/(hN)$，则
+
+$$
+v=\gamma(H_0+\beta_HI)b_0,
+\qquad b_0^{\mathsf T}H_0^2b_0=A_0\beta_H^2,
+\qquad \lambda_0\operatorname{Tr}H_0=A_0\beta_H.
+\tag{306.7}
+$$
+
+写 $B_v=b_0\cdot v$、$C_v=b_0\cdot H_0v$、$V=v\cdot H_0v$。式（306.7）给出 $C_v=\beta_H B_v$。展开 $Q_0+Q_0^{\mathsf T}$ 在 $v$ 上的作用，便有
+
+$$
+\begin{aligned}
+(Q_0+Q_0^{\mathsf T})v
+&=C_vb_0+B_vH_0b_0-2\lambda_0Vv\\
+&=(B_v/\gamma-2\lambda_0V)v
+=(\operatorname{Tr}Q_0)v.
+\end{aligned}
+\tag{306.8}
+$$
+
+最后一步使用 $B_v/\gamma=b_0^{\mathsf T}H_0b_0+A_0\beta_H$ 及式（306.7）的迹等式。
+
+令 $S_0=\operatorname{sym}Q_0$、$\ell=\operatorname{Tr}Q_0$。它逐项严格为正，且 $S_0v=(\ell/2)v$，其中 $v$ 逐坐标严格为正。矩阵 $\operatorname{diag}(v)^{-1}S_0\operatorname{diag}(v)$ 的所有行和均为 $\ell/2$。因此其算子无穷范数为 $\ell/2$，$S_0$ 的每个特征值都不超过 $\ell/2$。这证明
+
+$$
+\mathcal C(S_0)=\ell I-2S_0\succeq0,
+\qquad \mathcal C(S_0)v=0.
+\tag{306.9}
+$$
+
+现在核对三个列范数。设 $t_1=t_2=1$、$t_3=t$，由式（306.3）的范数展开可得
+
+$$
+\frac{\|G_0e_i\|_2^2}{(b_0)_i^2}
+=A_0\left(1-\frac{2t_i}{s}\right)
+ +\frac{\lambda_0^2}{(b_0)_i^2}.
+\tag{306.10}
+$$
+
+对前两列，右侧为 $A_0W/s^2=1/h^2$。对第三列，由 $Ct^2=2t+2$，
+
+$$
+\frac W{t^2}=C+B=4+2/k^2,
+$$
+
+故式（306.10）的右侧为 $1/(t^2h^2)$。于是
+
+$$
+\|Q_0e_1\|_2=\|Q_0e_2\|_2=1,
+\qquad \|Q_0e_3\|_2=k.
+\tag{306.11}
+$$
+
+三个列都满足支撑取等条件，且全部列范数约束饱和。
+
+最后计算目标值。反射 $I-2vv^{\mathsf T}$ 把式（306.5）的 $n'$ 送到 $-n$，所以
+
+$$
+\begin{aligned}
+Q_0b_0
+&=\left(b_0^{\mathsf T}H_0b_0-\lambda_0h\beta\right)b_0\\
+&=\frac{2h(1+Bt)}s b_0=q b_0.
+\end{aligned}
+\tag{306.12}
+$$
+
+因此原目标为 $A_0q$。令 $Z_0=\lambda_0vv^{\mathsf T}\succeq0$，利用式（306.9）的互补关系和式（306.11）的列支撑取等关系，
+
+$$
+\sum_i(b_0)_i\|G_0e_i\|_2
+=\langle G_0,Q_0\rangle_F
+=b_0^{\mathsf T}Q_0b_0+
+\operatorname{Tr}(Z_0\mathcal C(S_0))
+=A_0q.
+\tag{306.13}
+$$
+
+弱对偶遂认证这对显式矩阵最优。实际倒数半径为 $b=b_0/a$；相应最大化矩阵为 $Q_0/a$、对偶矩阵为 $Z_0/a^2$，目标为 $A_0q/a^3$。应用第298节的归一化和唯一性，得到式（306.4）及全部结论。证毕。
+

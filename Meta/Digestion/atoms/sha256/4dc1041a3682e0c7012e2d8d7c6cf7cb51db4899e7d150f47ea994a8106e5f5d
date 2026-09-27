@@ -1,0 +1,54 @@
+**定理 170.3（弱记录下同一使用预算的相反结论）。** 令 $r\uparrow1$、$\varepsilon=1-r$，并取任意整数视界函数 $N(r)$，满足
+$$
+\varepsilon N(r)\longrightarrow\infty.
+\tag{170.10}
+$$
+则即使预测过程及其记忆维数都随 $r,N(r)$ 改变，仍有
+$$
+\boxed{\mathcal C_{N(r)}(r)\longrightarrow1.}
+\tag{170.11}
+$$
+另一方面，对定理169.2的同一个比特预测器，在相同使用次数下却有
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})\longrightarrow0.
+}
+\tag{170.12}
+$$
+因此这个比特预测器的终端误差趋零，而其包含允许干预与历史的最坏过程距离趋于一。
+
+证明。 取固定
+$$
+t_0=\frac\pi{6\sqrt3},\qquad
+k_r=\left\lfloor\frac{t_0}{\varepsilon}\right\rfloor.
+\tag{170.13}
+$$
+充分接近一时 $k_r\ge1$，且由定理161.6，
+$$
+\varepsilon k_r\to t_0,\qquad
+k_r\alpha(r)\to\pi/6<\pi/4,\qquad
+q_{k_r}=r^{k_r}\sin(k_r\alpha(r))
+\longrightarrow\frac12e^{-t_0}>0.
+\tag{170.14}
+$$
+式（170.10）还给出 $k_r\le N(r)$ 及
+$$
+m_r=\left\lfloor\frac{N(r)}{k_r}\right\rfloor\longrightarrow\infty.
+\tag{170.15}
+$$
+在（170.4）中取 $k=k_r$ 和 $M_r=\max\{2,\lfloor(m_rq_{k_r}^2)^{1/3}\rfloor\}$，即可使下界趋于一。它对所有预测过程统一成立，因此不需要交换预测器下确界和参数极限，直接得到（170.11）。
+
+对终端读数，式（169.7）的 $m(x)\le2$ 给出
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})
+\le r^{N(r)}\le e^{-\varepsilon N(r)}\longrightarrow0.
+\tag{170.16}
+$$
+该界包含任意有限惰性参考系统。比特预测器的过程也是（170.2）中允许的候选之一，所以其干预距离至少为 $\mathcal C_{N(r)}(r)$、至多为一，得到最后的陈述。终端接线与保存分段测量历史的接线使用相同次数的源；新增资源是声明允许的制备、测量和记录，不是源相位信息。证毕。
+
+式（170.14）中，一段内部的相干合成先把未知相位转成非消失的可测均值，再由多段历史提供多个相互排斥的来源证据。若每次使用后立刻重置，实际单次均值幅度仅为 $r\sin\alpha(r)\sim\sqrt3\varepsilon$，同一集中估计需要 $N\varepsilon^2\to\infty$；分段构造把充分条件改为（170.10），但不声称已求出所有测试的最优有限样本速率。结论依赖本节的允许控制和最坏完整历史损失，不否定从实际数据学习相位的任务，也不把经典样本的可识别性当成量子性的普遍判据。
+
