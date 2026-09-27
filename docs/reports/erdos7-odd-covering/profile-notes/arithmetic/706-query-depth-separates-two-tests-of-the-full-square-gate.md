@@ -308,6 +308,116 @@ This excludes only the stated sufficiently deep finite-query criterion
 for central-only retentions. Padding a shallow period and excluding the
 padded gate cannot be used to exclude its stronger unpadded version.
 
+## A shared residual label gives a strict upper-bound saving
+
+The common-centre obstruction above concerns lower bounds on the query
+maximum. An upper bound can instead retain the shared residue of a query
+label across several pairs. Apply [Report27](../001-064/27-actual-mask-weights-and-an-all-height-square-certificate.md),
+LC2--LC5, to the SAME fixed measure nu=f sigma from FQ5. For d=9 or25 and
+q in {7,11,13,17,19}, define
+
+    J_(d q)(a)=max_(r mod d q, r=a mod d) nu([r]_(d q)),
+    kappa_d=2[sum_q max_a J_(d q)(a)
+                    -max_a sum_q J_(d q)(a)]>=0.            (RS1)
+
+Every complete query layout uses its one chosen residue a_d in all five
+pairs {d,dq}. Their sum is at most2 max_a sum_q J_(dq)(a), whereas the
+independent pair envelope charges2 sum_q max_a J_(dq)(a). Thus kappa_d is
+a valid saving for EVERY layout, even when the other numerical labels
+have incompatible phases. This is an application of the existing star
+inequality; the new certificate evaluates it on the FQ5 field.
+
+Let H be Report705's selected33 labels, K_H its complete nonunit square,
+and
+
+    B_rem(nu)=sum_j (W_j-v_full,j)S_j(nu).
+
+Each centre9 or25 belongs to H, but none of its five neighbors belongs
+to H. Consequently all ten spent pair factors lie outside the selected
+square; the two stars share no pair. No unary factor, original-loss
+coefficient or unit is spent. The remaining query envelope therefore
+gives, for any resolving finite Q containing these labels,
+
+    K_Q(nu)<=K_H(nu)+B_rem(nu)-kappa_9-kappa_25,
+    G_Q(nu)>=G_full(nu)+c(kappa_9+kappa_25).                 (RS2)
+
+To see why screen slack causes no problem, each spent pair has its own
+cap inside B_rem. That cap is at least the pair's exact independent
+maximum. The difference between the sum of these maxima and the actual
+joint pair sum is at least the corresponding kappa. Every unspent
+factor retains its existing cap. Query heights outside the selected
+stars, including the complete all-height comparison tail, remain charged.
+
+The exact two-star computation gives
+
+    kappa_9=0,
+    kappa_25=22213436809/874800000000000
+             =0.00002539258894490169...,
+    c kappa_25=24082319888051597/176051050560000000000000
+                =0.00000013679168520408287... .             (RS3)
+
+For the25-star, the individually maximizing central residues are{7,12}
+for175, {23} for275, and{17} for325,425,475. They cannot all be chosen
+for the same numerical label25. The joint star maximum occurs at7 or12.
+For the9-star all five profiles maximize at7, so this particular cut
+has zero saving. These maxima retain the actual joint exterior source.
+
+This strict saving does not suffice for the fixed field. Define the
+improved sufficient criterion G_star=G_full+c kappa_25 there. Report705's
+all-field upper U_full applies to its G_full term, hence
+
+    G_star(nu)<=U_full+c kappa_25
+      =583775468441598316530444776292093227830477
+       /316733290486180755476889600000000000000000000
+      =0.0018431137047372314... <193/100000.                 (RS4)
+
+The remaining gap in this upper certificate is
+27519782196730541539952151707906772169523 divided by the same denominator,
+or0.00008688629526276855... . RS4 bounds only this strengthened envelope
+criterion on the fixed field. Because RS2 is a LOWER bound on G_Q, RS4
+does not exclude the true full-query gate. Nor does the fixed-field
+value of kappa supply an all-field bound on G_star.
+
+The same certificate also evaluates a coarser complete pair envelope,
+without needing an upper bound for the selected33 maximum. In the product
+weights W_E, keep the central levels(1,3,5), replace their deep entries by
+
+    sum_(e=3..E_3) 2(2e+1)/3^e,
+    sum_(e=3..E_5) (2e+1)/(3*5^(e-1)),
+
+and replace each exterior weight by
+
+    3/(q-1)+sum_(e=2..E_q)(2e+1)/((q-2)q^(e-1)).
+
+These are the same ordered-pair multiplicities and screen normalizers
+as the all-height envelope, now summed only over the finite inventory;
+the unit-unit coefficient remains zero. The original-loss vector A is
+unchanged. Thus
+
+    G_Q(nu)>=g nu(1)-sum_j A_j S_j(nu)
+                  -c[sum_j W_E,j S_j(nu)-kappa_25].        (RS5)
+
+At E0 the right side is-0.009164737637654075...; the all-height
+comparison gives-0.012187781408378453... . Their exact rationals are
+in the result. These negative LOWER bounds certify no positive gate
+and do not exclude a positive true value. The existing coherent-centre
+upper FQ5 remains0.0020000698377553535... on this field, so the present
+bounds do not decide whether G_Q0 exceeds the target.
+
+The [residual-star verifier](../../frontier/cover-geometry/joined33_residual_star_verify.py)
+and [result](../../frontier/cover-geometry/joined33_residual_star_verify.json)
+retain the complete residue profiles, the pair ownership checks and two
+exact source contractions. The second contraction reconstructs exterior
+root marginals from the source categories and independently checks all170
+profile entries and both star gaps. To evaluate RS5, it reuses the pinned
+499 positive-loss screen maxima and reconstructs the remaining13 screens
+from complete central selectors or single-axis category marginals. Every
+single-axis maximum is also checked against all nonzero tokens in the
+canonical source matrix. The replay passes19,634 explicit checks.
+The computation is a finite rational
+certificate, not a new Lean theorem or a uniform supplier for arbitrary
+original families.
+
 ## Evidence and the remaining question
 
 The finite [field witness](../../frontier/cover-geometry/joined33_coherent_central_field_witness.json),
@@ -339,6 +449,7 @@ From the repository root, with NumPy installed:
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_coherent_central_field_verify.py
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_central_only_infinite_dual_verify.py
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_all_common_centres_fixedfield_verify.py
+python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_residual_star_verify.py
 ```
 
 Independent operator and mathematical reviews checked the screen maxima,
