@@ -9606,3 +9606,328 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 This supplies the last full12222 shape in the C75 three-inactive-root list. Together with the previous source suppliers, both specified C75 and C76 three-inactive-root lists are now supplied. The one-/two-inactive-root branches, complete cut74--76 classes and outside-cofactor/common-law lift remain open; unrestricted #7 is not settled.
+
+## Any actual cut below80 with at least two inactive roots supplies one law
+
+Ordinary mathematics on the unchanged complete literal4555 source.
+No Lean certification, minimum-cut saturation or arbitrary-height lift is
+asserted.
+
+### B80.1. Statement
+
+Keep the four occupied original roots, with child counts `(4,5,5,5)` and
+legal restriction sizes `(2,3,3,3)`. Every complete original child fibre is
+nonempty, and every pair of original legal restrictions at distinct roots
+has a union containing a ternary seven-tree. Retain the original actual
+network with capacities21,7,6,2,126,7,21 and its literal numerical labels.
+
+Suppose that this ORIGINAL network has a cut of raw capacity at most79
+with at least two occupied root nodes on the sink side. Then there is ONE
+probability on its actual points, fixed before every original numerical
+phase query, such that
+
+    Gamma_1225 <= 2865/319 = 9-6/319.
+
+The cut need not be minimum. No value of the original maximum flow is
+assumed. In particular this supplies every two-inactive-root obstruction
+in the C75 and C76 root-cap tests, since their largest relevant capacities
+are79 and78 respectively. It also supplies any cut74 source possessing
+such a cut; it does not assert that every cut74 source possesses one.
+
+### B80.2. A truncated cardinality consumer on COMPLETE original fibres
+
+For an original occupied root R define
+
+    L_R = sum_(all original children c) min(3, |F_(R,c)|).
+
+If `L_R<=9`, the stated common-law bound follows from the existing complete
+source suppliers. The minimum is a numerical statistic; the fibres are
+not truncated, replaced or deleted.
+
+For a full root there must be a singleton: otherwise its five nonempty
+fibres contribute at least10. If there are at least three singleton
+fibres, their original legal triple has complete projection at most three
+labels. IA.1, B3 and H2 supply every such triple, with bound249/28. If there
+are exactly two singletons, the other three fibres each contribute at
+least2 and together contribute at most7. At least two of them therefore
+have actual size2. F1122 supplies the two singletons and these two doubles,
+with the fifth complete fibre arbitrary, with bound893/100. If there is
+exactly one singleton, all four other terms must equal2, so F12222 applies
+with bound2865/319.
+
+For a gap root with a singleton, at least one other fibre has size at most2:
+otherwise the four terms total at least10. F1122.6 supplies this gap12**
+class with bound249/28. If there is no singleton, at least three of the four
+terms equal2, since two terms of3 would force total at least10. F1122.7
+supplies these three doubles and the arbitrary fourth fibre, again with
+bound249/28. All the displayed bounds are at most2865/319.
+
+This consumer applies even when one of the fibres counted as3 is a whole
+seven-column, or any larger arbitrary original fibre.
+
+### B80.3. Four full-root fibres covered by a public singleton plus one leaf each
+
+Suppose four distinct original full-root children have complete fibres
+
+    F_i subset {y,z_i},   i=1,2,3,4,
+
+where y and the private candidate labels need not be distinct or actual.
+The fifth original fibre is arbitrary nonempty. Then the source has a
+common law with bound5795/647.
+
+If y occurs in none of those four fibres, each is a singleton, and any
+three form an at-most-three-label original legal restriction. Otherwise
+choose an owner j at which y is actual, and let I be the other three
+designated owners. Their COMPLETE legal projection F is contained in
+`{y} union {z_i:i in I}`, hence has at most four labels. If it has at most
+three labels, use the small-anchor supplier with bound249/28.
+
+If F has four labels, the three z_i are pairwise distinct and different
+from y. Each z_i is actual at its own original owner i: none of the other
+two designated fibres could provide that distinct label. The same four
+labels therefore have four distinct actual owner representatives, namely
+the three z_i at their owners in I and y at owner j. F12222.2 supplies
+this whole four-label anchor with bound5795/647, using H2 if F is
+monochromatic. The fourth representative may lie outside the three
+anchor owners, exactly as allowed by F12222.2.
+
+The cut application is four private-cost1 children when the complete
+public prefix consists of one fine label. The proof never presumes that a
+private cut candidate is actual. No property of the fifth fibre is used.
+
+### B80.4. Source-preserving cut normalization and the meaning of its tokens
+
+No bridge of capacity126 can cross a cut of capacity at most79. First put
+each inactive root's private descendants sink-side, and remove private
+islands. Take the original public and private first-crossing prefix
+antichains, as in the existing actual-cut normalization.
+
+Public tokens describe one fixed union P of original seven-side prefixes:
+a whole first-seven column costs three tokens (raw capacity21), and a
+single fine label costs one token (raw7). Let k be that antichain's total
+token cost. It is a prefix-cut cost, not a count of arbitrary actual
+labels, and a whole-column token may cover seven different fine labels.
+
+At an active root r let n_r be its original occupied child count, a_r its
+source-side child count, and delta_r=n_r-a_r. An inactive child contributes
+its incoming raw7 edge. At an active child, the private antichain has
+raw cost2z_rc, where a fine leaf costs one token and an entire private
+first-seven column costs three tokens (raw6). If its private raw cost is
+at least8, move that whole private child subtree sink-side: raw7 replaces
+at least8, so capacity decreases. Thus every remaining active child has
+integer `0<=z_rc<=3`.
+
+If an active root's total forward cut contribution
+
+    A_r = 7 delta_r + 2 Z_r,   Z_r=sum_(active children) z_rc,
+
+is at least21, move the root and its entire private subtree sink-side.
+Its source edge21 replaces that whole forward contribution, while the
+public cut is unchanged. This does not increase capacity or activate any
+old inactive root. Starting with at least two inactive roots, normalization leaves two or
+three: four inactive occupied roots would already cost84>79. Repeat until every
+remaining active root has `A_r<=20`. This also implies delta_r<=2, so
+
+    a_r >= q_r := n_r-2.
+
+These changes concern only a cut in the same network. Every original
+child, point, fibre and original legal-pair premise remains present.
+
+For t inactive roots the normalized capacity c therefore satisfies
+
+    c = 21t + 7(delta+k) + 2Z <=79,
+    delta=sum_(active roots)delta_r,   Z=sum_(active roots)Z_r.   (TC1)
+
+The absence of crossing actual bridges gives the complete-fibre containment
+
+    F_(r,c) subset P union P_(r,c)     for each active child,       (TC2)
+
+where P_(r,c) is its private cut-prefix union. The fibre at an inactive
+child is arbitrary; TC2 is never asserted for it.
+
+At k=0, each active z is positive, because its COMPLETE fibre is nonempty.
+Moreover `min(3,|F_(r,c)|)<=z_rc` for every active child: costs1 and2
+are one or two fine leaves, while cost3 has truncated cardinality at most3
+even if its support is a whole column. For an inactive child only the
+trivial `min(3,|F_(r,c)|)<=3` is used. Consequently
+
+    k=0  implies  L_r <= Z_r + 3 delta_r.                        (TC3)
+
+This is the required bridge from actual cut costs to complete original
+fibres; it does not identify token cost with untruncated fibre cardinality.
+
+### B80.5. Three inactive roots at capacity at most79
+
+Only one active root remains. TC1 gives
+
+    7(delta+k)+2Z <=16,
+
+so delta+k<=2. If k=0, TC3 gives
+
+    L_R <= Z+3delta <= floor((16-7delta)/2)+3delta <=8.
+
+B80.2 supplies the root. If k=1 and delta=0, then Z<=4. The least sum p
+of q original active-child costs is at most `(q/n)Z<=12/5`, hence p<=2.
+If k=1 and delta=1, then Z<=1, so again p<=2. In either case these costs
+involve at most two private fine leaves; the one public token is a single
+fine label. The complete original legal projection of those q children
+has at most three labels and is supplied.
+
+Finally k=2 forces delta=0 and Z<=1. There are at least n-1 zero-cost
+active children, so one original q=n-2 restriction consists entirely of
+them. Its complete projection lies in P, which at token cost2 consists of
+at most two fine leaves. This is an at-most-two-label anchor. Thus every
+normalized three-inactive case in this capacity range is supplied.
+
+### B80.6. Two inactive roots: public cost at most one
+
+Let the two remaining active roots have least q_r-child private cost p_r.
+The average-subset bound gives
+
+    Z_r >= (a_r/q_r) p_r.
+
+The sharper integer version is
+
+    Z_r >= p_r + (a_r-q_r) ceil(p_r/q_r).                        (TC4)
+
+Indeed the q_r-th sorted cost is at least that ceiling, and every
+remaining sorted cost is at least the q_r-th.
+
+Apply the original pair premise to those two cheapest legal restrictions.
+Their complete union is covered by the same public prefix and the selected
+private prefixes. Covering a ternary tree costs at least9 tokens: each of
+its three columns costs at least3 by leaves or a whole-column prefix. Thus
+
+    p_1+p_2 >=9-k.                                              (TC5)
+
+TC1 now reads `7(delta+k)+2Z<=37`. If k>=9 the public raw cost alone
+exceeds37. For 2<=k<=8:
+
+* If delta>=2, use Z>=p_1+p_2 to obtain
+  `7(delta+k)+2Z >=18+7delta+5k >=42`.
+* If delta=1, both active ratios a_r/q_r are at least4/3, so the same
+  cost is at least `31+(13/3)k >=119/3 >37`.
+* If delta=0, both ratios are at least5/3, so the cost is at least
+  `30+(11/3)k >=112/3 >37`.
+
+All contradict TC1. Hence k is0 or1.
+
+### B80.7. Two inactive roots with no public prefix
+
+Suppose k=0. If some active root has delta_r>=1, its contribution bound20
+and TC3 give
+
+    L_r <= floor((20-7delta_r)/2)+3delta_r <=9,
+
+because delta_r is1 or2. B80.2 supplies this COMPLETE root, including
+all its arbitrary inactive-child fibres.
+
+Otherwise both roots have delta_r=0. TC1 gives2(Z_1+Z_2)<=37, so
+`Z_1+Z_2<=18`. At least one Z_r is at most9, and TC3 again supplies it.
+This exhausts the entire k0 branch without a shape enumeration.
+
+### B80.8. Two inactive roots with one public fine label
+
+Suppose k=1. The budget is
+
+    7delta+2Z <=30,   p_1+p_2>=8.                               (TC6)
+
+First delta=0 is forced. Delta>=3 is excluded by
+`7delta+2Z >=7delta+16 >=37`. If delta=2 is split1+1, both ratios are at
+least4/3, so Z>=32/3>8, whereas TC6 requires Z<=8. If delta=2 lies at one
+root, its contribution bound20 gives Z_r<=3 and p_r<=3. The fully active
+other root has p>=5 and, by TC4, Z>=9; this alone contradicts Z<=8.
+
+If delta=1, the partial root has Z_r<=6. Its ratio is at least4/3, hence
+its integer p_r is at most4. The fully active other root has ratio at
+least5/3, so
+
+    Z >= (4/3)p_r+(5/3)(8-p_r)
+       =40/3-p_r/3 >=12,
+
+contradicting TC6's integer bound Z<=11. This proves delta=0.
+
+Now both roots are fully active, with Z_1+Z_2<=15. If either p_r<=2,
+TC2 gives a complete legal projection covered by the public fine label
+and at most two private fine leaves, so it has at most three labels and
+the small-anchor supplier applies.
+
+Assume both p_r>=3. They cannot both be at least4: TC4 gives Z_r>=8 at
+either fully active root type when p_r>=4, forcing total at least16.
+Thus one root has p_r=3 and the other has p_s>=5. The latter has Z_s>=9,
+so Z_r<=6. A fully active gap root with p_r=3 would instead have
+`Z_r>=3+2ceil(3/2)=7`; hence r is a full root.
+
+Its five sorted integer private costs have least-three sum3 and total
+at most6. The first three cannot be003, since the remaining two would
+each be at least3; nor can they be012, since both remaining costs would
+be at least2. Therefore the first three are111, and the only complete
+sorted shapes are
+
+    11111 or 11112.
+
+In both shapes four ORIGINAL children have private cost1. The public
+prefix is one numerical fine-label candidate y, and TC2 says their COMPLETE fibres
+lie in `{y,z_i}` for their private candidates. B80.3 supplies these
+four fibres with the fifth arbitrary. This exhausts k1.
+
+### B80.9. Conclusion and scope
+
+Normalization leaves either two or three inactive roots, and every
+resulting case has one fixed actual-source law. The largest supplier
+bound is2865/319. All maps preserve the complete original source and its
+literal numerical phase queries. At no point is a nonminimum cut treated
+as saturated or a selected subsource presumed to inherit blocking.
+
+For the C75/C76 root-cap argument this removes its ENTIRE two-inactive
+obstruction branch, in addition to the previously supplied three-inactive
+branch. This supersedes the earlier open-scope statements about the two-inactive
+branch. The one-inactive-root obstruction branch remains. The theorem
+also does not settle all cut74 sources or the outside-cofactor/common-law
+lift needed for unrestricted Erdős #7.
+
+### B80.10. Exact necessary-profile and actual-source controls
+
+[two_inactive_below80_cost_control](../../../frontier/cover-geometry/height-two-small-anchors/two_inactive_below80_cost_control.py) and its [exact data](../../../frontier/cover-geometry/height-two-small-anchors/two_inactive_below80_cost_control.json) enumerates the finite sorted
+integer domain used in the argument: active counts between q and n,
+private costs0..3 (positive at k0), each root's forward contribution at
+most20, the original pair inequality and raw capacity at most79. It
+identifies interchange of the two equal full-root roles, while retaining
+the gap/full distinction. It finds29 necessary two-inactive profiles:
+
+| capacity |72|74|76|77|78|79|
+|---|---:|---:|---:|---:|---:|---:|
+| profiles |1|1|5|4|9|9|
+
+Of these,21 use the complete truncated-root consumer,4 use a whole original
+legal projection of at most three labels, and4 use the four public-plus-
+private-singleton consumer. No k>=2 or k1/delta>0 profile survives.
+The same control checks48 necessary three-inactive profiles and all20
+sorted clipped nonempty size vectors with total at most9. The ordinary
+proof above supplies the general inequalities and source mapping; these
+finite cost profiles make no assertion of actual source realizability.
+
+Reproduction with all substantive checks active under optimization:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/two_inactive_below80_cost_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/two_inactive_below80_cost_control.json
+```
+
+The separate actual-source control
+[four_public_singleton_actual_control](../../../frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.py) and its [exact data](../../../frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.json) retains four complete
+fibres `{y,z_i}` and a fifth fibre containing ALL49 fine labels. Its
+unchanged source has253 actual points at19 original owners. All480
+original legal pairs and the standalone five-tree pass, while no root is
+individually robust. It constructs26 normalized original paired trees,
+places the same four anchor labels at four different original owners,
+and verifies the fixed mixture against8835 numerical law-slot cylinders.
+The latter count is five component/aggregate laws times1767 cylinders;
+it is not a count of distinct phase-query layouts. The query bound reuses
+the existing four-owner certificate5795/647. No minimum-cut value is
+computed or claimed for this construction control.
+
+Reproduction:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/four_public_singleton_actual_control.json
+```
