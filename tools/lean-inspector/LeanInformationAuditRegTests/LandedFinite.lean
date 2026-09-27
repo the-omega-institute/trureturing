@@ -1,5 +1,5 @@
 import LeanInformationAuditRegTests.ProductionInputs
-import LeanInformationAudit.DispositionCensus
+import LeanInformationAudit.Census.Query
 import Reg.Catalogs.InformationRoot
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
@@ -17,19 +17,29 @@ run_cmd do
   unless expected.size == 11 do throwError "expected eleven independent landed occurrences"
   let registrations ← liftCoreM <| LeanInformationAuditRegTests.productionEntries expected
   unless registrations.size == 11 do throwError "expected eleven landed occurrences"
-  let mut rows : Array (Sigma fun key : StatementKey => CensusAssessment key) := #[]
-  for (registration, i) in registrations.toList.zipIdx do
+  for registration in registrations do
     let proofName := (← getCurrNamespace) ++ registration.arenaName.str "nondegenerate"
     liftTermElabM do
-      let arenaExpr ← mkAppM ``PrimitiveLawArena.toArena
-        #[← mkConstWithFreshMVarLevels registration.arenaName]
+      let arenaExpr := (← RegistrationGates.normalizeArena
+        (← mkConstWithFreshMVarLevels registration.arenaName)).finite
       let proposition ← mkAppM ``Arena.Nondegenerate #[arenaExpr]
       let proof ← mkDecideProof proposition
       addDecl <| .thmDecl { name := proofName, levelParams := [], type := proposition, value := proof }
     elabCommand (← `(command| #print axioms $(mkIdent proofName)))
-    rows := rows.push ⟨⟨registration.theoremName, ← ofExcept <| renderStatementId i⟩,
-      .certified <| .finiteOccurrence ⟨registration.canonicalObjectArenaName, registration.unitName,
-        registration.realizationName, proofName, registration.arenaName.str "__state_enumeration"⟩⟩
+  let index ← liftTermElabM <| CensusQuery.indexScope (← getEnv).header.mainModule
+  let mut rows : Array (Sigma fun key : StatementKey => CensusAssessment key) := #[]
+  for (registration, i) in registrations.toList.zipIdx do
+    let key : StatementKey := ⟨registration.theoremName, ← ofExcept <| renderStatementId i⟩
+    -- The consumer normalizes the arena and discovers typed certificates;
+    -- migrated registrations need not use the old generated-name convention.
+    let assessment ← liftTermElabM <| CensusQuery.assess index "fixture-head" key
+    let .certified (.finiteOccurrence payload) := assessment
+      | throwError "landed occurrence was not certified: {registration.theoremName}"
+    unless payload.canonicalArena == registration.canonicalObjectArenaName &&
+        payload.registration == registration.unitName &&
+        payload.realization == registration.realizationName do
+      throwError "landed occurrence identity mismatch: {registration.theoremName}"
+    rows := rows.push ⟨key, assessment⟩
   let inventory : DispositionInventory := ⟨"fixture-head", rows⟩
   liftTermElabM do
     validateEvidence (← getEnv).header.mainModule inventory

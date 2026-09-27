@@ -91003,3 +91003,5180 @@ $$
 这里新增的是同一来源、访问与计费合同中的联合结论。标准twirling、保真度数据处理、Bernoulli尾界和二阶U统计量都只作为中间工具。Haar相位、块间独立、已知边界、$n=1$、准确经典角度、reset前禁止新旧系统联合作用及确定完整块预算均为结论条件。改变相位先验或相关结构、增加量子参考、允许原输入共同操作、使用未知块边界或仅限制期望停止次数，需要另行分析。
 
 ## 追加锚（本行以下为增补区）
+
+## 284. 两份共同相位下完整量子参考的维数一致取得界
+
+### 284.1 两次更新就刷新的共同来源
+
+采用§280的规范图来源。对每个 $n\ge1$，令
+$$
+J_ne_1=0,\qquad J_ne_j=e_{j-1}\quad(2\le j\le n),
+\qquad M_n=I_n+\tfrac14J_n,
+$$
+$$
+Q_n+M_n^\dagger Q_nM_n=I_n,
+\qquad \tfrac7{23}I_n\preceq Q_n\preceq\tfrac{16}{23}I_n,
+\qquad Z_n=2Q_nM_n.
+\tag{284.1}
+$$
+在固定输入 $Y$ 本征基及参考 $E_n=\mathbb C^n$ 上，实际来源为
+$$
+\Omega_{n,a}=a\Omega_n+(1-a)\frac{I_{2n}}{2n},
+\qquad \Omega_n=\frac1nT(Q_n,M_n),
+\qquad 3/4\le a\le1.
+\tag{284.2}
+$$
+每个块独立抽取一个Haar相位 $\phi$，只对该块的两份输入共同施加 $U_\phi=\operatorname{diag}(e^{-i\phi},1)$。条件于相位，两份来源独立。下一块另抽独立相位。两假设为 $a_0=1$、$a_1=1-\delta$，其中 $0<\delta\le1/4$，先验各为 $1/2$。
+
+观察者只以经典角度请求前述四结果reset仪器；每份新来源先reset，再将实际记录和完整 $n$ 维参考交给观察者。两次请求之间，可以对第一份参考、全部旧记忆及实际记录实施共同正规操作，并用实际结果选择第二角度。新来源在reset前不可与旧记忆联合作用。允许连续标准Borel记录、可测经典角度、可分量子记忆及最终共同测量，采用§281的正规合同。
+
+完整块计费，每块两份。记平均错误不超过 $1/3$ 的最小确定最大副本数为
+$$
+N_2(n,\delta)=2K_{\rm opt}(n,\delta).
+\tag{284.3}
+$$
+所有校准和未使用位置均计入；块数有确定上界的停止可补齐忽略结果的块。相位值及其环境始终不可访问。
+
+本节保留量子参考，不能直接套用§283中只含经典新输出的 $n=1$ 替换。需要重新证明任意中间量子干预下的两轮通道等价。
+
+### 284.2 非对角响应的维数一致范数余量
+
+以下暂略去下标 $n$，记 $t=1/4$。由（284.1），
+$$
+\begin{aligned}
+Z-I
+&=2QM-(Q+M^\dagger QM)\\
+&=Q(M-I)-(M^\dagger-I)QM\\
+&=tQJ-tJ^\dagger QM.
+\end{aligned}
+\tag{284.4}
+$$
+因为 $\|J\|\le1$、$\|M\|\le5/4$，
+$$
+\|Z-I\|\le\tfrac14\tfrac{16}{23}(1+5/4)=\frac9{23},
+\qquad
+\boxed{\|Z\|\le\frac{32}{23}.}
+\tag{284.5}
+$$
+所以
+$$
+\kappa:=\frac12\left(\frac{32}{23}\right)^2
+=\frac{512}{529}<1.
+\tag{284.6}
+$$
+该界同时涵盖 $n=1$ 和增长的 $n$。它控制算子范数，没有将数值半径与算子范数混用。
+
+### 284.3 固定请求的完整两参考响应
+
+令 $r=(w,\eta)$ 为真实记录，$w\in\{0,1\}$、$\eta\in\{+1,-1\}$，并记
+$$
+\xi(r,\theta)=\eta i^w e^{i\theta},
+\qquad \operatorname{Re}X=(X+X^\dagger)/2.
+$$
+略去共同纯reset因子，给定相位的单记录参考块准确为
+$$
+S_{a,\phi}(r;\theta)
+=\frac{I_n+a\operatorname{Re}(e^{-i\phi}\xi(r,\theta)Z_n)}{4n}.
+\tag{284.7}
+$$
+对暂时固定的两个角度与记录，设 $\xi_j=\xi(r_j,\theta_j)$。共同相位平均给
+$$
+\begin{aligned}
+A_a(r_1,r_2;\theta_1,\theta_2)
+&=\int S_{a,\phi}(r_1;\theta_1)\otimes
+S_{a,\phi}(r_2;\theta_2)\,\frac{d\phi}{2\pi}\\
+&=\frac{I_{n^2}+a^2 B(r_1,r_2;\theta_1,\theta_2)}{16n^2},
+\end{aligned}
+\tag{284.8}
+$$
+其中
+$$
+B(r_1,r_2;\theta_1,\theta_2)
+=\tfrac12\operatorname{Re}(\xi_1\overline{\xi_2}\,Z_n\otimes Z_n^\dagger).
+\tag{284.9}
+$$
+线性相位项积分为零，二次项只留下正负频率相消的两项，因此（284.8）精确成立。由（284.5），
+$$
+\|B(r_1,r_2;\theta_1,\theta_2)\|\le\kappa.
+\tag{284.10}
+$$
+对第二记录的四种值求和，$B$ 相消，第一记录的参考边缘为 $I_n/(4n)$，与第二角度及 $a$ 无关。
+
+这些固定角度算子还不足以直接宣称自适应协议等价。下面给出一个可以按真实请求顺序执行的模拟器，并逐实际中间干预核对。
+
+### 284.4 有严格正性余量的两轮模拟器
+
+取
+$$
+c=\frac{33}{32},\qquad c\kappa=\frac{528}{529}<1.
+\tag{284.11}
+$$
+对每个人工参数 $u\in[-c,c]$，定义以下两轮量子装置。它只用于证明，不扩充观察者的实际访问权限。
+
+收到第一经典角度 $\theta_1$ 后，装置均匀产生记录 $r_1$，并制备
+$$
+|\Phi_n\rangle_{R_1M}
+=\frac1{\sqrt n}\sum_{j=1}^n|j\rangle_{R_1}|j\rangle_M.
+\tag{284.12}
+$$
+将 $R_1$ 和 $r_1$ 交给观察者，内部保留 $M,\theta_1,r_1$。观察者可以实施任何已声明的中间操作，再请求实际第二角度 $\theta_2$。
+
+对每个第二记录 $r_2$，定义从 $M$ 到 $R_2$ 的CP映射，其非归一化Choi算子按“输入参考 $R_1$ 在前、输出 $R_2$ 在后”的顺序写为
+$$
+J_{r_2}^{(u)}(\theta_2\mid\theta_1,r_1)
+=\frac{I_{n^2}+uB(r_1,r_2;\theta_1,\theta_2)}{4n}.
+\tag{284.13}
+$$
+由（284.10）—（284.11），
+$$
+J_{r_2}^{(u)}\succeq\frac{I_{n^2}}{4n\cdot529}\succ0.
+\tag{284.14}
+$$
+又因 $\sum_{r_2}B=0$，
+$$
+\sum_{r_2}J_{r_2}^{(u)}=\frac{I_{R_1}\otimes I_{R_2}}n,
+\qquad
+\operatorname{Tr}_{R_2}\sum_{r_2}J_{r_2}^{(u)}=I_{R_1}.
+\tag{284.15}
+$$
+因此四个映射构成真正的CPTP instrument，适用于每个请求角度。若把该映射记为 $\mathcal D_{r_2}^{(u)}$，Choi约定是
+$$
+(\operatorname{id}_{R_1}\otimes\mathcal D_{r_2}^{(u)})
+(|\Phi_n\rangle\langle\Phi_n|)
+=J_{r_2}^{(u)}/n.
+\tag{284.16}
+$$
+乘上第一记录的概率 $1/4$，得到两参考记录块
+$$
+\frac{I_{n^2}+uB(r_1,r_2;\theta_1,\theta_2)}{16n^2}.
+\tag{284.17}
+$$
+
+上述Choi正性、迹归一化和instrument对应属于标准工具。Chiribella、D’Ariano、Perinotti，*A theoretical framework for quantum networks*，[arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2)，第3页Lemma 3与Theorem 1、第4页III.A—B给CP映射、连接与instrument的对应，第7页Theorem 3给正性及因果归一化的网络实现。本节直接写出了（284.12）—（284.16）的实现，不把正的终端算子自动解释为允许任意先后顺序的装置。
+
+### 284.5 任意实际中间干预下的等价
+
+先固定第一角度、第一记录和输入旧记忆 $\tau$。令 $\mathcal A_x$ 表示观察者中间instrument的一条实际分支，它作用于旧记忆及已交付的 $R_1$；该分支随后请求 $\theta_2(x)$。在离散记号下，真实来源经过该分支并取得第二记录后的未归一化状态为
+$$
+(\mathcal A_x\otimes\operatorname{id}_{R_2})
+\left[\tau\otimes
+A_a(r_1,r_2;\theta_1,\theta_2(x))\right].
+\tag{284.18}
+$$
+这是把给定相位的两个独立参考块先作张量积，再将 $\mathcal A_x$ 的线性作用与相位积分交换得到的。$x$ 的真实概率已经包含在CP分支输出的迹中，没有假定两个假设取得相同的中间记录。
+
+在模拟器中，$\mathcal A_x$ 作用于旧记忆及 $R_1$，而第二轮 $\mathcal D_{r_2}^{(u)}$ 作用于内部 $M$。固定实际分支 $x$ 后，两者作用在不同系统上，可以交换其代数求值次序。式（284.16）—（284.17）因此使模拟器输出恰为（284.18），只须取
+$$
+u=a^2.
+\tag{284.19}
+$$
+这一代数交换不交换观察者实际选择第二角度的先后，也不要求 $x$ 与来源参数独立。
+
+对全部实际分支和记录求和或保留，随后施加相同后处理，便得到整个块通道相等。第一角度若由旧记忆的正常instrument选择，也先按该真实控制分支应用同一等式再积分。连续记录采用正常CP仪器的算子值测度；角度是可测函数，有限维的（284.13）连续依赖角度。这里不假定存在对全部输入通用的逐点CP密度：将有限维的 $B(\theta_2)$ 展开为固定算子与有界可测标量系数，逐项对CP算子值测度积分即可。等价地，对简单控制函数的逐分支相等通过正常积分延拓到所声明的可测控制。因此等价覆盖任意旧量子记忆、中间量子操作及连续经典自适应请求。
+
+式（284.18）是保留实际干预的承重点：第一份参考可以在第二次请求前被测量、与旧记忆纠缠或部分丢弃，等价仍成立。只比较无干预的两次记录概率不能替代这一步。
+
+### 284.6 严格内点的二值程序与统一下界
+
+模拟器的第一轮与 $u$ 无关，第二轮Choi算子仿射依赖 $u$。因此，先按概率
+$$
+p_u(+)=\frac{1+u/c}{2},\qquad
+p_u(-)=\frac{1-u/c}{2}
+\tag{284.20}
+$$
+选择 $+c$ 或 $-c$ 的模拟器，便准确实现参数 $u$ 的整个两轮装置。
+
+固定任意允许的块协议，把它接到两个端点模拟器，所得旧记忆通道记为 $\Lambda_+,\Lambda_-$。它们是同一对正规CPTP映射，两个假设的实际块通道为
+$$
+\Psi_b(\tau)
+=p_{a_b^2}(+)\Lambda_+(\tau)
++p_{a_b^2}(-)\Lambda_-(\tau).
+\tag{284.21}
+$$
+这份程序不可被观察者直接读取。它只把所有允许自适应干预的区别压到同一个二值分布中。
+
+理想程序是严格内点：
+$$
+p_1(+)\ =\frac{65}{66},\qquad p_1(-)=\frac1{66}.
+\tag{284.22}
+$$
+两程序正号概率之差为
+$$
+\frac{1-(1-\delta)^2}{2c}\le\frac\delta c.
+$$
+于是相对于理想程序的二项 $\chi^2$ 距离满足
+$$
+\chi^2(p_{(1-\delta)^2}\Vert p_1)
+\le\frac{(\delta/c)^2}{(65/66)(1/66)}
+=\frac{4096}{65}\delta^2<64\delta^2.
+\tag{284.23}
+$$
+此估计的全部常数与 $n$ 无关。
+
+用§283的共同程序保真度论证，记两程序的根保真度为 $f$。任意两种输入旧记忆 $\tau_0,\tau_1$ 都满足
+$$
+F(\Psi_0(\tau_0),\Psi_1(\tau_1))
+\ge fF(\tau_0,\tau_1),
+\qquad1-f^2\le64\delta^2.
+\tag{284.24}
+$$
+即使不同块的协议依赖已有记录，每个块仍使用同一对程序概率；独立的新相位保证程序与输入旧记忆独立。经过 $K$ 块后，
+$$
+d_{\rm final}^2\le1-f^{2K}\le64K\delta^2.
+\tag{284.25}
+$$
+平均错误不超过 $1/3$ 必须 $d_{\rm final}\ge1/3$。所以
+$$
+\boxed{N_2(n,\delta)\ge\frac1{288\delta^2}.}
+\tag{284.26}
+$$
+根保真度、判别及共同环境程序工具的原始归属同§283。新增的接口事实是（284.11）—（284.21）在维数一致的正性区间内实现了整个两轮过程；不能用单次参考维数直接读出这一信息界。
+
+### 284.7 真实两次记录达到相同阶
+
+上界只使用每块两次角度零的实际记录，可以丢弃量子参考。由§280的规范来源估计，
+$$
+a_n:=\operatorname{Tr}Z_n/n\in[15/16,1].
+\tag{284.27}
+$$
+每次构造
+$$
+W=(2\eta\mathbf1_{w=0},2\eta\mathbf1_{w=1}).
+\tag{284.28}
+$$
+条件于共同相位，$\mathbb E_aW=aa_n(\cos\phi,\sin\phi)$。因此块统计量
+$$
+V=W_1\cdot W_2
+\tag{284.29}
+$$
+满足
+$$
+\mathbb E_aV=a^2a_n^2,
+\qquad
+\mathbb E_aV^2=16\Pr(w_1=w_2)=8,
+\qquad\operatorname{Var}_aV\le8.
+\tag{284.30}
+$$
+两个设置标签是独立公平币，条件于相位的两份输出独立；所以这些等式在Haar平均后仍成立。
+
+两个假设的均值差至少为
+$$
+g_\delta=a_n^2(2\delta-\delta^2)
+\ge\frac{225}{256}\delta.
+\tag{284.31}
+$$
+独立使用
+$$
+K=\left\lceil\frac{128}{\delta^2}\right\rceil
+\tag{284.32}
+$$
+个块，对 $V$ 的均值作已知两均值的中点检验。每种错误概率由Chebyshev界至多
+$$
+\frac{32}{Kg_\delta^2}
+\le\frac{16384}{50625}<\frac13.
+\tag{284.33}
+$$
+全部块都只用允许的实际记录，没有免费相位校准。因此
+$$
+\boxed{N_2(n,\delta)\le2\left\lceil\frac{128}{\delta^2}\right\rceil
+\le\frac{257}{\delta^2}.}
+\tag{284.34}
+$$
+最后一步使用 $\delta\le1/4$ 吸收整数取整。
+
+### 284.8 量子参考维数不能替代这份共同相位关系
+
+**定理284.1（两份共同相位块的维数一致最优预算）。** 在（284.1）—（284.3）的实际来源、完整参考及正规经典reset访问合同下，对全部 $n\ge1$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{288\delta^2}\le N_2(n,\delta)\le\frac{257}{\delta^2}.
+}
+\tag{284.35}
+$$
+因此 $N_2(n,\delta)\asymp\delta^{-2}$，比较常数独立于参考维数。下界覆盖两次请求之间对第一份参考和旧量子记忆的自适应共同操作；上界由纯经典记录达到。
+
+**证明。** （284.4）—（284.10）给全部维数上的关联算子范数余量。它使（284.13）的instrument在 $u\in[-33/32,33/32]$ 上保持正性与因果归一化。（284.18）逐真实干预验证该两轮实现与实际来源在 $u=a^2$ 时等价。理想程序因此处于固定二值概率单纯形的严格内部，（284.23）—（284.26）给跨块量子记忆也适用的下界；（284.28）—（284.34）给计费一致的达到方案。$\square$
+
+每份独立刷新相位时，§282已经证明所有维数的单次平均完整输出均为 $I_{4n}/(4n)$，任何协议都不可判别。两份保持共同相位已经允许判别，但本节证明其最优预算仍是维数一致的 $\Theta(\delta^{-2})$。
+
+同一相位贯穿全部校准与检测时，§281—§282给出的共同Haar相位预算为
+$$
+N_{\rm shared}(n,\delta)
+\asymp\frac1{\delta/n+\delta^{3/2}}.
+\tag{284.36}
+$$
+例如在 $\delta\downarrow0$ 且 $n\sqrt\delta\to\infty$ 的联合范围内，该预算是 $\Theta(\delta^{-3/2})$，而两份刷新仍需 $\Theta(\delta^{-2})$。这是同一规范来源、同一完整参考和同一新输入访问权限下的差别；发生变化的是跨次共同相位的保持方式。
+
+因而，对当前来源族，增大已保留参考的维数不能补回被两份刷新规则截断的共同关系。此结论没有声称所有量子参考都无用，也没有给一般来源、任意块长或原输入共同测量的统一预算。未知块边界、相关相位刷新、相干角度控制、reset前新旧系统联合作用及只限制期望停止次数，均不在定理条件中。副本数仍不承担未标定的物理历时。
+
+## 追加锚（本行以下为增补区）
+
+## 285. 两份原输入的相位不变检验与重置权限的统一成本分离
+
+### 285.1 固定来源关系，只改变可接入的系统
+
+本节沿用§284的全部来源参数：$n\ge1$，$0<\delta\le1/4$，
+$$
+M=I_n+J_n/4,\qquad Q+M^\dagger QM=I_n,
+\qquad q_-I_n\preceq Q\preceq(1-q_-)I_n,
+\qquad q_-=7/23,
+$$
+$$
+Vx=|0\rangle\otimes x+|1\rangle\otimes M^\dagger x,
+\qquad\Omega_n=VQV^\dagger/n,
+\qquad\tau_n=I_{2n}/(2n).
+\tag{285.1}
+$$
+这里 $|0\rangle,|1\rangle$ 表示固定输入 $Y$ 本征基。设
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),
+\qquad\Omega_{n,\phi}=(U_\phi\otimes I_n)\Omega_n(U_\phi^\dagger\otimes I_n),
+$$
+$$
+\Omega_{n,\delta,\phi}=(1-\delta)\Omega_{n,\phi}+\delta\tau_n.
+\tag{285.2}
+$$
+每块独立抽取Haar相位 $\phi$，只在该块两份来源中共同使用；条件于相位，两份独立。两假设为理想来源与扰动来源，先验各为 $1/2$。
+
+来源和相位刷新规则都与§284相同，但现在允许保存每份完整原输入 $H\otimes E_n$，并对它们及旧记忆共同操作，不必先经过reset。记平均错误不超过 $1/3$ 所需的最小确定最大完整块副本数为 $N_{\rm full,2}(n,\delta)$。每块两份，所有已消费位置计费；提前停止可补齐忽略结果的块。相位环境仍不可访问，初始资源仍与假设无关。
+
+下界允许对所有原输入作任意共同测量；上界仅需在每个真实两份块内作一个已知投影。此访问改变必须与§284的重置后参考访问分开。
+
+### 285.2 总相位中间扇区内的已知图像
+
+对两个原输入，重排张量因子为 $H_1H_2E_1E_2$。令
+$$
+\mathcal H_{\rm mid}
+=\operatorname{span}\{|01\rangle,|10\rangle\}\otimes(E_n\otimes E_n),
+\qquad \Pi_{\rm mid}\text{ 为其正交投影}.
+\tag{285.3}
+$$
+两个输入的共同相位在此扇区上都是同一标量 $e^{-i\phi}$。因此任何仅作用在该扇区内部的算子都与共同相位作用对易。
+
+把 $\mathcal H_{\rm mid}$ 按 $|01\rangle,|10\rangle$ 的顺序识别为两份 $E_n\otimes E_n$ 的直和，定义
+$$
+C_nx=
+\begin{pmatrix}I_n\otimes M^\dagger\\M^\dagger\otimes I_n\end{pmatrix}x.
+\tag{285.4}
+$$
+这正是 $(V\otimes V)x$ 的中间扇区分量。$M$ 的最小奇异值至少为 $3/4$，所以 $C_n$ 单射，且
+$$
+C_n^\dagger C_n
+=I_n\otimes MM^\dagger+MM^\dagger\otimes I_n
+\succeq\frac98 I_{n^2}.
+\tag{285.5}
+$$
+在中间扇区上令
+$$
+P_n=I_{\mathcal H_{\rm mid}}
+-C_n(C_n^\dagger C_n)^{-1}C_n^\dagger,
+\tag{285.6}
+$$
+再把它延拓为其余两个扇区上的零算子。则 $P_n$ 是已知正交投影，
+$$
+\operatorname{rank}P_n=n^2,
+\qquad
+P_n(V\otimes V)=0.
+\tag{285.7}
+$$
+该投影只依赖已知的 $n,M$，不依赖未知相位或扰动假设。
+
+### 285.3 每个相位都成立的零点击与扰动质量
+
+由（285.7）及共同相位对易性，对每个 $\phi$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\Omega_{n,\phi})]=0.
+\tag{285.8}
+$$
+这里不需要先平均相位。$P_n$ 消去整个实际图像支撑，包括其中由 $Q\otimes Q$ 给出的全部权重。
+
+更具体地，$P_n$ 恰是共同Haar平均理想两份态的完整核投影。三个总相位扇区分别保留 $V\otimes V$ 的分量 $I_{n^2}$、$C_n$ 和 $M^\dagger\otimes M^\dagger$；相位积分消去不同扇区之间的交叉项。因为 $Q\otimes Q\succ0$，且首末分量可逆、中间分量单射，每个扇区块的秩都是 $n^2$。平均态总秩为 $3n^2$，其 $n^2$ 维核正是（285.6）的投影范围。
+
+考虑扰动后的两份乘积：
+$$
+\begin{aligned}
+\Omega_{n,\delta,\phi}^{\otimes2}
+&=(1-\delta)^2\Omega_{n,\phi}^{\otimes2}\\
+&\quad+\delta(1-\delta)
+(\Omega_{n,\phi}\otimes\tau_n+\tau_n\otimes\Omega_{n,\phi})
++\delta^2\tau_n^{\otimes2}.
+\end{aligned}
+\tag{285.9}
+$$
+在中间扇区中，第一交叉项的压缩准确为
+$$
+\Pi_{\rm mid}(\Omega_{n,\phi}\otimes\tau_n)\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+Q\otimes I_n&0\\0&(I_n-Q)\otimes I_n
+\end{pmatrix}.
+\tag{285.10}
+$$
+原因是第一输入的非对角块改变总相位扇区，压缩后消失；保留的两个对角块分别为 $Q$ 与 $M^\dagger QM=I_n-Q$。第二交叉项同理给
+$$
+\Pi_{\rm mid}(\tau_n\otimes\Omega_{n,\phi})\Pi_{\rm mid}
+=\frac1{2n^2}
+\begin{pmatrix}
+I_n\otimes(I_n-Q)&0\\0&I_n\otimes Q
+\end{pmatrix}.
+\tag{285.11}
+$$
+两式均与相位无关，并均至少为 $q_-I_{\rm mid}/(2n^2)$。因为 $\operatorname{Tr}P_n=n^2$，
+$$
+\operatorname{Tr}[P_n(\Omega_{n,\phi}\otimes\tau_n)]\ge q_-/2,
+\qquad
+\operatorname{Tr}[P_n(\tau_n\otimes\Omega_{n,\phi})]\ge q_-/2.
+\tag{285.12}
+$$
+同时，
+$$
+\operatorname{Tr}(P_n\tau_n^{\otimes2})=\frac14.
+\tag{285.13}
+$$
+因此实际扰动点击概率满足
+$$
+\begin{aligned}
+p_\delta
+&:=\operatorname{Tr}(P_n\Omega_{n,\delta,\phi}^{\otimes2})\\
+&\ge q_-\delta(1-\delta)+\delta^2/4
+\ge\frac{21}{92}\delta.
+\end{aligned}
+\tag{285.14}
+$$
+最后一步使用 $\delta\le1/4$。该界同时独立于参考维数和实际相位；Haar平均保持它。
+
+共同相位的总荷扇区分解是标准参考系工具，其一般机制见§282所引 Bartlett、Rudolph、Spekkens，[quant-ph/0610030](https://arxiv.org/abs/quant-ph/0610030)，式（2.7）—（2.9）。这里使用它确定当前规范图来源的中间支撑 $\operatorname{ran}C_n$；（285.10）—（285.14）另行计算了该支撑正交补上维数一致的实际扰动质量。
+
+### 285.4 不读取相位的实际取得方案
+
+每个真实块都对两份完整原输入测量 $\{P_n,I-P_n\}$，只要出现一次 $P_n$ 就判为扰动来源。理想来源从不误报；扰动来源在不同块上独立执行，所以 $K$ 块仍未点击的概率至多
+$$
+(1-p_\delta)^K\le\exp[-(21/92)K\delta].
+\tag{285.15}
+$$
+取
+$$
+K=\left\lceil\frac4\delta\right\rceil.
+\tag{285.16}
+$$
+则漏检概率不超过 $e^{-21/23}<1/2$，等先验平均错误小于 $1/4$。全部制备和检测位置均计费，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta)
+\le2\left\lceil\frac4\delta\right\rceil
+\le\frac9\delta.
+}
+\tag{285.17}
+$$
+它不需要相位估计或额外参考副本，也没有把模拟程序的隐藏标签开放给观察者。所需新权限正是把两份原输入保留到同一次联合测量。
+
+### 285.5 任意全输入处理的匹配下界
+
+记 $d$ 为半迹距离。对任意相位，
+$$
+d(\Omega_{n,\delta,\phi},\Omega_{n,\phi})
+=\delta d(\tau_n,\Omega_{n,\phi})\le\delta.
+\tag{285.18}
+$$
+给定所有块相位，$N$ 份来源按位置独立；逐因子替换及迹范数张量性质给两个原始联合态的距离至多 $N\delta$。再按两个假设共同的相位律积分，由迹范数凸性，平均联合态的距离仍至多 $N\delta$。
+
+任何允许的存储、跨块操作、自适应控制和最终共同测量，都是这些原始输入的共同CPTP后处理。因此最终距离至多 $N\delta$。等先验错误不超过 $1/3$ 需要距离至少 $1/3$，从而
+$$
+\boxed{N_{\rm full,2}(n,\delta)\ge\frac1{3\delta}.}
+\tag{285.19}
+$$
+有确定最大块数的停止用忽略剩余输入补齐，不改变此下界。判别及迹距数据处理使用§283—§284已经列明的标准工具；这里既没有假定操作逐份独立，也没有限制下界中的末端测量。
+
+### 285.6 同一共同来源上的权限分离
+
+**定理285.1（两份原输入的统一线性扰动检测）。** 对（285.1）—（285.3）的实际规范来源及两份共同相位刷新合同，在允许保留和共同处理完整原输入的访问类中，对全部 $n\ge1$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{3\delta}
+\le N_{\rm full,2}(n,\delta)
+\le\frac9\delta.
+}
+\tag{285.20}
+$$
+与§284的先reset访问类相比，在同一来源和同一两份相位保持方式下，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta)\asymp\delta^{-1},
+\qquad
+N_2(n,\delta)\asymp\delta^{-2},
+}
+\tag{285.21}
+$$
+所有比较常数都独立于 $n$。
+
+**证明。** 中间相位扇区的图像 $C_n$ 及其正交补给（285.8）的精确零事件；对实际混合来源展开，两个交叉项的正下界给（285.14）的统一线性点击量。实际重复投影由（285.15）—（285.17）达到上界；原始输入联合态的逐因子替换界给（285.19）的必要性。先reset访问的另一阶由定理284.1承担。$\square$
+
+当 $n=1$，$M=1$，中间图像由 $|01\rangle+|10\rangle$ 张成，$P_1$ 正是反对称投影。这与§283的qubit权限反例一致。对 $n>1$，$P_n$ 由完整输入—参考图像决定，不能把它默认替换成丢弃参考后的qubit反对称测量。
+
+式（285.21）说明，在当前模型中，两份之间保留同一个相位已足够支持一个不需相位校准的联合原输入检验；先reset则抹去这项检验所用的关系，即使完整参考保留下来且维数任意增大，也不能恢复同阶取得成本。这个区别由明确的投影和下界共同承担，不能仅从张量网络可表示或终端边缘一致推断。
+
+单份独立相位时§282的不可判别结论限于reset访问，不能移用于本节新开放的原输入访问。定理也不对任意来源族、任意相位噪声或一般物理时钟作结论。所有预算都是确定最大原输入份数；实现联合投影所需的门数、存储容量及钟表历时需要另行规定。
+
+## 追加锚（本行以下为增补区）
+
+## 286. 两份相位失配的谱填充与原输入权限的连续退化
+
+### 286.1 已标定的相对相位漂移
+
+保持§285的规范来源、原输入与参考系统、白噪声混合以及完整两位置块计费。记
+$$
+q=7/23,\qquad s=16/23,\qquad
+qI_n\preceq Q\preceq sI_n,\qquad
+\Omega_\delta=(1-\delta)\Omega_n+\delta\tau_n,
+\qquad\tau_n=I_{2n}/(2n).
+\tag{286.1}
+$$
+两假设分别为 $\delta=0$ 与一个已知的 $0<\delta\le1/4$，先验相等。
+
+本节只改变块内相位关系。每块独立产生两个随机变量：$\phi$ 服从Haar均匀律，$\xi$ 与 $\phi$ 独立，且相对相位律已标定为
+$$
+r=\mathbb E e^{i\xi}\in[3/4,1],\qquad\varepsilon=1-r.
+\tag{286.2}
+$$
+第一份输入施加 $U_\phi$，第二份施加 $U_{\phi+\xi}$。条件于这两个相位，两份来源独立；不同块独立。两个假设使用同一相位律。相位及其环境都不可访问，$r$ 的数值是已声明的模型参数。本节不把取得这个参数的校准成本包含进副本预算，也不声称未知 $r$ 时仍可用同一检验。
+
+允许保留全部原输入并作任意共同处理，初始资源与假设无关。记目标平均错误不超过 $1/3$ 的最小确定最大副本数为 $N_{\rm full,2}(n,\delta,r)$；每块两份，停止策略用忽略剩余完整块补齐。
+
+只有边缘条件“$\phi$ 为Haar”及一个无条件矩 $\mathbb E e^{i\xi}$，不足以推出下文分解；独立性保证共同相位积分可以先行执行。
+
+### 286.2 漂移只填充中间相位扇区的缺口
+
+令 $\mathcal G$ 表示单份输入的Haar相位平均，参考不变，置
+$$
+D_\delta=\mathcal G(\Omega_\delta)
+=\frac1n\begin{pmatrix}
+(1-\delta)Q+\delta I_n/2&0\\
+0&(1-\delta)(I_n-Q)+\delta I_n/2
+\end{pmatrix},
+\qquad D=D_0.
+\tag{286.3}
+$$
+令 $\sigma_{\delta,1}$ 为两份完全共同相位的平均原输入态，$\sigma_{\delta,r}$ 为（286.2）的真实块态。共同相位平均消去不同总荷扇区间的块。外侧两个扇区只含对角项；中间 $|01\rangle,|10\rangle$ 扇区间的非对角项恰乘以 $\mathbb E e^{\pm i\xi}=r$。因此
+$$
+\boxed{
+\sigma_{\delta,r}
+=r\sigma_{\delta,1}+\varepsilon D_\delta\otimes D_\delta.
+}
+\tag{286.4}
+$$
+这是一条准确的矩阵等式。相对相位律的其他Fourier系数不进入当前两份qubit输入的平均态。它不把真实相位分布改成一份可被观察者读取的混合标签。
+
+记
+$$
+R=D\otimes\tau_n+\tau_n\otimes D.
+$$
+白噪声项对相位不变，故实际扰动展开为
+$$
+\sigma_{\delta,r}
+=(1-\delta)^2\sigma_{0,r}
++\delta(1-\delta)R+\delta^2\tau_n^{\otimes2}.
+\tag{286.5}
+$$
+特别地，因 $D_\delta\succeq qI_{2n}/n$，
+$$
+\sigma_{0,r}\succeq\frac{\varepsilon q^2}{n^2}I_{4n^2},
+\qquad
+\sigma_{\delta,r}\succeq\frac{\varepsilon q^2}{n^2}I_{4n^2}.
+\tag{286.6}
+$$
+$\varepsilon>0$ 时，§285的理想核不再是零概率子空间。式（286.6）同时给出全矩阵上的谱填充尺度；它不是只对某个选定测量的经典背景作估计。
+
+### 286.3 任意全输入测量的单块可分辨率上界
+
+以下 $F(\rho,\omega)=\|\sqrt\rho\sqrt\omega\|_1$ 为根保真度，$d=\|\rho-\omega\|_1/2$ 为半迹距离，$\|\cdot\|_2$ 为Hilbert–Schmidt范数。
+
+首先控制实际来源的大小。由 $V^\dagger V=I+MM^\dagger$、$\|M\|\le5/4$ 和 $\|Q\|\le16/23$，
+$$
+\|\Omega_n\|\le\frac{41}{23n}<\frac2n,
+\qquad
+\operatorname{Tr}\Omega_n^2\le\frac2n,
+\qquad
+\|\Omega_\delta\|_2\le\sqrt{2/n}.
+\tag{286.7}
+$$
+同时
+$$
+\|\Omega_\delta-\Omega_n\|_2^2
+=\delta^2\left(\operatorname{Tr}\Omega_n^2-\frac1{2n}\right)
+\le\frac{3\delta^2}{2n}.
+\tag{286.8}
+$$
+对任一实际相位对，乘积差写成两个逐因子替换项。Hilbert–Schmidt范数的张量乘法与三角不等式给
+$$
+\begin{aligned}
+\|\Omega_\delta^{\otimes2}-\Omega_n^{\otimes2}\|_2
+&\le\|\Omega_\delta-\Omega_n\|_2
+(\|\Omega_\delta\|_2+\|\Omega_n\|_2)\\
+&\le\frac{2\sqrt3\delta}{n}.
+\end{aligned}
+$$
+不同相位对只是对这一差作相同酉共轭，取平均由范数凸性保持此界。因此
+$$
+\|\sigma_{\delta,r}-\sigma_{0,r}\|_2^2
+\le\frac{12\delta^2}{n^2}.
+\tag{286.9}
+$$
+
+当 $\varepsilon>0$ 时，令 $A=\sqrt{\sigma_{\delta,r}}$、$B=\sqrt{\sigma_{0,r}}$、$X=A-B$。平方根差满足标准Sylvester恒等式
+$$
+AX+XB=\sigma_{\delta,r}-\sigma_{0,r}.
+$$
+分别在 $A$ 的左本征基和 $B$ 的右本征基展开，则
+$$
+X_{ij}=\frac{(\sigma_{\delta,r}-\sigma_{0,r})_{ij}}{a_i+b_j}.
+$$
+由（286.6），分母至少为 $2q\sqrt\varepsilon/n$。于是
+$$
+\|X\|_2^2
+\le\frac{n^2}{4\varepsilon q^2}
+\|\sigma_{\delta,r}-\sigma_{0,r}\|_2^2
+\le\frac3{q^2}\frac{\delta^2}{\varepsilon}.
+\tag{286.10}
+$$
+这里使用左右两个不同本征基，不要求两态交换。又因 $F\ge\operatorname{Tr}(AB)$，
+$$
+1-F^2\le2(1-F)\le2-2\operatorname{Tr}(AB)=\|X\|_2^2.
+\tag{286.11}
+$$
+
+另一条不要求谱隙的界来自实际混合来源：每份的半迹距离至多 $\delta$，两份逐因子替换及共同相位平均给 $d(\sigma_{\delta,r},\sigma_{0,r})\le2\delta$。标准保真度—迹距不等式因而给
+$$
+1-F^2\le2d\le4\delta.
+\tag{286.12}
+$$
+把（286.10）与（286.12）取较小者，并使用
+$$
+\min\{A,B/x\}\le\frac{A+B}{1+x}\quad(x>0),
+\qquad 4+3/q^2<40,
+$$
+得到统一的块响应界
+$$
+\boxed{
+1-F(\sigma_{\delta,r},\sigma_{0,r})^2
+\le40\frac{\delta^2}{\varepsilon+\delta}.
+}
+\tag{286.13}
+$$
+当 $\varepsilon=0$ 时直接使用（286.12），所以端点也包含在内。
+
+保真度张量乘法、迹距数据处理、等先验二元判别及其与保真度的界是标准工具，沿用§283所引 Watrous，*The Theory of Quantum Information*，[原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4、Theorem 3.33。平方根差估计的有限维推导已在上面写出；这些工具只承担当前来源估计的中间步骤。
+
+### 286.4 允许跨块共同测量的必要副本数
+
+$K$ 个真实块的原始联合态分别为 $\sigma_{0,r}^{\otimes K}$ 与 $\sigma_{\delta,r}^{\otimes K}$。允许的全部处理是这两态上的共同CPTP后处理，包括跨块量子记忆、提前停止及最终全局测量。因此最终距离满足
+$$
+\begin{aligned}
+d_{\rm final}^2
+&\le1-F(\sigma_{\delta,r},\sigma_{0,r})^{2K}\\
+&\le K\bigl[1-F(\sigma_{\delta,r},\sigma_{0,r})^2\bigr]\\
+&\le40K\frac{\delta^2}{\varepsilon+\delta}.
+\end{aligned}
+\tag{286.14}
+$$
+平均错误至多 $1/3$ 必须 $d_{\rm final}\ge1/3$。因为 $N=2K$，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta,r)
+\ge\frac{\varepsilon+\delta}{180\delta^2}.
+}
+\tag{286.15}
+$$
+这个下界控制完整原输入的全部可用区别，没有假定观察者只测核投影。
+
+### 286.5 有背景点击的实际投影检验
+
+上界仍使用§285的已知投影 $P_n$，它是在中间相位扇区内 $\operatorname{ran}C_n$ 的正交补，秩为 $n^2$。定义两个可由已知矩阵计算的量
+$$
+b=\operatorname{Tr}[P_n(D\otimes D)],
+\qquad c=\operatorname{Tr}(P_nR).
+\tag{286.16}
+$$
+由 $qI/n\preceq D\preceq sI/n$、$\tau_n=I/(2n)$ 和 $\operatorname{Tr}P_n=n^2$，
+$$
+q\le c\le s.
+\tag{286.17}
+$$
+又有 $D\preceq2s\tau_n$。分别作用在两张量因子并相加，得到
+$$
+D\otimes D\preceq s(D\otimes\tau_n+\tau_n\otimes D)=sR,
+\qquad b\le sc.
+\tag{286.18}
+$$
+这是控制背景相对于扰动信号的关系，不能仅用粗略的 $b\le1$ 代替。
+
+由§285的理想共同相位零事件、（286.4）及（286.5），两个假设下的点击概率准确为
+$$
+p_0=\varepsilon b,
+\qquad
+p_\delta=\varepsilon(1-\delta)^2b
++\delta(1-\delta)c+\frac{\delta^2}{4}.
+\tag{286.19}
+$$
+所以
+$$
+\begin{aligned}
+p_\delta-p_0
+&=\delta\left[c(1-\delta)-\varepsilon b(2-\delta)+\delta/4\right]\\
+&\ge\delta c\left[1-\delta-\varepsilon s(2-\delta)\right]\\
+&\ge\frac{287}{2116}\delta
+>\frac\delta8.
+\end{aligned}
+\tag{286.20}
+$$
+最后一步中方括号在 $\delta,\varepsilon\in[0,1/4]$ 上均随各参数不增，最小值为 $3/4-7s/16=41/92$，再用 $c\ge7/23$。
+
+同时 $b\le s^2<1$，且 $c\le s<1$，故
+$$
+p_0\le\varepsilon,\qquad
+p_\delta\le\varepsilon+\delta.
+\tag{286.21}
+$$
+例如后一式由 $\delta(1-\delta)c+\delta^2/4\le\delta$ 得到。因此两种Bernoulli点击变量的方差都至多 $\varepsilon+\delta$。
+
+在每个真实块测量 $\{P_n,I-P_n\}$，对点击频率采用已知两均值的中点阈值。独立使用
+$$
+K=\left\lceil768\frac{\varepsilon+\delta}{\delta^2}\right\rceil
+\tag{286.22}
+$$
+个完整块，每种错误由Chebyshev不等式至多
+$$
+\frac{4(\varepsilon+\delta)}{K(p_\delta-p_0)^2}
+\le\frac{256(\varepsilon+\delta)}{K\delta^2}\le\frac13.
+\tag{286.23}
+$$
+因为 $(\varepsilon+\delta)/\delta^2\ge1/\delta\ge4$，包括取整的全部计费满足
+$$
+\boxed{
+N_{\rm full,2}(n,\delta,r)
+\le1537\frac{\varepsilon+\delta}{\delta^2}.
+}
+\tag{286.24}
+$$
+背景非零时不能沿用“出现一次点击就判扰动”的零漂移方案；这里的实际协议比较的是两份已标定点击率。
+
+### 286.6 同一漂移下的重置权限对照
+
+在同一相位来源上，若仍只允许§284的先reset访问，固定记录和角度的两参考块变为
+$$
+A_{a,r}=\frac{I_{n^2}+ra^2B}{16n^2},\qquad a\in\{1,1-\delta\},
+\tag{286.25}
+$$
+其中 $B$ 是（284.9）的记录关联算子。故§284的因果模拟器直接取 $u=ra^2$。它逐实际中间干预的等价仍成立，因为改变的只有同一仿射系数。
+
+对程序 $p_u(\pm)=(1\pm u/(33/32))/2$，基线 $u=r\le1$ 的二项概率乘积至少为 $65/4356$；两个假设的正号概率之差至多 $\delta/(33/32)$。因此（284.23）的 $64\delta^2$ 上界及其全部跨块量子记忆推论仍适用，给
+$$
+N_{\rm reset,2}(n,\delta,r)\ge\frac1{288\delta^2}.
+\tag{286.26}
+$$
+
+实际取得方案也复用（284.28）的 $W$，但统计量 $W_1\cdot W_2$ 的均值现在为 $ra^2a_n^2$，其中 $a_n=\operatorname{Tr}Z_n/n\ge15/16$。二阶矩仍为8。两个假设的均值差满足
+$$
+r a_n^2(2\delta-\delta^2)
+\ge\frac34\frac{225}{256}\frac74\delta
+=\frac{4725}{4096}\delta>\delta.
+\tag{286.27}
+$$
+使用 $K=\lceil128/\delta^2\rceil$ 个块作已知均值中点检验，每种错误至多 $32/(K\delta^2)\le1/4$。于是
+$$
+N_{\rm reset,2}(n,\delta,r)\le\frac{257}{\delta^2}.
+\tag{286.28}
+$$
+这些是§284的同一模拟器和实际统计量在当前相位矩上的应用，未额外赋予相位标签、重置前操作或相干角度访问。
+
+### 286.7 关系精度决定权限优势保留到哪一尺度
+
+**定理286.1（相位失配下的维数一致预算过渡）。** 对（286.1）—（286.2）的同一已标定来源、独立两份块和确定最大预算，全部 $n\ge1$、$0<\delta\le1/4$、$3/4\le r\le1$ 同时满足
+$$
+\boxed{
+\frac{\varepsilon+\delta}{180\delta^2}
+\le N_{\rm full,2}(n,\delta,r)
+\le1537\frac{\varepsilon+\delta}{\delta^2},
+\qquad\varepsilon=1-r.
+}
+\tag{286.29}
+$$
+同一漂移下，先reset的最优预算仍为维数一致的 $\Theta(\delta^{-2})$。
+
+**证明。** 完整平均块的准确分解给（286.6）的全谱下界；实际来源的Hilbert–Schmidt差与两种平方根估计共同给（286.13），由原输入张量积的判别界得到（286.15）。固定图支撑投影的背景—信号关系（286.18）保证真实点击率差仍为线性量，计费一致的频率检验给（286.24）。重置访问的比较由（286.25）—（286.28）完成。$\square$
+
+因此，在本合同中，若 $\varepsilon=O(\delta)$，完整输入仍只需 $\Theta(\delta^{-1})$ 份；若 $\delta/\varepsilon\to0$，其预算为 $\Theta(\varepsilon/\delta^2)$。两种访问的最优预算比为
+$$
+\frac{N_{\rm reset,2}}{N_{\rm full,2}}
+\asymp\frac1{\varepsilon+\delta}.
+\tag{286.30}
+$$
+“完整输入里仍有这项关系”不足以保证原来的一阶检测优势：必须把相对相位误差控制到任务扰动尺度。漂移填充了理想核，使原本不可能发生的事件出现背景；背景与实际扰动共同决定所需样本数。这里的填充是明确的量子态谱变化，不是对全部信息逃逸的统一比喻。
+
+上述结果没有要求具体相位律是高斯，也没有覆盖与共同相位相关的漂移、未知漂移标定、未知块边界或只限制期望停止次数。样本取得预算继续与联合投影的门复杂度、存储成本及钟表历时分开。
+
+## 追加锚（本行以下为增补区）
+
+## 287. 未标定相位的复合纤维与原输入—参考联合区别
+
+### 287.1 从已知参数检验改为逐假设一致保证
+
+保持§286的实际规范来源、完整两位置块、块间独立、Haar共同相位与独立漂移。现在观察者只知道
+$$
+r\in[3/4,1],\qquad a\in\{1,1-\delta\},
+\qquad0<\delta\le1/4,
+\tag{287.1}
+$$
+不知道固定的实际 $r$，也没有独立相位标定来源。$n,\delta,Q,M$ 仍已知。对每个允许的 $r$，漂移可以取任意独立于共同Haar相位、满足 $\mathbb E e^{i\xi}=r$ 的律；完整块态只依赖这个矩。
+
+本节明确采用逐假设一致风险。对同一个协议 $\Pi$，要求
+$$
+\mathcal R(\Pi)
+=\max\left\{
+\sup_{r\in[3/4,1]}\Pr_{1,r}(\widehat a=1-\delta),
+\sup_{r\in[3/4,1]}\Pr_{1-\delta,r}(\widehat a=1)
+\right\}\le\frac13.
+\tag{287.2}
+$$
+记两种访问权限下的最小确定最大副本数为 $N_{\rm unk}^{\rm full}(n,\delta)$ 与 $N_{\rm unk}^{\rm reset}(n,\delta)$，无可行协议时取 $+\infty$。全部完整块按两份计费。
+
+这是对两个复合假设分别一致的保证。它强于只要求“对同一个未知共同 $r$，两类错误的等先验平均再取最坏值不超过 $1/3$”。下面用不同 $r$ 构造不可区分来源时，依据的是（287.2），不把该构造自动用于后一种较弱风险合同。固定已知 $r$ 的§286也没有被重新结算。
+
+### 287.2 完整块保留的两种参数依赖
+
+记
+$$
+H=Q-I_n/2,\qquad T=QM,\qquad
+A_a=I_n/2+aH,\qquad B_a=I_n/2-aH,
+$$
+$$
+q=7/23,\qquad s=16/23,\qquad
+\|H\|\le9/46,\qquad qI_n\preceq A_a,B_a\preceq sI_n.
+\tag{287.3}
+$$
+按 $H_1H_2E_1E_2$ 排列张量因子，完整两份平均态为
+$$
+\Sigma_{a,r}=\frac1{n^2}
+\begin{pmatrix}
+A_a\otimes A_a&0&0&0\\
+0&A_a\otimes B_a&ra^2T\otimes T^\dagger&0\\
+0&ra^2T^\dagger\otimes T&B_a\otimes A_a&0\\
+0&0&0&B_a\otimes B_a
+\end{pmatrix}.
+\tag{287.4}
+$$
+共同Haar平均消去跨总荷项，剩下的中间非对角项恰乘 $\mathbb E e^{i\xi}$。因此相干部分只见乘积 $ra^2$，但对角部分仍分别含有 $a$。
+
+单份输入—参考边缘为
+$$
+D_a=\frac1n(A_a\oplus B_a).
+\tag{287.5}
+$$
+它与 $r$ 无关。这里“单份”仍包括原输入与完整参考；仅保留参考时，边缘始终为 $I_n/n$，不能读取下面使用的区别。
+
+### 287.3 无参考时的精确复合纤维交叠
+
+当 $n=1$，$Q=1/2,M=1,H=0$，故
+$$
+\Sigma_{a,r}
+=\frac{I_4}{4}
++\frac{ra^2}{4}
+(|01\rangle\langle10|+|10\rangle\langle01|).
+\tag{287.6}
+$$
+完整块只保留 $c=ra^2$。两个假设在该参数上的实际像分别为
+$$
+\mathcal C_0=[3/4,1],\qquad
+\mathcal C_1=[\tfrac34(1-\delta)^2,(1-\delta)^2].
+\tag{287.7}
+$$
+定义
+$$
+\delta_*=1-\frac{\sqrt3}{2}.
+\tag{287.8}
+$$
+这两个闭区间交叠当且仅当 $0<\delta\le\delta_*$。在此范围内，取
+$$
+r_0=\frac34,\qquad
+r_1=\frac3{4(1-\delta)^2}\in[3/4,1].
+\tag{287.9}
+$$
+理想来源 $(a,r)=(1,r_0)$ 与扰动来源 $(1-\delta,r_1)$ 给完全相同的实际块态。任意块数、量子记忆和共同测量之后，其输出分布仍相同。两类条件错误之和为一，最大值至少为 $1/2$，所以
+$$
+\boxed{N_{\rm unk}^{\rm full}(1,\delta)=+\infty
+\quad(0<\delta\le\delta_*).}
+\tag{287.10}
+$$
+等号端点也包含在不可识别区间内。这是一对真实允许来源的纤维见证，不是某个具体测量不够精确。
+
+### 287.4 无参考的分离区间及端点发散
+
+若 $\delta>\delta_*$，令
+$$
+g=\frac34-(1-\delta)^2>0,
+\qquad0<g\le3/16.
+\tag{287.11}
+$$
+在固定基 $|00\rangle,|11\rangle,|\psi_+\rangle,|\psi_-\rangle$ 中测量，其中 $|\psi_\pm\rangle=(|01\rangle\pm|10\rangle)/\sqrt2$。给两个中间结果分别赋值 $+1,-1$，外侧结果赋值零，得到实际变量 $W$。对（287.6），
+$$
+\Pr(W=\pm1)=\frac{1\pm c}{4},\qquad
+\mathbb EW=c/2,\qquad\operatorname{Var}W\le1/2.
+\tag{287.12}
+$$
+理想均值至少为 $3/8$，扰动均值至多为 $(1-\delta)^2/2$，间隔为 $g/2$。在这两个最近端点的中点设阈值，$K$ 块平均的每类错误至多 $8/(Kg^2)$。取 $K=\lceil24/g^2\rceil$ 得
+$$
+N_{\rm unk}^{\rm full}(1,\delta)\le49/g^2.
+\tag{287.13}
+$$
+
+下界选择最近端点 $c_0=3/4,c_1=3/4-g$。两态在上述共同本征基上对角化。合并参数无关的两个外侧结果，其经典概率为
+$$
+p_0=(7/16,1/16,1/2),\qquad
+p_1=(7/16-g/4,1/16+g/4,1/2).
+$$
+直接计算
+$$
+\chi^2(p_1\Vert p_0)=\frac87g^2.
+\tag{287.14}
+$$
+相同本征向量使整个量子输入是该经典程序的共同制备。根保真度 $F$ 满足 $1-F^2\le\chi^2$，所以任何 $K$ 块协议的半迹距离平方至多 $8Kg^2/7$。两类错误都不超过 $1/3$ 要求距离至少 $1/3$，得到
+$$
+\boxed{
+\frac7{36g^2}
+\le N_{\rm unk}^{\rm full}(1,\delta)
+\le\frac{49}{g^2}
+\quad(\delta>\delta_*).
+}
+\tag{287.15}
+$$
+于是预算在靠近可识别端点时发散。这里的控制尺度是两参数像之间的间隙 $g$，不能把它统一替换成原扰动幅度 $\delta$。
+
+### 287.5 参考维数至少为二时的统一联合信号
+
+现在设 $n\ge2$。不仅 $H\ne0$，其规范来源的联合读数还具有统一正强度。令 $t=1/4$，由 $M=I+tJ$ 和规范方程得到
+$$
+H+M^\dagger HM=\frac{I-M^\dagger M}{2}.
+\tag{287.16}
+$$
+在Hilbert–Schmidt范数上，左侧线性算子范数至多
+$$
+1+\|M\|^2\le41/16.
+$$
+右侧是 $-[t(J+J^\dagger)+t^2J^\dagger J]/2$。非对角矩阵 $J+J^\dagger$ 与对角矩阵 $J^\dagger J$ 正交，且
+$$
+\|J+J^\dagger\|_2^2=2(n-1),\qquad
+\|J^\dagger J\|_2^2=n-1.
+$$
+因此
+$$
+\left\|\frac{I-M^\dagger M}{2}\right\|_2^2
+=\frac{33}{1024}(n-1),
+$$
+从而
+$$
+\boxed{
+\frac{\operatorname{Tr}H^2}{n}
+\ge\frac{33(n-1)}{6724n}
+\ge\frac{33}{13448}.
+}
+\tag{287.17}
+$$
+这一步使用了同一个实际规范方程；非零性本身不足以保证随维数一致的信号。
+
+令 $Z_H=|0\rangle\langle0|-|1\rangle\langle1|$，对一份完整输入测量已知Hermitian算子
+$$
+F_n=\frac{46}{9}Z_H\otimes H.
+\tag{287.18}
+$$
+它的谱在 $[-1,1]$ 内。实际均值在每个相位下都相同，由（287.5）算得
+$$
+\mathbb E_aF_n=\kappa_na,\qquad
+\kappa_n=\frac{92}{9n}\operatorname{Tr}H^2
+\ge\frac{253}{10086}>\frac1{40}.
+\tag{287.19}
+$$
+不需要假定 $\operatorname{Tr}H=0$；两个输入对角块相减使常数项抵消。该算子测量的是原输入标签与参考结构的联合关系。
+
+每个块只测第一份，第二份仍计费并忽略。块间独立，且任意 $r$ 下的均值都不变。取阈值 $\kappa_n(1-\delta/2)$，Chebyshev界给每类错误至多
+$$
+\frac4{K\kappa_n^2\delta^2}\le\frac{6400}{K\delta^2}.
+$$
+用 $K=\lceil19200/\delta^2\rceil$ 个完整块，得到
+$$
+N_{\rm unk}^{\rm full}(n,\delta)\le\frac{38401}{\delta^2}
+\qquad(n\ge2).
+\tag{287.20}
+$$
+方案不估计 $r$，没有免费校准，也没有访问真实相位环境。
+
+匹配下界可直接固定两个假设共同的 $r=3/4$。满足（287.2）的协议必须处理这对来源；即使额外告诉它该参数，也要遵守§286的完整输入下界。因此
+$$
+\boxed{
+\frac1{720\delta^2}
+\le N_{\rm unk}^{\rm full}(n,\delta)
+\le\frac{38401}{\delta^2}
+\qquad(n\ge2).
+}
+\tag{287.21}
+$$
+常数不依赖参考维数。这个下界不把未知参数当成唯一障碍：允许区间内 $r=3/4$ 的真实噪声本身已经填满理想核。
+
+### 287.6 先重置会把全部维数送回同一个复合纤维
+
+对§284—§286的先reset访问，固定两次真实记录与角度的完整参考块为
+$$
+A_{a,r}=\frac{I_{n^2}+uB}{16n^2},\qquad u=ra^2.
+\tag{287.22}
+$$
+§284的因果模拟器在每条实际中间干预下都只依赖 $u$；不只是无干预终端态如此。因此在整个允许访问类中，相同 $u$ 产生相同的两轮装置，覆盖任意旧量子记忆及连续经典自适应控制。
+
+于是（287.9）对所有 $n\ge1$ 都给相同的可访问过程。按（287.2），
+$$
+\boxed{N_{\rm unk}^{\rm reset}(n,\delta)=+\infty
+\quad(n\ge1,\ 0<\delta\le\delta_*).}
+\tag{287.23}
+$$
+增大重置后保留的参考维数不能消除这个精确混同。
+
+当 $\delta>\delta_*$ 时，两个实际 $u$ 区间的间隙仍是 $g$。对实际统计量 $V=W_1\cdot W_2$，§286给
+$$
+\mathbb E V=a_n^2u,\qquad a_n\ge15/16,\qquad
+\operatorname{Var}V\le8.
+$$
+在两区间的最近均值之间设中点阈值，每类错误至多
+$$
+\frac{32}{K a_n^4g^2}.
+$$
+取 $K=\lceil128/g^2\rceil$，该值至多 $16384/50625<1/3$，得到上界 $257/g^2$。
+
+下界选择最近端点 $u_0=3/4,u_1=(1-\delta)^2$。§284的同一二值程序取
+$$
+p_u(\pm)=\frac{1\pm u/c_*}{2},\qquad c_*=33/32.
+$$
+基线概率乘积至少为 $65/4356$，两个正号概率相差 $g/(2c_*)$，所以
+$$
+\chi^2(p_{u_1}\Vert p_{u_0})
+\le\frac{1024}{65}g^2<16g^2.
+\tag{287.24}
+$$
+程序的共同CPTP实现保留全部实际适应干预。$K$ 块后最终半迹距离平方至多 $16Kg^2$，而两类错误上界需要距离至少 $1/3$。因此
+$$
+\boxed{
+\frac1{72g^2}
+\le N_{\rm unk}^{\rm reset}(n,\delta)
+\le\frac{257}{g^2}
+\quad(n\ge1,\ \delta>\delta_*).
+}
+\tag{287.25}
+$$
+没有把证明用程序的隐藏标签交给实际观察者；上界只用已取得的真实记录。
+
+### 287.7 识别性、来源维数与访问权限的共同判据
+
+**定理287.1（未标定相位下的联合区别与权限分离）。** 在（287.1）—（287.2）的实际来源与逐假设一致风险下，取 $\delta_*=1-\sqrt3/2$；当 $\delta>\delta_*$ 时取 $g=3/4-(1-\delta)^2$。最优副本预算满足下表，所有有限阶的比较常数与 $n,\delta$ 无关。
+
+| 参数范围与来源 | 完整原输入访问 | 先reset访问 |
+| --- | --- | --- |
+| $n=1,\ 0<\delta\le\delta_*$ | 不可一致识别 | 不可一致识别 |
+| $n\ge2,\ 0<\delta\le\delta_*$ | $\Theta(\delta^{-2})$ | 不可一致识别 |
+| $n=1,\ \delta>\delta_*$ | $\Theta(g^{-2})$ | $\Theta(g^{-2})$ |
+| $n\ge2,\ \delta>\delta_*$ | $\Theta(\delta^{-2})$ | $\Theta(g^{-2})$ |
+
+**证明。** 无参考时，（287.6）把全部真实原输入压到乘积参数 $ra^2$，实际像区间的交叠及分离分别给（287.10）、（287.15）。参考维数至少为二时，规范方程给（287.17）的联合信号下界，真实测量和固定噪声反例给（287.21）。先reset后，整个因果装置仅见同一乘积，故（287.23）与（287.25）给全部维数的结论。$\square$
+
+这里有两种不能替代的恢复义务。重置后的参考可以完整保留，但输入标签与参考之间用于（287.19）的联合读数已经被指定访问方式丢弃。未知相位矩又与任务参数共享同一个剩余坐标，导致两类允许世界落在同一续接纤维中。保留一个更大的参考空间，不等于保留了能切开这条纤维的关系。
+
+对 $n=1$，若独立标定只把 $r$ 缩到已知闭区间 $[r_-,r_+]\subset(0,1]$，两个任务像分离的精确条件为
+$$
+\boxed{r_->(1-\delta)^2r_+.}
+\tag{287.26}
+$$
+等价地，标定不确定宽度必须严格小于 $r_+(2\delta-\delta^2)$。等号仍有同态来源。这是识别性判据，未把该区间下的最优预算或取得标定所需的成本一并证明。
+
+本节复用§284的因果程序、§286的完整输入谱估计及已注明出处的保真度—判别工具。新增连接是同一未知参数族的实际像、规范来源的维数一致联合信号，以及它们在两种访问权限下的识别性差别。没有把参考单独边缘当成联合信息，也没有把副本数解释为物理历时。
+
+## 追加锚（本行以下为增补区）
+
+## 288. 二维参考中的精确漂移消去与未标定稀有读数
+
+### 288.1 未知漂移不必先被单独估计
+
+§287在完整区间 $r\in[3/4,1]$ 上给逐假设一致的预算分类。现在固定参考维数 $n=2$，把已知的相位矩区间写为
+$$
+r\in[1-w,1],\qquad0\le w\le1/4,
+\qquad0<\delta\le1/4.
+\tag{288.1}
+$$
+实际 $r$ 未知；两假设分别为理想来源与白噪声扰动强度 $\delta$ 的来源。共同Haar相位、与其独立的相对漂移、不同块独立及全部完整原输入访问，都沿用§286。漂移环境与任何真实相位均不可访问。
+
+风险仍严格采用§287的逐假设一致条件错误：同一个协议必须在每个假设的全部允许 $r$ 下错误至多 $1/3$。允许不同假设的最坏参数不同。记最小确定最大副本数为 $N_{\rm unk}^{\rm full}(2,\delta;w)$，每块两份，全部位置计费。
+
+本节构造一个实际三结果测量。其带符号读数对理想来源的均值恒为零，对扰动来源的均值准确为 $\delta/272$，两者都不依赖 $r$。背景只进入方差，因而不需先取得单独的相位标定。
+
+### 288.2 同一规范来源的两个正交零方向
+
+在参考基 $e_0,e_1$ 中，固定
+$$
+M=\begin{pmatrix}1&1/4\\0&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix},
+\qquad Q+M^\dagger QM=I_2.
+\tag{288.2}
+$$
+这正是前述规范族的 $n=2$ 成员。仍令 $D=\operatorname{diag}(Q,I-Q)/2$、$\tau=I_4/4$，并记
+$$
+R=D\otimes\tau+\tau\otimes D.
+\tag{288.3}
+$$
+张量因子按 $H_1H_2E_1E_2$ 重排；中间荷扇区按输入 $|01\rangle,|10\rangle$ 识别为两份 $\mathbb C^2\otimes\mathbb C^2$ 的直和。
+
+§285的理想中间图像为
+$$
+Cx=\begin{pmatrix}I\otimes M^\dagger\\M^\dagger\otimes I\end{pmatrix}x.
+$$
+在同一扇区定义另一列算子
+$$
+Kx=\begin{pmatrix}-(M\otimes I)x\\(I\otimes M)x\end{pmatrix}.
+\tag{288.4}
+$$
+由于不同张量因子上的算子交换，
+$$
+C^\dagger K
+=-(I\otimes M)(M\otimes I)+(M\otimes I)(I\otimes M)=0.
+\tag{288.5}
+$$
+因此 $K$ 的全部像都在旧核投影 $P_2$ 的范围内。
+
+令 $e_{ij}=e_i\otimes e_j$，取归一化向量
+$$
+u=\frac{Ke_{00}}{\sqrt2}
+=\frac1{\sqrt2}\begin{pmatrix}-e_{00}\\e_{00}\end{pmatrix},
+$$
+$$
+v=\frac{Ke_{11}}{\sqrt{17/8}}
+=\frac1{\sqrt{17/8}}
+\begin{pmatrix}-e_{01}/4-e_{11}\\e_{10}/4+e_{11}\end{pmatrix}.
+\tag{288.6}
+$$
+$Ke_{00}$ 的范数平方为二，$Ke_{11}$ 的范数平方为 $17/8$；两者在每个直和分量的参考支撑互不重叠，所以 $u\perp v$。于是
+$$
+P_u=|u\rangle\langle u|,\qquad P_v=|v\rangle\langle v|,
+\qquad P_u+P_v\preceq P_2.
+\tag{288.7}
+$$
+这两个投影都与共同相位作用对易，在完全共同相位的理想块上准确零点击。它们属于完整输入—参考空间，不是仅对两个输入qubit作测量。
+
+### 288.3 背景方向与任务方向的不同配比
+
+三个固定正算子在这两个方向上的准确二次型为
+
+| 方向 | $D\otimes D$ | $R$ | $\tau^{\otimes2}$ |
+| --- | --- | --- | --- |
+| $u$ | $1/16$ | $1/8$ | $1/16$ |
+| $v$ | $1/17$ | $33/272$ | $1/16$ |
+
+为核对表内数值，在中间输入扇区有
+$$
+D\otimes D
+=\frac14\operatorname{diag}(Q\otimes(I-Q),(I-Q)\otimes Q),
+\tag{288.8}
+$$
+$$
+R=\frac18\operatorname{diag}
+(Q\otimes I+I\otimes(I-Q),\ (I-Q)\otimes I+I\otimes Q),
+\qquad\tau^{\otimes2}=I_{16}/16.
+\tag{288.9}
+$$
+对 $u$，每个参考对角元为 $1/2$，再除以范数平方二，立即得到第一行。
+
+对 $v$，记 $z=Me_1=e_0/4+e_1$，则两个非零分量为 $-z\otimes e_1$ 与 $e_1\otimes z$。有
+$$
+\|z\|^2=17/16,\qquad
+\langle z,Qz\rangle
+=\langle e_1,M^\dagger QM e_1\rangle=1/2.
+$$
+式（288.8）未归一化的两个二次型分别为 $1/4$，故归一化后为
+$$
+\frac{1/4+1/4}{4(17/8)}=\frac1{17}.
+$$
+式（288.9）未归一化的四项为 $1/2,17/32,17/32,1/2$，故归一化后为
+$$
+\frac{1/2+17/32+17/32+1/2}{8(17/8)}=\frac{33}{272}.
+$$
+单位矩阵项两方向均为 $1/16$，表格全部成立。
+
+两方向的扰动交叉项与漂移背景之比分别为 $2$ 与 $33/16$。因此在旧核内部，这两个实际来源方向不成比例；单个总点击率没有显露的区别，可以由两个独立方向保留。
+
+### 288.4 实际三结果分布精确分开任务与漂移
+
+记 $a=1-\delta$，$\varepsilon=1-r$。§286的真实平均态展开为
+$$
+\sigma_{\delta,r}
+=a^2\sigma_{0,r}+\delta aR+\delta^2\tau^{\otimes2},
+\qquad
+\sigma_{0,r}=r\sigma_{0,1}+\varepsilon D\otimes D.
+\tag{288.10}
+$$
+由于 $P_u,P_v$ 都消去 $\sigma_{0,1}$，表格给真实概率
+$$
+\begin{aligned}
+p_u(\delta,r)
+&=\frac{\varepsilon a^2}{16}+\frac{\delta a}{8}+\frac{\delta^2}{16}
+=\frac{1-ra^2}{16},\\
+p_v(\delta,r)
+&=\frac{\varepsilon a^2}{17}+\frac{33\delta a}{272}+\frac{\delta^2}{16}
+=\frac{1-ra^2}{17}+\frac\delta{272}.
+\end{aligned}
+\tag{288.11}
+$$
+这是对有限扰动的准确恒等式，没有略去 $O(\delta^2)$ 余项。
+
+测量三结果POVM
+$$
+\{P_u,P_v,I-P_u-P_v\},
+\tag{288.12}
+$$
+分别记分 $-16/17,1,0$，得到真实随机变量 $X$。它对应已知Hermitian算子
+$$
+L=P_v-\frac{16}{17}P_u.
+$$
+于是
+$$
+\boxed{
+\mathbb E_{0,r}X=0,\qquad
+\mathbb E_{\delta,r}X=\frac\delta{272}
+\quad\text{对所有允许的 }r.
+}
+\tag{288.13}
+$$
+未知漂移的消去依靠两个实际方向的固定权重组合，不依靠事先估计 $r$，也不把隐藏噪声标签当成可访问数据。
+
+在响应概率已给定的数学层面，还能反向恢复
+$$
+\delta=272\left(p_v-\frac{16}{17}p_u\right),\qquad
+r=\frac{1-16p_u}{(1-\delta)^2}.
+\tag{288.14}
+$$
+当前区间内分母非零，所以该概率接口分离两个参数。公式不表示观察者已经免费知道这些概率；有限实际记录需要多少份，仍由下面的方差和预算证明承担。
+
+### 288.5 未知漂移只进入稀有读数的方差
+
+因为 $u,v$ 正交且记分的绝对值不超过一，
+$$
+L^2=P_v+\left(\frac{16}{17}\right)^2P_u
+\preceq P_u+P_v\preceq P_2.
+\tag{288.15}
+$$
+由§286（286.21），在理想与扰动假设下分别有
+$$
+\operatorname{Tr}(P_2\sigma_{0,r})\le1-r\le w,
+\qquad
+\operatorname{Tr}(P_2\sigma_{\delta,r})\le1-r+\delta\le w+\delta.
+$$
+所以
+$$
+\operatorname{Var}_{0,r}X\le w,\qquad
+\operatorname{Var}_{\delta,r}X\le w+\delta.
+\tag{288.16}
+$$
+这比仅使用 $|X|\le1$ 强：读数所在的两个方向，在没有漂移也没有扰动时都不发生，真实二阶矩随背景和任务扰动一起缩小。
+
+独立测量 $K$ 个完整块，以阈值 $\delta/544$ 比较 $X$ 的样本均值。由（288.13）—（288.16），每个假设在每个允许 $r$ 下的错误都至多
+$$
+\frac{4\cdot272^2(w+\delta)}{K\delta^2}.
+\tag{288.17}
+$$
+因此取
+$$
+K=\left\lceil12\cdot272^2\frac{w+\delta}{\delta^2}\right\rceil
+\tag{288.18}
+$$
+就达到（287.2）的逐假设一致目标。全部位置计费，且 $(w+\delta)/\delta^2\ge4$，故
+$$
+N_{\rm unk}^{\rm full}(2,\delta;w)
+\le(24\cdot272^2+1)\frac{w+\delta}{\delta^2}.
+\tag{288.19}
+$$
+显示常数没有优化。方案只使用已知 $\delta,w$ 设预算，阈值不依赖实际 $r$。
+
+### 288.6 任意全输入方案仍须支付同一尺度
+
+未知参数协议必须同时处理两个假设的 $r=1-w$ 来源。即使额外将这个值告诉观察者，§286的完整输入下界仍适用。逐假设错误上界蕴含该固定来源对的等先验平均错误上界，因此
+$$
+\boxed{
+N_{\rm unk}^{\rm full}(2,\delta;w)
+\ge\frac{w+\delta}{180\delta^2}.
+}
+\tag{288.20}
+$$
+该必要性允许任意跨块量子记忆和全输入共同测量。确定最大预算的停止按原合同补齐；没有把期望成本代入。
+
+**定理288.1（二维参考消去未标定漂移的最优尺度）。** 在（288.1）的同一实际来源和逐假设一致风险下，对全部 $0\le w\le1/4$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac{w+\delta}{180\delta^2}
+\le N_{\rm unk}^{\rm full}(2,\delta;w)
+\le(24\cdot272^2+1)\frac{w+\delta}{\delta^2}.
+}
+\tag{288.21}
+$$
+
+**证明。** （288.4）—（288.9）构造并计算两个真实核内投影；它们的三结果概率给（288.13）的漂移无关准确均值，且稀有支撑给（288.16）的方差尺度。实际阈值检验由（288.17）—（288.19）达到上界，固定允许噪声值的全输入下界给（288.20）。$\square$
+
+### 288.7 同一个小漂移承诺下的可识别与不可识别
+
+取 $w=3\delta$、$0<\delta\le1/12$。对二维参考及完整输入权限，定理288.1给
+$$
+N_{\rm unk}^{\rm full}(2,\delta;3\delta)=\Theta(\delta^{-1}).
+\tag{288.22}
+$$
+另一方面，先reset后的全部因果装置只依赖 $u=r(1-\delta)^2$。在未知区间 $[1-w,1]$ 上，两假设的实际像交叠当且仅当
+$$
+1-w\le(1-\delta)^2
+\iff w\ge2\delta-\delta^2.
+\tag{288.23}
+$$
+当该不等式成立时，可取理想 $r_0=1-w$、扰动 $r_1=(1-w)/(1-\delta)^2$，二者都在允许区间，且给同一个真实装置。按逐假设一致风险，任何副本数都不能达标。这一结论适用于所有参考维数；无参考的完整原输入也有同样的乘积依赖。
+
+特别地，$w=3\delta$ 满足（288.23）。所以在同一二维参考来源与同一小漂移承诺下，完整原输入以 $\Theta(\delta^{-1})$ 可取得答案，而先reset访问不可一致识别。对 $n=1$，即使开放完整原输入，仍不可一致识别。
+
+这个差别由两个可以实际取得的概率方向承担：一个共同分量随未知漂移变化，另一个固定组合只随任务扰动变化。关系接口必须保留这些独立方向，才能在任务所需处消去未知量。仅保留总点击率或乘积参数，无法实施同样的分离。
+
+本节没有证明任意参考维数都具有同一消去常数，也没有把该三结果测量扩展成一般量子态层析。结论限于当前规范 $n=2$ 来源及完整原输入权限；投影门数、联合存储容量和钟表历时仍须另行计入。全部矩阵恒等式已在正文推导，预算下界复用§286已说明来源的判别工具，不作外部原创优先权声明。
+
+## 追加锚（本行以下为增补区）
+
+## 289. 规范参考的带迹余量与所有维数上的未知漂移消去
+
+### 289.1 把两个特殊方向推广为全参考上的读数
+
+保持§288的未知相位矩合同
+$$
+r\in[1-w,1],\qquad0\le w\le1/4,
+\qquad0<\delta\le1/4,
+\tag{289.1}
+$$
+以及逐假设一致条件错误至多 $1/3$、完整两位置块、独立来源块和全部原输入访问。现在允许任意参考维数 $n\ge2$，仍使用同一个规范矩阵族，$M=I+J/4$、$Q+M^\dagger QM=I$。
+
+§288的两个向量只在固定二维参考内使用。如果把它们直接放进更大参考空间，当前来源的归一化会缩小实际概率，不能据此宣称维数一致。本节改用遍及参考空间的算子，并证明其任务信号具有与 $n$ 无关的正下界。
+
+下文的 $N_{\rm unk}^{\rm full}(n,\delta;w)$ 仍指最小确定最大副本数。协议知道 $n,Q,M,\delta,w$，不知道实际 $r$；初始资源与假设无关，相位环境不可访问。
+
+### 289.2 规范矩阵第二副对角线的统一正余量
+
+暂把 $t$ 作为参数，定义矩阵空间上的线性算子
+$$
+\mathcal A(Y)=\frac{J^\dagger Y+YJ}{2},\qquad
+\mathcal B(Y)=\frac{J^\dagger YJ}{2}.
+$$
+规范方程等价于
+$$
+(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q=I/2.
+\tag{289.2}
+$$
+在矩阵算子范数所诱导的映射范数下，$\|\mathcal A\|\le1$、$\|\mathcal B\|\le1/2$。取实际 $t=1/4$ 后，
+$$
+\|t\mathcal A+t^2\mathcal B\|\le9/32<1,
+\qquad
+\|(\operatorname{Id}+t\mathcal A+t^2\mathcal B)^{-1}\|\le32/23.
+\tag{289.3}
+$$
+这是标准Neumann逆估计，下面只把它用来控制明确的有限截断误差。
+
+设
+$$
+Q^{[2]}=I/2-\frac t4(J+J^\dagger)
++\frac{t^2}{8}(J^2+(J^\dagger)^2).
+\tag{289.4}
+$$
+将它代入（289.2），零、一、二次项准确相消，残差为
+$$
+\begin{aligned}
+\mathcal E
+&:=(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q^{[2]}-I/2\\
+&=\frac{t^3}{16}
+\left[J^3+(J^\dagger)^3-J^\dagger J^2-(J^\dagger)^2J\right]\\
+&\quad+\frac{t^4}{16}J^\dagger\left[J^2+(J^\dagger)^2\right]J.
+\end{aligned}
+\tag{289.5}
+$$
+因 $\|J\|\le1$，
+$$
+\|\mathcal E\|\le t^3/4+t^4/8,
+\qquad
+\|Q-Q^{[2]}\|\le\frac{32}{23}\left(\frac1{256}+\frac1{2048}\right)
+=\frac9{1472}.
+\tag{289.6}
+$$
+该残差包含全部高阶贡献，不要求矩阵阶数固定。实矩阵数据和（289.3）的逆表示也说明 $Q$ 为实对称矩阵。
+
+对 $0\le i\le n-3$，$Q^{[2]}_{i,i+2}=t^2/8=1/128$。每个矩阵元的误差不超过算子范数误差，所以
+$$
+\boxed{
+\frac5{2944}\le Q_{i,i+2}\le\frac{41}{2944}.
+}
+\tag{289.7}
+$$
+特别地，对 $n\ge3$，
+$$
+\sum_{i=0}^{n-3}Q_{i,i+2}\ge\frac{5(n-2)}{2944}.
+\tag{289.8}
+$$
+正余量来自实际规范方程的受控误差，而不是对若干数值矩阵的外推。
+
+### 289.3 旧核内三种响应的共同坐标
+
+记
+$$
+R=I-Q=M^\dagger QM,\qquad N=M^\dagger M,\qquad T=I+N,
+$$
+$$
+D=\frac1n\operatorname{diag}(Q,R),\qquad\tau=I_{2n}/(2n).
+\tag{289.9}
+$$
+这里 $R$ 是参考矩阵，下面 $D\otimes\tau+\tau\otimes D$ 才表示两份白噪声交叉响应。仍按 $H_1H_2E_1E_2$ 重排张量因子。
+
+设 $P_n$ 为§285的完整共同相位理想核投影。在中间总荷扇区定义
+$$
+Gx=\begin{pmatrix}I\otimes M^\dagger\\M^\dagger\otimes I\end{pmatrix}x,
+\qquad
+Kx=\begin{pmatrix}-(M\otimes I)x\\(I\otimes M)x\end{pmatrix}.
+\tag{289.10}
+$$
+$G^\dagger K=0$，故 $P_nK=K$。此外
+$$
+K^\dagger K=N\otimes I+I\otimes N,
+\qquad\|K\|^2\le25/8.
+\tag{289.11}
+$$
+将两份态的漂移背景、白噪声交叉项与双白噪声项压到这个同一核内，分别记为
+$$
+\mathsf A=P_n(D\otimes D)P_n,
+\quad
+\mathsf B=P_n(D\otimes\tau+\tau\otimes D)P_n,
+\quad
+\mathsf C=P_n\tau^{\otimes2}P_n.
+$$
+它们在 $K$ 坐标下满足准确合同恒等式
+$$
+\boxed{
+\begin{aligned}
+K^\dagger\mathsf AK&=\frac2{n^2}R\otimes R,\\
+K^\dagger\mathsf BK&=\frac1{2n^2}(R\otimes T+T\otimes R),\\
+K^\dagger\mathsf CK&=\frac1{4n^2}(N\otimes I+I\otimes N).
+\end{aligned}
+}
+\tag{289.12}
+$$
+例如第一式的两个直和分量分别给 $M^\dagger QM\otimes R$ 与 $R\otimes M^\dagger QM$，都等于 $R\otimes R$；第二式展开四项后合并成 $R\otimes(I+N)+(I+N)\otimes R$；第三式由单位矩阵与（289.11）直接得到。$K$ 不等距，因此这些是合同矩阵，不把其条目直接解释为归一化概率。
+
+### 289.4 一个有统一信号的实际核内算子
+
+设 $n\ge3$，定义第二副对角算子及其中心化
+$$
+S=J^2+(J^\dagger)^2,
+\qquad
+\lambda=\frac{\operatorname{Tr}(SR)}{\operatorname{Tr}R},
+\qquad X=S-\lambda I.
+\tag{289.13}
+$$
+有 $\operatorname{Tr}(XR)=0$。因为 $R=I-Q$、$S$ 无对角项且 $Q$ 实对称，
+$$
+g:=-\operatorname{Tr}(SR)
+=2\sum_{i=0}^{n-3}Q_{i,i+2}>0,
+\qquad\lambda=-\frac g{\operatorname{Tr}R}<0.
+\tag{289.14}
+$$
+由（289.7）及 $R\succeq(7/23)I$，
+$$
+g\ge\frac{5(n-2)}{1472},\qquad
+|\lambda|\le\frac{41}{448}<\frac18,
+\qquad\|X\|\le2+\frac18=\frac{17}{8}.
+\tag{289.15}
+$$
+于是可在实际中间扇区定义Hermitian算子
+$$
+L_n=\frac18K(X\otimes I)K^\dagger,
+\tag{289.16}
+$$
+并在其余扇区取零。它满足
+$$
+P_nL_nP_n=L_n,\qquad
+\|L_n\|\le\frac18\frac{25}{8}\frac{17}{8}=\frac{425}{512}<1,
+\qquad L_n^2\preceq P_n.
+\tag{289.17}
+$$
+其谱测量是本访问类允许的实际有限维测量；它只由已知规范矩阵决定，与 $r$ 无关。
+
+背景均值由（289.12）准确消失：
+$$
+\operatorname{Tr}(L_n\mathsf A)
+=\frac1{4n^2}\operatorname{Tr}(XR)\operatorname{Tr}R=0.
+\tag{289.18}
+$$
+另一方面，$N$ 与 $T$ 都是三对角矩阵，故
+$$
+\operatorname{Tr}S=\operatorname{Tr}(SN)=\operatorname{Tr}(ST)=0,
+$$
+$$
+\operatorname{Tr}(XT)=-\lambda\operatorname{Tr}T,
+\qquad\operatorname{Tr}(XN)=-\lambda\operatorname{Tr}N.
+\tag{289.19}
+$$
+令 $\beta_n=\operatorname{Tr}(L_n\mathsf B)$、$\gamma_n=\operatorname{Tr}(L_n\mathsf C)$。准确计算得到
+$$
+\begin{aligned}
+\beta_n
+&=\frac{-\lambda\operatorname{Tr}T\operatorname{Tr}R}{16n^2}
+=\frac{g\operatorname{Tr}T}{16n^2},\\
+\gamma_n&=-\frac{\lambda\operatorname{Tr}N}{16n}>0.
+\end{aligned}
+\tag{289.20}
+$$
+又因 $\operatorname{Tr}N=n+(n-1)/16\ge n$，有 $\operatorname{Tr}T\ge2n$。结合（289.15），
+$$
+\boxed{
+\beta_n\ge\frac{5(n-2)}{11776n}\ge\frac5{35328}
+\quad(n\ge3).
+}
+\tag{289.21}
+$$
+这就是将遍布参考空间的带迹余量转成实际核内任务信号的步骤。
+
+### 289.5 同一读数对全部未知漂移一致有效
+
+实际平均块仍满足
+$$
+\sigma_{\delta,r}
+=(1-\delta)^2\sigma_{0,r}
++\delta(1-\delta)(D\otimes\tau+\tau\otimes D)
++\delta^2\tau^{\otimes2},
+$$
+$$
+\sigma_{0,r}=r\sigma_{0,1}+(1-r)D\otimes D.
+\tag{289.22}
+$$
+$L_n$ 支撑于 $P_n$，所以消去共同相位理想支撑；（289.18）再消去全部漂移背景。因此其真实谱测量结果 $Y$ 满足
+$$
+\mathbb E_{0,r}Y=0,
+\qquad
+\mathbb E_{\delta,r}Y
+=\delta(1-\delta)\beta_n+\delta^2\gamma_n
+\ge\frac5{47104}\delta>\frac\delta{10000}
+\quad(n\ge3).
+\tag{289.23}
+$$
+两个均值都与实际 $r$ 无关。这里保留了全部有限扰动项，正的二次项可以合法舍去。
+
+当 $n=2$，直接使用§288的三结果算子 $L_2$。它同样支撑于 $P_2$、范数至多一，且扰动均值为 $\delta/272$。故对所有 $n\ge2$，可以统一取
+$$
+\kappa=\frac1{10000},\qquad
+\mathbb E_{0,r}Y=0,\qquad
+\mathbb E_{\delta,r}Y\ge\kappa\delta,
+\qquad L_n^2\preceq P_n.
+\tag{289.24}
+$$
+再由§286的总核点击界，对每个允许 $r$，
+$$
+\operatorname{Var}_{0,r}Y\le w,
+\qquad
+\operatorname{Var}_{\delta,r}Y\le w+\delta.
+\tag{289.25}
+$$
+稀有支撑和均值消去同时成立，才能把“不识别漂移也能读出任务”转成所需的样本尺度。
+
+### 289.6 全部参考维数上的最优未知参数预算
+
+对独立的 $K$ 个真实块测量同一个 $L_n$，以 $\kappa\delta/2$ 为样本均值阈值。理想均值与阈值相隔 $\kappa\delta/2$；扰动均值至少也相隔这么多。因此每类错误对全部允许 $r$ 一致至多
+$$
+\frac{4(w+\delta)}{K\kappa^2\delta^2}.
+\tag{289.26}
+$$
+取
+$$
+K=\left\lceil\frac{12}{\kappa^2}\frac{w+\delta}{\delta^2}\right\rceil,
+\tag{289.27}
+$$
+每类错误都不超过 $1/3$。全部完整块计费，得到
+$$
+N_{\rm unk}^{\rm full}(n,\delta;w)
+\le\left(\frac{24}{\kappa^2}+1\right)\frac{w+\delta}{\delta^2}.
+\tag{289.28}
+$$
+常数只用于证明统一阶，没有作数值优化。
+
+下界对任意全输入策略成立：固定两假设共同 $r=1-w$，再使用§286的已知参数下界。满足逐假设一致目标的协议在这对来源上的平均错误也至多 $1/3$，所以
+$$
+N_{\rm unk}^{\rm full}(n,\delta;w)
+\ge\frac{w+\delta}{180\delta^2}.
+\tag{289.29}
+$$
+
+**定理289.1（维数一致的未知相位矩消去）。** 对当前规范来源、全部 $n\ge2$、$0\le w\le1/4$、$0<\delta\le1/4$，在完整原输入访问及逐假设一致风险下，
+$$
+\boxed{
+\frac{w+\delta}{180\delta^2}
+\le N_{\rm unk}^{\rm full}(n,\delta;w)
+\le\left(24\cdot10000^2+1\right)\frac{w+\delta}{\delta^2}.
+}
+\tag{289.30}
+$$
+
+**证明。** 规范方程的二阶截断和全残差界给（289.7）的带迹余量；同一核内三个响应的合同恒等式将它转成（289.18）—（289.21）的零背景均值与统一任务信号。实际谱测量、稀有支撑方差和完整块计费给（289.28），固定允许漂移值的任意全输入下界给（289.29）。二维端点由§288的准确三结果构造承担。$\square$
+
+这里准确未知的漂移矩不必被单独恢复，最坏预算仍达到与区间端点已标定时相同的阶。$w=O(\delta)$ 时，全部 $n\ge2$ 都可用 $\Theta(\delta^{-1})$ 份实际输入；固定正 $w$ 时则为 $\Theta(\delta^{-2})$。
+
+与此同时，若 $w\ge2\delta-\delta^2$，§288的同过程见证仍排除所有维数的先reset一致识别，也排除 $n=1$ 的完整输入一致识别。因此 $w=3\delta$、$\delta\le1/12$ 时，完整原输入的线性取得与先reset的精确不可识别，已不再局限于一个特定参考维数。
+
+结果依赖当前规范矩阵族，而不是“参考空间足够大”这一空条件。承重结构是：核内的漂移响应与任务响应可由已知的实际算子分开，且这项区别不会随维数增长而消失。构造不提供一般未知来源的相位校准方法，也不把谱测量实现成本、存储成本或物理历时包含进副本阶界。Neumann逆、矩阵范数及判别工具是标准中间步骤；本文保留的是对当前来源的统一关系及其完整推导。
+
+## 追加锚（本行以下为增补区）
+
+## 290. 未知漂移的分离余量与一维参考的稀有事件优势
+
+### 290.1 同一参数区间中的最后一个成本缺口
+
+沿用§288—§289的实际两位置来源、规范矩阵、独立来源块和访问权限。固定
+$$
+0<\delta\le1/4,\qquad0\le w\le1/4,\qquad
+r\in[1-w,1],
+$$
+并定义
+$$
+a=1-\delta,\qquad b=1-a^2=2\delta-\delta^2,
+\qquad h=b-w.
+\tag{290.1}
+$$
+实际相位矩 $r$ 未知，$\delta,w$ 与规范来源已知。共同Haar相位与相对漂移独立，不同完整块独立；相位环境不可访问。每块两份实际输入都计费，预算为确定最大副本数，允许提前停止并将剩余位置补齐忽略。
+
+记 $N_{\rm unk}^{\rm full}(n,\delta;w)$ 与 $N_{\rm unk}^{\rm reset}(n,\delta;w)$ 为两种访问的最小预算；不存在有限可达协议时记为 $+\infty$。同一协议必须满足
+$$
+\max\left\{
+\sup_{r\in[1-w,1]}\Pr_{0,r}(\widehat j=1),
+\sup_{r\in[1-w,1]}\Pr_{1,r}(\widehat j=0)
+\right\}\le\frac13.
+\tag{290.2}
+$$
+这里两假设的最坏 $r$ 可以不同。它不是先在同一 $r$ 下平均两类错误、再取上确界的另一风险合同。
+
+§289已给全部 $n\ge2$ 的完整访问成本。本节补齐 $n=1$ 的完整访问及全部维数的先reset访问，特别保留 $w$ 与 $\delta$ 同时缩小时的稀有概率尺度。
+
+### 290.2 参数像交叠与分离余量
+
+当 $n=1$ 时，$M=1$、$Q=1/2$，完整原输入的平均块态为
+$$
+\Gamma_c=\frac{I_4}{4}
++\frac c4\bigl(|01\rangle\langle10|+|10\rangle\langle01|\bigr),
+\tag{290.3}
+$$
+其中理想假设 $c=r$，扰动假设 $c=ra^2$。两假设的实际参数像分别为
+$$
+[1-w,1],\qquad[(1-w)(1-b),1-b].
+\tag{290.4}
+$$
+它们交叠当且仅当 $h\le0$。此时取
+$$
+r_0=1-w,\qquad r_1=\frac{1-w}{1-b}.
+\tag{290.5}
+$$
+由 $w\ge b$，有 $r_1\le1$；又因 $1-b\le1$，有 $r_1\ge1-w$。两值均合法，且给出相同的完整态。任意副本数和共同后处理得到的两个输出仍相同，两类条件错误之和为一，不能满足（290.2）。
+
+§284—§286的先reset因果装置对全部参考维数只依赖 $u=ra^2$；这项依赖包括实际中途干预、历史记录与旧量子记忆。因此（290.5）也给全部 $n$ 的同装置见证。
+
+所以
+$$
+\boxed{
+h\le0\Longrightarrow
+N_{\rm unk}^{\rm full}(1,\delta;w)
+=N_{\rm unk}^{\rm reset}(n,\delta;w)=+\infty
+\quad(n\ge1).
+}
+\tag{290.6}
+$$
+等号 $h=0$ 属于不可识别情形。下面一律设 $h>0$，因而 $w<b$，并有
+$$
+\frac74\delta\le b\le2\delta,\qquad
+0<h\le b\le\frac7{16}.
+\tag{290.7}
+$$
+
+### 290.3 完整原输入的实际稀有读数
+
+在 $n=1$ 的两输入空间测量反对称投影
+$$
+P_-=|\psi_-\rangle\langle\psi_-|,
+\qquad |\psi_-\rangle=\frac{|01\rangle-|10\rangle}{\sqrt2}.
+$$
+由（290.3），真实点击概率为 $p=(1-c)/4$。两假设分别给
+$$
+p_0\in[0,w/4],\qquad
+p_1\in\left[b/4,\frac{b+w(1-b)}4\right].
+\tag{290.8}
+$$
+两个概率区间相隔 $h/4$。若 $Y\in\{0,1\}$ 是实际点击记录，则由 $w<b$，两类均满足
+$$
+\operatorname{Var}Y\le\mathbb EY\le b/2.
+\tag{290.9}
+$$
+观测者只取得这些真实记录，不取得 $r$、相位或概率表。
+
+对 $K$ 个独立块测量，以
+$$
+\theta=\frac{w+b}{8}
+\tag{290.10}
+$$
+为样本均值阈值。理想类均值至少低于阈值 $h/8$，扰动类均值至少高于阈值 $h/8$。Chebyshev界给每类、每个允许 $r$ 的错误至多
+$$
+\frac{b/2}{K(h/8)^2}=\frac{32b}{Kh^2}.
+\tag{290.11}
+$$
+取 $K=\lceil96b/h^2\rceil$ 即达到（290.2）。由 $b/h^2\ge1/b\ge16/7>2$，包括取整及两份计费后有
+$$
+\boxed{
+N_{\rm unk}^{\rm full}(1,\delta;w)\le\frac{193b}{h^2}.
+}
+\tag{290.12}
+$$
+阈值与预算均只使用已知的 $\delta,w$。实际背景概率本身至多为 $b/2$，正是此处比一般有界变量估计节省一个任务尺度因子的原因。
+
+### 290.4 必须比较完整态的全部本征值
+
+下界选择两个合法端点世界
+$$
+c_0=1-w,\qquad c_1=1-b,
+\tag{290.13}
+$$
+分别由理想 $r_0=1-w$ 与扰动 $r_1=1$ 实现，差为 $h$。
+
+完整态在 $|00\rangle,|11\rangle,|\psi_+\rangle,|\psi_-\rangle$ 中共同对角化。将概率恒定的两个外侧结果合并，得到概率向量
+$$
+p_0=\left(\frac{2-w}{4},\frac w4,\frac12\right),\qquad
+p_1=\left(\frac{2-b}{4},\frac b4,\frac12\right).
+\tag{290.14}
+$$
+该合并准确保留根保真度：最后一个结果可通过同一制备映射恢复为 $|00\rangle,|11\rangle$ 的等权混合。这里没有只比较反对称二结果测量后所得分布，便倒推完整输入的区分上界。
+
+令 $F=\sum_j\sqrt{p_0(j)p_1(j)}$，以及
+$$
+H^2=\sum_j\bigl(\sqrt{p_0(j)}-\sqrt{p_1(j)}\bigr)^2=2(1-F).
+$$
+直接计算全部变化项，得到
+$$
+\begin{aligned}
+H^2
+&=\frac14\left[
+(\sqrt{2-w}-\sqrt{2-b})^2+(\sqrt b-\sqrt w)^2
+\right]\\
+&=\frac{h^2}{4}\left[
+\frac1{(\sqrt{2-w}+\sqrt{2-b})^2}
++\frac1{(\sqrt b+\sqrt w)^2}
+\right].
+\end{aligned}
+\tag{290.15}
+$$
+第二个分母至少为 $b$；第一个分母也至少为 $2-b\ge b$。因此
+$$
+1-F^2\le2(1-F)=H^2\le\frac{h^2}{2b}.
+\tag{290.16}
+$$
+此外，$(\sqrt b+\sqrt w)^2\le4b$，故
+$$
+1-F^2=\frac{1+F}{2}H^2\ge\frac{h^2}{32b}.
+\tag{290.17}
+$$
+两式表明最近端点的完整态保真度亏损为 $\Theta(h^2/b)$，包括 $w=0$ 的零本征值端点。稀有方向上的平方根差为 $h/(\sqrt b+\sqrt w)$，不能在全部参数上将它简单按常数乘 $h$ 处理。
+
+对 $K$ 个独立完整块，根保真度相乘。用半迹距离 $d=\|\rho-\sigma\|_1/2$，Fuchs–van de Graaf不等式给
+$$
+d_{\rm raw}^2\le1-F^{2K}
+\le K(1-F^2)\le\frac{Kh^2}{2b}.
+\tag{290.18}
+$$
+全部跨块量子处理、适应控制、保留记录及末端测量都是这两份原始输入的共同通道，不能提高半迹距离。满足（290.2）必使所选两世界的等先验平均错误至多 $1/3$，因而最终半迹距离至少 $1/3$。所以
+$$
+\boxed{
+N_{\rm unk}^{\rm full}(1,\delta;w)\ge\frac{4b}{9h^2}.
+}
+\tag{290.19}
+$$
+所用根保真度乘法、半迹距离判别与数据处理是标准工具，可见 Fuchs–van de Graaf, *Cryptographic distinguishability measures for quantum-mechanical states*, arXiv:quant-ph/9712042v2，式（27）、定理1；本节的参数依赖由（290.15）的准确本征值比较承担。
+
+### 290.5 先reset装置保留固定的程序噪声余量
+
+对任意 $n\ge1$，取同样的最近参数端点 $u_0=1-w$、$u_1=1-b$。§284给出的准确因果模拟器使用二值程序
+$$
+\pi_u(\pm)=\frac{1\pm u/c_*}{2},\qquad c_*=33/32.
+\tag{290.20}
+$$
+它是任意实际中途仪器与旧量子记忆之后仍成立的共同实现，不向观察者开放该隐藏标签。
+
+因为 $u_0\le1$，
+$$
+\pi_{u_0}(+)\pi_{u_0}(-)\ge\frac{65}{4356}.
+$$
+两个正号概率相差 $h/(2c_*)$，所以准确二值计算给
+$$
+\chi^2(\pi_{u_1}\Vert\pi_{u_0})
+\le\frac{h^2}{4c_*^2}\frac{4356}{65}
+=\frac{1024}{65}h^2<16h^2.
+\tag{290.21}
+$$
+程序的基线小概率即使在 $w=0$ 时仍为 $1/66$。因此这一比较没有完整原输入的零本征值所产生的 $1/b$ 因子。
+
+根保真度亏损满足 $1-F(\pi_{u_0},\pi_{u_1})^2\le\chi^2$。对两个假设下可能不同的旧记忆 $\rho_0,\rho_1$，共同实现和保真度单调性给单块输出保真度至少
+$$
+F(\rho_0,\rho_1)F(\pi_{u_0},\pi_{u_1}).
+$$
+逐块迭代保留所有量子记忆与记录，得到
+$$
+d_{\rm final}^2\le16Kh^2.
+\tag{290.22}
+$$
+与同一错误目标结合，给任意先reset策略的必要预算
+$$
+\boxed{
+N_{\rm unk}^{\rm reset}(n,\delta;w)\ge\frac1{72h^2}.
+}
+\tag{290.23}
+$$
+
+### 290.6 先reset的实际统一取得方案
+
+使用§284—§286已经给出实际测量定义的四结果变量 $W$，在同一块上取 $V=W_1\cdot W_2$。记 $a_n=\operatorname{Tr}Z_n/n\ge15/16$。其真实矩满足
+$$
+\mathbb EV=a_n^2u,\qquad\operatorname{Var}V\le8.
+\tag{290.24}
+$$
+理想均值至少为 $a_n^2(1-w)$，扰动均值至多为 $a_n^2(1-b)$。在这两个已知端点的中点设置阈值，两类真实均值到阈值的距离均至少为 $a_n^2h/2$。
+
+对 $K$ 个独立块，每类条件错误对全部 $r$ 一致至多
+$$
+\frac{32}{Ka_n^4h^2}.
+$$
+取 $K=\lceil128/h^2\rceil$，上式至多 $16384/50625<1/3$。由 $h\le7/16$，包括全部两位置和取整有
+$$
+\boxed{
+N_{\rm unk}^{\rm reset}(n,\delta;w)\le\frac{257}{h^2}.
+}
+\tag{290.25}
+$$
+该达到方案读取实际reset结果与保留参考，没有访问隐藏程序或未知相位矩。
+
+### 290.7 未知相位宽度与访问权限的完整分类
+
+**定理290.1（分离余量下的稀有读数与固定程序余量）。** 在（290.1）—（290.2）的规范来源及确定最大完整块预算下，当 $h>0$ 时，
+$$
+\boxed{
+\frac{4b}{9h^2}
+\le N_{\rm unk}^{\rm full}(1,\delta;w)
+\le\frac{193b}{h^2},
+}
+\tag{290.26}
+$$
+并且对所有 $n\ge1$，
+$$
+\boxed{
+\frac1{72h^2}
+\le N_{\rm unk}^{\rm reset}(n,\delta;w)
+\le\frac{257}{h^2}.
+}
+\tag{290.27}
+$$
+当 $h\le0$ 时，两者均为 $+\infty$。
+
+**证明。** 参数像交叠与同过程见证给（290.6）；真实反对称概率及完整态的全本征值比较给（290.12）、（290.19）；准确因果程序与实际reset统计量分别给（290.23）、（290.25）。全部上下界均在同一风险合同与完整块计费下成立。$\square$
+
+由（290.7），（290.26）也可写为
+$$
+\frac{7\delta}{9h^2}
+\le N_{\rm unk}^{\rm full}(1,\delta;w)
+\le\frac{386\delta}{h^2}.
+\tag{290.28}
+$$
+结合§289，可将全部访问情形列为
+
+| 访问与参数范围 | 最小确定最大副本数的统一阶 |
+| --- | --- |
+| 完整原输入，$n\ge2$，全部允许 $w,\delta$ | $\Theta((w+\delta)/\delta^2)$ |
+| 完整原输入，$n=1$，$h>0$ | $\Theta(\delta/h^2)$ |
+| 先reset，任意 $n\ge1$，$h>0$ | $\Theta(h^{-2})$ |
+| 完整原输入且 $n=1$，或先reset任意维数，$h\le0$ | 不可一致识别 |
+
+每行的比较常数与该行全部允许参数无关。若 $w=0$，则 $h=b\asymp\delta$，完整 $n=1$ 恢复 $\Theta(\delta^{-1})$，先reset恢复 $\Theta(\delta^{-2})$。若 $w=\lambda b$、$0\le\lambda<1$，则分别为
+$$
+\Theta\left(\frac1{(1-\lambda)^2b}\right),\qquad
+\Theta\left(\frac1{(1-\lambda)^2b^2}\right).
+\tag{290.29}
+$$
+这些界也允许 $\lambda$ 随参数趋近一。只有当固定 $\delta$ 允许 $b\le1/4$ 时，才能在当前宽度范围内令 $w\uparrow b$；若 $b>1/4$，则允许范围留下 $h\ge b-1/4>0$。到真实交叠端点 $h=0$，分离彻底丧失。
+
+此前§287固定 $w=1/4$ 的可识别区间满足 $\delta>1-\sqrt3/2$，其中 $\delta$ 本身被正常数上下夹住。因此该节的 $\Theta(h^{-2})$ 与本节完整输入的 $\Theta(\delta/h^2)$ 相容；本节增加的是小 $\delta$ 与小宽度联合变化时必须保留的稀有事件因子。
+
+这份分类同时区分三种关系：参数像是否仍有间隙，实际读数的方差是否随任务尺度缩小，以及参考是否保留能准确消去未知背景的额外方向。它们分别控制可识别性、取得成本与维数端点，不能只用一个“边界大小”替代。以上尺度限于当前来源和访问合同，未把副本预算等同于测量门数、存储容量或钟表历时。
+
+## 追加锚（本行以下为增补区）
+
+## 291. 共同未知参数的风险链与有限记录达不到的最优端点
+
+### 291.1 固定同一参数再平均错误是另一项任务
+
+保留§290的实际来源、独立两位置块、完整块计费和既定访问权限。现在明确改换风险合同。令
+$$
+k=(1-\delta)^2,\qquad l=1-w,
+\qquad0<\delta\le1/4,\quad0\le w\le1/4,
+\tag{291.1}
+$$
+对同一个决策协议 $\mathcal P$，定义
+$$
+\mathcal R(\mathcal P)
+=\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2.
+\tag{291.2}
+$$
+这里先固定同一个 $r$，再平均两个假设的条件错误。§290控制每个假设的最坏条件错误，必然控制（291.2），反向则不成立。本节不改判§290，只研究这个不同任务。
+
+下文完整原输入访问限于 $n=1$，先reset访问则允许全部 $n\ge1$。在这些类中，整个可访问过程仅依赖同一标量 $c$：理想时 $c=r$，扰动时 $c=kr$。因此任意协议都有同一个函数
+$$
+f(c)=\Pr_c(\widehat j=0),\qquad0\le f(c)\le1.
+$$
+其风险准确为
+$$
+\mathcal R(f)=\frac12\left[1-
+\inf_{r\in[l,1]}\bigl(f(r)-f(kr)\bigr)\right].
+\tag{291.3}
+$$
+这项风险把 $r$ 与 $kr$ 成对比较。两个不同参数世界给同一 $c$，本身不构成（291.2）的不可能证明；必须同时考虑这些成对比较怎样接续。
+
+### 291.2 准确读数中的最长比较链
+
+先定义一个放大权限的数学模型：直接取得准确 $c$，再按概率 $f(c)$ 决定输出零。所有可测 $f:[kl,1]\to[0,1]$ 都允许。这个准确读数模型的最优风险记为 $R_{\rm exact}$，不把它当成有限观测已经取得的资源。
+
+设
+$$
+L=\frac{\log l}{\log k}\ge0,\qquad
+m=\lfloor L\rfloor+1.
+\tag{291.4}
+$$
+有 $m-1\le L<m$。因此
+$$
+1,k,\ldots,k^{m-1}\in[l,1],\qquad k^m<l,
+\tag{291.5}
+$$
+但 $k^m\ge kl$，故最后节点仍在实际读数的总区间内。
+
+若每条合法比较都满足 $f(r)-f(kr)\ge d$，沿（291.5）的 $m$ 条比较边相加，得到
+$$
+md\le f(1)-f(k^m)\le1.
+\tag{291.6}
+$$
+所以任何准确读数决策的最小间隔至多为 $1/m$。
+
+这个上界可达。对 $x=\log c/\log k\in[0,L+1]$，定义
+$$
+f(c)=1-\frac{\lfloor x\rfloor}{m}.
+\tag{291.7}
+$$
+由于 $L+1<m+1$，右侧位于 $[0,1]$。对 $r\in[l,1]$，对应 $x\in[0,L]$，而 $kr$ 对应 $x+1$，所以
+$$
+f(r)-f(kr)=\frac{\lfloor x+1\rfloor-\lfloor x\rfloor}{m}
+=\frac1m.
+$$
+于是
+$$
+\boxed{R_{\rm exact}=\frac12\left(1-\frac1m\right).}
+\tag{291.8}
+$$
+若 $l=k^j$，则 $L=j$、$m=j+1$：位于区间下端的 $r=l$ 仍是一条合法比较的起点，不能把这一条边删去。
+
+### 291.3 最优准确决策也可以连续
+
+为连接真实估计，下面给一个连续且仍准确达到（291.8）的决策。设
+$$
+s=L-m+1\in[0,1),
+\qquad
+\eta(t)=
+\begin{cases}
+0,&t\le s,\\
+(t-s)/(1-s),&s<t<1,\\
+1,&t\ge1.
+\end{cases}
+$$
+定义
+$$
+g(x)=1-\frac1m\sum_{j=0}^{m-1}\eta(x-j),
+\qquad f_*(c)=g\left(\frac{\log c}{\log k}\right).
+\tag{291.9}
+$$
+每个求和项都在 $[0,1]$，所以 $g$ 在 $[0,1]$ 中取值。对于 $x\in[0,L]$，有限和相消给
+$$
+g(x)-g(x+1)
+=\frac{\eta(x+1)-\eta(x-m+1)}m
+=\frac1m,
+\tag{291.10}
+$$
+因为 $x+1\ge1$、$x-m+1\le s$。故 $f_*$ 在全部允许 $r$ 上同样准确达到最优间隔。
+
+各 $\eta$ 的Lipschitz常数为 $1/(1-s)$，由平均求和可取 $g$ 的Lipschitz常数为 $1/(m-L)$。又因 $c\ge kl>0$，在整个读数区间可以取
+$$
+|f_*(c)-f_*(c')|\le C|c-c'|,
+\qquad
+C=\frac1{(m-L)kl|\log k|}<\infty.
+\tag{291.11}
+$$
+这里常数允许随当前已知的 $\delta,w$ 变化；本节尚不主张接近风险跳变边界时的最优副本阶。
+
+### 291.4 任意有限完整输入都留下严格风险余量
+
+令 $R_K^{\rm full}$ 为完整 $n=1$ 输入在至多 $K$ 个块下可达风险的下确界。固定协议的决定零概率可写成
+$$
+f_K(c)=\operatorname{Tr}\bigl(E\Gamma_c^{\otimes K}\bigr),
+\qquad0\preceq E\preceq I,
+\tag{291.12}
+$$
+其中 $\Gamma_c$ 是（290.3）的完整块态。任意量子记忆、适应处理与终端决策均已吸收到同一个效应 $E$ 中；确定最大预算的提前停止可补齐忽略剩余块。
+
+在共同本征基中，$\Gamma_c$ 的本征值为 $1/4,1/4,(1+c)/4,(1-c)/4$。逐项比较得到
+$$
+\Gamma_c\succeq\frac{1+c}{2}\Gamma_1
+\qquad(0\le c\le1).
+\tag{291.13}
+$$
+特别取 $c=k^m$，令
+$$
+\beta=\frac{1+k^m}{2}\in(0,1).
+$$
+正算子张量乘积保持这项支配关系，因此
+$$
+f_K(k^m)\ge\beta^K f_K(1).
+\tag{291.14}
+$$
+再次沿最长比较链求和，若 $d_K=\inf_{r\in[l,1]}[f_K(r)-f_K(kr)]$，则
+$$
+md_K\le f_K(1)-f_K(k^m)
+\le(1-\beta^K)f_K(1)\le1-\beta^K.
+$$
+所以对全部协议一致有
+$$
+\boxed{
+R_K^{\rm full}\ge R_{\rm exact}+\frac{\beta^K}{2m}
+>R_{\rm exact}.
+}
+\tag{291.15}
+$$
+这个不等式直接控制固定有限预算下的下确界，无需从“每个协议都严格大于”误推“全部协议的下确界严格大于”。
+
+### 291.5 任意有限先reset策略也有严格余量
+
+记 $R_K^{\rm reset}(n)$ 为至多 $K$ 个完整块的先reset最优风险下确界。使用§284的准确因果二值程序
+$$
+\pi_c(\pm)=\frac{1\pm c/c_*}{2},\qquad c_*=33/32.
+$$
+它对任意实际中途操作和旧量子记忆成立。对同一固定协议，将 $K$ 个独立程序全部预先抽取，再按真实因果次序消耗，得到某个与 $c$ 无关的函数 $F:\{+,-\}^K\to[0,1]$，使
+$$
+f_K(c)=\sum_{\omega}\pi_c^{\otimes K}(\omega)F(\omega).
+\tag{291.16}
+$$
+这里只在证明中表示整个协议的决定概率，没有向观察者开放隐藏程序。
+
+两个程序分布逐点满足
+$$
+\pi_{k^m}\ge\beta_{\rm reset}\pi_1,
+\qquad
+\beta_{\rm reset}=\frac{c_*+k^m}{c_*+1}\in(0,1).
+\tag{291.17}
+$$
+正号概率给等号，负号概率之比大于一。于是（291.16）给 $f_K(k^m)\ge\beta_{\rm reset}^K f_K(1)$，同一条链求和得到
+$$
+\boxed{
+R_K^{\rm reset}(n)
+\ge R_{\rm exact}+\frac{\beta_{\rm reset}^K}{2m}
+>R_{\rm exact}\qquad(n\ge1).
+}
+\tag{291.18}
+$$
+下界保留任意跨块记忆和适应控制，常数不随参考维数变化。它不将末态相等冒充整个可干预过程相等，而直接使用已建立的因果共同实现。
+
+### 291.6 有限真实记录可以一致逼近准确读数风险
+
+有限预算不能达到 $R_{\rm exact}$，并不排除其为全部有限预算的极限。
+
+完整 $n=1$ 输入可逐块测量反对称投影，得到概率 $(1-c)/4$ 的Bernoulli记录 $Y$。未截断估计 $\widetilde c=1-4\overline Y$ 无偏且
+$$
+\mathbb E_c(\widetilde c-c)^2\le\frac4K.
+$$
+把它截到已知区间 $[kl,1]$ 得到 $\widehat c$，距离实际 $c$ 不会增大，因此
+$$
+\sup_{c\in[kl,1]}\mathbb E_c|\widehat c-c|\le\frac2{\sqrt K}.
+\tag{291.19}
+$$
+这里中间 $c$ 对应同一物理块态，所取区间包含两假设的全部实际像。
+
+先reset访问则使用（290.24）的实际变量 $V$，其中 $\mathbb E_cV=a_n^2c$、$\operatorname{Var}_cV\le8$、$a_n\ge15/16$。将 $\overline V/a_n^2$ 同样截到 $[kl,1]$，得到
+$$
+\sup_{c\in[kl,1]}\mathbb E_c|\widehat c-c|
+\le\frac{\sqrt8}{a_n^2\sqrt K}<\frac4{\sqrt K}.
+\tag{291.20}
+$$
+这些矩关系来自同一实际测量表达式，对本节所用全部 $0\le c\le1$ 成立；即使某些区间内点不属于当前两类像，也不需要新的访问权限。
+
+取得估计后，用独立随机数以概率 $f_*(\widehat c)$ 输出零。由（291.11），其实际决定概率与 $f_*(c)$ 的差分别至多 $2C/\sqrt K$、$4C/\sqrt K$。两个决定概率进入（291.3）时各有至多这一误差，风险前的 $1/2$ 刚好抵消两项之和，故
+$$
+R_K^{\rm full}\le R_{\rm exact}+\frac{2C}{\sqrt K},
+\qquad
+R_K^{\rm reset}(n)\le R_{\rm exact}+\frac{4C}{\sqrt K}.
+\tag{291.21}
+$$
+于是对每个固定允许的 $\delta,w$，
+$$
+\boxed{
+\inf_{K<\infty}R_K^{\rm full}
+=\inf_{K<\infty}R_K^{\rm reset}(n)
+=R_{\rm exact},
+}
+\tag{291.22}
+$$
+但（291.15）、（291.18）说明任何固定有限 $K$ 的风险仍严格较大。
+
+### 291.7 误差三分之一的两条精确边界
+
+**定理291.1（共同参数平均风险的链分类与有限取得边界）。** 在（291.1）—（291.2）的来源及风险合同下，完整访问限于 $n=1$、先reset访问允许任意 $n\ge1$。令 $m=\lfloor\log l/\log k\rfloor+1$，则准确读取参数的最优风险为 $(1-1/m)/2$。全部有限实际预算的风险下确界等于该值，但任意固定有限预算都严格高于它。进一步，
+$$
+\boxed{
+R_{\rm exact}\le\frac13\iff l>k^3,
+}
+\tag{291.23}
+$$
+而存在某个有限完整块预算与实际协议满足 $\mathcal R\le1/3$，当且仅当
+$$
+\boxed{l>k^2.}
+\tag{291.24}
+$$
+
+**证明。** 最长比较链给准确间隔上界，阶梯或连续决策达到它。完整态及准确reset程序的严格支配给有限预算的统一正余量；实际参数估计和连续最优决策给一致逼近。因此准确读数可行等价于 $m\le3$，即 $L<3$、$l>k^3$。有限预算可行则必须有 $R_{\rm exact}<1/3$，且此严格不等式由（291.21）保证某个有限预算达到目标；它等价于 $m\le2$，即 $l>k^2$。$\square$
+
+§290的逐假设一致目标在这些访问类中要求 $l>k$。三个条件的关系可以明确列为
+
+| 参数位置 | 每个假设都控制错误 | 同一参数平均错误的有限取得 | 准确读数的最优风险 |
+| --- | --- | --- | --- |
+| $l>k$ | 有限可达 | 有限可达 | $0$ |
+| $k^2<l\le k$ | 不可达 | 有限可达 | $1/4$ |
+| $k^3<l\le k^2$ | 不可达 | 任意有限预算都失败 | $1/3$ |
+| $l\le k^3$ | 不可达 | 不可达 | 至少 $3/8$ |
+
+例如 $\delta=1/20$、$w=3/20$ 给 $k=361/400$、$l=17/20$，满足 $k^2<l\le k$，两种风险合同确实发生分离。保持同一 $\delta$ 而取 $w=1/5$，则 $k^3<l=4/5\le k^2$：有限协议的最优风险可以无限逼近 $1/3$，却没有任何有限预算达到 $1/3$。
+
+这些结论没有改变来源或向观察者增加相位环境。改变的是比较关系与错误预算的量词。准确参数接口、全部有限记录的极限、某个有限预算实际达标，是三个不同对象；本节在同一过程内给出了它们不同的精确边界。全部 $n\ge2$ 的完整原输入不受标量 $c$ 的描述限制，不能将本节的标量链下界越界用于该访问类。
+
+## 追加锚（本行以下为增补区）
+
+## 292. 平均错误合同中的取得成本与临界预算的非一致极限
+
+### 292.1 准确接口相同不意味着取得成本相同
+
+本节继续采用§291的共同未知参数平均风险
+$$
+\mathcal R(\mathcal P)
+=\sup_{r\in[1-w,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2,
+\tag{292.1}
+$$
+以及同一规范来源、独立两位置块和确定最大预算。先固定
+$$
+w=3\delta,\qquad0<\delta\le1/12,
+\qquad k=(1-\delta)^2,\quad l=1-3\delta.
+\tag{292.2}
+$$
+记达到（292.1）不超过 $1/3$ 所需的最小副本数为 $N_{\rm av}^{\rm full}(n,\delta;w)$、$N_{\rm av}^{\rm reset}(n,\delta;w)$。每块两份，全部位置计费，实际 $r$ 及相位环境不可访问。
+
+§291已经区分准确标量接口与有限取得。本节进一步证明：在（292.2）的同一实际来源上，完整 $n=1$ 输入与所有维数的先reset访问虽然有相同的准确标量最优风险，有限取得成本仍相差一个 $\delta^{-1}$ 因子。
+
+### 292.2 两条合法比较与连续决策的统一斜率
+
+由（292.2），
+$$
+k-l=\delta+\delta^2>0,
+$$
+$$
+l-k^2
+=\delta(1-6\delta+4\delta^2-\delta^3)
+\ge\delta/2>0.
+\tag{292.3}
+$$
+因此 $k^2<l<k$，§291的最长比较链有两条边，准确参数接口的最优风险为 $1/4$。两个实际参数像依然交叠，所以§290的逐假设一致目标在完整 $n=1$ 与全部先reset访问中仍不可达。
+
+使用（291.9）的连续最优决策 $f_*$。在 $m=2$ 时，两段线性上升区间的内部互不相交，故 $g$ 的斜率绝对值至多为 $1/[2(2-L)]$。复合对数坐标后可取
+$$
+\operatorname{Lip}(f_*)
+\le B:=\frac1{2kl\log(l/k^2)}.
+\tag{292.4}
+$$
+这比把两段斜率相加的估计更紧，但使用的是同一个连续决策。
+
+在当前参数范围内，
+$$
+kl\ge\frac{121}{192},\qquad
+\log(l/k^2)\ge\frac{l-k^2}{l}\ge\delta/2.
+$$
+第一式来自 $k\ge(11/12)^2$、$l\ge3/4$；第二式使用 $\log(1+x)\ge x/(1+x)$。因此
+$$
+\boxed{B\le\frac{192}{121\delta}\le\frac2\delta.}
+\tag{292.5}
+$$
+同时
+$$
+1-kl=5\delta-7\delta^2+3\delta^3\le5\delta.
+\tag{292.6}
+$$
+这个最后的界保留了完整原输入观测中的稀有概率尺度。
+
+### 292.3 完整一维输入的线性副本上界
+
+对 $n=1$，逐块反对称测量得到 $\Pr_c(Y=1)=(1-c)/4$。取 $\widetilde c=1-4\overline Y$，再截到 $[kl,1]$ 得 $\widehat c$。真实 $c$ 位于这个区间，因此
+$$
+\mathbb E_c|\widehat c-c|
+\le\sqrt{\operatorname{Var}_c\widetilde c}
+\le2\sqrt{\frac{1-kl}{K}}.
+\tag{292.7}
+$$
+最后按概率 $f_*(\widehat c)$ 输出零。由真实估计误差、Lipschitz界和（291.3）的风险恒等式，实际风险至多为
+$$
+\frac14+2B\sqrt{\frac{1-kl}{K}}
+\le\frac14+4\sqrt{\frac5{K\delta}}.
+\tag{292.8}
+$$
+取
+$$
+K=\left\lceil\frac{11520}{\delta}\right\rceil
+\tag{292.9}
+$$
+即可使附加项不超过 $1/12$，达到目标风险 $1/3$。完整两位置计费及取整给
+$$
+\boxed{
+N_{\rm av}^{\rm full}(1,\delta;3\delta)
+\le\frac{23041}{\delta}.
+}
+\tag{292.10}
+$$
+决策知道 $\delta$ 与所承诺区间，不需要知道实际 $r$，也没有先取得准确参数 $c$。
+
+### 292.4 所有参考维数的先reset二次上界
+
+先reset访问使用同一实际块统计量 $V$，其均值与方差满足
+$$
+\mathbb E_cV=a_n^2c,\qquad
+\operatorname{Var}_cV\le8,
+\qquad a_n\ge15/16.
+\tag{292.11}
+$$
+将 $\overline V/a_n^2$ 截到 $[kl,1]$，再使用相同 $f_*$，得到实际风险界
+$$
+\mathcal R\le\frac14+
+B\sqrt{\frac8{Ka_n^4}}
+\le\frac14+\sqrt{\frac{32}{K\delta^2a_n^4}}.
+\tag{292.12}
+$$
+因为 $(15/16)^4>3/4$，取
+$$
+K=\left\lceil\frac{6144}{\delta^2}\right\rceil
+\tag{292.13}
+$$
+使附加项至多 $1/12$，对全部 $n\ge1$ 一致达到目标。包括取整和两份计费有
+$$
+\boxed{
+N_{\rm av}^{\rm reset}(n,\delta;3\delta)
+\le\frac{12289}{\delta^2}.
+}
+\tag{292.14}
+$$
+这里 $V$ 来自实际reset输出与保留参考；准确二值程序标签仍不属于允许观测。
+
+### 292.5 共同参数风险仍包含困难的简单来源对
+
+未知参数区间包含 $r=1$。任何满足（292.1）的协议，在两个假设共同取 $r=1$ 时，等先验平均错误也至多为 $1/3$。
+
+因此§285完整原输入的简单来源下界与§284先reset的简单来源下界直接适用：
+$$
+N_{\rm av}^{\rm full}(n,\delta;3\delta)\ge\frac1{3\delta},
+\qquad
+N_{\rm av}^{\rm reset}(n,\delta;3\delta)\ge\frac1{288\delta^2}.
+\tag{292.15}
+$$
+这两项既有下界本来就只使用简单两世界的等先验平均错误，不要求逐假设一致风险。所以此处没有将强风险的像交叠论证错误搬到弱风险中。
+
+**定理292.1（未知小漂移下仍保留访问成本分离）。** 在（292.1）—（292.2）的共同参数平均风险及确定最大完整块预算下，
+$$
+\boxed{
+\frac1{3\delta}
+\le N_{\rm av}^{\rm full}(1,\delta;3\delta)
+\le\frac{23041}{\delta},
+}
+\tag{292.16}
+$$
+并且对全部 $n\ge1$，
+$$
+\boxed{
+\frac1{288\delta^2}
+\le N_{\rm av}^{\rm reset}(n,\delta;3\delta)
+\le\frac{12289}{\delta^2}.
+}
+\tag{292.17}
+$$
+
+**证明。** 两条比较边的连续最优决策给（292.5）的斜率界。完整输入估计保留（292.6）的稀有方差，先reset估计使用（292.11）的维数一致矩界；两者分别给（292.10）、（292.14）的实际方案。共同允许参数 $r=1$ 的困难简单来源对给（292.15），闭合两侧。$\square$
+
+对 $n\ge2$，§289的逐假设一致完整输入方案也达到较弱风险（292.1），在 $w=3\delta$ 时为 $O(\delta^{-1})$，且常数与 $n$ 无关。因此结合（292.15）—（292.17），当前平均风险下全部维数的完整访问均为 $\Theta(\delta^{-1})$，全部维数的先reset访问均为 $\Theta(\delta^{-2})$。
+
+在这个特定区间中，参考维数不再改变弱风险的可取得性，但先重置造成的样本成本仍然存在。准确标量接口相同并不提供相同的有限实验噪声；改变风险合同也不把两个访问类的统计成本自动变成相同。
+
+### 292.6 固定有限预算的风险连续性
+
+现在恢复一般允许的 $(k,l)$，仍保持（291.2）的平均风险。固定 $K$，完整 $n=1$ 块态满足
+$$
+\frac12\|\Gamma_c-\Gamma_{c'}\|_1=\frac{|c-c'|}{4}.
+$$
+逐因子替换和实际测量收缩给任意同一协议
+$$
+|f_K(c)-f_K(c')|\le\frac K4|c-c'|.
+\tag{292.18}
+$$
+对全部维数的先reset访问，准确程序 $\pi_c(\pm)=(1\pm c/c_*)/2$、$c_*=33/32$ 满足
+$$
+\operatorname{TV}(\pi_c,\pi_{c'})=\frac{|c-c'|}{2c_*}.
+$$
+程序乘积的逐因子替换以及整个适应协议的共同因果后处理给
+$$
+|f_K(c)-f_K(c')|\le\frac K{2c_*}|c-c'|.
+\tag{292.19}
+$$
+这个全维数结论使用真实reset共同实现，没有把一般 $n$ 的reset装置当成 $n=1$ 完整输入的后处理。
+
+将未知参数写为 $r=l+(1-l)t$、$t\in[0,1]$。另一参数对 $(k',l')$ 使用同一个 $t$ 时，
+$$
+|r-r'|\le|l-l'|,
+\qquad |kr-k'r'|\le|k-k'|+|l-l'|.
+$$
+因此同一协议的风险差由（292.18）或（292.19）一致控制。先对 $t$ 取上确界，再在共同允许的协议类中取下确界，得到
+$$
+\boxed{
+|R_K^{\rm full}(k,l)-R_K^{\rm full}(k',l')|
+\le\frac K8\bigl(|k-k'|+2|l-l'|\bigr),
+}
+\tag{292.20}
+$$
+$$
+\boxed{
+|R_K^{\rm reset}(n;k,l)-R_K^{\rm reset}(n;k',l')|
+\le\frac K{4c_*}\bigl(|k-k'|+2|l-l'|\bigr).
+}
+\tag{292.21}
+$$
+已知参数可以用于选择协议，但每个固定协议在两组参数下都是合法共同处理；全部效应或全部允许控制规则构成同一个协议类。因此取最优值没有破坏以上一致估计。
+
+### 292.7 临界预算发散不由准确读数平台显露
+
+固定 $k<1$，并假设 $k^2\in[3/4,1)$，以保证临界宽度仍属于本模型允许范围。令
+$$
+l=k^2+g,\qquad g>0,
+\tag{292.22}
+$$
+并从允许侧令 $g\downarrow0$。临界点 $l_0=k^2$ 的准确读数风险为 $1/3$，而右侧足够小的 $g>0$ 给准确读数风险 $1/4$。
+
+在临界点，§291的有限预算支配界使用链长三。定义
+$$
+\beta_F=\frac{1+k^3}{2},\qquad
+\beta_R=\frac{c_*+k^3}{c_*+1}.
+$$
+它们都严格位于 $(0,1)$。结合（291.15）、（291.18）及固定 $k$ 的（292.20）、（292.21），得到
+$$
+R_K^{\rm full}(k,k^2+g)
+\ge\frac13+\frac{\beta_F^K}{6}-\frac{Kg}{4},
+\tag{292.23}
+$$
+$$
+R_K^{\rm reset}(n;k,k^2+g)
+\ge\frac13+\frac{\beta_R^K}{6}-\frac{Kg}{2c_*}.
+\tag{292.24}
+$$
+所以任何实际风险至多 $1/3$ 的有限预算都必须满足相应必要条件
+$$
+\boxed{
+g\ge\frac{2\beta_F^K}{3K}
+\quad\text{或}\quad
+g\ge\frac{c_*\beta_R^K}{3K},
+}
+\tag{292.25}
+$$
+两式分别对应完整 $n=1$ 与先reset访问，不要求同一个协议同时使用两式。
+
+对每个固定有限 $K$，右侧为正。因此当 $g\downarrow0$ 时，达到目标所需预算必然趋于无穷。这些是明确的必要下界，不宣称给出了临界预算的最优发散阶。
+
+**定理292.2（固定预算连续与准确接口极限非一致）。** 在上述同一平均风险模型中，每个固定有限预算的最优风险满足（292.20）、（292.21）的连续性界。在允许的临界点 $l=k^2$，全部有限预算的风险极限仍由§291的准确读数值给出，但该极限不能在临界点邻域上一致；从 $l>k^2$ 侧达到错误目标 $1/3$ 的预算必须发散，并满足（292.25）。
+
+**证明。** 块态与因果程序的距离收缩给固定预算连续性；临界链长三的有限预算严格余量结合连续性给（292.23）—（292.25）。准确读数极限在临界点与其右侧分别为 $1/3$ 与 $1/4$，有跳变，故不可能是这些连续风险函数在该邻域的一致极限。$\square$
+
+这使“全部层联合能分离”与“某个有限层能在指定误差内取得答案”的区别具有具体预算读数。关系接口的极限形状可以出现跳变，任何固定有限记录的响应仍连续；取得成本承担了两者之间的非一致性。本文比较的是来源副本数，未将其换成物理时钟或任意网络的计算复杂度。
+
+## 追加锚（本行以下为增补区）
+
+## 293. 无偏记录的二阶消差与临界预算的一阶倒数上界
+
+### 293.1 达到指定错误不必逼近准确读数的最优决策
+
+保持§291—§292的共同参数平均风险、同一规范来源和确定最大完整块预算。固定
+$$
+\sqrt{3/4}\le k<1,\qquad k^2<l\le k,
+\qquad g=l-k^2>0.
+\tag{293.1}
+$$
+它们对应 $\delta=1-\sqrt k$、$w=1-l$，属于原来源允许范围。完整原输入仍限于 $n=1$；先reset访问允许全部 $n\ge1$。定义
+$$
+\kappa=-\log k>0,\qquad
+L=\frac{\log l}{\log k},\qquad
+\eta=2-L=\frac{\log(l/k^2)}\kappa\in(0,1].
+\tag{293.2}
+$$
+目标仍是
+$$
+\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2
+\le\frac13.
+\tag{293.3}
+$$
+在这段参数范围内，准确读数的最优风险是 $1/4$。§291的最优连续决策在 $g\downarrow0$ 时斜率增大，配合绝对估计误差只给 $O_k(g^{-2})$ 的充分预算。本节构造另一个实际随机决策：它只需越过（293.3）的判据，导数的Lipschitz常数却可与 $g$ 无关。
+
+### 293.2 临界坐标上的两个光滑拼接函数
+
+对实数 $x$，定义
+$$
+G(x)=
+\begin{cases}
+1,&x\le0,\\
+1-(2x^2-x^3)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(1-u)^2(1+u)/3,\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3,
+\end{cases}
+\tag{293.4}
+$$
+以及
+$$
+H(x)=
+\begin{cases}
+0,&x\le0,\\
+2x^2-x^3,&0\le x\le1,\\
+x,&1\le x\le2,\\
+(1-u)^2(2+5u),\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3.
+\end{cases}
+\tag{293.5}
+$$
+各段在端点给同一函数值。$G'$ 在 $x=0,1,2,3$ 依次为 $0,-1/3,-1/3,0$，$H'$ 依次为 $0,1,1,0$，因此二者均为连续可微函数，其导数全局Lipschitz。
+
+逐段求导得到
+$$
+|G'|\le4/9,\qquad |G''|\le4/3,
+\qquad |H'|\le49/15,\qquad |H''|\le16,
+\tag{293.6}
+$$
+二阶导数界在各段内部成立，一阶导数的连续拼接使它们也控制全局Lipschitz常数。
+
+此外 $0\le G\le1$、$H\ge0$。在三个非恒定区间，分别有
+$$
+H\le\tfrac32G,
+\qquad H\le6G,
+\qquad H\le\tfrac{21}{2}G.
+\tag{293.7}
+$$
+第一段使用 $H\le1$、$G\ge2/3$；第二段使用 $H/G=3x/(3-x)\le6$；第三段使用 $H/G=3(2+5u)/(1+u)\le21/2$，在零端点按连续性成立。
+
+令
+$$
+\varepsilon=\eta/144,\qquad A_\varepsilon(x)=G(x)-\varepsilon H(x).
+\tag{293.8}
+$$
+因为 $0<\varepsilon\le1/144$，上述界给
+$$
+0\le A_\varepsilon\le1,
+\qquad |A_\varepsilon'|\le1,
+\qquad |A_\varepsilon''|\le2.
+\tag{293.9}
+$$
+这些常数均不随 $g$ 缩小而增大。
+
+### 293.3 全部合法比较都有统一的正余量
+
+对 $0\le x\le1$，直接代入两段公式，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x(1-x)^2
+\ge\frac13+\varepsilon.
+\tag{293.10}
+$$
+对 $1\le x\le L=2-\eta$，写 $v=x-1\in[0,1-\eta]$，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+v^2\left[\frac{1-v}{3}-\varepsilon(8-5v)\right].
+\tag{293.11}
+$$
+括号至少为 $\eta/3-8\eta/144=5\eta/18\ge0$。因此对全部 $x\in[0,L]$，
+$$
+\boxed{
+A_\varepsilon(x)-A_\varepsilon(x+1)
+\ge\frac13+\frac\eta{144}
+\ge\frac13+\frac\eta{288}.
+}
+\tag{293.12}
+$$
+后面的预算只使用较弱的最后一项，保留余量而不优化常数。
+
+### 293.4 将决策定义在实际估计可能取到的全部实数上
+
+真实无偏估计可能小于零或大于一，因此不直接对这些读数取对数。定义全实轴上的决定零概率
+$$
+F_\varepsilon(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\tag{293.13}
+$$
+它在 $[0,1]$ 中取值。由于 $A_\varepsilon'(0)=A_\varepsilon'(3)=0$，常值段与中间段的一阶导数也连续。
+
+在中间段，$c\ge k^3$。链式求导及（293.9）给
+$$
+|F_\varepsilon''(c)|
+\le\frac2{\kappa^2c^2}+\frac1{\kappa c^2}
+\le M_k,
+\qquad
+M_k=k^{-6}\left(\frac2{\kappa^2}+\frac1\kappa\right).
+\tag{293.14}
+$$
+外侧一阶导数为零，有限个拼接点的一阶导数连续，故 $F_\varepsilon'$ 在整个实轴的Lipschitz常数不超过 $M_k$。
+
+对真实 $r\in[l,1]$，$x=\log r/\log k\in[0,L]$，而 $kr$ 对应 $x+1$。全部真实参数都位于 $[kl,1]\subseteq[k^3,1]$。因此（293.12）给
+$$
+F_\varepsilon(r)-F_\varepsilon(kr)
+\ge\frac13+\frac\eta{288}.
+\tag{293.15}
+$$
+这是已知 $k,l$ 所决定的合法随机决策函数，不是把隐藏参数准确读数交给观察者。
+
+### 293.5 无偏记录使一阶误差在决定概率中相消
+
+导数的Lipschitz界蕴含对任意实数 $z,c$，
+$$
+\left|F_\varepsilon(z)-F_\varepsilon(c)
+-F_\varepsilon'(c)(z-c)\right|
+\le\frac{M_k}{2}(z-c)^2.
+\tag{293.16}
+$$
+若实际估计量 $\widehat c$ 无偏，则取期望时线性项准确为零，得到
+$$
+\boxed{
+\left|\mathbb E_cF_\varepsilon(\widehat c)-F_\varepsilon(c)\right|
+\le\frac{M_k}{2}\operatorname{Var}_c\widehat c.
+}
+\tag{293.17}
+$$
+这只是标准一阶Taylor余项估计在当前实际决策中的使用；改善依赖（293.4）—（293.15）同时提供全实轴合法概率、与 $g$ 无关的导数控制和正比较余量。
+
+完整 $n=1$ 输入继续测量反对称投影。对 $K$ 个块的点击均值 $\overline Y$，取未经截断的
+$$
+\widehat c=1-4\overline Y,
+\qquad\mathbb E_c\widehat c=c,
+\qquad\operatorname{Var}_c\widehat c\le4/K.
+\tag{293.18}
+$$
+随后以概率 $F_\varepsilon(\widehat c)$ 输出零。该随机化对估计可能取到的全部实数都有定义。实际决定概率与 $F_\varepsilon(c)$ 的差至多 $2M_k/K$；成对比较中的总损失至多 $4M_k/K$。
+
+所以取
+$$
+K_F=\left\lceil\frac{1152M_k}{\eta}\right\rceil
+\tag{293.19}
+$$
+就使总损失不超过 $\eta/288$。由（293.15）及风险恒等式（291.3），实际风险不超过 $1/3$。
+
+先reset访问使用实际记录均值
+$$
+\widehat c=\overline V/a_n^2,
+\qquad\mathbb E_c\widehat c=c,
+\qquad
+\operatorname{Var}_c\widehat c
+\le\frac8{Ka_n^4}\le\frac{32}{3K},
+\tag{293.20}
+$$
+其中 $a_n\ge15/16$。同样保留无偏估计，不截断，而将全部取值交给已定义的 $F_\varepsilon$。决定概率误差至多 $16M_k/(3K)$，成对比较总损失至多 $32M_k/(3K)$。因此
+$$
+K_R=\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\tag{293.21}
+$$
+对全部 $n\ge1$ 一致达到（293.3）。两种方案都只使用真实观测记录与独立随机数，不接入准确 $c$、实际 $r$ 或隐藏相位。
+
+### 293.6 临界充分预算降至一阶倒数
+
+**定理293.1（平滑决策与无偏记录的临界取得上界）。** 在（293.1）—（293.3）的来源、权限和风险合同下，完整 $n=1$ 输入及全部维数的先reset访问分别满足
+$$
+\boxed{
+N_{\rm av}^{\rm full}(1,\delta;w)
+\le2\left\lceil\frac{1152M_k}{\eta}\right\rceil,
+}
+\tag{293.22}
+$$
+$$
+\boxed{
+N_{\rm av}^{\rm reset}(n,\delta;w)
+\le2\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\quad(n\ge1).
+}
+\tag{293.23}
+$$
+对每个固定允许的 $k$，当 $g=l-k^2\downarrow0$ 时，两种访问均有实际充分预算 $O_k(g^{-1})$，reset常数与 $n$ 无关。
+
+**证明。** 分段函数的范围和导数界使（293.13）成为全实轴上的合法随机决策，全部合法比较的余量由（293.10）—（293.12）逐段证明。无偏记录通过（293.16）—（293.17）将误差降到方差阶；（293.18）—（293.21）给实际块数和两份计费。最后
+$$
+\eta=\frac{\log(1+g/k^2)}\kappa
+\ge\frac g{l\kappa},
+\tag{293.24}
+$$
+所以 $1/\eta\le l\kappa/g\le\kappa/g$，而固定 $k$ 的 $M_k$ 有限，得到所述阶。$\square$
+
+这项改善不要求在有限预算内接近准确读数模型的最优风险 $1/4$。它直接构造满足所需 $1/3$ 判据的平滑决策，并把实际无偏性用于消去一阶误差。若先截断估计，再未经证明地继续使用无偏性，（293.17）的理由就不再成立；本节通过定义全实轴决策避免了该缺项。
+
+§292的有限预算必要界仍然有效，但没有与本节的新上界匹配。因此本节没有给出临界最优发散率，也没有把固定 $k$ 的常数宣称为 $k\uparrow1$ 时一致有界。全部成本仍是来源副本数，精确函数求值、随机化装置和钟表历时属于另行声明的实现成本。
+
+## 追加锚（本行以下为增补区）
+
+## 294. 完整块实验的可实现决策、连续证书与同参数极小极大对偶
+
+### 294.1 从完整量子输入到可逆的计数实验
+
+沿用§291—§293的规范来源、共同参数平均风险和确定最大完整块预算。本节只研究完整原输入、\(n=1\)；令
+\[
+k=(1-\delta)^2,\qquad l=1-w,\qquad 0<k<1,\quad 0<l\le1,
+\tag{294.1}
+\]
+并保留原来源对 \(\delta,w\) 的限制。真实比较为 \(c=r\) 与 \(c=kr\)，同一个未知 \(r\in[l,1]\) 用于两假设。每块耗用两份来源，\(K\ge1\) 块对应 \(N=2K\)。
+
+记 \(R_K(k,l)\) 为允许全部完整输入量子策略、最多 \(K\) 个完整块时的最优风险：
+\[
+R_K(k,l)=
+\inf_{\text{实际协议}}
+\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2.
+\tag{294.2}
+\]
+使用较少块的协议可以忽略补足的输入，故固定 \(K\) 块的二元效应包含这项最大预算下的全部策略。效应须是两假设及所有 \(r\) 共用的同一个实际操作。
+
+完整块态为
+\[
+\Gamma_c=\frac{I_4}{4}
++\frac c4\bigl(|01\rangle\langle10|+|10\rangle\langle01|\bigr).
+\tag{294.3}
+\]
+令 \(|\psi_\pm\rangle=(|01\rangle\pm|10\rangle)/\sqrt2\)。共同本征测量将其化为三标签实验
+\[
+p_c(+)=\frac{1+c}{4},\qquad
+p_c(-)=\frac{1-c}{4},\qquad
+p_c(0)=\frac12.
+\tag{294.4}
+\]
+标签零对应 \(\{|00\rangle,|11\rangle\}\) 子空间。反向制备通道把 \(+\)、\(-\) 分别制备为
+\(|\psi_+\rangle\langle\psi_+|\)、\(|\psi_-\rangle\langle\psi_-|\)，把零制备为
+\[
+\frac12\bigl(|00\rangle\langle00|+|11\rangle\langle11|\bigr).
+\]
+该制备通道与 \(c\) 无关，并准确恢复 \(\Gamma_c\)。因此三标签测量在这个来源族上没有损失判别信息。
+
+对 \(K\) 个独立块，令 \(T\) 是非零标签数，\(J\) 是其中正号数。其分布为
+\[
+T\sim\operatorname{Bin}(K,1/2),\qquad
+J\mid T=t\sim\operatorname{Bin}\left(t,\frac{1+c}{2}\right),
+\tag{294.5}
+\]
+即
+\[
+Q_{K,c}(t,j)=
+2^{-K}{K\choose t}{t\choose j}
+\left(\frac{1+c}{2}\right)^j
+\left(\frac{1-c}{2}\right)^{t-j},
+\qquad 0\le j\le t\le K.
+\tag{294.6}
+\]
+端点按二项分布的通常约定解释。给定 \((t,j)\)，所有具有这些计数的标签排列等概率；从计数均匀抽取一个这样的排列，再逐块使用上述制备通道，就恢复 \(\Gamma_c^{\otimes K}\)。此反向通道也不依赖 \(c\)，包括端点零概率事件上的任意固定定义。
+
+由此得到双向统计等价：
+\[
+\Gamma_c^{\otimes K}
+\quad\longleftrightarrow\quad
+p_c^{\otimes K}
+\quad\longleftrightarrow\quad
+Q_{K,c}.
+\tag{294.7}
+\]
+量子策略中的辅助系统、中间测量或适应性操作，都可合并为 \(\Gamma_c^{\otimes K}\) 上的共同最终效应；在共同对角基中，该效应等价于标签结果上的随机决策，再按条件排列平均即可只依赖 \((T,J)\)。反向的每个计数随机决策都由实际共同本征测量及经典随机化实现。
+
+\(T\) 的分布虽然与参数无关，观察到的 \(T\) 仍是实验结果的一部分；它决定本次获得了多少个带参数的符号，不能将它替换为固定的 \(K/2\)。
+
+### 294.2 可实现决定函数的精确集合
+
+定义
+\[
+\mathcal I_K=\{(t,j):0\le j\le t\le K\}.
+\]
+全部可实现协议准确由概率表
+\[
+q=(q_{t,j})_{(t,j)\in\mathcal I_K}\in[0,1]^{\mathcal I_K}
+\tag{294.8}
+\]
+描述：观测到 \((t,j)\) 后以概率 \(q_{t,j}\) 输出零。该表可以依赖已知的 \(K,k,l\)，不能依赖未知的 \(c,r\)。相应决定零概率为
+\[
+f_q(c)=\sum_{(t,j)\in\mathcal I_K}Q_{K,c}(t,j)q_{t,j}.
+\tag{294.9}
+\]
+这是一条次数至多 \(K\) 的多项式，计数表有
+\((K+1)(K+2)/2\) 个实区间变量。全部可实现多项式构成这个有限维概率盒在多项式系数空间中的线性像，因而是紧凸多面体。
+
+记这个响应函数集合为 \(\mathscr P_K\)，将各个次数的多项式视为同一参数区间上的函数。增加一个真实块后，可以忽略其中一个块并执行原来的 \(K\) 块规则；（294.7）的计数充分性又保证这一规则可写成新的计数概率表。因此
+\[
+\mathscr P_K\subseteq\mathscr P_{K+1}.
+\]
+这给出预算限制下可取得响应的静态几何：概率盒的线性像随允许块数形成嵌套族，包含关系由实际允许的丢弃操作实现。
+
+这里的承重约束是实际概率表 \(0\le q_{t,j}\le1\)，不能只要求多项式在真实参数区间上取值于 \([0,1]\)。例如取 \(c_0=kl<1\)，仿射函数
+\[
+f(c)=\frac{c-c_0}{1-c_0},\qquad c\in[c_0,1]
+\tag{294.10}
+\]
+有合法的区间值域，却不能由任何有限块协议实现。因为在 \(c_0\in(0,1)\) 下，每个计数结果均有正概率；若（294.9）在 \(c_0\) 等于零，所有非负的 \(q_{t,j}\) 必须为零，遂不可能在 \(c=1\) 取得一。等价地，\(\Gamma_{c_0}^{\otimes K}\) 满秩，其上期望为零的正效应只能是零效应。
+
+作为可直接手算的实例，\(K=1\) 时
+\[
+f_q(c)=\frac{q_{0,0}}2+
+\frac{q_{1,1}+q_{1,0}}4+
+\frac c4(q_{1,1}-q_{1,0}).
+\]
+最大可实现斜率是 \(1/4\)，由 \(q_{1,1}=1,q_{1,0}=0\) 达到，故
+\[
+R_1(k,l)=\frac12-\frac{l(1-k)}8.
+\tag{294.11}
+\]
+这项精确值使用真实概率表约束。
+
+### 294.3 有限变量、连续参数约束的准确优化
+
+对任意 \(q\)，共同参数平均风险满足
+\[
+R(q;k,l)=
+\frac12\left(1-\min_{r\in[l,1]}
+[f_q(r)-f_q(kr)]\right).
+\tag{294.12}
+\]
+因此令
+\[
+d_K(k,l)=
+\max_{q\in[0,1]^{\mathcal I_K}}
+\min_{r\in[l,1]}[f_q(r)-f_q(kr)],
+\tag{294.13}
+\]
+便有 \(R_K=(1-d_K)/2\)。准确的优化形式为
+\[
+\begin{array}{ll}
+\text{maximize}&d\\
+\text{subject to}&0\le q_{t,j}\le1,\\
+&H_{q,d}(r):=f_q(r)-f_q(kr)-d\ge0
+\quad\text{for every }r\in[l,1].
+\end{array}
+\tag{294.14}
+\]
+每个约束对 \((q,d)\) 线性；变量有限，参数约束仍是连续无限族，所以这是半无限线性规划。常值决定给出比较差零，而任何比较差不超过一，故寻找最优值时可将 \(d\) 限于 \([0,1]\)。该可行集非空、闭且有界，最优解存在。
+
+对一个给定候选 \((q,d)\)，\(H_{q,d}\) 是次数至多 \(K\) 的实多项式。若它非常数，则以下有限检查与全部连续约束等价：
+\[
+H_{q,d}(l)\ge0,\quad H_{q,d}(1)\ge0,\quad
+H_{q,d}(z)\ge0
+\ \text{对每个 }z\in(l,1)\text{ 满足 }H_{q,d}'(z)=0.
+\tag{294.15}
+\]
+这是闭区间最小值的端点或驻点判据。常数多项式只需检查其值；多重驻点必须计入，不能用“只找符号变化”的办法遗漏它们。
+
+当输入和候选系数是有理数或已精确表示的实代数数时，全部实根隔离及代数符号判定可以给出这一候选的完整连续证书。对任意实参数，（294.14）仍是准确数学表述，但不自动赋予浮点数据精确认证能力。
+
+预先选定的有限网格只保留部分必要约束。其解可以提供候选，不能单凭网格可行便认证整个连续区间可行；（294.15）的驻点位置随候选变化。这里没有把半无限规划误称为预先固定节点的有限线性规划，也不据此排除利用额外结构得到别种归约。
+
+### 294.4 同一个未知参数先验的精确对偶
+
+记 \(\mathcal P([l,1])\) 为区间上的概率分布集合。对任意 \(\mu\in\mathcal P([l,1])\)，定义两假设的计数混合分布
+\[
+A_\mu(t,j)=\int Q_{K,r}(t,j)\,d\mu(r),\qquad
+B_\mu(t,j)=\int Q_{K,kr}(t,j)\,d\mu(r).
+\tag{294.16}
+\]
+两式使用同一个 \(\mu\)，这是（294.2）的共同参数风险合同所要求的关系。
+
+**定理294.1（有限块的可实现决策与同参数对偶）。** 在上述来源与完整访问权限下，（294.8）—（294.14）准确描述全部 \(K\) 块决策及其最优值，并且
+\[
+\boxed{
+d_K(k,l)=
+\min_{\mu\in\mathcal P([l,1])}
+\operatorname{TV}(A_\mu,B_\mu).
+}
+\tag{294.17}
+\]
+这里
+\[
+\operatorname{TV}(A,B)=\frac12
+\sum_{(t,j)\in\mathcal I_K}|A(t,j)-B(t,j)|.
+\]
+最优决定表存在，最坏先验也存在，后者可以选成至多 \(K+1\) 个合法参数点的混合。
+
+**证明。** 双向统计等价已证明全部量子决策与概率表的对应，也给出（294.12）—（294.14）。对任何固定 \(q\)，在 \(r\) 上取最小值等于在概率分布 \(\mu\) 上取混合平均的最小值：所有平均均不小于点态最小值，而最小点的 Dirac 分布达到等号。
+
+每个 \(Q_{K,r}(t,j)\) 及 \(Q_{K,kr}(t,j)\) 对 \(r\) 的次数至多 \(K\)，所以它们的积分只依赖矩向量
+\[
+m(\mu)=\left(\int r\,d\mu,\ldots,\int r^K\,d\mu\right).
+\tag{294.18}
+\]
+全部可行矩向量构成曲线
+\(\{(r,\ldots,r^K):r\in[l,1]\}\) 的紧凸包。决定盒和该矩集合均为有限维紧凸集，比较的混合平均
+\[
+\Phi(q,\mu)=\sum_{t,j}q_{t,j}[A_\mu(t,j)-B_\mu(t,j)]
+\]
+对 \(q\) 与矩向量分别仿射且连续。Sion 的极小极大定理因此允许交换最大与最小。
+
+固定 \(\mu\) 后令 \(v_{t,j}=A_\mu(t,j)-B_\mu(t,j)\)。两者均为概率分布，故 \(\sum v_{t,j}=0\)。逐坐标选择 \(q\in[0,1]\) 给
+\[
+\max_q\Phi(q,\mu)
+=\sum_{t,j}(v_{t,j})_+
+=\frac12\sum_{t,j}|v_{t,j}|
+=\operatorname{TV}(A_\mu,B_\mu),
+\tag{294.19}
+\]
+从而得到（294.17）。连续目标在紧的决定盒及矩集合上分别达到所需最优值。
+
+最后，有限维凸包的 Carathéodory 表示给至多 \(K+1\) 个曲线点。其消点理由是：若一个有限凸组合有多于 \(K+1\) 个正权重点，则增广向量
+\((1,r_i,\ldots,r_i^K)\) 线性相关；沿一个保持全部矩及权重和不变的关系移动权重，直到至少一个权重归零，重复即可。紧曲线的凸包是紧集，所以概率积分的极限也留在同一凸包内。替换最优矩向量的表示不会改变任一 \(A_\mu,B_\mu\)，故可选所述有限支持最坏先验。\(\square\)
+
+这里调用的是标准极小极大工具：Maurice Sion, “On general minimax theorems,” *Pacific Journal of Mathematics* 8(1), 171–176 (1958), Theorem 3.4，印刷第174页。其紧凸性和上下半连续的凸凹条件，在这里由有限维紧凸集及连续双仿射函数满足。[原文](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf)。
+
+至多 \(K+1\) 个支撑点是存在结论；支撑位置和权重本身仍须确定。它不证明任何预先给定的 \(K+1\) 点网格都充分。
+
+### 294.5 上下界证书怎样汇合
+
+任意通过（294.15）的实际表 \(q\) 和差值 \(d\) 给
+\[
+R_K(k,l)\le(1-d)/2.
+\tag{294.20}
+\]
+任意合法有限支持先验
+\(\mu=\sum_s w_s\delta_{r_s}\)，\(w_s\ge0\)、\(\sum_s w_s=1\)、\(r_s\in[l,1]\)，则由（294.17）给
+\[
+R_K(k,l)\ge
+\frac12\left(1-\frac12\sum_{t,j}
+\left|\sum_s w_s
+[Q_{K,r_s}(t,j)-Q_{K,kr_s}(t,j)]\right|\right).
+\tag{294.21}
+\]
+后者不需要声称该有限支持先验最优：任何同参数混合都给有效下界。
+
+若同一 \(d\) 同时满足实际表的全区间下差值约束及
+\(\operatorname{TV}(A_\mu,B_\mu)\le d\)，则上下界相等，准确认证
+\(d_K=d\)。在最优的 \(q,\mu\) 对上，
+\[
+f_q(r_s)-f_q(kr_s)=d_K
+\quad\text{对每个 }w_s>0,
+\tag{294.22}
+\]
+并且
+\[
+v_{t,j}>0\Rightarrow q_{t,j}=1,\qquad
+v_{t,j}<0\Rightarrow q_{t,j}=0.
+\tag{294.23}
+\]
+第一式来自所有比较差均不小于 \(d_K\) 而混合平均恰等于它；第二式来自（294.19）的逐坐标最大化。零差坐标允许随机化。
+
+因此，连续非负性证书与有限支持对偶证书可以共同判定一个候选最优值。这里只建立准确证书接口，没有报告某个较大 \(K\) 的数值最优解，也没有把寻找这些证书的算法成本等同于来源副本预算。
+
+### 294.6 对偶应用：端点总变差与有限块严格余量
+
+双向统计等价使标签分布、计数分布及完整输入态具有相同的二元判别能力。对 \(0\le z<1\)，端点总变差可准确计算：
+\[
+\boxed{
+\operatorname{TV}(Q_{K,1},Q_{K,z})
+=1-\left(\frac{3+z}{4}\right)^K.
+}
+\tag{294.24}
+\]
+事实上，\(p_1^{\otimes K}\) 从不产生负号。在没有负号的序列上，
+\[
+\frac{p_z^{\otimes K}}{p_1^{\otimes K}}
+=\left(\frac{1+z}{2}\right)^J\le1;
+\]
+在有负号的序列上，\(p_1^{\otimes K}=0\)。故总变差等于 \(p_z^{\otimes K}\) 至少出现一次负号的概率。单块无负号概率是
+\((3+z)/4\)，由此得到（294.24）。
+
+沿§291最长合法链，记
+\[
+L=\frac{\log l}{\log k},\qquad m=\lfloor L\rfloor+1.
+\]
+取同参数先验
+\[
+\mu=\frac1m\sum_{i=0}^{m-1}\delta_{k^i}.
+\]
+这些点全在 \([l,1]\)，两假设的混合差望远镜相消为
+\((Q_{K,1}-Q_{K,k^m})/m\)。由（294.17）和（294.24），
+\[
+\boxed{
+R_K(k,l)\ge
+\frac12\left(1-\frac1m\right)
++\frac1{2m}\left(\frac{3+k^m}{4}\right)^K.
+}
+\tag{294.25}
+\]
+首项是准确读数模型的最优风险。固定有限 \(K\) 的第二项严格为正。这里准确计算的是端点总变差；没有声称这条链先验在全部参数下都达到（294.17）的最小值。
+
+### 294.7 对偶应用：临界附近的三点必要条件
+
+现在限制到§293的临界侧：
+\[
+\sqrt{3/4}\le k<1,\qquad
+l=k^2+g\le k,\qquad g>0.
+\tag{294.26}
+\]
+选择同一个合法先验
+\[
+\mu=\frac13(\delta_1+\delta_k+\delta_l).
+\]
+两混合分布之差为
+\[
+A_\mu-B_\mu
+=\frac13\left[
+(Q_{K,1}-Q_{K,kl})+
+(Q_{K,l}-Q_{K,k^2})
+\right].
+\tag{294.27}
+\]
+若实际最优风险不超过 \(1/3\)，则 \(d_K\ge1/3\)，所以这个先验的总变差至少为 \(1/3\)。三角不等式及（294.24）给必要条件
+\[
+\operatorname{TV}(Q_{K,l},Q_{K,k^2})
+\ge\left(\frac{3+kl}{4}\right)^K.
+\tag{294.28}
+\]
+
+左侧可由完整三标签单块概率控制。以 \(p_{k^2}\) 为严格正的基线，
+\[
+\chi^2(p_l\Vert p_{k^2})
+=\frac{g^2}{16}
+\left(\frac4{1+k^2}+\frac4{1-k^2}\right)
+=\frac{g^2}{2(1-k^4)}.
+\tag{294.29}
+\]
+为明确乘积界，令 \(B=\sum_a\sqrt{p_l(a)p_{k^2}(a)}\)。
+Cauchy–Schwarz 给
+\(\operatorname{TV}(p,q)\le\sqrt{1-B(p,q)^2}\)；
+乘积的平方根重叠为 \(B^K\)，并且
+\[
+1-B^2\le2(1-B)
+=\sum_a(\sqrt{p_l(a)}-\sqrt{p_{k^2}(a)})^2
+\le\chi^2(p_l\Vert p_{k^2}).
+\]
+因此，由 \(1-B^{2K}\le K(1-B^2)\) 及（294.7），
+\[
+\operatorname{TV}(Q_{K,l},Q_{K,k^2})
+\le g\sqrt{\frac{K}{2(1-k^4)}}.
+\tag{294.30}
+\]
+这里采用完整实验的统计等价，没有把单个反对称点击误认为全部可用信息。
+
+结合（294.28）—（294.30），且 \(kl=k^3+kg\ge k^3\)，得到任何达到规定风险的完整输入协议均须满足
+\[
+\boxed{
+g\ge
+\left(\frac{3+k^3}{4}\right)^K
+\sqrt{\frac{2(1-k^4)}{K}}.
+}
+\tag{294.31}
+\]
+该必要界仍只给固定 \(k\) 下的
+\(\Omega_k(\log(1/g))\) 块数阶，未与§293实际
+\(O_k(g^{-1})\) 的上界匹配。
+
+对具体参数还可直接使用（294.27）的有限精确和
+\[
+D_3=\frac16\sum_{(t,j)\in\mathcal I_K}
+\left|
+Q_{K,1}(t,j)-Q_{K,kl}(t,j)
++Q_{K,l}(t,j)-Q_{K,k^2}(t,j)
+\right|.
+\tag{294.32}
+\]
+若经准确计算证实 \(D_3<1/3\)，就已认证该 \(K\) 下目标不可达；无需先证明三点先验最优，也无需把有限参数点当作上界所需的连续可行性证书。这里没有执行该数值优化或提供特定大 \(K\) 的求解结果。
+
+全部可实现性与预算结论仍针对来源副本数 \(N=2K\)。搜索概率表、隔离驻点和优化最坏先验是另外的计算任务。本节把有限块实验的决策与证书准确写出，未声称相应优化器具有多项式时间复杂度，也未结算临界最优发散率。
+
+## 追加锚（本行以下为增补区）
+
+## 295. 高阶可实现决策与临界预算的次多项式上界
+
+### 295.1 固定阶数下的实际预算族
+
+固定 \(k\in[\sqrt{3/4},1)\)，\(k^2<l\le k\)，记 \(g=l-k^2\)、\(\kappa=-\log k\)、\(\eta=\log(l/k^2)/\kappa\in(0,1]\)。保持同一真实 \(r\in[l,1]\) 的两假设错误先平均，目标不超过 \(1/3\)，每个独立完整块计两份来源。
+
+**定理295.1（高阶合法系数与实际临界取得）。** 对每个固定整数 \(s\ge1\)，存在只依赖 \(k,s\) 的有限常数 \(C_{k,s}\)，使完整 \(n=1\) 输入与全部 \(n\ge1\) 的先 reset 访问均有确定最大预算
+\[
+N\le 2\max\left\{2s,\left\lceil(C_{k,s}/\eta)^{1/s}\right\rceil\right\}
+=O_{k,s}(g^{-1/s})
+\]
+达到目标。reset 常数不依赖 \(n\)。因此每个固定 \(a>0\) 都有实际 \(O_{k,a}(g^{-a})\) 上界；任何固定正幂的必要发散率都不能成立。
+
+这是连续全部 \(r\) 的解析上界，不依赖数值网格。下面给实际系数与记录；未把理想光滑函数当成可观测参数。没有证明 polylog 上界，没有控制 \(s\) 随 \(g\) 增长时的常数。原有 \(\Omega_k(\log(1/g))\) 必要界仍保留，最优发散率未解。
+
+### 295.2 具有高阶接触的固定宽度常值端段
+
+固定 \(s\)，取偶整数 \(M=2s+2\)。令
+\[
+R_M(z)=
+\frac{\int_0^z u^{M-1}(1-u)^{M-1}\,du}
+{\int_0^1 u^{M-1}(1-u)^{M-1}\,du}
+\qquad(0\le z\le1),
+\]
+并定义
+\[
+\rho(t)=
+\begin{cases}
+0,&t\le1/4,\\
+R_M(2t-1/2),&1/4<t<3/4,\\
+1,&t\ge3/4.
+\end{cases}
+\]
+\(\rho\in C^{M-1}(\mathbb R)\)，\(0\le\rho\le1\)，在两个拼接点分别以恰好 \(M\) 阶接触 0 和 1。特别地，其前 \(M-1\) 阶导数与常值段连续匹配。
+
+在 \(x\in[0,3]\) 定义
+\[
+G(x)=
+\begin{cases}
+1-x\rho(x)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(3-x)\rho(3-x)/3,&2\le x\le3,
+\end{cases}
+\]
+\[
+H(x)=
+\begin{cases}
+x\rho(x),&0\le x\le1,\\
+x,&1\le x\le2,\\
+x\rho(3-x),&2\le x\le3.
+\end{cases}
+\]
+外延取 \(G=1,H=0\) 于 \(x\le0\)，\(G=H=0\) 于 \(x\ge3\)。在 \(x=1,2\) 的邻域，邻接公式本来就是同一个线性函数；在 \(x=0,3\) 的邻域已经恒定。因此 \(G,H\in C^{M-1}(\mathbb R)\)。
+
+有 \(0\le G\le1\)、\(H\ge0\) 以及 \(H\le36G\)。末段只需注意 \(\rho(3-x)>0\) 时 \(3-x>1/4\)，从而
+\[
+H/G=\frac{3x}{3-x}\le36.
+\]
+首段和中段的上界分别是 \(3/2\) 和 6。
+
+令
+\[
+\varepsilon=\eta/144,\qquad A_\varepsilon=G-\varepsilon H.
+\]
+则
+\[
+\frac34G\le A_\varepsilon\le G\le1.
+\]
+尤其零集与 \(G\) 相同；其取值为 1 的集合也与 \(G\) 相同。
+
+对 \(0\le x\le1\)，有准确恒等式
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x[1-\rho(x)]
+\ge\frac13+\varepsilon.
+\]
+对 \(1\le x\le 2-\eta\)，令 \(t=2-x\in[\eta,1]\)，则
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+[1-\rho(t)]\left[\frac t3-\varepsilon(3-t)\right].
+\]
+括号至少为
+\(\eta/3-3\eta/144=5\eta/16>0\)。故所有合法比较均有余量 \(\eta/144\)。
+
+与 §293 相同，定义全实轴函数
+\[
+F_\eta(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\]
+实际常值区更宽：
+\[
+F_\eta(c)=0\quad(c\le k^{11/4}),\qquad
+F_\eta(c)=1\quad(c\ge k^{1/4}).
+\]
+因此 \(F_\eta\in C^{M-1}(\mathbb R)\)，各阶至 \(M-1\) 的导数界对 \(0<\eta\le1\) 一致。真实 \(r\in[l,1]\) 满足
+\[
+F_\eta(r)-F_\eta(kr)\ge\frac13+\frac{\eta}{144}.
+\tag{295.1}
+\]
+
+### 295.3 两类访问都产生实际独立 Bernoulli 记录
+
+**完整 \(n=1\)。** 每块测量反对称投影，得到实际
+\[
+Y\sim\operatorname{Bernoulli}(p_F(c)),\qquad
+p_F(c)=\frac{1-c}{4}.
+\]
+定义已知函数
+\[
+h_F(t)=F_\eta(1-4t),\qquad0\le t\le1.
+\]
+因此 \(h_F(p_F(c))=F_\eta(c)\)。不同块给独立 Bernoulli 记录。
+
+**先 reset，任意 \(n\ge1\)。** 使用 §284 的真实记录
+\[
+W=(2\zeta\,\mathbf1_{\{w=0\}},2\zeta\,\mathbf1_{\{w=1\}}),
+\quad\zeta\in\{-1,1\},
+\qquad V=W_1\cdot W_2\in\{-4,0,4\}.
+\]
+§290—§291 给 \(\mathbb E_cV=a_n^2c\)、\(a_n\ge15/16\)。在每块后独立随机产生
+\[
+Y\mid V\sim\operatorname{Bernoulli}\!\left(\frac{1+V/4}{2}\right).
+\]
+其实际成功率是
+\[
+p_R(c)=\frac12+\frac{a_n^2c}{8}.
+\]
+这由可访问的 \(V\) 随机化而成，绝非不可访问的模拟程序位。令
+\[
+h_R(t)=F_\eta\!\left(\frac{8(t-1/2)}{a_n^2}\right),\qquad0\le t\le1,
+\]
+便有 \(h_R(p_R(c))=F_\eta(c)\)。
+
+因 \(V\le4\) 且 \(c=1\) 是合法真实参数，\(a_n^2=\mathbb E_1V\le4\)；所以
+\[
+225/256\le a_n^2\le4.
+\]
+两个仿射变换的斜率因而一致有界，零区和一区的边缘保持固定的正间距。以下关于 \(h\) 的常数对 \(\eta\) 一致，并对 reset 的 \(n\) 一致。
+
+### 295.4 实际决策系数
+
+对 \(K\ge2s\)，定义标准 Bernstein 算子
+\[
+(B_Kf)(t)=\sum_{j=0}^K f(j/K)\binom Kj t^j(1-t)^{K-j}.
+\]
+取 \(h=h_F\) 或 \(h_R\)，构造
+\[
+Q_{K,s}h=\sum_{j=0}^{s-1}(I-B_K)^jh.
+\]
+最终的 \(K+1\) 个合法决定零概率为
+\[
+\alpha_i=
+\operatorname{clip}_{[0,1]}
+\bigl((Q_{K,s}h)(i/K)\bigr),
+\qquad 0\le i\le K.
+\tag{295.2}
+\]
+观察实际 \(K\) 枚 Bernoulli 记录的成功次数 \(J\)，以概率 \(\alpha_J\) 输出零。协议有确定块数 \(K\)，并非只有有限期望停止时间的方案。
+
+这些系数完全由已知参数决定。具体可用有限矩阵
+\[
+P_{ij}=\binom Kj(i/K)^j(1-i/K)^{K-j},\qquad
+v_i=h(i/K)
+\]
+计算向量 \(\sum_{j=0}^{s-1}(I-P)^jv\)，再逐项截断。计算该矩阵不需要从虚拟网格参数获取观测。真实响应是
+\[
+f_K(c)=
+\sum_{i=0}^K\alpha_i\binom Ki
+p(c)^i[1-p(c)]^{K-i}.
+\tag{295.3}
+\]
+故（295.2）确实是保持所有系数在 \([0,1]\) 内的物理后处理。
+
+### 295.5 未截断的迭代偏差修正为 \(O(K^{-s})\)
+
+这里的算子组合是经典 Bernstein 迭代布尔和：$B_KQ_{K,s}=I-(I-B_K)^s$。其标准误差算子恒等式与高阶逼近研究可参见 Li Cheng 与 Xinlong Zhou, “Strong inequalities for the iterated Boolean sums of Bernstein operators,” *Studia Universitatis Babeș-Bolyai Mathematica* 64(3), 299–304 (2019)，印刷第300页及 Theorem 1.1，[原文](https://www.cs.ubbcluj.ro/journal/studia-mathematica/journal/article/download/569/pdf)，[DOI](https://doi.org/10.24193/subbmath.2019.3.01)。本节使用这一标准工具，并给出所需的导数范数估计；真实决策还需要后面的系数合法化及其误差证明。
+
+对每个固定非负整数 \(m\)，
+\[
+\|(I-B_K)f\|_{C^m}
+\le\frac{C_m}{K}\|f\|_{C^{m+2}}
+\qquad(K\ge m).
+\tag{295.4}
+\]
+可直接证明，不需要假设函数解析。对于 \(0\le j\le m\)，令 \(S\sim\operatorname{Bin}(K-j,t)\)，令 \(U_1,\ldots,U_j\) 独立均匀于 \([0,1]\)，则有限差分的积分表示给
+\[
+(B_Kf)^{(j)}(t)=\frac{(K)_j}{K^j}
+\mathbb E f^{(j)}
+\!\left(\frac{S+U_1+\cdots+U_j}{K}\right).
+\]
+括号中随机变量 \(T\) 满足
+\[
+\mathbb E(T-t)=\frac{j(1/2-t)}K,\qquad
+\mathbb E(T-t)^2\le C_j/K,\qquad
+\left|1-\frac{(K)_j}{K^j}\right|\le C_j/K.
+\]
+Taylor 展开到一次、以二阶导数控制余项，即给（295.4）。
+
+连续使用（295.4），每次减少两个被控制的导数阶，得到
+\[
+\|(I-B_K)^sh\|_\infty
+\le C_sK^{-s}\|h\|_{C^{2s}}.
+\]
+代数恒等式
+\[
+B_KQ_{K,s}h=h-(I-B_K)^sh
+\]
+因而证明
+\[
+\|B_KQ_{K,s}h-h\|_\infty\le C_{k,s}K^{-s}.
+\tag{295.5}
+\]
+\(h\in C^{M-1}=C^{2s+1}\) 充分满足所需正则性。这里尚未把越界系数当作概率；其合法化见下一步。
+
+### 295.6 高阶常值接触使系数截断损失也是高阶
+
+记 \(Z_0=\{t:h(t)=0\}\)，\(Z_1=\{t:h(t)=1\}\)，以及
+\[
+d_0(t)=\operatorname{dist}(t,Z_0),\qquad
+d_1(t)=\operatorname{dist}(t,Z_1).
+\]
+这些集合都是 \([0,1]\) 中非空的端区间，距离函数为 1-Lipschitz。Beta 拼接在零区边缘恰好有 \(M\) 阶接触，且上述值域比较保持统一正的首项系数，故存在 \(c,C>0\) 使
+\[
+h(t)\ge c\,d_0(t)^M,\qquad
+|h''(t)|\le C\,d_0(t)^{M-2},
+\tag{295.6}
+\]
+\[
+1-h(t)\ge c\,d_1(t)^M,\qquad
+|h''(t)|\le C\,d_1(t)^{M-2}.
+\tag{295.7}
+\]
+在边缘附近，这是局部多项式接触及光滑仿射/对数换元的直接结果；远离边缘，由紧性、正值及导数有界得到。常数可对 \(\eta\) 和 reset 的 \(n\) 统一选择：\(A_\varepsilon\ge3G/4\)、\(1-A_\varepsilon\ge1-G\)，而全部变换参数落在上述紧区间内。
+
+以下只用（295.6）证明下越界小；对 \(1-h\) 使用（295.7）即可证明上越界小。
+
+若 \(T\sim K^{-1}\operatorname{Bin}(K,t)\)，则 \(\mathbb E(T-t)=0\)，并对每个固定偶数 \(q\ge2\) 有
+\[
+\mathbb E|T-t|^q\le C_qK^{-q/2}.
+\tag{295.8}
+\]
+这也可由独立有界中心变量的矩展开直接推出：非零项中每个指标至少出现两次，故至多含 \(q/2\) 个不同指标。
+
+令 \(e=(I-B_K)h\)。Taylor 余项、距离函数的 Lipschitz 性和（295.6）、（295.8）给
+\[
+|e(t)|\le
+C\left[K^{-1}d_0(t)^{M-2}+K^{-M/2}\right].
+\tag{295.9}
+\]
+具体说，余项被常数倍
+\(\mathbb E[(T-t)^2(d_0(t)+|T-t|)^{M-2}]\)
+控制；拆成 \(d_0(t)^{M-2}\mathbb E(T-t)^2\) 与
+\(\mathbb E|T-t|^M\) 即得（295.9）。
+
+\(B_K^j\) 对应固定步数的二项 Markov 链：
+\[
+X_0=t,\qquad X_{i+1}\mid X_i
+\sim K^{-1}\operatorname{Bin}(K,X_i).
+\]
+对固定 \(j\le s\)，由条件（295.8）及 Minkowski 不等式，
+\[
+\mathbb E|X_j-t|^q\le C_{q,j}K^{-q/2}.
+\]
+所以对（295.9）再作用任意 \(B_K^j\)、\(j\le s\)，仍被常数倍
+\[
+K^{-1}d_0(t)^{M-2}+K^{-M/2}
+\]
+控制。展开
+\[
+Q_{K,s}h-h
+=\sum_{j=1}^{s-1}(I-B_K)^{j-1}e
+\]
+为有限个 \(B_K^ie\) 的线性组合，得到
+\[
+|Q_{K,s}h(t)-h(t)|
+\le C_s\left[K^{-1}d_0(t)^{M-2}+K^{-M/2}\right].
+\tag{295.10}
+\]
+
+选择固定充分大的 \(D\)，使
+\((C_s/c)(D^{-2}+D^{-M})\le1/2\)。
+当 \(d_0(t)\ge D/\sqrt K\) 时，（295.6）、（295.10）给
+\[
+Q_{K,s}h(t)\ge h(t)/2\ge0.
+\]
+当 \(d_0(t)<D/\sqrt K\) 时，直接由 \(h\ge0\) 与（295.10）得到
+\[
+Q_{K,s}h(t)\ge-C'_sK^{-M/2}.
+\]
+同样，由 \(Q_{K,s}1=1\) 和对 \(1-h\) 的同一论证，有
+\[
+-C'_sK^{-M/2}\le Q_{K,s}h(t)
+\le1+C'_sK^{-M/2}.
+\tag{295.11}
+\]
+因此逐系数截断损失满足
+\[
+\max_i|\alpha_i-(Q_{K,s}h)(i/K)|
+\le C'_sK^{-M/2}=C'_sK^{-(s+1)}.
+\tag{295.12}
+\]
+Bernstein 基函数非负且和为 1，所以同一个上界控制截断后的整个响应变化。结合（295.5），实际协议（295.3）对全部 \(t\in[0,1]\) 的误差满足
+\[
+\left|
+\sum_i\alpha_i\binom Ki t^i(1-t)^{K-i}-h(t)
+\right|
+\le C_{k,s}K^{-s}.
+\tag{295.13}
+\]
+
+### 295.7 连续风险、预算和未解边界
+
+将（295.13）分别应用于真实 \(p(r)\)、\(p(kr)\)，再用（295.1），得到
+\[
+f_K(r)-f_K(kr)
+\ge\frac13+\frac{\eta}{144}-2C_{k,s}K^{-s}
+\qquad\text{对每个 }r\in[l,1].
+\]
+取
+\[
+K\ge\max\left\{2s,
+\left\lceil(288C_{k,s}/\eta)^{1/s}\right\rceil\right\}
+\]
+即可使全部真实比较差至少为 \(1/3\)，相应同 \(r\) 平均风险不超过 \(1/3\)。重新吸收常数即得开头结论。由
+\[
+\eta\ge g/(l\kappa),\qquad 1/\eta\le\kappa/g,
+\]
+得到固定 \(k,s\) 的 \(O_{k,s}(g^{-1/s})\)。
+
+每个块都实际消耗两份来源；从 \(V\) 随机化产生一枚 Bernoulli 位以及末端随机决定不额外消耗来源副本。系数计算的时间、存储和精确概率实现不计入当前副本预算，与 §293 的合同一致。
+
+任意固定 \(a>0\) 可选择整数 \(s\ge1/a\)，故确有 \(O_{k,a}(g^{-a})\)。这不等于已证 \(\operatorname{polylog}(1/g)\)：本节未控制常数随 \(s\) 的增长，也不将固定 \(s\) 的估计非法地统一到 \(s=s(g)\)。记 \(N_{\min}(g)\) 为这里任一指定访问类的最优副本数；reset 情形先固定 \(n\)。对每个固定 \(s\)，以上界给
+\[
+0\le\liminf_{g\downarrow0}\frac{\log N_{\min}(g)}{\log(1/g)}
+\le\limsup_{g\downarrow0}\frac{\log N_{\min}(g)}{\log(1/g)}\le\frac1s.
+\]
+再对固定整数 \(s\) 任取大值得到该比值趋零；这一步没有在任一估计内部令 \(s\) 随 \(g\) 改变。最佳对数或其他次多项式速率仍未确定。
+
+§293保留未经截断的估计，以便使用它的无偏性；这里截断的是预先计算的决定概率系数，并在（295.11）—（295.13）中计入其全部误差。这两步承担不同的作用。高阶逼近本身不足以成为实际协议，值域约束与合法记录的共同实现仍是证明的一部分。
+
+## 追加锚（本行以下为增补区）
+
+## 296. 可实现对数决策与临界取得预算的匹配阶
+
+### 296.1 连续边界响应怎样成为有限记录上的决定
+
+本节沿用§§291—295的规范来源、独立两位置块和共同未知参数平均风险。固定 $k\in[\sqrt{3/4},1)$，令 $k^2<l\le k$、$g=l-k^2$。每个合法实际协议先在同一个 $r\in[l,1]$ 下平均两假设的错误，再对 $r$ 取最坏值；目标为风险不超过 $1/3$。确定最大块数记为 $K$，来源副本数为 $N=2K$，未使用的位置仍计费。完整访问保留原输入；先 reset 访问须先做既定的经典 reset，不能在此之前预处理或接触相干记忆。实际漂移与相位环境均不可访问。
+
+**定理296.1（实际临界预算的对数匹配阶）。** 在上述合同下，固定 $k$，当 $g\downarrow0$ 时，
+
+$$
+N_{\min}^{\mathrm{full},\,n=1}(k,g)
+=\Theta_k\!\left(\log\frac1g\right),
+\qquad
+N_{\min}^{\mathrm{reset}}(n;k,g)
+=\Theta_k\!\left(\log\frac1g\right).
+$$
+
+第二式的上下界常数可以对全部 $n\ge1$ 统一选择。完整访问的结论限定于 $n=1$；高维完整输入保留的关系不能仅用此处的标量实验代替。常数不要求在 $k\uparrow1$ 时一致。
+
+以下给出实际概率表和确定预算，从而证明上界；下界引用同一风险合同下的（292.25）与（294.31）。本节强化§295的固定阶数预算族，保留原结论，不把固定阶数估计中的常数用于随 $g$ 变化的阶数。
+
+这里的连接是具体的：准确参数接口描述任务的理想区分，有限记录上的概率表描述观察者真正可以执行的决定。无需先将参数估计到 $O(g)$ 精度，仍可使任务所需的两族响应差跨过门槛。下面将这一点落实为两个单边指数误差估计。
+
+### 296.2 同一真实计数接口与对数比较差
+
+保持
+$$
+\sqrt{3/4}\le k<1,\qquad k^2<l\le k,\qquad
+\kappa=-\log k,\quad
+\eta=\frac{\log(l/k^2)}{\kappa}\in(0,1].
+$$
+实际两假设参数是同一个 $r\in[l,1]$ 下的 $c=r$ 与 $c=kr$。
+决定零概率为 $f(c)$ 时，风险为
+$$
+\frac12\left(1-\inf_{r\in[l,1]}[f(r)-f(kr)]\right).
+$$
+每个独立完整块计两份来源。
+
+两类权限都可产生下面的实际独立 Bernoulli 记录：
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B}.
+\tag{296.1}
+$$
+其参数为：
+
+| 访问类 | 实际记录 | $B$ | $C$ |
+|---|---|---:|---:|
+| 完整 $n=1$ | 反对称投影点击 | $4$ | $1$ |
+| 先reset | §295实际随机位的补位 | $2$ | $4/a_n^2$ |
+
+reset 原位成功率是 $1/2+a_n^2c/8$，所以补位成功率为
+$(1-a_n^2c/4)/2$，准确给（296.1）。这些都来自真实记录和独立随机数，不使用隐藏模拟位。由于
+$225/256\le a_n^2\le1$，统一有
+$$
+1\le C\le C_*:=1024/225,\qquad B\in\{2,4\}.
+\tag{296.2}
+$$
+实际参数满足 $0<c\le1\le C$，故 $0\le p(c)<1/B$。
+
+令
+$$
+\bar\eta=\min\{\eta,1/2\},\qquad
+D=3-\bar\eta/2\in[11/4,3),
+$$
+并定义仅用于比较的对数直线
+$$
+L(c)=1+\frac{\log c}{D\kappa},\qquad c>0.
+\tag{296.3}
+$$
+这不是一条被直接宣布可观测的决定概率。在两族真实参数上，它满足所需的单边范围：
+$$
+L(r)\le1,\qquad
+L(kr)\ge\frac{\bar\eta}{2D}>0.
+\tag{296.4}
+$$
+第二式来自
+$kr\ge kl=k^{3-\eta}\ge k^{3-\bar\eta}$。其准确比较差为
+$$
+L(r)-L(kr)=\frac1D
+=\frac13+\frac{\bar\eta}{6D}
+\ge\frac13+\frac{\bar\eta}{18}.
+\tag{296.5}
+$$
+目标是实际实现
+$$
+f_K(r)\ge L(r)-E_ke^{-a_kK},\qquad
+f_K(kr)\le L(kr)+E'_ke^{-a_kK}.
+$$
+不要求在所有参数上双边一致逼近 $L$，也不要求 $L$ 在全部经验结果上落于 $[0,1]$。
+
+### 296.3 与临界余量无关的固定阈值
+
+下列阈值只依赖固定 $k$：
+$$
+v_{--}=k^{11/4},\quad
+v_-=k^{21/8},\quad
+v=k^{5/2},\quad
+u=k^{1/2},\quad
+u_+=k^{1/4},\quad
+u_{++}=k^{1/8}.
+$$
+严格次序是
+$$
+\boxed{
+k^3<v_{--}<v_-<v<k^2<k<u<u_+<u_{++}<1.
+}
+\tag{296.6}
+$$
+这些间距独立于 $\eta,n$。
+
+定义一个共同的正间距常数
+$$
+\Delta_k=
+\frac1{4C_*}
+\min\{k^2-v,\ u_{++}-u_+,\ u_+-u,
+v-v_-,\ u-k,\ v_- - v_{--}\}>0,
+\tag{296.7}
+$$
+等价地，
+$$
+\Delta_k=
+\frac1{4C_*}
+\min\{k^2-k^{5/2},\
+k^{1/8}-k^{1/4},\
+k^{1/4}-k^{1/2},\
+k^{5/2}-k^{21/8},\
+k^{1/2}-k,\
+k^{21/8}-k^{11/4}\}.
+$$
+取
+$$
+\zeta_k=\min\{1/4,\Delta_k/2\}>0,\qquad
+d=\lfloor\zeta_kK\rfloor.
+\tag{296.8}
+$$
+截断级数阶数 $d$ 可随 $K$ 线性增长；以下直接证明该增长下的估计，不借用固定阶数的渐近常数。
+
+### 296.4 阶乘矩给出的对数系数与尾项
+
+令实际成功次数 $J=\sum_{i=1}^K Y_i$。对 $0\le i\le K$，定义经验坐标
+$$
+c_i=C(1-Bi/K)
+\tag{296.9}
+$$
+和实系数
+$$
+\beta_i=
+1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}
+\sum_{m=1}^{d}\frac{B^m}{m}
+\frac{(i)_m}{(K)_m}.
+\tag{296.10}
+$$
+$(i)_m=i(i-1)\cdots(i-m+1)$，当 $i<m$ 时按零解释。
+$d\le K$，分母非零。公式仅含已知参数和有限算术，不对非正的 $c_i$ 取对数。$\beta_i$ 尚不是决定概率，可以越界。
+
+二项分布的阶乘矩给
+$$
+\mathbb E_p\frac{(J)_m}{(K)_m}=p^m.
+$$
+因此
+$$
+\mathbb E_c\beta_J
+=
+1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}\sum_{m=1}^{d}\frac{(Bp(c))^m}{m}
+=L(c)+R_d(c),
+\tag{296.11}
+$$
+其中
+$$
+R_d(c)=\frac1{D\kappa}
+\sum_{m>d}\frac{(1-c/C)^m}{m}\ge0.
+$$
+对全部真实 $c\ge kl>k^3$，令
+$$
+z_*=1-k^3/C_*\in(0,1),\qquad
+T_k=\frac{C_*}{(11/4)\kappa k^3},
+$$
+便有
+$$
+0\le R_d(c)\le T_k z_*^{d+1}
+\le T_k\exp[-\zeta_k|\log z_*|K].
+\tag{296.12}
+$$
+这里没有以点态系数的最坏大小估计期望。
+
+另有两个点态事实。因为每个求和项非负，
+$$
+\beta_i\le U_k:=
+1+\frac{\log C_*}{(11/4)\kappa}.
+\tag{296.13}
+$$
+并且只要 $c_i>0$，无放回全成功概率不超过有放回全成功概率，给
+$$
+0\le\frac{(i)_m}{(K)_m}\le(i/K)^m.
+$$
+将有限和放大到收敛的无限和，得到
+$$
+\boxed{\beta_i\ge L(c_i)\quad(c_i>0).}
+\tag{296.14}
+$$
+这个下界不要求 $m/K$ 很小。
+
+### 296.5 可实现概率表的逐项合法性
+
+存在只依赖 $k$ 的整数 $K_0$，使 $K\ge K_0$ 时
+$$
+c_i\le u_{++}\ \Longrightarrow\ \beta_i<1.
+\tag{296.15}
+$$
+证明如下。对每个固定 $m$，将 $m$ 次有放回抽样与无放回抽样耦合；只有发生重复抽样时全成功概率才可能不同。因此
+$$
+0\le(i/K)^m-\frac{(i)_m}{(K)_m}
+\le\frac{m(m-1)}{2K}
+\tag{296.16}
+$$
+对全部 $i$ 成立，包括 $i<m$。
+
+选择固定 $m_0$，使
+$$
+\sup_{0\le z\le1-u_{++}/C_*}
+\sum_{m>m_0}\frac{z^m}{m}\le\kappa/32.
+$$
+上限严格小于一，所以这样一个 $m_0$ 存在。记
+$$
+A_{m_0}=\frac12\sum_{m=1}^{m_0}4^m(m-1).
+$$
+取
+$$
+K_0\ge
+\max\left\{1,\left\lceil m_0/\zeta_k\right\rceil,
+\left\lceil32A_{m_0}/\kappa\right\rceil\right\}.
+\tag{296.17}
+$$
+此时 $d\ge m_0$。如果 $c_i\le u_{++}$，则
+$Bi/K\ge1-u_{++}/C\ge0$。由（296.16）及各项非负，
+$$
+\begin{aligned}
+\sum_{m=1}^{d}\frac{B^m}{m}\frac{(i)_m}{(K)_m}
+&\ge
+\sum_{m=1}^{m_0}\frac{(Bi/K)^m}{m}
+-\frac{A_{m_0}}K\\
+&\ge
+\log(C/u_{++})-\kappa/32-\kappa/32\\
+&=\log C+\kappa/16.
+\end{aligned}
+$$
+代入（296.10）得
+$$
+\beta_i\le1-\frac1{16D}<1,
+$$
+证明（296.15）。此证明甚至覆盖 $c_i\le0$；只在正的固定阈值
+$u_{++}$ 上使用对数级数。
+
+在中间区域 $v<c_i<u$，（296.14）另外给
+$$
+\beta_i\ge L(c_i)\ge1-\frac{5/2}{D}\ge1/11.
+$$
+结合 $c_i<u<u_{++}$，所以这里的 $\beta_i$ 确实属于 $[0,1]$。
+
+现在定义真正的决定零概率表
+$$
+a_i=
+\begin{cases}
+1,&c_i\ge u,\\
+\beta_i,&v<c_i<u,\\
+0,&c_i\le v.
+\end{cases}
+\tag{296.18}
+$$
+对于 $K\ge K_0$，每个 $a_i$ 均合法。实际协议观察 $J$，再以概率 $a_J$ 输出零；其实际响应为
+$$
+f_K(c)=\mathbb E_c a_J.
+\tag{296.19}
+$$
+完整 $n=1$ 情形属于§294的真实计数决策集合；先 reset 情形是自身可访问记录的合法后处理。两者都只使用一个真实 Bernoulli 子实验，上界不要求该子实验保留全部输入信息。
+
+### 296.6 精确倾斜控制负系数事件
+
+对 $J\sim\operatorname{Bin}(K,p)$，单侧 Hoeffding 界为
+$$
+\Pr(J/K-p\ge t)\le e^{-2Kt^2},\qquad
+\Pr(J/K-p\le-t)\le e^{-2Kt^2}.
+\tag{296.20}
+$$
+可直接由二值中心变量的对数矩母函数二阶导数至多 $1/4$ 得
+$\mathbb E e^{\lambda(Y-p)}\le e^{\lambda^2/8}$，再作 Chernoff 最优化。
+因 $c_J=C(1-BJ/K)$、$BC\le4C_*$，真实坐标和经验坐标相隔一个固定阈值间距时，（296.20）给统一指数界。
+
+还需要处理可能极大的负系数，不能直接忽略它们。对任意事件指示函数 $\varphi$，准确的阶乘矩倾斜恒等式为
+$$
+\boxed{
+\mathbb E_p\left[
+\frac{(J)_m}{(K)_m}\varphi(J)
+\right]
+=p^m\,\mathbb E\varphi(m+Z),\quad
+Z\sim\operatorname{Bin}(K-m,p).
+}
+\tag{296.21}
+$$
+这由逐项恒等式
+$$
+\frac{(j)_m}{(K)_m}{K\choose j}
+={K-m\choose j-m}
+$$
+直接得到。
+
+若真实 $c\ge v_-$，则
+$$
+p(c)\le \tau-\Delta_k,\qquad
+\tau=\frac{1-v_{--}/C}{B}.
+$$
+对每个 $m\le d\le\zeta_kK$，倾斜后的随机数 $m+Z$ 的均值至多
+$$
+Kp+m\le K(\tau-\Delta_k+\zeta_k)
+\le K(\tau-\Delta_k/2).
+$$
+所以
+$$
+\Pr(m+Z>K\tau)
+\le e^{-K\Delta_k^2/2}.
+\tag{296.22}
+$$
+这里增量 $m$ 已计入阈值距离；没有把原来的小概率事件在倾斜后继续不加检查地当作小概率。
+
+由（296.14），$\beta_i<0$ 只能发生在
+$$
+c_i<k^D\le k^{11/4}=v_{--}.
+\tag{296.23}
+$$
+非正经验坐标也在此事件内。因为（296.10）的常数项至少为一，
+$$
+(-\beta_i)_+
+\le\frac1{D\kappa}
+\sum_{m=1}^{d}\frac{B^m}{m}
+\frac{(i)_m}{(K)_m}
+\,\mathbf1_{\{c_i<v_{--}\}}.
+$$
+对 $c\ge v_-$，使用（296.21）—（296.22），可得
+$$
+\begin{aligned}
+\mathbb E_c(-\beta_J)_+
+&\le
+\frac{e^{-K\Delta_k^2/2}}{D\kappa}
+\sum_{m=1}^{d}\frac{(Bp(c))^m}{m}\\
+&\le
+W_k e^{-K\Delta_k^2/2},\\
+W_k&:=\frac{\log(C_*/v_-)}{(11/4)\kappa}.
+\end{aligned}
+\tag{296.24}
+$$
+第二步用 $Bp(c)=1-c/C\le1-v_-/C_*<1$。这说明虽然低经验区域的某些辅助系数绝对值可随 $K$ 指数增长，坏事件上的期望贡献仍指数小；系数的 $B^m$ 被精确倾斜恒等式吸收到收敛的 $(Bp)^m$ 中。
+
+### 296.7 第一族真实参数的单边下界
+
+令
+$$
+a_k=\min\left\{\Delta_k^2/2,
+\zeta_k|\log z_*|\right\}>0.
+\tag{296.25}
+$$
+证明对全部 $r\in[l,1]$，
+$$
+\boxed{
+f_K(r)\ge L(r)-2U_ke^{-a_kK}.
+}
+\tag{296.26}
+$$
+
+先考虑 $r\le u_+$。必有 $r\ge l>k^2>v$。将系数改成零可能降低响应的事件包含于 $c_J\le v$，其发生概率至多
+$e^{-2K\Delta_k^2}$。将系数改成一只有原系数超过一时才可能降低响应；由（296.15），这只能发生于 $c_J>u_{++}$。
+由于真实 $r\le u_+<u_{++}$，该事件概率也至多
+$e^{-2K\Delta_k^2}$。由全局上界 $\beta_i\le U_k$，
+$$
+f_K(r)\ge\mathbb E_r\beta_J
+-2U_ke^{-2K\Delta_k^2}
+\ge L(r)-2U_ke^{-a_kK}.
+$$
+
+若 $r>u_+$，则 $u_+>u$，真实均值已在高阈值之外，并与之有固定间距。以概率至少
+$1-e^{-2K\Delta_k^2}$ 有 $c_J\ge u$，此时实际决定概率为一。其他系数非负，故
+$$
+f_K(r)\ge1-e^{-2K\Delta_k^2}
+\ge L(r)-e^{-a_kK}.
+$$
+最后一步使用的是真实 $r\le1$ 蕴含 $L(r)\le1$。这避免把原系数超过一的区域误当作在 $r$ 接近一时仍是小概率区域。
+
+### 296.8 第二族真实参数的单边上界
+
+记 $c=kr\in[kl,k]$。证明
+$$
+\boxed{
+f_K(c)\le L(c)+(1+W_k+T_k)e^{-a_kK}.
+}
+\tag{296.27}
+$$
+
+若 $c\le v_-$，则 $v_-<v$。只有经验坐标超过 $v$ 时实际输出零概率才可能非零，所以
+$$
+f_K(c)\le\Pr_c(c_J>v)
+\le e^{-2K\Delta_k^2}
+\le L(c)+e^{-a_kK}.
+$$
+这里利用 $L(c)\ge0$；其理由是 $c\ge kl$，而不是误称
+$\beta_i$ 在低经验区域都非负。
+
+若 $c>v_-$，将系数改成一可能增加响应的事件是高经验区域
+$c_J\ge u$。因为 $c\le k<u$，其概率至多
+$e^{-2K\Delta_k^2}$。高经验区域中 $c_i\ge u>0$，由（296.14）有
+$\beta_i\ge L(c_i)\ge L(u)>0$，所以此改动的正部分至多一。
+
+将系数改成零只有在原系数负时才可能增加响应，其总贡献由（296.24）控制。因此
+$$
+\begin{aligned}
+f_K(c)
+&\le\mathbb E_c\beta_J
++e^{-2K\Delta_k^2}
++W_ke^{-K\Delta_k^2/2}\\
+&\le L(c)+(1+W_k+T_k)e^{-a_kK},
+\end{aligned}
+$$
+最后使用（296.12）。
+
+这一分区没有把“低经验坐标事件”整体宣称为小概率。
+当真实 $c$ 也低时，直接估计实际非零输出的概率；
+当真实 $c$ 较高时，只估计真正有害的负系数事件，其阈值
+$v_{--}<v_-$ 才与真实均值保持固定距离。
+
+### 296.9 上下界匹配与临界取得成本
+
+合并（296.5）、（296.26）、（296.27），令
+$$
+E_k=2U_k+1+W_k+T_k,
+$$
+对所有真实 $r\in[l,1]$ 有
+$$
+f_K(r)-f_K(kr)
+\ge\frac13+\frac{\bar\eta}{18}-E_ke^{-a_kK}.
+\tag{296.28}
+$$
+因此取确定整数
+$$
+\boxed{
+K=
+\max\left\{
+K_0,
+\left\lceil\frac1{a_k}
+\log\frac{18E_k}{\bar\eta}\right\rceil
+\right\}
+}
+\tag{296.29}
+$$
+即可使全部比较差至少为 $1/3$，对应风险不超过 $1/3$。
+
+上述 $K_0,a_k,E_k$ 都只依赖固定 $k$；$B,C$ 在两种真实实验的统一范围内被处理。故确定来源副本预算是
+$$
+N=2K=O_k(\log(1/\eta))=O_k(\log(1/g))
+\quad(g\downarrow0),
+\tag{296.30}
+$$
+reset 对 $n$ 一致。这里使用
+$\eta=\log(1+g/k^2)/\kappa\asymp_k g$。
+$\eta>1/2$ 的其余参数也被同一个
+$\bar\eta=1/2$ 构造覆盖，但临界渐近只关心 $\eta\downarrow0$。
+
+与既有必要界连接如下：
+
+- 完整输入的§294三点同参数先验界要求
+$$
+g\ge
+\left(\frac{3+k^3}{4}\right)^K
+\sqrt{\frac{2(1-k^4)}K},
+$$
+从而 $K=\Omega_k(\log(1/g))$。这里下界约束完整输入的全部协议，上界只需一个合法子实验。
+
+- reset 的§292必要条件为
+$$
+g\ge\frac{c_*}{3K}
+\left(\frac{c_*+k^3}{c_*+1}\right)^K,\qquad c_*=33/32,
+$$
+也给固定 $k$ 下的 $K=\Omega_k(\log(1/g))$，且不依赖 $n$。
+
+在上述相同风险与权限条件下，（296.29）匹配其发散阶：
+$$
+N_{\min}^{\mathrm{full},\,n=1}(k,g)
+=\Theta_k(\log(1/g)),
+$$
+$$
+N_{\min}^{\mathrm{reset}}(n;k,g)
+=\Theta_k(\log(1/g)),
+$$
+后者可对全部 $n\ge1$ 选择统一的上下界常数。具体地，两条必要界取负对数后均给 $\log(1/g)\le A_kK+B_k\log K+C_k$，用 $\log K\le K$ 即得上述下界阶。准确常数及有限预算最优决定表未在这里求解。
+
+### 296.10 边界、来源与适用范围
+
+在 $g=0$ 时，§291的有限预算障碍仍然成立；本节描述从可达一侧接近该边界时的最优发散阶。准确参数接口在 $g>0$ 的这段区间内具有相同的最优风险 $1/4$，实际取得成本却在 $g\downarrow0$ 时对数发散。因此仅给出准确接口的可恢复性，还不能回答观察者在固定预算内能否实现指定任务。
+
+本节使用对数幂级数、二项阶乘矩、有限总体抽样耦合及 Chernoff—Hoeffding 估计；这些是标准工具。尾界的经典出处是 W. Hoeffding, [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830), *Journal of the American Statistical Association* 58(301), 13–30 (1963)。本节已给出所用二值指数估计及阶乘倾斜恒等式的推导。具体贡献是将这些工具接到当前来源与权限上，证明合法概率表的两族单边误差，并与既有同参数下界匹配；不将标准工具或这份仓内综合自动宣称为文献原创。
+
+所有预算均指真实来源副本数。系数计算、存储、数值精度及概率实施的额外资源没有包含在 $N$ 中；本节没有证明这些常数小、没有求解有限预算最优表，也没有将来源计数解释成物理钟的历时。正文是普通数学推导，未执行数值优化或 Lean 形式验证。
+
+## 追加锚（本行以下为增补区）
+
+## 297. 临界判别的有限概率精度、工作摘要与经典资源
+
+### 297.1 对数级取得可以接上有限经典实现
+
+第296节给出了真实计数记录上的对数级副本协议，但将概率表的计算与精确随机化留在来源预算之外。本节在明确的有限参数输入模型中补上这部分关系：保留足够的风险余量，把实际输出概率改为二进有理数，再用确定最大数量的公平位准确采样。
+
+**定理297.1（有限经典后处理保持临界取得阶）。** 给定精确有理 $k,l$，满足 $\sqrt{3/4}\le k<1$、$k^2<l\le k$，记 $g=l-k^2$。保持第296节的实际来源、权限和共同参数平均风险。对固定 $k$，完整 $n=1$ 与全部 $n\ge1$ 的先 reset 访问都有使用有限二进有理决定概率的协议，确定最大来源预算为
+
+$$
+N=O_k\!\left(\log\frac1g\right),
+$$
+
+并对全部实数 $r\in[l,1]$ 保证平均错误不超过 $1/3$。上界中的来源常数对 reset 维数一致。经典后处理新增公平位、系数工作精度均可取 $O_k(\log(1/g))$；固定参数设置、精确输入、规范参考参数生成及仪器实施分别计费。原全部协议类的对数下界继续适用，故限制为这里的有限经典实现仍达到同一来源发散阶。
+
+以下证明给出舍入误差的完整余量、阈值等号的处理和保守的位操作上界。工作摘要只为当前判别任务服务；原始档案、量子参考与设备记录仍按各自合同保留，不从小摘要推出全部观察者只占同样的存储。
+
+### 297.2 有限输入、校准与固定参数的设置成本
+
+主结果采用下面可完全执行的受限输入表示：
+
+- $k,l$ 是给定的精确有理数，满足原参数范围
+  $\sqrt{3/4}\le k<1$、$k^2<l\le k$。其分子分母的总输入位长记为 $L$。
+- $n$ 是给定整数；reset 使用原规范来源，不把 $a_n$ 当作免费实数 oracle。下面给出由 $n$ 精确生成 $a_n$ 的算法界。
+- 实际来源和测量采用第296节的 Bernoulli 记录接口；另外供给经典后处理的独立公平随机位可访问并明确计数。原仪器的制备、内部随机性与测量实施仍按该接口另计，不包含在后处理随机位数中。
+- 原风险仍对全部实数 $r\in[l,1]$ 取上确界，未把未知真实参数离散化。
+
+有理输入限制是经典参数的表示合同，不是缩成有限 $r$ 网格。对任意未给有效表示的实数 $k,l,a_n$，不据此宣称存在统一有限算法；如果改用可计算实数区间 oracle，其求值与精确分支认证费用必须另给。下文的精确有理模型已经避免将任意实数比较当作免费操作。
+
+固定 $k$ 的对数预算证明会使用一组正的阈值间距和误差常数。经典设置阶段应产生或提供其已认证有理界，例如有理
+$\zeta>0,\underline a>0,\overline E<\infty$ 和整数 $K_0$，使第296节对数预算证明中的
+$$
+d=\lfloor\zeta K\rfloor,\qquad
+f_K(r)-f_K(kr)\ge
+1/3+\bar\eta/18-\overline E e^{-\underline aK}
+\tag{297.1}
+$$
+成立。可取 $\zeta$ 为原允许正数的有理下界，随后增大 $K_0$。
+这是对严格正间距、幂和对数的有限区间认证任务。记这项一次性计算的成本为
+$T_{\rm setup}(k)$、存储为 $S_{\rm setup}(k)$；不把它删除，也不声称关于变化的 $k$ 输入位长的多项式复杂度。固定 $k$ 时，它与 $g,n$ 无关。
+
+### 297.3 为有限概率表示保留严格风险余量
+
+记
+$$
+\kappa=-\log k,\quad
+\eta=\log(l/k^2)/\kappa,\quad
+\bar\eta=\min\{\eta,1/2\},\quad D=3-\bar\eta/2.
+$$
+取得一个经认证的正有理数 $\theta$，满足
+$$
+\bar\eta/4\le\theta\le\bar\eta.
+\tag{297.2}
+$$
+例如，计算 $\bar\eta$ 的正区间上下界，使上界不超过下界两倍，再取下界的一半。由于 $g=l-k^2>0$，对数连续且可计算，这个认证过程终止；需要的绝对精度为 $O_k(g)$，费用计入参数计算。
+
+取
+$$
+K=\max\left\{K_0,\
+\left\lceil\underline a^{-1}
+\log\frac{36\overline E}{\theta}\right\rceil\right\}.
+\tag{297.3}
+$$
+若该实数取整不能直接由当前区间决定，将该量认证到宽度至多一的区间，再对其有理上端点向上取整即可，不需要判断某个实数是否恰为整数。
+由（297.1），理想合法概率表 $a_0,\ldots,a_K$ 的比较差至少为
+$$
+1/3+\bar\eta/18-\theta/36
+\ge1/3+\bar\eta/36.
+\tag{297.4}
+$$
+参数关系 $\theta\asymp_k g$ 保证
+$K=O_k(\log(1/g))$。
+
+如果另一合法表 $\widetilde a$ 满足
+$$
+\max_i|\widetilde a_i-a_i|\le\theta/144,
+\tag{297.5}
+$$
+则对任何实际 Bernoulli 参数 $p$，响应概率改变至多
+$\theta/144$：二项基函数非负且和为一。两真实参数的比较差至多损失
+$\theta/72$，所以新的比较差仍至少为
+$$
+1/3+\bar\eta/36-\theta/72
+\ge1/3+\bar\eta/72>1/3.
+$$
+原风险合同因而仍成立，且这一论证覆盖全部连续 $r$。
+
+### 297.4 有理阈值比较与真正需要计算的区域
+
+两种访问统一写为
+$$
+p(c)=\frac{1-c/C}{B},\qquad
+(B,C)=
+\begin{cases}
+(4,1),&\text{完整 }n=1,\\
+(2,4/a_n^2),&\text{reset}.
+\end{cases}
+$$
+对成功次数 $i$ 定义
+$$
+c_i=C(1-Bi/K),\quad
+v=k^{5/2},\quad u=k^{1/2}.
+$$
+合法表是
+$$
+a_i=
+\begin{cases}
+0,&c_i\le v,\\
+\beta_i,&v<c_i<u,\\
+1,&c_i\ge u,
+\end{cases}
+$$
+其中
+$$
+\beta_i=1+\frac{\log C-S_i}{A},\quad
+A=D\kappa,\quad
+S_i=\sum_{m=1}^{d}\frac{B^m}{m}
+\frac{(i)_m}{(K)_m}.
+\tag{297.6}
+$$
+
+在当前输入模型中 $C,c_i,k$ 都是精确有理数。因此三段判定无需近似求平方根：
+
+1. 若 $c_i\le0$，直接使用零。
+2. 否则，$c_i^2\le k^5$ 时使用零。
+3. $c_i^2\ge k$ 时使用一。
+4. 其余情形才计算中间的 $\beta_i$。
+
+等号也由有理数交叉相乘精确处理。实际协议完全不需要评价低区的 $\beta_i$，也不需要形成那些很大的负数。
+
+如果 $C$ 的精确表示位长为 $L_C$，两次平方和有理比较只需要
+$O(L+L_C+\log K)$ 位的整数。按学校式乘法，一个计数结果的分支认证可用
+$$
+O((L+L_C+\log K)^2)
+$$
+次位操作与同阶输入大小的工作存储完成。
+
+### 297.5 中间系数的收缩递推及工作精度
+
+在中区，令
+$$
+q_k=1-v/C_*<1,\qquad C_*=1024/225.
+$$
+有
+$$
+Bi/K=1-c_i/C\le1-v/C\le q_k.
+$$
+记
+$$
+w_0=1,\qquad
+w_m=w_{m-1}\frac{B(i-m+1)}{K-m+1}.
+\tag{297.7}
+$$
+只需运行到 $m=\min\{d,i\}$；之后所有项为零。各乘法因子非负，并且
+$$
+0\le\frac{B(i-m+1)}{K-m+1}
+\le Bi/K\le q_k<1.
+$$
+所以 $0\le w_m\le q_k^m$，而 $S_i=\sum_m w_m/m$ 是非负且有界的和：
+$$
+0\le S_i\le-\log(1-q_k).
+\tag{297.8}
+$$
+这是实际求值路径上的稳定性，不使用低区的最坏系数界。
+
+取工作网格 $2^{-P}$，把递推因子、乘积和除法向下舍入。若每个局部舍入误差至多 $\epsilon=2^{-P}$，则递推误差满足
+$$
+e_m\le q_ke_{m-1}+2\epsilon,
+\qquad
+e_m\le\frac{2\epsilon}{1-q_k}.
+$$
+求和项再除以 $m$ 后舍入，得到
+$$
+0\le S_i-\widehat S_i
+\le\frac{2\epsilon H_d}{1-q_k}+d\epsilon
+\le C_k(d+1)2^{-P}.
+\tag{297.9}
+$$
+同一网格上的加法可以精确完成，所需整数位数由（297.8）控制。
+
+分母不必先求 $\eta$ 再乘回 $\kappa$，可以直接计算
+$$
+\boxed{
+A=3\kappa-\frac12
+\min\{\log(l/k^2),\kappa/2\}.
+}
+\tag{297.10}
+$$
+准确分母满足
+$(11/4)\kappa\le A<3\kappa$。对于固定 $k<1$，它与零保持固定距离；min 是 Lipschitz 操作，在 $\eta=1/2$ 处没有不连续的数值分支。
+
+例如，若 $\log k,\log l,\log C$ 各以绝对误差至多
+$2^{-P}$ 给出，则 $A$ 的误差至多一个固定常数倍
+$2^{-P}$。在足够大的固定起始精度后，近似分母至少为
+$(11/8)\kappa$。
+结合（297.8）—（297.10），存在可由 $\kappa,q_k,C_*$ 明确上界的常数 $L_k$，使
+$$
+|\widehat\beta_i-\beta_i|
+\le L_k(d+1)2^{-P}.
+\tag{297.11}
+$$
+这里的常数独立于 $n,\eta,K,i$，但不声称对 $k\uparrow1$ 一致。
+
+因此只需
+$$
+P\ge P_0(k)+
+\left\lceil\log_2\frac{288L_k(d+1)}{\theta}\right\rceil
+\tag{297.12}
+$$
+便可保证中间系数计算误差不超过 $\theta/288$。
+这给
+$$
+P=O_k(\log(1/g)+\log K)=O_k(\log(1/g)).
+$$
+计算对数时再使用 $O(\log P)$ 个保护位即可维持目标绝对误差，仍不改变这个位数阶。
+
+参数输入精度在此没有被默认为无限：如果对数不是精确输入，必须由已知有理数的认证求值取得；对于一般区间参数，至少应认证其传播到（297.6）的误差不超过上述预算。本节主结果使用精确有理输入和以下具体求值方法。
+
+### 297.6 认证对数、二进有理概率与固定随机位数
+
+系数公式中的 $k,l,C$ 均位于 $[3/4,C_*]$。在此范围使用
+$$
+\log x=
+2\sum_{j=0}^{\infty}
+\frac{t^{2j+1}}{2j+1},\qquad
+t=\frac{x-1}{x+1}.
+\tag{297.13}
+$$
+整个范围有统一 $|t|\le q_0<1$。几何尾界使
+$O(P)$ 项足以达到 $2^{-P}$ 的绝对误差；使用定向舍入与保护位可同时给上下区间。所需 $\log(l/k^2)$ 可由
+$\log l-2\log k$ 得到，避免要求该比值落入另一个未声明的计算范围。
+
+预算式（297.3）中的 $x=36\overline E/\theta$ 未必位于上述固定范围。先用精确有理数的整数比较写成 $x=2^h u$、$1\le u<2$，再计算 $\log x=h\log2+\log u$。这里 $b$ 按下文（297.14）选取，$|h|=O_k(b)$；为控制乘上 $h$ 后的误差，多用 $O(\log(1+|h|))$ 个保护位即可。固定 $k$ 的常数在设置阶段认证。求正区间及 $\theta$ 时按倍增精度推进，费用被最终精度阶段的同阶上界控制。因而预算对数的认证没有引入范围之外的免费实数求值。
+
+在以 $W=P+O(\log P)$ 位运算为基本单元的模型中，这些常数对数的求值需要 $O(P)$ 次算术操作和 $O(W)$ 位工作存储。
+采用学校式整数运算可给 $O(PW^2)$ 的位操作上界；将长有理输入化为工作精度还需另计
+$O((L+L_C+W)^2)$ 的朴素除法费用。这里没有把一个高精度算术操作算成一单位物理时间。
+
+令
+$$
+b=\left\lceil\log_2(288/\theta)\right\rceil.
+\tag{297.14}
+$$
+对中间系数，先将有限计算结果 $\widehat\beta_i$ 裁剪到 $[0,1]$，再定义
+$$
+m_i=
+\left\lfloor 2^b\operatorname{clip}_{[0,1]}
+(\widehat\beta_i)\right\rfloor,\qquad
+\widetilde a_i=m_i/2^b.
+\tag{297.15}
+$$
+高低区分别直接取 $m_i=2^b,0$。
+有限计算结果是一个已存储的 dyadic 数，所以这一步的取整是整数操作，不涉及不可判的实数边界。
+
+由于裁剪不增大到合法原系数 $a_i$ 的距离，
+$$
+|\widetilde a_i-a_i|
+\le\theta/288+2^{-b}
+\le\theta/144.
+$$
+因此（297.5）成立。
+
+最后读入恰好 $b$ 个独立公平位，形成
+$U\in\{0,\ldots,2^b-1\}$，当且仅当 $U<m_J$ 输出零。这样准确实现 dyadic 概率，不需要一个只有有限期望长度的随机采样程序。对于概率零或一可以不读这些位，但确定最大位数仍为 $b$。
+
+### 297.7 规范参考参数的准确生成成本
+
+同卷（278.11）在 $t=1/4$ 给
+$$
+Q_{ij}=\frac{\mathbf1_{i=j}}2
+-\frac{Q_{i-1,j}+Q_{i,j-1}}8
+-\frac{Q_{i-1,j-1}}{32},
+\tag{297.16}
+$$
+边界下标零处取零。由（278.13）及
+$J_ne_j=e_{j-1}$，
+$$
+\boxed{
+a_n=1-\frac1{16n}\sum_{j=1}^{n-1}Q_{jj}.
+}
+\tag{297.17}
+$$
+$n=1$ 时空和给 $a_1=1$。
+
+每个 $Q_{ij}$ 都是 dyadic。有理递推归纳给其分母整除
+$2^{3(i+j)-5}$，而既有算子范数界给 $|Q_{ij}|\le1$。
+因此涉及的整数具有 $O(n)$ 位。
+按行递推到 $(n-1)\times(n-1)$，只保留前一行和当前行，同时累计对角线，就能用
+
+- $O(n^2)$ 次 $O(n)$ 位加法、常数位移；
+- $O(n^3)$ 次朴素位操作；
+- $O(n^2)$ 位峰值工作存储
+
+生成准确的 $a_n$。最终 $a_n$ 及 $C=4/a_n^2$ 的分子分母具有
+$O(n+\log n)$ 位。最后的平方、除法所需的朴素
+$O(n^2)$ 位操作不超过前述上界。
+
+这些是保守的经典实现上界，不声称最优。输入 $n$ 的编码只有
+$O(\log n)$ 位，因此本算法也没有被声称对输入编码长度高效。
+来源副本上界对 $n$ 一致，不意味着这项参数计算、存储或仪器准备工作也对 $n$ 一致。
+
+若已有带认证误差的 $a_n$ 输入，可以把其求值费用替换为该输入接口的成本；不能把它设为零。若要避免精确有理 $C$，还必须给出对经验阈值比较的认证方法，单纯近似 $\log C$ 不足以处理阈值等号。本节的精确生成路线已经解决了这个问题。
+
+### 297.8 任务摘要、算术工作空间与完整档案
+
+本协议在取得记录时只需保存成功计数 $J$、位置计数器和当前块的有限个标签。因而取得阶段的当前任务摘要占
+$O(\log K)$ 位，再加常数位的块内临时记录。
+
+这只说明 $J$ 足够执行当前指定终端判别，不是保留了原始有序档案，也不是证明一个 Bernoulli 点击保留完整量子实验信息。
+如果任务另需全部原始记录，必须另计档案：本协议的完整输入二元点击标签为 $K$ 位；reset 的每份来源有四种经典输出标签，两份一块，这些标签占 $4K$ 位。来源身份、校准、钟读数、允许操作、其他已获档案与需要保留的随机化结果分别按原合同计费；可访问量子参考不被算成这份经典标签串。
+
+有两种直接实现方式：
+
+| 实现 | 系数算术次数 | 额外存储 |
+|---|---:|---:|
+| 只计算最终命中的系数 | 至多 $O(d)$，另加 $O(P)$ 次参数对数算术 | $O(W+\log K)$ 工作位，另加参数输入 |
+| 预先存全部 dyadic 表 | 至多 $O(Kd)$，共享参数对数 | $O(Kb)$ 表位，另加 $O(W)$ 工作位 |
+
+按需计算时，高低区直接输出确定值；只有最终 $J$ 位于中区才运行（297.7）。参数的精确位串仍需存储或可读访问，不能并入一个与 $n,L$ 无关的常数。用学校式位运算，一个保守的按需后处理上界是
+$$
+O\!\left(
+(L+L_C+W+\log K)^2+d(W+\log K)^2+PW^2+K\log K
+\right),
+\tag{297.18}
+$$
+外加
+$T_{\rm setup}(k)$ 以及规范 $a_n$ 的生成成本。最后的
+$K\log K$ 可承担最朴素的流式计数更新。
+
+采用上述准确生成 $a_n$ 的路线，总位操作还须加上 $O(n^3)$；在计入输入和设置阶段的存储后，一个整体峰值上界为
+$$
+S_{\rm setup}(k)+O(L+n^2+W+\log K).
+$$
+参数生成的行缓冲区完成后可以释放；随后保留的 $C$ 只需 $O(n+\log n)$ 位。完整 $n=1$ 情形没有这一维数相关预计算项。
+
+固定 $k$，令 $b\asymp\log(1/g)$，则 $K,d,P,W=O_k(b)$。
+当参数表示和规范参数生成单独计费后，按需系数及对数运算部分有
+$O_k(b^3)$ 的朴素位操作上界和 $O_k(b)$ 工作位上界。
+预存整表需要 $O_k(b^2)$ 表位；直接逐项计算给
+$O_k(b^4)$ 的朴素系数运算上界。没有声称这些经典算法界最优。
+
+在既有实际测量输出之外，新增经典后处理公平位的确定最大预算为：
+
+- 完整 $n=1$：至多 $b$ 位，用于末端 dyadic 决策；
+- reset：每块把 $V\in\{-4,0,4\}$ 随机化时只可能需要一枚公平位，故至多 $K+b$ 位。
+
+这些后处理公平位独立于来源及此前随机化；测量本身的随机输出不是额外取得的免费公平位。它们不额外请求来源副本。
+计数、固定精度算术、随机位数、原始档案和实验室历时属于不同资源坐标；这里给出的位操作上界不是物理时间或能耗结论。
+
+### 297.9 权限改变后的边界与结论范围
+
+在上述精确有理输入及规范参数生成模型中，所有使用的决定概率都可有限表示、精确采样；连续真实参数风险仍不超过 $1/3$，来源预算保持
+$O_k(\log(1/g))$。有限概率精度没有重新引入负系数实施问题，也没有要求实现任意精确实数随机数。
+
+这里没有为任意无有效表示的实参数提供统一算法，也没有将经典参数求值免费化。对数阶结论只涉及当前完整 $n=1$ 与reset权限。对完整 $n\ge2$，同卷（289.30）的已有上界为常数倍
+$(w+\delta)/\delta^2$；固定 $k$ 即固定 $\delta>0$，而
+$w=1-k^2-g$ 保持有界，因此已给固定 $k$、$g\downarrow0$ 时的
+$O_k(1)$ 副本界。较强的逐假设风险保证也蕴含当前平均风险保证。这只是既有结果的应用，不是新的独立数学定理；该谱测量的有限精度实施也未由本节额外证明。
+
+本节是第296节可实现概率表在有限输入模型中的延伸。标准中间工具是区间算术、收缩递推的误差传播、对数的反双曲正切级数及二进有理数的公平位采样；所需界已在正文推导，不将这些工具另称为新结果。规范参数生成直接使用（278.11）、（278.13），高维权限比较直接应用（289.30）。本节未执行数值优化、实际仪器实验或 Lean 形式验证；位操作上界不承担物理历时、能耗或仪器精度的结论。
+
+## 追加锚（本行以下为增补区）
+
+## 298. 共同未知增益、参考校准与联合记录的临界取得
+
+### 298.1 校准也必须成为被取得的关系
+
+第296节使用已知的记录标定。若读数再经过一个未知共同增益，单份任务响应可能合并新的来源；给观察者一份校准仪器的名称，并不等于已经取得足以解除合并的参考记录。本节明确加入另一类可调用的来源，并把任务、校准、共同增益和样本成本放进同一合同。
+
+**定理298.1（独立参考记录下的临界总样本阶）。** 在下述两源经典实验中，固定 $k\in[\sqrt{3/4},1)$、增益下界 $h_0>0$，令 $k^2<l\le k$、$g=l-k^2\downarrow0$。保持同一个未知 $(r,h)$ 下两假设错误先平均、再对允许参数取最坏值。达到风险不超过 $1/3$ 的最小确定最大调用总数满足
+
+$$
+N_{\min}(k,h_0,g)=\Theta_{k,h_0}\!\left(\log\frac1g\right).
+$$
+
+上界显式使用 $(N_T,N_H)=(K,K)$ 个任务与参考样本；下界覆盖本节允许的全部适应性来源选择、共同经典记忆及随机化。常数可对下述 $B,C$ 范围统一选择。没有先取得一个精度为 $g$ 的未知增益读数。
+
+这是一个新声明的完整经典实验。它可以作为关系模型中的实际接口；若某量子装置只向它提供一部分输出，下面的构造给该子实验的上界，而下界须留在本节的权限范围内。两者只有在整个观测过程统计等价后才可共同转移。
+
+### 298.2 两种来源、同一增益与逐次计费
+
+固定已知
+$$
+\sqrt{3/4}\le k<1,\quad k^2<l\le k,\quad
+h_0\in(0,1],\quad B\in\{2,4\},\quad
+1\le C\le C_*:=1024/225.
+$$
+一次判别批次内，未知 $r\in[l,1]$、$h\in[h_0,1]$ 固定不变，且在两假设中使用同一个 $(r,h)$。设
+$$
+c_j=k^j r,\qquad j\in\{0,1\}.
+$$
+
+每次允许选择以下两种真实来源之一：
+
+- 任务来源 $T$：返回
+  $$
+  Y_T\sim\operatorname{Bernoulli}\left(\frac{1-hc_j/C}{B}\right).
+  $$
+- 参考校准来源 $H$：返回
+  $$
+  Y_H\sim\operatorname{Bernoulli}\left(\frac{1-h/C}{B}\right).
+  $$
+
+条件于 $(j,r,h)$，每次新调用与此前全部结果独立。参考来源的已知输入标度是一，任务和参考经过同一个未知增益 $h$。校准记录在两个假设中同分布，但与任务记录共享同一未知增益关系。
+
+允许策略按全部过去记录和独立随机数自适应选择下一来源，最后对全部已取得记录共同决定；规定确定最大调用数。每一次任务调用、每一次参考调用都分别计费，失败、未采用结果和附加校准都不免费。主结论报告样本向量
+$(N_T,N_H)$；如按每次调用一单位计费，则总样本为 $N_T+N_H$。
+若一个Bernoulli记录在具体实验中需要 $\tau_T$ 份任务来源或
+$\tau_H$ 份参考来源，实际来源成本是
+$\tau_TN_T+\tau_HN_H$，不能默认为 $\tau_T=\tau_H=1$。
+
+风险为
+$$
+\sup_{\substack{r\in[l,1]\\h\in[h_0,1]}}
+\frac{\Pr_{0,r,h}(\widehat j=1)+
+      \Pr_{1,r,h}(\widehat j=0)}2.
+\tag{298.1}
+$$
+来源类型、批次身份、位置及要求保留的时钟/参考标定档案继续保留并计费。后面用两个计数计算决定，不授权删除原始有序档案。
+
+同一个 $h$ 作用于两来源、参考标度已知和条件独立性都是新合同的承重假设，不由“有一个校准仪器”这句话自动保证。这里没有覆盖任务/参考增益不同、批次内漂移、与假设相关的校准偏差或未标明源类型的混合记录。
+
+### 298.3 缺少参考时的同像与可达边界
+
+若全部允许任务读数只依赖 $hc$，则令 $z=hr$。乘积参数准确遍历
+$[lh_0,1]$，两假设为 $z$ 与 $kz$。这与已有共同参数模型的区间下端替换
+$$
+l\longmapsto lh_0
+$$
+完全相同。
+
+因此，固定 $h_0<1$ 时，当 $l\downarrow k^2$，最终会有
+$lh_0\le k^2$，有限最大预算下错误 $1/3$ 的可达边界被移走。这个结论属于已声明经典观察的同像关系，不是原量子来源的全面不可识别结论，也不是新的独立核定理。
+
+增加参考来源后，准确平均读数是 $(hc,h)$，其比值为 $c$。
+但这份准确可识别性本身不提供有限样本取得成本。下面直接构造联合实际决定。
+
+### 298.4 联合对数比较与固定余量
+
+记
+$$
+g=l-k^2,\quad \kappa=-\log k,\quad
+\eta=\frac{\log(l/k^2)}{\kappa},\quad
+\bar\eta=\min\{\eta,1/2\},\quad
+D=3-\bar\eta/2,\quad A=D\kappa.
+$$
+因此 $D\in[11/4,3)$、$A\ge A_*:=(11/4)\kappa>0$。
+比较用的函数仍是
+$$
+L(c)=1+\frac{\log c}{A}.
+$$
+在真实两族上
+$$
+L(r)\le1,\qquad L(kr)\ge\frac{\bar\eta}{2D}>0,
+$$
+且
+$$
+L(r)-L(kr)=1/D\ge1/3+\bar\eta/18.
+\tag{298.2}
+$$
+
+取固定阈值
+$$
+t_0=k^{43/16},\quad v_-=k^{21/8},\quad v=k^{5/2},
+\quad u=k^{1/2},\quad u_+=k^{1/4},\quad u_{++}=k^{1/8}.
+$$
+其次序为
+$$
+k^3<k^{11/4}<t_0<v_-<v<k^2<k<u<u_+<u_{++}<1.
+\tag{298.3}
+$$
+联合对数误差不再点态非负，所以不能把负系数危险阈值直接放在
+$k^{11/4}$。新增的 $t_0$ 提供固定余量：
+$$
+L(t_0)\ge1-\frac{43/16}{44/16}=1/44.
+\tag{298.4}
+$$
+
+令 $D_*:=4C_*$，并定义
+$$
+\gamma=
+h_0\min\{1/2,\ k^2-v,\ u_{++}-u_+,\ u_+-u,\
+v-v_-,\ u-k,\ v_- - t_0\}>0.
+$$
+取
+$$
+0<\zeta\le\min\{1/4,\gamma/(4D_*)\},\qquad
+d=\lfloor\zeta K\rfloor.
+\tag{298.5}
+$$
+这些常数仅依赖 $k,h_0$，不依赖 $g,h$；允许统一的
+$B,C$ 范围已经计入 $D_*$。
+
+### 298.5 任务计数和校准计数的实际联合系数
+
+固定取得 $K$ 个任务样本和 $K$ 个参考样本。令
+$$
+I\sim\operatorname{Bin}(K,p_x),\quad
+J\sim\operatorname{Bin}(K,p_y),\qquad
+x=hc,\ y=h,
+$$
+$$
+p_x=(1-x/C)/B,\quad p_y=(1-y/C)/B.
+$$
+两计数条件独立。定义经验坐标
+$$
+X_i=C(1-Bi/K),\qquad Y_j=C(1-Bj/K),
+$$
+以及
+$$
+S_i=\sum_{m=1}^{d}\frac{B^m}{m}\frac{(i)_m}{(K)_m},
+\qquad
+\lambda_i=\log C-S_i.
+$$
+联合实系数为
+$$
+\beta_{ij}=1+\frac{\lambda_i-\lambda_j}{A}
+=1+\frac{S_j-S_i}{A}.
+\tag{298.6}
+$$
+它不含未知 $h$，也未对非正经验坐标取对数。
+
+阶乘矩恒等式给
+$$
+\mathbb E\lambda_I=\log x+R_d(x),\qquad
+\mathbb E\lambda_J=\log y+R_d(y),
+$$
+$$
+R_d(z)=\sum_{m>d}\frac{(1-z/C)^m}{m}.
+$$
+真实 $0<x\le y$ 蕴含 $R_d(x)\ge R_d(y)$。因此
+$$
+0\le\mathbb E_{c,h}\beta_{IJ}-L(c)
+=\frac{R_d(x)-R_d(y)}A
+\le T e^{-a_1K},
+\tag{298.7}
+$$
+其中可取
+$$
+z_*=1-h_0k^3/C_*\in(0,1),\quad
+a_1=\zeta|\log z_*|,\quad
+T=\frac{C_*}{A_*h_0k^3}.
+$$
+这里只使用两个真实计数的联合期望，未要求任何一个样本均值单独达到 $g$ 精度。
+
+### 298.6 经验中间区域的概率合法性
+
+对单个计数 $i$，当 $i\ge1$ 时有
+$$
+0\le (i/K)^m-\frac{(i)_m}{(K)_m}
+\le (i/K)^m\,\frac{m(m-1)}{2i}.
+\tag{298.8}
+$$
+若 $m\le i$，把无放回概率除以有放回概率，并用
+$$
+\prod_{r=0}^{m-1}(1-r/i)\ge
+1-\sum_{r=0}^{m-1}r/i
+$$
+即可证明；分母中的 $1-r/K\le1$ 只会提高该概率比。若 $m>i$，无放回概率为零，而
+$m(m-1)/(2i)\ge1$，仍成立。$i=0$ 的全部高阶项均为零。
+
+令
+$$
+a_0=h_0k^3/4,\qquad q_0=1-a_0/C_*<1.
+$$
+只要 $X_i\in[a_0,C]$，设 $q=Bi/K\le q_0$，由（298.8）得到
+$$
+0\le\lambda_i-\log X_i
+\le\frac{B}{2K(1-q_0)^2}
++\frac{q_0^{d+1}}{(d+1)(1-q_0)}
+=:\epsilon_K,
+\tag{298.9}
+$$
+右侧的 $B$ 可统一换成4。求和中使用
+$\sum_{m\ge1}(m-1)q^m=q^2/(1-q)^2$ 以及
+$q^2/i\le B/K$。同样估计适用于 $Y_j$。
+
+定义好校准区域
+$$
+G=\{Y_j\ge h_0/2\},
+$$
+其上经验比 $R_{ij}=X_i/Y_j$ 有定义。
+当 $v<R_{ij}<u$ 时，两个经验坐标都至少为 $a_0$，所以
+$$
+|\beta_{ij}-L(R_{ij})|\le2\epsilon_K/A_*.
+$$
+取一个固定充分大的 $K_0(k,h_0)$，使对所有 $K\ge K_0$ 有
+$$
+2\epsilon_K/A_*\le1/88.
+\tag{298.10}
+$$
+由于 $d=\lfloor\zeta K\rfloor$，这样的统一 $K_0$ 存在。
+又因为中区
+$$
+1/11\le L(R_{ij})\le1-1/6,
+$$
+故其中的 $\beta_{ij}$ 全部属于 $[0,1]$。
+
+实际概率表定义为
+$$
+a_{ij}=
+\begin{cases}
+0,&Y_j<h_0/2,\\
+0,&Y_j\ge h_0/2,\ R_{ij}\le v,\\
+\beta_{ij},&Y_j\ge h_0/2,\ v<R_{ij}<u,\\
+1,&Y_j\ge h_0/2,\ R_{ij}\ge u.
+\end{cases}
+\tag{298.11}
+$$
+观察 $(I,J)$ 后按该概率输出零，准确实现
+$f_K(c,h)=\mathbb E_{c,h}a_{IJ}$。
+
+这里的“好校准”是决定函数的一个分支，不是免费补样、丢弃整个批次或把条件风险当成无条件风险；坏校准分支也消耗全部预算，并已指定输出。
+
+### 298.7 两个有害系数事件的完整定位
+
+第一，对所有 $G$ 中的经验值都有
+$$
+\beta_{ij}\le U:=
+1+\frac{\log(2C_*/h_0)}{A_*}.
+\tag{298.12}
+$$
+理由是 $\lambda_i\le\log C$，而
+$\lambda_j\ge\log Y_j\ge\log(h_0/2)$。
+
+第二，$G$ 中的负系数只可能满足
+$$
+\beta_{ij}<0\ \Longrightarrow\ R_{ij}<t_0.
+\tag{298.13}
+$$
+若 $R_{ij}\ge t_0$，则
+$X_i\ge t_0h_0/2>a_0$，故（298.9）—（298.10）适用；
+由（298.4）得到
+$\beta_{ij}\ge1/44-1/88>0$。
+
+第三，增加 $K_0$ 后，
+$$
+G,\ \beta_{ij}>1\ \Longrightarrow\ R_{ij}>u_{++}.
+\tag{298.14}
+$$
+当 $X_i\ge a_0$ 且 $R_{ij}\le u_{++}$ 时，（298.9）给
+$$
+\beta_{ij}\le L(u_{++})+1/88
+\le1-1/24+1/88<1.
+$$
+还须处理 $X_i<a_0$，包括负经验坐标。把 $K_0$ 增大到经验网格步长
+$BC/K\le a_0$，可选一个网格值 $X_{i_*}\in[a_0,2a_0]$。
+$S_i$ 随计数 $i$ 不减，所以 $\lambda_i$ 随经验坐标 $X_i$ 不减。
+于是
+$$
+\lambda_i\le\lambda_{i_*}\le\log(2a_0)+\epsilon_K,
+\qquad
+\lambda_j\ge\log(h_0/2).
+$$
+故
+$$
+\beta_{ij}\le
+1+\frac{\log(k^3)+\epsilon_K}{A}
+=1-\frac3D+\epsilon_K/A<1.
+$$
+这一分支没有对非正 $X_i$ 使用对数近似。
+
+### 298.8 单流倾斜下的联合加权尾界
+
+不能仅用坏校准事件的普通小概率界控制可能极大的
+$\beta_{ij}$。这里同时给出所需加权尾界。
+
+对任意联合事件 $E$，阶乘矩倾斜恒等式为
+$$
+\mathbb E\!\left[
+\frac{(I)_m}{(K)_m}\mathbf1_E(I,J)
+\right]
+=p_x^m\Pr\{E(m+Z_x,J)\},
+\quad Z_x\sim\operatorname{Bin}(K-m,p_x),
+\tag{298.15}
+$$
+且 $Z_x,J$ 独立。对校准计数有完全相同的式子。
+
+倾斜任务或校准中的一个计数，最多使相应经验坐标的均值下降
+$$
+BC\,m/K\le D_*\zeta\le\gamma/4.
+\tag{298.16}
+$$
+考虑以下事件及其声明的真实参数区域：
+
+| 坏事件 | 真实参数条件 |
+|---|---|
+| $Y<h_0/2$ | $h\ge h_0$ |
+| $G,\ R\le v$ | $c\ge k^2$ |
+| $G,\ R>u_{++}$ | $c\le u_+$ |
+| $G,\ R<u$ | $c\ge u_+$ |
+| $G,\ R>v$ | $c\le v_-$ |
+| $G,\ R\ge u$ | $c\le k$ |
+| $G,\ R<t_0$ | $c\ge v_-$ |
+
+每个比值事件在 $G$ 上都是一个线性事件 $X-tY$ 的符号条件，且
+$0<t<1$。真实线性均值是 $h(c-t)$，与零的距离至少为
+$\gamma$。在（298.15）任一单流倾斜后，这个距离仍至少为
+$3\gamma/4$。坏校准事件也具有同样的固定均值距离。
+
+倾斜后的经验坐标仍是二项和的仿射函数。Hoeffding 界及两坐标并集界因此给一个共同常数
+$$
+a_0'=\gamma^2/(32D_*^2)>0
+$$
+使上述每个事件的普通概率，以及任一 $m\le d$ 单流倾斜后的概率，都不超过
+$$
+4e^{-a_0'K}.
+\tag{298.17}
+$$
+例如，只要两坐标到各自倾斜均值的偏差均小于 $\gamma/8$，
+$X-tY$ 的偏差就小于 $\gamma/4$，不足以跨越剩余均值距离。
+把 $G$ 条件删去只会增大所估计的线性事件，不构成条件概率换算。
+
+由
+$$
+|\beta_{ij}|\le1+(S_i+S_j)/A_*
+$$
+以及（298.15）—（298.17），对上述各自合法区域内的事件 $E$ 有
+$$
+\boxed{
+\mathbb E_{c,h}[|\beta_{IJ}|\mathbf1_E]
+\le W e^{-a_0'K},
+\quad
+W=4\left(1+\frac{2}{A_*}
+\log\frac{C_*}{h_0k^3}\right).
+}
+\tag{298.18}
+$$
+其中
+$Bp_x=1-hc/C\le1-h_0k^3/C_*<1$，校准也满足同一界，所以乘回的
+$B^m p_x^m$、$B^m p_y^m$ 的级数可求和。两流的条件独立性在精确倾斜恒等式中被使用，不能用两个无关最优界代替它。
+
+### 298.9 两族响应的统一单边估计
+
+置
+$$
+a=\min\{a_0',a_1\}>0.
+$$
+
+对第一族 $c=r\in[l,1]$：
+
+- 若 $r\le u_+$，把联合系数改成实际概率时，损失只可能来自坏校准、低比值区中的正系数，以及高比值区中超过一的系数。由（298.12）、（298.14）、（298.17）—（298.18），
+  $$
+  f_K(r,h)\ge\mathbb E\beta_{IJ}
+  -(W+8U)e^{-aK}\ge L(r)-(W+8U)e^{-aK}.
+  $$
+- 若 $r>u_+$，好校准且比值至少为 $u$ 时直接输出零，概率为一。其补集至多有两个普通尾事件，故
+  $$
+  f_K(r,h)\ge1-8e^{-aK}\ge L(r)-8e^{-aK}.
+  $$
+
+所以可统一取
+$$
+f_K(r,h)\ge L(r)-(W+8U)e^{-aK}.
+\tag{298.19}
+$$
+
+对第二族 $c=kr\in[kl,k]$：
+
+- 若 $c\le v_-$，实际输出零的概率只能出现在好校准且比值超过 $v$ 的事件上，
+  $$
+  f_K(c,h)\le4e^{-aK}\le L(c)+4e^{-aK}.
+  $$
+- 若 $c>v_-$，改成零只有在联合原系数为负时才会增大响应。由（298.13），该坏事件位于
+  $G,\ R<t_0$，其加权期望由（298.18）控制。坏校准的全部加权贡献也由同式控制。高比值区的原系数非负，所以改成一的增加量至多该普通尾事件概率。再加入（298.7）的截断偏差，得到
+  $$
+  f_K(c,h)\le L(c)+(T+2W+4)e^{-aK}.
+  $$
+
+因此
+$$
+f_K(kr,h)\le L(kr)+(T+2W+4)e^{-aK}.
+\tag{298.20}
+$$
+
+合并（298.2）、（298.19）、（298.20），令
+$E=T+3W+8U+4$，有
+$$
+f_K(r,h)-f_K(kr,h)
+\ge1/3+\bar\eta/18-Ee^{-aK}
+\tag{298.21}
+$$
+对所有 $(r,h)\in[l,1]\times[h_0,1]$ 一致成立。
+取
+$$
+K=\max\left\{K_0,\
+\left\lceil a^{-1}\log(18E/\bar\eta)\right\rceil\right\}
+\tag{298.22}
+$$
+即可达到风险 $1/3$。
+
+于是实际样本向量为
+$$
+\boxed{(N_T,N_H)=(K,K),\qquad
+N_T+N_H=O_{k,h_0}(\log(1/g)).}
+\tag{298.23}
+$$
+常数对允许的 $B,C$ 统一；若它们来自原reset参数范围，也可对 $n$ 统一选择，但这只给嵌入该两源观测的构造上界。
+
+### 298.10 覆盖全部适应性策略的样本下界
+
+对本节声明的完整经典实验，固定子模型 $h=1$。
+参考来源的分布此时既不依赖假设，也不依赖 $r$。任何最多调用
+$N$ 次两类来源的适应性策略，都可由预先取得 $N$ 个任务样本和一条独立的已知分布参考随机流模拟：按策略需要取下一个任务样本，校准调用则用对应共同随机流补足。最多需要 $N$ 个任务样本。因而给策略免费提供这条与任务无关的随机流，不会使下面的任务样本判别下界失效。
+
+记一枚任务币在参数 $c$ 下的分布为 $P_c$。
+对 $0<z\le1$，
+$$
+P_z\ge
+\frac{C(B-1)+z}{C(B-1)+1}\,P_1
+$$
+逐结果成立：零结果给所列比值，一结果的概率则不小于在
+$c=1$ 下的概率。置
+$$
+b_0=\frac{C(B-1)+k^3}{C(B-1)+1}\in(0,1).
+$$
+对 $z=kl\ge k^3$，乘积重叠至少为 $b_0^N$，所以
+$$
+\operatorname{TV}(P_1^{\otimes N},P_{kl}^{\otimes N})
+\le1-b_0^N.
+$$
+另外，单币总变差是 $|l-k^2|/(BC)=g/(BC)$，产品界给
+$$
+\operatorname{TV}(P_l^{\otimes N},P_{k^2}^{\otimes N})
+\le Ng/(BC).
+$$
+
+取同一个合法 nuisance 先验
+$$
+\mu=\tfrac13(\delta_1+\delta_k+\delta_l),\qquad h=1.
+$$
+两混合分布的差仍是
+$$
+\tfrac13[(P_1^N-P_{kl}^N)+(P_l^N-P_{k^2}^N)].
+$$
+达到风险 $1/3$ 要求这对混合分布总变差至少为 $1/3$。
+三角不等式因此给必要条件
+$$
+\boxed{g\ge\frac{BC}{N}b_0^N.}
+\tag{298.24}
+$$
+从而
+$$
+N=\Omega_k(\log(1/g)).
+$$
+这个结论覆盖自适应选择两类来源、任意共同经典记忆、全部记录的终端决定和独立随机化。它没有假设策略必须先给出一个精确的 $h$ 点估计，也不限制校准与任务样本的分配比例。
+
+由于 $BC\ge2$，且
+$b_0\ge(1+k^3)/2$，这个 logarithmic 下界也能对所声明的
+$B,C$ 范围统一取常数。结合（298.23），本模型总样本的临界量级为
+$$
+\Theta_{k,h_0}(\log(1/g)).
+$$
+下界的常数甚至无需依赖 $h_0$，因为 $h=1$ 总是允许参数。
+
+### 298.11 共同标定、档案与模型的适用范围
+
+本构造确实使用校准数据：两个计数同时进入
+$\log(hc)-\log h$ 的实际阶乘矩系数。它没有证明一个先把 $h$ 估到
+$g$ 精度再代入的算法也具有此预算。未知增益的点估计精度与任务判别精度不是同一目标。
+
+任务与参考的共同 $h$、参考标度一和独立重复调用必须由来源合同或额外的实际标定支持。若这些关系本身需要实验建立，其取得费用与时钟/参考档案应加入账目，不能由上述数学模型隐去。两个计数是当前决定的工作摘要；需要保留的原始任务记录、校准记录、源类型、批次标签、时标和参考证据均继续保留并单列存储成本。
+
+这里的实际概率表只用任务与参考的可访问二元记录。若原full/reset装置还提供其他未纳入本模型的输出，构造可在这些输出被忽略时给一个上界，但本节的下界不能转移过去，除非另证整个扩展观测与这两源经典模型统计等价。
+
+$h_0>0$ 用于固定正的级数收敛半径、校准好区和所有联合均值间距；没有声称对 $h_0\downarrow0$ 一致。增益漂移、参考强度误差、任务与校准不同步或两流条件相关也未包含在当前证明内。本节为普通数学推导，未执行数值优化、实际仪器实验或 Lean 形式验证。
+
+本节的阶乘矩、无放回抽样界和 Hoeffding 倾斜尾估计都是标准中间工具；单流机制见第296节，点态和联合形式在这里直接推导。新增连接是将任务来源与参考来源的真实联合计数接到同一个无条件风险，并把校准调用包括在匹配的总样本界中；不将此仓内推导自动宣称为文献原创。第297节的有限经典实现结论仍按原输入合同成立，本节没有不经误差论证就把它推广到新的两源仪器。
+
+## 追加锚（本行以下为增补区）
+
+## 299. 信号强度与可达边界的双尺度取得律
+
+### 299.1 两个同时变化的尺度
+
+第296节固定信号参数，证明临近可达边界时的对数样本发散。本节让信号本身同时变弱，给出不依赖这两个尺度的常数。来源、权限、独立两位置块和共同未知参数风险继续采用第291—296节的合同：完整访问保留输入，先reset访问必须在预处理或相干交互之前执行既定的经典reset；相位环境不可访问。确定最大块数为 $K$，每块两份来源，$N=2K$，未使用的位置仍计费。
+
+设
+$$
+\kappa_0=-\log\sqrt{3/4},\qquad
+0<\kappa\le\kappa_0,\qquad k=e^{-\kappa},
+$$
+$$
+0<g\le k-k^2,\qquad l=k^2+g.
+\tag{299.1}
+$$
+风险仍是在同一个 $r\in[l,1]$ 下先平均两假设错误，再取最坏值：
+$$
+\mathcal R(P)=\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2.
+\tag{299.2}
+$$
+目标为 $\mathcal R(P)\le1/3$。这里没有分别优化两假设中的未知参数。
+
+**定理299.1（双尺度一致的最优来源预算）。** 存在绝对正常数 $a,A$，使在（299.1）的全部参数域中，
+$$
+a\kappa^{-1}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{full},\,n=1}(k,g)
+\le A\kappa^{-1}\left(1+\log\frac\kappa g\right),
+\tag{299.3}
+$$
+$$
+a\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{reset}}(n;k,g)
+\le A\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\qquad(n\ge1).
+\tag{299.4}
+$$
+常数可以同时独立于 $\kappa,g,n$。完整输入结论限于 $n=1$；高维完整输入还保留第289节使用的其他关系，不能套用该标量下界。因为 $g\le k-k^2<\kappa$，对数项非负。
+
+证明分别给出全部允许协议的必要界和实际可取得记录的概率表。辅助比较函数、下界模拟位与真实记录各保留原权限，不互相替代。
+
+### 299.2 完整输入的统一必要界
+
+第294节的完整实验等价和三点同参数先验给任何成功的 $K$ 块完整输入协议
+$$
+g\ge\left(\frac{3+k^3}{4}\right)^K
+\sqrt{\frac{2(1-k^4)}K}.
+\tag{299.5}
+$$
+在 $0<\kappa\le\kappa_0$ 上，
+$1-k^4\asymp\kappa$，且
+$-\log((3+k^3)/4)\asymp\kappa$，比较常数固定。因此令 $t=K\kappa$，得到
+$$
+\frac g\kappa\ge c\,t^{-1/2}e^{-Ct}
+\tag{299.6}
+$$
+的必要条件。全文中 $c,C,A,a$ 等正常数允许在不同估计中改变，但不依赖 $\kappa,g,n$。
+
+还需排除 $t$ 过小。取合法参数 $r=1$；完整单块是第294节的共同本征基实验，
+$P_c(+)=(1+c)/4$、$P_c(-)=(1-c)/4$、$P_c(0)=1/2$。
+$P_1^{\otimes K}$ 的支持恰为不含负号的序列；在该支持上
+$P_k^{\otimes K}\le P_1^{\otimes K}$。因此两分布的重叠准确等于
+$P_k^{\otimes K}$ 不出现负号的概率，即 $[(3+k)/4]^K$，任何成功协议都要求
+$$
+1-\left(\frac{3+k}{4}\right)^K\ge1/3.
+$$
+由 $-\log((3+k)/4)\asymp\kappa$，得到 $t\ge c_0>0$。
+
+对（299.6）取负对数，再用 $t\ge c_0$ 和 $\log t\le t$，可得
+$$
+1+\log(\kappa/g)\le C't.
+$$
+这证明（299.3）的下界。所用距离属于完整输入实验，故覆盖其全部联合操作、记忆、随机化及允许停止策略，不只约束下面选择的点击测量。
+
+### 299.3 先reset协议的统一必要界
+
+第292节的因果程序表示给出常数 $c_*=33/32$ 及程序位
+$$
+\pi_c(\pm)=\frac{1\pm c/c_*}{2}.
+\tag{299.7}
+$$
+任意确定最多 $K$ 块的实际reset协议，均可由 $K$ 个独立程序位经过一个不依赖 $c$ 的共同后处理模拟。程序位只用于必要界；本节上界仍使用真实reset记录。
+
+令 $f(c)$ 为该共同后处理决定零的概率。若目标风险成立，在三个合法参数 $r=1,k,l$ 上相加可得
+$$
+1\le f(1)-f(kl)+f(l)-f(k^2).
+$$
+因此
+$$
+1-\operatorname{TV}(\pi_1^{\otimes K},\pi_{kl}^{\otimes K})
+\le\operatorname{TV}(\pi_l^{\otimes K},\pi_{k^2}^{\otimes K}).
+\tag{299.8}
+$$
+
+记 $d_*=c_*^2-1>0$。对这两个二值分布，直接计算
+$$
+\chi^2(\pi_u\Vert\pi_v)=\frac{(u-v)^2}{c_*^2-v^2}.
+\tag{299.9}
+$$
+由于 $kl\ge k^3$，有 $1-kl\le3\kappa$，从而
+$$
+D_{\mathrm{KL}}(\pi_1\Vert\pi_{kl})
+\le\chi^2(\pi_1\Vert\pi_{kl})
+\le9\kappa^2/d_*.
+$$
+对根重叠 $\rho(P,Q)=\sum_x\sqrt{P(x)Q(x)}$，Jensen不等式给
+$\rho(P,Q)^2\ge e^{-D_{\mathrm{KL}}(P\Vert Q)}$；Cauchy–Schwarz给
+$\operatorname{TV}(P,Q)\le\sqrt{1-\rho(P,Q)^2}$。
+于是 $1-\sqrt{1-x}\ge x/2$ 导出
+$$
+1-\operatorname{TV}(\pi_1^{\otimes K},\pi_{kl}^{\otimes K})
+\ge\tfrac12e^{-9K\kappa^2/d_*}.
+\tag{299.10}
+$$
+另一方面，由（299.9）、KL的乘积可加性及Pinsker不等式，可放宽为
+$$
+\operatorname{TV}(\pi_l^{\otimes K},\pi_{k^2}^{\otimes K})
+\le g\sqrt{K/d_*}.
+\tag{299.11}
+$$
+也可由根重叠的乘积公式得到同一界。
+
+令 $t=K\kappa^2$，合并（299.8）—（299.11）：
+$$
+\frac g\kappa\ge\frac{\sqrt{d_*}}2\,t^{-1/2}e^{-9t/d_*}.
+\tag{299.12}
+$$
+同参数 $r=1$ 的判别还要求程序分布总变差至少为 $1/3$；其上界不超过
+$(1-k)\sqrt{K/d_*}\le\kappa\sqrt{K/d_*}$。故 $t\ge d_*/9$。与上一节相同的取对数论证给（299.4）的统一下界。
+
+这里的程序后处理表示已经覆盖实际reset协议的全部记录与适应性；在参数域中所有 $\pi_c$ 都有严格正支持，且 $d_*>0$ 不随 $n$ 改变。这是上述下界对全部参考维数一致的原因。
+
+### 299.4 真实计数、比较余量和统一阶数
+
+第296节的两个真实子实验都是
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B},
+\tag{299.13}
+$$
+其中完整 $n=1$ 使用反对称投影点击，$(B,C)=(4,1)$；reset使用实际记录的随机补位，$(B,C)=(2,4/a_n^2)$，$15/16\le a_n\le1$。因而统一有
+$$
+B\in\{2,4\},\qquad1\le C\le C_*:=1024/225.
+$$
+完整块数为 $K$，令 $J=\sum_{i=1}^K Y_i$。两种协议均按自己的权限取得这些记录。
+
+保持
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\qquad
+\bar\eta=\min\{\eta,1/2\},\qquad
+D=3-\bar\eta/2\in[11/4,3),
+$$
+$$
+L(c)=1+\frac{\log c}{D\kappa}.
+$$
+在同一真实 $r$ 下有
+$$
+L(r)\le1,\quad L(kr)>0,\quad
+L(r)-L(kr)=1/D\ge1/3+\bar\eta/18.
+\tag{299.14}
+$$
+同时，$k^2\in[3/4,1)$，对数在所需紧区间内与其增量可比，故
+$$
+\eta\asymp g/\kappa,\qquad
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g)
+\tag{299.15}
+$$
+且比较常数统一。
+
+使用原阈值
+$$
+v_{--}=k^{11/4},\quad v_-=k^{21/8},\quad v=k^{5/2},
+\qquad u=k^{1/2},\quad u_+=k^{1/4},\quad u_{++}=k^{1/8}.
+$$
+所需的六个相邻间距
+$$
+k^2-v,\quad u_{++}-u_+,\quad u_+-u,\quad
+v-v_-,\quad u-k,\quad v_--v_{--}
+$$
+均至少为 $\gamma\kappa$，其中可取
+$\gamma=e^{-3\kappa_0}/8$。这由
+$e^{-a\kappa}-e^{-b\kappa}=\int_a^b\kappa e^{-t\kappa}\,dt$
+直接得到。对应的Bernoulli参数间距至少为
+$\delta_0\kappa$，$\delta_0=\gamma/(4C_*)$。
+
+为控制远尾，再取
+$$
+c_{\mathrm{cut}}=1/2<e^{-3\kappa_0},\qquad
+\delta_{\mathrm{far}}=
+\frac{e^{-(21/8)\kappa_0}-1/2}{4C_*}>0.
+$$
+固定
+$$
+0<\alpha\le\min\{\delta_0/4,
+\delta_{\mathrm{far}}/(4\kappa_0),1/(8\kappa_0)\},
+\qquad d=\lfloor\alpha\kappa K\rfloor.
+\tag{299.16}
+$$
+因此 $d\le K/8$。近阈值倾斜仍保留常数倍 $\kappa$ 的间距，远阈值倾斜则保留固定正间距。此处的截断阶数随双尺度和预算共同改变，不能套用一个未统一的固定 $k$ 常数。
+
+### 299.5 概率表的点态合法性
+
+对 $0\le i\le K$，定义
+$$
+c_i=C(1-Bi/K),\qquad
+\beta_i=1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}\sum_{m=1}^d
+\frac{B^m}{m}\frac{(i)_m}{(K)_m}.
+\tag{299.17}
+$$
+若 $i<m$，下降阶乘按零解释。整个式子只使用有限算术，未对非正经验坐标取对数。真实期望仍有准确恒等式
+$$
+\mathbb E_c\beta_J=L(c)+R_d(c),\qquad
+R_d(c)=\frac1{D\kappa}\sum_{m>d}\frac{(1-c/C)^m}{m}\ge0.
+\tag{299.18}
+$$
+对于正的经验坐标还成立 $\beta_i\ge L(c_i)$。
+
+第298节直接证明的无放回界是：当 $i\ge1$ 时，
+$$
+0\le(i/K)^m-\frac{(i)_m}{(K)_m}
+\le(i/K)^m\frac{m(m-1)}{2i}.
+$$
+它对 $m>i$ 仍成立；$i=0$ 单独给零误差。在 $c_i\ge1/2$ 的区域令
+$q_i=Bi/K\le q_*:=1-1/(2C_*)<1$，求和得到
+$$
+0\le\beta_i-L(c_i)
+\le\frac1{D\kappa}\left[
+\frac{Bq_i}{2K(1-q_i)^2}
++\frac{q_i^{d+1}}{(d+1)(1-q_i)}\right].
+\tag{299.19}
+$$
+由于 $d+1>\alpha\kappa K$，右侧统一不超过
+$$
+\varepsilon_K:=\frac A{K\kappa}
++\frac A{K\kappa^2}e^{-a\kappa K}.
+\tag{299.20}
+$$
+
+在完整输入情形，$C=1$ 使全部 $\beta_i\le1$；中间区域
+$v<c_i<u$ 又有 $\beta_i\ge L(c_i)\ge1/11$。因此该区域对任何合法阶数 $d$ 都给概率。
+
+在reset情形，$\beta_i$ 随整数 $i$ 单调不增。令 $i_0$ 为第一个
+$c_i\le u_{++}$ 的整数，则
+$$
+u_{++}-BC/K\le c_{i_0}\le u_{++}.
+$$
+存在统一充分大的 $A_0$，使 $K\kappa^2\ge A_0$ 时，网格点 $c_{i_0}\ge1/2$，且（299.20）小于 $1/48$。事实上首项至多 $A\kappa_0/A_0$，第二项至多 $A/A_0$；再增大 $A_0$ 同时控制网格步长即可。于是
+$$
+\beta_{i_0}\le L(u_{++})+1/48
+\le1-1/24+1/48<1.
+$$
+单调性将结论推广到全部 $c_i\le u_{++}$，包括非正坐标；中区下界仍为 $1/11$。
+
+因此真实概率表
+$$
+a_i=\begin{cases}
+0,&c_i\le v,\\
+\beta_i,&v<c_i<u,\\
+1,&c_i\ge u
+\end{cases}
+\tag{299.21}
+$$
+在所列预算范围内逐项合法。读取 $J$ 后以概率 $a_J$ 决定零，得到实际响应 $f_K(c)=\mathbb E_c a_J$。后续估计始终针对这张表。
+
+### 299.6 完整输入的稀有点击估计
+
+完整输入使用 $C=1,B=4$；全部真实参数 $c\ge kl>k^3$ 满足
+$$
+p(c)=(1-c)/4\le3\kappa/4.
+$$
+对独立Bernoulli和 $S$，中心化指数矩估计和Chernoff最优化给
+$$
+\Pr(|S-\mathbb ES|\ge x)
+\le2\exp\left[-\frac{x^2}{2(\operatorname{Var}S+x/3)}\right].
+\tag{299.22}
+$$
+这是标准Bernstein界；其指数矩界可由 $|Y-\mathbb EY|\le1$ 和
+$e^t-1-t\le t^2/[2(1-t/3)]$（$0\le t<3$）逐项相乘得到。
+这里方差至多 $3K\kappa/4$，所需阈值间距为常数倍 $K\kappa$，因而每个错误跨越事件的概率至多
+$Ae^{-aK\kappa}$。
+
+对加权负系数，继续使用准确倾斜
+$$
+\mathbb E\left[\frac{(J)_m}{(K)_m}\varphi(J)\right]
+=p^m\mathbb E\varphi(m+Z),\qquad
+Z\sim\operatorname{Bin}(K-m,p).
+\tag{299.23}
+$$
+$m\le d\le\alpha\kappa K$ 使均值偏移不超过 $\alpha\kappa K$，剩余方差仍为 $O(K\kappa)$。由（299.16）保留的阈值间距，倾斜后仍有同一 $Ae^{-aK\kappa}$ 界。若真实 $c\ge v_-$，乘回权重并求和得到
+$$
+\mathbb E_c(-\beta_J)_+
+\le Ae^{-aK\kappa}\frac{\log(1/v_-)}{D\kappa}
+\le A'e^{-aK\kappa}.
+\tag{299.24}
+$$
+所用比值为 $21/(8D)\le21/22$，不存在随 $\kappa\downarrow0$ 发散的前因子。
+
+真实级数尾也保留一个小参数因子。令 $z=1-c\le1-k^3\le3\kappa$，并取固定 $q_0=1-e^{-3\kappa_0}<1$，则
+$$
+R_d(c)\le\frac{z^{d+1}}{D\kappa(d+1)(1-z)}
+\le A q_0^d\le A'e^{-a\kappa K}.
+\tag{299.25}
+$$
+最后一步吸收 $d\ge\alpha\kappa K-1$ 的固定因子。
+
+现按第296节的四个真实参数区域核对响应：
+
+- 第一族 $r\le u_+$：赋零的损失至多 $\Pr(c_J\le v)$，因为 $\beta_i\le1$；赋一无有害下降，因为所有 $\beta_i\le1$。
+- 第一族 $r>u_+$：$c_J\ge u$ 时直接以概率一决定零，利用其补事件及 $L(r)\le1$。
+- 第二族 $c=kr\le v_-$：只有 $c_J>v$ 时实际概率可能非零，利用其小概率及 $L(c)>0$。
+- 第二族 $c>v_-$：高区赋一的增加量至多 $\Pr(c_J\ge u)$；低区赋零的增加由（299.24）控制，再加入（299.25）。
+
+因此统一有
+$$
+f_K(r)\ge L(r)-Ae^{-aK\kappa},\qquad
+f_K(kr)\le L(kr)+Ae^{-aK\kappa}.
+\tag{299.26}
+$$
+选择
+$$
+K\ge A\kappa^{-1}[1+\log(1/\bar\eta)]
+\tag{299.27}
+$$
+并向上取整，即可使两类误差总和不超过（299.14）的余量，证明完整输入上界。
+
+### 299.7 先reset的超额积分与远尾控制
+
+reset经验坐标 $\widehat c=c_J$ 满足统一Hoeffding界
+$$
+\Pr(|\widehat c-c|\ge x)\le2e^{-bKx^2}.
+\tag{299.28}
+$$
+当真实均值与阈值的距离为常数倍 $\kappa$ 时，普通事件的指数是
+$K\kappa^2$。直接把旧的 $O(1/\kappa)$ 系数界乘上这类概率，会产生多余的对数成本；需要估计真正有害的超额。
+
+如果 $t-c\ge b_0\kappa$，积分尾概率给
+$$
+\begin{aligned}
+\mathbb E(\widehat c-t)_+
+&\le2\int_0^\infty e^{-bK(b_0\kappa+x)^2}\,dx\\
+&\le\frac A{K\kappa}e^{-aK\kappa^2}.
+\end{aligned}
+\tag{299.29}
+$$
+下侧超额同理。因此除以 $\kappa$ 后，只留下
+$A(K\kappa^2)^{-1}e^{-aK\kappa^2}$，在 $K\kappa^2\ge A_0$ 时一致可控。
+
+先估计真实 $c\ge v_-$ 时的负系数。近区
+$1/2\le\widehat c<k^D$ 上，由 $\beta\ge L$ 及对数在 $[1/2,1]$ 上的导数界，
+$$
+(-\beta_J)_+\le(-L(\widehat c))_+
+\le\frac A\kappa(k^D-\widehat c)_+.
+$$
+$k^D\le v_{--}$，所以真实 $c-k^D\ge v_--v_{--}\ge\gamma\kappa$。由（299.29），此项的期望至多 $Ae^{-aK\kappa^2}$。
+
+远区 $\widehat c<1/2$ 上不使用经验对数，改用（299.23）。真实
+$c\ge v_-$ 与 $1/2$ 的距离有固定正下界；（299.16）使任一阶乘倾斜后的距离仍有固定正下界。因此
+$$
+\mathbb E[(-\beta_J)_+;\widehat c<1/2]
+\le\frac A\kappa e^{-bK}.
+\tag{299.30}
+$$
+这里阶乘权重求和至多
+$(D\kappa)^{-1}\log(C/v_-)=O(1/\kappa)$，但乘的是固定远尾指数。
+若 $K\kappa^2\ge1$，则 $1/\kappa\le\sqrt K$，且
+$\sqrt K e^{-bK/2}$ 有统一上界；故（299.30）也至多
+$Ae^{-aK\kappa^2}$。合并近区和远区：
+$$
+\mathbb E_c(-\beta_J)_+\le Ae^{-aK\kappa^2}
+\qquad(c\ge v_-).
+\tag{299.31}
+$$
+
+再处理第一族 $r\le u_+$ 时的高区损失。第299.5节证明
+$\beta_i>1$ 只可能发生在 $\widehat c>u_{++}>1/2$。
+由（299.19）—（299.20）及 $\log x\le x-1$，
+$$
+(\beta_J-1)_+
+\le\frac{(\widehat c-1)_+}{D\kappa}
++\varepsilon_K\mathbf1_{\{\widehat c>u_{++}\}}.
+\tag{299.32}
+$$
+真实 $1-r\ge1-u_+\ge c\kappa$，第一项由超额积分控制；第二项保留了其事件指示，$\varepsilon_K$ 在 $K\kappa^2\ge A_0$ 下一致有界，且事件与真实均值相隔常数倍 $\kappa$。所以高区有害下降的期望也至多 $Ae^{-aK\kappa^2}$。
+
+真实级数尾同样需要保留分母 $d+1$。因 $c\ge k^3>1/2$，使用固定 $q_*=1-1/(2C_*)<1$ 得
+$$
+R_d(c)\le\frac{Aq_*^{d+1}}{\kappa(d+1)}
+\le\frac A{K\kappa^2}e^{-a\kappa K}
+\le A'e^{-a'K\kappa^2}
+\quad(K\kappa^2\ge A_0).
+\tag{299.33}
+$$
+最后用 $\kappa\le\kappa_0$ 调整固定指数常数。
+
+### 299.8 reset的两族响应与双尺度匹配
+
+其余损失可使用概率表的点态范围：
+
+- 第一族 $r\le u_+$ 的低区有 $\beta_i\le1$，所以赋零损失至多跨越 $v$ 的概率；高区损失已由（299.32）控制。
+- 第一族 $r>u_+$ 用赋一区域 $c_J\ge u$ 的补事件，再用 $L(r)\le1$。
+- 第二族 $c=kr\le v_-$ 直接估计 $\Pr(c_J>v)$，并使用 $L(c)>0$。
+- 第二族 $c>v_-$ 在高区有 $\beta_i\ge L(u)>0$，赋一增加至多跨越 $u$ 的概率；低区增加由（299.31）控制，原期望偏差由（299.33）控制。
+
+结合（299.28），得到对全部实际参数统一的
+$$
+f_K(r)\ge L(r)-Ae^{-aK\kappa^2},\qquad
+f_K(kr)\le L(kr)+Ae^{-aK\kappa^2}.
+\tag{299.34}
+$$
+存在统一的 $A$，使选择并向上取整
+$$
+K\ge A\kappa^{-2}[1+\log(1/\bar\eta)]
+\tag{299.35}
+$$
+同时保证 $K\kappa^2\ge A_0$ 及比较余量至少为 $1/3$。这给reset上界，对全部 $n$ 一致。
+
+由（299.15），两种上界分别与第299.2、299.3节的必要界匹配。乘以每块两份来源，即得定理299.1。预算向上取整可以吸收进统一常数，因为两种尺度的基线均有固定正下界。
+
+### 299.9 两种几何缺口怎样进入同一成本
+
+本结果区分了信号弱化与接近可达边界的作用：
+$$
+\boxed{
+\begin{aligned}
+N_{\mathrm{full},\,n=1}&\asymp
+\kappa^{-1}\,[1+\log(\kappa/g)],\\
+N_{\mathrm{reset}}&\asymp
+\kappa^{-2}\,[1+\log(\kappa/g)].
+\end{aligned}}
+$$
+当 $g/\kappa$ 保持为正的固定比例时，边界项有界；当该比值趋零时，同一边界项对数发散。两者可以同时发生，公式无需先固定一个尺度再取另一个极限。
+
+完整输入的点击概率本身随 $\kappa$ 缩小，零支持附近的稀有事件给出 $K\kappa$ 的检验尺度。reset后的程序分布具有统一严格正支持，必要界和实际记录估计共同给出 $K\kappa^2$ 的尺度。两类允许观察的差别因而成为一个统一量化结果：在 $n=1$ 的同一来源和风险任务下，两种最优来源预算之比为 $\Theta(1/\kappa)$，在整个 $g$ 范围内成立。这个机制由具体来源和权限证明，不推广成所有量子/经典观察的普遍指数规律。
+
+两个计数任务的准确接口可以具有相同的可恢复结论，实际取得成本仍有不同阶数。因此边界不仅需要记录可恢复哪些关系，还需要声明如何取得这些关系。这里的 $K$ 是来源调用预算；局域钟增量、仪器操作、计算精度、工作存储和完整有序档案另有各自成本，不能把 $K$ 自动解释为物理历时。第297节的有限经典实现常数只在固定 $k$ 下证明，本节没有将它们统一化；第298节的未知共同增益实验也没有被本定理覆盖。
+
+所用Bernstein、Hoeffding、阶乘矩及KL—总变差关系均是标准工具。式（299.10）使用的检验重叠界可参见 Clément L. Canonne, [*A short note on an inequality between KL and TV*](https://arxiv.org/abs/2202.07198)（2022），本文已给所需推导。新增的仓内连接是对同一实际概率表重新控制双尺度下的有害系数和全部协议下界，不将该综合自动宣称为文献原创。
+
+本节为普通数学证明，未进行Lean形式验证、数值优化或实际仪器实验。$g=0$ 的有限预算障碍沿用第291节；$n\ge2$ 的完整访问不受本节标量下界限制。最佳常数、有限预算最优表及未知增益随尺度变化的情况仍未在这里求解。
+
+## 追加锚（本行以下为增补区）
