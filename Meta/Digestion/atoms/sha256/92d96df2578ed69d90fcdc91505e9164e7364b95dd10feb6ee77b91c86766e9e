@@ -1,0 +1,50 @@
+**引理 78.1（显式有限步修复）。** 若 $K\in\mathcal T$、$\|K\|_{\rm op}\le M$、$M\ge1$ 且 $0<\varepsilon M\le1/8$，则取
+
+$$
+\delta=4\varepsilon M^2,\qquad
+S=R_0+\varepsilon(K+\delta J)
+\tag{78.3}
+$$
+
+有 $S\in\mathcal C$，并且
+
+$$
+N\left(\frac{S-R_0}{\varepsilon}-K\right)
+\le28\varepsilon M^2.
+\tag{78.4}
+$$
+
+证明。切锥的因果偏迹条件及式（78.2）使 $S$ 的偏迹为 $I_A\otimes\sigma$，其中 $\sigma$ 厄米、迹一。只需证明 $S\succeq0$；此后偏迹正性自动给 $\sigma\succeq0$。
+
+将 $K$ 在 $\mathbb Cw\oplus w^\perp$ 的正交单位坐标中写为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&B\end{pmatrix},
+\qquad B\succeq0,\quad |a|\le M,\quad\|b\|\le M.
+$$
+
+$S$ 的左上标量块为
+
+$$
+A=2+\varepsilon a-\frac74\varepsilon\delta
+\ge2-\varepsilon M-7(\varepsilon M)^2>1,
+$$
+
+其中最后一步由 $\varepsilon M\le1/8$ 得到。右下块为
+
+$$
+\varepsilon B+\frac{\varepsilon\delta}{4}I
+=\varepsilon B+\varepsilon^2M^2I.
+$$
+
+因此对应 Schur 补满足
+
+$$
+\varepsilon B+\varepsilon^2M^2I
+-\frac{\varepsilon^2}{A}bb^*\succeq0.
+$$
+
+故 $S\succeq0$，从而为真实归一化因果修复。最后由式（78.2）有 $N(\delta J)\le7\delta=28\varepsilon M^2$。$\square$
+
+该引理控制的是一个已经给定的完整切向修复，不把一般半正定切锥误当作有限步可行域。
+

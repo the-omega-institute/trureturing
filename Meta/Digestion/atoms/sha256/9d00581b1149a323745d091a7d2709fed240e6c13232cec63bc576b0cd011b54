@@ -1,0 +1,87 @@
+### 244.6 条件测量的联合可测阈值与显式共同测量
+
+由（244.4），后处理后的报告设置标签仍以概率 $1/2$ 出现。对这一报告标签条件化，得到两份无偏二元 POVM
+$$
+M^{a_p}_s=\frac{I_2+s\,a_p\cdot\sigma}{2},
+\qquad
+M^{b_p}_t=\frac{I_2+t\,b_p\cdot\sigma}{2}.
+\tag{244.34}
+$$
+这里 $s,t\in\{+1,-1\}$ 是两份条件测量各自的结果。所问的联合可测性，是是否存在同一个四结果 POVM $\{G_{st}\}$，其两组边缘分别为（244.34）；它不把原过程的两个随机设置误称为已经同时执行。
+
+使用标准无偏量子比特准则
+$$
+\|a+b\|+\|a-b\|\le2.
+\tag{244.35}
+$$
+其原始可核对来源是 P. Busch、T. Heinosaari，*Approximate joint measurements of qubit observables*，[arXiv:0706.1415v2](https://arxiv.org/abs/0706.1415v2)，PDF第9页 Proposition 4 及式（39）。原文在 $\alpha=\beta=1$ 的无偏情形断言该条件充要，正好对应（244.34）；本节只将其作为已有工具。
+
+为明确实现与必要性，任意具有上述两组边缘的共同 POVM 都可按 Pauli 坐标写成
+$$
+G_{st}=\frac14\left[
+(1+st\,\gamma)I_2+
+(s a+t b+st\,z)\cdot\sigma
+\right]
+\tag{244.36}
+$$
+其中 $\gamma\in\mathbb R$、$z\in\mathbb R^3$。这是将四个算子按符号基 $1,s,t,st$ 展开，再用总和及两组边缘固定前三类系数得到的表示。
+
+正性给 $1+\gamma\ge\|a+b+z\|$ 及 $1+\gamma\ge\|-a-b+z\|$。对两向量的差用三角不等式，得 $1+\gamma\ge\|a+b\|$。同理另外两个结果给 $1-\gamma\ge\|a-b\|$。相加即（244.35），说明一般共同实现不能避开该必要条件。
+
+在本节通道族中，
+$$
+\|a_p+b_p\|=2\sqrt A,
+\qquad
+\|a_p-b_p\|=2q\sqrt K.
+\tag{244.37}
+$$
+因此精确阈值是
+$$
+\boxed{
+M^{a_p},M^{b_p}\text{ 联合可测}
+\quad\Longleftrightarrow\quad
+q\le q_{\mathrm{JM}}(c):=
+\frac{1-\sqrt A}{\sqrt K}
+=\frac{\sqrt K}{1+\sqrt A}.
+}
+\tag{244.38}
+$$
+对全部 $c\in[0,1)$，$0<q_{\mathrm{JM}}(c)<1$。等价地，翻转概率属于闭区间
+$$
+\frac{1-q_{\mathrm{JM}}(c)}2
+\le p\le
+\frac{1+q_{\mathrm{JM}}(c)}2.
+\tag{244.39}
+$$
+
+充分性可以用一个明确共同测量实现：取
+$$
+\boxed{
+G_{st}=\frac14\left[
+(1+st\,\gamma)I_2+
+(s a_p+t b_p)\cdot\sigma
+\right],
+\qquad
+\gamma=\sqrt A-q\sqrt K.
+}
+\tag{244.40}
+$$
+当 $st=+1$，正性所需的差为
+$$
+1+\gamma-\|s a_p+t b_p\|
+=1-\sqrt A-q\sqrt K\ge0.
+$$
+当 $st=-1$，对应差为
+$$
+1-\gamma-\|s a_p+t b_p\|
+=1-\sqrt A-q\sqrt K\ge0.
+$$
+所以四个算子均正。它们之和为 $I_2$，并且
+$$
+\sum_tG_{st}=M^{a_p}_s,
+\qquad
+\sum_sG_{st}=M^{b_p}_t.
+\tag{244.41}
+$$
+这给出整个阈值闭区间内的共同实现，包括边界。
+

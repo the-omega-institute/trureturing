@@ -1,0 +1,18 @@
+**定义 161.2（参考安全的终端预测半径）。** 对两个系统 CPTP 通道 $\mathcal T,\mathcal U$，令
+$$
+d_{\rm ref}(\mathcal T,\mathcal U)
+=\sup_{\substack{\dim\mathcal H_R<\infty\\
+\rho_{SR}\succeq0,\ \operatorname{Tr}\rho_{SR}=1}}
+\frac12\left\|\bigl((\mathcal T-\mathcal U)\otimes\operatorname{id}_R\bigr)(\rho_{SR})\right\|_1.
+\tag{161.4}
+$$
+两通道作用于同一份输入和同一个不受操作的参考。它是通常的半 diamond 距离；以下证明直接使用所列态优化，不需要限制参考维数。固定已知 $(r,N)$，预测者选择一个与 $\phi$ 无关的 CPTP 通道 $\mathcal F$。定义
+$$
+\mathcal R_N(r)=\inf_{\mathcal F\ \mathrm{CPTP}}
+\ \sup_{\phi:\ C(r,e^{i\phi})\succeq0}
+ d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F),\qquad N\ge1,
+\qquad \mathcal R_0(r)=0.
+\tag{161.5}
+$$
+这是对未知共同源作统一终端预测的误差，不是已知源通道的恢复误差。允许的预测通道不必属于原来的单参数源族；它须在所有输入及参考上物理合法。没有额外校准试次、环境读出、作用间干预或关于 $\phi$ 的概率先验。
+

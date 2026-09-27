@@ -1,0 +1,9 @@
+**命题 4.5（两比特严格间隙）。** 对 $r_1=r_2=3/4$，令 $S=\{00,11\}$。则
+
+$$
+\max_{\mu\in\mathcal A}\mu(S)=\frac34,
+\qquad
+\max_{\mu\in\mathcal G}\mu(S)=1.
+\tag{TM.223}
+$$
+

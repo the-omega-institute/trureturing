@@ -1,0 +1,42 @@
+### 84.4 真实首轮的两个内积分支均不可能
+
+由（84.8）—（84.9），$v\in N$。实际 $V_1p=v\otimes A$ 因而属于 $V_1D$；固定单射性给
+
+$$
+p\in D.
+\tag{84.13}
+$$
+
+先设 $\langle\eta_1,A\rangle\ne0$。实际 $V_0k=p\otimes\eta_1$ 与 $V_1D=N\otimes A$ 的跨位正交使 $p\perp N$，故 $p\in P$。结合（84.13）、（84.11），得到 $p\in U$。
+
+但 $p\in H_1$，由（84.12）有 $p\perp H$；而 $P_UH=U$。一个属于 $U$ 且正交于 $H$ 的向量必须正交于整个 $U$，于是 $p=0$，与实际单位初轮列矛盾。
+
+因此只能 $\eta_1\perp A$。现在实际一位像给
+
+$$
+V_1k=q\otimes\eta_1\perp V_1D=N\otimes A,
+\qquad k\perp D,\quad k\perp U.
+$$
+
+实际零位像则给
+
+$$
+k\perp H_3=H,\qquad k\perp H_5,
+\tag{84.14}
+$$
+
+因为 $V_0H_3=U\otimes A$ 和 $V_0H_5=G_6\otimes A$。由（84.6）的两个满投影，结合 $k\perp U$，得到
+
+$$
+k\perp S,\qquad k\perp Q.
+$$
+
+所以 $k\perp N=Q+S$，即 $k\in P$。可是（84.5）已将 $V_1P$ 全部放入 $K\otimes F$，从而 $V_1k=q\otimes\eta_1$ 也必须在其中。这与 $q\ne0$、$\eta_1\notin F$ 矛盾。定理84.1证明完毕。
+
+本节先用实际来源谱排除 $T=U$，再由七维预算得到完整三维一位像。两条尾射线被迫正交后，真实首轮与相同第三、第四终端之间的关系完成禁阻。该排除不使用未执行的后继，也不把首环境外置预设为正交。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{84.15}
+$$
+

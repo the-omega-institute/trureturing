@@ -1,0 +1,29 @@
+**证明.** 反射到 \(c=1\)，令公差一子族为 \(F_1\)，其他为 \(F_*\)，\(I=\bigcap F_1=[a,b]\subseteq[m]\)，\(l=|I|\)，\(L=a-1,R=m-b,e=L+R=m-l\)。取 \(A\in F_*\)，并写 \(W(A)\) 为所有碰到 \(A\) 的含点长 AP 的终端像。置
+\[
+ S(A,I)=\{\{x,y\}\subseteq V\setminus A:\{x,y\}\cap I\ne\varnothing\}
+ \cup\binom{[1,a-1]}2\cup\binom{[b+1,m]}2.
+\]
+这些对都在 \(Z_F\)：前一类避开 \(A\)，左、右两类各避开 \(F_1\) 中相应的端点极值区间。对 \(F_1\) 中每个 \(x>1,y<m\) 的区间 \([x,y]\)，对 \(\{x-1,y+1\}\) 在 \(Z_F\setminus W_F\)，且一端在 \(I\) 左、另一端在右，故不属于 \(S(A,I)\)；这些对互异。若它是某个可容许 AP 的终端像，该区间将处于两个相邻 AP 点之间，与可容许性矛盾。接触 \(1\) 或 \(m\) 的 \(F_1\) 区间至多 \(e+1\) 个，因此
+\[
+ |Z_F\setminus W_F|\geq |F_1|-(e+1)+|S(A,I)\setminus W(A)|.\tag{10}
+\]
+令 \(j=2\)，若 \(F_*\) 全为公差二；否则取公差至少三的 \(A\) 并令 \(j=3\)。由定理 7 的逐线计数，\(|F_*|\leq G_2(m)=f(\lceil m/2\rceil)\) 或 \(|F_*|\leq G_3(m)=\sum_{d=2}^{\lfloor m/3\rfloor}f(\lceil m/d\rceil)\)。又 \(|H_F|\leq|A\cap I|\leq\lceil l/j\rceil\)。设 \(b_0=m-\lceil m/j\rceil\)、\(u_0=l-\lceil l/j\rceil\)。前一类 \(S\) 至少有 \(\binom{b_0}2-\binom{b_0-u_0}2\) 个对，两侧池另给 \(\binom L2+\binom R2\) 个；\(|W(A)|\leq\tau(m)\)。代入 (10) 后，(8) 的足够整数裕量恰为
+\[
+ M_j=\binom{b_0}2-\binom{b_0-u_0}2+\binom L2+\binom R2
+ +l-\lceil l/j\rceil-\tau(m)-G_j(m).\tag{11}
+\]
+固定 \(m,l\) 时两侧二项式之和在 \(L,R\) 平衡处最小。命令 `python3 -B tools/scripts/agent/openproblem/erdos272-endgame-check.py` 精确核验 \(46\leq m\leq999\)、\(1\leq l\leq m\) 的 (11)：\(j=2\) 的最小值为 \(7\)（\(m=47\)），\(j=3\) 的最小值为 \(31\)（\(m=49\)）。
+
+对于 \(m\geq1000\)，\(\binom L2+\binom R2\geq e^2/4-e/2\) 且 \(b_0-u_0\leq\lceil(j-1)e/j\rceil\)，所以 (11) 的资源部分至少为 \(\binom{b_0}2-2m\)。利用 \(\tau(m)\leq m(1+\log m)\) 与
+\[
+ G_2(m)\leq m^2/16+m/2+1,\qquad
+ G_3(m)\leq m^2/6+m\log m+m/3
+\]
+得到 \(M_2\geq m^2/16-m\log m-17m/4\)、\(M_3\geq m^2/18-2m\log m-13m/3+1\)。因 \(\log m\leq m/100\)，两者分别至少为 \(19m^2/400\) 和 \(11m^2/360+1\)，均为正。
+
+最后，对 \(m\leq45\) 且粗裕量 (11) 为负的参数，直接以实际集合 \(S(A,I)\setminus W(A)\) 检验更强的不等式
+\[
+ |S(A,I)\setminus W(A)|+l-|A\cap I|\geq G_j(m).\tag{12}
+\]
+命令 `python3 -B tools/scripts/agent/openproblem/erdos272-endgame-check.py` 枚举全部相应 \((m,A,I)\)：\(j=2\) 共 \(224176\) 项，\(j=3\) 共 \(138\) 项，两支 (12) 的最小裕量均为 \(3\)。枚举还包含不可能组成相容族的参数，故覆盖所需情形。\(m<7\) 无四元公差二避点 AP，\(m<10\) 无四元公差至少三避点 AP。三段合并即得 (8)。\(\square\)
+

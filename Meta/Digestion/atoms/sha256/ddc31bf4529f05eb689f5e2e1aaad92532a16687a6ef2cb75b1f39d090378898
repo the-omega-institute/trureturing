@@ -1,0 +1,8 @@
+**命题 7.2（指定两端口任务的全息充分性）。** 以下等价：$J_M=J_N$；$\mathcal E_M=\mathcal E_N$；对于任意有限参考 $R$、联合输入 $\rho_{RA}$ 和输出效果 $F_{RB}$，两过程的概率相同。恢复公式为
+
+$$
+\mathcal E_M(X)=\operatorname{Tr}_A[(X^{\mathsf T}\otimes I)J_M].
+$$
+
+证明。$\operatorname{Tr}(X^{\mathsf T}|i\rangle\langle j|)=X_{ij}$，故右侧等于 $\sum_{ij}X_{ij}\mathcal E_M(|i\rangle\langle j|)=\mathcal E_M(X)$。通道相同蕴含所有扩展实验相同。反向取 $d_A^{-1/2}\sum_i|i\rangle_R|i\rangle_A$ 为输入，输出为 $J_M/d_A$。所有效果的迹配对分离 Hermitian 算子，故概率相同推出 Choi 算子相同。$\square$
+

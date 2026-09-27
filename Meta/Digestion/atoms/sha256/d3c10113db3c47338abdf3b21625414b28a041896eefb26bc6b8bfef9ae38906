@@ -1,0 +1,6 @@
+**定义 458.2（作为后续推导前置的三种最优化）。** 为说明为什么不能把这些平均混称为同一个中点，先限制 $p,q,r$ 都是严格正的概率向量，使用 $D(p\Vert q)=\sum_xp(x)\log(p(x)/q(x))$。经典的有限变分计算给出三个不同的最优对象：$A$ 最小化 $[D(p\Vert r)+D(q\Vert r)]/2$，$G$ 最小化 $[D(r\Vert p)+D(r\Vert q)]/2$，$H$ 最小化 $[\mathcal H^2(r,p)+\mathcal H^2(r,q)]/2$。这些是以下观察比较的既有数学前置，不另立为本批新创定理。
+
+具体计算保留 KL 的方向。第一项在 $r$ 的值与在 $A$ 的值之差为 $D(A\Vert r)$；第二项等于 $D(r\Vert G)-\log Z$。项目 [GrandmotherTheorem](../../../D5/S3/Divergence/GrandmotherTheorem.lean) 的 kl_divergence_nonneg 与 [GibbsEquality](../../../D5/S3/Divergence/GibbsEquality.lean) 的 kl_divergence_eq_zero_iff 提供归一化且满足绝对连续条件时的非负性与等号判据。本段全部向量严格正，满足这些条件，两个最优对象因而唯一。源码中的 KL 是实值有限和，不能越过其前提，把在零分母处的形式运算当作通常扩展实数 KL 的无穷大。
+
+第三项则为 $2-\langle\sqrt r,\sqrt p+\sqrt q\rangle$。因 $\|\sqrt r\|_2=1$，内积在 $\sqrt r$ 与 $\sqrt p+\sqrt q$ 同方向时唯一最大，平方并归一化得到 $H$。因此，归一化的 $\sqrt{pq}$ 与平方根距离下的 Fréchet 平均不同。Nielsen 的 *Revisiting Chernoff Information with Likelihood Ratio Exponential Families*，arXiv:2207.03745v4，第 2.1 节把归一化几何混合放在似然比指数族中；这里仅借用这项几何混合背景，不把该文的最优 Chernoff 参数与本文固定等权混为一谈。
+

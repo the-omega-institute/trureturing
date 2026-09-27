@@ -1,0 +1,125 @@
+**引理57.2（非正交 ABAA 的排除）。** 不可能有
+$$
+\eta_3=\eta_5=\eta_6=A,\qquad\eta_4=B,\qquad
+0<|\langle A,B\rangle|<1,\qquad A,B\in F.
+\tag{57.7}
+$$
+
+**证明。** 先使用 ABAA 的无正交结构归约
+$$
+G_4=G_5=U.
+\tag{57.8}
+$$
+为使来源依赖完整，简要复核：令 $L=U+G_4+G_5$、$R=U+G_3+G_5+G_6$、$T=U+G_5$。固定 $V_1$ 在 $L$ 上使用 $A$、在 $G_3$ 上使用 $B$，故 $G_3\cap L=0$。环境 $A$ 的零、一位正交像给
+$$
+7\ge\dim R+\dim L\ge2\dim T+2,
+$$
+所以 $T=U$、$G_5=U$。此时 $\dim L\in\{2,3\}$。若 $\dim L=3$，则 $\dim R=4$，环境 $A$ 的两个位像饱和为接收正交分解 $K=R\oplus Q_A$，$V_1L=Q_A\otimes A$。式（57.6）给 $v\in Q_A$，故（57.4）和单射性使 $p_A\in L$。另一方面 $G_5=U$ 使 $H_4=X_A$，故 $p_A\in H_4$。环境 $B$ 的零位像包含 $L\otimes B$，一位像包含 $Q_4\otimes B$，所以 $Q_4\perp L$。$H_4\subset G_4\oplus Q_4$ 到 $Q_4$ 的投影单射，且 $G_4\subset L$，因而 $H_4\cap L=0$，矛盾。故 $L=U$，得到（57.8）。该归约未使用 $A,B$ 正交。
+
+由（57.8）及固定零位映射，
+$$
+H_3=X_B,\qquad H_4=X_A,\qquad X=H_3+H_4.
+\tag{57.9}
+$$
+最后一个等式使用 $A,B$ 张成二维 $F$。固定一位映射还给
+$$
+Q_3=Q_5=Q_6.
+\tag{57.10}
+$$
+
+令
+$$
+S=U+G_3,\qquad W=Q_3+Q_4.
+\tag{57.11}
+$$
+$V_1U$ 与 $V_1G_3$ 分属不同射线，所以 $U\cap G_3=0$、$\dim S=4$。所有尾环境都在两条非正交射线中，跨位正交和（57.6）给
+$$
+S\perp W,\qquad v\perp S,\qquad\dim W\in\{2,3\}.
+\tag{57.12}
+$$
+若 $v\in Q_3$，由 $V_1p_A=v\otimes A\in Q_3\otimes A=V_1U$ 得 $p_A\in U$，但（57.9）使 $p_A\in H_4$，违反 $H_4\cap U=0$。同理，$v\in Q_4$ 会使 $p_B\in G_3\cap H_3=0$。因此
+$$
+v\notin Q_3\cup Q_4.
+\tag{57.13}
+$$
+
+**三维 $W$：同一内积给出的投影约束。**
+
+假设 $\dim W=3$。式（57.12）使 $K=S\oplus W$，所以 $v\in W$。
+
+定义等距 $f:U\to Q_3$、$g:G_3\to Q_4$，使
+$$
+V_1u'=f(u')\otimes A,\qquad
+V_1z=g(z)\otimes B.
+$$
+由 $p_A\in H_4\subset U\oplus Q_4$，写 $p_A=u_A+q_A$。式（57.12）给 $q_A\perp S$，所以 $u_A=P_Up_A$。等距投影和（57.4）给
+$$
+f(u_A)=P_{Q_3}v.
+\tag{57.14}
+$$
+对任意 $z\in G_3$，一方面
+$$
+\langle p_A,z\rangle
+=\langle u_A,z\rangle
+=\langle A,B\rangle\,\langle P_{Q_3}v,g(z)\rangle,
+$$
+另一方面，直接使用 $V_1p_A=v\otimes A$ 得
+$$
+\langle p_A,z\rangle
+=\langle A,B\rangle\,\langle v,g(z)\rangle.
+$$
+非零 $\langle A,B\rangle$ 可消去，$g$ 满射到 $Q_4$，所以
+$$
+P_{Q_4}v=P_{Q_4}P_{Q_3}v.
+\tag{57.15}
+$$
+于是 $v-P_{Q_3}v$ 同时正交于 $Q_3$、$Q_4$，也即正交于 $W$。但 $v,P_{Q_3}v\in W$，故 $v=P_{Q_3}v\in Q_3$，违反（57.13）。
+
+**二维 $W$：第一轮环境与独立初态的冲突。**
+
+只剩 $W=Q_3=Q_4=:Q$。式（57.10）使全部 $Q_n=Q$，且
+$$
+V_1S=Q\otimes F.
+\tag{57.16}
+$$
+令 $T=S\oplus Q$，它六维，$Z=T^\perp$ 一维。由（57.9），$X=H_3+H_4\subset T$，所以 $P_0\subset T$。式（57.12）、（57.13）给正交分解
+$$
+v=v_Q+v_Z,\qquad v_Q=P_Qv,\quad 0\ne v_Z\in Z.
+\tag{57.17}
+$$
+
+对任意 $\xi\in F$，（57.4）、（57.16）及等距性给
+$$
+V_1(P_Sp_\xi)=v_Q\otimes\xi.
+$$
+因为 $p_\xi\in T$，余下分量是 $P_Qp_\xi$，故
+$$
+V_1(P_Qp_\xi)=v_Z\otimes\xi.
+\tag{57.18}
+$$
+$\xi\mapsto P_Qp_\xi$ 的范数等于 $\|v_Z\|\,\|\xi\|$，因此它是 $F$ 到二维 $Q$ 的线性同构。特别 $P_Qp_1,P_Qp_2$ 线性无关，并且
+$$
+V_1Q=\mathbb Cv_Z\otimes F,\qquad
+V_1T=(Q\oplus\mathbb Cv_Z)\otimes F.
+\tag{57.19}
+$$
+
+第一轮零位像 $V_0k$ 必正交于 $V_1S=Q\otimes F$。用真实 Schmidt 分解（57.3），投影到 $Q\otimes F$ 得
+$$
+\sum_{i=1}^2\sqrt{\lambda_i}\,(P_Qp_i)\otimes(P_Fe_i)=0.
+$$
+两个接收向量 $P_Qp_i$ 线性无关、两个权重严格正，故
+$$
+e_1,e_2\perp F.
+\tag{57.20}
+$$
+
+由（57.3）、（57.20），$V_0k$ 正交于 $V_0H_2=G_3\otimes A$，所以 $k\perp H_2$。同样 $V_1k$ 正交于（57.19）中的整个 $V_1T$，所以
+$$
+k\in T^\perp=Z.
+\tag{57.21}
+$$
+$u\in S\subset T$，而 $a^2u+bv\in H_2$，结合 $b\ne0$、$k\perp H_2$ 得 $\langle k,v\rangle=0$。但 $k$ 是一维 $Z$ 中的单位向量，式（57.17）给 $v$ 在 $Z$ 中的分量非零，因此不可能 $k\perp v$。矛盾。
+
+两个可能的 $W$ 维数都被排除，定理得证。
+

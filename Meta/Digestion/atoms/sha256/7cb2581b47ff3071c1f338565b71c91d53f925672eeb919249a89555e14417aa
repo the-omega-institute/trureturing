@@ -1,0 +1,24 @@
+**定理 215.3（首次失败风险的上置信证书）。** 定义
+
+$$
+\overline\beta_i=\sup I_{\beta_i},
+\qquad
+\overline\alpha_i=\sup I_{\alpha_i},
+\qquad
+\overline\alpha_\infty=\sup I_{\alpha_\infty}.
+$$
+
+则以数据概率至少 $1-\delta$，
+
+$$
+\boxed{
+R^\pi_{\mathrm{worst}}
+\le
+\sum_{i=1}^{m}
+\overline\beta_i\,\overline\alpha_i
++
+\overline\alpha_\infty.
+}
+\tag{215.2}
+$$
+

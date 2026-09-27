@@ -1,0 +1,14 @@
+**推论 58.3（任意正校准容许内的均值上确界为无穷）。** 任给 $\varepsilon_{\mathrm{inst}},\varepsilon_{\mathrm{read}}>0$ 和有限 $M$，存在一个正 $w,\gamma$ 的上述二维仪器，满足
+
+$$
+\delta_{\mathrm{inst}}<\varepsilon_{\mathrm{inst}},\qquad
+\sup_{0<\eta\le1}|a_\eta-1|<\varepsilon_{\mathrm{read}},\qquad
+\mu>M.
+$$
+
+它的完整等待律与基准的总变差距离也可同时小于 $\varepsilon_{\mathrm{read}}$。
+
+证明。先固定 $0<w<\min\{1,\varepsilon_{\mathrm{inst}},\varepsilon_{\mathrm{read}}\}$，再选择足够小的 $0<\gamma<\min\{1,\varepsilon_{\mathrm{inst}}\}$，使 $1+w/\gamma>M$。应用定理 58.2。$\square$
+
+因此即使已知完整活动维数是二、仪器经过任意精细但仍有正误差的校准、所有截止响应均接近立即点击，仍没有统一有限的原始平均等待上界。这些候选自身没有永不点击质量；缺失的是跨候选的统一尾控制。第 53.2 条关于有限个精确响应的唯一性仍成立：这里没有声称响应精确相同。
+

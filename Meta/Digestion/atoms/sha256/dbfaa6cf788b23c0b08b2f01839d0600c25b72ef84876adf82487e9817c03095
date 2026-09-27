@@ -1,0 +1,22 @@
+**统一装置与容量。** 取（15.23）的有限启动扇区和本节运行扇区；按输入阶段选用已固定的启动通道或（16.10），得到一个独立纯初始化的固定全域 CPTP 接收器。实际阶段始终确定，运行阶段的块标签保持相干。由 $`\dim S_0=1`$、$`\dim S_t\le m^2`$ 和 $`\sum_kr_k\le m`$，其总维数至多
+
+$$
+1+(L-1)m^2+(2m^2)\sum_kr_k
+\le1+(L-1)m^2+2m^3.
+\tag{16.16}
+$$
+
+最后说明精度依赖。若存在非零严格收缩谱，令其最大模为 $`r<1`$。任取 $`r<\gamma<1`$，有限维 Jordan 估计并吸收有限幂零前缀，给常数 $`C_{E,\gamma}>0`$，使
+
+$$
+\delta_L\le C_{E,\gamma}\gamma^L
+\qquad(L\ge1).
+\tag{16.17}
+$$
+
+取 $`L=O_E(1+\log(1/\epsilon))`$ 即可使（16.15）至多 $`\epsilon`$。若没有非零严格收缩谱，$`\delta_L`$ 在有限步后为零，亦符合所述上界。证明完毕。
+
+定理15.1与本节给出精确和近似任务的不同结论：非零收缩谱可以排除任意有限容量的全时域精确接收；对每个固定正误差容限，同一已知有限维来源仍有有限固定接收器。两者不矛盾，容量可以随着误差趋零而发散。其几何内容是把来源的外围共同关系保存为可持续维护的纯化接口，并把剩余衰减部分的影响限制在一次启动比较中；并非每步舍弃一小块历史，再假定误差自行抵消。
+
+[^phase_stinespring_continuity]: Dennis Kretschmann, Dirk Schlingemann and Reinhard F. Werner, *A Continuity Theorem for Stinespring's Dilation*, [arXiv:0710.2495v1, Theorem 1 and equations (6)–(7)](https://arxiv.org/pdf/0710.2495v1). 定理给 $`\beta(T_1,T_2)\le\sqrt{\|T_1-T_2\|_{\rm cb}}`$、达到该 Bures 距离的共同 Stinespring 表示，以及两份最小表示的直和可作为共同表示。本文在有限矩阵代数上对通道的 Heisenberg 对偶应用该结论；其 cb 距离等于 Schrödinger 通道的 diamond 距离。原定理没有给出本文的固定在线接收、全终端误差或容量账，这些由本节的外围吸收器和两次距离比较建立。
+

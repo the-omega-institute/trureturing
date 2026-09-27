@@ -1,0 +1,13 @@
+**定义 25.1（第三累积量与阈值常数）。** 沿用定义 23.1 的实际平稳实验、
+固定参数、有限内在偏移及实际中心，另假设
+$`\log(1+r)/\log(1-r)\notin\mathbb Q`$。记
+
+```math
+h_\pm=\log(1\pm r),\qquad
+m_3=\frac{(1+r)h_+^3+(1-r)h_-^3}{2},\qquad
+A(z)=\frac{m_3(1-z^2)}{6v^{3/2}},\qquad
+k(z)=\log\frac{\varphi(z)}{\sqrt v\,\Phi(z)}.
+```
+
+式 (25.1)。
+

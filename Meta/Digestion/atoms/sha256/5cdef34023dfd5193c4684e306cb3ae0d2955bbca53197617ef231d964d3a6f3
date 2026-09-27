@@ -1,0 +1,61 @@
+### 81.3 早期列回接与第三终端的非零交
+
+由 $v\in Q$、$V_1p=v\otimes A$ 及 $V_1U=Q\otimes A$，固定单射性给 $p\in U$。同时 $p\in H_1=H_2$。早期正交组和 $ab\ne0$ 使
+
+$$
+H_2\cap U
+=\operatorname{span}(a^2u+bv,w)\cap\operatorname{span}(u,w)
+=\mathbb Cw.
+$$
+
+所以存在非零单位相位 $\zeta$，使
+
+$$
+p=\zeta w,\qquad
+V_0w=\zeta^{-1}u\otimes A,\qquad
+V_1w=\zeta^{-1}v\otimes A.
+\tag{81.13}
+$$
+
+最后使用同一来源的真实第二标签列。前两步的实际接收列为
+
+$$
+\Psi_1^1=m_1q=|0\rangle q,\qquad
+\Psi_2^1=m_0w=a|0\rangle w+b|1\rangle w.
+\tag{81.14}
+$$
+
+同一来源映射将 $|0\rangle$ 送到 $m_0\otimes|0\rangle$，将 $|1\rangle$ 送到 $m_1\otimes|1\rangle$。第三轮接收前，第二标签的联合列因而为
+
+$$
+a\,m_0\otimes(w\otimes|0\rangle)
++b\,m_1\otimes(w\otimes|1\rangle).
+$$
+
+对两输入位应用同一个 $V_0,V_1$，再用（81.13），得到
+
+$$
+\begin{aligned}
+&a\,m_0\otimes V_0w+b\,m_1\otimes V_1w\\
+&\qquad=\zeta^{-1}(a\,m_0u+b\,m_1v)\otimes A\\
+&\qquad=\zeta^{-1}
+\left(|0\rangle(a^2u+bv)+|1\rangle ab\,u\right)\otimes A.
+\end{aligned}
+\tag{81.15}
+$$
+
+因此实际第三终端的零记忆系数空间 $H_3$ 包含非零向量 $a^2u+bv$。该向量也属于实际 $H_2$，且因 $u\perp v$、$ab\ne0$ 而非零。于是
+
+$$
+H_2\cap H_3\ne0,
+$$
+
+与（81.7）的交零矛盾。定理81.1证明完毕。
+
+整个禁阻不需要两条尾射线的内积分类，也不需要一个未经证明的共同六维实际域。它先从实际三块及七维预算取得四维分叉跨度，再用真实首轮像证明 $v\in Q$，最后由来源的第三轮第二标签列闭合。末轮射线从未参与后继推断，所以 $AAABA$、$AAABB$ 及已知的 $AAABC$ 被同一前缀条件覆盖。一般容量区间仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{81.16}
+$$
+

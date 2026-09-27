@@ -1,0 +1,53 @@
+### 56.5 统一的有理阈值
+
+平方差恒等式给
+
+$$
+\frac{g_\varepsilon}{\varepsilon}
+=
+\frac{1-3\varepsilon-\varepsilon^2-\varepsilon^3}
+{(1+\varepsilon)[(1+\varepsilon)\sqrt{1-\varepsilon}+1+\varepsilon^2]}.
+$$
+
+对 $0<\varepsilon\le1/4$，分子至少为 $11/64$，分母至多为
+$(5/4)(5/4+5/4)=25/8$，故
+
+$$
+\frac{g_\varepsilon}{\varepsilon}\ge\frac{11}{200}.
+\tag{56.18}
+$$
+
+在式（56.17）取 $\eta=\varepsilon/10000$，其右侧除以 $\varepsilon$ 后不超过
+
+$$
+\frac1{25}+\frac1{20000}+\frac1{10000}
++\frac1{100}\sqrt{1+\frac1{5000}}
+<\frac1{25}+\frac1{20000}+\frac1{10000}
++\frac{1001}{100000}
+=\frac{627}{12500}
+<\frac{11}{200}.
+\tag{56.19}
+$$
+
+第一个严格不等式使用
+$(1001/1000)^2>1+1/5000$。式（56.18）、（56.19）矛盾，因此不存在满足
+$D(R_\varepsilon,S)\le(1+1/10000)\varepsilon$ 的因果 $S$。
+
+因果集合有限维且紧，事件误差连续，最小值达到，从而式（56.4）的下界严格成立。
+
+最后，令
+
+$$
+T=R_\varepsilon
++\varepsilon|0,1,0\rangle\langle0,1,0|
++\varepsilon|1,0,0\rangle\langle1,0,0|.
+$$
+
+则 $T\succeq R_\varepsilon$ 且
+$\operatorname{Tr}_D T=I_A\otimes\operatorname{diag}(1,\varepsilon)$。
+$S=T/(1+\varepsilon)$ 是因果修复；由
+$R_\varepsilon-S\preceq\varepsilon S$ 及
+$S-R_\varepsilon\preceq(T-R_\varepsilon)/(1+\varepsilon)$，两个方向的事件误差分别不超过 $\varepsilon$ 与 $2\varepsilon/(1+\varepsilon)$，得式（56.4）的上界。$\square$
+
+这个线性比例间隙排除了本族的 $\varepsilon+O(\varepsilon^2)$ 修复上界。这里的结论只针对指定等距族和全部量子 tester 的同一合同，不把常数 $1+1/10000$ 宣称为任何全局最优常数。
+

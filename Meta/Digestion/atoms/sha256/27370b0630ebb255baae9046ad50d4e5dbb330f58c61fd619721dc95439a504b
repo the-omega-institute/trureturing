@@ -1,0 +1,34 @@
+**推论119.2（纤维分块与支持计数）。** 定义
+
+$$
+J_z=\{i:[z_i]=[z]\},\qquad m_z=|J_z|.
+$$
+
+则所有完整纤维准确为
+
+$$
+\mathcal G_1([z])
+=Q\oplus\operatorname{span}\{d_i:i\in J_z\},
+\tag{119.3}
+$$
+
+$$
+\mathcal G_0([z])
+=P\oplus\operatorname{span}\{e_i:[z_i]=[z^\perp]\}.
+\tag{119.4}
+$$
+
+特别地，
+
+$$
+\boxed{
+\begin{aligned}
+g_1([z])&=\gamma+m_z,&
+ g_0([z])&=\gamma+m_{z^\perp},\\
+\sum_{[z]}m_z&=7-2\gamma,&
+\bigcap_{[z]}\mathcal G_0([z])&=P,\quad
+\bigcap_{[z]}\mathcal G_1([z])=Q.
+\end{aligned}}
+\tag{119.5}
+$$
+

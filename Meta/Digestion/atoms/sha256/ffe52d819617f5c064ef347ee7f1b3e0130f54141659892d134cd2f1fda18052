@@ -1,0 +1,47 @@
+**秩二第二终端的坐标。** 先取 $`r_2=2`$。沿用第27节的六维分解及记号：
+
+$$
+\begin{gathered}
+K=Q\otimes\Gamma,\qquad
+Q=\operatorname{span}\{u,v,w\},\qquad \dim\Gamma=2,\\
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\}.
+\end{gathered}
+\tag{29.2}
+$$
+
+其中 $`u,v,w`$ 正交归一，$`H+G=Q`$、$`H\cap G=\mathbb Cw`$。第二终端附加态在 $`\Gamma`$ 上正定。式（27.4）给等距 $`R:\Gamma\to E`$ 以及接收器中正交单位向量 $`s,r,t,j`$，使对全部 $`\xi\in\Gamma`$ 有
+
+$$
+\begin{aligned}
+V_0(z\otimes\xi)&=s\otimes R\xi,&
+V_1(u\otimes\xi)&=r\otimes R\xi,\\
+V_0(w\otimes\xi)&=t\otimes R\xi,&
+V_1(w\otimes\xi)&=j\otimes R\xi.
+\end{aligned}
+$$
+
+记 $`F=R\Gamma`$。命题27.1已经给出第四、第五轮新环境
+$`\eta_4,\eta_5\in F`$，并有 $`C_4,C_5\ne C_3`$。这里完整保留第二终端的混合附加态和前三轮累计环境的纠缠，不把（29.2）的某个纯切片当作实际第二终端态。
+
+记
+$$
+A=\operatorname{span}\{s,t\}=G_3,\quad
+B_3=\operatorname{span}\{r,j\},\quad Z=C_3^\perp,
+$$
+故 $`C_3=A\oplus B_3`$、$`\dim A=\dim B_3=\dim Z=2`$。
+对第 $`n=4,5`$ 轮令 $`Q_n`$ 为一位输入的接收器像，即
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+$$
+各 $`G_n,Q_n`$ 正交且二维，$`C_n=G_n\oplus Q_n`$。来源非退化还保证
+$$
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{29.3}
+$$
+这里两个投影限制在二维 $`H_n`$ 上均为同构。对 $`n=3`$，同样有
+$`P_AH_3=A`$、$`P_{B_3}H_3=B_3`$。这些事实来自来源递推的两个非零系数，而非任意四维支撑的性质。
+

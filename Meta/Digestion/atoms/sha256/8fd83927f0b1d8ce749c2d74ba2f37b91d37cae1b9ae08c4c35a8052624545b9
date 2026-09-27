@@ -1,0 +1,56 @@
+**定理 393.1（记录耦合扰动下的总成功区间）。** 对 $0\le\varepsilon\le1$，定义
+
+$$
+C_\varepsilon=(1-\varepsilon)C_0+\varepsilon I_4.
+$$
+
+在定义 389.2 的完整记录接口下，
+
+$$
+\boxed{\quad
+\varepsilon\le\eta(C_\varepsilon)
+\le\min\left\{1,\frac{4\varepsilon}{3-2\sqrt2}\right\}.
+\quad}
+$$
+
+因此 $\eta(C_0)=0$、$\eta(C_1)=1$，而
+
+$$
+0<\varepsilon<\frac{3-2\sqrt2}{4}
+\quad\Longrightarrow\quad
+0<\eta(C_\varepsilon)<1.
+$$
+
+这些严格不等式刻画一个可有成功标志、却不能确定精确恢复的区间；本界不决定 $\eta(C_\varepsilon)$ 的确切最优值，也不决定确定恢复出现的锐阈值。
+
+证明。令 $\zeta=e^{2\pi i/4}$，对 $k=0,1,2,3$ 定义相位向量
+
+$$
+(z^{(k)})_j=\zeta^{(j-1)k},\qquad j=1,2,3,4.
+$$
+
+有限几何级数给出
+
+$$
+\frac14\sum_{k=0}^3z^{(k)}z^{(k)\dagger}=I_4:
+$$
+
+对角元是 $1$；若 $i\ne j$，比值 $\zeta^{i-j}\ne1$，四项和为零。因此
+
+$$
+Q=\frac\varepsilon4\sum_{k=0}^3z^{(k)}z^{(k)\dagger}
+ =\varepsilon I_4\preceq C_\varepsilon,
+$$
+
+其剩余矩阵为 $(1-\varepsilon)C_0\succeq0$。定理 390.2 将四个成功分支各自实现为概率 $\varepsilon/4$ 的精确校正，给出总概率下界 $\varepsilon$。
+
+另一方面，定理 392.2 给出
+
+$$
+\operatorname{Tr}(WC_\varepsilon)
+ =(1-\varepsilon)\operatorname{Tr}(WC_0)
+   +\varepsilon\operatorname{Tr}W=4\varepsilon,
+$$
+
+从而得到上界。$\varepsilon=0$ 时上界为零，$\varepsilon=1$ 时下界为一；在所示开区间中下界严格为正而上界严格小于一。证毕。
+

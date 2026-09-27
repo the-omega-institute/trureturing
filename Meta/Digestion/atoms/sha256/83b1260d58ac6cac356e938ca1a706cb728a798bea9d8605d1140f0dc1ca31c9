@@ -1,0 +1,28 @@
+**定义 35.1（带记录和后继的单轮校准距离）。** 固定共同的系统空间 $\mathcal H$、有限点击集合 $X$、各点击后继空间及钟标签含义。每个模型的 $\mathcal H$ 都包含重复运行所需的全部活动记忆；比较对象是每轮使用同一通道的模型，不是只匹配单轮边缘的未知带记忆装置。仪器的完整输出通道为
+
+$$
+\mathfrak I(Y)=\mathcal N(Y)\oplus\bigoplus_{x\in X}\mathcal C_x(Y).
+$$
+
+不同直和块表示正交经典记录，块内保留量子后继。对共同输入输出空间上的两通道定义
+
+$$
+\delta(\Phi,\Psi)=
+\sup_{\mathcal K,\,\rho\in\mathcal S(\mathcal K\otimes\mathcal H)}
+D\bigl((\operatorname{id}_{\mathcal K}\otimes\Phi)(\rho),
+(\operatorname{id}_{\mathcal K}\otimes\Psi)(\rho)\bigr),
+\qquad D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+上确界允许任意有限参考空间；对通道差，这就是半 diamond 距离。下文令 $\delta=\delta(\mathfrak I,\mathfrak J)$。距离约束是校准合同的前提，本批不把有限样本自动升级为这个精确上界。
+
+对整数 $m\ge1$，保留首次点击标签及其后继的停止通道为
+
+$$
+\Omega_m^{\mathfrak I}(Y)=\mathcal N^m(Y)
+\oplus\bigoplus_{n=1}^m\bigoplus_x
+\mathcal C_x\mathcal N^{n-1}(Y).
+$$
+
+第一块的含义是截至第 $m$ 轮尚未点击；各 $(n,x)$ 块相互正交。完整性恒等式使它为 CPTP 通道。
+

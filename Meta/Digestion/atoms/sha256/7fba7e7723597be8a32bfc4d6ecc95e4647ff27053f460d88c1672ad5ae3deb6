@@ -1,0 +1,61 @@
+## ST27．离开一个固定编码空间，不等于逻辑信息已经不可恢复
+
+### 定义 ST27.1：正交错误副本
+
+设逻辑空间为 $V=\mathbb C^d$，物理输出为 $\mathcal H=\mathbb C^n$，$d\ge1$。取有限非空索引集 $J$ 和矩阵 $S_j:V\to\mathcal H$，满足
+
+$$
+S_j^\dagger S_k=\delta_{jk}I_V.
+\tag{ST27.1}
+$$
+
+令 $P=\sum_jS_jS_j^\dagger$。直接相乘得 $P=P^\dagger=P^2$。因此$n\ge d|J|$；这些索引是逻辑信息的正交副本标签，也称错误综合征（syndrome）。它们不是逻辑输入的复制：一次实际状态只占据一个联合编码，并未产生独立的未知态副本。
+
+对任意 syndrome 密度矩阵 $\sigma$，定义
+
+$$
+\mathcal N_\sigma(\rho)
+=\sum_{j,k}\sigma_{jk}S_j\rho S_k^\dagger.
+\tag{ST27.2}
+$$
+
+对固定复位密度态 $\tau$，定义完整恢复
+
+$$
+\mathcal D(X)
+=\sum_jS_j^\dagger X S_j+
+\operatorname{tr}[(I-P)X]\tau.
+\tag{ST27.3}
+$$
+
+### 定理 ST27.2：相干 syndrome 的精确恢复
+
+$\mathcal N_\sigma$ 与 $\mathcal D$ 均为 CPTP，而且
+
+$$
+\boxed{\mathcal D\mathcal N_\sigma=\mathrm{id}_V.}
+\tag{ST27.4}
+$$
+
+恢复不要求读取 $\sigma$，也不要求它在指定标签基下对角。
+
+**证明。** 定义等距$J_0:V\otimes\mathbb C^{|J|}\to\mathcal H$为$J_0(v\otimes|j\rangle)=S_jv$。式(ST27.1)保证等距性，故$\mathcal N_\sigma(\rho)=J_0(\rho\otimes\sigma)J_0^\dagger$完全正且保迹。
+
+恢复第一项由Kraus矩阵$S_j^\dagger$构造。第二项是正效果$I-P$后制备$\tau$的映射，故也完全正。两部分的迹相加为$\operatorname{tr}X$。
+
+对任意$\sigma,\rho$矩阵（此处甚至不需正性），
+
+$$
+\sum_iS_i^\dagger\mathcal N_\sigma(\rho)S_i
+=\sum_{i,j,k}\sigma_{jk}\delta_{ij}\delta_{ki}\rho
+=\operatorname{tr}(\sigma)\rho.
+$$
+
+$\mathcal N_\sigma$的输出支持在$P$内，故复位项为零。密度态的迹为一，得到结论。`OrthogonalSyndromeDecoding.lean` 承载对应的矩阵恢复恒等式。∎
+
+### 例 ST27.3：漏出参数为一但恢复误差为零
+
+取$\mathcal H=V\otimes\mathbb C^2$，旧编码$S_0v=v\otimes|0\rangle$，噪声实际把它送到$S_1v=v\otimes|1\rangle$。相对于旧投影$P_0=S_0S_0^\dagger$，ST19意义的漏出为$\lambda=1$。然而丢弃第二因子就精确恢复$\rho$。
+
+所以ST20对“压回旧空间并复位”的误差上界，没有声称是所有恢复方法的最优下界。能否恢复，取决于被允许访问的输出系统和 syndrome 信息。如果这些自由度实际不可访问，则不能使用这里的恢复器。[ST27-KL][ST27-EA]
+

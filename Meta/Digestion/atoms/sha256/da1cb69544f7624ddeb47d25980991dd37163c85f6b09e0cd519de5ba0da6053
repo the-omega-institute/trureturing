@@ -1,0 +1,31 @@
+## ST24．全局拓扑约束法向混合与控制强度
+
+### 假设 ST24.1
+
+现在允许环境本身是带相容 Hermitian 连接的向量丛；内积仍正定。参数曲面带一个固定 Riemann 度量，取局部定向正交切向框 $e_1,e_2$。沿用 ST17 的定义
+
+$$
+N_a=(I-P)\nabla_{e_a}U,\qquad
+\mathcal F_{12}=U^\dagger F^{\rm full}_{12}U
++i(N_1^\dagger N_2-N_2^\dagger N_1).
+$$
+
+该曲率分解来自相容连接的子丛几何，一般形式明确归于已有几何及2026年的系统研究。[ST19-OMP] 定义
+
+$$
+\mathscr E_N=\int_\Sigma(\|N_1\|_F^2+\|N_2\|_F^2)\,dA,
+\quad
+\mathscr B=\int_\Sigma\operatorname{tr}(U^\dagger F^{\rm full}_{12}U)\,dA.
+$$
+
+二者在局部酉换框下不变，故为全局量。参数度量在比较中固定，并不预先识别为物理时空度量。
+
+### 定理 ST24.2：带环境曲率扣除的拓扑界
+
+有
+
+$$
+\boxed{\mathscr E_N\ge|2\pi C_1(E)-\mathscr B|.}
+\tag{ST24.1}
+$$
+

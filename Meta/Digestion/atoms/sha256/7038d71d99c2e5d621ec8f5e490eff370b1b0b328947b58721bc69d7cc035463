@@ -1,0 +1,20 @@
+### 56.4 ABAA 环境交叠的定量下界
+
+采用第55节七维、$r_1=2,r_2=1$、前六个完整参考终端的实际合同，来源 $ab\ne0$。尾环境为
+$$
+\eta_3=\eta_5=\eta_6=A,\qquad\eta_4=B,\qquad A\not\parallel B.
+$$
+$A,B$ 是二维排出环境 $F$ 中的单位向量。ABAA 的无正交结构归约给
+$$
+G_4=G_5=U=G_2,\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad\|w\|=1,\quad w\in U,
+\tag{56.17}
+$$
+其中 $u,v,w$ 正交单位。这里引用该归约时不假设 $A\perp B$。
+
+置
+$$
+x=|a|^2,\qquad y=|b|^2,\qquad
+t_0=1,\quad t_j=1-y t_{j-1}.
+$$
+

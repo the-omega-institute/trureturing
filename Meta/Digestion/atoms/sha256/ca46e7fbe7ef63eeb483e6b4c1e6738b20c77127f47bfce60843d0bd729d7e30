@@ -1,0 +1,144 @@
+**定理34.4（排除三条互异尾环境射线）。** 第29—30节合同中的六维五终端精确接收器，
+其 $\eta_3,\eta_4,\eta_5$ 不可能是三条互异射线。结合命题30.1，
+后三轮若有六维实现，其环境必须恰好占据两条不同射线。
+
+证明。反设三条射线互异，使用引理34.1—34.3的全部结论。
+记 $g_{ij}=\langle\eta_i,\eta_j\rangle$。首先有
+
+$$
+g_{13}\ne0,\qquad g_{24}\ne0,\qquad g_{35}\ne0.
+\tag{34.28}
+$$
+
+最后一项已由（34.5）给出。若 $g_{13}=0$，二维 $F$ 和
+$\eta_2\perp\eta_3$ 给 $\eta_1\parallel\eta_2$。
+于是（34.16）的 $\mathcal B(\eta_2,\eta_1)=0$ 给
+$\mathcal B(\eta_2,\eta_2)=0$；再加上
+$\mathcal B(\eta_3,\eta_2)=0$，因 $\eta_2,\eta_3$ 为一组基，
+便得 $\mathcal B(x,\eta_2)=0$ 对所有 $x\in F$ 成立，违反非退化性。
+若 $g_{24}=0$，同一二维正交补关系给 $\eta_4\parallel\eta_3$，
+违反尾射线不同。因此（34.28）全部成立。
+
+由 $k\in S$、$V_1k=q\otimes\eta_1$，以及（34.10），
+
+$$
+k=W_{\eta_1}q,\qquad p=W_{\eta_2}v,\qquad q,v\in Q.
+\tag{34.29}
+$$
+
+取（34.26）的正交单位基 $r,s$。因为
+$(a^2u+bv)/c_0,w$ 是 $H_2$ 的正交单位基，固定
+$V_0H_2=G_3\otimes\eta_3$ 给 $Q$ 的另一组正交单位基 $r_3,s_3$，使
+
+$$
+\begin{aligned}
+V_0(a^2u+bv)&=c_0W_{\eta_4}r_3\otimes\eta_3,\\
+V_0w&=W_{\eta_4}s_3\otimes\eta_3.
+\end{aligned}
+\tag{34.30}
+$$
+
+分别将 $V_0k=p\otimes\eta_1$ 与这两式取内积。由（34.29）、
+$S\perp Q$ 和（34.10），等距关系给
+
+$$
+\begin{aligned}
+a^2g_{13}\langle q,r\rangle
+&=c_0g_{13}g_{24}\langle v,r_3\rangle,\\
+g_{13}\langle q,s\rangle
+&=g_{13}g_{24}\langle v,s_3\rangle.
+\end{aligned}
+$$
+
+消去非零的 $g_{13}$，得到
+
+$$
+a^2\langle q,r\rangle=c_0g_{24}\langle v,r_3\rangle,\qquad
+\langle q,s\rangle=g_{24}\langle v,s_3\rangle.
+\tag{34.31}
+$$
+
+现在使用实际第三轮来源，而不只使用其支撑维数。由（30.4），第二终端的系数为
+
+$$
+x_2^0=a^2u+bv,\quad y_2^0=ab u,\qquad
+x_2^1=aw,\quad y_2^1=bw.
+\tag{34.32}
+$$
+
+来源将旧的零、一记忆系数 $x,y$ 变成新零记忆系数
+$aV_0x+V_1y$。结合（34.30）以及
+$V_1u=r\otimes\eta_3$、$V_1w=s\otimes\eta_3$，
+在同一个实际环境 $\eta_3$ 中得到两个第三轮零记忆系数
+
+$$
+\begin{aligned}
+h_{30}&=a c_0W_{\eta_4}r_3+ab r,\\
+h_{31}&=a^2W_{\eta_4}s_3+b s.
+\end{aligned}
+\tag{34.33}
+$$
+
+它们张成 $H_3$。分别取与 $p,q$ 的内积，用（34.31）得到
+
+$$
+\begin{aligned}
+\langle p,h_{30}\rangle
+&=a c_0g_{24}\langle v,r_3\rangle
+=a^3\langle q,r\rangle,&
+\langle q,h_{30}\rangle&=ab\langle q,r\rangle,\\
+\langle p,h_{31}\rangle
+&=a^2g_{24}\langle v,s_3\rangle
+=a^2\langle q,s\rangle,&
+\langle q,h_{31}\rangle&=b\langle q,s\rangle.
+\end{aligned}
+\tag{34.34}
+$$
+
+$b\ne0$，因此在整个 $H_3$ 上有同一线性关系
+
+$$
+\langle p,h\rangle=\frac{a^2}{b}\langle q,h\rangle
+\qquad(h\in H_3).
+\tag{34.35}
+$$
+
+所以正交投影 $P_{H_1}|_{H_3}:H_3\to H_1$ 的秩至多一。
+
+另一方面，固定等距又给
+
+$$
+V_0H_1=G_2\otimes\eta_2,\qquad
+V_0H_3=G_4\otimes\eta_4.
+\tag{34.36}
+$$
+
+在 $G_2=\operatorname{im}W_{\eta_3}$ 与
+$G_4=\operatorname{im}W_{\eta_5}$ 上，用同一个 $Q$ 正交单位基传来的两组基，
+其交叠矩阵由（34.10）为 $g_{35}I_Q$。再乘上环境内积，
+（34.36）两空间的交叠矩阵便为
+
+$$
+g_{24}g_{35}I_Q.
+\tag{34.37}
+$$
+
+由（34.28），它的秩为二。交叠矩阵的秩不受两侧各自换正交基影响；
+等距 $V_0$ 又保持该秩，所以 $P_{H_1}|_{H_3}$ 的秩必须为二。
+这与（34.35）的秩至多一矛盾，三条互异尾射线分支被排除。证明完毕。
+
+定理34.4将命题30.1的二维尾环境必要条件进一步收紧为两条不同射线，仍允许它们非正交。
+剩余模式是
+
+$$
+\begin{array}{ll}
+\mathrm{AAB}:&\eta_3\parallel\eta_4\not\parallel\eta_5,\\
+\mathrm{ABA}:&\eta_3\parallel\eta_5\not\parallel\eta_4,\\
+\mathrm{ABB}:&\eta_4\parallel\eta_5\not\parallel\eta_3.
+\end{array}
+\tag{34.38}
+$$
+
+本节没有构造或排除这三种模式。因此在本节结论范围内，一般容量仍保持
+$6\le d_{\mathrm{CPTP},5}(a,b)\le7$。
+

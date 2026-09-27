@@ -1,0 +1,65 @@
+### 254.3 可实施统计量给出统一上界
+
+每份输出读取实际选择 $h$、参考产品旗标及符号 $s$。构造两个随机变量
+$$
+V_{\mathrm{old}}=
+\begin{cases}s,&h=\mathrm{old}\text{ 且参考产品旗标成立},\\0,&\text{其余},\end{cases}
+\qquad
+V_Y=
+\begin{cases}s,&h=Y\text{ 且参考产品旗标成立},\\0,&\text{其余}.\end{cases}
+\tag{254.15}
+$$
+旧统计量在两假设下的均值分别为
+$$
+q(1-\gamma)\sqrt A,
+\qquad q(1-\gamma)\sqrt A(1-2z^2),
+\tag{254.16}
+$$
+方差均不超过 $q(1-\gamma)$。$Y$ 统计量的均值分别为零与 $q\gamma y_z$，方差均不超过 $q\gamma$。
+
+对所用统计量取独立样本均值，以两假设均值中点作阈值。若使用旧统计量，两侧的错误率由 Chebyshev 界控制为
+$$
+P_j(\text{判错})\le\frac1{nq(1-\gamma)Az^4}
+\qquad(\gamma<1).
+\tag{254.17}
+$$
+若使用 $Y$ 统计量，两侧错误率满足
+$$
+P_j(\text{判错})
+\le\frac4{nq\gamma y_z^2}
+=\frac1{nq\gamma z^2(1-z^2)}
+\qquad(\gamma>0).
+\tag{254.18}
+$$
+旧统计量较大的一侧判零，$Y$ 统计量较大的一侧判 $z$。
+
+令
+$$
+u=q(1-\gamma)Az^4,
+\qquad v=q\gamma z^2(1-z^2).
+\tag{254.19}
+$$
+选择 $u,v$ 较大者对应的统计量。至少一个严格为正，零概率分支无须使用。每侧错误率至多为 $1/[n\max\{u,v\}]$。
+
+定义共同尺度
+$$
+r(z,\gamma)=(1-\gamma)z^4+\gamma z^2.
+\tag{254.20}
+$$
+因为 $A\ge1/2$、$z\le1/2$，
+$$
+u+v\ge\frac q2r(z,\gamma),
+\qquad
+\max\{u,v\}\ge\frac q4r(z,\gamma).
+\tag{254.21}
+$$
+所以取 $n\ge12/[qr(z,\gamma)]$ 即使两侧错误率均不超过 $1/3$，得到
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+\le\left\lceil\frac{12}{q\bigl((1-\gamma)z^4+\gamma z^2\bigr)}\right\rceil.
+}
+\tag{254.22}
+$$
+上界只需逐次读取与一个均值检验；其取样次数包含随机选择没有选中所用仪器的试次。
+

@@ -1,0 +1,16 @@
+**定义 30.1（秩差剖面）。** 对有限维 Q 向量空间上的幂零算子 T，定义
+
+$$
+w_j(T)=\dim\ker(T|_{\operatorname{im}T^{j-1}})
+=\operatorname{rank}T^{j-1}-\operatorname{rank}T^j,
+\qquad j\ge1.
+$$
+
+等号由 T:im T^{j-1}→im T^j 的秩零度公式得到。若 T 的幂零 Jordan 块长度按非增序排列为 λ_1,λ_2,…，末尾补零，则
+
+$$
+w_j(T)=\#\{i:\lambda_i\ge j\}.
+$$
+
+对一个长度 a 的 Jordan 块，其 j 次幂的秩为 max(a-j,0)，逐块相加即证明此式。以下承重的不等式直接用像空间和商空间证明，不要求先运行 Jordan 标准形算法。
+

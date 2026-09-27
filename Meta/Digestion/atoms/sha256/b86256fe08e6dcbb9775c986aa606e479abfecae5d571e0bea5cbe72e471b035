@@ -1,0 +1,12 @@
+**命题178.3（真实入口局部模拟比较边界的严格代价）。** 有
+
+$$
+\boxed{
+0<h_L(i)-\frac34
+\le\delta_K(\mathcal N_L\to\mathcal S)
+\le\beta w_1,
+\qquad\beta=\frac{288}{2353}.
+}
+\tag{178.7}
+$$
+

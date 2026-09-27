@@ -1,0 +1,26 @@
+### 12.2 活性条件在时钟上的两种读法
+
+对 renewal 集 $R$，
+
+$$
+\square\Diamond R
+\quad\Longleftrightarrow\quad
+\forall N\ \exists n\ge N:\ s_n\in R
+\quad\Longleftrightarrow\quad
+\lim_{n\to\infty}N_n=+\infty.
+\tag{12.3}
+$$
+
+最后一个等价只对 $r_t=\mathbf1_R(s_t)$ 的离散事件计数成立。它没有给出相邻 renewal 之间的最大等待时间，也没有给出 $\lim T_n=\infty$；若费用可以为零，二者独立。有限控制系统中的 Büchi 秩可以给出一条所选策略下的有限回到界，但这个界属于策略和对手后继合同，不能从时钟读数单独推出。
+
+若把 renewal 作为边界可见事件，需有
+
+$$
+\mathbf1_R(s)=\bar r(q(s)),
+\qquad
+q(T_a s)=\bar T_a(q(s)),
+\tag{12.4}
+$$
+
+并且费用也在纤维上因子化 $c_a(s)=\bar c_a(q(s))$. 此时 (12.1) 的两种累积量都能在边界上递推。若同一 $q$-纤维含有 renewal 与非-renewal 状态，则 $\bar r$ 不存在；即使普通时钟 $T_n$ 仍可下降，活性时钟也不能由该边界计算。
+

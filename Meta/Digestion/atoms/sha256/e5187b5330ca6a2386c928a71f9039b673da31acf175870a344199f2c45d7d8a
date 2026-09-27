@@ -1,0 +1,48 @@
+**证明。** 第 $n=2$ 轮有 $V_0H_1=U\otimes\eta_2$；第 $n=3,\ldots,6$ 轮的零位像由（60.3）给出，每个接收因子均二维。若 $\eta_2,\ldots,\eta_6$ 中有四个线性无关向量，对应的四个二维像为代数直和，维数八，不能包含于七维 $V_0K$。故（60.6）成立。
+
+现在设 $\dim F_3=3$。取其中三个实际尾环境作为基，指标集为 $J\subset\{3,4,5,6\}$。对应零位像的和六维。若 $\eta_2\notin F_3$，加入 $U\otimes\eta_2$ 得八维，矛盾。因此 $\eta_2\in F_3$。
+
+反设 $\eta_1\notin F_3$。首轮零、一位像各再添加一维，两个全域位像都被饱和：
+$$
+\begin{aligned}
+V_0K&=(\mathbb Cp\otimes\eta_1)
+\dotplus\mathop{\dotplus}_{j\in J}(G_j\otimes\eta_j),\\
+V_1K&=(\mathbb Cq\otimes\eta_1)
+\dotplus\mathop{\dotplus}_{j\in J}(Q_j\otimes\eta_j).
+\end{aligned}
+\tag{60.8}
+$$
+这些是由环境线性独立得到的代数直和，不要求正交。由 $V_1$ 单射，
+$$
+K=\mathbb Ck\dotplus\mathop{\dotplus}_{j\in J}G_{j-1}.
+\tag{60.9}
+$$
+
+写 $\eta_2=\sum_{j\in J}\alpha_j\eta_j$。因为 $U\otimes\eta_2\subset V_0K$，逐环境坐标比较（60.8）得
+$$
+\alpha_j\ne0\quad\Longrightarrow\quad U=G_j.
+\tag{60.10}
+$$
+这里先得到 $U\subseteq G_j$，再用两者均二维。
+
+还有一个共同矛盾：如果推出 $\eta_2\parallel\eta_j$，其中 $j\ge4$，则（60.10）给 $U=G_j$，所以
+$$
+V_0H_1=V_0H_{j-1},\qquad H_1=H_{j-1}.
+$$
+另一方面，$V_1p=v\otimes\eta_2$ 与（60.8）的一位环境坐标比较，给 $v\in Q_j$，继而 $p\in G_{j-1}$。于是
+$$
+0\ne p\in H_{j-1}\cap G_{j-1},
+\tag{60.11}
+$$
+违反 $j-1\ge3$ 时的（60.4）。
+
+可以选择包含 $\eta_3$ 的尾环境基，且只需以下三类：若 $\eta_3,\eta_4,\eta_5$ 独立，取 $J=\{3,4,5\}$；否则 $\eta_6$ 补足第三维，$\eta_3,\eta_4$ 独立时取 $J=\{3,4,6\}$，二者相关时取 $J=\{3,5,6\}$。
+
+取 $J=\{3,4,5\}$ 时，（60.9）中的 $G_2,G_3,G_4$ 为代数直和。（60.10）说明 $\eta_2$ 的 $\eta_3$ 系数非零会给 $U=G_3$，$\eta_4$ 系数非零会给 $U=G_4$，都违反 $U=G_2$ 与这两个输入空间交零。因此 $\eta_2\parallel\eta_5$，由（60.11）矛盾。
+
+取 $J=\{3,4,6\}$ 时，$G_2,G_3,G_5$ 为代数直和。$\eta_2$ 的 $\eta_3$ 系数必须为零。若其 $\eta_4$ 系数非零，则 $U=G_4$。固定 $V_1$ 在相同输入 $G_2=G_4$ 上的像相同，故 $\eta_5\parallel\eta_3$。再比较（60.8）的零位 $\eta_3$ 纤维，得到 $G_5=G_3$，与（60.9）矛盾。因此只剩 $\eta_2\parallel\eta_6$，仍由（60.11）矛盾。
+
+取 $J=\{3,5,6\}$ 时，$G_2,G_4,G_5$ 为代数直和。$\eta_2$ 的 $\eta_5$ 系数非零会给 $U=G_5$，故必须为零。若 $\eta_3$ 系数非零，则 $U=G_3$；固定 $V_1$ 给 $\eta_4\parallel\eta_3$，而（60.8）的零位 $\eta_3$ 纤维给 $G_4=G_3=U$，同样违反（60.9）。因此又只剩 $\eta_2\parallel\eta_6$，由（60.11）矛盾。
+
+三个基选择都排除了 $\eta_1\notin F_3$，所以（60.7）成立。证明完毕。
+

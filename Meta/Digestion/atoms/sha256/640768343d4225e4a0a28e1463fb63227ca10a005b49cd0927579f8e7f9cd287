@@ -1,0 +1,38 @@
+### 234.1 共同接口与事件振幅矩阵
+
+先固定一般整数 $d,N\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、经典记录 $B=\mathbb C^N$。指定各标签的单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\frac1N\operatorname{Tr}(X)P_j.
+\tag{234.SP.1}
+$$
+输出向量可以相同；正交标签承担各分支的区别。
+
+候选遍历同一接口的所有 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{\ell=1}^{k_j}C_{j\ell}XC_{j\ell}^{\dagger},
+\qquad \sum_{j,\ell}C_{j\ell}^{\dagger}C_{j\ell}=I_d,
+\tag{234.SP.2}
+$$
+其中每个分支采用最小 Kraus 表示，因此
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},\qquad
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{234.SP.3}
+$$
+零分支允许 $k_j=0$。不限制候选的量子输出方向，也不先假定它是测量—制备通道。
+
+定义目标支持事件的振幅矩阵
+$$
+L_j:A\longrightarrow\mathbb C^{k_j},\qquad
+(L_jv)_\ell=\langle r_j,C_{j\ell}v\rangle.
+\tag{234.SP.4}
+$$
+每个 $L_j$ 是复线性映射，秩至多为 $k_j$。$L_jv=0$ 只说明候选在该标签的指定纯输出事件上没有振幅，不表示所有 $C_{j\ell}v$ 为零。
+
+对非零输入子空间 $H\subseteq A$，置
+$$
+h=\dim H,\qquad a_j(H)=\operatorname{rank}(L_j|_H).
+\tag{234.SP.5}
+$$
+

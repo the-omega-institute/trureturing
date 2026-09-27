@@ -1,0 +1,52 @@
+### 247.1 固定通道与本节优化对象
+
+固定§244的量子比特四标签通道，所有量子输出重置为同一纯态 $P$。设置标签翻转概率 $p$ 已标定，原设置副本和翻转种子不在取得接口中。采用主范围
+$$
+0\le c<1,\qquad p\in[0,1]\setminus\left\{\frac12\right\},
+\qquad
+A=\frac{1+c}{2},\quad K=\frac{1-c}{2},\quad
+\beta=1-2p,\quad B=\beta^2K.
+\tag{247.1}
+$$
+因此 $A\ge B>0$。令 $u,v$ 为§244的两条正交单位轴，则实际效应向量为
+$$
+a=\sqrt A\,u+\beta\sqrt K\,v,
+\qquad
+b=\sqrt A\,u-\beta\sqrt K\,v.
+\tag{247.2}
+$$
+它们满足
+$$
+\|a\|=\|b\|=\ell:=\sqrt{A+B},
+\qquad
+\|a\times b\|=2\sqrt{AB}>0.
+\tag{247.3}
+$$
+候选与均匀目标在四个报告标签上的效应差为 $\pm a\cdot\sigma/4$ 和 $\pm b\cdot\sigma/4$。
+
+完整距离、无参考最优值及优势为
+$$
+D=\frac\ell2,\qquad U=\frac{\sqrt A}{2},\qquad
+\delta=D-U>0.
+\tag{247.4}
+$$
+对任意有限维参考 $E$ 及联合态 $\Omega$，仍以 $g(\Omega)$ 表示实际联合输出的半迹距离，以 $E_F(\Omega)$ 表示输入—参考形成纠缠。§245已经证明
+$$
+g(\Omega)\le U+\delta E_F(\Omega).
+\tag{247.5}
+$$
+
+固定 $0<\theta<1$，考察全部有限参考上的态
+$$
+\mathcal C_\theta=
+\{\Omega:E_F(\Omega)=\theta,\quad
+ g(\Omega)\ge U+\delta\theta\}.
+\tag{247.6}
+$$
+由（247.5），这些态必恰好达到 $g(\Omega)=U+\delta\theta$。它们是当前响应阈值下全局最省形成纠缠的探针，本节求其参考边缘
+$$
+\Omega_E=\operatorname{Tr}_H\Omega
+\tag{247.7}
+$$
+的最小 von Neumann 熵。全部可读取制备旗标均计入 $E$。
+

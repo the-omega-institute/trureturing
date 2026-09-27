@@ -1,0 +1,34 @@
+**定义 409.1（原始记录因子上的完整局部投影接口）。** 取整数 $d,q,n\ge1$，系统为单个 $S=\mathbb C^d$，固定系统正交基 $\{|i\rangle\}_{i=1}^d$，每份记录的物理空间为 $H=\mathbb C^q$。给定已知单位记录 $r_i\in H$，按定义 400.1 的受控制备，在测量之前完成全部 $n$ 份记录：
+
+$$
+J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n},\qquad
+\mathcal H_R=H^{\otimes n}.
+$$
+
+输入可以是 $S$ 上任意未知态，也可以与任意有限维参考 $A$ 纠缠；参考始终不被操作。每位持有者只持有一个原始 $H$ 因子，全部因子均被测量，不存在另一个未纳入模型的不可访问记录。制备之后不增加共享纠缠、量子通信、联合记录操作或系统—记录相干操作；记录测量期间不操作 $S$。
+
+将记录按复射影射线分类，设共有 $k$ 类，选择单位代表 $s_1,\ldots,s_k$，并固定已知的校准相位及类别映射：
+
+$$
+r_i=u_i s_{c(i)},\qquad |u_i|=1,\qquad
+c:\{1,\ldots,d\}\twoheadrightarrow\{1,\ldots,k\}.
+$$
+
+不同 $s_j$ 不共线。记实际单份记录跨度为
+
+$$
+E=\operatorname{span}_{\mathbb C}\{s_1,\ldots,s_k\}\subseteq H,
+\qquad \varrho=\dim_{\mathbb C}E.
+$$
+
+因此 $1\le\varrho\le\min(q,k)$；$\varrho$ 不是环境维数 $q$，也不是张量幂记录的秩。$E$ 的使用只表述记录族的数学关系，不授予物理压缩或新的张量分解权限。
+
+第 $a$ 位持有者选择单位 ket $|a_a\rangle\in H$，作完整两结果投影测量
+
+$$
+Q_{a,0}=|a_a\rangle\langle a_a|,\qquad
+Q_{a,1}=I_H-Q_{a,0}\qquad(1\le a\le n).
+$$
+
+全部 $2^n$ 个联合结果均保留为测量结果，只接受全第一结果 $\varepsilon=(0,\ldots,0)$，成功时对 $S$ 施加一个固定的终端对角酉反馈 $U$。投影及反馈可以依赖已知记录族和实际次数 $n$，不得依赖未知输入。沿用定义 389.2 的恢复要求：接受映射 $\mathcal T$ 满足 $\mathcal T=p\operatorname{id}_S$，其中 $0<p\le1$，等式作用于全部系统矩阵，并须保持任意未操作参考。
+

@@ -1,0 +1,256 @@
+**定理 68.5（完整组计数与精确标量的条件离散熵率）。** 对每份原始数据 $x$，
+以完整所选组计数向量 $R$ 在均匀大小 $q$ 支持先验下的有限后验分布定义
+
+```math
+h_M(x)=-\sum_r\mathbb P(R=r\mid\mathscr X_M=x)
+                    \log_2\mathbb P(R=r\mid\mathscr X_M=x),
+\qquad 0\log_20=0.
+```
+
+式 (68.19)。
+
+$h_M^T(x)$ 则是精确实值 $T_M$ 在同一数据纤维上的有限原子分布的离散熵。置
+
+```math
+c_q=\phi(1-\beta)/\beta,\quad
+\mathcal I=\{u:a+u\ge0,\ b+\alpha u\ge0\},\quad
+J_c(v)=v\log(v/c)-v+c\quad(v\ge0),
+```
+
+```math
+I(u)=J_a(a+u)+J_b(b+\alpha u),\qquad
+\mathscr H(r,\beta)=\frac1{2\log2}\int_{\mathcal I}(c_q-I(u))_+\,du.
+```
+
+式 (68.20)。
+
+这里 $0\log0=0$，率函数使用自然对数，$\mathscr H(r,\beta)$ 有限且严格为正。
+原平稳独立对与连续路径实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta),
+\qquad
+\frac{h_M^T(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.21)。
+
+收敛在先验数据概率意义下成立，亦即对每个固定 $e>0$，上述任一偏差超过 $e$ 的概率
+在所有大小 $q$ 的确定支持抽样律下之上确界趋零。这里仍评价由均匀先验定义的熵函数，
+不改用确定支持的点质量先验。在 $x\in H_M$ 上，$h_M^T(x)=h_M(x)$，
+给定 $x,T_M$ 后组计数的离散熵精确为零。结论不涉及 Gaussian 微分熵或期望熵的收敛。
+
+**证明。** 全部占据数先在原实际数据律下定义，不条件于截断成功。
+取固定充分大的 $C_0$，使全行计数截断事件 $\mathcal C_M$ 的失败概率至多 $CM^{1-D_0}$。
+第 68.2 条的一、二行生成函数比较可在任意固定倍数的 $\lambda$ 计数范围内使用。
+具体地，对于 $k=1,2$ 个指定行，在 Cauchy 系数圆上取各半径
+$\max(n_\nu,1)/m_\nu$，其中 $m_\nu$ 是该信号或背景 Poisson 坐标的均值。
+这些半径有共同常数上界；相对 Poisson 点质量的误差最多引入
+$C\prod_\nu\sqrt{n_\nu+1}$。因此对包括零计数在内的指定元组，
+
+```math
+\mathbb P_S^{\mathcal E}\{N=\mathbf n\}
+ =\mathbb P_{\rm Pois}\{N=\mathbf n\}
+       (1+O(\lambda^{k+1}/M)),\qquad k=1,2.
+```
+
+式 (68.22)。
+
+路径行仍可相依；此处使用秩二生成函数的系数界。指定点质量的误差是相对误差，
+不能换成会淹没稀有组均值的固定加性误差。
+设 $\alpha_Q=P/Q$、$\xi=a\lambda-k_0\in[0,1)$。在全行截断内，
+整数间隙与 $\lambda(\alpha-\alpha_Q)+\epsilon\lambda+q^{-1}=o(w)$、$w=o(Q^{-1})$
+使原窗口恰由下列可行计数线元组组成，且不同元组的精确分数不同：
+
+```math
+K_M=\{j:k_j=k_0+jQ\ge0,\ l_j=l_0+jP\ge0,\ k_j+l_j\le C_0\lambda\},
+\qquad u_j=j/Q^2,\qquad |K_M|\le CQ^2.
+```
+
+式 (68.23)。
+
+令 $C_j$ 是实际全部候选行中具有该计数元组的行数；它在任意原数据上定义。
+在 $\mathcal C_M$ 上，这些正占据数给出完整窗口各组，零占据数组可补入计数向量。
+
+先核对端点。固定振幅满足 $r>15/16$，故 $a>31/32$、$b<1/32$、
+$b/\alpha\le10b<a$，于是 $\mathcal I=[u_-,\infty)$，其中 $u_-=-b/\alpha$。
+在内部
+
+```math
+I'(u)=\log((a+u)/a)+\alpha\log((b+\alpha u)/b),\qquad
+I''(u)=\frac1{a+u}+\frac{\alpha^2}{b+\alpha u}>0.
+```
+
+式 (68.24)。
+
+$I$ 在闭域连续，唯一极小值 $I(0)=0$，且 $I(u)\sim(1+\alpha)u\log u$。
+因此 $(c_q-I)_+$ 的支撑紧，且在零附近严格为正。
+左端点不能预先删除：令 $d_0=b/\alpha$、
+$I_-=(a-d_0)\log(1-d_0/a)+d_0+b$，则
+
+```math
+0<I_-<d_0+b\le11b<11/32<225/512<\phi,\qquad
+\beta_*=\frac{\phi}{\phi+I_-}\in(1/2,1).
+```
+
+式 (68.25)。
+
+最后一个下界来自 $\phi'(r)=\operatorname{atanh}r\ge r$，故 $\phi(r)\ge r^2/2$。
+当 $\beta<\beta_*$ 时积分的正区域接触左端点；等号时端点积分值为零，右邻域为正；
+当 $\beta>\beta_*$ 时左根位于内部。右根 $u_+>0$ 总是唯一。
+增大同一个固定 $C_0$，使 $U_0=(C_0-1)/(1+\alpha)>u_++1$。
+这只扩大用于估计的截断，不改变原后验或窗口。
+
+令 $\bar u_j=\max(u_j,u_-)$。网格 $K_M/Q^2$ 的两端距 $u_-,U_0$ 为 $O(Q^{-2})$；
+若合法 $u_j<u_-$，其距离实际为 $O(\lambda^{-1}+\alpha-\alpha_Q)$，只影响有界数量的格点。
+又有 $k_j/\lambda=a+u_j-\xi/\lambda$、$l_j/\lambda=b+\alpha_Q u_j+\xi/\lambda$。
+对 $0\le n\le C_0\lambda$，统一使用
+$\log(n!)=n\log n-n+O(\log\lambda)$，包括 $n=0$。
+函数 $x\log x$ 在固定非负紧区间上的模连续性为
+$C|x-y|(1+|\log|x-y||)$，故信号 Poisson 点质量 $f_j$ 满足
+
+```math
+\log f_j=-\lambda I(\bar u_j)+O(\log\lambda)
+```
+
+式 (68.26)。
+
+这一步保留零负计数端点，没有把内部 Stirling 前因子延伸到零。
+背景点质量与 $f_j$ 的精确似然比为 $e^{W_j}$，两类总行均值同为 $\lambda$。
+因此占据数的比较均值
+
+```math
+m_j=qf_j\{1+(1-q/M)e^{\tau-W_j}\}=(2+o(1))qf_j,
+\quad
+\sup_{j\in K_M}|\log m_j-\lambda(c_q-I(\bar u_j))|\le C\log Q.
+```
+
+式 (68.27)。
+
+$W_j=\tau+o(w)$ 在整个截断线一致成立，$m_j>0$，但不要求其趋无穷。
+由 (68.22) 对同组的一个或两个行指标求和，记 $\varepsilon_M=C\lambda^3/M$，得到
+
+```math
+|\mathbb E C_j-m_j|\le\varepsilon_Mm_j,
+\qquad \operatorname{Var}C_j\le C(m_j+\varepsilon_Mm_j^2).
+```
+
+式 (68.28)。
+
+对任意固定 $A>2$，Markov 给 $1+C_j\le Q^A(1+m_j)$，
+对 $m_j\ge Q^A$ 再用 Chebyshev 给 $C_j/m_j\in[1/2,3/2]$，
+这些断言同时失败的概率至多 $CQ^{2-A}+CQ^2\varepsilon_M$。
+当 $m_j<Q^A$ 时只用 $\log(1+m_j)\le A\log Q+\log2$，不要求相对集中。
+由 $|\log(1+m)-(\log m)_+|\le\log2$，同一好事件上
+
+```math
+\sup_{j\in K_M}
+ \left|\log(1+C_j)-\lambda(c_q-I(\bar u_j))_+\right|\le C_A\log Q.
+```
+
+式 (68.29)。
+
+这是全窗口对数占据数估计；空组和过渡区域 $I\approx c_q$ 都在其中。
+
+下一步仅对给定原始数据的校准辅助标签取独立乘积律 $\mathsf Q_x$。
+第 35 章的校准根满足
+$p_i=\operatorname{logistic}(W_i-\log((M-q)/q)+\theta_M)$，
+$\theta_M=O_{\mathbb P}(q^{-1/2})$，总方差 $d_{\rm all}\asymp q$。
+这些全窗口估计也可从 (68.22) 核对：在倾斜前，精确改变测度给
+混合总成功均值为 $q$，混合总 Bernoulli 方差为 $q\mathbb E_s(1-p^0)$。
+信号 Poisson 分数的均值距阈值 $O(1)$、标准差为固定正倍数的 $\sqrt\lambda$，
+其普通特征函数 CLT 使 $\mathbb E_s(1-p^0)\to1/2$。
+一、二行比较对这些有界非负函数给方差
+$C(\mu+\varepsilon_M\mu^2+M^{2-D_0})$，其中 $\mu\asymp q$。
+由于 $\varepsilon_Mq\to0$，校准总和误差为 $O_{\mathbb P}(\sqrt q)$；
+logistic 方差在位移 $\theta$ 下至少为原值的 $e^{-|\theta|}$ 倍，给出上述根估计。
+原窗口内因而有 $p_j\in[1/4,3/4]$，概率趋一。
+
+对任意固定 $p_0>0$，经典二项分布离散熵界在全部 $n\ge0$、
+$p\in[p_0,1-p_0]$ 上统一给
+
+```math
+\left|H_{\rm disc}(\operatorname{Bin}(n,p))
+       -\frac{\log(1+n)}{2\log2}\right|\le C_{p_0}.
+```
+
+式 (68.30)。
+
+下界可由 Fourier 反演的最大原子界 $C/\sqrt{n+1}$ 取得；
+上界取离散比较律 $r_k=Z^{-1}\exp(-(k-np)^2/(n+1))$，
+$Z\le C\sqrt{n+1}$，用相对熵非负性和二项方差至多 $n/4$ 即得。
+$n=0$ 单独为零。各完整组在 $\mathsf Q_x$ 下是独立的
+$\operatorname{Bin}(C_j,p_j)$；设其联合离散熵为 $\widetilde h_M(x)$，则
+
+```math
+\left|\widetilde h_M(x)-\frac1{2\log2}\sum_{j\in K_M}\log(1+C_j)\right|
+ \le CQ^2.
+```
+
+式 (68.31)。
+
+(68.29) 与网格间距 $Q^{-2}$ 给
+
+```math
+\frac{\widetilde h_M(\mathscr X_M)}{Q^5}
+ =\frac1{2\log2\,Q^2}\sum_{j\in K_M}(c_q-I(\bar u_j))_++o_{\mathbb P}(1)
+ \longrightarrow\mathscr H(r,\beta).
+```
+
+式 (68.32)。
+
+率函数正部先增后减、总变差有限，Riemann 和误差为 $O(Q^{-2})$，
+即使左端点导数无界也成立。这里 $Q^5=\lambda Q^2$：
+每组对数占据数的尺度是 $\lambda$，计数线的宏观网格数是 $Q^2$。
+
+最后在同一有限字母表上传递实际后验熵。
+信号线概率满足 $\sum_{j\in K_M}f_j\le C/(Q\sqrt\lambda)$：
+两个 Poisson 最大点质量各为 $O(\lambda^{-1/2})$，在中心区域沿正计数间距 $Q$
+求 Gaussian 上界和，余下固定比例偏移为指数尾。故实际 $|J|=O_{\mathbb P}(B^2)$，
+$d_J=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$，补集方差 $d_{J^c}\asymp q$。
+给定数据后，完整校准乘积律条件于总数 $q$ 就是精确后验，所选向量的密度比为
+
+```math
+L(S_J)=\frac{\mathsf Q_x(S_{J^c}=q-S_J)}{\mathsf Q_x(S_{\rm all}=q)}.
+```
+
+式 (68.33)。
+
+独立 Bernoulli 和的局部界
+$\sup_k|\mathbb P(S=k)-(2\pi d)^{-1/2}e^{-(k-m)^2/(2d)}|\le C/d$
+对异质参数统一成立：中心特征函数满足
+$|\psi(t)|\le e^{-2d\sin^2(t/2)}$、
+$\log\psi(t)=-dt^2/2+O(d|t|^3)$，小区间积分误差为 $O(d^{-1})$，其余为指数尾。
+总均值恰为整数 $q$；因此令 $V=S_J-\mathbb E_{\mathsf Q_x}S_J$，有
+$L(S_J)=\sqrt{d_{\rm all}/d_{J^c}}e^{-V^2/(2d_{J^c})}+O(q^{-1/2})$。
+对 $|L-1|$ 积分并用 $\mathbb E_{\mathsf Q_x}V^2=d_J$，得到一次完整所选向量比较
+
+```math
+\Delta_M=d_{\rm TV}(\mathsf P_{x,J},\mathsf Q_{x,J})
+ \le C(d_J/q+q^{-1/2})=O_{\mathbb P}(Q^{-5/2}+q^{-1/2}).
+```
+
+式 (68.34)。
+
+这里 TV 是半 $\ell^1$ 距离。计数映射收缩 TV；两种计数律都在同一个盒字母表
+$\mathcal A_x=\prod_{j\in K_M}\{0,\ldots,C_j\}$ 上，允许其中一些点在实际后验中概率为零。
+在全行截断上，$\log_2|\mathcal A_x|\le CQ^2\log_2(M+1)\le CQ^5$。
+对于同一 $D$ 点字母表、TV 为 $t$ 的两律，最大耦合及误差指示位的链式法则给
+$|H(P)-H(Q)|\le h_2(t)+t\log_2(D-1)$；$D=1$ 时两熵都为零。
+因此
+
+```math
+\frac{|h_M(x)-\widetilde h_M(x)|}{Q^5}
+ \le Q^{-5}+C\Delta_M=o_{\mathbb P}(1).
+```
+
+式 (68.35)。
+
+这不是无界熵的一般 TV 连续性断言；完整组计数字母表的对数大小界是必要的一步。
+坏数据只付其概率，以证明数据概率收敛，没有用坏事件概率乘未受控的熵。
+由 (68.32)、(68.35) 得第一条 (68.21)。定理 68.2 在 $H_M$ 上使组计数与 $T_M$
+仅为同一有限原子概率表的重标记，故熵精确相等；$\mathbb P(H_M^c)\to0$ 给第二条。
+支持置换保持这些数据可测熵函数，且在所有大小 $q$ 支持上传递，得到所述一致确定支持含义。
+共同判向成功事件上所有数据、中心、组及熵函数同时一致，原未知方向结论同样按事件概率转移。
+这不提供期望熵极限、二阶熵展开、增长维数 CLT、组内站点恢复、稳定逆或计算效率。证毕。
+

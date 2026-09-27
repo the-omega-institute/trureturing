@@ -1,0 +1,36 @@
+**定理 16.2（两个方向实验的稀疏检测边界）。** 设
+
+```math
+ q=M^{1-\beta+o(1)},\qquad \tfrac12<\beta<1,\qquad r\longrightarrow0,
+ \qquad \frac{\lambda r^2}{2\ell}\longrightarrow\rho\in(0,\infty).
+ \tag{16.3}
+```
+
+定义
+
+```math
+ \rho_*(\beta)=
+ \begin{cases}
+ \beta-\tfrac12,&\tfrac12<\beta\le\tfrac34,\\[0pt]
+ (1-\sqrt{1-\beta})^2,&\tfrac34<\beta<1.
+ \end{cases}
+ \tag{16.4}
+```
+
+则对  $`\mathcal E\in\{\mathcal E_{\rm pair},\mathcal E_{\rm path}\}`$ ，
+
+```math
+ R_{\mathcal E}(d,s,q,r)\longrightarrow
+ \begin{cases}\tfrac12,&\rho<\rho_*(\beta),\\0,&\rho>\rho_*(\beta).
+ \end{cases}
+ \tag{16.5}
+```
+
+存在只使用  $`d,s`$  的同一组规则，在每条满足严格上侧条件的序列上
+实现错误率趋零；规则不需要  $`q,\beta,r`$ 。结论不涉及等号处的临界窗。
+
+式 (16.4) 的曲线及独立二项坐标的 Higher Criticism 边界是已知结果，
+见 [Mukherjee–Pillai–Lin，式 (6.1)、(6.4) 与定理 6.8(2)、6.10(2)](../../../Library/Dynamics/mukherjee2015binary.md)。
+其二项成功概率偏移对应这里的  $`r/2`$ ，文中强度参数对应  $`\rho/4`$ 。
+本定理的对象是带补偿的固定正支持及其两个实际方向观测律。
+

@@ -1,0 +1,18 @@
+**引理75.1（三块像的维数与完整纤维）。** 有
+
+$$
+\dim W=6-\dim(L_A\cap L_B\cap L_C),
+\tag{75.4}
+$$
+
+$$
+\begin{aligned}
+W_A&=L_A+(L_B\cap L_C),\\
+W_B&=L_B+(L_C\cap L_A),\\
+W_C&=L_C+(L_A\cap L_B).
+\end{aligned}
+\tag{75.5}
+$$
+
+特别地，只要任意一对 $L_A,L_B,L_C$ 交零，$W$ 就六维。
+

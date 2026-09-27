@@ -1,0 +1,28 @@
+### 77.1 等号合同与归一化块
+
+沿用第76节的有限维复 Hilbert 空间 $Q,F$，其中 $\dim Q=q$、$\dim F=2$，以及可逆 $A:F\to F$。置
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+设 $M:Q\otimes J\to Q\otimes F$ 是收缩，并在四条不同射线上保持二次纤维。第76节的三次多项式比较给出所有射线上的保持关系及加权块表示。选 $A^*A$ 的特征基，记正特征值为 $\mu,\nu$，置
+$$
+s=\mu+\nu,\qquad c=s^2-\mu\nu>0.
+$$
+在该节给出的正交基中，
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)
+=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{77.1}
+$$
+记 $D=I-MM^*\succeq0$、$d=\operatorname{rank}D$，并假设
+$$
+q=3d>0.
+\tag{77.2}
+$$
+“独立输入和输出酉坐标”意指用 $(U_{\rm out}\otimes I_F)M(U_{\rm in}^*\otimes I_J)$ 替换矩阵表示，其中两个 $Q$ 上的酉可以不同。这种变换保持收缩性、缺陷秩和全部纤维秩；它不声称固定通道的反复使用也允许每轮自由换坐标。
+

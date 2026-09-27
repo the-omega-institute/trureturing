@@ -1,0 +1,14 @@
+**推论 169.3（任务扩大时接口成本单调）。** 若 $\mathcal F\subseteq\mathcal F'$，则
+
+$$
+\operatorname{rank}\mathcal R_{\mathcal F}
+\le
+\operatorname{rank}\mathcal R_{\mathcal F'}.
+$$
+
+所以允许更多后续控制或读数不会降低精确线性接口的最小维数；它只能保持或增加边界成本。
+
+这里的秩是声明任务族上的线性下界，不自动等同于物理装置的 Hilbert 空间维数。正性、完全正性和可实现性还需要额外检查。
+
+---
+

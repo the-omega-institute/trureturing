@@ -1,0 +1,46 @@
+## 59. 七维第二终端秩二的尾环境二维封闭性
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+七维接收器 $K$ 独立纯启动，全部持久系统计费，同一个全域 CPTP 接收通道精确服务前六个完整参考终端。第二终端可逆附加态秩为二，第三至第六终端纯。固定同一 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$，二者均等距且两像正交。
+
+沿第53节，实际第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 为 $Q$ 中正交单位向量，附加态 $\tau_\Gamma$ 在 $\Gamma$ 上正定。置
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}(z,w),\qquad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮给等距 $R_\Gamma:\Gamma\to E$、二维环境 $F=R_\Gamma\Gamma$，以及正交单位接收向量 $s,t,r,j$，使
+$$
+V_0(z\otimes\xi)=s\otimes R_\Gamma\xi,\qquad
+V_0(w\otimes\xi)=t\otimes R_\Gamma\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R_\Gamma\xi,\qquad
+V_1(w\otimes\xi)=j\otimes R_\Gamma\xi.
+\tag{59.1}
+$$
+写
+$$
+A_0=\operatorname{span}(s,t)=G_3,\qquad
+B_0=\operatorname{span}(r,j)=Q_3.
+$$
+于是 $A_0\perp B_0$，并有两个四维旧块
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F.
+\tag{59.2}
+$$
+第三轮新环境可以与旧环境纠缠，未被假设为纯向量。
+
+对 $n=4,5,6$，纯尾环境和实际来源空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{59.3}
+$$
+各 $H_n,G_n,Q_n$ 二维；$C_n=G_n\oplus Q_n$ 四维，$H_n\subset C_n$ 到两个正交因子的投影均为同构，特别地 $H_n\cap G_n=0$。
+

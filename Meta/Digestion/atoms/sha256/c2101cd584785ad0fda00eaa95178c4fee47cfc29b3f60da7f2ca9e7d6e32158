@@ -1,0 +1,55 @@
+## 定理 385.1（有限合法接口的精确判据）
+
+在共同域 $\mathcal D$ 上，两准备对所有声明的 $(w,F_w)$ 给出相同末端联合概率，当且仅当
+
+$$
+\operatorname{Tr}(\Delta E)=0
+\quad\text{对所有 }E\in\mathcal V_{\mathcal L}.
+$$
+
+因而它们可由该接口区分，当且仅当 $\Delta\notin\mathcal V_{\mathcal L}^{\perp}$，其中正交取 Hermitian 矩阵上的实迹配对
+
+$$
+\langle A,B\rangle_{\mathbb R}=\operatorname{Tr}(AB)\in\mathbb R.
+$$
+
+### 证明
+
+对每个合法词，
+
+$$
+p_\rho(w,F_w)-p_\sigma(w,F_w)
+=\operatorname{Tr}((\rho-\sigma)\Phi_w^*(F_w))
+=\operatorname{Tr}(\Delta E_{w,F}).
+$$
+
+所以全部联合读数相等，当且仅当差值对生成集合为零；线性性把这等价地扩展到其有限实线性张成空间。若候选依赖不同的权限域，域成员资格和失败记录本身就是接口读数，此时上述共同域的概率判据不能抹除该差异。∎
+
+### 应用证明（相干历史与两步仪器）
+
+空词且无中间操作时，末端效果为钟对角的 $P_n\otimes F$，其确实不能检测 $\Gamma-\Gamma_{\mathrm{diag}}$ 的钟非对角块。对含操作的普通词，末端 $F$ 的对角性不推出拉回效果 $E=\Phi_w^*(F)$ 对角；必须直接要求每个拉回效果本身对角，才能应用同一相位盲结论。拉回效果的非对角性只是必要条件，未必足以区分；精确条件是存在某个声明的 $E$ 使
+
+$$
+\operatorname{Tr}\bigl[(\Gamma-\Gamma_{\mathrm{diag}})E\bigr]\ne0.
+$$
+
+因此不能声称每个允许混合的操作都能区分这两个历史。
+
+作为该应用的具体命题，考虑两个单步效果完全相同的二能级 instrument。第一仪器的 Kraus 分支为
+
+$$
+K_y=
+\begin{cases}
+|0\rangle\langle0|,&y=0,\\
+|1\rangle\langle1|,&y=1,
+\end{cases}
+$$
+
+第二仪器为 $\widetilde K_y=XK_y$，其中 $X$ 是 Pauli-$X$。则
+
+$$
+K_y^\dagger K_y=\widetilde K_y^\dagger\widetilde K_y\quad(y=0,1),
+\qquad
+\sum_yK_y^\dagger K_y=\sum_y\widetilde K_y^\dagger\widetilde K_y=I.
+$$
+

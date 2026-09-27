@@ -1,0 +1,21 @@
+## ST5．对偶要求连同观察协议一起运输
+
+### 定理 ST5.1：完整线性响应的对偶协变
+
+设两个正定有限高斯实现通过正交映射 $U$ 相关：
+
+$$
+\widetilde D=UDU^{\mathsf T},
+\qquad \widetilde J=JU^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{
+\widetilde J\widetilde D^{-1}\widetilde J^{\mathsf T}
+=JD^{-1}J^{\mathsf T}.
+}
+\tag{ST5.1}
+$$
+

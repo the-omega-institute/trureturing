@@ -1,0 +1,15 @@
+**定理212.2（容量限制的正部平方代价）。**
+存在联合实解析且严格正的函数 $C(\epsilon,h)$，使
+
+$$
+\boxed{
+E_{11}(\epsilon,h)-E(\epsilon,h)
+=\epsilon C(\epsilon,h)[b(\epsilon)-h]_+^2.
+}
+\tag{212.8}
+$$
+
+因此在固定小邻域存在常数 $0<c_-\le c_+<\infty$，使该代价介于
+$c_-\epsilon[b(\epsilon)-h]_+^2$ 与
+$c_+\epsilon[b(\epsilon)-h]_+^2$ 之间。
+

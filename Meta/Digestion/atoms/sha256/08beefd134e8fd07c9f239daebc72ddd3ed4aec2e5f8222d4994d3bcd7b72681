@@ -1,0 +1,31 @@
+**例 141.2（两种后继的长期差异）。** 取第 137.2 例的两个目标：
+
+$$
+\zeta^{(A)}=P_*,
+\qquad
+\zeta^{(B)}=P_0.
+$$
+
+则
+
+$$
+r_{\zeta^{(A)}}=1,
+\qquad
+r_{\zeta^{(B)}}=\frac12.
+$$
+
+两者都在等待占比 $\lambda\le1/2$ 的第 119 节可达区域内，但长期平均时间率分别为
+
+$$
+\boxed{
+\lim_{m\to\infty}\frac{\mathbb E_A[S_m]}m=1,
+\qquad
+\lim_{m\to\infty}\frac{\mathbb E_B[S_m]}m=\frac12.
+}
+\tag{141.4}
+$$
+
+第一轮事件的时间律在两种情形中都为 $e^{-t}dt$；递归展开后，二者的长期内部时钟已经不同。
+
+---
+

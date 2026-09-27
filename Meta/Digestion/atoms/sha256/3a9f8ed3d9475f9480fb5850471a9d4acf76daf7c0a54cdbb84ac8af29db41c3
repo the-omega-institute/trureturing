@@ -1,0 +1,100 @@
+**定理 15.12（任意校准的补偿分类与同时达到）。** 在定义15.10–15.11下，令 $E=A\times B$，并定义恒定差方向及其增量：
+
+$$
+\begin{gathered}
+D_f=\{d\in E:\ f(x+d)-f(x)\text{ 与 }x\in E\text{ 无关}\},
+\qquad \chi_f(d)=f(d)-f(0),\\
+D_{f,H}=\{d\in D_f:\chi_f(d)\in H\},\qquad
+\Gamma_H=\{(s,t,-\chi_f(s,t)):(s,t)\in D_{f,H}\}\subseteq S.
+\end{gathered}
+\tag{15.34}
+$$
+
+再取两条坐标轴上的限制：
+
+$$
+\begin{aligned}
+P_A&=\{s\in A:(s,0)\in D_f\},&
+\chi_A(s)&=\chi_f(s,0),& P_A^H&=\chi_A^{-1}(H),&P_A^0&=\ker\chi_A,\\
+P_B&=\{t\in B:(0,t)\in D_f\},&
+\chi_B(t)&=\chi_f(0,t),& P_B^H&=\chi_B^{-1}(H),&P_B^0&=\ker\chi_B.
+\end{aligned}
+\tag{15.35}
+$$
+
+这些方向集均为相应群的子群，$\chi_f,\chi_A,\chi_B$ 为同态，$\Gamma_H\le S$。两来源点 $z,z'$ 在同端的所有共同未来词后读数相同，当且仅当 $z'-z$ 属于下列对应子群：
+
+$$
+\begin{aligned}
+N_A^+&=\{(0,t,0):t\in P_B^0\},&
+N_B^+&=\{(s,0,0):s\in P_A^0\},\\
+N_A^-&=\{(0,t,-\chi_B(t)):t\in P_B^H\},&
+N_B^-&=\{(s,0,-\chi_A(s)):s\in P_A^H\},\\
+N_A^\ell&=\Gamma_H,&N_B^\ell&=\Gamma_H.
+\end{aligned}
+\tag{15.36}
+$$
+
+最小值为
+
+| 15.12的任务最小值 | $M_A^T$ | $M_B^T$ | $J^T$ |
+| --- | --- | --- | --- |
+| 双钟任务 $T_+$的同时最小实现 | $n_S/|P_B^0|$ | $n_S/|P_A^0|$ | $n_S$ |
+| 删原钟任务 $T_-$的同时最小实现 | $n_S/|P_B^H|$ | $n_S/|P_A^H|$ | $n_S$ |
+| $T_\ell$的同时最小实现 | $n_S/|D_{f,H}|$ | $n_S/|D_{f,H}|$ | $n_S/|D_{f,H}|$ |
+
+每行均有一对局部实现同时达到该行三项；实现依赖任务行。两端各自保存 $S/N_i^T$，它们同源联合像的大小是
+
+$$
+\left|\{(z+N_A^T,z+N_B^T):z\in S\}\right|
+=[S:N_A^T\cap N_B^T].
+\tag{15.37}
+$$
+
+证明。先在本校准计算中使用恒定差的标准加法性质。有限向量空间中的 additive translator 及其子群性见 Lai，*Additive and Linear Structures of Cryptographic Functions*，FSE 1994，LNCS 1008（1995），§2、Theorem 1 及式(5)，[DOI](https://doi.org/10.1007/3-540-60590-8_6)。有限交换群上的差分关系 $f(x+d)=f(x)+c$ 亦见 Baudrin 等，*Commutative Cryptanalysis as a Generalization of Differential Cryptanalysis*（2025），Definition 1，[DOI](https://doi.org/10.1007/s10623-025-01625-9)。这里无需域结构：零方向的差为零；对 $d,e\in D_f$，
+
+$$
+f(x+d+e)-f(x)
+=\bigl(f(x+d+e)-f(x+d)\bigr)+\bigl(f(x+d)-f(x)\bigr)
+=\chi_f(e)+\chi_f(d).
+\tag{15.38}
+$$
+
+且 $f(x-d)-f(x)=-\chi_f(d)$。这证明 $D_f$ 是子群及 $\chi_f$ 可加；其轴限制、核、$H$ 的原像也为子群。补偿图是同态 $d\mapsto(d,-\chi_f(d))$ 的像，其第一坐标投影单射，故 $|\Gamma_H|=|D_{f,H}|$。这些已知的恒定差性质在此只承担补偿分类中的一步。
+
+设 $z=(a,b,h)$，$z'-z=(s,t,k)$。共同续接总增量 $(u,v,w)$ 后的校准读数之差为
+
+$$
+k+f(a+u+s,b+v+t)-f(a+u,b+v).
+\tag{15.39}
+$$
+
+全部平移可由允许词实现，故 $(a+u,b+v)$ 遍历 $E$。式(15.39)恒为零恰好要求 $(s,t)\in D_f$ 且 $k=-\chi_f(s,t)$；$k\in H$ 又恰给 $D_{f,H}$。于是只读 $\ell$ 的未来核为 $\Gamma_H$。加入 $A$ 端的己方位置输出，空续接就强制 $s=0$；再加入原钟输出就强制 $k=0$。$B$ 端对称，得到式(15.36)。反向逐项代入式(15.39)，即可见每个所列差在所有未来词后保持对应读数相等。此论证也覆盖生成元输入，因为任何所需总增量有一个合法生成元词。
+
+现在应用既有未来行为商的最小性。[TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §2.1–2.3 的实际轨道、历史摘要满射与陪集计数在这里取作用群 $S$、来源轨道 $S$、初态稳定子 $\{0\}$，并取唯一的类型顶点。因而该卷允许外部已知的顶点不携带任何免费位置或钟值。有限确定性机器的经典背景是 Moore，*Gedanken-experiments on Sequential Machines*（1956），Theorem 4，pp.142–143，[原文](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf)；本平移系统由生成元及逆连通，满足其强连通前提。
+
+仓内 `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean` 的 `controlled_behavior_universal_property` 则适用于有限来源 $Y$、有限状态 $W$、满射实现 $Y\to W$ 及交换的更新、读出方程。这里可取 $Y=S$、来源更新 $z\mapsto z+u$、指定读出 $o_i$；但一般历史摘要未必有这样的 $S\to W$。对于定义15.11所允许的全部候选，所需的历史论证如下。若 $\sigma_i(w)=\sigma_i(w')$，确定性更新使任意共同续接后的状态仍相同，精确解码遂给相同未来读数。因此
+
+$$
+\pi_i:W_i^{\mathrm{reach}}\longrightarrow S/N_i^T,
+\qquad \pi_i(\sigma_i(w))=z(w)+N_i^T
+\tag{15.40}
+$$
+
+良定义。每个来源点可达，所以 $\pi_i$ 满射，得到 $|W_i^{\mathrm{reach}}|\ge[S:N_i^T]$，不要求 $W_i$ 有限。对同一历史产生的状态对，$\pi_A,\pi_B$ 一起满射到式(15.37)左侧的实际像，故联合下界也是该像的大小。两个来源点在此像下相等恰好是差同时落在 $N_A^T,N_B^T$ 中；每条纤维为其交的一个陪集，得到式(15.37)的指数，而不是两个局部指数之积。
+
+达到构造只使用各端自身的商状态：
+
+$$
+\begin{gathered}
+W_i=S/N_i^T,\qquad \mathrm{Init}_i=0+N_i^T,\\
+\mathrm{Update}_i(z+N_i^T,u)=(z+u)+N_i^T,
+\qquad \mathrm{Decode}_i(z+N_i^T)=o_i(z).
+\end{gathered}
+\tag{15.41}
+$$
+
+平移保持陪集相等，空未来词保证读数在陪集上常值，故更新与解码均良定义。所有商状态可达；初态解出的校准钟是 $f(0,0)$。两端从同一零制备出发，按同一标记更新，实际状态对恰遍历式(15.37)的像。这给每行的局部与联合同时达到。
+
+最后，$N_A^+\cap N_B^+=N_A^-\cap N_B^-=\{0\}$，因为交中两个空间分量均须为零，钟分量也随之为零。故前两行的联合最小值均为 $n_S$。也可从联合当前输出恢复 $a,b,\ell$，再由 $h=\ell-f(a,b)$ 恢复整个 $S$。最后一行两核均为 $\Gamma_H$；两端取同一商后，联合像是该商的对角像。代入各子群的阶得到全表。证毕。
+

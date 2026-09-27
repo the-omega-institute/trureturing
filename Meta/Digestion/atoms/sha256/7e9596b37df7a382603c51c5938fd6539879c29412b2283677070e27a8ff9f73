@@ -1,0 +1,31 @@
+**证明。** 先置 $L=G_4+G_5+G_6$。三个独立环境给
+$$
+2+2+\dim L\le7.
+$$
+若 $\dim L=2$，则 $G_4=G_5=G_6$，固定 $V_0$ 给 $H_3=H_4=H_5$，与实际主角行列式 $\delta_4\ne\delta_5$ 矛盾。故 $\dim L=3$，并饱和全域 $V_0K$。
+
+第60节给 $\eta_1\in\operatorname{span}(A,B,C)$。由 $V_0k=p\eta_1$，逐独立环境坐标比较全域饱和式：首轮的 $A$ 系数若非零，则 $p\in U$；但 $V_1p=vA$ 与 $V_1U=Q_3B$ 的不同环境冲突。首轮的 $B$ 系数若非零，则 $p\in G_3$；但 $V_1G_3=Q_4C$ 同样冲突。因此 $\eta_1\parallel C$、$p\in L$，并且 $k\in S:=H_3+H_4+H_5$。去掉共同 $C$ 的 $V_0$ 限制为等距 $f:S\to L$，故 $\dim S=3$。
+
+如果 $G_4\ne G_5$，它们张成 $L$。固定 $V_1$ 在二者上都使用 $C$，故 $V_1L\subset K\otimes C$。但 $p\in L$、$V_1p=vA$，矛盾。所以 $G_4=G_5=T$，固定 $V_0$ 给 $H_3=H_4=D$。若再有 $G_3=T$，则 $(H_3,G_3)=(H_4,G_4)$，违反 $\delta_3\ne\delta_4$。得到（64.32）、（64.33）。
+
+现在令
+$$
+J=G_3+T,\qquad W=Q_4+Q_5.
+$$
+固定 $V_1$ 去掉共同环境 $C$ 后给等距 $g:J\to W$。同环境跨位正交给 $W\perp L$。实际满投影给
+$$
+P_WH_4=Q_4,\qquad P_WH_5=Q_5,
+\qquad P_WS=W.
+\tag{64.35}
+$$
+因此 $\dim W\le\dim S=3$。而 $G_3\ne T$ 给 $\dim J\ge3$。故
+$$
+\dim J=\dim W=3,
+\quad P_W|_S\text{ 为同构},\quad S\cap W^\perp=0.
+\tag{64.36}
+$$
+
+反设 $\langle B,C\rangle\ne0$。$G_3B\subset V_0K$ 和 $WC\subset V_1K$ 的跨位正交给 $G_3\perp W$；$T\subset L\perp W$ 又给 $J\perp W$。由（64.36），$S\cap J=0$，所以非零 $k\in S$ 不在 $J$ 中。
+
+$V_1$ 在四维 $J+\mathbb Ck$ 上都使用 $C$，其接收像 $W'$ 四维。跨位正交给 $W'\perp L$；$\dim K=7$、$\dim L=3$ 使 $W'=L^\perp$。再次由 $G_3B$ 与 $W'C$ 跨位正交及 $\langle B,C\rangle\ne0$，得到 $G_3\subset L$。现在 $J=G_3+T$ 三维，故 $J=L$。但 $p\in L=J$，固定 $V_1p=vA$ 又与 $V_1J=WC$ 的不同环境冲突。矛盾，故 $B\perp C$。证明完毕。
+

@@ -1,0 +1,54 @@
+**证明。** 对每个结果，把各 Kraus 的 $a,b,c,d$ 元素视为向量
+$\mathbf a_j,\mathbf b_j,\mathbf c_j,\mathbf d_j$。
+共同 TP 保证这些向量范数一致有界。置
+
+$$
+\mathbf v_j=\mathbf d_j-2m\mathbf a_j,\qquad
+\mathbf u_0=\mathbf b_0-i2n\mathbf a_0.
+$$
+
+则 $\|\mathbf u_0\|^2=U$、
+$\sum_j\|\mathbf v_j\|^2=V$。
+凡包含 $\mathbf c_j$ 的 Gram 条目均为
+$O(\sqrt C)=O_{I,K}(\epsilon)$。
+由 Cauchy–Schwarz，
+
+$$
+M_j=2mA_j+O(\sqrt V),\qquad
+D_j=4m^2A_j+O(\sqrt V+V).
+\tag{204.6}
+$$
+
+结果0的另两项满足
+
+$$
+N_0=-i2nA_0+O(\sqrt U),\qquad
+B_0=4n^2A_0+O(\sqrt U+U).
+\tag{204.7}
+$$
+
+定义剩余的 $b,d$ 交叉矩
+$Z_j=\sum_\alpha b_{j,\alpha}\overline{d_{j,\alpha}}$。
+两种结果均满足
+
+$$
+Z_j=2m\overline{N_j}+O(\sqrt V).
+\tag{204.8}
+$$
+
+对结果1，共同 TP 给
+
+$$
+N_1=-N_0-P,\qquad
+B_1=1-B_0-D_0-D_1,
+$$
+
+而 $|P|\le\sqrt{C(D_0+D_1)}=O_{I,K}(\epsilon)$。
+这控制了全部 Gram 条目。
+将 $A_j=1/2$、$C=U=V=0$ 代入这些关系，
+恰得到 $\Gamma^*(h)$ 的条目，包括结果1的额外跳跃权重。
+$U,V$ 在固定紧 Choi 集上一致有界，故其中的 $U,V$ 项
+也可分别吸收到常数倍的 $\sqrt U,\sqrt V$ 中。
+有限个条目合并即得（204.5）。
+整个推导没有除以 $B_*(h)$，所以也适用于接触端点。证毕。
+

@@ -1,0 +1,24 @@
+**定义 63.16（完整延迟谱递推）。** 状态为 $`(l,u,e,r)`$，其中 $`[l,u)\subseteq[0,9)`$ 是非空原低位标签区间，$`0\le e\lt 9`$ 是累计偏移模九，$`0\le r\le4`$ 是剩余读取预算。谱 $`(\beta,\upsilon)`$ 是所有二元、所有一元出现的进入等待多重集，以下均按非降序列示。记其树重数为 $`N_r(l,u,e;\beta,\upsilon)`$。
+
+单点状态仅有空谱，重数一，对所有预算成立；非单点在 $`r=0`$ 或 $`u-l\gt 2^r`$ 时所有重数为零。其他状态遍历 $`d=1,\ldots,9`$，令
+
+```math
+I_z=\{x\in[l,u):\lfloor(x+e+d)/9\rfloor=z\},\qquad
+ e'=(e+d)\bmod9.
+\tag{63.50}
+```
+
+保留所有非空 $`I_z=[l_z,u_z)`$，按 $`z`$ 递增排列，其个数 $`m`$ 为一或二。为每个孩子选一个预算 $`r-1`$ 的谱，然后形成
+
+```math
+\begin{aligned}
+\beta&=\mathop{\biguplus}_{z:I_z\ne\varnothing}\beta_z
+ \uplus\begin{cases}\{d\},&m=2,\\\varnothing,&m=1,\end{cases}\\[0pt]
+\upsilon&=\mathop{\biguplus}_{z:I_z\ne\varnothing}\upsilon_z
+ \uplus\begin{cases}\varnothing,&m=2,\\\{d\},&m=1.\end{cases}
+\end{aligned}
+\tag{63.51}
+```
+
+对每个得到的谱，把各孩子重数之积加到其重数中；不同等待、不同孩子选择分别相加。根为 $`(0,9,0,4)`$。允许一元等待九，不能用“不分割”作为剪枝理由。只求二元和不超过十八的部分时，可以删除 $`\sum\beta\gt 18`$ 的中间结果，因为所有祖先贡献均非负；不作其他支配剪枝。
+

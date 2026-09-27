@@ -1,0 +1,41 @@
+**定义 45.1（逼近尾与更晚的采样强度）。** 保持[后验阈值卷定义 39.1](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)的同一个
+$`r,\alpha,P_j,Q_j`$，固定 $`\beta\in(1/2,1)`$，记
+
+```math
+\eta_j=\alpha-P_j/Q_j,\qquad
+L_j=\log(1/\eta_j),\qquad d=\frac{\phi(1-\beta)}\beta,\qquad
+\lambda_j=\left\lfloor\frac{2L_j}d\right\rfloor.
+```
+
+式 (45.1)。
+
+也允许把最后一个等式换成任意确定正整数序列
+$`\lambda_j=2L_j/d+O(1)`$。用该强度重新计算 (39.3) 的全部参数，
+保留实际得分、窗口、先验和后验的定义。以下只取参数合法的充分大下标，并省略下标 $`j`$。
+令
+
+```math
+\chi_j=\eta_j\sqrt{q_j},\qquad B_M=\sqrt{\frac q{Q\sqrt\lambda}},\qquad
+c_M=\frac{W(k_0,l_0)-\tau}{w},\qquad
+c_0=\frac1{4\pi\sqrt{ab}},\qquad
+V_\chi(u)=c_0\int_{-1/(h\chi)}^{u/(h\chi)}e^{-\kappa x^2/2}\,dx,
+\quad -1\le u\le1.
+```
+
+式 (45.2)。
+
+这里 $`h,a,b,\kappa`$ 均为 (39.2) 的固定常数。
+每个 $`V_\chi`$ 连续且严格递增，$`V_\chi(-1)=0`$。
+定义原微观窗口上的过程、标准化端点和端点投影
+
+```math
+F_M(u)=\frac1{B_M}\sum_{\tau-w\lt W_i\le\tau+uw}
+                   (\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+T_M=\frac{F_M(1)}{\sqrt{V_{\chi_j}(1)}},\qquad
+C_M(u)=F_M(u)-\frac{V_{\chi_j}(u)}{V_{\chi_j}(1)}F_M(1).
+```
+
+式 (45.3)。
+
+全部坐标使用同一实际数据与标签；未知方向时仍共同使用一次方向判决和工作正向权重。
+

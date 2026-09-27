@@ -1,0 +1,12 @@
+**文献关系。** 热校准的正块参数化和无动态约束的根保真度最优值来自既有干涉/子空间保持通道理论 [OA06]。时间协变的能隙选择属于不对称性模式理论 [MS14]；自由能或 Gibbs 保持不足以单独约束相干的事实归于 [LJR15, FOR15]。本章相对于《统一预测几何》§15 的共同本征基公式，增加了允许非对易谱投影的精确最优值、均值力参考下的热谱交集判据、全辅助输入的动态误差身份，以及同一恢复任务的有限窗口精确前沿。任意多标签之间仍需共同正块与环路相容性；逐对达到本章最大值不保证存在一个同时达到全部值的多标签通道。
+
+[NMLW25] §6 的多元保真度操作任务问题是相关外部目标，《统一预测几何》已经为一个静态热恢复任务建立对应。本章研究其两标签任务在已指定动力学下的约束与误差，不将一个新加约束的两态问题认领为原多元开放问题的完整解决。矩阵极分解、正块判据、谱模态和通道范数均是已有数学构件；所列组合的纸面证明与文献优先权分别判断。
+
+[^tcs11-oi]: Daniel K. L. Oi、Johan Åberg，*Fidelity and Coherence Measures from Interference*，Physical Review Letters 97, 220404 (2006)，DOI [10.1103/PhysRevLett.97.220404](https://doi.org/10.1103/PhysRevLett.97.220404)，[作者稿](https://arxiv.org/abs/quant-ph/0603157)。式 (6) 的一般 subspace-preserving 可见度最大值是根保真度；更窄的局部准备类有不同上限。本文采用前一通道类并显式加入热校准和时间约束。
+
+[^tcs11-modes]: Iman Marvian、Robert W. Spekkens，*Modes of asymmetry: the application of harmonic analysis to symmetric quantum dynamics and quantum reference frames*，Physical Review A 90, 062110 (2014)，DOI [10.1103/PhysRevA.90.062110](https://doi.org/10.1103/PhysRevA.90.062110)，[arXiv:1312.0680v2](https://arxiv.org/abs/1312.0680v2)，§II 的模式分解及式 (2.7)–(2.10)。时间对称通道只映射相同频率模式；本文将该标准选择规则与一个固定热恢复正块的迹最优化合并。
+
+[^tcs11-lostaglio]: Matteo Lostaglio、David Jennings、Terry Rudolph，*Description of quantum coherence in thermodynamic processes requires constraints beyond free energy*，Nature Communications 6, 6383 (2015)，DOI [10.1038/ncomms7383](https://doi.org/10.1038/ncomms7383)，[arXiv:1405.2188v3](https://arxiv.org/abs/1405.2188v3)，Theorem 1 及 Methods 的时间平移条件。另见 Philippe Faist、Jonathan Oppenheim、Renato Renner，*Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime*，New Journal of Physics 17, 043003 (2015)，DOI [10.1088/1367-2630/17/4/043003](https://doi.org/10.1088/1367-2630/17/4/043003)。本章没有把 Gibbs 保持或协变当作一个能量守恒装置的完整构造。
+
+[^tcs11-beny]: Cédric Bény、Tobias J. Osborne，*The renormalisation group via statistical inference*，New Journal of Physics 17, 083005 (2015)，DOI [10.1088/1367-2630/17/8/083005](https://doi.org/10.1088/1367-2630/17/8/083005)，[arXiv:1402.4949](https://arxiv.org/abs/1402.4949)。其有限观察、有效模型与统计可区分性框架是跨尺度解释的文献基础；命题 59.1 只给所定义通道的复合账，没有从它单独导出 Wilson RG 的局域有效作用量。
+

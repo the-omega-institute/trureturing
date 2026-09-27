@@ -1,0 +1,9 @@
+**命题 2.16。** 对每个非空前缀柱集，
+
+$$
+\mathbb P(X\in K\mid q_n(X)=h)
+=\frac{\mu(K\cap[h]_n)}{\mu([h]_n)}
+<1.
+\tag{TM.515}
+$$
+

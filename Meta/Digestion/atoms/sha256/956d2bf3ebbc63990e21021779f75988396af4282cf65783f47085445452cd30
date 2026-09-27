@@ -1,0 +1,18 @@
+### 66.2 两种尾词入口的共同接收结构
+
+本节使用下列两类射线条件。其中字母只代表射线，均不预设正交：
+
+$$
+\begin{array}{ll}
+\mathrm{I}:&([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])
+=(A,B,C,B,D),\\
+&A,C,D\ne B,\quad C\ne D;\\[2mm]
+\mathrm{II}:&([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])
+=(B,B,C,B,D),\\
+&B,C,D\text{ 两两不同}.
+\end{array}
+\tag{66.10}
+$$
+
+第一类允许 $A=C$ 或 $A=D$，按首次出现命名为 $ABABC,ABCBA,ABCBD$；第二类按首次出现命名为 $AABAC$。选任意非零向量表示这些射线，以下乘积子空间不受代表缩放影响。
+

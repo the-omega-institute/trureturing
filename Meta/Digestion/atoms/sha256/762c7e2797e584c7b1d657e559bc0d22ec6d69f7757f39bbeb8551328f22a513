@@ -1,0 +1,43 @@
+**命题 508.1（三行循环扰动的显式辨别）。** 输出为三个循环标签及公共符号 $\circ$，取 $0<\alpha<1$、$0<r\le\alpha$。下标按模三循环。在 $0\le\varepsilon<(1-\alpha)/3$ 下令
+
+$$
+Q_i^\varepsilon(\circ)=\alpha,\quad
+Q_i^\varepsilon(i)=1-\alpha-\varepsilon,\quad
+Q_i^\varepsilon(i+1)=\varepsilon,\quad
+Q_i^\varepsilon(i+2)=0.
+$$
+
+共同容量恒为 $M=\alpha$，受限半径恒为 $1-\alpha$。当 $\varepsilon=0$ 时，分数覆盖数为 $3/2$；当 $\varepsilon>0$ 时，它变为三。但整个参数范围内
+
+$$
+\rho^\varepsilon=\frac{2(1-\alpha)}3-\varepsilon,
+\qquad
+\frac{j_{\mathrm{exact}}^\varepsilon}{j_{\mathrm{free}}^\varepsilon}
+=\frac{2(1-\alpha)}{2(1-\alpha)/3-\varepsilon},
+$$
+
+所以代价比在 $\varepsilon\downarrow0$ 时趋于三，且在零点也等于三。
+
+证明：每个标签始终有一个零质量目标，故 $l=\alpha\delta_\circ$，容量中心只能为 $\delta_\circ$。零扰动时每个标签有两个零质量见证，三项各赋 $1/2$，或三个标签各赋 $1/2$ 而公共符号赋零，给出覆盖与弱对偶值 $3/2$。正扰动时，每个标签只有一个零质量见证，三个不同权重都必须至少为一，故 $\tau=3$。
+
+为求自由半径，按三次循环置换平均候选中心。目标族在该作用下不变，TV 凸性允许设公共质量为 $t$、三个标签质量均为 $(1-t)/3$。若 $t\le\alpha$，两个非主标签的正差之和为
+
+$$
+\frac{2(1-t)}3-\varepsilon\ge\frac{2(1-\alpha)}3-\varepsilon.
+$$
+
+其中两项确为正，使用了 $\varepsilon<(1-\alpha)/3$。若 $t\ge\alpha$ 且 $(1-t)/3\ge\varepsilon$，加上公共符号的正差，得到
+
+$$
+t-\alpha+\frac{2(1-t)}3-\varepsilon
+=\frac23-\alpha-\varepsilon+\frac t3,
+$$
+
+它在此区间随 $t$ 增长，故不低于 $t=\alpha$ 时的值。若 $t\ge\alpha$ 且 $(1-t)/3<\varepsilon$，仅公共符号与零标签上的正差便给出下界
+
+$$
+t-\alpha+\frac{1-t}3.
+$$
+
+该式随 $t$ 增长，其在边界 $t=1-3\varepsilon$ 的值是 $1-\alpha-2\varepsilon$，与声称半径的差为 $(1-\alpha)/3-\varepsilon>0$。最后取 $t=\alpha$，主标签上的差为负，其他两个标签上的正差之和恰为声称值，达到下界。代价比由第 498 节取得。证毕。
+

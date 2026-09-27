@@ -1,0 +1,20 @@
+**定理155.4（最优误差的相位几何）。** 函数 $h:G\to[0,1]$ 连续，且
+
+$$
+\boxed{|e_n-h(g^n)|\le\zeta_n\qquad(n\ge3).}
+\tag{155.13}
+$$
+
+$e_n$ 的全部子列极限组成的集合恰为 $h(G)$。特别地，
+
+$$
+\boxed{
+\limsup_{n\to\infty}e_n=\max_{z\in G}h(z),
+\qquad
+\liminf_{n\to\infty}e_n=\min_{z\in G}h(z).
+}
+\tag{155.14}
+$$
+
+因此 $e_n$ 收敛，当且仅当 $h$ 在实际共同相位群 $G$ 上为常数。
+

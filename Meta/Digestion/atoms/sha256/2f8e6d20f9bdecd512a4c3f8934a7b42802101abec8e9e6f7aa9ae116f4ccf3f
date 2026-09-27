@@ -1,0 +1,23 @@
+### 51.2 一个严格正性指数为三的 CPTP 通道
+
+在 $\mathbb C^2$ 的正交基 $|0\rangle,|1\rangle$ 上置
+
+$$
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\qquad
+L_0=|1\rangle\langle0|,
+\qquad
+L_1=|+\rangle\langle1|.
+\tag{51.3}
+$$
+
+由 $L_0^*L_0+L_1^*L_1=I$，映射
+
+$$
+\Theta(X)=L_0XL_0^*+L_1XL_1^*
+=X_{00}|1\rangle\langle1|+X_{11}|+\rangle\langle+|
+\tag{51.4}
+$$
+
+是 CPTP，特别也是 2-positive。
+

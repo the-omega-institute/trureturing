@@ -1,0 +1,26 @@
+## 定理 ST40.1：同时实现任意规定逻辑动力学与移动编码的物理Hamiltonian
+
+在ST37及ST39的一条时间路径上，给定连续逻辑Hermitian矩阵$h_L(t)$、常数$\hbar>0$和$\Delta>0$。定义
+
+$$
+\boxed{
+H_{\rm phys}(t)=i\hbar K(t)+\pi_t(h_L(t))+\Delta(I-P_t).
+}
+\tag{ST40.1}
+$$
+
+逻辑酉$V_L$由$i\hbar\dot V_L=h_LV_L$的同类Dyson级数构造。令
+
+$$
+V(t)=G(t)\left[\pi_0(V_L(t))+e^{-i\Delta t/\hbar}(I-P_0)\right].
+\tag{ST40.2}
+$$
+
+则$V$酉，满足$i\hbar\dot V=H_{\rm phys}V$、$V(0)=I$，且
+
+$$
+\boxed{\mathcal D_{\pi_t}\circ\operatorname{Ad}_{V(t)}\circ\mathcal N_0
+=\operatorname{Ad}_{V_L(t)}.}
+\tag{ST40.3}
+$$
+

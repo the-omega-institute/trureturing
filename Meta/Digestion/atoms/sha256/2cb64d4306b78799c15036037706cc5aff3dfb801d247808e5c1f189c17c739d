@@ -1,0 +1,44 @@
+**推论33.3（一个纯相位钟与去相干目标的容量差别）。** 取单状态单边来源 $P=[1]$，故 $m=s=1$、$r=0$。每个长度层只含一条路径，记为 $|n\rangle$。完整相干来源成为
+
+$$
+|c_\theta\rangle=\frac1{\sqrt W}
+\sum_{n=N}^{N+W-1}e^{in\theta}|n\rangle,
+\qquad\theta\in\mathbb T.
+\tag{33.15}
+$$
+
+对 $0\le\epsilon<1$，在相同的未知相位共同编解码合同下，
+
+$$
+\boxed{
+k_{N,W}^{0,\mathrm{coh}}=W,\qquad
+(1-\epsilon)W\le k_{N,W}^{\epsilon,\mathrm{coh}}\le W.
+}
+\tag{33.16}
+$$
+
+如果将来源替换为在长度分解上完全去相干后的族，则输出为
+
+$$
+\rho^{\mathrm{deph}}_\theta
+=\frac1W\sum_{n=N}^{N+W-1}|n\rangle\langle n|,
+\tag{33.17}
+$$
+
+与 $\theta$ 无关，其精确最小接收维数是一。
+
+证明。取 $\theta_j=2\pi j/W$、$j=0,\ldots,W-1$。有限等比和给
+$\langle c_{\theta_j}|c_{\theta_k}\rangle=\delta_{jk}$，故这 $W$ 个态构成 $W$ 维档案空间的正交基。
+
+设共同解码为 $\mathcal D$、接收维数为 $D$，置 $\tau=\mathcal D(I_D)$，则 $\operatorname{Tr}\tau=D$。每个编码密度矩阵不超过 $I_D$，恢复态因而不超过 $\tau$。误差不超过 $\epsilon$ 使每个目标投影的恢复概率至少为 $1-\epsilon$；对这组正交目标求和，得到
+
+$$
+W(1-\epsilon)
+\le\sum_{j=0}^{W-1}\langle c_{\theta_j}|\tau|c_{\theta_j}\rangle
+=\operatorname{Tr}\tau=D.
+$$
+
+整个档案空间的恒等编码给 $D=W$ 上界，$\epsilon=0$ 时两者相等。去相干后全族只有一份已知态，编码可以输出固定的一维态，解码重新准备（33.17），从而精确恢复。任何非空接收空间至少一维，故一维最优。证明完毕。
+
+这里去相干是更换来源及恢复目标；在原合同中测量长度会破坏需要恢复的相干项，不能据此获得一维方案。也没有把未知相位称为已校准物理时间。这个例子确定的是：同一组长度标签，是否保留它们之间的相位关系，会改变必要的边界容量。
+

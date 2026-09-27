@@ -1,0 +1,4 @@
+**命题 6.4.1（单层与跨层的信息谱）。** 固定正 iid $p$，令 $I_n=-\log p(X_{\le n})$、$h=H(p)$，$Z_n=I_n-nh$。设 $L_n(m)$ 是长度 $n$ 至多 $m$ 个词可有的最大质量，$L_n(0)=0$；$m\ge1,t\ge0$ 时
+$$
+\Pr(I_n\le\log m)\le L_n(m)\le\Pr(I_n\le\log m+t)+e^{-t}.
+$$

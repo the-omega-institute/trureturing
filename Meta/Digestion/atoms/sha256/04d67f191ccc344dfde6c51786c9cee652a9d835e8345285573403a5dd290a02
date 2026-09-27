@@ -1,0 +1,64 @@
+### 274.7 两个独立来源的实际相干相等结果
+
+取两份实际独立来源
+$$
+\Omega_i=\frac{T(Q_i,M_i)}{c_i},
+\qquad Q_i\succ0,\qquad
+M_i=I+t_iJ_{n_i},\qquad t_i>0,
+\qquad i=1,2.
+\tag{274.47}
+$$
+输入分别为qubit $H_i$，参考为 $E_i=\mathbb C^{n_i}$。$c_i$ 是各图矩阵的迹，不要求各参考边缘均匀。联合输入恰为 $\Omega_1\otimes\Omega_2$。
+
+在固定 $Y$ 坐标中，用 $|+\rangle,|-\rangle$ 简记两个输入基向量。固定因子重排后，对 $H_1\otimes H_2$ 施加成功Kraus算子
+$$
+W=|+\rangle\langle++|+|-\rangle\langle--|.
+\tag{274.48}
+$$
+它满足
+$$
+W^\dagger W=|++\rangle\langle++|+|--\rangle\langle--|\preceq I.
+\tag{274.49}
+$$
+失败可以由 $|f\rangle\langle+-|$ 与 $|f\rangle\langle-+|$ 两个Kraus算子组成，使用与成功输出正交的失败标记；全部效果之和为单位矩阵。这给出完整保迹仪器，而成功本身是合法的迹不增结果。参考 $E_1\otimes E_2$ 全部保留。
+
+按联合来源的四个块直接相乘，成功未归一化态为
+$$
+\begin{aligned}
+\tau
+&=(W\otimes I)(\Omega_1\otimes\Omega_2)(W^\dagger\otimes I)\\
+&=\frac{T(Q_1\otimes Q_2,M_1\otimes M_2)}{c_1c_2}.
+\end{aligned}
+\tag{274.50}
+$$
+例如上非对角块为
+$(Q_1M_1)\otimes(Q_2M_2)$，下对角块为
+$(M_1^\dagger Q_1M_1)\otimes(M_2^\dagger Q_2M_2)$，所以这确是同一个图矩阵。
+
+定义
+$$
+a_i=\operatorname{Tr}Q_i>0,\qquad
+b_i=\operatorname{Tr}(M_i^\dagger Q_iM_i)>0,
+\qquad c_i=a_i+b_i.
+\tag{274.51}
+$$
+成功概率精确为
+$$
+\boxed{
+p=\operatorname{Tr}\tau
+=\frac{a_1a_2+b_1b_2}{(a_1+b_1)(a_2+b_2)}
+\in(0,1).
+}
+\tag{274.52}
+$$
+失败概率为 $(a_1b_2+b_1a_2)/(c_1c_2)>0$。成功条件态是
+$$
+\Omega_{\mathrm{out}}
+=\frac{\tau}{p}
+=\frac{T(Q_1\otimes Q_2,M_1\otimes M_2)}
+{a_1a_2+b_1b_2}.
+\tag{274.53}
+$$
+
+单Kraus形式是合同的一部分：成功记录仅告知“相等”，不另行记录是 $++$ 还是 $--$，因此保留二者之间的相干。若用两个分别记录这两种情况的Kraus算子再丢弃该记录，成功态会失去对应的非对角块，不能使用（274.50）。下述结论针对（274.48）的具体相干仪器。
+

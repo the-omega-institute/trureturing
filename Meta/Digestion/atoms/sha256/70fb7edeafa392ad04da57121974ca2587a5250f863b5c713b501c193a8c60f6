@@ -1,0 +1,54 @@
+### 207.5 包含端点的精确 TP 匹配族
+
+取 $\xi=-a_{\mathrm{eff}}/2$、$\omega=\theta$，直接沿用第206节的六维列：
+
+$$
+\begin{gathered}
+a_j=\sqrt{\frac{1/2+(-1)^j\epsilon\xi}{1+4m^2\theta^2\epsilon^2}},\\
+p_\epsilon=(a_0,-i2m\theta\epsilon a_0,a_1,
+-i2m\theta\epsilon a_1,0,0)^{\mathsf T},\\
+r_*=(i\sqrt2n,\sqrt2m,-i\sqrt2n,\sqrt2m,\sqrt{B_*},0)^{\mathsf T},\\
+\chi_\epsilon=p_\epsilon^\dagger r_*,\qquad
+r_\epsilon=\frac{r_*-p_\epsilon\chi_\epsilon}
+{\sqrt{1-|\chi_\epsilon|^2}}.
+\end{gathered}
+\tag{207.19}
+$$
+
+这些定义在 $m=0$ 仍有效。
+$\|p_\epsilon\|=\|r_*\|=1$、$p_0^\dagger r_*=0$，
+参数有界给 $\chi_\epsilon=O_H(\epsilon)$。
+分母统一远离零，故构造严格正交单位列，并严格满足共同 TP。
+负旗标仍按 $Z$ 共轭，权限与全部参考不变。
+
+额外槽的 Choi 权重为
+$B_{\mathrm{extra}}=B_* /(1-|\chi_\epsilon|^2)$，
+所以 $\rho B_{\mathrm{extra}}=0$。
+仅用向量有界性和正交投影即可取得
+
+$$
+\begin{gathered}
+\mathfrak d=O_H(\epsilon),\qquad
+U_0,V,M_{\mathrm{def}}=O_H(\epsilon^2),\qquad
+\rho U_1=O_H(\epsilon^2),\\
+x=\xi+O_H(\epsilon^2),\qquad
+W_\theta=\theta^2V=O_H(\epsilon^2).
+\end{gathered}
+\tag{207.20}
+$$
+
+这些估计没有对 $\sqrt{B_*}$ 求导。
+在 $h=0$，全部 Kraus 的 $c=d=0$，更有 $V=W_\theta=0$。
+
+构造直接满足占据列速率，且（207.9）给
+$e_\epsilon=3/4+\epsilon\Phi_h+O_H(\epsilon^2)$。
+先结合第191节的统一最优值界，可将它置于某个固定二阶近优类。
+再把（207.20）代入（207.16），得到
+
+$$
+e_\epsilon\le\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+C_H\epsilon^3.
+\tag{207.21}
+$$
+
+该上界与（207.18）匹配，证明定理207.1。
+

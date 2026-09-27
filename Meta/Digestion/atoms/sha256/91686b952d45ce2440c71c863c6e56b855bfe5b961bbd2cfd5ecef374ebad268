@@ -1,0 +1,35 @@
+**命题51.2。** 映射 $\Phi$ 本原，且 $q(\Phi)=3$。
+
+证明。对任意 $X$，记
+
+$$
+\beta=\langle1|X|1\rangle,\qquad
+\gamma=\langle+|X|+\rangle.
+$$
+
+逐次应用（51.8）得到
+
+$$
+\Phi^2(X)=\operatorname{diag}\left(
+\gamma,\frac{\beta+\gamma}{2}\right),
+\qquad
+\Phi^3(X)=\operatorname{diag}\left(
+\frac{\beta+\gamma}{2},\frac{\beta+3\gamma}{4}\right).
+\tag{51.9}
+$$
+
+当 $0\ne X\succeq0$ 时，$\beta,\gamma\ge0$。若两者均为零，则 $X^{1/2}$ 同时消灭 $|1\rangle$ 和 $|+\rangle$；这两个向量张成整个空间，迫使 $X=0$，矛盾。所以 $\beta+\gamma>0$，（51.9）的两个末态对角元均严格正。
+
+取 $|-\rangle=(|0\rangle-|1\rangle)/\sqrt2$，则
+
+$$
+\Phi(|-\rangle\langle-|)=\operatorname{diag}(1/2,0),
+\qquad
+\Phi^2(|-\rangle\langle-|)=\operatorname{diag}(0,1/4).
+\tag{51.10}
+$$
+
+前两次均非正定，而第三次对全部非零半正定输入正定。因此 $q(\Phi)=3$。证明完毕。
+
+命题51.1、51.2是分别对两类映射的直接核验。它们排除了该精确版本 Theorem B、Theorem A 在二维所写的上界二；这个结论不以某个证明步骤有缺口为推断依据。
+

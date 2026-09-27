@@ -1,0 +1,4 @@
+**定义 399.1（固定纤维上的后处理）。** 对有限输出通道 $R:C\to\Delta_D$，记 $(LR)_x(d)=\sum_cL_x(c)R_c(d)$。项目 [DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 TV 收缩结果给出 $\delta(q,LR)\le\delta(q,L)$。这里输入仍按同一个 $q$ 分组；改变的是各规律被送往哪个目标。将结果只分成更少类别，确实可以让它们显得更接近。
+
+该结论没有许可同时把输入改成更粗的 $s\circ q$，却继续沿用原纤维的比较。后者会引入原先无需彼此一致的新状态对。
+

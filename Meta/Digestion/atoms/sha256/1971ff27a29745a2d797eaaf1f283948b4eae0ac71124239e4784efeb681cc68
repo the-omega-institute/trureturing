@@ -1,0 +1,66 @@
+### 188.1 联动来源与共同 instrument
+
+采用第186节明确给出的旗标通道模型，固定
+$\beta>0$、$\gamma\in\mathbb R$、$R>1$ 和 $h\ge0$。
+令
+
+$$
+\ell=h\epsilon,\qquad r=1-h\epsilon,\qquad
+\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle,\qquad
+\psi=(I\otimes Y)\Xi,
+$$
+
+$$
+w_0=\epsilon,\qquad w_1=R\epsilon,\qquad
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+\tag{188.1}
+$$
+
+以下 $\epsilon>0$ 足够小，使 $0\le\ell<1/2$ 且
+$w_1\le\beta/(\beta^2+\gamma^2)$。若 $h>0$，每个这样的来源都满秩。
+$\omega_j=\frac12\sum_sP_s^Q\otimes\eta_s(w_j)$、
+$\mathcal N(X)=\sum_jX_{jj}\omega_j$；
+目标仍为 $X_{Q_{\mathrm{out}}}\otimes P_\Xi$，$M$ 不可访问。
+
+取
+
+$$
+m\ge0,\qquad m^2+n^2\le\frac14,
+\qquad B=1-4m^2-4n^2\ge0.
+$$
+
+在旗标 $s=\pm1$ 上，对结果 $0$ 使用一个 Kraus 算子，对结果 $1$ 使用两个：
+
+$$
+\boxed{
+K_{0,s}=
+\begin{pmatrix}
+1/\sqrt2&is\sqrt2\,n\\
+0&\sqrt2\,m
+\end{pmatrix},\qquad
+K_{1,s}=
+\begin{pmatrix}
+1/\sqrt2&-is\sqrt2\,n\\
+0&\sqrt2\,m
+\end{pmatrix},\qquad
+J=\sqrt B\,|0\rangle\langle1|.
+}
+\tag{188.2}
+$$
+
+具体地，
+$\Gamma_{0,s}(X)=K_{0,s}XK_{0,s}^\dagger$，
+$\Gamma_{1,s}(X)=K_{1,s}XK_{1,s}^\dagger+JXJ^\dagger$。
+直接相乘给
+
+$$
+K_{0,s}^\dagger K_{0,s}+K_{1,s}^\dagger K_{1,s}
++J^\dagger J=I.
+\tag{188.3}
+$$
+
+接收端读取实际旗标，执行这同一份两结果 instrument，将结果写入输出标签并丢弃旧旗标。这是共同 CPTP 解码器；它不读取未知原输入 $j$，也不操作 $M$。
+
+额外的 $J$ 不是可删去的记号：它在输入 $|0\rangle$ 上为零，但在稀少的 $|1\rangle$ 方向上可以具有不随 $\epsilon$ 消失的幅度。将每个结果强行限制为一个 Kraus 算子，会遗漏这里的合法可达部分。
+

@@ -1,0 +1,27 @@
+**定理 22.2（任意候选集的统一尺度容量）。** 对任意非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$ 及 $`0<\epsilon<1`$，有
+
+$$
+\boxed{
+\max\left\{1,\frac{1-\epsilon}{4C_*}
+P(\Theta,n^{-1/2})\right\}
+\le k_n^{(\epsilon)}(\Theta)
+\le\min\left\{2n-1,\
+4J_\epsilon P(\Theta,n^{-1/2})\right\}.
+}
+\tag{22.4}
+$$
+
+特别地，固定 $`\epsilon`$ 后，
+
+$$
+k_n^{(\epsilon)}(\Theta)
+=\Theta_\epsilon\bigl(P(\Theta,n^{-1/2})\bigr),
+\tag{22.5}
+$$
+
+其中上下常数统一于候选集和终端编号，因而也允许候选集随 $`n`$ 改变。参数分辨率、可区分网与压缩记忆的联系已有文献先例；[^phase_metric_population] 本节针对上述关联来源及任意候选集合证明有限终端双边界。式（22.5）右侧的 $`\Theta_\epsilon(\cdot)`$ 表示双边阶估计，与候选集合符号相区别。
+
+证明。令 $`\delta=n^{-1/2}`$，取一份取得最大分离数的集合
+ $`A=\{\vartheta_1,\ldots,\vartheta_q\}`$，其中
+ $`q=P(\Theta,\delta)`$。
+

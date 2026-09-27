@@ -1,0 +1,13 @@
+### 27.4 协议作用下的同一结论
+
+当允许操作由幺半群 $M$ 作用于 $X$，当前读出为 $q:X\to O$ 时，完整协议 profile 为
+
+$$
+\operatorname{controlProfile}(x)(a)=q(a\mathbin{\cdot}x),
+\qquad a\in M.
+$$
+
+`ControlQuotientUniversalMinimality.control_quotient_universal_minimality` 给出该 profile 商的三项结构：当前读出可恢复、每个动作在商上有诱导作用、每个动作的后果可由商读出；并且任意同时满足这三项的候选摘要唯一因子到该商的实际像。`DynamicProfileCausalClosure.dynamic_profile_causal_closure` 则把执行一次动作后的 profile 写成 continuation 坐标的右平移。
+
+所以，自治更新的 (27.6) 与受控协议的完整 action profile 是同一模式的两个特例：前者把未来时间词作为索引，后者把合法操作词作为索引。若空间、时间、边界和记忆各自只记录 profile 的一个投影，它们能否联合恢复，仍由 (27.1)—(27.4) 的交核条件决定；若要每个投影单独可运行，还必须各自满足 (27.5) 的动态下降。
+

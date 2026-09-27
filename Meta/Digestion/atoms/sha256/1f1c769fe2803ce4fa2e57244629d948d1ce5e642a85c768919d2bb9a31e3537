@@ -1,0 +1,22 @@
+**排除 AAA。** 选三个环境的共同单位代表 $`\eta`$，置
+$$
+S_0=H_2+H_3+H_4,\qquad S_1=U+G_3+G_4.
+$$
+它们均为三维。在这两个空间上写 $`V_0x=f(x)\otimes\eta`$、$`V_1y=g(y)\otimes\eta`$。其正交像
+$$
+R=fS_0=G_3+G_4+G_5,\qquad
+W=gS_1=Q_3+Q_4+Q_5
+\tag{29.54}
+$$
+各三维，所以 $`K=R\oplus W`$。由 （29.53），$`v\in W`$、$`U\subset R`$。因此 $`S_1=R`$，$`g:R\to W`$ 为满等距。
+
+式 （29.52） 给 $`P_RH_2=U`$、$`P_WH_2=\mathbb Cv`$，而来源给
+$`P_RH_3=G_3`$、$`P_RH_4=G_4`$。于是 $`P_RS_0=U+G_3+G_4=R`$。三维 $`S_0`$ 为某个线性映射 $`T:R\to W`$ 的图，且
+$$
+T(U)=\mathbb Cv,\qquad T(w)=0,\qquad
+T(G_3)=Q_3=gU,\qquad T(G_4)=Q_4=gG_3.
+\tag{29.55}
+$$
+其中 $`T|_{G_3}`$ 单射。因 $`w\ne0`$，$`\operatorname{rank}T\le2`$。但
+$`g(U+G_3)\subset\operatorname{im}T`$，所以 $`G_3=U`$。这使同一限制 $`T|_U`$ 同时具有秩一和秩二，矛盾。
+

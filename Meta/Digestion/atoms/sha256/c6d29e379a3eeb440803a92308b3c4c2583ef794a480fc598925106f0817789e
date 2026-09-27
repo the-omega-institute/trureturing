@@ -1,0 +1,40 @@
+**定义 47.1（介于重开与有限网格之间的强度）。** 保持[后验阈值卷定义 39.1](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+的同一个固定振幅及 $`P_j,Q_j,\alpha`$，固定 $`\beta\in(1/2,1)`$，令
+
+```math
+\eta_j=\alpha-P_j/Q_j,\quad L_j=\log(1/\eta_j),\quad
+d=\frac{\phi(1-\beta)}\beta,\quad A=\frac{2\log10}{d},\qquad
+\lambda_j=\frac{2L_j+s_j\log Q_j}{d}+b_j\in\mathbb N,
+\quad 0\lt s_-\le s_j\le s_+\lt3,\quad \sup_j|b_j|\lt\infty.
+```
+
+式 (47.1)。
+
+各序列均为确定序列。用此强度重新计算 (39.3) 的全部参数，仍用同一实际观测与
+精确固定基数后验，只取最终合法的下标。记
+
+```math
+\chi_j=\eta_j\sqrt q,\qquad
+c_j=\frac{W(k_0,l_0)-\tau}{w},\qquad
+\sigma_j=\frac\Delta w,\qquad
+R_M=\sqrt{\frac q{\lambda\sigma_j}},\qquad
+c_0=\frac1{4\pi\sqrt{ab}}.
+```
+
+式 (47.2)。
+
+这里 $`\Delta`$ 为相邻直线计数点的精确补偿得分差，其最终为正将在下文证明。
+以原窗口坐标定义
+
+```math
+\mathcal F_M(u)=\frac1{R_M}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+Y_M=\mathcal F_M(1),\qquad
+\mathcal C_M(u)=\mathcal F_M(u)-\frac{u+1}{2}Y_M,
+\quad -1\le u\le1.
+```
+
+式 (47.3)。
+
+未知方向时全部坐标共用一次方向判决和相应工作权重。
+

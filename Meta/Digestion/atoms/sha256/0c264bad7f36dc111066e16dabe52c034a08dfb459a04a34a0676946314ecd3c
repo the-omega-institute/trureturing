@@ -1,0 +1,32 @@
+**二维商像中的 $G_4=U$ 分支。**
+
+现在 $H_3=X_B$。只需证明 $v\in Q$：一旦成立，（55.3）、（55.16）给 $p_B\in G_3$，而 $p_B\in H_3$，违反 $H_3\cap G_3=0$。
+
+若 $G_6\not\subset S$，由（55.11）、（55.12）及 $C\not\parallel A$，$\dim\pi G_6\le1$。故 $\dim(S+G_6)=5$。式（55.17）及（55.6）立即给 $K=(S+G_6)\oplus Q$、$v\in Q$。
+
+若 $G_6\subset S$ 而 $G_6\ne U$，则 $\dim\pi G_6=1$。已知零位像
+$$
+(U\otimes F)+(S\otimes A)+(G_6\otimes C)
+\tag{55.20}
+$$
+恰七维：商掉四维 $U\otimes F$ 后，前两个零位块留下二维 $M\otimes A$，最后一个留下不同环境线上的一维 $\pi(G_6)\otimes C$。因此（55.20）饱和 $V_0K$，并全部包含于 $S\otimes F$。式（55.4）两个严格正 Schmidt 权重迫使 $p_1,p_2\in S$，即 $P_0\subset S$。结合（55.2）、（55.16）得到 $v\in Q$。
+
+最后，若 $G_6=U$，则
+$$
+H_3=X_B,\qquad H_5=X_C,\qquad X=H_3+H_5.
+\tag{55.21}
+$$
+因为 $G_4=U$，固定 $V_1$ 又给 $Q_5=Q_3=Q$。于是 $H_3,H_4,H_5\subset S\oplus Q$，从而 $X\subset S\oplus Q$。$V_0X=U\otimes F$ 与 $V_0H_4=G_5\otimes A$ 交零，因为 $G_5\cap U=0$。所以
+$$
+X+H_4=S\oplus Q,\qquad \dim(X+H_4)=6.
+\tag{55.22}
+$$
+由（55.15），$G_3\subset U+G_5$，故
+$$
+V_0H_2=G_3\otimes A
+\subset (U\otimes F)+(G_5\otimes A)=V_0(X+H_4).
+$$
+单射性给 $H_2\subset X+H_4=S\oplus Q$。式（55.1）及 $u\in S$、$b\ne0$ 因而给 $v\in S\oplus Q$；而（55.6）使 $v\perp S$，所以仍有 $v\in Q$。
+
+最后一个分支的全部子情形都得到所需矛盾。$m=2$、$m=3$ 两个分支均已排除，定理得证。
+

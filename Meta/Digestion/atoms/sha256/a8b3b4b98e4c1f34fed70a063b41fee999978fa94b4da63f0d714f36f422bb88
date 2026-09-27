@@ -1,0 +1,8 @@
+**命题 2.42。** For this fixed computable presentation,
+
+$$
+R\equiv_T S.
+$$
+
+The reduction from $S$ to $R$ is uniform in the presentation. The reverse reduction is independent of the presentation.
+

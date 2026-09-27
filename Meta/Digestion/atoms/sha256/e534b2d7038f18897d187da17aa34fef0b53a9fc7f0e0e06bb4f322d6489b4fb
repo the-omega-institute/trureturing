@@ -1,0 +1,53 @@
+**定理 279.2（纯辅助编码不能借增加维数降低最优残差）。** 对任意上述等距编码，其六态最坏非实残差 $r$ 满足
+
+$$
+r^2\ge\eta^2+\frac{1+\eta^2}{4}\kappa(V).
+\tag{279.2}
+$$
+
+因此，允许任意有限输出维数的全部等距编码，其最小残差仍为 $\eta$。达到该值必有共轭不变的占用支撑；支撑不变本身不保证输入轴方向已达到最优。在可逆信道正规形中，这说明只使用秩一辅助态时，增加未占用维数不能改进二维最优值。
+
+证明。令 $S=V^*\bar V$。这是复对称的二阶矩阵，且
+
+$$
+\|S\|_F^2=\operatorname{Tr}(\Pi\bar\Pi)=2-\kappa(V).
+\tag{279.3}
+$$
+
+对输入状态 $\rho$，置 $H=V\rho V^*-\bar V\bar\rho V^{\mathsf T}$。它 Hermitian 且迹为零。其正负特征值各自的绝对值之和均为 $\|H\|_1/2$，故平方和至多为这两个和的平方之和，得到
+
+$$
+\left(\frac12\|H\|_1\right)^2
+\ge\frac12\operatorname{Tr}(H^2)
+=\operatorname{Tr}(\rho^2)-\operatorname{Tr}(\rho S\bar\rho S^*).
+\tag{279.4}
+$$
+
+这里的最后等式只用等距性；没有把 Hilbert–Schmidt 范数当成迹范数的等值替代。
+
+令 $Q=\|S\|_F^2$。分别将 $\rho_{i,+}$ 和 $\rho_{i,-}$ 代入式（279.4）后取平均，线性项抵消，于是
+
+$$
+r^2\ge\frac{2-Q}{4}
++\frac{a_i^2}{4}
+\left[2-\operatorname{Tr}(\sigma_i S\bar\sigma_i S^*)\right].
+\tag{279.5}
+$$
+
+对称性使 $S$ 属于复线性空间 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。Pauli 乘法直接给出
+
+$$
+\sum_{i=1}^3\sigma_i S\bar\sigma_i=S,
+\tag{279.6}
+$$
+
+从而三个迹项之和为 $Q$。将式（279.5）除以 $a_i^2$ 再求和，得
+
+$$
+r^2\sum_i\alpha_i^2
+\ge\frac{(2-Q)\sum_i\alpha_i^2+6-Q}{4}
+=1+\frac{2-Q}{4}\left(1+\sum_i\alpha_i^2\right).
+$$
+
+这就是式（279.2）。第278节的二维酉编码使输出虚轴读取单位方向 $u_i=\eta\alpha_i$，逐态残差均为 $\eta$。将它作实坐标补零即可在任意 $D\ge2$ 达到；未占用补空间上的解码补为固定态制备，仍在完整输出代数上 CPTP。证毕。
+

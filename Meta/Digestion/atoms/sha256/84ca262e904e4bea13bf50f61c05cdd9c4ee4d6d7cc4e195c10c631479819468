@@ -1,0 +1,14 @@
+**定义 3.1（钟—系统历史表示）。** 令 $\mathcal C_N=\operatorname{span}\{|0\rangle,\ldots,|N\rangle\}$，定义
+
+$$
+W\psi=\frac1{\sqrt{N+1}}\sum_{n=0}^N|n\rangle\otimes V_n\psi,
+\qquad \Gamma=W\rho_0W^\dagger,
+$$
+
+$$
+A_n=\langle n+1|\otimes I-\langle n|\otimes U_n,
+\qquad K_{\rm hist}=\sum_{n=0}^{N-1}A_n^\dagger A_n.
+$$
+
+这是电路历史编码的有限形式；相关标准构造见 Aharonov 等，*Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation*, [arXiv:quant-ph/0405098](https://arxiv.org/abs/quant-ph/0405098)。这里只使用编码与相邻传播约束，不引入该文的计算复杂度结论。
+

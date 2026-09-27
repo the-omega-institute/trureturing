@@ -1,0 +1,15 @@
+**定义 10.3（非对角纤维对图）。** 令
+
+$$
+\mathcal P=\{\{u,v\}:u\ne v,\ p(u)=p(v)\},\qquad
+P=|\mathcal P|=\sum_{v\in V}\binom{|Q_v|}{2}.
+$$
+
+若 u,v∈Q_{t(a)} 且 lambda_a(u)≠lambda_a(v)，加入一条带标签 a 的箭头
+
+$$
+\{u,v\}\longrightarrow\{\lambda_a(u),\lambda_a(v)\}.
+$$
+
+这张图沿真实时间的反方向追溯边界差异；合并到同一状态的转移离开该图。
+

@@ -1,0 +1,86 @@
+## 416. 五射线两份记录的可分恢复最优值与单向局部构造
+
+本节在第 389—391 节的全矩阵恢复接口及定义 400.1 的重复记录制备上，比较同一原始记录分割下的可分操作与有限局部操作。第 413 节给出平衡见证和成功阈值，第 415 节给出完整联合访问的最优值；以下保留这些条件，计算乘积效果在完整记录空间中的成功预算。
+
+**操作约定。** 固定已知实数 $r>0$，令
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&
+R_2&=R_A\otimes R_B,\\
+q_i&=s_i\otimes s_i,&J_2|i\rangle&=|i\rangle\otimes q_i
+&&&(1\le i\le5).
+\end{aligned}
+$$
+
+Alice 和 Bob 分别持有原始因子 $R_A$、$R_B$。写
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W_2&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&
+R_2&=W_2\oplus\mathbb C e_-,\\
+P_W&=P_{W_2},&P_-&=|e_-\rangle\langle e_-|,&P_W+P_-&=I_{R_2}.
+\end{aligned}
+$$
+
+这些是原始四维空间中的数学子空间；以 $W_2$ 表示准备像，不改变局部物理因子，也不授予先作跨持有者压缩的权限。
+
+一个有限可分记录仪器具有有限实际标签集 $Y$。每个 $y\in Y$ 有有限维非零局部输出空间 $O_{A,y},O_{B,y}$、有限隐藏指标集 $K_y$，以及线性算子
+
+$$
+\begin{aligned}
+A_{yk}&:R_A\longrightarrow O_{A,y},&
+B_{yk}&:R_B\longrightarrow O_{B,y},&
+L_{yk}&=A_{yk}\otimes B_{yk},\\
+\mathcal I_y(Z)&=\sum_{k\in K_y}L_{yk}ZL_{yk}^\dagger,&
+E_y&=\sum_{k\in K_y}A_{yk}^\dagger A_{yk}\otimes B_{yk}^\dagger B_{yk},&
+\sum_{y\in Y}E_y&=I_{R_2}.
+\end{aligned}
+$$
+
+这里 $\mathcal I_y:\mathcal L(R_2)\to\mathcal L(O_{A,y}\otimes O_{B,y})$ 完全正，全部分支的迹之和保持输入迹；最后一个等式要求在整个 $R_2$ 上成立。固定的有限维局部辅助态与未知输入、参考独立，且两方之间为乘积态，可连同局部输出及丢弃操作吸收进这些算子。定义不添加共享纠缠或量子通信；一份乘积 Kraus 表示本身也不构成局部实施树。
+
+对全部 $X\in\mathcal L(S)$，先迹掉全部输出记录，明确定义
+
+$$
+\mathcal M_y(X)=\operatorname{Tr}_{O_{A,y}\otimes O_{B,y}}
+ \left[(\operatorname{id}_S\otimes\mathcal I_y)(J_2XJ_2^\dagger)\right].
+$$
+
+协议预先固定接受集合 $Y_{\mathrm s}\subseteq Y$，并为每个实际 $y$ 指定一个作用于整个 $S$ 的终端酉算子 $U_y$。此前不操作 $S$；$k$ 不可读取，同一 $y$ 的全部隐藏指标共用这个 $U_y$。仪器、接受集合与反馈可以依赖已知的 $r$，不能依赖未知输入。所有拒绝标签仍属于完整仪器。精确恢复要求存在同一个标量 $p\in[0,1]$，使
+
+$$
+\mathcal T:=\sum_{y\in Y_{\mathrm s}}\operatorname{Ad}_{U_y}\circ\mathcal M_y
+       =p\operatorname{id}_S,
+\qquad \operatorname{Ad}_{U_y}(X)=U_yXU_y^\dagger.
+$$
+
+等式作用于全部系统矩阵；对任意有限维未操作参考 $F$，还须有同一个协议及同一个 $p$ 满足
+
+$$
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})=pX_{FS}
+\qquad\bigl(X_{FS}\in\mathcal L(F\otimes S)\bigr).
+$$
+
+在矩阵张量基上展开可知这两个表述等价；对联合密度矩阵取迹，$p$ 就是与输入无关的接受概率。允许空接受集合给出 $p=0$。
+
+有限 LOCC 类采用定义 405.1 的操作树，将该处系统与源族替换为这里的 $S$ 和五个 $s_i$：每棵树深度有限，每个节点由一方在有限维可访问局部工作空间上执行有限结果的完全正仪器，各结果之和保迹；后续操作可依赖已取得的经典信息，允许双向经典通信、私有记忆、重复访问、丢弃局部寄存器、提前终止和零分支。初始辅助态仍为独立乘积态，禁止共享纠缠及量子通信，全部记录操作结束后才作终端系统反馈。每个叶子，包括拒绝叶子，均保留在完整求和中；实际标签若被粗粒化，同一最终标签下的细分历史必须共用原协议指定的反馈，未观测 Kraus 指标不成为控制信息。有限性逐协议要求，不预设各协议共同的深度、结果数或工作空间维数上界。
+
+Alice 到 Bob 的单向子类进一步规定：Alice 先执行一次有限局部仪器并将实际结果 $a$ 发给 Bob；Bob 依 $a$ 执行一次有限局部仪器，以实际结果 $b$ 结束记录操作。终端反馈接收 $(a,b)$，接受集合固定在这些实际结果对上；Bob 的结果不再触发 Alice 的记录操作。局部辅助件和隐藏指标沿用上面的限制。
+
+这些操作类别沿用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2–2.3 的局部仪器、条件复合、粗粒化和可分操作区分。每棵有限树展开各局部 Kraus 指标后，在原始两因子上得到有限乘积 Kraus 族；粗粒化只将其并在同一实际标签内。因此这里的单向类包含于有限 LOCC 类，后者包含于上述有限可分类。单向类由刚给出的操作顺序定义，不借用该文特定的轮次记号。
+
+分别记这三类精确恢复概率的上确界为
+
+$$
+\eta_{\to}(r),\qquad\eta_{\mathrm{fin}}(r),\qquad\eta_{\mathrm{SEP}}(r).
+$$
+
+完整联合访问的值仍为第 390、415 节的 $\eta(G(r))$，其中
+$G(r)_{ij}=\langle q_j|q_i\rangle$。以上比较始终使用同一个 $J_2$、同一个完整 $R_2$ 和同一个全系统、全参考的恢复条件。
+

@@ -1,0 +1,18 @@
+**定义 131.1（时间依赖的后续族）。** 设输出空间为 $\mathcal H_B$。对每个 $t\ge0$，给定一个从当前点击输出空间到 $\mathcal H_B$ 的完全正迹不增映射 $\Lambda_t$。假定 $t\mapsto\Lambda_t$ 在有限维线性映射空间中可测且有统一范数界。
+
+对极限标记仪器定义时间推送后的续接映射
+
+$$
+\boxed{
+\mathcal K_{\Lambda_\bullet}(X)
+=
+\Lambda_0\bigl(\mathbf M_\infty(\{0\})(X)\bigr)
++
+\int_{(0,\infty)}
+\Lambda_t\bigl(\mathbf M_\infty(dt)(X)\bigr).
+}
+\tag{131.1}
+$$
+
+积分是有限维映射空间中的 Bochner 积分。若每个 $\Lambda_t$ 都保迹，则 $\mathcal K_{\Lambda_\bullet}$ 也保迹。
+

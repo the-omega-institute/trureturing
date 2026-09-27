@@ -1,0 +1,41 @@
+**证明。** 选共同单位环境 $\eta=R_\Gamma\xi$，记
+$$
+H_\xi=H\otimes\mathbb C\xi,\qquad
+G_\xi=G\otimes\mathbb C\xi,\qquad w_\xi=w\otimes\xi.
+$$
+$w_\xi\ne0$ 且 $w_\xi\in H_\xi\cap G_\xi$。这里 $H_\xi,G_\xi$ 只是旧混合编码中的子空间，未把实际第二终端改称纯态。
+
+第三轮旧块使用同一排出等距 $R_\Gamma$，其逐切片等式给 $V_0H_\xi=A_0\otimes\eta$、$V_1G_\xi=B_0\otimes\eta$。连同实际后三轮，全部四组输入子空间都使用同一环境：
+$$
+\begin{array}{c|cccc}
+\text{零位输入}&H_\xi&H_3&H_4&H_5\\
+\text{接收像}&A_0&G_4&G_5&G_6\\ \hline
+\text{一位输入}&G_\xi&A_0&G_4&G_5\\
+\text{接收像}&B_0&Q_4&Q_5&Q_6
+\end{array}
+\tag{61.12}
+$$
+令
+$$
+S_0=H_\xi+H_3+H_4+H_5,\qquad
+S_1=G_\xi+A_0+G_4+G_5.
+$$
+去掉共同环境，得到等距 $f:S_0\to K$、$g:S_1\to K$。它们的接收像为
+$$
+L_0=fS_0=A_0+G_4+G_5+G_6,
+\qquad
+L_1=gS_1=B_0+Q_4+Q_5+Q_6.
+\tag{61.13}
+$$
+跨位正交给 $L_0\perp L_1$。置 $l_i=\dim S_i=\dim L_i$，则
+$$
+l_0+l_1\le7.
+\tag{61.14}
+$$
+实际来源保证各 $H_n,G_n,Q_n$ 二维，$C_n=G_n\oplus Q_n$，$H_n$ 到两个因子的投影均为同构。因此对 $n=3,4,5$，
+$$
+P_{L_0}H_n=G_n,\qquad P_{L_1}H_n=Q_n,
+\qquad H_n\cap L_0=0.
+\tag{61.15}
+$$
+

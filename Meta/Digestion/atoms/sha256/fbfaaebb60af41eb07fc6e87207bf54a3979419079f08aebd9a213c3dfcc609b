@@ -1,0 +1,10 @@
+### 7.1 相容线程的无损抽层
+
+设集合构成逆系统 $X_0\leftarrow X_1\leftarrow\cdots$，复合投影记为 $\pi_{m,n}:X_m\to X_n$，其中 $m\ge n$，并满足 $\pi_{n,n}=\mathrm{id}$ 及 $\pi_{k,n}=\pi_{m,n}\pi_{k,m}$。取严格递增、无界的整数列
+$$
+S=\{0=n_0<n_1<n_2<\cdots\}.
+$$
+令 $\mathcal L=\varprojlim_nX_n$、$\mathcal L_S=\varprojlim_jX_{n_j}$，后者的投影继承自原逆系统。
+
+一般极限同构采用 `CategoryTheory.Functor.Initial.limitIso`。具体地，令逆索引范畴 $D$ 的箭头为 $m\to n\iff m\ge n$，保留层索引范畴 $C$ 也取反向整数序，$i:C\to D$ 给 $i(j)=n_j$，图表 $H$ 给 $H(n)=X_n$、$H(m\to n)=\pi_{m,n}$。对每个 $n$，`CostructuredArrow(i,n)` 是不低于 $n$ 的保留层构成的非空尾；任意两层都有共同更高层向它们映射，所以该范畴连通，$i$ 是 initial。在集合范畴中极限存在，既有接口给 $\lim(H\circ i)\cong\lim H$。该接口定义为 `asIso (limit.pre H i)` 的逆，故它的逆方向正是下面的限制映射。
+

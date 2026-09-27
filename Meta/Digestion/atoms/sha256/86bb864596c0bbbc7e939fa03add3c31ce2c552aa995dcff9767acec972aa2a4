@@ -1,0 +1,13 @@
+### 20.6 定理：实际两矩误差的最佳全程倍率
+
+令 $\mathcal E_M^*=A/M^2$ 为单独给定 $M$ 时允许重新布点的最优误差。对全部嵌套校准历史，有
+\[
+\boxed{
+\inf_{(G_M)\,\mathrm{nested}}\sup_{M\geq1}
+\frac{\mathcal E(G_M)}{\mathcal E_M^*}
+=\frac1{(\ln2)^2}=2.081368981\ldots.
+}
+\tag{20.11}
+\]
+将上确界换成 $M\to\infty$ 的上极限，最优值相同。
+

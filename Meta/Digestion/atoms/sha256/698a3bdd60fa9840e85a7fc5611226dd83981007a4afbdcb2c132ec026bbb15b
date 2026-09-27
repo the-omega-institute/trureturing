@@ -1,0 +1,42 @@
+### 35.1 折扣未来距离
+
+设 $q:Y\to O$，更新为 $F:Y\to Y$，并假设 $(O,d)$ 是度量空间，存在 $B<\infty$ 使
+
+$$
+ d(a,b)\le B\qquad(a,b\in O).
+$$
+
+对 $0<\gamma<1$ 定义
+
+$$
+D_\gamma(y,y')
+:=\sup_{n\ge0}
+ \gamma^n d\bigl(q(F^n y),q(F^n y')\bigr).
+\tag{35.1}
+$$
+
+仓内 `CanonicalDiscountedFutureGeometry.canonical_discounted_future_geometry` 形式化了以下性质：$D_\gamma$ 是 $Y$ 上的伪度量，满足
+
+$$
+ d(qy,qy')\le D_\gamma(y,y'),
+\tag{35.2}
+$$
+
+$$
+D_\gamma(Fy,Fy')\le\gamma^{-1}D_\gamma(y,y'),
+\tag{35.3}
+$$
+
+以及
+
+$$
+\boxed{
+D_\gamma(y,y')=0
+\iff
+\forall n,\ q(F^n y)=q(F^n y').
+}
+\tag{35.4}
+$$
+
+因此，对任意严格正的折扣，零核仍然是完整未来核；折扣只改变不同非等价状态之间的距离权重，不改变精确空间、时间、边界和记忆在任务上的等价类。
+

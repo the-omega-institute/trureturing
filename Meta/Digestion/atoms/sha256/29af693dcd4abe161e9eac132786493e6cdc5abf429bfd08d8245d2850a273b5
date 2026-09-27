@@ -1,0 +1,22 @@
+### 286.4 允许跨块共同测量的必要副本数
+
+$K$ 个真实块的原始联合态分别为 $\sigma_{0,r}^{\otimes K}$ 与 $\sigma_{\delta,r}^{\otimes K}$。允许的全部处理是这两态上的共同CPTP后处理，包括跨块量子记忆、提前停止及最终全局测量。因此最终距离满足
+$$
+\begin{aligned}
+d_{\rm final}^2
+&\le1-F(\sigma_{\delta,r},\sigma_{0,r})^{2K}\\
+&\le K\bigl[1-F(\sigma_{\delta,r},\sigma_{0,r})^2\bigr]\\
+&\le40K\frac{\delta^2}{\varepsilon+\delta}.
+\end{aligned}
+\tag{286.14}
+$$
+平均错误至多 $1/3$ 必须 $d_{\rm final}\ge1/3$。因为 $N=2K$，
+$$
+\boxed{
+N_{\rm full,2}(n,\delta,r)
+\ge\frac{\varepsilon+\delta}{180\delta^2}.
+}
+\tag{286.15}
+$$
+这个下界控制完整原输入的全部可用区别，没有假定观察者只测核投影。
+

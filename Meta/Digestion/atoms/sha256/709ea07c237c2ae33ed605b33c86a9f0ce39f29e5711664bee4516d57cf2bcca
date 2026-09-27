@@ -1,0 +1,20 @@
+### 193.4 把退化点展开为方向边界
+
+取固定 $\rho_0>0$ 足够小，使 $\rho_0\le1/2$ 且
+$R\rho_0<\beta/(\beta^2+\gamma^2)$。作坐标变换
+
+$$
+\rho=\ell+\epsilon,\qquad
+z=\frac{\ell}{\ell+\epsilon},
+\qquad
+\ell=\rho z,\quad\epsilon=\rho(1-z).
+\tag{193.6}
+$$
+
+在 $0<\rho\le\rho_0$、$0\le z<1$，定义归一化响应
+
+$$
+\mathcal R(\rho,z)
+=\frac{\mathscr E(\rho z,\rho(1-z))-3/4}{\rho(1-z)}.
+$$
+

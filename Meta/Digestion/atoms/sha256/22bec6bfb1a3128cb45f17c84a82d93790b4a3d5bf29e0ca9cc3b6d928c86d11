@@ -1,0 +1,23 @@
+#### 238.4.1 预算六及其空间补
+
+在 $\mathbb C^2$ 中取 $\omega=e^{2\pi i/3}$ 及
+$$
+x_j=\frac1{\sqrt2}(1,\omega^{j-1}),
+\qquad j=1,2,3.
+$$
+由 $1+\omega+\omega^2=0$，直接得到
+$$
+\sum_{j=1}^3|x_j\rangle\langle x_j|=\frac32I_2.
+\tag{238.20}
+$$
+在 $A=\mathbb C^2\oplus\mathbb C^2$ 中，定义
+$$
+\Pi_j=|x_j\rangle\langle x_j|\oplus|x_j\rangle\langle x_j|
+\quad(j=1,2,3),
+\qquad \Pi_4=0.
+\tag{238.21}
+$$
+秩型为 $(2,2,2,0)$，投影和为 $(3/2)I_4$，总秩六。故 $D_6=5/8$。
+
+逐个取空间补 $I_4-\Pi_j$，得到秩型 $(2,2,2,4)$、投影和 $(5/2)I_4$、总秩十，故 $D_{10}=3/8$。
+

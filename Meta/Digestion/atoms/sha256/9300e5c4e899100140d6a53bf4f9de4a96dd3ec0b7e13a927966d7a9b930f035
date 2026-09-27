@@ -1,0 +1,26 @@
+**引理65.1（共同接收矩形）。** 在（65.1）—（65.2）的反设下，存在接收器内正交子空间 $R,Q$，满足
+
+$$
+\begin{gathered}
+\dim R=4,\qquad\dim Q=2,\qquad R\perp Q,\\
+G_2+G_3=G_2+G_4=G_3+G_4=R,\qquad
+G_2,G_3,G_4,G_5,G_6\subset R,\\
+Q_3=Q_4=Q_5=Q_6=Q,\qquad V_1R=Q\otimes F.
+\end{gathered}
+\tag{65.5}
+$$
+
+置 $S_0=H_1+\cdots+H_5$，则 $\dim S_0=6$，且
+
+$$
+\begin{gathered}
+V_0S_0=(G_2\otimes\eta_2)\dotplus(G_3\otimes\eta_3)
+\dotplus(G_4\otimes\eta_4)\subset R\otimes F,\\
+V_0K=(\mathbb Cp\otimes\eta_1)\dotplus V_0S_0,
+\qquad k\notin S_0.
+\end{gathered}
+\tag{65.6}
+$$
+
+此外 $v\perp R$。如果 $P_F\eta_1\ne0$，还有 $p\perp Q$、$q\perp R$。
+

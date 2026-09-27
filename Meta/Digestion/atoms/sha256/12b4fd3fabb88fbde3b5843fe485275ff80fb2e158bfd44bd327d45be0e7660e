@@ -1,0 +1,27 @@
+**定理271.4（允许跨链相干的完整上界）。** 存在只依赖固定多链合同的有限常数 $C_{\mathrm{up}}$，使所有合法竞争态满足
+$$
+\boxed{
+\|\Xi-\Omega_*\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon(\Xi)^{1/(2m)}\}.
+}
+\tag{271.48}
+$$
+
+**证明。** 对 $0\le\varepsilon\le\eta_0$，由（271.38）及联合维数 $2N$，
+$$
+\begin{aligned}
+\|\Xi-\Omega_*\|_1
+&\le\frac2N\|D\|_1+\frac1N\|X\|_1\\
+&\le2\|D\|+2\|X\|\\
+&\le(2\Gamma+N)\varepsilon^{1/(2m)}.
+\end{aligned}
+\tag{271.49}
+$$
+当 $\eta_0\le\varepsilon\le1$ 时，态距离至多二，故系数 $2\eta_0^{-1/(2m)}$ 足够；$\varepsilon\ge1$ 时系数二足够。可取
+$$
+C_{\mathrm{up}}
+=\max\{2\Gamma+N,\ 2\eta_0^{-1/(2m)},\ 2\}.
+\tag{271.50}
+$$
+再与态迹距的独立上界二取最小即得结论。$\square$
+

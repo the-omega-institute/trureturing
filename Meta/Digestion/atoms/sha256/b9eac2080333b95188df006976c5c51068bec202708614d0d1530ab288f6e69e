@@ -1,0 +1,33 @@
+### 168.3 哪些关系在局部接口上被压缩
+
+对逻辑态
+
+$$
+\sigma=\frac12(I+xX+yY+zZ),
+$$
+
+有
+
+$$
+\mathcal D_\kappa(\sigma)
+=\frac12(I+\kappa xX+\kappa yY+zZ).
+\tag{168.10}
+$$
+
+因此局部接口保留 $Z$ 方向的区分距离，将两个相干方向的区分距离乘以 $\kappa$。具体地，若 $\sigma,\tau$ 的 Bloch 向量分别为
+$(x,y,z)$、$(x',y',z')$，则
+
+$$
+\boxed{
+\frac12\|
+\mathcal N_{\mathrm{loc}}(\sigma)
+-\mathcal N_{\mathrm{loc}}(\tau)
+\|_1
+=
+\frac12\sqrt{
+\kappa^2\bigl((x-x')^2+(y-y')^2\bigr)
++(z-z')^2}.
+}
+\tag{168.11}
+$$
+

@@ -1,0 +1,49 @@
+**定理 21.3（无限偏移与基数修正的临界位置）。** 在定义 21.1 下，不另要求
+$`\lambda/\ell`$ 收敛。如果 $`c_M\to+\infty`$，则 (21.3) 的四种风险均趋于零；
+如果 $`c_M\to-\infty`$，则它们均趋于一。此结论同时适用于两个实验。
+特别地，若固定 $`b,c\in\mathbb R`$，且
+
+```math
+\log q=(1-\beta)\ell+b\sqrt\ell+o(\sqrt\ell),\qquad
+\lambda=\alpha_A\ell+c\sqrt\ell+o(\sqrt\ell),
+\tag{21.19}
+```
+
+则这八种风险的共同极限为
+
+```math
+\Phi\!\left(-\frac{c\phi+b}{\sqrt{V_A}}\right).
+\tag{21.20}
+```
+
+若 $`q=\lfloor M^{1-\beta}\rfloor`$ 且
+$`\lambda=\alpha_A\ell+o(\sqrt\ell)`$，共同极限为 $`1/2`$。
+单独的 $`\lambda/\ell\to\alpha_A`$ 与
+$`q=M^{1-\beta+o(1)}`$ 不能确定该极限。
+
+证明。固定 $`d,q,r`$，增加样本量不会增加任何一种极小极大风险：独立对实验可丢弃
+后续样本，路径实验可保留初始路径段；两种操作均保留所论实际平稳律，且不要求知道方向。
+对任意固定 $`t\in\mathbb R`$，取
+
+```math
+s_M(t)=\max\!\left\{0,
+ \left\lfloor n\left(\frac{\tau_M}\phi+t\sqrt\ell\right)\right\rfloor\right\}.
+\tag{21.21}
+```
+
+因 $`\tau_M\sim\beta\ell`$，充分大 $`M`$ 时截零不作用，取整只使
+$`\lambda`$ 改变 $`O(1/n)`$。定理 21.2 给出此样本量下的风险极限为
+$`\mathcal L(t)`$。若 $`c_M\to+\infty`$，原样本量最终不小于每个固定
+$`s_M(t)`$，故风险上极限至多为 $`\mathcal L(t)`$；令 $`t\to+\infty`$ 即得零。
+若 $`c_M\to-\infty`$，反向比较给出风险下极限不小于
+$`\mathcal L(t)`$；令 $`t\to-\infty`$ 即得一。
+受约束风险用任意固定 $`q`$ 元输出、无约束风险用空集输出，均至多为一。
+
+(21.19) 给出
+$`\tau_M=\beta\ell-b\sqrt\ell+o(\sqrt\ell)`$，所以
+$`c_M\to c+b/\phi`$，代入 (21.3) 即得 (21.20)。
+指定的取整基数满足 $`\log q=(1-\beta)\ell+o(1)`$。
+仍取该基数，而令
+$`\lambda=\alpha_A\ell\pm\ell^{3/4}+O(1/n)`$，则两条序列均保持相同的一阶比值，
+风险却分别趋于零与一。这证明只给出一阶标度不足以指定边界风险。∎
+

@@ -1,0 +1,23 @@
+**推论 123.2（终端化只是取 $f=1$ 的边缘）。** 令 $f\equiv1$，则
+
+$$
+\mathbf M_j[1](X)=\Xi_{\Gamma_j}(X)
+\longrightarrow
+\operatorname{Tr}(Q_*X)P_0+\operatorname{Tr}(P_*X)\zeta,
+$$
+
+这正是式（115.3）（定理 115.2）的终端通道极限。若只取标量迹，则首次点击的缩放时间律弱收敛为
+
+$$
+\boxed{
+\mu_\infty^\rho
+=
+\operatorname{Tr}(Q_*\rho)\,\delta_0
++
+\operatorname{Tr}(P_*\rho)e^{-t}\,dt.
+}
+\tag{123.6}
+$$
+
+因此“时间被丢弃”不是说时间关系不存在，而是把同一标记对象作用于常函数 $1$。
+

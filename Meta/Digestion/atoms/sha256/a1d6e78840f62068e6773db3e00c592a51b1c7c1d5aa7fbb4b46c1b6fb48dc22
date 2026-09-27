@@ -1,0 +1,28 @@
+### 64.7 排除 ABCCC
+
+采用第60节纯分支合同：非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，七维接收器 $K$ 从独立单位初态 $k$ 启动，同一全域 CPTP 通道精确服务前六个完整参考终端。固定 Stinespring 位块 $V_0,V_1$，二者等距且两像正交。实际环境尾为
+$$
+(\eta_2,\eta_3,\eta_4,\eta_5,\eta_6)=(A,B,C,C,C),
+\tag{64.29}
+$$
+其中 $A,B,C$ 线性无关，暂不假设正交。所有射线等式可吸收相位，以下为单位代表。
+
+前两轮取正交单位 $p,q$ 及正交单位 $u,v,w$，满足
+$$
+V_0k=p\eta_1,\quad V_1k=q\eta_1,\quad
+V_0p=uA,\quad V_1p=vA,\quad V_0q=wA.
+\tag{64.30}
+$$
+置
+$$
+U=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+$$
+其余记号沿实际来源：$H_n,G_n,Q_n$ 二维，$C_n=G_n\oplus Q_n$ 四维，$H_n$ 到两个因子的投影均为同构，且
+$$
+V_0H_{n-1}=G_n\eta_n,\qquad
+V_1G_{n-1}=Q_n\eta_n.
+\tag{64.31}
+$$
+省略张量符号只表示乘积向量或子空间，不表示环境被删除。
+

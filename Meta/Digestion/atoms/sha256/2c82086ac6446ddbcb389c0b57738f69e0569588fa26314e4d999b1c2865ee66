@@ -1,0 +1,32 @@
+**引理 232.2（标量迹权重的公共 CP 部分）。** 设 $\mathcal A,\mathcal B$ 为同接口 CPTP 通道。若存在完全正映射 $\mathcal C$，满足
+$$
+\mathcal A-\mathcal C\text{ 完全正},\qquad
+\mathcal B-\mathcal C\text{ 完全正},\qquad
+\mathcal C^*(I)=cI,\qquad0\le c<1,
+\tag{232.UC.12}
+$$
+则
+$$
+\boxed{\frac12\|\mathcal A-\mathcal B\|_\diamond\le1-c.}
+\tag{232.UC.13}
+$$
+
+**证明。** 两个残差的迹效应都为 $(1-c)I$，所以
+$$
+\mathcal A'=\frac{\mathcal A-\mathcal C}{1-c},
+\qquad
+\mathcal B'=\frac{\mathcal B-\mathcal C}{1-c}
+\tag{232.UC.14}
+$$
+都是 CPTP 通道。于是
+$$
+\mathcal A-\mathcal B=(1-c)(\mathcal A'-\mathcal B'),
+\qquad
+\|\mathcal A-\mathcal B\|_\diamond\le2(1-c).
+$$
+这里使用 CPTP 通道的 diamond 范数为一：由 Kraus 表示构造等距扩张，等距嵌入保持迹范数；部分迹的迹范数收缩可由其对偶 $Y\mapsto I\otimes Y$ 的算子范数保持直接证明。两者在张量任意恒等参考后仍成立，给上界一；任意密度矩阵输入给下界一。$\square$
+
+标量条件 $\mathcal C^*(I)=cI$ 保证共同部分的权重对所有输入相同，也保证（232.UC.14）是真正的 CPTP 归一化。不能把依赖输入的成功概率在每个输入上分别归一化后，当作一个线性通道使用。
+
+若 $c=1$ 且其余条件成立，两份 CP 残差迹效应为零，必为零映射，直接得到 $\mathcal A=\mathcal B$；主区间构造只使用 $c<1$。
+

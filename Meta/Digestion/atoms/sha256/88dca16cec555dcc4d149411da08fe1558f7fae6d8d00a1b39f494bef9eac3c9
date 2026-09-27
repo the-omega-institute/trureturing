@@ -1,0 +1,62 @@
+**定理 107.2（共同合法性、完整距离与全部来源的相同等待）。** 对充分小的 $t>0$，定义 107.1 的全部 $\Gamma_t^\tau$ 都是同接口完整仪器，并同时属于 $\mathfrak B_{u_t}$，其中
+
+$$
+u_t=R-\kappa t+O(t^2)<R,
+\qquad \kappa=\frac{\sqrt\phi}{4}.
+\tag{107.4}
+$$
+
+它们都对全部初态终止，并且对任意两个后继参数
+
+$$
+\boxed{
+\frac12\|\Gamma_t^\tau-\Gamma_t^{\tau'}\|_\diamond
+=k_tD(\tau,\tau'),
+\qquad D(\tau,\tau')=\frac12\|\tau-\tau'\|_1.
+}
+\tag{107.5}
+$$
+
+若 $p=\operatorname{Tr}(\rho P)$，则每个 $\tau$ 给完全相同的首次点击概率：
+
+$$
+\begin{aligned}
+\Pr_\rho(\mathsf N=1)&=1-(1-k_t)p,\\
+\Pr_\rho(\mathsf N=n)&=(1-k_t)p\,\epsilon_t r_t^{n-2}\quad(n\ge2),\\
+\mathbb E_\rho\mathsf N&=1+\frac{(1-k_t)p}{\epsilon_t},\qquad
+M_t=1+\frac{1-k_t}{\epsilon_t}.
+\end{aligned}
+\tag{107.6}
+$$
+
+从准平稳态 $S_t$ 出发，等待准确服从 $\operatorname{Geom}(\epsilon_t)$。所有这些时间律都不含 $\tau$。
+
+证明。各分支是完全正的测量制备映射，其效果分别为 $(1-k_t)P$ 与 $I-(1-k_t)P$，总和为 $I$，得到完整性。未点击映射为秩一超算子，非零特征值为 $r_t<1$，所以全部初态终止。
+
+与 $\widehat\Gamma_{-t}$ 相比，未点击块减少 $k_t\operatorname{Tr}(PX)S_t$，点击块增加 $k_t\operatorname{Tr}(PX)\tau$。对任意带参考的归一化联合输入 $\omega\succeq0$、$\operatorname{Tr}\omega=1$，定义未归一化参考态
+
+$$
+\omega_R^P=(I_R\otimes\langle\psi|)\omega
+(I_R\otimes|\psi\rangle)\succeq0,
+\qquad\operatorname{Tr}\omega_R^P\le1.
+$$
+
+两块之差分别为 $-k_t\omega_R^P\otimes S_t$ 与 $k_t\omega_R^P\otimes\tau$。记录正交使其半迹范数为 $k_t\operatorname{Tr}\omega_R^P\le k_t$，由输入 $P$ 达到。因此
+
+$$
+\frac12\|\Gamma_t^\tau-\widehat\Gamma_{-t}\|_\diamond=k_t.
+$$
+
+三角不等式给 $\delta(\Gamma_t^\tau)\le u_t$，且这个上界对全部 $\tau$ 同时成立。定理 103.2 给式（107.4）。比较 $\tau,\tau'$ 时未点击块相同，点击块差为 $k_t\omega_R^P\otimes(\tau-\tau')$；取范数并再次用输入 $P$ 达到上界，得到式（107.5）。
+
+直接迭代得
+
+$$
+\mathcal N_t^n(\rho)=(1-k_t)p\,r_t^{n-1}S_t
+\qquad(n\ge1).
+$$
+
+取迹得到生存概率，作相邻差及尾和得到式（107.6）。最大值由 $p=1$ 的初态 $P$ 取得。对 $S_t$，未点击后仍为 $S_t$，且单轮生存概率为 $r_t$，所以等待为准确几何律。$\square$
+
+相同时间律并不只针对一份准备态。首次点击效果由共同未点击映射与共同点击效果确定，所以全部来源乃至保留参考系统而丢弃点击量子后继的时间记录通道都相同。$\tau$ 的区别位于仍可读取的量子后继中。
+

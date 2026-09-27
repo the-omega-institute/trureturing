@@ -1,0 +1,18 @@
+**定理299.1（双尺度一致的最优来源预算）。** 存在绝对正常数 $a,A$，使在（299.1）的全部参数域中，
+$$
+a\kappa^{-1}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{full},\,n=1}(k,g)
+\le A\kappa^{-1}\left(1+\log\frac\kappa g\right),
+\tag{299.3}
+$$
+$$
+a\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{reset}}(n;k,g)
+\le A\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\qquad(n\ge1).
+\tag{299.4}
+$$
+常数可以同时独立于 $\kappa,g,n$。完整输入结论限于 $n=1$；高维完整输入还保留第289节使用的其他关系，不能套用该标量下界。因为 $g\le k-k^2<\kappa$，对数项非负。
+
+证明分别给出全部允许协议的必要界和实际可取得记录的概率表。辅助比较函数、下界模拟位与真实记录各保留原权限，不互相替代。
+

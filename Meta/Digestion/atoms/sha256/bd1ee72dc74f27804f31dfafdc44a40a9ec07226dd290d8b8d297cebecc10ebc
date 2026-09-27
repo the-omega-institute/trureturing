@@ -1,0 +1,28 @@
+**定理 177.1（终端化的不可逆性）。** 设 $\mathcal C:\mathcal X\to\mathcal Y$ 是线性终端化映射。若存在 $x,y\in\mathcal X$ 使
+
+$$
+\mathcal C(x)=\mathcal C(y)
+$$
+
+但存在允许接口词 $\Phi_1,\ldots,\Phi_n$ 和终端效果 $H$ 满足
+
+$$
+H(\Phi_n\circ\cdots\circ\Phi_1(x))
+\ne
+H(\Phi_n\circ\cdots\circ\Phi_1(y)),
+$$
+
+则不存在恢复映射 $\mathcal R:\mathcal Y\to\mathcal X$ 能同时保持这两个状态的全部续接读数。特别地，不存在满足
+
+$$
+H\circ\Phi_n\circ\cdots\circ\Phi_1
+=
+\overline H\circ\mathcal C
+$$
+
+对所有声明续接都成立的单一摘要坐标。
+
+### 证明
+
+$\mathcal C(x)=\mathcal C(y)$ 迫使 $\mathcal R\mathcal C(x)=\mathcal R\mathcal C(y)$，所以任何只依赖摘要的后处理对这两个输入给出相同结果，不能同时重现两个不同的续接读数。若存在所述因子化，则右侧在 $x,y$ 上相同，而左侧不同，直接矛盾。证毕。
+

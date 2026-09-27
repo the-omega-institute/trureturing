@@ -1,0 +1,83 @@
+**定理241.1的证明。** 先在证明内部建立所需的正矩阵估计。设 $A,B\succeq0$，$t=\operatorname{Tr}(A+B)>0$，令 $P$ 为 $A-B$ 的正谱投影，并置
+$$
+e_A=\operatorname{Tr}[(I-P)A],
+\qquad e_B=\operatorname{Tr}(PB).
+$$
+正负谱分解给
+$$
+\ell:=t-\|A-B\|_1=2(e_A+e_B).
+\tag{241.6}
+$$
+在 Hilbert–Schmidt 范数中分解
+$$
+\sqrt A\sqrt B
+=\sqrt A P\sqrt B+\sqrt A(I-P)\sqrt B.
+$$
+第一项满足
+$$
+\begin{aligned}
+\|\sqrt A P\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}(\sqrt B P A P\sqrt B)\\
+&\le\|A\|_{\mathrm{op}}\operatorname{Tr}(\sqrt B P\sqrt B)\\
+&\le\operatorname{Tr}(A)e_B.
+\end{aligned}
+\tag{241.7}
+$$
+第二项用 $B\preceq\operatorname{Tr}(B)I$，得到
+$$
+\begin{aligned}
+\|\sqrt A(I-P)\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}[\sqrt A(I-P)B(I-P)\sqrt A]\\
+&\le\operatorname{Tr}(B)e_A.
+\end{aligned}
+\tag{241.8}
+$$
+所以三角不等式及二项 Cauchy–Schwarz 给
+$$
+\begin{aligned}
+\sqrt{\operatorname{Tr}(AB)}
+&\le\sqrt{\operatorname{Tr}(A)e_B}
++\sqrt{\operatorname{Tr}(B)e_A}\\
+&\le\sqrt{t(e_A+e_B)}.
+\end{aligned}
+\tag{241.9}
+$$
+平方后结合（241.6），得到
+$$
+\ell\ge\frac{2\operatorname{Tr}(AB)}{t}.
+\tag{241.10}
+$$
+$t=0$ 时 $A=B=0$，相应项直接为零。这里没有把不同迹权重的分支归一化成同一概率，也没有交换不等式方向。
+
+现在应用于（241.3）。设 $p_j=\operatorname{Tr}(\rho\Pi_j)\in[0,1]$，则
+$$
+t_j:=\operatorname{Tr}(A_j+B_j)
+=ap_j+b(1-p_j)
+\in[\min(a,b),\max(a,b)].
+\tag{241.11}
+$$
+由于 $a,b>0$，所有 $t_j$ 严格为正，零投影或满投影也不例外。§240的乘积计算给
+$$
+\operatorname{Tr}(A_jB_j)
+=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.12}
+$$
+又有 $\sum_jt_j=2D_*$，故
+$$
+\begin{aligned}
+D_*-f(\rho)
+&=\frac12\sum_j(t_j-\|A_j-B_j\|_1)\\
+&\ge\sum_j\frac{\operatorname{Tr}(A_jB_j)}{t_j}\\
+&\ge\frac{ab}{\max(a,b)}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{241.13}
+$$
+最后的系数为 $\min(a,b)$。在投影 $\Pi_j$ 的像与核分解中，交换子仅有互为负伴随的两个非对角块，所以
+$$
+\|[\rho,\Pi_j]\|_{\mathrm{HS}}^2
+=2\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.14}
+$$
+这证明（241.5）。$\square$
+

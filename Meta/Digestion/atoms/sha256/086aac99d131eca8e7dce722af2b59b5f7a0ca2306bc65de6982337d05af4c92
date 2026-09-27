@@ -1,0 +1,19 @@
+**推论158.3（阈值统计的精确范围）。** 对任意 $t$，
+
+$$
+\boxed{
+\mu_G\{h>t\}
+\le\liminf_Na_N(t)
+\le\limsup_Na_N(t)
+\le\mu_G\{h\ge t\}.
+}
+\tag{158.8}
+$$
+
+若 $\mu_G\{h=t\}=0$，则极限存在且
+
+$$
+\lim_Na_N(t)=\mu_G\{h>t\}.
+\tag{158.9}
+$$
+

@@ -1,0 +1,21 @@
+**命题 2.20（sparse ancestor criterion）。** Put
+$$
+c_p=\frac{p-2}{p-1},
+\qquad
+\delta_d=c_pp^{-d}>0.
+\tag{TM.564}
+$$
+For $D=[b]_d$, the following are equivalent:
+
+1. $E\cap D\ne\varnothing$.
+2. No included $C_h$ with $h\le d$ contains $D$.
+3. $\mu(E\cap D)\ge\delta_d$.
+
+In particular, each cylinder mass belongs to
+$$
+\mu(E\cap[b]_d)\in\{0\}\cup[\delta_d,p^{-d}],
+\qquad
+M\ge c_p.
+\tag{TM.565}
+$$
+

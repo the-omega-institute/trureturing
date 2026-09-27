@@ -1,0 +1,15 @@
+**定义 319.2（单个齐次生成元的实际恢复值）。** 在第293节同一个正半径六态任务中，对 $R>0$ 定义
+
+$$
+\widehat H_a(R)
+=\inf\left\{
+e(\mathcal E,\mathcal D):
+r(\mathcal E)\le R,\quad
+\mathcal D\circ\mathcal E=e^{\mathcal L},\
+\mathcal L\text{ 为量子比特 GKSL 生成元}
+\right\}.
+\tag{319.7}
+$$
+
+编码与解码均为完整 $M_2$ 上的实际 CPTP 通道。生成元允许依赖预算，不预先要求幺元；任意有限正演化时间吸收到 $\mathcal L$ 中。该可行类非空：选择足够小但严格正的退极化因子，再按第281节实现残差方向，就给出满足任意正预算的齐次半群方案。定义取下确界，不预先假设达到或闭性。
+

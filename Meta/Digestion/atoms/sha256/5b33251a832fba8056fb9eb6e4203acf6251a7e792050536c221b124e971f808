@@ -1,0 +1,8 @@
+### 38.6 与已形式化支点的范围
+
+本节直接复用 ThreeCompletionOrthogonality、GlobalProfileQuotientUniversality、ProtocolInnovationCriterion、FinitePrefixInfiniteCompletionSeparation 和 RefinementCompositionStructure 的公开结论。它们分别支撑 completion 正交性、全体局部读出的最小 profile、严格细化的 private witness、有限—无限概率分离和 refinement 复合；本节只是把这些结果接入共同核叙述，没有新增 Lean 声明。
+
+具体模型仍需声明：索引族是否包含合法性和失败、概率完成是否要求尾事件、接口值是否取实际像、以及更新是否在该核上下降。缺少这些条件时，本节结论只是一组适用判据，不能声称已得到物理时空统一。
+
+本节 Claim status 为 open。
+

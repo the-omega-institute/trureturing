@@ -1,0 +1,78 @@
+**引理 408.1（归一化相关矩阵的余维一支撑含有相位向量）。** 设整数 $m\ge1$，$H\in\mathbb C^{m\times m}$ 满足
+
+$$
+H\succeq0,\qquad H_{ii}=1\quad(1\le i\le m),\qquad
+\operatorname{rank}H\ge m-1.
+$$
+
+则
+
+$$
+\operatorname{ran}H\cap\mathbb T^m\ne\varnothing.
+$$
+
+证明。满秩时 $\operatorname{ran}H=\mathbb C^m$，结论立即成立。其余情形的秩为 $m-1$；$m=1$ 时归一化强制 $H=(1)$，故奇异情形必有 $m\ge2$。取分解 $H=RR^\dagger$，以 $r_i$ 记 $R$ 的第 $i$ 行 ket，则 $\|r_i\|^2=H_{ii}=1$。设 $\ker H=\operatorname{span}\{a\}$，$a\ne0$。由
+
+$$
+0=a^\dagger Ha=\|R^\dagger a\|^2
+$$
+
+得 $R^\dagger a=0$；逐坐标共轭后为
+
+$$
+\sum_{i=1}^m\overline{a_i}\,r_i=0.
+$$
+
+对每个 $j$，将第 $j$ 项移至一侧并取范数，得到长度平衡条件
+
+$$
+|a_j|\le\sum_{i\ne j}|a_i|.
+$$
+
+下面在此证明内展开所需的经典平面向量闭合判据。对任意有限列非负长度 $L_1,\ldots,L_s$，记总和为 $S$、最大值为 $M$，空列约定 $S=M=0$。可由复平面向量 $v_i$、$|v_i|=L_i$ 得到的合向量模长恰为
+
+$$
+\left\{\left|\sum_{i=1}^s v_i\right|:|v_i|=L_i\right\}
+ =[\max(0,2M-S),S].
+$$
+
+从空列的集合 $\{0\}$ 开始归纳。设前一列的可达模长区间为 $[a,b]$，再加入长度 $t\ge0$。每个已有配置都可整体旋转；对已有合向量模长 $r\in[a,b]$，与新向量夹角 $\theta\in[0,\pi]$ 时的新模长为
+
+$$
+f(r,\theta)=\sqrt{r^2+t^2+2rt\cos\theta}.
+$$
+
+每个这样的值都可达到，而任意新配置的模长也在此像中。当 $r=0$ 或 $t=0$ 时，公式仍成立且不需要指定零向量的方向。矩形 $[a,b]\times[0,\pi]$ 紧且连通，连续函数 $f$ 的像是闭区间。其最大值为 $b+t$；对固定 $r$ 的最小值为 $|r-t|$，故全局最小值为
+
+$$
+\operatorname{dist}(t,[a,b])=\max(0,a-t,t-b).
+$$
+
+将 $a=\max(0,2M-S)$、$b=S$ 代入，此下端点为
+
+$$
+\begin{aligned}
+\max(0,2M-S-t,t-S)
+ &=\max\bigl(0,2\max(M,t)-(S+t)\bigr),
+\end{aligned}
+$$
+
+上端点为 $S+t$，正是新总和与新最大值的公式，归纳完成。这同时包含零长度、全零列、零合向量以及平衡取等时的共线配置，不需要极限论证。
+
+现在取 $L_i=|a_i|$。逐项平衡等价于 $2M\le S$，故上述区间包含 $0$。于是存在 $v_i\in\mathbb C$，满足
+
+$$
+|v_i|=|a_i|,\qquad \sum_{i=1}^m v_i=0.
+$$
+
+若 $a_i\ne0$，令 $z_i=v_i/\overline{a_i}$；若 $a_i=0$，则 $v_i=0$，任选 $|z_i|=1$。因此
+
+$$
+|z_i|=1\quad\text{对所有 }i,\qquad
+ a^\dagger z=\sum_i\overline{a_i}z_i=\sum_i v_i=0.
+$$
+
+$H$ 为 Hermitian 矩阵，故 $\operatorname{ran}H=(\ker H)^\perp$，从而 $z\in\operatorname{ran}H\cap\mathbb T^m$。证毕。
+
+归一化条件在此承担实质作用：任意余维一子空间并不必含相位向量。例如超平面 $\{z:z_1=0\}$ 与 $\mathbb T^m$ 不相交；它是正半定矩阵 $\operatorname{diag}(0,1,\ldots,1)$ 的值域，但该矩阵不满足全部对角元为 $1$。
+

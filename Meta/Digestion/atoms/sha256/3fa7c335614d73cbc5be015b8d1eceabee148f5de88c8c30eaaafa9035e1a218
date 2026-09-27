@@ -1,0 +1,10 @@
+#### 2.9.4 Weighted binary supports and the only possible ambiguity
+
+For any support $S\subseteq\mathbb N_{>0}$, define
+
+$$
+F(S)=\sum_{n\in S}w_n.
+$$
+
+This is a binary choice of whether to use each weight, even when the ambient radices exceed two.
+

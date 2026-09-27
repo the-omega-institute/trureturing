@@ -1,0 +1,65 @@
+**定理 12.1（共同反向鞅与可选停止的方向保证）。** 对任意
+$P_b,P_c\in\mathcal K_d^0$，在正向 $P_c$ 路径律下，
+$(L^{-,\mathrm{path}}_{b,s})_{s\ge0}$ 是非负、均值为一的鞅；
+在反向 $P_c$ 路径律下，$(L^{+,\mathrm{path}}_{b,s})_{s\ge0}$ 具有同一性质。
+两项结论也适用于按样本对增长的独立状态对实验。
+因此，同一方向中预先固定非负权重且权重之和为一的任意有限似然混合，
+都是整个相反方向核族下的均值一非负鞅。
+
+对定义 11.1 的单峰族，取 $\overline L_s^\pm=M^{-1}\sum_z L_{b_z,s}^\pm$。
+给定 $\eta\in(0,1)$，定义停止时刻
+
+$$
+\tau_\eta=\inf\{s\ge1:\max(\overline L_s^+,\overline L_s^-)\ge1/\eta\},
+\tag{12.1}
+$$
+
+在停止时输出达到门槛的方向；若两个方向同时达到则任意破同分。
+对每个固定 $d,r$，两种实验中的 $\tau_\eta$ 都在每个单峰假设下几乎处处有限，且
+
+$$
+\max_{z,\epsilon}
+\mathsf P_{b_z}^{\epsilon}\{\widehat\epsilon_{\tau_\eta}\ne\epsilon\}
+\le\eta.
+\tag{12.2}
+$$
+
+不需要另给两个方向分摊错误预算。
+
+证明。在正向 $P_c$ 下，反向候选似然的下一步乘子条件期望为
+
+$$
+\mathbb E_c\!\left[
+ \frac{L_{b,s+1}^-}{L_{b,s}^-}\,\middle|\,X_0,\ldots,X_s\right]
+=n\sum_yP_c(X_s,y)P_b(y,X_s)
+=n(P_cP_b)(X_s,X_s)=1.
+\tag{12.3}
+$$
+
+最后一步使用 (10.2)，而非仅用单个核的平方等于 $\Pi$。
+似然严格为正且 $L_{b,0}^-=1$，得到鞅性质与均值一。
+交换两个方向时，使用
+$P_c^\top P_b^\top=(P_bP_c)^\top=\Pi$。
+对独立状态对，下一对的异向乘子均值由 (10.3) 在 $s=1$ 时给出，亦为一。
+固定权重的有限和保留鞅性质。
+
+由经典 Ville 不等式，见
+[Howard 等，引理 1](../../../Library/Dynamics/howard2020timeuniform.md)，
+每个真正向核下都有
+
+$$
+\Pr\{\sup_{s\ge0}\overline L_s^-\ge1/\eta\}\le\eta,
+$$
+
+真反向核下也有对应的正向越界界。
+报告错误方向必导致该错误方向的混合似然曾越界，故直接得到 (12.2)。
+对固定真单峰 $(z,\epsilon)$，有限正链的遍历定理或独立样本大数律给出
+
+$$
+\frac1s\log L_{b_z,s}^{\epsilon}\longrightarrow F_M(r)>0
+\quad\text{几乎处处}.
+$$
+
+又 $\overline L_s^\epsilon\ge L_{b_z,s}^\epsilon/M$，故真方向的混合似然最终超过任何固定门槛，
+证明停时有限。这里只给出错误率与几乎处处停止，不断言期望停时的最优尺度。$\square$
+

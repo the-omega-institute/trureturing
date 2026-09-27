@@ -1,0 +1,39 @@
+**定义 189.1（以可读信息归一的统一成本）。** 固定 $0<a<1$，仍以 $J_a=(2a-1,1)$ 为参数区间。对第187.1节的有限维固定量子程序，令
+$$
+\widehat R(\mathcal G,\rho)
+=\sup_{u\in J_a}\frac{I_Q(\rho_u)}{I_r(u)},
+\qquad I_r(u)=\frac1{1-u^2},
+\qquad
+\widehat R_Q^*(a)=\inf_{(\mathcal G,\rho)}\widehat R(\mathcal G,\rho).
+\tag{189.1}
+$$
+每个候选都必须精确模拟全部 $J_a$。下确界允许任意有限程序维数，信息量仍采用（187.2）的点态 SLD 约定。这里的归一分母是实验可读信息 $I_r$，与第187节以逐点经典生成成本 $B$ 为分母的 $R_Q^*$ 不同。
+
+取三个内部参数值
+$$
+u_- =\frac{3a-1}{2},\qquad u_0=a,\qquad u_+=\frac{1+a}{2},
+\qquad h_i=\frac{1+u_i}{2},\quad\ell_i=1-h_i,
+\tag{189.2}
+$$
+并定义
+$$
+M_a=\begin{pmatrix}
+h_-&h_0&h_+\\
+\ell_-&\ell_0&\ell_+\\
+\sqrt{h_-\ell_-}&\sqrt{h_0\ell_0}&\sqrt{h_+\ell_+}
+\end{pmatrix},
+\qquad
+\begin{pmatrix}\alpha_-\\\alpha_0\\\alpha_+\end{pmatrix}
+=M_a^{-1}\begin{pmatrix}0\\1\\0\end{pmatrix}.
+\tag{189.3}
+$$
+函数 $\sqrt{1-u^2}$ 严格凹，故三个点在其图上不共线；结合前两行张成常数与 $u$，可知 $M_a$ 可逆。令
+$$
+S_a=|\alpha_-|+|\alpha_+|,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+\qquad
+\Delta(a)=\frac{\mu_a^2(1-u_+^2)}{S_a^2}.
+\tag{189.4}
+$$
+$S_a>0$：否则（189.3）前两行之和迫使 $\alpha_0=1$，而第一行又要求 $h_0=0$，矛盾。因此 $\Delta(a)>0$，且只依赖已知参数 $a$。
+

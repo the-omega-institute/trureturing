@@ -1,0 +1,80 @@
+**定理 57.3（同一临界过程族的连续极限与共振）。** 以同一正态序列实现的
+连续过程可以选为满足
+
+```math
+G_\varrho(t+c)=G_{\varrho e^c}(t),\qquad
+C_\varrho(t+c,u+c)=C_{\varrho e^c}(t,u).
+```
+
+式 (57.10)。
+
+当 $`\varrho\downarrow0`$ 时，$`G_\varrho|_I`$ 在每个 $`C(I)`$ 中趋于
+协方差为 (56.4) 的平稳 OU 过程；该收敛相对于
+$`\sigma(\xi_1,\xi_2,\ldots)`$ 是 mixing。
+每个固定正 $`\varrho`$ 的全实轴过程则非平稳。
+置 $`V(z)=C_z(0,0)`$，当 $`z\to\infty`$，令
+$`\theta=\omega z\bmod\pi\in[0,\pi)`$，则一致地有
+
+```math
+V(z)=\frac{8g_0}{\omega^2z}\theta(\pi-\theta)+O(z^{-2}).
+```
+
+式 (57.11)。
+
+在精确共振 $`\omega z\in\pi\mathbb Z`$ 上，更强地有
+
+```math
+V(z)=\frac{16g_0\zeta(4)}{\omega^4z^3}+O(z^{-5}).
+```
+
+式 (57.12)。
+
+这些 $`z`$ 渐近结论描述已识别的 Gaussian 过程族，不改变实际定理 (57.3)
+要求网格比例趋于固定正数的量词。
+
+证明。先在有理参数上由级数逐项核对 (57.10)，
+再用 $`G_\varrho(t)=G_1(t+\log\varrho)`$ 选择所有连续版本。
+对固定时间紧集，Ci 乘积近零由 $`C(1+|\log|x||)^2`$ 控制，
+远处由 $`C/x^2`$ 控制；环带上关于空间与时间一致连续。
+删去中心小带和远尾后用一致 Riemann 和，再恢复它们，得
+
+```math
+\varrho\sum_{k\ne0}
+ \mathrm{Ci}(\omega\varrho e^t|k|)\mathrm{Ci}(\omega\varrho e^u|k|)
+ \longrightarrow
+ \int_{\mathbb R}\mathrm{Ci}(\omega e^t|x|)
+                 \mathrm{Ci}(\omega e^u|x|)\,dx
+ =\frac{\pi}{\omega e^{\max(t,u)}}.
+```
+
+式 (57.13)。
+
+最后一个恒等式是 (56.19) 的同一 $`L^2`$ Fourier 计算。
+因此协方差一致趋于 $`16g_0e^{-|t-u|/2}`$。
+紧性不能直接套 (57.9) 中依赖正下界的常数；
+改用 (56.25) 及归一化格和
+$`r\sum_k\min\{d^2,(rk)^{-2}\}\le Cd`$，
+便得对 $`0<\varrho\le1`$ 一致的二阶增量 $`C_I|t-u|`$。
+Gaussian 四阶矩和 Kolmogorov 判据补上 $`C(I)`$ 收敛。
+对每个固定 $`k`$，(57.2) 的系数是
+$`O_I(\sqrt\varrho(1+|\log\varrho|))\to0`$。
+因而新路径与任意有限组 $`\xi_k`$ 的交叉协方差趋零，
+联合 Gaussian 性先给出与有限柱的独立极限；
+对整个序列的有界可测测试作 $`L^1`$ 柱条件期望逼近，得到 mixing。
+
+由 (57.13)，$`V(z)\to16g_0`$ 当 $`z\downarrow0`$；
+倒数包络则给出 $`V(z)\le C/z\to0`$ 当 $`z\to\infty`$。
+所以 $`C_\varrho(t,t)=V(\varrho e^t)`$ 在全实轴上不恒定。
+此结论不要求方差在每个小区间严格单调。
+
+两次分部积分给出
+$`\mathrm{Ci}(x)=\sin x/x-\cos x/x^2+O(x^{-3})`$，$`x\ge1`$。
+在 (57.4) 的方差级数中逐项平方，余项由可和的 $`k^{-3}`$、$`k^{-4}`$ 控制，得
+$`V(z)=16g_0(\omega^2z)^{-1}\sum_{k\ge1}\sin^2(\omega zk)/k^2+O(z^{-2})`$。
+经典 Bernoulli 多项式 Fourier 级数给出
+$`\sum_{k\ge1}\sin^2(k\theta)/k^2=\theta(\pi-\theta)/2`$，
+即 (57.11)，其误差在相位上一致。
+在精确共振上正弦项全消；再作两次分部积分，得
+$`\mathrm{Ci}(\omega zk)=-\cos(\omega zk)/(\omega zk)^2+O((zk)^{-4})`$。
+平方求和即 (57.12)。不能用 (57.11) 的绝对误差在接近共振时直接推出等价式。
+

@@ -1,0 +1,95 @@
+### 68.4 同一反馈下的二阶正性矛盾
+
+对 $0<q<1$，取
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0),
+\quad
+H_q=(C_q^{1/2}\otimes I_D)(R_\varepsilon-S)(C_q^{1/2}\otimes I_D).
+$$
+
+$H_q$ 在 $x,y$ 上的主块为
+
+$$
+B_q=
+\begin{pmatrix}
+q(1/2-A)&\sqrt{q(1-q)/2}\,(c-k)\\
+\sqrt{q(1-q)/2}\,(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{68.14}
+$$
+
+记 $\lambda_q=\max\{0,\lambda_{\max}(B_q)\}$。在加权空间中选择一个对应最大非负特征值的投影（若无正特征值则取零），并加上正交的 $x'$ 投影，得到合法事件。它的响应为
+
+$$
+\lambda_q+q(1/2-S_{x',x'})
+=\lambda_q+q(A+p-1/2),
+$$
+
+其中用了 $S_{x',x'}=1-p-A$。同一 $C_q$ 的总响应差为 $-\varepsilon(1-q)$；将所选事件从总事件中取补，误差假设（68.4）给
+
+$$
+\lambda_q\le qF+g,
+\qquad F=\varepsilon-p+\frac12-A.
+\tag{68.15}
+$$
+
+这一步不需要假设所选事件的响应为正，也不要求 $H_q$ 在各子空间间没有相干。
+
+式（68.15）蕴含 $(qF+g)I_2-B_q\succeq0$，所以
+
+$$
+\bigl[q(\varepsilon-p)+g\bigr]
+\bigl[qF+g+(s-c^2)(1-q)\bigr]
+\ge\frac{q(1-q)}2|c-k|^2.
+\tag{68.16}
+$$
+
+现在选取同一个具体反馈参数 $q=\varepsilon$。由式（68.11），
+
+$$
+\varepsilon-p\le\varepsilon-p_*+\delta_p<2\varepsilon^2,
+\qquad s-c^2\le\varepsilon-p<2\varepsilon^2.
+$$
+
+并且
+
+$$
+F\le2\varepsilon^2+\frac{p_*}{2}+\delta_A
+<2\varepsilon^2+\frac\varepsilon2+\frac\varepsilon{16}
+\le\frac{11}{16}\varepsilon<\varepsilon.
+$$
+
+式（68.16）左侧的两个因子由正性非负。第一个因子满足
+
+$$
+q(\varepsilon-p)+g
+<2\varepsilon^3+\frac{\varepsilon^2}{1024}
+\le\left(\frac18+\frac1{1024}\right)\varepsilon^2
+<\frac{\varepsilon^2}{7}.
+$$
+
+第二个因子严格小于
+
+$$
+\varepsilon^2+g+2\varepsilon^2<4\varepsilon^2.
+$$
+
+故左侧严格小于
+
+$$
+\frac47\varepsilon^4\le\frac1{28}\varepsilon^3.
+$$
+
+式（68.13）却使其右侧严格大于
+
+$$
+\frac{\varepsilon(1-\varepsilon)}2\left(\frac\varepsilon3\right)^2
+\ge\frac5{96}\varepsilon^3
+>\frac1{28}\varepsilon^3.
+$$
+
+矛盾。由此排除所有满足式（68.4）的因果修复。
+
+因果修复集合在有限维下紧，事件误差连续，所以最小值达到。排除误差至多 $\varepsilon+\varepsilon^2/1024$ 的全部修复，便得到严格下界（68.2）。$\square$
+

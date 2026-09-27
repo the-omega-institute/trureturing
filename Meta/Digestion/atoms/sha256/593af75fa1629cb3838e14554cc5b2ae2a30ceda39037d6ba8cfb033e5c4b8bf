@@ -1,0 +1,16 @@
+**定理 163.2（划分细化的有限稳定性）。** 序列
+
+$$
+\mathcal P_0\succeq\mathcal P_1\succeq\cdots
+$$
+
+在至多 $|A|-1$ 次严格细分后稳定。稳定划分 $\mathcal P_\infty$ 是所有满足输出相同和控制族强 lumpability 的划分中最粗的一个。
+
+### 证明
+
+每次细化只会拆分块，不会合并块；若发生严格细分，块数至少增加一。块数最多为 $|A|$，所以严格细分次数不超过 $|A|-1$。
+
+稳定时，同一块内的状态具有相同的 $\nu,\rho$，并且对上一划分的每个块 $B$ 和每个控制 $u$ 具有相同的总转移概率。由于稳定划分等于上一划分，正满足定义 159.1 的强 lumpability 条件。
+
+反过来，设 $\mathcal Q$ 是任一满足这些条件的划分。归纳证明 $\mathcal Q$ 的每个块都包含在 $\mathcal P_n$ 的某个块中。$n=0$ 时由输出相同成立；若在 $\mathcal Q$ 中两个状态仍同块，则它们对 $\mathcal P_n$ 各块的总转移概率相同，而这正是 $\operatorname{sig}_{\mathcal P_n}$ 的每个坐标，所以它们也留在 $\mathcal P_{n+1}$ 的同一块。稳定后 $\mathcal Q$ 仍细于或等于 $\mathcal P_\infty$，故 $\mathcal P_\infty$ 最粗。证毕。
+

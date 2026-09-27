@@ -9,8 +9,12 @@ internal static class GitRepositorySnapshotReader
     private const int MaximumGitOutputBytes = 64 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null)
-        => ReadCurrentCore(repositoryRoot, include, null);
+    // readContents only projects regular bodies, never entries or link bytes.
+    // FILEMAP policy bytes are retained for the same structural validation and
+    // effective inventory as the full reader.
+    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null,
+        Func<string, bool>? readContents = null)
+        => ReadCurrentCore(repositoryRoot, include, null, readContents);
 
     // Visit every file while retaining only the bytes needed for the same link
     // validation as a full snapshot. Identity consumers need the complete path
@@ -22,7 +26,7 @@ internal static class GitRepositorySnapshotReader
     }
 
     private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
-        Action<RawRepositoryEntry>? visit)
+        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -63,8 +67,13 @@ internal static class GitRepositorySnapshotReader
             FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
             var fullPath = Path.Combine(root, path);
             var info = new FileInfo(fullPath);
+            // FileInfo caches lstat data. Do not re-read it through static File/Directory
+            // APIs or issue readlink for every regular repository entry.
+            var attributes = info.Attributes;
+            var present = attributes != (FileAttributes)(-1);
             var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
-            if (info.LinkTarget is { } target)
+            if (present && (attributes & FileAttributes.ReparsePoint) != 0
+                && info.LinkTarget is { } target)
             {
                 var linkBytes = ReadLinkBytes(root, fullPath, target);
                 inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
@@ -74,7 +83,7 @@ internal static class GitRepositorySnapshotReader
                 continue;
             }
 
-            if (Directory.Exists(fullPath))
+            if (present && (attributes & FileAttributes.Directory) != 0)
                 throw new InvalidOperationException($"non-regular repository entry {path} is a directory");
             if (!info.Exists)
             {
@@ -82,20 +91,22 @@ internal static class GitRepositorySnapshotReader
                 continue;
             }
 
-            if ((info.Attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
+            if ((attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
             {
                 throw new InvalidOperationException(
                     $"non-regular repository entry {path} is not a plain file");
             }
 
-            var executable = !OperatingSystem.IsWindows() && (File.GetUnixFileMode(fullPath)
+            var executable = !OperatingSystem.IsWindows() && (info.UnixFileMode
                 & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
             inventory.Add(new(path, indexMode, "regular", executable ? "100755" : "100644", null));
             if (include is not null && !include(path)) continue;
             Retain(new RawRepositoryEntry(
                 path,
                 // The fresh read buffer has no mutable alias; the snapshot owns it.
-                ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))));
+                readContents is null || readContents(path) || FileMapDocuments.IsPolicyPath(path)
+                    ? ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))
+                    : []));
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>

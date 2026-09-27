@@ -1,0 +1,12 @@
+## 15. 固定物理接收器存在的外围谱判据
+
+本节固定一个已知的有限维等距来源
+
+$$
+T:M\longrightarrow M\otimes\mathcal B,\qquad m=\dim M\ge1,
+\qquad E(X)=\operatorname{Tr}_{\mathcal B}(TXT^\dagger).
+\tag{15.1}
+$$
+
+全部发出系统都属于待恢复档案，来源没有另外丢弃、却不计入档案的环境。接收合同沿用定义10.1：一个有限寄存器 $`K`$ 从与来源独立的固定纯态开始；每步使用同一个全域 CPTP 映射 $`\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)`$；不访问参考或活动来源、不反馈来源；所有持久控制计入 $`K`$。每个终端可以使用依赖终端编号、只作用于 $`K`$ 的解码器，必须对全部有限参考 $`J`$ 和全部输入 $`\rho_{JM}`$ 精确恢复参考、活动来源与完整档案的联合态。
+

@@ -1,0 +1,144 @@
+**定理 313.1（列率严格保持单纯形坐标的顺序）。** 在第307、309节的正定对偶支撑分支，令 $x$ 为唯一的开单纯形参数，$\rho_i$ 为式（312.1）的列方向衰减率。对任意不同指标 $i,j$，有
+
+$$
+\operatorname{sign}(\rho_i-\rho_j)
+=\operatorname{sign}(x_i-x_j).
+\tag{313.1}
+$$
+
+因此固定端点半群的二阶超额系数在该分支满足
+
+$$
+\mathcal E_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{313.2}
+$$
+
+证明。沿用第310节的归一化与参数：$n_i^2=w_i$、$X=\operatorname{diag}(x)$、$G_0=G/A$、$Q_0=G_0X$、$M_*=Q_0/f$，以及
+
+$$
+p=\sum_{i<j}x_ix_j,\quad q=x_1x_2x_3,\quad
+h=c/q\ge2,\quad m=\sum_iw_ix_i,\quad
+\beta^2=\sum_iw_ix_i^2,\quad f=m-\beta^2>0.
+$$
+
+记 $u_i=x_i(1-x_i)$。第310节的 Gram 恒等式与固定方向关系为
+
+$$
+Q_0^{\mathsf T}Q_0=(c-q)\operatorname{diag}(w)+qnn^{\mathsf T},
+\qquad Q_0^{\mathsf T}n=\operatorname{diag}(u)n,
+\qquad fu_i=(c-q)w_i+q.
+\tag{313.3}
+$$
+
+所以 $\|M_*e_i\|_2^2=cw_i/f^2$，并且
+
+$$
+\rho_i
+=\frac{(c-q)(Q_0)_{ii}+qu_i}{cf}.
+\tag{313.4}
+$$
+
+确实，式（313.3）右乘 $Q_0$ 后的第 $ii$ 元为
+$w_i[(c-q)(Q_0)_{ii}+qu_i]$；按 $M_*=Q_0/f$ 的三个尺度因子，再除以列范数平方，就得到式（313.4）。
+
+由 $v=(X+\beta I)n/\sqrt{2\beta(\beta+m)}$ 及 $G_0=nn^{\mathsf T}+\beta I-2\beta vv^{\mathsf T}$，
+
+$$
+(Q_0)_{ii}
+=x_i\left[\beta+w_i\left(1-\frac{(x_i+\beta)^2}{\beta+m}\right)\right].
+$$
+
+消去 $w_i=(fu_i-q)/(c-q)$，于是
+
+$$
+\rho_i=\frac{N(x_i)}{cf(\beta+m)},
+\tag{313.5}
+$$
+
+其中是同一个多项式
+
+$$
+N(z)=(c-q)\beta(\beta+m)z
++fz^2(1-z)\bigl[\beta+m-(z+\beta)^2\bigr]
++qz\bigl[(z+\beta)^2-z(\beta+m)\bigr].
+\tag{313.6}
+$$
+
+下面只需比较这个多项式在三个单纯形坐标处的值。每个 $x_i$ 满足 $x_i^3-x_i^2+px_i-q=0$。将式（313.6）除以这个三次式，并用 $\beta^2=m-f$ 约去平方，余式为 $A_2z^2+A_1z+A_0$，其中
+
+$$
+\begin{aligned}
+A_2={}&-2\beta fp+\beta q-fp+fq-mq+q,\\
+A_1={}&\beta cm+\beta fp+2\beta fq-\beta mq
+ -cf+cm+f^2p+fp^2-pq,\\
+A_0={}&-q(\beta f+f^2+fp-q).
+\end{aligned}
+\tag{313.7}
+$$
+
+这些余式系数保留了同一模型的 $c,q,f,m,\beta$。再代入第310节的
+
+$$
+c=hq,\qquad q=\frac{2p^2h}{(h+1)(h+2)},\qquad
+f=\frac{ph}{h+1},\qquad
+m=\frac{h(h+1-6p)}{2(h^2-1)},
+$$
+
+记
+
+$$
+K_0=\frac{hp^2}{(h-1)(h+1)^2(h+2)},\qquad
+T=hp(2\beta+1)(h-1),
+$$
+
+并令
+
+$$
+J=2\beta(h-1)(h+1)^2+h^2(h+1)-2hp(h+2).
+\tag{313.8}
+$$
+
+代入式（313.7）直接整理得到
+
+$$
+A_2=-K_0J,\qquad A_1+A_2=-K_0T.
+\tag{313.9}
+$$
+
+因此对 $\{i,j,k\}=\{1,2,3\}$，使用 $x_i+x_j=1-x_k$，有精确的差值公式
+
+$$
+\rho_i-\rho_j
+=\frac{K_0}{cf(\beta+m)}
+(x_i-x_j)(Jx_k-T).
+\tag{313.10}
+$$
+
+只需证明 $Jx_k-T>0$。由 $p\le1/3$、$h\ge2$，
+
+$$
+\begin{aligned}
+2J-(2\beta+1)(h^2-1)(h+2)
+&=2\beta h(h^2-1)+h^3+h+2-4hp(h+2)\\
+&\ge2\beta h(h^2-1)
++\frac{(h-1)(3h^2-h-6)}3>0.
+\end{aligned}
+\tag{313.11}
+$$
+
+最后一式严格为正，因为 $\beta>0$、$h\ge2$，且 $3h^2-h-6\ge4$。这也证明 $J>0$，并使
+
+$$
+\frac TJ
+<\frac{2ph}{(h+1)(h+2)}
+=\frac qp
+=\frac1{x_1^{-1}+x_2^{-1}+x_3^{-1}}
+<\min_i x_i.
+\tag{313.12}
+$$
+
+故式（313.10）中除 $x_i-x_j$ 外的因子都严格为正，证明式（313.1）。这个推导也包括两个或三个坐标相等的情形，不除以任何坐标差。
+
+第312节已经证明：在正定支撑分支，$\mathcal E_a=0$ 恰好要求三个 $\rho_i$ 相等。式（313.1）使其等价于 $x_1=x_2=x_3=1/3$。第309节的唯一权重重构随后给出 $w_i=1/3$，即三个正倒数半径相等。反过来，等半径的唯一解具有这个均匀单纯形参数，三个衰减率相等。因此式（313.2）成立。证毕。
+

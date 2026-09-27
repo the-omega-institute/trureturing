@@ -1,0 +1,23 @@
+**定理 25.4（近似拉回闭合需要概率下界）。** 设 $\mathcal V$ 是包含 $I,B$ 的实效果空间，两态在 $\mathcal V$ 上期望相同，且共同分支概率 $p>0$。对某个后继效果 $0\le H\le I$，若存在 $G\in\mathcal V$ 满足
+
+$$
+\|\Phi^*(H)-G\|_\infty\le\eta,
+$$
+
+则
+
+$$
+\left|\operatorname{Tr}[(\rho_\Phi-\sigma_\Phi)H]\right|
+\le\min\{1,2\eta/p\}.
+$$
+
+证明。两态的 $G$ 期望相同，分母也相同，故左侧等于
+
+$$
+\frac{|\operatorname{Tr}[(\rho-\sigma)(\Phi^*H-G)]|}{p}
+\le\frac{\|\rho-\sigma\|_1\,\|\Phi^*H-G\|_\infty}{p}
+\le\frac{2\eta}{p}.
+$$
+
+效果的两状态期望差还不超过一。$\square$
+

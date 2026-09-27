@@ -1,0 +1,10 @@
+**命题 11.2（有限事件概率分解）。** 对每个 $N\ge1$，
+
+$$
+\sum_{n=1}^N\sum_xE_{n,x}+S_N=I.
+$$
+
+因而 $p(n,x)=\operatorname{Tr}(\rho E_{n,x})$ 与 $s_N=\operatorname{Tr}(\rho S_N)$ 满足总和为一。
+
+证明。$\sum_xE_{n,x}=S_{n-1}-S_n$，对 $n$ 求和后取迹。$\square$
+

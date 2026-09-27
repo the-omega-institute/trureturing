@@ -1,0 +1,12 @@
+**定理191.1（全 CPTP 最优值的统一余项）。** 存在 $C,\epsilon_0>0$，仅依赖上述固定参数，使全部 $0<\epsilon<\epsilon_0$ 与 $h\in[0,H]$ 满足
+
+$$
+\boxed{
+\left|E_\epsilon(h)-\frac34-\epsilon\Phi_h\right|
+\le C\epsilon^2.
+}
+\tag{191.1}
+$$
+
+这加强第189节的已述余项，不改变其过渡函数。统一性只覆盖有界 $h$；不能据此把 $h\to\infty$ 的任意路径代入。
+

@@ -1,0 +1,4 @@
+**定义 486.1（不能从受限最优值直接推出的结论）。** 沿用 $d(K\longrightarrow L)$ 表示从实验 $K$ 到实验 $L$ 的最小最坏状态 TV 模拟误差。项目 [FiniteDeficiencyRiskTransfer](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean) 的 finiteDeficiency 以目标、来源的次序收参数，所以此处对应 finiteDeficiency L K。
+
+$d(E_r\longrightarrow J)$ 允许模拟器生成整个目标记录，包括改换第一坐标；第 485 节的 $j_{\mathrm{free}}$ 只优化保留实际第一坐标的生成器。因此，命题 485.3 立即给出 $d(E_r\longrightarrow J)\le r\rho$，却不能只靠这项构造宣布等号。一个受限操作集合中的下界，未必约束更大的操作集合。
+

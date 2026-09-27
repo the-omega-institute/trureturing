@@ -1,0 +1,62 @@
+**定理 216.3（尖锐秩成本的完整达到性）。** 对所有定义216.1参数，
+
+```math
+D_1(a,t;r)=D_\infty(a,t;r)=D_\omega(a,t;r)
+ =\begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.12}
+```
+
+达到曲线可取为全区间实解析，并使完整尖锐集合恰为 $`\{t\}`$；其在 $`t`$ 的双侧曲率极限存在并等于 $`\kappa_*(a,t)`$。
+
+证明。 先取定理211.3的全域解析纯态曲线 $`\rho_u^0`$ 及其三维处理器。对非临界情形，固定一个 $`r`$ 维满秩密度矩阵 $`\tau`$，置
+
+```math
+\rho_u=\tau\otimes\rho_u^0,\qquad
+ E=I_r\otimes P_0,\qquad K=I_r\otimes T_0.
+\tag{216.13}
+```
+
+处理器忽略常值寄存器并使用原三维处理器，全输入精确性立即保留。常值张量因子不增加 SLD 信息，故其校准及全曲率与原曲线相同，名义秩为 $`r`$。程序预算维数至多 $`3r`$，下界保证实际联合支持恰为 $`3r`$。$`r=1`$ 时，此构造也覆盖临界位置并给出维数三。
+
+设 $`h=h_c`$ 且 $`r\ge2`$。保留（216.8）的二维稳定子空间 $`\operatorname{ran}R`$，用一个 $`r-1`$ 维空间 $`\mathcal U`$ 替代原来的一维单位子空间；固定 $`\mathcal U`$ 上的满秩态 $`\tau`$。定义与参数无关的 CPTP 映射
+
+```math
+\Phi(X)=RXR\big|_{\operatorname{ran}R}
+                    \ \oplus\ \operatorname{Tr}(ZX)\tau,
+ \qquad \widetilde\rho_u=\Phi(\rho_u^0).
+\tag{216.14}
+```
+
+完全正性来自正交块压缩和测量后准备，迹保持来自 $`R+Z=I`$。两个投影都约化 $`T_0`$；$`Z\le P_0`$ 也保证它们约化 $`P_0`$。在 $`\operatorname{ran}R\oplus\mathcal U`$ 上置
+
+```math
+T'=T_0\big|_{\operatorname{ran}R}\oplus(-I_{\mathcal U}),
+ \qquad P'=P_0\big|_{\operatorname{ran}R}\oplus I_{\mathcal U}.
+\tag{216.15}
+```
+
+它们满足 $`T'T'^\dagger=P'`$、$`P'T'=T'`$，且
+
+```math
+\operatorname{Tr}[\Phi(X)T']=\operatorname{Tr}(XT_0),
+ \qquad\operatorname{Tr}[\Phi(X)P']=\operatorname{Tr}(XP_0).
+\tag{216.16}
+```
+
+因此将 $`P',T'`$ 放入第211.18式的固定受控构造，就对 $`\widetilde\rho_u`$ 实现原来的全部目标通道。实际准备空间维数为 $`2+(r-1)=r+1`$，矩阵曲线仍实解析。
+
+名义纯向量在 $`R,Z`$ 中的概率分别为（216.10）的 $`v,w`$，两者严格为正。故 $`\widetilde\rho_t`$ 的稳定块秩为一，单位块秩为 $`r-1`$，总秩恰为 $`r`$。固定 CPTP 映射的点态 SLD 单调性与精确读出下界给出
+
+```math
+0\le I_Q(\widetilde\rho_u)-I_r(u)
+          \le I_Q(\rho_u^0)-I_r(u).
+\tag{216.17}
+```
+
+右侧在 $`t`$ 为零，所以校准成立；其二阶比值极限为 $`\kappa_*`$，而定理211.2对实际混态曲线提供反向下极限界，因此新曲线也具有相同的双侧普通极限。这里没有依赖参数的额外准备标签，替代映射 $`\Phi`$ 始终固定。
+
+构造的正谱始终只含 $`\lambda_+(h)`$：非临界时为原谱的重复，临界时为 $`2a`$。第215.2节的谱必要性及正谱签名的严格单调性排除其他尖锐点。相应维数下界还保证实际联合支持恰为声明的维数。正则性类别的包含关系与这些解析构造共同证明（216.12）。证毕。
+

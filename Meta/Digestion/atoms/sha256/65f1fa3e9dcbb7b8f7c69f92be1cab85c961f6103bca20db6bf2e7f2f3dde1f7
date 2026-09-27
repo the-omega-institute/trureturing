@@ -1,0 +1,18 @@
+**定理257.2（固定完整响应的精确不确定直径）。** 对任意有限非零参考空间及任意合法数据矩阵 $K$，令 $k=\|K\|_1\le1$，则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak F(K)}
+\frac12\|\Omega-\Xi\|_1
+=\sqrt{1-k^2}.
+}
+\tag{257.36}
+$$
+同一纤维的最小根保真度也精确为
+$$
+\boxed{
+\min_{\Omega,\Xi\in\mathfrak F(K)}
+\mathsf F(\Omega,\Xi)=k.
+}
+\tag{257.37}
+$$
+

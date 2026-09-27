@@ -1,0 +1,10 @@
+**定义 4.5.1（观察距离）。** 对定义 4.2.1 的紧有限字母乘积，令 $Q_n$ 读取前 $n$ 个字母。对 Borel 概率 $\alpha,\beta$，定义
+$$
+T_n(\alpha,\beta)
+=d_{\mathrm{TV}}((Q_n)_*\alpha,(Q_n)_*\beta)
+=\frac12\sum_{|\sigma|=n}|\alpha([\sigma])-\beta([\sigma])|,
+\qquad
+d_{\mathrm{obs}}(\alpha,\beta)=\sum_{n\ge1}2^{-n}T_n(\alpha,\beta).
+$$
+和式绝对收敛，因为 $0\le T_n\le1$。这里 $T_n$ 是有限层距离，$\mathbf T$ 是阶段选择接口，两者不同。
+

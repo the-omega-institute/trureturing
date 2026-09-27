@@ -1,0 +1,29 @@
+**定义 55.1（有限来源与驻定控制）。** 固定整数 $p\ge2$、$k\ge0$，置 $P=p^k$、$M=pP$、$X=\mathbb Z/M\mathbb Z$。对任意整数或剩余类 $z$，$[z]_M$ 是其在 $\{0,\ldots,M-1\}$ 内的代表。未知初态为 $x\in X$，物理当前态为 $s$，开始时 $s=x$。唯一改变来源的动作与唯一读取端口为
+$$
+W:s\longmapsto s+1,\qquad
+R:s\longmapsto s\quad\text{并返回}\quad
+ d(s)=\left\lfloor\frac{[s]_M}{P}\right\rfloor\in\{0,\ldots,p-1\}.
+\tag{55.1}
+$$
+$W$ 不返回任何来源信息。控制器对所有 $x$ 都从同一个 $\mathrm{Start}$ 开始；它是确定、驻定的，动作 $W/R/\mathrm{halt}$ 只由所存控制态决定，$W$ 后继只由该态决定，$R$ 后继只由该态及本次实际数字决定。停止输出也是该态的固定函数，不是来源动作。没有额外的来源时钟、读口、复位、复制、逆步或依赖 $x$ 的初始化；全部阶段、计数器及等待中的中间态都计入控制载体。
+
+每次 $W$ 计一个来源步，每次 $R$ 计一次读取，两项分开。所比较的规范化终止执行词为
+$$
+W^{\ell_0}R\,W^{\ell_1}R\cdots W^{\ell_j}R,
+\qquad j\ge0,\quad \ell_0\ge0,\quad \ell_i\ge1\ (1\le i\le j),
+\tag{55.2}
+$$
+最后一个 $R$ 后立即停止；等价的正则式是 $W^*R(WW^*R)^*$。指数表示实际逐次执行的 $W$，不表示直接访问未来态。下界容许任何满足此合同、对每个初态都在有限动作后停止并正确输出初始 $x$ 的协议，包括各分支读取数不同的协议。$X$ 有限，逐点有限终止使最坏读取数为有限整数。无读取的执行完全不依赖 $x$，不能识别 $M\ge2$ 个初态。最后一次读取之后的纯等待没有新增来源信息；这里把它规范化去掉，不对加回这些尾部等待作费用承诺。
+
+这一接口可编码为已知的总 Mealy 自动机：输入字母为 $W,R$，输出字母为一个常量符号 $\bot$ 与 $p$ 个数字，令
+$$
+\delta(s,W)=s+1,\quad\lambda(s,W)=\bot,\qquad
+\delta(s,R)=s,\quad\lambda(s,R)=d(s).
+\tag{55.3}
+$$
+Pavel Panteleev 的 [*Preset Distinguishing Sequences and Diameter of Transformation Semigroups*, arXiv:1412.0034v1，第1—2页](https://arxiv.org/pdf/1412.0034v1) 以总转移、总输出函数定义有限确定 Mealy 自动机，并以输入词产生的不同输出识别初态。式（55.3）给本接口到该定义的具体对应；合法词（55.2）和分别计数 $W,R$ 是额外限制，全文字长度的结论不能直接作为读取数结论。
+
+Petra van den Bos、Frits Vaandrager 的 [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2，第10—12页，定义12、13、14、17、20](https://arxiv.org/pdf/1907.11034v2) 用无环测试自动机、到叶观察及互不相交的观察集表达自适应识别。对本确定接口，可把一次输入和其确定输出展开为两个相继的边；$W$ 的输出边恒为 $\bot$，$R$ 才分数字支。有限终止协议按历史展开后得到这样的测试树，是其允许的 DAG 的特例。下文仍须独立证明合法等待与读取界。Markus Theo Frohme 的 [*Active Automata Learning with Adaptive Distinguishing Sequences*, arXiv:1902.01139v1，印刷第15—18页／PDF第21—24页，§2.4、§3.1.1](https://arxiv.org/pdf/1902.01139v1) 区分预定输入序列、逐符号依赖答案的序列，并把 symbol query 与 reset query 分开；这里采用前者的连续依赖语义，不取得其学习接口的 reset 权限，也不移用学习或复位复杂度。
+
+仓内固定版本 `ffec542f612d6e8858eb4b08715aed884285a2b0` 的 [AdaptiveResidueIdentification](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.lean) 中 `two_step_adaptive_residue_identification` 在四个指定状态上选择模 $2,3,5$ 的布尔传感器；它不规定本节的固定端口和加一轨道。同版本 [PrimePowerNonadaptiveResolution](https://github.com/the-omega-institute/trureturing/blob/ffec542f612d6e8858eb4b08715aed884285a2b0/D5/S3/Observer/Budget/PrimePowerNonadaptiveResolution.lean) 的 `result` 使用 $x+n=0$ 时取 $e$、否则取 $\min\{e,v_p(x+n)\}$ 的截断赋值。两种已证模型均不能替换（55.1）的高位读数。
+

@@ -4,7 +4,11 @@ using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
-/// <summary>Reads an optional same-partition Release seed; never establishes a check verdict.</summary>
+/// <summary>
+/// Reads an optional same-partition Release seed for main-checkout or standalone ensure paths.
+/// Linked-worktree ensure paths do not call this reader and use only the warm main checkout.
+/// A Release seed never establishes a check verdict.
+/// </summary>
 internal enum LeanArchiveOutcome
 {
     NotAttempted,

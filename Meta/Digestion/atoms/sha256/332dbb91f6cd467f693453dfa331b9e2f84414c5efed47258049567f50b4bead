@@ -1,0 +1,63 @@
+**引理31.4（共同标量历史比较与任意参考界）。** 令 $\pi$ 为 $P$ 的平稳分布，定义
+
+$$
+\begin{gathered}
+\beta_k=\max_i\sum_j|P^k(i,j)-\pi_j|,\quad
+B_1=\sum_{k\ge0}\beta_k,\quad B_2=\sum_{k\ge0}\beta_k^2,\\
+G_*=\max_{(i,j)\in\mathcal E}\|g_{ij}\|,\quad
+\mu=\sum_{i,j}\pi_iP_{ij}g_{ij},\quad
+C_{\mathrm{hist}}=1+G_*^2(1+4B_1+B_2).
+\end{gathered}
+\tag{31.14}
+$$
+
+primitive 性保证两个级数有限。给定已知相位历史
+$\boldsymbol\varphi=(\varphi_1,\ldots,\varphi_n)$，以每步
+$V_{\varphi_t}$ 定义虚拟等距 $T_{\boldsymbol\varphi,n}$。对实际常相位
+$\theta$，取 $\delta_t\in\mathbb R^q$ 为 $\theta-\varphi_t$ 的最短实提升，并置
+$b=\sum_t\delta_t\cdot\mu$。则
+
+$$
+\boxed{
+(T_{\theta,n}-e^{ib}T_{\boldsymbol\varphi,n})^*
+(T_{\theta,n}-e^{ib}T_{\boldsymbol\varphi,n})
+\preceq C_{\mathrm{hist}}
+\left(\sum_t\|\delta_t\|^2\right)I_M.
+}
+\tag{31.15}
+$$
+
+证明。对初态 $X_0=i$ 的 Markov 链，令
+$Y_t=\delta_t\cdot g_{X_{t-1}X_t}$、$Z=\sum_tY_t$。平稳均值与混合界给
+
+$$
+|\mathbb E_iZ-b|
+\le G_*\sum_t\beta_{t-1}\|\delta_t\|,
+\qquad
+\operatorname{Var}_iY_t\le G_*^2\|\delta_t\|^2.
+\tag{31.16}
+$$
+
+若 $s<t$，对截至第 $s$ 条边的历史 $\mathcal F_s$ 条件化，从 $X_s$ 到第 $t$ 条边的起点还需 $t-s-1$ 次转移，故
+
+$$
+|\mathbb E[Y_t\mid\mathcal F_s]-\delta_t\cdot\mu|
+\le G_*\beta_{t-s-1}\|\delta_t\|,
+\qquad
+|\operatorname{Cov}_i(Y_s,Y_t)|
+\le2G_*^2\beta_{t-s-1}\|\delta_s\|\,\|\delta_t\|.
+\tag{31.17}
+$$
+
+后一式使用 $`\mathbb E|Y_s-\mathbb E Y_s|\le2G_*\|\delta_s\|`$。方差展开中用 $2uv\le u^2+v^2$，均值偏移平方用 Cauchy–Schwarz，得到全部初态共用的
+
+$$
+\mathbb E_i(Z-b)^2
+\le G_*^2(1+4B_1+B_2)\sum_t\|\delta_t\|^2
+\le C_{\mathrm{hist}}\sum_t\|\delta_t\|^2.
+\tag{31.18}
+$$
+
+整数荷保证逐路径相位差正是 $e^{iZ}$。展开各输入列并使用
+$|e^{ix}-1|\le|x|$，其误差范数平方受（31.18）控制。不同初始 $i$ 被首条完整边标签分入正交档案扇区，因此列界提升为（31.15）的整个输入算子界。同一个 $b$ 用于所有初态，故可以张量任意参考，保留全部输入相干。证明完毕。
+

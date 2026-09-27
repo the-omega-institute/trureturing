@@ -1,0 +1,19 @@
+**引理259.1（最大Hermitian填充）。** 对任意 $A,B\succeq0$，令 $G=A\#B$。则
+$$
+\begin{pmatrix}A&G\\G&B\end{pmatrix}\succeq0,
+\qquad
+\begin{pmatrix}A&-G\\-G&B\end{pmatrix}\succeq0,
+\tag{259.10}
+$$
+并且任意Hermitian矩阵 $H$ 若满足
+$$
+\begin{pmatrix}A&H\\H&B\end{pmatrix}\succeq0,
+\tag{259.11}
+$$
+就有
+$$
+\boxed{-G\preceq H\preceq G.}
+\tag{259.12}
+$$
+特别地，$G$ 是全部此类 $H$ 在Loewner序中的最大元。
+

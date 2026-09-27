@@ -1,0 +1,53 @@
+**命题 275.4（精确恢复下的最小非实残差）。** 对式（275.6）的模型，在所有有限维编码与解码、所有共同输出基底中，要求模型精确恢复时，最小非实残差为
+
+$$
+\min_{\mathcal D\mathcal E(\rho)=\rho\ (\rho\in\mathcal R_\varepsilon)}r(\mathcal E)
+=\frac{\varepsilon}{1+2\varepsilon}.
+\tag{275.17}
+$$
+
+六维输出足够，且达到构造恢复全部量子比特输入。对于 $\varepsilon>0$ 和每个 $0\le\theta\le1$，还存在同一模型上的编码、解码达到
+
+$$
+e=\theta e_{\mathbb R}(\mathcal R_\varepsilon),
+\qquad
+r=(1-\theta)\delta(\mathcal R_\varepsilon).
+\tag{275.18}
+$$
+
+式（275.18）给出一条可达线段；下述定理将进一步证明它是最优预算边界。
+
+证明。下界由定理272.2的 $e+r\ge\delta$ 在 $e=0$ 时直接取得。为达到，分别选固定量子比特酉矩阵 $U_x,U_y,U_z$，使第 $b$ 个输入 Pauli 轴在 $U_b$ 共轭下成为输出 $Y$ 轴，其余两个输入坐标轴成为实的 $X,Z$ 轴，允许改变符号。可取 $U_y=I_2$；这样的其余酉矩阵由正交坐标旋转实现。令
+
+$$
+w_x=w_z=\frac{\varepsilon}{1+2\varepsilon},
+\qquad w_y=\frac1{1+2\varepsilon},
+\qquad
+\mathcal E_{\rm rev}(X)=\bigoplus_{b=x,y,z}w_bU_bXU_b^*.
+\tag{275.19}
+$$
+
+三个权重非负且和为一，故这是 CPTP 编码。对任意六维输出 $Y$，定义
+
+$$
+\mathcal D_{\rm rev}(Y)=\sum_{b=x,y,z}U_b^*Y_{bb}U_b.
+\tag{275.20}
+$$
+
+压缩、酉共轭与求和保证完全正，三个对角块迹之和为整个矩阵迹，故解码保迹，并有 $\mathcal D_{\rm rev}\mathcal E_{\rm rev}=\operatorname{id}_{M_2}$。
+
+对第 $b$ 个轴、半径 $a_b$ 的模型状态，只有对应输出块具有虚部。直接计算单个量子比特状态与其共轭的迹距离，得到非实残差 $w_ba_b$。这里 $a_x=a_z=1,a_y=\varepsilon$，三个乘积均为 $\varepsilon/(1+2\varepsilon)$。当 $\varepsilon=0$ 时两个零权重块仍保留在解码定义中，编码仅使用实模型所在的 $y$ 分支，公式照样成立。因此达到式（275.17）。
+
+最后，取定理275.3的实输出最优编码 $\mathcal E_0$ 及解码 $\mathcal D_0$，与上述可逆编码作带正交标签的混合：
+
+$$
+\mathcal E_\theta(X)
+=\theta\mathcal E_0(X)\oplus(1-\theta)\mathcal E_{\rm rev}(X),
+\qquad
+\mathcal D_\theta(Y)
+=\mathcal D_0(Y_{00})+\mathcal D_{\rm rev}(Y_{11}).
+\tag{275.21}
+$$
+
+编码和解码都在全部输入上 CPTP。复合等于 $\theta\mathcal D_0\mathcal E_0+(1-\theta)\operatorname{id}$，所以每个状态的恢复误差恰为原误差乘 $\theta$，最大值亦如此。输出直和的第一块完全实，第二块的非实残差乘 $1-\theta$，由迹范数的直和可加性得到式（275.18）。证毕。
+

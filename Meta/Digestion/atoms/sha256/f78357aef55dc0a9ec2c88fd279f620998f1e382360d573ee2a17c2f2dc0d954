@@ -1,0 +1,19 @@
+### 定义 12.1：允许零分支的谱恢复候选
+
+取非零有限维复 Hilbert 空间 $L=\mathbb C^d$、$H=\mathbb C^n$，给定有限矩阵族 $E_a:L\to H$，定义完全正分支 $\mathcal N(X)=\sum_aE_aXE_a^\dagger$。本定义不要求该分支保迹。令
+
+$$
+Q=\sum_aE_aE_a^\dagger,\qquad
+P=\mathbf 1_{(0,\infty)}(Q),\qquad
+W=f(Q),\quad f(x)=\begin{cases}x^{-1/2},&x>0,\\0,&x=0.\end{cases}
+\tag{12.1}
+$$
+
+谱函数作用于有限半正定矩阵；它们只由 $Q$ 决定，不依赖本征基的选择。固定逻辑单位基向量 $v$，定义
+
+$$
+\mathcal R_E(X)=\sum_aE_a^\dagger W X W E_a+
+\operatorname{tr}[(I-P)X]|v\rangle\langle v|.
+\tag{12.2}
+$$
+

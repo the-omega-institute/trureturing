@@ -1,0 +1,15 @@
+**定理199.1（固定比例的二阶系数存在）。** 对每个固定有限
+$h\ge0$，存在有限实数 $Q(h)$，使
+
+$$
+\boxed{
+\mathscr E(h\epsilon,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_h(\epsilon^2)
+\qquad(\epsilon\downarrow0).
+}
+\tag{199.1}
+$$
+
+这里 $\mathscr E$ 仍是全部合法共同接收端 CPTP 操作的最优完整参考误差，
+不是第188节某个可行族的误差。结论包括 $h=0$，但只对每个固定有限 $h$ 断言二阶极限。
+

@@ -1,0 +1,55 @@
+### 281.1 全参数实际来源与单次完整输出
+
+采用§280的实际混合来源。固定 $t=1/4$，对每个 $n\ge1$ 令
+$$
+J_ne_1=0,\qquad J_ne_j=e_{j-1}\ (j\ge2),\qquad M_n=I_n+tJ_n.
+\tag{281.1}
+$$
+规范实对称正定矩阵 $Q_n$ 满足
+$$
+Q_n+M_n^\dagger Q_nM_n=I_n,
+\qquad q_-I_n\preceq Q_n\preceq q_+I_n,
+\qquad q_-:=7/23,\quad q_+:=16/23.
+\tag{281.2}
+$$
+置 $Z_n=2Q_nM_n$，并在固定qubit输入基及参考 $E_n=\mathbb C^n$ 上定义
+$$
+\Omega_{n,0}=\frac1n
+\begin{pmatrix}Q_n&Q_nM_n\\M_n^\dagger Q_n&M_n^\dagger Q_nM_n\end{pmatrix},
+\qquad
+\Omega_{n,1}=(1-\delta)\Omega_{n,0}+\delta\frac{I_{2n}}{2n},
+\qquad 0<\delta\le\frac12.
+\tag{281.3}
+$$
+这两个来源对全部 $n,\delta$ 都是实际密度態；第二个严格正定。它们的参考边缘同为 $I_n/n$，完整非对角响应分别为 $Z_n/n$ 与 $(1-\delta)Z_n/n$。
+
+允许两者同时带有固定共同相位
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),\qquad
+\Omega_{n,b,\phi}=(U_\phi\otimes I_n)\Omega_{n,b}(U_\phi^\dagger\otimes I_n).
+\tag{281.4}
+$$
+一次查询请求经典角度 $\theta$，使用§280的正交重置仪器
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{281.5}
+$$
+保留全部实际记录及参考，略去共同纯重置因子。记 $e=\theta-\phi$，则
+$$
+H_0(e)=\operatorname{Re}(e^{ie}Z_n),\qquad
+H_1(e)=\operatorname{Re}(ie^{ie}Z_n),
+$$
+$$
+\sigma_b(e)=\bigoplus_{w,\eta}
+\frac{I_n+\eta(1-b\delta)H_w(e)}{4n},
+\qquad
+\sigma_1(e)=(1-\delta)\sigma_0(e)+\delta\frac{I_{4n}}{4n}.
+\tag{281.6}
+$$
+后一个等式保证每个固定角度的两个输出交换，但不同角度、不同查询及协议量子记忆不被假定交换。
+

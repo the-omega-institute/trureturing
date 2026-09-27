@@ -1,0 +1,97 @@
+**证明。** 保留命题64.7—64.9的全部必要条件。由 $C\perp A$、$V_0H_1=UA$、$V_0S=LC$，有
+$$
+H_1=\operatorname{span}(p,q)\perp S.
+\tag{64.48}
+$$
+已知 $p\in L$，而 $H_4=D\subset S$ 到 $T\subset L$ 的投影满射；故 $p\perp T$。又 $V_1k=qC$ 与 $V_0S=LC$ 跨位正交，给 $q\perp L$。（64.48）与 $S\subset T\oplus W$、$P_WS=W$ 继而给 $q\perp W$。因此
+$$
+L=T\oplus\mathbb Cp,\qquad
+K=T\oplus\mathbb Cp\oplus W\oplus\mathbb Cq,
+\tag{64.49}
+$$
+且这些因子两两正交：$T$ 二维、$W$ 三维，$p,q$ 单位。
+
+$V_1k=qC$、$V_1J=WC$ 与 $q\perp W$ 使 $k\perp J$；$f k=p$、$fD=T$ 与 $p\perp T$ 使 $k\perp D$。$k\in S$ 且 $S$ 三维、$D$ 二维，故
+$$
+S=D\oplus\mathbb Ck.
+\tag{64.50}
+$$
+由于 $k\perp J\supset T$，以及（64.48）使 $k\perp p$，有 $k\perp L$。$D$ 到 $T$ 的投影单射，所以
+$$
+S\cap L^\perp=\mathbb Ck.
+\tag{64.51}
+$$
+
+现在使用命题64.8的列交换，所有系数来自同一实际来源。置
+$$
+d=\sqrt{t_3},\qquad
+h=fX_3^0/d,\qquad e=g s,\qquad
+\kappa=\nu\sqrt{t_4/t_2},
+\tag{64.52}
+$$
+其中 $\nu$ 是（64.44）的单位相位。$h$ 为单位向量，且由 $fX_3^1=\omega c s$ 及两列正交，
+$$
+T=\operatorname{span}(s,h),\qquad s\perp h.
+\tag{64.53}
+$$
+$g t=\omega r$、$e=g s$，所以 $e,r$ 是 $W$ 中正交单位向量。
+
+式（64.44）、（64.45）说明 $M$ 的第二列为零，第一列为
+$$
+M^0=b(dh-\kappa a t)\ne0.
+\tag{64.54}
+$$
+由（64.40），$gM^0\in S$；它又在 $W\subset L^\perp$，故（64.51）给
+$$
+0\ne gM^0\in\mathbb Ck.
+\tag{64.55}
+$$
+特别地，$k\in W$。又 $k\perp D$、$X_3^0=ac s+ab r\in D$、$k\perp s$，且 $ab\ne0$，所以 $k\perp r$。因为 $s\perp h,t$，等距 $g$ 与（64.54）、（64.55）还给 $e=g s\perp k$。因此
+$$
+W=\operatorname{span}(e,r,k),
+\quad e,r,k\text{ 两两正交单位}.
+\tag{64.56}
+$$
+
+采用内积对第二变量线性的约定。由 $k\perp r$、（64.55）及 $g t=\omega r$，
+$$
+0=\langle r,gM^0\rangle
+=b\omega\bigl(d\langle t,h\rangle-\kappa a\bigr).
+$$
+所以
+$$
+d\langle t,h\rangle=\kappa a.
+\tag{64.57}
+$$
+再用 $X_4^0=\kappa X_3^1$ 及来源递推（64.39），得到
+$$
+\kappa(a^2t+bj)=a d h+bc e.
+\tag{64.58}
+$$
+取其与单位向量 $t$ 的内积。$t\perp j$，结合（64.57）后有
+$$
+\kappa a^2=a d\langle t,h\rangle+bc\langle t,e\rangle
+=\kappa a^2+bc\langle t,e\rangle.
+$$
+$b,c\ne0$，故 $t\perp e$。另外 $t\perp r$ 来自第三轮两个位像正交，$t\perp k$ 来自 $k\perp J\supset G_3$。式（64.56）于是给
+$$
+t\perp W.
+\tag{64.59}
+$$
+
+由 $C\perp A$、$V_1p=vA$ 和 $V_1J=WC$，固定等距还给 $p\perp J$，特别地 $p\perp t$。用（64.49）、（64.59），得到
+$$
+t\in T\oplus\mathbb Cq.
+$$
+但 $G_3\cap T=\mathbb Cs$，而 $t\perp s$，所以 $t\notin T$。于是
+$$
+q\in T+\mathbb Ct=J.
+\tag{64.60}
+$$
+
+最后，$w\in U$ 与（64.47）给 $w\perp J$，所以 $w\perp T,q$。又 $w\in H_2\perp S$，而 $w\perp T$、$S\subset T\oplus W$、$P_WS=W$，使 $w\perp W$。由（64.49），
+$$
+w\in\mathbb Cp.
+$$
+两者都是单位向量，因而共线。可是同一固定映射满足 $V_1w=jB$ 和 $V_1p=vA$，接收因子非零、环境射线 $A,B$ 线性独立，不可能把共线输入映成这两种输出。矛盾，证明完毕。
+

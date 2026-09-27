@@ -1,0 +1,29 @@
+**命题143.4（轮次反演与相邻间隔）。** 对 $n\ge2$，置
+
+$$
+z_n=\frac{x^2-\delta_n}{x^2-y^2\delta_n}.
+$$
+
+则分母严格为正，而且
+
+$$
+\boxed{
+x^2-y^2\delta_n=\frac{x^3}{t_n}>0,\qquad
+z_n=(-y)^{n-1},\qquad
+n=1+\frac{\log|z_n|}{\log y}.
+}
+\tag{143.12}
+$$
+
+相邻轮次的不变量差满足
+
+$$
+\boxed{
+|\delta_{n+1}-\delta_n|
+=\frac{x^3y^{n-1}}{t_nt_{n+1}},
+\qquad
+x^3y^{n-1}\le|\delta_{n+1}-\delta_n|\le xy^{n-1}.
+}
+\tag{143.13}
+$$
+

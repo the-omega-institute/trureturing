@@ -1,0 +1,11 @@
+**命题 2.11。** $U$ 是稠密开集；$K$ 是闭的无处稠密集，且
+
+$$
+\operatorname{int}(K)=\varnothing,
+\qquad
+\partial K=K.
+\tag{TM.504}
+$$
+
+因此没有非空前缀柱集包含在 $K$ 内，每个 $K$ 中的点都是边界点，尽管 $\mu(K)\ge1/2$。
+

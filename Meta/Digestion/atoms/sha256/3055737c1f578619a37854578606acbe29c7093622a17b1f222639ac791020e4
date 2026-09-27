@@ -1,0 +1,27 @@
+**证明。** 对每个 $w>0$，$H(w,t)$ 的非对角元仍严格为正，故最高单位本征向量可取 $x,y>0$。按该向量定义
+$d_0,d_1,\tau,\zeta$，保持 $t$ 不变，对（185.7）求导：
+
+$$
+\begin{aligned}
+\partial_wd(w,t)
+&=\beta\bigl[\tau^2-2\sin^2t(d_0^2+d_1^2)\bigr]
+-\gamma\sin2t\,\tau\zeta\\
+&\ge\tau^2\bigl[\beta\cos2t-\gamma\sin2t\bigr]\\
+&>\tau^2\left(\frac3{25}\frac{99}{100}-\frac1{50}\right)\\
+&=\frac{247}{2500}\tau^2
+>\frac{247}{20000}>0.
+\end{aligned}
+\tag{185.28}
+$$
+
+这里再次使用（185.9）、$\cos2t\ge99/100$、
+$0\le\sin2t\le1$。这是实际最高本征值的导数，不是纯化重叠的导数。证毕。
+
+特别地，对共同角度 $t_\circ(w_1)<2\gamma w_1<1/250$，
+
+$$
+d(w_1,t_\circ(w_1))-d(w_0,t_\circ(w_1))
+>\frac{247}{20000}(w_1-w_0)>0.
+\tag{185.29}
+$$
+

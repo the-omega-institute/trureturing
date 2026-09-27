@@ -1,0 +1,35 @@
+**定理 229.2（非单位相位次数的分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若它的同名分支 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{229.NC.11}
+$$
+
+证明。$k=0$ 时该竞争分支为零，直接用（229.NC.10）的事件即可。设 $1\le k<d$，写
+$$
+\mathcal S_b(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+将全部候选振幅组成
+$$
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+$$
+复内积对第一变量共轭线性，所以
+$$
+\boxed{F(av)=a^{1-n}F(v).}
+\tag{229.NC.12}
+$$
+现在 $q=1-n\ne0$，第二节给单位输入 $v$ 使全部振幅同时为零。对完整效果
+$$
+E_v=|b\rangle\langle b|\otimes P_{r(v)},
+$$
+候选概率为零，目标概率至少为 $\alpha$。两份完整通道输出都保迹，故事件概率差不超过输出差迹范数的一半，并给完整半 diamond 下界（229.NC.11）。其他结果分支以及任意外部参考都属于完整距离的定义；下界见证本身只需这个无参考纯输入。证毕。
+
+当 $\alpha>0$，取竞争者为目标本身即得到
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{229.NC.13}
+$$
+因此非单位相位次数的统一正事件族要求目标分支至少拥有 $d$ 个独立 Kraus 方向。这个结论只使用已声明的事件族和实际分支，不计算一般高维通道的全部最优预算距离。
+

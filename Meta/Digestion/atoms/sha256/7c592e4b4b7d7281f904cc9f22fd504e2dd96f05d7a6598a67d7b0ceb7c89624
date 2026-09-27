@@ -1,0 +1,50 @@
+**定理155.7（有限相位网的全时域证书）。** 假设已经给出有限集合
+
+$$
+Z_\eta=\{z^{(1)},\ldots,z^{(m)}\}\subseteq G
+$$
+
+及其经过证明的覆盖界
+
+$$
+\forall z\in G\quad\min_{1\le k\le m}d_G(z,z^{(k)})\le\eta.
+\tag{155.18}
+$$
+
+令 $h_\eta=\max_k h(z^{(k)})$。则
+
+$$
+h_\eta\le h_G\le h_\eta+C_{\mathrm{ph}}\eta,
+\tag{155.19}
+$$
+
+并且对每个 $N\ge3$，
+
+$$
+\boxed{
+\max\{M_{N-1},h_\eta\}
+\le E_\infty
+\le\max\{M_{N-1},h_\eta+C_{\mathrm{ph}}\eta+\zeta_N\}.
+}
+\tag{155.20}
+$$
+
+**证明。** 网点属于 $G$，给（155.19）的下界。给定任意 $z\in G$，选择（155.18）的一个网点，用引理155.6得到 $h(z)\le h_\eta+C_{\mathrm{ph}}\eta$。对 $z$ 取最大值即得上界。再代入（155.15）。证毕。
+
+实际计算可以使用第153节的原始、对偶可行点，而非假设每个 SDP 已精确求解。若有限前缀给 $\ell_n\le e_n\le u_n$，每个相位网点给 $\ell_k^G\le h(z^{(k)})\le u_k^G$，则
+
+$$
+\begin{aligned}
+L_{N,\eta}
+&=\max\left\{\max_{n<N}\ell_n,\ \max_k\ell_k^G\right\},\\
+U_{N,\eta}
+&=\max\left\{\max_{n<N}u_n,\ \max_k u_k^G+C_{\mathrm{ph}}\eta+\zeta_N\right\},\\
+L_{N,\eta}&\le E_\infty\le U_{N,\eta}.
+\end{aligned}
+\tag{155.21}
+$$
+
+这些上界还给出合法终端解码器。对每个网点固定给出上界 $u_k^G$ 的原始 SDP 可行解码器 $\mathcal D_k$；在 $n\ge N$ 的指定终端，选择一个距 $g^n$ 不超过 $\eta$ 的网点，使用相应 $\mathcal D_k$，再通过 $F_n^{-1}$ 与实际档案嵌入恢复原坐标。第154节的扰动估计对每个固定解码器都成立，因此同样给出（155.21）的统一上界。这里的网点选择与坐标变换只使用原合同已经允许的终端编号；持续运行的接收器没有获得外部轮次控制，也没有增加持久存储。
+
+因此有限数据可以承担整条无限尾部的上下界，但它必须同时包含转移收缩、相位覆盖和 SDP 可行性三类实际证书。本节没有从有限采样本身推断覆盖半径。
+

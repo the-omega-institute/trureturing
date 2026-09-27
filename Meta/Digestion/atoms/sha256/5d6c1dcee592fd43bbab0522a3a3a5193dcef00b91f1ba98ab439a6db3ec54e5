@@ -1,0 +1,10 @@
+**Conjecture 4.3 (the larger question, [GW, Conjecture 3]).** For every
+even integer $n\ge28$, there exists a Latin square of order $n$
+having no two disjoint transversals and no pinned entry. Theorem 4.2
+concerns only $n=4k\ge36$; it does not establish this all-even
+assertion. The uniform no-pinned-entry problem for the source family
+$G_{4k+2}$ and the existence question at order 30 lie outside its
+conclusion. The finite cases $n=28$ and even $32\le n\le10000$,
+including the H-family cases $9\le k\le2500$, are already established
+in [GW, Theorem 6 and §3].
+

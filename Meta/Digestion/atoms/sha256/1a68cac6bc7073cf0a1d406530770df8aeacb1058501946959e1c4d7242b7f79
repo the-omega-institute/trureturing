@@ -1,0 +1,9 @@
+**引理 61.2。** 对 $1-c\le p\le\varepsilon\le1/16$，正向最大值在 $q=t=1$ 达到，且
+
+$$
+f_\varepsilon^+(p)
+=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2.
+\tag{61.5}
+$$
+

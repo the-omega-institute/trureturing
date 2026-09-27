@@ -1,0 +1,68 @@
+**同一量化耦合控制平方信息。** (82.8) 给每个固定 $A\ge0,b>0$
+
+$$
+Q^A\sigma_M^{-b}D_M(x)\to0,\qquad
+D_M=\mathbb E|T-T^{\rm G}|.
+\tag{87.8}
+$$
+
+对两个平移正态核，令其 $L^1$ 距离为 $k$，则
+$k\le\min(2,C|T-T^{\rm G}|/\sigma_M)$，
+$\mathbb Ek^2\le CD_M/\sigma_M$。由 (87.5)，更换标量通道的平方权重误差至多为
+$CQ^2\sqrt{D_M/\sigma_M}=o_{\mathbb P}(1)$。
+至此才在乘积参考下写 $s=s_{\mathcal C}+s_{\mathcal O}$；
+外部计数与核心量化变量独立，
+$s_{\mathcal O}^2-\mathbb Es_{\mathcal O}^2$ 和
+$2s_{\mathcal C}s_{\mathcal O}$ 在条件核积分中精确抵消。
+
+还须将 (82.10) 的单组 $L^1$ 信息近似加强到 $L^2$。
+若 $X=(K-np)/\sqrt{d}$、$d=np(1-p)$、$p\in[1/4,3/4]$，
+同一单调量化耦合满足 $\|X-Z\|_2\le Cd^{-1/12}$，而八阶矩一致有界。
+插值及 Hölder 给
+
+$$
+\|X-Z\|_4\le Cd^{-1/36},\qquad
+\|X^2-Z^2\|_2\le Cd^{-1/36}.
+\tag{87.9}
+$$
+
+在 $|K-np|\le n^{5/8}$ 内，Stirling 余项为 $O(n^{-1/8})$。
+补集上全点界以 $C(1+X^2)$ 控制余项，而
+
+$$
+\mathbb E[(1+X^2)^2\mathbf1_{|X|>cn^{1/8}}]
+ \le Cn^{-1/2}\mathbb E(1+|X|^8)\le Cn^{-1/2}.
+$$
+
+因此单组中心信息 $s_j$ 满足
+$\|s_j-(Z_j^2-1)/2\|_2\le Cd_j^{-1/36}$。
+令 $m=|\mathcal C|$、$S_G=\tfrac12\sum_{\mathcal C}(Z_j^2-1)$、
+$k_M=\|s_{\mathcal C}-S_G\|_2$，则
+
+$$
+\begin{aligned}
+k_M&\le Cm d_{\min}^{-1/36},\qquad \mathbb ES_G^2=m/2,\\
+\mathbb E|s_{\mathcal C}^2-S_G^2|
+ +|\mathbb Es_{\mathcal C}^2-m/2|
+ &\le Ck_M(\sqrt m+k_M)=o_{\mathbb P}(1).
+\end{aligned}
+\tag{87.10}
+$$
+
+核心的指数占据下界胜过 $m\le CQ^2$。
+令 $g_x$ 为 $T^{\rm G}+\sigma_MG_0$ 的辅助密度，并记
+
+$$
+q_G(y)=\mathbb E[S_G\varphi_{\sigma_M}(y-T^{\rm G})],\qquad
+c_G(y)=\mathbb E[(S_G^2-m/2)\varphi_{\sigma_M}(y-T^{\rm G})].
+$$
+
+前述比较证明了未尺度化的
+
+$$
+\|c_x-c_G\|_1\to0,\qquad \|q_x-q_G\|_1\to0.
+\tag{87.11}
+$$
+
+第二式本身不能用来平方条件均值，后面另证所需的 $L^2$ 比较。
+

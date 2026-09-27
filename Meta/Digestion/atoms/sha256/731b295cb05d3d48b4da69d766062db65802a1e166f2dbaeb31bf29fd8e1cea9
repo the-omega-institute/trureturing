@@ -1,0 +1,32 @@
+**推论153.4（显式对偶与独立于解码器的下界证书）。** 继续使用 $O_n=M_{\rm out}\otimes S_n$、$X=J(\mathcal D)$，将（153.9）写成
+
+$$
+J_n(X)=\mathscr A_n(X)-J_{\rm tar},
+\qquad
+J_{\rm tar}=J(\operatorname{Ad}_{\widetilde T_n}).
+$$
+
+其中 $\mathscr A_n$ 为把解码器 Choi 矩阵映到实际恢复通道 Choi 矩阵的线性映射，其在 Hermitian 矩阵实向量空间上的 Hilbert–Schmidt 伴随由
+
+$$
+\langle W,\mathscr A_n(X)\rangle
+=\langle\mathscr A_n^*(W),X\rangle,
+\qquad \langle A,B\rangle=\operatorname{Tr}(AB)
+$$
+
+定义，配对中的矩阵均 Hermitian。定理153.3的最优值也等于以下对偶最大值：
+
+$$
+\boxed{
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Tr}Z-\langle W,J_{\rm tar}\rangle,\\
+\text{满足}\quad&\rho\succeq0,\qquad\operatorname{Tr}\rho=1,\\
+&0\preceq W\preceq I_{O_n}\otimes\rho,\\
+&\mathscr A_n^*(W)\succeq I_{S_n}\otimes Z,\\
+&Z\in\operatorname{Herm}(K).
+\end{aligned}
+}
+$$
+
+这里 $\rho$ 作用于二维 Choi 输入因子，$W$ 作用于 $O_n\otimes M_{\rm in}$；$Z$ 不要求半正定。该最大值取得。任一可行三元组 $(\rho,W,Z)$ 都给出对全部合法终端解码器有效的误差下界。
+

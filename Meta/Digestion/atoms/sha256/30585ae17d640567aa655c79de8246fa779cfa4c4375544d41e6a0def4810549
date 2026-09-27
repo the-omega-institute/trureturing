@@ -1,0 +1,33 @@
+**命题 2.20（sparse ancestor criterion）。** Put
+$$
+c_p=\frac{p-2}{p-1},
+\qquad
+\delta_d=c_pp^{-d}>0.
+\tag{TM.564}
+$$
+For $D=[b]_d$, the following are equivalent:
+
+1. $E\cap D\ne\varnothing$.
+2. No included $C_h$ with $h\le d$ contains $D$.
+3. $\mu(E\cap D)\ge\delta_d$.
+
+In particular, each cylinder mass belongs to
+$$
+\mu(E\cap[b]_d)\in\{0\}\cup[\delta_d,p^{-d}],
+\qquad
+M\ge c_p.
+\tag{TM.565}
+$$
+
+**Proof.** If an included ancestor or equal-depth cylinder contains $D$, its intersection with $E$ is empty. Otherwise, the nesting property of $p$-adic cylinders implies that every forbidden cylinder meeting $D$ has depth greater than $d$ and lies inside $D$. Consequently,
+$$
+\mu(E\cap D)
+\ge p^{-d}-\sum_{h>d}p^{-h}
+=\frac{p-2}{p-1}p^{-d}
+=\delta_d.
+\tag{TM.566}
+$$
+Positive mass implies nonemptiness, proving the equivalence. At depth zero there is no permitted forbidden ancestor, giving $M\ge c_p$. $\square$
+
+This criterion and gap are the ordinary mathematical result of [profile 343, §13, snapshot c2258c72](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md). The derivation uses countable subadditivity and does not require forbidden cylinders to be disjoint or nonredundant.
+

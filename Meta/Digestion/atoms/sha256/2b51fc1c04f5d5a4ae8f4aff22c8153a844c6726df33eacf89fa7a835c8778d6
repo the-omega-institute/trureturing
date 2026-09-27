@@ -1,0 +1,35 @@
+### 13.1 假想反例的小素数上界
+
+现假设原题在 `(n,i,j)` 失败。则 `g` 的素因子全部严格小于 `i`。令 `t=pi(i-1)`。对每个素数 `p`，Legendre 公式中
+\[
+v_p\binom ni=\sum_{r\ge1}
+\left(\left\lfloor\frac n{p^r}\right\rfloor-
+\left\lfloor\frac i{p^r}\right\rfloor-
+\left\lfloor\frac{n-i}{p^r}\right\rfloor\right)
+\]
+每项是 0 或 1，非零项至多 `floor(log_p n)` 个。所以
+\[
+p^{v_p\binom ni}\le n,\qquad g\le n^t.
+\tag{29}
+\]
+与 (23) 联立，任何反例均须满足
+\[
+[2(n-1)]^i\le i^i n^{4t}.
+\tag{30}
+\]
+
+若 `i>4t`，利用 `n>=2i+2`，有 `2(n-1)>=(2i+1)n/(i+1)`，因此
+\[
+\boxed{n\le N_i:=
+\left(\frac{i(i+1)}{2i+1}\right)^{i/(i-4\pi(i-1))}}.
+\tag{31}
+\]
+整数截止可无浮点地计算：取
+\[
+\left\lfloor\left\lfloor
+\frac{[i(i+1)]^i}{(2i+1)^i}
+\right\rfloor^{1/(i-4\pi(i-1))}\right\rfloor.
+\tag{32}
+\]
+本式中的外层是向下整数根，不需要近似实数决定边界。
+

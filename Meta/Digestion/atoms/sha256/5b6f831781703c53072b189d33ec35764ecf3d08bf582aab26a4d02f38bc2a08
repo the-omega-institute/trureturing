@@ -1,0 +1,30 @@
+**定理 244.2（任务商的最小充分性）。** 商映射 $q_{\mathcal T}$ 本身足以恢复 $\mathcal T$ 中的每个目标。若另一个摘要 $S:\mathfrak M\to\mathcal Z$ 也足以恢复全部 $\mathcal T$，即
+
+$$
+S(M)=S(M')
+\Longrightarrow
+\Phi(M)=\Phi(M')
+\quad\forall\Phi\in\mathcal T,
+$$
+
+则存在唯一映射 $f$ 使
+
+$$
+\boxed{
+q_{\mathcal T}=f\circ S.
+}
+\tag{244.1}
+$$
+
+换言之，任何足以回答 $\mathcal T$ 的摘要都至少区分任务商要求区分的模型类；任务商是最粗的精确全息边界。
+
+### 证明
+
+若 $S(M)=S(M')$，充分性假设给出 $M\sim_{\mathcal T}M'$，所以可定义
+
+$$
+f(S(M))=[M]_{\mathcal T}.
+$$
+
+若同一 $S$ 值有两个表示 $M,M'$，它们属于同一任务等价类，故 $f$ 良定义。显然 $q_{\mathcal T}=f\circ S$。商类上的每个 $\Phi$ 都是良定义函数，故 $q_{\mathcal T}$ 足以恢复全部目标。唯一性来自 $S(\mathfrak M)$ 上的像。证毕。
+

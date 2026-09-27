@@ -1,0 +1,7 @@
+**命题 2.1。** 存在可计算函数 $b:\mathbb N\to\mathbb N$，使
+
+$$
+b(n)\in H_n,\qquad \pi_n(b(n+1))=b(n)\quad\text{对所有 }n.
+\tag{TM.465}
+$$
+

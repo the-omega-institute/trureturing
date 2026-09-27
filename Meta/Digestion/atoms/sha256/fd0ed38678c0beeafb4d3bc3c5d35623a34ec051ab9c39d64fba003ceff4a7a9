@@ -1,0 +1,1 @@
+| Lyu, Jin, Li, Du, Lee, Hu, *Dichotomy of Early and Late Phase Implicit Biases Can Provably Induce Grokking*, ICLR 2024, arXiv:2311.18817（库内条目 [lyujinlidulee2023dichotomy](../../../Library/Dynamics/lyujinlidulee2023dichotomy.md)） | `literature-attested`：大初始化加小权重衰减先核区后富区的两阶段图景；本卷不重证其定理，也不据此断言线性化失效时刻（评注 3.4） 

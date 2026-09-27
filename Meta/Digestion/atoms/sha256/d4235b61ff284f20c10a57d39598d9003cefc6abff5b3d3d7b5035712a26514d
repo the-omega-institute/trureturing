@@ -1,0 +1,68 @@
+### 303.8 精校准的无条件成本与缺额矩
+
+先固定第一阶段记录，即固定 \(H_0\)。因为
+\(\mathbb E(\widehat q_0\mid H_0)=q\)，（303.30）、（303.31）及取整给出
+$$
+\mathbb E(m_0+m_1\mid H_0)
+\le A\Lambda\left(\frac{q}{\epsilon^2}
++\frac1\epsilon\right).
+\tag{303.37}
+$$
+常数项被右侧吸收：\(\epsilon\) 有统一严格小于一的上界，且 \(\Lambda\ge8\)。
+代入（303.29）及（303.24），注意 \(BC\) 一致有界：
+$$
+\begin{aligned}
+\mathbb E(m_0+m_1)
+&\le A\Lambda\left[
+\frac{C-h}{\kappa^2}\mathbb E H_0^{-2}
++\frac1\kappa\mathbb E H_0^{-1}\right]\\
+&\le A\Lambda\left[
+\frac{C-h}{h^2\kappa^2}+\frac1{h\kappa}\right]\\
+&=A\Lambda\frac{w_h}{h^2\kappa^2}.
+\end{aligned}
+\tag{303.38}
+$$
+该式没有用校准好事件，也没有在失败事件上改用丢失 \(w_h\) 的最坏上界。
+
+还需证明主表输入 \(a\) 的无条件缺额矩。给定两批样本数和第一批记录，第二批是独立 Bernoulli 平均，因此
+$$
+\mathbb E\bigl(|\widehat q_1-q|\mid H_0\bigr)
+\le \sqrt{q\,\mathbb E(1/m_1\mid H_0)}
+\le
+\epsilon\sqrt{\frac{q}{A_7\Lambda}
+\mathbb E\!\left[\frac1{\widehat q_0+\epsilon}\middle|H_0\right]}.
+\tag{303.39}
+$$
+这里分别用了条件方差界 \(q(1-q)/m_1\le q/m_1\)、Cauchy–Schwarz 及（303.31）。当 \(q>0\)，由 \(m_0\epsilon\ge1\)，
+$$
+\begin{aligned}
+\mathbb E\!\left[\frac1{\widehat q_0+\epsilon}\middle|H_0\right]
+&\le m_0\mathbb E\frac1{S_0+1}\\
+&=\frac{m_0}{m_0+1}
+\frac{1-(1-q)^{m_0+1}}q
+\le\frac1q.
+\end{aligned}
+\tag{303.40}
+$$
+中间等式由
+\(\binom{m_0}s/(s+1)=\binom{m_0+1}{s+1}/(m_0+1)\)
+或积分 \(\int_0^1(1-q+qt)^{m_0}\,dt\) 直接得到。
+当 \(q=0\)，两批均值恒为零，估计误差也恒为零，单独处理即可。
+所以对所有 \(q\)，
+$$
+\mathbb E(|\widehat q_1-q|\mid H_0)
+\le\epsilon/\sqrt{A_7\Lambda}\le\epsilon.
+\tag{303.41}
+$$
+
+由 \(h\le1\) 及（303.32），总有
+$$
+(h-a)_+\le |h-\widehat h|+H_0\kappa.
+$$
+（303.41）于是给出关键的全概率空间矩界
+$$
+\boxed{\mathbb E((h-a)_+\mid H_0)\le2H_0\kappa.}
+\tag{303.42}
+$$
+它允许 \(H_0>h\)、第一批低估方差、第二批校准失败等所有实际分支。未在失败分支强行声称 \(a\le h\)；只估计其成本所需要的正缺额。
+

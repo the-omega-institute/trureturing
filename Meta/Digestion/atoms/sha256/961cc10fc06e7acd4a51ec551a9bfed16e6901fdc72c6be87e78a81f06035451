@@ -1,0 +1,41 @@
+**只在接收器上解码完整档案。** 由 $`AA^\dagger=I`$，$`A^\dagger:K_{\rm run}\to K_{\rm run}\otimes\mathcal B`$ 是全域等距。对终端 $`n=L+\ell`$，反复施加它，按逆顺序恢复后 $`\ell`$ 个发出系统；最后在剩余运行寄存器上施加 $`C_L`$ 的全域 CPTP 左逆 $`\mathcal D_L`$，并把其值域嵌回前 $`L`$ 位档案。这定义只访问接收器的 $`\mathcal D_n`$。
+
+令 $`\mathcal S_\ell`$ 表示不接收时的后 $`\ell`$ 次来源发射，并保留全部新档案。在整个共同纯化子空间上，一步发射满足
+
+$$
+(I_M\otimes A^\dagger)(I_M\otimes A)(T\otimes I_{K_{\rm run}})
+=(T\otimes I_{K_{\rm run}}),
+\tag{16.12a}
+$$
+
+其中接收输入按固定次序重排为 $`K_{\rm run}\otimes\mathcal B`$。该式来自发射像处于成功投影 $`A^\dagger A`$ 的范围。因此逆运行在整个理想编码子空间上确实撤销接收；较早的接收操作只作用于接收器及已发出系统，与较后的来源发射作用于不同系统。归纳作逆序撤销给
+
+$$
+(\operatorname{id}_{JM}\otimes\mathcal D_n)(\widetilde\sigma_n)
+=\mathcal S_\ell\bigl((\operatorname{id}_{JM}\otimes\mathcal D_L)
+(\widetilde\alpha_L)\bigr),
+\tag{16.13}
+$$
+
+按固定次序重排档案张量因子。另一方面，真实启动编码可被精确逆转，故
+
+$$
+\Omega_n
+=\mathcal S_\ell\bigl((\operatorname{id}_{JM}\otimes\mathcal D_L)
+(\alpha_L)\bigr).
+\tag{16.14}
+$$
+
+这里没有把理想比较态的解码冒认为原目标。对（16.13）与（16.14）再次使用（16.9）及通道收缩性，它们的距离至多 $`\eta_L`$。再加上（16.12）的解码后距离，得到
+
+$$
+\begin{aligned}
+d\bigl((\operatorname{id}_{JM}\otimes\mathcal D_n)(\sigma_n),\Omega_n\bigr)
+&\le d(\sigma_n,\widetilde\sigma_n)+\eta_L\\
+&\le2\sqrt{\delta_L}.
+\end{aligned}
+\tag{16.15}
+$$
+
+所有比较使用同一个任意输入 $`\rho_{JM}`$，并且界与参考和终端编号无关。对 $`n<L`$，直接逆启动编码，误差为零。每个解码器在总寄存器 $`K`$ 的预期阶段扇区上按上述方式定义，在其他阶段扇区输出任意固定档案态，因而是整个 $`K`$ 上的 CPTP 通道；实际终端处在该预期扇区内。
+

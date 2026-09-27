@@ -1,0 +1,65 @@
+**前四步强制初态与第二步一列平行。**
+
+所有环境为 $`\eta_0`$ 的已指定接收输入，其零位和一位接收向量合并为
+$$
+A_0=\operatorname{span}(k,H),\qquad B_0=\operatorname{span}(k,G).
+\tag{25.11}
+$$
+所有环境为 $`\eta_1`$ 的第二、四轮输入合并为
+$$
+A_1=\operatorname{span}(p,q,cs+br,a^2t+bj),\qquad
+B_1=\operatorname{span}(p,s,t).
+\tag{25.12}
+$$
+固定 $`V`$ 等距且两个环境正交，因此
+$$
+A_0\perp A_1,\qquad B_0\perp B_1.
+\tag{25.13}
+$$
+
+等距映射在环境零支撑上的接收像空间为
+$`\operatorname{span}(p,q,L_3)`$，故
+$$
+\dim\operatorname{span}(p,q,L_3)
+=\dim A_0+\dim B_0.
+\tag{25.14}
+$$
+另外，由（25.2）、（25.7）同为环境零以及不同输入位正交，
+$$
+p\perp R,\qquad q\perp S.
+\tag{25.15}
+$$
+
+分四种实际的子空间位置，不作坐标上的额外假定：
+
+1. 若 $`k\notin H`$ 且 $`k\notin G`$，则（25.14）右侧为六。
+   因为 $`\dim L_3=4`$，$`p,q`$ 在商空间 $`K/L_3`$ 中线性独立。
+   两个向量 $`cs+br,a^2t+bj`$ 在 $`L_3`$ 内线性独立，故
+   $`\dim A_1=4`$。但 $`\dim A_0=3`$，与（25.13）及 $`D\le6`$ 矛盾。
+
+2. 若 $`k\in G\setminus H`$，由 $`k1\in G\otimes1`$ 和（25.7）可得 $`q\in R`$。
+   此时（25.14）为五，故 $`p\notin L_3`$。两个向量
+   $`cs+br,a^2t+bj`$ 在 $`S`$ 上的投影分别为 $`cs,a^2t`$，线性独立；
+   因此加上非零的 $`q\in R`$ 后仍线性独立。
+   再加 $`p\notin L_3`$ 得 $`\dim A_1=4`$，而 $`\dim A_0=3`$，仍矛盾。
+
+3. 若 $`k\in H\setminus G`$，同理有 $`p\in S`$，且由（25.14）得 $`q\notin L_3`$。
+   这时 $`A_0=H`$、$`B_0=L`$，而 $`B_1=S`$，所以（25.13）给 $`S\perp L`$。
+   特别地 $`s,t\perp H`$。又因 $`cs+br,a^2t+bj\in A_1\perp H`$，
+   且 $`a,b\ne0`$，有 $`r,j\perp H`$，从而 $`L_3\subset H^\perp`$。
+   同时 $`q\in A_1\subset H^\perp`$ 且 $`q\notin L_3`$，于是
+   $`\dim H^\perp\ge5`$，即 $`D\ge7`$，矛盾。
+
+4. 唯一剩余是 $`k\in H\cap G=\operatorname{span}\{w\}`$。
+
+故 $`k\parallel w`$。两者都是单位向量，写 $`w=\zeta k`$，$`|\zeta|=1`$。
+可在整个环境 $`\eta_1`$ 方向上把 $`V`$ 的输出乘 $`\overline\zeta`$，
+即在 Stinespring 输出环境上施加固定相位酉。这不改变 CPTP 接收通道，也不改变（25.1）的环境射线。
+在这份等价 Stinespring 表示中，第二轮的三个输出向量整体乘 $`\overline\zeta`$，于是新的 $`w=k`$。
+此后重新按（25.5）—（25.8）定义 $`z,s,r,t,j`$ 即可。固定同一个 $`V`$ 的（25.2）、（25.7）随即给
+$$
+t=p,\qquad j=q.
+\tag{25.16}
+$$
+这正是所用相位规范，未改变来源的 $`a,b`$，也未给运行门增加轮次控制。
+

@@ -1,0 +1,109 @@
+**命题 27.1（秩二附加态的后续环境限制）。** 在上述分支中，若精确服务全部五个终端，则
+
+$$
+\boxed{\eta_4,\eta_5\in F,
+\qquad C_4\ne C_3,
+\qquad C_5\ne C_3.}
+\tag{27.8}
+$$
+
+因此第四、第五轮的纯环境都必须落在第三轮排出附加因子的同一个二维环境空间内。两者仍可非正交，也可共线；本结论没有排除这两种剩余情形。
+
+证明。使用实际来源的记忆系数，写第三、第四终端的纯联合态为
+
+$$
+|\Psi_m\rangle
+=\frac1{\sqrt2}\sum_{i=0}^1|i\rangle_J
+\bigl(|0\rangle_Mx_m^i+|1\rangle_My_m^i\bigr),
+\quad
+H_m=\operatorname{span}\{x_m^0,x_m^1\},\quad
+G_m=\operatorname{span}\{y_m^0,y_m^1\},
+\qquad m=3,4.
+\tag{27.9}
+$$
+
+已知来源的实际档案列及等距编码给
+
+$$
+\dim H_m=\dim G_m=2,
+\qquad H_m+G_m=C_m,
+\qquad \dim C_m=4.
+\tag{27.10}
+$$
+
+下一次发射后的接收输入因此为
+
+$$
+L_{m+1}=(H_m\otimes|0\rangle)
+\oplus(G_m\otimes|1\rangle).
+\tag{27.11}
+$$
+
+这里同时使用参考与活动记忆的独立系数；未把活动记忆当成可访问的控制。
+
+**先排除一种支撑回返。** 若 $`\eta\in F`$ 为单位向量，取唯一单位 $`\xi\in\Gamma`$ 使 $`R\xi=\eta`$。由（27.4），
+
+$$
+V^{-1}(C_3\otimes\mathbb C\eta)
+=(H\otimes\mathbb C\xi\otimes|0\rangle)
+\oplus(G\otimes\mathbb C\xi\otimes|1\rangle).
+\tag{27.12}
+$$
+
+这里逆像在 $`V`$ 的像上理解；等距的单射性保证没有其它输入向量映到同一子空间。右边的零位、一位接收系数合起来只张成
+$`(H+G)\otimes\mathbb C\xi=Q\otimes\mathbb C\xi`$，维数为三。
+因此，当 $`n=4`$ 或 $`5`$ 时，不可能同时有
+
+$$
+C_n=C_3,\qquad \eta_n\in F:
+\tag{27.13}
+$$
+
+否则（27.7）、（27.11）及（27.12）会使前一终端的接收支撑 $`C_{n-1}`$ 只有三维，与（27.10）矛盾。
+
+**第四轮环境不能在 $`F`$ 外。** 反设 $`\eta_4\notin F`$。式（27.6）、（27.7）的两个像交为零，所以 $`L_3\cap L_4=0`$。两者维数和为 $`8+4=12=\dim(K\otimes B)`$，故同一个全域等距的整个像恰为
+
+$$
+\mathcal R:=V(K\otimes B)
+=C_3\otimes F+C_4\otimes\mathbb C\eta_4.
+\tag{27.14}
+$$
+
+若 $`C_4=C_3`$，则（27.14）使每次接收后的接收器支撑都包含于同一四维 $`C_3`$。但第二终端的接收器边缘支撑维数为
+$`3\cdot2=6`$，矛盾。因此此时 $`C_4\ne C_3`$，且
+$`\dim(C_3\cap C_4)\le3`$。
+
+第五轮像 $`C_5\otimes\mathbb C\eta_5`$ 必须包含于（27.14）。在环境商空间 $`E/F`$ 上投影，分三种情形：
+
+- 若 $`\eta_5\in F`$，则
+  $`\mathcal R\cap(K\otimes F)=C_3\otimes F`$，从而 $`C_5\subseteq C_3`$。两者均四维，所以 $`C_5=C_3`$，违反（27.13）。
+- 若 $`\eta_5\notin F`$，商空间投影强制
+  $`\eta_5=c\eta_4+f`$，其中 $`c\ne0`$、$`f\in F`$，并且 $`C_5\subseteq C_4`$，故 $`C_5=C_4`$。
+  若 $`f\ne0`$，减去 $`c(C_4\otimes\eta_4)`$ 又给
+  $`C_4\otimes f\subseteq C_3\otimes F`$，从而 $`C_4=C_3`$，矛盾。
+- 余下 $`f=0`$ 时，$`\eta_5\parallel\eta_4`$ 且 $`C_5=C_4`$。两轮像相同，固定等距单射性给 $`L_5=L_4`$。分别取新位零与一的系数空间，得到 $`H_4=H_3`$、$`G_4=G_3`$，故 $`C_4=C_3`$，仍矛盾。
+
+所有情形均不成立，故 $`\eta_4\in F`$。结合（27.13）得到 $`C_4\ne C_3`$。
+
+**第五轮环境也不能离开 $`F`$。** 现在（27.6）、（27.7）的交空间为
+
+$$
+V(L_3)\cap V(L_4)
+=(C_3\cap C_4)\otimes\mathbb C\eta_4.
+\tag{27.15}
+$$
+
+其维数至多三，所以
+
+$$
+\dim(L_3+L_4)
+=8+4-\dim(C_3\cap C_4)\ge9.
+\tag{27.16}
+$$
+
+同时 $`V(L_3+L_4)\subseteq K\otimes F`$。若 $`\eta_5\notin F`$，则
+$`V(L_5)=C_5\otimes\mathbb C\eta_5`$ 与该像交零。因此
+$`L_5\cap(L_3+L_4)=0`$，要求十二维输入空间中容纳至少 $`9+4=13`$ 维，矛盾。故 $`\eta_5\in F`$；再由（27.13）得 $`C_5\ne C_3`$。证明完毕。
+
+本命题保留第二终端的秩二附加态及其与过去环境的纠缠，也没有限制第一终端附加态的秩。它把此分支的后续纯环境限定到同一二维空间，没有给出剩余交叉 Gram 方程的可行解或矛盾，因而不能据此排除一般五终端六维接收器。
+

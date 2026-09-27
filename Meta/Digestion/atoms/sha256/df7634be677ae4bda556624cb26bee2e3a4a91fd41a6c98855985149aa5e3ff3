@@ -1,0 +1,35 @@
+**theorem 24.2: 精确有限记忆必须承载完整未来商；Claim status: open.** 设 $r:X\to W$ 是一个有限确定性记忆实现，存在 $G:W\to W$、$q_W:W\to Q$ 使
+
+$$
+r\circ F=G\circ r,
+\qquad
+q=q_W\circ r,
+$$
+
+并且 $r$ 满射。则存在唯一满射
+
+$$
+\theta:W\twoheadrightarrow C_\infty
+$$
+
+满足
+
+$$
+\theta\circ r=\pi_\infty,
+\qquad
+\theta\circ G=\bar F\circ\theta,
+\qquad
+\bar q\circ\theta=q_W,
+$$
+
+其中 $\pi_\infty:X\to C_\infty$ 是完整未来商，$\bar F$ 与 $\bar q$ 是其诱导更新和读出。因此
+
+$$
+\boxed{|C_\infty|\le |W|.}
+\tag{24.2}
+$$
+
+仓内 `DeterministicCompletionMinimality.minimal_deterministic_completion` 正是这一唯一满射因子和三条交换式的有限版本。它的含义是：任意精确记忆都至少包含完整未来行为类；当前显示 $q$ 只有在 $C_0\cong C_\infty$ 时才已经是最小动态记忆。
+
+这也说明“现在的目标后验”通常不是充分边界。它可能把两个状态合成同一当前读数，但两者的下一步更新落在不同未来类中；若要定义单值的记忆更新，必须保留能区分这些残余的结构。
+

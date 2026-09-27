@@ -1,0 +1,1 @@
+| `D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.lean` 中 `discounted_bellman_contraction_and_unique_fixed_point` | 有限离散状态、有限动作、非负归一化转移与 $0<\gamma<1$ 下的折扣收缩及唯一不动点 | 一般紧商空间的函数类、任意选择器的正则性或现成的跨表示缺陷界 

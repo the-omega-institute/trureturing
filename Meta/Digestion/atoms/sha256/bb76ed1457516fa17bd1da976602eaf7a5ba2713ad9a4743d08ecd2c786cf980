@@ -1,0 +1,76 @@
+**定理 117.3（全部极限边界点由实际仪器达到）。** 对每个 $\lambda\in[0,1]$，存在 $t_j\to0$ 的上述实际仪器和正间隙
+
+$$
+h_j=R-\delta(\Gamma_{t_j,k_j}^{\rm coh})\longrightarrow0,
+$$
+
+使该仪器属于 $\mathfrak B_{R-h_j}$，并且
+
+$$
+\boxed{
+\frac{M(\Gamma_{t_j,k_j}^{\rm coh})}{\mathscr K(R-h_j)}
+\longrightarrow\lambda,
+\qquad
+ d_{\Gamma_{t_j,k_j}^{\rm coh}}\longrightarrow\sqrt{1-\lambda}.
+}
+\tag{117.4}
+$$
+
+因而定理 116.1 的整个边界曲线都在同一物理接口与同一校准定义内实现。
+
+证明。先取固定 $a\ge0$，令 $k=at^2$。未点击动力学与第 107 节相同，其准平稳态为 $S_t=P_{\psi_t}$，且
+
+$$
+\epsilon_{t,k}=k+(1-k)\sin^2t,
+\qquad
+M(\Gamma_{t,k}^{\rm coh})=1+\frac{1-k}{\epsilon_{t,k}}.
+\tag{117.5}
+$$
+
+直接作用点击算子得到
+
+$$
+B_k\psi_t=-\sin t\,|0\rangle+\sqrt k\cos t\,|1\rangle,
+\qquad
+\zeta_{t,k}=
+\frac{|B_k\psi_t\rangle\langle B_k\psi_t|}{\epsilon_{t,k}}.
+\tag{117.6}
+$$
+
+从任意输入第一次点击时输出 $B_kXB_k^\dagger$；若第一次未点击，未归一化后继是 $(1-k)\operatorname{Tr}(PX)S_t$。从 $S_t$ 出发的最终点击后继准确为 $\zeta_{t,k}$，所以
+
+$$
+\Xi_{t,k}(X)=B_kXB_k^\dagger
++(1-k)\operatorname{Tr}(PX)\zeta_{t,k}.
+\tag{117.7}
+$$
+
+令 $t\to0$，有
+
+$$
+\epsilon_{t,at^2}\sim(1+a)t^2,
+\qquad
+\zeta_{t,at^2}\longrightarrow P_{\xi_a},
+\qquad
+\xi_a=\frac{-|0\rangle+\sqrt a\,|1\rangle}{\sqrt{1+a}}.
+$$
+
+引理 117.2 给 $h_t=\kappa t+O(t^2)>0$。由定理 113.1，
+
+$$
+\mathscr K(R-h_t)\sim t^{-2},\qquad
+\frac{M(\Gamma_{t,at^2}^{\rm coh})}{\mathscr K(R-h_t)}
+\longrightarrow\frac1{1+a}.
+$$
+
+定理 115.2 或式（117.7）直接给
+
+$$
+d_{\Gamma_{t,at^2}^{\rm coh}}
+\longrightarrow D(P_{\xi_a},P_0)=\sqrt{\frac a{1+a}}.
+$$
+
+每个 $0<\lambda\le1$ 都可取 $a=(1-\lambda)/\lambda$ 达到，包括 $a=0$ 对应的原旋转族。
+
+最后处理 $\lambda=0$：另取 $k=t^{3/2}$。引理 117.2 仍给 $h_t=\kappa t+o(t)>0$，而 $\epsilon_{t,k}\sim t^{3/2}$、$M\sim t^{-3/2}$。所以 $M/\mathscr K(R-h_t)\to0$。式（117.6）给 $\zeta_{t,k}\to P_1$，故 $d\to1$。所有正 $t$ 的装置都终止，结论来自真实子临界序列。$\square$
+

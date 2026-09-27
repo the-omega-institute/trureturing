@@ -1,0 +1,13 @@
+### 51.3 保单位伴随仍具有指数三
+
+取 Hilbert–Schmidt 伴随 $\Phi=\Theta^*$。由（51.3），
+
+$$
+\Phi(X)=L_0^*XL_0+L_1^*XL_1
+=\operatorname{diag}\bigl(\langle1|X|1\rangle,
+\langle+|X|+\rangle\bigr).
+\tag{51.8}
+$$
+
+这是完全正映射，且 $\Phi(I)=I$。保单位完全正映射满足 Schwarz 不等式，所以它属于所核对 Theorem A 的映射类。
+

@@ -1,0 +1,10 @@
+**命题 2.6（保留档案的随机振幅版本）。** 若 $A,B$ 在给定完整已获档案 $C$ 后具有有限二阶矩，则
+
+$$
+\mathbb E[|A+B|^2\mid C]
+= \mathbb E[|A|^2\mid C]
++\mathbb E[|B|^2\mid C]
++2\operatorname{Re}\mathbb E[A\bar B\mid C].
+\tag{AP.12}
+$$
+

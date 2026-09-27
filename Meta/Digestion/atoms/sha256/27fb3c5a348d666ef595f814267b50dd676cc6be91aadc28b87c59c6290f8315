@@ -1,0 +1,36 @@
+### 272.2 部分转置的Schur补与正规性
+
+记 $\Gamma$ 为在当前输入基上取部分转置。于是
+$$
+T_t^\Gamma=
+\begin{pmatrix}
+Q&M_t^\dagger Q\\
+QM_t&M_t^\dagger QM_t
+\end{pmatrix}.
+\tag{272.8}
+$$
+因为 $Q\succ0$，部分转置正半定当且仅当其Schur补
+$$
+S_t=M_t^\dagger QM_t-QM_tQ^{-1}M_t^\dagger Q
+\tag{272.9}
+$$
+正半定。置
+$$
+A_t=Q^{1/2}M_tQ^{-1/2}.
+\tag{272.10}
+$$
+直接相乘得到
+$$
+Q^{-1/2}S_tQ^{-1/2}=A_t^\dagger A_t-A_tA_t^\dagger.
+\tag{272.11}
+$$
+右侧Hermitian且迹为零，所以它正半定当且仅当它为零。因此
+$$
+\boxed{
+T_t^\Gamma\succeq0
+\quad\Longleftrightarrow\quad
+A_t\text{ 正规}.
+}
+\tag{272.12}
+$$
+

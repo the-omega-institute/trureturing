@@ -1,0 +1,76 @@
+### 296.6 精确倾斜控制负系数事件
+
+对 $J\sim\operatorname{Bin}(K,p)$，单侧 Hoeffding 界为
+$$
+\Pr(J/K-p\ge t)\le e^{-2Kt^2},\qquad
+\Pr(J/K-p\le-t)\le e^{-2Kt^2}.
+\tag{296.20}
+$$
+可直接由二值中心变量的对数矩母函数二阶导数至多 $1/4$ 得
+$\mathbb E e^{\lambda(Y-p)}\le e^{\lambda^2/8}$，再作 Chernoff 最优化。
+因 $c_J=C(1-BJ/K)$、$BC\le4C_*$，真实坐标和经验坐标相隔一个固定阈值间距时，（296.20）给统一指数界。
+
+还需要处理可能极大的负系数，不能直接忽略它们。对任意事件指示函数 $\varphi$，准确的阶乘矩倾斜恒等式为
+$$
+\boxed{
+\mathbb E_p\left[
+\frac{(J)_m}{(K)_m}\varphi(J)
+\right]
+=p^m\,\mathbb E\varphi(m+Z),\quad
+Z\sim\operatorname{Bin}(K-m,p).
+}
+\tag{296.21}
+$$
+这由逐项恒等式
+$$
+\frac{(j)_m}{(K)_m}{K\choose j}
+={K-m\choose j-m}
+$$
+直接得到。
+
+若真实 $c\ge v_-$，则
+$$
+p(c)\le \tau-\Delta_k,\qquad
+\tau=\frac{1-v_{--}/C}{B}.
+$$
+对每个 $m\le d\le\zeta_kK$，倾斜后的随机数 $m+Z$ 的均值至多
+$$
+Kp+m\le K(\tau-\Delta_k+\zeta_k)
+\le K(\tau-\Delta_k/2).
+$$
+所以
+$$
+\Pr(m+Z>K\tau)
+\le e^{-K\Delta_k^2/2}.
+\tag{296.22}
+$$
+这里增量 $m$ 已计入阈值距离；没有把原来的小概率事件在倾斜后继续不加检查地当作小概率。
+
+由（296.14），$\beta_i<0$ 只能发生在
+$$
+c_i<k^D\le k^{11/4}=v_{--}.
+\tag{296.23}
+$$
+非正经验坐标也在此事件内。因为（296.10）的常数项至少为一，
+$$
+(-\beta_i)_+
+\le\frac1{D\kappa}
+\sum_{m=1}^{d}\frac{B^m}{m}
+\frac{(i)_m}{(K)_m}
+\,\mathbf1_{\{c_i<v_{--}\}}.
+$$
+对 $c\ge v_-$，使用（296.21）—（296.22），可得
+$$
+\begin{aligned}
+\mathbb E_c(-\beta_J)_+
+&\le
+\frac{e^{-K\Delta_k^2/2}}{D\kappa}
+\sum_{m=1}^{d}\frac{(Bp(c))^m}{m}\\
+&\le
+W_k e^{-K\Delta_k^2/2},\\
+W_k&:=\frac{\log(C_*/v_-)}{(11/4)\kappa}.
+\end{aligned}
+\tag{296.24}
+$$
+第二步用 $Bp(c)=1-c/C\le1-v_-/C_*<1$。这说明虽然低经验区域的某些辅助系数绝对值可随 $K$ 指数增长，坏事件上的期望贡献仍指数小；系数的 $B^m$ 被精确倾斜恒等式吸收到收敛的 $(Bp)^m$ 中。
+

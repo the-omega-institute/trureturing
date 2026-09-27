@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 
 /// <summary>
 /// stamp 匹配不代表项目产物已就绪。
-/// 冷缓存只填空根；热缓存超过发布周期后可经校验替换，失败保留原缓存。
+/// 主检出可在空内容根取 Release archive，并周期刷新热缓存；linked worktree 禁用 archive。
 /// </summary>
 public sealed partial class LeanCacheEnsureCommandTests
 {
@@ -15,7 +15,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         if (OperatingSystem.IsWindows()) return;
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        var target = AddWorktree(repository.Path, "private-release-default");
+        var target = repository.Path;
         LeanCacheStamp.Write(Path.Combine(target, ".lake"), ReadPins(target));
         var script = LeanArchiveFetch.ScriptPath(target);
         Directory.CreateDirectory(Path.GetDirectoryName(script)!);
@@ -64,15 +64,15 @@ public sealed partial class LeanCacheEnsureCommandTests
             receipt.GetProperty("archive_producer_commit_sha").GetString());
         Assert.Equal("7777", receipt.GetProperty("archive_workflow_run_id").GetString());
 
-        // Clonefile donor 的依赖层可用时,项目内容层仍可能为冷。
-        aCloneFromAColdDonorStillFetchesTheContentLayer();
+        // A linked lane does not use the archive when its required main donor is cold.
+        aColdMainDonorFailsClosedWithoutArchive();
 
-        static void aCloneFromAColdDonorStillFetchesTheContentLayer()
+        static void aColdMainDonorFailsClosedWithoutArchive()
         {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         // donor 有 .lake 与依赖层,但**没有** project olean —— 内容层为冷。
-        WriteCache(repository.Path, "donor without project oleans\n");
+        WriteCache(repository.Path, "donor without project oleans\n", projectWarm: false);
         LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
         var target = AddWorktree(repository.Path, "cold-donor-clone");
         WriteFetcher(target);
@@ -82,14 +82,19 @@ public sealed partial class LeanCacheEnsureCommandTests
             ArchiveExitCode = 1,
         };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(
+        var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner()));
+            new RecordingDirectoryCloner());
 
-        Assert.Equal(1, runner.ArchiveInvocations);
-        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+        Assert.False(result.Success);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Contains("project layer cold", receipt.RootElement.GetProperty("reason").GetString(),
+            StringComparison.Ordinal);
+        Assert.Equal(LinkedArchiveDisabled,
+            receipt.RootElement.GetProperty("archive_skip_reason").GetString());
 
         }
     }
@@ -113,10 +118,10 @@ public sealed partial class LeanCacheEnsureCommandTests
             "project olean state is warm",
             receipt.GetProperty("archive_skip_reason").GetString());
 
-        // 本地热 donor 已提供项目内容层,不再访问归档。
-        aLocalDonorMakesTheArchiveUnnecessary();
+        // A warm main donor supplies the linked lane without an archive request.
+        aWarmMainDonorMakesTheArchiveUnnecessary();
 
-        static void aLocalDonorMakesTheArchiveUnnecessary()
+        static void aWarmMainDonorMakesTheArchiveUnnecessary()
         {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -136,7 +141,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(0, runner.ArchiveInvocations);
         Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
         Assert.Equal(
-            "project olean state is warm",
+            LinkedArchiveDisabled,
             receipt.GetProperty("archive_skip_reason").GetString());
         }
     }
@@ -208,7 +213,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void OldWarmDonorIsRefreshedAfterCopying(bool copyFallback)
+    public void OldWarmMainDonorSeedsLaneWithoutReleaseRefresh(bool copyFallback)
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -227,8 +232,9 @@ public sealed partial class LeanCacheEnsureCommandTests
             ["ensure-cache", "--path", target], runner,
             new RecordingDirectoryCloner { FailureReason = copyFallback ? "clone unavailable" : null }));
 
-        Assert.Equal(1, runner.ArchiveInvocations);
-        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal(LinkedArchiveDisabled, receipt.GetProperty("archive_skip_reason").GetString());
         Assert.Equal("seeded", receipt.GetProperty("status").GetString());
         Assert.True(File.Exists(olean));
     }
@@ -354,7 +360,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "donor without project oleans\n");
+        WriteCache(repository.Path, "donor without project oleans\n", projectWarm: false);
         LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
         // 将 donor 的 .lake/build/lib/lean 本身设为文件,使 clone 后的目标探测失败。
         var donorProjectRoot = Path.Combine(repository.Path, ".lake", "build", "lib", "lean");
@@ -364,14 +370,17 @@ public sealed partial class LeanCacheEnsureCommandTests
         WriteFetcher(target);
         var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(
+        var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner()));
+            new RecordingDirectoryCloner());
 
+        Assert.False(result.Success);
         Assert.Equal(0, runner.ArchiveInvocations);
-        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Contains("project layer cold", receipt.RootElement.GetProperty("reason").GetString(),
+            StringComparison.Ordinal);
         }
     }
 
@@ -395,10 +404,10 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
         Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
 
-        // 无本地 donor 时先补依赖层,再安装归档内容层。
-        absentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer();
+        // A linked lane with a cold main fails without cache-get or archive fallback.
+        absentLakeWithColdMainFailsClosedWithoutArchive();
 
-        static void absentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer()
+        static void absentLakeWithColdMainFailsClosedWithoutArchive()
         {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -408,28 +417,22 @@ public sealed partial class LeanCacheEnsureCommandTests
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n",
-            AfterArchiveFetch = _ =>
-            {
-                // 回调写入项目产物前,依赖层必须已经就绪。
-                Assert.True(
-                    File.Exists(Path.Combine(target, ".lake", "cache-get.marker")),
-                    "the dependency layer must be in place before the archive is fetched");
-                var olean = Path.Combine(
-                    target, ".lake", "build", "lib", "lean", "FromArchive.olean");
-                Directory.CreateDirectory(Path.GetDirectoryName(olean)!);
-                File.WriteAllText(olean, "content layer\n");
-            },
+            AfterArchiveFetch = _ => throw new Xunit.Sdk.XunitException(
+                "linked worktree ensure must not invoke the archive fetcher"),
         };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(
+        var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner()));
+            new RecordingDirectoryCloner());
 
-        Assert.Equal(1, runner.ArchiveInvocations);
-        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
-        Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
+        Assert.False(result.Success);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(LinkedArchiveDisabled,
+            receipt.RootElement.GetProperty("archive_skip_reason").GetString());
         }
     }
 
@@ -441,7 +444,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         {
             Repository = repositoryRoot;
             InitializeRepository(Repository);
-            target = AddWorktree(Repository, name);
+            target = Repository;
 
             // stamp Match:依赖层身份对得上。内容层此时为空,即 CI 上 dependency cache
             // 命中而 project build cache 未命中的那一刻。

@@ -1,0 +1,55 @@
+### 243.4 实际张量通道、完整标签及组合距离
+
+现在给两份独立固定接口 $i=1,2$，分别具有输入 $H_i$、维数 $d_i$、标签数 $N_i$、总秩 $R_i$ 及投影族 $\Pi_j^{(i)}$，满足
+$$
+\sum_j\Pi_j^{(i)}=\alpha_iI_{H_i},
+\qquad \alpha_i=R_i/d_i>0,
+\qquad R_i<N_id_i.
+\tag{243.17}
+$$
+各局部目标及候选均按（243.2）给出，记为 $\mathcal R_i,\mathcal S_i$。组合是明确的张量通道
+$$
+\mathcal R_{12}=\mathcal R_1\otimes\mathcal R_2,
+\qquad
+\mathcal S_{12}=\mathcal S_1\otimes\mathcal S_2,
+\tag{243.18}
+$$
+输入为 $H_1\otimes H_2$，记录保留全部 $N_1N_2$ 个标签对 $(j,k)$，量子输出为两个固定局部输出的张量积。
+
+组合投影为
+$$
+\Theta_{jk}=\Pi_j^{(1)}\otimes\Pi_k^{(2)},
+\qquad
+\sum_{j,k}\Theta_{jk}
+=\frac{R_1R_2}{d_1d_2}I_{H_1\otimes H_2}.
+\tag{243.19}
+$$
+对任意输入矩阵 $X$，包括非乘积矩阵，第 $(j,k)$ 个候选分支是
+$$
+\frac{d_1d_2}{R_1R_2}
+\operatorname{Tr}(\Theta_{jk}X)
+\,P_j^{(1)}\otimes P_k^{(2)}.
+\tag{243.20}
+$$
+该式在基本张量上由局部定义成立，再由线性延拓到全部矩阵。其目标分支相应为
+$$
+\frac1{N_1N_2}\operatorname{Tr}(X)
+\,P_j^{(1)}\otimes P_k^{(2)}.
+$$
+必要的输出因子重排只把两套记录放到一起，保留每个标签对及相应量子输出。
+
+每个候选分支的 Choi 秩恰为 $\operatorname{rank}\Pi_j^{(1)}\operatorname{rank}\Pi_k^{(2)}$。经典标签块相加，给组合精确总秩
+$$
+\sum_{j,k}\operatorname{rank}\Theta_{jk}=R_1R_2.
+\tag{243.21}
+$$
+所以组合仍属于同一固定投影候选类，参数为 $(d_1d_2,N_1N_2,R_1R_2)$。应用已有平坦取等公式，得到
+$$
+\boxed{
+D_{12}=1-\frac{R_1R_2}{N_1N_2d_1d_2}
+=1-(1-D_1)(1-D_2),
+}
+\tag{243.22}
+$$
+其中 $D_i=1-R_i/(N_id_i)$。此式由具体投影候选结构得到，不是任意两对量子通道的 diamond 距离恒等式。
+

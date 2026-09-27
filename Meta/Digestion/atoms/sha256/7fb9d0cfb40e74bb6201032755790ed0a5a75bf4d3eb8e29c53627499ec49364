@@ -1,0 +1,69 @@
+**定义 48.1（局部初始化的持久协议合同）。** 固定 $d\ge2$，令 $D=d+1$，沿用第47节
+
+$$
+\begin{gathered}
+V=\mathbb F_2^d\oplus\mathbb F_2,
+\quad W=\ker c=\langle e_1,\ldots,e_d\rangle,
+\quad V=A\oplus B,\\
+r=\dim A>0,\quad s=\dim B>0,\quad r+s=D,\\
+a=p_Az,\quad b=p_Bz,\quad
+\ell_A=c|_A,\quad\ell_B=c|_B,\quad
+\alpha_i=p_Ae_i,\quad\beta_i=p_Be_i.
+\end{gathered}
+\tag{48.1}
+$$
+
+这里“非中心化”仅指 $r,s>0$：固定的两个原摘要都不独占完整 $z$。持久控制器扩充这两份摘要，分别具有状态集 $M_A,M_B$ 与固定读出 $\rho_A:M_A\to A$、$\rho_B:M_B\to B$。局部准备映射满足
+
+$$
+\begin{gathered}
+\iota_A:A\to M_A,\quad \rho_A\iota_A=\operatorname{id}_A,
+\qquad
+\iota_B:B\to M_B,\quad \rho_B\iota_B=\operatorname{id}_B,\\
+I=\{(\iota_A(a),\iota_B(b)):a\in A,\ b\in B\}
+  =\iota_A(A)\times\iota_B(B).
+\end{gathered}
+\tag{48.2}
+$$
+
+因此两准备映射自动单射，整个初始乘积均由实际共同源 $z=a+b$ 产生。初始化时，左端只能读取 $a$，右端只能读取 $b$；额外缓存不能预先从对端摘要取得控制位。
+
+公开动作字母表固定为
+
+$$
+\mathcal F=\{\tau_1,\ldots,\tau_d,\tau_c,N_1,\ldots,N_d\},
+\qquad \tau_jz=z+e_j,\quad N_i z=c(z)e_i.
+\tag{48.3}
+$$
+
+令 $Q\subseteq M_A\times M_B$ 为从 $I$ 经所有有限动作词实际可达的联合状态集，且 $M_A,M_B$ 取 $Q$ 的两个实际投影；允许这些集合无限。对每个 $f\in\mathcal F$，协议在每个 $m=(m_A,m_B)\in Q$ 上确定、总定义并有限停止，给后继 $T_fm\in Q$ 和发送位数 $w(m,f)\in\mathbb N$。定义当前态读出
+
+$$
+R(m)=\rho_A(m_A)+\rho_B(m_B),\qquad
+\rho_A((T_fm)_A)=p_A(f(R(m))),\quad
+\rho_B((T_fm)_B)=p_B(f(R(m))).
+\tag{48.4}
+$$
+
+这要求固定投影在每步末仍恢复当前态，$R$ 只是数学读出，不是免费参与执行的中央控制器。全部基平移均零通信；动作词是外部给定的操作要求，正确性量化于每个词，动作选择本身不充当来源相关的免费信号。
+
+协议根也必须局部可选。对每个当前动作 $f$，存在本地函数 $\sigma_{f,A},\sigma_{f,B}$，在所有实际 $m\in Q$ 上满足
+
+$$
+\sigma_{f,A}(m_A)=\sigma_{f,B}(m_B)=:\sigma_f(m).
+\tag{48.5}
+$$
+
+共同标识选定一棵公开确定性二叉协议树。内部节点的发送者由 $f$、树标识及已传位串固定；所发位只能是本端旧持久状态、$f$ 与此前位串的函数。两端在叶处各自写入的新持久状态，也只能是本端旧持久状态、$f$ 与本次完整位串的函数；树标识本身已由本端旧状态与 $f$ 决定。不得把对端旧状态作为任何本地更新的免费实参。根为叶时成本零，根为内部节点时至少传一位；消息是否出现、静默时长、停止时刻及提前显露的输出均不额外传信息。
+
+凡影响未来行为的旧动作、计时器、模式、缓存与通信记录，都必须保存在 $M_A,M_B$ 中并计入容量。下一次操作仅接受本端旧持久状态、当前公开动作及该次通信；不额外读取过去动作词或外部历史。临时计算可用旧状态与本次位串，但带入下次操作的部分必须写回持久状态。
+
+对 $m_0\in I$ 与有限词 $u=f_1\cdots f_n$，按 $m_k=T_{f_k}m_{k-1}$ 定义
+
+$$
+\operatorname{Comm}(m_0,u)=\sum_{k=1}^n w(m_{k-1},f_k).
+\tag{48.6}
+$$
+
+“统一有限累计通信”指存在一个有限整数 $K$，使每个 $m_0\in I$ 和每个 $u\in\mathcal F^*$ 都满足 $\operatorname{Comm}(m_0,u)\le K$。这同时量化全部初始源与任意长动作词，不是逐词另选一个界。
+

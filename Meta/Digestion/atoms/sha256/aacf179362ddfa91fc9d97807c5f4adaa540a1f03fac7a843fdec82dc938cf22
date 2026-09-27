@@ -1,0 +1,17 @@
+**定义 188.1（响应谱与秩-$r$ 误差）。** 对固定 $N,M$，记
+
+$$
+\sigma_1\ge\sigma_2\ge\cdots\ge0
+$$
+
+为 $\mathsf H_{N,M}$ 的奇异值。对 $0\le r$ 定义
+
+$$
+\varepsilon_{2,r}=\sigma_{r+1},
+\qquad
+\varepsilon_{\mathrm F,r}
+=\left(\sum_{k>r}\sigma_k^2\right)^{1/2},
+$$
+
+并约定超出秩的奇异值为零。
+

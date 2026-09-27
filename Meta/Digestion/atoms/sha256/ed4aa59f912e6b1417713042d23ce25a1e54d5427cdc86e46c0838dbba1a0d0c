@@ -1,0 +1,45 @@
+**定理 62.3（Gaussian 方差轮廓下标量载波的精确边界）。** 保持实际模型与
+$`\eta^2\delta\to\zeta\in(0,\infty)`$，暂不施加相位间隔。
+用原模型的精确中心组和 $`A_j`$ 定义
+$`\mathcal C_M^{\rm act}=\sum_j e^{i\varphi_Mj}A_j`$；在共同全行事件外沿用截断定义。
+该标量趋于 Hermitian 方差为 $`\gamma`$ 的圆对称复 Gaussian 律，
+当且仅当 $`d_M/\delta\to\infty`$。
+结论分别按定理 62.2 的条件后验与无条件固定支持口径成立。
+此充要条件只针对标量载波，不声称是非线性能量过程的充要条件。
+
+证明。上述相位无关的精确中心比较、共同耦合及总方差尾界，
+将实际载波的有界测试联合转移到 (62.12) 的 Gaussian 载波；
+这些步骤只使用调制系数模为一。充分性由 (62.13) 的两个谐波控制得到。
+若条件失败，可取子列及最近整数 $`m_M`$，使
+$`b_M=(\varphi_M-\pi m_M)/\delta\to b\in\mathbb R`$。
+Gaussian 载波的 Hermitian 方差仍趋于 $`\gamma`$，伪协方差则为
+
+```math
+\sum_j e^{2i\varphi_Mj}v_j
+ =\sum_j e^{2ib_Mx_j}v_j
+ \longrightarrow\int e^{2ibx}\rho(x)\,dx
+ =\gamma e^{-2b^2/\kappa}>0.
+```
+
+式 (62.19)。
+
+固定空间截断上的一致相位收敛与环境相对误差给出 Riemann 极限，总方差尾界移除截断。
+因为 $`\rho`$ 为偶函数，实虚部极限独立，方差分别为
+$`\gamma(1+e^{-2b^2/\kappa})/2`$ 与 $`\gamma(1-e^{-2b^2/\kappa})/2`$。
+非零参数的实部特征函数这一有界测试将其与圆对称律区分。
+转回实际后验只转移该有界测试，没有从总变差比较推断实际无界矩收敛。
+$`m_M`$ 为偶数时旧场交叉 Gram 保留调制 $`e^{ibx}`$，为奇数时交叉 Gram 因交替符号消失；
+两种奇偶的伪协方差均为 (62.19)。因此旧新场独立不等于新场圆对称。
+
+此边界依赖本模型 Gaussian 轮廓的 Fourier 变换处处严格为正。
+经典矩形窗口可有精确消零：若 $`n\ge3`$、$`\xi_j`$ 独立标准实 Gaussian，
+$`Z_n=n^{-1/2}\sum_{j=0}^{n-1}\xi_je^{2\pi ij/n}`$ 已经圆对称，
+并独立于 $`n^{-1/2}\sum_j\xi_j`$，因为两个相应几何和都为零；
+但对 $`\delta_n=1/n`$，相位间隔除以网格趋于 $`2\pi`$。
+这不属于本实际模型，也不支持普遍 Fourier 必要性。
+另一方面，取任意 $`\ell_M\to\infty`$ 且 $`\delta\ell_M\to0`$，
+令 $`m_M`$ 为 $`\sqrt\zeta/(2\sqrt\delta)`$ 的最近整数，
+$`\eta=2m_M+\delta\ell_M/\omega`$，则 $`\eta^2\delta\to\zeta`$、
+$`d_M=\delta\ell_M\to0`$ 且 $`d_M/\delta=\ell_M\to\infty`$。
+故 (62.1) 包含任意缓慢分离的合法实际谱参数。
+

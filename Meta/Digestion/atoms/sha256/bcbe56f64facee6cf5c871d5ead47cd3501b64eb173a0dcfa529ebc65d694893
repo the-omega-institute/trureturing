@@ -1,0 +1,75 @@
+### 185.1 显式参数区间与实际启动长度
+
+沿用 Schmidt 坐标
+
+$$
+\rho=\operatorname{diag}(r,\ell),\qquad
+r=\frac{3+\sqrt5}{6},\quad
+\ell=\frac{3-\sqrt5}{6},\qquad
+\Delta=r\ell=\frac19,\quad
+\kappa=r-\ell=\frac{\sqrt5}{3},
+$$
+
+$$
+\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle,\qquad
+\beta=\frac{288}{2353},\quad
+\gamma=\frac{42}{2353}.
+$$
+
+以下简单有理界将用于全部估计：
+
+$$
+\frac3{25}<\beta<\frac18,\qquad
+0<\gamma<\frac1{50},\qquad
+\ell>\frac18.
+\tag{185.1}
+$$
+
+其中最后一式等价于 $4\sqrt5<9$。
+
+先核对实际参数。令
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+a_L=-\frac{2z}{3},
+$$
+
+$$
+d_{\mathrm{st}}(a)=\frac19-\frac a6-\frac{a^2}{2},\qquad
+w_1=\frac43-a_L-4\sqrt{d_{\mathrm{st}}(a_L)}
+=\frac{9a_L^2}{\frac43-a_L+4\sqrt{d_{\mathrm{st}}(a_L)}}.
+\tag{185.2}
+$$
+
+当 $L=3$ 时，$a_L=-1/6$、$d_{\mathrm{st}}(a_L)=1/8$，因此
+
+$$
+\boxed{w_1(3)=\frac32-\sqrt2<\frac1{10}.}
+\tag{185.3}
+$$
+
+严格上界使用 $\sqrt2>7/5$。当 $L\ge4$ 时，
+$|a_L|\le1/12$，且
+
+$$
+d_{\mathrm{st}}(a_L)\ge\frac19-\frac1{72}-\frac1{288}
+=\frac3{32}>0.
+$$
+
+（185.2）的分子至多为 $1/16$，分母严格大于
+$4/3-a_L\ge5/4$，故
+
+$$
+0<w_1<\frac1{20}\qquad(L\ge4).
+\tag{185.4}
+$$
+
+结合既有的 $0<w_0<w_1$，全部合法启动长度均满足
+
+$$
+0<w_0<w_1<\frac1{10}.
+\tag{185.5}
+$$
+
+以下先在整个连续区间 $0<w\le1/10$ 上证明结果。
+

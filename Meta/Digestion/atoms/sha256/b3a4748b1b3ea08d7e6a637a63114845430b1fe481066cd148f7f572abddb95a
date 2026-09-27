@@ -1,0 +1,56 @@
+### 270.3 未归一化压缩给出二阶保真度损失
+
+$\sqrt{\Omega_*}$ 在 $\operatorname{ran}R$ 上为零，因此
+$$
+\mathsf F(\Omega_*,\Omega_h)
+=\mathsf F(\Lambda,A_h)
+=\operatorname{Tr}\sqrt{\sqrt\Lambda A_h\sqrt\Lambda}.
+\tag{270.22}
+$$
+这里 $\operatorname{Tr}A_h=1-\ell_h$；不能把 $A_h$ 重新归一化而删掉支撑损失。
+
+置 $A_1=\|V\|_{\mathrm{HS}}+A_2$。因 $h_1\le1$，
+$$
+\|A_h-\Lambda\|_{\mathrm{HS}}\le A_1h.
+\tag{270.23}
+$$
+对 $\Lambda\succeq\mu I$、$A_h\succeq(\mu/2)I$，平方根满足
+$$
+\|\sqrt\Lambda-\sqrt{A_h}\|_{\mathrm{HS}}
+\le
+\frac{\|\Lambda-A_h\|_{\mathrm{HS}}}
+{\sqrt\mu+\sqrt{\mu/2}}.
+\tag{270.24}
+$$
+为直接证明这一估计，令 $X=\sqrt\Lambda-\sqrt{A_h}$，则
+$$
+\sqrt\Lambda X+X\sqrt{A_h}=\Lambda-A_h.
+\tag{270.25}
+$$
+分别取两平方根的正交本征基，矩阵单位组成的HS正交基使左边的Sylvester算子对角化；每个本征值都是两个正平方根本征值之和，至少为 $\sqrt\mu+\sqrt{\mu/2}$。因此得到（270.24），无需两矩阵交换。
+
+$\operatorname{Tr}(\sqrt\Lambda\sqrt{A_h})$ 为非负实数，而迹范数至少为迹的绝对值。于是
+$$
+\begin{aligned}
+\mathsf F(\Lambda,A_h)
+&\ge\operatorname{Tr}(\sqrt\Lambda\sqrt{A_h})\\
+&=\frac{\operatorname{Tr}\Lambda+\operatorname{Tr}A_h
+-\|\sqrt\Lambda-\sqrt{A_h}\|_{\mathrm{HS}}^2}{2}\\
+&\ge1-\frac{B_F}{2}h^2,
+\end{aligned}
+\tag{270.26}
+$$
+其中
+$$
+B_F=b_++
+\frac{A_1^2}{(\sqrt\mu+\sqrt{\mu/2})^2}<\infty.
+\tag{270.27}
+$$
+另一方面，Schatten Cauchy不等式给
+$$
+\mathsf F(\Lambda,A_h)^2
+\le\operatorname{Tr}\Lambda\,\operatorname{Tr}A_h
+=1-\ell_h.
+\tag{270.28}
+$$
+

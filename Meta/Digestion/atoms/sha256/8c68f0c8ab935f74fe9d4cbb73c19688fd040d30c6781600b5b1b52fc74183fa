@@ -1,0 +1,53 @@
+## 413. 两极与三等分纬线的精确恢复阈值及最少原始记录数
+
+沿用第 411 节的有序不同射线空间
+
+$$
+\mathcal D_5=\{(x_1,\ldots,x_5)\in(\mathbb{CP}^1)^5:
+                    x_i\ne x_j\text{ 对所有 }i\ne j\}
+$$
+
+及其通常复射影乘积流形的相对拓扑。给定一个已知配置 $\boldsymbol x\in\mathcal D_5$ 和一个实际整数 $n\ge1$，各选单位代表 $s_i$，按定义 400.1 制备
+
+$$
+S=\mathbb C^5,\qquad R_n=(\mathbb C^2)^{\otimes n},\qquad
+J_n|i\rangle=|i\rangle\otimes s_i^{\otimes n},\qquad
+W_n=\operatorname{Sym}^n(\mathbb C^2)\subseteq R_n.
+$$
+
+全部 $n$ 个原始记录因子在制备后保持联合可访问。允许的操作恰为第 411 节的接口：在完整 $R_n$ 上使用有限结果的联合完全正仪器 $\{\mathcal I_y\}_{y\in Y}$，各分支之和保迹，与输入无关的记录辅助装置并入其中。输出记录取迹后得到系统分支 $\mathcal M_y$；固定接受集合 $Y_{\mathrm s}\subseteq Y$，每个实际结果 $y$ 只控制一个预先指定、作用于整个 $S$ 的终端酉算子 $U_y$。此前不操作系统，任意有限维参考 $A$ 始终不被操作。协议可依赖配置和 $n$，不得依赖未知输入；各协议结果数有限，不要求所有协议共用一个上界。不授予系统滤波、遗漏原始记录、对不可访问记录施加逆操作、系统与记录的相干逆制备或额外可观测 Kraus 指标。
+
+成功集合仍记作 $\mathcal E_{5,n}$：同一个协议和同一个 $p>0$ 必须满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{y\in Y_{\mathrm s}}
+ U_y\mathcal M_y(X)U_y^\dagger=pX
+ &&\text{对每个 }X\in\mathcal L(S),\\
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})&=pX_{AS}
+ &&\text{对每个有限维 }A\text{ 及每个 }X_{AS}\in\mathcal L(A\otimes S).
+\end{aligned}
+$$
+
+对配置 $\boldsymbol x$，定义最少正整数记录数
+
+$$
+m(\boldsymbol x)=\min\{n\ge1:\boldsymbol x\in\mathcal E_{5,n}\},
+$$
+
+空集的最小值约定为 $+\infty$。令 $\omega=e^{2\pi i/3}$；对每个实数 $r>0$，取两极与三等分纬线的单位代表
+
+$$
+s_1=(1,0),\qquad s_2=(0,1),\qquad
+s_{3+j}=\frac{(1,r\omega^j)}{\sqrt{1+r^2}}\quad(j=0,1,2),
+\qquad \boldsymbol x(r)=([s_1],\ldots,[s_5]).
+$$
+
+在 $W_2$ 中固定第 407 节的正交归一基
+
+$$
+e_0=|00\rangle,\qquad
+e_1=\frac{|01\rangle+|10\rangle}{\sqrt2},\qquad
+e_2=|11\rangle.
+$$
+

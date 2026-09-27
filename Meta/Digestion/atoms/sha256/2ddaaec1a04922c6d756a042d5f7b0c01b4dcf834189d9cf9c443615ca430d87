@@ -1,0 +1,149 @@
+### 186.4 匹配的共同 Choi 对偶
+
+这里使用标准的线性恢复 SDP 方法，但保持本任务自己的操作族与误差度量。Fletcher–Shor–Win 将给定输入态的 entanglement fidelity 写成恢复 Choi 矩阵的线性目标，并以正性及部分迹约束优化；其原文第II、IV节的目标并非这里的完整半 diamond 误差。[^general_full_rank_fsw] Bény–Oreshkov 定理1给出 worst-case entanglement fidelity 与环境互补通道的恢复对偶，其度量和允许操作族也不直接替代这里不可访问 $M$ 的局部任务。[^general_full_rank_bo] 下文只将线性 Choi 收益作为下界证书，再用（186.7）把匹配构造连回完整参考误差。
+
+保持第184节输入优先的 Choi 约定，
+$g_0=\operatorname{vec}\rho$、$g_1=\operatorname{vec}(-Y\rho)$、
+$v=\operatorname{vec}I$。
+按第173节的输入 $Z$ 协变平均，可无损地把输出标签取成经典的；
+输入旗标本来就经典，所以任意共同局部解码器诱导每个旗标上的两个结果 CP 映射。
+同一个 instrument 的 Choi 约束是
+$J_{0,s},J_{1,s}\succeq0$、
+$\operatorname{Tr}_{\mathrm{out}}(J_{0,s}+J_{1,s})=I$。
+令 $A_{j,s}$ 为 $\eta_s(w_j)$ 的纯化收益矩阵。
+
+具体地，令 $\operatorname{vec}$ 按矩阵行排列，则
+
+$$
+A_{j,s}=(1-\beta c_j\epsilon)P_{g_0}
++\beta c_j\epsilon P_{g_1}
++s\gamma c_j\epsilon
+(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|),
+$$
+
+其中 $P_g$ 在这里表示未归一化外积 $|g\rangle\langle g|$。
+任意共同 instrument 的正确收益为
+$f_j=\frac12\sum_s\operatorname{Tr}(J_{j,s}A_{j,s})$。
+完整误差压缩给 $e\ge1-f_0f_1/(f_0+f_1)$，
+而对任意 $q\in[0,1]$，
+
+$$
+\frac{f_0f_1}{f_0+f_1}
+=\min_{x\in[0,1]}[x^2f_0+(1-x)^2f_1]
+\le q^2f_0+(1-q)^2f_1.
+$$
+
+当 $f_0=f_1=0$ 时，将上述比值定义为零。
+
+因此同一个 $\mathsf Y_s$ 同时压住
+$q^2A_{0,s}$ 与 $(1-q)^2A_{1,s}$ 的 Choi 对偶约束，
+就给所有共同 CPTP 解码器的下界。
+这没有将两个结果分成各自保迹的独立通道。
+
+选择
+
+$$
+x=-\frac{\beta\delta}{8},\qquad
+z=\delta\Sigma\left(-\frac{\beta^2}{16}
++\frac{\kappa^2\gamma^2}{8}\right),\qquad
+q=\frac12+x\epsilon+z\epsilon^2,
+$$
+
+对固定满秩参数及紧 $R$ 区间，$x,z$ 一致有界，故足够小的 $\epsilon$ 保证 $q\in(0,1)$。
+
+$$
+y=\frac{(1-2\Delta)\gamma\Sigma}{8}
+=\frac{(1+\kappa^2)\gamma\Sigma}{16},\qquad
+T=-Q_{\min}.
+$$
+
+取
+
+$$
+\mathsf Y_s^0
+=\left(\frac14-\frac{\beta\Sigma}{8}\epsilon+T\epsilon^2\right)\rho
+-s y\epsilon Y.
+\tag{186.8}
+$$
+
+两个 slack 的共同基点为
+$S_*=(\rho\otimes I-P_{g_0})/4$，谱为
+
+$$
+\left\{0,\frac{\Delta}{2},\frac r4,\frac\ell4\right\},
+\qquad \ker S_*=\operatorname{span}\{v\}.
+\tag{186.9}
+$$
+
+令 $d_j=\gamma c_j/4$、$c_0=1,c_1=R$。
+一阶非对角列的 Schur 代价为
+
+$$
+\begin{aligned}
+E_j
+&=4\left[\frac{(d_j\ell-y)^2}{r}
++\frac{(d_jr-y)^2}{\ell}\right]\\
+&=\frac4\Delta
+\left[(1-3\Delta)d_j^2-2(1-2\Delta)d_jy+y^2\right].
+\end{aligned}
+$$
+
+所选 $y=(1-2\Delta)(d_0+d_1)/2$ 最小化 $(E_0+E_1)/2$。
+直接计算得到
+
+$$
+\frac{E_0+E_1}{2}
+=\frac{\gamma^2(1+3\kappa^2)\delta^2}{16(1-\kappa^2)}
++\frac{\kappa^2\gamma^2\Sigma^2}{16},
+\qquad
+E_1-E_0=\frac{\kappa^2\gamma^2\delta\Sigma}{4}.
+\tag{186.10}
+$$
+
+因此
+
+$$
+T=x^2+z-\beta x+E_0
+=x^2-z+\beta Rx+E_1.
+\tag{186.11}
+$$
+
+令 $e=v/\sqrt2$，按 $\operatorname{span}\{e\}\oplus e^\perp$
+分块两个未补正 slack
+$S_{0,s}^0=\mathsf Y_s^0\otimes I-q^2A_{0,s}$、
+$S_{1,s}^0=\mathsf Y_s^0\otimes I-(1-q)^2A_{1,s}$。
+它们的核标量一阶为零，因为
+$x-\beta/4=-x-\beta R/4=-\beta\Sigma/8$。
+一阶非对角列是
+$s\operatorname{vec}[Y(d_j\rho-yI)]/\sqrt2$，
+而（186.11）使核标量二阶等于 $E_j/2$。
+所以两个 Schur 补的二阶均为
+$E_j\epsilon^2/2-E_j\epsilon^2/2=0$，仅余一致的 $O(\epsilon^3)$。
+
+基点正交谱间隙为 $\ell/4=(1-\kappa)/8>0$。
+在固定 $\kappa<1$、固定紧 $R$ 区间上，正交块保持一致正定，
+Schur 补不小于 $-C_0\epsilon^3$。加入 $C\epsilon^3I$
+使核标量增加 $C\epsilon^3$，不改变非对角列，并使正交块的逆减小。
+因此取 $C>C_0$，得到
+$\mathsf Y_s=\mathsf Y_s^0+C\epsilon^3I$
+同时满足
+
+$$
+\mathsf Y_s\otimes I\succeq q^2A_{0,s},\qquad
+\mathsf Y_s\otimes I\succeq(1-q)^2A_{1,s}.
+\tag{186.12}
+$$
+
+该共同 dual 于是给
+
+$$
+h_\kappa\ge1-\frac12\sum_s\operatorname{Tr}\mathsf Y_s
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++Q_{\min}\epsilon^2-2C\epsilon^3.
+$$
+
+这与构造上界匹配，证明定理186.1。
+若进一步限制 $0\le\kappa\le\kappa_{\max}<1$，
+谱间隙至少为 $(1-\kappa_{\max})/8$，所有构造系数及矩阵导数也一致有界。
+所以小参数范围与余项常数均可在这一满秩紧参数族上统一选择。
+

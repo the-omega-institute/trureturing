@@ -1,0 +1,1 @@
+- $\mathrm{Seek}$ 若 $L<U$、$E<B$ 且 $E\bmod P\ne P-m$，发出一个 $W$，后继与上一项相同。

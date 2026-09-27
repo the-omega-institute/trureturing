@@ -1,0 +1,36 @@
+**命题 401.1（小非对角总量的有限相位分解）。** 设 $d\ge1$，$H\in\mathbb C^{d\times d}$ 为 Hermitian 矩阵，$H_{ii}=1$。若
+
+$$
+s(H)=\sum_{1\le i<j\le d}|H_{ij}|\le1,
+$$
+
+则 $H\in\mathcal P_d$。这里不必预先假设 $H\succeq0$，以下有限相位分解同时证明其正半定性。
+
+证明。$d=1$ 时 $H=(1)$ 本身是相位秩一矩阵。以下设 $d\ge2$。对每个 $i<j$ 及实数 $\phi$，构造对角元全为 $1$、仅有非零非对角元
+
+$$
+A^{(ij,\phi)}_{ij}=e^{i\phi},\qquad
+A^{(ij,\phi)}_{ji}=e^{-i\phi}
+$$
+
+的矩阵。取 $z_i=1$、$z_j=e^{-i\phi}$，其余 $d-2$ 个坐标独立遍取 $\{-1,1\}$，以相同权重 $2^{-(d-2)}$ 对 $zz^\dagger$ 求和。第 $(i,j)$ 项为 $z_i\overline{z_j}=e^{i\phi}$；涉及一个其余坐标的交叉项因符号均值为零而消失，涉及两个不同其余坐标的项因独立性而消失，对角元恒为 $1$。这正给出 $A^{(ij,\phi)}\in\mathcal P_d$。$d=2$ 时没有其余坐标，符号集合含一个空选择，所得就是一项权重为 $1$ 的相位矩阵。
+
+同样，对全部 $2^d$ 个符号向量 $\varepsilon\in\{-1,1\}^d$ 作均匀混合，有
+
+$$
+I_d=2^{-d}\sum_{\varepsilon\in\{-1,1\}^d}
+       \varepsilon\varepsilon^\dagger\in\mathcal P_d.
+$$
+
+对 $H_{ij}\ne0$ 选择 $\phi_{ij}$ 使 $H_{ij}=|H_{ij}|e^{i\phi_{ij}}$。直接比较每个对角元和非对角元，得到
+
+$$
+\boxed{\quad
+H=(1-s(H))I_d+
+ \sum_{\substack{i<j\\H_{ij}\ne0}}
+       |H_{ij}|A^{(ij,\phi_{ij})}.
+\quad}
+$$
+
+外层权重均非负且总和为 $1$；展开各项内部的有限混合仍是有限相位混合。零系数不需要指定辐角；$s(H)=0$ 时只有 $I_d$，$s(H)=1$ 时其系数为零，均无例外。证毕。
+

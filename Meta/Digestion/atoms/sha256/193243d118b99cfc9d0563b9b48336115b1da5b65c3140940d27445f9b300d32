@@ -1,0 +1,44 @@
+**定理269.1（全维完整数据上界）。** 对每个固定合同（269.1）—（269.3），存在有限 $C_{\mathrm{up}}$，使（269.5）对所有合法竞争态成立。
+
+**证明。** 当 $0<\varepsilon\le\theta_0^{2n}$ 时，取
+$$
+\theta=\varepsilon^{1/(2n)}.
+\tag{269.26}
+$$
+此时 $\theta^n=\sqrt\varepsilon$，且位于允许区间。若记
+$$
+C_D=2n^{3/2}(\pi t)^{n-1}A,
+\tag{269.27}
+$$
+则（269.25）给
+$$
+\|D\|\le C_D\varepsilon^{1/(2n)}.
+\tag{269.28}
+$$
+当 $\varepsilon=0$ 时，$X=0$，而（269.25）对每个正 $\theta\le\theta_0$ 给 $\|D\|\le(C_D/2)\theta$；令 $\theta\downarrow0$ 得 $D=0$。这也直接恢复了精确数据唯一性。
+
+由联合维数 $2n$，
+$$
+\begin{aligned}
+\|\Xi-\Omega_*\|_1
+&\le\frac2n\|D\|_1+\frac1n\|X\|_1\\
+&\le2\|D\|+2\|X\|\\
+&\le2C_D\varepsilon^{1/(2n)}+n\varepsilon.
+\end{aligned}
+\tag{269.29}
+$$
+小误差时 $\varepsilon\le\varepsilon^{1/(2n)}$，所以可吸收最后一项。若
+$\theta_0^{2n}\le\varepsilon\le1$，则 $\varepsilon^{1/(2n)}\ge\theta_0$，状态迹距上界二给
+$$
+\|\Xi-\Omega_*\|_1
+\le2\le\frac2{\theta_0}\varepsilon^{1/(2n)}.
+\tag{269.30}
+$$
+$\varepsilon\ge1$ 时同样由迹距上界二控制。因此可取
+$$
+C_{\mathrm{up}}
+=\max\left\{2C_D+n,\frac2{\theta_0},2\right\},
+\tag{269.31}
+$$
+再与独立上界二取最小，即得（269.5）。$\square$
+

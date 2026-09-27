@@ -1,0 +1,32 @@
+**计数差的二阶矩同时控制两个倾斜方向。**
+原始平均计数差为
+$$
+K(p_x-p_y)=\frac{Kh(1-c)}{BC}.
+$$
+任务倾斜后
+$$
+\mathbb E(I_s-J)=K(p_x-p_y)+s(1-p_x),
+$$
+参考倾斜后
+$$
+\mathbb E(I-J_s)=K(p_x-p_y)-s(1-p_y).
+\tag{301.34}
+$$
+由于 $1-c\le3\kappa$、$s\le\alpha h_0\kappa K\le\alpha h\kappa K$，两种均值的绝对值都至多 $A Kh\kappa$。两流独立，且倾斜只减少随机项，所以两种计数差的方差都至多 $A Kw_h$。
+
+将任一倾斜差记为 $M_s$。于是
+$$
+(\mathbb E M_s^2)^{1/2}
+\le A(Kh\kappa+\sqrt{Kw_h}).
+$$
+Cauchy–Schwarz 与（301.33）给
+$$
+\boxed{
+\mathbb E_{\rm tilt}[|M_s|\mathbf1_F]
+\le A(Kh\kappa+\sqrt{Kw_h})
+\exp\!\left[-a\frac{Kh^2}{w_h+h}\right].
+}
+\tag{301.35}
+$$
+指数中的常数已经吸收平方根。没有要求 $M_s$ 与 $F$ 独立；Cauchy–Schwarz 正是为保留二者的共同分布而使用。
+

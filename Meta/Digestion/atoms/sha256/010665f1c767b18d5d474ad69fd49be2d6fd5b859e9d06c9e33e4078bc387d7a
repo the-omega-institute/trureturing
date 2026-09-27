@@ -1,0 +1,49 @@
+**定理 192.3（任意有限组设计点可由同一纯程序同时达到）。** 对任意有限非空集合 $\mathcal S=\{v_1,\ldots,v_m\}\subset J_a$，存在一个固定处理器和一条 $C^\infty$ 纯程序曲线，精确生成全部 $J_a$，程序空间维数不超过 $3m$，且
+$$
+I_Q(\rho_{v_i})=I_r(v_i)\qquad(1\le i\le m).
+\tag{192.14}
+$$
+因此在这些条件下，有限集合上的最坏信息成本比的最小值为一，并被达到。
+
+证明。 对每个 $v_i$，取定理190.3的三维实归一向量 $\psi_i(u)$ 及固定处理器 $\mathcal G_i$。每个分支在全部 $J_a$ 精确生成同一个 $\mathcal T_u$，且在 $v_i$ 达到下界。
+
+若 $m\ge2$，为 $i=2,\ldots,m$ 选择光滑截断函数 $0\le\chi_i\le1$，其紧支集在 $J_a$ 内两两不交、避开 $v_1$，并且在 $v_i$ 的某邻域恒为一。定义
+$$
+g_1=1-\sum_{i=2}^m\chi_i,\qquad g_i=\chi_i\ (i\ge2),
+\qquad b_i=\frac{g_i}{\sqrt{\sum_jg_j^2}}.
+\tag{192.15}
+$$
+同一参数处至多一个截断函数非零，故 $\sum_jg_j^2\ge1/2$，归一化全局光滑。$b_i$ 在 $v_i$ 附近恒为一，其他振幅在那里恒为零。$m=1$ 时直接取 $b_1=1$。
+
+令 $\mathcal H_P=\bigoplus_{i=1}^m\mathbb C^3$，$E_i$ 为固定块嵌入，并取
+$$
+\Psi_u=\bigoplus_i b_i(u)\psi_i(u),\qquad
+\rho_u=|\Psi_u\rangle\langle\Psi_u|.
+\tag{192.16}
+$$
+这是一条全局光滑、归一且秩恒为一的程序曲线。定义固定处理器
+$$
+\mathcal G(X)=\sum_i\mathcal G_i\!\left[(I\otimes E_i^\dagger)X(I\otimes E_i)\right].
+\tag{192.17}
+$$
+每项为 CP，且 $\sum_iE_iE_i^\dagger=I$ 保证整体保迹。处理器舍弃程序不同块之间的交叉项，故
+$$
+\mathcal G(\omega\otimes\rho_u)
+=\sum_i b_i(u)^2\mathcal T_u(\omega)=\mathcal T_u(\omega).
+\tag{192.18}
+$$
+所有分支的精确性属于同一个实际参数 $u$，因此这里可以直接组合。
+
+实归一分支满足 $\langle\psi_i,\psi_i'\rangle=0$。固定块正交及 $\sum_i b_i^2=1$ 给出
+$$
+I_Q(\rho_u)=4\|\Psi_u'\|^2
+=\sum_i b_i^2 I_Q(\psi_i(u))+4\sum_i(b_i')^2
+$$
+$$
+=I_r(u)+4h\sum_i b_i^2(\theta_i')^2+4\sum_i(b_i')^2,
+\tag{192.19}
+$$
+其中 $\theta_i(u)$ 是第190节角度与 $h=(1+u)/2$ 的复合，所有导数均对 $u$ 求取。该式保留了切换振幅的信息成本。在 $v_i$，只有第 $i$ 个分支被选中，振幅导数全部为零，且 $\theta_i'(v_i)=0$，所以（192.14）成立。结合普遍的 $I_Q\ge I_r$，有限集合上的最小比值确为一。证毕。
+
+固定程序、纯程序与正交控制标签的背景见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）—（2.16）与第III.A节；纯态信息度量见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439。这里的有限点达到来自第190节具体曲线与上述固定块拼接。$3m$ 是充分维数上界，不宣称它最小，也不宣称达到点的数量增加必然要求维数增加。
+

@@ -1,0 +1,16 @@
+**定义 53.6（二元两轮完整响应）。** 第一轮无控制，产生 $x\in\{0,1\}$；第二轮选择 $a\in\{0,1\}$，随后产生 $z\in\{0,1\}$。末轮输出 $z$ 是任务保留的数据。静态响应表及其因果子集为
+
+$$
+\begin{aligned}
+\mathcal P
+&=\left\{P_a(x,z)\ge0:
+\sum_{x,z}P_a(x,z)=1\quad(a=0,1)\right\}
+=\Delta_3\times\Delta_3,\\
+d(P)&=\sum_zP_0(0,z)-\sum_zP_1(0,z),\\
+\mathcal C&=\{P\in\mathcal P:d(P)=0\}.
+\end{aligned}
+\tag{53.10}
+$$
+
+因为两个固定动作列都归一化，$d=0$ 正好表示第一输出的整个边缘不依赖后续动作。满足时可写为 $p(x)q(z\mid x,a)$；零概率父分支按定理 52.3 取共同归一化延拓。
+

@@ -1,0 +1,21 @@
+**证明。** 令 $H=H_Z+iH_X$，
+$\zeta=c+is=e^{2i\theta}$。式（171.8）给
+$\mathcal F^*(H)=\zeta H$，而（171.9）给
+$\mathfrak E^*(H)=Z+iX$。
+
+第170节的带参考渐近合同
+$\mathcal F^n-\mathfrak E\mathcal U^n\Lambda_\infty\to0$
+也给有限维对偶算子范数收敛。因此
+
+$$
+\zeta^nH-
+\Lambda_\infty^*(\mathcal U^*)^n(Z+iX)
+\longrightarrow0.
+$$
+
+又 $(\mathcal U^*)^n(Z+iX)=\zeta^n(Z+iX)$，且
+$|\zeta|=1$，故
+$H=\Lambda_\infty^*(Z+iX)$。取实部与虚部即得（171.14）。证毕。
+
+这一步排除了仅找到某个数值近外围方向的可能。$H_Z,H_X$ 是联合 $MQR$ 上的数学观测，不被列为只访问 $QR$ 的终端操作。
+

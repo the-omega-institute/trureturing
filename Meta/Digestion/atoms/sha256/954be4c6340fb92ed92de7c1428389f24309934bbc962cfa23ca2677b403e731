@@ -1,0 +1,34 @@
+### 155.1 实际可达外围空间及共同相位群
+
+沿用第154节的固定非退化来源、$p=|b|^2\in(0,1)$、目标通道 $\mathcal V_*$、常数 $C_p$，以及固定装置诱导的
+
+$$
+\mathcal R_n=\mathcal F^n\mathcal E_\omega,
+\qquad
+\mathscr V=\operatorname{span}_{\mathbb C}
+\{\mathcal F^j\mathcal E_\omega(Z):j\ge0,\ Z\in\mathcal L(M_{\mathrm{in}})\},
+\qquad
+\mathcal A=\mathcal F|_{\mathscr V}.
+\tag{155.1}
+$$
+
+$\dim M_{\mathrm{in}}=\dim M=2$、$\dim K=D$，所以 $\dim\mathscr V\le4D^2$。只取实际初始化能生成的方向。
+
+CPTP 幂的有界性使 $\mathcal A$ 的谱落在闭单位圆内，且单位模特征值半单。将其互不相同的单位模特征值列为
+
+$$
+\lambda_1,\ldots,\lambda_s,
+\qquad |\lambda_j|=1,
+$$
+
+记相应谱投影为 $P_j$，并置
+
+$$
+\Pi=\sum_{j=1}^sP_j,
+\qquad
+\Phi_j=P_j\mathcal E_\omega.
+\tag{155.2}
+$$
+
+这些投影只作用在 $\mathscr V$ 上。它们不要求正交或各自保持正性；$\Phi_j$ 也不是逐项的物理通道。实际通道保迹，故外围部分非空：例如真实态轨道的 Cesàro 极限给出 $\mathscr V$ 内的非零固定态。
+

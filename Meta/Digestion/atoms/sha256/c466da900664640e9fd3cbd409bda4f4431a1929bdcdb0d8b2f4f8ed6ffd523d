@@ -1,0 +1,393 @@
+**定理 422.1（完整接受映射的有限深度模型与两类深度逃逸）。** 对上述每个固定源族、维数和深度，递归具有以下同时成立的性质。
+
+一、在任意非零形式乘积边界 $E=t\bigotimes_a\rho_a$，剩余路径深度至多 $n$ 的完整效果树，其接受 Choi 值的集合恰为 $tK_n(\rho)$。每棵允许的物理树都能抽取为这样的效果树；反向则能从累计平方根滤波构造一个新的规范实现。在物理根处，有精确等式
+
+$$
+\boxed{\displaystyle
+C(\mathcal A_n)=D_RK_n(\rho^\circ),\qquad
+\rho^\circ=(I_{R_1}/d_1,\ldots,I_{R_k}/d_k).}
+$$
+
+每个可达映射都有只用原始量子因子及有限真实经典历史的实现，其中持有者 $a$ 的任一节点最多有 $B_a$ 个实际子结果，深度仍至多 $n$。这保持聚合接受系统映射，不要求保持原协议的记录输出 instrument 或标签，也不把同一效果下每一种固定私有记忆实现的续接能力视为相同。$B_a$ 是充分界，不主张最小性。
+
+二、每个 $K_n$ 都有非空值和紧图像，且
+
+$$
+\operatorname{graph}(K_n)\subseteq
+\mathcal D\times\mathcal H_d,\qquad
+\mathcal H_d=\{Z\in\operatorname{Herm}(\mathbb C^{d^2}):
+                    Z\succeq0,\ \operatorname{Tr}Z\le d\}.
+$$
+
+因此 $\mathcal A_n$ 紧，精确最大成功率
+
+$$
+p_n=\max\{p\in[0,1]:p\operatorname{id}_S\in\mathcal A_n\}
+$$
+
+存在并由上述有限树取得。对 $0\le\delta\le2$，采用定义 395.1 的严格输入无关成功条件及未折半 diamond 范数，令
+
+$$
+\boxed{\displaystyle
+\eta_n(\delta)=\max\left\{p\in[0,1]:
+\begin{array}{l}
+\exists\mathcal T\in\mathcal A_n,\quad \mathcal T^*(I_S)=pI_S,\\
+\|\mathcal T-p\operatorname{id}_S\|_\diamond\le\delta p
+\end{array}\right\}.}
+$$
+
+这个最大值同样取得，并满足相同深度及分支界；$(\mathcal T,p)=(0,0)$ 包含在可行集中，不在零成功处定义归一化条件通道。固定全部源参数、维数和 $n$ 时，
+
+$$
+\eta_n(0)=p_n,\qquad
+\lim_{\delta\downarrow0}\eta_n(\delta)=p_n.
+$$
+
+对每个 $p_n<c\le1$，存在 $\bar\delta>0$，使 $0\le\delta\le\bar\delta$ 时均有 $\eta_n(\delta)<c$。
+
+三、对固定严格内部五态源，取 $d=5$、$k=2$、$d_1=d_2=2$，并令
+
+$$
+\begin{aligned}
+&r>0,\qquad \tfrac12<r^2<2,\qquad \omega=e^{2\pi i/3},\\
+&s_1=|0\rangle,\qquad s_2=|1\rangle,\qquad
+s_{3+j}=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\qquad q_i=s_i\otimes s_i,\\
+&\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad U=\frac1{3\kappa}.
+\end{aligned}
+$$
+
+此时 $D_R=4$、$B_1=B_2=629$。为显示固定参数，记相应最优值为 $p_n(r)$、$\eta_n(r,\delta)$。对每个有限 $n$，
+
+$$
+p_n(r)<U,\qquad
+\eta_n(r,\delta)<\frac{U+p_n(r)}2<U
+\quad(0\le\delta\le\bar\delta(r,n))
+$$
+
+对某个 $\bar\delta(r,n)>0$ 成立。在这个固定 $r$ 下，若一列允许的协议满足上述严格成功／误差合同，误差 $\delta_j\to0$，且成功率 $p_j\ge U-\varepsilon_j$、$\varepsilon_j\ge0$、$\varepsilon_j\to0$，则其深度最终超过每个固定整数 $n$。
+
+四、对四态源，固定物理拷贝数 $k\ge1$，取 $d=4$、每个 $d_a=2$，并令
+
+$$
+r_1=|0\rangle,\qquad r_2=|1\rangle,\qquad
+r_3=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+r_4=\frac{|0\rangle+i|1\rangle}{\sqrt2},\qquad
+q_i=r_i^{\otimes k}.
+$$
+
+这里 $k$ 是物理记录拷贝数，$n$ 是局部节点深度。此时 $D_R=2^k$、每个 $B_a=260$。记最优值为 $p_{k,n}$、$\eta_{k,n}(\delta)$，则对每个固定 $k,n$，
+
+$$
+p_{k,n}<1,\qquad
+\lim_{\delta\downarrow0}\eta_{k,n}(\delta)=p_{k,n},\qquad
+\eta_{k,n}(\delta)<\frac{1+p_{k,n}}2
+\quad(0\le\delta\le\bar\delta(k,n))
+$$
+
+对某个 $\bar\delta(k,n)>0$ 成立。在固定 $k$ 下，一列满足相同合同、$\delta_j\to0$ 且 $p_j\to1$ 的协议，其深度最终超过每个固定 $n$。
+
+两项应用的深度结论都是必要条件，不断言所述逼近列存在。上述紧性与极限均固定源族、维数、持有者数和深度，不提供统一误差模量、有效优化算法或深度与误差的极限交换，也不确定无深度限制的最优值、无限协议或闭包中的最优值。
+
+证明。先将一般物理协议转为原始输入上的效果，再同时保持局部重心与完整接受映射作有限压缩，最后证明紧性和两个源的应用。
+
+由于 $\langle i|j\rangle=0$ 对 $i\ne j$ 成立，且 $\|q_i\|=1$，有 $J^\dagger J=I_S$；不需要记录向量彼此正交。设某个终端记录 CP 分支为 $\Lambda:\mathcal L(R)\to\mathcal L(O)$，其中初始辅助态已吸收入映射，全部尚存记录输出属于 $O$，令 $E=\Lambda^*(I_O)$。编码、记录操作及输出偏迹给出
+
+$$
+\begin{aligned}
+J E_{ij}J^\dagger&=E_{ij}\otimes|q_i\rangle\langle q_j|,\\
+\operatorname{Tr}_{O}
+ \bigl[(\operatorname{id}_S\otimes\Lambda)(J E_{ij}J^\dagger)\bigr]
+ &=\operatorname{Tr}\Lambda(|q_i\rangle\langle q_j|)E_{ij}\\
+ &=\langle q_j|\Lambda^*(I_O)|q_i\rangle E_{ij}
+ =\Phi_E(E_{ij}).
+\end{aligned}
+$$
+
+所以终端 $U$ 给出的系统映射恰为 $\operatorname{Ad}_U\circ\Phi_E$。反过来，对任意 $E\succeq0$，用记录滤波 $\sqrt E$ 后取偏迹就给出 $\Phi_E$，因此它完全正。这只是一条 CP 表示；不将可能非局部的 $\sqrt E$ 授予各持有者。矩阵单位张成全部系统矩阵，任意 $X_{FS}$ 又可写成 $\sum_{i,j}X_{ij}\otimes E_{ij}$，故这些等式在所有有限参考上成立。具有共同反馈的多个真实历史，其效果与系统映射分别相加；合并标签效果一般不是乘积效果。这里并未恢复被迹掉的记录输出。
+
+固定一条真正取得的历史 $h$。沿该历史，每次操作选择与实际结果已固定；没有量子通信，初始辅助态为局部乘积，所以累计记录分支具有线性映射分解
+
+$$
+\Lambda_h=\bigotimes_{a=1}^k\Lambda_{a,h},\qquad
+\Lambda_{a,h}:\mathcal L(R_a)\longrightarrow\mathcal L(H_{a,h}),
+\qquad A_{a,h}=\Lambda_{a,h}^*(I_{H_{a,h}}).
+$$
+
+这在整个原始 $R$ 上成立，也作用于纠缠输入；乘积的是分支操作，不是被操作的态。有限可访问记忆留在陪域 $H_{a,h}$，已丢弃的寄存器由 CP 映射中的偏迹吸收。根处只是添加独立局部辅助态，故 $A_{a,\varnothing}=I_{R_a}$。若下一步由 $a$ 执行 $\{\Gamma_j\}_j$，则
+
+$$
+\begin{aligned}
+A_{a,hj}&=\Lambda_{a,h}^*\bigl(\Gamma_j^*(I_{H_{a,hj}})\bigr),
+& A_{b,hj}&=A_{b,h}\quad(b\ne a),\\
+\sum_j\Gamma_j^*(I_{H_{a,hj}})&=I_{H_{a,h}},
+&\sum_jA_{a,hj}&=A_{a,h}.
+\end{aligned}
+$$
+
+经典消息导致的确定性记账可吸收为相应保迹更新，不改变效果。被遗忘的实际结果可以在线性求和中继续列出，但其后控制与反馈仍共用原策略规定的值；粗粒 CP 映射的隐藏 Kraus 指标从未成为真实历史。置 $E_h=\bigotimes_aA_{a,h}$，从叶子向根作有限归纳便得
+
+$$
+\begin{aligned}
+E_h&=\sum_{\ell\succeq h\text{ 为终端历史}}E_\ell
+\quad\text{对每个节点 }h,\\
+E_h&=\sum_jE_{hj}\quad\text{当 }h\text{ 非终端},
+\qquad E_\varnothing=I_R.
+\end{aligned}
+$$
+
+终端后代之和包括所有失败与提前终止；若 $h$ 已终止，该和只有 $h$ 自己。正性还说明零效果的全部后代效果为零。这正是有限局部树的乘积效果与后代求和方法，见 Cohen，[*Devising local protocols for multipartite quantum measurements*, arXiv:1604.00093v1](https://arxiv.org/abs/1604.00093v1)，§II 式 (1)、引理 1；这里的伴随计算明确覆盖粗粒 CP 结果、任意有限记忆与遗忘，而未细化隐藏指标为物理控制。
+
+现在考虑非零节点 $E=\bigotimes_aA_a$。若 $a$ 作正分裂，略去零效果子项，令
+
+$$
+\lambda_j=\frac{\operatorname{Tr}A_{a,j}}{\alpha_a},
+\qquad \sigma_j=\frac{A_{a,j}}{\operatorname{Tr}A_{a,j}}.
+$$
+
+于是
+
+$$
+\sum_j\lambda_j=1,\qquad
+\sum_j\lambda_j\sigma_j=\rho_a,\qquad
+E_j=t\lambda_j\left(\sigma_j\otimes\bigotimes_{b\ne a}\rho_b\right),
+\qquad \operatorname{Tr}E_j=t\lambda_j,
+$$
+
+其中张量积按原持有者顺序排列。若第 $j$ 个子树的接受 Choi 值为 $t\lambda_jZ_j$，父节点的值除以 $t$ 后就是 $\sum_j\lambda_jZ_j$。这些 $\lambda_j$ 是效果迹权重，不是给定源输入上的条件结果概率。一个 $Z_j=0$ 的拒绝子树仍可能有非零输入效果，仍须贡献 $\lambda_j\sigma_j$；删掉这些项会破坏完整性。
+
+缩放也有明确意义：将某个因子及其整棵子树中对应因子同时乘以常数 $c>0$，全部分裂等式保持，全部叶子效果与接受映射同时乘以 $c$。若对根因子作 $A_a\mapsto c_aA_a$ 且 $\prod_ac_a=1$，则 $E,t,\rho$ 都不变；事实上非零乘积效果的归一化局部因子可由
+
+$$
+\rho_a=\frac{\operatorname{Tr}_{R_{\ne a}}E}{\operatorname{Tr}E}
+$$
+
+直接恢复。因此归一化边界与总尺度足以描述这种形式效果树，零乘积边界则只产生零值，无须归一化。
+
+对固定操作方 $a$，子描述符 $(\sigma_j,Z_j)$ 所在实仿射空间的维数至多为
+
+$$
+N_a=(d_a^2-1)+d^4,\qquad N_a+1=B_a.
+$$
+
+这一步使用成熟的 Carathéodory 有限维压缩方法；其陈述亦见 Chitambar、Leung、Mančinska、Ozols、Winter，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, Commun. Math. Phys. 328 (2014), arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，附录 A 引理 3。对这里的有限列表，可直接给出消元证明。若正权重点数超过 $N_a+1$，存在不全为零的实数 $c_j$，使
+
+$$
+\sum_jc_j=0,\qquad
+\sum_jc_j\sigma_j=0,\qquad
+\sum_jc_jZ_j=0.
+$$
+
+这些系数必有正有负。取
+
+$$
+\tau=\min_{c_j>0}\frac{\lambda_j}{c_j}>0,\qquad
+\lambda'_j=\lambda_j-\tau c_j.
+$$
+
+新权重非负，总和仍为一，至少一个正权重变成零，并同时保持 $\rho_a$ 与接受 Choi 值 $Z$。有限次重复后最多剩下 $B_a$ 项。保留子树按新入边尺度缩放，完整性由局部重心保持得到。它是同一个局部节点内的新分裂，不增加一个抽签步骤，也不把谱分解变为真实结果。操作方始终固定，因而没有对操作方并集作凸化。
+
+这里也须区分两项后续文献的接口。Cohen，[*Strong bounds on required resources for quantum channels by local operations and classical communication*, Phys. Rev. A 100, 042324 (2019), arXiv:1904.10980v1](https://arxiv.org/abs/1904.10980v1)，引理 2、定理 3 及 5，给出通过剪枝和子树缩放保持整个多方保迹通道、不增加轮数且不另加共享随机性的结果。这里被保持的是固定准备之后的系统接受迹不增映射，另有限制终端才可作用于系统；它不是该文的任意多方保迹通道接口，因此不能直接代入其 Kraus 秩界替换 $B_a$。Leung–Winter–Yu，[*LOCC protocols with bounded width per round optimize convex functions*, arXiv:1904.10985v1 (2019)](https://arxiv.org/abs/1904.10985v1)，定理 4、7 的细窄协议分量用于凸目标优化，选择一个分量不保证继续满足本节的输入无关成功及相对 diamond 误差约束；其定理 8 对精确 instrument 的表示使用共享随机性混合。这里既不能免费采用这种混合，也不能只保留一个分量来声称保持整个接受映射。上面的双坐标消元正是在当前接口内逐项保持所需两个量。
+
+接着给出完整效果树的规范实现，这是将形式压缩接回实际操作的反向步骤。在每个原始局部空间上维护累计滤波 $X\mapsto\sqrt A X\sqrt A$。对非零正分裂 $A=\sum_{j=1}^mA_j$，正性给出 $0\preceq A_j\preceq A$，故 $\ker A\subseteq\ker A_j$。令 $P$ 为 $A$ 的支撑投影，$Q=I-P$，并令 $A_{\mathrm{supp}}^{-1/2}$ 在支撑上为逆平方根、在核上为零。取
+
+$$
+L_j=\sqrt{A_j}\,A_{\mathrm{supp}}^{-1/2}.
+$$
+
+由支撑包含，$\sqrt{A_j}P=\sqrt{A_j}$，于是
+
+$$
+\begin{aligned}
+L_j\sqrt A&=\sqrt{A_j},\\
+\sum_jL_j^\dagger L_j
+ &=A_{\mathrm{supp}}^{-1/2}\left(\sum_jA_j\right)
+                 A_{\mathrm{supp}}^{-1/2}=P.
+\end{aligned}
+$$
+
+选择一个已经存在的非零子项 $j_0$，定义该节点的实际 CP 结果为
+
+$$
+\begin{aligned}
+\Gamma_{j_0}(Y)&=L_{j_0}YL_{j_0}^\dagger+QYQ,\\
+\Gamma_j(Y)&=L_jYL_j^\dagger\quad(j\ne j_0).
+\end{aligned}
+$$
+
+总 Kraus 效果为 $P+Q=I$，所以仪器在整个原始局部空间上完整。$Q$ 是原结果 $j_0$ 内部的隐藏 Kraus 项，没有新增实际结果、节点或控制。因为 $Q\sqrt A=0$，对每个局部矩阵 $X$ 都有
+
+$$
+\Gamma_j(\sqrt A X\sqrt A)=\sqrt{A_j}X\sqrt{A_j}.
+$$
+
+任意其他持有者、系统和参考的联合矩阵都能按局部矩阵基展开，张量上恒等映射后此式仍成立。因此隐藏补全项在所有可达联合矩阵上的贡献为零，任何后续线性 CP 分支仍将这个零贡献送到零；不会在以后步骤重新出现。对子树递归使用同一构造，就维持全部所需累计滤波。零效果分支可直接拒绝终止，零权重填充项可省去；非零父节点总能找到上述 $j_0$。所有非零拒绝子树仍保留其完整效果预算。
+
+这里的逆平方根只对一个给定正矩阵构造，不要求它跨越变秩边界连续。任意形式边界上的累计滤波也不被当作免费物理前缀；在实际根处 $A_a=I_{R_a}$，累计滤波就是恒等，无须准备额外前缀。终端只根据新协议真正取得的历史选择接受与一个 $U\in U(d)$，同一结果内部的隐藏项共用反馈。于是实现只需原始量子因子及有限经典历史。
+
+这不证明某个已固定的私有记忆实现也拥有同样续接。例如恒等通道和重置通道 $\mathcal R(X)=\operatorname{Tr}(X)|0\rangle\langle0|$ 的效果均为 $I$；后续效果 $H$ 经重置拉回是 $\langle0|H|0\rangle I$，经恒等通道拉回则是 $H$。已被重置丢掉的信息不能从相同效果中重新取得。此处反向构造的是新规范协议，而不是延续每一个原有前缀。
+
+现在对剩余最大路径深度归纳。深度零时，终止拒绝给零；接受给
+
+$$
+C(\operatorname{Ad}_U\circ\Phi_E)
+ =tC(\operatorname{Ad}_U\circ\Phi_{\bigotimes_a\rho_a}),
+$$
+
+恰是 $tK_0(\rho)$。在非终端节点，物理树抽取给出一个单因子正分裂，归纳假设给出各非零子树的归一化值 $Z_j\in K_n(\rho[a\leftarrow\sigma_j])$，上述有限消元将其压到 $B_a$ 项而保持父值，故父值属于 $tK_n^a(\rho)$。提前终止也已包含：取单项 $\lambda_1=1$、$\sigma_1=\rho_a$ 并补零权重，得到 $K_n(\rho)\subseteq K_{n+1}(\rho)$；操作上可用一个单结果恒等 instrument 延迟终止。
+
+反向地，一个 $K_n^a(\rho)$ 见证给出
+
+$$
+A_{a,j}=\alpha_a\lambda_j\sigma_j,\qquad
+\sum_jA_{a,j}=A_a,
+$$
+
+以及每个正权重子项的 $K_n$ 见证。对子项只作有限次选择，按入边尺度缩放，再用刚才的平方根构造逐节点实现；不需要无限选择或可测选择。一个非终端节点只增加一个局部 instrument 节点，后续深度至多 $n$，因此整体至多 $n+1$。这同时证明形式树等式和有界分支实现。对任意给定物理树，抽取、压缩及重新实现保持其整个接受系统映射；原输出记录和终端标签不作为交付对象。根处 $t=\operatorname{Tr}I_R=D_R$，局部归一化因子是 $I_{R_a}/d_a$，故得到所述根等式。特别地，
+
+$$
+\mathcal A_0=\{0\}\cup
+ \{\operatorname{Ad}_U\circ\Phi_{I_R}:U\in U(d)\}.
+$$
+
+每个非零成员都保迹，免费接受／拒绝抽签会改变这个零深度集合；递归并未加入这种资源。
+
+下面证明紧图像。每个 $\mathcal D_a$ 非空紧。$K_0$ 的图像是零图像与紧空间 $\mathcal D\times U(d)$ 在连续映射
+
+$$
+(\rho,U)\longmapsto
+ (\rho,C(\operatorname{Ad}_U\circ\Phi_{\bigotimes_a\rho_a}))
+$$
+
+下的像之并。所有这些 Choi 矩阵均非负，且
+
+$$
+\operatorname{Tr}C(\operatorname{Ad}_U\circ\Phi_{\bigotimes_a\rho_a})
+ =\sum_{i=1}^d\langle q_i|\bigotimes_a\rho_a|q_i\rangle\le d,
+$$
+
+因为各密度矩阵的算子范数至多一，$q_i$ 均归一化。非负性与这个迹界在递归的凸权重和下保持，所以全部图像都落在有限维紧集 $\mathcal D\times\mathcal H_d$ 内。
+
+若 $\operatorname{graph}(K_n)$ 紧，对固定 $a$，在紧参数空间
+
+$$
+\mathcal D\times\Delta_{B_a}
+       \times(\mathcal D_a\times\mathcal H_d)^{B_a}
+$$
+
+中施加约束
+
+$$
+(\rho[a\leftarrow\sigma_j],Z_j)\in\operatorname{graph}(K_n)
+\quad(1\le j\le B_a),\qquad
+\sum_j\lambda_j\sigma_j=\rho_a.
+$$
+
+这些约束闭，所得描述符集合紧。其在连续映射
+
+$$
+(\rho,\lambda,(\sigma_j,Z_j)_j)
+ \longmapsto\left(\rho,\sum_j\lambda_jZ_j\right)
+$$
+
+下的像恰是 $\operatorname{graph}(K_n^a)$。对有限个 $a$ 取并仍紧，完成归纳。零值处处可行；零权重的描述符也留在同一紧集内，不能藏入无界矩阵。奇异密度矩阵、变秩边界及零权重都包含在闭参数集合中，紧性证明没有调用逆平方根的连续性。
+
+固定轮次、固定最终结果数的 LOCC 紧性及分支压缩已有成熟结果，见上述 Chitambar 等 2014 年论文定理 2、推论 3 及附录 A。该文的通信轮次可包含其他方的条件保迹操作，其对象为固定输出字母表的 instrument；本节则逐个计数局部节点，允许反馈标签及中间记忆维数随协议改变，并只保留固定有限维的接受系统映射。因此这里用刚证的双向根等式和紧图像直接接合接口，不把较大的 LOCC 集合紧性自动当作受限终端反馈子类的紧性。
+
+取紧图像在固定 $\rho^\circ$ 的闭切片，乘以 $D_R$，再用有限维 Choi 线性双射的连续逆，得到 $\mathcal A_n$ 紧。每个成员都来自实际有限树，故完全正且迹不增：$J$ 等距，完整记录树和全部终端酉反馈保持总迹，接受只取其中部分分支。非空集合
+
+$$
+\{(\mathcal T,p)\in\mathcal A_n\times[0,1]:
+                \mathcal T=p\operatorname{id}_S\}
+$$
+
+是紧集中的闭集，含 $(0,0)$；投影到 $p$ 的最大值因此存在。双向实现已经保证最大化映射有同深度、同分支界的实际协议，而不是只有参数极限。
+
+为处理误差，明确使用未折半范数
+
+$$
+\|\mathcal F\|_\diamond
+ =\sup_{m\ge1}\sup_{X\ne0}
+  \frac{\|(\operatorname{id}_{\mathbb C^m}\otimes\mathcal F)(X)\|_1}
+       {\|X\|_1},\qquad
+\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}.
+$$
+
+对任意有限参考上的矩阵 $X=\sum_{i,j}X_{ij}\otimes E_{ij}$，块压缩与迹范数理想不等式给出 $\|X_{ij}\|_1\le\|X\|_1$。再由张量积迹范数乘法和三角不等式，
+
+$$
+\begin{aligned}
+\|(\operatorname{id}\otimes\mathcal F)(X)\|_1
+ &\le\sum_{i,j}\|X_{ij}\otimes\mathcal F(E_{ij})\|_1\\
+ &=\sum_{i,j}\|X_{ij}\|_1\|\mathcal F(E_{ij})\|_1\\
+ &\le\|X\|_1\sum_{i,j}\|\mathcal F(E_{ij})\|_1.
+\end{aligned}
+$$
+
+此界与参考维数无关，故
+
+$$
+\|\mathcal F\|_\diamond\le\sum_{i,j}\|\mathcal F(E_{ij})\|_1.
+$$
+
+所以 Choi 坐标收敛蕴含 diamond 范数收敛；这里没有把极限换进不受界的参考上确界。于是固定 $\delta$ 时，条件 $\mathcal T^*(I_S)=pI_S$ 与 $\|\mathcal T-p\operatorname{id}_S\|_\diamond\le\delta p$ 都闭，定义 $\eta_n(\delta)$ 的可行集是非空紧集，其最大值取得。
+
+成功条件仍是严格的输入无关等式。$p>0$ 时，$\mathcal T/p$ 是保迹 CP 通道，并对每个有限参考 $F$ 及联合密度矩阵 $\rho_{FS}$ 满足
+
+$$
+\operatorname{Tr}[(\operatorname{id}_F\otimes\mathcal T)(\rho_{FS})]=p,
+\qquad
+\left\|(\operatorname{id}_F\otimes(\mathcal T/p))(\rho_{FS})
+                     -\rho_{FS}\right\|_1\le\delta.
+$$
+
+$p=0$ 时，对任意 $X\succeq0$，$\mathcal T(X)\succeq0$ 且
+
+$$
+\operatorname{Tr}\mathcal T(X)
+ =\operatorname{Tr}[X\mathcal T^*(I_S)]=0,
+$$
+
+所以 $\mathcal T(X)=0$。正矩阵线性张成全部矩阵，故 $\mathcal T=0$；没有除以零。单个接受标签的概率不必各自输入无关，合同限制的是聚合接受映射。
+
+当 $\delta=0$ 时可行性恰给 $\mathcal T=p\operatorname{id}_S$，所以 $\eta_n(0)=p_n$。可行集随 $\delta$ 增大而增大，且始终包含精确最优映射，故 $\eta_n(\delta)\ge p_n$，右极限 $L=\lim_{\delta\downarrow0}\eta_n(\delta)$ 存在。沿任意 $\delta_j\downarrow0$ 取最优对 $(\mathcal T_j,p_j)$。紧性给出收敛子列，记其极限为 $(\mathcal T_\infty,L)$。由
+
+$$
+\|\mathcal T_j-p_j\operatorname{id}_S\|_\diamond
+ \le\delta_jp_j\le\delta_j\longrightarrow0
+$$
+
+与刚证的连续性，$\mathcal T_\infty=L\operatorname{id}_S\in\mathcal A_n$，所以 $L\le p_n$；结合反向不等式即得所述极限。给定 $p_n<c\le1$，极限定义提供 $\varepsilon>0$，使 $0\le\delta<\varepsilon$ 时 $\eta_n(\delta)<c$；选 $0<\bar\delta<\min\{\varepsilon,2\}$，即可在包含右端点的区间 $[0,\bar\delta]$ 上保持严格号。
+
+最后应用到两个固定源族。五态源的原始两个量子比特、固定准备、全参考恢复、允许的局部 CP 树及共同终端酉反馈，正是定理 420.1 的操作约定。直接引用该定理在 $1/2<r^2<2$ 的结论：每一棵允许的有限精确树都满足 $p<U$。当前 $p_n(r)$ 已由一棵这样的有限树取得，因此 $p_n(r)<U$；这里使用实际取得，不能仅由逐协议严格号对任意上确界作同样推断。代入 $B_a=5^4+2^2=629$、$D_R=4$，并在极限结论中取 $c=(U+p_n(r))/2$，得到本节所列小误差间隙。这里引用的是 420.1 对同一完整接口的逐协议不可达性，不重新证明其几何与有限树回推。
+
+若所述近似协议列在某个固定深度 $n$ 内出现无穷多次，沿这些指标，充分靠后时 $\delta_j\le\bar\delta(r,n)$ 且 $U-\varepsilon_j>(U+p_n(r))/2$。它们同时满足
+
+$$
+p_j\le\eta_n(r,\delta_j)<\frac{U+p_n(r)}2
+\quad\text{及}\quad
+p_j\ge U-\varepsilon_j>\frac{U+p_n(r)}2,
+$$
+
+矛盾。因此对每个固定 $n$，深度至多 $n$ 的指标只有有限个，正是深度最终超过每个固定整数。
+
+对四态源，将定义 405.1 和定理 405.3 的拷贝数记号改记为这里的固定 $k$。其原始空间为 $(\mathbb C^2)^{\otimes k}$，源向量、有限记忆、粗粒结果、局部权限、全参考要求和终端反馈均相同。该定理排除的是全部叶子确定性精确恢复，所以还须从接受成功一接到其前提。
+
+反设某棵允许树的接受映射为 $\mathcal T=\operatorname{id}_S$。给每个失败的实际终端标签也指定一个固定酉反馈，例如恒等，并对标签下的历史及隐藏项共用它。记聚合失败系统 CP 映射为 $\mathcal F$。完整记录仪器及酉反馈保证 $\mathcal T+\mathcal F$ 保迹，所以
+
+$$
+(\mathcal T+\mathcal F)^*(I_S)=I_S,
+\qquad \mathcal T^*(I_S)=I_S,
+\qquad \mathcal F^*(I_S)=0.
+$$
+
+对每个正矩阵 $X$，$\mathcal F(X)$ 非负且迹为零，故为零；再由线性张成，$\mathcal F=0$ 在全部 $\mathcal L(S)$ 上成立。因此将所有叶子标为接受后，整棵树给出的系统映射为
+
+$$
+\mathcal T+\mathcal F=\operatorname{id}_S,
+$$
+
+并在每个有限未操作参考上仍成立。它没有新增局部节点，原始空间上的 instrument 完备性也未改变，却成为定理 405.3 排除的全部叶子确定性精确恢复协议。失败效果在未占据的记录方向上不必为零；上述论证只需其诱导的聚合系统 CP 映射为零，不能据此删掉原始空间完备性中的失败效果。
+
+矛盾排除每个有限协议的接受成功一。固定 $k,n$ 的精确最大值已由有限树取得，因而 $p_{k,n}<1$。代入 $B_a=4^4+2^2=260$ 和 $D_R=2^k$，再取 $c=(1+p_{k,n})/2$，得到所述小误差区间与固定深度零误差极限。若 $\delta_j\to0$、$p_j\to1$ 的协议列在某个固定深度 $n$ 内出现无穷多次，则该子列最终同时满足 $p_j\le\eta_{k,n}(\delta_j)<(1+p_{k,n})/2$ 与 $p_j>(1+p_{k,n})/2$，再次矛盾。全过程固定物理拷贝数 $k$，没有把增加拷贝数代入深度极限。证毕。
+

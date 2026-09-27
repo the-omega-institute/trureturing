@@ -1,0 +1,16 @@
+**定义 57.7（等待尾向量松弛）。** 坐标按 $t=2,\ldots,P$ 排列。令 $\mathcal V_j(I)$ 为如下有限向量集合：$|I|\le1$ 时取单例零向量；$j=0,|I|>1$ 时为空集；其余取所有
+$$
+|I|2^{1-j}\bigl(\mathbf1_{d\ge t}\bigr)_{t=2}^{P}
++\sum_zv_z,
+\qquad
+1\le d\le P,\quad v_z\in\mathcal V_{j-1}(I_z(d)).
+\tag{57.18}
+$$
+一元等待包括在内。定义
+$$
+T_p(P,D):=\min_{v_0,\ldots,v_{p-1}\in\mathcal V_D([0,P))}
+\sum_{t=2}^{P}\left\lceil\frac{\sum_{b=0}^{p-1}v_{b,t}}p\right\rceil.
+\tag{57.19}
+$$
+这里必须先合并全部纤维的同一坐标，再除以 $p$ 取上整。$P=1$ 时向量维数为零，费用为零。
+

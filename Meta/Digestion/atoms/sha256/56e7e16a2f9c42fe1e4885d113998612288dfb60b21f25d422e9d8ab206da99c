@@ -1,0 +1,35 @@
+**定义 42.1（同一聚簇的带符号测度）。** 采用定义 39.1 的固定幅度、固定
+$`\beta\in(1/2,1)`$ 及原序列 $`\lambda=Q^3`$，并保留第 40 章的同一数据、标签、
+精确后验、窗口 $`J`$、完整端点 $`Y_M`$ 和轮廓 $`L_M`$。
+置
+
+```math
+\delta_M=\frac Q{\sqrt\lambda}=Q^{-1/2},\qquad
+B_M=\sqrt{\frac q{Q\sqrt\lambda}},\qquad
+u_i=\frac{W_i-\tau}w,\qquad
+\mu_M=\frac1{B_M}\sum_{i\in J}
+       (\mathbf1_{\{i\in S\}}-\pi_i)\delta_{u_i}.
+```
+
+式 (42.1)。
+
+$`\delta_x`$ 表示位置 $`x`$ 的单位点质量。把 $`(-1,1]`$ 嵌入圆周
+$`\mathbb T_4=\mathbb R/(4\mathbb Z)`$，相同得分的标签先合成一个原子。
+因此 $`\mu_M(\mathbb T_4)=Y_M`$，其总变差范数是完整得分组的中心化标签和的绝对值之和。
+未知方向时，全部工作坐标共同使用第 40 章的一次方向判决。
+
+固定 $`s\gt1/2`$。实 Hilbert 空间 $`H^{-s}(\mathbb T_4)`$ 取满足共轭对称条件的
+加权平方可和 Fourier 序列，并采用如下范数约定：
+
+```math
+\widehat\nu(k)=\int_{\mathbb T_4}e^{-\pi iku/2}\,d\nu(u),\qquad
+\|\nu\|_{-s}^2=\sum_{k\in\mathbb Z}(1+k^2)^{-s}|\widehat\nu(k)|^2,
+\qquad \widehat\nu(-k)=\overline{\widehat\nu(k)}.
+```
+
+式 (42.2)。
+
+此约定不另含圆周长度因子。有限实带符号测度按其 Fourier 系数嵌入该空间。
+仍取 $`\rho(x)=c_0e^{-\kappa x^2/2}`$，其中
+$`c_0=1/(4\pi\sqrt{ab})`$，$`\kappa=1/a+\alpha^2/b`$，$`D=ab\kappa`$。
+

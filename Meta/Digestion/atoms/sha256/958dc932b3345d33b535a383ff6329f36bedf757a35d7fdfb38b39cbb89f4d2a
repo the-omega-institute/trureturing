@@ -1,0 +1,53 @@
+### 234.6 预算五的实际达到构造
+
+固定输入正交分解
+$$
+A=H_0\oplus G,\qquad H_0=\operatorname{span}\{|0\rangle,|1\rangle\},\quad
+G=\operatorname{span}\{|2\rangle\}.
+\tag{234.SP.17}
+$$
+在 $H_0$ 上取标准 trine 纯态
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\qquad \Pi_j=|\psi_j\rangle\langle\psi_j|,
+\qquad \sum_j\Pi_j=\frac32I_{H_0}.
+\tag{234.SP.18}
+$$
+定义输入效应
+$$
+E_1=\frac23\Pi_1\oplus0,
+\qquad E_2=\frac23\Pi_2\oplus\frac12I_G,
+\qquad E_3=\frac23\Pi_3\oplus\frac12I_G.
+\tag{234.SP.19}
+$$
+三者正半定且总和为 $I_A$，故
+$$
+\mathcal S^{(5)}_j(X)=\operatorname{Tr}(E_jX)P_j
+\tag{234.SP.20}
+$$
+定义同接口 CPTP 通道。各分支 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，精确秩型为 $(1,2,2)$，总秩五。显式 Kraus 为每标签的 $\sqrt{2/3}|r_j\rangle\langle\psi_j|$，加上标签二和三各自的 $|r_j\rangle\langle2|/\sqrt2$。
+
+目标与候选都消去输入 $H_0$ 和 $G$ 间的非对角块。在 $H_0$ 上，两者之差正是第231节的 trine 近似：完整半 diamond 误差为 $1/2$，无参考误差为 $1/3$。在一维 $G$ 上，差别只是概率向量 $(1/3,1/3,1/3)$ 与 $(0,1/2,1/2)$，两种误差均为 $1/3$。
+
+为确认这些分块计算给完整上界，令 $\Delta=\mathcal S^{(5)}-\mathcal R$。对任意参考及任意输入矩阵 $X$，记对应两个对角块为 $X_H,X_G$。由三角不等式及上述两个完整范数，
+$$
+\|(\Delta\otimes\operatorname{id})(X)\|_1
+\le\|X_H\|_1+\frac23\|X_G\|_1
+\le\|X_H\|_1+\|X_G\|_1
+\le\|X\|_1.
+\tag{234.SP.21}
+$$
+末步来自去掉非对角块的 pinching：该映射等于恒等共轭与按两个子空间赋予相反符号的酉共轭的平均，故在任意参考下对所有矩阵的迹范数收缩；其输出为两块直和，迹范数就是两块范数之和。
+
+因此 $\delta_\diamond(\mathcal R,\mathcal S^{(5)})\le1/2$，结合（234.SP.16）得到
+$$
+\boxed{D_5=\delta_\diamond(\mathcal R,\mathcal S^{(5)})=\frac12.}
+\tag{234.SP.22}
+$$
+对无参考密度矩阵，两块均为次归一化正矩阵，迹之和为一。分别使用两块的无参考误差 $1/3$，得到整体误差至多 $1/3$。上节的单标签振幅核下界又给全部预算五候选 $U_5\ge1/3$，所以
+$$
+\boxed{U_5=\delta_0(\mathcal R,\mathcal S^{(5)})=\frac13<\frac12=D_5.}
+\tag{234.SP.23}
+$$
+这也完成定理234.3中尚缺的预算五及全部达到性证明。
+

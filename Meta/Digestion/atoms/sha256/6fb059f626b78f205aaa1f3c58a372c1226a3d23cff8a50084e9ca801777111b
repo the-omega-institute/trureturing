@@ -1,0 +1,25 @@
+**定理 20.2（统一于端点距离的显式有限时域误差隙）。** 对满足（20.1）的任一来源、任一维数不超过 $`D`$ 的固定接收器及任意一族终端解码器，有
+
+$$
+\boxed{
+\max_{1\le n\le8D^2}\ \sup_{J,\rho_{JM}}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)
+\right\|_1
+\ge\eta_{D,k}>0.
+}
+\tag{20.3}
+$$
+
+事实上，仅取指定初态 $`|0\rangle_M`$、不附加参考，已经足以得到此下界。因此，定义11.1中的全终端误差若严格小于 $`\eta_{D,k}`$，所需接收维数必大于 $`D`$。本节给出第12节正误差隙的一份显式下界，不主张该数值或其容量依赖最优。
+
+证明。把接收初态的固定单位向量用一个固定基变换送到 $`e_0`$，并同时共轭接收通道及各解码器，不改变容量、固定性或恢复误差。因此先令 $`\dim K=D`$，并取初态
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|_{MK}.
+\tag{20.4}
+$$
+
+以下全过程只使用这一指定纯来源。记一次发射与固定接收的合成通道为 $`\mathcal R`$，并置 $`\sigma_n=\mathcal R^n(\sigma_0)`$、$`\rho_n=\operatorname{Tr}_K\sigma_n`$、$`\sigma_{K,n}=\operatorname{Tr}_M\sigma_n`$。
+

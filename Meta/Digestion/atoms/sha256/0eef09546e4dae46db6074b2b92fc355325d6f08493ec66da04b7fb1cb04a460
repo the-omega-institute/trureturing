@@ -1,0 +1,20 @@
+**引理76.1（四点保持与二次坐标块形）。** 上述条件使所有射线的二次纤维都被保持。取 $A^*A$ 的正交单位特征基 $e_0,e_1$，特征值为 $\mu,\nu>0$，则在 $J$ 的正交单位基
+$$
+\frac{Ae_0\otimes e_0}{\sqrt\mu},\qquad
+\frac{Ae_0\otimes e_1+Ae_1\otimes e_0}{\sqrt{\mu+\nu}},\qquad
+\frac{Ae_1\otimes e_1}{\sqrt\nu}
+$$
+中，存在 $L_0,L_1\in\operatorname{End}(Q)$，使
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt{\mu+\nu}&0\\
+0&L_0/\sqrt{\mu+\nu}&L_1/\sqrt\nu
+\end{pmatrix},
+\tag{76.1}
+$$
+并且对 $z=z_0e_0+z_1e_1$，
+$$
+M(\xi\otimes Az\otimes z)=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{76.2}
+$$
+

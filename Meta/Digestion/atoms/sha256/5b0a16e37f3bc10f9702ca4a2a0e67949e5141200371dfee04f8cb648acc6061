@@ -1,0 +1,11 @@
+**定义 51.2（可能奏效与能够保证）。** 对目标 $K$，定义
+
+$$
+\begin{aligned}
+P_K(x)&=\{a:(x,a)\in L,\ R(x,a)\cap K\ne\varnothing\},\\
+G_K(x)&=\{a:(x,a)\in L,\ \varnothing\ne R(x,a)\subseteq K\}.
+\end{aligned}
+$$
+
+$P_K(x)$ 表示行动合宜且至少有一个允许的成功后续；$G_K(x)$ 表示行动合宜、能够实施，而且每个允许后续都成功。于是 $G_K(x)\subseteq P_K(x)$，但通常不相等。若某个合宜行动有两个后继 $g,d$，其中 $g\in K$、$d\notin K$，它属于 $P_K(x)$，却不属于 $G_K(x)$。实际出现一次 $g$，不能单独证明另一个后继不再可能。
+

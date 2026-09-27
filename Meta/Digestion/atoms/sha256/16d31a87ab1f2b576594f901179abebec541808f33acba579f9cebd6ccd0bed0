@@ -1,0 +1,25 @@
+**定义 206.1（上端接触的无量纲坐标）。** 固定定义201.1的合法 $a,t,R$，并假定 $R>R_0(a,t)$。置
+$$
+\begin{gathered}
+ h=\frac{1+t}{2},\qquad z=\frac{1+t+R}{2},\qquad
+ \Delta=z-h=\frac R2,\qquad k=1-a^2,\\
+ \alpha=\sqrt{\frac{z-a^2}{k}},\qquad
+ \beta=\sqrt{\frac{h-a^2}{k}},\qquad
+ \sigma=\sqrt{1-\alpha^2}=\sqrt{\frac{1-z}{k}},\qquad
+ \xi_b=\frac{a\sigma}{\sqrt z}.
+\end{gathered}
+\tag{206.1}
+$$
+合法性给出 $a<h<z<1$，以及
+$0<\xi_b<\beta<\alpha<1$、$\xi_b<\sigma$。对 $0\le\xi\le\xi_b$ 定义
+$$
+\begin{gathered}
+ \delta(\xi)=\operatorname{artanh}\alpha-\operatorname{artanh}\xi,\qquad
+ C(\xi)=\cosh\delta(\xi),\quad S(\xi)=\sinh\delta(\xi),\\
+ W(\xi)=\frac{S(\xi)(C(\xi)+a)}{1+aC(\xi)},\qquad
+ \Phi(\xi)=\xi^2+\xi(1-\xi^2)W(\xi).
+\end{gathered}
+\tag{206.2}
+$$
+这些量只用于参数化同一个有限程序优化问题，不改变点态 SLD 信息的定义或精确开放延拓条件。
+

@@ -1,0 +1,84 @@
+### 87.3 非正交射线下的严格投影矛盾
+
+由引理87.2，现有
+
+$$
+P=L+U,\qquad R\perp P,\qquad
+H_1=H_4\subset U\oplus R,\qquad
+H_3\subset L\oplus R,
+$$
+
+$$
+P_RH_1=R,\qquad P_RH_3=R.
+\tag{87.9}
+$$
+
+令
+
+$$
+\rho=|\langle A,B\rangle|,\qquad 0\le\rho<1.
+$$
+
+首先，同一个零位等距把 $H_1,H_2$ 分别送到 $L\otimes A,L\otimes B$。两个接收因子相同，因此对于每个 $h\in H_2$，
+
+$$
+\|P_{H_1}h\|=\rho\|h\|.
+\tag{87.10}
+$$
+
+确切地，等距保持投影范数，而 $L\otimes B$ 上的向量投影到 $L\otimes A$ 时，其范数恰乘 $\rho$。取（87.2）的单位公共向量 $w\in H_2\cap L$，得到
+
+$$
+\|P_{H_1}w\|=\rho.
+\tag{87.11}
+$$
+
+其次，固定一位映射给
+
+$$
+V_1L=R\otimes B,\qquad V_1U=Q\otimes A.
+$$
+
+故对任意 $l\in L,u\in U$，
+
+$$
+|\langle l,u\rangle|
+=|\langle V_1l,V_1u\rangle|
+\le\rho\|l\|\|u\|,
+$$
+
+从而
+
+$$
+\|P_Ul\|\le\rho\|l\|\qquad(l\in L).
+\tag{87.12}
+$$
+
+最后，实际第四终端的满投影给 $H_1\cap U=H_4\cap G_4=0$。在有限维空间中，这意味着
+
+$$
+\kappa:=\|P_{H_1}|_U\|<1.
+\tag{87.13}
+$$
+
+若该范数为一，紧致单位球面上将有单位 $u\in U$ 的正交投影范数为一，迫 $u\in H_1$，与交零矛盾。
+
+因为 $w\in L$ 而 $L\perp R$，且 $H_1\subset U\oplus R$，有
+
+$$
+P_{H_1}w=P_{H_1}P_Uw.
+$$
+
+结合（87.11）—（87.13），得到
+
+$$
+\rho=\|P_{H_1}w\|
+\le\kappa\|P_Uw\|
+\le\kappa\rho.
+\tag{87.14}
+$$
+
+若 $\rho>0$，这与 $\kappa<1$ 矛盾。因此任何尚未排除的候选只能满足 $A\perp B$。
+
+这里的严格性来自同一实际第四终端的满投影；没有用一个抽象上界替代实际来源关系。早期公共向量 $w$ 同时使（87.11）的等号和（87.12）的上界适用于同一个对象。
+

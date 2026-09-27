@@ -1,0 +1,8 @@
+**定义 198.1（粗观察与新增坐标）。** 项目 [ContextRefinementConflictSeparation](../../../D5/S3/ConceptDynamics/ContextRefinementConflictSeparation.lean) 的 `context_refinement_separates_conflict` 讨论如下结构。设状态空间为 $X$，原读数为 $q_C:X\to C$，新增读数为 $q_D:X\to D$，性质为 $P$。若存在 $x,y\in X$ 满足
+
+$$
+q_C(x)=q_C(y),\qquad P(x),\qquad\neg P(y),\qquad q_D(x)\ne q_D(y),
+$$
+
+那么合并读数 $q_{C,D}(z)=(q_C(z),q_D(z))$ 能区分 $x$ 与 $y$。同一个粗读数所遮住的正反实例，现在落在不同的精细读数上。这里依照声明及证明源码解释结构，没有进行本批 Lean 编译或公理闭包核验。
+

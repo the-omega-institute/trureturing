@@ -1,0 +1,29 @@
+**定理 69.2（实际对角尺度上的近似与联合弱极限）。** 在上述两个噪声选择下，
+原平稳独立对与连续路径实验都满足：对任意固定 $\varepsilon,\eta>0$，
+
+```math
+\mathbb P_{\mathrm{data}}
+ \left\{\mathbb P\bigl(|T_M^{\mathrm{sm}}-T_M|>\varepsilon
+                         \mid\mathscr X_M\bigr)>\eta\right\}\to0,
+\qquad
+\sup_{|S|=q}\mathbb P_S\{|T_M^{\mathrm{sm}}-T_M|>\varepsilon\}\to0.
+```
+
+式 (69.4)。
+
+第一式在均匀大小 $q$ 支持先验下，内层为精确后验及独立测量噪声；
+第二式为各确定支持的无条件抽样律。
+对第 49、51、54 章已建立的同一旧联合组束 $\mathcal B_M$，
+将对角坐标 $T_M$ 换成 $T_M^{\mathrm{sm}}$ 后联合极限不变：
+
+```math
+(T_M^{\mathrm{sm}},\mathcal B_M)\Longrightarrow(N_2,\mathcal B),
+\qquad N_2\sim N(0,2g_0),\qquad N_2\perp\mathcal W_\rho.
+```
+
+式 (69.5)。
+
+其中旧端点、偶极、固定紧区间上的剖面、桥、Fourier 场和定义 54.1 的有限截距保持原范围，
+并由同一个旧实 Gaussian 随机测度 $\mathcal W_\rho$ 驱动。
+条件 BL 收敛在先验数据概率意义下成立，无条件收敛一致于固定支持。
+

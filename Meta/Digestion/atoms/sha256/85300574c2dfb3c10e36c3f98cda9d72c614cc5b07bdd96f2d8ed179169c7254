@@ -1,0 +1,73 @@
+#### 2.10.6 总变差精确公式与不可计算收敛阶段
+
+采用总变差距离约定
+
+$$
+d_{\mathrm{TV}}(\alpha,\beta)
+=\sup_{A\text{ Borel}}|\alpha(A)-\beta(A)|
+=\frac12\int\left|\frac{d\alpha}{d\mu}-\frac{d\beta}{d\mu}\right|d\mu
+$$
+
+其中最后的密度公式适用于本节相对于 $\mu$ 绝对连续的分布。由于
+
+$$
+\frac{d\nu_s}{d\mu}=\frac{\mathbf1_{K_s}}{p_s},
+\qquad
+\frac{d\nu}{d\mu}=\frac{\mathbf1_K}{M},
+$$
+
+且 $K\subseteq K_s$，分别在 $K$ 和 $K_s\setminus K$ 上积分，得到
+
+$$
+\begin{aligned}
+d_{\mathrm{TV}}(\nu_s,\nu)
+&=\frac12\left[
+M\left(\frac1M-\frac1{p_s}\right)
++\frac{p_s-M}{p_s}\right]\\
+&=1-\frac{M}{p_s}
+=\frac{p_s-M}{p_s}.
+\end{aligned}
+$$
+
+事件 $A=K$ 达到该上确界。因此 $p_s\downarrow M>0$ 给出
+
+$$
+\nu_s\longrightarrow\nu\quad\text{于总变差距离}.
+$$
+
+已知的 $1/2\le p_s\le1$ 保留双向误差控制
+
+$$
+p_s-M
+\le d_{\mathrm{TV}}(\nu_s,\nu)
+\le2(p_s-M).
+$$
+
+如果只使用下界 $M\ge1/2$，能得到可计算上界
+
+$$
+d_{\mathrm{TV}}(\nu_s,\nu)
+\le1-\frac1{2p_s}.
+$$
+
+这个上界未必趋于零，不能替代总质量的任意精度信息。
+
+不存在可计算函数 $g:\mathbb N\to\mathbb N$ 能保证
+
+$$
+d_{\mathrm{TV}}(\nu_{g(k)},\nu)\le2^{-k}
+\quad\text{对每个 }k.
+$$
+
+否则
+
+$$
+0\le p_{g(k)}-M
+=p_{g(k)}d_{\mathrm{TV}}(\nu_{g(k)},\nu)
+\le2^{-k}
+$$
+
+会给出 $M$ 的可计算 Cauchy 名，矛盾。这已经排除了仅选一个精度合格阶段的可计算规则，当然也排除了保证所有后续阶段合格的可计算收敛模。
+
+反过来，若在一个相同形式的模型中总质量可计算且有已知正下界，就可利用质量名及 $p_s\downarrow M$ 搜索足够小的 $p_s-M$，进而取得总变差收敛模。本例恰好缺少前一项，而不是缺少普通意义的收敛。
+

@@ -1,0 +1,21 @@
+### 148.2 同一个全域固定通道
+
+记 $v0=v\otimes|0\rangle$、$v1=v\otimes|1\rangle$，
+$vA=v\otimes A$、$vB=v\otimes B$。在整个 $K\otimes\mathbb C^2$ 上定义下表所确定的线性映射：
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&PA&P0&uB\\
+w1&qA&P1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+\xi_4 0&hA&s1&hB\\
+g1&-gA&h1&eB\\
+\omega1&wA&\zeta_4 0&PB
+\end{array}
+\tag{148.7}
+$$
+
+除 $\omega1\mapsto wA$ 外，其余十三行给出实际所需部分表；这一行完成全域。
+

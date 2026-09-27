@@ -1,0 +1,50 @@
+**证明。** 取秩分解 $D=HH^*$，其中 $H:\mathbb C^d\to Q\otimes F$ 单射；按环境基写 $H=(H_0,H_1)$。置 $X=L_0L_0^*$、$Y=L_1L_1^*$。块方程是
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{77.5}
+$$
+第76节证明中的秩估计给出
+$$
+\operatorname{rank}L_i\ge q-\operatorname{rank}H_i\ge q-d=2d.
+$$
+另一方面，乘积秩不等式与（77.5）给
+$$
+\operatorname{rank}L_0+\operatorname{rank}L_1-q
+\le\operatorname{rank}(L_1L_0^*)\le d.
+$$
+因此两者秩均恰为 $2d$，乘积秩恰为 $d$，且 $H_0,H_1$ 都是秩 $d$ 的单射。特别地 $\dim E_0=\dim E_1=d$。
+
+取 $v\in E_0$。由 $L_0^*v=0$ 与第三个块方程，$H_0H_1^*v=0$；$H_0$ 单射使 $H_1^*v=0$。第二个对角方程于是给 $Yv=\nu v$，第一个再给
+$$
+H_0H_0^*v=\frac\mu s v.
+$$
+故 $E_0\subseteq\operatorname{ran}H_0$；两侧维数相同，所以
+$$
+\operatorname{ran}H_0=E_0,\qquad
+H_0H_0^*=\frac\mu s P_{E_0}.
+$$
+交换两个环境方向，得到
+$$
+\operatorname{ran}H_1=E_1,\qquad
+H_1H_1^*=\frac\nu s P_{E_1}.
+\tag{77.6}
+$$
+又 $H_1^*E_0=0$，所以 $E_0\perp E_1$。
+
+由（77.6），存在满等距 $J_i:\mathbb C^d\to E_i$，使
+$$
+H_0=\sqrt{\mu/s}\,J_0,\qquad
+H_1=\sqrt{\nu/s}\,J_1.
+$$
+于是 $H^*H=(\mu/s+\nu/s)I_d=I_d$，从而 $D^2=HH^*HH^*=D$，证明它是正交投影。
+
+最后联立（77.5）的两个对角方程，得到
+$$
+X=\frac{\mu s}{c}\bigl(\mu I-sH_0H_0^*+\nu H_1H_1^*\bigr),
+\qquad
+Y=\frac{\nu s}{c}\bigl(\nu I+\mu H_0H_0^*-sH_1H_1^*\bigr).
+$$
+代入（77.6），逐个正交子空间读取系数，即得（77.4）。证毕。
+

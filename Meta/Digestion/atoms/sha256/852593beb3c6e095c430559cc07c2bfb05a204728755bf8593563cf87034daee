@@ -1,0 +1,24 @@
+**命题 52.11（因果前缀的经典梳对应）。** 定理 52.3 成立时，在动作与输出的经典正交基上定义
+
+$$
+R^{(0)}=1,\qquad
+R^{(t)}=
+\sum_{a_{1:t},y_{1:t}}
+p_t(y_{1:t}\mid a_{1:t})
+|a_1,y_1,\ldots,a_t,y_t\rangle
+\langle a_1,y_1,\ldots,a_t,y_t|.
+\tag{52.27}
+$$
+
+则它们满足
+
+$$
+R^{(t)}\ge0,\qquad
+\operatorname{Tr}_{Y_t}R^{(t)}
+=R^{(t-1)}\otimes I_{A_t},\qquad
+\operatorname{Tr}R^{(t)}=\prod_{j=1}^t|A_j|.
+\tag{52.28}
+$$
+
+这些正性与偏迹条件就是[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义 11.5 的经典对角情形。
+

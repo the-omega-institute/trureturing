@@ -1,0 +1,46 @@
+**命题302.2（有限停止的临界不可达）。** 在本节三个实验中，
+当 \(l=k^2\) 时，即使允许无穷期望调用数，只要每个合法世界几乎必然用有限记录给出答案，也不能准确达到最坏同参数平均风险 \(1/3\)。
+
+若另有 \(\mathbb E_1N_{\rm info}\le M<\infty\)，两个停止律共同支配
+\(b^{N_{\rm info}}P_1^{\rm stop}\)。Jensen 给其质量至少
+$$
+\mathbb E_1b^{N_{\rm info}}
+\ge b^{\mathbb E_1N_{\rm info}}\ge b^M.
+$$
+于是
+$$
+\operatorname{TV}(P_1^{\rm stop},P_{k^3}^{\rm stop})\le1-b^M,
+\qquad
+\mathcal R\ge\frac13+\frac{b^M}{6}.
+\tag{302.29}
+$$
+这是一个明确的有限期望严格余量，不声称其在全部尺度上最佳。
+有限期望时也可以使用前面的停止 KL 与 BH 给对应信息尺度的余量。
+
+没有期望上限时，（302.28）的正数可以随协议序列趋零。
+因此本命题不能改写成“全部有限停止协议的风险下确界严格大于 \(1/3\)”。
+第291节已经给完整输入与reset的确定预算逼近。两源模型也能在固定 $h_0>0$、$\kappa>0$ 下逼近：各取 $K$ 个新鲜任务与参考样本，以计数 $I,J$ 定义
+$$
+X=C(1-BI/K),\qquad Y=C(1-BJ/K),\qquad
+\widehat c=\operatorname{clip}_{[k^3,1]}
+\left(\frac{X}{\max\{Y,h_0/2\}}\right).
+$$
+因为真实 $h\ge h_0$、$c\in[k^3,1]$，分母截断不增加它与 $h$ 的距离，区间投影也不增加与 $c$ 的距离。因此
+$$
+|\widehat c-c|
+\le\frac2{h_0}\bigl(|X-hc|+|Y-h|\bigr).
+$$
+两个经验坐标的方差均为 $O(K^{-1})$，对允许参数一致，故
+$\sup_{c,h}\mathbb E|\widehat c-c|\le A/(h_0\sqrt K)$。
+在 $[k^3,1]$ 上取端点决策
+$$
+f_*(c)=1+\frac{\log c}{3\kappa}\in[0,1].
+$$
+它的 Lipschitz 常数至多 $1/(3\kappa k^3)$，且对所有 $r\in[k^2,1]$ 都有
+$f_*(r)-f_*(kr)=1/3$。以概率 $f_*(\widehat c)$ 输出零，得到实际两源协议，并有
+$$
+\mathcal R_K\le\frac13+\frac{A}{h_0\kappa\sqrt K}
+\longrightarrow\frac13.
+$$
+全部 $2K$ 次调用照常计费。于是三个实验的有限停止风险下确界均为 $1/3$，而没有一个此类协议达到它；近似取得与准确达到被明确区分。
+

@@ -1,0 +1,34 @@
+**定理254.2（擦除标签后的精确碰撞）。** 对每个 $0<\gamma<1$，
+$$
+\boxed{
+\overline\tau_{z_\gamma}^\gamma
+=\overline\tau_0^\gamma,
+\qquad
+\frac12\|\Omega_{z_\gamma}-\Omega_0\|_1=qz_\gamma>0.
+}
+\tag{254.29}
+$$
+
+**证明。** 两态的参考边缘相同，Bell 部分也完全相同。对产品部分，$X$ 期望始终为零，$Z$ 期望从一变为 $1-2z^2$，$Y$ 期望从零变为 $2z\sqrt{1-z^2}$。因此两条混合响应的参考矩阵差均为
+$$
+\begin{aligned}
+&\operatorname{Tr}_H[(\overline A_w\otimes I_E)(\Omega_z-\Omega_0)]\\
+&\qquad=2qz\left[\gamma\sqrt{1-z^2}-(1-\gamma)\sqrt A\,z\right]P_{2_E},
+\qquad w=a,b.
+\end{aligned}
+\tag{254.30}
+$$
+在 $z=z_\gamma$ 时，（254.28）使括号为零。由共同边缘与（254.26），每个可见 $(w,s)$ 的整个参考输出块都相同；共同重置态也相同，得到第一式。第二式来自源半迹距离 $qz$，而 $q,z_\gamma>0$。$\square$
+
+因此任意有限副本数 $n$ 都有
+$$
+(\overline\tau_{z_\gamma}^\gamma)^{\otimes n}
+=(\overline\tau_0^\gamma)^{\otimes n},
+\qquad
+P_{\mathrm{succ}}^{\mathrm{opt}}(n)=\frac12.
+\tag{254.31}
+$$
+不存在任何副本预算或输出后处理能在此接口上达到 $2/3$。该结论覆盖全部参考与任意联合量子测量。
+
+这并不改变§251对旧接口的结论：$\Omega_0$ 的饱和性质对应旧仪器，而（254.26）已经改变输入方向并擦除了选择记录；本节没有假定它仍是新混合接口的饱和源。
+

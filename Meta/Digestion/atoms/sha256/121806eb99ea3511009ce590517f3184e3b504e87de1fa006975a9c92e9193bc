@@ -1,0 +1,31 @@
+#### 1.1.8 有限抽样能发现幸存者，不能替代空集证书
+
+固定有限模数 $L>1$ 及其真实幸存集合 $H$。独立、均匀地从
+$\mathbb Z/L\mathbb Z$ 抽样 $N$ 次，并准确判断每个样本是否属于 $H$。若 $H\ne\varnothing$，一次都没有命中的概率为
+$$
+\Pr(\text{miss }H)
+=\left(1-\frac{|H|}{L}\right)^N
+\le\left(1-\frac1L\right)^N .
+\tag{TM.371}
+$$
+对 $0<\alpha<1$，令
+$$
+N\ge
+\left\lceil\frac{\log\alpha}{\log(1-1/L)}\right\rceil
+\tag{TM.372}
+$$
+即可使最坏漏检概率不超过 $\alpha$。若要一个更直观的充分值，
+由 $1-u\le e^{-u}$ 得
+$$
+N\ge\left\lceil L\log(1/\alpha)\right\rceil
+\quad\Longrightarrow\quad
+\Pr(\text{miss }H)\le\alpha.
+\tag{TM.373}
+$$
+式（TM.372）在 $L\to\infty$ 时的主尺度为
+$L\log(1/\alpha)$。若 $L=1$，非空 $H$ 只有唯一一个点，一次抽样即可命中，应单独处理，不代入 $\log(1-1/L)$。
+
+命中一个经验证的幸存样本，是不覆盖的具体证书；有限次数未命中，只是上述漏检概率控制，不是逻辑空集证明，也不是在未指定先验时对 $H=\varnothing$ 的后验概率。非均匀、相关抽样或近似成员判定需要另一份误差模型。
+
+在无限完成对象上，若幸存集合非空但 Haar 测度为零，即使理想化地准许精确成员判定，任意可数次独立 Haar 抽样也几乎必然不命中它。因此随机搜索不能代替一般存在判定。反之，式（TM.368）的正测度例子并不自动赋予有限算法判定某点是否满足全部可数约束的能力。
+

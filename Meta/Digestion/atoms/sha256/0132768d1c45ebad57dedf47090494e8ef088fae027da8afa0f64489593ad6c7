@@ -1,0 +1,38 @@
+**定义 55.1（同一谱曲线的边界层余项）。** 保持定义 54.1 的原模型及记号，固定 $`U>0`$，
+记 $`S_M=U/\sqrt\delta`$，$`\psi(s)=s/(1+s)`$。定义右连续余项
+
+```math
+\mathcal B_M(s)=
+\begin{cases}
+ \mathcal Z_M(s\sqrt\delta)-\mathcal J_M-2s\sqrt\delta\,T_M,
+       &0\le s<S_M,\\
+ 0,&s\ge S_M,
+\end{cases}
+\qquad
+\widetilde{\mathcal B}_M(x)=
+\begin{cases}
+ \mathcal B_M\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.1)。
+
+$`S_M`$ 处采用右侧的零值；允许该处有跳跃。
+在第 53 章的同一实 Gaussian 空间上，令
+
+```math
+\mathcal E(s)=I_2(K_s^{\rm tail}),\qquad
+K_s^{\rm tail}(x,y)=2\mathrm{Ci}(\omega e^s|x-y|),\qquad s\ge0,
+\qquad
+\widetilde{\mathcal E}(x)=
+\begin{cases}
+ \mathcal E\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.2)。
+
+空间核的对角线取值不参与二重 Wiener 积分。
+

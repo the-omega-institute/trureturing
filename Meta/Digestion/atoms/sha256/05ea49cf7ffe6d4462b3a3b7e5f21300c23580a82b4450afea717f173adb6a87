@@ -1,0 +1,17 @@
+**定义 370.1（有限前缀与递推）。** 对 $N\ge0$ 定义
+
+$$
+xR_Ny\quad\Longleftrightarrow\quad
+q(F^t x)=q(F^t y)\ \text{对所有 }0\le t\le N.
+$$
+
+直接分离时刻零和后续时刻，得到
+
+$$
+R_0=\ker q,\qquad
+R_{N+1}=\ker q\cap(F\times F)^{-1}(R_N),\qquad
+R_{N+1}\subseteq R_N.
+$$
+
+因此一旦 $R_N=R_{N+1}$，把同一个递推算子再作用一次就得到 $R_{N+1}=R_{N+2}$，归纳可知以后永久不变。项目 [FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean) 直接给出等价的末坐标递推 $R_{N+1}=R_N\cap\ker(q\circ F^{N+1})$，以及反单调和完整未来交集结构。本段显示的首步递推由分离时刻零得到，也可由第 371 节的受控关系递推取单点输入得到；两种表达不要混为源码中逐字相同的陈述。
+

@@ -1,0 +1,36 @@
+### 63.2 两角标准族及其显式因果修复
+
+先在三个量子比特上取
+
+$$
+x=|000\rangle,\quad h=|011\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,
+$$
+
+以及非负参数
+
+$$
+a^2+b^2=c^2+d^2=1,
+\qquad a\ge c,\qquad d\ge b.
+\tag{63.6}
+$$
+
+等价地可写 $a=\cos\alpha,b=\sin\alpha,c=\cos\beta,d=\sin\beta$，其中 $0\le\alpha\le\beta\le\pi/2$。定义
+
+$$
+r_0=ax+cy,\qquad r_1=bh+dz,
+\qquad r=r_0+r_1,\qquad R=|r\rangle\langle r|,
+\qquad t=a^2-c^2=d^2-b^2\ge0.
+\tag{63.7}
+$$
+
+向量 $r$ 是等距
+
+$$
+V|0\rangle=a|00\rangle+b|11\rangle,
+\qquad
+V|1\rangle=c|01\rangle+d|10\rangle
+$$
+
+的 Choi 向量，所以 $\operatorname{Tr}_{BD}R=I_A$。
+

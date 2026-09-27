@@ -1,0 +1,60 @@
+## 138. 小侧先行的最后两个三尾词与二重纤维完整禁阻
+
+沿用第89、103、112、119、124、132节的同一七维六终端实际合同。来源固定为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，各轮使用同一个固定全域接收通道，完整参考—活动记忆—原档案终端属于同一个实际过程。本节限定通常纤维维数为二，剩余三维支持为正交二加一。按完整零位纤维尺寸命名环境 $X,Y$，第三条尾射线为普通方向 $Z$：
+
+$$
+X\perp Y,\qquad Z\ne X,Y,
+$$
+
+$$
+R_0=(U\otimes X)\oplus(M\otimes Y),\qquad
+R_1=(U^\perp\otimes X)\oplus(M^\perp\otimes Y),
+$$
+
+$$
+\dim U=4,\quad\dim M=3,\quad
+P=U\cap M,\quad\dim P=2,\quad
+S=U+M,\quad\dim S=5,\quad Q=S^\perp,\quad\dim Q=2.
+\tag{138.1}
+$$
+
+两个接收块 $U,M$ 不预设正交。普通方向的完整零、一位纤维分别为 $P,Q$。记
+
+$$
+F_X=U^\perp,\qquad F_Y=M^\perp.
+$$
+
+取单位 $r\in S\cap U^\perp$，则
+
+$$
+S=U\oplus\mathbb Cr,\qquad F_X=Q\oplus\mathbb Cr.
+\tag{138.2}
+$$
+
+本节两个词都从 $Y$ 开始。保留真实早期数据
+
+$$
+V_1p=v\otimes Y,\qquad
+G_2=\operatorname{span}(u,w)\subset M,\qquad
+H_1=\operatorname{span}(p,q),
+$$
+
+$$
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{138.3}
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一。第103节给
+
+$$
+S=\mathbb Cp+G_2+G_3+G_4+G_5,\qquad p\in S.
+\tag{138.4}
+$$
+

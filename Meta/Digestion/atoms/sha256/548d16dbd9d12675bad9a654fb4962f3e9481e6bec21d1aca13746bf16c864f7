@@ -1,0 +1,74 @@
+**证明。** 写
+$$
+F=\begin{pmatrix}1-x&c\\\overline c&y\end{pmatrix},
+\qquad x,y\ge0,
+\qquad
+\epsilon=\|\mathcal E\|,
+\qquad
+e_{ij}=\langle e_i,\mathcal E e_j\rangle.
+\tag{260.14}
+$$
+$x,y\ge0$ 分别来自 $I_2-F$ 与 $F$ 的正性。用 $e_{+,j}$、$e_{-,j}$ 表示上、下半空间中的标准基，取
+$$
+\zeta=\frac{e_{+,0}-e_{-,1}}{\sqrt2},
+\qquad
+t=\langle\zeta,T\zeta\rangle.
+\tag{260.15}
+$$
+理想块在这个方向上为零。直接计算得
+$$
+t=-\frac{x+y}{2}-\operatorname{Re}e_{01}\ge0,
+$$
+$$
+x+y+2t=-2\operatorname{Re}e_{01}\le2\epsilon.
+\tag{260.16}
+$$
+
+对任意正半定矩阵，Cauchy–Schwarz 不等式可由其正平方根给出：
+$$
+|\langle z,Tw\rangle|^2
+\le\langle z,Tz\rangle\langle w,Tw\rangle.
+\tag{260.17}
+$$
+令 $z=e_{+,1}$、$w=\zeta$。此时
+$$
+\langle e_{+,1},T\zeta\rangle
+=\frac{\overline c-e_{11}}{\sqrt2},
+\qquad
+\langle e_{+,1},Te_{+,1}\rangle=y,
+\tag{260.18}
+$$
+所以
+$$
+|\overline c-e_{11}|\le\sqrt{2yt}.
+\tag{260.19}
+$$
+由 $y+2t\le2\epsilon$ 及标量算术—几何平均不等式，
+$$
+2yt\le\frac{(y+2t)^2}{4}\le\epsilon^2.
+\tag{260.20}
+$$
+再用 $|e_{11}|\le\epsilon$，得到 $|c|\le2\epsilon$。对角和与非对角块分开取迹范数，
+$$
+\|F-E_{00}\|_1
+\le x+y+2|c|
+\le6\epsilon.
+\tag{260.21}
+$$
+
+记 $D=F-E_{00}$。则
+$$
+T-T_0=
+\begin{pmatrix}D&0\\0&-D\end{pmatrix}
++\begin{pmatrix}0&\mathcal E\\\mathcal E^\dagger&0\end{pmatrix}.
+\tag{260.22}
+$$
+右侧两个矩阵的迹范数分别为 $2\|D\|_1$ 与 $2\|\mathcal E\|_1$。因此
+$$
+\|T-T_0\|_1
+\le12\epsilon+2\|\mathcal E\|_1
+\le14\|\mathcal E\|_1.
+\tag{260.23}
+$$
+证明没有使用对角块交换性，也允许 $T$ 奇异。$\square$
+

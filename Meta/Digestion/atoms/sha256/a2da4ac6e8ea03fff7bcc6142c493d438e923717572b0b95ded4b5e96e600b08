@@ -1,0 +1,41 @@
+**证明。** 上界取定理168.1中的酉纠正，再迹掉独立标签，所得逻辑通道为 $\mathcal D_\kappa$。因为
+
+$$
+\mathcal D_\kappa-\operatorname{id}
+=\ell(\operatorname{Ad}_Z-\operatorname{id}),
+$$
+
+而 $\operatorname{Ad}_Z$ 与恒等通道的半 diamond 距离为一——输入 $|+\rangle$ 时输出正交，通道距离不超过一——故这个恢复器的完整参考误差恰为 $\ell$。
+
+对下界，任取一份恢复通道 $\mathcal R$，记其完整参考误差为 $\varepsilon$。将（168.12）的两个输入经过同一 $\mathcal R$，迹距离收缩给
+
+$$
+D\!\left(
+\mathcal R\mathcal N_{\mathrm{loc}}(P_+),
+\mathcal R\mathcal N_{\mathrm{loc}}(P_-)
+\right)\le\kappa,
+$$
+
+其中 $D(\omega,\tau)=\|\omega-\tau\|_1/2$。各输出到对应理想输入的距离均不超过 $\varepsilon$。三角不等式于是给
+
+$$
+1=D(P_+,P_-)\le\varepsilon+\kappa+\varepsilon.
+\tag{168.15}
+$$
+
+因此 $\varepsilon\ge(1-\kappa)/2=\ell$。上、下界匹配，且上界通道满足原完整参考要求。证毕。
+
+在 $p=1/2$ 的来源上，
+
+$$
+\boxed{
+\kappa=\frac{\sqrt5}{3},
+\qquad
+\varepsilon_{\mathrm{loc}}
+=\frac{3-\sqrt5}{6}.
+}
+\tag{168.16}
+$$
+
+这个值不是第165节的 $\mathfrak e(v)$：后者比较忘掉原始来源输入的常值入口与完整来源目标，本节则恢复混合编码中的任意逻辑输入。
+

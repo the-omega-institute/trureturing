@@ -1,0 +1,31 @@
+### 6.10 费用摘要与原始符号解码
+
+$C_q$ 只保留相位 $s$，是因为已知解码基准的变化仅重标记实际符号，后续归一化响应和费用不变。原始实现仍须保存
+$$
+\beta=\left(b+\left\lfloor n/P\right\rfloor\right)\bmod p,
+$$
+或等价地保留初始 $b$ 和准确累计事件数 $n$。若 $n=cP+s$，则
+$$
+\left\lfloor\frac{n+\delta}{P}\right\rfloor=c+\left\lfloor\frac{s+\delta}{P}\right\rfloor.
+$$
+所以对包括零等待和跨多周期等待的 $\delta\ge0$，用
+$$
+\beta'=\left(\beta+\left\lfloor\frac{s+\delta}{P}\right\rfloor\right)\bmod p,
+\qquad s'=(s+\delta)\bmod P
+$$
+更新，再将实际新读数 $y$ 解码为 $(y-\beta')\bmod p$。该值恰为零或一，候选更新具有以下精确的原始响应纤维解释。设 $I=[l,h]$；若 $s'>0$，两个不同原始符号 $\beta'$、$\beta'+1\pmod p$ 的实际来源分别为
+
+$$
+\{r\in I:R_{p,P}(b,r;n+\delta)=\beta'\}
+=I\cap[0,P-s'-1],
+$$
+
+$$
+\{r\in I:R_{p,P}(b,r;n+\delta)=\beta'+1\pmod p\}
+=I\cap[P-s',P-1].
+$$
+
+这由第6.8.1节指示量等于零或一直接得到。$s'=0$ 时只有原始符号 $\beta'$，候选仍为 $I$。每个非空响应纤维为区间，且新阈值在其中恒定，所以都是读后相容孩子；空纤维不是实际分支。初始 $\beta=b$、$s=0$；初始 $b$ 还须作为输出参数保留，以便最后从识别出的 $r$ 恢复原初态 $x=bP+r$。
+
+因此，$(l,h,s,q)$ 是归一化控制与未来费用的充分状态；固定模型参数后，$(b,l,h,s,\beta,q)$ 支持原始符号解码、动作选择、候选更新及目标输出。若还要求报告完整累计费用，则另外保留已累计的事件数和查询数；这不改变剩余费用递推。原合同中的完整事件档案也可以继续承担这些记忆，不必重新测量。
+

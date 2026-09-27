@@ -1,0 +1,16 @@
+**定理 38.3（两个校准相近模型的长期误差）。** 对任意 $m\ge1$，有
+
+$$
+\boxed{
+\delta(\Phi_\infty^{\mathfrak I},\Phi_\infty^{\mathfrak J})
+\le\min\left\{1,
+ m\delta+
+ \|\mathcal A_I^m(R_I)\|_\infty+
+ \|\mathcal A_J^m(R_J)\|_\infty\right\}.
+}
+$$
+
+最终点击效果差 $\|R_I-R_J\|_\infty$ 也满足同一个上界。
+
+证明。有限删失输出是第 35 节停止输出的共同 CPTP 后处理：对点击标签使用 $\Lambda_{n,x}$，把未点击后继压为旗标。故有限输出距离至多 $m\delta$。在两端分别加入第 38.2 条的删失距离，三角不等式给第一项；两通道距离至多一。最后检验是否处于点击块，取全部输入态，即得效果差界。$\square$
+

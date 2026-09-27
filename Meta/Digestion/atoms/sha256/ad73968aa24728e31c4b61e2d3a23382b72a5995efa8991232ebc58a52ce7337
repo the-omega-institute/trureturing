@@ -1,0 +1,112 @@
+**定理 73.2（显式失效仪器的完整半 diamond 距离）。** 记
+
+$$
+c_*=\sqrt{\frac{11+5\sqrt5}{32}}.
+$$
+
+则
+
+$$
+\boxed{
+\frac12\|\Gamma_+-\Gamma_0\|_\diamond=c_*.
+}
+$$
+
+该最大区分距离可由单个纯系统输入达到，针对这两个指定通道不需要外部参考系统。$\Gamma_+$ 从 $P_+$ 出发永不点击，所以第 71.1 条的全量子同接口失效距离满足
+
+$$
+\boxed{
+\frac45\le\mathfrak r_{\mathrm{fail}}\le c_*<1.
+}
+$$
+
+右侧是由一个具体失效仪器提供的上界；此处不把 $c_*$ 声明为全体失效仪器的最小距离。
+
+证明。由于通道之差保持 Hermitian 性，其 diamond 范数可以在纯联合输入上取最大，参考维数取输入维数已经足够。这里使用 John Watrous，[*The Theory of Quantum Information*，第 3.3.3 节、定理 3.51、式 (3.291)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf#page=184) 的标准表征；同节定理 3.52 说明其通道区分含义。下面为当前两个完整仪器计算该最大值，而不是由系统输入上的若干检验代替 diamond 范数。
+
+对任意纯联合输入 $|\Psi\rangle_{R\mathcal H}$，写系统边缘态为
+
+$$
+\rho=
+\begin{pmatrix}
+a&u+iv\\
+u-iv&1-a
+\end{pmatrix},
+\qquad
+0\le a\le1,\quad u^2+v^2\le a(1-a),
+\qquad x=a-u.
+$$
+
+每个记录块都是两个未归一化纯态的差。对任意向量 $\xi,\zeta$，由它们张成的至多二维空间中的迹与行列式，
+
+$$
+\bigl\||\xi\rangle\langle\xi|-|\zeta\rangle\langle\zeta|\bigr\|_1
+=\sqrt{(\|\xi\|^2+\|\zeta\|^2)^2-4|\langle\xi,\zeta\rangle|^2}.
+\tag{73.1}
+$$
+
+线性相关或零向量情形由同式直接包含。对未点击块，两向量的范数平方为 $1/2+u$、$1-a$，内积模平方为 $\bigl((1-a+u)^2+v^2\bigr)/4$；对点击块，相应三量为 $1/2-u$、$a$、$\bigl((a-u)^2+v^2\bigr)/2$。正交记录块的迹范数相加，故完整输出半迹距离恰为
+
+$$
+F(x,v)
+=\frac12\left[
+\sqrt{\frac54-x-v^2}
++\sqrt{\frac14+x-x^2-2v^2}
+\right].
+\tag{73.2}
+$$
+
+将 $\rho$ 的虚部 $v$ 置零保持正性与迹一，且不改变 $x$，两个根号内的数均不减。因此最大值可在实密度矩阵上取得。
+
+定义实对称算子
+
+$$
+H=
+\begin{pmatrix}
+1&-1/2\\
+-1/2&0
+\end{pmatrix}.
+$$
+
+有 $x=\operatorname{Tr}(\rho H)$，故
+
+$$
+x\in J:=
+\left[\frac{1-\sqrt2}{2},\frac{1+\sqrt2}{2}\right].
+$$
+
+反过来，$J$ 中每个点都由某个实纯态达到：取 $H$ 的实正交本征基，对两个本征向量作具有适当实系数的归一化叠加，其期望遍历整个区间。因此 diamond 最大化归结为单变量函数
+
+$$
+f(x)=F(x,0)
+=\frac12\left[\sqrt{\frac54-x}+\sqrt{\frac14+x-x^2}\right],
+\qquad x\in J.
+$$
+
+两项在 $J$ 上均为凹函数，第一项严格凹。其内部导数为
+
+$$
+f'(x)
+=\frac14\left[
+-\frac1{\sqrt{5/4-x}}
++\frac{1-2x}{\sqrt{1/4+x-x^2}}
+\right].
+$$
+
+取 $x_*=(3-\sqrt5)/4$，它位于 $J$ 内部，直接代入给 $f'(x_*)=0$。所以它是唯一最大点。记 $s=\sqrt5$，则
+
+$$
+\frac54-x_*=\frac{2+s}{4},\qquad
+\frac14+x_*-x_*^2=\frac{1+s}{8},
+$$
+
+$$
+\sqrt{\left(\frac54-x_*\right)
+\left(\frac14+x_*-x_*^2\right)}
+=\frac{3+s}{8}.
+$$
+
+于是 $f(x_*)^2=(11+5s)/32$，得到精确距离。由于 $x_*$ 也可由实纯系统态实现，外部参考并非达到这对通道最坏距离的必要资源。这不推广为任意仪器对都无纠缠辅助增益。
+
+最后，$Q_+|+\rangle=|+\rangle$ 且 $L_+|+\rangle=0$，故 $\Gamma_+$ 是一个实际不终止仪器。它给 $\mathfrak r_{\mathrm{fail}}\le c_*$；下界沿用定理 71.2。$\sqrt5<3$ 还给 $c_*^2<26/32<1$。$\square$
+

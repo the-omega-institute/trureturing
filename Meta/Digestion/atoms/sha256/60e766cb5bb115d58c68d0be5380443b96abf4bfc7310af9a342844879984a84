@@ -1,0 +1,17 @@
+**命题158.6（带共振分母的有限平均界）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\left|
+\frac1N\sum_{n=3}^{N+2}\varphi(e_n)
+-\int_G\varphi(h)\,d\mu_G
+\right|
+\le{}&\frac{K_\varphi A_\zeta}{N}+2\eta\\
+&+\sum_{\substack{k\in F\\\chi_k(g)\ne1}}
+|c_k|\min\left\{1,\frac{2}{N|1-\chi_k(g)|}\right\}.
+\end{aligned}
+}
+\tag{158.15}
+$$
+

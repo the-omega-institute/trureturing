@@ -1,0 +1,16 @@
+**定理100.1（保留部分动作的横截补全）。** 存在 $n$ 维子空间 $R_0\subset X$，满足
+
+$$
+E_0\subset R_0,\qquad E_1\subset R_0^\perp,
+\qquad R_0\cap S_z=0,
+\tag{100.2}
+$$
+
+当且仅当
+
+$$
+E_0\cap S_z=0,
+\qquad E_1\cap S_z^\perp=0.
+\tag{100.3}
+$$
+

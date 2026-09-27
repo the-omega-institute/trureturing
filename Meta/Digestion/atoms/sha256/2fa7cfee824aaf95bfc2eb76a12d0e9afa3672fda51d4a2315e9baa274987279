@@ -1,0 +1,12 @@
+**定义 244.1（三种可能性的不同关系）。** 给定一套解释规则和背景条件 $\Gamma$，一个描述 $\varphi$ 在所选模型类中可实现，指存在满足 $\Gamma$ 与 $\varphi$ 的模型。这里的模型类已经包含语言、解释和逻辑约定；写出了一个句子，或暂时没有找到反证，均不等于已经给出这种实现。若改变模型类，须说明改变了哪些背景要求，不能仍按旧问题结算。
+
+在一个已给定的状态空间 $X$ 内，令 $P\subseteq X$ 为目标，$q:X\to Q$ 为当前读数，$R_a\subseteq X\times X$ 为执行标签 $a$ 时允许的转换。对同一个 $x$，还可以分别定义
+
+$$
+E_q(P)(x)\Longleftrightarrow\exists y\in P,\ q(y)=q(x),
+\qquad
+D_a(P)(x)\Longleftrightarrow\exists y\in P,\ R_a(x,y).
+$$
+
+前者说目标与当前读数相容，后者说确有一个指定转换的后继满足目标。二者使用的关系分别是同一观察纤维和实际指定的转换关系。项目 [FiberModalOperatorLaws](../../../D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.lean) 的 `fiber_knowledge_and_possibility_operator_laws` 正是在同读数关系上给出存在可能性与全称知识的对偶，以及扩张、单调、幂等性质；它没有把这种认识可能性解释成行动能力。
+

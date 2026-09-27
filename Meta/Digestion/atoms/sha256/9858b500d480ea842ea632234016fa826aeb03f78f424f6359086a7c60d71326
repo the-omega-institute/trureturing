@@ -1,0 +1,131 @@
+**证明。** 先计算删除成本。 对任意 $|u|^2+|w|^2=1$，矩阵 $uM+wN$ 的输入 Gram 为
+$$
+\begin{pmatrix}
+1-|w|^2/2&\overline u w/\sqrt2\\
+u\overline w/\sqrt2&|w|^2
+\end{pmatrix}.
+$$
+它的迹为 $1+|w|^2/2$，行列式为 $|w|^2/2$，故本征值正好是
+$$
+1,\qquad |w|^2/2.
+$$
+于是
+$$
+\boxed{\delta_{\rm rot}=1.}
+\tag{224.RK.6}
+$$
+每个旋转方向都达到这个值，而且每个组合的最大奇异值都简单，输入 Gram 的谱隙至少为 $1/2$。
+
+再计算输入端口尾量。 写 $v=xf_0+yf_1$，$|x|^2+|y|^2=1$。两列 $Mv,Nv$ 的右 Gram 迹为
+$$
+1+|x|^2/2,
+$$
+行列式为 $|x|^2/2$。所以 $\Gamma(P_v)$ 的三个本征值为
+$$
+1,\qquad |x|^2/2,\qquad0.
+$$
+故
+$$
+\boxed{\gamma_{\rm in,tail}=1/2,}
+\tag{224.RK.7}
+$$
+由 $v=f_0$ 达到。
+
+最后计算输出端口。 写 $r=xe_0+ye_1+ze_2$，则
+$$
+\Gamma^*(P_r)=
+\begin{pmatrix}
+|x|^2+|y|^2/2&y\overline{(x+z)}/2\\
+\overline y(x+z)/2&|x+z|^2/2
+\end{pmatrix}.
+\tag{224.RK.8}
+$$
+置
+$$
+g=\frac{1+1/\sqrt2}{2}=\frac{2+\sqrt2}{4}.
+$$
+由二维输入矩阵的最小本征值不超过平均值，
+$$
+\lambda_{\min}(\Gamma^*(P_r))
+\le\frac12\operatorname{Tr}(\Gamma^*(P_r))
+=\frac12\langle r,\Gamma(I_2)r\rangle
+\le\frac12\lambda_{\max}(\Gamma(I_2)).
+$$
+而
+$$
+\Gamma(I_2)=\frac12
+\begin{pmatrix}3&0&1\\0&1&0\\1&0&1\end{pmatrix},
+\qquad
+\lambda_{\max}(\Gamma(I_2))=1+1/\sqrt2.
+\tag{224.RK.9}
+$$
+所以所有输出方向的最小本征值至多为 $g$。
+
+取
+$$
+r_*=\cos(\pi/8)e_0+\sin(\pi/8)e_2.
+$$
+此时（224.RK.8）的非对角元为零、两个对角元均为 $g$，即
+$$
+\Gamma^*(P_{r_*})=gI_2.
+$$
+于是
+$$
+\boxed{
+\gamma_{\rm out}=\frac{2+\sqrt2}{4}.
+}
+\tag{224.RK.10}
+$$
+结合三式，得到精确严格缺口
+$$
+\boxed{
+\delta_{\rm rot}
+-\max(\gamma_{\rm out},\gamma_{\rm in,tail})
+=\frac{2-\sqrt2}{4}>0.
+}
+\tag{224.RK.11}
+$$
+
+虽然（224.RK.5）的 $M$ 秩一，这并非只能使用秩一 Kraus 的例子。对它们作等权酉旋转，两个新 Kraus 的系数均有 $|w|^2=1/2$，各自输入 Gram 本征值为 $1,1/4$，所以两者都满输入秩，而 $\Gamma$ 和三个优化值完全不变。
+
+任取
+$$
+0<\kappa<1/2.
+$$
+令结果1的 Kraus 为
+$$
+A=\sqrt\kappa\,M,\qquad B=\sqrt\kappa\,N.
+$$
+由于
+$$
+M^\dagger M+N^\dagger N
+=\operatorname{diag}(3/2,1),
+$$
+可取结果0的单 Kraus
+$$
+K_0=
+\begin{pmatrix}
+\sqrt{1-3\kappa/2}&0\\
+0&\sqrt{1-\kappa}\\
+0&0
+\end{pmatrix}.
+\tag{224.RK.12}
+$$
+这严格满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2.
+$$
+两个结果的 Choi 秩为 $(1,2)$；$A,B$ HS 正交且两个正 Choi 权重为 $\kappa,3\kappa/2$。
+
+对完整记录通道，
+$$
+\delta_{\rm rot}=\kappa,\qquad
+\gamma_{\rm out}=\kappa\frac{2+\sqrt2}{4},\qquad
+\gamma_{\rm in,tail}=\frac\kappa2,
+$$
+$$
+q_0=\|K_0^\dagger K_0\|_\infty=1-\kappa>\kappa.
+\tag{224.RK.13}
+$$
+因此严格缺口位于合法共同 TP 通道内，且 $q_0$ 大于删除成本，缺失结果零的竞争者有更大的标签事件下界，不能解释这两个证书值与删除成本之间的差距。证毕。
+

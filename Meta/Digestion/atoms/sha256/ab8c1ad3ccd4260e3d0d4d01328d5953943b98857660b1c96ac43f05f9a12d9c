@@ -1,0 +1,88 @@
+### 268.6 任意合法证书都只能前进一层
+
+固定 $0\le j<n$，假设当前面为 $\mathcal C_j$。考虑任意严格约化证书 $Y$，它满足
+$$
+P_jYP_j\succeq0,\qquad
+Y\in L^\perp,\qquad
+\langle Y,T_*\rangle=0.
+\tag{268.32}
+$$
+本节将证明其下一面只能是 $\mathcal C_{j+1}$。
+
+记 $S=P_jYP_j$。因为 $T_*$ 支撑于 $N^\perp\subseteq N_j^\perp$，
+$$
+\operatorname{Tr}(ST_*)=\operatorname{Tr}(YT_*)=0.
+\tag{268.33}
+$$
+两个PSD算子的迹乘积为零，故 $S$ 的像位于 $T_*$ 的核；又 $S$ 已支撑于 $N_j^\perp$，因此
+$$
+\operatorname{ran}S\subseteq N\cap N_j^\perp.
+\tag{268.34}
+$$
+
+令 $V_j$ 为以 $q_{j+1},\ldots,q_n$ 为列的矩阵。$P_jV_j$ 满列秩：若 $P_jV_jc=0$，则 $V_jc\in N_j$，与全部 $q_i$ 线性独立矛盾。它的列空间正好是 $N\cap N_j^\perp$。所以存在 $C\succeq0$，阶数为 $n-j$，使
+$$
+S=P_jV_jCV_j^\dagger P_j.
+\tag{268.35}
+$$
+此处无需列正交；对满列秩矩阵 $W=P_jV_j$，可用左逆写
+$C=W^+S(W^+)^\dagger$ 来验证正性与该表示。
+
+置
+$$
+B=Y-V_jCV_j^\dagger,\qquad R_j=I-P_j.
+\tag{268.36}
+$$
+由（268.35），$P_jBP_j=0$。展开 $I=P_j+R_j$ 给精确分解
+$$
+\boxed{
+B=R_jB+BR_j-R_jBR_j.
+}
+\tag{268.37}
+$$
+因此每项至少一端落在旧核 $N_j$ 中。
+
+为核对这些交叉项对数据条件的影响，定义前缀参考空间
+$$
+E_j=\operatorname{span}\{e_1,\ldots,e_j\},
+\qquad E_0=\{0\},
+\tag{268.38}
+$$
+并令 $\Pi_j$ 为 $E_j^\perp$ 上的参考投影。由 $q_i=(-e_i-te_{i-1},e_i)$，
+$$
+N_j\subseteq E_j\oplus E_j.
+\tag{268.39}
+$$
+所以上半或下半单独嵌入的每个尾参考向量都与 $N_j$ 正交。将（268.37）上下两个对角块分别作尾部双侧压缩，得到
+$$
+\Pi_jB_{++}\Pi_j=0,\qquad
+\Pi_jB_{--}\Pi_j=0.
+\tag{268.40}
+$$
+这一步分别消去了两个尾主块，因而没有遗漏旧核与新方向之间的交叉项。
+
+现在使用 $Y\in L^\perp$：$Y_{++}=Y_{--}$。结合（268.36）、（268.40），$V_jCV_j^\dagger$ 的上下对角尾主块必须相等。$V_j$ 下半部分是尾参考基的嵌入，上半部分为该嵌入乘以 $-M$。压缩到 $E_j^\perp$ 时，第一列中落在 $e_j$ 上的分量被删除，剩余矩阵精确为
+$M_{n-j}=I_{n-j}+tJ_{n-j}$。因此等对角约束成为
+$$
+\boxed{
+M_{n-j}CM_{n-j}^\dagger=C.
+}
+\tag{268.41}
+$$
+由引理268.2，$C=c\,e_1e_1^\dagger$、$c\ge0$。代入（268.35），得到任意合法证书的当前压缩形式
+$$
+\boxed{
+P_jYP_j
+=c(P_jq_{j+1})(P_jq_{j+1})^\dagger.
+}
+\tag{268.42}
+$$
+若 $c=0$，证书在整个当前面上为零，不能严格约化。因此严格约化要求 $c>0$。对当前面中的 $X\succeq0$，该证书的零配对恰好要求额外消去 $q_{j+1}$，所以
+$$
+\mathcal C_j\cap\{Y\}^\perp=\mathcal C_{j+1}.
+\tag{268.43}
+$$
+
+以上分类对 $j=0$ 同样成立，先强制任何合法链的第一面为 $\mathcal C_1$；再逐步应用，强制全部后续面依次为
+$\mathcal C_2,\ldots,\mathcal C_n$。因此它覆盖所有可能约化链，而非只分析（268.23）给出的特定证书。
+

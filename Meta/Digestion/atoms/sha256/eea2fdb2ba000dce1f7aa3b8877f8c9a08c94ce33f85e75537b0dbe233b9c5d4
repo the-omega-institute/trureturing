@@ -1,0 +1,68 @@
+**证明。** 写 $D=HH^*$，其中 $H:\mathbb C^d\to Q\oplus Q$ 满列秩，按固定输出环境基分成 $H=(H_0,H_1)$。记 $X=L_0L_0^*$、$Y=L_1L_1^*$。第76节的完整块方程为
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{82.4}
+$$
+联立两个对角式，或将该节给出的 $X,Y$ 解直接相减，得到
+$$
+\mu^2Y-\nu^2X
+=\mu\nu s\left(H_0H_0^*-H_1H_1^*\right).
+\tag{82.5}
+$$
+具体地，两个标量恒等式
+$\mu^2+\nu s=\nu^2+\mu s=\Delta$
+使相减后的单位算子项抵消，并给出（82.5）的两个系数。
+
+对非零 $z=(z_0,z_1)$，定义伙伴
+$$
+w=\Theta z:=(-\nu^2\overline{z_1},\ \mu^2\overline{z_0}).
+\tag{82.6}
+$$
+$\Theta$ 反线性且可逆，并满足
+$$
+\Theta^2=-\mu^2\nu^2 I.
+$$
+因此它在复射影射线上定义一个可逆对合；不要求 $z,w$ 在原 Hilbert 度量下正交。
+
+直接展开同一个系数铅笔的乘积，利用（82.4）及（82.5），有
+$$
+\begin{aligned}
+L(z)L(w)^*
+={}&z_0z_1(\mu^2Y-\nu^2X)
++\mu^2z_0^2L_0L_1^*-\nu^2z_1^2L_1L_0^*\\
+={}&s\bigl(\nu z_1H_0-\mu z_0H_1\bigr)
+\bigl(\mu z_0H_0^*+\nu z_1H_1^*\bigr).
+\end{aligned}
+\tag{82.7}
+$$
+右侧两个括号分别从 $\mathbb C^d$ 到 $Q$、从 $Q$ 到 $\mathbb C^d$，所以
+$$
+\operatorname{rank}\bigl(L(z)L(\Theta z)^*\bigr)\le d
+\qquad(z\ne0).
+\tag{82.8}
+$$
+（82.7）右侧的 $z_0,z_1$ 没有额外共轭：它们正是（82.6）经过 $L(w)^*$ 后得到的系数。
+
+若 $r=0$，定理直接成立。设 $r\ge1$，选一个不是恒零的 $r$ 阶子式。它是 $r$ 次齐次多项式，故只有有限条复射影零射线。凡 $\operatorname{rank}L(z)<r$ 的射线都在其中，因此降秩射线集合 $\mathcal B$ 有限。由于 $\Theta$ 可逆，
+$$
+\mathcal B\cup\Theta^{-1}(\mathcal B)
+$$
+也有限。选取不在这个集合中的非零 $z$，便同时有
+$$
+\operatorname{rank}L(z)=\operatorname{rank}L(\Theta z)=r.
+$$
+对这两个同一实现中的系数映射使用基本乘积秩不等式，再由（82.8），得到
+$$
+2r-q\le
+\operatorname{rank}\bigl(L(z)L(\Theta z)^*\bigr)\le d.
+$$
+所以 $2r\le q+d$。结合整数性及 $r\le q$，得到（82.3）的第一个不等式。第76节还给 $q\le3d$，因此
+$$
+\left\lfloor\frac{q+d}{2}\right\rfloor\le2d.
+$$
+证明完毕。
+
+整个证明保留同一固定特征基、同一 $M$ 和同一缺陷分解 $H$。有限坏点的避开确保两个最大秩同时出现；加权伙伴恒等式负责一般 $\mu,\nu$，没有将分别可达的秩或旋转后不同的块合同拼接。
+

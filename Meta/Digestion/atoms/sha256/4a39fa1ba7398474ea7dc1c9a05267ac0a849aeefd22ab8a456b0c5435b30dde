@@ -1,0 +1,33 @@
+**定义 179.1（任务对与闭包算子）。** 令
+
+$$
+\mathfrak T=(\mathcal F,\mathcal C),
+$$
+
+其中 $\mathcal F\subseteq\mathcal X^*$ 是终端效果族、$\mathcal C$ 是允许接口族。定义
+
+$$
+\Gamma(\mathfrak T)
+=
+\operatorname{span}\left\{
+(\Phi_1^*\circ\cdots\circ\Phi_n^*)(H):
+ n\ge0,
+ H\in\mathcal F,
+ \Phi_j\in\mathcal C
+\right\}.
+$$
+
+对任意有限维效果子空间 $V$，记 $\mathsf q_V$ 为按 §175 同样方式由一组基给出的评价坐标；坐标基的改变只产生可逆线性变换。
+
+约定 $n=0$ 时表达式为 $H$。若
+
+$$
+\mathfrak T_1\preceq\mathfrak T_2
+\iff
+\mathcal F_1\subseteq\mathcal F_2
+\quad\text{且}\quad
+\mathcal C_1\subseteq\mathcal C_2,
+$$
+
+就称第二个续接合同扩张了第一个。
+

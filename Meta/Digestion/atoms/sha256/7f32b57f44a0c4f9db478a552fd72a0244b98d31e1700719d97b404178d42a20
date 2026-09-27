@@ -1,0 +1,73 @@
+**命题162.5（共同矩阵证书给统一尾界）。** 上述条件给出实际通道极限 $\mathcal R_{t,z}$，并使其最优解码值
+
+$$
+h(t,z)=
+\min_{\mathcal D}
+\frac12\left\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_{t,z}
+-\mathcal W_*
+\right\|_\diamond
+\tag{162.21}
+$$
+
+联合连续。其中解码器输出共同规范档案空间，稳定目标 $\mathcal W_*$ 来自固定来源。且全部参数、全部 $n\ge3$ 满足
+
+$$
+\boxed{
+|e_n(t)-h(t,g_t^n)|
+\le
+C_pp^{n-1}
++\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{162.22}
+$$
+
+右侧是一份共同的递减 $\zeta_n\to0$。
+
+**证明。** 由互斥投影及交换关系，
+
+$$
+\mathcal F_t^n\mathcal E_t
+=\sum_j\lambda_j(t)^n\Phi_j(t)
++\mathcal F_t^nQ_t\mathcal E_t.
+\tag{162.23}
+$$
+
+将 $n=Lk+r$ 分块，（162.17）作用于余项 Choi 矩阵的每个输出块，给其 Hilbert–Schmidt 范数上界 $B\kappa^k$。第155节相同的二维输入换算给该余项的半 diamond 范数至多
+$\sqrt D\,B\kappa^k$。
+
+对每个固定 $t,z$，由（162.19）可取 $n_\ell\to\infty$ 使
+$g_t^{n_\ell}\to z$。式（162.23）的稳定余项趋零，因此实际通道
+$\mathcal F_t^{n_\ell}\mathcal E_t$
+趋于 $\mathcal R_{t,z}$。故每个相位通道都为 CPTP，并且是同一物理装置的真实子列极限。
+
+这也处理某个 $\Phi_j(t)$ 为零的情形：共同坐标可以冗余，但必须保留上述实际极限证明；不能因删除零模后维数相近，就声称各参数的最小实际相位群相同。
+
+矩阵 $\Phi_j(t)$ 连续，因而 $\mathcal R_{t,z}$ 联合连续。允许解码器集合固定，目标固定，三角不等式直接给最优值的连续性，无需连续选取最优解码器。再加固定来源的规范目标尾界 $C_pp^{n-1}$，即得（162.22）。证毕。
+
+有限终端连续性也由这份物理数据得到。记
+
+$$
+a(t,u)=\frac12\|\omega_t-\omega_u\|_1,
+\qquad
+d(t,u)=\frac12\|\mathcal C_t-\mathcal C_u\|_\diamond.
+$$
+
+初始化比较及逐轮望远镜展开给
+
+$$
+|e_n(t)-e_n(u)|\le a(t,u)+n\,d(t,u).
+\tag{162.24}
+$$
+
+而共同相位坐标给
+
+$$
+\|h_t-h_u\|_\infty
+\le\frac12\sum_j
+\|\Phi_j(t)-\Phi_j(u)\|_\diamond.
+\tag{162.25}
+$$
+
+将（162.24）—（162.25）代入（162.6），得到一份只含有限前缀扰动、外围编码扰动与统一尾证书的参数误差界。
+

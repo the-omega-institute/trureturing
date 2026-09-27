@@ -1,0 +1,87 @@
+**定理132.1（两异常方向均在尾部时的五词收缩）。** 在上述同一实际合同中，五个尾环境只可能为
+
+$$
+\boxed{XXZYY,\qquad XZYYY,\qquad YXYXZ,\qquad YXXXZ,\qquad YXZXY.}
+\tag{132.3}
+$$
+
+这是必要形态的收缩，不是对这五词的实现或排除。本节也不处理小异常方向 $Y$ 不在尾部的另一分支。
+
+### 132.1 带支持标签的完整候选表
+
+所有非大当前位置的实际二维平面都包含于三维 $M$，其中普通方向的平面恰为 $P$。它们两两非零相交，故固定 $V_1$ 使所有已经执行的非大当前位置采用同一后继。
+
+第69、74节的十三个必要三尾词，结合这一共同后继条件，再将两个非大字母分别标为 $Y,Z$，得到下表。第2至5轮以外没有读取后继。
+
+| 第二轮 | 全部带标签候选 |
+|---|---|
+| $X$ | $XXXYZ,XXXZY,XXYXZ,XXZXY,XXYZZ,XXZYY,XYXXZ,XZXXY,XYXZX,XZXYX,XYZZZ,XZYYY$ |
+| $Y$ | $YXYXZ,YXXXZ,YXXZX,YXZXY,YXZXX,YXZXZ$ |
+| $Z$ | $ZXZXY,ZXXXY,ZXXYX,ZXYXZ,ZXYXX,ZXYXY$ |
+
+第127节已经完整排除第三行六词。本节排除第一行除 $XXZYY,XZYYY$ 外的十词，以及第二行的 $YXXZX,YXZXX,YXZXZ$，恰留下（132.3）。
+
+以下使用同一个实际五维一位尾像
+
+$$
+E=V_1S
+=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n,
+\qquad \dim E=5,
+\tag{132.4}
+$$
+
+以及原内积的正交分解
+
+$$
+T=U\cap P^\perp,\qquad U=P\oplus T,\qquad\dim T=2.
+\tag{132.5}
+$$
+
+### 132.2 两项共同几何读数与一个实际固定向量
+
+若 $V_1U=(A_X\otimes X)\oplus(A_Y\otimes Y)$，两个接收平面均二维，而某个实际 $G_i\subset U$ 满足 $V_1G_i=Q\otimes Z$，则逐环境分量读取普通方向的整个二维块给
+
+$$
+Q\subset A_X\cap A_Y,\qquad A_X=A_Y=Q,\qquad V_1U=Q\otimes F.
+\tag{132.6}
+$$
+
+这里 $Z$ 在正交 $X,Y$ 上的两个坐标都非零。这项读数只用于同一个 $V_1U$。
+
+另一个反复使用的事实是：若后期两个平面分别包含于 $L\oplus Q$、$L'\oplus Q$，其中 $L,L'\subset S$ 且 $L\perp L'$，并且两个平面都满投影到同一个非零 $Q$，则它们不可能正交。因为跨内积只剩两个 $Q$ 分量的内积，而两个满投影允许任取同一个非零 $Q$ 分量。
+
+最后，取单位 $r\in S\cap U^\perp$，则
+
+$$
+S=U\oplus\mathbb Cr,\qquad F_X=Q\oplus\mathbb Cr.
+$$
+
+若一份实际候选已推出
+
+$$
+V_1U=Q\otimes F,\qquad E=(Q\otimes F)\oplus(\mathbb Cr\otimes X),
+\tag{132.7}
+$$
+
+固定等距性便迫使存在相位 $\omega$ 满足
+
+$$
+V_1r=\omega r\otimes X,\qquad |\omega|=1.
+\tag{132.8}
+$$
+
+这是同一个接收向量 $r$ 的实际像：输入侧是 $S\ominus U$，输出侧是 $E\ominus(Q\otimes F)$，二者都已由候选确定。
+
+在（132.7）下，若初始两条尾方向为 $X,Y$，则真实 $V_1p=v\otimes X$ 与 $V_1G_2\subset K\otimes Y$ 正交，所以 $p\perp G_2$。同时 $V_0H_1\subset K\otimes X$ 与 $V_0H_2\subset K\otimes Y$ 正交，使 $p\perp H_2$。用 $a^2u+bv\in H_2$、$u\in G_2$、$b\ne0$，得到 $p\perp v$。
+
+实际 $p\in S$、$v\in F_X=Q\oplus\mathbb Cr$。式（132.8）和 $V_1p=v\otimes X$ 使 $p,v$ 沿 $r$ 的系数仅差一个非零相位，特别模相同；而 $p\perp v$ 使这两个系数的乘积为零。因此
+
+$$
+p\in U,\qquad v\in Q.
+\tag{132.9}
+$$
+
+这里没有从单独的接收因子等维推断固定点；（132.8）明确使用整个实际像和原内积的正交补。
+
+### 132.3 两个三次大方向前缀
+

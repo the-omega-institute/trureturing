@@ -1,0 +1,90 @@
+### 59.3 最优修复的边缘参数区间
+
+因果集合闭且迹固定为二，完整事件集合也紧，因此最优修复存在。
+
+先看下端。第 58 节的合法 $xz$ 事件与正性给
+
+$$
+p\ge(\sqrt\varepsilon-e_\varepsilon)_+^2.
+$$
+
+显式修复 $S_\varepsilon$ 给 $e_\varepsilon<9\varepsilon/8$。由于 $\varepsilon\le1/16$，括号为正，并有
+
+$$
+p\ge\varepsilon\left(1-\frac98\sqrt\varepsilon\right)^2
+\ge\frac{529}{1024}\varepsilon.
+$$
+
+另一方面，$c\ge\sqrt{15}/4>15/16$，所以
+
+$$
+1-c=\frac\varepsilon{1+c}
+<\frac{16}{31}\varepsilon
+<\frac{529}{1024}\varepsilon.
+\tag{59.15}
+$$
+
+最后一个比较是 $16\cdot1024=16384<16399=529\cdot31$。故最优修复的 $p>1-c$。
+
+再看上端。令
+
+$$
+d_\varepsilon=N(R_\varepsilon-S_\varepsilon),
+\qquad k=\frac c{1+c},
+\qquad q_* =\frac{k}{1+2k}=\frac c{1+3c},
+\qquad C_*=C(q_*,0).
+$$
+
+第 58 节证明 $d_\varepsilon=h(S_\varepsilon-R_\varepsilon)$，且最大值在 $C_*$ 达到。在 $xy$ 主块，加权算符
+$(C_*\otimes I_D)^{1/2}(S_\varepsilon-R_\varepsilon)(C_*\otimes I_D)^{1/2}/\varepsilon$
+是
+
+$$
+\begin{pmatrix}
+-q_*&-k\sqrt{q_*(1-q_*)}\\
+-k\sqrt{q_*(1-q_*)}&0
+\end{pmatrix}.
+$$
+
+它的单位负特征向量 $n=(n_x,n_y)$ 可取两个分量严格为正：取矩阵的相反数后，非对角严格为正，最大特征向量可取严格正。令
+
+$$
+\ell=\sqrt{q_*}\,n_x\,x+\sqrt{1-q_*}\,n_y\,y,
+\qquad L=|\ell\rangle\langle\ell|,
+\qquad g=(\ell_x+\ell_y)^2>0.
+\tag{59.16}
+$$
+
+$n$ 单位给 $L\preceq C_*\otimes I_D$，故
+
+$$
+E_*=C_*\otimes I_D-L
+$$
+
+合法。它去掉加权差算符唯一的负特征方向，因此
+
+$$
+\operatorname{Tr}((S_\varepsilon-R_\varepsilon)E_*)=d_\varepsilon.
+$$
+
+对任意因果 $S$，正性与对角预算给
+
+$$
+\operatorname{Tr}(SL)
+\le(1-p)(\ell_x+\ell_y)^2=(1-p)g.
+$$
+
+这个不等式在未经平均的 $S$ 上也成立，因为
+$\operatorname{Re}S_{xy}\le\sqrt{S_{xx}S_{yy}}\le1-p$。$S_\varepsilon$ 在该界达到等号，故
+
+$$
+\begin{aligned}
+\operatorname{Tr}((S-R_\varepsilon)E_*)
+&=1-\operatorname{Tr}(R_\varepsilon E_*)-\operatorname{Tr}(SL)\\
+&\ge d_\varepsilon+g(p-\varepsilon).
+\end{aligned}
+\tag{59.17}
+$$
+
+若最优修复有 $p>\varepsilon$，其误差便严格大于 $d_\varepsilon$，与显式修复 $S_\varepsilon$ 矛盾。因此每个最优修复满足 $p\le\varepsilon$。这些参数界针对最优解，不施加于任意非最优修复。
+

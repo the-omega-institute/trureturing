@@ -1,0 +1,65 @@
+### 300.7 真实方差尺度与Bernstein超额积分
+
+真实坐标 $x=hc$、$y=h$ 满足 $c\ge kl>k^3$，因此
+$$
+C-x=(C-h_0)+(h_0-h)+h(1-c)
+\le C-h_0+3\kappa\le3w,
+$$
+$$
+C-y\le C-h_0\le w.
+$$
+单个经验坐标的方差准确满足
+$$
+K\,\mathrm{Var}(X)
+=(C-x)[C(B-1)+x]\le A w,
+$$
+并且 $K\,\mathrm{Var}(Y)\le A w$。
+
+对任意固定阈值 $\tau\in[0,1]$，条件独立性给
+$$
+\mathrm{Var}(X-\tau Y)\le A w/K.
+\tag{300.28}
+$$
+每个组成的中心化加权 Bernoulli 项绝对值至多 $4C_\star/K$。于是标准 Bernstein 给两侧界
+$$
+\Pr\{|Z-\mathbb EZ|\ge s\}
+\le2\exp\!\left[-bK\frac{s^2}{w+s}\right],
+\tag{300.29}
+$$
+其中 $Z=X-\tau Y$ 或其相反数，$b>0$ 统一。
+
+若 $\mathbb EZ\le-b_0\kappa$，其中 $b_0>0$ 是只依赖 $h_\star$ 的固定常数，则
+$$
+\Pr(Z\ge0)\le A e^{-aK\kappa^2/w}
+\tag{300.30}
+$$
+以及
+$$
+\boxed{
+\mathbb E Z_+
+\le A\,\frac w{K\kappa}e^{-aK\kappa^2/w}.
+}
+\tag{300.31}
+$$
+后一式的完整积分理由如下。令
+$\phi(s)=s^2/(w+s)$，则
+$$
+\phi'(s)=\frac{s(2w+s)}{(w+s)^2},\qquad
+\phi''(s)=\frac{2w^2}{(w+s)^3}\ge0.
+$$
+由于 $w\ge\kappa$，在 $s_0=b_0\kappa$ 上有
+$$
+\phi(s_0)\ge c\kappa^2/w,\qquad
+\phi'(s_0)\ge c\kappa/w.
+$$
+因此对全部 $z\ge0$，
+$$
+\phi(s_0+z)\ge c\kappa^2/w+c\kappa z/w.
+$$
+将（300.29）的单侧形式从 $z=0$ 积到无穷，得到（300.31）。
+除以 $\kappa$ 后的前因子正是
+$$
+w/(K\kappa^2)=1/t,
+$$
+所以在 $t\ge A_0$ 下被统一吸收。该推导覆盖大超额区，不仅是局部高斯近似。
+

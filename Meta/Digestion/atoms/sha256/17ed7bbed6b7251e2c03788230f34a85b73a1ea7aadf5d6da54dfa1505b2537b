@@ -1,0 +1,4 @@
+**定义 501.3（跨模块复用承担了什么）。** 项目 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的 joint_faithfulness_tfae 以联合读数、点分离及核的交描述同一完备性。上一项把容量坐标变成一对必须区分的辅助状态，使本批问题能具体接到这组已有接口；没有把项目关于观察的声明原样冒充一个关于概率容量的既有定理。
+
+这个桥梁也说明一种会通方法：先写出对象如何对应，再检查对应是否保留需要的性质。辅助编码能证明指定判据等价，却不意味着编码中每个符号都有原传统中的独立实体与实践。
+

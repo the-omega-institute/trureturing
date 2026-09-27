@@ -1,0 +1,32 @@
+**定理149.2（忠实纯态的定量通道桥）。** 设归一化纯态
+
+$$
+|\Psi\rangle_{RS}
+=\sum_{j=1}^{\dim S}\sqrt{\gamma_j}|r_j\rangle_R|s_j\rangle_S,
+\qquad \gamma:=\min_j\gamma_j>0
+\tag{149.9}
+$$
+
+在 $S$ 上满 Schmidt 秩。对任意线性映射
+$\Delta:\mathcal L(S)\to\mathcal L(Y)$，有
+
+$$
+\boxed{
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1
+\le\|\Delta\|_\diamond
+\le\frac1\gamma
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1.
+}
+\tag{149.10}
+$$
+
+特别地，若 $\Delta=\mathcal A-\mathcal B$ 为两通道之差，且这份测试态的半迹误差为 $e$，则
+
+$$
+\boxed{
+e\le d_\diamond(\mathcal A,\mathcal B)
+\le\min\{1,e/\gamma\}.
+}
+\tag{149.11}
+$$
+

@@ -1,0 +1,55 @@
+**证明：排除三维环境张成。**
+
+反设 $`\eta_3,\eta_4,\eta_5`$ 线性无关。由（30.6），它们分别给 $`V_0`$ 与 $`V_1`$ 像中三个各二维的代数直和项。每个全域像的维数也恰为六，所以
+
+$$
+\begin{aligned}
+V_0(K)&=(G_3\otimes\eta_3)\dotplus
+(G_4\otimes\eta_4)\dotplus(G_5\otimes\eta_5),\\
+V_1(K)&=(Q_3\otimes\eta_3)\dotplus
+(Q_4\otimes\eta_4)\dotplus(Q_5\otimes\eta_5).
+\end{aligned}
+\tag{30.10}
+$$
+
+这里的直和不要求正交。取单射逆像，还得
+
+$$
+K=H_2\dotplus H_3\dotplus H_4
+=G_2\dotplus G_3\dotplus G_4.
+\tag{30.11}
+$$
+
+由（30.2），$`G_2\otimes\eta_2=V_0(H_1)\subseteq V_0(K)`$。先在环境上投影到 $`E/\operatorname{span}\{\eta_3,\eta_4,\eta_5\}`$，得到 $`\eta_2`$ 属于这三个向量的张成。若 $`\eta_2`$ 的 $`\eta_3`$ 系数非零，按独立环境坐标比较，必须有 $`G_2\subseteq G_3`$，与（30.11）矛盾；其 $`\eta_4`$ 系数也同理必须为零。因此
+
+$$
+\eta_2\parallel\eta_5,\qquad
+G_5=G_2,\qquad H_1=H_4.
+\tag{30.12}
+$$
+
+最后一个等式来自 $`V_0(H_1)=G_2\otimes\eta_2=G_5\otimes\eta_5=V_0(H_4)`$ 的子空间等式及单射性。
+
+再由（30.1）、（30.10）比较 $`p\otimes\eta_1`$。同样先得 $`\eta_1`$ 属于后三轮环境张成。因为（30.11）、（30.12）使 $`G_3,G_4,G_5`$ 成为三个代数直和空间，非零 $`p`$ 不可能同时属于其中两个；故 $`\eta_1`$ 必与某一个 $`\eta_j`$ 共线，$`j\in\{3,4,5\}`$。同时比较（30.10）的零位和一位像，可得
+
+$$
+k\in H_{j-1}\cap G_{j-1}.
+\tag{30.13}
+$$
+
+第三、第四终端各有四维总支撑，所以 $`H_3\cap G_3=H_4\cap G_4=0`$。因此只能 $`j=3`$，并由（30.4）得到
+
+$$
+\eta_1\parallel\eta_3,\qquad k\parallel w.
+\tag{30.14}
+$$
+
+吸收环境射线相位后，（30.1）、（30.14）使 $`V_0w`$、$`V_1w`$ 分别等于 $`p\otimes\eta_3`$、$`q\otimes\eta_3`$ 的同一个非零标量倍数。第二来源列在第二终端的系数为 $`x_2^1=aw`$、$`y_2^1=bw`$，所以其第三终端零记忆系数为
+
+$$
+0\ne x_3^1\in\mathbb C(a^2p+bq)\subseteq H_1=H_4.
+\tag{30.15}
+$$
+
+它按定义也属于 $`H_3`$，违反（30.11）的 $`H_3\cap H_4=0`$。故后三轮环境不可能张成三维。
+

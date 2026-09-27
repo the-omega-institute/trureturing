@@ -1,0 +1,6 @@
+**证明。** 把余弦长度盒经 $l_e=\operatorname{arccosh}x_e$ 变成真实长度的紧盒。其闭包在非退化几何域内。使用原来的共体积能量，令
+
+$$\mathcal H_\kappa(l)=\mathcal H(l)+\sum_e\kappa_e l_e.$$
+
+有 $\partial\mathcal H_\kappa/\partial l_e=\kappa_e-K_e(l)$。在任一下侧面，$K_e\ge\eta>\kappa_e$，把该坐标向内增加会降低能量；在上侧面，$K_e\le-\eta<\kappa_e$，向内减小会降低能量。因此紧盒中的最小点为内点，其梯度为零，得到 $K(l)=\kappa$。同一个全局边长向量保证各粘合面的度量一致。非零 $\kappa$ 表示沿边存在规定的锥奇性；边与截断面正交相交，其端点在边界上的总角也为 $2\pi-\kappa_e$。因此不把该度量或其边界称作处处无奇点的双曲度量。
+

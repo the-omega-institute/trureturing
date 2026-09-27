@@ -1,0 +1,24 @@
+**定理307.1（幂次联合校准的取得阈值）。** 固定 \(0<\beta<1\)，存在一个依赖已知 \(B,C,\kappa,g,\beta\) 而不知 \(h\) 的协议，对每个合法 \((j,r,h)\) 有
+$$
+\mathbb E_{j,r,h}N\le A_\beta\mathcal O(h),\qquad
+\mathbb E_{j,r,h}T\le A_\beta\mathcal O(h).
+\tag{307.5}
+$$
+对每个固定 \(\beta>0,h>0\)，任意成功协议都有
+$$
+\sup_{j,r}\mathbb E_{j,r,h}N\ge a\mathcal O(h),\qquad
+\sup_{j,r}\mathbb E_{j,r,h}T\ge a\mathcal O(h).
+\tag{307.6}
+$$
+此处常数 \(a>0\) 可取为不依赖 \(\beta\)。
+
+固定 \(\beta\ge1\) 及已知 \(B,C,\kappa,g\)，任何同一个未知 \(h\) 成功协议沿 \((j,r)=(0,1)\) 有
+$$
+\limsup_{h\downarrow0}
+\frac{h^2\mathbb E_{0,1,h}T}{\log\log(1/h)}>0.
+\tag{307.7}
+$$
+因而不可能在全部充分小 \(h\) 上以同一个常数控制 \(\mathbb E_{0,1,h}T/\mathcal O(h)\)，更不可能控制最坏世界的该比值。
+
+式（307.5）逐世界成立；式（307.6）仅断言固定 \(h\) 下的最坏世界；式（307.7）是固定协议与固定其余参数的子序列必要性，不能改为逐点双对数下界。
+

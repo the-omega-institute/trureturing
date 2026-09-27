@@ -1,0 +1,37 @@
+**定义 22.1（指定特征与固定查询接口）。** 设 $G$ 为有限阿贝尔群，以加法记群运算；$\chi:G\twoheadrightarrow C_2$ 为指定满同态，$H=\ker\chi$，$r\ge4$。本节的实际来源、目标与完整旧载体明确规定为
+
+$$
+S=G^r\times H,\qquad Y=\sum_{i=1}^r x_i,\qquad
+ t=Y+h,\qquad L_i=(x_i,t),\qquad a=x_1.
+\tag{22.10}
+$$
+
+这里 $h$ 是 $H$ 中的元素；规定完整载体 $L_i$ 不包含任何关于未指定旧任务的最小性断言。来源在一次调用期间固定，接收端读取 $(a,t)$，先作一次公共查询，再接收同时、局部的回复：
+
+$$
+c=q(a,t)\in C,\qquad e_i(x_i,t,c)\in A_i\quad(2\le i\le r),\qquad
+\Phi_q(x,h)=(a,t,e_2(x_2,t,c),\ldots,e_r(x_r,t,c)).
+\tag{22.11}
+$$
+
+$C,A_2,\ldots,A_r$ 是预先声明的非空有限字母表，$q:G^2\to C$ 固定，$e_i:G^2\times C\to A_i$ 为确定性映射。发送者只读取自己的 $(x_i,t)$ 与公共 $c$，不能读取其他回复；没有另存历史、额外侧信息、来源依赖的触发、时序或沉默信道。精确性指存在 $D:G^2\times\prod_{i=2}^r A_i\to G$，在全部实际 $S$ 上满足 $D\circ\Phi_q=Y$。查询可由接收端重算，却仍按其声明宽度收费：
+
+$$
+w_0=\lceil\log_2|C|\rceil,\qquad w_i=\lceil\log_2|A_i|\rceil,\qquad
+W_{\rm in}=\sum_{i=2}^r w_i,\qquad W_{\rm tot}=w_0+W_{\rm in}.
+\tag{22.12}
+$$
+
+广播只计一次，各时隙按固定宽度计费，未用标签也收费；单元素字母表允许零宽时隙。本节的最小值只在这个一次查询、同时回复、接收端输出的确定性接口内取，不是期望码长、渐近速率或任意交互下界。
+
+记 $B(t,c)=\{a:q(a,t)=c\}$、$f_i^{t,c}(x)=e_i(x,t,c)$；$B(t,c)\ne\varnothing$ 称可达分支。固定 $a\in B(t,c)$ 后，实际发送端纤维恰为
+
+$$
+\mathcal P_{a,t}=\left\{(x_2,\ldots,x_r):
+ \chi(a)+\sum_{i=2}^r\chi(x_i)=\chi(t)\right\},\qquad
+h=t-a-\sum_{i=2}^r x_i\in H.
+\tag{22.13}
+$$
+
+每个纤维元组对应唯一来源。以下使用的有限支持判据是：同一实际支持内，相同回复元组必须给出相同目标值。它是 Deylam Salehi、Chaouchi，*Support-Aware Telemetry Compression for 5G Positioning via Conditional Conflict Graphs*，[arXiv:2609.12933v1](https://arxiv.org/pdf/2609.12933v1)，PDF第2页 Proposition 1 的乘积分割判据；同页 Definition 1 的条件冲突图固定其他编码后，也比较这种实际支持上的冲突。这里在每个固定 $(a,t,c)$ 上将其支持取为 $\mathcal P_{a,t}$、目标取为 $a+\sum_{i=2}^r x_i$。仅借用该有限精确性判据，不移用其应用模型或速率结论，也不从广播、全体输出或有序通信模型移入下界。
+

@@ -1,0 +1,402 @@
+**定理 416.1（可分成功预算的精确值与可达到的单向局部界）。** 若 $\tfrac12\le r^2\le2$，置
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+\qquad \frac{2\sqrt2}{3}\le\kappa\le1.
+$$
+
+每个满足五个平方重叠相等的单位向量 $b=b_0e_0+b_1e_1+b_2e_2\in W_2$ 都有纯二量子比特并发度（concurrence）
+
+$$
+C(b)=|2b_0b_2-b_1^2|=\kappa.
+$$
+
+有限可分仪器的最大总精确成功概率为
+
+$$
+\boxed{\displaystyle \eta_{\mathrm{SEP}}(r)=\frac1{3\kappa}.}
+$$
+
+该值由一个包含六个接受标签和六个拒绝标签的完整乘积 Kraus 仪器取得，每个校正接受分支为 $\operatorname{id}_S/(18\kappa)$。另有一个 Alice 六结果、Bob 条件二结果的单向局部树，完整列出十二个实际叶子；六个接受叶子各给出
+$\operatorname{id}_S/[9(1+\kappa)]$。因此
+
+$$
+\boxed{\displaystyle
+\frac{2}{3(1+\kappa)}
+\le\eta_{\to}(r)\le\eta_{\mathrm{fin}}(r)
+\le\eta_{\mathrm{SEP}}(r)=\frac1{3\kappa}
+<\eta(G(r))=1.}
+$$
+
+左端是该单向树实际达到的概率。在两个端点 $r^2=1/2,2$，$\kappa=1$，单向、有限 LOCC 与可分类的最大值都为 $1/3$，且均取得。若 $r^2<1/2$ 或 $r^2>2$，则
+
+$$
+\eta_{\to}(r)=\eta_{\mathrm{fin}}(r)=\eta_{\mathrm{SEP}}(r)=\eta(G(r))=0.
+$$
+
+闭区间内部的 $\kappa<1$ 使上述局部下、上界不同；这组界本身不确定内部的单向或有限 LOCC 最优值。两个显式构造的分支等式都在全部矩阵及任意未操作的有限参考上成立。
+
+证明。先取 $1/2\le r^2\le2$。定理 413.1 给出单位平坦见证，并说明每个这样的见证都有
+
+$$
+|b_0|^2=|b_1|^2=|b_2|^2=
+|\langle b|q_i\rangle|^2=\frac13.
+$$
+
+为计算其 concurrence，按第 407、413 节的 bra 共轭约定，调整无关的整体相位后写
+
+$$
+\overline{b_0}=\frac1{\sqrt3},\qquad
+\overline{b_1}=\frac{e^{i\phi}}{\sqrt3},\qquad
+\overline{b_2}=\frac{e^{i\psi}}{\sqrt3}.
+$$
+
+纬线幅度为
+
+$$
+\langle b|q_{3+j}\rangle
+ =\frac{1+\sqrt2\,r e^{i\phi}\omega^j+r^2e^{i\psi}\omega^{2j}}
+        {\sqrt3(1+r^2)}.
+$$
+
+复用定理 413.1 中三点 Fourier 的非恒定系数为零条件，除以 $r>0$ 后得到
+
+$$
+\sqrt2 e^{i\phi}+\sqrt2 r^2e^{i(\psi-\phi)}
+                    +r e^{-i\psi}=0.
+$$
+
+前两项之和的模等于 $r$，故
+
+$$
+2+2r^4+4r^2\cos(\psi-2\phi)=r^2,
+\qquad
+\cos(\psi-2\phi)=\frac14-\frac{r^2+r^{-2}}2.
+$$
+
+这里使用 Wootters，[*Entanglement of Formation of an Arbitrary State of Two Qubits*, quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7) 的纯态 concurrence；该文式 (4)–(5) 的自旋翻转在固定计算基中作用。对本处坐标 $(b_0,b_1/\sqrt2,b_1/\sqrt2,b_2)$ 代入，正好给出 $C(b)=|2b_0b_2-b_1^2|$，所以
+
+$$
+C(b)^2
+ =\frac{|2e^{-i\psi}-e^{-2i\phi}|^2}{9}
+ =\frac{5-4\cos(\psi-2\phi)}9
+ =\frac{4+2(r^2+r^{-2})}9.
+$$
+
+当 $r^2\in[1/2,2]$ 时，$2\le r^2+r^{-2}\le5/2$，得到所述 $\kappa$ 范围；上端等号只在 $r^2=1/2,2$ 取得。此处只应用纯态量的定义与上述代入，不使用混态纠缠形成量的结论。
+
+现在对任意符合约定的有限可分仪器证明上界。将每个 $A_{yk}^\dagger A_{yk}$ 与 $B_{yk}^\dagger B_{yk}$ 分别作有限谱分解，吸收非负权重，得到
+
+$$
+E_y=\sum_{\nu}|v_{y\nu}\rangle\langle v_{y\nu}|,
+\qquad v_{y\nu}\in R_A\otimes R_B\text{ 为未必归一化的乘积向量}.
+$$
+
+可去掉零向量；$\nu$ 只合并原隐藏指标和两个谱指标，仍不是实际结果。由第 411 节的输出迹公式，对 $E_{ij}=|i\rangle\langle j|$ 有
+
+$$
+\begin{aligned}
+\mathcal M_y(E_{ij})&=\langle q_j|E_y|q_i\rangle E_{ij},\\
+K_{y\nu}&=\operatorname{diag}\bigl(\langle v_{y\nu}|q_1\rangle,
+                         \ldots,\langle v_{y\nu}|q_5\rangle\bigr),\\
+\mathcal M_y(X)&=\sum_{\nu}K_{y\nu}XK_{y\nu}^\dagger.
+\end{aligned}
+$$
+
+直接应用定理 411.1 证明中的正 Choi 秩一支撑论证，接受和为 $p\operatorname{id}_S$ 迫使
+
+$$
+U_yK_{y\nu}=c_{y\nu}I_S
+\quad(y\in Y_{\mathrm s}),
+\qquad
+p=\sum_{y\in Y_{\mathrm s},\nu}|c_{y\nu}|^2.
+$$
+
+这一步使用每个实际 $y$ 原有的同一个 $U_y$，不允许谱细化之后另选反馈。所有项为正，因而不同隐藏项不能通过相消规避这个结论。
+
+非零乘积向量不可能位于反对称线：$\beta e_-$ 的二量子比特系数矩阵为
+
+$$
+\begin{pmatrix}0&\beta/\sqrt2\\-\beta/\sqrt2&0\end{pmatrix},
+\qquad \det=\frac{\beta^2}{2},
+$$
+
+当 $\beta\ne0$ 时秩为二，而非零乘积向量的系数矩阵秩为一。又 $q_1=e_0$、$q_2=e_2$，任一纬线 $q_{3+j}$ 的 $e_1$ 系数非零，所以五个 $q_i$ 张成 $W_2$。若接受项的 $c_{y\nu}=0$，由酉性有 $K_{y\nu}=0$，从而 $P_Wv_{y\nu}=0$；刚才的行列式计算迫使该乘积向量为零。因此每个保留的非零接受向量都具有非零对称投影。
+
+暂略下标，写该向量为
+
+$$
+v=\alpha b+\beta e_-,\qquad
+\alpha=\|P_Wv\|>0,\qquad b=\frac{P_Wv}{\alpha}\in W_2.
+$$
+
+由 $UK=cI_S$，$|\langle v|q_i\rangle|^2=|c|^2$ 对全部 $i$ 成立；$b$ 因此为单位平坦见证。定理 413.1 给出
+
+$$
+|c|^2=\frac{|\alpha|^2}{3}.
+$$
+
+$v$ 的系数矩阵及乘积秩一条件为
+
+$$
+\begin{pmatrix}
+\alpha b_0&(\alpha b_1+\beta)/\sqrt2\\
+(\alpha b_1-\beta)/\sqrt2&\alpha b_2
+\end{pmatrix},
+\qquad
+0=\alpha^2b_0b_2-\frac{\alpha^2b_1^2-\beta^2}{2}.
+$$
+
+故
+
+$$
+\beta^2=\alpha^2(b_1^2-2b_0b_2),
+\qquad |\beta|^2=\kappa|\alpha|^2.
+$$
+
+在完整空间的完备等式 $\sum_yE_y=I_{R_2}$ 上取 $e_-$ 的二次型，拒绝项仍为非负，于是
+
+$$
+1=\sum_{y,\nu}|\langle e_-|v_{y\nu}\rangle|^2
+ \ge\sum_{y\in Y_{\mathrm s},\nu}|\beta_{y\nu}|^2
+ =\kappa\sum_{y\in Y_{\mathrm s},\nu}|\alpha_{y\nu}|^2
+ =3\kappa p.
+$$
+
+$p=0$ 时同一上界直接成立。这里的反对称方向虽不被 $q_i$ 占据，却因乘积条件而消耗真实仪器的完备性预算；若只要求 $W_2$ 上完备，就会删掉这个约束。
+
+下面构造达到上界的有限可分仪器。取定理 413.1 的任一单位平坦 $b$，并复用定理 415.1 的平坦正交轨道
+
+$$
+De_\ell=\omega^\ell e_\ell,\qquad
+b_a=D^ab\quad(a=0,1,2),\qquad
+\sum_{a=0}^2|b_a\rangle\langle b_a|=P_W.
+$$
+
+以下将固定 $b$ 的坐标另记为 $c_\ell=\langle e_\ell|b\rangle$，以区别轨道向量 $b_a$。选择一个复平方根 $d_0$，并固定相位一致的三个根
+
+$$
+d_0^2=c_1^2-2c_0c_2,\qquad
+ d_a=\omega^a d_0,\qquad
+ d_a^2=(b_a)_1^2-2(b_a)_0(b_a)_2,\qquad |d_a|^2=\kappa.
+$$
+
+定义六个单位向量及两个正权重
+
+$$
+v_{a,\pm}=\frac{b_a\pm d_a e_-}{\sqrt{1+\kappa}},
+\qquad
+\lambda=\frac{1+\kappa}{6\kappa},
+\qquad
+\mu=\frac{1-1/(3\kappa)}2.
+$$
+
+其范数为一；上面的行列式计算说明每个 $v_{a,\pm}$ 都是乘积向量。六个接受效果的和为
+
+$$
+\begin{aligned}
+E_{\mathrm s}
+ &=\lambda\sum_{a=0}^2\sum_{\epsilon\in\{+,-\}}
+                      |v_{a,\epsilon}\rangle\langle v_{a,\epsilon}|\\
+ &=\frac{2\lambda}{1+\kappa}
+       \sum_{a=0}^2\bigl(|b_a\rangle\langle b_a|+|d_a|^2P_-\bigr)\\
+ &=\frac{P_W}{3\kappa}+P_-.
+\end{aligned}
+$$
+
+为在原始空间上补全全部失败结果，取三个 Pauli 基的六个单位态
+
+$$
+\mathcal U=\left\{|0\rangle,|1\rangle,
+\frac{|0\rangle+|1\rangle}{\sqrt2},
+\frac{|0\rangle-|1\rangle}{\sqrt2},
+\frac{|0\rangle+i|1\rangle}{\sqrt2},
+\frac{|0\rangle-i|1\rangle}{\sqrt2}\right\}.
+$$
+
+以 $P_u=|u\rangle\langle u|$ 记投影。每个 Pauli 算子 $\sigma_j$ 的两本征态投影为 $(I_2\pm\sigma_j)/2$；直接相加二阶矩，在计算基 $(00,01,10,11)$ 中得到
+
+$$
+\begin{aligned}
+\sum_{u\in\mathcal U}|u\otimes u\rangle\langle u\otimes u|
+ &=\frac32 I_{R_2}+\frac12\sum_{j=1}^3\sigma_j\otimes\sigma_j\\
+ &=\begin{pmatrix}
+2&0&0&0\\0&1&1&0\\0&1&1&0\\0&0&0&2
+\end{pmatrix}
+ =2P_W.
+\end{aligned}
+$$
+
+这正是 Roy–Scott，[*Weighted complex projective 2-designs from bases: optimal state determination by orthogonal measurements*, quant-ph/0703025v2](https://arxiv.org/abs/quant-ph/0703025v2)，式 (2.3) 在维数二、二阶矩、六个权重均为 $1/6$ 时的归一化恒等式；该文 Theorem 3.3 前关于完整互无偏基并集的讨论适用于三个 Pauli 基。这里所需的等式已由直接矩阵求和给出。
+
+以六个拒绝效果 $\mu|u\otimes u\rangle\langle u\otimes u|$ 补全，就有
+
+$$
+E_{\mathrm s}+\mu\sum_{u\in\mathcal U}|u\otimes u\rangle\langle u\otimes u|
+ =\frac{P_W}{3\kappa}+P_-+\left(1-\frac1{3\kappa}\right)P_W
+ =I_{R_2}.
+$$
+
+为将这些效果明确实现为完全正仪器，各选单位因子
+$v_{a,\epsilon}=\xi_{a,\epsilon}\otimes\zeta_{a,\epsilon}$。两个局部输出都取 $\mathbb C^2$，空白态为 $|0\rangle$。给十二个实际标签
+
+$$
+Y=(\{\mathrm s\}\times\{0,1,2\}\times\{+,-\})
+       \sqcup(\{\mathrm f\}\times\mathcal U)
+$$
+
+分别指定单个乘积重置 Kraus 算子
+
+$$
+\begin{aligned}
+L_{\mathrm s,a,\epsilon}
+ &=\bigl(\sqrt\lambda\,|0\rangle\langle\xi_{a,\epsilon}|\bigr)
+       \otimes\bigl(|0\rangle\langle\zeta_{a,\epsilon}|\bigr),\\
+L_{\mathrm f,u}
+ &=\bigl(\sqrt\mu\,|0\rangle\langle u|\bigr)
+       \otimes\bigl(|0\rangle\langle u|\bigr),\\
+\mathcal I_y(Z)&=L_yZL_y^\dagger.
+\end{aligned}
+$$
+
+其 $L_y^\dagger L_y$ 恰为上述效果，故全部十二个分支之和保迹。接受集合就是前六个标签，拒绝反馈可取 $I_S$。令
+
+$$
+z_{ai}=\sqrt3\,\langle b_a|q_i\rangle,\qquad
+|z_{ai}|=1,\qquad
+U_{\mathrm s,a,\epsilon}=U_a
+   :=\operatorname{diag}(\overline z_{a1},\ldots,\overline z_{a5}).
+$$
+
+因为 $q_i\perp e_-$，两个符号下的幅度完全相同，迹掉重置输出后，接受系统 Kraus 算子为
+
+$$
+\begin{aligned}
+K_{\mathrm s,a,\epsilon}
+ &=\sqrt\lambda\,
+   \operatorname{diag}\bigl(\langle v_{a,\epsilon}|q_1\rangle,
+                              \ldots,\langle v_{a,\epsilon}|q_5\rangle\bigr)\\
+ &=\frac1{\sqrt{18\kappa}}\operatorname{diag}(z_{a1},\ldots,z_{a5}),
+\qquad U_aK_{\mathrm s,a,\epsilon}=\frac{I_S}{\sqrt{18\kappa}}.
+\end{aligned}
+$$
+
+每条校正接受映射遂为 $\operatorname{id}_S/(18\kappa)$，六条相加达到 $1/(3\kappa)$。这给出可分类的最大值取得；此十二标签仪器的乘积 Kraus 表示并未给出一棵 LOCC 实施树。
+
+另行构造单向树。为使全部局部相位相容，令
+
+$$
+H=\operatorname{diag}(1,\omega)\quad\text{作用于 }\mathbb C^2.
+$$
+
+$H\otimes H$ 在 $W_2$ 上为 $D$，并把 $e_-$ 送到 $\omega e_-$。选择单位因子 $x,y$，使 $v_{0,+}=x\otimes y$ 精确成立，而非仅相差整体相位。这样的选择可直接写出：由于 $c_0\ne0$，令
+
+$$
+\tau=\frac{c_1-d_0}{\sqrt2\,c_0},\qquad
+x=\frac{(1,\tau)}{\sqrt{1+|\tau|^2}},\qquad
+y=\frac{\sqrt{1+|\tau|^2}}{\sqrt{1+\kappa}}
+                   \left(c_0,\frac{c_1+d_0}{\sqrt2}\right).
+$$
+
+由 $d_0^2=c_1^2-2c_0c_2$，$v_{0,+}$ 的系数矩阵第二行是第一行的 $\tau$ 倍，因此这两个向量确实给出 $v_{0,+}=x\otimes y$。$\|x\|=1$ 且 $\|v_{0,+}\|=1$，故 $\|y\|=1$。交换两个因子固定 $b$、反转 $e_-$，于是 $v_{0,-}=y\otimes x$ 也精确成立。取
+
+$$
+x_a=H^ax,\qquad y_a=H^ay\quad(a=0,1,2).
+$$
+
+先前固定的 $d_a=\omega^ad_0$ 保证
+
+$$
+v_{a,+}=x_a\otimes y_a,\qquad
+v_{a,-}=y_a\otimes x_a.
+$$
+
+两极坐标的相等模长给出
+
+$$
+|\langle0|x\rangle\langle0|y\rangle|^2=\frac{|c_0|^2}{1+\kappa}
+ =\frac1{3(1+\kappa)}
+ =\frac{|c_2|^2}{1+\kappa}=|\langle1|x\rangle\langle1|y\rangle|^2.
+$$
+
+令 $s=|\langle0|x\rangle|^2$、$t=|\langle0|y\rangle|^2$，单位性使 $st=(1-s)(1-t)$，所以 $s+t=1$。循环相位和 $1+\omega+\omega^2=0$ 消去非对角元，因此
+
+$$
+\sum_{a=0}^2\bigl(|x_a\rangle\langle x_a|+|y_a\rangle\langle y_a|\bigr)
+ =3\begin{pmatrix}s+t&0\\0&2-s-t\end{pmatrix}=3I_2.
+$$
+
+Alice 的六个实际结果为 $(a,\epsilon)\in\{0,1,2\}\times\{+,-\}$。令
+
+$$
+\begin{aligned}
+h_{a,+}&=x_a,&g_{a,+}&=y_a,\\
+h_{a,-}&=y_a,&g_{a,-}&=x_a,\\
+A_{a,\epsilon}&=\frac1{\sqrt3}|0\rangle\langle h_{a,\epsilon}|,
+&\sum_{a,\epsilon}A_{a,\epsilon}^\dagger A_{a,\epsilon}&=I_2.
+\end{aligned}
+$$
+
+Alice 将 $(a,\epsilon)$ 发给 Bob。对每个单位 $g=(g_0,g_1)$ 固定单位正交向量
+$g^\perp=(-\overline{g_1},\overline{g_0})$。Bob 条件于收到的标签，执行伙伴投影及其补投影，并将输出重置；两个 Kraus 算子为
+
+$$
+B_{a,\epsilon,0}=|0\rangle\langle g_{a,\epsilon}|,
+\qquad
+B_{a,\epsilon,1}=|0\rangle\langle g_{a,\epsilon}^\perp|,
+\qquad
+\sum_{t=0}^1 B_{a,\epsilon,t}^\dagger B_{a,\epsilon,t}=I_2.
+$$
+
+完整树的十二个实际叶子为 $(a,\epsilon,t)$。其记录 Kraus 算子是
+
+$$
+L^{\to}_{a,\epsilon,t}=A_{a,\epsilon}\otimes B_{a,\epsilon,t},
+\qquad
+\sum_{a,\epsilon,t}(L^{\to}_{a,\epsilon,t})^\dagger
+                             L^{\to}_{a,\epsilon,t}
+ =\sum_{a,\epsilon}A_{a,\epsilon}^\dagger A_{a,\epsilon}\otimes I_2
+ =I_{R_2}.
+$$
+
+只接受 $t=0$ 的六个叶子；$t=1$ 的六个叶子全部保留为失败，终端反馈取 $I_S$。两个实际结果都到达系统反馈端。每个接受叶子的效果为
+
+$$
+(L^{\to}_{a,\epsilon,0})^\dagger L^{\to}_{a,\epsilon,0}
+ =\frac13|v_{a,\epsilon}\rangle\langle v_{a,\epsilon}|.
+$$
+
+由于每条叶子的两个记录输出均重置到 $|0\rangle$，接受系统 Kraus 算子及校正为
+
+$$
+K^{\to}_{a,\epsilon,0}
+ =\frac1{3\sqrt{1+\kappa}}\operatorname{diag}(z_{a1},\ldots,z_{a5}),
+\qquad
+U_aK^{\to}_{a,\epsilon,0}=\frac{I_S}{3\sqrt{1+\kappa}}.
+$$
+
+这是一棵实际的 Alice 到 Bob 单向树，六条接受映射之和为
+$2\operatorname{id}_S/[3(1+\kappa)]$。它与前一个可分仪器采用不同的效果权重及失败补全。
+
+两个构造的全参考恢复可由同一分支等式直接核对。对任一接受叶子，若 $UK=\gamma I_S$，则对每个有限维 $F$ 和全部 $X_{FS}$，
+
+$$
+(\operatorname{id}_F\otimes\operatorname{Ad}_U\circ\mathcal M)(X_{FS})
+ =(I_F\otimes UK)X_{FS}(I_F\otimes UK)^\dagger
+ =|\gamma|^2X_{FS}.
+$$
+
+在可分构造中 $|\gamma|^2=1/(18\kappa)$，在单向树中
+$|\gamma|^2=1/[9(1+\kappa)]$。逐接受标签相加分别给出同一个输入无关的总标量 $p=1/(3\kappa)$ 和 $p=2/[3(1+\kappa)]$；对联合密度矩阵归一化后，系统与参考的整个联合态恢复。
+
+类别包含关系和可分上界给出所述局部夹界；定理 415.1 在同一 $J_2$ 和完整记录接口下给出 $\eta(G(r))=1$。又 $1/(3\kappa)\le1/(2\sqrt2)<1$，因此这里获得了对所有有限局部协议统一成立的严格成功率上界。第 407 节的正成功存在性本身不比较最优总概率；第 405 节的有限树确定恢复障碍也不能单独替代这个统一概率界。
+
+在 $r^2=1/2,2$，$\kappa=1$，上下界均为 $1/3$，且上述单向树取得等号。区间内部 $\kappa<1$，两界之差为
+
+$$
+\frac1{3\kappa}-\frac{2}{3(1+\kappa)}
+ =\frac{1-\kappa}{3\kappa(1+\kappa)}>0,
+$$
+
+故这组夹界不识别内部局部最优值。最后，区间外由定理 413.1 排除同一两记录接口的所有正成功联合协议，第 415 节给出其联合值为零；三个受限类别均包含于联合类，空接受集合又达到零，所以它们的值也全为零。完整空间中未占据的反对称线通过乘积向量的行列式关系限制可分成功权重，而单向树的条件测量与全部失败叶子给出可实际达到的局部下界。证毕。
+

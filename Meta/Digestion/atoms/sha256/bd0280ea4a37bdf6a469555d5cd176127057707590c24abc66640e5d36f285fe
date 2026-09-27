@@ -1,0 +1,100 @@
+**定理53.3（环境交叠的显式正下界）。** 对 $n=5,6$，上述七维、第二终端秩二分支必须满足
+$$
+\boxed{
+\|P_F\eta_n\|^2
+\ge\frac{(\sigma_{n-1}-\kappa)^2}{4}>0.
+}
+\tag{53.9}
+$$
+所以第五、第六轮新环境都不能正交于第三轮排出附加因子的环境 $F$。
+
+证明。记 $m=n-1\ge4$、$s_n=\|P_F\eta_n\|^2$。由（53.1）、（53.2）及 $V_0$ 等距，对任意单位 $\xi\in H_m$ 有
+$$
+\|P_{H\otimes\Gamma}\xi\|^2
+=\|P_{A\otimes F}V_0\xi\|^2
+=s_n\|P_A\widehat V_0\xi\|^2\le s_n.
+\tag{53.10}
+$$
+这里 $\widehat V_0$ 是 $V_0$ 在该实际域上去掉共同单位环境 $\eta_n$ 后的等距。同理，对任意单位 $\gamma\in G_m$，
+$$
+\|P_{G\otimes\Gamma}\gamma\|\le\sqrt{s_n}.
+\tag{53.11}
+$$
+
+取
+$$
+h=\frac{\overline b\,u-\overline a^{\,2}v}{c}.
+$$
+则 $H^\perp\cap Q=\mathbb Ch$、$G^\perp\cap Q=\mathbb Cv$，且 $|\langle h,v\rangle|=\kappa$。$H_m$ 二维而 $Z$ 一维，故可选单位向量 $\zeta\in H_m\cap Z^\perp$。将它正交分解为
+$$
+\zeta=\zeta_H+\zeta_h,
+\qquad \zeta_H\in H\otimes\Gamma,
+\quad \zeta_h\in\mathbb Ch\otimes\Gamma.
+$$
+式（53.10）给 $\|\zeta_H\|\le\sqrt{s_n}$，而 $\|\zeta_h\|\le1$。记 $W=(G\otimes\Gamma)^\perp=(\mathbb Cv\otimes\Gamma)\oplus Z$，则
+$$
+\|P_W\zeta\|
+\le\|P_W\zeta_h\|+\|\zeta_H\|
+\le\kappa+\sqrt{s_n}.
+\tag{53.12}
+$$
+对任意单位 $\gamma\in G_m$，沿 $W\oplus(G\otimes\Gamma)$ 分解内积，并用（53.11），得到
+$$
+|\langle\gamma,\zeta\rangle|
+\le\|P_W\zeta\|
++\|P_{G\otimes\Gamma}\gamma\|\,
+ \|P_{G\otimes\Gamma}\zeta\|
+\le\kappa+2\sqrt{s_n}.
+$$
+取单位 $\gamma$ 的上确界，便有
+$$
+\|P_{G_m}\zeta\|\le\kappa+2\sqrt{s_n}.
+\tag{53.13}
+$$
+
+实际来源的内积给出反向下界。对两个来源初始标签，零记忆系数范数平方分别为 $t_m,t_{m-1}$。不同标签的档案支撑正交，精确可逆编码保持这些内积。沿第26节的同轮零、一输入像正交计算，$P_{H_m}P_{G_m}|_{H_m}$ 的两个特征值恰为
+$$
+\lambda_m=x\frac{t_{m-1}}{t_m},\qquad
+\lambda_{m-1}=x\frac{t_{m-2}}{t_{m-1}}.
+\tag{53.14}
+$$
+因此每个单位 $\zeta\in H_m$ 都满足 $\|P_{G_m}\zeta\|\ge\sigma_m$。与（53.13）合并给
+$$
+\sigma_m\le\kappa+2\sqrt{s_n}.
+$$
+
+最后证明严格正间隙。由（53.7），$t_j>x$ 对全部 $j\ge2$ 成立。对任意 $j\ge3$，利用 $d+xy=1$，有
+$$
+\lambda_j>\kappa^2
+\iff d t_{j-1}>x(1-y t_{j-1})
+\iff t_{j-1}>x.
+\tag{53.15}
+$$
+$m\ge4$ 使（53.14）的两个指标都至少三，所以 $\sigma_m>\kappa$。移项、平方即得（53.9）。证明完毕。
+
+这两个终端可以使用同一个显式正界。式（53.7）的闭式为
+$$
+t_j=\frac{1+y(-y)^j}{1+y},\qquad
+\lambda_j-x=\frac{xy(-y)^{j-1}}{t_j}.
+$$
+故 $\lambda_3,\lambda_5>x>\lambda_4$，从而
+$$
+\sigma_4=\sigma_5=\sqrt{x\frac{t_3}{t_4}},
+\qquad
+\|P_F\eta_5\|^2,\ \|P_F\eta_6\|^2
+\ge\frac14\left(\sqrt{x\frac{t_3}{t_4}}-
+\frac{x}{\sqrt{x^2+y}}\right)^2>0.
+\tag{53.16}
+$$
+
+第四轮的前一终端是 $m=3$，其较小特征值恰为 $\lambda_2=x^2/d=\kappa^2$，所以上述主角估计在该轮本身只给零下界。不过，六终端完整合同下的模式限制（53.5）给出额外推论：$FFF$ 中 $\|P_F\eta_4\|^2=1$；$OFO$、$OOO$ 中 $\eta_4\parallel\eta_6$，单位向量的投影范数相同。式（53.16）的右端至多 $1/4$，因为 $0\le\kappa<\sigma_4\le1$。故三个纯尾环境共同满足
+$$
+\boxed{
+\|P_F\eta_n\|^2
+\ge\frac14\left(\sqrt{x\frac{t_3}{t_4}}-
+\frac{x}{\sqrt{x^2+y}}\right)^2>0,
+\qquad n=4,5,6.
+}
+$$
+第四轮的正界是结合环境模式继承的结果，没有把 $m=3$ 本身的主角间隙改称严格正。外部射线虽然不包含于 $F$，却不能正交于 $F$。这些条件都是必要条件，未被宣称为充分条件。
+

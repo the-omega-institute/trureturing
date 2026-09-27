@@ -1,0 +1,36 @@
+### 270.8 一维参考端点
+
+$n=1$ 时 $J=0$、$M=1$、$Q=1/2$。§269的常数成为
+$$
+a=\frac1{16},\qquad k=\frac1{64},\qquad \delta_h=\frac{h^2}{64},
+$$
+$$
+\Omega_*=\frac12
+\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+\Omega_h=
+\begin{pmatrix}
+1/2+h/16&(1-h^2/64)/2\\
+(1-h^2/64)/2&1/2-h/16
+\end{pmatrix}.
+\tag{270.50}
+$$
+对 $0<h\le1$，
+$$
+\det\Omega_h=\frac{h^2}{256}-\frac{h^4}{16384}>0.
+\tag{270.51}
+$$
+理想支撑为 $(1,1)/\sqrt2$，因此
+$$
+\ell_h=\frac{h^2}{128},\qquad
+\mathsf F(\Omega_*,\Omega_h)^2=1-\frac{h^2}{128}.
+\tag{270.52}
+$$
+输入仍具有二阶保真度损失。输出满足
+$$
+\lambda_a=\lambda_b=\frac1{\sqrt2},
+\qquad \Gamma_1=1,\qquad c=\frac1{\sqrt2}.
+\tag{270.53}
+$$
+故输入预算为 $\Theta(h^{-2})$，输出预算为 $\Theta(h^{-4})$，与 $4n=4$ 一致。这个端点的理想来源是纯态；混合来源结论从 $n=2$ 开始。
+

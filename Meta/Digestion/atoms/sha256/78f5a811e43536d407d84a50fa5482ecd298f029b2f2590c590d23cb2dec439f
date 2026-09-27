@@ -1,0 +1,12 @@
+**定义 178.1（固定边缘的配对区间）。** 固定充分近一的 $r$，采用定义177.3及式（177.25）—（177.27）的 $\delta,x,\rho,\kappa,\beta,K_r,g_r$，其中 $\delta$ 必须是（177.27）给出的显式选择。记忆一次均匀初始化。对 $0\le w\le\delta$，定义同一个时间齐次联合处理器
+$$
+\begin{aligned}
+\Lambda_w(X)=\sum_s\Big(&[(x-w)\mathcal Q_s(X_{ss})+w\Delta(X_{ss})]
+\otimes|s\rangle\langle s|\\
+&+[w\mathcal Q_s(X_{ss})+(\delta-w)\Delta(X_{ss})]
+\otimes|-s\rangle\langle-s|\Big).
+\end{aligned}
+\tag{178.1}
+$$
+参数 $w$ 同时是“施加 $\mathcal Q_s$ 并翻转”与“完全去相位但保持标签”的概率。四个非负分支的总权重为一。$w=0$ 给出（177.19），$w=x\delta$ 给出独立组合（177.32）。记其同一系统终端通道为 $\mathcal P_{r,N}^{w}$，全视界风险为 $W_r(w)$，并令 $\mathcal M_r=\operatorname*{arg\,max}_NB_N(r)$。
+

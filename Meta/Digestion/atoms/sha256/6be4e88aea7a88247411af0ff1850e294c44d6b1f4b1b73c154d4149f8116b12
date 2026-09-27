@@ -1,0 +1,49 @@
+**命题 165.3（相同局部代价和缩放生成元不能认证全部视界）。** 令 $\mathcal R(A)=\operatorname{Tr}(A)|1\rangle\langle1|$ 为重置通道，并设
+$$
+p_r=(1-r)^2,\qquad
+\widehat{\mathcal T}_r=(1-p_r)\mathcal T_r+p_r\mathcal R,
+\qquad 0<r<1.
+\tag{165.22}
+$$
+它是三维 CPTP 通道族，满足
+$$
+\frac{\ell_r(\widehat{\mathcal T}_r)}{\mathcal R_1(r)}\longrightarrow h_*,\qquad
+\left\|\frac{\widehat{\mathcal T}_r-\mathcal T_r}{1-r}\right\|_{1\to1}\longrightarrow0,
+\tag{165.23}
+$$
+并在每个有限缩放视界区间上与 $\mathcal T_r$ 渐近一致：对任意 $T<\infty$，
+$$
+\sup_{0\le t\le T}
+ d_{\rm ref}\left(
+\widehat{\mathcal T}_r^{\lfloor t/(1-r)\rfloor},
+\mathcal T_r^{\lfloor t/(1-r)\rfloor}\right)
+\longrightarrow0.
+\tag{165.24}
+$$
+但它在每个 $0<r<1$ 都有
+$$
+\boxed{W_r(\widehat{\mathcal T}_r)=1,}
+\tag{165.25}
+$$
+所以不属于 $\mathscr A$。
+
+证明。 通道凸组合保持 CPTP，且 $d_{\rm ref}(\widehat{\mathcal T}_r,\mathcal T_r)\le p_r$。距离的三角不等式使两个单步风险之差的绝对值也至多为 $p_r$。因 $\mathcal R_1(r)\sim\sqrt3(1-r)/2$，命题163.3给出（165.23）的第一式。又 $\mathcal T_r\to\mathrm{Id}$，故 $\mathcal R-\mathcal T_r$ 在有限维算子范数中有界，而
+$$
+\frac{\widehat{\mathcal T}_r-\mathcal T_r}{1-r}
+=(1-r)(\mathcal R-\mathcal T_r),
+$$
+证明第二式。$\mathcal T_r$ 的各 Schur 系数在 $r=1$ 有单侧导数，所以 $(\mathcal T_r-\mathrm{Id})/(1-r)$ 确有极限；两族因此有同一个缩放生成元。
+
+复合的 telescoping 估计（163.24）给出第 $N$ 步距离至多为 $Np_r$，在 $N=\lfloor t/(1-r)\rfloor$、$0\le t\le T$ 时不超过 $T(1-r)$，即得（165.24）。
+
+另一方面，$\mathcal T_r$ 固定全部计算基态，并保持迹，故 $\mathcal T_r\mathcal R=\mathcal R\mathcal T_r=\mathcal R$、$\mathcal R^2=\mathcal R$。归纳得到
+$$
+\widehat{\mathcal T}_r^N
+=(1-p_r)^N\mathcal T_r^N+
+\bigl(1-(1-p_r)^N\bigr)\mathcal R.
+\tag{165.26}
+$$
+取输入 $|0\rangle\langle0|$。全部真实源及 $\mathcal T_r^N$ 都保留该态，重置通道则给出正交态 $|1\rangle\langle1|$。因此实际预测距离为 $1-(1-p_r)^N$，对 $N$ 的上确界是一。任意两通道的全参考距离至多为一，故（165.25）成立。证毕。
+
+定理165.2只用一个有限缩放时刻建立必要条件；其达到性使用第163节的统一尾界。命题165.3显示，这两种义务不可互相替代：每步 $O((1-r)^2)$ 的重置在 $N=O((1-r)^{-1})$ 的任何固定缩放区间上消失，却在更长视界累积成完全可区分的误差。局部最小代价和生成元相同均不足以控制无界视界。本节仍只研究定义165.1的已校准量子记录模型，不由这些预测权衡给出量子性的普遍定义或量子相对经典的普遍优势。
+

@@ -1,0 +1,30 @@
+### 187.1 秩一来源的任务与二元态
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，令
+$w_0=\epsilon$、$w_1=R\epsilon$。只考虑使以下密度矩阵半正定的充分小正 $\epsilon$。取
+
+$$
+\Xi=|0\rangle_M|0\rangle_R,\qquad
+\psi=(I\otimes Y)\Xi=i|0\rangle_M|1\rangle_R.
+$$
+
+两个等权实际旗标 $s=\pm1$ 下，原输入 $j$ 的条件态是
+
+$$
+\eta_{j,s}=P_0^M\otimes\omega_s(w_j),
+\qquad
+\omega_s(w)=
+\begin{pmatrix}
+1-\beta w&-is\gamma w\\
+is\gamma w&\beta w
+\end{pmatrix}
+=P_0+w(-\beta Z+s\gamma Y).
+\tag{187.1}
+$$
+
+其迹为一，行列式为
+$\beta w-(\beta^2+\gamma^2)w^2$。故
+$0\le w\le\beta/(\beta^2+\gamma^2)$ 保证合法。
+整个输入通道先按原输入计算基去相干，按 $j$ 输出上述等权旗标态。恢复器只操作接收端旗标与 $R$，目标是恢复原输入 qubit 并输出固定 $P_\Xi$，保留原输入任意外部参考。记最优半 diamond 误差为
+$h_{\mathrm{pure}}(w_0,w_1)$。
+

@@ -1,0 +1,32 @@
+**定理 11.5（边更新的像、纤维和记忆容量）。** 对边 $e:v\to w$，边界更新为
+
+$$
+ \bar T_e:\mathbb Z/D_v\mathbb Z\longrightarrow\mathbb Z/D_w\mathbb Z,
+ \qquad b\longmapsto a_e b+c_e\pmod {D_w}.
+ \tag{11.9}
+$$
+
+置
+
+$$
+ g_e=\gcd(D_w,a_e),\qquad
+ P_e=D_w/g_e,\qquad
+ k_e=D_v/P_e.
+ \tag{11.10}
+$$
+
+这些均为正整数，且 $P_e\mid D_v$。映射 (11.9) 良定义，实际像恰为陪集 $c_e+g_e\mathbb Z/D_w\mathbb Z$，含 $P_e$ 点；其每条非空纤维恰含 $k_e$ 点。要在更新后由 $(\bar T_e b,j(b))$ 精确恢复旧边界 $b$，附加记忆的最小字母表大小恰为 $k_e$。
+
+证明。(11.8) 的不动点关系给 $P_e\mid D_v$，等价于 $D_w\mid a_eD_v$，所以换代表不改变 (11.9)。元素 $a_e$ 在加法群 $\mathbb Z/D_w\mathbb Z$ 中的阶为 $P_e$，映射周期正是 $P_e$。旧边界包含 $k_e$ 个完整周期，因此每个像点具有 $k_e$ 个原像。
+
+对旧边界的规范代表 $0\le b<D_v$ 作除法
+
+$$
+ b=r+P_e j,\qquad 0\le r<P_e,\quad0\le j<k_e.
+ \tag{11.11}
+$$
+
+新边界唯一确定 $r$：$a_e r+c_e$ 在这 $P_e$ 个余数上两两不同。保存 $j=\lfloor b/P_e\rfloor$ 即可恢复 $b$，给上界。反向，在任一含 $k_e$ 个点的纤维上，新边界完全相同，任何可恢复的 $j$ 必须分开全部这 $k_e$ 个来源，由鸽巢原理得下界。$\square$
+
+数字 $j$ 使用指定规范代表，不是无须坐标的自然相位；更换坐标后，解码器和数字记录应共同运输。定理只给有限状态数，位编码需 $\lceil\log_2 k_e\rceil$ 个定长位，执行其运算的成本另计。如果旧档案已经保存了能分开这些纤维的记录，它可以承担该附加记忆；不能既保留它作为免费背景，又声称总记忆只剩新边界。
+

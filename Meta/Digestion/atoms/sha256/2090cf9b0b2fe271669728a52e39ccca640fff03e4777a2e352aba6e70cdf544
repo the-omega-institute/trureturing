@@ -1,0 +1,4 @@
+**定义 381.1（项目成果承担的具体关系）。** 本批的仓内数学来源分为四组。`ItineraryCompletion`、`PredictionCompletion` 与 `PredictiveSufficiencyDescent` 提供完整未来、商状态和唯一诱导更新、读数；`FiniteHorizonKernelRecurrence` 提供有限前缀的关系递推；`ControlledBehaviorUniversality`、`ControlledSignatureStabilization`、`ControlledRelationRecursion` 与 `ControlledFiniteStability` 提供全部输入字的行为、递归签名、关系递推和有限稳定界。`LinearDescentCriterion` 则把可见下降与隐藏到可见的零交叉块对应起来。正文各处链接到这些实际源码，并按所用状态、输出范围和操作条件解释迁移。
+
+完整未来商与动态闭包在本卷第 143 节已经出现，本批补充有限深度、实际取得条件和消去后的记忆结构。普通集合论证明、有限分区计数、分块消去、协方差计算与范数误差估计属于已有数学方法的应用和综合，不申报原创数学，也不声称全部新增文字已在所引项目模块中逐字形式化。所引声明支持的是逐项指定的抽象关系，不为每条散文命题和人文解释提供形式认证；源码阅读与 Lean kernel、公理闭包核验是不同的证据。
+
