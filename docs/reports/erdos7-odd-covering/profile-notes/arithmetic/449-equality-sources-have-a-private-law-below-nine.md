@@ -3088,7 +3088,7 @@ These standard residual facts explain why simply uncrossing a local20 mincut wit
 
 Also T3 is a property of the ENTIRE actual block support. Changing only the flow on a fixed source cannot make that same support satisfy T3. A correct global alternative is to remove the dangerous(a,d)=(21,20) status, or to choose a flow whose remaining dangerous blocks already have the requisite actual-support property.
 
-Still unproved: if a literal cut77 source admits no global reduction of a or d for a selected bad-neighborhood block, whether the simultaneous residual closure and(UC2)--(UC4) force WC1, three robust roots, the restricted common/private class, some different known supplier, or a genuinely new supplier. No general cut77 closure follows from this note.
+The pivot exclusions below rule out simultaneous absence of every global reduction of a or d for a selected bad-neighborhood block. This settles the single-block existence question left by(UC2)--(UC4). It does not give a replacement that preserves safety at other blocks, so the simultaneous repair and general cut77-law questions remain open.
 
 ### Global bad-block obstructions have exact source pivots
 
@@ -3312,12 +3312,119 @@ The earlier conditional eighteen-point-law derivation(GP77.8) remains valid. The
 
 It follows that the GLOBAL obstruction framework of GP77.1--GP77.6 has no exact q4 pivot and no exact q5 m4 pivot. For a selected bad-T3 root/G block whose masses21 and20 cannot be lowered by any value77 flow, the remaining pivot alternatives are q5 m=5 or6, of capacities79 or81.
 
-Those are nearcuts of a network whose maximum flow is still77. Their forward edges need not all be saturated, so this argument does NOT extend to them. It does not prove that every dangerous block admits a safe global repair, does not establish a law for every cut77 source, and does not supply the arbitrary original-cofactor/common-law lift or unrestricted Erdős #7.
+Those are nearcuts of a network whose maximum flow is still77. Their forward edges need not all be saturated, so the exact-cut argument alone does NOT extend to them. The next argument uses their ORIGINAL potential-level construction to exclude them while allowing slack on the newly exposed bad entries. Neither argument supplies simultaneous repair safety, a law for every cut77 source, or the arbitrary original-cofactor/common-law lift.
 
+
+#### The original q5 potential-level nearcuts are also impossible
+
+##### Fixed setting
+
+Use GP77.1--GP77.6 with one actual value77 flow minimizing the distinguished root/G objective20, distinguished root mass21, and its integral optimal potential. Write alpha=pi(R_r), X={pi<alpha+1}. In the q5 branch every one of the five actual selected G-prefixes rises. Choose the actual bad triple A of owners, with complete G-neighborhood union J of size2, total incidence m=5 or6, and G-flow F_A. The other two owners are complementary.
+
+Each complementary G-flow is at least2: F_A<=12, their sum is20-F_A>=8, and each is at most6. Both public J leaves have positive bad flow and potential at least alpha+1. The existing argument places all three bad child nodes at alpha, their private G-prefix nodes at alpha+1, and every actual bad private-leaf node outside X.
+
+Let N=X union the three bad private-prefix nodes. If the implementation retains private dead-leaf stubs with no actual bridge, move precisely those nonactual stubs together with their bad prefix, as in GP77.6; no actual leaf is moved and no missing incidence is inserted. Its capacity is69+2m, namely79 or81. The unchanged zero-cost forward X edges are saturated. X has no positive backward flow. Adding a bad prefix introduces no positive backward flow: its sole incoming parent child was already source-side, and all its actual outgoing leaves stay sink-side. Thus N also has no positive backward flow. Newly exposed bad private-leaf edges may be unsaturated; their exact saturation is NEVER assumed here.
+
+##### Every public G node stays sink-side
+
+The positive edges from sink-side J leaves forbid the G-column node from being source-side, because those would be positive backward edges. Hence no public whole-G prefix occurs.
+
+If a public G leaf h were source-side, its capacity7 edge to the sink-side G column would be an unchanged zero-cost forward X edge, hence saturated. It is not in J. The bad owners have no actual bridge to h. The two complementary owners supply at most2 each at h. All other roots together supply at most1 into the WHOLE G column, because the distinguished root sends20 and that public column has capacity21. Flow conservation would give7<=4+1=5. Therefore no public G leaf is source-side, and no public cut prefix meets G.
+
+This proof applies to X and N without assuming that either cut is minimum.
+
+##### Other active owners have no actual G-neighbor
+
+Every private edge belonging to another original root has cost0 in the selected min-cost problem and has the same endpoints' sides in X and N. Any forward such edge is therefore saturated. No such private cut edge can lie in G: its capacity is at least2, while the sum of ALL other-root flows in G is at most1.
+
+Consider any source-side original child C at another root and any one of its actual G-neighbors h. Its actual path is
+
+    C -> private-G-prefix -> private-G-leaf(h) -> public-G-leaf(h).
+
+The public endpoint is sink-side by the public-G argument above. The path must therefore have a forward crossing. A private crossing was just excluded. A bridge crossing has capacity126, larger than cap(N)<=81, so is also impossible. Hence such an actual neighbor cannot exist.
+
+This argument concerns source-side CHILD nodes. It does not assume that a source-side root has all children active, and it does not replace an inactive child's unknown actual support by an empty fiber.
+
+##### Every active legal restriction at another root costs at least9-k
+
+For a bad owner at the distinguished root, its entire off-G actual support lies in the public cut cylinders P. Indeed every off-G private forward edge below r has cost0 and remains an unchanged X edge, so it would be saturated with capacity at least2; the entire root has only one off-G flow unit. A126 bridge cannot cross. Its complete G-neighborhood lies in J. Thus the bad triple's actual projection is contained in P union J, where P has no G point and J has only two G-leaves.
+
+Take any other root i and any legal restriction B all of whose children are source-side: a triple for an original full five-child root, or a pair for the original four-child gap root. Those active children's actual support has no G point by the preceding actual-support argument and is contained in P together with their own private first-crossing prefixes.
+
+The actual pair premise supplies a ternary depth-two tree in the union of these two legal restrictions. Its G column has at most two available leaves, so G cannot be one of its three branches. All nine selected tree leaves must therefore be covered by P and B's private cut prefixes outside G. Counting a whole prefix against its three leaves of this chosen tree gives
+
+    k + z_B >= 9.                                    (GP77.10)
+
+Here k is the actual public prefix cost in tokens1 for a leaf and3 for a whole column. This strengthens GP77.4 for this ORIGINAL level cut. It does not follow merely from a nearcut having the same numerical capacity.
+
+##### The distinguished root contributes at least2m+12
+
+Each complementary owner has positive G-flow. Its root-child edge therefore has positive flow, giving pi(C)>=alpha. Since q5 means its G-prefix rises and potentials are integral,
+
+    pi(P)>=pi(C)+1>=alpha+1.
+
+Thus both complementary private G-prefixes are outside X and N. The distinguished root is inside. For each complementary owner, if its child is inside, the child-to-prefix arc crosses with capacity6; if its child is outside, the root-to-child arc crosses with capacity7. Each complementary owner therefore contributes at least6, without any need to classify the number of inactive children.
+
+The m actual bad-owner entries each cross N with capacity2. These are precisely the entries exposed by moving the three bad prefixes; they can be unsaturated. Consequently the selected root's raw forward-cut contribution is at least
+
+    2m+12.                                         (GP77.11)
+
+The bad-entry edges and the two complementary-owner edges are pairwise distinct, and all belong to the selected root. No saturation of a newly exposed bad entry or a complementary cost1 edge is assumed. Additional forward edges only increase the lower bound.
+
+##### Affine averaging gives a63-unit other-root/public budget
+
+Let k>=0 be the total actual public forward-cut cost in tokens: a leaf costs1 and a whole column costs3, so those actual edges contribute7k. If k>=9, their contribution alone is at least63. It remains to consider0<=k<=9.
+
+At any other root let n be its original number of children and q=n-2: (n,q)=(5,3) for a full root or(4,2) for the gap root. If its root node is sink-side, its source-root edge contributes21. If the root is source-side but fewer than q children are source-side, at least three root-child edges cross, again contributing at least21. Either case is already at least21(1-k/9). No assertion about inactive children's actual G-support is used.
+
+Otherwise let a>=q be the number of source-side children. The n-a root-to-inactive-child edges cost7 each. At each active child choose actual private first-crossing prefixes: if its private column node is sink-side, choose that whole prefix; if the column node is source-side, choose its outgoing edges to sink-side actual private leaves. An actual capacity126 bridge cannot cross N. These prefixes cover the child's complete actual support outside the public cut prefixes P. They form an antichain in that child's private forest and are actual raw forward-cut edges. Their total private token cost is no greater than half the raw private forward-cut cost. Private islands and redundant forward edges are omitted from this LOWER bound; no node is moved and no nearcut is normalized.
+
+For every legal q-subset B of these a active children, the strengthened legal-pair bound gives z_B>=9-k. Averaging over all q-subsets counts each child with frequency q/a, so their total private token cost Z satisfies
+
+    Z >= a(9-k)/q.
+
+The raw contribution of this root is therefore at least
+
+    F_(n,a)(k)=7(n-a)+2a(9-k)/q.                    (GP77.12)
+
+This function is affine in k. At k=0,
+
+    F_(5,a)(0)=35-a>=30   for a in{3,4,5},
+    F_(4,a)(0)=28+2a>=32  for a in{2,3,4}.
+
+Both are at least21. At k=9, F_(n,a)(9)=7(n-a)>=0. Linear interpolation on[0,9] therefore gives
+
+    F_(n,a)(k) >=21(1-k/9).
+
+All three other roots satisfy this bound, including the inactive-root and few-active-child cases handled above. Their combined raw contribution plus the public contribution is at least
+
+    3*21(1-k/9)+7k=63.                              (GP77.13)
+
+Together with the k>=9 case, this holds for every k>=0. The counted edges are disjoint: each original root owns its source, child and private edges, while the public edges form a separate layer. Private first-crossing selections never duplicate an edge within a child. The actual126 bridges cannot cross, and omitted private islands do not affect this lower bound.
+
+Adding(GP77.11) and(GP77.13) yields
+
+    cap(N) >=2m+12+63=2m+75,
+
+whereas the ORIGINAL pivot identity is
+
+    cap(N)=2m+69.
+
+The contradiction has a uniform margin6 and excludes the original q5 nearcuts m=5 and m=6. The same bound is also consistent with, and would exclude, the original m=4 q5 pivot. No table or profile enumeration is required.
+
+##### Exact consequence and remaining simultaneous-repair gap
+
+The proof requires the ORIGINAL potential construction N=X union the three bad G-prefix nodes, including only the permitted nonactual dead-stub adjustment. It uses the supplied positions of bad child/prefix/actual-leaf nodes; the original X saturation of unchanged zero-cost edges; the same selected flow; complete actual support at each original owner; and the literal pair premise for every all-active legal restriction B. It does not apply to an arbitrary cut of capacity79 or81.
+
+Combining this contradiction with the separately established exact q4 and exact q5 m4 pivot exclusions removes every branch of GP77.1--GP77.6's simultaneously globally unlowerable selected bad-T3 block. Consequently, for a selected bad-T3 root/G block having masses(a_r,d_(r,G))=(21,20), there exists an integral value77 flow that lowers its selected root mass to at most20 OR its selected G mass to at most19. This is existence of a global replacement lowering the SELECTED block's designated quantity; it is not a claim that the same replacement preserves all other blocks or lowers a global count of defects.
+
+An arbitrary such replacement may create or worsen another dangerous block. A joint safety, monotonicity or termination argument is still required before all dangerous blocks of ONE flow can be supplied to the simultaneous T3/common-law consumer. In particular, coordinatewise existence of lowerings does not establish one flow realizing every desired lowering together.
+
+This is an ordinary actual-source proof. It adds no Lean verification and establishes neither a law for every cut77 source nor the unrestricted original-cofactor/common-law lift.
 
 #### Scope and the remaining source implication
 
-The general potential estimate has been replaced by exact owner-sensitive configurations. The same-flow public-column argument now excludes every exact q4 pivot and every exact q5 m4 pivot, including all fully active profiles and the formerly retained conditional partial gap profile. A globally unlowerable bad-T3 block must therefore produce a q5 m5 or m6 nearcut of capacity79 or81. Those nearcuts remain unresolved. The previously proved public21+14/private6+36 supplier requires that complete matched-cut form; two public leaf labels or their saturation alone do not provide it. A global improving circulation also still requires a simultaneous safety or termination argument for all dangerous blocks.
+The same-flow public-column argument excludes every exact q4 pivot and every exact q5 m4 pivot. For the ORIGINAL q5 potential-level nearcuts, unchanged-edge saturation gives the stronger legal-pair bound(GP77.10); the affine budget(GP77.13) contradicts their capacities79 or81. Thus every selected bad-T3 block at masses21 and20 admits some integral value77 flow lowering its root mass to at most20 or its G mass to at most19. This is a separate existence statement for each selected block, not a common flow realizing all such lowerings. A simultaneous safety or termination argument remains necessary. The previously proved public21+14/private6+36 supplier still requires its complete matched-cut form; two public leaf labels or their saturation alone do not provide it.
 
 These are ordinary conditional proofs and a finite necessary-profile enumeration, not Lean verification, actual simultaneous-obstruction constructions, or a full cut77 theorem. The unrestricted original-cofactor/common-law bridge is unaffected. Reproduce the integer inventory with:
 
@@ -5553,7 +5660,7 @@ This is a common upper bound for the entire specified cut73 source class, not a 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. Hence every exact q4 or q5 m4 global pivot is impossible; q5 nearcuts79/81 and simultaneous global repair safety remain unresolved.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
 range74/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
