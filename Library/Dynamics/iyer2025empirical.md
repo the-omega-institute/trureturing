@@ -5804,3 +5804,21 @@ Biskup、Borgs、Chayes、Kleinwaks、Kotecký，*Partition function zeros at fi
 Katsevich，*The Laplace asymptotic expansion in high dimensions*，[arXiv:2406.12706v3](https://arxiv.org/abs/2406.12706v3)，原 PDF SHA256 `ee891c6035366249a08e23ee6ea71553466bf1aaa83788717105fdf54dda2742`。已核对的假设 2.1–2.3、定理 2.12 范围保持不变；本次重读注记 2.5 与 (2.7)，其振幅乘密度的联合尾部条件对应这里对复标记模的控制。单全局极小点定理不自动覆盖竞争的端点与内点。Borgs–Kotecký 的 [cond-mat/9501074v3](https://arxiv.org/abs/cond-mat/9501074v3) 继续只在第 150、152 章列明的轮廓／Peierls 条件与有限相响应范围内归属，未新增定理应用。
 
 原始计数回接后的相位预测保留实际有限系数。在 $k\asymp t$ 时，二次分支迭代与第三累积量都影响 $t^{-1}$ 级虚位移；固定编号公式直接代入增长编号会遗漏该项。正文分别陈述精确预测和极限曲线解释，未以未知速率的经验系数收敛代替所需精度。零点结果局限于指定矩形、编号与边界间隔，不声称全球原创性或 Lean 认证。
+
+## 谱边界第 155 章补充：共同总数、Poisson 亲和度与被遮住的率约束
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 155 章把增长维分类占据向量归约到一个总数，再按同一实际奇偶记录比较随机强度与确定强度。联合误差为 $8m/M+\sqrt{48m/M}$；用于稀有总数选择后，隐藏二项分配仍由原始精确条件律给出。新的率预算扩大总数目标集合，但原始 $\beta>1/2$ 与分数位移关系使现有带宽端点保持为 $c_q/4-5\kappa/2$。
+
+Lucien Le Cam，*An approximation theorem for the Poisson binomial distribution*，Pacific Journal of Mathematics **10**(4), 1181–1197 (1960)，[DOI:10.2140/pjm.1960.10.1181](https://doi.org/10.2140/pjm.1960.10.1181)。已核对原始 PDF 的引言、范数约定、第 5 节质量比值与 Stirling 方法、定理 2 假设及第 6 节注记 2。该文的范数是对 $|f|\le1$ 的积分上确界，等于正文事件总变差的两倍；独立 Bernoulli 和的均值和须有限。引言给出与最大成功概率同阶、试验数一致的界，而非仅有成功概率平方和的界。
+
+原 PDF 的文本层缺失部分显示公式并损坏个别字形，故命题 5、定理 2 中未完整提取的精确系数不作已核对前提。正文 (155.11) 独立写出整数试验数的充分界 $d_{\rm TV}(\operatorname{Bin}(n,p),\operatorname{Pois}(np))\le2p$（$0\le p\le1/4$）及所有零均值、小均值情形，归属其经典质量比值方法，不主张最优常数。原 PDF 为 1,418,189 字节，SHA256 `755631d00899d876e7ccbc33c112f912676496995cf3555d98dc3268df8d3216`；提取文本 31,138 字节，SHA256 `029f6a91c30e41f016dd8626c7c41e45e882c22c9e0605d373d6893f3bc34c33`。
+
+Le Cam 的注记 2 给出一般复合跳跃测度不能统一获得同样改善的边界，涉及有理独立的跳跃位置。正文的适用结构更具体：分类试验具有同一个概率向量，选中总数条件下与独立 Poisson 向量具有完全相同的多项分配核，且不同总数的纤维互不相交。因此向量总变差精确等于总数的总变差；这一结构在实际路径的两个奇偶槽位类型内分别验证，未借用任意标记和的结论。
+
+Lasse Leskelä，*Information divergences and likelihood ratios of Poisson processes and point patterns*，[arXiv:2404.00294v1](https://arxiv.org/abs/2404.00294v1)。已核对版本化原始 TeX 的 Hellinger 定义、Poisson Rényi 定理、Hellinger 推论及证明、有限强度证明（包含 $\alpha\in(0,1)$ 分支与零密度区域）以及条件标记定义。强度测度采用 $H^2(\mu,\nu)=\tfrac12\int(\sqrt f-\sqrt g)^2$，并有 $H^2(P_\mu,P_\nu)=1-e^{-H^2(\mu,\nu)}$。原定理在可测空间上的 $\sigma$ 有限强度下成立；本章每个有限 $Q$ 的 $4m$ 个坐标给出有限强度测度，维数增长和零条件强度均不违反假设。
+
+有限向量对应保留准确的二分之一：$\operatorname{Aff}(\bigotimes_i\operatorname{Pois}(\mu_i),\bigotimes_i\operatorname{Pois}(\nu_i))=\exp[-\tfrac12\sum_i(\sqrt{\mu_i}-\sqrt{\nu_i})^2]$。正文也由指数级数直接核对该式。对同一个实际奇偶记录取混合，再以其一阶相依计数的二阶矩支付随机均值差，是本模型的后续推导；该文不保证原始行独立，也不保证进一步条件化于全部池掩码后的 Poisson 比较。后一步使用原始精确分配核。
+
+版本化源归档为 46,152 字节，SHA256 `529bd2052ae36e884e1ea18080115112fd12b57e6039f7fd5c6e23b63f2facbc`；主 TeX 为 148,388 字节，SHA256 `5a359eac75e106ff54583d4ba5fa1c1d529fb8992155bc7bc8e9c2a1e420f59e`。稿件的动态日期和注释备选文本不替代固定版本身份。
+
+Barbour–Hall，*On the rate of Poisson convergence* (1984)，[DOI:10.1017/S0305004100061806](https://doi.org/10.1017/S0305004100061806)，仅核到书目信息，原始证明未取得；其最优 Chen–Stein 因子不作为正文前提。第 153 章所列 Féray–Méliot–Nikeghbali 的精确格点偏差范围保持不变，本章复用正总数位置的显式 Stirling 界和共同分数率函数，未将单行精确偏差升级为原始增长向量定理。经典工具、实际模型联合接口和带宽端点的解析比较分别归属；有限文献核对不构成全球原创性证明。
