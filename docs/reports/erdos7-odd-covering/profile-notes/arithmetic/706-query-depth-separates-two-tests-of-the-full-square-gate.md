@@ -8,8 +8,9 @@ stronger, and 705 does not exclude it.
 
 Two exact certificates below distinguish query depth from the information
 retained by a source weight. At the minimum actual period, a central-only
-field defeats every dual made from the declared shallow-centre/Haar-tail
-query family. At infinite query height, a different dual excludes every
+field defeats every dual made from complete common-centre query layouts.
+The finite calculation first uses the shallow-centre/Haar-tail family; the
+exact reduction below then covers every centre modulo the full period. At infinite query height, a different dual excludes every
 central-only field; an explicit truncation payment gives a finite-depth
 version. Neither statement settles the full gate on arbitrary fields or
 unrestricted Erdős #7. These are ordinary mathematical deductions and
@@ -159,6 +160,90 @@ tuples, maximizing 65,474,442 positive-fee rows across all 499 groups. It
 independently contracts every winning row and four whole-centre controls,
 including the maximum and a centre with multiple root-1 coordinates.
 
+## Every common centre at the finite period gives the same obstruction
+
+For the finite inventory Q0, let
+
+    K_coh,Q0(nu)=max_(a mod Q0) integral[L_(a,Q0)^2-1] dnu.
+
+This permits every central depth-six residue and every exterior depth-two
+residue, with no centre-tail averaging. It still assigns a mod d to every
+divisor label d. Thus M_h,E0<=K_coh,Q0<=K_Q0. On the same rational field as
+FQ5, the exact full maximum is
+
+    K_coh,Q0(f sigma)
+      =77259373485638923049517037/7071074010000000000000000
+      =M_h,E0(f sigma).                              (FQ5a)
+
+One maximizing centre has coordinate residues (0,7,5,8,8,8,8), interpreted
+modulo (3^6,5^6,7^2,11^2,13^2,17^2,19^2). The resulting gate remains exactly
+FQ5, strictly above the target. Consequently, even a law on ALL common
+centres cannot exclude that target for all retentions at Q0. Sampling more
+centres or reading more centre digits within this inventory cannot repair
+this particular exclusion method. The true independent-label maximum may
+still be larger; FQ5a does not prove its gate positive.
+
+The large period admits an exact reduction. The actual original list has
+101 originals plus eight higher pure originals. Every mixed original has
+3- and 5-exponents at most two. Conditional on a central mod9/mod25 cell,
+the remaining deeper central coordinates are therefore independent of the
+exterior variables and of one another. Each is uniform on the actual pure
+survivors in its own cell. The central-only field preserves that conditional
+law. The exterior joint root-1 exclusion remains in the source tensor.
+
+For a central centre in a fixed shallow leaf, every other source leaf has
+local squared factor 1 or 4 according to its first mismatch. Only the
+matching leaf depends on deeper centre digits. Its coefficient in every
+full joint contraction is nonnegative. Maximizing this one local factor
+therefore works simultaneously for all other coordinates; CRT realizes the
+two central choices in one centre. No source or query label gets a separate
+choice.
+
+A strong central leaf is uniform on all p^4 depth-six descendants. Its
+matching factor remains the finite Haar factor already used above. For the
+weak 3-leaf 4 mod9, there are 41 surviving residues modulo729. A depth-e
+cylinder contains at most 3^(6-e) of them, and the complete subtree22 mod27
+survives. A centre in that subtree attains every bound simultaneously:
+
+    B*_3=9+(7*27+9*9+11*3+13)/41=685/41.
+
+For the weak 5-leaf 2 mod25, there are 469 surviving residues modulo15625.
+The complete subtree52 mod125 survives, giving
+
+    B*_5=9+(7*125+9*25+11*5+13)/469=5389/469.
+
+The verifier enumerates the actual pure survivors and confirms domination
+of every central centre row by the corresponding representative. The
+capacity argument above proves why these local maxima are simultaneous,
+not independently attained bounds on different source laws.
+
+At an exterior prime q, the inventory stops at depth two. The matrix between
+the special root-1 child and the other root-1 children, uniformly pooled,
+is
+
+    [[9, 4], [4, 4+5/(q-1)]].
+
+For a complete non-root-1 first-root category the matching factor is4+5/q;
+for different roots it is1. A free-root orbit has factor
+1+(3+5/q)/(q-9). These are averages over actual source categories for one
+literal centre. The program checks every q^2 centre against the complete
+representative list before contracting the joint source.
+
+The full maximum reduces exactly to 5*19*7*10^4=6,650,000 centre types.
+All95 central pairs and all combinations with multiple exterior root-1
+coordinates remain. The two weak central factors change from the shallow
+calculation, but the global maximum stays at the displayed strong-leaf
+centre, proving FQ5a.
+
+The [complete-centre verifier](../../frontier/cover-geometry/joined33_all_common_centres_fixedfield_verify.py)
+and its [result](../../frontier/cover-geometry/joined33_all_common_centres_fixedfield_verify.json)
+reuse the pinned rational field, source engine and already verified
+original-loss maxima. Its exact replay passes 13,823 checks, including
+direct integration at centres using both weak leaves. An independent
+source-factorization review checked
+the reduction and the simultaneous local maxima. Run it after the finite
+field verifier below; its result pins the exact reused certificate bytes.
+
 ## At infinite height, central-only fields have a different obstruction
 
 A separate rational dual supplies one admissible row law per positive
@@ -245,7 +330,7 @@ contraction is product_i U_i + sum_i V_i product_(j!=i) U_j. This retains the
 cross-coordinate exclusion; it is not an independent product replacement.
 The infinite replay passes 2,244 local and 4,896 canonical-source checks.
 
-Both programs pin the existing source engine and original input hashes.
+The programs pin the existing source engine and original input hashes.
 They make certificate decisions with rational or arbitrary-precision integer
 arithmetic. Floating numbers in the outputs are display approximations.
 From the repository root, with NumPy installed:
@@ -253,6 +338,7 @@ From the repository root, with NumPy installed:
 ```sh
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_coherent_central_field_verify.py
 python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_central_only_infinite_dual_verify.py
+python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined33_all_common_centres_fixedfield_verify.py
 ```
 
 Independent operator and mathematical reviews checked the screen maxima,
@@ -262,10 +348,12 @@ they are not independent numerical estimates of one optimum.
 
 The full query gate remains unresolved for arbitrary joint retentions on
 the actual109 source, and the actual109 source is itself a restricted
-original phase configuration. The finite certificate shows why the declared
-shallow-centre/Haar-tail family cannot settle its Q0 case. The infinite and
-deep finite certificates show that central weights alone cannot settle
-those cases. Permitting deeper centre information, independent query
-phases, or exterior-dependent retentions changes a different part of the
-problem and requires its own same-source bounds. No combination of these
+original phase configuration. The finite certificate and complete-centre reduction show that the same
+fixed field prevents any common-centre-law dual from excluding the Q0
+target uniformly over all retentions. Further centre depth
+within Q0 does not fix this obstruction. The infinite and deep finite
+certificates show that central weights alone cannot settle those different
+criteria. Independent phases per numerical query label, exterior-dependent
+retentions, or a different actual source each requires its own same-source
+bounds. No combination of these
 diagnostics proves noncoverage for arbitrary original families.
