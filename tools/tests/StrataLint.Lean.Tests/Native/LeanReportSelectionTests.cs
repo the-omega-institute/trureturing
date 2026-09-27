@@ -215,7 +215,6 @@ public sealed class LeanReportSelectionTests
             [[ "${1:-}" != -B ]] || shift
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
-              */native.py) phase=publish ;;
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
@@ -227,10 +226,6 @@ public sealed class LeanReportSelectionTests
                 if [[ "$1" == --snapshot ]]; then printf '{}\n' > "$2"; break; fi
                 shift
               done
-            fi
-            if [[ "$phase" == publish ]]; then
-              printf 'published\n' > "$4"
-              printf 'fixture report published\n'
             fi
             """);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "dotnet"), """
@@ -247,7 +242,14 @@ public sealed class LeanReportSelectionTests
             "$@"
             """);
         var lake = Path.Combine(stubDirectory, "lake");
-        ScriptHarnessScratch.WriteExecutableStub(lake, "exit 0\n");
+        ScriptHarnessScratch.WriteExecutableStub(lake, """
+            [[ "$INSPECTOR_TEST_FAILURE" != publish ]] || exit 23
+            if [[ -n "${STRATALINT_INSPECTOR_PUBLISH_REPORT:-}" ]]; then
+              printf 'published\n' > "$STRATALINT_INSPECTOR_PUBLISH_REPORT"
+              printf 'LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0\n'
+              printf 'RAW_LEAN_REPORT path=%s sha256=fixture\n' "$STRATALINT_INSPECTOR_PUBLISH_REPORT"
+            fi
+            """);
         var producer = Path.Combine(fixture, "fixture-producer.dll");
         ScriptHarnessScratch.WriteScratchText(producer, "fixture producer");
         var shellEnvironment = Path.Combine(fixture, "fixture-shell-env");
@@ -271,13 +273,27 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
-            : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
-        var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
+            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "seal" }
+            : new[] { "inputs", "reuse", "capture", "ensure", "report", "seal" };
+        // Publication now runs inside the native report command. Keep the
+        // publication-failure case while observing the report phase boundary.
+        var observedFailure = failedPhase == "publish" ? "report" : failedPhase;
+        var expected = failedPhase.Length == 0
+            ? allPhases
+            : allPhases.Take(Array.IndexOf(allPhases, observedFailure) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0 || failedPhase == "seal", File.Exists(report));
         var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.Equal(failedPhase.Length == 0 ? "fixture report published\n" : "", standardOutput);
+        if (failedPhase.Length == 0)
+        {
+            Assert.Contains("LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0\n", standardOutput,
+                StringComparison.Ordinal);
+            Assert.Contains("RAW_LEAN_REPORT path=", standardOutput, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.Equal("", standardOutput);
+        }
         Assert.DoesNotContain("LEAN_INSPECTOR_PHASE", standardOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("LEAN_INSPECTOR_FAILED", standardOutput, StringComparison.Ordinal);
         var error = Encoding.UTF8.GetString(result.StandardError);
@@ -290,13 +306,13 @@ public sealed class LeanReportSelectionTests
             Assert.StartsWith($"LEAN_INSPECTOR_PHASE phase={phase} status=started clock=shell-seconds start_seconds=", observations[2 * index]);
             var completed = observations[2 * index + 1];
             Assert.StartsWith($"LEAN_INSPECTOR_PHASE phase={phase} status=completed clock=shell-seconds ", completed);
-            Assert.EndsWith("exit=" + (phase == failedPhase ? 23 : 0), completed);
+            Assert.EndsWith("exit=" + (phase == observedFailure ? 23 : 0), completed);
             Assert.Matches(unavailableClock
                 ? "start_seconds=unavailable end_seconds=unavailable elapsed_seconds=unavailable exit="
                 : "start_seconds=[0-9]+ end_seconds=[0-9]+ elapsed_seconds=[0-9]+ exit=", completed);
         }
         if (failedPhase.Length != 0)
-            Assert.Contains($"LEAN_INSPECTOR_FAILED phase={failedPhase} exit=23", error, StringComparison.Ordinal);
+            Assert.Contains($"LEAN_INSPECTOR_FAILED phase={observedFailure} exit=23", error, StringComparison.Ordinal);
         if (File.Exists(Path.Combine(logs, "native-work.jsonl")))
             Assert.Empty(ScriptHarnessScratch.ReadScratchText(Path.Combine(logs, "native-work.jsonl")));
     }
