@@ -6181,3 +6181,13 @@ Julia Eaton、Anant P. Godbole 与 Betsy Sinclair，*Competition between Discret
 Nickos Papadatos，*On corrected Poisson approximations for sums of independent indicators*，原文版本 [arXiv:2304.10314v2](https://arxiv.org/abs/2304.10314v2)，讨论独立指标、阶乘矩距离与修正 Poisson 律。距离含 $\frac12\sum_m2^m|\Delta m_m|/m!$；其全变差控制在具有适当指数矩的类中成立，所引反演证明由原文归于 Afendras–Papadatos，修正律的相关现象归于 Barbour–Hall。原文展示的误差同样含 $e^{2\lambda}$。本章不将阶乘矩反演或该指数损失声称为新方法，不借用未核对的引文证明；正文给出有限多元反演、余项与原始路径增长阶输入的完整连接。
 
 上述版本的相关模型、条件与所述原文证明已作有界核对；此归属不宣称全球原创或文献穷尽。实质新增部分是同一实际路径的增长阶系数控制、两种行类型的碰撞界与精确实际均值下的定量组合。
+
+## 谱边界卷第 181 章补充：完整条件纤维的系数稳定性与实际法向量
+
+对应 [谱边界卷第 181 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：对同一原始离线标签池的全部配置，保留精确校准量 $p(V)$，从原始正系数比得到 $d=-v/D+O(q^{-2})$，再证明 $d,h_0,h_1$ 的联合稳定界、原始谐波容差下的候选集夹逼，以及达到秩二时同一法向量的识别。原始参数满足 $\phi>c+\gamma+\kappa$ 时可控制完整谐波范围，此条件包括全部原始 $\beta\ge3/5$。余项中的自适应标量族概率尚无趋零界；这不扩展第 163 章已证明的物理带宽范围。
+
+Hélène Boistard、Hendrik P. Lopuhaä 与 Anne Ruiz-Gazen，*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，原文版本 [arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)，研究独立 Bernoulli 指标在总数为 $n$ 条件下的包含概率，其中 $\sum p_i=n$、$d=\sum p_i(1-p_i)\to\infty$。主包含定理固定 $k$，误差对所选指标一致；Bayes 证明比较具有固定均值、方差及累积量偏移的正中心概率。原文条件与对应证明已作有界核对。它不提供原始自适应法向量的分布或条件校准量的横向响应。
+
+本章实际使用第 132 章已给出的统一局部比值证明，明确核对固定偏移 $[-3,1]$、最多四个固定删除、方差下界和正归一化常数。所需累积量界只用于阶数至少二；不将原文 “any positive integer m” 的表述当作一致的一阶累积量与方差比较。配置间误差通过两个端点的绝对余项相减控制，未对渐近余项求导，也未把固定阶展开升级为随 $Q$ 增长的删除数。
+
+有限 Bernoulli 条件化、根稳定性、整数行列式与二维张成空间的比较是既有方法。本章新增的是这些关系在同一原始数组和指数谐波尺度下的定量组合。双标签池在该容差下的额外系数变化仍低于分辨尺度；这仅限制此表示的直接用法，不是物理后验反例。此归属不宣称文献穷尽或全球原创。

@@ -55302,3 +55302,518 @@ Here e<4 suffices. Since eta_K<=1 eventually, the remainder in (180.7) is at mos
 全变差结论仅控制有界检验函数。非有界熵泛函及其矩的转移另需两种概率律下相应的尾界，本章不给出此类转移；第 72 章的熵结论保留原假设与证明。$E_2$ 的存在、空性及同层同步问题仍不由上述条件逼近决定。
 
 ## 追加锚（本行以下为增补区）
+
+## 181. 随机校准的联合稳定性：同一条件纤维上的候选集与实际法向量
+
+原始离线标签池改变完整选择后验的校准量，同时保留计数线上的全部重数。本章比较同一条件纤维中所有有限配置：交换系数 $d$ 的变化为 $O(T/q^2)$，双锚系数 $h_i$ 的变化为 $O(T/q)$，而标量校准量 $p$ 保持精确随机。
+
+在所给指数间隙下，这些误差足以同时控制完整谐波候选集。整数行列式界进一步保证：实际候选集达到秩二时，扩大后的比较集合生成的是同一个原始法向量。沿随机 $p$ 选择该法向量的概率仍缺消失界，因此本章不给出更宽的无条件物理噪声范围。
+
+### 181.1 原始对象与联合估计
+
+
+**定义 181.1（共同原始数组与条件纤维）。** Retain the prescribed amplitude r, every fixed original beta in(1/2,1), original floors, and
+
+$$
+ \lambda=Q^3,\quad A_s=\log(1+r),\quad B_s=\log(1-r),\quad
+ \phi=((1+r)A_s+(1-r)B_s)/2,
+$$
+$$
+ c_q=\phi(1-\beta)/\beta,\quad c_M=c_q+\phi,\quad
+ \kappa=c_q/1000,\quad \gamma=c_q/2-5\kappa=99c_q/200.
+ \tag{181.1}
+$$
+
+Thus log q=c_q lambda+O(1), log M=c_M lambda+O(1), and phi>c_q. Fix, solely for165's conditional interface,
+
+$$
+ \gamma<c<3\gamma/2,\quad e=(3\gamma-2c)/8,\quad
+ a=\gamma-e,\quad \ell=2c-\gamma+3e,\quad h=e.
+ \tag{181.2}
+$$
+
+These are proof parameters, not a newly proved physical bandwidth range. The same lawful high-band pair has negative score -ell lambda+O(1), exact product P and outside laws nu_0,nu_1. For original count-line anchors0,1, write
+
+$$
+ p=\nu_0(I_0),\quad d=\nu_1(I_0)-\nu_0(I_0),\quad
+ h_i=\nu_i(1_{\{I_0+I_1=1\}}),\quad
+ z=\tanh(\Delta_Q/2).
+ \tag{181.3}
+$$
+
+The actual compensated gap has log Delta_Q=-phi lambda+O(log Q), not a substituted uncompensated Liouville phase. For each of the same nine membership branches,
+
+$$
+ \mu_0=C_0(p+dt),\qquad
+ \mu_1=C_1[p+dt+z\{h_0+(h_1-h_0)t\}],\quad0\le t\le W.
+ \tag{181.4}
+$$
+
+All physical count multiplicities and exact empirical centers are retained. Let V=(V_1,...,V_s), s=1 or2 FIXED, be the new conditional raw switch counts constructed in Section 181.2; T=sum n_i is their total number of retained pairs. They satisfy
+
+$$
+ \log T=\kappa\lambda-6\log Q+O_r(1),\qquad
+ (V_1,\ldots,V_s)\mid\mathcal F
+       \sim\bigotimes_{i=1}^s{\rm Bin}(n_i,\theta_i).
+ \tag{181.5}
+$$
+
+The coarse field fixes ALL C_j and the high pair's totals. Define starred coefficients by the lawful all-central configuration V=0. They are F-measurable; no observation of the actual hidden V is used to choose them. **定理 181.1（联合系数稳定性与实际秩二法向量）。** On a measurable enlargement G_181 with original-law failure b_181(Q)=o(1), the following bounds hold simultaneously for every V in its ENTIRE finite fiber:
+
+$$
+ |d(V)-d_*|\le CT/q^2,\qquad
+ |h_i(V)-h_{i,*}|\le CT/q\quad(i=0,1).
+ \tag{181.6}
+$$
+
+Here d_*=d(0), h_{i,*}=h_i(0); all are exact full-q probabilities or their differences. In particular this is stronger than178's separate bound |d|<=C/q. It neither differentiates its O(q^-2) remainder nor conditions on a favorable hidden configuration.
+
+Keep p(V) EXACT and set
+
+$$
+ \widetilde\mu_0(V,t)=C_0[p(V)+d_*t],\qquad
+ \widetilde\mu_1(V,t)=C_1[p(V)+d_*t+
+                           z\{h_{0,*}+(h_{1,*}-h_{0,*})t\}].
+ \tag{181.7}
+$$
+
+Then, on the SAME fiber and simultaneously for0<=t<=W,
+
+$$
+ \|\mu(V,t)-\widetilde\mu(V,t)\|_\infty
+       \le \zeta_Q:=C T(W/q+|z|).
+ \tag{181.8}
+$$
+
+This is the original center vector, with a proved deterministic error and all unexpanded coordinates present. It is not a new posterior or independent empirical environment. With the original epsilon,L,H=2N, the interval-error budget obeys
+
+$$
+ {L\zeta_Q\over\varepsilon}
+ \le \exp[-(9\kappa+e+\ell-h)\lambda+O_c(Q+\log Q)]
+   +\exp[-(\phi-c_q+9\kappa+e)\lambda+O_c(Q+\log Q)]
+ =o(1).
+ \tag{181.9}
+$$
+
+For the entire harmonic candidate set, a stronger conclusion holds if
+
+$$
+ \phi>c+\gamma+\kappa.
+ \tag{181.10}
+$$
+
+It includes EVERY original beta>=3/5 for every fixed c in(181.2). In that regime
+
+$$
+ \omega_Q:={H\zeta_Q\over\varepsilon}
+ \le \exp[-(c+9\kappa+2e)\lambda+O_c(Q+\log Q)]
+   +\exp[-(\phi-c-\gamma-\kappa)\lambda+O_c(Q+\log Q)]
+ =o(1).
+ \tag{181.11}
+$$
+
+The exact harmonic candidate set is sandwiched between the corresponding sets for(181.7) at tolerances(1-omega_Q)epsilon and(1+omega_Q)epsilon. The upper set still has rank at most2 by the ORIGINAL determinant budget. Whenever the exact set has rank2, its primitive normal is EXACTLY the upper set's primitive normal, up to the same sign convention and common shear. This is a new attained-normal comparison, not a claim that that normal is F-measurable.
+
+The vanishing probability bound for the residual below remains unproved. The theorem above reduces the random coefficients in the residual's attainable-plane problem to the scalar p(V) with coarse constants; it does not bound the selected plane family along that scalar law. It also proves a precise limitation: within these one or two rate-kappa reservoirs, the extra variation of direction/exchange coefficients is smaller than the operational tolerance. A second such reservoir does not by itself supply a resolved transverse response. This is a statement on a high-probability ORIGINAL conditional fiber, not a counterexample to the physical output.
+
+### 181.2 共同原始数组与精确条件乘积律
+
+For s=1 use178's reservoir. For s=2 reserve two disjoint blocks of m_c=floor(exp(kappa lambda)) true-label pairs in a predetermined ordering of each fixed support, in addition to ALL old173/170 reservoirs and all fixed low/high rare-total pools. Take fixed integers D_1=D_* and D_2=D_*+2, where
+
+$$
+ D_*\ge\max\{3,\lceil2(\log10+2)/A_s\rceil\}.
+ \tag{181.12}
+$$
+
+They depend only on the original fixed amplitude; they do not tune it. Put k_i=k_0-D_i, l_i=l_0. Type i retains pairs of totals(2k_i,2l_0) whose ordered allocations are central(k_i,l_0),(k_i,l_0) or the two orientations(k_i+1,l_0),(k_i-1,l_0). The weights are respectively(L_i,L_i) or(L_i exp(a_s),L_i exp(-a_s)), with L_i=L_0 exp(-D_i a_s) and the original compensated a_s. Products are fixed within type.
+
+Every retained label lies OFF the original count line(k_0+jQ,l_0+jP_n): its second count forces j=0, but its first count is not k_0. Hence ALL count-line multiplicities C_j stay fixed under all switch combinations. Off-line empirical groups can change with these actual allocations and are retained exactly; no claim that the entire off-line array is frozen is made. The labels and their exact likelihood factors still belong to the complete physical posterior and outside law.
+
+Write a_0=(1+r)/2,b_0=(1-r)/2 and d_v=(9sqrt(2v))^-1. The same compact near-mean Poisson point bound as178 gives one specified central allocation probability at least c_*lambda^-2 eventually, with c_*=min(1/2,d_a0^2d_b0^2)>0. Each D_i is fixed, so its finite count displacement changes only the starting Q. Set n_i=floor(c_*m_c/(2lambda^2)). Independent-Poisson supply failure for each block is at most exp[-c_*m_c/(8lambda^2)]. The original155 selected-vector comparison is applied ONCE, unconditionally, to every predetermined trial label, and costs
+
+$$
+ E_{\rm occ}\le8(2m_{173}+m_r+s m_c)/M+
+                    \sqrt{48(2m_{173}+m_r+s m_c)/M}.
+ \tag{181.13}
+$$
+
+Here log m_173=(c_q-kappa)lambda+O(1), and m_r covers the same finite rare-total pools and optional170 block, with log m_r<=(67/68)c_q lambda+O_c(log Q). Thus total labels are o(q/Q^3). All blocks coexist on EACH deterministic support, and central anchors remain outside them on the original occupancy event. Add the two old supply failures, fixed rare-pool costs O_c(exp(-Q^2)) and the at-most-two new supply costs. No comparison error is divided by a rare selection probability.
+
+For each experiment separately, condition on the full parity record, trial masks and totals, outside labels, and the permitted pair-arrival information or path terminal label. Within a true-label pair all slot weights agree, yielding independent fair-binomial allocation factors. In the path experiment, replacing a departure within its parity class leaves the predecessor's parity argument fixed. The terminal factor is retained. No iid path-row model is substituted.
+
+Reveal all eligibility flags, all ineligible and surplus allocations, retaining the first n_i eligible pairs of each type. Reveal all other reservoirs/proof-pair allocations, including the high pair's actual split if desired; its outside laws do not depend on that split. For each eligible pair the ratio of one mixed orientation to the central option is k_i/(k_i+1), so
+
+$$
+ \theta_i={2k_i\over3k_i+1}\in[1/2,2/3].
+ \tag{181.14}
+$$
+
+Restriction of each finite product factor to its own eligibility set, partition by the selected index sets, then integration of the revealed factors proves(181.5) against every F-measurable test. Orientations are equiprobable and irrelevant to the symmetric coefficients. The full coefficient array depends on the retained switches only through V. The high pair, old count square and170 blocks keep their own original kernels in their alternative views by revealing the new blocks fully. These are compatible views of one raw array, not independent posterior phases.
+
+The all-central V=0 reference is a legitimate point of this exact finite conditional fiber, even though it has small conditional mass. It is not assumed typical. To make regularity F-measurable, use its auxiliary root and a fixed enlargement as in178. For positive weights, the equation sum_i tw_i/(1+tw_i)=k has a unique positive solution for every interior integer k. Its derivative in log t is the Bernoulli variance D; each individual variance changes by a factor between exp(-|u|) and exp(|u|) under a log-root displacement u.
+
+Between two switch configurations at most2T weights change. At a fixed root this changes the mean by at most2T and variance by at most T/2. If one actual regular configuration has D>=d_0q, the intermediate value argument on a log interval C T/q shows that all roots differ by at most C T/q=o(1), and all variances remain comparable q. This is simultaneous over all configurations, without a union over2^T states. Conversely a suitably enlarged reference-root event guarantees those bounds for every configuration. The same reasoning applies after omission of any FIXED at most four labels and recalibration to q-1; removal changes the mean by at most4 and variance by at most1. It is not a deletion of T pairs.
+
+Define G_181 by that reference event, successful joint supply, anchors outside all blocks and the retained original count bounds C_i comparable q/Q^3, C_i<=Cq. Include the original high totals and, if revealing the split, |X_high|<=h lambda. Then, for all V and the three/four-deletion roots used below,
+
+$$
+ D\asymp q,\quad |\log(t_oL_0)|\le\log10,\quad
+ \log(t_o\sqrt P)=-\ell\lambda+O(1).
+ \tag{181.15}
+$$
+
+The last identity follows from the SAME selected totals and fixed ratio sqrt(P)/L_0; the root enlargement contributes only O(1). Original good-event failures plus(181.13), supply failures and the selected high-split tail2exp(-2h^2lambda/V_x) give b_181=o(1). All constants are fixed-model constants; floors consume bounded offsets. G_181 is F-measurable, so the binomial product is not conditioned on hidden-dependent regularity. The conclusion is separately support-uniform pair/path.
+
+### 181.3 固定偏移与精确差值的稳定界
+
+We use Chapter 132's uniform local ratio with a FIXED finite set of offsets, and give the full application rather than treating a polynomial identity as permission for extra deletions. If N is a sum of independent Bernoullis with integer mean n and variance D tending to infinity, then for fixed |j|<=3,
+
+$$
+ R(j):={P(N=n+j)\over P(N=n)}
+       =1-{j^2+\alpha_3j\over2D}+O(D^{-2}),
+ \qquad \alpha_3=\kappa_3(N)/D.
+ \tag{181.16}
+$$
+
+The constants are uniform over every Bernoulli parameter array. The authenticated direct proof uses |char_N(t)|<=exp[-2D sin^2(t/2)], fixed cumulant bounds |kappa_j|<=C_jD for j>=2, and a fixed real Fourier expansion through fourth order. At the center the bracket is1+O(D^-1)>0; division yields(181.16). No lower bound on individual probabilities or ratio of number of trials to D is required. No order grows with Q, and no source's fixed-k remainder is asserted uniform in growing k.
+
+For a given V, let O be all labels except the high pair and let w=L_0 be the anchor's weight. Calibrate O with the anchor ALSO omitted to integer mean n=q-1. Write its multiplier t_o(V), variance D(V), and auxiliary anchor probability u(V)=t_o w/(1+t_o w), v(V)=u(V)(1-u(V)). This omission has exactly three labels. Let M_k(V) denote the exact anchor inclusion probability in the positive weighted size-k support law on O, for k=q,q-1,q-2.
+
+For k=q+r, r=0,-1,-2, its exact auxiliary representation is an independent anchor Z of probability u conditioned with N on N+Z=q+r. Thus its exact normalized numerator is E[Z R(1+r-Z)] and denominator E[R(1+r-Z)]. Every used offset belongs to[-2,1]. The denominator is positive and1+O(1/q). Substitution into(181.16), or subtraction of the two Z values in its quadratic, gives
+
+$$
+ M_{q+r}(V)=u(V)+
+          {v(V)(2r+1+\alpha_3(V))\over2D(V)}
+          +O(q^{-2}).
+ \tag{181.17}
+$$
+
+Indeed the difference of j^2+alpha_3 j at Z=1 versus Z=0 is-(2r+1+alpha_3); normalization subtracts precisely the covariance with Z. This fixes the sign. All errors are uniform on the ENTIRE G_181 fiber. In particular
+
+$$
+ M_{q-1}-M_q=-v/D+O(q^{-2}),\qquad
+ M_{q-2}-M_q=-2v/D+O(q^{-2}).
+ \tag{181.18}
+$$
+
+Let E_k(V) be the exact symmetric coefficients on O and
+
+$$
+ \eta(V)={P E_{q-2}(V)\over E_q(V)+P E_{q-2}(V)}.
+ \tag{181.19}
+$$
+
+This is a genuine probability in[0,1], with a positive finite-q denominator. The exact outside law nu_0 is the mixture of sizes q,q-2 with weight eta on the latter; nu_1 is size q-1. Thus
+
+$$
+ d(V)=(-1+2\eta(V)){v(V)\over D(V)}+O(q^{-2}).
+ \tag{181.20}
+$$
+
+At the two-deletion root for O, centered at q-1, positive fixed-offset ratios imply E_{q-2}/E_q=t_o^2(1+O(q^-1)). That root and the three-deletion root differ in log by O(q^-1); both satisfy(181.15). Consequently eta<=C exp(-2ell lambda).
+
+In the WHOLE interval(181.2),
+
+$$
+ \ell=5c/4+\gamma/8>11\gamma/8,\qquad
+ 2\ell>11\gamma/4=(1089/800)c_q>c_q.
+ \tag{181.21}
+$$
+
+Therefore eta/q=o(q^-2), with a fixed positive rate margin. It follows that
+
+$$
+              d(V)=-v(V)/D(V)+O(q^{-2}).
+ \tag{181.22}
+$$
+
+This calculation retains the cancellation between the two even-cardinality alternatives. Using only |p-P_full|<=Cq^-1 exp[-(ell-h)lambda] would not give this precision automatically. We used actual finite-q size laws and the same product P, without any algebraic choice of a new rare-pair score.
+
+For two configurations, the deterministic root argument gives |log t_o(V)-log t_o(0)|<=CT/q. The logistic probability and its variance have bounded log-root derivatives, hence |v(V)-v(0)|<=CT/q. The variance sum changes by O(T) from changed weights and by O(q) times its log-root change on the unchanged labels, so |D(V)-D(0)|<=CT. With D(V),D(0)>=c q,
+
+$$
+ \left|{v(V)\over D(V)}-{v(0)\over D(0)}\right|
+     \le CT/q^2.
+ \tag{181.23}
+$$
+
+Subtract(181.22) at the two endpoints. The two absolute O(q^-2) remainders are absorbed because T>=1. This proves the first part of(181.6). We do NOT differentiate an error term, add T stochastic errors, or delete T coordinates. The exact d can fluctuate, but its entire fluctuation is bounded by CT/q^2.
+
+### 181.4 四个固定删除下的双锚定律
+
+The h_i comparison needs two anchors simultaneously. We explicitly justify this additional fixed deletion. Remove the high pair and BOTH anchors0,1, calibrating the remaining sum N to integer mean q-1. There are four omitted labels, independent of Q and T. The mean/variance/root bounds follow from Section 181.2, not from an assumed new many-deletion theorem. Denote the two independent auxiliary anchor probabilities by u_0(V),u_1(V).
+
+For the exact size-(q+r) support law on O, r=0,-1,-2, the independent anchor pattern Z=(Z_0,Z_1) is reweighted by
+
+$$
+ R(1+r-Z_0-Z_1).
+ \tag{181.24}
+$$
+
+The offsets lie in[-3,1], hence(181.16) gives R=1+O(q^-1) uniformly for EACH of the four patterns. The positive average normalizer is1+O(q^-1). Thus the exact two-anchor distribution differs in TV by at most C/q from the independent auxiliary pair, even if some pattern probabilities are tiny. This follows by multiplying each original pattern mass by its uniformly bounded relative factor; no lower bound on an individual pattern probability is needed.
+
+The xor statistic has auxiliary mean
+
+$$
+ H(V)=u_0(V)+u_1(V)-2u_0(V)u_1(V).
+ \tag{181.25}
+$$
+
+All three size laws have xor expectation H(V)+O(q^-1). Taking the exact positive mixture(181.19), with its full normalization and no change of probability space, gives
+
+$$
+ h_0(V)=H(V)+O(q^{-1}),\qquad
+ h_1(V)=H(V)+O(q^{-1}).
+ \tag{181.26}
+$$
+
+The four-deletion roots differ across configurations by CT/q. Both u_i are Lipschitz functions of the same log root, so |H(V)-H(0)|<=CT/q. Subtracting endpoint errors proves |h_i(V)-h_i(0)|<=CT/q, the remaining claims in(181.6). It also gives |h_1-h_0|<=C/q; that stronger fixed-array bound is not advertised as a new probability theorem.
+
+Every reservoir factor is present in the remaining coefficient array. Only the high pair and two fixed anchors are omitted for this calculation, and the resulting auxiliary independence is used ONLY to evaluate the original weighted size law by conditioning. It is not independence of posterior anchors under the physical posterior or independence of raw path rows. The raw law remains the exact product kernel(181.5), with no additional revealment needed to freeze d_*,h_{i,*}.
+
+The change from three to four fixed deletions has now been proved with explicit offsets, variance, positive normalizer and uniform error. It has no bearing on the separate physical real-temperature marks and does not change their local expansion orders. This completes the joint finite-q calibration proof.
+
+### 181.5 原始操作容差与完整谐波候选集
+
+The inherited geometric quantities on the same enlargement obey, with upper AND lower exponential envelopes for epsilon,
+
+$$
+ \log\varepsilon=-\gamma\lambda+O_c(Q+\log Q),\quad
+ L=2\lceil e^{a\lambda}\rceil,\quad H=2N,\quad
+ \log N=c\lambda+O_c(Q+\log Q),
+$$
+$$
+ W\le C e^{-(\ell-h)\lambda},\quad
+ \chi\ge c_0Q^{-2}e^{-\ell\lambda},\quad
+ |z|\le e^{-\phi\lambda+O(\log Q)},\quad C_i\le Cq.
+ \tag{181.27}
+$$
+
+Epsilon is the ORIGINAL sum of the small-energy tolerance and actual-to-projected hidden-response correction165.21–22. It is not replaced by its upper envelope when dividing an error. The small-energy term also supplies its stated lower envelope. All constants may depend on the fixed target c and original fixed model parameters; they are independent of the support and legal floors.
+
+We fix the uniform constants in that outside enlargement for the whole fiber: W,chi and the slope upper bound in epsilon's projection-error term can be chosen before V. Thus the comparison family uses a common tolerance. If an inherited application keeps a smaller realization-dependent slope bound in that error term, its exact candidate set is contained in the common-envelope candidate set used here. The determinant argument below applies to the latter, so its rank-two normal still agrees whenever the smaller actual set has rank2. No equality of the two candidate sets is asserted in that case; the lower inclusion in(181.32) refers to the displayed common-envelope tolerance. The actual long-interval condition is only enlarged. The strictly vanishing projection-defect ratio from165.27 and the strict determinant margins ensure that this choice changes no rate or physical hypothesis.
+
+Subtract(181.7) from(181.4) at a COMMON t. The first coordinate error is C_0(d(V)-d_*)t. The second adds C_1z times the changes of h_0 and h_1-h_0. Equations(181.6) and W<=1 therefore imply(181.8), uniformly over V,t. This proves a statement about actual coefficients, not a probability bound multiplied by inverse noise.
+
+Using log T<=kappa lambda+O(log Q), epsilon's LOWER envelope and a=gamma-e gives
+
+$$
+ \log{LTW\over q\varepsilon}
+ \le[\kappa-(\ell-h)-c_q+2\gamma-e]\lambda
+                                      +O_c(Q+\log Q)
+ =-[9\kappa+e+\ell-h]\lambda+O_c(Q+\log Q),
+$$
+$$
+ \log{LT|z|\over\varepsilon}
+ \le-[\phi-c_q+9\kappa+e]\lambda+O_c(Q+\log Q).
+ \tag{181.28}
+$$
+
+Both margins are strictly positive for EVERY original beta>1/2, proving(181.9). Thus the coefficient replacement is valid in the same coupled interval for any adaptive normal: its affine form changes by at most s zeta_Q, with s=|u|+|v|. This is a simultaneous deterministic estimate; no normal is held fixed under a false conditional law.
+
+At the full harmonic horizon one instead obtains
+
+$$
+ \log{HTW\over q\varepsilon}
+ \le[\kappa+c+\gamma-c_q-(\ell-h)]\lambda
+                                  +O_c(Q+\log Q)
+ =-[c+9\kappa+2e]\lambda+O_c(Q+\log Q),
+$$
+$$
+ \log{HT|z|\over\varepsilon}
+ \le-[\phi-c-\gamma-\kappa]\lambda+O_c(Q+\log Q).
+ \tag{181.29}
+$$
+
+This proves(181.11) under(181.10). For beta>=3/5, phi>=3c_q/2 and c+gamma<5gamma/2. Hence
+
+$$
+ \phi-c-\gamma-\kappa>
+ \left({3\over2}-{5\over2}{99\over200}-{1\over1000}\right)c_q
+ ={523\over2000}c_q>0.
+ \tag{181.30}
+$$
+
+This is a fixed analytic margin under the original amplitude hypothesis. It pays all O_c(Q+log Q) costs. No full-horizon conclusion is asserted when(181.10) fails; the interval estimate still holds there.
+
+For clarity define the finite un-sheared integer candidate set for a response line F(t) by
+
+$$
+ \mathcal S_\eta(F)=
+ \{(d_h,k_0',k_1')\in\mathbb Z^3:
+ L\le|d_h|\le H,\quad
+ |k_i'-d_hF_i(t)|\le\eta\ (i=0,1)
+ \text{ for SOME common }t\in[0,W]\}.
+ \tag{181.31}
+$$
+
+All numerator ranges and harmonic signs are included; no separately optimized t is allowed for the two coordinates. For each V, the same-t error in(181.8) and |d_h|<=H prove the exact inclusions
+
+$$
+ \mathcal S_{(1-\omega_Q)\varepsilon}(\widetilde\mu(V,\cdot))
+ \subseteq\mathcal S_\varepsilon(\mu(V,\cdot))
+ \subseteq
+ \mathcal S_{(1+\omega_Q)\varepsilon}(\widetilde\mu(V,\cdot)).
+ \tag{181.32}
+$$
+
+For large Q,1-omega_Q>0. The set comparison uses ONE common actual V, field and array; no newly sampled comparison model is introduced. Integer shears may be applied to all three sets at once, for instance the original exact-intercept shear. It is not necessary to equate the exact and approximate intercept floors, which can differ near an integer.
+
+The frozen slope vector is
+
+$$
+ b_*=(C_0d_*,\,C_1[d_*+z(h_{1,*}-h_{0,*})]).
+ \tag{181.33}
+$$
+
+Its norm is comparable Q^-3. Indeed, d_*=-v(0)/D(0)+O(q^-2), where D(0) is comparable q and v(0) is bounded away from zero; hence d_* has fixed-sign magnitude comparable q^-1. Also C_i are comparable q/Q^3 and |z(h_{1,*}-h_{0,*})|<=C|z|/q. It obeys the same upper slope envelope as the exact line. With tolerance epsilon(1+omega_Q), the original determinant bound remains STRICT:
+
+$$
+ 6H^2\|b_*\|_\infty W\,\varepsilon(1+\omega_Q)
+       +6H\varepsilon^2(1+\omega_Q)^2<1.
+ \tag{181.34}
+$$
+
+Indeed its two exponential margins are2c-(ell-h)-gamma=-2e and c-2gamma<0. Fixed enlargement of constants and a factor1+o(1) do not consume these fixed positive margins. The determinant proof itself is independent of the size of the real intercept: every triple is d_h(1,A)+d_h t(0,b_*)+(0,error), and the only one-error determinant contains b_* and the two-dimensional error. Thus using the same shear even when the approximate intercept is just outside[0,1)^2 is harmless.
+
+Every three triples of the upper set have integer determinant of absolute value<1, hence determinant zero; its rank is at most2. If the middle EXACT set has rank2, the upper set also has rank2, and inclusion forces equality of their real spans. Their unique primitive integer normals therefore coincide up to sign. Undoing the common unimodular shear gives the SAME primitive(m_0,u,v). The actual-normal bound |u|,|v|<=K remains the inherited one; no fictitious bound on the un-sheared m_0 is inserted.
+
+This equality of normals uses an attained rank-two subset, not an assumption of rank for every V. If the exact set has rank0 or1, the upper set might have rank2; we make no equality claim there. The construction can still enlarge a bad event by those extra points. Equality of normals is also NOT equality of candidate sets, and no stability of a normal chosen at V=0 has been proved.
+
+### 181.6 带自身生成法向量的标量族余项
+
+Keep the exact actual residual178.32, including opposite signs, J=uC_0+vC_1 nonzero, the rational intercept m_0/d_N when relevant, d_N=gcd(|u|,|v|), all memberships and its actual rank/determinant origin. Under(181.10), at every point where the exact set has rank2 let the normal be generated instead from the UPPER set in(181.32); Section 181.5 proves that it is exactly the same normal at that point. It may depend on V through p(V).
+
+For this normal define the coarse-coefficient affine expression
+
+$$
+ \widetilde F_N(V,t)=
+ m_0+J[p(V)+d_*t]
+       +v C_1z[h_{0,*}+(h_{1,*}-h_{0,*})t].
+ \tag{181.35}
+$$
+
+The exact expression differs by at most s zeta_Q, for every t. Since L<=H, s zeta_Q<=omega_Q s epsilon/L. Therefore the EXACT interval from178.25 is contained in
+
+$$
+ [0,W]\cap\{t:|\widetilde F_N(V,t)|
+                       \le(1+\omega_Q)s\varepsilon/L\}.
+ \tag{181.36}
+$$
+
+Its diameter is still at least chi/2 whenever the actual long interval has that diameter. This keeps the intercept AND slope together with the SAME J and normal. No denominator is chosen independently, and reducing m_0/J as a rational value is distinct from illegally dividing the integer normal by d_N.
+
+In beta>=2/3, fix0<t_*<e and retain
+
+$$
+ J_{\rm big}=\lceil e^{(c_q-\gamma)\lambda}\rceil,\quad
+ D_{\rm int}=\lfloor e^{\kappa\lambda/8}\rfloor,\quad
+ d_{\rm int}=|J|/\gcd(|m_0|,|J|).
+ \tag{181.37}
+$$
+
+Let E_181(F) be the subset of the conditional finite V-box where SOME original membership branch has: upper-set rank2; its OWN primitive normal with uv<0 and J nonzero; the long interval(181.36); all original integer ranges and memberships; and
+
+$$
+ |J|/d_N>\lfloor e^{t_*\lambda}\rfloor,\qquad
+ (\,|J|<J_{\rm big}\ \text{OR}\ d_{\rm int}>D_{\rm int}\,).
+ \tag{181.38}
+$$
+
+Use one common omega_Q upper envelope for all branches. This set can include points whose exact rank is smaller; that only makes it an upper bound. It does NOT choose a normal at V=0 and use it throughout the box. Its deterministic data d_*,h_{0,*},h_{1,*},C_0,C_1,z and the exact function p(V) all belong to the same F-fiber.
+
+The newly justified unresolved input can be written as
+
+$$
+ \mathcal R_{181}(Q)=
+ E_S\!\left[
+ 1_{G_{181}}\!
+ \sum_{v_1=0}^{n_1}\cdots\sum_{v_s=0}^{n_s}
+ \left(\prod_{i=1}^s
+       {n_i\choose v_i}\theta_i^{v_i}(1-\theta_i)^{n_i-v_i}\right)
+ 1_{\{(v_1,\ldots,v_s)\in E_{181}(\mathcal F)\}}
+ \right].
+ \tag{181.39}
+$$
+
+This is the exact raw conditional marginal integrated against its ACTUAL coarse law. It is not a Lebesgue law, independent phase, uniform reference square or conditional law given the generated normal. The attained-normal theorem and interval inclusion prove
+
+$$
+ R_{178}^{act}(Q)\le b_{181}(Q)+\mathcal R_{181}(Q).
+ \tag{181.40}
+$$
+
+The old paid terms from170/173/176/178 may then be added UNCONDITIONALLY using their lawful alternative views and the enlarged common supply budget. They give
+
+$$
+ P_S(B_{165})\le b_{176}+b_{178}+b_{181}
+       +e^{-\kappa\lambda/4+O_c(\log Q)}
+       +\mathcal R_{181}(Q)
+ \quad(\beta\ge2/3).
+ \tag{181.41}
+$$
+
+Vanishing of R_181 has NOT been proved. The new substance is the error-controlled elimination of fluctuating d,h_0,h_1 at the full numerator horizon, AND identification of the actual attained normal in the upper frozen-coefficient family. Equation(181.39) is its remaining task, not the proof of a distribution theorem by writing an expectation. In particular we do not claim that every rational approximation of p is attainable by that family.
+
+No actual-subevent probability is subtracted from176's old enlarged barred cardinality expectation. The present construction is a separate, proved enlargement of the EXACT residual with a different surviving raw kernel. The old barred set and178.32 retain their original scope. For3/5<=beta<2/3, Sections 181.1–181.5 still give the full-horizon joint calibration/normal comparison, but178's large-J rational-value payment is not extended by it. For smaller beta satisfying(181.10), the same analytic comparison holds; older probability inputs must still have THEIR actual hypotheses. No wider physical conclusion is hidden in these overlaps.
+
+The useful limitation of the second reservoir is now quantitative. After subtracting the exact scalar translation(C_0,C_1)p(V), every line on the whole one- or two-reservoir fiber is within zeta_Q of a SINGLE F-measurable line. At full-band resolution H zeta_Q=o(epsilon) in(181.10). Therefore the extra raw coordinate does not automatically create a new transverse response of observable size at that tolerance. Its exact coefficient derivatives or tiny minors can be nonzero; this statement does not call them zero, nor exclude a proof exploiting finer structure. Larger-rate reservoirs, another statistic or a direct Fourier route are not ruled out. These possible extensions are not conclusions of the present theorem.
+
+This is an actual-law, high-probability conditional-fiber statement. It neither exhibits P(B165) bounded below nor an event violating the physical posterior limits. The finite-band ceiling and this reservoir limitation are proof-method boundaries, not physical thresholds.
+
+### 181.7 完整物理目标与适用边界
+
+The original theorem remains the SAME full selected size-q posterior. With delta=Q^-1/2, B^2=q/Q^(5/2), mathcal B=q/Q^(11/4), retain the COMPLETE physical sum
+
+$$
+ T_{\rm phys}=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2
+                  -V_{\rm phys}/\sqrt\delta,\qquad
+ Y=T_{\rm phys}+\sigma G,\quad
+ \rho=\sigma\mathcal B\asymp e^{-cQ^3}.
+ \tag{181.42}
+$$
+
+The sum has every original low/outside group and empirical center; it is not restricted to the occupied block H. The new off-line groups are retained as their actual allocations change. No physical observer learns a proof sigma-field. All likelihoods, full tuple counts and the support prior remain exact.
+
+The finite coefficients are
+
+$$
+ A=V_H/\sqrt\delta,\quad
+ \nu_0^{sc}=2\sum_{j\in H}w_j^2,\quad
+ \kappa_3=8\sum_{j\in H}w_j^3,\quad
+ \Lambda=\nu_0^{sc}+\sigma^2,\quad
+ C_x={A^2\kappa_3\over\Lambda^3}
+                   -{2A\nu_0^{sc}\over\Lambda^2}.
+ \tag{181.43}
+$$
+
+The superscript merely distinguishes the original scalar coefficient from the outside law nu_0; its value is unchanged. Put m_x=E_xY and D_x(y)=Vpost_x(y)-Vprior_x+A^2/Lambda-C_xy. The required limits remain
+
+$$
+ \int f_x(y)|D_x(y)-R_*(y)|\,dy\to0,\quad
+ E_xY^2\to\nu,\quad \nu=2g_0,
+$$
+$$
+ R_*(y)=29/6-3\sqrt2+
+                 (3\sqrt2+8/\sqrt3-9)y^2/\nu,
+$$
+$$
+ \int f_x Vpost_x-Vprior_x+A^2/\Lambda-C_xm_x
+                              \to8/\sqrt3-25/6.
+ \tag{181.44}
+$$
+
+Chapter 163 proves them unconditionally only for0<c<gamma, with its stated full scope. That settlement is preserved. Above gamma,165's conditional interface still needs the actual probability P_S(B165)=o(1). Equation(181.41) retains a missing R_181 term and supplies no new bandwidth theorem, including in beta>=2/3. The wider physical conclusion for every original beta remains unproved.
+
+If that missing probability input were paid, the unchanged165 return would use the SAME occupied block and kappa, all numerator/harmonic values through N, separate reduced rational arcs with log denominator cutoff O_c(Q), nonzero-arc expansion only on the occupied block and all other factors exact. The zero arc retains the complete continuous reference on J and exact E=J^c law. The current coarse line is ONLY a probability-analysis comparison, not a replacement physical center in the marked density.
+
+The two normalized real-temperature derivatives, marks0,1,2, belong to the same normalized exp(uW_phys), at fixed physical y, with W_phys=s_lat+G^2/2. They are not derivatives in V. Off-arc contraction and exponential Fourier/Gaussian tails pay the existing inverse-rho costs. The raw event errors in(181.41) are never multiplied by inverse rho or sigma. Deterministic amplification H zeta_Q in(181.32) concerns a uniform pointwise center error, not a polynomial signed-mass error.
+
+On the still-unproved common-energy event, the inherited marked density error would be CQ^-400. Signed tuple/common-kernel transport retains CQ^-444 through both marks and CQ^-448 for prior variance, using sigma-independent L1 norms of Gaussian residual kernels. The nonlinear square uses q_1^2/q_0=sup_z(2zq_1-z^2q_0), clips at|z|<=Q^10, and pays O(Q^-16) fourth-moment tails and O(Q^-424) signed transport. Unmarked TV alone does not yield this step.
+
+The selected-log-density correction retains0<=h_selected<=C, L2 deviation O_P(Q^-5/2) and cost C a_xQ^2=o_P(1) for every sigma>0. Real denominator lower bounds and quotient estimates prove positivity before logarithms. Original real-mgf/fourth-moment estimates cover all outputs; the exact outside energy is translated before prior variance cancellation. The same C_xm_x, residual G and integrated moment are retained. Our additional FOUR fixed deletions were separately justified for the new two-anchor coefficient audit; they neither change nor replace any of these physical mark/quotient interfaces.
+
+All statements about probabilities above distinguish the pair and stationary-path experiments and are uniform in deterministic true supports and legal floors. No generic amplitude, stronger eta/noise condition, zero-noise assertion, parameter randomization or physical refutation is introduced.
+
+
+## 追加锚（本行以下为增补区）
