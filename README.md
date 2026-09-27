@@ -78,8 +78,8 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Choose questions whose answers could supply missing premises, expose overlooked
-distinctions or connect results. Search existing proofs and literature.
+Identify any missing premises, distinctions or connections for your target;
+choose questions addressing them. Search existing proofs and literature.
 Specify supporting and refuting outcomes before designing discriminating tests.
 Keep results with their assumptions; check those against your objects before reuse.
 
@@ -89,8 +89,9 @@ Proofs supply premises; counterexamples refute claims within their stated scope.
 When identical readings hide different target values, no function of those
 readings recovers the target in both cases.
 [Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
-Evaluate on questions unused in method design, against a stated baseline
-with matched information and resources.
+
+Evaluate research selection against stated baselines on questions excluded
+from method design, matching information and resources.
 
 ![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
