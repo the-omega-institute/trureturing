@@ -11,7 +11,7 @@
     <path id="question-to-test" d="M180 82 V124"/>
     <path id="test-to-check" d="M180 188 V228"/>
     <path id="check-to-result" d="M180 292 V332"/>
-    <path id="result-to-question" d="M90 354 H70 Q60 354 60 344 V44 Q60 34 70 34 H95"/>
+    <path id="result-to-question" d="M90 354 H70 Q60 354 60 344 V76 Q60 66 70 66 H95"/>
     <g stroke-dasharray="5 4">
       <path id="result-to-open" d="M180 396 V438"/>
       <path id="test-to-open" d="M270 156 H316 Q328 156 328 168 V478 Q328 490 316 490 H284"/>
