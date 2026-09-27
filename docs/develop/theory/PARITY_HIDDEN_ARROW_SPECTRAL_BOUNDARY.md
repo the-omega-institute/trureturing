@@ -49494,3 +49494,440 @@ Fernandez、Spence 与 Fokas 对其指定对数相位积分证明了增长参数
 本章覆盖的相位指标达到 $\mathcal T\Omega_Q$ 量级，而原坐标幅度达到 $\mathcal T\Omega_Q^{3/4}$ 量级；两者不可互换。包络指数只是充分构造，不代表物理临界指数。对每条许可序列最终成立，不等于存在一个与所有序列收敛速度无关的统一起始 $Q$。第 164 章的固定域结论、第 162 章的区域切分障碍和第 165 章未解决的后验例外事件概率均保持其原边界。
 
 ## 追加锚（本行以下为增补区）
+
+## 167. 计数线的补偿尺度、共同算术约束与联合响应的指数退化
+
+原计数线相邻两组的似然差，由完整选择模型中的补偿项主导，其尺度为 $Qq/M$；Liouville 逼近余项在这个尺度下趋零。该交换因子同时进入第 165 章所生成平面的截距与方向，因而将它们联系到同一个整数 $J=uC_0+vC_1$、同一经验校准及同一排斥概率。零整数组合分支在明确参数条件下要求指数大的公因数；非零分支则保留共同分母与校准的联合逼近条件。
+
+对于任意固定数量的隐藏对，交换身份还给出共同响应行列式的上界。即使除去每个隐藏对自身的稀有响应尺度，归一化响应矩阵仍以指数速率接近秩一。在原实际数据律下概率趋一的同一事件上，这排除了所指定的多项式横截性下界。它没有判定例外事件 $B_{165}$ 的概率，也没有排除利用指数小行列式的其它方法；第 163 章的无条件范围 $0<c<99c_q/200$ 未被扩展。
+
+### 167.1 补偿后的原计数线似然差
+
+**命题 167.1（原补偿项决定相邻似然差）。** Keep the original constants and floors:
+
+$$
+ A_s=\log(1+r),\quad B_s=\log(1-r)<0,\quad
+ \alpha_L=A_s/(-B_s),\quad \alpha_Q=P_n/Q,
+$$
+
+$$
+ \lambda=Q^3,\quad\phi=((1+r)A_s+(1-r)B_s)/2,
+ \quad c_q=\phi(1-\beta)/\beta,\quad c_M=\phi/\beta=c_q+\phi,
+ \quad\beta\in(1/2,1),
+$$
+
+$$
+ \log q=c_q\lambda+O(1),\quad\log M=c_M\lambda+O(1),
+ \quad\kappa=c_q/1000,\quad\gamma=c_q/2-5\kappa=99c_q/200.
+                                                               \tag{167.2}
+$$
+
+The original amplitude fixes alpha_L, with $1/10<\alpha_L<101/1000$ as established in Chapter 163. Write
+
+$$
+ \epsilon_M={rq\over M-q},\quad
+ a_s=A_s-\log(1-\epsilon_M),\quad
+ b_s=B_s-\log(1+\epsilon_M),\quad
+ \Delta_Q=Qa_s+P_nb_s.                               \tag{167.3}
+$$
+
+On the original isolated count line, group j has count tuple(k_0+jQ,l_0+jP_n). Its actual likelihood weight L_j therefore satisfies EXACTLY
+
+$$
+                  \log(L_j/L_k)=(j-k)\Delta_Q.       \tag{167.4}
+$$
+
+This uses the actual compensated score and full-q posterior factorization; there is no deterministic-mean replacement. Pair/path dependence is in the raw-data law, not in this likelihood ratio identity on a fixed data array.
+
+The useful asymptotic is
+
+$$
+ {\Delta_Q\over Qq/M}\longrightarrow r(1-\alpha_L)>0.
+                                                               \tag{167.5}
+$$
+
+Proof. Substitute(167.3) and use A_s=-alpha_L B_s:
+
+$$
+ \Delta_Q=(-B_s)Q(\alpha_L-\alpha_Q)
+       +Q[-\log(1-\epsilon_M)-\alpha_Q\log(1+\epsilon_M)].
+                                                               \tag{167.6}
+$$
+
+The original Liouville recurrence gives0<alpha_L-alpha_Q<=2exp[-(log10)Q^5] eventually. For0<=epsilon_M<=1/2, the bracket equals(1-alpha_Q)epsilon_M+O(epsilon_M^2), uniformly for alpha_Q in[0,1]. Meanwhile epsilon_M/(q/M) tends to r. Dividing the first term by Qq/M gives a bound C exp[-(log10)Q^5+phi Q^3+O(1)], which tends to zero. The quadratic compensation error also vanishes after division. This proves(167.5) along EVERY original floor sequence, without a numerical evaluation. In particular eventually
+
+$$
+ {r(1-\alpha_L)\over2}Qq/M\le\Delta_Q
+       \le2r(1-\alpha_L)Qq/M.                        \tag{167.7}
+$$
+
+For two original groups define the exact exchange factor
+
+$$
+ z_{jk}={L_j-L_k\over L_j+L_k}
+       =\tanh((j-k)\Delta_Q/2).                     \tag{167.8}
+$$
+
+Thus |z_jk|<=|j-k|Delta_Q/2, with an asymptotically matching lower bound for fixed distinct indices. Over the ENTIRE original count-line truncation |j|<=K_M=O(Q^2), max|z_jk|<=CQ^3q/M. Its exponent is -phi Q^3, uniformly on that line. The positivity in(167.7) is not a quantitative lower bound for an arbitrary integer linear combination of centers; that different assertion is not inferred.
+
+### 167.2 共同条件化下的精确交换身份
+
+**引理 167.2（交换配对与共同归一化）。** Consider the original size-q weighted support law at one fixed full array. Let two outside anchors a,b have weights L_a,L_b, and let I_a,I_b be their latent support indicators. Let H_ab=1_{I_a+I_b=1}. Suppose a nonnegative multiplier or an event on latent configurations is invariant under swapping anchors a,b. It may involve all OTHER labels, the hidden-pair cardinalities, or their common normalizer. Then, in the resulting normalized law,
+
+$$
+        E(I_b-I_a)=z_{ba}E H_{ab},\qquad
+ z_{ba}=(L_b-L_a)/(L_b+L_a).                         \tag{167.9}
+$$
+
+Proof. Pair each configuration with I_a=1,I_b=0 with its swapped configuration. All factors other than L_a versus L_b agree, including the total-support constraint. Their contributions to the signed numerator are L_b-L_a times the same nonnegative weight; to the xor numerator they are L_a+L_b times that weight. Configurations with both or neither anchor contribute zero to both. Sum and divide by the SAME positive normalizer. This proves(167.9), including after any permitted swap-invariant conditioning. It does not assert independence of the anchors or of hidden-pair states.
+
+For one retained hidden pair, use Chapter 165's exact outside laws nu_0 and nu_1. They put outside support size respectively q or q-2 in the fixed product-weighted mixture, and size q-1. Both are swap-invariant apart from the explicit anchor likelihoods. Let
+
+$$
+ p=\nu_0(I_a),\quad d=\nu_1(I_a)-\nu_0(I_a),\quad
+ h_0=\nu_0(H_{ab}),\quad h_1=\nu_1(H_{ab}),\quad z=z_{ba}.
+                                                               \tag{167.10}
+$$
+
+Then0<=h_0,h_1<=1 and EXACTLY
+
+$$
+ \nu_0(I_b)=p+zh_0,\quad
+ \nu_1(I_b)-\nu_0(I_b)=d+z(h_1-h_0).                 \tag{167.11}
+$$
+
+All these quantities are measurable under the ONE lawful outside revealment. They are not independently optimized parameters. For clarity their exclusion probabilities can be written explicitly. With E_k on all labels except the hidden pair, product P of that pair, C=E_q+PE_{q-2}, D=E_{q-1}, and E_k^{(-ab)} additionally omitting the two anchors,
+
+$$
+ h_0={(L_a+L_b)(E_{q-1}^{(-ab)}+PE_{q-3}^{(-ab)})\over C},
+ \qquad h_1={(L_a+L_b)E_{q-2}^{(-ab)}\over D}.        \tag{167.12}
+$$
+
+These are EXACT polynomial identities. No asymptotic expansion after four deletions is invoked; the bounds0<=h_i<=1 follow because they are probabilities. Every quantitative q-scale estimate below still uses at most the original three-deletion expansion, with all other pools kept in the outside coefficients.
+
+### 167.3 同一整数、同一校准与平面交段
+
+**命题 167.3（生成平面的联合算术必要条件）。** Use the two original groups0 and1 and retain their actual membership candidates C_0,C_1, exactly as in Chapter 165. Let t in[0,W] be Chapter 165's exact common response coordinate. Equations(167.10–11) give
+
+$$
+ \mu_0=C_0(p+dt),\qquad
+ \mu_1=C_1[p+dt+z\{h_0+(h_1-h_0)t\}].              \tag{167.13}
+$$
+
+This adds new joint information to the affine-line representation: its deviation from the count-multiplicity direction has the EXACT known factor z=tanh(Delta_Q/2). It is not an uncontrolled independent intercept/slope perturbation.
+
+Let (n_0,u,v) be the SINGLE primitive generated normal from (165.17)–(165.20) after its integer shears. Undo those shears, writing
+
+$$
+ m=n_0-u\lfloor C_0p\rfloor-v\lfloor C_1(p+zh_0)\rfloor,
+ \qquad J=uC_0+vC_1,\quad s=|u|+|v|.               \tag{167.14}
+$$
+
+Here m and J are INTEGERS; (m,u,v) is primitive because the shear is unimodular. The generated-normal height bound gives |u|,|v|<=K but is not falsely assigned to the unsheared m. The exact plane intercept and slope are
+
+$$
+ \delta_n=m+pJ+vC_1zh_0,\qquad
+ \beta_n=dJ+vC_1z(h_1-h_0).                         \tag{167.15}
+$$
+
+Consequently its operative interval is EXACTLY
+
+$$
+ [0,W]\cap\left\{t:
+ |m+J(p+dt)+vC_1z\{h_0+(h_1-h_0)t\}|
+                   \le s\varepsilon/L\right\}.     \tag{167.16}
+$$
+
+The exceptional branch $B_{165}$ occurs when this interval has diameter at least chi/2, with all the other rank/determinant definitions of Chapter 165 retained. The condition has not been replaced by a separately favorable slope bound. Rank0/1 branches remain governed by Chapter 165's two-site argument. Each of the nine memberships retains its own generated plane; no union over arbitrary integer normals has been introduced.
+
+For a negative-score pool with fixed $0<\ell<c_q$, (165.12)–(165.13) give c_*/q<=|d|<=C_*/q on the permitted outside enlargement. If(167.16) has diameter at least chi/2, it NECESSARILY satisfies
+
+$$
+ |dJ+vC_1z(h_1-h_0)|\le {4s\varepsilon\over L\chi}.
+                                                               \tag{167.17}
+$$
+
+Indeed two points at separation chi/2 in the interval have affine values differing by at most2s epsilon/L. This is a consequence of the same interval condition, not a substitute for it. If J is nonzero, interval nonemptiness and0<=h_0+(h_1-h_0)t<=1 for t in[0,W] subset[0,1] also imply
+
+$$
+ |J|\le {q\over c_*}
+       \left({4s\varepsilon\over L\chi}+|v|C_1|z|\right),
+$$
+
+$$
+ \left|p+{m\over J}\right|
+ \le |d|W+{|v|C_1|z|\over|J|}
+                    +{s\varepsilon\over L|J|}.      \tag{167.18}
+$$
+
+This is a coupled rational-approximation condition with denominator J=uC_0+vC_1, not a free denominator. The same p,d,h_0,h_1 and count pair occur in both lines. The allowed numerator m is retained without a fictitious small height bound. Equations(167.17–18) are necessary, not sufficient, for $B_{165}$. No probability bound is inferred from the number of formal rational candidates.
+
+There is a useful exact zero-combination alternative. If J=0 and
+
+$$
+               |v|C_1|z|+s\varepsilon/L<1,          \tag{167.19}
+$$
+
+then interval nonemptiness forces m=0. Put g=gcd(C_0,C_1). Primitivity now gives (u,v)=plus or minus(C_1/g,-C_0/g). Therefore
+
+$$
+                     g\ge\max(C_0,C_1)/K.           \tag{167.20}
+$$
+
+This uses the actual integer multiplicities and proves an arithmetic obstruction to the J=0 branch when its gcd is smaller. It does not presume a gcd law for the conditional counts.
+
+For Chapter 165's parameter construction, write e=(3gamma-2c)/8, a=gamma-e, ell=2c-gamma+3e, h=e, with gamma<c<3gamma/2. Its bounds give
+
+$$
+ K\le e^{(\gamma-2e)\lambda+O_c(Q+\log Q)},\quad
+ \varepsilon/L\le e^{-(\gamma+a)\lambda+O_c(Q+\log Q)}.
+                                                               \tag{167.21}
+$$
+
+If phi-c_q>gamma-2e, (167.7) and C_1<=Cq imply(167.19) eventually. This condition holds, for example, for every original beta>=2/3, since then phi>=2c_q. For the actual central counts C_i comparable q/Q^3, the exceptional J=0 branch must then obey
+
+$$
+ \gcd(C_0,C_1)\ge
+ \exp[(c_q-\gamma+2e)\lambda-O_c(Q+\log Q)].         \tag{167.22}
+$$
+
+The threshold is explicit. Its probability under the selected revealed environment is NOT proved here. In the remaining beta range even the implication to m=0 requires its displayed condition; we do not discard the amplitude-defect term. Most importantly the J nonzero branch(167.18) remains, so (167.22) alone cannot settle $B_{165}$ even if a gcd estimate becomes available.
+
+### 167.4 多个隐藏对的共同协方差与交换因子
+
+Now retain any fixed d hidden pairs, with fixed positive products P_i and variable sums S_i, and theta_i=log S_i. Use the exact positive expansion (165.31)–(165.32). Equivalently retain, in that same finite posterior, indicators Z_i of the event that hidden pair i contributes EXACTLY ONE support label. The joint law of these indicators is generally dependent; every derivative below uses its SAME full normalizer.
+
+For an outside anchor a_j with support indicator I_j, finite differentiation gives
+
+$$
+ U_{ji}:=\partial_{\theta_i}\pi_j
+       =\operatorname{Cov}(I_j,Z_i),\quad
+ t_i=P(Z_i=1),\quad\omega_i=t_i(1-t_i)>0.
+                                                               \tag{167.23}
+$$
+
+No integration/differentiation interchange is needed: the exact posterior is a finite positive sum. Conditional on Z_i being0 or1 the law of all other variables is independent of theta_i, so also
+
+$$
+ U_{ji}=\omega_i\,[E(I_j\mid Z_i=1)-E(I_j\mid Z_i=0)].
+                                                               \tag{167.24}
+$$
+
+This is a posterior covariance, not an assertion that the raw hidden allocations or the calibrated responses are independently phased.
+
+For two outside anchors0,j let H_0j=1_{I_0+I_j=1}. The event Z_i and the collapsed multipool weights are invariant under their exchange. Thus(167.9) holds throughout the theta parameterization and yields the EXACT factorization
+
+$$
+ \pi_j-\pi_0=z_{j0}E H_{0j},\qquad
+ U_{ji}-U_{0i}=z_{j0}\operatorname{Cov}(H_{0j},Z_i).
+                                                               \tag{167.25}
+$$
+
+Since H_0j takes values0,1,
+
+$$
+             |U_{ji}-U_{0i}|\le |z_{j0}|\omega_i.    \tag{167.26}
+$$
+
+This is an exact joint bound on a shared realization. It retains common normalization and does not optimize the two covariance terms separately. Near equality of likelihoods now forces near equality of every response row, regardless of how many other hidden inputs are present.
+
+For two pools, set V_i=Cov(H_01,Z_i). The normalized-anchor Jacobian has determinant
+
+$$
+ \det\begin{pmatrix}U_{01}&U_{02}\\U_{11}&U_{12}\end{pmatrix}
+       =z_{10}(U_{01}V_2-U_{02}V_1).                 \tag{167.27}
+$$
+
+The factor z_10 is the exact prescribed count-line factor(167.8), not a generic transversality constant. A lower bound for the remaining covariance minor would still have to be proved jointly. Its algebraic appearance is not such a proof.
+
+### 167.5 三项删除内的定量响应界
+
+**定理 167.4（固定多个隐藏对的归一化行列式上界）。** On the retained full-array regularity event, uniformly for an anchor in the original score window and each fixed hidden pair,
+
+$$
+                         |U_{ji}|\le C_*\omega_i/q.\tag{167.28}
+$$
+
+We give the required finite-order justification because it is not licensed by the mere multipool polynomial identity. Fix i and HOLD ALL OTHER pair allocations/weights at their actual values. They belong to its outside coefficients. This is a single-pair view. The common denominator omits only that pair, and the one-anchor expansion omits only that pair plus the chosen anchor, exactly three labels.
+
+For that view let C_i=E_q+P_iE_{q-2}, D_i=E_{q-1}, tau_i=2D_i sqrt(P_i)/C_i. The original fixed-offset ratios around integer mean q-1 give
+
+$$
+ {D_i\over\sqrt{E_qE_{q-2}}}=1+O(q^{-1}).
+$$
+
+The arithmetic-geometric mean inequality implies tau_i<=D_i/sqrt(E_qE_{q-2})<=2 eventually, UNIFORMLY in the positive product P_i. The exact one-pair anchor formula is pi_j=pi_j^0+(pi_j^1-pi_j^0)t_i. Compare its values at X_i=0 and |X_i| tending to infinity. Their difference is(pi_j^0-pi_j^1)/(1+tau_i).
+
+The retained three-deletion expansion is uniform in all positive pair odds and has the form p_ref-(v_o/D_o)f_{score}(X_i)+O(q^-2), with D_o comparable q and |f_score|<=1. Taking the difference of its TWO endpoint values bounds the difference by C/q. Since1+tau_i<=3, |pi_j^1-pi_j^0|<=C_*/q. Insert this in(167.24) to obtain(167.28). We differentiated no C0 error and used no four- or2d-deletion local approximation. The formal endpoint is an evaluation of a positive rational identity, not a claimed raw-data allocation.
+
+The uniformity over a fixed collection of anchors and pools follows on ONE original regularity event: deleting any three Bernoulli terms changes the mean by at most3, while the original calibration variance is comparable q. Its measurable outside enlargements are the same as in Chapters 163 and 165. For each column, all other hidden coordinates remain exact. We do not condition a marginal kernel on a joint favorable event to manufacture this bound.
+
+Combining(167.26) and(167.28), for d anchors0,...,d-1 and d retained pools, subtraction of the first response row from the other rows and the determinant expansion give
+
+$$
+ |\det(U_{ji})_{0\le j<d,1\le i\le d}|
+ \le {d!C_*\over q}\left(\prod_{i=1}^d\omega_i\right)
+                         \prod_{j=1}^{d-1}|z_{j0}|. \tag{167.29}
+$$
+
+Every determinant term contains one entry from the first row, bounded by C_*omega_i/q, and one entry from each other row, bounded by |z_j0|omega_i. Summing d! terms proves the inequality. There is no exponential dimension loss hidden in an unspecified constant; d is FIXED. No statement uniform in d growing with Q is made.
+
+Define the response matrix after removing individual marginal scales by
+
+$$
+             \mathscr J_{ji}={q\over\omega_i}U_{ji}.
+                                                               \tag{167.30}
+$$
+
+This is solely an analytic normalization of a response derivative; it does not change any physical observable, noise, likelihood or conditional kernel. Its first row is bounded by C_*, and each other row differs from it by at most q|z_j0| entrywise. In particular
+
+$$
+       |\det\mathscr J|\le d!C_*\prod_{j=1}^{d-1}q|z_{j0}|.
+                                                               \tag{167.31}
+$$
+
+Equivalently mathscr J is a rank-one matrix with repeated first row plus an error whose entries are bounded by q max|z_j0|. This is a quantitative rank-one approximation even when the finite-q determinant itself is nonzero. It is stronger than merely knowing that the one-pair curve is a line.
+
+### 167.6 原实际数组上的指数退化与联合概率
+
+**定理 167.5（实际共同数组上的指数退化）。** For fixed distinct central groups j=0,...,d-1, equations(167.7–8,31) give
+
+$$
+ |\det\mathscr J|\le C_d(Qq^2/M)^{d-1}
+       =\exp[-(d-1)(\phi-c_q)\lambda+O_d(\log Q)].   \tag{167.32}
+$$
+
+For ANY fixed d anchors chosen from the full original count line |j|<=K_M, the same proof gives the slightly larger polynomial factor
+
+$$
+ |\det\mathscr J|\le C_d(Q^3q^2/M)^{d-1}.           \tag{167.33}
+$$
+
+The exponential rate is unchanged and strictly positive in decay, since
+
+$$
+                    \phi-c_q=\phi(2\beta-1)/\beta>0.\tag{167.34}
+$$
+
+This is valid for EACH fixed originally admissible beta. It is not claimed uniform as beta tends to1/2 with Q. The original beta is not adjusted to obtain this result.
+
+On a fixed membership branch the physical center derivatives are C_j U_ji. Thus their d-by-d determinant is exactly product_j C_j times det U. For fixed central groups C_j comparable q/Q^3, (167.29) yields
+
+$$
+ |\det(\partial_{\theta_i}\mu_j)|
+ \le {C_d\over Q^{2d+1}}\left({q^2\over M}\right)^{d-1}
+                                      \prod_i\omega_i.        \tag{167.35}
+$$
+
+No count is replaced by its mean in this equation. The empirical C_j enter exactly; their high-probability upper bounds are used only for the inequality. On the whole score window compact exact posterior marginals imply C_j<=Cq: the sum of ALL posterior marginals is exactly q. This gives the broader bound C_d Q^{3(d-1)}(q^2/M)^{d-1} product_i omega_i for arbitrary count-line anchors. Virtual membership candidates add at most2d labels and obey the same bound after enlarging a fixed constant. On every actual branch its center is exact.
+
+The derivatives are those of the analytic continuation with fixed membership. Actual discrete memberships can change as the raw split changes; no differentiability across that change is claimed. At every actual allocation one of the finitely many retained membership branches supplies its exact centers. All branches satisfy the bounds, so no hidden membership is discarded.
+
+The necessary original-array event and conditional law can be realized jointly. Choose any fixed negative score magnitudes ell_i in(0,c_q), their attained positive minimizers x(-ell_i) from Chapter 163, and widths0<h_i<ell_i. The original exact rates satisfy I_i<67c_q/68. The exact rounded point prefactor k_i>0 gives trial counts
+
+$$
+ m_i=\lceil k_i^{-1}Q^5e^{I_i\lambda}\rceil,\quad
+ m=\sum_i m_i,\quad
+ \log m\le(67/68)c_q\lambda+5\log Q+O_d(1).         \tag{167.36}
+$$
+
+All blocks are predetermined and disjoint in the actual true support. The common joint approximation costs8m/M+sqrt(48m/M), and prescribed-total failure costs at most d exp(-Q^2). Since2m=o(q/Q^3), one can choose the d outside anchors in the fixed central groups after the permitted outside revealment. No new physical selection or known-support posterior is made.
+
+Reveal the original parity/transition information, masks and totals, outside labels, and lawful arrivals or terminal path label. Select each first successful index using totals ONLY, reveal all unselected allocations, and partition over the finite selected-index tuples. On each partition cell the selected factors of the exact product kernel remain; integrating the rest and summing the cells proves the SAME joint product of2d fair binomials conditional on this common sigma-field. There is no exponential selected-index union and no conditioning on a favorable hidden split. The posterior component indicators Z_i in(167.23) are DIFFERENT variables from these raw allocation binomials; their posterior dependence has been retained throughout.
+
+For the original split variables, conditional exponential moments give
+
+$$
+ P\{\exists i:|X_i|>h_i\lambda\mid F_0\}
+              \le\sum_i2e^{-2h_i^2\lambda/V_i},\quad
+ V_i=2(A_s^2x_{i,+}+B_s^2x_{i,-}+1).                \tag{167.37}
+$$
+
+On the common full-array regularity event, each one-pair calibration differs by O(q^-1) after its fixed deletions. Hence tau_i is comparable exp(-ell_i lambda), and on the paid hidden tails' complement
+
+$$
+       \omega_i\le t_i\le C_i e^{-(\ell_i-h_i)\lambda}.\tag{167.38}
+$$
+
+These bounds hold simultaneously on the SAME actual realization, not at separately optimized views. Let b_original denote the unchanged sum of original calibration, count-line isolation, count regularity and central-occupancy failure probabilities. It tends to zero separately for pair/path, uniformly over support/floors. The probability on which all preceding actual-center bounds, the chosen joint kernel and(167.38) are available is at least
+
+$$
+ 1-b_{original}-d e^{-Q^2}-8m/M-\sqrt{48m/M}
+                         -\sum_i2e^{-2h_i^2\lambda/V_i}=1-o(1).
+                                                               \tag{167.39}
+$$
+
+We apply the exact conditional kernel on permitted measurable outside enlargements and then charge b_original. We do not claim that conditioning that kernel on the full hidden-dependent good event leaves it unchanged. These distinctions hold for both original experiments.
+
+Equations (167.32)–(167.39) give the actual-law quantitative bounds. The physical center determinant can receive the further rare attenuation product_i exp[-(ell_i-h_i)lambda]; importantly the normalized determinant(167.32) already tends to zero exponentially without relying on those tails. This identifies an independent geometric cost inherited from the unchanged count-line likelihood relation.
+
+### 167.7 多项式横截性前提的反例与剩余问题
+
+**命题 167.6（多项式横截性假设失效）。** Fix d>=2 and K>0. Consider the following explicit proposed transversality premise: after scaling each hidden-pair response by its exact omega_i/q, some d-by-d minor formed from d original count-line centers has determinant at least Q^-K on an original-data event of probability bounded away from zero. For every fixed d and K this premise is FALSE on the regularity events above. Equations(167.33–34) make every such minor smaller than Q^-K eventually, uniformly over all its possible count-line anchor choices. There is no union over exponentially many choices: the same deterministic bound holds for each. This is a quantitative obstruction to a specifically stated multipool recipe.
+
+It is NOT a proof that multiple pools cannot help. A theorem retaining exponentially small determinants, their precise normalizations, the common-denominator arithmetic and the actual conditional atoms could still be usable. No polynomial lower bound was a necessary hypothesis of the physical posterior theorem. Nor do small derivatives alone imply concentration of a phase or failure of narrow-noise smoothing.
+
+Likewise the one-plane event remains genuinely unsettled. The exact reduction(167.16–18) keeps its intercept and orientation together. It neither treats p as uniform mod1 nor treats C_0,C_1 as independent of the elementary symmetric coefficients. The event selecting the generated plane and the rare totals is part of that same environment. A marginal local limit for the counts, a qualitative irrationality assertion, or a covariance identity alone does not give the needed conditional simultaneous approximation bound.
+
+The large-gcd consequence(167.22) addresses only J=0 and only under its explicit parameter inequality. The J nonzero condition involves the integer J and the SAME empirical p,d,h_0,h_1. No probability estimate for it is supplied. Therefore we do not claim $\mathbb P(B_{165})$ is small, large, or asymptotically one. A failure to prove that estimate is not evidence of a posterior transition.
+
+The remaining sufficient routes are: prove a joint actual-law bound for(167.16), or a harmonic estimate that tolerates the exponential minor scale(167.32) with all common normalization and atomic-kernel costs. The latter cannot simply assume a fixed nondegenerate surface constant.
+
+### 167.8 完整物理目标与尚缺的概率桥梁
+
+The target remains the SAME selected full-q theorem. Retain original lambda,delta,B,mathcal B,rho=sigma mathcal B, physical T and H, exact empirical centers and all count multiplicities. In particular retain
+
+$$
+ Y=T+\sigma G,\quad A=V_H/\sqrt\delta,\quad
+ \nu_0=2\sum_Hw_j^2,\quad\kappa_3=8\sum_Hw_j^3,\quad
+ \Lambda=\nu_0+\sigma^2,
+$$
+
+$$
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+ \quad D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+$$
+
+$$
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \quad\nu=2g_0,\quad m_x=E_xY.                       \tag{167.40}
+$$
+
+The required conclusions at rho comparable exp(-cQ^3) are integral f_x|D_x-R_*| tending to0, E_xY^2 tending to nu, and
+
+$$
+ \int f_xVpost_x-Vprior_x+A^2/\Lambda-C_xm_x
+                                  \longrightarrow8/\sqrt3-25/6.
+                                                               \tag{167.41}
+$$
+
+They remain established unconditionally only in Chapter 163's inherited0<c<gamma range. The response derivatives in theta_i or X_i are proof-data derivatives; they are not the two normalized real-temperature marks in this physical theorem.
+
+For a prospective c in Chapter 165's conditional window, its all-harmonic estimate still has the form
+
+$$
+ P\{\min_{1\le|p|\le N}\mathcal E(p)\le U\}
+              \le o(1)+P(B_{165}).                  \tag{167.42}
+$$
+
+The reductions and minor upper bounds do not replace the final term by o(1). This is the exact lost bridge. The lower-band construction of Chapter 163 can be implemented with the current denominator cutoff: changing its log cutoff from O_a(Q) to O_c(Q) does not consume its fixed positive Q^3 margins. That clarification does not address the high-band term $B_{165}$.
+
+If a valid joint replacement did remove that term, all the following inherited interfaces still apply without changing their hypotheses. The original occupied block, U, reduced arcs and complementary contraction retain their q-scale margins at fixed c; the same-array energy event is what suppresses nonzero arcs. Nonzero arcs expand only the occupied block, with all other coordinates exact; the zero arc expands the whole J={j:d_j>=Q^3600}, with low E exact. Both normalized real marks0–2 come from direct differentiation of the SAME normalized tilt exp(u(s_lat+G^2/2)) at fixed physical y. All center phases, noncentral shifts, original scalar/intercept and SAME G remain.
+
+The ONLY inverse-noise costs are the off-arc integral CQ^20(1+rho^-1)eta^(a_occ Q^2) and the summed rational-arc envelope C mathfrak b^2(1+rho^-1)[exp(-exp(7kappa lambda)/32)+exp(-rho^2N^2/(100 mathfrak b^2))]. With the all-harmonic event these are exponentially absorbed as in Chapters 163 and 165. Without it we do not claim their suppression. Raw bad-event probabilities, including(167.39) and $B_{165}$, are never multiplied by inverse noise to force a conclusion.
+
+The fixed-order signed-count telescope on COMPLETE tuples has marked TV error CQ^-444 through order2. The SAME residual kernels K_r(n,y)=((y-T(n))/sigma)^(2r)phi_sigma(y-T(n)) have sigma-free integral EG^(2r), so no polynomial signed error is inflated by rho^-1. The conditional mean-square term uses q_1^2/q_0=sup_z(2zq_1-z^2q_0), Q^10 clipping and fourth moments, not unmarked TV. The original selected-log-density correction h_selected, including its log surprise, retains its Ca_xQ^2=o_P(1) same-kernel transport. Neither a known-support posterior nor a changed physical selection is introduced by the proof pools.
+
+On the real output bulk the reference denominator is at least cQ^-60, the two quotient identities cost CQ^188 against the marked CQ^-400 error, and positivity is proved before the real logarithm. Output tails use the original real mgf/fourth moments without tail quotients. Outside ENERGY is translated before outside surprise cancellation, preserving exact outside variance and all low labels. The same finite A,Lambda,C_x and exact integrated C_xm_x then return(167.40–41). None of those bridges is repaired by the present minor upper bound alone; their new all-axis input remains(167.42)'s missing actual-law estimate.
+
+The determinant bound restricts the possible geometric input; it does not extend the physical posterior theorem. It neither differentiates a C0 approximation nor assumes a complex zero-free region, growing local expansion order, Gaussian whole-law replacement or new amplitude condition.
+
+### 167.9 来源与适用边界
+
+有限指数族的导数—协方差关系、交换配对、行列式按行相减及整数公因数是经典工具。这里将它们用于原完整选择后验的同一个实现，得到补偿主导的精确计数线尺度、共同平面的算术必要条件，以及保留每个视图删除范围和实际选择代价的行列式上界。没有把后验潜变量的协方差与原数据分配变量的独立性混为一谈。
+
+Dytso、Poor 与 Shamai 的 Gaussian 条件均值导数定理要求正定 Gaussian 噪声协方差、Markov 关系及相应可积性。它给出导数与条件协方差的身份，不给出协方差小行列式的定量正下界。本章的参数是隐藏对权重和的对数，其原条件分配不是该 Gaussian 观测通道；式 (167.23) 直接来自有限正和的微分。Györfi、Harremoës 与 Tusnády 的一维大偏差结果也不提供当前计数与经验校准的联合模整数分布。来源版本与这些迁移限制见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+尚缺的是式 (167.16) 在原数据律下的联合概率估计，或能容忍式 (167.32) 的指数小几何尺度、同时支付离散条件原子和共同归一化代价的全频率估计。大公因数条件只处理 $J=0$ 且带明确参数不等式；它不能替代 $J\ne0$ 分支。当前结果既不证明 $\mathbb P(B_{165})\to0$，也不证明其反面，且不是原后验结论的反例。
+
+## 追加锚（本行以下为增补区）

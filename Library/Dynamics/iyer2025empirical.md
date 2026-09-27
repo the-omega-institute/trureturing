@@ -5986,3 +5986,15 @@ A. Fernandez、E. A. Spence、A. S. Fokas，*Uniform asymptotics as a stationary
 引理 3.6 分别证明变换振幅导数的局部统一界和远处多项式增长界；配合引理 3.4 及 (3.27) 的领先振幅下界，才允许把尾项除以领先项。参数相关换元本身不保证统一余项。本文据此明确区分固定域估计与增长域估计，并重新证明原数组的能量预解式域、完整低计数组的非零性、缩放 Jacobian 控制和增长场计数返回。任何 $Q$ 的多项式因子都由 $Q^3$ 指数余量支付，不要求任意缓慢的 $t^2$ 去压住它。
 
 第 158 章提供完整选择系数与计数单元接口，第 160 章提供精确非中心剖面，第 162 章区分区域零点与总零点，第 164 章提供总积分矩形的固定域结构。经典 Laplace、Cauchy、解析隐函数和 Rouché 方法保留原归属；新增推导在于这些接口在同一原数组的显式增长域上的定量兼容。源文不直接证明本模型的选择计数结论，有限来源核对亦不构成全球原创性认证。
+
+## 谱边界第 167 章补充：补偿尺度与联合响应退化
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 167 章证明原计数线相邻似然差由补偿项主导，将同一生成平面的截距与方向联系到实际计数的整数线性组合，并证明固定多个隐藏对的归一化协方差行列式在原共同数组上指数衰减。这个方法反例针对明确的多项式横截性前提；原例外事件的概率和更宽原后验定理仍未得到。
+
+Alex Dytso、H. Vincent Poor、Shlomo Shamai (Shitz)，*A General Derivative Identity for the Conditional Mean Estimator in Gaussian Noise and Some Applications*，[arXiv:2104.01883v1](https://arxiv.org/abs/2104.01883v1)，[原 TeX](https://arxiv.org/e-print/2104.01883v1)。所核对 `Camera-Ready_v4.tex` 为 203,510 字节，SHA256 `ad005a76dfafcfeb9688390e40137cf3a6a4cb7572f9690b41652789270c9c16`。主定理假设 $Y=X+N$，其中 $N$ 独立且为正定协方差的 Gaussian 噪声，并要求 $U-X-Y$ Markov 关系及所列条件矩可积性。结论将条件均值 Jacobian 写成逆噪声协方差与条件协方差的乘积；原证明中的 Gaussian 似然微分、Bayes 公式、score 身份及积分可交换条件均在核对范围内。
+
+该身份不蕴含协方差或其小行列式的定量正下界。本章对 $\theta_i=\log S_i$ 的响应来自有限完整支持后验的正和微分，未把原离散分配替换为 Gaussian 观测通道，也未引入原文数值微分、模拟或增长阶数结论。式 (167.23) 的有限和证明与后续交换配对一起保留共同归一化，行列式的尺度由原补偿关系另行推出。
+
+László Györfi、Peter Harremoës、Gábor Tusnády，*Some Refinements of Large Deviation Tail Probabilities*，[arXiv:1205.1005v1](https://arxiv.org/abs/1205.1005v1)，[原 TeX](https://arxiv.org/e-print/1205.1005v1)。所核对 `gyorfi1205v1.tex` 为 19,664 字节，SHA256 `c0c8d218195c3aea5ec0e4529440b0f5467425f55f86fb7c7e7057ecd450c46b`。固定 iid 基准律在零附近有有限矩母函数，倾斜均值位于内部；归一化配分函数和精确散度身份继续用于理解第 163 章已证明的稀有总数率。原文的一维尾估计不提供本章所需的共同计数／校准模整数律，不能替代原取整点下界或共同向量条件律。
+
+第 165 章核对的 Beresnevich 解析非退化性及原始子格下界仍保留其范围。当前指数退化进一步说明，固定几何的多项式非退化常数不能直接迁移到该共同数组的响应。经典有限指数族、交换配对和行列式工具的归属不变；原补偿尺度、共同平面约束及含原选择代价的响应上界是本卷的具体综合推导。有限来源核对不构成全球原创性认证。
