@@ -232,9 +232,10 @@ proof reports and frozen state. Independent review examines whether statements
 faithfully express the intended mathematics.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
-browsable, searchable projection of [Blueprint/](Blueprint/), published by
+searchable snapshot of [explanations](Blueprint/), [problem dossiers](Problems/)
+and [literature notes](Library/), published by
 [trureturing-mdbook](https://github.com/the-omega-institute/trureturing-mdbook).
-It explains the work; the formal source remains authoritative.
+The formal source remains authoritative.
 
 Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
 
