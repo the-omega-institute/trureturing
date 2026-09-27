@@ -20,8 +20,21 @@ If the centered effects of all finite words span that carrier, finite-dimensiona
 
 For the depth clause, the uncentered bounded-word spans start with the identity line. Once two consecutive stages agree, prefix closure under every instrument generator makes that equality permanent. Their rank can therefore grow strictly at most d squared minus one times, after which canonical centering gives the full bounded centered span.
 
+**Theorem 1.2 (A bounded monotone rank sequence has an equal step).**
+
+$$r \text{ monotone }\land \forall n, r(n) \leq R \Rightarrow \exists m \leq R-r(0), r(m) = r(m+1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.bounded_monotone_has_equal_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If every step up to terminalRank - r(0) were strict, the sequence would exceed its bound at the next index.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.bounded_monotone_has_equal_step`
 - Truth anchor: `D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate`
 - Dependency: [D5/S3/Quantum/Completion/SequentialWordObservationResidual](../Completion/SequentialWordObservationResidual.md)
 - Dependency: [D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence](../Fibers/TraceZeroReadoutOrthogonalEquivalence.md)

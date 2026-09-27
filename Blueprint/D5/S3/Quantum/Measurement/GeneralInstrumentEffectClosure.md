@@ -38,11 +38,13 @@ $$d \geq 1 \land \sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^
 
 *Commentary.*
 
-Let alpha and iota be finite, let Q_a be the no-click and L_i the click Kraus operators with the completeness relation and d >= 1. Since A(I) = I minus the sum of the click effects and A applied to A^n(B_x) is A^{n+1}(B_x), the spaces satisfy V_{N+1} = V_1 + A(V_N); so one equality V_{k+1} = V_k persists for all later N, and it also shows A(V_k) inside V_k. Every generator is Hermitian, and the real parts of the entries on and above the diagonal together with the imaginary parts above the diagonal determine a Hermitian matrix, so every V_N has real dimension at most d^2. As V_1 contains the identity and each strict step raises the dimension, some k between 1 and d^2 satisfies V_{k+1} = V_k.
+Let alpha and iota be finite, let Q_a be the no-click and L_i the click Kraus operators with the completeness relation and d >= 1. Since A(I) = I minus the sum of the click effects and A applied to A^n(B_x) is A^{n+1}(B_x), the spaces satisfy V_{N+1} = V_1 + A(V_N); so one equality V_{k+1} = V_k persists for all later N, and it also shows A(V_k) inside V_k. Every generator is Hermitian, and the Hermitian d by d matrices form a real space of dimension d^2, so every V_N has real dimension at most d^2. As V_1 contains the identity and each strict step raises the dimension, some k between 1 and d^2 satisfies V_{k+1} = V_k.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Measurement/GeneralInstrumentEffectClosure.clickEffect`
 - Truth anchor: `D5/S3/Quantum/Measurement/GeneralInstrumentEffectClosure.effectSpace`
 - Truth anchor: `D5/S3/Quantum/Measurement/GeneralInstrumentEffectClosure.effectSpace_closure`
+- Dependency: [D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition](../Entanglement/BipartiteSectorDecomposition.md)
 - Dependency: [D5/S3/Quantum/Measurement/GeneralInstrumentDarkClosure](GeneralInstrumentDarkClosure.md)
+- Dependency: [D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate](../PredictionDepth/FiniteSequentialWordCertificate.md)
