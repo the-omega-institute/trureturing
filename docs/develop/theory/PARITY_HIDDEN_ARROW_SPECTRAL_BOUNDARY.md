@@ -55817,3 +55817,349 @@ All statements about probabilities above distinguish the pair and stationary-pat
 
 
 ## 追加锚（本行以下为增补区）
+
+## 182. 超出 Taylor 盘的有限谱曲率：精确低群混合与原始实电荷窗口
+
+完整低群混合在电荷 Hessian 中留下一个正的方差项。将它与能量倾斜后的精度及 Schur 补同时保留，可在显式负能量区间构造唯一实分支，并证明其曲率严格非退化。该区间包含行列式在零点的 Taylor 级数不收敛的谱尺度，因而曲率结论直接依赖完整有限谱。
+
+本章还将曲率转移到同一精确实剖面，并回接原始选择计数的稀有窗口。复鞍点的贡献系数、等振幅曲线、最大复域及新的总零点计数仍未得到；实分支本身不能替代这些条件。
+
+### 182.1 原始实验、尺度与有限谱条件
+
+
+**定义 182.1（原始选择律与有限谱数据）。** Keep the original full-q selected law:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ H_y=V+\sqrt\delta\,y,\quad a=(2V)^{-1}+\eta,
+$$
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)
+ \exp\{aD^2+hD-(E-H_y)^2/(2\delta\sigma^2)\}.
+ \tag{182.1}
+$$
+Here eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, sigma>0 tends to zero, and ONLY the inherited strict log(1/sigma)/Q^3 reserve applies. All statements are on the same inherited tight class M>=16, uniformly |y|<=Y. Enlarge M, if necessary, once for the bounds already retained in Chapter 179: V,V_H in[M^-1,M], max_H v_j/delta<=M, C2,H=delta^-1 sum_H v_j^2>=M^-1, a block of at least1/(M delta) conditional eigenvalues in[1/M,M] after dividing by delta, ||e_H||<=M delta^5, and n_g<=M delta^-4. The high/full discrepancy and every low tuple's charge and energy have the inherited exponentially small bounds. Exhaustion gives actual pair and actual path probability statements separately, uniformly over deterministic size-q supports. No deterministic occupied-profile limit is used.
+
+The literal selection coefficient is
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ { [z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)
+       \over [z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_jn_j.
+ \tag{182.2}
+$$
+The coefficient ratio in (182.2) has the full-box expansion of Chapter 169, exp(ell_sel-epsilon D^2)+O(q^-1/2), with epsilon=B^2/(2d_c), ell_sel=onehalf log(d_all/d_c). Define b_ch=a-epsilon; b_ch is NOT the residual exponent beta_res. The O(q^-1/2) term remains an original-law error, not an exact conditioning identity.
+
+### 182.2 精确有限函数与实能量区间
+
+Write C=diag(v_j:j in the high set), v=(v_j),
+$$
+ A_c=C-vv^T/V_H,\quad B_c=A_c/\delta,\quad
+ q_c={v\over V_H\sqrt\delta},\quad
+ f_L=-c_Lv/V_H-e_H,\quad b_L(\rho)=f_L-\rho q_c.
+ \tag{182.3}
+$$
+The vector q_c is a conditional charge direction, not the selection size q. Keep ALL original low tuples L with exact probabilities p_L, charges c_L and energies u_L. Set
+$$
+ \ell_Q=\max_L(|c_L|+u_L)\le P(Q)e^{-b_{Low}Q^3},\qquad \sum_Lp_L=1.
+$$
+Zero-probability tuples may be omitted from sums. This is not a deletion of any original mass.
+
+For real energy s<=0 put R_s=(I-2sB_c)^-1 and use the exact action
+$$
+ J_L(s,\rho)={\sigma^2s^2\over2}+s(u_L-H_y)
+ -{\delta\over2}\log\det(I-2sB_c)
+ +s\,b_L(\rho)^TR_sb_L(\rho),
+$$
+$$
+ F_L(s,\rho)=J_L(s,\rho)+b_{ch}\rho^2
+             -{(\rho+\sqrt\delta c_L)^2\over2V_H},\qquad
+ \mathscr F(s,\rho)=\delta\log\sum_Lp_Le^{F_L(s,\rho)/\delta}.
+ \tag{182.4}
+$$
+The logarithm in (182.4) is a real logarithm of a strictly positive finite sum on the real domain. No complex mixture nonvanishing is inferred. Both noncentrality and the exact low mixture precede energy profiling.
+
+Define, with the actual eta,delta and fixed Y,
+$$
+ a_Q=8M^6[\eta+\sqrt\delta(1+Y)+\delta],\quad
+ R_*=8M^3(1+2M^2),\quad I_Q=[-M,-a_Q].
+ \tag{182.5}
+$$
+Eventually 0<a_Q<1/M. This adds no eta/noise rate: a_Q~8M^6 eta follows from the original t->infinity. The result constructs, rather than assumes, a unique positive solution
+$$
+ \mathscr F_s(s,\rho_Q(s))=0\qquad (s\in I_Q),
+ \tag{182.6}
+$$
+with rho_Q strictly decreasing in s and 0<rho_Q(s)<R_*. Let
+$$
+ \rho_- =\rho_Q(-a_Q),\quad \rho_+=\rho_Q(-M),\quad
+ \mathcal I_Q=[\rho_-,\rho_+].
+ \tag{182.7}
+$$
+In particular rho_- is of order sqrt(a_Q), with constants depending on M,Y, whereas the portion s in[-M,-M/2] has charges bounded below by a fixed positive constant. All endpoints are exact finite-array quantities specified by (182.4),(182.6); the roots are proved unique below. Constants denoted by C_M or c_M may also depend on the fixed compact-output bound Y.
+
+For rho in this interval, let s_Q(rho) be the inverse, and set
+$$
+ A(\rho)=\mathscr F(s_Q(\rho),\rho),\quad
+ K_E(\rho)=\mathscr F_{ss}(s_Q(\rho),\rho),\quad
+ \mathcal A(\rho)=A(\rho)-{\delta\over2}\log K_E(\rho).
+ \tag{182.8}
+$$
+These are predictive finite spectral quantities. They are not defined using the unknown total normalizer or its zeros.
+
+### 182.3 保留低群方差的 Schur 曲率
+
+Let
+$$
+ S(s)=\sum_H{v_j\over1-2sv_j/\delta},\qquad
+ m_e(s)=-2s\sum_H{(v_j/\delta)e_j\over1-2sv_j/\delta}.
+$$
+The exact rank-one identity retained in Chapters 169 and 179 holds on the ENTIRE real negative s axis, not just on their small disks. Indeed I-2sB_c and I-2sC/delta are positive definite there, S(s)>0, and the same convergent Gaussian calculation gives
+$$
+ F_L={\sigma^2s^2\over2}+s(u_L-H_y)+L_Q(s)
+ +s\sum_H{e_j^2\over1-2sv_j/\delta}+b_{ch}\rho^2
+ -{[\rho+\sqrt\delta\{c_L+m_e(s)\}]^2\over2S(s)}
+ -{\delta\over2}\log{S(s)\over V_H},
+ \tag{182.9}
+$$
+where L_Q=-delta/2 sum_H log(1-2sv_j/delta). This is a direct extension of the exact identity on its convergence domain; no contour at complex infinity or limiting spectral law is used.
+
+Write w_L=p_L exp(F_L/delta)/sum_K p_K exp(F_K/delta), and let Var_w denote variance under these REAL positive weights.
+
+**定理 182.1（精确低群混合的曲率与实分支）。** Differentiation of the finite log-sum, using (182.9), gives the exact identity
+$$
+ \mathscr F_{\rho\rho}
+   =2b_{ch}-{1\over S(s)}+{\operatorname{Var}_w(c_L)\over S(s)^2}.
+ \tag{182.10}
+$$
+The coefficient of the variance term is exactly1/S^2: F_L,rho differs across lows by -sqrt(delta)c_L/S, and the log-sum Hessian divides its variance by delta. Actual e affects the weights and common slope but cancels from this variance difference. Thus the small low mixture is accounted for before curvature is estimated. Replacing a mixture by one low tuple without this term would not be an exact identity.
+
+Energy convexity is also exact. In the eigenbasis of B_c,
+$$
+ J_{L,s}=\sigma^2s+u_L-H_y+\delta\operatorname{tr}(B_cR_s)
+                                      +\|R_sb_L\|^2,
+$$
+$$
+ J_{L,ss}=\sigma^2+2\delta\operatorname{tr}(B_c^2R_s^2)
+                              +4b_L^TB_cR_s^3b_L>0.
+ \tag{182.11}
+$$
+Consequently
+$$
+ \mathscr F_{ss}=\sum_Lw_LJ_{L,ss}
+                    +\delta^{-1}\operatorname{Var}_w(J_{L,s})>0.
+ \tag{182.12}
+$$
+For -M<=s<=0 the retained block alone supplies
+$$
+ \mathscr F_{ss}\ge k_E={2\over M^3(1+2M^2)^2}.
+ \tag{182.13}
+$$
+Neither actual noncentrality, the noise nor low mixing can diminish this bound.
+
+At any real solution of (182.6), implicit differentiation and the envelope rule give
+$$
+ s_Q'(\rho)=-{\mathscr F_{s\rho}\over\mathscr F_{ss}},\qquad
+ A''(\rho)=\mathscr F_{\rho\rho}
+                 -{\mathscr F_{s\rho}^2\over\mathscr F_{ss}}.
+ \tag{182.14}
+$$
+Combining (182.10)--(182.14) proves the intrinsic inequality
+$$
+ -A''(\rho)\ge {1-2b_{ch}S(s)\over S(s)}
+       -{\operatorname{Var}_w(c_L)\over S(s)^2}
+       +{\mathscr F_{s\rho}^2\over\mathscr F_{ss}}.
+ \tag{182.15}
+$$
+In particular S(s)[1-2b_ch S(s)]>Var_w(c_L) is a sufficient strict-curvature condition; the nonnegative last term shows it is not a necessary condition. This distinction matters near the coexistence saddle, where the precision term by itself need not be positive. Equation (182.15) is valid for the exact finite mixture, at arbitrary negative s where its real energy root exists. It does not rely on a Taylor truncation or small noncentral cumulants.
+
+### 182.4 原始谱数据上的分支存在性与唯一性
+
+We now verify a realized domain for (182.15). For s=-u, 0<u<=M,
+$$
+ V_H-S(-u)=\sum_H{2u v_j(v_j/\delta)\over1+2u v_j/\delta}
+       \ge {2u C_{2,H}\over1+2uM},\quad
+ S(-u)\ge {V_H\over1+2uM}.
+ \tag{182.16}
+$$
+For u>=a_Q and eventually a_Q<=1/M, monotonicity yields
+$$
+ V_H-S(-u)\ge {2a_Q\over3M},\qquad
+ {1\over S(-u)}-2b_{ch}\ge {a_Q\over3M^3}.
+ \tag{182.17}
+$$
+For the second inequality, use 2b_ch=1/V+2eta-2epsilon, V>=V_H, so 1/S-1/V>=(V_H-S)/M^2, and a_Q>=8M^6 eta. Exponentially small high/full defects may instead be bounded explicitly; they do not weaken (182.17). Also S>=1/[M(1+2M^2)]. Since Var_w(c_L)<=ell_Q^2, its term in (182.15) is exponentially small uniformly even if the weights vary rapidly. Eventually
+$$
+ -A''\ge {a_Q\over4M^3}>0
+ \tag{182.18}
+$$
+at every root constructed below. The additional Schur term is retained, not dropped from the predictor.
+
+For existence, first take the reference low tuple c=u=0 while retaining ACTUAL e_H. This is an auxiliary function F_0, not an approximation in the final action. Formula (182.11) is a quadratic in rho:
+$$
+ F_{L,s}=a_s(\rho-m_L)^2+b_L^*,\quad
+ a_s=\|R_sq_c\|^2,
+ \quad m_L={\langle R_sq_c,R_sf_L\rangle\over a_s},
+$$
+$$
+ b_L^*=\sigma^2s+u_L-H_y+\delta\operatorname{tr}(B_cR_s)
+                    +\|R_sf_L\|^2-a_sm_L^2.
+ \tag{182.19}
+$$
+There is no relation between b_L^* and b_ch. Since ||q_c||^2=C2,H/V_H^2,
+$$
+ {1\over M^3(1+2M^2)^2}\le a_s\le M^4,
+ \qquad |m_L|\le C_M(\delta^5+\ell_Q).
+ \tag{182.20}
+$$
+The tilted conditional covariance has trace at most S(s). One proof is to tilt the diagonal independent Gaussian first and then condition its charge: its covariance is C_s-w_sw_s^T/S(s), with C_s diagonal entries v_j/(1-2sv_j/delta) and w_s=C_s 1. This equals delta B_cR_s by conditioning the original covariance first and tilting; completing the same Gaussian square proves both orders equal. The rank-one subtraction is positive semidefinite. Thus (182.16), the negative noise term sigma^2s and ||f_L||<=M delta^5+C_M ell_Q imply
+$$
+ b_L^*\le-a_Q/(4M)<0\qquad(s\in I_Q)
+ \tag{182.21}
+$$
+eventually, uniformly ALL lows and outputs. Here sqrt(delta)Y is paid by the explicit a_Q; no new noise relation is imposed. A uniform lower bound b_L^*>=-C_M also holds when sigma<=1. Therefore each F_L,s has exactly one positive root, of size between c_M sqrt(a_Q) and R_*/2; for F_0 this root is explicitly m_0+sqrt(-b_0^*/a_s). Its rho derivative is positive and bounded below by c_M sqrt(a_Q).
+
+To pass to the exact mixture, on -M<=s<=0, |rho|<=R_* the resolvents and their fixed derivatives are bounded. Uniformly through derivative order6,
+$$
+ \|F_L-F_0\|\le C_M\ell_Q,
+ \qquad
+ \|\mathscr F-F_0\|\le C_M\delta^{-6}\ell_Q=:\zeta_Q.
+ \tag{182.22}
+$$
+For the second estimate, factor out exp(F_0/delta); all remaining exponentials are within exp(+-C_M ell_Q/delta) of1. Differentiate the positive finite weighted sum and its logarithm. Each of at most six differentiations introduces at most one extra delta^-1; powers of ell_Q only improve the bound eventually. Exact p_L sum to1, so the number of low tuples never appears. Constants depend on M,Y,R_*, never inverse sigma. This is an analytic finite-function estimate on the bounded real parameter set, not differentiation of a limit.
+
+For rho below c_M sqrt(a_Q), every quadratic in (182.19) is negative after choosing that constant small; for rho>R_*/2 every quadratic is positive after using the loose R_* in (182.5). Hence a positive mixture root lies inside. On the intervening interval that can contain roots, F_0,srho=2a_s(rho-m_0)>=c_M sqrt(a_Q). The perturbation zeta_Q is smaller than every fixed power of a_Q under the original assumptions (eta>=sqrt(delta) eventually). Thus the exact mixture has strictly positive F_srho there and exactly one positive root. This proves (182.6), including uniqueness among ALL positive real charges, not only in an implicit neighborhood. The endpoint signs exclude roots outside the bounded interval.
+
+At the root, (182.12) and F_srho>0 give
+$$
+ {d\rho_Q\over ds}=-{\mathscr F_{ss}\over\mathscr F_{s\rho}}<0.
+ \tag{182.23}
+$$
+There is consequently one continuous, real analytic branch on the whole interval, with no loss of its real orientation. Real analyticity here follows from exact finite functions and a proved nonzero derivative. We do not infer a uniform complex tube from this fact. Since F_ss>=k_E, the inverse s_Q(rho) and its fixed derivatives have uniform bounds on this interval and small real extensions: denominators for this inverse are F_ss, NOT the shrinking F_srho. This distinction permits a_Q->0 without changing the admitted t sequences.
+
+### 182.5 超出行列式 Taylor 收敛盘的区间
+
+For s in[-M,-M/2], (182.16) gives V_H-S(s)>=1/(1+M^2), so (182.19)--(182.22) give rho_Q(s)>=c_M>0. At s=-M, every eigenvalue lambda in the retained conditional block satisfies |2s lambda|>=2. The power series for -log(1-2s lambda) around s=0 is therefore divergent on that block. No uniform small sixth-order/quartic estimate was invoked or could justify evaluating that series there. The actual resolvent in (182.4) is nevertheless positive definite and bounded for all negative s, and (182.15)--(182.18) give a strict curvature margin. This is a new structural relation: precision after energy tilting, conditional covariance positivity and a Schur complement control geometry without a cumulant truncation.
+
+The exact finite spectrum, actual mean and low probabilities enter every predicted quantity. The lower bound does not assert that these data can be replaced by finitely many moments. It says a particular sign is robust while their full effects on the action and phase remain. In particular it is not a claim that a pole of a diagonal resolvent is a singularity of the original finite sum.
+
+### 182.6 向精确实电荷剖面的曲率转移
+
+The theorem so far concerns the exact energy-transform action. It is useful to show that its curvature is not an artifact of optimizing that transform. Let g be exactly Chapter 179's faithful profile, with selection insertion, actual e and exact lows retained. For real rho and a real energy line s, its exact inversion is
+$$
+ g(\rho/\sqrt\delta)
+ ={\sigma e^{\ell_{sel}}\over2\pi\sqrt{V_H\delta}}
+  \int_{\mathbb R}\sum_Lp_L
+                   e^{F_L(s+iv,\rho)/\delta}\,dv.
+ \tag{182.24}
+$$
+Choose s=s_Q(rho). We prove, uniformly on (182.7), including fixed-order real derivatives through order2,
+$$
+ g(\rho/\sqrt\delta)
+ ={\sigma e^{\ell_{sel}}\over\sqrt{2\pi V_H}}
+       e^{\mathcal A(\rho)/\delta}[1+r_Q(\rho)],
+ \qquad \|r_Q\|_{C^2(\mathcal I_Q)}\le C_M\delta.
+ \tag{182.25}
+$$
+Raw sigma remains explicit. The result is a real-parameter relative expansion; it is NOT a uniform complex charge estimate for total zeros.
+
+Here are the contour and error details. For each low tuple at a real base s, exponential tilting produces a genuine Gaussian with covariance delta B_cR_s and real mean R_sb_L. Its centered squared-energy characteristic modulus is bounded by
+$$
+ D_Q(v)=(1+c_Mv^2)^{-1/(4M\delta)}.
+ \tag{182.26}
+$$
+The bound follows by multiplying the exact factors (1+4v^2 lambda_tilt^2)^-1/4 over the retained block; its tilted eigenvalues are between1/[M(1+2M^2)] and M. The noncentral modulus factor is at most1 for a real mean. The physical noise multiplies this by exp(-sigma^2v^2/(2delta)), which is not needed to get the uniform bound. Positive weights w_L on the real base make the same bound valid for the summed integrand normalized by exp(mathscr F(s,rho)/delta). This step keeps energy and charge on the same realization and under the same tilt.
+
+Vertical inversion at this negative real line is legal without crossing a determinant singularity. At finite sigma>0 it follows by shifting the Fourier contour in the pole-free left strip, using Gaussian damping on the horizontal closing pieces; alternatively the real exponential change of measure gives the same Fourier inversion directly. Bound (182.26) subsequently removes inverse-sigma constants. No right-going rays from Chapter 169 are continued through a new domain.
+
+For fixed small |v|<=v0, the conditional resolvents are analytic with a fixed margin about s in[-M,0]. The low mixture divided by its c=u=0 reference remains in a disk about1 uniformly on this local segment and for bounded real rho, by (182.22) and its local complex-s version. Hence its logarithm there is legitimate. Expand mathscr F(s+iv,rho): its linear term vanishes exactly, its quadratic is -K_E v^2/2, K_E>=k_E, and its fixed higher derivatives are bounded. These derivative bounds follow from the finite resolvents, ||b_L||<=C_M, delta tr(B_c^j)<=C_M for fixed j, and the exponentially small low perturbation. They hold also after two real rho derivatives and differentiating s_Q, because F_ss has the fixed lower bound (182.13).
+
+Scale v=sqrt(delta)u. On a symmetric central interval, the odd cubic term integrates to zero. The quartic term and the square of the cubic term have Gaussian moments of order delta. A Taylor expansion through order8 bounds the remainder and its first two real rho derivatives; one may split at $|u|=\delta^{-1/12}$, where higher terms are uniformly small, and use the local quadratic loss outside. On |v|>=v0, (182.26) and its differentiated version pay the entire tail. Differentiation of the explicit Gaussian transform introduces only fixed powers of delta^-1 and (1+|v|): resolvents are bounded on the vertical line, and null-direction linear terms contribute at most powers of v. The large retained exponent in (182.26) absorbs those powers, giving P(delta^-1)exp(-c_M/delta) after integration. Noise derivatives contribute bounded polynomials since sigma<=1; no inverse sigma appears. This proves the normalized integral equals sqrt(2pi delta/K_E)[1+O_C2(delta)] and hence (182.25). It accounts for the whole real energy contour, not merely its central stationary equation.
+
+Let
+$$
+ \mathcal B_{real}(\rho)=\delta\log[g(\rho/\sqrt\delta)/g(0)]
+$$
+on the real interval. Positivity of g justifies this REAL logarithm. Equation (182.25) gives
+$$
+ \mathcal B_{real}''=A''-{\delta\over2}(\log K_E)''+O(\delta^2).
+ \tag{182.27}
+$$
+The log-curvature derivatives are uniformly bounded as just proved. Since a_Q asymptotically is a fixed multiple of eta and delta/eta->0, (182.18) implies eventually
+$$
+ -\mathcal B_{real}''(\rho)\ge {a_Q\over8M^3}>0
+                    \qquad(\rho\in\mathcal I_Q).
+ \tag{182.28}
+$$
+The exact real charge saddle map H=mathcal B_real'(rho) is therefore strictly decreasing on this whole interval. For each H in its exact real image it has precisely one saddle in this interval, with fixed orientation and no real curvature zero. At the deep fixed subinterval its curvature margin is a positive class-dependent constant. We assert neither uniqueness among saddles OUTSIDE the interval nor dominance in a complex half-line integral.
+
+### 182.7 与既有剖面的重叠及复相位边界
+
+At the upper energy endpoint s=-a_Q, (182.19) implies rho_- asymptotically is a constant-class multiple of sqrt(eta). For instance the central leading relation s=-rho^2/(2V_H^2)+o(rho^2) gives this size; the same conclusion follows directly from the bounds without using this asymptotic. Thus a real interval [rho_-,2rho_-] lies within Chapter 179's fixed analytic profile disk eventually. Its energy roots lie near zero; the positive-real energy curvature and uniqueness established here identify them with the energy branches used to construct Chapter 179's profile on that disk. This is an ACTUAL same-array overlap.
+
+More directly, g in (182.24) and Chapter 179's g are the same integral by definition. Its real logarithm normalized at0 agrees with Chapter 179's holomorphic logarithm on the real overlap by positivity and normalization. The positive square root of K_E is the same energy Gaussian branch there. The charge curvature in (182.28) has positive square root for -mathcal B_real'', agreeing with the real branch of Chapter 179 wherever its charge saddle construction applies. There is no free 2pi i integer in these identities.
+
+This matching does NOT furnish a continuation of Chapter 179's zero phase along our real interval. Its endpoint factor contains H-a1; that factor can change sign or pass zero on a real saddle route. A complex bypass, its contour coefficient, and the relative endpoint contribution must be justified before assigning a phase logarithm there. We do not claim that the real interval constructed here lies on the equal-amplitude locus, or that its field image is a new oscillatory zero chart. In particular no total zero label is transported by a real density identity. The profile overlap resolves an energy/charge curvature interface, not the missing cycle topology.
+
+### 182.8 新区间上的原始选择计数窗口
+
+For fixed |Re H|<=H1 and |Im H|<=1, define the ORIGINAL mass in the charge window
+$$
+ W_P(\rho,H;y)=\sum_{\rho\le\sqrt\delta(-D)\le\rho+\delta}
+ P_x(n)e^{aD^2+(H/\sqrt\delta)D-(E-H_y)^2/(2\delta\sigma^2)}.
+ \tag{182.29}
+$$
+If necessary use the small real extension of the endpoints in (182.7) when integrating one final window; the estimates above hold with the same eventual margins. They also hold for windows wholly inside (182.7), which suffices to specify an exact domain without any extension. Set
+$$
+ \mathcal E(z)=\int_0^1e^{zu}\,du,
+ \quad
+ W_{pred}={\sigma e^{\ell_{sel}}\sqrt\delta\over\sqrt{2\pi V_H}}
+ e^{[\mathcal A(\rho)-H\rho]/\delta}
+             \mathcal E(\mathcal A'(\rho)-H).
+ \tag{182.30}
+$$
+Then uniformly for rho in[ rho_-,rho_+-delta ],
+$$
+ W_P=W_{pred}[1+O_M(\delta)+o(\delta^A)]
+                       \quad\hbox{for every fixed }A>0.
+ \tag{182.31}
+$$
+All finite noise, noncentral and low terms remain in (182.4),(182.8),(182.30). The O(delta) is a relative FUNCTION error, not an action term deleted before division by delta.
+
+To prove the return, first integrate (182.25) over a window of rho-width delta, retaining its exact mathcal A. Uniformly bounded second derivative gives the factor mathcal E and relative O(delta). Because mathcal A' is real and bounded, multiplication of mathcal E(mathcal A'-H) by exp(i Im H/2) makes its real part at least cos(1/2) times its positive envelope integral. Thus
+$$
+ |W_{pred}|\ge c_M\sigma\sqrt\delta\,e^{-C_M/\delta}.
+ \tag{182.32}
+$$
+This is the denominator used below; it precedes any division.
+
+The Chapter 169 full-box/count-cell argument applies to the present bounded rho locations by its stated polynomial-location cut-strip estimate, not by assuming its former small density tube extends. Its ingredients can be recorded explicitly. The original coefficient error O(q^-1/2) is paid using (Re h)D<=eta D^2+C/(eta delta) and the same-output positive bounds at2eta. Central high-cell density and displacement errors retain P(Q)e^-bQ^3. Field variation at h=H/sqrt(delta) costs only a polynomial. The likelihood comparison uses original log-width/Young bounds and score marks at widths[sigma/2,2sigma], never a naked inverse-sigma derivative. The two cut strips occur at polynomially bounded r=rho/sqrt(delta), so their exponentially thin cell widths, equality endpoints, lattice1/B and floors have the same joint-density payment. The positive real density bound needed at those strips is now supplied by (182.25); it is not imported from an unproved complex tube.
+
+All lows are summed after uniform estimates. Excluded original full tuples cost P(Q)e^-cQ^4. The full-tuple inequality D^2<=2n_gE+2(sum|e_j|)^2 and completion of the SAME energy residual bound their insertion by exp(CQ^(7/2)+C/(eta delta)); the original strict noise reserve pays the raw sigma lost only in this crude tail step. The actual noncentral vector remains inside the exact conditional functions. Consequently the additive window error is at most
+$$
+ \sigma P(Q)\exp\{-\beta_{res}Q^3+C/(\eta\delta)\}.
+ \tag{182.33}
+$$
+Divide by (182.32) only now. The ratio is bounded by
+$$
+ P(Q)\delta^{-1/2}
+ e^{-\beta_{res}Q^3+C/(\eta\delta)+C/\delta}=o(\delta^A).
+ \tag{182.34}
+$$
+Indeed eta>=sqrt(delta) eventually makes (eta delta)^-1<=Q^(3/4), while delta^-1=Q^(1/2). Raw sigma cancels after a proved same-window lower bound. This establishes (182.31) for the actual pair and actual path laws separately with the inherited support/output quantifiers. It is not a relative estimate for the total near unknown zeros, a discrete log-concavity theorem, or a substitute posterior experiment.
+
+### 182.9 复零点问题的剩余接口
+
+The exact finite mixture Hessian (182.10), Schur inequality (182.15), realized nondegenerate branch (182.5)--(182.23) and faithful-profile curvature (182.28) exclude one candidate obstruction: a real energy or charge curvature zero on this explicit negative-energy interval. They reach spectral tilts where a charge/energy cumulant truncation cannot organize the geometry. This supplies a reusable intrinsic interface, with full original rare-window return (182.31), rather than an assumed nondegeneracy chart.
+
+最大复延拓范围及实际振荡零点族的首个障碍仍未确定。 No first obstruction of the actual oscillatory family has been located, and no maximal regular complex domain has been proved. In particular we have not shown that Chapter 179's equal-amplitude locus enters this real branch's complex neighborhood, that the endpoint and this saddle have simultaneous nonzero cycle coefficients there, or that another saddle is absent. Complex continuation of the low mixture, the energy contour and the charge half-line requires amplitude lower bounds and legal paths on the SAME domain. Real positivity, (182.28), finite support of the original law and the absence of negative real determinant poles supply none of those missing cycle coefficients. The original finite count normalizer remains entire; that fact is compatible with both representation singularities and genuine competing-saddle changes.
+
+There are no new total labels, no-extra counts or d(h-h0) location claims beyond Chapter 179 in this chapter. Actual h0 and d retain their exact definitions and all separator-compact scopes; no surrogate is inserted. No claimed o(1) phase precision is obtained by dividing (182.33) by an unproved total amplitude. An O(delta) real relative window error is not a theorem about total zeros. No actual-law refutation is claimed. Chapter 179's connected order-delta^-1 family and all older boundaries remain intact.
+
+The new relation concerns intrinsic curvature and real orientation, not a larger label cutoff or a claimed change in zero density. A future density/phase theorem must use the full finite action in (182.4),(182.8), establish the contributing complex cycles, and prove an inverse phase and Rouche boundaries. The present derivation removes the need to assume real curvature nondegeneracy on the displayed interval, but does not replace those remaining obligations.
+
+
+## 追加锚（本行以下为增补区）
