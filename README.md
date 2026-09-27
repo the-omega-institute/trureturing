@@ -27,7 +27,7 @@ to open directions.
 
 ## Film
 
-[![TRURETURING — Truth Is Discovered: download Film 001](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg)](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4)
+<p><a href="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4"><img src="https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_cover.jpg" width="1920" height="1080" alt="TRURETURING — Truth Is Discovered: download Film 001"></a></p>
 
 **TRURETURING — Truth Is Discovered** · English AI narration · Chinese and English subtitles.
 [Download MP4](https://github.com/the-omega-institute/trureturing-film/releases/download/film-001-v1/TRURETURING_001_narrated_EN_subs_ZH-EN.mp4) ·
@@ -92,7 +92,7 @@ readings recovers the target in both cases.
 Evaluate research selection against stated baselines on questions excluded
 from method design, matching information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
+<p><img src="docs/assets/inquiry-cycle.svg" width="360" height="560" alt="Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions."></p>
 
 *A schematic of inquiry, not runtime behavior or dependency data.* Checked
 results return as premises; dashed returns carry unresolved questions, even
