@@ -6,6 +6,7 @@
    utility: none
    digest: Survival effects converge to the dark-space projection. -/
 
+import D5.S3.ObserverMemory.Dynamics.ResidualKernelInvariance
 import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.CStarAlgebra.Matrix
@@ -138,14 +139,15 @@ theorem finite_detection_survival_limit {d : ℕ} {ι : Type*} [Fintype ι]
     simpa only [hunit v v.2, hunit w w.2] using h
   have hqD_surjective : Function.Surjective qD :=
     LinearMap.surjective_of_injective hqD_injective
-  have hDperp_invariant : ∀ v, v ∈ Dᗮ → q v ∈ Dᗮ := by
-    intro v hv
-    rw [Submodule.mem_orthogonal'] at hv ⊢
+  have hD_adjoint_invariant : Set.MapsTo q.adjoint D D := by
     intro z hz
     obtain ⟨w, hw⟩ := hqD_surjective ⟨z, hz⟩
     have hw' : q (w : EuclideanSpace ℂ (Fin d)) = z := congrArg Subtype.val hw
-    rw [← hw', ← q.adjoint_inner_right, hunit w w.2]
-    exact hv w w.2
+    rw [← hw', hunit w w.2]
+    exact w.2
+  have hDperp_invariant : ∀ v, v ∈ Dᗮ → q v ∈ Dᗮ := fun v hv =>
+    ObserverMemory.Dynamics.ResidualKernelInvariance.residual_kernel_invariant q D
+      hD_adjoint_invariant hv
   let r : Dᗮ →L[ℂ] Dᗮ := q.restrict hDperp_invariant
   have hrnorm : ‖r‖ ≤ 1 := by
     apply r.opNorm_le_bound zero_le_one
