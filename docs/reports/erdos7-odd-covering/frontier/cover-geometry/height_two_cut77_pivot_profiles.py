@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sorted-private-cost enumeration for the actual q4 pivot necessary conditions.
+"""Sorted-private-cost enumeration for exact q4 and q5 m4 pivot conditions.
 Necessary integer profiles only; no source realizability claim.
 """
 from itertools import combinations_with_replacement,product
@@ -8,21 +8,21 @@ from pathlib import Path
 import argparse,json
 
 
-def options(n,dist):
+def options(n,dist,mandatory=None):
  out=[];q=n-2
  if not dist:out.append((0,0,0,()))
  allowed=(n-1,n) if dist else range(q,n+1)
  for a in allowed:
   if dist:
-   mandatory=(0,2,2) if n==5 else (2,2)
-   shapes={tuple(sorted(mandatory+extra)) for extra in combinations_with_replacement(range(4),a-len(mandatory))}
+   required=mandatory if mandatory is not None else ((0,2,2) if n==5 else (2,2))
+   shapes={tuple(sorted(required+extra)) for extra in combinations_with_replacement(range(4),a-len(required))}
   else:shapes=set(combinations_with_replacement(range(4),a))
   for sh in sorted(shapes):out.append((a,sum(sh[:q]),sum(sh),sh))
  return out
 
 
-def enumerate_profiles(n):
- opts=[options(v,i==0) for i,v in enumerate(n)];profiles=defaultdict(set)
+def enumerate_profiles(n,mandatory=None):
+ opts=[options(v,i==0,mandatory if i==0 else None) for i,v in enumerate(n)];profiles=defaultdict(set)
  for k in range(12):
   choices=[]
   for i,oo in enumerate(opts):
@@ -43,12 +43,13 @@ def enumerate_profiles(n):
   rec([],0,0)
  return [dict(active=list(a),T=T,public=k,private=Z,shapes=sorted(shapes)) for (a,T,k,Z),shapes in sorted(profiles.items())]
 
-out=dict(scope='Necessary normalized q4-pivot integer profiles; private costs0..3, exact distinguished0/2/2 or2/2, all literal pair lower bounds, duplicate-leaf discount, public0 nonemptiness and full-activity standalone lower bound. No source-existence conclusion.',
-         distinguished_full=enumerate_profiles((5,5,5,4)),distinguished_gap=enumerate_profiles((4,5,5,5)))
+out=dict(scope='Necessary normalized exact-pivot integer profiles; private costs0..3, q4 distinguished0/2/2 or2/2, q5 m4 distinguished1/1/2, all literal pair lower bounds, duplicate-leaf discount, public0 nonemptiness and full-activity standalone lower bound. No source-existence conclusion; source exclusions are separate deductions in Report449.',
+         distinguished_full=enumerate_profiles((5,5,5,4)),distinguished_gap=enumerate_profiles((4,5,5,5)),
+         q5_m4_distinguished_full=enumerate_profiles((5,5,5,4),(1,1,2)))
 parser=argparse.ArgumentParser()
 parser.add_argument('--output',type=Path,default=Path(__file__).with_suffix('.json'))
 args=parser.parse_args()
 args.output.write_text(json.dumps(out,indent=2)+'\n')
-for typ in ('distinguished_full','distinguished_gap'):
+for typ in ('distinguished_full','distinguished_gap','q5_m4_distinguished_full'):
  print(typ)
  for r in out[typ]:print({k:v for k,v in r.items() if k!='shapes'},'shape_count',len(r['shapes']))
