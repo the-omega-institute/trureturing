@@ -46,9 +46,8 @@ checks them. A verified proof extends what the library can justify and reuse.
 Neither this philosophical conviction nor a growing proof library establishes
 that one program can enumerate or decide every truth.
 
-The repository makes part of this geometry precise. Its
-[dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
-uses reachability in a dependency graph to define open sets. Its
+The [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+calls a set open when it contains every node reachable from its members. The
 [recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
 says that, on a nonempty state space, a target admits a recovery function from
 an observation exactly when any two states with the same observation have the
@@ -77,8 +76,8 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Identify any missing premises, distinctions or connections for your target;
-choose questions addressing them. Search existing proofs and literature.
+Search [existing proofs](#three-places-to-look) and literature for your target. Identify missing
+premises, distinctions or connections; choose questions addressing them.
 Specify supporting and refuting outcomes before designing discriminating tests.
 Keep results with their assumptions; check those against your objects before reuse.
 
