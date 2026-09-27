@@ -1,6 +1,6 @@
 [Index](../../marked_head_profile.md) · [Literal equality reduction](448-literal-product-trees-exclude-the-equality-cut.md) · [Generic cut bound](447-strict-child-cut-surplus-and-arithmetic-boundaries.md)
 
-# Literal cuts65/63 through67/63 force private laws below nine
+# Literal cuts65/63 through68/63 force private laws below nine
 
 The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md) is not a moment obstruction. Every source attaining that network's lower bound65/63, under its literal product-blocking and standalone-tree premises, has one actual supported law with
 
@@ -8,7 +8,7 @@ The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md
 
 This result allows incidence five at every full root. It uses actual private points forced by the equality cut, gives the common column zero mass, and chooses ONE probability before all original numerical labels and all phase tests. The same law construction applies to any larger actual source containing the specified private structure, whether or not that larger source has an equality cut or satisfies the tree premises.
 
-The next cut values66/63 and67/63 also force actual private laws, with bounds159/19 and79/9, respectively. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate below.
+The next cut values66/63,67/63 and68/63 also force actual private laws, with bounds159/19,79/9 and79/9, respectively. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate below.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -392,9 +392,9 @@ no literal tree premise beyond whatever is used to establish the cut
 value. In the occupancy4555 setting of447, the stated tree premises give
 t>=65/63. All network capacities, including the actual bridges, are
 integer multiples of1/63; so t=k/63 for an integer k. The source edges
-also give t<=4/3=84/63. The private-law theorems in this report handle k=65,66,67,
+also give t<=4/3=84/63. The private-law theorems in this report handle k=65,66,67,68,
 and LC3 handles k>=79. Consequently the only remaining possible cut
-values for that source class are k=68,...,78. This lists eleven
+values for that source class are k=69,...,78. This lists ten
 unresolved values, not a claim that each is attained or that each source
 at those values fails. Any source already containing the private
 structure above is handled regardless of its cut value.
@@ -612,6 +612,234 @@ original covering-family realization.
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut67_private_law.py
 ```
 
+## The68/63 stratum has an actual eighteen-point law
+
+Keep the literal height-two product-blocking, standalone five-ary seven
+projection, occupancy4555 and actual-child network premises stated above.
+Every source with minimum cut68/63 has one actual supported probability
+satisfying
+
+    Gamma_1225(nu)<=79/9=9-2/9<9.
+
+There are two minimum-cut profiles. The fully active profile uses a
+standalone-tree supplier construction; the partially active profile uses
+literal pair/subset tests to force private columns. Both produce eighteen
+actual points with distinct five-child labels, distinct seven leaves and
+at most five selected leaves per seven-column. The law is chosen once,
+before every original query phase.
+
+### Complete active/public and private-cost classification
+
+Use a,T,k,p and f from(A1)–(A2). Write
+
+    top=sum_r min(3,n_r-a_r),
+    Z=sum_(all child trees) z_rc,
+    cut numerator=7(top+k)+2Z.
+
+Private costs on inactive children are included in Z. No actual bridge
+crosses a cut of this size. The eligible-count bounds already used above
+exclude zero, one or two eligible roots. For three eligible roots including
+the gap root the continuous lower bound is69/63. If the eligible roots are
+the three full roots, a missing active child raises the half-sum branch
+from66/63 by at least4/63; with all three full roots active and top cost1/3,
+the integer table above has minimum71/63. Thus all four roots are eligible.
+
+For a partially active profile put delta_r=n_r-a_r. The half-sum lower
+bound is
+
+    1+5 delta_0/126+(4/63)sum_(r=1..3)delta_r.
+
+The exclusion branches are at least90/63, and the top-plus-one branch
+is at least70/63. A cut at most68/63 therefore requires
+
+    5 delta_0+8 sum_(r=1..3)delta_r<=10.
+
+Up to permutation of full roots, only the following three partial
+profiles remain. Applying(A2), their lower numerators are:
+
+| active profile | k0 | k1 | k2 | k3 | k4 | k5 | k6 | k7 | k8 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| (3,5,5,5) |73|74|75|68|71|72|77|78|79|
+| (2,5,5,5) |76|77|78|71|76|77|82|83|84|
+| (4,4,5,5) |73|74|75|70|71|72|77|78|79|
+
+Public cost R>=1 plus positive top cost is already at least70/63.
+Consequently the only partial profile is a=(3,5,5,5), top=1, k=3, Z=20.
+For full activity the earlier lower table leaves k=3,4,5; parity excludes
+k=3 and5 at numerator68. The standalone-tree bound excludes R>=1.
+Thus the only full profile is a=(4,5,5,5), top=0, k=4, Z=20.
+
+The private shapes are also determined. In the partial profile,
+f_gap(p)=p+ceil(p/2) and f_full(p)=p+2ceil(p/3). If the least coordinate
+of p is0,1 or2, the minimum-coordinate argument gives private lower costs
+at least29,29 or26. Otherwise all coordinates are at least3; the baseline
+cost is5+3*5=20. Increasing any coordinate exceeds20. Hence
+
+    p=(3,3,3,3),
+    active gap costs=(1,2,2),
+    each full root's costs=(1,1,1,1,1).
+
+There is no private cost at the one inactive gap child. All active
+private cut edges are leaves, since a first-prefix edge has integer cost3.
+
+In the full profile the only p-vector with lower cost at most20 is
+(2,3,3,3), with lower cost19. If every coordinate is at least3 the cost
+is at least22; a minimum0 or1 costs at least27. A minimum2 at a full root
+costs at least21; at the gap it costs19 only when all other coordinates
+are3, and raising any of them exceeds20. The one excess unit therefore
+gives exactly two shapes:
+
+- gap costs(1,1,1,2), with every full-root cost equal to1;
+- gap costs(1,1,1,1), with one full-root cost vector(1,1,1,1,2)
+  and all other full-root costs equal to1.
+
+In either shape there are twenty private leaf occurrences at nineteen
+actual children. Exactly one child has two private cut leaves; all others
+have one. This counts occurrences, without assuming that cut leaves are
+actual or globally distinct.
+
+### Full activity: use an actual standalone tree to select suppliers
+
+For each child c let S_c be its private cut-leaf set, and P the public
+cut-prefix support. The absence of a bridge crossing gives the actual
+fibre containment
+
+    F_c subset P union S_c.
+
+Public cost4/9 is four leaves or one whole first-seven column G plus
+one leaf y_star. Four public leaves would put the entire seven projection
+in at most24 points, contradicting its actual twenty-five-leaf standalone
+tree. Thus P=G union{y_star}.
+
+Outside G the actual projection has at most21 candidates: the twenty
+private occurrences and y_star. Fix one actual standalone five-ary tree.
+It must use G, since otherwise all twenty-five leaves would be outside G.
+Its four other columns contain twenty distinct actual leaves. Delete
+y_star if it occurs. The remaining set X has at least nineteen leaves,
+lies outside P, and has at most five leaves in each column.
+
+For every y in X choose a child c whose actual fibre contains y. Such a
+supplier exists because the fixed tree is actual. Since y is outside P,
+the containment forces y into that supplier's own S_c. Each singleton
+child can therefore supply at most one distinct chosen leaf, and the
+unique double child can supply at most two. Keep one assigned leaf per
+supplier. At most one leaf is lost, leaving at least eighteen actual
+pairs with different children and different seven leaves. Retain any
+eighteen. Their column caps are inherited from the fixed tree.
+
+This construction does not need every private candidate to be actual,
+and does not claim that the selected subset still blocks every tree.
+Its hypotheses are weaker than the full literal source premises, so it
+covers both full private-cost shapes at once.
+
+### Partial activity: force three gap points and fifteen clean points
+
+Here the public support P is one whole column or three leaves. For every
+ACTIVE child its actual fibre lies in P union its own private leaf set;
+this containment is not applied to the inactive gap child.
+
+Choose three children at each of two full roots. Literal product blocking
+forces a ternary seven-tree in their actual union. If P is a whole column
+G, the six private candidates must be distinct actual leaves outside G,
+split between two columns of three. If P consists of three leaves, there
+are at most nine candidates altogether, so all nine must be distinct and
+actual. In both cases each private candidate belongs to its own child's
+actual fibre: it is outside P and every other selected private support.
+
+Exchange one selected child while retaining two at its full root and the
+partner triple. In the whole-column case the external column counts are
+multiples of3; in the three-leaf case the full nine-leaf column counts are.
+The change is the difference of two unit vectors, so the exchanged private
+leaves lie in the same column. Any two of the five children can be
+compared using two others. Thus each full root has five distinct actual
+private leaves in one column H_r. The three H_r are different. In the
+three-public-leaf case, the two private triples already occupy two
+columns, so P occupies a third column G; comparing root pairs makes G
+different from all three H_r. In both cases P is contained in G.
+
+The three active gap children have private sets {z},E1,E2 of sizes1,2,2.
+Pair the singleton child with either double child and a triple at any
+full root. Outside G there are at most six candidates: three from these
+gap children and three from the full root. A ternary tree requires all
+six to be distinct and actual, divided into two columns of three. The
+full-root triple is already in H_r, so z and the tested pair are in one
+other column K, distinct from G and H_r. Their own-child actualness again
+follows from the distinct private candidates and the public containment.
+The shared z fixes the same K for both doubles; testing all full roots
+makes K different from every H_r.
+
+Keep z, any leaf of E1, and a different leaf of E2. The last choice exists
+because E2 has two leaves; neither double contains z. Together with the
+fifteen full-root private points these give eighteen actual pairs with
+different child labels and seven leaves. Their column counts are3,5,5,5.
+The inactive gap child remains part of the source and receives zero law
+mass; no claim is made that removing its fibre preserves blocking.
+
+### One uniform law and exact construction controls
+
+Put uniform mass1/18 on the selected points in either case. Distinct
+child labels give the full-five-digit caps, distinct seven leaves give
+the full-seven-digit caps, and root/column occupancies are at most five:
+
+    q5,q7,q35<=5/18,
+    q25,q49,q175,q245,q1225<=1/18.
+
+Every intersection of two independently phased original divisor queries
+is empty or a cylinder at their numerical LCM. The complete ordered-pair
+multiplicities therefore give, for this ONE law,
+
+    Gamma_1225<=1+(3+3+9)*5/18+(5+5+15+15+25)/18
+              =79/9<9.
+
+The [profile and partial-source program](../../frontier/cover-geometry/height_two_cut68_private_law.py)
+and its [exact result](../../frontier/cover-geometry/height_two_cut68_private_law.json)
+check all10800 necessary active/public profiles and all21^4 p-vectors for
+each survivor, including every compatible sorted private shape and
+inactive-cost slack. They return exactly the two profiles and the three
+private shapes above. These enumerations check the finite classification;
+the source-to-law proofs are the arguments just given.
+
+An actual144-point control realizes the partial minimum-cut profile.
+Let G0={(0,j):0<=j<5}. For full roots r=1,2,3 and children c=0,...,4 use
+F_(r,c)=G0 union{(r,c)}. At the four gap children use
+
+    F_(0,0)={(4,0)},
+    F_(0,1)={(4,1),(4,2)},
+    F_(0,2)={(4,3),(4,4)},
+    F_(0,3)={0,...,6}^2.
+
+A gap pair containing the last child already has a ternary tree. Any
+other gap pair supplies at least three leaves in column4, while a full
+triple supplies its private column and column0. Two full triples also
+supply three ternary columns. The standalone five-ary tree is immediate.
+The exact actual-child network has maximum flow68, matching a cut with
+top, private and public numerators7,40,21 and no bridge crossing. Its
+residual-reachable active counts are(3,5,5,5). The program checks480
+selected pair/subset tests,10000 complete literal five-tree tests,
+1767 numerical cylinders and81 ordered LCM pairs. The selected eighteen
+actual points give the envelope79/9. This control is not asserted to be
+the residual of an original odd covering system.
+
+The [actual supplier constructor](../../frontier/cover-geometry/height_two_cut68_actual_matching.py)
+and its [controls](../../frontier/cover-geometry/height_two_cut68_actual_matching.json)
+accept an arbitrary literal source and a specified actual standalone tree
+satisfying the weaker full-profile containment hypotheses. They verify
+integer CRT coordinates and actual suppliers before selecting the law.
+One control has maximum matching exactly18: two singleton children share
+the same sole actual leaf. Another has maximum matching19. Independent
+child/leaf/column matching networks verify both values; these are matching
+networks, not the actual-child cut network of447. Neither control is
+claimed to satisfy literal product blocking. Thus18 is sharp for the
+weaker matching hypotheses, without claiming that79/9 is an optimal law
+bound or that the stronger cut68 source class cannot yield nineteen
+points. Missing actual tree leaves and noninteger digit inputs are
+rejected.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut68_private_law.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut68_actual_matching.py
+```
+
 ## At78/63 the choice of maximum flow matters
 
 All raw quantities in this section are integer units1/63 unless otherwise
@@ -701,13 +929,13 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 
 ## Remaining source and arithmetic gaps
 
-All sources with a literal65/63,66/63 or67/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
+All sources with a literal65/63,66/63,67/63 or68/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 For occupancy4555, the large-cut estimate also handles every cut at
-least79/63. General high-incidence sources in the remaining range68/63
+least79/63. General high-incidence sources in the remaining range69/63
 through78/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. Some may contain
 the private structure, but its existence has not been proved for every
 remaining source. Other occupancy patterns retain their own stated
-premises and are not classified by this eleven-value reduction.
+premises and are not classified by this ten-value reduction.
 
 The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
