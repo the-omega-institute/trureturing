@@ -10,7 +10,7 @@ This result allows incidence five at every full root. It uses actual private poi
 
 The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63, with the sharp local refinement giving bound233/26. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
-The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The general fixed-head cut window is reduced to74/63 through77/63; specified profiles within that window are separately controlled.
+The complete classifications below also control every70/63,71/63 and72/63 source, with bounds643/72,79/9 and643/72 respectively. At73/63, all thirteen necessary families are controlled:48 of117 shapes are excluded and69 receive actual supported laws, with common bound206/23. This includes all49 fully active public3/private26 shapes. The asymmetric-root theorem AC77 below controls the complete77/63 class with2078/231. The remaining general fixed-head cut window is74/63 through76/63; specified profiles within that window are separately controlled.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -2325,7 +2325,7 @@ Thus the ONE repaired flow has every nonunit layout charge at most614. Normalizi
 
 The164-point actual source constructed below lies in this class. It passes480 selected tests,10000 literal product tests and the standalone tree predicate, has a matching actual flow/cut77, and forces root0/G_0 to remain20 under EVERY maximum flow. Its three-row private-neighborhood property therefore does not force internal mass21. Direct fractional replacement nevertheless gives the stronger complete-LCM upper674/77.
 
-For a general source, other roots may use G_r, and root r may have actual points outside P union G_r. Then the private-neighborhood inference and the simple one-unit transfer above both need new arguments. Neither is supplied by the bare pairwise tree premise alone. The general cut77 near20 problem remains open here.
+For a general source, other roots may use G_r, and root r may have actual points outside P union G_r. Then the private-neighborhood inference and the simple one-unit transfer above both need new arguments. Neither is supplied by the bare pairwise tree premise alone. This simple transfer alone does not settle the general cut77 near20 problem; AC77 below supplies the full maximum77 class using asymmetric capacities and a common mixture.
 
 ### General conditional consumer, including a column used by another root
 
@@ -3088,7 +3088,7 @@ These standard residual facts explain why simply uncrossing a local20 mincut wit
 
 Also T3 is a property of the ENTIRE actual block support. Changing only the flow on a fixed source cannot make that same support satisfy T3. A correct global alternative is to remove the dangerous(a,d)=(21,20) status, or to choose a flow whose remaining dangerous blocks already have the requisite actual-support property.
 
-The pivot exclusions below rule out simultaneous absence of every global reduction of a or d for a selected bad-neighborhood block. This settles the single-block existence question left by(UC2)--(UC4). It does not give a replacement that preserves safety at other blocks, so the simultaneous repair and general cut77-law questions remain open.
+The pivot exclusions below rule out simultaneous absence of every global reduction of a or d for a selected bad-neighborhood block. This settles the single-block existence question left by(UC2)--(UC4). It does not give a replacement preserving safety at other blocks. The simultaneous integral-repair question is separate from the common-law conclusion: AC77 below supplies the latter through asymmetric capacities and mixtures.
 
 ### Global bad-block obstructions have exact source pivots
 
@@ -3620,7 +3620,7 @@ The same proof works if only a designated subset A of roots receives capacity61/
 
 For this variant t(C) counts ONLY crossed source-root arcs belonging to A; the exact formula cap_new=cap_old-(2/3)t remains valid. The assertion that roots outside A can never host a bad-dangerous block is an additional actual-support/flow premise, not a consequence of their being left unmodified.
 
-The following supplier covers both t=3 obstruction classes by a direct actual law, including nonminimum capacity78 cuts. The later TA supplier also handles(t,c)=(2,77), while(1,77) and residual(2,78) remain structural targets; the previously established IF77 theorem covers its specified t=1 occupancy subfamily only. This does not establish general cut77.
+The following supplier covers both t=3 obstruction classes by a direct actual law, including nonminimum capacity78 cuts. The TA supplier handles(t,c)=(2,77). AC77 below treats(1,77) and every(2,78) obstruction through asymmetric source capacities and exact-cut uncrossing, completing general cut77 under the stated source premises.
 
 ## Three inactive roots at capacity77 or78 admit one common law
 
@@ -6162,7 +6162,7 @@ Using least legal private sums with p_1+p_2>=9 leaves the following small list, 
 
 For example, full totals8,9,10 have shapes11123 or11222;11133 or11223 or12222;11233 or12223 or22222 respectively. Their least-triple costs are3,4;3,4,5;4,5,6. Gap totals8,9,10 have1133/1223/2222,1233/2223,1333/2233 with least-pair costs2/3/4,3/4,4/4. Requiring the sum at least9 gives the displayed nine possibilities. This is a necessary cost-shape list, not an assertion of actual realization.
 
-The subsequent GF and PS sections supply gap2222/full22222 and full12222/full12222, respectively. The other seven capacity78 shapes remain unsupplied here. No c78 saturation is used; whole-prefix realizations must retain their complete actual fibres. The root-cap failure(t,c)=(1,77) is addressed separately below.
+The subsequent GF, PS, FD and TN sections give support-specific suppliers for five of these shapes; AC.8 supplies all nine through asymmetric capacities and exact-cut uncrossing. No c78 saturation is used; whole-prefix realizations must retain their complete actual fibres. The root-cap failure(t,c)=(1,77) is addressed separately below.
 
 ### Exact necessary-cost inventory
 
@@ -7163,20 +7163,262 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 
 The nine controls pass; their exact checks remain active under `-O`. No original outside-cofactor lift, other capacity78 shape, unrestricted Erdos #7 resolution or Lean kernel verification is claimed.
 
+## Asymmetric root capacities supply the complete maximum-flow77 class
+
+This is an ordinary actual-source proof, not Lean verification. Retain one original literal4555 source, all original child owners, complete actual fibres and numerical phase labels, the legal-pair ternary-tree premise, and the standalone five-tree premise. Suppose the original network with capacities21,7,6,2,126,7,21 has maximum flow77.
+
+Then ONE probability law on that actual source, fixed before all original numerical phase queries, satisfies
+
+    Gamma_1225 <=2078/231=9-1/231<9.                 (AC77)
+
+The proof uses the existing exact same-flow q4 pivot nonrealization theorem, OM1 regularization, IA and TA suppliers, and root-cap61/3 criterion. The source-cap perturbation and its selected-block repair are proved below; the original selected-block lowering theorem is not silently applied to a different-capacity network. No original capacity78 cut is inferred saturated.
+
+### AC.1. The modified network and the exact local theorem
+
+Fix one occupied root r and change only the source-root capacities:
+
+    u(S,r)=21;       u(S,s)=20 for s!=r.
+
+Call this network N[r]. Every other arc and every actual incidence is unchanged. Assume N[r] has a value77 flow and an exact capacity77 cut C in which r is sink-side and at most one other occupied root is sink-side. Source-side cut sets contain S and exclude T.
+
+Every value77 flow of N[r] saturates the r source-root21 edge, so a_r=21. The other roots have masses at most20. We prove:
+
+    for every integral value77 flow f and every T3-bad
+    actual-support block B=(r,G) with d_B(f)=20,
+    another integral value77 N[r] flow has d_B<=19. (AC1)
+
+T3 concerns the ENTIRE original actual block support. No change to f can change whether that support is T3-bad.
+
+Suppose(AC1) fails. Minimizing d_B over value77 flows has integral optimum20, because f attains20 and a smaller integral optimum would be at most19. Give cost1 to the selected r/G private first-column arcs and0 to all other original arcs. Conservation identifies this objective with d_B. An integral residual optimal potential pi satisfies
+
+    positive flow: pi(head)-pi(tail)>=cost,
+    unsaturated arc: pi(head)-pi(tail)<=cost.        (AC2)
+
+These are the same potential inequalities as GP77.1, now obtained for N[r] itself. The changed source-root arcs still have cost0 and satisfy(AC2) with their ACTUAL capacities20. They introduce no forward slack into a potential level cut when they cross it.
+
+Write alpha=pi(R_r), C_c for a selected-root child, P_c for its actual private G-prefix and f_c for its G-flow. A positive f_c forces its prefix to rise in potential. Since sum f_c=20 and each f_c<=6, at least four actual prefixes rise; there are at most five. Let q=4 or5 be their number. Absent actual prefixes are not counted. If an implementation retains nonactual dead leaf stubs with no actual bridge, move those stubs with their prefix in the constructions below; no actual leaf is moved merely to remove an incidence.
+
+### AC.2. The q4 local geometry survives the perturbation
+
+Exactly four rows have positive G-flow in the q4 case. A T3-bad triple cannot consist of three positive rows: with at most two actual G-neighbors they carry at most12 in all, and the fourth row carries at most6, less than20. Thus a bad triple contains the absent literal gap row or the fifth full-root row of zero G-flow, and two positive rows c,d.
+
+Their common actual two-leaf neighborhood J={u,v} has
+
+    N_c=N_d=J,       f_c=f_d=4,
+
+and the other two positive rows each have G-flow6. All four bad entries carry2. These identities follow by attaining the bound4+4+6+6=20; a smaller neighborhood or missing bad entry would make the total smaller.
+
+Each bad child's TOTAL flow is at most5, because the root has only one unit outside G. Its root-child7 and selected-prefix6 arcs are positive and unsaturated. Hence its child potential is alpha and its prefix potential alpha+1. Positive paths put both public J leaves at potential at least alpha+1.
+
+For a full root let z be its fifth row. Its G-flow is zero. Its root-child edge is unsaturated, so pi(C_z)<=alpha. An actual G-prefix there could not rise, since the four positive prefixes already account for q4; therefore pi(P_z)<=pi(C_z). Every hypothetical actual h in N_z belongs to J by the bad-triple premise. The unused private entry and actual bridge would give pi(U_h)<=pi(P_z)<=alpha, contradicting the positive J potential. Thus
+
+    N_z is empty.                                  (AC3)
+
+This is an absence in the complete actual G-neighborhood, not a deletion of the zero row's off-G fibre.
+
+Set X={v:pi(v)<alpha+1}. The positive selected source-root edge gives pi(S)<=alpha, and a positive selected G path gives pi(T)>=alpha+1, so X is an S-T cut. No positive flow crosses it backwards by(AC2). Every forward cost0 edge is saturated at its N[r] capacity. The two bad prefix arcs each have slack2; the two other positive prefixes are saturated and there is no other rising actual prefix. Therefore, using the SAME modified flow,
+
+    cap_N[r](X)=77+4=81.                            (AC4)
+
+### AC.3. Any given exact cut C supplies the q4 union pivot
+
+The cut C in AC.1 can be used directly; it need not be the smallest residual-reachable cut. Exact value77 flow-cut equality for C permits no positive backward crossing. Since r is sink-side, EVERY vertex reached from r by a positive-flow directed path is sink-side in C. In particular this holds for both bad children, both bad prefixes, their four positive actual leaf nodes, the two public J leaves, and both complementary flow6 prefixes.
+
+Put L=C union X. Submodularity and minimum capacity77 in N[r] give
+
+    cap_N[r](L)+cap_N[r](C intersect X)
+       <=77+81,
+    cap_N[r](L)<=81.
+
+The union activates r and both bad children but excludes the two bad prefixes and their four actual leaves. Adding both prefixes removes two incoming6 arcs and exposes exactly four actual entry2 arcs. Including any dead nonactual stubs with their parents adds no actual boundary. Consequently M=L union{P_c,P_d} has capacity at most77. Minimum capacity77 forces
+
+    cap_N[r](L)=81,       cap_N[r](M)=77.            (AC5)
+
+The four bad actual leaves and both public J leaves remain sink-side. Each complementary G-prefix remains sink-side as well: its positive flow excludes it from C, and pi(P)>=pi(C_child)+1>=alpha+1 excludes it from X. The corresponding child may lie on either side. If source-side, its prefix6 arc crosses M; if sink-side, its root-child7 arc crosses. Thus the selected-root forward contribution is at least
+
+    4*2+6+6=20.                                    (AC6)
+
+The root sets are controlled without an assumption on zero-flow descendants. Since M contains C and activates r, its inactive occupied roots form a subset of inactive(C) minus{r}. It has at most ONE companion root sink-side.
+
+At a full selected root, the zero-G child z is source-side in M. Otherwise its root-child7 edge would cross this exact cut with flow at most1, contradicting saturation. Every forward private edge below r lies in G: an off-G private edge would require saturation of capacity at least2, exceeding the whole root's off-G flow1. Actual126 bridges cannot cross M. Therefore the complete distinguished legal restriction lies in public cut support P together with J:
+
+- at a gap root it is the bad PAIR c,d;
+- at a full root it is the bad pair TOGETHER WITH z, a legal TRIPLE.
+
+The full zero owner's off-G fibre remains present and is contained in P by the exact-cut argument. This distinction is required when applying the original pair premise.
+
+If M has NO companion inactive root, every occupied root is source-side. No changed source-root arc crosses M, so its original-network capacity is also77. The same modified flow is an original feasible value77 flow. The cut has the four preserved bad entries, sink-side J, two complementary flow6 owners and the full-zero-row absence(AC3), exactly the hypotheses of the previously proved exact same-flow q4 pivot nonrealization theorem. That original theorem excludes M; its assumptions on source, ownership, actual support, standalone and minimum value77 are all retained here.
+
+If M has ONE companion inactive root s, its source edge contributes20. Consider either of the two other, source-side roots. For any legal restriction A all of whose children are source-side, let z_A be its actual private first-crossing token cost and k the total public token cost. Pair A with the distinguished legal restriction just described. The required nine distinct tree leaves are covered by P, at most two labels of J, and A's private boundary. Whole prefixes meet only their three selected leaves of this tree. Hence
+
+    z_A>=7-k.                                     (AC7)
+
+If this other root has n original children, legal size q0=n-2 and a>=q0 source-side children, averaging over all legal subsets gives raw contribution at least
+
+    7(n-a)+2a(7-k)/q0.
+
+For 0<=k<=7 this is at least21(1-k/7): at k0 its value is at least70/3 for a full root and exactly28 for the gap; at k7 it is nonnegative; both sides are affine. If a<q0, at least three child7 edges cross, giving21 directly.
+
+The two source-side roots together with the public edges contribute at least42+k>=42. Adding(AC6) and the companion20 gives cap_N[r](M)>=82, contradicting77. For k>=7 the public edges alone contribute at least49, giving an even stronger contradiction. Thus q4 is impossible in N[r].
+
+### AC.4. The q5 pivot identity is recalculated in the modified network
+
+The selected root is full. Let A be a T3-bad triple, J its complete G-neighborhood, m the number of actual incidences in those three rows and F_A their G-flow. Since all five actual prefixes rise, each has a nonempty actual neighborhood. The other two rows carry at most12, so
+
+    8<=F_A<=2m<=12,       m in{4,5,6}.
+
+Both leaves of J receive positive bad-row flow: one fine leaf could receive at most6 through three owner-entry2 arcs, less than8. Thus J has exactly two leaves and both public potentials are at least alpha+1.
+
+A positive bad row has total flow at most5 and has child/prefix potentials alpha,alpha+1 as above. At a zero-G bad row, its root-child arc is unsaturated and its rising prefix is unsaturated. For any actual h in its nonempty neighborhood J, the unused entry and bridge inequalities give
+
+    alpha+1<=pi(U_h)<=pi(private_leaf)
+       <=pi(P_c)=pi(C_c)+1<=alpha+1.
+
+Its child and prefix therefore have the same potentials alpha,alpha+1. Every actual bad leaf, including a zero-flow entry, is outside X={pi<alpha+1}: its actual bridge is unsaturated, so pi(private_leaf)>=pi(U_h)>=alpha+1.
+
+Each complementary row has G-flow at least2. If its prefix is unsaturated, its total child flow is at most6, and its child/prefix potentials are alpha,alpha+1. A saturated prefix has no slack. Consequently all selected-prefix residual slack that can contribute to X is exactly
+
+    sum_c(6-f_c)=30-20=10.
+
+Every forward cost0 edge, including any changed source-root edge, is saturated at its MODIFIED capacity, and X has no positive backward flow. Therefore the modified-network identity is
+
+    cap_N[r](X)=77+10=87.
+
+This does not identify cap_original(X) with87. The latter may be larger by the number of changed source arcs crossing X; it is never used below.
+
+Add the three bad private prefixes to X, together with only their dead nonactual stubs if present, to obtain N. Their children are inside, all m actual leaf nodes are outside, and the change removes18 and adds2m. Hence
+
+    cap_N[r](N)=87-18+2m=69+2m.                    (AC8)
+
+N has no positive backward flow. Its new bad-entry edges can be unsaturated. All unchanged forward cost0 edges retain their X saturation.
+
+### AC.5. The q5 support budget still contradicts the new capacities
+
+Every public G node is sink-side in N. The G-column node is sink-side because the two sink-side J leaves carry positive flow to it. If a public G leaf h were source-side, its unchanged cost0 capacity7 edge to G would be saturated. It is outside J. Only the two complementary owners at r can supply it, at most2 each; all other roots together send at most1 to the whole G column, since r already sends20. Thus7<=4+1, impossible. No public cut prefix meets G.
+
+At another root, a private forward edge in G would be an unchanged saturated cost0 edge with capacity at least2, again exceeding all other roots' G-flow budget1. Hence no such edge exists. An actual path from any source-side child there to a G public leaf would need either such a private forward crossing or an actual126 bridge crossing N. Both are impossible. Therefore every source-side child at any other root has NO actual G-neighbor. This concerns only source-side children; inactive original fibres remain unrestricted.
+
+At each bad selected owner, its entire off-G support lies in the public cut support P: any off-G private forward edge would be an unchanged saturated cost0 edge of capacity at least2, but r has off-G flow1. Its complete G-neighborhood lies in J. Thus the entire bad triple projects into P union J.
+
+Pair it with any all-active legal restriction B at another root. Those actual children have no G-neighbor, and J has only two G-leaves, so a ternary tree in this pair cannot use G. All nine tree leaves must be covered by P and B's private first-crossing prefixes. Therefore
+
+    z_B>=9-k.                                     (AC9)
+
+The distinguished root contributes at least2m+12 to N. The m actual exposed entries cost2 each. Each complementary prefix is outside: its positive root-child flow gives pi(C)>=alpha, and its rising prefix has pi(P)>=alpha+1. Each such owner contributes either its child7 edge or its prefix6 edge, at least6. No new bad-entry saturation is assumed.
+
+For another root, a sink-side root contributes its changed source capacity20. A source-side root with fewer than q0=n-2 active children contributes at least21 through child edges. Otherwise averaging(AC9) gives the raw contribution lower bound
+
+    7(n-a)+2a(9-k)/q0 >=21(1-k/9)
+
+for 0<=k<=9, as in the original affine estimate: at k0 the endpoint is35-a>=30 for a full root or28+2a>=32 for the gap, and at k9 it is nonnegative. In all three cases a uniform weaker bound is20(1-k/9).
+
+The three other roots and public edges therefore contribute at least
+
+    3*20(1-k/9)+7k=60+k/3>=60.
+
+For k>=9 the public edges alone give at least63. Combining with the selected-root contribution yields
+
+    cap_N[r](N)>=2m+12+60=2m+72,
+
+contradicting(AC8). The contradiction uses only MODIFIED capacities. Thus q5 is impossible too, proving(AC1).
+
+### AC.6. The asymmetric exact-cut case supplies one law with691/77
+
+Choose an integral value77 N[r] flow f. Only r can be dangerous, and its mass21 permits at most one dangerous block. If it has no T3-bad dangerous block, OM1 regularization already gives a law with maximum raw charge614 and envelope691/77.
+
+Otherwise call its unique bad block B. By(AC1) there is an integral value77 flow g with d_B(g)<=19. If g has no bad block, regularize it. Otherwise it has a unique bad block B' different from B, at the SAME root r. Because both root masses are21,
+
+    d_B(g)<=1,       d_B'(f)<=1.
+
+Regularize f and g separately using the existing pure full21 and T3-good dangerous replacements. This preserves actual support, all original capacities and every coarse root, column and block mass. Each component has noncoherent charge<=614, ordinary coherent charge<=613 and bad-block charge<=621.
+
+At a coherent centre in a block with d<=1, let f_c,g_h,x be its internal row, internal fine-column and cell masses, and z,y its external child and fine-leaf masses. The unchanged capacity bounds give f_c+z<=7 and g_h+y<=7. The exact coherent formula then yields
+
+    K=3a+3b+9d+20f_c+20g_h+25x+5z+5y
+      <=205+15f_c+15g_h+25x<=260,
+
+since a,b<=21 and f_c,g_h,x<=d<=1. This applies to the regularized opposite component at B and at B'.
+
+For the ONE actual flow h=(R(f)+R(g))/2, either formerly bad centre has charge at most(621+260)/2=881/2<614. All other coherent and noncoherent layouts retain the previous bounds. Dividing this value77 flow by77 gives
+
+    Gamma_1225(h/77)<=691/77<9.                    (AC10)
+
+No simultaneous integral repair, termination, or phase-dependent choice is asserted. The half-mixture is formed only after constructing both complete supported components.
+
+### AC.7. Exact-cut uncrossing covers every one-inactive capacity77 case
+
+Suppose an original exact77 cut C has only r inactive. Its capacity in N[r] stays77. If N[r] supports value77, apply(AC10).
+
+Otherwise an integral modified mincut D has capacity at most76. Let j count its inactive roots other than r. Its original capacity is at most76+j and at least77, so j is1,2 or3. If r were inactive when j=3, the four source arcs alone would have modified capacity81>76; hence that subcase cannot occur.
+
+Use original directed-cut submodularity throughout the following argument. Intersection of source-side sets takes the UNION of their inactive-root sets; union takes the INTERSECTION. Every original cut has capacity at least77.
+
+- For j1, D has original capacity77. If r is also inactive, TA applies. Otherwise C intersect D has two inactive roots and, by submodularity with two exact77 cuts, capacity77, again giving TA.
+- For j2, D has original capacity77 or78. If r is inactive, D has three inactive roots and IA applies. If r is active and the capacity is77, use TA. If it is78, C intersect D has three inactive roots and capacity at most78 because C union D has capacity at least77; use IA.
+- For j3, D has the other three roots inactive. Capacities77 or78 are covered by IA. Capacity79 is impossible: C intersect D would have four inactive roots and capacity at least84, while C union D has capacity at least77, contradicting84+77>77+79.
+
+Thus every original one-inactive exact77 source is supplied. The uniform bound is1385/154, the largest of(AC10), IA's503/56 and TA's1385/154.
+
+### AC.8. Every two-inactive capacity78 case is supplied
+
+Let P be an original capacity78 cut with inactive pair{r,s}. In N[r] its capacity is77. If value77 survives, apply(AC10) with C=P; its saturation is used only in the MODIFIED network, where flow and cut both have value77.
+
+Otherwise choose D of modified capacity at most76 and use j as above.
+
+- For j1, the original capacity is77. If r is inactive, D is a TA cut. Otherwise D has one inactive root and AC.7 applies.
+- For j2, the original capacity is77 or78. If r is inactive, IA applies. If r is active at capacity77, TA applies. At capacity78, compare D's inactive pair with{r,s}. Disjoint pairs would make P intersect D all-four-inactive and P union D of capacity at least77, contradicting84+77>78+78. Otherwise the pairs meet exactly at s. The intersection U has three inactive roots and the union V one, with cap(U)+cap(V)<=156. If cap(V)=77, use AC.7. If cap(V)>=78, then cap(U)<=78 and IA applies.
+- For j3, D has the other three roots inactive. Capacities77 or78 give IA. Capacity79 is impossible because P intersect D has all four roots inactive and P union D has s inactive, so their capacities sum to at least84+77>78+79.
+
+Every two-inactive capacity78 source consequently has one law below nine, with uniform bound1385/154. This covers all nine private-cost profiles without identifying a whole cost3 prefix with three actual leaves and without saturating the original capacity78 cut.
+
+### AC.9. The finite maximum77 theorem and its boundary
+
+If the existing root-cap61/3 test supports value77, its common mixture gives2078/231. If it fails, its exact obstruction list is
+
+    (t,c)=(1,77),(2,77),(2,78),(3,77),(3,78).
+
+AC.7 and AC.8 handle the first and third types; TA handles(2,77); IA handles the two three-inactive types. The three alternative bounds691/77,503/56,1385/154 are all smaller than2078/231. This proves(AC77).
+
+The theorem is confined to the fixed finite literal4555 height-two actual-source model. It does not close the remaining general cut74,75,76 strata, supply the arbitrary original outside-cofactor/common-law lift, extend through all heights or residual branches, or settle unrestricted Erdős #7. Its proof is ordinary mathematics; no Lean compilation or kernel verification is claimed here.
+
+### AC.10. Exact actual-source controls and the necessity of the exact-cut premise
+
+The [exact control program](../../../frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py) rebuilds each complete original network and all four asymmetric networks using the existing integral Dinic implementation. It checks actual incidences, every original arc capacity, flow conservation, a matching residual cut, all480 original legal pair restrictions per source, and the standalone five-tree. Auxiliary pinned-root networks certify cuts only: their augmented flows are never reported as original feasible flows.
+
+The15 actual controls comprise13 sources of original maximum77 and two FD boundary sources of original maximum78. Their7,200 original pair tests and60 modified networks give:
+
+| Source | Original maximum | Modified maxima, selected roots0,1,2,3 |
+|---|---:|---|
+| actual68 |77|75,75,75,74|
+| actual164 and actual192 |77|77,77,77,77|
+| eight TN224 sources |77|76,76,76,77|
+| TN459 four-owner and no-anchor459 |77|75,75,76,76|
+| FD459 and FD463 |78|76,76,77,77|
+
+The program finds24 exact77 selected-root cut witnesses,20 of them on sources satisfying the original-maximum77 premise. For every witness, limiting the selected root to20 decreases the modified maximum to76, independently verifying its forced21 mass in every value77 flow. The two original-max78 sources test a boundary of the assumptions and are not counted as AC77 instances.
+
+The actual164/192 controls are especially useful: every asymmetric network retains value77, but the all-roots20 network also retains77. No exact77 cut with the selected root inactive and at most one companion exists there. Thus preservation of value77 alone does NOT supply AC.1's exact-cut premise or force the selected root to carry21.
+
+The no-anchor459 source has no monochromatic complete legal restriction at any root, although it satisfies all original tests and has maximum77. At root0 its fibres are H0,H1,{H2,K0},{H3,K0},{H4,K0}; root1 has {Kc,Lc} at child c; the remaining full and gap roots have their complete49-leaf fibres. All original owners remain present. It rules out requiring an entire monochromatic anchor for the full11222/full22222 profile. Its original cut78 is not saturated; replacing the four private2 arcs into K0 by the public7 leaf gives an exact77 alternative.
+
+Across the original-max77 controls,52 actual cut branches are checked, including24 failed perturbations whose actual cut intersection and union are reconstructed directly. A separate exhaustive integer check uses every labelled inactive-root set, each selected root, every original D capacity from77 to76+j, and every pair of uncrossed integer capacities allowed by submodularity and the cut floors. Its96 singleton and288 pair lowered-cut candidates leave768 capacity assignments, all covered by the stated prior suppliers. These are counts in a necessary integer interface, not claims that each assignment has an actual-source realization.
+
+The [retained data](../../../frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.json) are reproduced by:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py --geometry-root docs/reports/erdos7-odd-covering/frontier/cover-geometry --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.json
+```
+
+All checks remain active under `-O`. These finite controls verify the stated instances and arithmetic branches; AC.1--AC.9 provide the universal selected-repair and common-law argument. No Lean verification is inferred from either.
+
 ## Remaining source and arithmetic gaps
 
-All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
-The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
-occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
-The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The two-inactive-root supplier(TA4) handles the entire(2,77) type with Gamma<=1385/154=9-1/154: the only remaining11111/12222 source profile admits a safe two-flow half-mixture. It also reduces(2,78) to nine fully active private-only cost shapes. GF supplies gap2222/full22222 with249/28, and PS supplies full12222/full12222 with1385/154, including its fourth-column exception through a mass19 local replacement that preserves both external units. IG and IFP now supply the entire(1,77) type: a bounded residual simple-cycle step repairs the gap-inactive branch, and the full-inactive partial-child budgets are impossible, leaving the established IF77 supplier. The reduced branches have691/77; the contribution21 normalization alternative uses TA, so the uniform bound for all(1,77) is1385/154. FD additionally supplies full11123/full22222 with249/28 using its three-singleton monochromatic anchor and a fourth actual representative. TN supplies full11223/full12222 and full11222/full12223 with1385/154 by retaining all eighteen original private candidates, the optional fourth column and the allowed four-owner fine leaf. The four remaining(2,78) cost shapes are full11222/full22222, gap1223/full22222, gap2222/full12223 and gap2223/full12222; these are the only unsupplied root-cap-failure types in this reduction. The root-cap test itself is not asserted for every source. Independently, the five-block bridge OM5 is sufficient for a common law below nine; its simultaneous-avoidance premise remains unproved in general, and a small hitting family is not a negative phase-law certificate.
-The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
-range74/63 through77/63 are not thereby controlled: their high root/column incidence
-can still invalidate the earlier mixed-cap estimate. The fully active R=1
-whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
-does not settle all sources at those numerical cut values. Some may contain
-the private structure, but its existence has not been proved for every
-remaining source. Other occupancy patterns retain their own stated
-premises and are not classified by this remaining four-value window.
+Under the original literal4555 and standalone premises, every source of minimum-cut value65/63 through73/63 is controlled by the source classifications above. The complete maximum77 class has bound2078/231 by AC77; every78/63 source has bound233/26 by sharp saturated-block transport; every cut at least79/63 is controlled by the large-cut estimate. Each conclusion concerns one supported probability fixed before all original numerical phase queries.
 
-The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
+The general source strata74/63,75/63 and76/63 remain unresolved. Specified profiles within these strata, including the fully active R=1 whole-column family at75/63, have their stated laws; a supplier for every source at those three values is still missing. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
+
+The neighborhood criterion, GP selected-block lowerings, OM occupation criterion and five-block avoidance bridge retain their own precise conclusions. Coordinatewise integral lowerings do not establish simultaneous integral safety, and OM5 is not proved for every actual source. Neither is now required to remain an unresolved prerequisite for the maximum77 common law: AC77 supplies that law by the root-cap61/3 branch or the IA/TA/asymmetric alternatives. The root-cap61/3 test itself is not asserted to hold on every source. A small hitting family remains insufficient to rule out a good fractional law.
+
+The individual GF, PS, FD, TN, IG and IFP source proofs are retained with their stronger or more specific bounds. They preserve whole private-prefix fibres, original owner multiplicities and the fourth-column exception; they do not saturate a nonminimum original cut78. AC.8 also covers the four profiles not supplied by these individual arguments: full11222/full22222, gap1223/full22222, gap2222/full12223 and gap2223/full12222.
+
+These are fixed-head1225 results. An actual full odd-covering residual must additionally preserve every original outside-cofactor constraint under one common lift, as in439. A head law does not provide that lift, and439 rules out a uniform complete-Gamma bound below nine for arbitrary free cofactors. All-height transport and a bound for the actual original test family's same-law deletion correlations remain necessary arithmetic obligations. No unrestricted noncoverage conclusion or Lean kernel verification follows from AC77 alone.

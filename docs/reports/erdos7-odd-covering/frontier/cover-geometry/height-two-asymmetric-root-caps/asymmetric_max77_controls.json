@@ -1,0 +1,5777 @@
+{
+  "result": "PASS",
+  "scope": "Exact finite actual-source flow/cut controls and separate integer uncrossing interface. Not Lean, no universal selected-repair proof, no unrestricted Erdos7 conclusion.",
+  "input_files": [
+    {
+      "relative_path": "height-two-cut72-full-k4/height_two_cut77_actual_bad_neighborhood.json",
+      "sha256": "e27a4737dbb75b59e38173c43a70899e1d9c89f191b4847ca657977b6cee68e8"
+    },
+    {
+      "relative_path": "height-two-cut72-full-k4/height_two_cut77_forced_twenty.json",
+      "sha256": "95ff9e135d85480d444dfb589d2a5f915f55bc915829e4576617a3553b1f3bf0"
+    },
+    {
+      "relative_path": "height-two-cut72-full-k4/height_two_cut77_complement_transport.json",
+      "sha256": "9c4f239fe235770c5d630bedc05fd52b24e6e1731b2624f1a9ecd151714e3484"
+    }
+  ],
+  "dinic_sha256": "5b6bd60d8e05528258b16662ac4f90ac76e380e692c6cbcc276dd39ddd516ec7",
+  "summary": {
+    "actual_sources": 15,
+    "original_max77_sources": 13,
+    "original_max78_boundary_controls": 2,
+    "pair_tests": 7200,
+    "asymmetric_networks": 60,
+    "exact77_selected_cut_witnesses": 24,
+    "exact77_selected_cut_witnesses_with_original_max77": 20,
+    "actual_cut_branch_controls": 52,
+    "actual_failed_perturbation_uncrossings": 24
+  },
+  "actual_source_controls": [
+    {
+      "name": "actual68",
+      "points": 68,
+      "source_sha256": "b8ab3b85b14c296d88d9caad7535dfbee40b3ba4dcf1a8a6fdcfb5c8f95ae004",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 6,
+      "vertices": 1145,
+      "arcs": 1211,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          0,
+          1,
+          2
+        ],
+        "root_flow": {
+          "0": 21,
+          "1": 21,
+          "2": 21,
+          "3": 14
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 7,
+          "21": 3
+        }
+      },
+      "all_roots20": {
+        "maximum": 74,
+        "inactive_roots": [
+          0,
+          1,
+          2
+        ],
+        "root_flow": {
+          "0": 20,
+          "1": 20,
+          "2": 20,
+          "3": 14
+        },
+        "cut_capacity": 74,
+        "cut_arc_counts": {
+          "2": 7,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              0,
+              1,
+              2
+            ],
+            "root_flow": {
+              "0": 21,
+              "1": 20,
+              "2": 20,
+              "3": 14
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 7,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 74,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 102
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              0,
+              1,
+              2
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 21,
+              "2": 20,
+              "3": 14
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 7,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 74,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 99
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 105
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              0,
+              1,
+              2
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 21,
+              "3": 14
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 7,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 74,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 106
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 74,
+            "inactive_roots": [
+              0,
+              1,
+              2
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 20,
+              "3": 14
+            },
+            "cut_capacity": 74,
+            "cut_arc_counts": {
+              "2": 7,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 74,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 116
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 102
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 105
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 106
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        }
+      ],
+      "actual_uncrossing": [],
+      "original_max77_premise": true
+    },
+    {
+      "name": "actual164",
+      "points": 164,
+      "source_sha256": "5e7a489fd9563315c9711b72908fee03e8b17b07b780c5444fd2f0a859ffc860",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1307,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [],
+        "root_flow": {
+          "0": 21,
+          "1": 21,
+          "2": 21,
+          "3": 14
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 21,
+          "7": 2,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 77,
+        "inactive_roots": [
+          0
+        ],
+        "root_flow": {
+          "0": 20,
+          "1": 20,
+          "2": 20,
+          "3": 17
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 18,
+          "20": 1,
+          "21": 1
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [],
+            "root_flow": {
+              "0": 21,
+              "1": 20,
+              "2": 20,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 21,
+              "7": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 78
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 88
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 84
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              0
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 21,
+              "2": 20,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              0
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 21,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 88
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 88
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 94
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              0
+            ],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 20,
+              "3": 17
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 84
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 84
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 94
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        }
+      ],
+      "actual_uncrossing": [],
+      "original_max77_premise": true
+    },
+    {
+      "name": "actual192",
+      "points": 192,
+      "source_sha256": "7a0bb3ee7db084bc988e77b2f22470ea8de49e595771b3ac476e4e3f34a72aab",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1335,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [],
+        "root_flow": {
+          "0": 21,
+          "1": 21,
+          "2": 21,
+          "3": 14
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "21": 2
+        }
+      },
+      "all_roots20": {
+        "maximum": 77,
+        "inactive_roots": [],
+        "root_flow": {
+          "0": 20,
+          "1": 20,
+          "2": 20,
+          "3": 17
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "21": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [],
+            "root_flow": {
+              "0": 21,
+              "1": 20,
+              "2": 20,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "21": 2
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 86
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 94
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 98
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [],
+            "root_flow": {
+              "0": 20,
+              "1": 21,
+              "2": 20,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "21": 2
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 88
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 98
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 100
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 21,
+              "3": 16
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "21": 2
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 88
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 94
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 98
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 100
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [],
+            "root_flow": {
+              "0": 20,
+              "1": 20,
+              "2": 20,
+              "3": 17
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "21": 2
+            }
+          },
+          "root_at_most20_maximum": 77,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 90
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 98
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 100
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        }
+      ],
+      "actual_uncrossing": [],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN1_H",
+      "points": 224,
+      "source_sha256": "9d4bc17575294c64d3b7d656f9ae54ccccb42f81aff232183ecd72aee38d6a03",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 18,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 28,
+              "20": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN1_L",
+      "points": 224,
+      "source_sha256": "96e4d8f013eccf96cd6427223d292b632567442ec180f3dc4a433a8958e4bc14",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 18,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 28,
+              "20": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN1_K",
+      "points": 224,
+      "source_sha256": "233ade8471f181dcf196609947e85d2a2c09e9eabf42598694405737a3a13def",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 18,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 28,
+              "20": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN1_M",
+      "points": 224,
+      "source_sha256": "728c1c72e8080bec429248ba5658e15bf8dc0a9f54510c5f6ae5ec7eaa76252d",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 18,
+          "1": 18,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 18,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 28,
+              "20": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 87
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 18,
+              "1": 18,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 79
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 18,
+                "1": 18,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "D:singleton77",
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN2_H",
+      "points": 224,
+      "source_sha256": "7668df1db2d3f6966fb17c5b722d982dc1fae9ef489271c062618a8e9a604c13",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 8,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 1,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN2_L",
+      "points": 224,
+      "source_sha256": "233ca61299ef8b65ad8f89637947ccdff1dd26864cad50413a3663e223ba8f74",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 8,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 1,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN2_K",
+      "points": 224,
+      "source_sha256": "ecb5498c3b2343f1af4cf6ca5fced838253a51cf5a2357a35694f307311b3b2b",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 8,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 1,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN2_M",
+      "points": 224,
+      "source_sha256": "694447c371ea2c9147bf0fee655c1b223eac4896efd6b5c7557afd6ffffee900",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1367,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 28,
+          "21": 1
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 8,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 18,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 8,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 81
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 77
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 28,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            },
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 18,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            3
+          ],
+          "C_capacity": 77,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 1,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            1,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "minimum_with_fixed_root_mask",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 78,
+            "inactive_roots": [
+              1,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 79,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              3
+            ]
+          },
+          "suppliers": [
+            "union:singleton77"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "asymmetric77_exactC"
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "TN2_K_four_owner",
+      "points": 459,
+      "source_sha256": "4990f0c7045830538b3a24b80578f3f48d908a4be4fdd23b774d9547d82f6c10",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1602,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 19,
+          "2": 21,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "21": 2
+        }
+      },
+      "all_roots20": {
+        "maximum": 75,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 19,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 75,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 21,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 84
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 76
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 91
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 76
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "suppliers": [
+            "D:TA",
+            "union:TA"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "suppliers": [
+            "D:TA",
+            "union:TA"
+          ]
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "no_anchor459",
+      "points": 459,
+      "source_sha256": "a037887180b4da987596df587a4ffaa91b66c7fd8ed6c9d9aa20947a2786e28f",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 0,
+      "vertices": 1145,
+      "arcs": 1602,
+      "original": {
+        "maximum": 77,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 19,
+          "2": 21,
+          "3": 21
+        },
+        "cut_capacity": 77,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "21": 2
+        }
+      },
+      "all_roots20": {
+        "maximum": 75,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 19,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 75,
+        "cut_arc_counts": {
+          "2": 14,
+          "7": 1,
+          "20": 2
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 75,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 75,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 21,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 84
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 76
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 19,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 14,
+              "7": 1,
+              "20": 1,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 75,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 91
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 76
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        }
+      ],
+      "actual_uncrossing": [
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 2,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "suppliers": [
+            "D:TA",
+            "union:TA"
+          ]
+        },
+        {
+          "C_inactive": [
+            2,
+            3
+          ],
+          "C_capacity": 78,
+          "C_kind": "specified_private18_cut78",
+          "selected_root": 3,
+          "branch": "actual_uncrossing",
+          "modified_D_capacity": 76,
+          "original_D": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "intersection": {
+            "capacity": 78,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "union": {
+            "capacity": 77,
+            "inactive_roots": [
+              2,
+              3
+            ]
+          },
+          "suppliers": [
+            "D:TA",
+            "union:TA"
+          ]
+        }
+      ],
+      "original_max77_premise": true
+    },
+    {
+      "name": "FD_finite",
+      "points": 459,
+      "source_sha256": "da9f604d59d1dfae4b1aa64accc732ae5350ae3ef998e15a10dee899e716605d",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 10,
+      "vertices": 1145,
+      "arcs": 1602,
+      "original": {
+        "maximum": 78,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 21,
+          "3": 21
+        },
+        "cut_capacity": 78,
+        "cut_arc_counts": {
+          "2": 15,
+          "6": 1,
+          "21": 2
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 5,
+          "6": 1,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 15,
+              "6": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 21,
+              "3": 20
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 21,
+                "3": 20
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 15,
+                "6": 1,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 15,
+                "6": 1,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [],
+      "original_max77_premise": false
+    },
+    {
+      "name": "FD_whole",
+      "points": 463,
+      "source_sha256": "04c2f45fe418846aa1a4236fd476219254aed5d4764a81a99fec084578ef28dc",
+      "occupancy": [
+        5,
+        5,
+        5,
+        4
+      ],
+      "pair_tests": 480,
+      "standalone_five_tree": true,
+      "monochromatic_legal_restrictions": 10,
+      "vertices": 1145,
+      "arcs": 1606,
+      "original": {
+        "maximum": 78,
+        "inactive_roots": [
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 21,
+          "3": 21
+        },
+        "cut_capacity": 78,
+        "cut_arc_counts": {
+          "2": 15,
+          "6": 1,
+          "21": 2
+        }
+      },
+      "all_roots20": {
+        "maximum": 76,
+        "inactive_roots": [
+          1,
+          2,
+          3
+        ],
+        "root_flow": {
+          "0": 16,
+          "1": 20,
+          "2": 20,
+          "3": 20
+        },
+        "cut_capacity": 76,
+        "cut_arc_counts": {
+          "2": 5,
+          "6": 1,
+          "20": 3
+        }
+      },
+      "asymmetric": [
+        {
+          "selected_root": 0,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 3
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                0
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 1,
+          "modified": {
+            "maximum": 76,
+            "inactive_roots": [
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 20
+            },
+            "cut_capacity": 76,
+            "cut_arc_counts": {
+              "2": 15,
+              "6": 1,
+              "20": 2
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                1
+              ],
+              "minimum_capacity": 100
+            },
+            {
+              "inactive_roots": [
+                0,
+                1
+              ],
+              "minimum_capacity": 104
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            }
+          ],
+          "exact77_C": [],
+          "exact_C_condition_met": false,
+          "all_value77_flows_root21_verified": null
+        },
+        {
+          "selected_root": 2,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 21,
+              "3": 20
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                0,
+                2
+              ],
+              "minimum_capacity": 89
+            },
+            {
+              "inactive_roots": [
+                1,
+                2
+              ],
+              "minimum_capacity": 85
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 21,
+                "3": 20
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 15,
+                "6": 1,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        },
+        {
+          "selected_root": 3,
+          "modified": {
+            "maximum": 77,
+            "inactive_roots": [
+              1,
+              2,
+              3
+            ],
+            "root_flow": {
+              "0": 16,
+              "1": 20,
+              "2": 20,
+              "3": 21
+            },
+            "cut_capacity": 77,
+            "cut_arc_counts": {
+              "2": 5,
+              "6": 1,
+              "20": 2,
+              "21": 1
+            }
+          },
+          "root_at_most20_maximum": 76,
+          "pinned_inactive_cut_minima": [
+            {
+              "inactive_roots": [
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                0,
+                3
+              ],
+              "minimum_capacity": 96
+            },
+            {
+              "inactive_roots": [
+                1,
+                3
+              ],
+              "minimum_capacity": 92
+            },
+            {
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "minimum_capacity": 77
+            }
+          ],
+          "exact77_C": [
+            {
+              "maximum": 77,
+              "inactive_roots": [
+                2,
+                3
+              ],
+              "root_flow": {
+                "0": 16,
+                "1": 20,
+                "2": 20,
+                "3": 21
+              },
+              "cut_capacity": 77,
+              "cut_arc_counts": {
+                "2": 15,
+                "6": 1,
+                "20": 1,
+                "21": 1
+              }
+            }
+          ],
+          "exact_C_condition_met": true,
+          "all_value77_flows_root21_verified": true
+        }
+      ],
+      "actual_uncrossing": [],
+      "original_max77_premise": false
+    }
+  ],
+  "integer_uncrossing": {
+    "scope": "Exhaustive four-root integer cut interface only; no actual-source realization inferred.",
+    "enumeration": "All labelled C masks of size1 or2; each selected r in C; all16 D masks; original D capacity77 through76+j, j=|D\\{r}|; all integer uncrossed capacities with each >=max(77,21*inactive roots) and sum <=c(C)+c(D).",
+    "branches": [
+      {
+        "branch": "singleton77",
+        "counts": {
+          "lowered_cut_candidates": 96,
+          "surviving_lowered_cuts": 72,
+          "surviving_assignments": 120,
+          "uncrossing_capacity_exclusions": 12,
+          "four_inactive_capacity_exclusions": 12
+        },
+        "supplier_assignment_histogram": {
+          "D:IA;intersection:IA": 48,
+          "D:TA;intersection:IA": 12,
+          "D:TA;intersection:TA": 12,
+          "intersection:IA": 36,
+          "intersection:TA": 12
+        }
+      },
+      {
+        "branch": "pair78",
+        "counts": {
+          "lowered_cut_candidates": 288,
+          "surviving_lowered_cuts": 168,
+          "surviving_assignments": 648,
+          "uncrossing_capacity_exclusions": 84,
+          "four_inactive_capacity_exclusions": 36
+        },
+        "supplier_assignment_histogram": {
+          "D:IA;intersection:IA": 96,
+          "D:IA;intersection:IA;union:TA": 96,
+          "D:IA;union:TA": 24,
+          "D:TA;intersection:IA": 48,
+          "D:TA;intersection:IA;union:singleton77": 96,
+          "D:TA;intersection:TA": 12,
+          "D:TA;intersection:TA;union:TA": 12,
+          "D:TA;union:TA": 12,
+          "D:singleton77;intersection:IA": 72,
+          "D:singleton77;intersection:TA": 12,
+          "D:singleton77;intersection:TA;union:singleton77": 12,
+          "D:singleton77;union:singleton77": 12,
+          "intersection:IA": 72,
+          "intersection:IA;union:singleton77": 48,
+          "union:singleton77": 24
+        }
+      }
+    ]
+  }
+}
