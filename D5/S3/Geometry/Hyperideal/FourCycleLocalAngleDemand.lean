@@ -4,10 +4,6 @@
    mirror-E: none(waiver:unbounded-genuine-angle-demand)
    anchors: []
    utility: none
-   proof_shape: paired_angle_demand: content
-   escape_witness: the exact cosine factorizations and positive slack identity
-     used on the active path of paired_angle_demand
-   admission_basis: escape-witness
    digest: Strict angle demand under three cosine-range hypotheses. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
