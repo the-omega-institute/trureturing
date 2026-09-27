@@ -26,7 +26,8 @@ class NativeArtifactTests(NativeArtifactTestSupport, NativeArtifactConsumerTests
 class NativePublicationTests(NativeDependencyTestSupport, NativePublicationConsumerTests, unittest.TestCase):
     pass
 
-class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTests, unittest.TestCase):
+class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTests,
+                          NativeBatchPartitionTests, unittest.TestCase):
     pass
 
 class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
