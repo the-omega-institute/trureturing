@@ -28,7 +28,21 @@ $$\forall d: \mathbb{N}, X: \operatorname{Type},\\{}Q: \operatorname{Matrix}(\op
 
 The dark projection is the matrix of the orthogonal projection onto the dark space.
 
-**Theorem 1.3 (Survival converges exactly to the dark projection).**
+**Theorem 1.3 (Dark-complement survival contracts geometrically by dimension blocks).**
+
+$$\forall d: \mathbb{N}, X: \operatorname{Type},\\{}Q: \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}), L: X \to \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}), [\operatorname{Fintype}(X)],\\{}(Q^{*} \cdot Q + \sum_{x \in X} L_{x}^{*} \cdot L_{x} = I_{d} \land d \neq 0) \Rightarrow\\{}\exists g \in \mathbb{R}, c \in \mathbb{N} \to \mathbb{R},\; \left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(\left(0 < g \land g \le 1\right) \land (\forall N \in \mathbb{N},\; 0 \le \operatorname{c}(N))\right) \land (\forall N \in \mathbb{N},\; \operatorname{c}(N) \le 1)\right) \land (\forall N \in \mathbb{N},\; \operatorname{c}(N + d) \le (1 - g) \cdot \operatorname{c}(N))\right) \land (\forall N \in \mathbb{N},\; \operatorname{darkProjection}(Q, L) \le (Q^{*})^{N} \cdot Q^{N})\right) \land (\forall N \in \mathbb{N},\; (Q^{*})^{N} \cdot Q^{N} - \operatorname{darkProjection}(Q, L) = (I_{d} - \operatorname{darkProjection}(Q, L)) \cdot (Q^{*})^{N} \cdot Q^{N} \cdot (I_{d} - \operatorname{darkProjection}(Q, L)))\right) \land 0 \le (I_{d} - \operatorname{darkProjection}(Q, L))\right) \land (\forall N \in \mathbb{N},\; (Q^{*})^{N} \cdot Q^{N} - \operatorname{darkProjection}(Q, L) \le \operatorname{smul}(\operatorname{c}(N), (I_{d} - \operatorname{darkProjection}(Q, L))))\right) \land (\forall N \in \mathbb{N},\; \left\lVert (Q^{*})^{N} \cdot Q^{N} - \operatorname{darkProjection}(Q, L) \right\rVert \le \operatorname{c}(N))\right) \land 1 - g = \operatorname{c}(d)\right) \land (Q^{*})^{d} \cdot Q^{d} - \operatorname{darkProjection}(Q, L) \le \operatorname{smul}((1 - g), (I_{d} - \operatorname{darkProjection}(Q, L)))\right) \land (\forall n \in \mathbb{N}, k \in \mathbb{N},\; \operatorname{c}(n + k \cdot d) \le (1 - g)^{k})\right) \land (\forall N \in \mathbb{N},\; \operatorname{c}(N) \le (1 - g)^{\operatorname{div}(N, d)})\right) \land (\forall n \in \mathbb{N}, k \in \mathbb{N},\; (Q^{*})^{n + k \cdot d} \cdot Q^{n + k \cdot d} - \operatorname{darkProjection}(Q, L) \le \operatorname{smul}((1 - g)^{k}, (I_{d} - \operatorname{darkProjection}(Q, L))))\right) \land (\forall N \in \mathbb{N},\; (Q^{*})^{N} \cdot Q^{N} - \operatorname{darkProjection}(Q, L) \le \operatorname{smul}((1 - g)^{\operatorname{div}(N, d)}, (I_{d} - \operatorname{darkProjection}(Q, L)))).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.dark_block_contraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let Q be the no-click operator and L_x the finite family of click operators. Their adjoint products sum with Q^* Q to the identity. The survival defect above the dark projection is positive, factors through the dark complement, and is controlled by squared norms of restricted powers.
+
+Compactness of the unit sphere in the finite-dimensional dark complement turns strict decay after d steps into a uniform positive gap g. Iterating that block contraction bounds the defect at n+kd by (1-g)^k, and the quotient-remainder decomposition gives the corresponding bound at every N.
+
+**Theorem 1.4 (Survival converges exactly to the dark projection).**
 
 $$\forall d: \mathbb{N}, X: \operatorname{Type},\\{}Q: \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}), L: X \to \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}), [\operatorname{Fintype}(X)],\\{}Q^{*} \cdot Q + \sum_{x \in X} L_{x}^{*} \cdot L_{x} = I_{d} \Rightarrow\\{}\lim_{N \to \infty} {Q^{*}}^{N} \cdot Q^{N} = \operatorname{darkProjection}(Q, L) \land \forall rho: \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}), \lim_{N \to \infty} \operatorname{Tr}(rho \cdot {Q^{*}}^{N} \cdot Q^{N}) = \operatorname{Tr}(rho \cdot \operatorname{darkProjection}(Q, L)).$$
 
@@ -48,6 +62,7 @@ Survival is the identity on the dark space and tends to zero on its orthogonal c
 
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.darkProjection`
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.darkSpace`
+- Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.dark_block_contraction`
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.finite_detection_survival_limit`
 - Dependency: [D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace](../../ObserverMemory/Dynamics/MaximalUnobservableSubspace.md)
 - Dependency: [D5/S3/ObserverMemory/Dynamics/ResidualKernelInvariance](../../ObserverMemory/Dynamics/ResidualKernelInvariance.md)
