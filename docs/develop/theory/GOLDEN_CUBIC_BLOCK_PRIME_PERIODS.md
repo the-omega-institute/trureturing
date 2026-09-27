@@ -83,3 +83,105 @@ preceding results; the block-power conclusion is the new assertion of
 this section. No claim that $h_p=1$ is used.
 
 ## 追加锚（本行以下为增补区）
+
+## 3. Entry ranks and original depths of block factors
+
+Retain $B_j=L_{3^j}^2+3$ and $C_j=L_{3^j}^2+1$ for $j\geq1$. For a
+prime $p$, let $\rho(p)$ be the least positive index with $p\mid F_{\rho(p)}$.
+The valuations below are taken in the original Fibonacci sequence.
+
+**Theorem 3.1 (Fibonacci block rank).** For every $j\geq1$ and prime
+$p\mid C_j$,
+$$
+\rho(p)=3^{j+1},\qquad v_p(C_j)=v_p(F_{\rho(p)}).
+$$
+
+Proof. Put $n=3^j$. The cubic Fibonacci identity is
+$F_{3n}=F_n C_j$. The Lucas discriminant identity and the block
+congruence exclude $p\mid F_n$ and $p=3$. Therefore $p\mid F_{3n}$,
+while $p\nmid F_n$. The first-zero rank divides $3n$, so it must be
+$3n=3^{j+1}$. Since $p\nmid F_n$, the product identity gives
+$v_p(C_j)=v_p(F_{3n})$.
+
+**Theorem 3.2 (Lucas block rank).** For every $j\geq1$ and prime
+$p\mid B_j$,
+$$
+\rho(p)=2\cdot3^{j+1},\qquad
+\left(\frac5p\right)=1,\qquad
+v_p(B_j)=v_p(F_{\rho(p)}).
+$$
+
+Proof. Put $n=3^j$ and $r=3n$. The cubic Lucas identity gives
+$L_r=L_n B_j$, and the duplication identity gives $F_{2r}=F_rL_r$.
+The discriminant identity and the block congruences exclude $p=2,3,5$
+and show that $p$ divides neither $F_n$, $L_n$, $F_{2n}$ nor $F_r$.
+Thus $p\mid F_{2r}$, but its first-zero rank cannot divide $r$ or
+$2n$. Since the rank divides $2r=2\cdot3^{j+1}$, it equals $2r$.
+At $L_r=0$ modulo $p$, the odd-index discriminant identity gives
+$5F_r^2=4$ modulo $p$, so five is a quadratic residue. Both $F_r$
+and $L_n$ are $p$-units, and $F_{2r}=F_rL_nB_j$ gives the valuation.
+
+## 追加锚（本行以下为增补区）
+
+## 4. Cubic block congruences
+
+Write $x_j=L_{3^j}$, $B_j=x_j^2+3$, and $C_j=x_j^2+1$ for $j\geq1$.
+
+**Theorem 4.1 (Lucas congruences).** For every $j\geq1$,
+$x_j\equiv4\pmod{72}$, $v_2(x_j)=2$,
+$B_j\equiv1\pmod9$, $x_j^2\equiv1\pmod5$, and
+$B_j\equiv19\pmod{80}$. Moreover $x_{j+1}=x_jB_j$.
+
+**Theorem 4.2 (Fibonacci congruences).** For every $j\geq1$,
+$F_{3^j}\equiv2\pmod4$, $v_2(F_{3^j})=1$, and
+$F_{3^{j+1}}=F_{3^j}C_j$.
+
+**Theorem 4.3 (interlevel residues).** If $1\leq i<j$, then
+$B_j\equiv3\pmod{B_i^2}$.
+
+**Theorem 4.4 (block product).** For every $j\geq1$,
+$$
+L_{3^j}=4\prod_{i=1}^{j-1}B_i.
+$$
+
+## 5. Finite Fibonacci rank closure
+
+For every natural $p$, let $\rho(p)$ be the least positive $r$ for which
+$p\mid F_r$ when $p$ is prime, and set $\rho(p)=1$ otherwise. For a
+finite set $S$ of primes greater than five, set
+$B=\max(5,\sup S)$, where $\sup\varnothing=0$,
+$H_0=S\cup\{2,3,5\}$, and
+$T(H)=H\cup\bigcup_{p\in H}\operatorname{PrimeDivisors}(\rho(p))$.
+Let $U$ be the set of primes at most $B$, and set $H(S)=T^{|U|}(H_0)$.
+
+**Theorem 5.1 (finite least closure).** For every such $S$, $H(S)$
+contains $H_0$; every element of $H(S)$ is prime and at most $B$;
+$T(H(S))=H(S)$; and $H(S)$ is contained in every finite $K$ satisfying
+$H_0\subseteq K$ and $T(K)\subseteq K$.
+
+## 6. Prime-to-index original depth
+
+Retain the least positive Fibonacci entry rank $\rho(p)$ for each prime $p$.
+
+**Theorem 6.1 (original rank depth).** If a prime $p$ divides $F_n$
+but does not divide $n$, then
+$$
+v_p(F_n)=v_p(F_{\rho(p)}).
+$$
+
+## 7. Faithful golden matrix
+
+For each natural modulus $m$, write a golden residue as $z=a+b\phi$,
+where $\phi^2=\phi+1$. On the basis $(\phi,1)$, multiplication by $z$
+has matrix
+$$
+M_m(z)=\begin{pmatrix}a+b&b\\b&a\end{pmatrix}
+\quad\text{over }\mathbb Z/m\mathbb Z.
+$$
+
+**Theorem 7.1 (faithful period representation).** The map $M_m$ is an
+injective ring homomorphism for every natural modulus $m$. It sends
+$\phi$ to $Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$, and the
+multiplicative orders of $\phi$ and $Q$ are equal.
+
+## 追加锚（本行以下为增补区）
