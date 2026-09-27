@@ -817,11 +817,13 @@ def report_seed(root):
     for relative in sorted(reports):
         report = seed / relative
         result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
-            "--repository", str(root), "--report", str(report)],
+            "--repository", str(root), "--report", str(report), "--diagnostics"],
             cwd=root, check=True, capture_output=True, text=True)
         outcome = json.loads(result.stdout)
         if type(outcome.get("needs_lake")) is not bool:
             raise ValueError("report producer returned no cache resource decision")
+        if result.stderr:
+            print(result.stderr, end="", file=sys.stderr, flush=True)
         if not outcome["needs_lake"]:
             return str(report)
     return None
