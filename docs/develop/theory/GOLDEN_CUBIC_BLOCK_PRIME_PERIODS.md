@@ -283,3 +283,259 @@ $\omega$ as the image of an integer. Every quotient class is an integer
 combination of $1$ and $\omega$, hence lies in the scalar image.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Square-class groups and an explicit original-depth escape bound
+
+### 10.1 Fixed objects and classical input
+
+Keep the original positive Fibonacci values. For a prime $p$ write
+$\rho(p)=\min\{r\geq1:p\mid F_r\}$ and $h_p=v_p(F_{\rho(p)})$.
+For $p>5$, $h_p=v_p(F_{p-(5/p)})$; thus WSS means $h_p\geq2$.
+For a positive integer $a$ let $\operatorname{Supp}(a)$ be its prime
+support, and put
+$$d(n)=\prod_{v_p(F_n)\ {\rm odd}}p\qquad(n\geq1).$$
+The positive rational square-class group is
+$$\mathcal G=\mathbb Q_{>0}^{\times}/(\mathbb Q_{>0}^{\times})^2
+ \simeq\bigoplus_{p\ {\rm prime}}\mathbb F_2.$$
+The coordinate of $[a]$ at $p$ is $v_p(a)\bmod2$. For a finite prime
+set $H$, let $\mathcal G_H=\langle[p]:p\in H\rangle$; it is isomorphic
+to $(\mathbb Z/2)^{|H|}$. The condition $[F_n]\in\mathcal G_H$ is
+exactly $\operatorname{Supp}(d(n))\subseteq H$.
+
+Two classical inputs are used with their full hypotheses. First, the
+Fibonacci valuation formulas of Lengyel, as restated in Medina-Rowland,
+Theorem 1.4, are
+$$
+v_p(F_n)=
+\begin{cases}h_p+v_p(n),&\rho(p)\mid n,\\0,&\rho(p)\nmid n,
+\end{cases}\quad(p\ne2,5),\qquad v_5(F_n)=v_5(n),
+$$
+and
+$$v_2(F_n)=\begin{cases}0,&3\nmid n,\\1,&n\equiv3\pmod6,\\
+v_2(n)+2,&6\mid n.\end{cases}$$
+The small ranks are $\rho(2)=3$, $\rho(3)=4$, $\rho(5)=5$.
+Second, the classical Fibonacci square-class theorem says that the only
+nonsingleton classes of positive indices are $\{1,2,12\}$ and $\{3,6\}$.
+It is stated in Ribenboim, *FFF: (Favorite Fibonacci Flowers)* (2005),
+(3.4), with attribution to his earlier paper. In particular, distinct
+indices whose ratio is $25$ never have square-equivalent Fibonacci
+values. These classical results are inputs, not new proofs of square-class
+rigidity or consequences of the coordinate-ring formalization.
+The source scopes are recorded in
+`Library/Recurrence/ribenboim2005squareclasses.md`.
+
+### 10.2 Support descent for a specified square-class subgroup
+
+A finite prime set $H$ is rank-closed if
+$\operatorname{Supp}(\rho(p))\subseteq H$ for every $p\in H$.
+Throughout this section assume $\{2,3,5\}\subseteq H$ and define
+$$R_H=\operatorname{lcm}_{p\in H}\rho(p).$$
+Then $60\mid R_H$ and $\operatorname{Supp}(R_H)\subseteq H$.
+
+**Lemma 10.1 (support descent).** If $[F_n]\in\mathcal G_H$, then
+$\operatorname{Supp}(n)\subseteq H$.
+
+Proof. Suppose otherwise and choose the largest prime $\ell\mid n$
+outside $H$. It exceeds five. Every prime $p\mid F_\ell$ has exact
+rank $\ell$ and satisfies $p>\ell$: the rank divides $p-1$ or $p+1$,
+and the putative equality $p+1=\ell$ is excluded by parity. The rank
+cannot be one, and the small primes are excluded by their small ranks.
+If such a $p$ divided $n$, maximality of $\ell$ outside $H$ would imply
+$p\in H$, whose rank-closure would imply $\ell\in H$, a contradiction.
+Thus $p\nmid n$, and the prime-to-index valuation formula gives
+$v_p(F_n)=v_p(F_\ell)=h_p$.
+The nonsquare $F_\ell$ has an odd-exponent factor $p$. It remains odd in
+$F_n$, hence lies in $H$ by hypothesis. Its rank again forces
+$\ell\in H$, the same contradiction. This is the earlier OSE
+largest-prime-outside-closure argument with a square-class hypothesis.
+
+### 10.3 Odd witnesses in prime-power quotient layers
+
+**Lemma 10.2 (prime-power layer).** Let $q\ne5$ be prime, let $s\geq1$,
+and exclude $(q,s)=(2,1)$. The actual positive integer
+$$C_{q,s}=F_{q^s}/F_{q^{s-1}}$$
+is greater than one, is coprime to $F_{q^{s-1}}$, and is not a square.
+Every prime $p\mid C_{q,s}$ satisfies
+$$\rho(p)=q^s,\qquad p\ne q,\qquad v_p(C_{q,s})=h_p.$$
+In particular there is such a $p$ with odd original depth.
+
+Proof. Fibonacci divisibility and strict growth give the integer quotient
+and positivity; the omitted case has quotient one. The rank bound shows
+$q\nmid F_{q^s}$ for odd $q\ne5$, since $\rho(q)>1$ is prime to $q$.
+For $q=2$, $\rho(2)=3$ gives the same exclusion. An old prime
+$p\mid F_{q^{s-1}}$ is therefore different from $q$. For odd $p\ne5$
+its valuation is unchanged under multiplication of the index by $q$.
+Five cannot occur because $q\ne5$. If the old prime is two, necessarily
+$q=3$ and both indices are odd multiples of three, so both valuations
+are one. This proves coprimality.
+Any new prime has rank a divisor of $q^s$ which does not divide
+$q^{s-1}$, hence exactly $q^s$. The same valuation formulas give its
+original depth, including $p=2$ at $(q,s)=(3,1)$ and $p=3$ at $(2,2)$.
+If the quotient were square, the distinct positive indices $q^{s-1}$
+and $q^s$ would lie in one classical square class. Inspection of the
+two exceptional classes leaves only the excluded pair $1,2$.
+Thus the quotient has an odd-exponent prime.
+For $q\geq7$ the rank and nonsquare layer mechanism is already present
+in PBC.3. The small-index clauses here ensure it can be used for every
+prime except the ramified prime five.
+
+The exclusion of five is essential to this cancellation argument:
+$F_{25}/F_5=5\cdot3001$ still shares a factor five with $F_5$.
+No nonsquare statement about that quotient with five removed is assumed.
+
+### 10.4 A divisibility bound replacing an unspecified height cutoff
+
+**Theorem 10.3 (explicit rank budget).** For every $n\geq1$,
+$$\boxed{[F_n]\in\mathcal G_H\quad\Longrightarrow\quad n\mid5R_H.}
+ \tag{GSE1}$$
+More precisely,
+$$v_q(n)\leq v_q(R_H)\ (q\ne5),\qquad
+  v_5(n)\leq v_5(R_H)+1.$$
+
+Proof. Lemma 10.1 puts all index primes in $H$. Let $q\ne5$ divide $n$
+and suppose $e=v_q(n)>v_q(R_H)$. Lemma 10.2 applies to $(q,e)$:
+the only excluded case is impossible since $4\mid R_H$.
+Choose an odd-exponent prime $p$ in $C_{q,e}$. Its rank $q^e$ cannot
+divide $R_H$, so $p\notin H$. Consequently $p\nmid n$, by Lemma 10.1.
+Since $q^e\mid n$, the original prime-to-index valuation gives
+$v_p(F_n)=h_p$, an odd integer. This contradicts
+$\operatorname{Supp}(d(n))\subseteq H$. The primes two and three
+cannot be this $p$, because they already belong to $H$.
+This proves all non-five bounds, without assuming their depths equal one.
+
+Set $a=v_5(R_H)\geq1$. If $e=v_5(n)\geq a+2$, put $m=n/25$.
+For every $p\in H$, the condition $\rho(p)\mid n$ is equivalent to
+$\rho(p)\mid m$: only the five-exponent has decreased, and it remains
+at least the five-exponent of every rank. For $p\in H\setminus\{2,5\}$
+the valuation formulas then give the same valuation in $F_n$ and $F_m$.
+At five the valuations differ by two. At two, division of an index by
+$25$ preserves its two-valuation and divisibility by three, so the small
+valuation formula gives equality. Outside $H$, primes do not divide $n$
+or $m$. Any such prime occurring in $F_m$ also occurs in $F_n$, with the
+same original valuation, which is even by the square-class hypothesis.
+Other outside primes have even valuation in $F_n$ and zero in $F_m$.
+Thus all valuation parities agree:
+$$[F_n]=[F_m]\quad\hbox{in }\mathcal G.$$
+But $n/m=25$ and $m<n$, contradicting the classical square-class
+exceptions. Hence $e\leq a+1$. These prime-exponent bounds prove GSE1.
+
+The group step is the explicit cancellation of an EVEN shift in the
+valuation vector once rank-divisibility thresholds are preserved.
+No claim is made that $n\mapsto[F_n]$ is a homomorphism.
+
+### 10.5 Original odd-depth support: exact finite candidate sets
+
+For positive $n$ define
+$$U(n)=\{p>5:p\mid F_n,\ p\nmid n,\ h_p\text{ odd}\},$$
+$$T(n)=\{p>5:p\mid F_n,\ h_p\geq3\text{ odd}\}.$$
+For a finite set $S$ of primes greater than five let $H(S)$ be the
+closure of Section 5, and put $R_S=R_{H(S)}$.
+
+**Corollary 10.4 (finite-support divisor set).** One has
+$$\boxed{U(n)\subseteq S\quad\Longrightarrow\quad n\mid5R_S.}
+ \tag{GSE2}$$
+If $\mathcal P(S)=\{n\geq1:F_n\text{ powerful},\ T(n)\subseteq S\}$,
+then
+$$\boxed{\mathcal P(S)=
+ \{n\mid5R_S:F_n\text{ powerful},\ T(n)\subseteq S\}.}\tag{GSE3}$$
+In particular the earlier OSE bound can be combined with the divisor bound:
+$$\#\mathcal P(S)\leq
+ \min\bigl(2^{|H(S)|}-4,\ \tau(5R_S)\bigr).$$
+
+Proof. The existing OSE support descent gives
+$[F_n]\in\mathcal G_{H(S)}$ from $U(n)\subseteq S$; Theorem 10.3 applies.
+In a powerful value, an external odd original depth is at least three,
+so $U(n)\subseteq T(n)$. This proves both inclusions in GSE3 and the
+stated bounds. The $2^{|H|}-4$ estimate is the earlier square-class
+count, not newly claimed here.
+
+**Proposition 10.5 (an exact finite procedure).** Both the set
+$\{n\geq1:U(n)\subseteq S\}$ and $\mathcal P(S)$ can be computed by
+examining the divisors of $5R_S$. Complete factorization of those large
+Fibonacci values is unnecessary.
+
+Proof. Compute the finite closure and its ranks, then factor $5R_S$ and
+enumerate its divisors. Every such divisor is supported in $H(S)$.
+For each candidate $n$, compute $F_n$ and remove all powers of primes
+in $H(S)$, giving a positive remaining integer $Z_n$. An integer square
+root decides whether $Z_n$ is square. If it is not, the candidate fails
+the necessary kernel-support condition. If it is, every outside factor
+has even valuation and is prime to $n$, so it has even original depth.
+Hence all members of $U(n)$ and $T(n)$ belong to $H(S)$ and can be
+checked individually using the known ranks and $h_p$ there. Powerfulness
+holds exactly when none of the removed positive exponents equals one;
+the outside exponents are already even. This decides both sets.
+This is a termination statement with explicit cutoff $5R_S$, not a
+polynomial-time bound. Ranks, closure and the cutoff may still be large.
+
+For the specified set $S=\{13\}$, its closure is
+$H(S)=\{2,3,5,7,13\}$ and $R_S=840$. The procedure has 48 candidate
+divisors of 4200. Exact evaluation gives
+$$\{n\geq1:U(n)\subseteq\{13\}\}
+ =\{1,2,3,4,5,6,7,12\}.$$
+The completeness of this finite certificate uses GSE2, rather than a
+freely chosen scan cutoff. Thirteen is not asserted to be WSS.
+
+### 10.6 Uniform escape in terms of the largest allowed original prime
+
+For an integer $Q\geq5$ define
+$$Y_Q=\max\left(5,\left\lfloor\frac{Q+1}{2}\right\rfloor\right),
+ \qquad L(Y)=\operatorname{lcm}(1,2,\ldots,Y).$$
+
+**Theorem 10.6 (uniform lcm escape).** For every positive $n$,
+$$\boxed{U(n)\subseteq\{p:p\leq Q\}
+ \quad\Longrightarrow\quad n\mid10L(Y_Q).}\tag{GSE4}$$
+Equivalently, if $n\nmid10L(Y_Q)$, there is a prime $p>Q$ such that
+$$p\mid F_n,\qquad p\nmid n,\qquad h_p\text{ is odd}.$$
+If $F_n$ is powerful, that same witness has odd $h_p\geq3$ and is WSS.
+
+Proof. Let $H_Q$ consist of all primes at most $Q$. It is rank-closed
+and contains $H(S)$ for $S=\{p:5<p\leq Q\}$; in fact this seed is
+already $H_Q$. For $p>5$ in $H_Q$, the relevant bound $p-(5/p)$ has
+form $2k$ with $1\leq k\leq Y_Q$. Hence $\rho(p)\mid2L(Y_Q)$.
+The ranks three, four and five at the small primes divide this integer
+too. It follows that $R_{H_Q}\mid2L(Y_Q)$. Apply GSE2 to obtain GSE4.
+The remaining assertions are its contrapositive and the definition of
+powerfulness. The existence of a powerful $F_n$ with the displayed
+nondivisibility is not assumed or proved by this implication.
+
+**Corollary 10.7 (size growth of an actual external odd-depth witness).**
+Set $P_U(n)=\max(\{5\}\cup U(n))$. Then
+$$\log n\leq\log10+\psi(Y_{P_U(n)}),\qquad
+ \liminf_{n\to\infty}\frac{P_U(n)}{\log n}\geq2.\tag{GSE5}$$
+Here $\psi(Y)=\log L(Y)$ is the Chebyshev function.
+
+Proof. Apply GSE4 with $Q=P_U(n)$ and take logarithms. The bound implies
+$P_U(n)\to\infty$ as $n\to\infty$. The classical prime number theorem
+in the form $\psi(Y)\sim Y$ and $Y_Q\sim Q/2$ give the liminf.
+No optimality claim is made for the constant two. On any unbounded
+sequence of powerful Fibonacci indices, $P_U(n)>5$ eventually and
+is the size of an original odd-super-depth WSS factor. This is a
+conditional application to that sequence, not a proof that it exists.
+
+### 10.7 Group comparison and the unremoved WSS obligation
+
+The group $\mathcal G_H$ keeps parity of original and transported
+valuations, while the rank thresholds keep their actual index support.
+Lemma 10.2 supplies new support in the layers; Theorem 10.3 forces a
+forbidden repeated square class if an exponent remains too large.
+The outcome is an explicit divisor bound, rather than just the finite
+cardinality $|\mathcal G_H|$.
+
+A different group occurs in a first lift at an odd prime. For a fixed
+return matrix $g=I+pA$ modulo $p^2$,
+$$g^k=I+kpA\pmod{p^2}.$$
+If $A$ is nonzero modulo $p$, then $g^k=I$ exactly when $p\mid k$.
+Thus a zero sum among copies of this one defect merely multiplies the
+index by $p$. It does not make the original defect vanish. This is the
+already-known local lifting mechanism; a cyclic zero-sum theorem alone
+cannot provide the missing original WSS witness.
+
+Theorem 10.3, its cutoff and its original-depth escape corollaries are
+ordinary deductions using the classical inputs stated in 10.1. They do
+not decide the whole WSS zero set or exclude every $P^2Q^3$ golden block.
+The square-class theorem is a separate formalization prerequisite.
+The prime-power layer statement for primes at least seven and OSE's
+support descent retain their earlier repository attribution.
+
+## 追加锚（本行以下为增补区）
