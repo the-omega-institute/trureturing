@@ -69154,3 +69154,326 @@ $$
 本推论是既有接口的组合推导（repo-derived）：416.1、417.1、421.1、430.3、435.2、436.1–436.2 均取自本卷[固定版本 40fb7ec023342614dec1c13b19dd925932763dc9](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/docs/develop/theory/QUANTUM-REALITY.md)。实闭域判定沿用 435–436 所引的量词消去工具。另仅使用[已发表第 438 节](https://github.com/the-omega-institute/trureturing/blob/d0c78e8e3ccca744b7cb96f8b56ce7e6093e6afb/docs/develop/theory/QUANTUM-REALITY.md)中严格内部的支撑与恢复值连续性，不依赖其端点正则性。以上为纸面推导，不作机器形式验证或原创优先权声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 440. 同一三结果恢复实验的二次系统误差与一次记录误差
+
+第 415 节的装置在校准点精确恢复全部未知输入。本节固定这套装置，改变实际制备参数：对实际结果求和后的系统误差是二次的，而保留同一实验的实际经典结果，在中央校准点已有一次误差。两种误差比较不同的输出，所用仪器与反馈完全相同。
+
+**定义 440.1（固定校准、完整仪器与两种输出）。** 令
+
+$$
+\begin{aligned}
+S&=\mathbb C^5,&
+R_2&=(\mathbb C^2)^{\otimes2}=W_2\oplus\mathbb C e_-,\\
+e_0&=|00\rangle,&
+e_1&=(|01\rangle+|10\rangle)/\sqrt2,\\
+e_2&=|11\rangle,&
+e_-&=(|01\rangle-|10\rangle)/\sqrt2,\\
+W_2&=\operatorname{span}\{e_0,e_1,e_2\},&
+I&=[\arctan(1/\sqrt2),\arctan\sqrt2],\qquad
+\omega=e^{2\pi i/3}.
+\end{aligned}
+$$
+
+保留第 413 节在 $r=\tan\theta$ 时的确切 ket 代表，实际制备等距映射为
+
+$$
+\begin{aligned}
+q_1(\theta)&=e_0,\qquad q_2(\theta)=e_2,\\
+q_{3+j}(\theta)&=\cos^2\theta\,e_0
+ +\sqrt2\sin\theta\cos\theta\,\omega^j e_1
+ +\sin^2\theta\,\omega^{2j}e_2\quad(j=0,1,2),\\
+J_\theta|i\rangle&=|i\rangle\otimes q_i(\theta),\qquad \theta\in I.
+\end{aligned}
+$$
+
+固定校准值 $u\in I$，任选第 413 节在 $r=\tan u$ 的一个归一化平衡见证 $b$。除去无关的共同相位，可写成
+
+$$
+b=\frac{e_0+e^{-i\beta}e_1+e^{-i\gamma}e_2}{\sqrt3},\qquad
+\sqrt2 e^{i(\beta+\gamma)}
+ +\sqrt2\tan^2u\,e^{i(2\gamma-\beta)}+\tan u=0.
+$$
+
+第 413 节的相位闭合判据保证整个闭区间内存在这样的 $b$。置 $De_\ell=\omega^\ell e_\ell$、$b_a=D^a b$，其中 $a=0,1,2$。这些向量在 $W_2$ 内正交归一，因为
+
+$$
+\langle b_a|b_c\rangle
+ =\frac13\sum_{\ell=0}^2\omega^{(c-a)\ell}
+ =\delta_{ac}.
+$$
+
+在完整四维 $R_2$ 上保持第 415 节的三个实际投影与仪器：
+
+$$
+\begin{aligned}
+Q_0&=|b_0\rangle\langle b_0|+|e_-\rangle\langle e_-|,\\
+Q_1&=|b_1\rangle\langle b_1|,\qquad
+Q_2=|b_2\rangle\langle b_2|,\\
+\mathcal I_a(Z)&=Q_aZQ_a,\qquad
+\sum_{a=0}^2Q_a=I_{R_2}.
+\end{aligned}
+$$
+
+两份原始记录联合可访问；在 $J_\theta$ 之后先作该记录测量，再按实际标签作终端系统酉反馈，接受全部三个结果。令
+
+$$
+\begin{aligned}
+h_{ai}(\theta)&=\langle b_a|q_i(\theta)\rangle,\\
+K_a(\theta)&=\operatorname{diag}\bigl(h_{a1}(\theta),\ldots,h_{a5}(\theta)\bigr),\\
+U_a(u)&=\operatorname{diag}\bigl(\sqrt3\,\overline{h_{a1}(u)},\ldots,
+                              \sqrt3\,\overline{h_{a5}(u)}\bigr),\\
+A_a(\theta)&=U_a(u)K_a(\theta).
+\end{aligned}
+$$
+
+两极的响应模长不变，纬线的响应仅将指标 $j$ 换为 $j-a\pmod3$，故平衡条件给出 $|h_{ai}(u)|^2=1/3$。因此 $U_a(u)$ 为酉，且 $A_a(u)=I_S/\sqrt3$。仪器与反馈一经选定即不随 $\theta$ 改变；也不要求各 $u$ 的见证选择连续或光滑。
+
+为明确被取迹的量子输出与被保留的经典输出，令 $C=\mathbb C^3$，其指定基 $\{|a\rangle_C\}$ 记录实际结果，并定义
+
+$$
+\begin{aligned}
+B_a(\theta)&=(U_a(u)\otimes Q_a)J_\theta:S\longrightarrow S\otimes R_2,\\
+\widehat{\mathcal Q}_{u,\theta}(X)
+ &=\sum_{a=0}^2|a\rangle\langle a|_C\otimes
+                B_a(\theta)XB_a(\theta)^\dagger,\\
+\mathcal Q_{u,\theta}(X)
+ &:=\operatorname{Tr}_{R_2}\widehat{\mathcal Q}_{u,\theta}(X)
+   =\sum_{a=0}^2|a\rangle\langle a|_C\otimes A_a(\theta)XA_a(\theta)^\dagger,\\
+\Phi_{u,\theta}(X)
+ &:=\operatorname{Tr}_C\mathcal Q_{u,\theta}(X)
+   =\sum_{a=0}^2 A_a(\theta)XA_a(\theta)^\dagger.
+\end{aligned}
+$$
+
+这里 $\widehat{\mathcal Q}$ 的输出次序是 $C\otimes S\otimes R_2$。由于 $Q_aq_i(\theta)=h_{ai}(\theta)b_a$，上述取迹等式对全部矩阵成立。反对称分量对所有已制备输入诱导零映射，但仍在实际 $Q_0$ 中，并与其余分量共用同一个 $U_0(u)$。因
+
+$$
+\sum_a A_a(\theta)^\dagger A_a(\theta)
+ =\operatorname{diag}\left(\sum_a|h_{ai}(\theta)|^2\right)_{i=1}^5=I_S,
+$$
+
+两种输出都是通道，总接受概率对每个输入恰为一。失配时单个标签的概率可以依赖输入。$C$ 是指定测量的经典结果寄存器，不是原始四维 $R_2$，也不代表未指定的其他观察者记忆。
+
+沿用定义 395.1 的未折半范数：对任意线性映射 $T$，
+
+$$
+\|T\|_\diamond
+ =\sup_{\dim F<\infty}\ \sup_{X\ne0}
+   \frac{\|(\operatorname{id}_F\otimes T)(X)\|_1}{\|X\|_1},
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}.
+$$
+
+参考 $F$ 始终不被操作。令 $\mathcal D(C)$ 为 $C$ 上的密度矩阵集合，定义
+
+$$
+\begin{aligned}
+\varepsilon_S(u,\theta)&=\|\Phi_{u,\theta}-\operatorname{id}_S\|_\diamond,\\
+\varepsilon_C(u,\theta)&=\inf_{\tau\in\mathcal D(C)}
+ \|\mathcal Q_{u,\theta}-\mathcal T_\tau\|_\diamond,
+ &\mathcal T_\tau(X)&=\tau\otimes X.
+\end{aligned}
+$$
+
+这里允许任意 $\tau$，包括有非对角元的态；它可依赖 $\theta,u$ 与已固定的装置，但必须对所有未知输入相同。
+
+**定理 440.2（同一装置的两种误差阶）。** 在定义 440.1 的设置下，令 $\delta=\theta-u$、$x=\sin^2\delta$。对所有 $u,\theta\in I$ 及每个允许的平衡见证，
+
+$$
+\boxed{\quad
+x\le\varepsilon_S(u,\theta)\le4x-x^2\le4\delta^2,\qquad
+\varepsilon_C(u,\theta)\le2\sqrt2\,|\sin\delta|.
+\quad}
+$$
+
+固定 $u=\pi/4$ 时，每个这样的固定装置还满足
+
+$$
+\boxed{\quad
+\liminf_{\substack{\theta\to u\,,\ \theta\ne u\\\theta\in I}}
+ \frac{\varepsilon_C(u,\theta)}{|\theta-u|}
+ \ge\frac12\sqrt{\frac76}>0.
+\quad}
+$$
+
+于是同一实验在该校准点有 $\varepsilon_S=\Theta(\delta^2)$ 与 $\varepsilon_C=\Theta(|\delta|)$。
+
+证明。先对求和后的系统通道取一个数学 Kraus 环境 $E=\mathbb C^3$，写
+
+$$
+V_\theta=\sum_{a=0}^2|a\rangle_E\otimes A_a(\theta):S\longrightarrow E\otimes S,
+\qquad c=\frac{|0\rangle+|1\rangle+|2\rangle}{\sqrt3}.
+$$
+
+完备性给出 $V_\theta^\dagger V_\theta=I_S$。令 $P_{\rm pole}=|1\rangle\langle1|+|2\rangle\langle2|$、$P_{\rm lat}=I_S-P_{\rm pole}$，并取交叠算子 $G=(\langle c|\otimes I_S)V_\theta$。它是对角矩阵，且
+
+$$
+\begin{aligned}
+G_{ii}&=\sum_a\overline{h_{ai}(u)}h_{ai}(\theta)
+       =\langle q_i(u)|q_i(\theta)\rangle,\\
+\langle q_{3+j}(u)|q_{3+j}(\theta)\rangle
+ &=\cos^2u\cos^2\theta+2\sin u\cos u\sin\theta\cos\theta
+   +\sin^2u\sin^2\theta\\
+ &=(\cos u\cos\theta+\sin u\sin\theta)^2=1-x,\\
+G&=P_{\rm pole}+(1-x)P_{\rm lat},\qquad
+\|G\|=1,\quad \|I_S-G\|=x.
+\end{aligned}
+$$
+
+这里 $\|\cdot\|$ 是算子范数。分解 $V_\theta=|c\rangle\otimes G+W$，则 $(\langle c|\otimes I_S)W=0$，从而
+
+$$
+\begin{aligned}
+W^\dagger W&=I_S-G^2=(2x-x^2)P_{\rm lat},\\
+\Phi_{u,\theta}(X)&=GXG+\mathcal R(X),\qquad
+\mathcal R(X)=\operatorname{Tr}_E(WXW^\dagger).
+\end{aligned}
+$$
+
+环境取迹使两个交叉项消失，$\mathcal R$ 完全正。其完整 diamond 范数恰为
+
+$$
+\|\mathcal R\|_\diamond=\|W^\dagger W\|=2x-x^2.
+$$
+
+具体地，对任何有限参考和任意矩阵 $X$，左右乘法的迹范数界给出上界 $\|W\|^2\|X\|_1$；部分迹收缩可直接由对偶式
+$\|\operatorname{Tr}_E Y\|_1=\sup_{\|H\|\le1}|\operatorname{Tr}[(I_E\otimes H)Y]|\le\|Y\|_1$
+得到。取 $W^\dagger W$ 的单位最大特征向量作纯态输入，$\mathcal R$ 输出为正，其迹达到 $\|W^\dagger W\|$，故有等号。这也说明不需要假定 $\mathcal R$ 保迹。
+
+另一方面，恒等式 $GXG-X=(G-I_S)XG+X(G-I_S)$ 在张量任意参考后仍成立，故
+
+$$
+\|\operatorname{Ad}_G-\operatorname{id}_S\|_\diamond\le2x,
+\qquad \operatorname{Ad}_G(X)=GXG.
+$$
+
+加上完全正余项即得 $4x-x^2$ 的上界。两极的校正幅度向量均为 $c$，任一纬线的幅度向量与 $c$ 的交叠为 $1-x$，故极点与纬线之间的相干元被乘以 $1-x$，而其布居保持不变。在输入 $|\psi\rangle=(|1\rangle+|3\rangle)/\sqrt2$ 上，输出误差的非零块为
+
+$$
+\begin{pmatrix}0&-x/2\\-x/2&0\end{pmatrix},
+$$
+
+其迹范数为 $x$，给出下界。这些估计直接控制每个参考扩张，不经过 Choi 保真度推断。对 $E$ 中方向 $c$ 的分解只用于求和通道的证明；数学 Kraus 变换没有产生新的实际标签或控制权限。
+
+保留实际标签的上界也可在相同固定幅度上得到。由于系统基向量彼此正交、各 $U_a(u)$ 的对角元模长为一，且 $\{b_a\}$ 完备，
+
+$$
+\begin{aligned}
+\|V_\theta-V_u\|^2
+ &=\max_i\sum_a|h_{ai}(\theta)-h_{ai}(u)|^2\\
+ &=\max_i\|q_i(\theta)-q_i(u)\|^2=2x.
+\end{aligned}
+$$
+
+在指定基上将 $E$ 去相干并标识为 $C$，$V_\theta X V_\theta^\dagger$ 就变为 $\mathcal Q_{u,\theta}(X)$；在校准点则为 $\lambda_C\otimes X$，其中 $\lambda_C=I_C/3$。对任意参考，展开
+
+$$
+V_\theta X V_\theta^\dagger-V_uXV_u^\dagger
+ =(V_\theta-V_u)XV_\theta^\dagger
+  +V_uX(V_\theta-V_u)^\dagger
+$$
+
+给出迹范数上界 $2\|V_\theta-V_u\|\|X\|_1$。去相干是三个相位酉共轭的平均，故亦收缩迹范数。选取合法的 $\tau=\lambda_C$ 即得 $\varepsilon_C\le2\sqrt2|\sin\delta|$。
+
+现在固定 $u=\pi/4$，并始终保持同一 $b$。完整相位方程变为
+
+$$
+\sqrt2 e^{i(\beta+\gamma)}+\sqrt2 e^{i(2\gamma-\beta)}+1=0.
+$$
+
+前两项之和的平方模为一，所以
+
+$$
+4+4\cos(\gamma-2\beta)=1,
+\qquad \cos(\gamma-2\beta)=-\frac34.
+$$
+
+对纬线 $j$ 和实际标签 $a$，置 $\ell=j-a\pmod3$、$t_\ell=2\pi\ell/3$，其概率为 $p_a(\theta)=|f_{j-a}(\theta)|^2$，其中
+
+$$
+\begin{aligned}
+f_\ell(\theta)
+ &=\frac{\cos^2\theta+\sqrt2\sin\theta\cos\theta\,e^{i\beta}\omega^\ell
+                  +\sin^2\theta\,e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+f_\ell(u)&=\frac{1+\sqrt2 e^{i\beta}\omega^\ell+e^{i\gamma}\omega^{2\ell}}{2\sqrt3},
+\qquad
+f'_\ell(u)=\frac{-1+e^{i\gamma}\omega^{2\ell}}{\sqrt3},\\
+v_\ell:=\left.\frac{d}{d\theta}|f_\ell(\theta)|^2\right|_{\theta=u}
+ &=\frac{\sqrt2}{3}
+   \bigl[\cos(\gamma-\beta+t_\ell)-\cos(\beta+t_\ell)\bigr].
+\end{aligned}
+$$
+
+三点 Fourier 正交性给出
+$\sum_\ell\cos(\alpha+t_\ell)=0$ 以及
+$\sum_\ell\cos(\alpha+t_\ell)\cos(\zeta+t_\ell)=\tfrac32\cos(\alpha-\zeta)$，因而
+
+$$
+\sum_\ell v_\ell=0,\qquad
+\sum_\ell v_\ell^2
+ =\frac23[1-\cos(\gamma-2\beta)]=\frac76.
+$$
+
+这个不变量适用于完整相位方程的每个解。设 $\lambda=(1/3,1/3,1/3)$；极点基态对所有 $\theta$ 的实际标签分布都是 $\lambda$，而该纬线基态的分布为
+
+$$
+p(\theta)=\lambda+\delta\,(v_{j-a})_{a=0}^2+O(\delta^2).
+$$
+
+对任意候选 $\tau$，记 $t_a=\langle a|\tau|a\rangle$。分别代入极点和纬线这两个输入，再取系统迹并对 $C$ 去相干，误差不会增大，所以
+
+$$
+\begin{aligned}
+\|\mathcal Q_{u,\theta}-\mathcal T_\tau\|_\diamond
+ &\ge\max\{\|\lambda-t\|_1,\|p(\theta)-t\|_1\}\\
+ &\ge\tfrac12\|p(\theta)-\lambda\|_1.
+\end{aligned}
+$$
+
+该式对每个 $\theta$、每个 $\tau$ 同时成立，故可先取 $\tau$ 的下确界，再除以 $|\delta|$ 并取下极限，得到
+
+$$
+\liminf_{\theta\to u,\,\theta\ne u}
+ \frac{\varepsilon_C(u,\theta)}{|\delta|}
+ \ge\frac12\sum_\ell|v_\ell|
+ \ge\frac12\sqrt{\sum_\ell v_\ell^2}
+ =\frac12\sqrt{\frac76}.
+$$
+
+这里的 $1/2$ 来自两个输入之间的三角不等式，不是范数折半；也没有对最优 $\tau$ 随参数的选择作正则性假设。证毕。
+
+**命题 440.3（仅改代表相位的物理边界）。** 保持定义 440.1 的仪器、反馈及恒等目标不变，仅将实际制备中的第一极点改成
+
+$$
+\widetilde q_1(\theta)=e^{i(\theta-u)}e_0,
+\qquad \widetilde q_i(\theta)=q_i(\theta)\quad(i\ne1).
+$$
+
+尽管每条记录射线不变，在 $|\psi_{12}\rangle=(|1\rangle+|2\rangle)/\sqrt2$ 上的系统恢复误差却恰为
+
+$$
+\left\|\widetilde\Phi_{u,\theta}(|\psi_{12}\rangle\langle\psi_{12}|)
+       -|\psi_{12}\rangle\langle\psi_{12}|\right\|_1
+ =2|\sin(\delta/2)|.
+$$
+
+证明。令 $Z_\delta=\operatorname{diag}(e^{i\delta},1,1,1,1)$，则
+$\widetilde J_\theta=J_\theta Z_\delta$、$\widetilde A_a=A_a Z_\delta$。原来的 $\Phi_{u,\theta}$ 在两极子空间上为恒等，故该输入的非对角元由 $1/2$ 变成 $e^{i\delta}/2$；误差矩阵的特征值是 $\pm|e^{i\delta}-1|/2$，即得所示迹范数。它在 $\delta=0$ 附近为一次量，因而不能沿用二次系统界。
+
+这改变了受控制备中两个系统分量的相对相位。若作联合表示运输，就必须同时运输制备、反馈与理想比较映射；仅以当前输入表示变换为例，目标也应变为 $\operatorname{Ad}_{Z_\delta}$，并有
+
+$$
+\|\Phi_{u,\theta}\circ\operatorname{Ad}_{Z_\delta}
+      -\operatorname{Ad}_{Z_\delta}\|_\diamond
+ =\|\Phi_{u,\theta}-\operatorname{id}_S\|_\diamond.
+$$
+
+等号由在 diamond 范数定义中对输入作可逆酉替换得到。因此，固定其他装置与目标的物理重定相，和对同一实验的联合表示运输，是不同的比较。证毕。
+
+系统边际中的一次项消失，并不意味着同一实验的经典结果也只在二次阶变化：结果分布已能在一次阶区分极点与纬线输入。只使用恢复后系统及未操作参考的后续通道可继承 $\varepsilon_S$ 上界；继续读取实际标签的比较须使用 $\mathcal Q$。本节的记录下界固定在 $u=\pi/4$，不推广为所有校准点或不同装置混合的下界，也不主张常数最优。本构造使用联合访问，不给出 LOCC 或局部协议结论，也不改动第 439 节的结论。
+
+本节的直接来源为[固定版本的本卷](https://github.com/the-omega-institute/trureturing/blob/c17f504816be4a1478f05c3de12ae9c7425d77c0/docs/develop/theory/QUANTUM-REALITY.md)：第 413、415 节提供代表与完整仪器，定义 395.1 提供求和输出及未折半范数，命题 395.2 只给必要 Choi 检验；ST28–ST31 已区分结果信息、恢复权限与最终系统输出，其半 diamond 约定不用于本节数值。
+
+所用成熟工具与接口见 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/pdf/quant-ph/0209025v1)，Theorem 1、Proposition 2（PDF 第 4–5 页）：纯初始环境的测量实现通道分解，固定 Kraus 分支的精确校正要求 $K_a^\dagger K_a=c_aI$，同维时可用酉反馈。完全正余项的范数恒等式见 Kretschmann–Schlingemann–Werner，[*A Continuity Theorem for Stinespring's Dilation*, arXiv:0710.2495v1](https://arxiv.org/pdf/0710.2495v1)，第 2–3 页的 $\|T\|_{\rm cb}=\|T(I)\|=\|V\|^2$；在有限维取迹对偶即适用于本节不必保迹的 $\mathcal R$。同作者 [*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*, quant-ph/0605009v1](https://arxiv.org/pdf/quant-ph/0605009v1)，第 6 页式 (15)–(16) 给出固定共同等距表示的两倍范数上界。上述两个范数步骤在证明中已对全部有限参考直接展开；这里的具体误差阶还依赖确切实重叠与实际标签概率的计算。
+
+## 追加锚（本行以下为增补区）
