@@ -17,7 +17,7 @@ internal sealed class ConjugateHankelSignatureDocument : IScribeDocumentDefiniti
                 F.Id("sigPos"), Open, F.Id("H"), Close, Minus,
                 F.Id("sigNeg"), Open, F.Id("H"), Close, Eq,
                 F.Id("sumRealNodeSigns"), Open, F.Id("s"), Comma, F.Id("w"), Close))),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Zeros/basu2003algorithms")),
             Blocks(
                 Paragraph(Text("Let s be any finite set of complex numbers closed under conjugation, and let d be any natural number at least the cardinality of s. Assign each node z a complex weight w(z), with w(conjugate z) equal to conjugate w(z). For i,j in Fin d, define H(i,j) as the real part of the sum over z in s of w(z) times z to the power i+j. This real Hankel matrix is symmetric.")),
                 Paragraph(Text("The positive index minus the negative index of the actual quadratic form associated to H equals the sum over real nodes r in s of the sign of the real part of w(r). Here the sign is one for a positive real part, minus one for a negative real part, and zero when that real part vanishes. The equality is an integer equality; the two natural inertia indices are individually cast to integers before subtraction. Conjugation compatibility makes every real-node weight real.")),

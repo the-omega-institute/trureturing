@@ -10,7 +10,7 @@ $$sigPos(H)-sigNeg(H)=sumRealNodeSigns(s,w)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/ConjugateHankelSignature.weighted_hankel_signature` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Saugata Basu; Richard Pollack; Marie-Françoise Roy (2003). *Algorithms in Real Algebraic Geometry*. DOI: [10.1007/978-3-662-05355-3](https://doi.org/10.1007/978-3-662-05355-3). URL: <https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf>.
 
 *Commentary.*
 
