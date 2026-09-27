@@ -167,17 +167,11 @@ theorem finite_detection_survival_limit {d : ℕ} {ι : Type*} [Fintype ι]
         exact ih (r v)
   have hr_powers : ∀ N, ‖r ^ N‖ ≤ 1 := by
     intro N
-    induction N with
-    | zero =>
-        rw [pow_zero]
-        change ‖ContinuousLinearMap.id ℂ Dᗮ‖ ≤ 1
-        exact ContinuousLinearMap.norm_id_le
-    | succ N ih =>
-        rw [pow_succ]
-        calc
-          ‖r ^ N * r‖ ≤ ‖r ^ N‖ * ‖r‖ := norm_mul_le _ _
-          _ ≤ 1 * 1 := mul_le_mul ih hrnorm (norm_nonneg _) zero_le_one
-          _ = 1 := mul_one _
+    rcases N with _ | N
+    · rw [pow_zero]
+      change ‖ContinuousLinearMap.id ℂ Dᗮ‖ ≤ 1
+      exact ContinuousLinearMap.norm_id_le
+    · exact (norm_pow_le' r N.succ_pos).trans (pow_le_one₀ (norm_nonneg r) hrnorm)
   have hrd_strict : ∀ v : Dᗮ, v ≠ 0 → ‖(r ^ d) v‖ < ‖v‖ := by
     intro v hv
     have hle : ‖(r ^ d) v‖ ≤ ‖v‖ := by
@@ -278,15 +272,11 @@ theorem finite_detection_survival_limit {d : ℕ} {ι : Type*} [Fintype ι]
   have hr_pow_zero : Tendsto (fun N => r ^ N) atTop (𝓝 0) := by
     have hrd_powers : ∀ N, ‖(r ^ d) ^ N‖ ≤ ‖r ^ d‖ ^ N := by
       intro N
-      induction N with
-      | zero =>
-          rw [pow_zero]
-          change ‖ContinuousLinearMap.id ℂ Dᗮ‖ ≤ 1
-          exact ContinuousLinearMap.norm_id_le
-      | succ N ih =>
-          rw [pow_succ, pow_succ]
-          exact (norm_mul_le _ _).trans
-            (mul_le_mul_of_nonneg_right ih (norm_nonneg (r ^ d)))
+      rcases N with _ | N
+      · rw [pow_zero, pow_zero]
+        change ‖ContinuousLinearMap.id ℂ Dᗮ‖ ≤ 1
+        exact ContinuousLinearMap.norm_id_le
+      · exact norm_pow_le' (r ^ d) N.succ_pos
     rw [tendsto_zero_iff_norm_tendsto_zero]
     apply squeeze_zero (fun N => norm_nonneg (r ^ N))
     · intro N
