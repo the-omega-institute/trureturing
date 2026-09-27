@@ -49079,3 +49079,418 @@ Thus this finite contribution offers two rigorously specified choices for future
 Beresnevich 的解析流形有理点结果要求不包含于真仿射子空间的非退化性，并控制固定几何中的 Lebesgue 覆盖和下计数。当前单一隐藏对的响应在高维中心坐标中恰落在一条仿射直线上；原文固定几何常数和格子下界也不能自动用于随 $Q$ 变化、指数扁平且带原子条件律的响应。本文直接证明有限混合、整数行列式和强凸性所需的估计，保留这些经典工具的归属。具体原文版本与迁移边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。有限检索不构成全球原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 166. 原始计数零点的显式增长窗口与统一相位反演
+
+第 164 章的总轮廓延拓在每个固定紧域内成立。要让零点指标的范围随原数组增长，必须同时控制能量预解式、低计数混合、轮廓间隙、相位逆映射和原始选择计数误差。下面给出一个对每条原许可参数序列都发散的显式包络；没有增加噪声衰减或 $t$ 增长速率的条件。
+
+关键区别在于三个成本分别是条件能量偏移 $\eta R^2$、复作用量 $\mathcal T R^4$ 和原计数正包络 $\mathcal T R^6$。各自的误差由对应的余量支付，因而允许 $t\to\infty$ 任意缓慢。完整有限非中心剖面仍直接决定每个预测零点，四次近似只用于建立统一域与误差界。结果给出增长域内的同时简单零点、精确计数和 $O(t^{-2})$ 未缩放位置误差；最优增长范围和域外零点仍未确定。以下为普通数学推导，未作 Lean 认证。
+
+### 166.1 显式增长包络与原始零点的同时计数
+
+**定理 166.1（增长包络内原始零点的同时定位）。** 保留完整的大小为 $q$ 的原选择律 $P_x$、计数向量、外部标签、取整规则、原中心 $\mu$ 和实际偏移 $e$。定义
+
+$$
+ \delta=Q^{-1/2},\ B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,
+$$
+
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,\quad
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad H_y=V+\sqrt\delta\,y.
+ \tag{166.1}
+$$
+
+沿用 $a=(2V)^{-1}+\eta$、$\eta\to0$、$t=\eta/\sqrt\delta\to\infty$，其中 $t$ 可任意缓慢增长。正噪声 $\sigma\to0$ 满足原条件 $\limsup Q^{-3}\log(1/\sigma)<c_q/2$。完整有限和为
+
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)e^{aD^2+hD-(T-y)^2/(2\sigma^2)}.
+ \tag{166.2}
+$$
+
+定义经验尺度 $m$ 及显式增长包络：
+
+$$
+ m=\sqrt{2V^4/C_2},\quad r_s=m\sqrt{\eta/\delta},\quad
+ h_s=\eta r_s,\quad \mathcal T=h_sr_s=m^2t^2,
+$$
+
+$$
+ b_Q=\eta+\sigma^2+t^{-1}+\sqrt\delta,\qquad
+ R_Q=b_Q^{-1/1000},\qquad \Omega_Q=R_Q^4=b_Q^{-1/250}.
+ \tag{166.3}
+$$
+
+这些公式用于 $b_Q<1$ 以后。每条原许可序列均有 $b_Q\to0$、$\Omega_Q\to\infty$，无需另取未指定的对角子序列。特别地，
+
+$$
+ R_Q\le t^{1/1000},\quad R_Q\le\eta^{-1/1000},\quad
+ R_Q\le\delta^{-1/2000},\quad
+ b_QR_Q^{12}=b_Q^{988/1000}\longrightarrow0.
+ \tag{166.4}
+$$
+
+物理统计量 $T$ 与作用量尺度 $\mathcal T$ 不同。$R_Q$ 是荷变量区域的倍数，物理输出限制为固定紧集 $|y|\le Y$。
+
+All uniform constants below depend only on the inherited common tight class and Y. On that class c<=V,C2<=C, v_*<=C delta, at least c/delta variances belong to[c delta,C delta], n_g<=C delta^-4, ||e||<=C delta^5, and the original strict noise reserve holds. The exact retained high/low split is used. The original data statement is obtained by exhausting these same classes, separately for pair and path and uniformly over deterministic size-q supports. No deterministic empirical m limit, extra eta/sigma rate or independence of empirical choices is assumed.
+
+Let g and L=log(g/g(0)) be the faithful finite profile of Section 166.2, now proved nonzero on growing disks. Let r_I(h) be its unique analytic saddle near the branch selected in Chapters 160 and 164, and set
+
+$$
+ q_0=h-L'(0),\quad K=-L''(r_I),\quad
+ A_0=g(0)/q_0,\quad
+ A_I=g(0)e^{L(r_I)-hr_I}\sqrt{2\pi/K},
+$$
+
+$$
+ \Theta_Q(h)=-L(r_I)+hr_I-\log q_0
+                         -\tfrac12\log(2\pi/K).
+ \tag{166.5}
+$$
+
+分支从实局部共存场连续延拓，其合法性在下文证明。$h_0$ 为第 160、164 章的实际等区域质量场，$d$ 为实际区域均值间隙，$z=d(h-h_0)$。有限预测保留这两个实际量。
+
+For every fixed A>0 put
+
+$$
+ n_Q=\left\lfloor{\mathcal T\Omega_Q\over2\pi}\right\rfloor+1,
+ \quad \mathfrak D_Q=\Theta_Q^{-1}
+ \{\zeta:|\Re\zeta|<A,\ |\Im\zeta|<2\pi n_Q\}.
+ \tag{166.6}
+$$
+
+当 $Q$ 充分大时，该逆映射在包含边界余量的邻域内良定义。原始总量在域内恰有 $2n_Q$ 个零点，均为简单零点，分别标记为 $j=-n_Q,\ldots,n_Q-1$；边界无零点。令
+
+$$
+ \widehat h_j=\Theta_Q^{-1}((2j+1)\pi i),
+$$
+
+则同时有
+
+$$
+ |h_j-\widehat h_j|\le
+ {C\over r_s\mathcal T\,[1+|(2j+1)\pi/\mathcal T|]^{1/4}},
+ \qquad
+ \sup_j|d(h_j-h_0)-d(\widehat h_j-h_0)|\le C/\mathcal T=o(1).
+ \tag{166.7}
+$$
+
+结合上述取整约定，这包含所有满足 $|2j+1|\le\mathcal T\Omega_Q/\pi$ 的指标，超出 $t^2$ 的倍数趋于无穷。预测直接使用精确有限作用量 (166.5)。域外全部零点和最大窗口未由此确定。
+
+### 166.2 完整选择律、有限剖面与不同增长成本
+
+The exact original coefficient identity is
+
+$$
+ P_x(n)=Q_x(n)
+ {[z^{q-k}]\prod_{i\notin J0}(1-p_i+p_i z)
+      \over[z^q]\prod_i(1-p_i+p_i z)},\quad
+ k=\sum_j n_j,\quad BD=k-m_{J0}.
+ \tag{166.8}
+$$
+
+Keep the retained finite coefficients epsilon=B^2/(2d_c) and ell_sel=onehalf log(d_all/d_c), including the original outside labels. For the same high block put V_H=sum_H v_j, v=(v_j)_H, C_H=diag(v), and A_c=C_H-vv^T/V_H. Each EXACT low tuple has its product-binomial probability p_L, charge c_L and energy u_L. Let
+
+$$
+ b_L(r)=-(r+c_L)v/V_H-e_H,
+$$
+
+$$
+ I_L(r)=E_{Z\sim N(0,A_c)}
+ \exp\{- [u_L+\|Z+b_L(r)\|^2-H_y]^2/(2\delta\sigma^2)\},
+$$
+
+$$
+ g(r)=e^{\ell_{sel}+(a-\epsilon)r^2}
+ \sum_{n_L}p_L(n_L)
+ {e^{-(r+c_L)^2/(2V_H)}\over\sqrt{2\pi V_H}} I_L(r).
+ \tag{166.9}
+$$
+
+The expectation is initially real; continuation uses bilinear squares in the exact resolvent below. Actual e is never removed. The full low sum, finite sigma and full H_y stay in the definition used for every root.
+
+The new size accounting is as follows. For |omega|<=2Omega_Q+O(1), the saddle x=r/r_s is O(R_Q), the field h/h_s is O(R_Q^3), the noncentral conditional-energy norm squared is O(eta R_Q^2), the scaled energy saddle |w|delta is O(eta R_Q^2+sqrt(delta)), the charge action is O(mathcalT R_Q^4), and the positive-envelope field cost is O(mathcalT R_Q^6). These are different costs. In particular we do not pay the count return using the smaller oscillatory action cost. Sections 166.3–166.7 prove these bounds jointly, rather than assuming a fixed-disk theorem has uniform constants.
+
+### 166.3 精确能量预解式给出的增长解析圆盘
+
+**命题 166.2（增长解析域与完整低计数混合非零性）。** Write R=R_Q and b=b_Q for this proof. For any fixed constant C0, all estimates in this section hold on |r/r_s|<=C0 R, with constants independent of R. Choose C0 large enough later to contain all charge contours and fixed analytic margins. The exact energy action is
+
+$$
+ \Psi_L(w,r)={\delta\sigma^2w^2\over2}+w(u_L-H_y)
+ -\tfrac12\log\det(I-2wA_c)
+ +w b_L(r)^T(I-2wA_c)^{-1}b_L(r).
+ \tag{166.10}
+$$
+
+The determinant branch is the one equal to zero in its logarithm at w=0. Rank-one interlacing retains the spectral block of A_c, its norm O(delta), and tr A_c^2=delta C2+O(delta^2)+exponentially small terms. For actual lows, their deterministic bounds are those of Chapter 158, exponentially small in Q^3. Define chi=eta R^2+sqrt(delta). Direct resolvent bounds, uniformly on |w|delta<=c0, give
+
+$$
+ \|b_L(r)\|^2\le C\chi,\quad
+ |\Psi'_L(0,r)|\le C\chi,\quad
+ {\Psi''_L(w,r)\over\delta}
+       =2C_2+\sigma^2+O(\chi+\delta+|w|\delta),
+$$
+
+$$
+ |\Psi_L^{(j)}(w,r)|\le C_j\delta^{j-1}(1+\chi),\qquad j\ge3
+ \text{ fixed}.
+ \tag{166.11}
+$$
+
+For example, each central term is bounded by tr A_c^j<=C_j delta^(j-1), and each noncentral term by C_j||b_L||^2 delta^(j-1). These are exact rational-function estimates, not derivatives of an undifferentiated asymptotic remainder. From (166.4), chi->0.
+
+Solving Psi'_L=0 by its linear term gives a contraction on a disk |w|<=C chi/delta: the derivative error after scaling w by chi/delta is O(chi+delta). Its center and radius may depend holomorphically on r; equivalently use one enclosing disk and the usual contraction at the linear root. The inverse derivative is bounded by C/delta. This proves a unique small holomorphic w_L(r) and
+
+$$
+ |w_L|\delta\le C\chi,\quad
+ c\delta\le\Re W_L\le |W_L|\le C\delta,
+ \quad W_L=\Psi''_L(w_L,r),\quad
+ |\Psi_L(w_L,r)|\le C(1+\mathcal T R^4).
+ \tag{166.12}
+$$
+
+All constants are independent of R as long as chi is sufficiently small. This is the first quantitative growing-domain assertion.
+
+The sector contour of Chapter 160 now has uniform constants as well. Fix s0 in(0,1/4), theta=arccos(s0), and small rho>0, independently of Q,R. Use the central segment w=w_L+i tau, |tau|<=rho/delta, bounded connectors and rays w=s exp(+/-i theta), s>=rho/delta. On the rays the determinant block obeys
+
+$$
+ \Re\sum_j[-\tfrac12\log(1-2w a_j)-w a_j]
+ \le-{c\over\delta}\min\{(\delta s)^2,\delta s\},
+ \tag{166.13}
+$$
+
+where a_j are the eigenvalues of A_c. The remaining linear/noncentral part is at most C chi s, including null covariance directions; the finite-noise term is at most -c delta sigma^2 s^2. Since chi->0, the same fixed rho and angle work for the ENTIRE growing charge disk. The connectors have a loss c/delta. On the central line the loss from the exact saddle is c delta tau^2. Every pole remains outside the swept sectors.
+
+For each fixed positive sigma the original real inversion contour can first be bent by Cauchy: at large radius its Gaussian noise term pays the vanishing arcs. Uniform estimates are then obtained from (166.13), not from a sigma-dependent radius. The bent contour is dominated uniformly on compact subsets of the growing charge disk, gives a holomorphic function there, and agrees with the real expectation. Thus the identity theorem supplies the legitimate continuation. There is no extension of a real characteristic-function modulus bound to complex means.
+
+Gaussian inversion at the exact energy saddle gives
+
+$$
+ I_L(r)=\sigma\sqrt\delta\,{e^{\Psi_L(w_L,r)}\over\sqrt{W_L}}
+             [1+\mathcal R_L(r)],\qquad
+ |\mathcal R_L|\le C\delta+P(\delta^{-1})
+                    e^{-c/\delta+C\mathcal T R^4}\le C'\delta.
+ \tag{166.14}
+$$
+
+The last inequality uses delta mathcalT R^4=O(eta^2R^4)->0. For the first, scale tau by sqrt(delta); the normalized cubic coefficient is O(sqrt(delta)), the quartic remainder is O(delta), and the odd cubic integral vanishes on the symmetric central segment. Bounds (166.11) through fixed order supply the same constants for every r in the disk. The central exterior, connectors and rays give the displayed tail. There is no polynomial-Q factor divided by slow t. The nonzero leading factor and |R_L|<1/2 give a holomorphic logarithm and fixed derivatives of the error by Cauchy on unit-width charge-disk margins.
+
+For the low mixture retain actual e_H in the reference c_L=u_L=0. Allow auxiliary complex |c_L|<=sqrt(eta), |u_L|<=eta in (166.10); the same estimates remain valid with changed fixed constants. Cauchy bounds on the logarithm of (166.14) show that its derivatives in these auxiliary variables are bounded by a fixed polynomial in delta^-1 and R. The Gaussian charge factor has the same polynomial logarithmic bounds. Since R<=delta^-1/2000 and the ACTUAL low values are P(Q)e^-b0Q^3, every actual summand divided by the reference is 1+P(Q)e^-b0Q^3 uniformly on the growing disk. The exact positive probabilities sum to 1. Hence their exact mixture is nonzero; no optimal low tuple or complex cancellation is silently discarded. No inverse sigma occurs in this argument.
+
+It follows that g is nonzero and has a single-valued L=log(g/g(0)) on |x|<=C0R, and
+
+$$
+ c_Y\sigma\le g(0)\le C_Y\sigma,\quad
+ \sigma e^{-C(1+\mathcal T R^4)}\le |g(r_sx)|
+                              \le C\sigma e^{C(1+\mathcal T R^4)}.
+ \tag{166.15}
+$$
+
+The sharper bound at zero follows from its O(sqrt(delta)) energy mismatch. These estimates retain the raw physical sigma even if it is exponentially small.
+
+### 166.4 统一作用量控制与保持精确的预测量
+
+Put F_Q(x)=L(r_sx)/mathcalT and F(x)=x^2-x^4/2. On a slightly smaller growing disk, for each j=0,...,6,
+
+$$
+ \sup_{|x|\le C_0R-2}|\partial_x^j(F_Q-F)(x)|
+                  \le C_j b R^8=:E_{Q,j}.
+ \tag{166.16}
+$$
+
+Here and below a fixed enlargement of C0 is used whenever a unit analytic margin is required. The power 8 is a coarse finite-degree bound, not an unspecified constant depending on the disk. We spell out its derivation.
+
+At w=0 the exact mismatch is
+
+$$
+ \Psi'_L(0,r_sx)=\eta A_Qx^2-\sqrt\delta\,y
+              +O(\delta)+O(\sqrt\eta\,\delta^5|x|)+o_{\exp}(1),
+ \quad A_Q=C_2m^2/V^2+O(\delta),
+$$
+
+and Psi''_L(0,r)/delta=2C2+sigma^2+O(eta|x|^2+delta). Taylor's formula at the exact root, justified by (166.11), gives an ACTION estimate with error at most C chi^3/delta:
+
+$$
+ \Psi_L(w_L,r)=-{\Psi'_L(0,r)^2\over2\Psi''_L(0,r)}
+                         +O(\chi^3/\delta).
+ \tag{166.17}
+$$
+
+After division by mathcalT, this error is at most C[eta R^6+sqrt(delta)/t^2]. The leading quartic coefficient is C2/(2C2+sigma^2), differing from 1/2 by O(sigma^2); the finite covariance error contributes O(delta R^4). The output cross term is O(R^2/t), and the bounded base action costs O(t^-2). All these are <=C b R^8. The critical Gaussian charge quadratic cancels with (2V)^-1 r^2 up to the exponentially small high-block defect; finite selection contributes (epsilon/eta)x^2, bounded by C delta^(9/2)R^2 because eta>=sqrt(delta) eventually. Actual e and low terms contribute only the smaller displayed polynomial or exponential errors.
+
+The log-prefactor difference is log(W_L(x)/W_L(0)), not two separate log(delta) terms. It is bounded by C(chi+delta); the inversion errors have bounded logarithms O(delta). Their contribution divided by mathcalT has the required bound. Similarly the common log(sigma) cancels in L. Thus no log Q or inverse-noise term has been discarded relative to slow t^2. This proves the j=0 bound. It holds holomorphically on the enlarged disk, so Cauchy on radius1 gives j<=6 with the SAME R^8 power and fixed j! constants. In particular E_Q=C bR^8 tends to zero on the chosen envelope.
+
+Equation (166.17) is used only to prove (166.16) and domain estimates. It is NEVER substituted for the finite energy saddle in g or for L in (166.5). Terms of size eta mathcalT R^6 or sigma^2 mathcalT R^4 can diverge; the zero predictor retains them exactly.
+
+### 166.5 增长驻点图与定量轮廓几何
+
+Use the radical branch and field map inherited from Chapters 162 and 164,
+
+$$
+ U(\omega)=\sqrt{[1+\sqrt{1-6i\omega}]/3},\quad
+ k(U)=2U-2U^3,\quad
+ A(U)=-U^2+\tfrac32U^4=-i\omega.
+ \tag{166.18}
+$$
+
+Fix a sufficiently small nu>0, independent of Q, as follows. On a fixed neighborhood of omega=0 use Chapter 160's local chart. Choose a fixed omega0>0 inside its overlap with Chapter 164. For real omega>=omega0, write U=alpha-i beta and ell=(1+omega)^1/4. The radical formulas, the positive continuous gaps on [omega0,1], and their explicit limits at infinity give
+
+$$
+ c\ell\le\alpha,\beta,|U|\le C\ell,\quad
+ c\ell^2\le\gamma(U):=\tfrac32\alpha^2-3\beta^2-1,
+$$
+
+$$
+ c\ell^2\le\Re(6U^2-2),\quad |6U^2-2|\le C\ell^2,
+ \quad c\ell^3\le\Im k(U)\le |k(U)|\le C\ell^3.
+ \tag{166.19}
+$$
+
+The derivative U'(omega)=O(ell^-3) shows that these inequalities, with margins, persist for |Im omega|<=2nu and Re omega>=omega0. The lower arc is conjugate. Choose nu also below 1/24 and below the fixed local-chart margin. This supplies ONE width for all positive omega, not a sequence of shrinking local neighborhoods.
+
+Work on |Re omega|<=2Omega_Q+2, |Im omega|<=2nu. Then |U|<=C R, |k(U)|<=C R^3. The real-part curvature is bounded below uniformly, and the other cubic roots are separated. By (166.16), solving F'_Q(u_Q)=k(U) gives one holomorphic root with
+
+$$
+ |u_Q-U|\le C E_Q/\ell^2,\quad
+ \Re[-F''_Q(u_Q)]\ge c\ell^2,\quad
+ |-F''_Q(u_Q)|\le C\ell^2,
+ \tag{166.20}
+$$
+
+where ell=(1+|Re omega|)^1/4; the local bounded-omega version has ell comparable to 1. For a direct uniform proof take circles of radius a/ell about U: the cubic linear term there is at least c a ell, and its nonlinear remainder is smaller for a fixed small a. E_Q=o(1) gives a unique root. The sharper displacement in (166.20) follows from the nonzero derivative. Local branches patch by uniqueness. Hence this argument, unlike a fixed-disk implicit theorem, has explicit radii and constants throughout the growing rectangle.
+
+For the upper outer arc use Chapter 164's whole-integral rectangle, now ending at M=C1 R for a fixed sufficiently large C1. Its exact limiting inequalities are
+
+$$
+ \Re[f(x-i\beta,k(U))-A(U)]
+       =-(x-\alpha)^2[\gamma(U)+\alpha x+x^2/2],\quad x\ge0,
+$$
+
+$$
+ \Re f(-iv,k(U))=-v^2-v^4/2-\Im k(U)v,\quad0\le v\le\beta.
+ \tag{166.21}
+$$
+
+Here $f(x,k)=F(x)-kx$. They hold also for the nearby complex-omega parameters because they are identities for every U=alpha-i beta in the domain of Chapter 164. The small tube preserves that domain. The right connector at real part M has real action <=-c M^4, below both endpoint and saddle actions when C1 is chosen large. The profile approximation (166.16) is an ABSOLUTE o(1) in this reduced action and its derivatives on the whole required disk; therefore it preserves every stated gap.
+
+At the interior saddle use v=(x-u_Q)sqrt(2[f_Q(u_Q)-f_Q(x)]/(x-u_Q)^2). On |x-u_Q|<=a/ell the normalized cubic and higher terms are uniformly bounded: F'''_Q=O(ell)+O(E_Q), F''''_Q=O(1)+O(E_Q), and higher fixed derivatives are O(E_Q). The map has a fixed v-disk, and ell times its inverse Jacobian and its first two v derivatives are uniformly bounded. Its value at zero is comparable to 1 after this normalization. The tangent images lie in fixed cones strictly inside Re(v^2)>0, since Re K/|K|>=c. Thus the annular connectors to a symmetric real v segment have a FIXED action gap, not a gap decaying with R. The Gaussian integral and cancellation of the odd Jacobian term give a uniform relative C/mathcalT error.
+
+The remainder of the horizontal path lies outside |x-alpha|>=a/(2ell) and by (166.19),(166.21) has gap at least c a^2. Its length is O(R); relative to the saddle width r_s/(sqrt(mathcalT)ell) its cost is at most C R^2 sqrt(mathcalT)e^-c mathcalT. On the vertical segment the real exponent decreases with slope at least c ell^3. Scale its near-endpoint coordinate by mathcalT ell^3. Its quadratic error is at most C/mathcalT against an integrable decreasing exponential; away from that small endpoint neighborhood the gap is fixed or larger. The exact oriented leading factor is g(0)/q0, with the FULL q0. A uniform upper bound for all short connectors and compact remainders is C mathcalT R^8 e^-c mathcalT times the sum of the two leading amplitudes. The power 8 safely bounds the path length, endpoint slope (O(R^3)), curvature width (O(R)), and their products; no untracked R-dependent constant is left.
+
+The upper imaginary and negative-real cubic saddles remain outside this lower-right rectangle: in(-U+sqrt(4-3U^2))/2 the imaginary part is positive, while(-U-sqrt(4-3U^2))/2 has negative real part. The separations are uniform after scaling by ell and persist under (166.20). Cauchy's bounded-rectangle identity accounts for every connecting piece; no global steepest-descent cycle theorem or action-alignment inference is used. The lower arc is handled by conjugation. The remaining fixed bounded-omega interval uses the established Chapters 160 and 164 total contours with their actual fixed constants. Since only this ONE fixed interval is covered that way, it contributes no hidden diagonal growth assumption.
+
+### 166.6 实尾及增长场中的原计数返回
+
+The unbounded real tail is not deformed. The exact negative energy tilt used in Chapter 160 yields, for r=r_s x and real x sufficiently large,
+
+$$
+ |g(r)e^{-hr}|\le C\sigma
+ \exp\{t^2[C x^2+C R^3 x-cx^4/(1+C\eta x^2)]\},
+ \quad |h|\le C h_s R^3.
+ \tag{166.22}
+$$
+
+The constants are independent of R: the field enters only in its displayed linear term. Choose M=C1R large enough. Since eta R^2->0, x^3/(1+C eta x^2) is increasing and its value at M dominates any fixed multiple of R^3. Likewise x^2/(1+C eta x^2) at M dominates the quadratic term. Retaining half the quartic term proves, for x>=M, an upper bound -c t^2 x^4/(1+C eta x^2) on the exponent. To integrate, retain a second half and use the monotone ratio x^2/(1+C eta x^2); at M this is comparable to M^2. The tail is <=C sigma r_s exp(-c' t^2 M^4), with constants adjusted and no polynomial Q factor. C1 can be chosen so that this and the right connector are negligible relative to BOTH amplitudes, whose saddle actions have size at most C mathcalT R^4. Their width costs are only powers of t and R.
+
+The original return must also be quantified beyond Chapter 158's fixed H. Its proof gives here
+
+$$
+ |N_P^-(h,y)-G_-(h,y)|
+ \le\sigma P(Q)R^p\exp\{-b_0Q^3+C\mathcal T R^6\},
+ \quad G_-(h)=\int_0^\infty g(r)e^{-hr}dr,
+ \quad |h|\le C h_sR^3,
+ \tag{166.23}
+$$
+
+where p is a FIXED integer and P a fixed polynomial, independent of R. It can equally be absorbed into P(Q), since R<=delta^-1/2000. This is not obtained by renaming Chapter 158's C_H. The dependence is checked as follows.
+
+The full-box coefficient estimate is L_x(k)=exp(ell_sel-epsilon D^2)+r_x(k), |r_x|<=C q^-1/2. Before normalization apply the EXACT inequality
+
+$$
+ (\Re h)D\le\eta D^2+|h|^2/(4\eta),\qquad
+ |h|^2/(4\eta)\le C\mathcal T R^6.
+ \tag{166.24}
+$$
+
+The remaining positive numerator is the old same-output bound with eta replaced by 2eta, hence at most sigma P(Q)exp(C t^2). Its fixed charge and likelihood-score marks have the same bound. Thus the coefficient error is sigma P(Q)exp(-c_qQ^3/2+C mathcalT R^6), while epsilon is kept in g.
+
+For central high cells the exact retained displacement/log-density errors are P(Q)e^-b1Q^3, with their original noise reserve. The change of the linear field factor costs |h| times that displacement; |h|<=C h_sR^3 is polynomially bounded. The quadratic mark produces the same fixed polynomial charge factors as before. For the likelihood, Young's inequality and its log-width derivative introduce fixed likelihood-score marks at widths between sigma/2 and 2sigma, never a naked inverse-sigma derivative. Apply (166.24) before those bounds. Only fixed powers of R are introduced. Exact low probabilities are summed after the uniform cell estimate, so no low-tuples multiplicity is lost.
+
+Excluded cells still have probability P(Q)e^-cQ^4. On the full tuple D^2<=2n_g E+2(sum|e_j|)^2; completing the square in the SAME E after (166.24) gives exp(CQ^(7/2)+C mathcalT R^6). The inverse raw sigma needed to compare this superexponential term costs only exp(O(Q^3)) under the unchanged strict noise margin. Sign-boundary/lattice/floor strips retain their exponentially thin widths, paid by the same joint density/score bounds and (166.24). This proves (166.23) with fixed b0>0 on the original class. There is no untilted TV step and no marginal optimization.
+
+In particular mathcalT R^6<=C delta^(-1-3/1000)=C Q^(1/2+3/2000), eventually eta<=1. Hence this field cost is o(Q^3). The original positive noise reserve is not reduced to a stronger assumption. Polynomial powers and R factors are absorbed by the Q^3 reserve, not divided by slow t^2.
+
+### 166.7 增长域内的相对振幅展开
+
+**命题 166.3（保留物理噪声的统一相对余项）。** Combining the exact contour, local expansions, paid tails and (166.23) gives
+
+$$
+ N_P^-=A_0+A_I+\mathcal E_Q,
+\quad |\mathcal E_Q|\le\rho_Q(|A_0|+|A_I|),
+$$
+
+$$
+ \rho_Q\le {C\over\mathcal T}
+       +C\mathcal T R^8e^{-c\mathcal T}
+       +h_sR^{p+3}P(Q)e^{-b_0Q^3+C\mathcal T R^6}
+       \le {C'\over\mathcal T}.
+ \tag{166.25}
+$$
+
+The last line holds eventually because R<=t^1/1000 and the exponent check in Section 166.6. For the original-count division use |A0|>=c sigma/(h_sR^3). Raw sigma cancels at THIS justified point. For separate contour tails one also has |AI|>=c sigma/(sqrt(eta)R)exp(-C mathcalT R^4). Those lower bounds were established before division; no real polynomial error is divided by an exponentially damped complex amplitude. Energy inversion's O(delta) bound is used to establish the exact profile and its derivatives, not to replace the exact g in (166.25).
+
+The phase factors are nonzero throughout the specified growing analytic domain: Re(K/eta)>=c ell^2; q0/h_s is separated from zero and from the negative-real logarithm cut, with its upper/lower arguments continuing from the positive value near omega=0. This follows from the radical field k(U), its angular limits +/-5pi/8, its positive value at zero, and (166.16). L is already a single-valued logarithm on the growing charge disk. Thus (166.5) and the normalized error are holomorphic. The exact relation AI/A0=exp(-Theta_Q) gives
+
+$$
+ {N_P^-(h)\over A_0(h)}=1+e^{-\Theta_Q(h)}+\varepsilon_Q(h),
+ \qquad |\varepsilon_Q|\le C\mathcal T^{-1}(1+|e^{-\Theta_Q}|).
+ \tag{166.26}
+$$
+
+No real positivity is used to assert complex nonvanishing of the total. The old fixed-cut regional masses can still have the zeros proved in Chapter 162; they have been regrouped before all estimates.
+
+### 166.8 定量相位逆映射与无额外零点计数
+
+On the smaller omega rectangle |Re omega|<2Omega_Q+1, |Im omega|<nu,
+
+$$
+ \sup\left|{\Theta_Q(h_s k(U(\omega)))\over\mathcal T}-i\omega\right|
+ \le C\left[b R^{12}+{\log(2+\mathcal T R)\over\mathcal T}\right]=:\epsilon_Q\longrightarrow0.
+ \tag{166.27}
+$$
+
+Indeed (166.16) bounds the reduced action error by C bR^8; the saddle displacement (166.20) changes its stationary value by at most C R^2 E_Q^2, also bounded by C bR^12. The combined logarithmic prefactor is log(h_s/sqrt(eta))+O(log(2+R))=log(sqrt(mathcalT))+O(log(2+R)), with bounded argument. It is essential to combine these factors; separate log(delta) bounds would be wrong for arbitrarily slow t. The exact finite action is still used in Theta_Q.
+
+Prove (166.27) first on the larger rectangle with twice the vertical margin. Cauchy on a fixed omega-radius then gives the same O(epsilon_Q) bound for the derivative of Theta_Q/mathcalT minus i on the smaller rectangle. Since R<=t^1/1000, both terms in epsilon_Q vanish. Integrating the derivative along any straight segment proves injectivity of the exact phase there and two-sided inverse bounds in omega. The boundary closeness in (166.27) and Rouché against i omega show that its image contains every point within the smaller real/imaginary margins, including the ENTIRE scaled rectangle in (166.6), because its imaginary height is Omega_Q+O(mathcalT^-1), not 2Omega_Q. Thus there is one inverse chart on one realized array across the growing window, not a chain of unquantified inverses.
+
+In the zeta=Theta_Q coordinate, on Re zeta=+/-A,
+
+$$
+ {|1+e^{-\zeta}|\over1+|e^{-\zeta}|}\ge\tanh(A/2)>0;
+$$
+
+on Im zeta=+/-2pi n_Q the ratio is1. Equation (166.26) therefore proves by Rouché the exact count 2n_Q and absence of boundary zeros. On disks of radius C1/mathcalT about each odd-pi site the same ratio is at least c C1/mathcalT. Choose C1 larger than the uniform error constant. Each disk contains exactly one zero counting multiplicity; they are disjoint, so all zeros are simple and there are no extras. One uniform estimate supplies ALL labels simultaneously; no union bound is used.
+
+Finally k(U)'(omega)=i/U. Differentiating the EXACT phase composite, using its just-proved derivative bound, gives |Theta'_Q(h)| comparable to r_s|U|, hence at least c r_s ell. The inverse bound converts each zeta disk into (166.7). d/r_s is uniformly bounded on separator compacts. The actual h0 cancels in the location difference, so no artificial observation-dependent recentering has entered. Boundaries other than (166.6) are covered only with an explicit phase margin from the sites. The conjugate labels follow from real original weights.
+
+### 166.9 可用尺度、切分无关性与未解边界
+
+Formula (166.3) is computable from the actual admitted eta,delta,sigma; the number of covered sites also uses the actual m through mathcalT. Its divergence needs only eta->0, sigma->0 and t->infinity. In particular a very slow sigma or eta simply slows Omega_Q. No condition of the form eta^3/delta->0, t^2>>log Q, or a new noise rate is imposed. For use on a specified tight class the proof requires exactly: the spectral/mean/low bounds in Section 166.1; the retained strict noise reserve and central-cell displacement exponent b1>0; chi sufficiently small in (166.11); E_Q=C bR^8 sufficiently small in (166.16); epsilon_Q sufficiently small in (166.27); and the explicit remainders in (166.25). All hold eventually on EVERY admitted sequence. Constants depend on those controlled class bounds, not on hidden compact sizes. The elementary powers in (166.3),(166.4),(166.16),(166.23),(166.25),(166.27) expose every growing-parameter cost used here.
+
+Omega_Q bounds the action-frequency coordinate Theta_Q/mathcalT, not the original unscaled z=d(h-h0). At the outer labels, the radical identities and (166.20),(166.27) give |h/h_s| comparable to Omega_Q^(3/4). Thus the original |z| reaches order mathcalT Omega_Q^(3/4)=mathcalT b_Q^(-3/1000), while the zero index reaches order mathcalT Omega_Q. Both multipliers diverge. They are not identified with one another; the error in (166.7) is in the original UNscaled z.
+
+This is conservative rather than maximal. The resolvent condition naturally involves eta|U|^2, while the displayed envelope imposes the stronger convenient absolute reduced-action error bR^8=o(1). A more direct finite-action contour could improve that sufficient limitation. No such improvement is assumed. This proof does not identify an intrinsic transition or a physical obstruction where its envelope stops. It covers an explicit growing multiple of t^2, which is new beyond Chapter 164, without claiming sharp maximal range.
+
+The finite predictor is independent of the artificial separator: g,Theta_Q and the physical h roots use the total law and no xi. The auxiliary coordinate z=d(h-h0) retains its prescribed separator dependence and its estimate is uniform over separator compacts. All pair/path probability, deterministic-support and compact-output statements are on the same empirical array. No deterministic m limit or broader phase diagram follows.
+
+Classical endpoint/saddle asymptotics and Rouché counting are credited as tools. The new original-model content is the quantitative growing resolvent disk, exact low-mixture nonvanishing with raw sigma, uniform rescaled charge geometry and the growing-field count return. This is ordinary mathematics; no Lean verification or global originality claim is made.
+
+### 166.10 方法归属与量词边界
+
+Fernandez、Spence 与 Fokas 对其指定对数相位积分证明了增长参数区间上的相对渐近式。本文借鉴其分别控制局部变换振幅导数、远段多项式增长和领先振幅下界的组织方式；该文的相位、轮廓、固定参数和下界均不直接移用于本数组。这里由精确预解式和原计数单元估计逐项建立所需条件，来源及适用范围见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章覆盖的相位指标达到 $\mathcal T\Omega_Q$ 量级，而原坐标幅度达到 $\mathcal T\Omega_Q^{3/4}$ 量级；两者不可互换。包络指数只是充分构造，不代表物理临界指数。对每条许可序列最终成立，不等于存在一个与所有序列收敛速度无关的统一起始 $Q$。第 164 章的固定域结论、第 162 章的区域切分障碍和第 165 章未解决的后验例外事件概率均保持其原边界。
+
+## 追加锚（本行以下为增补区）
