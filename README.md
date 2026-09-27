@@ -78,9 +78,9 @@ alternatives. Keep reusable results with their assumptions.
 > The last line of the ledger is always the first line of the next round.
 
 A proof supplies a premise; a counterexample refutes a claim within its stated
-scope. An observation limit can suggest what to measure next. When progress
-stalls, check whether the representation misses a needed distinction.
-Evaluate this proposed method on withheld questions, against a stated baseline
+scope. An obstruction can suggest [what to investigate next](docs/VISION.md#how-ai-can-find-its-next-direction).
+When progress stalls, check whether the representation misses a needed distinction.
+Evaluate on questions unused in method design, against a stated baseline
 with matched information and resources.
 
 ![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
@@ -217,8 +217,9 @@ comparison within one current catalog above. The wider design is described
 in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
 its proposed system is not a claim of completed implementation.
 
-Bring your own question to the [journey route](#start-your-journey), and use
-these four questions to follow what becomes distinguishable and what stays open.
+[Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
+indistinguishable pair. Which pairs, if any, remain indistinguishable after
+adding this readout?
 
 ## What is proved, and what is open
 
