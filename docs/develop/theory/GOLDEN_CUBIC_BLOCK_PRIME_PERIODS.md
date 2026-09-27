@@ -251,3 +251,35 @@ cube in $\mathbb Z$. The cubic balance has a nonzero summand, which
 supplies this factor. A cube would make every $h_p$ divisible by $3$.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Scalar contraction of an Eisenstein factor
+
+Let $E=\mathbb Z[\omega]$, where $\omega^2+\omega+1=0$. For an odd natural
+number $b$, put $\eta_b=-2+b\omega$ and $B_b=b^2+2b+4$.
+
+**Theorem 9.1 (scalar contraction and quotient).** The principal ideal of
+$\eta_b$ contracts to $B_b\mathbb Z$:
+
+$$
+(\eta_b)\cap\mathbb Z=B_b\mathbb Z.
+$$
+
+The scalar inclusion also induces a ring isomorphism
+
+$$
+\mathbb Z/B_b\mathbb Z\;\xrightarrow{\ \sim\ }\;E/(\eta_b).
+$$
+
+To verify the contraction, write an Eisenstein integer as $u+v\omega$. The
+coefficient of $\omega$ in $\eta_b(u+v\omega)$ is
+$bu-(b+2)v$. Since $b$ is odd, $b$ and $b+2$ are coprime; a scalar
+multiple therefore has $u=(b+2)t$ and $v=bt$ for some integer $t$,
+and its scalar coefficient is $-B_bt$. Conversely,
+$B_b=\eta_b\overline{\eta_b}$ belongs to $(\eta_b)$.
+For surjectivity of the induced map, $\gcd(b,B_b)=1$ because
+$B_b\equiv4\pmod b$ and $b$ is odd. In the quotient, $B_b=0$ and
+$b\omega=2$; Bezout coefficients for $b$ and $B_b$ consequently express
+$\omega$ as the image of an integer. Every quotient class is an integer
+combination of $1$ and $\omega$, hence lies in the scalar image.
+
+## 追加锚（本行以下为增补区）
