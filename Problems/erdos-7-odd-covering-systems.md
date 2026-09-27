@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [An exact capacity77 cut with two inactive roots admits one actual common law with Gamma1225 at most1385/154; capacity78 reduces to nine private cost shapes, while the unrestricted cofactor lift remains open](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md#two-inactive-roots-at-exact-capacity77-admit-one-common-law)
 - [Occupancy-aware restrictions and weighted root caps give one law below nine for four-root height-(2,2) product-tree blockers with at most one full five-child fibre](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/445-occupied-branch-restrictions-and-weighted-root-caps.md)
 - [Uniform subtree restrictions couple both prefix trees under one actual law; three robust first-five roots give Gamma6125 at most2024/225 without a fixed good-fibre selector](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/444-uniform-subtree-restrictions-couple-two-prefix-trees.md)
 - [One finite flow couples row and tree-prefix caps with optimal joint factor q/m; isolated ternary five-prefix sources admit one law below nine through five-height22 and every finite seven-height](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/443-one-supported-law-couples-rows-and-tree-prefixes.md)

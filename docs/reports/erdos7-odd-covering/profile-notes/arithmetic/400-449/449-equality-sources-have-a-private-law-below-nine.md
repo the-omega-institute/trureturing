@@ -3589,7 +3589,7 @@ The same proof works if only a designated subset A of roots receives capacity61/
 
 For this variant t(C) counts ONLY crossed source-root arcs belonging to A; the exact formula cap_new=cap_old-(2/3)t remains valid. The assertion that roots outside A can never host a bad-dangerous block is an additional actual-support/flow premise, not a consequence of their being left unmodified.
 
-The following supplier covers both t=3 obstruction classes by a direct actual law, including nonminimum capacity78 cuts. The other three types(t,c)=(1,77),(2,77),(2,78) remain structural targets; the previously established IF77 theorem covers its specified t=1 occupancy subfamily only. This does not establish general cut77.
+The following supplier covers both t=3 obstruction classes by a direct actual law, including nonminimum capacity78 cuts. The later TA supplier also handles(t,c)=(2,77), while(1,77) and residual(2,78) remain structural targets; the previously established IF77 theorem covers its specified t=1 occupancy subfamily only. This does not establish general cut77.
 
 ## Three inactive roots at capacity77 or78 admit one common law
 
@@ -5998,13 +5998,156 @@ The thirteen families exhaust the necessary normalized cuts of every actual cut7
 
 This is a common upper bound for the entire specified cut73 source class, not a claim of sharp optimality. The program also produces necessary inventories for74 through77, but those outputs alone establish neither source realizability nor a supported-law theorem at those cuts. The unrestricted original-cofactor and common-law lift remain separate unproved obligations.
 
+## Two inactive roots at exact capacity77 admit one common law
+
+This ordinary proof retains one actual literal4555 source, all original child owners, complete actual fibres and numerical phase queries. Assume its original21,7,6,2,126,7,21 network has maximum77 and a cut of capacity77 with two occupied roots sink-side. The conclusion is one probability on that same source with Gamma_1225<=1385/154=9-1/154. The argument uses the preceding IA1, UC1, selected-block lowering and simultaneous regularization results. It is not Lean verification. A separate necessary inventory below describes the remaining capacity78 shapes without assuming saturation of a nonminimum cut.
+
+### TA.1. Cut normalization and the small two-root budget
+
+Suppose the original actual network has maximum77 and a cut of capacity c<=78 with exactly two occupied roots sink-side. Put the inactive private subtrees sink-side and take public/private first-crossing prefix antichains. Move an active child with private raw cost at least8 sink-side, replacing that cost by its incoming7 edge. If an active root's TOTAL forward cut contribution (its inactive-child edges plus private prefixes) is at least21, move the whole root subtree sink-side instead. This does not increase the cut and enters the already supplied three-inactive-root class of capacity at most78. If such a move would yield capacity below77, the original maximum77 premise simply excludes that case.
+
+Thus it suffices to retain two eligible active roots, with every active child private token cost at most3 and EACH root's total cut contribution at most20. Their original child counts n_i are5 or4 and legal restriction sizes q_i=n_i-2. Put delta_i=n_i-a_i, delta=delta_1+delta_2, where a_i counts active children. The two source-root arcs cost42, and the exact residual budget is
+
+    7(delta+k)+2Z = c-42 in{35,36}.                 (TA1)
+
+For each root let p_i be its least q_i-child private token sum among active children. Literal pair blocking gives
+
+    p_1+p_2>=9-k.                                  (TA2)
+
+The sorted-cost bound is Z_i>=p_i+(a_i-q_i)ceil(p_i/q_i). When k=0 every active child has positive private cost.
+
+These inequalities force k<=1. One way to check this without a shape search is to use Z>=p_1+p_2>=9-k. For k>=2 and delta>=2, TA1 is already at least18+7delta+5k>=42. For delta=1, an active root ratio a_i/q_i is at least4/3, so Z>=4(9-k)/3; this excludes k=2, while k>=3 is excluded by the cruder18+7delta+5k bound. For delta=0, both ratios n_i/q_i are at least5/3, so TA1 is at least30+11k/3>36 for k>=2. Cases k>=9 have public cost alone at least63 and are immediate.
+
+For c=77, parity leaves k0/delta odd or k1/delta even. Delta>=3 gives Z<9-k and is impossible. For c=78, parity leaves k0/delta even or k1/delta odd; delta>=3 is again impossible.
+
+The per-root cut bound20 eliminates the c78 partial cases. For k0/delta2 concentrated at one root, that root has private cost at most3 if full or gap, so its p is at most3, while the other full-size root needs p>=6 and costs at least20; the partial root already costs at least18, exceeding the joint budget36. If delta2 is split as1+1, each partial root's private cost is at most6 and its least legal restriction has cost at most4, contradicting TA2's total9. For k1/delta1, the partial root has private cost at most6. With total Z=11, the possible least-cost sums are at most7, contradicting TA2's8; equivalently the sorted-cost bound at sum8 has minimum12 unless all cost lies at the partial root, which violates its cut bound20.
+
+For c77/k0/delta1, the only surviving least-cost configuration under the same per-root20 bound is a partial full root with four private singletons and a full full root with five private doubles: private1111/22222. The four-singleton supplier in IA1 applies. To see the restriction directly, the partial root has Z_i<=6; if it is full, p_i<=4. The other root needs p>=5, which would cost at least18, leaving the partial root at most17 and hence private cost at most5 and p at most3. Thus the other root needs p>=6, has private cost10 and raw cost20, and the partial root has private cost4, shape1111. A partial gap would need p<=3 at that same private budget4, but its three positive child costs have least-two sum at most2, so cannot meet total9.
+
+It remains to consider fully active roots.
+
+### TA.2. Exact77 fully active cuts with one public leaf
+
+Now c77, delta0, k1, Z14. The public support is one actual candidate leaf y. For a full root write f(p)=p+2ceil(p/3); for the gap write g(p)=p+2ceil(p/2). TA2 requires p_1+p_2>=8.
+
+For two full roots, the possible least-cost pairs with f(p_1)+f(p_2)<=14 are(0,8),(2,6),(3,5) and their exchanges. A p0 restriction lies entirely in{y} and has the one-puncture law. The(2,6) pair forces private shapes01111/22222; the actual common-leaf star supplier in section IA.5 handles01111. The(3,5) pair forces11111/12222 and is treated below.
+
+For one full root and the gap, the only pairs under total14 are(gap p0,full p8) or(gap p2,full p6). The first is one-puncture; the second forces gap1111/full22222 and invokes the gap common-leaf star supplier. No independent source enumeration is used in these short sorted-cost deductions. Some p0 profiles also violate the per-root20 bound; using their valid puncture implication does not assert actual realizability.
+
+### TA.3. The remaining11111/12222 profile has exact actual columns
+
+Let A be the full root with five private singleton candidates h_c. Let B be the full root with singleton candidate w and four private double sets E_1,...,E_4. Their entire actual fibres are contained in their own private candidates together with y.
+
+Take any three A children and, at B, the singleton owner together with any two double owners. The candidate projection has at most1+3+1+2+2=9 leaves. The literal ternary tree requires nine distinct actual leaves in three columns, exactly three per column. Therefore every private candidate in this test is actual at its OWN owner, lies outside{y}, and differs from every other candidate in the test.
+
+Exchanging one A child while fixing the B restriction makes the column-count difference e_col(h_i)-e_col(h_j) divisible by3. It must vanish. All five A private leaves are distinct and lie in one column H. No B private candidate and not y can be in H, since a selected A triple already fills that branch's three leaves.
+
+The other six leaves w,y,E_i,E_j form two columns of three. Exchanging double owners shows that all four double column-count vectors agree: their coordinate differences lie in[-2,2] and are divisible by3. The common vector cannot put both leaves in one column, as two chosen doubles would then put four distinct leaves there. Thus every double has one leaf in K and one in L, with K!=L. The two fixed labels w,y supply one leaf to each; name K=col(y), L=col(w). H,K,L are distinct. The four K private leaves are distinct and exclude y; the four L double leaves are distinct and exclude w.
+
+Consequently the ENTIRE A support lies in its own H singleton plus y at each child. The ENTIRE B support lies in its own one/two K,L private leaves plus y. All fourteen private incidences are actual and have pairwise distinct full-seven labels. These deductions preserve the original owners and numerical labels.
+
+### TA.4. What every maximum flow must do on this exact cut
+
+This is now an EXACT77 cut: the two inactive source-root edges contribute42, its public y leaf contributes7, and fourteen private entries contribute28. Every integral or real value77 flow saturates these forward cut arcs and has zero backward cut flow.
+
+Both inactive roots therefore have mass21. Each of the fourteen active private points has mass2. The inactive roots have zero flow at y because their actual bridges to that public source-side leaf would cross backward. Hence all seven y units come from A and B.
+
+The active roots' TOTAL public-column contributions are fixed as
+
+    H:10,  K:15,  L:10,  elsewhere:0.               (TA3)
+
+Their fine-leaf contributions are2 at each private label and7 at y. Root A has at most17 total mass and no joint block exceeding10. Root B has18 private units, hence at most3 units at y, and its largest block is at most11. Thus neither active root can have a dangerous block under ANY maximum flow.
+
+Every dangerous block at an inactive root has mass20, so its public column must be outside H,K,L, each of which already receives at least10 active units. Bad-dangerous blocks can therefore occur only at the two inactive roots, in columns where the active roots have NO actual support.
+
+### TA.5. Two inactive dangerous blocks cannot jointly trap a bad one
+
+Suppose both inactive roots have dangerous blocks: selected(r,G) is T3-bad and the other(s,G') has mass20, without requiring its support to be bad. Their columns are distinct and outside H,K,L. Root s has only one unit outside G'.
+
+After fixing all other-root atoms, consider any ACTUAL off-G point of r that lies outside G' and is not y. Its remaining public column capacity is at least5: outside G', the active contribution is at most15 and root s contributes at most1. Its remaining fine-leaf capacity is at least4, since every active fine leaf other than y carries at most2 and root s contributes at most1. The actual point has private-leaf capacity2, and the selected root's private path caps are at least2. In UC1 the old one-unit off-G component is replaced, and one unit can then be removed from the selected G matrix to restore a child cap7; no claim of two unused units at a currently occupied child is needed. Thus this actual point makes the complement capacity C in UC1 at least2. The existing two-unit complement repair then removes the selected dangerous block, holding every other-root atom fixed and creating no dangerous block.
+
+If no such actual point exists, the selected root's entire off-G support is contained in G' union{y}. Choose a legal restriction at r whose actual G-neighborhood has at most two leaves. Such a restriction exists from T3-badness: at a full root use the bad triple; at the gap use two actual rows from the bad literal triple, including the two actual rows if that triple contains the empty row.
+
+Pair this restriction with any A triple. Their entire projection is contained in:
+
+- at most two leaves in G;
+- column G';
+- column H;
+- the single leaf y in K.
+
+These four named columns are distinct. Only G' and H can contain a ternary branch, contradicting the literal pair premise. Therefore C>=2 always holds in the assumed two-dangerous-block situation.
+
+It follows that any integral maxflow can be modified so that it has at most ONE T3-bad dangerous block: if both inactive blocks are bad, remove either using the safe complement repair. If one is bad and the other dangerous but T3-good, the same repair removes the bad one. Each repair preserves every other-root atom and creates no dangerous block anywhere.
+
+### TA.6. A half-mixture uses selected global lowering without a termination claim
+
+Choose an integral maximum flow f with at most one bad-dangerous block. If none exists, the established simultaneous T3 consumer already supplies a law. Otherwise call the block B=(r,G).
+
+The accepted selected-block global lowering theorem supplies an integral value77 flow g lowering a_r to at most20 or d_rg to at most19. Root r is inactive in the fixed exact cut, so EVERY value77 flow has a_r=21. Hence d_rg(g)<=19.
+
+Apply the preceding safe complement repair if g has two bad-dangerous blocks. It produces g' with at most one and cannot recreate B. A repair at the other root leaves r fixed. A repair of another dangerous block at r leaves that selected block19 and the whole complement only2, so B has mass at most2. Thus B stays absent. If g' has no bad block, the simultaneous T3 consumer finishes. Otherwise its unique bad block B' differs from B.
+
+Regularize f and g' separately, using the PURE sharp295 full21 construction and the T3-good dangerous construction. All noncoherent layouts are at most614 in each component. Every coherent centre outside its component's unique bad block is at most613, while a bad-block centre is at most621.
+
+A stronger cross-component bound holds at B and B'. If the two blocks share a root or share a public column, the other component gives the old block mass at most1, and the coherent bound is below610. If they have different roots AND different columns, examine B in g'. The other inactive root places20 in B''s column and at most1 outside; the active roots have zero mass in G. Since B is absent, its mass is at most19 (or, for the symmetric examination of B' in f, possibly21). When d<=19, its public column mass is at most d+1<=20, so the original coherent cap formula gives
+
+    K<=3*21+3*20+9*19+315=609.
+
+If the symmetric block has d21, the pure full21 regularization gives K<=610. Thus EVERY centre of either bad block has charge at most610 in the opposite component.
+
+The ONE feasible actual flow
+
+    h=(R(f)+R(g'))/2
+
+therefore has noncoherent charge at most614, ordinary coherent charge at most613, and charge at most
+
+    (621+610)/2=1231/2
+
+at either formerly bad block. Consequently
+
+    Gamma_1225(h/77)<=1+(1231/2)/77=1385/154<9.       (TA4)
+
+This does not assume coordinatewise changes are simultaneously realizable. It explicitly constructs a common convex mixture AFTER each integral component has been regularized, and it needs no global repair termination theorem.
+
+Combining with the smaller-support cases, every source with an exact77 cut having two inactive roots is supplied, by the preceding IA1, UC1, selected-block lowering and OM regularization results.
+
+### TA.7. The remaining capacity78 cases are private-only and fully active
+
+After the reductions in section1, the remaining c78 cuts have delta0,k0,Z18. Each active root has private cost at most10, since a larger private contribution would allow moving that root sink-side and invoking IA1. Thus the two private totals lie in{8,9,10}. All active fibres are covered by their own private prefixes; every cost1 is a singleton, every cost2 is a finite double, and cost3 may still be a whole column.
+
+Using least legal private sums with p_1+p_2>=9 leaves the following small list, with exchanges of two full roots understood:
+
+| Active root types | Private shapes |
+|---|---|
+|full/full|11123 /22222|
+|full/full|11222 /12223|
+|full/full|11222 /22222|
+|full/full|11223 /12222|
+|full/full|12222 /12222|
+|gap/full|1223 /22222|
+|gap/full|2222 /12223|
+|gap/full|2222 /22222|
+|gap/full|2223 /12222|
+
+For example, full totals8,9,10 have shapes11123 or11222;11133 or11223 or12222;11233 or12223 or22222 respectively. Their least-triple costs are3,4;3,4,5;4,5,6. Gap totals8,9,10 have1133/1223/2222,1233/2223,1333/2233 with least-pair costs2/3/4,3/4,4/4. Requiring the sum at least9 gives the displayed nine possibilities. This is a necessary cost-shape list, not an assertion of actual realization.
+
+No general supplier for these nine capacity78 shapes is claimed here, and no c78 saturation is used. Whole-prefix realizations must retain their complete actual fibres. The root-cap failure(t,c)=(1,77) and these residual(t,c)=(2,78) shapes remain separate research tasks.
+
+### Exact necessary-cost inventory
+
+The [cost inventory program](../../../frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.py) enumerates all normalized child costs0..3, active child counts from n-2 through n, public cost0..5, root types full/full and gap/full, and per-root contributions at most20. Its [exact result](../../../frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.json) contains exactly the four capacity77 profiles and nine capacity78 profiles above, with full/full exchange identified. Explicit checks also verify the half-mixture bound and margin. This validates the necessary integer inventory and rational arithmetic; it neither enumerates actual sources nor substitutes for the support and common-law proof.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.json
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
-The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The other types(1,77),(2,77),(2,78) are not covered in general; IF77 handles only its specified one-inactive-full-root subfamily. The root-cap test is still not asserted for every source.
+The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The two-inactive-root supplier(TA4) handles the entire(2,77) type with Gamma<=1385/154=9-1/154: the only remaining11111/12222 source profile admits a safe two-flow half-mixture. It also reduces(2,78) to nine fully active private-only cost shapes, without claiming those shapes are realized or supplied. The types(1,77) and residual(2,78) remain open in general; IF77 handles only its specified one-inactive-full-root subfamily. The root-cap test is still not asserted for every source.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
 range74/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
