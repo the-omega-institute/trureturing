@@ -11444,3 +11444,146 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 The source-uniform conclusion uses the cut and mixture proof above, not an enumeration of all support graphs. No Lean verification is claimed.
+
+## A selected mass18 block can be lowered or supplies an existing actual-source law
+
+Ordinary finite-network mathematics, not Lean verification. All capacities,
+owners and support points below belong to one original literal4555 source.
+The argument establishes a selected-block alternative, not simultaneous
+lowering of every block in one common flow.
+
+### BL18.1. Complete-source alternative
+
+Assume the complete original literal4555 and standalone premises, and that
+the original network has maximum74. Replace each of its four occupied
+source-root capacities21 by37/2. Suppose the resulting balanced network
+has a half-integral flow of value74 with a designated root/column block of
+mass18. Then at least one of the following holds:
+
+1. The same balanced network has a half-integral value74 flow in which the
+   designated block has mass at most35/2.
+2. The entire original source has a cut with one inactive root and original
+   capacity at most77, or three inactive roots and original capacity at
+   most82. It is therefore supplied by the already established OC77/TP2/
+   NP34/UF14 or RC76.1 actual-source laws, respectively.
+
+The designated block need not be T3-good or T3-bad. The positive conclusion
+is about the complete actual source, including zero-flow actual incidences.
+
+### BL18.2. Proof by a minimum-cost potential
+
+Minimize the designated block's total over balanced value74 flows. Give
+cost1 to the selected root's child-to-private-G-prefix edges and cost0 to
+every other original edge. This is exactly the block-mass objective by
+conservation. Doubling every capacity gives an integral-capacity network,
+so a minimizing half-integral flow exists. If its designated block mass is
+less than18, it is at most35/2 and alternative1 holds. Otherwise the given
+flow forces the minimum to be exactly18; fix a half-integral minimizer f.
+
+Its residual network has no negative-cost directed cycle. With integer
+edge costs it admits an integer vertex potential pi for which
+
+    f_e>0       implies pi(head)-pi(tail)>=cost_e;
+    f_e<cap_e   implies pi(head)-pi(tail)<=cost_e.
+
+These follow from nonnegative reduced costs on residual reverse and forward
+arcs, respectively. They concern the actual half-integral capacities; no
+integrality of f beyond the earlier minimum step is needed here.
+
+All four source-root edges are saturated at37/2, since their capacities
+sum74. Write alpha=pi(R) for the selected root. Its off-G flow is exactly
+1/2. Every G private-prefix flow is at most6, hence each of this root's
+child totals is at most13/2<7. Its root-child edges are all unsaturated,
+so every actual child C has pi(C)<=alpha. A child carrying positive flow
+has pi(C)=alpha. Every positive selected-G prefix edge consequently goes
+from potential alpha to potential at least alpha+1.
+
+Set X={v:pi(v)<alpha+1}. The source belongs to X because the selected
+source-root edge is positive and has cost0, giving pi(source)<=alpha.
+The sink does not belong to X: a positive selected-G path first crosses
+to potential at least alpha+1, and all its subsequent positive cost0
+edges have nondecreasing potential. Thus X is a source-sink cut and the
+selected root and all its actual children belong to X.
+
+Let q count the selected-G prefix edges crossing X forwards. Every positive
+such prefix crosses, so the sum of their flows is18. Their capacities are6.
+Their zero-flow counterparts, if any cross, are included in q. Every other
+forward cut edge has cost0. Since potentials are integer, such a crossing
+has strictly positive potential rise and therefore is saturated. No
+positive edge crosses X backwards, because every original edge has
+nonnegative cost. Flow-cut accounting now gives the exact identity
+
+    cap_balanced(X)=74+sum_crossing_selected(6-f_e)
+                   =74+6q-18=56+6q.                 (BL18.1)
+
+Only source-root capacities are nonintegral. Let t be the number of
+occupied roots outside X. Equation(BL18.1) is integral, so t is even.
+The selected root belongs to X, leaving t=0 or2. In particular this is
+not an assumption that a local minimum cut is a global minimum cut.
+
+Now move the selected root and its entire private descendant forest to the
+sink side, keeping every public vertex's side unchanged. Call the resulting
+cut X'. The only incoming edge to this forest is its source-root edge;
+all private-to-public actual bridges point out of the forest. Thus this
+move can add only the source-root capacity, and removes at least the q
+selected prefix edges of total capacity6q. Measured in the ORIGINAL
+network, X first has capacity cap_balanced(X)+(5/2)t, and the newly crossed
+selected source-root edge has original capacity21. Consequently
+
+    cap_original(X')<=56+6q+(5/2)t-6q+21
+                     =77+(5/2)t.                   (BL18.2)
+
+The number of inactive roots is exactly t+1. For t=0 this is a one-inactive
+cut of capacity at most77; for t=2 it is a three-inactive cut of capacity
+at most82. Both are already supplied under the complete original source
+premises, using the respective consumers' own normalization arguments.
+This proves alternative2.
+
+### BL18.3. The simultaneous-flow obligation
+
+For a source outside those supplied cut branches, any selected mass18 block
+of any balanced half-integral value74 flow can individually be lowered to
+at most35/2 by another balanced half-integral value74 flow. That replacement
+can change other block masses. In particular this theorem alone does not
+produce a flow avoiding every T3-bad mass18/column21 obstruction, nor an
+occupation mixture keeping each such obstruction below a useful threshold.
+The complete maximum74 common-law branch remains open until a simultaneous
+argument or a different actual-source supplier is provided.
+
+### BL18.4. Complete actual-source control
+
+The [complete-source control](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py) and its [exact data](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.json) reuse the existing
+terminal-cap network paths and asymmetric-source premise checker. Its source
+has282 actual points: every child has every leaf of two shared columns;
+each of the three full roots has five private singleton leaves in its own
+column, and one full root has a sixth private leaf. The gap has no private
+leaf. The two shared public columns and16 private entry edges give an
+original cut42+32=74. The program supplies a matching balanced value74 flow
+whose gap/first-shared-column block has mass18.
+
+The program then solves the selected-block minimum-cost problem in the
+ENTIRE675-edge actual network, obtaining another balanced value74 flow with
+that block of mass0. It checks all480 original legal pairs, the standalone
+premise, every original capacity and conservation equation, the matching
+original cut, and the two residual-potential sign inequalities at all395
+vertices. Source, initial and minimizing atom flows, and an integer optimal
+potential are emitted as exact data. This control exercises the actual
+lowering alternative; it does not instantiate the minimum18/supplier branch
+or claim an exhaustive source search.
+
+Independent reconstruction from the saved source and atom flows, without
+either author helper, reproduces all480 pair tests, the675 edges, the two
+matching value74 flows and all1350 residual-potential sign checks. The three
+full roots in this particular control are individually robust; the control
+is not asserted to represent the unresolved nonrobust branch. The universal
+selected-block alternative follows from BL18.2, independently of this
+instance's additional structure.
+
+Reproduce from the project root with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py \
+  --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
+  --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
+  --output /tmp/e7_balanced74_selected_mass18_replay.json
+```
