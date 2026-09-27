@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:744e0906bf7a42e79d4f43e347c26715306df525379143e4d4d95c5df822c131
+  normalized_sha256: sha256:744e0906bf7a42e79d4f43e347c26715306df525379143e4d4d95c5df822c131
+cas_ref: sha256:744e0906bf7a42e79d4f43e347c26715306df525379143e4d4d95c5df822c131
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/OctahedralCochainSharpness.antipodal_repair_sharpness
+    target_statement_id: sha256:d5e6e32706761c4f1628fdfde3474738454e61b7e1084474ddeaddfcbbc385b1
+receipts:
+  unresolved_subitems: []
