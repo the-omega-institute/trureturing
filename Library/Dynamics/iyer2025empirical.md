@@ -6239,3 +6239,13 @@ Nickos Papadatos，*On corrected Poisson approximations for sums of independent 
 T. Bennett、C. J. Howls、G. Nemes 与 A. B. Olde Daalhuis，*Globally Exact Asymptotics for Integrals with Arbitrary Order Saddles*，[arXiv:1710.10073v2](https://arxiv.org/abs/1710.10073v2)，版本日期 2018 年 2 月 8 日；正文另列编辑部收稿日 2017 年 10 月 27 日。核对第 2 节的解析域、角区间 (7)、邻接与方向指标 (8)，第 3 节围绕 (20)–(22) 的轮廓变形与绝对可积条件，第 5.1 节的简单鞍点表示，以及附录 C 的逆映射拓扑和方向证明。原文要求函数在扫过域的闭包解析、相应相位模在无穷远发散、相关最陡路径通向无穷远而非奇点，并有非空有限的邻接鞍点集；余项还要求各邻接路径上的绝对积分及扫过域内无分母零点。这些条件不能由局部能量鞍点或作用量相等替代。已存提取含字形与 NUL 缺陷，空警告文件不表示提取完美；未核对的角余项范围不作输入。
 
 本章不直接移植该文的全局循环系数，而是在已证有限解析域内支付尾部与连接段。深实分支上的振幅失配仅排除指定端点/单鞍点表达式的局部平衡，未确立那里的实际电荷系数、全部竞争鞍点或原始零点不存在。复中段继续延拓仍是开放证明义务；不宣称全球原创、检索穷尽或形式核验。
+
+## 谱边界卷第 187 章补充：原始律指数包络与非有界波动转移
+
+对应 [谱边界卷第 187 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：第 183 章的精确条件标签分配和第 185 章的无均值上限联合全变差，在此由实际依赖总数的指数集中、实倾斜条件概率之分子/分母同阶平滑，以及三段指数加权尾部估计接合。所得实际律指数包络允许最大耦合转移矩母函数和四阶导数；非有界量的支付不来自全变差本身。
+
+Jay Bartroff、Larry Goldstein 与 Ümit Işlak，*Bounded size biased couplings, log concave distributions and concentration of measure for occupancy models*，[arXiv:1402.6769v3](https://arxiv.org/abs/1402.6769v3)。核对原始 TeX 的 size-bias 定义、一般尾界定理 `thm:main` 及其单侧有界耦合条件、配置耦合定理 `+1-1:generally` 与条件律证明、多项分配定理 `thm:multocc`、引理 `lem:multinomial` 的重新分配证明，以及附录中左尾去掉单调条件的论证。多项分配定理分别研究阈值计数 $Y_{\ge}$ 与“不等于指定值”的计数 $Y_{\ne}$；后者使用补集均值，不能直接给稀有精确双计数事件的均值尺度。独立球、单计数占据模型也不等于未经条件化的依赖路径。
+
+原文一般定理将更强尾界归于 Arratia–Baxendale；未核对该被引原始证明，不将其作为本章输入。$Y_{\ne}$ 配置证明末尾印出的 $\mathcal L(Y(N_{\ne}))=\mathcal L(Y_{\ge}^s)$ 与该处目标记号不一致；不把修正后的等式当作本文前提，也不据此否定整篇定理。本章直接证明所需的条件实倾斜界和原始总数集中，未从文章标题、补集操作或未证的有界耦合取得实际律结论。
+
+上述检索与核对仅界定已检查版本的迁移范围；不宣称全球原创或检索穷尽。标准化波动的对数加权绝对值可按本章给定界转移，仍不等于全数据后验熵或完整惊异度的转移；本章不解决 $E_2$。

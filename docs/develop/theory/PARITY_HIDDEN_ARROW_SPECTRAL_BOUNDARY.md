@@ -57631,3 +57631,424 @@ The global saddle-contour results discussed in the accompanying Library attribut
 本章保留精确低频混合、完整 $q$ 选择系数、经验均值、原始取整和同一输出。条件在共同紧类上统一，之后分别回接实际 pair 与实际依赖 path 的支持一致概率。它不要求新的经验谱极限、额外噪声速率或更快的 $\eta/\sqrt\delta\to\infty$。归一化加性误差不能除以未知零点附近的总量；第 179 章的既有零点和计数结果保持原范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 187. 原始计数的指数尾与矩母函数：越过有界测试函数
+
+第 185 章对一或两个完整原始群给出了无均值上限的联合 Poisson 全变差界，但全变差本身不支付非有界量。本章先在原始依赖总数下证明标准化计数的统一指数包络，再用同一实际均值的最大耦合转移矩母函数及其四阶导数。关键是条件实倾斜的分子与分母具有相同的局部平滑尺度，以及近、中、远三段总数偏离各自的指数加权支付。
+
+**定理 187.1（实际均值下的联合矩母函数与导数比较）。** 固定 $J\Subset D$、原始计数截止 $C_0$，取一或两个互异、确定的完整原始群。分别对实际 pair 与依赖 path、每个确定大小为 $q$ 的支持，以各实验自己的实际均值 $\mu_v=\mathbb E C_v$ 定义
+
+$$
+Z_v=\frac{C_v-\mu_v}{\sqrt{1+\mu_v}},\qquad
+Z_v^P=\frac{P_v-\mu_v}{\sqrt{1+\mu_v}},\qquad
+P_v\text{ 独立且服从 }\operatorname{Pois}(\mu_v).
+\tag{187.1}
+$$
+
+对每个先固定的 $A>0$，在 $|t_v|\le A$ 以及总阶数 $|\alpha|\le4$ 上一致有
+
+$$
+\left|\partial^\alpha\mathbb E e^{t\cdot Z}
+-\partial^\alpha\mathbb E e^{t\cdot Z^P}\right|
+\le C_{r,C_0,A}\sqrt{\varepsilon_Q}
+=O_{J,r,C_0,A}(Q^{-3/2}),
+\tag{187.2}
+$$
+
+其中 $\varepsilon_Q$ 是下式 (187.5) 的显式全变差界。没有新添的均值上限或正下界；原始实验实际达到的指数大均值也包括在内。每个固定 $L>0$ 的实际指数包络由 (187.18) 给出，Poisson 参考包络另由 (187.19) 给出；两者在转移前分别证明。
+
+### 187.2 原始实验与继承的定量接口
+
+
+All logarithms are natural. Keep the original definitions
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad\lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0,
+$$
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_1=q,\quad s_0=M-q,\quad\epsilon=rq/s_0,
+\quad T=2M\lambda.                                               \tag{187.3}
+$$
+
+Fix J compactly inside D=(beta_*,1), with beta_*>1/2 as proved at Section 68.25. There are two parity classes C_+,C_- of size M. For any deterministic S subset C_+, |S|=q, the original kernel is
+
+$$
+P_S(x,y)=(1+b_S(x)\chi(y))/(2M),\quad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+
+The path starts uniformly and takes T transitions; the pair experiment consists of T independent stationary adjacent pairs. These are the same correctly oriented experiments as Chapter 185/Chapter 72. No unaligned reverse scoring or data-dependent index selection is introduced.
+
+Choose d=1 or2 distinct deterministic lawful indices j_v with
+
+$$
+K_v=k_0+Qj_v\ge0,\quad B_v=l_0+Pj_v\ge0,\quad
+K_v+B_v\le C_0\lambda,
+$$
+
+where C_0>=1 is fixed; a smaller cutoff is covered by replacing it by1 in constants. The proof covers the whole original cutoff line, hence all prescribed fixed internal arcs. By Chapter 175's global injectivity, each complete group is exactly its count-pair group, with no omitted remote-score tail:
+
+$$
+C_v=C_{1,v}+C_{0,v},\qquad
+C_{i,v}=\sum_{x\in\mathcal A_i}{\bf1}\{(N_{x,+},N_{x,-})=(K_v,B_v)\},
+\quad\mathcal A_1=S,\quad\mathcal A_0=C_+\setminus S.
+$$
+
+The two reference intensities in class i are
+
+$$
+(\nu_{1,+},\nu_{1,-})=(a\lambda,b\lambda),\quad
+(\nu_{0,+},\nu_{0,-})=((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2).
+$$
+
+Eventually q<=M/2, hence epsilon<=r and b lambda<=nu_{i,sigma}<=lambda. Define
+
+$$
+f_{i,v}=\prod_{\sigma=+,-}\Pr\{\operatorname{Pois}(\nu_{i,\sigma})
+                          =k_{v,\sigma}\},\quad
+m_{i,v}=s_i f_{i,v},\quad m_v=m_{1,v}+m_{0,v},
+\quad(k_{v,+},k_{v,-})=(K_v,B_v).
+$$
+
+With
+
+$$
+\Delta(t)=10^6(t+Tt^2)e^{10^6Tt^2}+12\,2^{-T},\quad
+\delta_1=\Delta((1+C_0)/(2M)),\quad
+\delta_S=\Delta(3q/(2M)),
+$$
+
+the inherited one-row estimate gives, separately for each experiment,
+
+$$
+|\mu_v-m_v|\le\delta_1m_v,\quad
+m_v\le7B_*q/\lambda,\quad B_*=2/\sqrt{ab}.                  \tag{187.4}
+$$
+
+The mean bound uses the SAME original count line and compensation: f_{0,v}=exp(-W(K_v,B_v))f_{1,v}, W=z_0+o(1), so s_0 f_{0,v}<=6q f_{1,v}; and two Poisson maximal-atom bounds give f_{1,v}<=1/(lambda sqrt(ab)). These are Chapter 185's proved relations. Its explicit parameter-only TV bound is
+
+$$
+\varepsilon_Q=\min\left\{1,
+\frac{6+B_*}{\lambda}+216(1+C_0/b)B_*\frac q{\sqrt{s_0}}
++\frac{\delta_S}{2}+\frac2{q\lambda}
++\frac{6B_*q}{s_0\lambda}+\frac{7B_*\delta_1q}{\lambda}\right\}.
+                                                               \tag{187.5}
+$$
+
+It bounds dTV(L(C),product Pois(mu_v)) and is O_{J,r,C_0}(lambda^{-1}) uniformly. Its finite-layer conditions and all floors are retained from Chapter 185; no new mean cap is attached.
+
+The exact label-list disintegration is also retained. Let H_{i,sigma} count departures from class i with next parity sigma. Conditional on the original class trajectory, the four departure-label lists are independent uniform lists in their respective classes, independent of that trajectory, with their actual dependent lengths H_{i,sigma}. Conditional on H, the two sign occupancy vectors within each class are therefore independent multinomials with lengths H_{i,+},H_{i,-} and uniform label probabilities1/s_i. This is a consequence of the exact disintegration, not an assumption of independent unconditioned path rows.
+
+### 187.3 实际共同总数的指数集中
+
+We first strengthen the old variance-only bound. For either experiment, each total H=H_{i,sigma}, with h=E H=s_i nu_{i,sigma}, satisfies
+
+$$
+\log\mathbb E e^{u(H-h)}
+\le\frac h3(e^{3u}-1-3u)
+\le\frac{3h u^2}{2(1-|u|)},\qquad |u|<1.                    \tag{187.6}
+$$
+
+For the path, write H=sum_{t<T}I_t for its edge indicators and split positions into their three residue classes modulo3. Within each such class the indicators are jointly independent Bernoulli variables with the same probability p=h/T. Indeed the exact reset P_S^2=Pi makes the next chosen edge independent of the entire history through the previous chosen edge's endpoint. Successive conditioning proves joint independence within that subsequence; pairwise zero covariance alone would not suffice. The three subsequences need not be independent of each other. Hölder with exponent3, followed by log(1+p(e^{3u}-1))<=p(e^{3u}-1), yields the first inequality in (187.6). For independent pairs the same three-way splitting is permissible. Finally the power series gives e^{3u}-1-3u<=9u^2/[2(1-|u|)]: for every k>=2, 3^k/k!<=9/2. This proves (187.6) for both signs of u.
+
+Chernoff with u=x/(3s_i lambda+x), using h<=s_i lambda, gives
+
+$$
+\Pr\{|H_{i,\sigma}-s_i\nu_{i,\sigma}|>x\}
+\le2\exp\left\{-\frac{x^2}{2(3s_i\lambda+x)}\right\}.       \tag{187.7}
+$$
+
+For D_i=max_sigma |H_{i,sigma}-s_i nu_{i,sigma}|, a union bound doubles the right side's factor to4. No independence between the two signs or classes is asserted. These are actual path/pair bounds, not Poisson reference tails.
+
+### 187.4 实指数倾斜后的精确条件分配
+
+Here is the new conditional allocation estimate. Fix a class size s and deterministic positive integer totals n_+,n_-. Allocate each sign independently and uniformly among s labels, and let C count labels with the fixed pair (K,B). Put w_sigma=n_sigma/s and
+
+$$
+f(w)=\Pr\{\operatorname{Pois}(w_+)=K\}
+      \Pr\{\operatorname{Pois}(w_-)=B\}.
+$$
+
+**引理 187.2（实倾斜后的条件分配界）。** For every fixed R>0 define
+
+$$
+c_R=e^{-4R}/4,\qquad K_R=e^2(4/c_R+1).
+$$
+
+Provided n_sigma<=T and (1+T)e^{-c_R s}<=1, for every real |z|<=R,
+
+$$
+\boxed{\quad\mathbb E(e^{zC}\mid n_+,n_-)
+\le K_R\exp\{s f(w)(e^z-1)\}.\quad}                      \tag{187.8}
+$$
+
+The constant is uniform in the target pair and both totals. We only use (187.8) with positive totals in the wide band of Section 187.5.
+
+Proof. Let X_1,...,X_s be independent two-coordinate Poisson vectors of means w. Conditional on their two sums being n, their law is exactly the two independent uniform multinomial allocations. Tilt each row by exp(z 1_{X=(K,B)}), whose normalizer is D=1+f(w)(e^z-1). Write P_z for this independent tilted-row law. The exact identity is
+
+$$
+\mathbb E(e^{zC}\mid n)=D^s\,
+\frac{\Pr_z\{\sum_{l=1}^s X_l=n\}}
+ {\Pr\{\operatorname{Pois}(n_+)=n_+\}
+  \Pr\{\operatorname{Pois}(n_-)=n_-\}}.                     \tag{187.9}
+$$
+
+This is a reference representation of the conditional law; no original total is changed. The tilted one-row density relative to its Poisson law lies between e^{-2R} and e^{2R}. If psi_z is its characteristic function and
+
+$$
+x(\theta)=w_+(1-\cos\theta_+)+w_-(1-\cos\theta_-),
+$$
+
+then independent copies of a row give
+
+$$
+1-|\psi_z(\theta)|^2
+=\mathbb E_z[1-\cos(\theta\cdot(X-X'))]
+\ge e^{-4R}(1-e^{-2x(\theta)}).
+$$
+
+Using 1-e^{-2x}>=(1/2)min(x,1) and sqrt(1-y)<=e^{-y/2},
+
+$$
+|\psi_z(\theta)|\le e^{-c_R\min(x(\theta),1)}.
+$$
+
+Fourier inversion on the two-dimensional integer lattice, taking absolute values only here, bounds the numerator in (187.9) by
+
+$$
+\frac4{c_R\sqrt{(1+n_+)(1+n_-)}}+e^{-c_Rs}.              \tag{187.10}
+$$
+
+To see the constant, bound the integral by that of exp(-c_R s x) plus e^{-c_Rs}. For y>=0,
+(2pi)^{-1} integral_{-pi}^{pi} exp(-y(1-cos theta)) dtheta<=2/sqrt(1+y), using 1-cos theta>=2theta^2/pi^2 on that interval and the Gaussian integral. The two coordinates factor, and 1+c_R n>=c_R(1+n). This proves (187.10) without a local limit theorem or a fixed-target asymptotic.
+
+Stirling's upper bound n!<=e sqrt(n)(n/e)^n for n>=1 gives Pr(Pois(n)=n)>=e^{-1}/sqrt(n+1). Consequently the ratio in (187.9) is at most
+4e^2/c_R+e^2 sqrt((1+n_+)(1+n_-))e^{-c_Rs}<=K_R.
+Finally D^s<=exp(s f(w)(e^z-1)) by log(1+x)<=x for x>-1. The sign z<0 is included. QED.
+
+The polynomial conditioning cost which a crude division by the probability of the totals would incur has disappeared: the tilted numerator has the same local smoothing scale as the denominator. Neither a marginal comparison nor an unproved tilted local limit theorem is used.
+
+### 187.5 单类单群的实际指数包络
+
+**引理 187.3（原始计数的指数包络）。** Fix a class i and group v, and abbreviate s=s_i, C=C_{i,v}, nu=nu_i, f=f_{i,v}, m=sf. The target satisfies K+B<=C_0 lambda. Let
+
+$$
+U=(C-m)/\sqrt{1+m},\quad B_0=1/b,\quad B_{\mathrm{at}}=2/b,
+\quad A_0=1+2C_0/b,\quad c_b=b^2/28.
+$$
+
+For a fixed R>0 set
+
+$$
+V_R=B_{\mathrm{at}}R(e^R+1),\quad\eta_R=4\sqrt{V_R+1},\quad
+D_R=A_0e^{2A_0\eta_R},
+$$
+$$
+M_R=4K_R\exp\{R^2e^R/2+12B_0D_R^2e^{2R}R^2\}
+       +4K_R+4.                                               \tag{187.11}
+$$
+
+All these constants are independent of beta, layer, support, index and mean. Sufficient additional finite-layer conditions are
+
+$$
+\lambda\ge\max\{4/b,\eta_R,2\eta_R/b,4R/c_b,
+                         4D_Re^R R B_0\},\qquad
+(1+T)e^{-c_Rq}\le1,
+\tag{187.12}
+$$
+
+together with q<=M/2 and q>=1. Then for both actual experiments,
+
+$$
+\sup_{|t|\le R}\mathbb E e^{tU}\le M_R,
+\qquad\mathbb E e^{R|U|}\le2M_R.                         \tag{187.13}
+$$
+
+Proof. The reference maximal-atom bound gives f<=B_0/lambda since each nu_sigma>=b lambda. Write z=t/sqrt(1+m), and delta_sigma=H_{i,sigma}/s-nu_sigma. Divide the actual totals into three regions. All conditioning below uses their original dependent law.
+
+**Near totals: max|delta_sigma|<=eta_R.** Here the two perturbed intensities stay above b lambda/2. For f(w)=Pois(w_+){K}Pois(w_-){B}, its log partial derivatives are K/w_+-1 and B/w_--1, bounded in absolute value by A_0 throughout the segment between nu and w. Therefore
+
+$$
+|s f(w)-m|\le D_R f
+       (|H_{i,+}-s\nu_+|+|H_{i,-}-s\nu_-|).                \tag{187.14}
+$$
+
+Indeed the log ratio is bounded by A_0 sum|delta_sigma|<=2A_0 eta_R, and |e^x-1|<=e^{|x|}|x|. After centering, (187.8) and
+|e^z-1|<=e^R|z| give the conditional bound
+
+$$
+K_R\exp\left\{R^2e^R/2+\kappa
+        (|H_{i,+}-s\nu_+|+|H_{i,-}-s\nu_-|)\right\},
+\quad\kappa=D_Re^R R f/\sqrt{1+m}.                       \tag{187.15}
+$$
+
+The deterministic term uses m(e^z-1-z)<=m z^2 e^R/2<=R^2e^R/2. Conditions (187.12) ensure2kappa<=1/2. For every sign pair, Cauchy–Schwarz and (187.6) at +/-2kappa bound the exponential moment of the signed sum of the two centered totals by exp(12s lambda kappa^2). Since
+
+$$
+s\lambda\kappa^2
+\le D_R^2 e^{2R}R^2\lambda f\le B_0D_R^2e^{2R}R^2,
+$$
+
+and exp(kappa(|x|+|y|))<=sum_{sigma,tau=+/-1}exp(kappa(sigma x+tau y)), the near-region expectation is at most the first term of M_R. We extend the positive upper bound to all totals when applying (187.6); no conditioning on the near event is asserted to preserve its MGF.
+
+**Intermediate totals: eta_R<max|delta_sigma|<=b lambda/2.** Both perturbed intensities remain at least b lambda/2>=2, so their product Poisson mass is at most B_at/lambda, uniformly even when one target count is zero. Also m<=B_0s/lambda. Equation (187.8), with either sign of z and the exact centering -zm, consequently gives
+
+$$
+\mathbb E(e^{tU}\mid H)\le K_R e^{V_Rs/\lambda}.
+$$
+
+By (187.7), the probability of leaving the near region is at most
+
+$$
+4\exp\{-\eta_R^2s/[2(3\lambda+\eta_R)]\}
+\le4\exp\{-\eta_R^2s/(8\lambda)\}.
+$$
+
+Since eta_R^2=16(V_R+1), the intermediate contribution is at most4K_R exp(-(V_R+2)s/lambda)<=4K_R. This explicitly pays its exponential weight; a small unweighted failure probability would not suffice.
+
+**Far totals: max|delta_sigma|>b lambda/2.** The exact deterministic bounds0<=C<=s and0<=m<=s give e^{tU}<=e^{2Rs}. Equation (187.7) at x=b s lambda/2 gives probability at most4exp(-c_b s lambda); the choice c_b=b^2/28 is weaker than b^2/[8(3+b/2)]. Under (187.12), the weighted far contribution is at most4exp(-c_b s lambda/2)<=4. No conditional approximation or Poisson replacement is applied in this region.
+
+Adding the three bounds proves the first assertion of (187.13). Applying it at t=R and t=-R and using e^{R|U|}<=e^{RU}+e^{-RU} proves the second. QED.
+
+The split is essential. Using only a small fixed band without paying its complement would be invalid for small means; using a single relative mass bound throughout a band of width proportional to lambda would introduce an exponentially large multiplier. The intermediate region uses a global Poisson atom bound, and the far region uses the actual count bound and actual Bernstein tail. These are compatible bounds on the same original experiment.
+
+### 187.6 联合包络及精确实际均值中心
+
+The original floors give uniformly on J=[beta_0,beta_1] inside D,
+
+$$
+\log M=\phi\lambda/\beta+O(1),\qquad
+\log q=\phi(1/\beta-1)\lambda+O(1),\qquad
+q/\sqrt M\le C_J e^{-\gamma_J\lambda},
+\quad\gamma_J=\phi(1-1/(2\beta_0))>0.                    \tag{187.16}
+$$
+
+Thus q grows exponentially, log T=O_J(lambda), and all of (187.12) hold eventually for every fixed R, uniformly in the stated objects. In particular the smoothing condition (1+T)e^{-c_Rq}<=1 is fulfilled, however large the fixed constant e^{4R} is. No growing R is asserted.
+
+From (187.4), delta_1=O_{C_0}(lambda/M), so at late layers delta_1<=1/2 and
+
+$$
+\frac{|m_v-\mu_v|}{\sqrt{1+\mu_v}}
+\le\delta_1\sqrt{m_v/(1-\delta_1)}
+\le\delta_1\sqrt{14B_*q/\lambda}\le1.                    \tag{187.17}
+$$
+
+The last bound follows uniformly from m_v<=7B_*q/lambda and (187.16), and its left side actually tends to zero. Define U_{i,v}=(C_{i,v}-m_{i,v})/sqrt(1+m_{i,v}). Then, exactly,
+
+$$
+Z_v=\sum_{i=0,1}\frac{\sqrt{1+m_{i,v}}}{\sqrt{1+\mu_v}}U_{i,v}
+                  +\frac{m_v-\mu_v}{\sqrt{1+\mu_v}}.
+$$
+
+Every coefficient in the sum is at most sqrt2, because m_{i,v}<=m_v and mu_v>=(1-delta_1)m_v. Consequently, with S_Z=sum_v|Z_v|,
+
+$$
+S_Z\le d+\sqrt2\sum_{i,v}|U_{i,v}|.
+$$
+
+There are k=2d<=4 summands. Hölder with exponent k and (187.13) at R=4sqrt2 L gives, without independence of these variables,
+
+$$
+\boxed{\quad\mathbb E e^{L S_Z}\le B_L:=2e^{2L}M_{4\sqrt2L}.\quad}
+                                                               \tag{187.18}
+$$
+
+This proves the actual-law exponential envelope, uniformly over the stated original objects. The proof remains valid for tiny m_{i,v}; every normalization has1+m and no division by a small mean. If an actual group mean is zero, the corresponding count is identically zero and may simply be removed. The original full-group means, rather than reference means, appear in Z, and (187.17) pays the centering change explicitly.
+
+For comparison, the independent Poisson variables satisfy directly
+
+$$
+\log\mathbb E e^{tZ_v^P}
+=\mu_v(e^{t/\sqrt{1+\mu_v}}-1-t/\sqrt{1+\mu_v})
+\le t^2e^{|t|}/2.
+$$
+
+Thus, separately from the actual proof,
+
+$$
+\mathbb E e^{L\sum_v|Z_v^P|}\le P_L:=4e^{L^2e^L}.       \tag{187.19}
+$$
+
+Equations (187.18)–(187.19) also give uniform exponential tails B_L e^{-Lx} and P_L e^{-Lx} for the two sums of absolute standardized fluctuations. Constants are deliberately generous, not optimized or evaluated numerically.
+
+### 187.7 矩母函数与四阶导数的一致比较
+
+Fix A>0 and put L=2A+1. On a maximal coupling of the actual group vector and its independent Poisson comparison, the probability of disagreement is their TV distance, at most epsilon_Q. Such a coupling exists on the countable state space by matching the point masses' minima and coupling the two remaining masses. Because the centers and scales are the SAME exact mu_v, the standardized vectors agree whenever their count vectors agree.
+
+For a multi-index alpha with k=|alpha|<=4, put
+
+$$
+g_{\alpha,t}(z)=\prod_v z_v^{\alpha_v} e^{t\cdot z}.
+$$
+
+For |t_v|<=A and S=sum|z_v|,
+
+$$
+|g_{\alpha,t}(z)|^2\le S^{2k}e^{2AS}\le 8!e^{(2A+1)S}.
+\tag{187.20}
+$$
+
+For k=0 interpret S^0=1; for k>=1 the second inequality follows from S^{2k}<=(2k)!e^S. Applying Cauchy–Schwarz on the disagreement event, without assuming that event independent of either vector, yields
+
+$$
+\boxed{\quad
+|\mathbb E g_{\alpha,t}(Z)-\mathbb E g_{\alpha,t}(Z^P)|
+\le\sqrt{8!}\,\bigl(\sqrt{B_{2A+1}}+\sqrt{P_{2A+1}}\bigr)
+                      \sqrt{\varepsilon_Q}.
+\quad}                                                       \tag{187.21}
+$$
+
+This is the explicit parameter bound. Equations (187.5),(187.11),(187.18),(187.19) specify all quantities; the sufficient conditions are Chapter 185's finite conditions, (187.12) with R=4sqrt2(2A+1), delta_1<=1/2 and (187.17). Each is verified by the original scales, uniformly on J. There is no artificial group-mean bound.
+
+For every finite original layer the actual vector is bounded, so its MGF derivatives equal E g_{alpha,t}(Z). The Poisson vector has finite exponential moments of every fixed real parameter; domination by a slightly larger exponential proves the corresponding differentiation formula. The actual uniform envelope (187.18) is also available on every fixed slightly larger cube. Therefore (187.21) establishes uniform convergence of the MGF and all derivatives of total order at most4. It proves the derivative bound in Theorem 187.1 since epsilon_Q=O_J(Q^{-3}). There is no reliance on a formal power series, a fixed-order factorial substitution, or unbounded-degree moment inversion.
+
+For example, taking t=0 gives actual standardized mixed central moments through total order4, with the same O(Q^{-3/2}) error against the moving Poisson target. In one coordinate these reference values are
+
+$$
+\mathbb E Z^P=0,\quad
+\mathbb E (Z^P)^2=\frac\mu{1+\mu},\quad
+\mathbb E (Z^P)^3=\frac\mu{(1+\mu)^{3/2}},\quad
+\mathbb E (Z^P)^4=\frac{\mu+3\mu^2}{(1+\mu)^2}.
+$$
+
+The formulas follow by differentiating exp(mu(e^u-1-u)) four times at zero, or its Taylor coefficients. Mixed reference moments factor across the independent coordinates. The new justification of transfer is (187.18) and (187.21), not the formulas themselves.
+
+### 187.8 可转移的非有界量及结论边界
+
+The bound legitimately transfers specified unbounded fluctuation observables. Beyond the derivative observables in (187.21), it gives, for example,
+
+$$
+\left|\mathbb E\sum_v |Z_v|\log(1+|Z_v|)
+ -\mathbb E\sum_v |Z_v^P|\log(1+|Z_v^P|)\right|
+\le\sqrt{24}\,(\sqrt{B_1}+\sqrt{P_1})\sqrt{\varepsilon_Q}.
+\tag{187.22}
+$$
+
+Indeed sum x_v log(1+x_v)<=sum x_v^2<=(sum x_v)^2 for x_v>=0, its square is at most S^4<=24e^S, and the same maximal-coupling argument applies. This is a normalized absolute fluctuation weighted by a logarithm, a specified unbounded observable. It is not the posterior entropy or the likelihood surprise of the full data. Those involve additional groups, weights, deterministic centers and potentially rare data events; no full entropy/surprise transfer is claimed from two count coordinates.
+
+Chapter 185 already proves the existence of attained exponentially large means on the original line. If the allowed arc contains0, j=0 has actual mean asymptotic to q/(pi lambda sqrt(ab)); j=1 has the same leading order when the cutoff has room. In inward portions of internal root neighborhoods, lawful j_n=floor(u Q_n^2) with I(u)<phi(1/beta-1) have log mu=lambda(phi(1/beta-1)-I(u))+O(Q+log lambda). These are inherited attained examples, not new parameter constructions. The present estimates cover them and all other attained means, without selecting bounded-mean subsequences.
+
+The comparisons are with a moving independent Poisson vector of the exact original means, not a claim that those means converge or that root synchronization occurs. E2 remains separate and OPEN. We do not infer a new full-data entropy theorem, a result for data-selected groups, beta approaching the endpoints with the layer, an increasing number of coordinates, or a neighborhood whose radius grows with Q. Every finite real radius is allowed after fixing it first. Only derivative orders through4 are asserted here.
+
+
+### 187.9 来源与信息边界
+
+独立子序列的 Hölder 分解、Chernoff 界、实指数倾斜、整数格 Fourier 反演以及最大耦合均为经典方法。本章的新增连接是：在原始类别条件分配中证明实倾斜的统一常数代价，按同一实际总数律支付三段稀有事件，再以精确实际中心跨越全变差只控制有界量的限制。独立占据模型的阈值集中定理不自动适用于完整双计数群；文献适用条件见 Library 对应条目。
+
+这里的非有界可观测量仅涉及一或两个预先选定群的标准化波动。全数据后验熵、完整似然惊异度、增长维数、随层增长的实参数半径、依数据选择群和趋近参数端点都需要额外证明。该定理也不赋予移动均值的收敛性，不能替代 $E_2$ 的无限共同楼层同步条件。
+
+## 追加锚（本行以下为增补区）
