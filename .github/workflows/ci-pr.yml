@@ -22,7 +22,7 @@ jobs:
       work_required: ${{ steps.resolve.outputs.work_required }}
       plan_artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
@@ -32,7 +32,7 @@ jobs:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: python3 -B tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
       - id: upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ci-plan-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
@@ -81,13 +81,13 @@ jobs:
       CI_CHANGES_PATH: build/ci/changes.json
       CI_NEEDS: '{"resolve":{"result":${{ toJSON(needs.resolve.result) }}},"push":{"result":${{ toJSON(needs.push.result) }}}}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.CANDIDATE_SHA || github.sha }}
           fetch-depth: 2
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: needs.resolve.outputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ needs.resolve.outputs.plan_artifact_id }}
@@ -96,11 +96,11 @@ jobs:
       - id: route
         name: Validate delta prerequisites and resource plan
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage delta --base "$BASE_SHA"
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         if: steps.route.outputs.dotnet == 'true'
         with:
           global-json-file: global.json
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.route.outputs.current_required == 'true'
         with:
           artifact-ids: ${{ needs.push.outputs.artifact_id }}
@@ -112,7 +112,7 @@ jobs:
           UPSTREAM_RUN: ${{ needs.push.outputs.run_id }}
           UPSTREAM_ATTEMPT: ${{ needs.push.outputs.run_attempt }}
         run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/current/ci-current.tar.gz"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.route.outputs.engineering_required == 'true'
         with:
           artifact-ids: ${{ needs.push.outputs.engineering_artifact_id }}

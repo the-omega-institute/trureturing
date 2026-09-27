@@ -8,12 +8,10 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
-    public void MissingCacheWithEmptyBuildRootReproducesWithoutEnteringDonorPath()
+    public void MissingStampWithEmptyBuildRootReplacesLaneCacheFromWarmMain()
     {
-        // Pins the downgraded content-root predicate. "Clear" means the build root is absent,
-        // not "absent or empty": an existing but empty build root is still someone else's
-        // directory, and treating it as clear re-opens a publish window this path must not
-        // have. Widening the predicate back to "absent or empty" must turn this test red.
+        // An existing empty build root is not eligible for the build-only overlay. The linked
+        // lane is instead replaced from the required warm main-checkout cache.
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
@@ -33,18 +31,16 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner);
 
         Assert.True(result.Success, result.Error);
-        Assert.Empty(cloner.Invocations);
+        Assert.Single(cloner.Invocations);
         Assert.Empty(fixture.BuildStageDirectories);
-        Assert.False(fixture.BuildCacheExists);
+        Assert.True(fixture.BuildCacheExists);
         Assert.True(fixture.BuildDirectoryExists);
     }
 
     [Fact]
-    public void StampWriteFailurePreservesPublishedBuildAndNextEnsureRepairsStampInPlace()
+    public void StampWriteFailurePreservesPublishedBuildAndNextEnsureReplacesFromWarmMain()
     {
         using var repository = new TemporaryDirectory();
-        // The repair path runs the producer in place rather than cloning the donor again,
-        // so this test now needs the shared mathlib cache the producer consumes.
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "warm donor build\n");
@@ -61,8 +57,7 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.Contains("injected stamp write failure", exception.Message, StringComparison.Ordinal);
 
-        // The published build stays. This provisioner has no ability to delete the target
-        // build root, so a stamp write failure leaves a published-but-unstamped tree.
+        // The overlay provisioner leaves a published-but-unstamped tree when stamp writing fails.
         Assert.True(fixture.BuildDirectoryExists);
         Assert.True(fixture.BuildCacheExists);
         Assert.False(fixture.TargetStampExists);
@@ -74,11 +69,9 @@ public sealed partial class LeanCacheEnsureCommandTests
             new RecordingWorktreeProcessRunner(),
             retryCloner);
 
-        // That state is self-healing without re-entering the donor path: the content root is
-        // no longer clear, so ensure falls through to ReproduceExisting, which runs the
-        // producer in place and publishes the stamp over the preserved build.
+        // A linked lane with a missing stamp provisions only from the warm main checkout.
         Assert.True(retry.Success, retry.Error);
-        Assert.Empty(retryCloner.Invocations);
+        Assert.Single(retryCloner.Invocations);
         Assert.True(fixture.BuildCacheExists);
         Assert.True(fixture.StampMatches);
     }
