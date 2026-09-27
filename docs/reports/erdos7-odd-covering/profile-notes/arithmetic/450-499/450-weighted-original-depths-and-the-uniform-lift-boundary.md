@@ -835,3 +835,197 @@ This calculation includes no additional unit originals, retained core, or other 
 PE1--PE6 apply to arbitrary retained heights and all original outside labels. Their advance is a precise target: obtain one compatible outside law for which the MERGED distinct-phase excess cannot cover the retained reserve. Whole coverage supplied the lower demand, not the contradictory upper bound. The latter must still be derived from actual arithmetic, common-source or minimality relations. Qualitative outside survival is supplied by Hough--Nielsen, but a small phase-excess law does not follow from that existence result alone.
 
 The [phase-excess controls](../../../frontier/cover-geometry/merged-phase-excess/merged_phase_excess_controls.py) and [exact output](../../../frontier/cover-geometry/merged-phase-excess/merged_phase_excess_controls.json) check the constants,130 finite distinct cores on period315, the286-label deep-collision family on all143 outside points, its literal integer2 hole, the merged identity under one nonuniform eta, and the strict same-law comparison PE8. The finite checks are not a proof of the arbitrary-height reserve, which is supplied by section9.1, and no unrestricted odd noncoverage result follows here.
+
+## 10. Anchor phases give a same-law arithmetic supplier
+
+This ordinary finite argument continues section9 with the SAME original family m_i=b_i d_i and complete original-height carriers X_A times X_B, where B={3,5,7}. It supplies a sufficient condition for one outside law with zero merged phase excess. The ingredients are product conditioning, numerical exponent-vector distinctness and the union bound; no new general probability method or Lean verification is claimed. Original heights, numerical moduli, residues and owners are retained throughout.
+
+### 10.1. One anchor per retained numerical modulus
+
+For every appearing numerical d>1 choose one residue alpha_d modulo d. If a pure-B original has b_i=1 and d_i=d, REQUIRE alpha_d=a_i^B. There is at most one such original at any d because the original numerical moduli are distinct. Call an original bad when
+
+    i in J_alpha iff d_i=1
+       or (d_i>1 and a_i^B!=alpha_(d_i) mod d_i).
+
+Thus all A-only originals are bad. All originals with the chosen retained phase are free, including arbitrarily many labels with different numerical outside cofactors. The forced choice at pure-B originals ensures that no bad label has b_i=1. Without it an empty-support outside bad event would equal the whole X_A and escape the sums below.
+
+Define the actual outside avoidance set
+
+    Omega_alpha = X_A minus union_(i in J_alpha) C_i^A.
+
+At y in Omega_alpha there is no active A-only original, and for each numerical d>1 all active originals have phase alpha_d. After merging identical retained classes, this is a distinct-modulus B-core. By PE1 its complement is nonempty. Therefore
+
+    Omega_alpha nonempty implies original noncoverage;
+    F_H(y)=F_S(y)=0 for every y in Omega_alpha.      (AP1)
+
+The assertion uses one actual y with all original constraints together. It is not a selection of separate favorable y values for different d.
+
+### 10.2. A fixed retained d pays every outside height in one row
+
+For p in A let P_p^alpha be the union in X_p of all bad projected cylinders with outside support exactly{p}. Put
+
+    S_p^alpha = X_p minus P_p^alpha,
+    s_p^alpha = H_p(S_p^alpha),
+
+where H_p is uniform on the full ORIGINAL p-power carrier. Suppose every s_p^alpha>0 and use ONE product source
+
+    rho_alpha = product_(p in A) H_p(. | S_p^alpha).
+
+It avoids every pure-support bad event pointwise. For each mixed outside support E, |E|>=2, put
+
+    D_E^alpha = {d_i : i in J_alpha, support(b_i)=E},
+    N_E^alpha = |D_E^alpha|,
+    z_p^alpha = 1/((p-1)s_p^alpha),
+    Phi_alpha = sum_(E:|E|>=2) N_E^alpha product_(p in E) z_p^alpha.
+
+The value d=1 is included in D_E^alpha when A-only originals occur on E. The coefficient N_E counts different retained NUMERICAL moduli, not original labels or distinct phases.
+
+Fix one E and one d in D_E^alpha. Write b_i=product_(p in E)p^(e_(i,p)). At this fixed d, distinct original numerical m_i=b_i d imply distinct outside exponent vectors. For each actual original cylinder,
+
+    rho_alpha(C_i^A)
+       <=product_(p in E) p^(-e_(i,p))/s_p^alpha.
+
+Summing its finite actual row and enlarging to all positive exponent vectors gives
+
+    sum_(i in J_alpha:d_i=d,support(b_i)=E) rho_alpha(C_i^A)
+       <=product_(p in E) [(1/s_p^alpha) sum_(e>=1) p^(-e)]
+       =product_(p in E) z_p^alpha.                (AP2)
+
+This is an upper bound on actual finite data. It inserts neither a new original class nor a new residue at an unoccupied height. Different retained d values are counted separately by N_E; numerical distinctness does not remove that remaining multiplicity.
+
+The union bound over those rows, all under the SAME rho_alpha, now gives
+
+    rho_alpha(Omega_alpha)>=1-Phi_alpha.
+
+Consequently
+
+    all s_p^alpha>0 and Phi_alpha<1
+       imply eta_alpha=rho_alpha(. | Omega_alpha) exists,
+       eta_alpha(V_A)=1,
+       integral F_H d eta_alpha=integral F_S d eta_alpha=0,
+       and the original family is not a whole cover. (AP3)
+
+Conditioning is performed once on the common global event Omega_alpha. The zero-excess conclusion is pointwise on its support. This is an outside-law supplier for section9; it need not preserve a separately prescribed 1225 head marginal and is not a proof of the arbitrary-cofactor Gram lift from sections1--6.
+
+If A is empty, there are no bad originals after the forced pure-B choices. Interpret the product source on its singleton carrier and Phi_alpha=0; AP1 reduces directly to the retained-core theorem.
+
+### 10.3. A degree48 sufficient condition with a positive reserve
+
+An explicit uniform specialization of AP3 uses the additional pure-event hypothesis
+
+    H_p(P_p^alpha)<=1/(p-1),  for every p in A.     (AP4)
+
+It gives s_p^alpha>=(p-2)/(p-1) and z_p^alpha<=1/(p-2). One sufficient way to check AP4 is that, after merging identical pure-support bad projected classes, each outside modulus p^e has at most one bad residue. This extra property does NOT follow from distinct original numerical moduli: distinct retained d values can project to different bad residues at the same p^e. The exact pure union mass in AP4 is weaker than that convenient one-residue condition.
+
+Define the bad retained-depth incidence
+
+    D_alpha=max_(p in A) sum_(E contains p, |E|>=2) N_E^alpha,
+
+with D_alpha=0 if A is empty. This is a weighted incidence: a support with N_E retained numerical rows contributes N_E at each of its primes.
+
+Every p in A is at least11. With beta_p=1/(p-2)<1 and |E|>=2,
+
+    product_(p in E) beta_p <= (1/2)sum_(p in E) beta_p^2.
+
+For a pair this is 2ab<=a^2+b^2. For larger E, discard all but two factors first and then enlarge the sum. Therefore
+
+    Phi_alpha <=(D_alpha/2) sum_(p>=11 prime) 1/(p-2)^2. (AP5)
+
+An elementary exact bound for the entire infinite prime sum is
+
+    Q = sum_(p in P97) 1/(p-2)^2
+        +1/2520+1/2580+1/2700+1/2760
+        +1/2880+1/3060+1/3120+1/3300
+      =25333216947944940335217017219727643
+         /619258216451156108309703080921860800
+      <1/24,
+
+where
+
+    P97={11,13,17,19,23,29,31,37,41,43,47,
+         53,59,61,67,71,73,79,83,89,97}.
+
+To justify the infinite tail, every prime above97 lies in one of the eight reduced residue classes modulo30. Bound each entire progression 30k+r beyond97, allowing its composite members:
+
+| r | first k | first integer | tail upper bound |
+|---|---:|---:|---:|
+| 1 | 4 | 121 | 1/3120 |
+| 7 | 4 | 127 | 1/3300 |
+| 11 | 3 | 101 | 1/2520 |
+| 13 | 3 | 103 | 1/2580 |
+| 17 | 3 | 107 | 1/2700 |
+| 19 | 3 | 109 | 1/2760 |
+| 23 | 3 | 113 | 1/2880 |
+| 29 | 3 | 119 | 1/3060 |
+
+For a=30k+r-2, the centered-cell integral of (30x+r-2)^(-2) on[k-1/2,k+1/2] equals 1/(a^2-225)>1/a^2. Summing those cells from the stated first k to infinity yields the table. In particular composites such as119 are harmless enlargements. This proves the infinite estimate; a finite list of tested primes would not do so.
+
+Under AP4 and D_alpha<=48, AP5 gives Phi_alpha<=24Q<1. AP3 supplies one zero-excess law, with the explicit common product-source reserve
+
+    rho_alpha(Omega_alpha)>=1-24Q
+       =469208737519897511020611152016557
+          /25802425685464837846237628371744200
+       >0.01818467547.                              (AP6)
+
+The constant48 is a sufficient threshold, not an optimality claim. The exact criterion AP3 can succeed when AP4 fails.
+
+### 10.4. Collisions may remain: a dominant-phase upper test
+
+Complete anchor avoidance is stronger than section9 needs. For any ONE probability eta supported on V_A and nonnegative weights w_d, let F_w=sum_d w_d(R_d-1)_+. The merged indicator identity gives
+
+    integral F_w d eta
+       =sum_d w_d[sum_r eta(E_(d,r))-eta(E_d)]
+       <=sum_d w_d[sum_r eta(E_(d,r))-max_r eta(E_(d,r))]. (AP7)
+
+The maximum chooses one deterministic free phase at each d after fixing eta. It does not change the law from one d or query to another. The subtraction remains a whole SAME-PHASE UNION, not a sum of independently optimized original labels.
+
+For a source sigma not yet supported on V_A, retain s=sigma(V_A)>0 and put Q_(d,r)=sigma(V_A intersect E_(d,r)). Applying AP7 to eta=sigma(.|V_A), noncoverage follows from either
+
+    (1/s)sum_d [sum_r Q_(d,r)-max_r Q_(d,r)]/d <5/48,
+
+or
+
+    (1/s)sum_d omega_B(d)[sum_r Q_(d,r)-max_r Q_(d,r)] <1/3. (AP8)
+
+These are alternative sufficient inequalities, not additive credits. They permit phase collisions at every outside point. AP3 is the special supplier making every nonanchor phase term zero. No unrestricted upper bound in AP8 is established here.
+
+### 10.5. Two actual families show the criteria have different scopes
+
+For a high-incidence family take ten outside primes Q={11,13,17,19,23,29,31,37,41,43}. For each three-element subset E of Q include the original modulus3*product_(q in E)q with retained phase0 modulo3 and outside residues0. Add the original3*product_(q in Q)q with retained phase1 and all outside residues0. All121 moduli are odd and distinct.
+
+With alpha_3=0, only the last original is bad. There are no bad pure supports, N_Q=1 and D_alpha=1, so AP4 and the degree48 criterion hold. The retained prime3 belongs to121 distinct exact original supports; each q belongs to C(9,2)+1=37. Thus the old global support-incidence-at-most-five hypothesis does not hold. Each triple-support anchor has a private witness by setting exactly its three outside coordinates to0 and the others to1, with retained coordinate0. The large class has a private witness at retained coordinate1. Retained coordinate2 misses the whole family. This is a noncover diagnostic establishing scope separation, not evidence of an odd cover or an unrestricted theorem.
+
+Conversely, for e=1,...,120 include two originals with retained modulus d=3^e, outside cofactors11*13 and11^2*13, retained phases0 and1 respectively, and all outside residues0. All240 numerical moduli are distinct, while there is only one exact original mixed support{3,11,13}; its global support incidence is1.
+
+Every possible anchor at each d leaves at least one bad original. There are no pure outside bad events, so s_11=s_13=1, while N_{11,13}=120. Consequently every anchor has
+
+    Phi_alpha=120/((11-1)(13-1))=1.
+
+AP3's strict condition fails for every anchor, even though y_11=1 avoids every original outside cylinder. This demonstrates both reverse noncontainment and nonnecessity: the existence of a collision-free outside point does not imply Phi_alpha<1. The degree48 and old global-degree-five sufficient classes are incomparable. Their failures concern these estimates, not noncoverage itself.
+
+The exact criterion also recovers section3's known successful law on the702-label uniform-lift diagnostic: choose the pure ternary phases as anchors. At each outside p the bad pure projections forbid0 and1, so s_p=(p-2)/p>0, while there are no mixed outside bad supports and Phi_alpha=0. The one outside product law conditioned on y_p notin{0,1} has zero phase excess. Here 2/p>1/(p-1), so AP4 fails although AP3 succeeds. This is reuse of that diagnostic's successful phase-aware lift, not a new analysis of its second moment.
+
+### 10.6. Literature interfaces and the remaining arithmetic condition
+
+Hough--Nielsen Theorem1 already supplies V_A nonempty, as explained in section9. Prime-support minimality is not needed for that fact. It provides no bound on Phi_alpha or AP8.
+
+Theorem4 of [Hough--Nielsen](https://arxiv.org/abs/1703.02133) allows finite residue SETS at each numerical modulus. The bad outside family can be grouped in that form even when different original labels project to the same b. A nonnegative supersolution to its displayed inequalities is still a premise to prove. Its equation(6) states queries in the supplied modulus inventory; extending to additional queries needs the corresponding extension argument. AP2--AP6 bypass such a supersolution only for their stated sufficient class.
+
+[Scott--Sokal Theorem4.1](https://arxiv.org/abs/cond-mat/0309352) can improve a union-bound supplier when its conditional nonneighbor bounds and strict Shearer-region membership hold. Under rho_alpha, disjoint-support events are independent, so the support-intersection graph is available. The required positivity is for the relevant induced-subset polynomials; positivity of just one full endpoint polynomial does not suffice. No such universal positivity is supplied here.
+
+The staged distorted-measure method of [BBMST](https://arxiv.org/abs/1811.03547) is another candidate interface, but its quoted simplified numerical-modulus moment bounds do not automatically apply to a projected family with repeated b and several residues. Required label/tuple multiplicities and moment estimates under the STAGED distorted laws must be checked. In particular AP2 is proved under the particular PRODUCT rho_alpha and cannot be carried unchanged to those distorted laws. These are missing interface obligations, not a claimed application already completed.
+
+The [squarefree parallel-hyperplane theorem](https://arxiv.org/abs/1901.11465) has its own odd-prime product-box and proper-support hypotheses. It supplies no arbitrary-height extension of AP3. The present construction permits arbitrary finite original heights because it retains them and explicitly sums their distinct exponent vectors.
+
+The unresolved arithmetic issue is now explicit: original distinctness pays all outside cofactors within a fixed retained d, but does not by itself control the repetition N_E across different d, the actual pure survivor masses s_p, or the weaker weighted dominant-phase deficits. No implication from whole-cover minimality or private witnesses to a successful anchor or an AP8 bound has been proved. The240-label example also prevents treating AP3 as a necessary description of successful outside laws. The unrestricted odd-covering goal remains open in this route.
+
+### 10.7. Exact finite controls
+
+The exact rational controls verify the prime-tail constants and reserve, the two scope-separation families, each fixed-d row bound in one actual CRT source, and the merged subtraction identity under one common product law. The actual12-label CRT source has full outside heights11^2 and13, pure survivor masses98/121 and12/13,1176 product-source points and1142 points after all bad events are removed. Its values are
+
+    rho_alpha(Omega_alpha)=571/588,
+    Phi_alpha=1573/47040.
+
+Every retained outside point avoids A-only originals and has zero distinct-phase excess. Its pure-event mass at11 violates AP4, while AP3 succeeds, checking the distinction between exact and simplified suppliers. These finite tests are controls of the stated formulas; the proofs of arbitrary finite heights and the infinite tail are the arguments above, and no Lean or unrestricted whole-cover result is inferred from the controls.
+
+The [anchor-phase controls](../../../frontier/cover-geometry/merged-phase-excess/anchor_phase_controls.py) and [exact output](../../../frontier/cover-geometry/merged-phase-excess/anchor_phase_controls.json) retain these finite checks. Run the program with an explicit `--output` path.
