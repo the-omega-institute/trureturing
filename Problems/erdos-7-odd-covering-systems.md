@@ -28,12 +28,13 @@ Divisibility is in the integers. Set membership enforces distinct moduli;
 there is no bound on their sizes, exponents, number, or total prime support.
 A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
-23 September 2026. The results below do not settle this unrestricted assertion.
+28 September 2026. The results below do not settle this unrestricted assertion.
 
 The complete results and proofs are organized below. Each link opens the corresponding mathematical section; all original assumptions, bounds and open obligations are retained.
 
 ### Results and proofs
 
+- [Every complete full12222 source admits one original-source law with Gamma1225 at most2865/319; graph reductions and a complete128-layout classification finish the specified C75/C76 three-inactive-root lists, while the other cut74–76 branches and arbitrary-height lift remain open](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md#every-complete-full12222-source-admits-a-common-law-below-nine)
 - [Sharp mass19 transport and maximum-flow terminal synchronization give conditional74–76 laws; complete actual sources refute universal terminal-cap feasibility despite good common laws, motivating one joint coarse-cap flow criterion](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md#mass19-transport-terminal-synchronization-and-conditional-balance-consumers)
 - [Every complete monochromatic anchor supplies a law below nine; two singleton and two double fibres allow an arbitrary fifth fibre, and gap12/gap222 permit arbitrary remaining fibres, supplying three further C75 shapes](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md#every-complete-monochromatic-anchor-supplies-a-common-law-below-nine)
 - [Every complete full11222 source admits one common law with Gamma1225 at most503/56; distinct-label punctures and all64 root-query layouts supply the final C76 three-inactive-root shape, while the one-/two-inactive branches remain open](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md#every-complete-full11222-support-has-one-common-law-below-nine)
