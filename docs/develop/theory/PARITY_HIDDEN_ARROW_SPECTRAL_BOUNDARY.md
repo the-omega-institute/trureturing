@@ -52828,3 +52828,440 @@ The endpoint domination uses Re H bounded away from zero. It does not control a 
 第 169 章的计数返回界以加法误差使用；总振幅下界成立以后才除去同一个原始 $\sigma$。第 171 章的整线结果只在核对精确反射关系之后复用。附加精度零点的可移除性属于重组后表示的事实，不能据此推断原始物理转变。来源版本、日期及文本提取限制见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（本行以下为增补区）
+
+## 175. 原幅度的得分单射：双根实际均值比的有理基准与符号修正
+
+本章利用原幅度方程证明幅度 $r$ 超越，并据此证明在充分晚的原始层上，所有非负整数计数对的补偿得分全局单射。完整得分组因此恰对应一个计数对；原相对局部比较不再需要为远处同分碰撞支付加法余项。在固定计数截断内，即使组均值趋零，也能一致比较实际均值。
+
+对索引 $j>k$，两个同层实际组均值的比值具有同一个有理阶乘基准。对原平稳对与依赖路径实验，实际比值均严格低于该基准，而参考系数比值严格高于它；首项补偿修正大于实际行比较误差，连相邻索引也保持这个符号。原 Gamma 等系数曲线没有非对角整数共同中心，但所得排除宽度远小于同步所需的非零宽条带，不能推出同步集 $E_2$ 为空。以下是普通数学推导，未作 Lean 认证。
+
+### 175.1 原始模型、完整得分组与一致范围
+
+All logarithms are natural. Retain
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q_n=10^{e_n},\quad
+P_n=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h}.
+$$
+
+At layer n write Q=Q_n, P=P_n, lambda=Q^3, N=Q^2. Put
+
+$$
+\frac{\ln(1+r)}{-\ln(1-r)}=\vartheta,\qquad
+ a=(1+r)/2,\quad b=(1-r)/2,\quad h=-\ln(1-r)>0,
+$$
+$$
+\phi=a\ln(1+r)+b\ln(1-r)>0.
+$$
+
+The small positive decimal tail satisfies
+
+$$
+t_n:=\vartheta-P/Q>0,\qquad t_n<2\,10^{-Q^5}. \tag{175.1}
+$$
+
+Keep every original floor and count:
+
+$$
+k_0=\lfloor aQ^3\rfloor,\quad l_0=Q^3-k_0,\quad
+z_0=k_0\ln(1+r)+l_0\ln(1-r),
+$$
+$$
+L_0(\beta)=\left\lfloor\frac{\phi Q^3}{\beta\ln2}\right\rfloor,
+\quad M=2^{L_0(\beta)},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad \epsilon=\frac{rq}{M-q},\quad T=2MQ^3. \tag{175.2}
+$$
+
+Write K_j=k_0+Qj and B_j=l_0+Pj; the letter B_j here denotes a count, not a derivative. The full score of a count pair is
+
+$$
+W(K,B)=K\ln\frac{1+r}{1-\epsilon}
+       +B\ln\frac{1-r}{1+\epsilon}. \tag{175.3}
+$$
+
+The actual mean of its complete score group is denoted mu_j^E, for E=pair or path. The definition includes every count pair of that score; no new truncated observation is introduced.
+
+Fix a compact interval J inside D=(beta_*,1), and one fixed sufficiently large proof cutoff K+B<=C_0 Q^3. All uniform assertions below concern the original count-line indices inside this cutoff whose groups lie in the original window. The internal root arcs used for synchronization are among these indices for all sufficiently large original layers. Constants depend on J, C_0 and the original amplitude, not on j,k,n or the sizes of their means. This is not a statement about indices outside every fixed cutoff.
+
+For beta in J, the original scale identities give, uniformly,
+
+$$
+z_0=\phi Q^3+O(1),\quad
+\ln M=\phi Q^3/\beta+O(1),\quad
+\ln q=\phi(1/\beta-1)Q^3+O(1),
+\quad \epsilon=\exp(-\phi Q^3+O(1)). \tag{175.4}
+$$
+
+In particular q tends exponentially to infinity and 0<q/(M-q)<1 eventually.
+
+The synchronization question still asks for one beta in D, one finite H, and infinitely many common original Q_n with both positive- and negative-root complete-group means in [exp(-H),exp(H)], separately for pair and path with the same beta,Q,M,q and floors. The results below do not replace this by per-layer parameters or different marginal subsequences.
+
+### 175.2 原幅度的超越性
+
+**引理 175.1（原幅度超越）。** The original r, and consequently a and b, are transcendental over Q.
+
+**Proof.** Suppose r were algebraic. Set x=1+r and y=1-r. They lie in one fixed number field K of degree d. Choose an integer A>=1 such that Ax and Ay are algebraic integers. The amplitude equation and (175.1) give
+
+$$
+x^Q y^P=\exp(hQ t_n)>1,
+\qquad 0<x^Qy^P-1\le C Q\,10^{-Q^5}. \tag{175.5}
+$$
+
+The upper bound holds for sufficiently large n because hQ t_n tends to zero.
+
+The number
+
+$$
+\alpha_n=A^{Q+P}(x^Qy^P-1)
+=(Ax)^Q(Ay)^P-A^{Q+P}
+$$
+
+is a nonzero algebraic integer. Its norm to Q is therefore a nonzero integer. To recall the elementary reason, multiplication by an algebraic integer on the ring of integers has an integral characteristic polynomial, and its determinant is the product of its conjugates. A nonzero element has nonzero determinant. Thus the absolute product of all d conjugates of alpha_n is at least one.
+
+There is a fixed C_1>=2 which bounds A, |A sigma(x)| and |A sigma(y)| for every embedding sigma of K. Since P<Q eventually, each conjugate has absolute value at most 2 C_1^{Q+P}. Taking out the identity embedding gives
+
+$$
+|x^Qy^P-1|
+\ge A^{-(Q+P)}(2C_1^{Q+P})^{-(d-1)}
+\ge \exp(-C_2Q). \tag{175.6}
+$$
+
+This contradicts (175.5). Hence r is transcendental. The affine relations between r,a,b give the last assertion. QED.
+
+This proof uses the extremely small error at the *current original rational prefix*. It does not infer transcendence of r merely from transcendence of a ratio of logarithms. No theorem on logarithmic forms is needed.
+
+### 175.3 全局得分单射与处处相对的实际均值比较
+
+**定理 175.2（全计数域的得分单射）。** At every sufficiently late original layer, uniformly for beta in J, the map (K,B) -> W(K,B) is injective on all nonnegative integer count pairs. Consequently each original complete score group is exactly the group of rows with its single count pair, even outside the proof cutoff.
+
+**Proof.** Fix the layer and beta, and put c=q/(M-q), a rational number with 0<c<1. If two scores agree, their integer differences i,j satisfy
+
+$$
+\left(\frac{1+r}{1-cr}\right)^i
+\left(\frac{1-r}{1+cr}\right)^j=1. \tag{175.7}
+$$
+
+The two sides define a rational-function equation over Q in the variable r. Since r is transcendental and all displayed denominators at r are nonzero, clearing denominators forces the rational-function identity
+
+$$
+\left(\frac{1+X}{1-cX}\right)^i
+\left(\frac{1-X}{1+cX}\right)^j\equiv1.
+$$
+
+The four points -1,1,1/c,-1/c are distinct. The order of this rational function at X=-1 is i, and its order at X=1 is j. An identically one function has both orders zero. Hence i=j=0. This proves injectivity for arbitrary integer differences, so no remote count pair can share a score. QED.
+
+The original reference point masses are
+
+$$
+f_j=e^{-\lambda}\frac{(a\lambda)^{K_j}(b\lambda)^{B_j}}{K_j!B_j!},
+\qquad
+f_j^0=e^{-\lambda}
+\frac{((1-\epsilon)\lambda/2)^{K_j}
+      ((1+\epsilon)\lambda/2)^{B_j}}{K_j!B_j!},
+$$
+$$
+m_j=qf_j+(M-q)f_j^0,\qquad \chi_{Q,j}=2e^{-z_0}f_j. \tag{175.8}
+$$
+
+The operative point comparison is Theorem 17.2 of [the original model volume](PARITY_HIDDEN_ARROW.md), specialized in Chapter 72, equation (72.8): throughout the fixed cutoff, the mean nu_j of rows with exactly this count pair satisfies
+
+$$
+|\nu_j^{\mathcal E}-m_j|\le C_J Q^9M^{-1}m_j. \tag{175.9}
+$$
+
+It holds separately for both experiments. Its proof uses the exact marked-row matrix PGF for a path, an isolated eigenvalue expansion on a fixed complex polydisc, and Cauchy coefficient extraction at the Poisson saddle radii. The bound remains multiplicative for exponentially small point masses: dividing by the Poisson point mass costs only the polynomial Stirling factors in equation (17.26) of the original model volume. The pair experiment has its own exact multinomial PGF. Rows of a path have not been assumed independent.
+
+Theorem 175.2 proves mu_j=nu_j exactly. Therefore the complete-group comparison improves here to
+
+$$
+\boxed{\quad
+\mu_j^{\mathcal E}=m_j(1+\eta_j^{\mathcal E}),\qquad
+|\eta_j^{\mathcal E}|\le C_J Q^9/M.
+\quad} \tag{175.10}
+$$
+
+There is no additive remote-group term in (175.10). The earlier bound with an additional O(M^{-10}) remains true; its robust allowance for collisions is unnecessary for this particular amplitude.
+
+For clarity, a uniformly relative comparison with the original proxy also follows. Since
+
+$$
+f_j/f_j^0=e^{W_j},\qquad
+W_j-z_0=O_{J,C_0}(Q^3(\epsilon+t_n)),
+$$
+$$
+\frac{m_j}{Me^{-z_0}f_j}
+=\frac{q}{Me^{-z_0}}+(1-q/M)e^{z_0-W_j},
+$$
+
+we have
+
+$$
+\frac{\mu_j^{\mathcal E}}{2^{L_0}\chi_{Q,j}}
+=1+O_{J,C_0}\left(Q^9/M+q^{-1}+Q^3(\epsilon+t_n)\right). \tag{175.11}
+$$
+
+The q-floor error is included in q^{-1}. This is relative throughout the fixed original count cutoff, without imposing a lower band on mu_j. By (175.4), its error is O(exp(-c_J Q^3)) for some c_J>0. The exact floor k_0 remains inside every factorial; no expansion has replaced it.
+
+### 175.4 同层有理阶乘比与精确联合混合恒等式
+
+For two original indices j>k in the cutoff let s=j-k>=1 and put
+
+$$
+U_Q=Q^3/2\in\mathbb Z,
+\qquad
+\mathcal R_{Q;j,k}
+=U_Q^{(Q+P)s}\frac{K_k!B_k!}{K_j!B_j!}\in\mathbb Q_{>0}. \tag{175.12}
+$$
+
+This is a single rational number from the same layer and count floor. It is not the product of separate marginal estimates. Define
+
+$$
+\tau_Q=hQ t_n>0,\qquad
+b_Q=-Q\ln(1-\epsilon)-P\ln(1+\epsilon). \tag{175.13}
+$$
+
+For late layers, since P/Q tends to vartheta<1,
+
+$$
+b_Q=\epsilon(Q-P)+O(Q\epsilon^2)>0. \tag{175.14}
+$$
+
+The amplitude equation implies
+
+$$
+a^Qb^P=2^{-(Q+P)}\exp(\tau_Q).
+$$
+
+Consequently the two point ratios are exactly
+
+$$
+\frac{f_j}{f_k}=\mathcal R_{Q;j,k}e^{s\tau_Q},
+\qquad
+\frac{f_j^0}{f_k^0}=\mathcal R_{Q;j,k}e^{-sb_Q}. \tag{175.15}
+$$
+
+Set
+
+$$
+w_k=\frac{qf_k}{qf_k+(M-q)f_k^0}\in(0,1).
+$$
+
+Using the *same* lower-index masses in numerator and denominator gives the exact identity
+
+$$
+\boxed{\quad
+\frac{m_j}{m_k}
+=\mathcal R_{Q;j,k}
+ \left[w_k e^{s\tau_Q}+(1-w_k)e^{-sb_Q}\right].
+\quad} \tag{175.16}
+$$
+
+No new probabilistic mixing law has been inserted: (175.16) is algebra on the two deterministic terms of the original mean m_j. In particular
+
+$$
+-sb_Q\le\ln(m_j/m_k)-\ln\mathcal R_{Q;j,k}\le s\tau_Q. \tag{175.17}
+$$
+
+The weights in (175.16) cannot be optimized independently of j,k or the floors. They satisfy the useful uniform bound
+
+$$
+w_k=\tfrac12+O_{J,C_0}\left(q^{-1}+Q^3(\epsilon+t_n)\right). \tag{175.18}
+$$
+
+Indeed (M-q)e^{-W_k}/q equals
+$(1-q/M)e^{z_0-W_k}/(q/(Me^{-z_0}))$, which is 1 plus the displayed error. Taking 1/(1+this quantity) proves (175.18).
+
+### 175.5 实际双根均值比的首项符号
+
+**定理 175.3（实际均值比的严格符号修正）。** Uniformly for beta in J and all original cutoff indices j>k, separately for E=pair and path,
+
+$$
+\boxed{
+\ln\frac{\mu_j^{\mathcal E}}{\mu_k^{\mathcal E}}
+=\ln\mathcal R_{Q;j,k}
+ -\frac12\epsilon(Q-P)(j-k)\,[1+O_{J,C_0}(Z_Q)],
+} \tag{175.19}
+$$
+
+where one may take
+
+$$
+Z_Q=Q^8/q+Q^3\epsilon+t_n/\epsilon\longrightarrow0. \tag{175.20}
+$$
+
+In particular, for every sufficiently late original layer,
+
+$$
+\frac{\mu_j^{\mathcal E}}{\mu_k^{\mathcal E}}
+<\mathcal R_{Q;j,k}
+<\frac{\chi_{Q,j}}{\chi_{Q,k}}. \tag{175.21}
+$$
+
+The constants and threshold are uniform on the fixed parameter interval and count cutoff. The means need not lie in any bounded positive band.
+
+**Proof.** All cutoff indices have |j|=O(Q^2), so s=O(Q^2). Let alpha=s tau_Q and gamma=s b_Q. Equations (175.1),(175.4),(175.14) give
+
+$$
+0<\alpha\le C Q^3t_n,\qquad
+0<\gamma\le C Q^3\epsilon=o(1),\qquad
+\alpha/\gamma\le C t_n/\epsilon=o(1). \tag{175.22}
+$$
+
+For 0<=w<=1 and alpha,gamma tending uniformly to zero, elementary Taylor expansion, with bounded second derivatives of exp and log near one, gives
+
+$$
+\ln\{we^{\alpha}+(1-w)e^{-\gamma}\}
+=w\alpha-(1-w)\gamma+O((\alpha+\gamma)^2).
+$$
+
+Use (175.18), alpha/gamma from (175.22), and b_Q=epsilon(Q-P)(1+O(epsilon)). Dividing the error by epsilon(Q-P)s, which is positive, shows that (175.16) equals
+
+$$
+\ln(m_j/m_k)-\ln\mathcal R_{Q;j,k}
+=-\tfrac12\epsilon(Q-P)s
+\left[1+O\left(q^{-1}+Q^3\epsilon+t_n/\epsilon\right)\right]. \tag{175.23}
+$$
+
+Here Q^3 t_n is absorbed by Q^3 epsilon eventually, and the quadratic Taylor error divided by gamma is O(gamma)=O(Q^3 epsilon). This argument works even at the minimum difference s=1.
+
+By (175.10), changing m_j/m_k to the actual ratio changes its logarithm by O(Q^9/M). Since Q-P is bounded below by a positive multiple of Q,
+
+$$
+\frac{Q^9/M}{\epsilon(Q-P)s}
+\le C\frac{Q^8}{M\epsilon}
+\le C_r Q^8/q, \tag{175.24}
+$$
+
+where M epsilon=Mrq/(M-q)>=rq. Thus this actual-law error is smaller than the signed term, uniformly including s=1. Equations (175.23)–(175.24) prove (175.19).
+
+The quantities in (175.20) tend exponentially to zero on J: q grows exponentially, epsilon decays exponentially, and t_n decays on the much smaller scale 10^{-Q^5}. The leading term in (175.19) is strictly negative, proving the first inequality in (175.21). The exact identity (175.15), with tau_Q>0, proves the second. QED.
+
+A useful unsigned consequence, now with full relative scope, is
+
+$$
+\frac{\mu_j^{\mathcal E}}{\mu_k^{\mathcal E}}
+=\mathcal R_{Q;j,k}\bigl(1+O_{J,C_0}(e^{-cQ^3})\bigr) \tag{175.25}
+$$
+
+for some c>0. The stronger content of (175.19) is its uniform leading sign and its proof that the actual row error is smaller than that leading correction. An o(1) bridge alone would not justify (175.21).
+
+The rational anchor can depend on the original floor through K_j,B_j. At the exact Gamma tangent scale d comparable to Q, the original order-one intercept correction therefore remains present. It has not been suppressed by replacing the Gamma curve with its limiting curve.
+
+### 175.6 精确共同中心不存在及算术排除尺度
+
+Let ell_Q be the real Gamma extension of ln chi, and let G_Q be its opposite branch, so ell_Q(G_Q(x))=ell_Q(x). Keep its domain on the original internal arcs.
+
+**定理 175.4（精确等系数整数中心的排除）。** For any original layer and any distinct feasible integer indices j,k, the ratio chi_{Q,j}/chi_{Q,k} is transcendental. In particular G_Q(j) is never an integer on the opposite branch. For all sufficiently late layers and j>k in the fixed cutoff, the sign of ln(chi_{Q,j}/chi_{Q,k}) is the sign of ln R_{Q;j,k}.
+
+**Proof.** The exact factorial formula gives, for j>k,
+
+$$
+\frac{\chi_{Q,j}}{\chi_{Q,k}}
+=C\,(1+r)^{Qs}(1-r)^{Ps},\qquad C\in\mathbb Q_{>0}. \tag{175.26}
+$$
+
+The polynomial C(1+X)^{Qs}(1-X)^{Ps} is nonconstant. A nonconstant rational polynomial evaluated at a transcendental real cannot be algebraic: otherwise its value's minimal polynomial, composed with it, would give a nonzero rational polynomial vanishing at that real. Lemma 175.1 thus proves transcendence of (175.26). The reciprocal handles j<k. Equality of two coefficients would give ratio one, which is impossible. Hence the opposite equal-coefficient branch has no integer lattice point.
+
+For the quantitative sign assertion, write
+
+$$
+\mathcal R=U_Q^{(Q+P)s}/D_{jk},\quad
+D_{jk}=\prod_{t=K_k+1}^{K_j}t\prod_{t=B_k+1}^{B_j}t\in\mathbb Z_{>0}. \tag{175.27}
+$$
+
+The first product contains Qs>=10 consecutive positive integers and hence a multiple of3. But U_Q=10^{3e_n}/2 has prime factors only 2 and5. Therefore D_{jk} cannot equal U_Q^{(Q+P)s}, and R is never one.
+
+In the fixed cutoff both integers in this last comparison are at most exp(C Q^3 ln Q). Distinct positive integers A,B obey
+
+$$
+|\ln(A/B)|\ge |A-B|/\max(A,B)\ge1/\max(A,B).
+$$
+
+Thus
+
+$$
+|\ln\mathcal R|\ge\exp(-C Q^3\ln Q). \tag{175.28}
+$$
+
+On the other hand, (175.15) changes this logarithm by the positive amount s tau_Q<=C Q^3 10^{-Q^5}, smaller than half (175.28) at late layers. This proves sign stability and also
+
+$$
+|\ell_Q(j)-\ell_Q(k)|\ge\tfrac12\exp(-C Q^3\ln Q). \tag{175.29}
+$$
+
+All estimates keep the exact factorials and floors. QED.
+
+This obstructs a concrete proposed route: select an exact integer point on the original equal-coefficient curve and use it as a common center for later rational lifts. There is no such seed at any layer. It is an obstruction on the actual family, not a parabola countermodel.
+
+The obstruction is deliberately limited. Its lower bound (175.29) tends to zero far faster than the O(1) logarithmic coefficient gap allowed by a fixed mean bound. Equivalently, on internal arcs |ell_Q'| is comparable to Q, so the arithmetic exclusion radius is only of order exp(-C Q^3 ln Q)/Q, far smaller than the required constant/Q strip. Neither transcendence of every finite coefficient ratio nor absence of exact equality prevents ratios tending to one. Nor does (175.28) control the sign of the *actual* mean ratio relative to one when R>1: the compensation correction in (175.19) can exceed the lower bound (175.28). No unjustified sign transfer is made there.
+
+For an additional universal arithmetic description, let v_3 denote the exponent of3 in a nonzero rational. Elementary factorial valuation gives
+
+$$
+v_3(\mathcal R)
+=-\frac{(Q+P)(j-k)}2+O_{C_0}(\ln Q). \tag{175.30}
+$$
+
+Indeed v_3(m!)=sum_{h>=1} floor(m/3^h)=m/2+O(ln(m+2)); subtract the four valuations in (175.27), and use v_3(U_Q)=0. This follows by summing the finite factorial valuation formula.
+
+For a fixed beta in E2 with roots u>0>v, the original root localization implies j-k=N(u-v)+O(ln Q/Q) on its common bounded-mean subsequence. Hence every possible synchronization obeys
+
+$$
+\frac{v_3(\mathcal R_{Q;j,k})}{Q^3}
+\longrightarrow-\frac{(1+\vartheta)(u-v)}2<0, \tag{175.31}
+$$
+
+while (175.19) forces R to stay in a fixed positive real band. This is a necessary structural feature of all candidates, not an exclusion of a specially designed subset. It is not contradictory: rational numbers can remain bounded in the real absolute value while their 3-adic norms grow without bound. No positive real lower hit is inferred from the valuation.
+
+### 175.7 回接原始同步问题的共同层与取整条件
+
+Use the original rate
+
+$$
+I(x)=J_a(a+x)+J_b(b+\vartheta x),\quad
+J_c(y)=y\ln(y/c)-y+c,\quad
+F(x)=\phi/(\phi+I(x)).
+$$
+
+For fixed beta in D, write u=x_+(beta), v=x_-(beta), A=I'(u)>0 and B=-I'(v)>0. On any common fixed band, the unchanged signed displacements are
+
+$$
+j-Nu=-\frac{3\ln Q}{QA}+O(Q^{-1}),\qquad
+k-Nv=\frac{3\ln Q}{QB}+O(Q^{-1}). \tag{175.32}
+$$
+
+The original floor correction C_Q contains both Delta_Q=floor(aQ^3)-aQ^3 and rho_Q={phi Q^3/(beta ln2)}. Equation (175.11) is a relative bridge on the entire cutoff and therefore, in particular, on this actual band. It does not discard either floor or either displacement.
+
+On a synchronization subsequence with one H, (175.19) implies
+
+$$
+\ln\mathcal R_{Q;j,k}
+=\ln(\mu_j^{\mathcal E}/\mu_k^{\mathcal E})
+ +\tfrac12\epsilon(Q-P)(j-k)(1+o(1)). \tag{175.33}
+$$
+
+Thus R lies in [exp(-2H-o(1)),exp(2H+o(1))] with the signed correction shown. Both experiments have this same rational anchor; their actual ratios differ by O(Q^9/M) in logarithms by (175.10). This identifies a joint quantity in the same realization, not two marginally achievable values.
+
+A bounded R is still insufficient. The *same original* integer L_0(beta) must also place the positive coefficient in the required scale band. The cell remains
+
+$$
+C_{Q,L}=\left(\frac{\phi Q^3}{(L+1)\ln2},
+                 \frac{\phi Q^3}{L\ln2}\right], \tag{175.34}
+$$
+
+of width comparable to Q^{-3}. Choosing a convenient new L for an already prescribed beta would change the problem. Nor do (175.19) or (175.30) prove that any of these cells meet a prescribed shrinking parent interval with one uniform H.
+
+Chapter 168's joint intercept/residue test remains intact. Its exact tangent uses the same p,d,m and legal congruence pj+m=dk; at d comparable to Q the finite Gamma correction in the intercept is order one. Its exhaustive converse still has both the small-d and large-d alternatives, and its badly-approximable-slope necessity and parabola obstruction remain unchanged. The present results neither omit the small-d alternative nor establish recurrence in the large-d one. Their proofs do not select an auxiliary tangent denominator at all.
+
+Theorem 175.4 excludes exact integer centers. A continuation mechanism using approximate centers would still have to prove nonempty intersections of both constraints at the same prescribed layer, with the original fixed Q_n^2 and constant/Q_n vertical tolerance, and then preserve one H on one infinite branch. None of those missing obligations follows from the rational representation or its prime valuation.
+
+### 175.8 文献归属与仍缺少的近似共同命中
+
+代数整数范数下界、有理函数零极点阶数、Taylor 展开和阶乘素数赋值属于经典工具。原模型卷定理 17.2 与本卷式 (72.8) 提供实际一行比较；本章结合原幅度的超快有理逼近误差，推出幅度超越、得分全局单射、完整组的纯相对比较，以及式 (175.19) 中大于实际比较误差的有符号修正。式 (76.10) 已有精确阶乘比，本章的新增关系是实际两种实验与同一有理基准的定量对应。
+
+Temur 的短弧研究给整数二次曲线的加权上界；Brisebarre–Hanrot 的超越曲线算法在满足其条件时列举候选，但候选集可以为空。两者均不提供当前移动 Gamma 曲线在原始指定层的共同下界。本章不移植这些论文的定理；版本、核对范围及条件见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+第 168 章的完整切线／剩余类检验仍同时包含小分母与大分母情形；第 172 章对其构造标量类的排除也保持原范围。这里没有给出原同步参数，没有证明所有参数均被排除，也没有建立统一有限均值带内的后继命中。近似共同中心仍须同时满足原始层 $Q_n$ 的两条约束与同一个取整胞腔，并在无限分支上保持同一个有限 $H$。式 (175.29) 的极窄算术排除和式 (175.31) 的必要素数赋值关系都不能替代这些条件。
+
+## 追加锚（本行以下为增补区）
