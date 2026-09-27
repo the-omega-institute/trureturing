@@ -599,8 +599,12 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
       typeName producerName
+    -- The complete imported join runs in one MetaM transaction, not one per module.
+    let heartbeatBudget := max 200000 (inputs.size * 1000)
+    let options := ({} : Options).set `maxHeartbeats heartbeatBudget
     let (bindings, _) ← (driver (inputs.map (·.moduleName.toName))).run' |>.toIO
-      { fileName := "<information-template-join>", fileMap := default } { env }
+      { fileName := "<information-template-join>", fileMap := default,
+        options, maxHeartbeats := heartbeatBudget * 1000 } { env }
     return bindings
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
