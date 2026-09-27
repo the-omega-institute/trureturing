@@ -560,9 +560,9 @@ theorem flat_transverse_gap
   let M : ℝ := (r + 1) * (o + 1) - (a - b)^2
   have hrad : ∀ x y z : ℝ, 1 < x → 1 < y → 1 < z → 0 < rad x y z := by
     intro x y z hx hy hz
-    have hx2 : 1 ≤ x^2 := by nlinarith [sq_nonneg (x - 1)]
-    have hy2 : 1 ≤ y^2 := by nlinarith [sq_nonneg (y - 1)]
-    have hz2 : 1 ≤ z^2 := by nlinarith [sq_nonneg (z - 1)]
+    have hx2 : 1 ≤ x^2 := by nlinarith only [hx, sq_nonneg (x - 1)]
+    have hy2 : 1 ≤ y^2 := by nlinarith only [hy, sq_nonneg (y - 1)]
+    have hz2 : 1 ≤ z^2 := by nlinarith only [hz, sq_nonneg (z - 1)]
     have hp : 0 ≤ 2 * x * y * z := by positivity
     unfold rad
     linarith
@@ -581,7 +581,7 @@ theorem flat_transverse_gap
     unfold rad numerator
     ring
   have hminus : Dr * (1 - cosine r a b o a b) = (r - 1) * M := by
-    nlinarith [haxis_exact, hminus_poly]
+    nlinarith only [haxis_exact, hminus_poly]
   have hM : M ≤ 0 := by
     have hleft : Dr * (1 - cosine r a b o a b) ≤ 0 :=
       mul_nonpos_of_nonneg_of_nonpos hDr.le (by linarith)
@@ -596,7 +596,7 @@ theorem flat_transverse_gap
   have hL : 0 < L := by
     have hab : 0 < a * b := mul_pos (by linarith) (by linarith)
     dsimp [L]
-    nlinarith [hgap_sq, hab]
+    nlinarith only [hgap_sq, hab, hr, ho]
   have hca_exact : cosine a b r a b o * Real.sqrt (Dr * Do) =
       numerator a b r a b o := by
     unfold cosine
@@ -622,12 +622,13 @@ theorem flat_transverse_gap
       cosine b a r b a o) hQs
   have hab : 0 < a - b := by
     have hnegative : -(a - b) * L < 0 := by rw [← hnum_diff]; linarith
-    nlinarith
+    nlinarith only [hnegative, hL]
   have hsqrt_sq : (Real.sqrt ((r + 1) * (o + 1)))^2 =
       (r + 1) * (o + 1) := Real.sq_sqrt hprod.le
   constructor
   · linarith
-  · nlinarith [Real.sqrt_nonneg ((r + 1) * (o + 1))]
+  · nlinarith only [hgap_sq, hab, hsqrt_sq,
+      Real.sqrt_nonneg ((r + 1) * (o + 1))]
 
 #print axioms paired_angle_demand
 #print axioms flat_transverse_gap
