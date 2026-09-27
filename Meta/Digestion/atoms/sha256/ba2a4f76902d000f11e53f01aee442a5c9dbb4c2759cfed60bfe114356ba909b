@@ -1,0 +1,66 @@
+### 176.1 保留 Bell 输出差的谱下界
+
+沿用第174、175节的
+
+$$
+\epsilon_L=w_0>0,\qquad
+R_L=w_1/w_0\longrightarrow4,\qquad
+\beta=\frac{288}{2353}.
+\tag{176.1}
+$$
+
+根据第173节，可以无损地把解码器限制为共同二结果 instrument
+$\mathcal D_0,\mathcal D_1:QR\to R_{\mathrm{out}}$，
+其和保迹。对 $x=(\varphi,\mathcal D)$，令
+
+$$
+\sigma_{jj}^{\epsilon,R}(x)
+=(\operatorname{id}_M\otimes\mathcal D_j)
+\bigl(\xi_*^\varphi+\epsilon r_j\dot\xi^\varphi\bigr),
+\qquad r_0=1,\quad r_1=R.
+\tag{176.2}
+$$
+
+真实参数是 $(\epsilon,R)=(\epsilon_L,R_L)$。
+定义匹配标签空间中的固定单位向量
+
+$$
+|u\rangle
+=\frac{|0\rangle_C|\Xi\rangle+|1\rangle_C|\Xi\rangle}{\sqrt2},
+$$
+
+$$
+C_{\epsilon,R}(x)
+=P_u-\frac12\operatorname{diag}
+\bigl(\sigma_{00}^{\epsilon,R}(x),
+\sigma_{11}^{\epsilon,R}(x)\bigr),
+\qquad
+b_{\epsilon,R}(x)=\lambda_{\max}(C_{\epsilon,R}(x)).
+\tag{176.3}
+$$
+
+这是第173节参考权重 $q=1/2$ 的精确误差，故它下界同一 instrument 的完整参考最坏误差。令
+
+$$
+\mathcal K=(\mathbb R/\pi\mathbb Z)
+\times\{\text{共同二结果 instrument 的 Choi 对}\}.
+$$
+
+这是有限维紧度量空间。定义
+
+$$
+\underline b_L=\min_{x\in\mathcal K}b_{\epsilon_L,R_L}(x),
+\qquad
+m_L=\min_\varphi e_L(\varphi).
+$$
+
+于是
+
+$$
+m_L\ge\underline b_L.
+\tag{176.4}
+$$
+
+下面分析的是最大本征值 $b_{\epsilon,R}$ 的最小值，
+不是第175节的线性 Bell 收益最大值。
+

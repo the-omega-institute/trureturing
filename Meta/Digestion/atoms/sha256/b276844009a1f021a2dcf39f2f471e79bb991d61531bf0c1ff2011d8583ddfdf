@@ -1,0 +1,11 @@
+### 78.2 紧尺度上的可计算余项
+
+定义
+
+$$
+\mathcal D_\varepsilon=(\mathcal C-R_0)/\varepsilon,
+\qquad
+X_{r,\varepsilon}=
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}.
+$$
+

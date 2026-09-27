@@ -1,0 +1,11 @@
+**定义 2.23。** Let
+$$
+R_n=\{b\in\{0,\ldots,p^n-1\}:(n,b)\in R\},
+\qquad
+B_n=\bigcup_{b\in R_n}[b]_n,
+\qquad
+a_n=|R_n|p^{-n}=\mu(B_n).
+\tag{TM.578}
+$$
+These are the cylinders extendible in the final set $E$, not the candidates that have merely survived a finite amount of event enumeration.
+

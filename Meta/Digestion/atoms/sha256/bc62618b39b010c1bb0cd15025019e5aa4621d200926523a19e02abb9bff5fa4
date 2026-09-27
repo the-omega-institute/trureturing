@@ -1,0 +1,19 @@
+#### 1.1.9 与既有接口及开放目标的关系
+
+本节直接依赖有限剩余的共同实现、提升和计数。不可变项目快照
+9d416050c9a90f785d50f2a5034f1a1f99334d62 中，现有支点包括：
+
+- D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean:51，
+  joint_residue_image_eq_compatible_pairs：模 $L$ 与模 $m$ 的实际联合像，恰好由模 $\gcd(L,m)$ 上相容的剩余对组成。
+- D5/S3/Factorization/PrimePowers/FiniteCompatibleCrt.lean:112，
+  finite_crt_gluing：有限非互素同余族的成对 gcd 相容性、普通整数共同实现及模 LCM 的唯一剩余类；不把有限剩余类唯一性误作整数代表唯一性。
+- D5/S3/Arith/Covering/CoveringSystem.lean:23，
+  IsCoveringSystem 明确覆盖对象为全部整数，允许一般正模数；
+  同文件第27行 IsDistinct 额外明确每个模数至少二、且模数两两不同；
+  第31行 AllOdd 明确所有模数为奇数；
+  第36行 sum_reciprocal_moduli_ge_one 给有限覆盖的倒数模数和必要下界。
+
+因此在本项目的有限互异奇数覆盖目标中，必须同时保留有限族、模数互异、模数大于一、全体整数覆盖这几项条件；仅说“奇数”而允许模一，会引入一类即覆盖全部整数的平凡实例。
+
+上述结果仍允许存在含零 LCM 增量约束层的待研究有限奇数互异模数族。因此本节明确排除了“忽略所有约束层，只看分辨率增长便可判覆盖”的方法，不宣称已经证明或反驳有限覆盖开放命题。
+

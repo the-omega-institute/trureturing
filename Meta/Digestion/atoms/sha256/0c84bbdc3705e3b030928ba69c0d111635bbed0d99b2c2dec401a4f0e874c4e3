@@ -1,0 +1,1 @@
+- PDF 第20页 Proposition 23：闭区间 \(I\subset(0,1)\) 上有 \(\sup_{p\in I}\mathbb E_pN<\infty\) 的模拟，则 \(f\) 在 \(I\) 上 Lipschitz。这里需要统一期望，不能用“每个点期望有限”替换。

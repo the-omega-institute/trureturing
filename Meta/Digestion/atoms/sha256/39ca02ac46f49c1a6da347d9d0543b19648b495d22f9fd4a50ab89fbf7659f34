@@ -1,0 +1,20 @@
+**证明。** 根据第193节，只需证明
+$\Phi_{\ell/\epsilon}-\Phi_{h_S(\ell,\epsilon)}$ 对全部 $\ell$ 一致趋零。反设存在反例序列，记 $h_n=\ell_n/\epsilon_n$。
+
+若有有界子列，引理195.1在该子列上给
+$h_S(\ell_n,\epsilon_n)-h_n\to0$。两个比例处于同一紧区间，$\Phi$ 在其上连续，故响应差趋零。
+
+若无有界子列，则 $h_n\to\infty$。任取固定 $A>0$，最终有 $\ell_n\ge A\epsilon_n$。二元熵在 $[0,1/2]$ 单调增加，所以
+
+$$
+h_S(\ell_n,\epsilon_n)
+\ge\frac{s(A\epsilon_n)}{\epsilon_nL_{\epsilon_n}}
+\longrightarrow A.
+$$
+
+由于 $A$ 任意，$h_S\to\infty$。两项响应同时趋于
+$\Phi_\infty=\beta(R+1)/8$，差仍趋零，矛盾。证毕。
+
+这不是把两种比例逐点认作相等。例如固定正 $\ell$ 时，
+$s(\ell)/(\ell L_\epsilon)\to0$，两种比值的商也趋零；但它们都发散，且落在同一个已证的远端响应。定理保持的是任务的一阶响应。
+

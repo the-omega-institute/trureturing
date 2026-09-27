@@ -1,0 +1,72 @@
+**定理 202.2（条件放大与未来增益的串联界）。** 用半迹距离比较状态，用
+
+$$
+\|T\|_{1\to1}=\sup_{\|X\|_1\le1}\|T(X)\|_1
+$$
+
+比较线性未来映射。设两个来源边界满足
+
+$$
+D_H(\mathfrak R,\mathfrak S)\le\varepsilon,
+\qquad
+\inf_{\rho\in\mathfrak R\cup\mathfrak S}p_\Phi(\rho)\ge p_*>0.
+$$
+
+设未来映射族 $\mathfrak P,\mathfrak Q$ 满足：每个 $T\in\mathfrak P$ 有 $U\in\mathfrak Q$ 使
+
+$$
+\frac12\|T-U\|_{1\to1}\le\delta,
+$$
+
+反向也成立，并且
+
+$$
+\|T\|_{1\to1},\|U\|_{1\to1}\le G.
+$$
+
+令
+
+$$
+\mathfrak P\circ\mathsf C_\Phi(\mathfrak R)
+=\{T(\tau):T\in\mathfrak P,\ \tau\in\mathsf C_\Phi(\mathfrak R)\},
+$$
+
+则
+
+$$
+\boxed{
+D_H\!\left(
+\mathfrak P\circ\mathsf C_\Phi(\mathfrak R),
+\mathfrak Q\circ\mathsf C_\Phi(\mathfrak S)
+\right)
+\le
+\delta+G\frac{\varepsilon}{p_*}.
+}
+\tag{202.2}
+$$
+
+### 证明
+
+任取 $T\in\mathfrak P$ 和 $\tau=\Phi(\rho)/p_\Phi(\rho)$，由定理 199.2 取 $\sigma\in\mathfrak S$ 使对应条件态 $\upsilon$ 满足
+
+$$
+D(\tau,\upsilon)\le\varepsilon/p_*.
+$$
+
+再取匹配的 $U\in\mathfrak Q$. 写 $X=\tau-\upsilon$. 由三角不等式与算子范数，
+
+$$
+\begin{aligned}
+D(T\tau,U\upsilon)
+&\le
+\frac12\|(T-U)\upsilon\|_1
++\frac12\|T(\tau-\upsilon)\|_1\\
+&\le
+\delta+G D(\tau,\upsilon)
+\le
+\delta+G\frac{\varepsilon}{p_*}.
+\end{aligned}
+$$
+
+反向选择同理，故得到 Hausdorff 界。证毕。
+

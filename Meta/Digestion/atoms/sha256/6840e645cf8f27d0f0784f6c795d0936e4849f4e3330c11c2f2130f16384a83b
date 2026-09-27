@@ -1,0 +1,14 @@
+#### 4.6.4 全局容量松弛与逐步可实现性的严格分离
+
+记 $\mathcal A$ 为假设26.2下可由合法逐步法实现的末端联合律集合，并定义静态全局柱容量多面体
+
+$$
+\mathcal G=
+\left\{\mu\in\mathbb R_{\ge0}^{\Omega}:
+\sum_{v\in\Omega}\mu_v=1,\
+\sum_{v\in C_a}\mu_v\le c_a\ \forall a\right\}.
+\tag{TM.222}
+$$
+
+A卷命题4.2给 $\mathcal A\subseteq\mathcal G$。
+

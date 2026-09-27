@@ -1,0 +1,56 @@
+**单终端恒等式。** 对每个 $n\ge1$，
+
+$$
+\boxed{
+f_n(\mathcal C)=
+\max_{\mathcal D_n:K\to\mathcal B^{\otimes n}\ {\rm CPTP}}
+F\!\left((\operatorname{id}_M\otimes\mathcal D_n)(\sigma_n),
+|\Psi_n\rangle\langle\Psi_n|\right).
+}
+\tag{37.5}
+$$
+
+两侧均取得最大值，且
+
+$$
+f_n(\mathcal C)=1
+\quad\Longleftrightarrow\quad
+\text{该指定初态在终端 $n$ 有精确的 $K$-局部解码。}
+\tag{37.6}
+$$
+
+证明。记目标档案空间为 $A=\mathcal B^{\otimes n}$。对一个解码器取 Stinespring 等距
+$V:K\to A\otimes F$，并把环境维数按需补大。输出的全局纯化为
+
+$$
+|\zeta_V\rangle=(I_{ME}\otimes V)|\Gamma_n\rangle
+$$
+
+（这里只作固定的张量因子重排）。它在 $MA$ 上与纯目标的根保真度等于
+
+$$
+\max_{\|\xi\|=1,\ \xi\in E\otimes F}
+|\langle\Psi_n\otimes\xi\,|\,\zeta_V\rangle|.
+\tag{37.7}
+$$
+
+这是把 $\zeta_V$ 投影到目标纯态后所得环境向量的范数。
+
+对固定 $\xi$，令 $\tau=\operatorname{Tr}_F|\xi\rangle\langle\xi|$。
+$|\Psi_n\rangle\otimes|\xi\rangle$ 是
+$\rho_n\otimes\tau$ 在 $ME$ 上的一份纯化，而 $\Gamma_n$ 是
+$\omega_n$ 的纯化，所余纯化腿为 $K$。
+有限维 Uhlmann 变分恒等式于是给[^phase_uhlmann_transition]
+
+$$
+\max_{V:K\hookrightarrow A\otimes F}
+|\langle\Psi_n\otimes\xi|(I_{ME}\otimes V)|\Gamma_n\rangle|
+=F(\omega_n,\rho_n\otimes\tau).
+$$
+
+可取足够大的 $F$，使 Uhlmann 在纯化支撑上的等距延拓到整个 $K$；该等距因而定义全域 CPTP 解码器，而不是只定义于可达支撑的操作。这个变分恒等式也可由纯化振幅矩阵的极分解直接得到：最大重叠为相应乘积的迹范数。
+
+任意 $\tau$ 都有 $\xi$ 纯化，任意解码器和 $\xi$ 也都给这样一个 $\tau$。交换对这两个独立选择的最大化，得到（37.5）。有限维通道集和密度矩阵集紧，目标连续；上述等距构造也直接给最大值实现。根保真度等于一当且仅当两个密度矩阵相同，故（37.6）成立。证明完毕。
+
+（37.5）表明 $f_n$ 与纯化规范无关。固定 $\sigma_n$ 的两份同维纯化只差 $E$ 上酉变换，$\tau$ 的完整优化集随之双射；非最小辅助空间只需补零。这也是后面可用任意矩阵因子代替平方根而不改变优化值的原因。
+

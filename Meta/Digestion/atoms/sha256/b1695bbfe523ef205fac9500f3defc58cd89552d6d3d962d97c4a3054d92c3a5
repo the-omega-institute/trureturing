@@ -1,0 +1,10 @@
+**定义 285.1（同时改换货币单位）。** 项目 [BudgetSetScaleInvariance](../../../D5/S3/ResourceOrder/PriceCoordinates/BudgetSetScaleInvariance.lean) 比较有限种商品的严格正价格 $p_j$、正预算 $w$ 与正比例 $\lambda$。对非负商品束 $x$，有
+
+$$
+\sum_j(\lambda p_j)x_j\le\lambda w
+\quad\Longleftrightarrow\quad
+\sum_jp_jx_j\le w.
+$$
+
+这是 `budget_set_scale_invariance` 的集合等式内容：共同的正因子可以约去，全部付得起的非负商品束保持不变。若另与一套固定的非金钱可行集相交，交集也相同。此处保留源码给出的正价格与正预算适用范围；没有把实际经济中的所有价格、收入和制度变化都假设成这种同步缩放。
+

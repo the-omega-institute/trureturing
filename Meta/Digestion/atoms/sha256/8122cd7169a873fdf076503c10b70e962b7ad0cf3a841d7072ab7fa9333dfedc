@@ -1,0 +1,23 @@
+**定理 63.1（按活动质量加权的停止历史界）。** 两完整仪器 $\mathfrak I,\mathfrak J$ 具有共同输入、记录和各分支输出空间，完整单轮半 diamond 距离为 $\delta$。它们使用同一首次点击停止协议和同一初态 $\rho$。记
+
+$$
+s_j^I=\operatorname{Tr}\mathcal N_I^j(\rho),\qquad
+c_m^I=\sum_{j=0}^{m-1}s_j^I
+=\mathbb E_I\min(\mathsf N,m),
+$$
+
+并对 $J$ 类似定义。则第 35 节保留完整有限停止记录和量子后继的两个输出满足
+
+$$
+\boxed{
+D\bigl(\Omega_m^I(\rho),\Omega_m^J(\rho)\bigr)
+\le\min\{1,\delta\min(c_m^I,c_m^J)\}.
+}
+$$
+
+给定初态可带任意有限参考系统；此时左侧在完整联合输出上取距离，右侧的生存概率由共同系统边缘态计算。
+
+证明。取混合过程：前 $j$ 轮使用 $I$，剩余轮次使用 $J$，$0\le j\le m$。相邻两个混合过程只在第 $j+1$ 轮不同，其共同前缀中的未点击块是 $\mathcal N_I^j(\rho)$，迹为 $s_j^I$。归一化该块，应用完整仪器距离定义，再用后续相同停止处理的迹距离收缩性，这一替换的代价至多 $s_j^I\delta$。零迹块的代价为零。
+
+对 $j=0,\ldots,m-1$ 求和得 $\delta c_m^I$。交换 $I,J$ 重做给 $\delta c_m^J$，再与距离不超过一合并。带参考时同一未归一化块的迹仍为 $s_j^I$，其余论证不变。$\square$
+

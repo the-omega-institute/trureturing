@@ -1,0 +1,16 @@
+### 100.1 正交部分动作的横截延拓
+
+设 $K$ 为 $n$ 维复 Hilbert 空间，$n\ge1$，$F$ 为二维复 Hilbert 空间，置 $X=K\otimes F$。给定相互正交的子空间
+
+$$
+E_0,E_1\subset X,\qquad \dim E_i\le n.
+$$
+
+它们表示同一个部分等距已经固定的两个输入位像。对非零 $z\in F$，记
+
+$$
+S_z=K\otimes\mathbb Cz,
+\qquad S_z^\perp=K\otimes\mathbb Cz^\perp.
+\tag{100.1}
+$$
+

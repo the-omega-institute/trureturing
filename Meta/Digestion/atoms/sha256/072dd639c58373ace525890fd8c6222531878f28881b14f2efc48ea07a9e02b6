@@ -1,0 +1,36 @@
+**定义 21.1（有限公共查询与固定包宽）。** 固定 $r\ge4$，沿用定义19.1的实际来源与完整最小旧状态：
+
+$$
+S=C_4^r\times C_2,\qquad
+Y=\sum_{i=1}^r x_i\in C_4,\qquad t=Y+2h\in C_4,\qquad
+L_i=(x_i,t).
+\tag{21.1}
+$$
+
+全部公共平移可达 $S$ 的每一点。记 $L(x)=[x]_4\bmod2$、$H(x)=\lfloor[x]_4/2\rfloor$。旧端实际输出为 $(x_i,\ell)$，其中 $\ell=H(t)$；$L_i$ 的十六态最小值是定义19.1所引用的完整未来行为最小值。式(19.3)的旧状态实际联合像有 $2\cdot4^r$ 个元素；这两个计数沿用旧状态标签的含义。
+
+一次独立调用在预定时隙发生，来源在调用期间固定，精确性要求覆盖全部 $S$。接收端只读取 $(x_1,t)$，先向所有发送端作一次公共查询广播，再由各发送端同时向接收端回复：
+
+$$
+c=q(x_1,t)\in C,\qquad
+m_i=e_i(x_i,t,c)\in A_i\quad(2\le i\le r),\qquad
+\Phi_q(x,h)=(x_1,t,m_2,\ldots,m_r).
+\tag{21.2}
+$$
+
+$C,A_2,\ldots,A_r$ 均为预先声明的非空有限字母表，$q:C_4^2\to C$ 与 $e_i:C_4^2\times C\to A_i$ 是全局固定的确定性映射。不同 $(t,c)$ 可选用不同局部回复函数。发送端不能读取其他发送端的回复；旧输入词、刚消费的公共增量、另存历史、免费钟、探测、依赖来源的触发、时序、沉默及额外控制器均不提供信息。查询由接收端已有状态确定，故接收端可重算 $c$，无需在 $\Phi_q$ 中另列它。只有接收端须输出 $Y$，其解码器为 $D:C_4^2\times\prod_{i=2}^r A_i\to C_4$；精确性指 $D\circ\Phi_q=Y$。
+
+本契约采用预先声明容量的固定包宽：
+
+$$
+w_0=\lceil\log_2|C|\rceil,\qquad
+w_i=\lceil\log_2|A_i|\rceil,\qquad
+W_{\mathrm{in}}=\sum_{i=2}^r w_i,\qquad
+W_{\mathrm{tot}}=w_0+W_{\mathrm{in}}.
+\tag{21.3}
+$$
+
+每个包时隙均按其声明宽度计费，宽度不随来源或分支变化，未用标签及填充不使已声明的位免费；公共查询广播只计一次。单元素查询字母表的时隙宽度为零，不形成依赖来源的沉默信道。若改用允许重编码的有效查询像计费，应将查询字母表明确改为 $\operatorname{im}q$，并以 $\lceil\log_2|\operatorname{im}q|\rceil$ 代替 $w_0$；这与保留原声明 $C$ 的计费是不同契约。本节不取期望长度或变长长度，随机、量子、噪声及多轮交互也不在上述量词内。
+
+式(19.5)的固定 $t$ 代换 $z_1=x_1-t$、$z_i=x_i$ 将此来源化为偶和承诺，并给出 $F(z)=[\sum_i z_i]_4/2=h$ 与 $Y=t+2F(z)$。这一承诺函数的归属沿用定义19.2所引 Buhrman、Cleve、van Dam，*Quantum Entanglement and Communication Complexity*，[quant-ph/9705033v1](https://arxiv.org/pdf/quant-ph/9705033v1)，PDF第3页§2式(1)–(4)，以及 Buhrman、van Dam、Høyer、Tapp，*Multiparty Quantum Communication Complexity*，[quant-ph/9710054v2](https://arxiv.org/pdf/quant-ph/9710054v2)，PDF第2页§2及第4–5页§3式(4)–(5)的 $n=2$ 特例。此对应只识别函数及来源关系；原文的广播、全体输出和有序一轮通信接口不等于式(21.2)。后一文§3的多方下界要求 $n\ge\log_2 r$，不用于固定 $n=2$ 的任意 $r$。
+

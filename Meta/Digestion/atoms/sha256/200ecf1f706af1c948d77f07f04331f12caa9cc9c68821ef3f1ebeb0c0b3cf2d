@@ -1,0 +1,184 @@
+**证书 6.6.6（不可和最大字母尾下的四个检查点）。** 固定
+$$
+d=3,\quad\delta=1/8,\quad p^*=(6,1,1)/8,\quad
+b_n=0\ (n<3),\qquad b_n=3^n\mathbin{//}2^n\ (n\ge3).
+$$
+于是 $B\le\sum_{n\ge3}2^{-n}=1/4$。$s=2$ 时 $Z_2=19/32,C=1,e^{\beta_0}=3/2$，$\rho=\sqrt{57}/8<19/20$ 的严格性由 $57\cdot400=22800<23104=361\cdot64$ 承担。定理 6.2.4 的辅助尾在 $N=12$ 为 $2^{-6}\rho/(1-\rho)<19/64$，所以仍有原解析证书
+$$
+\Gamma>\frac{29}{64}\left(\frac38\right)^{12}
+=\frac{15411789}{4398046511104}>0.
+$$
+另一方面 $b_nr^n\ge(9/8)^n-(3/4)^n\to\infty$，故 $W_N$ 发散，不能用最大字母可和性解释这个证书。
+
+原律尾独立地满足 $T_N=19(19/20)^N=19^{N+1}/20^N$。记有限联合最优幸存 $Q_N=1-M_N(p^*,b)$，把有限码空层延长及把任意无限码截断分别给
+$$
+M_N\le1-\Gamma\le M_N+T_N,\qquad
+\max(0,Q_N-T_N)\le\Gamma\le Q_N.
+$$
+下列四个完整有理记录保留 $N=12,64,128,256$ 的 $Q_N,T_N,\max(0,Q_N-T_N)$；前两个截断下界为零，不使上面的 $N=12$ 辅助头正界失效。每个数字都是整数递推的结果，显示用近似区间不参加不等式判定。
+
+在最后一层，$Q_{256}=P/2^{542}$，其中 $P$ 为下方记录的完整分子，整数证书为
+$$
+49677\,2^{542}<10^6P<49678\,2^{542},\qquad
+500000\,19^{256}<20^{256}.
+$$
+第二式给 $T_{256}<38/10^6$，合成
+$$
+\frac{49639}{10^6}<\Gamma<\frac{49678}{10^6},
+\qquad 0.04963<\Gamma<0.0497.
+$$
+这是类最优间隙区间。每份合法库存都满足其下侧；上侧只约束最优值及其极端实现，空库存的实际幸存量为一。定理 6.1.4 保证同一 $p^*,G$ 达到 $\Gamma$。
+
+下面程序保留原稀有数算法，并独立用反向的重字母数递推 $\widetilde c_{n,k}=2c_{n-1,k}+c_{n-1,k-1}$，由最大 $k$ 开始删。两方向在检查点对照；每层检查实际活数和质量守恒，反向递推另检验整数守恒 $D_n+\sum_ka_n(k)6^{n-k}=8^n$，其中 $D_n$ 是累计删除在分母 $8^n$ 下的分子。它只检验有限算术，无限尾由定理 6.2.4 证明。
+
+```python
+from fractions import Fraction as F
+import json
+
+def certificate():
+    assert F(57, 64) < F(19, 20) ** 2
+    assert 1 - F(1, 4) - F(19, 64) == F(29, 64)
+    eta = F(29, 64) * F(3, 8) ** 12
+    assert eta > 0
+    active = [1]
+    live_count = 1
+    mass = F(0)
+    rows = []
+    for n in range(1, 257):
+        budget = 0 if n < 3 else 3**n // 2**n
+        if n >= 3:
+            assert F(budget) >= F(3, 2) ** n / 2
+        counts = [
+            (active[k] if k < len(active) else 0)
+            + (2 * active[k - 1] if k > 0 else 0)
+            for k in range(n + 1)
+        ]
+        remaining = budget
+        for k in range(n + 1):
+            chosen = min(remaining, counts[k])
+            remaining -= chosen
+            counts[k] -= chosen
+            mass += chosen * F(3, 4) ** (n - k) * F(1, 8) ** k
+        active = counts
+        live_count = max(0, 3*live_count-budget)
+        assert sum(active) == live_count
+        assert mass + sum(active[k]*F(6**(n-k),8**n) for k in range(n+1)) == 1
+        if n in (12, 64, 128, 256):
+            upper = 1 - mass
+            tail = 19 * F(19, 20) ** n
+            lower = max(F(0), upper - tail)
+            assert eta <= upper
+            rows.append({
+                "N": n,
+                "finite_gap": str(upper),
+                "renyi_tail_upper": str(tail),
+                "certified_lower": str(lower),
+                "approx_interval": [float(lower), float(upper)],
+            })
+    assert F(rows[-1]["certified_lower"]) > F(4963, 100000)
+    assert F(rows[-1]["finite_gap"]) < F(497, 10000)
+    return {
+        "exact_inequalities": "passed",
+        "uniform_lower_bound": str(eta),
+        "uniform_lower_decimal": float(eta),
+        "weighted_summability": "fails since b_n r^n >= (9/8)^n/2",
+        "greedy_recurrence_checks": rows,
+        "scope": "ordinary exact rational certificate; finite computation does not replace infinite proof",
+    }
+
+
+EXPECTED = json.loads(r'''
+{
+  "exact_inequalities": "passed",
+  "uniform_lower_bound": "15411789/4398046511104",
+  "uniform_lower_decimal": 3.504235110085574e-06,
+  "weighted_summability": "fails since b_n r^n >= (9/8)^n/2",
+  "greedy_recurrence_checks": [
+    {
+      "N": 12,
+      "finite_gap": "17912887/268435456",
+      "renyi_tail_upper": "42052983462257059/4096000000000000",
+      "certified_lower": "0",
+      "approx_interval": [
+        0.0,
+        0.06673070415854454
+      ]
+    },
+    {
+      "N": 64,
+      "finite_gap": "34658293102105144096939331964521674201367/696898287454081973172991196020261297061888",
+      "renyi_tail_upper": "131517656596604663956102176642678715072020072327450916777499793705236707816143809299/184467440737095516160000000000000000000000000000000000000000000000000000000000000000",
+      "certified_lower": "0",
+      "approx_interval": [
+        0.0,
+        0.049732211609701725
+      ]
+    },
+    {
+      "N": 128,
+      "finite_gap": "1507931459910621808100130898800229667258520137596387283545227670060044746407758097/30354201441027016733116592294117482916287606860189680019559568902170379456331382784",
+      "renyi_tail_upper": "910362841929601593699242915329458527779099306390144333215018898204440341851315851587840460641860627227530174135975712645444059202059862934786573527168118056972572179/34028236692093846346337460743176821145600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "certified_lower": "204495071303241680512818679215094959948977282127589372676515716376962076348470724598679275989740621878430318351002921730449496398528450001522744272984034778015029157848849/8920298079412249256614287309059344602392166400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "approx_interval": [
+        0.022924690350338124,
+        0.04967784979750737
+      ]
+    },
+    {
+      "N": 256,
+      "finite_gap": "715184061049080190881732629416829465795070381011439574350222071131358342763266976240749073923130966405108240840093196833274107594659369542891026416779376981754877/14396524142538228424993723224595141948383030778566133225922417832357880258148761185020930195532450742879746914027266864394266451377581759004827248578768524336431104",
+      "renyi_tail_upper": "43618973892954777765289478047635207270458669427007039031714300582378622444236349453270422733678918004735120592065946520519662376065260820422543226418305684176790122412321098238462124009215306168579423552472387890298771991863566398064579467000041351731303873119590663372272616831462695543552164600120849225075983739590773229726739/1157920892373161954235709850086879078532699846656405640394575840079131296399360000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "certified_lower": "61717665474779289825115655807366235200654073203945105022512928339863136374759038667806035872817830839082332336628698124017346042365677697853015458494772450930208656050210206210303927127353354988321965968223161288459115585494347112208831412170328377883848560901187914108478354850500197505326280535896187958852500523374422599823088085605896189/1243308091024466605388455620367052100251140376993369293601159942232898742531333438832640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "approx_interval": [
+        0.049639880831085795,
+        0.04967755091215977
+      ]
+    }
+  ],
+  "scope": "ordinary exact rational certificate; finite computation does not replace infinite proof"
+}
+''')
+
+def reverse_certificate():
+    live, deleted, live_count = [1], 0, 1
+    rows = {}
+    for n in range(1,257):
+        budget = 0 if n < 3 else 3**n // 2**n
+        expanded = [2*(live[k] if k < len(live) else 0)
+                    + (live[k-1] if k else 0) for k in range(n+1)]
+        remain = budget
+        removed = 0
+        for k in range(n,-1,-1):
+            take = min(expanded[k],remain)
+            expanded[k] -= take
+            remain -= take
+            removed += take*6**k
+        deleted = 8*deleted+removed
+        live_count = max(0,3*live_count-budget)
+        live = expanded
+        survivor = sum(count*6**k for k,count in enumerate(live))
+        assert deleted+survivor == 8**n
+        assert sum(live) == live_count
+        if n in (12,64,128,256):
+            rows[n] = F(survivor,8**n)
+    return rows
+
+if __name__ == "__main__":
+    result = certificate()
+    assert result == EXPECTED
+    reverse = reverse_certificate()
+    for row in result["greedy_recurrence_checks"]:
+        assert reverse[row["N"]] == F(row["finite_gap"])
+    q = reverse[256]
+    P = q.numerator
+    assert q.denominator == 2**542
+    margins = [10**6*P-49677*2**542,
+               49678*2**542-10**6*P,
+               20**256-500000*19**256]
+    assert all(x > 0 for x in margins)
+    assert q-19*F(19,20)**256 > F(49639,10**6)
+    print(json.dumps({"integer_margins": [str(x) for x in margins],
+                      "checkpoints": result["greedy_recurrence_checks"]},indent=2))
+    print("EC_CERTIFICATES_OK")
+```
+

@@ -1,0 +1,23 @@
+**定理 16.3（按需补齐的有限样本实验比较）。** 对定义 16.1 的
+两个实验，每一维的参数集为所有  $`(S,\varepsilon)`$ ，其中  $`q,r`$
+给定。令
+ $`A=q\phi(r)+(M-q)\phi(a)`$ 。对任意  $`s\ge1`$ ，其 Le Cam 距离满足
+
+```math
+ \Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})
+ \le\sqrt{\sqrt\lambda\,A}.
+ \tag{16.19}
+```
+
+这里  $`\Delta`$  是两个方向 deficiency 的最大值，deficiency 以
+参数无关随机映射后的最坏总变差定义。两个比较映射只使用  $`d,s`$ ，
+不使用  $`S,\varepsilon,q,r`$ 。特别地，在 (16.3) 之外再有
+
+```math
+ qr\sqrt\ell\longrightarrow0,
+ \tag{16.20}
+```
+
+就有  $`\Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})\to0`$ 。
+式 (16.20) 是本比较给出的充分条件。
+

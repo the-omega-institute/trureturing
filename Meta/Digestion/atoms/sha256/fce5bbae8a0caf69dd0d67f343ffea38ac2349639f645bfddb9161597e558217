@@ -1,0 +1,21 @@
+**命题 502.1（容量见证数收紧精确性代价）。** 在定义 498.2 的比值条件下，
+
+$$
+2\le\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+\le2s\le2\min(k,d).
+$$
+
+证明：第 488 节已给出 $\rho_r\ge\rho$ 与 $\rho_r\le1-M$。取大小为 $s$ 的容量见证子族 $S$。对任意概率 $R$，由其逐坐标最小值仍为 $l$，有
+
+$$
+\begin{aligned}
+1-M
+&=\sum_x\max_{i\in S}(R(x)-Q_i(x))\\
+&\le\sum_{i\in S}\sum_x(R(x)-Q_i(x))_+\\
+&=\sum_{i\in S}\operatorname{TV}(R,Q_i)
+\le s\max_{i\in I}\operatorname{TV}(R,Q_i).
+\end{aligned}
+$$
+
+在全族的最优自由中心处取值，得到 $1-M\le s\rho$。结合两个半径与误差的关系即可。证明没有声称子族与全族具有相同最优半径，也没有把逐坐标可能为负的最大差当作每点非负量。证毕。
+

@@ -1,0 +1,45 @@
+**定理50.3（非正交交替环境的六终端强化下界）。** 非正交交替纯环境的六终端接收器必须满足 $D\ge10$。
+
+证明。定理50.1的一般增长下界先给 $D\ge9$。反设 $D=9$。沿用该节的全局正交空间 $P\perp Q$、单轮 $G_n,H_n,Q_n$，以及累计
+$$
+E=G_2+G_4,\qquad O=G_1+G_3+G_5.
+$$
+增长下界的等号条件给
+$$
+\dim P=6,\quad \dim Q=3,\quad
+\dim E=\dim O=3,\quad P=E\dotplus O.
+\tag{50.10}
+$$
+固定 $V_1$ 分别将 $E,O$ 送入 $Q\otimes A,Q\otimes B$；维数饱和使
+$$
+V_1E=Q\otimes A,\qquad V_1O=Q\otimes B.
+\tag{50.11}
+$$
+由于 $V_1k=qA$，单射性和（50.11）迫使 $k\in E\subset P$。
+
+置 $L=H_2+H_4$。同一奇数轮环境给
+$$
+V_0L=(G_3+G_5)\otimes A\subset O\otimes A.
+$$
+故 $\dim L\le3$。另一方面，$L$ 到 $P$ 的投影为 $E$，所以恰有 $\dim L=3$，且 $L$ 是某个线性映射 $T:E\to Q$ 的图。
+
+由
+$$
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+得到 $Tw=0$、$Tu=(b/a^2)v$。因此 $T(G_2)=\mathbb Cv$。又因 $H_4$ 到 $G_4$ 和 $Q_4$ 的投影都是同构，
+$$
+T(G_4)=Q_4,\qquad \dim Q_4=2.
+$$
+$E$ 三维且 $w\ne0$ 在核中，所以 $\operatorname{rank}T=2$，继而
+$$
+\operatorname{im}T=Q_4\quad\text{且}\quad v\in Q_4.
+$$
+现在比较 $V_1p=vB$ 与 $V_1G_3=Q_4\otimes B$。单射性给 $p\in G_3$。再比较 $V_0k=pA$ 与 $V_0H_2=G_3\otimes A$，得到 $k\in H_2$。
+
+但 $k\in P$，且 $P\perp Q$、$b\ne0$ 使
+$$
+H_2\cap P=\mathbb Cw.
+$$
+故 $k\parallel w$。定理50.2在六终端要求 $D\ge13$，与 $D=9$ 矛盾。因此 $D\ge10$。证明完毕。
+

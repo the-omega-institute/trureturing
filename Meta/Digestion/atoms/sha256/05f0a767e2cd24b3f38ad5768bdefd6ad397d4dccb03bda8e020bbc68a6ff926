@@ -1,0 +1,68 @@
+## 62. 七维六终端接收器的混合终端完全排除
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+七维接收器 $K$ 独立纯启动，同一全域 CPTP 接收通道精确服务前六个完整参考—活动记忆—原档案终端，全部持久系统计费。固定同一 Stinespring 等距
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E,
+\qquad V_i x=V(x\otimes|i\rangle),
+$$
+其中 $V_0,V_1$ 均等距、两像正交。每轮使用新的环境副本；旧环境可以任意纠缠，后续接收器不可访问旧环境。
+
+反设第二终端可逆附加态秩为二。沿第53节，实际第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 正交单位，固定附加态 $\tau_\Gamma$ 正定。置
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}(z,w),\qquad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮将附加因子排入二维新环境 $F\subset E$，给同一等距 $R_\Gamma:\Gamma\to F$ 与正交单位 $s,t,r,j\in K$，使
+$$
+V_0(z\otimes\xi)=s\otimes R_\Gamma\xi,\qquad
+V_0(w\otimes\xi)=t\otimes R_\Gamma\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R_\Gamma\xi,\qquad
+V_1(w\otimes\xi)=j\otimes R_\Gamma\xi.
+\tag{62.1}
+$$
+记 $A_0=\operatorname{span}(s,t)=G_3$、$B_0=\operatorname{span}(r,j)=Q_3$。
+
+第58、59节排除外部尾环境，定理61.4已把剩余候选限为两种非正交模式：
+$$
+(\eta_4,\eta_5,\eta_6)=(\alpha,\alpha,\beta)
+\quad\text{或}\quad(\alpha,\beta,\alpha),
+\quad \alpha,\beta\in F,
+\quad 0<|\langle\alpha,\beta\rangle|<1.
+\tag{62.2}
+$$
+取单位 $\xi_\alpha,\xi_\beta\in\Gamma$ 满足 $R_\Gamma\xi_\alpha=\alpha$、$R_\Gamma\xi_\beta=\beta$，简记 $H_\gamma=H\otimes\mathbb C\xi_\gamma$、$G_\gamma=G\otimes\mathbb C\xi_\gamma$。
+
+实际纯尾满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(n=4,5,6).
+\tag{62.3}
+$$
+各 $H_n,G_n,Q_n$ 二维，$C_n=G_n\oplus Q_n$，$H_n$ 到两个正交因子的投影均为同构。引理61.2又给
+$$
+L_0=A_0+G_4+G_5+G_6,\qquad
+L_1=B_0+Q_4+Q_5+Q_6,
+$$
+$$
+K=L_0\oplus L_1,\qquad L_0\perp L_1,
+\qquad\dim L_0=4,\quad\dim L_1=3,
+\tag{62.4}
+$$
+以及式（61.10）的同一来源等式
+$$
+\begin{array}{c|ccc}
+AAB&G_4=A_0&H_3=H_\alpha&Q_5=Q_4\\
+ABA&G_5=A_0&H_4=H_\beta&Q_6=Q_4.
+\end{array}
+\tag{62.5}
+$$
+这些是已用接收因子的关系，不是全域 $V_iK$ 的包含关系。
+

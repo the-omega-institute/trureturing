@@ -1,0 +1,5 @@
+### 279.11 既有工具的来源与本节连接范围
+
+Schur扇区、对称支概率和重数编码均有既有来源，不另立为新的表示论、纯化或通用压缩成果：
+
+- J. I. Cirac、A. K. Ekert、C. Macchiavello，*Optimal purification of single qubits*，[quant-ph/9812075v1](https://arxiv.org/abs/quant-ph/9812075v1)，第2页式（5）、（9）、（10a）—（10d）给出自旋扇区、重数和扇区概率；第3页式（14）的两qubit对称概率为 $1-c_0c_1$，代入本节参数即 $193/256$。该稿主体详细采用偶数份；本节全部整数 $k$ 的概率由式（279.15）的直接对称迹计算及标准Schur分解承担。

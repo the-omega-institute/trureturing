@@ -1,0 +1,28 @@
+**证明。** 两个 $Q$ 标签正交，所以
+
+$$
+\|W_n-W_*\|_{\mathrm{op}}
+=\max_i\|\sqrt{\rho_{i,n}}-\sqrt{\rho_*}\|_{\mathrm{HS}}.
+$$
+
+令 $A_i=\sqrt{\rho_{i,n}}$、$B_*=\sqrt{\rho_*}$、
+$Z_i=A_i-B_*$。Sylvester 恒等式给
+
+$$
+A_iZ_i+Z_iB_*=\rho_{i,n}-\rho_*.
+$$
+
+在两正算子的各自本征基组成的矩阵基中，左侧线性算子的系数为两本征值之和，均不小于 $\sqrt{\lambda_*}$。故
+
+$$
+\begin{aligned}
+\|Z_i\|_{\mathrm{HS}}
+&\le\frac{\|\rho_{i,n}-\rho_*\|_{\mathrm{HS}}}{\sqrt{\lambda_*}}\\
+&\le\frac{\sqrt{2p}}{(1+p)\sqrt{\lambda_*}}p^{n-1}.
+\end{aligned}
+$$
+
+两个等距通道的半 diamond 距离不超过其等距算子的算子范数之差：对任意带参考纯输入使用纯态半迹距离界，再由纯化及偏迹处理混合输入。因此得到（154.5）。证毕。
+
+上述计算直接允许复 $a,b$；规范平方根和固定基向量化保留相位，没有把来源换成只保留概率的经典链。$C_p$ 只针对当前固定非退化来源，不声称在两个退化端点上一致。
+

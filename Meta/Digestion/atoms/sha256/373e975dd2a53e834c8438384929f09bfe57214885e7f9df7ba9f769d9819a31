@@ -1,0 +1,11 @@
+### 定理 11.2：压缩保持归一性当且仅当所有分支零漏出
+
+有精确等式
+
+$$
+\sum_a k_a^\dagger k_a+\sum_aR_a^\dagger R_a=I_L.
+\tag{11.2}
+$$
+
+从而 $\sum_a k_a^\dagger k_a=I_L$ 当且仅当每个 $R_a=0$，也当且仅当 $K_aU=Wk_a$ 对所有 $a$ 成立。
+

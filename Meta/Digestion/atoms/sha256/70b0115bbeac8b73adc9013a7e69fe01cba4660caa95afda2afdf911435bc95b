@@ -1,0 +1,89 @@
+**证明。** 先将第142.1节的有限实量词方法应用于当前任务。
+取固定合法参数域
+
+$$
+\mathcal D=\left\{(\ell,\epsilon):
+0\le\ell\le\frac12,\quad
+0\le\epsilon\le\frac{\beta}{R(\beta^2+\gamma^2)}\right\}.
+$$
+
+第189节的无损对称化将最小化限制到第198节的固定紧 Choi 集
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+$$
+
+把复数条目分成实部和虚部。Hermitian 正半定性等价于有限多个主子式非负，
+共同 TP 条件为线性等式，故 $\mathcal K$ 半代数。
+令 $\mathsf B(q,\ell,\epsilon,\Gamma)$ 为（189.10）的精确匹配偶块。
+其大小固定为四；条目只使用 Choi 坐标的实多项式及
+$\sqrt\ell,\sqrt{1-\ell},\sqrt q,\sqrt{1-q}$。
+每个根号可由唯一的非负辅助变量表达，例如
+$u\ge0,u^2=\ell$。因此这些矩阵条目具有有限实多项式的图描述。
+
+第173、189节的完整参考约化给
+
+$$
+\mathscr E(\ell,\epsilon)
+=\min_{\Gamma\in\mathcal K}\max_{q\in[0,1]}
+\lambda_{\max}\mathsf B(q,\ell,\epsilon,\Gamma).
+\tag{199.2}
+$$
+
+紧性和连续性使最小值及最大值均取得。于是其上图可精确写成
+
+$$
+\begin{aligned}
+\mathsf U(\ell,\epsilon,t)
+\quad\Longleftrightarrow\quad
+\exists\Gamma\in\mathcal K\
+\forall q\in[0,1]:\quad
+tI_4-\mathsf B(q,\ell,\epsilon,\Gamma)\succeq0.
+\end{aligned}
+\tag{199.3}
+$$
+
+这里 $\mathsf U(\ell,\epsilon,t)$ 等价于
+$t\ge\mathscr E(\ell,\epsilon)$。用上述辅助变量及主子式替换根号和矩阵不等式后，
+（199.3）是有限个实多项式条件的量词公式。
+再写
+
+$$
+t=\mathscr E(\ell,\epsilon)
+\quad\Longleftrightarrow\quad
+\mathsf U(\ell,\epsilon,t)\ \wedge\
+\neg\exists u<t:\ \mathsf U(\ell,\epsilon,u),
+\tag{199.4}
+$$
+
+实闭域量词消去给出 $\mathscr E$ 的半代数图。
+此处使用 Tarski–Seidenberg 的标准结论，见
+Basu–Pollack–Roy，*Algorithms in Real Algebraic Geometry*，
+[作者公开文本](https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf)定理2.77，页77；
+实线上可定义集为有限个区间和点之并见同书推论2.79，页78。
+固定模型参数允许是任意实数：半代数描述允许这些实系数，不要求它们为有理数或代数数。
+
+现在固定 $h\ge0$，在足够小的正 $\epsilon$ 上定义
+
+$$
+Q_\epsilon(h)
+=\frac{\mathscr E(h\epsilon,\epsilon)-3/4-\epsilon\Phi_h}
+{\epsilon^2}.
+\tag{199.5}
+$$
+
+这是关于 $\epsilon$ 的一元半代数函数；在这里 $h$ 和 $\Phi_h$ 是固定实常数。
+第191节给 $|Q_\epsilon(h)|\le C_h$。
+若它的下极限和上极限不同，取严格位于二者之间的实数 $a$。
+那么集合
+
+$$
+\{\epsilon>0:Q_\epsilon(h)>a\}
+$$
+
+及其在定义区间内的补集，都在零点右侧有任意小的元素。
+但一个一元半代数集是有限个区间和点之并，因此在足够靠近零的右邻域内，
+它要么包含整个邻域，要么完全不与之相交，矛盾。
+有界性遂保证有限极限 $Q(h)$ 存在，恰给（199.1）。证毕。
+

@@ -1,0 +1,37 @@
+### 241.1 固定候选与一般误差缺口
+
+沿用§240：输入 $A=\mathbb C^d$，$d,N\ge2$，固定全部经典记录标签及各标签的单位纯输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。目标与固定投影候选分别为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j,\\
+\mathcal S(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j,
+\qquad
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\quad 1\le R<Nd.
+\end{aligned}
+\tag{241.1}
+$$
+令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+\qquad D_*=1-\frac R{Nd}.
+\tag{241.2}
+$$
+已知 $D_*=(1/2)\|\mathcal S-\mathcal R\|_{\diamond}$。若纯联合输入的输入边缘为密度矩阵 $\rho$，其实际半迹距离记作 $f(\rho)$。标准纯化给第 $j$ 个参考差块
+$$
+(A_j-B_j)^{\mathsf T},
+\qquad
+A_j=a\sqrt\rho\Pi_j\sqrt\rho,
+\quad
+B_j=b\sqrt\rho(I_d-\Pi_j)\sqrt\rho.
+\tag{241.3}
+$$
+与§240相同，转置不影响迹范数；参考等距变化也不影响距离。因此
+$$
+f(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{241.4}
+$$
+

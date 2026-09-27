@@ -1,0 +1,32 @@
+### 41.3 双侧 quotient 的完整条件
+
+若 $E:X\times P\to\Lambda$ 与 $E':X'\times P'\to\Lambda$ 要被证明为同一 typed interface 的两个表达，数据必须包括
+
+$$
+f:X\to X',\qquad g:P\to P',
+\tag{41.6}
+$$
+
+以及明确的因式分解
+
+$$
+\boxed{
+E(x,p)=E'(f(x),g(p))\quad(\forall x,p).
+}
+\tag{41.7}
+$$
+
+此外，需要 $f,g$ 各自满射，且 $E'$ 的状态行与协议列外延：
+
+$$
+\begin{aligned}
+\bigl(\forall p',E'(x',p')=E'(y',p')\bigr)&\Longrightarrow x'=y',\\
+\bigl(\forall x',E'(x',p')=E'(x',q')\bigr)&\Longrightarrow p'=q'.
+\end{aligned}
+\tag{41.8}
+$$
+
+在这些条件下，评价核的状态商和协议商才分别与 $X'$、$P'$ 唯一等价；仓内 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 正是这一完整数据的形式化支点。$E'$ 不需要额外满射到 $\Lambda$；定理需要的是 $f,g$ 的来源满射与 (41.7) 的因式分解。
+
+因此，§39.5 原先的有限提示应精确解释为缺条件反例：取 $E(x,p)=x\land p$ 并把协议映射压成常值时，若试图保持一个仍能区分原协议的目标评价，(41.7) 已经失败；它说明不能省略因式分解和列外延性，不能把该例当作满足双侧 quotient 定理的实例。
+

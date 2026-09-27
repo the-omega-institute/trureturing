@@ -1,0 +1,38 @@
+### 131.3 ABABB：小侧饱和迫使第二轮回到首态
+
+此词中 $G_2,G_4\subset U_A$ 的后继均为 $B$，而 $G_3,G_5\subset U_B$ 的后继分别为 $A,B$。因此 $G_3\perp G_5$，实际零位像给
+
+$$
+H_2\perp H_4.
+\tag{131.11}
+$$
+
+若 $G_2=G_4$，非零早期 $w\in H_2\cap G_2$ 也属于 $G_4$。这与（131.11）及 $H_4$ 满投影到 $G_4$ 矛盾。
+
+只剩 $G_2\ne G_4$。它们在三维 $U_A$ 内张成整个 $U_A$，又都在三维 $F_B$ 内，所以
+
+$$
+F_B=U_A,\qquad F_A=U_A^\perp.
+$$
+
+当前 $G_3$ 位于 $B$、后继为 $A$，第131.2节于是给
+
+$$
+G_3=J,\qquad p\in J,\qquad [\eta_1]=[B].
+$$
+
+真实零位首像 $V_0k=p\otimes B$ 属于 $V_0H_2=G_3\otimes B$，所以 $k\in H_2$。真实一位首像 $V_1k=q\otimes B$ 又给 $k\in F_B=U_A$。而
+
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+u,w\in U_A,\quad 0\ne v\in U_A^\perp,\quad b\ne0,
+$$
+
+故
+
+$$
+H_2\cap U_A=\mathbb Cw,\qquad k\parallel w.
+$$
+
+引理131.2要求 $[\eta_6]=[\eta_4]$，但本词的第4、6轮分别为 $A,B$，矛盾。两种 $G_2,G_4$ 关系均排除。
+

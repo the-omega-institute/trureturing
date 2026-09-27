@@ -1,0 +1,13 @@
+**推论195.4（全部等值点共享的熵位置）。** 对任意选择
+$\ell_\epsilon\in\mathcal Z_\epsilon$，一致有
+
+$$
+\boxed{
+s(\ell_\epsilon)
+=h_c\epsilon\log_2\frac1\epsilon
++h_c\epsilon\log_2\frac{e}{h_c}
++O\left(\epsilon^2\log\frac1\epsilon\right).
+}
+\tag{195.7}
+$$
+

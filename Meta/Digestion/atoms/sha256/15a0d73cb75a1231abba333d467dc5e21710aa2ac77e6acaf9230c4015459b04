@@ -1,0 +1,18 @@
+**Mixed-radix endpoint check.** Take $b_1=3$ and $b_n=2$ for $n\ge2$. Then
+
+$$
+w_1=\frac13,
+\qquad
+\delta_0=\frac13,
+\qquad
+\delta_1=0.
+$$
+
+Embed the construction in $C=[0]$. Its constant mass is
+
+$$
+M_e=1-\frac16=\frac56,
+$$
+
+which is not dyadic in ordinary binary notation. The query $[00]$ still decides nonhalting. Thus a global positive gap at the root, positive computable total mass, and even a globally nondyadic mass do not provide a uniform decision procedure for every deeper extension query. This exact example checks both the immediate-next-level indexing in C卷第2.9.3节 and the need to normalize any binary-tail test.
+

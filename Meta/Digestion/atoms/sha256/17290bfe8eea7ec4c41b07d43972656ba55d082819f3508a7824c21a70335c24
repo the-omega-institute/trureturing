@@ -1,0 +1,4 @@
+**定义 404.1（正概率延续的相容性）。** 设有限非空字母表 $Y$，对每条历史 $h$ 给定 $Y^{\mathbb N}$ 上的概率律 $F_h$，采用乘积可测结构。设历史延长为 $hy$，并要求当 $p_h(y)=F_h\{\omega:\omega_0=y\}>0$ 时，$F_{hy}$ 正好等于 $F_h$ 在首符号为 $y$ 条件下的尾序列分布。
+
+这项条件将历史延长与概率条件化接在一起；任意随手指定的一族 $F_h$ 并不自动满足它。项目 [PredictiveStateUnifilarUpdate](../../../D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate.lean) 在可数可测字母及相应单点可测条件下使用同一相容性前提。
+

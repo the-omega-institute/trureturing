@@ -1,0 +1,19 @@
+#### 2.3.1 可直接引用的原文
+
+Laurent Bienvenu and Christopher P. Porter, *Deep $\Pi^0_1$ Classes*, **The Bulletin of Symbolic Logic** 22(2), 249–286 (2016), DOI [10.1017/bsl.2016.9](https://doi.org/10.1017/bsl.2016.9)。作者的[研究目录，J20](https://www.labri.fr/perso/lbienvenu/research.html)同时给出这一出版信息及 arXiv 链接。
+
+这里引用的完整证明版本是 [arXiv:1403.0450v3](https://arxiv.org/abs/1403.0450v3)，版本日期 **2017-01-30**；[固定版本 PDF](https://arxiv.org/pdf/1403.0450v3) 共 38 页，**Lemma 3.5 与完整证明均在 PDF 第 11 页，页面印号亦为 11**。这不是已经核验的期刊排版页码，不将它换算为期刊页码。可计算测度的定义在同版本第 5 页。
+
+
+作者在引理前明确写道：
+
+> “We first need the following lemma, which is folklore.”
+
+Lemma 3.5 的原陈述是：
+
+> “Let $C$ be a $\Pi^0_1$ class. If for some computable probability measure $\mu$ the value of $\mu(C)$ is a positive computable real number, then $C$ contains a computable member.”
+
+这里的空间是二进制 Cantor 空间 $2^{\mathbb N}$；$\Pi^0_1$ 类表示有效闭集。论文的“可计算测度”指所有基本柱集质量 $\mu([\sigma])$ 都能由 $(\sigma,t)$ 一致地近似到误差 $2^{-t}$。它不要求无原子、独立数字或均匀乘积测度。
+
+因此，应归属为**Bienvenu–Porter 文中明确标作 folklore 的引理**，不声称由该论文首创，也不把仓内再次推导视为新定理。
+

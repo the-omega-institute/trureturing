@@ -1,0 +1,89 @@
+**维数二与满秩记忆把近恢复转为近纯化。**
+
+先证明一个使用维数饱和的估计。设 $|\Gamma\rangle_{MKE}$ 是接收联合态
+$\sigma_{MK}$ 的实际纯化，$\dim M=\dim K=2$，且
+$\rho_M\succeq\mu I_M$。
+若存在环境态 $\tau_E$ 满足
+
+$$
+D(\omega_{ME},\rho_M\otimes\tau_E)\le\delta,
+\qquad
+\omega_{ME}=\operatorname{Tr}_K|\Gamma\rangle\langle\Gamma|,
+\tag{40.9}
+$$
+
+则
+
+$$
+\lambda_{\max}(\sigma_{MK})\ge1-\frac{2\delta}{\mu}.
+\tag{40.10}
+$$
+
+为证此式，记 $\rho_M$ 的特征值为 $\alpha\ge\beta\ge\mu$，
+$\tau_E$ 的特征值为 $t_1\ge t_2\ge\cdots$，不足两项时补零。
+$\rho_M\otimes\tau_E$ 的最大特征值是 $\alpha t_1$，次大值是
+$\max\{\beta t_1,\alpha t_2\}$。
+若次大值为 $\beta t_1$，最大的两个特征值之和为 $t_1$；
+否则其和至多 $\alpha(t_1+t_2)\le\alpha$，所以余下谱质量至少为
+$\beta\ge\mu$。两种情况均给
+
+$$
+1-\|\rho_M\otimes\tau_E\|_{(2)}
+\ge\mu(1-t_1),
+\tag{40.11}
+$$
+
+其中 $\|\cdot\|_{(2)}$ 是最大的两个特征值之和。
+
+$\omega_{ME}$ 的秩不超过 $\dim K=2$。用其支撑投影作为（40.9）的测量效果，
+得到 $\|\rho_M\otimes\tau_E\|_{(2)}\ge1-\delta$，故
+$1-t_1\le\delta/\mu$。再偏迹到 $E$，对 $\tau_E$ 的最大特征向量作投影，得
+$\lambda_{\max}(\omega_E)\ge t_1-\delta$。
+$\omega_E$ 与 $\sigma_{MK}$ 非零谱相同，因此
+
+$$
+\lambda_{\max}(\sigma_{MK})
+\ge1-\delta/\mu-\delta\ge1-2\delta/\mu.
+$$
+
+这证明（40.10），不限制环境维数或其秩。
+
+现在假设某终端最佳目标投影概率 $f_n^2\ge1-\epsilon$。
+选择达到最优值的解码器，并对其取 Stinespring 等距。
+将解码后全局纯态在真实目标方向上的分量归一化，就得到某环境态
+$\tau_E$，使（40.9）以 $\delta=\sqrt\epsilon$ 成立。
+这一过程只用目标投影概率，不要求预先有半迹误差上界。
+于是对于 $n=2,3$，令
+
+$$
+t=\frac{2\sqrt\epsilon}{\mu},
+$$
+
+便有 $\lambda_{\max}(\sigma_n)\ge1-t$。
+
+取最大特征向量 $\psi_n$。在实际纯化中，其对应环境向量可选为单位
+$\zeta_n$，满足
+
+$$
+\|\Gamma_n-\psi_n\otimes\zeta_n\|
+\le\sqrt{2t}.
+$$
+
+另一方面，$|\psi_n\rangle\langle\psi_n|$ 与 $\sigma_n$ 的半迹距离不超过
+$t$，其记忆边缘与真实 $\rho_n$ 的距离也不超过 $t$。
+由 Uhlmann 及 $F\ge1-D$，存在同一个二维 $K$ 上的纯化
+$\phi_n$，满足 $\operatorname{Tr}_K|\phi_n\rangle\langle\phi_n|=\rho_n$ 且
+$\|\psi_n-\phi_n\|\le\sqrt{2t}$。
+因此
+
+$$
+\boxed{
+\|\Gamma_n-\phi_n\otimes\zeta_n\|\le
+\zeta:=\frac{4\epsilon^{1/4}}{\sqrt\mu},
+\qquad n=2,3.
+}
+\tag{40.12}
+$$
+
+各纯态相位已选择使相关重叠为非负实数。稍后的反证阈值保证 $t<1$，所以全部近纯化选择都合法。
+

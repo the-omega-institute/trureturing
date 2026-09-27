@@ -1,0 +1,28 @@
+#### 2.10.1 共同对象与两种索引
+
+沿用C卷第2.2.1节唯一固定的 $X=\mathbb Z_3$、程序枚举 $(\varphi_e)$、事件顺序与归一化 Haar 律 $\mu$。本节的 $K$ 就是式（TM.479）的最终剩余集；C卷第2.2.2节给出
+
+$$
+M:=\mu(K)\ge\frac12,\qquad K\text{ 闭且没有可计算点}.
+$$
+
+这些构造及有效呈示的区别见 [profile343，第 10、13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)。
+
+记
+
+$$
+K_0\supseteq K_1\supseteq K_2\supseteq\cdots,
+\qquad \bigcap_s K_s=K,
+\qquad p_s=\mu(K_s)\downarrow M.
+$$
+
+这里 $K_s$ 固定为C卷第2.2.1节算法完成计算阶段 $s$ 后的剩余集：对 $e<s$ 模拟 $s$ 步后，排除已发现禁柱；$K_0=X$。因此它与C卷第2.2.3节的 $q_s^{-1}(H_s)$ 相同，但计算阶段 $s$ 与被查询的前缀深度 $n$ 始终分别索引。因此每个 $K_s$ 都是可计算的 clopen 集，$p_s$ 为可精确计算的有理数，并且
+
+$$
+\frac12\le M\le p_s\le1.
+$$
+
+$s$ 是约束公布的计算阶段；$n$ 是三进前缀深度。两者是不同参数。仅将二者都编号为自然数，不会使约束更新与前缀细化成为同一种操作。
+
+Bienvenu–Porter 的 [*Deep $\Pi^0_1$ Classes*, arXiv:1403.0450v3，第 11 页 Lemma 3.5](https://arxiv.org/pdf/1403.0450v3) 明确标作 folklore 的引理说明：有效闭集对可计算概率律若有正的可计算质量，便含有可计算点。它的有限字母适配适用于 Haar 三进数字空间。因此 $M$ 不可计算；否则与 $K$ 没有可计算点矛盾。特别地，每个可计算有理数 $p_s$ 都严格大于 $M$。
+

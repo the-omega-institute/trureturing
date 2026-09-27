@@ -1,0 +1,15 @@
+**引理156.2（发射后接收支撑正交）。** 两份 $\chi_j$ 在 $R\otimes B$ 上的 Schmidt 支撑是正交的二维子空间。因此存在一个全空间酉
+
+$$
+U:R\otimes B\longrightarrow R\otimes B
+$$
+
+同时满足
+
+$$
+(I_M\otimes U)|\chi_j\rangle
+=|\Xi\rangle_{MR}|j\rangle_B,
+\qquad j=0,1.
+\tag{156.10}
+$$
+

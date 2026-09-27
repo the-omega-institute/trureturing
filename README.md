@@ -192,16 +192,7 @@ A **readout** is a way of observing a state. We are developing an
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-The current rule checks declared-template bindings; its findings are
-**Observe warnings that do not block admission**
-([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
-Other admission checks still apply. Module selection for this rule is
-separate from the mathematical comparison below.
-The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
-describes a wider design whose implementation remains incomplete.
-
-Fix a catalog of registered theorem occurrences and their readouts on one
+**Mathematical comparison.** Fix a catalog of registered theorem occurrences and their readouts on one
 shared state space. Remove one occurrence while keeping the others fixed.
 Its **unique captures** are the pairs of distinct states that were
 distinguishable before removal and indistinguishable afterward. The
@@ -219,6 +210,15 @@ neither a universal value score nor a historical novelty judgment.
 [Example 02](#02--find-what-observations-cannot-tell-you) adds `X⊗X` expectations to separate a locally
 indistinguishable pair. Which pairs, if any, remain indistinguishable after
 adding this readout?
+
+The current rule checks declared-template bindings; its findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Its module selection is
+separate from the mathematical comparison above.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
 
 ## What is proved, and what is open
 

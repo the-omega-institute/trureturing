@@ -1,0 +1,65 @@
+### 253.2 完整输出只在产品符号分布上变化
+
+对任意联合源 $\Omega_j$，记参考边缘为 $\rho_E$、响应为 $R_w^{(j)}=\operatorname{Tr}_H[(A_w\otimes I_E)\Omega_j]$。由（253.2），输出为
+$$
+\sigma_j=
+\sum_{w,s}|w,s\rangle\langle w,s|
+\otimes P_{\mathrm{reset}}
+\otimes\frac{\rho_E+sR_w^{(j)}}4.
+\tag{253.7}
+$$
+共同的 $P_{\mathrm{reset}}$ 不改变迹距离或相对熵，以下在坐标中省略它。
+
+两假设在 Bell 参考块中的输出完全相同。在产品参考方向 $|2\rangle_E$ 上，各可见标签的权重为
+$$
+\begin{aligned}
+\sigma_0\big|_{(w,s,2)}&=\frac q4(1+s\alpha),\\
+\sigma_z\big|_{(w,s,2)}&=\frac q4\bigl(1+s\alpha(1-2z^2)\bigr).
+\end{aligned}
+\tag{253.8}
+$$
+产品旗标概率为 $q$；条件于该旗标，$w$ 均匀且不携带假设区别，符号 $s=+1$ 的概率分别为
+$$
+x=\frac{1+\alpha}{2},
+\qquad p_z=x-\alpha z^2.
+\tag{253.9}
+$$
+因为 $0<\alpha<1$ 且 $0<z<1$，$x,p_z$ 均严格在 $(0,1)$ 内。
+
+完整 $\sigma_0,\sigma_z$ 相互交换：它们在 Bell 参考块上是同一个算子，在产品参考块上都是（253.8）的经典对角分布。若某些 Bell 输出方向本征值为零，两假设在这些方向上仍同时为零，故不会引入相对熵的支撑问题。
+
+采用自然对数相对熵
+$$
+D_{\mathrm{nat}}(\rho\|\tau)
+=\operatorname{Tr}[\rho(\ln\rho-\ln\tau)],
+\qquad
+D_{\mathrm B}(p\|x)
+=p\ln\frac px+(1-p)\ln\frac{1-p}{1-x}.
+\tag{253.10}
+$$
+公共 Bell 块贡献为零，产品块的均匀 $w$ 也抵消，因而
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+=qD_{\mathrm B}(x-\alpha z^2\|x).
+}
+\tag{253.11}
+$$
+由 $\ln u\le u-1$，
+$$
+\begin{aligned}
+D_{\mathrm B}(p\|x)
+&\le\frac{p^2}{x}+\frac{(1-p)^2}{1-x}-1\\
+&=\frac{(p-x)^2}{x(1-x)}.
+\end{aligned}
+\tag{253.12}
+$$
+代入 $x(1-x)=(1-A)/4$，得到
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+\le\frac{4qA}{1-A}\,z^4.
+}
+\tag{253.13}
+$$
+

@@ -1,0 +1,42 @@
+### 282.2 完整输出与允许的取得方式
+
+每次仍只允许§277的实际重置仪器：经典角度 $\theta$ 决定两个正交设置，全部实际记录 $(w,\eta)$ 和完整参考保留；新来源在重置前不能与旧记忆共同作用。重置后的旧量子输出可任意处理。经典控制可采用标准Borel记录、可测角度函数和可分量子记忆，所有共同控制与后处理是§281所声明的正规CPTP操作。
+
+两假设先验相同，协议知道 $n,\delta,r$ 及平均相位，要求平均错误率不超过 $1/3$。记 $N_{\mathrm{noise}}(n,\delta,r)$ 为这一访问类所需的最小确定最大查询数。它允许提前停止后忽略剩余查询，也允许任意集体终端POVM。相位噪声的环境不在这个访问类内；只约束期望查询数的无界停止协议也不在本节合同内。
+
+略去共同纯重置因子。记理想无噪声输出为
+$$
+\sigma_n(\theta)=\bigoplus_{w,\eta}\frac{I_n+\eta H_w(\theta)}{4n},
+\quad
+H_0(\theta)=\operatorname{Re}(e^{i\theta}Z_n),
+\quad H_1(\theta)=\operatorname{Re}(ie^{i\theta}Z_n).
+\tag{282.9}
+$$
+实际输出精确为
+$$
+\widetilde\sigma_0(\theta)
+=r\sigma_n(\theta)+\epsilon\frac{I_{4n}}{4n},
+$$
+$$
+\widetilde\sigma_1(\theta)
+=(r-\Delta)\sigma_n(\theta)+s\frac{I_{4n}}{4n}
+=(1-\delta)\widetilde\sigma_0(\theta)+\delta\frac{I_{4n}}{4n}.
+\tag{282.10}
+$$
+故对每个角度，两输出交换。所有输出记录及参考均包含在这些 $4n$ 维态中。
+
+理想分子本征值记为 $\lambda\in[0,2]$，即取自四个矩阵
+$$
+A_\zeta=(I_n+\zeta M_n)^\dagger Q_n(I_n+\zeta M_n),
+\quad \zeta\in\{e^{i\theta},-e^{i\theta},ie^{i\theta},-ie^{i\theta}\}.
+\tag{282.11}
+$$
+共同本征基上的实际概率为
+$$
+p_\lambda=\frac{\epsilon+r\lambda}{4n},\qquad
+q_\lambda=\frac{s+(r-\Delta)\lambda}{4n},\qquad
+q_\lambda-p_\lambda=\frac{\Delta(1-\lambda)}{4n}.
+\tag{282.12}
+$$
+以下 $F$ 使用未平方的根保真度，$d$ 使用半迹距离；比较常数均独立于 $n,\delta,r$ 的上述范围。
+

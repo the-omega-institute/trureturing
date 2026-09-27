@@ -1,0 +1,40 @@
+**227.3.3 系数中心在球外：闭球 Sion 与边界最优。**
+
+设 $\|n_0\|>1$。定义闭球上的
+$$
+g(n)=\max_{s\in\mathbb B}f(s,n)
+=a+u\cdot n+\|t+L^Tn\|,
+$$
+$$
+h(s)=\min_{n\in\mathbb B}f(s,n)
+=a+t\cdot s-\|u+Ls\|.
+$$
+$f$ 在两个闭球上连续，分别仿射；两个闭球都是凸紧集。因此 Sion 定理适用，给
+$$
+\min_{n\in\mathbb B}g(n)=\max_{s\in\mathbb B}h(s).
+\tag{227.GD.17}
+$$
+它只施用于闭球，尚未用于球面。
+
+$g$ 在闭球邻域内可微，因为 $t+L^Tn=L^T(n-n_0)\ne0$。若它在球内部取得最小值，则
+$$
+0=\nabla g(n)
+=u+L\frac{t+L^Tn}{\|t+L^Tn\|},
+$$
+强制一个单位向量等于 $s_0$，违反 $\|s_0\|<1$。故 $g$ 的最小值在球面，等于 $\delta$。
+
+若 $h$ 在内部点 $s\ne s_0$ 取得最大值，则可微性给
+$$
+t=L^T\frac{u+Ls}{\|u+Ls\|},
+$$
+与 $\|L^{-T}t\|=\|n_0\|>1$ 矛盾。$s_0$ 也不是局部最大点：选方向 $d$ 满足 $Ld=-n_0/\|n_0\|$，则小的 $\varepsilon>0$ 给
+$$
+h(s_0+\varepsilon d)-h(s_0)
+=\varepsilon(\|n_0\|-1)>0,
+$$
+且该点仍在球内。因此 $h$ 的最大值也在球面，等于 $\beta$。（227.GD.17）给 $\delta=\beta$。
+
+最后，沿 $Lx$ 的正 $n_0$ 射线取 $x\in\partial K$，得到 $\lambda_+(s)<c$；沿负射线则得到 $\lambda_-(s)>c$。所以 $\beta>c>\alpha$，完成第三行及整个谱公式。
+
+Sion 来源为 Maurice Sion, “On general minimax theorems”, *Pacific Journal of Mathematics* **8** (1958), 171–176，定理3.4，第174页。原文假设凸紧空间及相应半连续、拟凹凸条件；这里用的是连续双仿射的直接特例。[原论文 PDF，第5页](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf#page=5)。
+

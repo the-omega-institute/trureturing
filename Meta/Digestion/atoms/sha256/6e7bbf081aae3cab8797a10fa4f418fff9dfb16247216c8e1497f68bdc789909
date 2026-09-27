@@ -1,0 +1,29 @@
+## 定理 ST34.2：由任意 Kraus 数据直接构造一个归一恢复候选
+
+由(ST34.1)计算
+
+$$
+Q=\mathcal N(I_d)=\sum_aE_aE_a^\dagger,\qquad
+P=P_Q,\qquad W=Q^{[-1/2]}.
+$$
+
+令
+
+$$
+R_a=E_a^\dagger W,
+\qquad R_{\perp b}=|0\rangle\langle b|(I-P),\quad b=1,\ldots,n.
+\tag{ST34.2}
+$$
+
+则这些矩阵定义一个从 $M_n$ 到 $M_d$ 的 CPTP 映射：
+
+$$
+\boxed{
+\mathcal R_{\mathcal N}(X)
+=\mathcal N^*(WXW)+\operatorname{tr}[(I-P)X]|0\rangle\langle0|.
+}
+\tag{ST34.3}
+$$
+
+此处不预先假设 $\mathcal N$ 可逆。该构造在任意有限通道上存在，但只有满足下一定理的通道被它精确反演。它是在均匀逻辑参考态下的 transpose/Petz 型恢复，相关一般构造与近似恢复背景见[ST34-BK]。
+

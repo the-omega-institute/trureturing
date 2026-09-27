@@ -1,0 +1,18 @@
+**定义155.1（共同外围相位群）。** 在 $\mathbb T^s$ 中取
+
+$$
+g=(\lambda_1,\ldots,\lambda_s),
+\qquad
+G=\overline{\{g^n:n\in\mathbb N_0\}},
+\tag{155.3}
+$$
+
+乘法与幂均逐坐标进行。对 $z=(z_1,\ldots,z_s)\in G$，定义
+
+$$
+\mathcal R_z=\sum_{j=1}^s z_j\Phi_j.
+\tag{155.4}
+$$
+
+$G$ 保留这些相位由同一个整数轮次同时产生的限制。若两个特征值满足代数关系，例如 $\lambda_2=\lambda_1^2$，则每个实际相位点均满足 $z_2=z_1^2$；不能将两个坐标分别自由选择。
+

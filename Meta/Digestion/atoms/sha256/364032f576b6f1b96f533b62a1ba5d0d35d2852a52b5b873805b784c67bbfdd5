@@ -1,0 +1,64 @@
+**证明。**
+秩约束使 $\mathcal K_{11}$ 非凸，需要单独证明全局定位。
+由第198节，零噪声完整误差满足
+
+$$
+\lambda=1-\frac{A_0A_1}{A_0+A_1}\ge\frac34,
+\qquad
+\mathcal F=\{A_0=A_1=1/2,\ C_0=C_1=0\}
+\tag{212.4}
+$$
+
+是它的精确最优面；分母为零时误差为一。
+在 $\mathcal K_{11}\cap\mathcal F$ 上，固定两主 Kraus 的正规范
+$a_j=1/\sqrt2$，则
+
+$$
+c_j=0,\qquad b_1=-b_0,\qquad
+2|b_0|^2+|d_0|^2+|d_1|^2=1.
+\tag{212.5}
+$$
+
+这给出该紧集的完整五维实球面表示。
+在 $h=h_b$，第206节的平方恒等式限制到此球面后为
+
+$$
+\begin{aligned}
+L_{h_b}-\Phi_{h_b}
+={}&\frac{\beta(R-1)}4|b_0-i\sqrt2n_b|^2\\
+&+\left(\frac{\beta R}4+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right).
+\end{aligned}
+\tag{212.6}
+$$
+
+因此球面上只有一个极小点，其局部球面 Hessian 正定。
+紧性保证当 $h\to h_b$ 时，所有球面全局极小点都进入该点的任意固定小邻域；
+否则取极小点聚点会得到 $h_b$ 处另一个极小点。
+正 Hessian 和隐函数定理随后给唯一解析极小分支。
+它就是第211节允许带符号 $\rho$ 的圆周驻点分支。
+再缩小并固定一个闭 $h$ 区间，上述定位和 Hessian 正性均一致成立。
+
+现在令 $\epsilon_n\downarrow0$、$h_n$ 位于该闭区间，
+并取任意 $\mathcal K_{11}$ 最优器 $\Gamma_n$。
+合法候选 $\Gamma_A$ 给出 $e(\Gamma_n)\le3/4+O(\epsilon_n)$。
+紧性和目标连续性先使全部聚点落在 $\mathcal K_{11}\cap\mathcal F$。
+在该面的固定邻域，第207节给一致冻结展开
+
+$$
+e(\Gamma_n)=\lambda(\Gamma_n)
++\epsilon_n L_{h_n}(\Gamma_n)+O(\epsilon_n^2).
+\tag{212.7}
+$$
+
+与 $\Gamma_A$ 的值比较，使用 $\lambda\ge3/4$，
+可知任意聚点的 $L_h$ 值不大于上段唯一球面极小值。
+所以所有聚点恰是对应的解析球面极小点。
+这证明真实受限最优器一致进入第211节在 $t=0$ 的完整主 Kraus 图。
+
+此处 $A_j$ 接近 $1/2$，所以两份 Choi 秩都恰为一，
+每个最优器都是该光滑 TP 流形上的驻点。
+快坐标隐函数定理与除以 $\epsilon$ 后的慢坐标隐函数定理
+唯一确定该图内的驻点为 $\Gamma_A$。
+故它是整个 $\mathcal K_{11}$ 的唯一最优器，得到（212.3）。证毕。
+

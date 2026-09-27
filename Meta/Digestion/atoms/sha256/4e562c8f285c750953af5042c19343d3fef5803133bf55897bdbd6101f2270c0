@@ -1,0 +1,2 @@
+**Proof.** The legality automaton removes every illegal input, so the triple product recognizes exactly $\mathcal A_{k,L}$ and has at most $kSL$ trim states. $\square$
+

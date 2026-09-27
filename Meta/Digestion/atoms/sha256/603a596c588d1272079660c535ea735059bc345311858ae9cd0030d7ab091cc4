@@ -1,0 +1,2 @@
+**Proof.** Equivalent states have identical residual functions, hence identical feasible observed triples under every such constraint. Applying the same objective gives the same attainable objective values and therefore the same supremum or infimum whenever the chosen ordered codomain admits it. $\square$
+

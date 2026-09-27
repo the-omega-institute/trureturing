@@ -1,0 +1,10 @@
+**命题 55.6（连续采样的有限执行）。** 第24.8节的连续恢复规则可用至多 $1+3pP^2$ 个控制态执行，全部初态均恰读 $P$ 次、恰执行 $P-1$ 个 $W$。采用
+$$
+Q_{\rm fixed}=\{\mathrm{Start}\}\sqcup
+\{(b,v,i,\phi):0\le b<p,\ 0\le v<P,\ 0\le i<P,
+\ \phi\in\{\mathrm{Step},\mathrm{Read},\mathrm{Done}\}\}.
+\tag{55.13}
+$$
+这里 $i$ 存实际累计步数，$v=0$ 表示尚未记录首个变化；有变化后 $v$ 保存恢复的低位余数。表如下，各项未改变的字段保留。
+
+- $\mathrm{Start}$ 发出 $R$，收到 $y$ 后置 $(b,v,i)=(y,0,0)$；$P=1$ 则进 $\mathrm{Done}$，否则进 $\mathrm{Step}$。

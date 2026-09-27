@@ -1,0 +1,20 @@
+## 111. 二维剩余乘积空间中的实际尾像与两方向后继
+
+固定第101、103节的同一实际七维六终端候选：非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$，接收器独立纯启动，每轮使用同一个固定全域通道，前六个终端精确恢复完整参考—活动记忆—原档案联合态。假设一份保持实际动作的固定酉补全具有通常纤维维数二，故
+
+$$
+S=\mathbb Cp+G_2+\cdots+G_5=\mathbb Cp+G_2+\cdots+G_6,
+\qquad \dim S=5,
+$$
+
+$$
+Q=S^\perp,\quad\dim Q=2,\qquad
+R_1=(Q\otimes F)\oplus N,\quad N\subset S\otimes F,\quad\dim N=3.
+$$
+
+$N$ 的通常乘积纤维为零。本节再假设
+
+$$
+M=N_{\mathrm{prod}},\qquad \dim M=2.
+$$
+

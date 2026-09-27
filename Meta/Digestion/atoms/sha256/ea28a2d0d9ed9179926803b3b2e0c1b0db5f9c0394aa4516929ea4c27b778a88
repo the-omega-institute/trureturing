@@ -1,0 +1,66 @@
+**每个固定接收器的 SDP 与全局有限变量优化。**
+
+对固定的正半定矩阵 $A,B$，根保真度有变分形式。[^phase_watrous_fidelity_sdp]
+
+$$
+F(A,B)=
+\max_X\left\{\operatorname{Re}\operatorname{Tr}X:
+\begin{pmatrix}A&X\\X^*&B\end{pmatrix}\succeq0\right\}.
+\tag{37.12}
+$$
+
+该式可由块正性给出的
+$X=\sqrt A\,C\,\sqrt B$、$\|C\|_{\rm op}\le1$ 及极分解验证，奇异情形按支撑限制或连续性处理。
+
+所以当 $\mathcal C$ 固定时，（37.4）是以下 SDP：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Re}\operatorname{Tr}X_n,\\
+\text{满足}\quad&
+\tau_n\succeq0,\quad\operatorname{Tr}\tau_n=1,\\
+&
+\begin{pmatrix}
+\omega_n&X_n\\X_n^*&\rho_n\otimes\tau_n
+\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{37.13}
+$$
+
+$\omega_n,\rho_n$ 此时固定，故右下块对 $\tau_n$ 仿射。
+$E$ 的维数为 $2D$，$\omega_n$ 和 $X_n$ 的矩阵大小是 $4D$，整个保真度块大小为 $8D$。这些状态矩阵的大小只随 $D$ 线性增长。
+
+全局优化接收器时，可以完全不引入大小为 $2^n$ 的档案或终端解码器。采用以下实坐标：
+
+- 接收 Choi 矩阵 $J_{\mathcal C}$ 的大小为 $2D^2\times2D^2$，Hermitian 坐标共 $4D^4$ 个，满足 $J_{\mathcal C}\succeq0$ 及对输出偏迹等于 $I_{2D}$。
+- 每个终端 $n=1,\ldots,N_D$ 有一个 $2D\times2D$ Hermitian 状态变量 $S_n$，坐标数 $4D^2$，满足从固定 $S_0=\sigma_0$ 出发的同一一步递推
+  $S_{n+1}=\mathcal R_{\mathcal C}(S_n)$。
+- 每个终端有一个复矩阵 $Y_n\in\mathbb C^{2D\times2D}$，共 $8D^2$ 个实坐标，满足 $`Y_nY_n^*=S_n`$。令 $\Gamma(Y_n)=\operatorname{vec}(Y_n)$，$\omega(Y_n)=\operatorname{Tr}_K|\Gamma(Y_n)\rangle\langle\Gamma(Y_n)|$。
+- 每个终端有一个 $2D\times2D$ Hermitian 密度变量 $\tau_n$，坐标数 $4D^2$，及 $4D\times4D$ 复矩阵 $X_n$，坐标数 $32D^2$。
+- 一个共同实标量 $s\in[0,1]$，要求 $s\le\operatorname{Re}\operatorname{Tr}X_n$ 对全部终端成立，并加入（37.13）的块正性，使用 $\omega(Y_n)$ 和 $\rho_n=\operatorname{Tr}_K S_n$。
+
+不同 $n$ 的 $Y_n$ 只是在各终端表示同一真实状态的辅助纯化；它们不需要是一个物理累计环境的前缀。由（37.5）的纯化不变性，这种自由度既不改变单终端值，也不放松同一接收通道的要求。同一通道要求完整保留在 $S_n$ 的共同递推中。
+
+最大化 $s$ 得到的值恰为 $\gamma_D$。对于固定接收器，每个终端的 $\tau_n,X_n$ 独立优化，故共同下界的最大值就是各 $f_n$ 的最小值；反向，任何可行点都定义一台合法接收器和这些终端的可行保真度见证。
+
+按上述坐标选择，总实变量数恰为
+
+$$
+4D^4+N_D(4+8+4+32)D^2+1
+=388D^4+1.
+\tag{37.14}
+$$
+
+若把纯初态也当变量优化，会再增加 $O(D)$ 坐标；固定初态的基变换已经消去了这项。Choi 矩阵本身大小为 $O(D^2)$，不能与其余 $O(D)$ 大小的状态矩阵混为一谈。
+
+该可行集紧。Choi 正性和固定偏迹使 Choi 坐标有界；一步递推从密度矩阵出发始终保持密度矩阵；$`Y_nY_n^*=S_n`$ 给 $\|Y_n\|_{\rm HS}=1$；$\tau_n$ 为密度矩阵；保真度块正性给
+
+$$
+|(X_n)_{uv}|^2
+\le(\omega_n)_{uu}(\rho_n\otimes\tau_n)_{vv}\le1.
+$$
+
+全部等式和非严格正性约束闭，所以可行集紧。
+
+对固定 $a,b$，递推对 Choi 和状态变量是双线性的，$`Y_nY_n^*=S_n`$ 是二次等式，块矩阵条目也是次数至多二的多项式。将有限大小的 Hermitian 正性用主子式非负表述，就得到一个有限基本闭半代数优化；它在全局上并非凸优化，尽管固定接收器后的每个终端是 SDP。主子式展开的个数和次数随 $D$ 增长，式（37.14）的变量计数不等于多项式时间算法或固定次数标量约束。
+

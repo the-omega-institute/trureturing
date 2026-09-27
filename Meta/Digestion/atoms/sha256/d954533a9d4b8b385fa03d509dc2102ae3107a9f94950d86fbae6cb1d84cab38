@@ -1,0 +1,45 @@
+**证明。** 令 $\pi:K\to K/U$。四维旧块使
+$$
+Z=(\pi\otimes I_E)V_0K,\qquad\dim Z\le3.
+\tag{57.23}
+$$
+$V_1$ 在 $U,G_3,G_5$ 上分别使用 $A,B,B$，所以 $U\cap G_3=U\cap G_5=0$。于是
+$$
+M=\pi(G_3+G_5),\qquad m=\dim M\in\{2,3\},\qquad M\otimes A\subset Z.
+\tag{57.24}
+$$
+
+若 $m=3$，则 $Z=M\otimes A$。不同环境 $B$ 的零位商像 $\pi(G_4)\otimes B$、$\pi(G_6)\otimes B$ 必为零，故
+$$
+G_4=G_6=U.
+$$
+固定零位等距给 $H_3=H_5$；固定一位等距在 $G_2=G_4=U$ 上给 $Q_3=Q_5=:Q$。共同环境 $A$ 的位像正交使 $G_3+G_5\perp Q$。于是同一空间 $H_3=H_5$ 到 $G_3+G_5$ 的投影像既等于 $G_3$、又等于 $G_5$，强制 $G_3=G_5$，与 $m=3$ 矛盾。
+
+因此 $m=2$。置
+$$
+S=U+G_3+G_5,\qquad\dim S=4.
+$$
+因 $U\cap G_3=U\cap G_5=0$，
+$$
+S=U+G_3=U+G_5.
+\tag{57.25}
+$$
+固定一位等距使
+$$
+V_1S=(Q_3\otimes A)+(Q_4\otimes B),\qquad
+Q_6\otimes B=V_1G_5\subseteq V_1S.
+\tag{57.26}
+$$
+$A,B$ 线性无关。逐个环境分量比较（57.26），任意 $q\otimes B\in Q_6\otimes B$ 的 $A$ 分量为零，所以 $q\in Q_4$。因此 $Q_6\subseteq Q_4$；两者二维，故 $Q_6=Q_4$。于是
+$$
+V_1G_5=Q_4\otimes B=V_1G_3.
+$$
+$V_1$ 单射给 $G_5=G_3$。再由两个零位像共用环境 $A$，
+$$
+V_0H_2=G_3\otimes A=G_5\otimes A=V_0H_4,\qquad H_2=H_4.
+\tag{57.27}
+$$
+但非零 $w\in H_2\cap U=H_4\cap U$，式（57.6）使 $P_{Q_4}w=0$，违反 $P_{Q_4}|_{H_4}$ 单射。矛盾。
+
+两种商维数均已排除，定理得证。
+

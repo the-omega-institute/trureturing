@@ -1,0 +1,59 @@
+### 230.1 同一实际接口上的事件与容量
+
+固定整数
+$$
+d\ge2,\qquad 1\le r<d,\qquad m\ge r.
+\tag{230.HR.1}
+$$
+令 $H\to\mathbb {CP}^{d-1}$ 为输入重言线丛，即
+$$
+H_{[v]}=\mathbb Cv\subset\mathbb C^d,
+\qquad h=c_1(H^*).
+\tag{230.HR.2}
+$$
+对单位输入 $v$，记 $P_v=|v\rangle\langle v|$。
+
+给定连续的秩 $r$ 正交事件投影族
+$$
+P:\mathbb {CP}^{d-1}\longrightarrow\operatorname{End}(\mathbb C^m),
+\qquad P(x)^2=P(x)=P(x)^\dagger.
+\tag{230.HR.3}
+$$
+其像定义复秩 $r$ 的向量子丛 $L$：在任意 $x_0$ 选 $\operatorname{im}P(x_0)$ 的一组基，并在邻域内用 $P(x)$ 投影这些固定向量。线性独立性在足够小邻域内保持，给出局部帧。这里不要求存在全局帧。
+
+定义
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+\tag{230.HR.4}
+$$
+由于 $1\le r<d$，上同调群 $H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)$ 由 $h^r$ 自由生成，故存在唯一整数 $\nu$ 满足
+$$
+c_r(E)=\nu h^r.
+\tag{230.HR.5}
+$$
+本节的拓扑假设为 $\nu\ne0$。
+
+目标为有限标签集 $B$ 上的 CPTP 记录通道
+$$
+\mathcal R(X)=\sum_{b\in B}|b\rangle\langle b|\otimes\Gamma_b(X),
+\tag{230.HR.6}
+$$
+其中 $\Gamma_b:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^m)$ 完全正，$\sum_b\Gamma_b$ 保迹。固定一个标签 $b_*$，记 $\Gamma=\Gamma_{b_*}$。假设存在 $\alpha\in[0,1]$，使
+$$
+\boxed{\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位 }v\in\mathbb C^d.}
+\tag{230.HR.7}
+$$
+比较对象 $\mathcal S$ 是具有相同输入、量子输出及标签接口的任意 CPTP 记录通道；其同名分支记为 $\Lambda$。分支 Kraus 容量取
+$$
+k=\operatorname{rank}J_\Lambda,
+\tag{230.HR.8}
+$$
+也就是最小 Kraus 数量。零分支的容量为零。所有距离均取完整通道的
+$$
+d_\diamond(\mathcal R,\mathcal S)
+=\tfrac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{230.HR.9}
+$$
+其中包括全部记录标签，并允许外部参考。单标签通道是这个定义的特例。
+

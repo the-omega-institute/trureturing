@@ -1,0 +1,48 @@
+**定理 92.1（最优装置、初态与成本势的共同极限）。** 设 $0\le u_j<R$ 且 $u_j\to R$。对每个 $j$，取一个实际达到最坏成本的仪器与初态：
+
+$$
+\Gamma_j\in\mathfrak B_{u_j},\qquad
+\operatorname{Tr}(\rho_jT_{\Gamma_j})=\mathscr K(u_j).
+\tag{92.1}
+$$
+
+这里 $\rho_j$ 可以是混态。若某子列 $\Gamma_j\to\Gamma_*$，则该极限属于 $\mathfrak F_R$，并且沿同一子列
+
+$$
+\boxed{
+\rho_j\longrightarrow P_*,\qquad
+\frac{T_{\Gamma_j}}{\mathscr K(u_j)}\longrightarrow F_*,
+}
+\tag{92.2}
+$$
+
+其中 $P_*$ 是 $\Gamma_*$ 自己的唯一暗态，$F_*$ 是它自己的最终未点击效果。特别地，最坏装置族接近最近失效集合；不要求这个集合只有一个装置。
+
+证明。由最坏值定义及式（92.1），必有
+$M(\Gamma_j)=\mathscr K(u_j)$。第 80.4 条给该值趋于无穷。
+
+假设某仪器极限 $\Gamma_*$ 不失效。有限维全状态终止给所有未点击谱严格位于单位圆内，所以 $\operatorname{id}-\mathcal A_{\Gamma_*}$ 可逆。有限矩阵逆在可逆点附近连续，而
+
+$$
+T_{\Gamma_j}=(\operatorname{id}-\mathcal A_{\Gamma_j})^{-1}(I),
+$$
+
+这将使其范数有界，与最坏成本发散矛盾。因此 $\Gamma_*$ 失效。由 $\delta(\Gamma_j)\le u_j$ 的连续极限，$\delta(\Gamma_*)\le R$；失效半径的最小性迫使等号成立。
+
+置 $H_j=T_{\Gamma_j}/\mathscr K(u_j)$。有
+
+$$
+0\preceq H_j\preceq I,\quad
+\|H_j\|_\infty=1,\quad
+\operatorname{Tr}(\rho_jH_j)=1,
+\quad H_j-\mathcal A_{\Gamma_j}(H_j)
+=\frac I{\mathscr K(u_j)}\longrightarrow0.
+\tag{92.3}
+$$
+
+从紧性取任何共同收敛子列 $(H_j,\rho_j)\to(H_*,\rho_*)$。极限满足
+$H_*\succeq0$、$\|H_*\|_\infty=1$、$\mathcal A_{\Gamma_*}(H_*)=H_*$，故定理 91.2 强制 $H_*=F_*$。
+
+又 $\operatorname{Tr}(\rho_*F_*)=1$，而 $F_*=P_*+q_*(I-P_*)$ 且 $q_*<1$，所以
+$\operatorname{Tr}[\rho_*(I-P_*)]=0$。正性给 $\rho_*=P_*$。所有聚点均为同一对 $(F_*,P_*)$，从而沿原来的仪器收敛子列成立式（92.2）。若最优仪器不接近 $\mathfrak F_R$，再用紧性取一个与该集合距离保持正值的聚点便得到矛盾。$\square$
+

@@ -1,0 +1,32 @@
+**定义 37.1（中心计数原子与收缩窗口）。** 沿用[波动卷定义 27.1、33.1](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md)的两个实际平稳实验，固定
+$`r=1/2`$、$`\beta\in(1/2,1)`$。记信号漂移为
+$`\phi=\tfrac34\log(3/2)-\tfrac14\log2\gt0`$，沿允许的
+$`M=2^{d-1}\to\infty`$ 取
+
+```math
+\lambda_M=4\left\lfloor\frac{\beta\log M}{4\phi}\right\rfloor,
+\qquad q_M=\left\lfloor M e^{-\lambda_M\phi}\right\rfloor,
+\qquad \mathsf T_M=2M\lambda_M,\qquad
+\tau_M=\log(M/q_M),\qquad w_M=\sqrt{\lambda_M/q_M}.
+```
+
+式 (37.1)。
+
+下文略去 $`q,\lambda,\tau,w`$ 的下标。所有标签使用同一真实支持
+$`S`$，$`\pi_i`$ 为正确对齐数据下、均匀基数先验的精确后验边缘概率。
+令
+
+```math
+J_M=\{i:\tau-w\lt W_i\le\tau+w\},\qquad
+V_M=q^{-1/4}\sum_{i\in J_M}(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad
+F_M(u)=q^{-1/4}\sum_{\tau-w\lt W_i\le\tau+uw}
+              (\mathbf1_{\{i\in S\}}-\pi_i),\quad -1\le u\le1.
+```
+
+式 (37.2)。
+
+路径取右连续版本，同分位置同时进入。于是 $`F_M(-1)=0`$、
+$`F_M(1)=V_M`$。未知方向时，按定义 35.1 的同一次方向判决计算工作得分与工作概率，
+得到相应的工作统计量；错误方向上的这些概率不被解释为未知方向模型的精确后验。
+

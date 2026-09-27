@@ -1,0 +1,41 @@
+### 259.5 白化公式与一般混合源的唯一性
+
+可实现性 $\rho\pm K\succeq0$ 先给支撑约束
+$$
+K=P_SKP_S,\qquad S=\operatorname{supp}\rho.
+\tag{259.32}
+$$
+理由是：对 $x\in\ker\rho$，两个非负二次型 $\langle x,(\rho\pm K)x\rangle$ 之和为零，故两个正矩阵均消去 $x$，从而 $Kx=0$；Hermitian性再给左支撑。
+
+在非零空间 $S$ 上定义
+$$
+Z=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2}.
+\tag{259.33}
+$$
+它满足 $Z=Z^\dagger$、$-I_S\preceq Z\preceq I_S$。
+
+几何平均对可逆同余有等式
+$$
+(TAT^\dagger)\#(TBT^\dagger)=T(A\#B)T^\dagger.
+\tag{259.34}
+$$
+这可直接从引理259.1证明：$H\mapsto THT^\dagger$ 给两个Hermitian填充集合之间保序的双射，故把唯一最大元送到唯一最大元。证明同时适用于奇异 $A,B$，只要求同余矩阵 $T$ 可逆。
+
+在 $S$ 上使用（259.34），由于 $I_S+Z$ 与 $I_S-Z$ 交换，逐本征值计算得到
+$$
+\boxed{
+G|_S=\rho_S^{1/2}(I_S-Z^2)^{1/2}\rho_S^{1/2},
+\qquad G|_{S^\perp}=0.
+}
+\tag{259.35}
+$$
+零支撑部分也可直接由块正性核条件确认。因此精确直径另有公式
+$$
+\boxed{
+\operatorname{diam}_d\mathfrak S(\rho,K)
+=\operatorname{Tr}_S\!\left[\rho_S(I_S-Z^2)^{1/2}\right].
+}
+\tag{259.36}
+$$
+这里没有要求 $\rho$ 与 $K$ 或 $Z$ 交换。
+

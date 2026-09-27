@@ -1,0 +1,11 @@
+**命题 31.2（正性、深度与完整观察剖面）。** 所有 A_λ 的群系数严格为正，ε(A_λ)=q⁴nJ_n，τ(A_λ)=λ_1。在定义 30.4 的空间上，
+
+$$
+(A_\lambda)_I=q^2N_\lambda\otimes\operatorname{id}_{I_H},
+\qquad
+\operatorname{rank}((A_\lambda)_I^j)
+=(q-1)\sum_i\max(\lambda_i-j,0)\quad(j\ge0).
+$$
+
+其幂零块长是 λ 的每个部分重复 q-1 次。
+

@@ -1,0 +1,35 @@
+#### 1.1.1 同一旧状态的精确提升数
+
+设 $L,m$ 为正整数，旧幸存集合为
+$H\subseteq\mathbb Z/L\mathbb Z$，新增要排除的同余类为
+$a+m\mathbb Z$，其中 $a\in\mathbb Z$。置
+$$
+d=\gcd(L,m),\qquad
+L'=\operatorname{lcm}(L,m),\qquad
+k=\frac md=\frac{L'}L .
+\tag{TM.352}
+$$
+以自然剩余映射 $\pi_{L',L}$ 将新分辨率投回旧分辨率，新幸存集合为
+$$
+H'=\{x\in\mathbb Z/L'\mathbb Z:
+       \pi_{L',L}(x)\in H,\quad x\not\equiv a\pmod m\}.
+\tag{TM.353}
+$$
+若 $h\in\mathbb Z/L\mathbb Z$，取整数代表 $h_0$。其在模 $L'$ 中的提升恰为
+$h_0+jL$，$0\le j<k$，共有 $k$ 个。不同 $j$ 给不同剩余类，因为 $L'=kL$。
+
+该纤维中被新同余类删去的点，满足
+$h_0+jL\equiv a\pmod m$。它有解当且仅当
+$h_0\equiv a\pmod d$；满足此条件时，约去 $d$ 后得到
+$(L/d)j\equiv(a-h_0)/d\pmod{k}$。
+由于 $\gcd(L/d,k)=1$，解在模 $k$ 下唯一。因此
+$$
+\#\{x:\pi_{L',L}(x)=h,\ x\equiv a\pmod m\} =
+\begin{cases}
+1,&h\equiv a\pmod d,\\
+0,&h\not\equiv a\pmod d.
+\end{cases}
+\tag{TM.354}
+$$
+这里 $h\bmod d$ 定义良好，因为 $d\mid L$。整个计数属于同一个模 $L'$ 的共同实现，未把模 $L$ 与模 $m$ 的自由乘积当作实际联合像。
+

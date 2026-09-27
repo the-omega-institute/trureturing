@@ -1,0 +1,26 @@
+## 78. 饱和一个暗态下界，还必须与相邻相干输入相容
+
+本批接续第 73—77 节，将同一二维、齐次、完整仪器的失效距离下界从 $4/5$ 加强为严格大于 $4/5$，并确定这个改进对等待成本的含义。第 71.2、73.2、76.2 条的既有结论仍成立；本批不改写旧字节，也不把第 73 节的显式候选宣布为全局最优。
+
+始终固定完整活动记忆 $\mathcal H=\mathbb C^2$、两个可读记录“未点击、点击”和同一个量子后继空间。实际仪器写为
+
+$$
+\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(\rho)
++|\mathrm c\rangle\langle\mathrm c|\otimes\mathcal C(\rho),
+$$
+
+其中两分支完全正，$\mathcal N+\mathcal C$ 保迹；每个装置在所有轮次重复自身同一仪器。名义仪器仍为
+
+$$
+Q_0=|0\rangle\langle1|,\qquad
+L_0=|0\rangle\langle0|,\qquad
+\Gamma_0=(\mathcal N_0,\mathcal C_0).
+$$
+
+距离始终是完整记录与量子后继都保留时的
+
+$$
+\delta(\Gamma)=\frac12\|\Gamma-\Gamma_0\|_\diamond.
+$$
+

@@ -1,0 +1,47 @@
+### 56.2 单向对偶与两个极端反馈
+
+对任意厄米 $X$，单向支持函数的准确对偶为
+
+$$
+h(X)=\max_{C,\,0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(XE)
+=\min\{\operatorname{Tr}n:
+N\succeq0,\ N\succeq X,\operatorname{Tr}_D N=I_A\otimes n\}.
+\tag{56.6}
+$$
+
+式（56.6）直接复用引理 55.1，最小值达到，并且
+
+$$
+D(R,S)=\max\{h(R-S),h(S-R)\}.
+$$
+
+两个方向使用独立上界，保留非归一化候选的完整事件响应。
+
+定义互补投影
+
+$$
+\begin{aligned}
+Q_+&=(|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|)\otimes I_D,\\
+Q_-&=(|0,1\rangle\langle0,1|+|1,0\rangle\langle1,0|)\otimes I_D.
+\end{aligned}
+\tag{56.7}
+$$
+
+它们都是合法反馈归一化算符，并满足
+
+$$
+\operatorname{Tr}(SQ_\pm)=1,
+\quad\operatorname{Tr}(R_\varepsilon Q_+)=1+\varepsilon,
+\quad\operatorname{Tr}(R_\varepsilon Q_-)=1-\varepsilon.
+\tag{56.8}
+$$
+
+下面证明：若某个 $\eta\ge0$ 允许
+
+$$
+D(R_\varepsilon,S)\le\varepsilon+\eta,
+\tag{56.9}
+$$
+
+则必须满足一个明确的不等式，再以 $\eta=\varepsilon/10000$ 反驳它。
+

@@ -1,0 +1,13 @@
+**引理277.3（小输出谱的统一尺度）。** 存在 $\theta_0>0$ 和固定常数 $c_a,C_a,b>0$，使对所有 $0\le\theta\le\theta_0$，$I_n-H_0(\theta)$ 的最小本征值 $a_\theta$ 满足
+$$
+c_a\theta^{2n}\le a_\theta\le C_a\theta^{2n},
+\qquad 0\le a_\theta\le1/2.
+\tag{277.26}
+$$
+在两输出的共同本征基中，理想输出恰有一个可能趋零的概率
+$$
+p_0=\frac{a_\theta}{4n},
+\tag{277.27}
+$$
+其余 $4n-1$ 个概率都至少为 $b$。$\theta>0$ 时全部理想有效输出概率严格正。
+

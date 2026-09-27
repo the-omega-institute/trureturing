@@ -1,0 +1,27 @@
+**proposition 25.3: 实际像因子化的准确类型；Claim status: open.** 式（25.3）中的 $Q_N,T$ 若仍取原名义陪域，应先取实际像映射
+\[
+\widehat Q_N:X\to\operatorname{im}(Q_N),\qquad
+\widehat T:X\to\operatorname{im}(T).
+\]
+准确的交换式是
+\[
+\widehat T=D_N\circ\widehat Q_N.
+\tag{25.8}
+\]
+其存在且唯一，当且仅当式（25.4）成立。存在性由纤维恒定使 $D_N(\widehat Q_N(x))=\widehat T(x)$ 无歧义，唯一性由 $\widehat Q_N$ 满射。空 $X$ 时两实际像皆空，取唯一空映射。`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 的名义全域版本要求非空来源，用以给不可达坐标补值；`CausalStateFactorization.causal_state_factorization` 的实际像唯一性不要求把不可达坐标当作观察状态。本节只假设时间窗口有限，不假设状态像或观察像有限。
+
+为免与第24节的有限性条件混淆，那里“有限状态”应理解为 $X$ 带有有限 `Fintype` 结构，而第24.2节的精确记忆实现还应明确 $W$ 带有有限 `Fintype` 结构；仅有有限时间窗口或有限值域读出，不能推出这两个载体有限。第24.4节的动态运输也应使用跨接口类型
+\[
+T:X\to X',\qquad G:P'\to P,
+\]
+并满足
+\[
+E'(Tx,p')=E(x,Gp').
+\tag{25.8a}
+\]
+它首先给出评价保持；由此自动得到状态行 kernel preservation。协议列 kernel preservation 若要按相反方向使用，还需 $T$ 满射、源列由 $\operatorname{im}(T)$ 决定，或显式假设
+\[
+C_{p'}=C_{q'}\Longrightarrow C_{G p'}=C_{G q'}\quad\text{对所有 }x\in X.
+\]
+满足所需方向的这些条件后，才可在实际像上下降到相应商。只有再加满射、双射或明确的实际像双向条件，才可把下降后的映射称为等价或互相恢复。
+

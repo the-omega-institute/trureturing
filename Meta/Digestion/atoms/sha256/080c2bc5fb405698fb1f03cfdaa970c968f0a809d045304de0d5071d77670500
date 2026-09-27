@@ -1,0 +1,16 @@
+**定理274.3（任意unipotent图来源）。** 对（274.1）—（274.4）的每个固定 $Q\succ0$ 和unipotent $M$，完整数据纤维为单点，且
+$$
+\boxed{
+d_S=m,\qquad
+\alpha_{\mathrm{sharp}}=\frac1{2m}.
+}
+\tag{274.45}
+$$
+存在固定有限常数 $C$，使全部合法竞争态满足
+$$
+\|\Xi-\Omega\|_1
+\le\min\{2,C\varepsilon(\Xi)^{1/(2m)}\}.
+\tag{274.46}
+$$
+精确同边缘子合同的最优指数也为 $1/(2m)$。
+

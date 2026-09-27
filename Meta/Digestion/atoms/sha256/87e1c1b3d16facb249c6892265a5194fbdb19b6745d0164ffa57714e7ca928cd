@@ -1,0 +1,2 @@
+**Proof.** If $M$ has an $A$-computable name, perform the construction of C卷第2.7.2节 using that name and the fixed computable presentation; every required operation is then $A$-computable. If $R$ is $A$-decidable, the finite query procedure of C卷第2.7.3节 returns an $A$-computable rational Cauchy name. These constructions are uniform in the specified inputs. $\square$
+

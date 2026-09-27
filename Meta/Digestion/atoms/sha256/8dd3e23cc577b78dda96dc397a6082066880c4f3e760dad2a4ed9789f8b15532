@@ -1,0 +1,13 @@
+### 234.3 三维三标签的两种优化任务
+
+以下固定 $d=N=3$、$m\ge3$，沿用（234.SP.1）—（234.SP.3）。对整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+U_R=\inf_{K(\mathcal S)\le R}
+\sup_{\rho\in\mathcal D(\mathbb C^3)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{234.SP.13}
+$$
+$D_R$ 包括任意参考，$U_R$ 不包括参考，故 $U_R\le D_R$。由于 $m\ge3$，将一个等距通道放入单个标签即可得到总秩一候选，所有上述候选集非空。目标各标签秩三，总秩九。
+

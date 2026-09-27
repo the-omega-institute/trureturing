@@ -1,0 +1,49 @@
+**命题96.2（全部跳秩预算可达）。** 对任意整数 $n\ge1$、$0\le k\le\lfloor n/2\rfloor$，存在一个固定酉
+$W:K\otimes\mathbb C^2\to K\otimes F$，$\dim K=n$、$\dim F=2$，使两侧通常纯环境纤维维数均为 $k$，且
+$$
+\sum_{[z]}(g_0([z])-k)=n-2k.
+$$
+因此定理96.1的上界即使在完整酉替代类中也锐利。
+
+**证明。** 置 $\ell=n-2k$，给接收因子取正交分解
+$$
+K=Q\oplus R\oplus S,\qquad
+\dim Q=\dim S=k,\qquad \dim R=\ell.
+\tag{96.14}
+$$
+选 $R$ 的正交单位基 $r_1,\ldots,r_\ell$。另任取单位环境向量
+$\zeta_1,\ldots,\zeta_\ell$，允许它们重复，也不要求不同射线正交。定义
+$$
+\mathcal R_0=(Q\otimes F)\oplus
+\bigoplus_{j=1}^{\ell}\mathbb C(r_j\otimes\zeta_j),
+$$
+$$
+\mathcal R_1=(S\otimes F)\oplus
+\bigoplus_{j=1}^{\ell}\mathbb C(r_j\otimes\zeta_j^\perp).
+\tag{96.15}
+$$
+接收因子的正交分解使不同 $r_j$ 项相互正交；相同 $j$ 的两个环境向量也正交。因此 $\mathcal R_0,\mathcal R_1$ 正交，且各自维数都是 $2k+\ell=n$，共同覆盖 $K\otimes F$。
+
+任选满等距 $V_i:K\to\mathcal R_i$，定义
+$$
+W(x_0\otimes|0\rangle+x_1\otimes|1\rangle)
+=V_0x_0+V_1x_1.
+$$
+它是一个固定全域酉。对任意环境射线，沿（96.14）的正交接收坐标逐项比较纯张量，直接得到
+$$
+g_0([z])=k+\#\{j:[\zeta_j]=[z]\},
+$$
+$$
+g_1([z])=k+\#\{j:[\zeta_j^\perp]=[z]\}.
+\tag{96.16}
+$$
+除有限条指定射线外，两式都等于 $k$。即使某些 $\zeta_j$ 重复，同一射线的额外维数也正好等于重复次数，故
+$$
+\sum_{[z]}(g_0([z])-k)
+=\ell=n-2k.
+\tag{96.17}
+$$
+该 $V_0$ 为等距，所以其两个环境系数没有共同输入核；定理96.1的全部条件均满足。$\ell=0$ 时上述直和为空，等式仍成立。证明完毕。
+
+特别地，$n=7$ 时通常维数 $k=1,2,3$ 的总超额预算 $5,3,1$ 均能由这种固定酉达到。命题96.2只证明铅笔与酉纤维预算锐利，没有把这些抽象酉宣称为满足非退化来源和完整六终端合同的接收器。
+

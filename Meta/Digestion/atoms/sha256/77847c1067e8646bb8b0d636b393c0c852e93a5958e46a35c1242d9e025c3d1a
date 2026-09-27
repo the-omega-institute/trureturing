@@ -1,0 +1,31 @@
+**推论163.4（三十四维装置的两个正频率区间）。** 对每个
+$q\ge1$、$0\le r<q$，有
+
+$$
+\boxed{
+\underline d_{q,r}
+\left(\left\{n:e_n>\frac{887}{1152}\right\}\right)
+\ge\frac13,
+}
+\tag{163.31}
+$$
+
+以及
+
+$$
+\boxed{
+\underline d_{q,r}
+\left(\left\{n:e_n<\frac{195}{256}\right\}\right)
+\ge\frac2\pi\arccos\frac{31}{32}>0.
+}
+\tag{163.32}
+$$
+
+两个阈值之间有严格间隔
+
+$$
+\frac{887}{1152}-\frac{195}{256}
+=\frac{19}{2304}>0.
+\tag{163.33}
+$$
+

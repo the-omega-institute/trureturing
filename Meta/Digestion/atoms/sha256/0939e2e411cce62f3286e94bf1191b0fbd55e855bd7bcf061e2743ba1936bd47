@@ -1,0 +1,55 @@
+**占据输出的联合结果均衡**
+$\operatorname{Tr}[P_0\Gamma_{0,s}(P_0)]
+=\operatorname{Tr}[P_0\Gamma_{1,s}(P_0)]$，
+即 $A_{0,s}=A_{1,s}$。
+它比较的是“结果为 $j$ 且量子输出仍在占据方向”的联合概率。
+
+对原始全 CPTP 解码器，先在输出标签的各对角块定义
+$\Gamma_{j,s}$。输出标签去相干保持这些对角 CP 映射及其和
+$\Lambda_s$，所以三类限制均保持。
+旗标对称化使用
+$\Gamma'_{j,s}=\operatorname{Ad}_Z\circ\Gamma_{j,-s}\circ
+\operatorname{Ad}_Z$，且
+
+$$
+\Gamma'_{j,s}(P_0)=Z\Gamma_{j,-s}(P_0)Z,\qquad ZP_0Z=P_0.
+$$
+
+因此总迹、与 $P_0$ 的配对以及
+$\Lambda_s(P_0)=P_0$ 分别保持；逐旗标施加限制保证交换旗标后仍合法。
+三类条件都是共同 Choi 紧集上的闭仿射条件，
+再平均原映射与变换映射仍保持它们。
+第189节保证这些步骤不增完整误差；
+实际操作仍不访问 $M$，全部外部参考保持不变。
+因此受限最优值存在，且可在各自的对称化可行集中取得。
+分别记这些完整参考最优值为
+$E_\epsilon^{\mathrm{fix}}(h)$、
+$E_\epsilon^{\mathrm{bal}}(h)$、
+$E_\epsilon^{\mathrm{joint}}(h)$。
+
+真实结果均衡与联合结果均衡不是同一个有限参数可行集。
+例如以下两组矩均由共同 CP instrument 实现：
+
+$$
+\begin{array}{c|cccc}
+&A_0&A_1&C_0&C_1\\ \hline
+\text{真实均衡而非联合均衡}&0&1/2&1/2&0\\
+\text{联合均衡而非真实均衡}&1/4&1/4&1/2&0
+\end{array}
+\tag{202.12}
+$$
+
+一个明确实现为
+
+$$
+\Gamma_j(X)
+=X_{00}(A_jP_0+C_j|1\rangle\langle1|)
++\mathbf1_{\{j=1\}}X_{11}P_0.
+\tag{202.13}
+$$
+
+这些是测量后准备的 CP 映射，其和由表中
+$\sum_j(A_j+C_j)=1$ 保迹；
+可在两个旗标上使用同一 instrument。
+此例只区分限制的操作含义，不被用作近优候选。
+

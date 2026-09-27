@@ -1,0 +1,30 @@
+**定理 171.2（因果闭合保证任意有限拼接充分）。** 若两份边界状态 $\rho,\sigma$ 对因果闭合空间 $V$ 的所有效果期望相同，即
+
+$$
+\operatorname{Tr}[(\rho-\sigma)F]=0
+\quad\forall F\in V,
+$$
+
+则对任意有限接口词 $\Phi_1,\ldots,\Phi_n\in\mathcal C$ 和任意终端效果 $H\in\mathcal F_{\mathrm{term}}$，都有
+
+$$
+\boxed{
+\operatorname{Tr}\!\left[
+(\rho-\sigma)
+(\Phi_1^*\circ\cdots\circ\Phi_n^*)(H)
+\right]
+=0.
+}
+\tag{171.1}
+$$
+
+### 证明
+
+因果闭合给出
+
+$$
+(\Phi_1^*\circ\cdots\circ\Phi_n^*)(H)\in V
+$$
+
+的归纳结论：$H\in V$，每次再作用一个 $\Phi_j^*$ 仍留在 $V$。将该效果代入两态在 $V$ 上相同的假设，得到式（171.1）。证毕。
+

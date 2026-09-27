@@ -1,0 +1,1 @@
+| [LocalEulerFrameHistoryNonreconstruction](https://github.com/the-omega-institute/trureturing/blob/bfd5737539c696eedd4638da17d7f449339526cd/D5/S3/Observer/AgencyHolonomy/LocalEulerFrameHistoryNonreconstruction.lean#L34) | 相同行列式不能恢复原始标架历史及跨地址过渡；其由全局标架生成的运输具有平凡闭路乘积，不是非平凡环相位反例。 

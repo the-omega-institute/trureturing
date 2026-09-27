@@ -1,0 +1,69 @@
+### 66.2 小根合法性与因果修复
+
+判别式满足
+
+$$
+b^4(1+\varepsilon)^2-4b^2\varepsilon
+\ge b^4-4b^2\varepsilon\ge\frac{b^4}{2}>0.
+$$
+
+有理化式（66.4）给
+
+$$
+p=\frac{2\varepsilon}
+{1+\varepsilon+\sqrt{(1+\varepsilon)^2-4\varepsilon/b^2}}
+\le2\varepsilon\le\frac{b^2}{4}<b^2.
+\tag{66.8}
+$$
+
+$p>0$ 由同一式明显成立。二次方程等价于
+
+$$
+p(b^2-p)=\varepsilon b^2(1-p)=\varepsilon b^2s,
+\qquad
+p-\varepsilon=\frac{a\varepsilon p}{b^2-p}>0.
+\tag{66.9}
+$$
+
+这也证明 $s>0$，且 $d>0$。
+
+定义
+
+$$
+\begin{aligned}
+s_0&=\sqrt a\,x+\sqrt s\,y+\sqrt\varepsilon b\,z,\\
+s_1&=\sqrt{b^2-p}\,x'-\sqrt{\frac{pa}{s}}\,z',\\
+S&=|s_0\rangle\langle s_0|+|s_1\rangle\langle s_1|
++p|h\rangle\langle h|.
+\end{aligned}
+\tag{66.10}
+$$
+
+所有根式均合法，$S\succeq0$。$B=0$ 的两个输入对角质量是
+
+$$
+a+b^2-p=s,\qquad s.
+$$
+
+$B=1$ 的两个输入对角质量是 $p$ 及
+
+$$
+\varepsilon b^2+\frac{pa}{s}=p;
+$$
+
+最后一个等式来自式（66.9）。偏迹后唯一可能的跨输入非对角项满足
+
+$$
+\sqrt{\varepsilon a}\,b
+-\sqrt{b^2-p}\sqrt{\frac{pa}{s}}=0,
+$$
+
+因为 $p(b^2-p)/s=\varepsilon b^2$。所以
+
+$$
+\operatorname{Tr}_D S=I_A\otimes\operatorname{diag}(s,p).
+\tag{66.11}
+$$
+
+这给出归一化因果修复。式（66.9）同时保证两条跨输入、相同末输出的相干项与原候选完全匹配。
+

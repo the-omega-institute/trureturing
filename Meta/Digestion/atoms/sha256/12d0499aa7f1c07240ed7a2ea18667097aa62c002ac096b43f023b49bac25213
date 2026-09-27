@@ -1,0 +1,20 @@
+**定理 58.1。** 对式（58.2）的显式修复，准确误差为
+
+$$
+D(R_\varepsilon,S_\varepsilon)
+=\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon,
+\qquad 0<\varepsilon\le\frac14.
+\tag{58.4}
+$$
+
+尤其
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{D(R_\varepsilon,S_\varepsilon)}{\varepsilon}=\frac98.
+\tag{58.5}
+$$
+
+式（58.4）给最优修复的上界；式（58.5）先计算这一份显式修复的极限；第 58.6 节另用匹配下界证明真正最优误差具有相同极限。
+

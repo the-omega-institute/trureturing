@@ -1,0 +1,15 @@
+**定义 163.1（输出签名与划分细化）。** 令 $A$ 为有限扇区集，$U$ 为有限控制集。对 $A$ 的划分 $\mathcal P$，定义状态 $a$ 的签名为
+
+$$
+\operatorname{sig}_{\mathcal P}(a)
+=
+\left(
+\nu_a,\rho_a,
+\left(
+\sum_{b\in B}T^u_{ba}
+\right)_{\substack{u\in U\\B\in\mathcal P}}
+\right).
+$$
+
+令 $\mathcal P_0$ 按 $(\nu_a,\rho_a)$ 相等性分块，并令 $\mathcal P_{n+1}$ 把具有相同 $\operatorname{sig}_{\mathcal P_n}$ 的状态放在同一块。
+

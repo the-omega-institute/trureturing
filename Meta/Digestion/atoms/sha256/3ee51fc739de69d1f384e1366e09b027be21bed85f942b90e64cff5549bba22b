@@ -1,0 +1,10 @@
+**推论191.3（有界联动路径的稳定性）。** 若 $h_\epsilon\in[0,H]$ 且 $h_\epsilon\to h$，则
+
+$$
+E_\epsilon(h_\epsilon)
+=\frac34+\epsilon\Phi_{h_\epsilon}+O(\epsilon^2),
+\qquad
+\frac{E_\epsilon(h_\epsilon)-3/4}{\epsilon}\longrightarrow\Phi_h.
+\tag{191.14}
+$$
+

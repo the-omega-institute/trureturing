@@ -1,0 +1,57 @@
+**引理 223.2（对称压缩的循环性与规范分支的共同正方向）。** 定义223.1的任意稳定 Gram 算子的 $H$ 具有简单谱，$b$ 在每个特征方向上的投影非零。令 $\alpha$ 是最大特征值，取对应单位向量 $u$，定向为 $u^{\mathsf T}b>0$。则其中每条嵌入的非临界规范准备
+$\psi_i(p)=\sqrt{1-p}\,q+\sqrt p\,v_i(p)$ 都满足
+
+$$
+u^{\mathsf T}v_i(p)>0\qquad(a\le p\le1).
+\tag{223.2}
+$$
+
+证明。 对每个非零稳定特征值 $\lambda$，取第213节的特征向量 $x_\lambda$，使 $q^{\mathsf T}x_\lambda=1$，置 $e_\lambda=(x_\lambda-q)/\lambda$。由分块的 $Vx_\lambda=\lambda x_\lambda$ 得
+
+$$
+B^{\mathsf T}e_\lambda=\lambda e_\lambda,
+\qquad b^{\mathsf T}e_\lambda=1,
+\qquad
+(I-2\lambda H+\lambda^2I)e_\lambda=b.
+\tag{223.3}
+$$
+
+最后一式由 $BB^{\mathsf T}+bb^{\mathsf T}=I$ 得到。这些 $e_\lambda$ 构成 $q^\perp$ 的一组基。若 $Hy=\mu y$ 且 $y^{\mathsf T}b=0$，则（223.3）给出
+$(1-2\lambda\mu+\lambda^2)y^{\mathsf T}e_\lambda=0$。因为 $|\mu|\le1$、$|\lambda|<1$，该系数严格为正，所以 $y=0$。每个特征空间因而是一维，且 $b$ 的投影非零。实际上全部特征值严格位于 $(-1,1)$：若实 Rayleigh 商达到 $\pm1$，收缩算子的 Cauchy–Schwarz 等号会给出 $T$ 的 $\pm1$ 特征向量，违反稳定性。
+
+现取任一规范三维块，记其二维压缩为 $B_i$、末列为 $b_i$，以及 $\beta_i=-\det B_i\in(0,1)$。第211.24—211.26式给出两个非对角元均正，并且
+
+$$
+(I-B_i)^{-1}b_i>0
+\quad\text{逐坐标成立}.
+\tag{223.4}
+$$
+
+由奇异值 $1,\beta_i$，其对称压缩的最大特征值为
+$\rho_i=(\operatorname{tr}B_i+1+\beta_i)/2$。定义 $D_i(s)=I-2sB_i+B_i^2$。Cayley–Hamilton 恒等式给出
+
+$$
+D_i(\rho_i)=(1+\beta_i)(I-B_i),\qquad
+D_i(1)=(I-B_i)^2.
+\tag{223.5}
+$$
+
+对 $\rho_i\le s\le1$，令 $\eta=(s-\rho_i)/(1-\rho_i)$，于是
+
+$$
+D_i(s)=\bigl[(1-\eta)(1+\beta_i)I+\eta(I-B_i)\bigr](I-B_i).
+\tag{223.6}
+$$
+
+把第一个因子写为 $L_i=c_0I-\eta B_i$，其中 $c_0=1+\beta_i-\eta\beta_i\ge1$。其对角元严格为正、非对角元非正，且 $\det L_i=(c_0-\eta\lambda_+)(c_0-\eta\lambda_-)>0$，所以二乘二逆矩阵公式给出逐项非负且对角元为正的逆。$I-B_i$ 同样如此。两个因子都是 $B_i$ 的多项式而相互交换，故 $D_i(s)^{-1}b_i=L_i^{-1}(I-B_i)^{-1}b_i>0$；这里使用（223.4），并不要求 $b_i$ 自身逐坐标为正。
+
+令 $U_i:\mathbb R^2\to q^\perp$ 为规范嵌入的二维部分。由压缩关系有 $\alpha\ge\rho_i$。把（223.3）分别与 $u$ 配对，并使用局部的两个稳定特征向量作为基，得到
+
+$$
+U_i^{\mathsf T}u=(u^{\mathsf T}b)D_i(\alpha)^{-1}b_i>0.
+\tag{223.7}
+$$
+
+具体地，两边与局部 $e_\lambda$ 的内积都为
+$(u^{\mathsf T}b)/(1-2\alpha\lambda+\lambda^2)$，故两向量相同。规范方向的坐标为 $(\cos\Theta_i,\sin\Theta_i)$，其中 $0\le\Theta_i<\bar\theta_i<\pi/2$。因此（223.7）给出（223.2）。证毕。
+

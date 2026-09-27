@@ -1,0 +1,19 @@
+**定义 24.4（发送者的全局周期）。** 现在设 $r\ge3$。对每个可达分支
+$\mathfrak b=(a,t,c)$，写
+
+$$
+f_i^{\mathfrak b}(x):=e_i(x,t,c),
+\qquad
+\operatorname{Per}(f_i^{\mathfrak b})
+ :=\{p\in G:\forall x\in G,\ f_i^{\mathfrak b}(x+p)=f_i^{\mathfrak b}(x)\}.
+$$
+
+定义发送者 $i$ 的全局周期为所有实际使用分支的交
+
+$$
+P_i:=\bigcap_{\mathfrak b\text{ 可达}}\operatorname{Per}(f_i^{\mathfrak b}).
+\tag{24.6}
+$$
+
+空分支不进入交集。这里的“可达”仍按定义23.1：存在同一实际来源产生 $(a,t,c)$。
+

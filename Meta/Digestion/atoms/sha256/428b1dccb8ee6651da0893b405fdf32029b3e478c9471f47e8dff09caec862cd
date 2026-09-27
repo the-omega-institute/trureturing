@@ -1,0 +1,48 @@
+**两次精确方差倾斜给二阶带符号密度。** 对核心 Gaussian 律乘
+$e^{\theta S_G}/\mathbb Ee^{\theta S_G}$。
+倾斜后的 $Z$ 精确等分布于 $(1-\theta)^{-1/2}Z$；
+保持 $c_j$ 和外部截距固定，所得标量记为 $T_\theta$。
+在零处的两阶导数为
+
+$$
+\begin{aligned}
+\mathcal A&=\sum_jw_j(Z_j^2-c_jZ_j),
+& a_0&=\mathbb E\mathcal A=\frac{V_{\mathcal C}}{\sqrt\delta},\\
+\mathcal B&=\sum_jw_j(2Z_j^2-\tfrac32c_jZ_j),
+& \mathbb E\mathcal B&=2a_0.
+\end{aligned}
+\tag{87.20}
+$$
+
+归一化倾斜密度的二阶导数恰为 $S_G^2-m/2$，所以有限精确恒等式是
+
+$$
+q_G=-\mathbb E[\mathcal A\varphi_{\sigma_M}'(\,\cdot-T^{\rm G})],
+\quad
+c_G=\mathbb E[\mathcal A^2\varphi_{\sigma_M}''(\,\cdot-T^{\rm G})
+                 -\mathcal B\varphi_{\sigma_M}'(\,\cdot-T^{\rm G})].
+\tag{87.21}
+$$
+
+每个有限 $\sigma_M>0$ 下，正态导数有界而多项式局部指数矩有限，故可求导。
+$\mathcal A-a_0,\mathcal B-2a_0$ 的固定阶矩由 (87.13) 有界；
+前者平方展开的每一项只依赖至多两个块。
+将输出导数放到未使用的独立块，应用 (87.15)，得到
+
+$$
+\|q_G+a_0g_x'\|_1\le C,\qquad
+\|c_G-a_0^2g_x''\|_1\le C(1+a_0).
+\tag{87.22}
+$$
+
+例如两块权重 $W$ 的二阶项的 $L^1$ 范数至多为
+$\mathbb E|W|\,\|h_{\rm unused}''*\varphi_{\sigma_M}\|_1\le C\mathbb E|W|$。
+这控制整条实线的输出，而非仅紧集。
+$V_{\mathcal C}\to\gamma$，故 (87.11)、(87.16)、(87.22) 给
+
+$$
+\|\sqrt\delta\,q_G+\gamma\varphi_\nu'\|_1\to0,\qquad
+\|\delta c_x-\gamma^2\varphi_\nu''\|_1\to0.
+\tag{87.23}
+$$
+

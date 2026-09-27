@@ -1,0 +1,11 @@
+**引理265.4（未归一化投影误差）。** 设 $\sigma$ 是有限维密度态，$P$ 为正交投影，$t=\operatorname{Tr}((I-P)\sigma)$。则
+$$
+\|\sigma-P\sigma P\|_1\le2\sqrt t.
+\tag{265.35}
+$$
+若 $t<1$，归一化压缩 $\sigma'=P\sigma P/(1-t)$ 还满足
+$$
+\|\sigma-\sigma'\|_1\le2\sqrt t+t.
+\tag{265.36}
+$$
+

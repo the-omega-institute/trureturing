@@ -1,0 +1,45 @@
+**纯第二终端的早期支撑。** 现在取 $`r_2=1`$。第二至第五终端的参考—活动记忆—接收器联合态均为纯态，第三至第五轮的新环境分别记为 $`\eta_3,\eta_4,\eta_5`$。
+
+沿用第26节的 $`H_n,G_n`$，置 $`C_n=H_n+G_n`$、$`U=G_2`$。有
+
+$$
+\dim H_n=\dim G_n=2,\qquad
+\dim C_2=3,\qquad \dim C_3=\dim C_4=\dim C_5=4.
+\tag{29.35}
+$$
+
+写 $`V_i x=V(x\otimes|i\rangle)`$。对 $`n=3,4,5`$，存在二维 $`Q_n`$，使
+
+$$
+V_0(H_{n-1})=G_n\otimes\eta_n,\qquad
+V_1(G_{n-1})=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n.
+\tag{29.36}
+$$
+
+第一终端附加态秩 $`r_1\in\{1,2,3\}`$。第26节的两轮系数比较适用于当前 $`r_2=1`$ 合同，给正交单位向量 $`p_\alpha,q_\alpha`$、$`u,v,w`$ 与正交单位环境向量 $`f_\alpha`$，使
+
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+\tag{29.37}
+$$
+
+因此，令
+
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha:1\le\alpha\le r_1\},
+\quad F=\operatorname{span}\{f_\alpha:1\le\alpha\le r_1\},
+$$
+
+便有
+
+$$
+U=\operatorname{span}\{u,w\},\qquad
+\dim X=2r_1,\quad\dim F=r_1,\qquad V_0(X)=U\otimes F.
+\tag{29.38}
+$$
+
+第一轮的混合附加因子仍保留；$`F`$ 是第二轮环境子空间，不预先等同于第一轮环境支撑。
+

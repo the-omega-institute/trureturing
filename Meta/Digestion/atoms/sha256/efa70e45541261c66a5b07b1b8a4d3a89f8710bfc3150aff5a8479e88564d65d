@@ -1,0 +1,54 @@
+### 203.2 完整下界在接触点仍成立
+
+第200节的精确平方恒等式（200.11）只使用共同 TP、
+$\gamma=2\beta n$ 及 $h(2-m)=3\beta Rm$，没有除以 $B_*$。
+它因此在整个闭区间成立。
+第200.3节的规范 Choi 对 $\Gamma^*(h)$ 在 $B_*=0$ 时仍合法；
+此时额外跳跃消失，两份结果 Choi 均为秩一。
+
+纯来源最优面上的全部平方系数仍严格为正。
+等号强制 $U=V=0$、$M_0=M_1=m$，并由同一 Gram 分解唯一确定
+$\Gamma^*(h)$，包括 $h_b$。作为 Choi 对，$\Gamma^*(h)$ 在闭区间连续；
+Kraus 秩的变化不破坏这一连续性。
+
+第191节在该有限区间给所有最优器一致的
+
+$$
+C=O_I(\epsilon^2),\qquad A_j-1/2=O_I(\epsilon).
+$$
+
+对任意最优器序列同时抽取 $h$ 和 Choi 聚点，
+非负基点缺陷使该聚点满足 $\Gamma\in\mathcal F$、$L_h(\Gamma)\le\Phi_h$。
+精确平方恒等式又给反向界和唯一性，因此紧性反证仍给
+
+$$
+\sup_{\substack{h\in I\\\Gamma\text{ 为最优器}}}
+\|\Gamma-\Gamma^*(h)\|\longrightarrow0.
+\tag{203.6}
+$$
+
+冻结操作的统一解析展开依赖 $A_j\approx1/2$、正紧 $h$ 区间以及参考谱间隙，
+不要求 Choi 正定或 $B_*>0$。第200.4节的完整参考二阶谱计算同样只代入矩，
+故其系数在端点仍为 $Q_0(h)$。因此
+$R_h(\Gamma)=Q_0(h)+o_I(1)$ 对所有最优器一致。
+
+只在占据列偏置上作 Taylor 展开的（200.20）继续有效。
+令 $x=(A_0-A_1)/(2\epsilon)$，再用（200.22）—（200.23）的复 Kraus 平方恒等式，得到
+
+$$
+\frac{e_\epsilon-3/4-\epsilon\Phi_h}{\epsilon^2}
+\ge Q_0(h)-\frac{a_{\mathrm{eff}}(h)^2}{4}
+-\frac{\gamma^2R^2}{4}(D_0+D_1)+o_I(1).
+$$
+
+式（203.6）给 $D_0+D_1=4m(h)^2+o_I(1)$，从而
+
+$$
+\mathscr E(h\epsilon,\epsilon)
+\ge\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+\tag{203.7}
+$$
+
+该下界仍包含任意复 Kraus、标签偏置及 $c$ 泄漏；
+没有因端点的秩下降而增加操作限制。
+

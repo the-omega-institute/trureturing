@@ -1,0 +1,82 @@
+### 9.3 完整纤维的三种中心与共同输入优化
+
+令
+
+$$
+Y_\varepsilon=F(\Delta_9)+[-\varepsilon,\varepsilon]^{16},\qquad
+\mathcal K_\varepsilon(y)=\{p\in\Delta_9:\|Fp-y\|_\infty\le\varepsilon\}.
+$$
+
+$Y_\varepsilon$ 紧；对 $y\in Y_\varepsilon$，$\mathcal K_\varepsilon(y)$ 非空紧。以下首先对任意非空紧集 $\mathcal K\subseteq\Delta_d$ 陈述中心公式，不要求凸性。记 $l_i=\min_{p\in\mathcal K}p_i$、$u_i=\max_{p\in\mathcal K}p_i$，以及 $r_E(\mathcal K)=\inf_{q\in E}\sup_{p\in\mathcal K}\|q-p\|_\infty$。实中心和质量一中心分别为
+
+$$
+r_{\mathbb R^d}(\mathcal K)=\frac12\max_i(u_i-l_i),
+\tag{ER9.SH.3}
+$$
+
+$$
+r_{H_d}(\mathcal K)=\max\left\{
+\frac12\max_i(u_i-l_i),\frac{\sum_i u_i-1}{d},
+\frac{1-\sum_i l_i}{d}\right\},\qquad H_d=\{q:\sum_iq_i=1\}.
+\tag{ER9.SH.4}
+$$
+
+证明是逐格误差不超过 $r$ 当且仅当 $q_i\in[u_i-r,l_i+r]$。这些区间非空等价于半宽条件；存在和为一的点当且仅当下端和不大于一、上端和不小于一。这给出第二式；第一式由各区间中点达到。
+
+第 8.9.5 节的紧单纯形中心公式，在 $d\ge2$ 以及相同的非空紧性、非负与质量一前提下为下式；$d=1$ 时单纯形只有一点，同式也直接成立：
+
+$$
+r_{\Delta_d}(\mathcal K)=\max\left\{
+0,\ \frac12\max_i(u_i-l_i),\ \frac{1-\sum_i l_i}{d},\
+\max_{\varnothing\ne S\subseteq\{0,\ldots,d-1\}}
+\frac{\sum_{i\in S}u_i-1}{|S|}\right\}.
+\tag{ER9.MS.14}
+$$
+
+为说明本题所需的全部条件，置 $L_i=\max(0,u_i-r)$、$U_i=l_i+r$。概率中心存在当且仅当 $L_i\le U_i$ 且 $\sum L_i\le1\le\sum U_i$。前一条件由半宽、$l_i\ge0$ 与 $r\ge0$ 给出；后两条件中，上端和给下端总和项，而恒等式
+
+$$
+\sum_i\max(0,u_i-r)=
+\max_{S\subseteq\{0,\ldots,d-1\}}\sum_{i\in S}(u_i-r)
+$$
+
+恰给所有非空子集项和空集的零项。故每项都必要且共同充分。其中心可以直接写成有限式：令 $c_i=U_i-L_i$、$a=1-\sum_iL_i$，则
+
+$$
+q_i=L_i+\min\left(c_i,\max\left(0,a-\sum_{j<i}c_j\right)\right).
+\tag{ER9.CENTER}
+$$
+
+$0\le a\le\sum c_i$；新增项等于 $\min(a,\sum_{j\le i}c_j)-\min(a,\sum_{j<i}c_j)$，求和望远镜消去后恰为 $a$。所以 $q\in\Delta_d$ 且逐格位于所需区间。这是明确中心，不依赖对某个有负格的向量作截断或投影。
+
+若所有 $u_i-l_i\le w$，取达到 $l_j$ 的来源，其他 $d-1$ 格至多比其下端大 $w$，得到 $1-\sum_i l_i\le(d-1)w$。对非空 $S$ 取 $j\in S$ 并选达到 $u_j$ 的来源，则其 $S$ 内质量至多一，其他 $|S|-1$ 格与其上端的差至多 $w$，故 $\sum_{i\in S}u_i-1\le(|S|-1)w$。代入中心公式，$d\ge2$ 时有 $r_{\Delta_d}\le(d-1)w/d$；$d=1$ 时半径为零。本题同纤维两来源满足 $\|F(p-p')\|_\infty\le2\varepsilon$，由反演得直径至多 $w=\min(4\varepsilon,1)$，故
+
+$$
+R_{\Delta_9}(\varepsilon)\le\frac89\min(4\varepsilon,1).
+\tag{ER9.MS.13}
+$$
+
+在本估计器合同下，可在每个可行输入选取上述中心，因此
+
+$$
+R_E(\varepsilon)=\sup_{y\in Y_\varepsilon}r_E(\mathcal K_\varepsilon(y)).
+\tag{ER9.FIBER}
+$$
+
+下界由每个固定纤维给出，上界由逐纤维中心给出。为精确表述其中的有限优化，记 $\mathcal P_m(\varepsilon)$ 为变量 $(y,p^{(1)},\ldots,p^{(m)})$ 满足
+
+$$
+p^{(a)}_j\ge0,\quad\sum_jp^{(a)}_j=1,\quad
+-\varepsilon\le F_gp^{(a)}-y_g\le\varepsilon
+\quad(1\le a\le m,\ 0\le g\le15)
+$$
+
+的集合。它紧，因为 $y_g\in[-\varepsilon,1+\varepsilon]$。半宽项的全局最大值是 $\frac12\max_j\max_{\mathcal P_2}(p^{(1)}_j-p^{(2)}_j)$；下端总和项是 $\frac19\max_{\mathcal P_9}(1-\sum_{j=0}^8p^{(j+1)}_j)$；子集 $S=\{t_0<\cdots<t_{k-1}\}$ 的项是
+
+$$
+\frac1k\max_{\mathcal P_k(\varepsilon)}
+\left(\sum_{a=0}^{k-1}p^{(a+1)}_{t_a}-1\right).
+$$
+
+固定 $y$ 后每个极值来源都存在，故这些式子准确实现各坐标极值；有限最大与上确界可交换。整个过程中每个优化式只有一个共同 $y$，不能把不同观察下各自可达的极值拼起来。
+

@@ -1,0 +1,22 @@
+**227.4.1 无简并同伦及起点相位。**
+
+取实极分解 $L=OP$，其中 $O\in O(3)$、$P\succ0$。矩阵路径
+$$
+O((1-\tau)I+\tau P),\qquad0\le\tau\le1,
+$$
+均可逆，将 $O$ 连到 $L$。再沿 $\tau u+Ls$ 加入平移；其零点若存在，只能是 $s=\tau s_0$，不在单位球面上。两段路径归一化后给出 $Os$ 到 $\nu(s)$ 的连续球面同伦，因此度数为 $\det O=\epsilon$。
+
+若 $\epsilon=1$，选酉矩阵 $U$ 实现旋转 $O$，即
+$$
+U(s\cdot\sigma)U^\dagger=(Os)\cdot\sigma.
+$$
+起点主向量可取 $q_0(v)=Uv$，满足
+$$
+q_0(e^{i\theta}v)=e^{i\theta}q_0(v).
+$$
+若 $\epsilon=-1$，令 $R=\operatorname{diag}(1,-1,1)$。复共轭满足 $s(\overline v)=Rs(v)$，而 $OR\in SO(3)$。选择 $U$ 实现旋转 $OR$，取 $q_0(v)=U\overline v$。此时它仍是 $Os(v)$ 的主向量，并满足
+$$
+q_0(e^{i\theta}v)=e^{-i\theta}q_0(v).
+$$
+所以两种情形统一为相位次数 $\epsilon$。任意三维旋转可由 qubit unitary 共轭实现，这是标准 Pauli–旋转对应；也可由轴角式 $\exp(-i\vartheta\,\widehat n\cdot\sigma/2)$ 直接检验。
+

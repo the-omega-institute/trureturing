@@ -1,0 +1,39 @@
+#### 2.9.6 Uniform recovery when nonbinary levels continue indefinitely
+
+Assume
+
+$$
+\forall d\ \exists j>d:\ b_j>2.
+$$
+
+There are two uniform constructions of extension from the presentation and a mass name.
+
+First, every $\delta_n$ is positive, so the weighted support expansion is unique. The strict-comparison procedure of C卷第2.9.4节 computes $S$, and the raw-cylinder search of C卷第2.9.2节 computes $R$.
+
+Second, a local mass argument provides an explicit positive-gap certificate. On a depth-$d$ query, search for the first later $j$ with $b_j>2$, and set $g_d=(b_j-2)w_j>0$. This search terminates under the displayed promise. Let $E_s$ be the complement of all forbidden events seen in the first $s$ computation steps, and put
+
+$$
+f_s=\mu(E_s),
+\qquad u_s=\mu(E_s\cap D),
+\qquad \ell_t=v(t)-2^{-t},
+$$
+
+where $v$ is a mass name satisfying $|v(t)-M|\le2^{-t}$. Finite unions of cylinders have exactly computable rational mass, and
+
+$$
+f_s\downarrow M,
+\qquad
+\max\{0,\ell_t-(f_s-u_s)\}
+\le\mu(E\cap D)\le u_s.
+$$
+
+The enclosing interval has width at most $f_s-\ell_t$. Choose $t$ with $2^{-t}<g_d/12$ and wait until
+
+$$
+f_s-\ell_t<g_d/3.
+$$
+
+Since $M-\ell_t<g_d/6$, this wait terminates. If $D$ is nonextendible, then $u_s<g_d/3$. If $D$ is extendible, then $u_s\ge\mu(E\cap D)\ge g_d$. Comparing $u_s$ with $g_d/2$ therefore decides extension.
+
+This construction is uniform even when a computable radix index is supplied as input, provided the infinite-nonbinary-level promise holds. It does not decide whether that promise holds. It also does not bound the event waiting time. The next nonbinary level may be very distant, and its associated mass $g_d$ may require high precision; neither cost has a uniform bound here depending only on $d$ across all computable radix sequences.
+

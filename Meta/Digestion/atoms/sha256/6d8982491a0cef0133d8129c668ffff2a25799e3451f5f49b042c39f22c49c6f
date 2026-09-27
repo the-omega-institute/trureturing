@@ -1,0 +1,66 @@
+### 206.4 全类三阶下界不依赖秩稳定
+
+第204节逐条 Gram 重构只使用 $U_0,V,C$ 与 $A_j$ 的偏差，
+其常数只需 $m,n$ 有界。
+所以这里仍有
+
+$$
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}
+\le C_{I,K}(\epsilon+\sqrt{U_0}+\sqrt V)
+\tag{206.13}
+$$
+
+对整个固定 $K$ 的二阶近优类成立。
+范数仍是两份 Choi 差矩阵的 Frobenius 范数平方和的平方根。
+
+冻结操作的谱间隙与参考极大点曲率在该连续紧 Choi 图上统一保持。
+第200、204节的解析展开及 Choi 导数界因此可以统一使用。
+其规范二阶系数为（206.8）的 $Z$：
+同一 Schur 计算只使用当前矩 $L_0,L_1,T_s,m$，
+额外 Kraus 只通过已保留的 $B_1$ 进入。
+这同时保留顶块混合的 $L_d^2/16$
+和参考最大点移动的 $3L_d^2/16$。
+
+令
+
+$$
+\begin{gathered}
+x=(A_0-A_1)/(2\epsilon),\qquad
+W_\theta=\sum_{j,\alpha}|c/\epsilon+i\theta d|^2,\qquad
+M_{\mathrm{def}}=\sum_j|M_j-m|^2,\\
+\Delta=e_\epsilon(h,\Gamma)
+-\left[3/4+\epsilon\Phi_h+\epsilon^2Q(h)\right].
+\end{gathered}
+$$
+
+将（206.11）代入冻结展开，并对占据列偏置与泄漏分别完成平方，
+第204节的定量计算给
+
+$$
+\begin{aligned}
+\Delta={}&\epsilon^2\left[
+(x+a_{\mathrm{eff}}/2)^2+W_\theta/4\right]\\
+&+\epsilon[k_0U_0+k_1U_1+k_dV+hM_{\mathrm{def}}/6]+\mathcal R,\\
+|\mathcal R|\le{}&C_{I,K}\left[
+\epsilon^3+\epsilon^2\sqrt{U_0+V}\right].
+\end{aligned}
+\tag{206.14}
+$$
+
+所有新增乘子系数在固定 $I$ 有界；
+共同 $A_0+A_1-1=-C$ 项依然只给三阶余项。
+泄漏平方留下的 $D_0+D_1-4m^2$ 也由（206.13）控制。
+
+由于（206.12），Young 不等式可将平方根余项吸收到
+一半 $U_0,V$ 正代价中，并留下 $O_I(\epsilon^3)$。
+对任意精确最优器取 $K=0$，便有
+
+$$
+\mathscr E(h\epsilon,\epsilon)
+\ge3/4+\epsilon\Phi_h+\epsilon^2Q(h)-C_I\epsilon^3.
+\tag{206.15}
+$$
+
+此下界同时包含任意复数、多 Kraus 的合法操作，
+没有由匹配构造预先限制优化集合。
+

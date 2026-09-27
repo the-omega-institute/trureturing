@@ -1,0 +1,38 @@
+**定理 76.2（系数的准确半定规划）。** $\gamma_{u^2}$ 是下列有限优化问题的达到最小值：最小化实数 $t$，变量为
+
+$$
+K,P_+,P_-\in\mathcal B,\qquad p,a_+,b_+,a_-,b_-\in\mathbb R,
+$$
+
+约束为
+
+$$
+\begin{gathered}
+P_0KP_0\succeq0,\qquad
+\operatorname{Tr}_D K=I_A\otimes\operatorname{diag}(-p,p),\\
+P_+\succeq0,\quad P_+-H(u)+K\succeq0,\\
+P_-\succeq0,\quad P_-+H(u)-K\succeq0,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes\operatorname{diag}(a_\pm,b_\pm),\\
+a_++b_+\le t,\qquad a_-+b_-\le t.
+\end{gathered}
+\tag{76.5}
+$$
+
+对每个固定 $u$，上述约束都是实仿射矩阵不等式与线性等式。
+
+证明。沿用第 55 节引理 55.1 的单向支持函数 $h$ 及其达到的对偶表示。完整范数满足
+
+$$
+N(X)=\max\{h(X),h(-X)\}.
+$$
+
+所以 $N(X)\le t$ 当且仅当存在两个半定上界算子 $P_\pm$，分别满足 $P_+\succeq X$、$P_-\succeq-X$，且它们的因果偏迹质量均不超过 $t$。这是同时保留两个符号的对偶约束，并未删去非因果方向的总事件读数。
+
+先取定理 76.1 的最优 $K\in\mathcal B$，于是 $X=H(u)-K$ 也在 $\mathcal B$。对每个符号，取达到单向最优值的对偶见证，然后作式（76.4）的四项平均及复共轭平均。$P_\pm\succeq0$ 与 $P_\pm\succeq\pm X$ 均被保持，偏迹形式及质量也被保持。所得 $P_\pm$ 属于 $\mathcal B$。
+
+在偏迹等式中，有限平均同时使 $n_\pm$ 与 $U_B=\operatorname{diag}(1,-i)$ 对易，故 $n_\pm$ 对角；同样，$\dot\sigma$ 对角且迹零，恰写成 $\operatorname{diag}(-p,p)$。于是得到式（76.5）的可行点，取 $t=N(H(u)-K)$ 即达到 $\gamma_{u^2}$。
+
+反方向，任意满足式（76.5）的变量均给 $K\in\mathcal T$。第 55 节的对偶上界分别给 $h(H(u)-K)\le t$ 与 $h(K-H(u))\le t$，故 $\gamma_{u^2}\le N(H(u)-K)\le t$。两方向合并得到准确等价。$\square$
+
+因此这是一份对全部合法复 tester 有效的有限实问题。块内可以继续出现满秩矩阵；式（76.5）没有给秩另设假设。
+

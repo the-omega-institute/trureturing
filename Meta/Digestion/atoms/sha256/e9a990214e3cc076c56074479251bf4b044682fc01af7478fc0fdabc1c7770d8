@@ -1,0 +1,69 @@
+**引理54.2（矩形像后的环境模式）。** 尾环境只有以下三种可能形式：
+
+1. 全部 $\eta_j\in F$；此项不限制它们在 $F$ 内的射线。
+2. 存在一条不包含于 $F$ 的射线 $O$，全部 $\eta_j\in O$。
+3. 存在一条不包含于 $F$ 的射线 $O$ 和一条包含于 $F$ 的射线 $B$，尾环境严格按 $O,B,O,B,\ldots$ 交替。
+
+这只是必要模式，不主张每种模式均可实现。
+
+**证明。** 两个简单的张量维数事实先单独说明。
+
+第一，所有 $\eta_j$ 在 $E/F$ 中的像至多张成一维。若两个像独立，则 $A\otimes F$ 与这两个对应的 $G_j\otimes\eta_j$ 为 $4+2+2=8$ 维代数直和，不能同处七维 $V_0K$。
+
+第二，若 $J$ 是一组环境在 $F$ 内的指标，且
+$$
+R_F=(A\otimes F)+\sum_{j\in J}G_j\otimes\eta_j,
+\qquad \dim R_F\le5,
+\tag{54.8}
+$$
+则
+$$
+\dim\left(A+\sum_{j\in J}G_j\right)\le3.
+\tag{54.9}
+$$
+令 $\pi_A:K\to K/A$。$(\pi_A\otimes I_E)|_{R_F}$ 的核恰为四维 $A\otimes F$，所以其像至多一维。如果像为零，（54.9）立即成立。否则该像含有某个非零纯张量 $u\otimes f$，且全部 $\pi_A(G_j)\otimes\eta_j$ 都在此单线内；因此所有非零 $\pi_A(G_j)$ 都在共同接收商线 $\mathbb Cu$ 内，仍给（54.9）。
+
+**首环境在 $F$ 内时不会离开。** 若 $\eta_1\in F$，反设 $t\ge2$ 是第一个 $\eta_t\notin F$ 的指标。式（54.8）对 $J=\{1,\ldots,t-1\}$ 的 $R_F$ 与 $G_t\otimes\eta_t$ 交零，故 $\dim R_F\le5$。由（54.9），二维 $G_{t-2}$ 和 $G_{t-1}$（当 $t=2$ 时前者是 $G_0=A$）都在同一至多三维空间中，交非零。固定 $V_1$ 将它们分别送到环境 $\eta_{t-1}\in F$ 和 $\eta_t\notin F$，不同环境线迫使输入交为零，矛盾。因此全部环境在 $F$ 内。
+
+**首环境在 $F$ 外时，全部外部环境同射线。** 现在取 $\eta_1\notin F$。若 $\eta_j\notin F$、$\eta_j\not\parallel\eta_1$，第一条维数事实给
+$$
+\eta_j=c\eta_1+f,\qquad c\ne0,\quad0\ne f\in F.
+$$
+逐个环境分量比较得到
+$$
+\bigl(A\otimes F+G_1\otimes\eta_1\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_1\cap G_j)\otimes\eta_j.
+\tag{54.10}
+$$
+左侧两个空间分别六维和二维，同处七维 $V_0K$，故交非零，特别有 $A\cap G_1\ne0$。固定 $V_1$ 因而强制 $\eta_2\parallel\eta_1$。
+
+若 $\eta_2\parallel\eta_1$，当 $L=2$ 时已得到全部尾环境共线；当 $L\ge3$ 时，$G_1+G_2$ 至多三维，因为其张量共同外部环境的像与 $A\otimes F$ 交零。因此 $G_1\cap G_2\ne0$，固定 $V_1$ 给 $\eta_3\parallel\eta_2$。对每个仍有后继的指标重复该论证，全部后续环境都与 $\eta_1$ 共线。这与上面选取的 $\eta_j$ 矛盾。
+
+所以全部外部环境均属于同一射线 $O=\mathbb C\eta_1$。若 $\eta_2\in O$，已经得到全 $O$ 模式；只需讨论 $\eta_2\in F$。
+
+**外部与内部的后继被固定。** 令
+$$
+R_O=\sum_{\eta_j\in O}G_j,
+\qquad
+R_F=(A\otimes F)+\sum_{\eta_j\in F}G_j\otimes\eta_j.
+$$
+两份零位像 $R_O\otimes\eta_1$ 和 $R_F$ 交零。$\dim R_F\ge4$、$\dim R_O\ge2$，故
+$$
+\dim R_O\le3,\qquad \dim R_F\le5.
+\tag{54.11}
+$$
+于是（54.9）给 $A+\sum_{\eta_j\in F}G_j$ 至多三维。
+
+每个内部指标 $j<L$ 都有 $A\cap G_j\ne0$；固定 $V_1$ 在 $A=G_0$ 上产生环境 $\eta_1\in O$，在 $G_j$ 上产生 $\eta_{j+1}$，所以
+$$
+\eta_j\in F\Longrightarrow\eta_{j+1}\in O.
+\tag{54.12}
+$$
+另一方面，每个外部指标 $j<L$ 都有 $G_1\cap G_j\ne0$，因为它们均二维且都位于至多三维 $R_O$。固定 $V_1$ 在 $G_1$ 上产生 $\eta_2$，故
+$$
+\eta_j\in O\Longrightarrow\eta_{j+1}\parallel\eta_2.
+\tag{54.13}
+$$
+式（54.12）、（54.13）给严格交替模式，内部环境的射线固定为 $B=\mathbb C\eta_2\subset F$。证明完毕。
+

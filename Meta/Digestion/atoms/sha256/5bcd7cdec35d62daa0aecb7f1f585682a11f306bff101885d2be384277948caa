@@ -1,0 +1,26 @@
+**证明：策略到流。** 对 $h\in\mathcal H_t$ 置
+
+$$
+\begin{aligned}
+m(h)&=\Pr(H_t=h),\\
+f(h,i)&=\Pr(H_t=h,I_t=i),\\
+f(h,i,x)&=\Pr(H_t=h,I_t=i,Y_t=x).
+\end{aligned}
+\tag{TM.235}
+$$
+
+分支互斥且完备给出全部守恒等式。即使实际档案还包含额外随机记录，$\{H_t=h,I_t=i\}$ 仍对 $\mathcal G_t$ 可测，故
+
+$$
+\begin{aligned}
+f(h,i,x)
+&=\mathbb E\left[
+\mathbf1_{\{H_t=h,I_t=i\}}
+\Pr(Y_t=x\mid\mathcal G_t)\right]\\
+&\le r_i f(h,i).
+\end{aligned}
+\tag{TM.236}
+$$
+
+这一步是对合法的细档案条件行取平均；确定容量与行集合的凸性保留合法性。式(TM.233)正是原策略的末端联合律。
+

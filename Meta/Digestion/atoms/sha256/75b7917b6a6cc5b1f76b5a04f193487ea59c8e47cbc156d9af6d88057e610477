@@ -1,0 +1,23 @@
+**定理77.2（等号分类与全部纤维的准确秩）。** 在（77.1）—（77.2）下，可以分别给输入和输出 $Q$ 选取三个 $d$ 维正交坐标块，使
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu I_d&0&0\\
+0&0&0\\
+0&\mu\sqrt{s/c}\,I_d&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu I_d&0&0\\
+0&0&\nu\sqrt{s/c}\,I_d
+\end{pmatrix}.
+\tag{77.7}
+$$
+反过来，（77.7）及（77.1）定义的算子满足全部假设且 $q=3d$。因此对每个非零 $z\in F$，都有
+$$
+\boxed{\operatorname{rank}M|_{Q\otimes(Az\otimes z)}=2d.}
+\tag{77.8}
+$$
+

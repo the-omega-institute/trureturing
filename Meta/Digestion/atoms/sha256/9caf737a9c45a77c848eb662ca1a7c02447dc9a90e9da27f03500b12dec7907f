@@ -1,0 +1,2 @@
+**Proof.** There are illegal words, and they all have empty right language. Completing the trim minimal automaton adds exactly this one state. When $L=1$, the language is $\mathcal L_k$; its $k$ live states record the trailing run of ones. Runs $a<b$ are distinguished by the continuation $1^{k-b}$, which is legal from $a$ and illegal from $b$. $\square$
+

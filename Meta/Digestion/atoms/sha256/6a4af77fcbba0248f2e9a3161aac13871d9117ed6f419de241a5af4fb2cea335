@@ -1,0 +1,45 @@
+## ST7．保留相对曲率结果，同时实行弦有效理论匹配
+
+此前研究笔记对四维、有限个实标量场、共同曲率耦合 $\xi$、常数正定质量平方矩阵 $\mathsf M$ 及固定分块 $\mathcal P$ 给出
+
+$$
+\mathsf M_0=\mathcal P\mathsf M>0,
+\qquad t=\operatorname{tr}\mathsf M,
+\quad \rho_{\mathsf M}=\mathsf M/t.
+$$
+
+假定所选欧氏问题适用且算子正定，无边界或已单独处理边界项；曲率和背景变化相对最轻质量尺度足够小。所提取的是固定处方下的局域低导数项，不假定任意时变洛伦兹背景都允许 Wick 旋转。
+
+同一热核处方下，比较打开与关闭跨块耦合的模型，局域欧氏曲率项
+$\Gamma_{E,R}=-\kappa\int\sqrt g\,R$ 的高斯物质圈系数差为
+
+$$
+\Delta\kappa
+=\frac{\hbar}{32\pi^2}\left(\frac16-\xi\right)
+\left[\operatorname{tr}(\mathsf M\log\mathsf M)
+-\operatorname{tr}(\mathsf M_0\log\mathsf M_0)\right].
+\tag{ST7.1}
+$$
+
+对数使用同一质量平方参考尺度，它因迹相同而抵消。
+
+**核对。** 标量热核中线性曲率系数是 $(1/6-\xi)R$。[ST-HeatKernel] 对两谱作相同 proper-time 积分，维数与迹相等使 $s^{-2}$ 曲率积分在 $s=0$ 有限。谱严格正定保证另一端收敛。两次分部积分给出括号中的差。由于 $\log\mathsf M_0$ 块对角，
+
+$$
+\operatorname{tr}(\mathsf M\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M_0\log\mathsf M_0),
+$$
+
+从而
+
+$$
+\boxed{
+\Delta\kappa
+=\frac{\hbar}{32\pi^2}\left(\frac16-\xi\right)
+ tD(\rho_{\mathsf M}\|\mathcal P\rho_{\mathsf M}).
+}
+\tag{ST7.2}
+$$
+
+该相对熵编码质量谱及指定分块，实际量子场态另行给定。整个有效作用量差也不因此全部紫外有限。
+

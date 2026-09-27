@@ -1,0 +1,59 @@
+### 235.7 达到 $R_*$ 的实际高维候选
+
+写
+$$
+d=2t+\epsilon,\qquad t=\lfloor d/2\rfloor\ge1,
+\qquad\epsilon\in\{0,1\}.
+\tag{235.AD.23}
+$$
+选择输入正交分解
+$$
+A=H_1\oplus\cdots\oplus H_t\oplus G,
+\qquad\dim H_a=2,
+\qquad\dim G=\epsilon.
+\tag{235.AD.24}
+$$
+当 $\epsilon=0$ 时省略 $G$。在每个 $H_a$ 上使用第六节的 trine 投影 $\Pi_j^{(a)}$。
+
+若 $d=2t$，定义
+$$
+E_j=\bigoplus_{a=1}^t\frac23\Pi_j^{(a)}
+\quad(j=1,2,3).
+\tag{235.AD.25}
+$$
+若 $d=2t+1$，则定义
+$$
+E_1=\left(\bigoplus_{a=1}^t\frac23\Pi_1^{(a)}\right)\oplus0,
+$$
+$$
+E_2=\left(\bigoplus_{a=1}^t\frac23\Pi_2^{(a)}\right)\oplus\frac12I_G,
+\qquad
+E_3=\left(\bigoplus_{a=1}^t\frac23\Pi_3^{(a)}\right)\oplus\frac12I_G.
+\tag{235.AD.26}
+$$
+各效应正半定且总和为 $I_A$，所以
+$$
+\mathcal S_j^{\rm blk}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{235.AD.27}
+$$
+定义实际 CPTP 记录通道 $\mathcal S^{\rm blk}$。其第 $j$ 个分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，因此精确分支秩为
+$$
+(t,t,t)\quad\text{若 }d=2t,
+\qquad
+(t,t+1,t+1)\quad\text{若 }d=2t+1.
+\tag{235.AD.28}
+$$
+总秩为
+$$
+\boxed{K(\mathcal S^{\rm blk})=3t+2\epsilon
+=\left\lceil\frac{3d}{2}\right\rceil=R_*.}
+\tag{235.AD.29}
+$$
+
+显式 Kraus 为每个标签、每个二维块的
+$$
+\sqrt{\frac23}|r_j\rangle\langle\psi_j^{(a)}|,
+\tag{235.AD.30}
+$$
+在奇数维时再给标签二和三各加一个 $|r_j\rangle\langle g|/\sqrt2$，其中 $g$ 是 $G$ 的单位基。它们的输入支撑分属正交块，故每个标签内的所列 Kraus 均非零且线性独立。全部块组成同一份实际 CPTP 效应族。
+

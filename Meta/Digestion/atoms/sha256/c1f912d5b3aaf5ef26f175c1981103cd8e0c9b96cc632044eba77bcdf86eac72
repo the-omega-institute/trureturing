@@ -1,0 +1,12 @@
+**推论 77.4（最坏误差的幂次余项）。** 在适当缩小 $\varepsilon_0$ 后，同一 $\alpha,C$ 满足
+
+$$
+|E_*(\varepsilon)-\Gamma|\le C\varepsilon^\alpha,
+\qquad
+\left|\sup_{0<a<1}e(a,\varepsilon)-\Gamma\varepsilon\right|
+\le C\varepsilon^{1+\alpha}.
+\tag{77.7}
+$$
+
+证明。上界直接来自 $\gamma_r\le\Gamma$ 与定理 77.3。取某个固定最大参数 $r_*\in\mathcal M$；当 $\varepsilon<1/r_*$ 时，$a=1-r_*\varepsilon$ 属于 $(0,1)$，于是同一统一误差界给 $E_*(\varepsilon)\ge\Gamma-C\varepsilon^\alpha$。再乘以正数 $\varepsilon$ 得第二式。$\square$
+

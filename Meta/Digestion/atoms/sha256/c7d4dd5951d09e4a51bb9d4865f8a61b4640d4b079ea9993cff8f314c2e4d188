@@ -1,0 +1,20 @@
+**定义 10.1（相对于均匀参考律的似然）。** 对 $P_b\in\mathcal K_d^0$，
+区分两种实验。路径实验观察均匀启动的 $s$ 步轨迹；状态对实验观察 $s$ 个独立的
+$Q_b(x,y)=P_b(x,y)/n$ 样本。两者的正向律分别记为
+$\mathsf P^{+,\mathrm{path}}_{b,s}$ 与 $\mathsf P^{+,\mathrm{pair}}_{b,s}$，
+反向律由整条路径倒序、或交换每个状态对的两坐标得到。
+相应均匀参考律为
+$\mathsf U^{\mathrm{path}}_s=\operatorname{Unif}(X)^{\otimes(s+1)}$ 和
+$\mathsf U^{\mathrm{pair}}_s=\operatorname{Unif}(X^2)^{\otimes s}$。
+对 $E\in\{\mathrm{path},\mathrm{pair}\}$、$\epsilon\in\{+,-\}$，置
+
+$$
+L^{\epsilon,E}_{b,s}
+=\frac{d\mathsf P^{\epsilon,E}_{b,s}}{d\mathsf U^E_s}.
+\tag{10.1}
+$$
+
+路径上的两个似然分别为 $\prod_{t<s}nP_b(X_t,X_{t+1})$ 与
+$\prod_{t<s}nP_b(X_{t+1},X_t)$；独立状态对上取相应单对因子的乘积。
+$s=0$ 时似然恒为 $1$。不致混淆时略去上标 $E$。
+

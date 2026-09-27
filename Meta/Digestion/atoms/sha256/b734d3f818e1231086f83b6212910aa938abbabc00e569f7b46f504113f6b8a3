@@ -1,0 +1,46 @@
+### 38.2 全体局部读出的规范最小 profile
+
+设协议索引为 $P$，每个协议有可能不同的读出值域 $O_p$，并给出
+
+$$
+ q_p:X\to O_p.
+$$
+
+定义 global profile
+
+$$
+ Q(x):=(q_p(x))_{p\in P},
+ \qquad
+ X_{\mathrm{prof}}:=X/\ker Q.
+ \tag{38.2}
+$$
+
+对每个 $p$，存在唯一局部读出
+
+$$
+ \widehat q_p:X_{\mathrm{prof}}\to O_p,
+ \qquad
+ q_p=\widehat q_p\circ\pi_{\mathrm{prof}}.
+ \tag{38.3}
+$$
+
+若另一个接口 $r:X\to R$ 能恢复全部局部读出，即对每个 $p$ 存在 $d_p:R\to O_p$ 满足
+
+$$
+ q_p=d_p\circ r,
+ \tag{38.4}
+$$
+
+则存在唯一
+
+$$
+ h:R\to X_{\mathrm{prof}},
+ \qquad
+ \pi_{\mathrm{prof}}=h\circ r.
+ \tag{38.5}
+$$
+
+因此 $X_{\mathrm{prof}}$ 是“同时保留这整个局部读出族”的最小接口。仓内 GlobalProfileQuotientUniversality 还表明，只要求每个有限子族存在共同解码器，就足以推出 (38.5)；非空来源条件是为了把因子定义在任意接口值上。
+
+这个 profile 商仍是静态对象。若更新 $F$、合法性和记录没有被纳入索引族 $P$，则 (38.4) 只保证当前局部读出可恢复，不能保证下一步动作或完整未来可恢复。把所有合法续接读出加入 $P$，才会把静态 profile 连接到第36节的动态共同核。
+

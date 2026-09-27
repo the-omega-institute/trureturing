@@ -1,0 +1,1 @@
+| `D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean`，`DynClosure`、`dynamic_closure_is_least` | 任意类型及全定义操作族的最小动态稳定细化；所需新行为商的主要一般支点 | 有类型的图边及部分动作须显式适配，不能省略合法性 

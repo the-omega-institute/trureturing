@@ -1,0 +1,6 @@
+**引理106.2（首轮平面不等于后期平面）。** 对每个 $3\le n\le6$，均有 $H_1\ne H_n$。
+
+**证明。** 若 $\eta_1\not\parallel E$，（106.2）给 $q\in Q$。因 $G_n\subset S\perp Q$，非零 $q\in H_1=H_n$ 将被 $P_{G_n}|_{H_n}$ 消去，矛盾。
+
+若 $\eta_1\parallel E$，（106.4）给 $p\in P$。假设 $p\in H_n$，按（106.7）写 $p=g+r$，$g\in G_n$、$r\in Q_n$。因为 $p,g\in S$，有 $r\in S\cap Q_n\subset\mathbb Cu_*$。若 $\eta_n\not\parallel E$，则 $Q_n=Q$，所以 $r=0$。若 $\eta_n\parallel E$，则（106.4）给 $G_n\subset P$，由 $p,g\in P$ 仍有 $r=0$。两种情形都使非零 $p\in H_n\cap G_n$，违反（106.7）。证明完毕。
+

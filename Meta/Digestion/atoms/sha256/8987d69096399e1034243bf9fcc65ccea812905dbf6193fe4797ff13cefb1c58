@@ -1,0 +1,49 @@
+### 26.2 四种表示何时各自完整
+
+设空间、时间、边界和记忆表示分别为
+
+$$
+q_{\rm sp}:X\to Y_{\rm sp},\quad
+q_{\rm tm}:X\to Y_{\rm tm},\quad
+q_{\rm bd}:X\to Y_{\rm bd},\quad
+q_{\rm mem}:X\to Y_{\rm mem},
+$$
+
+并令完整 profile 为
+
+$$
+\Phi_{\mathcal R}:X\to (A^*\to L),\qquad
+\Phi_{\mathcal R}(x)(w)=\operatorname{Obs}_{\mathcal R,w}(x).
+$$
+
+所有映射都应先限制到实际像。对任意 $q:X\to Y$，以下三件事在实际像上等价：
+
+1. 存在唯一双射 $d_q:\operatorname{im}(q)\to\operatorname{im}(\Phi_{\mathcal R})$，满足
+   $$
+   \widehat\Phi_{\mathcal R}=d_q\circ\widehat q,
+   \qquad
+   \widehat q=d_q^{-1}\circ\widehat\Phi_{\mathcal R};
+   $$
+2.
+   $$
+   \ker(q)=\ker(\Phi_{\mathcal R})=\approx_{\mathcal R};
+   $$
+3. $q$ 是该操作词任务的最小动态边界：它既能恢复所有声明的标签与合法性，又不把未来核中不同的状态合并。
+
+证明只使用实际像因子化：$d_q(\widehat q(x)):=\widehat\Phi_{\mathcal R}(x)$ 由 kernel 相等而良定义，由两侧实际像映射的满射性得到双射与唯一性。`InterfaceKernelCriterion.interface_refinement_iff_kernel_inclusion`、`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 和 `CausalStateFactorization.causal_state_factorization` 是这一判据的仓内支点。
+
+因此，若四个表示都满足
+
+$$
+\boxed{
+\ker(q_{\rm sp})
+=\ker(q_{\rm tm})
+=\ker(q_{\rm bd})
+=\ker(q_{\rm mem})
+=\approx_{\mathcal R},
+}
+\tag{26.2}
+$$
+
+它们才是在同一任务下互相恢复的四种表达。相同的值域基数、相同的当前读数或单向编码均不足以推出 (26.2)。若某一表示只需回答一个指定目标 $T$，则条件可弱化为 $\ker(q)\subseteq\ker(T)$；那是目标充分性，不是完整未来边界。
+

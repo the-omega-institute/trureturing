@@ -1,0 +1,87 @@
+**第二步：等待段与实主段都具有两个物理纤维方向。** 在第249.22—249.24式的复等待图中，让 $a$ 与 $y=\phi_y$ 自由，固定当前 $p,\kappa,\ell$；其余两个 $\phi$ 分量、$w,m$ 由原精确方程求解。为避免与代价 $Q_s$ 混淆，此处记矩阵 $\mathcal Q_s=(B_s+B_s^{\mathsf T})/2$。所解方程为
+
+$$
+\begin{aligned}
+\mu&=p-w,\qquad H=1-p-(a^2+\kappa^2)/\mu,\\
+Y&=(e_y-y\phi)/\sqrt{1-y^2},\\
+m&=-\frac{\kappa k_s^{\mathsf T}\phi+
+\ell\phi^{\mathsf T}(B_s^{\mathsf T}-B_s)Y}{k_s^{\mathsf T}Y},\\
+w&=\frac{\ell^2}{\mu}
++\frac{(\kappa\ell/\mu)^2+(m-a\ell/\mu)^2}{H},\\
+\mu\phi^{\mathsf T}\mathcal Q_s\phi
++wY^{\mathsf T}\mathcal Q_sY+a k_s^{\mathsf T}\phi&=a_s,
+\qquad \|\phi\|^2=1.
+\end{aligned}
+\tag{255.12}
+$$
+
+置 $v=\sqrt{se_s}$。在有界等待控制的邻域内，原缩放隐函数论证给出
+
+$$
+a,\kappa,\ell=O(v),\quad y=O(s),\quad
+m=O(sv),\quad w=O(v^2),\quad H\asymp s^2,
+\quad \phi=v_*+O(s),
+\tag{255.13}
+$$
+
+其中 $v_*$ 为实际带符号的第三极限方向，$(v_*)_y=0$，另两分量非零；$\mu\to1$，$k_s^{\mathsf T}Y\to\sigma>0$。
+
+需要核实控制的导数，不能只对（255.13）的零阶近似求导。令 $\mathscr S$ 为（255.12）中 $w$ 方程的残差，先消去 $m$，将 $\phi$ 暂视作独立变量。直接求导得到
+
+$$
+\mathscr S_w=1+o(1),\qquad
+\mathscr S_{\phi_j}=O(v^2/s)=O(e_s),\qquad
+\mathscr S_a=O(e_s+v^3/s^2)=O(v).
+\tag{255.14}
+$$
+
+例如 $m_{\phi_j}=O(v)$、$m-a\ell/\mu=O(sv)$，两者乘积除以 $H\asymp s^2$ 给出 $O(e_s)$。范数—实矩对两个剩余 $\phi$ 分量的 Jacobian 趋于行向量为
+$(2(v_*)_2,2(v_*)_3)$ 与 $(2(v_*)_2,-2(v_*)_3)$ 的可逆矩阵；其 $a,y$ 迫动项均为 $O(s)$，$w$ 系数有界。结合（255.14）隐式求导得到足够的界
+
+$$
+\partial_a\phi=O(s),\qquad
+\partial_y\phi=e_y+O(s),\qquad
+\partial_aw=O(v),\qquad \partial_yw=O(e_s).
+\tag{255.15}
+$$
+
+这里仅使用 $v/s=\sqrt{e_s/s}\to0$，不添加 $e_s$ 的幂次下界。
+
+取两个固定的实际密度读数
+
+$$
+r_1(\rho)=\operatorname{Re}\langle q,\rho v_*\rangle,
+\qquad
+r_2(\rho)=\operatorname{Re}\langle e_y,\rho v_*\rangle.
+\tag{255.16}
+$$
+
+记 $S=\langle\phi,v_*\rangle$。由精确因子及 $\langle Y,v_*\rangle=-yS/\sqrt{1-y^2}$，有
+
+$$
+r_1=aS,\qquad r_2=(p-2w)yS,
+\qquad D_{(a,y)}(r_1,r_2)=I_2+o(1).
+\tag{255.17}
+$$
+
+故 $\partial_a\rho,\partial_y\rho$ 是两个独立的密度切向量，不能解释成净化规范的变化。原因子第一列有非零 $\phi$ 分量，第二列 $\phi$ 分量为零而 $q$ 分量为 $\sqrt H>0$，所以局部秩恰为二。这些性质在每个固定任务的足够小管状邻域保持，包括 $a=0$ 附近。
+
+实主段使用不同的自由坐标 $(\theta,y)$，因子为
+
+$$
+\mathsf A=\phi(\sqrt p,0)+q(\sqrt{1-p}\cos\theta,
+\sqrt{1-p}\sin\theta).
+\tag{255.18}
+$$
+
+范数和实矩仍解其余方向坐标。当 $0<p<1$、$\sin\theta\ne0$ 时，其活动块行列式为 $p(1-p)\sin^2\theta>0$。若固定 $p$ 的一个纤维变分使 $d\rho=0$，非核块先给出
+$p(d\phi\,\phi^{\mathsf T}+\phi\,d\phi^{\mathsf T})=0$，结合 $\phi^{\mathsf T}d\phi=0$ 推出 $d\phi=0$，从而 $dy=0$；核—非核块再给出 $\sin\theta\,d\theta=0$。所以这也是二维物理纤维图。其精确 SLD 线元为
+
+$$
+ds_{\rm SLD}^2=
+\frac{dp^2}{p(1-p)}+4p(1-p)d\theta^2+4p\|d\phi\|^2,
+\tag{255.19}
+$$
+
+在纤维上正定。该图不延伸到纯态角端点；在 $\theta=0$，实际 $\partial_\theta\rho$ 可以为零，不能用非纯处线元的极限替代该点的信息。
+

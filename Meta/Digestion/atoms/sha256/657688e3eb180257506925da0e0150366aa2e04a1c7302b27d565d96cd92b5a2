@@ -1,0 +1,131 @@
+**定理 277.2（倒数三角条件决定最小实输出维数）。** 对三个严格正的半径，有
+
+$$
+D_*(a)=
+\begin{cases}
+3,&\alpha_k<\alpha_i+\alpha_j\quad\text{对所有不同 }i,j,k,\\
+2,&\text{至少一条上述严格不等式不成立}.
+\end{cases}
+\tag{277.1}
+$$
+
+在第一种情形中，最优编码可以先作四结果 POVM，再制备四个不正交的实三维纯态。其解码由到两个量子比特对称子空间的等距嵌入和一个偏迹给出。若在这个严格三角区域把输出限定为对角经典记录，则最少需要四个符号。在第二种情形中，二维实量子输出已足够。
+
+因此，定理276.2的全部误差预算边界可以分别在九维和八维输出中达到；这一预算构造的维数不宣称最小。
+
+证明。先证明严格三角区域内最优恢复通道的唯一性。此时 $B=\Delta$，令
+
+$$
+t_i=1-2\Delta\alpha_i>0,\qquad\sum_it_i=1.
+\tag{277.2}
+$$
+
+任意完全实输出编码的恢复复合 $\mathcal N=\mathcal D\mathcal E$，由第275节证明中的标准 PPT 归约，是量子比特纠缠破坏通道。写其仿射 Bloch 作用为 $v\mapsto c+Tv$。采用 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，[arXiv:quant-ph/0302031v2](https://arxiv.org/pdf/quant-ph/0302031v2)，定理4的测量—制备表示，把 POVM 效应和制备态分别写成 $w_k(I+s_k\cdot\boldsymbol\sigma)$ 和 $(I+r_k\cdot\boldsymbol\sigma)/2$，其中 $|s_k|,|r_k|\le1$、$\sum_kw_k=1$。于是
+
+$$
+T=\sum_kw_kr_ks_k^{\mathsf T},
+\qquad\operatorname{Tr}T\le1.
+\tag{277.3}
+$$
+
+这只是既有纠缠破坏表示的直接估计，不作为新的通道分类。
+
+对每个轴的正负两个模型态，误差上界 $\Delta$ 意味着
+
+$$
+\|c\pm a_i(Te_i-e_i)\|_2\le2\Delta.
+$$
+
+由这两个不等式得 $T_{ii}\ge1-2\Delta\alpha_i=t_i$。三个对角下界之和已经为一，与式（277.3）结合，迫使每个 $T_{ii}=t_i$。将同一对不等式平方后取平均，得到
+
+$$
+\|c\|_2^2+a_i^2\|Te_i-e_i\|_2^2\le4\Delta^2.
+\tag{277.4}
+$$
+
+其中第 $i$ 个对角坐标单独已经贡献 $a_i^2(t_i-1)^2=4\Delta^2$，所以 $c=0$，每列的全部非对角坐标也为零。因此最优恢复通道必须是
+
+$$
+\mathcal N:\ v\longmapsto\operatorname{diag}(t_1,t_2,t_3)v.
+\tag{277.5}
+$$
+
+这证明实际最优通道的唯一性，并非只确定它的 Pauli 平均。
+
+若输出维数为二，层析完备性保证编码在整个 Hermitian 输入空间上的像都属于输出基底中的实对称矩阵空间。这个实向量空间维数为三，故恢复复合在 Hermitian 空间上的秩至多为三。然而式（277.5）在 $I,X,Y,Z$ 上的特征值为 $1,t_1,t_2,t_3$，全部非零，秩为四，矛盾。因此严格三角情形必须有 $D\ge3$。若编码输出限定在 $m$ 个经典符号的对角代数内，其 Hermitian 像空间维数至多为 $m$，同一秩四结论迫使 $m\ge4$；第276节的四结果构造达到这个经典下界。
+
+下面给出三维达到构造。取式（276.10）的四个单位 Bloch 向量 $n_k$，并选单位量子比特向量 $\psi_k$ 使
+
+$$
+P_k=|\psi_k\rangle\langle\psi_k|
+=(I+n_k\cdot\boldsymbol\sigma)/2.
+$$
+
+令 $\zeta_k=\psi_k\otimes\psi_k$，它们都位于三维复空间 $\operatorname{Sym}^2(\mathbb C^2)$。任取互异的 $i,j,k$，由 Pauli 乘法得到标准三阶 Bargmann 公式
+
+$$
+\operatorname{Tr}(P_iP_jP_k)
+=\frac{1+n_i\cdot n_j+n_j\cdot n_k+n_k\cdot n_i
++i\,n_i\cdot(n_j\times n_k)}4.
+\tag{277.6}
+$$
+
+四个 $n_k$ 之和为零、长度均为一，所以任意三个的两两内积之和为 $-1$。又因三个 $t_i$ 严格正，标量三重积非零。因此式（277.6）为非零纯虚数。张量平方使三阶内积乘积成为这个数的平方，故对 $\zeta_i,\zeta_j,\zeta_k$ 的相应循环乘积为严格负实数。
+
+所有两两内积也非零：$|\langle\psi_i,\psi_j\rangle|^2$ 等于某个正的 $t_\ell$。分别改变 $\zeta_2,\zeta_3,\zeta_4$ 的整体相位，使它们与 $\zeta_1$ 的内积为正实数。每个含指标 $1$ 的三阶循环乘积为负实数，遂迫使其余两两内积全为负实数。得到的四个向量 $\zeta'_k$ 具有实 Gram 矩阵
+
+$$
+G=\begin{pmatrix}
+1&t_1&t_2&t_3\\
+t_1&1&-t_3&-t_2\\
+t_2&-t_3&1&-t_1\\
+t_3&-t_2&-t_1&1
+\end{pmatrix}.
+\tag{277.7}
+$$
+
+令 $h_i=\sqrt{(1-t_i)/2}$，显式取
+
+$$
+\begin{aligned}
+v_1&=(h_1,h_2,h_3),&v_2&=(-h_1,h_2,h_3),\\
+v_3&=(h_1,-h_2,h_3),&v_4&=(h_1,h_2,-h_3).
+\end{aligned}
+$$
+
+因 $\sum_ih_i^2=1$，这些都是实三维单位向量，直接内积得到式（277.7）。以它们为列的实矩阵，其三个坐标行两两正交，行范数平方为 $4h_i^2=2(1-t_i)$。所以 $G$ 的特征值为 $0,2(1-t_1),2(1-t_2),2(1-t_3)$，秩恰为三。相同 Gram 矩阵给出复线性等距映射
+
+$$
+W:\mathbb C^3\longrightarrow\operatorname{Sym}^2(\mathbb C^2)
+\subset\mathbb C^2\otimes\mathbb C^2,
+\qquad Wv_k=\zeta'_k.
+\tag{277.8}
+$$
+
+具体地，相同 Gram 矩阵保证规定 $v_k\mapsto\zeta'_k$ 的线性映射良定且保持内积。循环量与共同实坐标的这种联系沿用第229节所用的成熟 Gram 方法；见 Chaturvedi 等，*Null Phase Curves and Manifolds in Geometric Phase Theory*，[arXiv:1302.0206v1](https://arxiv.org/abs/1302.0206v1)，式（2.10）、（3.6）及（4.11）—（4.13）。本构造允许负的循环量，不要求文献中更强的正循环 null-phase 条件。
+
+以 $F_k=(I+n_k\cdot\boldsymbol\sigma)/4=P_k/2$ 定义
+
+$$
+\mathcal E(X)=\sum_{k=1}^4\operatorname{Tr}(F_kX)|v_k\rangle\langle v_k|,
+\qquad
+\mathcal D(Y)=\operatorname{Tr}_2(WYW^*).
+\tag{277.9}
+$$
+
+四个 $F_k$ 是 POVM，故编码是 CPTP，且对所有状态都产生实矩阵。等距嵌入与偏迹使解码在整个 $M_3$ 上 CPTP。由式（277.8），解码把第 $k$ 个实三维记录态送到 $P_k$，因为张量平方的偏迹恰为 $P_k$，整体相位不影响密度矩阵。因此复合正是第276节达到最优值的测量—制备通道，Bloch 系数为 $t_i$。它达到 $B$，证明严格三角情形 $D_*=3$。式（277.7）的非零非单位内积说明这些实记录态不正交，不能把它们当作四个可完全区分的经典标签。
+
+若至少一条严格三角不等式不成立，按大小排列倒数，使 $\alpha_3\ge\alpha_1+\alpha_2$。第276节的最优系数为
+
+$$
+t_1=\frac{\alpha_2}{\alpha_1+\alpha_2},\qquad
+t_2=\frac{\alpha_1}{\alpha_1+\alpha_2},\qquad t_3=0.
+\tag{277.10}
+$$
+
+这里两个非零系数严格正且和为一，对应 CPTP 纠缠破坏通道 $\mathcal N$。其全部状态输出都位于某个过原点的 Bloch 平面。取酉矩阵 $U$ 将这个平面旋到实的 $XZ$ 平面，令 $\mathcal E=\operatorname{Ad}_U\mathcal N$、$\mathcal D=\operatorname{Ad}_{U^*}$，便以二维实输出达到同一个恢复通道。等号边界也包含在这个构造中。
+
+一维输出只能产生固定恢复态。正负两个半径为 $a_i$ 的轴态之间迹距离为 $a_i$，三角不等式给出固定恢复态最坏误差至少 $\max_i a_i/2$，而最大混合态达到此值。另一方面，式（276.2）给出 $B\le\max_i a_i/3<\max_i a_i/2$，所以一维输出在所有正半径模型上都不够。由此完成式（277.1）。
+
+最后，将本节的三维或二维实最优编码，与第276节六维可逆编码作正交直和混合，仍逐态达到 $e=\theta B,r=(1-\theta)\Delta$，输出维数分别为九或八。两个解码分支均在完整空间上保迹，故也覆盖端点。证毕。
+

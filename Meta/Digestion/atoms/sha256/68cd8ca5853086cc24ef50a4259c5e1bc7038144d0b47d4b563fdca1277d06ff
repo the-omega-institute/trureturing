@@ -1,0 +1,14 @@
+**引理 5.1.3（全族一致的深度尾界）。** 若 $a>1$、$am<1$，且 $b_n\le a^n$ 对全部 $n\ge N_0$ 成立，则对任意 $\mathcal F\in\mathcal C_b$ 和 $N\ge N_0$，
+$$
+0\le S_{\mathcal F}(p)-S_{\mathcal F_{\le N}}(p)
+=\mu_p(E_{\mathcal F,N})-\mu_p(E_{\mathcal F})
+\le\sum_{n>N}b_nm^n
+\le\frac{(am)^{N+1}}{1-am}.
+$$
+特别地，对一词预算和全部 $N\ge0$，有精确的几何尾表达式
+$$
+0\le S_{\mathcal F}(p)-S_{\mathcal F_{\le N}}(p)
+=\mu_p(E_{\mathcal F,N})-\mu_p(E_{\mathcal F})
+\le\frac{m^{N+1}}{1-m}.
+$$
+

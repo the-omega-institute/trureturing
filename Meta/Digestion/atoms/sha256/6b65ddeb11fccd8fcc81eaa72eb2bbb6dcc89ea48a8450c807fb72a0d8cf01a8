@@ -1,0 +1,7 @@
+**定理。** 对上述全部目标，
+$$
+\boxed{d_2(\mathcal R)=\min(\delta,q_0).}
+\tag{227.GD.3}
+$$
+右侧总由一个明确的删除与共同右 Gram 修复候选取得。最近性不要求竞争者的 Kraus 落在 $\operatorname{span}\{A,B\}$。
+

@@ -1,0 +1,20 @@
+**证明。** 定义$J:L\otimes\mathbb C^{|I_{\mathrm{syn}}|}\to H$为$J(v\otimes|j\rangle)=S_jv$。正交关系给出$J^\dagger J=I$和$JJ^\dagger=P$，故$\mathcal E_\sigma(\rho)=J(\rho\otimes\sigma)J^\dagger$为CPTP。$\mathcal D$第一项的Kraus为$S_j^\dagger$，其Kraus平方和为$P$；第二项是正效果$I-P$后制备$\tau_0$，补足保迹条件。矩阵乘法给出
+
+$$
+\sum_iS_i^\dagger\mathcal E_\sigma(\rho)S_i
+=\sum_i\sigma_{ii}\rho=\rho,
+$$
+
+且编码支持在$P$，所以补项为零。
+
+设$\rho$与$\sigma$的本征值分别为$r_a,s_b$。编码的非零本征值为$r_as_b$，因此
+
+$$
+-\sum_{a,b}r_as_b\log(r_as_b)
+=-\sum_ar_a\log r_a-\sum_bs_b\log s_b.
+$$
+
+得到(10.2)。在各自支持上，$\log(\rho\otimes\sigma)=\log\rho\otimes I+I\otimes\log\sigma$。相对熵中综合征对数项相消，迹的乘法性和等距性给出(10.3)；支持不包含时两侧同时为无穷。∎
+
+此正规形的普遍可逆通道背景见Knill–Laflamme及Nayak–Sen。[QREC-KL][QREC-NS] 这里给出的熵计算不依赖原§1至§9中尚未核对的数论或物理类比。
+

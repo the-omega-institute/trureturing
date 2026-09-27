@@ -1,0 +1,15 @@
+### 22.10 定理：固定相位连续性的完整判据
+
+固定 $0<r<1$、$0<\alpha<1$ 和任意实相位 $x$。则
+\[
+\boxed{\beta\longmapsto G_r(\beta,x)\text{ 在 }\alpha\text{ 连续}
+\iff \forall k\geq1,\quad x+k\alpha\notin\mathbb Z.}
+\tag{22.17}
+\]
+若 $x+k\alpha=z\in\mathbb Z$，其中 $k\geq1$，则对每个 $0\leq\beta<\alpha$ 都有
+\[
+\boxed{G_r(\alpha,x)-G_r(\beta,x)\geq(1-r)^2r^{k-1}>0.}
+\tag{22.18}
+\]
+这里连续性使用完整的实数邻域；由于 $\alpha$ 是内部点，可把邻域限制在 $(0,1)$。$r=0$ 被明确排除，因为它只保留第一位，后续累计整数命中未必影响数值。
+

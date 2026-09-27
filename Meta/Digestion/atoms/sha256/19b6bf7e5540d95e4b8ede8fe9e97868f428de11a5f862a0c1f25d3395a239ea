@@ -1,0 +1,23 @@
+### 213.5 关于 $\nu$ 的联合解析临界图
+
+在 $\epsilon=h=0$，消去后的首阶约束给 $m=0$、
+$n=\sqrt{1-t}/2$。于是直接有
+
+$$
+\mu(0,0,\nu,t)
+=\frac{\beta\delta}{8}
+\left(\sqrt{\frac{1-\nu}{1-t}}-1\right).
+\tag{213.15}
+$$
+
+中心的导数为
+
+$$
+\boxed{
+\mu_t=\frac{\beta\delta}{16}>0,\qquad
+\mu_\nu=-\frac{\beta\delta}{16}<0,\qquad
+\mu_h=0.
+}
+\tag{213.16}
+$$
+

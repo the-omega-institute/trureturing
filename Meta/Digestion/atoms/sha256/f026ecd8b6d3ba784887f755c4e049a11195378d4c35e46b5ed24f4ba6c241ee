@@ -1,0 +1,33 @@
+### 237.5 从实际投影到实际 CPTP 通道及精确秩
+
+对第237.4节构造的任一投影族，定义实际输入效应
+$$
+E_j=\frac dR\Pi_j,
+\qquad\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{237.FL.24}
+$$
+各效应正半定，且（237.FL.7）给
+$$
+\sum_jE_j=I_d.
+\tag{237.FL.25}
+$$
+因此这些分支组成同接口 CPTP 记录通道。取 $\operatorname{im}\Pi_j$ 的正交基 $\{u_{j,a}\}_a$，一组显式 Kraus 为
+$$
+C_{j,a}=\sqrt{\frac dR}|r_j\rangle\langle u_{j,a}|.
+\tag{237.FL.26}
+$$
+其平方和正是（237.FL.25），验证保迹性。每个非零分支的 Kraus 线性独立；等价地，该分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，所以
+$$
+K(\mathcal S)=\sum_j\operatorname{rank}E_j
+=\sum_j\operatorname{rank}\Pi_j=R.
+\tag{237.FL.27}
+$$
+这验证了候选是给定预算内的真实通道，且秩不是由某份冗余 Kraus 列表虚增而来。
+
+最后应用（237.FL.7），得到每个中间预算的完整精确误差
+$$
+\boxed{D_R=1-\frac R{Nd}\qquad(d\le R\le(N-1)d).}
+\tag{237.FL.28}
+$$
+取等判据的公共 CP 部分在这里可直接取分支效应 $\Pi_j/N$：它被目标效应 $I_d/N$ 和候选效应 $(d/R)\Pi_j$ 同时支配，总迹效应为 $(R/(Nd))I_d$。因而该构造沿用的是同一实际完整通道误差证书。
+

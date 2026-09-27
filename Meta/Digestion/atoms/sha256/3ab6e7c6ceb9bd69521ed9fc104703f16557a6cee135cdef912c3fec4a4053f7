@@ -1,0 +1,89 @@
+**定理 303.1（对偶支撑的正性与主轴角界）。** 固定正半径六态模型，沿用第298、301节的 $M_*=S_*-\Omega_*$、$b$、$A=\|b\|_2^2$、$Z_*=\lambda vv^{\mathsf T}$，其中 $\lambda>0$、$\|v\|_2=1$、$v_i>0$。令
+
+$$
+G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},
+\qquad
+\theta=\arccos\frac{b\cdot v}{\sqrt A}.
+\tag{303.1}
+$$
+
+则 $G\succeq0$，并有
+
+$$
+0<\lambda\le A\cos(2\theta),
+\qquad 0\le\theta<\frac\pi4.
+\tag{303.2}
+$$
+
+$G$ 奇异恰当且仅当其恰有一条原坐标列为零；此时 $G$ 的秩为二，核就是该坐标轴，且式（303.2）中的非严格不等式取等。若没有零列，则 $G\succ0$ 且该不等式严格。另有
+
+$$
+\theta=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{303.3}
+$$
+
+证明。记 $Q=(D_a/A)M_*$。第301节已经证明
+
+$$
+QG=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}\succeq0,
+\tag{303.4}
+$$
+
+而第298节保证 $S_Q=(Q+Q^{\mathsf T})/2\succ0$。取 $G$ 的任一实特征向量 $z\ne0$，其特征值记为 $g$。则
+
+$$
+0\le z^{\mathsf T}QGz
+=g\,z^{\mathsf T}Qz
+=g\,z^{\mathsf T}S_Qz.
+$$
+
+最后的二次型严格为正，故 $g\ge0$。$G$ 对称，遂得 $G\succeq0$。
+
+$S_Q\succ0$ 也使 $Q$ 可逆：若 $Qx=0$，则 $x^{\mathsf T}S_Qx=x^{\mathsf T}Qx=0$，所以 $x=0$。如果 $G$ 的所有列均非零，列支撑条件给出
+
+$$
+Q=GH,
+\qquad H=\operatorname{diag}\left(\frac{\alpha_i}{\|Ge_i\|_2}\right)\succ0.
+\tag{303.5}
+$$
+
+于是 $G$ 可逆，再由半正定性得 $G\succ0$。反过来，一条零列显然使 $G$ 奇异，而第298节已证明至多存在一条这样的列。因此 $G$ 奇异恰好对应恰有一条零列。
+
+还需核对其核的维数。矩阵 $\lambda I+bb^{\mathsf T}$ 正定，且 $G$ 只从它减去秩一矩阵 $2\lambda vv^{\mathsf T}$。如果 $\ker G$ 至少二维，可以在该核中选一个非零 $x\perp v$，但此时
+
+$$
+0=x^{\mathsf T}Gx
+=\lambda\|x\|_2^2+(b\cdot x)^2>0,
+$$
+
+矛盾。故奇异时的核恰好一维；若 $Ge_i=0$，这个核就是 $\mathbb Re_i$。
+
+现在令 $n=b/\sqrt A$。取一个包含 $n,v$ 的二维平面，在其中写 $v=\cos\theta\,n+\sin\theta\,m$，其中 $m\perp n$、$\|m\|_2=1$。若 $\theta=0$，任选这样的 $m$。对应二维块为
+
+$$
+\begin{pmatrix}
+A-\lambda\cos(2\theta)&-\lambda\sin(2\theta)\\
+-\lambda\sin(2\theta)&\lambda\cos(2\theta)
+\end{pmatrix},
+\tag{303.6}
+$$
+
+其余正交方向上的系数为 $\lambda$。因此
+
+$$
+\det G=\lambda^2\bigl(A\cos(2\theta)-\lambda\bigr).
+\tag{303.7}
+$$
+
+半正定性给出式（303.2）的系数界。因为 $b\cdot v>0$，原本 $0\le\theta<\pi/2$；再由 $\lambda>0$ 得 $\cos(2\theta)>0$，所以 $\theta<\pi/4$。等号条件与奇异性由式（303.7）直接对应。
+
+最后，若 $\theta=0$，则 $b$ 在 $S_*$ 的最大特征轴上，写 $S_*b=d_3b$。由第301节的 $M_*b=b$，
+
+$$
+\Omega_*b=(d_3-1)b.
+$$
+
+反对称性使两边与 $b$ 取内积后得到 $d_3=1$，故 $\Omega_*b=0$。此时 $\omega$ 平行于 $b$，而定理301.1给出 $v\cdot\omega=0$。由于 $v$ 平行于 $b$，这迫使 $\omega=0$。再由定理299.1，三个半径相等。反过来，等半径的显式最优解满足 $v=b/\sqrt A$，故 $\theta=0$。证毕。
+

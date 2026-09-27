@@ -1,0 +1,9 @@
+**定理 223.3（两个纯端口优化的全局完备性）。** 对全部 $A,B\in M_2(\mathbb C)$，有
+
+$$
+\boxed{\delta_{\rm rot}=\max(\gamma_{\rm out},\gamma_{\rm in}).}
+\tag{223.TS.14}
+$$
+
+此式允许线性相关的 Kraus 矩阵、零矩阵和重奇异值，不要求这些辅助矩阵构成 TP 通道。
+

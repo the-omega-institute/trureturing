@@ -1,0 +1,59 @@
+### 174.2 接收端解掩码后的两个等权旗标
+
+置
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353}.
+\tag{174.6}
+$$
+
+在 $Q$ 的 $X$ 本征基 $|+\rangle,|-\rangle$ 中，
+$U_{\pi/4}\tau_jU_{\pi/4}^\dagger$ 的矩阵为
+
+$$
+\begin{pmatrix}
+1-\beta w_j&-\gamma w_j\\
+-\gamma w_j&\beta w_j
+\end{pmatrix}.
+\tag{174.7}
+$$
+
+考虑只作用于接收端 $QR$ 的酉
+
+$$
+W=P_+^Q\otimes I_R+P_-^Q\otimes Y_R.
+\tag{174.8}
+$$
+
+把它吸收到解码器中不会改变（174.5）的最优值。令
+$|q_r\rangle=(|+\rangle+(-1)^r|-\rangle)/\sqrt2$，
+$r=0,1$。直接展开（174.2）得到
+
+$$
+(\operatorname{id}_M\otimes\operatorname{Ad}_W)(\xi_j^{\pi/4})
+=\frac12\sum_{r=0}^1P_{q_r}^Q\otimes\eta_{j,r}^{MR},
+\tag{174.9}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\eta_{j,r}
+={}&(1-\beta w_j)P_\Xi+\beta w_jP_\psi\\
+&+(-1)^{r+1}\gamma w_j
+\left(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\right).
+\end{aligned}
+\tag{174.10}
+$$
+
+因此旗标 $r$ 总以概率 $1/2$ 出现，与原输入 $j$ 无关。条件态的支撑位于
+$\operatorname{span}\{\Xi,\psi\}$；其中的非对角项仍完整保留。
+
+为核对（174.9），在 $|+\rangle,|-\rangle$ 基中，施加 $W$ 后的两个对角块均为
+$\big((1-\beta w_j)P_\Xi+\beta w_jP_\psi\big)/2$，
+两个非对角块均为
+$-\gamma w_j(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|)/2$。
+再对这个旗标矩阵对角化即得所述表达式。
+

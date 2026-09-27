@@ -1,0 +1,91 @@
+### 43.7 收缩矩阵的秩缺陷下界
+
+取两个长度 $L=N-2$ 的正交单位族
+
+$$
+(P_n)_{n=2}^{N-1},\qquad (Z_{n+1})_{n=2}^{N-1},
+\tag{43.28}
+$$
+
+令其交叠矩阵为
+
+$$
+M_{mn}=\langle P_m,Z_{n+1}\rangle.
+\tag{43.29}
+$$
+
+它是两个等距嵌入的交叠矩阵，所以 $\|M\|\le1$。按偶、奇指标排序，
+
+$$
+M=
+\begin{pmatrix}
+D_{\mathrm e}&U\\
+W&D_{\mathrm o}
+\end{pmatrix},
+\tag{43.30}
+$$
+
+其中 $D_{\mathrm e},D_{\mathrm o}$ 分别是相应 $r_n$ 组成的对角矩阵，偶指标数
+
+$$
+e_N=\left\lfloor\frac{N-1}{2}\right\rfloor.
+\tag{43.31}
+$$
+
+由 $M^*M\preceq I$ 的奇列主块，
+
+$$
+U^*U+D_{\mathrm o}^*D_{\mathrm o}\preceq I.
+\tag{43.32}
+$$
+
+第43.6节使 $D_{\mathrm o}^*D_{\mathrm o}\succ x_0 I$。指标有限，所以
+
+$$
+\|U\|^2<1-x_0.
+\tag{43.33}
+$$
+
+同时 $D_{\mathrm e}D_{\mathrm e}^*\prec x_0I$。因此 $I-MM^*$ 的偶行主块满足
+
+$$
+I-D_{\mathrm e}D_{\mathrm e}^*-UU^*\succ0.
+\tag{43.34}
+$$
+
+这个主块维数为 $e_N$，故
+
+$$
+\operatorname{rank}(I-MM^*)\ge e_N.
+\tag{43.35}
+$$
+
+两个正交族的联合 Gram 矩阵为
+
+$$
+\begin{pmatrix}I&M\\M^*&I\end{pmatrix}.
+\tag{43.36}
+$$
+
+可逆分块消元给其秩为
+
+$$
+L+\operatorname{rank}(I-M^*M)
+=L+\operatorname{rank}(I-MM^*).
+\tag{43.37}
+$$
+
+因此两个族共同张成的接收子空间至少有 $L+e_N$ 维。
+
+第43.5节又给 $w,p$ 彼此正交，且同时正交于上述两个族。所以
+
+$$
+\begin{aligned}
+\dim K
+&\ge L+e_N+2\\
+&=N+\left\lfloor\frac{N-1}{2}\right\rfloor\\
+&=\left\lceil\frac{3N}{2}\right\rceil-1.
+\end{aligned}
+\tag{43.38}
+$$
+

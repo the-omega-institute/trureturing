@@ -1,0 +1,301 @@
+**定理38.1（指定初态的最短二维障碍）。** 对（38.1）的任一非退化复振幅来源，从指定初态 $|0\rangle_M$ 和独立纯接收初态出发，同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端的活动记忆与全部档案。前两个终端则可由同一个二维通道精确恢复，因此第三终端是这一指定输入任务的首个障碍。由此得到（38.23）—（38.24）的短期限显式正误差证书。证明保留任意丢弃环境和任意 Choi 秩，不借用完整参考输入族的较强要求。
+
+**纯输出必要性。** 若某终端的真实记忆边缘 $\rho_n$ 正定，且仅作用于二维 $K$ 的通道精确恢复原来的 $M$—档案纯目标，则 $\sigma_n$ 必为纯态。
+
+证明。取实际累计环境给出的 $\sigma_n$ 纯化。精确恢复纯目标迫使记忆与累计环境的边缘为
+$\rho_n\otimes\omega_E$。其秩又等于接收器边缘的秩，不超过二。因此
+
+$$
+2\operatorname{rank}\omega_E
+=\operatorname{rank}(\rho_n\otimes\omega_E)
+\le2.
+$$
+
+环境为纯态，原来的 $\sigma_n$ 也纯。反过来，若 $\sigma_n$ 纯且具有正确的 $\rho_n$，它与真实目标是同一 $\rho_n$ 的两份纯化；可将 $K$ 等距映入目标的档案 Schmidt 支撑，得到全域局部解码。证明完毕。
+
+因此，第二、第三终端均可精确解码，当且仅当 $\sigma_2,\sigma_3$ 均为纯态。以下直接排除后一个条件。
+
+**第二终端纯性强制第一接收态纯。**
+
+首次来源发射的档案恒为 $|0\rangle_{\mathcal B}$，所以
+
+$$
+\sigma_1=|m_0\rangle\langle m_0|\otimes\tau,\qquad
+\tau=\mathcal C(|e,0\rangle\langle e,0|).
+\tag{38.4}
+$$
+
+假设 $\sigma_2$ 纯。若 $\tau$ 秩二，取其谱分解
+$\tau=\lambda_0|q_0\rangle\langle q_0|+\lambda_1|q_1\rangle\langle q_1|$，
+其中 $\lambda_0,\lambda_1>0$，$q_0,q_1$ 正交归一。
+
+第二次发射前后的 $M\mathcal B$ 纯态为
+
+$$
+|\Theta\rangle
+=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B},
+\tag{38.5}
+$$
+
+它的记忆边缘为正定的 $\rho_2$，故在 $\mathcal B$ 上具有满 Schmidt 支撑。接收第二步时，这个纯态与 $\tau$ 张量相乘。
+
+两个正权谱分支接收后的混合态等于同一个纯态 $\sigma_2$，所以每个分支的 $MK$ 输出都等于这份纯态。两份关于正定 $\rho_2$ 的纯化只差 $K$ 上酉变换，因此存在一个共同酉 $U:\mathcal B\to K$ 和单位环境向量 $\zeta_0,\zeta_1$，满足
+
+$$
+V(q_j\otimes|b\rangle)
+=U|b\rangle\otimes\zeta_j
+\quad(j,b\in\{0,1\}).
+\tag{38.6}
+$$
+
+这里对全部 $b$ 的结论来自（38.5）的满 Schmidt 支撑，不能只比较一条输入向量。
+
+等距 $V$ 保持 $q_0\otimes|b\rangle$ 与 $q_1\otimes|b\rangle$ 的正交性，故 $\zeta_0\perp\zeta_1$。由于 $\{q_j\otimes|b\rangle\}$ 已是整个四维输入空间的基，（38.6）给出全域通道
+
+$$
+\mathcal C(X)=U(\operatorname{Tr}_K X)U^*.
+\tag{38.7}
+$$
+
+将它用于首步，得到 $\tau=U|0\rangle\langle0|U^*$ 为纯态，矛盾。
+
+所以 $\tau$ 必为纯态。取单位向量 $k\in K$，使 $\tau=|k\rangle\langle k|$。首步和第二步的固定等距因而可写为
+
+$$
+V(e\otimes|0\rangle)=k\otimes\eta_1,\qquad
+V(k\otimes|b\rangle)=u_b\otimes\eta_2
+\quad(b=0,1),
+\tag{38.8}
+$$
+
+其中 $\eta_1,\eta_2$ 单位，$u_0,u_1$ 是 $K$ 的一组正交归一基。
+
+**第三终端与固定等距的交叉 Gram 矛盾。**
+
+由（38.5）、（38.8），第二终端的联合纯态是
+
+$$
+|\psi_2\rangle
+=a|m_0\rangle\otimes u_0+b|0\rangle\otimes u_1
+=|0\rangle\otimes(a^2u_0+bu_1)
++|1\rangle\otimes ab\,u_0.
+\tag{38.9}
+$$
+
+定义
+
+$$
+r=\sqrt{|a|^4+|b|^2}>0,\qquad
+q=(a^2u_0+bu_1)/r.
+\tag{38.10}
+$$
+
+$q$ 单位，且因 $b\ne0$，$q$ 与 $u_0$ 不共线。
+
+第三次发射后，实际的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,\ u_0\otimes|1\rangle\}.
+\tag{38.11}
+$$
+
+理由是其两个记忆系数为线性无关的 $m_0,|0\rangle$，两个接收输入系数分别为非零的
+$r q\otimes|0\rangle$、$ab\,u_0\otimes|1\rangle$。
+
+若 $\sigma_3$ 也纯，则这整个二维支撑经 $V$ 后位于
+$K\otimes\mathbb C\eta_3$，并因两边维数都是二而占满该空间。所以存在正交归一基 $v_0,v_1$ 和单位 $\eta_3$，使
+
+$$
+V(q\otimes|0\rangle)=v_0\otimes\eta_3,\qquad
+V(u_0\otimes|1\rangle)=v_1\otimes\eta_3.
+\tag{38.12}
+$$
+
+令 $c_{23}=\langle\eta_2,\eta_3\rangle$。把（38.8）的两个第二步输入与（38.12）的两个第三步输入交叉取内积，得到
+
+$$
+\begin{pmatrix}
+\langle k,q\rangle&0\\
+0&\langle k,u_0\rangle
+\end{pmatrix}
+=
+c_{23}
+\begin{pmatrix}
+\langle u_0,v_0\rangle&\langle u_0,v_1\rangle\\
+\langle u_1,v_0\rangle&\langle u_1,v_1\rangle
+\end{pmatrix}.
+\tag{38.13}
+$$
+
+右边第二个矩阵是酉矩阵。若 $c_{23}=0$，则 $k$ 同时正交于张满 $K$ 的 $q,u_0$，矛盾。故 $c_{23}\ne0$，两项非对角元必须为零，于是
+
+$$
+v_0\parallel u_0,\qquad v_1\parallel u_1,\qquad
+|\langle k,q\rangle|=|\langle k,u_0\rangle|.
+\tag{38.14}
+$$
+
+特别地，$k$ 不可能平行于 $u_0$：否则（38.14）使 $q\parallel u_0$，与（38.10）矛盾。因此
+
+$$
+\langle k,u_1\rangle\ne0.
+\tag{38.15}
+$$
+
+现在把首次输入 $e\otimes|0\rangle$ 与第二步的
+$k\otimes|1\rangle$ 比较。输入正交，而输出内积为
+$\langle k,u_1\rangle\langle\eta_1,\eta_2\rangle$。
+由（38.15），$\langle\eta_1,\eta_2\rangle=0$。
+再与 $k\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,k\rangle
+=\langle k,u_0\rangle\langle\eta_1,\eta_2\rangle=0.
+\tag{38.16}
+$$
+
+同理，把首次输入与第三步的 $u_0\otimes|1\rangle$ 比较，利用
+$v_1\parallel u_1$ 及（38.15），得到
+$\langle\eta_1,\eta_3\rangle=0$。
+再与 $q\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,q\rangle
+=\langle k,v_0\rangle\langle\eta_1,\eta_3\rangle=0.
+\tag{38.17}
+$$
+
+二维空间中，非零 $e$ 的正交补是一条直线。（38.16）、（38.17）迫使
+$q\parallel k$，再由（38.14）得到 $k\parallel u_0$，最终又给
+$q\parallel u_0$，矛盾。
+
+**结论。** 对任意非退化复振幅 $a,b$，同一个二维固定 CPTP 接收器从指定输入 $|0\rangle$ 出发，不能使第二、第三终端同时精确可恢复。证明没有假设第一接收态纯，也没有假设各轮环境相同、正交或空白；所需纯性和两个环境正交关系均由实际合同推出。
+
+这个期限是该指定输入任务的首个障碍：取
+$\mathcal C(X)=\operatorname{Tr}_K X$，把每个新发出位存入二维接收器，前两个终端可精确恢复。终端一输出固定 $|0\rangle$；终端二将接收位前面附上首位 $|0\rangle$，就恢复完整档案。首步后继续使用同一个通道即可，不需免费控制或终端知识。
+
+**对 $\Delta_2$ 的短期限与显式全局证书。**
+
+令 $f_n(\mathcal C)$ 为指定来源输入下终端 $n$ 最优局部解码的根保真度，等价于消去解码器后的
+$\max_\tau F(\omega_n,\rho_n\otimes\tau)$。定义
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\quad
+\Delta_2^{[3]}=1-\gamma_2^{[3]},
+\quad
+Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{38.18}
+$$
+
+首终端对所有 $\mathcal C$ 都有 $f_1=1$，因为其真实档案恒为已知纯态
+$|0\rangle$。所以省略 $f_1$ 不改变前三终端的值。
+
+有限维 CPTP 集紧、$f_n$ 连续；上述精确障碍使最大值严格小于一。因此
+$\Delta_2^{[3]}>0$。原来使用前32终端的 $\Delta_2$ 满足
+
+$$
+\Delta_2\ge\Delta_2^{[3]}.
+\tag{38.19}
+$$
+
+还可将这个短期限零点排除代入既有的环境缺陷／实代数方法，给出无需数值搜索的有理证书。取整数 $k\ge2$，假设
+$|a|^2,|b|^2\ge1/k$，并令
+
+$$
+G_3=h(\sigma_2)+h(\sigma_3),
+\tag{38.20}
+$$
+
+其中 $h$ 是第20节的完整环境解耦缺陷多项式。若 $G_3=0$，则两个终端的记忆与累计环境均成乘积；由（38.3）及其第三步版本，秩论证迫使
+$\sigma_2,\sigma_3$ 都纯，已被上面的几何证明排除。所以整个合法参数集上
+$G_3>0$。
+
+使用第35节的固定次数展开，但只保留三个轨道变量
+$S_1,S_2,S_3$。二维接收通道的一份通用等距为
+$W:\mathbb C^4\to\mathbb C^2\otimes\mathbb C^8$，含128个实变量。
+保留复 $a,b$ 的四个实变量，再加三个 $4\times4$ Hermitian 状态的48个变量，总数为
+
+$$
+v_3=180.
+$$
+
+等距约束16条、来源归一化及端点约束3条、三个递推48条、状态实坐标的双侧盒约束96条，总数为
+
+$$
+s_3=163.
+$$
+
+递推次数至多五、目标次数至多四，取固定偶数 $d_3=6$。
+每个 $h(S_n)$ 的整数系数范数不超过
+$400\cdot2^4=6400$，两项之和不超过12800；递推约束的系数界不超过4128。因此可取
+
+$$
+H_3=\max\{k,12800\},\qquad
+\widehat H_3=\max\{H_3,2v_3+2s_3\}=H_3.
+\tag{38.21}
+$$
+
+状态正性和迹一仍由合法递推保证，没有添加高次主子式约束。
+
+与第35节相同的正最小值定理于是给出完全显式的正有理数
+
+$$
+\kappa_{2,k}^{[3]}
+=(16H_3\,6^{180})^{-180\,12^{180}},
+\qquad
+\min G_3\ge\kappa_{2,k}^{[3]}.
+\tag{38.22}
+$$
+
+对任何达到 $f_n$ 的产品环境态，
+$h(\sigma_n)\le16(1-f_n^2)$。在达到
+$\gamma_2^{[3]}$ 的接收器上，因此有
+$G_3\le32Q_2^{[3]}$。得到
+
+$$
+\boxed{
+Q_2^{[3]}\ge\frac{\kappa_{2,k}^{[3]}}{32},
+\qquad
+\Delta_2\ge\Delta_2^{[3]}
+\ge1-\sqrt{1-\kappa_{2,k}^{[3]}/32}.
+}
+\tag{38.23}
+$$
+
+若只要有理数形式，也有
+
+$$
+\Delta_2\ge\frac{\kappa_{2,k}^{[3]}}{64},
+\tag{38.24}
+$$
+
+因为 $1-\sqrt{1-x}\ge x/2$ 对 $0\le x\le1$ 成立。完整合同的最坏误差也至少为
+$\kappa_{2,k}^{[3]}/32$，指定输入的第二、第三终端已经见证此下界。
+
+这里使用了既有实代数最小值定理，但新增的零点排除是只用第二、第三终端的二维几何矛盾。对 $D=2$，展开所需变量从第35节通用构造的644个减到180个。证书仍极保守；它只证明一个明确正有理下界，没有计算真正的 $\Delta_2$、宣称数值最优或给出一般 $D$ 的新渐近率。全部结论均针对固定的全域 CPTP 接收器，不是假设接收酉或预设纯环境的受限模型。
+
+**源相位的固定换基。** 对已知的非零复振幅，令
+
+$$
+D_M=\operatorname{diag}(1,e^{i(\arg a-\arg b)}),\qquad
+U_{\mathcal B}=\operatorname{diag}
+(e^{-i\arg a},e^{i(\arg a-\arg b)}).
+\tag{38.25}
+$$
+
+逐列计算得到
+
+$$
+(D_M\otimes U_{\mathcal B})T_{a,b}D_M^*
+=T_{|a|,|b|}.
+\tag{38.26}
+$$
+
+在正实振幅来源上，把每个新发出位先作用 $U_{\mathcal B}^*$，再使用原来的固定接收通道；终端解码档案再作用 $U_{\mathcal B}^{\otimes n}$。该预处理每轮相同，可直接并入一个全域 CPTP 接收门，不增加持久控制。指定初态 $|0\rangle$ 被 $D_M$ 保持；完整参考合同则同时对来源初态作固定酉换基，而其全输入上确界不变。因此本节的指定输入误差、相应保真度不变量以及完整参考容量都只依赖 $p=|b|^2$，后续可在 $a=\sqrt{1-p},b=\sqrt p$ 上研究。
+
+这一等价没有把接收通道限制为实矩阵，也没有通过平均通道来选取对称接收器；被改变的是固定的物理基和每轮相同的新位预处理。
+
+**三维达到构造与精确容量。**
+

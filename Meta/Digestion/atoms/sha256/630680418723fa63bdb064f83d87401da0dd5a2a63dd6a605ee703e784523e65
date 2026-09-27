@@ -1,0 +1,281 @@
+**定理 17.2（实际双向律的有限秩母函数与相对局部泊松估计）。**
+在 (17.1)–(17.2) 下，固定 $`k\in\{1,2\}`$，任取候选行集合
+$`R\subset C_+`$、$`|R|=k`$。对每行记录出发后到达正、负奇偶类的次数：
+
+```math
+N_{x,\sigma}
+=\sum_{t=0}^{s-1}
+ \mathbf1_{\{X_t=x,\ \chi(X_{t+1})=\sigma\}},
+\qquad x\in R,\quad \sigma\in\{+1,-1\}.
+\tag{17.6}
+```
+
+独立对实验以相同方式对样本对计数。固定任何真实支持 $`S`$ 和方向
+$`\varepsilon`$，记单次事件概率为 $`p_{x,\sigma}`$、
+$`\mu_{x,\sigma}=sp_{x,\sigma}`$。这些概率精确为
+
+```math
+p_{x,\sigma}=
+\begin{cases}
+\displaystyle\frac{1+\sigma b_S(x)}{2n},&\varepsilon=+,\\[0pt]
+\displaystyle\frac1{2n},&\varepsilon=-.
+\end{cases}
+\tag{17.7}
+```
+
+令 $`\nu_{R,K}`$ 为这些精确均值所确定的 $`2k`$ 个独立泊松变量的乘积律。
+对任意固定 $`C\gt 0`$，一致于真实支持、方向、候选行及所有非负整数元组
+$`m=(m_{x,\sigma})`$、$`\sum m_{x,\sigma}\le C\ell`$，两个实验均有
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{N=m\}
+=\nu_{R,K}\{m\}
+ \left(1+O_{r,\alpha,C,k}\left(\frac{\ell^{k+1}}n\right)\right).
+\tag{17.8}
+```
+
+此外，对任意固定 $`D\gt 0`$，存在固定 $`C_D`$，使两个概率律均满足
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \left\{\sum_{x,\sigma}N_{x,\sigma}>C_D\ell\right\}
++\nu_{R,K}\left\{\sum_{x,\sigma}N_{x,\sigma}>C_D\ell\right\}
+\le M^{-D}
+\tag{17.9}
+```
+
+于充分大的维度成立。因而对任意计数事件 $`E`$，
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{N\in E\}
+=\nu_{R,K}(E)
+ \left(1+O_{r,\alpha,k,D}\left(\frac{\ell^{k+1}}n\right)\right)
++O(M^{-D}),
+\tag{17.10}
+```
+
+这里的乘法误差与加法余项均一致于 $`E`$。两行事件的比较始终在同一个
+真实 $`(S,\varepsilon)`$ 下进行。
+
+证明。以下 $`\mathbb E f=n^{-1}\sum_xf(x)`$ 只表示状态空间上的均匀平均。
+由于 $`q/M\to0`$，充分大的维度有 $`a\le r\lt 1`$。正向核逐行积分给出
+(17.7) 的第一式。反向时 $`b_S`$ 只支持在正类且总和为零，所以
+
+```math
+\sum_{y\in C_\sigma}P_S^{\mathsf T}(x,y)
+=\frac1n\sum_{y\in C_\sigma}(1+\chi(x)b_S(y))
+=\frac12.
+\tag{17.11}
+```
+
+再乘出发状态的平稳质量 $`1/n`$，即得第二式；候选行是否属于真实支持不影响此式。
+
+先求路径母函数。对候选行置
+
+```math
+u_x=\frac{z_{x,+}+z_{x,-}}2-1,\qquad
+v_x=\frac{z_{x,+}-z_{x,-}}2,
+\tag{17.12}
+```
+
+在 $`R`$ 外令两者为零。每条边的标记因子为
+$`w_z(x,y)=1+u_x+v_x\chi(y)`$。
+记 $`T_z(x,y)=K(x,y)w_z(x,y)`$，则均匀起点给出精确恒等式
+
+```math
+F_{K,s}(z):=\mathbb E_{S,\varepsilon}^{\mathrm{path}}
+ \prod_{x,\sigma}z_{x,\sigma}^{N_{x,\sigma}}
+=\frac1n\mathbf1^{\mathsf T}T_z^s\mathbf1.
+\tag{17.13}
+```
+
+正向令 $`b=b_S`$。逐项相乘得
+
+```math
+T_z(x,y)=\frac{f_x+h_x\chi(y)}n,\qquad
+f=1+u+bv,\quad h=b+v+bu.
+\tag{17.14}
+```
+
+$`f-1`$ 和 $`h`$ 都只支持在 $`C_+`$，而 $`\mathbb E b=0`$。
+置 $`A=\mathbb E(u+bv)`$、$`B=\mathbb E(v+bu)`$。
+算子分解 $`T_z f_0=f\,\mathbb E f_0+h\,\mathbb E(\chi f_0)`$
+将所有幂次约化为
+
+```math
+F_{P_S,s}(z)=e_1^{\mathsf T}C_+(z)^se_1,\qquad
+C_+(z)=
+\begin{pmatrix}
+1+A&B\\[0pt]
+A&B
+\end{pmatrix},
+\qquad
+A=\sum_{x,\sigma}p_{x,\sigma}(z_{x,\sigma}-1).
+\tag{17.15}
+```
+
+确切地说，取 $`\mathcal V f_0=(\mathbb E f_0,\mathbb E(\chi f_0))^{\mathsf T}`$、
+$`\mathcal U(c_1,c_2)=c_1f+c_2h`$，则 $`T_z=\mathcal U\mathcal V`$、
+$`C_+=\mathcal V\mathcal U`$、$`\mathcal V\mathbf1=e_1`$，
+且均匀行向量乘 $`\mathcal U`$ 是 $`e_1^{\mathsf T}C_+`$；
+故 (17.15) 对每个 $`s\ge0`$ 成立。
+
+反向核为 $`K(x,y)=(1+\chi(x)b(y))/n`$。
+利用 $`b(y)\chi(y)=b(y)`$ 以及 $`R\subset C_+`$，现在有
+
+```math
+T_z(x,y)=\frac{f_x+h_x\chi(y)+j_xb(y)}n,\qquad
+f=1+u,\quad h=v,\quad j=\chi+u+v.
+\tag{17.16}
+```
+
+置 $`A=\mathbb E u`$、$`G=\mathbb E v`$、
+$`D_b=\mathbb E(bu)`$、$`E_b=\mathbb E(bv)`$。
+依次用线性泛函 $`\mathbb E`$、$`\mathbb E(\chi\,\cdot)`$、
+$`\mathbb E(b\,\cdot)`$ 配合列函数 $`f,h,j`$，得到
+
+```math
+F_{P_S^{\mathsf T},s}(z)=e_1^{\mathsf T}C_-(z)^se_1,\qquad
+C_-(z)=
+\begin{pmatrix}
+1+A&G&A+G\\[0pt]
+A&G&1+A+G\\[0pt]
+D_b&E_b&D_b+E_b
+\end{pmatrix},
+\qquad
+A=\sum_{x,\sigma}p_{x,\sigma}(z_{x,\sigma}-1).
+\tag{17.17}
+```
+
+该式也包括 $`s=0`$，因为三个泛函作用于常数一分别为 $`1,0,0`$。
+因此反向母函数确实来自真实反向核，并未以公平独立行模型替代路径。
+
+现固定任意复多圆盘 $`|z_{x,\sigma}|\le R_0`$。
+两矩阵分别满足 $`C_\pm=C_{\pm,0}+O_{r,k,R_0}(n^{-1})`$，其中
+
+```math
+C_{+,0}=
+\begin{pmatrix}1&0\\[0pt]0&0\end{pmatrix},
+\qquad
+C_{-,0}=
+\begin{pmatrix}
+1&0&0\\[0pt]
+0&0&1\\[0pt]
+0&0&0
+\end{pmatrix}.
+\tag{17.18}
+```
+
+这里的估计只用候选行数固定及 $`|b|\le r`$，与真实支持大小无关。
+两个基准矩阵在特征值一处的左右特征向量均为 $`e_1`$；
+反向矩阵在零处有一个二阶幂零块。
+
+取复谱平面中的两条固定围道 $`|\zeta-1|=1/4`$ 与 $`|\zeta|=1/2`$。
+基准预解式在两围道上有一致有限范数。将
+
+```math
+(\zeta I-C_\pm)^{-1}
+=(\zeta I-C_{\pm,0})^{-1}
+\left[I-(C_\pm-C_{\pm,0})(\zeta I-C_{\pm,0})^{-1}\right]^{-1}
+\tag{17.19}
+```
+
+中的最后一项展开为一致收敛的 Neumann 级数，得到解析谱投影
+$`\mathcal P_\pm(z)=e_1e_1^{\mathsf T}+O(n^{-1})`$。
+第一条围道内始终只有一个简单特征值 $`\Lambda_\pm(z)`$。
+解析展开的一次项由基准左右特征向量给出，即矩阵扰动的第一对角元 $`A`$。
+由一致收敛的二次及以上项，
+
+```math
+\Lambda_\pm(z)=1+A(z)+O(n^{-2}),\qquad
+\kappa_\pm(z):=e_1^{\mathsf T}\mathcal P_\pm(z)e_1=1+O(n^{-1}).
+\tag{17.20}
+```
+
+这些解析对象在整个固定多圆盘上定义，包括 $`z_j=0`$；
+不要求标记变量靠近一。对第二条围道积分 $`\zeta^s`$ 乘预解式，得到
+
+```math
+F_{K,s}(z)
+=\kappa_\pm(z)\Lambda_\pm(z)^s+\mathcal R_{\pm,s}(z),
+\qquad
+|\mathcal R_{\pm,s}(z)|\le C2^{-s}.
+\tag{17.21}
+```
+
+此处直接控制整个剩余谱投影，不要求零附近特征值彼此分离或矩阵可对角化。
+在一附近取解析对数，(17.20) 给出
+$`\log\Lambda_\pm=A+O(n^{-2})`$，从而
+
+```math
+\left|F_{K,s}(z)-e^{sA(z)}\right|
+\le C\left(\frac1n+\frac{s}{n^2}\right)
+ \exp\left\{s\operatorname{Re}A(z)+C\frac{s}{n^2}\right\}
++C2^{-s}.
+\tag{17.22}
+```
+
+因 $`s\asymp n\ell`$、$`|sA|\le C\ell`$，最后的指数小项可吸收到
+$`C\ell n^{-1}\exp(s\operatorname{Re}A)`$ 中。记 $`j=(x,\sigma)`$，
+得到本证明所需的带符号误差界
+
+```math
+\left|F_{K,s}(z)-\exp\!\left(\sum_j\mu_j(z_j-1)\right)\right|
+\le C\frac{\ell}{n}
+ \exp\!\left(\sum_j\mu_j(\operatorname{Re}z_j-1)\right).
+\tag{17.23}
+```
+
+独立对的精确母函数为 $`(1+A(z))^s`$，
+由 $`\log(1+A)=A+O(n^{-2})`$ 得到相同界。
+
+接着提取系数。固定 $`\sum_jm_j\le C\ell`$，选择
+
+```math
+\rho_j=\frac{\max(m_j,1)}{\mu_j},\qquad
+\mu_j\asymp_{r,\alpha}\ell.
+\tag{17.24}
+```
+
+所有半径都有固定上界；某些半径可为 $`O(\ell^{-1})`$，但 (17.23)
+已经在包含零的整个多圆盘上成立。Cauchy 系数公式和
+$`\operatorname{Re}z_j\le\rho_j`$ 给出
+
+```math
+\left|\mathbb P\{N=m\}-\nu_{R,K}\{m\}\right|
+\le C\frac{\ell}{n}
+ \exp\!\left(\sum_j\mu_j(\rho_j-1)\right)\prod_j\rho_j^{-m_j}.
+\tag{17.25}
+```
+
+除以正的泊松乘积质量，右边的相对因子为
+
+```math
+C\frac{\ell}{n}
+\prod_j\frac{e^{v_j}m_j!}{v_j^{m_j}},
+\qquad
+v_j=\max(m_j,1),\qquad
+\frac{e^{v_j}m_j!}{v_j^{m_j}}\le C\sqrt{m_j+1}.
+\tag{17.26}
+```
+
+最后一界由 Stirling 不等式及 $`m_j=0`$ 的直接计算得到。
+共有 $`2k`$ 个因子，故额外损失为 $`O(\ell^k)`$，证明 (17.8)。
+这里使用的是倾斜后泊松质量在鞍点处的多项式界，
+没有假定原来的稀有局部质量具有多项式对数下界。
+
+最后令所有 $`z_j=2`$。由于 $`\sum_jp_j=k/n`$，(17.22) 给出
+$`F_{K,s}(2,\ldots,2)\le2e^{k\lambda}`$ 于充分大的维度成立。
+Markov 不等式于是给出
+
+```math
+\mathbb P\left\{\sum_jN_j>C_D\ell\right\}
+\le2\exp\{k\lambda-C_D\ell\log2\}.
+\tag{17.27}
+```
+
+泊松乘积律有相同界且无前因子二。取 $`C_D`$ 使指数带有大于 $`D`$
+的固定裕量，即得 (17.9)。在有界计数区求和 (17.8)，再用 (17.9)
+处理补集，得到 (17.10)。所有常数均在固定多圆盘、固定候选行数上取得，
+故具有所述一致性。∎
+

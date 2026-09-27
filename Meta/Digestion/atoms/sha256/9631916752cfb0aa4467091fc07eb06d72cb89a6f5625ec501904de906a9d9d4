@@ -1,0 +1,17 @@
+## 定理 ST37.2：不选全局向量框也能构造光滑实验扩张
+
+在ST37.1条件下，采用未归一化Choi矩阵
+
+$$
+J_x=\sum_{ij}e_{ij}\otimes\mathcal N_x(e_{ij}).
+$$
+
+令$A_\mu(x)$为$J_x^{1/2}$第$\mu$列的逆向量化，使用$\operatorname{vec}A=\sum_i|i\rangle\otimes A|i\rangle$约定。则
+
+$$
+\mathcal N_x(\rho)=\sum_{\mu=1}^{dn}A_\mu(x)\rho A_\mu(x)^\dagger,
+\quad\sum_\mu A_\mu^\dagger A_\mu=I_d.
+$$
+
+相应$V_xv=\sum_\mu A_\mu(x)v\otimes|\mu\rangle$是显式光滑Stinespring等距映射。
+

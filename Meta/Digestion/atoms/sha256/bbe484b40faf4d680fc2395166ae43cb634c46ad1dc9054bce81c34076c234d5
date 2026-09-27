@@ -1,0 +1,32 @@
+**定理 67.3（相位阻尼转变的首阶定位）。** 固定满足 $c>\mu+\eta/\sqrt a$ 的 $(a,\varepsilon)$；例如第64节全部参数区域 $0<\varepsilon\le1/16$、$1/49\le a<1$。则存在唯一转变位置 $\lambda_*\in(0,1)$，使
+
+$$
+e(R_\lambda)=\varepsilon\quad\Longleftrightarrow\quad0\le\lambda\le\lambda_*,
+$$
+
+并且
+
+$$
+\frac\mu c\le\lambda_*\le\frac{\mu+\eta/\sqrt a}{c}<1.
+$$
+
+**证明。** 若 $0\le\lambda'\le\lambda$ 且 $\lambda>0$，对 $R_\lambda$ 再施阻尼系数 $\lambda'/\lambda$ 的末端 CPTP 通道就得到 $R_{\lambda'}$。末端数据处理给 $e(R_{\lambda'})\le e(R_\lambda)$。函数 $e$ 对输入连续：三角不等式给 $|e(R)-e(R')|\le N(R-R')$，有限维下右侧连续。因而同系数修复集合是闭初段；前两个命题给其非空性、真子区间性与两端夹逼。
+
+对每个固定 $a\in(0,1)$，充分小的正 $\varepsilon$ 满足上述条件，且
+
+$$
+\frac\mu c=1-\frac\varepsilon2+\frac78\varepsilon^2+O(\varepsilon^3),
+\qquad
+\frac{\eta}{c\sqrt a}=\frac{\varepsilon^2}{\sqrt a}+O_a(\varepsilon^3).
+$$
+
+所以
+
+$$
+\lambda_*=1-\frac\varepsilon2+O_a(\varepsilon^2),
+\qquad
+1-\lambda_*=\frac\varepsilon2+O_a(\varepsilon^2).
+$$
+
+这里确定的是消除严格间隙所需相位阻尼强度的首阶，而不是准确转变点。对固定 $\lambda<1$，充分小 $\varepsilon$ 时已经处于可同系数修复区间；$\lambda=1$ 却在每个充分小非零参数处保留严格间隙。所有比较保留同一早边缘、同一完整 tester 合同及同一末端处理权限。
+

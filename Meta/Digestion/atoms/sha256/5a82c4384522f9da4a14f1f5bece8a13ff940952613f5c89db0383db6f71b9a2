@@ -1,0 +1,37 @@
+**定义 159.1（控制族的强 lumpability）。** 令 $A$ 为有限扇区集，$U$ 为允许的固定控制集，$T^u$ 是控制 $u$ 下的列随机转移矩阵。给定满射
+
+$$
+\varphi:A\longrightarrow\overline A,
+$$
+
+称 $\varphi$ 对控制族强 lumpable，若对任意 $u\in U$、任意 $a,a'$ 满足 $\varphi(a)=\varphi(a')$，以及任意 $\bar b\in\overline A$，都有
+
+$$
+\boxed{
+\sum_{\varphi(b)=\bar b}T^u_{ba}
+=
+\sum_{\varphi(b)=\bar b}T^u_{ba'}.
+}
+\tag{159.1}
+$$
+
+若同一纤维内的时间测度和声明输出也相同，
+
+$$
+\nu_a=\nu_{a'},
+\qquad
+\rho_a=\rho_{a'},
+$$
+
+则定义商核
+
+$$
+\overline T^u_{\bar b\,\bar a}
+=
+\sum_{\varphi(b)=\bar b}T^u_{ba},
+\qquad
+\overline\nu_{\bar a}=\nu_a,
+\qquad
+\overline\rho_{\bar a}=\rho_a.
+$$
+

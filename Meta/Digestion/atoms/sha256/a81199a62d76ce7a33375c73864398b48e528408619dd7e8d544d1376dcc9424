@@ -1,0 +1,11 @@
+**推论149.3（第三至第六终端的逻辑通道条件数）。** 对 $3\le n\le6$ 和 $0<p\le1/2$，
+
+$$
+\boxed{
+\frac12\|\mathcal L_n-\mathcal I_n\|_\diamond
+\le\min\{1,e_n/\lambda_n\}
+\le\min\left\{1,\frac{16e_n}{3p^2}\right\}.
+}
+\tag{149.14}
+$$
+

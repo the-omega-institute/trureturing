@@ -1,0 +1,17 @@
+### 305.15 既有方法与来源范围
+
+[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第12.7节给时间标记与费用测度的一致运输：连续费率按换元导数运输，点操作费用在同一实际实验的重标中保持；重新在新钟上等步采样可能改变物理实验。该卷第34.1、34.4节分别保留完整已获档案与共同常数钟接口。过程几何卷第29节供应本节使用的联合时间标签合同；路径钟不能仅从端点状态恢复的正费用自环见[边界动力学卷](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)第10.2节。
+
+Kaufmann、Cappé、Garivier，
+[*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)，JMLR 17（2016），第7页 Lemma 1及第24—25页的停止似然和期望背景，与第304节的有限信息前置一致。本节对随机时长先在有限曝光上逐项条件化，使用请求前可测的指标；无须将非终止参照代入完整无界停止等式。
+
+Sirin Nitinawarat、Venugopal V. Veeravalli，
+[*Controlled Sensing for Sequential Multihypothesis Testing with Controlled Markovian Observations and Non-Uniform Control Cost*](https://arxiv.org/pdf/1310.1844v2)，Sequential Analysis 34(1)，1—24（2015），[DOI](https://doi.org/10.1080/07474946.2014.961864)。作者版本第10页第5节引入正动作费 \(c(u)\)，第11页式(5.1)和 Theorem 5.1、第12页式(5.7)—(5.8)把期望累计动作费接到信息／费用率。其模型为有限假设、受控 Markov 观察、动作确定费用及风险趋零；没有直接供应本节未知趋零尺度、随机完成时长和非终止零信号参照的结论。
+
+George Vershinin、Asaf Cohen、Omer Gurewitz，
+[*On Cost-Aware Designs for Sequential Hypothesis Testing*](https://arxiv.org/pdf/2512.19067v3)，2026-09-24版本。第2—3页声明已知的随机费用分布不随其有限隐藏假设变化；第7页第V节式(12)以动作平均费用写期望总成本，第8页区分完成后揭示与允许中途取消，式(13)及 Lemma 3给取消后的有效费用与平均越界准则。该文主要研究风险阈值趋零，采用二进制对数；本节用自然对数，没有搬用其数值常数。
+
+本节的时长在同一 \(h\) 下对两个假设 \(j\) 相同，却依赖尚未知的干扰参数 \(h\)。完整世界为 \((j,r,h)\)，所以不能把这一未知时长核当成已知、外生的费用分布后删去其信息。定理305.3专门展示了这个差别。
+
+本节复用成熟的条件期望、有限链式相对熵、二元数据处理、Pinsker及停止窗口方法。仓内连接是把局域可加路径钟、完整联合来源、第一分布下的实际随机收费和未知尺度必要性放进同一合同，再用时长校准实验检验其边界。没有声称新的标准序贯不等式、文献核定的原创性、最佳常数、Lean形式验证或实际仪器实验。
+

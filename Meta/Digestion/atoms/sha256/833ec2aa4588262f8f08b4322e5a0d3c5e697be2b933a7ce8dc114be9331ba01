@@ -1,0 +1,12 @@
+**命题 4.3.2（数量化局部间隔）。** 假设对每个标准柱 $C$ 统一供应可计算实数 $c_C>0$，保证
+$$
+K\cap C\ne\varnothing\quad\Longrightarrow\quad\mu(K\cap C)\ge c_C.
+$$
+则 $\mathbf C$ 均匀判定 $\mathbf R$，不需要 $M$ 的数值正下界。
+
+**证明。** 因 $\mu(X)=1$，有 $M\le1$，所以非空时
+$$
+\nu(C)=\frac{\mu(K\cap C)}M\ge\mu(K\cap C)\ge c_C.
+$$
+空时该概率为零。搜索正有理 $r_C<c_C$，把 $\nu(C)$ 近似到误差严格小于 $r_C/4$，以阈值 $r_C/2$ 比较。空时近似小于 $r_C/4$，非空时大于 $3r_C/4$；两侧与阈值分离，故决定正确。证毕。
+

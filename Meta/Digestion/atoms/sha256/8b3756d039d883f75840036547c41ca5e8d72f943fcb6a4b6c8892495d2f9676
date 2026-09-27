@@ -1,0 +1,24 @@
+### 25.6 再追加勘误：无限投影、共同载体与双侧链条件
+
+式（25.5）中的无限时间投影需先定义为
+\[
+\operatorname{TP}_\infty(x)(k)=r(F^k x)\quad(k\in\mathbb N),
+\]
+或等价地约定 $\ker(\operatorname{TP}_\infty):=\bigcap_{N\in\mathbb N}\ker(\operatorname{TP}_N)$。前文只直接使用有限 $N$；不作此定义，$\ker(\operatorname{TP}_\infty)$ 不是已声明的对象。
+
+HiddenArchive 的联合反例还应明确共同载体：取同一个状态类型 $X$，令 $U,U_{\rm old}\in X$，并令 $\pi_{\rm sp}:X\to S$ 满足 $\pi_{\rm sp}(U)=\pi_{\rm sp}(U_{\rm old})$；再指定 $F=\mathrm{id}_X$ 与 $r\equiv *$。这样才由定义得到对全部 $N$ 的 $Q_N(U)=Q_N(U_{\rm old})$。Lean 反例实际证明的是相应 image/Subtype.val（嵌入后的空间投影）相等及 Guard 的分歧；“current/selected 数据字面相同”不是额外的集合论前提。
+
+第24.4节末尾的链式收束须带条件：
+\[
+\text{有限稳定}
+\Longrightarrow
+\text{完整未来商}
+\Longrightarrow
+\text{精确记忆因子}
+\Longrightarrow
+\text{双侧评价边界}
+\]
+只有在式（25.12）成立且评价行对 $\equiv_\infty$ 具有反向分离（等价地，行 kernel 正好是 $\equiv_\infty$）时才成立；否则最后一步只能作为条件分支，$C_\infty$ 与双侧协议商须分别保留。第24.4节的跨接口动态式亦应按第25.5节解释为 $T:X\to X'$、$G:P'\to P$；同接口写法只是特例。
+
+此外，前述“$W$ 有限 `Fintype`”应读作 $W$ 具有 `Finite` 载体（需要枚举时可选择一个 `Fintype` 实例）。有限时间窗口或有限读出值域本身都不能推出 $W$ 有限；这一修正只限定第24.2节的有限记忆合同，不改变其因子化方向。
+

@@ -1,0 +1,17 @@
+### 230.5 候选集非空的精确完整距离阶梯
+
+在第四节构造中进一步固定
+$$
+m\ge\max(d,r).
+\tag{230.HR.31}
+$$
+所有比较通道均取同一输入 $\mathbb C^d$、同一输出 $\mathbb C^m$ 及单标签接口。对每个整数 $R\ge1$，定义
+$$
+D_R=\inf\left\{
+\tfrac12\|\mathcal T-\mathcal S\|_\diamond:
+\mathcal S\text{ CPTP},\ \operatorname{rank}J_{\mathcal S}\le R
+\right\}.
+\tag{230.HR.32}
+$$
+候选集对每个 $R\ge1$ 都非空：由 $m\ge d$，存在等距 $U:\mathbb C^d\to\mathbb C^m$，通道 $X\mapsto UXU^\dagger$ 的 Choi 秩为一。
+

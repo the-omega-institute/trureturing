@@ -1,0 +1,55 @@
+### 47.3 二步回归足以推出全表正交，无需固定九行坐标
+
+现在允许任意维数 $D$，另假设 $k\parallel w$。写 $w=\zeta k$、$|\zeta|=1$，在 Stinespring 输出环境上施加固定相位酉 $A\mapsto A$、$B\mapsto\overline\zeta B$。第二轮三个接收向量整体乘 $\overline\zeta$，于是新 $w=k$；后续按同一个等距重新定义 $z,s,r,t,j$。这不改变来源 $a,b$ 或物理 CPTP 通道，也没有增加依赖轮次的操作。固定 $V$ 立即给 $t=p,j=q$。于是第三轮四个接收输出 $p,q,s,r$ 正交归一。
+
+置
+
+$$
+d=\sqrt{c^2+|b|^2},\qquad f=\frac{cs+br}{d}.
+\tag{47.27}
+$$
+
+$f$ 单位且正交于 $p,q$，而 $s\perp p$。第四轮的新实际输入是 $f0,s1$，它们与旧的同环境 $B$ 输入 $p0,p1,q0$ 正交；与环境 $A$ 的旧输入正交则由实际新环境为 $B$ 和固定等距性强制。故可记
+
+$$
+V(f0)=gB,\qquad V(s1)=hB,
+\tag{47.28}
+$$
+
+其中 $u,v,w,g,h$ 正交归一。这里没有规定 $g,h$ 必须正交于全部其余接收向量。
+
+前四轮九行的接收方向仍满足
+
+$$
+\begin{aligned}
+D_A&=\operatorname{span}\{w,z,u\}
+\subseteq\operatorname{span}\{u,v,w,g,h\}=O_B,\\
+D_B&=\operatorname{span}\{p,q,f,s\}
+\subseteq\operatorname{span}\{p,q,s,r\}=O_A.
+\end{aligned}
+\tag{47.29}
+$$
+
+这些包含只用 $z\in\operatorname{span}\{u,v\}$、$df=cs+br$，没有使用第25节构造的特殊坐标。
+
+第五轮的两条新输入为
+
+$$
+x0,\quad g1,\qquad
+x=\frac{a^2dg+cbh}{\sqrt{|a|^4d^2+|b|^2c^2}}.
+\tag{47.30}
+$$
+
+由于 $g,h\perp u,v,w$，它们正交于所有旧的同环境 $A$ 输入；与旧环境 $B$ 输入的正交则由环境正交及固定等距性强制。因此全部十一行完整输入在 $K\otimes\mathbb C^2$ 中正交归一，完整输出在 $K\otimes E$ 中正交归一；没有要求不同环境的接收向量在 $K$ 内相互正交。
+
+此后完全采用第43节的交叉包含归纳：上一轮新增输出正交旧同环境像，下一轮同环境旧输入又包含在这些旧像里，所以新输入正交同环境旧输入；异环境正交由 $A\perp B$ 和固定 $V$ 强制。两条新输入均在上一轮输出空间中，故交叉包含继续保持。
+
+所以各轮第一列写为
+
+$$
+\Psi_n^0=A_nm_0P_n+B_nm_1Q_n
+\tag{47.31}
+$$
+
+时，零位输入族 $w,p,q,Z_3,\ldots,Z_N$ 与一位输入族 $w,p,P_2,\ldots,P_{N-1}$ 各自正交归一。两族彼此之间不要求正交。
+

@@ -1,0 +1,63 @@
+## 423. 五射线有限局部恢复的共同阈值质量间隙
+
+沿用第 416、421 节的原始两量子比特分割、全矩阵恢复条件及有限局部操作类。固定已知 $r>0$ 且 $1/2<r^2<2$，取
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=R_B=\mathbb C^2,&R&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\qquad J:S\to S\otimes R,\qquad J|i\rangle=|i\rangle\otimes q_i.
+\end{aligned}
+$$
+
+在完整的 $R$ 上记 $W=\operatorname{Sym}^2(\mathbb C^2)$，其标准正交基为 $e_0=|00\rangle$、$e_1=(|01\rangle+|10\rangle)/\sqrt2$、$e_2=|11\rangle$；又记 $e_-=(|01\rangle-|10\rangle)/\sqrt2$、$P_-=|e_-\rangle\langle e_-|$、$P_W=I_R-P_-$。记录仪器始终在完整四维空间上完备，$W$ 只标识准备像所在的数学子空间。
+
+每棵允许树各自具有有限深度、有限结果数和有限维局部工作空间。两方可用与未知输入和未操作参考独立的初始乘积辅助态、局部完全正仪器、私有量子及经典记忆、双向经典通信、重复访问、局部丢弃、粗粒结果、结果遗忘、提前终止和单结果通道；不允许共享纠缠、量子通信或终端反馈之前对 $S$ 的操作。局部仪器各分支之和保迹。真实取得的完整终端历史记为 $\ell$，最终实际标签记为 $y(\ell)$；隐藏 Kraus 指标不是取得的结果。每个最终标签只使用原协议指定的同一个全系统酉反馈 $U_y$，同一标签内的真实历史及隐藏项均共用它。接受集合 $Y_{\mathrm s}$ 预先固定，全部失败历史保留。协议只可依赖已知 $r$，不能依赖未知输入或参考。
+
+逐真实历史迹掉包括剩余记忆在内的全部记录输出，得系统映射 $\mathcal M_\ell$。精确恢复要求同一 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}
+ U_{y(\ell)}\mathcal M_\ell(X)U_{y(\ell)}^\dagger=pX
+ &&(X\in\mathcal L(S)),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+ &&(X_{FS}\in\mathcal L(F\otimes S))
+ \quad\text{对每个有限维未操作参考 }F.
+\end{aligned}
+$$
+
+两式由矩阵张量基展开等价。按第 416、421 节，$\eta_{\mathrm{fin}}(r)$ 是这类各自有限的精确协议之 $p$ 的上确界，包含空接受集合。
+
+使用第 421 节固定的 Pauli 坐标，令
+
+$$
+\begin{aligned}
+D&=\{a\in\mathbb R^3:|a|\le1\},&
+\rho(a)&=\frac{I_2+a\cdot\sigma}{2},&Q(a,b)&=\rho(a)\otimes\rho(b),\\
+d(a,b)&=\operatorname{Tr}(P_-Q(a,b))=\frac{1-a\cdot b}{4},&
+C(a,b)&=\frac{a_z^2+b_z^2}{2},\\
+\kappa&=\frac{\sqrt{4+2(r^2+r^{-2})}}3,&
+h&=\frac1{3(1+\kappa)},&g&=3\kappa h=\frac{\kappa}{1+\kappa},\\
+U&=\frac1{3\kappa},&Z&=1-4h=\frac{3\kappa-1}{3(1+\kappa)},&
+H&=\frac{Z(1-\kappa)}{2\kappa}
+ =\frac{(3\kappa-1)(1-\kappa)}{6\kappa(1+\kappa)},\\
+\tau&=\frac H4,&\varepsilon&=\frac{H^2}{8192}=\frac{\tau^2}{512}.
+\end{aligned}
+$$
+
+这里 $\rho(a),\rho(b)$ 是累计输入效果的归一化坐标。记第 421 节既有集合 $\mathcal S_{\mathrm{flat}}$ 为 $K_{\mathrm s}$，即
+
+$$
+K_{\mathrm s}=\{(x,y)\in D^2:|x|=|y|=1,\quad
+ \langle q_i|Q(x,y)|q_i\rangle=h\quad(1\le i\le5)\}.
+$$
+
+本节的 $f$ 始终表示第 421 节已经定义的同一个函数 $V_\infty$，定义域是整个闭集 $D^2$。另置
+
+$$
+f_{\mathrm{SEP}}(a,b)=\frac{d(a,b)}{3\kappa},
+\qquad \psi(a,b)=f_{\mathrm{SEP}}(a,b)-f(a,b).
+$$
+

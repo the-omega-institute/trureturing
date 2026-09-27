@@ -1,0 +1,35 @@
+**推论 20.3（精度要求给出的显式容量发散）。** 固定一个满足（20.1）的来源及整数 $`k`$。当 $`\epsilon\downarrow0`$ 时，定义11.1的全时域容量满足
+
+$$
+d_{\infty}^{(\epsilon)}(a,b)
+=\Omega_k\!\left(
+\left[
+\frac{\log\log(1/\epsilon)}
+{\log\log\log(1/\epsilon)}
+\right]^{1/4}
+\right).
+\tag{20.25}
+$$
+
+式（20.25）只在误差充分小、全部对数有定义且分母为正时使用；常数及该阈值可以仅依赖 $`k`$。它与定理11.2的 $`O_{a,b}(\log(1/\epsilon))`$ 上界之间仍有缺口。
+
+证明。设容量 $`D`$ 实现误差 $`\epsilon`$，则由（20.3）、（20.24），
+
+$$
+\epsilon\ge\eta_{D,k}
+\ge\exp\{-\exp(C_kD^4\log(D+1))\}.
+\tag{20.26}
+$$
+
+置 $`L=\log\log(1/\epsilon)`$，对充分小的误差取对数得
+ $`L\le C_kD^4\log(D+1)`$。若 $`D\ge L^{1/4}`$，所需下界直接成立；否则对充分大的 $`L`$ 有 $`\log(D+1)\le\log L`$，从而
+
+$$
+D\ge C_k^{-1/4}(L/\log L)^{1/4}.
+\tag{20.27}
+$$
+
+取这两个情形的共同正常数，再对允许的容量取最小值，即得结论。证明完毕。
+
+[^phase_positive_polynomial_minimum]: Gabriela Jeronimo, Daniel Perrucci and Elias Tsigaridas, *On the minimum of a polynomial function on a basic closed semialgebraic set and applications*, [arXiv:1112.0544v1, Theorem 1, equation (1)](https://arxiv.org/html/1112.0544v1), [doi:10.1137/110857751](https://doi.org/10.1137/110857751). 原文的变量数 $`n`$、约束数 $`m`$ 在本节分别记为 $`v,s`$；定理要求偶数次数上界，并允许等式和非严格不等式、奇异可行集及紧连通分量。本节使用其非零最小值下界，不需要原定理同时给出的代数次数上界。原定理不涉及量子接收；环境缺陷多项式、有限时域零点排除及误差转换由本节与第12节给出。
+

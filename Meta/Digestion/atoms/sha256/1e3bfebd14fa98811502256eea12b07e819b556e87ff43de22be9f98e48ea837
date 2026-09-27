@@ -1,0 +1,13 @@
+**引理176.1（带统一谱间隙的扰动余项）。** 设 Hermitian 矩阵 $H$ 的最高本征值
+$\lambda$ 简单，单位本征向量为 $v$，且其与其余谱的间隙至少为
+$g>0$。设 $B$ Hermitian，$\|B\|\le M$。若
+$|\epsilon|M\le g/4$，则
+
+$$
+0\le
+\lambda_{\max}(H+\epsilon B)
+-\lambda-\epsilon\langle v|B|v\rangle
+\le\frac{2M^2}{g}\epsilon^2.
+\tag{176.11}
+$$
+

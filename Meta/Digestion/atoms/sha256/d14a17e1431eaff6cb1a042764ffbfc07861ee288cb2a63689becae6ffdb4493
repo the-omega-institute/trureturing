@@ -1,0 +1,32 @@
+### 65.4 极限与严格性的相容
+
+固定 $0<a<1$ 时，$b>0$ 且 $\beta\to b$，所以
+
+$$
+\xi=\frac{a}{2\sqrt{1-a}}\varepsilon^{3/2}
++O_a(\varepsilon^{5/2}),
+\qquad\zeta=a\varepsilon^2+O_a(\varepsilon^3).
+$$
+
+式（65.3）于是给更具体的上界展开
+
+$$
+e(R_{a,\varepsilon})
+\le\varepsilon+
+\frac{a(1+\sqrt a)}{\sqrt{1-a}}\varepsilon^{3/2}
++a\varepsilon^2+O_a(\varepsilon^{5/2}).
+\tag{65.10}
+$$
+
+这个展开属于显式修复的误差上界，不是未知最优误差的等式展开。上下夹逼证明式（65.4）。这里固定 $a$；误差常数依赖 $a$，显示的系数在 $a\uparrow1$ 时发散，且修复要求 $\varepsilon<1-a$。因此不能将结论当作整个 $a\in(0,1)$ 上的一致极限，也不能直接代入随 $\varepsilon$ 趋近端点的 $a(\varepsilon)$。
+
+严格反例条件是
+
+$$
+\sqrt a(c-\varepsilon)>\varepsilon(1+c).
+$$
+
+对固定 $a>0$，左侧趋于 $\sqrt a>0$，右侧趋于零，因此充分小的正 $\varepsilon$ 必满足。它与式（65.4）并不冲突：差值严格为正，但相对误差 $e/\Delta$ 趋于一。由此得到式（65.5）。$\square$
+
+同一固定 $a$ 的末端压缩把三维纯候选的 $e/\Delta\to9/8$ 变成混合量子比特族的 $e/\Delta\to1$，同时在每个充分小的非零参数处保留严格间隙。这一区别由两个相同接口问题的解析结论给出，不由有限参数数值拟合推出。混合族差值的尖锐阶数、非零系数及有限参数准确最优值仍未由这里的上界确定。
+

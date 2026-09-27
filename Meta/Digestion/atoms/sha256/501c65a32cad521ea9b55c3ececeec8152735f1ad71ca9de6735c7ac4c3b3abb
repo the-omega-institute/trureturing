@@ -1,0 +1,57 @@
+### 64.2 静态合法性、早边缘与三维纯反例的压缩
+
+式（64.4）的两个向量具有不交的标准基支撑，且均非零，因此 $R_{a,\varepsilon}$ 正且秩恰二。对 $D$ 取偏迹时，$u$ 中 $x,z$ 的交叉项与 $v$ 中 $x',z'$ 的交叉项准确相消：它们分别为
+
+$$
+\pm\sqrt{\varepsilon a(1-a)}\,|00\rangle\langle11|
+$$
+
+及其伴随。其余非对角项具有不同的 $D$ 坐标，偏迹后为零。各对角项相加得到式（64.5），所以 $\operatorname{Tr}_{BD}R=I_A$。
+
+若令 $q=C_{00,00}$、$t=C_{11,11}$，则 $q,t\in[0,1]$，且
+
+$$
+\operatorname{Tr}(M_\varepsilon C)=1-\varepsilon+\varepsilon(q+t).
+\tag{64.9}
+$$
+
+两端 $1+\varepsilon$、$1-\varepsilon$ 分别由
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad
+C_-=|01\rangle\langle01|+|10\rangle\langle10|
+\tag{64.10}
+$$
+
+达到。由此 $\Delta=\varepsilon$，并且任意因果修复都满足 $e(R)\ge\varepsilon$。
+
+这个候选可由三维末输出的纯候选
+
+$$
+R^{(3)}_\varepsilon
+=|000+c\,101+\sqrt\varepsilon\,112\rangle
+\langle000+c\,101+\sqrt\varepsilon\,112|
+$$
+
+经真实末端 CPTP 通道得到。定义等距 $W:\mathbb C^3\to\mathbb C^2_D\otimes\mathbb C^2_F$：
+
+$$
+\begin{aligned}
+W|0\rangle&=\sqrt a\,|0,0\rangle+\sqrt{1-a}\,|1,1\rangle,\\
+W|1\rangle&=|1,0\rangle,\\
+W|2\rangle&=\sqrt{1-a}\,|0,0\rangle-\sqrt a\,|1,1\rangle.
+\end{aligned}
+\tag{64.11}
+$$
+
+三列正交归一，故 $\Lambda_a(X)=\operatorname{Tr}_F(WXW^*)$ 是 CPTP，并有
+
+$$
+R_{a,\varepsilon}
+=(\operatorname{id}_{AB}\otimes\Lambda_a)(R^{(3)}_\varepsilon).
+\tag{64.12}
+$$
+
+末端处理保持全部反馈总响应，却将晚输出压缩成量子比特。下面证明这一个压缩族仍保留严格修复间隙。
+

@@ -1,0 +1,19 @@
+### 184.1 参数与结论
+
+沿用
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad
+\kappa=\frac{\sqrt5}{3},\qquad
+\epsilon=w_0,\quad R=\frac{w_1}{w_0},
+$$
+
+$$
+\delta=R-1,\qquad \Sigma=R+1,\qquad
+\Delta w=w_1-w_0,\quad \Sigma w=w_1+w_0.
+$$
+
+第177节给真实启动序列上的统一界
+$26/9<R<72/13$，且 $\epsilon\to0$、$R\to4$。
+

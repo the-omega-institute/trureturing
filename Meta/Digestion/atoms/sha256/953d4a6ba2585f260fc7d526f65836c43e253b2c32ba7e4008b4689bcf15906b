@@ -1,0 +1,7 @@
+#### 2.4.10 既有结果与来源边界
+
+对角集合、有效有限层以及无可计算线程的构造，见C卷第2.2节。本文固定其同一个 $K$ 和同一个 Haar 律；没有改变禁用同余族来适配不同结论。该构造的经典可计算性背景是 Andrej Bauer，[*König’s Lemma and Kleene Tree*](https://math.andrej.com/wp-content/uploads/2006/05/kleene-tree.pdf)，2006 年 5 月 3 日，定理 3.5；本文不主张构造或一般有限观察判据的原创性。
+
+仓内对应普通数学成果为不可变快照 82c3fcbcce00e4e504dc68583c356d9ec41bd942 中的 [profile 343](https://github.com/the-omega-institute/trureturing/blob/82c3fcbcce00e4e504dc68583c356d9ec41bd942/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)：
+
+- profile343 第 8 节给出有限正见证的精确条件 $\varnothing\ne q_n^{-1}(h)\subseteq F$，并将其等同于前缀拓扑中内部非空；C卷第2.4.2节、C卷第2.4.3节是在 $F=K$ 上的应用，包含自适应查询的具体运行证明。

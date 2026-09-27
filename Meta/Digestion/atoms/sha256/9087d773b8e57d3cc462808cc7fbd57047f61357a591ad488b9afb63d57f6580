@@ -1,0 +1,28 @@
+## ST3．规范结构给 CUT 增加了实质条件
+
+### 定理 ST3.1：线性规范恒等式在正确消元下下降
+
+这一命题不要求完整矩阵正定。设实对称矩阵 $K$、可逆隐藏块 $C$ 以及规范生成矩阵 $R$ 满足
+
+$$
+K=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix},
+\quad R=\begin{pmatrix}R_V\\R_H\end{pmatrix},
+\quad KR=0.
+$$
+
+则
+
+$$
+R_H=-C^{-1}B^{\mathsf T}R_V,
+\qquad
+\boxed{(A-BC^{-1}B^{\mathsf T})R_V=0.}
+\tag{ST3.1}
+$$
+
+若完整线性读数还满足 $JR=0$，则 ST2 中的转移读数满足
+
+$$
+\boxed{J_{\mathrm{eff}}R_V=0.}
+\tag{ST3.2}
+$$
+

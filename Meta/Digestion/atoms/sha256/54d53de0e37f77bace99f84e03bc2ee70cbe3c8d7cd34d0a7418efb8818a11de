@@ -1,0 +1,18 @@
+**定理 78.13（$s=0$ 类的精确容量）。** 在原模型中取 $p=3$、$P\ge5$、有限 $h$，并假设同一实际表的二元目标重合数 $s=0$。令 $z$ 为满足 $m_q=0,L_q=1,\Delta_q=-1$ 的目标数，其中 $\Delta_q=j_q-k_q$，$k_q$ 是纯解析前驱槽数。则
+
+$$
+Q^\sharp\le2(E+N)+z,\qquad
+E\ge\left\lceil\frac{3G^\sharp(P,P-2,h-1;0,P)-z}{2}\right\rceil-N,\qquad 0\le z\le e.
+\tag{78.12}
+$$
+
+特别在 $P=9,h=5$ 有 $G^\sharp(9,7,4;0,9)=35$，因此
+
+$$
+E\ge29-\left\lceil\frac z2\right\rceil,\qquad
+C\ge105+\left\lfloor\frac{3e}{2}\right\rfloor+\ell.
+\tag{78.13}
+$$
+
+公共一百零五态表属于 $s=0$ 类并达到 $105$，所以在允许任意 $J,U,\Xi$、额外读取态、单点继续、字面等待提升和初始化终止环的整个 $s=0$ 类内，最小容量正好为一百零五。这里 $s=0$ 只排除二元目标重合，仍允许一元历史及纯解析槽的共享，故严格扩大了第77节的 $J=0$ 条件类。
+

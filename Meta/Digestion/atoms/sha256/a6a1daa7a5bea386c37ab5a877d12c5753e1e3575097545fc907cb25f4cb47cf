@@ -1,0 +1,16 @@
+**定义 249.1（接口延续等价）。** 固定允许的后续合同族 $\mathcal K$。对接口状态 $z,z'\in Z$，定义
+
+$$
+z\sim_{\mathcal K}z'
+$$
+
+当且仅当对每个后续核 $K\in\mathcal K$、每个允许终端效果 $f$，都有
+
+$$
+\sum_yK(y\mid z)f(y)
+=
+\sum_yK(y\mid z')f(y).
+$$
+
+记商映射为 $q_{\mathcal K}:Z\to Z/\!\sim_{\mathcal K}$。
+

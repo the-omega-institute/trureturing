@@ -1,0 +1,12 @@
+**定理173.3（真实二元入口的完整参考恢复公式）。** 有
+
+$$
+\boxed{
+e=\min_{\{\mathcal D_0,\mathcal D_1\}\ {\rm instrument}}
+\max_{q\in[0,1]}f_{\mathcal D}(q).
+}
+\tag{173.7}
+$$
+
+两个极值都取得，instrument 仍在整个 $K$ 上定义。
+

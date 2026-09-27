@@ -1,0 +1,55 @@
+**零行列式强制列交换。** 设
+$$
+x=|a|^2,\quad y=|b|^2,\quad
+d=c^2=x^2+y,\quad \tau=x(d+y),
+$$
+所以 $`x,y>0`$、$`x+y=1`$，且 $`d^2-x\tau=y^2`$。直接从来源的正交输出列得到
+$$
+D_0=\begin{pmatrix}x&0\\0&1\end{pmatrix},\quad
+D_2=X_2^*X_2=\begin{pmatrix}d&0\\0&x\end{pmatrix},\quad
+D_3=X_3^*X_3=\begin{pmatrix}\tau&0\\0&d\end{pmatrix},
+\tag{29.23}
+$$
+及
+$$
+X_2^*Y_2=\bar a b D_0,\quad
+X_3^*Y_3=\bar a b D_2,\quad
+T^*D_2T=D_3.
+\tag{29.24}
+$$
+取任意非零 $`h\in\ker M`$。由 $`Y_3h=Y_2Th`$，式 （29.24） 给
+$$
+(D_2-T^*D_0T)h=0.
+\tag{29.25}
+$$
+令 $`L=D_2^{1/2}TD_3^{-1/2}`$，则 $`L`$ 酉。置 $`p=|L_{00}|^2`$，二阶酉性还给 $`|L_{11}|^2=p`$、$`|L_{01}|^2=|L_{10}|^2=1-p`$。对 $`N=T^*D_0T`$，有
+$$
+N_{00}=\tau\left(p\frac{x}{d}+(1-p)\frac1x\right),\quad
+N_{11}=(1-p)x+p\frac d x,\quad \det N=\tau.
+\tag{29.26}
+$$
+因此
+$$
+\begin{aligned}
+\det(D_2-T^*D_0T)
+&=dx+\tau-xN_{00}-dN_{11}\\
+&=p\left(xd+\frac{\tau y}{d}-\frac{d^2}{x}\right)
+=-p\frac{y^3}{xd}.
+\end{aligned}
+\tag{29.27}
+$$
+式 （29.25） 使左侧为零，故 $`p=0`$。于是存在单位复数 $`\omega,\nu`$ 满足
+$$
+T=\begin{pmatrix}
+0&\omega\\
+\nu\sqrt{\tau/x}&0
+\end{pmatrix},\qquad
+D_2-T^*D_0T=\begin{pmatrix}-y&0\\0&0\end{pmatrix}.
+\tag{29.28}
+$$
+由 （29.22）、（29.25），$`\ker M`$ 恰是第二坐标轴，故
+$$
+Y_3^1=\omega Y_2^0.
+\tag{29.29}
+$$
+

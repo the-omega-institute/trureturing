@@ -1,0 +1,109 @@
+### 47.1 一般前三轮资料
+
+设初始接收向量为单位 $k$。定义
+
+$$
+\begin{aligned}
+V(k0)&=pA,&V(k1)&=qA,\\
+V(p0)&=uB,&V(p1)&=vB,&V(q0)&=wB.
+\end{aligned}
+\tag{47.2}
+$$
+
+其中 $p,q$ 正交归一，$u,v,w$ 正交归一，但 $w$ 暂不等于 $k$。第二轮两列为
+
+$$
+\Psi_2^0=a m_0u+b m_1v,\qquad
+\Psi_2^1=m_0w.
+\tag{47.3}
+$$
+
+置
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\qquad
+G=\operatorname{span}\{u,w\},\qquad
+L=H+G=\operatorname{span}\{u,v,w\}.
+\tag{47.4}
+$$
+
+则 $H,G$ 二维、$H\cap G=\mathbb Cw$。第三轮的实际纯环境给
+
+$$
+V(z0)=sA,\qquad V(u1)=rA,\qquad
+V(w0)=tA,\qquad V(w1)=jA.
+\tag{47.5}
+$$
+
+四个输入正交，故 $s,r,t,j$ 正交归一。记
+
+$$
+S=\operatorname{span}\{s,t\},\qquad
+R=\operatorname{span}\{r,j\},\qquad
+L_3=S\oplus R.
+\tag{47.6}
+$$
+
+第三轮两列及第四轮所需系数空间为
+
+$$
+\begin{aligned}
+\Psi_3^0&=c m_0s+ab m_1r,&
+\Psi_3^1&=a m_0t+b m_1j,\\
+H_3&=\operatorname{span}\{cs+br,\ a^2t+bj\},&
+G_3&=S.
+\end{aligned}
+\tag{47.7}
+$$
+
+$H_3$ 到 $S,R$ 的两个投影均为同构，因此 $H_3\cap S=H_3\cap R=0$。
+
+固定等距的跨位正交给 $p\perp R$、$q\perp S$。第三轮与第二轮的环境不同，还给 $p\perp H+G=L$，因为 $p$ 同时正交于 $z,u,w$。
+
+对截至第五轮的实际输入，按环境及输入位定义累计接收方向空间
+
+$$
+\begin{aligned}
+H_A^0&=\operatorname{span}(k,H),&
+G_A^0&=\operatorname{span}(k,G),\\
+H_B&=\operatorname{span}(p,q,H_3),&
+G_B&=\operatorname{span}(p,S),\\
+H_A&=H_A^0+H_4,&G_A&=G_A^0+G_4.
+\end{aligned}
+\tag{47.8}
+$$
+
+这里 $H_4,G_4$ 是第四轮两列的零、一位接收系数空间。两个环境正交给
+
+$$
+H_A\perp H_B,\qquad G_A\perp G_B.
+\tag{47.9}
+$$
+
+令 $U_\eta,W_\eta$ 分别为固定 $V$ 在 $H_\eta0,G_\eta1$ 上去掉共同环境后的接收像；则
+
+$$
+U_\eta\perp W_\eta,\qquad
+\dim U_\eta=\dim H_\eta,\qquad
+\dim W_\eta=\dim G_\eta.
+\tag{47.10}
+$$
+
+特别地每个环境有 $\dim H_\eta+\dim G_\eta\le D$。只看前一、三轮还有
+
+$$
+\dim\operatorname{span}(p,q,L_3)=\dim H_A^0+\dim G_A^0.
+\tag{47.11}
+$$
+
+第四轮的零位像为
+
+$$
+U_B=G+G_4.
+\tag{47.12}
+$$
+
+这是因为 $H_B=\operatorname{span}(p,q,H_3)$，其前三类零位像分别张成 $G$ 和 $G_4$。第四轮实际零系数空间 $H_4$ 的另一投影满到 $V_1S$；具体地，第三轮的两个一位系数为非零倍数的 $s,t$，所以投影满秩没有额外假设。
+

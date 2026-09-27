@@ -1,0 +1,126 @@
+**引理92.2（至少差二余量的匹配方向）。** 存在子空间 $Z\subset\mathbb C^d$，$\dim Z\ge d-2$，使每个 $f\in Z$ 满足
+
+$$
+H_0f\in E_0,\qquad H_1f\in E_1,
+$$
+
+$$
+H_0^*H_0f=(\mu/s)f,\qquad
+H_1^*H_1f=(\nu/s)f.
+\tag{92.9}
+$$
+
+**证明：有一个系数取得最小秩。** 必要时交换两个环境特征方向及 $\mu,\nu$，可设 $\operatorname{rank}L_0=2d-2=q-d$。于是 $\dim E_0=d$。更精确的既有估计 $\operatorname{rank}L_0\ge q-\operatorname{rank}H_0$ 使 $H_0$ 满列秩。
+
+对于 $v\in E_0$，（92.6）先给 $H_1^*v=0$，再给
+
+$$
+Yv=\nu v,\qquad H_0H_0^*v=(\mu/s)v.
+$$
+
+因此 $E_0=\operatorname{ran}H_0$，存在满等距 $J_0:\mathbb C^d\to E_0$，使
+
+$$
+H_0=\sqrt{\mu/s}\,J_0,\qquad
+\operatorname{ran}H_1\subset W:=E_0^\perp.
+\tag{92.10}
+$$
+
+置 $T=H_1:\mathbb C^d\to W$；这里 $\dim W=2d-2$。由（92.7），
+
+$$
+X=0\oplus X_W,\qquad
+X_W=\frac{\mu s}{\Delta}(\mu I_W+\nu TT^*)>0,
+$$
+
+$$
+Y=\nu I_{E_0}\oplus Y_W,\qquad
+Y_W=\frac{\nu s}{\Delta}(\nu I_W-sTT^*)\succeq0.
+\tag{92.11}
+$$
+
+所以 $0\preceq T^*T\preceq(\nu/s)I_d$。令 $k$ 为其特征值 $\nu/s$ 的重数。以下在同一个输入补空间上核对饱和数，不能把两个独立秩上界当作共同实现。
+
+取输入 $N=\ker L_0$，$\dim N=d$；用 $L_0$ 的极分解把 $N^\perp$ 识别到 $W$。如第80节的同一块计算，两个系数写为
+
+$$
+L_0=
+\begin{pmatrix}0&0\\X_W^{1/2}&0\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}B&C\\0&E\end{pmatrix}
+:W\oplus N\longrightarrow E_0\oplus W,
+$$
+
+$$
+B=-\sqrt{\mu s}\,J_0T^*X_W^{-1/2},\qquad
+CC^*=\nu I_{E_0}-BB^*,\qquad
+EE^*=Y_W,\qquad CE^*=0.
+\tag{92.12}
+$$
+
+如果 $\lambda$ 是 $T^*T$ 的特征值，则 $CC^*$ 的对应特征值为
+
+$$
+\nu-\frac{\Delta\lambda}{\mu+\nu\lambda}
+=\frac{\mu(\nu-s\lambda)}{\mu+\nu\lambda}.
+$$
+
+它恰在 $\lambda=\nu/s$ 时为零；（92.11）给 $Y_W$ 的零特征值重数同样为 $k$。因此
+
+$$
+\operatorname{rank}C=d-k,\qquad
+\operatorname{rank}E=2d-2-k.
+$$
+
+$CE^*=0$ 使 $\operatorname{ran}C^*$ 与 $\operatorname{ran}E^*$ 在同一个 $d$ 维 $N$ 中正交，故
+
+$$
+(d-k)+(2d-2-k)\le d,\qquad k\ge d-1.
+\tag{92.13}
+$$
+
+取 $Z=\ker(T^*T-(\nu/s)I_d)$。对 $f\in Z$，（92.10）给 $H_0f\in E_0$ 及第一个 Gram 等式；（92.11）给 $YH_1f=0$，所以 $H_1f\in E_1$，第二个 Gram 等式正是 $Z$ 的定义。此时实际上 $\dim Z\ge d-1$。
+
+**证明：两个系数都取得较大秩。** 现在设 $\operatorname{rank}L_0=\operatorname{rank}L_1=2d-1$。Sylvester 秩不等式及（92.6）给
+
+$$
+d=(2d-1)+(2d-1)-q
+\le\operatorname{rank}(L_1L_0^*)
+=\operatorname{rank}(H_0H_1^*)\le d.
+$$
+
+所以 $H_0,H_1$ 都满列秩。与前一情形相同，对 $v\in E_0$ 得
+
+$$
+H_1^*v=0,\qquad H_0H_0^*v=(\mu/s)v;
+$$
+
+对 $v\in E_1$ 对称地得
+
+$$
+H_0^*v=0,\qquad H_1H_1^*v=(\nu/s)v.
+\tag{92.14}
+$$
+
+此时 $\dim E_0=\dim E_1=d-1$。定义
+
+$$
+Z_0=H_0^*E_0,\qquad Z_1=H_1^*E_1
+\quad\subset\mathbb C^d.
+$$
+
+由（92.14），$Z_0,Z_1$ 都为 $d-1$ 维，且
+
+$$
+H_0Z_0\subset E_0,\qquad
+H_0^*H_0|_{Z_0}=(\mu/s)I,
+$$
+
+$$
+H_1Z_1\subset E_1,\qquad
+H_1^*H_1|_{Z_1}=(\nu/s)I.
+$$
+
+取 $Z=Z_0\cap Z_1$，则 $\dim Z\ge(d-1)+(d-1)-d=d-2$，并满足（92.9）。两种情形穷尽（92.8），证明完毕。
+

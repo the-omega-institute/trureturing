@@ -1,0 +1,15 @@
+**命题 2.7（复交叉项恢复）。** 相位扫描给
+
+$$
+I_\alpha=B_0+2\operatorname{Re}(e^{-i\alpha}\Gamma),
+$$
+
+因而
+
+$$
+\Gamma=
+\frac{I_0-I_\pi}{4}
++i\,\frac{I_{\pi/2}-I_{3\pi/2}}4.
+\tag{AP.13}
+$$
+

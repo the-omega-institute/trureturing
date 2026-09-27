@@ -1,0 +1,22 @@
+**定义 7.1（单峰不可逆率）。** 对 $k=M-1$ 及 $0\le r<1$，记
+
+$$
+G_M(r)=\frac{g(r)+k g(r/k)}n.
+\tag{7.1}
+$$
+
+约定 $P_{d,0}=\Pi$，即将定义 5.1 的单峰族连续延拓到 $r=0$。
+本章仍在固定 $d\ge3$ 的 $\mathcal K_d^0$ 内取极值。
+其约束可表成固定中点的散度问题：令 $\mu_\pm(x)=(1\pm b(x))/n$，则
+
+$$
+\operatorname{JS}(\mu_+,\mu_-)=I(P),\qquad
+D(\mu_+\Vert\mu_-)+D(\mu_-\Vert\mu_+)=4\sigma(P).
+\tag{7.2}
+$$
+
+这里 $\operatorname{JS}$ 取等权混合，每个原子的中点质量固定为 $1/n$，
+且两测度在每个奇偶类上的质量均为 $1/2$。
+[Harremoës–Vajda 的散度联合值域定理（定理 8）](../../../Library/Dynamics/harremoes2010divergences.md)
+允许改变支撑权重；其二点分布凸组合约化不保持这里的固定中点与奇偶类约束。
+

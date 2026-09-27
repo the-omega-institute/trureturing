@@ -1,0 +1,153 @@
+**定理135.1（YXZXY 禁阻）。** 上述实际候选不能具有尾词
+
+$$
+([\eta_2],\ldots,[\eta_6])=(Y,X,Z,X,Y).
+\tag{135.3}
+$$
+
+### 135.1 两份完整普通像固定同一个四维块
+
+反设（135.3）成立。普通第4轮给 $G_4=P$，其后继为 $X$。$G_5\subset U$ 的后继是正交的 $Y$，所以 $G_5\perp P$，二维性给 $G_5=T$。于是
+
+$$
+V_1U=(Q_5\otimes X)\oplus(Q_6\otimes Y).
+$$
+
+实际 $G_3\subset U$ 的后继为普通 $Z$，故 $V_1G_3=Q\otimes Z$。$Z$ 在正交 $X,Y$ 上的两个分量均非零；逐环境分量读取这个完整二维块，使 $Q\subset Q_5\cap Q_6$，所以
+
+$$
+Q_5=Q_6=Q,\qquad V_1U=Q\otimes F,
+$$
+
+$$
+V_1P=Q\otimes X,\qquad V_1T=Q\otimes Y.
+\tag{135.4}
+$$
+
+当前第4轮普通，还给 $Q_4=Q$，故
+
+$$
+H_4\subset P\oplus Q,\qquad P_QH_4=Q.
+\tag{135.5}
+$$
+
+### 135.2 真实首轮平面同时正交于两个共同核
+
+真实 $V_1p=v\otimes Y$ 与（135.4）的 $V_1P=Q\otimes X$ 正交，固定等距性给 $p\perp P$。一位接收因子本来就满足 $q\perp P$，因此 $H_1\perp P$。
+
+两个真实零位像为
+
+$$
+V_0H_1=G_2\otimes Y,\qquad V_0H_4=T\otimes X,
+$$
+
+所以 $H_1\perp H_4$。将（135.5）的满投影与 $H_1\perp P$ 组合，得到 $H_1\perp Q$。因此
+
+$$
+\boxed{H_1\subset D:=S\cap P^\perp.}
+\tag{135.6}
+$$
+
+这项限制对下面两个分支都成立，固定的是同一真实 $H_1=\operatorname{span}(p,q)$。
+
+### 135.3 小侧平面不等于共同核时的固定向量冲突
+
+先设 $G_2\ne P$。由于 $G_2\subset M$、$\dim M=3$，有 $G_2+P=M$。$G_2$ 与 $P=G_4$ 的一位后继都为 $X$，所以整个三维 $M$ 被同一个 $V_1$ 送入完整三维一位 $X$ 纤维：
+
+$$
+V_1M=F_X\otimes X.
+\tag{135.7}
+$$
+
+真实 $V_1p=v\otimes Y$ 不可能属于这个单一环境块，故 $p\notin M$。完整零位首像只有 $X$ 纤维允许此位置，因此
+
+$$
+[\eta_1]=X,\qquad p\in U,\qquad q\in F_X.
+$$
+
+结合（135.6）的 $q\in S$，得到 $q\in\mathbb Cr$。
+
+由（135.4）、（135.7）和 $\dim E=5$，同一个实际尾像准确为
+
+$$
+E=(Q\otimes F)\oplus(\mathbb Cr\otimes X).
+\tag{135.8}
+$$
+
+输入侧 $S=U\oplus\mathbb Cr$，输出侧（135.8）的两个块正交，且 $V_1U=Q\otimes F$。固定等距性遂给一个相位 $\omega$，使
+
+$$
+V_1r=\omega r\otimes X,\qquad
+V_1q=\omega q\otimes X.
+$$
+
+首轮实际 $V_1k=q\otimes X$ 与固定单射性迫使 $k=\omega^{-1}q$。但真实零位像分别满足
+
+$$
+V_0k=p\otimes X,\qquad V_0q=w\otimes Y.
+$$
+
+两个非零乘积向量采用不同的正交环境，不能仅差一个相位，矛盾。此分支排除。
+
+### 135.4 小侧平面等于共同核时的严格等倾斜冲突
+
+只剩 $G_2=P$。由（135.4），
+
+$$
+Q_3=Q,\qquad H_3\subset G_3\oplus Q,
+$$
+
+并且后期投影到 $Q$ 为同构。因此任意非零 $h\in H_3$，令 $g=P_{G_3}h$，都有
+
+$$
+\|g\|<\|h\|.
+\tag{135.9}
+$$
+
+真实零位像为
+
+$$
+V_0H_1=P\otimes Y,\qquad V_0H_3=P\otimes Z.
+$$
+
+两个接收平面完全相同，因此 $H_1,H_3$ 双向等倾斜，投影范数的系数为
+
+$$
+\rho=|\langle Y,Z\rangle|>0.
+$$
+
+特别对每个 $h\in H_3$，
+
+$$
+\|P_{H_1}h\|=\rho\|h\|.
+\tag{135.10}
+$$
+
+另一方面，实际 $V_1G_3=Q\otimes Z$、$V_1T=Q\otimes Y$ 也给相同等倾斜系数：
+
+$$
+\|P_Tg\|=\rho\|g\|\qquad(g\in G_3).
+\tag{135.11}
+$$
+
+式（135.6）使 $H_1$ 同时正交于 $P,Q$。由于 $g\in G_3\subset U=P\oplus T$，对非零 $h\in H_3$ 先删去其 $Q$ 分量，再删去 $g$ 的 $P$ 分量，得到
+
+$$
+\|P_{H_1}h\|
+=\|P_{H_1}g\|
+=\|P_{H_1}P_Tg\|
+\le\|P_Tg\|
+=\rho\|g\|
+<\rho\|h\|.
+$$
+
+最后严格不等式使用（135.9）和 $\rho>0$，直接违反（135.10）。第二分支也排除，定理135.1得证。
+
+全文只使用第2至5轮的实际一位输入，没有给末轮 $G_6$ 添加后继。结合第132、134节，两个异常方向均进入三尾的正交二加一分支，现只保留
+
+$$
+XZYYY,\qquad YXYXZ,\qquad YXXXZ.
+$$
+
+这三词的共同实现尚未构造或排除；一般容量区间仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

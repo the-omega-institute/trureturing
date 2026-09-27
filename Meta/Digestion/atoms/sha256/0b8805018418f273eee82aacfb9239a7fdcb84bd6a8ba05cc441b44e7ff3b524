@@ -1,0 +1,23 @@
+**定理 225.1（全局连续事件的通道距离下界）。**
+
+令 $\mathcal R,\mathcal S$ 为输入 $\mathbb C^2$、同一量子输出 $\mathbb C^m$ 及同一经典结果寄存器上的 CPTP 记录通道。固定一个结果标签 $q$。设 $\mathcal R$ 的该结果分支为完全正映射 $\Gamma$，而 $\mathcal S$ 的同名分支 Choi 秩至多一，即
+$$
+\mathcal S_q(X)=CXC^\dagger
+\tag{225.CT.1}
+$$
+对某个线性算子 $C:\mathbb C^2\to\mathbb C^m$ 成立；零分支取 $C=0$。
+
+假设存在连续映射
+$$
+r:\mathbb {CP}^1\longrightarrow
+\{u\in\mathbb C^m:\|u\|=1\}
+\tag{225.CT.2}
+$$
+以及 $\alpha\ge0$，使对每个单位输入 $v$，都有
+$$
+\langle r([v]),\Gamma(P_v)r([v])\rangle\ge\alpha,
+\qquad P_v=|v\rangle\langle v|.
+\tag{225.CT.3}
+$$
+这里要求全局连续的单位向量；只给连续的秩一投影不足以代替（225.CT.2）。
+

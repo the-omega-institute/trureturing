@@ -1,0 +1,12 @@
+### ST16.2：主动改变耦合与被动换基的区别
+
+虽然 $H(\theta)=W(\theta)H(0)W(\theta)^\dagger$，其中 $W=\operatorname{diag}(1,e^{i\theta})$，但对时变态坐标 $\psi'=W\psi$，被动变换后的生成元包含
+
+$$
+H'=WHW^\dagger+i\hbar\dot W W^\dagger.
+$$
+
+直接令真实实验的 Hamiltonian 等于 $H(\theta)$ 没有自动包含这个惯性项，因而是不同的驱动。运输全部探针与连接后，纯粹换基不会改变物理结果。本反例没有否定对偶；它说明 ST5 中逐参数的响应相等，不足以代替整条实验路径的运输相等。
+
+这一实验层区分与 Oh–Murakami 2026年预印本关于有效 Hamiltonian 还需配套物理位置/电流接口的讨论相邻；本节证明仅依赖上述二态矩阵，不将该预印本的所有结论作为前提。[ST10-Embedding]
+

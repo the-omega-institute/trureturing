@@ -1,0 +1,22 @@
+**命题 54.5（事件误差与策略范数的准确关系）。** 对任意厄米算符 $X$ 和固定 $C\succeq0$，
+
+$$
+\max_{0\preceq E\preceq C}|\operatorname{Tr}(XE)|
+=\frac12\left(
+\|\sqrt C X\sqrt C\|_1
++|\operatorname{Tr}(XC)|
+\right).
+\tag{54.21}
+$$
+
+因而本节的事件误差为
+
+$$
+D(R,S)=\frac12\max_{C\in\mathcal C}
+\left[
+\|\sqrt C(R-S)\sqrt C\|_1
++|\operatorname{Tr}((R-S)C)|
+\right].
+\tag{54.22}
+$$
+

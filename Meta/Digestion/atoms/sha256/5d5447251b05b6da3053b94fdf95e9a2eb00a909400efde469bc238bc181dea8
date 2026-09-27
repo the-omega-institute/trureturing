@@ -1,0 +1,18 @@
+**定理 25（有理 LP 证书）.** 对 \(N\leq16\) 的每个中心，固定中心冲突图的全部极大团 LP（附 \(0\leq x_v\leq1\) 及至少选一个避点 AP）若可行，其最优值至多为 \(B(N)\)。共有 \(121\) 个可行中心实例；最小 \(B(N)\) 裕量为 \(1\)。\(N=14,c=7\) 的分数最优值为 \(1663/18=C_{14}+7/18\)，所以较强界 \(C_N\) 不能由此 LP 普遍推出。
+
+**证明.** 每个顶点代表一个避点长 AP、含点二元集、含点三元集或含点长 AP；冲突边恰为交为空或非 AP。每个极大冲突团的变量和至多一。原始变量的非负性、单点上界及避点变量和至少一，组成所述 LP。对每个可行实例，求解得到的数值原始解 \(x\) 与对偶权 \(y\) 化为有理数；逐行以精确算术验证原始可行，对每个顶点验证对偶覆盖至少一，并验证两目标有理数相等且不超过 \(B(N)\)。命令 `python3 -B tools/scripts/agent/openproblem/erdos272-lp-certificates.py` 重新生成图与全部极大团，调用 HiGHS 求解，再以 `Fraction` 核验上述每个等式与不等式，不使用预存证书。其余中心不可行是由于根本没有长避点 AP。由此有理证书给出所述精确 LP 上界，而整数端局族必满足 LP 约束。\(\square\)
+
+上述整数式、有理证书与求解器状态的核验命令及墙钟时间列于下表。所有命令均从仓库根目录执行，`real` 取 `/usr/bin/time -p` 所报的秒数。
+
+| 对象 | 命令 | `real`（秒） |
+| --- | --- | ---: |
+| 端点整数式与反例 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-endgame-check.py` | 38.39 |
+| 定位阈值与双线界 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-localization-check.py` | 7.30 |
+| 有理 LP 证书 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-lp-certificates.py` | 7.33 |
+| \(N=13\) 完整整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py` | 72.01 |
+| \(N=14\) 分类整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py --n 14` | 207.28 |
+| \(N=15\) 分类整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py --n 15` | 414.59 |
+| \(N=16\) 分类整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py --n 16` | 908.53 |
+| \(N=17\) 分类整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py --n 17` | 2289.24 |
+| \(N=18\) 分类整数规划 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/erdos272-case-milp.py --n 18` | 5064.98 |
+

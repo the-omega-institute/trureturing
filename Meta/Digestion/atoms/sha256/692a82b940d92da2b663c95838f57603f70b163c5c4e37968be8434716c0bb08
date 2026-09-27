@@ -1,0 +1,19 @@
+**定义 82.1（同一计数实现的逐输出后验熵）。** 保持第 75、77、79 章的两种原实际实验、
+完整窗口计数向量 $R$、均匀大小 $q$ 支持先验下的精确纤维律 $P_x$、
+精确中心标量 $T=t_x(R)$ 及同一个独立标准正态 $G$。
+仍令 $Y=T+\sigma_MG$，$L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$。
+沿用 $f_x$、$H_M=i_x(R,Y)-L_M$、$\nu=2g_0$、$c=\tfrac12\ln\nu$，并置
+
+$$
+\gamma=\int_{\mathbb R}\rho(t)\,dt,
+\qquad S_x(n)=-\ln P_x(n),\qquad
+h_x^{\rm nat}=\mathbb E_{P_x}S_x(R),
+\qquad
+\mathsf H_{{\rm post},x}(y)=-\sum_n p_x(n\mid y)\ln p_x(n\mid y).
+\tag{82.1}
+$$
+
+本章熵均用自然单位，$\rho$ 精确取 (77.2)，$\delta=Q^{-1/2}$。
+条件积分始终使用同一个先验计数向量及其测量噪声。
+所有环境收敛均按第 77 章的量词，在两种原实验中分别一致于确定真实支持的数据概率。
+

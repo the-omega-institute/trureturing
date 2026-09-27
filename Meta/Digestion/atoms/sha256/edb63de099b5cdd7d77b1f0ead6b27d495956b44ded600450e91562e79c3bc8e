@@ -1,0 +1,41 @@
+**定义 224.1（矩形接口的非零尾谱检验）。** 给定 $A,B:\mathbb C^2\to\mathbb C^3$，置
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\delta_{\rm rot}
+=\min_{|c_0|^2+|c_1|^2=1}\|c_0A+c_1B\|_\infty^2.
+\tag{224.RK.1}
+$$
+输出事件仍取单位 $r\in\mathbb C^3$：
+$$
+\gamma_{\rm out}
+=\max_{\|r\|=1}\lambda_{\min}(\Gamma^*(P_r)).
+\tag{224.RK.2}
+$$
+输入事件取单位 $v\in\mathbb C^2$，并定义
+$$
+\boxed{
+\gamma_{\rm in,tail}
+=\max_{\|v\|=1}\lambda_2(\Gamma(P_v)),
+}
+\tag{224.RK.3}
+$$
+其中 $\lambda_1\ge\lambda_2\ge\lambda_3$ 按降序排列。因为 $\Gamma(P_v)$ 的秩至多二，$\lambda_3=0$，所以 $\lambda_2$ 才是去掉一个输出纯方向后的最小遗漏量。没有把恒零的三维最小本征值当作反例。
+
+固定 $r$ 时，$A^\dagger r,B^\dagger r$ 形成一个 $2\times2$ 矩阵；固定 $v$ 时，$Av,Bv$ 形成一个 $3\times2$ 矩阵。后者的右 Gram 矩阵恰有两个本征值 $\lambda_1,\lambda_2$。因此
+$$
+\gamma_{\rm out}
+=\max_r\min_c\|(c_0A+c_1B)^\dagger r\|^2,
+$$
+$$
+\gamma_{\rm in,tail}
+=\max_v\min_c\|(c_0A+c_1B)v\|^2,
+$$
+并且始终有
+$$
+\boxed{\max(\gamma_{\rm out},\gamma_{\rm in,tail})\le\delta_{\rm rot}.}
+\tag{224.RK.4}
+$$
+以下在非零尾谱的定义下检验第 223 节反向不等式的维数边界。
+

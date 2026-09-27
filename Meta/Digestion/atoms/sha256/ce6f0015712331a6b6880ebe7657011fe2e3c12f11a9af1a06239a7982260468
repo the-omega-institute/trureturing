@@ -1,0 +1,66 @@
+### 93.2 同一个交叉秩控制两个需要删除的分量
+
+仍记
+
+$$
+X=L_0L_0^*,\qquad Y=L_1L_1^*,\qquad
+E_i=\ker L_i^*,\qquad e_i=\dim E_i.
+$$
+
+（92.6）、（92.7）的精确对角和交叉方程继续成立。定义
+
+$$
+\tau_i=\dim\ker H_i,\qquad
+r=\operatorname{rank}(H_0H_1^*)
+=\operatorname{rank}(L_1L_0^*),
+$$
+
+$$
+E_0'=E_0\cap\ker H_1^*,\qquad
+E_1'=E_1\cap\ker H_0^*,
+$$
+
+$$
+c_0=\operatorname{rank}(H_1^*|_{E_0}),\qquad
+c_1=\operatorname{rank}(H_0^*|_{E_1}).
+\tag{93.5}
+$$
+
+对 $v\in E_0$，交叉方程 $L_1L_0^*=-sH_0H_1^*$ 给 $H_1^*v\in\ker H_0$。该向量当然也在 $\operatorname{ran}H_1^*$ 中，所以
+
+$$
+H_1^*E_0\subset\ker H_0\cap\operatorname{ran}H_1^*.
+$$
+
+把 $H_0$ 限制到 $\operatorname{ran}H_1^*$，其像为 $\operatorname{ran}(H_0H_1^*)$。由秩—零度公式，
+
+$$
+\dim(\ker H_0\cap\operatorname{ran}H_1^*)
+=\operatorname{rank}H_1-r=d-\tau_1-r.
+$$
+
+对称地，利用
+$\operatorname{rank}(H_1H_0^*)=\operatorname{rank}(H_0H_1^*)=r$，得到
+
+$$
+c_0\le\min\{\tau_0,d-\tau_1-r\},\qquad
+c_1\le\min\{\tau_1,d-\tau_0-r\}.
+\tag{93.6}
+$$
+
+因此两个删除维数的和同时满足
+
+$$
+c_0+c_1\le\tau_0+\tau_1,\qquad
+c_0+c_1\le2d-\tau_0-\tau_1-2r.
+$$
+
+相加便得关键联合界
+
+$$
+\boxed{c_0+c_1\le d-r.}
+\tag{93.7}
+$$
+
+它使用的是同一个实际交空间与同一个交叉秩；分别只用 $\dim\ker H_i$ 会丢失这一约束。
+

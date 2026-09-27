@@ -1,0 +1,25 @@
+**定义 177.3（与翻转共同发生的去相位）。** 固定近一参数 $r$，取 $0<\delta<1-r$，记
+$$
+x=1-\delta,\qquad \rho=\frac r x,\qquad
+\kappa^2=\frac{1-\rho^2}{2(1-\rho\cos\alpha)},\qquad
+\beta=x\kappa.
+\tag{177.17}
+$$
+令 $\mathcal Q_s$ 是相关矩阵
+$$
+G_s=\begin{pmatrix}
+1&\kappa&\rho e^{is\alpha}\\
+\kappa&1&\kappa\\
+\rho e^{-is\alpha}&\kappa&1
+\end{pmatrix},\qquad s=\pm1,
+\tag{177.18}
+$$
+的 Schur 通道，$\Delta$ 是系统完全去相位通道。记忆为两个经典标签，一次均匀初始化。对任意系统—记忆联合输入定义
+$$
+\Lambda_\delta(X)=\sum_{s=\pm1}
+\left[x\mathcal Q_s(X_{ss})\otimes|s\rangle\langle s|
++\delta\Delta(X_{ss})\otimes|-s\rangle\langle-s|\right].
+\tag{177.19}
+$$
+同一次随机选择同时决定系统通道与标签更新：保持标签时施加 $\mathcal Q_s$，翻转时施加 $\Delta$。记忆基间相干在每步被去除，分支随机性来自新鲜环境，不另存为持久记忆。
+

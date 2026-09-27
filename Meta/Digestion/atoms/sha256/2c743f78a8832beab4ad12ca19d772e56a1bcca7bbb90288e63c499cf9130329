@@ -1,0 +1,23 @@
+**定理 46.2（同一初态的精确返回律）。** 仪器完整且随参数连续。对正 $\gamma$，从 $P_0$ 出发的首次返回轮数满足
+
+$$
+\boxed{
+p_\gamma(1)=1-\gamma,
+\qquad p_\gamma(n)=\gamma^2(1-\gamma)^{n-2}\quad(n\ge2).
+}
+$$
+
+在 $\gamma=0$ 处，$p_0(1)=1$，其余概率为零。从共同初态 $P_0$ 出发，所有参数均以概率一最终点击，点击后系统态均为 $P_0$。
+
+证明。直接核对 $U_\gamma^\dagger U_\gamma=I$，所以 $Q_\gamma^\dagger Q_\gamma+L_\gamma^\dagger L_\gamma=I$；共同矩阵条目连续给完整通道连续。第一轮点击振幅为 $\sqrt{1-\gamma}|0\rangle$。对 $n\ge2$，有
+
+$$
+Q_\gamma^{n-1}|0\rangle
+=-i\sqrt\gamma(\sqrt{1-\gamma})^{n-2}|1\rangle,
+\qquad
+L_\gamma Q_\gamma^{n-1}|0\rangle
+=-\gamma(\sqrt{1-\gamma})^{n-2}|0\rangle.
+$$
+
+取模平方即得概率。对正 $\gamma$ 求和，后续概率总和为 $\gamma$，与第一轮的 $1-\gamma$ 相加为一。零参数时第一轮已经必点击。所有非零点击分支均沿 $|0\rangle$。当 $\gamma=1$，公式按非负整数幂约定读为第二轮必点击。$\square$
+

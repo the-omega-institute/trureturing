@@ -1,0 +1,10 @@
+### 20.8 来源
+
+[20-A] Mathlib, `Mathlib/Combinatorics/Pigeonhole.lean`. https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Pigeonhole.html . 有限权重鸽笼及平均值形式的已有基础。
+
+[20-B] Mathlib, commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`, `Real.binEntropy_le_log_two` 与 `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`. https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean . Lean 定理调用的二元熵基础。
+
+[20-C] Christian Weiss. *An Explicit non-Poissonian Pair Correlation Function*. arXiv:2304.14202v3, 16 June 2026. https://arxiv.org/html/2304.14202v3 . Introduction 与 Proposition 2.1 给出经典低离散度对数序列的归属与间隔结构。本节只使用并重新证明所需间隔结构，不使用该文的成对相关主定理。
+
+[20-D] Harald Niederreiter. *On a measure of denseness for sequences*. In *Topics in Classical Number Theory*, Budapest 1981, Colloquia Mathematica Societatis Janos Bolyai 34, North-Holland, Amsterdam, 1984, pp. 1163--1208. 原始出处由 [20-C] 明确引用；本文未直接核查 1984 年原文。
+

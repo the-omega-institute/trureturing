@@ -1,0 +1,23 @@
+**定理186.1（满秩来源的最优二阶恢复误差）。** 对每个固定 $\kappa<1$，以及任意固定紧区间
+$0<R_{\min}\le R\le R_{\max}<\infty$，当 $\epsilon\downarrow0$ 时，
+
+$$
+h_\kappa(\epsilon,R)
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++Q_{\min}\epsilon^2+O(\epsilon^3),
+\tag{186.2}
+$$
+
+$$
+\boxed{
+Q_{\min}
+=\frac{3\beta^2\delta^2}{64}
+-\frac{\gamma^2(1+3\kappa^2)\delta^2}{16(1-\kappa^2)}
+-\frac{\kappa^2\gamma^2\Sigma^2}{16}.
+}
+\tag{186.3}
+$$
+
+余项对该 $R$ 区间一致；还可对 $0\le\kappa\le\kappa_{\max}<1$
+一致选取。这里不声明对 $\kappa\uparrow1$ 一致。
+

@@ -1,0 +1,4 @@
+**定义 213.1（同一个数学词可以容纳不同结局）。** 项目 [FixedPointMultiplicity](../../../D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.lean) 的 `fixed_point_multiplicity_and_actuality_gap` 给出幂集上的具体映射：在非空单元素集的幂集上取补集，没有不动点；把所有集合都送到空集，只有空集一个不动点；在双元素集的幂集上与一个固定单元素集取交，恰有空集与该单元素集两个不动点；恒等映射则使每个状态都是不动点。
+
+上述“恰有两个”还可直接核对：$S\cap\{b\}=S$ 当且仅当 $S\subseteq\{b\}$，所以不动点只可能是 $\varnothing$ 与 $\{b\}$。这些例子说明，不动点是否存在、是否唯一，都取决于映射的实际结构。把某个解释过程命名为“循环”或“自我理解”，并没有指定它属于上述哪一种情形，更没有给出从任意起点到达不动点的保证。
+

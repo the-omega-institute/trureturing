@@ -1,0 +1,27 @@
+**命题143.1（混合接口的来源主角谱）。** 对每个 $n\ge2$，算子
+
+$$
+P_{U_n^0}P_{U_n^1}\big|_{U_n^0}
+$$
+
+的特征值恰为
+
+$$
+\lambda_n=x\frac{t_{n-1}}{t_n},\qquad
+\lambda_{n-1}=x\frac{t_{n-2}}{t_{n-1}},
+\tag{143.7}
+$$
+
+各重复 $r_n$ 次。因而其行列式为
+
+$$
+\boxed{
+\Delta_n
+:=\det\!\left(P_{U_n^0}P_{U_n^1}\big|_{U_n^0}\right)
+=\delta_n^{\,r_n},
+\qquad
+\delta_n=x^2\frac{t_{n-2}}{t_n}>0.
+}
+\tag{143.8}
+$$
+

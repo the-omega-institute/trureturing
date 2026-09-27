@@ -1,0 +1,22 @@
+**定理 224.5（规范旋转删除候选的实际误差）。** 对定理 224.2 的共同 TP 通道，任取未缩放矩阵 $(M,N)$ 的一份酉旋转 $(D,C)$，其中 $D$ 为删除方向、$C$ 为保留方向。令
+
+$$
+H=(I_2-\kappa D^\dagger D)^{-1/2},
+$$
+
+并定义规范修复候选
+
+$$
+\mathcal S_{D,C}(X)
+=P_0^Q\otimes K_0HXHK_0^\dagger
++P_1^Q\otimes\kappa CHXHC^\dagger.
+$$
+
+则对每份这样的旋转，均有
+
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S_{D,C}\|_\diamond=\kappa.}
+$$
+
+另对定理 224.3 的有理数通道，删去唯一最优方向 $M/\sqrt8$ 并按同一规则修复的候选，其实际完整半 diamond 误差恰为 $1/8$。这些结论不对任意预算候选的最小误差作断言。
+

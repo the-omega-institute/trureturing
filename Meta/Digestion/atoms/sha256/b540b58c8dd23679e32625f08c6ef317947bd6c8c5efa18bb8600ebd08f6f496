@@ -1,0 +1,2 @@
+**证明。** 由隐藏状态边缘的混合，$\operatorname{TV}(\nu_{t+1},\nu_tQ)\le\varepsilon$。任取两个概率行向量 $u,v$，令 $d=\operatorname{TV}(u,v)$。若 $d=0$，核作用后的距离也为零；否则将 $u-v=d(p-r)$，其中 $p,r$ 是归一化的正负部分。由于 $pQ-rQ=\sum_{b,b'}p_br_{b'}(Q_b-Q_{b'})$，三角不等式给 $\operatorname{TV}(uQ,vQ)\le d\alpha$。插入 $\nu_tQ$ 后即得递推式，有限归纳得几何和。$\square$
+

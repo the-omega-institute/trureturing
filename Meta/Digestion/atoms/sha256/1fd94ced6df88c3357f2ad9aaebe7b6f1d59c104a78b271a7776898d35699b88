@@ -1,0 +1,102 @@
+**定理 76.2（$\delta<4/5$ 校准球中的统一平均等待界）。** 设实际完整仪器满足
+
+$$
+\frac12\|\Gamma-\Gamma_0\|_\diamond\le\delta<\frac45,
+\qquad \delta\ge0.
+$$
+
+则对每个初态 $\rho$，实际等待均值满足
+
+$$
+\boxed{
+\mathbb E_\rho\mathsf N
+\le
+\frac{3-\delta}{(1-\delta)(4/5-\delta)}.
+}
+$$
+
+该上界同时覆盖整个指定校准球与全部初态，不预设其中各实际模型已经终止。因此它在 $1/2\le\delta<4/5$ 的范围仍给有限的显式成本保证，尽管第 69.1 条标量余量证书族无法认证这些距离。
+
+证明。先固定有限 $n$，不假定无限成本势存在。由望远镜恒等式，
+
+$$
+\mathcal N(\sigma_n)-\sigma_n
+=\frac{\rho_n-\rho}{\mu_n},
+\qquad
+\operatorname{Tr}\mathcal C(\sigma_n)
+=\frac{1-s_n}{\mu_n}.
+$$
+
+把 $\sigma_n$ 全放入未点击记录块形成理想联合态，记为 $|\varnothing\rangle\langle\varnothing|\otimes\sigma_n$。记录块正交、点击分支为正以及 $\|\rho_n-\rho\|_1\le s_n+1$ 给
+
+$$
+D\!\left(
+\Gamma(\sigma_n),
+|\varnothing\rangle\langle\varnothing|\otimes\sigma_n
+\right)
+\le\frac{(1+s_n)+(1-s_n)}{2\mu_n}
+=\frac1{\mu_n}.
+\tag{76.1}
+$$
+
+这里 $D$ 为半迹距离。
+
+设 $\sigma_n$ 的最小本征值为 $t\in[0,1/2]$。选择最大本征值对应的秩一投影 $P$，则 $D(\sigma_n,P)=t$，包括 $t=1/2$ 的退化情况。记实际点击效果为 $E=\mathcal C^*(I)$。名义仪器对 $P_0$ 必点击，完整校准界于是给
+
+$$
+\langle0|E|0\rangle\ge1-\delta,\qquad
+\operatorname{Tr}E\ge1-\delta.
+$$
+
+由 $\sigma_n\ge tI$，
+
+$$
+t(1-\delta)
+\le\operatorname{Tr}(\sigma_nE)
+=\frac{1-s_n}{\mu_n}
+\le\frac1{\mu_n},
+\qquad
+t\le\frac1{(1-\delta)\mu_n}.
+\tag{76.2}
+$$
+
+另一方面，对任意纯态投影 $P$，第 71.2 条的秩一计算给
+
+$$
+D\!\left(
+\Gamma_0(P),
+|\varnothing\rangle\langle\varnothing|\otimes P
+\right)
+=\frac{a+\sqrt{a^2+4(1-a)^2}}2
+\ge\frac45,
+\qquad a=\operatorname{Tr}(P P_0).
+\tag{76.3}
+$$
+
+这个纯态不等式只涉及名义仪器；它不要求 $P$ 是实际仪器的固定态。沿
+
+$$
+\Gamma_0(P),\quad
+\Gamma_0(\sigma_n),\quad
+\Gamma(\sigma_n),\quad
+|\varnothing\rangle\langle\varnothing|\otimes\sigma_n,\quad
+|\varnothing\rangle\langle\varnothing|\otimes P
+$$
+
+应用三角不等式。名义通道的收缩性、校准界和式 (76.1)—(76.3) 依次给
+
+$$
+\frac45
+\le 2t+\delta+\frac1{\mu_n}
+\le\delta+\frac1{\mu_n}\left(1+\frac2{1-\delta}\right).
+$$
+
+因为 $\delta<4/5$，可移项得到
+
+$$
+\mu_n
+\le\frac{3-\delta}{(1-\delta)(4/5-\delta)}.
+$$
+
+最后令 $n\to\infty$，$\min(\mathsf N,n)$ 单调增加到实际扩展等待 $\mathsf N$，单调收敛给结论并排除正概率的无穷等待。$\square$
+

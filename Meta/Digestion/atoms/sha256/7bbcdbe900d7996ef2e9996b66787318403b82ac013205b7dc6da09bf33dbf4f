@@ -1,0 +1,60 @@
+### 213.2 完整对称化 Choi 的唯一性与秩
+
+第208节只声明归约效果唯一，不能不加论证就称原 instrument 唯一。
+在当前纯来源、严格正入口态下，可以补上这一点。
+
+记正旗标上的两份 CP 结果映射为 $\Gamma_j$，
+$\Gamma_0+\Gamma_1$ 保迹。令
+
+$$
+a_j=\operatorname{Tr}[P_0\Gamma_j(\rho_j)],\qquad
+b_j=\operatorname{Tr}[\Gamma_j(\rho_j)].
+$$
+
+显然 $0\le a_j\le b_j$，而
+$E_j=\Gamma_j^*(I)$ 构成二元 POVM。
+第189节的正确纯输出压缩给
+
+$$
+e(\Gamma)\ge1-\frac{a_0a_1}{a_0+a_1}
+\ge1-\frac{b_0b_1}{b_0+b_1}
+\ge\mathscr E(0,\epsilon).
+\tag{213.5}
+$$
+
+最优值不超过 $3/4$，所以达到最优时 $a_0,a_1>0$。
+函数 $ab/(a+b)$ 在两个正变量上严格增加，
+故等号强制 $a_j=b_j$。
+于是
+
+$$
+0=\operatorname{Tr}[\rho_j\Gamma_j^*(P_1)].
+$$
+
+由于 $\rho_j\succ0$、$\Gamma_j^*(P_1)\succeq0$，
+必有 $\Gamma_j^*(P_1)=0$。
+这迫使该结果的每个 Kraus 的第二输出行为零。
+所以实际映射必为
+
+$$
+\Gamma_j(X)=\operatorname{Tr}(E_jX)P_0.
+\tag{213.6}
+$$
+
+第208节的唯一效果因而唯一确定整个对称化 Choi 对：
+$J_j=E_j^{\mathsf T}\otimes P_0$。
+其秩等于效果秩。因此纯来源的精确模式是
+
+$$
+\boxed{
+\nu>\nu_*(x):\ (1,2),\qquad
+\nu\le\nu_*(x):\ (1,1).
+}
+\tag{213.7}
+$$
+
+唯一性只指已固定旗标对称化约定后的 Choi 对。
+它没有把不同环境装置或未经归约旗标实现也判为唯一。
+严格正入口态是本段新增唯一性论证的必要前提；
+不能把它套到 $\epsilon=0$。
+

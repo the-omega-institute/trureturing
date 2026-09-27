@@ -1,0 +1,4 @@
+**引理 2.44（effective extraction under unique expansion）。** Given the computable radix sequence and a Cauchy name for $r=F(S)$, the support $S$ can be extracted uniformly whenever this expansion is unique.
+
+Here uniqueness is among all numerical $0/1$ support expansions for these weights, not merely among supports compatible with a particular event inventory. An alternative numerical expansion need not be realizable by that same inventory.
+

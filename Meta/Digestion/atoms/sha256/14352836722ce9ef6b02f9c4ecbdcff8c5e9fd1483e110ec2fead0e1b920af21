@@ -1,0 +1,18 @@
+### 19.1 非空的代数核验
+
+新增程序：`tools/scripts/agent/openproblem/erdos699-quartic-cancellation-check.py`。
+
+实际运行：
+
+```text
+python tools/scripts/agent/openproblem/erdos699-quartic-cancellation-check.py \
+  --nmax 160 --derivative-nmax 80 --symbolic
+```
+
+- `10<=n<=160,4<j<=n/2` 的 5776 个真实参数对：由实际 gcd 生成 (43)，核验系数整性、(45)–(46)、正整数性、粗界 (47) 和紧界 (48)–(49)。
+- `10<=n<=80,4<=i<j<=n/2` 的 16206 个真实三元组：逐系数构造 (26) 和除阶乘导数 (51)，核验 (52) 与 (50)。没有假定被测参数是反例。
+- SymPy 符号展开核验 `I,J,T` 的全部通分因子、中心最大值，以及 `4I^3-J^2=27*Delta(H)` 作为组合符号的负对照。
+- 边界 `n=10,j=5`：`g_4=42`，`H=(42,-84,56,-14,1)`，`I=112,J=-1960,T=1031744`。
+
+这些是代数自审，不是独立评审或 Lean 核验。无穷结论依据 §§16–18 的书面证明；程序没有计算未知的 `C_i`，也没有验证任何非有效截止之内的全体反例。
+

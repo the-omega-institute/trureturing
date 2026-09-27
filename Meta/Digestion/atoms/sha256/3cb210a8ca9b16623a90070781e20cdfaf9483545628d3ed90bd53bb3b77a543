@@ -1,0 +1,39 @@
+**Lemma 1.4 (the source obstruction and maximum supports).** Every
+transversal of $H_n$ contains at least two members of $D$. Hence any
+two transversals intersect. If a transversal omits $d_j$, where
+$j\in\{0,1,2\}$, then its columns satisfy the following supports;
+the right-hand column is its $\Delta$-value in that row.
+
+| Row | Allowed columns $b$ | $\Delta$ |
+| --- | --- | --- |
+| $5h,\ h=0,1,2$ | $b\equiv1\pmod4,\ b\ne4h+1$ | $4$ |
+| $1+5h,\ h\in\{0,1,2\}\setminus\{j\}$ | $b=4h+1$ | $3$ |
+| $1+5j$ | $b\notin\{4j+1,4j+2,4j+3,4j+4\}$ | $0$ |
+| $4,9,14$ | $b\not\equiv1\pmod4$ | $0$ |
+| $15+4t,\ 0\le t<k-9$ | $b$ even | $2$ |
+| $17+4t,\ 0\le t<k-9$ | $b$ odd | $0$ |
+| All remaining rows | Any $b$ | $0$ |
+
+Proof. This is the row-bound argument of [GW, Lemmas 5 and 8], with its
+equality case made explicit. For any transversal $T$, summing the row,
+column and symbol permutations gives
+$$
+\sum_{e\in T}\Delta(e)\equiv
+-\sum_{a=0}^{n-1}a\equiv2k\pmod{4k}.
+$$
+The sum of row minima in Definition 1.2 is
+$3(-1-4)-2(k-9)=-2k+3$. If at most one member of $D$ is selected,
+the row maxima sum to at most $3\cdot4+3+2(k-9)=2k-3$.
+There is no integer congruent to $2k$ modulo $4k$ between those
+bounds. Every transversal therefore contains at least two members of
+the three-element set $D$, proving pairwise intersection.
+
+If $d_j$ is omitted, the other two members of $D$ must be selected.
+The corresponding maximum sum is $3\cdot4+2\cdot3+2(k-9)=2k$.
+The only admissible value between $-2k+3$ and $2k$ is $2k$.
+Every row must attain its maximum, since the sum of its nonnegative
+deficits is zero. Reading the equality cases from Definition 1.2 gives
+exactly the support table. In particular the omitted distinguished row
+must avoid its four exceptional columns, not merely its member of $D$.
+$\square$
+

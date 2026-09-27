@@ -1,0 +1,63 @@
+### 242.1 固定接口与纯探针资源
+
+输入为量子比特 $A=\mathbb C^2$，记录接口有四个指定正交标签。每个标签保留固定单位量子输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。量子输出空间及全部 $r_j$ 在本节保持固定。
+
+对单位 Bloch 轴 $n,m\in\mathbb R^3$，令
+$$
+c=|n\cdot m|\in[0,1],
+\qquad P_n=\frac{I_2+n\cdot\sigma}{2},
+\qquad P_m=\frac{I_2+m\cdot\sigma}{2},
+\tag{242.1}
+$$
+其中 $\sigma$ 为标准 Pauli 矩阵三元组。取四个输入投影
+$$
+(\Pi_1,\Pi_2,\Pi_3,\Pi_4)
+=(P_n,I_2-P_n,P_m,I_2-P_m).
+\tag{242.2}
+$$
+目标及固定候选为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\frac14\operatorname{Tr}(X)P_j,\\
+\mathcal S_{n,m}(X)&=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\frac12\operatorname{Tr}(\Pi_jX)P_j.
+\end{aligned}
+\tag{242.3}
+$$
+§241已验证这是一份实际 CPTP 候选，总 Choi 秩为四，并且
+$$
+\frac12\|\mathcal S_{n,m}-\mathcal R\|_{\diamond}
+=D_*=\frac12.
+\tag{242.4}
+$$
+以下复用该结论，不重新证明基础端点与保迹性。
+
+设归一化纯联合探针为 $|\psi\rangle\in A\otimes E$，输入边缘写作
+$$
+\rho=\operatorname{Tr}_E|\psi\rangle\langle\psi|
+=\frac{I_2+r\cdot\sigma}{2},
+\qquad t=\|r\|\in[0,1].
+\tag{242.5}
+$$
+其边缘本征值、纯度及纠缠熵分别为
+$$
+\lambda_\pm=\frac{1\pm t}{2},
+\qquad \operatorname{Tr}\rho^2=\frac{1+t^2}{2},
+\qquad E(\psi)=S(\rho)=H_2\left(\frac{1+t}{2}\right),
+\tag{242.6}
+$$
+其中
+$$
+H_2(x)=-x\log_2x-(1-x)\log_2(1-x),
+\qquad 0\log_2 0=0.
+$$
+由于探针是纯态，边缘熵确实是两侧纠缠熵。其实际半迹距离记为
+$$
+f(\rho)=\frac12
+\|[(\mathcal S_{n,m}-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\|_1.
+\tag{242.7}
+$$
+按§240的纯化接口，同一输入边缘的纯化只相差参考端等距变换，所以 $f$ 只依赖 $\rho$。
+

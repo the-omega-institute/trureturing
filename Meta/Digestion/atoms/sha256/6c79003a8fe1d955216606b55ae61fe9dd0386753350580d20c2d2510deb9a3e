@@ -1,0 +1,15 @@
+### 20.2 命题：近最优网格在变换坐标中的稳定性
+
+若 $\rho\geq0$ 且 $\mathcal E(G)\leq(1+\rho)A/M^2$，令 $q=\sqrt{1+\rho}-1$，则
+\[
+\sum_{j=0}^{M-1}(p_j-1/M)^2\leq\frac qM.
+\tag{20.3}
+\]
+对每个 $0\leq j\leq M$，还满足
+\[
+-\frac{(M-j)q}{M}\leq
+\frac{\psi(g_j)-\psi(a)}L-\frac jM
+\leq\frac{jq}{M}.
+\tag{20.4}
+\]
+

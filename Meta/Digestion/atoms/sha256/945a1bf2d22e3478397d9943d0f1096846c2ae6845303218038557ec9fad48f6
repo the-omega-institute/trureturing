@@ -1,0 +1,23 @@
+**定理157.1（固定代数装置的全时域代数性）。** 在（157.2）—（157.3）下，
+
+$$
+\boxed{
+e_n\in\mathbb A\quad(n\ge1),\qquad
+h_G\in\mathbb A,\qquad
+E_\infty\in\mathbb A.
+}
+\tag{157.6}
+$$
+
+更确切地，
+
+$$
+\boxed{
+E_\infty\in
+\{h_G\}\cup\{e_n:n\ge1\}.
+}
+\tag{157.7}
+$$
+
+以下逐步证明。结论保持固定装置和完整参考合同，不给出发生有限峰值的统一终端界。
+

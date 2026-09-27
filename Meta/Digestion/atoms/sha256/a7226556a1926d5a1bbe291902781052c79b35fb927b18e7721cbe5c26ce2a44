@@ -1,0 +1,139 @@
+**定理 11.3（未知峰位的共同尖锐门槛与定位跃迁）。** 对每个固定
+$\varepsilon\in(0,1)$、任意序列 $r_d\in(0,1)$ 与非负整数 $s_d$，
+令 $d\to\infty$。若充分大的 $d$ 均满足
+
+$$
+s_dF_M(r_d)\le(1-\varepsilon)\log M,
+$$
+
+则两种实验都满足
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow\frac12.
+\tag{11.9}
+$$
+
+在同一条件下，即使预先告知方向，均匀未知峰位的最优精确定位成功率也趋于零。
+若充分大的 $d$ 均满足
+
+$$
+s_dF_M(r_d)\ge(1+\varepsilon)\log M,
+$$
+
+则在全部 $2M$ 个位置与方向假设中作联合最大似然判别，
+其位置或方向判错的最坏概率趋于零，因而
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow0.
+\tag{11.10}
+$$
+
+因此两种实验的一阶临界样本尺度同为
+
+$$
+s_*(d,r)=\frac{\log M}{F_M(r)}
+=\frac{n\log M}{\phi(r)}\bigl(1+O(M^{-1})\bigr),
+\tag{11.11}
+$$
+
+其中相对余项一致地适用于 $0<r<1$。特别地，
+$r_d\to1$ 时 $s_*\sim n\log n/\log2$；
+$r_d\to0$ 时 $s_*\sim2n\log M/r_d^2$。
+这里不要求 $r_d$ 趋近端点的速度，亦不判定临界窗口中的极限风险。
+
+证明。先说明最坏风险与均匀先验的关系。
+$C_+$ 内的置换在峰位上可迁，倒序或交换坐标把两个方向互换。
+将任一随机化判别器对这个有限群平均，同时变换其输出方向，
+使全部 $2M$ 个风险相等，且不改变均匀平均风险。
+因此以 $\overline{\mathsf P}^{\epsilon,E}_s$ 记均匀峰位混合，有
+
+$$
+\mathcal R^E_{d,r}(s)
+=\frac{1-\operatorname{TV}(\overline{\mathsf P}^{+,E}_s,
+                          \overline{\mathsf P}^{-,E}_s)}2.
+\tag{11.12}
+$$
+
+这一步只是有限群对称化；混合中的峰位只选一次，不随样本重抽。
+
+以下固定任一实验，省略 $E$。在某一方向分别截断每个分量似然：
+对 $h>\mu$ 置
+
+$$
+\widetilde L_z=L_{b_z,s}^{\epsilon}
+   \mathbf1_{\{\log L_{b_z,s}^{\epsilon}\le h\}},\qquad
+\widetilde L=\frac1M\sum_z\widetilde L_z,
+\qquad
+\delta_h=\mathsf P_{b_z,s}^{\epsilon}
+          \{\log L_{b_z,s}^{\epsilon}>h\}.
+$$
+
+由对称性 $\delta_h$ 与 $z,\epsilon$ 无关；由 (11.3)，
+$\delta_h\le2\mu/(h-\mu)^2$。
+在参考律下，$\mathbb E\widetilde L=1-\delta_h$。
+对角项满足 $\mathbb E\widetilde L_z^2\le e^h\mathbb E L_{b_z,s}^{\epsilon}=e^h$；
+异位项由非负性及 (10.4) 满足
+$\mathbb E\widetilde L_z\widetilde L_w\le(1-\alpha/k)^s\le1$。
+所以
+
+$$
+\mathbb E\widetilde L^2\le\frac{e^h}{M}+\frac{M-1}{M},\qquad
+\mathbb E|\overline L_s^\epsilon-1|
+\le\delta_h+\sqrt{\frac{e^h}{M}+2\delta_h}.
+\tag{11.13}
+$$
+
+后一式使用截去的总均值为 $\delta_h$，及
+$\mathbb E(\widetilde L-1)^2\le e^h/M+2\delta_h$。
+这种逐分量截断属于既有的截断二阶矩方法；这里的精确异位内积使交叉项直接有界。
+
+若 $\mu\le(1-\varepsilon)\log M$，取
+$h=(1-\varepsilon/2)\log M$。则
+$\delta_h=O(1/\log M)$，$e^h/M=M^{-\varepsilon/2}$。
+故两个方向混合律分别在全变差下趋于均匀参考律。
+由三角不等式及 (11.12) 得到 (11.9)。
+若方向已知，令 $a_z$ 为任意随机化定位规则输出 $z$ 的条件概率，
+则 $\sum_z a_z=1$，并有
+
+$$
+\frac1M\sum_z\mathbb E_{\mathsf P_{b_z,s}^{\epsilon}}a_z
+\le\frac{e^h}{M}+\delta_h\longrightarrow0.
+\tag{11.14}
+$$
+
+这里将每项按真分量似然是否超过 $e^h$ 分开即可，不要求这些事件互斥。
+
+现在考虑上界。若真参数为 $(z,\epsilon)$，每个错误候选 $(w,\epsilon')$ 都满足
+
+$$
+\mathbb E_{\mathsf P_{b_z,s}^{\epsilon}}L_{b_w,s}^{\epsilon'}
+=\mathbb E_{\mathsf U_s}[L_{b_z,s}^{\epsilon}L_{b_w,s}^{\epsilon'}]\le1,
+\tag{11.15}
+$$
+
+其中异向时等于一，同向异位时为 $(1-\alpha/k)^s$。
+若真似然大于 $e^h$ 且其余 $2M-1$ 个似然全小于 $e^h$，最大似然唯一地选中真参数。
+因此对 $h<\mu$，Chebyshev 不等式与逐候选 Markov 不等式给出统一界
+
+$$
+\max_{z,\epsilon}\mathsf P_{b_z,s}^{\epsilon}
+ \{(\widehat z,\widehat\epsilon)\ne(z,\epsilon)\}
+\le\frac{2\mu}{(\mu-h)^2}+(2M-1)e^{-h}.
+\tag{11.16}
+$$
+
+若 $\mu\ge(1+\varepsilon)\log M$，取 $h=(1+\varepsilon/2)\log M$。
+函数 $\mu/(\mu-h)^2$ 在 $\mu>h$ 上递减，故右边至多
+$8(1+\varepsilon)/(\varepsilon^2\log M)+2M^{-\varepsilon/2}$，趋于零。
+这个论证使用全部路径转移，不作独立边抽稀，且对任意 $r_d\in(0,1)$ 一致成立。
+
+最后，正项级数
+$\phi(r)=\sum_{j\ge1}r^{2j}/((2j)(2j-1))$ 给出
+
+$$
+0\le k\phi(r/k)\le\frac{\phi(r)}k.
+$$
+
+代回 $F_M$ 得到 (11.11)。再用 $\phi(r)\to\log2$（$r\to1$）
+及 $\phi(r)\sim r^2/2$（$r\to0$）得到两个端点尺度。$\square$
+

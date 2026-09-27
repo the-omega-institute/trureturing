@@ -1,0 +1,60 @@
+### 300.4 实际联合系数与统一整数条件
+
+固定取得 $K$ 个任务和 $K$ 个参考样本。条件于真实 $c,h$，
+$$
+I\sim\mathrm{Bin}(K,p_x),\quad
+J\sim\mathrm{Bin}(K,p_y),\quad I\perp J,
+$$
+$$
+x=hc,\quad y=h,\quad
+p_z=(1-z/C)/B.
+$$
+经验坐标为
+$$
+X_i=C(1-Bi/K),\qquad Y_j=C(1-Bj/K).
+$$
+两流使用同一网格。令
+$$
+S_i=\sum_{m=1}^d\frac{B^m}{m}\frac{(i)_m}{(K)_m},
+\quad \lambda_i=\log C-S_i,\quad
+\beta_{ij}=1+\frac{\lambda_i-\lambda_j}{D\kappa}.
+\tag{300.12}
+$$
+以下简记 $X=X_I$、$Y=Y_J$、$\beta=\beta_{IJ}$，并在同一经验网格上写 $\lambda(X_i)=\lambda_i$、$\lambda(Y_j)=\lambda_j$。
+
+给出统一常数的一个可行选择。置
+$$
+m_\star=h_\star e^{-3\kappa_0}>0,\qquad a_\star=m_\star/4,
+$$
+$$
+0<\alpha\le
+\min\left\{\frac1{8\kappa_0},
+\frac{m_\star}{32C_\star\kappa_0}\right\},
+\qquad d=\lfloor\alpha\kappa K\rfloor.
+\tag{300.13}
+$$
+因此 $d\le K/8$，且任一单流阶乘倾斜的经验均值下降至多
+$$
+BC\,d/K\le4C_\star\alpha\kappa_0\le m_\star/8.
+\tag{300.14}
+$$
+以下仅在固定远尾使用倾斜；近区由后面的点态超额处理。
+
+取固定 $K_0=K_0(h_\star)$，充分大到
+$$
+\frac{C_\star}{K_0}\le
+\min\{a_\star/2,\gamma h_\star/6\}.
+\tag{300.15}
+$$
+令 $t=K\kappa^2/w$。因为 $w\ge\kappa$，
+$$
+K\kappa\ge t,\qquad K\ge t/\kappa_0.
+\tag{300.16}
+$$
+统一取
+$$
+A_0\ge\max\{1,2/\alpha,\kappa_0K_0\}.
+\tag{300.17}
+$$
+以后要求 $t\ge A_0$，即同时保证 $K\ge K_0$、$d\ge1$ 及 $d\le K/8$。$m\le d$ 的下降阶乘分母均非零。
+

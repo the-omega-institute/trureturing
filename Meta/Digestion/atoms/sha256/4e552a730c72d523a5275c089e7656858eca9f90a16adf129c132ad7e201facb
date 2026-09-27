@@ -1,0 +1,8 @@
+**引理251.1（核内共同单射）。** 若 Hermitian 算子 $T$ 满足
+$$
+T=P_{\mathcal K}TP_{\mathcal K},
+\qquad\mathcal R_a(T)=\mathcal R_b(T)=0,
+\tag{251.25}
+$$
+则 $T=0$。
+

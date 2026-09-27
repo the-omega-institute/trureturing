@@ -1,0 +1,61 @@
+### 194.2 完整参考压缩保留标签偏置
+
+采用第192节正旗标 Kraus 记号，令 $r=1-\ell$，
+$U_j,V_j,W_j$ 仍由（192.5）前的振幅定义。置
+
+$$
+D=1-U_0-U_1,\qquad t=U_0-U_1,
+$$
+
+$$
+L_j=c_j^{\mathrm{in}}
+[\beta(V_j-U_j)+2\gamma W_j],
+\qquad
+f_j=U_j+\epsilon L_j,
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+$$
+
+于是 $f_j$ 是正确输出块与完整来源 $\Xi$ 的配对收益。
+第192节的共同 TP 恒等式为
+
+$$
+D=r\sum|c|^2+\ell\sum|b|^2+r\ell\sum|a-d|^2\ge0.
+\tag{194.4}
+$$
+
+对参考权重 $q$，将匹配标签差矩阵压缩到来源方向 $\Xi$，
+得到
+$P_{u_q}-\operatorname{diag}(qf_0,(1-q)f_1)$。
+取 $q=f_1/(f_0+f_1)$，其最高根给完整误差下界
+
+$$
+\begin{aligned}
+e
+&\ge1-\frac{f_0f_1}{f_0+f_1}\\
+&=\frac34+\frac D4-\frac{\epsilon(L_0+L_1)}4
++\frac{[t+\epsilon(L_0-L_1)]^2}{4(f_0+f_1)}.
+\end{aligned}
+\tag{194.5}
+$$
+
+若 $f_0+f_1=0$，将两个零分子商均取零，第一行取值为一，等式仍成立。这里使用的是允许的参考输入及数学压缩；解码器没有获得对 $M$ 的操作权限。
+
+记 $g=|\gamma|$、$B_*=\Sigma(\beta+2g)$。由
+$0\le U_j,V_j,f_j\le1$ 和 $|W_j|\le\sqrt{U_jV_j}$，有
+
+$$
+|L_0-L_1|\le B_*,
+\qquad
+0\le f_0+f_1\le2.
+$$
+
+利用 $(x+y)^2\ge x^2/2-y^2$，最后的非负项满足
+
+$$
+\frac{[t+\epsilon(L_0-L_1)]^2}{4(f_0+f_1)}
+\ge\frac{t^2}{16}-\frac{B_*^2\epsilon^2}{8}.
+\tag{194.6}
+$$
+
+该估计在零分母约定下同样成立。
+

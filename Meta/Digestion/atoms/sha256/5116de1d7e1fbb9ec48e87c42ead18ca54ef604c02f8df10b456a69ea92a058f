@@ -1,0 +1,68 @@
+### 272.1 整个参数区间上的正定来源
+
+参考空间为 $E=\mathbb C^n$，输入 $H$ 为qubit。所有联合块矩阵使用固定输入 $Y$ 本征基。令
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad M_t=I_n+tJ,\qquad0\le t\le\frac14.
+\tag{272.1}
+$$
+在Hermitian矩阵空间上定义
+$$
+\mathcal E_t(X)=t(J^\dagger X+XJ)+t^2J^\dagger XJ,
+\qquad a(t)=t+\frac{t^2}{2}\le\frac9{32}.
+\tag{272.2}
+$$
+因为 $\|J\|\le1$，$\|\mathcal E_t/2\|\le a(t)<1$。因此§268的Neumann构造在整个区间上给出唯一Hermitian解
+$$
+Q(t)=\frac12
+\left(\operatorname{Id}+\frac12\mathcal E_t\right)^{-1}(I_n),
+\qquad
+Q+M_t^\dagger QM_t=I_n.
+\tag{272.3}
+$$
+以下在不会混淆时省略 $Q$ 的参数。级数估计给
+$$
+\left\|Q(t)-\frac12I_n\right\|
+\le\frac{a(t)}{2(1-a(t))}
+\le\frac9{46},
+$$
+$$
+\boxed{
+\frac7{23}I_n\preceq Q(t)\preceq\frac{16}{23}I_n.
+}
+\tag{272.4}
+$$
+还可将收敛速度写成
+$$
+\left\|Q(t)-\frac12I_n\right\|
+\le\frac{18}{23}t.
+\tag{272.5}
+$$
+确实，$a(t)=t(1+t/2)$，$1+t/2\le9/8$，$1-a(t)\ge23/32$，代入即得。
+
+$M_t$ 可逆，故（272.3）还给 $0\prec Q\prec I_n$。定义
+$$
+T_t=
+\begin{pmatrix}
+Q&QM_t\\
+M_t^\dagger Q&M_t^\dagger QM_t
+\end{pmatrix}
+=
+\begin{bmatrix}I_n\\M_t^\dagger\end{bmatrix}
+Q
+\begin{bmatrix}I_n&M_t\end{bmatrix},
+$$
+$$
+\Omega_t=\frac1nT_t.
+\tag{272.6}
+$$
+它是秩 $n$、迹一的密度态，完整数据为
+$$
+\rho_t=\frac1nI_n,\qquad
+K_t=\mathscr K(\Omega_t)=\frac2nQM_t,
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{272.7}
+$$
+对每个固定 $n$，逆映射、矩阵乘法和正平方根均连续，因而 $Q(t)$、$\Omega_t$ 及下述矩阵表达式都在 $t=0$ 连续。
+

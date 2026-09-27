@@ -1,0 +1,49 @@
+### 61.5 二阶最优值的下界
+
+对任意最优修复的边缘参数 $p_\varepsilon$，已证区间给 $p_\varepsilon\le\varepsilon$。合法 $xz$ 事件又给
+
+$$
+p_\varepsilon\ge(\sqrt\varepsilon-e_\varepsilon)_+^2,
+\qquad e_\varepsilon<\frac98\varepsilon.
+$$
+
+因此，写 $p_\varepsilon=\varepsilon-\kappa_\varepsilon\varepsilon^{3/2}$ 时，有
+
+$$
+0\le\kappa_\varepsilon\le\frac94
+$$
+
+对充分小的 $\varepsilon$ 成立。单参数约化允许保留同一个 $p_\varepsilon$ 而取 $S_{p_\varepsilon}$ 为最优修复。
+
+若沿某个趋零子列有 $\kappa_\varepsilon\ge3/4+\eta$，其中 $\eta>0$ 固定，则式（61.8）、（61.9）的一致收敛会给
+
+$$
+\frac{e_\varepsilon}{\varepsilon}
+\ge F^+(3/4+\eta)+o(1)>\frac98,
+$$
+
+与已证上界矛盾。所以
+
+$$
+\limsup_{\varepsilon\downarrow0}\kappa_\varepsilon\le\frac34.
+\tag{61.16}
+$$
+
+第 58 节的固定全块事件 $E_*$ 对任意因果修复给准确下界
+
+$$
+D(R_\varepsilon,S)
+\ge\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\tag{61.17}
+$$
+
+代入最优参数并使用式（61.16），得到
+
+$$
+\liminf_{\varepsilon\downarrow0}
+\frac{e_\varepsilon-9\varepsilon/8}{\varepsilon^{3/2}}
+\ge-\frac9{16}.
+\tag{61.18}
+$$
+

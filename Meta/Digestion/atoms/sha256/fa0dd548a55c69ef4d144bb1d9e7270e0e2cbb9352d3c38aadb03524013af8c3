@@ -1,0 +1,53 @@
+**定义 71.1（带噪输出与有限列表）。** 保留第 68–69 章的原实验、完整窗口、
+均匀大小 $q$ 支持先验和精确中心。给定原始数据 $x$，记完整组计数后验为
+$\mathsf P_x$，正支撑为有限集 $\mathcal F_x$，并写
+
+```math
+\imath_x(n)=-\log_2\mathsf P_x(n),\qquad
+h_x=\mathbb E_x\imath_x(R),\qquad
+v_*=\frac{\ell}{2(\log2)^2}.
+```
+
+式 (71.1)。
+
+$h_x$ 是定理 68.8 的精确纤维熵。令 $t_x(n)$ 为定义 54.1 的原 $T_M$ 在计数元组 $n$ 上的值，
+仍使用全固定基数后验均值及原校准方差中心。观察
+
+```math
+Y=T_M+\sigma_M G,\qquad G\sim N(0,1),\qquad
+\sigma_M>0\text{ 为确定序列},\qquad
+\log^+(1/\sigma_M)=o(Q),
+```
+
+式 (71.2)。
+
+$G$ 独立于原始数据和完整标签。给定 $x$，以下概率包含 $R$ 与 $G$ 的同一联合律。
+其输出密度和输出后验为
+
+```math
+w_n(y)=\varphi_{\sigma_M}(y-t_x(n)),\qquad
+f_x(y)=\sum_{n\in\mathcal F_x}\mathsf P_x(n)w_n(y)>0,\qquad
+\mathsf P_x^y(n)=\frac{\mathsf P_x(n)w_n(y)}{f_x(y)}.
+```
+
+式 (71.3)。
+
+对整数 $K\ge0$，定义
+
+```math
+\Psi_x(K)=\sup_{\mathcal L:\,|\mathcal L_x(y)|\le K}
+ \mathbb P_x\{R\in\mathcal L_x(Y)\},\qquad
+C_x^0(K)=\max_{A\subseteq\mathcal F_x,\ |A|\le K}\mathsf P_x(A).
+```
+
+式 (71.4)。
+
+列表可随 $x,y$ 改变，其大小预算对所有输出相同。
+允许列表使用独立于原始数据、标签及 $G$ 的辅助随机性，大小约束对每次随机化都成立；
+成功率同时对该随机性平均。确定列表是其中的特例。
+称随机列表置换不变，是指保持奇偶类的站点置换作用于数据和计数目标时，
+其输出列表的条件分布按同一作用变换，即策略核等变。
+$\Psi_x$ 是对噪声输出平均的最优成功率；$C_x^0$ 是不使用新增输出的最优成功率。
+$K=0$ 时两者为零，$K\ge|\mathcal F_x|$ 时为一。
+这里没有假定标量映射 $t_x$ 单射，亦不需要第 68 章的超越性论证。
+

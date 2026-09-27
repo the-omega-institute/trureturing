@@ -1,0 +1,34 @@
+**最后三轮环境只有两类。**
+
+以下仅比较环境射线，写 $`\eta\parallel\xi`$ 表示同一射线。
+若 $`\eta_i\not\parallel\eta_j`$，则 $`D_i\cap D_j=\{0\}`$；
+若 $`\eta_i\perp\eta_j`$，则 $`D_i\perp D_j`$。两者均由固定
+$`V`$ 等距及相应输出张量子空间直接得到。
+若 $`\langle\eta_i,\eta_j\rangle\ne0`$，不同输入位的正交性给
+
+$$
+G_i\perp Q_j,\qquad Q_i\perp G_j.
+\tag{26.12}
+$$
+
+如果 $`\langle\eta_3,\eta_4\rangle\ne0`$，则
+$`Q_4\perp G_3+G_4`$。五维 $`K`$ 中 $`\dim Q_4=2`$，因此
+$`\dim(G_3+G_4)\le3`$，所以 $`G_3\cap G_4\ne\{0\}`$。
+该非零交空间在第四、五轮均作为一位输入，固定 $`V_1`$ 强制
+$`\eta_4\parallel\eta_5`$。
+
+余下设 $`\eta_3\perp\eta_4`$。若 $`\eta_5`$ 与两者均不同射线，且与两者内积均非零，则由（26.12）仍有
+$`Q_5\perp G_3+G_4`$，继而同样得到
+$`\eta_4\parallel\eta_5`$，矛盾。所以 $`\eta_5`$ 必正交于
+$`\eta_3`$ 或 $`\eta_4`$ 中至少一个。
+若正交于 $`\eta_3`$，则 $`D_3`$ 同时正交于 $`D_4,D_5`$，
+而不同环境射线又给 $`D_4\cap D_5=\{0\}`$。于是三者总维数为十二，超过 $`\dim(K\otimes B)=10`$。正交于 $`\eta_4`$ 的情形相同。
+
+因此只剩
+
+$$
+\boxed{\eta_4\parallel\eta_5\quad\text{或}\quad
+\eta_3\parallel\eta_5\perp\eta_4.}
+\tag{26.13}
+$$
+

@@ -1,0 +1,92 @@
+**定理 82.1（保留完整接口的纯暗态修复）。** 存在同输入、同记录及同量子输出空间的完整仪器 $\widetilde\Gamma=(\widetilde{\mathcal N},\widetilde{\mathcal C})$，满足
+
+$$
+\boxed{
+\widetilde{\mathcal N}(P)=P,\qquad
+\widetilde{\mathcal C}(P)=0,\qquad
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond
+\le\sqrt{\varepsilon}.
+} \tag{82.1}
+$$
+
+这是一个通道存在与距离定理。它不宣称不知道 $\Gamma$ 或 $\psi$ 时，单靠一次读数即可实施修复。
+
+证明。取有限 Stinespring 等距
+
+$$
+V:\mathcal H\longrightarrow\mathcal K\otimes\mathcal E,\qquad
+\Gamma(X)=\operatorname{Tr}_{\mathcal E}(VXV^\dagger),
+\qquad v=V\psi.
+$$
+
+标准等距表示见 Watrous《The Theory of Quantum Information》[推论 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf#page=97)。设
+
+$$
+\Pi_y=|y\rangle\langle y|\otimes I_{\mathcal E},
+\qquad \|\Pi_yv\|^2=\alpha.
+$$
+
+若 $\alpha=1$，输出 $\Gamma(P)$ 已完全支撑于一维空间 $\mathbb Cy$，故等于 $|y\rangle\langle y|$，直接取 $\widetilde\Gamma=\Gamma$。
+
+若 $0<\alpha<1$，令 $w=\Pi_yv/\sqrt\alpha$；若 $\alpha=0$，在 $\mathbb Cy\otimes\mathcal E$ 中任选单位向量 $w$。两种情形均有
+
+$$
+w=y\otimes e,\qquad
+\langle v,w\rangle=\sqrt\alpha,
+\qquad
+\theta=\arccos\sqrt\alpha\in(0,\pi/2].
+$$
+
+在 $v,w$ 张成的复二维平面中，令
+
+$$
+u=\frac{w-\cos\theta\,v}{\sin\theta}.
+$$
+
+于是 $v,u$ 正交归一，且 $w=\cos\theta\,v+\sin\theta\,u$。定义酉算子 $U$：
+
+$$
+Uv=\cos\theta\,v+\sin\theta\,u,\qquad
+Uu=-\sin\theta\,v+\cos\theta\,u,
+$$
+
+并在该平面的正交补上取恒等。它满足 $Uv=w$，以及整个联合空间上的算子不等式
+
+$$
+\frac{U+U^\dagger}{2}\ge\cos\theta\,I
+=\sqrt\alpha\,I. \tag{82.2}
+$$
+
+令 $V'=UV$，并先构造通道 $\Xi(X)=\operatorname{Tr}_{\mathcal E}(V'XV'^\dagger)$。它在输入 $P$ 上输出 $|y\rangle\langle y|$，但对其他输入未必已经在记录基中分块。以 $\mathcal P$ 表示实际记录空间上的去相干通道，置
+
+$$
+\widetilde\Gamma=\mathcal P\circ\Xi.
+$$
+
+这样所得通道重新具有两个 CP 记录分支，且 $P$ 的目标输出不变。因为 $\Gamma$ 原先已经是记录分块通道，$\mathcal P\circ\Gamma=\Gamma$。
+
+下面控制包含任意有限参考系统的完整距离。对任意纯联合输入 $\zeta\in\mathcal R\otimes\mathcal H$，设 $z=(I_{\mathcal R}\otimes V)\zeta$。式 (82.2) 给
+
+$$
+\operatorname{Re}\langle z|(I_{\mathcal R}\otimes U)z\rangle
+\ge\sqrt\alpha.
+$$
+
+两个归一化纯态的半迹距离因而满足
+
+$$
+\begin{aligned}
+D\!\left(
+|z\rangle\langle z|,
+(I_{\mathcal R}\otimes U)|z\rangle\langle z|
+(I_{\mathcal R}\otimes U^\dagger)
+\right)
+&=\sqrt{1-\left|\langle z|(I_{\mathcal R}\otimes U)z\rangle\right|^2}\\
+&\le\sqrt{1-\alpha}.
+\end{aligned}
+$$
+
+偏迹及记录去相干都是 CPTP 映射，不增加此距离。混合联合输入由凸性包含；通道差的纯联合输入表征见第 73 节所引 Watrous 定理 3.51。因此得到式 (82.1) 的完整 half-diamond 界。$\square$
+
+证明中的环境是同一次调用的等距表示，并非新增的持久活动记忆。按同一个修复仪器逐轮重复时，从 $P$ 出发每轮仍为 $P$ 且始终未点击；不需要把环境指标变成观察者记录。
+

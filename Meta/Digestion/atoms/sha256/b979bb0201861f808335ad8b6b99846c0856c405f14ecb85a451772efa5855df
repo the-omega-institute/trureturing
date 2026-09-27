@@ -1,0 +1,57 @@
+**定理172.2（不能由任何常值通道消去的残留）。** 有
+
+$$
+\boxed{
+\inf_\sigma d_\diamond(\Theta_L,\mathcal C_\sigma)
+=\frac{d_L}{2},
+\qquad
+\sigma_{\mathrm{mid}}=\frac{\tau_0+\tau_1}{2}
+\ \text{达到最小值}.
+}
+\tag{172.16}
+$$
+
+**证明。** 三角不等式给
+
+$$
+d_L\le D(\tau_0,\sigma)+D(\sigma,\tau_1)
+\le2\max_jD(\tau_j,\sigma).
+$$
+
+取中点 $\sigma_{\mathrm{mid}}$，迹范数的齐次性使两距离都等于
+$d_L/2$，达到下界。证毕。
+
+这个半径在联合编码及逻辑旋转后仍保持：对任意相位 $\varphi$，
+
+$$
+\boxed{
+\inf_{\Sigma\in\mathcal D(MQR)}
+d_\diamond\!\left(
+\mathfrak E\operatorname{Ad}_{U_\varphi}\Theta_L,
+\mathcal C_\Sigma
+\right)
+=\frac{d_L}{2}.
+}
+\tag{172.17}
+$$
+
+上界由编码后的中点达到。对任意候选常值状态 $\Sigma$，后接联合
+CPTP 通道
+$\operatorname{Ad}_{U_\varphi}^{-1}\Lambda_{\mathrm{joint}}$
+会把它变成某个逻辑常值通道，并把编码主项还原成 $\Theta_L$。通道收缩与（172.16）给下界。这一证明使用联合映射来比较范数，没有将它加入接收端读出权限。
+
+到集合的距离对 $d_\diamond$ 是一阶 Lipschitz。由第170节，
+
+$$
+\boxed{
+\left|
+\inf_\Sigma d_\diamond(\mathcal R_{L+k},\mathcal C_\Sigma)
+-\frac{d_L}{2}
+\right|\le\varepsilon_k.
+}
+\tag{172.18}
+$$
+
+所以真实通道与其最佳常值近似之间仍有严格正的渐近半径。局部接收通道也有对应结论：在固定相位，其最近常值半径为
+$\mathfrak d_L(\varphi)/2$，直接对两份局部输出重复（172.15）—（172.16）即可。
+

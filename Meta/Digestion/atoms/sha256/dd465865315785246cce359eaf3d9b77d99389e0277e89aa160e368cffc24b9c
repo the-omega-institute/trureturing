@@ -1,0 +1,59 @@
+**$ABAAC$。** 普通第3轮给 $G_3=P$，其后继为 $A$；（128.8）使 $G_4$ 的一位像也为 $Q\otimes A$，故 $G_4=P$。实际零位像为 $V_0H_2=P\otimes B$、$V_0H_3=P\otimes A$。
+
+置 $r=|\langle A,B\rangle|>0$，正值来自普通 $B\ne Y=A^\perp$。同一个单位 $w\in H_2\cap G_2$ 满足 $\|P_{H_3}w\|=r$；$G_2,G_3$ 的一位环境分别为 $B,A$，给 $\|P_{G_3}w\|\le r$。当前第3轮普通，所以 $Q_3=Q\perp U\ni w$。后期严格投影再次给 $r<r$，矛盾。
+
+### 128.7 ABACA 的同一个首轮向量与两次投影夹逼
+
+此词仍有 $X=A$，并满足（128.8）。两个普通当前平面为 $G_3=G_5=P$，都具有后继 $A$，所以
+
+$$
+V_1P=Q\otimes A,\qquad Q_4=Q_6=Q.
+$$
+
+同时 $V_1G_2=Q\otimes B$、$V_1G_4=Q\otimes C$，并且 $G_2+G_4=U$。
+
+先置 $r=|\langle B,C\rangle|$。零位像 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$ 给同一单位 $w\in H_2\cap G_2$ 的精确读数 $\|P_{H_4}w\|=r$；一位等距给 $\|P_{G_4}w\|\le r$。由于 $Q_4=Q\perp U\ni w$，若 $r>0$，后期严格投影产生矛盾。故
+
+$$
+B\perp C,\qquad G_2\perp G_4,\qquad H_2\perp H_4.
+\tag{128.9}
+$$
+
+这里 $B,C$ 都普通，它们彼此正交仍须继续检验，不能仅以此排除。
+
+$u\in G_2$ 与 $H_4\subset G_4\oplus Q$ 使 $u\perp H_4$。真实 $a^2u+bv\in H_2$、$b\ne0$ 结合（128.9）给 $v\perp H_4$。一位 $A$ 纤维是 $U^\perp=Q\oplus J$，所以 $v\in Q\oplus J$。$J\perp U\oplus Q$，特别 $J\perp H_4$；因此 $P_Qv\perp H_4$。后期 $P_QH_4=Q$ 迫使
+
+$$
+P_Qv=0.
+$$
+
+真实 $V_1p=v\otimes A$ 遂正交于 $Q\otimes F=V_1U$，故 $p\perp U$。又 $p\in S\perp Q$，所以 $p\perp H_4$。
+
+最后比较真实零位像 $V_0p=u\otimes A$ 与 $V_0H_4=P\otimes C$。普通 $C\ne A^\perp=Y$ 使 $\langle A,C\rangle\ne0$，所以 $p\perp H_4$ 迫使 $u\perp P$。另一方面，同一个一位等距满足
+
+$$
+V_1G_2=Q\otimes B,\qquad V_1P=Q\otimes A,
+\qquad \langle A,B\rangle\ne0.
+$$
+
+因此 $P_P|_{G_2}$ 单射：若 $x\in G_2$ 正交于 $P$，写 $V_1x=y\otimes B$，它正交于整个 $Q\otimes A$，非零环境内积迫使 $y=0$，进而 $x=0$。非零单位 $u\in G_2$ 不可能正交于 $P$，矛盾。$ABACA$ 完整排除。
+
+### 128.8 最后两个普通尾部与完整结算
+
+余下 $X=A$ 的词只有 $AABCC,ABCCC$。两词都使 $G_4=G_5=G_6=P$，末两份零位像同处环境 $C$，所以 $H_4=H_5$。相同空间对 $(H_4,G_4)=(H_5,G_5)$ 违反实际 $\delta_4\ne\delta_5$。
+
+十三个必要尾词已全部排除：$ABCAB$ 无合法大侧标签，$X=B$ 的六词由第128.3—128.5节排除，$X=A$ 的六词由第128.6—128.8节排除。反设 $Y$ 不在尾部不成立，定理128.1得证。所用实际来源差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\quad y=|b|^2,\quad
+ t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+本节排除的是小零位方向 $Y$ 只在首轮出现、尾部采用大侧 $X$ 与两个普通方向的全部三尾形态。仍须检验 $Y$ 在尾部实际出现的正交 $2+1$ 候选，以及其他未结算分支；本节没有给出七维实现，也没有排除全部七维接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

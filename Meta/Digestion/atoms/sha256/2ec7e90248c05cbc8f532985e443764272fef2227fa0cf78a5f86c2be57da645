@@ -1,0 +1,40 @@
+**定理 54.1（量子比特返回的随机截止响应）。** 对第 46 节的仪器和共同初态 $P_0$，有
+
+$$
+\boxed{
+a_\eta(\gamma)=1-\frac{\gamma\eta}{\eta+q\gamma},\qquad
+c_\eta(\gamma)=1+\frac{q\gamma}{\eta+q\gamma},
+\qquad q=1-\eta.
+}
+$$
+
+其中 $0\le\gamma\le1$、$0<\eta\le1$。特别地，
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}(1-a_\eta(\gamma))=\eta,
+\qquad
+\sup_{0\le\gamma\le1}|\mathbb E_\gamma\mathsf N-c_\eta(\gamma)|=1.
+}
+$$
+
+证明。将第 46.2 条的等待律代入生成函数：
+
+$$
+a_\eta(\gamma)
+=1-\gamma+\frac{q\gamma^2}{1-q(1-\gamma)}
+=1-\frac{\gamma\eta}{\eta+q\gamma}.
+$$
+
+零参数时也直接成立。成本式由第 50.3 条，或对 $q^m s_m$ 求和得到。
+
+函数 $\gamma\eta/(\eta+q\gamma)$ 随 $\gamma$ 单调增加，在 $\gamma=1$ 取得最大值 $\eta$。对正 $\gamma$，原始均值为二，故
+
+$$
+2-c_\eta(\gamma)=\frac{\eta}{\eta+q\gamma};
+$$
+
+固定 $\eta$ 后令正 $\gamma\downarrow0$，上确界为一。零参数时原始均值和截止成本都为一，差为零。$\square$
+
+这份来源上，截止前点击概率一致趋向一；实际成本却不能一致逼近原始均值。所有原始模型都最终必点击，所以这种非一致性完全不需要永久未点击质量。
+

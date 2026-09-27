@@ -1,0 +1,34 @@
+**定义 126.1（两个扇区的时间系数与准备映射）。** 对 Borel 集 $E\subseteq[0,\infty)$，置
+
+$$
+\alpha(E)=\mathbf 1_{\{0\in E\}},
+\qquad
+\beta(E)=\int_Ee^{-t}\,dt.
+$$
+
+定义两个固定的完全正映射
+
+$$
+\mathsf F(X)=\operatorname{Tr}(Q_*X)P_0,
+\qquad
+\mathsf S(X)=\operatorname{Tr}(P_*X)\zeta.
+$$
+
+这里的 $\mathsf F$ 与 $\mathsf S$ 分别表示快速和慢速边界扇区的点击后继。定义极限标记仪器为
+
+$$
+\boxed{
+\mathbf M_\infty(E)=\alpha(E)\mathsf F+\beta(E)\mathsf S.
+}
+\tag{126.1}
+$$
+
+这一定义直接给出一个算子值测度。它不是把有限 $j$ 的离散测度在每个 Borel 集上逐点取极限所得的额外断言；第 123 节的弱极限含义是，对每个固定有界连续 $f$，有
+
+$$
+\mathbf M_\infty[f](X)
+=f(0)\mathsf F(X)
++\left(\int_0^\infty f(t)e^{-t}\,dt\right)\mathsf S(X).
+\tag{126.2}
+$$
+

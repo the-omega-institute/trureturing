@@ -1,0 +1,29 @@
+### 285.1 固定来源关系，只改变可接入的系统
+
+本节沿用§284的全部来源参数：$n\ge1$，$0<\delta\le1/4$，
+$$
+M=I_n+J_n/4,\qquad Q+M^\dagger QM=I_n,
+\qquad q_-I_n\preceq Q\preceq(1-q_-)I_n,
+\qquad q_-=7/23,
+$$
+$$
+Vx=|0\rangle\otimes x+|1\rangle\otimes M^\dagger x,
+\qquad\Omega_n=VQV^\dagger/n,
+\qquad\tau_n=I_{2n}/(2n).
+\tag{285.1}
+$$
+这里 $|0\rangle,|1\rangle$ 表示固定输入 $Y$ 本征基。设
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),
+\qquad\Omega_{n,\phi}=(U_\phi\otimes I_n)\Omega_n(U_\phi^\dagger\otimes I_n),
+$$
+$$
+\Omega_{n,\delta,\phi}=(1-\delta)\Omega_{n,\phi}+\delta\tau_n.
+\tag{285.2}
+$$
+每块独立抽取Haar相位 $\phi$，只在该块两份来源中共同使用；条件于相位，两份独立。两假设为理想来源与扰动来源，先验各为 $1/2$。
+
+来源和相位刷新规则都与§284相同，但现在允许保存每份完整原输入 $H\otimes E_n$，并对它们及旧记忆共同操作，不必先经过reset。记平均错误不超过 $1/3$ 所需的最小确定最大完整块副本数为 $N_{\rm full,2}(n,\delta)$。每块两份，所有已消费位置计费；提前停止可补齐忽略结果的块。相位环境仍不可访问，初始资源仍与假设无关。
+
+下界允许对所有原输入作任意共同测量；上界仅需在每个真实两份块内作一个已知投影。此访问改变必须与§284的重置后参考访问分开。
+

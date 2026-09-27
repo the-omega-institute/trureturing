@@ -1,0 +1,38 @@
+**定义 24.1（初选后的振幅估计与再筛选）。** 对定义 22.1 的两组初选集合
+$`A_+,A_-`$ 及基数 $`R_+,R_-`$，取基数较大的方向
+$`\widehat\varepsilon`$，相等时取正向。置
+$`A=A_{\widehat\varepsilon}`$、$`R=|A|`$；以下计数均按这个方向对齐。
+若 $`R=0`$，输出 $`\widetilde S=\varnothing`$。若 $`R\ge1`$，令
+
+```math
+\epsilon_M=\min\{1/4,\ell^{-1}\},\qquad
+U_A=\sum_{x\in A}(N_{x,+}+N_{x,-}),\qquad
+V_A^{\mathrm{obs}}=\sum_{x\in A}(N_{x,+}-N_{x,-}),
+```
+
+式 (24.1)。
+
+并定义
+
+```math
+r_A=
+\begin{cases}V_A^{\mathrm{obs}}/U_A,&U_A\gt0,\\[0pt]1/2,&U_A=0,\end{cases}
+\qquad
+\widehat r=\min\{1-\epsilon_M,\max\{\epsilon_M,r_A\}\}.
+```
+
+式 (24.2)。
+
+以 $`Z_x(u)=N_{x,+}\log(1+u)+N_{x,-}\log(1-u)`$ 为分数，取
+
+```math
+C=\{x\in C_+:Z_x(\widehat r)\ge\log(M/R)\},\qquad
+K=\min\{M,2R\}.
+```
+
+式 (24.3)。
+
+当 $`|C|\le K`$ 时置 $`\widetilde S=C`$；否则保留 $`C`$ 中分数最大的
+$`K`$ 项，边界并列时均匀随机。方向估计仍为 $`\widehat\varepsilon`$。
+该规则只使用维数和同一份观测；初选、估计和再筛选均未引入参数或额外样本。
+

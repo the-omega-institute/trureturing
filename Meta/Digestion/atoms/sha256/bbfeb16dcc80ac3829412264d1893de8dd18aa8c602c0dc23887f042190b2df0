@@ -1,0 +1,55 @@
+### 251.1 固定接口、理想响应与唯一性的量词
+
+固定输入 $H=\mathbb C^2$、已声明的有限维参考空间 $E$ 及§248的通道参数。取
+$$
+A\ge B>0,\qquad b_0^2=B,\qquad
+\ell=\sqrt{A+B},\qquad
+D=\frac\ell2,\quad U=\frac{\sqrt A}{2},\quad\delta=D-U.
+\tag{251.1}
+$$
+在已标定的输入基中，令
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{251.2}
+$$
+这里 $X,Z$ 是实 Pauli 矩阵，$Y^{\mathsf T}=-Y$，而 $b_0$ 允许为负。对任意联合算子 $T$，定义线性响应
+$$
+\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T],
+\qquad w=a,b.
+\tag{251.3}
+$$
+固定一个满足§248饱和条件的源态
+$$
+\Omega\succeq0,\quad\operatorname{Tr}\Omega=1,\quad
+E_F(\Omega)=\theta\in(0,1),\quad
+ g(\Omega)=U+\delta\theta,
+\tag{251.4}
+$$
+并给定两份完整 Hermitian 矩阵
+$$
+R_a=\mathcal R_a(\Omega),\qquad R_b=\mathcal R_b(\Omega).
+\tag{251.5}
+$$
+本节证明的结论为
+$$
+\boxed{
+\left\{\Xi\succeq0:\operatorname{Tr}\Xi=1,
+\ \mathcal R_a(\Xi)=R_a,
+\ \mathcal R_b(\Xi)=R_b\right\}
+=\{\Omega\}.
+}
+\tag{251.6}
+$$
+集合中的全部态作用于同一已声明接口 $H\otimes E$。等式不涉及未纳入该接口的额外环境系统。
+
+若 $r=\dim E$，一份 Hermitian 响应矩阵包含 $r^2$ 个实坐标。给定参考端任意 Hermitian 基 $\{B_j\}_{j=1}^{r^2}$，完整响应等价于知道
+$$
+\operatorname{Tr}[B_jR_w]
+=\operatorname{Tr}[(A_w\otimes B_j)\Omega]
+\qquad(w=a,b;\ 1\le j\le r^2).
+\tag{251.7}
+$$
+因此“两份响应”包含两组矩阵层析数据，其取得合同必须覆盖这些参考坐标。
+

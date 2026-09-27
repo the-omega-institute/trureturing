@@ -1,0 +1,1 @@
+- `D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.lean` 的 `expand` 展开零、$10$ 与终止尾；`decode_expand`、`expandCode_injective`、`expand_compressLegalWord`、`compressLegalWord_expand` 给该代码层双向关系。其 `LegalWord` 定义为展开像，禁止相邻一的独立语言刻画还须结合下一项。

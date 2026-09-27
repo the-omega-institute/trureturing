@@ -1,0 +1,45 @@
+### 147.1 同一来源的二维混合曲线
+
+固定已知非退化来源，令
+
+$$
+p=|b|^2\in(0,1),\qquad
+R_0=|m_0\rangle\langle m_0|,\qquad
+R_1=|0\rangle\langle0|,\qquad
+|\langle m_0,0\rangle|^2=1-p.
+$$
+
+对 $0<w<1$ 定义
+
+$$
+\rho_p(w)=(1-w)R_0+wR_1,\qquad
+v_p=\frac p{1+p},\qquad
+\rho_*=\rho_p(v_p).
+\tag{147.1}
+$$
+
+第11节的真实启动边缘可写为
+
+$$
+\begin{aligned}
+\rho_{0,T}&=\rho_p(w_{0,T}),&
+w_{0,T}&=\frac p{1+p}-\frac p{1+p}(-p)^{T-1},\\
+\rho_{1,T}&=\rho_p(w_{1,T}),&
+w_{1,T}&=\frac p{1+p}+\frac1{1+p}(-p)^{T-1}.
+\end{aligned}
+\tag{147.2}
+$$
+
+它们是同一来源执行 $T$ 轮后的两份活动记忆边缘。相应的共同档案编码保留初始逻辑标签及其与参考的相干，不是分别选择两份互不相容的纯化。
+
+对整数 $T\ge3$，置
+
+$$
+\delta_T(p)=
+\max_{i=0,1}
+\left\|\sqrt{\rho_p(w_{i,T})}-\sqrt{\rho_p(v_p)}\right\|_{\mathrm{HS}}.
+\tag{147.3}
+$$
+
+这是同一固定基下规范平方根的距离。已知相位改变只引起所有矩阵的共同酉共轭，所以该量只依赖 $p$。
+

@@ -1,0 +1,14 @@
+## 19. 来源、核验与范围
+
+第 15 节依赖的 Wedderburn 结构和除环矩阵单位是 literature-attested；从它们推出 n b_H 的最优统一界、全部指数同增广正系数实现以及 Q_8/D_8 的停止界差异，在本文给出证明，按 repo-derived 收录。第 16 节的矩形幂恒等式与秩不等式属于标准代数构件，其对本卷群环证书和幂零轮廓的应用在此完整证明。第 17 节使用标准特征标正交关系与第 13.2 条的实际计数；惰性下全部扭曲周期数据的塌缩以及其与证书深度的分离在此推导。第 18 节的逐块高次时间编码、共同编码的互素时间条件及无重叠编码刚性均有直接证明。
+
+[^rrosft3-matrixunits]: Gurmeet Kaur Bakshi and Jyoti Garg, *Matrix units in the simple components of rational group algebras*, [arXiv:2406.10113v1](https://arxiv.org/html/2406.10113v1)，2024-06-14。引言说明 QG 的简单分量为除环上的矩阵代数，§2 说明 Schur 指数，§3 在广义强单项且具有素 Schur 指数的指定分量上构造矩阵单位；仅使用这些明确范围。另参见 Ram Karan Choudhary and Sunil Kumar Prajapati, *A Combinatorial Technique for the Wedderburn Decomposition of Rational Group Algebras of Nested GVZ p-groups*, [arXiv:2509.23349v1](https://arxiv.org/html/2509.23349v1)，2025-09-27：其组合分解针对文中限定的奇素数群类，不作为任意群分解的通用算法。
+
+Epperlein, *Eventual conjugacy of free inert G-SFTs*, 2026-05-25，[DOI:10.1017/etds.2026.10309](https://doi.org/10.1017/etds.2026.10309)，Theorem 5.2、Remark 5.3 与 §6，是惰性及 eventual 共轭的外部锚。第 15 节细化其 n(|H|-1) 界与本卷 n d_* 界；第 18.1 条只是同一增广矩阵下的显式特殊情形，不替代其一般 SE 增广的定理，也不解决其原时间自由惰性作用问题。Bilich–Dor-On–Ruiz, *Shift equivalence relations through the lens of C*-correspondences*, 2026-09-04，[DOI:10.1007/s00208-026-03544-z](https://doi.org/10.1007/s00208-026-03544-z)，Definitions 2.1、3.2、Theorem 3.5、Remark 3.8，界定了第 16 节短证书限制所针对的输入，不将 SE 方程误写成完整路径对齐。
+
+文献检索覆盖 inert/Wedderburn、inert/Schur、nilpotency/Schur index、群代数矩阵单位与 shift-equivalence 证书范围。未定位到与第 15 至 18 节全部组合陈述相同的结果；这不足以证明全球原创性。本卷不据此宣称首次解决公开问题。第 15.3 条的最优性只指固定群 H、固定矩阵阶 n、允许所有非负整数群系数时的统一均匀化界，不指最短 SSE 链或最早实际动力学共轭时间。
+
+有限核验使用有理数、整数和有限群乘法表，不设浮点数接受阈值，固定种子为 2026091703。在 C_2、D_8、Q_8、S_3 上分别检查 n=1,2,3,4，共 16 组同增广族、60 个严格正系数矩阵；每组覆盖从一到 n b_H 的全部指数。检查包括群表结合律、所用有理坐标映射的可逆性、逐幂均匀化、A^j=U^j+N^j、高次幂相等，以及总计 2360 个扭曲周期等式。对 D_8、S_3 的 24 对随机矩形因子验证 192 条非平凡块秩不等式。另检查 Q_8 的单周期误判例与 D_8 的严格正系数例；对后者的全部二边、三边路径建立保总群标记双射并验证 4352 个逆恢复和标记等式，返回两个具体输入，分别见证二步/三步分块编码不同以及二步分块编码不与一步时间交换。
+
+有限检查没有穷尽全部群、呈示或块双射。特别，D_8 的一组计算中块编码不相等不能替代定理 18.3 至 18.4 关于全部此类编码的证明。一般原时间群共轭及无界路径证书存在性仍未判定。后续数学义务是构造允许重叠窗口的原时间对齐，并保留实际路径见证；本文已给出不能由周期计数或独立保边界分块代替这项义务的精确理由。
+

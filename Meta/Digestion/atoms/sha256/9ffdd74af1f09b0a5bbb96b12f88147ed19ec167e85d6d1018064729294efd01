@@ -1,0 +1,10 @@
+**证明及算法。** 全层概率之和为一，故 $v_n\ge1/B_n=w_n$；最大值必须取整个完整层，不需要先找 $R_n$。将命题 4.1.2 中所有 $w_{n,i}$ 取为 $w_n$，有 $D_n=v_n/w_n$，立即得到夹逼；其证明允许 $R_n$ 内有零质量切片。
+
+设全部查询近似的最大值为 $z_n$，令 $\widetilde v_n=\max(w_n,z_n)$。有限最大值及截断均不增加误差，所以 $|\widetilde v_n-v_n|\le\eta$。由两者至少为 $w_n$，
+$$
+\left|\frac{w_n}{\widetilde v_n}-\frac{w_n}{v_n}\right|
+=\frac{w_n|\widetilde v_n-v_n|}{\widetilde v_nv_n}
+\le\frac\eta{w_n}=2^{-k-2}.
+$$
+再加 $a_n-M\le w_n\le2^{-k-2}$，总误差至多 $2^{-k-1}<2^{-k}$。这给具体的 $B_{k+2}$ 次条件概率查询，适用于全二进及最终二进情形，均不先恢复延拓。证毕。
+

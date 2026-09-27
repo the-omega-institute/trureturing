@@ -1,0 +1,10 @@
+**推论 230.3（目标容量）。** 若 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge
+\left\lceil\frac d r\right\rceil.}
+\tag{230.HR.19}
+$$
+证明：若目标自身的分支秩 $k$ 满足 $rk<d$，在定理 230.2中取 $\mathcal S=\mathcal R$，即得 $0\ge\alpha>0$，矛盾。因此 $rk\ge d$，给出整数下界。$\square$
+
+完整记录通道的 Choi 矩阵在标签方向上是分支 Choi 矩阵的正交直和，其秩为各分支秩之和。因此（230.HR.19）也给完整通道 Kraus 容量的下界，但它首先约束的是指定分支。
+

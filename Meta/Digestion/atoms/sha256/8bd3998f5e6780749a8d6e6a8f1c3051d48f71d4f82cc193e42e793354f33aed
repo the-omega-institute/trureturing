@@ -1,0 +1,34 @@
+### 76.5 完整缺陷是秩一正交投影
+
+令 $X=L_0L_0^*$、$Y=L_1L_1^*$。由（76.6），
+$$
+X=\operatorname{diag}(1,0,2/3),\qquad
+Y=\operatorname{diag}(0,1,2/3),\qquad
+L_1L_0^*=|u_1\rangle\langle u_0|.
+\tag{76.11}
+$$
+故
+$$
+MM^*=
+\begin{pmatrix}
+X+Y/2&|u_1\rangle\langle u_0|/2\\
+|u_0\rangle\langle u_1|/2&X/2+Y
+\end{pmatrix},
+$$
+$$
+I-MM^*=
+\frac12
+\begin{pmatrix}
+|u_1\rangle\langle u_1|&-|u_1\rangle\langle u_0|\\
+-|u_0\rangle\langle u_1|&|u_0\rangle\langle u_0|
+\end{pmatrix}
+=hh^*,
+\tag{76.12}
+$$
+其中
+$$
+h=\frac{u_1\otimes e_0-u_0\otimes e_1}{\sqrt2}
+$$
+为单位向量。因此 $I-MM^*$ 是秩一正交投影，$MM^*\preceq I$ 且 $d=1$。（76.10）却使每条非零纤维的秩为 $2>d$，完成定理76.3的反例。证明完毕。
+
+

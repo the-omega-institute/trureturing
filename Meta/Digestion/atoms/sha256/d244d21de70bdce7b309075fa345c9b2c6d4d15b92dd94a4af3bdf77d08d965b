@@ -1,0 +1,47 @@
+### 300.3 比较函数和统一几何间距
+
+令
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\quad
+\bar\eta=\min(\eta,1/2),\quad
+D=3-\bar\eta/2\in[11/4,3),
+\qquad L(c)=1+\frac{\log c}{D\kappa}.
+$$
+则
+$$
+L(r)\le1,\qquad L(kr)>0,\qquad
+L(r)-L(kr)=1/D\ge1/3+\bar\eta/18.
+\tag{300.9}
+$$
+而
+$$
+g/\kappa\le\eta\le4g/(3\kappa),\qquad g<\kappa,
+$$
+所以
+$$
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g)
+\tag{300.10}
+$$
+在整个参数域一致。
+
+使用阈值
+$$
+t_0=k^{43/16},\quad v_-=k^{21/8},\quad v=k^{5/2},
+\quad u=k^{1/2},\quad u_+=k^{1/4}.
+$$
+它们满足
+$$
+k^3<k^{11/4}<t_0<v_-<v<k^2<k<u<u_+<1.
+$$
+取
+$$
+\gamma=e^{-3\kappa_0}/16.
+$$
+以下全部差值均至少为 $\gamma\kappa$：
+$$
+t_0-k^{11/4},\quad v_--t_0,\quad v-v_-,
+\quad k^2-v,\quad u-k,\quad u_+-u,\quad1-u_+.
+\tag{300.11}
+$$
+这是指数区间 $[0,3]$ 上、指数差至少 $1/16$ 的积分下界。又因为 $D\ge11/4$，$k^D\le k^{11/4}$。
+

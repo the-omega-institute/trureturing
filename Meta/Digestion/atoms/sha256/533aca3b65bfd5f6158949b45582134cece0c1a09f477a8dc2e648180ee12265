@@ -1,0 +1,4 @@
+**$XXZXY$。** 普通第4轮给 $G_4=P$，其后继为 $X$；$G_5\subset U$ 的后继为 $Y$，故 $G_5=T$。$G_2\subset U$ 的后继为 $X$，遂有 $G_2=P$。$G_3\subset U$ 的后继是普通 $Z$，沿 $U=P\oplus T$ 用（132.6）得到 $Q_3=Q$。
+
+令 $c=|\langle X,Z\rangle|>0$。真实 $V_0p=u\otimes X$、$u\in P$ 与 $V_0H_3=P\otimes Z$ 给 $\|P_{H_3}p\|=c$；$V_1p=v\otimes X$ 和 $V_1G_3=Q\otimes Z$ 给 $\|P_{G_3}p\|\le c$。又 $p\perp Q_3=Q$，后期 $H_3\cap G_3=0$ 使非零 $G_3$ 投影严格缩短，得到 $c<c$ 的矛盾。
+

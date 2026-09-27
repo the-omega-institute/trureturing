@@ -1,0 +1,2 @@
+**证明。** 给定（251.6）左侧的任意 $\Xi$，由（251.24）得 $\operatorname{supp}\Xi\subseteq\mathcal K$。源态也支撑于该核，故 $T=\Xi-\Omega$ 满足（251.25）。引理251.1给 $T=0$，即 $\Xi=\Omega$。$\square$
+

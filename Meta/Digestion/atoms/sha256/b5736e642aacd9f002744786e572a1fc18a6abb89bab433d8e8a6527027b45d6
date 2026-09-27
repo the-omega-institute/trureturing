@@ -1,0 +1,15 @@
+**定义 4.1.1（共同对象及外部体积）。** 固定概率空间 $(X,\mathcal B,\mu)$，其中 $\mu(X)=1$，及可测集 $K$，记
+$$
+0<M=\mu(K)\le1,\qquad \nu(E)=\frac{\mu(E\cap K)}M\quad(E\in\mathcal B).
+$$
+每个 $n$ 给出一个有限可测分割 $\mathcal D_n=\{C_{n,i}:i\in I_n\}$，所有实际参考权重 $w_{n,i}=\mu(C_{n,i})$ 严格为正，但同层不必相等。定义
+$$
+R_n=\{i\in I_n:K\cap C_{n,i}\ne\varnothing\},\qquad
+A_n=\bigcup_{i\in R_n}C_{n,i},\qquad a_n=\mu(A_n).
+$$
+这里 $R_n$ 包含非空但质量为零的切片；它不是某个有限计算阶段的候选集，也不是正条件概率单元的同义词。以下外部体积条件是一项独立供应：
+$$
+0\le a_n-M\le\varepsilon_n,\qquad \varepsilon_n\longrightarrow0.
+$$
+有效版本还给出层选择器 $N$，使 $\varepsilon_{N(k)}\le2^{-k}$。它只选择一个合格层；不要求 $N$ 单调，也不自带所有后续层都合格的模量。基本估计不要求各分割嵌套。
+

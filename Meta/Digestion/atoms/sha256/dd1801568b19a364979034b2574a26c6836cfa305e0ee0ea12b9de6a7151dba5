@@ -1,0 +1,16 @@
+**定义 139.1（扇区时间变换）。** 对 $s\ge0$，置
+
+$$
+D(s)=
+\begin{pmatrix}
+1&0\\
+0&(1+s)^{-1}
+\end{pmatrix}.
+$$
+
+第一行对应 $\nu_0=\delta_0$ 的 Laplace 变换，第二行对应 $\nu_1(dt)=e^{-t}dt$ 的 Laplace 变换。对扇区权重向量 $v=(v_0,v_1)^{\mathsf T}$，定义准备映射
+
+$$
+\mathsf R(v)=v_0\rho_0+v_1\rho_1.
+$$
+

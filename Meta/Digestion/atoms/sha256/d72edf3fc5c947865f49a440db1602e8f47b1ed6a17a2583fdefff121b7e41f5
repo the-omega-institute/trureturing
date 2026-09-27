@@ -1,0 +1,80 @@
+### 151.4 端点系数及已知复相位
+
+当 $p\uparrow1$、$x\downarrow0$ 时，由（151.9）有
+
+$$
+c,\kappa,\mu\longrightarrow1,\qquad
+d,\nu\longrightarrow\sqrt2,\qquad
+\lambda\longrightarrow\sqrt3.
+\tag{151.19}
+$$
+
+式（151.11）的右侧除以 $\sqrt x$ 后趋于 $\sqrt3-\sqrt2$；此极限严格为正，故正部操作在充分靠近端点时不改变表达式。式（151.12）的右侧除以 $\sqrt x$ 后趋于
+
+$$
+\frac1{\sqrt3+\sqrt2}=\sqrt3-\sqrt2.
+\tag{151.20}
+$$
+
+双侧夹逼即证明定理151.1的正实振幅结论。
+
+现在设已知复振幅为
+
+$$
+a=Ae^{i\alpha},\qquad b=Be^{i\beta},\qquad A,B>0.
+$$
+
+定义固定相位门
+
+$$
+U=\operatorname{diag}(1,e^{i(\alpha-\beta)})\quad\text{作用于 }M,
+$$
+
+$$
+E=\operatorname{diag}(e^{-i\alpha},e^{i(\alpha-\beta)})
+\quad\text{作用于发出位 }B.
+$$
+
+第144节的来源恒等式为
+
+$$
+T_{A,B}=(U\otimes E)T_{a,b}U^*.
+\tag{151.21}
+$$
+
+相位运输后的实际固定接收器定义为
+
+$$
+\mathcal C_{a,b}
+=\mathcal C_{B^2}\circ
+\operatorname{Ad}_{I_K\otimes E},
+\qquad \operatorname{Ad}_W(Y)=WYW^*,
+\tag{151.22}
+$$
+
+初态仍为 $w$。因此每轮仅在最新输入位前增加同一个已知相位门，不接触活动记忆或参考，也不增加持久维数。
+
+对正实来源的一组任意解码器 $\mathcal D_n$，取
+
+$$
+\mathcal D_n^{a,b}
+=\operatorname{Ad}_{(E^*)^{\otimes n}}\circ\mathcal D_n.
+\tag{151.23}
+$$
+
+由（151.21）逐轮相消，复来源输入 $\rho_{RM}$ 上的恢复误差，等于正实来源输入
+$(I_R\otimes U)\rho_{RM}(I_R\otimes U^*)$ 上的恢复误差；两边只差活动记忆与档案上的终端酉共轭。这里的 $U$ 用于数学上的变量替换，没有授权接收器实际操作 $M$。输入态的该变量替换是双射，且（151.23）对全部 CPTP 解码器也是双射，所以重新优化解码后的误差恰好相等。
+
+因此（151.11）—（151.12）对运输后的已知复振幅装置仍成立，且
+
+$$
+\boxed{
+e_{148}^{\mathrm{transport}}(a,b)
+=[\sqrt3-\sqrt2+o(1)]\,|a|,
+\qquad |a|\downarrow0.
+}
+\tag{151.24}
+$$
+
+这处理的是每份已知来源各自校准的固定装置，没有要求一台未知参数通道同时服务整个来源族。
+

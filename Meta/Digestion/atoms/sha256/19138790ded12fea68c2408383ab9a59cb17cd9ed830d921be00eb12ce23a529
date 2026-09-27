@@ -1,0 +1,9 @@
+**命题 13.3（单 Kraus 生存极限）。** 设 $P_{\mathcal D}$ 为正交投影，则
+
+$$
+S_N\longrightarrow P_{\mathcal D},
+\qquad p(\text{永不点击})=\operatorname{Tr}(\rho P_{\mathcal D}).
+$$
+
+证明。$Q\mathcal D\subseteq\mathcal D$，且对 $u\in\mathcal D$ 有 $Q^\dagger Qu=u$，故 $Q|_{\mathcal D}$ 为有限维酉映射。若 $y\perp\mathcal D$、$x=Qu\in\mathcal D$，则 $\langle x,Qy\rangle=\langle u,y\rangle=0$；所以 $\mathcal D^\perp$ 也不变。若该补空间非零，$G_d$ 在其上正定，最小本征值 $g>0$，从而 $\|Q^d|_{\mathcal D^\perp}\|^2=1-g<1$。补空间分量逐块趋零，暗分量保持范数，得算子极限。全暗情形直接成立。$\square$
+

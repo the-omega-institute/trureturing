@@ -1,0 +1,38 @@
+### 153.4 固定接收器的精确凸半定规划
+
+令
+
+$$
+O_n=M_{\rm out}\otimes S_n.
+$$
+
+以 $X=J(\mathcal D)\in\operatorname{Herm}(S_n\otimes K)$ 表示解码器，取
+
+$$
+X\succeq0,\qquad \operatorname{Tr}_{S_n}X=I_K.
+\tag{153.8}
+$$
+
+对任意 Hermitian $X$，Choi 反演定义一个线性映射
+
+$$
+\mathcal D_X(Z)
+=\operatorname{Tr}_K\bigl[X(I_{S_n}\otimes Z^{\mathsf T})\bigr],
+$$
+
+转置均相对于（153.5）的固定基。定义仿射 Hermitian 矩阵
+
+$$
+J_n(X)
+=(\operatorname{id}_{M_{\rm out}}\otimes\mathcal D_X
+\otimes\operatorname{id}_{M_{\rm in}})J(\mathcal R_n)
+-J(\operatorname{Ad}_{\widetilde T_n}).
+\tag{153.9}
+$$
+
+$\mathcal R_n$ 与 $\widetilde T_n$ 此时均固定；故（153.9）确实对解码器 Choi 变量仿射。在（153.8）下，它是两 CPTP 通道之差的 Choi 矩阵，因而
+
+$$
+\operatorname{Tr}_{O_n}J_n(X)=0.
+$$
+

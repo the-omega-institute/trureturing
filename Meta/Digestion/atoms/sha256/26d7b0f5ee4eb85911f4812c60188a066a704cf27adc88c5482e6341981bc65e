@@ -1,0 +1,25 @@
+**推论28.4（几何候选集的最优对数阶）。** 对 $`0<q<1`$，置
+
+$$
+\Theta_q=\{0\}\cup\{q^j:j\ge0\}\subseteq[0,1]\subseteq\mathbb T.
+\tag{28.30}
+$$
+
+固定 $`0<\epsilon<1`$，存在一套与未来终端无关的接收门序列，在全部确定终端满足完整联合误差界，且
+
+$$
+\dim K_n=\Theta_{q,\epsilon}(\log n)\qquad(n\to\infty).
+\tag{28.31}
+$$
+
+每一套满足相同合同的门序列均须满足相应的 $`\Omega_{q,\epsilon}(\log n)`$ 下界。
+
+证明。相邻候选间距为 $`(1-q)q^j`$。保留间距至少为 $`r`$ 的初段给 $`\Omega_q(1+\log(1/r))`$ 个分离点；反向将初段与位于长度 $`O_q(r)`$ 区间中的尾段分开，给
+
+$$
+P(\Theta_q,r)=\Theta_q(1+\log(1/r))\qquad(r\downarrow0).
+\tag{28.32}
+$$
+
+在（28.25）中固定例如 $`\eta=1/2`$，则 $`\log L_{\epsilon,\eta}(n)=O_\epsilon(\log\log n)`$，（28.27）给 $`O_{q,\epsilon}(\log n)`$。任意因果门序列在某个确定终端构成一个合法单终端编码，定理22.2遂给反向下界。证明完毕。
+

@@ -1,0 +1,52 @@
+### 76.1 从完整复 tester 问题到四个固定荷块
+
+第 70—75 节已经给出完整 tester 合同下的准确系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r\ge0,
+$$
+
+其中最小值达到，$\gamma_0=1$，$\gamma_r>1$ 对每个 $r>0$ 成立，两个参数端点的极限均为一。本节不预设最优修复的秩，也不将某个数值矩阵的零元提升为普遍结构。
+
+沿用三个量子比特的顺序 $A,B,D$，并将八个标准基向量写为
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,\quad k=|011\rangle,\\
+j=|100\rangle,\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle.
+\end{gathered}
+$$
+
+令 $w=x+y$、$P_0=I-ww^*/2$。对 $u\ge0$ 定义 $H(u)=H_{u^2}$，即
+
+$$
+\begin{aligned}
+H(u)={}&-\frac12\bigl[(u^2x+y)w^*+w(u^2x+y)^*\bigr]\\
+&+u(zw^*+wz^*)+(ux'-z')(ux'-z')^*.
+\end{aligned}
+\tag{76.1}
+$$
+
+它的全部矩阵元是 $u$ 的有理系数多项式。
+
+定义四阶局部酉算符
+
+$$
+U=\operatorname{diag}(1,i)_A\otimes
+\operatorname{diag}(1,-i)_B\otimes
+\operatorname{diag}(1,-i)_D.
+\tag{76.2}
+$$
+
+其互异特征值对应子空间为
+
+$$
+\begin{array}{c|c}
+1&\operatorname{span}(x,y,z)\\
+-i&\operatorname{span}(x',h,z')\\
+i&\operatorname{span}(j)\\
+-1&\operatorname{span}(k).
+\end{array}
+\tag{76.3}
+$$
+
