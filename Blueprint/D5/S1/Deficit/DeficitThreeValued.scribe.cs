@@ -38,7 +38,7 @@ internal sealed class DeficitThreeValuedDocument : IScribeDocumentDefinition
                                         + "the golden ratio. Three window readings place the deficit strictly "
                                         + "between minus two and two, and the final numeric gates reduce to "
                                         + "the golden conjugate being negative and the golden ratio being "
-                                        + "less than two: the window of length exactly one admits precisely "
+                                        + "less than two: the resulting open interval admits precisely "
                                         + "three integers."))),
                 DescribeRole.Theorem)),
         [

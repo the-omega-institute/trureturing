@@ -1,0 +1,4 @@
+**出处 32.2（与当前前沿的实际交界）。** Jianfeng Lu，*A sharp hypocoercive entropy decay estimate for underdamped Langevin dynamics*，[arXiv:2605.01933v2](https://arxiv.org/html/2605.01933v2)，本批读取 Assumptions 2.1–2.2、Theorem 2.3 及条件熵/最优输运修正项，确认其凸势、空间 log-Sobolev 和增长前件。该文在更广的非线性族中研究显式熵速率；本批保持可精确求系数的线性与单比特载体。Lu 的 ICM 2026 文章 [*Quantitative Hypocoercivity and Lifting of Classical and Quantum Dynamics*](https://doi.org/10.1137/25M1806065) 已给出经典 Langevin 与量子 Lindblad 的统一加速框架，故“经典与量子存在共同耗散数学”本身是已有研究方向。
+
+Pierre Monmarché、Lihan Wang，*On the entropic convergence for piecewise deterministic samplers: speedup and obstruction*，[arXiv:2606.26086v1](https://arxiv.org/html/2606.26086v1)，本批读取 Theorem 2：在其 BPS/ZZP 与速度分布前件下，即使 Gaussian 目标，也不存在文中所定义的统一衰减熵比；其 RHMC 正向结果与此分开。因此本卷从 Gaussian 线性核得到的精确系数，不能从“同一个平衡态”或“同样包含 Hamilton 运动”直接迁移到任意采样器。
+

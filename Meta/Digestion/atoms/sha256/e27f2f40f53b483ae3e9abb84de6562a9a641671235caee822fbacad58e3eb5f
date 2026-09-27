@@ -1,0 +1,11 @@
+**定理 19.4（近似加权下降的全时域证书）。** 固定 $\tau>0$，设粗矩阵 $\bar K$ 非负且每行至少有一项为正。若存在 $\delta\ge0$ 使
+\[
+ e^{-\delta/\tau}\bar K(q(x),j)\le k_\tau(x,j)
+                          \le e^{\delta/\tau}\bar K(q(x),j)
+\]
+对所有 $x,j$ 成立，则对任意粗终端费用 $g$、任意时域 $H$，真实软递推与粗递推满足
+\[
+ \|V_t-\bar V_t\circ q\|_\infty\le(H-t)\delta.
+\]
+粗递推直接使用 $\bar K$，不要求它行归一化。
+

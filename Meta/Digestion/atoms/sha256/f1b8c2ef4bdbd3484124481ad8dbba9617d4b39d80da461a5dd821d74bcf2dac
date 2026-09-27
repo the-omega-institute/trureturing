@@ -1,0 +1,10 @@
+**出处 45.1（实际进展与未闭合量词）。** 定理 42.2 的统计比较与数据处理、定理 43.2 的正交块熵计算及引理 44.1 的连续性方法是已有构件。相对于第 40 节，本批新增的外部问题覆盖范围由定理 43.3 和 44.2 精确给出：允许非对易核心、全局相对对比度一、受控的任意未认证分区，以及足够小的跨分区相干。这些是原 HR-upper 的受限族结论，不证明任意不可约输出对或全部强相干边界。全局 $r=1$ 的一般困难不能通过更换名称或统计无损压缩消除，定理 42.2 已说明这一点。
+
+原 HR 论文 §III 已给经典条件化的方法，§VII.A 给二元擦除取等。本批并未重新认领这两个事实；这里利用的是第 40 节的非对易严格余量，并把它变成分区及恢复预算。当前原文与后续作者论文检索没有给出一般 HR 上界已解决的证据，检索未命中不等于完整优先权判定。第 43.3 条的核心/余块阈值及第 44.2 条的证书按本卷推导记为 `repo-derived`。上述定义没有建立超出经典或量子理论的全新物理理论，也没有从哲学类比推导实验事实。
+
+[^tcs8-operational]: G. Chiribella、G. M. D'Ariano、P. Perinotti，*Probabilistic theories with purification*，Physical Review A 81, 062348 (2010)，[arXiv:0908.1583v5](https://arxiv.org/abs/0908.1583v5)。操作概率框架用制备、变换、测量及复合来组织理论，可不以 Hilbert 坐标为起点；其纯化和可逆实现结论需要其公理。本批读取作者摘要与框架范围，没有把该文一般定理作为 HR-upper 的证明。
+
+[^tcs8-buscemi]: Francesco Buscemi，*Comparison of quantum statistical models: equivalent conditions for sufficiency*，Communications in Mathematical Physics 310, 625–647 (2012)，[arXiv:1004.3794](https://arxiv.org/abs/1004.3794)，DOI [10.1007/s00220-012-1421-3](https://doi.org/10.1007/s00220-012-1421-3)。量子统计模型的 CPTP 比较与充分性为已有结构。本文直接证明所用的双向恢复不变量，没有把所有任务中的等价条件或任意统计态射都当作 CPTP 可逆映射。
+
+[^tcs8-continuity]: Andreas Winter，*Tight Uniform Continuity Bounds for Quantum Entropies: Conditional Entropy, Relative Entropy Distance and Energy Constraints*，Communications in Mathematical Physics 347, 291–313 (2016)，[arXiv:1507.07775](https://arxiv.org/abs/1507.07775)。引理 44.1 直接写出该类 Jordan 分解/共同混合证明并使用经典标签的条件熵范围。另核对 Mario Berta 等，*Sharp continuity of quantum conditional entropy*，[arXiv:2607.24687v1](https://arxiv.org/html/2607.24687v1)，Theorem 1.1 给出一般量子条件熵的精确维数模数。本批使用已完整证明的 cq 模数，不将它标成最优，也不误用经典条件系统与经典被条件变量的相反角色。
+

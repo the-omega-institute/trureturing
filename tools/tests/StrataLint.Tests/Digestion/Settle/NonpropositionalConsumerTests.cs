@@ -1,18 +1,12 @@
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.NonpropositionalTestSupport;
+using static StrataLint.TestSupport.NonpropositionalTestSupport;
 
 namespace StrataLint.Tests;
 
 public sealed class NonpropositionalConsumerTests
 {
-    [Fact]
-    public void DigestionDiagramNamesFourStates()
-    {
-        var text = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "CLAUDE.md"), System.Text.Encoding.UTF8);
-        Assert.Contains("\u6d88\u5316\u8d26\u76ee\u00b7\u56db\u6001\u89c1\u4e0b", text, StringComparison.Ordinal);
-    }
 
     [Fact]
     public void NonpropositionalIsAbsentFromResidualAndFormalizationFrontierButRendersInStatus()

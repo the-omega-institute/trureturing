@@ -1,0 +1,7 @@
+**定理 19.2（全终端费用的软 Bellman 精确下降）。** 固定 $\tau>0$。软 Bellman 算子把每个形如 $v\circ q$ 的终端函数仍映成 $q$ 的纤维常值函数，当且仅当
+\[
+ q(x)=q(x')\quad\Longrightarrow\quad
+ k_\tau(x,j)=k_\tau(x',j)\quad\text{对全部 }j.
+\]
+成立时定义 $\bar K_\tau(q(x),j)=k_\tau(x,j)$，全部有限时域、全部粗终端费用的值函数均精确下降，最优后继的粗概率也只依赖当前粗状态。
+

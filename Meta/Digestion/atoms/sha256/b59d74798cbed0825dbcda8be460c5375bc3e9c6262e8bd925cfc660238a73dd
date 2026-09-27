@@ -1,0 +1,7 @@
+**定义 20.1（二次能量与观测坐标）。** 对 $x\in\mathbb R^p,z\in\mathbb R^r$，$p,r\ge1$，设对称块矩阵
+\[
+ L=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}>0,\qquad
+ U(x,z)=\tfrac12x^{\mathsf T}Ax+x^{\mathsf T}Bz+\tfrac12z^{\mathsf T}Cz.
+\]
+因此 $C>0$ 且 $S=A-BC^{-1}B^{\mathsf T}>0$。观察只保留 $x$，所有范数使用欧氏范数及其诱导算子范数。
+

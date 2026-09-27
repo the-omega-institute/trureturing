@@ -536,7 +536,7 @@ public sealed partial class ResourceAdapterTests
     public void LocalPushPreflightUsesTheSameNoWorkScopeBeforeAnySdkOrCache()
     {
         using var fixture = new ResourceFixture([]);
-        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh" })
+        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         fixture.CommitPlan();
         fixture.Write("fixtures/selected.txt", "documentation change\n");

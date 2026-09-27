@@ -52,6 +52,21 @@ jobs:
       plan_artifact_id: ${{ needs.resolve.outputs.plan_artifact_id }}
       no_work: ${{ needs.resolve.result == 'success' && needs.resolve.outputs.work_required == 'false' }}
 
+  engineering_cache:
+    name: engineering_cache
+    needs: [resolve, push]
+    if: github.event_name == 'pull_request' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number) && needs.resolve.result == 'success' && needs.push.result == 'success' && needs.push.outputs.engineering_artifact_id != ''
+    uses: ./.github/workflows/ci-engineering-cache.yml
+    with:
+      candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
+      plan_artifact_id: ${{ needs.resolve.outputs.plan_artifact_id }}
+      build_artifact_id: ${{ needs.push.outputs.build_artifact_id }}
+      build_run_id: ${{ needs.push.outputs.build_run_id }}
+      build_run_attempt: ${{ needs.push.outputs.build_run_attempt }}
+      engineering_artifact_id: ${{ needs.push.outputs.engineering_artifact_id }}
+      engineering_run_id: ${{ needs.push.outputs.engineering_run_id }}
+      engineering_run_attempt: ${{ needs.push.outputs.engineering_run_attempt }}
+
   delta:
     name: delta
     needs: [resolve, push]

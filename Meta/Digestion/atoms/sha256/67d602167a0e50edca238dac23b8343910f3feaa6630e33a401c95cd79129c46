@@ -1,0 +1,16 @@
+**定理 18.2（路径优化的精确 Gibbs 分解及零温极限）。** 令
+\[
+ P_\tau^*(\omega)=Z_\tau^{-1}R(\omega)e^{-C(\omega)/\tau}.
+\]
+对任意 $P$ 有
+\[
+ J_\tau(P)=F_\tau+\tau\operatorname{KL}(P\Vert P_\tau^*).
+\]
+所以 $P_\tau^*$ 是唯一极小点。若 $c_* =\min C$，$r_*=R\{C=c_*\}>0$，则
+\[
+ c_*\le F_\tau\le c_*-\tau\log r_*,\qquad
+ \lim_{\tau\downarrow0}F_\tau=c_*.
+\]
+
+**证明。** 将 $\log P_\tau^*=\log R-C/\tau-\log Z_\tau$ 代入 KL，逐项整理得到恒等式。相对熵非负且仅在两分布相同时为零，给出唯一极小性。另有 $r_*e^{-c_*/\tau}\le Z_\tau\le e^{-c_*/\tau}$；取负对数得到夹逼与极限。最短路在此是固定可行路径集上的最小费用；若费用取几何长度才得到对应几何的最短路径。证毕。[^tcs3-gibbs][^tcs3-todorov]
+

@@ -40,6 +40,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("source-policy:agents/CONTEXT.md", false)]
     [InlineData("source-policy:Meta/Digestion/atoms/sha256/*", true)]
     [InlineData("declaration", true)]
+    [InlineData("evidence-metadata", true)]
     public void RegisteredScribeFileMapInputsInvalidateEvidenceWhileUnrelatedDocumentationReusesIt(string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
@@ -52,8 +53,10 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_filemap_paths" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
+        RegisterRuntimeSourceOwners(fixture,
+            declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
-            fixture.Write(input, "registered fixture material\n");
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
         var filemap = """
             schema_version = 5
             resources = [{ id = "lean-report", cache_layers = [], cache_activation = {} }]
@@ -74,6 +77,15 @@ public sealed partial class CurrentExecutionContractTests
         if (path.StartsWith("source-policy:", StringComparison.Ordinal))
         {
             filemap = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create("Meta/FILEMAP.toml"));
+            // This fixture queries the real file rows with synthetic First/Second
+            // registrations. Whole-repository resource consumers belong to the
+            // real resource mapping, not this isolated query fixture.
+            var filesDeclaration = System.Text.RegularExpressions.Regex.Match(filemap,
+                @"(?m)^(?:files\s*=\s*\[|\[\[files\]\])");
+            Assert.True(filesDeclaration.Success, "source FILEMAP has no files declaration");
+            var fileRows = filesDeclaration.Index;
+            filemap = System.Text.RegularExpressions.Regex.Replace(filemap[..fileRows],
+                @", path_(inventory|inputs) = \[[^\]]*\]", "") + filemap[fileRows..];
             fixture.Write("Meta/FILEMAP.docs.reports.toml", TestRepositoryLayout.ReadAllText(
                 RepositoryRelativePath.Create("Meta/FILEMAP.docs.reports.toml")));
         }
@@ -96,11 +108,13 @@ public sealed partial class CurrentExecutionContractTests
 
         if (path == "declaration")
             EditRegistration(fixture, rows => rows[0]!["execution_filemap_paths"]!.AsArray().RemoveAt(0));
+        else if (path == "evidence-metadata")
+            fixture.Write("Meta/FILEMAP.toml", filemap.Replace("selectors = [\"result\"]",
+                "selectors = [\"result\", \"proof\"]", StringComparison.Ordinal));
         else if (path.StartsWith("source-policy:", StringComparison.Ordinal))
         {
             var row = Assert.Single(filemap.Split('\n'), line => line.Contains($"pattern = \"{path[14..]}\"", StringComparison.Ordinal));
-            var changed = row.Replace("require = []", "require = [\"filemap\"]", StringComparison.Ordinal)
-                .Replace("require = [\"delta\", \"engineering\", \"filemap\"]", "require = [\"filemap\"]", StringComparison.Ordinal)
+            var changed = System.Text.RegularExpressions.Regex.Replace(row, @"require = \[[^\]]*\]", "require = [\"filemap\"]")
                 .Replace("kind = \"ledger\"", "kind = \"data\"", StringComparison.Ordinal);
             Assert.NotEqual(row, changed);
             fixture.Write("Meta/FILEMAP.toml", filemap.Replace(row, changed, StringComparison.Ordinal));
@@ -188,16 +202,6 @@ public sealed partial class CurrentExecutionContractTests
     }
 
     [Theory]
-    [InlineData("D5/S0/CacheInputProbe.lean", false)]
-    [InlineData("Blueprint/CacheInputProbe.scribe.cs", false)]
-    [InlineData("Meta/Digestion/backfill/cache-input-probe.json", false)]
-    [InlineData("tools/scripts/worktree/lean_actions.py", true)]
-    [InlineData("tools/scripts/worktree/lean_cache_release.py", true)]
-    [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
-    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string path, bool invalidates)
-        => AssertRegisteredFixtureInputOwnership("StrataLint.Cache.Tests", path, invalidates);
-
-    [Theory]
     [InlineData("Reg/lakefile.toml", true)]
     [InlineData("Reg/lake-manifest.json", true)]
     [InlineData("tools/lean-inspector/tests/packages/reg.py", true)]
@@ -209,9 +213,107 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("Reg/D5/Fixture.lean", false)]
     [InlineData("tools/lean-inspector/tests/packages/README.md", false)]
     public void RegisteredLeanFixtureInputsInvalidateConsumedMaterialsOnly(string path, bool invalidates)
-        => AssertRegisteredFixtureInputOwnership("StrataLint.Lean.Tests", path, invalidates);
+        => RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges("StrataLint.Lean.Tests", path, invalidates);
 
-    private static void AssertRegisteredFixtureInputOwnership(string project, string path, bool invalidates)
+    [Theory]
+    [InlineData("query-policy", true)]
+    [InlineData("query-target-bytes", false)]
+    [InlineData("content-target-bytes", true)]
+    public void GeneratedFileMapQueriesBindPolicyWithoutBindingTargetBytes(string change, bool invalidates)
+    {
+        using var fixture = new ExecutionFixture();
+        const string target = "Evidence/D5/values.json";
+        const string filemap = "schema_version = 5\n[[files]]\npattern = \"Evidence/D5/values.json\"\nkind = \"generated\"\nrequire = []\n";
+        fixture.Write("Meta/FILEMAP.toml", filemap);
+        fixture.Write(target, "{\"fixture\":1}\n");
+        EditRegistration(fixture, rows =>
+        {
+            rows[0]!["execution_inputs"] = change == "content-target-bytes"
+                ? new JsonArray("Meta/FILEMAP.toml", target) : new JsonArray("Meta/FILEMAP.toml");
+            rows[0]!["execution_filemap_paths"] = new JsonArray(target);
+        });
+        fixture.Track();
+        Execute(fixture);
+        Seed(fixture);
+        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
+
+        if (change == "query-policy")
+            fixture.Write("Meta/FILEMAP.toml", filemap.Replace("require = []", "require = [\"filemap\"]", StringComparison.Ordinal));
+        else fixture.Write(target, "{\"fixture\":2}\n");
+        fixture.Track();
+
+        Assert.Equal(invalidates ? new[] { ExecutionFixture.First } : [], Execute(fixture));
+        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        Assert.Equal(invalidates, prior.Projects[0].InputFingerprint != accepted.Projects[0].InputFingerprint);
+        Assert.Equal(prior.Projects[1].InputFingerprint, accepted.Projects[1].InputFingerprint);
+    }
+
+    [Theory]
+    [InlineData("StrataLint.Cache.Tests", "D5/S0/CacheInputProbe.lean", false)]
+    [InlineData("StrataLint.Cache.Tests", "Blueprint/CacheInputProbe.scribe.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "Meta/Digestion/backfill/cache-input-probe.json", false)]
+    [InlineData("StrataLint.Cache.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/agent/header-check.sh", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Configuration/RepositoryPolicyLoader.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_actions.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", false)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/scripts/worktree/lean_actions.py", false)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.Cache.Native.Tests", "lean-toolchain", true)]
+    [InlineData("StrataLint.Cache.Native.Tests", "tools/scripts/worktree/lean_cache_release.py", false)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/header-check.sh", true)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs", true)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/merge-gate.sh", false)]
+    [InlineData("StrataLint.HeaderScript.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Configuration.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Configuration.Tests", "Meta/FILEMAP.toml", false)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/domains.yaml", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/judge-seed.json", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/package-materials.json", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/FILEMAP.toml", true)]
+    [InlineData("StrataLint.Lean.Tests", "tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
+    [InlineData("StrataLint.Lean.Tests", "tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean", true)]
+    [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
+    [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean", true)]
+    [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector-interface/lakefile.toml", true)]
+    [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector-interface/lake-manifest.json", true)]
+    [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector/.lake/build/Ignored.lean", false)]
+    [InlineData("StrataLint.Tests", "CLAUDE.md", false)]
+    [InlineData("StrataLint.InstructionContract.Tests", "CLAUDE.md", true)]
+    [InlineData("StrataLint.WorktreeContract.Tests", "README.md", false)]
+    [InlineData("StrataLint.WorktreeContract.Tests", "Meta/FILEMAP.toml", false)]
+    [InlineData("StrataLint.Tests", "D5/S3/Midline/GoldenSpectralMarker.lean", false)]
+    [InlineData("StrataLint.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md", false)]
+    [InlineData("StrataLint.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs", false)]
+    [InlineData("StrataLint.Tests", "D5/S0/Carrier/Unrelated.lean", false)]
+    [InlineData("StrataLint.Tests", "Golden/Projection/statement-projection-pilot-v1.json", true)]
+    [InlineData("StrataLint.Tests", "Golden/Projection/statement-projection-expansion-v1.json", true)]
+    [InlineData("StrataLint.Tests", "Golden/values-kernels.toml", false)]
+    [InlineData("StrataLint.Tests", "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", true)]
+    [InlineData("StrataLint.Tests", "tools/StrataLint.Engine/Relocated/BackfillInventoryRule.cs", true, true)]
+    [InlineData("StrataLint.Tests", "tools/scripts/report/lean-report.sh", false)]
+    [InlineData("StrataLint.Tests", "tools/scripts/workflow/playbook-workflows.sh", true)]
+    [InlineData("StrataLint.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Tests", "Meta/FILEMAP.toml", false)]
+    [InlineData("StrataLint.TruthRelease.Tests", "D5/S3/Midline/GoldenSpectralMarker.lean", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Golden/Projection/statement-projection-pilot-v1.json", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Golden/Projection/statement-projection-expansion-v1.json", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Meta/Digestion/atomizers.toml", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "D5/S0/Carrier/Unrelated.lean", false)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Meta/FILEMAP.toml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "tools/scripts/agent/header-check.sh", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Meta/Digestion/atomizers.toml", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/agent/header-check.sh", false)]
+    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates, bool addInput = false)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -222,33 +324,72 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
-        const string documents = "tools/fixture/BlueprintFixture.csproj";
-        fixture.Write(documents, "<Project />\n");
-        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
-        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
-            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        RegisterRuntimeSourceOwners(fixture,
+            declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        fixture.Write(path, "original registered input\n");
+        if (!addInput && path != "Meta/FILEMAP.toml") fixture.Write(path, "original registered input\n");
+        if (path == "Meta/FILEMAP.toml" && !File.Exists(Path.Combine(fixture.Root, path)))
+            fixture.Write(path, "schema_version = 5\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\nrequire = []\n");
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
-        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+        var priorEvidence = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        var prior = priorEvidence.Projects[0];
 
-        fixture.Write(path, "changed registered input\n");
+        if (path == "Meta/FILEMAP.toml") File.AppendAllText(Path.Combine(fixture.Root, path), "# changed registered input\n");
+        else fixture.Write(path, "changed registered input\n");
         fixture.Track();
 
         var calls = Execute(fixture);
         Assert.True(calls.SequenceEqual(invalidates ? new[] { ExecutionFixture.First } : []),
             $"[FAIL] registered_fixture_input_isolation: {project}: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}");
-        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+        var acceptedEvidence = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        var accepted = acceptedEvidence.Projects[0];
         if (invalidates)
         {
             Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);
             Assert.Equal("executed", accepted.Status);
+            AcceptEngineering(fixture);
+            CommonExecutionEvidence.ValidateEngineering(fixture.Root);
+            CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.TestsPath, acceptedEvidence with
+            {
+                Projects = priorEvidence.Projects.Select(item => item with { Status = "reused" }).ToArray(),
+                Materials = priorEvidence.Materials,
+            });
+            Assert.Contains("test input identity mismatch", Assert.Throws<InvalidDataException>(() =>
+                CommonExecutionEvidence.ValidateEngineering(fixture.Root)).Message);
         }
         else Assert.Equal(prior with { Status = "reused" }, accepted);
+    }
+
+    private static void RegisterRuntimeSourceOwners(ExecutionFixture fixture, IEnumerable<string>? runtimeInputs = null)
+    {
+        var inputs = runtimeInputs?.ToArray() ?? [];
+        // Byte-read C# materials still require source ownership in the synthetic
+        // candidate; these owners are not compile references of the test projects.
+        const string documents = "tools/fixture/BlueprintFixture.csproj";
+        fixture.Write(documents, "<Project />\n");
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
+        fixture.Write(sourceInputs, "<Project />\n");
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
+                new[] { "tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs",
+                    "tools/StrataLint.Lean/**/*.cs" }.Concat(inputs.Where(path => path.StartsWith("tools/", StringComparison.Ordinal)
+                        && path.EndsWith(".cs", StringComparison.Ordinal))).Distinct(StringComparer.Ordinal).ToArray())));
+        // Projects read as runtime bytes still need declarations in the synthetic
+        // repository. They do not become compilation references or selected tests.
+        foreach (var project in inputs.Where(path => path.EndsWith(".csproj", StringComparison.Ordinal)
+            && !path.Contains('*')).Distinct(StringComparer.Ordinal))
+        {
+            fixture.Write(project, "<Project />\n");
+            File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+                new EngineeringProjectFixture(project, Path.GetFileNameWithoutExtension(project), "test-support", false, [])));
+        }
     }
 }

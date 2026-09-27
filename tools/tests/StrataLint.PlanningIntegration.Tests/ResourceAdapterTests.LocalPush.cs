@@ -1,5 +1,6 @@
 using StrataLint.EngineeringScope;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.TestSupport;
 using Xunit;
@@ -367,8 +368,19 @@ public sealed partial class ResourceAdapterTests
         return environment;
     }
 
-    private static (int Exit, string Text) LocalPreflight(ResourceFixture fixture, Dictionary<string, string> environment) =>
-        EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
+    private static (int Exit, string Text) LocalPreflight(ResourceFixture fixture, Dictionary<string, string> environment)
+    {
+        var result = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
+        Console.WriteLine("PLANNING_PREFLIGHT " + JsonSerializer.Serialize(new {
+            fixture = Path.GetFileName(fixture.Root), mode = environment.GetValueOrDefault("MODE"),
+            raw_exit = result.Exit }));
+        // Retain the existing producer's timing records without interpreting or
+        // changing the captured output used by the test's assertions.
+        foreach (var line in result.Text.Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal)))
+            Console.WriteLine("PLANNING_STAGE " + JsonSerializer.Serialize(new {
+                fixture = Path.GetFileName(fixture.Root), record = line["STAGE_PROCESS ".Length..] }));
+        return result;
+    }
 
     private static string LocalState(ResourceFixture fixture)
     {

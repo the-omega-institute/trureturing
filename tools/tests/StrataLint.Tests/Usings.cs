@@ -4,3 +4,4 @@ global using Xunit;
 global using StrataLint.EngineeringScope;
 global using StrataLint.Scribe;
 global using StrataLint.TestSupport;
+global using StrataLint.Configuration;

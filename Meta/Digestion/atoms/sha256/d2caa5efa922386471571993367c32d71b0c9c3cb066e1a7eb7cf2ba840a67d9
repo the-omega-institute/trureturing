@@ -1,0 +1,2 @@
+**出处 27.2（最新记忆学习结果的范围）。** Quanjun Lang、Jianfeng Lu，*Learning Memory Kernels in Generalized Langevin Equations*，SIAM Journal on Mathematics of Data Science 8(1), 141–166 (2026)，DOI [10.1137/24M1651101](https://doi.org/10.1137/24M1651101)，已核对出版方条目与 [arXiv:2402.11705v3](https://arxiv.org/html/2402.11705v3) 第 2–4 节。其方法控制相关函数误差传向记忆核的误差；本批不重复该算法。本批三时刻证书只需三个已校准的相关值，用来检验删除历史的信息损失；有限浴回归与 Markov 极限又属于不同的模型假设。
+

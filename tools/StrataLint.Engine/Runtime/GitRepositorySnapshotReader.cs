@@ -15,10 +15,10 @@ internal static class GitRepositorySnapshotReader
     // Visit every file while retaining only the bytes needed for the same link
     // validation as a full snapshot. Identity consumers need the complete path
     // inventory, but do not need all file bodies alive at once.
-    internal static void VisitCurrent(string repositoryRoot, Action<RawRepositoryEntry> visit)
+    internal static ImmutableArray<RepositoryPathInventoryEntry> VisitCurrent(string repositoryRoot, Action<RawRepositoryEntry> visit)
     {
         ArgumentNullException.ThrowIfNull(visit);
-        _ = ReadCurrentCore(repositoryRoot, null, visit);
+        return ReadCurrentCore(repositoryRoot, null, visit).PathInventory;
     }
 
     private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
@@ -38,6 +38,7 @@ internal static class GitRepositorySnapshotReader
             .Order(StringComparer.Ordinal)
             .ToArray();
         var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
+        var inventory = ImmutableArray.CreateBuilder<RepositoryPathInventoryEntry>();
         var links = new HashSet<string>(StringComparer.Ordinal);
         var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
         void Retain(RawRepositoryEntry entry, bool link = false)
@@ -48,8 +49,6 @@ internal static class GitRepositorySnapshotReader
         }
         foreach (var path in paths)
         {
-            if (include is not null && !include(path)) continue;
-
             if (!RepoPath.TryCreate(path, out _))
             {
                 throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
@@ -64,24 +63,35 @@ internal static class GitRepositorySnapshotReader
             FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
             var fullPath = Path.Combine(root, path);
             var info = new FileInfo(fullPath);
+            var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
             if (info.LinkTarget is { } target)
             {
+                var linkBytes = ReadLinkBytes(root, fullPath, target);
+                inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
+                if (include is not null && !include(path)) continue;
                 links.Add(path);
-                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))), link: true);
+                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(linkBytes)), link: true);
                 continue;
             }
 
+            if (Directory.Exists(fullPath))
+                throw new InvalidOperationException($"non-regular repository entry {path} is a directory");
             if (!info.Exists)
             {
+                inventory.Add(new(path, indexMode, "absent", null, null));
                 continue;
             }
 
-            if ((info.Attributes & FileAttributes.ReparsePoint) != 0)
+            if ((info.Attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
             {
                 throw new InvalidOperationException(
                     $"non-regular repository entry {path} is not a plain file");
             }
 
+            var executable = !OperatingSystem.IsWindows() && (File.GetUnixFileMode(fullPath)
+                & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
+            inventory.Add(new(path, indexMode, "regular", executable ? "100755" : "100644", null));
+            if (include is not null && !include(path)) continue;
             Retain(new RawRepositoryEntry(
                 path,
                 // The fresh read buffer has no mutable alias; the snapshot owns it.
@@ -94,7 +104,7 @@ internal static class GitRepositorySnapshotReader
             var info = new FileInfo(Path.Combine(root, path));
             return info.Exists || Directory.Exists(info.FullName) || info.LinkTarget is not null;
         });
-        return RawRepositorySnapshot.Create(entries);
+        return RawRepositorySnapshot.Create(entries, inventory.ToImmutable());
     }
 
     internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)

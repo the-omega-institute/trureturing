@@ -7,7 +7,16 @@ public static class RegPackageFixture
     // Pin/cache fixtures use the same independent package data as admission.
     public static void Write(string root)
     {
-        var rootManifest = JsonNode.Parse(File.ReadAllText(Path.Combine(root, "lake-manifest.json")))!;
+        var files = Files(File.ReadAllText(Path.Combine(root, "lake-manifest.json")));
+        var reg = Path.Combine(root, "Reg");
+        Directory.CreateDirectory(reg);
+        foreach (var (path, text) in files)
+            File.WriteAllText(Path.Combine(root, path), text);
+    }
+
+    public static IReadOnlyDictionary<string, string> Files(string manifest)
+    {
+        var rootManifest = JsonNode.Parse(manifest)!;
         var packages = new JsonArray();
         foreach (var (name, directory, config) in new[]
                  {
@@ -27,9 +36,9 @@ public static class RegPackageFixture
             inherited["inherited"] = true;
             packages.Add(inherited);
         }
-        var reg = Path.Combine(root, "Reg");
-        Directory.CreateDirectory(reg);
-        File.WriteAllText(Path.Combine(reg, "lakefile.toml"), """
+        return new Dictionary<string, string>
+        {
+            ["Reg/lakefile.toml"] = """
             name = "reg"
             packagesDir = "../.lake/packages"
             buildDir = "../.lake/build/reg"
@@ -48,11 +57,12 @@ public static class RegPackageFixture
             srcDir = ".."
             roots = ["Reg"]
             globs = ["Reg.+"]
-            """ + "\n");
-        File.WriteAllText(Path.Combine(reg, "lake-manifest.json"), new JsonObject
-        {
-            ["version"] = "1.1.0", ["name"] = "reg",
-            ["packagesDir"] = "../.lake/packages", ["packages"] = packages,
-        }.ToJsonString() + "\n");
+            """ + "\n",
+            ["Reg/lake-manifest.json"] = new JsonObject
+            {
+                ["version"] = "1.1.0", ["name"] = "reg",
+                ["packagesDir"] = "../.lake/packages", ["packages"] = packages,
+            }.ToJsonString() + "\n",
+        };
     }
 }

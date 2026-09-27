@@ -1,4 +1,5 @@
 import Lean
+import LeanInformationAuditInterface.SourceSelection
 
 namespace LeanInformationAudit
 open Lean
@@ -27,6 +28,7 @@ structure TemplateOccurrenceEvent where
 
 /-- Syntax input is retained for authoritative reassessment, never executed. -/
 structure EscapeRecordInput where
+  sourceSelection : Option SourceSelection := none
   fromObject : Option Expr := none
   continuation : Option Expr := none
   openContinuation : Bool := false
@@ -80,6 +82,8 @@ structure TemplateBindingCertificate where
   argumentInputs : Array TemplateAudit.DependencyIdentity
   extractionInputs : Array TemplateAudit.DependencyIdentity
   escape : EscapeRecordEvidence := {}
+  /-- Producer-created scope and reconstruction evidence for the source-bound plan variant. -/
+  sourceBinding : Option Json := none
   deriving Inhabited
 
 inductive TemplateBindingResult where
@@ -118,6 +122,7 @@ structure AutoDerivedSemanticCertificate where
   outputEvidence : Expr
 
 structure InformationRegistryEntry where
+  sourceBound : Bool := false
   theoremName : Name
   unitName : Name
   /-- The `PrimitiveLawArena` presentation. -/

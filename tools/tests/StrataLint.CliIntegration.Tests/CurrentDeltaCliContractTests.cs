@@ -562,6 +562,12 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             Write(document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
         var syntheticFileMap = TomlSerializer.Deserialize<TomlTable>(
             File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+        // This fixture registers First/Second instead of the repository's path consumers.
+        foreach (var resource in ((TomlArray)syntheticFileMap["resources"]).Cast<TomlTable>())
+        {
+            resource.Remove("path_inventory");
+            resource.Remove("path_inputs");
+        }
         var syntheticEntries = new[]
         {
             "tools/tests/StrataLint.First/**",

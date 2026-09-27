@@ -1,0 +1,20 @@
+**定理 18.5（图路径熵、费用与同一转移谱）。** 设有限简单有向图强连通且含有边，支持边费用为 $c_{xy}\in\mathbb R$。置 $W_\tau(x,y)=\mathbf1_{x\to y}e^{-c_{xy}/\tau}$，其 Perron 根为 $\lambda_\tau>0$。对图上任意平稳 Markov 对 $(\pi,Q)$，定义
+\[
+ h(\pi,Q)=-\sum_{x,y}\pi_xQ_{xy}\log Q_{xy}.
+\]
+则
+\[
+ -\tau\log\lambda_\tau
+ =\min_{\pi Q=\pi}\left(\sum_{x,y}\pi_xQ_{xy}c_{xy}-\tau h(\pi,Q)\right).
+\]
+另外
+\[
+ \lim_{n\to\infty}n^{-1}\log(W_\tau^n\mathbf1)_x=\log\lambda_\tau.
+\]
+若 $c_{xy}=0$，图上的路径增长熵为 $\log\rho(A)$，其中 $A$ 是邻接矩阵。若 $c_{\mathrm{cyc}}$ 为最小有向环平均费用，$d_{\max}$ 为最大出度，则
+\[
+ c_{\mathrm{cyc}}-\tau\log d_{\max}
+ \le-\tau\log\lambda_\tau\le c_{\mathrm{cyc}},
+\]
+故零温极限为最小环平均费用。
+

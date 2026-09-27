@@ -1,4 +1,4 @@
-import LeanInformationAudit.Registry.Enrollment
+import LeanInformationAudit.Registry.SourceContract
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
@@ -111,9 +111,10 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
               forwarded := forwarded.push argument
         return forwarded == expected).run state
     unless ← forwarding do return actual
-    let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining (← get).constructorTypes
+    let (dependencies, typeWork) ← checkExtractionType theoremName info.type
+      (← get).remaining (← get).constructorTypes
     debit typeWork
-    let indices := indexPositions info.type
+    let indices := typePositions info.type
     debit indices.size
     let (argumentNames, argumentWork) ← match ←
         RegistrationGates.templateArgumentsCurrent theoremName arguments (← get).remaining
@@ -289,7 +290,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
               (projection.universeArgs.isNone || projection.universeArgs == some universeArgs) then
             -- Audit the entire literal receiver before selecting a field. An
             -- unused anchor or signature parameter is still an extraction input.
-            let indices := indexPositions info.type
+            let indices := typePositions info.type
             debit (indices.size + projection.parameters.size)
             let (names, work) ← match ← RegistrationGates.templateArgumentsCurrent
                 context.theoremName (fields ++ projection.parameters) (← get).remaining
@@ -455,7 +456,7 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) (input : EscapeRecordInput) : MetaM TemplateBindingCertificate :=
   RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
@@ -469,12 +470,15 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
       descriptor.getAppArgs.size == plan.slots.size do
     throwError "unclassified_form:dtr.descriptor_telescope"
+  if plan.sourceBound then
+    return ← SourceContract.validate event descriptor plan input
+  if input.sourceSelection.isSome then throwError "unclassified_form:source.plan_kind"
   let initialBudget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
   let (descriptor, eraseWork) ← eraseProofs descriptor initialBudget
   let arguments := descriptor.getAppArgs
   let budget := initialBudget - eraseWork
   let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget plan.constructorTypes
-      (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
+      (plan.slots.map fun slot => slot.type.isConstOf ``Nat || slot.kind == .dictionary) with
     | .ok result => pure result
     | .error reason => throwError reason
   let compare : CompareM TemplateBindingCertificate := do
@@ -567,15 +571,17 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        let certificate ← validate event descriptor claim.owner escape
+        let certificate ← validate event descriptor claim.owner escape claim.escapeInput
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
-        let message ← error.toMessageData.toString
+        let message ← exceptionDiagnostic error
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         let provenance ← diagnosticProvenance event claim reason
         return .declaredUnresolved (diagnosticMessage event.key reason provenance))
-    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape }
+    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape := match result with
+      | .declaredValidated certificate => certificate.escape
+      | _ => escape }
 
 private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
   Option (Name × Nat × Nat × Bool)
@@ -641,6 +647,7 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
 
 private def retainAssessment (record : BindingRecord) (claim : TemplateBindingClaim)
     (certificate : TemplateBindingCertificate) : MetaM Unit := do
+  if certificate.sourceBinding.isSome then return
   let some descriptor := claim.descriptor | return
   let .const name _ := descriptor.getAppFn | return
   let env ← getEnv
@@ -679,7 +686,7 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
       retainAssessment record claim certificate
     catch error =>
       let diagnostic := diagnosticMessage event.key
-        ("incomplete_closure:dtr.cache_inputs:" ++ (← error.toMessageData.toString)) Json.null
+        ("incomplete_closure:dtr.cache_inputs:" ++ (← exceptionDiagnostic error)) Json.null
       return { record with result := .declaredUnresolved diagnostic }
   return record
 

@@ -1,0 +1,11 @@
+**定义 4.1（有限窗口响应及静态编码）。** 设 $\Sigma$ 有限，$Y$ 为度量空间，$H\in\mathbb N$。定义
+\[
+ B_H(x)=\bigl(o(F_wx)\bigr)_{|w|\le H},\qquad
+ d_H(x,y)=\max_{|w|\le H}d_Y(o(F_wx),o(F_wy)).
+\]
+一个静态 $\varepsilon$ 预测编码包括 $e:X\to C$ 及解码器 $D:C\times\Sigma^{\le H}\to Y$，并要求每个 $x,w$ 满足
+\[
+ d_Y(D(e(x),w),o(F_wx))\le\varepsilon.
+\]
+此定义不要求存在从 $e(x)$ 计算 $e(F_ax)$ 的更新。
+

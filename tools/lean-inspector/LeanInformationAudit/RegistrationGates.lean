@@ -1,6 +1,7 @@
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.ReadoutProvenance
 import D5.S3.ConceptDynamics.RegistrationWitnesses
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 
 namespace LeanInformationAudit.RegistrationGates
 open Lean Meta
@@ -37,6 +38,9 @@ def checked (name : Name) (expected : Expr) : MetaM Bool := do
 def witnessArenaName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
 
+def objectDomainArenaName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+
 def witnessBridgeName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization
 
@@ -47,17 +51,24 @@ structure NormalizedArena where
   law : Expr
   finite : Expr
   witness : Bool
+  domain : Option Expr
 
 def normalizeArena (arena : Expr) : MetaM NormalizedArena := do
   let type ← whnfR (← inferType arena)
   let witness := type.isConstOf witnessArenaName
+  let objectDomain := type.isConstOf objectDomainArenaName
   let law ← if witness then mkAppM (witnessArenaName.str "toPrimitiveLawArena") #[arena]
+    else if objectDomain then mkAppM (objectDomainArenaName.str "toPrimitiveLawArena") #[arena]
     else pure arena
   let finite ← if witness || type.isConstOf ``PrimitiveLawArena then
       mkAppM ``PrimitiveLawArena.toArena #[law]
+    else if objectDomain then mkAppM ``PrimitiveLawArena.toArena #[law]
     else if type.isConstOf ``Arena then pure arena
     else throwError "IE-C003 ArenaResolutionFailed: {arena}"
-  return { original := arena, law, finite, witness }
+  let domain ← if objectDomain then
+      some <$> mkAppM (objectDomainArenaName.str "Domain") #[arena]
+    else pure none
+  return { original := arena, law, finite, witness, domain }
 
 private def closedExpression (e : Expr) : Bool :=
   !e.hasFVar && !e.hasMVar && !e.hasLooseBVars
@@ -124,7 +135,7 @@ def variationError (root catalog theoremName arena : Name)
 
 /-- Identify slots in the signature's finite enumeration order. Only indices are
 reflected, never realizations, states, outputs or Law truth tables. -/
-private def indices (indexType fintype : Expr) : MetaM (Array Expr) := do
+def indices (indexType fintype : Expr) : MetaM (Array Expr) := do
   let elems ← mkAppOptM ``Fintype.elems #[some indexType, some fintype]
   let multiset ← whnf (← mkAppM ``Finset.val #[elems])
   unless multiset.isAppOfArity ``Quot.mk 3 do

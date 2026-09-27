@@ -131,15 +131,16 @@
       "StrataLint": {
         "type": "Project",
         "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.ExecutionEvidence": "[1.0.0, )",
+          "StrataLint.FileMap": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.Lean": "[1.0.0, )",
           "StrataLint.ResourcePlanning": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
           "StrataLint.Scribe.Documents": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "YamlDotNet": "[16.3.0, )"
+          "Tomlyn": "[2.10.1, )"
         }
       },
       "stratalint.admissiontestsupport": {
@@ -168,7 +169,29 @@
         "type": "Project",
         "dependencies": {
           "StrataLint": "[1.0.0, )",
-          "StrataLint.AdmissionTestSupport": "[1.0.0, )",
+          "StrataLint.DigestionTestSupport": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
+      "stratalint.configuration": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "YamlDotNet": "[16.3.0, )"
+        }
+      },
+      "stratalint.configurationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
+      "stratalint.digestiontestsupport": {
+        "type": "Project",
+        "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.RegistrationTestSupport": "[1.0.0, )",
           "StrataLint.TestSupport": "[1.0.0, )",
@@ -208,6 +231,15 @@
           "StrataLint.ResourcePlanning": "[1.0.0, )"
         }
       },
+      "stratalint.filemap": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
       "stratalint.inspectionscope": {
         "type": "Project",
         "dependencies": {
@@ -242,6 +274,17 @@
       },
       "stratalint.resourceplanning": {
         "type": "Project"
+      },
+      "stratalint.ruletestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.ConfigurationTestSupport": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
       },
       "stratalint.scribe": {
         "type": "Project",

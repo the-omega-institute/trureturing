@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -93,10 +94,6 @@ public sealed class PlaybookWorkflowScriptTests
                 call => call.StartsWith("git-branch-merge:", StringComparison.Ordinal));
         }
     }
-
-    private static string Diagnostics(ProcessOutput result) =>
-        "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
-        + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
     private static void WriteTruthGraph(PlaybookFixture fixture, string module) =>
         WriteTruthGraphContent(

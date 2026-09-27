@@ -8,6 +8,19 @@ namespace StrataLint.InspectionIntegration.Tests;
 public sealed class FileMapInspectionScopeTests
 {
     [Theory]
+    [InlineData("tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs")]
+    [InlineData("tools/StrataLint.FileMap/FileMapPolicy.cs")]
+    [InlineData("Meta/domains.yaml")]
+    public void RepositoryPolicyChangesInspectTheWholeTree(string changed)
+    {
+        var result = FileMapInspectionScope.Select(RepositoryRegistration(), [changed],
+            [changed, "Library/Carrier/reference.md"]);
+
+        Assert.Null(result.Paths);
+        Assert.True(result.Actors);
+    }
+
+    [Theory]
     [InlineData("Blueprint/D5/Changed.md")]
     [InlineData("Generated/Changed.json")]
     [InlineData("Evidence/D5/Changed.json")]

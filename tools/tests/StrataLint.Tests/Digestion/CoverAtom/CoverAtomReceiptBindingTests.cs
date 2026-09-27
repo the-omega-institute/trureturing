@@ -5,15 +5,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-internal sealed partial record CoverSpec
-{
-    internal bool FreezeTargetModule { get; init; } = true;
-
-    internal bool FrozenTargetInBaseline { get; init; } = true;
-
-    internal string TargetStatementId { get; init; } = FrozenStatementReceiptTestData.Id('a');
-}
-
 public sealed partial class CoverAtomTests
 {
     [Fact]

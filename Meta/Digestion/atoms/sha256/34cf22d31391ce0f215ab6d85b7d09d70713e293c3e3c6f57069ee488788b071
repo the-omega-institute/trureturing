@@ -1,0 +1,12 @@
+**定理 46.3（平坦环面的全局 Hamilton 分解与精确误设误差）。** 在 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上取 $\Omega=d\theta\wedge d\phi$、平坦范数及归一面积概率 $\mu$。任意光滑保持 $\Omega$ 的向量场 $X=(u,v)$ 都能唯一写为
+\[
+ X=(a,b)+X_{H_0},\qquad a=\int u\,d\mu,\quad b=\int v\,d\mu,
+ \quad \int H_0\,d\mu=0,
+\]
+其中 $H_0$ 是全局单值光滑周期函数。$X$ 有全局单值 Hamilton 函数，当且仅当 $a=b=0$。并且在全部光滑周期 $H$ 上，
+\[
+ \boxed{\inf_H\|X-X_H\|_{L^2(\mu)}^2=a^2+b^2,
+ \qquad \inf_H\|X-X_H\|_\infty=\sqrt{a^2+b^2}.}
+\]
+特别地，非零恒定流 $a\partial_\theta+b\partial_\phi$ 保持辛形式，局部可用 $a\phi-b\theta$ 生成，却不能由环面上的全局单值能量生成。
+

@@ -1,0 +1,11 @@
+**定义 10.1（两分支收缩编码）。** 给定 $0<\lambda<1/2$，令
+\[
+ K_\lambda=\left\{(1-\lambda)\sum_{j=0}^\infty b_j\lambda^j:
+                         b_j\in\{0,1\}\right\}\subseteq[0,1],
+\]
+动作及观察为
+\[
+ F_a(x)=(1-\lambda)a+\lambda x\quad(a\in\{0,1\}),\qquad o(x)=x\in\mathbb R.
+\]
+对 $\varepsilon>0$，记 $N_\varepsilon(\lambda)$ 为对全部初态及全部动作词、误差至多 $\varepsilon$ 的最少预测器状态数，采用定义 8.1 的计费口径。数字串按从当前最高权位到较低权位的顺序书写；执行动作 $a$ 把 $a$ 加到数字串开头。
+

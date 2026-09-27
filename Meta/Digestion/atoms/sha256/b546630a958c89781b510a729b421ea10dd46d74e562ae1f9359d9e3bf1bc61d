@@ -1,0 +1,11 @@
+**定理 8.2（有限状态近似等价于确定性前向不变覆盖）。** 存在至多 $s\ge1$ 个状态、满足定义 8.1 全未来要求的预测器，当且仅当存在至多 $s$ 个非空集合 $C_i\subseteq X$ 覆盖 $X$，为每个 $i,a$ 指定唯一后继编号 $\delta(i,a)$，并存在 $y_i\in Y$，满足
+\[
+ F_a[C_i]\subseteq C_{\delta(i,a)},\qquad
+ \sup_{x\in C_i}d_Y(o(x),y_i)\le\varepsilon.
+\]
+这些集合允许重叠。若定义
+\[
+ d_\infty(x,x')=\sup_{w\in\Sigma^*}d_Y(o(F_wx),o(F_wx'))\in[0,\infty],
+\]
+则每个 $C_i$ 的 $d_\infty$ 直径至多为 $2\varepsilon$。
+

@@ -132,7 +132,9 @@ public sealed class ColdPreflightContractTests
         {
             Assert.True(result.Exit == (resource == "engineering" ? 2 : 0), result.Text);
             Assert.Equal(1, events.Count(s => s == "bootstrap-build"));
-            var processes = result.Text.Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
+            var rawOutput = string.Join("\n", Directory.GetFiles(Path.Combine(root, "build/ci/logs"), "console.log", SearchOption.AllDirectories)
+                .Select(File.ReadAllText));
+            var processes = rawOutput.Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
                 .Select(line => JsonNode.Parse(line["STAGE_PROCESS ".Length..])!)
                 .Where(process => process["stage"]!.ToString() == "build").ToArray();
             Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process["arguments"]![0]!.ToString()));

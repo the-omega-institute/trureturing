@@ -1,3 +1,4 @@
+using StrataLint.FileMap;
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;

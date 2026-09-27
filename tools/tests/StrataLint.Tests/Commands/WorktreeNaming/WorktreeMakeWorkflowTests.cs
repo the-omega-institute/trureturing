@@ -86,7 +86,7 @@ public sealed class WorktreeMakeWorkflowTests
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        ReviewRegressionTests.RunGit(fixtureRoot, "init", "--initial-branch=dev");
+        TestGit.Run(fixtureRoot, "init", "--initial-branch=dev");
         return Path.Combine(fixtureRoot, "dotnet-called");
     }
 

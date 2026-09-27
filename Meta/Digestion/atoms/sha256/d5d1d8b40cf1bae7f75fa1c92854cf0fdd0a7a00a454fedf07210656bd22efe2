@@ -1,0 +1,24 @@
+**推论 10.3（状态复杂度指数及黄金收缩实例）。** 对每个固定 $0<\lambda<1/2$，
+\[
+ \lim_{\varepsilon\downarrow0}
+ \frac{\log N_\varepsilon(\lambda)}{\log(1/\varepsilon)}
+ =\frac{\log2}{\log(1/\lambda)}.
+\]
+特别地，取 $\lambda=\varphi^{-2}$，则
+\[
+ N_{1/(2\varphi^{2L})}(\varphi^{-2})=2^L\quad(L\ge1),
+\]
+而复杂度指数为 $\log2/(2\log\varphi)$。
+
+**证明。** 对足够小的 $\varepsilon>0$，令 $m\ge2$ 为满足 $\lambda^m/2\le\varepsilon$ 的最小整数，则
+\[
+ \lambda^m/2\le\varepsilon<\lambda^{m-1}/2.
+\]
+长度 $m$ 的前缀机器给出 $N_\varepsilon\le2^m$。长度 $m-1$ 的尾零初态族两两距离至少为 $(1-\lambda)\lambda^{m-2}$，而
+\[
+ 2\varepsilon<\lambda^{m-1}<(1-\lambda)\lambda^{m-2},
+\]
+故同样的第零步单射论证给出 $N_\varepsilon\ge2^{m-1}$。于是 $\log N_\varepsilon$ 被 $(m-1)\log2$ 与 $m\log2$ 夹住，$\log(1/\varepsilon)$ 与 $m\log(1/\lambda)$ 相差有界量，取极限即得。
+
+因为 $\varphi^2>2$，黄金特例满足 $0<\varphi^{-2}<1/2$；在定理 10.2 中代入即可。这个实例的前缀被动作确定更新，而第 9 节旋转的相位持续累积；相同黄金常数没有把两种动力学的资源界识别为同一结论。证毕。
+

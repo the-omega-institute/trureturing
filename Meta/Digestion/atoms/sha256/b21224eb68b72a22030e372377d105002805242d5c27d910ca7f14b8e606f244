@@ -1,0 +1,10 @@
+**引理 39.1（逆对数平均的四点不等式）。** 对 $a,b>0$ 令
+\[
+ \ell(a,b)=\begin{cases}(\log a-\log b)/(a-b),&a\ne b,\\1/a,&a=b.\end{cases}
+\]
+则对全部 $a,b,c,d>0$，
+\[
+ \frac{\ell(ac,bd)+\ell(ad,bc)}2\ge \ell(a,b)\ell(c,d).
+\]
+等号当且仅当 $a=b$ 或 $c=d$。
+

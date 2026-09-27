@@ -1,0 +1,12 @@
+**定理 39.2（Hermitian 方向上的 BKM 张量下界）。** 对任意有限维 $\sigma\succ0$ 和 Hermitian $X$，定义
+\[
+ Q_\sigma(X)=\operatorname{Tr}\big[X\,D\log(\sigma)[X]\big]
+ =\int_0^\infty\operatorname{Tr}\big[X(\sigma+uI)^{-1}X(\sigma+uI)^{-1}\big]du.
+\]
+对任意两组这样的数据，
+\[
+ \boxed{Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)
+        \ge Q_{\sigma_1}(\Delta_1)Q_{\sigma_2}(\Delta_2).}
+\]
+若 $\Delta_1,\Delta_2$ 均非零，等号当且仅当 $[\sigma_1,\Delta_1]=0$ 或 $[\sigma_2,\Delta_2]=0$。特别地，两边均非对易时该二次型比较严格。
+

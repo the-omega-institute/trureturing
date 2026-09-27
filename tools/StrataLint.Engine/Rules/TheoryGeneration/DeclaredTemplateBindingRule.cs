@@ -25,7 +25,8 @@ internal sealed record InformationTemplateOccurrence(
     string? RealizationName = null,
     InformationEscapeFrom? EscapeFrom = null,
     InformationEscapeContinuation? EscapeContinues = null,
-    string BridgeKind = "legacy")
+    string BridgeKind = "legacy",
+    string? SourceOwner = null)
 {
     internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
         && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;

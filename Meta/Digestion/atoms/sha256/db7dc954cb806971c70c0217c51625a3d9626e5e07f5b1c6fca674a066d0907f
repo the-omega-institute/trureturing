@@ -1,0 +1,8 @@
+**出处 37.1（已有文献与本轮结果的关系）。** 完全强数据处理、条件期望熵分解、BKM 对数微分和完全正序均是已有研究。本批第 33.3 条给出已知普通/完全系数分离的可分态见证；第 34 节在二元对称和精确互补条件下推导所需常数；第 35 节利用原卷受控传播矩阵的特殊奇异值乘法关系，把这些构件接入时变经典/量子共同曲线；第 36 节比较两种实际证书的精度阶。九条结果按正文直接推导列为 `repo-derived`，下列既有框架列为 `literature-attested`。本批没有求出所有保单位单比特信道的完全系数，也没有认领其一般分类或原卷统计样本预算的最优性。
+
+[^tcs6-complete]: Li Gao、Cambyse Rouzé，*Complete Entropic Inequalities for Quantum Markov Chains*，Archive for Rational Mechanics and Analysis 245, 183–238 (2022)，DOI [10.1007/s00205-022-01785-1](https://doi.org/10.1007/s00205-022-01785-1)，[作者预印本 v3](https://arxiv.org/pdf/2102.04146)。本批核对作者 PDF 的 Theorems 1.1–1.3、§2.1–2.3、§5 的条件期望及熵张量化，包括 PDF 第 3、4 页图像。一般完全性及 commuting-square 背景归于文献；第 34.2 条额外利用 $UXU=-X$ 的成对谱计算本批所需的二元精确常数，不从该文一般非尖锐界直接宣称精确性。
+
+[^tcs6-cporder]: Li Gao、Marius Junge、Nicholas LaRacuente、Haojian Li，*Complete positivity order and relative entropy decay*，Forum of Mathematics, Sigma 13, e31 (2025)，DOI [10.1017/fms.2024.117](https://doi.org/10.1017/fms.2024.117)。核对出版方全文的完全正序、熵差和 §6 讨论；该文已明确指出单比特退极化的普通与完全 MLSI 常数可分离。本文的可分输入矩阵、终点比值及四阶/三阶证书比较分别直接计算，不将一般分离本身表述为新发现。本文第 36.1 条仅需完全正分解与 KL 凸性，未照搬该文含不同生成元归一化的速率常数。
+
+[^tcs6-laracuente]: Nicholas LaRacuente，*Self-restricting Noise and Exponential Relative Entropy Decay Under Unital Quantum Markov Semigroups*，Quantum 10, 2010 (2026)，DOI [10.22331/q-2026-03-04-2010](https://doi.org/10.22331/q-2026-03-04-2010)，[作者全文 v5](https://arxiv.org/html/2203.03745v5)。实际读取 Introduction 的 Propositions/Theorems 1.1–1.3、§2.1 的完全正序与条件期望、§3 的有限时间结论。该文已在任意有限辅助系统下证明有限时间尺度上的可重复收缩，并指出不交换 Hamilton 项可使零时刻的标准指数界失效。本批在更窄的固定轴受驱动单比特族中算出精确终点系数，三阶起始律与文献的早期边界相容；没有将有限时间收缩误写为带正速率、前因子一的全时间线性指数界。
+

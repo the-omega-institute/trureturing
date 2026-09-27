@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from test_native_support import NativeTestSupport
+from test_native_support import NativeTestSupport, NativeArtifactTestSupport, NativeDependencyTestSupport
 from test_native_invalidation import *
 from test_native_publication import *
 from test_native_recovery import *
@@ -12,12 +12,40 @@ from test_native_packaging import *
 from test_native_reuse import *
 from test_native_interface import *
 from test_native_records import *
-from packages.reg import NativeRegTests
+from packages.reg import NativeRegTests, NativeRegConsumerTests, NativeRegSupport
 from Census.tests.relocation_fixture import NativeRelocationTests
 
-class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
-                  NativeRecoveryTests, NativePackagingTests, NativeReuseTests,
-                  NativeInterfaceTests, NativeRecordTests, NativeRegTests, unittest.TestCase):
+class NativeTests(NativeTestSupport, NativeInvalidationTests, NativeColdPublicationTests,
+                  NativePackagingTests, NativeInterfaceTests, NativeRecordTests,
+                  NativeRegTests, unittest.TestCase):
+    pass
+
+class NativeArtifactTests(NativeArtifactTestSupport, NativeArtifactConsumerTests, unittest.TestCase):
+    pass
+
+class NativePublicationTests(NativeDependencyTestSupport, NativePublicationConsumerTests, unittest.TestCase):
+    pass
+
+class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTests, unittest.TestCase):
+    pass
+
+class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
+    pass
+
+class NativeCompilerTests(NativeDependencyTestSupport, NativeCompilerOptionsTests,
+                          NativeCompilerConsumerTests, NativeModuleFacetTests, unittest.TestCase):
+    pass
+
+class NativePackageTests(NativeDependencyTestSupport, NativePackageConsumerTests,
+                         NativeRegSupport, unittest.TestCase):
+    pass
+
+class NativeRoutingTests(NativeDependencyTestSupport, NativeRegConsumerTests,
+                         NativeInterfaceConsumerTests, unittest.TestCase):
+    pass
+
+class NativeReportTests(NativeDependencyTestSupport, NativeReportConsumerTests,
+                        NativeRegSupport, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

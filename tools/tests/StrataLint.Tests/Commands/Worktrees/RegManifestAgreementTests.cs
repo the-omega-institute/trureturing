@@ -256,8 +256,9 @@ public sealed class RegManifestAgreementTests
 
     private static IEnumerable<Diagnostic> Current(Dictionary<string, string> files)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            System.Text.Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            System.Text.Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(files.Select(item => RawRepositoryEntry.FromText(item.Key, item.Value))))).Snapshot;
         return RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(15),

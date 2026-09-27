@@ -141,6 +141,8 @@ unsafe def main : IO Unit := do
                                       cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+
+class NativeInterfaceConsumerTests:
     def test_interface_edit_rebuilds_implementation_consumer(self):
         self.reg_package()
         self.run_lake('build', 'Fixture')

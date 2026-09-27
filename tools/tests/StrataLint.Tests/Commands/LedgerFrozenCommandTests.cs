@@ -1,6 +1,6 @@
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 using Directory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 
 namespace StrataLint.Tests;

@@ -1,0 +1,26 @@
+**引理 40.1（有限幅度 Holevo 信息的二次型夹逼）。** 设 $\sigma\succ0$ 为密度矩阵，$X=X^\dagger$、$\operatorname{Tr}X=0$，$r=\|\sigma^{-1/2}X\sigma^{-1/2}\|<1$。置
+\[
+ \psi(r)=\begin{cases}-\log(1-r^2)/r^2,&0<r<1,\\1,&r=0.\end{cases}
+\]
+则
+\[
+ \boxed{\frac12Q_\sigma(X)\le J(\sigma,X)
+                 \le\frac{\psi(r)}2Q_\sigma(X).}
+\]
+更精确地，令 $K_u=(\sigma+uI)^{-1/2}X(\sigma+uI)^{-1/2}$，有
+\[
+ J(\sigma,X)=-\frac12\int_0^\infty\operatorname{Tr}\log(I-K_u^2)\,du.
+\]
+
+**证明。** 对 $f(v)=D(\sigma+vX\Vert\sigma)$ 使用矩阵对数的预解式微分：
+\[
+ f''(v)=\int_0^\infty\operatorname{Tr}\big[K_u^2(I+vK_u)^{-2}\big]du.
+\]
+这一公式由 $(\sigma+vX+uI)^{-1}=(\sigma+uI)^{-1/2}(I+vK_u)^{-1}(\sigma+uI)^{-1/2}$ 和迹的循环性推出，不需要 $\sigma X=X\sigma$。又 $f(0)=f'(0)=0$，且 $J=(f(1)+f(-1))/2$。将对 $v$ 的二次积分写成对 $K_u$ 各实本征值 $k$ 的标量积分，每个本征值的偶部分恰为 $-\log(1-k^2)/2$，得到积分身份。
+
+由 $-r\sigma\preceq X\preceq r\sigma$ 可知 $\|K_u\|\le r$。$Q_\sigma(X)=\int\operatorname{Tr}K_u^2du$ 有限，因 $u$ 大时被积项为 $O(u^{-2})$，近零时 $\sigma\succ0$；同一个上界控制上述积分换序。对 $0\le z\le r^2$ 使用
+\[
+ z\le-\log(1-z)\le\psi(r)z
+\]
+并逐谱点积分，得到夹逼。右侧系数的单调性由 $-\log(1-z)/z=\sum_{j\ge0}z^j/(j+1)$ 给出。$X=0$ 的情形两边都是零。证毕。
+
