@@ -70,7 +70,7 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
                     Paragraph(Text(
                         "The identity Kp+zu=qp makes every weighted row sum strictly smaller than q. Applying the maximum-ratio argument to an eigenvector places both support eigenvalues below q.")),
                     Paragraph(Text(
-                        "Adjoining p/z to the support eigenbasis gives the explicit upper-triangular block change of basis. The relation Kp+zu=qp proves the final column equation, and the displayed block inverse proves invertibility."))),
+                        "Adjoining p/z to the support eigenbasis gives the explicit upper-triangular block change of basis. The relation Kp+zu=qp proves the final column equation, and invertibility follows because the change of basis is block upper-triangular with invertible diagonal blocks."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(
@@ -92,8 +92,8 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
         Typed(F.Id("z"), Real()), Comma, Sp,
         Typed(F.Id("p"), Arrow(Fin(2), Real())), Sp, Rightarrow, Sp,
         Call("r", F.Id("z"), F.Id("p")), Sp, Eq, Sp,
-        Root(Seq(Square(F.Id("z")), Plus, Square(At(F.Id("p"), D(1))), Plus,
-            Square(At(F.Id("p"), D(2))))), Dot));
+        Root(Seq(Square(F.Id("z")), Plus, Square(At(F.Id("p"), D(0))), Plus,
+            Square(At(F.Id("p"), D(1))))), Dot));
 
     private static Formula GZeroFormula() => Disp(Seq(
         Typed(F.Id("z"), Real()), Comma, Sp,
@@ -108,11 +108,12 @@ internal sealed class SingularSupportCandidateDiagonalizableDocument : IScribeDo
     private static Formula HFormula() => Disp(Seq(
         Typed(F.Id("z"), Real()), Comma, Sp,
         Typed(F.Id("p"), Arrow(Fin(2), Real())), Comma, Sp,
-        Forall, Sp, Typed(F.Id("j"), Fin(2)), Comma, Sp,
-        At(Call("H", F.Id("z"), F.Id("p")), F.Id("j"), F.Id("j")), Sp, Eq, Sp,
-        Fraction(At(F.Id("p"), F.Id("j")),
-            Seq(Call("r", F.Id("z"), F.Id("p")), Sp,
-                Root(Seq(Square(F.Id("z")), Plus, Square(At(F.Id("p"), F.Id("j"))))))), Dot));
+        Call("H", F.Id("z"), F.Id("p")), Sp, Eq, Sp,
+        Call("diagonal", Seq(Open, F.Id("j"), Sp, Mapsto, Sp,
+            Fraction(At(F.Id("p"), F.Id("j")),
+                Seq(Call("r", F.Id("z"), F.Id("p")), Sp,
+                    Root(Seq(Square(F.Id("z")), Plus, Square(At(F.Id("p"), F.Id("j"))))))),
+            Close)), Dot));
 
     private static Formula KFormula() => Disp(Seq(
         Typed(F.Id("z"), Real()), Comma, Sp,

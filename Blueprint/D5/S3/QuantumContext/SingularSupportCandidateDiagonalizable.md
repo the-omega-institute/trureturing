@@ -6,7 +6,7 @@ Positive singular-support candidate columns admit an explicit real diagonalizati
 
 **Definition 1.1 (The singular-support radius).**
 
-$$z: \mathbb{R}, p: (\operatorname{Fin}(2)) \to \mathbb{R} \Rightarrow \operatorname{r}(z, p) = \sqrt{{z}^{2}+{p_{1}}^{2}+{p_{2}}^{2}}.$$
+$$z: \mathbb{R}, p: (\operatorname{Fin}(2)) \to \mathbb{R} \Rightarrow \operatorname{r}(z, p) = \sqrt{{z}^{2}+{p_{0}}^{2}+{p_{1}}^{2}}.$$
 
 *Formalization.* `D5/S3/QuantumContext/SingularSupportCandidateDiagonalizable.r` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The support block is a positive scalar identity plus a positive rank-one matrix.
 
 **Definition 1.3 (The column-normalization matrix).**
 
-$$z: \mathbb{R}, p: (\operatorname{Fin}(2)) \to \mathbb{R}, \forall j: \operatorname{Fin}(2), \operatorname{H}(z, p)_{jj} = \frac{p_{j}}{\operatorname{r}(z, p) \sqrt{{z}^{2}+{p_{j}}^{2}}}.$$
+$$z: \mathbb{R}, p: (\operatorname{Fin}(2)) \to \mathbb{R}, \operatorname{H}(z, p) = \operatorname{diagonal}((j \mapsto \frac{p_{j}}{\operatorname{r}(z, p) \sqrt{{z}^{2}+{p_{j}}^{2}}})).$$
 
 *Formalization.* `D5/S3/QuantumContext/SingularSupportCandidateDiagonalizable.H` (`✓ std3`).
 
@@ -104,7 +104,7 @@ The unnormalized support block is positive definite. Conjugating it by the posit
 
 The identity Kp+zu=qp makes every weighted row sum strictly smaller than q. Applying the maximum-ratio argument to an eigenvector places both support eigenvalues below q.
 
-Adjoining p/z to the support eigenbasis gives the explicit upper-triangular block change of basis. The relation Kp+zu=qp proves the final column equation, and the displayed block inverse proves invertibility.
+Adjoining p/z to the support eigenbasis gives the explicit upper-triangular block change of basis. The relation Kp+zu=qp proves the final column equation, and invertibility follows because the change of basis is block upper-triangular with invertible diagonal blocks.
 
 ## References
 
