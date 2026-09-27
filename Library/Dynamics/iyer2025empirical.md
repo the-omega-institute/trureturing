@@ -3563,3 +3563,69 @@ Stirling／Binet 展开和有限集合的 limsup 推理均是经典工具。
 有理截距排除仅适用于该规则或等正均值子目标；
 没有构造原曲线上的有理斜率／有理截距点，也没有排除不等均值的全部同步可能。
 文献核对给出上述具体适用边界，不作为不存在性或全球原创性认证。
+
+## 原文对照：第 92 章的指数分辨率与二项量化耦合
+
+[理论卷第 92 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+将精确条件熵中心下的第三阶覆盖扩展到
+$\limsup\ln(1/\sigma_M)/Q^3<c_q/2$，仍要求 $\ln(1/\sigma_M)\to\infty$。
+该系数是所证充分条件，不是噪声阈值锐性结论。
+经典二项耦合支付唯一的逆噪声误差；外部计数能量通过二维联合平移移除，
+其与外部信息量的依赖一直保留到最终条件中心化。
+
+**直接使用的有限 Wasserstein 定理。** Thomas Bonis，
+*Stein's method for normal approximation in Wasserstein distances with application to the multivariate Central Limit Theorem*，
+[arXiv:1905.13615v2](https://arxiv.org/abs/1905.13615v2)，
+[原 TeX](https://arxiv.org/e-print/1905.13615v2)。
+2020 年 5 月 11 日版本的 32 页 PDF 第 1 页设定 iid、中心化、单位协方差；
+第 5 页 Theorem 1、式 (9) 对 $m\ge2$ 给有限 $W_m$ 界：
+常数只依赖阶数 $m$，分子由四阶矩矩阵范数和 $(m+2)$ 阶矩显式控制，
+分母为 $\sqrt n$。原 body.tex 的 CTLmain、Wpmainthm 标签核对相同陈述。
+在一维代入标准化 Bernoulli，成功概率位于 $[1/4,3/4]$ 时所有这些矩一致有界，
+故直接取得 $C_m/\sqrt n$，不需密度、非格点或精确成功概率 $1/2$。
+一维单调量化同时最小化各固定阶凸运输代价，给正文同一个耦合的 $L^2,L^4$ 控制。
+这个精确阶及量化方法完全归属经典结果。
+
+**二项原文的交叉核对。** Alexander A. Serov、Andrew M. Zubkov，
+*A Full Proof of Universal Inequalities for the Distribution Function of the Binomial Law*，
+[arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)，
+[原 TeX](https://arxiv.org/e-print/1207.3838v2)。
+2012 年 8 月 31 日版本第 2 页的定理对全部 $n$、$p\in(0,1)$、
+$k=0,\ldots,n-1$ 给
+$C_{n,p}(k)\le F_{n,p}(k)\le C_{n,p}(k+1)$；
+内部 $C$ 为二项相对熵有符号平方根处的标准正态 CDF，
+端点单独定义为 $C(0)=(1-p)^n$、$C(n)=1-p^n$。
+第 2–5 页给完整 beta 积分及单调性证明，原 0542008.tex 中核对了定理和端点。
+紧 $p$ 区间内，有符号根的 Taylor 展开和量化夹逼给
+$|X-Z|\le C(1+Z^2)/\sqrt n$ 于 $|Z|\le c\sqrt n$，
+其外以 $|X|\le C\sqrt n$ 和正态尾控制各固定矩。
+这提供独立的二项专用核对，但正文已直接使用 Bonis 的有限定理。
+
+Serov–Zubkov 将原不等式归于 Alfers–Dinges 的 1984 年文献；
+该早期原文未独立取得，归属依据为这里核对的完整证明及其引用。
+所取 TeX 的介绍性 Moivre–Laplace 显示式多出一个 $\Phi(x)$ 因子，
+其后单独显示的 Stirling 公式省去 $(n/e)$ 的指数 $n$；
+紧接的二项系数计算使用 $n^n$。这两处未用显示式不承担本章前提，
+不把提取成功等同于每个印刷公式正确。
+
+**不作统一估计依据的后来版本。** Bonis，
+*Improved rates of convergence for the multivariate Central Limit Theorem in Wasserstein distance*，
+[arXiv:2305.14248v4](https://arxiv.org/abs/2305.14248v4)，
+2024 年 4 月 29 日版本第 3 页 Corollary 1 另用截断增量协方差条件，
+并含依赖底层分布的渐近余项；更强的非格点收益要求非零绝对连续分量。
+Bernoulli 没有该分量，且分布依赖余项不能直接当作随数据变化的 $p_j$ 的一致界。
+本章用前述更早的显式有限定理，未借此推导未给出的统一性。
+
+Carter–Pollard，*Tusnady's Inequality Revisited*，
+[arXiv:math/0508606v1](https://arxiv.org/abs/math/0508606v1)，
+DOI [10.1214/009053604000000733](https://doi.org/10.1214/009053604000000733)，
+第 1–5 页 Theorems 1–2 的原对象是 $\operatorname{Bin}(n,1/2)$，有其所列
+$n\ge28$ 及内部指标范围和尾部处理。实际 $p_j\to1/2$ 不能替代精确对称假设。
+这些成熟结果说明精确量化阶并非新发明；实际参数对应由 Bonis 定理完成。
+
+**组合范围。** 第 90 章已归属的 Kontoyiannis–Verdú、Chen–Effros–Kostina、
+Gavalakis–Kontoyiannis 和 Hu–Lu–Nualart 分别承担经典排序／编码与密度机制。
+它们不直接提供当前随数据、噪声变化的实际条件后验结论。
+本章先比较联合可观测量和中心一阶矩密度，再于最终参考使用条件 $C/Q$ 密度界；
+未在保留外部真实能量的中间通道虚报独立性。
+文献核对有版本和范围限制，不作为全球原创性证明。
