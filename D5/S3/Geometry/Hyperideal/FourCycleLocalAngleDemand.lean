@@ -8,7 +8,7 @@
    escape_witness: the exact cosine factorizations and positive slack identity
      used on the active path of paired_angle_demand
    admission_basis: escape-witness
-   digest: Strict angle demand for a genuine paired hyper-ideal four-cycle. -/
+   digest: Strict angle demand under three cosine-range hypotheses. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
@@ -25,6 +25,7 @@ open D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 
 /- The six entries are in the fixed order (12,13,14,34,24,23). -/
 set_option maxHeartbeats 3000000 in
+-- The coupled radical identities and strict angle comparison need this local budget.
 theorem paired_angle_demand
     (r a b o : ℝ)
     (hr : 1 < r) (ha : 1 < a) (hb : 1 < b) (ho : 1 < o)
@@ -553,5 +554,7 @@ theorem paired_angle_demand
     dsimp [eta] at htarget
     change 2 * theta + beta + delta > Real.pi
     linarith only [htarget]
+
+#print axioms paired_angle_demand
 
 end D5.S3.Geometry.Hyperideal.FourCycleLocalAngleDemand
