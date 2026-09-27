@@ -26213,3 +26213,602 @@ $$
 本批在有限定向三维 CW 复形、阿贝尔面曲率上链、有限边运输、有限表面事件核、有限维误差度量和显式停止合同下，给出离散 Bianchi 恒等式、离散 Stokes 关系、曲率可实现性 \(H^2\) 判据、同一曲率的 \(H^1\) 残余、近似闭合下界和三维曲率感知全息。没有把这些有限胞腔结论推广为连续规范场论、量子引力或物理时空曲率定律；没有把上同调类自动解释为可直接观测的粒子属性；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 359. 有限胞腔上链的 Hodge 分解
+
+上一批已经区分了曲率的闭合性、可实现性与 \(H^1\) 残余。为了说明这些残余在有限模型中怎样彼此正交，给上链空间加入一个明确的内积。这个内积是重建与误差预算的结构，不是另加一个物理观察者。
+
+### 定义 359.1（有限上链内积与伴随）
+
+令 \(K\) 是有限定向胞腔复形，系数取 \(\mathbb R\)。在每个有限维上链空间 \(C^k(K;\mathbb R)\) 选择正定内积 \(\langle\cdot,\cdot\rangle_k\)。记
+
+$$
+d_k:C^k\longrightarrow C^{k+1}
+$$
+
+为 coboundary，并定义其伴随
+
+$$
+\delta_{k+1}=d_k^*:C^{k+1}\longrightarrow C^k.
+$$
+
+定义第 \(k\) 层的 Hodge Laplacian：
+
+$$
+\boxed{
+\Delta_k=d_{k-1}\delta_k+\delta_{k+1}d_k.
+}
+$$
+
+约定没有相应阶数的项为零。定义 harmonic 子空间
+
+$$
+\mathcal H^k=\ker\Delta_k.
+$$
+
+内积可以来自胞腔权重、探测器精度或资源成本。改变内积会改变最小范数代表和误差大小，但不改变闭合关系 \(d_{k+1}d_k=0\)。
+
+### 定理 359.2（有限 Hodge 正交分解）
+
+对每个 \(k\)，有正交直和
+
+$$
+\boxed{
+C^k
+=
+\operatorname{im}d_{k-1}
+\ \oplus\
+\mathcal H^k
+\ \oplus\
+\operatorname{im}\delta_{k+1}.
+}
+$$
+
+并且
+
+$$
+\mathcal H^k
+=
+\ker d_k\cap\ker\delta_k.
+$$
+
+### 证明
+
+对任意 \(u\in C^k\)，有
+
+$$
+\langle\Delta_ku,u\rangle
+=
+\langle d_{k-1}\delta_ku,u\rangle
+\ +\
+\langle\delta_{k+1}d_ku,u\rangle
+=
+\|\delta_ku\|^2+\|d_ku\|^2.
+$$
+
+因此 \(\Delta_ku=0\) 当且仅当 \(d_ku=0\) 且 \(\delta_ku=0\)。
+
+又因为 \(d_kd_{k-1}=0\)，有
+
+$$
+\left\langle d_{k-1}a,\delta_{k+1}b\right\rangle
+=
+\left\langle d_kd_{k-1}a,b\right\rangle
+=0.
+$$
+
+同理，\(\mathcal H^k\) 与两幅像空间都正交。有限维线性代数给出
+
+$$
+(\ker\Delta_k)^\perp=\operatorname{im}\Delta_k
+\subseteq
+\operatorname{im}d_{k-1}+\operatorname{im}\delta_{k+1}.
+$$
+
+反向包含由上式的正交性成立，故三项正交直和张成整个 \(C^k\)。证毕。
+
+### 定理 359.3（harmonic 空间代表上同调）
+
+映射
+
+$$
+\mathcal H^k\longrightarrow H^k(K;\mathbb R),
+\qquad
+h\longmapsto[h],
+$$
+
+是线性同构。因此
+
+$$
+\boxed{\dim\mathcal H^k=\dim H^k(K;\mathbb R).}
+$$
+
+### 证明
+
+先取任意闭上链 \(z\in Z^k=\ker d_k\)。由定理 359.2 写成
+
+$$
+z=d_{k-1}a+h+\delta_{k+1}b.
+$$
+
+因为 \(d_kz=0\)，有 \(d_k\delta_{k+1}b=0\)。于是
+
+$$
+\|\delta_{k+1}b\|^2
+=
+\langle d_k\delta_{k+1}b,b\rangle
+=0,
+$$
+
+故 \(\delta_{k+1}b=0\)，从而 \(z=d_{k-1}a+h\)。这说明每个上同调类都有 harmonic 代表。
+
+若 \(h\in\mathcal H^k\) 同时是恰当上链 \(h=d_{k-1}a\)，则
+
+$$
+\|h\|^2
+=
+\langle d_{k-1}a,h\rangle
+=
+\langle a,\delta_kh\rangle
+=0.
+$$
+
+所以 \(h=0\)，代表唯一。证毕。
+
+### 推论 359.4（曲率的局部与拓扑正交层）
+
+对一阶边上链 \(g\)，有
+
+$$
+g
+=
+\underbrace{d_0\lambda}_{\text{顶点规范}}
+\ +\
+\underbrace{h_1}_{\text{harmonic 全局模式}}
+\ +\
+\underbrace{\delta_2\beta}_{\text{曲率响应模式}}.
+$$
+
+其中：
+
+1. \(d_0\lambda\) 不改变面曲率 \(d_1g\)，属于坐标规范；
+2. \(h_1\) 满足 \(d_1h_1=0\)，不被局部曲率读数看到，却承载 \(H^1\) 周期；
+3. \(\delta_2\beta\) 是与面曲率直接相连的 coexact 部分。
+
+因此，同一个局部曲率读数可以对应不同的全局 harmonic 波形。
+
+### AHH 359.5（Hodge 三分）
+
+有限关系体中的“整体波”可以分成三个可检验层：
+
+$$
+\boxed{
+\text{exact}
+\;|\;
+\text{harmonic}
+\;|\;
+\text{coexact}.
+}
+$$
+
+exact 是局部命名变化，harmonic 是局部曲率看不见的全局记忆，coexact 是实际被面曲率激活的局部响应。粒子式事件只在声明的效果接口上读取其中的一部分；一次读数不会自动把三层合并成完整状态。
+
+---
+
+## 360. 曲率重建、规范固定与最小范数代表
+
+Hodge 分解不仅分类残余，还给出一个明确的重建程序：先由曲率确定 coexact 部分，再由周期读数确定 harmonic 部分，最后把 exact 部分作为规范选择处理。
+
+### 定义 360.1（曲率解集与三个子空间）
+
+在一阶上链空间中置
+
+$$
+\mathcal E^1=\operatorname{im}d_0,
+\qquad
+\mathcal C^1=\operatorname{im}\delta_2,
+\qquad
+\mathcal H^1=\ker\Delta_1.
+$$
+
+给定可实现曲率 \(F\in B^2(K;\mathbb R)\)，定义解集
+
+$$
+\mathcal S_F
+=
+\{g\in C^1:d_1g=F\}.
+$$
+
+### 定理 360.2（曲率确定唯一的 coexact 代表）
+
+对每个可实现 \(F\)，存在唯一 \(g_{\mathrm{coex}}\in\mathcal C^1\)，使
+
+$$
+d_1g_{\mathrm{coex}}=F.
+$$
+
+所有曲率解都唯一写成
+
+$$
+\boxed{
+g=g_{\mathrm{coex}}+d_0\lambda+h,
+\qquad
+\lambda\in C^0,\ h\in\mathcal H^1.
+}
+$$
+
+### 证明
+
+取一个解 \(g\in\mathcal S_F\)，由定理 359.2 分解为
+
+$$
+g=d_0\lambda+h+\delta_2\beta.
+$$
+
+因为 \(d_1d_0=0\) 且 \(d_1h=0\)，有
+
+$$
+F=d_1\delta_2\beta.
+$$
+
+令 \(g_{\mathrm{coex}}=\delta_2\beta\)。若 \(u\in\mathcal C^1\) 也满足 \(d_1u=0\)，写 \(u=\delta_2b\)，则
+
+$$
+\|u\|^2
+=
+\langle\delta_2b,u\rangle
+=
+\langle b,d_1u\rangle
+=0.
+$$
+
+故曲率到 coexact 部分的映射是单射，\(g_{\mathrm{coex}}\) 唯一。反向代入给出全部解。证毕。
+
+### 定理 360.3（最小范数规范）
+
+在 \(\mathcal S_F\) 中，唯一满足
+
+$$
+g_{\min}\perp\ker d_1
+$$
+
+的解是 \(g_{\mathrm{coex}}\)。它满足
+
+$$
+\boxed{
+\|g_{\min}\|
+\le
+\|g\|
+\quad\text{对所有 }g\in\mathcal S_F.
+}
+$$
+
+若只允许顶点规范变换 \(g\mapsto g+d_0\lambda\)，则 Coulomb 条件
+
+$$
+\delta_1g=0
+$$
+
+可以消去 exact 方向，但不会消去 harmonic 方向。
+
+### 证明
+
+由 Hodge 分解，
+
+$$
+\ker d_1=\mathcal E^1\oplus\mathcal H^1.
+$$
+
+而 \(\mathcal C^1\) 与这两个子空间正交。任意解都为
+
+$$
+g=g_{\mathrm{coex}}+v,
+\qquad
+v\in\ker d_1.
+$$
+
+勾股关系给出
+
+$$
+\|g\|^2=\|g_{\mathrm{coex}}\|^2+\|v\|^2.
+$$
+
+等号只在 \(v=0\) 时成立。Coulomb 条件对 exact 分量的作用来自
+
+$$
+\delta_1d_0=\Delta_0,
+$$
+
+其核只包含不改变 \(g\) 的常数势；\(\delta_1h=0\) 对 harmonic \(h\) 恒成立，所以它不能被该规范条件消除。证毕。
+
+### 定义 360.4（周期读数）
+
+取线性映射
+
+$$
+\Pi:\mathcal H^1\longrightarrow\mathbb R^r
+$$
+
+使其在 harmonic 空间上单射。它可以由一组基本闭路积分、周期 holonomy 的局部坐标或其他声明的全局接口构成。
+
+### 定理 360.5（曲率加周期的唯一重建）
+
+若 \(F\) 可实现，且给定周期数据 \(p\in\operatorname{im}\Pi\)，则存在唯一的 harmonic \(h_p\in\mathcal H^1\) 满足
+
+$$
+\Pi(h_p)=p.
+$$
+
+因此
+
+$$
+\boxed{
+g_{\mathrm{rec}}=g_{\mathrm{coex}}+h_p
+}
+$$
+
+是满足 Coulomb 条件和周期合同的唯一规范代表。所有其他满足同一数据的边运输只差一个不改变代表的常数顶点势。
+
+### 证明
+
+\(\Pi\) 在 \(\mathcal H^1\) 上单射，故 \(p\) 至多对应一个 \(h_p\)；由 \(p\in\operatorname{im}\Pi\) 存在性成立。定理 360.2 给出所有解的 exact、harmonic、coexact 分解。Coulomb 条件去除 exact 变化，周期条件固定 harmonic，曲率固定 coexact，故只剩常数势的零作用。证毕。
+
+### AHH 360.6（重建的三步合同）
+
+完整边界的重建不应把所有读数混成一张位置图，而应按三步进行：
+
+$$
+\boxed{
+\text{曲率读数}
+\longrightarrow
+\text{coexact 响应};
+\qquad
+\text{周期读数}
+\longrightarrow
+\text{harmonic 记忆};
+\qquad
+\text{规范选择}
+\longrightarrow
+\text{exact 表示}.
+}
+$$
+
+这说明“全息恢复”有不同强度：只给 \(F\) 只能恢复 coexact 部分；给 \(F\) 加上足够周期才恢复规范等价类；给出具体规范还需要额外的表示约定。
+
+---
+
+## 361. 局部事件、周期接口与可识别性
+
+上一批的边界语言强调合法后继。本节把它转成一个简单的可识别性判据：哪些事件接口能够切开曲率解集的纤维，哪些接口只看得到 coexact 部分。
+
+### 定义 361.1（曲率与事件观察）
+
+定义局部曲率观察
+
+$$
+\mathcal O_{\mathrm{curv}}(g)=d_1g.
+$$
+
+给定周期映射 \(\Pi\)，定义增强观察
+
+$$
+\mathcal O_{\mathrm{enh}}(g)
+=
+\bigl(d_1g,\Pi(P_{\mathcal H^1}g)\bigr),
+$$
+
+其中 \(P_{\mathcal H^1}\) 是 Hodge 正交投影。
+
+对有限事件族 \(\mathcal T\)，若每个事件 \(t\) 的记录核可以写成
+
+$$
+R_t(g)
+=
+\Phi_t\!\left(
+d_1g,\Pi(P_{\mathcal H^1}g)
+\right),
+$$
+
+则称 \(\mathcal T\) **通过增强边界因子化**。这里 \(\Phi_t\) 可以包含记录概率、后继状态和停止条件；因子化是模型的声明合同。
+
+### 定理 361.2（局部曲率观察的精确纤维）
+
+对任意 \(g,g'\in C^1\)，有
+
+$$
+\mathcal O_{\mathrm{curv}}(g)
+=
+\mathcal O_{\mathrm{curv}}(g')
+\quad\Longleftrightarrow\quad
+g'-g\in\ker d_1.
+$$
+
+由 Hodge 分解，
+
+$$
+\ker d_1=\operatorname{im}d_0\oplus\mathcal H^1.
+$$
+
+因此局部曲率观察恰好把 exact 规范和 harmonic 全局模式合并在同一观察纤维中。
+
+### 证明
+
+第一等价由
+
+$$
+d_1g=d_1g'
+\Longleftrightarrow
+d_1(g'-g)=0
+$$
+
+直接得到。若 \(z\in\ker d_1\)，按定理 359.2 分解为 \(d_0\lambda+h+\delta_2\beta\)。由 \(d_1z=0\) 和定理 360.2 的单射性，\(\delta_2\beta=0\)，故 \(z=d_0\lambda+h\)。反向包含显然。证毕。
+
+### 定理 361.3（周期读数切开全部非规范纤维）
+
+若 \(\Pi\) 在 \(\mathcal H^1\) 上单射，则
+
+$$
+\mathcal O_{\mathrm{enh}}(g)
+=
+\mathcal O_{\mathrm{enh}}(g')
+\quad\Longleftrightarrow\quad
+g'-g\in\operatorname{im}d_0.
+$$
+
+所以增强观察能够唯一确定边运输的规范等价类。
+
+### 证明
+
+若增强观察相同，定理 361.2 给出 \(g'-g=d_0\lambda+h\)，其中 \(h\in\mathcal H^1\)。周期分量相同给出 \(\Pi(h)=0\)，\(\Pi\) 单射故 \(h=0\)。反向若差是 \(d_0\lambda\)，曲率与 harmonic 投影都不变。证毕。
+
+### 推论 361.4（事件的粒子式读数不自动恢复 harmonic 波）
+
+若事件族只通过 \(\mathcal O_{\mathrm{curv}}\) 因子化，则任意两个只相差非零 harmonic 模式的边运输具有相同全部事件统计：
+
+$$
+g'=g+h,
+\qquad
+0\ne h\in\mathcal H^1.
+$$
+
+若某事件直接耦合于一个周期接口 \(\Pi\)，则它可以切开这两个状态；这需要额外的访问权限，不能由局部点击记录自动推出。
+
+### 证明
+
+由 \(d_1h=0\)，局部曲率观察相同，因子化合同使所有 \(R_t\) 相同。若事件访问 \(\Pi(h)\ne0\)，则增强观察不同，定理 361.3 给出可区分性。证毕。
+
+### 定理 361.5（任务族的充分边界判据）
+
+固定一个来源类 \(\mathcal S\subseteq C^1\)。若所有声明任务响应 \(R_t\) 都通过 \(\mathcal O_{\mathrm{enh}}\) 因子化，且未来合法性、结果概率和后继边界也只依赖 \(\mathcal O_{\mathrm{enh}}\)，则 \(\mathcal O_{\mathrm{enh}}\) 对任务族 \(\mathcal T\) 是充分边界。
+
+若存在 \(g,g'\in\mathcal S\) 具有相同 \(\mathcal O_{\mathrm{enh}}\) 但某个任务或后继不同，则该观察不是充分边界。
+
+### 证明
+
+第一部分是因子化定义对每一步记录和后继的有限归纳：当前观察相同，下一步合法动作、结果分布和后继观察相同，故有限任务词的联合响应相同。第二部分由一对观察相同而目标不同的来源直接否定充分性。证毕。
+
+### AHH 361.6（局部事件的识别边界）
+
+局部粒子式事件是一个观察接口，而不是完整本体。它可以精确读取某个曲率效果，却可能把
+
+$$
+\operatorname{im}d_0\oplus\mathcal H^1
+$$
+
+压成同一条观察纤维。只有追加周期接口，才可能把 harmonic 波形从这个纤维中切出。
+
+---
+
+## 362. Hodge 感知全息边界
+
+把前面四层合并，就得到一个同时支持重建、事件识别、误差估计和继续操作的边界。
+
+### 定义 362.1（Hodge 感知边界）
+
+固定有限胞腔复形、上链内积、允许的曲率和事件接口。定义
+
+$$
+\boxed{
+\eta_{\mathrm{Hodge}}=
+\left(
+K,
+d,
+\delta,
+\operatorname{spec}\Delta,
+F,
+\mathcal C^1,
+\mathcal H^1,
+\Pi,
+\mathsf{Event},
+\mathsf{Err},
+\mathsf{Stop}
+\right).
+}
+$$
+
+其中：
+
+1. \(d,\delta\) 与 \(\operatorname{spec}\Delta\) 保存有限 Hodge 结构和重建条件数；
+2. \(F\) 保存当前曲率以及它是否满足 \(H^2\) 可实现性；
+3. \(\mathcal C^1\) 保存由曲率激活的 coexact 响应空间；
+4. \(\mathcal H^1\) 与 \(\Pi\) 保存局部曲率看不见的 harmonic 周期；
+5. \(\mathsf{Event}\) 保存局部点击、周期探针、结果概率和记录后继；
+6. \(\mathsf{Err}\) 保存曲率残差、周期估计误差、最小范数代价和停止预算；
+7. \(\mathsf{Stop}\) 保存未来允许动作、资源耗尽和停止后继。
+
+### 定理 362.2（Hodge 边界的条件充分性）
+
+若两个有限关系体具有相同的 \(\eta_{\mathrm{Hodge}}\)，且未来任务限于边界声明的有限曲率重建、规范固定、周期观测、局部事件、误差合同和停止规则，则二者给出相同的：
+
+1. Hodge 正交分解与 harmonic 维数；
+2. 曲率的 coexact 重建和最小范数代表；
+3. 周期数据约束下的规范等价类恢复；
+4. 局部事件与周期事件的记录分布和条件后继；
+5. 曲率、周期和重建误差的声明下界；
+6. 有限预算内的合法任务树。
+
+### 证明
+
+第 1 项由 \(d,\delta,\operatorname{spec}\Delta\) 决定。第 2 项由定理 360.2—360.3；第 3 项由定理 360.5 与 \(\Pi\) 的声明；第 4 项由 \(\mathsf{Event}\) 的因子化核和记录后继递归；第 5 项由 \(\mathsf{Err}\) 与有限维正交投影的范数公式；第 6 项由 \(\mathsf{Stop}\) 作有限深度归纳。所有任务的外部响应因此相同。证毕。
+
+### 定理 362.3（删除 Hodge 字段的有限反例）
+
+以下删字段均有有限反例：
+
+1. 删除 coexact 曲率字段：同一 harmonic 周期但局部面曲率不同；
+2. 删除 harmonic 周期字段：环面上的零曲率边运输具有不同基本闭路相位；
+3. 删除内积或 Laplacian：同一规范等价类的最小范数代表与误差代价不同；
+4. 删除事件核：同一 Hodge 摘要在不同探测接口下给出不同记录后继；
+5. 删除停止合同：当前重建相同，但一个接口允许继续、另一个已耗尽预算。
+
+### 证明
+
+第 1 项取两个不同的 coexact 上链；第 2 项取例 356.4 的两个 \(H^1\) 周期；第 3 项改变胞腔权重，最小范数投影随之改变；第 4 项改变事件的周期耦合或局部效果核；第 5 项附加不同资源后继。每项都产生一个剩余摘要无法决定的声明任务。证毕。
+
+### 定义 362.4（Hodge 波粒事件链）
+
+一条合法事件链写成
+
+$$
+\mathsf C_{\mathrm H}=
+\bigl(
+\text{exact 规范},
+\text{coexact 曲率响应},
+\text{harmonic 周期},
+\text{局部或周期探测},
+\text{钟标签},
+\text{离散结果},
+\text{后继边界}
+\bigr).
+$$
+
+粒子式事件是链中的离散结果；波性则是三个 Hodge 分量之间的相干约束以及它们对未来接口的联合作用。
+
+### AHH 362.5（Hodge 全息）
+
+> 全息边界的最小充分性不是“保存最多的局部读数”，而是把 exact 规范、coexact 曲率和 harmonic 全局记忆分别保存到它们真正影响未来任务的程度。局部点击通常只切到 coexact 响应；周期探针才可能读出 harmonic 波形。
+
+主线可写成
+
+$$
+\boxed{
+\text{上同调闭合}
+\longrightarrow
+\text{Hodge 三分}
+\longrightarrow
+\text{曲率与周期重建}
+\longrightarrow
+\text{局部/全局事件}
+\longrightarrow
+\text{记录后继}.
+}
+$$
+
+**新的 AHH 时刻是：所谓“波的整体形状”在有限关系几何中不是一个额外的神秘实体，而是 coexact 局部响应与 harmonic 全局模式的联合；exact 部分只是表示选择。粒子式事件只在声明的接口上切片，是否看见 harmonic 模式完全取决于周期访问权限。**
+
+### 来源与边界 362.6
+
+本批在有限定向胞腔复形、有限维实上链、正定内积、Hodge 伴随、有限曲率与周期接口、显式事件核和停止合同下，给出有限 Hodge 分解、harmonic 上同调代表、曲率 coexact 重建、最小范数规范、周期增强可识别性与 Hodge 感知全息。没有把有限维 Hodge 结构推广为连续场论、量子引力或物理时空的普适定律；没有把 harmonic 分量自动解释为可直接观测的粒子属性；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
