@@ -56163,3 +56163,368 @@ The new relation concerns intrinsic curvature and real orientation, not a larger
 
 
 ## 追加锚（本行以下为增补区）
+
+## 183. 原始路径的条件标签分解：均值至多 Q⁸ 的联合 Poisson 逼近
+
+给定原始三类状态的完整轨迹，具体标签在各自类别中独立且均匀。路径的相关性因此可保留在四个出发总数中，再用同一组标签序列耦合这些总数与独立 Poisson 总数。每次增删标签影响目标稀有群的概率，由该群的参考行质量支付。
+
+这一构造给出对实际群均值仅多项式增长的误差界，解决第 180 章保留的 $Q^8$ 均值窗口问题。比较的 Poisson 参数分别校准到原始 pair 与 path 实验自己的精确均值。预设均值是否在同一层出现、$E_2$ 同步及非有界熵矩转移仍是独立问题。
+
+### 183.1 原始对象与完整群识别
+
+**定义 183.1（原始实验、完整得分群与实际均值）。** 取原始序列
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=Q_n=10^{e_n},\quad
+P=P_n=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3.
+$$
+
+The unchanged original amplitude satisfies
+
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\qquad
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+
+Keep, exactly,
+
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad \epsilon=\frac{rq}{M-q},\quad T=2M\lambda.
+\tag{183.1}
+$$
+
+Fix a compact interval J inside the original D=(beta_*,1). Fix any deterministic S contained in C_+, |S|=q. The two parity classes have M states each. Set
+
+$$
+b_S(x)=r\ (x\in S),\quad b_S(x)=-\epsilon\ (x\in C_+\setminus S),
+\quad b_S(x)=0\ (x\in C_-),\qquad
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M}.
+\tag{183.2}
+$$
+
+The path starts uniformly and takes exactly T transitions. The pair experiment takes T independent stationary adjacent pairs with joint mass (2M)^{-1}P_S(x,y). These are the original correctly oriented experiments of Chapter72. A reverse observation, when correctly oriented by reversing the path or swapping pair endpoints as in that chapter, has the same law. The claim does not concern applying the forward score to an unaligned reverse observation.
+
+For x in C_+, let N_{x,+},N_{x,-} count outgoing transitions to each parity. Choose d=1 or2 distinct lawful original indices j_v, with
+
+$$
+(K_v,B_v)=(k_0+Qj_v,l_0+Pj_v),\qquad
+K_v,B_v\ge0,\qquad K_v+B_v\le C_0\lambda,
+\tag{183.3}
+$$
+
+where C_0>=1 is fixed for the original internal arcs. Indices may depend on beta and the layer. They are deterministic choices in the theorem, not data-selected groups. The estimate below actually holds for any distinct count pairs satisfying (183.3) whose complete-group identification holds, so is uniform on all these internal arcs.
+
+Let C_v be the ACTUAL number of rows in the complete score group with score
+
+$$
+W(K_v,B_v)=K_v\log\frac{1+r}{1-\epsilon}
+                 +B_v\log\frac{1-r}{1+\epsilon},
+\qquad \mu_v=\mathbb E_S^{\mathcal E}C_v,\quad u=\sum_v\mu_v.
+\tag{183.4}
+$$
+
+Chapter 175 gives
+
+$$
+C_v=\sum_{x\in C_+}{\bf1}\{(N_{x,+},N_{x,-})=(K_v,B_v)\}
+\tag{183.5}
+$$
+
+exactly at every sufficiently late layer. There is no discarded remote-score-collision tail. The existing reason is that the fixed r is transcendental, whereas a collision would force the rational function ((1+X)/(1-cX))^i((1-X)/(1+cX))^j to be identically one, with rational c=q/(M-q) in (0,1). Its orders at -1 and1 force i=j=0. The complete-group identification is reused from Chapter 175.
+
+### 183.2 精确实际均值下的联合全变差界
+
+Put q_*=min(q,M-q), c=(1-r)/2>0, and A=1+C_0/c. The letter c here is a fixed lower intensity constant, not the rational c in the preceding citation. Define the inherited one-row bound
+
+$$
+t=\frac{1+C_0}{2M},\qquad
+\delta=10^6(t+Tt^2)\exp(10^6Tt^2)+12\,2^{-T}.
+\tag{183.6}
+$$
+
+Assume the following explicit late-layer conditions: q<=M/2, q_*>=2, t<=1/200, delta<1,
+
+$$
+q_*^{-1/3}\le c/2,\qquad
+Aq_*^{-1/3}+C_0\lambda/q_*\le1,
+$$
+
+and the complete-group identity (183.5). They all hold eventually, uniformly on J.
+
+**定理 183.1（两种原始实验的增长均值联合 Poisson 逼近）。** Separately for each original experiment, uniformly over the objects in Section 183.1,
+
+$$
+\boxed{\begin{split}
+d_{TV}\left(\mathcal L_S^{\mathcal E}(C_1,\ldots,C_d),
+                \bigotimes_{v=1}^d\operatorname{Pois}(\mu_v)\right)
+\le {}&\left(12\lambda+\frac{36Au}{1-\delta}\right)q_*^{-1/3}\\
+ &+\frac{u^2}{(1-\delta)^2q_*}
+  +\frac{\delta u}{1-\delta}.
+\end{split}}\tag{183.7}
+$$
+
+Total variation is sup over measurable events, or half the l1 mass difference. The bound may be capped at one. There is no positive lower bound on any mean.
+
+In particular, if every mu_v<=Q^8, then u<=2Q^8. Since delta=O_{C_0}(Q^3/M), (183.7) gives
+
+$$
+d_{TV}\le C_{r,C_0}\left(
+\frac{Q^8}{q_*^{1/3}}+\frac{Q^{16}}{q_*}+\frac{Q^{11}}M\right)
+\longrightarrow0
+\tag{183.8}
+$$
+
+uniformly on J. This covers the full stated mean range. The theorem is conditional only on the lawful indices and their actual means whenever they occur; no root synchronization or attainment assumption is introduced.
+
+### 183.3 同一路径的精确条件标签分配
+
+Partition the state space into three classes
+
+$$
+\mathcal A_1=S,\quad \mathcal A_0=C_+\setminus S,\quad
+\mathcal A_-=C_-,\qquad s_1=q,\ s_0=M-q,\ s_-=M.
+$$
+
+Let g(x) denote its class, beta_1=r, beta_0=-epsilon, beta_-=0, and chi_1=chi_0=1, chi_-=-1. For a path let G_t=g(X_t). Its exact class transition matrix is
+
+$$
+R(a,b)=\frac{s_b}{2M}(1+\beta_a\chi_b),
+\qquad \Pr(G_0=a)=s_a/(2M).
+\tag{183.9}
+$$
+
+**引理 183.1（完整三类轨迹下的独立均匀标签）。** Given the entire class trajectory G_0,...,G_T, the labels X_0,...,X_T are independent, and X_t is uniform in its specified class. This includes repeated occurrences of the same class and adjacent times.
+
+Proof. For any path of concrete states with this class trajectory, its probability is
+
+$$
+(2M)^{-T-1}\prod_{t=0}^{T-1}(1+\beta_{G_t}\chi_{G_{t+1}}).
+$$
+
+This expression depends only on the class trajectory, not on the choices of labels. There are exactly product_{t=0}^T s_{G_t} such label paths. Dividing by their sum gives product_t s_{G_t}^{-1}. Equivalently, first generate (183.9), then generate independent uniform labels in its classes; multiplying the probabilities recovers every original path mass. Thus this is an exact disintegration of the actual law, not a product-row approximation. QED.
+
+For a in {1,0}, sigma in {+,-}, define the four random totals
+
+$$
+H_{a,\sigma}=\#\{0\le t<T:G_t=a,\ \chi_{G_{t+1}}=\sigma\},
+\quad \nu_{a,\sigma}=\lambda(1+\sigma\beta_a)/2.
+\tag{183.10}
+$$
+
+Here signs in arithmetic mean +1 and -1. Given the class trajectory, each of these four lists of departure labels consists of H_{a,sigma} independent uniform labels in the class of size s_a. The four lists are mutually independent. Indeed they use disjoint time positions t; a label at a destination time may also be a departure label, but its identity is never used to decide the parity/class list, which is already fixed. This observation is essential: we have conditioned on the whole three-class trajectory, not just on parity or one row's occurrence count.
+
+Consequently the whole positive-row count array has the following exact construction. Generate the original class trajectory and hence its dependent four totals H. Independently generate four infinite lists U_{a,sigma,i} of uniform labels in the corresponding class. Allocate the first H_{a,sigma} labels of each list. These arrays have the same joint count law as the original path. Unused labels are only auxiliary randomness in the coupling.
+
+For the pair experiment, generate the class pair of each independent observation with probability (s_a/(2M))R(a,b). Conditional on all class pairs, all endpoint labels are independent uniforms within their classes. The same four-list construction with its actual pair totals is exact. No total is conditioned to take an artificial value, and no independent-ball construction is asserted for the unconditioned path.
+
+### 183.4 四个实际总数的共同集中界
+
+Both experiments are stationary, so
+
+$$
+\mathbb E H_{a,\sigma}=s_a\nu_{a,\sigma},\qquad
+\nu_{a,+}+\nu_{a,-}=\lambda,\qquad
+c\lambda\le\nu_{a,\sigma}\le\lambda.
+\tag{183.11}
+$$
+
+The lower bound uses epsilon<=r, which follows from q<=M/2. The exact original compensation gives sum_x b_S(x)=0 and sum_x chi(x)b_S(x)=0. The original two-step reset is therefore P_S^2=Pi, the uniform projection. One can also see this directly by writing P_S=Pi+B with B(x,y)=b_S(x)chi(y)/(2M): Pi B=B Pi=B^2=0.
+
+For completeness, its consequence for the present totals is finite and quantitative. If edge positions t and t+h satisfy h>=3, the end of the first edge and start of the second are separated by at least two transitions. The Markov property and P_S^2=Pi imply that the second edge is independent of the first and of the history through X_{t+1}. Thus the stationary indicator I_t={G_t=a, chi(G_{t+1})=sigma} has zero covariance at such lags. At lags1 and2, Cov(I_t,I_{t+h})<=E I_t=p; also Var(I_t)<=p. Hence
+
+$$
+\operatorname{Var}H_{a,\sigma}
+\le Tp+2(T-1)p+2(T-2)_+p
+\le5Tp=5s_a\nu_{a,\sigma}.
+\tag{183.12}
+$$
+
+For the pair experiment its indicators are independent across observations and the sharper bound Var H<=s_a nu holds; (183.12) covers both. No independence between different totals is used.
+
+On the same probability space as H and the label lists, take four independent random variables
+
+$$
+Z_{a,\sigma}\sim\operatorname{Pois}(s_a\nu_{a,\sigma}),
+$$
+
+independent of H and of the lists. These are coupling variables, not a new parameter prior or a replacement of the observed path. Use the first Z_{a,sigma} labels of each same list to form a reference count array, and write C_v^* for its selected-group counts.
+
+Put D_a=s_a^{2/3} and let $\mathcal B$ be the event that all eight totals H_{a,sigma} and Z_{a,sigma} are within D_a of s_a nu_{a,sigma}. Chebyshev and a union bound, using the sum of the two intensities in (183.11), give
+
+$$
+\Pr(\mathcal B^c)
+\le6\lambda\sum_{a=1,0}s_a^{-1/3}
+\le12\lambda q_*^{-1/3}.
+\tag{183.13}
+$$
+
+This pays the entire bad-event probability; it is not a tail assertion inferred from low-order factorial inversion. The totals in the good event may still have arbitrary joint dependence.
+
+### 183.5 一次标签增删的稀有群代价
+
+Here is the local estimate that makes the coupling useful. In a class of size s, allocate n_+ and n_- labels independently and uniformly, with
+
+$$
+|n_\sigma-s\nu_\sigma|\le D=s^{2/3}.
+$$
+
+For any fixed label, its two counts are independent Bin(n_sigma,1/s) variables. They are not independent across labels, and no such assertion is needed.
+
+For an integer k with 0<=k<=C_0 lambda and n in this band, the binomial-to-Poisson point ratio satisfies
+
+$$
+\frac{\Pr\{\operatorname{Bin}(n,1/s)=k\}}
+     {e^{-\nu}\nu^k/k!}
+\le \exp\left\{\left(1+\frac{C_0}{c}\right)s^{-1/3}
+                    +\frac{C_0\lambda}{s}\right\}
+\le e.
+\tag{183.14}
+$$
+
+Proof. If k>n the numerator is zero. Otherwise n>0 by D/s<=c/2<=nu/2. Write Delta=n/s-nu, so |Delta|<=s^{-1/3}. Using (n)_k<=n^k and log(1-1/s)<=-1/s, the ratio is at most
+
+$$
+\exp\{k\log(n/(s\nu))-(n-s\nu)/s+k/s\}.
+$$
+
+The inequality log(1+x)<=x for x>-1 bounds its exponent by
+
+$$
+\Delta(k/\nu-1)+k/s
+\le |\Delta|(1+k/\nu)+k/s
+\le A s^{-1/3}+C_0\lambda/s.
+$$
+
+The hypotheses in Section 183.2 imply that this is at most one for either class. This proof works also at k=0. QED.
+
+Define the reference row mass and its category sum in class a by
+
+$$
+f_{a,v}=e^{-\lambda}
+ \frac{\nu_{a,+}^{K_v}\nu_{a,-}^{B_v}}{K_v!B_v!},
+\quad F_a=\sum_{v=1}^d f_{a,v},\quad
+m_{a,v}=s_af_{a,v},\quad m_v=\sum_a m_{a,v},\quad m=\sum_vm_v.
+\tag{183.15}
+$$
+
+These preserve the original signal/background Poisson masses and every count floor. Since the pairs are distinct, F_a<=1.
+
+Add one plus label at the end of its list, independently and uniformly among the s labels. Only the selected label's row can change. Membership in group v changes only if its BEFORE counts are (K_v,B_v) or (K_v-1,B_v). The latter event is empty when K_v=0. By (183.14), their probabilities are at most e^2 f_{a,v} and e^2(K_v/nu_{a,+})f_{a,v}, respectively. Therefore their sum is at most
+
+$$
+9(1+C_0/c)f_{a,v}=9Af_{a,v}.
+\tag{183.16}
+$$
+
+For a minus addition use (K_v,B_v-1); the same bound holds. This is an upper bound at the random added label as well as at a fixed label, because the new uniform choice is independent of the earlier list entries and of the other-sign list. Deletion is the same comparison viewed backwards: its last label is independent of the preceding entries. Thus (183.16) is valid for either direction without making an invalid independence assertion about the counts AFTER a deletion.
+
+To compare H and Z, change the four list lengths one at a time in any fixed order. Conditional on H,Z and the class trajectory on $\mathcal B$, this is a deterministic finite list of additions/deletions, and every intermediate length remains in its prescribed band. For each class there are at most 2D_a changes of each sign, hence at most4D_a changes in total. The other-sign length at each step is fixed and stays in its band. The label lists are still independent uniforms under this conditioning. Applying (183.16), summing over v and all steps, and using a union bound gives
+
+$$
+\Pr\{(C_v)_v\ne(C_v^*)_v,\ \mathcal B\}
+\le36A\sum_a D_a F_a
+\le36A\,m q_*^{-1/3}.
+\tag{183.17}
+$$
+
+We do not condition on success of previous steps when applying (183.16). The union bound uses each step's unconditional law under fixed totals, so previous membership events cannot bias the row law being estimated. A step may affect two different selected groups, but the sum over categories already covers that case. If there is no such step event, every selected count is unchanged. Combining (183.13) and (183.17) yields the genuine joint distributional interface
+
+$$
+d_{TV}(\mathcal L(C),\mathcal L(C^*))
+\le(12\lambda+36Am)q_*^{-1/3}.
+\tag{183.18}
+$$
+
+This bound concerns the same array and the same actual path; it does not assemble separately obtained marginal approximations. The proof couples a statistic of the path to a reference occupancy statistic. The reference need not be an observation of another lawful path, because only its law as a comparison random vector is required. The actual marginal of the coupling is the original path by Section 183.3.
+
+More generally, the proof is reusable with any four totals independent of the label lists, means s_a nu_{a,sigma}, variances at most kappa s_a nu_{a,sigma}, and widths D_a such that D_a/s_a<=c lambda/2 and A D_a/s_a+C_0 lambda/s_a<=1. The displayed argument then bounds the bad event by (kappa+1)lambda sum_a s_a/D_a^2 and the good-event changes by36A sum_a D_a F_a. The specific choice D_a=s_a^{2/3} and kappa=5 is fulfilled by the original law above; this is not an unfulfilled conditional criterion.
+
+### 183.6 联合 Poisson 化、同排互斥与实际均值校准
+
+The reference count array has independent Poisson entries with means nu_{a,sigma} at every label in class a. To verify this rather than assume it, for one stream of s labels, conditional on Z=z its occupancy vector is multinomial. Its unconditional PGF is
+
+$$
+\mathbb E\left(\frac{z_1+\cdots+z_s}{s}\right)^Z
+=\exp\left\{\nu\sum_{i=1}^s(z_i-1)\right\}.
+$$
+
+This is exactly the product of the s Poisson PGFs. The four totals and lists are independent, so all four streams are independent. Thus each reference row contributes the categorical vector 0,e_1,...,e_d with probabilities 1-F_a,f_{a,1},...,f_{a,d}, independently over rows.
+
+For a single such categorical vector, compare with independent Poisson coordinates of means f_{a,v}. Their total is Pois(F_a); conditional on a total of one, its label probabilities are f_{a,v}/F_a, exactly those of the categorical vector conditional on being nonzero. The mass at zero of the Poisson vector is e^{-F_a}>=1-F_a, its masses at e_v are e^{-F_a}f_{a,v}, and its remaining masses are positive. Hence its TV distance from the categorical law equals
+
+$$
+F_a(1-e^{-F_a})\le F_a^2.
+\tag{183.19}
+$$
+
+The assertion is also valid at F_a=0. Independent maximal couplings of the finitely many rows, followed by summing each coordinate, give
+
+$$
+d_{TV}\left(\mathcal L(C^*),\bigotimes_v\operatorname{Pois}(m_v)\right)
+\le\sum_a s_aF_a^2
+=\sum_a\frac{(\sum_v m_{a,v})^2}{s_a}
+\le\frac{m^2}{q_*}.
+\tag{183.20}
+$$
+
+This explicitly pays cross-category exclusion inside a row as well as within-category collisions. Coordinatewise marginal Poisson approximations have not been substituted for a joint law.
+
+It remains to calibrate to the SAME actual means in the statement. Chapter 180, equation (180.18) at h=1, with (183.6), states that every selected row's actual point probability differs from f_{a,v} relatively by at most delta. Its proof is the exact pair/path PGF multiplier bound, not a moment-to-TV assertion. Summing over the rows, and using the exact complete-group identity (183.5), gives
+
+$$
+|\mu_v-m_v|\le\delta m_v,
+\qquad m\le\frac{u}{1-\delta}.
+\tag{183.21}
+$$
+
+The Chapter 180 multiplier bound has absolute-coefficient majorant 10^6(t+Tt^2)exp(10^6Tt^2)+12*2^{-T}; its positive Poisson coefficient multiplier pays sum_i p_i(1+k_i/nu_i)<=t. Only its one-row specialization is used here. No fixed-order result is used at a growing order.
+
+For nonnegative numbers x,y, couple Pois(x) and Pois(y) using a common Pois(min(x,y)) variable and an independent remainder of mean |x-y|. The probability of a difference is at most |x-y|. Applying this independently to the coordinates and then (183.21) gives
+
+$$
+d_{TV}\left(\bigotimes_v\operatorname{Pois}(m_v),
+             \bigotimes_v\operatorname{Pois}(\mu_v)\right)
+\le\sum_v|m_v-\mu_v|\le\delta m.
+\tag{183.22}
+$$
+
+The triangle inequality with (183.18), (183.20), (183.22), followed by (183.21), proves (183.7). This calibrates separate actual pair and path means; they need not coincide.
+
+If an actual mean is zero, its count is almost surely zero. Since delta<1, (183.21) also forces the corresponding reference mean to be zero. Such a coordinate may be removed, or all bounds may be used directly without dividing by that mean. If all means vanish the actual and target vectors are identically zero. For very small positive means the proof still uses relative local bounds and never divides by a group mean. This discharges the entire zero/small-mean clause.
+
+### 183.7 原始尺度上的一致性及结论边界
+
+The floors in (183.1) give
+
+$$
+z_0=\phi\lambda+O_r(1),\quad
+\log M=\phi\lambda/\beta+O(1),\quad
+\log q=\phi(1/\beta-1)\lambda+O_{J,r}(1).
+\tag{183.23}
+$$
+
+For the last formula, Me^{-z_0} tends to infinity exponentially uniformly on J, so taking its integer floor changes its logarithm by a uniformly vanishing amount. Thus, writing beta_1=max J and alpha_J=phi(1/beta_1-1)>0, eventually q_*=q and q_*>=exp(alpha_J Q^3-C_{J,r}). Also M grows exponentially, epsilon<=r, and every finite-layer hypothesis of Section 183.2 holds uniformly. Equation (183.6) gives delta<=C_{C_0}lambda/M eventually. Substitution of u<=2Q^8 yields (183.8). For example a weaker single exponential form is
+
+$$
+d_{TV}\le C_{J,r,C_0}Q^{16}\exp(-\alpha_J Q^3/4)
+\tag{183.24}
+$$
+
+for all sufficiently late layers. No numerical threshold or mathematical computation is asserted.
+
+The constants depend on the fixed amplitude and fixed internal cutoff/arcs, and the eventual layer may depend on the fixed compact J. They do not depend on the support, indices within those arcs, individual group means or selected subsequence. The support is fixed throughout each experiment; the proof does not introduce a random support prior. The enlarged probability space is only a coupling used to bound total variation.
+
+This is distributional approximation whenever the lawful means satisfy the stated range. It does not assert that any prescribed pair of means occurs at the same original layer. It supplies no fixed beta, finite H, or common-layer arithmetic construction or exclusion. E2 and all inherited arithmetic boundaries are unchanged. Total variation here controls bounded tests. No statement about an unbounded entropy functional or its moments is made; those would require separate tails under both laws.
+
+The new step beyond Chapter 180 is (183.18), with the exact conditioning and local change estimate that prove it. It avoids factorial inversion altogether. The elementary concentration window has an exponentially large width in the number of rows but a vanishing width per row; every changed label pays the rare target probability. This is why the error grows polynomially in u. Neither the representation alone nor a generic invocation of Stein's method would have supplied this bound.
+
+
+## 追加锚（本行以下为增补区）
