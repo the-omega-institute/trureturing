@@ -2141,6 +2141,7 @@ If Q>5 has pi(Q)=2r_j, the order of phi^2 modulo Q is r_j, because the square of
 **Proposition.** GPC2-GPC6 give exact relations between different actual prime supports, while GPC1 shows that the normal composite-period ratio is insensitive to their individual initial WSS status. The quadratic identities constrain only the parity of the depths in the later support. They allow h=1 and also odd h>=3, and the complete-splitting conditions in GPC10 have not been proved to contradict the required factorization or exact clock.
 
 **Proof.** Equation (GPC5) transports each original depth exactly, but requires evaluation on the actual later block. The Jacobi and quadratic Frobenius groups have exponent two, so replacing an exponent h by h+2 does not change their character values. GPC11 shows that the necessary finite splitting tests are consistent for unrestricted comparison primes, whereas its last paragraph retains the missing exact-period restriction. None of these statements chooses a new prime with h=1 or h>=2. They therefore provide a period-aware cross-prime constraint and an explicit remaining obligation for heterogeneous-depth covering, rather than a resolution of WSS or a new prime-family WSS decision.
+
 ### CF. Carlitz degree-five exactness within the same Wieferich family
 
 The integer WSS target and the following function-field subproblem share
