@@ -5,9 +5,9 @@ For the same actual109 source and all512 screens as
 the selected33-label charge by its COMPLETE square gives the exact bound
 
     G_full(f sigma)<=U_full
-      =2712920971152738644863791781994333587333835041
-       /1145941044979001973315386572800000000000000000000
-      =0.002367417576182944... .                    (FS1)
+      =118279958795823862369936857351498127502543
+       /52202124862381649659046400000000000000000000
+      =0.0022658073614367333... .                    (FS1)
 
 This holds for every jointly measurable retention0<=f<=1, including arbitrary
 digit depth. It remains ABOVE the target193/100000. It neither excludes that
@@ -81,13 +81,13 @@ mixture is bounded by K_full. Hence on the SAME source,
     G_full(f sigma)<=integral f(g-d) d sigma
                     <=integral[g-d]_+ d sigma=U_full. (FS6)
 
-This certificate has249763 query rows and229 positive complete-layout
+This certificate has249835 query rows and229 positive complete-layout
 probabilities. Each of its507 probability budgets has integer numerators
 summing to10^12. All2125830 positive source categories are integrated, with
-563792 positive residuals and source mass305684996597/646498195200.
+544253 positive residuals and source mass305684996597/646498195200.
 
 The witness SHA256 is
-`eecea34a15899216c1bf8f28d16621d4aab8263e199e7d6b0826973c15236608`.
+`c54760c08e4ea7940a9b00c9b44c63625d5d532f1603e2d401243784082dda0a`.
 The exact residual sum gives FS1. Finitely many legal complete layouts
 suffice: they lower-bound the subtracted K_full. A positive primal claim
 would require the opposite bound on the TRUE maximum, which is not supplied
@@ -143,15 +143,15 @@ C*+sum_q[A*_q t_q+B*_q(q-t_q)/(q-1)]. The certificate recomputes all branch
 sums; all five slopes are negative, so the common endpoint is t_q=0 for all q.
 With the old central reference fixed, the result is
 
-    V_full=54091427334206883421912993587361758928999
-            /22446985269221013757132800000000000000000000
-          =0.0024097412942296658... .
+    V_full=4311420765150753542366884950935606544727
+            /1870582105768417813094400000000000000000000
+          =0.002304855131381502... .
 
 Allowing the stated joint central variation gives
 
-    W_full=1790290786287527392330877535292263267947
-            /742248587794545216000000000000000000000000
-          =0.0024119827450356573... .              (FS8)
+    W_full=29822099110997316737073869531830137813169
+            /12927496237421662512000000000000000000000000
+          =0.0023068735479241736... .              (FS8)
 
 These remain above the target. Separate marginal caps cannot replace the
 joint central cap, and independent per-cell source choices are not included.
@@ -172,7 +172,7 @@ python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined
 
 The [result](../../frontier/cover-geometry/joined33_full_square_verify.json)
 separates exact certificate validity from the Boolean `below_target`.
-The canonical full-square replay passes1624338 explicit checks.
+The canonical full-square replay passes1624770 explicit checks.
 The default `joined` mode retains704's smaller atom selection and strict
 target checks; its exact bounds are unchanged. An independent mathematical
 audit checked the comparison direction and common-source transfer, and an
