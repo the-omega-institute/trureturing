@@ -1,0 +1,1 @@
+- PDF 第21—22页 Theorem 26：连续 \(f:(0,1)\to[\epsilon,1-\epsilon]\)、\(\epsilon>0\)，有 terminating simulation，即每个输入参数下几乎必然有限；没有给有限均值或指数尾保证。定理标注来源 [8] Keane–O’Brien，Nacu–Peres 在此给出证明。

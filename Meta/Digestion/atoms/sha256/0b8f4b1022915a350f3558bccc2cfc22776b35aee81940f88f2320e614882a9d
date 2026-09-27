@@ -1,0 +1,86 @@
+### 203.3 端点的跳跃权重修复
+
+置
+
+$$
+t=\gamma R,\qquad
+x_*(h)=-\frac{a_{\mathrm{eff}}(h)}2,\qquad
+\sigma=\beta(3R+1)n^2(1+4n^2)>0.
+\tag{203.8}
+$$
+
+由（203.4）及 $t=2\beta nR$，严格有
+
+$$
+16n^2x_*(h)+16nm(h)^2t=2\sigma.
+\tag{203.9}
+$$
+
+第200节未修正构造的额外跳跃权重因此为
+$B_*(h)-2\sigma\epsilon+O_I(\epsilon^2)$。
+在 $h=h_b$，它为负，故不能把该构造直接代入端点。
+
+保持实际来源 $h$ 和 $n,t,x_*(h)$ 不变，仅在 Kraus 构造中采用
+
+$$
+\mu=\mu_\epsilon(h)=\sqrt{m(h)^2-\sigma\epsilon}.
+\tag{203.10}
+$$
+
+$m(h)$ 在 $I$ 有正下界，所以充分小 $\epsilon$ 时 $\mu$ 对全区间为正，且
+
+$$
+\mu-m=-\frac{\sigma\epsilon}{\mu+m}=O_I(\epsilon).
+\tag{203.11}
+$$
+
+定义
+
+$$
+\begin{gathered}
+p_0=\frac12+\epsilon x_*,\qquad
+p_1=\frac12-\epsilon x_*,\qquad
+a_j=\sqrt{\frac{p_j}{1+4\mu^2t^2\epsilon^2}},\qquad
+A_\Sigma=a_0^2+a_1^2,\\
+d_j=2\mu a_j,\qquad c_j=-it\epsilon d_j,\qquad b_0=i2na_0,\\
+b_1=-i\frac{2na_0^2+4\mu^2t\epsilon A_\Sigma}{a_1},\qquad
+B_{\mathrm{extra}}
+=1-|b_0|^2-|b_1|^2-d_0^2-d_1^2.
+\end{gathered}
+\tag{203.12}
+$$
+
+对正旗标使用
+
+$$
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},\qquad
+J=i\sqrt{B_{\mathrm{extra}}}\,|0\rangle\langle1|,
+\tag{203.13}
+$$
+
+额外 $J$ 属于结果1，负旗标仍按 $Z$ 共轭。
+
+首先核对 $B_{\mathrm{extra}}$ 的正性。由（203.12），一致有
+
+$$
+\begin{aligned}
+|b_0|^2&=2n^2+4n^2x_*\epsilon+O_I(\epsilon^2),\\
+|b_1|^2&=2n^2+(12n^2x_*+16nm^2t)\epsilon+O_I(\epsilon^2),\\
+d_0^2+d_1^2&=4m^2-4\sigma\epsilon+O_I(\epsilon^2).
+\end{aligned}
+$$
+
+利用（203.9）得
+
+$$
+\boxed{
+B_{\mathrm{extra}}(h,\epsilon)
+=B_*(h)+2\sigma\epsilon+O_I(\epsilon^2).
+}
+\tag{203.14}
+$$
+
+全部分母保持统一正下界，故 Taylor 余项在闭区间一致。
+因为 $B_*\ge0$、$\sigma>0$，充分小 $\epsilon$ 时
+$B_{\mathrm{extra}}\ge\sigma\epsilon>0$ 对整个 $I$ 成立。
+

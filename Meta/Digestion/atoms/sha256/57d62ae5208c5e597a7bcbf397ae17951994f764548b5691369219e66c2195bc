@@ -1,0 +1,52 @@
+### 276.6 二维例子的负性精确为 $r/2$
+
+定义输入正交向量
+$$
+|s\rangle=\frac{|+\rangle+|-\rangle}{\sqrt2},
+\qquad
+|d\rangle=\frac{|+\rangle-|-\rangle}{\sqrt2},
+$$
+$$
+|a\rangle=|s\rangle\otimes e_1,
+\qquad |b\rangle=|d\rangle\otimes e_2.
+\tag{276.27}
+$$
+由（276.2）与（276.22），
+$$
+\Omega_{\mathrm E}(r)
+=\frac12\left(
+|a\rangle\langle a|+|b\rangle\langle b|
++r|a\rangle\langle b|+r|b\rangle\langle a|
+\right).
+\tag{276.28}
+$$
+这也直接给其两个非零本征值 $(1+r)/2$ 与 $(1-r)/2$。
+
+在正交产品基
+$$
+(s\otimes e_1,\ s\otimes e_2,\ d\otimes e_1,\ d\otimes e_2)
+$$
+中，来源与其输入部分转置分别具有矩阵
+$$
+\frac12\begin{pmatrix}
+1&0&0&r\\0&0&0&0\\0&0&0&0\\r&0&0&1
+\end{pmatrix},
+\qquad
+\frac12\begin{pmatrix}
+1&0&0&0\\0&0&r&0\\0&r&0&0\\0&0&0&1
+\end{pmatrix}.
+\tag{276.29}
+$$
+输入基变换为实酉矩阵，故这里的部分转置与原固定基下的部分转置具有相同谱。读出后者的四个本征值，得到
+$$
+\operatorname{spec}(\Omega_{\mathrm E}(r)^{\Gamma_H})
+=\left\{\frac12,\frac12,\frac r2,-\frac r2\right\}.
+\tag{276.30}
+$$
+所以
+$$
+\boxed{\operatorname{Neg}(\Omega_{\mathrm E}(r))=r/2.}
+\tag{276.31}
+$$
+这给出任意小正负性与深度一、平方根锐指数同时成立的实际来源族。
+

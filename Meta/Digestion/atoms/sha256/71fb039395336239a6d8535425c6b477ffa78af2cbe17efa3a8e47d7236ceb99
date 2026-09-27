@@ -1,0 +1,19 @@
+### 246.5 实现自由参考最小成本恰需三维支撑
+
+自由有限参考的最小形成纠缠由§245给出：当 $\delta>0$，
+$$
+C_{\mathrm{mix}}(\epsilon)=
+\max\left\{0,1-\frac\epsilon\delta\right\}.
+\tag{246.26}
+$$
+现在不仅问成本，还问达到这个全局最小成本的探针至少需要多少总参考支撑。定义
+$$
+M(\epsilon)=\min\left\{
+r_E(\Omega):
+E_F(\Omega)=C_{\mathrm{mix}}(\epsilon),\quad
+ g(\Omega)\ge D-\epsilon
+\right\}.
+\tag{246.27}
+$$
+参考遍历任意有限维空间，且包括全部可读取旗标。
+

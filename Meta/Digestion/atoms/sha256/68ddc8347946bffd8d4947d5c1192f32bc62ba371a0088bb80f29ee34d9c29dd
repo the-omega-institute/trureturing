@@ -1,0 +1,13 @@
+**定理265.3（二维完整数据四次根界）。** 对 $H\otimes\mathbb C^2$ 上任意归一化正半定态 $\Xi$，
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le
+\min\left\{2,\,
+\left(9+3\sqrt5+\sqrt{13}\right)\varepsilon(\Xi)^{1/4}\right\}
+\le
+\min\{2,20\varepsilon(\Xi)^{1/4}\}.
+}
+\tag{265.20}
+$$
+

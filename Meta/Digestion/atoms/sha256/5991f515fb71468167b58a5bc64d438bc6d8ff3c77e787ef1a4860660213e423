@@ -1,0 +1,28 @@
+**定理283.1（有限共同相位块的统一预算与径向信息）。** 在（283.1）—（283.6）的来源、访问及完整块合同内，$B=1$ 时两假设对所有协议不可区分。对全部 $B\ge2$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{54}\left(B+\frac1{B\delta^2}\right)
+\le N_{\rm opt}(B,\delta)
+\le B+360000\left(\delta^{-1}+\frac1{B\delta^2}\right).
+}
+\tag{283.48}
+$$
+因而比较常数独立于 $B,\delta$ 地有
+$$
+\boxed{
+N_{\rm opt}(B,\delta)
+\asymp B+\frac1{B\delta^2}
+\asymp B+\delta^{-1}+\frac1{B\delta^2}.
+}
+\tag{283.49}
+$$
+同一访问类的纯边界径向Fisher信息满足
+$$
+\boxed{
+\frac{4B^2}{30000}\le I_{\rm opt}(B;1)\le2B(B-1),
+\qquad B\ge2,
+}
+\tag{283.50}
+$$
+而 $I_{\rm opt}(1;1)=0$。
+

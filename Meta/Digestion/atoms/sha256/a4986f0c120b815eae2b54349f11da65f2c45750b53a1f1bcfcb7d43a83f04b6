@@ -1,0 +1,13 @@
+### 153.2 解码输出压回实际支撑不损失最优值
+
+任选 $S_n$ 上的固定密度矩阵 $\tau_n$，定义全域压缩通道
+
+$$
+\mathcal P_n(Y)
+=\iota_n^*Y\iota_n
++\operatorname{Tr}[(I_{H_n}-\iota_n\iota_n^*)Y]\,\tau_n.
+\tag{153.3}
+$$
+
+它是 CPTP，且 $\mathcal P_n\operatorname{Ad}_{\iota_n}=\operatorname{id}_{S_n}$。
+

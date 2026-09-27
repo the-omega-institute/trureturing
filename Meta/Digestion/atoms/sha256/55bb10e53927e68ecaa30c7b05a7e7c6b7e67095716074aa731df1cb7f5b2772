@@ -1,0 +1,31 @@
+**引理 79.1（失效集合紧致，最短失效距离取得）。** 在上述固定有限输入、输出和记录接口内，全部完整仪器组成紧致集 $\mathfrak I$。其中
+
+$$
+\mathfrak F=
+\{\Gamma\in\mathfrak I:\exists\rho,\
+\lim_n\operatorname{Tr}\mathcal N_\Gamma^n(\rho)>0\}
+$$
+
+也是非空紧致集。因此存在实际失效仪器 $\Gamma_*$，使
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{fail}}
+=\min_{\Gamma\in\mathfrak F}\delta(\Gamma)
+=\delta(\Gamma_*).
+} \tag{79.1}
+$$
+
+证明。用各记录分支的 Choi 矩阵表示仪器，完全正性给正半定约束，完整保迹给固定的部分迹等式。各 Choi 矩阵的迹非负且其和为输入维数，因而这是有限维实向量空间中的闭有界集，故紧致。此处允许每个分支任意有限 Kraus 表示，不先固定 Kraus 数再取一个可能遗漏边界的参数集。
+
+第 71.2 条的 Cesàro 证明给
+
+$$
+\Gamma\in\mathfrak F
+\iff\exists\sigma\ge0,\quad
+\operatorname{Tr}\sigma=1,\quad
+\mathcal N_\Gamma(\sigma)=\sigma. \tag{79.2}
+$$
+
+反向显然：从该固定态出发始终未点击。仪器与密度矩阵的乘积空间紧致，式 (79.2) 的等式连续，所以符合条件的联合集合闭且紧致。向仪器坐标的投影仍紧致。恒等未点击、零点击仪器属于其中，故集合非空。有限维中的 diamond 范数连续，最小值因此取得。$\square$
+

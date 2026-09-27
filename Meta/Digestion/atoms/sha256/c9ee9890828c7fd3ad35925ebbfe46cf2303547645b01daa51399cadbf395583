@@ -1,0 +1,30 @@
+**定理193.1（全尺度统一首项）。** 有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\sup_{0\le\ell\le1/2}
+\left|
+\frac{\mathscr E(\ell,\epsilon)-3/4}{\epsilon}
+-\Phi_{\ell/\epsilon}
+\right|=0.
+}
+\tag{193.2}
+$$
+
+等价地，设
+
+$$
+z=\frac{\ell}{\ell+\epsilon},
+$$
+
+则
+
+$$
+\mathscr E(\ell,\epsilon)
+=\frac34+\epsilon\Psi(z)+o(\epsilon),
+\tag{193.3}
+$$
+
+其中余项对 $\ell\in[0,1/2]$ 一致。
+

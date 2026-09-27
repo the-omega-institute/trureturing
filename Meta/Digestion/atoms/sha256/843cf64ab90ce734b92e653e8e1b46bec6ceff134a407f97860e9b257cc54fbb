@@ -1,0 +1,73 @@
+**推论28.5（上下盒维指数与幂律累积）。** 定义
+
+$$
+\underline d=\liminf_{r\downarrow0}\frac{\log P(\Theta,r)}{\log(1/r)},
+\qquad
+\overline d=\limsup_{r\downarrow0}\frac{\log P(\Theta,r)}{\log(1/r)}.
+\tag{28.33}
+$$
+
+不要求两者相等。取（28.25）的任意固定 $`\eta>0`$，定理28.2给出的同一套接收门序列满足
+
+$$
+\boxed{
+\liminf_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\underline d}{2},
+\qquad
+\limsup_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\overline d}{2}.
+}
+\tag{28.34}
+$$
+
+每一套满足相同合同的门序列，其相应下极限至少为 $`\underline d/2`$，上极限至少为 $`\overline d/2`$。特别地，若盒维数 $`d=\underline d=\overline d`$ 存在，本构造的对数维数比收敛到 $`d/2`$；结论也包含维数为零和有限候选集。
+
+证明。令
+
+$$
+r_n^{\rm coarse}=n^{-1/2},\qquad
+r_n^{\rm fine}=\frac{n^{-1/2}}{L_{\epsilon,\eta}(n)}.
+$$
+
+两列尺度都严格递减到零，相邻项之比趋于一，且
+
+$$
+\frac{\log(1/r_n^{\rm coarse})}{\log n}=\frac12,
+\qquad
+\frac{\log(1/r_n^{\rm fine})}{\log n}\longrightarrow\frac12.
+$$
+
+对细尺度，在 dyadic 边界还须使用（28.25）的 $`u_{j+1}/u_j\to1`$；在区块内部只剩平方根因子。若 $`r_{n+1}\le r\le r_n`$，分离数的单调性给
+
+$$
+\frac{\log P(\Theta,r_n)}{\log(1/r_{n+1})}
+\le\frac{\log P(\Theta,r)}{\log(1/r)}
+\le\frac{\log P(\Theta,r_{n+1})}{\log(1/r_n)}
+$$
+
+（只取分母为正的充分大编号）。因此对上述任一列尺度，沿该序列取盒维数比的下、上极限，分别仍为全尺度的 $`\underline d,\overline d`$。定理22.2与（28.27）对本构造逐终端给
+
+$$
+\frac{1-\epsilon}{4C_*}P(\Theta,r_n^{\rm coarse})
+\le\dim K_n
+\le4P(\Theta,r_n^{\rm fine})+1\qquad(n\ge4).
+$$
+
+取对数、除以 $`\log n`$，两侧具有相同的下极限 $`\underline d/2`$ 与相同的上极限 $`\overline d/2`$，得到（28.34）。左侧对任意合法门序列仍成立，给出所述必要下界。证明完毕。
+
+特别地，对（22.15）的 $`\Theta_\beta=\{0\}\cup\{j^{-\beta}:j\ge1\}`$，令 $`d=1/(\beta+1)`$。对任意 $`\eta>0`$，有一套接收门序列满足
+
+$$
+\dim K_n
+=O_{\beta,\epsilon,\eta}\!\left(
+ n^{d/2}(\log n)^{d/2}
+ (\log\log n)^{d(1/2+\eta)}\right),
+\tag{28.35}
+$$
+
+而每套合法门序列均须满足 $`\dim K_n=\Omega_{\beta,\epsilon}(n^{d/2})`$。因此指数相合，额外的对数因子仍未消去。
+
+本节没有建立对所有候选集都成立的 $`O_\epsilon(P(\Theta,n^{-1/2}))`$ 无终端接收界。即使全圆，定理22.2与13.2目前仍分别给出 $`\Omega_\epsilon(\sqrt n)`$ 下界和另一套门序列的 $`O_\epsilon(\sqrt{n\log\log n})`$ 上界；定理13.4的限制只针对其规定的吸收截断接收器。两种上界各由一套完整门序列实现，不能仅因它们分别成立，就声称存在一套门序列在每个终端自动取得两者的较小值。
+
+前缀支撑的相干逐步接收与等距延拓已有一般先例，[^phase_bcz] 联合纯目标的误差转换使用既有迹距离与保真度不等式。[^phase_fvg] 参数网与压缩指数的联系也有独立同分布规则族的先例。[^phase_metric_population] 本节的具体推导是（28.3）的共同移心历史比较、（28.11）—（28.19）的祖先历史支撑和（28.21）的累计投影关系；这些关系共同给出任意固定候选集的一套完整联合恢复门序列，不由上述文献的合同直接代入而得。
+

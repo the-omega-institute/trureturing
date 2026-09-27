@@ -1,0 +1,113 @@
+**定理 116.1（等待占比与终端距离的平方关系）。** 对任意 $h_j>0$、$h_j\to0$ 及任意实际 $\Gamma_j\in\mathfrak B_{R-h_j}$，有
+
+$$
+\boxed{
+\limsup_{j\to\infty}
+\left[\lambda_{h_j}(\Gamma_j)+d_{\Gamma_j}^{\,2}\right]
+\le1.
+}
+\tag{116.1}
+$$
+
+这比较同一个装置的实际最大均值和最终完整通道，不将不同装置各自达到的值拼成共同结论。
+
+证明。只需考虑 $\lambda_j\to\lambda$ 的任意子列。若 $\lambda=0$，由 $d_j\le1$ 直接成立。设 $\lambda>0$。定理 113.1 给 $\mathscr K(R-h_j)\sim\kappa^2h_j^{-2}$，故 $M(\Gamma_j)\to\infty$。仪器紧性、子临界均值的局部有界性及校准约束迫使每个装置聚点属于 $\mathfrak F_R$。于是可用第 111—112 节的共同估计，以及
+
+$$
+\epsilon_jM(\Gamma_j)\longrightarrow1,
+\qquad
+\frac{h_j^2}{\kappa^2\epsilon_j}\longrightarrow\lambda.
+\tag{116.2}
+$$
+
+在当前准平稳态本征基中，保留式（112.6）里 $g_j$ 的实部，不先用其模替换。其他可能降低检验值的项仍为 $o(\sqrt{\epsilon_j})$，且 $H_{cb}\to-\kappa/2$。因 $L(a,z_0)\ge R$，有
+
+$$
+h_j\le R-\delta(\Gamma_j)
+\le(\kappa+o(1))\operatorname{Re}g_j
++o(\sqrt{\epsilon_j}).
+$$
+
+$|g_j|/\sqrt{\epsilon_j}$ 有界，结合式（116.2）得到
+
+$$
+\liminf_j\frac{\operatorname{Re}g_j}{\sqrt{\epsilon_j}}
+\ge\sqrt\lambda.
+\tag{116.3}
+$$
+
+点击效果 $E_j=\mathcal C_j^*(I)$ 的矩阵元满足
+
+$$
+(E_j)_{\psi\eta}=-g_j-\sum_\ell\overline{f_\ell}a_\ell,
+\qquad
+\left|\sum_\ell\overline{f_\ell}a_\ell\right|
+\le\sqrt{F_jv_j}=o(\sqrt{\epsilon_j}),
+$$
+
+$$
+(E_j)_{\psi\psi}\le\ell_{\psi,j}
+=\epsilon_j(1+o(1)),\qquad
+(E_j)_{\eta\eta}\longrightarrow1.
+\tag{116.4}
+$$
+
+现在必须回到原始点击后继。取该点击 CP 映射的任一 Kraus 表示 $B_\ell$，在本装置的辅助空间中置
+
+$$
+x_j=\sum_\ell B_\ell\psi_j\otimes|\ell\rangle,
+\qquad
+z_j=\sum_\ell B_\ell\eta_j\otimes|\ell\rangle,
+\qquad A=P_0\otimes I.
+$$
+
+这些辅助标签只用于证明，不是新可读记录。由式（116.4），
+
+$$
+\langle x_j,z_j\rangle=(E_j)_{\psi\eta},
+\qquad \|x_j\|/\sqrt{\epsilon_j}=O(1),
+\qquad \|z_j\|\to1.
+$$
+
+定理 106.1 对原始点击分支的分类给 $\mathcal C_j(P_{\eta,j})\to P_0$。因此
+
+$$
+\|(I-A)z_j\|\to0,\qquad \|Az_j\|\to1.
+$$
+
+把内积分成 $A$ 与 $I-A$ 两部分，Cauchy–Schwarz 给
+
+$$
+\frac{|(E_j)_{\psi\eta}|}{\sqrt{\epsilon_j}}
+\le\frac{\|Ax_j\|}{\sqrt{\epsilon_j}}\|Az_j\|
++\frac{\|x_j\|}{\sqrt{\epsilon_j}}\|(I-A)z_j\|.
+\tag{116.5}
+$$
+
+第二项趋零，第一项的最后因子趋一；结合式（116.3）—（116.4），得到
+
+$$
+\liminf_j
+\frac{\langle0|\mathcal C_j(P_j)|0\rangle}{\epsilon_j}
+\ge\lambda.
+$$
+
+实际准平稳态为 $\sigma_j=(1-y_j)P_j+y_jP_{\eta,j}$，$y_j\to0$。两个点击输出均正，所以
+
+$$
+\liminf_j\langle0|\zeta_j|0\rangle
+=\liminf_j
+\frac{(1-y_j)\langle0|\mathcal C_j(P_j)|0\rangle
++y_j\langle0|\mathcal C_j(P_{\eta,j})|0\rangle}{\epsilon_j}
+\ge\lambda.
+\tag{116.6}
+$$
+
+对任意量子比特密度矩阵 $\zeta=\begin{pmatrix}q&b\\\overline b&1-q\end{pmatrix}$，正性给 $|b|^2\le q(1-q)$，直接求 $\zeta-P_0$ 的两本征值可得
+
+$$
+D(\zeta,P_0)^2=(1-q)^2+|b|^2\le1-q.
+$$
+
+结合式（116.6）与定理 115.2，得到 $\limsup d_j^2\le1-\lambda$。每一条 $\lambda_j$ 的收敛子列都满足相同结论，故成立式（116.1）。$\square$
+

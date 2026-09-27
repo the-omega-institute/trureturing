@@ -1,0 +1,13 @@
+**定理 245.4（全混合探针类上的精确最小成本）。** 对所有 $\epsilon\ge0$，
+$$
+\boxed{
+C_{\mathrm{mix}}(\epsilon)=
+\begin{cases}
+\max\{0,1-\epsilon/\delta\},&\delta>0,\\
+0,&\delta=0.
+\end{cases}
+}
+\tag{245.31}
+$$
+下确界在每个参数点都实际达到；参考维数三已经足够。
+

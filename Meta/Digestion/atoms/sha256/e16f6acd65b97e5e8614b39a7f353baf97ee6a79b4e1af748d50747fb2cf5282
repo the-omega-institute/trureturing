@@ -1,0 +1,14 @@
+**定理204.1（一致三阶余项）。** 存在常数 $C_I,\epsilon_I>0$，使
+
+$$
+\boxed{
+\left|E_\epsilon(h)-\frac34-\epsilon\Phi_h-\epsilon^2Q(h)\right|
+\le C_I\epsilon^3
+\qquad(h\in I,\ 0<\epsilon<\epsilon_I).
+}
+\tag{204.2}
+$$
+
+该结论包含 $b=h_b$，不要求最优器关于参数可微，
+也不要求所有噪声处的 Kraus 秩相同。
+

@@ -1,0 +1,34 @@
+**命题 91.3（较小失效半径并不单独保证唯一暗态）。** 在相同二维活动空间和两个结果接口上，另取名义仪器
+
+$$
+\widetilde\Gamma_0
+=((1-\gamma)\operatorname{id},\,\gamma\operatorname{id}),
+\qquad 0<\gamma<1.
+$$
+
+相对于这个新名义仪器，完整失效半径恰为 $\widetilde R=\gamma<1$，但一个最近失效仪器是
+$\widetilde\Gamma_*=(\operatorname{id},0)$，它的每个密度矩阵都是暗态。在其子临界校准球内，
+
+$$
+\widetilde{\mathscr K}(u)=\frac1{\gamma-u}
+\qquad(0\le u<\gamma),
+\tag{91.8}
+$$
+
+而且每个初态都能与同一个最优仪器共同取得该值，包括混态。
+
+证明。任一失效仪器有未点击固定密度矩阵 $\sigma$；该来源在失效仪器上的点击概率为零，在 $\widetilde\Gamma_0$ 上为 $\gamma$，故完整距离至少 $\gamma$。两个记录块直接相减给
+$\frac12\|\widetilde\Gamma_*-\widetilde\Gamma_0\|_\diamond=\gamma$，因此半径准确。
+
+若完整距离至多 $u<\gamma$，每个输入的点击概率都至少 $\gamma-u$，即实际点击效果满足
+$E\succeq(\gamma-u)I$。未点击分支因而使每个正输入的迹至多乘 $1-\gamma+u$；逐轮迭代并求尾和，得到式（91.8）的上界。
+
+取
+
+$$
+\widetilde\Gamma_u
+=((1-\gamma+u)\operatorname{id},\,(\gamma-u)\operatorname{id}).
+$$
+
+它与新名义仪器的完整距离恰为 $u$，每个初态都产生成功参数为 $\gamma-u$ 的几何等待律，达到上界。其成本势为 $I/(\gamma-u)$，归一化后恒为 $I$；极限失效仪器的特征值 $1$ 具有四重代数重数。因此唯一纯暗态、统一分离的其余三个谱值和唯一最坏初态均不能只由 $\widetilde R<1$ 推出。$\square$
+

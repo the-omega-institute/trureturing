@@ -1,0 +1,36 @@
+**引理55.2（四轮尾射线的六种候选模式）。** 用相同字母表示同一环境射线、不同字母表示不同射线，则四轮尾 $(\eta_3,\eta_4,\eta_5,\eta_6)$ 必为下列六种模式之一：
+$$
+AAAA,\quad AAAB,\quad AABA,\quad ABAA,\quad ABAB,\quad ABAC.
+\tag{55.7}
+$$
+最后一种中的 $A,B,C$ 三条射线互异。列表只声明必要模式，不声称逐个可实现；不同字母没有正交含义。
+
+**证明。** 令 $\pi_U:K\to K/U$，置
+$$
+Z=(\pi_U\otimes I_E)V_0K.
+$$
+$U\otimes F$ 是四维核子空间，而 $V_0K$ 七维，所以 $\dim Z\le3$。
+
+令 $A=\mathbb C\eta_3$。若 $n\in\{3,4,5\}$ 满足 $\eta_{n+1}\notin A$，固定 $V_1$ 在 $U$ 与 $G_n$ 上的环境射线不同，故 $U\cap G_n=0$。因此
+$$
+\dim\pi_U(G_n)=2,\qquad
+\pi_U(G_n)\otimes\eta_n\subseteq Z.
+\tag{55.8}
+$$
+若两个这样的指标 $n,m$ 还满足 $\eta_n\not\parallel\eta_m$，两个二维张量子空间的交为零，其和四维，违反 $\dim Z\le3$。所以
+$$
+\eta_{n+1},\eta_{m+1}\notin A
+\quad\Longrightarrow\quad
+\eta_n\parallel\eta_m
+\qquad(n,m\in\{3,4,5\}).
+\tag{55.9}
+$$
+
+现在逐项处理射线位置。
+
+- 若 $\eta_4\notin A$，取其射线为 $B$。若 $\eta_5\notin A$，则（55.9）对 $n=3,m=4$ 会给 $\eta_3\parallel\eta_4$，矛盾。因此 $\eta_5\in A$。最后的 $\eta_6$ 或属于 $A$、或属于 $B$、或属于第三条射线 $C$，分别得到 $ABAA,ABAB,ABAC$。
+- 若 $\eta_4\in A$ 而 $\eta_5\notin A$，取后者射线为 $B$。若 $\eta_6\notin A$，则（55.9）对 $n=4,m=5$ 会给 $\eta_4\parallel\eta_5$，矛盾。因此 $\eta_6\in A$，得到 $AABA$。
+- 若 $\eta_4,\eta_5\in A$，则 $\eta_6\in A$ 给 $AAAA$，其余情况给 $AAAB$。
+
+三类情形互斥并穷尽全部环境位置，得到（55.7）。证明完毕。
+

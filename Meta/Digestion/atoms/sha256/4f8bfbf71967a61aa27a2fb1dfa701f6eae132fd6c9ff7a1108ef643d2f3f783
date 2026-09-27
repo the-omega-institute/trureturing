@@ -1,0 +1,1 @@
+| [EnvironmentRecords](https://github.com/the-omega-institute/trureturing/blob/bfd5737539c696eedd4638da17d7f449339526cd/D5/S3/Quantum/EnvironmentRecords.lean#L24) | 记录 Gram 重叠及迹掉环境后的相干因子；不能仅由相同约化通道推断观察者已获哪些环境信息。 

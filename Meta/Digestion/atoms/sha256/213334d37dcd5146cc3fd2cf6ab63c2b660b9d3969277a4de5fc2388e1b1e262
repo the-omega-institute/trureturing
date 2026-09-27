@@ -1,0 +1,23 @@
+**引理65.3（二次纤维的四点禁阻）。** 设 $Q$ 为非零有限维复 Hilbert 空间，$F$ 为二维复 Hilbert 空间，$A:F\to F$ 可逆，且
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+
+不存在同时满足下述两项的线性映射 $M:Q\otimes J\to Q\otimes F$：
+
+$$
+MM^*=I_{Q\otimes F},
+\tag{65.11}
+$$
+
+以及对四条不同射线 $[z_1],\ldots,[z_4]\in\mathbb P(F)$，
+
+$$
+M\bigl(Q\otimes\mathbb C(Az_i\otimes z_i)\bigr)
+\subset Q\otimes\mathbb Cz_i.
+\tag{65.12}
+$$
+
+（65.11）称为余等距条件，要求同一个 $M$ 的伴随为等距；（65.12）也使用同一个映射，不是四个分别可选的映射。
+

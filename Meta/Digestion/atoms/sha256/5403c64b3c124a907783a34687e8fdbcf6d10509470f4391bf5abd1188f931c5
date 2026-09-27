@@ -1,0 +1,34 @@
+**例141.5（同一满支撑不能决定合法续接）。** 此例只检验可逆编码接口，不替代（141.4）的实际来源嵌入。令
+
+$$
+K=L_1\otimes L_2\otimes G,\qquad
+\dim L_1=\dim L_2=\dim G=2,\qquad \tau=I_G/2.
+$$
+
+以 $L=L_1\otimes L_2$ 为四维逻辑空间。令 $U$ 交换 $L_1,G$，定义两个可逆编码
+
+$$
+\mathcal A_0(\rho)=\rho\otimes\tau,\qquad
+\mathcal A_1(\rho)=U(\rho\otimes\tau)U^*.
+\tag{141.21}
+$$
+
+二者的附加秩与附加谱相同；对任意正定 $\rho$，接收支撑都等于 $K$。对同一正定逻辑态 $\rho=I_L/4$，接收边缘甚至都等于 $I_K/8$。
+
+给输入位 $B$ 一个固定独立状态，并在全域定义固定通道
+
+$$
+\mathcal C_{\mathrm{erase}}(Y)
+=\operatorname{Tr}_{G B}(Y)\otimes\tau_G,
+\tag{141.22}
+$$
+
+其中输出按 $L_1,L_2,G$ 排列。它保留 $\mathcal A_0$ 的全部逻辑态。对 $\mathcal A_1$，则将两个不同逻辑输入
+$|i\rangle\langle i|_{L_1}\otimes\sigma_{L_2}$，$i=0,1$，都映为
+
+$$
+\frac{I_{L_1}}2\otimes\sigma_{L_2}\otimes\frac{I_G}2.
+$$
+
+因此第二个编码中的第一逻辑位被不可逆删除。相同支撑、附加谱，乃至某个正定输入产生的相同接收边缘，都不能代替完整逻辑—参考对应。这正是命题141.1必须使用联合态各矩阵块的原因。该例的固定输入位不是实际来源的 $F_n$，所以它不单独给出原接收问题的维数上下界。
+

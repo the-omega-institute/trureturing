@@ -1,0 +1,23 @@
+**定义 143.1（事件数的 Laplace 质量）。** 记
+
+$$
+F_m(s;\rho)
+=
+\operatorname{Tr}\widehat{\mathbf T}^{(m)}_\Lambda(s)(\rho)
+=
+\mathbf 1^{\mathsf T}D(s)[T D(s)]^{m-1}w,
+\qquad s\ge0.
+$$
+
+假定 $T$ 是 primitive 的列随机矩阵，即存在某个正整数 $k$ 使 $T^k$ 的每个矩阵元都严格为正。置
+
+$$
+A(s)=T D(s),
+\qquad
+\lambda(s)=\rho(A(s)),
+\qquad
+\psi(s)=\log\lambda(s),
+$$
+
+其中 $\rho(\cdot)$ 表示谱半径。
+

@@ -1,0 +1,63 @@
+### 154.1 真实完整目标的共同四维坐标
+
+固定已知非退化复来源
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+置
+
+$$
+\begin{aligned}
+p&=|b|^2\in(0,1),&
+m_0&=a|0\rangle+b|1\rangle,&m_1&=|0\rangle,\\
+\Gamma_0&=|m_0\rangle\langle m_0|,&
+\Gamma_1&=|m_1\rangle\langle m_1|,&
+H_s&=\Gamma_0-\Gamma_1,\\
+\rho_*&=\frac{\Gamma_0+p\Gamma_1}{1+p},&
+\lambda_*&=\lambda_{\min}(\rho_*)>0,&
+C_p&=\frac{\sqrt{2p}}{(1+p)\sqrt{\lambda_*}} .
+\end{aligned}
+\tag{154.1}
+$$
+
+其中 $\det\rho_*=p^2/(1+p)^2$、$\|H_s\|_{\mathrm{HS}}=\sqrt{2p}$。从初始记忆基态 $|i\rangle$ 出发，第 $n$ 轮活动记忆边缘为第11节的
+
+$$
+\rho_{i,n}=\rho_*+c_i(-p)^{n-1}H_s,\qquad
+c_0=\frac p{1+p},\quad c_1=-\frac1{1+p}.
+\tag{154.2}
+$$
+
+取两个固定 qubit $Q,A$，令 $H_{\mathrm{can}}=Q\otimes A$。$Q$ 用于保留初始首发位扇区，$A$ 用于活动记忆的规范纯化，二者只是终端档案的坐标，不是增加给物理接收器的持久空间。固定基下记
+
+$$
+|\operatorname{vec}X\rangle_{MA}
+=\sum_{j,k}X_{jk}|j\rangle_M|k\rangle_A.
+$$
+
+对 $n\ge3$，本卷的实际档案支撑 $S_n$ 为四维。第11节的共同纯化构造给一个档案侧等距同构
+$F_n:S_n\to H_{\mathrm{can}}$，使真实累计来源等距在该坐标中为
+
+$$
+W_n|i\rangle
+=|i\rangle_Q|\operatorname{vec}\sqrt{\rho_{i,n}}\rangle_{MA}.
+\tag{154.3}
+$$
+
+系统顺序按标记作固定置换。两份初始基态的档案具有不同首位标签，因而相应扇区正交；各扇区上的纯化等距合起来就是同一个 $F_n$，在线性叠加及任意参考上成立。没有按未知初态另选编码。
+
+定义固定比较等距及目标通道
+
+$$
+W_*|i\rangle
+=|i\rangle_Q|\operatorname{vec}\sqrt{\rho_*}\rangle_{MA},
+\qquad
+\mathcal V_n=\operatorname{Ad}_{W_n},\quad
+\mathcal V_*=\operatorname{Ad}_{W_*}.
+\tag{154.4}
+$$
+

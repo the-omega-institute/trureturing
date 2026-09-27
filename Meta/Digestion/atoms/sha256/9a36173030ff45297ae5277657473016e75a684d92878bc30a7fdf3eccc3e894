@@ -1,0 +1,19 @@
+**定理111.1（二维剩余乘积空间的秩一后继分类）。** 在本节实际合同、$\dim N_{\mathrm{prod}}=2$ 和 $\operatorname{rank}B_\lambda=1$ 的条件下，存在两条不同环境射线 $Z,W$，使
+
+$$
+\dim\{y:y\otimes Z\in E\}=3,\qquad
+\dim\{y:y\otimes W\in E\}=2,
+$$
+
+$$
+\dim\{y:y\otimes z\in E\}=1
+\quad([z]\notin\{Z,W\}),
+$$
+
+且四个实际后继恰使用这两个方向：
+
+$$
+\boxed{\{[\eta_3],[\eta_4],[\eta_5],[\eta_6]\}
+=\{[Z],[W]\}.}
+$$
+

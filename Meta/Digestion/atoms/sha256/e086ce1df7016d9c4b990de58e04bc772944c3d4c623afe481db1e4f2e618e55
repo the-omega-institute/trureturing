@@ -1,0 +1,29 @@
+**命题 48（含时间剖面的更新与充分性，repo-derived）。** 对非零格作下表的系数推送；若多个格映到同格，系数相加。写 $a=(p,\epsilon,r,n)$，并令
+
+$$
+\begin{aligned}
+a\diamond_t a'&=(p+p',\epsilon\epsilon',
+ \operatorname{pair}(r,r'),\max(n,n')+1),\\
+\tau_k(a)&=(p,\epsilon,r,n+k),\qquad
+\tau_k[U]=\{\tau_k(v):v\in U\}.
+\end{aligned}
+$$
+
+| 操作 | 剖面推送 |
+| --- | --- |
+| $X\boxplus Y$ | 两剖面逐格相加 |
+| $NX$ | $(a,b,U)\mapsto(a,1-b,U)$ |
+| $F_SX$ | $(a,b,U)\mapsto(a,b\mathbf1_S(p),U)$ |
+| $F_LX$ | $(a,b,U)\mapsto(a,b\mathbf1_L(r),U)$ |
+| $F_{\downarrow Q}X$ | $(a,b,U)\mapsto(a,b\mathbf1_{U\cap Q\ne\varnothing},U)$ |
+| $X\triangleright Y$，域为 $M_X<m_Y$ | 左格 $(a,b,U)\mapsto(a,b,U\cup V_t(Y))$，右格不变，再相加 |
+| $X\boxtimes Y$ | 格对 $((a,b,U),(a',b',U'))\mapsto(a\diamond_t a',bb',\{a\diamond_t a'\})$，系数相乘后推送 |
+| $T_kX$ | $(a,b,U)\mapsto(\tau_k(a),b,\tau_k[U])$ |
+
+端点更新直接引用命题 29，以 (TCAU-SUPPORT) 提供 $s_X,s_Y$：并集取 $\min(m_X,m_Y),\max(M_X,M_Y)$；乘积取 $\min(m_X,m_Y),\max(M_X,M_Y,\gamma(s_X,s_Y))$；补集与三个筛选不改端点；平移对有限端点加 $k$，保持哨兵。结论是
+
+$$
+\ker(\Gamma_t,m,M)\subseteq\approx_{\Sigma_{{\rm cau},t}}.
+\tag{TCAU-SUFF}
+$$
+

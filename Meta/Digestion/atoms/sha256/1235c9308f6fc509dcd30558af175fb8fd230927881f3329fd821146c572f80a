@@ -1,0 +1,78 @@
+**引理261.2（切向数据逆界）。** 有
+$$
+\boxed{
+\|T'\|_1\le
+3\|\mathscr K(T')\|_1+
+2\|\operatorname{Tr}_H T'\|_1.
+}
+\tag{261.20}
+$$
+
+**证明。** 两个未直接读取的对角块可以由 $N,R'$ 恢复为
+$$
+\begin{aligned}
+P'&=a(Nb)^\dagger+(Nb)a^\dagger
+-\langle b,R'b\rangle\,|a\rangle\langle a|,\\
+Q'&=b(N^\dagger a)^\dagger+(N^\dagger a)b^\dagger
+-\langle a,R'a\rangle\,|b\rangle\langle b|.
+\end{aligned}
+\tag{261.21}
+$$
+例如 $Nb=r+a(s^\dagger b)$，而
+$\langle b,R'b\rangle=2\operatorname{Re}(b^\dagger s)$，
+代入即得第一式；第二式由
+$N^\dagger a=s+b(r^\dagger a)$ 同样得到。
+
+秩一矩阵的迹范数与迹范数理想性质给
+$$
+\|P'\|_1\le2\|N\|_1+\|R'\|_1,
+\qquad
+\|Q'\|_1\le2\|N\|_1+\|R'\|_1.
+\tag{261.22}
+$$
+再分开对角和非对角块，
+$$
+\|T'\|_1
+\le\|P'\|_1+\|Q'\|_1+2\|N\|_1
+\le6\|N\|_1+2\|R'\|_1.
+\tag{261.23}
+$$
+使用 $\mathscr K(T')=2N$ 即得结论。$\square$
+
+该公式已包括 $r,s$ 的所有环境方向；不靠把它们投影到二维参考支撑来换取逆界。特别地，若切向矩阵的两份完整数据都为零，则该矩阵为零。
+
+回到理想源，定义整个参考空间上的可逆算子
+$$
+D_E=\rho_S^{-1/2}\oplus I_{S^\perp}.
+\tag{261.24}
+$$
+它满足
+$$
+\|D_E\|^2=\frac1p,\qquad
+\|D_E^{-1}\|^2\le1,
+\tag{261.25}
+$$
+并把 $u,v$ 送到 $a,b$。任意Hermitian纯源切向矩阵
+$$
+T=|\psi\rangle\langle h|+|h\rangle\langle\psi|
+\tag{261.26}
+$$
+在 $I_H\otimes D_E$ 同余后属于（261.17）的形式。两个数据分量都与这个参考同余相容：
+$$
+\operatorname{Tr}_H[(I_H\otimes D_E)T(I_H\otimes D_E)]
+=D_E(\operatorname{Tr}_H T)D_E,
+$$
+$$
+\mathscr K[(I_H\otimes D_E)T(I_H\otimes D_E)]
+=D_E\mathscr K(T)D_E.
+\tag{261.27}
+$$
+结合引理261.2、（261.25）以及迹范数理想性质，得到
+$$
+\boxed{
+\|T\|_1\le\frac3p\|\mathcal M(T)\|_{\oplus}.
+}
+\tag{261.28}
+$$
+这里“切向”只命名上述线性空间；不要求 $h$ 很小，也未使用一阶近似。
+

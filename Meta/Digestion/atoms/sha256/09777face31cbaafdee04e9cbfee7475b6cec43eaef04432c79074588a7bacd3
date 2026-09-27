@@ -1,0 +1,24 @@
+**定义 204.1（无条件与条件的鲁棒值）。** 固定效果 $0\le H\le I$。对 $\rho$ 定义
+
+$$
+ p(\rho)=p_\Phi(\rho),
+ \qquad
+ h(\rho)=\operatorname{Tr}\!\left(
+ \frac{\Phi(\rho)}{p(\rho)}H
+ \right)
+$$
+
+只在 $p(\rho)>0$ 时定义 $h$，并令
+
+$$
+ a(\rho)=\operatorname{Tr}(\Phi(\rho)H)=p(\rho)h(\rho).
+$$
+
+对 $\mathfrak R_+$ 定义
+
+$$
+V_{\mathrm{cond}}=\inf_{\rho\in\mathfrak R_+}h(\rho),
+\qquad
+V_{\mathrm{uncond}}=\inf_{\rho\in\mathfrak R_+}a(\rho).
+$$
+

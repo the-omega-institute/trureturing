@@ -1,0 +1,21 @@
+**例 179.3（只增加一个后段接口也可能增加一整维）。** 取 $\mathcal X=\mathbb R^2$，终端效果 $F_0(x_1,x_2)=x_1$。令 $\mathfrak T_1$ 只含恒等接口，令 $\mathfrak T_2$ 另外允许交换接口
+
+$$
+S(x_1,x_2)=(x_2,x_1).
+$$
+
+则
+
+$$
+\Gamma(\mathfrak T_1)=\operatorname{span}\{F_0\},
+\qquad
+\Gamma(\mathfrak T_2)=\operatorname{span}\{F_0,F_0\circ S\}
+=\operatorname{span}\{x_1,x_2\}.
+$$
+
+所以旧终端摘要的秩为一，而扩张合同要求秩为二。两个状态在旧合同下相同，不代表它们在新合同下仍相同。
+
+这条单调性把“新增观察权限”的代价写成了闭包偏序：权限扩张只能细分原来的等价类，不能由旧摘要自动制造被删去的方向。
+
+---
+

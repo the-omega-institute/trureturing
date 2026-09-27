@@ -1,0 +1,11 @@
+**Proof.** Take a nondecidable co-c.e. set $A$. Let $N$ be the closed set of $p$-adic points all of whose digits belong to $\{0,1\}$. It is effectively closed and has Haar measure zero, since its depth-$n$ cover has mass $(2/p)^n$. Define
+$$
+N_A=N\setminus\bigcup_{n\notin A}D_n,
+\qquad
+F=[0]_1\cup(1+pN_A).
+\tag{TM.592}
+$$
+The set $N_A$ is effectively closed and null, and the two displayed components of $F$ lie in disjoint depth-one cylinders. Hence $F$ is effectively closed and $\mu(F)=1/p$. For each $n$, the cylinder $1+pD_n$ meets $F$ if and only if $D_n$ meets $N_A$, which holds exactly when $n\in A$: when allowed, the point $p^n$ belongs to $N\cap D_n$. Thus its extension relation is undecidable. Each queried intersection has mass zero whether empty or nonempty. $\square$
+
+This example shows why computable local masses do not generally decide nonemptiness. The strict gap of C卷第2.7.1节 excludes these nonempty null intersections. There is also a separate obstruction: zero-testing a uniformly computable family of cylinder masses can itself be undecidable.
+

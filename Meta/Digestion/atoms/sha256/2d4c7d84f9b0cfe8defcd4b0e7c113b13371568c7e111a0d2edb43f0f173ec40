@@ -1,0 +1,28 @@
+**定义 191.1（阶段响应合同）。** 取有限维赋范空间链
+
+$$
+\mathcal U_0
+\xrightarrow{R_1}
+\mathcal U_1
+\xrightarrow{R_2}
+\cdots
+\xrightarrow{R_k}
+\mathcal U_k.
+$$
+
+精确总响应为
+
+$$
+R^{[k]}=R_k\circ\cdots\circ R_1.
+$$
+
+对每一阶段给出近似响应 $\widehat R_i:\mathcal U_{i-1}\to\mathcal U_i$，并令
+
+$$
+\delta_i=\|R_i-\widehat R_i\|,
+\qquad
+g_i\ge\|R_i\|,
+\qquad
+\widehat g_i\ge\|\widehat R_i\|.
+$$
+

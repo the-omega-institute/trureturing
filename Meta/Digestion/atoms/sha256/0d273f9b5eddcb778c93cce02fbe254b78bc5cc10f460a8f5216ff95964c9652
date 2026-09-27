@@ -1,0 +1,22 @@
+**定理158.2（完整参考恢复误差的经验分布）。** 有弱收敛
+
+$$
+\boxed{
+\frac1N\sum_{n=1}^N\delta_{e_n}\ \Longrightarrow\ \nu=h_*\mu_G.
+}
+\tag{158.5}
+$$
+
+等价地，对每个连续 $\varphi:[0,1]\to\mathbb R$，
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n=1}^N\varphi(e_n)
+=\int_G\varphi(h(z))\,d\mu_G(z).
+\tag{158.6}
+$$
+
+**证明。** $\varphi$ 在紧区间上一致连续，结合（158.2）有
+$\varphi(e_n)-\varphi(h(g^n))\to0$。趋零序列的 Cesàro 平均也趋零；有限启动项不影响极限。对连续函数 $\varphi\circ h$ 应用引理158.1，得到（158.6），亦即（158.5）。证毕。
+
+特别地，长期平均误差是 $\int_Gh\,d\mu_G$，而第155节的最大渐近误差是 $\max_Gh$。平均值不能代替逐终端最坏值，第157节的全时域上确界还可能由有限启动后的某个暂态峰值取得。
+

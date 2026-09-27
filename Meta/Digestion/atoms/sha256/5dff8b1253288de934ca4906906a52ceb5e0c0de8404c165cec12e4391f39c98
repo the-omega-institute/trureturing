@@ -1,0 +1,14 @@
+**定理195.3（全来源区间上的等值带）。** 存在 $C>0$，使充分小正 $\epsilon$ 时
+$\mathcal Z_\epsilon\ne\varnothing$，且
+
+$$
+\boxed{
+\ell\in\mathcal Z_\epsilon
+\Longrightarrow
+|\ell-h_c\epsilon|\le C\epsilon^2.
+}
+\tag{195.6}
+$$
+
+这里不声明 $\mathcal Z_\epsilon$ 只有一个点。
+

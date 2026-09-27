@@ -1,0 +1,17 @@
+**证明。** 两个简单的张量维数事实先单独说明。
+
+第一，所有 $\eta_j$ 在 $E/F$ 中的像至多张成一维。若两个像独立，则 $A\otimes F$ 与这两个对应的 $G_j\otimes\eta_j$ 为 $4+2+2=8$ 维代数直和，不能同处七维 $V_0K$。
+
+第二，若 $J$ 是一组环境在 $F$ 内的指标，且
+$$
+R_F=(A\otimes F)+\sum_{j\in J}G_j\otimes\eta_j,
+\qquad \dim R_F\le5,
+\tag{54.8}
+$$
+则
+$$
+\dim\left(A+\sum_{j\in J}G_j\right)\le3.
+\tag{54.9}
+$$
+令 $\pi_A:K\to K/A$。$(\pi_A\otimes I_E)|_{R_F}$ 的核恰为四维 $A\otimes F$，所以其像至多一维。如果像为零，（54.9）立即成立。否则该像含有某个非零纯张量 $u\otimes f$，且全部 $\pi_A(G_j)\otimes\eta_j$ 都在此单线内；因此所有非零 $\pi_A(G_j)$ 都在共同接收商线 $\mathbb Cu$ 内，仍给（54.9）。
+

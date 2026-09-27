@@ -1,0 +1,19 @@
+**推论193.2（相对尺度分类）。** 取 $a>0$、$\alpha>0$，令
+$\ell_\epsilon=a\epsilon^\alpha$。充分小参数处来源边缘态都满秩，并有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\frac{\mathscr E(a\epsilon^\alpha,\epsilon)-3/4}{\epsilon}
+=
+\begin{cases}
+\Phi_0,&\alpha>1,\\
+\Phi_a,&\alpha=1,\\
+\Phi_\infty,&0<\alpha<1.
+\end{cases}
+}
+\tag{193.4}
+$$
+
+其中 $\Phi_0<0$、$\Phi_\infty>0$，而 $\Phi_a$ 在第190节的唯一 $a=h_c$ 处过零。
+

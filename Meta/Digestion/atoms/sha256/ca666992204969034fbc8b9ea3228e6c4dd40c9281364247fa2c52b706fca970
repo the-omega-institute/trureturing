@@ -1,0 +1,6 @@
+### 2.6 不同深度柱集的规范表示、有效性与局部分裂
+
+本节固定实际的前缀塔，研究“每个深度至多使用一个柱集”究竟约束了什么。以下给出普通数学推导、有效性反例及运输条件；不宣称已经完成 Lean 核验、文献穷尽或原创性鉴定。其用途是补齐完成化表示与实际离散接口之间的条件，不能由此结算有限互异奇模数覆盖问题。
+
+可复用的协作基础是 [profile343 的第 13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#13-exact-cylinder-extendibility-with-one-forbidden-class-per-prime-power-height)：它已经给出奇素数、每高度至多一个最终禁类时的柱集可延伸判据、条件正测度界，以及最终高度表与可枚举事件流之间的有效性区别。本节不把这些已有结论重新计为成果；补充的对象是规范最小柱基、二进制边界、可枚举性失配和接口运输。
+

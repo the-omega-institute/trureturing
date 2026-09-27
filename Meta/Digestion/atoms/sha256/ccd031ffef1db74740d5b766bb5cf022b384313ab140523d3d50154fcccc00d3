@@ -1,0 +1,21 @@
+**定理281.1（包含未知共同相位校准的维数一致最优预算）。** 对（281.1）—（281.7）的实际来源和正规经典角度重置访问合同，对全部 $n\ge1$、$0<\delta\le1/2$，
+$$
+\boxed{
+\frac1{9C(\delta/n+\delta^{3/2})}
+\le N_{\rm known}(n,\delta)
+\le N_{\rm unknown}(n,\delta)
+\le\frac{150345}{\delta/n+\delta^{3/2}},
+}
+\tag{281.53}
+$$
+其中 $C=\max\{2,(2+\pi K/2)/4\}$、$K=64/\sqrt{7/23}$ 与参数无关。因此
+$$
+\boxed{
+N_{\rm known}(n,\delta)
+\asymp N_{\rm unknown}(n,\delta)
+\asymp\frac1{\delta/n+\delta^{3/2}}.
+}
+\tag{281.54}
+$$
+未知相位的上界对每个共同固定相位一致，并计入全部实际校准。
+

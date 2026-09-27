@@ -1,0 +1,15 @@
+**定理 240.3（带先验的方差分解）。** 令 $M$ 按先验 $\lambda$ 取值，$Z=\Phi(M)$，$Y$ 是干预 $a$ 的结果。则
+
+$$
+\boxed{
+\mathbb E_\lambda[\operatorname{Var}(Z\mid Y)]
+=
+\operatorname{Var}_\lambda(Z)
+-
+\operatorname{Var}_\lambda(\mathbb E[Z\mid Y]).
+}
+\tag{240.2}
+$$
+
+所以平均后验方差不会因取得结果而增加；但它与最坏直径价值是两种不同的合同。
+

@@ -1,0 +1,35 @@
+**定理267.2（唯一混合点的访问代价分离）。** 在本节固定来源、仪器和等先验独立副本合同下，对所有 $0<h\le1/8$，
+$$
+\boxed{
+\frac{32}{513h^2}
+\le N_{\mathrm{in}}(h)
+\le\left\lceil\frac{5\ln(3/2)}{4h^2}\right\rceil,
+}
+\tag{267.38}
+$$
+$$
+\boxed{
+\frac1{55296h^8}
+\le N_{\mathrm{out}}(h)
+\le\left\lceil\frac1{96h^8}\right\rceil.
+}
+\tag{267.39}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)=\Theta(h^{-2}),
+\qquad
+N_{\mathrm{out}}(h)=\Theta(h^{-8}),
+\qquad h\downarrow0.
+}
+\tag{267.40}
+$$
+以同一对源的半迹距离 $d_h=\|\Omega_h-\Omega_0\|_1/2$ 表示，仍有
+$$
+N_{\mathrm{in}}=\Theta(d_h^{-2}),
+\qquad
+N_{\mathrm{out}}=\Theta(d_h^{-8}).
+\tag{267.41}
+$$
+

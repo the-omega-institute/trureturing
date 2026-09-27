@@ -1,0 +1,71 @@
+### 280.2 已知固定角度的完整输出与副本合同
+
+给定已知角度 $\theta$，每份来源都使用§277的同一实际reset仪器：
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{280.7}
+$$
+仪器重置输入量子输出，同时保留全部实际记录及完整参考。略去共同纯重置因子，记
+$$
+H_0(\theta)=\operatorname{Re}(e^{i\theta}Z_n),
+\qquad H_1(\theta)=\operatorname{Re}(ie^{i\theta}Z_n).
+$$
+两个完整有效输出为
+$$
+\sigma_n(\theta)=\bigoplus_{w,\eta}\frac{I_n+\eta H_w(\theta)}{4n},
+$$
+$$
+\boxed{
+\sigma_{n,\delta}(\theta)
+=(1-\delta)\sigma_n(\theta)+\delta\frac{I_{4n}}{4n}.
+}
+\tag{280.8}
+$$
+两假设的先验各为 $1/2$，来源副本独立，方案知道 $n,\delta$、来源族和角度。记 $N_n(\theta,\delta)$ 为使平均错误率不超过 $1/3$ 所需的最小固定整数副本数。每次检验中的全部副本使用同一个角度；下界允许完整输出的任意集体终端POVM。上界将由逐份记录读取、参考测量及经典似然比检验达到。这里只计副本，不计本征基测量的门数或物理历时。
+
+下文的 $\asymp$ 表示双向正常数比较，常数独立于 $n\ge1$ 和 $0<\delta\le1/2$。令
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,
+\qquad F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1.
+\tag{280.9}
+$$
+$F$ 是未平方的根保真度。
+
+式（280.8）使两个输出交换。若其共同本征基上的概率为 $p_j,q_j$，则
+$$
+q_j=(1-\delta)p_j+\frac\delta{4n},
+\qquad
+1-F=\frac12\sum_j(\sqrt{p_j}-\sqrt{q_j})^2.
+\tag{280.10}
+$$
+置 $a=1-F^2$。标准根保真度—迹距界、张量乘法及Helstrom判别公式给
+$$
+d(\sigma_n^{\otimes N},\sigma_{n,\delta}^{\otimes N})^2
+\le1-F^{2N}\le Na,
+\qquad N_n(\theta,\delta)\ge\frac1{9a}.
+\tag{280.11}
+$$
+另一方面，实际测量共同本征基后，经典等先验似然检验的平均错误满足
+$$
+P_{\rm err}
+=\frac12\sum_{\boldsymbol j}\min\{p_{\boldsymbol j},q_{\boldsymbol j}\}
+\le\frac12\sum_{\boldsymbol j}\sqrt{p_{\boldsymbol j}q_{\boldsymbol j}}
+=\frac12F^N.
+\tag{280.12}
+$$
+由于 $-\log F\ge(1-F^2)/2$，并且 $0<a\le1$，有
+$$
+\boxed{
+\frac1{9a}\le N_n(\theta,\delta)
+\le\left\lceil\frac{2\log(3/2)}a\right\rceil
+\le\frac{1+2\log(3/2)}a.
+}
+\tag{280.13}
+$$
+所用标准判别界见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4及Theorem 3.33；经典上界已由（280.12）直接证明。下面分别估计两个实际输出的 $a$，不把这些标准工具另立为新结果。
+

@@ -1,0 +1,9 @@
+**引理173.2（对角输入边缘已足够）。** 有
+
+$$
+\frac12\|\Delta\|_\diamond
+=\max_{0\le q\le1}
+\frac12\|(\Delta\otimes\operatorname{id}_J)(P_{\phi_q})\|_1.
+\tag{173.5}
+$$
+

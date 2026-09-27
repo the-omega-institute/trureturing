@@ -1,0 +1,75 @@
+**定理 5.2（尖锐双对数修正及临界极值形状）。** 固定 $d\ge3$，
+令 $n=2^d$、$M=n/2$、$q=1/(M-1)$。当 $c\uparrow c_d$ 时，
+
+$$
+\Sigma_d(c)
+=\frac{g(r_c)+(M-1)g(r_c/(M-1))}{n}+o(1)
+=\frac{L_\delta+\log L_\delta-\log n}{2n}
+ +\frac{M-1}{n}g(q)+o(1).
+\tag{5.2}
+$$
+
+第一式中的 $o(1)$ 非负。每个 $c<c_d$ 的上确界均可达；
+当 $c\uparrow c_d$ 时，任何极大化向量 $b_c$ 到下列有限集合的距离趋于零：
+在一个奇偶类上取 $s,-s/(M-1),\ldots,-s/(M-1)$，
+另一奇偶类全零，其中 $s\in\{-1,1\}$，单峰位置任取。
+距离可取 $\mathbb R^n$ 的任意范数。
+
+固定 $d=2$ 时，两个同类坐标必须同时趋向端点，增长式改为
+
+$$
+\Sigma_2(c)=\frac14\bigl(L_\delta+\log L_\delta-\log2\bigr)+o(1),
+\qquad c\uparrow c_2=\frac{\log2}{2}.
+\tag{5.3}
+$$
+
+证明。式 (2.3) 使 $I\le c<c_d$ 的所有坐标落在
+$[-r_c,r_c]$；两个零和约束与信息约束给出紧可行集，$\sigma$ 在其上连续。
+因此存在极大化向量。单峰族给出下界
+
+$$
+\Sigma_d(c)\ge
+\frac{g(r_c)+(M-1)g(r_c/(M-1))}{n}\longrightarrow\infty.
+\tag{5.4}
+$$
+
+考虑任意 $c_k\uparrow c_d$ 及相应极大化向量。
+在 $[-1,1]^n$ 中取收敛子列，极限记为 $b_*$。
+若全部极限坐标均在 $(-1,1)$ 内，则该子列的 $\sigma$ 有界，与 (5.4) 矛盾。
+故某一坐标绝对值为一。将 (2.3) 的 Jensen 论证用于此端点，
+该奇偶类的信息贡献至少为 $c_d$，另一类非负；
+连续性又给出总信息至多为 $c_d$。
+严格凸性的等号条件强制同类其余坐标全等于该端点的负值除以 $M-1$，
+另一类全零。这既证明极值形状的断言，也说明 $M\ge4$ 时恰有一个端点坐标。
+
+沿该子列将端点坐标记为 $x_*$。式 (2.3) 给出
+$g(b_{c_k}(x_*))\le g(r_{c_k})$；其余坐标处 $g$ 连续，故
+
+$$
+\limsup_k\left(\Sigma_d(c_k)-\frac{g(r_{c_k})}{n}\right)
+\le\frac{M-1}{n}g(q).
+\tag{5.5}
+$$
+
+若 (5.5) 对整体极限不成立，可取违反它的子列，再按上述紧性论证取子列，
+产生矛盾。结合 (5.4) 得到 (5.2) 第一式。
+这没有断言单峰族在每个亚临界 $c$ 上都是精确极大化者。
+
+为求第二式，置 $\varepsilon=1-r_c$、$s=\log(1/\varepsilon)$。
+由 $\phi'(u)=\operatorname{artanh}u$，直接展开端点和内部点 $q<1$ 得
+
+$$
+\delta=\frac{\varepsilon}{2n}
+ \left(s+1+\log2+2\operatorname{artanh}q+O(\varepsilon)\right).
+\tag{5.6}
+$$
+
+取对数先得 $s/L_\delta\to1$，再代回得
+$s=L_\delta+\log L_\delta-\log(2n)+o(1)$。
+同时 $g(1-\varepsilon)=(s+\log2)/2+o(1)$，
+其余有限项趋于 $(M-1)g(q)/n$，给出 (5.2)。
+若 $d=2$，定理 3.2 给出精确上界 $g(r_c)/2$，且
+$\delta=(\log2-\phi(r_c))/2$
+$=\varepsilon(s+1+\log2+O(\varepsilon))/4$。
+同样反演便得到 (5.3)。$\square$
+

@@ -1,0 +1,43 @@
+### 61.6 匹配上界与最优参数收敛
+
+选取明确的竞争参数
+
+$$
+\kappa(\delta)=\frac34-\sqrt\delta,
+\qquad
+p(\delta)=\delta^2-\kappa(\delta)\delta^3.
+\tag{61.19}
+$$
+
+充分小的 $\delta>0$ 时，$0<\kappa(\delta)<3/4$ 且
+$1-\sqrt{1-\delta^2}<p(\delta)<\delta^2$，故该修复合法并位于约化区间。
+
+式（61.8）、（61.9）或准确式（61.5）给
+
+$$
+\frac{f_\varepsilon^+(p(\delta))}{\varepsilon}
+=F^+(\kappa(\delta))+O(\delta)
+=\frac98-\frac3{10}\sqrt\delta+O(\delta),
+\tag{61.20}
+$$
+
+其中 $(F^+)'(3/4)=3/10$。另一方面，式（61.15）给
+
+$$
+\frac{f_\varepsilon^-(p(\delta))}{\varepsilon}
+=\frac98-\frac9{16}\delta+o(\delta).
+\tag{61.21}
+$$
+
+正向距 $9/8$ 的裕量为 $\sqrt\delta$ 阶，严格大于负向的 $\delta$ 阶下降，所以充分小的 $\delta$ 时，完整误差由负向决定。式（61.21）给式（61.2）的匹配上界，与式（61.18）合并，证明式（61.2）。
+
+最后，对任意最优参数，在式（61.17）中代入式（61.2），得到
+
+$$
+-\frac9{16}+o(1)
+\ge-\frac34\kappa_\varepsilon-O(\sqrt\varepsilon).
+$$
+
+故 $\liminf\kappa_\varepsilon\ge3/4$。与式（61.16）合并得
+$\kappa_\varepsilon\to3/4$，证明式（61.3）。$\square$
+

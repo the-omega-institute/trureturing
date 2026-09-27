@@ -1,0 +1,33 @@
+### 293.4 将决策定义在实际估计可能取到的全部实数上
+
+真实无偏估计可能小于零或大于一，因此不直接对这些读数取对数。定义全实轴上的决定零概率
+$$
+F_\varepsilon(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\tag{293.13}
+$$
+它在 $[0,1]$ 中取值。由于 $A_\varepsilon'(0)=A_\varepsilon'(3)=0$，常值段与中间段的一阶导数也连续。
+
+在中间段，$c\ge k^3$。链式求导及（293.9）给
+$$
+|F_\varepsilon''(c)|
+\le\frac2{\kappa^2c^2}+\frac1{\kappa c^2}
+\le M_k,
+\qquad
+M_k=k^{-6}\left(\frac2{\kappa^2}+\frac1\kappa\right).
+\tag{293.14}
+$$
+外侧一阶导数为零，有限个拼接点的一阶导数连续，故 $F_\varepsilon'$ 在整个实轴的Lipschitz常数不超过 $M_k$。
+
+对真实 $r\in[l,1]$，$x=\log r/\log k\in[0,L]$，而 $kr$ 对应 $x+1$。全部真实参数都位于 $[kl,1]\subseteq[k^3,1]$。因此（293.12）给
+$$
+F_\varepsilon(r)-F_\varepsilon(kr)
+\ge\frac13+\frac\eta{288}.
+\tag{293.15}
+$$
+这是已知 $k,l$ 所决定的合法随机决策函数，不是把隐藏参数准确读数交给观察者。
+

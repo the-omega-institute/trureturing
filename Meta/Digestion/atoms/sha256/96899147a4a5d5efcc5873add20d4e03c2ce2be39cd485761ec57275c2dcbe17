@@ -1,0 +1,26 @@
+**定理 64.1（混合量子比特末输出的严格间隙）。** 若
+
+$$
+\sqrt a\,(c-\varepsilon)>\varepsilon(1+c),
+\tag{64.6}
+$$
+
+则
+
+$$
+e(R_{a,\varepsilon})>\Delta(R_{a,\varepsilon})=\varepsilon.
+\tag{64.7}
+$$
+
+特别地，式（64.7）对整个参数区域
+
+$$
+0<\varepsilon\le\frac1{16},
+\qquad\frac1{49}\le a<1
+\tag{64.8}
+$$
+
+成立。因此 $a=1/2,\varepsilon=1/16$ 给出一个具体的 $2\times2\times2$ 混合严格反例。
+
+证明只使用归一化总事件的饱和、正性和二阶主子式；不需要数值优化。
+

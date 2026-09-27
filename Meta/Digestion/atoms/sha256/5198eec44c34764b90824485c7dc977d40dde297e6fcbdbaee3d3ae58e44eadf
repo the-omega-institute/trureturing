@@ -1,0 +1,45 @@
+### 62.4 ABA 模式也强制相同的六维已用位像
+
+现在取 $ABA$。固定 $V_1$ 给 $A_0\cap G_4=0$，所以（62.4）使
+$$
+L_0=A_0+G_4.
+$$
+（62.5）给 $G_5=A_0$，因此零位上直接有同一六维包含（62.20）。
+
+首先 $Q_5\ne B_0$：否则（62.1）、（62.3）给 $G_4=G_\beta$，而（62.5）给 $H_4=H_\beta$，两空间共同包含非零 $w\otimes\xi_\beta$，矛盾。
+
+再证明 $Q_4\ne B_0$。反设 $Q_4=B_0$，由 $V_1A_0=B_0\alpha=V_1G_\alpha$ 得
+$$
+A_0=G_\alpha.
+$$
+记单位向量 $w_\alpha=w\otimes\xi_\alpha$、$r_*=|\langle\alpha,\beta\rangle|>0$。（62.5）给 $H_4=H_\beta$，而 $R_\Gamma$ 等距，故
+$$
+\|P_{H_4}w_\alpha\|=r_*.
+\tag{62.21}
+$$
+另一方面，（62.1）给 $V_1w_\alpha=j\otimes\alpha$，实际第五轮给 $V_1G_4=Q_5\otimes\beta$。固定等距的投影公式遂给
+$$
+\|P_{G_4}w_\alpha\|
+=r_*\|P_{Q_5}j\|\le r_*.
+\tag{62.22}
+$$
+$w_\alpha\in A_0\subset L_0$，而 $Q_4\subset L_1$，所以 $w_\alpha\perp Q_4$。实际 $H_4\subset G_4\oplus Q_4$ 到 $Q_4$ 的投影单射，故 $H_4\cap G_4=0$。有限维性因此给
+$$
+s_*:=\|P_{H_4}|_{G_4}\|<1.
+$$
+由于 $w_\alpha\perp Q_4$ 且 $H_4\subset G_4\oplus Q_4$，
+$$
+P_{H_4}w_\alpha=P_{H_4}P_{G_4}w_\alpha.
+$$
+与（62.21）、（62.22）合并得到
+$$
+r_*\le s_*\|P_{G_4}w_\alpha\|\le s_*r_*<r_*,
+$$
+矛盾。故 $Q_4\ne B_0$。
+
+（62.5）又有 $Q_6=Q_4$。所以
+$$
+B_0+Q_4=L_1=B_0+Q_5,
+$$
+旧块与尾像再次给六维包含（62.19）。至此两种模式都满足（62.19）、（62.20），并且均已证明 $Q_4\ne B_0$。
+

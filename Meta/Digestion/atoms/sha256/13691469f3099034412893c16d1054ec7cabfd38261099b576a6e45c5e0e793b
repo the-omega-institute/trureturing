@@ -1,0 +1,61 @@
+**证明。** 调整第二个基向量的相位，使 $R_1$ 的非对角元为非负实数。于是
+
+$$
+\rho_p(w)=
+\begin{pmatrix}
+1-pw&w\sqrt{p(1-p)}\\
+w\sqrt{p(1-p)}&pw
+\end{pmatrix}.
+\tag{147.8}
+$$
+
+因此
+
+$$
+d_p(w):=\sqrt{\det\rho_p(w)}=\sqrt{pw(1-w)},\qquad
+h_p(w):=\sqrt{1+2d_p(w)}.
+$$
+
+二维迹一正矩阵的 Cayley–Hamilton 等式给
+
+$$
+\boxed{
+\sqrt{\rho_p(w)}
+=\frac{\rho_p(w)+d_p(w)I}{h_p(w)}.
+}
+\tag{147.9}
+$$
+
+具体地，$\rho^2-\rho+d^2I=0$，故 $(\rho+dI)^2=(1+2d)\rho$；右侧正平方根由正定性唯一确定。
+
+记 $A_p(w)=\sqrt{\rho_p(w)}$。对（147.9）求导，
+
+$$
+\frac{\partial A_p}{\partial w}
+=\frac{R_1-R_0+d_p'(w)I}{h_p(w)}
+-\frac{d_p'(w)}{h_p(w)^2}A_p(w),
+\qquad
+d_p'(w)=\frac{\sqrt p(1-2w)}{2\sqrt{w(1-w)}}.
+\tag{147.10}
+$$
+
+此区间内 $w\ge p/2$、$1-w\ge1/2$，所以 $|d_p'(w)|\le1$。又有
+
+$$
+h_p(w)\ge1,\qquad
+\|R_1-R_0\|_{\mathrm{HS}}=\sqrt{2p}\le1,\qquad
+\|A_p(w)\|_{\mathrm{HS}}=1,\qquad
+\|I\|_{\mathrm{HS}}=\sqrt2.
+$$
+
+将这些量代入（147.10），得到（147.6）。
+
+对于一致极限，在区间（147.4）上 $w/p\in[1-p,1]$，故
+
+$$
+d_p'(w)\longrightarrow\tfrac12,\qquad
+d_p(w)\longrightarrow0,\qquad h_p(w)\longrightarrow1
+$$
+
+均一致成立。同时（147.8）给 $\rho_p(w)\to R_0$、$R_1-R_0\to0$；由（147.9），$A_p(w)\to R_0$ 也一致成立。代入（147.10），导数一致趋向 $(I-R_0)/2$，即（147.7）。证毕。
+

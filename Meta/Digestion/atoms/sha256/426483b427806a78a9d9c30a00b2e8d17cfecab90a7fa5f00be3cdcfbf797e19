@@ -1,0 +1,22 @@
+**定义 399.1（张量输入与归一化误差合同）。** 固定定义 389.1 的 $d$ 维系统、归一化纯记录 $r_i$ 及相关矩阵 $C$，令 $n\ge1$ 为整数。对整个输入空间 $S^{\otimes n}$ 使用乘积基 $|\mathbf i\rangle=|i_1,\ldots,i_n\rangle$，记录耦合为
+
+$$
+J^{\otimes n}|\mathbf i\rangle
+ =|\mathbf i\rangle\otimes
+   |r_{i_1}\rangle\otimes\cdots\otimes|r_{i_n}\rangle,
+\qquad
+C^{\otimes n}_{\mathbf i,\mathbf j}
+ =\prod_{a=1}^n C_{i_a j_a}.
+$$
+
+这里输入是任意 $d^n$ 维未知态，允许不同系统因子之间以及与任意有限维参考系统之间存在纠缠；“张量”限定耦合的形式，不限定输入态为乘积态。允许测量全部联合记录的任意有限 POVM，再按结果对整个 $S^{\otimes n}$ 施加任意联合酉反馈。对所接受结果的总映射 $\mathcal T_{\mathrm s}$，要求
+
+$$
+\mathcal T_{\mathrm s}^{*}(I)=tI,\qquad
+0<t\le1,\qquad
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_{S^{\otimes n}}\|_\diamond
+ \le t\delta.
+$$
+
+$\delta$ 使用第 395 节未除以 $2$ 的 diamond 范数约定。成功概率 $t$ 对全部输入相同，误差要求包括保留外部参考系统。这个任务没有选择编码子空间，也没有把恢复目标缩减为部分输入。
+

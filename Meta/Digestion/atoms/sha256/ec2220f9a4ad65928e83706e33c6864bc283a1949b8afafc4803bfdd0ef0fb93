@@ -1,0 +1,35 @@
+## 128. 正交二加一的三尾不能把小零位方向留在首轮
+
+沿用第89、101、103、112、119节的同一七维六终端实际合同。非退化来源固定为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，每轮使用同一个固定全域接收通道，完整参考—活动记忆—原档案终端按原合同恢复。本节处理通常纤维维数二、三维乘积生成剩余空间采用两个正交环境支持且重数为 $2+1$ 的子类。
+
+按完整零位纤维尺寸命名正交单位环境 $X,Y$。第119节正规形给
+
+$$
+R_0=(U\otimes X)\oplus(W\otimes Y),\qquad
+\dim U=4,\quad\dim W=3,
+$$
+
+$$
+R_1=(U^\perp\otimes X)\oplus(W^\perp\otimes Y),
+\qquad P=U\cap W,\quad\dim P=2,
+$$
+
+$$
+S=U+W,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{128.1}
+$$
+
+$U,W$ 不预设接收正交。完整零位纤维在 $X,Y$ 上分别为 $U,W$，其他方向均为同一个二维 $P$；完整一位纤维在 $X,Y$ 上分别为 $U^\perp,W^\perp$，其他方向均为 $Q$。令
+
+$$
+J=S\cap U^\perp,\qquad \dim J=1,\qquad U^\perp=Q\oplus J.
+\tag{128.2}
+$$
+

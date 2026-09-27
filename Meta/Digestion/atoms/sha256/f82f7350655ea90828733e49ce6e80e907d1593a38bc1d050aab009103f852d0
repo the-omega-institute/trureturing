@@ -1,0 +1,17 @@
+**定理 6.2.4（Rényi 的辅助头尾与原律尾）。** 令 $s>1$、$\theta=(s-1)/s$。对 iid $p$ 令
+$$
+Z_s=\sum_ap_a^s,\quad H_s=-\frac{\log Z_s}{s-1};
+$$
+对整个历史类取 $Z_s=r^s+(d-1)\delta^s$ 及相同定义的 $H_s=H_s(p^*)$。若全深度预算有包络 $b_n\le C e^{\beta_0n}$，$C\ge1$，$\beta_0<H_s$，记 $\rho=e^{-\theta(H_s-\beta_0)}<1$，则辅助均匀头律的长词尾满足
+$$
+R_N=C^\theta e^{-\theta(\log d-\beta_0)N}\frac{\rho}{1-\rho},
+\qquad
+\mu(E_F)\ge(d\ell)^N[1-B_N-R_N]_+,
+$$
+其中 iid 时 $\ell=p_{\min}$，历史类时 $\ell=\delta$。另在原律中，
+$$
+\sum_{\substack{w\in F\\|w|>N}}\mu[w]\le
+T_N:=C^\theta\frac{\rho^{N+1}}{1-\rho}.
+$$
+$W_N,R_N,T_N$ 分别是最大字母尾、辅助头尾、原律尾，不互相代名；最后一式才直接控制原律截断和真外体积误差。
+

@@ -1,0 +1,16 @@
+**命题 45（剖面的推送更新与充分性，repo-derived）。** 以下操作把剖面系数沿所列映射推送；多个格合并时将系数相加：
+
+| 操作 | 对剖面格 $(a,b,U)$ 的更新 |
+| --- | --- |
+| $X\boxplus Y$ | 两剖面逐格相加 |
+| $NX$ | $(a,b,U)\mapsto(a,1-b,U)$ |
+| $F_SX$，$a=(p,\epsilon,r)$ | $(a,b,U)\mapsto(a,b\mathbf1_S(p),U)$ |
+| $F_LX$ | $(a,b,U)\mapsto(a,b\mathbf1_L(r),U)$ |
+| $F_{\downarrow Q}X$ | $(a,b,U)\mapsto(a,b\mathbf1_{U\cap Q\ne\varnothing},U)$ |
+| 有定义的 $X\triangleright Y$ | 左侧 $(a,b,U)\mapsto(a,b,U\cup V_Y)$，$V_Y=\alpha[\Omega_Y]$；右侧不变，再相加 |
+| $X\boxtimes Y$ | 输入格对 $((a,b,U),(a',b',U'))\mapsto(a\diamond a',bb',\{a\diamond a'\})$，系数相乘后推送 |
+| $T_kX$ | $\Gamma_c$ 不变 |
+
+其中
+$a\diamond a'=(p+p',\epsilon\epsilon',\operatorname{pair}(r,r'))$。端点 $(m,M,s)$ 的类型、空哨兵、更新与时间守卫 $M_X<m_Y$ 全部引用 §20 命题 29；三个筛选都不改端点。因此 $(\Gamma_c,m,M,s)$ 对 $\Sigma_{\rm cau}$ 充分。
+

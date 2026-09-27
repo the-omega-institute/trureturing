@@ -1,0 +1,28 @@
+**命题 22.3（指定扩张的分裂与总和商观测）。** 对定义22.1的指定扩张
+
+$$
+0\longrightarrow H\longrightarrow G\mathrel{\mathop{\longrightarrow}^{\chi}} C_2\longrightarrow0,
+\tag{22.16}
+$$
+
+若它不分裂，则每个精确 $Y$ 协议都恢复当前整个来源。若它分裂，取任一满足 $\chi(\tau)=1$、$2\tau=0$ 的元素，存在对任意固定 $q$ 都精确、却不恢复来源的协议：每个发送者回复
+
+$$
+p_\tau(x_i)=x_i-\chi(x_i)\tau\in H,\qquad
+Y=p_\tau(a)+\sum_{i=2}^r p_\tau(x_i)+\chi(t)\tau.
+\tag{22.17}
+$$
+
+这里二元特征作为 $0,1$ 系数；这个全商构造的每条实际观测纤维恰有 $2^{r-2}$ 个来源。
+
+证明。分裂的标准含义是 $\chi$ 有同态截面，见 Keith Conrad，*Splitting of Short Exact Sequences for Groups*，[Theorem 3.3、Definition 3.4](https://kconrad.math.uconn.edu/blurbs/grouptheory/splittinggp.pdf)，PDF第5、7页；第7页还说明阿贝尔情形的半直积为直积。用于式(22.16)时，截面由 $1\mapsto\tau$ 决定，恰要求 $\chi(\tau)=1$ 与 $2\tau=0$；这只是该标准群论判据的具体化。无此元素时，定理22.2排除每个分支的两个非单射发送者，因此精确观测必为来源单射。
+
+有此元素时，$G=H\oplus\langle\tau\rangle$，$p_\tau$ 是到 $H$ 的同态投影。由于 $h\in H$，有 $\chi(Y)=\chi(t)$，给出式(22.17)的解码公式。固定一个实际观测后，$a,t$ 与每个 $p_\tau(x_i)$ 已知，发送端坐标只能是 $p_\tau(x_i)+\epsilon_i\tau$；$r-1$ 个二元值仅受一个方程
+
+$$
+\sum_{i=2}^r\epsilon_i=\chi(t)-\chi(a)\quad\text{于 }C_2
+\tag{22.18}
+$$
+
+约束，故有 $2^{r-2}$ 种选择。每种选择的 $Y$ 都由式(22.17)给定，$h=t-Y$ 唯一，所以计数恰好且全部实际可达。例如全零来源与 $x_2=x_3=\tau$、其余 $x_i=0,h=0$ 的来源都有 $a=t=Y=0$，全部回复相同。这一恒定纤维计数只针对式(22.17)的全商构造，不适用于定理22.2允许的任意部分碰撞。证毕。
+

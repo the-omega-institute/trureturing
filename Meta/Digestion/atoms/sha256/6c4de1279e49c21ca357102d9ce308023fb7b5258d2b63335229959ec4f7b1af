@@ -1,0 +1,281 @@
+**定理121.1（单支持三维剩余空间禁阻）。** 若通常纤维维数为二，三维剩余空间 $N$ 不可能具有单环境形态
+
+$$
+N=D\otimes\zeta,\qquad \dim D=3.
+$$
+
+本结论只排除三维乘积生成剩余空间的支持分割 $3$，不排除分割 $2+1$ 或 $1+1+1$。
+
+### 121.1 单支持正规形与全部实际纤维
+
+反设上述形态成立。取单位环境 $\theta\perp\zeta$。第119节的正规形在此化为原接收内积下的正交分解
+
+$$
+K=P\oplus D\oplus Q,\qquad
+\dim P=2,\quad\dim D=3,\quad\dim Q=2,
+$$
+
+$$
+R_0=(P\otimes F)\oplus(D\otimes\theta),\qquad
+R_1=(Q\otimes F)\oplus(D\otimes\zeta).
+$$
+
+记 $S_0=P\oplus D$。第101、103节给同一个实际跨度
+
+$$
+S_0=\mathbb Cp+G_2+\cdots+G_5
+=\mathbb Cp+G_2+\cdots+G_6,\qquad\dim S_0=5.
+$$
+
+完整接收纤维准确为
+
+$$
+\mathcal G_0([z])=
+\begin{cases}
+S_0,&[z]=[\theta],\\
+P,&[z]\ne[\theta],
+\end{cases}
+\qquad
+\mathcal G_1([z])=
+\begin{cases}
+D\oplus Q,&[z]=[\zeta],\\
+Q,&[z]\ne[\zeta].
+\end{cases}
+$$
+
+称 $\theta$ 为异常零位方向，其余为普通方向。所有普通零位纤维是同一个二维 $P$；它们并非随着环境改变的不同平面。相应地，任意普通实际当前方向都满足 $G_i=P$。
+
+所有一位乘积接收因子均属于 $D\oplus Q=P^\perp$，特别地
+
+$$
+q,v\in P^\perp,\qquad Q_n\subset P^\perp\quad(3\le n\le6),
+$$
+
+若后期当前环境为 $\theta$，则 $Q_n=Q$，从而
+
+$$
+H_n\subset G_n\oplus Q,\qquad H_n\cap S_0=0
+\quad(3\le n\le6, [\eta_n]=[\theta]).
+$$
+
+后一个零交使用 $G_n\subset S_0$、$Q\perp S_0$，以及 $H_n$ 到 $Q_n$ 的同构投影。
+
+两个特殊环境都必须在实际尾部出现。若 $\theta$ 从不出现，则全部 $G_i=P$，使实际 $S_0=\mathbb Cp+P$ 至多三维，矛盾。若 $\zeta$ 从不出现，则真实
+
+$$
+V_1S_0=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n
+\subset Q\otimes F,
+$$
+
+因为所有这些一位纤维都为 $Q$；五维输入便被等距送入四维空间，仍矛盾。第74节给尾部至多三条射线，因此只须处理正交两尾 $\theta,\zeta$，或再加一条不同射线的三尾。
+
+早期实际列保持为
+
+$$
+V_0k=p\otimes\eta_1,\quad V_1k=q\otimes\eta_1,\qquad
+V_0p=u\otimes\eta_2,\quad V_1p=v\otimes\eta_2,\quad
+V_0q=w\otimes\eta_2,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一。对后期 $3\le n\le6$，仍有 $H_n\subset G_n\oplus Q_n$、$G_n\perp Q_n$，两个同轮投影均为同构。全文只用第2至5轮的已执行 $V_1G_i$。
+
+### 121.2 两尾不能从二维普通侧开始
+
+先假设只有 $\theta,\zeta$ 两尾。如果 $[\eta_2]=[\zeta]$，则 $G_2=P$，任何以后再次采用 $\zeta$ 的实际平面也等于 $P$。普通方向的一位后继因同一 $V_1P$ 而唯一；若第三轮仍为 $\zeta$，此自循环将使所有尾环境都是 $\zeta$，矛盾。因此第三轮为 $\theta$。
+
+若以后不再出现 $\zeta$，第3至6轮全部为 $\theta$，违反第71节。否则取首次回返 $\zeta$ 的位置 $j\in\{4,5,6\}$。前一轮当前方向为 $\theta$，而
+
+$$
+G_j=G_2=P,\qquad
+V_0H_{j-1}=P\otimes\zeta=V_0H_1,
+$$
+
+故 $H_{j-1}=H_1$。但 $j-1\ge3$ 且其当前环境为 $\theta$，所以 $H_{j-1}\cap S_0=0$，与非零 $p\in H_1\cap S_0$ 矛盾。末轮回返只使用实际零位像。
+
+### 121.3 大侧开始的两尾十词只剩五词
+
+余下令 $A=\theta$、$B=\zeta$，从第二轮 $A$ 开始。第69节共同分叉限制的十三个两字母必要词，再用普通 $B$ 的实际平面全等于 $P$、已见后继不能分叉，留下
+
+$$
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,
+\ AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+$$
+
+其中五个局部禁阻与第112.3节相同，其证明不要求大侧只有四维。
+
+- $ABBBB$ 的四个后继相同，违反第71节。
+- $ABABA$ 中，实际交替词引理99.3给 $\dim(G_3+G_5)\ge3$，但 $G_3=G_5=P$，矛盾。
+- $AABAB$ 中，$G_4=G_6=P$ 给 $H_3=H_5$。第3、第5轮当前环境均为 $A$，其一位纤维均为 $Q$，所以向 $S_0$ 投影得到 $G_3=G_5$；相同空间对违反 $\delta_3\ne\delta_5$。
+- $ABAAB$ 中，$G_3=G_6=P$ 给 $H_2=H_5$。当前环境均为 $A$，且 $v,Q_5\subset Q$，所以 $P_{S_0}H_2=G_2$、$P_{S_0}H_5=G_5$，得到 $G_2=G_5$。非零 $w\in H_2\cap G_2$ 遂落入后期 $H_5\cap G_5=0$。
+- $AABBB$ 中，$G_4=G_5=G_6=P$ 给 $H_4=H_5$，相同空间对违反 $\delta_4\ne\delta_5$。
+
+只剩 $AAAAB,AAABA,AAABB,AABAA,ABAAA$。以下直接使用完整一位 $A$ 纤维为二维 $Q$，不使用四维大侧预算。
+
+对于 $AAAAB$，$G_2,G_3,G_4$ 的一位像都填满 $Q\otimes A$，所以它们相等。当前方向相同使 $H_2=H_3$，非零 $w$ 落入 $H_3\cap G_3=0$，矛盾。
+
+对于 $AAABA,AAABB$，同样有 $G_2=G_3=T$，而 $G_4$ 的一位后继是正交的 $B$，故 $T\perp G_4$。两份零位像 $V_0H_2=T\otimes A$、$V_0H_3=G_4\otimes A$ 使 $H_2\perp H_3$。非零 $w\in H_2\cap T$ 因而正交于 $H_3$，却不能正交于满投影到 $T=G_3$ 的 $H_3$。
+
+对于 $ABAAA$，完整一位 $A$ 纤维给 $G_4=G_5=T$；$G_2$ 的后继为 $B$，故 $G_2\perp T$。环境正交又使 $H_2\perp H_4$。实际 $H_4\subset T\oplus Q_4$ 且 $Q_4=Q$，而 $u\in G_2\subset S_0$，所以 $u\perp H_4$。由 $a^2u+bv\in H_2$ 与 $b\ne0$ 得 $v\perp H_4$；但真实 $v\in Q=Q_4$，后期满投影使这不可能。
+
+对于 $AABAA$，完整一位 $A$ 纤维给 $G_2=G_5=T$，且真实 $V_1p=v\otimes A$ 使 $p\in T$。$G_3$ 的后继为 $B$，所以 $T\perp G_3$；相应零位像使 $H_1\perp H_2$，特别 $p\perp H_2$。然而 $u,w$ 张成 $T$，$v\in Q\perp T$，且 $a\ne0$，故 $P_TH_2=T$；非零 $p\in T$ 不可能正交于 $H_2$。至此两尾全部排除。
+
+### 121.4 三尾的十三词与唯一异常标签
+
+反设尾部恰有三条射线，按首次出现命名为 $A,B,C$。其中包含 $\theta,\zeta$，第三条与二者都不同。普通方向上的实际平面全部等于 $P$，因此所有已有后继的普通当前位置都必须采用同一后继。
+
+第69、74节的十三个必要三尾词按这一条件得到下表；第二列指出哪一个字母必须等于异常零位方向 $\theta$。
+
+| 尾词 | 可能的异常字母 |
+|---|---|
+| $AAABC$ | $A$ |
+| $AABAC$ | $A$ |
+| $AABCC$ | $A$ |
+| $ABAAC$ | $A$ |
+| $ABABC$ | $B$ |
+| $ABACA$ | $A$ |
+| $ABBBC$ | $B$ |
+| $ABBCB$ | $B$ |
+| $ABCAB$ | 无 |
+| $ABCBA$ | $B$ |
+| $ABCBB$ | $B$ |
+| $ABCBC$ | $B$ |
+| $ABCCC$ | $A$ |
+
+该表只读取前四个尾位置的后继。$ABCAB$ 的三个当前字母具有三个不同后继，任意选一个异常字母后，两个普通字母仍有不同后继，因此直接排除。其余十二词分别处理。
+
+### 121.5 七个早期回返或重复空间的三尾禁阻
+
+**$AAABC$，异常字母 $A$。** 完整一位 $A$ 纤维是 $Q$，故 $p\in G_2=G_3$；相同零位像给 $H_1=H_2$。$G_3,G_4$ 的已执行后继为不同的 $A,B$，所以它们交零；当前方向同为 $A$，又给 $H_2\cap H_3=0$。于是
+
+$$
+0\ne p\in H_2\cap G_2=\mathbb Cw,
+\qquad p=\omega w,\quad |\omega|=1.
+$$
+
+按真实第二终端的标签 $m_0w$ 续接，同一个来源和固定接收器给第三终端零记忆列 $\omega^{-1}(a^2u+bv)\in H_3$。它是 $H_2$ 中的非零向量，违反 $H_2\cap H_3=0$。
+
+**$ABABC,ABCBA$，异常字母 $B$。** 前者普通 $A$ 给 $G_2=G_4=P$，故 $H_1=H_3$；后者给 $G_2=G_6=P$，故 $H_1=H_5$。被识别的后期平面当前环境均为 $B=\theta$，所以与 $S_0$ 交零，和非零 $p\in H_1\cap S_0$ 矛盾。
+
+**$ABBBC$，异常字母 $B$。** 前三个一位后继均为 $B=\theta$，其完整纤维为二维 $Q$，故 $G_2=G_3=G_4$。相同零位像给 $H_2=H_3$，使非零 $w$ 落入后期 $H_3\cap G_3=0$。
+
+**$AABCC,ABCCC$，异常字母 $A$。** 两词均有 $G_4=G_5=G_6=P$。末两份零位像同处环境 $C$，故 $H_4=H_5$。于是 $(H_4,G_4)=(H_5,G_5)$，违反实际 $\delta_4\ne\delta_5$。
+
+**$ABCBC$，异常字母 $B$。** 普通 $C$ 给 $G_4=G_6=P$，故 $H_3=H_5$。两者当前环境都是 $B=\theta$，向 $S_0$ 投影给 $G_3=G_5$，相同空间对违反 $\delta_3\ne\delta_5$。
+
+这七个词的识别只在零位输出环境也相同的情形下使用 $V_0$ 单射性；没有把两个不同普通环境上的相同 $P$ 输出直接视为相同完整像。
+
+### 121.6 三个第三环境夹逼禁阻
+
+以下重复使用后期严格投影：因为 $H_n\cap G_n=0$，有限维空间中任意非零 $x\in G_n$ 都满足 $\|P_{H_n}x\|<\|x\|$。若同时待投影向量正交于 $Q_n$，可先投影到 $G_n$ 再应用该严格收缩。
+
+**$ABACA$，异常字母 $A$。** 普通 $B,C$ 给 $G_3=G_5=P$，所以
+
+$$
+V_0H_2=P\otimes B,\qquad V_0H_4=P\otimes C.
+$$
+
+置 $r=|\langle B,C\rangle|$，环境取单位代表。$\zeta$ 必等于 $B,C$ 之一，而它唯一的正交射线是 $A=\theta$，因此 $r>0$。对同一个单位早期 $w\in H_2\cap G_2$，两份零位像给 $\|P_{H_4}w\|=r$；固定一位映射在 $G_2,G_4$ 上的环境为 $B,C$，又给 $\|P_{G_4}w\|\le r$。当前第4轮环境为 $A=\theta$，故 $Q_4=Q$，且 $w\in S_0\perp Q$。所以
+
+$$
+r=\|P_{H_4}P_{G_4}w\|
+<\|P_{G_4}w\|\le r,
+$$
+
+矛盾。
+
+**$ABBCB,ABCBB$，异常字母 $B$。** 前者取 $n=4$，后者取 $n=3$。两词都满足
+
+$$
+G_2=P,\qquad V_0p=u\otimes A,\quad u\in P,\qquad
+V_0H_n=P\otimes C,\qquad V_1G_n=Q_{n+1}\otimes C,
+$$
+
+且第 $n$ 轮当前方向为 $B=\theta$，所以 $Q_n=Q$。置 $r=|\langle A,C\rangle|$。$\zeta$ 必在 $A,C$ 中，故第三射线条件使 $r>0$。真实 $p$ 是单位向量，零位像给 $\|P_{H_n}p\|=r$，一位像 $V_1p=v\otimes A$ 给 $\|P_{G_n}p\|\le r$。又 $p\in S_0\perp Q_n$，同一严格投影给 $r<r$ 的矛盾。
+
+### 121.7 ABAAC 的正交夹逼
+
+此词的异常字母为 $A$。完整一位 $A$ 纤维为二维 $Q$，故 $G_3=G_4$，真实 $V_1p$ 又使 $p\in G_3$。第3轮当前方向为普通 $B$，所以
+
+$$
+G_3=G_4=P,\qquad p\in P.
+$$
+
+置 $r=|\langle A,B\rangle|$。真实零位像 $V_0H_2=P\otimes B$、$V_0H_3=P\otimes A$ 给同一单位 $w\in H_2$ 的读数 $\|P_{H_3}w\|=r$。一位映射在 $G_2,G_3$ 上的环境分别为 $B,A$，故 $\|P_{G_3}w\|\le r$。
+
+若 $r>0$，$w\otimes A\in R_0$ 与 $Q_3\otimes B\subset R_1$ 跨位正交使 $w\perp Q_3$，严格投影便给
+
+$$
+r=\|P_{H_3}P_{G_3}w\|<\|P_{G_3}w\|\le r,
+$$
+
+矛盾。因此 $A\perp B$，必有 $B=\zeta$。一位等距进一步给 $G_2\perp P$，故 $u\perp P$。实际 $V_0p=u\otimes A$ 与 $V_0H_3=P\otimes A$ 使 $p\perp H_3$，却和非零 $p\in P=G_3$ 及满投影 $P_{G_3}H_3=G_3$ 冲突。
+
+### 121.8 AABAC 的首末投影秩矛盾
+
+最后的尾词为 $A,A,B,A,C$，异常方向为 $A=\theta$。$G_2,G_4$ 的已执行一位后继均为 $A$，完整一位纤维二维；第4轮当前方向又是普通 $B$。所以
+
+$$
+G_2=G_4=P,\qquad V_1P=Q\otimes A,\qquad p\in P.
+$$
+
+首先证明 $A\perp B$。置 $r=|\langle A,B\rangle|$。实际 $V_0p=u\otimes A$、$u\in P$，以及 $V_0H_3=P\otimes B$，给 $\|P_{H_3}p\|=r$；实际 $V_1p=v\otimes A$、$V_1G_3=Q_4\otimes B$ 给 $\|P_{G_3}p\|\le r$。第3轮当前方向是 $A$，故 $Q_3=Q\perp p$。若 $r>0$，后期严格投影立即给 $r<r$。因此 $B=\zeta$，且 $A\perp B$。
+
+$G_3$ 的一位后继为 $B$，而 $V_1P=Q\otimes A$，所以 $G_3\perp P$。结合 $G_3\subset S_0=P\oplus D$，得 $G_3\subset D$。又 $Q_3=Q$，故
+
+$$
+P_PH_3=0.
+$$
+
+首轮平面满足 $H_1=\operatorname{span}(p,q)$，其中 $p\in P$、$q\in P^\perp$，所以 $P_PH_1=\mathbb Cp$，只有一维。
+
+真实第6轮的方向 $C$ 是普通方向，因此 $G_6=P$。实际零位像给
+
+$$
+V_0H_1=P\otimes A,\qquad
+V_0H_3=P\otimes B,\qquad
+V_0H_5=P\otimes C.
+$$
+
+$A,B$ 张成同一二维环境 $F$，所以 $V_0(H_1+H_3)=P\otimes F$，从而 $H_5\subset H_1+H_3$。于是
+
+$$
+\dim P_PH_5\le1.
+$$
+
+另一方面，第5轮当前方向为 $A$，故 $Q_5=Q$，且同轮投影满射给
+
+$$
+P_PH_5=P_PG_5.
+$$
+
+真实 $V_1G_5=Q_6\otimes C$；$C$ 不等于 $\zeta=B$，所以 $Q_6=Q$。因而同一个 $V_1$ 把 $P,G_5$ 分别等距映到 $Q\otimes A,Q\otimes C$。第三条 $C$ 不同于 $B=A^\perp$，故 $\langle A,C\rangle\ne0$，这使 $P_P|_{G_5}$ 单射：若 $x\in G_5$ 正交于 $P$，写 $V_1x=y\otimes C$，则 $y\otimes C$ 正交于整个 $Q\otimes A$；非零环境内积迫使 $y=0$，进而 $x=0$。两个空间均二维，所以
+
+$$
+P_PG_5=P,\qquad \dim P_PH_5=2,
+$$
+
+与前面的至多一维矛盾。最后一词排除。
+
+### 121.9 单支持形态的完整边界
+
+两尾及十三个必要三尾词均已排除；第74节不允许更多尾方向，因此单支持 $N=D\otimes\zeta$ 不可能，定理得证。所用实际来源差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\quad y=|b|^2,\quad
+ t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+结论不依赖重选首轮环境，不给末轮增加一位动作，也不把不同普通环境的相同接收平面当作同一乘积输出。二重分支的三维乘积生成剩余空间仍须检查支持分割 $2+1$ 和 $1+1+1$；本节没有排除全部七维接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

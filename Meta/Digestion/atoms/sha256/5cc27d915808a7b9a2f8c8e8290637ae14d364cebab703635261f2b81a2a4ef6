@@ -1,0 +1,74 @@
+### 221.5 实际联合族的解析正交缺陷
+
+项目的实际谱族在固定带符号 $t$ 邻域解析。$A,L$ 可在
+$k_1,w$ 的解析二维支撑平面中，利用大、小根之间的谱隙解析选取。
+这不要求把完整 Choi 的退化零谱当作简单根。
+
+纯源整面 $h=0$ 上，$A,L$ 都只有输出0分量，所以
+$$
+\det L=hD_{\det}(p,t),\qquad
+D(\det)_L[A]=hE_{\det}(p,t)
+\tag{221.21}
+$$
+是联合解析整除。定义
+$$
+\mathfrak c=\operatorname{Tr}(LL^\dagger A L^\dagger).
+$$
+二维余因子恒等式为
+$$
+L^\dagger LL^\dagger
+=\|L\|_{\mathrm{HS}}^2 L^\dagger
+-\overline{\det L}\operatorname{adj}(L).
+$$
+将其与 $A$ 取迹配对，使用 $\operatorname{Tr}(AL^\dagger)=0$ 及
+$D(\det)_L[A]=\operatorname{Tr}(\operatorname{adj}(L)A)$，得到
+$$
+\mathfrak c
+=-\overline{\det L}\,D(\det)_L[A]
+=h^2Z(p,t).
+\tag{221.22}
+$$
+而 $LL^\dagger$ 的两根简单，故
+$$
+\zeta=\langle r_+,AL^\dagger r_+\rangle
+=\frac{\mathfrak c}{s_+-s_-}
+=h^2Z_\zeta(p,t)
+\tag{221.23}
+$$
+也是真正联合解析的标量；可用解析主投影定义它，不需要固定奇异向量相位。
+
+令 $M=2/(3\beta R)$。在 $\epsilon=\nu=t=0$ 的实际冻结切片，
+$$
+K_1=\begin{pmatrix}1/\sqrt2&-i\sqrt2\,n\\0&\sqrt2\,m\end{pmatrix},
+\qquad W=|0\rangle\langle1|,
+$$
+$$
+m^2+n^2=\frac14,\qquad m_h(0)=M,\qquad n_h(0)=0.
+$$
+在 $t=0$，$A=K_1$，并可选
+$$
+L=\frac{W-K_1\overline b}{\sqrt{1-|b|^2}},
+\qquad b=-i\sqrt2n.
+$$
+此切片上 $\det K_1=m$。记 $\eta=1-|b|^2$，因 $W$ 只改变上三角条目，有精确等式
+$$
+\det L=\frac{\overline b^{\,2}m}{\eta},\qquad
+D(\det)_L[K_1]=-
+\frac{2\overline b\,m}{\sqrt\eta}.
+$$
+中心 $b=-i/\sqrt2$、$\eta=1/2$，所以结合实际导数 $m_h(0)=M$ 得
+$$
+D_{\det}(0,0)=-M,\qquad
+E_{\det}(0,0)=-2iM.
+$$
+因此
+$$
+\boxed{
+Z(0,0)=Z_\zeta(0,0)=-2iM^2\ne0.
+}
+\tag{221.24}
+$$
+这些是实际冻结方程的读数，不是假设某个未知泄漏系数非零。
+正小 $h$ 下，$\zeta\ne0$，所以原谱删除界确实严格未饱和，
+$d_2<\lambda s_+$。
+

@@ -1,0 +1,20 @@
+**定理 2.39。** Fix a computable event presentation with at most one forbidden binary cylinder per positive depth. For every oracle $A$,
+
+$$
+\boxed{
+M\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+R\text{ is }A\text{-decidable}.
+}
+\tag{TM.665}
+$$
+
+In particular,
+
+$$
+M\text{ is computable}
+\quad\Longleftrightarrow\quad
+R\text{ is decidable}.
+\tag{TM.666}
+$$
+

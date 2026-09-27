@@ -1,0 +1,6 @@
+**定理 4（文献，Yang，引理 3.3）.** 设 \(\mathcal S\) 是整数区间 \([-l,r]\ni0\) 的任意族，其中 \(0\leq l\leq\Lambda\)、\(0\leq r\leq P\)、\(l+r\geq3\)。令 \(W(\mathcal S)\) 是被至少一个区间覆盖的数对 \(\{a,b\}\subseteq[-\Lambda,P]\setminus\{0\}\)，满足 \(\gcd(|a|,|b|)=1\) 且 \(\{0,a,b\}\) 不是 AP。则
+\[
+ |\mathcal S|\leq |W(\mathcal S)|+\mathbf1_{\min(\Lambda,P)\geq2}.
+\]
+这里是覆盖数，不预设每个区间都有不同的见证数对。
+

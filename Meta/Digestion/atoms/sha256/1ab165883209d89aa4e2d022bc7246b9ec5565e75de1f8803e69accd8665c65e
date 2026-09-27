@@ -1,0 +1,64 @@
+### 278.1 同一来源对的未知相位轨道
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$、qubit输入 $H$ 及固定的 $Y$ 本征基。沿用§277的同一规范来源对：
+$$
+t=\frac14,\qquad M=I_n+tJ,\qquad
+Je_1=0,\quad Je_j=e_{j-1}\quad(j\ge2),
+$$
+$$
+Q=Q^\dagger\succ0,\qquad Q+M^\dagger QM=I_n,\qquad Z=2QM.
+\tag{278.1}
+$$
+取§269固定的矩阵 $C$ 和常数 $k>0$，记
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,\qquad \delta=kh^{2n}.
+$$
+以 $b=0,1$ 标记两个假设，令
+$$
+\Omega_0=\frac1n
+\begin{pmatrix}
+Q&QM\\
+M^\dagger Q&I_n-Q
+\end{pmatrix},
+\qquad
+\Omega_1=\frac1n
+\begin{pmatrix}
+Q+D_h&(1-\delta)QM\\
+(1-\delta)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{278.2}
+$$
+存在固定 $h_0>0$，使 $0<h\le h_0$ 时两者都是实际密度态，且 $\Omega_1\succ0$。缩小 $h_0$，以下要求
+$$
+0<\delta\le\frac12.
+\tag{278.3}
+$$
+两个来源的参考边缘都是 $I_n/n$，非对角数据分别为 $Z/n$ 与 $(1-\delta)Z/n$。
+
+对未知相位 $\phi\in\mathbb R/(2\pi\mathbb Z)$，定义
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),
+\qquad
+\Omega_{b,\phi}
+=(U_\phi\otimes I_n)\Omega_b(U_\phi^\dagger\otimes I_n).
+\tag{278.4}
+$$
+这些来源仍合法，且
+$$
+\rho_{b,\phi}=I_n/n,\qquad
+K_{b,\phi}:=\mathscr K(\Omega_{b,\phi})
+=(1-b\delta)e^{-i\phi}Z/n,
+\qquad \mathscr K(X)=2X_{+-}.
+\tag{278.5}
+$$
+输入酉变换同时作用于两假设，故其来源迹距离仍为 $\Theta(h)$。
+
+每次检验使用同一个固定但未知的 $\phi$，并独立提供所选假设的副本。协议知道来源族、$n$ 和 $h$，因而知道 $\delta$；协议不知道 $b$ 或 $\phi$。两假设的先验各为 $1/2$，不对 $\phi$ 加先验分布。要求的错误保证对每个固定 $\phi$ 成立。
+
+矩阵迹范数记为 $\|\cdot\|_1$，无下标矩阵范数为算子范数；二维实向量的欧氏范数记为 $\|\cdot\|_2$。状态半迹距离为
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1.
+\tag{278.6}
+$$
+

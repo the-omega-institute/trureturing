@@ -1,0 +1,74 @@
+**证明。** 继续使用 (68.23) 的完整计数线、校准乘积律 $\mathsf Q_x$ 与精确后验
+$\mathsf P_x$。在概率趋一的实际数据集上，
+$p_j\in[1/4,3/4]$、$d_{\rm all},d_{J^c}\asymp q$、
+$d_J=O_{\mathbb P}(B^2)$、$|J|=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$。
+这些估计来自定理 68.5 的实际一、二行比较与校准。
+由 (68.33) 的同一条件化，组计数的概率精确满足
+
+```math
+\mathsf P_x(R=n)=L\left(\sum_jn_j\right)
+                     \prod_j\mathbb P\{\operatorname{Bin}(C_j,p_j)=n_j\}.
+```
+
+式 (68.38)。
+
+设 $m_J=\mathbb E_{\mathsf Q_x}S_J$。
+同一个 Bernoulli 局部估计在中心分母与任意分子上给
+
+```math
+L(k)=\sqrt{d_{\rm all}/d_{J^c}}
+         e^{-(k-m_J)^2/(2d_{J^c})}+O(q^{-1/2}),\qquad
+\sup_kL(k)\le1+C(d_J/q+q^{-1/2}).
+```
+
+式 (68.39)。
+
+误差对全部整数 $k$ 统一；总均值恰为 $q$，所以分母至少为 $c/\sqrt q$。
+这是相对最大原子比较所需的密度信息，不能用 (68.34) 的加性 TV 误差替代。
+
+对于 $N\ge0$、$p\in[1/4,3/4]$，记二项最大原子为 $b_{N,p}$。
+经典 Fourier 模界给 $b_{N,p}\le C/\sqrt{1+N}$。
+另一方面，方差至多 $N/4$，半径 $\sqrt{N+1}$ 内由 Chebyshev 至少容纳 $3/4$ 的质量；
+该区间最多有 $3\sqrt{N+1}$ 个整数，故有统一下界。
+相邻概率之比为 $(N-k)p/((k+1)(1-p))$，因此可取模态
+$n^*=\lfloor(N+1)p\rfloor$，并有 $|n^*-Np|\le1$。
+$N=0$ 时单独取 $n^*=0$、$b_{0,p}=1$。于是
+
+```math
+\frac c{\sqrt{1+N}}\le b_{N,p}\le\frac C{\sqrt{1+N}},\qquad
+\left|\sum_j n_j^*-m_J\right|\le |K_M|\le CQ^2=o(\sqrt q).
+```
+
+式 (68.40)。
+
+乘积模态向量在实际后验中可行：好事件上 $|J|<q<M-|J|$，
+所以任何所选总数 $0\le k\le|J|$ 都可由补集凑成总数 $q$；所有辅助 Bernoulli 参数严格在零一之间。
+将 $k^*=\sum_jn_j^*$ 代入 (68.39)，得到
+$L(k^*)=1+O(d_J/q+Q^4/q+q^{-1/2})$。
+令 $\widetilde p_{\max,M}=\prod_jb_{C_j,p_j}$，则 (68.38) 直接给
+
+```math
+L(k^*)\widetilde p_{\max,M}\le p_{\max,M}
+       \le (\sup_kL(k))\widetilde p_{\max,M},\qquad
+\left|\log\frac{p_{\max,M}}{\widetilde p_{\max,M}}\right|
+ =O_{\mathbb P}(Q^{-5/2}+Q^4/q+q^{-1/2}).
+```
+
+式 (68.41)。
+
+所以实际与乘积最大原子的比趋一，即使二者本身都以 $Q^5$ 指数尺度趋零。
+(68.40) 又给
+
+```math
+-\log_2\widetilde p_{\max,M}
+ =\frac1{2\log2}\sum_{j\in K_M}\log(1+C_j)+O(Q^2).
+```
+
+式 (68.42)。
+
+由 (68.29) 与同一全域 Riemann 和，右边除以 $Q^5$ 趋于 $\mathscr H(r,\beta)$，
+证明 (68.37)。空组、稀有组、率函数过渡区域及零计数左端点均未删去。
+坏数据只付其概率；没有平均最小熵或平均最大原子的指数断言。
+单射事件上，$T_M$ 与 $R$ 只是同一有限概率表的重标记。
+支持置换与共同判向事件按定理 68.5 处理，得到所述一致性。证毕。
+

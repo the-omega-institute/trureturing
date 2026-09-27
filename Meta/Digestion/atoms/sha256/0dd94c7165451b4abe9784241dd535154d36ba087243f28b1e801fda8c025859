@@ -1,0 +1,43 @@
+**证明。** （273.3）已给每个参数所需的正定解，所以唯一性证明只需保持原核向量
+$$
+q_{b,j}=(-e_{b,j}-te_{b,j-1},e_{b,j}).
+\tag{273.19}
+$$
+任意同数据正矩阵的差为 $\operatorname{diag}(D,-D)$。首层零二次型和PSD性消去完整列 $De_{b,1}$，以后逐层相同，得到 $D=0$；所有跨链分量同时被消去。
+
+标准面约化的显式证书仍使用（273.19），以及
+$$
+w_{b,j}=\left(0,te_{b,j+1}+\frac{t^2}{2}e_{b,j}\right).
+\tag{273.20}
+$$
+各项 $q_{b,j+1}q_{b,j+1}^\dagger+q_{b,j}w_{b,j}^\dagger+w_{b,j}q_{b,j}^\dagger$ 的等对角块、固定切片零配对与当前压缩正性是关于 $t$ 的恒等式。因此逐层求和仍给 $m$ 步链。
+
+任意链下界使用的协方差关系为
+$$
+(I+tJ_{\mathrm{tail}})C(I+tJ_{\mathrm{tail}})^\dagger=C,
+\qquad C\succeq0.
+\tag{273.21}
+$$
+§271的多项式有界性证明只用 $J_{\mathrm{tail}}$ 幂零和 $t\ne0$，所以仍迫使 $\operatorname{ran}C\subseteq\ker J_{\mathrm{tail}}$。由此，标准层证书只支持下一首层；对任意较大当前面，PSD性继续给已删空间 $W_j\subseteq\mathcal N_j$ 的归纳。最长链未结束前，相对Slater不可能成立。因此仍有 $d_S=m$。
+
+对于含完整数据误差的任意竞争态，§271的分解仍有
+$\|X\|\le N\varepsilon_t/2$。每条长度 $n_b$ 的链可以使用正阈值
+$$
+\theta_{0,b}(t)=\min\left\{1,\frac{t}{2n_b},\frac\pi{n_b}\right\}>0.
+\tag{273.22}
+$$
+全局近核向量满足
+$Mx-\lambda x=-tz^{n_b}e_{b,n_b}$，同模相位仍精确消去未知对角差的二次型。在 $0\le\varepsilon_t\le1$ 时，原PSD和Vandermonde估计因此给有限的固定常数 $A_b(t)$，使
+$$
+\|D\iota_b\|
+\le A_b(t)\theta^{1-n_b}
+(\theta^{n_b}+\sqrt{\varepsilon_t})
+\quad(0<\theta\le\theta_{0,b}(t)).
+\tag{273.23}
+$$
+这里 $D\iota_b$ 是整个参考空间中的列块，仍含其他链上的分量。选 $\theta=\varepsilon_t^{1/(2n_b)}$，再合并有限个列块，得到全态上界 $C_t\varepsilon_t^{1/(2m)}$。零误差与大误差沿§271同样处理。所有分母涉及的 $t$ 在当前固定合同中严格正，所以阈值和常数合法。
+
+最后选一个最长块。§269的下界原本就允许任意固定 $t>0$ 与正定解 $Q$，故在该块上仍有精确同边缘族，态差为 $\Theta(h)$、数据差为 $\Theta(h^{2m})$。将该真实竞争块与其余原块直和，并统一除以总维数 $N$，保留相同阶数和共同边缘 $I_E/N$。它排除全部大于 $1/(2m)$ 的局部指数。$\square$
+
+此参数延伸对每个固定 $t>0$ 成立，不给 $t\downarrow0$ 的一致恢复常数。在 $t=0$ 时，所有链分解都落到（273.17）的同一个产品来源；§272已证明该端点的最优完整数据指数为 $1/2$。
+

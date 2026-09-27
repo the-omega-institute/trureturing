@@ -1,0 +1,2 @@
+**定义 16.1（二态投影监测）。** 固定 $\omega\ne0$，$U_\delta=e^{-i\omega\delta X}$、$P_j=|j\rangle\langle j|$，$Q_\delta=P_0U_\delta$、$L_\delta=P_1U_\delta$，初态为 $|0\rangle$。每轮历时 $\delta>0$。此为理想 Zeno 模型；标准机制见 Misra–Sudarshan, [DOI:10.1063/1.523304](https://doi.org/10.1063/1.523304)。
+

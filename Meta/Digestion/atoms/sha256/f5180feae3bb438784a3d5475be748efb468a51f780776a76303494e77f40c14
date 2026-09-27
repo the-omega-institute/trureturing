@@ -1,0 +1,44 @@
+**定理 47.2（概率尾收敛，但加权尾不收敛）。** 定义
+
+$$
+z_m(\gamma)=\mathbb E_\gamma[\mathsf N\,\mathbf1_{\{\mathsf N>m\}}].
+$$
+
+对 $m\ge1$、$\gamma>0$，
+
+$$
+\boxed{
+z_m(\gamma)=(1+m\gamma)(1-\gamma)^{m-1},
+\qquad z_m(0)=0.
+}
+$$
+
+对 $m\ge2$，其精确上确界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}z_m(\gamma)
+=\left(1+\frac1m\right)
+ \left(1-\frac1{m^2}\right)^{m-1}
+\longrightarrow1.
+}
+$$
+
+因此这些等待时间的均值虽共同不超过二，分布族却不一致可积。
+
+证明。对正参数，逐项计数给
+
+$$
+\mathbb E[\mathsf N\mathbf1_{\{\mathsf N>m\}}]
+= m s_m+\sum_{k=m}^{\infty}s_k
+=(1+m\gamma)(1-\gamma)^{m-1}.
+$$
+
+零参数下所有等待时间都为一，所以 $m\ge1$ 时尾矩为零。对 $m\ge2$，正参数表达式的导数为
+
+$$
+(1-\gamma)^{m-2}(1-m^2\gamma),
+$$
+
+最大值在 $\gamma=1/m^2$ 取得。代入即得上确界；第二因子的对数为 $(m-1)\log(1-1/m^2)\to0$，故极限为一。$m=1$ 时，正参数下 $z_1(\gamma)=1+\gamma$，零参数下仍为零，最大值为二。按非负随机变量族的一致可积尾判据，统一加权尾不趋零，正是所需反例。$\square$
+

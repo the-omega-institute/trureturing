@@ -1,0 +1,38 @@
+### 247.5 全体最优态的精确最小参考边缘熵
+
+记（247.31）中两份归一化参考边缘为
+$$
+\rho_{\mathrm{ent}}=\operatorname{Tr}_H\Omega_{\mathrm{ent}},
+\qquad
+\rho_{\mathrm{prod}}=\operatorname{Tr}_H\Omega_{\mathrm{prod}}.
+\tag{247.32}
+$$
+每个最大纠缠纯分量的参考边缘为 $P_{L_j}/2$，因此
+$$
+\rho_{\mathrm{ent}}
+=\sum_{j\in J_1}\frac{\lambda_j}{\theta}\frac{P_{L_j}}2,
+\qquad
+0\preceq\rho_{\mathrm{ent}}\preceq\frac12I_{E_{\mathrm{ent}}}.
+\tag{247.33}
+$$
+每个非零本征值 $\mu$ 都满足 $\mu\le1/2$，所以
+$$
+S(\rho_{\mathrm{ent}})
+=\sum_\mu\mu\log_2\frac1\mu
+\ge\sum_\mu\mu=1.
+\tag{247.34}
+$$
+另一块为密度矩阵，$S(\rho_{\mathrm{prod}})\ge0$。
+
+真正的参考正交分块给出精确熵式
+$$
+\begin{aligned}
+S(\Omega_E)
+&=H_2(\theta)+\theta S(\rho_{\mathrm{ent}})
+ +(1-\theta)S(\rho_{\mathrm{prod}})\\
+&\ge H_2(\theta)+\theta.
+\end{aligned}
+\tag{247.35}
+$$
+第一项来自两块权重，后两项来自各块内部谱。
+

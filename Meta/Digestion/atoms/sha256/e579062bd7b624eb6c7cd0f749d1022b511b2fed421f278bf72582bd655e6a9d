@@ -1,0 +1,11 @@
+**定理 70.1。** 对每个固定 $r>0$，存在实数 $\gamma_r$，使
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon}{\varepsilon}
+=\gamma_r,
+\qquad 1<\gamma_r\le\frac98.
+\tag{70.6}
+$$
+
+特别地，$e_\varepsilon=\gamma_r\varepsilon+o_r(\varepsilon)$。下面给出 $\gamma_r$ 的一个达到最小值的准确切锥变分式；不将它进一步识别为某个显式数值。
+

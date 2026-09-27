@@ -1,0 +1,23 @@
+**单个计数的统一概率上界。**
+
+记
+$$
+p_{n,i,j}(c)=\|b_{n,ij,c}\|^2.
+$$
+这是以状态 $i$ 启动、长度 $n$ 后到 $j$ 并具有计数 $c$ 的经典路径概率。对独立边相位的矩阵
+$M_\theta(i,j)=P_{ij}e^{i\theta_{ij}}$，有有限 Fourier 展开
+$$
+M_\theta^n(i,j)=\sum_c p_{n,i,j}(c)e^{i\theta\cdot c}.
+$$
+归一化 Haar 积分反演及引理31.3的全局有限步 Gaussian 界给
+$$
+\begin{aligned}
+p_{n,i,j}(c)
+&\le\int_{\mathbb T^s}|M_\theta^n(i,j)|\,d\theta\\
+&\le C\int_{\mathbb T^s}e^{-c_0n d_H([\theta],0)^2}\,d\theta
+\le C_0 n^{-r/2}.
+\end{aligned}
+\tag{33.6}
+$$
+最后一步将 Haar 测度推到维数 $r$ 的固定商环面；局部体积界控制 Gaussian 积分，远处由指数衰减控制。$r=0$ 时该积分为常数，仍是同一式。$C_0$ 统一于 $i,j,c,n$；取充分大 $n$ 已足够，也可增大常数覆盖全部 $n\ge1$。
+

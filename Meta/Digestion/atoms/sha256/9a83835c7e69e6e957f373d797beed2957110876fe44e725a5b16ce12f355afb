@@ -1,0 +1,58 @@
+### 7.9 延迟停止、过滤与精确尾和
+
+令 $\tau_F(x)$ 为路径命中 $F$ 的深度，未命中时为 $\infty$。前缀自由性保证有限命中词唯一。逐路径有
+$$
+\tau_{D_S(F)}=m_S(\tau_F).
+\tag{RST.28}
+$$
+证明。命中旧词 $w$ 的路径在深度 $m_S(|w|)$ 命中其完整后代束。若更早命中其他新束，将给出另一个 $F$ 前缀，与前缀自由性矛盾。未命中旧码的路径也不在任一新柱中。$\square$
+
+令 $\mathcal G_j=\mathcal F_{n_j}$，并定义
+$$
+J_F=\min\{j\ge1:\tau_F\le n_j\},
+\qquad J_F=\infty\text{ 若该集合为空}.
+\tag{RST.29}
+$$
+因为 $\{J_F\le j\}=\{\tau_F\le n_j\}\in\mathcal G_j$，$J_F$ 是选层过滤的停止时间。若在原始整数时钟上保持最近完整记录，令 $s(n)=\max(S\cap[0,n])$、$\mathcal H_n=\mathcal F_{s(n)}$，则
+$$
+\{m_S(\tau_F)\le n\}=\{\tau_F\le s(n)\}\in\mathcal H_n.
+$$
+所以延迟时间同时适应这个保持过滤和原过滤；没有在未观察的时刻读取将来的字符。按原始步数计费的延迟为 $n_{J_F}$，无穷索引对应无穷延迟。保留深度上的尾分布满足
+$$
+\Pr\{\tau_{D_S(F)}>n_j\}=\Pr\{\tau_F>n_j\},
+\tag{RST.30}
+$$
+因为 $m_S(t)>n_j$ 等价于 $t>n_j$，包括 $t=\infty$。
+
+逐路径的非负指示分解为
+$$
+\begin{aligned}
+\tau_F&=\sum_{n\ge0}\mathbf1_{\{\tau_F>n\}},\\
+m_S(\tau_F)&=\sum_{j\ge1}(n_j-n_{j-1})\mathbf1_{\{\tau_F>n_{j-1}\}},\\
+J_F&=\sum_{j\ge1}\mathbf1_{\{\tau_F>n_{j-1}\}}.
+\end{aligned}
+$$
+有限停止时分别是计数与望远镜和；无限停止时无界层列使三式均为无穷。由 Tonelli 得
+$$
+\begin{aligned}
+\mathbb E\tau_F&=\sum_{n\ge0}\Pr(\tau_F>n),\\
+\mathbb E\tau_{D_S(F)}
+&=\sum_{j\ge1}(n_j-n_{j-1})\Pr(\tau_F>n_{j-1}),\\
+\mathbb E J_F&=\sum_{j\ge1}\Pr(\tau_F>n_{j-1}).
+\end{aligned}
+\tag{RST.31}
+$$
+这些都是非负扩实恒等式，没有有限均值前提。阶段数与原始等待长度是两个成本单位。
+
+若每段间距 $n_j-n_{j-1}\le g$，其中有限整数 $g\ge1$，则
+$$
+\tau_F\le\tau_{D_S(F)}\le\tau_F+g-1.
+\tag{RST.32}
+$$
+若有 $C\ge1$ 使 $n_j\le C(n_{j-1}+1)$，则
+$$
+\tau_F\le\tau_{D_S(F)}\le C\tau_F.
+\tag{RST.33}
+$$
+证明。在有限命中所在段内，$n_{j-1}+1\le\tau_F\le n_j$。于是 $n_j-\tau_F\le n_j-n_{j-1}-1\le g-1$，且 $n_j\le C(n_{j-1}+1)\le C\tau_F$。下界来自向上取层；无穷路径以扩实约定处理。积分后得到对应期望界。恒等层列 $n_j=j$ 给逐路径完全相等；对任意层列，若原码仅在保留层停止，也有 $m_S(\tau_F)=\tau_F$。$\square$
+

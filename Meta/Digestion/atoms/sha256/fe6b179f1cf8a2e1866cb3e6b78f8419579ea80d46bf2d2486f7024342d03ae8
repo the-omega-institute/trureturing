@@ -1,0 +1,55 @@
+#### 233.5.1 等号强制实际秩与共同支撑
+
+最大纠缠输入及（233.FF.11）给连续不等式
+$$
+\begin{aligned}
+1-\frac R{dN}
+&=\frac12\|\mathcal S-\mathcal R\|_\diamond\\
+&\ge\frac1{2d}\|H\|_1\\
+&\ge1-\frac{\operatorname{Tr}(QP_{\rm tar})}{dN}\\
+&\ge1-\frac{\operatorname{rank}Q}{dN}\\
+&\ge1-\frac R{dN}.
+\end{aligned}
+\tag{233.FF.25}
+$$
+故每一步都为等号，特别是
+$$
+\operatorname{rank}Q=R,
+\qquad\operatorname{Tr}(QP_{\rm tar})=R.
+\tag{233.FF.26}
+$$
+由于
+$$
+\|(I-P_{\rm tar})Q\|_{\rm HS}^2
+=\operatorname{Tr}Q-\operatorname{Tr}(QP_{\rm tar})=0,
+$$
+得到
+$$
+\boxed{Q\preceq P_{\rm tar}.}
+\tag{233.FF.27}
+$$
+因此一个取等候选的输出不能泄漏到目标支撑之外。这个限制由等号推出，并未施加在原优化集合上。
+
+在正交分解 $Q\oplus(P_{\rm tar}-Q)\oplus(I-P_{\rm tar})$ 中，
+$$
+H=\left(J-\frac QN\right)\oplus
+\left(-\frac{P_{\rm tar}-Q}{N}\right)\oplus0.
+\tag{233.FF.28}
+$$
+而
+$$
+\operatorname{Tr}\left(J-\frac QN\right)=d-\frac RN.
+$$
+（233.FF.25）的半迹范数等号使
+$$
+\left\|J-\frac QN\right\|_1=d-\frac RN
+=\operatorname{Tr}\left(J-\frac QN\right).
+$$
+Hermitian 矩阵的迹范数等于其迹，当且仅当它正半定，故
+$$
+\boxed{J\succeq\frac QN,\qquad
+|H|=J+\frac1NP_{\rm tar}-\frac2NQ.}
+\tag{233.FF.29}
+$$
+这些等式包括 $R=dN$ 的零差情形。
+

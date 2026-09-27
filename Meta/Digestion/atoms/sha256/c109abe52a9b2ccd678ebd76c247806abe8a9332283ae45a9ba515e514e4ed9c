@@ -1,0 +1,18 @@
+### 定理 10.2：额外熵与完全恢复可以同时成立
+
+式(10.1)的两个映射均为CPTP，$\mathcal D\mathcal E_\sigma=\mathrm{id}$，且
+
+$$
+\boxed{S(\mathcal E_\sigma(\rho))=S(\rho)+S(\sigma).}
+\tag{10.2}
+$$
+
+对同一综合征态编码的任意逻辑态$\rho,\tau$，有
+
+$$
+\boxed{D(\mathcal E_\sigma(\rho)\|\mathcal E_\sigma(\tau))=D(\rho\|\tau).}
+\tag{10.3}
+$$
+
+因此完整输出熵的严格增加，不能单独证明逻辑信息已不可恢复。本定理给本卷§4的信息搬移叙述一个有限、带明确访问权限的实现；它不把任意环境耦合都判成可恢复。
+

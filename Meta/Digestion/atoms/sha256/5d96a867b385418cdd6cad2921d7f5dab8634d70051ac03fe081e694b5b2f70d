@@ -1,0 +1,74 @@
+**定理 124.1（固定正缩放时间的条件后继）。** 取整数 $n_j\ge1$，满足
+
+$$
+\epsilon_jn_j\longrightarrow s\in(0,\infty).
+$$
+
+若 $X\succeq0$ 且 $p=\operatorname{Tr}(P_*X)>0$，则
+
+$$
+\boxed{
+\frac{\mathcal C_j\mathcal N_j^{\,n_j-1}(X)}
+{\operatorname{Tr}[\mathcal C_j\mathcal N_j^{\,n_j-1}(X)]}
+\longrightarrow\zeta.
+}
+\tag{124.1}
+$$
+
+更一般地，对任意有限参考系统 $R$ 和固定的正迹类联合输入 $\omega_{RA}\succeq0$（以下取密度算子），若
+
+$$
+\omega_R^*
+=
+\operatorname{Tr}_A[
+(I_R\otimes P_*)\omega_{RA}(I_R\otimes P_*)
+],
+\qquad
+p=\operatorname{Tr}\omega_R^*>0,
+$$
+
+则对充分大的 $j$ 条件事件概率为正，且条件后的联合输出在迹范数中满足
+
+$$
+\boxed{
+\frac{(\operatorname{id}_R\otimes\mathcal C_j\mathcal N_j^{\,n_j-1})(\omega_{RA})}
+{\operatorname{Tr}[(\operatorname{id}_R\otimes\mathcal C_j\mathcal N_j^{\,n_j-1})(\omega_{RA})]}
+\longrightarrow
+\frac{\omega_R^*}{p}\otimes\zeta.
+}
+\tag{124.2}
+$$
+
+### 证明
+
+式（122.3）给慢主项
+
+$$
+r_j^{\,n_j-1}\epsilon_j\zeta_j\operatorname{Tr}(G_jX).
+$$
+
+因 $\epsilon_jn_j\to s$，有 $r_j^{n_j-1}\to e^{-s}$，而 $\operatorname{Tr}(G_jX)\to p$。稳定项由式（122.4）为 $O(q^{n_j})=o(\epsilon_j)$。所以分子为
+
+$$
+\epsilon_je^{-s}p\,\zeta+o(\epsilon_j),
+$$
+
+其迹为 $\epsilon_je^{-s}p+o(\epsilon_j)$，得到式（124.1）。
+
+对联合输入，慢项变为
+
+$$
+r_j^{n_j-1}\epsilon_j\,
+\omega_{R,j}^{G}\otimes\zeta_j,
+\qquad
+\omega_{R,j}^{G}
+=
+\operatorname{Tr}_A[
+(I_R\otimes G_j^{1/2})\omega_{RA}(I_R\otimes G_j^{1/2})
+],
+$$
+
+且 $\omega_{R,j}^{G}\to\omega_R^*$。同样的稳定尾估计在参考张量后成立；慢项的迹为 $\epsilon_je^{-s}p+o(\epsilon_j)>0$，归一化并在迹范数中取极限，得到式（124.2）。证毕。
+
+这说明“晚到”不是一次单纯的时间条件化：它把输入筛到边界慢扇区，同时把点击后的量子后继筛到同一个 $\zeta$。若 $\zeta=P_0$，时间仍可揭示输入来自慢扇区的权重；若 $\zeta\ne P_0$，时间条件化和后继输出共同保留这一临界关系。
+

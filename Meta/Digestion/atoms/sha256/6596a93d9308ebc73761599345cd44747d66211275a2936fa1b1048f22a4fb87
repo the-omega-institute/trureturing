@@ -1,0 +1,24 @@
+### ST5.2 圆紧化的动量与绕数例子
+
+取圆半径 $R>0$，弦参数 $\alpha'>0$。质量平方中的圆部分为
+
+$$
+\frac{n^2}{R^2}+\frac{w^2R^2}{\alpha'^2}.
+$$
+
+变换
+
+$$
+\widetilde R=\frac{\alpha'}R,\qquad (n,w)\mapsto(w,n)
+$$
+
+保持这部分谱。实际弦对偶还运输振子、物理态约束、简并度及必要的理论类型。圆对偶还要求
+
+$$
+\widetilde g_s=g_s\frac{\sqrt{\alpha'}}R,
+\qquad
+\widetilde\Phi=\Phi-\log\frac R{\sqrt{\alpha'}}.
+$$
+
+由此直接验证 $\widetilde R/\widetilde g_s^2=R/g_s^2$，这与对应低维引力作用量的归一化相容。相关圆紧化条件见[ST-Tong8]。这组公式没有把世界面模变换与目标空间 T 对偶视为同一个操作。
+

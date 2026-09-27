@@ -1,0 +1,20 @@
+**推论 68.3（精确可恢复性与 Gaussian 独立极限并存）。** 原始数据与单标量 $T_M$ 在 $H_M$ 上
+决定 $D_M$，但原联合弱极限仍有
+
+```math
+(T_M,D_M)\Longrightarrow (N_2,W_\rho(x)),\qquad
+N_2\ \perp\ W_\rho,
+```
+
+式 (68.17)。
+
+并保留第 51–54 章所列旧空间对象及其条件 BL、固定支持无条件一致范围。
+若 $S_M=\operatorname{sgn}D_M$、$\operatorname{sgn}0=0$，TV 采用事件上确界约定，则先验数据概率意义下
+
+```math
+\left\|\mathcal L((T_M,S_M)\mid\mathscr X_M)
+       -\mathcal L((T_M,-S_M)\mid\mathscr X_M)\right\|_{\rm TV}\longrightarrow1.
+```
+
+式 (68.18)。
+

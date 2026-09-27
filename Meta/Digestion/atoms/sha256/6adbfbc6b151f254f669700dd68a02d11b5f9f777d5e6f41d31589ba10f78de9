@@ -1,0 +1,47 @@
+**一个对全部输入共同有效的启动编码。** 使用（15.5）—（15.6）的外围分解。这份结构对一般 $`E`$ 同样成立；本节仅将前节的 $`E^L`$ 换成 $`\widetilde E_L`$ 来定义各 CP 分支及其 Kraus 算子。取
+
+$$
+\dim Q=2m^2,
+\qquad K_{\rm run}=Q\otimes\bigoplus_kR_k,
+\qquad \dim R_k=\dim B_k=r_k.
+\tag{16.5}
+$$
+
+各分支的最小 Kraus 空间维数至多 $`m\dim A_k\le m^2`$，因而都能嵌入此公共 $`Q`$。按（15.11）构造 $`\widetilde E_L`$ 的规范 Stinespring 等距
+
+$$
+\widetilde W_L:M\longrightarrow M\otimes K_{\rm run}.
+\tag{16.6}
+$$
+
+其像处于（15.20）的共同纯化子空间。它同时保存输入与参考关联，以及不同外围块之间的相干。
+
+对 $`E^L`$ 与 $`\widetilde E_L`$ 应用 Stinespring 连续性定理。[^phase_stinespring_continuity] 该定理对 Heisenberg 对偶的 cb 范数给出共同膨胀的算子范数界；有限维对偶关系将其改写为本节的 diamond 范数。两份最小环境维数各至多 $`m^2`$，共同环境可取它们的直和，故维数至多 $`2m^2`$。于是存在同环境上的等距 $`V,\widetilde V`$，分别表示这两个通道，并满足
+
+$$
+\|V-\widetilde V\|_{\rm op}\le\sqrt{\delta_L}.
+\tag{16.7}
+$$
+
+由于 $`\sum_kr_k\ge1`$，（16.5）的环境维数至少为 $`2m^2`$。把上述共同环境嵌入 $`K_{\rm run}`$；$`\widetilde V`$ 与固定的规范等距 $`\widetilde W_L`$ 表示同一通道，其实际环境支撑之间的等距可在同维的整个环境上扩展成一个酉。将这个共同酉同时作用于两份膨胀，就能保持（16.7），并使理想膨胀恰为 $`\widetilde W_L`$。
+
+真实 $`L`$ 步等距 $`W_L`$ 的实际档案支撑为（15.12）的 $`S_L`$。Stinespring 唯一性给出一个共同等距
+
+$$
+C_L:S_L\longrightarrow K_{\rm run},
+\qquad
+\|(I_M\otimes C_L)W_L-\widetilde W_L\|_{\rm op}
+\le\sqrt{\delta_L}.
+\tag{16.8}
+$$
+
+它不依赖实际输入或参考。对任意参考纠缠纯输入，两个输出向量的范数差仍至多 $`\sqrt{\delta_L}`$；归一化纯态的半迹距离不超过相应向量范数差。再对混态取纯化并偏迹，得到统一比较
+
+$$
+d(\alpha_L(\rho),\widetilde\alpha_L(\rho))
+\le\eta_L:=\sqrt{\delta_L},
+\tag{16.9}
+$$
+
+其中 $`\alpha_L`$ 是真实档案经 $`C_L`$ 编码后的 $`JMK_{\rm run}`$ 态，$`\widetilde\alpha_L`$ 是规范膨胀（16.6）的输出态。
+

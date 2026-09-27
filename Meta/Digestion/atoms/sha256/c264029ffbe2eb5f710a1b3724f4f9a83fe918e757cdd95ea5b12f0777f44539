@@ -1,0 +1,23 @@
+**定义 58.3（等待层、空槽层与到达质量）。** 令
+$$
+L_q=\max_{v:\tau(v)=q}\delta(v)\ge1.
+$$
+对每个整数 $t\ge1$，定义
+$$
+\begin{aligned}
+F_t&=\{q\ne q_0:L_q\ge t\},&m_t&=|F_t|,\\
+Z_t&=\sum_{q\in F_t}Z_q,&B_t&=\sum_{q\in F_t}b_q,\\
+A_t&=\#\{v\text{ 活动}:\delta(v)\ge t\},\\
+J_t&=\sum_{x\in X}\sum_{i=2}^{N_x}2^{i-h}\mathbf1_{\delta_{x,i}\ge t},\\
+J_t^*&=\sum_{x\in X}\sum_{i=2}^{N_x}2^{-(N_x-i)}\mathbf1_{\delta_{x,i}\ge t}.
+\end{aligned}
+\tag{58.4}
+$$
+$A_t$ 数不同前驱槽，$J_t,J_t^*$ 数带权实际到达访问；两者的计数单位不同。$F_t$ 是同一个控制器的嵌套目标集，故
+$$
+B_1=S_r,\qquad B_{t+1}\le B_t,\qquad
+B_t-B_{t+1}=\sum_{L_q=t}b_q.
+\tag{58.5}
+$$
+$Z_t$ 也随这同一目标集嵌套，不能与 $B_t$ 独立选择。
+

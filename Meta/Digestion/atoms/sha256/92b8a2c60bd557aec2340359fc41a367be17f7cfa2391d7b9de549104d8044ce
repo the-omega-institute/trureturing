@@ -1,0 +1,53 @@
+### 192.2 一个独立于来源权重的完整参考上界
+
+忽略旗标，保持量子接口，并独立均匀输出标签：
+$\Gamma_{0,s}=\Gamma_{1,s}=\frac12\operatorname{id}$。
+正确输出块为
+
+$$
+\sigma_{jj}
+=\frac12\bigl[(1-\beta w_j)P_\Xi+\beta w_jP_\psi\bigr].
+$$
+
+因为 $\Xi,\psi$ 正交，第173节的完整参考分块把其误差精确化为
+
+$$
+e_{\mathrm{keep}}
+=\max_{0\le q\le1}
+\lambda_{\max}
+\left(P_{u_q}-\operatorname{diag}(qf_0,(1-q)f_1)\right),
+\quad
+u_q=(\sqrt q,\sqrt{1-q})^{\mathsf T},
+$$
+
+其中 $f_j=(1-\beta w_j)/2$。伙伴方向及错误标签块均半负定。
+这个约化保留了全部参考，并非只计算 Bell 输入。
+
+一般地，置 $S=f_0+f_1$、$K=S-f_0f_1$、
+$\lambda_*=K/S$，则
+
+$$
+\det\left[
+\lambda_*I-P_{u_q}+\operatorname{diag}(qf_0,(1-q)f_1)
+\right]
+=K\left(q-\frac{f_1}{S}\right)^2.
+$$
+
+两个对角元非负，因为
+$\lambda_*-(1-f_j)=f_j^2/S$。
+故最高根不超过 $\lambda_*$；在 $q=f_1/S$ 取等号。
+于是严格有
+
+$$
+\boxed{
+e_{\mathrm{keep}}
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac{\beta^2\delta^2\epsilon^2}
+{16(1-\beta\Sigma\epsilon/2)}.
+}
+\tag{192.4}
+$$
+
+此式完全独立于 $\ell$，同时给出（192.2）的上界和
+$H_\epsilon\le3/4+C\epsilon$ 的统一估计。
+

@@ -1,0 +1,24 @@
+**引理145.1（两端同时移动的主角界）。** 设 $A,B,A',B'$ 为同一有限维复 Hilbert 空间中的 $k$ 维子空间。用非降次序记各对的主角，并置
+
+$$
+\alpha=\theta_{\max}(A,A'),\qquad
+\beta=\theta_{\max}(B,B').
+$$
+
+则对全部 $1\le i\le k$，
+
+$$
+\boxed{
+|\theta_i(A,B)-\theta_i(A',B')|\le\alpha+\beta.
+}
+\tag{145.6}
+$$
+
+同时，
+
+$$
+\|P_A-P_{A'}\|_{\mathrm{op}}=\sin\alpha,\qquad
+\|P_B-P_{B'}\|_{\mathrm{op}}=\sin\beta.
+\tag{145.7}
+$$
+

@@ -1,0 +1,88 @@
+### 207.3 零来源端点的 Choi 唯一性与 Gram 控制
+
+保留第206节的 $U_0,U_1,V,k_0,k_1,k_d$。
+精确互补恒等式仍为
+
+$$
+\begin{aligned}
+G_h-\Phi_h={}&k_0U_0+k_1U_1+k_dV
++\frac h6\sum_j|M_j-m|^2\\
+&-\beta\delta n^2(A_0-1/2)
+-\left(\beta Rm^2+\frac\rho4\right)(A_0+A_1-1)
++\frac\theta2\operatorname{Im}P,
+\end{aligned}
+\tag{207.10}
+$$
+
+且全区间有
+
+$$
+k_0\ge\beta\delta/4>0,\qquad k_d\ge\beta R/4>0.
+\tag{207.11}
+$$
+
+在纯基点最优面 $A_0=A_1=1/2,C_0=C_1=0$ 上，$P=0$。
+等号强制 $U_0=V=0$，即
+$b=i2na$ 对结果0成立，且所有结果都有 $d=2ma$。
+因而 $M_j=2mA_j=m$，不需要使用 $hM_{\mathrm{def}}$ 的正权重。
+共同 TP 继而唯一确定结果1的剩余 Gram 条目，得到第206节的 $\Gamma^*(h)$。
+
+特别地，$h=0$ 时 $d=0$，全部含 $c,d$ 的 Gram 条目为零，且
+
+$$
+N_0=-i\nu,\quad B_0=2\nu^2,\qquad
+N_1=i\nu,\quad B_1=1-2\nu^2.
+\tag{207.12}
+$$
+
+这直接确定完整 Choi 对。
+$\gamma=\beta$ 时 $k_1=0$ 与 $B_*=0$ 同时发生也不影响唯一性。
+
+固定 $K<\infty$，考虑全部满足
+$0\le e_\epsilon-E_\epsilon\le K\epsilon^2$
+的对称化共同 instrument。
+第191节已在 $[0,H]$ 给出
+
+$$
+C=C_0+C_1=O_{H,K}(\epsilon^2),\qquad
+A_j-1/2=O_{H,K}(\epsilon).
+\tag{207.13}
+$$
+
+把 Kraus 元素视为向量，置
+$\mathbf v_j=\mathbf d_j-2m\mathbf a_j$、
+$\mathbf u_0=\mathbf b_0-i2n\mathbf a_0$。
+Cauchy–Schwarz 给
+
+$$
+\begin{gathered}
+M_j=2mA_j+O(\sqrt V),\qquad
+D_j=4m^2A_j+O(\sqrt V+V),\\
+N_0=-i2nA_0+O(\sqrt{U_0}),\qquad
+B_0=4n^2A_0+O(\sqrt{U_0}+U_0),\\
+Z_j:=\sum b\overline d=2m\overline{N_j}+O(\sqrt V).
+\end{gathered}
+\tag{207.14}
+$$
+
+共同 TP 再给
+$N_1=-N_0-P$、$B_1=1-B_0-D_0-D_1$，
+其中 $|P|\le\sqrt C=O(\epsilon)$；其他含 $c$ 的条目也是 $O(\epsilon)$。
+因此
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak d:=\|\Gamma-\Gamma^*(h)\|_{\mathrm F}
+&\le C_{H,K}(\epsilon+\sqrt{U_0}+\sqrt V),\\
+M_{\mathrm{def}}:=\sum_j|M_j-m|^2
+&\le C_{H,K}(\epsilon^2+V).
+\end{aligned}}
+\tag{207.15}
+$$
+
+这里没有除以 $h,m,B_*$ 或 $\rho$。
+第二式使 $M_{\mathrm{def}}$ 在 $h=0$ 仍受正权重的 $V$ 控制。
+结合（207.9）、基点缺陷非负与唯一性，紧性也给上述整个近优类到
+$\Gamma^*(h)$ 的一致收敛，允许参数序列趋向零来源。
+

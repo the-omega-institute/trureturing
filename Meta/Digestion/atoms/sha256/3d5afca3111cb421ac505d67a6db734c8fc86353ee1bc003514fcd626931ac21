@@ -1,0 +1,11 @@
+**定义 1.3（关系体的全息充分性）。** 对过程配置 $s$、边界摘要 $\eta(s)$ 与指定实验族 $\mathcal T$，称 $\eta$ 全息充分，当
+
+$$
+\eta(s)=\eta(t)
+\Longrightarrow
+\operatorname{Obs}(E[s])=\operatorname{Obs}(E[t])
+\quad(E\in\mathcal T).
+$$
+
+若任务包含继续执行，观察值还包括合法性、分支概率及后继边界。该定义恢复的是指定任务的作用，不要求恢复内部的唯一搭建方式。
+

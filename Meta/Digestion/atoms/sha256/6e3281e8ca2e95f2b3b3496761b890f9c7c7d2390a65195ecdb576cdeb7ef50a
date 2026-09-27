@@ -1,0 +1,30 @@
+**证明。** 由切向逆界和正尾部的迹，
+$$
+\begin{aligned}
+\|\Delta\|_1
+&\le\|T\|_1+t\\
+&\le\frac3p(\varepsilon+2t)+t\\
+&\le\left(\frac4p+\frac6{p^2}\right)\varepsilon,
+\end{aligned}
+\tag{261.35}
+$$
+最后一步使用（261.16）。因 $p\le1/2$，$4p+6\le8$。两份原始态归一化还给独立上界二，得到（261.34）。$\square$
+
+该证明没有将竞争态先去相干，也没有把核外相干仅按质量的平方根估计。线性界来自（261.21）对切向矩阵的直接恢复；暴露算子负责剩余正尾部。
+
+如需使用原始两条响应误差，令
+$$
+\varepsilon_R=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_\psi)\|_1
++\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_\psi)\|_1.
+\tag{261.36}
+$$
+由坐标转换，
+$$
+\varepsilon\le
+\|\Delta\rho\|_1+
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon_R.
+\tag{261.37}
+$$
+所以这仍是边缘与两份完整实际响应的全数据误差界。
+

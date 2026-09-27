@@ -1,0 +1,9 @@
+**定义 1.2（相干运输）。** 给定合法切面链 $\Sigma_0\to\cdots\to\Sigma_N$ 及酉映射 $U_n:\mathcal H\to\mathcal H$。置
+
+$$
+V_0=I,\qquad V_n=U_{n-1}\cdots U_0,
+\qquad \rho_n=V_n\rho_0V_n^\dagger.
+$$
+
+阶段 $n$ 仅为标签；若解释为历时，另给钟读数与标签的标定。未来会再次参与耦合的记忆包括在 $\mathcal H$ 内。
+

@@ -1,0 +1,2 @@
+**Proof.** Unique decomposition makes expansion a bijection, independent of the starting state. The specified concatenation makes it composition-preserving. Retaining the raw legality condition gives equivalence of the domains of action. The preceding proposition supplies transition intertwining and the required observation, cost, and raw-duration identities; the state map is the identity on the represented raw states. $\square$
+

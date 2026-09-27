@@ -1,0 +1,77 @@
+### 148.5 一个只依赖已知来源的第六终端解码器
+
+定义理想比较等距 $U_6:M\to M\otimes K$：
+
+$$
+\begin{aligned}
+U_6|0\rangle&=a\lambda\,m_0P+b\kappa\,m_1e,\\
+U_6|1\rangle&=m_0G+m_1H.
+\end{aligned}
+\tag{148.16}
+$$
+
+它不是另一份被执行的接收通道；下面证明它是实际第六终端完整档案的可逆编码，供同一个解码器比较。
+
+四个实际档案列 $\chi_{00}^6,\chi_{01}^6,\chi_{10}^6,\chi_{11}^6$ 两两正交，其平方范数依次为
+
+$$
+t_5,\qquad p\,t_4,\qquad t_4,\qquad p\,t_3,
+\qquad t_j=1-p\,t_{j-1},\quad t_0=1.
+$$
+
+当前参数满足
+
+$$
+t_3=a^2d^2,\qquad t_4=\kappa^2,\qquad t_5=a^2\lambda^2.
+\tag{148.17}
+$$
+
+接收向量
+
+$$
+a\lambda P,\qquad b\kappa e,\qquad G,\qquad H
+$$
+
+也两两正交。它们的平方范数分别为上述四个数：特别地，
+
+$$
+\|G\|^2=a^4d^2+a^4b^2+b^4=\kappa^2,\qquad
+\|H\|^2=a^2b^2(c^2+b^2)=a^2b^2d^2.
+$$
+
+所以规定
+
+$$
+\begin{aligned}
+W_6\chi_{00}^6&=a\lambda P,&
+W_6\chi_{01}^6&=b\kappa e,\\
+W_6\chi_{10}^6&=G,&
+W_6\chi_{11}^6&=H
+\end{aligned}
+\tag{148.18}
+$$
+
+给出 $W_6:S_6\to K$ 的等距。实际来源列展开于是证明，$U_6$ 恰为先实际发射六轮、再在档案端使用 $W_6$ 的编码。
+
+令 $\iota_6:S_6\hookrightarrow B^{\otimes6}$ 为档案嵌入，任选固定档案密度矩阵 $\zeta$，定义
+
+$$
+\begin{aligned}
+\mathcal D_6(Y)
+={}&\iota_6W_6^*YW_6\iota_6^*\\
+&+\operatorname{Tr}[(I_K-W_6W_6^*)Y]\,\zeta .
+\end{aligned}
+\tag{148.19}
+$$
+
+这是全域 CPTP 通道，并对任意输入与参考满足
+
+$$
+(\operatorname{id}_{RM}\otimes\mathcal D_6)
+\bigl[(I_R\otimes U_6)\rho(I_R\otimes U_6)^*\bigr]
+=\Omega_6(\rho).
+\tag{148.20}
+$$
+
+$W_6$ 和解码器只使用已知 $p$、来源档案列及声明的接收基，没有使用未知输入或参考读数。
+

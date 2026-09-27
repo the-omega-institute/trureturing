@@ -1,0 +1,29 @@
+**有限启动后精确进入外围空间。** 有限维 CPTP 映射的幂一致有界，因此单位模特征值的 Jordan 块均为一阶。在（15.2）下，其余 Jordan 块全部属于零特征值。令 $`L\ge1`$ 为零 Jordan 块的最大长度；无零块时取 $`L=1`$。于是
+
+$$
+1\le L\le m^2,\qquad
+\operatorname{ran}E^L=X_E,
+\tag{15.4}
+$$
+
+其中 $`X_E`$ 是全部单位模特征空间的复线性张成。这是有限步的精确等式，不是渐近近似。
+
+Wolf–Pérez-García 的外围空间结构定理给出原 Hilbert 空间的正交分解与正定密度矩阵：[^phase_peripheral_structure]
+
+$$
+M=M_0\oplus\bigoplus_{k=1}^{s}(A_k\otimes B_k),
+\qquad
+X_E=0\oplus\bigoplus_{k=1}^{s}\mathcal L(A_k)\otimes\tau_k.
+\tag{15.5}
+$$
+
+存在块置换 $`p`$ 及酉识别 $`U_k:A_k\to A_{p(k)}`$，使
+
+$$
+E\bigl(\iota_k(X\otimes\tau_k)\bigr)
+=\iota_{p(k)}\bigl(U_kXU_k^\dagger\otimes\tau_{p(k)}\bigr).
+\tag{15.6}
+$$
+
+这里 $`\iota_k`$ 表示嵌入第 $`k`$ 个来源块。只有 $`\dim A_k=\dim A_{p(k)}`$ 是必需条件；不要求 $`r_k:=\dim B_k`$ 沿置换循环保持相同。
+

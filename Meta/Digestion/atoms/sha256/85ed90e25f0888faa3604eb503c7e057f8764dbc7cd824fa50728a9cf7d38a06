@@ -1,0 +1,33 @@
+**推论 85.4（指定根的熵余项消失）。** 沿用原完整后验熵 $h_M(\mathscr X)$、
+实际均值确定中心 $d_M^{\mathcal E}$ 和
+$\mathcal B(v)=H(\operatorname{Bin}(v,1/2))$，熵单位为 bits。
+既有过渡带表示为
+
+$$
+h_M(\mathscr X)-d_M^{\mathcal E}
+ =\sum_{j:Q^{-8}\le\bar c_{Q,j}^{\mathcal E}\le Q^8}
+ [\mathcal B(C_j)-\mathcal B(\lfloor\bar c_{Q,j}^{\mathcal E}\rfloor)]
+ +o_{\mathbb P}(1).
+\tag{85.12}
+$$
+
+定理 85.2 指定根的这部分和，非零概率至多为 $C_{F,\beta}Q^{-3}$，
+一致于确定真实支持并对两个实际实验分别成立。
+所以两根情形的全余项只剩另一根的项加 $o_{\mathbb P}(1)$；
+合法单根区间中若唯一根属于 $\mathbb Q(\vartheta)$，则全余项趋零。
+
+证明。带内无指标时根项恒为零；有指标时其均值为 $O(Q^{-3})<1$，
+确定中心项为零，随机项仅为 $\mathcal B(C_{J_n^F})$。
+$\mathcal B(v)>0$ 恰在整数 $v\ge1$，因此实际均值及 Markov 给
+
+$$
+\sup_{S:|S|=q}\Pr_S^{\mathcal E}
+ (\text{该根的过渡带项非零})
+ \le\mathbb E_S^{\mathcal E}C_{J_n^F}\le C_{F,\beta}Q^{-3}.
+\tag{85.13}
+$$
+
+原支持置换不变性给一致性；这是事件概率界，没有推出无界熵的期望收敛。
+倒数例中指标集最终为空，指定根项直接恒零。
+临界参数 $\beta_*$ 的边界根有不同前因子，不在本结论内。证毕。
+

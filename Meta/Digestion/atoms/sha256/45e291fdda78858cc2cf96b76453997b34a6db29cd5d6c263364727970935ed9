@@ -1,0 +1,50 @@
+**四步实际联合态。** 对初始活动记忆基态 $`|i\rangle`$，前三步及第四步接收后的联合向量为
+
+$$
+\begin{aligned}
+\Psi_1^0&=m_0\otimes t,
+&\Psi_1^1&=m_1\otimes q,\\
+\Psi_2^0&=a m_0\otimes u+b m_1\otimes v,
+&\Psi_2^1&=m_0\otimes w,\\
+\Psi_3^0&=c m_0\otimes s+ab m_1\otimes r,
+&\Psi_3^1&=a m_0\otimes t+b m_1\otimes q,\\
+\Psi_4^0&=ad m_0\otimes t+cb m_1\otimes e,
+&\Psi_4^1&=m_0\otimes(a^2u+bw)+ab m_1\otimes v.
+\end{aligned}
+\tag{23.25}
+$$
+
+两种初始基态在每一步输出相同的环境纯向量，环境序列为
+
+$$
+\eta_1=|0\rangle,\qquad
+\eta_2=|1\rangle,\qquad
+\eta_3=|0\rangle,\qquad
+\eta_4=|1\rangle.
+\tag{23.26}
+$$
+
+首步使用 $`w0,w1`$ 两条映射。第二步的接收输入为
+$`a m_0\otimes t0+b m_1\otimes t1`$ 和
+$`m_0\otimes q0`$，故得到（23.25）第二行且环境为一。第三步的接收输入为
+
+$$
+c m_0\otimes z0+ab m_1\otimes u1,
+\qquad
+a m_0\otimes w0+b m_1\otimes w1,
+\tag{23.27}
+$$
+
+给（23.25）第三行且环境为零。第四步的接收输入为
+
+$$
+\begin{aligned}
+&a m_0\otimes(cs+br)0+cb m_1\otimes s1
+=ad m_0\otimes f0+cb m_1\otimes s1,\\
+&m_0\otimes(a^2t+bq)0+ab m_1\otimes t1.
+\end{aligned}
+\tag{23.28}
+$$
+
+由（23.23）均输出环境一，给（23.25）第四行。环境序列（23.26）对两个初始基态相同，故线性性覆盖任意输入相干和任意参考纠缠；混合输入可取纯化。
+

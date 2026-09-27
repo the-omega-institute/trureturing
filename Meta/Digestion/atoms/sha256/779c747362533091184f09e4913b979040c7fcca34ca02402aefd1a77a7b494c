@@ -1,0 +1,6 @@
+**定理 230.2（完整半 diamond 下界）。** 保持第一节的所有假设。任意同接口 CPTP 记录竞争者 $\mathcal S$，只要其同名分支容量 $k$ 满足 $rk<d$，就有
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)\ge\alpha.}
+\tag{230.HR.15}
+$$
+

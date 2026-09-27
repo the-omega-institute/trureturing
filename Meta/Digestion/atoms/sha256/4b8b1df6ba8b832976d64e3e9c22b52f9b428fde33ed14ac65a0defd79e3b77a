@@ -1,0 +1,65 @@
+### 299.5 概率表的点态合法性
+
+对 $0\le i\le K$，定义
+$$
+c_i=C(1-Bi/K),\qquad
+\beta_i=1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}\sum_{m=1}^d
+\frac{B^m}{m}\frac{(i)_m}{(K)_m}.
+\tag{299.17}
+$$
+若 $i<m$，下降阶乘按零解释。整个式子只使用有限算术，未对非正经验坐标取对数。真实期望仍有准确恒等式
+$$
+\mathbb E_c\beta_J=L(c)+R_d(c),\qquad
+R_d(c)=\frac1{D\kappa}\sum_{m>d}\frac{(1-c/C)^m}{m}\ge0.
+\tag{299.18}
+$$
+对于正的经验坐标还成立 $\beta_i\ge L(c_i)$。
+
+第298节直接证明的无放回界是：当 $i\ge1$ 时，
+$$
+0\le(i/K)^m-\frac{(i)_m}{(K)_m}
+\le(i/K)^m\frac{m(m-1)}{2i}.
+$$
+它对 $m>i$ 仍成立；$i=0$ 单独给零误差。在 $c_i\ge1/2$ 的区域令
+$q_i=Bi/K\le q_*:=1-1/(2C_*)<1$，求和得到
+$$
+0\le\beta_i-L(c_i)
+\le\frac1{D\kappa}\left[
+\frac{Bq_i}{2K(1-q_i)^2}
++\frac{q_i^{d+1}}{(d+1)(1-q_i)}\right].
+\tag{299.19}
+$$
+由于 $d+1>\alpha\kappa K$，右侧统一不超过
+$$
+\varepsilon_K:=\frac A{K\kappa}
++\frac A{K\kappa^2}e^{-a\kappa K}.
+\tag{299.20}
+$$
+
+在完整输入情形，$C=1$ 使全部 $\beta_i\le1$；中间区域
+$v<c_i<u$ 又有 $\beta_i\ge L(c_i)\ge1/11$。因此该区域对任何合法阶数 $d$ 都给概率。
+
+在reset情形，$\beta_i$ 随整数 $i$ 单调不增。令 $i_0$ 为第一个
+$c_i\le u_{++}$ 的整数，则
+$$
+u_{++}-BC/K\le c_{i_0}\le u_{++}.
+$$
+存在统一充分大的 $A_0$，使 $K\kappa^2\ge A_0$ 时，网格点 $c_{i_0}\ge1/2$，且（299.20）小于 $1/48$。事实上首项至多 $A\kappa_0/A_0$，第二项至多 $A/A_0$；再增大 $A_0$ 同时控制网格步长即可。于是
+$$
+\beta_{i_0}\le L(u_{++})+1/48
+\le1-1/24+1/48<1.
+$$
+单调性将结论推广到全部 $c_i\le u_{++}$，包括非正坐标；中区下界仍为 $1/11$。
+
+因此真实概率表
+$$
+a_i=\begin{cases}
+0,&c_i\le v,\\
+\beta_i,&v<c_i<u,\\
+1,&c_i\ge u
+\end{cases}
+\tag{299.21}
+$$
+在所列预算范围内逐项合法。读取 $J$ 后以概率 $a_J$ 决定零，得到实际响应 $f_K(c)=\mathbb E_c a_J$。后续估计始终针对这张表。
+

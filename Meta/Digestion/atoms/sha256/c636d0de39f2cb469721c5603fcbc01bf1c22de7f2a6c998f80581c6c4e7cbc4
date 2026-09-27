@@ -1,0 +1,88 @@
+**定理31.6（任意候选集的单终端商空间容量）。** 令
+$\Gamma=\{[\theta]:\theta\in\Theta\}\subseteq\mathcal Q$，以商距离定义
+
+$$
+\operatorname{Pack}(\Gamma,r)=
+\max\{|A|:A\subseteq\Gamma,\ d_{\mathcal Q}(x,y)\ge r
+\text{ 对全部不同的 }x,y\in A\}.
+\tag{31.21}
+$$
+
+固定 $0<\epsilon<1$。对全部充分大的 $n$，统一于非空候选集，
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\asymp_{P,g,\epsilon}\operatorname{Pack}(\Gamma,n^{-1/2}).
+}
+\tag{31.22}
+$$
+
+具体上界对所有 $n\ge1$ 为
+
+$$
+k_n^{(\epsilon)}(\Theta)\le
+m^2\operatorname{Pack}\!\left(
+\Gamma,\frac{\epsilon}{\sqrt{2C_{\mathrm{hist}}n}}\right)+1.
+\tag{31.23}
+$$
+
+这个上界可由门依赖预定终端 $n$ 的因果接收实现。
+
+证明。紧商环面的分离集基数有有限整数上界，故最大基数由某个实际有限子集取得；包含意义下极大的分离集同时为严格同半径网。这不要求 $\Gamma$ 闭或可测。
+
+上界取尺度 $h=\epsilon/\sqrt{2C_{\mathrm{hist}}n}$ 的极大网，点数
+$N\le\operatorname{Pack}(\Gamma,h)$。为各网点任取相位代表，以其常相位支撑之和定义 $W_n$，则 $\dim W_n\le m^2N$。对实际 $\theta$，选临近网点及一个常量 $h_0\in\mathcal H$，使 $\theta+h_0$ 与该代表的原环面距离小于 $h$。由（31.15）、（31.20），
+
+$$
+T_{\theta,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta,n}
+\preceq C_{\mathrm{hist}}nh^2I_M
+=\frac{\epsilon^2}{2}I_M.
+\tag{31.24}
+$$
+
+因果实现时，在每个前缀 $t\le n$ 都用这个同一终端网的全部常相位支撑之和。其维数始终至多 $m^2N$，并满足
+$W_{t+1}\subseteq W_t\otimes B$。以
+$W_0=K_0=\mathbb C$ 启动，用下一定理（31.31）—（31.33）的部分等距、吸收旗标与全域完成，累计成功恰等于终端投影。式（31.24）给所需完整联合误差；无须预先保存完整档案。
+
+下界取 $n^{-1/2}$ 分离的最大集合，点数为 $N$，并从实际 $\Theta$ 选各点代表。输入取 $m$ 维 Bell 参考态，完整纯目标记为
+$|\Psi_{\theta,n}\rangle$。路径正交性精确给
+
+$$
+\langle\Psi_{\theta,n},\Psi_{\varphi,n}\rangle
+=\frac1m\mathbf1^{\mathsf T}M_{\varphi-\theta}^n\mathbf1.
+\tag{31.25}
+$$
+
+若商维数为 $r_{\mathcal Q}$，固定紧平坦环面的局部体积比较给常数
+$C_{\mathrm{pack}}$，使距某分离点在
+$[\ell n^{-1/2},(\ell+1)n^{-1/2})$ 内的点数至多
+$C_{\mathrm{pack}}(\ell+2)^{r_{\mathcal Q}}$，对充分大 $n$ 统一成立。由（31.9），Gram 绝对行和统一有界：
+
+$$
+B_{\mathrm G}
+=C_{\mathrm G}C_{\mathrm{pack}}
+\sum_{\ell\ge0}(\ell+2)^{r_{\mathcal Q}}e^{-c_{\mathrm G}\ell^2}
+<\infty.
+\tag{31.26}
+$$
+
+商为单点时直接取 $B_{\mathrm G}=1$。平均目标态
+$\bar\rho=N^{-1}\sum_j|\Psi_{\theta_j,n}\rangle\langle\Psi_{\theta_j,n}|$
+与 Gram 矩阵具有相同非零谱，差一个 $1/N$ 因子，所以
+$\|\bar\rho\|_{\mathrm{op}}\le B_{\mathrm G}/N$。
+
+任取维数 $D$ 的合法编码及共同解码，置
+$\tau=\mathcal D_n(I_D)$，则 $\tau\succeq0$、$\operatorname{Tr}\tau=D$。
+编码后的联合密度矩阵不超过 $I_{JM}\otimes I_D$；解码正性使恢复态不超过 $I_{JM}\otimes\tau$。半迹误差至多 $\epsilon$ 给每个目标重叠至少
+$1-\epsilon$，取平均得
+
+$$
+1-\epsilon\le
+\operatorname{Tr}[\bar\rho(I_{JM}\otimes\tau)]
+\le\frac{B_{\mathrm G}m^2D}{N}.
+\tag{31.27}
+$$
+
+故 $D\ge(1-\epsilon)N/(B_{\mathrm G}m^2)$；这里 $m^2$ 正是参考与活动记忆的乘积维数。最后，固定商环面的局部打包比较将（31.23）的细尺度分离数控制为粗尺度 $n^{-1/2}$ 分离数的常数倍，常数只依赖模型及固定 $\epsilon$。上下界统一于候选集，得（31.22）。证明完毕。
+

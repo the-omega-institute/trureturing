@@ -1,0 +1,23 @@
+* **observable containment**：只要求一族指定 observable 包含于该生成代数；这是较弱的独立标签。
+
+在仓内定理列出的 $RCLike$、$NormedAddCommGroup$、$InnerProductSpace$ 与逐项 $HasOrthogonalProjection$ 条件下，仓内 `FourTypedCompletionHierarchy.four_typed_completion_hierarchy` 给出正向层级
+
+$$
+\boxed{
+\operatorname{Uniform}\Longrightarrow
+\operatorname{StateFamily}\Longrightarrow
+\operatorname{MemberTarget},
+}
+\tag{39.5}
+$$
+
+并给出两个方向都严格的反例。它还分别给出解析收敛与操作代数的独立反例：可以有完整的窗口生成代数而三种 Hilbert 收敛都失败，也可以三种 Hilbert 收敛都成立而 prime-diagonal 代数仍然是 proper 子代数并漏掉指定非对角 observable。
+
+所以 (39.5) 是**解析强度的偏序**，不是语义核的偏序。特别地，不能从
+
+$$
+\operatorname{Sem}_{K_*}(r)\land\operatorname{Dyn}(r)
+$$
+
+推出 Uniform、StateFamily、MemberTarget 或 Algebra 中任何一个；也不能从其中任意一个解析性质反推出 $\ker r=K_*$。这些结论各自需要自己的载体、范数、测试族和运算代数假设。
+

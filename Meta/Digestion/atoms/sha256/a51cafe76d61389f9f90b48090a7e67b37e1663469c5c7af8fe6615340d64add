@@ -1,0 +1,33 @@
+**定理141.3（给定实际续接接口的共同实现充要条件）。** 下列两项等价。
+
+1. 存在单个全域 CPTP 通道 $\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)$，使（141.8）对全部 $0\le n<N$ 成立。
+
+2. 存在同一个有限维空间 $E$ 和等距 $R_n:\Gamma_n\to\Gamma_{n+1}\otimes E$，使
+
+$$
+\dim(K\otimes E)\ge\dim(K\otimes B),\qquad
+\operatorname{Tr}_E(R_n\tau_nR_n^*)=\tau_{n+1},
+\tag{141.15}
+$$
+
+且全部跨轮 Gram 块同时满足
+
+$$
+\boxed{J_n^*J_m=T_n^*T_m\qquad(0\le n,m<N).}
+\tag{141.16}
+$$
+
+完整展开为
+
+$$
+\begin{aligned}
+J_n^*J_m
+={}&(I_{S_{n+1}}\otimes R_n^*)\\
+&\quad\cdot(W_{n+1}^*W_{m+1}\otimes I_E)
+       (I_{S_{m+1}}\otimes R_m).
+\end{aligned}
+\tag{141.17}
+$$
+
+这是从 $S_{m+1}\otimes\Gamma_m$ 到 $S_{n+1}\otimes\Gamma_n$ 的算子等式；不同轮次的逻辑维数或附加维数不必相同。
+

@@ -1,0 +1,16 @@
+**定义 11.1（固定单 Kraus 未点击接口）。** 令 $\dim\mathcal H=d\ge1$，固定
+
+$$
+Q^\dagger Q+\sum_xL_x^\dagger L_x=I.
+$$
+
+每轮未点击则继续，首次点击则记录轮数、端口并停止。定义
+
+$$
+K_{n,x}=L_xQ^{n-1},\qquad E_{n,x}=K_{n,x}^\dagger K_{n,x},
+\qquad S_N=(Q^\dagger)^NQ^N,
+\qquad S_0=I.
+$$
+
+$Q$ 包含传播和未点击更新，轮次不自动等于秒。首次探测的重复测量框架参见 Friedman–Kessler–Barkai, *Quantum walks: The first detected passage time problem*, [DOI:10.1103/PhysRevE.95.032141](https://doi.org/10.1103/PhysRevE.95.032141)；这里以下述逐项计算固定实际使用的合同。
+

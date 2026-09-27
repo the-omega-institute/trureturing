@@ -1,0 +1,25 @@
+## ST32．全局向量框的拓扑障碍，不排除全局CPTP编码
+
+ST23排除了非零第一Chern数子丛的单一全局等距框。本节给出一个严格的能力区别：全局通道可以存在，即使全局纯态向量框不存在。
+
+### 定理 ST32.1：恒定能隙下的全局可恢复通道
+
+取参数$\boldsymbol n\in S^2$和秩一投影
+
+$$
+p(\boldsymbol n)=\tfrac12(I+\boldsymbol n\cdot\boldsymbol\sigma),
+\qquad
+P(\boldsymbol n)=p(\boldsymbol n)\otimes I_2.
+$$
+
+物理Hamiltonian取$H(\boldsymbol n)=\Delta(\boldsymbol n\cdot\boldsymbol\sigma)\otimes I_2$，$\Delta>0$。正能级子空间$E$秩二、物理能隙恒为$2\Delta$，按ST25的连接与定向规范其第一Chern数是$-2$。因此不存在全局连续等距$U:S^2\to\operatorname{Mat}_{4\times2}(\mathbb C)$以像$E_{\boldsymbol n}$作为编码。
+
+然而，下列通道全局光滑且精确可恢复：
+
+$$
+\boxed{\mathcal E_{\boldsymbol n}(\rho)=p(\boldsymbol n)\otimes\rho,
+\qquad\mathcal D=\operatorname{Tr}_{\rm first},
+\qquad\mathcal D\mathcal E_{\boldsymbol n}=\mathrm{id}.}
+\tag{ST32.1}
+$$
+

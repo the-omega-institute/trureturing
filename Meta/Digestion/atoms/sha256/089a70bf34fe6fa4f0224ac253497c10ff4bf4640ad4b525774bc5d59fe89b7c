@@ -1,0 +1,2 @@
+**命题 53.4（减少候选不会破坏已有保证）。** 若 $B\in W_n$ 且 $\varnothing\ne C\subseteq B$，则 $C\in W_n$。
+

@@ -1,0 +1,48 @@
+### 159.1 同一来源、规范目标与反例结论
+
+固定正实振幅 $a,b>0$、$a^2+b^2=1$，并置 $p=b^2$。来源为
+
+$$
+T|0\rangle=|m_0\rangle_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+|m_0\rangle=a|0\rangle+b|1\rangle.
+\tag{159.1}
+$$
+
+沿用第11、156节的平稳态与规范纯化
+
+$$
+\rho_*=
+\frac{|m_0\rangle\langle m_0|+p|0\rangle\langle0|}{1+p},
+\qquad
+\lambda_*=\lambda_{\min}(\rho_*)>0,
+\qquad
+|\Xi\rangle_{MR}=\operatorname{vec}\sqrt{\rho_*}.
+\tag{159.2}
+$$
+
+取固定 qubit $Q,R$，运行接收空间为
+$K_{\mathrm{run}}=Q\otimes R$，维数四。规范档案输出另记为
+$Q_{\mathrm{out}}\otimes R_{\mathrm{out}}$，其稳定目标为
+
+$$
+W_*|j\rangle
+=|j\rangle_{Q_{\mathrm{out}}}|\Xi\rangle_{MR_{\mathrm{out}}},
+\qquad
+\mathcal W_*=\operatorname{Ad}_{W_*}.
+\tag{159.3}
+$$
+
+启动误差继续采用
+
+$$
+\delta_n=
+\max_{j=0,1}
+\|\sqrt{\rho_{j,n}}-\sqrt{\rho_*}\|_{\mathrm{HS}}
+\le C_pp^{n-1},
+\qquad
+C_p=\frac{\sqrt{2p}}{(1+p)\sqrt{\lambda_*}},
+\qquad n\ge3.
+\tag{159.4}
+$$
+

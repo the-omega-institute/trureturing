@@ -1,0 +1,26 @@
+### 58.5 显式构造的一阶极限
+
+式（58.8）给
+
+$$
+X_\varepsilon\longrightarrow
+H=-|x\rangle\langle x|
+-\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+$$
+
+同一完整 tester 计算给 $h(H)=9/8$、$h(-H)=1$。有限 $\varepsilon$ 的准确计算比只使用该极限更强：没有必要为式（58.4）添加 $O(\varepsilon^{3/2})$ 余项。
+
+与第 56 节的统一线性下界结合，当前先得到
+
+$$
+\left(1+\frac1{10000}\right)\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S)
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.13}
+$$
+
+因此，单用上述构造只能推出最优比例的上极限至多 $9/8$。下面给匹配的一阶下界。
+
+

@@ -1,0 +1,15 @@
+## ST19–ST26 参考文献与归属
+
+[ST19-RLD]: https://arxiv.org/html/2501.12447v5 "Bartosz Regula, Ludovico Lami, Nilanjana Datta, Tight relations and equivalences between smooth relative entropies, IEEE Transactions on Information Theory 72(5), 3051–3073 (2026), DOI 10.1109/TIT.2026.3661711. Lemma 6 and Appendix C, especially the generalized trace-distance expression in Eq. (175)."
+[ST19-OMP]: https://arxiv.org/abs/2503.17163 "Marius A. Oancea, Thomas B. Mieling, Giandomenico Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026), DOI 10.22331/q-2026-01-14-1965. Sections 3.2–3.3, equations (3.13), (3.34)–(3.35). The original paper allows a more general Hermitian pseudo-metric; this supplement restricts to a positive metric where norm inequalities apply."
+[ST19-MO]: https://arxiv.org/abs/2103.11583 "Bruno Mera and Tomoki Ozawa, Kähler geometry and Chern insulators: Relations between topology and the quantum metric, Physical Review B 104, 045104 (2021), DOI 10.1103/PhysRevB.104.045104. Existing quantum-volume and Chern-number geometry; not a novelty claim for the flat-background bound."
+[ST19-GMP]: https://doi.org/10.1103/d76r-nzwm "Giandomenico Palumbo, Noncommutative Geometry and GMP-type algebra for three-dimensional quantum Hall fluids of extended objects, Physical Review D 114, 046021 (24 August 2026). Published abstract retains the assumed isotropic gapped internal sector and suitably smeared collective operators. The inspected arXiv:2602.15664v1 uses the earlier title Generalized GMP Algebra for Three-Dimensional Quantum Hall Fluids of Extended Objects; it is not treated as an identical revision of the published text."
+[ST19-Berry]: https://doi.org/10.1088/1751-8113/42/36/365303 "M. V. Berry, Transitionless quantum driving, Journal of Physics A 42, 365303 (2009). Classical source for the counterdiabatic mechanism; here only the explicitly stated finite-dimensional projector identity is used."
+[ST19-Sen]: https://arxiv.org/abs/1609.00459 "Ashoke Sen, Wilsonian Effective Action of Superstring Theory, JHEP 01 (2017) 108, DOI 10.1007/JHEP01(2017)108. External BV-consistency input, not a proof of the additional instrument hypotheses."
+
+---
+
+---
+
+<a id="string-observer-recovery-record-holonomy"></a>
+

@@ -1,0 +1,13 @@
+### 276.3 正规性给出显式产品分解
+
+继续写出上述低秩可分性结构在合同（276.1）—（276.2）中的显式形式：
+$$
+\boxed{
+\Omega(Q,M)\text{ 可分}
+\quad\Longleftrightarrow\quad
+\Omega(Q,M)\text{ 为PPT}
+\quad\Longleftrightarrow\quad A\text{ 正规}.
+}
+\tag{276.12}
+$$
+

@@ -1,0 +1,2 @@
+**命题 1.24（bare bijections do not preserve prefix complexity）。** For every integer $n\ge4$, two subsets of $\{0,1\}^{2n}$ can be carried onto one another by a bijection of that universe while having different native continuation complexity: one has at least $2^n$ distinct residuals at its middle cut, while the other has a DFA with $2n+2$ states.
+

@@ -1,0 +1,2 @@
+**容差阈值。** 对固定 $c<1$，$\varepsilon\uparrow\varepsilon_0(c)$ 时，$t_\varepsilon\uparrow1$，二元熵趋于零，与第二分支连续相接。$\varepsilon=0$ 则强制 $t=0$，最小熵恰为一比特。$\varepsilon\ge\varepsilon_0(c)$ 已由产品探针处理，其中也包括要求阈值非正的较大 $\varepsilon$；无需在该范围继续使用平方反解式。
+

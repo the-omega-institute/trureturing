@@ -1,0 +1,5 @@
+#### 1.2.15 已有归属与适用范围
+
+整数与增长部分以下列不可变源码快照为定位依据：`19a8543ea50538700a993a51989d9cbc7b5bf4fd`。
+
+- `D5/S0/Tower/DBonacci/Names.lean` 中 `dbonacci d (N+2)` 对应本节 $G_N$；`DBonacciAdmissible` 定义禁连续 $d$ 个一；`dbonacci_name_card` 给一般合法词计数。计数声明本身不等于指定整数值映射的双射，式（TM.376）的区间归纳明确承担后者。

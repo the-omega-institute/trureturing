@@ -1,0 +1,32 @@
+### 46.2 一份无额外旗标的截断复位码
+
+将权重递减排序为 $a_{(1)}\ge\cdots\ge a_{(M_*)}>0$，只排序已知权重，保留每个所选项原来的整数相位频率。对 $1\le s\le M_*$，令 $S_s$ 为最大的 $s$ 项对应的频率集合，置
+
+$$
+p_s=\sum_{\ell\in S_s}a_\ell,
+\qquad d_s=1-p_s,
+\qquad a_*=a_{(1)}.
+\tag{46.6}
+$$
+
+取 $\ell_*\in S_s$ 使 $a_{\ell_*}=a_*$。在 $C$ 上保留投影 $P_s$，将失败直接复位到 $|\ell_*\rangle$。编码到 $s$ 维空间并按原频率等距解码后的通道为
+
+$$
+\mathcal R_s(X)=P_sXP_s+
+\operatorname{Tr}[(I-P_s)X]|\ell_*\rangle\langle\ell_*|.
+\tag{46.7}
+$$
+
+这确实通过 $s$ 维系统分解：成功 Kraus 是从 $P_sC$ 到代码空间的等距，其他 Kraus 分别将每个未选频率送到同一个代码基态。保留整个 $I\otimes J$，故实际接收维数为 $4s$，不需再加失败旗标。将 $U_{\rm ar}$ 的定义在共同支撑外完成为任意 CPTP 编码，解码用其逆等距，得到整个原档案空间上的全域编解码。
+
+对相位态，解码结果是
+
+$$
+\sigma_{s,\theta}
+=P_s|\psi_\theta\rangle\langle\psi_\theta|P_s
++d_s|\ell_*\rangle\langle\ell_*|.
+\tag{46.8}
+$$
+
+该通道与相位对角作用协变，故误差与 $\theta$ 无关；（46.5）及半迹距离对张量一个共同密度矩阵的不变性，使同一个数也是全部参考和全部初态的最坏误差。
+

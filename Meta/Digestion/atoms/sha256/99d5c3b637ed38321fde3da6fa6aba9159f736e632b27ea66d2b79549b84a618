@@ -1,0 +1,107 @@
+**引理72.1（秩一缺陷仍使所有二次纤维退秩）。** 对每个非零 $z\in F$，$M$ 在 $Q\otimes(Az\otimes z)$ 上的秩至多一。因此它不能在（72.2）任一纤维上满射到二维 $Q\otimes z_i$。
+
+**证明。** 选四个射线的任意非零代表。对每个 $q\in Q$，$M(q\otimes Az\otimes z)$ 的两个输出环境坐标都是 $z_0,z_1$ 的二次齐次多项式。其与 $z=z_0e_0+z_1e_1$ 的楔积是三次齐次多项式。（72.2）使每个矩阵系数在四条不同射线上为零，所以这些三次多项式恒为零。因此 $M$ 对所有射线都满足同一纤维包含条件。具体地，若两个输出坐标写作
+$$
+Y_0(z)=B_{00}z_0^2+B_{01}z_0z_1+B_{02}z_1^2,\qquad
+Y_1(z)=B_{10}z_0^2+B_{11}z_0z_1+B_{12}z_1^2,
+$$
+其中各 $B_{ij}\in\operatorname{End}(Q)$，则
+$$
+z_1Y_0(z)-z_0Y_1(z)
+=-B_{10}z_0^3+(B_{00}-B_{11})z_0^2z_1
+ +(B_{01}-B_{12})z_0z_1^2+B_{02}z_1^3=0.
+$$
+所以 $B_{10}=B_{02}=0$、$B_{00}=B_{11}=:L_0$、$B_{01}=B_{12}=:L_1$。
+
+选 $A^*A$ 的正交单位特征基 $e_0,e_1$，特征值 $\mu,\nu>0$。此时 $Ae_0\perp Ae_1$，$J$ 的正交单位基为
+$$
+\frac{Ae_0\otimes e_0}{\sqrt\mu},\qquad
+\frac{Ae_0\otimes e_1+Ae_1\otimes e_0}{\sqrt{\mu+\nu}},\qquad
+\frac{Ae_1\otimes e_1}{\sqrt\nu}.
+$$
+将恒为零的三次多项式逐系数比较，存在 $L_0,L_1\in\operatorname{End}(Q)$，使
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt{\mu+\nu}&0\\
+0&L_0/\sqrt{\mu+\nu}&L_1/\sqrt\nu
+\end{pmatrix}.
+\tag{72.3}
+$$
+对 $z=z_0e_0+z_1e_1$，其实际纤维作用为
+$$
+M(q\otimes Az\otimes z)
+=(z_0L_0+z_1L_1)q\otimes z.
+\tag{72.4}
+$$
+
+先排除 $I-MM^*=0$。在此情形，下面（72.5）的两个右侧都是 $I$，且（72.6）给 $L_1L_0^*=0$。如果 $L_0$ 奇异，取单位 $t\in\ker L_0^*$，第一条对角方程给 $\langle t,Yt\rangle=\mu+\nu$，第二条却给 $\langle t,Yt\rangle\le\nu$，矛盾。因此 $L_0$ 可逆，交叉块给 $L_1=0$；第一条对角方程继而给 $X=\mu I$，第二条则要求 $\mu/(\mu+\nu)=1$，又矛盾。
+
+因此只需考虑
+$$
+I-MM^*=hh^*,\qquad h=(h_0,h_1)\ne0.
+$$
+令 $X=L_0L_0^*$、$Y=L_1L_1^*$。块方程为
+$$
+\frac X\mu+\frac Y{\mu+\nu}=I-h_0h_0^*,\qquad
+\frac X{\mu+\nu}+\frac Y\nu=I-h_1h_1^*,
+\tag{72.5}
+$$
+$$
+L_1L_0^*=-(\mu+\nu)h_0h_1^*.
+\tag{72.6}
+$$
+
+先证 $h_0,h_1$ 都非零。若 $h_0=0$ 且 $L_0$ 奇异，取单位 $t\in\ker L_0^*$；第一式给 $\langle t,Yt\rangle=\mu+\nu$，第二式却给 $\langle t,Yt\rangle\le\nu$，矛盾。所以此时 $L_0$ 可逆，（72.6）给 $L_1=0$。第一式再给 $X=\mu I$，第二式要求
+$h_1h_1^*=\nu I/(\mu+\nu)$，其秩二，又矛盾。$h_1=0$ 的情形通过交换两个环境基方向同样排除。
+
+因此（72.6）右侧秩一，至少一个 $L_i$ 奇异。交换 $e_0,e_1$ 必要时也交换 $\mu,\nu$ 和 $L_0,L_1$，不改变问题，可设 $L_0$ 奇异。它非零，否则（72.6）右侧不可能非零，所以 $\operatorname{rank}L_0=1$。
+
+取单位 $t\in\ker L_0^*$，并取单位 $s\perp t$。将（72.6）作用于 $t$，得到 $h_1\perp t$。因 $Xt=0$，将（72.5）两式作用于 $t$ 并消去 $Yt$，得到
+$$
+h_0\langle h_0,t\rangle=\frac{\mu}{\mu+\nu}t.
+$$
+故
+$$
+h_0=\alpha t,\qquad h_1=\beta s,\qquad
+|\alpha|^2=\frac{\mu}{\mu+\nu},\qquad \beta\ne0.
+\tag{72.7}
+$$
+两式还给 $Yt=\nu t$。于是存在 $x>0,y\ge0$，使
+$$
+X=x\,ss^*,\qquad Y=\nu\,tt^*+y\,ss^*.
+\tag{72.8}
+$$
+
+写 $L_0=\sqrt x\,s a^*$，其中 $a\in Q$ 为单位向量。（72.6）说明 $L_1a$ 属于直线 $\mathbb Ct$，并且
+$$
+x\|L_1a\|^2=(\mu+\nu)^2|\alpha|^2|\beta|^2
+=\mu(\mu+\nu)|\beta|^2.
+\tag{72.9}
+$$
+
+若 $y>0$，则 $L_1$ 可逆。由 $L_1a\in\mathbb Ct$、$\|a\|=1$ 与
+$\|L_1^{-1}t\|^2=\langle t,Y^{-1}t\rangle=1/\nu$，有
+$\|L_1a\|^2=\nu$。所以（72.9）给
+$|\beta|^2=x\nu/[\mu(\mu+\nu)]$。将它代入（72.5）的 $s$ 对角方程，第二式成为
+$$
+\frac x\mu+\frac y\nu=1,
+$$
+而第一式为
+$$
+\frac x\mu+\frac y{\mu+\nu}=1.
+$$
+相减迫 $y=0$，矛盾。因此实际必须 $y=0$。
+
+此时（72.5）给
+$$
+x=\mu,\qquad |\beta|^2=\frac{\nu}{\mu+\nu}.
+$$
+$L_1$ 是秩一算子，可写 $L_1=\sqrt\nu\,t b^*$，$\|b\|=1$。由（72.6）取范数，
+$$
+\sqrt{\mu\nu}\,|\langle b,a\rangle|
+=(\mu+\nu)|\alpha\beta|=\sqrt{\mu\nu}.
+$$
+所以 $a,b$ 属于同一射线。$L_0,L_1$ 因而具有同一个一维右核，任意线性组合 $z_0L_0+z_1L_1$ 的秩都至多一。结合（72.4）完成证明。
+
+本引理比满余等距禁阻多允许一维正缺陷，但仍保留实际纤维秩限制。它只适用于 $\dim Q=2$；以上证明未宣称任意输出维数的一般秩估计。
+

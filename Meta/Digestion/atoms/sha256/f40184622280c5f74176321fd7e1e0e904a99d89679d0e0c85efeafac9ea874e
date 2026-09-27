@@ -1,0 +1,10 @@
+### 51.12 既有接口的精确归属与结论范围
+
+(51.9) 的静态因子化使用实际来源 $P$：以 $p_A|_P$ 为细观察、$x\mapsto[x]_{E_A}$ 为粗观察，`D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean` 的 `refinement_iff_kernel_inclusion_on_effective_images` 正好将有效像上的唯一因子化与核包含对应起来。它只证明初始恢复，不保证把初始解码函数重新用于任意后继标签。`D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.lean` 的 `commonCoarsening` 是两观察核上确界的商，`concept_kernel_order_duality` 末项将其核识别为两核之并的等价闭包；在准备边或运输后的实际支撑上取两端投影，就得到共同函数沿连通分量恒定的静态结构。第51.6节还须证明根命中旗标是两端共同函数，并证明运输后的物理不等价与逐端分离，不能由这个静态商直接跳到容量界。
+
+`ControlledBehaviorUniversality.controlled_behavior_universal_property` 的声明另要求有限来源 $Y$、有限实现 $W$、满射 `realization : Y → W` 以及更新、读出的交织。任意分布式控制器可保留历史，记忆可无限，同一物理源也可对应多个实际联合状态，因此并未自动提供这些假设。本节使用它所定义的物理未来商；对无限竞争者的容量必要性由第51.5—51.6节独立承担。有限深度的精确归属与空字母表例外已在第51.2节列明，未把已有商或分割细化界作为本节的新通用结果。
+
+数学背景可参照 Edward F. Moore 的 [Gedanken-Experiments on Sequential Machines](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf) 中以输入实验区分有限状态的定义。本节 (51.4) 采用全部有限词的当前物理输出，经典可区分性只承担这一背景。Guy Goren、Yoram Moses 的 [Silence](https://arxiv.org/abs/1805.07954)（2018，§2.2）明确采用共享离散全局时钟、按轮投递保证和可崩溃进程；其引言以等待已知投递时限后检测缺席来说明静默信息。本节采用定义51.1的二叉协议根合同，没有这种免费同步时钟或缺席信号，因此不把该文的静默通信结论移植为此处的零费动作规则。这两项只作背景来源，不承担定理51.4的分布式容量结论。
+
+承重连接是有限共同根命中旗标、实际硬分量的免费运输、两端各自与静默层分离，以及未知标签层和未来商层的同时达到。它们限定于有限非空物理源、有限总动作字母表、满射且联合单射的当前读出、任意非空实际准备、局部下降的传递免费置换群、每个实际对上有限停止的确定性协议和统一有限累计预算。结论是这些条件下的精确未来物理读出容量，不分类实现消息、通信费用、完整事件档案或已逝时钟，不包含非齐性模型的分类；其形式状态仍为 Claim status: open、repo-derived synthesis。
+

@@ -1,0 +1,7 @@
+**约定 1.3（字典学习）。** 数据 $x$ 取自 $\mathbb R^d$ 上有限支撑的分布。字典 $D=[d_1,\dots,d_K]$，各原子单位范数 $\|d_k\|_2=1$；码 $c\in\mathbb R^K_{\ge0}$。两阶段目标
+$$
+\operatorname{cost}(x;D)=\min_{c\ge0}\Big[\tfrac12\|x-Dc\|_2^2+\lambda\|c\|_1\Big],\qquad
+\mathcal J(D)=\mathbb E_x\operatorname{cost}(x;D),\qquad 0<\lambda<1 .
+$$
+这是稀疏自编码器目标去掉摊销编码器后的内层精确形式；摊销编码器只能使目标更大，故本卷结论是对理想编码器的结论。取 $u,v$ 为标准正交单位向量，$w=(u+v)/\sqrt2$；数据支撑于 $\{0,u,u+v,v\}$，概率 $p_0,p_A,p_{AB},p_B$。约定 $u$ 是父特征 A 的方向、$v$ 是子特征 B 的方向，$p_B$ 是“B 单独出现”的概率，$p_B=0$ 称严格层级（B 蕴含 A）。两个典型字典：忠实字典 $D_F=[u,v]$ 与吸收字典 $D_A=[u,w]$。
+

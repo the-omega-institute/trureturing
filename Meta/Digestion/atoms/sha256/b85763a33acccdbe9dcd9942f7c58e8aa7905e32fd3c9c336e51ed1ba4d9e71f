@@ -1,0 +1,14 @@
+**排除 $(0,0)$。** 此时 $G_5=A_0$、$Q_5=B_0$。取单位 $\xi\in\Gamma$ 使 $R_\Gamma\xi=\beta$。由（59.1）、（59.3），
+$$
+V_0(H\otimes\mathbb C\xi)=A_0\otimes\beta=V_0H_4,
+$$
+$$
+V_1(G\otimes\mathbb C\xi)=B_0\otimes\beta=V_1G_4.
+$$
+两个固定等距均单射，因而
+$$
+H_4=H\otimes\mathbb C\xi,\qquad
+G_4=G\otimes\mathbb C\xi.
+$$
+这两者包含同一非零向量 $w\otimes\xi$，违反 $H_4\cap G_4=0$。
+

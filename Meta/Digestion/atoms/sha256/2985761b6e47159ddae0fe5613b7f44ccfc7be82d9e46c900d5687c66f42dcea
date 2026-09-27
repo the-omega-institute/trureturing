@@ -1,0 +1,22 @@
+**定义 15.1（有理非平凡分量及其矩阵阶）。** 固定非平凡有限群 H，记 s=|H|、u_H=Σ_{h∈H}h、e_H=u_H/s∈Q[H]。令 epsilon:Q[H]→Q 为增广。对 n≥1 及 A∈M_n(N[H])，置 M=epsilon(A)，并将有理矩阵按单位群元素嵌入群代数，定义
+
+$$
+Z_A=A-e_HM.
+$$
+
+使用有理群代数的 Wedderburn 分解
+
+$$
+\mathbb Q[H]\cong\mathbb Q\times\prod_{\lambda\in\Lambda}M_{r_\lambda}(D_\lambda),
+\qquad b_H=\max_{\lambda\in\Lambda}r_\lambda.
+$$
+
+本文凡使用 inert 均假定相应增广矩阵 essential；纯矩阵恒等式、分量幂零性及秩论证不需这一假设。第一因子是增广，Lambda 只含非平凡因子；D_lambda 是其中心 F_lambda 上的有限维除环，r_lambda≥1。记 A_lambda∈M_{n r_lambda}(D_lambda) 为 A 的对应分量，nu_lambda(A) 为其最小正幂零指数，不幂零时取无穷；零矩阵的正指数为一。有限群非平凡保证 Lambda 非空。若 chi 为对应复不可约特征标，m_Q(chi)=sqrt(dim_{F_lambda}D_lambda) 为该有理简单分量的 Schur 指数，则
+
+$$
+\chi(1)=r_\lambda m_{\mathbb Q}(\chi),\qquad
+b_H=\max_{\chi\ne\mathbf1}\frac{\chi(1)}{m_{\mathbb Q}(\chi)}.
+$$
+
+Wedderburn 分量与除环上矩阵单位属于既有表示论。Bakshi–Garg 的引言及第 2 至 3 节给出这一结构，并在指定类型的简单分量上提供实际矩阵单位方法；本节不把这些算法扩张为该文未覆盖的任意有限群算法。[^rrosft3-matrixunits]
+

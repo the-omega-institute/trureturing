@@ -1,0 +1,191 @@
+**定理 13.2（真律与异位双重加权律的联合正态极限）。** 令 $d\to\infty$，
+$r=r_d\in(0,1)$ 任意，$s=s_d$ 为整数，且 $\mu/\log M\to1$。
+在任一真参数 $(z,\epsilon)$ 下，两种实验均满足
+
+$$
+\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma}
+ \ \Longrightarrow\ N(0,1).
+\tag{13.2}
+$$
+
+对任意异位 $z\ne w$，置 $\beta=1-r^2/(2k^2)$，定义概率律
+
+$$
+\frac{d\mathsf T^{\epsilon,E}_{z,w,s}}{d\mathsf U_s^E}
+ =\frac{L^{\epsilon,E}_{b_z,s}L^{\epsilon,E}_{b_w,s}}{\beta^s}.
+\tag{13.3}
+$$
+
+在此律下，两个坐标满足
+
+$$
+\left(\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma},
+       \frac{\log L^{\epsilon,E}_{b_w,s}-\mu}{\sigma}\right)
+ \ \Longrightarrow\ N(0,I_2).
+\tag{13.4}
+$$
+
+结论不限制 $r_d$ 接近 $0$ 或 $1$ 的速度。
+
+证明。以下 $C,c>0$ 为与 $d,r,s,z,w$ 无关的常数，可在各处不同；
+所有估计只需对充分大的 $d$ 成立。置 $q=r/k$，并定义
+
+$$
+B_j(u)=\frac{(1+u)|\log(1+u)|^j+(1-u)|\log(1-u)|^j}{2}.
+$$
+
+在 $u\downarrow0$ 处展开，在 $u\uparrow1$ 处用
+$(1-u)|\log(1-u)|^j\to0$，再在中间紧区间取界，得到
+
+$$
+B_1(u)\le Cu,\quad B_3(u)\le Cu^2,\quad
+cu^2\le\phi(u),\psi(u)\le Cu^2\qquad(0<u<1).
+\tag{13.5}
+$$
+
+同样 $(1\pm u)|\log(1\pm u)|\le Cu$、$|\xi(u)|\le Cu$。
+因此 $I\asymp r^2/n$、$v\asymp I$，且 $|J|\le C/n$。
+若 $a_z(x,y)=\log(nP_{b_z}(x,y))$，则在单边真律下
+
+$$
+\mathbb E|a_z|\le Cr/n,\qquad \mathbb E|a_z|^3\le CI.
+\tag{13.6}
+$$
+
+由 (11.5)，路径方差等于 $sv(1+O(n^{-1}))$。
+因为 $P_{b_z}^2=\Pi$，任何截至第 $j$ 条边的历史与从第 $j+3$ 条边开始的
+未来相互独立：两组端点之间有两步转移，条件分布已重置为均匀律。
+故边变量构成 $2$-依赖序列；独立状态对当然也满足固定依赖阶数的条件。
+中心化后的三阶绝对矩仍至多 $CI$，而
+
+$$
+\frac{sCI}{(sv)^{3/2}}=O(\mu^{-1/2})\longrightarrow0.
+\tag{13.7}
+$$
+
+应用固定依赖阶数三角阵的 Lyapunov 中心极限定理
+[Janson，定理 4.1](../../../Library/Dynamics/janson2021mdependent.md)
+即得 (13.2)。这里调用既有中心极限定理，所需矩界与依赖结构由本核族提供。
+
+下面证明双重加权结论，只需处理正向。以 (10.5) 的 $K=K_{b_zb_w}$ 记
+
+$$
+f=1+b_zb_w,\qquad g=\chi(b_z+b_w),\qquad
+\gamma=\mathbb E(\chi f)=\mathbb E(b_zb_w)=\beta-1.
+$$
+
+有 $\mathbb E f=\beta$、$\mathbb E g=\mathbb E(\chi g)=0$，所以
+
+$$
+K^2(x,y)=\frac{\beta f(x)+\gamma g(x)}n.
+\tag{13.8}
+$$
+
+由于 $K$ 每列之和为 $\beta$，矩阵 $Q=K^\top/\beta$ 是转移核，且
+
+$$
+Q^2(x,y)=\nu(y),\qquad
+\nu(y)=\frac{\beta f(y)+\gamma g(y)}{n\beta^2},\qquad
+\sup_y|n\nu(y)-1|\le Cr^2/n.
+\tag{13.9}
+$$
+
+$Q$ 为正核，$Q^2$ 的共同一行 $\nu$ 是其平稳分布。
+最后一界来自 $|b_zb_w|\le r^2/k$、$|g|\le2r$ 及
+$|\gamma|=r^2/(2k^2)$。
+(13.3) 的路径律倒序后正是均匀启动的 $Q$ 链。
+改为 $\nu$ 启动时，整条任意长路径的全变差变化至多
+$\operatorname{TV}(\operatorname{Unif}(X),\nu)\le Cr^2/n$，
+因为后续均用同一转移核。这一界不随 $s$ 增长。
+
+先分析双重加权独立单边律
+
+$$
+T(x,y)=\frac{K(x,y)}{n\beta}.
+$$
+
+相对于第 $z$ 个真单边律，其密度为
+$(1+\chi(x)\chi(y)b_w(x))/\beta$。
+对 $y$ 的奇偶取平均给出精确均值
+
+$$
+\mathbb E_Ta_z
+=\frac{I+\mathbb E[b_w\xi(b_z)]}{\beta},\qquad
+\mathbb E[b_w\xi(b_z)]
+=-\frac{q}{n}\bigl(\xi(r)+\xi(q)\bigr).
+\tag{13.10}
+$$
+
+在 $z$、$w$、$C_+\setminus\{z,w\}$ 上分别使用
+$b_z,b_w=(r,-q),(-q,r),(-q,-q)$，以及 $|\log(1\pm q)|\le Cq$，
+由 (13.5) 得到
+
+$$
+\begin{aligned}
+|\mathbb E_Ta_z-I|&\le CI/n,\\
+|\mathbb E_Ta_z^2-(v+I^2)|&\le CI/n,\\
+\mathbb E_T|a_za_w|&\le CI/n,\\
+\mathbb E_T|a_z|&\le Cr/n,\qquad
+\mathbb E_T|a_z|^3\le CI.
+\end{aligned}
+\tag{13.11}
+$$
+
+为详核第二行，相对于真律的未归一化二阶矩修正，其绝对值至多
+
+$$
+\frac{q\psi(r)+r\psi(q)+(k-1)q\psi(q)}n
+\le Cr^3/n^2\le CI/n.
+$$
+
+归一化误差满足同一界。第三行中，在两个峰位各有一个对数因子至多 $Cq$，
+另一个因子的加权绝对一阶矩至多 $Cr$；其余非零位置的乘积至多 $Cq^2$。
+故总量至多 $C(qr/n+q^2)\le CI/n$。第一行由 (13.10) 直接得到，
+最后两界由密度至多常数及 (13.6) 得到。对 $w$ 的估计完全相同。
+
+平稳倒序 $Q$ 路径的一条边，按原方向写成 $(x,y)$，其分布为
+$\nu(y)K(x,y)/\beta=n\nu(y)T(x,y)$。
+由 (13.9)，这个额外因子对均值造成的变化至多
+$C(r^2/n)(r/n)\le CI/n$，对二阶矩造成的变化至多 $CI/n$；
+故 (13.11) 的全部界在此单边分布下仍成立。
+
+还须控制相邻边。令 $Y_j$ 为倒序链，
+$A_{i,j}=a_i(Y_{j+1},Y_j)$，其中 $i\in\{z,w\}$。
+其下一条边的条件均值为
+
+$$
+H_i(y)=\frac1\beta\sum_xK(x,y)a_i(x,y),\qquad
+\|H_i\|_\infty\le Cr/n.
+\tag{13.12}
+$$
+
+确实，对每个固定 $y$，峰位那一项的绝对值至多 $Cr/n$，
+其余 $k$ 个非零项之和至多 $Ckq/n=Cr/n$，由
+$(1\pm r)|\log(1\pm r)|\le Cr$ 得到；另一个候选因子至多 $2$。
+因此对 $\ell=1,2$，马尔可夫性给出
+
+$$
+|\mathbb E[A_{i,0}A_{j,\ell}]|
+=|\mathbb E[A_{i,0}(Q^{\ell-1}H_j)(Y_1)]|
+\le Cr^2/n^2\le CI/n.
+\tag{13.13}
+$$
+
+减去均值乘积不改变这个量级。对 $\ell\ge3$，由 $Q^2$ 的共同一行，
+两条边及其两侧历史独立，协方差为零。
+
+综合 (13.11)–(13.13)，在平稳双重加权路径下，两个对数似然的均值向量为
+$(\mu,\mu)+O(\mu/n)$，协方差矩阵为
+
+$$
+svI_2+O(sI/n),
+\tag{13.14}
+$$
+
+其中矩阵余项逐元素有界。独立状态对由 (13.11) 相加也满足此式。
+对任一固定非零线性组合，两种实验的中心化单边三阶绝对矩至多 $CI$，
+总方差渐近于相应系数平方和乘 $sv$。
+再次用 Janson 的定理及 Cramér–Wold 判据，得到以真实均值中心化的二维正态极限。
+由于 $\mu\asymp\log M$，$O(\mu/n)/\sqrt{sv}\to0$；
+再用均匀启动与平稳启动的全变差界，即得 (13.4)。反向由整体倒序或逐对交换得到。$\square$
+

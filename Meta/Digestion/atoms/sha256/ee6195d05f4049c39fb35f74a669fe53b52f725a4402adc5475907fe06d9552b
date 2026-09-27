@@ -1,0 +1,110 @@
+**定理 406.1（相同局部投影基给出总成功概率三分之一）。** 在定义 405.1 的 $n=2$ 接口中，令 $s=\sqrt3$，并定义两个 bra
+
+$$
+\begin{aligned}
+u&=\frac{(1-i)(1+s)}2,&
+v&=\frac{(1-i)(1-s)}2,\\
+\langle a|&=\frac{(1,u)}{\sqrt{3+s}},&
+\langle b|&=\frac{(1,v)}{\sqrt{3-s}}.
+\end{aligned}
+$$
+
+对应 ket 为 $|a\rangle=(|0\rangle+\bar u|1\rangle)/\sqrt{3+s}$ 与 $|b\rangle=(|0\rangle+\bar v|1\rangle)/\sqrt{3-s}$，其系数是上述 bra 系数的复共轭。两位持有者各自使用同一个二结果正交投影基 $\{|a\rangle,|b\rangle\}$。四个联合结果中，接受两个不同的相反结果 $(a,b)$ 与 $(b,a)$，均施加反馈
+
+$$
+U=\operatorname{diag}(1,-i,1,1).
+$$
+
+另两个结果 $(a,a)$ 与 $(b,b)$ 宣告失败。则每个接受结果的校正映射都是 $\operatorname{id}_S/6$，总接受映射是 $\operatorname{id}_S/3$。对任意有限参考 $A$ 和任意 $\rho_{AS}$，两个接受分支分别给出 $\rho_{AS}/6$，总接受输出为 $\rho_{AS}/3$。这是一个达到 $1/3$ 的构造，不是最优成功概率的断言。
+
+证明。直接计算
+
+$$
+u+v=1-i,\qquad uv=i,\qquad u\bar v=-1,\qquad
+|u|^2=2+s,\qquad |v|^2=2-s.
+$$
+
+因 $3\pm s>0$ 且 $(3+s)(3-s)=6$，有
+
+$$
+\langle a|a\rangle=\frac{1+|u|^2}{3+s}=1,\qquad
+\langle b|b\rangle=\frac{1+|v|^2}{3-s}=1,\qquad
+\langle a|b\rangle=\frac{1+u\bar v}{\sqrt6}=0.
+$$
+
+因此 $|a\rangle\langle a|+|b\rangle\langle b|=I_2$，双方投影的四个乘积结果之和为 $I_2\otimes I_2$，确实给出完整的有限局部 instrument。
+
+对结果 $(a,b)$，按 $i=1,2,3,4$ 排列的四个源重叠为
+
+$$
+\begin{aligned}
+\bigl(\langle a|r_i\rangle\langle b|r_i\rangle\bigr)_{i=1}^4
+ &=\frac1{\sqrt6}
+   \left(1,uv,\frac{(1+u)(1+v)}2,
+                   \frac{(1+iu)(1+iv)}2\right)\\
+ &=\frac1{\sqrt6}(1,i,1,1).
+\end{aligned}
+$$
+
+最后两个分子的化简分别是
+
+$$
+\frac{1+(u+v)+uv}2
+ =\frac{1+(1-i)+i}2=1,\qquad
+\frac{1+i(u+v)-uv}2
+ =\frac{1+i(1-i)-i}2=1.
+$$
+
+对另一个实际结果 $(b,a)$，第一张量因子使用 $\langle b|$、第二张量因子使用 $\langle a|$，从而直接得到
+
+$$
+\begin{aligned}
+\bigl(\langle b|r_i\rangle\langle a|r_i\rangle\bigr)_{i=1}^4
+ &=\frac1{\sqrt6}
+   \left(1,vu,\frac{(1+v)(1+u)}2,
+                   \frac{(1+iv)(1+iu)}2\right)\\
+ &=\frac1{\sqrt6}(1,i,1,1).
+\end{aligned}
+$$
+
+这是不同的正交结果；共同标签使两因子都为 $r_i$，标量乘法交换才使它们的四个振幅相同。
+
+每个秩一乘积投影后的记录输出为固定单位向量 $|a\rangle\otimes|b\rangle$ 或 $|b\rangle\otimes|a\rangle$。所以迹掉记录后，系统的单 Kraus 算子分别为
+
+$$
+K_{ab}=K_{ba}=\frac1{\sqrt6}\operatorname{diag}(1,i,1,1),
+\qquad UK_{ab}=UK_{ba}=\frac1{\sqrt6}I_4.
+$$
+
+于是对任意系统矩阵 $X$，
+
+$$
+UK_{ab}XK_{ab}^\dagger U^\dagger
+ =UK_{ba}XK_{ba}^\dagger U^\dagger=\frac16X.
+$$
+
+张量上参考恒等映射并求和即得所述联合态公式，成功概率恒为 $1/3$，完整 instrument 的总失败概率恒为 $2/3$。
+
+这两个失败结果也不能分别通过某个左侧系统酉反馈变成对全部输入的非零精确恢复分支。事实上，$K_{aa}^\dagger K_{aa}$ 在系统标签 $1,2$ 上的两个对角元为
+
+$$
+\frac1{(3+s)^2},\qquad \frac{(2+s)^2}{(3+s)^2},
+$$
+
+而 $K_{bb}^\dagger K_{bb}$ 的相应对角元为
+
+$$
+\frac1{(3-s)^2},\qquad \frac{(2-s)^2}{(3-s)^2}.
+$$
+
+两对都不相等。若左酉反馈把某一分支变成 $p\operatorname{id}_S$，对全部输入取迹便要求 $K^\dagger K=pI_4$；左乘酉算子不能改变这个效果，故不可能。
+
+最后，若第一位持有者先测量，其结果 $a$ 在系统输入 $|1\rangle\langle1|$ 与 $|2\rangle\langle2|$ 下的前缀概率分别为
+
+$$
+\Pr(a\mid |1\rangle\langle1|)=\frac1{3+s},\qquad
+\Pr(a\mid |2\rangle\langle2|)=\frac{2+s}{3+s}.
+$$
+
+它们不同。接受的两个叶子各自无信息，并不使含失败叶子的更早前缀无信息；定理 405.3 中的后继求和只有在整棵树全部叶子均精确校正时才给出输入无关权重。故本构造不满足该反证所需的确定性前提。证毕。
+

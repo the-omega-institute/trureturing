@@ -1,0 +1,10 @@
+**命题 246.2（一个有限模态询问就能检测这项差别）。** 用 $\langle a\rangle\varphi$ 表示存在一个 $a$ 后继满足 $\varphi$，$\top$ 表示恒真。则
+
+$$
+\langle a\rangle\big(\langle b\rangle\top\ \land\ \langle c\rangle\top\big)
+$$
+
+在 $x$ 成立，在 $y$ 不成立。因为 $x$ 的后继 $s$ 同时保留两种延续；$y$ 的任何一个 $a$ 后继都只保留其中一种。相反，$\langle a\rangle\langle b\rangle\top\land\langle a\rangle\langle c\rangle\top$ 在两根都成立，它允许两个分句分别选取不同的 $a$ 后继。
+
+这里没有把存在边自动解释成主体能够强制选择该边；若要讨论保证，仍须加入第 245 节的行动结构。已经得到的差别是：相同的全部有限路径标签，不能替代相同的嵌套可能性。比较两种实践或两套教导“能通向什么”时，途中保留哪些共同选择，本身就可以是需要保留的关系。
+

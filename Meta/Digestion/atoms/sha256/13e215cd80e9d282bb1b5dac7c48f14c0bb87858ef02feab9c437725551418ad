@@ -1,0 +1,84 @@
+### 272.4 全区间的显式负性下界
+
+现在假设 $n\ge2$。由 $M_te_1=e_1$ 和（272.3），
+$$
+M_t^\dagger Qe_1=e_1-Qe_1,\qquad Q_{11}=\frac12.
+\tag{272.21}
+$$
+再比较该方程的 $(1,2)$ 元，得到
+$$
+2Q_{12}+tQ_{11}=0,\qquad Q_{12}=-\frac t4.
+\tag{272.22}
+$$
+利用（272.21）计算Schur补的首个二次型：
+$$
+\begin{aligned}
+e_1^\dagger S_te_1
+&=\frac12-(e_1-Qe_1)^\dagger Q^{-1}(e_1-Qe_1)\\
+&=2-(Q^{-1})_{11}.
+\end{aligned}
+\tag{272.23}
+$$
+
+按 $e_1$ 与其正交补分块，
+$$
+Q=\begin{pmatrix}1/2&r^\dagger\\r&Q_{\mathrm{tail}}\end{pmatrix},
+\qquad
+\alpha=r^\dagger Q_{\mathrm{tail}}^{-1}r.
+\tag{272.24}
+$$
+$Q\succ0$ 给 $0\le\alpha<1/2$，且
+$$
+(Q^{-1})_{11}=\frac1{1/2-\alpha}.
+\tag{272.25}
+$$
+又 $Q_{\mathrm{tail}}\preceq I$，$r$ 的首项为 $-t/4$，所以
+$$
+\alpha\ge\|r\|^2\ge\frac{t^2}{16}.
+\tag{272.26}
+$$
+因此
+$$
+(Q^{-1})_{11}-2
+=\frac{4\alpha}{1-2\alpha}\ge4\alpha\ge\frac{t^2}{4},
+$$
+$$
+e_1^\dagger S_te_1\le-\frac{t^2}{4}.
+\tag{272.27}
+$$
+
+取联合向量
+$$
+q_t=(-Q^{-1}M_t^\dagger Qe_1,e_1)
+=(e_1-Q^{-1}e_1,e_1).
+\tag{272.28}
+$$
+按左上块完成平方的精确恒等式给
+$$
+q_t^\dagger T_t^\Gamma q_t=e_1^\dagger S_te_1.
+\tag{272.29}
+$$
+因为 $0\prec Q\prec I$ 且 $\lambda_{\min}(Q)\ge7/23$，
+$$
+\|I-Q^{-1}\|\le\frac{16}{7},
+\qquad
+\|q_t\|^2\le1+\left(\frac{16}{7}\right)^2
+=\frac{305}{49}\le\frac{25}{4}.
+\tag{272.30}
+$$
+Rayleigh原理与（272.27）给
+$$
+\lambda_{\min}(T_t^\Gamma)
+\le\frac{q_t^\dagger T_t^\Gamma q_t}{\|q_t\|^2}
+\le-\frac{t^2}{25}.
+\tag{272.31}
+$$
+结合（272.15），得到整个参数区间上的下界
+$$
+\boxed{
+\mathcal N(\Omega_t)\ge\frac{t^2}{25n}
+\qquad(n\ge2,\ 0<t\le1/4).
+}
+\tag{272.32}
+$$
+

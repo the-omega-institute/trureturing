@@ -1,0 +1,9 @@
+### 22.5 命题：定向二进制逼近与边界不稳定
+
+对无理 $\alpha\in(0,1)$，设
+\[
+\alpha_p^-=2^{-p}\lfloor2^p\alpha\rfloor,\qquad
+\alpha_p^+=2^{-p}\lceil2^p\alpha\rceil.
+\]
+两种有理逼近到 $\alpha$ 的误差都严格小于 $2^{-p}$，并分别从下方、上方逼近。对固定有限 $n$，若 $x+k\alpha$ 对 $1\leq k\leq n$ 全都不是整数，则任意收敛参数序列最终都给出正确的长度 $n$ 词。
+

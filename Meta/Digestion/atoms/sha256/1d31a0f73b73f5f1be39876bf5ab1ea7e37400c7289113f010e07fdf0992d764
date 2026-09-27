@@ -1,0 +1,277 @@
+**定理 15.1（固定 CPTP 精确接收的谱充要条件）。** 上述合同存在有限维实现，当且仅当
+
+$$
+\operatorname{spec}_{\mathbb C}(E)
+\subseteq\{0\}\cup\{z\in\mathbb C:|z|=1\}.
+\tag{15.2}
+$$
+
+成立时可取
+
+$$
+\dim K\le m^4+m^3.
+\tag{15.3}
+$$
+
+此界只给统一有限上界，不主张最优。装置可以依赖已知的 $`T`$，但不依赖实际输入、参考或未来终端。
+
+证明。必要性由定理14.2末段：任一非零严格收缩谱投影都在某个纯初始态上非零，而全部输入合同必须包含该初态；该定理因而排除有限固定接收。以下证明充分性。
+
+**有限启动后精确进入外围空间。** 有限维 CPTP 映射的幂一致有界，因此单位模特征值的 Jordan 块均为一阶。在（15.2）下，其余 Jordan 块全部属于零特征值。令 $`L\ge1`$ 为零 Jordan 块的最大长度；无零块时取 $`L=1`$。于是
+
+$$
+1\le L\le m^2,\qquad
+\operatorname{ran}E^L=X_E,
+\tag{15.4}
+$$
+
+其中 $`X_E`$ 是全部单位模特征空间的复线性张成。这是有限步的精确等式，不是渐近近似。
+
+Wolf–Pérez-García 的外围空间结构定理给出原 Hilbert 空间的正交分解与正定密度矩阵：[^phase_peripheral_structure]
+
+$$
+M=M_0\oplus\bigoplus_{k=1}^{s}(A_k\otimes B_k),
+\qquad
+X_E=0\oplus\bigoplus_{k=1}^{s}\mathcal L(A_k)\otimes\tau_k.
+\tag{15.5}
+$$
+
+存在块置换 $`p`$ 及酉识别 $`U_k:A_k\to A_{p(k)}`$，使
+
+$$
+E\bigl(\iota_k(X\otimes\tau_k)\bigr)
+=\iota_{p(k)}\bigl(U_kXU_k^\dagger\otimes\tau_{p(k)}\bigr).
+\tag{15.6}
+$$
+
+这里 $`\iota_k`$ 表示嵌入第 $`k`$ 个来源块。只有 $`\dim A_k=\dim A_{p(k)}`$ 是必需条件；不要求 $`r_k:=\dim B_k`$ 沿置换循环保持相同。
+
+**一次共同的启动编码。** 记 $`P_k`$ 为来源块投影，定义
+
+$$
+F_k(X)=\operatorname{Tr}_{B_k}\bigl(P_kE^L(X)P_k\bigr).
+\tag{15.7}
+$$
+
+这是完全正映射，且由（15.4）—（15.5），
+
+$$
+E^L(X)=\bigoplus_k F_k(X)\otimes\tau_k,
+\qquad
+\sum_k\operatorname{Tr}F_k(X)=\operatorname{Tr}X.
+\tag{15.8}
+$$
+
+为每个 $`F_k`$ 取最小 Kraus 实现
+
+$$
+V_k:M\longrightarrow A_k\otimes Q_k,
+\qquad
+F_k(X)=\operatorname{Tr}_{Q_k}(V_kXV_k^\dagger),
+\qquad q_k:=\dim Q_k\le m\dim A_k.
+\tag{15.9}
+$$
+
+各 $`V_k`$ 不必分别等距，但 $`\sum_kV_k^\dagger V_k=I_M`$。取 $`q=\max_kq_k`$ 维公共空间 $`Q`$，固定等距 $`j_k:Q_k\to Q`$，并令 $`\widetilde V_k=(I\otimes j_k)V_k`$。
+
+取 $`\tau_k`$ 的最小纯化
+
+$$
+|\Xi_k\rangle\in B_k\otimes R_k,
+\qquad \dim R_k=r_k,
+\qquad K_{\rm run}=Q\otimes\bigoplus_kR_k.
+\tag{15.10}
+$$
+
+按固定张量因子次序，将
+
+$$
+W_{\rm can}|\psi\rangle
+=\sum_k\widetilde V_k|\psi\rangle\otimes|\Xi_k\rangle
+\in M\otimes K_{\rm run}
+\tag{15.11}
+$$
+
+解释为等距：其中 $`A_kB_k`$ 属于来源，第 $`k`$ 个 $`QR_k`$ 属于接收器。不同 $`R_k`$ 正交，故迹掉接收器所得通道正是 $`E^L`$。式（15.11）是相干求和，不是测量块标签后选择分支。
+
+令 $`W_t:M\to M\otimes\mathcal B^{\otimes t}`$ 为真实来源的 $`t`$ 步发射等距，只将活动来源写在张量积前方。定义统一实际档案支撑
+
+$$
+S_t=\operatorname{span}\{
+(\langle u|_M\otimes I)W_t|v\rangle:
+u,v\in M\}
+\subseteq\mathcal B^{\otimes t}.
+\tag{15.12}
+$$
+
+于是
+
+$$
+S_0=\mathbb C,\qquad
+\dim S_t\le m^2,\qquad
+S_{t+1}\subseteq S_t\otimes\mathcal B.
+\tag{15.13}
+$$
+
+维数界来自输入和活动来源各有 $`m`$ 个基向量；包含关系来自下一次发射只作用于活动来源。这一支撑同时容纳全部输入及全部参考，未依实际态选择。
+
+由于 $`W_L`$ 与 $`W_{\rm can}`$ 给出同一个来源通道，存在一个等距
+
+$$
+C_L:S_L\longrightarrow K_{\rm run},
+\qquad
+(I_M\otimes C_L)W_L=W_{\rm can}.
+\tag{15.14}
+$$
+
+这是最小实际环境上的 Stinespring 唯一性，也可直接由 Gram 矩阵证明：在输入和来源输出基下，两份等距的档案系数向量具有相同的全部内积，因为这些内积就是 $`E^L(|i\rangle\langle j|)`$ 的矩阵元。因此把真实系数送到规范系数的线性映射良定且等距。这里比较的是整个通道的一份共同编码，已经固定不同块的相对相位。
+
+**一个保持块相干的固定运行吸收器。** 对每个 $`k`$，在 $`B_kR_k`$ 上准备 $`\Xi_k`$，让实际来源 $`T`$ 作用于 $`A_kB_k`$。这给出一个等距
+
+$$
+W_k:A_k\longrightarrow M\otimes\mathcal B\otimes R_k.
+\tag{15.15}
+$$
+
+它的来源边缘通道由（15.6）给出。该通道的另一份最小 Stinespring 等距为
+
+$$
+Z_k|v\rangle
+=\iota_{p(k)}\bigl(U_k|v\rangle\otimes|\Xi_{p(k)}\rangle\bigr)
+\in M\otimes R_{p(k)}.
+\tag{15.16}
+$$
+
+由于 $`\tau_{p(k)}`$ 正定，这份环境的支撑是整个 $`R_{p(k)}`$。Stinespring 唯一性因而给一个等距
+
+$$
+J_k:R_{p(k)}\longrightarrow\mathcal B\otimes R_k,
+\qquad
+W_k=(I_M\otimes J_k)Z_k.
+\tag{15.17}
+$$
+
+这是对整个输入空间 $`A_k`$ 的线性等式，因此即使 $`A_k`$ 与任意参考及 $`Q`$ 纠缠也成立。它也直接蕴含 $`r_{p(k)}\le(\dim\mathcal B)r_k`$，无需另加相同噪声秩的假设。
+
+在 $`K_{\rm run}\otimes\mathcal B`$ 上定义单个部分等距 $`A`$：将第 $`k`$ 块按固定张量次序写成 $`Q\otimes\mathcal B\otimes R_k`$ 后，在 $`Q\otimes\operatorname{ran}J_k`$ 上施加 $`I_Q\otimes J_k^\dagger`$，输出放入第 $`p(k)`$ 块；在这些成功子空间的正交补上取零。
+
+输入块彼此正交，输出块也因 $`p`$ 是置换而彼此正交。因此
+
+$$
+AA^\dagger=I_{K_{\rm run}},\qquad
+P:=A^\dagger A\text{ 是成功支撑投影}.
+\tag{15.18}
+$$
+
+取任意固定运行态 $`\omega`$，定义
+
+$$
+\mathcal C_{\rm run}(X)
+=AXA^\dagger+\operatorname{Tr}[(I-P)X]\,\omega.
+\tag{15.19}
+$$
+
+这是一份全域 CPTP 映射。成功部分必须是单个 Kraus 算子 $`A`$；若将每个块分别作为一个成功 Kraus 算子，就会测量并消除块间相干，不能用于本合同。
+
+为验证实际运行永不离开成功支撑，考虑以下共同纯化子空间：
+
+$$
+\Gamma((\xi_k)_k)
+=\sum_k\xi_k^{A_kQ}\otimes\Xi_k^{B_kR_k},
+\qquad
+\xi_k\in A_k\otimes Q.
+\tag{15.20}
+$$
+
+它包含（15.11）的全部像。由（15.17），一次真实发射加（15.19）把（15.20）精确送到同一形式，其中
+
+$$
+\xi'_{p(k)}=(U_k\otimes I_Q)\xi_k.
+\tag{15.21}
+$$
+
+发射后的接收输入全部位于 $`P`$；补空间重置项的概率为零。式（15.21）是一份块置换加酉的线性等式，既保持块内参考纠缠，也保持不同块之间的相干。因而此性质可以无限迭代，且不用外部时钟切换运行门。
+
+**把有限启动和运行装成同一台机器。** 对 $`0\le t<L`$，令 $`K_t`$ 为 $`S_t`$ 的一份等距副本，取固定编码 $`C_t:S_t\to K_t`$，其中 $`K_0=\mathbb C|e\rangle`$。最后一步编码使用（15.14）。由（15.13），每个启动转移可以在实际输入子空间
+
+$$
+(C_t\otimes I_{\mathcal B})S_{t+1}
+\subseteq K_t\otimes\mathcal B
+\tag{15.22}
+$$
+
+上实现规定的等距编码；在其正交补上输出任意固定态，就得到全域 CPTP 映射。目标扇区在 $`t+1<L`$ 时为 $`K_{t+1}`$，在 $`t+1=L`$ 时为 $`K_{\rm run}`$。
+
+取总寄存器
+
+$$
+K=\bigoplus_{t=0}^{L-1}K_t\oplus K_{\rm run}.
+\tag{15.23}
+$$
+
+按输入阶段扇区投影，随后施加对应启动通道或运行通道，构成一份固定全域 CPTP 映射 $`\mathcal C`$。实际时刻的阶段标签确定：前 $`L`$ 步顺次经过启动扇区，此后永久处于运行扇区。因此阶段投影不删除任何实际来源与参考的相干；它没有测量运行扇区内部的 $`k`$ 标签。接收初态为固定独立纯态 $`|e\rangle`$，全部阶段控制已纳入 $`K`$。
+
+**全部终端的本地精确解码。** 还须证明运行编码在完整档案支撑上等距，而不只在各个单独输入上保持概率。对 $`n\ge L`$ 递归定义
+
+$$
+C_{n+1}
+=A(C_n\otimes I_{\mathcal B})\big|_{S_{n+1}}.
+\tag{15.24}
+$$
+
+假设 $`C_n`$ 是等距，且实际接收后的等距为 $`(I_M\otimes C_n)W_n`$。由（15.20）—（15.21），对每个源输入 $`v`$，下一次发射后的向量属于 $`M\otimes\operatorname{ran}P`$。对其活动来源系数逐个取内积，并用（15.12）张成定义，得到
+
+$$
+(C_n\otimes I_{\mathcal B})S_{n+1}
+\subseteq\operatorname{ran}P.
+\tag{15.25}
+$$
+
+在这个子空间上 $`A`$ 等距，所以（15.24）是整个 $`S_{n+1}`$ 上的等距，且继续给出相同的实际编码恒等式。由（15.14）开始归纳，每个 $`n`$ 都得到一个与输入、参考无关的共同等距 $`C_n:S_n\to K`$。将 $`C_n`$ 在 $`S_n`$ 的正交补上延零；目标 $`\Omega_n`$ 本来支撑于 $`JM\otimes S_n`$。于是
+
+$$
+\sigma_n(\rho)
+=(I_{JM}\otimes C_n)\Omega_n(\rho)(I_{JM}\otimes C_n^\dagger)
+\quad\text{对全部 }J,\rho_{JM}.
+\tag{15.26}
+$$
+
+将 $`C_n^\dagger`$ 的值域 $`S_n`$ 嵌回完整档案空间，记所得算子为 $`R_n:K\to\mathcal B^{\otimes n}`$。取任意固定档案态 $`\zeta_n`$，则
+
+$$
+\mathcal D_n(X)
+=R_nXR_n^\dagger
++\operatorname{Tr}[(I_K-C_nC_n^\dagger)X]\,\zeta_n
+\tag{15.27}
+$$
+
+是只作用于接收器的全域 CPTP 解码器，并由（15.26）恢复完整 $`JM\mathcal B^{\otimes n}`$ 联合态。参考完整性来自统一线性等距恒等式，不需要逐输入选择恢复映射。
+
+等价地，对 $`n>L`$ 可反复施加 $`A^\dagger`$ 恢复后续发出系统，再逆启动编码；$`AA^\dagger=I`$ 保证反向运行本身等距，且在实际像上回到正确的历史支撑。早期接收操作与后续只作用于活动来源的发射可交换位置，因此整个解码电路不访问活动来源。
+
+**容量账。** 由（15.5），
+
+$$
+\sum_kr_k\le\sum_k(\dim A_k)r_k\le m,
+\qquad q\le m\max_k\dim A_k\le m^2.
+\tag{15.28}
+$$
+
+于是
+
+$$
+\begin{aligned}
+\dim K
+&=\sum_{t=0}^{L-1}\dim S_t+q\sum_kr_k\\
+&\le1+(L-1)m^2+m^3\\
+&\le m^4+m^3,
+\end{aligned}
+\tag{15.29}
+$$
+
+最后一步使用 $`L\le m^2`$ 和 $`m\ge1`$。所有持久启动、块标签、纯化与 Kraus 记忆均已计入。证明完毕。
+
+本判据区分两种量词：每个固定终端的实际档案支撑始终不超过 $`m^2`$，但要让一个独立初始化、固定 CPTP 的有限物理装置连续维护精确边界，还必须排除全部非零严格收缩谱模。单位模部分可以永久可逆地运行，零谱部分可以在有限启动内消去。结论不要求外围相位是单位根，也没有声称同维固定酉、无丢弃环境的接收合同成立。
+
+[^phase_peripheral_structure]: Michael M. Wolf and David Pérez-García, *The Inverse Eigenvalue Problem for Quantum Channels*, [arXiv:1005.4545v1, Theorem 8, pp.10–11, equations (22)–(24)](https://arxiv.org/pdf/1005.4545v1#page=10). 原定理适用于保迹 Schwarz 映射，文中定义为其对偶满足 Schwarz 不等式；CPTP 映射属于此类。定理给原 Hilbert 空间在某个正交基下的分解，允许瞬态空间及不同噪声块维数。原文输出第 $`k`$ 块读取输入第 $`\pi(k)`$ 块，本节用 $`p=\pi^{-1}`$ 写成输入块到输出块的方向。原定理只描述外围空间；有限步进入该空间由本节的额外谱假设（15.2）和 Jordan 分解提供。固定接收器及容量上界是本节在该结构上的组合推导，不是原定理的原有结论。
+

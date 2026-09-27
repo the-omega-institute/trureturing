@@ -1,0 +1,66 @@
+**五维接收向量。** 取五维接收器的正交单位基
+$`u,v,w,t,e`$，接收初态为 $`w`$。定义正实数及两层正交旋转
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+d=\sqrt{c^2+|b|^2},
+\qquad
+z=\frac{a^2u+bv}{c},\qquad
+y=\frac{-\overline b\,u+\overline{a}^{2}v}{c},
+\tag{23.17}
+$$
+
+$$
+q=\frac{\overline b\,y+\overline{a}^{2}e}{c},
+\qquad
+f=\frac{-a^2y+be}{c}.
+\tag{23.18}
+$$
+
+因此 $`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的正交单位基，
+$`q,f`$ 是 $`\operatorname{span}\{y,e\}`$ 的正交单位基，
+$`z,q,f`$ 是 $`\operatorname{span}\{u,v,e\}`$ 的正交单位基。
+再定义
+
+$$
+s=\frac{-cv+be}{d},
+\qquad
+g=\frac{\overline b\,v+ce}{d},
+\qquad
+r=\frac{df-cs}{b}.
+\tag{23.19}
+$$
+
+$`s,g`$ 是 $`\operatorname{span}\{v,e\}`$ 的正交单位基，所以
+$`s\perp u`$。展开（23.17）—（23.18）给出关键恒等式
+
+$$
+s=\frac{-\overline b\,z+cf}{d}.
+\tag{23.20}
+$$
+
+其验证为
+
+$$
+-\overline b\,z+cf
+=-\frac{a^2\overline b}{c}u
+-\frac{|b|^2}{c}v-a^2y+be
+=-cv+be.
+\tag{23.21}
+$$
+
+由（23.20）有 $`\langle s,f\rangle=c/d`$，于是
+
+$$
+\langle s,r\rangle=0,
+\qquad
+\|r\|^2=\frac{d^2+c^2-2c^2}{|b|^2}=1,
+\qquad
+cs+br=df.
+\tag{23.22}
+$$
+
+所以 $`s,r`$ 是 $`\operatorname{span}\{z,f\}`$ 的正交单位基，
+$`q,s,r`$ 是 $`\operatorname{span}\{u,v,e\}`$ 的正交单位基。
+以上等式对一般复数 $`a,b`$ 成立；除以 $`b`$ 合法来自非退化假设。
+

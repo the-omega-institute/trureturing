@@ -1,0 +1,39 @@
+**定义 73.1（逐输出的条件分布距离）。** 保持第 68、69、71 章的原实际模型，
+记一个完整原始数据纤维为 $x$，完整组计数律为 $P_x$，其精确熵为 $h_x$。
+令 $R$ 为同一组计数向量，$T=t_x(R)$ 为定义 54.1 的精确标量，
+并观测 $Y=T+\sigma_MG$，其中 $\sigma_M>0$ 确定，$G$ 独立标准正态且不另行揭示。
+沿用 $v=\ell/(2(\log2)^2)>0$，置 $\Phi_v(z)=\Phi(z/\sqrt v)$、
+
+```math
+Z_x(R)=\frac{-\log_2P_x(R)-h_x}{Q},\qquad
+p_x(n\mid y)=\frac{P_x(n)\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},
+```
+
+```math
+f_x(y)=\sum_nP_x(n)\varphi_{\sigma_M}(y-t_x(n)),\qquad
+J_x(n,y)=-\log_2p_x(n\mid y).
+```
+
+式 (73.1)。
+
+严格正的有限 Gaussian 混合使这些条件权重对每个实数 $y$ 都有定义。
+定义两个有界距离
+
+```math
+D_M^A(x,y)=\sup_{z\in\mathbb Q}
+ |P_x(Z_x\le z\mid y)-\Phi_v(z)|,
+```
+
+```math
+D_M^B(x,y)=\sup_{z\in\mathbb Q}
+ \left|P_x\left(\frac{J_x(R,y)-h_x}{Q}\le z\,\middle|\,y\right)
+       -\Phi_v(z)\right|,
+\qquad \overline D_M^a(x)=\int D_M^a(x,y)f_x(y)\,dy\quad(a=A,B).
+```
+
+式 (73.2)。
+
+有理阈值上确界可测，并由 CDF 右连续性与正态 CDF 连续性等于实阈值上确界。
+$A$ 度量原惊奇量在给定输出后的分布，$B$ 度量输出后验自身的惊奇量；二者不混同。
+内层条件律和 $f_x$ 均由均匀大小 $q$ 先验定义。
+

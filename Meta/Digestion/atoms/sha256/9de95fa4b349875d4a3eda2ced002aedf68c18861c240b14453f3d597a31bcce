@@ -1,0 +1,8 @@
+**定义。** 令
+
+$$\beta_2=\arccos(70/99),\quad
+\beta_3=\arccos(49\sqrt6/198),\quad
+\beta_4=\arccos(17/33),\quad\theta_k=\arccos q_k.$$
+
+它们满足 $0<\beta_2<\beta_3<\beta_4$ 和 $0<\theta_0<\theta_1<\cdots<\theta_4$。这些序关系也可由上述正余弦的平方比较直接核对。
+

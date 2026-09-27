@@ -1,0 +1,10 @@
+**引理154.1（完整目标的稳定坐标）。** 对全部 $n\ge3$，
+
+$$
+\boxed{
+\frac12\|\mathcal V_n-\mathcal V_*\|_\diamond
+\le C_p p^{n-1}=:\delta_n.
+}
+\tag{154.5}
+$$
+

@@ -1,0 +1,28 @@
+**证明。** 任意具有相同 $Z$ 的Hermitian填充都写成
+$$
+T=T_*+\operatorname{diag}(D,-D),
+\qquad D=D^\dagger.
+\tag{268.16}
+$$
+假设 $T\succeq0$。对 $q_1=(-e_1,e_1)$，
+$$
+q_1^\dagger Tq_1=0.
+\tag{268.17}
+$$
+正半定矩阵将零二次型向量送到零，所以 $Tq_1=0$。又 $T_*q_1=0$，读取
+$\operatorname{diag}(D,-D)q_1=0$ 的下半部分便得 $De_1=0$。
+
+设已证明 $De_i=0$，$1\le i<j$。Hermitian性同时消去相应行。因此
+$$
+\begin{aligned}
+q_j^\dagger Tq_j
+&=(e_j+te_{j-1})^\dagger D(e_j+te_{j-1})
+-e_j^\dagger De_j\\
+&=0.
+\end{aligned}
+\tag{268.18}
+$$
+再次由PSD性得 $Tq_j=0$；减去 $T_*q_j=0$ 并读取下半部分，得到 $De_j=0$。归纳至 $n$ 得 $D=0$。
+
+该论证允许任意复Hermitian的 $D$，没有对竞争态增加实性、纯性或秩限制。将整个填充乘以 $1/n$，正性和唯一性保留；反向将实际来源乘以 $n$ 又回到同一个Ando纤维，所以得到实际来源唯一性。$\square$
+

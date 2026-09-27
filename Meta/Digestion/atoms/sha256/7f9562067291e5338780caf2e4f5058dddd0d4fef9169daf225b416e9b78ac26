@@ -1,0 +1,2 @@
+**注 2.26。** The reverse tail bound uses the one-cylinder-per-depth condition but not the strict positivity of $c_p$. Its proof also works for $p=2$. It does not provide an effective approximation merely from the event stream: computing the final sets $R_n$ is the oracle operation being assumed.
+

@@ -1,0 +1,5 @@
+source_id = "erdos-272-ap-intersection-endgame"
+path = "docs/develop/theory/ERDOS_272_AP_INTERSECTION_ENDGAME.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

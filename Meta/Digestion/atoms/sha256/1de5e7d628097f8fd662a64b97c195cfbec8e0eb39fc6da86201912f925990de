@@ -1,0 +1,56 @@
+### 189.6 Choi 预算化为非负圆盘域
+
+令
+
+$$
+n=|N_0^*|=|N_1^*|,\qquad
+m^2=\frac{|M_0^*|^2+|M_1^*|^2}{2}.
+$$
+
+Choi 正性及 $A_j^*=1/2$ 给
+
+$$
+B_j^*\ge2|N_j^*|^2,\qquad
+D_j^*\ge2|M_j^*|^2.
+\tag{189.19}
+$$
+
+共同保迹的第二式因此强制
+$4n^2+4m^2\le1$，即 $(m,n)\in\mathcal D$。
+又因为 $R>1$，
+
+$$
+\begin{aligned}
+B_0^*+RB_1^*
+&=R[1-(D_0^*+D_1^*)]-\delta B_0^*\\
+&\le R-4Rm^2-2\delta n^2.
+\end{aligned}
+$$
+
+同时
+
+$$
+\operatorname{Re}(M_0^*+M_1^*)\le2m,\qquad
+\gamma\operatorname{Im}N_0^*\ge-|\gamma|n.
+$$
+
+将这些不等式代入（189.18），正得到（189.1）中对应
+$(m,n)$ 的二次式，因而下斜率至少为 $\Phi_h$。
+
+最优误差的归一化斜率由（189.11）与可行上界一致有界。
+对实现其 $\liminf$ 的序列选取上述 Choi 收敛子列，得到
+
+$$
+\liminf_{\epsilon\downarrow0}
+\frac{H_h(\epsilon)-3/4}{\epsilon}\ge\Phi_h.
+$$
+
+第188节取非负圆盘域最小点及正确的 $\gamma$ 符号给反向
+$\limsup$ 不等式。因此极限存在并等于 $\Phi_h$，定理189.1得证。
+
+这些 Choi 不等式没有删除额外跳跃自由度。
+第188节的实现恰让 $B_0=2n^2$、$D_0=D_1=2m^2$，
+将剩余 $B$ 预算放入结果 $1$ 的额外跳跃，并令
+$M_0=M_1=m$、$N_0=-i\operatorname{sgn}(\gamma)n$。
+所以所有下界所用的不等式能够由同一实际共同 instrument 同时达到。
+

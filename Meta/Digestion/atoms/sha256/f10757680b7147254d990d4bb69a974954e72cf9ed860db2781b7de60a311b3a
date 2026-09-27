@@ -1,0 +1,10 @@
+**证明：必要性。** 设恢复 Kraus 为 $A_t$。复合通道的 Choi 矩阵为 $|I_d\rangle\!\rangle\langle\!\langle I_d|$，是秩一正矩阵。因此各向量 $|A_tE_a\rangle\!\rangle$ 必须与 $|I_d\rangle\!\rangle$ 共线，记 $A_tE_a=z_{ta}I_d$。由恢复保迹得
+
+$$
+E_a^\dagger E_b
+=\sum_tE_a^\dagger A_t^\dagger A_tE_b
+=\Bigl(\sum_t\overline{z_{ta}}z_{tb}\Bigr)I_d.
+$$
+
+取迹确定该标量正是$c_{ab}$，故$D_{ab}=0$。
+

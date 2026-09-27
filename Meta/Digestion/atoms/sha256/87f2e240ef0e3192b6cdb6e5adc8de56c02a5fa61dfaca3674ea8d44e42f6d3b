@@ -1,0 +1,38 @@
+### 72.4 例外只能落在一对相邻正交环境上
+
+置 $k=j-1\in\{2,3,4,5\}$，$Z=R\cap R_0^\perp$，故
+$$
+R=R_0\oplus Z,\qquad \dim Z=1.
+$$
+由（72.12）—（72.13），三个非例外输入平面 $G_i$、$i\in\{2,3,4,5\}\setminus\{k\}$ 都在 $R_0$ 中，任意两个都张成 $R_0$，因为其一位像是不同环境上的完整 $Q$ 纤维。$G_k$ 不包含于 $R_0$。
+
+从例外 $Q_j$ 取向量，投影到 $Q^\perp=R$ 后得到非零接收向量 $m$。于是
+$$
+V_1R=(Q\otimes F)\oplus(\mathbb Cm\otimes\eta_j),
+\qquad V_1Z=\mathbb Cm\otimes\eta_j.
+\tag{72.16}
+$$
+这里 $m$ 可归一化；第二式来自等距性和 $Z\perp R_0$。
+
+三个非例外当前位置的环境互异，至多一个正交于 $\eta_j$。另两个零位平面与 $m\eta_j$ 跨位正交，故 $m$ 正交于它们张成的 $R_0$。所以 $\mathbb Cm=Z$，并有
+$$
+V_1Z=Z\otimes\eta_j,\qquad Q_j\subset Q\oplus Z.
+\tag{72.17}
+$$
+$G_k$ 不包含于 $R_0$，所以不能正交于 $m$。它的零位像与 $m\eta_j$ 正交，因而必须
+$$
+\eta_k\perp\eta_{k+1}.
+\tag{72.18}
+$$
+其余四条当前射线均不同于 $\eta_k$，故都与 $\eta_j$ 非正交；同样的跨位正交给
+$$
+G_i\subset R_0\qquad(2\le i\le6,\ i\ne k).
+\tag{72.19}
+$$
+
+还可直接推出 $v\in Q$。三个非例外已见输入平面中，至少两个的当前环境与 $\eta_2$ 非正交；它们张成 $R_0$，所以 $V_1p=v\eta_2$ 给 $v\perp R_0$。而 $\eta_2$ 与例外当前环境 $\eta_k$ 也非正交：当 $k=2$ 它们相同；当 $k>2$ 时，$\eta_k$ 的唯一正交伙伴是不同于 $\eta_2$ 的 $\eta_{k+1}$。故 $v\perp G_k$。于是
+$$
+v\perp R_0+G_k=R,\qquad v\in Q.
+\tag{72.20}
+$$
+

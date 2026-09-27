@@ -1,0 +1,111 @@
+**定理 22.2（任意候选集的统一尺度容量）。** 对任意非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$ 及 $`0<\epsilon<1`$，有
+
+$$
+\boxed{
+\max\left\{1,\frac{1-\epsilon}{4C_*}
+P(\Theta,n^{-1/2})\right\}
+\le k_n^{(\epsilon)}(\Theta)
+\le\min\left\{2n-1,\
+4J_\epsilon P(\Theta,n^{-1/2})\right\}.
+}
+\tag{22.4}
+$$
+
+特别地，固定 $`\epsilon`$ 后，
+
+$$
+k_n^{(\epsilon)}(\Theta)
+=\Theta_\epsilon\bigl(P(\Theta,n^{-1/2})\bigr),
+\tag{22.5}
+$$
+
+其中上下常数统一于候选集和终端编号，因而也允许候选集随 $`n`$ 改变。参数分辨率、可区分网与压缩记忆的联系已有文献先例；[^phase_metric_population] 本节针对上述关联来源及任意候选集合证明有限终端双边界。式（22.5）右侧的 $`\Theta_\epsilon(\cdot)`$ 表示双边阶估计，与候选集合符号相区别。
+
+证明。令 $`\delta=n^{-1/2}`$，取一份取得最大分离数的集合
+ $`A=\{\vartheta_1,\ldots,\vartheta_q\}`$，其中
+ $`q=P(\Theta,\delta)`$。
+
+**分离目标的共同解码下界。** 对相同 Bell 初始参考输入，记相位 $`\vartheta_j`$ 的纯联合目标为 $`|\Psi_{j,n}\rangle`$。式（19.4）及（5.17）给
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le\exp\left\{-\alpha^3
+\left\lfloor\frac{n-1}{3}\right\rfloor
+\sin^2\frac{d_{\mathbb T}(\vartheta_j,\vartheta_k)}2\right\}.
+\tag{22.6}
+$$
+
+对 $`0\le d\le\pi`$，有 $`\sin(d/2)\ge d/\pi`$；对 $`n\ge4`$，有 $`\lfloor(n-1)/3\rfloor\ge n/6`$。故
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le e^{-a_*n d_{\mathbb T}(\vartheta_j,\vartheta_k)^2}.
+\tag{22.7}
+$$
+
+固定 $`j`$，从 $`\vartheta_j`$ 分别沿顺时针及逆时针方向排列距离不超过 $`\pi`$ 的其余点；若有对径点，只归入一侧。同一侧第 $`r`$ 个点的距离至少为 $`r\delta`$：首个距离至少为 $`\delta`$，相邻点之间的弧长不超过 $`\pi`$，因而等于它们的测地距离，也至少为 $`\delta`$。因此 Gram 矩阵 $`G_{jk}=\langle\Psi_{j,n}|\Psi_{k,n}\rangle`$ 的每个绝对行和满足
+
+$$
+\sum_k|G_{jk}|
+\le1+2\sum_{r=1}^{\infty}e^{-a_*n(r\delta)^2}
+=C_*.
+\tag{22.8}
+$$
+
+令 $`Q=q^{-1}\sum_j|\Psi_{j,n}\rangle\langle\Psi_{j,n}|`$。令 $`V`$ 为以这些目标向量为列的矩阵，则 $`VV^*`$ 与 Gram 矩阵 $`G=V^*V`$ 具有相同非零特征值。式（22.8）的最大绝对行和控制 Hermitian 矩阵 $`G`$ 的谱范数；以下 $`\|\cdot\|_\infty`$ 均表示算子谱范数。因此
+
+$$
+\|Q\|_\infty=\frac{\|G\|_\infty}{q}
+\le\frac{C_*}{q}.
+\tag{22.9}
+$$
+
+任取维数 $`D`$ 的合法编码及同一个解码器。不可访问系统 $`R=JM`$ 的维数为四。对编码所得各 $`KR`$ 态使用 $`0\preceq\tau_j\preceq I_{KR}`$，与（19.9）同样的正性及幺性计算给
+
+$$
+\frac1q\sum_j
+\operatorname{Tr}\bigl[
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|
+(\mathcal D\otimes\operatorname{id}_R)(\tau_j)
+\bigr]
+\le\frac{4DC_*}{q}.
+\tag{22.10}
+$$
+
+半迹误差不小于一减去目标重叠。因此任何同一解码器的最坏误差 $`e_n`$ 满足
+
+$$
+e_n\ge\max\{0,1-4DC_*/q\}.
+\tag{22.11}
+$$
+
+若要求 $`e_n\le\epsilon`$，即得（22.4）的下界。这里只对有限候选子集取平均，不需要在 $`\Theta`$ 上定义概率测度。
+
+**相位网覆盖与物理编码上界。** 最大分离集同时给一份 $`\delta`$ 网：若存在 $`\vartheta\in\Theta`$ 与全部 $`\vartheta_j`$ 的距离均至少为 $`\delta`$，将它加入就得到更大的分离集，矛盾。因此 $`\Theta`$ 被以这些点为中心、半径 $`\delta`$ 的弧覆盖。因 $`n\ge4`$，每条弧长 $`2\delta\le1<2\pi`$，可分别提升为实区间。
+
+把每条弧等分为 $`J_\epsilon`$ 段，取中点作为已知参考相位。至多得到 $`qJ_\epsilon`$ 个参考点，每个实际候选距某个参考点不超过
+
+$$
+h=\frac{\delta}{J_\epsilon}
+\le\frac{\sqrt2\epsilon}{\sqrt n}.
+\tag{22.12}
+$$
+
+参考点可以位于候选集之外；它们只用于定义一个已知子空间，并不声称实际来源具有这些相位。取所有参考相位的共同档案支撑之和，令其投影为 $`P_0`$、秩为 $`r`$。由定理3.2，各参考相位的支撑维数至多四，故
+
+$$
+r\le4qJ_\epsilon.
+\tag{22.13}
+$$
+
+在实际相位与对应参考相位之间，选取实现测地距离的实提升差。式（18.6）—（18.8）使用同一个标量相位控制整个来源输入空间，且 $`g_n^2\le n`$。因为参考输出全部落在 $`P_0`$ 内，实际输出在补空间的质量算子满足
+
+$$
+T_{\vartheta,n}^*[(I-P_0)\otimes I_M]T_{\vartheta,n}
+\preceq\frac{h^2g_n^2}{4}I_M
+\preceq\frac{\epsilon^2}{2}I_M.
+\tag{22.14}
+$$
+
+将（18.12）的投影编码及失败重置应用于 $`P_0`$，就得到维数 $`r`$ 的全域 CPTP 编码和解码。由（18.13）—（18.14），对任意参考纯化及任意实际候选，相同通道的联合恢复半迹误差至多 $`\epsilon`$。丢弃额外纯化参考后仍保持此界。网和通道不使用未知实际相位；只在误差证明中为每个候选选择一个临近参考点。结合（22.13）得到第二个上界；全圆精确编码另给 $`2n-1`$。证明完毕。
+

@@ -1,0 +1,15 @@
+**定理 28.3（最优最坏成功率）。** 令 $r_{\min},r_{\max}>0$ 为 $R|_{\mathcal H_P}$ 的最小、最大本征值。则
+
+$$
+\boxed{
+p_{\mathrm{opt}}
+:=\sup_{\mathcal E}\inf_{\rho\text{ 支撑于 }P}
+p_{\mathcal E}(\rho)
+=\frac{r_{\min}}{r_{\max}}.
+}
+$$
+
+上确界由成功 Kraus 算子 $G/\sqrt{r_{\max}}$ 达到，可补失败 Kraus 算子 $\sqrt{I_P-R/r_{\max}}$。确定性精确制备对全部来源成立，当且仅当 $R|_{\mathcal H_P}$ 是正标量乘恒等。
+
+证明。定理 28.2 给出 $c\le1/r_{\max}$，而输入取最小本征态时成功率为 $cr_{\min}$；这既给出上界，又被所述 Kraus 对达到。确定性要求 $cR=I_P$，等价于正标量形式。反向此时 $\tau_R(\rho)=\rho$，恒等通道即可。$\square$
+

@@ -1,0 +1,84 @@
+### 189.3 任意 instrument 的精确偶块
+
+记 $c_0^{\mathrm{in}}=1$、$c_1^{\mathrm{in}}=R$，
+所以 $w_j=c_j^{\mathrm{in}}\epsilon$。
+由（189.4），旗标平均后的正确输出块按 $MR$ 奇偶宇称分块。
+其偶块为
+
+$$
+\sigma_{jj}^{\mathrm{even}}
+=
+\begin{pmatrix}
+rF_j&\sqrt{r\ell}\,T_j\\
+\sqrt{r\ell}\,\overline{T_j}&\ell G_j
+\end{pmatrix},
+\tag{189.7}
+$$
+
+其中
+
+$$
+F_j=A_j+\epsilon L_j,\qquad
+L_j=c_j^{\mathrm{in}}
+[\beta(B_j-A_j)+2\gamma\operatorname{Im}N_j],
+\tag{189.8}
+$$
+
+$$
+G_j=(1-\beta w_j)D_j+\beta w_jC_j
++2\gamma w_j\operatorname{Im}P_j.
+$$
+
+若另记
+$U_j=\sum b\overline c$、
+$V_j=\sum a\overline c$、
+$W_j=\sum b\overline d$，则
+
+$$
+T_j=(1-\beta w_j)M_j-\beta w_jU_j
++i\gamma w_j(V_j+W_j).
+$$
+
+这些等式由每个 Kraus 作用于
+$\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle$、
+$\psi=i\sqrt r\,|01\rangle-i\sqrt\ell\,|10\rangle$
+后直接相乘得到。
+
+各 Choi 对角量在 $[0,1]$ 内，非对角量由 Cauchy–Schwarz 一致有界。
+因此对全部共同 instrument，有
+
+$$
+|L_0|+|L_1|\le C,\qquad
+T_j=M_j+O(\epsilon),
+\tag{189.9}
+$$
+
+其中常数独立于 instrument。
+此外 $0\le F_j,G_j\le1$：
+它们分别是输入条件态的 $M=0$、$M=1$ 对角块归一化以后，
+经同一 CP 结果映射取得的指定输出概率。
+当 $\ell=0$ 时，仍可用右侧的归一化输入块定义 $G_j$。
+
+令 $u_q=(\sqrt q,\sqrt{1-q})^{\mathsf T}$，
+$M_q(x_0,x_1)=P_{u_q}-\operatorname{diag}(qx_0,(1-q)x_1)$。
+第173节的匹配标签矩阵的偶块是
+
+$$
+\begin{pmatrix}
+rM_q(F_0,F_1)&
+\sqrt{r\ell}\,[P_{u_q}-\operatorname{diag}(qT_0,(1-q)T_1)]\\
+\sqrt{r\ell}\,[P_{u_q}-\operatorname{diag}(q\overline{T_0},(1-q)\overline{T_1})]&
+\ell M_q(G_0,G_1)
+\end{pmatrix}.
+\tag{189.10}
+$$
+
+奇块半负定。特别地，仅压缩到 $MR=00$ 就给完整误差下界
+
+$$
+e\ge r\left(1-\frac{F_0F_1}{F_0+F_1}\right).
+\tag{189.11}
+$$
+
+$F_0+F_1=0$ 时，右侧取 $r$。
+

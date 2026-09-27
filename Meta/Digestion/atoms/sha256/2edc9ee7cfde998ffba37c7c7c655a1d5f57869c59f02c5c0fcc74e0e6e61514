@@ -1,0 +1,24 @@
+### 30.3 完成边界的更新与观察者档案
+
+完整 itinerary 的更新是移去第一个坐标的 shift：
+
+$$
+\operatorname{TP}_\infty(Fx)(k)=
+\operatorname{TP}_\infty(x)(k+1).
+\tag{30.4}
+$$
+
+所以实际完整边界上有一个 `itineraryUpdate`；在兼容有限族上，则由限制相容性诱导 `limitUpdate`。`itinerary_completion` 的半共轭式表明这两种表达承载同一更新。
+
+但数学上的 $I_\infty$ 或逆极限不是观察者当前档案。观察者在预算 $N$ 下最多持有某个 $u_N\in I_N$，以及为取得它所保存的参考、权限和来源记录。若后续协议需要一个未取得的坐标，必须执行相应操作或把足以预测它的 completion 摘要实际写入记忆；不能把理论上的 $I_\infty$ 当作免费输入。
+
+这也解释了为何有限一致不自动给出观察者知道完整未来：
+
+$$
+\text{数学 completion}
+\neq
+\text{当前可访问 archive}.
+$$
+
+前者是用来定义最小动态边界的对象，后者是选择器和更新程序真正可以读取的接口。
+

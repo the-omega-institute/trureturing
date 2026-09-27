@@ -1,0 +1,61 @@
+### 205.1 活跃区的一阶参数
+
+固定 $\beta>0$、$\gamma>0$、$R>1$，保持此前的共同接收端恢复任务、
+不可访问系统 $M$ 和全部外部参考。置 $\delta=R-1$、$\Sigma=R+1$。
+取固定正紧区间 $I$，要求无约束圆盘驻点在整个区间严格位于圆盘外：
+
+$$
+\left(\frac{\gamma}{2\beta}\right)^2+
+\left(\frac{2h}{h+3\beta R}\right)^2>\frac14
+\qquad(h\in I).
+\tag{205.1}
+$$
+
+当 $0<\gamma<\beta$ 时，这等价于 $I\subset(h_b,\infty)$，
+其中 $h_b$ 是第203节的接触点；当 $\gamma\ge\beta$ 时，每个正 $h$ 都满足该条件。
+
+对每个 $h\in I$，令 $\rho=\rho(h)>0$ 为唯一正解
+
+$$
+\left(\frac{2h}{h+3\beta R+3\rho}\right)^2+
+\left(\frac{\gamma\delta}{2(\beta\delta+2\rho)}\right)^2
+=\frac14,
+\tag{205.2}
+$$
+
+并定义
+
+$$
+\boxed{
+ m=m(h)=\frac{2h}{h+3\beta R+3\rho},\qquad
+ n=n(h)=\frac{\gamma\delta}{2(\beta\delta+2\rho)}.
+}
+\tag{205.3}
+$$
+
+这里的 $n$ 不再等于内点常数 $\gamma/(2\beta)$。
+式（205.2）左侧在 $\rho=0$ 时大于 $1/4$，随 $\rho$ 严格下降并趋于零，
+因此正根存在且唯一。其关于 $\rho$ 的导数严格为负，
+故 $\rho,m,n$ 随 $h$ 光滑，在固定 $I$ 上连续有界，并有严格正的下界。
+
+乘子采用第189节 $(m,n)$ 变量的归一化：
+在目标 $F_h(m,n)$ 上加 $\rho(m^2+n^2-1/4)$。
+它等于第190节使用 $(x,y)=(2n,2m)$ 时的乘子之四倍。
+相应 KKT 关系为
+
+$$
+ m^2+n^2=\frac14,\qquad
+ h(2-m)=3(\beta R+\rho)m,\qquad
+ \frac{\gamma\delta}{2}=(\beta\delta+2\rho)n.
+\tag{205.4}
+$$
+
+严格凸性保证这是圆盘问题的唯一极小点。完整 CPTP 一阶值仍为
+
+$$
+\Phi_h=\frac{7h}{12}-\frac{\beta\delta}{8}
+-\frac{4h}{3}m+\left(\frac h3+\beta R\right)m^2
++\frac\delta2(\beta n^2-\gamma n).
+\tag{205.5}
+$$
+

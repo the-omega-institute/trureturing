@@ -1,0 +1,38 @@
+**定理 20.4（固定偏移下实际风险不收敛的振幅）。** 取
+
+```math
+\varphi=\frac{1+\sqrt5}{2},\qquad
+r=\varphi^{-1},\qquad h=\log\varphi,\qquad \beta=\frac34.
+\tag{20.21}
+```
+
+则 (20.1) 中 $`m=1,k=2`$。对每个固定 $`c\notin E_h`$，
+因而也对每个充分负的固定偏移，沿全部整数维数 $`d\to\infty`$，取可实现的整数样本量满足
+
+```math
+\lambda=\alpha_E\ell-\frac{\log\ell}{2\gamma}+c+o(1),
+\tag{20.22}
+```
+
+三种精确错误风险在实际平稳独立对实验和路径实验中都不收敛。
+它们分别有趋于 $`1-\Psi_h(c,0)`$ 和 $`1-\Psi_h(c,\delta_*)`$
+的两条子序列，且这两个极限不同。离散极值及并列振荡的相关结果见
+[Ottolini](../../../Library/Dynamics/ottolini2020oscillations.md)。
+
+证明。恒等式 $`1+r=\varphi`$、$`1-r=\varphi^{-2}`$ 给出格距与整数对。
+比值 $`\log2/\log\varphi`$ 无理：若为有理数，则存在正整数
+$`p,q`$ 使 $`2^q=\varphi^p`$；在数域 $`\mathbb Q(\sqrt5)`$
+中取范数将给出 $`4^q=(-1)^p`$，矛盾。
+因此 $`(3/4)\log2/\log\varphi`$ 也无理，圆上的无理旋转使
+
+```math
+\delta_M=\frac34(d-1)\log2\pmod{\log\varphi}
+\tag{20.23}
+```
+
+稠密，且每个尾序列仍稠密。可分别选择相位趋于 $`0`$ 与 $`\delta_*`$ 的子序列。
+对目标样本数取最近整数只改变 $`\lambda`$ 至多 $`O(1/n)`$，
+不改变 (20.22)，而目标样本数最终为正。
+定理 20.2 给出两条子序列的风险极限，定理 20.3 保证其不同。
+若 $`c\in E_h`$，本命题的两相位比较不判定风险是否收敛。∎
+

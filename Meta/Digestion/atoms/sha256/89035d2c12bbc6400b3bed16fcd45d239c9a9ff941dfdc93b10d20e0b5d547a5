@@ -1,0 +1,370 @@
+**定理 423.1（共同阈值总质量给出的统一有限树间隙）。** 在上述严格内部参数及完整操作条件下，每棵允许的有限精确恢复树满足
+
+$$
+\boxed{\displaystyle
+p\le U-\frac{H^3}{49152\kappa},\qquad
+\eta_{\mathrm{fin}}(r)\le U-\frac{H^3}{49152\kappa}<U.}
+$$
+
+该界对固定 $r$ 的全部有限树同时成立，不要求共同的深度、分支数、局部记忆维数或最小正叶权重。函数 $f=V_\infty$ 等于从任意 $(a,b)\in D^2$ 出发、每次只对一个 Bloch 向量作有限重心分裂的有限树终端报酬上确界；终端位于 $K_{\mathrm s}$ 时得 $h$，否则得零，允许立即停止。在整个闭域上，$f$ 分别凹，且
+
+$$
+\begin{gathered}
+0\le f\le f_{\mathrm{SEP}},\qquad
+f|_{K_{\mathrm s}}=h,\qquad f(n,n)=0\quad(|n|=1),\\
+p\le4f(0,0)\le U-\frac{H^3}{49152\kappa}.
+\end{gathered}
+$$
+
+因此 $\psi$ 分别凸，并满足完整证书条件
+
+$$
+\boxed{\displaystyle
+0\le\psi\le f_{\mathrm{SEP}},\quad
+\psi|_{K_{\mathrm s}}=0,\quad
+\psi(n,n)=0\ (|n|=1),\quad
+\psi(0,0)\ge\frac{H^3}{196608\kappa}.}
+$$
+
+证明。先由定理 416.1 的普遍平坦几何接出本节需要的归一化。该定理及其证明给出：单位对称平坦向量 $u=\sum_{j=0}^2u_je_j$ 存在，且每个这样的向量均满足
+
+$$
+|u_0|^2=|u_1|^2=|u_2|^2
+ =|\langle u|q_i\rangle|^2=\frac13,
+\qquad |u_1^2-2u_0u_2|=\kappa.
+$$
+
+五个 $q_i$ 张成 $W$，而反对称线不含非零乘积向量（定理 421.1 的证明）。故任一单位平坦乘积向量 $v$ 的对称投影非零，可写为 $v=\alpha u+\delta e_-$，其中 $\alpha=\|P_Wv\|>0$。乘积秩一的行列式等式给
+
+$$
+\delta^2=\alpha^2(u_1^2-2u_0u_2),\qquad
+|\delta|^2=\kappa\alpha^2,\qquad
+1=(1+\kappa)\alpha^2.
+$$
+
+因此其共同重叠为 $h$，反对称权重为 $g$。反过来，对上述任一 $u$ 取 $\delta_0^2=u_1^2-2u_0u_2$，向量 $(u+\delta_0e_-)/\sqrt{1+\kappa}$ 的系数矩阵非零且行列式为零，故为单位乘积向量，给出 $K_{\mathrm s}$ 中一点。集合 $K_{\mathrm s}$ 由闭球上的单位模长条件与连续等式定义，因而紧。若 $(x,y)\in K_{\mathrm s}$，两极响应分别为 $(1+x_z)(1+y_z)/4$ 和 $(1-x_z)(1-y_z)/4$，两者都等于 $h$，故
+
+$$
+x_z=-y_z,\qquad x_z^2=y_z^2=Z,\qquad
+C(x,y)=Z,\qquad x_zy_z=-Z,\qquad d(x,y)=g.
+$$
+
+严格内部条件保证
+
+$$
+\frac{2\sqrt2}{3}\le\kappa<1,\quad
+0<g<\frac12,\quad
+0<\frac Zg=1-\frac1{3\kappa}<1,\quad
+0<H<1,\quad 0<\varepsilon<\frac1{8192},\quad
+d(0,0)=\frac14>\varepsilon,\quad g>\varepsilon.
+$$
+
+以下对所有有限树使用同一个正阈值 $\varepsilon$。
+
+（一）真实历史、原反馈与乘积效果树。沿一条真实取得历史，把添加独立局部辅助态、局部完全正分支、私有记忆及丢弃分别合成为 $\Lambda_{A,v},\Lambda_{B,v}$。固定该历史后，联合分支是 $\Lambda_{A,v}\otimes\Lambda_{B,v}$。其原始输入效果为
+
+$$
+A_v=\Lambda_{A,v}^\dagger(I),\qquad
+B_v=\Lambda_{B,v}^\dagger(I),\qquad E_v=A_v\otimes B_v.
+$$
+
+根效果是 $I_R$。Alice 操作时子效果满足 $\sum_jA_{vj}=A_v$、$B_{vj}=B_v$；Bob 操作时对称。全部终端效果之和为 $I_R$，包括每个失败历史。对后来遗忘的真实结果，可为求和保留历史，但其后续映射仍遵守原协议的控制限制；隐藏 Kraus 项从未变成可用结果。这正是定理 421.1 的真实历史效果接口。
+
+对矩阵单位 $E_{ij}=|i\rangle\langle j|$，输出迹给出
+
+$$
+\mathcal M_\ell(E_{ij})
+ =\operatorname{Tr}\mathcal I_\ell(|q_i\rangle\langle q_j|)E_{ij}
+ =\langle q_j|E_\ell|q_i\rangle E_{ij}.
+$$
+
+对每个非零接受真实历史，将两局部效果谱分解为
+
+$$
+E_\ell=\sum_\nu c_{\ell\nu}|v_{\ell\nu}\rangle\langle v_{\ell\nu}|,
+\qquad c_{\ell\nu}>0,\qquad
+v_{\ell\nu}=\xi_{\ell\nu}\otimes\zeta_{\ell\nu},\quad
+\|\xi_{\ell\nu}\|=\|\zeta_{\ell\nu}\|=1,
+$$
+
+并令 $K_{\ell\nu}=\sqrt{c_{\ell\nu}}\operatorname{diag}(\langle v_{\ell\nu}|q_1\rangle,\ldots,\langle v_{\ell\nu}|q_5\rangle)$。这些谱指标仅用于表达 $\mathcal M_\ell(X)=\sum_\nu K_{\ell\nu}XK_{\ell\nu}^\dagger$。以 $|L\rangle\!\rangle=\sum_i|i\rangle\otimes L|i\rangle$ 向量化，完整的接受恢复条件是
+
+$$
+\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |U_{y(\ell)}K_{\ell\nu}\rangle\!\rangle
+ \langle\!\langle U_{y(\ell)}K_{\ell\nu}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+正性迫使每项都在右边的一维支撑上：
+
+$$
+U_{y(\ell)}K_{\ell\nu}=\gamma_{\ell\nu}I_S,
+\qquad p=\sum_{\ell:\,y(\ell)\in Y_{\mathrm s}}\sum_\nu
+ |\gamma_{\ell\nu}|^2.
+$$
+
+若 $\gamma_{\ell\nu}=0$，则 $v_{\ell\nu}$ 与所有 $q_i$ 正交，成为反对称线中的非零乘积向量，矛盾。因此每个保留项均有正的平坦响应。固定一条真实历史时，原有的同一个 $U_{y(\ell)}$ 还使所有幅度向量成比例。由 $q_i$ 张成 $W$，所有 $P_Wv_{\ell\nu}$ 成比例，遂有
+
+$$
+\dim P_W(\operatorname{supp}A_\ell\otimes\operatorname{supp}B_\ell)\le1.
+$$
+
+此处使用定理 421.1 的单射桥梁：对任一非零 $\xi\in\operatorname{supp}A_\ell$，$P_W$ 在 $\xi\otimes\mathbb C^2$ 上单射，因为其核中非零向量会同时属于乘积锥和反对称线。因此 $\operatorname{rank}B_\ell\le1$，交换两方得到 $\operatorname{rank}A_\ell\le1$。非零性给出两秩都为一。所以每个非零接受真实历史有
+
+$$
+E_\ell=t_\ell Q(x_\ell,y_\ell),\qquad
+t_\ell=\operatorname{Tr}E_\ell>0,\qquad
+(x_\ell,y_\ell)\in K_{\mathrm s}.
+$$
+
+该真实历史的校正接受贡献为 $t_\ell h$。合并后的最终标签可以有较高秩，也不要求它只有一个归一化 Bloch 对；复制完成后才按原实际标签重新合并。$p=0$ 时同一正 Choi 等式排除所有非零接受项。所有系统等式在矩阵张量基上延伸到任意未操作有限参考，所用反馈始终是原来的 $U_y$。
+
+删除零效果及其全零后代后，每个节点唯一写成
+
+$$
+E_v=t_vQ(a_v,b_v),\qquad t_v=\operatorname{Tr}A_v\operatorname{Tr}B_v>0.
+$$
+
+一次 Alice 分裂给出 $t_{vj}=t_vw_j$、$a_v=\sum_jw_ja_{vj}$、$b_{vj}=b_v$，其中 $w_j=\operatorname{Tr}A_{vj}/\operatorname{Tr}A_v>0$、$\sum_jw_j=1$；Bob 同理。根的 $t_\varnothing=4$、$(a_\varnothing,b_\varnothing)=(0,0)$。由此得到有限的一坐标重心分裂树。这些概率是效果的迹权重；实际未知输入下的结果条件概率一般不同。
+
+（二）反对称预算与二阶矩超额。现在对任意根为 $(0,0)$ 的上述抽象树证明界，允许只把 $K_{\mathrm s}$ 叶子的任意子集标为成功，其余全部标为失败。记终端的根概率权重为 $w_\ell$，成功总权重为 $S_*$，失败反对称预算为
+
+$$
+\Delta=\sum_{\ell\text{ 失败}}w_\ell d(a_\ell,b_\ell)\ge0.
+$$
+
+两个 Bloch 向量分别是有限树上的鞅；$d$ 与 $a_zb_z$ 都分别仿射。因此
+
+$$
+gS_*+\Delta=\frac14,\qquad
+\mathbb E[a_zb_z]=0.
+$$
+
+成功叶上 $C=Z$、$a_zb_z=-Z$，而任意叶上 $C\ge a_zb_z$。故失败部分的 $C$ 加权和至少为 $ZS_*$，从而
+
+$$
+\begin{aligned}
+\mathbb E[C]-Z
+ &\ge Z(2S_*-1)\\
+ &=\frac{Z(1-2g)}{2g}-\frac{2Z}{g}\Delta
+ =H-\frac{2Z}{g}\Delta.
+\end{aligned}
+$$
+
+对原协议抽出的树，$S_*=p/(4h)$，所以
+
+$$
+\Delta=\frac{1-3\kappa p}{4},\qquad
+p=\frac{1-4\Delta}{3\kappa}.
+$$
+（三）有限阈值细化及原叶保持。对树中任一归一化节点 $Q=Q(a,b)$，若 $d=d(a,b)>\varepsilon$，写其原始子效果为 $E_i=w_iQ_i$，其中 $w_i>0$、$\sum_iw_i=1$、$Q_i=Q(a_i,b)$ 或 $Q(a,b_i)$。令
+
+$$
+\alpha_i=\frac{w_i(\varepsilon-d_i)_+}{d-\varepsilon},
+\qquad
+\beta=\frac1{1+\sum_i\alpha_i},
+\qquad
+\widetilde Q_i=\beta(E_i+\alpha_iQ).
+$$
+
+这里 $d_i=d(Q_i)$。所有 $E_i$ 与 $Q$ 共享未被本次分裂的局部因子，故 $\widetilde Q_i$ 仍是同一坐标的一次正重心分裂；并且
+
+$$
+\sum_i\widetilde Q_i=Q.
+$$
+
+其归一化后的缺陷为
+
+$$
+\frac{w_id_i+\alpha_id}{w_i+\alpha_i}.
+$$
+
+当 $d_i<\varepsilon$ 时后一个量等于 $\varepsilon$，当 $d_i\ge\varepsilon$ 时它等于 $d_i$。第一阶段进入第 $i$ 行的效果权重是 $\beta(w_i+\alpha_i)$；在该行内，把原来的所有列子效果 $E_j$ 复制为
+
+$$
+E_{ij}=\beta(\delta_{ij}+\alpha_i)E_j.
+$$
+
+于是
+
+$$
+\sum_jE_{ij}=\widetilde Q_i,
+\qquad
+\sum_iE_{ij}=E_j,
+$$
+
+且第 $i$ 行的条件列概率为
+
+$$
+\frac{(\delta_{ij}+\alpha_i)w_j}{w_i+\alpha_i}.
+$$
+
+零权重先删除；没有零权重被重新归一化。这个有限行列构造只是在效果树上作代数细化。它的阈值停法在方法上与 M. Kleinmann、H. Kampermann、D. Bruß，*Asymptotically perfect discrimination in the LOCC paradigm*（arXiv:[1105.5132v2](https://arxiv.org/abs/1105.5132v2)，pp.3--4，式(5a)--(5b)、(6)）关于弱测量细化的写法，以及 Andrew M. Childs、Debbie Leung、Laura Mancinska、Maris Ozols，*A framework for bounding nonlocality of state discrimination*（arXiv:[1206.5822v1](https://arxiv.org/abs/1206.5822v1)，pp.9--10，Theorem 1、式(12)、Figure 2）的阈值停止递推相近；这里只借用行列插值与停止的数学方法，不使用其中的区分性结论，也不把它们当作本恢复问题的证明。
+
+对原树的剩余高度 $D$ 作归纳。若叶子满足 $d>\varepsilon$，保留该原叶；若第一阶段得到 $d=\varepsilon$ 的节点，立即停止细化，并在该节点接上这一行中原始子树的全部复制；若某节点仍有 $d>\varepsilon$，则 $\alpha_i=0$，其行只有 $j=i$，只对原始子节点 $i$ 递归。等号同样停止。每次递归均进入原树的严格较小剩余高度，因而得到有限树，且高度至多 $2D$。恢复复制不再递归调用恢复副本。
+
+列恒等式说明每个原始终端叶 $\ell$ 的所有复制效果之和仍是 $E_\ell$；每个复制保留原叶的归一化对、成功或失败标记以及原协议的共同反馈。故终端迹掉后的系统映射、终端分布和报酬均保持。这里没有声称任意记录输出 CP 仪器被保持，也没有为抽象细化树赋予新的物理控制；它只用于上界。细化后的前沿是所有首次达到 $d=\varepsilon$ 的节点与所有仍有 $d>\varepsilon$ 的原始叶组成的不交完全割。
+
+（四）前沿总质量。对阈值节点 $Q(a,b)$，有 $a\cdot b=1-4\varepsilon$，从而 $|a|,|b|\ge1-4\varepsilon$。其完整后继树中 $a_T,b_T$ 都是鞅，故
+
+$$
+\mathbb E|a_T-a|^2\le1-|a|^2,
+\qquad
+\mathbb E|b_T-b|^2\le1-|b|^2,
+$$
+
+并因此
+
+$$
+\mathbb E[C(a_T,b_T)]
+\le C(a,b)+\frac{2-|a|^2-|b|^2}{2}
+\le C(a,b)+8\varepsilon.
+$$
+
+令 $W_{\mathrm{fr}}$ 为满足 $C(a,b)\ge Z+\tau$ 的阈值节点根权重总和。其余阈值节点的 $C-Z$ 小于 $\tau$，被计入 $W_{\mathrm{fr}}$ 的节点至多贡献 $W_{\mathrm{fr}}$；未停止的成功叶贡献为零；未停止的失败叶均有 $d>\varepsilon$，其总权重至多为 $\Delta/\varepsilon$。于是
+
+$$
+H-\frac{2Z}{g}\Delta
+\le \tau+W_{\mathrm{fr}}+8\varepsilon+\frac{\Delta}{\varepsilon}.
+$$
+
+因 $\tau=H/4$ 且 $8\varepsilon=H^2/1024\le H/4$，得到
+
+$$
+W_{\mathrm{fr}}\ge\frac H2-\left(\frac{2Z}{g}+\frac1\varepsilon\right)\Delta.
+$$
+
+（五）每个被计数阈值节点的条件失败缺陷。对这样的节点，
+
+$$
+|a-b|\le\sqrt{8\varepsilon}=\frac H{32}=\frac\tau8.
+$$
+
+置 $n=a/|a|$。由 $C(a,b)\ge Z+\tau$、$|a|\le1$ 及 $|a_z^2-b_z^2|\le2|a-b|$，有
+
+$$
+n_z^2\ge a_z^2\ge C(a,b)-|a-b|\ge Z+\frac\tau2.
+$$
+
+对每个 $(x,y)\in K_{\mathrm s}$，$x_z=-y_z$、$x_z^2=Z$，且 $|n|=|x|=|y|=1$，故
+
+$$
+\frac{(1-n\cdot x)(1-n\cdot y)}4
+\ge\frac{(n_z^2-Z)^2}{16}\ge\frac{\tau^2}{64}\qquad((x,y)\in K_{\mathrm s}).
+$$
+
+置 $P_{-n}=(I_2-n\cdot\sigma)/2$。令该节点后继中成功部分的条件权重为 $s$，失败效果之和为 $F$，则
+
+$$
+Q=\sum_{\mathrm{success}}u\,Q(x,y)+F,
+\qquad
+\frac{\tau^2}{64}s\le\operatorname{Tr}\bigl[Q(P_{-n}\otimes P_{-n})\bigr]
+=\frac{(1-|a|)(1-n\cdot b)}4.
+$$
+
+由
+
+$$
+4\varepsilon=(1-|a|)+|a|(1-n\cdot b),
+$$
+
+以及 $|a|>1/2$，右端不超过 $4\varepsilon^2/|a|$。所以
+
+$$
+s\le\frac{4\varepsilon^2}{|a|(\tau^2/64)}
+\le\frac{512\varepsilon^2}{\tau^2}=\varepsilon.
+$$
+
+该节点的条件失败反对称缺陷为
+
+$$
+\delta=\operatorname{Tr}(P_-F)=\varepsilon-gs
+\ge\varepsilon(1-g)\ge\frac\varepsilon2.
+$$
+
+前沿不交且其余失败缺陷非负，故
+
+$$
+\Delta\ge\frac{\varepsilon}{2}W_{\mathrm{fr}}.
+$$
+
+（六）聚合与常数。和前式合并，得到
+
+$$
+\Delta\left(\frac32+\frac{\varepsilon Z}{g}\right)
+\ge\frac{\varepsilon H}{4}.
+$$
+
+因为 $Z/g<1$、$\varepsilon<1/8$，可用较弱但统一的估计
+
+$$
+\Delta\ge\frac{\varepsilon H}{8}=\frac{H^3}{65536}.
+$$
+
+再用 $p=(1-4\Delta)/(3\kappa)$，便得
+
+$$
+p\le\frac1{3\kappa}-\frac{H^3}{49152\kappa}
+=U-\frac{H^3}{49152\kappa}.
+$$
+
+这一步使用的是前沿的总质量 $W_{\mathrm{fr}}$，不是某一片叶子的正权重下界；任意进一步的标量细分都不改变论证。
+
+（七）闭域变分证书。立即停止说明从任意 $(a,b)$ 出发的有限树族非空。对任意成功叶 $(x,y)\in K_{\mathrm s}$，有 $h=d(x,y)/(3\kappa)$，失败叶贡献非负，且 $d$ 分别仿射，因此每棵树的报酬不超过 $d(a,b)/(3\kappa)$。取所有有限一坐标重心树的报酬上确界，正是第 421 节的 $f=V_\infty$，从而
+
+$$
+0\le f\le f_{\mathrm{SEP}}.
+$$
+
+若把任一有限分裂的各子点接上报酬任意接近相应 $f$ 值的有限树，再将它们拼接到该分裂上，令误差趋于零，便得
+
+$$
+f\left(\sum_j\lambda_ja_j,b\right)\ge\sum_j\lambda_jf(a_j,b),
+$$
+
+Bob 方向同理。故 $f$ 在整个闭域上分别凹。这里不假定 $f$ 连续，也不假定上确界取得。对 $K_{\mathrm s}$，立即停止给出 $f\ge h$，而上界给出 $f\le h$，所以 $f=h$；对纯对角线 $d(n,n)=0$，有 $f(n,n)=0$。
+
+对任意真实协议的效果树，将全部 $K_{\mathrm s}$ 终端标为成功所得的归一化树报酬至少为 $p/4$；由 $f$ 的上确界定义，根处有
+
+$$
+p\le4f(0,0).
+$$
+
+现在固定任意一个根为 $(0,0)$ 的有限一坐标重心树 $T$，把它的全部 $K_{\mathrm s}$ 终端都标为成功，记成功终端的根概率总质量为 $S_*$，并定义其报酬
+
+$$
+R_T=hS_*.
+$$
+
+在这棵抽象树上令 $p_T:=4R_T=4hS_*$；部分（二）的同一预算恒等式于是写成 $\Delta=(1-3\kappa p_T)/4$。
+
+上述部分（二）至（六）的论证（反对称预算、阈值细化、前沿总质量及聚合）只使用这个抽象树的重心恒等式和终端标记；它不需要该树有任何物理实现、记录输出仪器或反馈。因此对每一个这样的 $T$ 都得到
+
+$$
+4R_T\le U-\frac{H^3}{49152\kappa}.
+$$
+
+对所有这类有限树取上确界，并使用第 421 节已经导入的等式 $f(0,0)=\sup_T R_T$，便有
+
+$$
+4f(0,0)\le U-\frac{H^3}{49152\kappa}.
+$$
+
+另一方面，$f_{\mathrm{SEP}}(a,b)=d(a,b)/(3\kappa)$ 固定任一变量时为仿射函数，故分别凹；它在 $K_{\mathrm s}$ 上等于 $h$，在集合外支配零。第 421 节的最小分别凹上包络性质给出 $f\le f_{\mathrm{SEP}}$，并且
+
+$$
+\psi=f_{\mathrm{SEP}}-f
+$$
+
+分别凸、非负，在 $K_{\mathrm s}$ 与纯对角线上为零。最后
+
+$$
+\psi(0,0)=\frac1{12\kappa}-f(0,0)
+\ge\frac{H^3}{196608\kappa}.
+$$
+
+证毕。
+
+本定理只给出固定严格内部参数下对全部有限协议的统一正间隙。它不主张实际控制的可实现性超出原操作类，不主张常数尖锐、精确最优值、上确界取得、闭包或近似协议，也不延伸到端点；端点 $r^2=1/2,2$ 时 $H=0$，上述正间隙除法不适用。
+

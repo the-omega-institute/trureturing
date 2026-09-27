@@ -1,0 +1,15 @@
+**推论 89.2（倍率尺度律与两个端点系数条件）。** 对每个固定 $\lambda>0$，有
+
+$$
+\lim_{h\downarrow0}
+\frac{\mathscr K(R-\lambda h)}{\mathscr K(R-h)}
+=\lambda^{-p},\qquad
+\lim_{h\downarrow0}
+\frac{\log\mathscr K(R-h)}{\log(1/h)}=p.
+\tag{89.4}
+$$
+
+若 $p=1$，则 $c\ge R$；若 $p=2$，则 $c\le(1-R)^{-1}$。
+
+证明。两个极限直接代入式（89.1）；足够小的 $h$ 使 $R-\lambda h\ge0$。两个端点系数条件分别将式（89.3）乘 $h$ 或 $h^2$ 后取极限得到。$\square$
+

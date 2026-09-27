@@ -1,0 +1,33 @@
+**定理 167.2（接口拼接的结合律）。** 若 $K:A\to B$、$L:B\to C$、$M:C\to D$ 的矩阵值测度均为有限质量，则
+
+$$
+\boxed{
+M\star(L\star K)
+=
+(M\star L)\star K.
+}
+\tag{167.2}
+$$
+
+在 Laplace 域中，
+
+$$
+\boxed{
+\widehat{L\star K}(s)
+=
+\widehat L(s)\widehat K(s).
+}
+\tag{167.3}
+$$
+
+### 证明
+
+展开左侧的 $(d,a)$ 分量：
+
+$$
+\sum_{c\in C}\sum_{b\in B}
+M_{dc}*(L_{cb}*K_{ba}).
+$$
+
+测度卷积的结合律允许去掉括号；有限求和可以交换顺序，所得表达式正是 $(M\star L)\star K$ 的 $(d,a)$ 分量。Laplace 变换把卷积变成乘法，且矩阵乘法保留接口求和的顺序，得到式（167.3）。证毕。
+

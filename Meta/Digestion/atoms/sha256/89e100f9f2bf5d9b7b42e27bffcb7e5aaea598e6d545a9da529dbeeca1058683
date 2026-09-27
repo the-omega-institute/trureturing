@@ -1,0 +1,55 @@
+**定理 224.4（矩形记录通道的完整预算夹界）。** 考虑任意 qubit 输入、三维量子输出、两标签、结果秩 $(1,2)$ 的 CPTP 通道。候选总 Choi 秩至多二。
+
+令 $d_2$ 为到同输入、同三维量子输出、同两个经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失。令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+\min\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\}
+\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+$$
+
+对定理 224.2 的共同 TP 族，特别有
+
+$$
+\kappa\frac{2+\sqrt2}{4}\le d_2\le\kappa.
+$$
+
+**证明。** 若候选结果1 Choi 秩至多一，记其 Kraus 为 $C$。输出端口下界与二维输出时相同：选达到 $\gamma_{\rm out}$ 的 $r$，再选与向量 $C^\dagger r$ 正交的单位输入 $v$，即满足
+$$
+\langle C^\dagger r,v\rangle=0
+$$
+的单位输入，目标事件概率至少为 $\gamma_{\rm out}$、候选为零。这里使用的是向量 $C^\dagger r$ 的正交补；若该向量为零，任取单位 $v$。
+
+输入端口取达到 $\gamma_{\rm in,tail}$ 的 $v$，令 $w=Cv$。若 $w\ne0$，用输出效果 $I_3-P_{w/\|w\|}$，候选概率为零，而目标概率至少为
+$$
+\operatorname{Tr}\Gamma(P_v)-\lambda_1(\Gamma(P_v))
+=\lambda_2(\Gamma(P_v)).
+$$
+若 $w=0$，整个结果1都可作为零概率事件，下界仍成立。实际上也可以取一个纯输出投影：当 $\lambda_2>0$，$\operatorname{supp}\Gamma(P_v)$ 是二维子空间，它与 $w^\perp$ 至少一维；该交集内单位 $r$ 的目标概率至少为 $\lambda_2$。所以修正后的尾量不是借助三维零谱制造出来的量，也不需要外部参考。
+
+若候选结果1 Choi 秩为二，结果0必缺失，标签0测试给下界 $q_0$。因此
+$$
+d_2\ge
+\min\left\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\right\}.
+\tag{224.RK.22}
+$$
+另一方面，输入维数仍为二、$K_0\ne0$，谱迹界继续给 $\delta_{\rm rot}<1$。第 219 节的全 $0\le\delta<1$ 右 Gram 修复可用于最优旋转删除；当 $q_0<\delta_{\rm rot}$，则 $q_0<1$，也可删除整个结果0并修复。故
+$$
+\boxed{
+\min\left\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\right\}
+\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+\tag{224.RK.23}
+$$
+
+对（224.RK.12）的精确族，该区间成为
+$$
+\boxed{
+\kappa\frac{2+\sqrt2}{4}\le d_2\le\kappa.
+}
+\tag{224.RK.24}
+$$
+此上下界完成所述夹界证明。该夹界本身没有确定区间内的真实距离；下条另结算规范旋转修复类的实际误差。证毕。
+
+

@@ -1,0 +1,35 @@
+**定理 67.2（任意相位实际归约与收敛当且仅当）。** 对每个固定紧区间 $`I`$，
+
+```math
+\sup_{\theta\in I}
+\left|\mathcal S_M(\theta)
+ -2\theta\bigl(|Z_{\varphi,M}|^2-\mathcal Q_M\bigr)\right|
+ \longrightarrow_P0.
+```
+
+式 (67.3)。
+
+不加相位假设，$`\mathcal S_M`$ 已为 C-tight。
+若 $`I`$ 含非零时刻，则其完整序列收敛，当且仅当 $`\ell_M`$ 在 $`[0,\infty]`$ 中收敛。
+对有限极限 $`\ell`$，极限为 $`2\theta E_\ell`$，其中
+
+```math
+E_\ell\overset d=
+ \lambda_+(\ell)G_+^2+\lambda_-(\ell)G_-^2-\gamma,
+\qquad
+\lambda_\pm(\ell)=\frac\gamma2(1\pm e^{-2\ell^2/\kappa}),
+```
+
+式 (67.4)。
+
+$`G_+,G_-`$ 独立标准实 Gaussian；在 $`\ell=\infty`$ 时，$`E_\infty`$ 为均值 $`\gamma`$ 的指数变量减去 $`\gamma`$。
+与全部旧坐标联合的完整序列收敛，当且仅当下列二者之一成立：
+
+- $`\ell_M\to\infty`$，此时斜率独立于整个旧场和 $`N_2`$；
+- $`\ell_M\to\ell<\infty`$ 且 $`m_M`$ 的奇偶性最终固定为 $`e`$，此时斜率为 $`2\theta\{|F_e(\ell/\omega)|^2-\gamma\}`$。
+
+有限极限时，$`d_M`$ 的符号无需稳定。只把 $`T_M`$ 添入边缘过程不改变第一个判据。
+若 $`I=\{0\}`$，过程恒零，不存在上述必要相位条件。
+结论在均匀支持先验下为条件 BL 收敛、以数据概率成立；(67.3) 的条件超差概率也以数据概率趋零。
+对每个固定支持，结论无条件且一致成立；两种平稳实验和共同方向一致事件均保留。
+

@@ -1,0 +1,381 @@
+**定理138.1（最后两个小侧三尾词不可能）。** 上述实际合同不能采用 $YXXXZ$ 或 $YXYXZ$。
+
+### 138.1 YXXXZ 的共同后期平面与完整一位像
+
+先设
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])
+=(Y,X,X,X,Z).
+$$
+
+$G_3,G_4\subset U$ 的后继为 $X$，$G_5\subset U$ 的后继为不同的 $Z$。不同纯环境的乘积子空间交零，故
+
+$$
+(G_3+G_4)\cap G_5=0.
+$$
+
+四维 $U$ 中 $G_5$ 已二维，所以
+
+$$
+G_3=G_4=:T,\qquad
+L:=G_5,\qquad U=T\dotplus L.
+\tag{138.5}
+$$
+
+此处只得到代数直和，不把 $X,Z$ 当成正交环境。固定一位像给
+
+$$
+Q_4=Q_5=:A,\qquad
+V_1T=A\otimes X,\quad
+V_1L=Q\otimes Z,
+$$
+
+$$
+V_1U=(A\otimes X)\dotplus(Q\otimes Z).
+\tag{138.6}
+$$
+
+相同零位像 $T\otimes X$ 还给
+
+$$
+H_2=H_3.
+\tag{138.7}
+$$
+
+若 $G_2=T$，非零早期 $w\in H_2\cap G_2$ 就属于后期 $H_3\cap G_3=0$，矛盾。故 $G_2\ne T$。
+
+两者的一位像都在三维完整 $F_X\otimes X$ 内，故其和恰三维，且
+
+$$
+V_1(G_2+T)=F_X\otimes X.
+\tag{138.8}
+$$
+
+此外 $G_2$ 不能包含于 $U$。否则（138.6）的纯 $X$ 纤维只有 $A$，会给 $V_1G_2=V_1T$，再由固定单射性得 $G_2=T$。于是五维 $S$ 被 $G_2+U$ 填满，并且
+
+$$
+E:=V_1S
+=(F_X\otimes X)\dotplus(Q\otimes Z)
+=(Q\otimes F)\oplus(\mathbb Cr\otimes X),
+\qquad F=\operatorname{span}(X,Y).
+\tag{138.9}
+$$
+
+真实 $V_1p=v\otimes Y$ 属于 $E$。式（138.9）的纯 $Y$ 纤维恰为 $Q$，所以
+
+$$
+v\in Q.
+\tag{138.10}
+$$
+
+将（138.7）向 $U$ 正交投影。早期式（138.3）和 $v\perp U$、$a\ne0$ 给 $P_UH_2=P_UG_2$；后期满投影给 $P_UH_3=T$。因此
+
+$$
+P_UG_2=T,\qquad G_2\subset T\oplus\mathbb Cr.
+$$
+
+结合（138.8）的三维读数，
+
+$$
+G_2+T=T\oplus\mathbb Cr.
+\tag{138.11}
+$$
+
+$V_1p$ 采用 $Y$，而（138.8）采用正交的 $X$，所以 $p\perp G_2+T$。真实 $p\in S$ 与（138.11）使
+
+$$
+p\in U,\qquad p\perp T.
+\tag{138.12}
+$$
+
+现在把普通单位环境写成
+
+$$
+Z=\alpha X+\beta Y,\qquad \alpha\beta\ne0.
+$$
+
+由于 $v\otimes Y=V_1p\in V_1U$，式（138.6）给某个 $a_X\in A$、$q_Z\in Q$，使
+
+$$
+v\otimes Y=a_X\otimes X+q_Z\otimes Z.
+$$
+
+逐 $X,Y$ 坐标比较，
+
+$$
+a_X=-\alpha q_Z,\qquad v=\beta q_Z.
+$$
+
+两个环境系数都非零，所以
+
+$$
+v\in A.
+\tag{138.13}
+$$
+
+### 138.2 YXXXZ 的实际源列迫使投影极值取等
+
+还需从（138.7）、（138.10）识别 $Q_3$。早期 $G_2\subset S$，故
+
+$$
+P_QH_2=\mathbb Cv.
+$$
+
+后期 $H_3\subset T\oplus Q_3$ 且满投影到 $Q_3$，其中 $T\subset S$，所以
+
+$$
+P_QH_3=P_QQ_3.
+$$
+
+$H_2=H_3$ 因而使 $P_Q|_{Q_3}$ 的秩为一。$Q_3$ 是 $F_X=Q\oplus\mathbb Cr$ 内的二维平面，其投影核必为 $\mathbb Cr$；像为 $\mathbb Cv$。因此
+
+$$
+Q_3=\mathbb Cr\oplus\mathbb Cv,
+\qquad v\in Q_3.
+\tag{138.14}
+$$
+
+下面保留复数 $a,b$ 的全部相位，不进行输入位交换，也不把来源系数改为正实数。取
+
+$$
+y=|b|^2>0,\qquad
+c=\sqrt{|a|^4+|b|^2}>0,\qquad
+f=\frac{a^2u+bv}{c}.
+\tag{138.15}
+$$
+
+$f,w$ 是实际 $H_2$ 的正交单位基。将第3轮共同环境取作所选单位代表 $X$，以同一个固定等距定义
+
+$$
+V_0f=s\otimes X,\qquad
+V_0w=t\otimes X,\qquad
+V_1u=r_u\otimes X,\qquad
+V_1w=j\otimes X.
+\tag{138.16}
+$$
+
+这只是为同一实际乘积像选择公共环境代表；接收因子保留相应共同相位。四个完整输入 $f0,w0,u1,w1$ 正交归一，固定等距及相同环境因此使
+
+$$
+s,t,r_u,j
+$$
+
+在接收空间中正交归一。其中 $\operatorname{span}(s,t)=T$、$\operatorname{span}(r_u,j)=Q_3$。
+
+真实第二终端的两份来源列为
+
+$$
+\Psi_2^0=a m_0u+b m_1v,\qquad
+\Psi_2^1=m_0w.
+$$
+
+用同一个来源与（138.16）续接，第三终端的列准确为
+
+$$
+\Psi_3^0=c m_0s+ab\,m_1r_u,\qquad
+\Psi_3^1=a m_0t+b m_1j.
+\tag{138.17}
+$$
+
+取零记忆系数，并使用 $a\ne0$，得到
+
+$$
+H_3=\operatorname{span}(c s+b r_u,\ a^2t+bj).
+\tag{138.18}
+$$
+
+这两个向量正交，范数平方分别为 $c^2+y$、$c^2$。相应正交单位基是
+
+$$
+\frac{c s+b r_u}{\sqrt{c^2+y}},
+\qquad
+\frac{a^2t+bj}{c}.
+\tag{138.19}
+$$
+
+由（138.14），单位 $v\in Q_3$ 可以唯一写为
+
+$$
+v=\lambda r_u+\mu j,\qquad
+|\lambda|^2+|\mu|^2=1.
+$$
+
+早期基 $f,w$ 给
+
+$$
+\|P_{H_2}v\|^2=\frac{y}{c^2}.
+$$
+
+后期基（138.19）则给
+
+$$
+\|P_{H_3}v\|^2
+=\frac{y|\lambda|^2}{c^2+y}
++\frac{y|\mu|^2}{c^2}.
+\tag{138.20}
+$$
+
+由于 $H_2=H_3$，两份读数相等。又 $y>0$、$c^2+y>c^2$，所以
+
+$$
+0
+=\frac{y}{c^2}
+-\left(
+\frac{y|\lambda|^2}{c^2+y}
++\frac{y|\mu|^2}{c^2}
+\right)
+=\frac{y^2|\lambda|^2}{c^2(c^2+y)}.
+$$
+
+因此 $\lambda=0$，即 $v\parallel j$。所有来源相位都已保留在（138.17）—（138.19）中；这里取模平方只消去不影响投影范数的相位。
+
+结合（138.13），$j\in A$。实际
+
+$$
+V_1w=j\otimes X\in A\otimes X=V_1T
+$$
+
+遂给 $w\in T=G_3$。但非零 $w\in H_2=H_3$，违反后期 $H_3\cap G_3=0$。$YXXXZ$ 排除。
+
+### 138.3 YXYXZ 的两个小侧平面不同
+
+现在设
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])
+=(Y,X,Y,X,Z).
+$$
+
+$G_3,G_5\subset U$ 的后继分别为 $Y,Z$，因此它们交零并张成 $U$：
+
+$$
+U=G_3\dotplus G_5,\qquad
+V_1U=(Q_4\otimes Y)\dotplus(Q\otimes Z).
+\tag{138.21}
+$$
+
+先假设 $G_2\ne G_4$。两个小侧平面填满三维 $M$，其一位后继都为 $X$，所以
+
+$$
+V_1M=F_X\otimes X.
+\tag{138.22}
+$$
+
+由于 $P\subset M\cap U$ 二维，$V_1P$ 是（138.21）内二维纯 $X$ 像。写 $Z=\alpha X+\beta Y$，$\alpha\beta\ne0$，逐环境分量比较可见（138.21）的纯 $X$ 纤维恰为 $Q_4\cap Q$：消去 $Y$ 分量要求来自 $Q$ 的同一接收向量也属于 $Q_4$。这个交因此二维，故
+
+$$
+Q_4=Q,\qquad V_1U=Q\otimes F.
+$$
+
+连同（138.22）与 $S=U+M$，
+
+$$
+V_1S=(Q\otimes F)\oplus(\mathbb Cr\otimes X).
+$$
+
+真实 $v\otimes Y\in V_1S$ 使 $v\in Q$，因此
+
+$$
+V_1p=v\otimes Y\in Q\otimes Y=V_1G_3,
+\qquad p\in G_3.
+\tag{138.23}
+$$
+
+$V_1M$ 只采用纯环境 $X$，故非零 $p$ 不属于 $M$。真实 $p\in U$ 以及完整零位首像遂迫首环境为 $X$，并给 $q\in F_X$。
+
+于是
+
+$$
+V_0k=p\otimes X\in G_3\otimes X=V_0H_2,
+$$
+
+使 $k\in H_2$；同时
+
+$$
+V_1k=q\otimes X\in F_X\otimes X=V_1M
+$$
+
+使 $k\in M$。早期（138.3）中 $u,w\in M$、$v\in Q\perp M$，且 $b\ne0$，所以
+
+$$
+H_2\cap M=\mathbb Cw,\qquad k\parallel w.
+$$
+
+第131节引理131.2对同一个实际首态与来源给 $[\eta_6]=[\eta_4]$。本词的第4、6轮却为 $Y,Z$，矛盾。
+
+### 138.4 YXYXZ 的相同小侧平面与精确环境纤维
+
+只剩 $G_2=G_4=:T$。它们的零位输出环境都为 $Y$，所以
+
+$$
+H_1=H_3,\qquad p\in H_3\cap S.
+\tag{138.24}
+$$
+
+如果 $Q_3=Q$，则 $H_3\subset G_3\oplus Q$ 且满投影到 $Q$，立即给 $H_3\cap S=0$，违反（138.24）。因此 $Q_3\ne Q$。两个二维平面都在三维 $F_X=Q\oplus\mathbb Cr$ 中，故
+
+$$
+D:=Q_3\cap Q,\qquad\dim D=1.
+\tag{138.25}
+$$
+
+$T$ 也不能包含于 $U$。否则 $T=P$，而实际 $V_1T=Q_3\otimes X$ 属于（138.21），其纯 $X$ 纤维为 $Q_4\cap Q$，会迫 $Q_3\subset Q$，与刚得结论矛盾。所以
+
+$$
+T+U=S,\qquad\dim(T\cap P)=1.
+\tag{138.26}
+$$
+
+将非零 $T\cap P$ 送入同一个 $V_1$。它同时属于 $Q_3\otimes X$ 和（138.21）的纯 $X$ 纤维，故 $Q_3\cap Q_4\cap Q$ 非零。结合（138.25），
+
+$$
+D\subset Q_4.
+\tag{138.27}
+$$
+
+由（138.26），整个实际五维像为
+
+$$
+E=V_1S
+=(Q_3\otimes X)+(Q_4\otimes Y)+(Q\otimes Z).
+\tag{138.28}
+$$
+
+现在完整计算它的纯 $Y$ 纤维。若 $z\otimes Y\in E$，存在 $q_3\in Q_3$、$q_4\in Q_4$、$q_0\in Q$，使
+
+$$
+z\otimes Y
+=q_3\otimes X+q_4\otimes Y
++q_0\otimes(\alpha X+\beta Y).
+$$
+
+独立环境坐标给
+
+$$
+q_3=-\alpha q_0,\qquad z=q_4+\beta q_0.
+$$
+
+$\alpha\ne0$ 因而使 $q_0\in Q_3\cap Q=D$，于是
+
+$$
+z\in Q_4+D=Q_4.
+$$
+
+反向，$Q_4\otimes Y$ 本来就在 $E$ 中。因此准确的纤维等式是
+
+$$
+\boxed{\{z:z\otimes Y\in E\}=Q_4+(Q_3\cap Q)=Q_4.}
+\tag{138.29}
+$$
+
+真实 $V_1p=v\otimes Y\in E$ 遂给 $v\in Q_4$，再由同一个
+
+$$
+V_1G_3=Q_4\otimes Y
+$$
+
+得到 $p\in G_3$。这与（138.24）的非零 $p\in H_3$ 及后期 $H_3\cap G_3=0$ 矛盾。$YXYXZ$ 两种小侧关系全部排除，定理138.1得证。
+
+### 138.5 二重通常纤维的整体结算
+

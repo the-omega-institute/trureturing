@@ -1,0 +1,11 @@
+**定理 20.2（未点击预测的精确闭合）。** 一般仪器的效果空间在至多 $d^2$ 层后稳定。全部首次事件律相同等价于 $b_\rho=b_\sigma$。此外 $\mathcal A(\mathcal V)\subseteq\mathcal V$，若 $p_0=b_\rho(\mathcal A I)>0$，则未点击后
+
+$$
+b_{\rho'}(H)=\frac{b_\rho(\mathcal A H)}{p_0},
+\qquad \rho'=\mathcal N(\rho)/p_0.
+$$
+
+因而事件边界足以递归预测同一停止协议的全部未点击续接。
+
+证明。命题 14.2—14.3 的线性论证只用了 $\mathcal A$ 的线性、$\mathcal A(I)=I-\sum_xB_x$ 和 $E_{n+1,x}=\mathcal A(E_{n,x})$，故逐项适用。剩余公式由迹对偶得到；分母是已知边界坐标，零分支无需定义条件后继。由于协议首次点击即停止，本断言不要求预测点击后的额外实验。$\square$
+

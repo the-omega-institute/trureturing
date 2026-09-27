@@ -1,0 +1,117 @@
+**定理187.3（纯来源的闭式最优恢复）。** 设
+$0\le w_0<w_1<1/\chi$，并且
+
+$$
+\boxed{\alpha_1+\sqrt{\alpha_0\alpha_1}\ge\frac{\chi}{\beta}.}
+\tag{187.16}
+$$
+
+则
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+}
+\tag{187.17}
+$$
+
+这是一条精确有限参数等式。特别地，若 $|\gamma|<\beta$，则
+$\chi/\beta<2$，所以固定 $R>1$ 下全部充分小正 $w_0=\epsilon,w_1=R\epsilon$ 满足其条件。
+
+**证明。** 写 $k=\beta^2+\gamma^2$，对 $s=+$ 定义单位核方向的投影
+
+$$
+\Pi=\frac1k
+\begin{pmatrix}
+\beta^2&i\beta\gamma\\
+-i\beta\gamma&\gamma^2
+\end{pmatrix}.
+$$
+
+它是向量 $(\beta,-i\gamma)^{\mathsf T}/\sqrt k$ 的秩一投影，直接计算得
+
+$$
+\operatorname{Tr}(\Pi\omega_j)
+=\frac{\beta}{\chi}\alpha_j.
+$$
+
+取同一效果
+
+$$
+E=\lambda\Pi,\qquad
+\lambda=\frac{\chi}
+{\beta(\alpha_1+\sqrt{\alpha_0\alpha_1})}.
+\tag{187.18}
+$$
+
+（187.16）保证 $0<\lambda\le1$，所以 $E$ 合法；负旗标使用 $ZEZ$。记
+$\mu=1/(\alpha_1+\sqrt{\alpha_0\alpha_1})$，则正确概率为
+$a_0=\mu\alpha_0$、$a_1=1-\mu\alpha_1$，并有
+
+$$
+\frac{a_0a_1}{a_0+a_1}
+=\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+$$
+
+因此（187.2）给（187.17）的上界。
+
+对下界，在（187.3）中选择
+
+$$
+q_*=
+\frac{\sqrt{\alpha_1}}{\sqrt{\alpha_0}+\sqrt{\alpha_1}},
+\qquad
+z_*=
+\frac{q_*^2}{(1-q_*)^2}=\frac{\alpha_1}{\alpha_0}.
+$$
+
+由（187.1）直接相减，
+
+$$
+z_*\omega_0-\omega_1
+=-\frac{w_1-w_0}{\beta\alpha_0}
+\begin{pmatrix}
+\gamma^2&-i\beta\gamma\\
+i\beta\gamma&\beta^2
+\end{pmatrix}
+\preceq0.
+\tag{187.19}
+$$
+
+右侧是负的秩一矩阵，核恰为 $\Pi$ 的像。因此
+$q_*^2\omega_0-(1-q_*)^2\omega_1\preceq0$，其正谱部分为零。
+（187.3）在这个 $q_*$ 的标量值为
+
+$$
+(1-q_*)^2
+=\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+$$
+
+因为最小化值不超过这个可行值，最优误差至少为（187.17）右侧，与构造上界相等。证毕。
+
+对第184—185节采用的具体常数，出现精确简化
+
+$$
+\boxed{
+\frac{\beta^2+\gamma^2}{\beta}=\frac18,
+\qquad \frac{\chi}{\beta}=\frac{2353}{2304}.
+}
+\tag{187.20}
+$$
+
+若 $0\le w_0<w_1<1/2$，则 $\alpha_j=1-w_j/8>15/16$，故
+$\alpha_1+\sqrt{\alpha_0\alpha_1}>15/8>2353/2304$。
+所以在对应的纯来源模型中，所有这些参数都满足
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\frac{1-w_0/8}
+{\bigl(\sqrt{1-w_0/8}+\sqrt{1-w_1/8}\bigr)^2}.
+}
+\tag{187.21}
+$$
+
+这也覆盖把实际启动数值 $w_0,w_1$ 代入纯来源模型的全部 $L\ge3$，但没有把原来的满秩来源替换掉：这是改变来源后的另一份明确任务。相应小扰动斜率为 $-(R-1)/64$，与（187.5）的 $G=1/16$ 一致。
+

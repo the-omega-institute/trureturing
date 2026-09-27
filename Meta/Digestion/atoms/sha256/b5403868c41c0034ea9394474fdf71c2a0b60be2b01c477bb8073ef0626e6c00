@@ -1,0 +1,39 @@
+**定理197.2（两种尺度之间的统一展开）。** 存在固定 $H,C,\epsilon_0>0$，使
+$0<\epsilon\le\epsilon_0$、$H\epsilon\le\ell\le1/2$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr E(\ell,\epsilon)
+={}&\frac34+\Phi_\infty\epsilon
+-\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell}
+-\frac{\beta\Sigma g^2\delta^2}{32}\frac{\epsilon^3}{\ell^2}\\
+&+O\left(\epsilon^2+\frac{\epsilon^4}{\ell^3}\right).
+\end{aligned}
+}
+\tag{197.5}
+$$
+
+这里 $O$ 常数与 $\ell,\epsilon$ 无关。
+
+特别地，任意满足
+
+$$
+\ell_\epsilon\to0,\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0
+$$
+
+的路径均有
+
+$$
+\boxed{
+\frac{\ell_\epsilon}{\epsilon^2}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
+\right]
+\longrightarrow-\frac{g^2\delta^2}{16}.
+}
+\tag{197.6}
+$$
+

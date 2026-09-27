@@ -1,0 +1,9 @@
+**命题 2.37。** For the fixed computable presentation $\mathcal P$,
+
+$$
+R\equiv_T S.
+\tag{TM.659}
+$$
+
+The reduction from $S$ to $R$ is uniform when the presentation is also supplied. The reverse reduction does not need that presentation.
+

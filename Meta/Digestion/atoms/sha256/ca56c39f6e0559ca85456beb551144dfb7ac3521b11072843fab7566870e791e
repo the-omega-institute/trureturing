@@ -1,0 +1,55 @@
+#### 238.4.3 在证明内部应用标准 Naimark 补
+
+说明所用补操作的具体归一化。一般地，设 $d_0$ 维空间 $U$ 上有投影族 $Q_j$，满足
+$$
+\sum_jQ_j=\alpha I_U,
+\qquad
+\alpha=R/d_0>1,
+\qquad R=\sum_j\operatorname{rank}Q_j.
+\tag{238.25}
+$$
+令 $W_j=\operatorname{im}Q_j$，取外部正交直和 $W=\bigoplus_jW_j$，$\dim W=R$。定义
+$$
+\mathsf Av=\alpha^{-1/2}(Q_jv)_j,
+\qquad \mathsf A:U\to W.
+\tag{238.26}
+$$
+由（238.25），$\mathsf A^{\dagger}\mathsf A=I_U$。令
+$$
+Z=(\operatorname{im}\mathsf A)^\perp,
+\qquad\dim Z=R-d_0,
+\qquad P_Z=I_W-\mathsf A\mathsf A^{\dagger}.
+\tag{238.27}
+$$
+对坐标包含 $\iota_j:W_j\to W$，定义 $B_j=P_Z\iota_j:W_j\to Z$。由于 $\mathsf A^{\dagger}\iota_j$ 是 $W_j\hookrightarrow U$ 乘以 $\alpha^{-1/2}$，有
+$$
+B_j^{\dagger}B_j
+=\iota_j^{\dagger}(I_W-\mathsf A\mathsf A^{\dagger})\iota_j
+=\frac{\alpha-1}{\alpha}I_{W_j}.
+\tag{238.28}
+$$
+所以 $V_j=\sqrt{\alpha/(\alpha-1)}B_j$ 是等距嵌入，$\Pi'_j=V_jV_j^{\dagger}$ 是 $Z$ 上秩为 $\dim W_j$ 的正交投影。利用坐标投影之和为 $I_W$，得到
+$$
+\sum_j\Pi'_j
+=\frac{\alpha}{\alpha-1}
+P_Z\left(\sum_j\iota_j\iota_j^{\dagger}\right)P_Z\big|_Z
+=\frac{\alpha}{\alpha-1}I_Z
+=\frac R{R-d_0}I_Z.
+\tag{238.29}
+$$
+因此 Naimark 补保持标签数与各投影秩，把共同实现从维数 $d_0$ 转到 $R-d_0$。零子空间也由同一公式处理；$\alpha=1$ 时（238.28）不能作此归一化，所以构造明确要求 $R>d_0$。对子空间维数不等、投影像相交或含有满投影的情形，证明不需另加限制。
+
+对（238.24）取 $d_0=3$、$R=7$、$\alpha=7/3$，所得 $Z$ 恰为四维，并满足
+$$
+\sum_{j=1}^4\Pi'_j=\frac74I_Z,
+\qquad
+(\operatorname{rank}\Pi'_j)_j=(1,2,2,2).
+\tag{238.30}
+$$
+选择 $Z$ 到实际输入 $A=\mathbb C^4$ 的任意酉识别，便得到（238.15）要求的同一四维输入上的投影族。用（238.16）—（238.17）构造实际秩七通道，得到
+$$
+\boxed{D_7=9/16.}
+\tag{238.31}
+$$
+再在四维空间逐个取空间补，得到总秩九、秩型 $(3,2,2,2)$、投影和 $(9/4)I_4$，因此 $D_9=7/16$。
+

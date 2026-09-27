@@ -1,0 +1,31 @@
+### 217.5 精确二次容量代价及端点系数
+
+固定 $p$，由 $q_t(p,\widehat t)=0$，两次基本积分给
+$$
+q(p,0)-q(p,\widehat t)
+=\widehat t^2\int_0^1 r\,q_{tt}(p,r\widehat t)\,dr.
+\tag{217.17}
+$$
+此式对正负小 $\widehat t$ 都精确成立。定义
+$$
+C_{\mathrm{cap}}(p)
+=a(p)^2\int_0^1 r\,q_{tt}(p,r\widehat t(p))\,dr.
+\tag{217.18}
+$$
+积分保持局部实解析性，且 $q_{tt}>0$ 保证 $C_{\mathrm{cap}}>0$。
+
+$\Delta>0$ 时，全 CPTP 最优值由 $t=\widehat t>0$ 取得；$\Delta\le0$ 时由 $t=0$ 取得。结合（217.16）、（217.17），得到（217.5）。
+
+第213节中心读数为
+$$
+q_{tt}(0,0)=\frac{\beta\delta}{16},\qquad a(0)=1.
+$$
+所以
+$$
+C_{\mathrm{cap}}(0)
+=\frac12q_{tt}(0,0)
+=\frac{\beta\delta}{32}.
+\tag{217.19}
+$$
+这是联合端点读数，不是把固定 $0<\gamma<\beta$ 的切换系数直接取极限。
+

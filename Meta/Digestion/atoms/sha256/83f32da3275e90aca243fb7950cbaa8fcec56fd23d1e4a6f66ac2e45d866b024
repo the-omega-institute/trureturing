@@ -1,0 +1,1 @@
+| [D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)，`dynamic_closure_is_least` | 给一般最小动态稳定细化；它不计算本题具体证书反链和七种规范形。 

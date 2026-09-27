@@ -1,0 +1,24 @@
+## 219. 删除小谱后的合法修复与联合端点的尖锐距离
+
+第218节在纯来源上得到精确距离，本节把距离的一阶系数延伸到允许正来源的联合端点。
+关键是同时保留两个方向：每份低秩候选都必须通过输出事件的检验；
+从实际通道删去谱尾后，还必须恢复共同 TP 条件，才得到合法比较候选。
+
+固定 $\beta>0,R>1$，沿用第213、217—218节的同一恢复模型，记
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h).
+\tag{219.1}
+$$
+物理参数取充分小 $\epsilon>0,h\ge0$，并满足原入口与来源合法性条件。
+实际最优正旗标条件记录通道记为 $\mathcal R^\sharp(p)$，
+$\lambda(p)=\lambda_2^\sharp(p)$ 为结果一 Choi 的第二大本征值。
+$\mathfrak C_2$ 是同输入、同输出、总 Choi 秩至多二的全部合法经典记录通道，
+$$
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R^\sharp(p)-\mathcal S\|_\diamond.
+\tag{219.2}
+$$
+全部 diamond 范数保留任意外部参考。本文给纸面证明，未作 Lean 核验。
+

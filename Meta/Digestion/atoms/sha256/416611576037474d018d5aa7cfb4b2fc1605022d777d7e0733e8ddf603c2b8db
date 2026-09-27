@@ -1,0 +1,22 @@
+**命题 503.2（覆盖权重控制精确边缘的联合代价）。** 在定义 498.2 的比值条件下，
+
+$$
+2\le\frac{j_{\mathrm{exact}}}{j_{\mathrm{free}}}
+\le2\tau\le2s\le2\min(k,d).
+$$
+
+证明：取任意可行覆盖权重 $w$ 与任意中心 $R$。若 $R(x)\le l(x)$，则下式左边非正、右边非负；若 $R(x)>l(x)$，每个达到最小值的目标都有 $(R(x)-Q_i(x))_+=R(x)-l(x)$，而这些目标的权重总和至少为一。因此逐点均有
+
+$$
+R(x)-l(x)\le\sum_iw_i(R(x)-Q_i(x))_+.
+$$
+
+求和得到
+
+$$
+1-M\le\sum_iw_i\operatorname{TV}(R,Q_i)
+\le\left(\sum_iw_i\right)\max_i\operatorname{TV}(R,Q_i).
+$$
+
+先取达到 $\tau$ 的权重，再取全族最优自由中心，得到 $\rho_r\le1-M\le\tau\rho$。由比值关系及 $\rho_r\ge\rho$ 得结论。证毕。
+

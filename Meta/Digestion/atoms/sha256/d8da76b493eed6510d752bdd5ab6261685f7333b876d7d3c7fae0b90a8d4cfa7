@@ -1,0 +1,7 @@
+**引理 57.1（扩展由末端 CPTP 通道产生）。** 对任意满足式（57.2）的 $R$，存在 CPTP 通道 $\Lambda:\mathcal L(E)\to\mathcal L(D)$，使
+
+$$
+R=(\operatorname{id}_{AB}\otimes\Lambda)(R^{\mathrm{pur}}).
+\tag{57.6}
+$$
+

@@ -1,0 +1,25 @@
+**定理 240.2（固定候选的最小参考判据）。** 达到 $D_*$ 的纯联合输入中，最小 Schmidt 秩、最小所需参考维数及（240.18）相等：
+$$
+\boxed{
+\min\{\operatorname{rank}\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,
+\ \varepsilon(\rho)=D_*\}=r_{\min}.
+}
+\tag{240.19}
+$$
+若仅允许参考维数 $h$，定义
+$$
+D_h(\mathcal S)=
+\max_{\substack{|\psi\rangle\in A\otimes\mathbb C^h\\\|\psi\|=1}}
+\varepsilon(\psi),
+\qquad 1\le h\le d.
+\tag{240.20}
+$$
+则
+$$
+\boxed{
+D_h(\mathcal S)=D_*\ \Longleftrightarrow\ h\ge r_{\min};
+\qquad h<r_{\min}\ \Longrightarrow\ D_h(\mathcal S)<D_*.
+}
+\tag{240.21}
+$$
+

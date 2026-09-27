@@ -1,0 +1,10 @@
+**命题 111.3（共同、人人与汇集的蕴含方向）。** 对上述模型，有
+
+$$
+CP(x)\ \Longrightarrow\ EP(x)\ \Longrightarrow\ DP(x)\ \Longrightarrow\ x\in P.
+$$
+
+证明。每个 $[x]_i$ 都包含于 $[x]_C$，而所有个人纤维的交集包含于每个 $[x]_i$；实际状态 $x$ 属于这个交集。依次使用集合包含即得。参与者非空使 $EP\Rightarrow DP$ 可以选出一个个人条件。证毕。
+
+项目[概念核的序对偶](../../../D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.lean)提供其中两种集合构造的直接接口：联合读数的核取各核的交，共同粗化的核取其并所生成的等价关系。两个参与者时，源码 `concept_kernel_order_duality` 正是这两个恒等式。信息汇集缩小不可区分纤维，共同粗化扩大纤维；本节先给出知识语义，才把这些核接到 $D$ 与 $C$，没有仅凭源码中的“common”名称就省略这座桥。
+

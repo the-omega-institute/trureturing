@@ -1,0 +1,16 @@
+**命题 2.33。** The point $0$ belongs to $E_A$, and
+$$
+E_A\cap D_n=
+\begin{cases}
+D_n,&n\in A,\\
+\varnothing,&n\notin A.
+\end{cases}
+\tag{TM.590}
+$$
+The extension relation $R_{E_A}$ is Turing equivalent to $A$, and
+$$
+\mu(E_A)=1-\sum_{n\notin A}p^{-(n+1)}.
+\tag{TM.591}
+$$
+Consequently $\mu(E_A)$ is computable if and only if $A$ is decidable, although $E_A$ always has the explicit computable point $0$.
+

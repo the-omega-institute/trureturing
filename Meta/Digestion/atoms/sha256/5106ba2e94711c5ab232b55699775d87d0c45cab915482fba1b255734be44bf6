@@ -1,0 +1,45 @@
+### 74.2 有界尺度上的一致一阶展开
+
+记 $R_0=|x+y\rangle\langle x+y|$，并沿用第70节的紧凸因果修复集合 $\mathcal C$、缩放集合
+
+$$
+\mathcal D_\varepsilon=\frac{\mathcal C-R_0}{\varepsilon},
+\qquad
+\mathcal T=\overline{\bigcup_{t>0}\mathcal D_t}.
+\tag{74.7}
+$$
+
+若 $r\ge0$ 且 $r\varepsilon<1$，把 $a=1-r\varepsilon$ 代入候选，得到
+
+$$
+\begin{aligned}
+R_{1-r\varepsilon,\varepsilon}
+={}&|\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z\rangle
+\langle\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z|\\
+&+\varepsilon|\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\rangle
+\langle\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'|.
+\end{aligned}
+\tag{74.8}
+$$
+
+在 $r=0$ 时使用第71节已经定义的端点 $a=1$。对任意固定 $R<\infty$，存在常数 $C_R<\infty$，使充分小正 $\varepsilon$ 满足
+
+$$
+\sup_{0\le r\le R}
+N\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}-H_r
+\right)\le C_R\varepsilon.
+\tag{74.9}
+$$
+
+为核对一致性，可将（74.8）逐矩阵元展开。只需对 $\sqrt{1-r\varepsilon}$ 和 $\sqrt{1-\varepsilon}$ 沿 $\varepsilon$ 作二阶 Taylor 估计。在紧集
+
+$$
+0\le r\le R,\qquad
+0\le\varepsilon\le\frac1{2(1+R)}
+$$
+
+上，两个根号的被开方数均至少为 $1/2$，各矩阵元关于 $\varepsilon$ 的二阶导数连续且一致有界。因 $\sqrt r$ 在此紧参数集上连续有界，第二行外积同样满足这一性质。一阶项恰为第70节的 $H_r$，于是余项的迹范数一致为 $O_R(\varepsilon^2)$。再用 $N(X)\le2\|X\|_1$ 即得（74.9）。这里没有要求关于 $r$ 在零点可微。
+

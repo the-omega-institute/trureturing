@@ -1,0 +1,146 @@
+### 185.4 四维 Choi 对偶的定量正性
+
+现在固定 $t=t_\circ(w)$、$C=\cos t$、$S=\sin t$，采用第183节的移动检验
+
+$$
+D=\operatorname{diag}(\sqrt r\,x,\sqrt\ell\,y),\qquad
+\tau=\operatorname{Tr}D,\quad\zeta=\operatorname{Tr}(DZ),
+$$
+
+$$
+a=1-b,\qquad
+p=a\tau C+c\zeta S,\qquad
+q_*=b\zeta S+c\tau C.
+\tag{185.18}
+$$
+
+这里以 $q_*$ 区分对偶系数与（185.7）的 $q=c\sin2t$。
+$D$ 不作密度矩阵归一化。由单位向量与正分量，
+
+$$
+0<\tau\le1,\qquad |\zeta|\le\tau,\qquad
+\|D\|\le\|D\|_{\mathrm F}\le1,
+$$
+
+$$
+\|D-\rho\|_{\mathrm F}\le\delta_\xi,\qquad
+|1-\tau|\le\delta_\xi.
+\tag{185.19}
+$$
+
+对每个旗标置
+
+$$
+g_0=\operatorname{vec}D,\qquad
+g_1=\operatorname{vec}(-YD),
+$$
+
+$$
+A_s=a|g_0\rangle\langle g_0|
++b|g_1\rangle\langle g_1|
++sc\bigl(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\bigr),
+$$
+
+$$
+Z_s=(pI-sq_*Y)D,\qquad
+\mathsf Y_s=Z_sU_s^\dagger,\qquad
+\mathsf S_s=\mathsf Y_s\otimes I-A_s.
+\tag{185.20}
+$$
+
+当前检验向量在角度求导时固定。由（185.10）的驻点条件，或者直接对检验收益求导，得到
+
+$$
+p\tau S=q_*\zeta C.
+\tag{185.21}
+$$
+
+第183节的逐项相乘于是给 $\mathsf Y_s$ Hermitian，并且
+
+$$
+\mathsf S_s\,\operatorname{vec}(U_s^{\mathsf T})=0.
+\tag{185.22}
+$$
+
+下面对两个旗标统一估计它相对基点的范数变化。记
+
+$$
+A^{(0)}=|\operatorname{vec}\rho\rangle
+\langle\operatorname{vec}\rho|,
+\qquad
+\mathsf S^{(0)}=\rho\otimes I-A^{(0)}.
+$$
+
+首先，
+$\|g_0\|,\|g_1\|,\|\operatorname{vec}\rho\|\le1$，
+且 $\|g_0-\operatorname{vec}\rho\|\le\delta_\xi$。利用
+$\||v\rangle\langle v|-|z\rangle\langle z|\|
+\le(\|v\|+\|z\|)\|v-z\|$，有
+
+$$
+\boxed{
+\|A_s-A^{(0)}\|
+\le2\delta_\xi+2b+2c.
+}
+\tag{185.23}
+$$
+
+其次，（185.19）及 $0\le t\le2c$ 给
+
+$$
+|p-1|
+\le b+\delta_\xi+\frac{t^2}{2}+ct,\qquad
+|q_*|\le bt+c.
+$$
+
+用 $\|U_s-I\|\le t$ 分解
+$Z_sU_s^\dagger-\rho$，得到
+
+$$
+\begin{aligned}
+\|\mathsf Y_s-\rho\|
+&\le|p-1|+|q_*|+t+\delta_\xi\\
+&\le b+3c+2\delta_\xi+2bc+4c^2.
+\end{aligned}
+\tag{185.24}
+$$
+
+两式合并为
+
+$$
+\begin{aligned}
+\|\mathsf S_s-\mathsf S^{(0)}\|
+&\le3b+5c+4\delta_\xi+2bc+4c^2\\
+&<\frac3{80}+\frac1{100}+\frac1{45}
++\frac1{20000}+\frac1{62500}\\
+&<\frac7{100}.
+\end{aligned}
+\tag{185.25}
+$$
+
+最后一步可完全用有理数核对：
+前三项之和为 $251/3600$；后两项之和小于 $1/10000<1/3600$，而 $7/100=252/3600$。
+
+基点谱由第181、183节为
+
+$$
+\operatorname{spec}\mathsf S^{(0)}=\{0,2/9,r,\ell\}.
+$$
+
+其三条正根均大于 $1/8$。Hermitian 本征值的算子范数扰动界与（185.25）保证 $\mathsf S_s$ 的三条较大根均大于
+
+$$
+\frac18-\frac7{100}=\frac{11}{200}>0.
+$$
+
+另一方面，（185.22）始终提供一个非零零核向量。矩阵只有四维，故剩余一根恰为零，不能变为负数。于是得到显式区间上的完整对偶可行性：
+
+$$
+\boxed{
+\mathsf Y_s\otimes I-A_s\succeq0
+\qquad
+\left(0<w\le\frac1{10},\ s=\pm1\right).
+}
+\tag{185.26}
+$$
+

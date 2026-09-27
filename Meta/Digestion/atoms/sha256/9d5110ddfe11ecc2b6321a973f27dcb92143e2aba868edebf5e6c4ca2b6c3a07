@@ -1,0 +1,13 @@
+**引理63.1（有限 Schmidt 数的纯态重叠上界）。** 若未归一化正算子 $X$ 可以写成有限和 $X=\sum_j|v_j\rangle\langle v_j|$，每个 $v_j\in B\otimes Q$ 的 Schmidt 秩不超过 $m$，则
+$$
+\langle\psi|X|\psi\rangle\le\Lambda_m\operatorname{Tr}X.
+$$
+
+证明。对一个非零 $v_j$，左侧支撑在某个秩至多 $m$ 的投影 $P_j$ 中。Cauchy–Schwarz 给
+$$
+|\langle\psi|v_j\rangle|^2
+\le \|v_j\|^2\langle\psi|(P_j\otimes I)|\psi\rangle
+=\|v_j\|^2\operatorname{Tr}(P_j\rho_B^\psi).
+$$
+在 $\rho_B^\psi$ 的本征基中，投影对角元位于 $[0,1]$，总和至多 $m$，故加权和不超过前 $m$ 个本征值之和 $\Lambda_m$。求和得到结论。零向量不贡献。
+

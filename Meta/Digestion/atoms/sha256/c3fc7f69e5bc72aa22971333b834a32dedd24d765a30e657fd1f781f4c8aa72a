@@ -1,0 +1,28 @@
+**引理271.2（不变正协方差只支撑于固定向量）。** 设有限维复空间上的 $J$ 幂零，$t>0$，$M=I+tJ$。若
+$$
+C\succeq0,
+\qquad MCM^\dagger=C,
+\tag{271.20}
+$$
+则
+$$
+\operatorname{ran}C\subseteq\ker J.
+\tag{271.21}
+$$
+
+**证明。** 令 $B=C^{1/2}$。对每个非负整数 $k$，迭代（271.20）得
+$$
+\|M^kB\|_{\mathrm{HS}}^2
+=\operatorname{Tr}(M^kC(M^\dagger)^k)
+=\operatorname{Tr}C.
+\tag{271.22}
+$$
+若 $J^a=0$，二项式展开为
+$$
+M^kB=\sum_{\ell=0}^{a-1}\binom{k}{\ell}t^\ell J^\ell B.
+\tag{271.23}
+$$
+右侧是关于 $k$ 的矩阵值多项式。若其次数为正，除以最高次幂后趋于非零首项矩阵，其HS范数必无界；这与（271.22）矛盾。因此它是常多项式。比较 $k=0,1$ 得 $tJB=0$，于是 $\operatorname{ran}B\subseteq\ker J$。有限维PSD谱分解给 $\operatorname{ran}C=\operatorname{ran}B$，结论成立。$\square$
+
+对Jordan块直和，$\ker J$ 是每条链的首向量张成空间。引理允许 $C$ 在不同首向量间存在任意合法的相干条目，不把 $C$ 限制为块对角。
+

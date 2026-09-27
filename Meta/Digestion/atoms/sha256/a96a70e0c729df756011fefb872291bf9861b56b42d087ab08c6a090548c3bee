@@ -1,0 +1,4 @@
+**定义 396.1（项目数学的使用范围）。** 本批引用八个项目源码：`StrongLumpabilityDescent` 支持推前规律在纤维上恒定与实际像上下降的对应；`DistributionIndependentClosure` 支持确定性动力对全部初始分布闭包的判据；`SingleSampleLawNonimplication` 提供单个匹配样本不能识别规律的反例；`BeliefSetSufficiency` 提供相容集合对可能未来的充分性；`BeliefMarkovUpdate` 提供静态非负权重的预测与更新、零分母约定；`PosteriorUniversalSufficiency`、`ExperimentStatePosteriorDecisionSeparation` 与 `TaskIndependentBeliefSufficiency` 分别承担一步决策、状态侧与证据侧区分、固定未来实验核下的后验充分性。正文链接到各自声明的实际来源。
+
+分块矩阵、受限初始分布反例、潜在二值参数、有限滤波、罕见事件的敏感性、指标损失反向刻画、信息价值及合作例子，是普通数学方法在明确有限模型中的应用和综合。它们不申报原创定理，也不因引用了项目源码而获得对全部散文公式的形式认证。源码阅读与 Lean kernel、公理闭包核验不同；数学模型中的条件充分性更不自动验证关于真实宗教、哲学和经验的解释桥梁。
+

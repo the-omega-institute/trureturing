@@ -1,0 +1,25 @@
+### 定理 10.3：恢复器可由噪声数据显式计算
+
+给定$\mathcal N(X)=\sum_aE_aXE_a^\dagger$且$\sum_aE_a^\dagger E_a=I_d$。计算
+
+$$
+Q=\mathcal N(I_d),\quad P=\operatorname{supp}Q,\quad
+W=Q^{[-1/2]},\quad
+c_{ab}=\operatorname{tr}(E_a^\dagger E_b)/d,
+$$
+
+其中$Q^{[-1/2]}$在正谱上取逆平方根、在零谱上取零。映射
+
+$$
+\boxed{\mathcal R_\mathcal N(X)=\sum_aE_a^\dagger WXWE_a+
+\operatorname{tr}[(I-P)X]\tau_0}
+\tag{10.4}
+$$
+
+总是CPTP，并且它精确反演$\mathcal N$，当且仅当存在任一CPTP逆，当且仅当
+
+$$
+E_a^\dagger E_b=c_{ab}I_d\quad\forall a,b.
+\tag{10.5}
+$$
+

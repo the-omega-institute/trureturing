@@ -1,0 +1,65 @@
+### 182.5 共同反馈的二阶收益及显式选择
+
+记第180节二阶二次式为
+
+$$
+Q_{180}(R,r_1,t_1)
+=\frac1{16}\left[
+\beta^2(R-1)^2+4\beta(R-1)r_1+4\gamma(R-1)t_1
++16r_1^2+4t_1^2
+\right].
+\tag{182.18}
+$$
+
+将（182.11）代入（182.14），得到
+
+$$
+\boxed{
+\begin{aligned}
+\widetilde e_L(r,t,u)
+={}&\frac34+\frac{\beta(1+R)}8\epsilon\\
+&+\left[
+Q_{180}(R,r_1,t_1)
++\frac{u_1^2-\kappa\gamma(1+R)u_1}{4}
+\right]\epsilon^2
++O(\epsilon^3).
+\end{aligned}
+}
+\tag{182.19}
+$$
+
+其中来自两个正确块的项
+$\kappa u_1b_0+\kappa u_1b_1$ 相消，因为 $b_0+b_1=0$。
+共同反馈留下的总重叠改变量为
+$[-u_1^2+\kappa\gamma(1+R)u_1]\epsilon^2$。
+误差式 $1-f_0f_1/(f_0+f_1)$ 在基点 $f_0=f_1=1/2$ 对两个重叠的偏导均为 $-1/4$，
+所以得到（182.19）的符号与系数。
+
+反馈角度的二次式在
+
+$$
+u_1=\frac{\kappa\gamma(1+R)}2
+$$
+
+取最小值，贡献
+$-\kappa^2\gamma^2(1+R)^2/16$。
+现在保留原始启动变量，记
+
+$$
+\Sigma w=w_0+w_1,\qquad \Delta w=w_1-w_0,
+$$
+
+并取显式参数
+
+$$
+\boxed{
+\widehat r_L=\frac12-\frac{\beta\Delta w}{8},\qquad
+\widehat t_L=-\frac{\gamma\Delta w}{2},\qquad
+\widehat u_L=\frac{\kappa\gamma\Sigma w}{2}.
+}
+\tag{182.20}
+$$
+
+前两个参数由第180节对全部有限 $L\ge3$ 合法；第三个参数为实数，
+其指数对任意取值都是酉。因此本显式解码器对每个有限 $L\ge3$ 都合法。
+

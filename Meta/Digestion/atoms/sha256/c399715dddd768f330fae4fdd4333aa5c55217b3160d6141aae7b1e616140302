@@ -1,0 +1,33 @@
+**定义 22.1（相位集合的分离数及终端任务）。** 沿用定义1.1的等权两态来源及其未知共同相位。相位圆记为 $`\mathbb T=\mathbb R/(2\pi\mathbb Z)`$，其测地距离为
+
+$$
+d_{\mathbb T}(\vartheta,\varphi)
+=\min_{j\in\mathbb Z}|\vartheta-\varphi+2\pi j|.
+\tag{22.1}
+$$
+
+对任意非空集合 $`\Theta\subseteq\mathbb T`$ 和 $`\delta>0`$，定义
+
+$$
+P(\Theta,\delta)
+=\max\bigl\{|A|:A\subseteq\Theta,\
+d_{\mathbb T}(\vartheta,\varphi)\ge\delta
+\text{ 对全部不同的 }\vartheta,\varphi\in A\bigr\}.
+\tag{22.2}
+$$
+
+圆周有限且距离分离，故上述集合的基数有有限整数上界；非空性保证最大值至少为一，并有一份有限集合取得该整数。这里不要求 $`\Theta`$ 闭、可测或具有正长度。
+
+将定义18.1的弧 $`I`$ 换为 $`\Theta`$，记完整参考、活动记忆及档案恢复的最小单终端接收维数为 $`k_n^{(\epsilon)}(\Theta)`$。编码和解码可以依赖 $`\Theta,n,\epsilon`$，不能依赖实际相位或来源输入；参考与活动记忆不可访问。本节不要求这些终端编码之间具有共同在线更新。
+
+置
+
+$$
+a_*:=\frac{\alpha^3}{6\pi^2},\qquad
+C_*:=1+2\sum_{r=1}^{\infty}e^{-a_*r^2}<\infty,
+\qquad
+J_\epsilon:=\left\lceil\frac1{\sqrt2\epsilon}\right\rceil,
+\quad \alpha=\frac{\sqrt5-1}{2}.
+\tag{22.3}
+$$
+

@@ -1,0 +1,37 @@
+### 112.3 十个大纤维起始尾词缩为五个
+
+现在 $[\eta_2]=A$。第69节共同分叉限制给十三个两字母尾词：
+
+$$
+\begin{gathered}
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,\ AABBB,\\
+ABAAA,\ ABAAB,\ ABABA,\ ABABB,\ ABBAB,\ ABBBA,\ ABBBB.
+\end{gathered}
+$$
+
+二维 $B$ 纤维识别所有对应的实际 $G_i=P_B$，因此 $B$ 的已见后继不能分叉。这排除 $ABABB,ABBAB,ABBBA$，剩下十词
+
+$$
+\begin{gathered}
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,\\
+AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+\end{gathered}
+\tag{112.8}
+$$
+
+下面排除其中五个，每次都保持同一实际来源：
+
+- $ABBBB$：第3至6轮环境全部相同，违反第71节。
+- $ABABA$：第99节引理99.3的局部实际证明给
+  $\dim(G_3+G_5)\ge3$；但两者都包含于二维 $P_B$，矛盾。该局部证明不使用正则纤维交零。
+- $AABAB$：第4、6轮都在二维 $B$ 纤维中，故 $G_4=G_6=P_B$，固定 $V_0$ 给 $H_3=H_5$。第3、5轮当前环境同为 $A$，由（112.6）恢复 $G_3=G_5$。于是空间对 $(H_3,G_3)=(H_5,G_5)$，违反实际 $\delta_5-\delta_3=x^4y^2/(t_3t_5)>0$。
+- $ABAAB$：第3、6轮给 $G_3=G_6=P_B$，所以 $H_2=H_5$。将两边投影到当前完整纤维 $P_A$，分别使用早期（112.7）与后期（112.6），得到 $G_2=G_5$。同一个 $0\ne w\in H_2\cap G_2$ 因而落入 $H_5\cap G_5=0$。
+- $AABBB$：$G_4=G_5=G_6=P_B$，固定 $V_0$ 给 $H_4=H_5$，违反实际 $\delta_5-\delta_4=-x^3y^3/(t_4t_5)\ne0$。
+
+这里 $x=|a|^2,y=|b|^2,t_0=1,t_j=1-yt_{j-1}$，非退化来源保证显示的主角差值严格非零。因此只剩
+
+$$
+\boxed{AAAAB,\qquad AAABA,\qquad AAABB,\qquad AABAA,\qquad ABAAA.}
+\tag{112.9}
+$$
+

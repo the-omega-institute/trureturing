@@ -1,0 +1,23 @@
+**推论204.4（阈值的三阶余项与熵的对数放大界）。** 有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+k_c\epsilon^2+O(\epsilon^3).
+}
+\tag{204.15}
+$$
+
+第201节的四项熵展开因此强化为
+
+$$
+\begin{aligned}
+H_2(\ell_\epsilon)={}&
+h_c\epsilon\log_2(1/\epsilon)
++h_c\epsilon\log_2(e/h_c)
++k_c\epsilon^2\log_2(1/\epsilon)\\
+&-\left[k_c\log_2h_c+\frac{h_c^2}{2\ln2}\right]\epsilon^2
++O\bigl(\epsilon^3\log(1/\epsilon)\bigr).
+\end{aligned}
+\tag{204.16}
+$$
+

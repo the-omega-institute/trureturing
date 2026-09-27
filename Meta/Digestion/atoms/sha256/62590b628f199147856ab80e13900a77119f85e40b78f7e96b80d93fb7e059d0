@@ -1,0 +1,33 @@
+**证明。** 两份相邻的未排序角对为
+$(\vartheta_{n-1},\vartheta_n)$、
+$(\vartheta_n,\vartheta_{n+1})$。
+由（145.15），公共角 $\vartheta_n$ 在两份排序列表中占据相同的一侧，另一侧之差为
+$|\vartheta_{n+1}-\vartheta_{n-1}|$。定理145.2即给（145.16）。
+
+利用 $t_n=x+y^2t_{n-2}$ 及
+$t_{n+1}=x+y^2t_{n-1}$，有
+
+$$
+\begin{aligned}
+\lambda_{n+1}-\lambda_{n-1}
+&=x\frac{t_nt_{n-1}-t_{n-2}t_{n+1}}
+           {t_{n-1}t_{n+1}}\\
+&=x^2\frac{t_{n-1}-t_{n-2}}{t_{n-1}t_{n+1}},
+\end{aligned}
+$$
+
+而 $t_{n-1}-t_{n-2}=(-y)^{n-1}$，得到（145.17）。
+
+最后，$t_j\to1/(1+y)$、$\lambda_j\to x$。函数
+$f(u)=\arccos\sqrt u$ 在固定 $x\in(0,1)$ 处可微，且
+$f'(x)=-1/(2\sqrt{xy})$。由中值定理，
+
+$$
+|\vartheta_{n+1}-\vartheta_{n-1}|
+\sim\frac{|\lambda_{n+1}-\lambda_{n-1}|}{2\sqrt{xy}}.
+$$
+
+结合（145.17）与 $\sin v\sim v$ 即得（145.18）。证毕。
+
+这里的渐近是固定 $a,b$ 后的轮次极限，没有宣称对趋近退化来源的参数一致。每两轮的最优几何间距严格为正，同时相邻轮次的最优间距可以指数趋零；精确区别不产生统一正分离常数。
+

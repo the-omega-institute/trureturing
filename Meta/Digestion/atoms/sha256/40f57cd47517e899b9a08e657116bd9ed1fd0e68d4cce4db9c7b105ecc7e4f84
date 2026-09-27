@@ -1,0 +1,7 @@
+**Proof.** More generally, equality of continuation languages is equivalent to
+$$
+(H-r)\cap D_{a,t}=(H-r')\cap D_{a,t}.
+\tag{TM.544}
+$$
+Each continuation has a definite increment, and each element of $D_{a,t}$ has a realizing continuation, proving both directions. By unrestricted attainability, the displayed equality reduces to $H-r=H-r'$. This says exactly that $r-r'$ belongs to the translation stabilizer of $H$, which is a subgroup. Its cosets give the stated count. $\square$
+

@@ -1,0 +1,53 @@
+### 209.1 同一模型与全来源结论
+
+固定 $\beta>0,\gamma>0,R>1$，采用第186节的同一模型：
+来源边缘为 $\rho=\operatorname{diag}(1-\ell,\ell)$，
+$0\le\ell\le1/2$，两个入口参数为 $w_0=\epsilon,w_1=R\epsilon$。
+接收端操作旗标及自身量子接口，不能访问 $M$；
+同一个共同 CPTP 恢复器服务两个原输入，误差保留全部外部参考。
+其最优半 diamond 误差仍记为 $\mathscr E(\ell,\epsilon)$。
+
+具体地，令 $r=1-\ell$、
+$\Xi=\sqrt r\,|00\rangle_{MR}+\sqrt\ell\,|11\rangle_{MR}$、
+$\psi=(I\otimes Y)\Xi$，实际旗标 $s=\pm1$ 下的条件态为
+
+$$
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+入口通道为 $\mathcal N(X)=\sum_jX_{jj}\omega_j$，
+$\omega_j=\tfrac12\sum_sP_s^Q\otimes\eta_s(w_j)$，
+目标为 $\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。
+因此 $\mathscr E$ 正是（186.1）同一完整恢复优化在 $\kappa=1-2\ell$ 的值，
+不是等先验标签判别的误差。
+
+置
+
+$$
+\delta=R-1,\qquad\Sigma=R+1,\qquad
+a=\frac{\gamma\delta}{4},\qquad B=\beta\Sigma,
+\qquad\Phi_\infty=\frac B8,
+$$
+
+$$
+q_0=\frac{3\beta^2\delta^2}{64}
++\frac{\gamma^2\delta^2}{8}-\frac{\gamma^2\Sigma^2}{16},
+\qquad
+D(\ell)=\gamma^2\ell
+\left[\frac{\Sigma^2(1-\ell)}4-\frac{\delta^2}{16(1-\ell)}\right].
+\tag{209.1}
+$$
+
+$D$ 在 $[0,1/2]$ 的邻域解析，且 $D(0)=0$。
+沿用第206、207节的 $\Phi_h,Q(h)$，定义
+
+$$
+\boxed{
+C_{\mathrm{comp}}(\ell,\epsilon)
+=\frac34+\epsilon\Phi_{\ell/\epsilon}
++\epsilon^2\left[Q(\ell/\epsilon)+D(\ell)\right].
+}
+\tag{209.2}
+$$
+

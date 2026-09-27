@@ -1,0 +1,6 @@
+## 278. 未知共同相位的真实校准与自适应重置副本预算
+
+§277中仪器角度及其相对于来源的方向已知。本节允许来源带有一个未知、固定的共同输入相位，并把取得方向信息所消耗的副本计入总预算。对同一单Jordan来源对，实际校准之后再旋转重置设置，仍能以 $\Theta(\delta^{-1})=\Theta(h^{-2n})$ 个副本完成等先验平均错误率不超过 $1/3$ 的二元判别，而且这个保证对未知相位一致。
+
+先估计方向、再沿估计方向测量是成熟的自适应估计方法，见 Bagan等，*Purity estimation with separable measurements*，Phys. Rev. Lett. 95, 110504 (2005)，[原文](https://arxiv.org/abs/quant-ph/0509087v2)，以及 Mahler等，*Adaptive quantum state tomography improves accuracy quadratically*，Phys. Rev. Lett. 111, 183601 (2013)，[原文](https://arxiv.org/abs/1303.0436v2)。本节在既定来源和重置访问合同中直接证明有限样本的统一错误界，并给出允许保留量子参考的自适应下界。
+

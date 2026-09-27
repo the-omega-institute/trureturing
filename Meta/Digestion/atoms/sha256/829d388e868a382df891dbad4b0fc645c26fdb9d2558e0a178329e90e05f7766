@@ -1,0 +1,65 @@
+### 181.2 该模拟器的精确二阶矩阵与有限严格改善
+
+为避免把纯化重叠直接当作迹距离，先计算实际输出差。置
+
+$$
+b=\beta w,\qquad c=\gamma w,\qquad
+u=b+(1-2b)\sin^2t,\quad
+v=b+\sin^2t,\quad
+q=c\sin2t.
+\tag{181.6}
+$$
+
+旗标平均后的 $\sigma(w,t)$ 在偶宇称
+$|00\rangle,|11\rangle$ 与奇宇称 $|01\rangle,|10\rangle$ 之间分块。
+目标 $\Xi$ 位于偶块；偶块上的目标减实际输出恰为
+
+$$
+\boxed{
+H(w,t)=
+\begin{pmatrix}
+r(u-q)&\sqrt\Delta\,v\\
+\sqrt\Delta\,v&\ell(u+q)
+\end{pmatrix}.
+}
+\tag{181.7}
+$$
+
+该式由（181.2）—（181.4）直接相乘得到。也可先写
+$A_0=(1-b)P_\Xi+bP_\psi$、
+$T=|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|$，则
+
+$$
+\sigma(w,t)
+=\cos^2t\,A_0+\sin^2t\,X_RA_0X_R
+-ic\sin t\cos t\,[X_R,T],
+$$
+
+再取偶块即得（181.7）。
+
+奇块上的输出差为负半定。整个差是秩一投影减一份密度矩阵，至多有一个正本征值，且总迹为零。因此
+
+$$
+\boxed{
+d(w,t)=\lambda_{\max}(H(w,t))
+=\frac{
+u-\kappa q+
+\sqrt{(\kappa u-q)^2+4\Delta v^2}
+}{2}.
+}
+\tag{181.8}
+$$
+
+特别地，$H(w,0)=\beta wP_\Xi$，故
+$d(w,0)=\beta w$。对每个固定 $w>0$，其最高本征值简单。
+由（181.7）计算该固定点的导数，
+
+$$
+\boxed{
+\partial_t d(w,0)
+=\langle\Xi|\partial_tH(w,0)|\Xi\rangle
+=-2\kappa\gamma w<0.
+}
+\tag{181.9}
+$$
+

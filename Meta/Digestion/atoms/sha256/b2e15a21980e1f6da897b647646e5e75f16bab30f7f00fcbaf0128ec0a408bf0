@@ -1,0 +1,17 @@
+**定理164.4（长期最坏误差的参数极限公式）。** 假设
+$t_k\to t_0$ 且 $G_{t_k}\xrightarrow{d_H}H$。在本节合同下，
+
+$$
+\boxed{
+\lim_{k\to\infty}E_\infty(t_k)
+=
+\max\left\{
+E_\infty(t_0),\
+\max_{z\in H}\widetilde h(t_0,z)
+\right\}.
+}
+\tag{164.11}
+$$
+
+而且对每个 $z\in H$，$\mathcal R_{t_0,z}$ 都是 CPTP 通道；它可由邻近装置的实际长期通道取参数极限得到，但未必属于固定装置 $t_0$ 的实际相位族。
+

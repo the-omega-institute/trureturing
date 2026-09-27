@@ -1,0 +1,27 @@
+**定义 241.1（未分离模型对）。** 在当前接口 $I$ 下，定义
+
+$$
+\mathcal P_I
+=
+\left\{
+(M,M')\in\mathfrak M^2:
+M\sim_I M',
+\ \Phi(M)\ne\Phi(M')
+\right\}.
+$$
+
+干预 $a$ 覆盖模型对 $(M,M')$，若
+
+$$
+P_M^a\ne P_{M'}^a.
+$$
+
+对干预集合 $J$，记其覆盖集为
+
+$$
+\operatorname{Cov}(J)
+=
+\{(M,M')\in\mathcal P_I:
+\exists a\in J,\ P_M^a\ne P_{M'}^a\}.
+$$
+

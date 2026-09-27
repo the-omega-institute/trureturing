@@ -1,0 +1,32 @@
+**定义 54.1（趋零的谱区间左端点）。** 保持[窗口相位卷](PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)第 49–52 章的原序列、
+同一完整后验标签、精确中心及全部空间归一化。
+记 $`\delta=Q^{-1/2}`$，$`\mathfrak L=\log(1/h)`$，并把定义 51.1 的有限谱公式
+按原式定义到 $`u=0`$：
+
+```math
+\begin{aligned}
+N_M(u)&=\left\lfloor h^{-1}e^{u/\sqrt\delta}\right\rfloor,\qquad u\ge0,\\
+\mathcal Z_M(u)&=\sum_{|k|\le N_M(u)}(1+k^2)^{-1/2}
+ |\widehat\mu_M(k)|^2-2\mathfrak L Y_M^2-\frac{2u}{\sqrt\delta}V_M,\\
+\mathcal J_M&=b_*\mathcal Q_M+
+ \sum_{t\ne r}H(x_t,x_r)A_tA_r,\qquad
+\mathcal Q_M=\sum_tA_t^2,\qquad
+T_M=\frac{\mathcal Q_M-V_M}{\sqrt\delta}.
+\end{aligned}
+```
+
+式 (54.1)。
+
+这里 $`A_t`$ 为按完整得分组合并的精确中心标签和，
+$`H(x,y)=1+2D_{\rm w}-2\log(\omega|x-y|)`$，$`\omega=\pi/2`$。
+固定 $`U>0`$；取任意确定性序列 $`a_M\in(0,U)`$，满足
+
+```math
+a_M\longrightarrow0,\qquad
+\ell_M:=\frac{a_M}{\sqrt\delta}\longrightarrow\infty,
+\qquad
+\vartheta_M(t)=a_M+\left(1-\frac{a_M}{U}\right)t,\quad 0\le t\le U.
+```
+
+式 (54.2)。
+

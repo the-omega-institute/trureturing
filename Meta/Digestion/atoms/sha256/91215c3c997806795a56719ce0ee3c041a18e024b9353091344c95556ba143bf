@@ -1,0 +1,44 @@
+**定理 232.2（离策略 provenance 传输界）。** 在定义 232.1 的绝对连续条件下，任意非负节点权重 $g_{t,h,a}$ 满足
+
+$$
+\sum_a\pi_t(a\mid h)g_{t,h,a}\kappa_{t,h,a}
+\le
+C_t(h)
+\sum_aq_t(a\mid h)g_{t,h,a}\kappa_{t,h,a}.
+$$
+
+从而目标策略的终端误差满足
+
+$$
+\boxed{
+\left|
+\mathbb E_{\mathbb P^\pi}F
+-
+\mathbb E_{\bar{\mathbb P}^\pi}F
+\right|
+\le
+\sum_{t=0}^{H-1}
+\mathbb E_{h\sim\mu_t}
+\left[
+C_t(h)\sum_aq_t(a\mid h)g_{t,h,a}\kappa_{t,h,a}
+\right].
+}
+\tag{232.1}
+$$
+
+### 证明
+
+对每个有 $\pi_t(a\mid h)>0$ 的动作，代入 $\pi_t=r_tq_t$，并使用 $r_t\le C_t(h)$：
+
+$$
+\sum_a\pi_tg\kappa
+=
+\sum_aq_t r_tg\kappa
+\le
+C_t(h)\sum_aq_tg\kappa.
+$$
+
+将此不等式代入定理 231.3 即得（232.1）。证毕。
+
+覆盖系数不是单纯的估计方差常数。它记录了目标策略在校准策略看来有多么反事实；当 $C_t$ 很大时，即使参考数据中的加权误差很小，目标策略的真实证书仍可能很松。
+

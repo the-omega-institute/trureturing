@@ -1,0 +1,66 @@
+**定理 127.2（时间窗条件化的参考—后继公式）。** 对任意 Borel 集 $E$，有
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathbf M_\infty(E))(\omega_{RA})
+=\alpha(E)\,\omega_R^Q\otimes P_0
++\beta(E)\,\omega_R^P\otimes\zeta.
+}
+\tag{127.1}
+$$
+
+令
+
+$$
+Z_E=\alpha(E)q+\beta(E)p.
+$$
+
+若 $Z_E>0$，则条件于事件 $E$ 的归一化联合后继为
+
+$$
+\boxed{
+\omega_{RA\mid E}
+=\frac{\alpha(E)\,\omega_R^Q\otimes P_0
++\beta(E)\,\omega_R^P\otimes\zeta}{Z_E}.
+}
+\tag{127.2}
+$$
+
+特别地，若 $E\subseteq(0,\infty)$ 且 $\beta(E)>0$，则
+
+$$
+\boxed{
+\omega_{RA\mid E}
+=\frac{\omega_R^P}{p}\otimes\zeta,
+}
+\tag{127.3}
+$$
+
+只要 $p>0$。正时间窗的形状、长度和位置只改变该事件的发生概率 $\beta(E)p$，不改变其条件量子后继。
+
+### 证明
+
+对任意 $Y_R\otimes X_A$，有
+
+$$
+(\operatorname{id}_R\otimes\mathsf F)(Y_R\otimes X_A)
+=Y_R\operatorname{Tr}(Q_*X_A)P_0,
+$$
+
+$$
+(\operatorname{id}_R\otimes\mathsf S)(Y_R\otimes X_A)
+=Y_R\operatorname{Tr}(P_*X_A)\zeta.
+$$
+
+线性延拓到 $\omega_{RA}$，并用部分迹的 sandwich 恒等式，得到
+
+$$
+(\operatorname{id}_R\otimes\mathsf F)(\omega_{RA})=\omega_R^Q\otimes P_0,
+$$
+
+$$
+(\operatorname{id}_R\otimes\mathsf S)(\omega_{RA})=\omega_R^P\otimes\zeta.
+$$
+
+代入式（126.1）即得式（127.1）。取迹得到 $Z_E$；在 $Z_E>0$ 时除以该正数，得到式（127.2）。当 $E$ 不含零时 $\alpha(E)=0$，再用 $\beta(E)>0$ 与 $p>0$ 即得式（127.3）。证毕。
+

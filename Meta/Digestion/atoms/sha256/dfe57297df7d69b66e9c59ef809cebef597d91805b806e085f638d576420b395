@@ -1,0 +1,26 @@
+### 211.6 任意多 Kraus 共同 CPTP 的全局匹配
+
+完整误差对共同 Choi 对凸。
+任取合法竞争者 $\Gamma$，不限制其秩或距离；
+可行线段在候选端的导数由环境解析函数给出。因此
+
+$$
+\begin{aligned}
+e(\Gamma)
+&\ge e(\Gamma^\sharp)
++\sum_j\operatorname{Tr}[G_j(J_j-J_j^\sharp)]\\
+&=e(\Gamma^\sharp)+\sum_j\operatorname{Tr}(S_jJ_j)\\
+&\ge e(\Gamma^\sharp).
+\end{aligned}
+\tag{211.31}
+$$
+
+共同 TP 消去乘子，精确互补消去候选项，
+真实 PSD slack 给最后一步。
+候选物理可行，故精确达到全类最优值。
+第189节无损对称化仍保证这也是原完整任务的最优值。
+
+平方恒等式在本证明中只确定消元 Jacobian 和慢块极限；
+有限噪声对偶来自实际梯度、解析整除、Schur 补和精确标量互补。
+没有把一阶平方恒等式直接当成有限噪声的全类证书。
+

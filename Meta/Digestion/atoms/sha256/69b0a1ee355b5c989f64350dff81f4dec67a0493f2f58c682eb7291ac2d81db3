@@ -1,0 +1,33 @@
+**定理 2.19（preservation under continuation intertwining）。** Consider two weighted continuation systems with the same observation and cost sets. Suppose there are a surjective state map $h:Q\to Q'$ and a single bijection $\Phi:\mathcal T\to\mathcal T'$ of continuation tests, shared by all states, with the following properties:
+
+1. $\Phi$ preserves the identity and defined concatenations in both directions.
+2. For every $q,u$, the action $\delta(q,u)$ is defined if and only if $\delta'(h(q),\Phi(u))$ is defined, and then
+   $$
+   h(\delta(q,u))=\delta'(h(q),\Phi(u)).
+   \tag{TM.555}
+   $$
+3. Observations, additional costs, and raw durations are preserved:
+   $$
+   \begin{aligned}
+   o'(h(q))&=o(q),\\
+   c'(h(q),\Phi(u))&=c(q,u),\\
+   \tau'(h(q),\Phi(u))&=\tau(q,u)
+   \end{aligned}
+   \tag{TM.556}
+   $$
+   whenever the continuation is legal.
+
+Then
+$$
+q\sim r\quad\Longleftrightarrow\quad h(q)\sim' h(r),
+\tag{TM.557}
+$$
+and $h$ induces an isomorphism of the weighted continuation quotients, with tests identified by $\Phi$.
+
+**Proof.** The hypotheses give the exact identity
+$$
+\mathcal R'_{h(q)}(\Phi(u))=\mathcal R_q(u)
+\tag{TM.558}
+$$
+for every state and test, including undefined actions. Since $\Phi$ is a single surjective test correspondence, equality of either pair of residual functions is equivalent to equality of the other pair. Thus the map on quotient classes is well-defined and injective. Surjectivity of $h$ makes it surjective. The transition intertwining and preservation of cost, duration, and observation descend to the quotient by the preceding proposition. $\square$
+

@@ -1,0 +1,41 @@
+## ST27．离开一个固定编码空间，不等于逻辑信息已经不可恢复
+
+### 定义 ST27.1：正交错误副本
+
+设逻辑空间为 $V=\mathbb C^d$，物理输出为 $\mathcal H=\mathbb C^n$，$d\ge1$。取有限非空索引集 $J$ 和矩阵 $S_j:V\to\mathcal H$，满足
+
+$$
+S_j^\dagger S_k=\delta_{jk}I_V.
+\tag{ST27.1}
+$$
+
+令 $P=\sum_jS_jS_j^\dagger$。直接相乘得 $P=P^\dagger=P^2$。因此$n\ge d|J|$；这些索引是逻辑信息的正交副本标签，也称错误综合征（syndrome）。它们不是逻辑输入的复制：一次实际状态只占据一个联合编码，并未产生独立的未知态副本。
+
+对任意 syndrome 密度矩阵 $\sigma$，定义
+
+$$
+\mathcal N_\sigma(\rho)
+=\sum_{j,k}\sigma_{jk}S_j\rho S_k^\dagger.
+\tag{ST27.2}
+$$
+
+对固定复位密度态 $\tau$，定义完整恢复
+
+$$
+\mathcal D(X)
+=\sum_jS_j^\dagger X S_j+
+\operatorname{tr}[(I-P)X]\tau.
+\tag{ST27.3}
+$$
+
+### 定理 ST27.2：相干 syndrome 的精确恢复
+
+$\mathcal N_\sigma$ 与 $\mathcal D$ 均为 CPTP，而且
+
+$$
+\boxed{\mathcal D\mathcal N_\sigma=\mathrm{id}_V.}
+\tag{ST27.4}
+$$
+
+恢复不要求读取 $\sigma$，也不要求它在指定标签基下对角。
+

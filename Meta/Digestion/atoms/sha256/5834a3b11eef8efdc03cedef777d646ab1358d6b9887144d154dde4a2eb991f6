@@ -1,0 +1,42 @@
+**定理 59.1（单参数精确约化）。** 对 $p\in[1-c,\varepsilon]$，定义
+
+$$
+\begin{aligned}
+v_p&=\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z,\\
+S_p&=|v_p\rangle\langle v_p|+p|h_0\rangle\langle h_0|.
+\end{aligned}
+\tag{59.5}
+$$
+
+则 $S_p$ 是归一化因果梳，而且
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p).
+\tag{59.6}
+$$
+
+进一步，对 $q,t\in[0,1]$ 定义
+
+$$
+\begin{aligned}
+U&=q+c^2(1-q)+\varepsilon t,\\
+V&=1-p+pt,\\
+W&=\sqrt{1-p}\,[q+c(1-q)]+\sqrt{\varepsilon p}\,t,\\
+\Lambda(p,q,t)
+&=\frac{U-V+\sqrt{(U+V)^2-4W^2}}2.
+\end{aligned}
+\tag{59.7}
+$$
+
+则有完全标量的准确表达式
+
+$$
+e_\varepsilon
+=\min_{1-c\le p\le\varepsilon}
+\max_{0\le q,t\le1}
+\left[\Lambda(p,q,t)+\varepsilon(1-q-t)_+\right],
+\tag{59.8}
+$$
+
+其中 $a_+=\max\{a,0\}$。该结论从全体因果修复推出，不预先假设未知修复只有式（59.5）的支撑或秩。
+

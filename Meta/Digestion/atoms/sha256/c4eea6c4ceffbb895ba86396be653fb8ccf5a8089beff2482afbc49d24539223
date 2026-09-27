@@ -1,0 +1,46 @@
+### 10.2 规范双商的下降不需要满射
+
+定义
+
+$$
+ x\sim_X y\iff r_E(x)=r_E(y),
+ \qquad
+ p\sim_P q\iff c_E(p)=c_E(q).
+ \tag{10.5}
+$$
+
+只由 (10.3) 即得
+
+$$
+ x\sim_Xy\Longrightarrow Fx\sim_XFy,
+ \qquad
+ p\sim_Pq\Longrightarrow \delta p\sim_P\delta q.
+ \tag{10.6}
+$$
+
+故有唯一的诱导映射
+
+$$
+ \bar F:X/{\sim_X}\to X/{\sim_X},
+ \qquad
+ \bar\delta:P/{\sim_P}\to P/{\sim_P},
+ \tag{10.7}
+$$
+
+以及规范评价
+
+$$
+ \bar E([x],[p])=E(x,p)
+$$
+
+满足
+
+$$
+ \bar E(\bar F[x],[p])
+ =
+ \bar E([x],\bar\delta[p]).
+ \tag{10.8}
+$$
+
+这里不需要 $F$、$\delta$ 满射、单射或可逆。满射性属于之后的恢复问题；把它提前写进下降定理会把合法的非可逆动态商排除在外。
+

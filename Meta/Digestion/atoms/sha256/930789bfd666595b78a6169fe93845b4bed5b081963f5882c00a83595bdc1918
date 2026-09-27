@@ -1,0 +1,66 @@
+**定理 225.1（全局连续事件的通道距离下界）。**
+
+令 $\mathcal R,\mathcal S$ 为输入 $\mathbb C^2$、同一量子输出 $\mathbb C^m$ 及同一经典结果寄存器上的 CPTP 记录通道。固定一个结果标签 $q$。设 $\mathcal R$ 的该结果分支为完全正映射 $\Gamma$，而 $\mathcal S$ 的同名分支 Choi 秩至多一，即
+$$
+\mathcal S_q(X)=CXC^\dagger
+\tag{225.CT.1}
+$$
+对某个线性算子 $C:\mathbb C^2\to\mathbb C^m$ 成立；零分支取 $C=0$。
+
+假设存在连续映射
+$$
+r:\mathbb {CP}^1\longrightarrow
+\{u\in\mathbb C^m:\|u\|=1\}
+\tag{225.CT.2}
+$$
+以及 $\alpha\ge0$，使对每个单位输入 $v$，都有
+$$
+\langle r([v]),\Gamma(P_v)r([v])\rangle\ge\alpha,
+\qquad P_v=|v\rangle\langle v|.
+\tag{225.CT.3}
+$$
+这里要求全局连续的单位向量；只给连续的秩一投影不足以代替（225.CT.2）。
+
+**结论。** 任意满足（225.CT.1）的竞争者都满足
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{225.CT.4}
+$$
+该下界由一个无参考纯输入和同名结果块中的秩一输出事件见证。
+
+证明。只需证明存在单位 $v$ 使
+$$
+\langle r([v]),Cv\rangle=0.
+\tag{225.CT.5}
+$$
+取输入正交基 $f_0,f_1$。在闭单位圆盘 $\overline{\mathbb D}$ 上，定义
+$$
+v(z)=\sqrt{1-|z|^2}\,f_0+zf_1,
+\qquad
+F(z)=\langle r([v(z)]),Cv(z)\rangle.
+\tag{225.CT.6}
+$$
+两者均连续。圆盘边界 $|z|=1$ 上有 $[v(z)]=[f_1]$，所以
+$$
+F(z)=zh,
+\qquad
+h=\langle r([f_1]),Cf_1\rangle.
+\tag{225.CT.7}
+$$
+若 $h=0$，边界上已经存在零点。若 $h\ne0$ 且 $F$ 在整个闭圆盘上无零，则
+$$
+R(z)=\frac{|h|}{h}\frac{F(z)}{|F(z)|}
+$$
+是从闭圆盘到单位圆周的连续映射，并且在 $|z|=1$ 上满足 $R(z)=z$。它因此是一份从闭圆盘到边界圆周的缩回，与标准无缩回结论矛盾。这一标准工具直接采用 Hatcher《Algebraic Topology》第1章 §1.1、第32页、定理1.9证明中使用的“$D^2$ 不存在到 $S^1$ 的缩回”；该处由 $\pi_1(S^1)\ne0$ 证明，不作为本文的新定理。[官方章节 PDF，第12页](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=12)。因此 $F$ 必有零点，证明（225.CT.5）。
+
+对该输入 $P_v$，取完整输出上的效果
+$$
+E=|q\rangle\langle q|\otimes P_{r([v])}.
+\tag{225.CT.8}
+$$
+由（225.CT.3）、（225.CT.5），目标在此事件上的概率至少为 $\alpha$，竞争者的概率为零。由于两份完整输出都是迹为一的状态，它们之差迹为零，故该概率差不超过输出差的迹范数的一半，也不超过完整半 diamond 距离。这证明（225.CT.4）。其他结果分支始终包含在两份通道内，没有把分支迹范数误当作完整通道距离。证毕。
+
+相位条件在本证明中承担实质义务。例如对单 Kraus 等距通道 $X\mapsto UXU^\dagger$，取 $Uv$ 作为输出向量会随输入相位改变，不能下降为（225.CT.2）的映射。不能仅因输出投影 $P_{Uv}$ 连续，便使用本结论。
+

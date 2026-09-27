@@ -1,0 +1,13 @@
+**定理 128.3（带参考输入的观察商）。** 对两个密度矩阵 $\omega_{RA}$ 与 $\widetilde\omega_{RA}$，全部参考—时间—后继标记输出相同，当且仅当
+
+$$
+\boxed{
+\omega_R^Q=\widetilde\omega_R^Q,
+\qquad
+\omega_R^P=\widetilde\omega_R^P.
+}
+\tag{128.4}
+$$
+
+因此参考接口可以保留两个扇区的条件参考状态，但仍然不读取系统输入的跨扇区相干块。
+

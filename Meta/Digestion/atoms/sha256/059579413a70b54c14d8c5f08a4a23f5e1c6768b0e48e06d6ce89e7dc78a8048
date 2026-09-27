@@ -1,0 +1,39 @@
+**定义 51.1（对数二次核与增长谱坐标）。** 沿用定义 49.1、50.1 的原序列、
+同一完整后验标签及精确中心，记 $`\delta=\delta_M=Q^{-1/2}`$、
+$`h=h_M`$、$`\mathfrak L=\log(1/h)`$、$`\omega=\pi/2`$。
+保留同一组电荷 $`A_t`$、标记 $`x_t=t\delta`$、
+$`\mathcal Q_M=\sum_t A_t^2`$、$`V_M=d_J/B_M^2`$ 和 $`T_M`$。
+置
+
+```math
+D_{\mathrm w}=\sum_{k\ge1}\{(1+k^2)^{-1/2}-k^{-1}\},\qquad
+H(x,y)=1+2D_{\mathrm w}-2\log(\omega|x-y|)\quad(x\ne y).
+```
+
+式 (51.1)。
+
+对实对称核 $`K\in L^2(\rho\otimes\rho)`$，以第 43 章的同一实 Gaussian
+测度 $`\mathcal W_\rho`$ 定义二重 Wiener 积分 $`I_2(K)`$，其规范为
+
+```math
+I_2(f\widetilde\otimes g)
+ =\mathcal W_\rho(f)\mathcal W_\rho(g)-\int fg\rho,\qquad
+\mathbb E I_2(K)^2=2\iint K(x,y)^2\rho(x)\rho(y)\,dx\,dy.
+```
+
+式 (51.2)。
+
+有限对称张量和及此等距式给出完备化定义。下述证明核对 $`H`$ 属于该空间；
+其对角线取值不影响这个定义。对 $`u>0`$，定义实际有限谱过程
+
+```math
+s_M(u)=\frac{u}{\sqrt\delta},\qquad
+N_M(u)=\left\lfloor\frac{e^{s_M(u)}}h\right\rfloor,\qquad
+\mathcal Z_M(u)=\sum_{|k|\le N_M(u)}(1+k^2)^{-1/2}
+ |\widehat\mu_M(k)|^2-2\mathfrak L Y_M^2-2s_M(u)V_M.
+```
+
+式 (51.3)。
+
+这里 $`u`$ 是谱尺度参数，不是得分阈值；$`V_M`$ 仍为观测环境中的辅助方差中心。
+

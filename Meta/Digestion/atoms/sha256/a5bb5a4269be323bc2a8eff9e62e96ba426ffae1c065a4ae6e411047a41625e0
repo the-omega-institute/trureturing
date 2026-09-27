@@ -1,0 +1,64 @@
+**证明。** 引理79.1排除非正交射线，正交情形又由（79.10）和引理79.2只剩
+
+$$
+r=s=e=3,
+\qquad R_A=E,
+\qquad E\perp O,
+\qquad\dim(E\oplus O)=6.
+\tag{79.11}
+$$
+
+由（79.8），$Q_B=Q_3+Q_5$ 正交于 $O$，且其维数为 $e=3$。实际 $H_3,H_5$ 分别包含于 $G_3\oplus Q_3$ 与 $G_5\oplus Q_5$，所以
+
+$$
+H_3+H_5\subset O\oplus Q_B,
+\qquad P_O(H_3+H_5)=G_3+G_5=O.
+$$
+
+这个和至少三维，又包含于三维 $D_A$，因此
+
+$$
+D_A=H_3+H_5\subset O\oplus Q_B,
+\qquad P_O|_{D_A}:D_A\to O\text{ 是同构}.
+\tag{79.12}
+$$
+
+所以 $D_A$ 是一个线性图 $T:O\to Q_B$。其像就是 $D_A$ 到 $Q_B$ 的投影，而实际满投影给
+
+$$
+\operatorname{im}T=Q_3+Q_5=Q_B.
+$$
+
+两边均三维，故 $T$ 也是同构。因此
+
+$$
+D_A\cap O=0.
+\tag{79.13}
+$$
+
+真实单位向量 $p$ 属于 $H_1\subset D_A$。另一方面，$V_1p=v\otimes A$ 与 $V_1E=Q_B\otimes B$ 因 $A\perp B$ 而正交，固定等距性给 $p\perp E$。
+
+如果 $p\in E\oplus O$，结合 $p\perp E$ 就有 $p\in O$；但 $p\in D_A$，（79.13）会迫 $p=0$，矛盾。于是 $p\notin E\oplus O$。由（79.11），
+
+$$
+K=E+O+\mathbb Cp.
+\tag{79.14}
+$$
+
+这三个真实一位输入域的像全都属于尾环境空间：
+
+$$
+V_1E=Q_B\otimes B,\qquad
+V_1O=Q_A\otimes A,\qquad
+V_1p=v\otimes A.
+$$
+
+故（79.14）强制 $V_1K\subset K\otimes F$。可是实际初态满足 $V_1k=q\otimes\eta_1$，其中 $q\ne0$、$\eta_1\notin F$，该向量不在 $K\otimes F$，矛盾。证明完毕。
+
+这个排除使用首轮外置对真实尾域的维数约束，再由早期 $p$ 和实际后期图映射恢复全域一位像的限制。它没有先将首轮环境改成 $B$，没有调用完整六轮周期合同，也未为 $G_6$ 添加未执行的一位后继。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{79.15}
+$$
+

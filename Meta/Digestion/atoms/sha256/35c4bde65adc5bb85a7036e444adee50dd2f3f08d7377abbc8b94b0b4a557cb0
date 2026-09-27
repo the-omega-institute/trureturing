@@ -1,0 +1,7 @@
+**Proof.** The hypotheses give the exact identity
+$$
+\mathcal R'_{h(q)}(\Phi(u))=\mathcal R_q(u)
+\tag{TM.558}
+$$
+for every state and test, including undefined actions. Since $\Phi$ is a single surjective test correspondence, equality of either pair of residual functions is equivalent to equality of the other pair. Thus the map on quotient classes is well-defined and injective. Surjectivity of $h$ makes it surjective. The transition intertwining and preservation of cost, duration, and observation descend to the quotient by the preceding proposition. $\square$
+

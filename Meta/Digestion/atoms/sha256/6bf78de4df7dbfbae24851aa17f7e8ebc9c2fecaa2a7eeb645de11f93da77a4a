@@ -1,0 +1,23 @@
+#### 8.5.5 有界误差与自由质量 minimax
+
+完整终态观测满足 $\|\widehat y-y\|_\infty\le\varepsilon$ 时，线性反演给
+$$
+\|\widehat x-x\|_\infty\le\kappa(M)\varepsilon,
+\qquad \widehat x=B\widehat y.
+$$
+这对非负实直方图成立。在总质量未固定、每格无固定上界的该来源类中，任何恢复算法都不能改进此最坏常数：取足够大的共同非负基线 $b$，令
+$$
+x^\pm=b\pm\varepsilon w/t.
+$$
+两份实际完整响应的中点，与两者各自全部读数的距离都不超过 $\varepsilon$，但目标格相差 $2\kappa(M)\varepsilon$。同一个观测输入下，任何算法至少对其中一份来源有误差 $\kappa(M)\varepsilon$。没有假设独立噪声或概率噪声律。可以明确取共同基线 $b_c=\varepsilon|w_c|/t$，非负性随即逐格成立。
+
+将来源类和估计器量词完整写出，令 $F(x)$ 是全部带标签读数，$\mathcal A$ 输出实向量，则
+$$
+\inf_{\mathcal A}\sup_{x\in\mathbb R_{\ge0}^X}
+\sup_{\|\eta\|_\infty\le\varepsilon}
+\|\mathcal A(F(x)+\eta)-x\|_\infty=\kappa\varepsilon.
+$$
+若输出必须非负，反演后逐格截到 $[0,\infty)$ 不增加对非负真值的误差，所以公式仍成立。若还限制完整观测必须等于同一个非负来源的精确响应，下界中的 $F(b)$ 已满足该条件，上界沿用反演，故自由质量合同下也保持同一值。这两项扩展仍未施加总质量一的约束。
+
+若实际直方图为整数且已知 $\kappa(M)\varepsilon<1/2$，逐格舍入可精确恢复。若另给固定总质量、受限可达类、已知直方图上界，或只观察非空与否，最优常数必须重新检验；本节没有证明这些更小来源类也达到该常数。测量样本数、查询成本与位复杂度另计。
+

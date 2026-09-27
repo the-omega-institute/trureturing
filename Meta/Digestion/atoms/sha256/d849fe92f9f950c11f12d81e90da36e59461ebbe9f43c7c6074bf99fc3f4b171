@@ -1,0 +1,28 @@
+**定理 201.2（矩形化只给出保守最坏界）。** 对任何实值未来响应 $h$，有
+
+$$
+\boxed{
+\inf_{\operatorname{Rect}(\mathfrak J_\Phi)}h
+\le
+\inf_{\mathfrak J_\Phi}h
+\le
+\sup_{\mathfrak J_\Phi}h
+\le
+\sup_{\operatorname{Rect}(\mathfrak J_\Phi)}h.
+}
+\tag{201.1}
+$$
+
+若未来目标分别是下界或上界，矩形化只有在对应极值能够由原联合集合中的合法配对达到时才保持该端点；否则它会扩大鲁棒区间。
+
+### 证明
+
+有
+
+$$
+\mathfrak J_\Phi\subseteq
+\operatorname{Rect}(\mathfrak J_\Phi).
+$$
+
+对集合包含关系取下确界与上确界，立即得到（201.1）。端点相等的充要条件就是扩大后的集合没有产生更小的下界或更大的上界。证毕。
+

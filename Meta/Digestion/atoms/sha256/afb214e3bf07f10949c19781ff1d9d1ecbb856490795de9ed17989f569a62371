@@ -1,0 +1,66 @@
+### 96.3 可达部分对每个有限参数都满行秩
+
+定义同一 $T,B$ 的可达空间
+$$
+\mathcal R=\operatorname{span}
+\{T^jBx:x\in\mathbb C^k,\ 0\le j\le r-1\},
+\qquad u=\dim\mathcal R.
+$$
+Cayley–Hamilton 保证它是 $T$-不变子空间，（96.3）给
+$$
+\mathcal R\subset\ker C,\qquad u\ge k.
+\tag{96.5}
+$$
+选任意固定补空间 $\mathcal E$，写
+$$
+\mathbb C^r=\mathcal R\oplus\mathcal E,\qquad
+\ell=\dim\mathcal E=r-u\le n-2k.
+$$
+在这个分解中，
+$$
+T=\begin{pmatrix}T_{\mathcal R}&T_{\mathcal R\mathcal E}\\
+0&T_{\mathcal E}\end{pmatrix},
+\qquad
+B=\begin{pmatrix}B_{\mathcal R}\\0\end{pmatrix},
+\qquad
+C=\begin{pmatrix}0&C_{\mathcal E}\end{pmatrix}.
+\tag{96.6}
+$$
+
+对于每个复数 $\lambda$，矩阵
+$$
+[T_{\mathcal R}-\lambda I_u\ \ B_{\mathcal R}]
+$$
+均满行秩 $u$。否则存在非零行泛函 $f$，使
+$$
+fT_{\mathcal R}=\lambda f,\qquad fB_{\mathcal R}=0.
+$$
+它便消去全部 $T_{\mathcal R}^jB_{\mathcal R}$ 的像；这些像张成 $\mathcal R$，迫使 $f=0$，矛盾。
+
+将（96.2）的输入块重排为
+$\mathcal R,\mathbb C^k,\mathcal E$，得到
+$$
+P(\lambda)=
+\begin{pmatrix}
+T_{\mathcal R}-\lambda I_u&B_{\mathcal R}&T_{\mathcal R\mathcal E}\\
+0&0&T_{\mathcal E}-\lambda I_\ell\\
+0&0&C_{\mathcal E}
+\end{pmatrix}.
+\tag{96.7}
+$$
+前两组输入列的像恰为第一输出块。因此，对其取商或直接计算秩，给
+$$
+\operatorname{rank}P(\lambda)
+=u+\operatorname{rank}
+\begin{pmatrix}T_{\mathcal E}-\lambda I_\ell\\C_{\mathcal E}\end{pmatrix}.
+$$
+于是超出通常核维数的部分有精确表达式
+$$
+\boxed{
+j([\lambda:1])
+=\dim\bigl(\ker(T_{\mathcal E}-\lambda I_\ell)
+\cap\ker C_{\mathcal E}\bigr).
+}
+\tag{96.8}
+$$
+

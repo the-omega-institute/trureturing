@@ -1,0 +1,50 @@
+### 48.2 具有单、双节点周期类的经典通道
+
+取整数 $k\ge2$ 和两两互素的整数周期 $p_1,\ldots,p_k\ge2$。在通道的 Hilbert 空间中取正交基，由一个根向量 $o$ 及以下 $k$ 个互不相交的组件组成：组件 $i$ 有单节点
+
+$$
+x_{i,0},\ldots,x_{i,p_i-2}
+$$
+
+和双节点 $y_{i,0},y_{i,1}$。因此总维数为
+
+$$
+d=1+\sum_{i=1}^k(p_i+1).
+\tag{48.2}
+$$
+
+组件 $i$ 的周期类 $0,\ldots,p_i-2$ 各有一个节点，周期类 $p_i-1$ 有两个节点。转移规则为：根以概率 $1/k$ 进入每个组件的类零；单节点沿类次序确定前进；进入最后的双节点类时等概率分支；两个末节点随后都确定回到类零。
+
+将这些转移明确写成 Kraus 算子：
+
+$$
+\begin{aligned}
+R_i&=\frac1{\sqrt k}|x_{i,0}\rangle\langle o|,
+&&1\le i\le k,\\
+T_{i,j}&=|x_{i,j+1}\rangle\langle x_{i,j}|,
+&&0\le j\le p_i-3,\\
+B_{i,\alpha}&=\frac1{\sqrt2}|y_{i,\alpha}\rangle
+  \langle x_{i,p_i-2}|,
+&&\alpha\in\{0,1\},\\
+C_{i,\alpha}&=|x_{i,0}\rangle\langle y_{i,\alpha}|,
+&&\alpha\in\{0,1\}.
+\end{aligned}
+\tag{48.3}
+$$
+
+当 $p_i=2$ 时，$T_{i,j}$ 的指标集合为空；分支与合并仍按同一公式定义。令 $\Phi$ 为对（48.3）全部 Kraus 项求和的映射。每个输入节点的出边概率之和为一，具体有
+
+$$
+\begin{aligned}
+\sum_iR_i^*R_i&=|o\rangle\langle o|,\\
+\sum_jT_{i,j}^*T_{i,j}
++\sum_{\alpha}B_{i,\alpha}^*B_{i,\alpha}
++\sum_{\alpha}C_{i,\alpha}^*C_{i,\alpha}
+&=\sum_{j=0}^{p_i-2}|x_{i,j}\rangle\langle x_{i,j}|
++\sum_{\alpha=0}^1|y_{i,\alpha}\rangle\langle y_{i,\alpha}|.
+\end{aligned}
+\tag{48.4}
+$$
+
+所以全部 Kraus 平方和为 $I$，$\Phi$ 是同一个全域 CPTP 通道。它在所列基上先测量、再依照转移概率制备，后续论证只涉及对角态。其新环境可以携带被丢弃的经典信息；这里没有施加第45节的纯轨道或其他接收恢复条件。
+

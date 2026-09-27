@@ -1,0 +1,25 @@
+### 162.4 已标定正钟的权重稳定
+
+另给联合连续的正函数
+
+$$
+c:P\times G\longrightarrow(0,\infty).
+$$
+
+对每个参数，假设实际正历时满足第158节的标定合同
+$\ell_n(t)-c(t,g_t^n)\to0$。
+这只用于识别该参数的时间占比极限，不由本节的相位条件自动产生。
+
+紧性给一个共同下界
+$m=\min_{P\times G}c>0$。
+记
+
+$$
+\bar c_t=\int_Gc(t,z)\,d\mu_G(z),
+\qquad
+w_t(z)=\frac{c(t,z)}{\bar c_t},
+\qquad
+\nu_t^c=(h_t)_*(w_t\mu_G).
+\tag{162.12}
+$$
+

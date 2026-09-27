@@ -1,0 +1,23 @@
+### 22.2 定理：构造局部参数区间及全部错误区域
+
+固定无理 $\alpha\in(0,1)$ 和整数 $n\geq0$。对 $1\leq k\leq n$ 令 $c_k=1-\{k\alpha\}$，并令
+\[
+g_n=\min\bigl(\{1-\alpha\}\cup\{c_k:1\leq k\leq n\}
+\cup\{|c_i-c_j|:1\leq i<j\leq n\}\bigr),\qquad
+r_n=\frac{g_n}{2(n+1)}.
+\]
+有限集合中全部元素严格为正，故 $r_n>0$。对全部 $0\leq\delta\leq r_n$，有 $\alpha+\delta<1$，且
+\[
+\boxed{E_n(\alpha,\alpha+\delta)
+=\bigsqcup_{k=1}^n[c_k-k\delta,c_k),\qquad
+\lambda(E_n)=\frac{n(n+1)}2\delta.}
+\tag{22.2}
+\]
+对第 $k$ 个区域内的每个相位，实际有符号读出差为
+\[
+\boxed{s_j(\alpha+\delta,x)-s_j(\alpha,x)
+=\mathbf1_{\{j=k-1\}}-\mathbf1_{\{j=k\}},\quad 0\leq j<n.}
+\tag{22.3}
+\]
+当 $k=n$ 时只有最后一位增加一；当 $k<n$ 时实际出现相邻 $01\to10$，其余位不变。$n=0$ 时错误集为空。
+

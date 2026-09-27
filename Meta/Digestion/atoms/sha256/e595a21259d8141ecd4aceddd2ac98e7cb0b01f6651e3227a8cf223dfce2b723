@@ -1,0 +1,13 @@
+**定义 103.1（四种时间要求）。** 令一条无限历程为 $x:\mathbb N\to X$，$S\subseteq X$ 表示本次模型要求持续保留的范围，$G\subseteq S$ 表示需要达到或重新实现的状态。四种要求分别为
+
+$$
+\begin{aligned}
+\text{曾经达到}&:\quad \exists n,\ x_n\in G,\\
+\text{始终保留}&:\quad \forall n,\ x_n\in S,\\
+\text{反复达到}&:\quad \forall N,\exists n\ge N,\ x_n\in G,\\
+\text{此后一直达到}&:\quad \exists N,\forall n\ge N,\ x_n\in G.
+\end{aligned}
+$$
+
+“反复达到”使用任意晚时刻之后仍有到达的量词，允许中间离开；“此后一直达到”要求某一时刻以后再不离开。它们还没有指定是否存在行动策略、谁能观察状态、哪些环境变化须被纳入保证。第 53 节的有限停止目标仅要求在有限阶段确认达标，不能自行承担后三种义务。
+

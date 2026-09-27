@@ -1,0 +1,4 @@
+**引理 6.2.1（保留实际条件尾的 Borel 比较）。** 给 $q\in\mathcal Q_\delta$ 和 $N\ge0$，令 $\nu_N$ 的前 $N$ 个条件行均匀，之后在每个实际历史上仍用 $q$ 的原行。对所有 Borel 集 $D$，
+$$
+(d\delta)^N\nu_N(D)\le\mu_q(D)\le(dr)^N\nu_N(D).
+$$

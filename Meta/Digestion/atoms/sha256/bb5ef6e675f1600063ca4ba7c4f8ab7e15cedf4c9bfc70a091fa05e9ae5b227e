@@ -1,0 +1,24 @@
+**定理 248.2（饱和态的完整正常形）。** 在当前通道下，满足（248.4）的态，恰好是在参考本地等距换坐标后可写为
+$$
+\boxed{
+\theta P_{\Phi^+}\otimes\sigma_M
+\quad\oplus\quad
+\bigoplus_{s\in\Sigma}q_s P_{r_s}\otimes\tau_s,
+\qquad
+q_s\ge0,\quad\sum_s q_s=1-\theta.
+}
+\tag{248.22}
+$$
+$\sigma_M$ 与各正权重块中的 $\tau_s$ 为归一化密度矩阵；参考的 $Q\otimes M$ 与各 $E_s$ 两两正交。$P_{r_s}$ 表示（248.21）对应的纯量子比特态，零权重块可以省略。
+
+**证明。** 必要性由定理248.1的共同 Bell 因子化，以及（248.17）—（248.21）的产品方向与参考正交性得到。
+
+反向，任给（248.22）的态。Bell 因子配任意独立 $\sigma_M$ 的响应为 $D$，每个指定产品输入配任意 $\tau_s$ 的响应为 $U$。参考块正交，且局部参考等距变换保持距离，所以
+$$
+g(\Omega)=\theta D+\sum_s q_sU=U+\delta\theta.
+\tag{248.23}
+$$
+将 $\sigma_M$ 与各 $\tau_s$ 作纯态分解，所得联合纯分量的纠缠分别为一和零，给 $E_F(\Omega)\le\theta$。§245的普遍上界 $g(\Omega)\le U+\delta E_F(\Omega)$ 与 $\delta>0$ 再给 $E_F(\Omega)\ge\theta$。两者合并得到 $E_F(\Omega)=\theta$，故（248.4）成立。$\square$
+
+这里并未只列出一个达到族，而是由共同见证给出必要结构，再由实际通道响应证明充分性。$A=B$ 时的四种最优产品方向也完整保留。
+
