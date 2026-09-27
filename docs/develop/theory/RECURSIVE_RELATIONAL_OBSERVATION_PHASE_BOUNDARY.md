@@ -82742,3 +82742,422 @@ $$
 由此，精确共同核、取得它所需的合法面约化步骤、到固定纤维的误差界，以及某个具体唯一源的最优指数各有独立判据。标准误差界连接这些对象，但不把其中一个对象的已知性当作其余对象已经取得，也不提供取得最大秩填充或最短约化链的效率保证。
 
 ## 追加锚（本行以下为增补区）
+
+## 267. 唯一混合来源在完整重置接口上的八次方副本预算
+
+§265的唯一混合来源具有最优四次根稳定性：合法来源可以相差一阶，而完整数据只相差四阶。本节把同一来源族交给§253规定的实际重置仪器，计算取得这些区别的副本成本。对相同的已知二元来源，访问重置前联合输入所需副本数为 $h^{-2}$ 阶；只访问完整重置输出时则为 $h^{-8}$ 阶。两个下界都允许任意集体终端测量。
+
+这个比较同时保留源态的支撑变化与输出的全部记录和参考。源真值秩二，竞争态满秩；不能只由单副本迹距推断输入成本，也不能对源使用不满足支撑条件的有限相对熵界。
+
+### 267.1 固定来源、仪器、访问权限与成功目标
+
+取§265的固定 $H\otimes E=\mathbb C^2\otimes\mathbb C^2$ 来源族。块矩阵使用同一输入 $Y$ 本征基，记
+$$
+Z_*=\begin{pmatrix}1&1/2\\-1/2&1/2\end{pmatrix},
+\qquad
+F_*=\begin{pmatrix}1/2&-1/4\\-1/4&1/2\end{pmatrix},
+$$
+$$
+\Omega_0=\frac12
+\begin{pmatrix}F_*&Z_*/2\\Z_*^\dagger/2&I_2-F_*\end{pmatrix}.
+\tag{267.1}
+$$
+对每个已知 $0<h\le1/8$，令
+$$
+D_h=\begin{pmatrix}0&2h^2\\2h^2&h\end{pmatrix},
+\qquad \delta=64h^4,
+$$
+$$
+\Omega_h=\frac12
+\begin{pmatrix}
+F_*+D_h&(1-\delta)Z_*/2\\
+(1-\delta)Z_*^\dagger/2&I_2-F_*-D_h
+\end{pmatrix}.
+\tag{267.2}
+$$
+§265已证明 $\Omega_h$ 严格正定，且
+$$
+\rho_h=\rho_0=\frac12I_2,\qquad
+K_h=(1-\delta)K_0,\qquad K_0=Z_*/2,
+$$
+$$
+h\le\|\Omega_h-\Omega_0\|_1<2h.
+\tag{267.3}
+$$
+
+固定§253的实际重置仪器，取
+$$
+A=B=\frac12,\qquad b_0=\frac1{\sqrt2},
+\qquad
+A_a=\frac{Z_H+X_H}{\sqrt2},
+\quad A_b=\frac{Z_H-X_H}{\sqrt2},
+$$
+$$
+E_{w,s}=\frac{I_2+sA_w}{4},
+\qquad w\in\{a,b\},\quad s\in\{+1,-1\}.
+\tag{267.4}
+$$
+四个效应正半定且和为 $I_2$；量子输出统一重置为同一纯态 $P_{\mathrm{reset}}$。全部可见记录 $(w,s)$ 与完整参考 $E$ 均保留。输入Pauli算子 $Z_H$ 与固定参考矩阵 $Z_*$ 是不同对象。
+
+未知假设 $j\in\{0,h\}$ 以等先验选定，此后提供 $n$ 份同一来源的独立副本。比较两个接口：
+
+- 重置前接口开放 $\Omega_j^{\otimes n}$ 的全部输入与参考。
+- 规定输出接口只开放 $\sigma_j^{\otimes n}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$，固定仪器各次独立作用。
+
+两种接口均允许任意集体POVM、辅助处理和自适应终端测量。输出接口不开放原输入、额外设置种子或其隐藏副本，也不允许改换仪器查询其他方向。来源与通道没有共享的未建模记忆。
+
+令 $N_{\mathrm{in}}(h)$、$N_{\mathrm{out}}(h)$ 为达到等先验平均错误率不超过 $1/3$ 的最小整数副本数。方案可依赖已知 $h$ 和固定仪器。这里统计的是已知二元判别，不是未知幅度的复合检验。
+
+沿用未除以二的迹范数，并记
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,
+\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1
+\tag{267.5}
+$$
+为半迹距离与未平方的根保真度。
+
+### 267.2 理想支撑压缩给出精确源保真度
+
+沿用§265的正交向量
+$$
+v_0=(1,-1/2,1,1/2)^{\mathsf T},
+\qquad
+v_1=(0,1,0,1)^{\mathsf T}.
+\tag{267.6}
+$$
+令 $P$ 为它们张成空间的投影，即 $\Omega_0$ 的支撑投影。在正交归一基
+$v_0/\sqrt{5/2},v_1/\sqrt2$ 下，
+$$
+\Omega_0\big|_{\operatorname{ran}P}
+=\Lambda=\operatorname{diag}(5/8,3/8).
+\tag{267.7}
+$$
+竞争态的未归一化压缩为
+$$
+A_h=P\Omega_hP\big|_{\operatorname{ran}P}
+=
+\begin{pmatrix}
+5/8-\frac45h^2-\frac{88}{5}h^4&-\frac{h}{2\sqrt5}\\
+-\frac{h}{2\sqrt5}&3/8-8h^4
+\end{pmatrix}.
+\tag{267.8}
+$$
+因此其理想支撑外质量精确为
+$$
+\boxed{
+t_h=\operatorname{Tr}((I-P)\Omega_h)
+=1-\operatorname{Tr}A_h
+=\frac45h^2+\frac{128}{5}h^4.
+}
+\tag{267.9}
+$$
+
+根保真度由未归一化的 $A_h$ 直接计算。令
+$$
+B_h=\sqrt\Lambda A_h\sqrt\Lambda
+=
+\begin{pmatrix}
+25/64-h^2/2-11h^4&-\sqrt3h/16\\
+-\sqrt3h/16&9/64-3h^4
+\end{pmatrix}.
+\tag{267.10}
+$$
+直接相乘得到
+$$
+\operatorname{Tr}B_h=\frac{17}{32}-\frac12h^2-14h^4,
+$$
+$$
+\det B_h
+=\frac{225}{4096}-\frac{21}{256}h^2
+-\frac{87}{32}h^4+\frac32h^6+33h^8.
+\tag{267.11}
+$$
+二阶正半定矩阵的两个本征值给
+$$
+\boxed{
+\mathsf F_{\mathrm{in}}(h)^2
+:=\mathsf F(\Omega_0,\Omega_h)^2
+=\operatorname{Tr}B_h+2\sqrt{\det B_h}.
+}
+\tag{267.12}
+$$
+这里 $\sqrt{\Omega_0}$ 在 $P^\perp$ 上为零，但 $A_h$ 的迹仍小于一；没有将压缩态重新归一化而删除支撑损失。事实上 $h>0$ 时
+$D_{\mathrm{nat}}(\Omega_h\|\Omega_0)=+\infty$，所以输入下界不能借用该方向的有限相对熵。
+
+**引理267.1（源根保真度的二阶损失）。** 对 $0<h\le1/8$，
+$$
+\boxed{
+1-\frac{57}{32}h^2
+\le\mathsf F_{\mathrm{in}}(h)^2
+\le1-\frac45h^2-\frac{128}{5}h^4.
+}
+\tag{267.13}
+$$
+
+**证明。** Schatten Cauchy不等式给
+$$
+\mathsf F_{\mathrm{in}}^2
+\le\operatorname{Tr}\Lambda\,\operatorname{Tr}A_h
+=1-t_h,
+\tag{267.14}
+$$
+证明上界。
+
+对下界，置
+$$
+u=h^2\le1/64,\qquad
+a_*=\frac{225}{4096},\qquad
+v_*=\frac{21}{256}u+\frac{87}{32}u^2.
+\tag{267.15}
+$$
+此时 $v_*/a_*\le17/480<1$，且（267.11）给
+$\det B_h\ge a_*-v_*$。由
+$$
+\sqrt{a_*-v_*}\ge\sqrt{a_*}-\frac{v_*}{\sqrt{a_*}},
+\tag{267.16}
+$$
+代入（267.12）得到
+$$
+\begin{aligned}
+\mathsf F_{\mathrm{in}}^2
+&\ge1-\frac65u-\frac{186}{5}u^2\\
+&\ge1-\left(\frac65+\frac{186}{320}\right)u
+=1-\frac{57}{32}u.
+\end{aligned}
+\tag{267.17}
+$$
+$\square$
+
+特别地，$1-\mathsf F_{\mathrm{in}}=\Theta(h^2)$。精确式（267.12）还给
+$$
+\mathsf F_{\mathrm{in}}(h)=1-\frac{17}{40}h^2+O(h^4),
+\tag{267.18}
+$$
+但下述副本界使用整个声明区间内的（267.13），不依赖未控制的渐近余项。
+
+### 267.3 任意联合输入测量的下界与逐次可达上界
+
+§257给归一化态的界 $d(\tau,\omega)^2\le1-\mathsf F(\tau,\omega)^2$。平方根和奇异值的张量乘法又给根保真度乘性，所以
+$$
+\begin{aligned}
+d(\Omega_h^{\otimes n},\Omega_0^{\otimes n})^2
+&\le1-\mathsf F_{\mathrm{in}}(h)^{2n}\\
+&\le n\bigl(1-\mathsf F_{\mathrm{in}}(h)^2\bigr)\\
+&\le\frac{57}{32}nh^2.
+\end{aligned}
+\tag{267.19}
+$$
+按照§253的等先验Helstrom公式，正确率至少 $2/3$ 要求半迹距离至少 $1/3$。因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)\ge\frac{32}{513h^2}.
+}
+\tag{267.20}
+$$
+该界允许全部原输入与参考上的任意集体测量。
+
+一个逐次协议达到同阶：每份测量 $\{P,I-P\}$，只要有一次落在理想支撑外就判 $h$，否则判零。假设零下点击概率为零，假设 $h$ 下每份点击概率为 $t_h$。独立性给
+$$
+P_{\mathrm{succ}}(n)
+=1-\frac12(1-t_h)^n
+\ge1-\frac12e^{-nt_h}.
+\tag{267.21}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{t_h}\right\rceil
+\le\left\lceil\frac{5\ln(3/2)}{4h^2}\right\rceil.
+}
+\tag{267.22}
+$$
+这里零假设下没有错误，另一假设的错误率至多 $2/3$；其等先验平均错误率满足规定的 $1/3$ 目标。
+
+### 267.4 全部重置输出块严格正且两假设可交换
+
+按§253的仪器公式，省略共同纯 $P_{\mathrm{reset}}$ 因子，完整输出为
+$$
+\sigma_j
+=\bigoplus_{w,s}\frac{\rho_0+sR_w^{(j)}}4.
+\tag{267.23}
+$$
+由固定坐标关系 $K=R_Z-iR_X$，理想源响应为
+$$
+R_Z=\begin{pmatrix}1/2&0\\0&1/4\end{pmatrix},
+\qquad
+R_X=-\frac14Y_E,
+$$
+$$
+R_a=\frac{R_Z+R_X}{\sqrt2},\qquad
+R_b=\frac{R_Z-R_X}{\sqrt2}.
+\tag{267.24}
+$$
+两者分别具有同一对本征值
+$$
+r_\pm=\frac{3\pm\sqrt5}{8\sqrt2},
+\qquad0<r_-<r_+<\frac12.
+\tag{267.25}
+$$
+因此四个理想输出参考块 $(I_2/2+sR_w)/4$ 都严格正。这里严格正性指省略共同纯重置因子后的八维可访问支撑；不要求在包含无用纯态正交补的更大空间上全秩。
+
+由共同边缘及 $K_h=(1-\delta)K_0$，
+$$
+R_w^{(h)}=(1-\delta)R_w,\qquad w=a,b.
+\tag{267.26}
+$$
+在每个固定记录 $w$ 的块内，可用 $R_w$ 的同一个本征基同时对角化两个假设。由于不同记录块彼此正交，完整 $\sigma_0,\sigma_h$ 相互交换。这不要求 $R_a$ 与 $R_b$ 彼此交换。
+
+相应八项严格正概率为
+$$
+p_{w,s,k}=\frac{1+2sr_k}{8},
+\qquad
+p_{w,s,k}^{(h)}
+=\frac{1+2s(1-\delta)r_k}{8},
+\quad k\in\{+,-\}.
+\tag{267.27}
+$$
+这些概率包含全部实际记录与参考信息；没有对参考先迹掉以证明下界。由于 $r_\pm>0$，
+$$
+\boxed{
+\|\sigma_h-\sigma_0\|_1
+=\delta(r_++r_-)
+=\frac{3\delta}{4\sqrt2}
+=24\sqrt2\,h^4.
+}
+\tag{267.28}
+$$
+这也精确确认了实际完整重置输出只有四阶变化。
+
+### 267.5 输出相对熵的二次上界与集体测量下界
+
+两输出交换且具有共同严格正支撑，故相对熵就是（267.27）的经典相对熵。沿用§253从 $\ln u\le u-1$ 得到的估计，
+$$
+D_{\mathrm{nat}}(\sigma_h\|\sigma_0)
+\le\sum_{w,s,k}
+\frac{(p_{w,s,k}^{(h)}-p_{w,s,k})^2}{p_{w,s,k}}.
+\tag{267.29}
+$$
+代入概率后，其系数可以完全求出：
+$$
+\begin{aligned}
+\sum_{w,s,k}
+\frac{(p_{w,s,k}^{(h)}-p_{w,s,k})^2}{p_{w,s,k}}
+&=2\delta^2\sum_{k=\pm}\frac{r_k^2}{1-4r_k^2}\\
+&=2\delta^2\left[
+\left(\frac34+\frac{\sqrt5}{3}\right)
++\left(\frac34-\frac{\sqrt5}{3}\right)\right]\\
+&=3\delta^2.
+\end{aligned}
+\tag{267.30}
+$$
+因此
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_h\|\sigma_0)\le3\delta^2.
+}
+\tag{267.31}
+$$
+
+Helstrom公式、自然对数Pinsker不等式及相对熵张量加性均直接承接§253。若 $n$ 份输出的平均成功率达到 $2/3$，则
+$$
+\frac49
+\le\|\sigma_h^{\otimes n}-\sigma_0^{\otimes n}\|_1^2
+\le2nD_{\mathrm{nat}}(\sigma_h\|\sigma_0)
+\le6n\delta^2.
+\tag{267.32}
+$$
+从而
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\ge\frac{2}{27\delta^2}
+=\frac1{55296h^8}.
+}
+\tag{267.33}
+$$
+这一下界对全部规定输出上的任意联合POVM成立；自适应终端处理也不能越过同一最优二元测量界。
+
+### 267.6 只读取实际符号的逐次协议达到八次方阶
+
+每份规定输出读取符号 $s$。可以忽略已经开放的 $w$ 和参考来构造上界；上一节下界仍是对完整输出得到的。
+
+记
+$$
+c=\operatorname{Tr}R_a=\operatorname{Tr}R_b
+=\frac{3}{4\sqrt2}.
+\tag{267.34}
+$$
+由（267.23），两个假设下
+$$
+\mathbb E_0s=c,\qquad
+\mathbb E_hs=(1-\delta)c,\qquad
+\operatorname{Var}_j(s)\le1.
+\tag{267.35}
+$$
+对 $n$ 份独立符号取样本均值，以 $c(1-\delta/2)$ 为阈值；大于阈值判零，否则判 $h$。两个均值到阈值的距离均为 $c\delta/2$。Chebyshev不等式给每一侧的错误率
+$$
+P_j(\text{判错})\le\frac4{nc^2\delta^2}.
+\tag{267.36}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2\delta^2}\right\rceil
+=\left\lceil\frac{128}{3\delta^2}\right\rceil
+=\left\lceil\frac1{96h^8}\right\rceil.
+}
+\tag{267.37}
+$$
+该协议使用真实可见的单份符号记录，不把理想算子响应矩阵当成一次实验直接给出的数据。
+
+### 267.7 同一二元任务的二次方与八次方预算
+
+**定理267.2（唯一混合点的访问代价分离）。** 在本节固定来源、仪器和等先验独立副本合同下，对所有 $0<h\le1/8$，
+$$
+\boxed{
+\frac{32}{513h^2}
+\le N_{\mathrm{in}}(h)
+\le\left\lceil\frac{5\ln(3/2)}{4h^2}\right\rceil,
+}
+\tag{267.38}
+$$
+$$
+\boxed{
+\frac1{55296h^8}
+\le N_{\mathrm{out}}(h)
+\le\left\lceil\frac1{96h^8}\right\rceil.
+}
+\tag{267.39}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)=\Theta(h^{-2}),
+\qquad
+N_{\mathrm{out}}(h)=\Theta(h^{-8}),
+\qquad h\downarrow0.
+}
+\tag{267.40}
+$$
+以同一对源的半迹距离 $d_h=\|\Omega_h-\Omega_0\|_1/2$ 表示，仍有
+$$
+N_{\mathrm{in}}=\Theta(d_h^{-2}),
+\qquad
+N_{\mathrm{out}}=\Theta(d_h^{-8}).
+\tag{267.41}
+$$
+
+**证明。** 输入界由（267.20）、（267.22），输出界由（267.33）、（267.37）。各系数固定且严格正，取整不改变渐近阶。最后，（267.3）给 $h/2\le d_h<h$，故可用 $d_h$ 等价替换 $h$。$\square$
+
+源端的二阶保真度损失包含理想支撑外 $O(h^2)$ 的可检测质量；规定仪器则消去来源隐藏填充的低阶变化，只保留 $O(h^4)$ 的响应变化。其完整输出基点在共同支撑内严格正，式（267.30）把该变化转为 $O(h^8)$ 的散度。两端副本预算因此相差 $h^{-6}$ 阶。
+
+这与理想数据的唯一性一致：$\Omega_0$ 由完整重置数据唯一确定，但从有限副本取得足以排除指定 $\Omega_h$ 的精度仍需（267.39）的预算。全部参考与所有实际记录已经计入输出下界；额外集体测量不能补回仪器没有保留的低阶区别。
+
+标准判别工具沿用§253核列的 Watrous，The Theory of Quantum Information，Theorem 3.4、Theorem 5.38，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，以及§257给出的根保真度与半迹距离关系。当前来源压缩、相对熵系数和逐次协议均按本节同一实际实现计算，不据此宣称文献原创性。
+
+本节不把已知二元预算推广为所有来源的层析复杂度或任意两态可判别性，也不由副本数直接推出物理历时。若要计算时间成本，还须指定制备速率、每份处理时间及并行规则。
+
+## 追加锚（本行以下为增补区）
