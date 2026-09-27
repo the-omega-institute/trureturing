@@ -1,0 +1,346 @@
+{
+  "scope": "Exact finite original-AP/owner controls. No Lean verification or unrestricted covering theorem.",
+  "cases": [
+    {
+      "name": "odd_distinct_local_whole_fibre",
+      "classes": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 35,
+          "residue": 7
+        },
+        {
+          "modulus": 245,
+          "residue": 98
+        },
+        {
+          "modulus": 1715,
+          "residue": 1029
+        },
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 105,
+          "residue": 70
+        },
+        {
+          "modulus": 735,
+          "residue": 245
+        },
+        {
+          "modulus": 2401,
+          "residue": 1
+        }
+      ],
+      "period": 36015,
+      "global_heights": {
+        "3": 1,
+        "5": 1,
+        "7": 4
+      },
+      "lower_modulus": 343,
+      "top_size": 105,
+      "uncovered_count": 24811,
+      "private_witnesses": [
+        6,
+        7,
+        98,
+        1029,
+        0,
+        70,
+        245,
+        2402
+      ],
+      "global_check": {
+        "tag": "all original lower sources",
+        "lower_count": 343,
+        "lower_mass": "1",
+        "checks": 30,
+        "prime_rows": [
+          {
+            "p": 3,
+            "owner_mass": "19/245",
+            "pair_capacity": "3/245",
+            "exact_defect": "16/245",
+            "inventory_cap": "19/245"
+          },
+          {
+            "p": 5,
+            "owner_mass": "533/1715",
+            "pair_capacity": "198/1715",
+            "exact_defect": "600/343",
+            "inventory_cap": "2199/1715"
+          },
+          {
+            "p": 7,
+            "owner_mass": "11/36015",
+            "pair_capacity": "0",
+            "exact_defect": "11/2401",
+            "inventory_cap": "0"
+          }
+        ]
+      },
+      "local_check": {
+        "tag": "specified whole top fibres only",
+        "lower_count": 1,
+        "lower_mass": "1/343",
+        "checks": 30,
+        "prime_rows": [
+          {
+            "p": 3,
+            "owner_mass": "1/1715",
+            "pair_capacity": "1/1715",
+            "exact_defect": "0",
+            "inventory_cap": "1/1715"
+          },
+          {
+            "p": 5,
+            "owner_mass": "1/343",
+            "pair_capacity": "18/1715",
+            "exact_defect": "12/1715",
+            "inventory_cap": "3/245"
+          },
+          {
+            "p": 7,
+            "owner_mass": "0",
+            "pair_capacity": "0",
+            "exact_defect": "0",
+            "inventory_cap": "0"
+          }
+        ],
+        "phi_integral": "18/1715",
+        "phi_given_source": "18/5",
+        "defect_given_source": "12/5",
+        "inventory_cap_given_source": "21/5",
+        "old_cap_given_source": "6",
+        "collision_supports": [
+          {
+            "support": [
+              5
+            ],
+            "K": 4
+          },
+          {
+            "support": [
+              3,
+              5
+            ],
+            "K": 3
+          }
+        ],
+        "g": 18,
+        "g_term_given_source": "3/35",
+        "scope": "Actual odd-distinct irredundant NONCOVER; complete top coverage is asserted only over lower source zero."
+      }
+    },
+    {
+      "name": "distinct_even_whole_control",
+      "classes": [
+        {
+          "modulus": 2,
+          "residue": 1
+        },
+        {
+          "modulus": 4,
+          "residue": 2
+        },
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 6,
+          "residue": 2
+        },
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 10,
+          "residue": 2
+        },
+        {
+          "modulus": 20,
+          "residue": 8
+        },
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 30,
+          "residue": 24
+        }
+      ],
+      "period": 60,
+      "global_heights": {
+        "2": 2,
+        "3": 1,
+        "5": 1
+      },
+      "lower_modulus": 2,
+      "top_size": 30,
+      "uncovered_count": 0,
+      "private_witnesses": [
+        3,
+        18,
+        4,
+        20,
+        36,
+        12,
+        48,
+        0,
+        24
+      ],
+      "global_check": {
+        "tag": "all original lower sources",
+        "lower_count": 2,
+        "lower_mass": "1",
+        "checks": 49,
+        "prime_rows": [
+          {
+            "p": 2,
+            "owner_mass": "11/60",
+            "pair_capacity": "0",
+            "exact_defect": "0",
+            "inventory_cap": "0"
+          },
+          {
+            "p": 3,
+            "owner_mass": "4/15",
+            "pair_capacity": "1/15",
+            "exact_defect": "1/5",
+            "inventory_cap": "2/15"
+          },
+          {
+            "p": 5,
+            "owner_mass": "1/10",
+            "pair_capacity": "1/10",
+            "exact_defect": "1/2",
+            "inventory_cap": "1/8"
+          }
+        ]
+      },
+      "local_check": null
+    },
+    {
+      "name": "repeated_odd_whole_control",
+      "classes": [
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 15,
+          "residue": 2
+        },
+        {
+          "modulus": 15,
+          "residue": 3
+        },
+        {
+          "modulus": 15,
+          "residue": 4
+        },
+        {
+          "modulus": 15,
+          "residue": 5
+        },
+        {
+          "modulus": 15,
+          "residue": 6
+        },
+        {
+          "modulus": 15,
+          "residue": 7
+        },
+        {
+          "modulus": 15,
+          "residue": 8
+        },
+        {
+          "modulus": 15,
+          "residue": 9
+        },
+        {
+          "modulus": 15,
+          "residue": 10
+        },
+        {
+          "modulus": 15,
+          "residue": 11
+        },
+        {
+          "modulus": 15,
+          "residue": 12
+        },
+        {
+          "modulus": 15,
+          "residue": 13
+        },
+        {
+          "modulus": 15,
+          "residue": 14
+        }
+      ],
+      "period": 15,
+      "global_heights": {
+        "3": 1,
+        "5": 1
+      },
+      "lower_modulus": 1,
+      "top_size": 15,
+      "uncovered_count": 0,
+      "private_witnesses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "global_check": {
+        "tag": "all original lower sources",
+        "lower_count": 1,
+        "lower_mass": "1",
+        "checks": 15,
+        "prime_rows": [
+          {
+            "p": 3,
+            "owner_mass": "1",
+            "pair_capacity": "1",
+            "exact_defect": "0",
+            "inventory_cap": "1"
+          },
+          {
+            "p": 5,
+            "owner_mass": "1",
+            "pair_capacity": "6",
+            "exact_defect": "0",
+            "inventory_cap": "6"
+          }
+        ]
+      },
+      "local_check": null
+    }
+  ]
+}

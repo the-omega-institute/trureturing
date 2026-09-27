@@ -10,6 +10,8 @@ For this same family, section6 proves that every head marginal with a uniform ac
 
 Section7 identifies a whole-cover condition that this countercontrol fails: every prime3-private point has a hole on its complete3-coordinate line. More generally, an original pure prime power at minimum positive height has an exact private-product region, and every hole resets into it. This extracts the pointwise mechanism of Reports354 and357 without importing their later whole-cover matching conclusions.
 
+Section8 computes the exact defect in the original owner-pair capacity. Prime privacy forces a positive pure-owner defect under distinct original pure moduli, but enlarging the actual private centers to a whole cofactor cylinder still leaves an insufficient bound. Two actual noncover families separate positive scalar defect and distinct numerical matching from the required joint contradiction.
+
 These are ordinary mathematical results with exact controls. The Gram projection mechanism is reused from Chapter08; no new Lean certification, mathematical priority, or unrestricted Erdős #7 conclusion is claimed.
 
 ## 1. A sharp weighted bound retaining every original ternary depth
@@ -417,3 +419,258 @@ The higher pure-power case repeats that containment argument under(PR1). This is
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_prime_private_reset.py
 ```
+
+## 8. Exact original owner defects and the prime-private capacity boundary
+
+The actual owner partition in the [coset library](../../../../../Library/Arith/lettlsun2008cosets.md), clauses(OB1)–(OB4) and(OS1)–(OS3), admits an exact linewise defect formula. Combined with the prime-private product identity from section7, it forces positive first-digit defect under distinct original moduli at every prime height. The resulting coarse whole-fibre capacity still does not contradict the private demand. Two explicit original families identify separate boundaries: positive local defects can exactly fit the remaining demand, and distinct numerical-cofactor matching need not distribute suppliers among different prime supports.
+
+All results in this section use ordinary finite proofs and exact original-AP controls. No Lean verification or resolution of unrestricted Erdős #7 is asserted.
+
+### 8.1 One original law and an exact owner-line identity
+
+Let C_s be the ORIGINAL class a_s modulo m_s, with complete period
+
+    L=product_p p^H_p.
+
+Use the uniform probability mu on Z/L. Its global-top CRT decomposition is X=B times Q, where Q=product_p F_p, R=|Q|, and B retains all digits below each global top digit. Write beta for the uniform law on B, so mu=beta times Uniform(Q). These are two factors of one original law.
+
+Fix one total order of original labels and define
+
+    O_s=C_s minus union_(r<s)C_r,
+    T_s={p:v_p(m_s)=H_p},
+    Z_s=projection_B(O_s).
+
+The owner sets O_s are disjoint and partition the actual covered union, even when the family is a noncover. At a fixed lower source z, an active original class is a hyperplane with support T_s and fixed phase theta_s. Two labels with the same support and phase define the same hyperplane there; the later one has no owned point in that fibre. In particular owner-positive labels of a fixed support have distinct phases.
+
+For a support A put
+
+    Y_A(z)=disjoint union_(s:T_s=A) O_s(z),
+    n_A(z)=|Y_A(z)|,
+    K_A(z)=#{s:T_s=A, z in Z_s},
+    Omega_A(W)=(1/R) integral_W n_A(z) d beta(z).
+
+Here W is any subset of B. For p in A, a p-line fixes every top coordinate other than p. Let h_(A,p)(z,ell)=|Y_A(z) intersect ell|. Each original with support A owns at most one endpoint of this line.
+
+Let tau_(s,p) replace only the top p-digit by theta_(s,p), and define the actual replacement preimage
+
+    F_(s,p)={x:x_p!=theta_(s,p), tau_(s,p)x in O_s}.
+
+Let B_(A,p)(W) sum mu(W^up intersect F_(s,p) intersect F_(t,p)) over unordered original pairs s,t of support A whose phases differ only at p. Pairs with any other phase discrepancy have empty intersection. Two distinct owned endpoints on a p-line yield exactly p-2 common replacement bases, one at each of the other p-phases. Conversely every such pair of replacements recovers those endpoints. Therefore
+
+    B_(A,p)(W)
+      = (p-2)/R integral_W sum_(ell parallel p) binom(h_(A,p),2) d beta.
+                                                               (OD1)
+
+Define the nonnegative exact defect
+
+    Delta_(A,p)(W)
+      = (p-2)/(2R) integral_W sum_(ell parallel p)
+                              h_(A,p)(p-h_(A,p)) d beta.
+
+Since 2 binom(h,2)+h(p-h)=(p-1)h and sum_ell h=n_A,
+
+    B_(A,p)(W)+Delta_(A,p)(W)
+      = binom(p-1,2) Omega_A(W).                     (OD2)
+
+For odd p, zero defect is equivalent to every relevant line having h=0 or h=p. At p=2 both the coefficient and the defect vanish, so this equivalence is not asserted.
+
+Sum over A containing p and write B_p, Delta_p and Omega_p for the resulting quantities. Formula(OD2) gives the exact slack in(OS3). At a base point x, let
+
+    k_(A,p)(x)=#{s:T_s=A, x in F_(s,p)},
+    k_p(x)=sum_(A containing p)k_(A,p)(x)<=p-1.
+
+There is at most one owner per replacement endpoint. Also integral k_p dmu=(p-1)Omega_p on W^up, and the pair service is integral sum_A binom(k_(A,p),2) dmu. Thus the same defect has the decomposition
+
+    Delta_p(W)
+      = (1/2) integral_(W^up) k_p(p-1-k_p) dmu
+        + integral_(W^up) sum_(A<A') k_(A,p)k_(A',p) dmu.       (OD3)
+
+The first term counts missing replacement supply; the second counts its division among different supports. Both refer to this same owner partition and source law.
+
+### 8.2 Arithmetic inventory improves the cap but depends on the observed digit
+
+Let lambda_A be the total number of original labels with global top support A. For any occupied support A,
+
+    h_(A,p)<=min(p,lambda_A),
+    B_(A,p)(W)
+      <= (p-2)/2 [min(p,lambda_A)-1] Omega_A(W).       (OD4)
+
+Retaining the actual lower source gives the source-dependent bound
+
+    B_(A,p)(W)
+      <= (p-2)/(2R) integral_W n_A(z)(K_A(z)-1)_+ d beta(z).
+                                                               (OD5)
+
+Under pairwise distinct original numerical moduli, their exponents at primes in A are fixed at H_p; at every q outside A there are H_q choices, namely 0 through H_q-1. Hence
+
+    lambda_A<=product_(q outside A)H_q.              (OD6)
+
+One useful source-local defect lower bound follows without replacing the owner sets. For a demanded prime set J, set
+
+    g_J(z)=max_(A:K_A(z)>=2)
+             K_A(z) sum_(p in A intersect J)(p-2)(p-K_A(z))_+,
+
+with maximum zero when there is no eligible A. The inequalities h<=K_A and n_A>=K_A give
+
+    sum_(p in J)Delta_p(W)
+      >= (1/(2R)) integral_W g_J(z) d beta(z).        (OD7)
+
+Indeed sum_ell h(p-h)>=(p-K_A)_+ n_A for each p in A, and any one support's contribution is bounded by the sum of all nonnegative support defects. A positive right side strictly reduces the old capacity; it need not place that capacity below the actual demand.
+
+The choice of digit matters for applying these formulas to a prime-private region. An original prime modulus p has global top support {p} when H_p=1 and empty top support when H_p>1. At a lower source containing its private point, that prime class fills the entire global-top fibre in the latter case. The proper-hyperplane private-source argument cannot then be applied as though this were a top-touching prime target.
+
+Alternatively expose the FIRST digit of every prime and keep every higher digit in the base. An original class is then inactive or a hyperplane whose support is the ordinary prime support supp(m_s). Formulas(OD1)–(OD5) remain valid with this carrier. But the distinct-modulus inventory becomes
+
+    #{s:supp(m_s)=A}<=product_(p in A)H_p.            (OD8)
+
+Each included prime now has H_p positive exponent choices and every excluded prime has exponent zero. The complement-height product(OD6) cannot be retained after this change. In particular the numerical cofactors distinguished by [Report354](../321-384/354-synchronized-prime-private-cofactor-matching.md) can all have the same ordinary prime support.
+
+### 8.3 An actual odd-distinct local equality control
+
+Consider the following original classes:
+
+| Modulus | Residue |
+| ---: | ---: |
+| 5 | 1 |
+| 35 | 7 |
+| 245 | 98 |
+| 1715 | 1029 |
+| 15 | 0 |
+| 105 | 70 |
+| 735 | 245 |
+| 2401 | 1 |
+
+Their complete period is L=36015=3*5*7^4, the lower modulus is343, and the top cardinality is R=105. The first four originals fix the four nonzero5-roots and have global top support {5}. The next three fix5-root zero and respectively the three3-roots, with support {3,5}. The last original makes the true7-height four and is inactive above z=0 modulo343.
+
+At that specified lower source, the first seven classes tile the entire105-point top fibre disjointly. Every point in it is genuinely private. The full family is irredundant: in the displayed label order, private witnesses are
+
+    6, 7, 98, 1029, 0, 70, 245, 2402.
+
+Let V be just this fibre, of original mu-mass1/343. For a private point whose p-alternatives are covered, phi_p denotes the minimum of sum_A binom(n_A,2) over legal choices of one actual original supplier for each alternative, where n_A counts suppliers with support A. An actual owner choice is one such assignment.
+
+Here every alternative has a unique supplier. At a {5}-owned point, three alternatives have support {5} and one has support {3,5}, giving phi_5=3. At a {3,5}-owned point, all four alternatives have support {5}, giving phi_5=6. Conditional on this V alone, the exact values are
+
+| Quantity | Value |
+| --- | ---: |
+| Omega_5 | 1 |
+| Mean phi_5 | 18/5 |
+| Exact pair capacity B_5 | 18/5 |
+| Exact defect Delta_5 | 12/5 |
+| Original cap binom(4,2)Omega_5 | 6 |
+| Inventory cap from(OD4) | 21/5 |
+
+Thus demand plus the positive exact defect equals the old cap. The unnormalized original integrals are these values multiplied by1/343.
+
+The only owner-positive collision supports are {5}, with K=4, and {3,5}, with K=3. Both meet the demanded prime, both have 2<=K<5, and every pair in either support differs in at most two top coordinates. The inventory inequalities hold:
+
+    lambda_{5}=4<=H_3 H_7=4,
+    lambda_{3,5}=3<=H_7=4.
+
+Formula(OD7) has g_{5}=18 and conditional contribution18/(2*105)=3/35. Neither this positive contribution nor the stronger exact defect creates a strict demand/capacity contradiction.
+
+The full original family has24811 holes and is not divisor-closed. Complete coverage here is only coverage of the specified top fibre. This refutes a deduction from the stated local conditions; it does not supply a whole odd-distinct cover or address an argument that additionally uses the full extremal hypothesis. V is not identified with the entire private union or all prime-private cofactors.
+
+### 8.4 Prime privacy forces positive first-digit defect at every height
+
+Assume a finite irredundant original family contains a designated prime class A_p, where p is odd. Use its complete period L=p^H B with gcd(p,B)=1 and the same fixed original owner order. Let R_p be the set of cofactors in Z/B avoiding all original p-free classes. The product identity from section7, [Report354](../321-384/354-synchronized-prime-private-cofactor-matching.md) and [Report357](../321-384/357-original-private-swaps-and-prime-reset-transport.md) gives
+
+    Priv(A_p)={its first p-root} times {all p-tails} times R_p,
+    V_p=(Z/p^H) times R_p,
+    pi_p=mu(Priv(A_p)),
+    mu(V_p)=p pi_p.                                  (PD0)
+
+No whole-cover premise is needed here. Any other p-bearing original intersecting A_p would be contained in it and would have no private point. The p-free originals are absent exactly on R_p. Irredundancy gives pi_p>0.
+
+Partition V_p into FIRST-p-digit lines, keeping every p-tail digit and all non-p coordinates fixed. Let h_ell be the number of endpoints owned by an original pure p-power label. Each line contains its genuine prime-private endpoint, so 1<=h_ell<=p. The pure-support case of(OD2) is
+
+    Delta_p^pure(V_p)
+      = (p-2)/(2L) sum_(ell subset V_p) h_ell(p-h_ell).
+
+Since h_ell(p-h_ell)>=p-h_ell, writing Y_p for the actual pure-owner union yields
+
+    Delta_p^pure(V_p)
+      >= (p-2)/2 [mu(V_p)-mu(Y_p intersect V_p)].
+
+Define the inventory sum over ORIGINAL LABELS, counting repeated moduli with multiplicity:
+
+    T_p=sum_(s:m_s=p^e for some e>=1)1/m_s.
+
+Each pure class depends only on the full p-coordinate. Therefore the one uniform product law and the union bound give
+
+    mu(Y_p intersect V_p)<=T_p mu(V_p),
+    Delta_p^pure(V_p)>=p(p-2)/2 (1-T_p)pi_p.          (PD)
+
+The basic inequality permits repeated original moduli. Its right side is strictly positive when T_p<1. If each pure modulus p^e occurs at most once, then
+
+    T_p<=(1-p^(-H))/(p-1),
+    Delta_p^pure(V_p)
+      >=p(p-2)/(2(p-1)) (p-2+p^(-H))pi_p>0.         (PD1)
+
+Pairwise distinct ORIGINAL numerical moduli suffice for this premise. Divisor closure is unnecessary for the upper bound on T_p; when all pure powers up to H are present exactly once, that upper bound is attained. The result retains every tail digit and makes no assumption K_A<p.
+
+The multiplicity condition cannot be silently discarded. The three classes0 mod3,1 mod3,2 mod3 form an irredundant complete partition. For the designated0 mod3 class, pi_3=1/3, V_3 is the full period, h=3 and Delta_3^pure=0. The actual label sum is T_3=1, so(PD) correctly gives zero. Collapsing the repeated modulus into one exponent would give the incorrect T_3=1/3 and false positive lower bound1/3.
+
+This positive defect still does not close the coarse budget. Assume now whole coverage. On V_p all owners are p-bearing because its cofactors avoid every p-free original. Its coarse first-digit cap is therefore binom(p-1,2)mu(V_p). The actual owner assignment on Priv(A_p), followed by enlargement to V_p, and subtraction of the pure defect give only
+
+    integral_(Priv(A_p)) phi_p^first dmu
+      <=binom(p-1,2)mu(V_p)-Delta_p^pure(V_p)
+      <=p(p-2)/2 (p-2+T_p)pi_p.                     (PD2)
+
+The last upper bound is greater than the automatic pointwise ceiling binom(p-1,2)pi_p. Their difference is
+
+    (p-2)/2 [p^2-3p+1+p T_p]pi_p>0,  p>=3.          (PD3)
+
+Consequently(PD) combined only with this enlarged capacity cannot force a contradiction. A useful further estimate must preserve the actual prime-private centers or pay for the enlarged source through a compatible joint budget.
+
+### 8.5 Divisor-closed numerical matching can coexist with maximal support collision
+
+For any two distinct odd primes p,q, take the original inventory
+
+    {p} union {q^j,p q^j:1<=j<=p-1}.
+
+It is odd, numerically distinct and divisor-closed above one. Let
+
+    A_p=0 modulo p,
+    A_(q^j)=q^(j-1) modulo q^j,
+    A_(p q^j)={x:x=0 modulo q^j, x=j modulo p}.      (MC1)
+
+The last row specifies one literal CRT class for each original numerical modulus. The complete period is p q^(p-1).
+
+The pure q-prefixes are pairwise disjoint. Comparable children have different p-roots, and a child's comparable pure q-parent is disjoint from it because that parent requires a nonzero q-prefix. The original prime p is disjoint from all children. These observations check every comparable pair.
+
+Every original has a private point. Use the full CRT coordinates modulo p and q^(p-1): A_p uses(0,0); child j uses(j,0); and pure q^j uses(j,q^(j-1)). For the last witness, all other pure q-prefixes fail. Children of lower depth may meet its q-prefix, but have different p-roots; child j and all deeper children fail the q-prefix. Thus no competing original contains any of the stated witnesses.
+
+At the actual full cofactor x_q=0, the complete p-fibre is privately covered by A_p and its p-1 children. The p-height is one, so this includes the entire original p-tail. The alternative roots give a synchronized matching of rank p-1 with distinct numerical cofactors
+
+    q,q^2,...,q^(p-1).
+
+All these suppliers nevertheless have ordinary prime support {p,q}. At the actual prime-private root every alternative has its unique child supplier, hence
+
+    phi_p^first=binom(p-1,2),                        (MC2)
+
+the maximal support-assignment cost. Distinct cofactor colors do not imply different support bins, even with original parents, divisor closure and genuine private witnesses.
+
+The family is an explicit noncover: the full coordinates(1,2) miss the prime p, every pure q-prefix and every child. Complete p-fibre coverage is asserted only at cofactor zero, not throughout R_p. The latter condition would imply whole coverage by section7 and is not satisfied here.
+
+### 8.6 Exact finite controls and the remaining joint inequality
+
+The [owner-line program](../../frontier/cover-geometry/original_owner_line_defect.py) and [exact owner-line data](../../frontier/cover-geometry/original_owner_line_defect.json) reconstruct original residue membership, one owner partition, all lower sources and complete top lines. They check the line and inventory formulas on the eight-class period36015 noncover, the distinct even period60 whole cover, and the complete repeated-modulus15 partition. The last two are controls of the stated incidence formulas, not odd-distinct covering candidates. The repeated15 partition attains the old cap with zero exact defect for both3 and5; the p=2 calculation in the even control makes no zero-defect characterization claim.
+
+The [matching and prime-defect program](../../frontier/cover-geometry/original_matching_support_boundary.py) and [exact matching data](../../frontier/cover-geometry/original_matching_support_boundary.json) enumerate these instances of(MC1):
+
+| p,q | Period | Holes | Matching rank | Support cost | pi_p | mu(V_p) | Pure defect |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 3,5 | 75 | 33 | 2 | 1 | 19/75 | 19/25 | 19/75 |
+| 5,3 | 405 | 142 | 4 | 6 | 41/405 | 41/81 | 82/135 |
+| 7,3 | 5103 | 2005 | 6 | 15 | 365/5103 | 365/729 | 1825/1701 |
+
+The defects are unnormalized integrals under the original probability mu; they need not be bounded by one because their integrands include combinatorial factors. Each displayed pure defect attains(PD). An additional higher-pure control0 mod3,1 mod9,2 mod27 has one first-digit line with h=3, two with h=2 and six with h=1. Its exact defect is8/27, above the(PD) lower bound7/27. The repeated pure-modulus3 partition records the necessary multiplicity boundary explicitly.
+
+Both programs use exact integer and rational arithmetic and complete successfully with Python optimization enabled:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_owner_line_defect.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_matching_support_boundary.py
+```
+
+The line identity refines the existing owner cap; prime privacy supplies a uniform positive pure-owner defect under distinct moduli. The two countercontrols explain why neither that positivity alone nor numerical matching alone forces the required strict inequality. The unresolved obligation is a joint estimate on the same original private centers and owner partition, using whole-cover supply to make demand exceed a compatible arithmetic capacity. No sum of independently optimized laws or replacement of numerical cofactors by their supports discharges it.

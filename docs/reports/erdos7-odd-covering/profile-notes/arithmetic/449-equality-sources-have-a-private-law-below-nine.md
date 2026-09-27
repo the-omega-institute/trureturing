@@ -3424,13 +3424,172 @@ This is an ordinary actual-source proof. It adds no Lean verification and establ
 
 #### Scope and the remaining source implication
 
-The same-flow public-column argument excludes every exact q4 pivot and every exact q5 m4 pivot. For the ORIGINAL q5 potential-level nearcuts, unchanged-edge saturation gives the stronger legal-pair bound(GP77.10); the affine budget(GP77.13) contradicts their capacities79 or81. Thus every selected bad-T3 block at masses21 and20 admits some integral value77 flow lowering its root mass to at most20 or its G mass to at most19. This is a separate existence statement for each selected block, not a common flow realizing all such lowerings. A simultaneous safety or termination argument remains necessary. The previously proved public21+14/private6+36 supplier still requires its complete matched-cut form; two public leaf labels or their saturation alone do not provide it.
+The same-flow public-column argument excludes every exact q4 pivot and every exact q5 m4 pivot. For the ORIGINAL q5 potential-level nearcuts, unchanged-edge saturation gives the stronger legal-pair bound(GP77.10); the affine budget(GP77.13) contradicts their capacities79 or81. Thus every selected bad-T3 block at masses21 and20 admits some integral value77 flow lowering its root mass to at most20 or its G mass to at most19. This is a separate existence statement for each selected block, not a common flow realizing all such lowerings. Turning these lowerings into one repaired integral flow still requires a simultaneous safety or termination argument; the following occupation-mixture criterion supplies a separate conditional route to one fractional law. The previously proved public21+14/private6+36 supplier still requires its complete matched-cut form; two public leaf labels or their saturation alone do not provide it.
 
 These are ordinary conditional proofs and a finite necessary-profile enumeration, not Lean verification, actual simultaneous-obstruction constructions, or a full cut77 theorem. The unrestricted original-cofactor/common-law bridge is unaffected. Reproduce the integer inventory with:
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_pivot_profiles.py
 ```
+
+## A common mixture controls dangerous-block occupation
+
+This is an ordinary mathematical implication of the existing local transport and phase-layout bounds in Report449. It is not Lean verification, a construction of the required mixture, or a theorem that all literal4555 sources satisfy the criterion. All flows, supports, owners and query labels below belong to one fixed actual source E and its original capacity network.
+
+### A regularized integral-flow component has safe-centre bound613
+
+Let f be an integral value77 flow. Its coarse root masses a_r, column masses b_g and block masses d_rg are integers. Call a block bad-dangerous if its ENTIRE actual support is T3-bad and (a_r,d_rg)=(21,20). T3 is a property of E, not the positive support of f.
+
+Replace every full21 block by the pure sharp295 matrix. Replace every T3-good dangerous block by the pure flagged mass20 matrix of score at most6200/21. The local score at a cell is S=20*(internal row mass)+20*(internal column mass)+25*(cell mass). These replacements are jointly feasible:
+
+- A full21 block has a=b=d=21, hence no external mass in its root or public column. Internal row6, fine-column7 and entry2 caps therefore suffice for every original network capacity.
+- A dangerous block has a=21,d=20. The one external root unit lies at one child in the integral original flow; every child's external mass is consequently at most1. Internal row6 plus this external mass respects the original child7 cap.
+- Its public column has b=20 or21. If b=20 there is no external public mass. If b=21, the one external unit lies at one public fine leaf h*. The flagged transport theorem has internal cap6 at h* and7 elsewhere, giving total public-leaf cap7 after the unchanged external unit is restored.
+- All full21/dangerous blocks have distinct original roots and distinct public columns, since two masses at least20 could not fit in root21 or column21. Every atom outside the selected blocks stays fixed. Thus no replacement modifies another replacement's outside child mass or flagged public-leaf allowance. Coarse a,b,d, total77, all capacities and actual support containment are preserved.
+
+Call the resulting rational flow R(f). At a coherent centre the exact raw charge is
+
+    K=3a+3b+9d+S+5z+5y,
+
+where z and y are the external child and public-leaf masses.
+
+For a full21 block, z=y=0 and K<=315+295=610. For a T3-good dangerous block, a=21,b<=21,d=20,z,y<=1 give
+
+    K<=316+6200/21=12836/21<613.
+
+Any other coherent centre outside a bad-dangerous block has a<=20, giving the established slack bound K<=613, or d<=19, giving K<=612. All bad-dangerous centres still obey K<=621. These exclusions use the unchanged integral coarse masses of THIS component, not an integrality assertion about a later mixture.
+
+Every noncoherent phase layout satisfies K<=614 for R(f). The Report449 noncoherent argument uses the fine network caps and unchanged integral a,b,d; in the exceptional full-block case it needs only the weaker score bound1195/4. The pure full21 score295 meets that premise. The new T3 replacements keep all required caps and are nonfull, so they fall under the same coarse exclusion argument.
+
+Therefore, for any fixed centre in a fixed original block B,
+
+    K_B(R(f)) <=613+8*1_{B is bad-dangerous in f},   (OM1)
+
+uniformly over its fine-cell label. Every noncoherent layout is at most614.
+
+#### Optional positive-support preservation without weakening OM1
+
+Pure replacements suffice when the law is only required to be supported on E. If every initially positive atom must remain positive, use15/16 of each pure local matrix plus1/16 of its original block instead. Any original feasible local score is at most310. The resulting full21 score is
+
+    (15*295+310)/16=4735/16<1195/4,
+
+so its coherent bound is315+4735/16=9775/16<613. The resulting T3-good dangerous score is
+
+    (15/16)*(6200/21)+(1/16)*310=16585/56,
+
+so its coherent bound is316+16585/56=34281/56<613. All capacity and external-budget conditions are convex, so remain valid. Every initially positive atom stays positive; previously zero ACTUAL atoms may become positive. OM1 and the noncoherent614 bound therefore hold with this optional mixture as well.
+
+### One distribution on components is enough
+
+Choose finitely many integral value77 flows f_j on the SAME E and nonnegative weights theta_j summing to1. Let
+
+    f_bar=sum_j theta_j R(f_j).
+
+It is one actual supported rational flow when the theta_j are rational. Its total is77 and all capacities hold by convexity. Its phase charge is linear in atom masses for every fixed numerical phase layout; no phase-dependent choice of component is allowed.
+
+For each fixed T3-bad-support block B define its occupation probability
+
+    p_B=sum_j theta_j * 1_{(a_B(f_j),d_B(f_j))=(21,20)}.
+
+T3-good blocks have p_B=0 by convention. Averaging OM1 gives, for every coherent centre in B,
+
+    K_B(f_bar)<=613+8p_B.                           (OM2)
+
+All noncoherent layouts stay at most614. Thus, if p=max_B p_B, with p=0 when there are no T3-bad-support blocks,
+
+    Gamma_1225(f_bar/77)
+      <=1+max(614,613+8p)/77.                       (OM3)
+
+In particular p<3/8 implies Gamma<9. The convenient sufficient condition p_B<=1/3 for every fixed block gives
+
+    max_layout K<=1847/3=615+2/3,
+    Gamma_1225<=2078/231<9.                         (OM4)
+
+There are only finitely many integral flows and original blocks in the finite actual network. Hence any feasible real mixture satisfying the non-strict rational constraints p_B<=1/3 can be replaced by a rational feasible mixture using ordinary rational-polytope existence. Strict p<3/8 can likewise be retained by sufficiently close rational weights. This is an existence statement about a known common flow family, not an efficient construction guarantee.
+
+### The missing occupation theorem is a genuinely joint assertion
+
+Let F be the finite family of all integral value77 flows of the fixed source. Let B be its set of original blocks whose actual support is T3-bad, and v(f)_B=1 if f makes B dangerous and0 otherwise. Define
+
+    beta*=min_{theta in Prob(F)} max_{B in B} E_theta[v(f)_B].
+
+If B is empty, beta*=0. For nonempty B, finite minimax gives the equivalent target
+
+    beta*=max_{w in Prob(B)} min_{f in F} sum_B w_B v(f)_B.
+
+Thus beta*<=1/3 follows if EVERY nonnegative weighting of all bad-support blocks with total1 has ONE integral maxflow with weighted bad-dangerous occupation at most1/3. The weaker condition beta*<3/8 would already suffice for the strict Gamma target by OM3.
+
+The new selected-block lowering theorem shows, for each individually dangerous B, that some alternative flow makes v(f)_B=0. It does not supply the weighted condition, nor a common theta. Likewise, at most3 bad-dangerous blocks per flow means sum_B v(f)_B<=3; it places no bound of3 on the number of POSSIBLE bad blocks across all flows, and it does not imply beta*<=1/3. A convex or lexicographic argument must establish a further exchange/separation property of this actual source/network before either implication can be used.
+
+This note contributes the conditional consumer OM3/OM4 and isolates the remaining joint occupation problem. It makes no claim that beta*<=1/3, no actual-source counterexample to that assertion, no simultaneous integral repair theorem, and no unrestricted odd-covering conclusion.
+
+## A rational root-cap test supplies the common mixture
+
+This ordinary deduction is conditional on the established regularization/occupation consumer(OM1)--(OM4). It is not Lean verification and does not assert that every actual4555 source satisfies the new root-cap hypothesis. All flows use one actual E and its original network.
+
+### Root cap20 is sufficient but may discard the full value
+
+Reducing all four source-root capacities from21 to20 leaves an integral network. If it still has a flow of value77, an integral such flow has no root21 and therefore no dangerous block; the existing SH1 consumer applies directly.
+
+Let M20 be the modified maximum-flow value. For any original cut C, let t(C) be the number of occupied root nodes on the sink side, so exactly t source-root arcs cross. The same cut's new capacity is
+
+    cap20(C)=cap21(C)-t(C).
+
+Every original cut has capacity at least77. A modified cut of capacity below77 has t in{1,2,3}: t=0 would be unchanged, and t=4 already contributes4*20=80. Thus M20 is at least74. If M20<77, its minimizing cut has one of the following exact possibilities (c is its original capacity):
+
+    M20=74: (t,c)=(3,77);
+    M20=75: (t,c)=(2,77) or(3,78);
+    M20=76: (t,c)=(1,77),(2,78),or(3,79).
+
+This is an arithmetic cut constraint, not a classification of the underlying actual source support. Saturation for a new maximum M20 flow cannot be transferred to the original77 flow without a separate argument.
+
+### Root cap20+1/3 already supplies a good common law
+
+Suppose the network obtained by replacing the four source-root capacities by61/3 supports a flow x of value77. The modified capacities are rational, so x may be chosen rational, for example by multiplying all capacities by3, taking an integral value231 flow and dividing by3.
+
+Write a_r=x(S,r). For each source-root arc impose the INTEGER interval
+
+    floor(a_r) <= f(S,r) <= ceil(a_r).
+
+Keep all other original integral capacities and impose total value77. The bounded feasible-flow polytope with these integer lower and upper bounds is integral: one can use the ordinary network-flow integrality theorem after adding a return arc T->S with lower=upper=77. The rational x lies in this polytope. Consequently it is a finite rational convex combination of integral value77 flows f_j in this SAME network, with weights theta_j.
+
+If a_r<=20 then ceil(a_r)<=20, so every component has root r mass at most20. If20<a_r<=61/3, the component root masses are20 or21, and
+
+    Pr_theta[a_r(f_j)=21]=a_r-20<=1/3.
+
+A fixed bad-support block can be dangerous only when its original root has mass21. Hence its dangerous occupation probability p_rg is at most1/3. Apply the full21/T3 regularization separately to every integral component, then take their single common convex mixture. The occupation consumer gives
+
+    Gamma_1225 <=2078/231<9.                         (RC1)
+
+Crucially, the argument does not infer a saturation probability from a mean alone: the floor/ceil constraints ensure that each relevant integral root mass is20 or21. It also does not apply an integrality-dependent charge bound directly to x. The individually regularized components have the charge bounds, and these are averaged afterward. Regularization preserves their coarse masses.
+
+### The exact cut obstruction for the61/3 capacity test
+
+For the same original cut C,
+
+    cap_(61/3)(C)=cap21(C)-(2/3)t(C).
+
+A value77 flow exists with root cap61/3 if and only if every such capacity is at least77. Original capacities are integers. For t=0 the condition is automatic; for t=4 the four source arcs alone have original capacity84 and modified capacity244/3>77. For the remaining values the condition is exactly
+
+    t=1: cap21(C)>=78;
+    t=2: cap21(C)>=79;
+    t=3: cap21(C)>=79.
+
+Thus this route can fail only because of an original cut with
+
+    (t,cap21(C)) in{(1,77),(2,77),(2,78),(3,77),(3,78)}.
+
+In particular, the old-cap79/t3 obstruction to the stronger rootcap20 condition is no obstruction here: its modified capacity is exactly77. The criterion is an exact mincut equivalence, not a proof that its five failing cut types are impossible or covered by an existing law supplier.
+
+An original minimum cut77 crossing a source-root21 edge forces that root to retain mass21 in EVERY original maximum77 flow, so the uniform rootcap61/3 test must fail there. Failure of this test does not establish failure of a different supported-law construction. This explains why the new test is a sufficient branch, not an automatic consequence of the selected-block lowering theorem.
+
+### Optional restriction to roots requiring protection
+
+The same proof works if only a designated subset A of roots receives capacity61/3, provided every dangerous block outside A is already known to be T3-good for every component flow under consideration. Unmodified roots can retain capacity21. On modified roots use the same floor/ceil decomposition; outside A, bad-dangerous occupation is zero by hypothesis. The same Gamma bound follows.
+
+For this variant t(C) counts ONLY crossed source-root arcs belonging to A; the exact formula cap_new=cap_old-(2/3)t remains valid. The assertion that roots outside A can never host a bad-dangerous block is an additional actual-support/flow premise, not a consequence of their being left unmodified.
+
+The remaining question is whether the five root-cut obstruction classes above can be supplied by existing structural laws, T3 arguments or a stronger weighted-block analysis. Their low original capacities give a finite structural target, but this note neither classifies them nor establishes general cut77.
 
 ## Three cut77 strata with one inactive full root
 
@@ -5661,6 +5820,7 @@ All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are contro
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
+The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. These five raw types are not a source-law classification; the capacity78 cases need not be original minimum cuts, and the test is not asserted for every source.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
 range74/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
