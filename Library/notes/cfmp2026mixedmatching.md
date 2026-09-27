@@ -19,6 +19,15 @@ The new continuation is stored in
 This note is neither a published paper nor a priority certificate. The new
 arguments are ordinary written mathematics, not new Lean declarations.
 
+## Verified locator
+
+https://github.com/the-omega-institute/trureturing/pull/9474
+
+This draft pull request locates the repository-authored continuation and its
+source files. It is not an external publication, an independent review, or a
+priority certificate. The external inputs used below are identified in their
+own cited versions and sections.
+
 ## Verified primary inputs
 
 Costantino, Frigerio, Martelli and Petronio, *Triangulations of 3-manifolds,
