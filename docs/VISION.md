@@ -148,11 +148,11 @@ does not ensure positivity for every gain function. This motivates checking
 test provenance, without establishing a general law of learning performance.
 
 Evaluate AI research selection on questions withheld from method design.
-Compare with a stated baseline under matched information and resource budgets.
-Set success and stopping criteria beforehand; assess gap reduction, reusable
-connections and justified route changes. Report unsuccessful and unresolved
-cases. These experiments evaluate the methodological transfer; formalizing
-the structures alone does not establish these capabilities.
+Fix the baseline, matched information and resource budgets, and success and
+stopping criteria before testing. Report evidence for each question's outcome:
+premises supplied, distinctions exposed, routes ruled out, failures and
+unresolved gaps. These experiments evaluate research selection; formalizing
+the structures alone does not establish this capability.
 
 ## Studying time and space through holographic geometry
 
