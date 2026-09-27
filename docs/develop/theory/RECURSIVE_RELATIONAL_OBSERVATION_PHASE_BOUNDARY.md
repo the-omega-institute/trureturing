@@ -98931,3 +98931,667 @@ $$
 本节复用成熟的有限链式相对熵、二元数据处理、Pinsker 和停止窗口方法。仓内新增连接是将非终止零信号参照的有限回答质量、按第一分布实际期望曝光计费的事件界及显式参数尺度放进同一个合同，并接回现有两源模型。这里没有声称新的标准序贯不等式、文献核定的原创性、最佳常数、Lean 形式验证或实际仪器实验。
 
 ## 追加锚（本行以下为增补区）
+
+## 305. 已标定路径钟的取得信息与时长校准
+
+第301—304节计算来源调用次数；将它变成实际时间的必要界，还要声明每次取得的完整记录及已支付时长。本节把完成调用的随机时长纳入同一联合来源，以条件平均时长约束每次新信息，再用实际累计钟分离停止窗口。结果允许辅助零信号世界不回答，但保留真实正参数世界的有限答案要求。
+
+[过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)第29.1—29.2节已经把读数、时钟增量和后继状态放入共同核，并运输完整输出词与累计时钟的联合律；第29.5节给相同边缘、不同耦合的例子，第29.6节区分正确概率运输与实际路径钟恢复。本节直接使用这些接口，不重证一般核下降。新增的信息率合同必须作用于已经完成并实际可见的联合记录，不能只对遗失时间标签的边缘实验计费。
+
+### 305.1 完成调用、路径时长与零信号参照
+
+已知动作集合有限。每次调用只在完成后返回完整可见记录 \(X\)，记录中包含实际已标定时长
+$$
+\tau_a(X)\in[0,\tau_{\max}],\qquad 0<\tau_{\max}<\infty.
+\tag{305.1}
+$$
+时长映射及标定在全部世界共用，不能随未知真实 \(h\) 偷换单位；联合记录的概率律允许依赖 \(h\)。可允许映射还依赖已经可见的完整过去，只要在比较世界中是同一个函数，并保持（305.1）。
+
+协议只在完成调用后，根据已取得完整记录及共同私随机种子选择下一动作或给答案。调用串行，不并行、不取消、不在调用中途作决定或使用另一个未计入记录的信息通道。一旦开始调用，就取得并支付这个完整联合记录，包括可能越过分析钟阈值的最后一次调用。
+
+把全部私随机数纳入初始种子 \(U\)；其分布在全部世界相同，与来源的新随机性独立。给定 \(U\) 和完整过去，控制与停止规则相同。内部程序有可数控制步骤，每次请求至少消耗一个分析控制步骤；这一步数不作为物理钟单位。
+
+在每个正参数世界 \(P_h\)、\(0<h\le h_\star\)，要求有限次调用后在有限控制步骤上给出答案，几乎必然成立。辅助参照律 \(Q\) 不要求回答，且
+$$
+Q(\text{有限给出答案})\le q,\qquad 0\le q<1.
+\tag{305.2}
+$$
+
+完成第 \(n\) 次调用后的累计取得钟为
+$$
+S_n=\sum_{i=1}^n\tau_i.
+$$
+有限回答且调用数为 \(N\) 时，定义 \(T=S_N\)。没有有限回答时，分析上定义 \(T=\infty\)。这包括辅助世界在有限累计钟内进行无限次调用的情形：它不是已经完成的历时，不将其有限钟极限称作成功回答成本。正参数世界满足有限回答条件，因此其中 \(T\) 始终是真实完成路径的时长和。
+
+### 305.2 联合条件信息率与固定尺度
+
+给定共同完整过去 \(\mathcal H\) 和即将执行的动作 \(a\)，记新完整记录的条件律为 \(P_{h,a,\mathcal H}\)、\(Q_{a,\mathcal H}\)，要求单向绝对连续。置
+$$
+d_a(h,\mathcal H)
+=D(P_{h,a,\mathcal H}\Vert Q_{a,\mathcal H}),
+\qquad
+c_a(h,\mathcal H)
+=\mathbb E_h[\tau_a(X)\mid\mathcal H,a].
+$$
+假设对全部实际请求前历史，
+$$
+\boxed{d_a(h,\mathcal H)\le I(h)c_a(h,\mathcal H),\qquad 0<I(h)<\infty.}
+\tag{305.3}
+$$
+不需要各次记录独立；共同历史上的条件核及（305.3）足够。零条件平均时长只允许零 KL，这由（305.3）直接约束，不需要除以零。
+
+为以 \(h\) 归一化，还假设固定 \(\rho>0\) 和正常数 \(c_-,c_+\) 满足
+$$
+c_-h^\rho\le I(h)\le c_+h^\rho
+\qquad\text{对充分小 }h>0.
+\tag{305.4}
+$$
+协议、模型、标定、\(\tau_{\max}\)、\(\rho,c_-,c_+,q\) 在极限中全部固定。
+
+**定理305.1（未知尺度的路径钟信息必要性）。** 在上述合同和（305.1）—（305.4）下，
+$$
+\boxed{
+\limsup_{h\downarrow0}
+\frac{I(h)\mathbb E_hT}{\log\log(1/h)}
+\ge1-q.}
+\tag{305.5}
+$$
+这是固定模型的子序列必要性，允许期望无穷；不是每个小 \(h\) 的必要界，不声明常数最优。
+
+### 305.3 完整越界调用与有限分析截断
+
+固定有限钟阈值 \(b\ge0\) 与有限分析控制步上限 \(R\)。模拟原协议，并在以下最早事件截断：
+
+1. 协议有限回答；
+2. 某次调用已经完成，其累计钟首次严格超过 \(b\)；
+3. 分析控制步骤达到 \(R\)，停止开始新调用。
+
+已经开始的调用完整完成后才返回记录并收费；控制步计数可把一次完整请求—返回作为一个原子控制转移。这个分析截断不在调用中途取消任何任务。
+
+因为每次请求占至少一个控制步骤，截断记录含至多 \(R\) 次完整曝光，即使允许零时长也有限。记其实际累计钟为 \(T_{b,R}\)。非负性及单次上界给
+$$
+0\le T_{b,R}\le b+\tau_{\max}.
+\tag{305.6}
+$$
+在正参数世界，与原运行使用相同种子和新样本耦合，截断只保留原运行前缀，所以
+$$
+T_{b,R}\le T\qquad P_h\text{-几乎处处}.
+\tag{305.7}
+$$
+如果在累计钟恰等于 \(b\) 时仍未回答，必须保留继续进行零时长调用或有限内部运算后在钟 \(b\) 上回答的可能，因此采用严格越界 \(>b\)。若下一调用从 \(S_{n-1}\le b\) 开始，不能预看它的随机时长后决定是否把它算入前缀。
+
+完成越界后即作分析截断，不取消该次调用。此后非负增量不可能再产生 \(T\le b\) 的回答，所以这种截断保留全部所需有限回答事件。
+
+### 305.4 可预测请求与随机时长收费
+
+保留种子、实际来源请求、完整联合返回、停止及截断标志。记第 \(i\) 次可能曝光真正被该截断请求的指标为 \(J_i\)。请求前的过去记为 \(\mathcal F_{i-1}\)，包含已选择动作、剩余分析步骤、全部已完成记录和累计钟。则
+$$
+J_i\in\mathcal F_{i-1},\qquad i\le R.
+\tag{305.8}
+$$
+这正是不能按本次尚未看到的随机时长删样本的原因。
+
+共同控制核不贡献 KL。有限链式公式给
+$$
+\begin{aligned}
+D(P_h^{b,R}\Vert Q^{b,R})
+&=\mathbb E_h\sum_{i=1}^R
+J_i\,d_{A_i}(h,\mathcal H_{i-1})\\
+&\le I(h)\mathbb E_h\sum_{i=1}^R
+J_i\,c_{A_i}(h,\mathcal H_{i-1}).
+\end{aligned}
+\tag{305.9}
+$$
+用（305.8）逐项条件化：
+$$
+\begin{aligned}
+\mathbb E_h[J_i\tau_i]
+&=\mathbb E_h\!\left[
+J_i\,\mathbb E_h(\tau_i\mid\mathcal F_{i-1})\right]\\
+&=\mathbb E_h[J_i c_{A_i}(h,\mathcal H_{i-1})].
+\end{aligned}
+$$
+有限求和于是给出
+$$
+\boxed{
+D(P_h^{b,R}\Vert Q^{b,R})
+\le I(h)\mathbb E_hT_{b,R}
+\le I(h)\min\{\mathbb E_hT,\ b+\tau_{\max}\}.}
+\tag{305.10}
+$$
+这里不要求时长与同次读数独立，也不要求时长在给定动作后为确定量；只需要完整联合核和请求的可预测性。没有将无界停时任意代入 Wald 等式，也没有先把随机停止次数替换成其均值。
+
+### 305.5 有限回答事件的信息费用
+
+**引理305.2（有限钟窗口的信息界）。** 不需要（305.4）的幂尺度条件。令 \(A\subseteq\{T\le b\}\) 由有限终端记录确定。例如 \(A=\{a<T\le b\}\)。记有限输出的控制步为 \(L\)，置
+$$
+A_R=A\cap\{L\le R\}.
+$$
+因为 \(A\) 的时长至多为 \(b\)，非负性保证其运行不会在输出前越过 \(b\)，故 \(A_R\) 是上述截断记录上的事件。随着 \(R\to\infty\)，有 \(A_R\uparrow A\)，包括零时长但最终有限回答的运行。
+
+二元数据处理和二元 KL 下半连续性给
+$$
+\boxed{
+\operatorname{kl}(P_h(A),Q(A))
+\le I(h)\min\{\mathbb E_hT,\ b+\tau_{\max}\}.}
+\tag{305.11}
+$$
+参照世界始终无须终止；极限只穷尽有限回答事件。若取任意有限 \(a\ge0\) 及 \(A=\{T\le a\}\)，得到早停界
+$$
+\boxed{
+P_h(T\le a)
+\le q+\sqrt{I(h)(a+\tau_{\max})/2}.}
+\tag{305.12}
+$$
+这就是第304节有限曝光信息界向随机可加路径钟的实际迁移。时长越界不能遗漏，但其有界代价在信息率趋零时消失。
+
+### 305.6 分离钟窗口的必要性证明
+
+若（305.5）不成立，取固定
+$$
+0<\gamma<1-q
+$$
+大于左侧 limsup，使所有充分小 \(h\) 都有
+$$
+I(h)m(h)\le\gamma\log\log(1/h),
+\qquad m(h)=\mathbb E_hT.
+\tag{305.13}
+$$
+若任意趋零子序列的期望为无穷大，则原结论已成立。
+
+取
+$$
+h_n=n^{-n},\quad I_n=I(h_n),\quad
+L_n=\log\log(1/h_n)=\log n+\log\log n.
+$$
+由（305.4），
+$$
+I_n/I_{n-1}=O(n^{-\rho}).
+$$
+选 \(K\) 足够大及固定 \(p_\star\) 满足
+$$
+\gamma<p_\star<1-q-\gamma/K.
+$$
+定义实值钟窗口端点
+$$
+b_n=K\log n/I_n,\qquad a_n=b_{n-1}.
+\tag{305.14}
+$$
+从某级起 \(b_n\) 严格递增；并且
+$$
+I_n(a_n+\tau_{\max})
+=O(n^{-\rho}\log n)+I_n\tau_{\max}\longrightarrow0.
+\tag{305.15}
+$$
+（305.12）给 \(P_{h_n}(T\le a_n)\le q+o(1)\)；Markov 给
+$$
+P_{h_n}(T>b_n)\le
+\frac{\gamma L_n}{K\log n}=\gamma/K+o(1).
+$$
+所以互不相交的有限回答窗口
+$$
+A_n=\{a_n<T\le b_n\},\quad
+p_n=P_{h_n}(A_n),\quad q_n=Q(A_n)
+$$
+最终满足 \(p_n\ge p_\star\)。（305.11）、（305.13）及二元熵界给
+$$
+p_n\log(1/q_n)-\log2
+\le\operatorname{kl}(p_n,q_n)
+\le I_nm(h_n)\le\gamma L_n.
+$$
+选 \(\gamma/p_\star<\beta<1\)，便有
+\(q_n\ge c n^{-\beta}\) 对所有充分大 \(n\) 成立。右侧求和发散，而同一 \(Q\) 下
+$$
+\sum_nq_n\le Q(T<\infty)\le q.
+$$
+矛盾，证明（305.5）。只用了同一实现上的累计时长；未把各动作分别最优的信息率当作同时可达。
+
+### 305.7 时长标签必须进入联合信息
+
+在有正规条件律时，联合 KL 的准确分解为
+$$
+D(P_{X,\tau}\Vert Q_{X,\tau})
+=D(P_X\Vert Q_X)
++\mathbb E_{P_X}D(P_{\tau\mid X}\Vert Q_{\tau\mid X}).
+\tag{305.16}
+$$
+所以“时长的边缘律相同”也不足以保留旧样本 KL；需要同次条件时长核共同，或者直接估计完整联合项。
+
+一个有限例子：\(X\in\{0,1\}\)、\(\tau\in\{1,2\}\)。令 \(Q\) 对四对均匀，令 \(P_h\) 在 \((0,1),(0,2),(1,1),(1,2)\) 上的概率依次为
+$$
+\tfrac14(1+h),\ \tfrac14(1-h),\
+\tfrac14(1-h),\ \tfrac14(1+h),\qquad0<h<1.
+$$
+两个边缘都与 \(h\) 无关，但联合 KL 为
+$$
+\frac12[(1+h)\log(1+h)+(1-h)\log(1-h)]
+=h^2/2+O(h^4)>0.
+$$
+所有时长都正且有界。仅分别看读数边缘、时长边缘会遗漏全部关系信息。
+
+若时长的条件核在 \(P_h,Q\) 中相同，则（305.16）的第二项为零；这才是一份可以复用旧样本 KL 的足够条件。时长独立于样本且其分布与未知参数无关，是这种条件的一个特例。
+
+### 305.8 携带增益信息的正有界时长模型
+
+保持第301—304节原两源任务的同参数平均风险。已知
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star=1024/225,\quad
+0<\kappa\le\kappa_0=-\log\sqrt{3/4},
+$$
+$$
+k=e^{-\kappa},\quad 0<g\le k-k^2,\quad l=k^2+g.
+$$
+批次内固定但未知的参数为 \(r\in[l,1]\)、\(h\in(0,1]\)，假设标号 \(j=0,1\)。不提供正增益下界。每次完成调用返回二元联合记录 \((X,Z)\)：
+
+- \(X\) 仍是原任务币或参考币，分别为
+  \(\operatorname{Bernoulli}((1-hk^jr/C)/B)\)、
+  \(\operatorname{Bernoulli}((1-h/C)/B)\)；
+- 同次独立产生
+  $$
+  Z\sim\operatorname{Bernoulli}((1-\sqrt h)/2),
+  \qquad \tau=1+Z\in\{1,2\}.
+  \tag{305.17}
+  $$
+  给定参数，新联合记录与过去独立。
+
+时长在全部世界使用相同的已知标定 \(\tau=1+Z\)，其概率律依赖真实增益。零增益参照是原币 \(\operatorname{Bernoulli}(1/B)\) 与独立 \(Z\sim\operatorname{Bernoulli}(1/2)\)。对所有 \(h>0\) 都有联合单向绝对连续；没有利用时长奇异编码。
+
+记
+$$
+w(z)=C-z+z\kappa,\qquad w_h=w(h),\qquad
+H=1+\log(\kappa/g),\qquad
+\mathcal O(h)=\frac{w_h}{h^2\kappa^2}H,
+$$
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\qquad
+\bar\eta=\min(\eta,1/2).
+$$
+第301节给 \(1+\log(1/\bar\eta)\asymp H\)，其常数在本节全部参数范围内一致。
+
+**定理305.3（时长校准后的统一取得阶）。** 该完整联合观察实验存在一个不知 \(h\) 的协议，对每个合法同一 \((r,h)\) 平均风险至多 \(1/3\)，各世界有限回答，且
+$$
+\boxed{
+\sup_{j,r}\mathbb E_{j,r,h}N\le A\mathcal O(h),
+\qquad
+\sup_{j,r}\mathbb E_{j,r,h}T\le A\mathcal O(h)}
+\tag{305.18}
+$$
+对全部允许 \(B,C,\kappa,g,h\) 以绝对常数一致成立。第305.9—305.11节给出达到协议及其全部分支的费用和风险。
+
+另一方面，每个成功协议都满足
+$$
+\boxed{
+\sup_{j,r}\mathbb E_{j,r,h}N\ge a\mathcal O(h),
+\qquad
+\sup_{j,r}\mathbb E_{j,r,h}T\ge a\mathcal O(h)}
+\tag{305.19}
+$$
+对每个 \(h>0\) 成立。上下界属于本节完整联合观察实验，并且同一个达到协议用于全部正增益。第303节原来只返回币的实验保留其不同的适应边界。
+
+### 305.9 从完成时长发现尺度与四阶逆矩
+
+只用参考调用的时长，令
+$$
+t=\sqrt h,\qquad W=1-2Z=3-2\tau,\qquad \mathbb E W=t.
+$$
+在累计样本数 \(n_s=2^s\) 上，用第303节同一 dyadic Hoeffding 发现规则：
+$$
+L_s=\log(A(s+1)^2/\delta),\quad
+r_s=2\sqrt{L_s/(2n_s)},\quad
+J=\inf\{s:\widehat t_s\ge2r_s\},\quad
+t_0=\min(1,\widehat t_J/2).
+\tag{305.20}
+$$
+取 \(\delta=\bar\eta/288\)、\(\Lambda=\log(A/\delta)\asymp
+H=1+\log(\kappa/g)\)，与第303节相同。此处时长流是实际完成记录，不是免费校准。停在 \(J\) 的记录满足事件
+\(G_0=\{t/3\le t_0\le t\}\) 的概率至少 \(1-\delta/3\)。这是实际停止记录上的事件；全时 Hoeffding 界只用于估计其失败概率。
+
+对于 \(p=2,4\)，尺度发现满足
+$$
+\mathbb E t_0^{-p}\le A_p t^{-p}.
+\tag{305.21}
+$$
+具体核对 \(p=4\)：令 \(s_\star\) 为首个 \(r_s\le t/4\) 的级别，则
+\(n_{s_\star}/L_{s_\star}\le A/t^2\)，且
+\(n_{s_\star}t^2\ge aL_{s_\star}\)。
+停止条件保证
+$$
+t_0^{-4}\le1+r_J^{-4}
+\le1+A(n_J/L_J)^2.
+$$
+对于 \(s=s_\star+m\)、\(m\ge1\)，
+$$
+\Pr(J\ge s)\le e^{-a2^{m-1}n_{s_\star}t^2},
+\qquad
+(n_s/L_s)^2\le2^{2m}(n_{s_\star}/L_{s_\star})^2.
+$$
+超指数尾求和后给 \(\mathbb E t_0^{-4}\le At^{-4}\)。
+\(p=2\) 用一次方同理。没有在校准失败分支丢弃这些矩。
+
+令
+$$
+H_0=t_0^2.
+$$
+于是
+$$
+\Pr(h/9\le H_0\le h)\ge1-\delta/3,\quad
+\mathbb E H_0^{-2}\le Ah^{-2},\quad
+\mathbb E H_0^{-1}\le Ah^{-1}.
+\tag{305.22}
+$$
+发现调用成本为
+$$
+\mathbb E n_J
+\le Ah^{-1}\,[\Lambda+\ell_+(h)],
+\qquad
+\ell_+(h)=\log\log(e^e/h).
+\tag{305.23}
+$$
+因为 \(t=\sqrt h\ge h\)，可以用 \(\ell_+(h)\) 统一控制
+\(\ell_+(t)\)。这一步把原来的发现成本 \(h^{-2}\ell_+(h)\) 降为 \(h^{-1}\ell_+(h)\)。
+
+### 305.10 新鲜参考币的精校准与无条件矩
+
+继续只用新的参考调用，并在这一阶段利用原参考币 \(X\)，令
+$$
+p_H=(1-h/C)/B,\qquad
+\epsilon=H_0\kappa/(BC).
+$$
+取新的两批参考币：
+$$
+m_0=\lceil A\Lambda/\epsilon\rceil,\qquad
+\widehat p_0=S_0/m_0,\qquad
+m_1=\left\lceil
+A\Lambda(\widehat p_0+\epsilon)/\epsilon^2
+\right\rceil,
+$$
+第二批均值为 \(\widehat p_1\)，并令
+$$
+\widehat h=C(1-B\widehat p_1),\qquad
+a=\min\{1,\max\{H_0,\widehat h-H_0\kappa\}\}.
+\tag{305.24}
+$$
+与第303节相比，实际停止好事件由 \(H_0\ge h/3\) 改为 \(H_0\ge h/9\)。后续风险只使用 \(H_0\le h\)，成本只使用（305.22），所以所有后续义务仍满足。
+
+先明确实际校准记录上的好事件：
+$$
+G_1=\{h/9\le H_0\le h\},\qquad
+G_2=\{p_H\le2\widehat p_0+\epsilon\},\qquad
+G_3=\{|\widehat p_1-p_H|\le\epsilon\}.
+$$
+第一阶段给 \(\Pr_h(G_1^c)\le\delta/3\)。给定 \(H_0\)，若 \(p_H\le\epsilon\)，事件 \(G_2\) 自动成立；否则失败蕴含 \(\widehat p_0<p_H/2\)，乘法 Chernoff 给
+$$
+\Pr_h(G_2^c\mid H_0)
+\le e^{-m_0p_H/8}
+\le e^{-A\Lambda/8}\le\delta/3.
+$$
+在 \(G_2\) 上，\(p_H+\epsilon\le2(\widehat p_0+\epsilon)\)，所以
+$$
+m_1\ge\frac{A\Lambda(p_H+\epsilon)}{2\epsilon^2}.
+$$
+第二批是条件于第一批的新鲜独立 Bernoulli 样本。双边 Bernstein 给
+$$
+\Pr_h(G_3^c\mid H_0,\widehat p_0)
+\le2\exp\left[-\frac{m_1\epsilon^2}{2(p_H+\epsilon/3)}\right]
+\le\delta/3
+\qquad\text{在 }G_2\text{ 上}.
+$$
+从而 \(G=G_1\cap G_2\cap G_3\) 满足 \(\Pr_h(G^c)\le\delta\)。这些事件使用固定真实参数作为分析判据，但全部是已经取得的校准记录的函数，不要求协议知道它们是否发生。在 \(G\) 上
+$$
+|\widehat h-h|\le BC\epsilon=H_0\kappa,\qquad H_0\le h,
+$$
+故（305.24）给 \(a\le h\)，且 \(a\ge h-2H_0\kappa\)。截到一不破坏结论，因为 \(h\le1\)。
+
+期望费用不能只在 \(G\) 上计算。给定 \(H_0\)，利用 \(\mathbb E(\widehat p_0\mid H_0)=p_H\)，从样本数直接得到
+$$
+\mathbb E(m_0+m_1\mid H_0)
+\le A\Lambda\left(\frac{p_H}{\epsilon^2}+\frac1\epsilon\right).
+$$
+取整项由右侧吸收，因为 \(\epsilon\) 一致小于一且 \(\Lambda\) 有正下界。代入（305.22）与 \(p_H=(C-h)/(BC)\)，得到
+$$
+\begin{aligned}
+\mathbb E(m_0+m_1)
+&\le A\Lambda\left[
+(C-h)\kappa^{-2}\mathbb E H_0^{-2}
++\kappa^{-1}\mathbb E H_0^{-1}\right]\\
+&\le A\mathcal O(h).
+\end{aligned}
+\tag{305.25}
+$$
+这包括所有校准记录。
+
+还需对坏校准分支控制增益缺额。对 \(p_H>0\)，因为 \(m_0\epsilon\ge1\) 且 \(S_0\sim\operatorname{Bin}(m_0,p_H)\)，二项倒数恒等式给
+$$
+\begin{aligned}
+\mathbb E\left[\frac1{\widehat p_0+\epsilon}\middle|H_0\right]
+&\le m_0\mathbb E\frac1{S_0+1}\\
+&=\frac{m_0}{m_0+1}
+\frac{1-(1-p_H)^{m_0+1}}{p_H}
+\le\frac1{p_H}.
+\end{aligned}
+$$
+再按第二批条件方差及 Cauchy–Schwarz，
+$$
+\begin{aligned}
+\mathbb E(|\widehat p_1-p_H|\mid H_0)
+&\le\sqrt{p_H\mathbb E(1/m_1\mid H_0)}\\
+&\le\epsilon\sqrt{\frac{p_H}{A\Lambda}
+\mathbb E\left[\frac1{\widehat p_0+\epsilon}\middle|H_0\right]}
+\le\epsilon.
+\end{aligned}
+$$
+\(p_H=0\) 时两批样本恒为零，直接给零误差，不作除零。对所有校准记录，总有 \(a\ge H_0>0\) 且
+$$
+(h-a)_+\le|h-\widehat h|+H_0\kappa.
+$$
+因此得到包括全部失败分支的结论
+$$
+\boxed{\Pr_h(a\le h)\ge1-\delta,\qquad
+\mathbb E[(h-a)_+\mid H_0]\le2H_0\kappa.}
+\tag{305.26}
+$$
+
+### 305.11 实际主表、平均风险与全部成本
+
+使用第301节的实际概率表，以候选 \(a\) 取每流
+$$
+K(a)=\left\lceil
+A\frac{w(a)}{a^2\kappa^2}
+[1+\log(1/\bar\eta)]\right\rceil,\qquad
+w(a)=C-a+a\kappa.
+$$
+表在全部校准分支上合法；在 \(a\le h\) 上同参数平均风险至多
+\(1/3-\bar\eta/72\)，这是第301节响应差余量按第303节所取常数的直接应用。校准只用参考联合记录，其分布在固定 \(h\) 的两个假设及所有 \(r\) 下相同，主表使用新鲜两源样本。给定同一校准记录，才能在两个假设之间配对平均风险。令 \(p_{\rm bad}=\Pr_h(G^c)\le\delta\)，于是
+$$
+\begin{aligned}
+\mathcal R(r,h)
+&\le(1-p_{\rm bad})
+\left(\frac13-\frac{\bar\eta}{72}\right)+p_{\rm bad}\\
+&\le\frac13-\frac{\bar\eta}{72}+\delta\le\frac13.
+\end{aligned}
+$$
+没有把某一个假设的错误单独约束为三分之一，也没有忽略失败记录。
+
+无条件主表费用保持稀有背景：
+$$
+\begin{aligned}
+\mathbb E\frac{w(a)}{a^2}
+&\le w_h\mathbb E H_0^{-2}
++\mathbb E\frac{(h-a)_+}{H_0^2}\\
+&\le Aw_h/h^2+2\kappa\mathbb E H_0^{-1}
+\le Aw_h/h^2.
+\end{aligned}
+\tag{305.27}
+$$
+所以 \(\mathbb E(2K(a))\le A\mathcal O(h)\)，包括所有校准失败记录。
+
+总调用数
+$$
+N=n_J+m_0+m_1+2K(a)
+$$
+满足
+$$
+\mathbb E N\le
+A\{\mathcal O(h)+h^{-1}[H+\ell_+(h)]\}.
+\tag{305.28}
+$$
+在原参数范围 \(w_h\ge\kappa\)、\(H\ge1\)、\(\kappa\le\kappa_0<1\)，
+$$
+\mathcal O(h)\ge H/(\kappa h^2)\ge h^{-2}.
+$$
+另有 \(h\ell_+(h)\le1\)：令 \(s=\log(1/h)\ge0\)，则
+\(e^{-s}\log(e+s)\le e^{-s}(1+s/e)\le1\)。
+因此（305.28）的两个附加项以绝对常数被 \(\mathcal O(h)\) 吸收，证明（305.18）的调用上界。每次 \(1\le\tau\le2\)，故逐运行
+$$
+N\le T\le2N,
+$$
+时间上界也成立。所有阶段在每个 \(h>0\) 下有限完成，且期望有限。
+
+### 305.12 任意协议的固定增益下界与准确联合率
+
+固定真实 \(h\)。第302节必要界比较任务参数 \(c=1,k,k^2,l,kl\)；这些世界中的时长律完全相同，且与 \(X\) 条件独立。因此每次完整联合记录在这类比较中的 KL 准确等于原币 KL：
+$$
+D(P_{X,c}\otimes P_{Z,h}\Vert
+P_{X,c'}\otimes P_{Z,h})
+=D(P_{X,c}\Vert P_{X,c'}).
+\tag{305.29}
+$$
+任意适应性控制即使使用过去时长，也仍是两比较世界的共同控制；第302节的停止 KL 和同参数三点链不变，直接给
+\(\sup_{j,r}\mathbb E N\ge a\mathcal O(h)\)。
+逐运行 \(T\ge N\) 给时间下界。这证明完整的（305.19），而不是只由上界宣称匹配。
+
+现在比较趋零增益与零增益参照，沿 \(j=0,r=1\) 两来源相同。原币单次 KL 为
+$$
+d_X(h)=h^2/[2C^2(B-1)]+O(h^3).
+$$
+时长位的 KL 为
+$$
+\begin{aligned}
+d_Z(\sqrt h)
+&=\frac{1-\sqrt h}{2}\log(1-\sqrt h)
++\frac{1+\sqrt h}{2}\log(1+\sqrt h)\\
+&=h/2+h^2/12+O(h^3).
+\end{aligned}
+$$
+单次条件平均时长为
+$$
+\mu_\tau(h)=\mathbb E_h(1+Z)=(3-\sqrt h)/2.
+$$
+记 \(s=C^2(B-1)\)。把两项 KL 相加并展开上述分母，有
+$$
+\begin{aligned}
+\frac{d_X(h)+d_Z(\sqrt h)}{\mu_\tau(h)}
+&=\frac{h+h^2(1/6+1/s)+O(h^3)}{3-\sqrt h}\\
+&=\frac h3+\frac{h^{3/2}}9+O(h^2).
+\end{aligned}
+$$
+分母的 \(\sqrt h\) 项产生了首个 \(h^{3/2}\) 修正。
+
+因原任务币的信号系数不超过一，相对零增益币的 KL 不超过参考币的 \(d_X(h)\)。故整个两源模型可取
+$$
+\boxed{
+I(h)=\frac{d_X(h)+d_Z(\sqrt h)}{\mu_\tau(h)}
+\sim h/3.}
+\tag{305.30}
+$$
+沿 \(j=0,r=1\) 达到等号。这是 \(\rho=1\) 的联合信息率，满足本节主定理。
+
+同一 \(h\) 下两条风险边仍给
+\(Q(\text{有限回答})\le1/3\)：时长独立于 \(c\)，中间任务参数 \(k\) 的共同实验仍相同；有限联合记录随 \(h\downarrow0\) 收敛于零增益律。因此正确的时间必要性为
+$$
+\limsup_{h\downarrow0}
+\frac{I(h)\mathbb E_{0,1,h}T}{\log\log(1/h)}
+\ge2/3,
+$$
+或以（305.30）写成
+$$
+\limsup_{h\downarrow0}
+\frac{h\,\mathbb E_{0,1,h}T}{\log\log(1/h)}
+\ge2.
+\tag{305.31}
+$$
+它与本节逐 \(h\) 的 \(\mathcal O(h)\) 取得阶相容：获得较强的增益信息仍不消除任务币区分所需的原成本。
+
+对于所构造协议，固定 \(B,C,\kappa,g\) 后，由（305.18）有
+$$
+\limsup_{h\downarrow0}
+\frac{h^2\mathbb E_{0,1,h}T}{\log\log(1/h)}=0.
+\tag{305.32}
+$$
+这明确推翻“忽略计时信息而沿用旧币 \(h^2\) 率，就能得到正的时间 limsup 下界”的迁移。改变的是完整可见实验，不是原第303—304节定理。
+
+### 305.13 零时长、非爆炸、端点与物理总历时
+
+在定理305.3的稀有背景端点 \(h=C=1\)，原参考币恒为 \(X=0\)，时长位恒为 \(Z=0\)，每次实际时长为一。尺度发现的 \(W=1\)，所以停止后确定有
+$$
+t_0=1/2,\qquad H_0=1/4.
+$$
+两批精校准的 \(p_H=0\)，均值都为零，故
+$$
+\widehat h=1,\qquad
+\epsilon=\kappa/(4B),\qquad
+ a=1-\kappa/4,
+$$
+$$
+w_h=\kappa,\qquad
+w(a)=\kappa(5-\kappa)/4,\qquad
+\mathcal O(1)=\kappa^{-1}H.
+$$
+第一阶段调用数为 \(O(H)\)，两批精校准分别为 \(O(H/\kappa)\)，实际主表也是 \(O(H/\kappa)\)；因此全部阶段均满足 \(O(H/\kappa)\)，且 \(T=N\)。这里按零误差直接处理 \(p_H=0\)，不作除零；（305.27）保留了稀有背景尺度，没有额外的 \(\kappa^{-1}\) 损失。相对零增益联合律只使用正确方向的绝对连续，反向 KL 在该端点可能无穷，不用于证明。对于 \(l=k\)，风险链中的 \(r=1,k\) 仍合法；\(g=0\) 不在本节取得合同内。
+
+如果再要求统一正下界 \(\tau_{\min}>0\)，则有
+$$
+\text{越过钟 }b\text{ 以前的请求数}
+\le\lfloor b/\tau_{\min}\rfloor+1,
+$$
+并排除无限调用发生在有限累计取得钟内。它是一个清楚的物理非 Zeno 条件。
+
+但在本证明中，有限 \(R\) 已独立限制曝光次数；之后只对有限回答事件取极限。因此信息必要性本身不需要 \(\tau_{\min}\)。若辅助世界无限零时长调用却不回答，分析量仍置 \(T=\infty\)，绝不把有限累计钟极限当成已完成答案的实际历时。需要物理非 Zeno 实现时仍可额外要求正下界或适当的路径非爆炸条件。
+
+\(\tau_{\max}\) 用于（305.6）、（305.10）及（305.15）的统一越界控制。它不是所有可能模型中的必要条件，但删除它需要另一份具体控制。例如，若保留 \(\tau_{\min}>0\) 且逐历史有统一条件均值上界 \(c_a(h,\mathcal H)\le C_0\)，则至多 \(\lfloor b/\tau_{\min}\rfloor+1\) 次曝光给
+$$
+\mathbb E_hT_{b,R}
+\le C_0(\lfloor b/\tau_{\min}\rfloor+1).
+$$
+早停信息仍为 \(O(I(h)(b+1))\)，同一个窗口证明保留系数 \(1-q\)。这是另一个已明确给出的充分合同；并非任意重尾、无下界时长都自动适用。
+
+已完成调用时长的和是“取得段路径钟”。若实际物理钟还包括非负的准备、内部计算和空闲间隔，串行性给实际总历时 \(W\ge T\)，于是同一信息率下必要界也传到 \(\mathbb E_hW\)。但取得段上界不自动变成总历时上界。若要声称 \(T\) 本身等于物理完成历时，须声明这些增量已覆盖整个实际时间段。
+
+### 305.14 单位、细分和观察权限的运输
+
+若所有时长乘已知固定 \(\alpha>0\)，完整记录做共同可逆重标，
+$$
+\tau'=\alpha\tau,\quad T'=\alpha T,\quad
+c_a'=\alpha c_a,\quad I'(h)=I(h)/\alpha.
+$$
+联合 KL、有限回答质量和控制合法性不变，且
+\(I'(h)\mathbb E_hT'=I(h)\mathbb E_hT\)。这是钟单位变换，不是新物理资源。
+
+一般已知严格递增的非线性换钟，累计历时取 \(T'=f(T)-f(0)\)，需重新运输每段实际增量
+\(f(S+\tau)-f(S)\)、其条件均值及信息率；不能用 \(f(\mathbb ET)\) 代替
+\(\mathbb E f(T)\)。若有 \(0<m\le f'\le M<\infty\)，可用逐路径比较得到相应有界失真结论；没有这样的合同，常数信息率不自动保持。
+
+路径细分只有在以下内容共同保留时才能当作同一实验：合法动作、整段联合返回核、所有可见时间标签、实际时间和、参考及私种子关系、以及在中间点是否允许作决定。若细分暴露了原来不可访问的中间记录或准许取消，就产生新控制权限；同一末端数值与同一总时长不足以保证协议等价。
+
+并行调用的完成钟通常是最大值，不是各调用时长之和。即使每个单独调用满足（305.3），同时启动许多调用可以使单位真实历时的信息增加；要将整批视为一个动作并重新核对联合 KL 与整批时长，不能直接把逐调用累加费用称为墙钟。
+
+允许中途取消时，已开始调用可以只付部分时长而观察到删失标签。此时分析请求的完整联合核及费用都改变，必须把“尚未完成／已取消”的记录纳入新核。若中途信息只被被动保存、完全由最终时长恢复且不改变任何决定，则它可能不增加终端实验；真正承重的是决定时机、取得权限及实际支付费用的合同。
+
+### 305.15 既有方法与来源范围
+
+[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第12.7节给时间标记与费用测度的一致运输：连续费率按换元导数运输，点操作费用在同一实际实验的重标中保持；重新在新钟上等步采样可能改变物理实验。该卷第34.1、34.4节分别保留完整已获档案与共同常数钟接口。过程几何卷第29节供应本节使用的联合时间标签合同；路径钟不能仅从端点状态恢复的正费用自环见[边界动力学卷](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)第10.2节。
+
+Kaufmann、Cappé、Garivier，
+[*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)，JMLR 17（2016），第7页 Lemma 1及第24—25页的停止似然和期望背景，与第304节的有限信息前置一致。本节对随机时长先在有限曝光上逐项条件化，使用请求前可测的指标；无须将非终止参照代入完整无界停止等式。
+
+Sirin Nitinawarat、Venugopal V. Veeravalli，
+[*Controlled Sensing for Sequential Multihypothesis Testing with Controlled Markovian Observations and Non-Uniform Control Cost*](https://arxiv.org/pdf/1310.1844v2)，Sequential Analysis 34(1)，1—24（2015），[DOI](https://doi.org/10.1080/07474946.2014.961864)。作者版本第10页第5节引入正动作费 \(c(u)\)，第11页式(5.1)和 Theorem 5.1、第12页式(5.7)—(5.8)把期望累计动作费接到信息／费用率。其模型为有限假设、受控 Markov 观察、动作确定费用及风险趋零；没有直接供应本节未知趋零尺度、随机完成时长和非终止零信号参照的结论。
+
+George Vershinin、Asaf Cohen、Omer Gurewitz，
+[*On Cost-Aware Designs for Sequential Hypothesis Testing*](https://arxiv.org/pdf/2512.19067v3)，2026-09-24版本。第2—3页声明已知的随机费用分布不随其有限隐藏假设变化；第7页第V节式(12)以动作平均费用写期望总成本，第8页区分完成后揭示与允许中途取消，式(13)及 Lemma 3给取消后的有效费用与平均越界准则。该文主要研究风险阈值趋零，采用二进制对数；本节用自然对数，没有搬用其数值常数。
+
+本节的时长在同一 \(h\) 下对两个假设 \(j\) 相同，却依赖尚未知的干扰参数 \(h\)。完整世界为 \((j,r,h)\)，所以不能把这一未知时长核当成已知、外生的费用分布后删去其信息。定理305.3专门展示了这个差别。
+
+本节复用成熟的条件期望、有限链式相对熵、二元数据处理、Pinsker及停止窗口方法。仓内连接是把局域可加路径钟、完整联合来源、第一分布下的实际随机收费和未知尺度必要性放进同一合同，再用时长校准实验检验其边界。没有声称新的标准序贯不等式、文献核定的原创性、最佳常数、Lean形式验证或实际仪器实验。
+
+## 追加锚（本行以下为增补区）
