@@ -140,8 +140,8 @@ addition?
 $$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
 
 [`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
-all natural inputs. Its proof combines an integer certificate with bounds on
-the conjugate coordinate. The discrepancy is also the signed count of the two
+all natural inputs. For `1 + 1`, `β(1)=φ²` and `β(2)=φ³` give `2φ²−φ³=1`.
+The discrepancy is also the signed count of the two
 lowest repeated-carry rules during digit normalization: a reusable connection
 between an arithmetic algorithm and an exact bound, however large the inputs.
 [Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
