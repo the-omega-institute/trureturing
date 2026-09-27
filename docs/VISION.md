@@ -161,13 +161,13 @@ We aim to study time, space, provenance and observation through **holographic
 spacetime geometry**: how does a whole appear through finite viewpoints, and
 when do those viewpoints support reconstruction?
 
-Imagine viewing the same history through different windows. Each window has a
-visible extent; some windows overlap. Events have an order, records have
-shared sources, and joining another window requires conditions to hold. The
-research task is to determine which windows and relations suffice to answer
-a target question, which distinctions remain hidden, and how the answers
-change with resolution or budget. The analogy suggests questions; explicit
-models carry the conclusions.
+A [Boolean counterexample](../D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean)
+uses three windows onto variables: one permits pairs with `x=y`, another
+`y=z`, and the third `x≠z`. Their allowed records agree on every overlap:
+either value of the shared variable is permitted. Yet no joint record
+satisfies all three constraints. Finding relations that make local agreement
+sufficient is the task; the tree criterion below gives one answer. Connecting
+these record models to physical spacetime remains a research question.
 
 Existing work offers several connected routes:
 
