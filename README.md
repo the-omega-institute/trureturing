@@ -189,22 +189,20 @@ We are developing an **information-escape judge** around four questions:
   indistinguishable pair, prove none remain within the stated scope, or mark
   the boundary open.
 
-A **readout** is a way of observing a state; several readouts can observe
-the same states. Fix one current catalog of registered theorem occurrences
-and one shared state space, then remove just one occurrence. Pairs of distinct
-states that the full catalog distinguished but the remaining readouts cannot
-distinguish are that occurrence's **unique captures**. The
+A **readout** is a way of observing a state. Fix a catalog of registered theorem
+occurrences and their readouts on one shared state space. Remove one occurrence
+while keeping the others fixed. Its **unique captures** are the pairs of distinct
+states that were distinguishable before removal and indistinguishable afterward. The
 [EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
 formalize this comparison.
 
-For a **finite arena with at least two states**,
+For a **finite state space with at least two states**,
 [StructuralNovelty](D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean)
-connects a strict reduction in indistinguishability to a strict decrease in
-the escape rate: the fraction of ordered distinct-state pairs left
-indistinguishable. A unique capture witnesses that reduction. Zero unique
-capture does not mean worthlessness: another occurrence can carry the same
-distinction. Information here is contextual; this supplies neither a universal
-value score nor a historical novelty judgment.
+shows that removing an occurrence strictly increases the **escape rate** exactly
+when it has a unique capture. The rate is the fraction of ordered distinct-state
+pairs left indistinguishable. Zero unique capture does not mean worthlessness:
+another occurrence can carry the same distinction. This comparison supplies
+neither a universal value score nor a historical novelty judgment.
 
 The judge is **under development**. Its declared-template findings are
 **Observe warnings that do not block admission**
