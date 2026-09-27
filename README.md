@@ -77,9 +77,10 @@ alternatives. Keep reusable results with their assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof supplies a premise; a counterexample refutes a claim within its stated
-scope. An obstruction can suggest [what to investigate next](docs/VISION.md#how-ai-can-find-its-next-direction).
-When progress stalls, check whether the representation misses a needed distinction.
+Proofs supply premises; counterexamples refute claims within their stated scope.
+When identical readings hide different target values, no function of those
+readings recovers the target in both cases.
+[Seek new observations or relations](docs/VISION.md#how-ai-can-find-its-next-direction).
 Evaluate on questions unused in method design, against a stated baseline
 with matched information and resources.
 
