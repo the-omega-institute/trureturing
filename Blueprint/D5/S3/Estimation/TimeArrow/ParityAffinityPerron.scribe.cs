@@ -42,7 +42,7 @@ internal sealed class ParityAffinityPerronDocument : IScribeDocumentDefinition
                     Frac,
                     Grp(Sum, Underscore, Grp(X, Sp, InMacro, Sp, Sub(F.Id("C"), P)), Sp,
                         Sqrt, Grp(D(1), Sp, Minus, Sp, Call("b", X), Caret, Grp(D(2)))),
-                    Grp(D(2), Caret, Grp(Dm, Sp, Minus, Sp, D(1))))))),
+                    Grp(D(2), Caret, Grp(Dm, Sp, Minus, Sp, D(1)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The affinity of a parity class is the normalized cross product of its positive and negative "
@@ -123,7 +123,7 @@ internal sealed class ParityAffinityPerronDocument : IScribeDocumentDefinition
                             + "each parity class. Let eta_+ and eta_- be the two class affinities, and let z be a positive "
                             + "root of the affinity equation.")),
                     Paragraph(Text(
-                        "The frozen proper-coordinate law at the empty coordinate set gives zero total parity, so "
+                        "The proper-coordinate law at the empty coordinate set gives zero total parity, so "
                             + "both classes have 2^(d-1) vertices. The zero sums then give the two squared norms and "
                             + "the class cross products. These identities evaluate the rank-four action of R, and "
                             + "the root equation supplies the final coefficient identity. Every surviving square "
