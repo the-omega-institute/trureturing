@@ -128,16 +128,13 @@ The method links five steps:
    reusable content, and state the conditions still to be met. Let the next
    question begin from an explicit boundary.
 
-A [quantum error model question](../Problems/eidesen-2025-nice-error-basis-non-normal-stabilizer.md)
-asks whether a size relation can hold while stabilizers fail to remain closed
-under conjugation. The
-[Lean construction](../D5/S3/Quantum/Information/NiceErrorBasisNonNormalStabilizer.lean)
-gives a projective error model on a four-dimensional complex space: the group
-has 16 elements, and the logical and stabilizer sets for a code subspace each
-have four. Their sizes satisfy `4 × 4 = 16`, but conjugation can take a
-stabilizer outside the set. This suggests a research move: identify
-which structural relation a numerical condition leaves unresolved, then test
-it directly.
+A [circle theorem](../D5/S3/ConceptDynamics/Topology/CircleDoubleCoverNoSection.lean)
+rules out choosing a square root continuously around the whole complex unit circle.
+It suggests a next question: how accurate can a constrained approximation be?
+For any real `L ≥ 0`, a circle map stretching shortest-arc distances by at most
+a factor of `L` has [uniform mean squared chord error](../D5/S3/ConceptDynamics/Topology/CircleDoubleCoverLipschitzError.lean)
+at least `2/(2L+1)`, measured between its squared output and the input.
+For every `L ≥ 1/2`, a map attains this bound.
 
 The finite-record
 [lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean)
