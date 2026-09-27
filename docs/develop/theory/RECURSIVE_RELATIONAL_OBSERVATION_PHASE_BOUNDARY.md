@@ -83686,3 +83686,574 @@ $$
 本节还没有给寻找任意数据的最短证书链的算法效率，也没有把固定参考空间的奇异度直接移到增加未观测环境后的另一个切片。共同核、标准最少步骤和最优恢复指数仍是不同对象，各自需要相应证据。
 
 ## 追加锚（本行以下为增补区）
+
+## 269. 单Jordan唯一来源的最优局部指数恰为参考维数的倒数一半
+
+§268构造了参考维数为 $n$、标准奇异度恰为 $n$ 的唯一来源。通用面约化定理给出 $2^{-n}$ 次误差上界，但这个保证不必是该实例的最优指数。本节利用单Jordan块的具体结构，证明完整数据逆映射的最优局部Hölder指数恰为 $1/(2n)$。
+
+上界对固定 $2\otimes n$ 空间上的任意合法竞争态成立，允许边缘带噪和秩变化。下界则由精确共同边缘的严格正来源族承担：态误差为 $\Theta(h)$，完整数据误差为 $\Theta(h^{2n})$。因此两个方向比较的是同一个固定真值与同一个数据映射。
+
+### 269.1 固定合同与目标
+
+沿用§268的标准基 $e_1,\ldots,e_n$，令
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad M=I_n+tJ,\qquad t>0.
+\tag{269.1}
+$$
+固定一个Hermitian正定矩阵 $Q$，满足
+$$
+Q+M^\dagger QM=I_n.
+\tag{269.2}
+$$
+§268已证明 $t=1/4$ 对每个 $n\ge1$ 都有这样的解，并有统一谱界
+$(7/23)I_n\preceq Q\preceq(16/23)I_n$。以下结论对任意满足（269.2）的固定 $(n,t,Q)$ 成立。
+
+记
+$$
+W=\begin{bmatrix}I_n&M\end{bmatrix},\qquad
+T_*=W^\dagger QW,\qquad Z=2QM,
+$$
+$$
+\Omega_*=\frac1nT_*,
+\qquad
+\rho_*=\frac1nI_n,\qquad K_*=\frac1nZ.
+\tag{269.3}
+$$
+输入空间 $H$ 为qubit，块矩阵使用固定输入 $Y$ 本征基，$\mathscr K(X)=2X_{+-}$。$T_*$ 秩为 $n$、迹为 $n$，所以 $\Omega_*$ 是合法来源；$n\ge2$ 时它是混合态。§268已证明其完整数据纤维唯一、标准奇异度为 $d_S=n$。
+
+对同一 $H\otimes\mathbb C^n$ 上任意密度态 $\Xi$，定义未除以二的完整数据误差
+$$
+\varepsilon(\Xi)=
+\|\operatorname{Tr}_H\Xi-\rho_*\|_1+
+\|\mathscr K(\Xi)-K_*\|_1.
+\tag{269.4}
+$$
+迹范数也用于非Hermitian数据矩阵的核范数；无下标的范数为算子范数。
+
+本节首先证明：存在依赖固定 $(n,t,Q)$ 的有限常数 $C_{\mathrm{up}}$，使
+$$
+\|\Xi-\Omega_*\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon(\Xi)^{1/(2n)}\}.
+\tag{269.5}
+$$
+随后构造一个趋近 $\Omega_*$ 的合法族，排除每个更大的局部指数。
+
+### 269.2 精确分离不可见方向与完整噪声
+
+令
+$$
+R=\operatorname{Tr}_H\Xi-\rho_*,
+\qquad N=\mathscr K(\Xi)-K_*,
+\qquad T'=n\Xi.
+\tag{269.6}
+$$
+把误差写成
+$$
+T'-T_*=\operatorname{diag}(D,-D)+X,
+\qquad D=D^\dagger,
+$$
+$$
+X=\frac n2
+\begin{pmatrix}R&N\\N^\dagger&R\end{pmatrix}.
+\tag{269.7}
+$$
+这是精确分解：$X$ 承担全部边缘与非对角读数误差，剩余项属于原数据映射的Hermitian核。
+
+对角与非对角块分别估计给
+$$
+\xi:=\|X\|
+\le\frac n2(\|R\|+\|N\|)
+\le\frac n2\varepsilon.
+\tag{269.8}
+$$
+又因 $T',T_*\succeq0$ 且两者迹均为 $n$，
+$$
+\|T'\|\le n,\qquad\|T_*\|\le n.
+\tag{269.9}
+$$
+没有在这些估计中要求 $\Xi$ 与理想源同支撑、同秩或同边缘。
+
+### 269.3 单位相位上的高阶近核向量
+
+取
+$$
+0<\theta\le\theta_0
+:=
+\min\left\{1,\frac{t}{2n},\frac{\pi}{n}\right\},
+\qquad \ell=0,\ldots,n-1.
+\tag{269.10}
+$$
+定义
+$$
+\lambda_\ell=e^{i\ell\theta},
+\qquad z_\ell=\frac{\lambda_\ell-1}{t},
+$$
+$$
+x_\ell=(1,z_\ell,\ldots,z_\ell^{n-1})^{\mathsf T},
+\qquad
+v_\ell=(x_\ell,-\lambda_\ell^{-1}x_\ell).
+\tag{269.11}
+$$
+由Jordan移位的定义，
+$$
+Mx_\ell-\lambda_\ell x_\ell=-tz_\ell^ne_n,
+\qquad
+Wv_\ell=\lambda_\ell^{-1}tz_\ell^ne_n.
+\tag{269.12}
+$$
+因此理想矩阵在这些向量上的二次型满足
+$$
+v_\ell^\dagger T_*v_\ell
+\le\|Q\|t^2|z_\ell|^{2n}.
+\tag{269.13}
+$$
+另一方面，$|\lambda_\ell|=1$ 使隐藏方向精确消失：
+$$
+v_\ell^\dagger\operatorname{diag}(D,-D)v_\ell=0.
+\tag{269.14}
+$$
+这里不是忽略一个小项，而是利用同模的两个参考分量得到恒等式。
+
+由（269.10），
+$$
+|z_\ell|
+\le\frac{\ell\theta}{t}\le\frac12,
+\qquad
+\|x_\ell\|^2\le n,\qquad
+\|v_\ell\|^2\le2n.
+\tag{269.15}
+$$
+对PSD矩阵 $T'$ 有 $(T')^2\preceq\|T'\|T'$，故
+$$
+\begin{aligned}
+\|T'v_\ell\|^2
+&\le n\,v_\ell^\dagger T'v_\ell\\
+&\le n\left(\|Q\|t^2|z_\ell|^{2n}+2n\xi\right).
+\end{aligned}
+\tag{269.16}
+$$
+同时，（269.12）给
+$$
+\|T_*v_\ell\|
+\le\|W\|\|Q\|t|z_\ell|^n.
+\tag{269.17}
+$$
+从
+$\operatorname{diag}(D,-D)v_\ell=(T'-T_*-X)v_\ell$
+读取第一分量，再用三角不等式，得到
+$$
+\begin{aligned}
+\|Dx_\ell\|
+\le{}&
+\left(\sqrt{n\|Q\|}+\|W\|\|Q\|\right)t|z_\ell|^n\\
+&+\sqrt2\,n\sqrt\xi+\sqrt{2n}\,\xi.
+\end{aligned}
+\tag{269.18}
+$$
+因此对 $0\le\varepsilon\le1$，存在只依赖固定 $(n,t,Q)$ 的有限常数 $A$，使
+$$
+\boxed{
+\max_\ell\|Dx_\ell\|\le A(\theta^n+\sqrt\varepsilon).
+}
+\tag{269.19}
+$$
+例如可以取
+$$
+A=
+\left(\sqrt{n\|Q\|}+\|W\|\|Q\|\right)t
+\left(\frac{n-1}{t}\right)^n
++n^{3/2}+\frac{n\sqrt{2n}}2.
+\tag{269.20}
+$$
+这里使用了 $\xi\le n\varepsilon/2$ 及 $\varepsilon\le\sqrt\varepsilon$。$n=1$ 时首项为零，仍是有限正的有效选择。
+
+这些相位向量只为证明提供PSD约束，没有被当作实验一次直接开放的振幅读数。
+
+### 269.4 Vandermonde反演的损失与全态上界
+
+令
+$$
+V=\begin{bmatrix}x_0&\cdots&x_{n-1}\end{bmatrix}.
+\tag{269.21}
+$$
+节点 $z_\ell$ 两两不同，故 $V$ 可逆。其逆矩阵的第 $\ell$ 行是Lagrange多项式
+$$
+p_\ell(z)=
+\prod_{k\ne\ell}\frac{z-z_k}{z_\ell-z_k}
+\tag{269.22}
+$$
+按幂次排列的系数行，因为该行乘 $V$ 正好给出
+$p_\ell(z_k)=\delta_{\ell k}$。
+
+对 $\ell\ne k$，$0<|\ell-k|\theta<\pi$，所以
+$$
+|z_\ell-z_k|
+=\frac{2\sin(|\ell-k|\theta/2)}{t}
+\ge\frac{2|\ell-k|\theta}{\pi t}.
+\tag{269.23}
+$$
+分子多项式的系数绝对值之和不超过
+$\prod_{k\ne\ell}(1+|z_k|)\le2^{n-1}$。分母绝对值至少为
+$[2\theta/(\pi t)]^{n-1}\prod_{k\ne\ell}|\ell-k|$，
+最后的整数乘积至少为一。因此每个逆矩阵元素的绝对值都不超过
+$(\pi t)^{n-1}\theta^{1-n}$，从而
+$$
+\|V^{-1}\|\le n(\pi t)^{n-1}\theta^{1-n}.
+\tag{269.24}
+$$
+$n=1$ 时这些式子按空积为一解释；$V=[1]$，无需不同节点。
+
+由 $\|DV\|\le\sqrt n\max_\ell\|Dx_\ell\|$，得
+$$
+\boxed{
+\|D\|\le
+n^{3/2}(\pi t)^{n-1}A
+\theta^{1-n}(\theta^n+\sqrt\varepsilon).
+}
+\tag{269.25}
+$$
+
+**定理269.1（全维完整数据上界）。** 对每个固定合同（269.1）—（269.3），存在有限 $C_{\mathrm{up}}$，使（269.5）对所有合法竞争态成立。
+
+**证明。** 当 $0<\varepsilon\le\theta_0^{2n}$ 时，取
+$$
+\theta=\varepsilon^{1/(2n)}.
+\tag{269.26}
+$$
+此时 $\theta^n=\sqrt\varepsilon$，且位于允许区间。若记
+$$
+C_D=2n^{3/2}(\pi t)^{n-1}A,
+\tag{269.27}
+$$
+则（269.25）给
+$$
+\|D\|\le C_D\varepsilon^{1/(2n)}.
+\tag{269.28}
+$$
+当 $\varepsilon=0$ 时，$X=0$，而（269.25）对每个正 $\theta\le\theta_0$ 给 $\|D\|\le(C_D/2)\theta$；令 $\theta\downarrow0$ 得 $D=0$。这也直接恢复了精确数据唯一性。
+
+由联合维数 $2n$，
+$$
+\begin{aligned}
+\|\Xi-\Omega_*\|_1
+&\le\frac2n\|D\|_1+\frac1n\|X\|_1\\
+&\le2\|D\|+2\|X\|\\
+&\le2C_D\varepsilon^{1/(2n)}+n\varepsilon.
+\end{aligned}
+\tag{269.29}
+$$
+小误差时 $\varepsilon\le\varepsilon^{1/(2n)}$，所以可吸收最后一项。若
+$\theta_0^{2n}\le\varepsilon\le1$，则 $\varepsilon^{1/(2n)}\ge\theta_0$，状态迹距上界二给
+$$
+\|\Xi-\Omega_*\|_1
+\le2\le\frac2{\theta_0}\varepsilon^{1/(2n)}.
+\tag{269.30}
+$$
+$\varepsilon\ge1$ 时同样由迹距上界二控制。因此可取
+$$
+C_{\mathrm{up}}
+=\max\left\{2C_D+n,\frac2{\theta_0},2\right\},
+\tag{269.31}
+$$
+再与独立上界二取最小，即得（269.5）。$\square$
+
+### 269.5 为匹配下界构造严格正的极限矩阵
+
+下面构造精确同边缘的竞争来源。先定义实数序列
+$$
+c_{2r}=(-1)^r,\qquad
+c_{2r+1}=\frac{(-1)^r}{2},
+\qquad r\ge0,
+$$
+$$
+(C_0)_{ij}=c_{|i-j|},\qquad1\le i,j\le n.
+\tag{269.32}
+$$
+$C_0$ 是实对称Toeplitz矩阵，对角元全为一；这里不要求 $C_0$ 正定。它满足
+$$
+c_{d-1}+c_{d+1}=0\quad(d\ge1),
+\qquad 2c_1=1.
+\tag{269.33}
+$$
+因此对 $i,j\ge2$，
+$$
+(J^\dagger C_0+C_0J)_{ij}
+=(C_0)_{i-1,j}+(C_0)_{i,j-1}
+=\delta_{ij}.
+\tag{269.34}
+$$
+令
+$$
+u=(c_0,c_1,\ldots,c_{n-2})^{\mathsf T}\in\mathbb R^{n-1},
+\tag{269.35}
+$$
+在 $n=1$ 时按空向量解释。完整矩阵关系为
+$$
+J^\dagger C_0+C_0J
+=\begin{pmatrix}0&u^\dagger\\u&I_{n-1}\end{pmatrix}.
+\tag{269.36}
+$$
+
+记 $E_{jj}=|e_j\rangle\langle e_j|$，并取
+$$
+k_0=t(1+\|u\|^2),\qquad
+L_0=t(J^\dagger C_0+C_0J)+k_0E_{11}.
+\tag{269.37}
+$$
+则
+$$
+L_0=
+t\begin{pmatrix}1+\|u\|^2&u^\dagger\\u&I_{n-1}\end{pmatrix}
+=tB^\dagger B,
+\qquad
+B=\begin{pmatrix}1&0\\u&I_{n-1}\end{pmatrix}.
+\tag{269.38}
+$$
+$B$ 可逆，且 $\|B^{-1}\|\le1+\|u\|$。因此
+$$
+L_0\succeq\mu_0 I_n,
+\qquad
+\mu_0=\frac{t}{(1+\|u\|)^2}>0.
+\tag{269.39}
+$$
+再令
+$$
+\beta=(Q^{-1})_{nn}>0,\qquad
+v=C_0e_n,\qquad
+s=\frac{\mu_0}{2\beta\|v\|^2},
+$$
+$$
+C=sC_0,\qquad k=sk_0.
+\tag{269.40}
+$$
+因为 $v_n=1$，这些常数有限且严格正；并有 $C_{nn}=s$。
+
+所需极限矩阵是
+$$
+R_0=t(J^\dagger C+CJ)-\beta CE_{nn}C+kE_{11}.
+\tag{269.41}
+$$
+代入定义，
+$$
+\begin{aligned}
+R_0
+&=sL_0-\beta s^2vv^\dagger\\
+&\succeq(s\mu_0-\beta s^2\|v\|^2)I_n
+=\frac{s\mu_0}{2}I_n\succ0.
+\end{aligned}
+\tag{269.42}
+$$
+这个严格正性将控制整个联合来源，而不是把可能不正的 $C$ 当作来源对角块。
+
+### 269.6 精确竞争族及其Schur补
+
+对 $h>0$，定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad
+D_h=hS_hCS_h,\qquad
+\delta_h=kh^{2n}.
+\tag{269.43}
+$$
+令
+$$
+T_h=
+\begin{pmatrix}
+Q+D_h&(1-\delta_h)QM\\
+(1-\delta_h)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix},
+\qquad \Omega_h=\frac1nT_h.
+\tag{269.44}
+$$
+现在证明充分小的正 $h$ 使 $T_h$ 严格正。
+
+由于 $D_h\to0$ 且 $Q\succ0$，充分小的 $h$ 满足 $Q+D_h\succ0$。记
+$$
+V_h=(Q+D_h)^{-1}.
+\tag{269.45}
+$$
+$T_h$ 对左上块的Schur补为
+$$
+R_h=M^\dagger QM-D_h
+-(1-\delta_h)^2M^\dagger QV_hQM.
+\tag{269.46}
+$$
+利用精确恒等式
+$$
+Q-QV_hQ=D_h-D_hV_hD_h,
+\tag{269.47}
+$$
+得到
+$$
+\begin{aligned}
+R_h={}&M^\dagger D_hM-D_h
+-M^\dagger D_hV_hD_hM\\
+&+(2\delta_h-\delta_h^2)M^\dagger QV_hQM.
+\end{aligned}
+\tag{269.48}
+$$
+（269.47）来自把 $Q=(Q+D_h)-D_h$ 代入双侧乘积；不要求 $Q$ 与 $D_h$ 对易。
+
+为保留各坐标不同的尺度，定义
+$$
+H_h=hS_h,\qquad
+M_h=S_hMS_h^{-1}=I_n+thJ,
+$$
+$$
+A_h=h^{n-1}S_h^{-1}
+=\operatorname{diag}(1,h,\ldots,h^{n-1}).
+\tag{269.49}
+$$
+逐项同余缩放给精确等式
+$$
+\begin{aligned}
+H_h^{-1}R_hH_h^{-1}
+={}&t(J^\dagger C+CJ)+t^2hJ^\dagger CJ\\
+&-M_h^\dagger CS_hV_hS_hCM_h\\
+&+(2k-k^2h^{2n})
+A_hM^\dagger QV_hQMA_h.
+\end{aligned}
+\tag{269.50}
+$$
+其中第一行来自
+$h^{-1}(M_h^\dagger CM_h-C)$；最后一行使用
+$h^{n-1}S_h^{-1}=A_h$，所以数据扰动的 $h^{2n}$ 次数正好补偿所需双侧缩放。
+
+当 $h\downarrow0$，
+$$
+S_h\longrightarrow E_{nn},\qquad
+A_h\longrightarrow E_{11},\qquad
+V_h\longrightarrow Q^{-1},\qquad
+M_h\longrightarrow I_n.
+\tag{269.51}
+$$
+又因为 $Me_1=e_1$，将（269.2）夹在 $e_1$ 上得到
+$$
+Q_{11}=(M^\dagger QM)_{11}=\frac12.
+\tag{269.52}
+$$
+所以（269.50）的极限为
+$$
+t(J^\dagger C+CJ)-\beta CE_{nn}C+kE_{11}
+=R_0\succ0.
+\tag{269.53}
+$$
+在固定有限维空间中，严格正定集合是开集，而（269.50）在零点具有上述连续延拓。因此存在 $h_0>0$，使 $0<h\le h_0$ 时 $Q+D_h$ 与缩放Schur补均严格正。可再缩小 $h_0$，同时保证 $h_0\le1$、$\delta_h<1$。由于 $H_h$ 对每个 $h>0$ 都可逆，原Schur补也严格正，故
+$$
+\boxed{T_h\succ0\quad(0<h\le h_0).}
+\tag{269.54}
+$$
+
+这是精确缩放极限与严格正开集给出的存在性证明；没有把去掉高阶项后的近似正性冒作 $T_h$ 的正性。这里不要求一个最大的允许 $h$ 区间，也没有声称其常数最优。
+
+当 $n=1$ 时，$J=0$、$M=1$、$Q=1/2$，$u$ 为空，且
+$S_h=A_h=I_1=E_{11}$。此时 $\mu_0=t$、$s=t/4$、$k=t^2/4$，
+$R_0=t^2/8>0$，所以上述证明也覆盖这个端点。
+
+### 269.7 精确共同边缘下的匹配误差阶
+
+两个对角块之和始终为 $I_n$。因此（269.54）给出的 $\Omega_h$ 是正定密度态，且
+$$
+\rho_h=\frac1nI_n=\rho_*,
+\qquad
+K_h=(1-\delta_h)\frac1nZ.
+\tag{269.55}
+$$
+完整数据误差精确为
+$$
+\boxed{
+\varepsilon_h
+=\|\rho_h-\rho_*\|_1+\|K_h-K_*\|_1
+=\frac{k\|Z\|_1}{n}h^{2n}.
+}
+\tag{269.56}
+$$
+$Z=2QM$ 可逆，因此该系数严格正。
+
+取算子范数为一的Hermitian可观测量
+$$
+B_{\mathrm{test}}=\operatorname{diag}(E_{nn},-E_{nn}).
+\tag{269.57}
+$$
+由 $(D_h)_{nn}=sh$，
+$$
+\operatorname{Tr}\bigl(B_{\mathrm{test}}(\Omega_h-\Omega_*)\bigr)
+=\frac2n(D_h)_{nn}=\frac{2s}{n}h.
+\tag{269.58}
+$$
+迹范数对偶性给态差下界
+$$
+\|\Omega_h-\Omega_*\|_1\ge\frac{2s}{n}h.
+\tag{269.59}
+$$
+
+对 $0<h\le h_0\le1$，$\|S_h\|=1$，故
+$\|D_h\|_1\le h\|C\|_1$。非对角扰动的迹范数为
+$\delta_h\|Z\|_1/n$，从而
+$$
+\begin{aligned}
+\|\Omega_h-\Omega_*\|_1
+&\le\frac2n\|D_h\|_1+\frac{\delta_h}{n}\|Z\|_1\\
+&\le\frac{2\|C\|_1+k\|Z\|_1}{n}h.
+\end{aligned}
+\tag{269.60}
+$$
+合并得到
+$$
+\boxed{
+\|\Omega_h-\Omega_*\|_1=\Theta(h),
+\qquad
+\varepsilon_h=\Theta(h^{2n}).
+}
+\tag{269.61}
+$$
+上下界常数对应同一个固定 $(n,t,Q)$，且 $\Omega_h\to\Omega_*$。真值秩为 $n$，竞争态严格正、秩为 $2n$；证明保留了这一支撑变化。
+
+### 269.8 最优指数的完整结算
+
+在固定真值 $\Omega_*$ 处，称 $\alpha>0$ 是可用的局部逆指数，若存在有限常数 $C$ 和 $\Omega_*$ 的一个邻域，使其中全部合法竞争态满足
+$$
+\|\Xi-\Omega_*\|_1\le C\varepsilon(\Xi)^\alpha.
+\tag{269.62}
+$$
+
+**定理269.2（单Jordan族的锐局部指数）。** 对每个满足（269.1）—（269.3）的固定合同，
+$$
+\boxed{
+\text{完整数据逆映射的最优局部Hölder指数恰为 }\frac1{2n}.
+}
+\tag{269.63}
+$$
+即使把竞争来源限制为精确共同边缘 $\rho_*=I_n/n$，最优指数仍相同。
+
+**证明。** 定理269.1给指数 $1/(2n)$ 的全域上界，因此它可用于局部逆界。若 $\alpha>1/(2n)$，取§269.6—269.7中的同边缘合法族，则
+$$
+\begin{aligned}
+\frac{\|\Omega_h-\Omega_*\|_1}{\varepsilon_h^\alpha}
+&\ge
+\frac{2s/n}{(k\|Z\|_1/n)^\alpha}
+h^{1-2n\alpha}\\
+&\longrightarrow+\infty
+\qquad(h\downarrow0).
+\end{aligned}
+\tag{269.64}
+$$
+因此任意有限常数都不能使更大指数在真值邻域内成立。该反例已经处于共同边缘子合同中；上界也对该子集成立，所以两种合同有相同最优指数。$\square$
+
+取§268的统一参数 $t=1/4$，这个结论对任意参考维数都给出实际实例。$n=1$ 时真值是纯态、指数为 $1/2$；$n\ge2$ 时真值混合，最优指数随维数变为 $1/(2n)$。
+
+### 269.9 与标准奇异度的关系及范围
+
+§268已证明这些固定切片的标准奇异度为 $d_S=n$。§266的通用面约化误差界给有效指数 $2^{-d_S}=2^{-n}$；本节通过结构上界与真实来源下界得到锐指数 $1/(2n)$。当 $n\ge3$ 时，
+$$
+\frac1{2n}>2^{-n}.
+\tag{269.65}
+$$
+因此，通用面约化指数不是该族的最优指数。已知 $d_S=n$ 并引用通用误差定理，不能据此把 $2^{-n}$ 标成锐结论；当前改进由单Jordan块的近核结构和匹配来源族共同承担。这里没有另行给出全部同奇异度切片的锐指数分类。
+
+本节常数 $C_{\mathrm{up}}$、下界系数及允许的 $h_0$ 可依赖固定 $n,t,Q$，不声称跨维数一致或数值系数最优。结论针对显式单Jordan族，不扩展为任意Ando纤维的通用指数，也不把固定 $2\otimes n$ 的合同直接移到新增参考环境后的问题。
+
+正性、Lagrange插值和Schur补都是这里直接使用的有限维工具；具体构造与所有极限已给出完整证明，不据其组合宣称外部文献原创性。近核向量、矩阵系数与完整数据是数学约束，未被解释为实验中免费取得的经典读数；有限副本或时间成本需要另设来源与访问合同。
+
+## 追加锚（本行以下为增补区）
