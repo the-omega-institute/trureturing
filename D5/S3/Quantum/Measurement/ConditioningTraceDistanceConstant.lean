@@ -16,16 +16,11 @@ namespace D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant
 
 open BigOperators Matrix Filter Topology
 open scoped ComplexOrder MatrixOrder InnerProductSpace
+open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-def IsDensity {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ) : Prop :=
-  ρ.PosSemidef ∧ ρ.trace = 1
-
-def traceDistance {d : ℕ} (X Y : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
-  traceNorm (X - Y) / 2
 
 def rMax {d : ℕ} (hd : 0 < d) (R : Matrix (Fin d) (Fin d) ℂ)
     (hR : R.IsHermitian) : ℝ :=
@@ -39,26 +34,110 @@ def conditionNumber {d : ℕ} (hd : 0 < d) (R : Matrix (Fin d) (Fin d) ℂ)
     (hR : R.IsHermitian) : ℝ :=
   rMax hd R hR / rMin hd R hR
 
-def conditionedState {d : ℕ} (R : Matrix (Fin d) (Fin d) ℂ)
-    (ρ : Matrix (Fin d) (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
-  (1 / (R * ρ).trace.re) • (CFC.sqrt R * ρ * CFC.sqrt R)
+def conditionedState {d : ℕ} (hd : 0 < d) (R : Matrix (Fin d) (Fin d) ℂ) (hR : R.PosDef)
+    (ρ : DensityState (Fin d)) : DensityState (Fin d) := by
+  let hH : R.IsHermitian := hR.isHermitian
+  let kMin : Fin (Fintype.card (Fin d)) :=
+    ⟨Fintype.card (Fin d) - 1, by simpa using hd⟩
+  let rlo : ℝ := rMin hd R hH
+  have hrlo : 0 < rlo := by
+    have hp := hH.posDef_iff_eigenvalues_pos.mp hR
+      ((RHLinalg.eigEquiv (n := Fin d)) kMin)
+    rw [RHLinalg.eigenvalues_eigEquiv hH kMin] at hp
+    simpa [rlo, rMin, kMin] using hp
+  have hlower : ∀ x ∈ spectrum ℝ R, rlo ≤ x := by
+    rw [hH.spectrum_real_eq_range_eigenvalues]
+    rintro _ ⟨i, rfl⟩
+    let k : Fin (Fintype.card (Fin d)) :=
+      (RHLinalg.eigEquiv (n := Fin d)).symm i
+    have hi : hH.eigenvalues i = hH.eigenvalues₀ k := by
+      simpa [k] using RHLinalg.eigenvalues_eigEquiv hH k
+    have hk : k.val ≤ Fintype.card (Fin d) - 1 := by omega
+    have hle := hH.eigenvalues₀_antitone (show k ≤ kMin by exact hk)
+    rw [hi]
+    simpa [rlo, rMin, kMin, RHLinalg.eigenvalues_eigEquiv] using hle
+  have hfloor : (rlo : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) ≤ R := by
+    simpa [rlo, Algebra.algebraMap_eq_smul_one] using
+      algebraMap_le_of_le_spectrum hlower hH
+  let X : Matrix (Fin d) (Fin d) ℂ := CStarMatrix.ofMatrix.symm ρ.val
+  have hXpsd : X.PosSemidef := by
+    change (CStarMatrix.ofMatrixStarAlgEquiv.symm ρ.val).PosSemidef
+    simpa [X, CStarMatrix.ofMatrix_eq_ofMatrixStarAlgEquiv] using
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm ρ.prop.1).posSemidef
+  have hXtrace : X.trace = 1 := by
+    change Matrix.trace (CStarMatrix.ofMatrix.symm ρ.val) = 1
+    exact ρ.prop.2
+  have htraceLower : rlo ≤ (X * R).trace.re := by
+    have ht := RHLinalg.trace_mul_nonneg_of_posSemidef hXpsd
+      (sub_nonneg.mpr hfloor)
+    have ht' : 0 ≤ (X * R).trace.re - rlo := by
+      simpa [Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_one, Matrix.trace_sub,
+        Matrix.trace_smul, hXtrace, Complex.sub_re, Complex.real_smul] using ht
+    linarith
+  have htrpos : 0 < (R * X).trace.re := by
+    rw [Matrix.trace_mul_comm R X]
+    exact lt_of_lt_of_le hrlo htraceLower
+  have hbase : (CFC.sqrt R * X * CFC.sqrt R).PosSemidef := by
+    have hGstar : (CFC.sqrt R)ᴴ = CFC.sqrt R := by
+      simpa [star_eq_conjTranspose] using (CFC.sqrt_nonneg R).isSelfAdjoint.star_eq
+    simpa [hGstar, hXpsd.1.eq, hH.eq, Matrix.mul_assoc] using
+      ((hXpsd.conjTranspose_mul_mul_same (CFC.sqrt R)).conjTranspose)
+  have hpsd : ((1 / (R * X).trace.re) : ℝ) •
+      (CFC.sqrt R * X * CFC.sqrt R) |>.PosSemidef :=
+    hbase.smul (one_div_nonneg.mpr htrpos.le)
+  refine ⟨CStarMatrix.ofMatrix
+      (((1 / (R * X).trace.re) : ℝ) • (CFC.sqrt R * X * CFC.sqrt R)), ?_, ?_⟩
+  · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hpsd.nonneg
+  · change Matrix.trace (((1 / (R * X).trace.re) : ℝ) •
+      (CFC.sqrt R * X * CFC.sqrt R)) = 1
+    rw [Matrix.trace_smul]
+    have htrace : (CFC.sqrt R * X * CFC.sqrt R).trace = (R * X).trace := by
+      rw [Matrix.trace_mul_cycle]
+      rw [CFC.sqrt_mul_sqrt_self R hR.posSemidef.nonneg]
+    have hstar : star ((R * X).trace) = (R * X).trace := by
+      rw [← Matrix.trace_conjTranspose, Matrix.conjTranspose_mul, hXpsd.isHermitian.eq,
+        hH.eq, Matrix.trace_mul_comm]
+    have htraceReal : (R * X).trace = ((R * X).trace.re : ℂ) := by
+      apply Complex.ext
+      · simp
+      · have him := congrArg Complex.im hstar
+        change ((starRingEnd ℂ) ((R * X).trace)).im = _ at him
+        rw [Complex.conj_im] at him
+        have him' : (R * X).trace.im = 0 := by linarith
+        simpa [him']
+    rw [htrace, htraceReal]
+    simp only [Complex.real_smul, one_div, Complex.ofReal_re, Complex.ofReal_inv]
+    field_simp [htrpos.ne']
 
 theorem conditioning_trace_distance_constant
     {d : ℕ} (hd : 2 ≤ d) (R : Matrix (Fin d) (Fin d) ℂ) (hR : R.PosDef) :
-    (∀ ρ σ : Matrix (Fin d) (Fin d) ℂ, IsDensity ρ → IsDensity σ →
+    (∀ ρ σ : DensityState (Fin d),
       (conditionNumber (by omega) R hR.isHermitian)⁻¹ * traceDistance ρ σ ≤
-        traceDistance (conditionedState R ρ) (conditionedState R σ) ∧
-      traceDistance (conditionedState R ρ) (conditionedState R σ) ≤
+        traceDistance (conditionedState (by omega) R hR ρ)
+          (conditionedState (by omega) R hR σ) ∧
+      traceDistance (conditionedState (by omega) R hR ρ)
+          (conditionedState (by omega) R hR σ) ≤
         conditionNumber (by omega) R hR.isHermitian * traceDistance ρ σ) ∧
-      IsLUB {x : ℝ | ∃ ρ σ : Matrix (Fin d) (Fin d) ℂ,
-        IsDensity ρ ∧ IsDensity σ ∧ ρ ≠ σ ∧
-          x = traceDistance (conditionedState R ρ) (conditionedState R σ) /
+      (∀ ρ : DensityState (Fin d),
+        rMin (by omega) R hR.isHermitian = rMax (by omega) R hR.isHermitian →
+          conditionedState (by omega) R hR ρ = ρ) ∧
+      IsLUB {x : ℝ | ∃ ρ σ : DensityState (Fin d),
+        ρ ≠ σ ∧
+          x = traceDistance (conditionedState (by omega) R hR ρ)
+              (conditionedState (by omega) R hR σ) /
             traceDistance ρ σ} (conditionNumber (by omega) R hR.isHermitian) := by
   classical
   have hd0 : 0 < d := by omega
   letI : NeZero (Fintype.card (Fin d)) :=
     ⟨Nat.ne_of_gt (by simpa using hd0)⟩
   let hH : R.IsHermitian := hR.isHermitian
+  let IsDensity (X : Matrix (Fin d) (Fin d) ℂ) : Prop :=
+    X.PosSemidef ∧ X.trace = 1
+  let traceDistance (X Y : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
+    traceNorm (X - Y) / 2
+  let conditionedState (R' X : Matrix (Fin d) (Fin d) ℂ) :
+      Matrix (Fin d) (Fin d) ℂ :=
+    (1 / (R' * X).trace.re) • (CFC.sqrt R' * X * CFC.sqrt R')
   have spectralSandwich : ∀ (R' : Matrix (Fin d) (Fin d) ℂ) (hR' : R'.PosDef),
       (rMin (by omega) R' hR'.isHermitian : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) ≤ R' ∧
         R' ≤ (rMax (by omega) R' hR'.isHermitian : ℂ) •
@@ -455,9 +534,150 @@ theorem conditioning_trace_distance_constant
       simpa [conditionNumber, rlo, rhi] using hh'
     · exact hupper
 
-  refine ⟨?_, ?_⟩
-  · exact hTwoSided
-  · let kMin : Fin (Fintype.card (Fin d)) :=
+  let densityOfMatrix (X : Matrix (Fin d) (Fin d) ℂ) (hX : IsDensity X) :
+      DensityState (Fin d) :=
+    ⟨CStarMatrix.ofMatrix X, map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hX.1.nonneg,
+      by
+        change Matrix.trace (CStarMatrix.ofMatrix X) = 1
+        exact hX.2⟩
+  have rawDensityOfDensity (ρ : DensityState (Fin d)) :
+      IsDensity (CStarMatrix.ofMatrix.symm ρ.val) := by
+    constructor
+    · change (CStarMatrix.ofMatrixStarAlgEquiv.symm ρ.val).PosSemidef
+      simpa [CStarMatrix.ofMatrix_eq_ofMatrixStarAlgEquiv] using
+        (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm ρ.prop.1).posSemidef
+    · change Matrix.trace (CStarMatrix.ofMatrixStarAlgEquiv.symm ρ.val) = 1
+      exact ρ.prop.2
+  have conditionedState_val (X : Matrix (Fin d) (Fin d) ℂ) (hX : IsDensity X) :
+      CStarMatrix.ofMatrix.symm
+          (D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+            (by omega) R hR (densityOfMatrix X hX)).val = conditionedState R X := by
+    rfl
+  have conditionedState_density_val (ρ : DensityState (Fin d)) :
+      CStarMatrix.ofMatrix.symm
+          (D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+            (by omega) R hR ρ).val = conditionedState R (CStarMatrix.ofMatrix.symm ρ.val) := by
+    rfl
+  let rawRatioSet : Set ℝ := {x : ℝ | ∃ ρ σ : Matrix (Fin d) (Fin d) ℂ,
+    IsDensity ρ ∧ IsDensity σ ∧ ρ ≠ σ ∧
+      x = traceDistance (conditionedState R ρ) (conditionedState R σ) /
+        traceDistance ρ σ}
+  have ratioSet_eq :
+      {x : ℝ | ∃ ρ σ : DensityState (Fin d), ρ ≠ σ ∧
+        x = D5.S3.Quantum.Foundation.FiniteTraceDistance.traceDistance
+          (D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+            (by omega) R hR ρ)
+          (D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+            (by omega) R hR σ) /
+          D5.S3.Quantum.Foundation.FiniteTraceDistance.traceDistance ρ σ} = rawRatioSet := by
+    ext x
+    constructor
+    · rintro ⟨ρ, σ, hne, hx⟩
+      refine ⟨CStarMatrix.ofMatrix.symm ρ.val, CStarMatrix.ofMatrix.symm σ.val,
+        rawDensityOfDensity ρ, rawDensityOfDensity σ, ?_, ?_⟩
+      · intro h
+        apply hne
+        apply Subtype.ext
+        simpa using congrArg CStarMatrix.ofMatrix h
+      · simpa [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceDistance,
+          conditionedState_density_val] using hx
+    · rintro ⟨ρ, σ, hρ, hσ, hne, hx⟩
+      let ρ' := densityOfMatrix ρ hρ
+      let σ' := densityOfMatrix σ hσ
+      have hne' : ρ' ≠ σ' := by
+        intro h
+        apply hne
+        have hv := congrArg (fun q : DensityState (Fin d) =>
+          CStarMatrix.ofMatrix.symm q.val) h
+        simpa [ρ', σ', densityOfMatrix] using hv
+      refine ⟨ρ', σ', hne', ?_⟩
+      dsimp [ρ', σ']
+      rw [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceDistance,
+        conditionedState_val ρ hρ, conditionedState_val σ hσ]
+      exact hx
+
+  have equalExtreme : ∀ ρ : DensityState (Fin d),
+      rMin (by omega) R hH = rMax (by omega) R hH →
+        D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+          (by omega) R hR ρ = ρ := by
+    intro ρ heq
+    let r : ℝ := rMin (by omega) R hH
+    have hr : 0 < r := by
+      dsimp [r]
+      let k : Fin (Fintype.card (Fin d)) :=
+        ⟨Fintype.card (Fin d) - 1, by simpa using hd0⟩
+      have hp := hH.posDef_iff_eigenvalues_pos.mp hR
+        ((RHLinalg.eigEquiv (n := Fin d)) k)
+      rw [RHLinalg.eigenvalues_eigEquiv hH k] at hp
+      simpa [rMin, k] using hp
+    have hRscalar : R = (r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
+      have hs := spectralSandwich R hR
+      have hu : R ≤ (r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
+        simpa [r, heq] using hs.2
+      have hl : (r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) ≤ R := by
+        simpa [r] using hs.1
+      exact le_antisymm hu hl
+    have hG : CFC.sqrt R = (Real.sqrt r : ℂ) •
+        (1 : Matrix (Fin d) (Fin d) ℂ) := by
+      let rr : NNReal := ⟨r, hr.le⟩
+      have hscalar : (r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) =
+          algebraMap NNReal (Matrix (Fin d) (Fin d) ℂ) rr := by
+        rw [Algebra.algebraMap_eq_smul_one]
+        change (r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) =
+          (rr : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ)
+        congr 1
+      calc
+        CFC.sqrt R = CFC.sqrt ((r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ)) := by
+          rw [hRscalar]
+        _ = (Real.sqrt r : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
+          rw [hscalar, CFC.sqrt_algebraMap]
+          rw [Algebra.algebraMap_eq_smul_one]
+          change (↑(NNReal.sqrt rr) : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) = _
+          congr 1
+          have hnon : 0 ≤ (NNReal.sqrt rr : ℝ) := (NNReal.sqrt rr).property
+          have hrnon : 0 ≤ r := hr.le
+          have hsq : (NNReal.sqrt rr : ℝ) ^ 2 = r := by
+            have h := congrArg (fun x : NNReal => (x : ℝ)) (NNReal.sq_sqrt rr)
+            change (NNReal.sqrt rr : ℝ) ^ 2 = r at h
+            exact h
+          have hrealnon : 0 ≤ Real.sqrt r := Real.sqrt_nonneg r
+          have hreal : (NNReal.sqrt rr : ℝ) = Real.sqrt r := by
+            nlinarith [hsq, Real.sq_sqrt hrnon, hrealnon]
+          exact_mod_cast hreal
+    apply Subtype.ext
+    change CStarMatrix.ofMatrix.symm
+        (D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditionedState
+          (by omega) R hR ρ).val = CStarMatrix.ofMatrix.symm ρ.val
+    let X : Matrix (Fin d) (Fin d) ℂ := CStarMatrix.ofMatrix.symm ρ.val
+    change (1 / (R * X).trace.re) • (CFC.sqrt R * X * CFC.sqrt R) = X
+    have htrace : Matrix.trace X = 1 := by
+      change Matrix.trace (CStarMatrix.ofMatrix.symm ρ.val) = 1
+      exact ρ.prop.2
+    rw [hG, hRscalar]
+    have hsqrt : (Real.sqrt r : ℂ) ^ 2 = (r : ℂ) := by
+      exact_mod_cast (Real.sq_sqrt hr.le)
+    ext a b
+    simp [Matrix.smul_apply, Matrix.mul_apply, Matrix.one_apply, htrace,
+      Complex.real_smul]
+    calc
+      (↑r : ℂ)⁻¹ * ((Real.sqrt r : ℂ) *
+          ((Real.sqrt r : ℂ) * X a b)) =
+        (↑r : ℂ)⁻¹ * ((Real.sqrt r : ℂ) ^ 2 *
+          X a b) := by ring
+      _ = X a b := by
+        rw [hsqrt]
+        field_simp [hr.ne']
+
+  refine ⟨?_, ?_, ?_⟩
+  · intro ρ σ
+    have hraw := hTwoSided (CStarMatrix.ofMatrix.symm ρ.val)
+      (CStarMatrix.ofMatrix.symm σ.val) (rawDensityOfDensity ρ)
+      (rawDensityOfDensity σ)
+    simpa [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceDistance,
+      conditionedState_density_val] using hraw
+  · exact equalExtreme
+  · rw [ratioSet_eq]
+    let kMin : Fin (Fintype.card (Fin d)) :=
         ⟨Fintype.card (Fin d) - 1, by simpa using hd0⟩
     let kMax : Fin (Fintype.card (Fin d)) := ⟨0, by simpa using hd0⟩
     let kOne : Fin (Fintype.card (Fin d)) :=
@@ -560,7 +780,8 @@ theorem conditioning_trace_distance_constant
     have hEigPos (i : Fin d) : 0 < hH.eigenvalues i := by
       exact hH.posDef_iff_eigenvalues_pos.mp hR i
     have hTauP (i : Fin d) : conditionedState R (P i) = P i := by
-      rw [conditionedState, htraceRP i, hFilter i]
+      dsimp [conditionedState]
+      rw [htraceRP i, hFilter i]
       ext a b
       simp [Complex.real_smul]
       field_simp [show (hH.eigenvalues i : ℂ) ≠ 0 by
@@ -605,7 +826,8 @@ theorem conditioning_trace_distance_constant
         simp only [one_smul]
         abel
       have hupp : traceDistance (P i) (P j) ≤ 1 := by
-        rw [traceDistance, hdiff]
+        dsimp [traceDistance]
+        rw [hdiff]
         calc
           traceNorm ((1 : ℝ) • P i + -((1 : ℝ) • P j)) / 2 ≤
               (traceNorm ((1 : ℝ) • P i) + traceNorm (-((1 : ℝ) • P j))) / 2 := by
@@ -719,7 +941,8 @@ theorem conditioning_trace_distance_constant
           conditionedState R (σe e) =
             (((1 - e) * rlo / δ e) : ℝ) • P iMin +
               ((e * rhi / δ e) : ℝ) • P iMax := by
-        rw [conditionedState, hSigmaTrace, hSigmaFilter]
+        dsimp [conditionedState]
+        rw [hSigmaTrace, hSigmaFilter]
         ext a b
         simp [Matrix.smul_apply, Complex.real_smul, Complex.ofReal_mul]
         field_simp [ne_of_gt (hDeltaPos e he0 he1)]
@@ -752,8 +975,9 @@ theorem conditioning_trace_distance_constant
           dsimp [σe]
           ext a b
           simp [Matrix.smul_apply]
-          ring
-        rw [traceDistance, hdiff]
+          ring_nf
+        dsimp [traceDistance]
+        rw [hdiff]
         calc
           traceNorm (e • P iMin + -(e • P iMax)) / 2 ≤
               (traceNorm (e • P iMin) + traceNorm (-(e • P iMax))) / 2 := by
@@ -853,7 +1077,7 @@ theorem conditioning_trace_distance_constant
             intro hEq
             have hzero : traceDistance (P iMin) (σe e) = 0 := by
               rw [hEq]
-              rw [traceDistance]
+              dsimp [traceDistance]
               simp [traceNorm]
             have hlow := hSourceLower e he0 he1
             rw [hzero] at hlow
@@ -895,8 +1119,10 @@ theorem conditioning_trace_distance_constant
           apply hfamily (1 / ((n : ℝ) + 2))
           · positivity
           · apply (div_lt_iff₀ (show 0 < (n : ℝ) + 2 by positivity)).2
-            have hn0 : (0 : ℝ) ≤ (n : ℝ) := by positivity
-            nlinarith
+            have hnle : (1 : ℝ) ≤ (n : ℝ) + 1 := by
+              exact_mod_cast Nat.succ_le_succ (Nat.zero_le n)
+            norm_num
+            linarith
         have hkb : rhi / rlo ≤ b := le_of_tendsto' hlim hbound
         simpa [conditionNumber, rlo, rhi] using hkb
 
