@@ -275,6 +275,50 @@ internal static class LeanCacheProvisioner
             cloneReceipt);
     }
 
+    internal static LeanCacheProvisionResult ProvisionFromRequiredDonor(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
+        Action<string> removePartial,
+        Action<TimeSpan>? wait = null)
+    {
+        ArgumentNullException.ThrowIfNull(selection);
+        ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(removePartial);
+        ArgumentNullException.ThrowIfNull(writerGuard);
+        if (selection.Donor is null)
+            throw new InvalidOperationException("required cache donor is unavailable");
+
+        wait ??= WaitForRetry;
+        var target = Path.Combine(worktreeRoot, ".lake");
+        writerGuard.RequireOwnershipOf(target);
+        EnsureAbsent(target);
+        var source = Path.Combine(selection.Donor, ".lake");
+        var staged = target + ".stage-" + Path.GetRandomFileName();
+        var cloned = TryClone(
+            selection,
+            source,
+            staged,
+            target,
+            worktreeRoot,
+            pins,
+            runner,
+            cloner,
+            LeanCachePublisher.Instance,
+            removePartial,
+            wait,
+            out var cloneReceipt,
+            out var cloneWarning);
+        if (cloned is not null) return cloned;
+
+        throw new LeanCacheProvisionException(
+            Join(cloneWarning, "required main-checkout donor copy failed"),
+            clonefile: cloneReceipt);
+    }
+
     internal static LeanCacheProvisionResult ReproduceExisting(
         string worktreeRoot,
         LeanPinSet pins,
