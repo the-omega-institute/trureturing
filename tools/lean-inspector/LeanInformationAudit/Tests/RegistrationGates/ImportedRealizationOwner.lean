@@ -1,34 +1,21 @@
-import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Designated
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
 
-namespace LeanInformationAudit.Tests.ImportedRealizationOwner
-open Lean Meta
+open Lean LeanInformationAudit
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
+open LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
 
-private def foreignDeclaration : Nat := 0
-
-private def rejection (event : TemplateOccurrenceEvent) : MetaM Bool := do
-  try
-    TemplateBinding.validateEvent event
-    return false
-  catch error =>
-    return (← error.toMessageData.toString) == "incomplete_closure:dtr.event_unit_owner"
-
+-- One generated inline realization and two imported pure realization bridges.
+-- The eleven production events run these same assertions in FrozenRoots.
 run_meta do
-  let env ← getEnv
-  let root := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-  let events := (TemplateBinding.inventory env).filter (·.key.registrationModule == root)
-  unless events.size == 11 do throwError "setup: expected eleven original root occurrences"
-  let mut accepted : Nat := 0
-  for event in events do
-    try
-      TemplateBinding.validateEvent event
-      accepted := accepted + 1
-    catch _ => pure ()
-  (if accepted == 11 then logInfo else logError) m!"[{if accepted == 11 then "PASS" else "FAIL"}] \
-    imported_realizations_keep_original_owner accepted={accepted}"
-  let event := events[0]!
-  let badRealization ← rejection { event with realizationName := ``foreignDeclaration }
-  let badUnit ← rejection { event with unitName := ``foreignDeclaration }
-  (if badRealization then logInfo else logError) m!"[{if badRealization then "PASS" else "FAIL"}] imported_realization_wrong_owner_rejected"
-  (if badUnit then logInfo else logError) m!"[{if badUnit then "PASS" else "FAIL"}] generated_unit_wrong_owner_rejected"
-
-end LeanInformationAudit.Tests.ImportedRealizationOwner
+  checkImportedOwners baselineRoot 1
+  checkImportedOwners causalContributor 2
+  let events := TemplateBinding.inventory (← getEnv)
+  let baseline := events.find? (·.key.registrationModule == baselineRoot)
+  let causal := events.find? (·.key.registrationModule == causalContributor)
+  let (some baseline, some causal) := (baseline, causal)
+    | throwError "fixture ownership: missing native contributor"
+  -- Present units from the other imported contributor still have the wrong owner.
+  rejectsOwner { baseline with unitName := causal.unitName }
+  rejectsOwner { causal with unitName := baseline.unitName }
+  logInfo "fixture cross-contributor units rejected"

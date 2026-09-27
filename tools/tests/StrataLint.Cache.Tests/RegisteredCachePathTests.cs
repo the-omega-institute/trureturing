@@ -1,7 +1,8 @@
-using System.Text;
 using System.Text.Json;
 using StrataLint.TestSupport;
 using Xunit;
+using FactAttribute = Xunit.SkippableFactAttribute;
+using TheoryAttribute = Xunit.SkippableTheoryAttribute;
 
 namespace StrataLint.Cache.Tests;
 
@@ -66,13 +67,13 @@ public sealed class RegisteredCachePathTests
         using var fixture = new Fixture();
         fixture.Manifest([".lake/build/lib"]);
         var before = fixture.Keys("project");
-        fixture.Manifest([".lake/build/lib", ".lake/build/lean-inspector"]);
+        fixture.Manifest([".lake/build/lib", ".lake/build/lean-inspector", ".lake/build/reg"]);
         var after = fixture.Keys("project");
         Assert.True(before.Exit == 0 && after.Exit == 0, before.Text + after.Text);
         foreach (var key in new[] { "mathlib_revision", "partition", "project_key", "project_restore_prefix" })
             Assert.Equal(ReadOutput(before.Output, key), ReadOutput(after.Output, key));
         Assert.NotEqual(ReadOutput(before.Output, "project_archive_path"), ReadOutput(after.Output, "project_archive_path"));
-        fixture.Manifest([".lake/build/lean-inspector", ".lake/build/lib"]);
+        fixture.Manifest([".lake/build/reg", ".lake/build/lean-inspector", ".lake/build/lib"]);
         var reordered = fixture.Keys("project");
         Assert.True(reordered.Exit == 0, reordered.Text);
         Assert.Equal(ReadOutput(after.Output, "project_archive_path"), ReadOutput(reordered.Output, "project_archive_path"));
@@ -124,10 +125,10 @@ public sealed class RegisteredCachePathTests
             var output = Path.Combine(Root, "outputs");
             File.Delete(output);
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py");
-            var result = TestProcessRunner.Run("env", ["GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
-                "python3", "-B", script, "keys", "--repository", Root, "--layers", layer], Root,
-                TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
-            return (result.ExitCode, Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError),
+            var result = EngineeringProcess.Process(Root, "env", ["GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
+                "python3", "-B", script, "keys", "--repository", Root, "--layers", layer],
+                hangGuard: TestBudgets.WorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
+            return (result.Exit, result.Text,
                 File.Exists(output) ? File.ReadAllText(output) : "");
         }
         public void Dispose() => temporary.Dispose();

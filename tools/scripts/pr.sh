@@ -31,46 +31,69 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
 }'
 run_bounded_capture() {
   local step="$1" timeout_seconds="$2"; shift 2
-  local started deadline output errors pid watcher rc=0 result=success
+  local started deadline errors pid watcher rc=0 result=success
   started="$(date +%s)"; deadline=$((started + timeout_seconds))
-  output="$(mktemp "${TMPDIR:-/tmp}/pr-command-out.XXXXXX")"
   errors="$(mktemp "${TMPDIR:-/tmp}/pr-command-err.XXXXXX")"
   receipt "COMMAND_STARTED deadline_kind=api step=$step timeout_seconds=$timeout_seconds deadline_at=$deadline"
-  "$@" >"$output" 2>"$errors" & pid=$!
-  (
-    sleep "$timeout_seconds"
-    kill -TERM "$pid" 2>/dev/null || exit 0
-    sleep 1
-    kill -KILL "$pid" 2>/dev/null || true
-  ) >/dev/null 2>&1 & watcher=$!
-  if wait "$pid"; then rc=0; else rc=$?; fi
-  kill "$watcher" 2>/dev/null || true; wait "$watcher" 2>/dev/null || true
-  BOUNDED_OUTPUT="$(<"$output")"
+  # Capture stdout in memory: the same bounded call also obtains credentials.
+  if BOUNDED_OUTPUT="$(
+    # Isolate the command process group so a broker child cannot hold the
+    # capture pipe open after its parent exits or the deadline expires.
+    set -m
+    "$@" 2>"$errors" & pid=$!
+    (
+      sleep "$timeout_seconds"
+      kill -TERM -- "-$pid" 2>/dev/null || exit 0
+      sleep 1
+      kill -KILL -- "-$pid" 2>/dev/null || true
+    ) >/dev/null 2>&1 & watcher=$!
+    if wait "$pid"; then rc=0; else rc=$?; fi
+    kill -KILL -- "-$pid" 2>/dev/null || true
+    kill -- "-$watcher" 2>/dev/null || true; wait "$watcher" 2>/dev/null || true
+    exit "$rc"
+  )"; then rc=0; else rc=$?; fi
   if [[ "$rc" -eq 143 || "$rc" -eq 137 ]]; then rc=124; result=timeout
   elif [[ "$rc" -ne 0 ]]; then result=exit
   fi
   if [[ "$rc" -ne 0 && -s "$errors" ]]; then head -c 4096 "$errors" >&2; fi
-  rm -f "$output" "$errors"
+  rm -f "$errors"
   receipt "COMMAND_FINISHED deadline_kind=api step=$step timeout_seconds=$timeout_seconds result=$result deadline_at=$deadline exit_code=$rc"
   return "$rc"
 }
+gh_authenticated() {
+  local mode="$1" step="$2" timeout_seconds="$3"; shift 3
+  local deadline remaining fresh_token=""
+  deadline=$(($(date +%s) + timeout_seconds))
+  # Creation prefers the App identity. Local calls keep native gh auth when
+  # GITHUB_TOKEN is absent; when supplied, refresh that credential per call.
+  # An absent/failing/empty broker preserves the caller's existing fallback.
+  if [[ "$mode" == create || -n "${GITHUB_TOKEN:-}" ]] \
+      && command -v gh-app >/dev/null 2>&1 \
+      && run_bounded_capture gh-app-token "$timeout_seconds" bash -c 'exec gh-app token --auto 2>/dev/null' \
+      && [[ -n "$BOUNDED_OUTPUT" ]]; then
+    fresh_token="$BOUNDED_OUTPUT"
+  fi
+  BOUNDED_OUTPUT=""
+  # Creation already had separate token/API budgets; watch calls must share
+  # their supplied remaining budget with credential acquisition.
+  remaining="$timeout_seconds"
+  if [[ "$mode" != create ]]; then remaining=$((deadline - $(date +%s))); fi
+  (( remaining > 0 )) || return 124
+  # Shell assignments keep credentials out of external argv and restore the
+  # caller's environment after capture; creation still takes GH_TOKEN priority.
+  if [[ -n "$fresh_token" && "$mode" == create ]]; then
+    GH_TOKEN="$fresh_token" run_bounded_capture "$step" "$remaining" env LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  elif [[ -n "$fresh_token" ]]; then
+    GITHUB_TOKEN="$fresh_token" run_bounded_capture "$step" "$remaining" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  else
+    run_bounded_capture "$step" "$remaining" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  fi
+}
 gh_local() {
-  local step="$1" timeout_seconds="$2"; shift 2
-  run_bounded_capture "$step" "$timeout_seconds" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  gh_authenticated local "$@"
 }
 gh_create() {
-  local token="" CREATE_TOKEN=local
-  if command -v gh-app >/dev/null 2>&1 \
-      && run_bounded_capture gh-app-token "$PR_OPEN_TIMEOUT_SECONDS" gh-app token --auto \
-      && [[ -n "$BOUNDED_OUTPUT" ]]; then
-    token="$BOUNDED_OUTPUT"; CREATE_TOKEN="$token"
-  fi
-  if [[ "$CREATE_TOKEN" == local ]]; then
-    gh_local pr-create "$PR_OPEN_TIMEOUT_SECONDS" "$@"
-  else
-    run_bounded_capture pr-create "$PR_OPEN_TIMEOUT_SECONDS" env GH_TOKEN="$CREATE_TOKEN" \
-      LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
-  fi
+  gh_authenticated create pr-create "$PR_OPEN_TIMEOUT_SECONDS" "$@"
 }
 parse_snapshot() {
   jq -Rsec --argjson required "$1" --arg head "$2" --argjson number "$3" --argjson runs "$4" --arg repo "$PR_REPO" '
@@ -79,13 +102,25 @@ parse_snapshot() {
     def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
     def pr_event: . == "pull_request" or . == "pull_request_target";
     def native_run: .path == ".github/workflows/ci-pr.yml";
-    # This repository calls exactly this reusable workflow at its PR merge commit.
-    # GitHub retains that ref after merge even when pull_requests becomes empty.
-    def native_pr:
+    # The unique ci-push call anchors native PR identity. Other reusable calls
+    # must belong to the same repository, candidate and retained PR merge ref.
+    def native_anchor:
       select(native_run and .event == "pull_request") |
-      .referenced_workflows | select(type == "array" and length == 1) | .[0] |
-      select(type == "object" and (.sha | sha and length == 40) and
-        .path == ($repo + "/.github/workflows/ci-push.yml@" + .sha)) |
+      .referenced_workflows | select(type == "array" and length > 0) |
+      select(all(.[]; type == "object" and (.sha | sha and length == 40) and
+        (.path | type == "string") and (.ref | type == "string"))) |
+      . as $references |
+      [.[] | select(.path == ($repo + "/.github/workflows/ci-push.yml@" + .sha))] |
+      select(length == 1) | .[0] as $anchor |
+      select(all($references[]; .sha == $anchor.sha and .ref == $anchor.ref and
+        (.path | startswith($repo + "/.github/workflows/")) and
+        (.path | ltrimstr($repo + "/.github/workflows/") |
+          test("\\A[^/@\\r\\n]+\\.ya?ml@" + $anchor.sha + "\\z")))) |
+      select($references | map(.path) | length == (unique | length)) |
+      $anchor;
+    # GitHub retains that ref after merge; pull_requests only lists open head matches.
+    def native_pr:
+      native_anchor |
       .ref | select(type == "string") | capture("\\Arefs/pull/(?<number>[1-9][0-9]*)/merge\\z") |
       .number | tonumber | select(database_id);
     def associated_prs: if native_run then [native_pr] else [.pull_requests[].number] end;
@@ -124,7 +159,7 @@ parse_snapshot() {
       (if producer == null then {membership:"commit-context"}
        else {membership:"workflow-run", event:(run_metadata | .event),
          pull_requests:(run_metadata | [.pull_requests[].number])} +
-         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | .referenced_workflows[0])}
+         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | native_anchor)}
           else {} end) end);
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
@@ -166,8 +201,7 @@ parse_snapshot() {
       # The workflow path must be known before selecting its PR identity policy.
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
-      (if native_run then associated_prs as $prs |
-        ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])
+      (if native_run then (associated_prs | length) == 1
        elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and

@@ -14,6 +14,8 @@ public sealed class OpenProblemResolutionClaimTests
     private const string ModuleGid = "D5/S1/Phase/Basic";
     private const string FormalPath = ModuleGid + ".lean";
     private const string TheoremGid = ModuleGid + ".resolution_theorem";
+    private const string OtherModuleGid = "D5/S1/Phase/Other";
+    private const string OtherTheoremGid = OtherModuleGid + ".other_theorem";
 
     [Theory]
     [InlineData("")]
@@ -311,12 +313,12 @@ public sealed class OpenProblemResolutionClaimTests
 
             using var parsed = JsonDocument.Parse(json);
             Assert.Equal(
-                "scribe-describe-report-v2",
+                "scribe-describe-report-v3",
                 parsed.RootElement.GetProperty("schema").GetString());
             var resolution = Assert.Single(parsed.RootElement.GetProperty("nodes").EnumerateArray())
                 .GetProperty("open_problem_resolution");
             Assert.Equal(ProblemSlug, resolution.GetProperty("problem_slug").GetString());
-            Assert.Equal(TheoremGid, resolution.GetProperty("declaration_gid").GetString());
+            Assert.Equal(TheoremGid, Assert.Single(resolution.GetProperty("declaration_gids").EnumerateArray()).GetString());
             Assert.Equal("refuted", resolution.GetProperty("resolution_kind").GetString());
         });
     }
@@ -350,7 +352,7 @@ public sealed class OpenProblemResolutionClaimTests
             Assert.Equal("theorem", projected.GetProperty("kind").GetString());
             var resolution = projected.GetProperty("open_problem_resolution");
             Assert.Equal(ProblemSlug, resolution.GetProperty("problem_slug").GetString());
-            Assert.Equal(TheoremGid, resolution.GetProperty("declaration_gid").GetString());
+            Assert.Equal(TheoremGid, Assert.Single(resolution.GetProperty("declaration_gids").EnumerateArray()).GetString());
             Assert.Equal("proved", resolution.GetProperty("resolution_kind").GetString());
         });
     }
@@ -371,14 +373,15 @@ public sealed class OpenProblemResolutionClaimTests
             var node = Assert.Single(json.RootElement.GetProperty("nodes").EnumerateArray(),
                 item => item.GetProperty("open_problem_resolution").ValueKind != JsonValueKind.Null);
             Assert.EndsWith("#describe/editorial-title", node.GetProperty("node_id").GetString());
-            Assert.Equal(otherGid, node.GetProperty("open_problem_resolution")
-                .GetProperty("declaration_gid").GetString());
-            Assert.Contains($"declaration_gid={otherGid}", DescribeReportWriter.WriteText(report));
+            Assert.Equal(otherGid, Assert.Single(node.GetProperty("open_problem_resolution")
+                .GetProperty("declaration_gids").EnumerateArray()).GetString());
+            Assert.Contains($"declaration_gids=[\"{otherGid}\"]", DescribeReportWriter.WriteText(report));
             using var marker = ParseResolutionMarker(Encoding.UTF8.GetString(
                 CanonicalMarkdownWriter.Write(document,
                     DeclarationCatalog.Create(Report((TheoremGid, "theorem"), (otherGid, "theorem")))).AsSpan()));
             Assert.Equal(marker.RootElement.GetProperty("declaration_gid").GetString(),
-                node.GetProperty("open_problem_resolution").GetProperty("declaration_gid").GetString());
+                Assert.Single(node.GetProperty("open_problem_resolution")
+                    .GetProperty("declaration_gids").EnumerateArray()).GetString());
         });
     }
 
@@ -560,6 +563,106 @@ public sealed class OpenProblemResolutionClaimTests
         });
     }
 
+    [Fact]
+    public void CrossModuleResolutionValidatesAndProjectsBothMembersAsOneClaim()
+    {
+        WithRepository(root =>
+        {
+            AddOtherFrozenModule(root);
+            var claim = new OpenProblemResolutionClaim(ProblemSlugRef.Create(ProblemSlug),
+                ResolutionKind.Proved, [DeclarationHandle.Create(OtherTheoremGid)]);
+            var document = CreateDocument(ClaimDescribe(claim: claim));
+            var otherDocument = CreateDocumentFor(OtherModuleGid,
+                Describe.Lean(DescribeId.Create("other"), DeclarationHandle.Create(OtherTheoremGid),
+                    Heading.Create("Other theorem"), StatementSource.FromAuthor(InlineIdentity()),
+                    AssessedProvenance.FromRepo(),
+                    DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Other theorem.")))));
+            var report = Report((TheoremGid, "theorem"), (OtherTheoremGid, "theorem"));
+            Assert.Empty(DescribeRepositoryValidator.Validate(root, [document, otherDocument], report));
+
+            var markdown = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+                document, DeclarationCatalog.Create(report)).AsSpan());
+            var markers = markdown.Split('\n').Where(static line =>
+                line.StartsWith("<!-- scribe-open-problem-resolution-v1 ", StringComparison.Ordinal)).ToArray();
+            Assert.Equal(2, markers.Length);
+            Assert.Contains($"by `{TheoremGid}` and `{OtherTheoremGid}`.", markdown);
+            Assert.Contains($"\"declaration_gid\":\"{TheoremGid}\"", markers[0]);
+            Assert.Contains($"\"declaration_gid\":\"{OtherTheoremGid}\"", markers[1]);
+
+            var describeReport = DescribeReport.Build(root, [document, otherDocument], report);
+            using var json = JsonDocument.Parse(DescribeReportWriter.WriteJson(describeReport));
+            var node = Assert.Single(json.RootElement.GetProperty("nodes").EnumerateArray(),
+                static item => item.GetProperty("open_problem_resolution").ValueKind != JsonValueKind.Null);
+            Assert.Equal(TheoremGid, node.GetProperty("declaration_gid").GetString());
+            Assert.Equal([TheoremGid, OtherTheoremGid], node.GetProperty("open_problem_resolution")
+                .GetProperty("declaration_gids").EnumerateArray().Select(static item => item.GetString()));
+        });
+    }
+
+    [Fact]
+    public void ResolutionMembersRejectDuplicatesAndInvalidAdditionalSources()
+    {
+        var slug = ProblemSlugRef.Create(ProblemSlug);
+        Assert.Throws<ArgumentException>(() => new OpenProblemResolutionClaim(slug,
+            ResolutionKind.Proved, [DeclarationHandle.Create(OtherTheoremGid),
+                                    DeclarationHandle.Create(OtherTheoremGid)]));
+        Assert.Throws<InvalidOperationException>(() => new OpenProblemResolutionClaim(slug,
+            ResolutionKind.Proved, [default(DeclarationHandle)]));
+        Assert.Throws<ArgumentNullException>(() => new OpenProblemResolutionClaim(slug,
+            ResolutionKind.Proved, null!));
+        WithRepository(root =>
+        {
+            AddOtherFrozenModule(root);
+            var other = DeclarationHandle.Create(OtherTheoremGid);
+            var report = Report((TheoremGid, "theorem"), (OtherTheoremGid, "theorem"));
+            var repeatedHost = new OpenProblemResolutionClaim(slug, ResolutionKind.Proved,
+                [DeclarationHandle.Create(TheoremGid)]);
+            Assert.Contains(DescribeRepositoryValidator.Validate(root,
+                [CreateDocument(ClaimDescribe(claim: repeatedHost))], report),
+                static item => item.Code == "invalid-problem-resolution-source"
+                    && item.Message.Contains("repeated", StringComparison.Ordinal));
+            var claim = new OpenProblemResolutionClaim(slug, ResolutionKind.Proved, [other]);
+            Assert.Contains(DescribeRepositoryValidator.Validate(root,
+                [CreateDocument(ClaimDescribe(claim: claim))], report),
+                static item => item.Code == "invalid-problem-resolution-source"
+                    && item.Message.Contains("matching Scribe Describe", StringComparison.Ordinal));
+            var otherDescribe = ClaimDescribe(id: "other", declarationGid: OtherTheoremGid,
+                slug: "missing-open-problem");
+            var otherDocument = CreateDocumentFor(OtherModuleGid, otherDescribe);
+            Assert.Contains(DescribeRepositoryValidator.Validate(root,
+                [CreateDocument(ClaimDescribe(claim: claim)),
+                 CreateDocumentFor(OtherModuleGid, otherDescribe,
+                     ClaimDescribe(id: "another", declarationGid: OtherTheoremGid,
+                         slug: "missing-open-problem"))], report),
+                static item => item.Code == "invalid-problem-resolution-source"
+                    && item.Message.Contains("found 2", StringComparison.Ordinal));
+            var findings = DescribeRepositoryValidator.Validate(root,
+                [CreateDocument(ClaimDescribe(claim: claim)), otherDocument],
+                Report((TheoremGid, "theorem"), (OtherTheoremGid, "def")));
+            Assert.Contains(findings, static item => item.Code == "invalid-problem-resolution-source"
+                && item.Message.Contains("theorem-like", StringComparison.Ordinal));
+            TemporaryFileSystem.File.Delete(Path.Combine(root, "Golden", "Frozen", "state",
+                "D5", "S1", "Phase", "Other.lean.json"));
+            Assert.Contains(DescribeRepositoryValidator.Validate(root,
+                [CreateDocument(ClaimDescribe(claim: claim)), otherDocument], report),
+                static item => item.Code == "invalid-problem-resolution-source"
+                    && item.Message.Contains("not a member of frozen state", StringComparison.Ordinal));
+        });
+    }
+
+    [Fact]
+    public void ResolutionMembersHaveCanonicalValueEquality()
+    {
+        var slug = ProblemSlugRef.Create(ProblemSlug);
+        var first = new OpenProblemResolutionClaim(slug, ResolutionKind.Proved,
+            [DeclarationHandle.Create(OtherTheoremGid), DeclarationHandle.Create(ModuleGid + ".z")]);
+        var second = new OpenProblemResolutionClaim(slug, ResolutionKind.Proved,
+            [DeclarationHandle.Create(ModuleGid + ".z"), DeclarationHandle.Create(OtherTheoremGid)]);
+        Assert.Equal(first, second);
+        Assert.Equal(first.GetHashCode(), second.GetHashCode());
+        Assert.Equal([TheoremGid, ModuleGid + ".z", OtherTheoremGid], first.Members(TheoremGid).ToArray());
+    }
+
     private static JsonDocument ParseResolutionMarker(string markdown)
     {
         const string prefix = "<!-- scribe-open-problem-resolution-v1 ";
@@ -645,8 +748,11 @@ public sealed class OpenProblemResolutionClaimTests
             AssessedProvenance.FromRepo(), DefinitionDsl.Blocks(children));
 
     private static ScribeDocument CreateDocument(params DocumentBlock.Describe[] describes) =>
+        CreateDocumentFor(ModuleGid, describes);
+
+    private static ScribeDocument CreateDocumentFor(string moduleGid, params DocumentBlock.Describe[] describes) =>
         ScribeDocument.Create(
-            DefinitionDsl.Header(ModuleGid, "Resolution claim fixture."),
+            DefinitionDsl.Header(moduleGid, "Resolution claim fixture."),
             Heading.Create("Resolution claims"),
             DefinitionDsl.Blocks(new DocumentBlock.Section(
                 Heading.Create("Results"),
@@ -675,11 +781,10 @@ public sealed class OpenProblemResolutionClaimTests
 
     private static LeanAxiomReport ReportWithNameKeys(
         IEnumerable<(string Gid, string Kind, string NameKeyShortName)> declarations) =>
-        LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
-        {
-            [FormalPath] = new LeanFileReport(
-                [],
-                declarations.Select(static item =>
+        LeanAxiomReport.Create(declarations.GroupBy(static item =>
+            item.Gid.Split('.', 2)[0] + ".lean", StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => new LeanFileReport(
+                [], group.Select(static item =>
                 {
                     var canonicalName = item.Gid.Replace('/', '.');
                     return new LeanDeclaration(
@@ -691,9 +796,15 @@ public sealed class OpenProblemResolutionClaimTests
                         NameKey = $"ns(n0,{Encoding.UTF8.GetByteCount(item.NameKeyShortName)}:"
                             + $"{item.NameKeyShortName})",
                     };
-                })
-                .ToImmutableArray()),
-        });
+                }).ToImmutableArray()), StringComparer.Ordinal));
+
+    private static void AddOtherFrozenModule(string root)
+    {
+        var encoding = new UTF8Encoding(false, true);
+        Write(root, OtherModuleGid + ".lean", "-- other resolution fixture\n", encoding);
+        Write(root, "Golden/Frozen/state/" + OtherModuleGid + ".lean.json",
+            "{\"statement_id\":\"sha256:" + new string('e', 64) + "\"}\n", encoding);
+    }
 
     private static void WithRepository(Action<string> assertion)
     {

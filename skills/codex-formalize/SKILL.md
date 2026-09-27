@@ -23,6 +23,16 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 - `make help` - owns the live catalogue of canonical doors.
 - `tools/` - owns executable admission and repository enforcement.
 
+## Escape-audit delivery (CLAUDE.md §3.9; SPEC A5.5/A5.6)
+
+Attempt faithful registration in the same delivery for each newly authored public `theorem` or `lemma` in a D5 source module selected by the existing delta/first-pin scope, including D5 content templates. Prefer a lawful existing template; otherwise add a meaningful parameterized content template with shared enrollment. Registration completion requires at least one `declared_validated` four-slot registration in the source owner's `Reg/D5/<mirrored source path>.lean`, compiled Lean proof terms and current binding evidence. Check the actual realization bridge, lawful enrolled-template application and required variation/sensitivity proofs. `escape continues` is an `EscapeResidualWitness`, `EscapeResidualEmpty`, or literal `open`; the latter records only an unknown residual, proves neither undecidability nor inexhaustibility, and cannot replace missing evidence. With the other evidence valid, an open residual is a complete registration. CI success or an Observe warning alone is not registration completion.
+
+For dependent or infinite source domains, the existing enrollment pipeline also accepts `DependentFamily.realize` via `Reg.Support.DependentFamily`. Use the source owner's Reg mirror with `realizes auditRecord escape from source (SourceSelection) escape continues (open)`; supply the complete original telescope, scoped observations, exact source reconstruction, equivalence bridge, actual-positive law, whole-family intervention/sensitivity and actual observational dependence (spec A5.3). Finite roles do not imply finite states, parameters or outputs, and degenerate fibers remain in scope. An available interface does not establish an uncompiled client's registration.
+
+If a concrete obstacle in template expressiveness, interfaces, or registration proof/evidence production or processing prevents completion, open or reuse a relevant issue identifying the original theorem and source, actual failure and missing evidence or obligation. Link it in delivery, explicitly state that the escape audit is unfinished, and continue mathematical development and delivery without waiting for registration repair. This §3.9 exception takes precedence over §5.4/5.5: no exhaustive encodings, repeated retries, immediate hotfix/repair lane or separate waiver is required. The issue is neither proof nor `declared_validated` nor a new machine status. Do not force a wrong template, weaken the original theorem, add bind-only wrappers or drop Lean/kernel, `sorry`, axiom, freeze or other required checks. Do not backfill historical theorems or introduce a debt ledger. The four Observe statuses, delta scope and judge ownership stay unchanged.
+
+Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Reg proofs are audit evidence, not a new mathematical GID/Scribe/deposit/utility obligation.
+
 ## State machine
 
 Follow these steps in order. Do not pass a step until its postcondition holds.
@@ -60,7 +70,7 @@ Triage the claim class before committing to it; each class below is named by lan
 
 - **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.
 - **Existing machinery is a starting point**: a new standalone module still needs a live escape witness. A bridge, instantiation, or characterization obtained only by binding existing results is not a standalone target.
-- **Never independently first-freeze a bind-only result** (`CLAUDE.md` §3.2). That section owns proof classification, escape witnesses and admission. The sole module-level basis is `admission_basis: escape-witness`: at least one public theorem must be `content` with a valid live escape witness. Upstream thin wrappers, atom prose, API/coverage needs and promised consumers create no exception. If the candidate is bind-only, report `proof_shape: bind-only`, `escape_witness: none`, `admission_basis: none` and stop standalone implementation/deposit. Use an already frozen declaration for `make cover` where it covers the atom verbatim. Otherwise wait for an actual downstream proof, then apply the existing result directly or write a necessary local/private lemma or named companion in that consumer's content module. Named companions require an actual proof consumer in the same delivery and a live `consumer → prerequisite` edge; that module must itself have an escape witness. Never reprove an upstream result to manufacture content. If all reachable targets are bind-only, report the missing analytic input as `open`.
+- **Apply `CLAUDE.md` §3.2 to every new declaration.** That section owns proof classification and admission: no new bind-only declaration, including local/private lemmas or named companions, except its explicitly allowed external open-problem resolution. Judge content per declaration; one content theorem or escape witness cannot shield bind-only siblings. An all-bind-only atom reuses existing results with zero new Lean; report the reuse basis and stop mathematical implementation, handling digestion under §1.2. Apply existing results directly inside admissible content proofs; neither a consumer nor a coverage need permits a wrapper.
 - **Definition clauses — only with an earning theorem** (see the thin-deposit taxonomy below); a definition alone is not a target.
 - **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
 - **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
@@ -160,13 +170,34 @@ Iterate on the source artifacts, then run the canonical door when they are ready
 make lean
 ```
 
+Attempt the escape audit for each new public D5 theorem/lemma as described above. Compile the mathematical targets and this delivery's actual retained Reg sources through the governed entry; when the mirrored Reg source is retained, for example (the plain root `lake build Reg...` form is not valid):
+
+```sh
+make lean LEAN_TARGETS="D5.<dotted.module> Reg.D5.<mirrored.dotted.module>"
+# equivalent cache wrapper:
+/bin/bash tools/scripts/worktree/lean-cache-run.sh --build D5.<dotted.module> Reg.D5.<mirrored.dotted.module>
+```
+
+When no valid Reg source can be delivered, omit that Reg target and use the linked-issue exception; do not invent a mirror or placeholder target. Retain successful audit sources, compiled proofs and current binding evidence. Remove this attempt's failed audit source additions and imports if they would break the normal build; do not remove pre-existing or successful sources to hide failures. Compile every retained Reg source, including support/enrollment sources, with its existing kernel, `sorry` and axiom checks. A successful D5 build establishes no registration completion.
+
 Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full preflight runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
+
+Complete any pending canonical report production through `make lean-report`, then run `make emit` to
+generate the canonical committed projections, including this document's Blueprint `.md`. Never
+hand-write a mirror or placeholder. Scoped Lean compilation and Scribe formula tests do not inspect
+the complete publication inventory.
+
+If the implementation seat delegates report production or emission to the caller, its handoff is
+explicitly **source-only, not publication-ready**: name the intended source paths, pending producers
+and expected committed projections, and report only the checks actually run. The caller must complete
+the producer work and the publication boundary in Step 7 before committing or pushing that logical
+unit, including an early review draft. A source-only handoff does not satisfy rendered fidelity.
 
 Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger, so catch defects before depositing rather than creating a conflicting frozen state.
 
-Postcondition: both source artifacts exist in the observed shape and `make lean` exits 0.
+Postcondition: the mathematical Lean and Scribe sources exist in the observed shape and the required build exits 0, covering all retained Reg sources. Each audit is either complete with compiled evidence or explicitly unfinished with the linked issue required above; the latter permits proceeding to mathematical checks and delivery.
 
-If a faithful proof cannot be made to compile, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
+If the faithful mathematical proof cannot be made to compile, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
 ### 6. Run the fidelity and non-hollowness gate
 
@@ -176,31 +207,61 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit and cover, then early local feedback
+### 7. Deposit and cover, then commit the complete publication unit
 
-Only after Step 6 passes, run:
+Only after Step 6 and independent review pass, freeze through deposit and cover. If review needs an
+early draft, first complete the publication boundary below and use Step 8 to publish the draft with
+freeze and cover still pending; return here after review. Review must precede freeze and merge.
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make cover ATOM_ID=<id> GID=<gid>
-make preflight MODE=push BASE="$(git rev-parse origin/dev^{commit})"   # early feedback only; NOT a gate (CLAUDE.md 器律②)
 ```
 
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
 command creates an intermediate commit.
 
-`make deposit` and `make cover` must exit 0. `make preflight` is local early feedback: report its exit code and every rejected rule verbatim, but a nonzero local preflight does not stop the lane — the three remote required checks are the only judgment (CLAUDE.md 器律②, user 2026-08-26; ②′ push and local verification run in parallel). This macOS host has known preflight noise (Perl `C.UTF-8` locale crashes in script tests, `ENGINEERING_TEST_EVIDENCE_FAILED` without TRX, an `SL-022` observation line); stop only on a content-level red you caused (Lean error, `SL-008` frozen-surface diff, `SL-010` generality, digestion coverage), and then end as `open`. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+`make deposit` and `make cover` must exit 0. Judge commands by their raw exit code, never elapsed time
+or quiet output. Do not pipe a judgment command through formatting that hides its exit; run it bare,
+or capture `$?` immediately before formatting.
 
 If `make deposit` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
-Before pushing, inspect the complete deposit-and-cover delta and create one builder-owned commit:
+**Publication boundary, including early review drafts.** Before committing or pushing a logical
+formalization unit, finish every intended source and its canonical committed projections. Complete
+pending report production and `make emit` as in Step 5; rerun the affected producers if their inputs
+changed. Inspect the complete intended delta, including new untracked paths, then stage the sources
+and generated files together. Run the existing inventory check with a build of the current inputs:
 
 ```sh
 git status --short
+git diff
 git diff --check
-git add -A
+git add -- <all-intended-source-and-generated-paths>
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- filemap-conform
+git diff --cached --name-status
+git diff --cached
+git diff --cached --check
+git status --short
+```
+
+Run these commands separately and honor each raw exit. Do not use `--no-build` or an old CLI/Scribe
+binary: generated inventory is derived from compiled document definitions, so an exit 0 from a
+binary lacking the new document does not assess the current sources. A failed build or inventory
+check leaves the unit unpublished; fix the cause and rerun, or hand off the actual failure. A generated
+file merely present on disk is not enough: inspect the index to confirm every intended source and
+committed projection is staged, with no intended changes left unstaged or untracked. Only then create
+the builder-owned commit:
+
+```sh
 git commit -F <commit-message-file>
 ```
+
+This focused publication-completeness boundary reuses `filemap-conform`; it adds no required CI
+status and does not require a full local preflight before publication. Full local preflight remains
+post-push, parallel with CI under `CLAUDE.md` §8.2. The native check validates inventory; following this
+handoff procedure remains an agent/review obligation. Source fidelity, the no-wrapper rule, the
+explicit registration exception above, and independent review before freeze/merge still apply.
 
 **The theorem you cover with must own the clause unconditionally.** Before `make cover`, list the
 atom's clauses and the chosen theorem's explicit hypotheses side by side, and for each hypothesis name
@@ -215,11 +276,16 @@ was frozen two files away. In both, the fix was one composed public theorem and 
 both the module was already frozen, so the fix cost a full redo. If the difference is a hypothesis some
 frozen theorem discharges, expose the composed unconditional theorem and cover that.
 
-Postcondition: deposit and cover exited 0; preflight exit code and diagnostics reported; the complete intended delta is in one explicit builder commit; and the worktree is clean. A failure is captured as an `open` outcome with diagnostics and no push.
+Postcondition: deposit and cover exited 0 after review (or are explicitly pending for an early review
+draft); current-input `filemap-conform` exited 0; the complete intended source-and-projection delta
+was inspected in the index and is in one explicit builder commit; and the worktree is clean. An
+incomplete producer or failed publication check is reported with diagnostics, without publishing the
+incomplete unit.
 
 ### 8. Push and open the pull request, or report `open`
 
-After Step 7 completes (local preflight reported, not gated), push the committed current branch and use the repository door:
+After Step 7's publication boundary completes, push the committed current branch promptly; do not
+wait for full local preflight. Use the repository door:
 
 ```sh
 git push -u origin <branch>
@@ -227,11 +293,21 @@ make pr-open HEAD=<branch> MESSAGE=<message-file>   # deposit PRs: no AUTO_MERGE
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Deposit lanes must NOT pass it: the sshx review triplet (tests / quality / architecture) runs after the PR opens and must be able to block the merge (memory `review-must-precede-automerge`, #2337 precedent). After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
+If running full local early feedback, start it after `git push` in a separate job, alongside CI and
+the PR door rather than waiting for either to finish:
 
-If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, completed fidelity-gate evidence, and, for every public theorem, `proof_shape` (`content` | `bind-only`), its direct frozen public dependencies (GID + `statement_id`), its `escape_witness` (or `bind-only`) and the module's `admission_basis`. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
+```sh
+make preflight MODE=push BASE=<explicit-existing-40-hex-commit-sha>
+```
 
-Postcondition: the task ends with an opened pull request, or with evidence-complete `open`.
+Report its raw exit and rejected rules; it does not replace the three remote required checks or gate
+the push. Fix actual failures under their existing owners without weakening required checks.
+
+`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before independent review passes: the sshx review triplet (tests / quality / architecture) must finish and pass before freeze or merge, and may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, including the return to freeze after review, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
+
+If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code and completed fidelity-gate evidence. For each new public D5 theorem/lemma in scope, report either its retained Reg path, compiled target exit code, validated four-slot/binding-evidence result and continuation kind, or the linked issue and explicit unfinished-audit disclosure under the exception above. Report actual attempted compilation failures without inventing missing Reg targets or successful evidence. Delivery success with an issue does not mean registration completion. `proof_shape` (`content` | `bind-only`), direct frozen public dependencies (GID + `statement_id`), `escape_witness` (or `bind-only`) and the module's `admission_basis` remain required for the mathematical declaration. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
+
+Postcondition: the task ends with an opened pull request (with completed audit evidence or the linked-issue exception disclosed), or with evidence-complete `open`.
 
 ## Fidelity and non-hollowness gate
 

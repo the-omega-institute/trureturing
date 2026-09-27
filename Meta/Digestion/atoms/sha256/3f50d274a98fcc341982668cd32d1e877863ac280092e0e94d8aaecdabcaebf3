@@ -1,0 +1,29 @@
+### 20.1 总化失败而不是删除非法边
+
+令 $A$ 是动作字母表，$S_\bot=S\sqcup\{\dagger\}$ 是加入吸收失败状态后的配置集。对每个 $a\in A$，给出
+
+$$
+T_a:S_\bot\to S_\bot,
+\qquad
+O_a:S_\bot\to\widehat L,
+$$
+
+其中 $T_a$ 把非法接续送到 $\dagger$，$O_a$ 的值域 $\widehat L$ 同时包含正常读数、失败原因、权限结果和必要的记录标签。$\dagger$ 的后续动作仍可得到固定的失败记录；因此非法分支没有从模型中消失，也不会被当作“没有输出”。
+
+对动作词 $w=a_1\cdots a_n\in A^*$，递归运行并收集完整标签词，记为
+
+$$
+\operatorname{Trace}(s,w)\in\widehat L^*.
+$$
+
+完整未来 profile 是
+
+$$
+\Phi(s):A^*\to\widehat L^*,
+\qquad
+\Phi(s)(w)=\operatorname{Trace}(s,w).
+\tag{20.1}
+$$
+
+若任务只允许一部分动作词，则把不允许的词也解释为带原因的失败标签；这样所有未来测试仍在同一个固定的 $A^*$ 上，权限条件成为响应的一部分。
+

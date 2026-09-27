@@ -1,0 +1,15 @@
+**命题 21.3（对数导数、反射与坐标运输的范围）。** 在 $\Re s>1$ 内，
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=\sum_{\substack{p\ \mathrm{prime}\\a\ge1}}(\log p)p^{-as}.
+\tag{21.8}
+$$
+若实际零点 $\rho$ 的重数为 $m$，在其一个邻域写
+$\zeta(s)=(s-\rho)^mA(s)$，其中 $A$ 解析且非零，则
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=-\frac m{s-\rho}-\frac{A'(s)}{A(s)}.
+\tag{21.9}
+$$
+反射 $J(s)=1-\overline s$ 的固定点条件是 $\Re s=1/2$；将 $s,J(s)$ 放入同一个商类不蕴含该条件。
+

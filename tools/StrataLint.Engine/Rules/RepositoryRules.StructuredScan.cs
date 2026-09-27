@@ -173,6 +173,7 @@ internal static partial class RepositoryRules
         ImmutableArray<RuleFinding>.Builder findings)
     {
         var normalized = value.Replace("\uFEFF", string.Empty, StringComparison.Ordinal).Trim();
+        if (normalized.Length == 0) return;
         var bytes = Encoding.UTF8.GetBytes(normalized);
         var opaque = new ArrayBufferWriter<byte>(bytes.Length);
         var cursor = 0;

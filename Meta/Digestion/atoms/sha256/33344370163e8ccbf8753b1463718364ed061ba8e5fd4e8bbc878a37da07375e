@@ -1,0 +1,14 @@
+**证明。** 记 $L_0=\operatorname{diag}(D,E)$、$K_0=\left(\begin{smallmatrix}0&B\\-B^{\mathsf T}&0\end{smallmatrix}\right)$，则 $h\Omega_h=hL_0+\sqrt hK_0$。指数级数的可见对角块中，含奇数个 $K_0$ 的单词为零。零阶、一次 $L_0$ 与两次 $K_0$ 给 $I+hD-hM/2$，其余非零项至少为 $h^2$。若 $\ell=\|L_0\|$、$0<h\le1$，余项可用
+\[
+ h^2\left[\ell^2/2+(3\ell g^2+\ell^3)/6
+                +(\ell+g)^4e^{\ell+g}/24\right]
+\]
+控制：分别估计二、三阶剩余项和四阶起的指数尾项。$A_*+A_*^{\mathsf T}=-M\preceq0$ 使 $e^{tA_*}$ 收缩，$F^{(h)}$ 也是正交压缩。与 $e^{hA_*}$ 比较，再对 $n$ 次幂作望远镜展开，得到一致有限时域的误差界。噪声协方差仍使用定理 25.2 的精确望远镜恒等式。
+
+线性随机方程的显式解具有协方差 $\int_0^te^{sA_*}Me^{sA_*^{\mathsf T}}ds=I-e^{tA_*}e^{tA_*^{\mathsf T}}$，所以其转移核即上述极限。Fokker–Planck 方程写成
+\[
+ \partial_t\rho=-\nabla\cdot(Dx\rho)
+ +\tfrac12\nabla\cdot\{M[\nabla\rho+x\rho]\}.
+\]
+对相对熵求导并分部积分，$D$ 的零散度及 $x^{\mathsf T}Dx=0$ 使第一项贡献为零，第二项给所列平方耗散。$M$ 可退化，本文只对满足上述正则性条件的解使用导数公式。该极限同时改变耦合尺度、环境更新与时间步；没有把它当作固定有限封闭系统的长时间极限。证毕。[^tcs4-collision]
+

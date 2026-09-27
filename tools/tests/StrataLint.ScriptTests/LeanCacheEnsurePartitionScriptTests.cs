@@ -91,6 +91,7 @@ internal sealed class LeanCachePartitionFixture : IDisposable
             + "\nrev = " + JsonSerializer.Serialize(revision) + "\n");
         Assert.True(LeanLakeExecutable.TryResolve(out var lake, out var reason), reason);
         RequireSuccess(Run(lake, ["update"], Main));
+        StrataLint.TestSupport.RegPackageFixture.Write(Main);
         // The tiny dependency has no cache executable. Register its real Lake
         // checkout as the donor seed using the production stamp writer.
         LeanCacheStamp.Write(Path.Combine(Main, ".lake"), LeanPinSet.TryReadWorktree(Main, out _)!);

@@ -117,6 +117,19 @@ def owners(api, org):
     return roster
 
 
+def mirrors_protection(rule, contexts):
+    """True only for a non-strict Actions-bound required-checks rule restating `contexts` exactly."""
+    parameters = rule.get("parameters") if rule.get("type") == "required_status_checks" else None
+    if not isinstance(parameters, dict) or parameters.get("strict_required_status_checks_policy") is not False:
+        return False
+    required = parameters.get("required_status_checks")
+    if not isinstance(required, list) or any(
+            not isinstance(c, dict) or not isinstance(c.get("context"), str)
+            or c.get("integration_id") != ACTIONS_APP for c in required):
+        return False
+    return sorted(c["context"] for c in required) == sorted(contexts)
+
+
 def policy(api, root, branch):
     branch = quote(branch, safe="")
     protection = api.get(f"{root}/branches/{branch}/protection")
@@ -125,15 +138,18 @@ def policy(api, root, branch):
     checks = required.get("checks", [])
     contexts = required.get("contexts", [])
     reasons = []
-    if rules:
+    checks_unsupported = (not isinstance(checks, list) or not checks or not isinstance(contexts, list)
+                          or any(not isinstance(c, dict) or not isinstance(c.get("context"), str)
+                                 or not c["context"] or c.get("app_id") != ACTIONS_APP for c in checks)
+                          or set(contexts) != {c["context"] for c in checks}
+                          or len(checks) != len({c["context"] for c in checks}))
+    # Rulesets are evaluated only when they restate the protected checks; anything else stays unmodelled.
+    if rules and (checks_unsupported
+                  or not all(mirrors_protection(r, [c["context"] for c in checks]) for r in rules)):
         reasons.append(reason("unsupported_rulesets"))
     if required.get("strict") is not False:
         reasons.append(reason("unsupported_strict_policy"))
-    if (not isinstance(checks, list) or not checks or not isinstance(contexts, list)
-            or any(not isinstance(c, dict) or not isinstance(c.get("context"), str)
-                   or not c["context"] or c.get("app_id") != ACTIONS_APP for c in checks)
-            or set(contexts) != {c["context"] for c in checks}
-            or len(checks) != len({c["context"] for c in checks})):
+    if checks_unsupported:
         reasons.append(reason("unsupported_required_checks"))
     return {"fingerprint": fingerprint({"protection": protection, "active_rules": rules}),
             "strict": required.get("strict"), "required_checks": checks,

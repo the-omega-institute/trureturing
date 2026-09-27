@@ -1,0 +1,11 @@
+**证明。** 固定 $n\in\mathbb N$ 和 $s\in S$，取 $t$ 使 $F(t)=s$。在 $p\approx_P q$ 中代入 $n+1,t$，得到
+
+$$
+E(F^{[n]}(s),\sigma^{[n]}(\sigma(p)))
+=E(F^{[n+1]}(t),\sigma^{[n+1]}(p))
+=E(F^{[n+1]}(t),\sigma^{[n+1]}(q))
+=E(F^{[n]}(s),\sigma^{[n]}(\sigma(q))).
+$$
+
+故协议轴下降，且 $\bar\sigma([p])=[\sigma(p)]$ 唯一。$\square$
+

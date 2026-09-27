@@ -79,14 +79,14 @@ public sealed class CapacityAuditCommandTests
     public void CapacityAuditRunUsesIndexedBlobWhenWorkingTreeFileIsShortened()
     {
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
+        TestGit.Run(repository.Path, "init");
         var path = Path.Combine(repository.Path, "Synthetic", "Oversize.cs");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, string.Join(
             '\n',
             Enumerable.Range(0, RepositoryRules.ArtifactHardLineLimit + 1)
                 .Select(static index => $"line {index}")));
-        ReviewRegressionTests.RunGit(repository.Path, "add", "--all");
+        TestGit.Run(repository.Path, "add", "--all");
         File.WriteAllText(path, "short\n");
 
         var result = CapacityAuditCommand.Run([], repository.Path);
@@ -104,7 +104,7 @@ public sealed class CapacityAuditCommandTests
     public void CapacityAuditReadsCompleteIndexAcrossBoundedBatches()
     {
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
+        TestGit.Run(repository.Path, "init");
         var contents = new[]
         {
             string.Concat(Enumerable.Repeat("alpha\n", 80)),
@@ -115,7 +115,7 @@ public sealed class CapacityAuditCommandTests
         {
             File.WriteAllText(Path.Combine(repository.Path, $"file{index}.cs"), contents[index]);
         }
-        ReviewRegressionTests.RunGit(repository.Path, "add", "--all");
+        TestGit.Run(repository.Path, "add", "--all");
         File.Delete(Path.Combine(repository.Path, "file0.cs"));
         File.WriteAllText(Path.Combine(repository.Path, "file1.cs"), "unstaged replacement");
         var indexed = ProductionCapacityAuditFileAccess.Instance.Enumerate(repository.Path);
@@ -331,7 +331,7 @@ public sealed class CapacityAuditCommandTests
     private static TemporaryDirectory RepositoryWithTrackedFiles(int count)
     {
         var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
+        TestGit.Run(repository.Path, "init");
         for (var index = 0; index < count; index++)
         {
             var path = Path.Combine(repository.Path, "Synthetic", "Bucket", $"File{index}.cs");
@@ -339,7 +339,7 @@ public sealed class CapacityAuditCommandTests
             File.WriteAllText(path, "x\n");
         }
 
-        ReviewRegressionTests.RunGit(repository.Path, "add", "--all");
+        TestGit.Run(repository.Path, "add", "--all");
         return repository;
     }
 

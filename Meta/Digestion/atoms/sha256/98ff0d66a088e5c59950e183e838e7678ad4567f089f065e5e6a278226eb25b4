@@ -1,0 +1,16 @@
+### 27.2 完整自适应历史的联合后验
+
+记矩序列
+$$
+M_n=\int q^n\,\mu(dq),\qquad n\ge0,\qquad M_0=1.
+\tag{27.2}
+$$
+因为 $0<q<1$ 几乎处处，每个 $M_n$ 严格为正。设一份尚未出现标记的历史已取得左、右长度 $\ell,r$。定义有序奇偶对、其和及完整交替对数
+$$
+\eta=(\eta_L,\eta_R)=(\ell\bmod2,r\bmod2),\qquad
+s=\eta_L+\eta_R,\qquad
+k=\lfloor\ell/2\rfloor+\lfloor r/2\rfloor.
+\tag{27.3}
+$$
+查询次数满足 $N=2k+s$。这里的 $N$ 由实际历史导出，不作为摘要之外的额外输入。
+

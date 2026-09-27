@@ -1,0 +1,36 @@
+### 12.3 联合边界的动态闭合
+
+令 \(T_a\) 是完整配置在操作 \(a\) 下的后继，\(D_a\) 是合法域，\(O_a\) 是指定输出。若存在实际像上的
+
+$$
+\bar T_a:E\to E,\qquad
+\bar D_a\subseteq E,\qquad
+\bar O_a:E\to Y_a
+$$
+
+满足
+
+$$
+\begin{aligned}
+s\in D_a&\Longleftrightarrow e(s)\in\bar D_a,\\
+O_a(s)&=\bar O_a(e(s)),\\
+e(T_a(s))&=\bar T_a(e(s))\qquad(s\in D_a),
+\end{aligned}
+\tag{12.2}
+$$
+
+那么 \(e\) 是该操作合同下的动态充分边界。若当前读出与策略各自已有因子化更新
+
+$$
+c(T_a(s))=\bar c_a(c(s),p(s)),\qquad
+p(T_a(s))=\bar p_a(c(s),p(s)),
+$$
+
+且合法性与输出也只依赖 \((c(s),p(s))\)，则可取
+
+$$
+\bar T_a(c,p)=\bigl(\bar c_a(c,p),\bar p_a(c,p)\bigr).
+$$
+
+仍需检查该联合值落在实际像 \(E\)；分别可实现的 \(c'\) 与 \(p'\) 可能没有同一份来源。反过来，若式（12.2）成立，投影 \(\operatorname{fst}\circ\bar T_a\) 和 \(\operatorname{snd}\circ\bar T_a\) 就给出两个分量的更新。
+

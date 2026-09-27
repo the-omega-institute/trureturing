@@ -6,16 +6,6 @@
     <AssemblyName>StrataLint.ScriptTests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
-    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <!-- TransactionFixture 执行真 CLI(PLAYBOOK_REAL_CLI),需要 StrataLint apphost
-         与测试程序集同目录。此前靠 ProjectReference→StrataLint.Tests 传递取得;
-         该 test→test 边删除后必须直接声明。这是**生产**引用,不是拓扑债。 -->
-    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
-    <!-- 脚手架(TemporaryDirectory / TestProcessRunner / ScriptHarnessScratch 等)单一归属于
-         StrataLint.Tests。ScriptTests 已具名进 CrossCuttingHarnessPaths,不在 ownedTestProjects
-         里,故 OwnedTestToOwnedTestReference 的 foreach 主语不含它 —— 该引用不记拓扑债。 -->
-    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="Xunit.SkippableFact" />
@@ -23,8 +13,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="../../scripts/workflow/engineering-test-execution-harness.sh"
-          Link="engineering-test-execution-harness.sh"
-          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../scripts/workflow/engineering-test-execution-harness.sh" Link="engineering-test-execution-harness.sh" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
+    <ProjectReference Include="../../StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj" />
+    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
+    <ProjectReference Include="../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+    <ProjectReference Include="../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />
+    <ProjectReference Include="../../StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,25 @@
+**定理 31.1（已知 OU 类内的单延迟熵证书）。** 在定义 29.1 的已校准完整状态模型中，取固定延迟 $h>0$。平衡配对相关为 $F_h=\mathbb E[X_hX_0^{\mathsf T}]$。若矩阵估计满足 $\|\widehat F_h-F_h\|_2\le\varepsilon$，定义
+\[
+ c_-=(\|\widehat F_h\|_2-\varepsilon)_+^2,
+ \qquad c_+=\min\{1,(\|\widehat F_h\|_2+\varepsilon)^2\}.
+\]
+则 $c_-\le\eta_{\gamma_d}(\mathcal P_h)\le c_+$。若 $c_+<1$，对全部有限熵初态及全部整数 $n\ge0$ 有
+\[
+ \boxed{D(\mathcal P_{nh}\nu\Vert\gamma_d)
+        \le c_+^nD(\nu\Vert\gamma_d).}
+\]
+由 $N$ 次独立热初态制备的配对样本构造 $\widehat F_h=N^{-1}\sum_{j=1}^N X_h^{(j)}(X_0^{(j)})^{\mathsf T}$，在无额外传感噪声且热白化已知时，任意失败概率 $0<\alpha<1$ 可取
+\[
+ \varepsilon_N=\sqrt{d(d+1)/(N\alpha)}.
+\]
+此预算以至少 $1-\alpha$ 概率有效。如果 $b_h=1-\|F_h\|>0$ 且 $\varepsilon_N<b_h/2$，则在同一事件上证书必为严格收缩。$m<\infty$ 时，固定维数和置信度下，$N$ 为充分大常数倍的 $h^{-4m-2}$ 是小延迟的一个保守充分预算，不宣称样本最优性。
+
+**证明。** 范数三角不等式和定理 28.2 给系数区间；半群性使它可逐段复用。热平衡下 $X_0,X_h$ 各自协方差为 $I$，且联合 Gaussian。Wick 四阶矩给每个相关元素的样本方差为 $[1+(F_h)_{ab}^2]/N$，故
+\[
+ \mathbb E\|\widehat F_h-F_h\|_F^2
+ =\frac{d^2+\|F_h\|_F^2}{N}\le\frac{d(d+1)}N.
+\]
+Markov 不等式及算子范数不超过 Frobenius 范数给所列置信预算。在该事件上 $\|\widehat F_h\|+\varepsilon_N\le\|F_h\|+2\varepsilon_N<1$。定理 29.2 给 $b_h=\Theta(h^{2m+1})$，代入预算即可。
+
+本结论将平衡实验的矩阵误差转换为已知模型类中全部非平衡初态的熵保证；外推依赖该类的 Gaussian 转移与半群结构。只读取未闭合的投影、未知热白化、相邻时刻的非独立样本或额外仪器噪声，都需要另建误差模型。量子单比特若已获得 Bloch 矩阵的算子范数误差，也可用定理 28.3 的相同代数区间，但上述 Gaussian 样本统计不能直接充当量子测量保证。证毕。
+

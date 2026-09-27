@@ -82,6 +82,7 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
 fi
+workspace=(-d "$REPOSITORY/Reg")
 # A scoped caller passes the selected resource's registered targets. Direct
 # report calls consume all explicitly registered program targets.
 if [[ "${STRATALINT_LEAN_BUILD_TARGETS-}" != '[]' ]]; then
@@ -145,7 +146,7 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     PROGRAM_BUILD_PENDING=1
     run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" build "${BUILD_TARGETS[@]}"
+      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
   cat "$LOG_DIR/reuse.stdout.log"
@@ -167,7 +168,7 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report \
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \

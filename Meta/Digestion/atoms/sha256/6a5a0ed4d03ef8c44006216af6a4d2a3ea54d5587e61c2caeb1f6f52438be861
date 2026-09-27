@@ -1,0 +1,6 @@
+**定理 140.6（候选数与精确编码上界）。** 规范队列有 $q$ 个记录时，
+$$
+\frac{q(q+1)}2+q+1\le R,\qquad
+q\le Q_R:=\left\lfloor\frac{\sqrt{8R+1}-3}{2}\right\rfloor.
+\tag{140.15}
+$$

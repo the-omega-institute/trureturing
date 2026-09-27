@@ -1,0 +1,7 @@
+**定理 23.2（单时刻热保持与隐藏信息账）。** 定义 23.1 中，$\|F_t\|\le1$、$L_tL_t^{\mathsf T}=I-F_tF_t^{\mathsf T}$，且 $\mathsf T_t\gamma_r=\gamma_r$。若 $D_{\rm KL}(\nu\Vert\gamma_r)<\infty$，令 $\mu_t$ 为联合初态 $\nu\otimes\gamma_k$ 的完整演化，$\mu_t^V$ 为隐藏边缘，则
+\[
+ D_{\rm KL}(\nu\Vert\gamma_r)-D_{\rm KL}(\mathsf T_t\nu\Vert\gamma_r)
+ =I(U_t:V_t)+D_{\rm KL}(\mu_t^V\Vert\gamma_k)\ge0.
+\]
+此不等式分别比较每个 $t$ 与同一个初始时刻，没有蕴含两个任意正时刻之间的单调性。
+

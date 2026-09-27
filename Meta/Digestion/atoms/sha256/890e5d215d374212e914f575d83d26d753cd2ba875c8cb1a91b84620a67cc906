@@ -1,0 +1,6 @@
+**证明。** 用 $\mathbb Z/q\mathbb Z$ 作状态集，更新 $j\mapsto j+p$，状态 $j$ 输出 $\exp(2\pi ij/q)$。把初相位 $x$ 编到最近的 $j/q$。真实相位与预测相位在第 $n$ 步的圆周距离至多为
+\[
+ \frac1{2q}+n\left|\alpha-\frac pq\right|.
+\]
+映射 $t\mapsto\exp(2\pi it)$ 对圆周距离的 Lipschitz 常数为 $2\pi$，得到所列界。更新表与输出表固定，不读取外部时刻。该构造无需假设 $p,q$ 互素。证毕。
+

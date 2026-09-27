@@ -6,11 +6,12 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positive_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positiveRealization
    digest: Strict and weak substitution bounds retain their source statements in one shared catalog. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S1.Words.Powers.GoldenDesubstitution
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,7 +21,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations
 open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord D5.S3.ConceptDynamics.CIRPT
 
-register_information_template homogeneousPointwiseOrderRealization
+
 open D5.S1.Words.Powers D5.S0.Tower.GoldenGapWord
 
 def lengthZero : Fin 3 := (⟨Nat.zero, (let h : Nat.lt 0 3 := (by change 0 < 3; omega); h)⟩ : Fin (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))
@@ -61,24 +62,15 @@ private def positiveChain : LayerChain strictArena.toArena where
   kernel := fun _ => cutKernel (fun b : Bool => (lengthZero, lengthReadout b))
   refines := fun r => Fin.elim0 r
 
-private theorem positive_empty : EscapeResidualEmpty positiveChain := by
+theorem positive_empty : EscapeResidualEmpty positiveChain := by
   change positiveChain.unresolvedCount = 0
   decide +kernel
 
-register_information_theorem substLength_pos in strictArena
-  object_arena objectArena catalog substitutionBounds
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
-    Bool (Fin 3) (instDecidableEqFin 3)
-    (fun _ => lengthZero) (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b))
-  primitives positiveRealization.toPrimitiveBundle realization positive_bridge
-  variation positive_lawSensitive sensitivity strict_slotSensitive
-  escape from (Bool) escape continues (positive_empty)
-example : substLength_pos.«D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__information_unit.Statement =
-    (∀ b : Bool, 0 < (subst b).length) := rfl
+
+
 #print axioms positive_bridge
 #print axioms positive_lawSensitive
-expect_information_occurrence substLength_pos in objectArena
-  from "D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations"
+
 
 def upperRealization := @homogeneousPointwiseOrderRealization Bool (Fin 3)
   (instDecidableEqFin 3) (fun b => lengthReadout b) (fun _ => lengthTwo)
@@ -104,40 +96,20 @@ private def upperChain : LayerChain weakArena.toArena where
   kernel := fun _ => cutKernel (fun b : Bool => (lengthReadout b, lengthTwo))
   refines := fun r => Fin.elim0 r
 
-private theorem upper_empty : EscapeResidualEmpty upperChain := by
+theorem upper_empty : EscapeResidualEmpty upperChain := by
   change upperChain.unresolvedCount = 0
   decide +kernel
 
-register_information_theorem substLength_le_two in weakArena
-  object_arena objectArena catalog substitutionBounds
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
-    Bool (Fin 3) (instDecidableEqFin 3)
-    (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b) (fun _ => lengthTwo))
-  primitives upperRealization.toPrimitiveBundle realization upper_bridge
-  variation upper_lawSensitive sensitivity weak_slotSensitive
-  escape from (Bool) escape continues (upper_empty)
-example : substLength_le_two.«D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__information_unit.Statement =
-    (∀ b : Bool, (subst b).length ≤ 2) := rfl
+
+
 #print axioms upper_bridge
 #print axioms upper_lawSensitive
-expect_information_occurrence substLength_le_two in objectArena
-  from "D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations"
+
 
 #print axioms strict_slotSensitive
 #print axioms weak_slotSensitive
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName env.header.mainModule)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0],readout[1]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations

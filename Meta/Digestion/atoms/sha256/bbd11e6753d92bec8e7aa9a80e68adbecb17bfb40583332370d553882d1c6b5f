@@ -1,0 +1,22 @@
+**定理 139.11（有限下界与一致渐近系数）。** 对 $R\ge1$、$g\ge1$ 且 $q_g<1/2$，
+$$
+d_k(R)\ge\frac{1/2-q_g}{R+g-1}.
+\tag{139.27}
+$$
+特别地，对全部 $k\ge2$、$R\ge1$，
+$$
+d_k(R)\ge\frac1{4(R+14)},
+\qquad
+\liminf_{R\to\infty}\inf_{k\ge2}R\,d_k(R)\ge\frac12.
+\tag{139.28}
+$$
+结合推论139.8，统一渐近系数被限制为
+$$
+\boxed{
+\frac12\le\liminf_{R\to\infty}\inf_{k\ge2}R\,d_k(R),
+\qquad
+\limsup_{R\to\infty}\sup_{k\ge2}R\,d_k(R)\le1.
+}
+\tag{139.29}
+$$
+

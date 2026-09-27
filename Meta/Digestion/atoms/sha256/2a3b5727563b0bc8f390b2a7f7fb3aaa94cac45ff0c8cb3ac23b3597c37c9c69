@@ -1,0 +1,30 @@
+**定理 29.2（同一 Gramian 决定可观测深度与最坏熵损失）。** 对所有 $t\ge0$，
+\[
+ \eta_{\gamma_d}(\mathcal P_t)=\|F_t\|^2,
+ \qquad 1-\eta_{\gamma_d}(\mathcal P_t)=\lambda_{\min}G_t,
+\]
+\[
+ G_t=I-F_t^{\mathsf T}F_t
+     =\int_0^te^{sA^{\mathsf T}}BB^{\mathsf T}e^{sA}ds.
+\]
+以下等价：$m<\infty$；某个正时刻的熵系数严格小于一；每个正时刻的熵系数严格小于一。成立时
+\[
+ \boxed{1-\eta_{\gamma_d}(\mathcal P_t)=\Theta(t^{2m+1})\quad(t\downarrow0).}
+\]
+选任意 $t_0>0$、$c_0=\|F_{t_0}\|^2<1$，则全部有限熵初态及全部 $t\ge0$ 有
+\[
+ D(\mathcal P_t\nu\Vert\gamma_d)
+ \le c_0^{\lfloor t/t_0\rfloor}D(\nu\Vert\gamma_d).
+\]
+
+**证明。** $A+A^{\mathsf T}=-M$，对 $F_t^{\mathsf T}F_t$ 求导并积分即得 Gramian。显式线性随机解的噪声协方差是 $I-F_tF_t^{\mathsf T}$，所以定理 28.2 给出前两式。
+
+对 $x$，$x^{\mathsf T}G_tx=\int_0^t|B^{\mathsf T}e^{sA}x|^2ds$。在任意正窗上为零当且仅当所有导数 $B^{\mathsf T}A^jx$ 都为零；矩阵解析性和 Cayley–Hamilton 使前 $d$ 项已足够。每个有限阶的零导数空间还满足
+\[
+ \bigcap_{j=0}^N\ker(B^{\mathsf T}A^j)
+ =\bigcap_{j=0}^N\ker(B^{\mathsf T}D^j).
+\]
+逐阶证明此式：若前面各 $B^{\mathsf T}D^jx=0$，则对应的 $MD^jx=0$，故到下一阶之前 $A^jx=D^jx$；反向使用同一递推。这些空间的正交补由 $[B,DB,\ldots,D^NB]$ 的列张成，因为 $D^{\mathsf T}=-D$。因此严格正定与所列秩条件等价。
+
+有限 $m$ 下，有限导数映射 $x\mapsto(B^{\mathsf T}x,\ldots,B^{\mathsf T}A^mx)$ 有统一正下界。对 $B^{\mathsf T}e^{sA}x$ 展开到 $m$ 阶，令 $s=tu$；Hilbert Gram 矩阵 $(1/(i+j+1))_{0\le i,j\le m}$ 的正定性给多项式平方积分下界 $c t^{2m+1}|x|^2$。指数尾项的 $L^2$ 范数为 $O(t^{m+3/2})|x|$，小时间可吸收一半，得到统一下界。最小性给非零 $x$ 使第零至 $m-1$ 阶导数为零（$m=0$ 时任选单位向量），其积分为 $O(t^{2m+1})$，得到上界。最后半群性和参考保持使每个完整 $t_0$ 区间贡献因子 $c_0$，剩余时间使用数据处理。该幂次就是经典 hypocoercivity index 的时间尺度；本条把它与本卷的预测导数塔及固定参考信息逃逸放在相同矩阵上。证毕。[^tcs5-index]
+

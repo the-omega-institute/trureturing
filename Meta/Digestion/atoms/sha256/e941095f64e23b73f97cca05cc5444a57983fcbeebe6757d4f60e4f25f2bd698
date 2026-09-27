@@ -1,0 +1,23 @@
+**定理 44.2（恢复损失给出猜想余量的可靠误差账）。** 对每个二元实验 $\mathsf W_i$，取任意 CPTP 粗粒化 $\Lambda_i$，记 $\mathsf V_i=\Lambda_i\mathsf W_i$、$\delta_i=I(\mathsf W_i)-I(\mathsf V_i)\ge0$，并令
+\[
+ \delta_-=I(\mathsf W_1\boxast\mathsf W_2)
+                  -I(\mathsf V_1\boxast\mathsf V_2)\ge0.
+\]
+则有精确式
+\[
+ \mathfrak G(\mathsf W_1,\mathsf W_2)
+ =\mathfrak G(\mathsf V_1,\mathsf V_2)+\delta_-
+       -I(\mathsf V_1)\delta_2-I(\mathsf V_2)\delta_1-\delta_1\delta_2.
+\]
+若另有固定恢复映射 $\mathcal R_i$ 满足
+\[
+ \frac14\sum_{s=\pm}
+ \|\rho_{i,s}-\mathcal R_i\Lambda_i(\rho_{i,s})\|_1\le\epsilon_i\le1,
+\]
+则 $\delta_i\le w_i:=w(\epsilon_i)$。因此只要对粗实验已有下界 $\mathfrak G(\mathsf V_1,\mathsf V_2)\ge L$，就有
+\[
+ \boxed{\mathfrak G(\mathsf W_1,\mathsf W_2)
+ \ge L-I(\mathsf V_1)w_2-I(\mathsf V_2)w_1-w_1w_2.}
+\]
+对定义 43.1 的候选投影，粗粒化可取 pinching $\Lambda(\rho)=\sum_aP_a\rho P_a$，恢复取同一矩阵空间的包含映射。因此正的分区余量能够认证小但非零的跨分区相干扰动；不要求原态已经精确块对角。
+

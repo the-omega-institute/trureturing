@@ -1,0 +1,32 @@
+### 20.3 任意动态记忆都必须映到这个核
+
+设 $r:S\to M$ 是一个实际记忆摘要。若它满足：
+
+$$
+\begin{aligned}
+\Phi(s)(w)&=\psi_w(r(s))qquad &&(w\in A^*),\\
+r(T_a s)&=\overline T_a(r(s))qquad &&(a\in A),
+\end{aligned}
+\tag{20.4}
+$$
+
+并且选择器、权限和失败标签也由 $r(s)$ 决定，那么
+
+$$
+r(s)=r(t)\Longrightarrow s\sim_{\mathrm{word}}t.
+\tag{20.5}
+$$
+
+在实际记忆像 $r(S)$ 上存在唯一映射
+
+$$
+\theta:r(S)\to S_{\mathrm{word}},
+\qquad
+\theta(r(s))=[s].
+\tag{20.6}
+$$
+
+若 $r$ 还分离所有不同的未来 profile，则 $\theta$ 为双射。故空间切面、时间动作词、边界状态和记忆摘要要互相恢复，不能只要求它们的当前读数相等；它们都必须在同一个实际像上双射到 (20.2) 的未来核。
+
+这正是 `CausalStateFactorization.causal_state_factorization` 的过程化读法：预测律在摘要纤维上恒定时，摘要实际像唯一映到预测律像；`PredictionCompletionUniversality.prediction_completion_universality` 则把当前读出和更新的因子化提升为完整未来轨迹的因子化。两者结合得到 (20.6)，但一般动作词树版本是本节的数学组合，并非仓内已单独冻结的泛化定理。
+

@@ -1,0 +1,41 @@
+**证明。** 只取 horizon 一、固定实验 \(e\) 的常策略，以及单一输出 transcript \([o]\)，式（11.3）的左侧给出 \(L_e(o\mid\beta(h))=L_e(o\mid\beta(h'))\)。对全部 \(e,o\) 应用式（11.2）得到后验相等；正向是命题 11.1。证毕。
+
+一步 separating 是容易检查的充分证书；一般的最弱条件是完整 profile 本身分离，即直接要求 \(\ker\Phi=\ker\beta\)。一步混合不分离时，多步自适应实验仍可能分离，不能把式（11.2）冒充必要条件。
+
+### 11.1 分支更新的交换
+
+对合法实验 \(e\) 和输出 \(o\)，写 \(h^+=\operatorname{extend}(h,e,o)\)。若共同来源的 Bayes 条件律给出
+
+$$
+\beta(h^+)=U_{e,o}(\beta(h)),
+\tag{11.4}
+$$
+
+且零概率分支被排除或采用明示的 totalized update，则 profile 等价类上的分支更新
+
+$$
+\overline U_{e,o}([h]_\Phi)=[\operatorname{extend}(h,e,o)]_\Phi
+\tag{11.5}
+$$
+
+是良定义的，并满足
+
+$$
+\overline\beta\circ\overline U_{e,o}
+=U_{e,o}\circ\overline\beta,
+\tag{11.6}
+$$
+
+其中 \(\overline\beta([h]_\Phi)=\beta(h)\)。定理 11.2 使 \(\overline\beta\) 在 realized belief image 上成为双射，所以式（11.6）把 profile 边界和 belief 边界动态互相恢复。
+
+证明只需取 \(\Phi(h)=\Phi(h')\)，由式（11.3）得 \(\beta(h)=\beta(h')\)，再用式（11.4）得到两个扩展历史的后验相等，最后再次使用式（11.3）。正概率条件不能省略：零概率输出没有条件律，不能由分母为零的形式表达冒充可执行分支。
+
+若内部观察者还保留 \((C,\kappa,\rho,P)\)，总边界应写成
+
+$$
+B(h)=\bigl(\beta(h),\kappa(h),\rho(h),P(h)\bigr).
+\tag{11.7}
+$$
+
+此时必须分别证明策略、控制更新、参考更新和权限更新在 \(B\)-纤维上常值；posterior-only 的式（11.3）不能自动升级为完整内部观察者定理。这个区分把概率 belief 的动态充分性与一般档案记忆的动态充分性分开，避免把单一后验误当作所有关系的边界。
+

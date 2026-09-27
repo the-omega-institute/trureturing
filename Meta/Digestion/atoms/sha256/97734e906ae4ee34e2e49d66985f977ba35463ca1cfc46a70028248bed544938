@@ -1,0 +1,12 @@
+**引理 139.10（三步共同质量与任意未来块）。** 令 $\nu$ 在 $(0,0),(0,1)$ 上均匀。提升核满足
+$$
+P^3(z,\cdot)\ge\tfrac14\nu(\cdot),
+$$
+故对全部整数 $g\ge0$，
+$$
+\sup_z\operatorname{TV}(P^g(z,\cdot),\widetilde\pi)
+\le q_g:=(3/4)^{\lfloor g/3\rfloor}.
+\tag{139.26}
+$$
+同一界适用于从时间 $g$ 开始的任意固定长度完整状态块。
+

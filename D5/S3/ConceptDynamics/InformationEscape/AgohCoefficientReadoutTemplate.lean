@@ -6,8 +6,9 @@
    utility: none
    digest: Three indexed coefficient-code cuts for the alternating-numerator counterexample. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -33,6 +34,6 @@ def coefficientRealization {S : Type} (readCoefficients : S → Fin 3 → Fin 9)
   readout index state := readCoefficients state index
   anchor := Fin.elim0
 
-register_information_template coefficientRealization
+
 
 end D5.S3.ConceptDynamics.InformationEscape.AgohCoefficientReadoutTemplate

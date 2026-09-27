@@ -42,7 +42,19 @@ $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{
 
 The positive square root is positive semidefinite and has nonnegative real trace.
 
-**Theorem 1.4 (Trace norm triangle inequality).**
+**Theorem 1.4 (Unitary maximum formula).**
+
+$$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \left(\exists U \in \operatorname{unitaryGroup}\left(n, \mathbb{C}\right),\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{val}\left(U\right) \cdot A\right)\right) = \operatorname{traceNorm}\left(A\right)\right) \land \left(\forall U \in \operatorname{unitaryGroup}\left(n, \mathbb{C}\right),\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{val}\left(U\right) \cdot A\right)\right) \le \operatorname{traceNorm}\left(A\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U` (`✓ std3`). ∎
+
+*Citation.* Mark M. Wilde (2017). *Quantum Information Theory*. DOI: [10.1017/9781316809976](https://doi.org/10.1017/9781316809976).
+
+*Commentary.*
+
+A unitary attains the trace norm as the real trace of its product with A, and every unitary gives a value at most the trace norm. Here val denotes the underlying matrix. The formula holds in every finite complex square dimension, including the empty type.
+
+**Theorem 1.5 (Trace norm triangle inequality).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{traceNorm}\left(A + B\right) \le \operatorname{traceNorm}\left(A\right) + \operatorname{traceNorm}\left(B\right)$$
 
@@ -54,7 +66,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 The retained SVD proof identifies the norm as the maximum real trace over unitaries; trace additivity gives the bound.
 
-**Theorem 1.5 (Positive trace norm).**
+**Theorem 1.6 (Positive trace norm).**
 
 $$\forall n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(n, n, R\right),\; \operatorname{PosSemidef}\left(A\right) \Rightarrow \operatorname{embed}\left(R, \operatorname{traceNorm}\left(A\right)\right) = \operatorname{trace}\left(A\right)$$
 
@@ -66,7 +78,7 @@ $$\forall n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(n, n,
 
 For a positive semidefinite matrix, the Gram matrix is its square and its positive square root is the original matrix.
 
-**Definition 1.6 (Canonical channel on matrix coordinates).**
+**Definition 1.7 (Canonical channel on matrix coordinates).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{act}\left(C, A\right) = \operatorname{raw}\left(\operatorname{applyCP}\left(C, \operatorname{toCstar}\left(A\right)\right)\right)$$
 
@@ -78,7 +90,7 @@ $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right)
 
 The matrix coordinate equivalence transports the actual completely positive map.
 
-**Definition 1.7 (Actual density distance).**
+**Definition 1.8 (Actual density distance).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) = \frac{\operatorname{traceNorm}\left(\operatorname{raw}\left(rho\right) - \operatorname{raw}\left(sigma\right)\right)}{2}$$
 
@@ -90,7 +102,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 The canonical density-state values are converted to matrices before taking half the trace norm of their difference.
 
-**Theorem 1.8 (Nonnegative density distance).**
+**Theorem 1.9 (Nonnegative density distance).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; 0 \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -102,7 +114,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Trace-norm nonnegativity gives the lower endpoint of the density-distance interval.
 
-**Theorem 1.9 (Symmetry).**
+**Theorem 1.10 (Symmetry).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) = \operatorname{traceDistance}\left(sigma, rho\right)$$
 
@@ -114,7 +126,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Reversing the state difference negates the matrix and preserves its trace norm.
 
-**Theorem 1.10 (Density distance triangle inequality).**
+**Theorem 1.11 (Density distance triangle inequality).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right), tau \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, tau\right) \le \operatorname{traceDistance}\left(rho, sigma\right) + \operatorname{traceDistance}\left(sigma, tau\right)$$
 
@@ -126,7 +138,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Split the state difference through the intermediate state and apply the trace-norm triangle inequality.
 
-**Theorem 1.11 (All density distances are at most one).**
+**Theorem 1.12 (All density distances are at most one).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) \le 1$$
 
@@ -138,7 +150,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Each density matrix has trace norm one; the triangle inequality bounds their difference by two.
 
-**Theorem 1.12 (Every CPTP channel contracts trace distance).**
+**Theorem 1.13 (Every CPTP channel contracts trace distance).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(\operatorname{mapState}\left(C, rho\right), \operatorname{mapState}\left(C, sigma\right)\right) \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -165,6 +177,7 @@ Contraction follows from the actual Hermitian Jordan positive and negative parts
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_triangle`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef`

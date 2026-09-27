@@ -5,7 +5,7 @@ year: 2025
 title: "Order polytopes of crown posets"
 doi: 10.48550/arXiv.2504.05123
 url: https://arxiv.org/abs/2504.05123v3
-claim: "Conjecture 3.7: for every positive integer n, the full geometric f-vector of the order polytope of the crown on 2n vertices is log-concave. Theorem 3.6 supplies the face-count formula, not a proof of this conjecture."
+claim: "Original v3 target, Conjecture 3.7: for every positive integer n, the full geometric f-vector of the order polytope of the crown on 2n vertices is log-concave. Theorem 3.6 supplies the face-count formula, not a proof of this conjecture."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CrownOrderPolytope
   - D5/S3/Combinatorics/Geometry/CrownOrderPolytopeFaceCounts
@@ -24,22 +24,22 @@ DOI: 10.48550/arXiv.2504.05123
 
 URL: https://arxiv.org/abs/2504.05123v3
 
-The inspected primary version is arXiv:2504.05123v3, dated 9 December
-2025 in the supplied HTML. Both the 25-page PDF and the HTML were read
-directly for the definitions, enumeration and conjecture. The PDF SHA-256 is
+The inspected primary version is arXiv:2504.05123v3, submitted at
+`2025-12-09T17:39:28Z`. The definitions, enumeration, and conjecture below
+come from its 25-page PDF and HTML. The PDF SHA-256 is
 `90581682c5daf1125ccf1bc937a581aa4c0d43254e0d4c62fca5553299864400`;
-the supplied arXiv HTML SHA-256 is
+the arXiv HTML SHA-256 is
 `9e6cbda3cc5a9793adf3781afc374d58d29f5df43d29ee39ebf5f04f431f2abd`.
 These identify the inspected files, not a claim that a later download has
-identical bytes. A fresh read of the unversioned arXiv abstract on
-2026-09-20 still identifies v3 as its current version and also records the
-journal DOI `10.1016/j.ejc.2025.104304` (European Journal of Combinatorics).
-The mathematical source inspected here remains the versioned arXiv text.
-The supplied HTML states the arXiv perpetual non-exclusive license.
+identical bytes. The inspected record also reported the journal DOI
+`10.1016/j.ejc.2025.104304` (European Journal of Combinatorics); this note
+does not establish any further journal-publication chronology. The original
+mathematical target remains pinned to the versioned v3 text.
+The inspected HTML states the arXiv perpetual non-exclusive license.
 This note supplies citation, a short quotation, and mathematical mapping;
 it does not redistribute the paper or assert a software license for it.
 
-Conjecture 3.7, PDF page 12 (also checked against the supplied HTML), states:
+Conjecture 3.7 states on PDF page 12 and in the corresponding HTML:
 
 > For any positive integer n, the entries of the f-vector of O(C₂ₙ) form a log-concave sequence.
 
@@ -47,6 +47,26 @@ Here `O(C₂ₙ)` transcribes the source's calligraphic order-polytope notation.
 The preceding paragraph reports tests for `n = 1,...,200` and explicitly
 says the authors were unable to prove the assertion for every `n`.
 That experiment is neither a domain restriction nor a universal proof.
+
+## Source and delivery chronology
+
+The repository's formal result was delivered in
+[PR 8714](https://github.com/the-omega-institute/trureturing/pull/8714),
+merged at `2026-09-20T09:08:33Z` as
+`1fce15789f3bb988cf6df49ff7cfe560d16a08c8` from final head
+`52b788c222ff73b3594088c98f1bc4aabb942351`. Required CI run
+`35498693398` completed with conclusion `SUCCESS`; its build, engineering,
+current and delta checks succeeded. The prior delivery audit also
+succeeded.
+
+The arXiv record gives the later v4 submission time as
+`2026-09-22T11:25:57Z`. In v4 Section 3.1,
+[Theorem 3.12](https://arxiv.org/html/2504.05123v4#S3.SS1) proves the result
+for `n>=2`, using Lemmas 3.9 and 3.13, a Chebyshev-root route, and the needed
+low-coefficient corrections; the unversioned record is
+[arXiv:2504.05123](https://arxiv.org/abs/2504.05123). Because the v4 submission
+postdates the recorded merge, it does not by itself establish a pre-delivery
+source resolution or worldwide priority.
 
 ## Geometric object and hypotheses
 
@@ -81,9 +101,9 @@ has a typed `Proved` claim in the matching Scribe document bound to
 `Problems/crown-order-polytope-log-concavity.md`. The displayed formula
 is a handwritten presentation of that compiled declaration with `F`
 defined as the full geometric vector. Only the full named conjecture is
-the resolution target; the prerequisite freeze count is not a KPI.
-Final artifact reviews, required CI for this increment and dev merge
-remain pending.
+the resolution target; the prerequisite freeze count is not a KPI. The
+merged delivery retains exactly one historical resolution credit; the later
+v4 source status introduces no second claim or KPI.
 
 ## Published prerequisites and formal correspondence
 
@@ -148,9 +168,11 @@ empty and whole faces. The proof claims splitting only for the auxiliary
 scalar polynomial; it makes no real-rootedness claim for the actual
 f-polynomial or any h/Ehrhart polynomial.
 
-## Bounded library-first and prior-resolution audit
+## Historical bounded library-first and pre-delivery audit
 
-The 2026-09-20 local refresh inspected repository D5 sources and pinned
+The following records the bounded pre-delivery audit used for the formal
+delivery; it is historical, not a present-tense assertion that the source
+remains unresolved. On 2026-09-20 it inspected repository D5 sources and pinned
 Mathlib at `db584cd6d46c92f209a44c0f1c829460d327499d`, with Lean
 `v4.33.0`. The semantic pattern `newton|laguerre|log.?concav|real.?root`
 matched 12 Mathlib files; adding `crown.*polytop` for D5 matched 99 files.
@@ -165,7 +187,7 @@ criteria have different conclusions. The pinned split-polynomial and
 Chebyshev root APIs are used directly inside the content proofs.
 This bounded name/shape audit is not an exhaustive semantic search.
 
-The public API refresh found an upstream candidate:
+The bounded public API search identified an upstream candidate:
 [Mathlib PR 42876](https://github.com/leanprover-community/mathlib4/pull/42876),
 open and unmerged when inspected on 2026-09-20, with head
 `e3c1793d0e097d9b8d782a323e91c99c2ef0d64c`.
@@ -207,13 +229,13 @@ zero matches; no resolution of the present geometric conjecture was found
 in that inspected text. Its HTML SHA-256 is
 `28c982cfc8a368137dec0de30d942263951843a042b7b0e2528eabdb0fd022ac`.
 
-The inspected primary v3 still labels the target a conjecture. The public
-refresh above establishes only bounded findings: other title-search hits
-were not all read in full, and worldwide priority remains unverified.
-The metadata searches do not rule out an unindexed proof or a resolution
-inside a work with a different title. The caller identifies issue 8670
-as preregistration and PR 8714 as publication context; their remote contents
-and chronology were not reverified in this artifact-only lane. Full
-pre-freeze native reviews, including source fidelity and the Newton
-license, are approved. Their bounded literature findings do not establish
-worldwide priority; final artifact review and publication remain pending.
+At that pre-delivery cutoff, the inspected primary v3 still labeled the
+target a conjecture. The historical search established only bounded
+findings: other title-search hits were not all read in full, and it did not
+establish worldwide priority. Its metadata searches did not rule out an
+unindexed proof or a resolution inside a work with a different title.
+Issue 8670 remains the preregistration. The pre-freeze native
+reviews, including source fidelity and the Newton license, were approved;
+PR 8714, its required CI and its delivery audit subsequently completed as
+recorded above. The later v4 theorem updates the current source status but
+does not recompute the historical search or create another resolution claim.

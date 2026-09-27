@@ -1,0 +1,643 @@
+using StrataLint.Engine;
+using System.Text;
+using System.Text.Json;
+
+namespace StrataLint.TestSupport;
+
+// Shared Playbook workflow fixture: synthetic repository, scripts and process capture.
+// Run defaults to stubs. Integration callers explicitly supply the apphost path
+// to execute the canonical ledger-frozen query; that path must exist.
+internal sealed partial class TransactionFixture : IDisposable
+{
+    internal const string CanonicalHeaderFinding =
+        "expected the canonical Lean header at byte zero "
+        + "(six-line legacy header or seven-line header with utility)";
+
+    internal static string Diagnostics(ProcessOutput result) =>
+        "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
+        + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
+
+    internal const string AtomId = "atom-1";
+    internal const string SecondaryAtomId = "atom-2";
+    internal const string Gid = "D5/S0/Carrier/Probe.probe";
+    internal const string LeanPath = "D5/S0/Carrier/Probe.lean";
+    internal const string SecondaryGid =
+        "D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition";
+    internal const string SecondaryLeanPath = "D5/S3/Observer/WindowRegisterCRT.lean";
+    internal const string NewGid = "D5/S2/NewModule.new_module";
+    internal const string NewLeanPath = "D5/S2/NewModule.lean";
+    internal const string NewEmissionPath = "Blueprint/D5/S2/NewModule.md";
+    internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+    internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
+    internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
+    private const string StatePinPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
+    internal const string BackfillPath = "Meta/BACKFILL.yaml";
+    private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
+    private readonly TemporaryDirectory temporary = new();
+    private readonly string binPath;
+    private readonly string callsPath;
+    private readonly string freezeProbePath;
+
+    internal TransactionFixture()
+    {
+        Root = temporary.Path;
+        binPath = Path.Combine(Root, "bin");
+        callsPath = Path.Combine(Root, "calls");
+        freezeProbePath = Path.Combine(Root, "freeze-probes");
+        Directory.CreateDirectory(binPath);
+        CopyScript();
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"),
+            Path.Combine(Root, "Makefile"));
+        WriteFile(
+            ".gitignore",
+            ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n.ledger-frozen-status\n");
+        WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by trivial\n"));
+        WriteFile(DefinitionPath, "definition baseline\n");
+        WriteFile(EmissionPath, "emission: baseline\n");
+        Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
+        File.WriteAllBytes(Path.Combine(binPath, "StrataLint.Cli.dll"), []);
+        WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
+        WriteMakeStub();
+        WriteDotnetStub();
+        WriteGitGuardStub();
+        Git("init", "-q");
+        Git("config", "user.email", "playbook@example.invalid");
+        Git("config", "user.name", "Playbook Test");
+        Git("add", "-A");
+        Git("commit", "-qm", "fixture baseline");
+        File.Copy(Path.Combine(Root, LeanPath), Path.Combine(Root, ".report-source"));
+    }
+
+    internal string Root { get; }
+
+    internal string BackfillContents() => File.ReadAllText(Path.Combine(Root, BackfillPath));
+
+    internal string EmissionContents() => File.ReadAllText(Path.Combine(Root, EmissionPath));
+
+    internal void ChangeFormalization()
+    {
+        WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by\n  trivial\n"));
+        WriteFile(DefinitionPath, "definition deposited\n");
+    }
+
+    internal void AddNewFormalization(bool withMirror)
+    {
+        WriteFile(NewLeanPath, ExactSixLineLean(NewGid, "theorem new_module : True := by trivial\n"));
+        if (withMirror)
+        {
+            WriteFile(NewEmissionPath, "emission: new module\n");
+        }
+    }
+
+    internal void AddSecondaryFormalization()
+    {
+        WriteFile(SecondaryLeanPath,
+            ExactSixLineLean(
+                SecondaryGid,
+                "theorem window_register_crt_decomposition : True := by trivial\n"));
+        WriteFile(
+            "Blueprint/D5/S3/Observer/WindowRegisterCRT.scribe.cs",
+            "secondary definition\n");
+        WriteFile(
+            "Blueprint/D5/S3/Observer/WindowRegisterCRT.md",
+            "secondary emission\n");
+    }
+
+    internal void FailAfterNextFreeze() => WriteFile("fail-ledger-once", "1\n");
+
+    internal void FailFrozenQuery() => WriteFile(".ledger-frozen-status", "2\n");
+
+    internal void WriteRevokedSnapshot()
+    {
+        WriteLedger(Array.Empty<string>());
+    }
+
+    internal void WriteActiveFreeze()
+    {
+        var freeze = JsonSerializer.Serialize(new
+        {
+            event_hash =
+                "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+            event_type = "Freeze",
+            payload = new
+            {
+                declaration_statement_ids = Array.Empty<object>(),
+                descriptor_selector = LeanPath,
+                prerequisite_frozen_node_ids = Array.Empty<string>(),
+                statement_id =
+                    "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+            },
+            schema_version = 5,
+        });
+        WriteLedger(freeze);
+        WriteFile(StatePinPath,
+            "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n");
+        WriteFile(".ledger-frozen-status", "0\n");
+    }
+
+    internal void RevokeStatePin() => Git("rm", StatePinPath);
+
+    internal bool StatePinExists() => TemporaryFileSystem.File.Exists(Path.Combine(Root, StatePinPath));
+
+    internal string StatePinContents() => TemporaryFileSystem.File.ReadAllText(Path.Combine(Root, StatePinPath));
+
+    internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
+
+    internal int FreezeCount(string leanPath = LeanPath) =>
+        Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+        .Count(path =>
+        {
+            using var document = JsonDocument.Parse(File.ReadAllText(path));
+            var root = document.RootElement;
+            if (!root.TryGetProperty("event_type", out var eventType)
+                || eventType.GetString() != "Freeze")
+            {
+                return false;
+            }
+
+            var payload = root.GetProperty("payload");
+            var selector = payload.TryGetProperty(
+                "descriptor_selector",
+                out var descriptorSelector)
+                ? descriptorSelector.GetString()
+                : null;
+            return selector == leanPath;
+        });
+
+    private void WriteLedger(params string[] events)
+    {
+        WriteLedger(events.Select(static (json, index) => ($"fixture-{index}.json", json)).ToArray());
+    }
+
+    private void WriteLedger(params (string FileName, string Json)[] events)
+    {
+        var directory = Path.Combine(Root, LedgerPath);
+        foreach (var path in Directory.EnumerateFiles(directory, "*.json")) File.Delete(path);
+        foreach (var (fileName, json) in events)
+        {
+            File.WriteAllText(
+                Path.Combine(directory, fileName),
+                json + "\n",
+                new UTF8Encoding(false));
+        }
+    }
+
+    internal string[] Status() => Git("status", "--porcelain=v1")
+        .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+    internal string[] TrackedPaths() => Git("ls-files")
+        .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+    internal string[] LedgerState() =>
+        Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+            .Order(StringComparer.Ordinal)
+            .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
+            .ToArray();
+
+    internal string[] CallKinds() => !File.Exists(callsPath)
+        ? []
+        : File.ReadAllLines(callsPath).Select(static call =>
+        {
+            if (!call.StartsWith("dotnet:", StringComparison.Ordinal)) return call;
+            var command = call["dotnet:".Length..];
+            var separator = command.IndexOf(' ');
+            return "dotnet:" + (separator < 0 ? command : command[..separator]);
+        }).ToArray();
+
+    internal string[] Calls() => File.Exists(callsPath) ? File.ReadAllLines(callsPath) : [];
+
+    internal void ClearCalls()
+    {
+        if (File.Exists(callsPath)) File.Delete(callsPath);
+    }
+
+    private string Git(params string[] arguments)
+    {
+        var result = TestProcessRunner.Run(
+            "/usr/bin/git",
+            arguments,
+            Root,
+            TestBudgets.PlaybookProcessHangGuard,
+            128 * 1024);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"git {string.Join(' ', arguments)} failed: "
+                + Encoding.UTF8.GetString(result.StandardError));
+        }
+
+        return Encoding.UTF8.GetString(result.StandardOutput);
+    }
+
+    private void WriteExecutable(string name, string body)
+    {
+        var path = Path.Combine(binPath, name);
+        File.WriteAllText(
+            path,
+            "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
+            new UTF8Encoding(false));
+        if (OperatingSystem.IsWindows()) return;
+        File.SetUnixFileMode(
+            path,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
+
+    private void WriteFile(string relativePath, string content)
+    {
+        var path = Path.Combine(Root, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(path) ?? Root);
+        File.WriteAllText(path, content, new UTF8Encoding(false));
+    }
+
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal int FreezeProbeCount() => File.Exists(freezeProbePath)
+        ? File.ReadAllLines(freezeProbePath).Length
+        : 0;
+
+    private void CopyScript()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var target = Path.Combine(Root, ScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(Path.Combine(root, ScriptPath), target);
+    }
+
+    private void WriteGitGuardStub() => WriteExecutable("git", """
+        arguments=("$@")
+        index=0
+        while [[ $index -lt ${#arguments[@]} ]]; do
+          token=${arguments[index]}
+          case "$token" in
+            -C|-c|--git-dir|--work-tree|--namespace|--super-prefix|--config-env)
+              index=$((index + 2))
+              ;;
+            --git-dir=*|--work-tree=*|--namespace=*|--super-prefix=*|--config-env=*)
+              index=$((index + 1))
+              ;;
+            --no-pager|--paginate|--bare|--literal-pathspecs|--no-literal-pathspecs|--glob-pathspecs|--noglob-pathspecs|--icase-pathspecs)
+              index=$((index + 1))
+              ;;
+            --)
+              index=$((index + 1))
+              break
+              ;;
+            -*) index=$((index + 1)) ;;
+            *) break ;;
+          esac
+        done
+        subcommand=${arguments[index]:-}
+        if [[ $subcommand == hash-object && ${PLAYBOOK_INSIDE_LEDGER_STUB:-0} != 1 ]]; then
+          printf 'freeze-exists\n' >> "$PLAYBOOK_TEST_FREEZE_PROBES"
+        fi
+        if [[ $subcommand == merge ]]; then
+          printf 'git-branch-merge:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
+          exit 97
+        fi
+        exec /usr/bin/git "${arguments[@]}"
+        """);
+
+    private void WriteMakeStub() => WriteExecutable("make", """
+        printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
+        case "${1:-}" in
+          lean-report)
+            mkdir -p .lake/build/stratalint
+            printf '{"schema":"synthetic-lean-report"}\n' \
+              > .lake/build/stratalint/raw-lean-report.json
+            if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
+              cp D5/S0/Carrier/Probe.lean .report-source
+            fi
+            ;;
+          emit)
+            if ! cmp -s D5/S0/Carrier/Probe.lean .report-source; then
+              echo 'STALE_LEAN_REPORT emit refused stale input' >&2
+              exit 41
+            fi
+            mkdir -p Generated
+            printf '{"truth":{"nodes":[{"repo_path":"D5/S0/Carrier/Probe.lean","state":"closed"}]}}\n' \
+              > Generated/truth-graph.v1.json
+            if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+              printf 'emission: covered\n' > Blueprint/D5/S0/Carrier/Probe.md
+            else
+              printf 'emission: open\n' > Blueprint/D5/S0/Carrier/Probe.md
+            fi
+            ;;
+        esac
+        """);
+
+    private void WriteDotnetStub() => WriteExecutable("dotnet", """
+        args="$*"
+        command=${args##* -- }
+        printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
+        read -r -a parts <<< "$command"
+        case "${parts[0]:-}" in
+          deposit-header-check)
+            if [[ ${parts[1]:-} != --target \
+                || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
+              echo 'DEPOSIT_HEADER_CHECK_INVALID synthetic target transport mismatch' >&2
+              exit 96
+            fi
+            if [[ ${PLAYBOOK_REJECT_DEPOSIT_HEADER:-0} == 1 ]]; then
+              printf 'SL-012 %s: expected the canonical Lean header at byte zero (six-line legacy header or seven-line header with utility)\n' \
+                "${parts[2]}"
+              exit 1
+            fi
+            ;;
+          ledger-frozen)
+            if [[ ${parts[1]:-} != --target \
+                || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
+              echo 'LEDGER_FROZEN_INVALID synthetic target transport mismatch' >&2
+              exit 96
+            fi
+            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 ]]; then
+              exec "$PLAYBOOK_REAL_CLI" "${parts[@]}"
+            fi
+            status=1
+            [[ ! -f .ledger-frozen-status ]] || status=$(<.ledger-frozen-status)
+            [[ $status != 2 ]] || echo 'LEDGER_FROZEN_INVALID synthetic failure' >&2
+            exit "$status"
+            ;;
+          ledger-align)
+            if [[ ${parts[1]:-} == --add ]]; then
+              if [[ ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" \
+                  || ${parts[3]:-} != --candidate-lean-report ]]; then
+                echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
+                exit 97
+              fi
+            elif [[ ${parts[1]:-} != --candidate-lean-report ]]; then
+              echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
+              exit 97
+            fi
+            target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
+            if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
+              event_id=2222222222222222222222222222222222222222222222222222222222222222
+            else
+              event_id=3333333333333333333333333333333333333333333333333333333333333333
+            fi
+            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 ]]; then
+              for accepted in Golden/Frozen/accepted/*.json; do
+                [[ -f "$accepted" ]] || continue
+                if jq -e --arg target "$target_module" \
+                    '.payload.descriptor_selector == $target' "$accepted" >/dev/null; then
+                  rm "$accepted"
+                fi
+              done
+            fi
+            printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"declaration_statement_ids":[],"descriptor_selector":"%s","prerequisite_frozen_node_ids":[],"statement_id":"sha256:%s"},"schema_version":5}\n' \
+              "$event_id" "$target_module" "$event_id" \
+              > "Golden/Frozen/accepted/${event_id}.json"
+            state_pin="Golden/Frozen/state/${target_module}.json"
+            mkdir -p "$(dirname "$state_pin")"
+            printf '{"statement_id":"sha256:%s"}\n' "$event_id" > "$state_pin"
+            printf '0\n' > .ledger-frozen-status
+            if [[ -f fail-ledger-once ]]; then
+              rm fail-ledger-once
+              echo 'LEDGER_ALIGN_INTERRUPTED synthetic kill after align' >&2
+              exit 75
+            fi
+            ;;
+          cover-batch)
+            exit "${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0}"
+            ;;
+          cover-atom)
+            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 \
+                && ! -f "Golden/Frozen/state/${PLAYBOOK_TARGET_MODULE}.json" ]]; then
+              echo "COVER_INVALID cover target module ${PLAYBOOK_TARGET_MODULE} is not frozen; run make deposit before cover" >&2
+              exit 1
+            fi
+            atom=''
+            gid=''
+            for ((index=1; index<${#parts[@]}; index+=2)); do
+              case "${parts[index]}" in
+                --cover-atom) atom=${parts[index+1]} ;;
+                --gid) gid=${parts[index+1]} ;;
+              esac
+            done
+            if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
+              printf 'atom_id: %s\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' "$atom" \
+                > Meta/BACKFILL.yaml
+              echo 'COVER_INVALID synthetic disposition' >&2
+              exit 1
+            fi
+            secondary=''
+            existing_atom=$(sed -n 's/^atom_id: //p' Meta/BACKFILL.yaml)
+            if [[ $existing_atom == "$atom" ]] \
+                && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+              echo "COVER_INVALID cover atom $atom already has coverage: $gid" >&2
+              exit 1
+            fi
+            printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
+              "$atom" "$secondary" > Meta/BACKFILL.yaml
+            ;;
+        esac
+        """);
+
+    internal ProcessOutput Run(
+        string command,
+        string gid = Gid,
+        string? atomId = AtomId,
+        bool staleReport = false,
+        bool coverDispositionFailure = false,
+        TimeSpan? timeout = null,
+        string? baseRevision = null,
+        bool rejectDepositHeader = false,
+        string? realCliPath = null,
+        bool throughMake = false) =>
+        TestProcessRunner.Run(
+            "/usr/bin/env",
+            [
+                $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                $"PLAYBOOK_TEST_CALLS={callsPath}",
+                $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
+                $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
+                $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
+                $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
+                $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(realCliPath is not null ? "1" : "0")}",
+                $"PLAYBOOK_REAL_CLI={(realCliPath is null ? "" : RealCliPath(realCliPath))}",
+                .. (throughMake
+                    ? new[] { "/usr/bin/make", command, $"BASE={baseRevision ?? "HEAD"}", $"GID={gid}" }
+                        .Concat(atomId is null ? [] : new[] { $"ATOM_ID={atomId}" })
+                    : new[]
+                        {
+                            "/bin/bash", Path.Combine(Root, ScriptPath), command,
+                            baseRevision ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
+                        }
+                        .Concat(atomId is null ? [] : new[] { atomId })
+                        .Append(gid)),
+            ],
+            Root,
+            timeout ?? BoundedProcessRunner.HangDetectionBudget,
+            128 * 1024);
+
+    public void Dispose()
+    {
+        temporary.Dispose();
+    }
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal string HeadRevision() => Git("rev-parse", "HEAD").Trim();
+
+    internal string CommitAll(string message)
+    {
+        Git("add", "-A");
+        Git("commit", "-qm", message);
+        return HeadRevision();
+    }
+
+    internal string WriteAcceptedFreezeV5()
+    {
+        var identity = new string('4', 64);
+        var relativePath = $"{LedgerPath}/{identity}.json";
+        WriteFile(relativePath, JsonSerializer.Serialize(new
+        {
+            event_hash = "sha256:" + identity,
+            event_type = "Freeze",
+            payload = new
+            {
+                declaration_statement_ids = Array.Empty<object>(),
+                descriptor_selector = LeanPath,
+                prerequisite_frozen_node_ids = Array.Empty<string>(),
+                statement_id = "sha256:" + identity,
+            },
+            schema_version = 5,
+        }) + "\n");
+        return relativePath;
+    }
+
+    internal string WriteLegacyFreeze()
+    {
+        var identity = new string('5', 64);
+        var relativePath = $"{LedgerPath}/{identity}.json";
+        WriteFile(relativePath, JsonSerializer.Serialize(new
+        {
+            event_type = "Freeze",
+            payload = new { descriptor_selector = LeanPath },
+            schema_version = 4,
+        }) + "\n");
+        return relativePath;
+    }
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal void ChangeFormalizationToSevenLineWrappedDigest()
+    {
+        WriteFile(LeanPath, SevenLineWrappedDigest(
+            Gid[..Gid.LastIndexOf('.')],
+            "theorem probe : True := by trivial\n"));
+        WriteFile(DefinitionPath, "definition deposited\n");
+    }
+
+    internal string[] BlueprintState()
+    {
+        var directory = Path.Combine(Root, "Blueprint");
+        return Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal)
+            .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
+            .ToArray();
+    }
+
+    internal static string ExactSixLineLean(string gid, string declaration)
+    {
+        var documentGid = gid[..gid.LastIndexOf('.')];
+        return $"/- GID: {documentGid}\n"
+            + "   generality: G\n"
+            + $"   mirror-B: D5/B/{documentGid[3..]}\n"
+            + "   mirror-E: none(waiver:pure-definition)\n"
+            + "   anchors: []\n"
+            + "   digest: Synthetic deposit workflow fixture. -/\n"
+            + declaration;
+    }
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal bool LeanReportExists() => File.Exists(
+        Path.Combine(Root, ".lake/build/stratalint/raw-lean-report.json"));
+
+    internal ProcessOutput RunMakeCover(bool includeAtomId) =>
+        TestProcessRunner.Run(
+            "/usr/bin/env",
+            includeAtomId
+                ?
+                [
+                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                    $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    "/usr/bin/make",
+                    "cover",
+                    $"ATOM_ID={AtomId}",
+                ]
+                :
+                [
+                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                    $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    "/usr/bin/make",
+                    "cover",
+                ],
+            Root,
+            TestBudgets.ShortProcessHangGuard,
+            128 * 1024);
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal string WriteBatchFile(string contents)
+    {
+        const string path = ".lake/cover-batch.tsv";
+        WriteFile(path, contents);
+        return path;
+    }
+
+    internal ProcessOutput RunBatch(string atomsFile, bool coverDispositionFailure = false) =>
+        TestProcessRunner.Run(
+            "/usr/bin/env",
+            [
+                $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                $"PLAYBOOK_TEST_CALLS={callsPath}",
+                "PLAYBOOK_STALE_REPORT=0",
+                $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
+                "/bin/bash",
+                Path.Combine(Root, ScriptPath),
+                "cover-batch",
+                "synthetic-base",
+                atomsFile,
+            ],
+            Root,
+            BoundedProcessRunner.HangDetectionBudget,
+            128 * 1024);
+}
+
+internal sealed partial class TransactionFixture
+{
+    internal void WriteActiveFreezeForCurrentModule() => WriteActiveFreeze();
+
+    internal void AddUnrelatedMalformedLedgerShard() => WriteFile(
+        LedgerPath + "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+        "{\"event_type\":\"Freeze\",\"payload\":{\"node_path\":\"D5/S4/Unrelated.lean\"\n");
+
+    internal static string SevenLineWrappedDigest(string documentGid, string declaration) =>
+        $"/- GID: {documentGid}\n"
+        + "   generality: G\n"
+        + $"   mirror-B: D5/B/{documentGid[3..]}\n"
+        + "   mirror-E: none(waiver:pure-definition)\n"
+        + "   anchors: []\n"
+        + "   digest: Synthetic deposit workflow digest\n"
+        + "   wraps onto physical line seven. -/\n"
+        + declaration;
+
+    private static string RealCliPath(string path)
+    {
+        return File.Exists(path)
+            ? path
+            : throw new InvalidOperationException(
+                $"PLAYBOOK_REAL_CLI 需要 StrataLint apphost 与测试程序集同目录,但 {path} 不存在;"
+                + "消费该夹具的测试项目必须引用 StrataLint.Cli。");
+    }
+
+}

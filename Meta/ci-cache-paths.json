@@ -10,6 +10,7 @@
       ".lake/build/ir/**/*.o*",
       ".lake/build/ir/**/*.bc*",
       ".lake/build/lean-inspector",
+      ".lake/build/reg",
       ".lake/build/stratalint/raw-lean-report.json*",
       ".lake/build/declared-template-evidence.json"
     ]

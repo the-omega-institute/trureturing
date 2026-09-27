@@ -1,0 +1,119 @@
+name: CI engineering cache
+
+on:
+  workflow_call:
+    inputs:
+      candidate_sha:
+        type: string
+        default: ''
+      plan_artifact_id:
+        type: string
+        default: ''
+      build_artifact_id:
+        required: true
+        type: string
+      build_run_id:
+        required: true
+        type: string
+      build_run_attempt:
+        required: true
+        type: string
+      engineering_artifact_id:
+        required: true
+        type: string
+      engineering_run_id:
+        required: true
+        type: string
+      engineering_run_attempt:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  CI_WORKFLOW_INPUTS: ${{ inputs.candidate_sha != '' && format('{{"candidate_sha":{0}}}', toJSON(inputs.candidate_sha)) || '{}' }}
+  CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
+  PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+  STRATALINT_CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '') || (github.event_name == 'pull_request' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number)) }}
+  CI_CACHE_JOB_NAME: engineering_cache / engineering_cache
+  CI_CHANGES_PATH: build/ci/changes.json
+  CI_PLAN_PATH: build/ci/plan.json
+
+jobs:
+  engineering_cache:
+    name: engineering_cache
+    if: ((github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '') || (github.event_name == 'pull_request' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number))) && inputs.build_artifact_id != '' && inputs.engineering_artifact_id != ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 2
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - id: cache_window
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
+      - uses: actions/download-artifact@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true' && inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
+      - name: Validate plan for engineering cache
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --stage engineering
+      - uses: actions/setup-dotnet@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          artifact-ids: ${{ inputs.build_artifact_id }},${{ inputs.engineering_artifact_id }}
+          path: ${{ runner.temp }}/engineering-cache
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ inputs.build_run_id }}
+          UPSTREAM_ATTEMPT: ${{ inputs.build_run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-build.tar.gz"
+      - name: Validate accepted engineering bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ inputs.engineering_run_id }}
+          UPSTREAM_ATTEMPT: ${{ inputs.engineering_run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-engineering.tar.gz"
+      - id: keys
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage engineering
+      - id: prior_engineering
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}
+          restore-keys: ${{ steps.keys.outputs.engineering_restore_prefix }}
+      - name: Restore optional unselected test seeds before export
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        env:
+          ENGINEERING_KEY: ${{ steps.prior_engineering.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
+      - id: snapshot
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
+      - if: steps.snapshot.outputs.engineering_ready == 'true'
+        timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}

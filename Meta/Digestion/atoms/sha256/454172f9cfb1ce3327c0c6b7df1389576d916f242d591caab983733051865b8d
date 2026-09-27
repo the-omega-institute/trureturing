@@ -1,0 +1,17 @@
+**推论 139.8（一致 $3/R$ 与上界首项）。** 令
+$$
+m_R=\left\lceil4\log_\varphi(R+1)\right\rceil.
+$$
+当 $m_R\le R$ 时，
+$$
+d_k(R)\le\frac1{R-m_R+2}+\frac1{(R+1)^2}.
+\tag{139.23}
+$$
+特别地，
+$$
+d_k(R)\le\frac3R\quad(k\ge2,\ R\ge128),
+\qquad
+\limsup_{R\to\infty}\sup_{k\ge2}R\,d_k(R)\le1.
+\tag{139.24}
+$$
+

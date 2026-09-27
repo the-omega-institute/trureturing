@@ -1,0 +1,11 @@
+**命题 2.20（零关系的有限生成）。** 在 $\mathbb N^{d\times d}$ 上采用逐坐标偏序。令 $\mathcal B_H$ 为 $S_H\setminus\{0\}$ 的极小元集合。Dickson 引理说明有限个自然数坐标的逐坐标序没有无限反链，因而 $\mathcal B_H$ 有限。本处的 $0$ 必须排除，否则唯一极小元是零，不能生成非零关系。
+
+更具体地，若 $\alpha,\beta\in S_H$ 且 $0<\beta\le\alpha$、$\beta\ne\alpha$，则 $\alpha-\beta$ 是非零自然数指数，并且总权重仍为零。所以 $\alpha$ 非极小当且仅当它可写成两个非零 $S_H$ 元素之和。由此，$\mathcal B_H$ 正是全部不可分解零权重指数，且
+$$
+\mathcal B_H=\operatorname{Min}(S_H\setminus\{0\}),\qquad
+|\mathcal B_H|<\infty,\qquad
+S_H=\left\{\sum_{\beta\in\mathcal B_H}n_\beta\beta:
+ n_\beta\in\mathbb N\right\}.
+\tag{TM.178}
+$$
+

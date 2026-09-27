@@ -1,0 +1,21 @@
+**命题 2.2（实际效果空间的充要条件）。** 完整相容效果可用是一份明确的强合同。若装置只有效果集合 $\mathcal F$ 与酉操作菜单 $\{U_a:a\in\mathcal A\}$，实际实验暂限为执行有限操作词后作一次末端读数。对 $w=a_1\cdots a_k$ 取 $U_w=U_{a_k}\cdots U_{a_1}$，空词对应 $I$。定义
+$$
+\mathcal W
+=\operatorname{span}_{\mathbb R}
+\left(\{I\}\cup\{U_w^\dagger F U_w:F\in\mathcal F,\ w\in\mathcal A^*\}\right)
+\subseteq\operatorname{Herm}(\mathcal H).
+\tag{TM.115}
+$$
+
+有限维保证这是闭实子空间，尽管动作菜单或操作词集合可无限。迹循环性给出全部未来读数的精确判据：
+$$
+\boxed{
+\operatorname{Tr}(F U_w\rho U_w^\dagger)
+=\operatorname{Tr}(F U_w\sigma U_w^\dagger)
+\quad\forall F,w
+\quad\Longleftrightarrow\quad
+\rho-\sigma\in\mathcal W^\perp.
+}
+\tag{TM.116}
+$$
+

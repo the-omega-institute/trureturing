@@ -1,0 +1,74 @@
+**反例 2.6（同源样本细分单份纤维）。** 令单系统 $H=N=|1\rangle\langle1|$，取
+$$
+\rho=|+\rangle\langle+|=\tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\sigma=I/2,\qquad
+P_N(\rho)=P_N(\sigma)=I/2.
+\tag{TM.128}
+$$
+
+现在额外授予两次来自同一制备源、具有共同相位的样本，候选联合输入分别为 $\rho\otimes\rho$ 和 $\sigma\otimes\sigma$。按 $00,01,10,11$ 排列，$N^{(2)}=N\otimes I+I\otimes N=\operatorname{diag}(0,1,1,2)$。第一份乘积矩阵全部元素为 $1/4$，经总能量 pinching 后为
+$$
+\begin{aligned}
+P_{N^{(2)}}(\rho\otimes\rho)
+&=\tfrac14\begin{pmatrix}
+1&0&0&0\\
+0&1&1&0\\
+0&1&1&0\\
+0&0&0&1
+\end{pmatrix}\\
+&=\tfrac14|00\rangle\langle00|
+ +\tfrac12|\psi_+\rangle\langle\psi_+|
+ +\tfrac14|11\rangle\langle11|,\\
+P_{N^{(2)}}(\sigma\otimes\sigma)&=I_4/4,
+\qquad |\psi_+\rangle=(|01\rangle+|10\rangle)/\sqrt2.
+\end{aligned}
+\tag{TM.129}
+$$
+
+取合法二元效果
+$$
+Q=|\psi_+\rangle\langle\psi_+|
+=\tfrac12\begin{pmatrix}
+0&0&0&0\\
+0&1&1&0\\
+0&1&1&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+[Q,N^{(2)}]=0,\qquad
+\operatorname{Tr}(Q\rho^{\otimes2})=\tfrac12,\quad
+\operatorname{Tr}(Q\sigma^{\otimes2})=\tfrac14.
+\tag{TM.130}
+$$
+
+其余效果为 $I-Q$，也合法。$Q$ 完全位于总能量一的简并块，故交换关系直接成立；将中间 $2\times2$ 块相乘取迹便给两个概率。若采用B卷第2.1.3节对联合系统的指针资源合同，这份效果也有明确的合法实施；仅给出 $Q$ 不替受限装置自动授予该实施能力。
+
+共同相位不能省略。写 $|+_\phi\rangle=(|0\rangle+e^{i\phi}|1\rangle)/\sqrt2$、$\rho_\phi=|+_\phi\rangle\langle+_\phi|$。没有外部相位标准、而两份样本共享同一个均匀未知 $\phi$ 时，联合律为
+$$
+\begin{aligned}
+\Omega_{\rm common}
+&=\frac1{2\pi}\int_0^{2\pi}\rho_\phi\otimes\rho_\phi\,d\phi
+ =\frac14\sum_{k=0}^{3}\rho_{k\pi/2}\otimes\rho_{k\pi/2}
+ =P_{N^{(2)}}(\rho^{\otimes2}),\\
+\Omega_{\rm independent}
+&=\left(\frac1{2\pi}\int_0^{2\pi}\rho_\phi\,d\phi\right)
+ \otimes\left(\frac1{2\pi}\int_0^{2\pi}\rho_\theta\,d\theta\right)
+ =I_4/4.
+\end{aligned}
+\tag{TM.131}
+$$
+
+证明只需展开矩阵元素：两样本的总激发数为 $0,1,2$，元素的相位因子为 $e^{im\phi}$，其中 $m\in\{-2,-1,0,1,2\}$。积分及所列四点平均都仅保留 $m=0$，恰得式(TM.129)。独立相位平均则分别消去每份的非对角项，得到第二行。因此两个单份边缘均为 $I/2$，联合读数仍不同；新增结构是实际共同来源保留的相对相位。
+
+式(TM.131)第一行已经给出四个乘积态的合法凸组合，所以这份共同相位平均态是可分态；平均前的 $\rho\otimes\rho$ 更是乘积态。$Q$ 使用联合效果不使被测态因此成为纠缠态。这个例子认证的是特定共同相位资源的可见后果，不能作为纠缠存在性的见证。
+
+同样，“取得第二份样本”不是对单份未知态免费调用一条通道。假设对所有态都有一个线性通道实现 $\rho\mapsto\rho\otimes\rho$，令 $\rho_0=|0\rangle\langle0|$、$\rho_1=|1\rangle\langle1|$，则仿射性要求的输出与所需输出矛盾：
+$$
+\tfrac12\rho_0^{\otimes2}+\tfrac12\rho_1^{\otimes2}
+=\tfrac12\operatorname{diag}(1,0,0,1)
+\ne I_4/4
+=\left(\tfrac12\rho_0+\tfrac12\rho_1\right)^{\otimes2}.
+\tag{TM.132}
+$$
+
+所以这里的正确定义是一个可重复调用的制备源及其共同参数、相位重置规则和样本权限；不是在旧摘要上进行后处理。B卷第2.1.5节的参考 $\tau$ 固定且不变，本例在两种假设下加入的第二样本分别是 $\rho$ 与 $\sigma$，本来就不是同一个独立不变参考。两项结论因此可以同时成立：单份观察商对前一种资源扩展保持充分，对后一种来源扩展却可以被严格细分。
+

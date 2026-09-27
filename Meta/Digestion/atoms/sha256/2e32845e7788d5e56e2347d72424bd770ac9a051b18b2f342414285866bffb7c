@@ -1,0 +1,18 @@
+**命题 1.11（端点锐平方根尺度）。** 当 $p_0=0$，正半定性迫使目标相干为零，$F_0$ 只有 $|1\rangle\langle1|$。由式(TM.88)与合法性，
+$$
+\operatorname{dist}_D(R(p,c),F_0)^2
+=p^2+|c|^2\le p^2+p(1-p)=p,
+\qquad
+\operatorname{dist}_D(R(p,r(p)),F_0)=\sqrt p.
+\tag{TM.93}
+$$
+
+纯态输入达到上界，因此平方根的常数一是最小的。对任意 $\beta>1/2$，同一纯态族还给
+$$
+\frac{\operatorname{dist}_D(R(p,r(p)),F_0)}{|p-0|^\beta}
+=p^{1/2-\beta}\longrightarrow\infty\qquad(p\downarrow0).
+\tag{TM.94}
+$$
+
+故不存在任何有限线性常数，也不存在指数大于 $1/2$ 的局部统一 Hölder 界。目标 $p_0=1$ 的结论完全对称：唯一目标为 $|0\rangle\langle0|$，距离平方为 $(1-p)^2+|c|^2\le1-p$，纯态达到 $\sqrt{1-p}$。在B卷第1.2节的嵌入中，这两个逻辑纯态分别对应 $|10\rangle$ 与 $|01\rangle$，始终属于同一个零能量层。
+

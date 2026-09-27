@@ -214,10 +214,17 @@ def check(body, next_round=None, closed=False, carriers=None):
                 break
         findings.extend(layout_findings(text, nxt, carriers))
         prev = nyxid_of(rounds.get(max(rounds), []))
-        m = re.search(r"(architecture|quality)\s+nyxid", text, re.I)
-        if m is None:
-            m = re.search(r"nyxid[^,.]*?,?\s*(?:seat\s+)?(?:is\s+)?(architecture|quality)", text, re.I)
-        nxt_seat = m.group(1).lower() if m else None
+        # Read the nyxid seat from the same assignment parser the layout comparison uses, so the
+        # two checks cannot disagree about one line. The proximity regexes remain only as the
+        # fallback for layouts the assignment parser does not cover.
+        assigned = layout_seats(text)
+        nxt_seat = next((seat for seat in ("architecture", "quality")
+                         if carrier_family(assigned.get(seat, "")).startswith("nyxid")), None)
+        if nxt_seat is None and not any(carrier_family(c).startswith("nyxid") for c in assigned.values()):
+            m = re.search(r"(architecture|quality)\s+nyxid", text, re.I)
+            if m is None:
+                m = re.search(r"nyxid[^,.]*?,?\s*(?:seat\s+)?(?:is\s+)?(architecture|quality)", text, re.I)
+            nxt_seat = m.group(1).lower() if m else None
         if prev and nxt_seat and prev == nxt_seat:
             findings.append(
                 f"STANDING DRAW-REPEAT round {nxt} keeps nyxid-oracle on {nxt_seat}, the same as round {top}"
@@ -258,6 +265,16 @@ def selftest():
     cases.append(("tests nyxid", GOOD.replace("| 2 | `aaa` | tests | codex-cli | reject |", "| 2 | `aaa` | tests | nyxid-oracle / ChatGPT Pro | reject |"), ["TESTS-NYXID"]))
     cases.append(("draw repeat in table", GOOD.replace("| 2 | `aaa` | architecture | nyxid-oracle / ChatGPT Pro | approve |\n| 2 | `aaa` | quality | codex-cli | reject |", "| 2 | `aaa` | architecture | codex-cli | approve |\n| 2 | `aaa` | quality | nyxid-oracle / ChatGPT Pro | reject |"), ["DRAW-REPEAT"]))
     cases.append(("draw repeat into next", GOOD.replace("Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli", "Round 3 seat layout at this head: architecture nyxid-oracle / ChatGPT Pro, quality codex-cli"), ["DRAW-REPEAT"]))
+    # `seat = carrier` layouts with CJK punctuation (#9661 round 2): the assignment parser read
+    # architecture = nyxid, while the repeat check used a proximity regex that treats only ASCII
+    # commas as boundaries and swallowed "nyxid-oracle(ChatGPT Pro),quality" as nyxid on quality.
+    eq_layout = "Round 3 seat layout: head `bbb`;{a} = {ac}(ChatGPT Pro),{q} = {qc},tests = codex-cli。"
+    cases.append(("equals layout, nyxid moves", GOOD.replace(
+        "Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli.",
+        eq_layout.format(a="quality", ac="nyxid-oracle", q="architecture", qc="codex-cli")), []))
+    cases.append(("equals layout, nyxid repeats", GOOD.replace(
+        "Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli.",
+        eq_layout.format(a="architecture", ac="nyxid-oracle", q="quality", qc="codex-cli")), ["DRAW-REPEAT"]))
     never = GOOD.replace(
         "Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli.",
         "Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli"

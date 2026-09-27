@@ -1,0 +1,7 @@
+**引理 44.1（二元经典标签的条件熵连续模数）。** 令 $\rho_{XB},\tau_{XB}$ 是在同一二元经典标签基上块对角的量子态，$\tfrac12\|\rho-\tau\|_1\le\epsilon\le1$。定义
+\[
+ w(\epsilon)=\min\left\{1,\epsilon+(1+\epsilon)
+                         h_2\!\left(\frac{\epsilon}{1+\epsilon}\right)\right\}.
+\]
+则 $|H(X|B)_\rho-H(X|B)_\tau|\le w(\epsilon)$，常数与 $\dim B$ 无关。
+

@@ -1,4 +1,5 @@
 import LeanInformationAudit.Census.Report
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit.CensusTransport
 
@@ -10,7 +11,7 @@ def readHandoff (rows receipt digest : String) (report : FrozenReport)
     (generate : Option (String × String × String) := none) : IO (Array StatementKey) :=
   IO.FS.withTempDir fun directory => do
     let keys := directory / "keys.json"
-    let repository ← IO.currentDir
+    let repository ← Repository.root
     let direct := #[
       (repository / "tools/lean-inspector/Census/Certificate/handoff.py").toString,
       "--rows", rows, "--receipt", receipt, "--digest", digest,
@@ -37,7 +38,7 @@ def publish (destination : String) (metadata : Json) : IO Unit :=
   IO.FS.withTempDir fun directory => do
     let certificate := directory / "certificate.json"
     IO.FS.writeFile certificate metadata.compress
-    let repository ← IO.currentDir
+    let repository ← Repository.root
     let result ← IO.Process.output { cmd := "python3", args := #[
       (repository / "tools/lean-inspector/Census/Certificate/handoff.py").toString,
       "--certificate", certificate.toString, "--output", destination] }

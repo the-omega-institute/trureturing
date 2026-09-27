@@ -1,0 +1,36 @@
+**定义 1.8（密度态及零能量实现）。** 在有序基 $|0\rangle,|1\rangle$ 上，写全部量子位密度态为
+$$
+R(p,c)=\begin{pmatrix}p&c\\\overline c&1-p\end{pmatrix},\qquad
+0\le p\le1,\quad |c|\le r(p),\qquad r(p)=\sqrt{p(1-p)}.
+\tag{TM.83}
+$$
+
+矩阵 Hermitian、迹为一；两个对角元非负以及行列式 $p(1-p)-|c|^2\ge0$ 恰好保证正半定性。因此这里使用的全是实际密度态，且式(TM.83)穷尽该二维空间上的密度态。等号 $|c|=r(p)$ 等价于行列式为零，即该态为秩一纯态。
+
+此模型直接嵌入B卷第1.2节的零能量子空间。令 $V|0\rangle=|01\rangle$、$V|1\rangle=|10\rangle$，则 $V^\dagger V=I$，并有
+$$
+\widehat R(p,c)=VR(p,c)V^\dagger
+=\begin{pmatrix}
+0&0&0&0\\
+0&p&c&0\\
+0&\overline c&1-p&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+H\widehat R(p,c)=0,\qquad
+H=Z\otimes I+I\otimes Z.
+\tag{TM.84}
+$$
+
+全部嵌入态的完整能量分布仍集中于零。两嵌入态之差只比原二阶差矩阵增加两个零本征值，因此其半迹距离完全相同。占据读数 $p$ 对应 $|01\rangle$ 的概率，也等于第一系统计算基结果为零的概率；在逻辑量子位表示中，它是 $|0\rangle\langle0|$ 的 Born 期望。
+
+固定目标 $p_0\in[0,1]$，令
+$$
+F_{p_0}=\{R(p_0,d):|d|\le r_0\},\qquad
+r_0=r(p_0),\qquad
+\delta=|p-p_0|,\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+\tag{TM.85}
+$$
+
+$F_{p_0}$ 对每个目标都非空且紧。$\delta$ 是该二值占据测量的两个输出律之间的总变差；距离则考察完整密度态。
+

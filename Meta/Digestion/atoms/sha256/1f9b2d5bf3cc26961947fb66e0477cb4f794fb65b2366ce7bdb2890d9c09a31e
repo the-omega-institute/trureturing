@@ -1,0 +1,30 @@
+**定义 140.3（规范状态的一位映射）。** 对新位 $x\in\{0,1\}$，定义幸存记录集合
+$$
+S_x(\mathcal Q)
+=\{(a-1,b-1,\eta\oplus(1-x)):(a,b,\eta)\in\mathcal Q, a>-R\}.
+\tag{140.7}
+$$
+记 $\operatorname{ord}$ 为按右端点递增排列有限记录集，记录的长度仍为 $z(a,b,\eta)=b-a-1$。定义
+$$
+\mathcal Q_x'=\begin{cases}
+\operatorname{ord}\bigl(\{c\in S_x(\mathcal Q):z(c)>\ell\}
+\cup\{(-\ell-2,-1,0)\}\bigr),
+&x=1\text{ 且 }1\le\ell\le R-2,\\
+\operatorname{ord}(S_x(\mathcal Q)),&\text{其他情形},
+\end{cases}
+\tag{140.8}
+$$
+以及
+$$
+\ell_x'=\begin{cases}\min\{R,\ell+1\},&x=0,\\0,&x=1,\end{cases}
+\qquad
+j_x'=\begin{cases}0,&x=0,\\j+1,&x=1.\end{cases}
+\tag{140.9}
+$$
+完整合同的新位合法条件为
+$$
+x=0\quad\text{或}\quad(x=1\text{ 且 }j<k-1).
+\tag{140.10}
+$$
+对合法位令 $T_x(\mathcal Q,\ell,j)=(\mathcal Q_x',\ell_x',j_x')$。不要求自判合法性时，令 $\widehat T_x(\mathcal Q,\ell)=(\mathcal Q_x',\ell_x')$，仅在实际合法输入上要求其合同。
+

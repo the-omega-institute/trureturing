@@ -40,7 +40,7 @@ internal static class LeanArchiveFetch
     internal static LeanArchiveAttempt Run(
         string worktreeRoot,
         IWorktreeProcessRunner runner,
-        TimeSpan budget, LeanCacheWriterGuard? writerGuard = null)
+        TimeSpan budget, LeanCacheWriterGuard? writerGuard = null, bool refreshStale = false)
     {
         writerGuard?.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         var script = ScriptPath(worktreeRoot);
@@ -60,7 +60,7 @@ internal static class LeanArchiveFetch
         {
             output = runner.Run(
                 "/bin/bash",
-                [script, "fetch", "--repository", worktreeRoot, .. (writerGuard is null ? Array.Empty<string>() : new[] { "--writer-owned" })],
+                [script, "fetch", "--repository", worktreeRoot, .. (refreshStale ? new[] { "--refresh-stale" } : Array.Empty<string>()), .. (writerGuard is null ? Array.Empty<string>() : new[] { "--writer-owned" })],
                 worktreeRoot,
                 budget);
         }
@@ -85,6 +85,40 @@ internal static class LeanArchiveFetch
         }
 
         return Parse(output);
+    }
+
+    // Matches the six-hour publication schedule. Copies retain the source age;
+    // directory creation time would incorrectly make an old donor look fresh.
+    internal static readonly TimeSpan RefreshPeriod = TimeSpan.FromHours(6);
+
+    internal static bool IsExpired(string root, DateTimeOffset now)
+    {
+        var build = Path.Combine(root, ".lake", "build");
+        var marker = Path.Combine(build, ".release-refreshed-at");
+        if (File.Exists(marker))
+        {
+            if (File.GetAttributes(marker).HasFlag(FileAttributes.ReparsePoint))
+                throw new IOException("cache refresh timestamp is a symlink");
+            if (DateTimeOffset.TryParse(File.ReadAllText(marker),
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.AssumeUniversal, out var refreshed))
+                return refreshed > now || now - refreshed > RefreshPeriod;
+            return true;
+        }
+
+        var oleans = Path.Combine(build, "lib", "lean");
+        if (!Directory.Exists(oleans)) return true;
+        var options = new EnumerationOptions
+        {
+            RecurseSubdirectories = true,
+            IgnoreInaccessible = false,
+            AttributesToSkip = FileAttributes.ReparsePoint,
+        };
+        // Older caches have no refresh receipt. Use their oldest content output,
+        // so a partial rebuild cannot rejuvenate a mostly stale snapshot.
+        var oldest = Directory.EnumerateFiles(oleans, "*.olean", options)
+            .Select(File.GetLastWriteTimeUtc).DefaultIfEmpty(DateTime.MinValue).Min();
+        return oldest > now.UtcDateTime || now.UtcDateTime - oldest > RefreshPeriod;
     }
 
     private static LeanArchiveAttempt Parse(ProcessOutput output)

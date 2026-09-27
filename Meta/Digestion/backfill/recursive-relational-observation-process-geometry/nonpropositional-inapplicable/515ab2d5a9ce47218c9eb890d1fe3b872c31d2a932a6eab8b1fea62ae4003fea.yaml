@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:515ab2d5a9ce47218c9eb890d1fe3b872c31d2a932a6eab8b1fea62ae4003fea
+  normalized_sha256: sha256:515ab2d5a9ce47218c9eb890d1fe3b872c31d2a932a6eab8b1fea62ae4003fea
+cas_ref: sha256:515ab2d5a9ce47218c9eb890d1fe3b872c31d2a932a6eab8b1fea62ae4003fea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure, no applicable frozen project GID. For arbitrary A, root types ty:A->I and h_a:H_(ty a), use the subtype of typed behaviors reachable legally from some h_a. It is closed by Quiver.Path.comp_assoc and the exact partial-writer naturality supplied by CategoryTheory.Paths.liftNatTrans and Functor.map_comp. Inclusion preserves roots, absence, labels and successors; finite tagged total states imply finite tagged reachable union by Finite.of_injective, and its surjection onto the residual union implies finiteness by Finite.of_surjective. Conversely the literal union supplies one controller and one root per source. No Finite A/I or finite label assumption.
+    previous_atom_id: 70502e56a210177e04d1d0c6c3490aab8c2950a5af78064c28030a0c06b36f3e
+    next_atom_id: 0c78a3edce2001d214fa606ac2a1cc946f3d81c641f9d6bcf3cdf7e25d9f45eb

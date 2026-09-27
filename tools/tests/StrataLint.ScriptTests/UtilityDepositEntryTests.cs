@@ -28,8 +28,17 @@ public sealed class UtilityDepositEntryTests
         var source = TransactionFixture.ExactSixLineLean(TransactionFixture.Gid, body)
             .Replace("   digest:", "   utility: " + utility + "\n   digest:", StringComparison.Ordinal);
         File.WriteAllText(Path.Combine(root, TransactionFixture.LeanPath), source);
-        foreach (var path in new[] { "Meta/registry.yaml", "Meta/domains.yaml" })
-            File.Copy(Path.Combine(repository, path), Path.Combine(root, path));
+        var fileMap = FileMapDocuments.Resolve(
+            File.ReadAllBytes(Path.Combine(repository, FileMapLoader.RelativePath)),
+            FileMapLoader.RelativePath,
+            path => File.ReadAllBytes(Path.Combine(repository, path)));
+        foreach (var document in fileMap)
+        {
+            var destination = Path.Combine(root, document.Path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.WriteAllBytes(destination, document.Bytes.AsSpan());
+        }
+        File.Copy(Path.Combine(repository, "Meta/domains.yaml"), Path.Combine(root, "Meta/domains.yaml"));
         File.Copy(Path.Combine(repository, "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
             "name = \"utility_deposit_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");

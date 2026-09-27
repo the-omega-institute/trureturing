@@ -72,17 +72,53 @@ public sealed record OpenProblemResolutionClaim
 {
     public OpenProblemResolutionClaim(
         ProblemSlugRef problemSlug,
-        ResolutionKind resolutionKind)
+        ResolutionKind resolutionKind) : this(problemSlug, resolutionKind, []) { }
+
+    public OpenProblemResolutionClaim(
+        ProblemSlugRef problemSlug,
+        ResolutionKind resolutionKind,
+        IEnumerable<DeclarationHandle> additionalMembers)
     {
         ProblemSlug = problemSlug ?? throw new ArgumentNullException(nameof(problemSlug));
         ResolutionKind = resolutionKind is ResolutionKind.Proved or ResolutionKind.Refuted
             ? resolutionKind
             : throw new ArgumentOutOfRangeException(nameof(resolutionKind));
+        ArgumentNullException.ThrowIfNull(additionalMembers);
+        var members = additionalMembers.Select(static member => member.Value)
+            .Order(StringComparer.Ordinal).ToImmutableArray();
+        if (members.Distinct(StringComparer.Ordinal).Count() != members.Length)
+        {
+            throw new ArgumentException("Resolution members must be distinct.", nameof(additionalMembers));
+        }
+        AdditionalMembers = members;
     }
 
     public ProblemSlugRef ProblemSlug { get; }
 
     public ResolutionKind ResolutionKind { get; }
+
+    public ImmutableArray<string> AdditionalMembers { get; }
+
+    public ImmutableArray<string> Members(string hostGid) =>
+        [hostGid, .. AdditionalMembers];
+
+    public bool Equals(OpenProblemResolutionClaim? other) =>
+        other is not null
+        && Equals(ProblemSlug, other.ProblemSlug)
+        && ResolutionKind == other.ResolutionKind
+        && AdditionalMembers.SequenceEqual(other.AdditionalMembers, StringComparer.Ordinal);
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(ProblemSlug);
+        hash.Add(ResolutionKind);
+        foreach (var member in AdditionalMembers)
+        {
+            hash.Add(member, StringComparer.Ordinal);
+        }
+        return hash.ToHashCode();
+    }
 }
 
 public abstract record DescribeStatement

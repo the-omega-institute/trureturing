@@ -23,13 +23,6 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private readonly bool exportSeeds = seedExport == SeedExportMode.Automatic
         && Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
 
-    internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
-    {
-        0 => 0,
-        1 => 1,
-        3 when allowProtectedAnnotation => 0,
-        _ => 2,
-    };
 
     internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null, string? changesPath = null)
     {
@@ -153,13 +146,22 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var projectSet = Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx");
         new XElement("Solution", roots.Select(target =>
             new XElement("Project", new XAttribute("Path", Path.Combine(root, target))))).Save(projectSet);
+        var restoreSet = projectSet;
+        if (resourcePlan is null || resourcePlan.TestProjects.Length != 0)
+        {
+            // Package transport is registry-wide whenever tests are selected.
+            restoreSet = Path.Combine(root, CommonExecutionEvidence.RootPath, "package-restore.slnx");
+            var registry = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root));
+            new XElement("Solution", registry.Projects.Select(project =>
+                new XElement("Project", new XAttribute("Path", Path.Combine(root, project.Path))))).Save(restoreSet);
+        }
         // Keep references outside this explicit root list in the requested configuration.
         string[] buildOptions = ["-nr:false", "-m:1", "-p:ShouldUnsetParentConfigurationAndPlatform=false"];
-        Step("restore-StrataLint", "dotnet", ["restore", projectSet, "--locked-mode", .. buildOptions]);
+        Step("restore-StrataLint", "dotnet", ["restore", restoreSet, "--locked-mode", .. buildOptions]);
         Step("build", "dotnet", ["build", projectSet, "--configuration", "Release", "--no-restore", "--warnaserror", .. buildOptions,
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots, resourcePlan?.TestProjects), steps.ToArray(), roots, resourcePlan?.Retain(root));
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots, resourcePlan?.TestProjects), steps.ToArray(), roots, resourcePlan?.Retain(root, CommonExecutionEvidence.RootPath));
     }
 
     private string[] BuildRoots()
@@ -232,6 +234,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private CheckOperation Operation(string name, string[] arguments)
     {
+        output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
+        output.Flush();
         var result = Capture("dotnet", arguments);
         output.WriteLine(result.Text);
         var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
@@ -258,7 +262,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (runReport) RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
         if (ids.Length != 0) RequireBinary(build, CommonExecutionEvidence.CliPath);
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
-        if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
+        if (Directory.Exists(logs))
+            foreach (var path in Directory.EnumerateFileSystemEntries(logs))
+            {
+                // The stage console owns this open log across current cleanup.
+                if (Path.GetFileName(path) == "console.log") continue;
+                if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+                else File.Delete(path);
+            }
         var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
         string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
             ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -353,10 +364,17 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var full = Path.Combine(root, log);
         Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         File.WriteAllText(full, result.Text);
-        var exit = proof is null ? Normalize(result.Exit, allowAnnotation)
+        var exit = proof is null ? CommonExecutionEvidence.Normalize(result.Exit, allowAnnotation)
             : result.Exit is not (0 or 1) ? 2 : proof(result.Exit, result.Text) ? 0 : 1;
         steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
-        if (exit != 0) throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
+        if (exit != 0)
+        {
+            // A failing process can emit useful details without severity labels.
+            output.WriteLine($"CI_DIAGNOSTIC_BEGIN stage={stage} step={name} raw_exit={result.Exit}");
+            output.WriteLine(result.Text);
+            output.WriteLine("CI_DIAGNOSTIC_END");
+            throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
+        }
         return result.Text;
     }
 

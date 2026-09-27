@@ -1,0 +1,10 @@
+**定义 21.13（保留原型的正则化证人）。** 固定有限 Hermitian $K\succeq0$、$b\in\mathbb C^n$ 及 $c\in\mathbb R$，令
+$$
+A=\begin{pmatrix}K&b\\b^*&c\end{pmatrix},\qquad
+R_\lambda=(K+\lambda I)^{-1},\qquad
+v_\lambda=\binom{-R_\lambda b}{1},\qquad
+E_\lambda=v_\lambda^*Av_\lambda\quad(\lambda>0).
+\tag{21.25}
+$$
+正则化用于选取原矩阵 $A$ 的测试向量，不把被判断对象替换为 $A+\lambda I$。
+

@@ -41,7 +41,7 @@ public sealed class AddressesAndFormulasScopingTests
 
         Assert.DoesNotContain(result.Diagnostics, diagnostic => diagnostic.Path == FormulaPath);
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Path == invalidPath
-            && diagnostic.Message.Contains("path is outside the registry artifact kind/selector whitelist", StringComparison.Ordinal));
+            && diagnostic.Message.Contains("path is outside the FILEMAP Evidence policy", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public sealed class AddressesAndFormulasScopingTests
     [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":null,\"material_excludes\":[]}]}")]
     [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":[],\"materials\":[\"**\"],\"material_excludes\":[]}]}")]
     [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":[\"**\",\"**\"],\"material_excludes\":[]}]}")]
-    [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":[\"Meta/registry.yaml\"],\"material_excludes\":[\"Meta/**\"]}]}")]
+    [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":[\"Meta/FILEMAP.toml\"],\"material_excludes\":[\"Meta/**\"]}]}")]
     [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[{\"id\":\"SL-015\",\"materials\":[\"Evidence/absent.json\"],\"material_excludes\":[]}]}")]
     public void MissingOrInvalidFormulaRegistrationFailsExplicitly(string? manifest)
     {
@@ -108,12 +108,15 @@ public sealed class AddressesAndFormulasScopingTests
             && diagnostic.Message.Contains("registration", StringComparison.Ordinal));
     }
 
-    private static void RegisterFormulaMaterials(RuleFixture fixture, string[] materials, string[]? excludes = null) =>
-        fixture.Files["Meta/ci-checks.json"] = System.Text.Json.JsonSerializer.Serialize(new
-        {
-            schema = "ci-check-input-registration-v2",
-            checks = new[] { new { id = "SL-015", materials, material_excludes = excludes ?? [] } },
-        });
+    private static void RegisterFormulaMaterials(RuleFixture fixture, string[] materials, string[]? excludes = null)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(fixture.Files["Meta/ci-checks.json"])!;
+        var declaration = manifest["checks"]!.AsArray()
+            .Single(check => check!["id"]!.ToString() == "SL-015")!;
+        declaration["materials"] = System.Text.Json.JsonSerializer.SerializeToNode(materials);
+        declaration["material_excludes"] = System.Text.Json.JsonSerializer.SerializeToNode(excludes ?? []);
+        fixture.Files["Meta/ci-checks.json"] = manifest.ToJsonString();
+    }
 
     [Fact]
     [BaseFactScopeProbe(

@@ -1,0 +1,13 @@
+**证明。** 固定 $n\in\mathbb N$ 和 $p\in P$。取 $q\in P$ 使 $\sigma(q)=p$。在 $s\approx_S t$ 中代入时域 $n+1$ 和协议 $q$，并使用迭代恒等式，得到
+
+$$
+\begin{aligned}
+E(F^{[n]}(F(s)),\sigma^{[n]}(p))
+&=E(F^{[n+1]}(s),\sigma^{[n+1]}(q))\\
+&=E(F^{[n+1]}(t),\sigma^{[n+1]}(q))\\
+&=E(F^{[n]}(F(t)),\sigma^{[n]}(p)).
+\end{aligned}
+$$
+
+对所有 $n,p$ 成立，故结论成立。于是 $\bar F([s])=[F(s)]$ 与代表元无关，并由商投影满射而唯一。$\square$
+

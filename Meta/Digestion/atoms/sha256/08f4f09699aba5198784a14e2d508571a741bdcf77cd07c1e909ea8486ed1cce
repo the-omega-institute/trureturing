@@ -1,0 +1,24 @@
+**定义 3.1（有限时钟与实际能隙）。** 令 $\mathcal H$ 是非零有限维 Hilbert 空间，$H=\sum_{a=1}^rE_a\Pi_a$，不同 $E_a$ 两两不等，$\Pi_a$ 为非零正交能量投影，允许任意有限简并重数。设 $\nu$ 是 $\mathbb R$ 上的 Borel 概率测度。实验从独立于系统输入及其外部参考的随机源取得 $t\sim\nu$，执行 $U_t=e^{-itH}$，最后忘记或隔离 $t$。系统边缘通道为
+
+$$
+\mathcal C_\nu^H(X)=\int_{\mathbb R}e^{-itH}Xe^{itH}\,d\nu(t),
+\qquad
+\widehat\nu(\omega)=\int_{\mathbb R}e^{-it\omega}\,d\nu(t).
+\tag{TM.258}
+$$
+
+有限维下被积矩阵有界，逐坐标积分存在；任意辅助空间上的正性由随机酉平均保持，迹也保持，故这是完全正保迹通道。若只允许非负等待，应额外要求 $\nu([0,\infty))=1$；一般实线公式不授予负时间演化权限。
+
+谱展开直接给出
+
+$$
+\mathcal C_\nu^H(X)
+=\sum_{a,b=1}^r\widehat\nu(E_a-E_b)\Pi_aX\Pi_b,
+\qquad
+\Pi_a\mathcal C_\nu^H(X)\Pi_b
+=\widehat\nu(E_a-E_b)\Pi_aX\Pi_b.
+\tag{TM.259}
+$$
+
+因此实际有限能隙集上的字符值完全决定系统边缘通道。两份时间分布给出相同字符值，不意味着带时间记录的实验相同。$\widehat\nu(0)=1$，每个简并能量块内部的全部算子均保留，不能按任意选定的秩一基向量再次删去交叉项。
+

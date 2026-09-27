@@ -106,7 +106,8 @@ internal static partial class RepositoryRules
                 .Order(StringComparer.Ordinal)
                 .ToArray();
             if (declarations.Length > 0
-                && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal))
+                && (!path.Value.Contains("/X_Frontier/", StringComparison.Ordinal)
+                    || path.Value.StartsWith("Reg/", StringComparison.Ordinal)))
             {
                 findings.Add(new RuleFinding(
                     path.Value,

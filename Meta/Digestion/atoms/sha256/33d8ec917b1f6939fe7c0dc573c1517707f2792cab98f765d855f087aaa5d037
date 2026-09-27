@@ -1,0 +1,22 @@
+**命题 21.3（对数导数、反射与坐标运输的范围）。** 在 $\Re s>1$ 内，
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=\sum_{\substack{p\ \mathrm{prime}\\a\ge1}}(\log p)p^{-as}.
+\tag{21.8}
+$$
+若实际零点 $\rho$ 的重数为 $m$，在其一个邻域写
+$\zeta(s)=(s-\rho)^mA(s)$，其中 $A$ 解析且非零，则
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=-\frac m{s-\rho}-\frac{A'(s)}{A(s)}.
+\tag{21.9}
+$$
+反射 $J(s)=1-\overline s$ 的固定点条件是 $\Re s=1/2$；将 $s,J(s)$ 放入同一个商类不蕴含该条件。
+
+**证明。** 在 $\Re s>1$ 上，Euler 乘积的对数展开
+$\log\zeta(s)=\sum_{p,a\ge1}p^{-as}/a$ 及其导数在紧子域上一致绝对收敛，逐项微分给（21.8）。对零点的局部分解作对数微分即（21.9），所以零点对应对数导数的极点。解析延拓允许继续研究左侧函数，不把原级数的收敛域延长到临界线。Euler 乘积与零点记号采用 DLMF [§25.2](https://dlmf.nist.gov/25.2)、[§25.10](https://dlmf.nist.gov/25.10) 的通常约定。
+
+写 $s=x+iy$，则 $J(s)=1-x+iy$，故 $J(s)=s$ 等价于 $x=1/2$。商映射按定义可以令 $[s]=[J(s)]$，即使两点在原空间不同；例如 $0$ 与 $1$。若单射坐标映射 $\kappa$ 满足 $J'\kappa=\kappa J$，则
+$J'\kappa(s)=\kappa(s)$ 等价于 $J(s)=s$。但距离数值的保持还要求运输度量。取 $\kappa(s)=2s$、$J'(w)=2-\overline w$，普通 Euclidean 距离满足
+$|\kappa(s)-J'\kappa(s)|=2|s-J(s)|$，并不原值保持。证毕。
+

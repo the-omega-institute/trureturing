@@ -1,0 +1,8 @@
+**命题 21.5（保留指定未来混合响应的最大安全商）。** 对子空间 $N\subseteq V$，全部响应 $[f]\mapsto B(f,g)$、$g\in T$ 在 $V/N$ 上良定，当且仅当
+$$
+N\subseteq N_{\rm safe}:=V\cap T^{\perp_B}
+=V\cap\operatorname{Rad}_T(B).
+\tag{21.11}
+$$
+增加允许测试只能缩小这个核；严格缩小需要一项实际分离旧核的混合响应。若指定的后续空间 $T$ 不包含 $V$，只保该后续响应的最大不可见空间仍为 $V\cap T^{\perp_B}$，但不能直接改写为 $V\cap\operatorname{Rad}_T(B)$。
+

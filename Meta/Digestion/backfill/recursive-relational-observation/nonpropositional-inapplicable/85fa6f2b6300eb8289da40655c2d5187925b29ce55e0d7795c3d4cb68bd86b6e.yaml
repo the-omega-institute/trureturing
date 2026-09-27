@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85fa6f2b6300eb8289da40655c2d5187925b29ce55e0d7795c3d4cb68bd86b6e
+  normalized_sha256: sha256:85fa6f2b6300eb8289da40655c2d5187925b29ce55e0d7795c3d4cb68bd86b6e
+cas_ref: sha256:85fa6f2b6300eb8289da40655c2d5187925b29ce55e0d7795c3d4cb68bd86b6e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only bind settlement of both clauses. Given A_t and the actual relation past, A_(t-n)=A_t xor the finite parity of c_(t-1),...,c_(t-n); repeated use of the given recurrence is List.foldl_append and Bool xor associativity/cancellation normalization, including n=0. All inputs are previously recorded bits; this proof map adds no controller observation. Measurable finite-coordinate encode and decode maps give the actual lifted-past/source-past sigma equality by MeasurableSpace.comap_le_comap_of_eq_comp in both directions; arbitrary integer t is obtained by the coordinate shift r(i) to r(t+i), without any stationarity premise. Independently, MeasurePreserving.skew_product on the original relation-path law times the original fair Bool seed, with identity base and path-dependent xor fiber translation, preserves that same full product law. PMF.toMeasure_map, PMF.map_apply, PMF.uniformOfFintype_apply, tsum_fintype and Fintype.sum_bool verify the fiber invariance; hence A_t is independent of the complete relation path. These are pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d instances and finite normalization. No frozen project GID for the complete clause is identified, and no new Lean is warranted. The neighboring stationary marginal and stationary-Markov claims remain open.
+    previous_atom_id: eed8dad49b02e935bf138c24c867f59a1c960b633c766d909762264da11aa910
+    next_atom_id: 13a3c8b05aeb894e5fb9d45b26a4fb27b6edabc1f78c284940e8e46555b374b5

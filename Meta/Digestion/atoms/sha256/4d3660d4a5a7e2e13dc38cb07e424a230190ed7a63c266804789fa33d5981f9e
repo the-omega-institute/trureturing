@@ -1,0 +1,14 @@
+令
+$$
+L=\lceil\log_2(R+1)\rceil,\qquad J=\lceil\log_2k\rceil.
+$$
+存在持久状态编码满足
+$$
+B_{\rm out}(R,k)\le Q_R(2L+1)+2L,
+$$
+$$
+B_{\rm leg}(R,k)\le Q_R(2L+1)+2L+J.
+\tag{140.16}
+$$
+特别地，后者为 $O(\sqrt R\log(R+1)+\log k)$，共同常数不依赖 $R,k$。
+

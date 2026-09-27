@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>StrataLint.EngineeringScope</RootNamespace>
+    <AssemblyName>StrataLint.ResourcePlanning</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+</Project>

@@ -58,7 +58,7 @@ internal static partial class RepositoryRules
     [
         Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports,
             RegistrationImportsAffected, RegistrationImportDirection)),
-        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry)),
+        Register(2, "Sorry closure", new RepositoryRule(ReportLean, Sorry)),
         Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, CurrentCapacity, CapacityAffected, Capacity)),
         Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors)),
         Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges)),
@@ -122,7 +122,7 @@ internal static partial class RepositoryRules
             19,
             "Balanced anomaly ledger",
             new RepositoryRule(StructuredOrChronicle, Ledger)),
-        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms)),
+        Register(20, "Lean axiom closure", new RepositoryRule(ReportLean, Axioms)),
         Register(
             21,
             "Instantiated coordinate gate",

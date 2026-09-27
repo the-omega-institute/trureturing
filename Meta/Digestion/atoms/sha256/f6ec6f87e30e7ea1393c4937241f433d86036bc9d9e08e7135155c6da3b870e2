@@ -1,0 +1,12 @@
+**算例 41.1（有理矩阵的非对易内部实例）。** 取
+\[
+ \sigma_1=\operatorname{diag}(4/5,1/5),\quad \Delta_1=\begin{pmatrix}0&1/5\\1/5&0\end{pmatrix},\qquad
+ \sigma_2=\operatorname{diag}(9/10,1/10),\quad \Delta_2=\begin{pmatrix}0&3/20\\3/20&0\end{pmatrix}.
+\]
+两对 $\sigma_i\pm \Delta_i$ 都为正定密度矩阵，两个交换子非零，且 $r_1=r_2=1/2$。按自然对数可直接求出
+\[
+ Q_{\sigma_1}(\Delta_1)=\tfrac2{15}\log4,\qquad
+ Q_{\sigma_2}(\Delta_2)=\tfrac9{160}\log9.
+\]
+换算为比特，$I_1\simeq0.1391449606$、$I_2\simeq0.0927094011$、$I^-\simeq0.01733665547$，而 $I_1I_2\simeq0.01290004597$。前两个条件态的正本征值分别是 $(5\pm\sqrt{13})/10$ 与 $(10\pm\sqrt{73})/20$；奇偶条件态的本征值是 $(37\pm\sqrt{1234})/100$、$(13\pm\sqrt{34})/100$，所以全部数值可从明确的代数数及对数重建。一般定理的非对易范围由证明承担，此实例只检查系数、单位和符号。
+

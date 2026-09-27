@@ -1,0 +1,18 @@
+**引理 139.2（离散极大值与周期容纳）。** 若 $Z_0,\ldots,Z_{n-1}$ 独立服从（139.5），则
+$$
+\Pr\{Z_0\ge\max_{1\le i<n}Z_i\}\le\frac1{pn}\le\frac2n
+\qquad(n\ge1).
+\tag{139.7}
+$$
+取 $x=6/5$，有
+$$
+\mathbb E x^Z\le2,\qquad \mathbb E x^W\le2,
+\qquad \mathbb E x^{Z+W}\le4.
+\tag{139.8}
+$$
+若 $R\ge18$、$t=R-2$、$n=\lfloor t/16\rfloor$，而跨度 $T$ 是 $n$ 个独立完整周期长度之和，或一个 $Z$ 加 $n-1$ 个独立完整周期长度之和，则
+$$
+\Pr(T>R-2)\le e^{-(R-2)/16}.
+\tag{139.9}
+$$
+

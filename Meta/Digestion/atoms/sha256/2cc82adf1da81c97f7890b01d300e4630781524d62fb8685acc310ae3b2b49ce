@@ -1,0 +1,9 @@
+若 $I_\mu<\infty$，最小均值为
+$$
+\boxed{
+\min_{\text{等待标记策略}}\mathbb E_\mu\tau
+=2I_\mu-a+\sum_{m\ge1}\min(0,v_m),}
+\tag{27.66}
+$$
+并由一个确定性、合法的策略达到。该策略不读取实现值 $Q$。
+

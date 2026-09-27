@@ -1,0 +1,17 @@
+**定理 2.1（动态充分边界判据）。** 对每个允许操作 \(a\)，下列条件等价于在 \(B\) 上存在相应的合法性、读数和后继
+\[
+\bar D_a,\qquad \bar O_a,\qquad \bar T_a
+\]
+使
+\[
+\begin{aligned}
+s\in\mathsf D(a)&\Longleftrightarrow \eta(s)\in\bar D_a,\\
+\mathsf O_a(s)&=\bar O_a(\eta(s)),\\
+\eta(\mathsf T_a(s))&=\bar T_a(\eta(s))
+\end{aligned}
+\tag{2.1}
+\]
+对每个 \(s\in\mathsf D(a)\) 成立。
+
+等价条件是：只要 \(\eta(s)=\eta(t)\)，则 \(s,t\) 对 \(a\) 同时合法或同时非法；合法时输出相同；且后继边界相同。
+

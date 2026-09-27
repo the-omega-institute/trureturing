@@ -113,7 +113,7 @@ public sealed class FileMapPlanningTests
             "name-newline" => source.Replace("consumed_by = [\"reader\"]", "consumed_by = [\"reader\\n\"]", StringComparison.Ordinal),
             "numeric-projection-mode" => NumericProjectionMode(source),
             "duplicate-resource" => source.Replace("id = \"engineering\"", "id = \"build\"", StringComparison.Ordinal),
-            "duplicate-field" => source.Replace("schema_version = 4", "schema_version = 4\nschema_version = 4", StringComparison.Ordinal),
+            "duplicate-field" => source.Replace("schema_version = 5", "schema_version = 5\nschema_version = 5", StringComparison.Ordinal),
             "invalid-stage" => source.Replace("stage = \"current\"", "stage = \"unknown\"", StringComparison.Ordinal),
             "invalid-cache" => source.Replace("cache_layers = []", "cache_layers = [\"unknown\"]", StringComparison.Ordinal),
             "retired-report-cache" => source.Replace("cache_layers = [], cache_activation = {}",

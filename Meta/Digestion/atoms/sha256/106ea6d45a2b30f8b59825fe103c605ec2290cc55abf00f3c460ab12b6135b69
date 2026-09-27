@@ -1,0 +1,37 @@
+**反例 1.2（守能层内的隐藏相干）。** 固定两个量子位的子系统分解和计算基次序 $|00\rangle,|01\rangle,|10\rangle,|11\rangle$。取通常的 Pauli 约定，并选择一个无量纲 Hamiltonian：
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+H=Z\otimes I+I\otimes Z=\operatorname{diag}(2,0,0,-2),\quad
+E_0=\ker H=\operatorname{span}\{|01\rangle,|10\rangle\}.
+\tag{TM.51}
+$$
+
+能量为零的条件本身不决定可分性：$|01\rangle$ 是乘积态，$(|01\rangle+|10\rangle)/\sqrt2$ 是纠缠态，却都属于 $E_0$。以下加强这一比较，让初始局部态也完全相同。对 $c\in\mathbb C$，定义
+$$
+\begin{aligned}
+\rho_c
+&=\tfrac12|01\rangle\langle01|+\tfrac12|10\rangle\langle10|
++c|01\rangle\langle10|+\overline c|10\rangle\langle01|\\
+&=\begin{pmatrix}
+0&0&0&0\\
+0&1/2&c&0\\
+0&\overline c&1/2&0\\
+0&0&0&0
+\end{pmatrix},\qquad |c|\le\tfrac12.
+\end{aligned}
+\tag{TM.52}
+$$
+
+它是 Hermitian，迹为一，特征值为 $0,0,1/2+|c|,1/2-|c|$。故所给参数范围恰好保证它是合法密度矩阵；超出此范围则出现负特征值。每个合法参数都有
+$$
+H\rho_c=0,\qquad
+\Pr_{\rho_c}(H=0)=1,\qquad
+\operatorname{Tr}_B\rho_c=\operatorname{Tr}_A\rho_c=I/2,\qquad
+(p_{00},p_{01},p_{10},p_{11})=(0,1/2,1/2,0).
+\tag{TM.53}
+$$
+
+第一项说明完整能量分布均为零点上的单位质量，不只是能量均值相同。两个约化态相同，说明任意单侧 POVM 的全部结果概率均相同；计算基联合概率也相同。但这并未指定所有联合测量的结果，因为 $c$ 仍是尚未写进这些摘要的联合相干。
+

@@ -1,0 +1,11 @@
+**命题 1.14（最近点修复的通道障碍）。** 记式(TM.87)的唯一最近点映射为 $N_{p_0}(R(p,c))=R(p_0,d_*)$。对每个内部目标，它都没有面向全部未知输入态的单一 CPTP 实现：
+$$
+0<p_0<1
+\quad\Longrightarrow\quad
+\nexists\,\Phi:M_2(\mathbb C)\to M_2(\mathbb C)\ \text{为 CPTP},\quad
+\Phi(\rho)=N_{p_0}(\rho)\ \text{对全部密度态 }\rho\text{ 成立}.
+\tag{TM.99}
+$$
+
+端点 $p_0=0,1$ 则存在常值制备通道。以下分别证明这些范围，并将它们与单纯的逐态最小化区分。
+

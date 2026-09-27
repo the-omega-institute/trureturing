@@ -14,9 +14,21 @@ public sealed record RawRepositoryEntry(
         new(path, ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(text)));
 }
 
+// Effective working inventory includes indexed-but-absent paths. Regular bodies
+// and index blob identities are deliberately absent from this projection.
+internal sealed record RepositoryPathInventoryEntry(string Path, string? IndexMode,
+    string State, string? EffectiveMode, string? LinkTarget);
+
 public sealed class RawRepositorySnapshot
 {
-    private RawRepositorySnapshot(ImmutableArray<RawRepositoryEntry> entries) => Entries = entries;
+    private RawRepositorySnapshot(ImmutableArray<RawRepositoryEntry> entries,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory = default)
+    { Entries = entries; PathInventory = pathInventory; }
+
+    internal ImmutableArray<RepositoryPathInventoryEntry> PathInventory { get; }
+
+    internal static RawRepositorySnapshot Create(IEnumerable<RawRepositoryEntry> entries,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory) => new(entries.ToImmutableArray(), pathInventory);
 
     public ImmutableArray<RawRepositoryEntry> Entries { get; }
 
@@ -109,12 +121,16 @@ public sealed class RepositoryFile
 
 public sealed class RepositorySnapshot
 {
-    private RepositorySnapshot(ImmutableDictionary<RepoPath, RepositoryFile> files) => Files = files;
+    private RepositorySnapshot(ImmutableDictionary<RepoPath, RepositoryFile> files,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory)
+    { Files = files; PathInventory = pathInventory; }
+
+    internal ImmutableArray<RepositoryPathInventoryEntry> PathInventory { get; }
 
     public ImmutableDictionary<RepoPath, RepositoryFile> Files { get; }
 
-    internal static RepositorySnapshot Create(ImmutableDictionary<RepoPath, RepositoryFile> files) =>
-        new(files);
+    internal static RepositorySnapshot Create(ImmutableDictionary<RepoPath, RepositoryFile> files,
+        ImmutableArray<RepositoryPathInventoryEntry> pathInventory = default) => new(files, pathInventory);
 
     public bool TryGetFile(string path, [NotNullWhen(true)] out RepositoryFile? file)
     {
@@ -187,7 +203,7 @@ public static class SnapshotDecoder
                     entry.GitBlobOid));
             }
 
-            return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable()));
+            return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable(), raw.PathInventory));
         }
         catch (FormatException exception)
         {
