@@ -198,9 +198,11 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         Assert.Contains(target, result.Error, StringComparison.Ordinal);
-        Assert.Contains("make -C", result.Error, StringComparison.Ordinal);
-        Assert.Contains("lean-cache-ensure", result.Error, StringComparison.Ordinal);
-        Assert.Contains("STRATALINT_ACCEPT_COLD_BUILD=1", result.Error, StringComparison.Ordinal);
+        Assert.Contains("sync dev and warm the dev cache", result.Error, StringComparison.Ordinal);
+        Assert.Contains(
+            $"make -C {LeanCacheGuard.PhysicalPath(repository.Path)} warm-donor",
+            result.Error,
+            StringComparison.Ordinal);
     }
 
     private static string AddColdGuardWorktree(string repositoryRoot, string name)
