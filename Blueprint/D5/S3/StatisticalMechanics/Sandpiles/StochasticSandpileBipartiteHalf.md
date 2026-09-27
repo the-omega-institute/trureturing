@@ -2,7 +2,7 @@
 
 ## Abstract
 
-In the stochastic sandpile model on the complete bipartite graph K_{m,n} with the sink in the first part, the stochastically recurrent states number at most half of the n^(m-1) m^n stable configurations, and exactly half if and only if m = 2. This answers Question 6 of Alofi and Dukes: the stochastically recurrent states never dominate the stable states.
+In the stochastic sandpile model on the complete bipartite graph K_{m,n}, m at least 2 and n at least 1, with the sink in the first part, the stochastically recurrent states number at most half of the n^(m-1) m^n stable configurations, and exactly half if and only if m = 2. This answers Question 6 of Alofi and Dukes: the stochastically recurrent states never dominate the stable states.
 
 **Definition 1.1 (Orientations).**
 
@@ -80,7 +80,7 @@ $$claim$$
 
 *Commentary.*
 
-The vertices of the first part have degree n and those of the second part degree m, so there are n^(m-1) m^n stable configurations. Every orientation directs each of the mn edges into exactly one vertex, so the in-degrees sum to mn; summing in_O(v) + c(v) >= d(v) over the non-sink vertices of a stochastically recurrent c gives at least 2mn - n - mn = n(m - 1) grains. The involution c(v) -> d(v) - 1 - c(v) sends a configuration with S grains to one with (m - 1)(2n - 1) - S grains, so it maps the configurations with at least n(m - 1) grains injectively to those with at most (m - 1)(n - 1) grains, a disjoint set; hence twice the number of stochastically recurrent states is at most the number of stable configurations. For m = 2, direct both sink edges into the second part, the edge from the non-sink first-part vertex a to b towards b when c(b) = 0 and towards a otherwise; then every configuration with at least n grains is recurrent, and the involution exchanges the configurations with at least n grains and those with at most n - 1, so equality holds. For m at least 3, the configuration with no grain on the first part and m - 2, m - 1, ..., m - 1 grains on the second part has n(m - 1) - 1 grains, which lies in neither set, so the inequality is strict.
+The vertices of the first part have degree n and those of the second part degree m, so there are n^(m-1) m^n stable configurations. Every orientation directs each of the mn edges into exactly one vertex, so the in-degrees sum to mn; summing in_O(v) + c(v) >= d(v) over the non-sink vertices of a stochastically recurrent c gives at least 2mn - n - mn = n(m - 1) grains. The involution c(v) -> d(v) - 1 - c(v) sends a configuration with S grains to one with (m - 1)(2n - 1) - S grains, so it maps the configurations with at least n(m - 1) grains injectively to those with at most (m - 1)(n - 1) grains, a disjoint set; hence twice the number of stochastically recurrent states is at most the number of stable configurations. For m = 2, direct all n sink edges into the second part, the edge from the non-sink first-part vertex a to b towards b when c(b) = 0 and towards a otherwise; then every configuration with at least n grains is recurrent, and the involution exchanges the configurations with at least n grains and those with at most n - 1, so equality holds. For m at least 3, the configuration with no grain on the first part and m - 2, m - 1, ..., m - 1 grains on the second part has n(m - 1) - 1 grains, which lies in neither set, so the inequality is strict.
 
 ## References
 
