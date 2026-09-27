@@ -88766,3 +88766,540 @@ $n=1$ 时，$Q=1/2$、$Z=1$、$a_n=1$，参考投影是整个一维参考空间�
 §270的完整输入访问仍有 $\Theta(h^{-2})$ 副本阶。本节证明的是规定重置访问类中、包含未知共同相位校准的 $\Theta(h^{-2n})$ 阶，不对未受限的原输入访问增加下界，也不提供一般来源层析、未知扰动幅度估计、最优常数或物理历时结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 279. 相干拼接的对称支筛选、完整Schur编码与深度载体
+
+§274.10把 $k$ 个相同的二维图来源相干地接成参考维数 $2^k$、深度 $k+1$ 的来源。本节在同一实际来源上给出两种参考接口。第一种再选择参考的全对称支，得到维数 $k+1$ 的条件来源，额外条件成功率为 $h_k$。第二种保留全部Schur扇区，只去掉可固定补回的重数系统，得到维数 $\lfloor(k+2)^2/4\rfloor$ 的模型精确编码；相干相等成功以后，这条路线不再筛选。
+
+两种输出的最长Jordan链都是 $k+1$，所以既有图来源分类都给出深度 $k+1$ 和锐完整数据逆指数 $1/[2(k+1)]$。筛选概率、精确解码的模型范围、输出态的竞争者范围和取得来源的副本成本各有不同合同，下面分别写明。Schur表示、扇区概率及重数压缩采用既有工具；本节的连接在于它们作用到指定图来源后，保留怎样的完整数据恢复障碍。
+
+### 279.1 固定来源与输出的完整数据合同
+
+固定 $k\ge1$。每份来源的输入 $H$ 与参考 $E$ 都是qubit；输入使用固定 $Y$ 本征基 $\{|+\rangle,|-\rangle\}$，参考使用 $\{e_1,e_2\}$。记
+$$
+J_2e_1=0,\qquad J_2e_2=e_1,\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad t=\frac14,
+$$
+$$
+Q=\frac12I_2-\frac t4X
+=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix},
+\qquad M=I_2+tJ_2.
+\tag{279.1}
+$$
+于是
+$$
+Q\succ0,\qquad M^\dagger QM=I_2-Q,\qquad
+\operatorname{Tr}Q=\operatorname{Tr}(I_2-Q)=1.
+\tag{279.2}
+$$
+$Q$ 的两个本征值为
+$$
+\lambda_+=\frac9{16},\qquad
+\lambda_-=\frac7{16}.
+\tag{279.3}
+$$
+沿用图记号
+$$
+T(A,B)=
+\begin{pmatrix}A&AB\\B^\dagger A&B^\dagger AB\end{pmatrix},
+\qquad
+\Omega_2=\frac12T(Q,M).
+\tag{279.4}
+$$
+实际批次由 $k$ 份独立同分布来源 $\Omega_2^{\otimes k}$ 组成。以下固定重排
+$$
+(H\otimes E)^{\otimes k}\cong H^{\otimes k}\otimes E^{\otimes k}.
+$$
+
+对于任意输出参考空间 $F$ 上的正定图参数 $A\succ0,B$，令
+$$
+c=\operatorname{Tr}(A+B^\dagger AB),\qquad
+\Omega=\frac{T(A,B)}c,
+$$
+$$
+\rho=\operatorname{Tr}_H\Omega=\frac{A+B^\dagger AB}c,
+\qquad
+K=\mathscr K(\Omega)=\frac{2AB}c,
+\qquad
+\mathscr K(Y)=2Y_{+-}.
+\tag{279.5}
+$$
+在整个 $H\otimes F$ 上，对任意密度态 $\Xi$ 使用
+$$
+\varepsilon_\Omega(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho\|_1+
+\|\mathscr K(\Xi)-K\|_1.
+\tag{279.6}
+$$
+迹范数未除以二。后文的深度和锐指数均指这一原始完整数据合同，其仿射方向是
+$$
+L_F=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{279.7}
+$$
+定理274.3已经证明：若 $B$ 为unipotent，最大Jordan链长为 $r$，则完整数据纤维为单点，标准奇异度 $d_S=r$；对全部密度态竞争者存在局部恢复上界 $C\varepsilon^{1/(2r)}$，任何更大的指数都不成立，且失败见证可取精确同参考边缘。这里的常数允许依赖固定输出来源。
+
+### 279.2 对称支的完整三结果物理仪器
+
+相干相等算子为
+$$
+W_k=|+\rangle\langle+\cdots+|
++|-\rangle\langle-\cdots-|,
+\qquad
+P_{\mathrm{eq}}=W_k^\dagger W_k.
+\tag{279.8}
+$$
+它保留全正输入与全负输入之间的相干。参考置换 $U_\pi$ 给出正交投影
+$$
+P_{\mathrm{sym}}=\frac1{k!}\sum_{\pi\in S_k}U_\pi.
+\tag{279.9}
+$$
+令
+$$
+v_j=\binom kj^{-1/2}
+\sum_{\substack{x\in\{1,2\}^k\\
+\#\{a:x_a=2\}=j}}
+e_{x_1}\otimes\cdots\otimes e_{x_k},
+\qquad 0\le j\le k.
+\tag{279.10}
+$$
+这是归一化Dicke基，$v_0=e_1^{\otimes k}$、$v_k=e_2^{\otimes k}$。取等距映射
+$$
+V:\mathbb C^{k+1}\longrightarrow E^{\otimes k},
+\qquad VV^\dagger=P_{\mathrm{sym}}.
+$$
+固定 $V$ 将 $\mathbb C^{k+1}$ 的第 $j$ 个标准基向量映到 $v_j$（$0\le j\le k$）；下文压缩空间的坐标均按这组Dicke基。
+
+将不同结果的输出放入互相正交的标记空间，定义三个Kraus算子
+$$
+F_s=W_k\otimes V^\dagger,
+\qquad
+F_{\mathrm{symfail}}=W_k\otimes(I-P_{\mathrm{sym}}),
+\qquad
+F_{\mathrm{eqfail}}=(I-P_{\mathrm{eq}})\otimes I.
+\tag{279.11}
+$$
+它们分别输出成功参考、相等成功但对称失败的参考，以及相等失败的原系统。三个效果准确为
+$$
+F_s^\dagger F_s=P_{\mathrm{eq}}\otimes P_{\mathrm{sym}},
+$$
+$$
+F_{\mathrm{symfail}}^\dagger F_{\mathrm{symfail}}
+=P_{\mathrm{eq}}\otimes(I-P_{\mathrm{sym}}),
+\qquad
+F_{\mathrm{eqfail}}^\dagger F_{\mathrm{eqfail}}
+=(I-P_{\mathrm{eq}})\otimes I.
+\tag{279.12}
+$$
+效果之和为单位矩阵，故这是一台完整迹保持仪器。成功支是实际结果，另外两支也是明确的CP结果；不把条件成功态的维数用作整台仪器的输出维数。$k=1$ 时两种失败算子均为零。
+
+### 279.3 成功支仍是正定图来源
+
+每个 $A^{\otimes k}$ 都与参考置换交换，其伴随也如此，故对称子空间约化所有这些张量算子。定义
+$$
+Q_s=V^\dagger Q^{\otimes k}V\succ0,
+\qquad
+M_s=V^\dagger M^{\otimes k}V.
+\tag{279.13}
+$$
+相干相等先给图块 $T(Q^{\otimes k},M^{\otimes k})$；约化性质使图块乘法通过限制。因此
+$$
+F_s\Omega_2^{\otimes k}F_s^\dagger
+=\frac1{2^k}T(Q_s,M_s).
+\tag{279.14}
+$$
+令
+$$
+h_k=h_k(\lambda_+,\lambda_-)
+=\sum_{j=0}^k\lambda_+^{k-j}\lambda_-^j.
+\tag{279.15}
+$$
+在 $Q$ 的本征向量所生成的Dicke基中，$Q_s$ 的本征值是式（279.15）的各项，各出现一次，故 $\operatorname{Tr}Q_s=h_k$。而
+$$
+M_s^\dagger Q_sM_s
+=V^\dagger(I_2-Q)^{\otimes k}V.
+\tag{279.16}
+$$
+$I_2-Q$ 的本征值与 $Q$ 交换，$h_k$ 对两个变量对称，所以式（279.16）的迹也是 $h_k$。条件成功来源准确为
+$$
+\Omega_s=\frac{T(Q_s,M_s)}{2h_k}.
+\tag{279.17}
+$$
+它的参考维数和联合秩均为 $k+1$，完整数据为
+$$
+\rho_s=\frac{Q_s+M_s^\dagger Q_sM_s}{2h_k},
+\qquad
+K_s^{\mathrm{data}}=\frac{Q_sM_s}{h_k}.
+\tag{279.18}
+$$
+这里 $K_s^{\mathrm{data}}$ 是完整响应矩阵，区别于物理Kraus算子 $F_s$。
+
+### 279.4 成功概率、失败概率与真实边缘
+
+相干相等分支的未归一化图迹为二。因此
+$$
+p_{\mathrm{eq}}=2^{1-k},
+\qquad
+\Pr(\mathrm{sym}\mid\mathrm{eq})=h_k,
+\qquad
+p_s=2^{1-k}h_k.
+\tag{279.19}
+$$
+完整三结果概率为
+$$
+p_s=2^{1-k}h_k,\qquad
+p_{\mathrm{symfail}}=2^{1-k}(1-h_k),
+\qquad
+p_{\mathrm{eqfail}}=1-2^{1-k}.
+\tag{279.20}
+$$
+三项和为一。$h_1=1$；对于 $k\ge2$，
+$$
+0<h_k<(\lambda_++\lambda_-)^k=1,
+$$
+严格不等式来自至少一个内部二项式系数大于一。代入当前参数，
+$$
+h_k=\frac{\lambda_+^{k+1}-\lambda_-^{k+1}}
+{\lambda_+-\lambda_-}
+=\frac{9^{k+1}-7^{k+1}}{2\,16^k},
+$$
+$$
+\boxed{p_s=\frac{9^{k+1}-7^{k+1}}{32^k}.}
+\tag{279.21}
+$$
+所以 $p_s\asymp(9/32)^k$；额外筛选不能省略为常数成功率。
+
+来源的参考边缘也必须随筛选更新。令
+$$
+Z_2=\operatorname{diag}(1,-1),\qquad
+D_s=V^\dagger Z_2^{\otimes k}V
+=\operatorname{diag}((-1)^j)_{j=0}^k.
+$$
+因为 $Z_2QZ_2=I_2-Q$，
+$$
+\rho_s=\frac{Q_s+D_sQ_sD_s}{2h_k}.
+\tag{279.22}
+$$
+在 $Q$ 的本征Dicke基中，$\rho_s$ 的本征值为
+$$
+\frac{\lambda_+^{k-j}\lambda_-^j
++\lambda_-^{k-j}\lambda_+^j}{2h_k},
+\qquad 0\le j\le k.
+\tag{279.23}
+$$
+它们严格正、和为一。$k\ge2$ 时边缘非均匀：端点 $j=0$ 与 $j=1$ 的分子之差为
+$$
+(\lambda_+-\lambda_-)
+(\lambda_+^{k-1}-\lambda_-^{k-1})>0.
+$$
+因此不能继续把成功来源的边缘写成 $I_{k+1}/(k+1)$。
+
+### 279.5 对称支保留深度 $k+1$
+
+下面使用标准对称幂计算确定图算子的链长。令
+$$
+L=\sum_{a=1}^kJ_2^{(a)}.
+$$
+各项交换且平方为零，所以
+$$
+M^{\otimes k}=\exp(tL),\qquad
+M_s=\exp(tL_s),\qquad L_s=V^\dagger LV.
+\tag{279.24}
+$$
+Dicke基中
+$$
+L_sv_j=\sqrt{j(k-j+1)}\,v_{j-1}\quad(1\le j\le k),
+\qquad L_sv_0=0.
+\tag{279.25}
+$$
+依次作用给 $L_s^kv_k=k!v_0$，而 $L_s^{k+1}=0$。展开指数后，$M_s-I=tL_s$ 加上更高次幂；在其 $k$ 次方中，所有总次数大于 $k$ 的项消失。因此
+$$
+(M_s-I)^k=k!t^k|v_0\rangle\langle v_k|\ne0,
+\qquad
+(M_s-I)^{k+1}=0.
+\tag{279.26}
+$$
+空间恰有维数 $k+1$，所以 $M_s$ 只有一个大小 $k+1$ 的unipotent Jordan块。
+
+**命题279.1（对称成功支的深度与恢复）。** 对每个固定 $k\ge1$，式（279.11）的实际成功支以概率（279.21）产生参考维数和联合秩均为 $k+1$ 的来源 $\Omega_s$。在式（279.6）的完整数据合同中，它的纤维为单点，且
+$$
+d_S(\Omega_s)=k+1,\qquad
+\alpha_{\mathrm{sharp}}(\Omega_s)=\frac1{2(k+1)}.
+\tag{279.27}
+$$
+恢复上界适用于输出 $H\otimes\mathbb C^{k+1}$ 上全部密度态；任何更大指数在精确同边缘子类中也不成立。
+
+**证明。** 式（279.13）给 $Q_s\succ0$，式（279.26）给最大链长 $k+1$；对式（279.17）直接应用定理274.3。物理产生式与概率分别由（279.14）及（279.19）—（279.21）给出。$\square$
+
+这一全竞争锐性不要求所有竞争态都能由原先独立同分布的 $k$ 份来源，经同一筛选产生。若另行限制原始来源扰动及其物理产生路径，需对那个更小的竞争类重新判断锐性。
+
+### 279.6 两份来源的精确例子
+
+当 $k=2$ 时，在
+$$
+v_0=e_1e_1,\qquad
+v_1=(e_1e_2+e_2e_1)/\sqrt2,\qquad
+v_2=e_2e_2
+$$
+基中，
+$$
+Q_s=\frac1{256}
+\begin{pmatrix}
+64&-8\sqrt2&1\\
+-8\sqrt2&65&-8\sqrt2\\
+1&-8\sqrt2&64
+\end{pmatrix},
+\qquad
+M_s=
+\begin{pmatrix}
+1&\sqrt2/4&1/16\\
+0&1&\sqrt2/4\\
+0&0&1
+\end{pmatrix}.
+\tag{279.28}
+$$
+此时
+$$
+h_2=\frac{193}{256},\qquad
+\operatorname{Tr}T(Q_s,M_s)=\frac{193}{128},
+$$
+$$
+\rho_s=\frac1{193}
+\begin{pmatrix}
+64&0&1\\
+0&65&0\\
+1&0&64
+\end{pmatrix},
+\qquad
+\operatorname{spec}\rho_s
+=\left\{\frac{63}{193},\frac{65}{193},\frac{65}{193}\right\}.
+\tag{279.29}
+$$
+三结果概率为
+$$
+p_s=\frac{193}{512},\qquad
+p_{\mathrm{symfail}}=\frac{63}{512},\qquad
+p_{\mathrm{eqfail}}=\frac{256}{512}.
+\tag{279.30}
+$$
+又有 $(M_s-I)^2=(1/8)|v_0\rangle\langle v_2|\ne0$，而三次方为零。于是实际成功来源是一个秩三的 $2\otimes3$ 来源，深度为三，锐指数为 $1/6$。
+
+### 279.7 保留所有Schur扇区的图参数
+
+若保留相等成功支中的所有参考扇区，可以用较大的参考接口避免第二次筛选。相等成功的归一化来源是
+$$
+\Omega_{\mathrm{eq}}
+=\frac12T(Q^{\otimes k},M^{\otimes k}).
+\tag{279.31}
+$$
+它的参考边缘
+$$
+\frac{Q^{\otimes k}+(I_2-Q)^{\otimes k}}2
+$$
+严格正，秩为 $2^k$。
+
+使用标准Schur–Weyl分解。令
+$$
+j=0,\ldots,\lfloor k/2\rfloor,\qquad
+\ell_j=k-2j,\qquad
+m_j=\binom kj-\binom k{j-1},
+\qquad \binom k{-1}=0.
+\tag{279.32}
+$$
+可固定一个仅依赖 $k$ 的Schur酉变换 $U$，使
+$$
+E^{\otimes k}\cong
+\bigoplus_{j=0}^{\lfloor k/2\rfloor}
+\left(\operatorname{Sym}^{\ell_j}\mathbb C^2
+\otimes\mathbb C^{m_j}\right).
+\tag{279.33}
+$$
+在该正交分解中，张量作用为
+$$
+UA^{\otimes k}U^\dagger
+=\bigoplus_j
+(\det A)^j\operatorname{Sym}^{\ell_j}(A)\otimes I_{m_j}.
+\tag{279.34}
+$$
+这里 $\operatorname{Sym}^{\ell}(A)$ 是归一化对称基中的标准对称幂；$\ell=0$ 时它等于一。式（279.33）—（279.34）是既有表示论工具。
+
+由于 $\det M=1$，定义
+$$
+Q_j=(\det Q)^j\operatorname{Sym}^{\ell_j}(Q)\succ0,
+\qquad
+M_j=\operatorname{Sym}^{\ell_j}(M).
+\tag{279.35}
+$$
+在共同Schur坐标中，全部联合来源准确为
+$$
+(I_H\otimes U)\Omega_{\mathrm{eq}}(I_H\otimes U^\dagger)
+=\frac12\bigoplus_jT(Q_j,M_j)\otimes I_{m_j}.
+\tag{279.36}
+$$
+设 $h_0=1$，则第 $j$ 扇区的条件概率为
+$$
+w_j=m_j(\det Q)^j h_{\ell_j}(\lambda_+,\lambda_-),
+\qquad
+\sum_jw_j=1.
+\tag{279.37}
+$$
+其归一化输入/表示来源是
+$$
+\omega_j=
+\frac{T(Q_j,M_j)}
+{2(\det Q)^j h_{\ell_j}(\lambda_+,\lambda_-)}.
+\tag{279.38}
+$$
+因此式（279.36）也可写成
+$$
+\bigoplus_j w_j\,\omega_j\otimes\frac{I_{m_j}}{m_j}.
+\tag{279.39}
+$$
+最高扇区 $j=0$ 的权重正是 $h_k$，且 $\omega_0=\Omega_s$。
+
+扇区概率是已有Schur谱权重公式在本来源参数中的应用。每个 $M_j$ 的最大链长为 $\ell_j+1$，可由（279.24）—（279.26）把 $k$ 换成 $\ell_j$ 得到；因此定理274.3分别给这些条件来源深度 $\ell_j+1$、锐指数 $1/[2(\ell_j+1)]$。偶数 $k$ 的末扇区有 $\ell_j=0$，是一维参考的产品来源，深度一、锐指数 $1/2$。
+
+### 279.8 固定CPTP编码、解码与模型范围
+
+令编码参考空间
+$$
+\widehat E=\bigoplus_{j=0}^{\lfloor k/2\rfloor}
+\operatorname{Sym}^{\ell_j}\mathbb C^2.
+$$
+其总维数为
+$$
+D_k=\sum_{j=0}^{\lfloor k/2\rfloor}(k-2j+1)
+=\left(\lfloor k/2\rfloor+1\right)
+\left(\lceil k/2\rceil+1\right)
+=\left\lfloor\frac{(k+2)^2}{4}\right\rfloor.
+\tag{279.40}
+$$
+设 $\Pi_j$ 是Schur空间第 $j$ 个扇区投影，$\widehat\Pi_j$ 是 $\widehat E$ 的对应投影。参考编码通道为
+$$
+\mathcal E(Y)
+=\bigoplus_j
+\operatorname{Tr}_{\mathbb C^{m_j}}
+\left(\Pi_j UYU^\dagger\Pi_j\right),
+\tag{279.41}
+$$
+解码通道为
+$$
+\mathcal D(\widehat Y)
+=U^\dagger\left[
+\bigoplus_j
+(\widehat\Pi_j\widehat Y\widehat\Pi_j)
+\otimes\frac{I_{m_j}}{m_j}
+\right]U.
+\tag{279.42}
+$$
+投影分块、偏迹、补入固定迹一态以及酉共轭均为CP操作；求和后的迹保持，故两者都是在完整输入算子空间上定义的CPTP通道。它们与 $Q,M$ 无关。量子输入 $H$ 不参与编码，联合通道使用 $\operatorname{id}_H\otimes\mathcal E$ 或 $\operatorname{id}_H\otimes\mathcal D$。
+
+精确解码的模型是所有满足
+$$
+(I_H\otimes U_\pi)\Xi(I_H\otimes U_\pi^\dagger)=\Xi
+\qquad(\pi\in S_k)
+\tag{279.43}
+$$
+的联合态。Schur引理使每个这样的态具有唯一分块形式
+$$
+(I_H\otimes U)\Xi(I_H\otimes U^\dagger)
+=\bigoplus_jR_j\otimes\frac{I_{m_j}}{m_j},
+\qquad
+R_j\succeq0,\qquad \sum_j\operatorname{Tr}R_j=1,
+\tag{279.44}
+$$
+其中 $R_j$ 可以保留输入 $H$ 与第 $j$ 表示空间的全部关联。编码得到 $\bigoplus_jR_j$，解码逐块补回同一个重数态，所以
+$$
+(\operatorname{id}_H\otimes\mathcal D\mathcal E)(\Xi)=\Xi.
+\tag{279.45}
+$$
+特别地，式（279.36）的图来源在这个模型内。
+
+式（279.41）必须保留所有扇区权重；既不把每个块单独归一化后等权拼回，也不丢弃经典扇区标记。编码与解码的现有原理是舍去、补回已知的无信息重数态，见本节末所引压缩文献。式（279.44）把这一原理直接用于可与外部输入关联的置换不变联合态。
+
+精确性不延伸到违反（279.43）的任意联合态。它也不重构相等失败分支，或原始重排以前的全部 $k$ 份来源。这里无损的是相等成功后、指定置换不变模型中的联合来源。
+
+### 279.9 完整编码态的深度与全竞争锐性
+
+编码后的实际来源为
+$$
+\widehat\Omega
+=(\operatorname{id}_H\otimes\mathcal E)(\Omega_{\mathrm{eq}})
+=\frac12\bigoplus_jm_jT(Q_j,M_j).
+\tag{279.46}
+$$
+定义
+$$
+\widehat Q=\bigoplus_jm_jQ_j\succ0,
+\qquad
+\widehat M=\bigoplus_jM_j.
+\tag{279.47}
+$$
+于是
+$$
+\widehat\Omega=\frac12T(\widehat Q,\widehat M),
+\qquad
+\operatorname{Tr}\widehat Q
+=\operatorname{Tr}(\widehat M^\dagger\widehat Q\widehat M)=1.
+\tag{279.48}
+$$
+它的实际完整数据是
+$$
+\widehat\rho=
+\frac{\widehat Q+\widehat M^\dagger\widehat Q\widehat M}{2},
+\qquad
+\widehat K=\widehat Q\widehat M.
+\tag{279.49}
+$$
+$\widehat M$ 的Jordan块长度依次为 $k+1,k-1,\ldots$，最长者仍为 $k+1$。
+
+**命题279.2（全部扇区编码来源的恢复）。** 每个固定 $k\ge1$ 的相干相等成功支，经式（279.41）的确定性参考编码后，产生参考维数与联合秩均为 $D_k$ 的来源 $\widehat\Omega$。从原始 $k$ 份来源取得它的总概率是 $2^{1-k}$。在式（279.6）的完整数据合同中，它的纤维为单点，且
+$$
+d_S(\widehat\Omega)=k+1,\qquad
+\alpha_{\mathrm{sharp}}(\widehat\Omega)=\frac1{2(k+1)}.
+\tag{279.50}
+$$
+该恢复上界针对整个 $H\otimes\widehat E$ 上全部密度态竞争者，包括具有跨扇区相干的竞争者；任何更大指数在同参考边缘子类中也不成立。
+
+**证明。** 编码后图块的准确形式为（279.46）—（279.48）。$\widehat Q\succ0$，$\widehat M$ 为unipotent且最长链为 $k+1$，因此定理274.3适用。编码本身迹保持，相等成功后无需再选择结果，故总取得概率保持为 $2^{1-k}$。$\square$
+
+命题279.2的竞争者范围与式（279.45）的解码范围是两个不同陈述。前者是编码真值作为一个固定图来源的全空间恢复定理；后者是参考编码对特定模型的精确可逆性。全空间锐性不推出编码能精确解码全部全空间竞争态。
+
+当 $k=2$ 时，$D_2=4$，两个扇区的重数都为一，因此这一步没有维数压缩；最高扇区权重为 $193/256$，一维末扇区权重为 $63/256$。当 $k\ge3$ 时，$D_k<2^k$，重数舍去才严格降低参考维数。总直和空间应按 $D_k$ 计量；若改用最大维数 $k+1$ 的量子寄存器加经典扇区标签，所声明的接口仍须包含那个标签。
+
+### 279.10 来源取得成本与载体下界的范围
+
+对两条路线都采用以下明确的取得协议：每批使用 $k$ 份新的独立来源，失败批次丢弃，独立重复直到首次成功。成功率为 $p$ 时，批次数为几何分布，期望批次数是 $1/p$，期望原始来源副本数是 $k/p$。因此
+
+| 接口 | 参考维数 | 每批成功率 | 期望原始来源副本数 |
+| --- | ---: | ---: | ---: |
+| 对称支条件来源 | $k+1$ | $2^{1-k}h_k$ | $k2^{k-1}/h_k$ |
+| 全部Schur扇区模型编码 | $\lfloor(k+2)^2/4\rfloor$ | $2^{1-k}$ | $k2^{k-1}$ |
+
+固定只尝试 $B$ 个独立批次时，取得至少一份成功来源的概率准确为
+$$
+1-(1-p)^B.
+\tag{279.51}
+$$
+在 $k=2$ 例子中，两条路线的期望原始副本数分别为 $1024/193$ 与 $4$。随着 $k$ 增长，对称路线的期望副本数为 $\Theta(k(32/9)^k)$，全部扇区路线为 $k2^{k-1}$。这些是所声明重复协议的来源取得成本，不是二元判断的确定性查询预算；理想Kraus算子和Schur通道也未给出门数或物理运行时间界。
+
+在正定上块的unipotent图来源类中，定理274.3将标准奇异度等同于最大Jordan块长度。参考维数为 $d$ 的矩阵，其最大块长度至多为 $d$。因此要求这一类中的来源具有深度 $k+1$，就必须
+$$
+d\ge k+1.
+\tag{279.52}
+$$
+对称成功来源在这一指定类中达到载体下界。这个论断不声称任意来源、任意编码合同的绝对最小量子记忆。
+
+相等来源的参考边缘满秩 $2^k$，所以只改等距坐标不能将整个参考装进 $k+1$ 维空间。$k\ge2$ 时，对称筛选确实排除了条件质量 $1-h_k>0$。由于相等来源本已在对称支及其正交补上分块，非选择测量可以保持来源不变；选择其中一支仍会改变归一化来源。全部扇区路线保留这些质量，其精确解码则依赖式（279.43）的置换不变模型。
+
+### 279.11 既有工具的来源与本节连接范围
+
+Schur扇区、对称支概率和重数编码均有既有来源，不另立为新的表示论、纯化或通用压缩成果：
+
+- J. I. Cirac、A. K. Ekert、C. Macchiavello，*Optimal purification of single qubits*，[quant-ph/9812075v1](https://arxiv.org/abs/quant-ph/9812075v1)，第2页式（5）、（9）、（10a）—（10d）给出自旋扇区、重数和扇区概率；第3页式（14）的两qubit对称概率为 $1-c_0c_1$，代入本节参数即 $193/256$。该稿主体详细采用偶数份；本节全部整数 $k$ 的概率由式（279.15）的直接对称迹计算及标准Schur分解承担。
+- D. Bacon、I. L. Chuang、A. W. Harrow，*Efficient Quantum Circuits for Schur and Clebsch-Gordan Transforms*，[quant-ph/0407082v1](https://arxiv.org/abs/quant-ph/0407082v1)，第2页式（3）、（5）给出Schur分解与张量作用的标准结构。本节使用该结构，不把近似Schur电路的复杂度转成当前精确投影的时间保证。
+- Y. Yang、D. Ebler、G. Chiribella，*Optimal Compression for Ensembles of Identically Prepared Mixed States*，所引[1506.03542v1](https://arxiv.org/abs/1506.03542v1)的标题；现行条目题为 *Efficient Quantum Compression for Ensembles of Identically Prepared Mixed States*。第2—3页式（2）—（4）、（7）、（9）采用Schur块中的 $I_m/m$，编码舍去重数、解码补回，其精确表示空间维数与式（279.40）相同。本节始终明确保留扇区权重，并由式（279.44）说明带输入关联的适用范围。
+
+本节具体建立的是同一相干拼接来源的两种实际接口：一条以已计入的成功率取得最短单链参考，另一条以较大的总表示空间保留全部模型来源；再将各自准确的正定图参数接到定理274.3，得到相同深度与锐指数。原始来源取得成本、条件筛选及模型解码的范围均不由这个共同指数替代。
+
+## 追加锚（本行以下为增补区）
