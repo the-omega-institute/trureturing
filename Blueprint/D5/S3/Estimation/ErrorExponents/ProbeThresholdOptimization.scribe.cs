@@ -73,7 +73,7 @@ internal sealed class ProbeThresholdOptimizationDocument
         Formula normSquare = SumAt(l, Power(xAt, D(2)));
         Formula objectiveAtX = Seq(
             At(objective, x), Sp, Eq, Sp,
-            Open, Power(Grp(aggregate), D(2)), Sp, Minus, Sp,
+            Open, Power(Seq(Open, aggregate, Close), D(2)), Sp, Minus, Sp,
             epsilon, Sp, Cdot, Sp, normSquare, Close);
         Formula vDefinition = Seq(
             v, Sp, Eq, Sp,
@@ -138,7 +138,7 @@ internal sealed class ProbeThresholdOptimizationDocument
             Open, xStarDefinition, Close, Sp, Land, Sp,
             Open, activeDefinition, Close, Sp, Land, RowBreak,
             Open, inactiveDefinition, Close, Sp, Land, Sp,
-            Open, activeSumDefinition, Close, RowBreak,
+            Open, activeSumDefinition, Close, Sp, Land, RowBreak,
             Open, coordinateBounds, Close, Sp, Land, RowBreak,
             Open, maximumClause, Close, Sp, Land, RowBreak,
             Open, inactiveMass, Sp, Lt, Sp, epsilon, Close, Sp, Land, RowBreak,
@@ -155,7 +155,7 @@ internal sealed class ProbeThresholdOptimizationDocument
             Open, vDefinition, Close, Comma, Sp,
             Open, objectiveAtX, Close, Comma, RowBreak, Grp(),
             Exists, Sp, Typed(threshold, real), Comma, Sp,
-            property, Sp, Land, Sp, rootUniqueness, Dot,
+            Open, property, Close, Sp, Land, Sp, rootUniqueness, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

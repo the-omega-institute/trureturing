@@ -6,6 +6,7 @@
    utility: none
    digest: A positive probability vector has an exact capped probe optimizer. -/
 
+import D5.S3.Analytic.Curvature.CardinalSplineRecurrence
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Mul
@@ -76,8 +77,7 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι]
       a l ≤ ∑ j, a j := Finset.single_le_sum (fun j _ => (ha j).le) (Finset.mem_univ l)
       _ = 1 := hsum
   have halev (l : ι) : a l ≤ v l := by
-    rw [Real.le_sqrt (ha l).le (ha l).le]
-    nlinarith [mul_nonneg (ha l).le (sub_nonneg.mpr (haleone l))]
+    simpa only [v] using Real.le_sqrt_self_iff.mpr (haleone l)
   have hg_one : g 1 = 1 := by
     simp only [g, div_one, min_eq_left (halev _), hsum]
   let V : ℝ := ∑ l, v l
@@ -259,40 +259,9 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι]
       HasDerivAt J (2 * (∑ l, v l * Y t l - t)) t := by
     have hpospart (x : ℝ) :
         HasDerivAt (fun y : ℝ => max y 0 ^ 2) (2 * max x 0) x := by
-      rcases lt_trichotomy x 0 with hx | hx | hx
-      · have heq : (fun y : ℝ => max y 0 ^ 2) =ᶠ[nhds x] fun _ => 0 := by
-          filter_upwards [Iio_mem_nhds hx] with y hy
-          have hy' : y < 0 := by simpa only [Set.mem_Iio] using hy
-          simp [max_eq_right hy'.le]
-        simpa [max_eq_right hx.le] using
-          (hasDerivAt_const x (0 : ℝ)).congr_of_eventuallyEq heq
-      · subst x
-        apply hasDerivAt_iff_tendsto_slope_zero.mpr
-        have hc : ContinuousAt (fun y : ℝ => max y 0) 0 :=
-          continuousAt_id.max continuousAt_const
-        have ht : Filter.Tendsto (fun y : ℝ => max y 0)
-            (nhdsWithin 0 {0}ᶜ) (nhds 0) := by
-          simpa using hc.mono_left
-            (nhdsWithin_le_nhds : nhdsWithin (0 : ℝ) {0}ᶜ ≤ nhds 0)
-        have heq : (fun y : ℝ => max y 0) =ᶠ[nhdsWithin 0 {0}ᶜ]
-            fun y => y⁻¹ • (max (0 + y) 0 ^ 2 - max 0 0 ^ 2) := by
-          filter_upwards [self_mem_nhdsWithin] with y hy
-          have hy0 : y ≠ 0 := by simpa using hy
-          by_cases hy' : 0 ≤ y
-          · simp only [zero_add, max_eq_left hy', max_self, pow_two, zero_mul,
-              sub_zero, smul_eq_mul]
-            field_simp
-          · have hy' : y < 0 := lt_of_not_ge hy'
-            simp [max_eq_right hy'.le, hy0]
-        simpa using ht.congr' heq
-      · have heq : (fun y : ℝ => max y 0 ^ 2) =ᶠ[nhds x]
-          fun y => y * y := by
-          filter_upwards [Ioi_mem_nhds hx] with y hy
-          have hy' : 0 < y := hy
-          simp [max_eq_left hy'.le, pow_two]
-        have hmul : HasDerivAt (fun y : ℝ => y * y) (2 * x) x :=
-          ((hasDerivAt_id x).mul (hasDerivAt_id x)).congr_deriv (by simp [id]; ring)
-        simpa [max_eq_left hx.le] using hmul.congr_of_eventuallyEq heq
+      simpa using
+        (D5.S3.Analytic.Curvature.CardinalSplineRecurrence.hasDerivAt_max_sub_pow
+          (0 : ℝ) 0 x)
     have hphi (l : ι) :
         HasDerivAt (fun s : ℝ =>
           2 * s * v l * min 1 (s * v l / ε) -
