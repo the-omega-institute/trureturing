@@ -5632,3 +5632,15 @@ Roger Baker，*Lp maximal estimates for quadratic Weyl sums*，[arXiv:2103.05555
 Agostini–Amendola 的离散 Gaussian／theta 实矩关系以及 Cellarosi–Marklof 的 theta 变换保留既有归属与假设；正文不使用未证零点条件下的复 theta 对数。Dytso–Poor–Shamai 的条件导数恒等式仍受第 140 章说明的 Markov 边界约束：完整惊异中的同一残差 $G^2/2$ 必须直接求导。
 
 第 142 章是这些工具在原始共同实现中的新组合及定量桥梁：先证明同时占据，再控制加宽带内的位移能量、同一噪声和两次实温度导数，最后支付有符号核、条件均值平方及全部输出尾部。结论分别在原 pair/path 数据概率下对确定支持一致；不声称全局原创、阈值必要性、零噪声或环境期望收敛。
+
+## 谱边界第 143 章补充：条件乘积抽样与逐相相对比较
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 143 章将第 141 章的弱外场结果迁回原完整固定基数选择律。对每个 $\eta\to0$、$\eta/\sqrt\delta\to\infty$ 的确定序列，在原严格半指数噪声条件、紧物理输出和 $|h|\le K\sqrt\eta$ 内，保留第 139 章的精确经验中心。结论包括配分函数比、两个符号概率的相对渐近式和每相内平移后的 Gaussian 波动；任意慢的尺度分离与指数小的少数相均在原量词范围内。
+
+Tatpon Siripraparat、Kritsana Neammanee，*A local limit theorem for Poisson binomial random variables*，ScienceAsia 47 (2021), 111–116，[DOI:10.2306/scienceasia1513-1874.2021.006](https://doi.org/10.2306/scienceasia1513-1874.2021.006)。使用 Theorem 2：独立非同分布 Bernoulli 和的总方差 $d>1$ 时，概率质量与对应正规密度在支持整数上的一致差满足随 $d\to\infty$ 的 $O(d^{-1})$ 界。这里无需方差与标签数成比例，也无需有界中心偏移。原文的误差定义、定理及证明分别位于印刷页 111、112、114–115。原出版 PDF SHA256 `1a6ec512d5621ed33bd58ff52260f80256c3ca662a73711c93a580a81628150a`。该定理分别应用于同一校准后的全部标签及外部标签，给出正文 (143.13)–(143.15)，随后稀有输出和逐相比较由本卷另行支付。
+
+Richard Arratia、Larry Goldstein、Bryan Langholz，*Local central limit theorems, the high-order correlations of rejective sampling and logistic likelihood asymptotics*，Annals of Statistics 33 (2005), 871–914，[DOI:10.1214/009053604000000706](https://doi.org/10.1214/009053604000000706)，核对版本 [arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)，2005-06-15。其作者提供的电子重印本注明排版、页码与期刊不同，不作版本字节等同。所读 PDF 465,316 字节，SHA256 `48d1f6866626e807686ace55c894866fa46acdfb049a26659ed6185f749d83c5`。
+
+Lemma 3.5 及其证明给出正权重、有限可行固定样本数下的精确条件乘积恒等式，直接对应全部标签上的校准 Bernoulli 条件化。其高阶展开不作为本章井位移的估计：Condition 2.1 要求方差至少为 Bernoulli 总数的固定正比例，Theorem 2.1 还使用有界中心偏移；本模型 $d_{\rm all}\asymp q$ 而 $q/M\to0$，井上的整数位移也无需有界。Theorem 3.1 的权重稳定性及采样比例远离零、一的条件不能替代这一稀疏模型。原文条件与 Lemma 3.5 的完整证明已核对；未将整个高阶展开路线宣称为适用。
+
+新推导在完整计数盒上保留 $L_x(k)=\exp(\ell_0-\varepsilon D^2)+r_x(k)$ 的加性误差，避免对极端尾点取未获相对控制的对数。对同一逐相后验积分后，误差为 $O_{\mathbb P}(q^{-1/2}+\delta^5+\eta\delta^4+\delta^5/\eta)$，不含逆噪声或逆少数相概率。条件抽样、局部极限及有限换测度是成熟工具；本章贡献是它们在原完整计数、原能量、同一外部补偿与弱场下的定量连接，不宣称全局原创、增长外场范围或完整相图。

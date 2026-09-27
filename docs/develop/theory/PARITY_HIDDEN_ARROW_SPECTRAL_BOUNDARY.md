@@ -37175,3 +37175,331 @@ Barron 关于二次 Weyl 和的 $L^4$ 极大估计，对线性变量使用 Lebes
 本章不提供零噪声结论、必要阈值、锐性、原始环境的期望收敛或计算效率保证；有限文献检索也不构成全局原创性结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 143. 完整选择约束下的弱外场与少数相相对控制
+
+第 141 章在原乘积计数律中得到双阱的弱场响应。本章把完整固定基数选择恢复为全部外部标签的精确系数比，再在每一符号条件后验内部比较该比值。外部方差尺度使逐相误差趋零，即使少数相概率本身指数小，也无需用其倒数放大误差。
+
+### 143.1 原始完整选择后验与结论
+
+**定理 143.1（完整选择律的逐相弱场响应）。** Fix the original admissible amplitude, beta in (1/2,1), and every original legal deterministic floor/scale sequence. All symbols retain their original finite-level meanings. The level Q and the product prior Q_x(n) are distinct objects. Let
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ Q_x(n)=\prod_{j\in K_M}\binom{C_j}{n_j}p_j^{n_j}(1-p_j)^{C_j-n_j},
+$$
+$$
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+$$
+$$
+ E(n)=\sum_jx_j^2,\quad D(n)=\sum_j(x_j+e_j),\quad
+ T(n)=(E(n)-V)/\sqrt\delta .
+ \tag{143.1}
+$$
+The complete original groups, floors, multiplicities, noncentral centers mu_j and full V are retained. Let eta=eta_Q be EACH deterministic positive sequence with eta->0 and t=eta/sqrt(delta)->infinity, without a prescribed divergence rate. Set a=1/(2V)+eta. The original noise is positive, sigma->0, and satisfies the strict half-exponent condition
+$$
+ \limsup_{Q\to\infty}\frac{\log(1/\sigma)}{Q^3}<c_q/2,
+ \qquad \log q=c_qQ^3+O(1),\quad c_q=\phi(1-\beta)/\beta .
+ \tag{143.2}
+$$
+In particular sigma may tend to zero arbitrarily slowly. The noise hypothesis is exactly (143.2).
+
+For A=P or Q define raw finite partitions and posterior laws on the original count box by
+$$
+ F_{y,h}(n)=
+ \exp\{aD(n)^2+hD(n)-(T(n)-y)^2/(2\sigma^2)\},
+\quad Z^A_y(h)=\sum_n A_x(n)F_{y,h}(n),
+\quad \pi^A_{y,h}(n)=\frac{A_x(n)F_{y,h}(n)}{Z^A_y(h)} .
+ \tag{143.3}
+$$
+Here P_x is recovered literally in Section 143.2, not postulated as a new conditioning model. Normalizing the unperturbed output posterior first only multiplies Z^A_y(h) by an h-independent factor, so the partition ratio below is unchanged.
+
+Retain the exact Chapter 139 finite real-saddle center r_*=r_*(Q,y), recalled in Section 143.4. Put S=sign(D), sign(0)=0, W=2sqrt(eta)(D-Sr_*), lambda=h/(2sqrt(eta)), and
+$$
+ \ell_\tau(h,y)=\frac{e^{\tau h r_*}}{2\cosh(h r_*)},
+ \qquad \tau\in\{-1,1\}.
+ \tag{143.4}
+$$
+For every fixed finite K,R, uniformly |h|<=Ksqrt(eta), |y|<=R,
+$$
+ \frac{Z^P_y(h)}
+ {Z^P_y(0)\cosh(h r_*)\exp(h^2/(8\eta))}=1+o_{\mathbb P}(1),
+ \tag{143.5}
+$$
+$$
+ \max_{\tau=\pm1}\left|
+ \frac{\pi^P_{y,h}(S=\tau)}{\ell_\tau(h,y)}-1\right|
+ =o_{\mathbb P}(1).
+ \tag{143.6}
+$$
+For each fixed continuous f with |f(w)|<=C_f(1+|w|^p), p finite,
+$$
+ \max_{\tau=\pm1}\left|
+ E_{\pi^P_{y,h}}[f(W-\lambda)\mid S=\tau]
+ -\int_{\mathbb R} f(w)\frac{e^{-w^2/2}}{\sqrt{2\pi}}\,dw
+ \right|=o_{\mathbb P}(1).
+ \tag{143.7}
+$$
+Both sign probabilities are positive on common good events; outside them the conditional expressions can be assigned arbitrary values. The mass at D=0 is negligible relative to either sign mass as well.
+
+Every probability statement refers to the original actual raw-data law, uniformly over deterministic size-q supports, separately for the pair experiment and the path experiment. More explicitly, for every positive tolerance, the supremum over those supports of the probability that the displayed supremum over h,y exceeds that tolerance tends to zero. Fields and outputs can consequently be chosen measurably from this same fiber inside the stated ranges. The sequence eta is arbitrary as specified, but there is no claim of one common convergence rate over all possible sequences. No growing K,R or test degree is asserted.
+
+Chapters 137, 139 and 141 retain their stated scopes. The new conclusion concerns the original selected law P, with the same center, field range and noise range as the product-law conclusion of Chapter 141.
+
+### 143.2 包含全部外部标签的原始选择律
+
+The fixed-cardinality support posterior is given by the elementary-symmetric generating polynomial (29.6) and the calibrated-label representation in Chapter 35 of [the fluctuation volume](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md). With W_i the original row log likelihood score and w_i=exp(W_i)>0,
+$$
+ P_x(\mathcal S=A)=
+ \frac{\mathbf1_{\{|A|=q\}}\prod_{i\in A}w_i}
+ {\sum_{|B'|=q}\prod_{i\in B'}w_i}.
+ \tag{143.8}
+$$
+Equations (68.33), (68.38) and (70.6) give its full group-count pushforward. We spell out the mapping because imposing a total constraint on the selected window alone would produce a different model.
+
+On the given complete raw-data fiber, choose the original calibration
+$$
+ p_i=\operatorname{logistic}
+ \{W_i-\log((M-q)/q)+\theta_M\},\qquad \sum_{i=1}^M p_i=q.
+ \tag{143.9}
+$$
+Let mathsf Q_x be independent Bernoulli labels with these probabilities; its selected group-count pushforward is exactly Q_x in (143.1). Equation (143.9) uses the same theta_M as the originals. Conditioning mathsf Q_x on the ALL-label sum q gives (143.8): the common odds multiplier exp(theta_M)q/(M-q), raised to |A|=q, cancels. This is the classical conditional-product/rejective-sampling identity, not a new theorem.
+
+Let J be the union of ALL original observed groups, with N_J=sum_j C_j labels. Write k(n)=sum_j n_j,
+$$
+ m_J=\sum_j C_jp_j,\quad d_J=\sum_j C_jp_j(1-p_j)=B^2V,\quad
+ d_c=\sum_{i\notin J}p_i(1-p_i),\quad d_{\rm all}=d_c+d_J.
+ \tag{143.10}
+$$
+The complement is the original set of outside labels, without grouping, deletion or homogenization. Independence under mathsf Q_x gives the exact coefficient formula
+$$
+ L_x(k)=
+ \frac{[z^{q-k}]\prod_{i\notin J}(1-p_i+p_i z)}
+ {[z^q]\prod_{i=1}^M(1-p_i+p_i z)},\qquad
+ P_x(n)=L_x(k(n))\,Q_x(n).
+ \tag{143.11}
+$$
+The count multiplicities in Q_x remain the full binomial coefficients. The denominator in (143.11) is the exact finite probability of the total-label event, not a limiting constant. Its numerator enforces the support constraint by making the complement supply q-k successes. Thus full-q selection does not set the selected-window charge to zero.
+
+Original(70.4) supplies N_J=O_P(B^2)=o_P(q), d_c,d_all asymptotic to q/2. On common good events, N_J<q<M-N_J. Every integer 0<=k<=N_J is then completable by the complement. Since all nonempty original label probabilities are strictly between zero and one, P_x has the entire original count box as support there. Empty groups are deterministic and harmless. Even without this support observation, the coefficient formula with impossible coefficients set to zero remains exact.
+
+Most importantly, by (143.1),
+$$
+ B D(n)=\sum_j\{n_j-\mu_j+\mu_j-C_jp_j\}
+       =k(n)-m_J.
+ \tag{143.12}
+$$
+Dependence of L on D is therefore derived, not assumed. This algebra cancels mu only in the linear charge; E,T and their original noncentral centers are unchanged. The complement mean is exactly q-m_J, so its required displacement in (143.11) is -BD. All these relations hold jointly on the same finite count tuple and same data fiber.
+
+### 143.3 全计数盒局部极限界与井位移
+
+Fix one of the usual common tight-constant classes, on which c<=V<=C, cq<=d_c,d_all<=Cq, N_J<=CB^2 and the geometry of Chapter 141 holds. Constants below depend only on that class and fixed K,R or fixed moment degree. These classes exhaust the required raw-data probability uniformly over supports in each experiment.
+
+We directly use Siripraparat–Neammanee, ScienceAsia47(2021), Theorem2: for a sum of N independent heterogeneous Bernoullis with variance d tending to infinity, its probability mass uniformly over integers 0,...,N differs from the corresponding normal mass by at most C/d. No variance lower bound proportional to the number of labels is needed. These integers cover every required complement count by Section 143.2. If desired, the same bound extends outside that range: for mean m, d<=min(m,N-m), so the normal mass there is at most (2pi d)^(-1/2)exp(-d/2), while the actual mass is zero. Apply the theorem to the complement and to the full calibrated sum, whose mean is exactly the integer q. Then
+$$
+ \mathsf Q_x(S_{\rm all}=q)=(2\pi d_{\rm all})^{-1/2}+O(q^{-1}),
+$$
+$$
+ \mathsf Q_x(S_{J^c}=q-k)
+ =(2\pi d_c)^{-1/2}e^{-(k-m_J)^2/(2d_c)}+O(q^{-1})
+ \tag{143.13}
+$$
+uniformly in k. The first expression is bounded below by c/sqrt(q). Dividing (143.13), including the denominator's relative O(q^-1/2) error, gives
+$$
+ L_x(k)=e^{\ell_0}e^{-\varepsilon D^2}+r_x(k),\qquad
+ \sup_k|r_x(k)|\le Cq^{-1/2},
+$$
+$$
+ \ell_0=\tfrac12\log(d_{\rm all}/d_c),\qquad
+ \varepsilon=\frac{B^2}{2d_c},\qquad
+ \ell_0=O(\delta^5),\quad \varepsilon=O(\delta^5).
+ \tag{143.14}
+$$
+This reproduces exactly the operative original(68.39) from a verified primary theorem. Epsilon is kept as its finite value before bounding it. We do not take the logarithm of an additive approximation at far count tuples.
+
+Since ell_0>=0, epsilon>=0 and 1-exp(-u)<=u for u>=0, (143.14) implies on the ENTIRE count box
+$$
+ 0\le L_x(k)\le1+C(d_J/d_c+q^{-1/2}),
+$$
+$$
+ |L_x(k)-1|
+ \le C\{d_J/d_c+q^{-1/2}+\varepsilon D(n)^2\}.
+ \tag{143.15}
+$$
+This is a pointwise envelope, not a statement about its expectation under the unweighted prior. It remains legal after any common nonnegative count/energy/field weighting. No global lower bound for L is claimed at extreme tuples.
+
+Its scale on the moving wells can be computed directly. The inherited center obeys r_*^2 asymptotic to (eta/delta)m_Q^2 with m_Q^2=2V^4/C_2 bounded above and below. At r=tau r_*+w/(2sqrt(eta)), for |w|<=M,
+$$
+ D^2\le C_M(\eta/\delta+\eta^{-1}),\qquad
+ \varepsilon D^2\le C_M(\eta\delta^4+\delta^5/\eta)=o(1).
+ \tag{143.16}
+$$
+Moreover the complement's mean displacement measured in its OWN standard deviation is
+$$
+ \frac{|k-m_J|}{\sqrt{d_c}}
+ =\sqrt{2\varepsilon}|D|
+ \le C_M\{\sqrt\eta\,\delta^2+\delta^{5/2}/\sqrt\eta\}
+ =O_M(\sqrt\eta\,\delta^2)=o(1).
+ \tag{143.17}
+$$
+The last equality uses t->infinity: the second term divided by the first is 1/t. The integer displacement itself need not be bounded, which is why a bounded-offset local theorem alone is insufficient. Formula (143.15) proves pointwise relative flatness on BOTH contributing bands with the same finite normalization. There is no need to optimize the two bands using different environments.
+
+Local flatness alone would leave tails and minority normalization unproved. The next section integrates the global bound on the actual tilted counts and closes those obligations.
+
+### 143.4 精确经验中心与乘积后验矩
+
+The center is recalled to specify exactly which finite object remains in (143.4)--(143.7). Let H={j:C_j>=exp(zeta Q^3)} be the fixed high block of Chapter 139, chosen once for the whole compact field/output range using its original positive exponent margins. Put V_H=sum_H v_j, C_H=diag(v_j), w_H=(v_j), d=w_H/V_H,
+$$
+ A=C_H-w_Hw_H^T/V_H,\qquad
+ \gamma=\eta-\{(2V_H)^{-1}-(2V)^{-1}\},\qquad H_y=V+\sqrt\delta\,y,
+$$
+$$
+ K_0(z)=-\tfrac12\log\det(I-2zA)+\tfrac12\delta\sigma^2z^2,
+ \qquad \Psi(z)=z\,d^T(I-2zA)^{-1}d.
+$$
+The exact Chapter 139 root and center are
+$$
+ \Psi(z_*)=-\gamma,\quad z_*<0,\qquad
+ r_*=\left\{\frac{H_y-K_0'(z_*)}{\Psi'(z_*)}\right\}^{1/2}.
+ \tag{143.18}
+$$
+Chapter 139 proves existence, uniqueness in the specified real branch, positivity and the required uniform geometry, including r_*^2 asymptotic to eta m_Q^2/delta. Full V, original physical H_y and finite sigma are retained in (143.18). The high block defines this already justified center; it does not truncate the laws P_x or Q_x used here.
+
+Equations (141.5)–(141.7) prove (143.5)–(143.7) with P replaced by Q. Chapter 141 also proves that pi^Q(D=0)/pi^Q(S=tau)->0 uniformly for each tau. Its actual-count proof includes both the unbounded quadratic and field insertions in the SAME output likelihood, rare density payment, low tuples, lattice lifting and original noncentrality. It is not merely a Gaussian reference result. The parts used here are (141.5)–(141.7) and (141.24)–(141.35), particularly its sign-relative full-count numerator comparison.
+
+A precise finite consequence of (141.7) is useful. Write z=W-lambda. For every fixed p>=0, on common events whose probability tends to one as specified,
+$$
+ \sup_{|h|\le K\sqrt\eta,\ |y|\le R}
+ \max_{\tau=\pm1} E_{\pi^Q_{y,h}}[1+|z|^{p+2}\mid S=\tau]
+ \le C_{p,K,R}.
+ \tag{143.19}
+$$
+Indeed apply (141.7) to the continuous polynomial-growth function |z|^{p+2}; its Gaussian moment is finite. Only a finite collection of moment bounds is needed for any given test. Thus we can intersect the original geometric class with the events on which those uniform moments are bounded. Their probability loss still tends to zero uniformly over supports. We do not assume all infinitely many moment bounds on a single fixed-constant event.
+
+Within either sign, the exact identity D=tau r_*+(z+lambda)/(2sqrt(eta)) and |lambda|<=K/2 imply
+$$
+ (1+|z|^p)D^2
+ \le C_{p,K}\{r_*^2(1+|z|^p)
+             +\eta^{-1}(1+|z|^{p+2})\}.
+ \tag{143.20}
+$$
+Taking expectation in THE SAME sign-conditioned actual product posterior, using (143.19), gives
+$$
+ E_{\pi^Q_{y,h}}[(1+|z|^p)D^2\mid S=\tau]
+ \le C_{p,K,R}(r_*^2+\eta^{-1}).
+ \tag{143.21}
+$$
+This is a joint bound for the observable needed by selection. It does not multiply unrelated marginal extrema or use an unconditional charge variance.
+
+### 143.5 少数相内部的相对选择比较
+
+For each sign let nu^Q_tau be pi^Q_{y,h} conditioned on S=tau and let nu^P_tau be its selected-law analogue. Equations (143.3),(143.11) are finite exact sums, so
+$$
+ \frac{Z^P_{y,\tau}(h)}{Z^Q_{y,\tau}(h)}
+   =E_{\nu^Q_\tau}L_x(k)=:A_\tau(h,y),\qquad
+ d\nu^P_\tau=\frac{L_x(k)}{A_\tau(h,y)}\,d\nu^Q_\tau .
+ \tag{143.22}
+$$
+Here Z^A_{y,tau} is the raw partition restricted to S=tau. Each denominator is positive on the stated good events. Crucially, the expectation in (143.22) is normalized WITHIN the sign before estimating it. It is not obtained by dividing an absolute total-law error by the sign probability.
+
+Combining the global pointwise bound (143.15) with (143.19)--(143.21) gives the new quantitative actual-model estimate
+$$
+ E_{\nu^Q_\tau}[(1+|z|^p)|L_x(k)-1|]
+ \le C_{p,K,R}\{d_J/d_c+q^{-1/2}
+                  +\varepsilon(r_*^2+\eta^{-1})\}.
+ \tag{143.23}
+$$
+Every term refers to this very count tuple, output, field, complement and calibrated fiber. The finite coefficient on the right is controlled uniformly in y by
+$$
+ b_Q:=q^{-1/2}+\delta^5+\eta\delta^4+\delta^5/\eta
+ \longrightarrow0 .
+ \tag{143.24}
+$$
+To check the last term without imposing a rate, delta^5/eta=delta^(9/2)/t. Also (delta^5/eta)/(eta delta^4)=t^-2. Thus the potentially large within-well variance term causes no restriction even when t diverges arbitrarily slowly. This argument has no factor sigma^-1 or exp(C_Kt).
+
+In particular |A_tau-1|<=Cb_Q, uniformly for both signs. Eventually A_tau>=1/2. For any measurable f with |f(z)|<=C_f(1+|z|^p), the exact difference-of-quotients formula yields
+$$
+ \left|E_{\nu^P_\tau}f(z)-E_{\nu^Q_\tau}f(z)\right|
+ \le\frac{
+ E_{\nu^Q_\tau}[|f(z)||L-1|]
+ +|A_\tau-1|E_{\nu^Q_\tau}|f(z)|
+ }{A_\tau}
+ \le C_{f,p,K,R}b_Q .
+ \tag{143.25}
+$$
+The bound holds on the common moment events; equivalently it is O_P(b_Q) uniformly in the stated domains. Taking a supremum over measurable f bounded by 1+|z|^p gives a weighted comparison of the two discrete sign-conditioned laws. No discrete/continuous total variation assertion is involved.
+
+This also pays ALL tails after selection. For any nonnegative count observable G, (143.15),(143.22) give
+$$
+ E_{\nu^P_\tau}G
+ \le\frac{1+C(\delta^5+q^{-1/2})}{1-Cb_Q}
+       E_{\nu^Q_\tau}G .
+ \tag{143.26}
+$$
+Apply it, for example, to (1+|z|^p)1_{|z|>M}. Uniform product tail integrability follows from its next higher fixed moment; (143.26) transfers it to P. The bound is valid at every finite count boundary and every extreme tuple, not just inside the Gaussian cells. In particular selection cannot introduce an extra far-tail contribution whose energy/field insertion was omitted.
+
+The role of Chapter 141's rare-output analysis is now explicit. That analysis has already established (143.19) for the EXACT count law with the physical positive sigma and unbounded field/quadratic weight, sign by sign. Equations (143.15),(143.20),(143.22) then compare exact finite probabilities. There is no fresh approximation of a likelihood kernel, no widening of sigma, no passage through an unconditioned TV bound and no inverse rare denominator to pay in the selection comparison here. A raw bound sup L<=C by itself would not imply A_tau->1; the charge-sensitive bound (143.15) and the SAME-LAW moment estimate (143.21) supply the missing lower comparison.
+
+One can also see why the minority presents no exponential loss. Its raw product numerator can be of order sigma exp(-C_Kt) times its common modal normalization. Nevertheless (143.22)--(143.23) say
+$$
+ Z^P_{y,\tau}(h)=Z^Q_{y,\tau}(h)\{1+O_P(b_Q)\}
+ \tag{143.27}
+$$
+for EACH sign. Both the main quantity and its error contain that same possibly tiny numerator. No condition such as b_Q exp(C_Kt)->0 is needed, and such a condition has not been used.
+
+### 143.6 配分函数、相权重与条件波动
+
+First treat zero charge. If any atom has D=0, then k=m_J by (143.12) and (143.15) gives |L_x(k)-1|<=C(delta^5+q^-1/2) at that atom. If m_J is not an integer there is no such atom. In either case
+$$
+ Z^P_{y,0}(h)\le[1+C(\delta^5+q^{-1/2})]Z^Q_{y,0}(h).
+ \tag{143.28}
+$$
+Combining (143.27),(143.28) with Chapter 141's zero-to-each-sign estimate proves
+Z^P_{y,0}(h)/Z^P_{y,tau}(h)->0 uniformly. This addresses the zero atom without assigning it to a favorable sign.
+
+In fact summing the three sign pieces proves the stronger total raw comparison
+$$
+ \frac{Z^P_y(h)}{Z^Q_y(h)}=1+O_P(b_Q).
+ \tag{143.29}
+$$
+For the zero piece the same absolute relative bound at D=0 is available, so no smallness estimate of its mass is even required for (143.29). All pieces are nonnegative. Applying (143.29) at h and0 yields
+$$
+ \frac{Z^P_y(h)/Z^P_y(0)}{Z^Q_y(h)/Z^Q_y(0)}
+ =1+O_P(b_Q).
+ \tag{143.30}
+$$
+Insertion of (141.5) proves (143.5).
+
+For either sign, division of (143.27) by (143.29) gives
+$$
+ \frac{\pi^P_{y,h}(S=\tau)}{\pi^Q_{y,h}(S=\tau)}
+ =1+O_P(b_Q).
+ \tag{143.31}
+$$
+Multiply this relative identity by the already relative product formula (141.6). This proves (143.6), including the exponentially small minority, without subtracting two total probabilities. The same statement holds at zero field, yielding asymptotically fair signs; finite noncentral asymmetry has not been assumed absent.
+
+For the conditional fluctuation law, combine (143.25) with (141.7) for the SAME f, r_*, h,y. This proves (143.7). Equation (143.26), or a higher moment in (143.25), supplies all polynomial-growth tests and uniform integrability. We never differentiate an asymptotic density or infer exponential moments from polynomial convergence; the exponential field was already included in Chapter 141's exact tilted law before (143.19) was invoked.
+
+The constants in the requested response have therefore remained exactly those of Chapter 141. They can also be checked from the within-well change hD=tau h r_*+lambda W: completing lambda W-W^2/2 gives lambda^2/2=h^2/(8eta) and a local mean lambda=h/(2sqrt(eta)). Positive summation over two equal zero-field amplitudes gives cosh(h r_*), and their normalized ratio gives (143.4). Those algebraic identities are classical; they are not the new selection estimate.
+
+The exact center is retained at fluctuation precision. For example (143.25) with f(z)=z gives a selected/product conditional mean difference O_P(b_Q) in W-lambda coordinates; with f(z)=z^2 it gives the analogous second-moment difference. Since r_* itself was not approximated inside any field exponential, no leading-center replacement error is hidden. We do not infer a derivative or pointwise mode shift for the discrete likelihood ratio from its additive local-limit approximation.
+
+### 143.7 共同实现与适用范围
+
+The dependence of groups, outside labels, original centers and physical energy is not ignored. Only the auxiliary calibrated labels are independent at the exact finite identity stage. The actual raw pair/path rows are never replaced by independent draws; their inherited common classes and the probability theorem of Chapter 141 are used separately under their original laws. The union of the finite extra moment events in (143.19) preserves their support-uniform probability scope. On those events every inequality (143.11)--(143.31) holds for the same fiber simultaneously over the prescribed field/output domain.
+
+All low groups enter k,m_J,d_J,V,D,E,T and the full product/selected sums. The complement factor (143.11) includes every outside label. The high-block quantities occur only in the inherited definition (143.18) of r_*. Neither low counts nor count boundaries are removed in the selection transfer. Original floors remain in C_j and the same measurement residual appears on both sides of (143.22).
+
+The all-tuple envelope avoids a false far-tail logarithmic expansion. It permits L to become very small at extreme counts, as the original real-tilt lower bound allows. Such points have already controlled moments under the actual tilted product conditional law, and (143.23),(143.26) control their selected-law effect. This is more information than bounded likelihood ratios or unweighted polynomial L2 convergence.
+
+The direct scale computation (143.17) explains the outcome: the selected-window displacement along a supercritical well is still o(1) in the outside Bernoulli standard deviation. The outside population absorbs that displacement with a relatively flat local mass. This is a deduction from the original B,q,d_c and D, not an independently fitted ensemble.
+
+No stronger sigma rate, eta^3/delta restriction, t^2>>log Q assumption or smaller h range was used. No derivative in entropy order, equality of entire posteriors, full phase diagram, growing parameter range, negative variance continuation or new prior is asserted. The proof establishes precisely the three selected-law statements and the quantitative sign-relative interface (143.23)--(143.31).
+
+### 143.8 方法归属与迁移条件
+
+固定基数加权抽样等于独立 Bernoulli 标签在总和上的条件化，这是成熟的条件乘积恒等式。Arratia–Goldstein–Langholz 的 Lemma 3.5 直接适用；但该文高阶局部展开所需的方差与标签总数同阶、采样比例远离端点等条件，并不由本卷稀疏支持模型满足。这里使用 Siripraparat–Neammanee Theorem 2 的方差型一致局部界，完整保留其独立 Bernoulli 与方差大于一的条件。
+
+本章的模型内推导是线性电荷与外部补偿量的精确对应 (143.12)，以及在同一实际符号条件后验内的加权比较 (143.23)–(143.31)。外部整数位移无需有界；它除以外部标准差后趋零，而全计数盒包络同时支付尾部。文献版本、定理条件及未适用的展开见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（本行以下为增补区）
