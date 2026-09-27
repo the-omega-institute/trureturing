@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
 import Mathlib.Analysis.InnerProductSpace.Positive
+import Mathlib.Analysis.CStarAlgebra.Matrix
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,7 +17,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Measurement.GeneralInstrumentDetectionCertificate
 
 open Matrix Filter Topology
-open scoped ComplexOrder MatrixOrder
+open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
 open D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
 open D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
@@ -82,84 +84,13 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
     have hPD : (1 - survival Q d).PosDef := (htfae.out 0 2).mp hD
     by_cases hd0 : d = 0
     · exact ⟨1, one_pos, htriv hd0 _ _⟩
-    · let n : (Fin d → ℂ) → ℂ := fun w => star w ⬝ᵥ w
-      let q : (Fin d → ℂ) → ℂ := fun w => star w ⬝ᵥ ((1 - survival Q d) *ᵥ w)
-      have hn_nonneg : ∀ w, 0 ≤ n w := fun w => dotProduct_star_self_nonneg w
-      have hn_real : ∀ w, n w = ((n w).re : ℂ) := fun w =>
-        Complex.ext rfl (by simpa using ((Complex.nonneg_iff.mp (hn_nonneg w)).2).symm)
-      have hq_real : ∀ w, q w = ((q w).re : ℂ) := fun w =>
-        Complex.ext rfl (by simpa using ((Complex.nonneg_iff.mp
-          (hPD.posSemidef.dotProduct_mulVec_nonneg w)).2).symm)
-      have hn_pos : ∀ w, w ≠ 0 → 0 < (n w).re := by
-        intro w hw
-        have h0 := (Complex.nonneg_iff.mp (hn_nonneg w)).1
-        refine lt_of_le_of_ne h0 fun h => hw ?_
-        have : n w = 0 := by rw [hn_real w, ← h]; simp
-        exact dotProduct_star_self_eq_zero.mp this
-      have hq_pos : ∀ w, w ≠ 0 → 0 < (q w).re := by
-        intro w hw
-        have h := hPD.dotProduct_mulVec_pos hw
-        exact (Complex.pos_iff.mp h).1
-      have hscale : ∀ (t : ℝ) (w : Fin d → ℂ), q ((t : ℂ) • w) = ((t ^ 2 : ℝ) : ℂ) * q w ∧
-          n ((t : ℂ) • w) = ((t ^ 2 : ℝ) : ℂ) * n w := by
-        intro t w
-        simp only [q, n, Matrix.mulVec_smul, star_smul, dotProduct_smul, smul_dotProduct,
-          smul_eq_mul, Complex.star_def, Complex.conj_ofReal]
-        push_cast
-        constructor <;> ring
-      let R : (Fin d → ℂ) → ℝ := fun w => (q w).re / (n w).re
-      have hsphere_ne : (Metric.sphere (0 : Fin d → ℂ) 1).Nonempty := by
-        have hd : 0 < d := Nat.pos_of_ne_zero hd0
-        let v : Fin d → ℂ := Pi.single ⟨0, hd⟩ 1
-        have hv0 : v ≠ 0 := by
-          intro h
-          have := congrFun h ⟨0, hd⟩
-          simp [v] at this
-        exact ⟨(((‖v‖⁻¹ : ℝ)) : ℂ) • v, by
-          rw [mem_sphere_zero_iff_norm, norm_smul, Complex.norm_real, Real.norm_eq_abs,
-            abs_inv, abs_norm, inv_mul_cancel₀ (norm_ne_zero_iff.mpr hv0)]⟩
-      have hRcont : ContinuousOn R (Metric.sphere (0 : Fin d → ℂ) 1) := by
-        have hqc : Continuous fun w : Fin d → ℂ => (q w).re :=
-          Complex.continuous_re.comp
-            (continuous_star.dotProduct (continuous_const.matrix_mulVec continuous_id))
-        have hnc : Continuous fun w : Fin d → ℂ => (n w).re :=
-          Complex.continuous_re.comp (continuous_star.dotProduct continuous_id)
-        refine hqc.continuousOn.div hnc.continuousOn fun w hw => (hn_pos w ?_).ne'
-        rintro rfl
-        simp at hw
-      obtain ⟨v₀, hv₀, hmin⟩ :=
-        (isCompact_sphere (0 : Fin d → ℂ) 1).exists_isMinOn hsphere_ne hRcont
-      have hv₀ne : v₀ ≠ 0 := by rintro rfl; simp at hv₀
-      have hRscale : ∀ w, w ≠ 0 → R ((((‖w‖⁻¹ : ℝ)) : ℂ) • w) = R w := by
-        intro w hw
-        simp only [R, (hscale _ _).1, (hscale _ _).2, Complex.re_ofReal_mul]
-        have ht : (‖w‖⁻¹ : ℝ) ^ 2 ≠ 0 := pow_ne_zero _ (inv_ne_zero (norm_ne_zero_iff.mpr hw))
-        field_simp
-      refine ⟨R v₀, div_pos (hq_pos v₀ hv₀ne) (hn_pos v₀ hv₀ne), ?_⟩
-      rw [Matrix.le_iff]
-      refine PosSemidef.of_dotProduct_mulVec_nonneg ?_ fun w => ?_
-      · change (1 - survival Q d - ((R v₀ : ℝ) : ℂ) • 1)ᴴ = 1 - survival Q d - ((R v₀ : ℝ) : ℂ) • 1
-        rw [conjTranspose_sub, hPD.1.eq, conjTranspose_smul, conjTranspose_one, Complex.star_def,
-          Complex.conj_ofReal]
-      · have hsplit : star w ⬝ᵥ ((1 - survival Q d - (R v₀ : ℂ) • 1) *ᵥ w) =
-            q w - (R v₀ : ℂ) * n w := by
-          simp only [q, n, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, dotProduct_sub,
-            dotProduct_smul, smul_eq_mul]
-        rw [hsplit, hq_real w, hn_real w, Complex.nonneg_iff]
-        refine ⟨?_, by simp⟩
-        simp only [Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-          sub_zero]
-        by_cases hw : w = 0
-        · subst hw; simp [q, n]
-        · have hmem : (((‖w‖⁻¹ : ℝ)) : ℂ) • w ∈ Metric.sphere (0 : Fin d → ℂ) 1 := by
-            rw [mem_sphere_zero_iff_norm, norm_smul, Complex.norm_real, Real.norm_eq_abs,
-              abs_inv, abs_norm, inv_mul_cancel₀ (norm_ne_zero_iff.mpr hw)]
-          have h : R v₀ ≤ R ((((‖w‖⁻¹ : ℝ)) : ℂ) • w) := hmin hmem
-          rw [hRscale w hw] at h
-          have hpos := hn_pos w hw
-          have : R v₀ ≤ (q w).re / (n w).re := h
-          rw [le_div_iff₀ hpos] at this
-          linarith
+    · -- a strictly positive element dominates a positive multiple of the identity
+      haveI : Nonempty (Fin d) := ⟨⟨0, Nat.pos_of_ne_zero hd0⟩⟩
+      have hsp : IsStrictlyPositive (1 - survival Q d) := hPD.isStrictlyPositive
+      obtain ⟨r, hr, hle⟩ :=
+        (CFC.exists_pos_algebraMap_le_iff hsp.isSelfAdjoint).2 fun x hx => hsp.spectrum_pos hx
+      refine ⟨r, hr, ?_⟩
+      rwa [Algebra.algebraMap_eq_smul_one, RCLike.real_smul_eq_coe_smul (K := ℂ)] at hle
   · -- (ii) block decay of the survival effects
     have hSd : survival Q d ≤ (((1 - g : ℝ)) : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
       rw [Matrix.le_iff]
@@ -203,11 +134,7 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
     have htrace : ∀ (a b : Fin d → ℂ) (A : Matrix (Fin d) (Fin d) ℂ),
         (vecMulVec a b * A).trace = b ⬝ᵥ (A *ᵥ a) := by
       intro a b A
-      simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.vecMulVec_apply, dotProduct,
-        Matrix.mulVec, Finset.mul_sum]
-      rw [Finset.sum_comm]
-      refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
-      ring
+      rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm, dotProduct_mulVec]
     have htr_nonneg : ∀ Y : Matrix (Fin d) (Fin d) ℂ, Y.PosSemidef → 0 ≤ (ρ * Y).trace := by
       intro Y hY
       rw [hv, Finset.sum_mul, Matrix.trace_sum]

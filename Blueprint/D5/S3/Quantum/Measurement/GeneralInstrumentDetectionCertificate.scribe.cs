@@ -28,13 +28,12 @@ internal sealed class GeneralInstrumentDetectionCertificateDocument : IScribeDoc
                         + "d-dimensional space with the completeness relation, let S_N be the survival effects and D_d "
                         + "the stable dark layer; the order is the Loewner order.")),
                 Paragraph(Text(
-                    "If D_d is zero, then I - S_d is positive definite, and its quadratic form divided by the "
-                        + "squared Euclidean norm attains a positive minimum g on the compact unit sphere, so "
-                        + "g I <= I - S_d. For any such g, S_d <= (1 - g) I; the dual no-click map is positive, "
+                    "If D_d is zero, then I - S_d is positive definite, so its spectrum is positive and "
+                        + "compact, and some g > 0 satisfies g I <= I - S_d. For any such g, S_d <= (1 - g) I; the dual no-click map is positive, "
                         + "monotone and homogeneous, so S_{(m+1)d} = A^d(S_{md}) <= (1 - g)^m A^d(I) = (1 - g)^m S_d "
                         + "<= (1 - g)^{m+1} I.")),
                 Paragraph(Text(
-                    "For a density matrix rho, the traces Tr(rho S_N) are nonnegative and decrease in N; the "
+                    "For a density matrix rho, the real parts of the traces Tr(rho S_N) are nonnegative and decrease in N; the "
                         + "block of d consecutive terms starting at md is at most d (1 - g)^m, and the geometric "
                         + "sum of these block bounds is at most d / g."))),
             DescribeRole.Theorem))));
@@ -52,8 +51,8 @@ internal sealed class GeneralInstrumentDetectionCertificateDocument : IScribeDoc
         Formula summable = Seq(
             Forall, Sp, F.Rho, Sp, Geq, Sp, D(0), Sp, F.Text, Grp(Sp, F.Id("with"), Sp),
             Operatorname, Grp(F.Id("Tr")), Sp, F.Rho, Sp, Eq, Sp, D(1), Comma, Sp,
-            Sum, Underscore, Grp(N), Sp, Operatorname, Grp(F.Id("Tr")), Open, F.Rho, Sp, Sub("S", N), Close, Sp,
-            Leq, Sp, Frac, Grp(F.Id("d")), Grp(G));
+            Open, N, Sp, Mapsto, Sp, ReTr(Sub("S", N)), Close, Sp, F.Text, Grp(Sp, F.Id("summable"), Sp), Land, Sp,
+            Sum, Underscore, Grp(N), Sp, ReTr(Sub("S", N)), Sp, Leq, Sp, Frac, Grp(F.Id("d")), Grp(G));
         return Disp(Seq(
             complete, Sp, Rightarrow, RowBreak, Grp(),
             Open, Sub("D", F.Id("d")), Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp, Exists, Sp, G, Sp, Gt, Sp, D(0),
@@ -63,4 +62,7 @@ internal sealed class GeneralInstrumentDetectionCertificateDocument : IScribeDoc
     }
 
     private static Formula Sub(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
+
+    private static Formula ReTr(Formula x) =>
+        Seq(Operatorname, Grp(F.Id("Re")), Sp, Operatorname, Grp(F.Id("Tr")), Open, F.Rho, Sp, x, Close);
 }

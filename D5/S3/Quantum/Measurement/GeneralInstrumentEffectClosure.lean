@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
 import D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure
+import D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 set_option autoImplicit false
@@ -134,32 +135,23 @@ theorem effectSpace_closure (hd : 1 ≤ d) (Q : α → Matrix (Fin d) (Fin d) �
         ≤ Module.finrank ℝ (D5.S3.Quantum.Measurement.BasisMeasurementProjection.HermitianSpace d) :=
           Submodule.finrank_mono hle
       _ = d ^ 2 := D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition.hermitian_space_finrank d
-  -- stabilization within `d²` steps
+  -- stabilization within `d²` steps: the ranks of `𝒱_{n+1}` are monotone and bounded by `d²`
   have hexists : ∃ k, 1 ≤ k ∧ k ≤ d ^ 2 ∧ V (k + 1) = V k := by
-    by_contra hne
-    simp only [not_exists, not_and] at hne
-    have hgrow : ∀ k, 1 ≤ k → k ≤ d ^ 2 + 1 → k ≤ Module.finrank ℝ (V k) := by
-      intro k hk1 hk2
-      induction k with
-      | zero => omega
-      | succ k ih =>
-          rcases Nat.eq_zero_or_pos k with rfl | hkpos
-          · have hne0 : V (0 + 1) ≠ ⊥ := by
-              intro hbot
-              have h1 := h1mem 1
-              rw [show (0 + 1 : ℕ) = 1 from rfl] at hbot
-              rw [hbot, Submodule.mem_bot] at h1
-              have : (1 : Matrix (Fin d) (Fin d) ℂ) ⟨0, hd⟩ ⟨0, hd⟩ = 0 := by rw [h1]; rfl
-              simp at this
-            exact Nat.one_le_iff_ne_zero.mpr fun h => hne0 (Submodule.finrank_eq_zero.mp h)
-          · have hlt : V k < V (k + 1) :=
-              lt_of_le_of_ne (hmono k (k + 1) (by omega)) fun h => hne k hkpos (by omega) h.symm
-            have := Submodule.finrank_lt_finrank_of_lt hlt
-            have := ih hkpos (by omega)
-            omega
-    have := hgrow (d ^ 2 + 1) (by omega) le_rfl
-    have := hdim (d ^ 2 + 1)
-    omega
+    have hV1 : 1 ≤ Module.finrank ℝ (V 1) := by
+      refine Nat.one_le_iff_ne_zero.mpr fun h => ?_
+      have h1 := h1mem 1
+      rw [Submodule.finrank_eq_zero.mp h, Submodule.mem_bot] at h1
+      have : (1 : Matrix (Fin d) (Fin d) ℂ) ⟨0, hd⟩ ⟨0, hd⟩ = 0 := by rw [h1]; rfl
+      simp at this
+    obtain ⟨m, hm, hmeq⟩ :=
+      D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate.bounded_monotone_has_equal_step
+        (fun n => Module.finrank ℝ (V (n + 1))) (d ^ 2)
+        (fun a b hab => Submodule.finrank_mono (hmono (a + 1) (b + 1) (by omega)))
+        (fun n => hdim (n + 1))
+    have hm' : m ≤ d ^ 2 - Module.finrank ℝ (V 1) := hm
+    have hV1d := hdim 1
+    refine ⟨m + 1, by omega, by omega, ?_⟩
+    exact (Submodule.eq_of_le_of_finrank_eq (hmono (m + 1) (m + 1 + 1) (by omega)) hmeq).symm
   obtain ⟨k, hk1, hkd, hk⟩ := hexists
   refine ⟨k, hk1, hkd, fun N hN => ?_, fun X hX => ?_⟩
   · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hN
