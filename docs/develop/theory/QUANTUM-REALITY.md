@@ -67807,3 +67807,382 @@ $$
 本节的有效性只针对给定有限 $n$ 和精确代数输入，不包含复杂度界、浮点数据的精确认证、任意实数输入算法、实际装置成本或已经算出的全深度截止。$\eta_{\mathrm{fin}}$ 的连续性、半代数性、有限全局取得性及额外有效误差证书不由这里决定；不作它们不可能成立的判断。所选树可以改变旧树的标签、遗忘机制和记录输出，不声称保持旧记录 CP 仪器；不把任意数学根视为独立可实施的滤波，也不把有限协议上确界解释为某个无限协议或协议闭包已经可达。这些陈述与证明为纯理论源文本，不构成 Lean、CAS 或其他机器验证结果。
 
 ## 追加锚（本行以下为增补区）
+
+## 436. 内点有理多项式对偶与五射线有限恢复的有效逼近
+
+本节的分别凹性始终针对整个向量块。解析结论允许任意实几何数据；有效结论则以精确编码的实代数数为输入。五射线部分沿用假设 430.2 的完整操作接口，使用定理 421.1 的最小分别凹上包络、定理 424.1（四）的固定深度代数优化及定理 430.3 的精确物理提升。
+
+**定理 436.1（闭积球上的有理多项式上主函数与内点对偶）。** 设
+
+$$
+K=\prod_{i=1}^k\overline B(b_i,R_i)\subseteq\prod_{i=1}^k\mathbb R^{m_i},
+\qquad k,m_i\ge1,\quad R_i>0,\quad |a_i-b_i|<R_i.
+$$
+
+设 $F:K\to[0,M]$，其中 $M<\infty$，且固定其余块的任意值（包括边界值）时，$F$ 对第 $i$ 个完整向量块凹。不假设 $F$ 在边界连续、半连续或可测。对每个 $\eta>0$，存在原始笛卡尔坐标中的有理系数多项式 $q$，满足
+
+$$
+q\ge F\quad\text{于 }K,\qquad q\text{ 在 }K\text{ 上分别凹},
+\qquad F(a)\le q(a)<F(a)+\eta.
+$$
+
+若 $F$ 是 $0\le f\le M$ 的最小实值分别凹上主函数，则
+
+$$
+F(a)=\inf\{q(a):q\in\mathbb Q[x],\ q\ge f\text{ 于 }K,\ q\text{ 在 }K\text{ 上分别凹}\}.
+$$
+
+把此处 $\mathbb Q[x]$ 换成 $\mathbb R[x]$，下确界不变。结论是保持整个闭域上的支配而逼近一个严格内点的值，不是对 $F$ 作全域一致逼近。
+
+证明。先建立卷积所需的内部正则性。对任一球上的凹函数 $0\le g\le M$，若 $x,y$ 到球边界的距离均至少为 $\delta>0$，且 $x\ne y$，令 $u=(y-x)/|y-x|$。点 $x-\delta u$、$y+\delta u$ 仍在球中。沿该直线的凹割线斜率单调，故
+
+$$
+-\frac M\delta
+\le\frac{g(y+\delta u)-g(y)}\delta
+\le\frac{g(y)-g(x)}{|y-x|}
+\le\frac{g(x)-g(x-\delta u)}\delta
+\le\frac M\delta.
+$$
+
+此界与固定的其他块无关。逐块改变坐标，在任一具有正边界距离 $\delta_i$ 的内球乘积上得到
+
+$$
+|F(x)-F(y)|\le\sum_i\frac M{\delta_i}|x_i-y_i|.
+$$
+
+所以 $F$ 在 $\operatorname{int}K$ 联合局部 Lipschitz，特别地在该开集连续且可测；没有为原边界另加可测性假设。
+
+固定 $0<c<1$，令 $(C_cx)_i=a_i+c(x_i-a_i)$。每次仅收缩一个块，由凹性及非负性有
+
+$$
+F(\ldots,a_i+c(x_i-a_i),\ldots)
+\ge cF(\ldots,x_i,\ldots)+(1-c)F(\ldots,a_i,\ldots)
+\ge cF(\ldots,x_i,\ldots).
+$$
+
+依次作用于 $k$ 个块，得到包括边界在内的支配
+
+$$
+F(C_cx)\ge c^kF(x)\quad(x\in K).
+$$
+
+令
+
+$$
+O_c=C_c^{-1}(\operatorname{int}K),\qquad G_c=c^{-k}F\circ C_c\quad\text{于 }O_c.
+$$
+
+这是一个开球乘积上的连续、有界、分别凹函数，并且
+
+$$
+K\subset O_c,\qquad G_c\ge F\text{ 于 }K,\qquad G_c(a)=c^{-k}F(a).
+$$
+
+确实，置 $\delta_i=R_i-|a_i-b_i|>0$，则 $C_cK$ 在第 $i$ 块到原球边界的距离至少为 $(1-c)\delta_i$。因此开集
+
+$$
+V=\prod_i B\left(b_i,R_i+\frac{(1-c)\delta_i}{2c}\right)
+$$
+
+满足 $K\subset V$ 且 $\overline V\subset O_c$。这里通过收缩取得真正的邻域函数，没有跨越 $F$ 的原边界作连续延拓。
+
+给定 $t>0$，取非负、积分为一的光滑紧支撑乘积核 $\varphi$，支撑充分小，使 $\overline V-\operatorname{supp}\varphi\subset O_c$。在 $V$ 上定义
+
+$$
+S(x)=\int G_c(x-z)\varphi(z)\,dz.
+$$
+
+紧邻域上的一致连续性允许进一步缩小核的支撑，使 $\|S-G_c\|_K<t$。若两个点只在一个向量块不同，每个固定平移后的 Jensen 不等式均在开积球 $O_c$ 内成立；以非负核积分后仍成立。因此 $S\in C^\infty(V)$ 分别凹，且
+
+$$
+D^2_{ii}S\preceq0\quad\text{于 }V\quad(1\le i\le k).
+$$
+
+这些是完整的 $m_i\times m_i$ Hessian 块。卷积不必保持上支配，稍后的常数余量将补足这一点。
+
+为使用二阶多项式逼近，取 $\chi\in C_c^\infty(V)$，使它在 $K$ 的某个邻域恒为一。把 $H=\chi S$ 在 $V$ 外延为零，得到 $H\in C_c^\infty(\mathbb R^m)$，其中 $m=\sum_i m_i$；它在 $K$ 附近与 $S$ 连同全部导数相同。在包含 $K$ 的立方体上作仿射重标定后，使用张量 Bernstein 多项式的二阶导数一致收敛。该工具适用的全局光滑前提已由截断满足，具体为 Veretennikov–Veretennikova，[*On partial derivatives of multivariate Bernstein polynomials*](https://arxiv.org/abs/1507.05235v2)，定理 3–4。
+
+所需的导数逼近也可由下式直接看出。在单位立方体坐标中记 $b_{n,j}(z)=\binom njz^j(1-z)^{n-j}$，则对 $|\alpha|\le2$ 及 $n\ge2$，
+
+$$
+D^\alpha B_nH(z)
+=\left(\prod_{j=1}^m(n)_{\alpha_j}\right)
+\sum_{0\le\nu_j\le n-\alpha_j}
+\Delta_{1/n}^{\alpha}H(\nu/n)
+\prod_{j=1}^m b_{n-\alpha_j,\nu_j}(z_j),
+$$
+
+其中 $(n)_s=n(n-1)\cdots(n-s+1)$，$\Delta_{1/n}^{\alpha}$ 是沿各坐标的前向差分。反复使用微积分基本定理，把 $n^{|\alpha|}\Delta_{1/n}^{\alpha}H(w)$ 写成 $D^\alpha H$ 在距 $w$ 为 $O(1/n)$ 的点上的平均。上式的乘积二项核质量为一；其节点 $\nu/n$ 相对于 $z$ 的偏差为 $O(1/n)$，方差为 $O(1/n)$，均匀于整个闭立方体。由导数的一致连续性以及 $(n)_s/n^s\to1$，得到每个 $|\alpha|\le2$ 的一致收敛，包括边界。仿射变换只带来固定的导数缩放因子，故可取实系数多项式 $p$，使
+
+$$
+\|p-S\|_K<t,\qquad
+\sup_K\|D^2_{ii}(p-S)\|_{\mathrm{op}}<t\quad(1\le i\le k).
+$$
+
+有限维下逐个 Hessian 元素的一致逼近保证这些算子范数界。此处只使用导数逼近，不使用 Bernstein 算子的保凹性。
+
+令
+
+$$
+Q(x)=\sum_i|x_i-a_i|^2,\qquad R_Q=\max_K Q,\qquad
+q_\star=p+3t+t(R_Q-Q).
+$$
+
+因为 $p\ge G_c-2t$ 且 $R_Q-Q\ge0$，故在 $K$ 上
+
+$$
+q_\star\ge G_c+t,\qquad
+D^2_{ii}q_\star\preceq-tI_{m_i},\qquad
+q_\star(a)\le c^{-k}F(a)+(R_Q+5)t.
+$$
+
+最后把 $q_\star$ 在原始笛卡尔坐标中的有限个系数同时换为足够接近的有理数。每个涉及的单项式及其二阶导数在 $K$ 上有有限上界，所以系数扰动可保证
+
+$$
+\|q-q_\star\|_K<t/2,\qquad
+\sup_K\|D^2_{ii}(q-q_\star)\|_{\mathrm{op}}<t/2.
+$$
+
+这一步即使在 $a,b_i,R_i$ 为任意实数时仍是成立的存在性论证：只有有限多个系数及有限个正误差容限。因而
+
+$$
+q\ge G_c+t/2\ge F,\qquad
+D^2_{ii}q\preceq-(t/2)I_{m_i},\qquad
+q(a)\le c^{-k}F(a)+(R_Q+11/2)t.
+$$
+
+固定其余块的任意边界或内部值，将 $q$ 限制到第 $i$ 块任意闭线段，其二阶导数为该 Hessian 块的二次型且非正；积分即得该闭线段上的凹性。因此分别凹性成立于完整的闭积球，而非仅内部。
+
+选择的次序为：先取 $c$ 充分接近一，使 $(c^{-k}-1)F(a)<\eta/2$；再取 $t>0$ 使 $(R_Q+11/2)t<\eta/2$；随后依次选择核支撑、实多项式逼近和有理系数误差。由此 $q(a)<F(a)+\eta$。这些选择不声称能从未编码的任意函数 $F$ 计算出来。
+
+对于最小上主函数的情形，常数 $M$ 本身分别凹且支配 $f$，故 $0\le f\le F\le M$。每个分别凹多项式 $q\ge f$ 均由最小性满足 $q\ge F$；上面构造的有理多项式又能使 $q(a)$ 任意接近 $F(a)$。两向不等式证明所述下确界公式。实系数多项式类包含有理系数类，且每个成员仍不小于 $F$，所以实系数下确界也等于 $F(a)$。证毕。
+
+内点条件不能删去。在一个一维闭球 $[-1,1]$ 上令 $f=F$，其中 $F(-1)=0$、$F(x)=1$（$x>-1$）。该函数非负、有界且凹：非平凡线段除左端点外的值均为一，满足 Jensen 不等式。每个连续上主函数却必须有 $q(-1)\ge\lim_{x\downarrow-1}F(x)=1$，而常数一可取到该界；故边界下确界为一，不等于 $F(-1)=0$。允许实系数也不能消除此障碍。最小性同样必要：若仅知 $F\ge f$，取 $f=0,F=1$，则只约束 $q\ge f$ 的下确界为零。
+
+完整块 Hessian 也不能换成对角元条件。在一个二维向量块内，$g(u,v)=uv$ 的两个对角二阶导数均为零，但 Hessian 为 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，沿 $(t,t)$ 的限制为 $t^2$，并不凹。把两坐标视为两个标量块则是另一种条件。张量 Bernstein 算子也不保持一般向量块凹性：在 $[0,1]^2$ 上对 $g(u,v)=-(u+v)^2$，有
+
+$$
+B_ng=g-\frac{u(1-u)+v(1-v)}n,
+$$
+
+其 Hessian 沿 $(1,-1)$ 的特征值为 $2/n>0$。定理中的负二次项及上移余量同时修复了曲率误差和支配误差。
+
+五射线记号与操作接口。输入 $r$ 由整数多项式及有理隔离数据精确指定，要求
+
+$$
+r>0,\qquad \frac12<r^2<2,\qquad \varepsilon\in\mathbb Q_{>0}.
+$$
+
+这些输入条件可由代数数符号判定检查。取正平方根定义
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad h=\frac1{3(1+\kappa)},
+\qquad \omega=-\frac12+\frac{\sqrt3}{2}i,
+$$
+
+并取假设 430.2 的 $s_1=|0\rangle,s_2=|1\rangle$、$s_{3+j}=(|0\rangle+r\omega^j|1\rangle)/\sqrt{1+r^2}$（$j=0,1,2$）。为区别于多项式 $q$，将记录向量记为 $\chi_i=s_i\otimes s_i$，于是 $J|i\rangle=|i\rangle\otimes\chi_i$。
+
+系统仍是 $S=\mathbb C^5$，原始记录仍是 $R_A\otimes R_B=\mathbb C^2\otimes\mathbb C^2$，不物理压缩到其对称张成空间。每棵协议各自有限；局部完全正仪器在整个当前工作空间上完备，各分支迹不增且总和保迹。允许有限私有量子与经典记忆、非零有限维输出、独立于未知输入及参考的初始乘积辅助态、双向经典通信、重复操作、丢弃、粗粒实际结果、后来遗忘的真实历史、零分支、单结果通道及提前停止。控制只读取当时实际可用的信息，量子控制纳入行动方的完全正映射。禁止共享纠缠、量子通信及终端反馈前对 $S$ 的操作。路径深度按实际局部仪器节点计数，单结果节点也计数；纯经典记账、消息及最终系统酉反馈不计数，伴随的局部量子操作仍计数。
+
+逐真实历史迹掉全部记录输出及剩余记忆后得到 $\mathcal M_\ell$，再按最终实际标签求和为 $\mathcal M_y$。同一接受标签下全部真实历史及隐藏 Kraus 项共用唯一的全系统反馈 $U_y$。控制和反馈可依赖已知 $r$，不依赖未知输入或参考。完整恢复要求同一个 $p\in[0,1]$ 满足
+
+$$
+\mathcal T(X)=\sum_{y\text{ 接受}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad(X\in\mathcal L(S)),
+$$
+
+$$
+(\operatorname{id}_{H_{\mathrm{ref}}}\otimes\mathcal T)(X)=pX
+\quad\bigl(X\in\mathcal L(H_{\mathrm{ref}}\otimes S)\bigr)
+$$
+
+对每个有限维未操作参考 $H_{\mathrm{ref}}$ 成立。所有失败历史保留在完整仪器中；被遗忘的历史只可为数学求和保留，隐藏 Kraus 指标从不成为实际控制结果。$p_n(r)$ 与 $\eta_{\mathrm{fin}}(r)$ 分别是在此完整类别中、深度至多 $n$ 和所有逐棵有限协议的成功率上确界。
+
+在固定 Pauli 坐标下令 $D=\{x\in\mathbb R^3:|x|^2\le1\}$、$\rho(x)=(I_2+x\cdot\sigma)/2$、$\Omega=(0,0)$。五个源 Bloch 向量为
+
+$$
+\begin{aligned}
+v_1&=(0,0,1),&v_2&=(0,0,-1),\\
+v_3&=\frac{(2r,0,1-r^2)}{1+r^2},&
+v_4&=\frac{(-r,\sqrt3r,1-r^2)}{1+r^2},&
+v_5&=\frac{(-r,-\sqrt3r,1-r^2)}{1+r^2}.
+\end{aligned}
+$$
+
+定义闭积球谓词及平坦谓词
+
+$$
+\begin{aligned}
+\mathsf B(x,y)&:\ |x|^2\le1\ \wedge\ |y|^2\le1,\\
+\mathsf S_r(x,y)&:\ |x|^2=|y|^2=1\ \wedge\
+\bigwedge_{i=1}^5(1+v_i\cdot x)(1+v_i\cdot y)=4h.
+\end{aligned}
+$$
+
+因为 $\langle s_i|\rho(x)|s_i\rangle=(1+v_i\cdot x)/2$，$\mathsf S_r$ 恰对应假设 430.2 的纯平坦乘积对。置 $f=h\mathbf1_{\mathsf S_r}$，$F=V_\infty$。定理 421.1 给出 $0\le F\le h$ 及 $F$ 对 $f$ 的最小分别凹上主函数性质；定理 430.3 在 $\rho(0)=I_2/2$ 的根上给出
+
+$$
+p_n(r)=4V_n(\Omega),\qquad
+\eta_{\mathrm{fin}}(r)=\sup_np_n(r)=4F(\Omega).
+$$
+
+这里的 $\rho(x),\rho(y)$ 是归一化累计输入效果，不是后测量条件态；坐标分裂权是效果的迹权重，不是一般未知输入下的条件概率。
+
+**定理 436.2（可判定多项式上证书与有限恢复的停机算法）。** 对上述精确代数输入，称 $q\in\mathbb Q[x_1,x_2,x_3,y_1,y_2,y_3]$ 为上证书，当且仅当下列四个全称句成立；所有向量量词均遍历 $\mathbb R^3$：
+
+$$
+\begin{aligned}
+&\forall x,y:\quad \mathsf B(x,y)\Rightarrow q(x,y)\ge0,\\
+&\forall x,y:\quad \mathsf S_r(x,y)\Rightarrow q(x,y)\ge h,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{xx}q(x,y)u\le0,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{yy}q(x,y)u\le0.
+\end{aligned}
+$$
+
+每个候选的证书条件可判定，并且
+
+$$
+\eta_{\mathrm{fin}}(r)=\inf_{q\text{ 为上证书}}4q(\Omega).
+$$
+
+存在一个 Turing 算法，对每个所述 $(r,\varepsilon)$ 停机，输出有理数 $L,U$、一个有限协议 $\Pi$ 的完整代数描述及其精确代数成功率 $p$，满足
+
+$$
+0\le L\le p\le\eta_{\mathrm{fin}}(r)\le U,\qquad
+U-L<\varepsilon,\qquad \eta_{\mathrm{fin}}(r)-p<\varepsilon.
+$$
+
+协议描述列出有限树的每个行动方、实际结果、后继、全部代数 Kraus 矩阵、仅依赖实际历史的有限控制器、所有接受与失败终端、各终端实际标签及其全系统酉反馈。所有复代数矩阵均由实部和虚部的实代数编码给出。该算法从而在精确代数参数输入上任意精度计算 $\eta_{\mathrm{fin}}$，并找出该输入及误差要求下足够的有限深度。
+
+证明。前两个全称句恰好表示 $q\ge f$ 于整个 $D\times D$。后两个句给出完整向量块 Hessian 非正，由闭线段上的二阶导数判据，蕴含包括边界切片在内的分别凹性。反过来，若多项式在闭积球上分别凹，固定其他块的任意值，在活动块内部由二阶方向导数得到该 Hessian 非正，再由 Hessian 的连续性延至活动块边界。因此四句与所需的支配及分别凹性等价。
+
+全部常数均为可有效表示的实代数数。例如 $\kappa,h$ 也可由
+
+$$
+9\kappa^2r^2=4r^2+2(r^4+1),\qquad \kappa>0,\qquad 3(1+\kappa)h=1
+$$
+
+刻画；$r$ 保留其隔离条件，$\sqrt3$ 取正根。清除的分母 $r^2$、$1+r^2$、$1+\kappa$ 均严格为正。四句于是属于精确代数系数的实闭域一阶理论。量词消去给出有限判定，所需代数运算、根隔离及符号判定在上述有限编码上均为 Turing 可执行步骤。这里使用 Basu–Pollack–Roy，[*On the Combinatorial and Algebraic Complexity of Quantifier Elimination*](https://www.math.purdue.edu/~sbasu/jacm95.ps)，JACM 43(6) (1996)，定理 1.3.1–1.3.2；不以仅充分的平方和检验替代四句的精确判定。
+
+将定理 436.1 取为 $k=2,m_1=m_2=3,K=D\times D,a=\Omega,M=h$，由 $F$ 的最小性得到 $F(\Omega)=\inf_q q(\Omega)$。乘以物理根因子四即得所述公式。平坦谓词中的四来自两个 Bloch 重叠的分母；此处的四来自两个原始根效果 $I_2$ 相对于归一化效果 $I_2/2$ 的缩放，两者分别保留。
+
+算法同时使用以下两个有限过程。首先按次数、系数分子绝对值和正分母的递增有限界，公平枚举六变量有理多项式，对每个候选判定四句。初置 $U=1$，每遇到一个上证书就令
+
+$$
+U\leftarrow\min\{U,4q(\Omega)\}.
+$$
+
+$q(\Omega)$ 为有理数，且始终 $U\ge\eta_{\mathrm{fin}}(r)$。初始上界一来自完整物理仪器的概率界。
+
+其次，依次对 $n=0,1,2,\ldots$ 使用定理 424.1（四）精确计算 $p_n(r)$，并保留其尚未消去的有限树存在变量。参数对应为
+
+$$
+d=5,\quad k=2,\quad d_A=d_B=2,\quad D_R=4,\quad
+B_A=B_B=d^4+d_A^2=629,\quad \Theta=\{r\}.
+$$
+
+单点参数空间紧；源坐标只涉及 $r,\sqrt3,\sqrt{1+r^2}$ 及其代数运算，满足精确代数前提。定理 424.1 的取得性和第四项给出可计算的代数 $p_n$；它们非负、单调，且由 421.1、430.3 有 $\sup_np_n=\eta_{\mathrm{fin}}$。不需要钻石误差优化或其他后续章节。
+
+每一阶段完成一个候选证书判定和一个新深度计算；每项均停机，故这是公平的 Turing 调度。阶段末精确判定
+
+$$
+U-p_n<\varepsilon/2.
+$$
+
+若不成立就进入下一阶段；若成立，取有理数 $L$ 满足 $0\le L\le p_n$、$p_n-L<\varepsilon/2$。例如取网格小于 $\varepsilon/2$ 的非负二进有理下舍入，通过代数数比较可有效取得；$p_n=0$ 时取 $L=0$。于是
+
+$$
+U-L=(U-p_n)+(p_n-L)<\varepsilon.
+$$
+
+停机只需两个有限见证。定理 436.1 以锚点误差 $\varepsilon/32$ 给出某个有理上证书，使
+
+$$
+4q(\Omega)<\eta_{\mathrm{fin}}+\varepsilon/8.
+$$
+
+上确界等式又给出某个有限 $n_0$，使 $p_{n_0}>\eta_{\mathrm{fin}}-\varepsilon/8$。公平搜索最终遇到此证书并计算到至少该深度；届时 $U-p_n<\varepsilon/4$，所以必通过 $\varepsilon/2$ 的严格停机判据。此论证不预设收敛率，也不判定任何涉及 $\eta_{\mathrm{fin}}$ 的精确等号。$\varepsilon/8$ 用于存在性见证；实际首次返回的迭代保证的是 $U-p_n<\varepsilon/2$。
+
+下面从返回深度的有限代数描述提取完整物理见证。沿第 424 节的 $\mathcal K_n$ 递归保留行动方选择、单纯形权重、全部局部密度坐标、子节点 Choi 矩阵及终端拒绝或酉接受选择。其零层是
+
+$$
+\mathcal K_0(r,\rho)
+=\{0\}\cup\{C(\operatorname{Ad}_U\circ\Phi_{r,\rho_A\otimes\rho_B}):U\in\mathcal U(5)\},
+$$
+
+其中 $\Phi_{r,E}(|i\rangle\langle j|)=\langle\chi_j|E|\chi_i\rangle|i\rangle\langle j|$。第 $m+1$ 层选择一位行动方，将其密度作至多 629 项重心分解，保持另一方密度，子 Choi 元素属于相应 $\mathcal K_m$，父 Choi 元素为权重和。行动方和终端选择均保留为有限析取，不对这些选择额外凸化。提前停止可用单例恒等节点补齐剩余深度；这不把任何实际局部操作记为免费。
+
+在归一化根 $\rho_A=\rho_B=I_2/2$ 施加
+
+$$
+4Z_{\mathrm{root}}=p_n\,|\operatorname{vec}I_5\rangle\langle\operatorname{vec}I_5|.
+$$
+
+展开到深度零后是一个有限存在公式，其无量词矩阵、权重和酉条件都是代数系数的实多项式条件。半正定性可由实化 Hermitian 矩阵的全部主子式非负表达，保留奇异密度与零权重。固定深度的最大值取得保证该公式有实解。实代数数域是实闭子域，量词消去保证同一公式有一个所有坐标均为实代数数的解。该解可以有效找到：公平枚举相应有限长度的实代数编码元组，逐个精确检验无量词条件及有限析取，遇到首个满足者返回。非空性保证这次搜索也停机。此步骤不假定可行成功率集合是区间，并保留拒绝选择；拒绝叶允许偶然为平坦叶。
+
+将所得坐标树按定义 430.1 变成加性效果树。写 $X_{v,i}=a_{v,i}P_{v,i}$，根取 $a_{\varnothing,i}=1$；在 $i$-分裂处置
+
+$$
+a_{vj,i}=a_{v,i}\lambda_{vj},\qquad X_{vj,i}=a_{vj,i}P_{vj,i},
+$$
+
+其他因子保持不变。这不除以零权重，且 $X_{v,i}=\sum_jX_{vj,i}$。再令
+
+$$
+A_v=2X_{v,A},\qquad B_v=2X_{v,B}.
+$$
+
+物理根成为 $(I_2,I_2)$，每个分裂仍加性完备，每个叶张量效果为归一化树相应效果的四倍。依递归展开的线性关系及上述根 Choi 等式，按样本中的终端接受和反馈求和，接受映射正是 $p_n\operatorname{id}$。
+
+精确物理实现使用定理 430.3 的支撑补全。若 Alice 节点满足 $A=\sum_jA_j\ne0$，令 $P$ 为 $A$ 的支撑投影，$A^{-1/2}$ 为支撑上的逆平方根并在核上取零，置
+
+$$
+L_j=\sqrt{A_j}A^{-1/2},\qquad Q=I_2-P,
+\qquad \Phi_j(Z)=L_jZL_j^\dagger+\mathbf1_{\{j=j_*\}}QZQ,
+$$
+
+其中 $j_*$ 是一个已有实际结果。正性给出 $\operatorname{supp}A_j\subseteq\operatorname{supp}A$，从而
+
+$$
+\sum_jL_j^\dagger L_j=P,\qquad
+L_j\sqrt A=\sqrt{A_j},\qquad Q\sqrt A=0.
+$$
+
+总 Kraus 效果是 $P+Q=I_2$，故仪器在整个量子比特上保迹，而非只在支撑上保迹。补全项是原实际结果内部的隐藏 Kraus 项；对任意附加系统及任意联合矩阵，其累计作用因 $Q\sqrt A=0$ 恒为零，随后任何完全正映射仍把它送为零。Bob 使用同样构造。保留指定的零结果及不可达子树；被分裂的累计因子为零时，任选同一有限结果形状的完整仪器，累计映射仍为零。由根递归，每个可达节点的累计分支实现指定的 $A_v\otimes B_v$，深度和实际结果数均不增加。
+
+代数正半定矩阵的特征值、谱投影、正平方根和支撑逆可由根隔离及代数线性运算有效给出，故上述全部 Kraus 矩阵都有精确代数编码。每个非零接受真实叶由 430.3 的正 Choi 秩一论证必有
+
+$$
+A_\ell\otimes B_\ell=t_\ell P_{\xi_\ell}\otimes P_{\zeta_\ell},
+\qquad t_\ell>0,\qquad (P_{\xi_\ell},P_{\zeta_\ell})\in\mathcal S_r.
+$$
+
+可为这两条代数射线选取代数单位代表，并显式指定
+
+$$
+z_{\ell i}=\frac{\langle\xi_\ell\otimes\zeta_\ell|\chi_i\rangle}{\sqrt h},\qquad
+|z_{\ell i}|=1,\qquad
+U_\ell=\operatorname{diag}(\overline z_{\ell1},\ldots,\overline z_{\ell5}).
+$$
+
+迹掉记录后的系统 Kraus 矩阵可写为 $K_\ell=\sqrt{t_\ell h}\operatorname{diag}(z_{\ell i})$，于是 $U_\ell K_\ell=\sqrt{t_\ell h}I_5$。该反馈与提取的精确恢复一致，每个接受叶贡献 $t_\ell h\operatorname{id}$，对全部系统矩阵及任意未操作有限参考成立；求和为 $p_n\operatorname{id}$。零接受叶贡献零，失败叶仍保留，失败反馈可取恒等。
+
+对这个新构造的见证，从一开始就为每个终端保留自己的实际历史标签；有限经典控制器只读取这些已取得的信息，同一标签的全部隐藏项共用一个 $U_\ell$。只需原始两个量子比特工作寄存器、平凡乘积初始辅助态和有限经典历史，实施仪器时允许有限局部辅助件。这个构造没有恢复旧协议遗忘的信息，也不声称再现其任意记录输出状态。对偶证明中的抽象收缩与坐标运输不成为物理上的免费操作。
+
+取输出协议的精确成功率 $p=p_n$。停机时
+
+$$
+0\le\eta_{\mathrm{fin}}-p\le U-p<\varepsilon/2<\varepsilon,
+$$
+
+连同有理下舍入及完整物理实现，得到全部输出条件。证毕。
+
+来源与适用边界。上述复用对应于不可变版本 [2a6201b77b78133ce70b081a57c53daa035e3ba1 的 QUANTUM-REALITY.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a6201b77b78133ce70b081a57c53daa035e3ba1/docs/develop/theory/QUANTUM-REALITY.md) 的 421.1、424.1（四）、430.1–430.3。428.1–428.2 和 429.1 的具体边界及连续误差结论以 $r=1$ 为前提；它们不提供一般 $r$ 的边界连续性。430.3 的统一有限深度存在结论仍不在这里附带有效统一速率。上面的停机证明新增了可判定上证书，不能仅由一致收敛推出：若 $s_n$ 是递增可计算有理列而极限不可计算，常值函数列 $x\mapsto s_n$ 仍一致收敛，却没有有效误差证书。任意未编码的常值报酬也不成为 Turing 算法输入。
+
+有限分裂与包络的背景可见 Beiglböck–Nutz，[*Martingale Inequalities and Deterministic Counterparts*](https://arxiv.org/abs/1401.4698v2)，定理 3.3、注 3.4 的最小支配不动点及有限支撑鞅表述；近期的有限阶 laminate 与二叉鞅关系见 Cassese，[*Martingales, laminates and minimal Korn inequalities*](https://arxiv.org/abs/2512.02784v2)，§2、定义 4。这些文献不直接给出本节的有理上主函数或五射线算法。Basu–Amini Khorasgani–Maji–Nguyen，[*Solving polynomial inequalities over spaces of convex sets and applications*](https://arxiv.org/abs/2608.07794v1)，定理 2 要求 $V=U\oplus\bigoplus_iW_i$、允许方向为 $\bigcup_i(U+W_i)$ 且每个 $\dim W_i=1$；第 10 页脚注 1 明确把无此维数限制的推广列为未知。两个独立三维 Bloch 块不满足该条件，把它们拆成标量轴会改变允许分裂方向。因此该精确有限集层合凸包结果不替代这里的近似求值论证，近似计算一个上确界也不判定精确层合成员关系。以上引用只取所列范围，不作首创性断言。
+
+定理 436.1 的任意实几何存在性不意味着其证书可有效检查；定理 436.2 的可计算性依赖特定报酬的精确代数半代数描述。结论不提供任意实数预言机或通用黑箱报酬算法，不判定 $\eta_{\mathrm{fin}}$ 的精确等号，不断言该极限值为代数数或关于参数为半代数函数，不给出所有深度上最大化的有限协议或可达无限协议。返回的是严格误差内的精确有限协议；没有数值求解结果、预先的统一次数或深度界、有效统一收敛率或实用复杂度估计。
+
+## 追加锚（本行以下为增补区）

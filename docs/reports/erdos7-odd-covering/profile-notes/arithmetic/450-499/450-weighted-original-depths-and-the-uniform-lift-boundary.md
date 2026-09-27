@@ -1017,7 +1017,7 @@ The staged distorted-measure method of [BBMST](https://arxiv.org/abs/1811.03547)
 
 The [squarefree parallel-hyperplane theorem](https://arxiv.org/abs/1901.11465) has its own odd-prime product-box and proper-support hypotheses. It supplies no arbitrary-height extension of AP3. The present construction permits arbitrary finite original heights because it retains them and explicitly sums their distinct exponent vectors.
 
-The unresolved arithmetic issue is now explicit: original distinctness pays all outside cofactors within a fixed retained d, but does not by itself control the repetition N_E across different d, the actual pure survivor masses s_p, or the weaker weighted dominant-phase deficits. No implication from whole-cover minimality or private witnesses to a successful anchor or an AP8 bound has been proved. The240-label example also prevents treating AP3 as a necessary description of successful outside laws. The unrestricted odd-covering goal remains open in this route.
+The unresolved arithmetic issue is now explicit: original distinctness pays all outside cofactors within a fixed retained d, but does not by itself control the repetition N_E across different d, the actual pure survivor masses s_p, or the weaker weighted dominant-phase deficits. Section11 below retains the weights before summing retained depths and supplies further sufficient classes, but no implication from unrestricted whole-cover minimality or private witnesses to a successful anchor or an AP8 bound has been proved. The240-label example also prevents treating AP3 as a necessary description of successful outside laws. The unrestricted odd-covering goal remains open in this route.
 
 ### 10.7. Exact finite controls
 
@@ -1029,3 +1029,180 @@ The exact rational controls verify the prime-tail constants and reserve, the two
 Every retained outside point avoids A-only originals and has zero distinct-phase excess. Its pure-event mass at11 violates AP4, while AP3 succeeds, checking the distinction between exact and simplified suppliers. These finite tests are controls of the stated formulas; the proofs of arbitrary finite heights and the infinite tail are the arguments above, and no Lean or unrestricted whole-cover result is inferred from the controls.
 
 The [anchor-phase controls](../../../frontier/cover-geometry/merged-phase-excess/anchor_phase_controls.py) and [exact output](../../../frontier/cover-geometry/merged-phase-excess/anchor_phase_controls.json) retain these finite checks. Run the program with an explicit `--output` path.
+
+## 11. Retained weights pay arbitrary depth multiplicity under one outside law
+
+This continues sections9--10 with the original finite distinct odd moduli, full original heights, numerical retained moduli and phase unions unchanged. The result is a sufficient ordinary mathematical criterion. It allows phase collisions and arbitrarily many retained numerical depths on one outside support, but requires the stated common-source and incidence bounds. It is not an unrestricted noncoverage theorem or a Lean result.
+
+### 11.1. Weighted rows under an actual cylinder-cap source
+
+For each occurring d>1 fix an anchor phase alpha_d, forced to be the original retained phase if a pure-B original with b_i=1 occurs. There is at most one such original at each d. Define the NONANCHOR depth set of a nonempty outside support E by
+
+    D_(E,+)^alpha = {d>1: some original i has d_i=d,
+                     support(b_i)=E, a_i^B!=alpha_d},
+    W_E(w) = sum_(d in D_(E,+)^alpha) w_d,
+
+where all w_d are nonnegative. The plus sign distinguishes this set from AP2's D_E^alpha, which can also contain the A-only row d=1.
+
+Let sigma be ONE probability on the full actual outside carrier, and suppose
+
+    s=sigma(V_A)>0,   eta=sigma(. | V_A).
+
+Suppose nonnegative c_(p,e) bound every actual original outside cylinder by
+
+    sigma(C_i^A)<=product_(p in support(b_i)) c_(p,e_(i,p)),
+    Lambda_p=sum_(e>=1)c_(p,e)<infinity.
+
+Only actual finite-height cylinders need such bounds; values above the carrier's maximum original height may be zero or any larger summable majorant. Sigma need not be a product measure. Then
+
+    integral F_w d eta
+      <= (1/s) sum_(nonempty E) W_E(w) product_(p in E) Lambda_p,
+    F_w(y)=sum_(d>1)w_d (R_d(y)-1)_+.             (WR1)
+
+Indeed, pointwise,
+
+    (R_d-1)_+ <= sum_(r!=alpha_d) 1_(E_(d,r)).
+
+The inequality holds even when the chosen anchor is inactive: in that case its right side is R_d. Integrate under eta, union-bound the actual originals in each nonanchor phase, and use eta(C)<=sigma(C)/s. At a FIXED numerical d and outside support E, distinct original m_i=d b_i imply distinct full positive exponent vectors of b_i. Thus
+
+    sum_(i:d_i=d,support(b_i)=E,a_i^B!=alpha_d) sigma(C_i^A)
+       <=sum_((e_p) in positive integers^E) product_(p in E)c_(p,e_p)
+       =product_(p in E)Lambda_p.
+
+Multiplying by w_d and summing gives WR1. The forced pure-B anchor ensures no nonanchor cylinder has empty outside support. No distinctness is asserted after varying d or projecting away its numerical value.
+
+### 11.2. One shared envelope can replace many same-phase supports
+
+For each nonanchor(d,r), let A_(d,r) be a finite family of actual outside events with controlled sigma masses. Assign nonnegative gamma_(d,r,A) such that EVERY original i at that phase obeys
+
+    sum_(A: V_A intersect C_i^A subset A) gamma_(d,r,A)>=1.
+
+For y in V_A intersect E_(d,r), choose one original cylinder containing it. Every envelope in the displayed sum contains y, so
+
+    1_(E_(d,r))(y)<=sum_A gamma_(d,r,A)1_A(y).
+
+The same pointwise excess bound therefore gives
+
+    integral F_w d eta
+       <=(1/s)sum_(d>1)w_d sum_(r!=alpha_d)
+                 sum_A gamma_(d,r,A) sigma(V_A intersect A). (WR2)
+
+All envelope masses and the denominator belong to ONE sigma. Different phases may share an envelope, but each phase cost is still charged as displayed; no unjustified cross-phase discount is taken. Actual-cylinder envelopes recover the pre-row version of WR1. A common coordinate cylinder can instead pay once for a whole phase union across many different supports. This is a sufficient fractional cover, not an assertion that its optimal cost has an unrestricted arithmetic bound.
+
+### 11.3. Pure-deleted product specialization with one conditioning
+
+Use section10.2's actual product source rho_alpha, with all s_p^alpha>0 and z_p^alpha=1/((p-1)s_p^alpha). All bad singleton-support events, including A-only ones, are already excluded pointwise. Put
+
+    E_0={E:|E|>=2 and some A-only original has support E},
+    U_0=sum_(E in E_0)product_(p in E)z_p^alpha,
+    Psi_w=sum_(E:|E|>=2)W_E(w)product_(p in E)z_p^alpha.
+
+The fixed d=1 exponent-vector bound gives
+
+    s=rho_alpha(V_A)>=1-U_0.
+
+If U_0<1, the SAME law eta=rho_alpha(. | V_A) satisfies
+
+    integral F_w d eta<=Psi_w/s<=Psi_w/(1-U_0).    (WR3)
+
+Consequently either of the following suffices for original noncoverage:
+
+    Psi_H < (5/48)(1-U_0),   w_d=1/d;
+    Psi_S < (1/3)(1-U_0),    w_d=omega_B(d).       (WR4)
+
+These alternative tests consume PE2 and PE3; they are not additive credits. One can replace 1-U_0 by the actual positive s when it is known. Unlike AP3, eta conditions only on avoiding A-only originals, and may give positive probability to several retained phases at the same d.
+
+### 11.4. Support incidence replaces the number of retained numerical rows
+
+Assume the additional pure-event hypothesis AP4. Put beta_p=1/(p-2), so z_p^alpha<=beta_p. Let Q be the EXPLICIT RATIONAL UPPER BOUND on the infinite prime-square sum proved in section10.3; Q<1/24. Define
+
+    Delta_0=max_p #{E in E_0:p in E},
+    Delta_w=max_p sum_(E contains p,|E|>=2)W_E(w),
+
+with empty maxima zero. The product inequality from AP5 gives
+
+    U_0<=Delta_0 Q/2,   Psi_w<=Delta_w Q/2.
+
+It follows that each of these inequalities suffices:
+
+    48 Delta_H+5 Delta_0<=240;                    (WR5H)
+    3 Delta_S+Delta_0<=48.                        (WR5S)
+
+For WR5H, Delta_0<=48 and hence 1-Delta_0 Q/2>0. The desired strict inequality is equivalent to
+
+    Q(48 Delta_H+5 Delta_0)<10,
+
+which follows from Q<1/24 and WR5H. The zero-coefficient case also satisfies it. The WR5S rearrangement is Q(3 Delta_S+Delta_0)<2. This verifies the denominator and strictness, including equality in the incidence hypotheses.
+
+The complete retained-weight sums over ALL B-smooth numerical d>1 are
+
+    sum_d 1/d = (3/2)(5/4)(7/6)-1=19/16,
+    sum_d omega_B(d)
+       =product_(p in B)(1+1/(p-2))-1=11/5.
+
+Let k be the largest number of DISTINCT mixed outside support sets E incident at one outside prime with D_(E,+)^alpha nonempty, and put k_0=Delta_0. A support is counted once regardless of how many retained d or original labels occur on it. Then
+
+    Delta_H<=(19/16)k,   Delta_S<=(11/5)k.
+
+Thus two simpler sufficient conditions are
+
+    57k+5k_0<=240;                               (WR6H)
+    33k+5k_0<=240.                               (WR6S)
+
+In particular, when there are no mixed-support A-only originals, k<=4 suffices for WR6H, and k<=7 for WR6S. Arbitrarily many distinct retained d and arbitrary finite original heights are allowed on each support. These statements retain AP4; original distinctness does not imply it. They extend the available weighted supplier beyond the earlier degree48 test, which counted retained rows. They do not assert that every earlier degree48 instance satisfies these coarser conditions.
+
+### 11.5. The existing240-label family has positive collisions and small excess
+
+Take section10.5's original family with d=3^e, 1<=e<=120, one original at outside cofactor11*13 and retained phase0, and another at11^2*13 and retained phase1. Outside residues are zero. All240 original numerical moduli are distinct. There are no A-only or singleton-outside originals, so rho_alpha is the complete uniform outside law and s=1. Choose alpha_(3^e)=0.
+
+The unweighted AP3 row envelope is Phi_alpha=120/(10*12)=1 and does not certify avoidance. Its incidence exceeds48. In contrast
+
+    W_{11,13}(H)=(1-3^(-120))/2,
+    W_{11,13}(S)=1-3^(-120),
+    Psi_H=(1-3^(-120))/240 <5/48,
+    Psi_S=(1-3^(-120))/120 <1/3.                  (WR7)
+
+Both weighted tests succeed under one uniform law. The phase1 outside cylinder is contained in the phase0 cylinder and has mass1/1573. At each d the excess equals the indicator of that smaller cylinder. Hence the EXACT common-law expectations are
+
+    integral F_H d eta=(1-3^(-120))/3146,
+    integral F_S d eta=(1-3^(-120))/1573.          (WR8)
+
+These are positive. The result permits actual collisions rather than implicitly finding a collision-free law.
+
+The conditioning denominator is independently necessary. Use original moduli11,3,33, with outside-only residue0 modulo11, pure retained phase0 modulo3, and the33 class having retained phase1 and outside residue1 modulo11. The one outside uniform law has s=10/11. The sole nonanchor event has unconditioned mass1/11 but conditioned mass1/10, giving integral F_H=1/30 rather than1/33. Omitting s in the pre-row or envelope inequality would fail even in this complete three-label family.
+
+### 11.6. Support-row costs can diverge while a phase envelope stays small
+
+For any finite set P of primes greater than11, take the distinct odd original moduli
+
+    3*11*p at retained phase0,
+    3*11^2*p at retained phase1,  for p in P,
+
+with all outside residues zero. There are no A-only originals. For anchor0, WR1's H row envelope under uniform outside Haar is
+
+    (1/30)sum_(p in P)1/(p-1).                    (WR9)
+
+This grows without bound along increasing finite prime sets, by divergence of the sum of reciprocal primes. Anchor1 has the same exponent-vector row envelope; another anchor cannot decrease it. Even the unsummed original-cylinder majorant for anchor0 is (1/363)sum_(p in P)1/p, also unbounded.
+
+However, with U_P=union_(p in P){x_p=0}, the actual merged phase events are
+
+    E_(3,0)={x_11=0 mod11} intersect U_P,
+    E_(3,1)={x_11=0 mod121} intersect U_P,
+
+and the latter is contained in the former. The EXACT expectation is
+
+    integral F_H d eta
+       =(1/363)(1-product_(p in P)(1-1/p))<1/363<5/48,
+    integral F_S d eta=2 integral F_H d eta<2/363<1/3. (WR10)
+
+One envelope {x_11=0 mod121}, with coefficient1, covers every phase1 original and gives the bounded WR2 cost1/363. These actual families show that weighted numerical-depth rows do not by themselves control arbitrarily many outside supports. The obstruction concerns that estimate, not original noncoverage or the general phase-excess criterion.
+
+The outstanding unrestricted obligation is a simultaneous arithmetic upper bound on same-phase envelope costs under ONE suitable outside law, or another whole-cover consequence supplying PE2/PE3's strict reverse. WR1--WR10 do not establish it.
+
+### 11.7. Actual original-label controls
+
+The [weighted-phase control program](../../../frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.py) and [data](../../../frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.json) reconstruct every original numerical residue by CRT and check all247 original labels in the three families of sections11.5--11.6. Across their complete outside carriers,28325 points are examined. The shared-envelope fixture takes P={13,17} and gives exact H expectation29/80223. The program also checks all333 criterion-labelled nonnegative integer(k,k_0) cases satisfying their displayed degree condition, using section10.3's rational Q bound. These finite controls do not replace the all-height, arbitrary-support-count proofs or the infinite-tail estimate.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/weighted_phase_rows_controls.json
+```

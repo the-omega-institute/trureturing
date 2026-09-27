@@ -1,0 +1,366 @@
+{
+  "result": "PASS",
+  "pure19_cut_types": {
+    "shapes": [
+      [
+        0,
+        1,
+        6
+      ],
+      [
+        1,
+        1,
+        3
+      ],
+      [
+        2,
+        1,
+        0
+      ]
+    ],
+    "excluded_shape": [
+      2,
+      1,
+      0
+    ],
+    "excluded_inside_entry_capacity": 6,
+    "scaled_mass20_score": "589/2"
+  },
+  "cut_016": {
+    "cut_shape": [
+      0,
+      1,
+      6
+    ],
+    "degree_neighbor_cases": 350,
+    "parameter_cases": [
+      {
+        "k": 4,
+        "h": 0,
+        "count": 25,
+        "max_inside_score": "260"
+      },
+      {
+        "k": 4,
+        "h": 1,
+        "count": 140,
+        "max_inside_score": "270"
+      },
+      {
+        "k": 4,
+        "h": 2,
+        "count": 120,
+        "max_inside_score": "575/2"
+      },
+      {
+        "k": 4,
+        "h": 3,
+        "count": 20,
+        "max_inside_score": "295"
+      },
+      {
+        "k": 5,
+        "h": 1,
+        "count": 5,
+        "max_inside_score": "283"
+      },
+      {
+        "k": 5,
+        "h": 2,
+        "count": 30,
+        "max_inside_score": "283"
+      },
+      {
+        "k": 5,
+        "h": 3,
+        "count": 10,
+        "max_inside_score": "283"
+      }
+    ]
+  },
+  "cut_113": {
+    "cut_shape": [
+      1,
+      1,
+      3
+    ],
+    "degree_cases": 16,
+    "outside_column_cases": 236,
+    "max_inside_score": "270",
+    "max_outside_score": "290",
+    "degree_patterns": [
+      [
+        0,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        1,
+        0,
+        2
+      ],
+      [
+        0,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        1
+      ],
+      [
+        0,
+        2,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        2
+      ],
+      [
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        2,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        1
+      ],
+      [
+        2,
+        0,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        0,
+        0
+      ]
+    ]
+  },
+  "sharp_local_matrix": {
+    "total": "19",
+    "rows": [
+      "17/3",
+      "17/3",
+      "17/3",
+      "2",
+      "0"
+    ],
+    "columns": [
+      "7",
+      "4",
+      "4",
+      "4",
+      "0",
+      "0",
+      "0"
+    ],
+    "matrix": [
+      [
+        "5/3",
+        "2",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "5/3",
+        "2",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "5/3",
+        "0",
+        "2",
+        "2",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "maximum_score": "295",
+    "maximizing_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "cut_capacity": 19,
+    "lower_bound": "295"
+  },
+  "conditional_consumers": [
+    {
+      "total": 74,
+      "coarse_caps": [
+        19,
+        19,
+        19
+      ],
+      "raw_bounds": [
+        591,
+        580,
+        584,
+        587
+      ],
+      "maximum_raw": 591,
+      "law_bound": "665/74",
+      "gap_to_nine": "1/74"
+    },
+    {
+      "total": 75,
+      "coarse_caps": [
+        19,
+        20,
+        19
+      ],
+      "raw_bounds": [
+        594,
+        598,
+        587,
+        590
+      ],
+      "maximum_raw": 598,
+      "law_bound": "673/75",
+      "gap_to_nine": "2/75"
+    },
+    {
+      "total": 75,
+      "coarse_caps": [
+        20,
+        19,
+        19
+      ],
+      "raw_bounds": [
+        594,
+        598,
+        587,
+        595
+      ],
+      "maximum_raw": 598,
+      "law_bound": "673/75",
+      "gap_to_nine": "2/75"
+    },
+    {
+      "total": 76,
+      "coarse_caps": [
+        20,
+        21,
+        19
+      ],
+      "raw_bounds": [
+        600,
+        604,
+        593,
+        601
+      ],
+      "maximum_raw": 604,
+      "law_bound": "170/19",
+      "gap_to_nine": "1/19"
+    }
+  ],
+  "four_block_occupation": {
+    "good_raw": "604",
+    "bad_raw": "613",
+    "noncoherent": [
+      602,
+      605
+    ],
+    "strict_occupation_threshold": "4/9",
+    "minimax_sufficient_occupation": "3/7",
+    "sorting_equality_weights": [
+      "1/7",
+      "1/7",
+      "1/7",
+      "1/7",
+      "1/7",
+      "1/7",
+      "1/7"
+    ],
+    "raw_bound": "4255/7",
+    "law_bound": "4787/532",
+    "gap_to_nine": "1/532"
+  },
+  "scope": "Exact finite arithmetic interfaces and one sharp local transport support. Not exhaustive actual-source enumeration, terminal-cap feasibility, four-block avoidance, a general minimax proof or Lean verification."
+}

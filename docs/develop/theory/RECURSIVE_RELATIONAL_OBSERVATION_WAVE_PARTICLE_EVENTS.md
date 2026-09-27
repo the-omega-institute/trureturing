@@ -31769,3 +31769,380 @@ $\beta$ 固定且非零，所以 $\beta z_2$ 与 $z_2$ 相互确定；定理 401
 另一方面，$(0,0,a,0,0)$ 与 $(0,0,0,a,0)$ 有相同 $\widehat\eta$。因 $d_2=0$，它们的曲率测量均闭合，而 $H^2=C^2/\operatorname{im}d_1\cong\mathbb R^3$ 中的坐标分别为 $(0,a,0)$ 与 $(0,0,a)$，并不相等；两份曲率均不可由 $d_1g$ 实现。所保留的 $Q=a^2$ 正确报告非零相容残差，却不报告障碍的全部坐标。增加这些坐标任务就必须细分该商。预测公式仍是未知 $(c,h)$ 索引的条件族，不能把 $z_1,z_5$ 当作已恢复的实际来源。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 403. 静态残差商的仿射 Gaussian 递归判据
+
+**定义 403.1（正交坐标、声明的续接与逐点下降）。** 固定定义 401.1 的模型。在正交直和 $E=S\oplus M\oplus N$ 中，选定等距坐标映射 $J_u:S\oplus M\to\mathbb R^p$、$J_v:N\to\mathbb R^\ell$，其中本节的 $p=\dim S+\dim M\ge0$、$\ell=\dim N\ge0$。记
+
+$$
+u=J_u(P_Sz+P_Mz),\qquad v=J_vP_Nz,\qquad
+q(u,v)=(u,\rho),\quad \rho=\|v\|^2.
+$$
+
+定理 401.2 的单射 $K|_M$ 及其逆 $D_K$ 给出 $P_Mz=D_K(KR_{\mathrm{st}}z)$，其中 $R_{\mathrm{st}}=I-P_S$ 是静态残差投影。因此 $\eta(z)$ 与 $q(u,v)$ 相互确定；没有把 $KR_{\mathrm{st}}z$ 当作正交坐标。若 $m(u)=P_MJ_u^{-1}u$，则完整相容残差是
+
+$$
+Q(z)=\|m(u)\|^2+\rho.
+$$
+
+给定非负整数 $p,\ell$，另行声明如下离散时间经典续接，各步前后的维数相同：
+
+$$
+\begin{aligned}
+u_{t+1}&=Au_t+Bv_t+b+\epsilon_t,\\
+v_{t+1}&=Cu_t+Dv_t+d+\zeta_t,\qquad t\in\mathbb N_0,\\
+\begin{pmatrix}\epsilon_t\\\zeta_t\end{pmatrix}
+&\sim\mathcal N\!\left(0,
+\begin{pmatrix}U&R\\R^{\mathsf T}&W\end{pmatrix}\right),
+\qquad
+\begin{pmatrix}U&R\\R^{\mathsf T}&W\end{pmatrix}\succeq0.
+\end{aligned}
+$$
+
+$A\in\mathbb R^{p\times p}$、$B\in\mathbb R^{p\times\ell}$、$C\in\mathbb R^{\ell\times p}$、$D\in\mathbb R^{\ell\times\ell}$、$b\in\mathbb R^p$、$d\in\mathbb R^\ell$ 及全部协方差已知且恒定。创新对在不同时刻独立同分布，并与初态独立；对随机初态也要求这项独立性。允许奇异及零协方差。本节的 $A,B,C,R$ 专指这些转移系数及创新交叉协方差，不与 §401 的同名字母混用。这一续接是增加的概率模型数据，不由静态联合噪声或 Hodge 算子推出。
+
+记 $T((u,v),\cdot)$ 为此转移核，$\mathcal Z_\ell=\mathbb R^p\times[0,\infty)$（$\ell\ge1$），$\mathcal Z_0=\mathbb R^p\times\{0\}$。称转移在 $q$ 上逐点下降，若对每两个满足 $q(u,v)=q(\widetilde u,\widetilde v)$ 的点，有
+
+$$
+q_*T((u,v),\cdot)=q_*T((\widetilde u,\widetilde v),\cdot)
+\quad\text{作为 }\mathcal Z_\ell\text{ 上的联合概率测度}.
+$$
+
+这里比较所有初始点，不以某个先验下几乎处处的等式替代。其有限状态对应是 §159.1 与主卷 §74.3 的逐纤维转移判据；有限链的文献表述见 G. Wolfer、S. Watanabe, *Geometric Aspects of Data-Processing of Markov Chains*, [arXiv:2203.04575v3，定理 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmtheorem1)，该处归于 Kemeny–Snell 的定理 6.3.2，并在其不可约链框架中陈述。Markov 函数的另一相关框架是 L. C. G. Rogers、J. W. Pitman, *Markov Functions*, *The Annals of Probability* **9**(4), 573–582, 1981，DOI [10.1214/aop/1176994363](https://doi.org/10.1214/aop/1176994363)；这里的系数判据由下面的联合矩与旋转不变性直接推出，不把一般 Markov 函数或 intertwining 框架等同于本定义的全部初始点推前相等。
+
+**定理 403.2（方形隐藏块的精确系数判据）。** 在定义 403.1 下，若 $\ell\ge1$，则转移在 $q$ 上逐点下降，当且仅当 $B=0$，并且下列两种情形之一成立：
+
+1. $D=0$；$C,d,R,W$ 除维数与整体协方差半正定外不受限制。
+2. 存在 $a>0$、$O\in O(\ell)$、$\sigma\ge0$，使
+
+$$
+D=aO,\qquad C=0,\qquad d=0,\qquad
+W=\sigma^2I_\ell,\qquad R=0.
+$$
+
+两种情形中 $A,b,U$ 均可任取，只须满足已列协方差条件。$p=0$ 时可见块为空，相关条件按唯一的空矩阵解释。$\ell=1$ 时 $O=1$ 或 $O=-1$，$\sigma=0$ 也允许。$\ell=0$ 时 $q$ 等价于恒等观察 $u\mapsto u$，任意声明的可见转移均下降。
+
+下降时存在唯一的 Borel 商核 $\overline T$，满足 $q_*T(x,\cdot)=\overline T(q(x),\cdot)$。重置情形的核为
+
+$$
+\overline T((u,\rho),\cdot)
+=\mathcal L\bigl(Au+b+\epsilon,\ \|Cu+d+\zeta\|^2\bigr),
+$$
+
+其中 $(\epsilon,\zeta)$ 保留原来的共同 Gaussian 律，不能将右侧任意改成两个边缘律的乘积。第二种情形的核为
+
+$$
+\overline T((u,\rho),\cdot)
+=\mathcal N(Au+b,U)\otimes\nu_{\ell,a,\sigma}(\rho,\cdot),
+\qquad
+\nu_{\ell,a,\sigma}(\rho,\cdot)
+=\mathcal L\bigl(\|a\sqrt\rho\,n_0+\sigma G\|^2\bigr),
+$$
+
+$n_0$ 是任意固定单位向量，$G\sim\mathcal N(0,I_\ell)$。这个定义在 $\sigma=0$ 时直接给出 $\delta_{a^2\rho}$，不需要除以 $\sigma$。每一有限 $q$ 路径的联合律由此商核与当前 $q$ 递归决定。
+
+**证明。** 所有一次、二次及本证明使用的混合矩均有限。若下降成立，比较 $(u,v)$ 与 $(u,-v)$ 的可见均值，得到 $2Bv=0$，所以 $B=0$。令 $h(u)=Cu+d$，隐藏范数的均值为
+
+$$
+\mathbb E\|h(u)+Dv+\zeta\|^2
+=\|h(u)\|^2+2v^{\mathsf T}D^{\mathsf T}h(u)
++v^{\mathsf T}D^{\mathsf T}Dv+\operatorname{tr}W.
+$$
+
+先比较 $v,-v$，可得 $D^{\mathsf T}h(u)=0$ 对所有 $u$ 成立；再比较所有同范数的 $v$，可得二次型 $v^{\mathsf T}D^{\mathsf T}Dv$ 在单位球上恒定。具体地，标准基向量给出相同对角元 $a^2\ge0$，对 $i\ne j$ 比较 $(e_i+e_j)/\sqrt2$ 与 $(e_i-e_j)/\sqrt2$ 得到非对角元为零。因此
+
+$$
+D^{\mathsf T}D=a^2I_\ell.
+$$
+
+若 $a=0$，则 $\|Dv\|^2=0$ 对所有 $v$ 成立，故 $D=0$。若 $a>0$，方形矩阵 $D$ 可逆，$O=D/a$ 满足 $O^{\mathsf T}O=OO^{\mathsf T}=I$。由 $D^{\mathsf T}(Cu+d)=0$ 先取 $u=0$ 再遍历 $u$，得 $d=0,C=0$。这里使用了隐藏块为方形；若把确定性映射改为 $v\mapsto(av,c)$，输出隐藏空间增加一维，则其范数平方是 $a^2\|v\|^2+c^2$，仍只依赖输入半径，却容许 $c\ne0$，故上述仿射项消失结论不适用于任意矩形块。
+
+在 $a>0$ 的分支，令 $w=Dv$。将 $W$ 正交对角化，可把 $\zeta$ 写成旋转后的 $(\sqrt{\lambda_i}G_i)_i$，其中 $\lambda_i\ge0$，$G_i$ 独立标准正态。经典 Gaussian 矩运算在这里给出
+
+$$
+\operatorname{Var}\|w+\zeta\|^2
+=2\operatorname{tr}(W^2)+4w^{\mathsf T}Ww.
+$$
+
+为核对该式，包括奇异情形，单个 $G_i$ 的矩母函数 $\exp(t^2/2)$ 给出 $\mathbb EG_i^2=1$、$\mathbb EG_i^4=3$；于是 $\operatorname{Var}\|\zeta\|^2=2\sum_i\lambda_i^2$，$\operatorname{Var}(2w^{\mathsf T}\zeta)=4w^{\mathsf T}Ww$。线性项与中心化二次项的协方差因中心 Gaussian 的奇数阶矩为零而消失。这是在本转移中使用 Gaussian 二次型矩公式，而无须假设正定密度。
+
+下降要求上述方差也在每个输入球面上不变，所以 $D^{\mathsf T}WD$ 为标量矩阵。代入 $D=aO$，得 $W=\sigma^2I_\ell$，其中 $\sigma^2\ge0$。最后还须检验同一联合律。因已知 $B=C=d=0$，可见输出减去其已知均值 $Au+b$ 就是 $\epsilon$。直接展开得到向量混合矩
+
+$$
+\mathbb E\bigl[\epsilon\,\|Dv+\zeta\|^2\bigr]
+=2\mathbb E[\epsilon\zeta^{\mathsf T}]Dv
+=2RDv.
+$$
+
+常数项乘 $\epsilon$ 的均值为零，$\epsilon\|\zeta\|^2$ 的每一分量都是联合中心 Gaussian 的三阶矩，也为零。比较 $v$ 与 $-v$ 的联合输出律，得 $RDv=0$ 对所有 $v$ 成立；$D$ 可逆遂给出 $R=0$。这一步不能仅从可见与半径两个边缘律分别下降推出。
+
+反过来，若 $B=D=0$，输出联合向量就是定理所列重置核的随机向量，全部初始依赖仅通过 $u$ 进入，允许 $R\ne0$。若第二种情形成立，联合 Gaussian 特征函数由 $R=0$ 分解，所以 $\epsilon$ 与 $\zeta$ 独立，即使协方差奇异仍如此。标准 Gaussian 的正交不变性由特征函数 $\exp(-\|t\|^2/2)$ 得到；$Dv$ 的范数是 $a\|v\|$，故隐藏范数律恰为 $\nu_{\ell,a,\sigma}(\rho,\cdot)$，与方向无关。这给出所列乘积核，证明充分性。
+
+为说明可测性，$\ell\ge1$ 时固定 Borel 截面
+
+$$
+s(u,\rho)=(u,\sqrt\rho\,n_0),\qquad
+\overline T((u,\rho),H)=T(s(u,\rho),q^{-1}(H))
+$$
+
+供每个 Borel 集 $H\subseteq\mathcal Z_\ell$ 使用。仿射 Gaussian 平移是 Borel 核，$q,s$ 连续，故该式是 Borel 核；下降使它不依赖截面代表。$q$ 满射到 $\mathcal Z_\ell$，所以核唯一。$\ell=0$ 时取 $s(u,0)=(u,0)$，结论相同。
+
+在已知初态 $x$ 下，对每个 $n\ge0$ 及 Borel 集 $H_0,\ldots,H_n$，创新独立性与逐步条件期望给出
+
+$$
+\begin{aligned}
+&\mathbb P_x\{q(X_i)\in H_i,\ 0\le i\le n\}\\
+&\quad=\int_{H_0}\delta_{q(x)}(dq_0)
+\int_{H_1}\overline T(q_0,dq_1)\cdots
+\int_{H_n}\overline T(q_{n-1},dq_n).
+\end{aligned}
+$$
+
+这是 §159 的有限路径递推在所给连续状态核上的应用；对任意初态分布再积分即可。它决定声明的 $q$ 路径，不自动提供原来源在任意更新后、任意附加观测下的后验。重置只使下一步核不依赖当前 $\rho$；由于当前任务包括 $Q=\|m(u)\|^2+\rho$，重置也不能删除当前半径。证毕。
+
+**命题 403.3（共同噪声与退化边界的区分）。** 定理 403.2 的 $R=0$、隐藏各向同性及重置分支的例外分别有下列有限维见证。
+
+取 $p=\ell=1$、$A=1$、$B=C=0$、$b=d=0$、$D=1$，且 $\epsilon=\zeta=G\sim\mathcal N(0,1)$。固定同一个 $u$，初始 $v=a$ 与 $v=-a$，$a>0$，给出的可见边缘和半径边缘相同，但联合 $q$ 律不同。若仅把 $D$ 改成零，允许的奇异共同协方差保持为 $\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$，则 $q$ 确实下降，商核的两个输出一般仍不独立。
+
+另取 $p=0$、$\ell=2$、$D=I_2$、$d=0$、$W=\operatorname{diag}(w_1,w_2)$，其中 $w_1,w_2\ge0$ 且 $w_1\ne w_2$。初始 $v=ae_1$ 与 $v=ae_2$，$a>0$，具有相同当前半径和相同下一半径均值，但下一半径律不同。
+
+**证明。** 第一例的可见边缘都是 $u+G$；由 $G\overset d=-G$，$(a+G)^2$ 与 $(-a+G)^2$ 同分布。然而
+
+$$
+\mathbb E[(u^+-u)(v^+)^2]
+=\mathbb E[G(\pm a+G)^2]=\pm2a.
+$$
+
+有限混合矩不同，故联合律不同。这正是 $R=D=1$ 时的必要条件见证，且没有将奇异协方差排除。当 $D=0$ 时，输出是 $(u+G,G^2)$，完全不依赖初始 $v$，所以下降成立；$G^2$ 是 $G$ 的非恒定函数，不能与 $G$ 独立。例如 $\{|G|\le1\}$ 与 $\{G^2\le1\}$ 是同一概率严格介于零与一之间的事件，违反独立所需的概率乘积等式。
+
+第二例的两个均值均为 $a^2+w_1+w_2$，而方差分别为
+
+$$
+2(w_1^2+w_2^2)+4a^2w_1,\qquad
+2(w_1^2+w_2^2)+4a^2w_2.
+$$
+
+二者不等，所以只检验隐藏均值也不足以证明下降。相反，$\ell=1$、$D=-a$、$a>0$、$W=0$ 且 $R=0$ 时，半径确定地更新为 $a^2\rho$，直接实现定理允许的反射与零噪声分支。证毕。
+
+## 404. 谱块能量与平稳 Hodge 记录的延续商
+
+**定义 404.1（谱块噪声与全有限路径任务）。** 在定义 403.1 的固定正交坐标中，另固定续接
+
+$$
+u_{t+1}=Au_t+b+\epsilon_t,\qquad
+v_{t+1}=Dv_t+\zeta_t,\qquad D=D^{\mathsf T}.
+$$
+
+即 $B=C=0,d=0,R=0$。$\epsilon_t\sim\mathcal N(0,U)$，而
+
+$$
+D^2=\sum_{j=1}^k\theta_j\Pi_j,\qquad
+W=\sum_{j=1}^k s_j^2\Pi_j,\qquad s_j\ge0.
+$$
+
+$\theta_1,\ldots,\theta_k$ 是 $D^2$ 的两两不同特征值，$\Pi_j$ 是到 $E_j=\ker(D^2-\theta_jI)$ 的正交投影，$m_j=\dim E_j\ge1$，$\sum_jm_j=\ell$。每一整个平方谱块只配一个固定噪声尺度 $s_j$；即使该块含有 $D$ 的正负两个特征值，也不得在其内部另用不同噪声尺度。$\ell=0$ 时取 $k=0$、空和为空隐藏块。创新独立性沿用定义 403.1；联合 Gaussian 及 $R=0$ 使可见噪声与所有隐藏块噪声独立，不同隐藏块也独立。各向同性 $s_j=\sigma$ 是此模型的特例。
+
+在每个确定初始点 $x=(u,v)$，任务为当前 $q(x)$ 以及每个 $n\ge1$ 的整个联合路径律
+
+$$
+\mathcal L_x(q(X_0),q(X_1),\ldots,q(X_n)).
+$$
+
+以全部这些任务相等定义 $x\sim_{\mathrm{path}}x'$，不是只比较各时刻的边缘均值。时刻 $0$ 是任务的一部分。置
+
+$$
+e_j(v)=\|\Pi_jv\|^2,\qquad
+\mathcal E(u,v)=(u,e_1(v),\ldots,e_k(v)).
+$$
+
+该任务固定这一演化和观察，不增添控制、来源干预、原始上同调坐标或操作权限。
+
+**定理 404.2（谱块能量给出精确递归任务商）。** 在定义 404.1 下，对全部初始点有
+
+$$
+(u,v)\sim_{\mathrm{path}}(u',v')
+\quad\Longleftrightarrow\quad
+\mathcal E(u,v)=\mathcal E(u',v').
+$$
+
+$\mathcal E$ 自身具有 Borel Markov 转移核。给定当前 $(u,e_1,\ldots,e_k)$，下一步可见量的核为 $\mathcal N(Au+b,U)$，各下一步块能量彼此独立且与该可见量独立，其核为
+
+$$
+\kappa_j(e,\cdot)
+=\mathcal L\bigl(\|\sqrt{\theta_je}\,n_j+s_jG_j\|^2\bigr),
+\qquad G_j\sim\mathcal N(0,I_{m_j}),
+$$
+
+其中 $n_j$ 是 $E_j$ 中固定的单位向量。特别地，$s_j=0$ 时 $\kappa_j(e,\cdot)=\delta_{\theta_je}$，$\theta_j=0$ 时下一块能量不依赖 $e$。从这个乘积核递推并应用 $(u,e)\mapsto(u,\sum_je_j)$，便恢复全部有限 $q$ 路径律。
+
+若一个确定性摘要 $h$ 对本任务充分，即 $h(x)=h(x')$ 必有 $x\sim_{\mathrm{path}}x'$，则存在定义于 $h$ 值域的唯一函数 $f$，使 $\mathcal E=f\circ h$。这里是任务纤维的最粗性；不在未给摘要空间及额外正则性时声称 $f$ 可测，也不声称任意编码至少需要多少个实坐标。$k\ge1$ 时，一个显式表示是旧 $q=(u,\rho)$ 加 $e_1,\ldots,e_{k-1}$，因为 $e_k=\rho-\sum_{j<k}e_j$。
+
+当 $\ell>0$ 时，旧 $q$ 具有对全部初始点适用的自治 Markov 核，当且仅当 $k=1$。这包括 $D=0$ 的单个零谱块；该情形当前半径仍属于任务。
+
+**证明。** 实对称矩阵的正交谱分解在这里用于 $D^2$。因 $D$ 与 $D^2$ 交换，$D$ 保持每个 $E_j$。若 $\theta_j>0$，则在 $E_j$ 上
+
+$$
+D_j=\sqrt{\theta_j}\,O_j,\qquad
+O_j^{\mathsf T}O_j=I_{E_j};
+$$
+
+若 $\theta_j=0$，$\|D_jw\|^2=\theta_j\|w\|^2=0$，所以 $D_j=0$。于是 $D_j\Pi_jv$ 的长度只取决于 $\theta_je_j(v)$。块内噪声的正交不变性给出 $\kappa_j$；整体 Gaussian 特征函数按 $U,s_1^2I_{m_1},\ldots,s_k^2I_{m_k}$ 分解，故一次转移中各块及可见输出独立。该推导只需 $D_j$ 是缩放正交映射，不要求它与该块的每个旋转交换。
+
+固定各块的截面 $e\mapsto\sqrt e\,n_j$，与定理 403.2 同样可知这些是 Borel 核。给定完整当前状态，下一 $\mathcal E$ 的律只依赖当前 $\mathcal E$；逐步条件期望遂给出其乘积核的路径迭代。对整个路径施加 $q_t=(u_t,\sum_je_{j,t})$ 得到原 $q$ 路径律。因此 $\mathcal E$ 相等足以保证任务相等，所用的是联合路径递推而非边缘律的拼接。
+
+为证必要性，任务在时刻 $0$ 已给出 $u=u'$。从确定 $v$ 出发，展开隐藏递推：
+
+$$
+v_t=D^tv+\sum_{a=0}^{t-1}D^{t-1-a}\zeta_a.
+$$
+
+不同创新独立且中心化，故在每个谱块上
+
+$$
+\mathbb E_v\|\Pi_jv_t\|^2
+=\theta_j^te_j(v)+m_js_j^2\sum_{r=0}^{t-1}\theta_j^r.
+$$
+
+$t=0$ 时和为空，约定包括 $\theta_j=0$ 在内均有 $\theta_j^0=1$；$D^0=I$。该有限和也涵盖 $\theta_j=1$，无需使用带分母的等比公式。于是从任务律可读取的有限均值满足
+
+$$
+\mathbb E_v\|v_t\|^2-\sum_{j=1}^km_js_j^2\sum_{r=0}^{t-1}\theta_j^r
+=\sum_{j=1}^k\theta_j^te_j(v).
+$$
+
+两个任务相等的初态有相同左侧。取 $t=0,\ldots,k-1$，能量差因此落入矩阵 $V=(\theta_j^t)_{0\le t<k,\,1\le j\le k}$ 的核。经典 Vandermonde 行列式给出
+
+$$
+\det V=\prod_{1\le i<j\le k}(\theta_j-\theta_i)\ne0,
+$$
+
+故每个 $e_j(v)=e_j(v')$。这里使用的是 §364.2 已用过的有限谱分离工具；其输入现在是扣除已知噪声偏置后的范数均值，输出是块能量，而不是对隐藏向量的线性可观测性。$k=1$ 时矩阵是 $(1)$；$k=0$ 时没有隐藏能量，只由时刻 $0$ 得到 $u=u'$。必要性虽仅需这些均值，充分性依靠前述完整核，不能将有限个矩相同本身当作一般概率律相等的判据。
+
+任取充分摘要值 $y\in h(\mathbb R^{p+\ell})$，定义 $f(y)=\mathcal E(x)$，其中 $h(x)=y$。充分性与刚证明的必要性使此定义不依赖代表，且每个 $y$ 都有代表，所以 $f$ 存在且唯一。这是在已解出的能量纤维上应用 §160.2 的任务因子化，额外坐标数只陈述上述显式表示。
+
+若 $k=1$，$\mathcal E=(u,\rho)$，已构造的核即为 $q$ 的自治核。若 $k\ge2$，取 $E_i,E_j$ 中单位向量 $w_i,w_j$，$\theta_i\ne\theta_j$，以及任意 $a>0$。在相同 $u$ 下，初态 $aw_i,aw_j$ 的半径相同，而下一半径均值相差
+
+$$
+a^2(\theta_i-\theta_j)\ne0;
+$$
+
+共同噪声项 $\operatorname{tr}W$ 抵消。所以一步推前已不在旧纤维上恒定。该结论针对所有初始点的自治，不把某个特殊初态分布下的 Markov 性与之混同。证毕。
+
+**命题 404.3（平方谱合并与零模的时间边界）。** 定义 404.1 中，同一 $\theta$ 所对应的正负特征值不要求分开保存能量。例如 $D=\operatorname{diag}(a,-a)$、$a>0$、$W=s^2I_2$ 时，总隐藏半径足以决定全部有限半径路径律，即使交换两个坐标的正交变换不与 $D$ 交换。
+
+在固定相同可见初态 $u$ 的比较中，若任务改为仅保留 $t\ge1$ 的全部有限 $q$ 路径，则可以删除初始零谱块能量；所有正谱块的初始能量仍由该未来任务律决定。因此这项未来专属结论不能代替定理 404.2 的含当前时刻结论。
+
+**证明。** 第一例有 $D^2=a^2I_2$，只有一个平方谱块，且 $D/a$ 正交。定理 404.2 的径向核适用。若 $H(x,y)=(y,x)$，则 $DH(x,y)=(ay,-ax)$，$HD(x,y)=(-ay,ax)$，不相等；所以径向闭合并不以 $DH=HD$ 为前提。
+
+若 $\theta_0=0$，则 $\Pi_0v_1=\Pi_0\zeta_0$，以后此块每一步也只取新的噪声，其全部正时刻路径律与 $\Pi_0v_0$ 无关。其他块与之独立，且可见演化不读取隐藏初态，故可以删除这一初始能量。反过来，设有 $k_+$ 个不同正特征值 $\vartheta_1,\ldots,\vartheta_{k_+}$。比较 $t=1,\ldots,k_+$ 的均值并扣除共同噪声偏置后，正块能量差满足系数矩阵 $(\vartheta_j^t)$ 的齐次方程。它的行列式是
+
+$$
+\left(\prod_{j=1}^{k_+}\vartheta_j\right)
+\prod_{i<j}(\vartheta_j-\vartheta_i)\ne0.
+$$
+
+故正块能量仍全部确定；没有正块时这一要求为空。特别地，$\ell=1,D=0$ 时，不同初始半径有完全相同的正时刻半径路径律，但当前诊断不同。将 $t=0$ 放回任务，才恢复零块能量这一列；不保留当前可见量的另一种未来任务，还可能合并可见初态，本命题没有对它给出 $u$ 的恢复结论。证毕。
+
+**命题 404.4（原有限 CW 模型上的平稳记录续接与精确细分）。** 在命题 402.2 的实际有限 CW 复形、标准内积及 $\beta\ne0$ 模型中，以 $A$ 表示该命题的来源算子（可见续接的矩阵则为 $I_3$），保持
+
+$$
+Ag=(c,0,0,0,h),\qquad g=(c,h),\qquad
+u=(z_1,z_5,z_2),\quad v=(z_3,z_4).
+$$
+
+对每个固定来源 $g$，取 $z_0=Ag+\xi_0$、$\xi_0\sim\mathcal N(0,I_5)$，保持 $u_t=u_0$，并声明
+
+$$
+v_{t+1}=Dv_t+\zeta_t,\qquad
+D=\begin{pmatrix}1/2&0\\0&1/3\end{pmatrix},\qquad
+W=\begin{pmatrix}3/4&0\\0&8/9\end{pmatrix}.
+$$
+
+$\zeta_t\sim\mathcal N(0,W)$ 相互独立，并独立于 $\xi_0$ 和来源；若另给来源先验，也要求这些噪声与来源独立。再取独立的 $\eta_t\sim\mathcal N(0,1)$，独立于全部前述随机量，并定义当前记录所配的标量块
+
+$$
+Y_{f,t}=c+\beta z_{2,t}+\eta_t.
+$$
+
+则每个时刻均有 $z_t\mid g\sim\mathcal N(Ag,I_5)$。在各个当前时刻，§§401–402 的三项任务逐字保持为
+
+$$
+\begin{aligned}
+\lambda_{(c,h)}(z)&=\exp\!\left(cz_1+hz_5-\tfrac12(c^2+h^2)\right),\\
+\mathcal F_{(c,h)}(z,\cdot)&=\mathcal N(c+\beta z_2,1),\\
+Q(z)&=z_2^2+z_3^2+z_4^2.
+\end{aligned}
+$$
+
+尽管这些单时刻模型不变，旧静态商 $\widehat\eta=(u,z_3^2+z_4^2)$ 不支持该续接的逐点递归。对含当前值及全部有限未来 $q$ 路径的任务，精确最粗分割由
+
+$$
+\mathcal E(z)=(z_1,z_5,z_2,z_3^2,z_4^2)
+$$
+
+给出，亦可用旧 $\widehat\eta$ 加一个显式能量 $z_3^2$ 表示。它仍合并隐藏坐标的符号，不恢复测量的完整 $H^2$ 坐标或原始操作权限。这里的 $D$ 是记录噪声坐标的声明演化，不是该复形的 Hodge 热流。
+
+**证明。** 初始隐藏均值为零，协方差为 $I_2$。若 $v_t\sim\mathcal N(0,I_2)$，新噪声独立性与
+
+$$
+DD^{\mathsf T}+W
+=\operatorname{diag}(1/4+3/4,\ 1/9+8/9)=I_2
+$$
+
+给出 $v_{t+1}\sim\mathcal N(0,I_2)$。初始 $v_0$ 独立于 $u_0$，而后续隐藏演化只读取 $v_0$ 与隐藏创新，故一直独立于保持不变的 $u_0$。后者在来源 $g$ 下的均值是 $(c,h,0)$、协方差是 $I_3$。把两块放回原坐标顺序，即得 $z_t\mid g\sim\mathcal N(Ag,I_5)$ 对所有 $t$ 成立。又 $z_{2,t}$ 是当前来源噪声的第二坐标，$\eta_t$ 独立，所以当前 $(z_t,Y_{f,t})$ 的联合模型有 $K=\beta e_2^{\mathsf T}$、$\Gamma=\beta^2+1$、$\Psi=1$，恰好给出列明的条件核族。索引 $c,h$ 仍是固定未知来源，不由此条件族断言已知。
+
+这些记录并不跨时独立。例如在 $s\le t$ 时，中心化记录的条件交叉协方差为
+
+$$
+\operatorname{Cov}(z_t-Ag,z_s-Ag\mid g)
+=\operatorname{diag}\bigl(1,1,(1/2)^{t-s},(1/3)^{t-s},1\bigr).
+$$
+
+可见坐标保持不变，隐藏相关项由 $v_t=D^{t-s}v_s+$ 独立中心创新得到。故当前似然公式只指各个单时刻，不允许把多个这样的似然当作独立观测相乘；这也与主卷 §128.7 对共同噪声的要求一致。$Y_{f,t}$ 是每时刻声明的配对标量，并不把“未来块”这个名称当作整条记录路径的独立性前提。
+
+现在从两个实际坐标点
+
+$$
+z=(0,0,a,0,0),\qquad z'=(0,0,0,a,0),\qquad a\ne0
+$$
+
+分别启动续接核。二者旧 $\widehat\eta$ 相同，但隐藏下一半径均值分别是
+
+$$
+\frac{a^2}{4}+\frac{59}{36},\qquad
+\frac{a^2}{9}+\frac{59}{36},\qquad
+\frac{59}{36}=\frac34+\frac89,
+$$
+
+差为 $5a^2/36\ne0$。对一般共同 $u$，完整下一残差只再加共同的 $z_2^2$，因此同样被区分。这里比较处处定义的核，不给精确单点赋予正概率。不同的有限均值使两个非负残差律不等，故存在某个 $b\ge0$，使下一步 Borel 事件 $\{Q_1>b\}$ 的概率不同：若所有这些阈值概率相同，分布函数就相同，两个律及其有限均值也必相同。
+
+平方谱为 $\theta_1=1/4,\theta_2=1/9$，两个块维数均为一，且噪声尺度分别满足 $s_1^2=3/4,s_2^2=8/9$。定理 404.2 因而给出 $\mathcal E$ 的充分性与最粗任务分割。其必要性也可在本例直接看出：当前隐藏半径 $\rho$ 与下一隐藏半径均值扣除噪声后的值 $h_1$ 满足
+
+$$
+\rho=z_3^2+z_4^2,\qquad
+h_1=\tfrac14z_3^2+\tfrac19z_4^2,\qquad
+z_3^2=\frac{36}{5}\left(h_1-\frac{\rho}{9}\right),\quad
+z_4^2=\rho-z_3^2.
+$$
+
+这里 $h_1$ 是任务分布的均值，不是一次已实现路径的下一样本；这些等式不给出从一个噪声样本精确反演隐藏能量的结论。旧半径加 $z_3^2$ 的显式表示确能恢复两块能量，但不产生对任意实数编码的坐标数下界。
+
+最后，沿用命题 402.2 的 $C^2$ 胞腔基，并将其嵌入五维记录空间。该复形没有三胞腔，故 $d_2=0$；又 $d_1^{\mathsf T}e_3=d_1^{\mathsf T}e_4=0$，所以
+
+$$
+\Delta_2e_i=(d_1d_1^{\mathsf T}+d_2^{\mathsf T}d_2)e_i=0,
+\qquad i=3,4.
+$$
+
+§363 的热算子 $e^{-\tau\Delta_2}$ 在这两个方向上恒等，不等于本例的收缩 $D$。来源像 $Ag$ 在这两个坐标恒为零，它们是相容残差的记录方向，不是增加的来源自由度。尽管如此，实际测量曲率的 $H^2=C^2/\operatorname{im}d_1$ 坐标包含其带符号的值：例如把非零 $z_3$ 改为 $-z_3$ 保持 $\mathcal E$，却改变该上同调类。因此精确路径商的充分性仍限于声明的任务，未包含原始上同调读数及权限任务。证毕。
+
+**推论 404.5（固定时钟上的残差阈值与停止任务）。** 在定理 404.2 的模型下，固定时钟步长 $\tau>0$，在各时刻用 $Q_t=\|m(u_t)\|^2+\rho_t$ 读取完整残差。固定任意 $n<\infty$ 及 Borel 阈值函数 $b_t:\mathcal Z_\ell^t\to[0,\infty)$，$t=0,\ldots,n$，其中 $t=0$ 的定义域为单点。令
+
+$$
+T_n=\min\bigl\{t\in\{0,\ldots,n\}:Q_t>b_t(q_0,\ldots,q_{t-1})\bigr\},
+$$
+
+空集时记 $T_n=\infty$。则 $\mathcal E$ 决定停止标签 $T_n$、物理时标 $\tau T_n$、停止前 $q$ 记录及有限停止位置 $q_{T_n}$ 的联合律；无命中时采用一个固定额外标签。也可在所得路径上再应用一个预先固定的 Borel 概率核产生随机事件标签。命题 404.4 的旧静态商不能对全部这些残差阈值任务充分。
+
+**证明。** 对每个 $t\le n$，$\{T_n=t\}$ 是有限个 Borel 不等式事件的交，所列停止记录是有限 $q$ 路径的 Borel 函数。定理 404.2 给出同一个完整路径律，其推前因此相同；再对共同 Borel 标签核积分也保持相同。对命题 404.4 的两个记录取 $n=1$、$b_0=a^2$，则当前残差等于阈值，均不在时刻 $0$ 停止；再将 $b_1$ 取为该命题给出的常数阈值，便得到不同的时刻 $1$ 停止概率。因此整个阈值任务族也区分这个旧商纤维。这里固定时钟且只读已证明的有限路径；不从这些推前增加来源恢复、任意控制或未声明观测的结论。证毕。
+
+## 追加锚（本行以下为增补区）
