@@ -13,7 +13,8 @@ internal sealed class HeisenbergFockPolynomialDocument : IScribeDocumentDefiniti
                 "D5/S3/VertexAlgebra/HeisenbergFockPolynomial.heisenberg_fock_polynomial"),
             H("Shifted polynomial modes satisfy the Heisenberg relation"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/VertexAlgebra/chulin2018heisenberg")),
             Blocks(
                 Paragraph(Text(
                     "Let V be the multivariate polynomial ring over the rationals, with one "

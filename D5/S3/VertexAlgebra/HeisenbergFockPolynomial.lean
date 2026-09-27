@@ -108,11 +108,6 @@ private theorem creation_spans :
   | mul_X p k hp =>
     simpa [mul_comm] using hstable k p hp
 
-private theorem field_mode (m : ℤ) : field[[m]] = mode m := by
-  rw [field, VertexOperator.ncoeff_of_coeff]
-  congr 1
-  omega
-
 private theorem mode_ccr (m n : ℤ) :
     (mode m).comp (mode n) - (mode n).comp (mode m) =
       if m + n = 0 then (m : ℚ) • LinearMap.id else 0 := by
@@ -188,20 +183,24 @@ theorem heisenberg_fock_polynomial :
       (field[[-1]]).comp (field[[1]])) (1 : Fock) = 1) ∧
     (∀ k : ℕ, (field[[Int.negSucc k]]) (1 : Fock) = X k) ∧
     Submodule.span ℚ (Set.range creationState) = ⊤ := by
-  refine ⟨field_mode, ?_, ?_, ?_, ?_, creation_spans⟩
+  have hcoeff (m : ℤ) : field[[m]] = mode m := by
+    rw [field, VertexOperator.ncoeff_of_coeff]
+    congr 1
+    omega
+  refine ⟨hcoeff, ?_, ?_, ?_, ?_, creation_spans⟩
   · intro p
     refine ⟨(p.vars.sup id : ℕ) + 1, ?_⟩
     intro m hm
-    rw [field_mode]
+    rw [hcoeff]
     exact positive_vanish p m hm
   · intro m n
-    rw [field_mode, field_mode]
+    rw [hcoeff, hcoeff]
     exact mode_ccr m n
-  · rw [field_mode, field_mode]
+  · rw [hcoeff, hcoeff]
     simpa using congrArg (fun T : Module.End ℚ Fock => T (1 : Fock))
       (mode_ccr 1 (-1))
   · intro k
-    rw [field_mode]
+    rw [hcoeff]
     simp [mode]
 
 end D5.S3.VertexAlgebra.HeisenbergFockPolynomial
