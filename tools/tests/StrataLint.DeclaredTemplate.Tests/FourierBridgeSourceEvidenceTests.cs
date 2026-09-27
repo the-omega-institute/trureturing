@@ -9,6 +9,10 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOutputHelper output)
 {
+    // Required production evidence has a hard deadline: expiration is a failure,
+    // not an infrastructure skip. Keep the original 300-second process budget.
+    private static readonly TimeSpan NativeEvidenceDeadline = TimeSpan.FromSeconds(300);
+
     // These are actual :report artifacts, including compiler type materials and axioms.
     // No synthetic positive report or copied certificate supplies the acceptance case.
     [Theory]
@@ -29,7 +33,7 @@ public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOut
             var produced = BoundedProcessRunner.Run("/bin/bash",
                 ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "Reg", "build",
                     "+" + module + ":report", "+Reg." + module + ":report"],
-                root, TestBudgets.ReportSupervisorHangGuard, 4 * 1024 * 1024);
+                root, NativeEvidenceDeadline, 4 * 1024 * 1024);
             var diagnostics = Encoding.UTF8.GetString(produced.StandardOutput)
                 + Encoding.UTF8.GetString(produced.StandardError);
             output.WriteLine(diagnostics);

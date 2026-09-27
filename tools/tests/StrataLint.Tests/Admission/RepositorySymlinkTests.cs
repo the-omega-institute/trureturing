@@ -361,6 +361,33 @@ public sealed class RepositorySymlinkTests
         Assert.Equal("Read CLAUDE.md\n", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), "AGENTS.md"));
     }
 
+    [Fact]
+    public void ContentProjectionPreservesInventoryLinksAndIncludedPolicy()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        AddSkillAliases(repository.Path);
+        const string fragment = "Meta/FILEMAP.skills.toml";
+        var original = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
+        Write(repository.Path, fragment,
+            "schema_version = 3\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..]);
+        Write(repository.Path, "Meta/FILEMAP.toml", "schema_version = 3\ninclude = [\"FILEMAP.skills.toml\"]\n");
+        Commit(repository.Path);
+        Write(repository.Path, "skills/untracked.md", "new target member\n");
+        var full = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var projected = GitRepositorySnapshotReader.ReadCurrent(repository.Path, readContents: _ => false);
+        Assert.Equal(full.PathInventory.ToArray(), projected.PathInventory.ToArray());
+        Assert.Equal(full.Entries.Select(entry => entry.Path), projected.Entries.Select(entry => entry.Path));
+        Assert.Equal("../skills", Text(projected, ".codex/skills"));
+        Assert.Equal(Text(full, fragment), Text(projected, fragment));
+        Assert.Empty(projected.Entries.Single(entry => entry.Path == "skills/untracked.md").Bytes);
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(projected));
+        Write(repository.Path, fragment,
+            File.ReadAllText(Path.Combine(repository.Path, fragment)).Replace("../skills", "../absent", StringComparison.Ordinal));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, readContents: _ => false));
+    }
+
     internal static void Declare(string root, params (string Path, string Target, string Kind)[] links)
     {
         var text = """
@@ -412,6 +439,8 @@ public sealed class RepositorySymlinkTests
     private static void AssertBothReject(string root)
     {
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(root));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(root, readContents: _ => false));
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.VisitCurrent(root, _ => { }));
         Commit(root);
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadRevision(root, "HEAD"));

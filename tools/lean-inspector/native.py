@@ -82,9 +82,10 @@ def write_if_changed(path, data):
 @phase('native-inputs')
 def prepare(root):
     root = Path(root).resolve()
-    inputs = selection.Selection(root)
-    inputs.validate('lean-report')
-    modules = inputs.modules()
+    with phase('native-input-selection'):
+        inputs = selection.Selection(root)
+        inputs.validate('lean-report')
+        modules = inputs.modules()
     producer = os.environ.get('STRATALINT_LEAN_PRODUCER_DLL')
     if producer:
         if not Path(producer).is_absolute() or not Path(producer).is_file():
@@ -93,33 +94,36 @@ def prepare(root):
     else:
         command = ['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'),
             '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--']
-    result = subprocess.run([*command, 'lean-utility-input'],
-        cwd=root, stdout=subprocess.PIPE, check=True)
-    utilities = public.read_json(result.stdout)
-    if not isinstance(utilities, list):
-        raise ValueError('utility input must be an array')
-    by_path = {}
-    for utility in utilities:
-        materials.require_keys(utility, UTILITY_FIELDS, 'authoritative utility input')
-        if any(not isinstance(value, str) or not value for value in utility.values()):
-            raise ValueError('incomplete utility input')
-        path = utility['modulePath']
-        if path in by_path:
-            raise ValueError('duplicate utility obligation')
-        claim = inputs.safe_file(utility['claimSourcePath'])
-        if utility['claimSourceSha256'] != 'sha256:' + public.digest(claim):
-            raise ValueError('stale authoritative claim source')
-        by_path[path] = utility
-    for name, path in sorted(modules.items()):
-        utility = [by_path[path]] if path in by_path else []
-        write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
-            'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-    write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
+    with phase('native-utility-input'):
+        result = subprocess.run([*command, 'lean-utility-input'],
+            cwd=root, stdout=subprocess.PIPE, check=True)
+    with phase('native-input-files'):
+        utilities = public.read_json(result.stdout)
+        if not isinstance(utilities, list):
+            raise ValueError('utility input must be an array')
+        by_path = {}
+        for utility in utilities:
+            materials.require_keys(utility, UTILITY_FIELDS, 'authoritative utility input')
+            if any(not isinstance(value, str) or not value for value in utility.values()):
+                raise ValueError('incomplete utility input')
+            path = utility['modulePath']
+            if path in by_path:
+                raise ValueError('duplicate utility obligation')
+            claim = inputs.safe_file(utility['claimSourcePath'])
+            if utility['claimSourceSha256'] != 'sha256:' + public.digest(claim):
+                raise ValueError('stale authoritative claim source')
+            by_path[path] = utility
+        for name, path in sorted(modules.items()):
+            utility = [by_path[path]] if path in by_path else []
+            write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
+                'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
+        write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
-    write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
-        'modules': sorted(modules),
-        'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
+    with phase('native-input-coordinates'):
+        write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
+            'modules': sorted(modules),
+            'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
 
 
 @lru_cache(maxsize=None)
