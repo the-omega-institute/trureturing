@@ -44,6 +44,16 @@ maximum of both words. This formalizes the endpoint uniqueness ingredient
 of Lemmas 3.2 and 3.4. It does not yet identify all words in a `j<i` fiber,
 and does not change KPI.
 
+`MamedeFactorSeparation.source_shape_unique_of_j_lt_i` supplies the
+factor-separation step of Proposition 3.7: under `1<=m<j<i<M<=n`, equal-product
+reduced consecutive words with the two actual first-orientation source shapes
+are equal. It recovers the separate prefix and suffix products and checks
+all endpoint-uniqueness premises, including empty factors and `i=j+1`.
+The shapes remain hypotheses. Existing source extraction requires `i<=j`
+and cannot establish them for this branch. An extraction theorem with
+independent bounds on `i` and `j`, the actual endpoint equations and exterior
+fixedness is still needed for whole-fiber uniqueness. KPI remains 0.
+
 ## Gap
 
 The reflected orientation, oscillating and involutive branches, and a global

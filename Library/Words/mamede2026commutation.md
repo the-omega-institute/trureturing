@@ -4,7 +4,7 @@ authors: Ricardo Mamede, Jose Luis Santos, Diogo Soares
 year: 2026
 title: Maximum number of one-element commutation classes of a permutation
 doi: 10.48550/arXiv.2601.09395
-claim: Lemmas 2.4 and 3.1 give exterior support and extremal orientation; Lemmas 3.2 and 3.4 give uniqueness at an extremal endpoint; Lemma 3.6 gives a source-word shape, and Proposition 3.8 gives deletion injectivity.
+claim: Lemmas 2.4 and 3.1 give exterior support and extremal orientation; Lemmas 3.2 and 3.4 give uniqueness at an extremal endpoint; Lemma 3.6 gives a source-word shape, Proposition 3.7 separates factors when j<i, and Proposition 3.8 gives deletion injectivity.
 strata_touched:
   - D5/S1/Words/Permutations/MamedeAdjacentWords
   - D5/S1/Words/Permutations/MamedeSourceAction
@@ -13,6 +13,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeDeletionEquiv
   - D5/S1/Words/Permutations/MamedeExtremalOrientation
   - D5/S1/Words/Permutations/MamedeEndpointUniqueness
+  - D5/S1/Words/Permutations/MamedeFactorSeparation
 license: citation-only
 triage: anchor
 ---
@@ -24,7 +25,7 @@ triage: anchor
 DOI [10.48550/arXiv.2601.09395](https://doi.org/10.48550/arXiv.2601.09395)
 identifies [arXiv:2601.09395v1](https://arxiv.org/html/2601.09395v1).
 The cited scope is Definition 3.1, Lemmas 2.4, 3.1, 3.2 and 3.4, Lemma 3.6 (first
-orientation), and Proposition 3.8. The conditional converse below is a new formal claim, not a
+orientation), and Propositions 3.7 and 3.8. The conditional converse below is a new formal claim, not a
 result asserted by those source passages.
 
 [Mamede, Santos and Soares, arXiv:2601.09395v1](https://arxiv.org/html/2601.09395v1)
@@ -121,8 +122,36 @@ mathematics. The proof alternates forced initial descents with reflected
 ascents, using induction on word length; reversal supplies the right
 endpoint cases.
 
-For Proposition 3.7's `j<i` argument, this result can determine the prefix
-and suffix after their separate permutation products have been recovered.
-That recovery still needs the all-fiber source shape without `i<=j` and
-the disjoint-support argument for the central excursion. No whole-fiber
-uniqueness or source-admissibility implication follows yet.
+## Separated source factors
+
+`MamedeFactorSeparation.source_shape_unique_of_j_lt_i` formalizes the
+factor-separation part of Proposition 3.7's proof. For
+`1<=m<j<i<M<=n`, two reduced consecutive words with equal products and
+first-orientation `sourceShape m M i j` decompositions are equal. Each
+prefix has generators in `(m,j)` and each suffix in `(i,M)`. Both shapes
+are actual hypotheses; no nonoscillation or endpoint equations are assumed.
+
+The prefix and suffix products fix every position outside `[m+1,j]` and
+`[i+1,M]`, respectively. The central excursion fixes both intervals. To
+prove this, split `descending(i-1,m)` before `j` and use the existing
+three-cycle action formula for `deletedExcursion`. The extra descending
+run has length `i-j-1` and is empty when `i=j+1`; the definition of
+`descending` with reversed bounds would not describe that empty case.
+Commute the central product past the suffixes and cancel it. Evaluation
+on the prefix interval recovers the equal prefix products, and left
+cancellation recovers the equal suffix products. Each subword is reduced
+and consecutive. Chain boundaries give the common maximal last letter
+`j-1` of nonempty prefixes and the common minimal first letter `i+1` of
+nonempty suffixes. The endpoint theorem identifies them. Minimality
+against the empty representative covers empty factors.
+
+This is published intermediate mathematics, not a resolution of the
+global conjecture. Whole-fiber uniqueness still requires shapes for
+every singleton word under the `j<i` endpoint and exterior data.
+The existing `endpointExteriorFixedSource`, `source_forced_runs`, and
+`source_shape_for_every_singleton` require `i<=j`, so their current
+statements cannot supply that premise. A general extraction interface
+would need independent `m<j<M` and `m<i<M` bounds, the three actual endpoint
+equations, and exterior fixedness. The strict endpoints and their
+extraction from an arbitrary nonoscillating source also remain unproved.
+No whole-fiber or source-admissibility implication is claimed; KPI is 0.
