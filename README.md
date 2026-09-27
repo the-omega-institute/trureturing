@@ -139,7 +139,8 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 ## Toward holographic spacetime
 
 We study **holographic spacetime geometry** by asking when partial records
-of time and space support reconstruction and action.
+of time and space support reconstruction and
+[temporal composition](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean).
 
 Theory inputs study
 [event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
@@ -150,10 +151,9 @@ composition, shared sources and targets; and
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
-The [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-adds an inactive event at time `2`, preserving the current spatial readout
-but blocking composition before an archive at time `1`: every left event
-must precede every right event.
+[Local agreement can fail globally](D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean):
+three windows on Boolean variables require `x=y`, `y=z` and `x≠z`. Every
+overlap allows both values, yet no triple satisfies all three constraints.
 
 A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
 applies to nonempty local record sets on a finite tree: each recorded variable
