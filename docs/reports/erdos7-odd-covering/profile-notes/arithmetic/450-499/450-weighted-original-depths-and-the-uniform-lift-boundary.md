@@ -674,3 +674,164 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/ori
 ```
 
 The line identity refines the existing owner cap; prime privacy supplies a uniform positive pure-owner defect under distinct moduli. The two countercontrols explain why neither that positivity alone nor numerical matching alone forces the required strict inequality. The unresolved obligation is a joint estimate on the same original private centers and owner partition, using whole-cover supply to make demand exceed a compatible arithmetic capacity. No sum of independently optimized laws or replacement of numerical cofactors by their supports discharges it.
+
+## 9. Whole coverage needs weighted excess of distinct projected phases
+
+This ordinary finite argument retains every original numerical modulus and every finite prime-power height. It gives a necessary whole-cover demand and a sufficient noncoverage criterion. It does not supply the common outside law meeting that criterion for an arbitrary original family, and is not Lean verification.
+
+Let the original distinct odd moduli greater than one be m_i=b_i d_i, where d_i has all its prime factors in B={3,5,7}, and b_i is coprime to3*5*7. Split the full CRT carrier as X_A times X_B, at the maximum original heights in each coordinate. Write the original cylinder as C_i^A times C_i^B. An absent coordinate has a singleton carrier. Let
+
+    V_A = X_A minus union_(i:d_i=1) C_i^A.
+
+For d>1 and r modulo d, merge the original outside events carrying the SAME projected phase:
+
+    E_(d,r) = union_(i:d_i=d, a_i^B=r mod d) C_i^A,
+    E_d = union_r E_(d,r),
+    R_d(y) = #{r mod d : y in E_(d,r)}.
+
+All sums over d below are over the finitely many retained numerical moduli that occur. R_d counts distinct active residues; several original labels with the same(d,r) contribute once. This merging does not declare their other weighted-label obligations interchangeable.
+
+The set V_A is nonempty by the published [Hough--Nielsen Theorem1](https://arxiv.org/html/1703.02133v2), already used in [Report526](../500-549/526-supported-unit-mixtures-control-the-sum-of-all-original-responses.md). The A-only originals have d_i=1, so b_i=m_i>1; their numerical moduli remain pairwise distinct and are all coprime to6. If they covered X_A, periodicity and CRT would give a distinct integer cover with no modulus divisible by2 or3, contradicting that theorem. An empty A-only inventory leaves all of X_A. This is direct reuse of a published theorem, not a new proof or Lean result. It guarantees an outside-supported probability exists, but supplies no bound on its merged phase excess.
+
+### 9.1 A distinct retained core has a uniform positive reserve
+
+Take any finite B-family with at most one residue for each numerical modulus greater than one, at arbitrary heights. For each p in B, remove all its pure p-power classes. Distinct numerical moduli allow at most one class for each exponent. The surviving fraction s_p of the complete p-coordinate satisfies
+
+    s_p >=1-sum_(e>=1)p^(-e)=(p-2)/(p-1).
+
+The product of these actual pure-coordinate survivors has Haar mass at least5/16. Give it the product uniform law rho. For a fixed exact mixed support T contained in B, the full exponent vectors of the numerical moduli are distinct. Its total class mass is bounded by
+
+    sum_(support(d)=T) rho(C_d)
+      <=product_(p in T)[(1/s_p)sum_(e>=1)p^(-e)]
+      <=product_(p in T)1/(p-2).
+
+The four possible mixed supports together cost at most
+
+    1/3+1/5+1/15+1/15=2/3.
+
+Thus the core complement U has
+
+    rho(U)>=1/3,     H_B(U)>=5/48.                 (PE1)
+
+This uses the same actual pure-survivor and exponent-vector mechanism as the [support-incidence theorem](../../../problem-details/50-prime-support-incidence-at-most-five.md). Neither constant is asserted sharp. Missing classes, empty pure inventories and arbitrary finite heights are included.
+
+### 9.2 Extra phases must cover that reserve
+
+Suppose the original family is a whole cover, and fix y in V_A. No A-only original covers this y, so all active retained classes have d>1 and jointly cover X_B. Choose one active residue r_d for each active numerical d. These choices form a distinct-modulus core to which PE1 applies. Its holes must be covered by the remaining active phases. Their number at modulus d is exactly(R_d(y)-1)_+.
+
+Each excess phase has Haar mass1/d. Under the chosen core's pure-survivor law it has mass at most
+
+    omega_B(d)=product_(p^e || d) (p-1)/((p-2)p^e).
+
+Consequently every y in V_A obeys
+
+    F_H(y):=sum_d (R_d(y)-1)_+/d >=5/48,           (PE2)
+    F_S(y):=sum_d omega_B(d)(R_d(y)-1)_+ >=1/3.   (PE3)
+
+The core and its pure-survivor law may depend on y. The uniform cylinder upper bound omega_B removes that dependence from PE3; no single retained source valid for all y is claimed. Since omega_B(d)<=(16/5)/d, PE3 also implies PE2. These demands cannot be added as independent budgets.
+
+In particular a whole cover requires at least two distinct active phases for some retained d at every y in V_A. If D_A is the union of C_i^A intersect C_j^A over pairs with d_i=d_j>1 and different retained residues, then V_A is contained in D_A. This is a phase condition: duplicate original occurrences of one retained phase do not suffice.
+
+### 9.3 One outside law keeps the subtraction and all original correlations
+
+For any one finite positive measure eta on X_A, pointwise indicator arithmetic gives the exact identity
+
+    integral_(V_A) (R_d-1)_+ d eta
+      =sum_r eta(V_A intersect E_(d,r))
+         -eta(V_A intersect E_d).                  (PE4)
+
+Therefore whole coverage implies, under that SAME eta for every d and phase,
+
+    sum_d [sum_r eta(V_A intersect E_(d,r))
+             -eta(V_A intersect E_d)]/d
+       >=(5/48)eta(V_A),                           (PE5)
+
+    sum_d omega_B(d)[sum_r eta(V_A intersect E_(d,r))
+             -eta(V_A intersect E_d)]
+       >=(1/3)eta(V_A).                            (PE6)
+
+If eta(V_A)>0 and either inequality is violated, the original family is not a whole cover. Equivalently, one normalized eta supported on V_A with integral F_H<5/48 or integral F_S<1/3 is sufficient. Nonemptiness of V_A follows from Hough--Nielsen as above; constructing one law attaining either strict bound remains an additional obligation. If eta(V_A)=0, the displayed necessary demands are vacuous.
+
+The subtraction in PE4 allows one active phase per numerical modulus for free. Replacing it by original-pair intersections is only a majorant:
+
+    (R_d-1)_+ <= choose(R_d,2)
+      <=sum_(i<j:d_i=d_j=d, a_i^B!=a_j^B)
+           1_(C_i^A intersect C_j^A).
+
+For such a pair, choose delta_ij congruent to a_j^B-a_i^B modulo d, and translate only the retained coordinate by it. Full retained Haar gives the exact transported overlap
+
+    (eta times H_B)(C_i intersect tau_delta_ij^(-1)(C_j))
+      =eta(C_i^A intersect C_j^A)/d.                (PE7)
+
+The shifts can be chosen coherently: for each d fix a reference phase, choose one lift of each original label's phase difference from that reference, and use differences of those label shifts for delta_ij. This represents incompatible retained phases by aligned overlap, but supplies no upper bound on the sum. Distinct original numerical moduli imply that a useful pair with the same d must have DIFFERENT b. A fixed-b Gram estimate therefore does not directly pay for these useful cross-b pairs. Any use of a non-Haar retained law needs its own transport identity and cannot substitute PE7 unchanged.
+
+### 9.4 Complete outside collision can coexist with insufficient phase mass
+
+Set p=11,q=13 and index the143 outside points t=(u,v). Give each its own retained modulus
+
+    d_t=3^(1+t)5^(143-t),     t=0,...,142.
+
+Include two original classes per point: modulus p*d_t with outside phase u and retained phase0, and modulus q*d_t with outside phase v and retained phase1. The286 numerical moduli are odd, distinct and pairwise incomparable: the3-exponent increases while the5-exponent decreases, and the p/q cofactors differ.
+
+At y=(u,v), exactly its own d_t has both retained phases active. Every other active d has one phase. Thus
+
+    D_A=X_A,     V_A=X_A,
+    F_H(y)=1/d_t<5/48,
+    F_S(y)=(8/3)/d_t<1/3.
+
+No collision-free outside point exists, yet PE2 or PE3 excludes whole coverage. The literal integer2 is also a direct hole because all retained phases are0 or1 at moduli greater than2. This family already belongs to the support-incidence theorem's range; its purpose is to refute the stronger requirement that a successful outside law must avoid every collision. The quantitative criterion needs only insufficient excess phase mass.
+
+### 9.5 Merging phases can succeed when the same-law original-pair bound fails
+
+Let Q={11,13,17,19,23}. Include pure3,9,27 with residue0 and, for q in Q and e,h in{1,2,3}, the original modulus3^e*q^h with retained phase1 modulo3^e and outside phase0 modulo q^h. Pure5 and7 at residue0 may also be included. There are no A-only originals, so V_A=X_A; use one outside Haar law eta.
+
+The useful original pairs are each pure3^e label paired with its same-e mixed labels. Their source-weight energy is
+
+    (sum_(e=1..3)2/3^e)(sum_(q in Q,h=1..3)1/q^h)
+      =277120755748135798/830038705801515639 >1/3.
+
+At fixed e, the phase1 events with q-heights1,2,3 are nested. Merging the events leaves precisely the event that at least one outside coordinate is0 modulo its prime. Hence under the SAME eta,
+
+    integral F_S d eta
+      =(26/27)(1-product_(q in Q)(1-1/q))
+      =54914/200583 <1/3,                          (PE8)
+
+with margin11947/200583. The merged functional certifies noncoverage where its raw-pair majorant cannot do so under this law.
+
+This is also a scope control: the only mixed exact supports are the five sets{3,q}, so the global support-incidence-at-most-five theorem already applies. An additional sufficient criterion demanding small pair energy does not automatically contain that entire established class. Some larger-incidence families may satisfy such a criterion; that is a complementary range, not a containment claim.
+
+### 9.6 The phase-balanced transport obstruction has zero merged excess
+
+The raw-transport obstruction of [Report525](../500-549/525-phase-balanced-originals-defeat-all-outside-laws-and-groupings.md) does not obstruct this merged functional. Take its three-prime family alone: H>=0, K>=1 are integers, q ranges over{23,29,31}, and for1<=i<=Kq use the original modulus and fixed CRT phase
+
+    m_(q,i)=3^(H+i)q,
+    a_(q,i)=1 mod3^(H+i),   a_(q,i)=i modq.
+
+These83K odd numerical moduli are pairwise distinct. For the present retained set B={3,5,7}, their retained modulus is d_i=3^(H+i) and their outside cofactor is q. There are no A-only originals, so V_A=X_A. At every fixed d_i, every original has the SAME retained phase1. Consequently E_(d_i,1) is a union of its actual outside cylinders, all other phase events are empty, and
+
+    R_(d_i)(y)<=1,
+    F_H(y)=F_S(y)=0  for every y in X_A.            (PE9)
+
+This is compatible with Report525's failure of every outside-law raw transport when13K>H+1: that expense counts original labels whose retained phases have already been merged in PE9. The family was already known to be noncovering, since its whole union lies in1mod3^(H+1). PE9 identifies why that method counterexample does not defeat the present phase-excess account; it is not a new unrestricted covering result.
+
+There is also a direct phase-free estimate for this same finite numerical inventory. Replace each retained phase1 by an arbitrary fixed alpha_(q,i) modulo3^(H+i), keeping its outside phase i modq. At each d_i there are at most three original labels, and hence at most three distinct active retained phases, regardless of outside correlations. Since d_i is a pure power of3,
+
+    omega_B(d_i)=2/d_i.
+
+More precisely there are three labels for i<=23K, two for23K<i<=29K and one thereafter. Thus, pointwise for EVERY outside y,
+
+    F_S(y)
+      <=4 sum_(i=1..23K)3^(-H-i)
+          +2 sum_(i=23K+1..29K)3^(-H-i)
+       =3^(-H)[2-3^(-23K)-3^(-29K)]
+       <2*3^(-H).                                 (PE10)
+
+The finite sum is bounded above by the corresponding infinite geometric sum; no tail is inserted as an actual original. For H>=2, PE10 is strictly below2/9<1/3. Every outside probability law therefore meets the PE3 sufficient bound for these83K originals, with their retained phases chosen once and arbitrarily. The raw transport obstruction, when13K>H+1, is unchanged because its calculation uses the original numerical cofactors and outside phase cycles, not these retained residues.
+
+This calculation includes no additional unit originals, retained core, or other nonunit labels. Their support restrictions and phase-excess contributions require their own common-law accounting. The bridge concerns the already explicit Report525 inventory: merging actual equal phases and weighting the remaining excess by its retained depth avoids the raw-label obstruction without asserting that an arbitrary original family has a small-excess law.
+
+### 9.7 Remaining upper-bound obligation
+
+PE1--PE6 apply to arbitrary retained heights and all original outside labels. Their advance is a precise target: obtain one compatible outside law for which the MERGED distinct-phase excess cannot cover the retained reserve. Whole coverage supplied the lower demand, not the contradictory upper bound. The latter must still be derived from actual arithmetic, common-source or minimality relations. Qualitative outside survival is supplied by Hough--Nielsen, but a small phase-excess law does not follow from that existence result alone.
+
+The [phase-excess controls](../../../frontier/cover-geometry/merged-phase-excess/merged_phase_excess_controls.py) and [exact output](../../../frontier/cover-geometry/merged-phase-excess/merged_phase_excess_controls.json) check the constants,130 finite distinct cores on period315, the286-label deep-collision family on all143 outside points, its literal integer2 hole, the merged identity under one nonuniform eta, and the strict same-law comparison PE8. The finite checks are not a proof of the arbitrary-height reserve, which is supplied by section9.1, and no unrestricted odd noncoverage result follows here.
