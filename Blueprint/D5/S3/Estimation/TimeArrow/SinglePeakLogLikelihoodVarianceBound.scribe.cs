@@ -65,7 +65,7 @@ internal sealed class SinglePeakLogLikelihoodVarianceBoundDocument : IScribeDocu
     private static Formula TheoremFormula()
     {
         Formula carrier = F.Id("X"), chi = F.Id("chi"), z = F.Id("z"), x = F.Id("x");
-        Formula y = F.Id("y"), t = F.Id("t"), path = F.Id("mathbf{x}");
+        Formula y = F.Id("y"), t = F.Id("t"), path = Grp(Seq(Mathbf, Sp, Grp(F.Id("x"))));
         Formula r = F.Id("r"), q = F.Id("q"), m = F.Id("M"), u = F.Id("u"), s = F.Id("s");
         Formula p = F.Id("P"), k = F.Id("k"), information = F.Id("I");
         Formula correction = F.Id("J"), variance = F.Id("v");
