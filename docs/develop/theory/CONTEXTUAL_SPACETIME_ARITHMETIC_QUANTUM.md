@@ -66242,3 +66242,219 @@ $$
 第300节的 $o(\delta^2)$ 余项随后给出式（306.19）。若 $k\ne1$，三个半径不全相等，第301节的严格负无限制曲率给出另一侧的不等式。这里的邻域可以依赖于固定的 $a,k$；本结论不把轴向族的曲率正性推广到一般三个不同半径。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 307. 正定支撑分支的二参数代数重建
+
+**定义 307.1（列权重单纯形与候选矩阵）。** 固定正半径六态模型，记 $b=(1/a_1,1/a_2,1/a_3)$、$A=\|b\|_2^2$，并令 $w_i=b_i^2/A$。对开单纯形中的点
+
+$$
+x_i>0,\qquad x_1+x_2+x_3=1,
+$$
+
+定义
+
+$$
+\begin{aligned}
+\beta&=\sqrt{\sum_iw_ix_i^2},&
+m&=\sum_iw_ix_i,\\
+c_i&=x_i^2\left(1-2x_i+\frac{\beta^2}{w_i}\right),&
+v&=\frac{\operatorname{diag}(x)b+\beta b}
+{\|\operatorname{diag}(x)b+\beta b\|_2},\\
+\lambda&=A\beta,&
+G_x&=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T},\\
+Q_x&=G_x\operatorname{diag}(x),&
+S_x&=\operatorname{sym}Q_x.
+\end{aligned}
+\tag{307.1}
+$$
+
+再记三个实数及其组合
+
+$$
+g_{ij}=(S_x)_{ij}v_iv_j\quad(i<j),
+\qquad
+\mathcal T_x=g_{12}g_{13}+g_{12}g_{23}+g_{13}g_{23}.
+\tag{307.2}
+$$
+
+称 $x$ 可准入，当且仅当
+
+$$
+c_1=c_2=c_3=:c,
+\qquad \mathcal T_x\ge0.
+\tag{307.3}
+$$
+
+这里三个 $c_i$ 自动严格为正，因为 $\beta^2\ge w_ix_i^2$，故括号内至少为 $(1-x_i)^2>0$。另外 $\beta^2<m$，因为每个 $0<x_i<1$。
+
+**定理 307.2（正定支撑的精确代数刻画）。** 第303节的实际最优支撑矩阵 $G$ 正定，当且仅当式（307.3）有一个可准入点；这个点存在时唯一。对它有 $\mathcal T_x>0$，并可重建
+
+$$
+\begin{aligned}
+Z_*&=A\beta vv^{\mathsf T},&G&=G_x,\\
+D_a&=\frac{A^{3/2}(m-\beta^2)}{\sqrt c},&
+\kappa_a&=\frac{\sqrt c}{2\sqrt A(m-\beta^2)},\\
+M_*&=\frac{G_x\operatorname{diag}(x)}{A(m-\beta^2)}.
+\end{aligned}
+\tag{307.4}
+$$
+
+所以第305节的奇异支撑判据未通过时，完整端点解等价于开单纯形内两个标量等式及一个标量不等式的唯一可准入解；无需在这一表述中继续把原、对偶矩阵的全部条目当作独立未知量。
+
+证明。先对任意开单纯形点建立恒等式，不预设可准入性。令 $X=\operatorname{diag}(x)$、$n=b/\sqrt A$、$n'=Xb/(\beta\sqrt A)$。两个向量都是单位向量，且 $n\cdot n'=m/\beta>0$。由定义，$v=(n+n')/\|n+n'\|_2$。反射 $R_v=I-2vv^{\mathsf T}$ 因而满足
+
+$$
+R_vXb=-\beta b,\qquad R_vb=-Xb/\beta.
+\tag{307.5}
+$$
+
+若 $\theta$ 是 $v$ 与 $n$ 的夹角，则 $\cos(2\theta)=m/\beta$。因为 $\beta^2<m$，有 $\lambda=A\beta<A\cos(2\theta)$。式（303.6）的二维块计算遂给出
+
+$$
+G_x\succ0.
+\tag{307.6}
+$$
+
+这个结论对每个单纯形点都成立，不依赖式（307.3）。式（307.5）又给出
+
+$$
+Q_xb=A(m-\beta^2)b.
+\tag{307.7}
+$$
+
+接着验证共同核方向。写 $v=\gamma(X+\beta I)b$、$B=b\cdot v$、$C=b\cdot Xv$、$V=v\cdot Xv$。由 $b^{\mathsf T}X^2b=A\beta^2$，有 $C=\beta B$；而 $B/\gamma=A(m+\beta)$。因此
+
+$$
+\begin{aligned}
+(Q_x+Q_x^{\mathsf T})v
+&=Cb+BXb-2\lambda Vv\\
+&=(B/\gamma-2\lambda V)v
+=(\operatorname{Tr}Q_x)v.
+\end{aligned}
+\tag{307.8}
+$$
+
+最后一个等式使用 $\operatorname{Tr}X=1$、$\lambda=A\beta$。所以 $\mathcal C(S_x)v=0$，其中 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$。
+
+这一核恒等式将锥可行性精确化为式（307.3）的标量条件。令 $V_0=\operatorname{diag}(v)$。对每个 $y\in\mathbb R^3$，
+
+$$
+y^{\mathsf T}V_0\mathcal C(S_x)V_0y
+=2\sum_{i<j}g_{ij}(y_i-y_j)^2.
+\tag{307.9}
+$$
+
+这里 $g_{ij}$ 暂不要求非负。左侧矩阵的任一二阶主子式均为 $4\mathcal T_x$。因此 $\mathcal C(S_x)$ 左上二阶主子式为 $4\mathcal T_x/(v_1^2v_2^2)$。记其余两个特征值为 $\rho_1,\rho_2$；因为单位向量 $v$ 在核中，该主子式也等于 $v_3^2\rho_1\rho_2$，包括额外零特征值的情形。另一方面，
+
+$$
+\rho_1+\rho_2
+=\operatorname{Tr}\mathcal C(S_x)
+=\operatorname{Tr}Q_x>0,
+$$
+
+因为 $G_x\succ0$ 且 $X\succ0$。故 $\rho_1,\rho_2$ 都非负恰好等价于其乘积非负，也就是
+
+$$
+\mathcal C(S_x)\succeq0
+\quad\Longleftrightarrow\quad\mathcal T_x\ge0.
+\tag{307.10}
+$$
+
+现假设 $x$ 可准入。由 $G_x=bb^{\mathsf T}+\lambda R_v$ 和式（307.5），逐列计算得到
+
+$$
+\frac{\|G_xe_i\|_2^2}{b_i^2}
+=A\left(1-2x_i+\frac{\beta^2}{w_i}\right).
+\tag{307.11}
+$$
+
+取 $s=1/\sqrt{Ac}$、$Q=sQ_x$，则
+
+$$
+\|Qe_i\|_2=b_i\qquad(i=1,2,3).
+\tag{307.12}
+$$
+
+各列还沿着 $G_xe_i$ 的正方向。因此三条列球约束全部可行且满足支撑取等；式（307.10）保证耗散锥可行，式（307.8）保证与 $Z=\lambda vv^{\mathsf T}$ 的互补关系。原目标为
+
+$$
+b^{\mathsf T}Qb=sA^2(m-\beta^2),
+$$
+
+并与对偶列支撑值相等。第298节的弱对偶关系证明 $Q,Z$ 同时最优。代入 $s$，再按 $M_*=(A/D_a)Q$ 归一化，就得到式（307.4）。支撑矩阵为正定的 $G_x$，因此可准入点必属于实际正定支撑分支。
+
+反过来，设实际最优支撑 $G\succ0$。第303节给出
+
+$$
+Q=GH,\qquad
+H=\operatorname{diag}(h_i),\qquad
+h_i=\frac{b_i}{\|Ge_i\|_2}>0,
+\qquad Qb=qb,\quad q=D_a/A.
+\tag{307.13}
+$$
+
+写 $s=\operatorname{Tr}H$、$\beta_H=\|Hb\|_2/\sqrt A$、$m_H=b^{\mathsf T}Hb/A$。由 $Qb=qb$ 得 $R_vHb$ 平行于 $b$。它与 $v$ 的内积等于 $-v\cdot Hb<0$，而 $v\cdot b>0$，故该比例系数为负。反射保范数，因而
+
+$$
+R_vHb=-\beta_Hb,\qquad
+v=\frac{Hb+\beta_Hb}{\|Hb+\beta_Hb\|_2},
+\qquad q=Am_H-\lambda\beta_H.
+\tag{307.14}
+$$
+
+令 $v=\gamma(H+\beta_HI)b$。与式（307.8）相同的展开给出 $b\cdot Hv=\beta_H(b\cdot v)$，以及
+
+$$
+(Q+Q^{\mathsf T})v
+=\bigl(A(m_H+\beta_H)-2\lambda(v\cdot Hv)\bigr)v.
+$$
+
+将它与实际互补关系 $(Q+Q^{\mathsf T})v=(\operatorname{Tr}Q)v$ 比较，得到
+
+$$
+\lambda s=A\beta_H.
+\tag{307.15}
+$$
+
+取 $x_i=h_i/s$，则 $\beta_H=s\beta$，从而 $\lambda=A\beta$，式（307.14）中的 $v$ 正是定义307.1的向量。于是实际 $G$ 等于 $G_x$。全部列范数约束取等，将式（307.11）代入 $h_i\|Ge_i\|_2=b_i$，得到
+
+$$
+c_i=\frac1{As^2}
+$$
+
+对三个坐标同时成立。实际耗散锥可行，再由式（307.10）可得 $\mathcal T_x\ge0$，所以这个 $x$ 可准入。
+
+最后，第298节使实际原、对偶最优矩阵均唯一。对每个可准入点，$G$ 可逆且 $H=G^{-1}Q$，故 $H$ 也唯一，进而 $x_i=h_i/\operatorname{Tr}H$ 唯一。该节还使实际 $\mathcal C(\operatorname{sym}Q)$ 的秩为二，因此上述两个非零特征值的乘积严格为正；式（307.10）的主子式关系遂给出 $\mathcal T_x>0$。证毕。
+
+**命题 307.3（无限制曲率的列权重方差表达）。** 对定理307.2的唯一可准入点，令
+
+$$
+u_i=x_i(1-x_i),\qquad
+f=\sum_iw_iu_i=m-\beta^2,\qquad
+\mathcal V_x=\sum_iw_i(u_i-f)^2.
+\tag{307.16}
+$$
+
+则第301节的旋转位移及无限制曲率满足
+
+$$
+\Omega_*b=\frac{(\operatorname{diag}(u)-fI)b}{2f},
+\qquad
+\Gamma_a=-\frac{\sqrt c\,\mathcal V_x}{4\sqrt A\,f^3}
+=-\kappa_a\frac{\mathcal V_x}{2f^2}.
+\tag{307.17}
+$$
+
+证明。式（307.5）与 $\lambda=A\beta$ 给出 $G_xb=A(I-X)b$，其中 $X=\operatorname{diag}(x)$。将它与式（307.7）代入 $M_*^{\mathsf T}-M_*=2\Omega_*$，得到
+
+$$
+2\Omega_*b
+=\frac{XG_xb-G_xXb}{Af}
+=\frac{(X(I-X)-fI)b}{f}.
+$$
+
+这证明第一个等式，并给出 $\|\Omega_*b\|_2^2=A\mathcal V_x/(4f^2)$。再用第301节的 $\Gamma_a=-\|\Omega_*b\|_2^2/D_a$ 和式（307.4），即得式（307.17）。证毕。
+
+这里得到的是正定支撑分支的有限代数刻画和唯一重建，并未给出两个标量等式的一般根式解。条件 $\mathcal T_x\ge0$ 仍须检查；本节没有证明所有满足列范数等式的单纯形点自动满足它，也没有由正定性推出 $G_x$ 逐条目为正或半群的最大角点在所有参数上固定。
+
+## 追加锚（本行以下为增补区）
