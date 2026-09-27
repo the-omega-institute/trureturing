@@ -65027,3 +65027,606 @@ No such new inverse bound, unscaled location or Rouché counting boundary is inf
 第 179、184、186、195 章保留各自范围。以上为普通数学推导，未作 Lean 认证；定向来源核对不构成全球原创性判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 204. 完整重复实验的函数似然极限：运行统计量、越界检验与监测代价
+
+第 198、200 章的固定时刻检验信息可以扩展为整个有界信息时间区间上的共同过程极限。本章证明真实全直方图对数似然与可观测运行统计量逐前缀一致接近，并在零假设、原替代下分别收敛到带漂移 $-1/2$、$+1/2$ 的同一布朗运动。最大余项、初始时间段及零似然路径的例外概率均在转移越界事件之前支付。
+
+常数边界由此得到明确的渐近拒绝概率和功效。相同最终信息量与水平下，持续监测的这一规则具有严格低于终点最优检验的功效；较早停止的机会并不免费。结论适用于原替代的精确均值 product-Poisson 零假设，未扩展为全部有限均值下的有限样本随时有效保证。第 202 章的固定终点精确条件水平仍保持原范围。
+
+### 204.1 Exact process statement
+
+**定理 204.1（真实似然与自适应运行过程的共同极限）。** 使用以下原始对象与约定，结论 (204.5)、(204.6) 在任意固定有界信息时间区间成立，且对固定参数紧集、全部合法确定性支持一致，分别涵盖 pair 与平稳 path 实验。
+
+Write $f=F_Q$ for the known deterministic full original signal-line mass, and put
+
+$$
+h=h_Q=f^2/8,\qquad n_Q(v)=\lfloor v/h\rfloor,
+\qquad N=N_Q=\lfloor V/h\rfloor,\quad 0<V<\infty.
+\tag{204.1}
+$$
+
+Here $V$ is a fixed bounded information horizon, not the original transition horizon. A repetition is an independent copy of the ENTIRE original pair experiment or the ENTIRE original stationary path at the same beta and support. Let $Z_i$ be its full count-line aggregate. For $k\ge2$, define
+
+$$
+\bar Z_k=k^{-1}\sum_{i\le k}Z_i,\qquad
+S_k^2=(k-1)^{-1}\sum_{i\le k}(Z_i-\bar Z_k)^2,
+$$
+$$
+D_k=\sqrt{(k-1)/2}\left(1-\frac{S_k^2}{\bar Z_k}\right)
+\quad\text{if }\bar Z_k>0,
+\qquad D_k=0\quad\text{if }\bar Z_k=0.
+\tag{204.2}
+$$
+
+Set $D_0=D_1=0$, and define the adapted step process
+
+$$
+\mathcal A_Q(v)=\sqrt{n_Q(v)h}\,D_{n_Q(v)}-n_Q(v)h/2.
+\tag{204.3}
+$$
+
+The entire original histogram law is $P_Q$; its product-Poisson reference with the SAME exact actual means is $R_\mu$. Put
+
+$$
+\ell_{Q,k}=\log\frac{dP_Q^{\otimes k}}{dR_\mu^{\otimes k}},
+\qquad \ell_{Q,0}=0.
+\tag{204.4}
+$$
+
+Under the null a finite-layer likelihood can be zero. Define $\ell_Q^\dagger(v)$ by evaluating (204.4) at $k=n_Q(v)$ when it is finite, and replacing a nonfinite value by zero. We prove that the probability ANY such replacement is needed through $N$ tends to zero uniformly. Under $P_Q^{\otimes N}$ no replacement is needed almost surely. This convention is only for a real-valued path-space statement; the actual test (204.3) is always defined and uses no likelihood oracle.
+
+The theorem is convergence in the Skorohod $J_1$ space $D([0,V],\mathbb R^2)$:
+
+$$
+\boxed{
+(\ell_Q^\dagger,\mathcal A_Q)\ \Rightarrow\
+\begin{cases}
+(W(v)-v/2,W(v)-v/2)_{0\le v\le V},&R_\mu^{\otimes N},\\
+(W(v)+v/2,W(v)+v/2)_{0\le v\le V},&P_Q^{\otimes N}.
+\end{cases}}
+\tag{204.5}
+$$
+
+Here $W$ is standard Brownian motion. In addition,
+
+$$
+\sup_{0\le v\le V}|\ell_Q^\dagger(v)-\mathcal A_Q(v)|\to0
+\quad\text{in probability under BOTH laws}.
+\tag{204.6}
+$$
+
+Both statements are uniform over beta in each fixed compact $J\Subset D$, every lawful deterministic support, and separately the pair/path laws. Precisely, the supremum of the bounded-Lipschitz distance for the usual bounded $J_1$ metric tends to zero, and the probabilities in (204.6) tend uniformly to zero for each positive tolerance. Limit paths are continuous. Polygonal interpolation has the same limit in the uniform topology; this does not assert distributional TV convergence of a discrete path to a continuous one. At $V=0$ the path is identically zero and the process assertion is trivial; nontrivial crossing calibration below uses $V>0$.
+
+### 204.2 Original model and the operative full-experiment interface
+
+Retain exactly
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=10^{e_n},\quad
+P=\sum_{j\le n}10^{e_n-e_j},\quad
+\vartheta=\sum_{j\ge1}10^{-e_j},\quad\lambda=Q^3,
+$$
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,\quad
+a=(1+r)/2,\ b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r)>0.
+$$
+
+For original beta in $D=(\beta_*,1)$, where $\beta_*>1/2$, keep all floors and compensation:
+
+$$
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad s_0=M-q,\quad\epsilon=rq/s_0,\quad T=2M\lambda.
+\tag{204.7}
+$$
+
+The parity classes each have size $M$. For any deterministic $S\subset C_+$, $|S|=q$, the original kernel is
+
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+b_S=r\text{ on }S,\quad b_S=-\epsilon\text{ on }C_+\setminus S,
+\quad b_S=0\text{ on }C_-.
+$$
+
+One pair experiment uses $T$ independent stationary adjacent pairs. One path experiment starts uniformly and uses $T$ consecutive transitions of this kernel. The exact compensation/reset identity is $P_S^2=\Pi$, not independence of neighboring edges.
+
+The complete groups are
+
+$$
+(K_j,B_j)=(k_0,l_0)+j(Q,P),\quad J_Q=\{j:K_j,B_j\ge0\},
+$$
+$$
+C_j=\sum_{x\in C_+}{\bf1}_{\{(N_{x,+},N_{x,-})=(K_j,B_j)\}},
+\quad Z=\sum_{J_Q}C_j,\quad \mu_j=E_{P_Q}C_j,\quad t=\mu_\bullet=\sum_j\mu_j.
+\tag{204.8}
+$$
+
+Chapter 175 proves their complete-score identification at the unchanged amplitude. Only $j\in J_Q$ with $\lambda+j(Q+P)\le T$ can occur. Thus at each layer the actual vector has a finite set $A_Q$ of potentially nonzero coordinates, and all remaining coordinates of the countable line are deterministic zero. Within $A_Q$, mean zero again forces count zero. Since $Z\le M$, $P_Q\ll R_\mu=\bigotimes_{J_Q}\operatorname{Pois}(\mu_j)$. This is an exact support reduction, not removal of a low-probability tail.
+
+The known line mass in (204.1) is
+
+$$
+f=\sum_{j\in J_Q}f_j,\quad
+f_j=e^{-\lambda}\frac{(a\lambda)^{K_j}(b\lambda)^{B_j}}{K_j!B_j!},
+\quad f\sim c_FQ^{-5/2},\quad c_F=[2\pi(b+a\vartheta^2)]^{-1/2}.
+\tag{204.9}
+$$
+
+The full-line normalization and floor/endpoint uniformity are inherited Chapter 197 results. Thus $N=O_V(Q^5)$. On $J=[\beta_0,\beta_1]\Subset D$, Chapter 198/228 also give
+
+$$
+\log t=\phi(1/\beta-1)Q^3-\tfrac52\log Q+O_J(1),
+\quad t\ge\exp(c_-Q^3/2)\text{ eventually},\quad c_-:=\phi(1/\beta_1-1)>0.
+\tag{204.10}
+$$
+
+We use the following stronger interfaces, rather than deducing anything from the scalar KL coefficient or a fixed-time weak limit. Chapter 198 constructs full-vector laws $\mathsf B_Q,\mathsf R_Q$ on the SAME finite set $A_Q$, with identical independent paid tails and deterministic zeros elsewhere. Their core laws are a categorical histogram from $q$ iid signal-reference rows plus proportional-shape Poisson background, and its matching product Poisson law. The core total laws are
+
+$$
+\operatorname{Bin}(q,F)*\operatorname{Pois}(\rho qF)
+\quad\text{and}\quad\operatorname{Pois}(\nu),\qquad
+\nu=(1+\rho)qF,
+\tag{204.11}
+$$
+
+where $F$ is the mass on the inherited fixed proof core, $F/f\to1$, $\rho=s_0e^{-z_0}/q\to1$, and $\nu\to\infty$ exponentially. Conditional target shape is the SAME under these two reference laws. These are proof references only, not an assertion that actual path rows are independent.
+
+Uniformly on $J$, for the full horizon $N$, the paid comparisons are
+
+$$
+\|P_Q^{\otimes N}-\mathsf B_Q^{\otimes N}\|_{\rm TV}\le\Delta_P:=\sqrt{N\varepsilon_Q},
+\quad\|R_\mu^{\otimes N}-\mathsf R_Q^{\otimes N}\|_{\rm TV}\le\Delta_R:=\sqrt{N\omega_Q},
+$$
+$$
+\varepsilon_Q=O_J(Q^{-20})+O_J(e^{-c_JQ^3}),\quad
+\omega_Q+g_Q+\zeta_Q=O_J(e^{-c_JQ^3}),\quad |t-\nu|\le g_Q.
+\tag{204.12}
+$$
+
+Here $\zeta_Q$ bounds the reference tail's aggregate mean, so the chance of ANY nonzero tail over $N$ reference repetitions is at most $N\zeta_Q$. These errors retain the information-weighted tiny-mean tails of Chapters 191 and 197 and the mean-weighted projection of Chapter 198, not merely coordinatewise relative error. In particular $\Delta_P,\Delta_R,Nfg_Q,N\zeta_Q\to0$. The original domain $\beta_*>1/2$ makes the stronger absolute mean error $g_Q$ exponentially small through $q^2/M$, as proved there. No stronger original rate is requested here.
+
+The actual comparison pays the whole signal-word array, and uses the SAME actual realization and dependent four-total mixture for signal and background. Conditional label lists, common totals, background smoothing and full tail remain in that proof. The conditional information payment in Chapter 198 is a sum and retains its complete three-indicator encoding. We do not replace that actual law by independent rows or mix unrelated conditional experiments.
+
+For one repetition under $\mathsf R_Q$, let $Y\sim\operatorname{Pois}(\nu)$ denote the core total, and define
+
+$$
+W_u(z)=\frac{(z-u)^2-z}{u},\qquad
+s_Q=-\frac{W_\nu(Y)}{2(1+\rho)},\qquad
+I_Q=E s_Q^2=\frac1{2(1+\rho)^2}\to\frac18.
+\tag{204.13}
+$$
+
+Chapter 197's finite all-degree Charlier estimate, used in Chapter 198, gives
+
+$$
+L_Q:=\frac{d\mathsf B_Q}{d\mathsf R_Q}=1+Fs_Q+r_Q,
+\quad E s_Q=E r_Q=0,\quad E(s_Qr_Q)=0,
+$$
+$$
+E s_Q^4\le C_J,\quad E r_Q^2\le C_JF^4,
+\quad 0<L_Q\le2,\quad E(L_Q-1)^4\le C_JF^4.
+\tag{204.14}
+$$
+
+All expectations in (204.13),(204.14) are under the explicit reference. Their uniform moving-mean and entire-degree bounds are existing inputs, not a substitution of growing order into a fixed-order theorem. Writing $b_k=\prod_{i\le k}L_Q^{(i)}$, independence of ENTIRE reference repetitions gives
+
+$$
+E_{\mathsf R_Q^{\otimes N}}b_N^2
+=(1+F^2 I_Q+O_J(F^4))^N\le C_{J,V}<\infty.
+\tag{204.15}
+$$
+
+This is reference-only L2. No actual likelihood L2 assertion will be made.
+
+### 204.3 Finite-horizon maximal inequalities used below
+
+Here is the elementary maximal tool, with its proof scope explicit. If $(M_k)_{0\le k\le N}$ is a finite martingale with the needed terminal moment, then
+
+$$
+\Pr\{\max_{k\le N}|M_k|>u\}\le E|M_N|/u,
+\qquad E\max_{k\le N}|M_k|^p\le\left(\frac p{p-1}\right)^p E|M_N|^p\quad(p>1).
+\tag{204.16}
+$$
+
+To justify both, stop at the first crossing of $u$. On each event that this is index $k$, conditional Jensen gives $|M_k|\le E(|M_N|\mid\mathcal F_k)$. Summing these finitely many events gives
+$u\Pr(M^*>u)\le E[|M_N|{\bf1}_{\{M^*>u\}}]$.
+The first inequality follows. Integrate the latter inequality against $p u^{p-2}du$, first with truncation, then use Hölder and monotone convergence, to get
+$E(M^*)^p\le p/(p-1)E[|M_N|(M^*)^{p-1}]$, hence the second. Thus no optional-stopping validity of a statistical procedure is being imported from a slogan.
+
+For later use, if $U_k$ is a partial sum of centered independent variables of common variance $\sigma^2$, dyadic blocks and (204.16) at $p=2$ imply
+
+$$
+E\max_{1\le k\le N}\frac{U_k^2}{k^2}\le C\sigma^2,
+\qquad
+E\max_{1\le k\le N}\frac{U_k^2}{k\sigma^2}\le C\log(2N)
+\quad(\sigma>0).
+\tag{204.17}
+$$
+
+Indeed on $2^j\le k<2^{j+1}$, bound the numerator by the maximum through $\min(N,2^{j+1})$, whose expectation is at most $4\cdot2^{j+1}\sigma^2$. Dividing by $2^{2j}$ and summing a geometric series proves the first estimate. Dividing instead by $2^j\sigma^2$ costs at most an absolute constant per block, proving the logarithmic second estimate. These are finite inequalities for every $N$, not large-time laws.
+
+### 204.4 Reference likelihood expansion uniformly over all prefixes
+
+All probability statements in this section first use the common reference $\mathsf R_Q^{\otimes N}$. Let $y_i=L_Q^{(i)}-1$, $s_i,r_i$ be the corresponding independent copies, and $\ell^B_k=\sum_{i\le k}\log(1+y_i)$. Put $a_Q=F^{1/4}$. The fourth moment in (204.14) pays every small-likelihood event through the full horizon:
+
+$$
+\Pr\{\max_{i\le N}|y_i|>a_Q\}\le C_J NF^4/a_Q^4=O_{J,V}(F).
+\tag{204.18}
+$$
+
+On its complement the third-order logarithm remainder at EVERY prefix is bounded by $C a_Q\sum_{i\le N}y_i^2$. Its expected quadratic sum is bounded, since
+$E y_i^2=F^2I_Q+O_J(F^4)$ and $NF^2=O_V(1)$.
+Moreover (204.16) gives
+
+$$
+E\max_{k\le N}\left|\sum_{i\le k}r_i\right|^2\le C_JNF^4=O_{J,V}(F^2),
+$$
+$$
+E\max_{k\le N}\left|\sum_{i\le k}(y_i^2-Ey_i^2)\right|^2
+\le C_JNF^4=O_{J,V}(F^2).
+\tag{204.19}
+$$
+
+The deterministic difference $\max_{k\le N}k|Ey_i^2-F^2I_Q|$ is $O_J(NF^4)$. Thus Taylor expansion, (204.18),(204.19) prove the genuinely maximal statement
+
+$$
+\boxed{\quad
+\max_{0\le k\le N}\left|\ell^B_k-F\sum_{i\le k}s_i+\tfrac12kF^2I_Q\right|
+\to0\quad\text{in reference probability}.\quad}
+\tag{204.20}
+$$
+
+For example, at any fixed tolerance $u>0$, its failure probability is bounded by a constant times
+$F+F^2/u^2+F^{1/4}/u$, together with the deterministic $O(NF^4)$ term, uniformly. This estimate uses no union bound over fixed-time error probabilities; the martingale maxima and the full quadratic sum pay all prefixes together.
+
+### 204.5 Triangular process tightness and the reference change of law
+
+Set
+
+$$
+M_Q(v)=F\sum_{i\le n_Q(v)}s_i.
+$$
+
+It has centered independent increments, each with variance $F^2I_Q$, third absolute moment $O_J(F^3)$, and fourth moment $O_J(F^4)$. The variance clock satisfies
+
+$$
+\sup_{v\le V}|n_Q(v)F^2I_Q-v|\to0,
+\qquad F^2I_Q/h=8I_Q(F/f)^2\to1.
+\tag{204.21}
+$$
+
+For any fixed finite collection of time increments, Taylor expansion of their characteristic functions gives
+$E e^{iuFs_i}=1-u^2F^2I_Q/2+O_u(F^3)$.
+Taking products over disjoint blocks gives independent normal limiting increments with the corresponding information-time lengths, because $NF^3\to0$. This proves the finite-dimensional distributions, but we still need tightness.
+
+For a block of $l$ consecutive increments, independence and centering give
+
+$$
+E\left(F\sum_{i=1}^l s_i\right)^4
+=lF^4E s_Q^4+3l(l-1)F^4 I_Q^2
+\le C_J\{lF^4+l^2F^4\}.
+\tag{204.22}
+$$
+
+Partition information time into intervals of length $\delta$. Any two times within $\delta$ lie in the union of two adjacent intervals. That union contains at most $2\delta/h+2$ increments. Equation (204.22) bounds its endpoint fourth moment by $C_J(\delta+h)^2$; (204.16) with $p=4$ bounds its maximum fluctuation by the same order. A union bound over at most $C(1+V/\delta)$ such unions gives
+
+$$
+\Pr\{w(M_Q,\delta,V)>u\}
+\le C_{J,V}u^{-4}(1+V/\delta)(\delta+h)^2,
+\tag{204.23}
+$$
+
+up to an absolute change of $u$, which is absorbed into the constant. Here $w$ is the ordinary uniform oscillation modulus. First let $Q\to\infty$, then $\delta\downarrow0$: the right side tends to zero. Also
+
+$$
+\Pr\{\max_{i\le N}|Fs_i|>u\}\le C_JNF^4/u^4\to0.
+\tag{204.24}
+$$
+
+For completeness, polygonally interpolate on the mesh $h$, extending the last segment constantly to $V$. Its distance from the step path is at most the maximum jump. Bound (204.23) also bounds its modulus, with a harmless additional mesh width. Its initial value is zero, its full maximum is tight by (204.16), and its moduli satisfy the displayed double limit. The Arzelà–Ascoli compactness criterion, applied to a sequence of tolerances and mesh widths with summable exceptional probabilities, gives tightness in $C([0,V])$. Every subsequential limit has the Gaussian finite-dimensional distributions already obtained; these uniquely determine the continuous Brownian law. With (204.24), this proves $M_Q\Rightarrow W$ in $J_1$, with continuous limiting paths. This supplies actual tightness rather than assuming it from separate CLTs.
+
+The initial interval is explicitly controlled: for $0\le\eta\le V$,
+
+$$
+\Pr\{\sup_{v\le\eta}|M_Q(v)|>u\}\le C_J(\eta+h)/u^2
+\tag{204.25}
+$$
+
+by (204.16). Combining (204.20),(204.21) proves
+$\ell^B_{n_Q(\cdot)}\Rightarrow W(v)-v/2$ on the entire interval. In particular its infimum is bounded away from minus infinity in probability; there is no omitted initial positive-time cutoff.
+
+To change the reference law, for bounded continuous path functional $G$, use the exact identity
+
+$$
+E_{\mathsf B_Q^{\otimes N}}G(\ell^B)
+=E_{\mathsf R_Q^{\otimes N}}[e^{\ell^B_N}G(\ell^B)].
+\tag{204.26}
+$$
+
+The terminal L2 bound (204.15) makes these weights uniformly integrable. Truncate the weight, use path convergence and continuity of terminal evaluation at continuous paths, then remove the truncation. The limiting expectation is tilted by $\exp(W(V)-V/2)$, which has mean one. On a finite time partition including $V$, the independent Gaussian increment densities multiply by $\prod_j\exp(\Delta W_j-\Delta v_j/2)$; completing each square changes its mean from zero to $\Delta v_j$, leaving its variance unchanged. The tilted continuous process $W(v)-v/2$ is therefore $W(v)+v/2$. This proves the alternative reference process law without importing an unchecked functional likelihood theorem.
+
+The same bound gives, for every path event $E$,
+
+$$
+\mathsf B_Q^{\otimes N}(E)\le C_{J,V}\sqrt{\mathsf R_Q^{\otimes N}(E)}.
+\tag{204.27}
+$$
+
+It transfers reference-probability maximal remainders to the reference alternative. It is still a reference-only L2 statement.
+
+### 204.6 Maximal density transfer to the ACTUAL full likelihood
+
+All four full-horizon laws in (204.12) are placed on the common dominating law $\mathsf R_Q^{\otimes N}$, which has positive mass on every finite vector on $A_Q$. With $\mathcal F_k$ the first $k$ ENTIRE histograms, let
+
+$$
+a_k=\frac{dP_Q^{\otimes k}}{d\mathsf R_Q^{\otimes k}},\quad
+r_k=\frac{dR_\mu^{\otimes k}}{d\mathsf R_Q^{\otimes k}},\quad
+b_k=\frac{d\mathsf B_Q^{\otimes k}}{d\mathsf R_Q^{\otimes k}}.
+\tag{204.28}
+$$
+
+These are density martingales, equal to the conditional expectations of their terminal densities. Consequently $a_k-b_k$ and $r_k-1$ are integrable martingales. Equation (204.12) bounds their terminal L1 norms by $2\Delta_P$ and $2\Delta_R$. Applying the first inequality in (204.16) proves
+
+$$
+\Pr_{\mathsf R^{\otimes N}}\{\max_{k\le N}|a_k-b_k|>u\}\le2\Delta_P/u,
+\quad
+\Pr_{\mathsf R^{\otimes N}}\{\max_{k\le N}|r_k-1|>u\}\le2\Delta_R/u.
+\tag{204.29}
+$$
+
+The reference process limit of Section 204.5 implies
+$\lim_{c\downarrow0}\limsup_Q\Pr(\min_{k\le N}b_k<c)=0$, uniformly. On the event $\min b_k\ge c$, $\max|a_k-b_k|\le c u/4$, and $\max|r_k-1|\le u/4$, for $0<u\le1$, every $a_k,r_k$ is positive and
+
+$$
+\max_{k\le N}|\log(a_k/r_k)-\log b_k|\le u.
+\tag{204.30}
+$$
+
+This follows from $|\log(1+x)|\le2|x|$ for $|x|\le1/2$. The failure probability is at most
+
+$$
+\Pr\{\min b_k<c\}+\frac{8\Delta_P}{cu}+\frac{8\Delta_R}{u}.
+\tag{204.31}
+$$
+
+First let $Q\to\infty$ and then $c\downarrow0$. This proves a UNIFORM-IN-PREFIX likelihood comparison and pays the event that any actual likelihood is zero (or any dominating-law ratio is undefined). It uses terminal L1 comparison and martingale maxima, not an inference of actual L2 from small KL.
+
+Transfer (204.30) and its exceptional event to $R_\mu^{\otimes N}$ by (204.12). Transfer to $P_Q^{\otimes N}$ by its TV proximity to $\mathsf B_Q^{\otimes N}$ and (204.27). Under $P_Q\ll R_\mu$, the ratio in (204.30) is the actual likelihood wherever relevant. Under actual sampling all realized one-block probabilities are positive, so its logarithm is finite almost surely. Under the null the probability of any nonfinite prefix tends to zero by (204.31). Therefore the real-valued patched process in (204.5) has the same limit as $\ell^B$ under the respective actual laws. This proves the likelihood half of (204.5) and its rare-path payment on the FULL interval.
+
+More generally, the same full-horizon comparisons give for every measurable event on the repeated data
+
+$$
+P_Q^{\otimes N}(E)
+\le\Delta_P+C_{J,V}\sqrt{R_\mu^{\otimes N}(E)+\Delta_R}.
+\tag{204.32}
+$$
+
+This is the only transfer needed below for adaptive-statistic probability events. All components refer to the same original beta, support, class realization and horizon. No expectation of an unbounded statistic is transported by TV.
+
+### 204.7 Full-aggregate centering and a running adaptive remainder
+
+First compare the reference likelihood with a score that uses the full aggregate and the exact actual mean as a PROOF parameter. Define
+
+$$
+M_k(t)=-\frac f4\sum_{i\le k}W_t(Z_i),\qquad
+\mathcal B_Q(v)=M_{n_Q(v)}(t)-n_Q(v)h/2.
+\tag{204.33}
+$$
+
+Under the common reference, all tail coordinates in all $N$ repetitions vanish except on an event of probability at most $N\zeta_Q$. On its complement the full aggregate $Z_i$ equals the core total $Y_i$. The exact identity
+
+$$
+W_t(z)-W_\nu(z)=(z^2-z)(1/t-1/\nu)+(t-\nu)
+$$
+
+and $E[Y(Y-1)]=\nu^2$ show
+
+$$
+E|W_t(Y)-W_\nu(Y)|\le |t-\nu|(\nu/t+1)\le3g_Q
+\tag{204.34}
+$$
+
+eventually. Hence the supremum of the centering-error partial sums, multiplied by $f/4$, is bounded in expectation by $3Nfg_Q/4\to0$. This pays the mean change at its exponentially large magnitude. For the coefficient change from $-F/[2(1+\rho)]$ to $-f/4$, the centered $W_\nu$-partial sums have maximum of order $\sqrt N$ by (204.16), since their variance per term is exactly two. Its coefficient difference is $o_J(f)$, while $\sqrt N f=O_V(1)$. Finally
+$\max_{k\le N}|kF^2I_Q/2-kh/2|\to0$ by (204.21).
+Together with (204.20), these bounds prove
+
+$$
+\sup_{v\le V}|\ell^B_{n_Q(v)}-\mathcal B_Q(v)|\to0
+\tag{204.35}
+$$
+
+in common-reference probability. Equations (204.27),(204.29)–(204.32) transfer it to BOTH actual hypotheses, including the maximal actual likelihood replacement. No tail coordinate of the actual data is removed from $\mathcal B_Q$.
+
+It remains to replace the unknown mean in (204.33) by the observed sample mean UNIFORMLY over prefixes. Under $R_\mu^{\otimes N}$, the full aggregates are exactly iid $\operatorname{Pois}(t)$, regardless of the zero/tiny coordinate means. Put
+$U_k=\sum_{i\le k}(Z_i-t)$, $\delta_k=U_k/k$.
+The elementary Poisson identities give
+
+$$
+EW_t(Z)=0,\quad EW_t(Z)^2=2,
+\qquad E(Z-t)^2=t.
+\tag{204.36}
+$$
+
+They follow by expanding $W_t=((Z-t)^2-(Z-t)-t)/t$ and the centered Poisson moments of orders two through four, $t,t,3t^2+t$. Thus $M_k(t)$ in (204.33) is a martingale with increment variance exactly $h$.
+
+The exact Chapter 200 estimation identity, with the $k-1$ correction retained and multiplied by $\sqrt{kh}$, is, for $k\ge2,\bar Z_k>0$,
+
+$$
+\sqrt{kh}\,D_k
+=\frac{t}{\bar Z_k}\sqrt{\frac{k}{k-1}}M_k(t)
++\frac f4\sqrt{\frac{k}{k-1}}
+\left(\frac{U_k^2}{k\bar Z_k}-1\right).
+\tag{204.37}
+$$
+
+This identity, not a pointwise plug-in assertion, is the source of the cancellation. Let
+
+$$
+G_N=\left\{\max_{1\le k\le N}\frac{|U_k|}{kt}\le\frac12\right\}.
+$$
+
+Using the first inequality in (204.17) for $U_k$,
+
+$$
+\Pr(G_N^c)\le C/t,\qquad
+E\max_{k\le N}\frac{U_k^2}{k^2t^2}\le C/t.
+\tag{204.38}
+$$
+
+On $G_N$, all sample means are positive and $t/\bar Z_k\le2$. The contribution to the maximum in (204.37) from the relative-mean coefficient is bounded in expectation by
+
+$$
+C\left(E\max_k\frac{U_k^2}{k^2t^2}\right)^{1/2}
+\left(E\max_k M_k(t)^2\right)^{1/2}
+\le C\sqrt{Nh/t}.
+\tag{204.39}
+$$
+
+No independence between the two maxima is assumed. The remaining coefficient $\sqrt{k/(k-1)}-1\le2/k$ contributes at most $C\sqrt h$ in expected maximum, by the first inequality in (204.17) applied to the martingale $M_k(t)$. For the quadratic correction in (204.37), the second inequality in (204.17) gives
+
+$$
+E\left[{\bf1}_{G_N}\max_{2\le k\le N}
+\frac f4\sqrt{\frac{k}{k-1}}
+\left|\frac{U_k^2}{k\bar Z_k}-1\right|\right]
+\le C f\log(2N).
+\tag{204.40}
+$$
+
+At $k=0$, both centered scores are zero. At $k=1$, our convention $D_1=0$ misses $M_1(t)$, whose expected absolute value is at most $\sqrt h$. Therefore (204.38)–(204.40) and Markov give, for $N\ge2,u>0$,
+
+$$
+\boxed{
+R_\mu^{\otimes N}\left\{\max_{0\le k\le N}
+|\sqrt{kh}D_k-M_k(t)|>u\right\}
+\le\frac Ct+\frac C u\left(\sqrt{Nh/t}+f\log(2N)\right).
+}
+\tag{204.41}
+$$
+
+This explicit maximal bound uses only scalar Poisson moments under the exact-mean null and a finite dyadic decomposition. Since (204.10) holds and $N=O(Q^5)$, its right side tends to zero uniformly for every fixed $u>0$. In particular $f\log(2N)\to0$; no enhanced original rate is imposed. The bad zero/sample-mean events are contained in $G_N^c$. The conventions at indices zero and one are separately paid, with no arbitrary positive-time exclusion.
+
+Applying (204.32) to the single maximal event in (204.41) proves the same vanishing probability under $P_Q^{\otimes N}$. This transports a probability event, not the expected supremum in (204.39),(204.40). Combining (204.35), the maximal density transfer, and (204.41) proves (204.6) and the joint theorem (204.5). The likelihood and adaptive process have the SAME Brownian limit path, not merely matching marginal distributions.
+
+The initial-time obligation can now also be stated directly. For every $u>0$, under either actual hypothesis,
+
+$$
+\lim_{\eta\downarrow0}\limsup_{Q\to\infty}
+\Pr\left\{\sup_{0\le v\le\eta}|\mathcal A_Q(v)|>u\right\}=0,
+\tag{204.42}
+$$
+
+uniformly on the stated original scope. It follows from (204.25), the uniform drift bound, (204.20),(204.35),(204.41), and the full-horizon event transfer (204.27),(204.32). Thus small information time is paid before any boundary argument.
+
+### 204.8 Uniformity, topology and nuisance boundary
+
+All constants in the one-block interface are uniform over the fixed compact $J$, deterministic lawful supports, and the two experiments with separately supplied original error bounds. The new martingale estimates depend only on those uniform constants and the fixed information horizon. Every sequence of original parameters therefore obeys (204.20)–(204.42) and the same process limit. If bounded-Lipschitz uniformity in (204.5) failed, a violating parameter sequence would contradict the just-proved tightness and finite-dimensional identification along that sequence. The same reasoning and explicit estimates give the uniform maximal remainders.
+
+Step processes live in $D([0,V])$. Their limiting paths are continuous, their maximal approximation errors vanish in the supremum norm, and their limiting maximum jumps vanish. Polygonal interpolations have the same limit under the uniform topology. The null's exceptional minus-infinite likelihood event was explicitly paid in Section 204.6; no extended-real path was silently treated as a real-valued element of $D$.
+
+The primary null in (204.5) is precisely the product Poisson vector with the SAME exact actual means for the original alternative being considered. The statistic does not know those means. No larger all-mean sequential calibration theorem is asserted. The proof of (204.41) deliberately uses the already attained exponential lower bound on $t$, which is uniform for ALL stated original alternatives. That is not a restriction of the original target.
+
+In particular Chapter 202's fixed-horizon exact conditional construction is not being called an e-process. A Brownian sequential limit cannot hold uniformly over every finite Poisson mean for (204.3): at $t=0$, every aggregate is zero, so $\mathcal A_Q(v)=-n_Q(v)h/2$ and no positive boundary is crossed. More generally if an enlarged-null sequence has $Nt_Q\to0$, all $N$ aggregates are zero with probability tending to one. Its positive-boundary crossing probability tends to zero, rather than the nonzero Brownian value below. This elementary boundary example limits a possible nuisance enlargement; it does not refute (204.5), whose attained original means satisfy (204.10). No alternative with random or changing means/supports between repetitions is introduced.
+
+### 204.9 A nontrivial sequential crossing rule and its paid limiting probabilities
+
+Fix $a>0$ and $V>0$. Monitor the observable statistic after each whole repetition and stop/reject the exact-mean null at the first $k\le N$ with
+
+$$
+\sqrt{kh}D_k-kh/2\ge a.
+\tag{204.43}
+$$
+
+If no crossing occurs by $N$, do not reject. The stopping index is adapted to the observed aggregate history and bounded by the prescribed horizon when a rejection occurs. Indices zero and one cannot cross a positive boundary under our convention. The process may be defined on a full pre-generated sequence of $N$ independent repetitions for analysis; no observations after the actual stopping decision are required by the rule. The deterministic full-line sum $f$ is fixed by the original layer and amplitude and is a known parameter of this statistic; no efficient evaluation claim is made.
+
+We derive the Brownian crossing formula and its continuity rather than infer optional-stopping validity from fixed-time limits. For $X_d(v)=W(v)+dv$, let
+
+$$
+p_d(a,V)=\Pr\{\max_{0\le v\le V}X_d(v)\ge a\}.
+$$
+
+For standard Brownian motion, reflection at the first hitting time of $a$ gives, for terminal $x<a$, the crossing subdensity $\varphi_V(2a-x)$, where $\varphi_V$ is the $N(0,V)$ density. For $x\ge a$, every continuous path ending there has crossed, with density $\varphi_V(x)$. To justify the stopping-time reflection used here, approximate the hitting time from above by its next dyadic grid point. Independence and symmetry of increments after a grid-valued stopping time follow by summing over its finitely many possible grid indices. Reflect those future increments; continuity lets the grid decrease to the hitting time on each bounded time interval. Equivalently one may first restrict the hit to occur before $V-\eta$, pass to the grid limit, and then let $\eta\downarrow0$; the event of a first hit exactly at $V$ has probability zero because it forces $W(V)=a$. The reflection bijection preserves Brownian law and sends endpoint $x<a$ to $2a-x>a$, proving the stated subdensity.
+
+The law of $W(v)+dv$ on this finite interval is obtained by multiplying standard Brownian path probabilities by $\exp(dW(V)-d^2V/2)$. This finite-interval identity is proved by completing squares in independent Gaussian increments on any partition including $V$, and extending from cylinder events using continuity and the generated path sigma-field. It is the same explicit Gaussian tilting argument as Section 204.5, not an imported stopping theorem. Integrating the two reflected terminal pieces yields
+
+$$
+\begin{aligned}
+p_d(a,V)
+&=\int_a^\infty e^{dx-d^2V/2}\varphi_V(x)\,dx
+ +\int_{-\infty}^a e^{dx-d^2V/2}\varphi_V(2a-x)\,dx\\
+&=\Phi\left(\frac{dV-a}{\sqrt V}\right)
+ +e^{2da}\Phi\left(\frac{-dV-a}{\sqrt V}\right).
+\end{aligned}
+\tag{204.44}
+$$
+
+The change of variable $y=2a-x$ gives the second integral, followed by completing the square. The result is continuous in every positive $a$. Therefore the maximum has no atom at the chosen boundary. The map taking a path's maximum is continuous in the uniform norm and at continuous paths in $J_1$. Equations (204.5),(204.42) and this zero-boundary-mass fact pay the crossing-event transfer for the full interval.
+
+Consequently the actual asymptotic type-I probability against the SAME exact-mean null and the actual power of (204.43) are, uniformly on the original scope,
+
+$$
+\boxed{
+\begin{aligned}
+R_\mu^{\otimes N}(\text{cross})&\longrightarrow
+\Phi\left(\frac{-a-V/2}{\sqrt V}\right)
++e^{-a}\Phi\left(\frac{V/2-a}{\sqrt V}\right)=p_{-1/2}(a,V),\\
+P_Q^{\otimes N}(\text{cross})&\longrightarrow
+\Phi\left(\frac{V/2-a}{\sqrt V}\right)
++e^{a}\Phi\left(\frac{-V/2-a}{\sqrt V}\right)=p_{1/2}(a,V).
+\end{aligned}}
+\tag{204.45}
+$$
+
+For any fixed significance $0<\alpha<1$, choose the unique positive $a=a_\alpha(V)$ with $p_{-1/2}(a,V)=\alpha$. Existence follows because that continuous function tends to one as $a\downarrow0$ and to zero as $a\to\infty$. Strict decrease follows either from the reflected density or from differentiating (204.44): at $d=-1/2$ its derivative is
+
+$$
+-\frac2{\sqrt V}\varphi\left(\frac{-V/2-a}{\sqrt V}\right)
+-e^{-a}\Phi\left(\frac{V/2-a}{\sqrt V}\right)<0.
+\tag{204.46}
+$$
+
+This choice uses only alpha and the known information horizon. Rule (204.43) then has asymptotic size alpha and power $p_{1/2}(a_\alpha(V),V)$. These are bounded-horizon sequential asymptotics for the stated null/alternative, NOT finite-sample exact or anytime guarantees over arbitrary means. Chapter 202's finite fixed-horizon calibration is unchanged.
+
+### 204.10 The information cost of this monitoring rule
+
+Repeated monitoring cannot use the same terminal threshold without accounting for earlier crossings. The second term of (204.44) is strictly positive for finite $a,V>0$. Thus under the limiting null its crossing probability exceeds the probability of merely ending above $a$. To have size alpha, the crossing boundary exceeds the terminal-likelihood cutoff
+
+$$
+k_\alpha=-V/2+\sqrt V\,z_{1-\alpha},
+\qquad a_\alpha(V)>k_\alpha.
+\tag{204.47}
+$$
+
+The terminal optimal test has power $\Phi(z_\alpha+\sqrt V)$, the inherited fixed-time envelope at $m f^2\to8V$. The crossing rule calibrated by (204.46) has STRICTLY smaller power:
+
+$$
+p_{1/2}(a_\alpha(V),V)<\Phi(z_\alpha+\sqrt V).
+\tag{204.48}
+$$
+
+Here is a proof of strictness, rather than a claimed equality of sequential and terminal envelopes. Under the limiting null, the likelihood ratio between the two drifted Brownian laws is $e^{X_{-1/2}(V)}$. The terminal test is ${\bf1}_{\{X_{-1/2}(V)>k_\alpha\}}$, and both it and the calibrated crossing test have size alpha. The pointwise Neyman–Pearson inequality therefore gives a nonnegative difference of powers, equal to the null expectation of
+$(e^{X(V)}-e^{k_\alpha})(\varphi^{\rm terminal}-\varphi^{\rm cross})$.
+It is positive on a set of positive probability. Indeed, for terminal $x<a=a_\alpha(V)$, the density of paths not crossing $a$ is
+
+$$
+e^{-x/2-V/8}\{\varphi_V(x)-\varphi_V(2a-x)\}>0.
+\tag{204.49}
+$$
+
+The strict inequality follows from $(2a-x)^2-x^2=4a(a-x)>0$. Integrating over any nonempty subinterval of $(k_\alpha,a)$ yields paths that the terminal test rejects and the crossing test does not, with likelihood strictly above the terminal cutoff. This proves (204.48). The monitoring rule offers an earlier stopping opportunity, paid by the explicit power loss at the same final information horizon; no optimal sequential-design or expected-sample-size claim is added.
+
+
+### 204.11 来源、机制与边界
+
+Ward Whitt，*Proofs of the martingale FCLT*，arXiv:0712.1929v1（原始 TeX）提供鞅函数极限定理的对照。其主定理的可预测二次变差分支包含最大跳幅条件；本章参考得分的确定方差时钟和消失最大跳幅满足相应关系。仅有可预测括号的连续紧性并不足够：固定的补偿率一 Poisson 过程序列具有确定连续括号 $v$，极限却仍有跳跃。因此不把单独括号条件作为本章的过程极限定理，也不导入该来源所引用但未在此展开的一般极限刻画证明。
+
+本章直接给出有限最大不等式、三角独立数组的特征函数、四阶模连续性界、终端似然倾斜及反射公式。经典鞅原理、布朗反射、Gaussian 倾斜、Neyman–Pearson 比较和离散度统计量均不作新方法声明。新增连接是 (204.20) 的全部前缀展开、(204.29)–(204.31) 从共同完整实验密度到真实似然的最大稳定性、(204.41) 的未知均值运行余项，以及它们在原始 path 内部依赖保持完整时给出的 (204.45)。
+
+原始取整、补偿、完整计数线、零／微小均值坐标、精确均值和实际共同实现均保留。相互独立的是各次完整实验，不是原 path 的相邻边。界限不覆盖任意变化的支持或均值、不受限信息时间、期望停止时间或最优顺序边界；也不推出 E2、支持恢复、后验熵或时间箭头结算。以上为普通数学推导，未作 Lean 认证；定向来源比较不构成全球原创性认定。
+
+## 追加锚（本行以下为增补区）
