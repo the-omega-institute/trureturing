@@ -200,3 +200,9 @@ and declared joint source variations. It does not exclude other criteria,
 label inventories or sources outside those hypotheses. The unrestricted
 problem still requires arbitrary original phases, heights and prime supports
 to be handled under one actual source and one global original-label assignment.
+
+[Report706](706-query-depth-separates-two-tests-of-the-full-square-gate.md)
+replaces the entire independent query envelope by the full query maximum
+and separates finite from infinite depth. It gives a finite-field obstruction
+to shallow-centre duals and an infinite-depth upper for central-only fields,
+without extending this report's all-field exclusion to the new criterion.
