@@ -4066,3 +4066,50 @@ Li–Li–Wu 所引矩阵环面收缩目标的 manifold-theory 预印本，
 完整得分组未被独立 Poisson 行替代；$E_2$ 是否非空仍未解决。
 
 ## 追加锚（第 99 章来源后续增补区）
+
+## 第 100 章：常数阶条件信息方差
+
+对应 [理论卷第 100 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+新增综合是：在完整实际计数后验及整个严格噪声区间上，扣除精确观测到的
+有限方差／线性系数后，得到紧输出区间一致的显式二次剖面。
+实际到 Gaussian 的中心二阶局部误差直接复用第 98 章；
+新步骤把参考余项算到常数阶，并将同一测量残差一起倾斜。
+没有从有界余项、弱收敛或 TV 近似直接推出常数极限。
+
+Dytso–Cardone, *A General Derivative Identity for the Conditional Expectation
+with Focus on the Exponential Family*,
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，
+PDF 第 5 页 Theorem 4、Proposition 3 将条件累积量联系到按充分统计量
+缩放的输出导数。其条件是所指定连续指数族及相应可积性、正则性；
+第 98 章已经核对 Theorems 1–2 的条件。
+Gaussian 有限纤维满足这些有限矩条件，但含逆噪声的公式本身不提供
+指数小噪声下一致估计。第 100 章直接证明归一化倾斜的精确密度变换，
+倾斜全部潜在 Gaussian 坐标及同一个 $G$，再用热方程求导。
+这些是成熟条件累积量工具，不把完整离散信息量冒认为通道的自然参数。
+
+Mansanarez–Poly–Swan, *Edgeworth expansion on Wiener chaos*,
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，
+原 TeX Theorem 1.2：固定阶混沌中 $\mathbb EF^2=1$ 的 $F$，
+与截至 $4m-1$ 阶的带符号 Hermite 密度之间，TV 误差至多
+$C_{p,m}\operatorname{Var}(\Gamma(F,F))^{(m+1)/2}$。
+对标准化的中心二次型取 $p=2,m=2$ 可直接给 $O(\delta^{3/2})$
+参考带符号分布近似。这不包含本章需要的密度导数上确界、
+乘发散系数后的对数曲率余项或实际选中离散律的中心局部矩。
+加上独立一阶 Gaussian 噪声后的输出不被未经核对地归入单一二阶混沌。
+本章用实际有限系数的乘积特征函数单独证明所需导数界。
+
+Tudor–Yoshida [arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)
+的 Conditions A1–A3、Proposition 1、Theorem 1 要求相应 Malliavin Sobolev、
+Gamma 因子及指数／正则性条件；未对增长维度的完整未归一化信息量直接套用。
+Herry–Malicet–Poly [arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+的 Corollary 10(a) 提供所规定混沌和的通用密度导数收敛，
+不自动提供此处放大后仍为 $o(1)$ 的定量阶。
+Bonis 与 Serov–Zubkov 的有限 binomial 耦合输入仍按第 94–98 章的
+精确条件复用，不重复声称新的耦合定理。
+
+全部 Gaussian 积分、Hermite 多项式、热方程及指数倾斜代数均属成熟工具。
+本章保留实际有限系数、同一残差的混合矩、常数阶核心比较及原支持一致概率范围。
+限定文献核查不构成全球原创性证明。没有输出全轴积分、坏数据期望、
+零噪声、端点最优性、增长紧区间或新的覆盖效率结论。
+
+## 追加锚（第 100 章来源后续增补区）
