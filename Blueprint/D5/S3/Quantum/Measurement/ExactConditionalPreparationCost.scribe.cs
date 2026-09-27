@@ -125,7 +125,7 @@ internal sealed class ExactConditionalPreparationCostDocument : IScribeDocumentD
     private static Formula Ratio => Seq(Minimum, Sp, Slash, Sp, Maximum);
 
     private static Formula Action(Formula family, Formula input) =>
-        Call("PhyslibLeaf.MatrixMap.of_kraus", family, family, input);
+        Call("ofKraus", family, family, input);
 
     private static Formula Trace(Formula value) => Call("Tr", value);
     private static Formula RealPart(Formula value) => Call("Re", value);
