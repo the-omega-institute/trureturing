@@ -13094,3 +13094,338 @@ AHH 在于：**全息不是“保存后可以再加工”这么简单；摘要�
 **来源与边界 178.2。** 本批在有限维线性效果空间、声明接口映射族和有限续接任务下推导规范评价商、近似闭合误差、终端化不可逆性及边界层级。没有把线性恢复映射自动解释为物理逆过程，没有推广到非线性摘要、无限维闭包、未知接口或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+## 179. 允许续接扩张会单调增加边界成本
+
+前面的闭包秩依赖于两个合同：当前要回答哪些终端效果，以及未来允许调用哪些接口。改变任一合同，必须重新计算闭包；不能把旧合同下的充分性外推到新任务。
+
+**定义 179.1（任务对与闭包算子）。** 令
+
+$$
+\mathfrak T=(\mathcal F,\mathcal C),
+$$
+
+其中 $\mathcal F\subseteq\mathcal X^*$ 是终端效果族、$\mathcal C$ 是允许接口族。定义
+
+$$
+\Gamma(\mathfrak T)
+=
+\operatorname{span}\left\{
+(\Phi_1^*\circ\cdots\circ\Phi_n^*)(H):
+ n\ge0,
+ H\in\mathcal F,
+ \Phi_j\in\mathcal C
+\right\}.
+$$
+
+对任意有限维效果子空间 $V$，记 $\mathsf q_V$ 为按 §175 同样方式由一组基给出的评价坐标；坐标基的改变只产生可逆线性变换。
+
+约定 $n=0$ 时表达式为 $H$。若
+
+$$
+\mathfrak T_1\preceq\mathfrak T_2
+\iff
+\mathcal F_1\subseteq\mathcal F_2
+\quad\text{且}\quad
+\mathcal C_1\subseteq\mathcal C_2,
+$$
+
+就称第二个续接合同扩张了第一个。
+
+**定理 179.2（合同扩张的单调性）。** 若 $\mathfrak T_1\preceq\mathfrak T_2$，则
+
+$$
+\boxed{
+\Gamma(\mathfrak T_1)
+\subseteq
+\Gamma(\mathfrak T_2).
+}
+\tag{179.1}
+$$
+
+令 $K_i=\Gamma(\mathfrak T_i)^\perp\subseteq\mathcal X$。则
+
+$$
+K_2\subseteq K_1,
+$$
+
+并且第一个评价商在第二个评价商上有唯一线性因子化：存在唯一线性映射 $L$ 使
+
+$$
+\mathsf q_{\Gamma(\mathfrak T_1)}
+=
+L\circ\mathsf q_{\Gamma(\mathfrak T_2)}
+$$
+
+在第二个评价商的像上成立。因此闭包秩满足
+
+$$
+\dim\Gamma(\mathfrak T_1)
+\le
+\dim\Gamma(\mathfrak T_2).
+$$
+
+### 证明
+
+$\Gamma(\mathfrak T_1)$ 的每个生成元仍然是 $\mathfrak T_2$ 的允许终端效果和接口词，所以（179.1）成立。对偶取正交补反向包含给出 $K_2\subseteq K_1$。
+
+取 $\Gamma(\mathfrak T_1)$ 的一组基。若两个状态在 $\mathsf q_{\Gamma(\mathfrak T_2)}$ 下相同，它们对较小闭包的所有效果也相同，因此 $\mathsf q_{\Gamma(\mathfrak T_1)}$ 在第二个评价商的每个纤维上为常值。有限维因子化给出 $L$；在像空间上，因子化唯一。秩不等式是子空间包含的维数不等式。证毕。
+
+**例 179.3（只增加一个后段接口也可能增加一整维）。** 取 $\mathcal X=\mathbb R^2$，终端效果 $F_0(x_1,x_2)=x_1$。令 $\mathfrak T_1$ 只含恒等接口，令 $\mathfrak T_2$ 另外允许交换接口
+
+$$
+S(x_1,x_2)=(x_2,x_1).
+$$
+
+则
+
+$$
+\Gamma(\mathfrak T_1)=\operatorname{span}\{F_0\},
+\qquad
+\Gamma(\mathfrak T_2)=\operatorname{span}\{F_0,F_0\circ S\}
+=\operatorname{span}\{x_1,x_2\}.
+$$
+
+所以旧终端摘要的秩为一，而扩张合同要求秩为二。两个状态在旧合同下相同，不代表它们在新合同下仍相同。
+
+这条单调性把“新增观察权限”的代价写成了闭包偏序：权限扩张只能细分原来的等价类，不能由旧摘要自动制造被删去的方向。
+
+---
+
+## 180. 随机调度的闭包不等于逐词闭包
+
+允许接口词逐次选择时，记录接口标签会保留每条路径；若先把接口标签作概率平均，再反复作用，可能发生代数抵消；若联合记录仍可作相干读取，还会出现额外交叉项。两种操作的顺序必须写入边界合同。
+
+**定义 180.1（词闭包与调度闭包）。** 设允许接口为有限族
+
+$$
+\mathcal C=\{\Phi_1,\ldots,\Phi_m\},
+\qquad
+A_i=\Phi_i^*.
+$$
+
+终端效果族记为 $\mathcal F$。词闭包为
+
+$$
+V_{\mathrm{word}}
+=
+\operatorname{span}\{A_{i_n}\cdots A_{i_1}H:
+ n\ge0,\ H\in\mathcal F\}.
+$$
+
+对概率向量 $p=(p_1,\ldots,p_m)$，定义平均拉回
+
+$$
+T_p=\sum_{i=1}^mp_iA_i.
+$$
+
+给定调度族 $\mathfrak P\subseteq\Delta_m$，定义调度闭包
+
+$$
+V_{\mathfrak P}
+=
+\operatorname{span}\{T_{p_n}\cdots T_{p_1}H:
+ n\ge0,\ H\in\mathcal F,\ p_j\in\mathfrak P\}.
+$$
+
+**定理 180.2（平均调度的包含关系）。** 总有
+
+$$
+\boxed{
+V_{\mathfrak P}\subseteq V_{\mathrm{word}}.
+}
+\tag{180.1}
+$$
+
+若 $\mathfrak P$ 包含每个顶点分布 $\delta_i$，则
+
+$$
+\boxed{
+V_{\mathfrak P}=V_{\mathrm{word}}.
+}
+\tag{180.2}
+$$
+
+### 证明
+
+把每个平均算子展开：
+
+$$
+T_{p_n}\cdots T_{p_1}H
+=
+\sum_{i_1,\ldots,i_n}
+(p_1)_{i_1}\cdots(p_n)_{i_n}
+A_{i_n}\cdots A_{i_1}H.
+$$
+
+右侧属于词闭包，得到（180.1）。若 $\delta_i\in\mathfrak P$，取 $p_j=\delta_{i_j}$ 就直接得到每个逐词生成元，反向包含成立，故得（180.2）。证毕。
+
+**例 180.3（固定平均会抹掉逐词方向）。** 在抽象线性接口模型中取
+
+$$
+\mathcal X^*=\mathbb R^2,
+\qquad
+H=e_1,
+\qquad
+S=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+并令 $A_1=S$、$A_2=-S$。逐词闭包包含 $H$ 与 $SH=e_2$，所以
+
+$$
+V_{\mathrm{word}}=\mathbb R^2.
+$$
+
+但固定均匀调度 $p=(1/2,1/2)$ 给出
+
+$$
+T_p=\tfrac12(S-S)=0,
+$$
+
+从而
+
+$$
+V_{\{p\}}=\operatorname{span}\{H\}
+\subsetneq
+V_{\mathrm{word}}.
+$$
+
+因此“先平均再递归”与“保留标签后逐词递归”一般不交换。这个反例只使用线性接口；若要把两个接口解释为具体量子仪器，还必须另行验证正性、完全正性及记录合同。
+
+---
+
+## 181. 折扣 resolvent 只提供带权续接合同
+
+当任务只关心按 horizon 衰减的平均响应，可以把无限词压缩为一个 resolvent；这个压缩有严格尾误差，但它不自动等价于保留每个离散 horizon。
+
+**定义 181.1（固定调度的折扣响应）。** 固定一个调度 $p$，写 $T=T_p$。在 $\mathcal X^*$ 上固定次乘法范数，取 $\lambda\ge0$ 满足
+
+$$
+\lambda\|T\|<1.
+$$
+
+对 $H\in\mathcal X^*$ 定义
+
+$$
+\mathsf R_{\lambda,T}(H)
+=
+\sum_{n=0}^{\infty}\lambda^nT^nH.
+$$
+
+**定理 181.2（折扣响应的收敛、方程与尾界）。** 上述级数在范数下绝对收敛，并满足
+
+$$
+\boxed{
+\mathsf R_{\lambda,T}(H)
+=(I-\lambda T)^{-1}H,
+}
+\tag{181.1}
+$$
+
+以及对截断响应
+
+$$
+\mathsf R^{(N)}_{\lambda,T}(H)
+=\sum_{n=0}^{N}\lambda^nT^nH
+$$
+
+的尾误差
+
+$$
+\boxed{
+\left\|
+\mathsf R_{\lambda,T}(H)-\mathsf R^{(N)}_{\lambda,T}(H)
+\right\|
+\le
+\frac{\|H\|(\lambda\|T\|)^{N+1}}
+{1-\lambda\|T\|}.
+}
+\tag{181.2}
+$$
+
+### 证明
+
+由次乘法性，级数各项范数至多为
+
+$$
+\|H\|(\lambda\|T\|)^n.
+$$
+
+几何级数收敛，尾和给出（181.2）。逐项作用 $I-\lambda T$ 后，除首项 $H$ 外相邻项望远镜抵消，得到
+
+$$
+(I-\lambda T)\mathsf R_{\lambda,T}(H)=H.
+$$
+
+因为 $\lambda\|T\|<1$，Neumann 级数同时给出 $I-\lambda T$ 的逆，故得（181.1）。证毕。
+
+**定理 181.3（一个折扣读数不保持全部 horizon）。** 取 $\mathcal X=\mathbb R^2$，并把 $T$ 视为作用在效果空间 $\mathcal X^*$ 上的交换算子，令终端效果 $H=e_1^*$，并取 $0<\lambda<1$。则
+
+$$
+\mathsf R_{\lambda,T}(H)
+=\frac{e_1^*+\lambda e_2^*}{1-\lambda^2}.
+$$
+
+存在非零状态差
+
+$$
+\Delta=-\lambda e_1+e_2
+$$
+
+使
+
+$$
+\mathsf R_{\lambda,T}(H)(\Delta)=0,
+$$
+
+但
+
+$$
+H(\Delta)=-\lambda\ne0,
+\qquad
+(TH)(\Delta)=e_2^*(\Delta)=1.
+$$
+
+所以两个边界状态若只保留这一个折扣读数，可以在折扣任务上相同，却在 horizon $0$ 和 $1$ 的离散任务上不同。
+
+### 证明
+
+交换矩阵满足 $T^2=I$，故
+
+$$
+\sum_{n\ge0}\lambda^nT^nH
+=
+\frac{H+\lambda TH}{1-\lambda^2}.
+$$
+
+将 $\Delta$ 代入，分子为 $(-\lambda)+\lambda=0$；而两个未加权效果的取值分别为 $-\lambda$ 与 $1$。证毕。
+
+因此 resolvent 的充分性必须连同权重 $\lambda$、调度 $p$ 和目标测试族一起声明。它是带权续接的接口，不是无条件的“全部未来”接口。
+
+---
+
+## 182. AHH：闭包、调度和折扣形成三层边界合同
+
+**关系结论 182.1（从逐词到带权未来的边界阶梯）。** 在有限维线性模型中：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{边界层}&\text{保留的关系}&\text{可保证的任务}\\
+\hline
+V_{\mathrm{word}}&\text{每个允许接口词及其终端效果}&\text{全部有限确定性续接}\\
+V_{\mathfrak P}&\text{声明调度族的平均拉回}&\text{该调度族的有限随机续接}\\
+\mathsf R_{\lambda,T}&\text{按 }\lambda^n\text{ 加权的总响应}&\text{固定调度的折扣任务}\\
+\end{array}
+}
+\tag{182.1}
+$$
+
+逐词闭包先保留标签再组合；调度闭包把标签按声明的概率合同组合；折扣 resolvent 进一步把不同 horizon 按权重相加。每一步都是信息商，而且包含关系一般严格。
+
+AHH 在于：**“未来”不是单一对象；它至少要标明接口词是否可区分、调度是否可访问、horizon 是否带权。先平均会丢掉逐词方向，先折扣会把不同时间层合并；这些压缩一旦合并了目标任务可区分的方向，后处理不能普遍恢复。**
+
+这把边界成本写成一条带合同的偏序：扩大接口标签或调度权限只能扩大闭包，加入折扣则改变需要保持的测试族。任何声称“一个平均终端输出包含全部未来”的说法，都必须给出从目标任务族到该摘要的因子化证明；找不到因子化时，二维或符号矩阵反例足以否定普适充分性。
+
+**来源与边界 182.2。** 本批在有限维线性效果空间、有限接口族、概率调度与严格收敛的折扣参数下推导合同扩张单调性、逐词/平均调度闭包差异、resolvent 尾误差及带权边界阶梯。没有把抽象负接口自动解释为物理量子仪器，没有把折扣参数解释为物理钟速率，没有推广到无限维谱或未知接口识别；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
