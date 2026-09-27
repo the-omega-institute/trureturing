@@ -110,7 +110,7 @@ theorem result : claim := by
     have := hv i
     have := hw i
     omega
-  -- Step 1: a positive box has exactly the four extensions at the axis cells.
+  -- Step 1: a positive box has exactly the d extensions at the axis cells.
   have box_ext : ∀ v : Fin d → ℕ, (∀ i, 0 < v i) →
       {J : Finset (Fin d → ℕ) | IsSolidPartition ((box v).card + 1) J ∧ box v ⊆ J} =
         Set.range fun i => insert (Pi.single i (v i)) (box v) := by
@@ -123,26 +123,9 @@ theorem result : claim := by
     simp only [Set.mem_ofPred_eq, Set.mem_range]
     constructor
     · rintro ⟨⟨hJl, hJc⟩, hsub⟩
-      have hcard : (J \ box v).card = 1 := by
-        rw [Finset.card_sdiff_of_subset hsub, hJc]
-        omega
-      obtain ⟨c, hc⟩ := Finset.card_eq_one.1 hcard
-      have hcJ : c ∈ J := (Finset.mem_sdiff.1 (hc ▸ Finset.mem_singleton_self c)).1
-      have hcb : c ∉ box v := (Finset.mem_sdiff.1 (hc ▸ Finset.mem_singleton_self c)).2
-      have hJeq : J = insert c (box v) := by
-        ext x
-        rw [Finset.mem_insert]
-        constructor
-        · intro hx
-          by_cases hxb : x ∈ box v
-          · exact Or.inr hxb
-          · left
-            have : x ∈ J \ box v := Finset.mem_sdiff.2 ⟨hx, hxb⟩
-            rw [hc] at this
-            exact Finset.mem_singleton.1 this
-        · rintro (rfl | hx)
-          · exact hcJ
-          · exact hsub hx
+      obtain ⟨c, hcb, hins⟩ := Finset.exists_eq_insert_iff.2 ⟨hsub, hJc.symm⟩
+      have hJeq : J = insert c (box v) := hins.symm
+      have hcJ : c ∈ J := hJeq ▸ Finset.mem_insert_self c (box v)
       -- every cell strictly below `c` lies in the box
       have below : ∀ y : Fin d → ℕ, y ≤ c → y ≠ c → y ∈ box v := by
         intro y hy hne
@@ -219,7 +202,7 @@ theorem result : claim := by
               omega
         · exact Or.inr (lower_box v hba ha)
       · rw [Finset.card_insert_of_notMem (single_not i)]
-  -- the four axis extensions are distinct
+  -- the d axis extensions are distinct
   have axis_inj : ∀ (v : Fin d → ℕ) (I : Finset (Fin d → ℕ)), (∀ i, 0 < v i) →
       (∀ i, Pi.single i (v i) ∉ I) → Function.Injective fun i => insert (Pi.single i (v i)) I := by
     intro v I hv hnot i i' h
@@ -229,7 +212,7 @@ theorem result : claim := by
     simp only [Pi.single_eq_same, Pi.single_eq_of_ne hne] at this
     have := hv i
     omega
-  -- Step 2: four extensions force a box.
+  -- Step 2: d extensions force a box.
   have ext_box : ∀ (n : ℕ) (I : Finset (Fin d → ℕ)), 1 ≤ n → IsSolidPartition n I →
       extensions n I = d → ∃ v : Fin d → ℕ, (∀ i, 0 < v i) ∧ I = box v := by
     intro n I hn ⟨hIl, hIc⟩ hext
