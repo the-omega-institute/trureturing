@@ -35564,3 +35564,292 @@ $$
 反过来，两个标签本身没有提供同读数异目标的对象，也没有提供无适用标签的对象；例如常目标的恢复器对任意读数都存在，而取 $\Phi=X\times\{0,1\}$ 时任意总赋值都忠实。此处是数学边界模型，不是关于某个人群的经验断言。具体应用须分别给出上述见证或相应的全称充分性、忠实性证明。由于这些推导始终把 $T$ 与 $\Phi$ 作为输入，它们没有推出应以另一目标或适用关系替换该输入的规范结论。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 533. 共同焦点下固定操作的可识别族：正随机实现的完整分类
+
+### 定义 533.1（共同焦点与关系角色的分别）
+
+本章以“共同焦点”指若干不同关系所共同指向的参照，以“角色”指对象与该参照发生关系的方式；共享参照不在定义上把这些方式合并。此区别的历史参照为亚里士多德《形而上学》Γ.2：健康之物可以保存健康、产生健康、作为健康的征候或能够承受健康；医疗之物可以具有医术、天性适于医术或是医术的功能。他用这些区别说明“是”虽有多义，却都关联于一个起点，而非仅仅同名；其中有些是实体，有些是实体的属性、生成、毁灭、缺失等。他进一步主张，同一科学不仅研究具有一个共同概念的事物，也研究关联于同一共同本性的事物，故存在者之为存在者属于同一科学；科学主要研究其他事物所依赖并由之得名的首要者，因而哲学家须把握实体的原理与原因。这里的共同关联包含统一科学与实体优先的实质主张。引文据 Aristotle, *Metaphysics*, Γ.2，[W. D. Ross 英译](https://classics.mit.edu/Aristotle/metaphysics.4.iv.html)；关于 *pros hen*“关联于一”与实体的首要意义，参见 [*Aristotle’s Metaphysics*, §3](https://plato.stanford.edu/entries/aristotle-metaphysics/#RoleSubsStudBeinQuaBein)，实质修订于 2025-01-24。
+
+以下把“共同参照是否足以决定不同关系之间的操作后果”限定为一个有限随机模型的问题。模型中的焦点状态集不是亚里士多德实体概念的定义；输入、焦点与输出的箭头也不由“健康”或“医疗”这些共同名称推出。保存、产生与征候的历史例子在这里不被赋予具体医学因果律。
+
+### 定义 533.2（固定标签的双通道实现与共同数据）
+
+固定有限带标签集合 $X,H,Y$，其大小分别为 $m,r,n$，其中 $m,n\ge r\ge2$；固定各集合的坐标顺序。记 $\mathbf1_d$ 为 $d$ 维全一列向量，$\Delta_d=\{u\in\mathbb R_{\ge0}^d:\mathbf1_d^Tu=1\}$。列随机矩阵指逐项非负且每列和为一的矩阵。固定严格正的概率列向量 $\mu\in\Delta_m$、$\pi\in\Delta_r$。
+
+一个实现是矩阵对 $(P,S)$，满足
+
+$$
+\begin{gathered}
+P\in\mathbb R_{>0}^{r\times m},\qquad
+S\in\mathbb R_{>0}^{n\times r},\qquad
+\operatorname{rank}P=\operatorname{rank}S=r,\\
+\mathbf1_r^TP=\mathbf1_m^T,\qquad
+\mathbf1_n^TS=\mathbf1_r^T,\qquad P\mu=\pi.
+\end{gathered}
+$$
+
+同一实现的联合律与端点通道分别规定为
+
+$$
+\Pr(x,h,y)=\mu_xP_{hx}S_{yh},\qquad M=SP.
+$$
+
+因此 $P$ 是从 $X$ 到 $H$ 的条件通道，$S$ 是从 $H$ 到 $Y$ 的条件通道，$\pi$ 是操作插入前的焦点边缘。这个共同联合律同时给出两类关系的衔接，不从两个各自可实现的边缘关系拼出未经规定的共同实现。
+
+设至少存在一个上述实现生成固定数据 $(M,\mu,\pi)$。其完整实现类定义为
+
+$$
+\mathcal F(M,\mu,\pi)=
+\left\{(P',S'):
+\begin{array}{l}
+P'\in\mathbb R_{>0}^{r\times m},\quad
+S'\in\mathbb R_{>0}^{n\times r},\\
+\operatorname{rank}P'=\operatorname{rank}S'=r,\\
+\mathbf1_r^TP'=\mathbf1_m^T,\quad
+\mathbf1_n^TS'=\mathbf1_r^T,\\
+S'P'=M,\quad P'\mu=\pi
+\end{array}
+\right\}.
+$$
+
+其中的 $X,H,Y,\mu,\pi,M$ 始终固定，不再加入已知零项、特定参数族或已知内部通道等限制。
+
+### 假设 533.3（方向、插入操作与模块保持）
+
+模型预先指定方向 $X\to H\to Y$ 及定义 533.2 的条件分解。一个允许的固定操作由列随机矩阵 $K\in\mathbb R_{\ge0}^{r\times r}$ 表示，$K_{h'h}$ 的含义是把操作前的固定标签 $h$ 送到操作后的固定标签 $h'$ 的概率。允许零项及重置操作，不要求 $K$ 严格正、可逆或预先满足 $K\pi=\pi$。
+
+模块保持假设规定：插入 $K$ 后，两个通道仍为该实现原有的 $P,S$，扩展联合律和端点后果为
+
+$$
+\Pr_K(x,h,h',y)=\mu_xP_{hx}K_{h'h}S_{yh'},
+\qquad Q_K(P,S)=SKP.
+$$
+
+每个竞争实现使用同一个 $K$、同一组焦点标签及同一操作含义。若某个可逆矩阵 $T$ 被用于比较分解，同步把 $K$ 改为 $TKT^{-1}$ 是另外的操作运输问题，不属于这里的固定操作比较。上述方向与模块保持是现代数学重构的假设，不是从共同焦点的名称或端点观察恢复出的因果事实；把此模型用于经验系统还须分别给出这些假设的依据。
+
+### 定义 533.4（固定操作后果的识别）
+
+称数据 $(M,\mu,\pi)$ 识别固定操作 $K$ 的端点后果，当且仅当 $Q_K$ 在全部 $\mathcal F(M,\mu,\pi)$ 上恒定。此处要求完整端点通道相同，因而同时决定每个输入标签的输出律；仅仅决定按 $\mu$ 平均的输出律是较弱目标。
+
+这是本卷第 108 节的观察纤维准则在该实现空间上的用法；一般的目标识别与纤维包含关系亦见[查询族识别准则](../../../D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)及[干预目标因子化准则](../../../D5/S3/ConceptDynamics/RefinementFactorization/InterventionTargetFactorization.lean)。这里的目标为固定 $K$ 的 $Q_K$，观察为 $(SP,P\mu)$，$\mu$ 和全部标签是固定参数。后果可识别不等于内部角色通道 $P,S$ 已被识别，也不赋予取得焦点读数、制造 $K$ 或执行 $K$ 的能力。
+
+### 定理 533.5（共同焦点边缘下可识别固定操作的完整分类）
+
+在定义 533.2 的非空完整实现类与假设 533.3 下，对任意固定列随机矩阵 $K$，下列两项等价：数据 $(M,\mu,\pi)$ 识别 $K$ 的端点后果；存在实数
+
+$$
+-\min_{1\le i\le r}\frac{\pi_i}{1-\pi_i}\ \le\ \alpha\ \le\ 1
+$$
+
+使
+
+$$
+K=\alpha I_r+(1-\alpha)\pi\mathbf1_r^T.
+\tag{533.1}
+$$
+
+这样的 $\alpha$ 唯一，共同端点后果由数据直接恢复为
+
+$$
+Q_K=\alpha M+(1-\alpha)(M\mu)\mathbf1_m^T.
+\tag{533.2}
+$$
+
+若 $K$ 不属式（533.1）的操作族，则每个 $(P,S)\in\mathcal F(M,\mu,\pi)$ 的任意邻域内都有共同数据相同、固定操作后果不同的竞争实现。因此，共同焦点边缘与完整端点观察决定的恰是这一整族操作后果；它们没有决定任意固定焦点操作的可迁移后果。式（533.1）在 $0\le\alpha\le1$ 时是恒等操作与重置到 $\pi$ 的凸混合，但完整范围还含负 $\alpha$；式（533.2）在负参数时仍是合法通道，因为它等于 $SKP$。
+
+**证明。** 固定任一 $(P,S)\in\mathcal F(M,\mu,\pi)$。满秩使 $P:\mathbb R^m\to\mathbb R^r$ 满射、$S:\mathbb R^r\to\mathbb R^n$ 单射，故 $\operatorname{rank}M=r$。取左逆 $L\in\mathbb R^{r\times n}$ 与右逆 $R\in\mathbb R^{m\times r}$，使 $LS=I_r$、$PR=I_r$；它们仅用于代数消去，不要求非负。
+
+先使用满秩分解的经典基变换事实，其非负分解表述见 Laurberg et al., *Theorems on Positive Data: On the Uniqueness of NMF* (2008), [§3, doi:10.1155/2008/764206](https://doi.org/10.1155/2008/764206)。在这里，若 $S'P'=SP$，则 $\operatorname{im}S'=\operatorname{im}M=\operatorname{im}S$；$S,S'$ 的列都是这个像空间的基。因此存在唯一 $A\in\operatorname{GL}_r(\mathbb R)$ 使 $S'=SA$，再由 $S$ 单射消去得 $P=AP'$。置 $T=A^{-1}$，于是
+
+$$
+P'=TP,\qquad S'=ST^{-1}.
+\tag{533.3}
+$$
+
+由 $P,P'$ 的列和，
+
+$$
+(\mathbf1_r^TT-\mathbf1_r^T)P=0.
+$$
+
+右乘 $R$ 得 $\mathbf1_r^TT=\mathbf1_r^T$；共同焦点边缘给出 $T\pi=TP\mu=P'\mu=\pi$。因此全部分解变换属于
+
+$$
+G_\pi=\{T\in\operatorname{GL}_r(\mathbb R):
+\mathbf1_r^TT=\mathbf1_r^T,\ T\pi=\pi\}.
+$$
+
+反过来，只要 $T\in G_\pi$ 且 $TP,ST^{-1}$ 逐项严格正，式（533.3）就是合法竞争实现：其乘积为 $M$，其焦点边缘为 $\pi$，其秩保持为 $r$，而
+
+$$
+\mathbf1_r^TTP=\mathbf1_m^T,\qquad
+\mathbf1_n^TST^{-1}=\mathbf1_r^TT^{-1}=\mathbf1_r^T.
+$$
+
+$T$ 是分解之间的代数变换，不要求它或 $T^{-1}$ 非负或列随机；需要严格正且列随机的是变换后两个通道。随机分解中这一非负性区别亦见 Christopher Adams, *Stochastic Matrix Factorization*, [§§2–3, arXiv:1609.05772v1](https://arxiv.org/abs/1609.05772v1)。
+
+因为 $P,S$ 的全部有限个条目严格正，映射 $T\mapsto TP$、$T\mapsto ST^{-1}$ 在 $I_r$ 处连续，故 $G_\pi$ 中存在包含 $I_r$ 的相对开邻域 $U$，其中每个 $T$ 都给出严格正的竞争实现。严格正性在此提供的是所有满足两项线性约束的充分小可逆扰动，而非一条特选扰动曲线。
+
+若 $K$ 的后果恒定，则对每个 $T\in U$ 有
+
+$$
+ST^{-1}KTP=SKP.
+$$
+
+左乘 $L$、右乘 $R$，得到 $T^{-1}KT=K$，即
+
+$$
+KT=TK\qquad(T\in U).
+\tag{533.4}
+$$
+
+为求这一局部交换条件的全部解，令 $W=\ker(\mathbf1_r^T)$。由于 $\mathbf1_r^T\pi=1$，每个 $z\in\mathbb R^r$ 唯一分解为
+
+$$
+z=(\mathbf1_r^Tz)\pi+
+\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+\qquad\mathbb R^r=\mathbb R\pi\oplus W.
+$$
+
+在此直和下，$T\in G_\pi$ 恰有块式
+
+$$
+T=\begin{pmatrix}1&0\\0&D\end{pmatrix},
+\qquad D\in\operatorname{GL}(W).
+$$
+
+所以 $U$ 包含每个充分接近 $I_W$ 的 $D$ 所对应的变换。$K$ 的列和条件则恰给出
+
+$$
+K=\begin{pmatrix}1&0\\v&C\end{pmatrix},
+\qquad v\in W,\quad C\in\operatorname{End}(W).
+$$
+
+式（533.4）因而等价于 $v=Dv$ 与 $CD=DC$。取充分小非零 $t$ 及 $D=(1+t)I_W$，第一式给出 $v=0$。令 $d=\dim W=r-1\ge1$；若 $d=1$，$C$ 自为标量。若 $d\ge2$，固定 $W$ 的一组基，对每个 $i\ne j$ 取基矩阵 $E_{ij}$。$D=I_W+tE_{ij}$ 在充分小非零 $t$ 时落入上述邻域，故 $CD=DC$ 给出 $CE_{ij}=E_{ij}C$。逐项写成
+
+$$
+C_{ai}\delta_{jb}=\delta_{ai}C_{jb}.
+$$
+
+取 $a\ne i,b=j$ 得 $C_{ai}=0$，故全部非对角项为零；取 $a=i,b=j$ 得 $C_{ii}=C_{jj}$。于是 $C=\alpha I_W$。这里使用的是与初等剪切矩阵交换强制标量的经典步骤，亦见 [Matrix.mem_range_scalar_of_commute_transvectionStruct](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Transvection.lean#L228)；本证明中的邻域条件通过非零 $t$ 消去给出它所需的全部基矩阵交换关系。
+
+回到原坐标，对任意 $z$ 有
+
+$$
+Kz=(\mathbf1_r^Tz)\pi+
+\alpha\bigl(z-(\mathbf1_r^Tz)\pi\bigr),
+$$
+
+即式（533.1）。$W\ne\{0\}$ 保证 $\alpha$ 唯一；特别地，$K\pi=\pi$ 是必要性推出的结论，并非对允许操作预加的限制。
+
+现确定非负性的准确范围。$r\ge2$ 与 $\pi$ 严格正给出 $0<\pi_i<1$。当 $i\ne j$ 时，$K_{ij}=(1-\alpha)\pi_i$，故全部非对角项非负当且仅当 $\alpha\le1$；对角项为
+
+$$
+K_{ii}=\pi_i+\alpha(1-\pi_i),
+$$
+
+故全部对角项非负当且仅当
+
+$$
+\alpha\ge\max_i\left(-\frac{\pi_i}{1-\pi_i}\right)
+=-\min_i\frac{\pi_i}{1-\pi_i}.
+$$
+
+式（533.1）的列和对每个实数 $\alpha$ 都是一，故这两个不等式既必要又充分，且两端点均包含在内。
+
+反向，若 $K$ 有式（533.1）的形式及上述范围，则对任意 $(P',S')\in\mathcal F(M,\mu,\pi)$，
+
+$$
+\begin{aligned}
+S'KP'
+&=\alpha S'P'+(1-\alpha)S'\pi\mathbf1_r^TP'\\
+&=\alpha M+(1-\alpha)(S'P'\mu)\mathbf1_m^T\\
+&=\alpha M+(1-\alpha)(M\mu)\mathbf1_m^T.
+\end{aligned}
+$$
+
+这既证明充分性，也证明恢复式（533.2）。
+
+最后证明非族操作的局部不可识别性。若 $K$ 不是式（533.1）的形式，则在上述块式中，或者 $v\ne0$，或者 $v=0$ 而 $C$ 非标量。第一种情形取 $B=I_W$，第二种情形取一个满足 $CB\ne BC$ 的基矩阵 $B=E_{ij}$；这样的基矩阵存在，否则刚才的逐项论证使 $C$ 成为标量。令 $N$ 在直和下为 $\operatorname{diag}(0,B)$，便有
+
+$$
+N\pi=0,\qquad \mathbf1_r^TN=0,\qquad KN-NK\ne0.
+$$
+
+对每个充分小非零 $\varepsilon$，$T_\varepsilon=I_r+\varepsilon N$ 可逆且属于 $U$，因此
+
+$$
+(P_\varepsilon,S_\varepsilon)
+=(T_\varepsilon P,ST_\varepsilon^{-1})
+\in\mathcal F(M,\mu,\pi),
+\qquad(P_\varepsilon,S_\varepsilon)\longrightarrow(P,S).
+$$
+
+其操作后果差恰为
+
+$$
+\begin{aligned}
+S_\varepsilon KP_\varepsilon-SKP
+&=ST_\varepsilon^{-1}(KT_\varepsilon-T_\varepsilon K)P\\
+&=\varepsilon ST_\varepsilon^{-1}(KN-NK)P\ne0.
+\end{aligned}
+$$
+
+若末项为零，左乘 $T_\varepsilon L$、右乘 $R$ 就会得到 $KN-NK=0$，矛盾。每个充分小非零扰动都保留共同数据而改变该固定后果，证明所述任意邻域结论。证毕。
+
+### 命题 533.6（同焦点、同方向与同边缘下重置后果仍可不同）
+
+令 $X=H=Y=\{1,2\}$，所有标签及角色类型固定，取
+
+$$
+\mu=\pi=\begin{pmatrix}1/2\\1/2\end{pmatrix},\qquad
+P=S=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},
+$$
+
+$$
+P'=\begin{pmatrix}11/16&5/16\\5/16&11/16\end{pmatrix},\qquad
+S'=\begin{pmatrix}5/6&1/6\\1/6&5/6\end{pmatrix}.
+$$
+
+两实现具有相同数据
+
+$$
+M=\begin{pmatrix}5/8&3/8\\3/8&5/8\end{pmatrix},
+\qquad P\mu=P'\mu=\pi,
+$$
+
+而同一个“重置到标签 $1$”的操作
+
+$$
+K=\begin{pmatrix}1&1\\0&0\end{pmatrix}
+$$
+
+产生不同的端点通道
+
+$$
+SKP=\begin{pmatrix}3/4&3/4\\1/4&1/4\end{pmatrix},\qquad
+S'KP'=\begin{pmatrix}5/6&5/6\\1/6&1/6\end{pmatrix}.
+$$
+
+因此，即使焦点集合、两类关系的方向、类型、操作含义和焦点边缘都已固定，共同端点资料仍可遗失这些关系经焦点衔接所需的操作信息。在相同 $\pi$ 下，定理 533.5 的负端点 $\alpha=-1$ 则给出可识别的标签交换操作；重置到一个固定标签与重置到共同分布 $\pi$ 也属于不同操作。
+
+**证明。** 四个通道逐项严格正且每列和为一，其行列式依次为 $1/2,1/2,3/8,2/3$，故均满秩。两个 $P$ 矩阵还各自每行和为一，因而保持均匀 $\mu$。直接相乘得 $SP=S'P'=M$。由于 $KP=KP'=K$，两种操作后果分别把 $S,S'$ 的第一列重复两次，得到显示的不同通道。操作 $K$ 不满足 $K\pi=\pi$，亦不在定理 533.5 的族中。
+
+此处的分解变换及其逆为
+
+$$
+T=\begin{pmatrix}7/8&1/8\\1/8&7/8\end{pmatrix},\qquad
+T^{-1}=\begin{pmatrix}7/6&-1/6\\-1/6&7/6\end{pmatrix},
+\qquad P'=TP,\quad S'=ST^{-1}.
+$$
+
+$T^{-1}$ 的负条目没有妨碍两个新通道严格正，具体体现了定理中对代数变换与合法通道的分别。最后，均匀 $\pi$ 的参数范围为 $[-1,1]$，且
+
+$$
+-I_2+2\pi\mathbf1_2^T=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+该操作的共同后果为 $-M+2(M\mu)\mathbf1_2^T=\begin{pmatrix}3/8&5/8\\5/8&3/8\end{pmatrix}$。它不在 $0\le\alpha\le1$ 的凸混合段内，故不能删除负参数部分。整个构造只比较同一现代模型中的关系实现，没有把健康征候等同于产生健康的关系，也没有从端点数据判定经验因果方向。证毕。
+
+## 追加锚（本行以下为增补区）
