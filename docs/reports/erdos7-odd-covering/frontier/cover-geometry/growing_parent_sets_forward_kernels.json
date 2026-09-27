@@ -1,0 +1,150 @@
+{
+  "schema": "growing-parent-sets-forward-kernels-v1",
+  "source": {
+    "name": "unrestricted_triple_parent_forward_kernels.json",
+    "sha256": "ed7a6ce06258ba9e64c66420fc14975b0abb29b2a9904db180a489e7362cefd1",
+    "producer_sha256": "68a762ddd880b5f6ec0ac390403f0c6c587b105f9447805792bad2db72708ea9"
+  },
+  "scope": {
+    "head": "Fixed reference head and precise Report617 pure-source/relational-root phase hypotheses, inherited through619",
+    "small_arity": "Union of at most three distinct smaller parent primes: every owner>=37 uses619 rows",
+    "four_parents": "A fixed union of four distinct smaller parents: owner>=1253; cube threshold n>=5",
+    "higher_arity": "Fixed union of r>=5 distinct smaller parents: owner>=2(3r)^r+3; cube n>=3r",
+    "tuples": "Several syntactic tuples allowed only within the one declared parent union; actual numerical moduli deduplicated before one row is chosen",
+    "source_law": "One full-head law followed by normalized owner rows in numerical order, including dead fibres; uniform conditional Haar cap v/4",
+    "heights": "Arbitrary finite original heights and arbitrary globally fixed phases at distinct numerical moduli",
+    "ordinary": "Inherited private domains, single-head Type I branches and separate components; no undeclared crossings",
+    "exclusions": "Unrestricted head, parent sets violating the growth thresholds, changing union by branch, numerical-label duplication, non-increasing parents, undeclared ordinary interior crossings"
+  },
+  "constants": {
+    "alpha": "2673/138320",
+    "gate": "60482197234393807/2054767329987788800",
+    "three_parent_fee": "1242544552328676774450933643518281280362468568657373535064155590928507247198457685044479930728600881846448585755351824527501659733305095308865661/46802220966240370862182144385376474196780456091929349297936855105144300860484742389160785039130409688132222696934995960213883977775000000000000000",
+    "ordinary": "1/65536"
+  },
+  "four_parent": {
+    "primes": [
+      3,
+      5,
+      7,
+      11
+    ],
+    "caps": [
+      "2",
+      "2",
+      "2",
+      "11/4"
+    ],
+    "all_factors": [
+      "5",
+      "11/4",
+      "19/9",
+      "47/25"
+    ],
+    "minimum_cube_n": 5,
+    "minimum_owner": 1253,
+    "cross_checks": [
+      {
+        "n": 5,
+        "exact_moment": "10629286733/35298301500",
+        "majorant": "2103072391361/6933594937500",
+        "scaled_majorant": "2103072391361/28533312500"
+      },
+      {
+        "n": 6,
+        "exact_moment": "661286651624/6920754946875",
+        "majorant": "4292167370504201/44846492055750000",
+        "scaled_majorant": "4292167370504201/61517821750000"
+      },
+      {
+        "n": 7,
+        "exact_moment": "12171624000847189/392406805487812500",
+        "majorant": "12054301262888921369/388482737432934375000",
+        "scaled_majorant": "12054301262888921369/177632710303125000"
+      }
+    ],
+    "moment_upper": "74*3^(-n)",
+    "odd_interval_count": "4n^3+6n^2+4n+1",
+    "whole_prime_fee": "24827/31640625",
+    "strict_fee": "1/1250"
+  },
+  "arbitrary_arity": {
+    "coordinate_cap": "max(2,p_i/4)",
+    "moment_constant": "3r(9r+1)5^(r-2)",
+    "whole_prime_fee": "9r*C_r/(3r)^(r+1)*3^(-3r)",
+    "ratio_upper": "46/2997",
+    "geometric_ratio": "1/60",
+    "thresholds": [
+      {
+        "arity": 5,
+        "minimum_cube_n": 15,
+        "minimum_owner": 1518753,
+        "moment_constant": 86250,
+        "whole_prime_fee": "46/1937102445"
+      },
+      {
+        "arity": 6,
+        "minimum_cube_n": 18,
+        "minimum_owner": 68024451,
+        "moment_constant": 618750,
+        "whole_prime_fee": "34375/244019119519584"
+      },
+      {
+        "arity": 7,
+        "minimum_cube_n": 21,
+        "minimum_owner": 3602177085,
+        "moment_constant": 4200000,
+        "whole_prime_fee": "200000/299047972837078521"
+      },
+      {
+        "arity": 8,
+        "minimum_cube_n": 24,
+        "minimum_owner": 220150628355,
+        "moment_constant": 27375000,
+        "whole_prime_fee": "1140625/431784999454557339648"
+      }
+    ],
+    "entire_arity_ge5_fee": "184/7619269617",
+    "strict_fee": "1/10000000"
+  },
+  "consequence": {
+    "raw_good_lower": "3354976434925556996935948691538203832178834701129677713374951164670283728058797497408327439569200150878198824005962545067269986772725779973879579635696877/1608112067441343303423869066642735818583679419254404198217594823597483308452533018147443813030009519116875646456997816696085990797456126771200000000000000000",
+    "exact_head_lower": "3354976434925556996935948691538203832178834701129677713374951164670283728058797497408327439569200150878198824005962545067269986772725779973879579635696877/83215136987836365779868899849615869220536676869161686755502325476993599410832161268295708274714147655909554589574237936925781611337123627008000000000000000000",
+    "simple_raw_lower": "10417363/5120000000",
+    "simple_head_lower": "27845611299/708198400000000",
+    "strict_head": "1/26000",
+    "full_density_lower": "1/(26000 Q_off)"
+  },
+  "checks": {
+    "inherited_checks": true,
+    "inherited_producer": true,
+    "inherited_no_Lean_claim": true,
+    "inherited_gate_precision": true,
+    "inherited_complete_three_parent_precision": true,
+    "inherited_head_and_ordinary": true,
+    "inherited_conditional_interface": true,
+    "four_parent_full_factors": true,
+    "four_cube_5": true,
+    "four_cube_6": true,
+    "four_cube_7": true,
+    "four_cube_start": true,
+    "four_scaled_diagonal_ratios": true,
+    "four_scaled_cross_ratios": true,
+    "four_threshold": true,
+    "four_odd_integer_count": true,
+    "four_entire_prime_tail": true,
+    "four_tail_rows_preserve_future_cap": true,
+    "generic_cross_start": true,
+    "generic_cross_term_decrease": true,
+    "generic_arity_ratio_bound": true,
+    "generic_dimension_four_start": true,
+    "generic_dimension_five_start": true,
+    "all_higher_arities": true,
+    "all_arity_four_alternative": true,
+    "arity_five_threshold": true,
+    "one_common_positive_budget": true,
+    "full_head_projection": true
+  },
+  "producer_sha256": "1271c86d6397c0511d6dfb6cf1b36d020f323cf3fbc3ccf2df8ea0ff791d7f1c",
+  "new_lean_verification": false
+}

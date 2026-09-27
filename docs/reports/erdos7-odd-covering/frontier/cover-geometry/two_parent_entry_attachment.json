@@ -1,0 +1,8721 @@
+{
+  "schema": "two-parent-entry-attachment-v1",
+  "scope": {
+    "minimum_entry_prime": 53,
+    "parent_coordinates": "Any two distinct head primes; lower comparison3,5",
+    "low_entry_extension": "Entries37,41,43,47 also allowed when neither head parent is3",
+    "entry_domains": "One actual private descendant domain per entry prime",
+    "head_touching_originals": "Supported on its two head parents and its entry prime",
+    "branches": "Pairwise disjoint exterior prime sets; ordinary single-port branches also allowed",
+    "all_original_heights": "Unbounded finite; no numerical label or phase merged",
+    "excluded": "Arbitrary multiple-entry shared separators and unrestricted Erdos7",
+    "lean_verified": false
+  },
+  "source": {
+    "file": "twelve_vertex_attachment_kernel.json",
+    "sha256": "4d83eb4b250698b897d9f58253fb2a0093b8611de5e5d1ee78cb50a5d2cc18d3",
+    "producer_sha256": "2e846b6f859c4dbec9f1da7a5f876d2bffcef98698c6bf10fab0e469553e0efa"
+  },
+  "parent_label_prefix": [
+    {
+      "modulus": 3,
+      "exponents": [
+        1,
+        0
+      ]
+    },
+    {
+      "modulus": 5,
+      "exponents": [
+        0,
+        1
+      ]
+    },
+    {
+      "modulus": 9,
+      "exponents": [
+        2,
+        0
+      ]
+    },
+    {
+      "modulus": 15,
+      "exponents": [
+        1,
+        1
+      ]
+    },
+    {
+      "modulus": 25,
+      "exponents": [
+        0,
+        2
+      ]
+    },
+    {
+      "modulus": 27,
+      "exponents": [
+        3,
+        0
+      ]
+    },
+    {
+      "modulus": 45,
+      "exponents": [
+        2,
+        1
+      ]
+    },
+    {
+      "modulus": 75,
+      "exponents": [
+        1,
+        2
+      ]
+    },
+    {
+      "modulus": 81,
+      "exponents": [
+        4,
+        0
+      ]
+    },
+    {
+      "modulus": 125,
+      "exponents": [
+        0,
+        3
+      ]
+    },
+    {
+      "modulus": 135,
+      "exponents": [
+        3,
+        1
+      ]
+    },
+    {
+      "modulus": 225,
+      "exponents": [
+        2,
+        2
+      ]
+    },
+    {
+      "modulus": 243,
+      "exponents": [
+        5,
+        0
+      ]
+    },
+    {
+      "modulus": 375,
+      "exponents": [
+        1,
+        3
+      ]
+    },
+    {
+      "modulus": 405,
+      "exponents": [
+        4,
+        1
+      ]
+    },
+    {
+      "modulus": 625,
+      "exponents": [
+        0,
+        4
+      ]
+    },
+    {
+      "modulus": 675,
+      "exponents": [
+        3,
+        2
+      ]
+    },
+    {
+      "modulus": 729,
+      "exponents": [
+        6,
+        0
+      ]
+    },
+    {
+      "modulus": 1125,
+      "exponents": [
+        2,
+        3
+      ]
+    },
+    {
+      "modulus": 1215,
+      "exponents": [
+        5,
+        1
+      ]
+    },
+    {
+      "modulus": 1875,
+      "exponents": [
+        1,
+        4
+      ]
+    },
+    {
+      "modulus": 2025,
+      "exponents": [
+        4,
+        2
+      ]
+    },
+    {
+      "modulus": 2187,
+      "exponents": [
+        7,
+        0
+      ]
+    },
+    {
+      "modulus": 3125,
+      "exponents": [
+        0,
+        5
+      ]
+    },
+    {
+      "modulus": 3375,
+      "exponents": [
+        3,
+        3
+      ]
+    },
+    {
+      "modulus": 3645,
+      "exponents": [
+        6,
+        1
+      ]
+    },
+    {
+      "modulus": 5625,
+      "exponents": [
+        2,
+        4
+      ]
+    },
+    {
+      "modulus": 6075,
+      "exponents": [
+        5,
+        2
+      ]
+    },
+    {
+      "modulus": 6561,
+      "exponents": [
+        8,
+        0
+      ]
+    },
+    {
+      "modulus": 9375,
+      "exponents": [
+        1,
+        5
+      ]
+    },
+    {
+      "modulus": 10125,
+      "exponents": [
+        4,
+        3
+      ]
+    },
+    {
+      "modulus": 10935,
+      "exponents": [
+        7,
+        1
+      ]
+    },
+    {
+      "modulus": 15625,
+      "exponents": [
+        0,
+        6
+      ]
+    },
+    {
+      "modulus": 16875,
+      "exponents": [
+        3,
+        4
+      ]
+    },
+    {
+      "modulus": 18225,
+      "exponents": [
+        6,
+        2
+      ]
+    },
+    {
+      "modulus": 19683,
+      "exponents": [
+        9,
+        0
+      ]
+    },
+    {
+      "modulus": 28125,
+      "exponents": [
+        2,
+        5
+      ]
+    },
+    {
+      "modulus": 30375,
+      "exponents": [
+        5,
+        3
+      ]
+    },
+    {
+      "modulus": 32805,
+      "exponents": [
+        8,
+        1
+      ]
+    },
+    {
+      "modulus": 46875,
+      "exponents": [
+        1,
+        6
+      ]
+    },
+    {
+      "modulus": 50625,
+      "exponents": [
+        4,
+        4
+      ]
+    },
+    {
+      "modulus": 54675,
+      "exponents": [
+        7,
+        2
+      ]
+    },
+    {
+      "modulus": 59049,
+      "exponents": [
+        10,
+        0
+      ]
+    },
+    {
+      "modulus": 78125,
+      "exponents": [
+        0,
+        7
+      ]
+    },
+    {
+      "modulus": 84375,
+      "exponents": [
+        3,
+        5
+      ]
+    },
+    {
+      "modulus": 91125,
+      "exponents": [
+        6,
+        3
+      ]
+    },
+    {
+      "modulus": 98415,
+      "exponents": [
+        9,
+        1
+      ]
+    },
+    {
+      "modulus": 140625,
+      "exponents": [
+        2,
+        6
+      ]
+    },
+    {
+      "modulus": 151875,
+      "exponents": [
+        5,
+        4
+      ]
+    },
+    {
+      "modulus": 164025,
+      "exponents": [
+        8,
+        2
+      ]
+    },
+    {
+      "modulus": 177147,
+      "exponents": [
+        11,
+        0
+      ]
+    },
+    {
+      "modulus": 234375,
+      "exponents": [
+        1,
+        7
+      ]
+    },
+    {
+      "modulus": 253125,
+      "exponents": [
+        4,
+        5
+      ]
+    },
+    {
+      "modulus": 273375,
+      "exponents": [
+        7,
+        3
+      ]
+    },
+    {
+      "modulus": 295245,
+      "exponents": [
+        10,
+        1
+      ]
+    },
+    {
+      "modulus": 390625,
+      "exponents": [
+        0,
+        8
+      ]
+    },
+    {
+      "modulus": 421875,
+      "exponents": [
+        3,
+        6
+      ]
+    },
+    {
+      "modulus": 455625,
+      "exponents": [
+        6,
+        4
+      ]
+    },
+    {
+      "modulus": 492075,
+      "exponents": [
+        9,
+        2
+      ]
+    },
+    {
+      "modulus": 531441,
+      "exponents": [
+        12,
+        0
+      ]
+    },
+    {
+      "modulus": 703125,
+      "exponents": [
+        2,
+        7
+      ]
+    },
+    {
+      "modulus": 759375,
+      "exponents": [
+        5,
+        5
+      ]
+    },
+    {
+      "modulus": 820125,
+      "exponents": [
+        8,
+        3
+      ]
+    },
+    {
+      "modulus": 885735,
+      "exponents": [
+        11,
+        1
+      ]
+    },
+    {
+      "modulus": 1171875,
+      "exponents": [
+        1,
+        8
+      ]
+    },
+    {
+      "modulus": 1265625,
+      "exponents": [
+        4,
+        6
+      ]
+    },
+    {
+      "modulus": 1366875,
+      "exponents": [
+        7,
+        4
+      ]
+    },
+    {
+      "modulus": 1476225,
+      "exponents": [
+        10,
+        2
+      ]
+    },
+    {
+      "modulus": 1594323,
+      "exponents": [
+        13,
+        0
+      ]
+    },
+    {
+      "modulus": 1953125,
+      "exponents": [
+        0,
+        9
+      ]
+    },
+    {
+      "modulus": 2109375,
+      "exponents": [
+        3,
+        7
+      ]
+    },
+    {
+      "modulus": 2278125,
+      "exponents": [
+        6,
+        5
+      ]
+    },
+    {
+      "modulus": 2460375,
+      "exponents": [
+        9,
+        3
+      ]
+    },
+    {
+      "modulus": 2657205,
+      "exponents": [
+        12,
+        1
+      ]
+    },
+    {
+      "modulus": 3515625,
+      "exponents": [
+        2,
+        8
+      ]
+    },
+    {
+      "modulus": 3796875,
+      "exponents": [
+        5,
+        6
+      ]
+    },
+    {
+      "modulus": 4100625,
+      "exponents": [
+        8,
+        4
+      ]
+    },
+    {
+      "modulus": 4428675,
+      "exponents": [
+        11,
+        2
+      ]
+    },
+    {
+      "modulus": 4782969,
+      "exponents": [
+        14,
+        0
+      ]
+    },
+    {
+      "modulus": 5859375,
+      "exponents": [
+        1,
+        9
+      ]
+    },
+    {
+      "modulus": 6328125,
+      "exponents": [
+        4,
+        7
+      ]
+    },
+    {
+      "modulus": 6834375,
+      "exponents": [
+        7,
+        5
+      ]
+    },
+    {
+      "modulus": 7381125,
+      "exponents": [
+        10,
+        3
+      ]
+    },
+    {
+      "modulus": 7971615,
+      "exponents": [
+        13,
+        1
+      ]
+    },
+    {
+      "modulus": 9765625,
+      "exponents": [
+        0,
+        10
+      ]
+    },
+    {
+      "modulus": 10546875,
+      "exponents": [
+        3,
+        8
+      ]
+    },
+    {
+      "modulus": 11390625,
+      "exponents": [
+        6,
+        6
+      ]
+    },
+    {
+      "modulus": 12301875,
+      "exponents": [
+        9,
+        4
+      ]
+    },
+    {
+      "modulus": 13286025,
+      "exponents": [
+        12,
+        2
+      ]
+    },
+    {
+      "modulus": 14348907,
+      "exponents": [
+        15,
+        0
+      ]
+    },
+    {
+      "modulus": 17578125,
+      "exponents": [
+        2,
+        9
+      ]
+    },
+    {
+      "modulus": 18984375,
+      "exponents": [
+        5,
+        7
+      ]
+    },
+    {
+      "modulus": 20503125,
+      "exponents": [
+        8,
+        5
+      ]
+    },
+    {
+      "modulus": 22143375,
+      "exponents": [
+        11,
+        3
+      ]
+    },
+    {
+      "modulus": 23914845,
+      "exponents": [
+        14,
+        1
+      ]
+    },
+    {
+      "modulus": 29296875,
+      "exponents": [
+        1,
+        10
+      ]
+    },
+    {
+      "modulus": 31640625,
+      "exponents": [
+        4,
+        8
+      ]
+    },
+    {
+      "modulus": 34171875,
+      "exponents": [
+        7,
+        6
+      ]
+    },
+    {
+      "modulus": 36905625,
+      "exponents": [
+        10,
+        4
+      ]
+    },
+    {
+      "modulus": 39858075,
+      "exponents": [
+        13,
+        2
+      ]
+    },
+    {
+      "modulus": 43046721,
+      "exponents": [
+        16,
+        0
+      ]
+    },
+    {
+      "modulus": 48828125,
+      "exponents": [
+        0,
+        11
+      ]
+    },
+    {
+      "modulus": 52734375,
+      "exponents": [
+        3,
+        9
+      ]
+    },
+    {
+      "modulus": 56953125,
+      "exponents": [
+        6,
+        7
+      ]
+    },
+    {
+      "modulus": 61509375,
+      "exponents": [
+        9,
+        5
+      ]
+    },
+    {
+      "modulus": 66430125,
+      "exponents": [
+        12,
+        3
+      ]
+    },
+    {
+      "modulus": 71744535,
+      "exponents": [
+        15,
+        1
+      ]
+    },
+    {
+      "modulus": 87890625,
+      "exponents": [
+        2,
+        10
+      ]
+    },
+    {
+      "modulus": 94921875,
+      "exponents": [
+        5,
+        8
+      ]
+    },
+    {
+      "modulus": 102515625,
+      "exponents": [
+        8,
+        6
+      ]
+    },
+    {
+      "modulus": 110716875,
+      "exponents": [
+        11,
+        4
+      ]
+    },
+    {
+      "modulus": 119574225,
+      "exponents": [
+        14,
+        2
+      ]
+    },
+    {
+      "modulus": 129140163,
+      "exponents": [
+        17,
+        0
+      ]
+    },
+    {
+      "modulus": 146484375,
+      "exponents": [
+        1,
+        11
+      ]
+    },
+    {
+      "modulus": 158203125,
+      "exponents": [
+        4,
+        9
+      ]
+    },
+    {
+      "modulus": 170859375,
+      "exponents": [
+        7,
+        7
+      ]
+    },
+    {
+      "modulus": 184528125,
+      "exponents": [
+        10,
+        5
+      ]
+    },
+    {
+      "modulus": 199290375,
+      "exponents": [
+        13,
+        3
+      ]
+    },
+    {
+      "modulus": 215233605,
+      "exponents": [
+        16,
+        1
+      ]
+    },
+    {
+      "modulus": 244140625,
+      "exponents": [
+        0,
+        12
+      ]
+    },
+    {
+      "modulus": 263671875,
+      "exponents": [
+        3,
+        10
+      ]
+    },
+    {
+      "modulus": 284765625,
+      "exponents": [
+        6,
+        8
+      ]
+    },
+    {
+      "modulus": 307546875,
+      "exponents": [
+        9,
+        6
+      ]
+    },
+    {
+      "modulus": 332150625,
+      "exponents": [
+        12,
+        4
+      ]
+    },
+    {
+      "modulus": 358722675,
+      "exponents": [
+        15,
+        2
+      ]
+    },
+    {
+      "modulus": 387420489,
+      "exponents": [
+        18,
+        0
+      ]
+    },
+    {
+      "modulus": 439453125,
+      "exponents": [
+        2,
+        11
+      ]
+    },
+    {
+      "modulus": 474609375,
+      "exponents": [
+        5,
+        9
+      ]
+    },
+    {
+      "modulus": 512578125,
+      "exponents": [
+        8,
+        7
+      ]
+    },
+    {
+      "modulus": 553584375,
+      "exponents": [
+        11,
+        5
+      ]
+    },
+    {
+      "modulus": 597871125,
+      "exponents": [
+        14,
+        3
+      ]
+    },
+    {
+      "modulus": 645700815,
+      "exponents": [
+        17,
+        1
+      ]
+    },
+    {
+      "modulus": 732421875,
+      "exponents": [
+        1,
+        12
+      ]
+    },
+    {
+      "modulus": 791015625,
+      "exponents": [
+        4,
+        10
+      ]
+    },
+    {
+      "modulus": 854296875,
+      "exponents": [
+        7,
+        8
+      ]
+    },
+    {
+      "modulus": 922640625,
+      "exponents": [
+        10,
+        6
+      ]
+    },
+    {
+      "modulus": 996451875,
+      "exponents": [
+        13,
+        4
+      ]
+    },
+    {
+      "modulus": 1076168025,
+      "exponents": [
+        16,
+        2
+      ]
+    },
+    {
+      "modulus": 1162261467,
+      "exponents": [
+        19,
+        0
+      ]
+    },
+    {
+      "modulus": 1220703125,
+      "exponents": [
+        0,
+        13
+      ]
+    },
+    {
+      "modulus": 1318359375,
+      "exponents": [
+        3,
+        11
+      ]
+    },
+    {
+      "modulus": 1423828125,
+      "exponents": [
+        6,
+        9
+      ]
+    },
+    {
+      "modulus": 1537734375,
+      "exponents": [
+        9,
+        7
+      ]
+    },
+    {
+      "modulus": 1660753125,
+      "exponents": [
+        12,
+        5
+      ]
+    },
+    {
+      "modulus": 1793613375,
+      "exponents": [
+        15,
+        3
+      ]
+    },
+    {
+      "modulus": 1937102445,
+      "exponents": [
+        18,
+        1
+      ]
+    },
+    {
+      "modulus": 2197265625,
+      "exponents": [
+        2,
+        12
+      ]
+    },
+    {
+      "modulus": 2373046875,
+      "exponents": [
+        5,
+        10
+      ]
+    },
+    {
+      "modulus": 2562890625,
+      "exponents": [
+        8,
+        8
+      ]
+    },
+    {
+      "modulus": 2767921875,
+      "exponents": [
+        11,
+        6
+      ]
+    },
+    {
+      "modulus": 2989355625,
+      "exponents": [
+        14,
+        4
+      ]
+    },
+    {
+      "modulus": 3228504075,
+      "exponents": [
+        17,
+        2
+      ]
+    },
+    {
+      "modulus": 3486784401,
+      "exponents": [
+        20,
+        0
+      ]
+    },
+    {
+      "modulus": 3662109375,
+      "exponents": [
+        1,
+        13
+      ]
+    },
+    {
+      "modulus": 3955078125,
+      "exponents": [
+        4,
+        11
+      ]
+    },
+    {
+      "modulus": 4271484375,
+      "exponents": [
+        7,
+        9
+      ]
+    },
+    {
+      "modulus": 4613203125,
+      "exponents": [
+        10,
+        7
+      ]
+    },
+    {
+      "modulus": 4982259375,
+      "exponents": [
+        13,
+        5
+      ]
+    },
+    {
+      "modulus": 5380840125,
+      "exponents": [
+        16,
+        3
+      ]
+    },
+    {
+      "modulus": 5811307335,
+      "exponents": [
+        19,
+        1
+      ]
+    },
+    {
+      "modulus": 6103515625,
+      "exponents": [
+        0,
+        14
+      ]
+    },
+    {
+      "modulus": 6591796875,
+      "exponents": [
+        3,
+        12
+      ]
+    },
+    {
+      "modulus": 7119140625,
+      "exponents": [
+        6,
+        10
+      ]
+    },
+    {
+      "modulus": 7688671875,
+      "exponents": [
+        9,
+        8
+      ]
+    },
+    {
+      "modulus": 8303765625,
+      "exponents": [
+        12,
+        6
+      ]
+    },
+    {
+      "modulus": 8968066875,
+      "exponents": [
+        15,
+        4
+      ]
+    },
+    {
+      "modulus": 9685512225,
+      "exponents": [
+        18,
+        2
+      ]
+    },
+    {
+      "modulus": 10460353203,
+      "exponents": [
+        21,
+        0
+      ]
+    },
+    {
+      "modulus": 10986328125,
+      "exponents": [
+        2,
+        13
+      ]
+    },
+    {
+      "modulus": 11865234375,
+      "exponents": [
+        5,
+        11
+      ]
+    },
+    {
+      "modulus": 12814453125,
+      "exponents": [
+        8,
+        9
+      ]
+    },
+    {
+      "modulus": 13839609375,
+      "exponents": [
+        11,
+        7
+      ]
+    },
+    {
+      "modulus": 14946778125,
+      "exponents": [
+        14,
+        5
+      ]
+    },
+    {
+      "modulus": 16142520375,
+      "exponents": [
+        17,
+        3
+      ]
+    },
+    {
+      "modulus": 17433922005,
+      "exponents": [
+        20,
+        1
+      ]
+    },
+    {
+      "modulus": 18310546875,
+      "exponents": [
+        1,
+        14
+      ]
+    },
+    {
+      "modulus": 19775390625,
+      "exponents": [
+        4,
+        12
+      ]
+    },
+    {
+      "modulus": 21357421875,
+      "exponents": [
+        7,
+        10
+      ]
+    },
+    {
+      "modulus": 23066015625,
+      "exponents": [
+        10,
+        8
+      ]
+    },
+    {
+      "modulus": 24911296875,
+      "exponents": [
+        13,
+        6
+      ]
+    },
+    {
+      "modulus": 26904200625,
+      "exponents": [
+        16,
+        4
+      ]
+    },
+    {
+      "modulus": 29056536675,
+      "exponents": [
+        19,
+        2
+      ]
+    },
+    {
+      "modulus": 30517578125,
+      "exponents": [
+        0,
+        15
+      ]
+    },
+    {
+      "modulus": 31381059609,
+      "exponents": [
+        22,
+        0
+      ]
+    },
+    {
+      "modulus": 32958984375,
+      "exponents": [
+        3,
+        13
+      ]
+    },
+    {
+      "modulus": 35595703125,
+      "exponents": [
+        6,
+        11
+      ]
+    },
+    {
+      "modulus": 38443359375,
+      "exponents": [
+        9,
+        9
+      ]
+    },
+    {
+      "modulus": 41518828125,
+      "exponents": [
+        12,
+        7
+      ]
+    },
+    {
+      "modulus": 44840334375,
+      "exponents": [
+        15,
+        5
+      ]
+    },
+    {
+      "modulus": 48427561125,
+      "exponents": [
+        18,
+        3
+      ]
+    },
+    {
+      "modulus": 52301766015,
+      "exponents": [
+        21,
+        1
+      ]
+    },
+    {
+      "modulus": 54931640625,
+      "exponents": [
+        2,
+        14
+      ]
+    },
+    {
+      "modulus": 59326171875,
+      "exponents": [
+        5,
+        12
+      ]
+    },
+    {
+      "modulus": 64072265625,
+      "exponents": [
+        8,
+        10
+      ]
+    },
+    {
+      "modulus": 69198046875,
+      "exponents": [
+        11,
+        8
+      ]
+    },
+    {
+      "modulus": 74733890625,
+      "exponents": [
+        14,
+        6
+      ]
+    },
+    {
+      "modulus": 80712601875,
+      "exponents": [
+        17,
+        4
+      ]
+    },
+    {
+      "modulus": 87169610025,
+      "exponents": [
+        20,
+        2
+      ]
+    },
+    {
+      "modulus": 91552734375,
+      "exponents": [
+        1,
+        15
+      ]
+    },
+    {
+      "modulus": 94143178827,
+      "exponents": [
+        23,
+        0
+      ]
+    },
+    {
+      "modulus": 98876953125,
+      "exponents": [
+        4,
+        13
+      ]
+    },
+    {
+      "modulus": 106787109375,
+      "exponents": [
+        7,
+        11
+      ]
+    },
+    {
+      "modulus": 115330078125,
+      "exponents": [
+        10,
+        9
+      ]
+    },
+    {
+      "modulus": 124556484375,
+      "exponents": [
+        13,
+        7
+      ]
+    },
+    {
+      "modulus": 134521003125,
+      "exponents": [
+        16,
+        5
+      ]
+    },
+    {
+      "modulus": 145282683375,
+      "exponents": [
+        19,
+        3
+      ]
+    },
+    {
+      "modulus": 152587890625,
+      "exponents": [
+        0,
+        16
+      ]
+    },
+    {
+      "modulus": 156905298045,
+      "exponents": [
+        22,
+        1
+      ]
+    },
+    {
+      "modulus": 164794921875,
+      "exponents": [
+        3,
+        14
+      ]
+    },
+    {
+      "modulus": 177978515625,
+      "exponents": [
+        6,
+        12
+      ]
+    },
+    {
+      "modulus": 192216796875,
+      "exponents": [
+        9,
+        10
+      ]
+    },
+    {
+      "modulus": 207594140625,
+      "exponents": [
+        12,
+        8
+      ]
+    },
+    {
+      "modulus": 224201671875,
+      "exponents": [
+        15,
+        6
+      ]
+    },
+    {
+      "modulus": 242137805625,
+      "exponents": [
+        18,
+        4
+      ]
+    },
+    {
+      "modulus": 261508830075,
+      "exponents": [
+        21,
+        2
+      ]
+    },
+    {
+      "modulus": 274658203125,
+      "exponents": [
+        2,
+        15
+      ]
+    },
+    {
+      "modulus": 282429536481,
+      "exponents": [
+        24,
+        0
+      ]
+    },
+    {
+      "modulus": 296630859375,
+      "exponents": [
+        5,
+        13
+      ]
+    },
+    {
+      "modulus": 320361328125,
+      "exponents": [
+        8,
+        11
+      ]
+    },
+    {
+      "modulus": 345990234375,
+      "exponents": [
+        11,
+        9
+      ]
+    },
+    {
+      "modulus": 373669453125,
+      "exponents": [
+        14,
+        7
+      ]
+    },
+    {
+      "modulus": 403563009375,
+      "exponents": [
+        17,
+        5
+      ]
+    },
+    {
+      "modulus": 435848050125,
+      "exponents": [
+        20,
+        3
+      ]
+    },
+    {
+      "modulus": 457763671875,
+      "exponents": [
+        1,
+        16
+      ]
+    },
+    {
+      "modulus": 470715894135,
+      "exponents": [
+        23,
+        1
+      ]
+    },
+    {
+      "modulus": 494384765625,
+      "exponents": [
+        4,
+        14
+      ]
+    },
+    {
+      "modulus": 533935546875,
+      "exponents": [
+        7,
+        12
+      ]
+    },
+    {
+      "modulus": 576650390625,
+      "exponents": [
+        10,
+        10
+      ]
+    },
+    {
+      "modulus": 622782421875,
+      "exponents": [
+        13,
+        8
+      ]
+    },
+    {
+      "modulus": 672605015625,
+      "exponents": [
+        16,
+        6
+      ]
+    },
+    {
+      "modulus": 726413416875,
+      "exponents": [
+        19,
+        4
+      ]
+    },
+    {
+      "modulus": 762939453125,
+      "exponents": [
+        0,
+        17
+      ]
+    },
+    {
+      "modulus": 784526490225,
+      "exponents": [
+        22,
+        2
+      ]
+    },
+    {
+      "modulus": 823974609375,
+      "exponents": [
+        3,
+        15
+      ]
+    },
+    {
+      "modulus": 847288609443,
+      "exponents": [
+        25,
+        0
+      ]
+    },
+    {
+      "modulus": 889892578125,
+      "exponents": [
+        6,
+        13
+      ]
+    },
+    {
+      "modulus": 961083984375,
+      "exponents": [
+        9,
+        11
+      ]
+    },
+    {
+      "modulus": 1037970703125,
+      "exponents": [
+        12,
+        9
+      ]
+    },
+    {
+      "modulus": 1121008359375,
+      "exponents": [
+        15,
+        7
+      ]
+    },
+    {
+      "modulus": 1210689028125,
+      "exponents": [
+        18,
+        5
+      ]
+    },
+    {
+      "modulus": 1307544150375,
+      "exponents": [
+        21,
+        3
+      ]
+    },
+    {
+      "modulus": 1373291015625,
+      "exponents": [
+        2,
+        16
+      ]
+    },
+    {
+      "modulus": 1412147682405,
+      "exponents": [
+        24,
+        1
+      ]
+    },
+    {
+      "modulus": 1483154296875,
+      "exponents": [
+        5,
+        14
+      ]
+    },
+    {
+      "modulus": 1601806640625,
+      "exponents": [
+        8,
+        12
+      ]
+    },
+    {
+      "modulus": 1729951171875,
+      "exponents": [
+        11,
+        10
+      ]
+    },
+    {
+      "modulus": 1868347265625,
+      "exponents": [
+        14,
+        8
+      ]
+    },
+    {
+      "modulus": 2017815046875,
+      "exponents": [
+        17,
+        6
+      ]
+    },
+    {
+      "modulus": 2179240250625,
+      "exponents": [
+        20,
+        4
+      ]
+    },
+    {
+      "modulus": 2288818359375,
+      "exponents": [
+        1,
+        17
+      ]
+    },
+    {
+      "modulus": 2353579470675,
+      "exponents": [
+        23,
+        2
+      ]
+    },
+    {
+      "modulus": 2471923828125,
+      "exponents": [
+        4,
+        15
+      ]
+    },
+    {
+      "modulus": 2541865828329,
+      "exponents": [
+        26,
+        0
+      ]
+    },
+    {
+      "modulus": 2669677734375,
+      "exponents": [
+        7,
+        13
+      ]
+    },
+    {
+      "modulus": 2883251953125,
+      "exponents": [
+        10,
+        11
+      ]
+    },
+    {
+      "modulus": 3113912109375,
+      "exponents": [
+        13,
+        9
+      ]
+    },
+    {
+      "modulus": 3363025078125,
+      "exponents": [
+        16,
+        7
+      ]
+    },
+    {
+      "modulus": 3632067084375,
+      "exponents": [
+        19,
+        5
+      ]
+    },
+    {
+      "modulus": 3814697265625,
+      "exponents": [
+        0,
+        18
+      ]
+    },
+    {
+      "modulus": 3922632451125,
+      "exponents": [
+        22,
+        3
+      ]
+    },
+    {
+      "modulus": 4119873046875,
+      "exponents": [
+        3,
+        16
+      ]
+    },
+    {
+      "modulus": 4236443047215,
+      "exponents": [
+        25,
+        1
+      ]
+    },
+    {
+      "modulus": 4449462890625,
+      "exponents": [
+        6,
+        14
+      ]
+    },
+    {
+      "modulus": 4805419921875,
+      "exponents": [
+        9,
+        12
+      ]
+    },
+    {
+      "modulus": 5189853515625,
+      "exponents": [
+        12,
+        10
+      ]
+    },
+    {
+      "modulus": 5605041796875,
+      "exponents": [
+        15,
+        8
+      ]
+    },
+    {
+      "modulus": 6053445140625,
+      "exponents": [
+        18,
+        6
+      ]
+    },
+    {
+      "modulus": 6537720751875,
+      "exponents": [
+        21,
+        4
+      ]
+    },
+    {
+      "modulus": 6866455078125,
+      "exponents": [
+        2,
+        17
+      ]
+    },
+    {
+      "modulus": 7060738412025,
+      "exponents": [
+        24,
+        2
+      ]
+    },
+    {
+      "modulus": 7415771484375,
+      "exponents": [
+        5,
+        15
+      ]
+    },
+    {
+      "modulus": 7625597484987,
+      "exponents": [
+        27,
+        0
+      ]
+    },
+    {
+      "modulus": 8009033203125,
+      "exponents": [
+        8,
+        13
+      ]
+    },
+    {
+      "modulus": 8649755859375,
+      "exponents": [
+        11,
+        11
+      ]
+    },
+    {
+      "modulus": 9341736328125,
+      "exponents": [
+        14,
+        9
+      ]
+    },
+    {
+      "modulus": 10089075234375,
+      "exponents": [
+        17,
+        7
+      ]
+    },
+    {
+      "modulus": 10896201253125,
+      "exponents": [
+        20,
+        5
+      ]
+    },
+    {
+      "modulus": 11444091796875,
+      "exponents": [
+        1,
+        18
+      ]
+    },
+    {
+      "modulus": 11767897353375,
+      "exponents": [
+        23,
+        3
+      ]
+    },
+    {
+      "modulus": 12359619140625,
+      "exponents": [
+        4,
+        16
+      ]
+    },
+    {
+      "modulus": 12709329141645,
+      "exponents": [
+        26,
+        1
+      ]
+    },
+    {
+      "modulus": 13348388671875,
+      "exponents": [
+        7,
+        14
+      ]
+    },
+    {
+      "modulus": 14416259765625,
+      "exponents": [
+        10,
+        12
+      ]
+    },
+    {
+      "modulus": 15569560546875,
+      "exponents": [
+        13,
+        10
+      ]
+    },
+    {
+      "modulus": 16815125390625,
+      "exponents": [
+        16,
+        8
+      ]
+    },
+    {
+      "modulus": 18160335421875,
+      "exponents": [
+        19,
+        6
+      ]
+    },
+    {
+      "modulus": 19073486328125,
+      "exponents": [
+        0,
+        19
+      ]
+    },
+    {
+      "modulus": 19613162255625,
+      "exponents": [
+        22,
+        4
+      ]
+    },
+    {
+      "modulus": 20599365234375,
+      "exponents": [
+        3,
+        17
+      ]
+    },
+    {
+      "modulus": 21182215236075,
+      "exponents": [
+        25,
+        2
+      ]
+    },
+    {
+      "modulus": 22247314453125,
+      "exponents": [
+        6,
+        15
+      ]
+    },
+    {
+      "modulus": 22876792454961,
+      "exponents": [
+        28,
+        0
+      ]
+    },
+    {
+      "modulus": 24027099609375,
+      "exponents": [
+        9,
+        13
+      ]
+    },
+    {
+      "modulus": 25949267578125,
+      "exponents": [
+        12,
+        11
+      ]
+    },
+    {
+      "modulus": 28025208984375,
+      "exponents": [
+        15,
+        9
+      ]
+    },
+    {
+      "modulus": 30267225703125,
+      "exponents": [
+        18,
+        7
+      ]
+    },
+    {
+      "modulus": 32688603759375,
+      "exponents": [
+        21,
+        5
+      ]
+    },
+    {
+      "modulus": 34332275390625,
+      "exponents": [
+        2,
+        18
+      ]
+    },
+    {
+      "modulus": 35303692060125,
+      "exponents": [
+        24,
+        3
+      ]
+    },
+    {
+      "modulus": 37078857421875,
+      "exponents": [
+        5,
+        16
+      ]
+    },
+    {
+      "modulus": 38127987424935,
+      "exponents": [
+        27,
+        1
+      ]
+    },
+    {
+      "modulus": 40045166015625,
+      "exponents": [
+        8,
+        14
+      ]
+    },
+    {
+      "modulus": 43248779296875,
+      "exponents": [
+        11,
+        12
+      ]
+    },
+    {
+      "modulus": 46708681640625,
+      "exponents": [
+        14,
+        10
+      ]
+    },
+    {
+      "modulus": 50445376171875,
+      "exponents": [
+        17,
+        8
+      ]
+    },
+    {
+      "modulus": 54481006265625,
+      "exponents": [
+        20,
+        6
+      ]
+    },
+    {
+      "modulus": 57220458984375,
+      "exponents": [
+        1,
+        19
+      ]
+    },
+    {
+      "modulus": 58839486766875,
+      "exponents": [
+        23,
+        4
+      ]
+    },
+    {
+      "modulus": 61798095703125,
+      "exponents": [
+        4,
+        17
+      ]
+    },
+    {
+      "modulus": 63546645708225,
+      "exponents": [
+        26,
+        2
+      ]
+    },
+    {
+      "modulus": 66741943359375,
+      "exponents": [
+        7,
+        15
+      ]
+    },
+    {
+      "modulus": 68630377364883,
+      "exponents": [
+        29,
+        0
+      ]
+    },
+    {
+      "modulus": 72081298828125,
+      "exponents": [
+        10,
+        13
+      ]
+    },
+    {
+      "modulus": 77847802734375,
+      "exponents": [
+        13,
+        11
+      ]
+    },
+    {
+      "modulus": 84075626953125,
+      "exponents": [
+        16,
+        9
+      ]
+    },
+    {
+      "modulus": 90801677109375,
+      "exponents": [
+        19,
+        7
+      ]
+    },
+    {
+      "modulus": 95367431640625,
+      "exponents": [
+        0,
+        20
+      ]
+    },
+    {
+      "modulus": 98065811278125,
+      "exponents": [
+        22,
+        5
+      ]
+    },
+    {
+      "modulus": 102996826171875,
+      "exponents": [
+        3,
+        18
+      ]
+    },
+    {
+      "modulus": 105911076180375,
+      "exponents": [
+        25,
+        3
+      ]
+    },
+    {
+      "modulus": 111236572265625,
+      "exponents": [
+        6,
+        16
+      ]
+    },
+    {
+      "modulus": 114383962274805,
+      "exponents": [
+        28,
+        1
+      ]
+    },
+    {
+      "modulus": 120135498046875,
+      "exponents": [
+        9,
+        14
+      ]
+    },
+    {
+      "modulus": 129746337890625,
+      "exponents": [
+        12,
+        12
+      ]
+    },
+    {
+      "modulus": 140126044921875,
+      "exponents": [
+        15,
+        10
+      ]
+    },
+    {
+      "modulus": 151336128515625,
+      "exponents": [
+        18,
+        8
+      ]
+    },
+    {
+      "modulus": 163443018796875,
+      "exponents": [
+        21,
+        6
+      ]
+    },
+    {
+      "modulus": 171661376953125,
+      "exponents": [
+        2,
+        19
+      ]
+    },
+    {
+      "modulus": 176518460300625,
+      "exponents": [
+        24,
+        4
+      ]
+    },
+    {
+      "modulus": 185394287109375,
+      "exponents": [
+        5,
+        17
+      ]
+    },
+    {
+      "modulus": 190639937124675,
+      "exponents": [
+        27,
+        2
+      ]
+    },
+    {
+      "modulus": 200225830078125,
+      "exponents": [
+        8,
+        15
+      ]
+    },
+    {
+      "modulus": 205891132094649,
+      "exponents": [
+        30,
+        0
+      ]
+    },
+    {
+      "modulus": 216243896484375,
+      "exponents": [
+        11,
+        13
+      ]
+    },
+    {
+      "modulus": 233543408203125,
+      "exponents": [
+        14,
+        11
+      ]
+    },
+    {
+      "modulus": 252226880859375,
+      "exponents": [
+        17,
+        9
+      ]
+    },
+    {
+      "modulus": 272405031328125,
+      "exponents": [
+        20,
+        7
+      ]
+    },
+    {
+      "modulus": 286102294921875,
+      "exponents": [
+        1,
+        20
+      ]
+    },
+    {
+      "modulus": 294197433834375,
+      "exponents": [
+        23,
+        5
+      ]
+    },
+    {
+      "modulus": 308990478515625,
+      "exponents": [
+        4,
+        18
+      ]
+    },
+    {
+      "modulus": 317733228541125,
+      "exponents": [
+        26,
+        3
+      ]
+    },
+    {
+      "modulus": 333709716796875,
+      "exponents": [
+        7,
+        16
+      ]
+    },
+    {
+      "modulus": 343151886824415,
+      "exponents": [
+        29,
+        1
+      ]
+    },
+    {
+      "modulus": 360406494140625,
+      "exponents": [
+        10,
+        14
+      ]
+    },
+    {
+      "modulus": 389239013671875,
+      "exponents": [
+        13,
+        12
+      ]
+    },
+    {
+      "modulus": 420378134765625,
+      "exponents": [
+        16,
+        10
+      ]
+    },
+    {
+      "modulus": 454008385546875,
+      "exponents": [
+        19,
+        8
+      ]
+    },
+    {
+      "modulus": 476837158203125,
+      "exponents": [
+        0,
+        21
+      ]
+    },
+    {
+      "modulus": 490329056390625,
+      "exponents": [
+        22,
+        6
+      ]
+    },
+    {
+      "modulus": 514984130859375,
+      "exponents": [
+        3,
+        19
+      ]
+    },
+    {
+      "modulus": 529555380901875,
+      "exponents": [
+        25,
+        4
+      ]
+    },
+    {
+      "modulus": 556182861328125,
+      "exponents": [
+        6,
+        17
+      ]
+    },
+    {
+      "modulus": 571919811374025,
+      "exponents": [
+        28,
+        2
+      ]
+    },
+    {
+      "modulus": 600677490234375,
+      "exponents": [
+        9,
+        15
+      ]
+    },
+    {
+      "modulus": 617673396283947,
+      "exponents": [
+        31,
+        0
+      ]
+    },
+    {
+      "modulus": 648731689453125,
+      "exponents": [
+        12,
+        13
+      ]
+    },
+    {
+      "modulus": 700630224609375,
+      "exponents": [
+        15,
+        11
+      ]
+    },
+    {
+      "modulus": 756680642578125,
+      "exponents": [
+        18,
+        9
+      ]
+    },
+    {
+      "modulus": 817215093984375,
+      "exponents": [
+        21,
+        7
+      ]
+    },
+    {
+      "modulus": 858306884765625,
+      "exponents": [
+        2,
+        20
+      ]
+    },
+    {
+      "modulus": 882592301503125,
+      "exponents": [
+        24,
+        5
+      ]
+    },
+    {
+      "modulus": 926971435546875,
+      "exponents": [
+        5,
+        18
+      ]
+    },
+    {
+      "modulus": 953199685623375,
+      "exponents": [
+        27,
+        3
+      ]
+    },
+    {
+      "modulus": 1001129150390625,
+      "exponents": [
+        8,
+        16
+      ]
+    },
+    {
+      "modulus": 1029455660473245,
+      "exponents": [
+        30,
+        1
+      ]
+    },
+    {
+      "modulus": 1081219482421875,
+      "exponents": [
+        11,
+        14
+      ]
+    },
+    {
+      "modulus": 1167717041015625,
+      "exponents": [
+        14,
+        12
+      ]
+    },
+    {
+      "modulus": 1261134404296875,
+      "exponents": [
+        17,
+        10
+      ]
+    },
+    {
+      "modulus": 1362025156640625,
+      "exponents": [
+        20,
+        8
+      ]
+    },
+    {
+      "modulus": 1430511474609375,
+      "exponents": [
+        1,
+        21
+      ]
+    },
+    {
+      "modulus": 1470987169171875,
+      "exponents": [
+        23,
+        6
+      ]
+    },
+    {
+      "modulus": 1544952392578125,
+      "exponents": [
+        4,
+        19
+      ]
+    },
+    {
+      "modulus": 1588666142705625,
+      "exponents": [
+        26,
+        4
+      ]
+    },
+    {
+      "modulus": 1668548583984375,
+      "exponents": [
+        7,
+        17
+      ]
+    },
+    {
+      "modulus": 1715759434122075,
+      "exponents": [
+        29,
+        2
+      ]
+    },
+    {
+      "modulus": 1802032470703125,
+      "exponents": [
+        10,
+        15
+      ]
+    },
+    {
+      "modulus": 1853020188851841,
+      "exponents": [
+        32,
+        0
+      ]
+    },
+    {
+      "modulus": 1946195068359375,
+      "exponents": [
+        13,
+        13
+      ]
+    },
+    {
+      "modulus": 2101890673828125,
+      "exponents": [
+        16,
+        11
+      ]
+    },
+    {
+      "modulus": 2270041927734375,
+      "exponents": [
+        19,
+        9
+      ]
+    },
+    {
+      "modulus": 2384185791015625,
+      "exponents": [
+        0,
+        22
+      ]
+    },
+    {
+      "modulus": 2451645281953125,
+      "exponents": [
+        22,
+        7
+      ]
+    },
+    {
+      "modulus": 2574920654296875,
+      "exponents": [
+        3,
+        20
+      ]
+    },
+    {
+      "modulus": 2647776904509375,
+      "exponents": [
+        25,
+        5
+      ]
+    },
+    {
+      "modulus": 2780914306640625,
+      "exponents": [
+        6,
+        18
+      ]
+    },
+    {
+      "modulus": 2859599056870125,
+      "exponents": [
+        28,
+        3
+      ]
+    },
+    {
+      "modulus": 3003387451171875,
+      "exponents": [
+        9,
+        16
+      ]
+    },
+    {
+      "modulus": 3088366981419735,
+      "exponents": [
+        31,
+        1
+      ]
+    },
+    {
+      "modulus": 3243658447265625,
+      "exponents": [
+        12,
+        14
+      ]
+    },
+    {
+      "modulus": 3503151123046875,
+      "exponents": [
+        15,
+        12
+      ]
+    },
+    {
+      "modulus": 3783403212890625,
+      "exponents": [
+        18,
+        10
+      ]
+    },
+    {
+      "modulus": 4086075469921875,
+      "exponents": [
+        21,
+        8
+      ]
+    },
+    {
+      "modulus": 4291534423828125,
+      "exponents": [
+        2,
+        21
+      ]
+    },
+    {
+      "modulus": 4412961507515625,
+      "exponents": [
+        24,
+        6
+      ]
+    },
+    {
+      "modulus": 4634857177734375,
+      "exponents": [
+        5,
+        19
+      ]
+    },
+    {
+      "modulus": 4765998428116875,
+      "exponents": [
+        27,
+        4
+      ]
+    },
+    {
+      "modulus": 5005645751953125,
+      "exponents": [
+        8,
+        17
+      ]
+    },
+    {
+      "modulus": 5147278302366225,
+      "exponents": [
+        30,
+        2
+      ]
+    },
+    {
+      "modulus": 5406097412109375,
+      "exponents": [
+        11,
+        15
+      ]
+    },
+    {
+      "modulus": 5559060566555523,
+      "exponents": [
+        33,
+        0
+      ]
+    },
+    {
+      "modulus": 5838585205078125,
+      "exponents": [
+        14,
+        13
+      ]
+    },
+    {
+      "modulus": 6305672021484375,
+      "exponents": [
+        17,
+        11
+      ]
+    },
+    {
+      "modulus": 6810125783203125,
+      "exponents": [
+        20,
+        9
+      ]
+    },
+    {
+      "modulus": 7152557373046875,
+      "exponents": [
+        1,
+        22
+      ]
+    },
+    {
+      "modulus": 7354935845859375,
+      "exponents": [
+        23,
+        7
+      ]
+    },
+    {
+      "modulus": 7724761962890625,
+      "exponents": [
+        4,
+        20
+      ]
+    },
+    {
+      "modulus": 7943330713528125,
+      "exponents": [
+        26,
+        5
+      ]
+    },
+    {
+      "modulus": 8342742919921875,
+      "exponents": [
+        7,
+        18
+      ]
+    },
+    {
+      "modulus": 8578797170610375,
+      "exponents": [
+        29,
+        3
+      ]
+    },
+    {
+      "modulus": 9010162353515625,
+      "exponents": [
+        10,
+        16
+      ]
+    },
+    {
+      "modulus": 9265100944259205,
+      "exponents": [
+        32,
+        1
+      ]
+    },
+    {
+      "modulus": 9730975341796875,
+      "exponents": [
+        13,
+        14
+      ]
+    },
+    {
+      "modulus": 10509453369140625,
+      "exponents": [
+        16,
+        12
+      ]
+    },
+    {
+      "modulus": 11350209638671875,
+      "exponents": [
+        19,
+        10
+      ]
+    },
+    {
+      "modulus": 11920928955078125,
+      "exponents": [
+        0,
+        23
+      ]
+    },
+    {
+      "modulus": 12258226409765625,
+      "exponents": [
+        22,
+        8
+      ]
+    },
+    {
+      "modulus": 12874603271484375,
+      "exponents": [
+        3,
+        21
+      ]
+    },
+    {
+      "modulus": 13238884522546875,
+      "exponents": [
+        25,
+        6
+      ]
+    },
+    {
+      "modulus": 13904571533203125,
+      "exponents": [
+        6,
+        19
+      ]
+    },
+    {
+      "modulus": 14297995284350625,
+      "exponents": [
+        28,
+        4
+      ]
+    },
+    {
+      "modulus": 15016937255859375,
+      "exponents": [
+        9,
+        17
+      ]
+    },
+    {
+      "modulus": 15441834907098675,
+      "exponents": [
+        31,
+        2
+      ]
+    },
+    {
+      "modulus": 16218292236328125,
+      "exponents": [
+        12,
+        15
+      ]
+    },
+    {
+      "modulus": 16677181699666569,
+      "exponents": [
+        34,
+        0
+      ]
+    },
+    {
+      "modulus": 17515755615234375,
+      "exponents": [
+        15,
+        13
+      ]
+    },
+    {
+      "modulus": 18917016064453125,
+      "exponents": [
+        18,
+        11
+      ]
+    },
+    {
+      "modulus": 20430377349609375,
+      "exponents": [
+        21,
+        9
+      ]
+    },
+    {
+      "modulus": 21457672119140625,
+      "exponents": [
+        2,
+        22
+      ]
+    },
+    {
+      "modulus": 22064807537578125,
+      "exponents": [
+        24,
+        7
+      ]
+    },
+    {
+      "modulus": 23174285888671875,
+      "exponents": [
+        5,
+        20
+      ]
+    },
+    {
+      "modulus": 23829992140584375,
+      "exponents": [
+        27,
+        5
+      ]
+    },
+    {
+      "modulus": 25028228759765625,
+      "exponents": [
+        8,
+        18
+      ]
+    },
+    {
+      "modulus": 25736391511831125,
+      "exponents": [
+        30,
+        3
+      ]
+    },
+    {
+      "modulus": 27030487060546875,
+      "exponents": [
+        11,
+        16
+      ]
+    },
+    {
+      "modulus": 27795302832777615,
+      "exponents": [
+        33,
+        1
+      ]
+    },
+    {
+      "modulus": 29192926025390625,
+      "exponents": [
+        14,
+        14
+      ]
+    },
+    {
+      "modulus": 31528360107421875,
+      "exponents": [
+        17,
+        12
+      ]
+    },
+    {
+      "modulus": 34050628916015625,
+      "exponents": [
+        20,
+        10
+      ]
+    },
+    {
+      "modulus": 35762786865234375,
+      "exponents": [
+        1,
+        23
+      ]
+    },
+    {
+      "modulus": 36774679229296875,
+      "exponents": [
+        23,
+        8
+      ]
+    },
+    {
+      "modulus": 38623809814453125,
+      "exponents": [
+        4,
+        21
+      ]
+    },
+    {
+      "modulus": 39716653567640625,
+      "exponents": [
+        26,
+        6
+      ]
+    },
+    {
+      "modulus": 41713714599609375,
+      "exponents": [
+        7,
+        19
+      ]
+    },
+    {
+      "modulus": 42893985853051875,
+      "exponents": [
+        29,
+        4
+      ]
+    },
+    {
+      "modulus": 45050811767578125,
+      "exponents": [
+        10,
+        17
+      ]
+    },
+    {
+      "modulus": 46325504721296025,
+      "exponents": [
+        32,
+        2
+      ]
+    },
+    {
+      "modulus": 48654876708984375,
+      "exponents": [
+        13,
+        15
+      ]
+    },
+    {
+      "modulus": 50031545098999707,
+      "exponents": [
+        35,
+        0
+      ]
+    },
+    {
+      "modulus": 52547266845703125,
+      "exponents": [
+        16,
+        13
+      ]
+    },
+    {
+      "modulus": 56751048193359375,
+      "exponents": [
+        19,
+        11
+      ]
+    },
+    {
+      "modulus": 59604644775390625,
+      "exponents": [
+        0,
+        24
+      ]
+    },
+    {
+      "modulus": 61291132048828125,
+      "exponents": [
+        22,
+        9
+      ]
+    },
+    {
+      "modulus": 64373016357421875,
+      "exponents": [
+        3,
+        22
+      ]
+    },
+    {
+      "modulus": 66194422612734375,
+      "exponents": [
+        25,
+        7
+      ]
+    },
+    {
+      "modulus": 69522857666015625,
+      "exponents": [
+        6,
+        20
+      ]
+    },
+    {
+      "modulus": 71489976421753125,
+      "exponents": [
+        28,
+        5
+      ]
+    },
+    {
+      "modulus": 75084686279296875,
+      "exponents": [
+        9,
+        18
+      ]
+    },
+    {
+      "modulus": 77209174535493375,
+      "exponents": [
+        31,
+        3
+      ]
+    },
+    {
+      "modulus": 81091461181640625,
+      "exponents": [
+        12,
+        16
+      ]
+    },
+    {
+      "modulus": 83385908498332845,
+      "exponents": [
+        34,
+        1
+      ]
+    },
+    {
+      "modulus": 87578778076171875,
+      "exponents": [
+        15,
+        14
+      ]
+    },
+    {
+      "modulus": 94585080322265625,
+      "exponents": [
+        18,
+        12
+      ]
+    },
+    {
+      "modulus": 102151886748046875,
+      "exponents": [
+        21,
+        10
+      ]
+    },
+    {
+      "modulus": 107288360595703125,
+      "exponents": [
+        2,
+        23
+      ]
+    },
+    {
+      "modulus": 110324037687890625,
+      "exponents": [
+        24,
+        8
+      ]
+    },
+    {
+      "modulus": 115871429443359375,
+      "exponents": [
+        5,
+        21
+      ]
+    },
+    {
+      "modulus": 119149960702921875,
+      "exponents": [
+        27,
+        6
+      ]
+    },
+    {
+      "modulus": 125141143798828125,
+      "exponents": [
+        8,
+        19
+      ]
+    },
+    {
+      "modulus": 128681957559155625,
+      "exponents": [
+        30,
+        4
+      ]
+    },
+    {
+      "modulus": 135152435302734375,
+      "exponents": [
+        11,
+        17
+      ]
+    },
+    {
+      "modulus": 138976514163888075,
+      "exponents": [
+        33,
+        2
+      ]
+    },
+    {
+      "modulus": 145964630126953125,
+      "exponents": [
+        14,
+        15
+      ]
+    },
+    {
+      "modulus": 150094635296999121,
+      "exponents": [
+        36,
+        0
+      ]
+    },
+    {
+      "modulus": 157641800537109375,
+      "exponents": [
+        17,
+        13
+      ]
+    },
+    {
+      "modulus": 170253144580078125,
+      "exponents": [
+        20,
+        11
+      ]
+    },
+    {
+      "modulus": 178813934326171875,
+      "exponents": [
+        1,
+        24
+      ]
+    },
+    {
+      "modulus": 183873396146484375,
+      "exponents": [
+        23,
+        9
+      ]
+    },
+    {
+      "modulus": 193119049072265625,
+      "exponents": [
+        4,
+        22
+      ]
+    },
+    {
+      "modulus": 198583267838203125,
+      "exponents": [
+        26,
+        7
+      ]
+    },
+    {
+      "modulus": 208568572998046875,
+      "exponents": [
+        7,
+        20
+      ]
+    },
+    {
+      "modulus": 214469929265259375,
+      "exponents": [
+        29,
+        5
+      ]
+    },
+    {
+      "modulus": 225254058837890625,
+      "exponents": [
+        10,
+        18
+      ]
+    },
+    {
+      "modulus": 231627523606480125,
+      "exponents": [
+        32,
+        3
+      ]
+    },
+    {
+      "modulus": 243274383544921875,
+      "exponents": [
+        13,
+        16
+      ]
+    },
+    {
+      "modulus": 250157725494998535,
+      "exponents": [
+        35,
+        1
+      ]
+    },
+    {
+      "modulus": 262736334228515625,
+      "exponents": [
+        16,
+        14
+      ]
+    },
+    {
+      "modulus": 283755240966796875,
+      "exponents": [
+        19,
+        12
+      ]
+    },
+    {
+      "modulus": 298023223876953125,
+      "exponents": [
+        0,
+        25
+      ]
+    },
+    {
+      "modulus": 306455660244140625,
+      "exponents": [
+        22,
+        10
+      ]
+    },
+    {
+      "modulus": 321865081787109375,
+      "exponents": [
+        3,
+        23
+      ]
+    },
+    {
+      "modulus": 330972113063671875,
+      "exponents": [
+        25,
+        8
+      ]
+    },
+    {
+      "modulus": 347614288330078125,
+      "exponents": [
+        6,
+        21
+      ]
+    },
+    {
+      "modulus": 357449882108765625,
+      "exponents": [
+        28,
+        6
+      ]
+    },
+    {
+      "modulus": 375423431396484375,
+      "exponents": [
+        9,
+        19
+      ]
+    },
+    {
+      "modulus": 386045872677466875,
+      "exponents": [
+        31,
+        4
+      ]
+    },
+    {
+      "modulus": 405457305908203125,
+      "exponents": [
+        12,
+        17
+      ]
+    },
+    {
+      "modulus": 416929542491664225,
+      "exponents": [
+        34,
+        2
+      ]
+    },
+    {
+      "modulus": 437893890380859375,
+      "exponents": [
+        15,
+        15
+      ]
+    },
+    {
+      "modulus": 450283905890997363,
+      "exponents": [
+        37,
+        0
+      ]
+    },
+    {
+      "modulus": 472925401611328125,
+      "exponents": [
+        18,
+        13
+      ]
+    },
+    {
+      "modulus": 510759433740234375,
+      "exponents": [
+        21,
+        11
+      ]
+    },
+    {
+      "modulus": 536441802978515625,
+      "exponents": [
+        2,
+        24
+      ]
+    },
+    {
+      "modulus": 551620188439453125,
+      "exponents": [
+        24,
+        9
+      ]
+    },
+    {
+      "modulus": 579357147216796875,
+      "exponents": [
+        5,
+        22
+      ]
+    },
+    {
+      "modulus": 595749803514609375,
+      "exponents": [
+        27,
+        7
+      ]
+    },
+    {
+      "modulus": 625705718994140625,
+      "exponents": [
+        8,
+        20
+      ]
+    },
+    {
+      "modulus": 643409787795778125,
+      "exponents": [
+        30,
+        5
+      ]
+    },
+    {
+      "modulus": 675762176513671875,
+      "exponents": [
+        11,
+        18
+      ]
+    },
+    {
+      "modulus": 694882570819440375,
+      "exponents": [
+        33,
+        3
+      ]
+    },
+    {
+      "modulus": 729823150634765625,
+      "exponents": [
+        14,
+        16
+      ]
+    },
+    {
+      "modulus": 750473176484995605,
+      "exponents": [
+        36,
+        1
+      ]
+    },
+    {
+      "modulus": 788209002685546875,
+      "exponents": [
+        17,
+        14
+      ]
+    },
+    {
+      "modulus": 851265722900390625,
+      "exponents": [
+        20,
+        12
+      ]
+    },
+    {
+      "modulus": 894069671630859375,
+      "exponents": [
+        1,
+        25
+      ]
+    },
+    {
+      "modulus": 919366980732421875,
+      "exponents": [
+        23,
+        10
+      ]
+    },
+    {
+      "modulus": 965595245361328125,
+      "exponents": [
+        4,
+        23
+      ]
+    },
+    {
+      "modulus": 992916339191015625,
+      "exponents": [
+        26,
+        8
+      ]
+    },
+    {
+      "modulus": 1042842864990234375,
+      "exponents": [
+        7,
+        21
+      ]
+    },
+    {
+      "modulus": 1072349646326296875,
+      "exponents": [
+        29,
+        6
+      ]
+    },
+    {
+      "modulus": 1126270294189453125,
+      "exponents": [
+        10,
+        19
+      ]
+    },
+    {
+      "modulus": 1158137618032400625,
+      "exponents": [
+        32,
+        4
+      ]
+    },
+    {
+      "modulus": 1216371917724609375,
+      "exponents": [
+        13,
+        17
+      ]
+    },
+    {
+      "modulus": 1250788627474992675,
+      "exponents": [
+        35,
+        2
+      ]
+    },
+    {
+      "modulus": 1313681671142578125,
+      "exponents": [
+        16,
+        15
+      ]
+    },
+    {
+      "modulus": 1350851717672992089,
+      "exponents": [
+        38,
+        0
+      ]
+    },
+    {
+      "modulus": 1418776204833984375,
+      "exponents": [
+        19,
+        13
+      ]
+    },
+    {
+      "modulus": 1490116119384765625,
+      "exponents": [
+        0,
+        26
+      ]
+    },
+    {
+      "modulus": 1532278301220703125,
+      "exponents": [
+        22,
+        11
+      ]
+    },
+    {
+      "modulus": 1609325408935546875,
+      "exponents": [
+        3,
+        24
+      ]
+    },
+    {
+      "modulus": 1654860565318359375,
+      "exponents": [
+        25,
+        9
+      ]
+    },
+    {
+      "modulus": 1738071441650390625,
+      "exponents": [
+        6,
+        22
+      ]
+    },
+    {
+      "modulus": 1787249410543828125,
+      "exponents": [
+        28,
+        7
+      ]
+    },
+    {
+      "modulus": 1877117156982421875,
+      "exponents": [
+        9,
+        20
+      ]
+    },
+    {
+      "modulus": 1930229363387334375,
+      "exponents": [
+        31,
+        5
+      ]
+    },
+    {
+      "modulus": 2027286529541015625,
+      "exponents": [
+        12,
+        18
+      ]
+    },
+    {
+      "modulus": 2084647712458321125,
+      "exponents": [
+        34,
+        3
+      ]
+    },
+    {
+      "modulus": 2189469451904296875,
+      "exponents": [
+        15,
+        16
+      ]
+    },
+    {
+      "modulus": 2251419529454986815,
+      "exponents": [
+        37,
+        1
+      ]
+    },
+    {
+      "modulus": 2364627008056640625,
+      "exponents": [
+        18,
+        14
+      ]
+    },
+    {
+      "modulus": 2553797168701171875,
+      "exponents": [
+        21,
+        12
+      ]
+    },
+    {
+      "modulus": 2682209014892578125,
+      "exponents": [
+        2,
+        25
+      ]
+    },
+    {
+      "modulus": 2758100942197265625,
+      "exponents": [
+        24,
+        10
+      ]
+    },
+    {
+      "modulus": 2896785736083984375,
+      "exponents": [
+        5,
+        23
+      ]
+    },
+    {
+      "modulus": 2978749017573046875,
+      "exponents": [
+        27,
+        8
+      ]
+    },
+    {
+      "modulus": 3128528594970703125,
+      "exponents": [
+        8,
+        21
+      ]
+    },
+    {
+      "modulus": 3217048938978890625,
+      "exponents": [
+        30,
+        6
+      ]
+    },
+    {
+      "modulus": 3378810882568359375,
+      "exponents": [
+        11,
+        19
+      ]
+    },
+    {
+      "modulus": 3474412854097201875,
+      "exponents": [
+        33,
+        4
+      ]
+    },
+    {
+      "modulus": 3649115753173828125,
+      "exponents": [
+        14,
+        17
+      ]
+    },
+    {
+      "modulus": 3752365882424978025,
+      "exponents": [
+        36,
+        2
+      ]
+    },
+    {
+      "modulus": 3941045013427734375,
+      "exponents": [
+        17,
+        15
+      ]
+    },
+    {
+      "modulus": 4052555153018976267,
+      "exponents": [
+        39,
+        0
+      ]
+    },
+    {
+      "modulus": 4256328614501953125,
+      "exponents": [
+        20,
+        13
+      ]
+    },
+    {
+      "modulus": 4470348358154296875,
+      "exponents": [
+        1,
+        26
+      ]
+    },
+    {
+      "modulus": 4596834903662109375,
+      "exponents": [
+        23,
+        11
+      ]
+    },
+    {
+      "modulus": 4827976226806640625,
+      "exponents": [
+        4,
+        24
+      ]
+    },
+    {
+      "modulus": 4964581695955078125,
+      "exponents": [
+        26,
+        9
+      ]
+    },
+    {
+      "modulus": 5214214324951171875,
+      "exponents": [
+        7,
+        22
+      ]
+    },
+    {
+      "modulus": 5361748231631484375,
+      "exponents": [
+        29,
+        7
+      ]
+    },
+    {
+      "modulus": 5631351470947265625,
+      "exponents": [
+        10,
+        20
+      ]
+    },
+    {
+      "modulus": 5790688090162003125,
+      "exponents": [
+        32,
+        5
+      ]
+    },
+    {
+      "modulus": 6081859588623046875,
+      "exponents": [
+        13,
+        18
+      ]
+    },
+    {
+      "modulus": 6253943137374963375,
+      "exponents": [
+        35,
+        3
+      ]
+    },
+    {
+      "modulus": 6568408355712890625,
+      "exponents": [
+        16,
+        16
+      ]
+    },
+    {
+      "modulus": 6754258588364960445,
+      "exponents": [
+        38,
+        1
+      ]
+    },
+    {
+      "modulus": 7093881024169921875,
+      "exponents": [
+        19,
+        14
+      ]
+    },
+    {
+      "modulus": 7450580596923828125,
+      "exponents": [
+        0,
+        27
+      ]
+    },
+    {
+      "modulus": 7661391506103515625,
+      "exponents": [
+        22,
+        12
+      ]
+    },
+    {
+      "modulus": 8046627044677734375,
+      "exponents": [
+        3,
+        25
+      ]
+    },
+    {
+      "modulus": 8274302826591796875,
+      "exponents": [
+        25,
+        10
+      ]
+    },
+    {
+      "modulus": 8690357208251953125,
+      "exponents": [
+        6,
+        23
+      ]
+    },
+    {
+      "modulus": 8936247052719140625,
+      "exponents": [
+        28,
+        8
+      ]
+    },
+    {
+      "modulus": 9385585784912109375,
+      "exponents": [
+        9,
+        21
+      ]
+    },
+    {
+      "modulus": 9651146816936671875,
+      "exponents": [
+        31,
+        6
+      ]
+    },
+    {
+      "modulus": 10136432647705078125,
+      "exponents": [
+        12,
+        19
+      ]
+    },
+    {
+      "modulus": 10423238562291605625,
+      "exponents": [
+        34,
+        4
+      ]
+    },
+    {
+      "modulus": 10947347259521484375,
+      "exponents": [
+        15,
+        17
+      ]
+    },
+    {
+      "modulus": 11257097647274934075,
+      "exponents": [
+        37,
+        2
+      ]
+    },
+    {
+      "modulus": 11823135040283203125,
+      "exponents": [
+        18,
+        15
+      ]
+    },
+    {
+      "modulus": 12157665459056928801,
+      "exponents": [
+        40,
+        0
+      ]
+    },
+    {
+      "modulus": 12768985843505859375,
+      "exponents": [
+        21,
+        13
+      ]
+    },
+    {
+      "modulus": 13411045074462890625,
+      "exponents": [
+        2,
+        26
+      ]
+    },
+    {
+      "modulus": 13790504710986328125,
+      "exponents": [
+        24,
+        11
+      ]
+    },
+    {
+      "modulus": 14483928680419921875,
+      "exponents": [
+        5,
+        24
+      ]
+    },
+    {
+      "modulus": 14893745087865234375,
+      "exponents": [
+        27,
+        9
+      ]
+    },
+    {
+      "modulus": 15642642974853515625,
+      "exponents": [
+        8,
+        22
+      ]
+    },
+    {
+      "modulus": 16085244694894453125,
+      "exponents": [
+        30,
+        7
+      ]
+    },
+    {
+      "modulus": 16894054412841796875,
+      "exponents": [
+        11,
+        20
+      ]
+    },
+    {
+      "modulus": 17372064270486009375,
+      "exponents": [
+        33,
+        5
+      ]
+    },
+    {
+      "modulus": 18245578765869140625,
+      "exponents": [
+        14,
+        18
+      ]
+    },
+    {
+      "modulus": 18761829412124890125,
+      "exponents": [
+        36,
+        3
+      ]
+    },
+    {
+      "modulus": 19705225067138671875,
+      "exponents": [
+        17,
+        16
+      ]
+    },
+    {
+      "modulus": 20262775765094881335,
+      "exponents": [
+        39,
+        1
+      ]
+    },
+    {
+      "modulus": 21281643072509765625,
+      "exponents": [
+        20,
+        14
+      ]
+    },
+    {
+      "modulus": 22351741790771484375,
+      "exponents": [
+        1,
+        27
+      ]
+    },
+    {
+      "modulus": 22984174518310546875,
+      "exponents": [
+        23,
+        12
+      ]
+    },
+    {
+      "modulus": 24139881134033203125,
+      "exponents": [
+        4,
+        25
+      ]
+    },
+    {
+      "modulus": 24822908479775390625,
+      "exponents": [
+        26,
+        10
+      ]
+    },
+    {
+      "modulus": 26071071624755859375,
+      "exponents": [
+        7,
+        23
+      ]
+    },
+    {
+      "modulus": 26808741158157421875,
+      "exponents": [
+        29,
+        8
+      ]
+    },
+    {
+      "modulus": 28156757354736328125,
+      "exponents": [
+        10,
+        21
+      ]
+    },
+    {
+      "modulus": 28953440450810015625,
+      "exponents": [
+        32,
+        6
+      ]
+    },
+    {
+      "modulus": 30409297943115234375,
+      "exponents": [
+        13,
+        19
+      ]
+    },
+    {
+      "modulus": 31269715686874816875,
+      "exponents": [
+        35,
+        4
+      ]
+    },
+    {
+      "modulus": 32842041778564453125,
+      "exponents": [
+        16,
+        17
+      ]
+    },
+    {
+      "modulus": 33771292941824802225,
+      "exponents": [
+        38,
+        2
+      ]
+    },
+    {
+      "modulus": 35469405120849609375,
+      "exponents": [
+        19,
+        15
+      ]
+    },
+    {
+      "modulus": 36472996377170786403,
+      "exponents": [
+        41,
+        0
+      ]
+    },
+    {
+      "modulus": 37252902984619140625,
+      "exponents": [
+        0,
+        28
+      ]
+    },
+    {
+      "modulus": 38306957530517578125,
+      "exponents": [
+        22,
+        13
+      ]
+    },
+    {
+      "modulus": 40233135223388671875,
+      "exponents": [
+        3,
+        26
+      ]
+    },
+    {
+      "modulus": 41371514132958984375,
+      "exponents": [
+        25,
+        11
+      ]
+    },
+    {
+      "modulus": 43451786041259765625,
+      "exponents": [
+        6,
+        24
+      ]
+    },
+    {
+      "modulus": 44681235263595703125,
+      "exponents": [
+        28,
+        9
+      ]
+    },
+    {
+      "modulus": 46927928924560546875,
+      "exponents": [
+        9,
+        22
+      ]
+    },
+    {
+      "modulus": 48255734084683359375,
+      "exponents": [
+        31,
+        7
+      ]
+    },
+    {
+      "modulus": 50682163238525390625,
+      "exponents": [
+        12,
+        20
+      ]
+    },
+    {
+      "modulus": 52116192811458028125,
+      "exponents": [
+        34,
+        5
+      ]
+    },
+    {
+      "modulus": 54736736297607421875,
+      "exponents": [
+        15,
+        18
+      ]
+    },
+    {
+      "modulus": 56285488236374670375,
+      "exponents": [
+        37,
+        3
+      ]
+    },
+    {
+      "modulus": 59115675201416015625,
+      "exponents": [
+        18,
+        16
+      ]
+    },
+    {
+      "modulus": 60788327295284644005,
+      "exponents": [
+        40,
+        1
+      ]
+    },
+    {
+      "modulus": 63844929217529296875,
+      "exponents": [
+        21,
+        14
+      ]
+    },
+    {
+      "modulus": 67055225372314453125,
+      "exponents": [
+        2,
+        27
+      ]
+    },
+    {
+      "modulus": 68952523554931640625,
+      "exponents": [
+        24,
+        12
+      ]
+    },
+    {
+      "modulus": 72419643402099609375,
+      "exponents": [
+        5,
+        25
+      ]
+    },
+    {
+      "modulus": 74468725439326171875,
+      "exponents": [
+        27,
+        10
+      ]
+    },
+    {
+      "modulus": 78213214874267578125,
+      "exponents": [
+        8,
+        23
+      ]
+    },
+    {
+      "modulus": 80426223474472265625,
+      "exponents": [
+        30,
+        8
+      ]
+    },
+    {
+      "modulus": 84470272064208984375,
+      "exponents": [
+        11,
+        21
+      ]
+    },
+    {
+      "modulus": 86860321352430046875,
+      "exponents": [
+        33,
+        6
+      ]
+    },
+    {
+      "modulus": 91227893829345703125,
+      "exponents": [
+        14,
+        19
+      ]
+    },
+    {
+      "modulus": 93809147060624450625,
+      "exponents": [
+        36,
+        4
+      ]
+    },
+    {
+      "modulus": 98526125335693359375,
+      "exponents": [
+        17,
+        17
+      ]
+    },
+    {
+      "modulus": 101313878825474406675,
+      "exponents": [
+        39,
+        2
+      ]
+    },
+    {
+      "modulus": 106408215362548828125,
+      "exponents": [
+        20,
+        15
+      ]
+    },
+    {
+      "modulus": 109418989131512359209,
+      "exponents": [
+        42,
+        0
+      ]
+    },
+    {
+      "modulus": 111758708953857421875,
+      "exponents": [
+        1,
+        28
+      ]
+    },
+    {
+      "modulus": 114920872591552734375,
+      "exponents": [
+        23,
+        13
+      ]
+    },
+    {
+      "modulus": 120699405670166015625,
+      "exponents": [
+        4,
+        26
+      ]
+    },
+    {
+      "modulus": 124114542398876953125,
+      "exponents": [
+        26,
+        11
+      ]
+    },
+    {
+      "modulus": 130355358123779296875,
+      "exponents": [
+        7,
+        24
+      ]
+    },
+    {
+      "modulus": 134043705790787109375,
+      "exponents": [
+        29,
+        9
+      ]
+    },
+    {
+      "modulus": 140783786773681640625,
+      "exponents": [
+        10,
+        22
+      ]
+    },
+    {
+      "modulus": 144767202254050078125,
+      "exponents": [
+        32,
+        7
+      ]
+    },
+    {
+      "modulus": 152046489715576171875,
+      "exponents": [
+        13,
+        20
+      ]
+    },
+    {
+      "modulus": 156348578434374084375,
+      "exponents": [
+        35,
+        5
+      ]
+    },
+    {
+      "modulus": 164210208892822265625,
+      "exponents": [
+        16,
+        18
+      ]
+    },
+    {
+      "modulus": 168856464709124011125,
+      "exponents": [
+        38,
+        3
+      ]
+    },
+    {
+      "modulus": 177347025604248046875,
+      "exponents": [
+        19,
+        16
+      ]
+    },
+    {
+      "modulus": 182364981885853932015,
+      "exponents": [
+        41,
+        1
+      ]
+    },
+    {
+      "modulus": 186264514923095703125,
+      "exponents": [
+        0,
+        29
+      ]
+    },
+    {
+      "modulus": 191534787652587890625,
+      "exponents": [
+        22,
+        14
+      ]
+    },
+    {
+      "modulus": 201165676116943359375,
+      "exponents": [
+        3,
+        27
+      ]
+    },
+    {
+      "modulus": 206857570664794921875,
+      "exponents": [
+        25,
+        12
+      ]
+    },
+    {
+      "modulus": 217258930206298828125,
+      "exponents": [
+        6,
+        25
+      ]
+    },
+    {
+      "modulus": 223406176317978515625,
+      "exponents": [
+        28,
+        10
+      ]
+    },
+    {
+      "modulus": 234639644622802734375,
+      "exponents": [
+        9,
+        23
+      ]
+    },
+    {
+      "modulus": 241278670423416796875,
+      "exponents": [
+        31,
+        8
+      ]
+    },
+    {
+      "modulus": 253410816192626953125,
+      "exponents": [
+        12,
+        21
+      ]
+    },
+    {
+      "modulus": 260580964057290140625,
+      "exponents": [
+        34,
+        6
+      ]
+    },
+    {
+      "modulus": 273683681488037109375,
+      "exponents": [
+        15,
+        19
+      ]
+    },
+    {
+      "modulus": 281427441181873351875,
+      "exponents": [
+        37,
+        4
+      ]
+    },
+    {
+      "modulus": 295578376007080078125,
+      "exponents": [
+        18,
+        17
+      ]
+    },
+    {
+      "modulus": 303941636476423220025,
+      "exponents": [
+        40,
+        2
+      ]
+    },
+    {
+      "modulus": 319224646087646484375,
+      "exponents": [
+        21,
+        15
+      ]
+    },
+    {
+      "modulus": 328256967394537077627,
+      "exponents": [
+        43,
+        0
+      ]
+    },
+    {
+      "modulus": 335276126861572265625,
+      "exponents": [
+        2,
+        28
+      ]
+    },
+    {
+      "modulus": 344762617774658203125,
+      "exponents": [
+        24,
+        13
+      ]
+    },
+    {
+      "modulus": 362098217010498046875,
+      "exponents": [
+        5,
+        26
+      ]
+    },
+    {
+      "modulus": 372343627196630859375,
+      "exponents": [
+        27,
+        11
+      ]
+    },
+    {
+      "modulus": 391066074371337890625,
+      "exponents": [
+        8,
+        24
+      ]
+    },
+    {
+      "modulus": 402131117372361328125,
+      "exponents": [
+        30,
+        9
+      ]
+    },
+    {
+      "modulus": 422351360321044921875,
+      "exponents": [
+        11,
+        22
+      ]
+    },
+    {
+      "modulus": 434301606762150234375,
+      "exponents": [
+        33,
+        7
+      ]
+    },
+    {
+      "modulus": 456139469146728515625,
+      "exponents": [
+        14,
+        20
+      ]
+    },
+    {
+      "modulus": 469045735303122253125,
+      "exponents": [
+        36,
+        5
+      ]
+    },
+    {
+      "modulus": 492630626678466796875,
+      "exponents": [
+        17,
+        18
+      ]
+    },
+    {
+      "modulus": 506569394127372033375,
+      "exponents": [
+        39,
+        3
+      ]
+    },
+    {
+      "modulus": 532041076812744140625,
+      "exponents": [
+        20,
+        16
+      ]
+    },
+    {
+      "modulus": 547094945657561796045,
+      "exponents": [
+        42,
+        1
+      ]
+    },
+    {
+      "modulus": 558793544769287109375,
+      "exponents": [
+        1,
+        29
+      ]
+    },
+    {
+      "modulus": 574604362957763671875,
+      "exponents": [
+        23,
+        14
+      ]
+    },
+    {
+      "modulus": 603497028350830078125,
+      "exponents": [
+        4,
+        27
+      ]
+    },
+    {
+      "modulus": 620572711994384765625,
+      "exponents": [
+        26,
+        12
+      ]
+    },
+    {
+      "modulus": 651776790618896484375,
+      "exponents": [
+        7,
+        25
+      ]
+    },
+    {
+      "modulus": 670218528953935546875,
+      "exponents": [
+        29,
+        10
+      ]
+    },
+    {
+      "modulus": 703918933868408203125,
+      "exponents": [
+        10,
+        23
+      ]
+    },
+    {
+      "modulus": 723836011270250390625,
+      "exponents": [
+        32,
+        8
+      ]
+    },
+    {
+      "modulus": 760232448577880859375,
+      "exponents": [
+        13,
+        21
+      ]
+    },
+    {
+      "modulus": 781742892171870421875,
+      "exponents": [
+        35,
+        6
+      ]
+    },
+    {
+      "modulus": 821051044464111328125,
+      "exponents": [
+        16,
+        19
+      ]
+    },
+    {
+      "modulus": 844282323545620055625,
+      "exponents": [
+        38,
+        4
+      ]
+    },
+    {
+      "modulus": 886735128021240234375,
+      "exponents": [
+        19,
+        17
+      ]
+    },
+    {
+      "modulus": 911824909429269660075,
+      "exponents": [
+        41,
+        2
+      ]
+    },
+    {
+      "modulus": 931322574615478515625,
+      "exponents": [
+        0,
+        30
+      ]
+    },
+    {
+      "modulus": 957673938262939453125,
+      "exponents": [
+        22,
+        15
+      ]
+    },
+    {
+      "modulus": 984770902183611232881,
+      "exponents": [
+        44,
+        0
+      ]
+    },
+    {
+      "modulus": 1005828380584716796875,
+      "exponents": [
+        3,
+        28
+      ]
+    },
+    {
+      "modulus": 1034287853323974609375,
+      "exponents": [
+        25,
+        13
+      ]
+    },
+    {
+      "modulus": 1086294651031494140625,
+      "exponents": [
+        6,
+        26
+      ]
+    },
+    {
+      "modulus": 1117030881589892578125,
+      "exponents": [
+        28,
+        11
+      ]
+    },
+    {
+      "modulus": 1173198223114013671875,
+      "exponents": [
+        9,
+        24
+      ]
+    },
+    {
+      "modulus": 1206393352117083984375,
+      "exponents": [
+        31,
+        9
+      ]
+    },
+    {
+      "modulus": 1267054080963134765625,
+      "exponents": [
+        12,
+        22
+      ]
+    },
+    {
+      "modulus": 1302904820286450703125,
+      "exponents": [
+        34,
+        7
+      ]
+    },
+    {
+      "modulus": 1368418407440185546875,
+      "exponents": [
+        15,
+        20
+      ]
+    },
+    {
+      "modulus": 1407137205909366759375,
+      "exponents": [
+        37,
+        5
+      ]
+    },
+    {
+      "modulus": 1477891880035400390625,
+      "exponents": [
+        18,
+        18
+      ]
+    },
+    {
+      "modulus": 1519708182382116100125,
+      "exponents": [
+        40,
+        3
+      ]
+    },
+    {
+      "modulus": 1596123230438232421875,
+      "exponents": [
+        21,
+        16
+      ]
+    },
+    {
+      "modulus": 1641284836972685388135,
+      "exponents": [
+        43,
+        1
+      ]
+    },
+    {
+      "modulus": 1676380634307861328125,
+      "exponents": [
+        2,
+        29
+      ]
+    },
+    {
+      "modulus": 1723813088873291015625,
+      "exponents": [
+        24,
+        14
+      ]
+    },
+    {
+      "modulus": 1810491085052490234375,
+      "exponents": [
+        5,
+        27
+      ]
+    },
+    {
+      "modulus": 1861718135983154296875,
+      "exponents": [
+        27,
+        12
+      ]
+    },
+    {
+      "modulus": 1955330371856689453125,
+      "exponents": [
+        8,
+        25
+      ]
+    },
+    {
+      "modulus": 2010655586861806640625,
+      "exponents": [
+        30,
+        10
+      ]
+    },
+    {
+      "modulus": 2111756801605224609375,
+      "exponents": [
+        11,
+        23
+      ]
+    },
+    {
+      "modulus": 2171508033810751171875,
+      "exponents": [
+        33,
+        8
+      ]
+    },
+    {
+      "modulus": 2280697345733642578125,
+      "exponents": [
+        14,
+        21
+      ]
+    },
+    {
+      "modulus": 2345228676515611265625,
+      "exponents": [
+        36,
+        6
+      ]
+    },
+    {
+      "modulus": 2463153133392333984375,
+      "exponents": [
+        17,
+        19
+      ]
+    },
+    {
+      "modulus": 2532846970636860166875,
+      "exponents": [
+        39,
+        4
+      ]
+    },
+    {
+      "modulus": 2660205384063720703125,
+      "exponents": [
+        20,
+        17
+      ]
+    },
+    {
+      "modulus": 2735474728287808980225,
+      "exponents": [
+        42,
+        2
+      ]
+    },
+    {
+      "modulus": 2793967723846435546875,
+      "exponents": [
+        1,
+        30
+      ]
+    },
+    {
+      "modulus": 2873021814788818359375,
+      "exponents": [
+        23,
+        15
+      ]
+    },
+    {
+      "modulus": 2954312706550833698643,
+      "exponents": [
+        45,
+        0
+      ]
+    },
+    {
+      "modulus": 3017485141754150390625,
+      "exponents": [
+        4,
+        28
+      ]
+    },
+    {
+      "modulus": 3102863559971923828125,
+      "exponents": [
+        26,
+        13
+      ]
+    },
+    {
+      "modulus": 3258883953094482421875,
+      "exponents": [
+        7,
+        26
+      ]
+    },
+    {
+      "modulus": 3351092644769677734375,
+      "exponents": [
+        29,
+        11
+      ]
+    },
+    {
+      "modulus": 3519594669342041015625,
+      "exponents": [
+        10,
+        24
+      ]
+    },
+    {
+      "modulus": 3619180056351251953125,
+      "exponents": [
+        32,
+        9
+      ]
+    },
+    {
+      "modulus": 3801162242889404296875,
+      "exponents": [
+        13,
+        22
+      ]
+    },
+    {
+      "modulus": 3908714460859352109375,
+      "exponents": [
+        35,
+        7
+      ]
+    },
+    {
+      "modulus": 4105255222320556640625,
+      "exponents": [
+        16,
+        20
+      ]
+    },
+    {
+      "modulus": 4221411617728100278125,
+      "exponents": [
+        38,
+        5
+      ]
+    },
+    {
+      "modulus": 4433675640106201171875,
+      "exponents": [
+        19,
+        18
+      ]
+    },
+    {
+      "modulus": 4559124547146348300375,
+      "exponents": [
+        41,
+        3
+      ]
+    },
+    {
+      "modulus": 4656612873077392578125,
+      "exponents": [
+        0,
+        31
+      ]
+    },
+    {
+      "modulus": 4788369691314697265625,
+      "exponents": [
+        22,
+        16
+      ]
+    },
+    {
+      "modulus": 4923854510918056164405,
+      "exponents": [
+        44,
+        1
+      ]
+    },
+    {
+      "modulus": 5029141902923583984375,
+      "exponents": [
+        3,
+        29
+      ]
+    },
+    {
+      "modulus": 5171439266619873046875,
+      "exponents": [
+        25,
+        14
+      ]
+    },
+    {
+      "modulus": 5431473255157470703125,
+      "exponents": [
+        6,
+        27
+      ]
+    },
+    {
+      "modulus": 5585154407949462890625,
+      "exponents": [
+        28,
+        12
+      ]
+    },
+    {
+      "modulus": 5865991115570068359375,
+      "exponents": [
+        9,
+        25
+      ]
+    },
+    {
+      "modulus": 6031966760585419921875,
+      "exponents": [
+        31,
+        10
+      ]
+    },
+    {
+      "modulus": 6335270404815673828125,
+      "exponents": [
+        12,
+        23
+      ]
+    },
+    {
+      "modulus": 6514524101432253515625,
+      "exponents": [
+        34,
+        8
+      ]
+    },
+    {
+      "modulus": 6842092037200927734375,
+      "exponents": [
+        15,
+        21
+      ]
+    },
+    {
+      "modulus": 7035686029546833796875,
+      "exponents": [
+        37,
+        6
+      ]
+    },
+    {
+      "modulus": 7389459400177001953125,
+      "exponents": [
+        18,
+        19
+      ]
+    },
+    {
+      "modulus": 7598540911910580500625,
+      "exponents": [
+        40,
+        4
+      ]
+    },
+    {
+      "modulus": 7980616152191162109375,
+      "exponents": [
+        21,
+        17
+      ]
+    },
+    {
+      "modulus": 8206424184863426940675,
+      "exponents": [
+        43,
+        2
+      ]
+    },
+    {
+      "modulus": 8381903171539306640625,
+      "exponents": [
+        2,
+        30
+      ]
+    },
+    {
+      "modulus": 8619065444366455078125,
+      "exponents": [
+        24,
+        15
+      ]
+    },
+    {
+      "modulus": 8862938119652501095929,
+      "exponents": [
+        46,
+        0
+      ]
+    },
+    {
+      "modulus": 9052455425262451171875,
+      "exponents": [
+        5,
+        28
+      ]
+    },
+    {
+      "modulus": 9308590679915771484375,
+      "exponents": [
+        27,
+        13
+      ]
+    },
+    {
+      "modulus": 9776651859283447265625,
+      "exponents": [
+        8,
+        26
+      ]
+    },
+    {
+      "modulus": 10053277934309033203125,
+      "exponents": [
+        30,
+        11
+      ]
+    },
+    {
+      "modulus": 10558784008026123046875,
+      "exponents": [
+        11,
+        24
+      ]
+    },
+    {
+      "modulus": 10857540169053755859375,
+      "exponents": [
+        33,
+        9
+      ]
+    },
+    {
+      "modulus": 11403486728668212890625,
+      "exponents": [
+        14,
+        22
+      ]
+    },
+    {
+      "modulus": 11726143382578056328125,
+      "exponents": [
+        36,
+        7
+      ]
+    },
+    {
+      "modulus": 12315765666961669921875,
+      "exponents": [
+        17,
+        20
+      ]
+    },
+    {
+      "modulus": 12664234853184300834375,
+      "exponents": [
+        39,
+        5
+      ]
+    },
+    {
+      "modulus": 13301026920318603515625,
+      "exponents": [
+        20,
+        18
+      ]
+    },
+    {
+      "modulus": 13677373641439044901125,
+      "exponents": [
+        42,
+        3
+      ]
+    },
+    {
+      "modulus": 13969838619232177734375,
+      "exponents": [
+        1,
+        31
+      ]
+    },
+    {
+      "modulus": 14365109073944091796875,
+      "exponents": [
+        23,
+        16
+      ]
+    },
+    {
+      "modulus": 14771563532754168493215,
+      "exponents": [
+        45,
+        1
+      ]
+    },
+    {
+      "modulus": 15087425708770751953125,
+      "exponents": [
+        4,
+        29
+      ]
+    },
+    {
+      "modulus": 15514317799859619140625,
+      "exponents": [
+        26,
+        14
+      ]
+    },
+    {
+      "modulus": 16294419765472412109375,
+      "exponents": [
+        7,
+        27
+      ]
+    },
+    {
+      "modulus": 16755463223848388671875,
+      "exponents": [
+        29,
+        12
+      ]
+    },
+    {
+      "modulus": 17597973346710205078125,
+      "exponents": [
+        10,
+        25
+      ]
+    },
+    {
+      "modulus": 18095900281756259765625,
+      "exponents": [
+        32,
+        10
+      ]
+    },
+    {
+      "modulus": 19005811214447021484375,
+      "exponents": [
+        13,
+        23
+      ]
+    },
+    {
+      "modulus": 19543572304296760546875,
+      "exponents": [
+        35,
+        8
+      ]
+    },
+    {
+      "modulus": 20526276111602783203125,
+      "exponents": [
+        16,
+        21
+      ]
+    },
+    {
+      "modulus": 21107058088640501390625,
+      "exponents": [
+        38,
+        6
+      ]
+    },
+    {
+      "modulus": 22168378200531005859375,
+      "exponents": [
+        19,
+        19
+      ]
+    },
+    {
+      "modulus": 22795622735731741501875,
+      "exponents": [
+        41,
+        4
+      ]
+    },
+    {
+      "modulus": 23283064365386962890625,
+      "exponents": [
+        0,
+        32
+      ]
+    },
+    {
+      "modulus": 23941848456573486328125,
+      "exponents": [
+        22,
+        17
+      ]
+    },
+    {
+      "modulus": 24619272554590280822025,
+      "exponents": [
+        44,
+        2
+      ]
+    },
+    {
+      "modulus": 25145709514617919921875,
+      "exponents": [
+        3,
+        30
+      ]
+    },
+    {
+      "modulus": 25857196333099365234375,
+      "exponents": [
+        25,
+        15
+      ]
+    },
+    {
+      "modulus": 26588814358957503287787,
+      "exponents": [
+        47,
+        0
+      ]
+    },
+    {
+      "modulus": 27157366275787353515625,
+      "exponents": [
+        6,
+        28
+      ]
+    },
+    {
+      "modulus": 27925772039747314453125,
+      "exponents": [
+        28,
+        13
+      ]
+    },
+    {
+      "modulus": 29329955577850341796875,
+      "exponents": [
+        9,
+        26
+      ]
+    },
+    {
+      "modulus": 30159833802927099609375,
+      "exponents": [
+        31,
+        11
+      ]
+    },
+    {
+      "modulus": 31676352024078369140625,
+      "exponents": [
+        12,
+        24
+      ]
+    },
+    {
+      "modulus": 32572620507161267578125,
+      "exponents": [
+        34,
+        9
+      ]
+    },
+    {
+      "modulus": 34210460186004638671875,
+      "exponents": [
+        15,
+        22
+      ]
+    },
+    {
+      "modulus": 35178430147734168984375,
+      "exponents": [
+        37,
+        7
+      ]
+    },
+    {
+      "modulus": 36947297000885009765625,
+      "exponents": [
+        18,
+        20
+      ]
+    },
+    {
+      "modulus": 37992704559552902503125,
+      "exponents": [
+        40,
+        5
+      ]
+    },
+    {
+      "modulus": 39903080760955810546875,
+      "exponents": [
+        21,
+        18
+      ]
+    },
+    {
+      "modulus": 41032120924317134703375,
+      "exponents": [
+        43,
+        3
+      ]
+    },
+    {
+      "modulus": 41909515857696533203125,
+      "exponents": [
+        2,
+        31
+      ]
+    },
+    {
+      "modulus": 43095327221832275390625,
+      "exponents": [
+        24,
+        16
+      ]
+    },
+    {
+      "modulus": 44314690598262505479645,
+      "exponents": [
+        46,
+        1
+      ]
+    },
+    {
+      "modulus": 45262277126312255859375,
+      "exponents": [
+        5,
+        29
+      ]
+    },
+    {
+      "modulus": 46542953399578857421875,
+      "exponents": [
+        27,
+        14
+      ]
+    },
+    {
+      "modulus": 48883259296417236328125,
+      "exponents": [
+        8,
+        27
+      ]
+    },
+    {
+      "modulus": 50266389671545166015625,
+      "exponents": [
+        30,
+        12
+      ]
+    },
+    {
+      "modulus": 52793920040130615234375,
+      "exponents": [
+        11,
+        25
+      ]
+    },
+    {
+      "modulus": 54287700845268779296875,
+      "exponents": [
+        33,
+        10
+      ]
+    },
+    {
+      "modulus": 57017433643341064453125,
+      "exponents": [
+        14,
+        23
+      ]
+    },
+    {
+      "modulus": 58630716912890281640625,
+      "exponents": [
+        36,
+        8
+      ]
+    },
+    {
+      "modulus": 61578828334808349609375,
+      "exponents": [
+        17,
+        21
+      ]
+    },
+    {
+      "modulus": 63321174265921504171875,
+      "exponents": [
+        39,
+        6
+      ]
+    },
+    {
+      "modulus": 66505134601593017578125,
+      "exponents": [
+        20,
+        19
+      ]
+    },
+    {
+      "modulus": 68386868207195224505625,
+      "exponents": [
+        42,
+        4
+      ]
+    },
+    {
+      "modulus": 69849193096160888671875,
+      "exponents": [
+        1,
+        32
+      ]
+    },
+    {
+      "modulus": 71825545369720458984375,
+      "exponents": [
+        23,
+        17
+      ]
+    },
+    {
+      "modulus": 73857817663770842466075,
+      "exponents": [
+        45,
+        2
+      ]
+    },
+    {
+      "modulus": 75437128543853759765625,
+      "exponents": [
+        4,
+        30
+      ]
+    },
+    {
+      "modulus": 77571588999298095703125,
+      "exponents": [
+        26,
+        15
+      ]
+    },
+    {
+      "modulus": 79766443076872509863361,
+      "exponents": [
+        48,
+        0
+      ]
+    },
+    {
+      "modulus": 81472098827362060546875,
+      "exponents": [
+        7,
+        28
+      ]
+    },
+    {
+      "modulus": 83777316119241943359375,
+      "exponents": [
+        29,
+        13
+      ]
+    },
+    {
+      "modulus": 87989866733551025390625,
+      "exponents": [
+        10,
+        26
+      ]
+    },
+    {
+      "modulus": 90479501408781298828125,
+      "exponents": [
+        32,
+        11
+      ]
+    },
+    {
+      "modulus": 95029056072235107421875,
+      "exponents": [
+        13,
+        24
+      ]
+    },
+    {
+      "modulus": 97717861521483802734375,
+      "exponents": [
+        35,
+        9
+      ]
+    },
+    {
+      "modulus": 102631380558013916015625,
+      "exponents": [
+        16,
+        22
+      ]
+    },
+    {
+      "modulus": 105535290443202506953125,
+      "exponents": [
+        38,
+        7
+      ]
+    },
+    {
+      "modulus": 110841891002655029296875,
+      "exponents": [
+        19,
+        20
+      ]
+    },
+    {
+      "modulus": 113978113678658707509375,
+      "exponents": [
+        41,
+        5
+      ]
+    },
+    {
+      "modulus": 116415321826934814453125,
+      "exponents": [
+        0,
+        33
+      ]
+    },
+    {
+      "modulus": 119709242282867431640625,
+      "exponents": [
+        22,
+        18
+      ]
+    },
+    {
+      "modulus": 123096362772951404110125,
+      "exponents": [
+        44,
+        3
+      ]
+    },
+    {
+      "modulus": 125728547573089599609375,
+      "exponents": [
+        3,
+        31
+      ]
+    },
+    {
+      "modulus": 129285981665496826171875,
+      "exponents": [
+        25,
+        16
+      ]
+    },
+    {
+      "modulus": 132944071794787516438935,
+      "exponents": [
+        47,
+        1
+      ]
+    },
+    {
+      "modulus": 135786831378936767578125,
+      "exponents": [
+        6,
+        29
+      ]
+    },
+    {
+      "modulus": 139628860198736572265625,
+      "exponents": [
+        28,
+        14
+      ]
+    },
+    {
+      "modulus": 146649777889251708984375,
+      "exponents": [
+        9,
+        27
+      ]
+    },
+    {
+      "modulus": 150799169014635498046875,
+      "exponents": [
+        31,
+        12
+      ]
+    },
+    {
+      "modulus": 158381760120391845703125,
+      "exponents": [
+        12,
+        25
+      ]
+    },
+    {
+      "modulus": 162863102535806337890625,
+      "exponents": [
+        34,
+        10
+      ]
+    },
+    {
+      "modulus": 171052300930023193359375,
+      "exponents": [
+        15,
+        23
+      ]
+    },
+    {
+      "modulus": 175892150738670844921875,
+      "exponents": [
+        37,
+        8
+      ]
+    },
+    {
+      "modulus": 184736485004425048828125,
+      "exponents": [
+        18,
+        21
+      ]
+    },
+    {
+      "modulus": 189963522797764512515625,
+      "exponents": [
+        40,
+        6
+      ]
+    },
+    {
+      "modulus": 199515403804779052734375,
+      "exponents": [
+        21,
+        19
+      ]
+    },
+    {
+      "modulus": 205160604621585673516875,
+      "exponents": [
+        43,
+        4
+      ]
+    },
+    {
+      "modulus": 209547579288482666015625,
+      "exponents": [
+        2,
+        32
+      ]
+    },
+    {
+      "modulus": 215476636109161376953125,
+      "exponents": [
+        24,
+        17
+      ]
+    },
+    {
+      "modulus": 221573452991312527398225,
+      "exponents": [
+        46,
+        2
+      ]
+    },
+    {
+      "modulus": 226311385631561279296875,
+      "exponents": [
+        5,
+        30
+      ]
+    },
+    {
+      "modulus": 232714766997894287109375,
+      "exponents": [
+        27,
+        15
+      ]
+    },
+    {
+      "modulus": 239299329230617529590083,
+      "exponents": [
+        49,
+        0
+      ]
+    },
+    {
+      "modulus": 244416296482086181640625,
+      "exponents": [
+        8,
+        28
+      ]
+    },
+    {
+      "modulus": 251331948357725830078125,
+      "exponents": [
+        30,
+        13
+      ]
+    },
+    {
+      "modulus": 263969600200653076171875,
+      "exponents": [
+        11,
+        26
+      ]
+    },
+    {
+      "modulus": 271438504226343896484375,
+      "exponents": [
+        33,
+        11
+      ]
+    },
+    {
+      "modulus": 285087168216705322265625,
+      "exponents": [
+        14,
+        24
+      ]
+    },
+    {
+      "modulus": 293153584564451408203125,
+      "exponents": [
+        36,
+        9
+      ]
+    },
+    {
+      "modulus": 307894141674041748046875,
+      "exponents": [
+        17,
+        22
+      ]
+    },
+    {
+      "modulus": 316605871329607520859375,
+      "exponents": [
+        39,
+        7
+      ]
+    },
+    {
+      "modulus": 332525673007965087890625,
+      "exponents": [
+        20,
+        20
+      ]
+    },
+    {
+      "modulus": 341934341035976122528125,
+      "exponents": [
+        42,
+        5
+      ]
+    },
+    {
+      "modulus": 349245965480804443359375,
+      "exponents": [
+        1,
+        33
+      ]
+    },
+    {
+      "modulus": 359127726848602294921875,
+      "exponents": [
+        23,
+        18
+      ]
+    },
+    {
+      "modulus": 369289088318854212330375,
+      "exponents": [
+        45,
+        3
+      ]
+    },
+    {
+      "modulus": 377185642719268798828125,
+      "exponents": [
+        4,
+        31
+      ]
+    },
+    {
+      "modulus": 387857944996490478515625,
+      "exponents": [
+        26,
+        16
+      ]
+    },
+    {
+      "modulus": 398832215384362549316805,
+      "exponents": [
+        48,
+        1
+      ]
+    },
+    {
+      "modulus": 407360494136810302734375,
+      "exponents": [
+        7,
+        29
+      ]
+    },
+    {
+      "modulus": 418886580596209716796875,
+      "exponents": [
+        29,
+        14
+      ]
+    },
+    {
+      "modulus": 439949333667755126953125,
+      "exponents": [
+        10,
+        27
+      ]
+    },
+    {
+      "modulus": 452397507043906494140625,
+      "exponents": [
+        32,
+        12
+      ]
+    },
+    {
+      "modulus": 475145280361175537109375,
+      "exponents": [
+        13,
+        25
+      ]
+    },
+    {
+      "modulus": 488589307607419013671875,
+      "exponents": [
+        35,
+        10
+      ]
+    },
+    {
+      "modulus": 513156902790069580078125,
+      "exponents": [
+        16,
+        23
+      ]
+    },
+    {
+      "modulus": 527676452216012534765625,
+      "exponents": [
+        38,
+        8
+      ]
+    },
+    {
+      "modulus": 554209455013275146484375,
+      "exponents": [
+        19,
+        21
+      ]
+    },
+    {
+      "modulus": 569890568393293537546875,
+      "exponents": [
+        41,
+        6
+      ]
+    },
+    {
+      "modulus": 582076609134674072265625,
+      "exponents": [
+        0,
+        34
+      ]
+    },
+    {
+      "modulus": 598546211414337158203125,
+      "exponents": [
+        22,
+        19
+      ]
+    },
+    {
+      "modulus": 615481813864757020550625,
+      "exponents": [
+        44,
+        4
+      ]
+    },
+    {
+      "modulus": 628642737865447998046875,
+      "exponents": [
+        3,
+        32
+      ]
+    },
+    {
+      "modulus": 646429908327484130859375,
+      "exponents": [
+        25,
+        17
+      ]
+    },
+    {
+      "modulus": 664720358973937582194675,
+      "exponents": [
+        47,
+        2
+      ]
+    },
+    {
+      "modulus": 678934156894683837890625,
+      "exponents": [
+        6,
+        30
+      ]
+    },
+    {
+      "modulus": 698144300993682861328125,
+      "exponents": [
+        28,
+        15
+      ]
+    },
+    {
+      "modulus": 717897987691852588770249,
+      "exponents": [
+        50,
+        0
+      ]
+    },
+    {
+      "modulus": 733248889446258544921875,
+      "exponents": [
+        9,
+        28
+      ]
+    },
+    {
+      "modulus": 753995845073177490234375,
+      "exponents": [
+        31,
+        13
+      ]
+    },
+    {
+      "modulus": 791908800601959228515625,
+      "exponents": [
+        12,
+        26
+      ]
+    },
+    {
+      "modulus": 814315512679031689453125,
+      "exponents": [
+        34,
+        11
+      ]
+    },
+    {
+      "modulus": 855261504650115966796875,
+      "exponents": [
+        15,
+        24
+      ]
+    },
+    {
+      "modulus": 879460753693354224609375,
+      "exponents": [
+        37,
+        9
+      ]
+    },
+    {
+      "modulus": 923682425022125244140625,
+      "exponents": [
+        18,
+        22
+      ]
+    },
+    {
+      "modulus": 949817613988822562578125,
+      "exponents": [
+        40,
+        7
+      ]
+    },
+    {
+      "modulus": 997577019023895263671875,
+      "exponents": [
+        21,
+        20
+      ]
+    },
+    {
+      "modulus": 1025803023107928367584375,
+      "exponents": [
+        43,
+        5
+      ]
+    },
+    {
+      "modulus": 1047737896442413330078125,
+      "exponents": [
+        2,
+        33
+      ]
+    },
+    {
+      "modulus": 1077383180545806884765625,
+      "exponents": [
+        24,
+        18
+      ]
+    },
+    {
+      "modulus": 1107867264956562636991125,
+      "exponents": [
+        46,
+        3
+      ]
+    },
+    {
+      "modulus": 1131556928157806396484375,
+      "exponents": [
+        5,
+        31
+      ]
+    },
+    {
+      "modulus": 1163573834989471435546875,
+      "exponents": [
+        27,
+        16
+      ]
+    },
+    {
+      "modulus": 1196496646153087647950415,
+      "exponents": [
+        49,
+        1
+      ]
+    },
+    {
+      "modulus": 1222081482410430908203125,
+      "exponents": [
+        8,
+        29
+      ]
+    },
+    {
+      "modulus": 1256659741788629150390625,
+      "exponents": [
+        30,
+        14
+      ]
+    },
+    {
+      "modulus": 1319848001003265380859375,
+      "exponents": [
+        11,
+        27
+      ]
+    },
+    {
+      "modulus": 1357192521131719482421875,
+      "exponents": [
+        33,
+        12
+      ]
+    },
+    {
+      "modulus": 1425435841083526611328125,
+      "exponents": [
+        14,
+        25
+      ]
+    },
+    {
+      "modulus": 1465767922822257041015625,
+      "exponents": [
+        36,
+        10
+      ]
+    },
+    {
+      "modulus": 1539470708370208740234375,
+      "exponents": [
+        17,
+        23
+      ]
+    },
+    {
+      "modulus": 1583029356648037604296875,
+      "exponents": [
+        39,
+        8
+      ]
+    },
+    {
+      "modulus": 1662628365039825439453125,
+      "exponents": [
+        20,
+        21
+      ]
+    },
+    {
+      "modulus": 1709671705179880612640625,
+      "exponents": [
+        42,
+        6
+      ]
+    },
+    {
+      "modulus": 1746229827404022216796875,
+      "exponents": [
+        1,
+        34
+      ]
+    },
+    {
+      "modulus": 1795638634243011474609375,
+      "exponents": [
+        23,
+        19
+      ]
+    },
+    {
+      "modulus": 1846445441594271061651875,
+      "exponents": [
+        45,
+        4
+      ]
+    },
+    {
+      "modulus": 1885928213596343994140625,
+      "exponents": [
+        4,
+        32
+      ]
+    },
+    {
+      "modulus": 1939289724982452392578125,
+      "exponents": [
+        26,
+        17
+      ]
+    },
+    {
+      "modulus": 1994161076921812746584025,
+      "exponents": [
+        48,
+        2
+      ]
+    },
+    {
+      "modulus": 2036802470684051513671875,
+      "exponents": [
+        7,
+        30
+      ]
+    },
+    {
+      "modulus": 2094432902981048583984375,
+      "exponents": [
+        29,
+        15
+      ]
+    },
+    {
+      "modulus": 2153693963075557766310747,
+      "exponents": [
+        51,
+        0
+      ]
+    },
+    {
+      "modulus": 2199746668338775634765625,
+      "exponents": [
+        10,
+        28
+      ]
+    },
+    {
+      "modulus": 2261987535219532470703125,
+      "exponents": [
+        32,
+        13
+      ]
+    },
+    {
+      "modulus": 2375726401805877685546875,
+      "exponents": [
+        13,
+        26
+      ]
+    },
+    {
+      "modulus": 2442946538037095068359375,
+      "exponents": [
+        35,
+        11
+      ]
+    },
+    {
+      "modulus": 2565784513950347900390625,
+      "exponents": [
+        16,
+        24
+      ]
+    },
+    {
+      "modulus": 2638382261080062673828125,
+      "exponents": [
+        38,
+        9
+      ]
+    },
+    {
+      "modulus": 2771047275066375732421875,
+      "exponents": [
+        19,
+        22
+      ]
+    },
+    {
+      "modulus": 2849452841966467687734375,
+      "exponents": [
+        41,
+        7
+      ]
+    },
+    {
+      "modulus": 2910383045673370361328125,
+      "exponents": [
+        0,
+        35
+      ]
+    },
+    {
+      "modulus": 2992731057071685791015625,
+      "exponents": [
+        22,
+        20
+      ]
+    },
+    {
+      "modulus": 3077409069323785102753125,
+      "exponents": [
+        44,
+        5
+      ]
+    },
+    {
+      "modulus": 3143213689327239990234375,
+      "exponents": [
+        3,
+        33
+      ]
+    },
+    {
+      "modulus": 3232149541637420654296875,
+      "exponents": [
+        25,
+        18
+      ]
+    },
+    {
+      "modulus": 3323601794869687910973375,
+      "exponents": [
+        47,
+        3
+      ]
+    },
+    {
+      "modulus": 3394670784473419189453125,
+      "exponents": [
+        6,
+        31
+      ]
+    },
+    {
+      "modulus": 3490721504968414306640625,
+      "exponents": [
+        28,
+        16
+      ]
+    },
+    {
+      "modulus": 3589489938459262943851245,
+      "exponents": [
+        50,
+        1
+      ]
+    },
+    {
+      "modulus": 3666244447231292724609375,
+      "exponents": [
+        9,
+        29
+      ]
+    },
+    {
+      "modulus": 3769979225365887451171875,
+      "exponents": [
+        31,
+        14
+      ]
+    },
+    {
+      "modulus": 3959544003009796142578125,
+      "exponents": [
+        12,
+        27
+      ]
+    },
+    {
+      "modulus": 4071577563395158447265625,
+      "exponents": [
+        34,
+        12
+      ]
+    },
+    {
+      "modulus": 4276307523250579833984375,
+      "exponents": [
+        15,
+        25
+      ]
+    },
+    {
+      "modulus": 4397303768466771123046875,
+      "exponents": [
+        37,
+        10
+      ]
+    },
+    {
+      "modulus": 4618412125110626220703125,
+      "exponents": [
+        18,
+        23
+      ]
+    },
+    {
+      "modulus": 4749088069944112812890625,
+      "exponents": [
+        40,
+        8
+      ]
+    },
+    {
+      "modulus": 4987885095119476318359375,
+      "exponents": [
+        21,
+        21
+      ]
+    },
+    {
+      "modulus": 5129015115539641837921875,
+      "exponents": [
+        43,
+        6
+      ]
+    },
+    {
+      "modulus": 5238689482212066650390625,
+      "exponents": [
+        2,
+        34
+      ]
+    },
+    {
+      "modulus": 5386915902729034423828125,
+      "exponents": [
+        24,
+        19
+      ]
+    },
+    {
+      "modulus": 5539336324782813184955625,
+      "exponents": [
+        46,
+        4
+      ]
+    },
+    {
+      "modulus": 5657784640789031982421875,
+      "exponents": [
+        5,
+        32
+      ]
+    },
+    {
+      "modulus": 5817869174947357177734375,
+      "exponents": [
+        27,
+        17
+      ]
+    },
+    {
+      "modulus": 5982483230765438239752075,
+      "exponents": [
+        49,
+        2
+      ]
+    },
+    {
+      "modulus": 6110407412052154541015625,
+      "exponents": [
+        8,
+        30
+      ]
+    },
+    {
+      "modulus": 6283298708943145751953125,
+      "exponents": [
+        30,
+        15
+      ]
+    },
+    {
+      "modulus": 6461081889226673298932241,
+      "exponents": [
+        52,
+        0
+      ]
+    },
+    {
+      "modulus": 6599240005016326904296875,
+      "exponents": [
+        11,
+        28
+      ]
+    },
+    {
+      "modulus": 6785962605658597412109375,
+      "exponents": [
+        33,
+        13
+      ]
+    },
+    {
+      "modulus": 7127179205417633056640625,
+      "exponents": [
+        14,
+        26
+      ]
+    },
+    {
+      "modulus": 7328839614111285205078125,
+      "exponents": [
+        36,
+        11
+      ]
+    }
+  ],
+  "finite_rows": [
+    {
+      "entry_prime": 53,
+      "shallow_parent_label_count": 43,
+      "last_shallow_label": 59049,
+      "remaining_parent_reciprocal_mass": "823999/7381125000",
+      "reserve_denominator": 7,
+      "blocker_fee_upper": "823999/51667875000"
+    },
+    {
+      "entry_prime": 59,
+      "shallow_parent_label_count": 47,
+      "last_shallow_label": 98415,
+      "remaining_parent_reciprocal_mass": "2430203/36905625000",
+      "reserve_denominator": 9,
+      "blocker_fee_upper": "2430203/332150625000"
+    },
+    {
+      "entry_prime": 61,
+      "shallow_parent_label_count": 50,
+      "last_shallow_label": 164025,
+      "remaining_parent_reciprocal_mass": "1699763/36905625000",
+      "reserve_denominator": 8,
+      "blocker_fee_upper": "1699763/295245000000"
+    },
+    {
+      "entry_prime": 67,
+      "shallow_parent_label_count": 55,
+      "last_shallow_label": 295245,
+      "remaining_parent_reciprocal_mass": "2784497/110716875000",
+      "reserve_denominator": 9,
+      "blocker_fee_upper": "2784497/996451875000"
+    },
+    {
+      "entry_prime": 71,
+      "shallow_parent_label_count": 60,
+      "last_shallow_label": 531441,
+      "remaining_parent_reciprocal_mass": "23434327/1660753125000",
+      "reserve_denominator": 8,
+      "blocker_fee_upper": "23434327/13286025000000"
+    },
+    {
+      "entry_prime": 73,
+      "shallow_parent_label_count": 61,
+      "last_shallow_label": 703125,
+      "remaining_parent_reciprocal_mass": "21072367/1660753125000",
+      "reserve_denominator": 9,
+      "blocker_fee_upper": "21072367/14946778125000"
+    },
+    {
+      "entry_prime": 79,
+      "shallow_parent_label_count": 66,
+      "last_shallow_label": 1265625,
+      "remaining_parent_reciprocal_mass": "12255991/1660753125000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "12255991/16607531250000"
+    },
+    {
+      "entry_prime": 83,
+      "shallow_parent_label_count": 70,
+      "last_shallow_label": 1953125,
+      "remaining_parent_reciprocal_mass": "120360281/24911296875000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "120360281/249112968750000"
+    },
+    {
+      "entry_prime": 89,
+      "shallow_parent_label_count": 76,
+      "last_shallow_label": 3796875,
+      "remaining_parent_reciprocal_mass": "64468601/24911296875000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "64468601/249112968750000"
+    },
+    {
+      "entry_prime": 97,
+      "shallow_parent_label_count": 84,
+      "last_shallow_label": 7971615,
+      "remaining_parent_reciprocal_mass": "87681419/74733890625000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "87681419/747338906250000"
+    },
+    {
+      "entry_prime": 101,
+      "shallow_parent_label_count": 88,
+      "last_shallow_label": 12301875,
+      "remaining_parent_reciprocal_mass": "301533943/373669453125000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "301533943/3736694531250000"
+    },
+    {
+      "entry_prime": 103,
+      "shallow_parent_label_count": 90,
+      "last_shallow_label": 14348907,
+      "remaining_parent_reciprocal_mass": "742101829/1121008359375000",
+      "reserve_denominator": 10,
+      "blocker_fee_upper": "742101829/11210083593750000"
+    },
+    {
+      "entry_prime": 107,
+      "shallow_parent_label_count": 93,
+      "last_shallow_label": 20503125,
+      "remaining_parent_reciprocal_mass": "564604909/1121008359375000",
+      "reserve_denominator": 11,
+      "blocker_fee_upper": "51327719/1121008359375000"
+    },
+    {
+      "entry_prime": 109,
+      "shallow_parent_label_count": 95,
+      "last_shallow_label": 23914845,
+      "remaining_parent_reciprocal_mass": "467104909/1121008359375000",
+      "reserve_denominator": 11,
+      "blocker_fee_upper": "467104909/12331091953125000"
+    },
+    {
+      "entry_prime": 113,
+      "shallow_parent_label_count": 99,
+      "last_shallow_label": 36905625,
+      "remaining_parent_reciprocal_mass": "330231757/1121008359375000",
+      "reserve_denominator": 11,
+      "blocker_fee_upper": "330231757/12331091953125000"
+    },
+    {
+      "entry_prime": 127,
+      "shallow_parent_label_count": 112,
+      "last_shallow_label": 119574225,
+      "remaining_parent_reciprocal_mass": "1596627227/16815125390625000",
+      "reserve_denominator": 12,
+      "blocker_fee_upper": "1596627227/201781504687500000"
+    },
+    {
+      "entry_prime": 131,
+      "shallow_parent_label_count": 116,
+      "last_shallow_label": 170859375,
+      "remaining_parent_reciprocal_mass": "3440773313/50445376171875000",
+      "reserve_denominator": 12,
+      "blocker_fee_upper": "3440773313/605344514062500000"
+    },
+    {
+      "entry_prime": 137,
+      "shallow_parent_label_count": 122,
+      "last_shallow_label": 284765625,
+      "remaining_parent_reciprocal_mass": "10524041461/252226880859375000",
+      "reserve_denominator": 12,
+      "blocker_fee_upper": "10524041461/3026722570312500000"
+    },
+    {
+      "entry_prime": 139,
+      "shallow_parent_label_count": 124,
+      "last_shallow_label": 332150625,
+      "remaining_parent_reciprocal_mass": "8944541461/252226880859375000",
+      "reserve_denominator": 12,
+      "blocker_fee_upper": "8944541461/3026722570312500000"
+    },
+    {
+      "entry_prime": 149,
+      "shallow_parent_label_count": 133,
+      "last_shallow_label": 732421875,
+      "remaining_parent_reciprocal_mass": "13141211239/756680642578125000",
+      "reserve_denominator": 13,
+      "blocker_fee_upper": "1010862403/756680642578125000"
+    },
+    {
+      "entry_prime": 151,
+      "shallow_parent_label_count": 135,
+      "last_shallow_label": 854296875,
+      "remaining_parent_reciprocal_mass": "11298882439/756680642578125000",
+      "reserve_denominator": 13,
+      "blocker_fee_upper": "869144803/756680642578125000"
+    },
+    {
+      "entry_prime": 157,
+      "shallow_parent_label_count": 141,
+      "last_shallow_label": 1318359375,
+      "remaining_parent_reciprocal_mass": "107570800649/11350209638671875000",
+      "reserve_denominator": 13,
+      "blocker_fee_upper": "8274676973/11350209638671875000"
+    },
+    {
+      "entry_prime": 163,
+      "shallow_parent_label_count": 146,
+      "last_shallow_label": 1937102445,
+      "remaining_parent_reciprocal_mass": "73196185649/11350209638671875000",
+      "reserve_denominator": 14,
+      "blocker_fee_upper": "73196185649/158902934941406250000"
+    },
+    {
+      "entry_prime": 167,
+      "shallow_parent_label_count": 150,
+      "last_shallow_label": 2767921875,
+      "remaining_parent_reciprocal_mass": "54718310129/11350209638671875000",
+      "reserve_denominator": 14,
+      "blocker_fee_upper": "7816901447/22700419277343750000"
+    },
+    {
+      "entry_prime": 173,
+      "shallow_parent_label_count": 156,
+      "last_shallow_label": 4271484375,
+      "remaining_parent_reciprocal_mass": "106572754451/34050628916015625000",
+      "reserve_denominator": 14,
+      "blocker_fee_upper": "106572754451/476708804824218750000"
+    },
+    {
+      "entry_prime": 179,
+      "shallow_parent_label_count": 162,
+      "last_shallow_label": 6591796875,
+      "remaining_parent_reciprocal_mass": "347126464447/170253144580078125000",
+      "reserve_denominator": 14,
+      "blocker_fee_upper": "49589494921/340506289160156250000"
+    },
+    {
+      "entry_prime": 181,
+      "shallow_parent_label_count": 164,
+      "last_shallow_label": 7688671875,
+      "remaining_parent_reciprocal_mass": "301068244447/170253144580078125000",
+      "reserve_denominator": 14,
+      "blocker_fee_upper": "301068244447/2383544024121093750000"
+    },
+    {
+      "entry_prime": 191,
+      "shallow_parent_label_count": 173,
+      "last_shallow_label": 14946778125,
+      "remaining_parent_reciprocal_mass": "482706978661/510759433740234375000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "482706978661/7661391506103515625000"
+    },
+    {
+      "entry_prime": 193,
+      "shallow_parent_label_count": 175,
+      "last_shallow_label": 17433922005,
+      "remaining_parent_reciprocal_mass": "421769478661/510759433740234375000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "421769478661/7661391506103515625000"
+    },
+    {
+      "entry_prime": 197,
+      "shallow_parent_label_count": 179,
+      "last_shallow_label": 23066015625,
+      "remaining_parent_reciprocal_mass": "321988950853/510759433740234375000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "321988950853/7661391506103515625000"
+    },
+    {
+      "entry_prime": 199,
+      "shallow_parent_label_count": 181,
+      "last_shallow_label": 26904200625,
+      "remaining_parent_reciprocal_mass": "282501450853/510759433740234375000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "282501450853/7661391506103515625000"
+    },
+    {
+      "entry_prime": 211,
+      "shallow_parent_label_count": 193,
+      "last_shallow_label": 59326171875,
+      "remaining_parent_reciprocal_mass": "1902997973483/7661391506103515625000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "1902997973483/114920872591552734375000"
+    },
+    {
+      "entry_prime": 223,
+      "shallow_parent_label_count": 204,
+      "last_shallow_label": 124556484375,
+      "remaining_parent_reciprocal_mass": "2835442745177/22984174518310546875000",
+      "reserve_denominator": 16,
+      "blocker_fee_upper": "2835442745177/367746792292968750000000"
+    },
+    {
+      "entry_prime": 227,
+      "shallow_parent_label_count": 209,
+      "last_shallow_label": 164794921875,
+      "remaining_parent_reciprocal_mass": "10348977040069/114920872591552734375000",
+      "reserve_denominator": 15,
+      "blocker_fee_upper": "10348977040069/1723813088873291015625000"
+    },
+    {
+      "entry_prime": 229,
+      "shallow_parent_label_count": 210,
+      "last_shallow_label": 177978515625,
+      "remaining_parent_reciprocal_mass": "9703276225069/114920872591552734375000",
+      "reserve_denominator": 16,
+      "blocker_fee_upper": "9703276225069/1838733961464843750000000"
+    },
+    {
+      "entry_prime": 233,
+      "shallow_parent_label_count": 214,
+      "last_shallow_label": 242137805625,
+      "remaining_parent_reciprocal_mass": "7564633225069/114920872591552734375000",
+      "reserve_denominator": 16,
+      "blocker_fee_upper": "7564633225069/1838733961464843750000000"
+    },
+    {
+      "entry_prime": 239,
+      "shallow_parent_label_count": 220,
+      "last_shallow_label": 345990234375,
+      "remaining_parent_reciprocal_mass": "15664713423847/344762617774658203125000",
+      "reserve_denominator": 16,
+      "blocker_fee_upper": "15664713423847/5516201884394531250000000"
+    },
+    {
+      "entry_prime": 241,
+      "shallow_parent_label_count": 221,
+      "last_shallow_label": 373669453125,
+      "remaining_parent_reciprocal_mass": "14742072798847/344762617774658203125000",
+      "reserve_denominator": 17,
+      "blocker_fee_upper": "14742072798847/5860964502169189453125000"
+    },
+    {
+      "entry_prime": 251,
+      "shallow_parent_label_count": 230,
+      "last_shallow_label": 672605015625,
+      "remaining_parent_reciprocal_mass": "8604101673031/344762617774658203125000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "8604101673031/6205727119943847656250000"
+    },
+    {
+      "entry_prime": 257,
+      "shallow_parent_label_count": 237,
+      "last_shallow_label": 961083984375,
+      "remaining_parent_reciprocal_mass": "85000403713121/5171439266619873046875000",
+      "reserve_denominator": 17,
+      "blocker_fee_upper": "85000403713121/87914467532537841796875000"
+    },
+    {
+      "entry_prime": 263,
+      "shallow_parent_label_count": 243,
+      "last_shallow_label": 1412147682405,
+      "remaining_parent_reciprocal_mass": "59750542185041/5171439266619873046875000",
+      "reserve_denominator": 17,
+      "blocker_fee_upper": "59750542185041/87914467532537841796875000"
+    },
+    {
+      "entry_prime": 269,
+      "shallow_parent_label_count": 248,
+      "last_shallow_label": 2017815046875,
+      "remaining_parent_reciprocal_mass": "44715085584041/5171439266619873046875000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "44715085584041/93085906799157714843750000"
+    },
+    {
+      "entry_prime": 271,
+      "shallow_parent_label_count": 250,
+      "last_shallow_label": 2288818359375,
+      "remaining_parent_reciprocal_mass": "40082602417193/5171439266619873046875000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "40082602417193/93085906799157714843750000"
+    },
+    {
+      "entry_prime": 277,
+      "shallow_parent_label_count": 256,
+      "last_shallow_label": 3113912109375,
+      "remaining_parent_reciprocal_mass": "85101875994779/15514317799859619140625000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "85101875994779/279257720397473144531250000"
+    },
+    {
+      "entry_prime": 281,
+      "shallow_parent_label_count": 260,
+      "last_shallow_label": 3922632451125,
+      "remaining_parent_reciprocal_mass": "340975625222263/77571588999298095703125000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "340975625222263/1396288601987365722656250000"
+    },
+    {
+      "entry_prime": 283,
+      "shallow_parent_label_count": 263,
+      "last_shallow_label": 4449462890625,
+      "remaining_parent_reciprocal_mass": "286402520576863/77571588999298095703125000",
+      "reserve_denominator": 17,
+      "blocker_fee_upper": "286402520576863/1318717012988067626953125000"
+    },
+    {
+      "entry_prime": 293,
+      "shallow_parent_label_count": 273,
+      "last_shallow_label": 8009033203125,
+      "remaining_parent_reciprocal_mass": "492576072443869/232714766997894287109375000",
+      "reserve_denominator": 17,
+      "blocker_fee_upper": "492576072443869/3956151038964202880859375000"
+    },
+    {
+      "entry_prime": 307,
+      "shallow_parent_label_count": 285,
+      "last_shallow_label": 16815125390625,
+      "remaining_parent_reciprocal_mass": "256724807671837/232714766997894287109375000",
+      "reserve_denominator": 19,
+      "blocker_fee_upper": "256724807671837/4421580572959991455078125000"
+    },
+    {
+      "entry_prime": 311,
+      "shallow_parent_label_count": 290,
+      "last_shallow_label": 21182215236075,
+      "remaining_parent_reciprocal_mass": "987803273058089/1163573834989471435546875000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "987803273058089/20944329029810485839843750000"
+    },
+    {
+      "entry_prime": 313,
+      "shallow_parent_label_count": 292,
+      "last_shallow_label": 22876792454961,
+      "remaining_parent_reciprocal_mass": "2653916630504267/3490721504968414306640625000",
+      "reserve_denominator": 18,
+      "blocker_fee_upper": "2653916630504267/62832987089431457519531250000"
+    },
+    {
+      "entry_prime": 317,
+      "shallow_parent_label_count": 295,
+      "last_shallow_label": 28025208984375,
+      "remaining_parent_reciprocal_mass": "2249556459629267/3490721504968414306640625000",
+      "reserve_denominator": 19,
+      "blocker_fee_upper": "2249556459629267/66323708594399871826171875000"
+    },
+    {
+      "entry_prime": 331,
+      "shallow_parent_label_count": 308,
+      "last_shallow_label": 58839486766875,
+      "remaining_parent_reciprocal_mass": "1144974405889211/3490721504968414306640625000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "1144974405889211/69814430099368286132812500000"
+    },
+    {
+      "entry_prime": 337,
+      "shallow_parent_label_count": 314,
+      "last_shallow_label": 77847802734375,
+      "remaining_parent_reciprocal_mass": "2511373698734033/10472164514905242919921875000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "2511373698734033/209443290298104858398437500000"
+    },
+    {
+      "entry_prime": 347,
+      "shallow_parent_label_count": 324,
+      "last_shallow_label": 129746337890625,
+      "remaining_parent_reciprocal_mass": "7503808558575301/52360822574526214599609375000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "7503808558575301/1047216451490524291992187500000"
+    },
+    {
+      "entry_prime": 349,
+      "shallow_parent_label_count": 326,
+      "last_shallow_label": 151336128515625,
+      "remaining_parent_reciprocal_mass": "6784148871075301/52360822574526214599609375000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "6784148871075301/1047216451490524291992187500000"
+    },
+    {
+      "entry_prime": 353,
+      "shallow_parent_label_count": 330,
+      "last_shallow_label": 185394287109375,
+      "remaining_parent_reciprocal_mass": "5579703247694821/52360822574526214599609375000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "5579703247694821/1047216451490524291992187500000"
+    },
+    {
+      "entry_prime": 359,
+      "shallow_parent_label_count": 336,
+      "last_shallow_label": 252226880859375,
+      "remaining_parent_reciprocal_mass": "12345868335984463/157082467723578643798828125000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "12345868335984463/3141649354471572875976562500000"
+    },
+    {
+      "entry_prime": 367,
+      "shallow_parent_label_count": 344,
+      "last_shallow_label": 360406494140625,
+      "remaining_parent_reciprocal_mass": "8319153832139599/157082467723578643798828125000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "8319153832139599/3141649354471572875976562500000"
+    },
+    {
+      "entry_prime": 373,
+      "shallow_parent_label_count": 349,
+      "last_shallow_label": 490329056390625,
+      "remaining_parent_reciprocal_mass": "32730719978940803/785412338617893218994140625000",
+      "reserve_denominator": 21,
+      "blocker_fee_upper": "32730719978940803/16493659110975757598876953125000"
+    },
+    {
+      "entry_prime": 379,
+      "shallow_parent_label_count": 356,
+      "last_shallow_label": 648731689453125,
+      "remaining_parent_reciprocal_mass": "69441625659990209/2356237015853679656982421875000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "69441625659990209/47124740317073593139648437500000"
+    },
+    {
+      "entry_prime": 383,
+      "shallow_parent_label_count": 359,
+      "last_shallow_label": 817215093984375,
+      "remaining_parent_reciprocal_mass": "60081436519365209/2356237015853679656982421875000",
+      "reserve_denominator": 21,
+      "blocker_fee_upper": "60081436519365209/49480977332927272796630859375000"
+    },
+    {
+      "entry_prime": 389,
+      "shallow_parent_label_count": 366,
+      "last_shallow_label": 1081219482421875,
+      "remaining_parent_reciprocal_mass": "42831115953265889/2356237015853679656982421875000",
+      "reserve_denominator": 20,
+      "blocker_fee_upper": "42831115953265889/47124740317073593139648437500000"
+    },
+    {
+      "entry_prime": 397,
+      "shallow_parent_label_count": 373,
+      "last_shallow_label": 1588666142705625,
+      "remaining_parent_reciprocal_mass": "30957792977636297/2356237015853679656982421875000",
+      "reserve_denominator": 21,
+      "blocker_fee_upper": "30957792977636297/49480977332927272796630859375000"
+    },
+    {
+      "entry_prime": 401,
+      "shallow_parent_label_count": 377,
+      "last_shallow_label": 1853020188851841,
+      "remaining_parent_reciprocal_mass": "76779733122068891/7068711047561038970947265625000",
+      "reserve_denominator": 21,
+      "blocker_fee_upper": "76779733122068891/148442931998781818389892578125000"
+    },
+    {
+      "entry_prime": 409,
+      "shallow_parent_label_count": 385,
+      "last_shallow_label": 2780914306640625,
+      "remaining_parent_reciprocal_mass": "264329429688033127/35343555237805194854736328125000",
+      "reserve_denominator": 21,
+      "blocker_fee_upper": "264329429688033127/742214659993909091949462890625000"
+    },
+    {
+      "entry_prime": 419,
+      "shallow_parent_label_count": 394,
+      "last_shallow_label": 4412961507515625,
+      "remaining_parent_reciprocal_mass": "173536374235247167/35343555237805194854736328125000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "173536374235247167/777558215231714286804199218750000"
+    },
+    {
+      "entry_prime": 421,
+      "shallow_parent_label_count": 396,
+      "last_shallow_label": 4765998428116875,
+      "remaining_parent_reciprocal_mass": "158495005265885167/35343555237805194854736328125000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "14408636842353197/70687110475610389709472656250000"
+    },
+    {
+      "entry_prime": 431,
+      "shallow_parent_label_count": 406,
+      "last_shallow_label": 7724761962890625,
+      "remaining_parent_reciprocal_mass": "301505268634664173/106030665713415584564208984375000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "301505268634664173/2332674645695142860412597656250000"
+    },
+    {
+      "entry_prime": 433,
+      "shallow_parent_label_count": 408,
+      "last_shallow_label": 8342742919921875,
+      "remaining_parent_reciprocal_mass": "275447550821144173/106030665713415584564208984375000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "275447550821144173/2332674645695142860412597656250000"
+    },
+    {
+      "entry_prime": 439,
+      "shallow_parent_label_count": 413,
+      "last_shallow_label": 10509453369140625,
+      "remaining_parent_reciprocal_mass": "218890666042769173/106030665713415584564208984375000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "218890666042769173/2438705311408558444976806640625000"
+    },
+    {
+      "entry_prime": 443,
+      "shallow_parent_label_count": 418,
+      "last_shallow_label": 13238884522546875,
+      "remaining_parent_reciprocal_mass": "878799992309346881/530153328567077922821044921875000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "878799992309346881/11663373228475714302062988281250000"
+    },
+    {
+      "entry_prime": 449,
+      "shallow_parent_label_count": 424,
+      "last_shallow_label": 16677181699666569,
+      "remaining_parent_reciprocal_mass": "2008438297116610643/1590459985701233768463134765625000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "2008438297116610643/34990119685427142906188964843750000"
+    },
+    {
+      "entry_prime": 457,
+      "shallow_parent_label_count": 431,
+      "last_shallow_label": 23829992140584375,
+      "remaining_parent_reciprocal_mass": "1474138763213279003/1590459985701233768463134765625000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "1474138763213279003/36580579671128376674652099609375000"
+    },
+    {
+      "entry_prime": 461,
+      "shallow_parent_label_count": 436,
+      "last_shallow_label": 29192926025390625,
+      "remaining_parent_reciprocal_mass": "1178253069785054003/1590459985701233768463134765625000",
+      "reserve_denominator": 22,
+      "blocker_fee_upper": "1178253069785054003/34990119685427142906188964843750000"
+    },
+    {
+      "entry_prime": 463,
+      "shallow_parent_label_count": 437,
+      "last_shallow_label": 31528360107421875,
+      "remaining_parent_reciprocal_mass": "1127807693613179003/1590459985701233768463134765625000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "1127807693613179003/36580579671128376674652099609375000"
+    },
+    {
+      "entry_prime": 467,
+      "shallow_parent_label_count": 440,
+      "last_shallow_label": 36774679229296875,
+      "remaining_parent_reciprocal_mass": "993377748143234819/1590459985701233768463134765625000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "993377748143234819/38171039656829610443115234375000000"
+    },
+    {
+      "entry_prime": 479,
+      "shallow_parent_label_count": 453,
+      "last_shallow_label": 64373016357421875,
+      "remaining_parent_reciprocal_mass": "8508025004026309429/23856899785518506526947021484375000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "8508025004026309429/548708695066925650119781494140625000"
+    },
+    {
+      "entry_prime": 487,
+      "shallow_parent_label_count": 461,
+      "last_shallow_label": 87578778076171875,
+      "remaining_parent_reciprocal_mass": "5991328439123269429/23856899785518506526947021484375000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "5991328439123269429/548708695066925650119781494140625000"
+    },
+    {
+      "entry_prime": 491,
+      "shallow_parent_label_count": 464,
+      "last_shallow_label": 107288360595703125,
+      "remaining_parent_reciprocal_mass": "5283195727398548509/23856899785518506526947021484375000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "5283195727398548509/572565594852444156646728515625000000"
+    },
+    {
+      "entry_prime": 499,
+      "shallow_parent_label_count": 473,
+      "last_shallow_label": 150094635296999121,
+      "remaining_parent_reciprocal_mass": "10842696207167048527/71570699356555519580841064453125000",
+      "reserve_denominator": 23,
+      "blocker_fee_upper": "10842696207167048527/1646126085200776950359344482421875000"
+    },
+    {
+      "entry_prime": 503,
+      "shallow_parent_label_count": 476,
+      "last_shallow_label": 178813934326171875,
+      "remaining_parent_reciprocal_mass": "9568057326062550871/71570699356555519580841064453125000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "9568057326062550871/1717696784557332469940185546875000000"
+    },
+    {
+      "entry_prime": 509,
+      "shallow_parent_label_count": 482,
+      "last_shallow_label": 225254058837890625,
+      "remaining_parent_reciprocal_mass": "7453212948317267671/71570699356555519580841064453125000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "7453212948317267671/1717696784557332469940185546875000000"
+    },
+    {
+      "entry_prime": 521,
+      "shallow_parent_label_count": 494,
+      "last_shallow_label": 375423431396484375,
+      "remaining_parent_reciprocal_mass": "22651163928677620787/357853496782777597904205322265625000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "22651163928677620787/8588483922786662349700927734375000000"
+    },
+    {
+      "entry_prime": 523,
+      "shallow_parent_label_count": 496,
+      "last_shallow_label": 405457305908203125,
+      "remaining_parent_reciprocal_mass": "20841600191627620787/357853496782777597904205322265625000",
+      "reserve_denominator": 24,
+      "blocker_fee_upper": "20841600191627620787/8588483922786662349700927734375000000"
+    },
+    {
+      "entry_prime": 541,
+      "shallow_parent_label_count": 513,
+      "last_shallow_label": 851265722900390625,
+      "remaining_parent_reciprocal_mass": "31097021956071458081/1073560490348332793712615966796875000",
+      "reserve_denominator": 25,
+      "blocker_fee_upper": "31097021956071458081/26839012258708319842815399169921875000"
+    },
+    {
+      "entry_prime": 547,
+      "shallow_parent_label_count": 519,
+      "last_shallow_label": 1072349646326296875,
+      "remaining_parent_reciprocal_mass": "24504931426082990513/1073560490348332793712615966796875000",
+      "reserve_denominator": 25,
+      "blocker_fee_upper": "24504931426082990513/26839012258708319842815399169921875000"
+    },
+    {
+      "entry_prime": 557,
+      "shallow_parent_label_count": 529,
+      "last_shallow_label": 1609325408935546875,
+      "remaining_parent_reciprocal_mass": "246405975645819729583/16103407355224991905689239501953125000",
+      "reserve_denominator": 25,
+      "blocker_fee_upper": "246405975645819729583/402585183880624797642230987548828125000"
+    },
+    {
+      "entry_prime": 563,
+      "shallow_parent_label_count": 535,
+      "last_shallow_label": 2027286529541015625,
+      "remaining_parent_reciprocal_mass": "193534866202187649583/16103407355224991905689239501953125000",
+      "reserve_denominator": 25,
+      "blocker_fee_upper": "193534866202187649583/402585183880624797642230987548828125000"
+    },
+    {
+      "entry_prime": 569,
+      "shallow_parent_label_count": 540,
+      "last_shallow_label": 2553797168701171875,
+      "remaining_parent_reciprocal_mass": "158186813215703274583/16103407355224991905689239501953125000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "158186813215703274583/418688591235849789547920227050781250000"
+    },
+    {
+      "entry_prime": 571,
+      "shallow_parent_label_count": 542,
+      "last_shallow_label": 2758100942197265625,
+      "remaining_parent_reciprocal_mass": "146344442598745184743/16103407355224991905689239501953125000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "146344442598745184743/418688591235849789547920227050781250000"
+    },
+    {
+      "entry_prime": 577,
+      "shallow_parent_label_count": 548,
+      "last_shallow_label": 3474412854097201875,
+      "remaining_parent_reciprocal_mass": "115825504959909686743/16103407355224991905689239501953125000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "115825504959909686743/418688591235849789547920227050781250000"
+    },
+    {
+      "entry_prime": 587,
+      "shallow_parent_label_count": 558,
+      "last_shallow_label": 5214214324951171875,
+      "remaining_parent_reciprocal_mass": "235515009665801602117/48310222065674975717067718505859375000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "235515009665801602117/1256065773707549368643760681152343750000"
+    },
+    {
+      "entry_prime": 593,
+      "shallow_parent_label_count": 564,
+      "last_shallow_label": 6568408355712890625,
+      "remaining_parent_reciprocal_mass": "186560278699475602117/48310222065674975717067718505859375000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "186560278699475602117/1256065773707549368643760681152343750000"
+    },
+    {
+      "entry_prime": 599,
+      "shallow_parent_label_count": 570,
+      "last_shallow_label": 8274302826591796875,
+      "remaining_parent_reciprocal_mass": "739827323299763876249/241551110328374878585338592529296875000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "739827323299763876249/6280328868537746843218803405761718750000"
+    },
+    {
+      "entry_prime": 601,
+      "shallow_parent_label_count": 572,
+      "last_shallow_label": 8936247052719140625,
+      "remaining_parent_reciprocal_mass": "685001533406439386249/241551110328374878585338592529296875000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "685001533406439386249/6280328868537746843218803405761718750000"
+    },
+    {
+      "entry_prime": 607,
+      "shallow_parent_label_count": 578,
+      "last_shallow_label": 11257097647274934075,
+      "remaining_parent_reciprocal_mass": "543710155448867636249/241551110328374878585338592529296875000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "543710155448867636249/6280328868537746843218803405761718750000"
+    },
+    {
+      "entry_prime": 613,
+      "shallow_parent_label_count": 584,
+      "last_shallow_label": 14483928680419921875,
+      "remaining_parent_reciprocal_mass": "1296870760677402268187/724653330985124635756015777587890625000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "1296870760677402268187/18840986605613240529656410217285156250000"
+    },
+    {
+      "entry_prime": 617,
+      "shallow_parent_label_count": 588,
+      "last_shallow_label": 16894054412841796875,
+      "remaining_parent_reciprocal_mass": "1113945581626491868187/724653330985124635756015777587890625000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "1113945581626491868187/18840986605613240529656410217285156250000"
+    },
+    {
+      "entry_prime": 619,
+      "shallow_parent_label_count": 590,
+      "last_shallow_label": 18245578765869140625,
+      "remaining_parent_reciprocal_mass": "1032515213459241868187/724653330985124635756015777587890625000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "79424247189172451399/1449306661970249271512031555175781250000"
+    },
+    {
+      "entry_prime": 631,
+      "shallow_parent_label_count": 601,
+      "last_shallow_label": 28156757354736328125,
+      "remaining_parent_reciprocal_mass": "683580472812722118851/724653330985124635756015777587890625000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "683580472812722118851/19565639936598365165412425994873046875000"
+    },
+    {
+      "entry_prime": 641,
+      "shallow_parent_label_count": 612,
+      "last_shallow_label": 41371514132958984375,
+      "remaining_parent_reciprocal_mass": "6807457521636351448741/10869799964776869536340236663818359375000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "6807457521636351448741/282614799084198607944846153259277343750000"
+    },
+    {
+      "entry_prime": 643,
+      "shallow_parent_label_count": 614,
+      "last_shallow_label": 44681235263595703125,
+      "remaining_parent_reciprocal_mass": "6314025412596431038741/10869799964776869536340236663818359375000",
+      "reserve_denominator": 26,
+      "blocker_fee_upper": "6314025412596431038741/282614799084198607944846153259277343750000"
+    },
+    {
+      "entry_prime": 647,
+      "shallow_parent_label_count": 617,
+      "last_shallow_label": 50682163238525390625,
+      "remaining_parent_reciprocal_mass": "5642673900886800913741/10869799964776869536340236663818359375000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "5642673900886800913741/293484599048975477481186389923095703125000"
+    },
+    {
+      "entry_prime": 653,
+      "shallow_parent_label_count": 623,
+      "last_shallow_label": 63844929217529296875,
+      "remaining_parent_reciprocal_mass": "4509462535925550913741/10869799964776869536340236663818359375000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "4509462535925550913741/293484599048975477481186389923095703125000"
+    },
+    {
+      "entry_prime": 659,
+      "shallow_parent_label_count": 629,
+      "last_shallow_label": 80426223474472265625,
+      "remaining_parent_reciprocal_mass": "3619530314377107792061/10869799964776869536340236663818359375000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "3619530314377107792061/293484599048975477481186389923095703125000"
+    },
+    {
+      "entry_prime": 661,
+      "shallow_parent_label_count": 631,
+      "last_shallow_label": 86860321352430046875,
+      "remaining_parent_reciprocal_mass": "3365707213019124042061/10869799964776869536340236663818359375000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "3365707213019124042061/293484599048975477481186389923095703125000"
+    },
+    {
+      "entry_prime": 673,
+      "shallow_parent_label_count": 643,
+      "last_shallow_label": 134043705790787109375,
+      "remaining_parent_reciprocal_mass": "6532863390859455757159/32609399894330608609020709991455078125000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "6532863390859455757159/880453797146926432443559169769287109375000"
+    },
+    {
+      "entry_prime": 677,
+      "shallow_parent_label_count": 646,
+      "last_shallow_label": 152046489715576171875,
+      "remaining_parent_reciprocal_mass": "5861511879149825632159/32609399894330608609020709991455078125000",
+      "reserve_denominator": 28,
+      "blocker_fee_upper": "5861511879149825632159/913063197041257041052579879760742187500000"
+    },
+    {
+      "entry_prime": 683,
+      "shallow_parent_label_count": 653,
+      "last_shallow_label": 191534787652587890625,
+      "remaining_parent_reciprocal_mass": "22766150657890779287123/163046999471653043045103549957275390625000",
+      "reserve_denominator": 27,
+      "blocker_fee_upper": "22766150657890779287123/4402268985734632162217795848846435546875000"
+    },
+    {
+      "entry_prime": 691,
+      "shallow_parent_label_count": 660,
+      "last_shallow_label": 253410816192626953125,
+      "remaining_parent_reciprocal_mass": "17673079762352785553723/163046999471653043045103549957275390625000",
+      "reserve_denominator": 28,
+      "blocker_fee_upper": "17673079762352785553723/4565315985206285205262899398803710937500000"
+    },
+    {
+      "entry_prime": 701,
+      "shallow_parent_label_count": 670,
+      "last_shallow_label": 362098217010498046875,
+      "remaining_parent_reciprocal_mass": "37101673105428533116049/489140998414959129135310649871826171875000",
+      "reserve_denominator": 28,
+      "blocker_fee_upper": "37101673105428533116049/13695947955618855615788698196411132812500000"
+    },
+    {
+      "entry_prime": 709,
+      "shallow_parent_label_count": 677,
+      "last_shallow_label": 469045735303122253125,
+      "remaining_parent_reciprocal_mass": "28921230465547967941049/489140998414959129135310649871826171875000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "28921230465547967941049/14185088954033814744924008846282958984375000"
+    },
+    {
+      "entry_prime": 719,
+      "shallow_parent_label_count": 687,
+      "last_shallow_label": 670218528953935546875,
+      "remaining_parent_reciprocal_mass": "20343648232270750083977/489140998414959129135310649871826171875000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "20343648232270750083977/14185088954033814744924008846282958984375000"
+    },
+    {
+      "entry_prime": 727,
+      "shallow_parent_label_count": 695,
+      "last_shallow_label": 911824909429269660075,
+      "remaining_parent_reciprocal_mass": "15440719035998344083977/489140998414959129135310649871826171875000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "15440719035998344083977/14185088954033814744924008846282958984375000"
+    },
+    {
+      "entry_prime": 733,
+      "shallow_parent_label_count": 702,
+      "last_shallow_label": 1117030881589892578125,
+      "remaining_parent_reciprocal_mass": "180909498975796997421007/7337114976224386937029659748077392578125000",
+      "reserve_denominator": 28,
+      "blocker_fee_upper": "180909498975796997421007/205439219334282834236830472946166992187500000"
+    },
+    {
+      "entry_prime": 739,
+      "shallow_parent_label_count": 707,
+      "last_shallow_label": 1368418407440185546875,
+      "remaining_parent_reciprocal_mass": "151789908457058234046007/7337114976224386937029659748077392578125000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "151789908457058234046007/212776334310507221173860132694244384765625000"
+    },
+    {
+      "entry_prime": 743,
+      "shallow_parent_label_count": 711,
+      "last_shallow_label": 1596123230438232421875,
+      "remaining_parent_reciprocal_mass": "132186301305683234046007/7337114976224386937029659748077392578125000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "132186301305683234046007/212776334310507221173860132694244384765625000"
+    },
+    {
+      "entry_prime": 751,
+      "shallow_parent_label_count": 719,
+      "last_shallow_label": 2111756801605224609375,
+      "remaining_parent_reciprocal_mass": "100213370111623771010647/7337114976224386937029659748077392578125000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "100213370111623771010647/212776334310507221173860132694244384765625000"
+    },
+    {
+      "entry_prime": 757,
+      "shallow_parent_label_count": 724,
+      "last_shallow_label": 2532846970636860166875,
+      "remaining_parent_reciprocal_mass": "84613446941448786635647/7337114976224386937029659748077392578125000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "84613446941448786635647/220113449286731608110889792442321777343750000"
+    },
+    {
+      "entry_prime": 761,
+      "shallow_parent_label_count": 729,
+      "last_shallow_label": 2954312706550833698643,
+      "remaining_parent_reciprocal_mass": "214529271632580595043893/22011344928673160811088979244232177734375000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "214529271632580595043893/638329002931521663521580398082733154296875000"
+    },
+    {
+      "entry_prime": 769,
+      "shallow_parent_label_count": 737,
+      "last_shallow_label": 3908714460859352109375,
+      "remaining_parent_reciprocal_mass": "163060282101791385818293/22011344928673160811088979244232177734375000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "163060282101791385818293/638329002931521663521580398082733154296875000"
+    },
+    {
+      "entry_prime": 773,
+      "shallow_parent_label_count": 740,
+      "last_shallow_label": 4433675640106201171875,
+      "remaining_parent_reciprocal_mass": "147519737849253651443293/22011344928673160811088979244232177734375000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "147519737849253651443293/660340347860194824332669377326965332031250000"
+    },
+    {
+      "entry_prime": 787,
+      "shallow_parent_label_count": 754,
+      "last_shallow_label": 7035686029546833796875,
+      "remaining_parent_reciprocal_mass": "458353533888630756825521/110056724643365804055444896221160888671875000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "458353533888630756825521/3301701739300974121663346886634826660156250000"
+    },
+    {
+      "entry_prime": 797,
+      "shallow_parent_label_count": 765,
+      "last_shallow_label": 10053277934309033203125,
+      "remaining_parent_reciprocal_mass": "951816498183798326283323/330170173930097412166334688663482666015625000",
+      "reserve_denominator": 29,
+      "blocker_fee_upper": "951816498183798326283323/9574935043972824952823705971240997314453125000"
+    },
+    {
+      "entry_prime": 809,
+      "shallow_parent_label_count": 776,
+      "last_shallow_label": 14771563532754168493215,
+      "remaining_parent_reciprocal_mass": "662214266390051355444179/330170173930097412166334688663482666015625000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "662214266390051355444179/9905105217902922364990040659904479980468750000"
+    },
+    {
+      "entry_prime": 811,
+      "shallow_parent_label_count": 778,
+      "last_shallow_label": 15514317799859619140625,
+      "remaining_parent_reciprocal_mass": "619048825491239117977379/330170173930097412166334688663482666015625000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "619048825491239117977379/9905105217902922364990040659904479980468750000"
+    },
+    {
+      "entry_prime": 821,
+      "shallow_parent_label_count": 787,
+      "last_shallow_label": 22168378200531005859375,
+      "remaining_parent_reciprocal_mass": "461185665040070524642379/330170173930097412166334688663482666015625000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "461185665040070524642379/10235275391833019777156375348567962646484375000"
+    },
+    {
+      "entry_prime": 823,
+      "shallow_parent_label_count": 789,
+      "last_shallow_label": 23283064365386962890625,
+      "remaining_parent_reciprocal_mass": "2162605176841033005069463/1650850869650487060831673443317413330078125000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "2162605176841033005069463/51176376959165098885781876742839813232421875000"
+    },
+    {
+      "entry_prime": 827,
+      "shallow_parent_label_count": 794,
+      "last_shallow_label": 26588814358957503287787,
+      "remaining_parent_reciprocal_mass": "5505038800728954893632189/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "5505038800728954893632189/148576578268543835474850609898567199707031250000"
+    },
+    {
+      "entry_prime": 829,
+      "shallow_parent_label_count": 796,
+      "last_shallow_label": 27925772039747314453125,
+      "remaining_parent_reciprocal_mass": "5145326793238852914742189/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 30,
+      "blocker_fee_upper": "5145326793238852914742189/148576578268543835474850609898567199707031250000"
+    },
+    {
+      "entry_prime": 839,
+      "shallow_parent_label_count": 805,
+      "last_shallow_label": 39903080760955810546875,
+      "remaining_parent_reciprocal_mass": "3829800456145781303617189/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "3829800456145781303617189/153529130877495296657345630228519439697265625000"
+    },
+    {
+      "entry_prime": 853,
+      "shallow_parent_label_count": 818,
+      "last_shallow_label": 61578828334808349609375,
+      "remaining_parent_reciprocal_mass": "2511787894231861379787469/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "2511787894231861379787469/158481683486446757839840650558471679687500000000"
+    },
+    {
+      "entry_prime": 857,
+      "shallow_parent_label_count": 822,
+      "last_shallow_label": 69849193096160888671875,
+      "remaining_parent_reciprocal_mass": "2215782805558948011645037/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "2215782805558948011645037/158481683486446757839840650558471679687500000000"
+    },
+    {
+      "entry_prime": 859,
+      "shallow_parent_label_count": 825,
+      "last_shallow_label": 75437128543853759765625,
+      "remaining_parent_reciprocal_mass": "2014123663152794502369637/4952552608951461182495020329952239990234375000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "2014123663152794502369637/153529130877495296657345630228519439697265625000"
+    },
+    {
+      "entry_prime": 863,
+      "shallow_parent_label_count": 829,
+      "last_shallow_label": 83777316119241943359375,
+      "remaining_parent_reciprocal_mass": "5304859679392597934468911/14857657826854383547485060989856719970703125000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "5304859679392597934468911/460587392632485889972036890685558319091796875000"
+    },
+    {
+      "entry_prime": 877,
+      "shallow_parent_label_count": 843,
+      "last_shallow_label": 132944071794787516438935,
+      "remaining_parent_reciprocal_mass": "16980777689494603938709067/74288289134271917737425304949283599853515625000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "16980777689494603938709067/2302936963162429449860184453427791595458984375000"
+    },
+    {
+      "entry_prime": 881,
+      "shallow_parent_label_count": 847,
+      "last_shallow_label": 150799169014635498046875,
+      "remaining_parent_reciprocal_mass": "14902441646218459171789067/74288289134271917737425304949283599853515625000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "14902441646218459171789067/2302936963162429449860184453427791595458984375000"
+    },
+    {
+      "entry_prime": 883,
+      "shallow_parent_label_count": 849,
+      "last_shallow_label": 162863102535806337890625,
+      "remaining_parent_reciprocal_mass": "13977256441768608403039067/74288289134271917737425304949283599853515625000",
+      "reserve_denominator": 31,
+      "blocker_fee_upper": "13977256441768608403039067/2302936963162429449860184453427791595458984375000"
+    },
+    {
+      "entry_prime": 887,
+      "shallow_parent_label_count": 852,
+      "last_shallow_label": 184736485004425048828125,
+      "remaining_parent_reciprocal_mass": "12718472357313051918664067/74288289134271917737425304949283599853515625000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "12718472357313051918664067/2377225252296701367597609758377075195312500000000"
+    },
+    {
+      "entry_prime": 907,
+      "shallow_parent_label_count": 872,
+      "last_shallow_label": 349245965480804443359375,
+      "remaining_parent_reciprocal_mass": "20407706537338271362617833/222864867402815753212275914847850799560546875000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "20407706537338271362617833/7131675756890104102792829275131225585937500000000"
+    },
+    {
+      "entry_prime": 911,
+      "shallow_parent_label_count": 876,
+      "last_shallow_label": 387857944996490478515625,
+      "remaining_parent_reciprocal_mass": "18018169892725126107264233/222864867402815753212275914847850799560546875000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "18018169892725126107264233/7131675756890104102792829275131225585937500000000"
+    },
+    {
+      "entry_prime": 919,
+      "shallow_parent_label_count": 883,
+      "last_shallow_label": 488589307607419013671875,
+      "remaining_parent_reciprocal_mass": "14455855100229843462219233/222864867402815753212275914847850799560546875000",
+      "reserve_denominator": 33,
+      "blocker_fee_upper": "1314168645475440314747203/668594602208447259636827744543552398681640625000"
+    },
+    {
+      "entry_prime": 929,
+      "shallow_parent_label_count": 894,
+      "last_shallow_label": 678934156894683837890625,
+      "remaining_parent_reciprocal_mass": "51629354668049822717054701/1114324337014078766061379574239253997802734375000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "51629354668049822717054701/35658378784450520513964146375656127929687500000000"
+    },
+    {
+      "entry_prime": 937,
+      "shallow_parent_label_count": 902,
+      "last_shallow_label": 879460753693354224609375,
+      "remaining_parent_reciprocal_mass": "120413737708707415510164103/3342973011042236298184138722717761993408203125000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "120413737708707415510164103/106975136353351561541892439126968383789062500000000"
+    },
+    {
+      "entry_prime": 941,
+      "shallow_parent_label_count": 905,
+      "last_shallow_label": 997577019023895263671875,
+      "remaining_parent_reciprocal_mass": "109923870338244444807039103/3342973011042236298184138722717761993408203125000",
+      "reserve_denominator": 33,
+      "blocker_fee_upper": "109923870338244444807039103/110318109364393797840076577849686145782470703125000"
+    },
+    {
+      "entry_prime": 947,
+      "shallow_parent_label_count": 912,
+      "last_shallow_label": 1196496646153087647950415,
+      "remaining_parent_reciprocal_mass": "88732677715162900166986663/3342973011042236298184138722717761993408203125000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "88732677715162900166986663/106975136353351561541892439126968383789062500000000"
+    },
+    {
+      "entry_prime": 953,
+      "shallow_parent_label_count": 917,
+      "last_shallow_label": 1425435841083526611328125,
+      "remaining_parent_reciprocal_mass": "75995768822266565066761663/3342973011042236298184138722717761993408203125000",
+      "reserve_denominator": 33,
+      "blocker_fee_upper": "75995768822266565066761663/110318109364393797840076577849686145782470703125000"
+    },
+    {
+      "entry_prime": 967,
+      "shallow_parent_label_count": 932,
+      "last_shallow_label": 2199746668338775634765625,
+      "remaining_parent_reciprocal_mass": "145191344818762145539660597/10028919033126708894552416168153285980224609375000",
+      "reserve_denominator": 32,
+      "blocker_fee_upper": "145191344818762145539660597/320925409060054684625677317380905151367187500000000"
+    }
+  ],
+  "analytic_tail": {
+    "rectangle_start": 22,
+    "first_odd_entry": 971,
+    "bound": "5/204558018192",
+    "formula": "135 / (8 n0 3^n0)"
+  },
+  "consequence": {
+    "finite_two_port_fee": "26367566679970603998162514215695685748991796027092345257/715166192625059001701426870634865611791610717773437500000000",
+    "total_two_port_fee": "26367584160737159768114439538435093169150182257561095257/715166192625059001701426870634865611791610717773437500000000",
+    "head_density_lower": "26345885990886052732242307711/468579418066477236879360000000000",
+    "ordinary_attachment_fee": "1/131072",
+    "extendible_head_lower": "740986326295187281718625201495435054644778008821158621204832622115539/63189299180887951443020211999063050062014375000000000000000000000000000000",
+    "strictly_greater_than": "1/90000",
+    "full_density_lower": "extendible_head_lower / Q_outside"
+  },
+  "low_entry_extension": {
+    "parent_comparison": [
+      5,
+      7
+    ],
+    "parent_label_prefix": [
+      {
+        "modulus": 5,
+        "exponents": [
+          1,
+          0
+        ]
+      },
+      {
+        "modulus": 7,
+        "exponents": [
+          0,
+          1
+        ]
+      },
+      {
+        "modulus": 25,
+        "exponents": [
+          2,
+          0
+        ]
+      },
+      {
+        "modulus": 35,
+        "exponents": [
+          1,
+          1
+        ]
+      },
+      {
+        "modulus": 49,
+        "exponents": [
+          0,
+          2
+        ]
+      },
+      {
+        "modulus": 125,
+        "exponents": [
+          3,
+          0
+        ]
+      },
+      {
+        "modulus": 175,
+        "exponents": [
+          2,
+          1
+        ]
+      },
+      {
+        "modulus": 245,
+        "exponents": [
+          1,
+          2
+        ]
+      },
+      {
+        "modulus": 343,
+        "exponents": [
+          0,
+          3
+        ]
+      },
+      {
+        "modulus": 625,
+        "exponents": [
+          4,
+          0
+        ]
+      },
+      {
+        "modulus": 875,
+        "exponents": [
+          3,
+          1
+        ]
+      },
+      {
+        "modulus": 1225,
+        "exponents": [
+          2,
+          2
+        ]
+      },
+      {
+        "modulus": 1715,
+        "exponents": [
+          1,
+          3
+        ]
+      },
+      {
+        "modulus": 2401,
+        "exponents": [
+          0,
+          4
+        ]
+      },
+      {
+        "modulus": 3125,
+        "exponents": [
+          5,
+          0
+        ]
+      },
+      {
+        "modulus": 4375,
+        "exponents": [
+          4,
+          1
+        ]
+      },
+      {
+        "modulus": 6125,
+        "exponents": [
+          3,
+          2
+        ]
+      },
+      {
+        "modulus": 8575,
+        "exponents": [
+          2,
+          3
+        ]
+      },
+      {
+        "modulus": 12005,
+        "exponents": [
+          1,
+          4
+        ]
+      },
+      {
+        "modulus": 15625,
+        "exponents": [
+          6,
+          0
+        ]
+      },
+      {
+        "modulus": 16807,
+        "exponents": [
+          0,
+          5
+        ]
+      },
+      {
+        "modulus": 21875,
+        "exponents": [
+          5,
+          1
+        ]
+      },
+      {
+        "modulus": 30625,
+        "exponents": [
+          4,
+          2
+        ]
+      },
+      {
+        "modulus": 42875,
+        "exponents": [
+          3,
+          3
+        ]
+      },
+      {
+        "modulus": 60025,
+        "exponents": [
+          2,
+          4
+        ]
+      },
+      {
+        "modulus": 78125,
+        "exponents": [
+          7,
+          0
+        ]
+      },
+      {
+        "modulus": 84035,
+        "exponents": [
+          1,
+          5
+        ]
+      },
+      {
+        "modulus": 109375,
+        "exponents": [
+          6,
+          1
+        ]
+      },
+      {
+        "modulus": 117649,
+        "exponents": [
+          0,
+          6
+        ]
+      },
+      {
+        "modulus": 153125,
+        "exponents": [
+          5,
+          2
+        ]
+      },
+      {
+        "modulus": 214375,
+        "exponents": [
+          4,
+          3
+        ]
+      },
+      {
+        "modulus": 300125,
+        "exponents": [
+          3,
+          4
+        ]
+      },
+      {
+        "modulus": 390625,
+        "exponents": [
+          8,
+          0
+        ]
+      },
+      {
+        "modulus": 420175,
+        "exponents": [
+          2,
+          5
+        ]
+      },
+      {
+        "modulus": 546875,
+        "exponents": [
+          7,
+          1
+        ]
+      },
+      {
+        "modulus": 588245,
+        "exponents": [
+          1,
+          6
+        ]
+      },
+      {
+        "modulus": 765625,
+        "exponents": [
+          6,
+          2
+        ]
+      },
+      {
+        "modulus": 823543,
+        "exponents": [
+          0,
+          7
+        ]
+      },
+      {
+        "modulus": 1071875,
+        "exponents": [
+          5,
+          3
+        ]
+      },
+      {
+        "modulus": 1500625,
+        "exponents": [
+          4,
+          4
+        ]
+      },
+      {
+        "modulus": 1953125,
+        "exponents": [
+          9,
+          0
+        ]
+      },
+      {
+        "modulus": 2100875,
+        "exponents": [
+          3,
+          5
+        ]
+      },
+      {
+        "modulus": 2734375,
+        "exponents": [
+          8,
+          1
+        ]
+      },
+      {
+        "modulus": 2941225,
+        "exponents": [
+          2,
+          6
+        ]
+      },
+      {
+        "modulus": 3828125,
+        "exponents": [
+          7,
+          2
+        ]
+      },
+      {
+        "modulus": 4117715,
+        "exponents": [
+          1,
+          7
+        ]
+      },
+      {
+        "modulus": 5359375,
+        "exponents": [
+          6,
+          3
+        ]
+      }
+    ],
+    "rows": [
+      {
+        "entry_prime": 37,
+        "shallow_parent_label_count": 30,
+        "last_shallow_label": 153125,
+        "remaining_parent_reciprocal_mass": "5290879/220591875000",
+        "reserve_denominator": 4,
+        "blocker_fee_upper": "5290879/882367500000"
+      },
+      {
+        "entry_prime": 41,
+        "shallow_parent_label_count": 32,
+        "last_shallow_label": 300125,
+        "remaining_parent_reciprocal_mass": "3526879/220591875000",
+        "reserve_denominator": 6,
+        "blocker_fee_upper": "3526879/1323551250000"
+      },
+      {
+        "entry_prime": 43,
+        "shallow_parent_label_count": 34,
+        "last_shallow_label": 420175,
+        "remaining_parent_reciprocal_mass": "12185819/1102959375000",
+        "reserve_denominator": 6,
+        "blocker_fee_upper": "12185819/6617756250000"
+      },
+      {
+        "entry_prime": 47,
+        "shallow_parent_label_count": 39,
+        "last_shallow_label": 1071875,
+        "remaining_parent_reciprocal_mass": "31395653/7720715625000",
+        "reserve_denominator": 5,
+        "blocker_fee_upper": "31395653/38603578125000"
+      }
+    ],
+    "fee": "5241874291/463242937500000",
+    "expanded_extendible_head_lower": "62332722242758081115138250112167978469716233789601849512803125699409139/151717507333311971414691529009750383198896514375000000000000000000000000000000",
+    "strictly_greater_than": "1/2500000",
+    "full_density_lower": "expanded_extendible_head_lower / Q_outside"
+  },
+  "checks": {
+    "analytic_boundary_971": true,
+    "strictly_ordered_distinct_parent_labels": true,
+    "complete_heap_prefix_matches_exponent_grid": true,
+    "literal_label_roundtrip": true,
+    "complete_nonunit_parent_reciprocal_mass": true,
+    "positive_remaining_infinite_parent_tails": true,
+    "complete_finite_prime_inventory": true,
+    "positive_shallow_reserve_53": true,
+    "actual_truncation_identity_53": true,
+    "positive_shallow_reserve_59": true,
+    "actual_truncation_identity_59": true,
+    "positive_shallow_reserve_61": true,
+    "actual_truncation_identity_61": true,
+    "positive_shallow_reserve_67": true,
+    "actual_truncation_identity_67": true,
+    "positive_shallow_reserve_71": true,
+    "actual_truncation_identity_71": true,
+    "positive_shallow_reserve_73": true,
+    "actual_truncation_identity_73": true,
+    "positive_shallow_reserve_79": true,
+    "actual_truncation_identity_79": true,
+    "positive_shallow_reserve_83": true,
+    "actual_truncation_identity_83": true,
+    "positive_shallow_reserve_89": true,
+    "actual_truncation_identity_89": true,
+    "positive_shallow_reserve_97": true,
+    "actual_truncation_identity_97": true,
+    "positive_shallow_reserve_101": true,
+    "actual_truncation_identity_101": true,
+    "positive_shallow_reserve_103": true,
+    "actual_truncation_identity_103": true,
+    "positive_shallow_reserve_107": true,
+    "actual_truncation_identity_107": true,
+    "positive_shallow_reserve_109": true,
+    "actual_truncation_identity_109": true,
+    "positive_shallow_reserve_113": true,
+    "actual_truncation_identity_113": true,
+    "positive_shallow_reserve_127": true,
+    "actual_truncation_identity_127": true,
+    "positive_shallow_reserve_131": true,
+    "actual_truncation_identity_131": true,
+    "positive_shallow_reserve_137": true,
+    "actual_truncation_identity_137": true,
+    "positive_shallow_reserve_139": true,
+    "actual_truncation_identity_139": true,
+    "positive_shallow_reserve_149": true,
+    "actual_truncation_identity_149": true,
+    "positive_shallow_reserve_151": true,
+    "actual_truncation_identity_151": true,
+    "positive_shallow_reserve_157": true,
+    "actual_truncation_identity_157": true,
+    "positive_shallow_reserve_163": true,
+    "actual_truncation_identity_163": true,
+    "positive_shallow_reserve_167": true,
+    "actual_truncation_identity_167": true,
+    "positive_shallow_reserve_173": true,
+    "actual_truncation_identity_173": true,
+    "positive_shallow_reserve_179": true,
+    "actual_truncation_identity_179": true,
+    "positive_shallow_reserve_181": true,
+    "actual_truncation_identity_181": true,
+    "positive_shallow_reserve_191": true,
+    "actual_truncation_identity_191": true,
+    "positive_shallow_reserve_193": true,
+    "actual_truncation_identity_193": true,
+    "positive_shallow_reserve_197": true,
+    "actual_truncation_identity_197": true,
+    "positive_shallow_reserve_199": true,
+    "actual_truncation_identity_199": true,
+    "positive_shallow_reserve_211": true,
+    "actual_truncation_identity_211": true,
+    "positive_shallow_reserve_223": true,
+    "actual_truncation_identity_223": true,
+    "positive_shallow_reserve_227": true,
+    "actual_truncation_identity_227": true,
+    "positive_shallow_reserve_229": true,
+    "actual_truncation_identity_229": true,
+    "positive_shallow_reserve_233": true,
+    "actual_truncation_identity_233": true,
+    "positive_shallow_reserve_239": true,
+    "actual_truncation_identity_239": true,
+    "positive_shallow_reserve_241": true,
+    "actual_truncation_identity_241": true,
+    "positive_shallow_reserve_251": true,
+    "actual_truncation_identity_251": true,
+    "positive_shallow_reserve_257": true,
+    "actual_truncation_identity_257": true,
+    "positive_shallow_reserve_263": true,
+    "actual_truncation_identity_263": true,
+    "positive_shallow_reserve_269": true,
+    "actual_truncation_identity_269": true,
+    "positive_shallow_reserve_271": true,
+    "actual_truncation_identity_271": true,
+    "positive_shallow_reserve_277": true,
+    "actual_truncation_identity_277": true,
+    "positive_shallow_reserve_281": true,
+    "actual_truncation_identity_281": true,
+    "positive_shallow_reserve_283": true,
+    "actual_truncation_identity_283": true,
+    "positive_shallow_reserve_293": true,
+    "actual_truncation_identity_293": true,
+    "positive_shallow_reserve_307": true,
+    "actual_truncation_identity_307": true,
+    "positive_shallow_reserve_311": true,
+    "actual_truncation_identity_311": true,
+    "positive_shallow_reserve_313": true,
+    "actual_truncation_identity_313": true,
+    "positive_shallow_reserve_317": true,
+    "actual_truncation_identity_317": true,
+    "positive_shallow_reserve_331": true,
+    "actual_truncation_identity_331": true,
+    "positive_shallow_reserve_337": true,
+    "actual_truncation_identity_337": true,
+    "positive_shallow_reserve_347": true,
+    "actual_truncation_identity_347": true,
+    "positive_shallow_reserve_349": true,
+    "actual_truncation_identity_349": true,
+    "positive_shallow_reserve_353": true,
+    "actual_truncation_identity_353": true,
+    "positive_shallow_reserve_359": true,
+    "actual_truncation_identity_359": true,
+    "positive_shallow_reserve_367": true,
+    "actual_truncation_identity_367": true,
+    "positive_shallow_reserve_373": true,
+    "actual_truncation_identity_373": true,
+    "positive_shallow_reserve_379": true,
+    "actual_truncation_identity_379": true,
+    "positive_shallow_reserve_383": true,
+    "actual_truncation_identity_383": true,
+    "positive_shallow_reserve_389": true,
+    "actual_truncation_identity_389": true,
+    "positive_shallow_reserve_397": true,
+    "actual_truncation_identity_397": true,
+    "positive_shallow_reserve_401": true,
+    "actual_truncation_identity_401": true,
+    "positive_shallow_reserve_409": true,
+    "actual_truncation_identity_409": true,
+    "positive_shallow_reserve_419": true,
+    "actual_truncation_identity_419": true,
+    "positive_shallow_reserve_421": true,
+    "actual_truncation_identity_421": true,
+    "positive_shallow_reserve_431": true,
+    "actual_truncation_identity_431": true,
+    "positive_shallow_reserve_433": true,
+    "actual_truncation_identity_433": true,
+    "positive_shallow_reserve_439": true,
+    "actual_truncation_identity_439": true,
+    "positive_shallow_reserve_443": true,
+    "actual_truncation_identity_443": true,
+    "positive_shallow_reserve_449": true,
+    "actual_truncation_identity_449": true,
+    "positive_shallow_reserve_457": true,
+    "actual_truncation_identity_457": true,
+    "positive_shallow_reserve_461": true,
+    "actual_truncation_identity_461": true,
+    "positive_shallow_reserve_463": true,
+    "actual_truncation_identity_463": true,
+    "positive_shallow_reserve_467": true,
+    "actual_truncation_identity_467": true,
+    "positive_shallow_reserve_479": true,
+    "actual_truncation_identity_479": true,
+    "positive_shallow_reserve_487": true,
+    "actual_truncation_identity_487": true,
+    "positive_shallow_reserve_491": true,
+    "actual_truncation_identity_491": true,
+    "positive_shallow_reserve_499": true,
+    "actual_truncation_identity_499": true,
+    "positive_shallow_reserve_503": true,
+    "actual_truncation_identity_503": true,
+    "positive_shallow_reserve_509": true,
+    "actual_truncation_identity_509": true,
+    "positive_shallow_reserve_521": true,
+    "actual_truncation_identity_521": true,
+    "positive_shallow_reserve_523": true,
+    "actual_truncation_identity_523": true,
+    "positive_shallow_reserve_541": true,
+    "actual_truncation_identity_541": true,
+    "positive_shallow_reserve_547": true,
+    "actual_truncation_identity_547": true,
+    "positive_shallow_reserve_557": true,
+    "actual_truncation_identity_557": true,
+    "positive_shallow_reserve_563": true,
+    "actual_truncation_identity_563": true,
+    "positive_shallow_reserve_569": true,
+    "actual_truncation_identity_569": true,
+    "positive_shallow_reserve_571": true,
+    "actual_truncation_identity_571": true,
+    "positive_shallow_reserve_577": true,
+    "actual_truncation_identity_577": true,
+    "positive_shallow_reserve_587": true,
+    "actual_truncation_identity_587": true,
+    "positive_shallow_reserve_593": true,
+    "actual_truncation_identity_593": true,
+    "positive_shallow_reserve_599": true,
+    "actual_truncation_identity_599": true,
+    "positive_shallow_reserve_601": true,
+    "actual_truncation_identity_601": true,
+    "positive_shallow_reserve_607": true,
+    "actual_truncation_identity_607": true,
+    "positive_shallow_reserve_613": true,
+    "actual_truncation_identity_613": true,
+    "positive_shallow_reserve_617": true,
+    "actual_truncation_identity_617": true,
+    "positive_shallow_reserve_619": true,
+    "actual_truncation_identity_619": true,
+    "positive_shallow_reserve_631": true,
+    "actual_truncation_identity_631": true,
+    "positive_shallow_reserve_641": true,
+    "actual_truncation_identity_641": true,
+    "positive_shallow_reserve_643": true,
+    "actual_truncation_identity_643": true,
+    "positive_shallow_reserve_647": true,
+    "actual_truncation_identity_647": true,
+    "positive_shallow_reserve_653": true,
+    "actual_truncation_identity_653": true,
+    "positive_shallow_reserve_659": true,
+    "actual_truncation_identity_659": true,
+    "positive_shallow_reserve_661": true,
+    "actual_truncation_identity_661": true,
+    "positive_shallow_reserve_673": true,
+    "actual_truncation_identity_673": true,
+    "positive_shallow_reserve_677": true,
+    "actual_truncation_identity_677": true,
+    "positive_shallow_reserve_683": true,
+    "actual_truncation_identity_683": true,
+    "positive_shallow_reserve_691": true,
+    "actual_truncation_identity_691": true,
+    "positive_shallow_reserve_701": true,
+    "actual_truncation_identity_701": true,
+    "positive_shallow_reserve_709": true,
+    "actual_truncation_identity_709": true,
+    "positive_shallow_reserve_719": true,
+    "actual_truncation_identity_719": true,
+    "positive_shallow_reserve_727": true,
+    "actual_truncation_identity_727": true,
+    "positive_shallow_reserve_733": true,
+    "actual_truncation_identity_733": true,
+    "positive_shallow_reserve_739": true,
+    "actual_truncation_identity_739": true,
+    "positive_shallow_reserve_743": true,
+    "actual_truncation_identity_743": true,
+    "positive_shallow_reserve_751": true,
+    "actual_truncation_identity_751": true,
+    "positive_shallow_reserve_757": true,
+    "actual_truncation_identity_757": true,
+    "positive_shallow_reserve_761": true,
+    "actual_truncation_identity_761": true,
+    "positive_shallow_reserve_769": true,
+    "actual_truncation_identity_769": true,
+    "positive_shallow_reserve_773": true,
+    "actual_truncation_identity_773": true,
+    "positive_shallow_reserve_787": true,
+    "actual_truncation_identity_787": true,
+    "positive_shallow_reserve_797": true,
+    "actual_truncation_identity_797": true,
+    "positive_shallow_reserve_809": true,
+    "actual_truncation_identity_809": true,
+    "positive_shallow_reserve_811": true,
+    "actual_truncation_identity_811": true,
+    "positive_shallow_reserve_821": true,
+    "actual_truncation_identity_821": true,
+    "positive_shallow_reserve_823": true,
+    "actual_truncation_identity_823": true,
+    "positive_shallow_reserve_827": true,
+    "actual_truncation_identity_827": true,
+    "positive_shallow_reserve_829": true,
+    "actual_truncation_identity_829": true,
+    "positive_shallow_reserve_839": true,
+    "actual_truncation_identity_839": true,
+    "positive_shallow_reserve_853": true,
+    "actual_truncation_identity_853": true,
+    "positive_shallow_reserve_857": true,
+    "actual_truncation_identity_857": true,
+    "positive_shallow_reserve_859": true,
+    "actual_truncation_identity_859": true,
+    "positive_shallow_reserve_863": true,
+    "actual_truncation_identity_863": true,
+    "positive_shallow_reserve_877": true,
+    "actual_truncation_identity_877": true,
+    "positive_shallow_reserve_881": true,
+    "actual_truncation_identity_881": true,
+    "positive_shallow_reserve_883": true,
+    "actual_truncation_identity_883": true,
+    "positive_shallow_reserve_887": true,
+    "actual_truncation_identity_887": true,
+    "positive_shallow_reserve_907": true,
+    "actual_truncation_identity_907": true,
+    "positive_shallow_reserve_911": true,
+    "actual_truncation_identity_911": true,
+    "positive_shallow_reserve_919": true,
+    "actual_truncation_identity_919": true,
+    "positive_shallow_reserve_929": true,
+    "actual_truncation_identity_929": true,
+    "positive_shallow_reserve_937": true,
+    "actual_truncation_identity_937": true,
+    "positive_shallow_reserve_941": true,
+    "actual_truncation_identity_941": true,
+    "positive_shallow_reserve_947": true,
+    "actual_truncation_identity_947": true,
+    "positive_shallow_reserve_953": true,
+    "actual_truncation_identity_953": true,
+    "positive_shallow_reserve_967": true,
+    "actual_truncation_identity_967": true,
+    "finite_fee_exact": true,
+    "analytic_tail_exact": true,
+    "square_interval_boundary": true,
+    "head_checks_true": true,
+    "head_producer_fingerprint": true,
+    "same_head_and_single_port_reserve": true,
+    "simultaneous_two_port_reserve_positive": true,
+    "simultaneous_two_port_reserve_gt_1_90000": true,
+    "low_parent_prefix_complete": true,
+    "low_parent_total": true,
+    "all_low_entry_primes": true,
+    "low_entry_positive_reserve_37": true,
+    "low_entry_original_label_identity_37": true,
+    "low_entry_positive_reserve_41": true,
+    "low_entry_original_label_identity_41": true,
+    "low_entry_positive_reserve_43": true,
+    "low_entry_original_label_identity_43": true,
+    "low_entry_positive_reserve_47": true,
+    "low_entry_original_label_identity_47": true,
+    "low_fee_exact": true,
+    "expanded_reserve_gt_1_2500000": true
+  },
+  "producer_sha256": "e4f43fbb80ba3fc463f136c9a2de88a02ddba7afa14ea665fab49ef51697741b"
+}

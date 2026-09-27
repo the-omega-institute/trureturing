@@ -409,9 +409,14 @@ for Distinct Odd Moduli with at Most Three Prime Divisors*, Lemma 8.2,
 TeX label `lem:mertens`. It derives (JR20) from Rosser–Schoenfeld,
 *Approximate formulas for some functions of prime numbers*, Illinois
 Journal of Mathematics 6 (1962), Theorem 8, equations (3.28)–(3.29).
-The pinned source statement and ratio derivation were inspected; the
-original Rosser–Schoenfeld PDF was not independently retrieved. This
-analytic premise is not certified by the rational program below.
+The pinned source statement and ratio derivation were inspected.
+The original Theorem 8 has also been read directly on printed page70
+of the Rosser–Schoenfeld scan: (3.28) is the lower bound for `x>1`,
+and (3.29) is the upper bound for `x>=286`. The
+[citation note and direct ratio derivation](../../../../Library/Arith/rosser1962approximate.md)
+identify the scan and its SHA-256. This closes the unread-primary-text
+boundary; neither the rational program below nor this source check
+certifies the original analytic proof or its numerical tables.
 
 The archive SHA-256 is
 `5956327277ac47dd6e98a0a38f2a785cd61e647560c7f6ab5c73a63cf49faa51`.

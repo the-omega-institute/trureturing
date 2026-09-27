@@ -1,0 +1,135 @@
+{
+  "verified": true,
+  "certificate_sha256": "17b06e82067b023feee0f7aa7a40b66da1fd4612f75c356df02bc8b0ab8937d4",
+  "literal_label_count": 51,
+  "axis_capacities": [
+    22,
+    21,
+    39,
+    30,
+    45,
+    42,
+    58,
+    85,
+    78,
+    79
+  ],
+  "branches": [
+    {
+      "region": "t1_le_20",
+      "clip": [
+        [
+          1,
+          0,
+          0
+        ],
+        20
+      ],
+      "weight": [
+        17,
+        9,
+        8
+      ],
+      "capacity": 671,
+      "t_vertex_count": 15,
+      "u_vertex_count": 22,
+      "checked_vertex_pairs": 330,
+      "minimum": "41",
+      "minimizers": [
+        {
+          "t": [
+            "18",
+            "21",
+            "18"
+          ],
+          "u": [
+            "22",
+            "12",
+            "23"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "t1_ge_20",
+      "clip": [
+        [
+          -1,
+          0,
+          0
+        ],
+        -20
+      ],
+      "weight": [
+        9,
+        16,
+        9
+      ],
+      "capacity": 662,
+      "t_vertex_count": 12,
+      "u_vertex_count": 22,
+      "checked_vertex_pairs": 264,
+      "minimum": "92",
+      "minimizers": [
+        {
+          "t": [
+            "21",
+            "18",
+            "19"
+          ],
+          "u": [
+            "15",
+            "21",
+            "21"
+          ]
+        }
+      ]
+    }
+  ],
+  "vertex_pairs_checked": 594,
+  "uniform_616_weighted_survivor_lower": "41",
+  "uniform_max_survivor_lower": "41/20944",
+  "scope": "Exact minima of the declared two polytope branches and same-family budget transport, not arithmetic sharpness, a new Boolean edge, or a global source-mass improvement. Ordinary proof plus exact arithmetic, not Lean verification.",
+  "inputs": {
+    "integer_selector_tail_interface_certificate.json": "66f155d2d9f65b044017e0c033c1d3e8f9999cea100eabce1b8aa049810ecb5a",
+    "integer_selector_tail_interface.json": "4681c5b6da42138625dfa6c21e680522edf60ed400a3ae83c817d94bfcf9e4f4",
+    "mixed_split_complete_weighted_boundary_certificate.json": "1c46cc37e02ffaf4206d628609a1a037de310fcf679770be0026d4a84f2cb015",
+    "mixed_split_complete_weighted_boundary.json": "87f177f9e2a8744d95ed99f8ce3087b0a3e5ca88573e409948d57d19688c57cb"
+  },
+  "profiles": [
+    [
+      4,
+      2,
+      -4,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      5,
+      -2,
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      -5,
+      -3,
+      -2,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "old_fixed_objective_minimum": "32",
+  "original_weight": [
+    17,
+    16,
+    13
+  ],
+  "original_capacity": 892
+}

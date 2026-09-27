@@ -1,0 +1,1134 @@
+{
+  "schema": "free-within-edge-actual-dead-central-fibre-v1",
+  "scope": "One actually empty central fibre after freeing within-edge endpoints.\n\nConstruct34 globally fixed, distinct odd congruence labels. Check the local\n49x121 product and the complete1334025-period residue table. This is a local\nsource obstruction, not an odd covering-system counterexample. Standard\nlibrary exact arithmetic only; no Lean verification.\n",
+  "family": [
+    {
+      "name": "pure_3",
+      "group": "pure",
+      "modulus": 3,
+      "residue": 2,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "name": "pure_9",
+      "group": "pure",
+      "modulus": 9,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 9,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "pure_5",
+      "group": "pure",
+      "modulus": 5,
+      "residue": 4,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 4
+        }
+      ]
+    },
+    {
+      "name": "pure_25",
+      "group": "pure",
+      "modulus": 25,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 25,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "pure_7",
+      "group": "pure",
+      "modulus": 7,
+      "residue": 0,
+      "components": [
+        {
+          "modulus": 7,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "pure_49",
+      "group": "pure",
+      "modulus": 49,
+      "residue": 43,
+      "components": [
+        {
+          "modulus": 49,
+          "residue": 43
+        }
+      ]
+    },
+    {
+      "name": "pure_11",
+      "group": "pure",
+      "modulus": 11,
+      "residue": 0,
+      "components": [
+        {
+          "modulus": 11,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "central_15",
+      "group": "central_mask",
+      "modulus": 15,
+      "residue": 0,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "star_3_7^1",
+      "group": "star_7",
+      "modulus": 21,
+      "residue": 16,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "name": "star_5_7^1",
+      "group": "star_7",
+      "modulus": 35,
+      "residue": 31,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 3
+        }
+      ]
+    },
+    {
+      "name": "star_15_7^1",
+      "group": "star_7",
+      "modulus": 105,
+      "residue": 46,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 4
+        }
+      ]
+    },
+    {
+      "name": "star_9_7^1",
+      "group": "star_7",
+      "modulus": 63,
+      "residue": 61,
+      "components": [
+        {
+          "modulus": 9,
+          "residue": 7
+        },
+        {
+          "modulus": 7,
+          "residue": 5
+        }
+      ]
+    },
+    {
+      "name": "star_25_7^1",
+      "group": "star_7",
+      "modulus": 175,
+      "residue": 6,
+      "components": [
+        {
+          "modulus": 25,
+          "residue": 6
+        },
+        {
+          "modulus": 7,
+          "residue": 6
+        }
+      ]
+    },
+    {
+      "name": "star_3_7^2",
+      "group": "star_7",
+      "modulus": 147,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "star_5_7^2",
+      "group": "star_7",
+      "modulus": 245,
+      "residue": 106,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 8
+        }
+      ]
+    },
+    {
+      "name": "star_3_11^1",
+      "group": "star_11",
+      "modulus": 33,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "star_5_11^1",
+      "group": "star_11",
+      "modulus": 55,
+      "residue": 46,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 2
+        }
+      ]
+    },
+    {
+      "name": "star_15_11^1",
+      "group": "star_11",
+      "modulus": 165,
+      "residue": 91,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 3
+        }
+      ]
+    },
+    {
+      "name": "star_9_11^1",
+      "group": "star_11",
+      "modulus": 99,
+      "residue": 70,
+      "components": [
+        {
+          "modulus": 9,
+          "residue": 7
+        },
+        {
+          "modulus": 11,
+          "residue": 4
+        }
+      ]
+    },
+    {
+      "name": "star_25_11^1",
+      "group": "star_11",
+      "modulus": 275,
+      "residue": 181,
+      "components": [
+        {
+          "modulus": 25,
+          "residue": 6
+        },
+        {
+          "modulus": 11,
+          "residue": 5
+        }
+      ]
+    },
+    {
+      "name": "star_3_11^2",
+      "group": "star_11",
+      "modulus": 363,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 121,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "star_5_11^2",
+      "group": "star_11",
+      "modulus": 605,
+      "residue": 1,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 121,
+          "residue": 1
+        }
+      ]
+    },
+    {
+      "name": "edge_11_c1",
+      "group": "edge_11",
+      "modulus": 77,
+      "residue": 50,
+      "components": [
+        {
+          "modulus": 7,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 6
+        }
+      ]
+    },
+    {
+      "name": "edge_21_c1",
+      "group": "edge_21",
+      "modulus": 539,
+      "residue": 505,
+      "components": [
+        {
+          "modulus": 49,
+          "residue": 15
+        },
+        {
+          "modulus": 11,
+          "residue": 10
+        }
+      ]
+    },
+    {
+      "name": "edge_12_c1",
+      "group": "edge_12_source_null",
+      "modulus": 847,
+      "residue": 0,
+      "components": [
+        {
+          "modulus": 7,
+          "residue": 0
+        },
+        {
+          "modulus": 121,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "edge_11_c3",
+      "group": "edge_11",
+      "modulus": 231,
+      "residue": 106,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 7
+        }
+      ]
+    },
+    {
+      "name": "edge_21_c3",
+      "group": "edge_21",
+      "modulus": 1617,
+      "residue": 1198,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 22
+        },
+        {
+          "modulus": 11,
+          "residue": 10
+        }
+      ]
+    },
+    {
+      "name": "edge_12_c3",
+      "group": "edge_12_source_null",
+      "modulus": 2541,
+      "residue": 847,
+      "components": [
+        {
+          "modulus": 3,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 0
+        },
+        {
+          "modulus": 121,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "edge_11_c5",
+      "group": "edge_11",
+      "modulus": 385,
+      "residue": 316,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 8
+        }
+      ]
+    },
+    {
+      "name": "edge_21_c5",
+      "group": "edge_21",
+      "modulus": 2695,
+      "residue": 1891,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 29
+        },
+        {
+          "modulus": 11,
+          "residue": 10
+        }
+      ]
+    },
+    {
+      "name": "edge_12_c5",
+      "group": "edge_12_source_null",
+      "modulus": 4235,
+      "residue": 2541,
+      "components": [
+        {
+          "modulus": 5,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 0
+        },
+        {
+          "modulus": 121,
+          "residue": 0
+        }
+      ]
+    },
+    {
+      "name": "edge_11_c15",
+      "group": "edge_11",
+      "modulus": 1155,
+      "residue": 526,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 9
+        }
+      ]
+    },
+    {
+      "name": "edge_21_c15",
+      "group": "edge_21",
+      "modulus": 8085,
+      "residue": 4201,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 36
+        },
+        {
+          "modulus": 11,
+          "residue": 10
+        }
+      ]
+    },
+    {
+      "name": "edge_12_c15",
+      "group": "edge_12_source_null",
+      "modulus": 12705,
+      "residue": 11011,
+      "components": [
+        {
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "modulus": 7,
+          "residue": 0
+        },
+        {
+          "modulus": 121,
+          "residue": 0
+        }
+      ]
+    }
+  ],
+  "actual_prime_support": [
+    3,
+    5,
+    7,
+    11
+  ],
+  "containing_literal_core": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "exact_global_period": 1334025,
+  "central_cell": {
+    "residue": 106,
+    "modulus": 225,
+    "coordinate_points": 5929,
+    "actual_star_survivors": 220,
+    "actual_final_survivors": 0,
+    "q49_survivors": [
+      15,
+      22,
+      29,
+      36
+    ],
+    "s121_survivors": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      17,
+      18,
+      19,
+      20,
+      21,
+      28,
+      29,
+      30,
+      31,
+      32,
+      39,
+      40,
+      41,
+      42,
+      43,
+      50,
+      51,
+      52,
+      53,
+      54,
+      61,
+      62,
+      63,
+      64,
+      65,
+      72,
+      73,
+      74,
+      75,
+      76,
+      83,
+      84,
+      85,
+      86,
+      87,
+      94,
+      95,
+      96,
+      97,
+      98,
+      105,
+      106,
+      107,
+      108,
+      109,
+      116,
+      117,
+      118,
+      119,
+      120
+    ],
+    "edge_hit_counts": [
+      {
+        "name": "edge_11_c1",
+        "modulus": 77,
+        "residue": 50,
+        "hits": 44
+      },
+      {
+        "name": "edge_21_c1",
+        "modulus": 539,
+        "residue": 505,
+        "hits": 11
+      },
+      {
+        "name": "edge_12_c1",
+        "modulus": 847,
+        "residue": 0,
+        "hits": 0
+      },
+      {
+        "name": "edge_11_c3",
+        "modulus": 231,
+        "residue": 106,
+        "hits": 44
+      },
+      {
+        "name": "edge_21_c3",
+        "modulus": 1617,
+        "residue": 1198,
+        "hits": 11
+      },
+      {
+        "name": "edge_12_c3",
+        "modulus": 2541,
+        "residue": 847,
+        "hits": 0
+      },
+      {
+        "name": "edge_11_c5",
+        "modulus": 385,
+        "residue": 316,
+        "hits": 44
+      },
+      {
+        "name": "edge_21_c5",
+        "modulus": 2695,
+        "residue": 1891,
+        "hits": 11
+      },
+      {
+        "name": "edge_12_c5",
+        "modulus": 4235,
+        "residue": 2541,
+        "hits": 0
+      },
+      {
+        "name": "edge_11_c15",
+        "modulus": 1155,
+        "residue": 526,
+        "hits": 44
+      },
+      {
+        "name": "edge_21_c15",
+        "modulus": 8085,
+        "residue": 4201,
+        "hits": 11
+      },
+      {
+        "name": "edge_12_c15",
+        "modulus": 12705,
+        "residue": 11011,
+        "hits": 0
+      }
+    ]
+  },
+  "actual_source": {
+    "q7_star_mass": "1/9",
+    "q11_star_mass": "1/2",
+    "Z7": "23/210",
+    "Z11": "95/198",
+    "thinning7": "69/70",
+    "thinning11": "95/99",
+    "positive_product_mass": "437/8316",
+    "edge_union_probability": "1"
+  },
+  "global_uncovered_count": 252185,
+  "global_uncovered_witness": 3,
+  "global_uncovered_density": "50437/266805",
+  "complete_global_survivor_table_sha256": "d89096727751d3e26fe2c602680d778adf292240a4aac694ce4801f60edd418f",
+  "uniform_box_obstruction": {
+    "primes": [
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "zmin": [
+      "23/210",
+      "95/198",
+      "977/1716",
+      "2773/4080",
+      "4163/5814"
+    ],
+    "beta_unconditional": [
+      "4409/207900",
+      "6283/360360",
+      "2203/171360",
+      "13873/1220940",
+      "305/30888",
+      "9793/1346400",
+      "36989/5755860",
+      "41813/7001280",
+      "52639/9976824",
+      "5419/1395360"
+    ],
+    "normalized_caps": [
+      "4409/10925",
+      "6283/22471",
+      "11015/63779",
+      "13873/95749",
+      "671/18563",
+      "29379/1317175",
+      "36989/1977425",
+      "41813/2709221",
+      "52639/4067251",
+      "92123/11543999"
+    ],
+    "q7_clique_cap_sum": "123312300031532/123217470726275",
+    "q7_clique_polynomial": "-94829305257/123217470726275",
+    "full_matching_polynomial": "-7717505155558/123217470726275",
+    "nonpositive_induced_polynomials": 64,
+    "all12_active_7_11_cap": "17636/10925"
+  },
+  "checks": [
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "pairwise_coprime_CRT_components",
+      "count": 1
+    },
+    {
+      "name": "fixed_CRT_phase",
+      "count": 1
+    },
+    {
+      "name": "34_distinct_odd_numerical_labels",
+      "count": 1
+    },
+    {
+      "name": "exact_full_period",
+      "count": 1
+    },
+    {
+      "name": "all_14_stars_centrally_active",
+      "count": 1
+    },
+    {
+      "name": "central_cell_live_before_outside_deletions",
+      "count": 1
+    },
+    {
+      "name": "exact_local_coordinate_bijection",
+      "count": 1
+    },
+    {
+      "name": "actual_star_product_is_220_points",
+      "count": 1
+    },
+    {
+      "name": "actual_local_fibre_is_empty",
+      "count": 1
+    },
+    {
+      "name": "q_survivors_are_four_registered_children",
+      "count": 1
+    },
+    {
+      "name": "s_survivors_are_five_registered_roots",
+      "count": 1
+    },
+    {
+      "name": "local_star_set_is_cartesian_product",
+      "count": 1
+    },
+    {
+      "name": "four_first_root_rectangles_each_cover_44",
+      "count": 1
+    },
+    {
+      "name": "four_square_cylinders_each_cover_11",
+      "count": 1
+    },
+    {
+      "name": "four_other_square_labels_are_source_null",
+      "count": 1
+    },
+    {
+      "name": "eight_active_labels_partition_actual_star_product",
+      "count": 220
+    },
+    {
+      "name": "actual_pure_marginals_are_probabilities",
+      "count": 1
+    },
+    {
+      "name": "actual_first_root_caps",
+      "count": 1
+    },
+    {
+      "name": "actual_square_and_density_caps",
+      "count": 1
+    },
+    {
+      "name": "positive_actual_uniform_thinning_available",
+      "count": 1
+    },
+    {
+      "name": "global_family_is_not_a_cover",
+      "count": 1
+    },
+    {
+      "name": "direct_cell_and_global_table_agree",
+      "count": 5929
+    },
+    {
+      "name": "unconditional_q7_clique_exceeds_one",
+      "count": 1
+    }
+  ],
+  "check_count": 89,
+  "new_lean_verification": false,
+  "producer_sha256": "8fd8e1131b369adbe895550afbf8d5c3a7cb2352d2d002c6744eef71f65294d0"
+}

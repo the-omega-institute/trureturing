@@ -1,0 +1,3652 @@
+{
+  "actual_fixture_regression": {
+    "actual_original_count": 101,
+    "counts": [
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          2
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          3
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "physical_cell": [
+          0,
+          6
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          7
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          8
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "physical_cell": [
+          0,
+          11
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          12
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          13
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "physical_cell": [
+          0,
+          16
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          17
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          18
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "physical_cell": [
+          0,
+          21
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          22
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          0,
+          23
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          2
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          3
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "physical_cell": [
+          3,
+          6
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          7
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          8
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          3,
+          11
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          12
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          13
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          3,
+          16
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          17
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          18
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          3,
+          21
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          22
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          3,
+          23
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          0
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          2
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          3
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          5
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          4,
+          6
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          7
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          8
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          10
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          4,
+          11
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          12
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          13
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          15
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          4,
+          16
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          17
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          18
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          20
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          4,
+          21
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          22
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          4,
+          23
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          2
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          3
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "physical_cell": [
+          6,
+          6
+        ],
+        "retained": false
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          7
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          8
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          6,
+          11
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          12
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          13
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          6,
+          16
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          17
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          18
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "physical_cell": [
+          6,
+          21
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          22
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          6,
+          23
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          0
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          2
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          3
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          5
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "physical_cell": [
+          7,
+          6
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          7
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          8
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          10
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          7,
+          11
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          12
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          13
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          15
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          7,
+          16
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          17
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          18
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          20
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "physical_cell": [
+          7,
+          21
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          22
+        ],
+        "retained": true
+      },
+      {
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "physical_cell": [
+          7,
+          23
+        ],
+        "retained": true
+      }
+    ],
+    "fees_by_central_mode": [
+      "2538491211086194930889806393/206925059115536207846400000000",
+      "41957988958888040447123383/1724375492629468398720000000",
+      "35999076809469357053620039/5173126477888405196160000000",
+      "11896872052738890121344449/2759000788207149437952000000",
+      "2375400527399925824831734699/63669248958626525491200000000",
+      "7204076469930872316686287/287395915438244733120000000",
+      "1949188233322501240143589/143697957719122366560000000",
+      "11768044065208342667285539/2299167323505957864960000000",
+      "1283800840997493186422939/61584839022481014240000000",
+      "8477326464972409519020827/206925059115536207846400000",
+      "150643678433959032962109059/15519379433665215588480000000",
+      "150443630670356644725075899/41385011823107241569280000000",
+      "403681108121645014796872589/8621877463147341993600000000",
+      "80817642098075652228724319/2586563238944202598080000000",
+      "57884097842594547407953253/7759689716832607794240000000",
+      "1160433142871349874939193/517312647788840519616000000"
+    ],
+    "full_gate": "-34684038567037034905564050721/275900078820714943795200000000",
+    "full_residual_additions": [
+      {
+        "coefficient": "200163067/19923472800",
+        "mode": 8,
+        "original_modulus": 1089,
+        "support": 2
+      },
+      {
+        "coefficient": "15397159/2213719200",
+        "mode": 8,
+        "original_modulus": 1521,
+        "support": 4
+      },
+      {
+        "coefficient": "200163067/51318036000",
+        "mode": 8,
+        "original_modulus": 2601,
+        "support": 8
+      },
+      {
+        "coefficient": "200163067/65002845600",
+        "mode": 8,
+        "original_modulus": 3249,
+        "support": 16
+      }
+    ],
+    "global_stars": [
+      {
+        "central_divisor": 3,
+        "central_phase": 0,
+        "modulus": 21,
+        "outside_prime": 7,
+        "residue": 15
+      },
+      {
+        "central_divisor": 5,
+        "central_phase": 1,
+        "modulus": 35,
+        "outside_prime": 7,
+        "residue": 16
+      },
+      {
+        "central_divisor": 15,
+        "central_phase": 6,
+        "modulus": 105,
+        "outside_prime": 7,
+        "residue": 66
+      },
+      {
+        "central_divisor": 9,
+        "central_phase": 0,
+        "modulus": 63,
+        "outside_prime": 7,
+        "residue": 18
+      },
+      {
+        "central_divisor": 25,
+        "central_phase": 6,
+        "modulus": 175,
+        "outside_prime": 7,
+        "residue": 131
+      },
+      {
+        "central_divisor": 45,
+        "central_phase": 36,
+        "modulus": 315,
+        "outside_prime": 7,
+        "residue": 216
+      },
+      {
+        "central_divisor": 75,
+        "central_phase": 6,
+        "modulus": 525,
+        "outside_prime": 7,
+        "residue": 456
+      },
+      {
+        "central_divisor": 225,
+        "central_phase": 81,
+        "modulus": 1575,
+        "outside_prime": 7,
+        "residue": 1206
+      },
+      {
+        "central_divisor": 3,
+        "central_phase": 0,
+        "modulus": 33,
+        "outside_prime": 11,
+        "residue": 12
+      },
+      {
+        "central_divisor": 5,
+        "central_phase": 1,
+        "modulus": 55,
+        "outside_prime": 11,
+        "residue": 46
+      },
+      {
+        "central_divisor": 15,
+        "central_phase": 6,
+        "modulus": 165,
+        "outside_prime": 11,
+        "residue": 36
+      },
+      {
+        "central_divisor": 9,
+        "central_phase": 0,
+        "modulus": 99,
+        "outside_prime": 11,
+        "residue": 81
+      },
+      {
+        "central_divisor": 25,
+        "central_phase": 6,
+        "modulus": 275,
+        "outside_prime": 11,
+        "residue": 181
+      },
+      {
+        "central_divisor": 45,
+        "central_phase": 36,
+        "modulus": 495,
+        "outside_prime": 11,
+        "residue": 171
+      },
+      {
+        "central_divisor": 75,
+        "central_phase": 6,
+        "modulus": 825,
+        "outside_prime": 11,
+        "residue": 381
+      },
+      {
+        "central_divisor": 225,
+        "central_phase": 81,
+        "modulus": 2475,
+        "outside_prime": 11,
+        "residue": 756
+      },
+      {
+        "central_divisor": 3,
+        "central_phase": 0,
+        "modulus": 39,
+        "outside_prime": 13,
+        "residue": 27
+      },
+      {
+        "central_divisor": 5,
+        "central_phase": 1,
+        "modulus": 65,
+        "outside_prime": 13,
+        "residue": 41
+      },
+      {
+        "central_divisor": 15,
+        "central_phase": 6,
+        "modulus": 195,
+        "outside_prime": 13,
+        "residue": 81
+      },
+      {
+        "central_divisor": 9,
+        "central_phase": 0,
+        "modulus": 117,
+        "outside_prime": 13,
+        "residue": 108
+      },
+      {
+        "central_divisor": 25,
+        "central_phase": 6,
+        "modulus": 325,
+        "outside_prime": 13,
+        "residue": 31
+      },
+      {
+        "central_divisor": 45,
+        "central_phase": 36,
+        "modulus": 585,
+        "outside_prime": 13,
+        "residue": 396
+      },
+      {
+        "central_divisor": 75,
+        "central_phase": 6,
+        "modulus": 975,
+        "outside_prime": 13,
+        "residue": 306
+      },
+      {
+        "central_divisor": 225,
+        "central_phase": 81,
+        "modulus": 2925,
+        "outside_prime": 13,
+        "residue": 2556
+      },
+      {
+        "central_divisor": 3,
+        "central_phase": 0,
+        "modulus": 51,
+        "outside_prime": 17,
+        "residue": 18
+      },
+      {
+        "central_divisor": 5,
+        "central_phase": 1,
+        "modulus": 85,
+        "outside_prime": 17,
+        "residue": 36
+      },
+      {
+        "central_divisor": 15,
+        "central_phase": 6,
+        "modulus": 255,
+        "outside_prime": 17,
+        "residue": 156
+      },
+      {
+        "central_divisor": 9,
+        "central_phase": 0,
+        "modulus": 153,
+        "outside_prime": 17,
+        "residue": 72
+      },
+      {
+        "central_divisor": 25,
+        "central_phase": 6,
+        "modulus": 425,
+        "outside_prime": 17,
+        "residue": 56
+      },
+      {
+        "central_divisor": 45,
+        "central_phase": 36,
+        "modulus": 765,
+        "outside_prime": 17,
+        "residue": 261
+      },
+      {
+        "central_divisor": 75,
+        "central_phase": 6,
+        "modulus": 1275,
+        "outside_prime": 17,
+        "residue": 381
+      },
+      {
+        "central_divisor": 225,
+        "central_phase": 81,
+        "modulus": 3825,
+        "outside_prime": 17,
+        "residue": 756
+      },
+      {
+        "central_divisor": 3,
+        "central_phase": 0,
+        "modulus": 57,
+        "outside_prime": 19,
+        "residue": 39
+      },
+      {
+        "central_divisor": 5,
+        "central_phase": 1,
+        "modulus": 95,
+        "outside_prime": 19,
+        "residue": 21
+      },
+      {
+        "central_divisor": 15,
+        "central_phase": 6,
+        "modulus": 285,
+        "outside_prime": 19,
+        "residue": 231
+      },
+      {
+        "central_divisor": 9,
+        "central_phase": 0,
+        "modulus": 171,
+        "outside_prime": 19,
+        "residue": 99
+      },
+      {
+        "central_divisor": 25,
+        "central_phase": 6,
+        "modulus": 475,
+        "outside_prime": 19,
+        "residue": 81
+      },
+      {
+        "central_divisor": 45,
+        "central_phase": 36,
+        "modulus": 855,
+        "outside_prime": 19,
+        "residue": 576
+      },
+      {
+        "central_divisor": 75,
+        "central_phase": 6,
+        "modulus": 1425,
+        "outside_prime": 19,
+        "residue": 1356
+      },
+      {
+        "central_divisor": 225,
+        "central_phase": 81,
+        "modulus": 4275,
+        "outside_prime": 19,
+        "residue": 4131
+      }
+    ],
+    "literal_selectors": 559,
+    "mode0": "31840305005954603376439854827/206925059115536207846400000000",
+    "mode1_minus_proposed_remainder": "49520278757683943172344723/8621877463147341993600000000",
+    "physical_corner": [
+      4,
+      2
+    ],
+    "remaining_debit": "231413335724929518222451571471/827700236462144831385600000000",
+    "retained_cells": 74,
+    "root_major_corner": [
+      4,
+      10
+    ],
+    "source_term": "4897264418381880100759211/29476504147512280320000000",
+    "support_selector_evaluations": 17888
+  },
+  "affine_minorant": {
+    "constant": 140440,
+    "denominator": 1000000,
+    "equalities": [
+      [
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "slopes_in_Q_order": [
+      35110,
+      17555,
+      10551,
+      4824,
+      4138
+    ]
+  },
+  "check_count": 568038,
+  "checks": {
+    "affine_equalities": 1,
+    "affine_minorant": 59049,
+    "coefficient_count": 1,
+    "constant_three_net": 1,
+    "corner_count": 1,
+    "corner_mode0_lower": 95,
+    "crt_table_bijection": 1,
+    "fixture101_unique": 1,
+    "fixture_central_nulls": 5,
+    "fixture_exact_gate": 1,
+    "fixture_exact_mode0": 1,
+    "fixture_exact_mode1": 1,
+    "fixture_exact_rest": 1,
+    "fixture_mode1_alone_refutes": 1,
+    "fixture_negative_gate": 1,
+    "fixture_odd_modulus": 101,
+    "fixture_outside_pure": 5,
+    "fixture_reduced_residue": 101,
+    "fixture_remainder_claim_refuted": 1,
+    "fixture_retained_cells": 1,
+    "fixture_star_phase81": 40,
+    "input_sha256": 2,
+    "integer_edge_weights": 10,
+    "literal_matching_count": 1,
+    "literal_selector_count": 1,
+    "literal_support_selector_evaluations": 1,
+    "live_cell_count": 1,
+    "minimum_positive_response": 1,
+    "nonnegative_complete_coefficients": 1,
+    "positive_vector_count": 1,
+    "retained_response_positive": 508608,
+    "sharp_corner_lower": 1
+  },
+  "constant_three_mode0": "8482754828806680432735281/3678667717609532583936000000",
+  "corners": [
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        0,
+        0
+      ],
+      "root_major_corner": [
+        0,
+        0
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        2
+      ],
+      "root_major_corner": [
+        0,
+        10
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        3
+      ],
+      "root_major_corner": [
+        0,
+        15
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        0,
+        5
+      ],
+      "root_major_corner": [
+        0,
+        1
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        6
+      ],
+      "root_major_corner": [
+        0,
+        6
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        7
+      ],
+      "root_major_corner": [
+        0,
+        11
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        8
+      ],
+      "root_major_corner": [
+        0,
+        16
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        0,
+        10
+      ],
+      "root_major_corner": [
+        0,
+        2
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        11
+      ],
+      "root_major_corner": [
+        0,
+        7
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        12
+      ],
+      "root_major_corner": [
+        0,
+        12
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        13
+      ],
+      "root_major_corner": [
+        0,
+        17
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        0,
+        15
+      ],
+      "root_major_corner": [
+        0,
+        3
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        16
+      ],
+      "root_major_corner": [
+        0,
+        8
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        17
+      ],
+      "root_major_corner": [
+        0,
+        13
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        18
+      ],
+      "root_major_corner": [
+        0,
+        18
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        0,
+        20
+      ],
+      "root_major_corner": [
+        0,
+        4
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        21
+      ],
+      "root_major_corner": [
+        0,
+        9
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        22
+      ],
+      "root_major_corner": [
+        0,
+        14
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        0,
+        23
+      ],
+      "root_major_corner": [
+        0,
+        19
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        3,
+        0
+      ],
+      "root_major_corner": [
+        1,
+        0
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        2
+      ],
+      "root_major_corner": [
+        1,
+        10
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        3
+      ],
+      "root_major_corner": [
+        1,
+        15
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        3,
+        5
+      ],
+      "root_major_corner": [
+        1,
+        1
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        6
+      ],
+      "root_major_corner": [
+        1,
+        6
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        7
+      ],
+      "root_major_corner": [
+        1,
+        11
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        8
+      ],
+      "root_major_corner": [
+        1,
+        16
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        3,
+        10
+      ],
+      "root_major_corner": [
+        1,
+        2
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        11
+      ],
+      "root_major_corner": [
+        1,
+        7
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        12
+      ],
+      "root_major_corner": [
+        1,
+        12
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        13
+      ],
+      "root_major_corner": [
+        1,
+        17
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        3,
+        15
+      ],
+      "root_major_corner": [
+        1,
+        3
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        16
+      ],
+      "root_major_corner": [
+        1,
+        8
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        17
+      ],
+      "root_major_corner": [
+        1,
+        13
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        18
+      ],
+      "root_major_corner": [
+        1,
+        18
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        3,
+        20
+      ],
+      "root_major_corner": [
+        1,
+        4
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        21
+      ],
+      "root_major_corner": [
+        1,
+        9
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        22
+      ],
+      "root_major_corner": [
+        1,
+        14
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        3,
+        23
+      ],
+      "root_major_corner": [
+        1,
+        19
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        4,
+        0
+      ],
+      "root_major_corner": [
+        4,
+        0
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        2
+      ],
+      "root_major_corner": [
+        4,
+        10
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        3
+      ],
+      "root_major_corner": [
+        4,
+        15
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        4,
+        5
+      ],
+      "root_major_corner": [
+        4,
+        1
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        6
+      ],
+      "root_major_corner": [
+        4,
+        6
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        7
+      ],
+      "root_major_corner": [
+        4,
+        11
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        8
+      ],
+      "root_major_corner": [
+        4,
+        16
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        4,
+        10
+      ],
+      "root_major_corner": [
+        4,
+        2
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        11
+      ],
+      "root_major_corner": [
+        4,
+        7
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        12
+      ],
+      "root_major_corner": [
+        4,
+        12
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        13
+      ],
+      "root_major_corner": [
+        4,
+        17
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        4,
+        15
+      ],
+      "root_major_corner": [
+        4,
+        3
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        16
+      ],
+      "root_major_corner": [
+        4,
+        8
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        17
+      ],
+      "root_major_corner": [
+        4,
+        13
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        18
+      ],
+      "root_major_corner": [
+        4,
+        18
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        4,
+        20
+      ],
+      "root_major_corner": [
+        4,
+        4
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        21
+      ],
+      "root_major_corner": [
+        4,
+        9
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        22
+      ],
+      "root_major_corner": [
+        4,
+        14
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        4,
+        23
+      ],
+      "root_major_corner": [
+        4,
+        19
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        6,
+        0
+      ],
+      "root_major_corner": [
+        2,
+        0
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        2
+      ],
+      "root_major_corner": [
+        2,
+        10
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        3
+      ],
+      "root_major_corner": [
+        2,
+        15
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        6,
+        5
+      ],
+      "root_major_corner": [
+        2,
+        1
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        6
+      ],
+      "root_major_corner": [
+        2,
+        6
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        7
+      ],
+      "root_major_corner": [
+        2,
+        11
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        8
+      ],
+      "root_major_corner": [
+        2,
+        16
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        6,
+        10
+      ],
+      "root_major_corner": [
+        2,
+        2
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        11
+      ],
+      "root_major_corner": [
+        2,
+        7
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        12
+      ],
+      "root_major_corner": [
+        2,
+        12
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        13
+      ],
+      "root_major_corner": [
+        2,
+        17
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        6,
+        15
+      ],
+      "root_major_corner": [
+        2,
+        3
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        16
+      ],
+      "root_major_corner": [
+        2,
+        8
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        17
+      ],
+      "root_major_corner": [
+        2,
+        13
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        18
+      ],
+      "root_major_corner": [
+        2,
+        18
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "116/135",
+      "mode0_lower": "5314687/168750000",
+      "physical_corner": [
+        6,
+        20
+      ],
+      "root_major_corner": [
+        2,
+        4
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        21
+      ],
+      "root_major_corner": [
+        2,
+        9
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        22
+      ],
+      "root_major_corner": [
+        2,
+        14
+      ]
+    },
+    {
+      "class_maxima": [
+        "4/9",
+        "4/15",
+        "4/27",
+        "2/9",
+        "4/75",
+        "8/135",
+        "4/135",
+        "8/675"
+      ],
+      "mass": "23/27",
+      "mode0_lower": "5139137/168750000",
+      "physical_corner": [
+        6,
+        23
+      ],
+      "root_major_corner": [
+        2,
+        19
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        7,
+        0
+      ],
+      "root_major_corner": [
+        5,
+        0
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        2
+      ],
+      "root_major_corner": [
+        5,
+        10
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        3
+      ],
+      "root_major_corner": [
+        5,
+        15
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        7,
+        5
+      ],
+      "root_major_corner": [
+        5,
+        1
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        6
+      ],
+      "root_major_corner": [
+        5,
+        6
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        7
+      ],
+      "root_major_corner": [
+        5,
+        11
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        8
+      ],
+      "root_major_corner": [
+        5,
+        16
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        7,
+        10
+      ],
+      "root_major_corner": [
+        5,
+        2
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        11
+      ],
+      "root_major_corner": [
+        5,
+        7
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        12
+      ],
+      "root_major_corner": [
+        5,
+        12
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        13
+      ],
+      "root_major_corner": [
+        5,
+        17
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        7,
+        15
+      ],
+      "root_major_corner": [
+        5,
+        3
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        16
+      ],
+      "root_major_corner": [
+        5,
+        8
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        17
+      ],
+      "root_major_corner": [
+        5,
+        13
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        18
+      ],
+      "root_major_corner": [
+        5,
+        18
+      ]
+    },
+    {
+      "class_maxima": [
+        "112/225",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "187/225",
+      "mode0_lower": "396103/18750000",
+      "physical_corner": [
+        7,
+        20
+      ],
+      "root_major_corner": [
+        5,
+        4
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        21
+      ],
+      "root_major_corner": [
+        5,
+        9
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        22
+      ],
+      "root_major_corner": [
+        5,
+        14
+      ]
+    },
+    {
+      "class_maxima": [
+        "22/45",
+        "4/15",
+        "8/45",
+        "2/9",
+        "4/75",
+        "8/135",
+        "8/225",
+        "8/675"
+      ],
+      "mass": "37/45",
+      "mode0_lower": "64121/3125000",
+      "physical_corner": [
+        7,
+        23
+      ],
+      "root_major_corner": [
+        5,
+        19
+      ]
+    }
+  ],
+  "count_vectors": 59049,
+  "failures": [],
+  "gamma": "193/100000",
+  "input_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4"
+  },
+  "literal_matchings": 26,
+  "minimum_positive_response": {
+    "counts": [
+      0,
+      6,
+      6,
+      8,
+      8
+    ],
+    "unqueried_mask": 31,
+    "value": "28028831665337/8462661375168000"
+  },
+  "mode0_lower": "64121/3125000",
+  "new_lean_verification": false,
+  "optimizer_used": false,
+  "positive_vectors": 15894,
+  "proposed_remainder_target": "232359/12500000",
+  "schema": "coherent-star-mode0-independent-v1",
+  "scope": "Exact mode0 affine minorant and95-corner bound; one actual coherent phase81 fixture refutes the proposed uniform remainder bound for chi=1[F>0] with fullmode8 residual fees. No upper obstruction to all fields or sources, no complete positive gate, no unrestricted odd-covering resolution. All finite-height source claims use the ordinary source proof, not these finite checks.",
+  "status": "PASS",
+  "verifier_sha256": "6a4ea5851a8cc7fe7060544305511efc4a0bbcd2b1af3dfd9361bbbad37b60fc"
+}

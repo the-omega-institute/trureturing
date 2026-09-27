@@ -1,0 +1,224 @@
+{
+  "result": "PASS",
+  "period": 315,
+  "original_classes": {
+    "3": 0,
+    "5": 0,
+    "7": 0,
+    "9": 7,
+    "15": 13,
+    "21": 10,
+    "35": 6,
+    "45": 4,
+    "63": 37,
+    "105": 61,
+    "315": 46
+  },
+  "query_classes": {
+    "1": 0,
+    "3": 2,
+    "5": 0,
+    "7": 0,
+    "9": 4,
+    "15": 4,
+    "21": 0,
+    "35": 0,
+    "45": 37,
+    "63": 0,
+    "105": 0,
+    "315": 1
+  },
+  "survivor_count": 86,
+  "query_load_on_all_survivors": 2,
+  "variance_under_every_probability_supported_on_U": 0,
+  "all_original_classes_have_private_points": true,
+  "private_regions": [
+    {
+      "d": 3,
+      "count": 69,
+      "witness": 3
+    },
+    {
+      "d": 5,
+      "count": 27,
+      "witness": 5
+    },
+    {
+      "d": 7,
+      "count": 17,
+      "witness": 14
+    },
+    {
+      "d": 9,
+      "count": 13,
+      "witness": 16
+    },
+    {
+      "d": 15,
+      "count": 9,
+      "witness": 13
+    },
+    {
+      "d": 21,
+      "count": 5,
+      "witness": 31
+    },
+    {
+      "d": 35,
+      "count": 5,
+      "witness": 41
+    },
+    {
+      "d": 45,
+      "count": 5,
+      "witness": 4
+    },
+    {
+      "d": 63,
+      "count": 3,
+      "witness": 37
+    },
+    {
+      "d": 105,
+      "count": 2,
+      "witness": 166
+    },
+    {
+      "d": 315,
+      "count": 1,
+      "witness": 46
+    }
+  ],
+  "comparable_original_pairs_checked": 31,
+  "all_comparable_original_classes_are_disjoint": true,
+  "original_overlapping_incomparable_pairs": [
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      3,
+      35
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      21
+    ],
+    [
+      5,
+      63
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      15
+    ],
+    [
+      7,
+      45
+    ],
+    [
+      9,
+      15
+    ],
+    [
+      9,
+      21
+    ],
+    [
+      9,
+      35
+    ],
+    [
+      9,
+      105
+    ],
+    [
+      15,
+      21
+    ],
+    [
+      15,
+      63
+    ],
+    [
+      21,
+      45
+    ]
+  ],
+  "nonunit_query_partition": [
+    {
+      "d": 3,
+      "a": 2,
+      "count": 69
+    },
+    {
+      "d": 9,
+      "a": 4,
+      "count": 8
+    },
+    {
+      "d": 15,
+      "a": 4,
+      "count": 4
+    },
+    {
+      "d": 45,
+      "a": 37,
+      "count": 4
+    },
+    {
+      "d": 315,
+      "a": 1,
+      "count": 1
+    }
+  ],
+  "largest_original_private_point": 46,
+  "largest_query_active_point": 1,
+  "base_maximum_complete_query_mean": "271/86",
+  "base_R_uniform_nonunit_maxima_sum": "185/86",
+  "base_uniform_density_relative_to_Haar": "315/86",
+  "complete_Haar_query_mean": "208/105",
+  "complete_Haar_query_load_histogram": {
+    "1": 101,
+    "2": 144,
+    "3": 56,
+    "4": 7,
+    "5": 4,
+    "6": 2,
+    "7": 1
+  },
+  "complete_Haar_primitive_K_Fourier": "exp(-2*pi*i/315)/315",
+  "seven_prime_CRT_extension": {
+    "new_original_classes": {
+      "11": 0,
+      "13": 0,
+      "17": 0,
+      "19": 0
+    },
+    "new_query_phase_rule": "0 for every divisor not dividing 315",
+    "period": 14549535,
+    "survivor_count": 2972160,
+    "uniform_density_relative_to_Haar": "323323/66048",
+    "source_density_cap": "6075000000000/7235955529",
+    "R_uniform_nonunit_maxima_sum": "9545059/2972160",
+    "constant_load": 2,
+    "verification": "CRT product identity; full 315-period enumeration above"
+  },
+  "scope": "Refutes universal positive variance only; no constant-20 realization or exclusion."
+}

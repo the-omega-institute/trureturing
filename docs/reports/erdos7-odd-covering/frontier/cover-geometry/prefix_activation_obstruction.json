@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "checks": {
+    "108_unique_originals": 1,
+    "95_anchor_inventory": 1,
+    "actual_global_CRT": 108,
+    "forced_originals": 1,
+    "positive_actual_conflict_cell": 3,
+    "one_root_cannot_absorb_at_each_firstroot_leaf": 18,
+    "every643_positive_mask_misses_forced_leaf": 23,
+    "all23_positive_masks_accounted": 1,
+    "actual_firstroot_plus_prefix_source_absorbs_every_anchor": 3310,
+    "square_prefix_strictly_cheaper_than_full_root": 1,
+    "repaired7_mass": 1,
+    "uniform_prefix_gate_positive": 3,
+    "one_prefix_repairs_full_network": 1,
+    "two_prefix_full_network": 1,
+    "three_prefix_does_not_pay_this_full_network_budget": 1
+  },
+  "check_count": 3474,
+  "scope": "Actual108-original obstruction to641/643 positive root-table classes; prefix repair and uniform-prefix scalar reuse",
+  "base_fixture_sha256": "746c8a2adfa4ab88fd57860a05edaaabd7af5af6d04be8cc9d45e1fc1812d73b",
+  "cost_source_sha256": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+  "replacements": {
+    "35": 15,
+    "175": 50,
+    "245": 50,
+    "147": 51
+  },
+  "added_pure_originals": [
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 25,
+      "residue": 6
+    }
+  ],
+  "forced_ternary_leaves": [
+    0,
+    1,
+    2
+  ],
+  "uniform_prefix_results": [
+    {
+      "prefix_budget": 1,
+      "gate": "111479471147274534767358817/4434108409618633025280000000",
+      "projected_full_network_bound": "58838149492693874340197968115519223828958736209867/221912603483523718569707009815828032691277660160000000"
+    },
+    {
+      "prefix_budget": 2,
+      "gate": "4736126578421785608053143/328452474786565409280000000",
+      "projected_full_network_bound": "50506870059319247884062292874942752271623905809/8218985314204582169248407770956593803380654080000000"
+    },
+    {
+      "prefix_budget": 3,
+      "gate": "133093500681540132676666267/31038758867330431176960000000",
+      "projected_full_network_bound": "-370625661342801671424280682302049955731748676442483/1553388224384666029987949068710796228838943621120000000"
+    }
+  ],
+  "limitations": "Reuses640's16 previously certified full16-mode maximum-response vectors for separable H_T=h_T M; does not rederive their11400-corner coverage or audit646's conditional-layout gate.",
+  "new_lean_verification": false
+}

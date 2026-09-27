@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Exact extension with one independently placed regular leaf-pair role.
+
+One of ten named edges has role0; the other nine independently have role4 or5.
+Each layout selects one entire priority95 family, used for every corner/query.
+Only pinned640,658 and663 sibling certificates are inputs.
+"""
+from pathlib import Path
+from fractions import Fraction as F
+from itertools import combinations,product
+from math import prod,lcm
+from hashlib import sha256
+from collections import Counter
+import argparse,json
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--directory',type=Path,default=Path(__file__).resolve().parent)
+parser.add_argument('--output',type=Path)
+args=parser.parse_args();checks=Counter()
+def ck(name,value):
+ if not value:raise ArithmeticError(name)
+ checks[name]+=1
+PINS={'binary_leaf_pair_library_certificate.json':'4f64080de7056488b7299992ce8da2b7615410e8ddccc597ade50b323bff470d','remaining33_global_root_exclusion_certificate.json':'dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4','joint_square_pair_225_star_certificate.json':'cbdc3903174d5640ea6518160abaaa9ac567424f9f8afc717128e1202f378be5'}
+sources={}
+for name,pin in PINS.items():
+ raw=(args.directory/name).read_bytes();ck('source_pin',sha256(raw).hexdigest()==pin);sources[name]=json.loads(raw)
+base=sources['remaining33_global_root_exclusion_certificate.json'];network=sources['joint_square_pair_225_star_certificate.json']
+Q=(7,11,13,17,19);I=(0,1,2,4,5);J=tuple(m for m in range(20)if m!=5)
+CELLS=tuple(product(range(6),range(20)));LIVE=tuple((l,m)for l,m in product(I,J)if not(l<3 and m<5));CASES=tuple(product((0,1,4,5),(0,6,10,15)))
+EDGES=tuple(combinations(range(5),2));EM=tuple(sum(1<<q for q in e)for e in EDGES);PAIRS=tuple((e,f)for e,f in combinations(range(10),2)if not EM[e]&EM[f])
+g=F(200163067,201247200);r=tuple(F(1,q-1)for q in Q);a=tuple(F(1,q*(q-2))for q in Q)
+B0=tuple(a[u]*r[v]+r[u]*a[v]for u,v in EDGES);B1=tuple(r[u]*r[v]for u,v in EDGES)
+C=list(map(F,base['combined512_coefficients']));ck('complete512_nonnegative',len(C)==512 and min(C)>=0)
+ck('same_unit_gate_coefficient',g==F(base['constants']['g'])==F(network['g']))
+for u in range(1,5):C[32*9+(1<<u)]+=g*a[u]
+DC=lcm(g.denominator,*(x.denominator for x in C));GI=int(g*DC);CI=[int(x*DC)for x in C]
+
+# Exact matching polynomial coefficients for four unary profiles.
+polys={}
+for n in range(4):
+ Z=tuple(F(5,6)-F(n,35)if q==7 else F(q-2,q-1)-2*a[u]for u,q in enumerate(Q))
+ ck('uniform_strict_shearer_box',1-sum((B0[e]+B1[e])/(Z[u]*Z[v])for e,(u,v)in enumerate(EDGES))>=F(754111121894423,876550251053789))
+ for T in range(32):
+  def zprod(mask):return prod((Z[u]for u in range(5)if not mask>>u&1),start=F(1))
+  es=[e for e in range(10)if not T&EM[e]];ps=[(e,f)for e,f in PAIRS if not T&(EM[e]|EM[f])]
+  b=zprod(T)-sum((B0[e]*zprod(T|EM[e])for e in es),F())+sum((B0[e]*B0[f]*zprod(T|EM[e]|EM[f])for e,f in ps),F())
+  us=[F()]*10
+  for e in es:us[e]=-B1[e]*zprod(T|EM[e])+sum((B1[e]*B0[f]*zprod(T|EM[e]|EM[f])for f in es if not EM[e]&EM[f]),F())
+  vs=[B1[e]*B1[f]*zprod(T|EM[e]|EM[f])if(e,f)in ps else F()for e,f in PAIRS]
+  polys[n,T]=(b,us,vs)
+DH=lcm(*(x.denominator for b,us,vs in polys.values()for x in[b]+us+vs))
+responses={}
+for(n,T),(b,us,vs)in polys.items():
+ bi=int(b*DH);ui=[int(x*DH)for x in us];vi=[int(x*DH)for x in vs]
+ for mask in range(1024):
+  value=bi+sum(ui[e]for e in range(10)if mask>>e&1)+sum(v for(e,f),v in zip(PAIRS,vi)if mask>>e&1 and mask>>f&1)
+  ck('all_local_subset_responses_positive',value>0);responses[n,T,mask]=value
+
+def orbit(i,j,l,m):return('r'if i<3 else str(i),('eq'if i==l else'other')if i<3 and l<3 else'r'if l<3 else str(l),j//5,m//5,j==m)
+KEYS=sorted({orbit(i,j,l,m)for i,j in product(I,J)for l,m in LIVE});INDEX={key:k for k,key in enumerate(KEYS)}
+ck('orbit_count',len(KEYS)==180)
+def profile(l,m):return(0 if l==0 else 2 if l<3 else 4 if l==4 else 6)+int(m//5==2)
+FAMILIES=sources['binary_leaf_pair_library_certificate.json']['families']
+ck('inherited_orbit_keys',sources['binary_leaf_pair_library_certificate.json']['orbit_keys']==[list(k)for k in KEYS])
+SELECTION=[[0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 2, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 2, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 2, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 3, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 2, 3, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 0, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 2, 1], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 2, 3, 3, 3, 1, 0, 3, 3, 3, 0, 3, 3, 2, 0, 3, 3, 3, 3, 3, 3, 1, 0, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 2, 2, 1]]
+ck('library_size',len(FAMILIES)==4)
+ck('complete_layout_selector',len(SELECTION)==10 and all(len(row)==512 and all(isinstance(s,int)and 0<=s<4 for s in row)for row in SELECTION))
+for family in FAMILIES:
+ den=family['denominator'];nums=family['numerators'];ck('field_shape',len(nums)==180 and den>0)
+ for num in nums:ck('field_value_bounds',isinstance(num,int)and 0<=num<=den)
+ for i,j in product(I,J):
+  for l,m in LIVE:
+   val=nums[INDEX[orbit(i,j,l,m)]]
+   ck('ternary_priority',nums[INDEX[orbit(l,j,l,m)]]>=val)
+   ck('quinary_priority',nums[INDEX[orbit(i,m,l,m)]]>=val)
+
+def reduced_selectors(family,i,j):
+ nums=family['numerators'];x=[0 if l==3 else 1 if l==i else 2 for l in range(6)];y=[0 if m==5 else 3 if m==j else 4 for m in range(20)]
+ MX=[[x],[[x[l]if l//3==b else 0 for l in range(6)]for b in range(2)],[[x[l]if l==b else 0 for l in range(6)]for b in I],[[9 if l==b else 0 for l in range(6)]for b in I]]
+ MY=[[y],[[y[m]if m//5==b else 0 for m in range(20)]for b in range(4)],[[y[m]if m==b else 0 for m in range(20)]for b in J],[[60 if m==b else 0 for m in range(20)]for b in J]]
+ menus=[];raw_count=0
+ for e3,e5 in product(range(4),repeat=2):
+  rows=[]
+  for xx in MX[e3]:
+   for yy in MY[e5]:
+    raw_count+=1;vec=[0]*8
+    for l,m in LIVE:vec[profile(l,m)]+=xx[l]*yy[m]*nums[INDEX[orbit(i,j,l,m)]]
+    rows.append(tuple(vec))
+  unique=sorted(set(rows));kept=[u for u in unique if not any(u!=v and all(a<=b for a,b in zip(u,v))for v in unique)]
+  for u in rows:ck('selector_preserved_or_dominated',any(all(a<=b for a,b in zip(u,v))for v in kept))
+  menus.append([tuple((p,w)for p,w in enumerate(v)if w)for v in kept])
+ ck('all_literal_selectors_count',raw_count==559)
+ return menus
+MENUS={(s,i,j):reduced_selectors(family,i,j)for s,family in enumerate(FAMILIES)for i,j in CASES}
+records=[];minimum=None;readings=0
+for fixed in range(10):
+ rest=[e for e in range(10)if e!=fixed];singleton=1<<fixed
+ for short_mask in range(512):
+  mask=sum(1<<e for k,e in enumerate(rest)if short_mask>>k&1);complement=1023^mask^singleton
+  s=SELECTION[fixed][short_mask];family=FAMILIES[s];den=675*family['denominator']*DH*DC
+  V=[[responses[0,T,singleton],responses[1,T,singleton],responses[0,T,0],responses[1,T,0],responses[1,T,mask],responses[2,T,mask],responses[2,T,complement],responses[3,T,complement]]for T in range(32)]
+  corners=[]
+  for i,j in CASES:
+   menus=MENUS[s,i,j];screens=[]
+   for mode,ss in enumerate(menus):
+    for T in range(32):
+     value=max(sum(V[T][p]*w for p,w in sel)for sel in ss);screens.append(value);readings+=1
+   gate=F(GI*screens[0]-sum(c*z for c,z in zip(CI,screens)),den)
+   ck('complete_branch_corner_gate',gate>F(197,100000))
+   row=dict(weak3=i,weak5=j,gate=str(gate));corners.append(row)
+   if minimum is None or gate<F(minimum['gate']):minimum=dict(fixed_edge_index=fixed,binary_mask=short_mask,family=s,**row)
+  records.append(dict(fixed_edge_index=fixed,binary_mask=short_mask,family=s,corner_gates=corners))
+ck('all5120_layouts',len(records)==5120 and readings==5120*16*512)
+gate=F(minimum['gate']);alpha=F(network['projection_alpha']);policies=[]
+for policy in network['policies']:
+ fee=F(network['finite_fee_upper'])+F(network['complete_five_parent_tail'])+F(network['ordinary_typeI_fee'])+F(policy['fee'])
+ margin=alpha*(gate-fee);ck('complete_network_density',margin>F(1,490000))
+ policies.append(dict(kind=policy['kind'],K=policy['K'],complete_fee=str(fee),projected_margin=str(margin),density_denominator=490000))
+out=dict(schema='one-regular-leaf-pair-library-cover-v1',status='PASS',new_lean_verification=False,source_sha256=PINS,producer_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),scope='One named9qs role in regularleaf0 transported to any regularleaf0/1/2; other nine independently leaf4/leaf5. Fixed low phases/nulls/square7roles/50incidences and ordinary/private interfaces remain.',edges=[list(e)for e in combinations(Q,2)],orbit_keys=KEYS,families=FAMILIES,selection=SELECTION,corner_representatives=CASES,layout_count=5120,transported_regular_leaf_layout_count=15360,represented_corner_count=95,computed_corner_count=16,complete_screen_count=readings,minimum=minimum,layout_records=records,policies=policies,checks=dict(checks),check_count=sum(checks.values()))
+output=args.output or Path(__file__).with_suffix('.json');output.write_text(json.dumps(out,indent=2)+'\n')
+print(json.dumps(dict(status='PASS',check_count=out['check_count'],minimum=minimum,policies=[dict(kind=p['kind'],projected=float(F(p['projected_margin'])))for p in policies]),indent=2))

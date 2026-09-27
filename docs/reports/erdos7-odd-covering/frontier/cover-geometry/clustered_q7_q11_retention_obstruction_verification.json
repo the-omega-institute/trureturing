@@ -1,0 +1,90 @@
+{
+  "schema": "clustered-q7-q11-retention-obstruction-verification-v1",
+  "status": "PASS",
+  "optimizer_used": false,
+  "new_lean_verification": false,
+  "candidate_sha256": "1511cbb74aedd06b8e6750ebf5dfde886ee653bb545df029cd93d7535baa98cf",
+  "verifier_sha256": "1e7b39eb621ca468011f054922654e5d3e2f046c4c471dd67bdce89ce24eb139",
+  "source_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "ae2f90ae8f3c109cf4354dbe74377f0b1597a6b81901e85c8419934504b9530e",
+    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4"
+  },
+  "active_field_columns": 3484,
+  "dual_nonzero_count": 2568,
+  "source_mass": "305684996597/646498195200",
+  "universal_upper": "1507661452610803341661/8686831052451071520000000000000",
+  "target": "193/100000",
+  "Dscaled_upper": "9664131752726713392755020642907/96458861236920019217947607040000000000000",
+  "frozen_dual_lifting_failure": {
+    "cell": [
+      4,
+      10
+    ],
+    "outside_roots": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "source": "200163067/9389389363200000",
+    "dual_debit": "1146693653467/191289600000000000000",
+    "positive_residual": "737374609602494947/48120620486400000000000000",
+    "scope": "Failure of these fixed query roots/multipliers outside the7/11-only field class; not a positive full query gate."
+  },
+  "checks": {
+    "same_base_fixture": 1,
+    "actual_n4_extension": 1,
+    "109_distinct_originals": 1,
+    "same_pair_root1": 40,
+    "root_pair_present": 10,
+    "other_queried_root9_free": 240,
+    "seven_category_partition": 80,
+    "eleven_category_partition": 80,
+    "other_factor_positive": 640,
+    "source640_pin": 1,
+    "complete_full_fees": 1,
+    "complete_literal_selectors": 1,
+    "exact_actual_source_mass_before_retention": 1,
+    "candidate_schema": 1,
+    "candidate_input_pin": 3,
+    "literal_central_capacity_parameters": 1,
+    "literal_eight_new_pure_originals": 1,
+    "higher_pure_capacity_identity": 1,
+    "actual_weak_capacity": 2,
+    "actual_weak_density_ratio": 2,
+    "joint_central_domination_factor": 1,
+    "deep_other11_dominated_by_firstroot": 1,
+    "free11_actual_unqueried_mass": 80,
+    "free11_actual_fixedroot_query": 80,
+    "positive_dual_denominator": 1,
+    "root2_joint_lift_field_actual": 5,
+    "literal_dual_selector": 2568,
+    "nonnegative_dual_numerator": 2568,
+    "unique_dual_address": 2568,
+    "every_exact_fee_budget": 512,
+    "exact_universal_upper": 1,
+    "target_not_paid": 1,
+    "joint_density_lift_exact": 1,
+    "joint_density_lift_below_target": 1,
+    "literal_field_dimensions": 1,
+    "frozen_dual_fails_pointwise_lifting": 1
+  },
+  "check_count": 9498,
+  "scope": "All fields depending on central coarsecell and the actual seven q7 / ten q11 classes, on this fixed109source and full512fee deep-sup interface. No arbitrary outside-field or covering conclusion.",
+  "central_density_lift": {
+    "actual_weak_capacities": [
+      "41/729",
+      "469/15625"
+    ],
+    "actual_weak_densities": [
+      "81/41",
+      "625/469"
+    ],
+    "joint_density_cap": "8/3",
+    "domination_factor": "153832/151875",
+    "lifted_upper": "1507661452610803341661/8576320051036237500000000000000",
+    "scope": "Arithmetic for the measurable coarsening and joint density domination theorem proved in Report682; fixed outside conditional law and query interface."
+  }
+}

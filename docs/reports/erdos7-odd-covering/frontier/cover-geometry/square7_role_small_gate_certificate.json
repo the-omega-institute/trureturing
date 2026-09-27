@@ -1,0 +1,167 @@
+{
+  "schema": "square7-small-exact-gate-v1",
+  "status": "PASS",
+  "new_lean_verification": false,
+  "source_sha256": {
+    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+    "binary_leaf_pair_library_certificate.json": "4f64080de7056488b7299992ce8da2b7615410e8ddccc597ade50b323bff470d"
+  },
+  "producer_sha256": "c2a853d091c6fe2cf20bc60d7793f8504005bb670a6c3a180c4d4cbf707c1b89",
+  "layout": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "rows": [
+    {
+      "name": "baseline",
+      "row": 1,
+      "column": 2,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "gate": "180928235776873868141017681/71627905078454841177600000000",
+          "gate_decimal": 0.002525946215775837
+        },
+        {
+          "family": 1,
+          "gate": "-4529317935755218359608189428057/1236334192519273473952972800000000",
+          "gate_decimal": -0.0036635061645636804
+        },
+        {
+          "family": 2,
+          "gate": "11968415713712921897609620235059/51053329596972351689116876800000000",
+          "gate_decimal": 0.00023442967986994314
+        },
+        {
+          "family": 3,
+          "gate": "23790219624433139362527592197749/36162775131188749113124454400000000",
+          "gate_decimal": 0.0006578648772979582
+        }
+      ]
+    },
+    {
+      "name": "column1",
+      "row": 1,
+      "column": 1,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "gate": "-8792883664970637499063324349/4966201418772868988313600000000",
+          "gate_decimal": -0.0017705451155751407
+        },
+        {
+          "family": 1,
+          "gate": "-2629670944366435129352205618277697/867906603148529978714986905600000000",
+          "gate_decimal": -0.003029900838208514
+        },
+        {
+          "family": 2,
+          "gate": "-28207901679337221607975838179801/123986657592647139816426700800000000",
+          "gate_decimal": -0.00022750755788589024
+        },
+        {
+          "family": 3,
+          "gate": "-3128436895478985480971494316863/6258941849628821961886924800000000",
+          "gate_decimal": -0.0004998347916692201
+        }
+      ]
+    },
+    {
+      "name": "row0_column1",
+      "row": 0,
+      "column": 1,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "gate": "-187830113444528972215881869/76013287022033709004800000000",
+          "gate_decimal": -0.0024710168551201226
+        },
+        {
+          "family": 1,
+          "gate": "-3607364137077477081168896561312009/867906603148529978714986905600000000",
+          "gate_decimal": -0.004156396695209988
+        },
+        {
+          "family": 2,
+          "gate": "-388923418195614525849913362826493/433953301574264989357493452800000000",
+          "gate_decimal": -0.000896233343045682
+        },
+        {
+          "family": 3,
+          "gate": "-135938282921146108875604283282693/108488325393566247339373363200000000",
+          "gate_decimal": -0.0012530222254606553
+        }
+      ]
+    },
+    {
+      "name": "uniform_unary",
+      "row": 1,
+      "column": 2,
+      "leaf": 5,
+      "uniform_unary": true,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "gate": "-5785265596566521864174295919/465581383009956467654400000000",
+          "gate_decimal": -0.01242589546679276
+        },
+        {
+          "family": 1,
+          "gate": "-2776038429969358683081730003166939/216976650787132494678746726400000000",
+          "gate_decimal": -0.012794180479321824
+        },
+        {
+          "family": 2,
+          "gate": "-3439739933924721777028360010790931/325464976180698742018120089600000000",
+          "gate_decimal": -0.010568694592855275
+        },
+        {
+          "family": 3,
+          "gate": "-536206281937061197987775833976903/50071534797030575695095398400000000",
+          "gate_decimal": -0.010708804595477673
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "source_pin": 2,
+    "field_orbits": 1,
+    "positive_response": 1280,
+    "all_literal_selectors": 16,
+    "literal_full_selector_maximum": 8192,
+    "baseline_family0_pays": 1,
+    "all_four_existing_fields_negative": 3
+  },
+  "check_count": 9495,
+  "scope": "One fixed weak corner suffices to rule out each of four supplied whole families in each changed configuration. No claim about the optimum over other fields, all sources or actual covering."
+}

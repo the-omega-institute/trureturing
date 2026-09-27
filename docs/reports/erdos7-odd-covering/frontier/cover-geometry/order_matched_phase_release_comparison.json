@@ -1,0 +1,87 @@
+{
+  "schema": "order-matched-phase-release-comparison-v1",
+  "status": "PASS",
+  "source_sha256": {
+    "all_square_star_phase_certificate.json": "53e8521c3f7efbb6d1d84ec18995ed254777d011574799d0de079d31c621577b",
+    "order_matched_owner_network_certificate.json": "9988d52c1c56a776e159295a8b98ed3b389e484a7946edb5b435aca8709adb4c",
+    "induced_square_pair_boundary_certificate.json": "1e48eef19d525c7071498d15b4ba25445c7b431f01633d081156fb39c40d772e"
+  },
+  "producer_sha256": "fa29d9654caa191ccdcf0c84d8f2547409d7e266626a5d8f658c58e70fae7c97",
+  "constants": {
+    "alpha": "2673/110656",
+    "all20_head_gate": "203129722400814193208791597/20692505911553620784640000000",
+    "all5_225_head_gate": "3650667248749677341466943/306555643134127715328000000"
+  },
+  "direct225_fees": {
+    "7": "85964226668567559143/63163937458954886400000",
+    "11": "98696012248642433/127603914058494720000",
+    "13": "721455743506377191/1148435226526452480000",
+    "17": "22663914228464951/49540343105062656000",
+    "19": "78793974948274573/195553985941036800000"
+  },
+  "released225_originals": [
+    1575,
+    2475,
+    2925,
+    3825,
+    4275
+  ],
+  "results": {
+    "3": {
+      "owner_fee_strict_upper": "8631/1000000",
+      "large_owner_tail": "19740202146111572828188083/495176015714152109959649689600",
+      "ordinary_fee": "1/65536",
+      "total_fee_strict_upper": "2688225112592218666394898846211/309485009821345068724781056000000",
+      "all20": {
+        "projected_margin": "14139629098284561357011327894223077923624675090991/517796074794888676662649689570265409612981207040000000",
+        "density_denominator": 36700,
+        "remaining_linear_incidence_count": 40,
+        "remaining_pair_incidence_count": 20
+      },
+      "all5_225": {
+        "projected_margin": "11942820744286569936482948478976731646322768641/153421059198485533825970278391189750996438876160000",
+        "density_denominator": 12900,
+        "remaining_linear_incidence_count": 35,
+        "remaining_pair_incidence_count": 40
+      }
+    },
+    "4": {
+      "owner_fee_strict_upper": "397/50000",
+      "large_owner_tail": "6580067382037190942729361/61897001964269013744956211200",
+      "ordinary_fee": "1/65536",
+      "total_fee_strict_upper": "62373342034363386140052609741/7737125245533626718119526400000",
+      "all20": {
+        "projected_margin": "2743939009142154673482700111324202982905740495717/64724509349361084582831211196283176201622650880000000",
+        "density_denominator": 23600,
+        "remaining_linear_incidence_count": 40,
+        "remaining_pair_incidence_count": 20
+      },
+      "all5_225": {
+        "projected_margin": "44554539802610971820815022326775014116630178739/479440809995267293206157119972467971863871488000000",
+        "density_denominator": 10800,
+        "remaining_linear_incidence_count": 35,
+        "remaining_pair_incidence_count": 40
+      }
+    }
+  },
+  "checks": {
+    "all5_originals_in_retained_inventory": 1,
+    "all5_unique_originals": 1,
+    "all5_exact_source_floors": 1,
+    "worst_single_direct_fee": 1,
+    "all5_gate": 1,
+    "all20_gate": 1,
+    "all20_original_identity": 1,
+    "all20_retained_pairs": 1,
+    "all15_square_stars_retained": 1,
+    "same_complete512": 1,
+    "certified_owner_budget": 2,
+    "correct_large_owner_tail": 2,
+    "same_large_owner_threshold": 2,
+    "positive_all20_complete_network": 2,
+    "positive_all5_complete_network": 2
+  },
+  "check_count": 20,
+  "scopes_are_alternatives": true,
+  "new_lean_verification": false
+}

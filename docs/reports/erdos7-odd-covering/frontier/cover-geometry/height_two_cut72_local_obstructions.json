@@ -1,0 +1,165 @@
+{
+  "scope": "Ordinary finite arithmetic/support controls, not Lean and not all cut72.",
+  "independent_profiles": [
+    {
+      "k": 0,
+      "Z": 36,
+      "budget_fitting_shape_quadruples": 316,
+      "shapes": [
+        "2222/12222/12222/12223",
+        "2222/12222/12222/22222",
+        "2223/12222/12222/12222"
+      ]
+    },
+    {
+      "k": 2,
+      "Z": 29,
+      "budget_fitting_shape_quadruples": 31174,
+      "shapes": [
+        "2222/02222/02222/11111",
+        "2222/02222/11111/11222",
+        "2222/11111/11222/11222"
+      ]
+    }
+  ],
+  "vector_checks": {
+    "exchange_vector_pairs": 833,
+    "k0_final_vectors": 5488,
+    "k0_survivors": 0,
+    "k2_tight_public_gap_vectors": 105,
+    "k2_exception_vector_tests": 22050,
+    "k2_exception_survivors": 105
+  },
+  "sharpness_controls": [
+    {
+      "scope": "Local selected tests only; not a global source counterexample.",
+      "side_with_only_two_double_children": "gap",
+      "gap_double_sets": [
+        [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "full_double_sets": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "full_singleton": [
+        [
+          2,
+          2
+        ]
+      ],
+      "all_required_local_tests": 3
+    },
+    {
+      "scope": "Local selected tests only; not a global source counterexample.",
+      "side_with_only_two_double_children": "full",
+      "gap_double_sets": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "full_double_sets": [
+        [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "full_singleton": [
+        [
+          2,
+          2
+        ]
+      ],
+      "all_required_local_tests": 3
+    }
+  ]
+}

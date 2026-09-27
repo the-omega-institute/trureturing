@@ -1,0 +1,536 @@
+{
+  "schema": "capped-root-three-child-forward-kernels-v1",
+  "sources": {
+    "staged_two_parent_attachment.json": {
+      "sha256": "2312048ed43413f9a64e37ddd94faa9958e78b67bc5f8fbee4fc4605d3fb933c",
+      "producer_sha256": "7e8ab9bd5071e6434928083864a362c5634b18345caf38228f9b05af5f179186"
+    },
+    "shared_head_pair_forward_kernels.json": {
+      "sha256": "cdae854425989c4ad1713abe61ccd5c8cabea89f09a7ca4cc19e4dfb7827d524",
+      "producer_sha256": "420a5c17f4236672e829980d0d787610ca57ac8df27e1a3b874a923a40dc7b92"
+    }
+  },
+  "scope": {
+    "head": "Report598 restriction",
+    "special_owners": "First four network entries q0<q1<q2<q3, bounded below by37,41,43,47",
+    "root": "q0 fixed parents first two head coordinates; N15,delta1/5 capped selected-complement row",
+    "children": "q1,q2,q3 fixed triple of those same two head parents and q0; N20,delta1/2",
+    "other_owners": "All Report614 fixed two-parent owners and global crossings, numerically after q3",
+    "ordinary": "All existing private ordinary domains, Type I head branches and separate components",
+    "source": "One normalized-row construction over the same actual head submeasure",
+    "heights": "Arbitrary finite",
+    "phases": "Arbitrary globally fixed per distinct numerical original modulus",
+    "excluded": "Other three-parent inventories, unrestricted head labels, undeclared ordinary-interior crossings",
+    "lean_verified": false
+  },
+  "constants": {
+    "head_gate": "26345885990886052732242307711/9055182074115772514304000000000",
+    "alpha": "2673/138320",
+    "single_head_cap": 2,
+    "head_pair_cap": 4,
+    "root_cap": "45/19"
+  },
+  "root_moment": {
+    "primes": [
+      3,
+      5
+    ],
+    "caps": [
+      "2",
+      "5/3"
+    ],
+    "selected_nonunit_count": 15,
+    "literal_prefix": [
+      [
+        1,
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        3,
+        [
+          1,
+          0
+        ]
+      ],
+      [
+        5,
+        [
+          0,
+          1
+        ]
+      ],
+      [
+        9,
+        [
+          2,
+          0
+        ]
+      ],
+      [
+        15,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        25,
+        [
+          0,
+          2
+        ]
+      ],
+      [
+        27,
+        [
+          3,
+          0
+        ]
+      ],
+      [
+        45,
+        [
+          2,
+          1
+        ]
+      ],
+      [
+        75,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        81,
+        [
+          4,
+          0
+        ]
+      ],
+      [
+        125,
+        [
+          0,
+          3
+        ]
+      ],
+      [
+        135,
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        225,
+        [
+          2,
+          2
+        ]
+      ],
+      [
+        243,
+        [
+          5,
+          0
+        ]
+      ],
+      [
+        375,
+        [
+          1,
+          3
+        ]
+      ],
+      [
+        405,
+        [
+          4,
+          1
+        ]
+      ]
+    ],
+    "complete_moment": "295/24",
+    "unselected_moment": "1043/9720",
+    "tails": [
+      "61/8",
+      "353/72",
+      "241/72",
+      "173/72",
+      "347/216",
+      "461/360",
+      "3121/3240",
+      "2237/3240",
+      "341/648",
+      "4079/9720",
+      "5737/16200",
+      "12767/48600",
+      "223/1080",
+      "24917/145800",
+      "20113/145800",
+      "1043/9720"
+    ]
+  },
+  "root": {
+    "reference_owner": 37,
+    "selected_nonunit_count": 15,
+    "D": 19,
+    "threshold": "1/5",
+    "conditional_Haar_cap": "45/19",
+    "violation_fee": "5215/11228544"
+  },
+  "child_moment": {
+    "primes": [
+      3,
+      5,
+      37
+    ],
+    "caps": [
+      "2",
+      "5/3",
+      "45/19"
+    ],
+    "selected_nonunit_count": 20,
+    "literal_prefix": [
+      [
+        1,
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        3,
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      [
+        5,
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        9,
+        [
+          2,
+          0,
+          0
+        ]
+      ],
+      [
+        15,
+        [
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        25,
+        [
+          0,
+          2,
+          0
+        ]
+      ],
+      [
+        27,
+        [
+          3,
+          0,
+          0
+        ]
+      ],
+      [
+        37,
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      [
+        45,
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      [
+        75,
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      [
+        81,
+        [
+          4,
+          0,
+          0
+        ]
+      ],
+      [
+        111,
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      [
+        125,
+        [
+          0,
+          3,
+          0
+        ]
+      ],
+      [
+        135,
+        [
+          3,
+          1,
+          0
+        ]
+      ],
+      [
+        185,
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      [
+        225,
+        [
+          2,
+          2,
+          0
+        ]
+      ],
+      [
+        243,
+        [
+          5,
+          0,
+          0
+        ]
+      ],
+      [
+        333,
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      [
+        375,
+        [
+          1,
+          3,
+          0
+        ]
+      ],
+      [
+        405,
+        [
+          4,
+          1,
+          0
+        ]
+      ],
+      [
+        555,
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    ],
+    "complete_moment": "484685/32832",
+    "unselected_moment": "1248323/4432320",
+    "tails": [
+      "319229/32832",
+      "219653/32832",
+      "162101/32832",
+      "4679/1216",
+      "94789/32832",
+      "137027/54720",
+      "55073/25920",
+      "32510639/18221760",
+      "26313223/18221760",
+      "4511827/3644352",
+      "60639941/54665280",
+      "49959821/54665280",
+      "228593969/273326400",
+      "65445971/91108800",
+      "55203491/91108800",
+      "29148061/54665280",
+      "401882603/819979200",
+      "345542243/819979200",
+      "103815049/273326400",
+      "55756823/163995840",
+      "1248323/4432320"
+    ]
+  },
+  "children": [
+    {
+      "reference_owner": 41,
+      "selected_nonunit_count": 20,
+      "D": 18,
+      "threshold": "1/2",
+      "conditional_Haar_cap": "40/9",
+      "violation_fee": "1248323/1436071680"
+    },
+    {
+      "reference_owner": 43,
+      "selected_nonunit_count": 20,
+      "D": 20,
+      "threshold": "1/2",
+      "conditional_Haar_cap": "21/5",
+      "violation_fee": "1248323/1772928000"
+    },
+    {
+      "reference_owner": 47,
+      "selected_nonunit_count": 20,
+      "D": 24,
+      "threshold": "1/2",
+      "conditional_Haar_cap": "23/6",
+      "violation_fee": "1248323/2553016320"
+    }
+  ],
+  "reclaimed": [
+    {
+      "reference_prime": 37,
+      "terms": {
+        "3_5": "52769/98415000",
+        "3_23": "1915241/118544115195"
+      },
+      "total": "65477242877/118544115195000"
+    },
+    {
+      "reference_prime": 41,
+      "terms": {
+        "3_5": "84611/295245000",
+        "3_23": "45113425/6543635158764",
+        "two_parent": "12062881/3104182310400"
+      },
+      "total": "213105121932129209/716658922587833280000"
+    },
+    {
+      "reference_prime": 43,
+      "terms": {
+        "3_5": "84611/393660000",
+        "3_23": "37318957/8179543948455",
+        "two_parent": "34357/15101427456"
+      },
+      "total": "6443299198943711/29053740104912160000"
+    },
+    {
+      "reference_prime": 47,
+      "terms": {
+        "3_5": "705901/5904900000",
+        "3_23": "48302071/24538631845365",
+        "two_parent": "4808785/4640752554048"
+      },
+      "total": "2140764694480054363/17468561238078436200000"
+    }
+  ],
+  "budget": {
+    "early_roots": "274654697659954069474997263035611701314387151251701720257/715166192625059001701426870634865611791610717773437500000000",
+    "late_roots": "54426057553318457986801992582544048015458530301726134473298068481222195/7080199779813445395721259447453481718911518838845658710279160023571723048312",
+    "two_parent": "613684422166251681482721155530168851404989773655093920717280324749732284170629787416989326442864567046334632938626748595021493648800375753096421085192618449863193/159002383711606464652017707004234602934701608942793334218733629689315942720590165897066931117184530062376393343225331464788749305195048769250185166031312713456459776000",
+    "ordinary_base": "1/131072",
+    "old_raw": "210296915158675627076773812805785523258760666499964554049123657566368842535214408901511528094274794520879214184351292126924865704544211479220096273477612958137800710048267098387102612480867692435925895324904928226503395963634107/133470037363548360329408663154559830739490596323360338892936046021126003129994181746722458195599426167114040184102096856538089705469386202916511181006931321173263495052114623453149400850093413660193367187500000000000000000000000000",
+    "reclaimed": "166863257555290507129/139748489904627489600000",
+    "new_star": "27577492013/10914144768000",
+    "raw": "615903285120764543852084318774385805804662484958391459837715013582818876958838044199080947200069547974239638683925361280053903460374880985044196545710645144512270412797994044722137594898786863608271611724341097241064523309048033/2535930709907418846258764599936636784050321330143846438965784874401394059469889453187726705716389097175166763497939840274223704403918337855413712439131695102292006405990177845609838616151774859543673976562500000000000000000000000000",
+    "simple_raw": "5260468727593499468839527169104406487/21970721833381086083805638688768000000000"
+  },
+  "consequence": {
+    "exact_extendible_head_lower": "615903285120764543852084318774385805804662484958391459837715013582818876958838044199080947200069547974239638683925361280053903460374880985044196545710645144512270412797994044722137594898786863608271611724341097241064523309048033/131227061651475561097834762238397156741429272871491522423399687178152198393518559358371252500819655787979448831662940032446922107426107180007790761160006010680520136953446090387112935797274036128724648125000000000000000000000000000000",
+    "simple_extendible_head_lower": "5260468727593499468839527169104406487/1136921153757303339735127550853120000000000",
+    "strictly_greater_than": "1/220000",
+    "full_density_lower": "1/(220000 Q_off)"
+  },
+  "checks": {
+    "staged_two_parent_attachment.json_checks": true,
+    "staged_two_parent_attachment.json_producer": true,
+    "shared_head_pair_forward_kernels.json_checks": true,
+    "shared_head_pair_forward_kernels.json_producer": true,
+    "shared_staged_input": true,
+    "head_constants": true,
+    "root_literal_prefix": true,
+    "root_complement_0": true,
+    "root_complement_1": true,
+    "root_complement_2": true,
+    "root_complement_3": true,
+    "root_complement_4": true,
+    "root_complement_5": true,
+    "root_complement_6": true,
+    "root_complement_7": true,
+    "root_complement_8": true,
+    "root_complement_9": true,
+    "root_complement_10": true,
+    "root_complement_11": true,
+    "root_complement_12": true,
+    "root_complement_13": true,
+    "root_complement_14": true,
+    "root_complement_15": true,
+    "root_moment_and_fee": true,
+    "root_preserves_old_prefix_interface": true,
+    "root_monotone_cap_identity": true,
+    "children_literal_prefix": true,
+    "children_complement_0": true,
+    "children_complement_1": true,
+    "children_complement_2": true,
+    "children_complement_3": true,
+    "children_complement_4": true,
+    "children_complement_5": true,
+    "children_complement_6": true,
+    "children_complement_7": true,
+    "children_complement_8": true,
+    "children_complement_9": true,
+    "children_complement_10": true,
+    "children_complement_11": true,
+    "children_complement_12": true,
+    "children_complement_13": true,
+    "children_complement_14": true,
+    "children_complement_15": true,
+    "children_complement_16": true,
+    "children_complement_17": true,
+    "children_complement_18": true,
+    "children_complement_19": true,
+    "children_complement_20": true,
+    "child_moment": true,
+    "child_41_normalized_cap": true,
+    "child_43_normalized_cap": true,
+    "child_47_normalized_cap": true,
+    "later_children_cap_monotone": true,
+    "whole_prime_budgets": true,
+    "single_head_ordinary_fee": true,
+    "reclaimed_rows": true,
+    "one_joint_star_fee": true,
+    "strict_positive_raw_reserve": true,
+    "head_projection": true
+  },
+  "producer_sha256": "670e1932441d0e54dbeafafe32e024373d3898f3d1ca06ac4400d69c7d7b772c"
+}

@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "input": {
+    "path": "all_height_coherent_query_weights.json",
+    "sha256": "37cbaefa1f745f865b62aa4735e05bcdb923508fcd727c6b31b4c61a7d119f2a",
+    "bytes": 212071
+  },
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "coarse_height": 19,
+  "maximum_query_height": 21,
+  "rational_weight_rows": 9190,
+  "base_label_count": 8857,
+  "fine_numerical_label_count": 8987,
+  "saturated_label_budgets": 8475,
+  "combined_monotone_terms": 1102,
+  "minimal_heavy_profile_count": 644,
+  "minimum_payoff": "518208786071716091117232249582461032144788982430014637/23426987120022440188673034618298581948465087890625000",
+  "retained_payoff_lower_bound": "221/10",
+  "attaining_minimal_profiles": [
+    [
+      0,
+      1,
+      0,
+      1,
+      1,
+      2,
+      0
+    ]
+  ],
+  "unit_resource": "1",
+  "payoff_at_least_one_everywhere": true,
+  "source_nonunit_query_cap": "70871/3375",
+  "source_density_cap": "6075000000000/7235955529",
+  "source_mass_outside_coherent_heavy_region": "683/142425",
+  "max_active_old_cofactors_outside_heavy_region": 19,
+  "new_primes": [
+    23,
+    29
+  ],
+  "minimum_new_coordinate_survivor_Haar_mass": "1/77",
+  "full_original_survivor_Haar_lower_bound": "449287056937/6056623125000000000",
+  "verification": "Exact rational prefix budgets and all minimal heavy profiles; no CRT-period enumeration or optimization runtime.",
+  "scope": "The original family is finite, its numerical moduli are pairwise distinct and greater than one, and all their prime supports lie in the first nine odd primes. Every class touching 23 or 29 has one common old-coordinate centre; old cofactor heights and all other original phases and heights are arbitrary. No independent-old-phase conclusion."
+}

@@ -19,6 +19,10 @@ https://arxiv.org/abs/1901.11465, submitted 31 January 2019. The arXiv metadata,
 checked 16 September 2026, links the published article at
 https://doi.org/10.2140/ant.2021.15.609.
 
+Theorem1.2 gives the geometric form: a cover of the product of the first n odd-prime coordinate sets by proper axis-parallel hyperplanes contains two hyperplanes with the same fixed-coordinate support. Footnote2 identifies exclusion of the empty support with exclusion of the modulus-one progression. Restricting larger distinct odd-prime coordinate sets to these sizes preserves nonempty intersections and fixed supports, so the same nonparallel-cover exclusion applies to any finite set of distinct odd primes. The inspected text was rechecked on27 September2026 for this use.
+
+The [original-label top-shadow deduction](lettlsun2008cosets.md#global-top-shadows-and-original-top-shell-pair-capacities) freezes all lower prime-power digits before applying this squarefree theorem at actual private sources. It obtains same-source lower-shadow collision and top-shell pair-capacity constraints. The numerical capacities use uniform probability on the original period; their unrestricted inventory bound and the transport to a separately chosen supported head law remain unproved.
+
 Section 5 of the arXiv source, read 16 September 2026, defines
 `f21 = c21(3) / mu21`; Corollary 5.2 gives the `138.877` threshold. Its surviving-mass
 denominator cannot be discarded. Transferring the argument to an arbitrary

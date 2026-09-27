@@ -1,0 +1,279 @@
+{
+  "schema": "square7-small-exact-gate-independent-v1",
+  "status": "PASS",
+  "new_lean_verification": false,
+  "read_same_round_producer": false,
+  "source_sha256": {
+    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+    "joint_square_pair_225_star_certificate.json": "cbdc3903174d5640ea6518160abaaa9ac567424f9f8afc717128e1202f378be5",
+    "binary_leaf_pair_library_certificate.json": "4f64080de7056488b7299992ce8da2b7615410e8ddccc597ade50b323bff470d"
+  },
+  "witness_sha256": "04bf26c1291dc97d2a09c33134cff570ed6c5f81d82c4f89c56199fabc0742b2",
+  "verifier_sha256": "fb015fa71054e29b65da67572d39ae3dd45f13d5247c128ae0b89642ca9d74f1",
+  "method": "Exact Fraction matching deletion-contraction, integer denominator clearing, all559 literal selectors in all512 screens, complete95-corner priorities for each whole field.",
+  "layout": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "rows": [
+    {
+      "name": "baseline",
+      "row": 1,
+      "column": 2,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "source": "24963364098039109/62033988360960000",
+          "complete512_fee": "56975775426197484894087266563/143255810156909682355200000000",
+          "gate": "180928235776873868141017681/71627905078454841177600000000",
+          "gate_decimal": 0.002525946215775837,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "9eeddb34c096d4b6a7d320f55151754e9260f97387801e50113092e163a6ec43"
+        },
+        {
+          "family": 1,
+          "source": "22760253166588413990233/68065647040187596800000",
+          "complete512_fee": "1247148147646743503213180225409611/3709002577557820421858918400000000",
+          "gate": "-4529317935755218359608189428057/1236334192519273473952972800000000",
+          "gate_decimal": -0.0036635061645636804,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "dd9f98b90ec401d5bdff9320c1e2d7bfde9b2bafdd04174cd5f7884caaac9368"
+        },
+        {
+          "family": 2,
+          "source": "215028938904524802659683/598977693953650851840000",
+          "complete512_fee": "309690670648041074008850363455883197/867906603148529978714986905600000000",
+          "gate": "11968415713712921897609620235059/51053329596972351689116876800000000",
+          "gate_decimal": 0.00023442967986994314,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "10b214008e970dbcf90ea563f85d99e29f807426da946c5a11f2e1819f9f2a88"
+        },
+        {
+          "family": 3,
+          "source": "7298417113857673570927/20725871763102105600000",
+          "complete512_fee": "12641983491431764904276060769257281/36162775131188749113124454400000000",
+          "gate": "23790219624433139362527592197749/36162775131188749113124454400000000",
+          "gate_decimal": 0.0006578648772979582,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "8b2825a8f15b3705c4129ac2588e1b7952939bd38dc8ccdcd588ef839473b735"
+        }
+      ],
+      "max_family_mincorner_upper": "180928235776873868141017681/71627905078454841177600000000",
+      "max_family_mincorner_upper_decimal": 0.002525946215775837
+    },
+    {
+      "name": "column1",
+      "row": 1,
+      "column": 1,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "source": "2514341864600604023/6231596103532800000",
+          "complete512_fee": "2001775264920594937432088746709/4966201418772868988313600000000",
+          "gate": "-8792883664970637499063324349/4966201418772868988313600000000",
+          "gate_decimal": -0.0017705451155751407,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "1a4e3534c8e72e1d38836be463fe7405f5a384c247a83f8ba08b00d3152495f3"
+        },
+        {
+          "family": 1,
+          "source": "125367134031200945588447/374361058721031782400000",
+          "complete512_fee": "291711053905220572294860098843930177/867906603148529978714986905600000000",
+          "gate": "-2629670944366435129352205618277697/867906603148529978714986905600000000",
+          "gate_decimal": -0.003029900838208514,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "2721fb58baab58a3c96c1f9c523e080da2d5110d948a738344c5ea1e2b739ec1"
+        },
+        {
+          "family": 2,
+          "source": "82743089010039682461959/230376036136019558400000",
+          "complete512_fee": "310240163297117566326478781168954767/867906603148529978714986905600000000",
+          "gate": "-28207901679337221607975838179801/123986657592647139816426700800000000",
+          "gate_decimal": -0.00022750755788589024,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "aef2f488b58c1cb0fe1e55608d316a1bb653b50267171f0893b0009153414ab9"
+        },
+        {
+          "family": 3,
+          "source": "27408147339115798053563/77789310903071539200000",
+          "complete512_fee": "4393025901526824771894770274672941/12517883699257643923773849600000000",
+          "gate": "-3128436895478985480971494316863/6258941849628821961886924800000000",
+          "gate_decimal": -0.0004998347916692201,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "ecc663689afaf9dee8db8ac7d139b32ef1c52e08bf7d4a9b26290c9e5b9d5928"
+        }
+      ],
+      "max_family_mincorner_upper": "-28207901679337221607975838179801/123986657592647139816426700800000000",
+      "max_family_mincorner_upper_decimal": -0.00022750755788589024
+    },
+    {
+      "name": "row0_column1",
+      "row": 0,
+      "column": 1,
+      "leaf": 5,
+      "uniform_unary": false,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "source": "5498263872915653423/13709511427772160000",
+          "complete512_fee": "1494945311529210738605161471931/3724651064079651741235200000000",
+          "gate": "-187830113444528972215881869/76013287022033709004800000000",
+          "gate_decimal": -0.0024710168551201226,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "6e642dfce03e39d60d1422b5407e4150aa51174bbd00f01d53b11640e608a6bf"
+        },
+        {
+          "family": 1,
+          "source": "124717190695651799002403/374361058721031782400000",
+          "complete512_fee": "291190056713576355636684702833323529/867906603148529978714986905600000000",
+          "gate": "-3607364137077477081168896561312009/867906603148529978714986905600000000",
+          "gate_decimal": -0.004156396695209988,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "22fb9d052888f725870440b4834c7aefb92d744eb7b2914f9bbf15b24c3485b2"
+        },
+        {
+          "family": 2,
+          "source": "152705966252876627394443/427841209966893465600000",
+          "complete512_fee": "154442039972242002417765078731698733/433953301574264989357493452800000000",
+          "gate": "-388923418195614525849913362826493/433953301574264989357493452800000000",
+          "gate_decimal": -0.000896233343045682,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "648d723c4f34e4fd5d48d32b5dfcc95180b123a23263be8c067461dbab620283"
+        },
+        {
+          "family": 3,
+          "source": "2097692517587111830730713/5989776939536508518400000",
+          "complete512_fee": "37925189397808043042869597149192083/108488325393566247339373363200000000",
+          "gate": "-135938282921146108875604283282693/108488325393566247339373363200000000",
+          "gate_decimal": -0.0012530222254606553,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "c399a25a73da00f8dcc7808d2fd2d7ac48d1d5cf1d355f1e6bdcfeca0ed6d75d"
+        }
+      ],
+      "max_family_mincorner_upper": "-388923418195614525849913362826493/433953301574264989357493452800000000",
+      "max_family_mincorner_upper_decimal": -0.000896233343045682
+    },
+    {
+      "name": "uniform_unary",
+      "row": 1,
+      "column": 2,
+      "leaf": 5,
+      "uniform_unary": true,
+      "weak_corner": [
+        4,
+        15
+      ],
+      "family_gates": [
+        {
+          "family": 0,
+          "source": "3653816954578409959/9792508162694400000",
+          "complete512_fee": "714275513837604534217758302761/1862325532039825870617600000000",
+          "gate": "-5785265596566521864174295919/465581383009956467654400000000",
+          "gate_decimal": -0.01242589546679276,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "1f88ad94bc9462089c1a44b43b6a01bc68a8c76347c807b87797d61e5e44a878"
+        },
+        {
+          "family": 1,
+          "source": "232064315831808421200793/748722117442063564800000",
+          "complete512_fee": "47617945259950387911422311407133/148309399034266913656012800000000",
+          "gate": "-2776038429969358683081730003166939/216976650787132494678746726400000000",
+          "gate_decimal": -0.012794180479321824,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "3bd70b83b5edd1d34e974fc076752aff7a2ad499ac6c551b8bb35378b258acf1"
+        },
+        {
+          "family": 2,
+          "source": "995646867130720343891201/2994888469768254259200000",
+          "complete512_fee": "6532780849634765747729965500380183/19144998598864631883418828800000000",
+          "gate": "-3439739933924721777028360010790931/325464976180698742018120089600000000",
+          "gate_decimal": -0.010568694592855275,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "5f81b91a98fb3cfed9212957971085644baa2aa31fcd4ba93855dcdaf21782a2"
+        },
+        {
+          "family": 3,
+          "source": "279102715790456355933037/855682419933786931200000",
+          "complete512_fee": "883175594476225641819183574331297/2635343936685819773426073600000000",
+          "gate": "-536206281937061197987775833976903/50071534797030575695095398400000000",
+          "gate_decimal": -0.010708804595477673,
+          "literal_selector_count": 559,
+          "screen_count": 512,
+          "screen_sha256": "d6a2761e2cd72fb4149812849ef1b3461c287bacd5f1e9150a6fa9f997c068ab"
+        }
+      ],
+      "max_family_mincorner_upper": "-3439739933924721777028360010790931/325464976180698742018120089600000000",
+      "max_family_mincorner_upper_decimal": -0.010568694592855275
+    }
+  ],
+  "checks": {
+    "canonical_source_pin": 3,
+    "source_and_network_same_g": 1,
+    "source_and_network_same_projection": 1,
+    "same_outside_head_masses": 1,
+    "all512_nonnegative_fees": 1,
+    "labelled_all_leaf5_layout": 1,
+    "all_exact_responses_positive": 256,
+    "deleted7_removes_role_dependence": 128,
+    "uniform7_value": 1,
+    "exact_response_denominator_clear": 256,
+    "full_field_orbit_inventory": 1,
+    "four_whole_families": 1,
+    "field_shape": 4,
+    "field_box": 720,
+    "complete95_ternary_priority": 36100,
+    "complete95_quinary_priority": 36100,
+    "all_literal559_selectors": 1,
+    "full_source_mass": 1,
+    "witness_roles_and_corner": 4,
+    "literal_selector_mass_bound": 8944,
+    "no_selector_pruning": 16,
+    "full_literal_maximum": 8192,
+    "all512_screens_paid": 16,
+    "candidate_exact_gate_equality": 16,
+    "baseline_family0_strictly_pays": 1,
+    "each_existing_family_bad_corner": 12,
+    "max_family_mincorner_strict_negative_upper": 3
+  },
+  "check_count": 90781,
+  "scope": "At one common corner each of four supplied whole families fails in each of three changed configurations. The maximum of these four corner values is an upper bound on max_family min_corner. Does not bound optimal other fields, actual survivor mass, unrestricted square7 roles, or odd covering. Negative gates are certificate failures, not source impossibility."
+}

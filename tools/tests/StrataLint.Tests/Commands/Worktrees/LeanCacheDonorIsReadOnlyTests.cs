@@ -30,6 +30,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "main repository cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "read-only-donor");
         var runner = new RecordingWorktreeProcessRunner();
 

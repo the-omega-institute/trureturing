@@ -1,0 +1,3209 @@
+{
+  "all_height_averaged_supremum": "3/10",
+  "all_height_original_supremum": "1/14",
+  "average_on_prefix": "3/10",
+  "check_count": 805,
+  "deeper_height_justification": "Reference and both fields have constant Haar density on depth-three cylinders; numerator and cap scale identically below depth three.",
+  "new_lean_verification": false,
+  "prefix_mass": "2/343",
+  "program_sha256": "5605f6e3c6f1258b0ee29c21eedaa2eec35189c39aba2bea66dacdd0f331bc9b",
+  "q": 7,
+  "queries": [
+    {
+      "averaged": "18/1715",
+      "cap": "1/6",
+      "height": 1,
+      "original": "18/1715",
+      "phase": 0,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 1,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 2,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 3,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 4,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 5,
+      "reference_mass": "1/6"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/6",
+      "height": 1,
+      "original": "0",
+      "phase": 6,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/49",
+      "cap": "1/35",
+      "height": 2,
+      "original": "3/49",
+      "phase": 0,
+      "reference_mass": "2/343"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 1,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 2,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 3,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 4,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 5,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 6,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 7,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 8,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 9,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 10,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 11,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 12,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 13,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 14,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 15,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 16,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 17,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 18,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 19,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 20,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 21,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 22,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 23,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 24,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 25,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 26,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 27,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 28,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 29,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 30,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 31,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 32,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 33,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 34,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 35,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 36,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 37,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 38,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 39,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 40,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 41,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 42,
+      "reference_mass": "331/12348"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 43,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 44,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 45,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 46,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 47,
+      "reference_mass": "1/42"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/35",
+      "height": 2,
+      "original": "0",
+      "phase": 48,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/10",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 0,
+      "reference_mass": "1/245"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 1,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 2,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 3,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 4,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 5,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 6,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 7,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 8,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 9,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 10,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 11,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 12,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 13,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 14,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 15,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 16,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 17,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 18,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 19,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 20,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 21,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 22,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 23,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 24,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 25,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 26,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 27,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 28,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 29,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 30,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 31,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 32,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 33,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 34,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 35,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 36,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 37,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 38,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 39,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 40,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 41,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 42,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 43,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 44,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 45,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 46,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 47,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 48,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 49,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 50,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 51,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 52,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 53,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 54,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 55,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 56,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 57,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 58,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 59,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 60,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 61,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 62,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 63,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 64,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 65,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 66,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 67,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 68,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 69,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 70,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 71,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 72,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 73,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 74,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 75,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 76,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 77,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 78,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 79,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 80,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 81,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 82,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 83,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 84,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 85,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 86,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 87,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 88,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 89,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 90,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 91,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 92,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 93,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 94,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 95,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 96,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 97,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 98,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 99,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 100,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 101,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 102,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 103,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 104,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 105,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 106,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 107,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 108,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 109,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 110,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 111,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 112,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 113,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 114,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 115,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 116,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 117,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 118,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 119,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 120,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 121,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 122,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 123,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 124,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 125,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 126,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 127,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 128,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 129,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 130,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 131,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 132,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 133,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 134,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 135,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 136,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 137,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 138,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 139,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 140,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 141,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 142,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 143,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 144,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 145,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 146,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 147,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 148,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 149,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 150,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 151,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 152,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 153,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 154,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 155,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 156,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 157,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 158,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 159,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 160,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 161,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 162,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 163,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 164,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 165,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 166,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 167,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 168,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 169,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 170,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 171,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 172,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 173,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 174,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 175,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 176,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 177,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 178,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 179,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 180,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 181,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 182,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 183,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 184,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 185,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 186,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 187,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 188,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 189,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 190,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 191,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 192,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 193,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 194,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 195,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 196,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 197,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 198,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 199,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 200,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 201,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 202,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 203,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 204,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 205,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 206,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 207,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 208,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 209,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 210,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 211,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 212,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 213,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 214,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 215,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 216,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 217,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 218,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 219,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 220,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 221,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 222,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 223,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 224,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 225,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 226,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 227,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 228,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 229,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 230,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 231,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 232,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 233,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 234,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 235,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 236,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 237,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 238,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 239,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 240,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 241,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 242,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 243,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 244,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 245,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 246,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 247,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 248,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 249,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 250,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 251,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 252,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 253,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 254,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 255,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 256,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 257,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 258,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 259,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 260,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 261,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 262,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 263,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 264,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 265,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 266,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 267,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 268,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 269,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 270,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 271,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 272,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 273,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 274,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 275,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 276,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 277,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 278,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 279,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 280,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 281,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 282,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 283,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 284,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 285,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 286,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 287,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 288,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 289,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 290,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 291,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 292,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 293,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "3/140",
+      "cap": "1/245",
+      "height": 3,
+      "original": "1/14",
+      "phase": 294,
+      "reference_mass": "1/3430"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 295,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 296,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 297,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 298,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 299,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 300,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 301,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 302,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 303,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 304,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 305,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 306,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 307,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 308,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 309,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 310,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 311,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 312,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 313,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 314,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 315,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 316,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 317,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 318,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 319,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 320,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 321,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 322,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 323,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 324,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 325,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 326,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 327,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 328,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 329,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 330,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 331,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 332,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 333,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 334,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 335,
+      "reference_mass": "0"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 336,
+      "reference_mass": "331/86436"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 337,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 338,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 339,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 340,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 341,
+      "reference_mass": "1/294"
+    },
+    {
+      "averaged": "0",
+      "cap": "1/245",
+      "height": 3,
+      "original": "0",
+      "phase": 342,
+      "reference_mass": "0"
+    }
+  ],
+  "reference": "root-balanced but nonuniform surviving-root Haar density",
+  "schema": "prefix-averaging-capped-reference-counterexample-v1",
+  "source_mass": "3/1715",
+  "status": "PASS"
+}

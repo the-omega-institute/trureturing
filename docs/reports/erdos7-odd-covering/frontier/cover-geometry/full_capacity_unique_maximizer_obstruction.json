@@ -1,0 +1,378 @@
+{
+  "schema": "full-capacity-unique-maximizer-obstruction-v1",
+  "inventory": {
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "height": 64,
+    "period": "4849845^64",
+    "occupied_label_count": 4902227890624,
+    "rule": "Every nonunit divisor of the period is occupied; phase 0 except for the listed exceptional labels.",
+    "exceptional": [
+      {
+        "label": 135,
+        "phase": 2
+      },
+      {
+        "label": 405,
+        "phase": 8
+      },
+      {
+        "label": 1215,
+        "phase": 14
+      },
+      {
+        "label": 3645,
+        "phase": 4
+      },
+      {
+        "label": 10935,
+        "phase": 7
+      },
+      {
+        "label": 32805,
+        "phase": 13
+      },
+      {
+        "label": 98415,
+        "phase": 11
+      },
+      {
+        "label": 295245,
+        "phase": 16
+      },
+      {
+        "label": 885735,
+        "phase": 17
+      },
+      {
+        "label": 2657205,
+        "phase": 19
+      },
+      {
+        "label": 7971615,
+        "phase": 22
+      },
+      {
+        "label": 23914845,
+        "phase": 23
+      },
+      {
+        "label": 71744535,
+        "phase": 26
+      },
+      {
+        "label": 215233605,
+        "phase": 28
+      },
+      {
+        "label": 645700815,
+        "phase": 29
+      },
+      {
+        "label": 1937102445,
+        "phase": 31
+      },
+      {
+        "label": 5811307335,
+        "phase": 32
+      },
+      {
+        "label": 17433922005,
+        "phase": 34
+      },
+      {
+        "label": 52301766015,
+        "phase": 37
+      },
+      {
+        "label": 156905298045,
+        "phase": 38
+      },
+      {
+        "label": 470715894135,
+        "phase": 41
+      },
+      {
+        "label": 1412147682405,
+        "phase": 43
+      },
+      {
+        "label": 4236443047215,
+        "phase": 44
+      }
+    ]
+  },
+  "survivor": {
+    "kappa": "207360/323323",
+    "haar_mass": "1132730727646720/3382072778653569",
+    "untouched_cylinder": "W intersect [1] mod45",
+    "untouched_mass": "4608/323323"
+  },
+  "maximizers": {
+    "decisive_labels": [
+      3,
+      5,
+      9,
+      15,
+      45
+    ],
+    "preferred_phase": 1,
+    "rows": [
+      {
+        "label": 3,
+        "phi": 2,
+        "first_cut_by_residue": {
+          "0": null,
+          "1": 4,
+          "2": 1
+        },
+        "complete_survivor_cylinder_masses": [
+          "0",
+          "192515895797248/1127357592884523",
+          "79311862893568/483153254093367"
+        ],
+        "minimum_normalized_gap": "43680951439/2212364702435"
+      },
+      {
+        "label": 5,
+        "phi": 4,
+        "first_cut_by_residue": {
+          "0": null,
+          "1": 7,
+          "2": 1,
+          "3": 2,
+          "4": 3
+        },
+        "complete_survivor_cylinder_masses": [
+          "0",
+          "32130936381952/375785864294841",
+          "177348708352/2197578153771",
+          "94595307986944/1127357592884523",
+          "40975244870656/483153254093367"
+        ],
+        "minimum_normalized_gap": "4593190123/2212364702435"
+      },
+      {
+        "label": 9,
+        "phi": 6,
+        "first_cut_by_residue": {
+          "0": null,
+          "1": 10,
+          "2": 1,
+          "3": null,
+          "4": 4,
+          "5": 3,
+          "6": null,
+          "7": 5,
+          "8": 2
+        },
+        "complete_survivor_cylinder_masses": [
+          "0",
+          "340043040256/5964854988807",
+          "6545040163840/125261954764947",
+          "0",
+          "7987020800/140585807817",
+          "1248496114688/22105050840873",
+          "0",
+          "64199841393664/1127357592884523",
+          "2434377276416/43923023099397"
+        ],
+        "minimum_normalized_gap": "80031111/442472940487"
+      },
+      {
+        "label": 15,
+        "phi": 8,
+        "first_cut_by_residue": {
+          "0": null,
+          "1": 8,
+          "2": 1,
+          "3": null,
+          "4": 4,
+          "5": null,
+          "6": null,
+          "7": 5,
+          "8": 2,
+          "9": null,
+          "10": null,
+          "11": 7,
+          "12": null,
+          "13": 6,
+          "14": 3
+        },
+        "complete_survivor_cylinder_masses": [
+          "0",
+          "66116403712/1546443885987",
+          "176316009472/4639331657961",
+          "0",
+          "592625631232/13917994973883",
+          "0",
+          "0",
+          "1782781373440/41753984921649",
+          "271438852096/6592734461313",
+          "0",
+          "0",
+          "16064650279936/375785864294841",
+          "0",
+          "48179264278528/1127357592884523",
+          "142818685705216/3382072778653569"
+        ],
+        "minimum_normalized_gap": "5750937/442472940487"
+      },
+      {
+        "label": 45,
+        "phi": 24,
+        "first_cut_by_residue": {
+          "0": null,
+          "1": null,
+          "2": 1,
+          "3": null,
+          "4": 4,
+          "5": null,
+          "6": null,
+          "7": 5,
+          "8": 2,
+          "9": null,
+          "10": null,
+          "11": 7,
+          "12": null,
+          "13": 6,
+          "14": 3,
+          "15": null,
+          "16": 8,
+          "17": 9,
+          "18": null,
+          "19": 10,
+          "20": null,
+          "21": null,
+          "22": 11,
+          "23": 12,
+          "24": null,
+          "25": null,
+          "26": 13,
+          "27": null,
+          "28": 14,
+          "29": 15,
+          "30": null,
+          "31": 16,
+          "32": 17,
+          "33": null,
+          "34": 18,
+          "35": null,
+          "36": null,
+          "37": 19,
+          "38": 20,
+          "39": null,
+          "40": null,
+          "41": 21,
+          "42": null,
+          "43": 22,
+          "44": 23
+        },
+        "complete_survivor_cylinder_masses": [
+          "0",
+          "4608/323323",
+          "3072/323323",
+          "0",
+          "40960/2909907",
+          "0",
+          "0",
+          "11264/793611",
+          "4096/323323",
+          "0",
+          "0",
+          "1119232/78567489",
+          "0",
+          "4096/287793",
+          "1024/74613",
+          "0",
+          "3358720/235702467",
+          "775168/54392877",
+          "0",
+          "2748416/192847473",
+          "0",
+          "0",
+          "90698752/6363966609",
+          "2990080/209801097",
+          "0",
+          "0",
+          "816292864/57275699481",
+          "0",
+          "2448879616/171827098443",
+          "51375104/3604764303",
+          "0",
+          "1296465920/90967287411",
+          "66119762944/4639331657961",
+          "0",
+          "114724864/8049736827",
+          "0",
+          "0",
+          "595077870592/41753984921649",
+          "162293964800/11387450433177",
+          "0",
+          "0",
+          "411976987648/28906604945757",
+          "0",
+          "16067102519296/1127357592884523",
+          "48201307558912/3382072778653569"
+        ],
+        "minimum_normalized_gap": "1/2212364702435"
+      }
+    ],
+    "uniform_gap": "1/2212364702435"
+  },
+  "entropy": {
+    "full_unused_reciprocal_tail": "13453218210738583572871732725081381270112207639608019209833499319680956651915711437550755345307145088557378697542513857246744262032500086893711182974295233955030136311111453281606653024825450581148602195718153171221415107461885032922779723590928342836582664690347153624065771189091650155579685106950656299888095633007789664373705607992286404239571308401708790951737301020632074705581785959355195487/47401802404631539142077247184921043110092577401024597175448815419398646164323612907681702486374458026235789610557859715076155915411457973023122422789214711173621259705996408815025865903445986892038000761243604956533174498228661488085543404899410306228574148608517124248242509969588114235147560114725268344102265974390164230610236644335952502930247523390742209152532877978827453487209453442119411192834377288818359375000000000000",
+    "tail_upper": "7/3433683820292512484657849089281",
+    "relative_entropy_upper": "7/1144561273430837494885949696427",
+    "total_variation_upper": "1/205891132094649",
+    "normalizer_strict_lower": "1/6"
+  },
+  "consequence": {
+    "hinge_lower": "4608/323323",
+    "rejected_hinge_target": "2320665005572177/2381400000000000000",
+    "complete_gcd_coefficient_sum": "102292357680525861/20480",
+    "same_minimizer_query_upper": "216827/36864",
+    "same_minimizer_query_strict_upper": 6,
+    "scope": "Actual redundant finite original family, full unused capacities, unique maximizing phases of the exact minimizer. Refutes the universal sufficient hinge bound, not Erdos7 or an irredundant-only/high-query-norm assertion."
+  },
+  "checks": {
+    "all_nonpreferred_units": true,
+    "distinct_exceptional_numerical_labels": true,
+    "all_exceptional_labels_divide_period": true,
+    "fixed_phases_are_valid_units": true,
+    "disjoint_exceptional_cylinders": true,
+    "source_factor": true,
+    "full_euler_factor": true,
+    "untouched_mass": true,
+    "complete_cut_sum": true,
+    "complete_survivor_mass": true,
+    "uniform_phase_gap": true,
+    "complete_cylinder_partition_3": true,
+    "unique_maximum_3": true,
+    "complete_cylinder_partition_5": true,
+    "unique_maximum_5": true,
+    "complete_cylinder_partition_9": true,
+    "unique_maximum_9": true,
+    "complete_cylinder_partition_15": true,
+    "unique_maximum_15": true,
+    "complete_cylinder_partition_45": true,
+    "unique_maximum_45": true,
+    "entire_unused_tail": true,
+    "entropy_comparison": true,
+    "Pinsker_radius": true,
+    "maximizers_stable_under_entropy_perturbation": true,
+    "potential_normalizer": true,
+    "hinge_target_refuted": true,
+    "complete_gcd_coefficient_sum": true,
+    "same_minimizer_query_bound": true
+  },
+  "producer_sha256": "5263479f202f5e016564822a8ceaf2d88a390bd6efdcd89acb291655fd281da6",
+  "new_lean_verification": false
+}

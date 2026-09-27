@@ -365,3 +365,125 @@ irredundant AP provenance to multiplicative joint caps. It neither
 contradicts PC7 nor refutes a stronger result using the full odd
 minimum-cover hypotheses. Such additional arithmetic is still needed
 for the unrestricted joint-load argument.
+
+## 8. Pair mixing gives a stronger joint-prefix bound
+
+There is a refinement of the common marginal bounds when six laws are
+supported on the six pairs of four rows. It controls a row and a prefix
+under one probability. The refinement alone does not give a root
+second moment at most four.
+
+Let `nu_ij`, `1<=i<j<=4`, be any six probabilities, each supported on
+rows `{i,j}`. There exist nonnegative weights `lambda_ij` summing to one
+such that, for their mixture `nu`,
+
+\[
+ a_r=\nu(\text{row }r),\qquad
+ \theta_r=\sum_{\{i,j\}\ni r}\lambda_{ij},\qquad
+ \theta_r+2a_r=1\quad(1\le r\le4).
+ \tag{PC11}
+\]
+
+To prove existence, make one column for each pair `{i,j}`. Its two
+nonzero entries are `1+2p` at row `i` and `3-2p` at row `j`, where
+`p=nu_ij(row i)`; both lie in `[1,3]` and their sum is four. By finite
+Farkas duality, it suffices to show that a vector `y` with negative
+coordinate sum has negative scalar product with some column. Reorder
+its coordinates so that `y_1<=y_2<=y_3<=y_4` and use the column for
+the two smallest coordinates. For some `1<=c<=3`, its scalar product is
+
+\[
+ cy_1+(4-c)y_2\le y_1+3y_2
+                 \le y_1+y_2+y_3+y_4<0.
+\]
+
+Thus the vector of four ones belongs to the cone of the six columns.
+Summing its coordinates forces the cone coefficients to sum to one,
+and its coordinate equations are exactly PC11. Rational input row
+masses permit rational weights. No positivity or uniqueness of the
+individual weights is required.
+
+Since `a_r<=theta_r`, PC11 gives `a_r<=1/3`. Suppose in addition that
+all six laws bound every specified depth-`j` prefix by `c_j`. Only
+pair laws containing row `r` can contribute to a joint row-prefix
+event. The same mixture therefore satisfies, simultaneously,
+
+\[
+ \nu(\text{prefix})\le c_j,\qquad
+ \nu(\text{row }r,\text{ prefix})
+ \le\min\{a_r,(1-2a_r)c_j\}.
+ \tag{PC12}
+\]
+
+For `R` in `{1,2,3,4} x Z/7^K`, assume each pair of row fibres
+contains a complete ternary tree of depth `K`. Choose one such tree
+per pair, label each leaf by an available row in that pair, and use
+uniform leaf mass. Then `c_j=3^(-j)` at every depth `0<=j<=K`, giving
+
+\[
+ \nu(\text{row }r,\text{ depth-}j\text{ prefix})
+ \le\min\{a_r,(1-2a_r)3^{-j}\}
+ \le\frac1{3^j+2}.
+ \tag{PC13}
+\]
+
+The last inequality follows by intersecting the increasing bound `a_r`
+with the decreasing bound `(1-2a_r)3^(-j)`. At a fixed positive row
+mass it improves the marginal estimate `min(a_r,3^(-j))` precisely
+when `a_r>1/(3^j+2)`. All caps here belong to the constructed mixture;
+they are not attached to the possibly different law supplied by PC7.
+For a source meeting every ternary-5 by five-ary-7 product tree with
+row zero absent and 5-height one, the pair-tree premise follows by
+using 5-roots `{0,i,j}` and the tree duality of report 375. There is no
+standalone five-ary 7-tree hypothesis in PC11--PC13.
+
+### A fixed family of pair laws can still force a root cost of 22/5
+
+At `K=1`, use uniform mass on each of these three-point sets:
+
+| Pair | Points supporting its law |
+| --- | --- |
+| `12` | `(1,0),(2,1),(2,2)` |
+| `13` | `(1,0),(3,1),(3,2)` |
+| `14` | `(1,0),(4,1),(4,2)` |
+| `23` | `(2,0),(3,1),(3,2)` |
+| `34` | `(3,0),(4,1),(4,2)` |
+| `24` | `(4,0),(2,1),(2,2)` |
+
+Each is a labelled ternary tree. The weights `lambda_1i=1/5` and
+`lambda_23=lambda_34=lambda_24=2/15` satisfy PC11 and give
+
+\[
+ (a_1,a_2,a_3,a_4)=(1/5,4/15,4/15,4/15),\qquad
+ (\theta_1,\theta_2,\theta_3,\theta_4)=(3/5,7/15,7/15,7/15).
+ \tag{PC14}
+\]
+
+All three occupied columns have mass `1/3`, and row 1 lies entirely
+at `(1,0)`. Taking the divisor-5 event to be row 1, the divisor-7
+event to be column 0 and the divisor-35 event to be `(1,0)` gives
+
+\[
+ \mathbb E_\nu(1+1_{\text{row }1}+1_{\text{column }0}
+                    +1_{(1,0)})^2
+ =1+3/5+1+9/5=22/5>4.
+ \tag{PC15}
+\]
+
+This obstruction holds for every mixture of these fixed six laws
+that satisfies PC11: their incident laws always put one third of
+their mass in row 1, so `a_1=theta_1/3`; PC11 forces `theta_1=3/5`
+and `a_1=1/5`. Every pair law gives column 0 mass `1/3`.
+
+For the displayed weights, `22/5` is also the full maximum over all
+1,225 independent root layouts. This is not a source-level obstruction
+to a better probability: uniform mass on the nine points in rows
+2, 3, 4 and columns 0, 1, 2 has root maximum four. The source has only
+three 7-roots, so it contains no complete five-ary tree even at depth
+one. The example therefore leaves open what can be gained by combining
+the pair refinement with a supported five-ary-tree law.
+
+The affine identity and prefix consequence above are ordinary
+mathematical arguments. The finite values in PC14--PC15 and both full
+root maxima were independently checked with exact rational arithmetic;
+no Lean certification or unrestricted covering conclusion is claimed.

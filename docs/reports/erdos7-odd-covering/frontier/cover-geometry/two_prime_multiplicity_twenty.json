@@ -1,0 +1,1510 @@
+{
+  "p": 23,
+  "q": 29,
+  "period": 444889,
+  "class_count": 129,
+  "maximum_later_modulus_multiplicity": 20,
+  "multiplicities": {
+    "23": 20,
+    "29": 20,
+    "529": 20,
+    "667": 20,
+    "841": 20,
+    "15341": 20,
+    "444889": 9
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "name": "pure23",
+      "class_count": 20,
+      "newly_covered": 386860,
+      "survivors": 58029,
+      "classes": [
+        [
+          0,
+          23
+        ],
+        [
+          1,
+          23
+        ],
+        [
+          2,
+          23
+        ],
+        [
+          3,
+          23
+        ],
+        [
+          4,
+          23
+        ],
+        [
+          5,
+          23
+        ],
+        [
+          6,
+          23
+        ],
+        [
+          7,
+          23
+        ],
+        [
+          8,
+          23
+        ],
+        [
+          9,
+          23
+        ],
+        [
+          10,
+          23
+        ],
+        [
+          11,
+          23
+        ],
+        [
+          12,
+          23
+        ],
+        [
+          13,
+          23
+        ],
+        [
+          14,
+          23
+        ],
+        [
+          15,
+          23
+        ],
+        [
+          16,
+          23
+        ],
+        [
+          17,
+          23
+        ],
+        [
+          18,
+          23
+        ],
+        [
+          19,
+          23
+        ]
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "pure29",
+      "class_count": 20,
+      "newly_covered": 40020,
+      "survivors": 18009,
+      "classes": [
+        [
+          0,
+          29
+        ],
+        [
+          1,
+          29
+        ],
+        [
+          2,
+          29
+        ],
+        [
+          3,
+          29
+        ],
+        [
+          4,
+          29
+        ],
+        [
+          5,
+          29
+        ],
+        [
+          6,
+          29
+        ],
+        [
+          7,
+          29
+        ],
+        [
+          8,
+          29
+        ],
+        [
+          9,
+          29
+        ],
+        [
+          10,
+          29
+        ],
+        [
+          11,
+          29
+        ],
+        [
+          12,
+          29
+        ],
+        [
+          13,
+          29
+        ],
+        [
+          14,
+          29
+        ],
+        [
+          15,
+          29
+        ],
+        [
+          16,
+          29
+        ],
+        [
+          17,
+          29
+        ],
+        [
+          18,
+          29
+        ],
+        [
+          19,
+          29
+        ]
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "mixed23_29",
+      "class_count": 20,
+      "newly_covered": 13340,
+      "survivors": 4669,
+      "classes": [
+        [
+          20,
+          667
+        ],
+        [
+          572,
+          667
+        ],
+        [
+          457,
+          667
+        ],
+        [
+          342,
+          667
+        ],
+        [
+          227,
+          667
+        ],
+        [
+          112,
+          667
+        ],
+        [
+          664,
+          667
+        ],
+        [
+          549,
+          667
+        ],
+        [
+          434,
+          667
+        ],
+        [
+          136,
+          667
+        ],
+        [
+          21,
+          667
+        ],
+        [
+          573,
+          667
+        ],
+        [
+          458,
+          667
+        ],
+        [
+          343,
+          667
+        ],
+        [
+          228,
+          667
+        ],
+        [
+          113,
+          667
+        ],
+        [
+          665,
+          667
+        ],
+        [
+          550,
+          667
+        ],
+        [
+          252,
+          667
+        ],
+        [
+          137,
+          667
+        ]
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "pure23square",
+      "class_count": 20,
+      "newly_covered": 4060,
+      "survivors": 609,
+      "classes": [
+        [
+          22,
+          529
+        ],
+        [
+          45,
+          529
+        ],
+        [
+          68,
+          529
+        ],
+        [
+          91,
+          529
+        ],
+        [
+          114,
+          529
+        ],
+        [
+          137,
+          529
+        ],
+        [
+          160,
+          529
+        ],
+        [
+          183,
+          529
+        ],
+        [
+          206,
+          529
+        ],
+        [
+          229,
+          529
+        ],
+        [
+          252,
+          529
+        ],
+        [
+          275,
+          529
+        ],
+        [
+          298,
+          529
+        ],
+        [
+          321,
+          529
+        ],
+        [
+          344,
+          529
+        ],
+        [
+          367,
+          529
+        ],
+        [
+          390,
+          529
+        ],
+        [
+          413,
+          529
+        ],
+        [
+          436,
+          529
+        ],
+        [
+          459,
+          529
+        ]
+      ]
+    },
+    {
+      "stage": 5,
+      "name": "mixed23square_29",
+      "class_count": 20,
+      "newly_covered": 580,
+      "survivors": 29,
+      "classes": [
+        [
+          7359,
+          15341
+        ],
+        [
+          5243,
+          15341
+        ],
+        [
+          3127,
+          15341
+        ],
+        [
+          1011,
+          15341
+        ],
+        [
+          14236,
+          15341
+        ],
+        [
+          12120,
+          15341
+        ],
+        [
+          10004,
+          15341
+        ],
+        [
+          10027,
+          15341
+        ],
+        [
+          7911,
+          15341
+        ],
+        [
+          5795,
+          15341
+        ],
+        [
+          3679,
+          15341
+        ],
+        [
+          1563,
+          15341
+        ],
+        [
+          14788,
+          15341
+        ],
+        [
+          12672,
+          15341
+        ],
+        [
+          12695,
+          15341
+        ],
+        [
+          10579,
+          15341
+        ],
+        [
+          8463,
+          15341
+        ],
+        [
+          6347,
+          15341
+        ],
+        [
+          4231,
+          15341
+        ],
+        [
+          2115,
+          15341
+        ]
+      ]
+    },
+    {
+      "stage": 6,
+      "name": "pure29square",
+      "class_count": 20,
+      "newly_covered": 20,
+      "survivors": 9,
+      "classes": [
+        [
+          28,
+          841
+        ],
+        [
+          57,
+          841
+        ],
+        [
+          86,
+          841
+        ],
+        [
+          115,
+          841
+        ],
+        [
+          144,
+          841
+        ],
+        [
+          173,
+          841
+        ],
+        [
+          202,
+          841
+        ],
+        [
+          231,
+          841
+        ],
+        [
+          260,
+          841
+        ],
+        [
+          289,
+          841
+        ],
+        [
+          318,
+          841
+        ],
+        [
+          347,
+          841
+        ],
+        [
+          376,
+          841
+        ],
+        [
+          405,
+          841
+        ],
+        [
+          434,
+          841
+        ],
+        [
+          463,
+          841
+        ],
+        [
+          492,
+          841
+        ],
+        [
+          521,
+          841
+        ],
+        [
+          550,
+          841
+        ],
+        [
+          579,
+          841
+        ]
+      ]
+    },
+    {
+      "stage": 7,
+      "name": "mixed23square_29square",
+      "class_count": 9,
+      "newly_covered": 9,
+      "survivors": 0,
+      "classes": [
+        [
+          46022,
+          444889
+        ],
+        [
+          429547,
+          444889
+        ],
+        [
+          368183,
+          444889
+        ],
+        [
+          306819,
+          444889
+        ],
+        [
+          245455,
+          444889
+        ],
+        [
+          184091,
+          444889
+        ],
+        [
+          122727,
+          444889
+        ],
+        [
+          61363,
+          444889
+        ],
+        [
+          444888,
+          444889
+        ]
+      ]
+    }
+  ],
+  "complete_period_survivor_count": 0,
+  "independent_coordinate_pairs_checked": 444889,
+  "independent_coordinate_survivor_count": 0,
+  "fixed_old_point": 0,
+  "old_period": 1162261467,
+  "original_uncovered_integer": 1,
+  "lifted_original_family": [
+    {
+      "old_label": 1,
+      "later_modulus": 23,
+      "later_residue": 0,
+      "original_modulus": 23,
+      "original_residue": 0
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 23,
+      "later_residue": 1,
+      "original_modulus": 69,
+      "original_residue": 24
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 23,
+      "later_residue": 2,
+      "original_modulus": 207,
+      "original_residue": 117
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 23,
+      "later_residue": 3,
+      "original_modulus": 621,
+      "original_residue": 486
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 23,
+      "later_residue": 4,
+      "original_modulus": 1863,
+      "original_residue": 648
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 23,
+      "later_residue": 5,
+      "original_modulus": 5589,
+      "original_residue": 2673
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 23,
+      "later_residue": 6,
+      "original_modulus": 16767,
+      "original_residue": 6561
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 23,
+      "later_residue": 7,
+      "original_modulus": 50301,
+      "original_residue": 32805
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 23,
+      "later_residue": 8,
+      "original_modulus": 150903,
+      "original_residue": 59049
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 23,
+      "later_residue": 9,
+      "original_modulus": 452709,
+      "original_residue": 236196
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 23,
+      "later_residue": 10,
+      "original_modulus": 1358127,
+      "original_residue": 413343
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 23,
+      "later_residue": 11,
+      "original_modulus": 4074381,
+      "original_residue": 1948617
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 23,
+      "later_residue": 12,
+      "original_modulus": 12223143,
+      "original_residue": 2125764
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 23,
+      "later_residue": 13,
+      "original_modulus": 36669429,
+      "original_residue": 6377292
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 23,
+      "later_residue": 14,
+      "original_modulus": 110008287,
+      "original_residue": 71744535
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 23,
+      "later_residue": 15,
+      "original_modulus": 330024861,
+      "original_residue": 100442349
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 23,
+      "later_residue": 16,
+      "original_modulus": 990074583,
+      "original_residue": 129140163
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 23,
+      "later_residue": 17,
+      "original_modulus": 2970223749,
+      "original_residue": 1807962282
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 23,
+      "later_residue": 18,
+      "original_modulus": 8910671247,
+      "original_residue": 3486784401
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 23,
+      "later_residue": 19,
+      "original_modulus": 26732013741,
+      "original_residue": 8135830269
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 29,
+      "later_residue": 0,
+      "original_modulus": 29,
+      "original_residue": 0
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 29,
+      "later_residue": 1,
+      "original_modulus": 87,
+      "original_residue": 30
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 29,
+      "later_residue": 2,
+      "original_modulus": 261,
+      "original_residue": 234
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 29,
+      "later_residue": 3,
+      "original_modulus": 783,
+      "original_residue": 351
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 29,
+      "later_residue": 4,
+      "original_modulus": 2349,
+      "original_residue": 729
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 29,
+      "later_residue": 5,
+      "original_modulus": 7047,
+      "original_residue": 2673
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 29,
+      "later_residue": 6,
+      "original_modulus": 21141,
+      "original_residue": 11664
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 29,
+      "later_residue": 7,
+      "original_modulus": 63423,
+      "original_residue": 6561
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 29,
+      "later_residue": 8,
+      "original_modulus": 190269,
+      "original_residue": 170586
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 29,
+      "later_residue": 9,
+      "original_modulus": 570807,
+      "original_residue": 334611
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 29,
+      "later_residue": 10,
+      "original_modulus": 1712421,
+      "original_residue": 118098
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 29,
+      "later_residue": 11,
+      "original_modulus": 5137263,
+      "original_residue": 3897234
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 29,
+      "later_residue": 12,
+      "original_modulus": 15411789,
+      "original_residue": 4251528
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 29,
+      "later_residue": 13,
+      "original_modulus": 46235367,
+      "original_residue": 30292137
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 29,
+      "later_residue": 14,
+      "original_modulus": 138706101,
+      "original_residue": 71744535
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 29,
+      "later_residue": 15,
+      "original_modulus": 416118303,
+      "original_residue": 344373768
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 29,
+      "later_residue": 16,
+      "original_modulus": 1248354909,
+      "original_residue": 1033121304
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 29,
+      "later_residue": 17,
+      "original_modulus": 3745064727,
+      "original_residue": 2970223749
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 29,
+      "later_residue": 18,
+      "original_modulus": 11235194181,
+      "original_residue": 1162261467
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 29,
+      "later_residue": 19,
+      "original_modulus": 33705582543,
+      "original_residue": 25569752274
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 667,
+      "later_residue": 20,
+      "original_modulus": 667,
+      "original_residue": 20
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 667,
+      "later_residue": 572,
+      "original_modulus": 2001,
+      "original_residue": 1239
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 667,
+      "later_residue": 457,
+      "original_modulus": 6003,
+      "original_residue": 1791
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 667,
+      "later_residue": 342,
+      "original_modulus": 18009,
+      "original_residue": 6345
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 667,
+      "later_residue": 227,
+      "original_modulus": 54027,
+      "original_residue": 34911
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 667,
+      "later_residue": 112,
+      "original_modulus": 162081,
+      "original_residue": 27459
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 667,
+      "later_residue": 664,
+      "original_modulus": 486243,
+      "original_residue": 290142
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 667,
+      "later_residue": 549,
+      "original_modulus": 1458729,
+      "original_residue": 876987
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 667,
+      "later_residue": 434,
+      "original_modulus": 4376187,
+      "original_residue": 977589
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 667,
+      "later_residue": 136,
+      "original_modulus": 13128561,
+      "original_residue": 10510722
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 667,
+      "later_residue": 21,
+      "original_modulus": 39385683,
+      "original_residue": 9152595
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 667,
+      "later_residue": 573,
+      "original_modulus": 118157049,
+      "original_residue": 7794468
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 667,
+      "later_residue": 458,
+      "original_modulus": 354471147,
+      "original_residue": 321521805
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 667,
+      "later_residue": 343,
+      "original_modulus": 1063413441,
+      "original_residue": 162620946
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 667,
+      "later_residue": 228,
+      "original_modulus": 3190240323,
+      "original_residue": 712662381
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 667,
+      "later_residue": 113,
+      "original_modulus": 9570720969,
+      "original_residue": 1262703816
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 667,
+      "later_residue": 665,
+      "original_modulus": 28712162907,
+      "original_residue": 27334667835
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 667,
+      "later_residue": 550,
+      "original_modulus": 86136488721,
+      "original_residue": 5553027009
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 667,
+      "later_residue": 252,
+      "original_modulus": 258409466163,
+      "original_residue": 173564379072
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 667,
+      "later_residue": 137,
+      "original_modulus": 775228398489,
+      "original_residue": 209207064060
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 529,
+      "later_residue": 22,
+      "original_modulus": 529,
+      "original_residue": 22
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 529,
+      "later_residue": 45,
+      "original_modulus": 1587,
+      "original_residue": 45
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 529,
+      "later_residue": 68,
+      "original_modulus": 4761,
+      "original_residue": 3771
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 529,
+      "later_residue": 91,
+      "original_modulus": 14283,
+      "original_residue": 12258
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 529,
+      "later_residue": 114,
+      "original_modulus": 42849,
+      "original_residue": 1701
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 529,
+      "later_residue": 137,
+      "original_modulus": 128547,
+      "original_residue": 91125
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 529,
+      "later_residue": 160,
+      "original_modulus": 385641,
+      "original_residue": 309096
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 529,
+      "later_residue": 183,
+      "original_modulus": 1156923,
+      "original_residue": 527067
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 529,
+      "later_residue": 206,
+      "original_modulus": 3470769,
+      "original_residue": 3444525
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 529,
+      "later_residue": 229,
+      "original_modulus": 10412307,
+      "original_residue": 7518906
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 529,
+      "later_residue": 252,
+      "original_modulus": 31236921,
+      "original_residue": 1180980
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 529,
+      "later_residue": 275,
+      "original_modulus": 93710763,
+      "original_residue": 36492282
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 529,
+      "later_residue": 298,
+      "original_modulus": 281132289,
+      "original_residue": 227988189
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 529,
+      "later_residue": 321,
+      "original_modulus": 843396867,
+      "original_residue": 44641044
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 529,
+      "later_residue": 344,
+      "original_modulus": 2530190601,
+      "original_residue": 2391484500
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 529,
+      "later_residue": 367,
+      "original_modulus": 7590571803,
+      "original_residue": 5581724823
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 529,
+      "later_residue": 390,
+      "original_modulus": 22771715409,
+      "original_residue": 6241774545
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 529,
+      "later_residue": 413,
+      "original_modulus": 68315146227,
+      "original_residue": 22082967873
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 529,
+      "later_residue": 436,
+      "original_modulus": 204945438681,
+      "original_residue": 129011022837
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 529,
+      "later_residue": 459,
+      "original_modulus": 614836316043,
+      "original_residue": 235939077801
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 15341,
+      "later_residue": 7359,
+      "original_modulus": 15341,
+      "original_residue": 7359
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 15341,
+      "later_residue": 5243,
+      "original_modulus": 46023,
+      "original_residue": 35925
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 15341,
+      "later_residue": 3127,
+      "original_modulus": 138069,
+      "original_residue": 18468
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 15341,
+      "later_residue": 1011,
+      "original_modulus": 414207,
+      "original_residue": 47034
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 15341,
+      "later_residue": 14236,
+      "original_modulus": 1242621,
+      "original_residue": 489807
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 15341,
+      "later_residue": 12120,
+      "original_modulus": 3727863,
+      "original_residue": 2589408
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 15341,
+      "later_residue": 10004,
+      "original_modulus": 11183589,
+      "original_residue": 2203767
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 15341,
+      "later_residue": 10027,
+      "original_modulus": 33550767,
+      "original_residue": 29802249
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 15341,
+      "later_residue": 7911,
+      "original_modulus": 100652301,
+      "original_residue": 18233019
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 15341,
+      "later_residue": 5795,
+      "original_modulus": 301956903,
+      "original_residue": 275069925
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 15341,
+      "later_residue": 3679,
+      "original_modulus": 905870709,
+      "original_residue": 733211433
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 15341,
+      "later_residue": 1563,
+      "original_modulus": 2717612127,
+      "original_residue": 2701137456
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 15341,
+      "later_residue": 14788,
+      "original_modulus": 8152836381,
+      "original_residue": 1951451352
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 15341,
+      "later_residue": 12672,
+      "original_modulus": 24458509143,
+      "original_residue": 12072213756
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 15341,
+      "later_residue": 12695,
+      "original_modulus": 73375527429,
+      "original_residue": 27913407084
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 15341,
+      "later_residue": 10579,
+      "original_modulus": 220126582287,
+      "original_residue": 184785224346
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 15341,
+      "later_residue": 8463,
+      "original_modulus": 660379746861,
+      "original_residue": 488408096466
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 15341,
+      "later_residue": 6347,
+      "original_modulus": 1981139240583,
+      "original_residue": 351777804012
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 15341,
+      "later_residue": 4231,
+      "original_modulus": 5943417721749,
+      "original_residue": 2196286752141
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 15341,
+      "later_residue": 2115,
+      "original_modulus": 17830253165247,
+      "original_residue": 15927631143768
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 841,
+      "later_residue": 28,
+      "original_modulus": 841,
+      "original_residue": 28
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 841,
+      "later_residue": 57,
+      "original_modulus": 2523,
+      "original_residue": 57
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 841,
+      "later_residue": 86,
+      "original_modulus": 7569,
+      "original_residue": 927
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 841,
+      "later_residue": 115,
+      "original_modulus": 22707,
+      "original_residue": 4320
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 841,
+      "later_residue": 144,
+      "original_modulus": 68121,
+      "original_residue": 37989
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 841,
+      "later_residue": 173,
+      "original_modulus": 204363,
+      "original_residue": 26244
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 841,
+      "later_residue": 202,
+      "original_modulus": 613089,
+      "original_residue": 491346
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 841,
+      "later_residue": 231,
+      "original_modulus": 1839267,
+      "original_residue": 343359
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 841,
+      "later_residue": 260,
+      "original_modulus": 5517801,
+      "original_residue": 3260817
+    },
+    {
+      "old_label": 19683,
+      "later_modulus": 841,
+      "later_residue": 289,
+      "original_modulus": 16553403,
+      "original_residue": 2499741
+    },
+    {
+      "old_label": 59049,
+      "later_modulus": 841,
+      "later_residue": 318,
+      "original_modulus": 49660209,
+      "original_residue": 45881073
+    },
+    {
+      "old_label": 177147,
+      "later_modulus": 841,
+      "later_residue": 347,
+      "original_modulus": 148980627,
+      "original_residue": 56155599
+    },
+    {
+      "old_label": 531441,
+      "later_modulus": 841,
+      "later_residue": 376,
+      "original_modulus": 446941881,
+      "original_residue": 66430125
+    },
+    {
+      "old_label": 1594323,
+      "later_modulus": 841,
+      "later_residue": 405,
+      "original_modulus": 1340825643,
+      "original_residue": 374665905
+    },
+    {
+      "old_label": 4782969,
+      "later_modulus": 841,
+      "later_residue": 434,
+      "original_modulus": 4022476929,
+      "original_residue": 2917611090
+    },
+    {
+      "old_label": 14348907,
+      "later_modulus": 841,
+      "later_residue": 463,
+      "original_modulus": 12067430787,
+      "original_residue": 6801381918
+    },
+    {
+      "old_label": 43046721,
+      "later_modulus": 841,
+      "later_residue": 492,
+      "original_modulus": 36202292361,
+      "original_residue": 26775060462
+    },
+    {
+      "old_label": 129140163,
+      "later_modulus": 841,
+      "later_residue": 521,
+      "original_modulus": 108606877083,
+      "original_residue": 46748739006
+    },
+    {
+      "old_label": 387420489,
+      "later_modulus": 841,
+      "later_residue": 550,
+      "original_modulus": 325820631249,
+      "original_residue": 211531586994
+    },
+    {
+      "old_label": 1162261467,
+      "later_modulus": 841,
+      "later_residue": 579,
+      "original_modulus": 977461893747,
+      "original_residue": 919348820397
+    },
+    {
+      "old_label": 1,
+      "later_modulus": 444889,
+      "later_residue": 46022,
+      "original_modulus": 444889,
+      "original_residue": 46022
+    },
+    {
+      "old_label": 3,
+      "later_modulus": 444889,
+      "later_residue": 429547,
+      "original_modulus": 1334667,
+      "original_residue": 1319325
+    },
+    {
+      "old_label": 9,
+      "later_modulus": 444889,
+      "later_residue": 368183,
+      "original_modulus": 4004001,
+      "original_residue": 3482406
+    },
+    {
+      "old_label": 27,
+      "later_modulus": 444889,
+      "later_residue": 306819,
+      "original_modulus": 12012003,
+      "original_residue": 4310820
+    },
+    {
+      "old_label": 81,
+      "later_modulus": 444889,
+      "later_residue": 245455,
+      "original_modulus": 36036009,
+      "original_residue": 29163240
+    },
+    {
+      "old_label": 243,
+      "later_modulus": 444889,
+      "later_residue": 184091,
+      "original_modulus": 108108027,
+      "original_residue": 90051669
+    },
+    {
+      "old_label": 729,
+      "later_modulus": 444889,
+      "later_residue": 122727,
+      "original_modulus": 324324081,
+      "original_residue": 186976107
+    },
+    {
+      "old_label": 2187,
+      "later_modulus": 444889,
+      "later_residue": 61363,
+      "original_modulus": 972972243,
+      "original_residue": 500116599
+    },
+    {
+      "old_label": 6561,
+      "later_modulus": 444889,
+      "later_residue": 444888,
+      "original_modulus": 2918916729,
+      "original_residue": 164608929
+    }
+  ],
+  "Q19_survivor_lower": "1/77",
+  "scope": "Finite projected later-fibre cover, with later-modulus multiplicity20. All129 lifted original numerical moduli are distinct odd numbers; they cover the old residue0 fibre, while integer1 avoids them. Refutes a single-fibre multiplicity20 noncoverage claim, not Erd\u0151s7; no Lean verification."
+}

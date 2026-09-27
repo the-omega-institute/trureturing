@@ -1,0 +1,585 @@
+{
+  "scope": "Finite CRT masks, correlated-law query controls and rational constants; ordinary proof supplies all-height claims.",
+  "constants": {
+    "source_query_bound": [
+      70871,
+      3375
+    ],
+    "source_density_cap": [
+      6075000000000,
+      7235955529
+    ],
+    "two_copy_query_bound": [
+      33748,
+      3375
+    ],
+    "two_copy_density_cap": [
+      3037500000000,
+      7235955529
+    ],
+    "two_copy_haar_floor": [
+      7235955529,
+      3037500000000
+    ],
+    "later_23_29_reserve": [
+      61909,
+      693000
+    ],
+    "later_23_29_haar_floor": [
+      40724615531351,
+      191362500000000000
+    ],
+    "finite_transfer_height": 16,
+    "finite_tail_cap": [
+      25000000000,
+      1281827814095763
+    ],
+    "finite_query_bound": [
+      1602192942411252212,
+      160225351761970375
+    ],
+    "finite_density_cap": [
+      538084000000000000,
+      1281802814095763
+    ],
+    "conditional_cofactor_lower_bound": [
+      6,
+      1
+    ],
+    "conditional_lower_transfer_height": 75,
+    "conditional_seven_prime_lower_bound": [
+      975,
+      88
+    ],
+    "conditional_query_target_surplus": [
+      5,
+      4488
+    ]
+  },
+  "controls": [
+    {
+      "input": {
+        "A": [],
+        "B": []
+      },
+      "height": 1,
+      "cofactor_period": 1,
+      "full_period": 3,
+      "lifted_label_count": 1,
+      "A_survivors": 1,
+      "AB_survivors": 1,
+      "lifted_survivors": 2,
+      "same_law_query_control": {
+        "law_total_weight": 12,
+        "restricted_mass": [
+          2,
+          3
+        ],
+        "finite_full_query_sum": [
+          5,
+          3
+        ],
+        "twice_restricted_query_sum": [
+          4,
+          3
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [],
+        "B": []
+      },
+      "height": 2,
+      "cofactor_period": 1,
+      "full_period": 9,
+      "lifted_label_count": 2,
+      "A_survivors": 1,
+      "AB_survivors": 1,
+      "lifted_survivors": 5,
+      "same_law_query_control": {
+        "law_total_weight": 26,
+        "restricted_mass": [
+          12,
+          13
+        ],
+        "finite_full_query_sum": [
+          55,
+          26
+        ],
+        "twice_restricted_query_sum": [
+          24,
+          13
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [],
+        "B": []
+      },
+      "height": 4,
+      "cofactor_period": 1,
+      "full_period": 81,
+      "lifted_label_count": 4,
+      "A_survivors": 1,
+      "AB_survivors": 1,
+      "lifted_survivors": 41,
+      "same_law_query_control": {
+        "law_total_weight": 247,
+        "restricted_mass": [
+          236,
+          247
+        ],
+        "finite_full_query_sum": [
+          503,
+          247
+        ],
+        "twice_restricted_query_sum": [
+          472,
+          247
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ]
+        ]
+      },
+      "height": 1,
+      "cofactor_period": 5,
+      "full_period": 15,
+      "lifted_label_count": 3,
+      "A_survivors": 4,
+      "AB_survivors": 3,
+      "lifted_survivors": 7,
+      "same_law_query_control": {
+        "law_total_weight": 40,
+        "restricted_mass": [
+          3,
+          5
+        ],
+        "finite_full_query_sum": [
+          21,
+          10
+        ],
+        "twice_restricted_query_sum": [
+          8,
+          5
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ]
+        ]
+      },
+      "height": 2,
+      "cofactor_period": 5,
+      "full_period": 45,
+      "lifted_label_count": 5,
+      "A_survivors": 4,
+      "AB_survivors": 3,
+      "lifted_survivors": 16,
+      "same_law_query_control": {
+        "law_total_weight": 104,
+        "restricted_mass": [
+          77,
+          104
+        ],
+        "finite_full_query_sum": [
+          261,
+          104
+        ],
+        "twice_restricted_query_sum": [
+          105,
+          52
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ]
+        ]
+      },
+      "height": 4,
+      "cofactor_period": 5,
+      "full_period": 405,
+      "lifted_label_count": 9,
+      "A_survivors": 4,
+      "AB_survivors": 3,
+      "lifted_survivors": 124,
+      "same_law_query_control": {
+        "law_total_weight": 739,
+        "restricted_mass": [
+          713,
+          739
+        ],
+        "finite_full_query_sum": [
+          2014,
+          739
+        ],
+        "twice_restricted_query_sum": [
+          1910,
+          739
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            2
+          ],
+          [
+            35,
+            9
+          ]
+        ],
+        "B": [
+          [
+            7,
+            3
+          ],
+          [
+            35,
+            19
+          ]
+        ]
+      },
+      "height": 1,
+      "cofactor_period": 35,
+      "full_period": 105,
+      "lifted_label_count": 5,
+      "A_survivors": 27,
+      "AB_survivors": 22,
+      "lifted_survivors": 49,
+      "same_law_query_control": {
+        "law_total_weight": 284,
+        "restricted_mass": [
+          44,
+          71
+        ],
+        "finite_full_query_sum": [
+          171,
+          71
+        ],
+        "twice_restricted_query_sum": [
+          132,
+          71
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            2
+          ],
+          [
+            35,
+            9
+          ]
+        ],
+        "B": [
+          [
+            7,
+            3
+          ],
+          [
+            35,
+            19
+          ]
+        ]
+      },
+      "height": 2,
+      "cofactor_period": 35,
+      "full_period": 315,
+      "lifted_label_count": 8,
+      "A_survivors": 27,
+      "AB_survivors": 22,
+      "lifted_survivors": 115,
+      "same_law_query_control": {
+        "law_total_weight": 712,
+        "restricted_mass": [
+          269,
+          356
+        ],
+        "finite_full_query_sum": [
+          989,
+          356
+        ],
+        "twice_restricted_query_sum": [
+          829,
+          356
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            2
+          ],
+          [
+            35,
+            9
+          ]
+        ],
+        "B": [
+          [
+            7,
+            3
+          ],
+          [
+            35,
+            19
+          ]
+        ]
+      },
+      "height": 4,
+      "cofactor_period": 35,
+      "full_period": 2835,
+      "lifted_label_count": 14,
+      "A_survivors": 27,
+      "AB_survivors": 22,
+      "lifted_survivors": 907,
+      "same_law_query_control": {
+        "law_total_weight": 5450,
+        "restricted_mass": [
+          2638,
+          2725
+        ],
+        "finite_full_query_sum": [
+          8193,
+          2725
+        ],
+        "twice_restricted_query_sum": [
+          7981,
+          2725
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            25,
+            7
+          ],
+          [
+            175,
+            23
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ],
+          [
+            25,
+            18
+          ],
+          [
+            35,
+            4
+          ],
+          [
+            175,
+            114
+          ]
+        ]
+      },
+      "height": 1,
+      "cofactor_period": 175,
+      "full_period": 525,
+      "lifted_label_count": 9,
+      "A_survivors": 113,
+      "AB_survivors": 71,
+      "lifted_survivors": 184,
+      "same_law_query_control": {
+        "law_total_weight": 1020,
+        "restricted_mass": [
+          142,
+          255
+        ],
+        "finite_full_query_sum": [
+          218,
+          85
+        ],
+        "twice_restricted_query_sum": [
+          32,
+          17
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            25,
+            7
+          ],
+          [
+            175,
+            23
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ],
+          [
+            25,
+            18
+          ],
+          [
+            35,
+            4
+          ],
+          [
+            175,
+            114
+          ]
+        ]
+      },
+      "height": 2,
+      "cofactor_period": 175,
+      "full_period": 1575,
+      "lifted_label_count": 14,
+      "A_survivors": 113,
+      "AB_survivors": 71,
+      "lifted_survivors": 397,
+      "same_law_query_control": {
+        "law_total_weight": 2398,
+        "restricted_mass": [
+          857,
+          1199
+        ],
+        "finite_full_query_sum": [
+          3653,
+          1199
+        ],
+        "twice_restricted_query_sum": [
+          2933,
+          1199
+        ]
+      }
+    },
+    {
+      "input": {
+        "A": [
+          [
+            5,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            25,
+            7
+          ],
+          [
+            175,
+            23
+          ]
+        ],
+        "B": [
+          [
+            5,
+            1
+          ],
+          [
+            25,
+            18
+          ],
+          [
+            35,
+            4
+          ],
+          [
+            175,
+            114
+          ]
+        ]
+      },
+      "height": 4,
+      "cofactor_period": 175,
+      "full_period": 14175,
+      "lifted_label_count": 24,
+      "A_survivors": 113,
+      "AB_survivors": 71,
+      "lifted_survivors": 2953,
+      "same_law_query_control": {
+        "law_total_weight": 17698,
+        "restricted_mass": [
+          17023,
+          17698
+        ],
+        "finite_full_query_sum": [
+          59509,
+          17698
+        ],
+        "twice_restricted_query_sum": [
+          28888,
+          8849
+        ]
+      }
+    }
+  ],
+  "period_points_checked": 20088,
+  "rejections_checked": 7
+}
