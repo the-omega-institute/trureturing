@@ -73,7 +73,7 @@ internal sealed class AsymmetricFamilyRiskInjectivityDocument : IScribeDocumentD
         return Disp(Seq(
             Forall, Sp, TypedMany([a, d, b], Real()), Comma, RowBreak, Grp(),
             LetIn(
-                [Eqn(defect, Sub(D(1), Add(b, a, d)))],
+                [Eqn(defect, Sub(D(1), Paren(Add(b, a, d))))],
                 Eqn(Call("asymmetricExperiment", a, d, b), Tuple(rowZero, rowOne))), Dot));
     }
 
@@ -131,10 +131,10 @@ internal sealed class AsymmetricFamilyRiskInjectivityDocument : IScribeDocumentD
                     LtF(Half(), tPlus), LtF(tPlus, D(1))),
                 ImpliesF(Member(piOne, Call("Icc", D(0), tMinus)), Eqn(riskOne, piOne)),
                 ImpliesF(Member(piOne, Call("Icc", tMinus, Half())),
-                    Eqn(riskOne, Add(aOne, Mul(piOne, Sub(m, Mul(D(2), aOne)))))),
+                    Eqn(riskOne, Add(aOne, Mul(piOne, Paren(Sub(m, Mul(D(2), aOne))))))),
                 ImpliesF(Member(piOne, Call("Icc", Half(), tPlus)),
-                    Eqn(riskOne, Add(Mul(m, Sub(D(1), piOne)),
-                        Mul(Sub(Mul(D(2), piOne), D(1)), dOne)))),
+                    Eqn(riskOne, Add(Mul(m, Paren(Sub(D(1), piOne))),
+                        Mul(Paren(Sub(Mul(D(2), piOne), D(1))), dOne)))),
                 ImpliesF(Member(piOne, Call("Icc", tPlus, D(1))),
                     Eqn(riskOne, Sub(D(1), piOne)))));
 
@@ -154,8 +154,8 @@ internal sealed class AsymmetricFamilyRiskInjectivityDocument : IScribeDocumentD
                 Eqn(l, Sub(mTwo, aTwo)),
                 Eqn(u, Add(Mul(D(2), l), defect)),
                 Eqn(s, Sub(Mul(D(2), piTwo), D(1))),
-                Eqn(c, Mul(mTwo, Sub(D(1), piTwo))),
-                Eqn(t, Div(Mul(defect, Sub(D(1), s)), Mul(D(2), s)))
+                Eqn(c, Mul(mTwo, Paren(Sub(D(1), piTwo)))),
+                Eqn(t, Div(Mul(defect, Paren(Sub(D(1), s))), Mul(D(2), s)))
             ],
             And(
                 ForallIn(fiber, fiberSet,
@@ -268,6 +268,8 @@ internal sealed class AsymmetricFamilyRiskInjectivityDocument : IScribeDocumentD
 
     private static Formula Half() => Div(D(1), D(2));
 
+    private static Formula Paren(Formula value) => Seq(Open, value, Close);
+
     private static Formula MinF(Formula left, Formula right) =>
         Seq(Min, Sp, Open, left, Comma, Sp, right, Close);
 
@@ -281,11 +283,11 @@ internal sealed class AsymmetricFamilyRiskInjectivityDocument : IScribeDocumentD
         Seq(value, Sp, InMacro, Sp, set);
 
     private static Formula ImpliesF(Formula premise, Formula conclusion) =>
-        Seq(Open, premise, Close, Sp, Rightarrow, Sp, Open, conclusion, Close);
+        Seq(Open, Open, premise, Close, Sp, Rightarrow, Sp, Open, conclusion, Close, Close);
 
     private static Formula IffF(Formula left, Formula right) =>
-        Seq(Open, left, Close, Sp, Iff, Sp, Open, right, Close);
+        Seq(Open, Open, left, Close, Sp, Iff, Sp, Open, right, Close, Close);
 
     private static Formula ForallIn(Formula value, Formula set, Formula body) =>
-        Seq(Forall, Sp, value, Sp, InMacro, Sp, set, Comma, Sp, body);
+        Seq(Open, Forall, Sp, value, Sp, InMacro, Sp, set, Comma, Sp, body, Close);
 }
