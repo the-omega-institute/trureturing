@@ -49,6 +49,4 @@ Survival is the identity on the dark space and tends to zero on its orthogonal c
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.darkProjection`
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.darkSpace`
 - Truth anchor: `D5/S3/Quantum/Measurement/FiniteDetectionSurvivalLimit.finite_detection_survival_limit`
-- Dependency: [D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace](../../ObserverMemory/Dynamics/MaximalUnobservableSubspace.md)
-- Dependency: [D5/S3/ObserverMemory/Dynamics/ResidualKernelInvariance](../../ObserverMemory/Dynamics/ResidualKernelInvariance.md)
-- Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionDarkSpace](FiniteDetectionDarkSpace.md)
+- Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionDarkBlockContraction](FiniteDetectionDarkBlockContraction.md)
