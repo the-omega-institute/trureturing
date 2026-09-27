@@ -64569,3 +64569,607 @@ $$
 本结论确定的是 $r=1$、深度至多三的有限最优值及其取得；$a_Z$ 的精确定义是唯一内点驻点方程 (427.4)。各残量族的精确值以及第426节的全部有限深度上确界 $\eta_{\mathrm{fin}}(1)=4F(0,0)$ 均未由本定理确定。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 428. 同深度正则化、边界上半连续性与切片簇
+
+沿用第421节的完整操作约定，并取源参数 $r=1$。每个有限协议是一棵局部完全正仪器树：Alice、Bob 可以使用各自的有限量子和经典私有记忆、与未知输入及参考独立的初始乘积辅助态、双向经典通信、重复操作、重置、丢弃、粗粒结果、已经取得但后来遗忘的实际结果、提前停止、零分支和单结果通道；禁止共享纠缠、量子通信以及终端反馈以前对 $S$ 的操作。每条根到叶路径上的局部仪器节点计一个深度，纯经典记账和消息传递不计数，最后的系统酉反馈不计数。每一个真实终端历史和所有失败历史都保留在完整仪器中；实际结果标签合并真实历史，但同一标签下的所有真实历史和隐藏 Kraus 项共用一个作用于整个 $S$ 的反馈。隐藏 Kraus 指标从不成为控制结果。若 $\mathcal M_\ell$ 是记录输出取迹后的真实历史系统映射，且 $\mathcal M_y=\sum_{\ell:y(\ell)=y}\mathcal M_\ell$，则
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\quad (X\in\mathcal L(S)),
+$$
+
+并且对每个有限维未操作参考 $F$，
+
+$$
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})=pX_{FS}
+\quad (X_{FS}\in\mathcal L(F\otimes S)).
+$$
+
+这两个等式等价于矩阵张量基上的全系统和全参考恢复；$p$ 与未知输入无关。以下的 $V_n$、$F=V_\infty$ 和累计效果树均指第421节中的对象；树的系数是累计输入效果的迹权重，不是未知输入下的结果概率，也不是操作后的条件态。
+
+置
+
+$$
+D=\{x\in\mathbb R^3:|x|\le1\},\qquad
+\rho(x)=\frac{I+x\cdot\sigma}{2},\qquad
+\mathcal U=\operatorname{int}(D)\times\operatorname{int}(D),
+$$
+
+并保留第426节的十二个方向 $X$、对合 $\pi:X\to X$、平坦边界报酬 $B_{\partial}$ 以及其精确纯面值和零集。记
+
+$$
+h=3-2\sqrt2.
+$$
+
+### 定理428.1（同深度首作用支配与内点正则化）
+
+设 $n\ge0$，且 $a,b,a',b'\in\operatorname{int}(D)$。若存在 $c_A,c_B\in[0,1]$ 使
+
+$$
+\rho(a')\succeq c_A\rho(a),\qquad
+\rho(b')\succeq c_B\rho(b),
+$$
+
+则
+
+$$
+\boxed{V_n(a',b')\ge c_Ac_BV_n(a,b).}
+$$
+
+因此，对任意 $0<\delta<1$，当四个点都满足
+
+$$
+|a|,|b|,|a'|,|b'|\le1-\delta,
+$$
+
+有统一于 $n$ 的估计
+
+$$
+\boxed{
+|V_n(a,b)-V_n(a',b')|
+ \le \frac h\delta\bigl(|a-a'|+|b-b'|\bigr).
+}
+$$
+
+同一估计对 $F$ 成立。特别地，$V_n\uparrow F$ 在 $\mathcal U$ 的每一个紧子集上一致收敛。
+
+#### 证明
+
+固定一棵根在 $(a,b)$、深度至多 $n$ 的有限奖励树。奖励树保留第421节的完整失败叶、提前停止、真实标签和累计效果；每个叶的原始终端报酬是其对应的 $V_0$，故非负且至多为 $h$。在复制树中给每一条路径附加两个旗标，分别记录 Alice 和 Bob 是否已经执行过各自的第一项原始局部作用。某一方尚未执行第一项作用以前，复制树中的该坐标保持在新的根点；另一方的坐标按原树的后继照常复制。这样复制的是同一棵树的深度预算，旗标只用于选择第一次作用的位置。
+
+考虑 Alice 沿任一路径的第一次原始作用。若 $c_A<1$，写成
+
+$$
+\rho(a')=c_A\rho(a)+(1-c_A)\rho(r_A),\qquad
+\rho(r_A)=\frac{\rho(a')-c_A\rho(a)}{1-c_A}.
+$$
+
+正性和迹为一说明 $\rho(r_A)$ 是合法的归一化效果。复制该节点时，原分裂中权重 $\lambda_j$ 的成功子分支取得新权重 $c_A\lambda_j$，并沿用原来的后继；另加一个权重 $1-c_A$ 的残差分支。残差分支在该处终止，用原树的实际非负终端报酬 $V_0$ 评价，不能把它强行指定为零，也不给它一个隐藏的后继。若 $c_A=1$，迹相等的正性关系迫使 $\rho(a')=\rho(a)$，于是没有残差分支；若 $c_A=0$，整项都是残差分支。Bob 的第一次作用用
+
+$$
+\rho(b')=c_B\rho(b)+(1-c_B)\rho(r_B)
+$$
+
+作完全对称的复制。已经作用过的一方在其后的节点保持原树坐标和权重；若另一方尚未作用，它仍保持新的严格内点根。
+
+对复制树作结构归纳。叶的旗标若有一方尚未置位，则该坐标仍是严格混合的，因而不可能是 $V_0$ 的平坦纯叶。于是复制树中来自原树的每个成功叶都必在两方的第一作用已经发生之后；它的原叶权重恰被乘以 $c_Ac_B$，平坦点和终端报酬保持不变。已经作用过的节点复制原有权重；零权重、单结果节点、提前终止、两方首次作用深度不同、重复作用、纯后继、$c_A=0$、$c_A=1$、$c_B=0$、$c_B=1$ 以及零输入效果均按同一归纳处理，不需除以一个可能为零的路径权重。新添的残差叶只贡献其实际的非负 $V_0$，所以复制树的总值至少是原树总值的 $c_Ac_B$ 倍。
+
+每一个被修改的分裂仍是原节点上的一个完整局部仪器。具体地，对给定累计效果 $A$ 的有限分裂 $A=\sum_jA_j$，使用第421节的支撑补全：在 $A$ 的支撑上取
+
+$$
+L_j=\sqrt{A_j}\,A^{-1/2},
+$$
+
+并把核投影的隐藏 Kraus 算子并入一个已有的实际结果。这样不增加实际结果或局部节点，也不把隐藏 Kraus 指标交给控制。残差分支若使有限结果数增加，先允许该有限分裂，再用第421节的有限结果数压缩保持或提高同深度值；以下的 $c_Ac_B$ 叶权重是压缩以前、在原始复制树中的精确权重。该构造没有预置过滤器、隐藏控制结果、免费的边界准备，也没有在破坏性输出之后继续运行；它只是在指定的边界效果上另构一棵合法的完整仪器树。新树的每个终端叶取得自己的实际标签；每个标签指定一个相容的全系统反馈，同一标签下的所有真实历史和隐藏 Kraus 项共用该反馈，成功标签使用第421节的平坦终端反馈。这里不声称保留任意原协议的标签或任意记录输出。故
+
+$$
+V_n(a',b')\ge c_Ac_BV_n(a,b).
+$$
+
+现在证明模估计。若 $x,x'$ 都满足 $|x|,|x'|\le1-\delta$，并令 $d=|x-x'|\le\delta$，则
+
+$$
+\rho(x')-\Bigl(1-\frac d\delta\Bigr)\rho(x)\succeq0.
+$$
+
+事实上，$\lambda_{\min}(\rho(x))\ge\delta/2$，而
+$\|\rho(x')-\rho(x)\|_{\mathrm{op}}=d/2$。若 $d>\delta$，则取系数 $c=0$ 即得平凡的正性不等式。故在两坐标上分别取
+
+$$
+ c_A=\max\Bigl\{0,1-\frac{|a-a'|}{\delta}\Bigr\},\qquad
+ c_B=\max\Bigl\{0,1-\frac{|b-b'|}{\delta}\Bigr\},
+$$
+
+并在正性有意义的方向应用首式；反向交换撇号也应用首式。因为 $0\le V_n\le h$，且
+
+$$
+1-c_Ac_B\le\frac{|a-a'|+|b-b'|}{\delta}
+$$
+
+在右端小于一时成立，右端大于等于一时则由 $|V_n(a,b)-V_n(a',b')|\le h$ 直接成立，得到所示的绝对值估计。
+
+对 $n$ 取单调极限，得到 $F$ 的同一模估计；这里没有预先假定 $F$ 的连续性。设 $K\Subset\mathcal U$ 为紧集，取 $\delta>0$ 使 $K$ 中每一坐标的范数至多 $1-\delta$。给定 $\varepsilon>0$，从该共同 Lipschitz 估计选择足够小的有限 $\eta$-网。每个网点上的 $V_n$ 单调收敛到 $F$，故可取同一个 $N$ 使所有网点的差小于 $\varepsilon/3$；任意 $z\in K$ 与一个网点相距至多 $\eta$ 时，分别用 $F$ 和 $V_N$ 的共同模估计控制两端，取 $\eta$ 使两项各小于 $\varepsilon/3$。于是 $\sup_K(F-V_n)<\varepsilon$ 对 $n\ge N$ 成立，证明紧致内点上一致收敛。证毕。
+
+### 定理428.2（全局上半连续性、边界簇与不连续轨迹）
+
+在同一约定下，$F$ 在 $D^2$ 上全局上半连续。对每一个 $z_0\in\partial(D^2)$，定义
+
+$$
+\operatorname{Cl}_{\mathcal U}(F,z_0)
+=\left\{\lim_{j\to\infty}F(z_j):z_j\in\mathcal U,\ z_j\to z_0\right\}
+$$
+
+为沿内点序列的聚点集合，则
+
+$$
+\boxed{\operatorname{Cl}_{\mathcal U}(F,z_0)=[0,F(z_0)].}
+$$
+
+$F$ 的不连续点恰为
+
+$$
+\boxed{
+(X\times\operatorname{int}D)\ \cup\ (\operatorname{int}D\times X)\ \cup\ \{(x,\pi(x)):x\in X\}.
+}
+$$
+
+#### 证明
+
+任取根在 $(a,b)$ 的有限奖励效果树，保留全部失败叶和提前终止叶。第421节的完整效果树恒等式给出
+
+$$
+\sum_j w_j\rho(a_j)\otimes\rho(b_j)
+=\rho(a)\otimes\rho(b),
+\qquad \sum_jw_j=1,
+$$
+
+其中 $w_j$ 是终端累计效果迹权重。把所有平坦成功叶 $(x,\pi(x))$ 的总权重记为 $\lambda_x$。保留失败项后，正性给出完整的张量不等式
+
+$$
+\sum_{x\in X}\lambda_x\rho(x)\otimes\rho(\pi(x))
+\preceq \rho(a)\otimes\rho(b).
+$$
+
+对任一有限树，其 $V_0$ 奖励为 $h\sum_x\lambda_x$。取部分迹得到两个边际不等式
+
+$$
+\sum_x\lambda_x\rho(x)\preceq\rho(a),\qquad
+\sum_x\lambda_x\rho(\pi(x))\preceq\rho(b).
+$$
+
+这些关系对每一棵有限树成立，因而可在取上确界时逐一使用，而不需要最优协议取得。
+
+若 $n\in\mathbb S^2\setminus X$，令
+
+$$
+c(n)=\min_{x\in X}(1-n\cdot x)>0.
+$$
+
+对第一边际不等式取 $Q_n=I-n\cdot\sigma$，得到
+
+$$
+\sum_x\lambda_x(1-n\cdot x)\le1-n\cdot a.
+$$
+
+所以对每一棵树
+
+$$
+h\sum_x\lambda_x
+\le h\min\left\{1,\frac{1-n\cdot a}{c(n)}\right\},
+$$
+
+从而
+
+$$
+F(a,b)\le h\min\left\{1,\frac{1-n\cdot a}{c(n)}\right\}.
+$$
+
+若 $n\in X$，令
+
+$$
+c_*(n)=\min_{x\in X,\,x\ne n}(1-n\cdot x)>0.
+$$
+
+同一边际不等式给出
+
+$$
+\sum_{x\ne n}\lambda_x\le\frac{1-n\cdot a}{c_*(n)}.
+$$
+
+另一边际不等式中保留 $x=n$ 的正项，得到
+
+$$
+\lambda_n\rho(\pi(n))\preceq\rho(b),\qquad
+\lambda_n\le\ell(b;\pi(n)),
+$$
+
+其中第426节的分段公式定义 $\ell$，包括纯重合时的值 $1$ 和纯不同时的值 $0$。于是
+
+$$
+F(a,b)\le h\min\left\{1,
+\ell(b;\pi(n))+\frac{1-n\cdot a}{c_*(n)}\right\}.
+$$
+
+交换两坐标还得到相应的两条边界估计。第426节的精确纯面值为
+
+$$
+F(n,b)=
+\begin{cases}
+0,&n\notin X,\\
+h\ell(b;\pi(n)),&n\in X,
+\end{cases}
+$$
+
+以及交换后的公式。由于 $\ell$ 的分段表达在闭球上上半连续，上述逐树估计直接说明 $F$ 在含纯坐标的每一点联合上半连续；在 $\mathcal U$ 内则由定理428.1连续。这里没有把单调上升的上半连续函数列的极限错误地判为上半连续。
+
+现证边界聚点。令 $z_0\in\partial(D^2)$，并写 $F_0=F(z_0)$。若 $F_0=0$，上半连续性和 $F\ge0$ 说明每一条趋于 $z_0$ 的内点序列的极限都只能是零；例如径向内缩序列给出聚点 $0$。若 $F_0>0$，先取高值序列。令
+
+$$
+H_j=(1-1/j)z_0,
+$$
+
+即逐坐标径向内缩。由分别凹性、非负性以及两次从原点的凹性应用，
+
+$$
+F(H_j)\ge(1-1/j)^2F(z_0).
+$$
+
+上半连续性给出 $\limsup_jF(H_j)\le F_0$，故 $F(H_j)\to F_0$。
+
+再取低值序列。若 $z_0$ 的一个纯坐标为 $n$，取单位向量 $n_j\to n$，其中 $n_j\notin X$，并令 $c_j=c(n_j)>0$。选取
+
+$$
+0<\varepsilon_j\le\min\{1/j,c_j/j^2\}.
+$$
+
+把该坐标换为 $(1-\varepsilon_j)n_j$，把另一坐标按 $1-1/j$ 径向内缩（若它本来已经是内点也可作同样的内缩）。所得 $L_j\in\mathcal U$ 趋于 $z_0$，而非平坦纯方向的估计给出
+
+$$
+F(L_j)\le h\frac{1-n_j\cdot((1-\varepsilon_j)n_j)}{c_j}
+=h\frac{\varepsilon_j}{c_j}\le\frac h{j^2}.
+$$
+
+因此 $F(L_j)\to0$。
+
+固定 $t\in(0,F_0)$。对足够大的 $j$，有 $F(L_j)<t<F(H_j)$。因为 $\mathcal U$ 是凸集，连接 $L_j$ 与 $H_j$ 的线段完全位于 $\mathcal U$，而定理428.1给出其上的连续性。介值定理为每个 $j$ 选取线段上一点 $Z_j(t)$，使
+
+$$
+F(Z_j(t))=t.
+$$
+
+两端都趋于 $z_0$，故 $Z_j(t)\to z_0$。低值序列和高值序列分别实现聚点 $0$ 与 $F_0$，而上半连续性和非负性排除区间外的聚点。这证明
+
+$$
+\operatorname{Cl}_{\mathcal U}(F,z_0)=[0,F(z_0)].
+$$
+
+最后，由第426节的零集，边界上 $F$ 为正的点恰为
+
+$$
+X\times\operatorname{int}D,\qquad
+\operatorname{int}D\times X,\qquad
+\{(x,\pi(x)):x\in X\}.
+$$
+
+在这些点，刚才构造的低值内点序列趋于零，故 $F$ 不连续。其余边界点（包括所有不匹配的纯—纯点）满足 $F(z_0)=0$，上半连续性和非负性则给出 $F(z)\to0$，所以是连续点；内点连续性已经由定理428.1得到。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 429. 线性边界误差与闭积球上一致收敛
+
+沿用第421、426节以及定理428.1–428.2的操作、坐标和效果树约定。置
+
+$$
+D=\{a\in\mathbb R^3:|a|\le1\},\qquad
+\rho(a)=\frac{I+a\cdot\sigma}{2},\qquad
+h=3-2\sqrt2,
+$$
+
+并令 $V_n$ 和 $F=V_\infty=\sup_nV_n$ 为第421节在 $r=1$ 的函数。保留第426节的十二个互异方向 $X$、对合 $\pi$ 和终端集合
+
+$$
+K=\{(x,\pi(x)):x\in X\},
+$$
+
+所以 $V_0=h$ 于 $K$，并在其余点为零。这里的 $\rho(a),\rho(b)$ 是归一化的累计输入效果；树权是累计效果的迹权重。根的物理输入因子是第421节的 $4$，不把下列归一化报酬与物理输入概率混同。
+
+记
+
+$$
+\mathcal U=\operatorname{int}(D)\times\operatorname{int}(D),\qquad
+\partial(D^2)=\{(a,b):\max(|a|,|b|)=1\},\qquad
+\delta(a,b)=1-\max(|a|,|b|),
+$$
+
+以及
+
+$$
+\gamma=\min_{\substack{x,x'\in X\\x\ne x'}}(1-x\cdot x'),\qquad
+\beta=1-\sqrt{1-\gamma/2}.
+$$
+
+有限集合 $X$ 给出 $0<\gamma\le2$ 及 $0<\beta\le1$。对 $y\in\mathbb S^2$ 定义第426节的提取系数
+
+$$
+\ell(a;y)=\max\{t\ge0:\rho(a)-t\rho(y)\succeq0\},
+$$
+
+包括其全部奇异支撑值
+
+$$
+\ell(a;y)=
+\begin{cases}
+\displaystyle\frac{1-|a|^2}{2(1-a\cdot y)},&|a|<1,\\[6pt]
+1,&|a|=1\text{ 且 }a=y,\\
+0,&|a|=1\text{ 且 }a\ne y.
+\end{cases}
+$$
+
+### 定理429.1（选定乘积容量、线性边界误差与深度二阈值）
+
+在上述完整操作假设下，对所有 $a,b\in D$ 成立：
+
+1. 对每个 $x\in X$，选定乘积投影的精确容量为
+
+$$
+\boxed{
+\max\{t\ge0:\rho(a)\otimes\rho(b)-t\rho(x)\otimes\rho(\pi(x))\succeq0\}
+ =\ell(a;x)\ell(b;\pi(x)).
+}
+$$
+
+选定奖励 $h\ell(a;x)\ell(b;\pi(x))$ 可由至多两个局部仪器节点实现，并且满足
+
+$$
+h\ell(a;x)\ell(b;\pi(x))\le V_2(a,b).
+$$
+
+2. 对任意单位向量 $\nu$，若 $x_0\in\arg\max_{x\in X}\nu\cdot x$，则对每个 $x\ne x_0$（包括未选中的并列最大者）有
+
+$$
+1-\nu\cdot x\ge\beta.
+$$
+
+对每个整数 $n\ge2$，有
+
+$$
+\boxed{
+0\le F(a,b)-V_n(a,b)
+ \le F(a,b)-V_2(a,b)
+ \le h\min\left\{1,\frac{\delta(a,b)}{\beta}\right\}.
+}
+$$
+
+3. 对 $n\ge2$，$E_n=F-V_n$ 在整个闭积球 $D^2$ 上连续，在边界上为零，并且单调一致收敛到零：
+
+$$
+\lim_{n\to\infty}\sup_{D^2}(F-V_n)=0.
+$$
+
+特别地，$F=V_2+E_2$，且对每个 $n\ge2$
+
+$$
+V_n=V_2+(E_2-E_n),
+$$
+
+其中修正项连续并在边界消失。
+
+4. 对每个 $z_0\in\partial(D^2)$ 及固定 $n\ge2$，有
+
+$$
+\boxed{
+\operatorname{Cl}_{\mathcal U}(V_n,z_0)
+ =\operatorname{Cl}_{\mathcal U}(F,z_0)
+ =[0,F(z_0)].
+}
+$$
+
+深度二阈值对这些连续误差和边界聚簇结论是尖锐的：$V_0=V_1=0$ 在 $\mathcal U$ 上恒成立，而对每个 $x\in X$，
+
+$$
+F(x,\pi(x))=h>0.
+$$
+
+#### 证明
+
+先证精确乘积容量，包括奇异支撑情形。单投影最大可减系数的支撑判据及倒数公式见 Lewenstein–Sanpera，[*Separability and entanglement of composite quantum systems*](https://arxiv.org/abs/quant-ph/9707043)，第2页引理1及式(6)–(7)；下面在证明内使用该标准结果，并写出支撑论证及所需的张量因子化。设 $M\succeq0$ 为有限维正半定矩阵，$u$ 为单位向量，定义
+
+$$
+ c_M(u)=\max\{t\ge0:M-t|u\rangle\langle u|\succeq0\}.
+$$
+
+若 $u\notin\operatorname{ran}(M)$，取其在 $\ker M$ 上的非零投影 $k$，则对任意 $t>0$，
+
+$$
+\langle k,(M-t|u\rangle\langle u|)k\rangle
+=-t|\langle u,k\rangle|^2<0,
+$$
+
+故 $c_M(u)=0$。若 $u\in\operatorname{ran}(M)$，把不等式限制到该支撑并用 $M^{-1/2}$ 共轭，得到
+
+$$
+I_{\operatorname{supp}M}
+-t|M^{-1/2}u\rangle\langle M^{-1/2}u|\succeq0,
+$$
+
+其成立当且仅当
+
+$$
+ t\le\frac1{\langle u,M^+u\rangle}.
+$$
+
+因此 $c_M(u)=1/\langle u,M^+u\rangle$，且最大值取得。谱分解给出
+
+$$
+\operatorname{ran}(A\otimes B)=\operatorname{ran}(A)\otimes\operatorname{ran}(B),\qquad
+(A\otimes B)^+=A^+\otimes B^+.
+$$
+
+对非零单位 $u,v$，$u\otimes v$ 属于该支撑当且仅当 $u$ 和 $v$ 分别属于两个因子支撑；在支撑条件成立时，伪逆期望因子化，否则两边都为零。因此
+
+$$
+ c_{A\otimes B}(u\otimes v)=c_A(u)c_B(v).
+$$
+
+令 $A=\rho(a)$、$B=\rho(b)$，并取 $u,v$ 为 $\rho(x),\rho(\pi(x))$ 的单位代表，就得到第一项的精确容量。这个论证在纯边界支撑奇异、容量为零以及纯重合容量为一的情形都成立，不需要把 $0/0$ 代入分式。
+
+再证容量奖励的至多二节点实现。固定 $x\in X$，令 $y=\pi(x)$、$\ell=\ell(a;x)$、$m=\ell(b;y)$。由定义 $0\le\ell,m\le1$。若 $\ell m=0$，所需的选定奖励为零，空接受规则即实现它。若 $\ell m>0$，先把第一坐标分裂为
+
+$$
+\rho(a)=\ell\rho(x)+(1-\ell)\rho(c),\qquad
+\rho(c)=\frac{\rho(a)-\ell\rho(x)}{1-\ell}\quad(\ell<1),
+$$
+
+并保留残差结果后终止；若 $\ell=1$，残差为零而该分裂省略。然后只在选定的第一分支上把第二坐标分裂为
+
+$$
+\rho(b)=m\rho(y)+(1-m)\rho(d),
+$$
+
+同样在系数为一时省略零残差。选定终端 $(x,y)$ 的权重是 $\ell m$，树深至多二；所有其他结果仍作为失败保留。残差若偶然也是平坦点，在原始 $V_0$ 记账中贡献它自己的实际非负报酬，所以所得树的总 $V_0$ 值至少为
+
+$$
+ h\ell m.
+$$
+
+因此得到的是 $V_2(a,b)\ge h\ell(a;x)\ell(b;\pi(x))$，而不是把 $V_2$ 等同于单个选定贡献。第421节的规范累计效果实现把这些正性分裂作为完整局部仪器接回原始两因子，在奇异节点上也成立。新树的终端叶各自取得自己的实际标签，每个标签下的所有真实历史和隐藏 Kraus 项共用一个相容的全系统反馈；每个接受实际标签经反馈校正后的映射，在所有系统矩阵和每个有限未操作参考上都是同一个标量乘恒等映射。若该节点的输入累计效果写成
+
+$$
+A=\alpha\rho(a),\qquad B=\eta\rho(b),
+$$
+
+则这个全矩阵、全参考标量为
+
+$$
+\alpha\eta\,h\ell(a;x)\ell(b;\pi(x));
+$$
+
+在 $V_2$ 的归一化效果记账中只保留 $h\ell(a;x)\ell(b;\pi(x))$，根处的物理因子 $\alpha\eta=4$ 已由第421节固定。这里保持一个实际标签对应一个反馈，不把隐藏 Kraus 指标或丢弃的记忆变成后继控制，也不在任意破坏性实现之后继续运行。
+
+现在证明角向间隔。令 $x_0$ 最大化 $\nu\cdot x$。若 $x\ne x_0$，则
+
+$$
+\nu\cdot x
+\le\frac{\nu\cdot x+\nu\cdot x_0}{2}
+\le\frac{|x+x_0|}{2}
+=\sqrt{\frac{1+x\cdot x_0}{2}}
+\le\sqrt{1-\frac\gamma2}.
+$$
+
+第一步即使在 $\nu\cdot x=\nu\cdot x_0$ 时仍成立，所以并列但未选中的最大者也满足该估计。用一减去两端即得 $1-\nu\cdot x\ge\beta$。
+
+取任意根在 $(a,b)$ 的原始有限奖励树。令 $w_j$ 为包括失败和提前终止在内的全部终端效果权重，终端坐标为 $(a_j,b_j)$。每个局部分裂的仿射性沿树逐层望远镜相消，给出第421节的完整张量恒等式
+
+$$
+\sum_jw_j\rho(a_j)\otimes\rho(b_j)
+=\rho(a)\otimes\rho(b),\qquad \sum_jw_j=1.
+$$
+
+把所有奖励终端 $(x,\pi(x))$ 的总权重记为 $\lambda_x$。删去失败项只加强正半定序，于是
+
+$$
+\sum_{x\in X}\lambda_x\rho(x)\otimes\rho(\pi(x))
+\preceq\rho(a)\otimes\rho(b).
+$$
+
+取部分迹得到
+
+$$
+\sum_x\lambda_x\rho(x)\preceq\rho(a),\qquad
+\sum_x\lambda_x\rho(\pi(x))\preceq\rho(b),
+$$
+
+而该树的归一化 $V_0$ 奖励是 $h\sum_x\lambda_x$。张量不等式还给出每个聚合质量
+
+$$
+\lambda_x\le\ell(a;x)\ell(b;\pi(x)),
+$$
+
+这与上面的精确容量一致。
+
+令
+
+$$
+R=\max\{|a|,|b|\},\qquad \delta=1-R.
+$$
+
+若 $R>0$ 且 $|a|=R$，取 $\nu=a/R$，并选 $x_0\in\arg\max_{x\in X}\nu\cdot x$。用 $Q_\nu=I-\nu\cdot\sigma$ 检验第一边际不等式，得到
+
+$$
+\sum_x\lambda_x(1-\nu\cdot x)\le1-\nu\cdot a=1-R=\delta.
+$$
+
+各项非负，故角向间隔给出
+
+$$
+\sum_{x\ne x_0}\lambda_x\le\frac\delta\beta.
+$$
+
+而选中项由容量公式和二节点见证满足
+
+$$
+ h\lambda_{x_0}
+\le h\ell(a;x_0)\ell(b;\pi(x_0))
+\le V_2(a,b).
+$$
+
+所以任意有限树的奖励不超过 $V_2(a,b)+h\delta/\beta$。若 $|b|=R$，对第二边际取 $\nu=b/R$，选 $y_0$ 最大化 $\nu\cdot y$，将选中对写成 $(\pi(y_0),y_0)$。由于 $\pi$ 是对合，所有未选中的第二坐标有同一角向下界，张量容量仍给出
+
+$$
+ h\lambda_{\pi(y_0)}\le V_2(a,b).
+$$
+
+若两个坐标范数相等，任选其一即可。对所有有限树取上确界，得到 $F-V_2\le h\delta/\beta$。第421节给出 $0\le V_2\le V_n\le F\le h$，故对 $n\ge2$
+
+$$
+0\le F-V_n\le F-V_2\le h\min\{1,\delta/\beta\}.
+$$
+
+若 $R=0$，则 $a=b=0$、$\delta=1$，且 $0\le F-V_2\le h=h\min\{1,\delta/\beta\}$，因为 $\beta\le1$。当 $R=1$ 时 $\delta=0$，这同样覆盖整个边界，并与第426节的纯面值 $F=V_1$ 相容；因此 $V_2=F$ 在边界上。
+
+由定理428.1，$F$ 和每个 $V_n$ 在 $\mathcal U$ 连续，所以 $E_n=F-V_n$ 在 $\mathcal U$ 连续。上面的线性界在边界给出 $E_n=0$，并且沿闭球中任意趋于边界的序列有 $E_n\to0$；故每个 $E_n$（$n\ge2$）在整个 $D^2$ 连续。单调性给出 $E_n\downarrow0$ 点态成立。对 $\varepsilon>0$，令
+
+$$
+O_n=\{z\in D^2:E_n(z)<\varepsilon\},\qquad n\ge2.
+$$
+
+这些相对开集递增并覆盖紧空间 $D^2$。有限子覆盖中取最大指标 $N$，则 $O_N=D^2$；连续性和紧性于是给出 $\max_{D^2}E_N<\varepsilon$，并由单调性对一切 $n\ge N$ 有 $\sup_{D^2}E_n<\varepsilon$。所以
+
+$$
+\lim_{n\to\infty}\sup_{D^2}(F-V_n)=0.
+$$
+
+取 $n=2$ 得 $F=V_2+E_2$，再减去 $E_n$ 得
+
+$$
+V_n=V_2+(E_2-E_n).
+$$
+
+这些修正项连续且在边界消失；一致收敛只给出一个共同的深度预算，逼近某一点的有限树仍可依赖该点。
+
+最后取 $z_0\in\partial(D^2)$。若 $z_j\in\mathcal U$ 且 $z_j\to z_0$，则对固定 $n\ge2$
+
+$$
+|F(z_j)-V_n(z_j)|
+\le h\min\left\{1,\frac{\delta(z_j)}\beta\right\}
+\longrightarrow0,
+$$
+
+其中界与 $n$ 无关。因此，固定 $n\ge2$ 时，一列内点对 $F$ 有某个极限，当且仅当它对 $V_n$ 有同一个极限。调用定理428.2的边界簇结论便得
+
+$$
+\operatorname{Cl}_{\mathcal U}(V_n,z_0)
+=\operatorname{Cl}_{\mathcal U}(F,z_0)
+=[0,F(z_0)].
+$$
+
+深度阈值的尖锐性如下。因为 $K$ 由纯—纯对组成，任何 $(a,b)\in\mathcal U$ 的零步终端都不是平坦对，故 $V_0=0$ 于 $\mathcal U$。深度一至多改变一个坐标，另一坐标仍严格混合，所以每个终端仍无平坦报酬，$V_1=0$ 于 $\mathcal U$。在匹配边界点 $(x,\pi(x))$，第426节给出
+
+$$
+F(x,\pi(x))=V_0(x,\pi(x))=V_1(x,\pi(x))=h.
+$$
+
+于是这些点的 $V_0,V_1$ 内点簇只有 $\{0\}$，而 $F$ 的内点簇为 $[0,h]$；沿着 $F\to h$ 的内点序列，$E_0$ 和 $E_1$ 趋于 $h$，尽管边界值为零。故连续零边界误差和边界簇等结论不能把阈值降到一。这里的 $n\ge2$ 是这些连续误差及簇结论的深度阈值，并非对 $V_n\to F$ 的极限序列另加一个起始指标限制。证毕。
+
+## 追加锚（本行以下为增补区）
