@@ -1,0 +1,21 @@
+## 11. The pure-cubic order of an actual Lucas block
+
+Retain $j\geq1$, $x_j=L_{3^j}$, $B_j=x_j^2+3$, and the original
+depth $h_p=v_p(F_{\rho(p)})$ for $p\mid B_j$. Section 8.3 supplies the
+noncube input for $B_j$; its formal verification remains a prerequisite.
+Write uniquely
+
+$$
+B_j=d_jc_j^3,\qquad
+d_j=\prod_{p\mid B_j}p^{h_p\bmod3},\qquad
+R_j=\operatorname{rad}(d_j)
+   =\prod_{p\mid B_j,\,3\nmid h_p}p,
+$$
+
+where $d_j$ is cubefree and $c_j$ is positive. In particular $R_j>1$.
+Let $\theta_j$ be the positive real cube root of $B_j$ and set
+$k_j=\mathbb Q(\theta_j)$. The polynomial $T^3-B_j$ is irreducible
+over $\mathbb Q$. Since $B_j\equiv1\pmod9$, the integer
+$a_j=(B_j-1)/9$ is defined; put
+$\beta_j=(1+\theta_j+\theta_j^2)/3$.
+
