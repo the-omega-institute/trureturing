@@ -56528,3 +56528,348 @@ The new step beyond Chapter 180 is (183.18), with the exact conditioning and loc
 
 
 ## 追加锚（本行以下为增补区）
+
+## 184. 中心化能量轮廓：连接小电荷域与 Taylor 域外的复剖面
+
+第 182 章建立了精确有限混合的实能量分支。本章在同一实际数组上构造具有固定复宽度的连通管域：它与第 179 章的小电荷域有非空开重叠，并到达行列式 Taylor 展开失效的负能量区域。关键是围绕实际能量鞍点中心化后，非中心高斯项在选定射线上实部非正，从而无需用小电荷假设压住远端能量积分。
+
+所得结论包括解析能量根、方向系数 $+1$、精确低模混合非零性、相对 $O(\delta)$ 剖面误差，以及管域内有限电荷路径的合法变形。总电荷的等幅曲线、贡献周期系数及新零点标签仍未建立；原始计数误差在没有实际分母下界时仍只能作为加性误差使用。
+
+### 184.1 原始有限实验与精确剖面
+
+
+Use the original full-q selected law:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,\quad
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ H_y=V+\sqrt\delta\,y,\quad a=(2V)^{-1}+\eta,
+$$
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)
+  e^{aD^2+hD-(E-H_y)^2/(2\delta\sigma^2)}.
+ \tag{184.1}
+$$
+Here eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, sigma>0 tends to zero with ONLY the inherited strict log(1/sigma)/Q^3 reserve. We work on the inherited common tight class M>=16, uniformly |y|<=Y and the permitted separator compacts. The high spectrum satisfies V,V_H in[M^-1,M], max v_j/delta<=M, C2,H>=M^-1, and the conditional covariance divided by delta has at least1/(M delta) eigenvalues in[1/M,M]. Also ||e_H||<=M delta^5 and n_g<=M delta^-4. Constants may depend on M,Y and the inherited fixed cell/noise reserve, not on inverse sigma or an extra eta rate. Exhaustion gives the actual pair and actual path statements separately, uniformly in deterministic size-q supports. Every displayed parameter choice is on ONE realized array.
+
+The selection law remains literally
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ \frac{[z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)}
+      {[z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_jn_j.
+ \tag{184.2}
+$$
+Its retained full-box coefficient approximation is exp(ell_sel-epsilon D^2)+O(q^-1/2), with epsilon=B^2/(2d_c), ell_sel=onehalf log(d_all/d_c). Write b_ch=a-epsilon, distinct from the residual exponent beta_res. This is not an exact replacement of (184.2); the coefficient error remains in the original-law return.
+
+Let C=diag(v_j) on the high set, v=(v_j), and
+$$
+ A_c=C-vv^T/V_H,\quad B_c=A_c/\delta,\quad
+ q_c=v/(V_H\sqrt\delta),\quad
+ f_L=-c_Lv/V_H-e_H,\quad b_L(w)=f_L-wq_c.
+ \tag{184.3}
+$$
+All low tuples L, their exact probabilities p_L, charges c_L and energies u_L are kept, with sum p_L=1 and ell_Q=max_L(|c_L|+u_L)<=P(Q)exp(-b_Low Q^3). Zero-probability entries have no effect. The exact energy action is
+$$
+ J_L(s,w)=\frac{\sigma^2s^2}{2}+s(u_L-H_y)
+ -\frac{\delta}{2}\log\det(I-2sB_c)
+ +s\,b_L(w)^T(I-2sB_c)^{-1}b_L(w).
+ \tag{184.4}
+$$
+Complex squares are bilinear. On the real negative energy axis all determinants are positive and their logarithms are fixed by continuation from s=0. For real charge w initially the faithful profile is
+$$
+ g(w/\sqrt\delta)=\frac{e^{\ell_{sel}}}{\sqrt{2\pi V_H}}
+ \sum_Lp_L
+ e^{[b_{ch}w^2-(w+\sqrt\delta c_L)^2/(2V_H)]/\delta} I_L(w),
+$$
+$$
+ I_L(w)=\mathbb E\exp\!\left[
+ -\frac{(u_L+\|Z+b_L(w)\|^2-H_y)^2}{2\delta\sigma^2}\right],
+ \qquad Z\sim N(0,A_c).
+ \tag{184.5}
+$$
+This is precisely the retained Chapters 169, 179 and 182 profile, not a new Gaussian experiment. For each fixed finite array and sigma>0 it is entire in w: on any compact set of complex w the negative quartic in the real integration variable dominates the lower-degree terms. This establishes holomorphy only; its nonvanishing and uniform estimates require the proof below.
+
+### 184.2 已实现实区间与固定复宽度
+
+Retain Chapter 182's explicit quantities
+$$
+ a_Q=8M^6[\eta+\sqrt\delta(1+Y)+\delta],\qquad
+ R_*=8M^3(1+2M^2).
+$$
+Let F_L=J_L+b_ch rho^2-(rho+sqrt(delta)c_L)^2/(2V_H) for real rho, and mathscr F=delta log sum_L p_L exp(F_L/delta). Chapter 182 proves a unique positive root rho_Q(s) of mathscr F_s=0 for s in[-M,-a_Q], strictly decreasing in s. Set
+$$
+ \rho_-=\rho_Q(-a_Q),\qquad \rho_+=\rho_Q(-M),\qquad
+ I_Q=[\rho_-,\rho_+].
+ \tag{184.6}
+$$
+These exact roots are not postulated. We reuse their established real theorem: rho_-=O_M(sqrt(eta)), 0<rho_-<rho_+<R_*, and the portion s in[-M,-M/2] has charge bounded below by a fixed positive class constant. Per-low real energy roots s_L^real(rho), defined by J_L,s=0, differ from Chapter 182's mixture energy root by O_M(ell_Q); hence for rho in I_Q they lie in[-M-1,0] eventually. Their existence follows from strict positive energy curvature and the uniform low difference, not from complex continuation.
+
+The following conservative constants specify a NONshrinking complex width. They are choices for this proof, not optimized constants:
+$$
+ R=R_*+1,\quad
+ \beta_-=\frac{1}{M[1+2M(M+1)]},\quad
+ k=\frac{1}{M^3[1+2M(M+1)]^2},
+$$
+$$
+ C_*=2^{100}(10!)^2(1+M+R+Y)^{100},\quad
+ d_s=\min\{(64M)^{-1},\,k/(64C_*)\},\quad v_0=d_s/8,
+$$
+$$
+ \gamma=\frac{\beta_-^2}{64M},\qquad
+ \varepsilon_*=\min\left\{
+ \frac{d_s k^2}{2^{16}C_*^2},
+ \frac{\gamma v_0^2}{2^{16}C_*(M+2)},\frac1{128M}
+ \right\}.
+ \tag{184.7}
+$$
+All are fixed on the class, independent of Q and sigma^-1. The proved domain is the open capsule
+$$
+ \mathcal T_Q=\{w\in\mathbb C:\operatorname{dist}(w,I_Q)<\varepsilon_*\}.
+ \tag{184.8}
+$$
+We carry out estimates on the capsule of width4epsilon_* to leave an inner Cauchy margin. The large constants in (184.7) absorb those fixed factors. Eventually0 lies in mathcal T_Q since rho_-->0. This is a connected complex domain reaching the deep negative-energy charges, not a union of unrelated assumed charts.
+
+Here is the elementary derivative accounting behind C_*. On a complex energy disk of radius1/(32M) about any c in[-M-1,0], the resolvent norm is at most2. Its jth derivative is j! times products of at most j powers of2B_c and j+1 resolvents. For 1<=j<=10, delta tr(B_c^j)<=M^j(1+M); determinant derivatives never require the dimension without a B_c factor. The undifferentiated determinant logarithm is bounded by integrating its first derivative from0. Also ||q_c||<=M^2 and ||b_L(w)||<=2M^2(1+R) for |w|<=R and eventual Q. These give bounds by C_* on the mixed action derivatives needed through order8, and the far-ray parameter differences used below. No minimum positive eigenvalue of the WHOLE spectrum is used: the retained block supplies lower bounds while small eigenvalues are handled by resolvent norms.
+
+### 184.3 中心化非中心高斯的精确恒等式
+
+Fix a real rho in I_Q and one low tuple, and put c=s_L^real(rho). Define
+$$
+ T=B_c(I-2cB_c)^{-1},\qquad
+ \mu=(I-2cB_c)^{-1}b_L(\rho).
+ \tag{184.9}
+$$
+Both are real, T is positive semidefinite, its retained block eigenvalues beta lie in[beta_-,M], and ||mu|| is bounded on this realized interval. The following identity is EXACT, including the physical noise:
+$$
+ J_L(c+z,\rho)-J_L(c,\rho)
+ =\frac{\sigma^2z^2}{2}
+ +\delta\left[-\frac12\log\det(I-2zT)-z\operatorname{tr}T\right]
+ +2z^2\mu^T T(I-2zT)^{-1}\mu.
+ \tag{184.10}
+$$
+To prove it, exponentially tilt the conditional Gaussian at c. Its covariance becomes delta T and mean becomes mu. Its exact quadratic-form transform at z has determinant det(I-2zT)^-1/2 and noncentral exponent z mu^T(I-2zT)^-1 mu/delta. Subtract its linear derivative z[delta tr T+||mu||^2], and add the noise quadratic. The remaining linear terms vanish because J_L,s(c,rho)=0. Equivalently, apply the resolvent identity twice to (184.4). This proves (184.10) without neglecting a null component, actual e, low energy or noise drift. A null eigenvalue contributes zero to the centered noncentral term, although its uncentered linear energy contribution need not vanish.
+
+For z=r exp(i theta), r>=0, pi/3<=|theta|<=pi/2, diagonalization gives
+$$
+ \Re\frac{z^2}{1-2z\beta}
+ =\frac{r^2\cos(2\theta)-2\beta r^3\cos\theta}
+             {|1-2z\beta|^2}\le0\qquad(\beta\ge0).
+ \tag{184.11}
+$$
+Thus the entire noncentral term in (184.10) has nonpositive real part for EVERY real conditional mean. It is not bounded by a positive C||b||^2r remainder. This is the new relation that removes Chapter 169's small-charge requirement in its infinite energy-contour estimate. Centering at the actual energy saddle, including sigma^2 c and the conditional mean energy in the centering equation, is essential.
+
+For the two rays theta=+-pi/3 put a=r beta. Each centered determinant summand has real part
+$$
+ f(a)=-\tfrac14\log(1-2a+4a^2)-a/2,\qquad
+ f'(a)=-\frac{a(1+2a)}{1-2a+4a^2}.
+$$
+For 0<=a<=1 the denominator is at most3, so f(a)<=-a^2/6. For a>=1 the derivative is at most-2/5 and f(1)<=-1/6; consequently
+$$
+ f(a)\le-\tfrac1{16}\min(a^2,a).
+ \tag{184.12}
+$$
+The derivative bounds above imply (184.12) by integration. Summing the retained block and using beta_-<=1 gives
+$$
+ \Re[J_L(c+r e^{\pm i\pi/3},\rho)-J_L(c,\rho)]
+       \le-4\gamma\min(r^2,r).
+ \tag{184.13}
+$$
+The noise has real part -sigma^2 r^2/4 and only improves the inequality. All other determinant modes have nonpositive centered real part and all noncentral modes obey (184.11). For the arcs |z|=v0, pi/3<=|arg z|<=pi/2, the same derivative calculation with cos(theta) in[0,1/2] gives a quadratic loss at least4gamma v0^2 after the conservative choice of gamma. On the vertical segment this also follows from the exact tilted characteristic function. These bounds are uniform in the SAME finite array and all lows.
+
+### 184.4 实际轮廓变形与能量系数
+
+Start with the exact real-charge inversion
+$$
+ I_L(\rho)=\frac{\sigma}{i\sqrt{2\pi\delta}}
+          \int_{c-i\infty}^{c+i\infty} e^{J_L(s,\rho)/\delta}\,ds.
+ \tag{184.14}
+$$
+Use the upward-oriented contour consisting of a ray from c+infinity exp(-i pi/3) inward to c+v0 exp(-i pi/3), the lower radius-v0 arc to c-iv0, the vertical segment to c+iv0, the upper radius-v0 arc to c+v0 exp(i pi/3), and the outgoing upper ray. All determinant singularities in the z=s-c coordinate are on the positive real axis at1/(2beta), when beta>0. None lies in either swept angular sector. The determinant logarithm continues from z=0 separately along these joined sectors with no winding about a pole.
+
+For finite sigma>0, the closing arcs at radius R_infty vanish: throughout their angular sectors cos(2theta)<=-1/2, so the centered noise factor has Gaussian decay. The centered noncentral term remains nonpositive by (184.11), and the centered determinant real part is nonpositive there. Therefore there is no compensating exponentially growing factor on the closing arcs. This proves the contour identity before taking any uniform asymptotic estimate. Subsequently (184.13) and the finite arc gaps give bounds independent of inverse sigma; no limit sigma=0 is interchanged with the closing-contour argument.
+
+The local vertical segment has the original upward orientation. On the upward segment $s=c+iv$, the differential is $ds=i\,dv$, so the raw leading integral is $i\sqrt{2\pi\delta/K_L}$, where $K_L=J_{L,ss}(c,\rho)>0$. The factor $1/i$ in (184.14) cancels this $i$, giving energy-cycle coefficient $+1$. The two connectors and the whole infinite remainder have been specified and paid. We do not infer an individual CHARGE saddle coefficient from this energy coefficient.
+
+The negative full-charge precision root q_star=0 from Chapter 171/Chapter 174 does not occur in (184.4) or (184.14). We have conditioned charge, not integrated it over the entire real line with a supercritical Gaussian insertion. Crossing that auxiliary precision value in energy introduces no singularity into the present conditional determinant. Positive conditional determinant poles remain avoided by the explicit angular sectors. This establishes a legal representation across that particular auxiliary boundary; it does not assert that the original total has a physical transition there.
+
+### 184.5 定量复扰动与全管域能量分支
+
+At each real anchor rho in I_Q, J_L,ss(c,rho)>=2k. Linearize J_L,s at c on an energy circle of radius d_s. The action derivative bounds give a quadratic energy remainder at most C_* d_s^2 and a charge perturbation at most C_*|w-rho|. With |w-rho|<4epsilon_*, these are smaller than fixed fractions of k d_s. Rouche therefore gives one root s_L(w) in the disk, with
+$$
+ |s_L(w)-c|\le 2C_*|w-\rho|/k,\qquad
+ \Re K_L(w)\ge k,\quad K_L(w)=J_{L,ss}(s_L(w),w).
+ \tag{184.15}
+$$
+The last inequality follows from the same mixed derivative bounds and (184.7). Every assertion includes a surrounding margin. No positive determinant pole is approached; in particular Re s_L(w)<1/(8M).
+
+These roots patch on the WHOLE capsule. On the real interval the energy root derivative satisfies |ds_L^real/drho|<=C_*/k. If two anchor disks of charge radius4epsilon_* overlap, their real anchors differ by at most8epsilon_* and their real energy centers differ by at most8C_*epsilon_*/k. Both continued roots then lie in the same uniqueness disk of radius d_s, using the margins in (184.7). They are identical there. This proves a single-valued analytic branch, not merely a collection of local implicit solutions. The square root of K_L has positive real part everywhere by (184.15).
+
+Keep the anchor's rays and arcs outside the central segment. For s=c+z on those rays, the factorization
+$$
+ (I-2sB_c)^{-1}
+ =(I-2zT)^{-1}(I-2cB_c)^{-1}
+$$
+has norm at most2, since the ray angle is pi/3 and T is positive semidefinite. The exact noncentral difference in (184.4), together with |b_L(w)-b_L(rho)|<=M^2|w-rho|, gives
+$$
+ |J_L(c+z,w)-J_L(c+z,\rho)|
+       \le C_*|w-\rho|(M+2+|z|).
+ \tag{184.16}
+$$
+The saddle values themselves differ by at most C_* times a fixed multiple of |w-rho|. The second smallness condition in (184.7) makes this cost less than half of (184.13) for every r>=v0, INCLUDING the linear-in-r infinite part. The same condition preserves the finite arc gaps. Notice that (184.16) is paid against the centered determinant loss; no positive O(||b||^2r) baseline term remains to require rho small.
+
+Replace only the local vertical segment by one through s_L(w), with short connectors near its endpoints to the fixed anchor contour. Taylor expansion about the complex saddle, (184.15), and v0<=d_s/8 give
+$$
+ \Re[J_L(s_L(w)+iv,w)-J_L(s_L(w),w)]\le-kv^2/4
+       \quad (|v|\le v0).
+ \tag{184.17}
+$$
+At the connecting pieces the real-anchor gap is of order gamma v0^2 and (184.16),(184.7) preserve it. Thus on the entire parameter-dependent contour all pieces except the central saddle have a proved strict loss relative to its complex saddle amplitude.
+
+The integral defined by these contours is holomorphic on each charge disk by uniform domination, including the rays. It equals (184.5) on the real part of the disk by (184.14). Since (184.5) is entire for each finite sigma, the identity theorem gives equality throughout the disk. Overlapping disks meet on real subintervals and give the same function; the contour descriptions and logarithms are compatible. This avoids applying a real-mean characteristic-function inequality to a complex mean, or inferring uniform complex estimates from Chapter 182's real C2 result.
+
+### 184.6 相对解析剖面与精确低模混合非零性
+
+The central Gaussian calculation, on the contour just proved, yields
+$$
+ I_L(w)=\sigma K_L(w)^{-1/2}
+           e^{J_L(s_L(w),w)/\delta}\,[1+r_L(w)],
+ \qquad \sup_{\operatorname{dist}(w,I_Q)<2\varepsilon_*}|r_L(w)|
+                \le C\delta.
+ \tag{184.18}
+$$
+Here and below C is fixed on M,Y and the constants (184.7). The cubic term is odd on the local symmetric vertical segment; its integral vanishes. Its square and the quartic term cost O(delta). Bounded derivatives through order8 control the remaining local terms after scaling v=sqrt(delta)u. The connectors and rays contribute at most C exp(-c/ delta) relative to the saddle by (184.13),(184.16),(184.17), with only fixed Gaussian-width powers of delta. All of these statements apply to the same saddle value; they are not absolute errors divided later by an unknown oscillatory sum. Cauchy estimates on the width margin give O(delta) bounds for every fixed derivative order of r_L on a smaller tube. Neither constants nor relative remainder contain inverse sigma.
+
+Define the exact finite spectral predictors
+$$
+ Q_L(w)=b_{ch}w^2-\frac{(w+\sqrt\delta c_L)^2}{2V_H}
+                          +J_L(s_L(w),w),\qquad
+ Z_Q(w)=\sum_Lp_L K_L(w)^{-1/2}e^{Q_L(w)/\delta}.
+ \tag{184.19}
+$$
+The real-root and complex-contour construction also applies to the reference c_L=u_L=0 while KEEPING the actual e_H. The low differences and their fixed derivatives satisfy
+$$
+ |s_L-s_0|+|K_L-K_0|+|Q_L-Q_0|\le C\delta^{-m}\ell_Q
+ \tag{184.20}
+$$
+on the tube for a fixed integer m; a conservative m=8 suffices. To see this directly, differences of the finite actions are O(ell_Q) on the bounded energy/charge disks, the energy roots divide by K>=k, and the finite differentiation and exponential factors introduce only fixed delta powers. All bounds are uniform in L. Thus
+$$
+ \frac{Z_Q(w)}{K_0(w)^{-1/2}e^{Q_0(w)/\delta}}=1+\xi_Q(w),
+ \qquad |\xi_Q|\le C\delta^{-9}\ell_Q=o(\delta^A)
+ \tag{184.21}
+$$
+for each fixed A. Exact positive p_L sum to1 before continuation; their coefficients stay fixed in this analytic sum. Equation (184.21), rather than positivity at complex w, proves nonvanishing and a logarithm near1. It also prevents cancellation loss when summing the individual errors in (184.18).
+
+Use the positive-real-root branch of log K_0 and define
+$$
+ \mathcal A_Q(w)=Q_0(w)-\frac{\delta}{2}\log K_0(w)
+                         +\delta\log(1+\xi_Q(w)).
+ \tag{184.22}
+$$
+Then exp(mathcal A_Q/delta)=Z_Q EXACTLY, with branches normalized real on the real interval. The faithful complex profile satisfies
+$$
+ g(w/\sqrt\delta)=
+       \frac{\sigma e^{\ell_{sel}}}{\sqrt{2\pi V_H}}
+       e^{\mathcal A_Q(w)/\delta}[1+\mathcal R_Q(w)],
+ \qquad \|\mathcal R_Q\|_{\infty,\mathcal T_Q}\le C\delta.
+ \tag{184.23}
+$$
+All finite mean, noise, low, rank-one and selection terms remain in (184.19),(184.22); no finite cumulants are substituted. Nonzero determinant, energy curvature, low sum and near1 inversion factors now yield
+$$
+ c\sigma e^{-C/\delta}\le |g(w/\sqrt\delta)|
+                 \le C\sigma e^{C/\delta}\qquad(w\in\mathcal T_Q).
+ \tag{184.24}
+$$
+In particular g is nonzero there. The action in (184.22) is predictive from finite resolvents and their proved branches. The error in (184.23) is a relative function error $O(\delta)$. The common raw-sigma normalization remains exact:
+
+$$
+\delta\log g(w/\sqrt\delta)=\mathcal A_Q(w)
++\delta\log\!\left(\frac{\sigma e^{\ell_{sel}}}{\sqrt{2\pi V_H}}\right)
++\delta\log(1+\mathcal R_Q(w)).
+$$
+
+Only the last term is $O(\delta^2)$. The common normalization is not asserted to have that size under the original noise reserve; normalization by $g(0)$ in (184.26) cancels it exactly.
+
+### 184.7 实际重叠、分支归一化与 Taylor 域外延伸
+
+Because rho_-->0, the disk |w|<epsilon_*/4 lies in mathcal T_Q eventually. Intersect it with Chapter 179's established disk |w|<r0. This is a nonempty fixed open disk containing the actual small real coexistence saddle for sufficiently large Q. A whole fixed normalized coexistence neighborhood of saddles, whose charges are O(sqrt(eta)), also lies there. This is an actual realized overlap, not convergence of two unrelated limiting pictures.
+
+Both constructions use the SAME integral (184.5). Define on the new tube
+$$
+ \mathcal B(w)=\delta\log[g(w/\sqrt\delta)/g(0)],\qquad \mathcal B(0)=0.
+ \tag{184.25}
+$$
+The tube is simply connected and (184.24) justifies the logarithm. Its real normalization agrees with Chapter 179 on the overlap, so the two logs are exactly equal there and on every connected common domain. The analytic identity is
+$$
+ \mathcal B(w)=\mathcal A_Q(w)-\mathcal A_Q(0)
+ +\delta\{\log(1+\mathcal R_Q(w))-\log(1+\mathcal R_Q(0))\}.
+ \tag{184.26}
+$$
+The last two logarithms are their near1 branches; the difference is O(delta^2) with fixed derivatives on inner margins. Energy roots coincide on the overlap by the real uniqueness and analytic patching proof, and their Gaussian square roots are positive real there. On Chapter 179's retained charge-saddle chart the exact profile, its charge derivatives and its already justified phase consequently agree. No fitted integer-label shift occurs on that existing overlap. This statement preserves Chapter 179's labels; it does not transport them beyond its charge-contour theorem.
+
+At the other end, the subinterval corresponding to s in[-M,-M/2] has real charge bounded below by a fixed positive constant and has a genuine open complex neighborhood of width epsilon_* inside the new tube. For c=-M the retained conditional eigenvalues satisfy |2c lambda|>=2, so the determinant Taylor series at zero diverges on that block. Bounds (184.10)--(184.24) nevertheless apply using the full tilted resolvent. This is not a renamed small charge disk or a larger unnamed constant in Chapter 179.
+
+The tube connects these two regions without an assumed energy branch, without a deterministic spectral limit and with fixed contour/error constants. It removes the previously missing complex-energy tail and nonvanishing interface along this route. It does not assert that the equal-amplitude locus itself follows the capsule around the positive real charge interval.
+
+### 184.8 有限电荷轮廓变形及其边界
+
+Eventually [0,rho_+] is contained in mathcal T_Q. For any finite piecewise smooth charge path Gamma in the tube joining0 to a fixed R_c in(0,rho_+], Cauchy's theorem gives the exact identity
+$$
+ \frac1{\sqrt\delta}\int_0^{R_c}
+      g(w/\sqrt\delta)e^{-Hw/\delta}\,dw
+ =\frac1{\sqrt\delta}\int_\Gamma
+      g(w/\sqrt\delta)e^{-Hw/\delta}\,dw.
+ \tag{184.27}
+$$
+The orientation is inherited from0 toward R_c, with coefficient+1. The energy representation for each point of this path is (184.14)--(184.18); finitely many overlapping charge disks cover its compact image and provide consistent contours and absolute domination. Thus one may use the energy integrals under the finite charge integral, keeping all connecting energy pieces. This is a proved common analytic domain for finite charge and energy deformations. The domains and bounds, not merely entireness, justify the use of the asymptotic profile on it.
+
+It is NOT an endpoint/saddle asymptotic formula for the TOTAL. The remaining real charge tail is still
+$$
+ \frac1{\sqrt\delta}\int_{R_c}^{\infty}
+            g(w/\sqrt\delta)e^{-Hw/\delta}\,dw
+$$
+in the faithful total, and (184.27) does not estimate it relative to an oscillatory boundary. Nor does an arbitrary deformation within the tube show that a charge saddle contributes, that both endpoint and saddle are comparable, or that an additional saddle is absent. These quantities cannot be discarded by calling (184.27) a two-cycle decomposition.
+
+The apparent endpoint singularity H-a1=0, with a1=mathcal B'(0), belongs to a leading endpoint approximation, not to (184.27). The latter is entire in H on this finite cut. Its regularity establishes that the pole of the leading endpoint term alone is not an obstruction to this finite-cut representation. It does not establish a bypass carrying the TOTAL endpoint phase and its cycle coefficient across that value. Such a bypass requires new charge-contour comparisons, not an energy logarithm or a real positivity argument. No physical obstruction or absence of zeros is deduced.
+
+### 184.9 原始分布回接与相对误差条件
+
+The established original-count return on fixed H disks remains
+$$
+ |N_P^-(H/\sqrt\delta,y)-G_-(H/\sqrt\delta,y)|
+ \le \sigma P(Q)e^{-\beta_{res}Q^3+C/(\eta\delta)},\qquad
+ G_-(h)=\int_0^\infty g(r)e^{-hr}\,dr.
+ \tag{184.28}
+$$
+This is ADDITIVE. Our energy-contour identity does not change the original count law, nor does it convert (184.28) into a total relative estimate near unknown zeros. Full-q selection, floors, outside labels, low probabilities and actual e remain exactly as in (184.1)--(184.5).
+
+For completeness the original error budget has the same interpretation on the present bounded real charge interval. Before normalization, the full-box coefficient error is paid using (Re h)D<=eta D^2+C/(eta delta) and the positive same-output bound at2eta. Central high-cell density/displacement errors are P(Q)exp(-bQ^3); the field variation is polynomial. Likelihood comparison uses the retained log-width/Young inequality and marked positive bounds for noise widths[sigma/2,2sigma], not inverse-sigma differentiation. Cut strips at the polynomially bounded real charge locations include cell boundaries, lattice1/B, floors and equality conventions. Exact lows are summed only after uniform bounds. Excluded full tuples retain P(Q)exp(-cQ^4); the same full-tuple D^2-versus-E inequality gives exp(CQ^(7/2)+C/(eta delta)), with the strict original noise reserve used only where the crude estimate loses raw sigma.
+
+The real-window return from Chapter 182 can also be obtained from (184.23), now with analytic finite predictors. For rho in a fixed inner real portion of I_Q, a charge window of rho-width delta and |Re H|<=H1, |Im H|<=1 has leading mass
+$$
+ W_{\rm pred}=
+ \frac{\sigma e^{\ell_{sel}}\sqrt\delta}{\sqrt{2\pi V_H}}\,
+ e^{[\mathcal A_Q(\rho)-H\rho]/\delta}
+ \int_0^1 e^{[\mathcal A_Q'(\rho)-H]u}\,du,
+ \tag{184.29}
+$$
+with relative O(delta) faithful-profile error. Its modulus is at least c sigma sqrt(delta)exp(-C/delta): on the real interval mathcal A_Q' is real, and rotating the integral by exp(i Im H/2) gives a positive lower bound cos(1/2) times its real envelope. Only after this lower bound may the count/window error be divided, with cost
+$$
+ P(Q)\delta^{-1/2}
+ e^{-\beta_{res}Q^3+C/(\eta\delta)+C/\delta}=o(\delta^A)
+ \tag{184.30}
+$$
+for every fixed A. Here (eta delta)^-1<=Q^(3/4) eventually. Raw sigma cancels after an actual same-window denominator. This is compatible with Chapter 182's finite predictor by the same integral and relative expansion; no claim of exact equality of two differently organized approximate spectral predictors is needed. The original real window is the same experiment, separately actual pair/path and uniformly deterministic supports and outputs.
+
+There is no original probability measure at a complex charge w asserted here. The analytic continuation belongs to the faithful integral used to deform contours; discrete original masses rejoin through (184.28) or through real windows as in (184.29)--(184.30). At new total zero counting contours a proved lower bound for the combined endpoint/saddle amplitude is still missing. It would be invalid to divide (184.28) by an exponentially small unknown coherent residual, even though each energy profile factor in (184.24) is nonzero.
+
+
+### 184.10 总电荷延拓的剩余问题
+
+本章建立的是能量轮廓与解析剖面的连接。要继续第 179 章的总零点分支，还需证明同一原始半直线电荷轮廓在新域上保留所需端点与鞍点系数，并将连接段、实尾及其他鞍点相对于其合成振幅统一控制。等幅条件本身不承担这些义务。相位反演、无额外零点的计数边界及实际未缩放 $d(h-h_0)$ 的 $o(1)$ 定位，均依赖这一未完成的共同估计。
+
+上述解析结论保留有限均值、实际噪声、完整低模元组和选择插入；既没有以确定性谱极限替代原数组，也没有从实正性推出复非零性。能量周期系数不能直接成为总电荷周期系数，有限切段中端点近似的表观极点也不构成原始整个函数的物理障碍。
+
+## 追加锚（本行以下为增补区）
