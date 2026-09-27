@@ -3088,12 +3088,173 @@ Also T3 is a property of the ENTIRE actual block support. Changing only the flow
 
 Still unproved: if a literal cut77 source admits no global reduction of a or d for a selected bad-neighborhood block, whether the simultaneous residual closure and(UC2)--(UC4) force WC1, three robust roots, the restricted common/private class, some different known supplier, or a genuinely new supplier. No general cut77 closure follows from this note.
 
+## Three cut77 strata with one inactive full root
+
+This is an ordinary deduction in the actual Report449 network, not a Lean verification and not a closure of general cut77. Retain the literal4555 blocker and standalone five-ary seven-tree premises. Suppose the actual network has minimum cut77 and admits a normalized minimum cut with one full root inactive, the other two full roots and all four occupied children of the gap root active, public integer cut cost4, and total private integer cut cost14. In raw units the cut is
+
+    21 + 7*4 + 2*14 = 77.
+
+The active child counts, in the order inactive full / full / full / gap, are(0,5,5,4). This does not delete the inactive root from the source or assume that its deletion preserves blocking.
+
+Then the source admits an integral value77 flow with NO root21/joint20 block. Consequently the existing(SH1) full-block repair supplies one actual probability law with
+
+    Gamma_1225 <= 691/77 <9.                         (PF77)
+
+The proof uses at most one two-unit complement repair. It does not require T3 at the initial dangerous block and does not require three robust roots, WC1, or a two-column-per-root source classification.
+
+### The private cut must consist of fourteen singleton leaves
+
+Let p1,p2 be the sums of the three smallest private costs at the two active full roots, and p3 the sum of the two smallest costs at the gap. Literal pair blocking and public cost4 imply
+
+    p1+p2>=5,   p1+p3>=5,   p2+p3>=5.
+
+These are the standard selected-pair prefix-cost inequalities: a ternary depth-two tree cannot be covered with unweighted integer prefix cost below9. Let the three private total costs be Z1,Z2,Z3. Sorted nonnegative child costs imply
+
+    Z1>=ceil(5p1/3), Z2>=ceil(5p2/3), Z3>=2p3,
+    Z1+Z2+Z3=14.
+
+If p3<=1, both full p-values are at least4; for p3=1 the cost is at least7+7+2=16, and for p3=0 it is at least9+9=18. If p3>=3, the constraint p1+p2>=5 implies Z1+Z2>=9, so the total is at least15. Thus p3=2, forcing p1,p2>=3. Total14 then forces
+
+    (p1,p2,p3)=(3,3,2),   (Z1,Z2,Z3)=(5,5,4).
+
+Equality for sorted lists of lengths5,5,4 forces every individual cost to be1. For example a full-root list with smallest-three sum3 and total5 cannot have third entry at least2, because its total would be at least3+2+2=7; hence the first three and final two entries are all1. The gap argument is identical with two entries in each half.
+
+Therefore each active child has exactly one private cut leaf. Its actual fibre is contained in that one candidate label together with the public cut support P. A candidate is not initially assumed actual. The public antichain P is either four leaf labels or one whole column G plus one leaf y outside G.
+
+### Tight pair tests determine the entire active support
+
+Test any gap pair against any triple at an active full root. There are exactly five private candidate occurrences.
+
+If P is a whole column G plus y, the actual projection outside G has at most six candidate leaves. A ternary tree must use G, then use exactly six distinct actual outside leaves in two other columns of three. Thus all five private candidates and y are distinct, outside G and actual in the tested union. A private candidate is actual at its OWN child: it is outside P and distinct from every other selected private candidate, so containment forbids any other selected child from supplying it.
+
+Exchanging one child in a full-root triple while retaining the other two and the gap pair changes the outside-column count vector by a difference of coordinate unit vectors. Both vectors have all coordinates divisible by3, so the two exchanged leaves have the same column. All five full-root private leaves lie in one column H_i. Exchanging one child in a gap pair while retaining the other child and a full triple proves the same statement for all four gap leaves, in a column K. The selected gap pair plus y fills one three-leaf branch, so K=col(y), different from G and H_i.
+
+If P consists of four leaves, each gap/full test has exactly nine candidate occurrences. A ternary tree forces all nine distinct and actual, with exactly three leaves in each of three columns. The same exchange argument locks all four gap leaves into K and each full-root family into H_i. K and H_i differ, since otherwise the five selected private leaves already occupy one column and cannot belong to a nine-leaf ternary tree. The fixed public vector is necessarily one leaf y in K and three leaves in one further column G, different from K and both full private columns.
+
+In either public case, H1 and H2 differ: if they agreed, the full/full triple test could use only that shared private column and G as full three-leaf branches; the public K contribution is only y. Every private family consists of distinct actual leaves at its own children, outside P. Thus G,K,H1,H2 are four distinct columns, and the entire active source has the following containment:
+
+- full root i: public P plus its five private leaves in H_i;
+- gap: public P plus its four private leaves in K, all different from y.
+
+No location or support restriction has been placed on the inactive full root.
+
+### Every maximum flow has the same other-root coarse masses
+
+Take an integral maximum flow of value77. The cut has cost77, so every forward cut arc is saturated and every backward crossing arc carries zero flow. The inactive source-root arc contributes21. The fourteen private leaf arcs each contribute2. The public cut contributes28.
+
+In a normalized cut, the inactive root's subtree is on the sink side. Its actual bridges to public cut support would run backward across the cut, so its flow on P is zero. Thus all28 public cut units come from the three active roots. Each saturated private leaf receives exactly2 units at its actual owner; all those fine labels are distinct outside P.
+
+It follows that the OTHER three roots, jointly, have the exact coarse masses
+
+    G:21,   K:15,   H1:10,   H2:10,               (PF-mass)
+
+and zero mass in every other column. In the finite-four-leaf case, the G mass21 consists of its three saturated public7 leaves. In the whole-column case it is the saturated public-column21 edge. The K mass is the public y mass7 plus the four private gap leaves of mass2 each. The H_i masses are the five private leaves of mass2 each.
+
+Each of these three roots has every joint root/column block at most15. At a full root its H_i block is10, its G block at most21-10=11, and its K block at most7. At the gap its K block is at most8+7=15 and its G block at most21-8=13. This statement holds without prescribing how the public mass is shared among those roots.
+
+### The only possible dangerous block has a direct repair
+
+The inactive root has mass21 because its source-root arc is saturated. If it has no joint block20, the entire flow already satisfies(SH1)'s premise, since the active roots' blocks are at most15.
+
+Otherwise let its unique block20 be in column J. From(PF-mass), the residual public coarse capacities available to this root in G,K,H1,H2 are respectively0,6,11,11. Therefore J is outside those four columns. There is exactly one outside atom p=(r,rho,H,k), of mass1.
+
+That atom cannot use G or y because their public capacities are saturated by the other roots. On every other actual fine leaf, the other roots have either0 or2 units; hence the residual fine capacity at p is at least5. The residual coarse capacity at its column H is at least6. In particular, TWO units can be placed at the very same actual outside point p with all public and entry capacities valid.
+
+Add1 at p and delete1 from an old positive J atom. If rho's old J row has6, delete in that same row; otherwise delete from any positive J atom. Such an atom exists in the required row in the first case, and somewhere in J in the second. The only possible child conflict is thereby avoided. The resulting root mass stays21, the J block is19, and all its outside blocks together have mass2. Every other-root atom stays fixed. All private and public capacities hold.
+
+No dangerous block remains anywhere. Original blocks of mass21, if any, were not touched and are handled by the existing(SH1) repair. This proves(PF77). The argument is a restricted source theorem: it uses this one inactive-full-root/public4/private14 cut profile and does not assert that every cut77 source has such a profile.
+
+### The adjacent public2/private21 profile is impossible
+
+Keep the same one-inactive-full-root active counts(0,5,5,4), but suppose a normalized cut77 has public integer cost2 and private total21:
+
+    21 + 7*2 + 2*21 =77.
+
+No literal4555 source admits this cut profile.
+
+Here the selected private costs satisfy pair bounds p_i+p_j>=7. For a sorted five-child list whose three smallest entries sum p, its total is at least p+2*ceil(p/3). For a four-child list whose two smallest entries sum t, its total is at least t+2*ceil(t/2). These bounds use the largest selected entry to bound every unselected entry.
+
+For t=0,1,2,3 the three-root total is at least26,23,22,23 respectively, since each full p-value must be at least7-t. For t>=5, the full p-values sum to at least7, so their total cost is at least13; the gap cost is at least11, giving at least24. Thus t=4. Equality at total21 then forces the two full p-values to be3 and4, with total costs5 and8, and gap total8. The only sorted child-cost shapes are
+
+    11111 / 02222 / 2222,
+    11111 / 11222 / 2222,
+
+up to exchanging the two full roots. Every private cut is finite: all individual costs are0,1 or2. P is exactly two public leaves.
+
+Call the11111 full root clean. Pair any clean triple with any gap pair. The union is contained in public2 plus clean3 plus gap4 candidate occurrences, exactly9. Literal blocking forces all nine distinct actual labels in three columns of three. Each private candidate is actual at its own owner by exact distinctness and cut containment.
+
+Exchanging a clean child while fixing the other two and the gap pair locks the clean singleton family into one column H. Therefore P and each gap pair supply the other two three-leaf columns, and none of these six labels lies in H.
+
+For a gap child c, let v_c be its two-candidate column-count vector. Exchange c with d while retaining another gap child and a clean triple. The resulting complete count vectors are divisible by3 in every coordinate, so v_c-v_d is coordinatewise divisible by3. But every coordinate of v_c and v_d is between0 and2. Hence v_c=v_d. All four gap children have the same vector v.
+
+Now P+2v has every coordinate0 or3 and total6. If the two private candidates of one gap child lay in the same column, that coordinate of2v would already be4, impossible. Thus v has value1 in two different columns K,L. The two public leaves must contribute one in K and one in L, yielding3 in each. K,L differ from H. Every gap child's ENTIRE actual support is contained in K union L, because its private candidates and P are all there.
+
+At the exceptional full root choose a legal triple whose private total is4: its zero child and any two doubles for02222, or its two singletons and any double for11222. Test this triple against a clean H triple. Again P2 plus private4 plus clean3 is exactly9. The H triple already fills its branch, while P supplies one label in K and one in L; the exceptional candidates must supply the missing two labels in each of K,L. Thus the ENTIRE actual union of this exceptional triple is contained in K union L.
+
+Pair that same exceptional triple with any gap pair. Their actual projection is contained in only the two columns K,L, contradicting the required ternary tree. This excludes both private shapes and proves impossibility. The inactive root was never removed from the source; these tests are legal root-pair restrictions of the original literal hypothesis.
+
+Together these results handle public costs2 and4 for this active profile. The next result handles the finite-private part of public0/private28; whole-private-column variants and other active profiles remain outside these conclusions.
+
+### Public0/private28 also closes when every private cut is finite
+
+Keep the same one-inactive-full-root active profile and suppose the normalized cut77 has NO public cut and consists of the inactive source-root21 edge plus28 private LEAF edges of capacity2. The qualifier matters: a private whole-column edge of capacity6 is not covered by this statement.
+
+Take an integral maximum flow77. All28 private leaf edges are saturated and every active source point lies below one of them. Each such edge has a unique actual bridge to its public fine leaf. Hence the active source has exactly28 actual points and EACH carries2 units. In particular every active root has an even total at most20; none can be dangerous. All public coarse and fine masses contributed by those roots are even.
+
+The inactive root has21 units. If it has no block20, apply(SH1). Otherwise let its unique dangerous block be J. The other roots have at most1 unit in J by the public21 cap. But any actual point of an active root would carry2, so there is NO actual J point at any active root, not merely no positive J mass.
+
+If the entire actual J support satisfies T3, the existing actual-neighborhood mass20 refinement applies, giving the same bound691/77. Here T3 means every triple of the five literal child digits has at least three actual J fine neighbors. This is a property of the source, not of positive support.
+
+If T3 fails, choose a legal triple at the inactive full root whose actual J neighborhood has at most two digits. I claim that the two-unit complement condition C>=2 must hold. Suppose instead C=1. Since all other-root public masses are even and the public capacities21 and7 are odd, no public prefix has residual capacity0. The(UC2) cover therefore contains no zero-prefix part. The ENTIRE inactive-root support outside J lies in its one critical prefix, which in either case is contained in a single column H different from J.
+
+Now test the selected bad triple against ANY pair of occupied gap children. The gap has no actual J point. Thus J cannot be a three-leaf branch of this pair projection. The inactive triple has no points outside H or J. A ternary tree therefore needs at least TWO other columns, each with at least three leaves, contributed entirely by the selected gap children outside H and J. The gap pair contains at least six actual points outside H.
+
+Let n_c count the actual points outside H at gap child c. Every one of its six child pairs satisfies n_c+n_d>=6. Summing gives
+
+    3*(n_0+n_1+n_2+n_3)>=36,
+    n_0+n_1+n_2+n_3>=12.
+
+Each of those actual points carries2 in the maximum flow, forcing gap mass at least24, contrary to its root cap21. This contradiction proves C>=2. The two-unit complement repair removes the inactive root's dangerous block while holding every active atom fixed. There is then no dangerous block anywhere, so(SH1) applies.
+
+Thus every source in this finite-private public0 stratum admits one actual law with Gamma<=691/77. The proof offers a genuine alternative: an already T3 dangerous block uses the known local refinement; a bad-T3 block must admit the actual two-unit complement reroute. It does not assert that the two-unit criterion holds for every T3 block, or that whole private-column cuts have even atomic flows.
+
+### Exact actual controls
+
+The [self-contained program](../../frontier/cover-geometry/height_two_cut77_partial0554.py) and [exact data](../../frontier/cover-geometry/height_two_cut77_partial0554.json) construct both public forms and the finite-private public0 source, checking the corresponding arguments on actual sources. It exhausts15573 sorted nonnegative private-cost triples of lengths5,5,4 and total14, without imposing an artificial upper bound3 on individual costs. The unique survivor of all three pair inequalities is11111/11111/1111. It separately enumerates239590 sorted triples for the public2/private21 case and checks exactly the four ordered versions of the two impossible shapes above; the ordinary tight-pair proof, rather than a fabricated actual source, supplies their impossibility.
+
+Use labels G=0,K=2,H1=3,H2=4,J=1. At the three active roots put the common public G support and y=(2,0) in every occupied child. Private points are(3,c) at root1, (4,c) at root2, and(2,c+1) at gap root3. The common public support is either all7 G leaves or its leaves0,1,2.
+
+At inactive full root0, put all7 leaves in every column except J, at each of its5 children. At J use the actual bad-neighborhood support
+
+    child0:0,1,2; child1:0,1; child2:0,1;
+    child3:empty; child4:0,1,3,4.
+
+This gives347 source points for a whole public column and291 for four public leaves. The target block fails the actual T3 condition at child triple(1,2,3), whose target-column neighborhood is only{0,1}. Root0 is the sole individually robust root. Every column occurs at more than3 child owners, excluding WC1 by its nonpublic-owner budget; the source also lies outside the common-plus-exclusive-private two-column-per-root class.
+
+Put the standard unique20 matrix in root0/J and one outside unit at(0,0,2,1). Put2 at every active private point. At active full root1 put common G masses2 at(c,h)=(0,0),(1,1),(2,2),(3,0); at full root2 use(0,0),(1,1),(2,2),(3,1). Give each full root one y unit at each of children0,1,2. At the gap put G masses1,1,2,1 at(0,0),(1,1),(2,2),(3,2), and one y unit at child0.
+
+The resulting root totals are21,21,21,14. Its three active-root G fine totals are7,7,7, and its y total is7. The explicit cut comprises the inactive source-root21 edge, the public28 antichain and the fourteen private2 edges, for77. The program builds the complete actual network and verifies every capacity, all vertex balances, forward cut saturation and zero backward cut flow, establishing matching flow and cut77. It also checks480 selected pair tests and10000 full literal tests per source, plus the standalone five-tree and exact robust-root inventory.
+
+The repair is simply
+
+    (0,0,1,0) -=1,    (0,0,2,1) +=1.
+
+For both controls, the separate-cylinder LCM envelope changes from698/77 to689/77. The latter is an exact stronger bound for these controls; the general stratum bound691/77 comes from(SH1), not from asserting that every source attains the same envelope. Program execution:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_partial0554.py
+```
+
+A third control has no public cut. At active root1 put(0,c),(1,c) in child c; at active root2 put(2,c),(3,c); at gap child c put(4,c),(4,c+1). These are28 actual points, all carrying2. Their root totals are20,20,16 and their public column totals are10,10,10,10,16. At inactive full root0 use every fine leaf in every column except J=5 at all five children, together with the same bad20 support in J. Put the bad20 flow there and one outside unit at(0,0,0,0). The source has249 points, one robust root, the same bad T3 child triple, and an explicit matching cut/flow77 made from the inactive root21 edge and28 private2 edges. All480 selected pair tests,10000 literal tests, standalone tree, full network balances and capacities are checked. Doubling the old outside atom and deleting one at(0,0,5,0) gives an exact separate-cylinder envelope683/77, compared with695/77 before the repair. This control establishes nonvacuity of the finite-private public0 theorem; its stronger numerical bound is not claimed uniformly for that entire stratum.
+
+It uses no external solver or unpublished fixture. The source theorem above is an ordinary proof; these finite controls verify its nonvacuity and implementation, not Lean formalization.
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. Excluding every terminal trap, or supplying a further global reroute, remains missing.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. For the one-inactive-full-root active profile(0,5,5,4), public4/private14 always admits a repair, public2/private21 is impossible, and public0/private28 is controlled when all private cut prefixes are leaves. These restricted strata have bound691/77; public0 cuts containing whole private-column prefixes remain outside that proof. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. General high-incidence sources in the remaining
 range72/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
