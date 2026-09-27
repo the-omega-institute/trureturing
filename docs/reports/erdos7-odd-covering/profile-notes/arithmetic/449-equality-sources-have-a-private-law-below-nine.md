@@ -8,7 +8,7 @@ The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md
 
 This result allows incidence five at every full root. It uses actual private points forced by the equality cut, gives the common column zero mass, and chooses ONE probability before all original numerical labels and all phase tests. The same law construction applies to any larger actual source containing the specified private structure, whether or not that larger source has an equality cut or satisfies the tree premises.
 
-The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate below.
+The next cut values66/63 and67/63 force actual nineteen-point laws with bound159/19. The68/63 and69/63 strata have eighteen-point laws with bound79/9. The saturated-block transport theorem below controls every cut78/63 with bound701/78. Large cuts at least79/63 are controlled by a separate sharp flow-cap estimate.
 
 These are ordinary proofs with exact construction controls, not new Lean-certified declarations. They do not prove that every remaining source contains this structure, lift the law through arbitrary original outside-cofactor tests, or settle unrestricted Erdős #7. The bound is uniform over a newly classified source family; it is not an improvement of448's particular117-point law bound107/13.
 
@@ -393,8 +393,9 @@ value. In the occupancy4555 setting of447, the stated tree premises give
 t>=65/63. All network capacities, including the actual bridges, are
 integer multiples of1/63; so t=k/63 for an integer k. The source edges
 also give t<=4/3=84/63. The private-law theorems in this report handle k=65,66,67,68,69,
-and LC3 handles k>=79. Consequently the only remaining possible cut
-values for that source class are k=70,...,78. This lists nine
+the saturated-block transport theorem below handles k=78, and LC3 handles
+k>=79. Consequently the only remaining possible cut values for that source
+class are k=70,...,77. This lists eight
 unresolved values, not a claim that each is attained or that each source
 at those values fails. Any source already containing the private
 structure above is handled regardless of its cut value.
@@ -1227,8 +1228,8 @@ The conditional mixture statement remains valid, but its uniform supplier
 premise is false: the next actual source forces an old625 block to retain
 mass21 under every value78 flow. An off-block actual point therefore does
 not certify a route that lowers the block, even when such points are
-present at every child. A uniform good-law construction must allow
-redistribution inside a block or another mechanism that directly controls
+present at every child. The saturated-block transport theorem below gives a uniform good-law
+construction by redistributing mass inside the blocks while controlling
 the original coherent charges.
 
 ```sh
@@ -1357,17 +1358,211 @@ is not an original odd-covering counterexample or a new Lean result.
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut78_forced_block.py
 ```
 
+## Saturated-block transport closes every78/63 source
+
+For any actual-child network in this literal height-two carrier admitting
+an integral flow of value78, there is one rational feasible flow of the
+same value and on the same positive actual support whose normalized law
+satisfies
+
+    Gamma_1225(nu)<=701/78=9-1/78<9.                  (SB1)
+
+An integral flow exists whenever the integer-capacity network has a flow
+of at least78; one may reduce an integral larger flow to that value.
+Consequently every minimum-cut78/63 source in the stated class is
+controlled. The construction keeps the masses of all first-five/first-seven
+blocks fixed. It therefore also applies to the preceding forced-block
+source, for which moving mass out of its old625 block is impossible.
+All raw quantities below are in units1/63.
+
+### A rational transport lemma on any five-by-seven support
+
+Let E be any subset of five rows times seven columns. Suppose E supports
+an integral nonnegative matrix of total21, with row sums at most6,
+column sums at most7, and each entry at most2. There is a rational matrix
+x on E, with the same total and all the same caps, such that for EVERY
+cell(i,j), including cells outside E with x_ij=0,
+
+    20 r_i(x)+20 c_j(x)+25 x_ij<=308.                (SB2)
+
+Every positive entry of the chosen initial matrix remains positive. If
+E is its positive support, the resulting positive support is exactly E.
+Only containment in E is claimed when additional zero edges are allowed.
+
+Use the bipartite network with source-row capacity6, allowed cell-edge
+capacity2, and column-sink capacity7. For each allowed cell(i,j), there
+is an integral value21 flow in which at least one of its row, column or
+cell bounds is not saturated.
+
+If the network admits a value22 flow, take an integral one. When its
+(i,j) entry is positive, subtract one unit along that cell's complete
+source-to-sink path. The new entry is at most1. If that entry is zero,
+subtract a unit along any positive path instead. This supplies the
+required value21 flow.
+
+It remains to treat maximum flow21. Suppose all integral maximum flows
+saturate source-row i, cell(i,j), and column j-sink. Each of these three
+arcs then belongs to some capacity21 minimum cut: reduce its capacity by
+one. The new integer network cannot have an integral value21 flow, so
+integrality and max-flow/min-cut supply a cut of new capacity at most20.
+Its old capacity is at least21 and changes by at most one. Hence its
+old capacity is exactly21 and the reduced arc crosses it.
+
+Let R,M,C be source sides of minimum cuts crossing these three arcs,
+respectively. Minimum cuts are closed under intersection and union:
+cut submodularity bounds the sum of the intersection and union capacities
+by42, while each is at least21. Therefore
+
+    S0=R intersect M,   S1=M,   S2=M union C
+
+form an increasing chain of minimum cuts. Row i is absent from S0 and
+present in S1; column j is absent from S1 and present in S2.
+
+For a cut let a count rows outside its source side, b columns inside,
+and c allowed cell edges crossing outwards. Its capacity is6a+7b+2c.
+The complete nonnegative integer solutions to capacity21 are
+
+    (a,b,c)=(0,3,0),(0,1,7),(1,1,4),(2,1,1).
+
+S0 omits row i, so it has exactly one column. S1 has an outward cell
+edge, so it also has exactly one column. Their nested source sides make
+this the same column. S2 contains that column and also j. It must therefore
+have three columns, all five rows, and no outward cell edge. Thus the
+ENTIRE allowed support E lies in those three columns.
+
+Passing from S0 to S1 adds at least row i and no columns. Every added
+row has at most two allowed neighbors outside their shared column.
+Its change to the cut capacity is therefore at most
+
+    -6+2*2=-2.
+
+The cut strictly decreases, contradicting that both cuts have capacity21.
+This proves the required alternative flow for each cell.
+
+Take the initial integral matrix x0. Call a cell bad if its row sum is6,
+column sum7, and entry2. At most three rows and three columns can be
+saturated because the total is21, so there are k<=9 bad cells. For each,
+select an integral value21 alternative where that cell is not bad.
+Average these k matrices and x0 with equal weights1/(k+1).
+
+For any integral feasible matrix the expression in(SB2) is at most310.
+At a nonbad cell it is at most290: at least one integer coordinate drops
+by one, saving at least20. Every cell is nonbad in at least one matrix
+in the average, either x0 or its designated alternative. Thus
+
+    20 r_i+20 c_j+25 x_ij<=310-20/(k+1)<=308.
+
+The average preserves nonnegativity, total, capacities and support;
+including x0 with positive weight preserves its positive entries.
+This proves(SB2). Four-child roots are covered by padding with a zero
+fifth row.
+
+Fractional output is essential for this lemma. On K_(4,3), any integral
+value21 matrix has all three columns at7 and at least one row at6.
+That row's three entries are all2, so it has bad cells. An explicit
+feasible integer matrix has row triples(2,2,2),(1,2,2),(2,1,2),(2,2,1).
+The rational uniform value7/4 on the twelve edges is feasible and has
+no such obstruction. This integer counterexample does not contradict
+(SB2), whose output is a rational mixture.
+
+### Replace disjoint saturated blocks in the same actual flow
+
+Start with an integral value78 flow lambda. For each first-five root r
+and first-seven column g write a_r,b_g,d_rg for its root, column and
+joint masses. They are integers at most21. Call(r,g) full when
+
+    a_r=b_g=d_rg=21.
+
+Such a block contains all mass of its root and all mass of its column;
+every other block in that root or column has mass zero. Full blocks
+therefore have distinct root labels and distinct column labels. There
+are at most three, since four would require total84>78.
+
+Inside one full block, index its actual positive bridge masses by the
+five-child digit c and the fine seven-digit h. They form a matrix of
+total21. Its row bound6 is the private first-prefix capacity; its column
+bound7 is the public leaf capacity; its entry bound2 is the private leaf
+capacity. Its support consists entirely of actual source points.
+Apply(SB2) using that original positive support.
+
+Replace all full blocks by their resulting rational matrices. Their
+roots and public columns are disjoint, and each full block already
+isolates all flow at its root and column. The replacements consequently
+respect every root, child, private-prefix, public-prefix and actual-bridge
+capacity simultaneously. The child cap7 is implied by the stronger
+within-block row cap6. All other masses are unchanged. Each coarse joint
+mass d_rg and the root and column masses remain unchanged integers.
+This is one explicitly defined actual flow, not a combination of
+incompatible separately optimized marginal laws.
+
+### Every coherent and noncoherent phase layout is controlled
+
+At a coherent centre in a full block, the root and column isolation
+gives u5=u7=u35=21, u25=u175=r_i, u49=u245=c_j and u1225=x_ij. Hence
+its raw nonunit charge is
+
+    K=315+20 r_i+20 c_j+25 x_ij<=623.
+
+At a centre outside the full blocks write
+
+    (a,b,c,d,e,f,g,h)=(u5,u7,u25,u35,u49,u175,u245,u1225).
+
+The actual set-inclusion inequality c+d<=a+f still holds for a rational
+measure. Consequently
+
+    K=3a+3b+5c+9d+5e+15f+15g+25h
+      <=8a+3b+4d+20f+5e+15g+25h.
+
+The eight unchanged network caps bound the latter expression by625.
+Since a,b,d are integers and are not all21 at this centre, one is at
+most20, saving at least3. Thus K<=622. This step uses integrality only
+of the unchanged coarse masses, not of the new fine entries.
+
+Finally, the earlier noncoherent LC2 bound622 was proved from rational
+cylinder caps and incompatibility of numerical queries; it does not
+require integral flows. Every noncoherent layout therefore also has
+charge at most622 after replacement. Dividing the one repaired flow
+by78 and restoring the unit-unit term gives(SB1). No phase choice enters
+the construction of the law.
+
+### Exact support construction and actual-flow controls
+
+The [saturated-block constructor](../../frontier/cover-geometry/height_two_saturated_block_transport.py)
+and [exact results](../../frontier/cover-geometry/height_two_saturated_block_transport.json)
+implement the proof by trying a one-unit reduction of the row, column
+or cell capacity for each initial bad cell, finding the alternative
+integer21 flow, and averaging at most ten flows. All matrix entries and
+final checks use exact rational arithmetic.
+
+The controls enumerate all216 labelled three-column supports in which
+each column has at least four neighbors among five rows. They also test
+5000 supports generated with fixed seed20260927;3692 admit value21.
+These finite checks do not supply the universal quantifier: the minimum-cut
+argument above does. The program checks(SB2) at all35 cells, including
+zero cells outside the support.
+
+It also repairs the bad maximum flows of both actual examples above,
+using their original positive supports. It checks every network-capacity
+family, unchanged coarse blocks, every one of the1225 coherent centres,
+and the resulting all-layout bound using LC2 for noncoherent layouts.
+The actual-source controls are not asserted to be original odd-cover
+residuals. No Lean formalization is claimed.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_saturated_block_transport.py
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
-For occupancy4555, the large-cut estimate also handles every cut at
-least79/63. General high-incidence sources in the remaining range70/63
-through78/63 are not thereby controlled: their high root/column incidence
+The saturated-block theorem also controls every78/63 source. For
+occupancy4555, the large-cut estimate handles every cut at least79/63.
+General high-incidence sources in the remaining range70/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
 whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
 does not settle all sources at those numerical cut values. Some may contain
 the private structure, but its existence has not been proved for every
 remaining source. Other occupancy patterns retain their own stated
-premises and are not classified by this nine-value reduction.
+premises and are not classified by this eight-value reduction.
 
 The theorem is at the fixed head1225. An actual full odd-covering residual must also carry every original outside-cofactor constraint under one common lift, as in439. A head law alone does not supply that lift, and a uniform complete-Gamma bound below nine for arbitrary free cofactors is already ruled out there. The next arithmetic obligation remains a bound for the actual original test family and its same-law deletion correlations. No unrestricted noncoverage conclusion follows from this finite head theorem alone.
