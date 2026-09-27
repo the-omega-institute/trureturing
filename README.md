@@ -83,11 +83,11 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.](docs/assets/inquiry-cycle.svg)
+![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
-*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
-do not establish a theorem. Dashed paths return unresolved questions to
-another inquiry, including when no checked result was obtained.
+*A schematic of inquiry, not runtime behavior or dependency data.* Checked
+results return as premises; dashed returns carry unresolved questions, even
+without a checked result. Tests alone do not establish a theorem.
 
 Golden integers, Fibonacci weights and Zeckendorf representations are one
 thread of the library; the examples below also explore conjecture refutation
@@ -249,12 +249,13 @@ This repository does **not** establish the Riemann hypothesis.
 ## First run
 
 Install [elan](https://github.com/leanprover/elan#installation) and the
-[.NET SDK](https://dotnet.microsoft.com/en-us/download), with `lake`
-and `dotnet` on your `PATH`. You also need Git, Make and a Bash-compatible shell.
+[.NET SDK](https://dotnet.microsoft.com/en-us/download) version specified in
+[global.json](global.json). Ensure `lake` and `dotnet` are on `PATH`;
+you also need Git, Make and Bash.
 elan selects Lean from [lean-toolchain](lean-toolchain). Mathlib is declared in
 [lakefile.toml](lakefile.toml), with resolved dependencies in
-[lake-manifest.json](lake-manifest.json). Install the .NET SDK version specified
-in [global.json](global.json); the installed SDK must match that file.
+[lake-manifest.json](lake-manifest.json). For contribution checks, add Python
+3.11+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
 
 Clone the project, then build just the introductory module. The `make` entry
 prepares a private Lean cache; the first run may download dependencies.

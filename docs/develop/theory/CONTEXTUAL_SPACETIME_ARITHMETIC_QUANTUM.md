@@ -64723,3 +64723,368 @@ $$
 这里的旋转必要性相对于任务固定的输入、输出坐标而言。改用随参数旋转的参考系可能改变生成元的反对称项，同时也改变恢复误差所比较的参考关系；本节没有把这种改坐标当作原任务中的无代价消去。共同一阶极限也不蕴含整个有限预算最优通道唯一，或两类最优矩阵之间具有平方阶距离界。
 
 ## 追加锚（本行以下为增补区）
+
+## 300. 任意正半径的精确二阶误差与严格平方阶差距
+
+**定义 300.1（端点二阶系数）。** 固定正半径六态，沿用第298、299节的正角点规范。记 $\alpha_i=1/a_i$、$A=\sum_i\alpha_i^2$、$b=\alpha$、$\eta=A^{-1/2}$，唯一端点最优矩阵为 $M_*=S_*-\Omega_*$。令
+
+$$
+0<d_1\le d_2<d_3=d_1+d_2
+$$
+
+为 $S_*$ 的特征值，$v$ 为严格正的单位最大特征向量，$Z_*=\lambda vv^{\mathsf T}$ 为唯一对偶矩阵，$\lambda>0$。定义向量 $\omega$ 使 $\Omega_*x=\omega\times x$，并记
+
+$$
+\begin{aligned}
+J_a&=\|M_*^{\mathsf T}b\|_2^2
+   +2b^{\mathsf T}(M_*^{\mathsf T})^2b,\\
+L_a&=\frac{3A-J_a}{2},\qquad
+\mu_a=\frac1{2D_a},\qquad
+\zeta_a=\frac\lambda{2D_a},\\
+\Gamma_a&=\mu_a L_a+\zeta_a(v\cdot\omega)^2,\\
+\Theta_a&=\zeta_a d_1d_2>0.
+\end{aligned}
+\tag{300.1}
+$$
+
+**定理 300.2（两种恢复类的精确二阶展开）。** 对任意固定正半径，令 $R_\delta=\eta(1-\delta)$。当 $\delta\downarrow0$ 时，
+
+$$
+\begin{aligned}
+F_a^{(2)}(R_\delta)
+&=\kappa_a\delta+\Gamma_a\delta^2+o(\delta^2),\\
+\widehat G_a(R_\delta)
+&=\kappa_a\delta+(\Gamma_a+\Theta_a)\delta^2+o(\delta^2).
+\end{aligned}
+\tag{300.2}
+$$
+
+因此一般不等半径也具有严格为正的精确平方阶差距：
+
+$$
+\lim_{R\uparrow\eta}
+\frac{\widehat G_a(R)-F_a^{(2)}(R)}{(\eta-R)^2}
+=\frac{\lambda d_1d_2}{2D_a\eta^2}>0.
+\tag{300.3}
+$$
+
+证明不要求有限预算最优通道随预算可微，也不要求全部轴误差约束的乘子严格为正。
+
+证明。先给出共同的一致展开。对 $M=S-\Omega$ 在 $M_*$ 的一个固定小邻域内，置 $T=I-\delta M$，并令
+
+$$
+K(M)=\frac12(\Omega S-S\Omega-\Omega^2).
+\tag{300.4}
+$$
+
+直接展开正平方根可得
+
+$$
+(T^{\mathsf T}T)^{1/2}
+=I-\delta S+\delta^2K(M)+O(\delta^3).
+\tag{300.5}
+$$
+
+余项在这个邻域内一致，因为所有矩阵有界，且 $T^{\mathsf T}T$ 一致接近单位矩阵。$S$ 的最大特征值在邻域内保持单重，其与第二特征值之差有严格正下界。因此可对 $(I-(T^{\mathsf T}T)^{1/2})/\delta$ 的最大特征值使用一致的一阶 Rayleigh 扰动展开，余项为 $O(\delta^2)$；再乘回 $\delta$，得到最小奇异值的 $O(\delta^3)$ 余项。这个估计只使用单重最大特征值的间隙，不要求 $S$ 的另两个特征值不同。
+
+记 $d_1(S)\le d_2(S)<d_3(S)$、单位最大特征向量 $v_S$，并令 $\Omega x=\omega_M\times x$。在 $S$ 的本征标架内，交换子 $\Omega S-S\Omega$ 的对角元为零，且 $-\Omega^2=\|\omega_M\|^2I-\omega_M\omega_M^{\mathsf T}$。所以
+
+$$
+\operatorname{Tr}K(M)-2v_S^{\mathsf T}K(M)v_S
+=(v_S\cdot\omega_M)^2.
+$$
+
+若 $s_1\ge s_2\ge s_3$ 为 $T$ 的奇异值，并记 $c(S)=\operatorname{Tr}S-2d_3(S)$，则
+
+$$
+\begin{aligned}
+s_1+s_2-s_3-1
+&=-\delta c(S)+\delta^2(v_S\cdot\omega_M)^2+O(\delta^3),\\
+s_1s_2-s_3
+&=-\delta c(S)
+ +\delta^2\bigl((v_S\cdot\omega_M)^2+d_1(S)d_2(S)\bigr)
+ +O(\delta^3).
+\end{aligned}
+\tag{300.6}
+$$
+
+求第二式时，只需要另外两个奇异值的和与积，故没有在它们重合时选取不可微的单独本征方向。
+
+邻近单位通道且行列式为正时，幺元完全正性中唯一可能在当前一阶方向上取等的面是 $s_1+s_2\le1+s_3$；其他 Pauli 概率的一阶系数由 $d_1,d_2>0$ 保证严格为正。微分可分性则再要求 $s_1s_2\le s_3$。这些是既有幺元通道正规形与可分性条件，分别见 Choi–Li（2023），[定理2.2与定理4.1](https://doi.org/10.26421/QIC23.7-8-2)，及 Wolf–Cirac（2008），[定理24](https://arxiv.org/abs/math-ph/0611057v3)。本节使用的是近单位幺元可逆范围。
+
+再展开残差。由于第299节保证规范后的正角点最终唯一活跃，
+
+$$
+\|T^{-\mathsf T}b\|_2^2
+=A+2\delta b^{\mathsf T}Sb
+ +\delta^2\left(\|M^{\mathsf T}b\|_2^2
+               +2b^{\mathsf T}(M^{\mathsf T})^2b\right)
+ +O(\delta^3).
+\tag{300.7}
+$$
+
+该余项同样一致。
+
+现在证明两个二阶下界。分别取任一类问题的实际最优恢复，并按第299节作符号共轭，写成 $T_\delta=I-\delta M_\delta$。该节保证 $M_\delta\to M_*$，但此处不假定其收敛速度为 $O(\delta)$。由预算可行性与
+
+$$
+\frac1{R_\delta^2}
+=\frac A{(1-\delta)^2}
+=A+2A\delta+3A\delta^2+O(\delta^3),
+$$
+
+式（300.7）给出
+
+$$
+b^{\mathsf T}S_\delta b-A
+\ge\delta L_a+o(\delta).
+\tag{300.8}
+$$
+
+令
+
+$$
+k_0=(v\cdot\omega)^2,
+\qquad k_1=(v\cdot\omega)^2+d_1d_2.
+\tag{300.9}
+$$
+
+完全正问题由式（300.6）的第一式得到 $c(S_\delta)\ge\delta k_0+o(\delta)$；微分可分问题由第二式得到 $c(S_\delta)\ge\delta k_1+o(\delta)$。而固定极限向量 $v$ 的 Rayleigh 商总满足
+
+$$
+v^{\mathsf T}\mathcal C(S_\delta)v
+\ge\lambda_{\min}(\mathcal C(S_\delta))
+=c(S_\delta),
+\tag{300.10}
+$$
+
+其中 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$。这一步避免把未知二阶位移 $M_\delta-M_*$ 除以 $\delta$ 后擅自认定有界。
+
+第298节的最优对偶矩阵还给出对任意实矩阵 $M=S-\Omega$ 都成立的支撑不等式
+
+$$
+\frac12h_a(S,\Omega)
+\ge\frac{b^{\mathsf T}Mb+\lambda v^{\mathsf T}\mathcal C(S)v}{2D_a}
+=\kappa_a+\mu_a(b^{\mathsf T}Sb-A)
+          +\zeta_a v^{\mathsf T}\mathcal C(S)v.
+\tag{300.11}
+$$
+
+它只是对三个列球逐列使用支撑函数，不要求此处的 $M$ 本身满足端点锥条件。将式（300.8）—（300.10）代入，并使用 $\mu_a,\zeta_a>0$，最后乘以 $\delta$，便分别得到式（300.2）的下界，系数为 $\mu_aL_a+\zeta_a k_0$ 与 $\mu_aL_a+\zeta_a k_1$。
+
+为构造匹配上界，只需一个有限线性规划。令 $m_i=M_*e_i$，并记活跃轴集合
+
+$$
+I_* =\{i:a_i\|m_i\|_2=2\kappa_a\}.
+$$
+
+$S_*\succ0$ 使 $M_*$ 可逆，因此每个 $m_i\ne0$。对 $k=k_0$ 或 $k=k_1$，在实矩阵 $H$ 与实数 $t$ 上最小化 $t$，约束为
+
+$$
+\begin{gathered}
+a_i\frac{\langle m_i,He_i\rangle}{\|m_i\|_2}\le2t
+\quad(i\in I_*),\\
+b^{\mathsf T}Hb\ge L_a,
+\qquad v^{\mathsf T}\mathcal C(\operatorname{sym}H)v\ge k.
+\end{gathered}
+\tag{300.12}
+$$
+
+取 $H=sI$、$s$ 足够大，再取足够大的 $t$，可使所有约束严格成立。下面给出一个有限对偶值，故此线性规划有有限且达到的最小值，并满足强对偶；这里使用普通有限维线性规划对偶，不要求非线性最优解可微。
+
+其对偶变量为 $\beta_i\ge0$（$i\in I_*$）、$\mu'\ge0$ 与 $\zeta'\ge0$，满足
+
+$$
+\sum_{i\in I_*}\beta_i=\frac12,
+\qquad
+\sum_{i\in I_*}\beta_i a_i
+\frac{m_i}{\|m_i\|_2}e_i^{\mathsf T}
+=\mu'bb^{\mathsf T}+\zeta'(I-2vv^{\mathsf T}).
+\tag{300.13}
+$$
+
+对偶目标为 $\mu'L_a+\zeta'k$。设 $G_*=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}$，第298节的列支撑条件给出一组可行乘子
+
+$$
+\mu'=\mu_a,\qquad\zeta'=\zeta_a,
+\qquad\beta_i=\frac{\alpha_i\|G_*e_i\|_2}{2D_a}.
+\tag{300.14}
+$$
+
+若 $G_*e_i\ne0$，该列必取到范数界，所以 $i\in I_*$；零列的乘子为零。因此式（300.14）没有给未列入规划的轴分配非零乘子。
+
+更强地，任何对偶可行乘子都具有相同的 $\mu',\zeta'$。把式（300.13）与 $M_*$ 取 Frobenius 内积，利用活跃轴等式和 $\mathcal C(S_*)v=0$，得到 $\kappa_a=\mu'A$，故 $\mu'=1/(2D_a)>0$。随后令 $Z=(\zeta'/\mu')vv^{\mathsf T}$。由式（300.13），它在第298节对偶中的目标值为
+
+$$
+\sum_i\alpha_i
+\left\|\left(bb^{\mathsf T}+(\operatorname{Tr}Z)I-2Z\right)e_i\right\|_2
+=\frac{\sum_i\beta_i}{\mu'}=D_a.
+$$
+
+因此它也是该对偶的达到点；唯一性使 $Z=Z_*$，从而 $\zeta'=\zeta_a$。强对偶便说明式（300.12）的最小值精确为
+
+$$
+t_k=\mu_aL_a+\zeta_a k.
+\tag{300.15}
+$$
+
+取一个达到矩阵 $H_k$。对充分大的固定正常数 $C$，构造
+
+$$
+T_\delta=I-\delta M_*-\delta^2H_k-C\delta^3I.
+\tag{300.16}
+$$
+
+式（300.12）分别保证残差预算与所需谱条件的二阶系数正确。剩余误差都是 $O(\delta^3)$。加入 $-C\delta^3I$ 后，式（300.6）中的两个左侧各减少 $C\delta^3+O(\delta^4)$，而式（300.7）的正角点平方范数增加 $2CA\delta^3+O(\delta^4)$。因而可以选定一个足够大的 $C$ 同时控制这些余项：当 $k=k_0$ 时得到完全正且预算可行的通道，当 $k=k_1$ 时再满足 $s_1s_2\le s_3$，得到微分可分通道。
+
+这些比较中的三阶主变化可以直接在邻近单位矩阵处求导；$C$ 先固定，再令 $\delta$ 足够小。其余完全正面有由 $d_1,d_2>0$ 给出的严格一阶余量，行列式也保持正，所以没有遗漏其他通道条件。第281节的最小残差方向、酉编码旋转与逆酉解码把同一个 $T_\delta$ 实现成一对完整 $M_2$ 上的实际通道，同时达到所需预算与恢复误差。
+
+非活跃轴的首阶误差有严格间隙，活跃轴的列范数则在 $m_i\ne0$ 处可微，因此式（300.12）、（300.15）还给出
+
+$$
+e(T_\delta)=\kappa_a\delta+t_k\delta^2+O(\delta^3).
+\tag{300.17}
+$$
+
+这与前面的两个下界匹配，证明式（300.2）。相减后使用 $\eta-R=\eta\delta$，得到式（300.3）。证毕。
+
+等半径时，$S_*=(I+nn^{\mathsf T})/2$、$\Omega_*=0$、$d_1=d_2=1/2$、$\lambda=1/a^2$、$D_a=3\sqrt2/a^3$，而 $J_a=3A$。所以 $\Gamma_a=0$、$\Theta_a=a/(24\sqrt2)$，式（300.3）还原第297节的 $1/(8\sqrt2a)$。一般半径的系数由同一个唯一端点原、对偶解决定；本节仍不求出整条有限预算曲线，也不声称实际最优通道在端点具有唯一二阶矩阵。
+
+## 追加锚（本行以下为增补区）
+
+## 301. 端点生成元的固定角点方向、横向旋转与曲率符号
+
+**定理 301.1（最优生成元的固定方向与旋转轴）。** 固定正半径六态模型，沿用第298节正角点规范下唯一的端点矩阵 $M_*=S_*-\Omega_*$、$b=(1/a_1,1/a_2,1/a_3)$ 与唯一对偶矩阵 $Z_*=\lambda vv^{\mathsf T}$。选择 $\|v\|_2=1$、$v_i>0$，并定义 $\omega\in\mathbb R^3$ 使 $\Omega_*x=\omega\times x$。则
+
+$$
+M_*b=b,
+\qquad v\cdot\omega=0.
+\tag{301.1}
+$$
+
+不等半径时，第299节所必需的非零一阶旋转，其轴因而总在 $v^\perp$ 内。在第296节采用的主轴 Lindblad 表示中，$v$ 是耗散系数为零的方向。两个结论都包括对偶列支撑中出现零列的情形。
+
+证明。记 $A=\|b\|_2^2$，将归一化最优矩阵正数缩放为第298节最大化问题的达到点
+
+$$
+Q=\frac{D_a}{A}M_*,
+\qquad G=bb^{\mathsf T}+\lambda I-2\lambda vv^{\mathsf T}.
+\tag{301.2}
+$$
+
+互补松弛与列支撑给出
+
+$$
+(Q+Q^{\mathsf T})v=\operatorname{Tr}(Q)v,
+\qquad
+Qe_i=\frac{\alpha_i}{\|Ge_i\|_2}Ge_i
+\quad\text{当 }Ge_i\ne0.
+\tag{301.3}
+$$
+
+因为 $G$ 对称，逐列展开乘积可得
+
+$$
+QG
+=\sum_{i:Ge_i\ne0}
+\frac{\alpha_i}{\|Ge_i\|_2}(Ge_i)(Ge_i)^{\mathsf T}.
+\tag{301.4}
+$$
+
+零列对应的项是 $(Qe_i)(Ge_i)^{\mathsf T}=0$，不要求 $Qe_i=0$。因此 $QG$ 对称，亦即 $QG=GQ^{\mathsf T}$。这一步统一保留了全部零乘子情形。
+
+令 $B=b\cdot v>0$、$\ell=\operatorname{Tr}(Q)$、$w=Qv$。式（301.3）给出 $Q^{\mathsf T}v=\ell v-w$ 与 $v\cdot w=\ell/2$，而 $Gv=Bb-\lambda v$。把 $QG=GQ^{\mathsf T}$ 作用到 $v$，两侧分别为
+
+$$
+QGv=BQb-\lambda w,
+$$
+
+以及
+
+$$
+\begin{aligned}
+GQ^{\mathsf T}v
+&=\ell(Bb-\lambda v)-Gw\\
+&=\ell Bb-b(b\cdot w)-\lambda w,
+\end{aligned}
+$$
+
+其中最后一步使用 $2v\cdot w=\ell$ 抵消 $v$ 方向的项。于是
+
+$$
+BQb=(\ell B-b\cdot w)b.
+\tag{301.5}
+$$
+
+由于 $B>0$，$Qb$ 与 $b$ 平行；再由 $b^{\mathsf T}Qb=D_a$ 得
+
+$$
+Qb=\frac{D_a}{A}b.
+$$
+
+正数缩放后即为 $M_*b=b$。
+
+为证明旋转约束，令 $K=Q-Q^{\mathsf T}$、$P=I-vv^{\mathsf T}$。展开同一个对称乘积等式，得到
+
+$$
+0=QG-GQ^{\mathsf T}
+=Qb\,b^{\mathsf T}-b(Qb)^{\mathsf T}+\lambda PKP.
+\tag{301.6}
+$$
+
+这里使用 $Qv=(\ell v+Kv)/2$ 与 $v^{\mathsf T}K=-(Kv)^{\mathsf T}$。已证的 $Qb\parallel b$ 使前两项抵消，因此 $PKP=0$。在以 $v$ 为第三轴的任意正向正交标架内，这意味着 $K$ 在前两轴平面上的反对称块为零；等价地，$\Omega_Q=(Q^{\mathsf T}-Q)/2$ 的旋转轴向量满足 $v\cdot\omega_Q=0$。再正数缩放回 $M_*$，得到式（301.1）。证毕。
+
+**定理 301.2（无限制端点曲率的精确符号）。** 在第300节的记号下，任意固定正半径都有
+
+$$
+\Gamma_a=-\frac{\|\Omega_*b\|_2^2}{D_a}\le0,
+\qquad
+\Theta_a=\frac{\lambda d_1d_2}{2D_a}>0.
+\tag{301.7}
+$$
+
+而且
+
+$$
+\Gamma_a=0
+\quad\Longleftrightarrow\quad a_1=a_2=a_3.
+\tag{301.8}
+$$
+
+因此，对每个固定的不等正半径模型，当 $\delta>0$ 充分小时，无限制实际最优误差严格低于其端点一阶切线：
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)<\kappa_a\delta.
+\tag{301.9}
+$$
+
+证明。由 $M_*b=b$ 与 $M_*^{\mathsf T}=M_*+2\Omega_*$，
+
+$$
+M_*^{\mathsf T}b=b+2\Omega_*b,
+\qquad
+b^{\mathsf T}(M_*^{\mathsf T})^2b
+=b^{\mathsf T}M_*^2b=A.
+$$
+
+反对称性给出 $b\cdot\Omega_*b=0$，故定义300.1中的量满足
+
+$$
+J_a=3A+4\|\Omega_*b\|_2^2.
+\tag{301.10}
+$$
+
+再将定理301.1的 $v\cdot\omega=0$ 代入该定义，得到
+
+$$
+\Gamma_a=\frac{3A-J_a}{4D_a}
+=-\frac{\|\Omega_*b\|_2^2}{D_a}.
+$$
+
+$\Theta_a$ 的表达与严格正性直接由第300节给出。
+
+若 $\Omega_*b=0$，则 $\omega\times b=0$，故 $\omega$ 平行于 $b$。但 $v\cdot\omega=0$ 且 $v\cdot b>0$，所以 $\omega=0$，即 $\Omega_*=0$。反方向显然成立。结合定理299.1，$\Omega_*=0$ 恰好等价于三个半径相等，证明式（301.8）。最后，对不等半径使用定理300.2的 $o(\delta^2)$ 余项与 $\Gamma_a<0$，得到式（301.9）。证毕。
+
+这些关系来自任务最优解的共同列支撑与耗散锥互补条件。它们不要求全部列约束具有严格正乘子，也不是一般量子比特生成元的分类。式（301.7）本身尚未确定一般半径下受限系数 $\Gamma_a+\Theta_a$ 的符号；端点的固定方向也不意味着有限预算最优通道具有完全相同的特征向量。
+
+## 追加锚（本行以下为增补区）
