@@ -7671,7 +7671,7 @@ Together with the full-root three-singleton theorem in SA.4 (bound503/56), the s
 
 In public-token-cost1 rows the public prefix is exactly one fine leaf y. Whole source containment gives the displayed {y,zi} constraints for the three private-cost1 children; the full private-cost0 child has entire nonempty fibre {y}. Other active cost2 or cost3 children are allowed arbitrary fibres by the corresponding supplier.
 
-These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, and FP1 supplies full/public1/private11111. Together they give eight of nine and nine of fourteen respectively. The remaining C76 t=3 shape is full/private11222. Remaining C75 t=3 shapes additionally include full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
+These SA consumers supply six of the nine previously unsupplied t=3 shapes needed by the C76 root-cap test, and seven of the fourteen needed by the C75 test. The complete four-double gap theorem in G4 below additionally supplies gap/private2222, and FP1 supplies full/public1/private11111. Together with F11222 below, which supplies full/private11222, they give all nine C76 t=3 shapes and ten of the fourteen C75 t=3 shapes. The remaining C75 t=3 shapes are full/private11223, full/private12222, gap/private1233 and gap/private2223 at capacity81. One-/two-inactive cut branches, the entire cut74--76 classes and the outside-cofactor/common-law lift remain unresolved.
 
 ### SA.9. Exact controls on complete original sources
 
@@ -7850,7 +7850,7 @@ The checks remain active under Python -O. The program imports the adjacent actua
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/gap_four_double_actual_controls.json
 ```
 
-This supplies one more complete t3 support shape in the root-cap reduction. FP1 below also supplies full/public1/private11111, leaving full/private11222 as the remaining C76 t3 shape. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
+This supplies one more complete t3 support shape in the root-cap reduction. FP1 below supplies full/public1/private11111 and F11222 supplies full/private11222, completing the C76 t3 shape list. The one-/two-inactive branches and the complete cut74--76 problem retain their stated unresolved obligations.
 
 ## A public singleton and five private candidates at a full root
 
@@ -7994,3 +7994,344 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 ```
 
 These actual-source fixtures are not an exhaustive source enumeration. The unrestricted quantifier over the stated source family is supplied by FP1.1--FP1.6 and the complete finite query encoding. All results remain ordinary mathematical and exact finite certificates at head1225, without a Lean or height-lift claim.
+
+## Every complete full11222 support has one common law below nine
+
+Ordinary mathematical proof and an exact finite query certificate. This is
+not a Lean proof, a minimum-cut certificate, or an arbitrary-height result.
+
+### F11222.1. Statement
+
+Use one complete actual literal4555 source: one gap root has four occupied
+children and three full roots have five. Every occupied child's complete
+fibre is nonempty. For every pair of ORIGINAL legal restrictions at
+different roots, their actual fine-label union contains a ternary seven-tree
+(three different columns, each with three different fine labels). Legal
+restrictions select two children at the gap and three at a full root.
+
+Suppose a full root R has two complete singleton fibres {a},{b} and three
+complete double fibres E1,E2,E3. Then there is ONE probability on the same
+actual source, selected before all original numerical queries, with
+
+    Gamma_1225 <= 503/56 = 9 - 1/56.
+
+The same conclusion holds if the three named doubles only have size at most
+two: a smaller fibre gives three singleton children and the existing
+full-three-singletons supplier. We prove the exact 11222 case below.
+
+### F11222.2. Existing consumers and their actual-source hypotheses
+
+We use Report449 IA.1, SA.2--SA.4 and FP1.1--FP1.7:
+
+* A whole original legal restriction with at most two fine labels has a
+  law of envelope at most 328/37.
+* B3: a whole nonmonochromatic legal restriction with exactly three labels
+  has a law of envelope 249/28.
+* H4-two: a whole original monochromatic restriction in a column H, plus
+  four distinct actual H labels assigned at at most two points per owner,
+  has envelope 249/28. All R owners here have at most two labels, so that
+  assignment condition is automatic whenever four H labels are available.
+* H4: given a whole monochromatic H restriction, an actual H-supported
+  probability eta with child cap 1/4, fine-label cap 3/8 and atom cap 1/4
+  supplies envelope 503/56.
+* H3+2: given a whole monochromatic H restriction, five distinct labels at
+  five distinct R owners, three in H and two outside, supply 206/23.
+* HT: a whole monochromatic restriction in H and three double owners that
+  are the three edges of a fine-label triangle in H supply 61/7. The
+  auxiliary eta is uniform on their six actual incidences.
+* FP1: if all five complete R fibres are contained respectively in
+  {y,z_i} for a common fine label y, they have envelope 503/56.
+
+Every bound in this list is at most 503/56. These consumers keep all complete
+fibres in the source and use a single law for all queries.
+
+### F11222.3. Repeated singleton labels
+
+If a=b, each legal restriction comprising both singleton owners and one
+double has at most three labels. A restriction of size at most two, or a
+nonmonochromatic three-label restriction, is already supplied. Otherwise
+all three double fibres avoid a and lie entirely in H=col(a). If their
+total union together with a has at least four labels, use H4-two with one
+of these monochromatic restrictions. If it has at most three labels, all
+three doubles equal the same two-set, so their original legal triple has
+only two labels. This supplies every case with a=b.
+
+Henceforth a and b are distinct.
+
+### F11222.4. A singleton label in a double
+
+Suppose a belongs to E1. If E1={a,b}, the original restriction of both
+singleton owners and E1 has two labels. Otherwise E1={a,c}, with a,b,c
+distinct. The same complete restriction is A={a,b,c}; B3 supplies the case
+where it is nonmonochromatic. Thus A lies in one column H and is a whole
+monochromatic legal anchor. Any fourth actual R label in H gives H4-two,
+so assume R has exactly the three H labels A.
+
+For either remaining double E, if E meets {a,b}, use the original legal
+restriction consisting of both singleton owners and E. If E instead meets
+A only at c, use the original restriction consisting of the a-singleton,
+E1 and E. Were E's other endpoint outside A, this complete restriction
+would be a nonmonochromatic three-set, giving B3, or would introduce a
+fourth H label, giving H4-two. Consequently, outside those supplied cases,
+every remaining double which meets A is contained in A.
+
+A remaining double {a,b} gives a two-label original legal restriction with
+the two singletons. A remaining double {a,c}=E1 gives a two-label original
+legal restriction with E1 and the a-singleton. Thus a remaining double
+meeting A can only be {b,c}. In that case use four actual H owners: the
+a-singleton, b-singleton, E1={a,c}, and that {b,c} owner. Give the two
+singleton points mass 1/4 each and each of the four double incidences mass
+1/8. The child cap is 1/4, the fine masses are 3/8,3/8,1/4, and the atom cap
+is 1/4. H4 applies, irrespective of the fifth complete fibre.
+
+If neither remaining double meets A, both lie outside H. Choose different
+representatives from them; their size two guarantees this is possible.
+Together with a at its singleton owner, b at its singleton owner and c at
+E1's owner, these give five distinct labels at five distinct owners, three
+in H and two outside. Apply H3+2.
+
+This supplies every case where a singleton label occurs in a double.
+Henceforth {a,b} is disjoint from E1 union E2 union E3.
+
+### F11222.5. The three-edge graph
+
+If the three doubles share a common label y, every complete R fibre is of
+the form required by FP1: each singleton is contained in {y,a} or {y,b},
+and each double equals {y,z_i}. This supplies all common-centre cases.
+
+If two doubles coincide, say E1=E2={u,v}, their original legal restriction
+with the a-singleton has three labels. B3 handles the nonmonochromatic
+case, so {a,u,v} lies in one column H. The analogous restriction with the
+b-singleton either invokes B3 or forces b into H. The four labels a,b,u,v
+are distinct, so H4-two applies. Thus all repeated-edge cases are supplied.
+
+We now have a simple graph of three distinct two-sets, with no common
+endpoint. If it is a triangle, the original legal triple of the three
+double owners has three labels. Use B3 if these are nonmonochromatic;
+otherwise it is a whole monochromatic anchor and HT applies directly.
+
+A simple three-edge graph without a common endpoint and without a triangle
+is a three-edge matching, a two-edge path plus a disjoint edge, or a
+three-edge path. Indeed a graph of three edges with a cycle is the
+triangle; a connected acyclic graph of three edges is a star or a path;
+the disconnected possibilities are a two-edge path plus an edge, or three
+separate edges. With the two disjoint singleton labels included, their
+numbers n of distinct actual R labels are respectively 8,7,6.
+
+### F11222.6. Column bounds for the remaining three graphs
+
+Write m_C for the number of DISTINCT R labels in a column C. The following
+are forced after H4-two cases have been supplied:
+
+    matching: n=8, m_C<=5;
+    two-edge path plus edge: n=7, m_C<=5;
+    three-edge path: n=6, m_C<=4.
+
+Here is a direct argument, without reliance on an enumerated inventory.
+
+For the matching, suppose m_C>=6. If both singleton labels lie in C, at
+least four of the six matching endpoints lie there, so at least one entire
+edge lies there; that edge and the two singletons form a monochromatic
+original legal restriction with four distinct labels. If exactly one
+singleton lies in C, at least five endpoints lie there, so at least two
+entire edges lie there; those owners and the singleton form such a
+restriction. If no singleton lies in C, all six endpoints lie there, and
+the three edge owners are a monochromatic legal restriction. Each case
+has at least four distinct H labels and invokes H4-two.
+
+For the two-edge path plus edge, suppose m_C>=6. If both singletons lie in
+C, at least four of the five graph vertices do. Four of these vertices
+must contain an entire edge: an independent set has at most three vertices
+(at most two in the two-edge path and at most one in the separate edge).
+Use that edge and the two singletons. If just one singleton lies in C,
+all five graph vertices do; use that singleton and any two edge owners.
+Their union contains at least three graph vertices, hence at least four
+distinct labels including the singleton. With no singleton there, m_C>=6
+is impossible. The displayed legal restrictions again invoke H4-two.
+
+For the three-edge path, suppose m_C>=5. With both singletons in C, at
+least three of the four graph vertices lie there. Such three contain an
+entire edge, because a four-vertex path has independence number two. Use
+that edge and both singletons. With exactly one singleton in C, all four
+path vertices lie there; use that singleton and two adjacent edge owners.
+Their union has four distinct labels. With no singleton in C the assumed
+bound is impossible. These are H4-two cases as well.
+
+In addition, for each i let F_i={a,b} union E_i, the COMPLETE projection of
+the original restriction consisting of both singleton owners and owner
+Ei. These have four distinct labels. A monochromatic F_i itself invokes
+H4-two, so assume every F_i has at most three labels in any column.
+
+### F11222.7. One normalized puncture law
+
+Choose i uniformly from {1,2,3}. For every other original root Q and every
+ORIGINAL legal restriction at Q, take one ternary tree in its union with
+the original R restriction having complete projection F_i. For each column
+C occurring in that tree, replace its three leaves by three distinct
+actual union labels containing ALL of (F_i)_C. This is possible because
+|(F_i)_C|<=3 and the original tree proves the actual union has at least
+three labels in that column. Columns outside the tree are unchanged.
+
+Delete ALL labels of F_i globally. At most four of nine tree leaves are
+deleted, leaving at least five. Choose five survivors, make them uniform,
+and give each an actual owner in Q's original restriction. Such an owner
+exists because the entire complete R projection F_i was deleted. Average
+over Q's original restrictions, over the three i, and equally over the
+three Q different from R. All choices are made once, before the query.
+Call the resulting law psi.
+
+A full-root child is in a uniform original triple with probability 3/5;
+a gap child is in a uniform original pair with probability 1/2<=3/5.
+Each selected column has at most three of the five survivors, and each
+fine label has at most one. In divisor order
+
+    D=(1,5,7,25,35,49,175,245,1225),
+
+the SAME law psi, supported away from R, has simultaneous baseline caps
+
+    (1,1/3,3/5,1/5,1/5,1/5,3/25,1/15,1/25).
+
+It also satisfies the stronger joint puncture bounds. Let
+
+    A={a,b}, a_C=|A intersect C|,
+    d_C=sum_i |(E_i minus A) intersect C|,
+    m_C=|(A union E1 union E2 union E3) intersect C|.
+
+Counts d_C retain repeated appearances of a label in different doubles;
+m_C counts each fine label only once. Thus m_C<=a_C+d_C, and
+
+    psi(C) <= (3-a_C-d_C/3)/5.                       (1)
+
+Indeed before averaging i, the chosen survivors in C number at most
+3-|(F_i)_C|. If C is absent from the tree its mass is zero and this same
+inequality still holds because its right side is nonnegative.
+
+Every label in A is always deleted. A label outside A occurring in t
+doubles is deleted on t/3 of the i choices, and on the others has psi mass
+at most 1/5. Consequently
+
+    psi(y)=0 for y in A;
+    psi(y)<= (1-t/3)/5 for an R label y outside A.   (2)
+
+These are global modulus49 statements, not merely statements at root R.
+
+### F11222.8. One mixture and its root-sensitive caps
+
+For each of the n DISTINCT actual R labels choose one actual R owner.
+Give each chosen point mass 1/n, obtaining eta. No owner can receive more
+than two points because each complete fibre contains at most two labels.
+Set, once and for all,
+
+    nu=(3/4)psi+(1/4)eta; lambda=(3/4)psi; pi=(1/4)eta.
+
+Write m=max_C m_C. The two subprobabilities have the following caps at
+the six divisors with a factor 5:
+
+    d       5       25       35       175      245      1225
+    lambda  1/4     3/20     3/20     9/100    1/20     3/100
+    pi      1/4     1/(2n)   m/(4n)   1/(2n)   1/(4n)   1/(4n).
+
+Lambda avoids R; pi is entirely at R. These are simultaneous caps of
+fixed subprobabilities. In particular the root/fine cap of pi uses n
+distinct labels, not the eight incidences which may repeat fine labels.
+
+The whole nu has the pure-coordinate caps
+
+    nu(column)<=9/20,  nu(fine label)<=3/20.          (3)
+
+For columns, (1) gives
+
+    nu(C) <=9/20 -3a_C/20 -d_C/20 +m_C/(4n)
+           <=9/20,
+
+because n>=5 and m_C<=a_C+d_C. For a label y in A, nu(y)=1/(4n)<=3/20.
+For any other R label appearing in t>=1 doubles, (2) gives
+
+    nu(y)<=3/20-t/20+1/(4n)<=3/20.
+
+For a label not present at R, eta gives zero and the baseline psi fine
+cap proves (3). No disjointness between all R labels and psi is assumed;
+the averaged puncture allows positive psi mass on repeated or unselected
+R labels.
+
+### F11222.9. Exact 64-layout certificate for all original queries
+
+Choose any original numerical phase query, one residue class C_d for
+each d in D, with C_1 the whole source. Each of its six positive-5 classes
+specifies one ORIGINAL first-five root. Encode that root by bit 1 if it is
+R and by bit 0 otherwise. Thus each actual query gives one of 64 layouts.
+
+For each ordered pair (d,e), use the following upper bound on
+nu(C_d intersect C_e):
+
+* If neither modulus contains 5, use the whole-law cap at lcm(d,e),
+  namely 1,9/20 or 3/20 at modulus 1,7 or 49.
+* If both moduli contain 5 and their bits differ, the actual intersection
+  is empty, so use zero.
+* Otherwise at least one modulus contains 5 and all specified bits agree.
+  Use the lambda cap at lcm(d,e) if that bit is 0; use the pi cap if it is 1.
+
+For compatible residue classes the actual intersection is exactly one
+original lcm cylinder; for incompatible classes it is empty. Two bit-zero
+classes can name different original roots; treating them as compatible
+only enlarges this upper bound. Ignoring all other digit compatibility
+also only enlarges the upper bound. This encoding therefore bounds every
+actual query without identifying different original roots in the source.
+
+Sum over all 81 ordered pairs. The exact rational program
+[root-query certificate](../../../frontier/cover-geometry/height-two-small-anchors/full11222_root_query_controls.py) and its [data](../../../frontier/cover-geometry/height-two-small-anchors/full11222_root_query_controls.json), run with an explicit output
+path, enumerates all 64 layouts for each allowed parameter pair:
+
+    (n,m)=(8,5), (7,5), (6,4).
+
+In every case the maximum is 44/5, attained only by the all-zero layout.
+Smaller actual m only decreases pi caps, so these checks include all
+column multiplicities allowed in F11222.6. Thus for every original query
+
+    E_nu (sum_{d in D} 1_{C_d})^2 <=44/5<9.
+
+This finite enumeration is a certificate for the stated cap interface.
+It does not enumerate actual sources or assert attainment of the bound
+by an actual source. It also records failure boundaries of this particular
+interface: (n,m)=(6,5),(5,4),(5,3) give respectively 1087/120,193/20,46/5;
+those values are not source counterexamples.
+
+### F11222.10. Conclusion and scope
+
+F11222.3--F11222.6 reduce EVERY complete full11222 source to an existing supplier
+or one of the three parameter cases in F11222.9. The latter have envelope
+44/5; all existing branches have envelope at most 503/56. Their maximum is
+therefore 503/56, proving the statement.
+
+The proof keeps all actual labels, complete original fibres and legal-pair
+premises. It never asserts that selecting zero probability on a point
+creates a smaller source satisfying the blocking condition. The probability
+is fixed before the numerical query. No maximum-flow, minimum-cut or
+standalone-five-tree hypothesis is used.
+
+This supplies full/private11222 in the three-inactive-root reduction. It
+does not supply the one-/two-inactive-root branches, complete cut74--76,
+the outside-cofactor/common-law lift, or unrestricted Erdos #7.
+
+### F11222.11. Complete actual sources and shared fine-label controls
+
+The [actual-source program](../../../frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.json) construct three complete original sources with the residual graphs above. They retain all19 original owners and every whole fibre. Each source passes all480 original legal-pair tests and the standalone five-tree, while no root individually supplies a ternary tree for all its own legal restrictions.
+
+| Source | Distinct R labels | Maximum distinct R labels per column | Actual points | psi mass at original49 residue1 |
+|---|---:|---:|---:|---:|
+|three-edge matching|8|5|176|2/15|
+|three-edge path|6|4|190|1/15|
+|two-edge path and disjoint edge|7|5|176|1/15|
+
+The marked fine label occurs at R and at other original roots. In the last two controls it belongs to two R doubles. Both lambda and pi assign it positive mass, so these controls test the joint puncture bounds without assuming disjoint fine-label supports. Each selected complete F_i is still globally deleted from its own component, and the two singleton labels have zero psi mass throughout.
+
+Across the three sources the program checks1440 original legal pairs,234 normalized paired-tree constructions and21204 original numerical cylinders over psi, lambda, pi and nu. All component caps and the same-law pure7/49 caps are checked in the original CRT coordinates. Capacity79 is only an explicit whole-fibre cut witness, not a certified minimum. The actual fixtures do not exhaust the source family; the complete reduction F11222.3--F11222.6 and all64 root-query layouts supply the universal statement.
+
+Both programs retain checks under Python -O and require an explicit output path:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_root_query_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_root_query_controls.json
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/full11222_actual_controls.json
+```
+
+This completes the nine previously unsupplied C76 three-inactive-root shapes. Four C75 shapes remain at capacity81: full/private11223, full/private12222, gap/private1233 and gap/private2223. The one-/two-inactive-root branches, entire cut74--76 classes and arbitrary outside-cofactor lift remain open.
