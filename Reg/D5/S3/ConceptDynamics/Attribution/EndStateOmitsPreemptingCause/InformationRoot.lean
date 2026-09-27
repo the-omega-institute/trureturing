@@ -1,3 +1,4 @@
+import Reg.Support.LegacyRelations.Preemption
 import LeanInformationAudit.Syntax
 import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations
@@ -62,8 +63,13 @@ local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
 
 register_information_theorem _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause
   in endStateOmitsPreemptingCauseArena
-  primitives endStateOmitsPreemptingCauseRealization.toPrimitiveBundle
-  realization end_state_omits_preempting_cause_realization
+  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
+    Reg.Support.LegacyRelations.Preemption.signature Reg.Support.LegacyRelations.Preemption.actual.readout Reg.Support.LegacyRelations.Preemption.actual.anchor)
+  realizes Reg.Support.LegacyRelations.Preemption.registration
+  finite via end_state_omits_preempting_cause_realization
+  variation Reg.Support.LegacyRelations.Preemption.finite_variation sensitivity Reg.Support.LegacyRelations.Preemption.finite_sensitivity
+  escape from source (Reg.Support.LegacyRelations.Preemption.selection)
+  escape continues (open)
 end
 
 end Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.InformationRoot

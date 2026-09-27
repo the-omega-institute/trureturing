@@ -68,14 +68,6 @@ answered? Existing work gives this picture several mathematical entry points.
   its smallest open neighborhood in this topology. This describes dependencies, not
   physical distance.
 
-- **Observation and recovery.** Which states share a reading, and does that reading
-  determine a target?
-
-  The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a
-  nonempty state space, says a target can be recovered exactly when states with the same
-  reading have the same target value. Existence does not establish computability or a
-  cost bound.
-
 - **Local and joint information.** Which correlations remain unknown after observing
   each part separately?
 
@@ -95,7 +87,8 @@ answered? Existing work gives this picture several mathematical entry points.
 
 Both counterexamples hide different target values behind equal readings.
 Separating one pair need not make recovery possible.
-Recovery requires separating **every pair with different target values**:
+[Recovery](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+requires separating **every pair with different target values**:
 the target must be constant on each observation fiber. On a nonempty state
 space, this condition ensures a recovery function exists but supplies no
 algorithm or cost bound.
@@ -193,12 +186,12 @@ Existing work offers several connected routes:
   data and allowed operations.
 
 The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-gives one criterion for compatible completion. Arrange nonempty sets of allowed
-local records on a finite tree. Each recorded variable must occur on a connected
-subtree, and neighbors must allow exactly the same joint assignments on their
-full overlap. Every allowed local record then extends to a record on the union
-of the local variable sets, satisfying every local constraint. This establishes
-existence; uniqueness, original-history recovery and computational cost require
+applies to nonempty local record sets on a finite tree. Each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+to the union of the local variable sets, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Unique completion, original-history recovery and computational cost require
 further results.
 
 Here, holography names a research direction concerning wholes and observations.
