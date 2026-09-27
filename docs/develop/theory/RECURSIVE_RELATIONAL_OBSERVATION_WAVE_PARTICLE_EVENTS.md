@@ -9698,3 +9698,437 @@ $$
 本批不新增 Lean、消化、覆盖或冻结内容；不推广到无限维记忆、时变控制、非齐次仪器或未声明的完整时间记录认证问题，也不主张文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 临界标记测度因子化为两个时间扇区
+
+第 123 节的极限公式还可以进一步压缩。它的时间坐标是连续的，但它对输入的作用只通过两个互相正交的边界扇区发生：在时间零出现的快速扇区，以及产生指数尾的慢扇区。
+
+**定义 126.1（两个扇区的时间系数与准备映射）。** 对 Borel 集 $E\subseteq[0,\infty)$，置
+
+$$
+\alpha(E)=\mathbf 1_{\{0\in E\}},
+\qquad
+\beta(E)=\int_Ee^{-t}\,dt.
+$$
+
+定义两个固定的完全正映射
+
+$$
+\mathsf F(X)=\operatorname{Tr}(Q_*X)P_0,
+\qquad
+\mathsf S(X)=\operatorname{Tr}(P_*X)\zeta.
+$$
+
+这里的 $\mathsf F$ 与 $\mathsf S$ 分别表示快速和慢速边界扇区的点击后继。定义极限标记仪器为
+
+$$
+\boxed{
+\mathbf M_\infty(E)=\alpha(E)\mathsf F+\beta(E)\mathsf S.
+}
+\tag{126.1}
+$$
+
+这一定义直接给出一个算子值测度。它不是把有限 $j$ 的离散测度在每个 Borel 集上逐点取极限所得的额外断言；第 123 节的弱极限含义是，对每个固定有界连续 $f$，有
+
+$$
+\mathbf M_\infty[f](X)
+=f(0)\mathsf F(X)
++\left(\int_0^\infty f(t)e^{-t}\,dt\right)\mathsf S(X).
+\tag{126.2}
+$$
+
+**定理 126.2（标记对象的二元因子化）。** 对任意 Borel 集 $E$，$\mathbf M_\infty(E)$ 完全正且迹不增，并且
+
+$$
+\mathbf M_\infty([0,\infty))=\mathsf F+\mathsf S
+$$
+
+是迹保持通道。对任意密度矩阵 $\rho$，其标量时间测度为
+
+$$
+\boxed{
+\mu_\infty^\rho
+=q_\rho\,\delta_0+p_\rho e^{-t}\,dt,
+\qquad
+q_\rho=\operatorname{Tr}(Q_*\rho),
+\quad
+p_\rho=\operatorname{Tr}(P_*\rho).
+}
+\tag{126.3}
+$$
+
+并且 $q_\rho+p_\rho=1$。因此，极限标记对象可以因子化为
+
+$$
+\boxed{
+X
+\xmapsto{\ \mathsf d\ }
+\bigl(\operatorname{Tr}(Q_*X),\operatorname{Tr}(P_*X)\bigr)
+\xmapsto{\ \mathsf p_E\ }
+\alpha(E)\operatorname{Tr}(Q_*X)P_0
++\beta(E)\operatorname{Tr}(P_*X)\zeta.
+}
+\tag{126.4}
+$$
+
+### 证明
+
+$\mathsf F$ 与 $\mathsf S$ 是正映射的非负标量倍和，因而完全正。对 $X\succeq0$，
+
+$$
+\operatorname{Tr}\mathsf F(X)=\operatorname{Tr}(Q_*X),
+\qquad
+\operatorname{Tr}\mathsf S(X)=\operatorname{Tr}(P_*X).
+$$
+
+由于 $0\le\alpha(E)\le1$ 且 $0\le\beta(E)\le1$，两项的迹之和不超过 $\operatorname{Tr}X$，所以 $\mathbf M_\infty(E)$ 迹不增。对全集，$\alpha=1$、$\beta=1$，且 $Q_*+P_*=I$，故总映射保迹。
+
+把这两个迹写成 $q_\rho,p_\rho$ 即得式（126.3）。式（126.4）只是把式（126.1）的两个系数先读出，再执行相应的准备映射。证毕。
+
+**推论 126.3（无限时间坐标的二元状态作用）。** 对任意有界 Borel 测试函数 $f$，形式上定义的极限响应都只依赖于两个数
+
+$$
+\alpha_f=f(0),
+\qquad
+\beta_f=\int_0^\infty f(t)e^{-t}\,dt,
+$$
+
+并满足
+
+$$
+\mathbf M_\infty[f](X)=\alpha_f\mathsf F(X)+\beta_f\mathsf S(X).
+\tag{126.5}
+$$
+
+若 $f\ge0$，该响应为完全正；若 $0\le f\le1$，它迹不增。时间函数的其余细节只影响指数尾上的经典加权，不再产生新的输入方向。
+
+这不是说指数等待律退化成单个时间点。对慢扇区，$\beta_f$ 仍然是完整的 Laplace 型时间读数；它说明的是：在输入—输出关系的量子部分，全部时间读数通过 $\mathsf S$ 的同一个量子后继进入。
+
+---
+
+## 127. 参考系统下，任意时间窗都只混合两个条件后继
+
+前一节的二元因子化对没有参考系统的状态已经成立。加入参考系统后，时间窗还会更新参考边缘；这个更新同样只沿快速和慢速两个扇区进行。
+
+**定义 127.1（参考扇区压缩）。** 对有限参考系统 $R$ 和联合正算子 $\omega_{RA}\succeq0$，置
+
+$$
+\omega_R^Q
+=\operatorname{Tr}_A\bigl[(I_R\otimes Q_*)\omega_{RA}(I_R\otimes Q_*)\bigr],
+$$
+
+$$
+\omega_R^P
+=\operatorname{Tr}_A\bigl[(I_R\otimes P_*)\omega_{RA}(I_R\otimes P_*)\bigr].
+$$
+
+记
+
+$$
+q=\operatorname{Tr}\omega_R^Q,
+\qquad
+p=\operatorname{Tr}\omega_R^P.
+$$
+
+当 $\omega_{RA}$ 是密度矩阵时，$p+q=1$。
+
+**定理 127.2（时间窗条件化的参考—后继公式）。** 对任意 Borel 集 $E$，有
+
+$$
+\boxed{
+(\operatorname{id}_R\otimes\mathbf M_\infty(E))(\omega_{RA})
+=\alpha(E)\,\omega_R^Q\otimes P_0
++\beta(E)\,\omega_R^P\otimes\zeta.
+}
+\tag{127.1}
+$$
+
+令
+
+$$
+Z_E=\alpha(E)q+\beta(E)p.
+$$
+
+若 $Z_E>0$，则条件于事件 $E$ 的归一化联合后继为
+
+$$
+\boxed{
+\omega_{RA\mid E}
+=\frac{\alpha(E)\,\omega_R^Q\otimes P_0
++\beta(E)\,\omega_R^P\otimes\zeta}{Z_E}.
+}
+\tag{127.2}
+$$
+
+特别地，若 $E\subseteq(0,\infty)$ 且 $\beta(E)>0$，则
+
+$$
+\boxed{
+\omega_{RA\mid E}
+=\frac{\omega_R^P}{p}\otimes\zeta,
+}
+\tag{127.3}
+$$
+
+只要 $p>0$。正时间窗的形状、长度和位置只改变该事件的发生概率 $\beta(E)p$，不改变其条件量子后继。
+
+### 证明
+
+对任意 $Y_R\otimes X_A$，有
+
+$$
+(\operatorname{id}_R\otimes\mathsf F)(Y_R\otimes X_A)
+=Y_R\operatorname{Tr}(Q_*X_A)P_0,
+$$
+
+$$
+(\operatorname{id}_R\otimes\mathsf S)(Y_R\otimes X_A)
+=Y_R\operatorname{Tr}(P_*X_A)\zeta.
+$$
+
+线性延拓到 $\omega_{RA}$，并用部分迹的 sandwich 恒等式，得到
+
+$$
+(\operatorname{id}_R\otimes\mathsf F)(\omega_{RA})=\omega_R^Q\otimes P_0,
+$$
+
+$$
+(\operatorname{id}_R\otimes\mathsf S)(\omega_{RA})=\omega_R^P\otimes\zeta.
+$$
+
+代入式（126.1）即得式（127.1）。取迹得到 $Z_E$；在 $Z_E>0$ 时除以该正数，得到式（127.2）。当 $E$ 不含零时 $\alpha(E)=0$，再用 $\beta(E)>0$ 与 $p>0$ 即得式（127.3）。证毕。
+
+**推论 127.3（正时间条件化的参考信息与系统后继分离）。** 在式（127.3）中，参考系统保留的是慢扇区压缩 $\omega_R^P/p$，受测系统固定为 $\zeta$。因此晚事件条件化可以改变参考系统的状态，却不能把一个新的系统后继从指数时间位置中读出来。
+
+相反，含有时间零的事件窗会混合两个后继。例如对 $E=[0,a]$，$a>0$，有
+
+$$
+\omega_{RA\mid[0,a]}
+=\frac{\omega_R^Q\otimes P_0+(1-e^{-a})\omega_R^P\otimes\zeta}
+{q+(1-e^{-a})p},
+\tag{127.4}
+$$
+
+只要分母正。早期有限分辨率因此不是简单地把“快事件”读成时间零；它把时间零原子与慢尾在同一事件格中混合。
+
+---
+
+## 128. 全部临界标记记录的观察商只有一个慢扇区人口
+
+因果边界是否保留全部时间—后继标记，取决于它能否区分输入。临界极限给出一个精确的观察等价关系。
+
+**定理 128.1（无参考输入的标记观察等价）。** 对密度矩阵 $\rho,\sigma$，以下条件等价：
+
+$$
+\mathbf M_\infty(E)(\rho)=\mathbf M_\infty(E)(\sigma)
+\quad\text{对所有 Borel 集 }E;
+\tag{128.1}
+$$
+
+$$
+\operatorname{Tr}(P_*\rho)=\operatorname{Tr}(P_*\sigma).
+\tag{128.2}
+$$
+
+等价地，全部有界连续时间测试函数及其点击后继输出都相同，当且仅当两输入具有相同的慢扇区人口。
+
+对一般 Hermitian 输入差值 $\Delta$，全部标记响应为零的充要条件是
+
+$$
+\boxed{
+\operatorname{Tr}(Q_*\Delta)=0,
+\qquad
+\operatorname{Tr}(P_*\Delta)=0.
+}
+\tag{128.3}
+$$
+
+### 证明
+
+若式（128.2）成立，由迹为一且 $Q_*+P_*=I$，两态的 $Q_*$ 人口也相等；代入式（126.1）即可得到式（128.1）。
+
+反过来，取 $E=(0,\infty)$，有 $\alpha(E)=0$、$\beta(E)=1$，从而
+
+$$
+\mathbf M_\infty(E)(\rho)=\operatorname{Tr}(P_*\rho)\zeta.
+$$
+
+两边相等给出式（128.2）。对一般 Hermitian 差值，取 $E=\{0\}$ 与 $E=(0,\infty)$，分别得到两个迹条件；反向代入式（126.1）显然成立。证毕。
+
+若只假定所有有界连续测试函数的响应相同，也可取 $f(t)=e^{-t}$；其两个系数为 $f(0)=1$ 与 $\int_0^\infty e^{-2t}dt=1/2$，因而能区分两个不同的慢扇区人口。这说明这里的 Borel 集表述与连续测试函数表述给出同一个观察商。
+
+**例 128.2（相同临界标记、不同相干输入）。** 在二维活动空间中取 $P_*=|p\rangle\langle p|$、$Q_*=|q\rangle\langle q|$。固定 $0<p<1$，定义
+
+$$
+|\psi_\phi\rangle
+=\sqrt p\,|p\rangle+e^{i\phi}\sqrt{1-p}\,|q\rangle,
+\qquad
+\rho_\phi=|\psi_\phi\rangle\langle\psi_\phi|.
+$$
+
+不同的 $\phi$ 给出不同的纯态；当 $\phi-\phi'\notin2\pi\mathbb Z$ 时，通常 $\rho_\phi\ne\rho_{\phi'}$。但
+
+$$
+\mathbf M_\infty(E)(\rho_\phi)
+=\mathbf M_\infty(E)(\rho_{\phi'})
+$$
+
+对所有 $E$ 成立。临界时间—后继接口完全删去了 $P_*\!-\!Q_*$ 之间的相对相位。
+
+**定理 128.3（带参考输入的观察商）。** 对两个密度矩阵 $\omega_{RA}$ 与 $\widetilde\omega_{RA}$，全部参考—时间—后继标记输出相同，当且仅当
+
+$$
+\boxed{
+\omega_R^Q=\widetilde\omega_R^Q,
+\qquad
+\omega_R^P=\widetilde\omega_R^P.
+}
+\tag{128.4}
+$$
+
+因此参考接口可以保留两个扇区的条件参考状态，但仍然不读取系统输入的跨扇区相干块。
+
+### 证明
+
+若两个压缩算子相同，式（127.1）立即给出全部事件集的输出相同。
+
+反之，取 $E=\{0\}$ 得
+
+$$
+\omega_R^Q\otimes P_0
+=\widetilde\omega_R^Q\otimes P_0,
+$$
+
+从而 $\omega_R^Q=\widetilde\omega_R^Q$；取 $E=(0,\infty)$ 得
+
+$$
+\omega_R^P\otimes\zeta
+=\widetilde\omega_R^P\otimes\zeta,
+$$
+
+从而 $\omega_R^P=\widetilde\omega_R^P$。证毕。
+
+**关系解释。** “保留整个临界时间记录”与“恢复整个临界输入”不是同一命题。对无参考输入，连续时间记录的观察商只有一个实数 $p=\operatorname{Tr}(P_*\rho)$；对带参考输入，观察商扩大为两个参考算子 $\omega_R^Q,\omega_R^P$，但跨扇区相干仍在该接口上不可见。
+
+---
+
+## 129. 有限时间分辨率把理想扇区识别变成贝叶斯混合
+
+理想极限的时间零原子与正时间指数尾互相奇异，因此精确记录任意 $t>0$ 会确定事件来自慢扇区。有限时间分辨率会把一段含零的早期窗口与慢尾合并；该合并可以精确计算。
+
+**定理 129.1（早晚窗口的后验与后继）。** 固定 $a>0$，对无参考密度输入 $\rho$ 记
+
+$$
+p=\operatorname{Tr}(P_*\rho),
+\qquad
+q=1-p.
+$$
+
+以
+
+$$
+E_a=[0,a],
+\qquad
+L_a=(a,\infty)
+$$
+
+作为二元时间读数，则
+
+$$
+\boxed{
+\Pr(E_a)=1-pe^{-a},
+\qquad
+\Pr(L_a)=pe^{-a}.
+}
+\tag{129.1}
+$$
+
+在 $\Pr(E_a)>0$ 时，早窗口中来自慢扇区的后验人口为
+
+$$
+\boxed{
+\Pr(P_*\mid E_a)
+=\frac{p(1-e^{-a})}{1-pe^{-a}}.
+}
+\tag{129.2}
+$$
+
+若 $p>0$，晚窗口必来自慢扇区：
+
+$$
+\boxed{\Pr(P_*\mid L_a)=1.}
+\tag{129.3}
+$$
+
+相应的系统条件后继为
+
+$$
+\boxed{
+\rho_{\mid E_a}
+=\frac{qP_0+p(1-e^{-a})\zeta}{1-pe^{-a}},
+\qquad
+\rho_{\mid L_a}=\zeta.
+}
+\tag{129.4}
+$$
+
+### 证明
+
+由式（126.3），快速扇区在 $E_a$ 上的质量为 $q$，在 $L_a$ 上为零；慢扇区在两窗上的质量分别为 $p(1-e^{-a})$ 与 $pe^{-a}$。相加得到式（129.1），以慢质量除以早窗总质量得到式（129.2），晚窗的快速质量为零故得式（129.3）。将同样的两个质量乘以后继 $P_0,\zeta$，再归一化即得式（129.4）。证毕。
+
+**推论 129.2（分辨率的单调作用）。** 对固定 $p\in(0,1)$，早窗的慢扇区后验
+
+$$
+\pi_p(a)=\frac{p(1-e^{-a})}{1-pe^{-a}}
+$$
+
+严格随 $a$ 增加而增加，并满足
+
+$$
+\lim_{a\downarrow0}\pi_p(a)=0,
+\qquad
+\lim_{a\to\infty}\pi_p(a)=p.
+$$
+
+### 证明
+
+置 $u=e^{-a}$。直接求导得
+
+$$
+\frac{d\pi_p}{da}
+=\frac{p(1-p)e^{-a}}{(1-pe^{-a})^2}>0.
+$$
+
+两个极限由 $e^{-a}\to1$ 与 $e^{-a}\to0$ 得到。证毕。
+
+有限分辨率越早截断，早窗越接近纯时间零的快速记录；把窗口放宽，便逐渐把慢尾早期部分混入同一经典标签。晚窗始终保持慢扇区纯度，却以概率 $pe^{-a}$ 变得稀有。
+
+---
+
+## 130. AHH：连续时间的量子观察商只有一个人口坐标
+
+**关系结论 130.1（时间细节与扇区信息的分离）。** 在第 115 节的指定名义仪器、完整二维活动记忆、两种实际记录、齐次重复及单一最近失效相位的临界序列条件下，极限标记仪器同时具有两种看似不同的结构：
+
+$$
+\boxed{
+\begin{aligned}
+\text{在经典时间侧：}
+&\quad \delta_0\ \text{与}\ e^{-t}dt\ \text{保留完整的零点原子和指数形状};\\
+\text{在量子输入侧：}
+&\quad \rho\mapsto\operatorname{Tr}(P_*\rho)\ \text{是全部无参考标记输出的观察商};\\
+\text{在参考侧：}
+&\quad \omega_{RA}\mapsto(\omega_R^Q,\omega_R^P)\ \text{是全部参考标记输出的观察商}.
+\end{aligned}
+}
+\tag{130.1}
+$$
+
+AHH 在于：**临界极限没有把连续时间坐标变成更多的量子状态坐标。时间仍然可以精确描述“慢事件在指数尾的哪一处发生”，但所有这些正时间位置共享同一个点击后继 $\zeta$，对无参考输入也共享同一个慢人口 $\operatorname{Tr}(P_*\rho)$。因此，时间记录的连续细节属于事件律；量子关系的可辨识信息在该接口上已经压缩为扇区人口。**
+
+这不是说跨扇区相干在整个关系体中不存在。它只是被当前临界标记接口的观察商消去；若允许访问更细的有限 $j$ 过渡结构、其他控制或不同探测接口，原本被合并的关系可能重新可见。因而“观察商只有一个人口坐标”是一个接口相对的充分性结论，不是全体内部状态的本体定义。
+
+第 126—129 节还给出一个更操作性的版本：任何 Borel 时间窗只通过 $(\alpha(E),\beta(E))$ 混合两个条件后继；正时间窗把参考系统筛到慢扇区并固定系统后继，含零窗口则按贝叶斯权重混合 $P_0$ 与 $\zeta$。这把“晚事件会选择什么”与“早期有限分辨率会混合什么”放在同一标记对象中。
+
+**来源与边界 130.2。** 本批只把第 123—125 节的标记弱极限改写为二元扇区因子化，并在有限参考系统、正迹条件输入及固定时间窗上作直接推导。没有把有限 $j$ 的离散测度宣称为逐 Borel 集收敛，没有把临界极限的观察商推广为任意仪器或无限维记忆的充分统计，也没有把时间窗口的贝叶斯后验当作物理钟的动力学定律。本批仍是纯理论 Markdown，不新增 Lean、消化、coverage 或 freeze 内容。
+
+## 追加锚（本行以下为增补区）
