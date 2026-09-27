@@ -68186,3 +68186,301 @@ $$
 定理 436.1 的任意实几何存在性不意味着其证书可有效检查；定理 436.2 的可计算性依赖特定报酬的精确代数半代数描述。结论不提供任意实数预言机或通用黑箱报酬算法，不判定 $\eta_{\mathrm{fin}}$ 的精确等号，不断言该极限值为代数数或关于参数为半代数函数，不给出所有深度上最大化的有限协议或可达无限协议。返回的是严格误差内的精确有限协议；没有数值求解结果、预先的统一次数或深度界、有效统一收敛率或实用复杂度估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 437. 代数根面上的多项式上证书与完整有限标量树
+
+本节把最小面限制、内点多项式上主函数和有限树的严格阈值判定接在一起。报酬允许带符号和不连续；下方见证始终是一棵实际有限树，上方见证是根面坐标中的有理多项式。分别凹性始终针对整个向量块。
+
+输入与树的约定。令 $I$ 为有限集，允许为空。对每个 $i\in I$，输入整数 $d_i\ge0$、以精确实代数系数多项式等式和不等式的有限 Boolean 组合描述的集合 $C_i\subseteq\mathbb R^{d_i}$，以及精确实代数点 $a_i$。实代数常数由整数多项式及有理隔离数据指定。输入还包括报酬图公式 $\mathsf G_f(x,y)$ 和 $\varepsilon\in\mathbb Q_{>0}$。承诺每个 $C_i$ 非空、紧且凸，$a_i\in C_i$，并且 $\mathsf G_f$ 在 $C=\prod_iC_i$ 上恰为一个处处有定义、单值、有界函数 $f:C\to\mathbb R$ 的图。报酬图不要求闭，也不要求 $f$ 上半连续。
+
+完整有限单块分裂树采用定义432.1、433.1及434.1的约定：节点标签 $x_\nu\in C$，根标签 $a=(a_i)_i$；每个内部节点选择 $i\in I$，声明有限非空子节点集，并满足
+
+$$
+\lambda_{\nu j}\ge0,\qquad \sum_j\lambda_{\nu j}=1,\qquad
+x_{\nu,i}=\sum_j\lambda_{\nu j}x_{\nu j,i},\qquad
+x_{\nu j,h}=x_{\nu,h}\quad(h\ne i).
+$$
+
+最后一式也约束零权边。所有已声明的零权、余项、失败及提前停止分支均保留。深度是根叶路径上内部节点数的最大值，单子节点和零权路径上的内部节点也计数。叶质量 $w_\ell$ 是路径边权之积，根叶的空乘积为一。置
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_\ell w_\ell f(x_\ell),\qquad
+\tau=T_{\mathrm{fin}}^f(a;C)
+=\sup_{\mathsf T\text{ 为上述完整有限树}}\operatorname{val}_f(\mathsf T).
+$$
+
+空积 $C$ 是只含空元组的单点集；$I=\varnothing$ 时没有可选块，只有根叶树。
+
+**定理 437.1（边界根的有效双侧证书与严格代数树见证）。** 对每个满足上述承诺的输入，存在一个停机的 Turing 算法，输出以下有限精确数据：各根最小面 $F_i$ 的半代数公式、其维数 $m_i$、实代数满列秩矩阵 $B_i\in\mathbb R^{d_i\times m_i}$ 及仿射图
+
+$$
+J_i(z_i)=a_i+B_i z_i,\qquad
+D_i=\{z_i\in\mathbb R^{m_i}:J_i(z_i)\in F_i\},\qquad
+J=\prod_iJ_i,\quad D=\prod_iD_i;
+$$
+
+一个整数 $B\ge1$，使 $|f|\le B$ 于 $C$；一个有理系数多项式 $q\in\mathbb Q[z]$；有理数 $L,U$；以及一棵以 $a$ 为根的完整有限树 $\mathsf T$ 和它的精确实代数值 $v$。其中 $J_i:D_i\to F_i$ 为仿射双射，$D_i$ 紧、凸且在 $\mathbb R^{m_i}$ 中满维，$0\in\operatorname{int}D_i$。令 $h=f\circ J$，证书满足
+
+$$
+q(z)\ge h(z)+B\quad(z\in D),\qquad
+u^{\mathsf T}D^2_{ii}q(z)u\le0
+\quad(z\in D,\ u\in\mathbb R^{m_i},\ i\in I),
+$$
+
+且
+
+$$
+\boxed{
+U=q(0)-B,\qquad
+L<v=\operatorname{val}_f(\mathsf T)\le\tau\le U,\qquad
+U-L<\varepsilon.
+}
+$$
+
+特别地，$0\le\tau-v<\varepsilon$。树的每个节点标签、边权及叶报酬都有实代数编码，每个 $i$-节点至多有 $m_i+1$ 个子节点；输出列出全部节点和后继，包括其所有零权和非获利分支。这里 $\mathbb R^0=\{()\}$ 非空，零维图的矩阵没有列，零维 Hessian 条件为空；所有根面均为单点及空积情形均在结论内。多项式系数的有理性是在所输出的代数仿射坐标中说的，拉回原仿射面后的系数一般仅为实代数数。
+
+**证明。**
+
+（一）有效根面与精确平移。定理432.2和引理433.2已经给出根最小面及根的相对内部性质。将其线段见证中的系数换为 $t=\lambda/(1-\lambda)$，得到可供量词消去的公式
+
+$$
+F_i=\{x\in C_i:\exists t>0,\ a_i+t(a_i-x)\in C_i\},\qquad
+a_i\in\operatorname{ri}F_i.
+$$
+
+还需确认所得面紧。若 $x\in C_i\cap\operatorname{aff}F_i$，相对内点性质允许取充分小的 $t>0$，使 $a_i+t(a_i-x)\in F_i$；上式遂给出 $x\in F_i$。反向包含直接成立，因此
+
+$$
+F_i=C_i\cap\operatorname{aff}F_i.
+$$
+
+有限维仿射子空间闭，$C_i$ 紧，故 $F_i$ 紧。这里没有把最小面换成其闭包。
+
+在精确实代数系数上消去 $t$，可得到 $F_i$ 的无量词公式。从方向空间的零子空间开始，判定是否存在 $x\in F_i$ 不在当前的 $a_i+\operatorname{span}\{b_1,\ldots,b_r\}$ 中；若存在，就有效选取一个实代数这样的 $x$，追加列 $x-a_i$。仿射成员关系由代数线性方程表示，判定属于实闭域的一阶问题；非空半代数集合的代数点提取也有效。每次秩严格增加，至多追加 $d_i$ 列后停止。无外点时所得列张成 $\operatorname{span}(F_i-a_i)$，从而给出所需 $B_i$、$m_i$ 和 $D_i$。满列秩保证 $J_i$ 在该方向空间上是同胚；紧性、凸性、满维及 $0\in\operatorname{int}D_i$ 随之成立。若一开始即无外点，则 $F_i=\{a_i\}$、$m_i=0$。
+
+枚举整数 $B=1,2,\ldots$，对每个候选判定
+
+$$
+\forall x,y:\quad
+\bigl(x\in C\ \wedge\ \mathsf G_f(x,y)\bigr)
+\Longrightarrow -B\le y\le B.
+$$
+
+输入的有界性承诺保证此过程停机。完整树的叶质量恒为一，这是432.2、433.3中逐子树归纳的恒等式。因此，对任何这样的树，精确地有
+
+$$
+\operatorname{val}_{f+B}(\mathsf T)
+=\operatorname{val}_f(\mathsf T)+B.
+$$
+
+将432.2、433.3的面限制用于非负报酬 $f+B$，再减去 $B$，得到每个固定深度和全部有限深度上的值均可限制到 $F=\prod_iF_i$。所复用的证明把第一条零权边下的整棵子树重标为其父标签，保留全部节点、边权和深度；并非删除零权分支。各 $J_i$ 保持重心及非活动坐标等式，故在 $F$ 与 $D$ 上又有逐树同值、同深度的仿射对应。于是
+
+$$
+T_n^f(a;C)=T_n^h(0;D),\qquad
+\tau=T_{\mathrm{fin}}^h(0;D).
+$$
+
+（二）带符号树值的最小上主函数。对 $z\in D$ 令
+
+$$
+E(z)=T_{\mathrm{fin}}^h(z;D),\qquad V(z)=E(z)+B.
+$$
+
+根叶树和叶质量恒等式给出 $h\le E$、$-B\le E\le B$，因而 $0\le V\le2B$。任给一个块的有限凸分解 $z_i=\sum_j\lambda_j y_{j,i}$，其他块固定。对每个子根选值大于 $E(y_j)-\delta$ 的实际有限树，再将这有限多个树嫁接到该分裂，得到
+
+$$
+E(z)\ge\sum_j\lambda_j E(y_j)-\delta.
+$$
+
+各子树各自有限，有限嫁接仍有限；零权子根也可选根叶树。令 $\delta\downarrow0$，即得 $E$ 在完整闭域上分别凹。反之，任何实值分别凹函数 $A\ge h$，沿一棵树从叶向根应用有限 Jensen 不等式，都给出 $A(z)\ge\operatorname{val}_h(\mathsf T)$。取上确界得到 $A\ge E$。所以 $E$ 是 $h$ 的最小实值分别凹上主函数，$V$ 是 $h+B$ 的同类最小上主函数。此处以近似树嫁接补齐421.1的包络机制在当前任意有界报酬类上的应用，没有使用最大值取得或上半连续性。
+
+（三）从闭积球的解析前置扩展到凸因子。先省去所有零维块，设余下块数为 $s>0$。任取 $0<c<1$，逐块使用凹性和 $V\ge0$，得到
+
+$$
+V(cz)\ge c^sV(z)\quad(z\in D).
+$$
+
+取 $r_i>0$ 使 $\overline B(0,r_i)\subseteq D_i$。凸性给出
+
+$$
+cD_i+B\bigl(0,(1-c)r_i\bigr)\subseteq\operatorname{int}D_i.
+$$
+
+确实，固定 $x\in D_i$ 后，$cx+(1-c)B(0,r_i)$ 是包含于 $D_i$ 的开球，故其每一点都是内点。于是
+
+$$
+O=\prod_i c^{-1}\operatorname{int}D_i,\qquad
+G(z)=c^{-s}V(cz)\quad(z\in O)
+$$
+
+在 $D$ 外还具有正宽度的定义域，且 $G\ge V$ 于 $D$、$G(0)=c^{-s}V(0)$。具体地，取
+
+$$
+0<\delta_i<\frac{(1-c)r_i}{4c},\qquad
+N_i=D_i+B(0,\delta_i),\qquad N=\prod_iN_i.
+$$
+
+各 $N_i$ 有界、开且凸，$D\subset N$，并且
+
+$$
+\overline N_i+\overline B(0,2\delta_i)
+\subset c^{-1}\operatorname{int}D_i.
+$$
+
+这同时给出闭邻域与平移核所需的缓冲，而不要求原边界上的连续延拓。
+
+函数 $G$ 在 $O$ 上分别凹且 $0\le G\le M:=2Bc^{-s}$。固定其他块，对具有 $\delta$ 线段延长余量的两点 $x,y$，沿单位方向 $u=(y-x)/|y-x|$ 比较 $x-\delta u,x,y,y+\delta u$ 的凹割线斜率，得到
+
+$$
+-M/\delta\le\frac{G(\ldots,y,\ldots)-G(\ldots,x,\ldots)}{|y-x|}
+\le M/\delta.
+$$
+
+上述缓冲使此界在 $\prod_i(\overline N_i+\overline B(0,\delta_i))$ 上逐块一致成立，常数取 $M/\delta_i$。逐块望远镜求和即得联合 Lipschitz 界，特别是紧邻域上的一致连续性。$G$ 在整个 $O$ 上的局部连续性同理由更小的局部缓冲得到；因此只在内部使用卷积已足够，不需要为 $V$ 的原边界添加可测性前提。
+
+给定 $t>0$，选非负、积分为一、支撑充分小的光滑乘积核 $\varphi$，使 $\overline N-\operatorname{supp}\varphi\subset O$。定义
+
+$$
+S(z)=\int G(z-w)\varphi(w)\,dw\quad(z\in N).
+$$
+
+缩小支撑使 $\|S-G\|_D<t$。平移后的每一条单块线段仍在开凸积域 $O$ 内，故将 $G$ 的单块 Jensen 不等式用非负核积分，得到 $S\in C^\infty(N)$ 且 $D^2_{ii}S\preceq0$ 于 $N$。
+
+至此已经满足436.1证明中截断及 $C^2$ 多项式逼近步骤的实际条件：取支撑于 $N$、在 $D$ 邻域恒为一的光滑截断，将截断后的 $S$ 延零至整个欧氏空间，在包含 $D$ 的立方体上应用该步骤，取得实多项式 $p$，使
+
+$$
+\|p-S\|_D<t,\qquad
+\sup_D\|D^2_{ii}(p-S)\|_{\mathrm{op}}<t.
+$$
+
+这里只复用全局光滑函数的二阶导数一致逼近，不使用 Bernstein 算子的保凹性，也没有把一般凸因子说成球。沿436.1的同一余量构造，置
+
+$$
+Q(z)=\sum_i|z_i|^2,\qquad R=\max_D Q,\qquad
+q_\star=p+3t+t(R-Q).
+$$
+
+在 $D$ 上有 $p\ge G-2t$ 和 $R-Q\ge0$，故
+
+$$
+q_\star\ge G+t,\qquad
+D^2_{ii}q_\star\preceq-tI_{m_i},\qquad
+q_\star(0)\le c^{-s}V(0)+(R+5)t.
+$$
+
+将有限多个系数同时扰动为有理数，紧集上单项式及其二阶导数有界，因而可使值误差及每个完整 Hessian 块的算子范数误差都小于 $t/2$。所得 $q\in\mathbb Q[z]$ 满足
+
+$$
+q\ge G+t/2\ge V,\qquad
+D^2_{ii}q\preceq-(t/2)I_{m_i},\qquad
+q(0)\le c^{-s}V(0)+(R+11/2)t.
+$$
+
+先取 $c$ 接近一，使 $(c^{-s}-1)V(0)<\eta/2$，再取 $t>0$ 使 $(R+11/2)t<\eta/2$，就得到 $q(0)<V(0)+\eta$。若 $s=0$，$D$ 是单点，直接取 $V(0)\le q<V(0)+\eta$ 的有理常数即可。全程只为密度证明选取参数，不要求算法先计算未知函数 $V$ 或它的连续模。
+
+在凸因子的任意闭线段上，完整块 Hessian 非正给出分别凹性，包括其他块的边界值。反过来，多项式的分别凹性在活动块内部给出该 Hessian 条件，再由连续性延至边界；零维块条件为空。由第二步的最小性以及刚证的任意精度上主函数，得到
+
+$$
+\tau
+=\inf\{q(0)-B:q\in\mathbb Q[z],\ q\ge h+B\text{ 于 }D,
+\ D^2_{ii}q\preceq0\text{ 于 }D\text{ 对所有 }i\}.
+$$
+
+（四）有限树的严格阈值公式。令 $\mathcal A_n$ 为原域 $C$ 上根为 $a$、深度至多 $n$ 的所有完整树的实际值集合。直接将定理434.2第一项用于 $D$ 上的有界带符号报酬 $h$：每棵树都被同根、深度不增、值不减的树支配，其 $i$-节点至多有 $m_i+1$ 个正权子节点。令 $\mathcal R_n$ 为 $D$ 上满足该分支数界、允许非负边权的树值集合，则
+
+$$
+\mathcal R_n\subseteq\mathcal A_n,\qquad
+\forall v\in\mathcal A_n\ \exists v'\in\mathcal R_n:\ v'\ge v.
+$$
+
+第一步的面限制及坐标对应用于这里的比较。这是向上的共尾子集，不断言 $\mathcal R_n=\mathcal A_n$；421.1证明中把报酬作为额外坐标的 $m_i+2$ 点压缩保持精确值，而此处只需434.2的 $m_i+1$ 点单侧优势。$I=\varnothing$ 时两类直接都只有根叶值，无须应用要求至少一个因子的434.2。
+
+固定 $n$ 后，这些树只有有限多个有序形状：每个内部节点有有限种活动块选择和 $1$ 至 $m_i+1$ 个子节点，路径长至多 $n$。对每个形状 $\sigma$，取节点变量 $z_\nu$、边变量 $\lambda_{\nu j}$ 及叶报酬变量 $y_\ell$。记 $\mathsf G_h(z,y):=\mathsf G_f(J(z),y)$。令 $\mathsf F_\sigma$ 为下列有限多项式条件的合取：
+
+$$
+\begin{aligned}
+&z_\nu\in D\quad\text{对每个节点},\qquad z_{\varnothing}=0,\\
+&\lambda_{\nu j}\ge0,\qquad \sum_j\lambda_{\nu j}=1,\\
+&z_{\nu,i}=\sum_j\lambda_{\nu j}z_{\nu j,i}
+\quad\text{在每个活动块为 }i\text{ 的节点},\\
+&z_{\nu j,h}=z_{\nu,h}\quad(h\ne i)\quad\text{对该节点的每条边},\\
+&\mathsf G_h(z_\ell,y_\ell)\quad\text{对每个叶},\\
+&v=\sum_\ell\left(\prod_{e\in\operatorname{path}(\varnothing,\ell)}\lambda_e\right)y_\ell.
+\end{aligned}
+$$
+
+域和图的 Boolean 公式原样保留；并未要求它们仅由合取组成。所有非活动坐标等式包括零权边，所有叶都要满足实际报酬图。根叶形状用空乘积一。于是
+
+$$
+\mathsf R_n(v):=\bigvee_\sigma\exists(z,\lambda,y)\,\mathsf F_\sigma,
+\qquad
+\Psi_n(L):=\exists v\,[\mathsf R_n(v)\wedge v>L]
+$$
+
+都是可有效构造的实代数系数公式。由共尾性，$\Psi_n(L)$ 为真当且仅当存在任意分支数、深度至多 $n$ 的原域树，其实际值严格大于 $L$。它使用 $f$ 的实际图，没有把报酬换成上半连续包络。
+
+量词消去判定每个 $\Psi_n(L)$。若为真，有限析取中至少一个形状可行。实代数数域是实闭域，带实代数系数的此有限存在公式在 $\mathbb R$ 与实代数数域中真值相同，故存在所有变量均为实代数数的解。可用半代数采样提取，也可公平枚举该形状的有限长度实代数编码元组，逐个精确检验无量词条件，直到找到满足者；存在性保证后者停机。提升 $x_\nu=J(z_\nu)$ 后得到原域上的完整代数树，$v$ 也因有限代数加乘而为实代数数。没有舍入标签、删去失败或零权后继，也没有把严格下见证改成上确界点。
+
+同一公式还给出一个不要求取得性的有限深度后果。$\mathcal R_n$ 非空、有界且半代数，$\sup\mathcal R_n=\sup\mathcal A_n=:s_n$；其中 $\mathcal R_0=\{f(a)\}$，即使坐标空间是 $\mathbb R^0$ 也不为空。其上确界由单点公式
+
+$$
+\operatorname{Sup}_n(t):=
+\bigl[\forall v\,(\mathsf R_n(v)\Rightarrow v\le t)\bigr]
+\ \wedge\
+\bigl[\forall\delta>0\ \exists v\,(\mathsf R_n(v)\wedge v>t-\delta)\bigr]
+$$
+
+刻画。量词消去与根隔离因而可计算实代数数 $s_n$，但 $s_n$ 未必属于 $\mathcal R_n$。这个后果不作为下述算法的必经步骤，亦不施加 $v=s_n$。
+
+（五）有限检验与公平搜索。对任一候选 $q\in\mathbb Q[z]$，它是上证书当且仅当以下全称句成立：
+
+$$
+\begin{aligned}
+&\forall z,y:\quad
+\bigl(z\in D\wedge\mathsf G_h(z,y)\bigr)\Rightarrow q(z)\ge y+B,\\
+&\forall z,u:\quad z\in D\Rightarrow
+u^{\mathsf T}D^2_{ii}q(z)u\le0\qquad(i\in I,\ u\in\mathbb R^{m_i}).
+\end{aligned}
+$$
+
+这些句子连同有限形状公式均属于精确实代数系数的实闭域一阶理论，可由量词消去有限判定。完整 Hessian 块包括块内混合导数。第一句借助总单值图保证支配全部实际报酬，第二句给出第三步所用的闭域分别凹性；这里没有用仅充分的代数证书替代这些精确条件。
+
+按多项式次数、系数分子绝对值、正分母、$n\in\mathbb N_0$ 以及有理数 $L$ 的编码长度的递增有限界，公平枚举三元组 $(q,n,L)$。令 $U=q(0)-B\in\mathbb Q$。依次检验
+
+$$
+U-L<\varepsilon,\qquad q\text{ 满足上述上证书句},\qquad\Psi_n(L).
+$$
+
+任一条件为假就继续枚举；全部为真时，按第四步提取一个满足 $v>L$ 的完整代数树，连同面坐标、$B,q,L,U,v$ 返回。每个候选的检验都停机，只在已经判定非空的公式上进行代数见证搜索。
+
+对返回的 $q$，逐树向后 Jensen 给出 $q(0)\ge\operatorname{val}_h(\mathsf T)+B$ 对所有完整树成立，因此 $U\ge\tau$。返回的树本身可行，故 $L<v\le\tau\le U$，并有
+
+$$
+0\le\tau-v\le U-v<U-L<\varepsilon.
+$$
+
+停机性只需存在两个有限见证。第三步以 $\eta=\varepsilon/4$ 给出某个有理上证书，满足 $U<\tau+\varepsilon/4$。再选有理数
+
+$$
+\tau-\varepsilon/4<L<\tau.
+$$
+
+由 $\tau$ 的上确界定义，某棵实际有限树的值严格大于 $L$；它有某个有限深度 $n$，第四步保证 $\Psi_n(L)$ 为真。该三元组满足 $U-L<\varepsilon/2$，故公平枚举终将检验并接受一个合格三元组。这个存在性论证不把 $\tau$ 当作算法可调用的实数预言机。
+
+若全部 $m_i=0$，第一步使每个正质量叶都在唯一根元组，故 $\tau=f(a)$。图在代数点 $a$ 上的单值性使 $f(a)$ 为可有效提取的实代数数；可直接用根叶树、严格有理下界和有理常数上证书返回，也可沿同一枚举停机。空积同理，所有空和及空乘积依前述约定解释。证毕。
+
+三种边界见证。第一，432.2证明第（七）步的 $C=[0,1]$、$a=0$、$f=\mathbf1_{(0,1]}$ 已说明错误定义域的障碍：$\tau=0$，而每个在整个 $C$ 上支配 $f$ 的连续多项式都因右侧极限满足 $q(0)\ge1$。先限制到根面 $\{0\}$ 才消除此间隙。
+
+第二，434节的紧域非取得性例在此仍适用：$C=[-1,1]$、$a=0$，令 $f(x)=|x|$ 当 $|x|<1$，而 $f(\pm1)=0$。这是有界半代数报酬，每一点的值严格小于一，故每棵有限树的值严格小于一；但一步等权分裂到 $\pm t$ 的值为 $t\uparrow1$。因此 $s_1=\tau=1$，没有任何有限树取得它。紧性不能补足缺失的上半连续性，424.1的特定物理取得性不能移作这里的前提。
+
+第三，取 $C=[-1,1]$、$a=0$、$f(x)=\mathbf1_{\{x^2=1/2\}}$。一步等权分裂到 $\pm1/\sqrt2$ 的值为一，而所有标签均有理的树值只能为零。故当 $\varepsilon<1$ 时，有效见证不能一律要求有理标签；精确代数采样与对等式定义报酬的精确检验不可由有理网格舍入取代。
+
+来源与适用条件。本节使用本卷不可变版本 [4c30752aef4fbd3a0efa3de1f87b03530396df63](https://raw.githubusercontent.com/the-omega-institute/trureturing/4c30752aef4fbd3a0efa3de1f87b03530396df63/docs/develop/theory/QUANTUM-REALITY.md) 的432.2、433.2–433.3作为最小面、相对内部、叶质量和完整树限制的来源；434.2第一项直接提供有符号报酬的 $m_i+1$ 分支优势。421.1提供包络与图点压缩的既有机制，其特定取得性未用于437.1。424.1第四项的有限代数描述是接口参照，437.1对一般报酬重新使用严格可行公式和上确界公式，未调用其物理最大值结论。解析前置是第436节《内点有理多项式对偶与五射线有限恢复的有效逼近》定理436.1及其证明中的截断、$C^2$ 逼近和有理余量步骤；436.1的原陈述仍限于闭积球，437.1第三步补出一般紧凸因子所需的邻域论证。
+
+外部工具的范围分别是：Stephan Weis，[*A note on faces of convex sets*，arXiv:2404.00832v3](https://arxiv.org/html/2404.00832v3#S4)，§4的 Proposition 4.1、Corollary 4.2、Theorem 4.5，提供生成面的线段描述和相对代数内部背景；有限维相对范数内点由432.2提供。A. Yu. Veretennikov、E. V. Veretennikova，[*On partial derivatives of multivariate Bernstein polynomials*，arXiv:1507.05235v2](https://arxiv.org/html/1507.05235v2)，Theorems 3–4，提供全局连续、相应阶连续可微函数在闭立方体上的函数值及导数一致逼近，应用前已作光滑截断；其结论不是一般向量块的保凹性。S. Basu、R. Pollack、M.-F. Roy，[*On the Combinatorial and Algebraic Complexity of Quantifier Elimination*](https://www.math.purdue.edu/~sbasu/jacm95.ps)，JACM 43(6) (1996)，Theorems 1.3.1–1.3.2，第1004–1005页，提供实闭域量词消去和句子判定；配合精确实代数运算、根隔离及上述代数点枚举，给出这里的有效有限步骤。这些来源各承担所列工具，不承担整个437.1的结论，也不构成首创性断言。
+
+输出对象仅为标量坐标树。一般半代数凸域及终端报酬本身不指定物理 instrument。任何物理特化还须另行满足430.2的完整空间完全正与保迹、实际可用控制信息、隐藏补全项、同一实际标签的共同反馈，以及全部系统矩阵和任意未操作有限参考上的恢复等式；共享资源和通信权限也须遵守该接口。本节不从坐标重心关系推出这些物理条件。
+
+本节只对所承诺的有限精确输入给出逐实例、逐精度的停机算法，不断言全深度上确界取得、$\tau$ 为代数数或其参数图半代数，不判定涉及 $\tau$ 的精确等号或精确阈值，也不给出预先的统一次数、深度、有效统一收敛率或复杂度界。固定 $n$ 的代数性与可判定性不改变这些边界。关键联系在于：根面把可用的边界几何变为相对内点几何，严格下阈值把上确界的逼近变为一个实际有限见证；可判定的上证书与这个下见证共同提供误差内停机条件。
+
+## 追加锚（本行以下为增补区）
