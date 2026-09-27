@@ -1,0 +1,69 @@
+**定理 188.3（同一量子程序不可能在开区间处处达到可读下界）。** 任何第187.1节的有限维固定程序，都不存在非空开区间 $K\subseteq J_a$，使
+$$
+I_Q(\rho_u)=I_{r}(u)\qquad\text{对所有 }u\in K.
+\tag{188.15}
+$$
+该断言不要求程序族交换，也不要求其秩恒定。
+
+证明。 固定第181节的均衡 $02$ 输入。令 $|\pm\rangle=(|0\rangle\pm|2\rangle)/\sqrt2$，取整个输出空间上的二元 POVM
+$M_+=|+\rangle\langle+|+|1\rangle\langle1|$、$M_-=|-\rangle\langle-|$，使两效应之和为恒等算符。目标输出的中间基态权重为零，故测量得到概率
+$h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$。该试验连同固定处理器，在程序上诱导一个不依赖参数的二元 POVM，其经典信息量恰为 $I_{r}$。
+
+使用固定的 Naimark 等距嵌入 $J$，将该 POVM 表为更大有限维程序空间上的正交投影 $P_+,P_-$，满足 $P_++P_-=I$。嵌入态 $\sigma_u=J\rho_uJ^\dagger$ 的 SLD 信息量不变。为使处理器在整个扩大的程序空间上有定义，取任一固定原程序态 $\rho_*$，使用 CPTP 映射
+$$
+\mathcal D(\tau)=J^\dagger\tau J+
+\operatorname{Tr}[(I-JJ^\dagger)\tau]\rho_*.
+\tag{188.16}
+$$
+它在嵌入态上还原原程序。将原处理器与 $\mathcal D$ 组合，就得到固定扩展处理器，仍对任意数据输入精确生成同一通道。
+
+现假设（188.15）成立。SLD 测量信息不等式及其等号条件的原始框架见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）。这里直接保留支持上的平方根因子，以免将满秩简化条件用于秩亏态。
+
+对每个 $u\in K$，双侧非负性使 $\sigma_u'$ 在 $\sigma_u$ 的核上的压缩为零，故可取有限 Hermitian SLD $L_u$，满足
+$\sigma_u'=(L_u\sigma_u+\sigma_uL_u)/2$。对 $j\in\{+,-\}$，设
+$A_j=P_j\sqrt{\sigma_u}$、$B_j=P_jL_u\sqrt{\sigma_u}$。在 Hilbert–Schmidt 内积下，
+$$
+\|A_j\|_2^2=p_j,
+\quad\operatorname{Re}\langle A_j,B_j\rangle=p_j',
+\quad\sum_j\|B_j\|_2^2=I_Q(\sigma_u).
+\tag{188.17}
+$$
+Cauchy–Schwarz 给出 $(p_j')^2/p_j\le\|B_j\|_2^2$。所有 $p_j$ 严格为正；若总和达到等号，则每项都达到等号，并有 $B_j=s_jA_j$，其中
+$$
+s_+=\frac1{2h},\qquad s_-=-\frac1{2\ell}.
+\tag{188.18}
+$$
+因此，令 $D_u=s_+P_++s_-P_-$，相加得到
+$L_u\sqrt{\sigma_u}=D_u\sqrt{\sigma_u}$。右乘平方根并取伴随，遂得
+$$
+\sigma_u'=\frac12(D_u\sigma_u+\sigma_uD_u).
+\tag{188.19}
+$$
+这个论证不需要逆转 $\sigma_u$，所以也适用于非满秩情形。
+
+令 $K_u=\sqrt h\,P_++\sqrt\ell\,P_-$。它在区间内可逆，且 $K_u'=D_uK_u/2$；（188.19）表明 $K_u^{-1}\sigma_uK_u^{-1}$ 的导数为零。故存在固定的正半定矩阵 $A$，使 $\sigma_u=K_uAK_u$。写
+$$
+A_+=P_+AP_+,\quad A_-=P_-AP_-,\quad C=P_+AP_-,
+$$
+$$
+\sigma_u=hA_++\ell A_-+\sqrt{h\ell}(C+C^\dagger).
+\tag{188.20}
+$$
+由测量概率 $\operatorname{Tr}(P_+\sigma_u)=h$、$\operatorname{Tr}(P_-\sigma_u)=\ell$，可得 $\operatorname{Tr}A_+=\operatorname{Tr}A_-=1$，所以两者都是固定密度矩阵。
+
+将（188.20）送入固定扩展处理器，对所有数据输入同时得到通道恒等式
+$$
+\mathcal T_u=h\mathcal R_++\ell\mathcal R_-
++\sqrt{h\ell}\,\mathcal S,
+\tag{188.21}
+$$
+其中 $\mathcal R_\pm$ 是以 $A_\pm$ 为程序的固定 CPTP 通道，$\mathcal S$ 是以交叉项 $C+C^\dagger$ 定义的固定线性映射。目标 $\mathcal T_u$ 对 $u$ 仿射，而 $1,u,\sqrt{1-u^2}$ 在任何非空开区间上线性无关。故（188.21）迫使
+$\mathcal S=0$、$\mathcal R_+=\mathcal T_1$、$\mathcal R_-=\mathcal T_{-1}$。这里后两个等式只是由仿射系数决定，不假定程序在端点存在。
+
+但 $\mathcal T_{-1}$ 不是完全正映射。事实上，对 $n=(1,-2a,1)^{\mathsf T}$，
+$$
+n^{\mathsf T}F(a,-1)n=-4a^2<0.
+\tag{188.22}
+$$
+将该 Schur 乘子作用于均匀相干输入 $\frac13\sum_{i,j}|i\rangle\langle j|$，输出正是 $F(a,-1)/3$，不是正半定矩阵。这已经违背正性，与 $\mathcal R_-$ 为 CPTP 矛盾。证毕。
+

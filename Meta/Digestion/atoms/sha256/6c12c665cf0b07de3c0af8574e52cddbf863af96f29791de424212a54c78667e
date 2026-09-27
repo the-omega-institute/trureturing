@@ -1,0 +1,29 @@
+**定义 164.1（单步超额与固定通道的全视界风险）。** 沿用定义161.1的校准记录源、定义161.2的全参考距离和定义163.1的固定三维 CPTP 预测合同。真实相位在全部步骤固定未知，每步记录单元新鲜；预测者不能访问旧记录、取得额外相位校准、插入中间控制或附加持久记忆。对 $1/\sqrt3<r<1$ 和任意 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，令
+$$
+\ell_r(\mathcal F)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F),
+\qquad
+W_r(\mathcal F)=
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N).
+\tag{164.1}
+$$
+定义非负的单步超额及相对超额
+$$
+\delta_r(\mathcal F)=\ell_r(\mathcal F)-\mathcal R_1(r),
+\qquad
+\xi_r(\mathcal F)=\frac{\delta_r(\mathcal F)}{\mathcal R_1(r)}.
+\tag{164.2}
+$$
+分母在所给区间内严格为正。记
+$$
+q=r\sin\alpha(r)=2\mathcal R_1(r),\qquad
+\eta_r(\mathcal F)=
+\sqrt{\frac43\bigl(q\delta_r(\mathcal F)+\delta_r(\mathcal F)^2\bigr)}
+=\frac{2\mathcal R_1(r)}{\sqrt3}
+\sqrt{\xi_r(\mathcal F)\bigl(2+\xi_r(\mathcal F)\bigr)}.
+\tag{164.3}
+$$
+仍令 $\mathcal F_*(A)=C(r,\cos\alpha(r))\odot A$ 为定理162.2的共同达到通道。对系统态使用距离 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$，对矩阵使用 Hilbert–Schmidt 范数 $\|A\|_2^2=\operatorname{Tr}(A^\dagger A)$。
+

@@ -1,0 +1,21 @@
+**定义 187.1（固定量子处理器与程序的信息量）。** 仍固定 $0<a<1$、$J_a=(2a-1,1)$。有限维量子程序由固定的 CPTP 映射
+$\mathcal G:\mathcal B(\mathbb C^3\otimes\mathcal H_P)\to\mathcal B(\mathbb C^3)$ 与一条 $C^1$ 密度矩阵曲线 $\rho_u$ 组成，要求对每个输入 $\omega$ 及全部 $u\in J_a$，
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega).
+\tag{187.1}
+$$
+程序与输入初始独立；每次使用提供一份新的程序态，不要求处理器保留程序。以程序态的 SLD 信息量作为输入信息成本，记为 $I_Q(\rho_u)$。若 $\rho_u=\sum_j\lambda_j|j\rangle\langle j|$ 是某一点的谱分解，则采用
+$$
+I_Q(\rho_u)=
+\sum_{j,k:\lambda_j+\lambda_k>0}
+\frac{2|\langle j|\rho_u'|k\rangle|^2}{\lambda_j+\lambda_k}.
+\tag{187.2}
+$$
+这是当前态与切向量确定的点态值。称整条程序曲线为交换的，若 $[\rho_u,\rho_v]=0$ 对全部 $u,v\in J_a$ 成立。定义量子程序的最优最坏相对成本
+$$
+R_Q^*(a)=\inf_{(\mathcal G,\rho)}\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)},
+$$
+下确界取遍满足（187.1）的所有有限维固定处理器及程序曲线。
+
+固定处理器与可变程序寄存器是既有的量子编程框架。Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）处理混合程序，第III.B节的 $Y$ 处理器由数据基控制程序上的幺正操作。下面使用该结构，计算当前三能级通道族的确切信息成本，并与第186节的统一经典下界比较。
+

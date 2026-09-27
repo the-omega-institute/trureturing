@@ -1,0 +1,10 @@
+**定义 278.1（固定输出维数的精确恢复残差）。** 对定义276.1的正半径六态模型，令 $R_D(a)$ 为所有输出维数为 $D$、在模型上精确恢复的复线性 CPTP 编码、解码及共同输出基底中，非实残差 $r$ 的下确界。对 $D\ge2$，等距编码与补全解码保证可行集非空。记
+
+$$
+\eta=\left(\sum_i\alpha_i^2\right)^{-1/2},
+\qquad
+\Lambda=\min_i\frac1{\alpha_i+\sqrt{\sum_{j\ne i}\alpha_j^2}},
+\qquad\alpha_i=1/a_i.
+\tag{278.1}
+$$
+

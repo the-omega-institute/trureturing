@@ -1,0 +1,38 @@
+**定理 255.2（完整的有限联合代价区域）。** 对每条满足（255.1）的实际预算路径，有限共同极限的全体恰为
+
+$$
+\boxed{
+\mathcal C_\gamma=
+\left\{(P,Q):\ 0\le Q\le P<\infty,\quad
+\exists z\in\mathcal Z_\gamma:\quad
+P\ge\frac{A(z)}{D_\gamma(z)^2},\quad
+Q\ge\frac{A(z)}{D_\gamma(z)}\right\}.
+}
+\tag{255.4}
+$$
+
+有限共同聚点的全体也是这个集合。必要性允许任意点态秩；每个点的充分性都可由全域实解析、每点秩至多二的同一准备族实现，保持全输入精确性、实际联合支持四、完整尖锐集合、普通最优双侧曲率、任意指定的有限阶实规范节点数据及两项一致有界的内部代价。不要求族关于 $s$ 连续，不声称每个固定任务存在极小元。
+
+证明。 先记
+
+$$
+\Delta_s=h_3(s)-p_{\delta_s},\qquad
+\kappa_s=\frac{\Delta_s}{dse_s}\longrightarrow1,
+\qquad
+t=\frac{p-p_{\delta_s}}{\Delta_s}\in[0,1].
+\tag{255.5}
+$$
+
+因 $u=2p-1$，原尾窗长度为 $2\Delta_s$。置 $i_s(t)=e_s^2I_Q(u(t))$，则精确地有
+
+$$
+P_s=\sup_{[0,1]}i_s,\qquad
+Q_s=\kappa_s\int_0^1i_s(t)\,dt,\qquad
+Q_s\le\kappa_s P_s.
+\tag{255.6}
+$$
+
+故任何有限共同聚点满足 $Q\le P$。沿得到该聚点的子列，第249.19—249.21式的共同过零方向论证给出某个 $z\in\mathcal Z_\gamma$，使（255.4）中的两个下界同时成立。代价有界保证剩余尾窗比例有正下界，因而所取方向确实可行。这证明必要性。
+
+充分性需要在精确任务纤维内增加实际信息，而不只增加净化因子的导数。下面分步给出这个构造。
+

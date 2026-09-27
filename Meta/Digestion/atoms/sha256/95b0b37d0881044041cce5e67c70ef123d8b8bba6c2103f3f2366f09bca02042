@@ -1,0 +1,59 @@
+**定理 181.2（所有固定时长的精确自适应加法性）。** 对全部充分近一的 $r$、全部 $w\in[0,\delta(r)]$ 和正整数 $m,N$，有
+$$
+I_m^{(N)}(r,w)
+=m\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.2}
+$$
+独立均衡 $02$ 输入及各次的固定对称、反对称基测量达到等号。特别地，第179节的二步接口满足精确式
+$$
+I_m^{(2)}(r,w)=m\frac{4J(r)^2}{1-u(w)^2},
+\qquad
+\sup_{w\in[0,\delta(r)]}
+\left|\frac{I_m^{(2)}(r,w)}{m(1-r)^3}-9\right|\longrightarrow0,
+\tag{181.3}
+$$
+且极限对所有正整数 $m$ 统一。该式收紧第179节的程序上界，不改变其有限辨识成本结论。
+
+证明。 固定 $N$，略写 $a=a_N$、$u=u_N(w)$、$h=(1+u)/2$、$\ell=(1-u)/2$。由（180.2）有 $0<a<h<1$。在实三维环境中取单位向量
+$$
+v_0=(\sqrt h,\sqrt\ell,0),\qquad
+v_2=(\sqrt h,-\sqrt\ell,0),\qquad
+v_1=\left(\frac a{\sqrt h},0,\sqrt{1-\frac{a^2}{h}}\right).
+\tag{181.4}
+$$
+其 Gram 矩阵恰为 $F(a,u)$，所以等距映射 $V_u|i\rangle=|i\rangle v_i$ 实现该 Schur 通道。各 $v_i$ 为实单位向量，故
+$$
+V_u^\dagger\partial_uV_u=0,
+\qquad
+(\partial_uV_u)^\dagger\partial_uV_u
+=\operatorname{diag}\left(
+\frac1{16h\ell},\frac{a^2}{16h^2(h-a^2)},\frac1{16h\ell}\right).
+\tag{181.5}
+$$
+其中中间项不超过端点项，等价于 $a^2\le h^2$。因此对 $w$ 求导后，记 $A_w=(\partial_wV_w)^\dagger\partial_wV_w$，有
+$$
+V_w^\dagger\partial_wV_w=0,
+\qquad
+4\lVert A_w\rVert=\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.6}
+$$
+
+说明它怎样控制已有参数信息的输入。设信号—参考态的当前切向量满足 $\dot\rho=(L\rho+\rho L)/2$，且 $I(\rho)=\operatorname{Tr}(\rho L^2)<\infty$。取任一纯化 $|\psi\rangle$，令 $|\xi\rangle=(L\otimes I)|\psi\rangle/2$，则
+$$
+\langle\psi|\xi\rangle=0,\qquad
+4\lVert\xi\rVert^2=I(\rho).
+\tag{181.7}
+$$
+局部归一化曲线 $\bigl(|\psi\rangle+s|\xi\rangle\bigr)/\sqrt{1+s^2\lVert\xi\rVert^2}$ 的约化态具有相同的当前态和一阶切向量。这里仅匹配切向量，不要求它在邻域中纯化原来的整条输入曲线，因此不需要把任意变秩输入的 SLD 值误等同于整条曲线的最小纯化速度。
+
+施加 $V_w$ 后，纯态切向量为 $\dot V_w|\psi\rangle+V_w|\xi\rangle$。由（181.6），交叉内积消失，纯态切向量与纯态本身仍正交。偏迹的信息量单调性遂给出
+$$
+I\bigl((\mathcal T_w^{(N)}\otimes\operatorname{Id})(\rho_w)\bigr)
+\le I(\rho_w)+4\operatorname{Tr}(\rho_wA_w)
+\le I(\rho_w)+\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.8}
+$$
+参考上的恒等因子在迹中省略；无限输入信息量时上界按扩展实数理解。该论证也覆盖秩亏的有限 SLD 切向量，因为约化态的 SLD 信息量只依赖当前态与一阶切向量。
+
+从不依赖未知参数的初态开始，每次查询间控制都不增加信息量，每次查询最多增加（181.8）的第二项。归纳得到（181.2）的上界。独立均衡输入达到单次最优信息量，其固定基测量产生独立 Bernoulli 样本，信息量可加，给出匹配下界。（181.3）再由第179节的一致单次极限得到。端点按通道的光滑局部延伸取单侧值。证毕。
+

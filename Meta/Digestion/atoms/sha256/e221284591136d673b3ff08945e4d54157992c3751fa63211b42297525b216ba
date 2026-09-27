@@ -1,0 +1,25 @@
+**定义 305.1（逐坐标的奇异支撑候选）。** 固定正半径六态模型，记 $b=(\alpha_1,\alpha_2,\alpha_3)$、$\alpha_i=1/a_i$、$A=\|b\|_2^2$、$r=\sqrt A$。对一个候选坐标 $i$，将其写在最后，记其余两个坐标组成的正向量为 $p\in\mathbb R^2$，并令 $z=\alpha_i>0$。定义
+
+$$
+\begin{aligned}
+G_0&=zrI_2+\frac r{r+z}pp^{\mathsf T},\\
+H&=\operatorname{diag}\left(
+\frac{p_j}{r\sqrt{z^2+p_j^2}}\right)_{j=1,2},
+\qquad K=G_0H,\\
+q&=\frac1r\sum_{j=1}^2p_j\sqrt{z^2+p_j^2},
+\qquad u=\frac{(qI_2-K)p}{z},\\
+Q_i&=\begin{pmatrix}K&u\\0&q\end{pmatrix},
+\qquad E_i=(\operatorname{Tr}K+q)I_2-K-K^{\mathsf T}.
+\end{aligned}
+\tag{305.1}
+$$
+
+这里 $G_0,H,K,q,u,E_i$ 都依赖于候选坐标 $i$；公式中的块矩阵最后按原坐标顺序放回。候选通过的条件定义为
+
+$$
+\|u\|_2^2+q^2\le z^2.
+\tag{305.2}
+$$
+
+这个条件只包含正半径的代数运算与平方根。下面证明 $E_i\succ0$ 对每个正半径候选自动成立，因此无需另作半正定判定。
+

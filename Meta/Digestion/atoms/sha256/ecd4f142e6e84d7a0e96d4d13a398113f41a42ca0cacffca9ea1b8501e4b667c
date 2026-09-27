@@ -1,0 +1,158 @@
+**定理 286.1（原达到方案的解码必要性）。** 对定义276.1的正半径六态模型，固定 $0<R<\eta$。任意达到 $F^{(2)}_a(R)$ 的二维编码、解码方案 $(\mathcal E,\mathcal D)$ 都满足：$\mathcal D$ 是酉通道，$\mathcal E$ 是幺元通道，而且六个模型态各自的非实残差都恰为 $R$。
+
+具体地，在原方案计算共轭的编码输出基底中，对每个 $i=1,2,3$ 及每个符号都有
+
+$$
+D\bigl(\mathcal E(\rho_{\pm a_ie_i}),
+\overline{\mathcal E(\rho_{\pm a_ie_i})}\bigr)=R.
+\tag{286.1}
+$$
+
+这里 $D$ 表示迹距离。结论约束的是原达到方案，不只是在等价预算类中选出的一个代表；这里编码的不可逆性指不存在 CPTP 逆通道，不指 Bloch 矩阵不可逆；事实上，内部预算不允许酉编码，因为酉编码的虚轴行为单位向量，其最坏残差至少为 $\eta$。
+
+证明。写原方案的 Bloch 作用为
+
+$$
+\mathcal E:v\longmapsto c+Av,
+\qquad
+\mathcal D:w\longmapsto d+Lw,
+\qquad T=LA.
+\tag{286.2}
+$$
+
+定理285.1保证实际恢复 $N=\mathcal D\mathcal E$ 幺元且 Choi 奇异，定理283.1的证明保证 $T$ 可逆。因而 $T$ 是定理281.3中达到同一最优误差的可行幺元矩阵。第284节的预算饱和论证给出
+
+$$
+r_*(T)=R.
+\tag{286.3}
+$$
+
+令 $r_0=\max_i a_i|e_y^{\mathsf T}Ae_i|$。原编码的最坏残差由中心对称性写为 $r(\mathcal E)=|c_y|+r_0$。像定理281.2中一样，取单位向量 $n$ 垂直于 $L(\operatorname{span}\{e_x,e_z\})$，于是 $L^{\mathsf T}n=k e_y$，且迹距离收缩性保证 $|k|\le1$。现在这整条成本链必须处处取等：
+
+$$
+R=r_*(T)
+\le\max_i a_i|n^{\mathsf T}Te_i|
+=|k|r_0\le r_0\le r(\mathcal E)\le R.
+\tag{286.4}
+$$
+
+因为 $R>0$，式（286.4）强迫 $|k|=1$、$r_0=R$ 及 $c_y=0$。又由 $\|L\|_{\rm op}\le1$ 与 $n^{\mathsf T}Le_y=k$，有 $Le_y=kn$，故 $\|Le_y\|_2=1$。解码通道把两个纯输入 $\pm e_y$ 送到 Bloch 向量 $d\pm Le_y$，它们都在单位球内。两条范数平方不等式相加，得到
+
+$$
+2\|d\|_2^2+2\|Le_y\|_2^2\le2,
+$$
+
+所以 $d=0$。原解码通道已经幺元，且保持这一对纯态的完全可区分性。又因实际恢复幺元，$d+Lc=0$；$T=LA$ 可逆使 $L$ 可逆，故此时也已得到 $c=0$，即原编码幺元。剩下须证明的实质加强是解码的酉性。
+
+下面使用保持一对正交纯态的量子比特通道的标准结构，并给出所需推导。先接一个输出酉旋转，使解码固定 $Y$ 的正、负本征纯态。纯态输出的每个 Kraus 分量只能落在相同的一维射线上，故每个 Kraus 算子都在这个本征基中对角。于是两条对角概率保持不变，非对角矩阵元乘上一个复数 $z$，其中 $|z|\le1$。把 $z$ 的相角吸收到绕 $Y$ 的输出酉旋转，便可写
+
+$$
+\mathcal D=\operatorname{Ad}_W\circ\mathcal D_t,
+\qquad
+\mathcal D_t=p\operatorname{id}+q\operatorname{Ad}_Y,
+\qquad
+p=\frac{1+t}{2},\quad q=\frac{1-t}{2},\quad t=|z|.
+\tag{286.5}
+$$
+
+这里 $W$ 包括前述输出基底旋转，$Y$ 仍指原编码输出的虚轴 Pauli 矩阵。由 $T=LA$ 可逆，$L$ 可逆，故 $t>0$。若原解码非酉，则 $t<1$，从而 $p,q$ 都严格为正。以下证明这个假设不可能。
+
+去掉式（286.5）的输出酉部分，令
+
+$$
+N'=\operatorname{Ad}_{W^*}\circ N=\mathcal D_t\mathcal E.
+$$
+
+它仍幺元且 Choi 奇异；这里不需要声称旋转后的 $N'$ 仍相对于原目标最优。这里明确采用归一化 Choi 约定
+
+$$
+J(\Phi)=(\operatorname{id}\otimes\Phi)(|\Phi^+\rangle\langle\Phi^+|),
+\qquad |\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2.
+$$
+
+通道的 $J(\Phi)$ 迹为一；下引 Choi–Li 的矩阵约定为 $C(\Phi)=2J(\Phi)$，缩放不改变核与本征向量。置 $K=I\otimes Y$，有
+
+$$
+J(N')=pJ(\mathcal E)+qKJ(\mathcal E)K.
+\tag{286.6}
+$$
+
+Choi 与 Li，*On unital qubit channels*（2023），[定理2.2及式（2.3）](https://doi.org/10.26421/QIC23.7-8-2)给出的局部酉 Pauli 正规形，结合 $J(N')$ 的奇异性，保证存在一个最大纠缠核向量 $\psi$。因两项半正定且 $p,q>0$，式（286.6）给出
+
+$$
+J(\mathcal E)\psi=0,
+\qquad
+J(\mathcal E)K\psi=0.
+\tag{286.7}
+$$
+
+最大纠缠性及 $\operatorname{Tr}Y=0$ 使 $\psi$ 与 $K\psi$ 正交。
+
+为把这个二维核约束译回原编码的虚轴，写 $\psi=(U\otimes I)|\Phi\rangle$，其中 $U$ 为酉矩阵，$|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$。令
+
+$$
+B=UY^{\mathsf T}U^*,\qquad C=B\otimes Y.
+\tag{286.8}
+$$
+
+矩阵 $B$ 为迹零 Hermitian 对合，$C$ 的正、负一特征空间各为二维。利用 $(Y^{\mathsf T}\otimes Y)|\Phi\rangle=|\Phi\rangle$，可见 $C\psi=\psi$；又因 $C$ 与 $K$ 对易，也有 $CK\psi=K\psi$。所以 $\operatorname{span}\{\psi,K\psi\}$ 恰是 $C$ 的正一特征空间。
+
+式（286.7）与 Choi 半正定性说明 $J(\mathcal E)$ 的支撑全在负一特征空间中。其迹为一，故
+
+$$
+\operatorname{Tr}\bigl[(B\otimes Y)J(\mathcal E)\bigr]=-1.
+\tag{286.9}
+$$
+
+写 $B^{\mathsf T}=b\cdot\boldsymbol\sigma$，则 $b\in\mathbb R^3$ 且 $\|b\|_2=1$。标准 Choi 迹恒等式把式（286.9）写成
+
+$$
+-1=\frac12\operatorname{Tr}\bigl[Y\mathcal E(B^{\mathsf T})\bigr]
+=e_y^{\mathsf T}Ab.
+\tag{286.10}
+$$
+
+平移 $c$ 不出现在这个等式中，因为 $B^{\mathsf T}$ 迹零。由式（286.10）及通道的迹距离收缩性，$\|A^{\mathsf T}e_y\|_2=1$。但 $r_0=R$ 又给出每个坐标的界
+
+$$
+|(A^{\mathsf T}e_y)_i|\le R\alpha_i,
+\qquad
+\|A^{\mathsf T}e_y\|_2\le R\sqrt{\sum_i\alpha_i^2}
+=R/\eta<1,
+\tag{286.11}
+$$
+
+矛盾。因此 $t=1$，原解码 $\mathcal D$ 必为酉通道。这与前面已得到的编码幺元性合在一起，给出所述通道结构。
+
+最后证明逐态残差相等，这需要把第281节存在的平衡最优方向加强为所有最优方向的性质。现在 $L$ 是正向旋转。置 $n=Le_y$，则 $n^{\mathsf T}T=e_y^{\mathsf T}A$；由 $r_0=R=r_*(T)$，这个 $n$ 已达到残差方向的最小值。
+
+令
+
+$$
+G=\operatorname{diag}(a_i)T^{\mathsf T},\qquad u=Gn/R.
+\tag{286.12}
+$$
+
+$G$ 可逆，$\|u\|_\infty=1$ 且 $\|G^{-1}u\|_2=1/R$。第281节的逆范数公式给出
+
+$$
+\max_{v\in[-1,1]^3}\|G^{-1}v\|_2=\frac1{r_*(T)}=\frac1R.
+\tag{286.13}
+$$
+
+因此 $u$ 是这个立方体上正定二次式 $\|G^{-1}v\|_2^2$ 的最大化点。正定二次式严格凸，所以每个最大化点都必须为极点：若某点是闭立方体中的两个不同点（允许位于边界）的非平凡凸组合，严格凸性就使其值小于两端值的最大者。故 $u$ 是立方体顶点，即全部 $|u_i|=1$。
+
+再代入式（286.12），得到对每个 $i$ 都有
+
+$$
+a_i|n^{\mathsf T}Te_i|
+=a_i|e_y^{\mathsf T}Ae_i|=R.
+\tag{286.14}
+$$
+
+原编码无平移，量子比特态与其共轭的迹距离等于虚坐标绝对值，因此正、负两态都满足式（286.1）。证毕。
+
+定理281.2提供的是成本不增的酉解码替换；本节利用最优性、严格内部预算与完全正边界，才把替换提升为原方案的必要条件。它表明，在这个模型与输出维数中，达到最优时不可逆的压缩全部发生在编码端，解码只作酉变换；同时，六个输入态都实际触及残差预算。证明没有借用“Choi 秩必须为三”，因此仍允许第285节未排除的秩二情形。$R=0$ 与 $R\ge\eta$ 不在本节的必要性及逐态饱和断言范围内。
+
+文献范围还可进一步定位。Wolf 与 Cirac，*Dividing Quantum Channels*（2008），[定义8与定理23](https://arxiv.org/abs/math-ph/0611057v3)已证明：幺元、Kraus 秩三的量子比特通道不可非平凡分解，即任意两个量子比特通道的串行分解中至少有一个因子为酉。Kraus 秩等于 Choi 秩。因此，若本节的实际恢复为 Choi 秩三，则该既有定理与“内部预算排除酉编码”直接给出解码必须为酉。本节还允许第285节未排除的 Choi 秩二，此时不能直接套用那个不可分解性结论；上面的核空间与残差预算论证同时处理这两种秩。其正交最大纠缠核向量方法与该文定理23的证明属于相同的通道组合背景，不作为新的通道不可分解分类。这里额外连接的是所给模型的残差预算、原达到方案及逐态饱和。
+

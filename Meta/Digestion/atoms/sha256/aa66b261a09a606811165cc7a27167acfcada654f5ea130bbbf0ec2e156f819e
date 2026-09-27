@@ -1,0 +1,24 @@
+**定义 168.1（保留关键相干的附加去相干族）。** 沿用定义165.1的源族、全参考距离、风险 $W_r$ 及常数 $L,t_*,k_*$，并沿用定理163.2的预测器 $\mathcal T_r$。所有预测器仍是同一三维系统上的一个固定 CPTP 通道，以其幂服务全部视界，没有持久辅助记忆。令
+$$
+Z=\operatorname{diag}(1,-1,1),\qquad
+\mathcal D_u=\frac{1+u}{2}\mathrm{Id}
++\frac{1-u}{2}\operatorname{Ad}_Z\quad(0\le u\le1),
+\qquad
+\mathcal F_{h,r}=\mathcal T_r\circ\mathcal D_{r^h}
+\quad(h\ge0).
+\tag{168.1}
+$$
+$\mathcal D_u$ 是酉通道的凸组合，故 $\mathcal F_{h,r}$ 对全部 $0<r<1$ 都为 CPTP。它保留三个对角元，且相干系数为
+$$
+b_{01}=b_{10}=b_{12}=b_{21}=r^{1+h},\qquad
+b_{02}=b_{20}=r^{1+k_*}.
+\tag{168.2}
+$$
+再定义与 $r$ 无关的正数
+$$
+T_0=\log\frac2L,\qquad
+h_0=\frac{1-e^{-k_*T_0}}{2T_0}>0.
+\tag{168.3}
+$$
+该区间是下面构造的充分范围，不定义全部最优预测器的最大参数范围。
+

@@ -1,0 +1,201 @@
+**定理 311.1（固定最优生成元的二阶超额）。** 取正半径模型
+
+$$
+a_1=a_2=a,\qquad a_3=a/\sqrt2,\qquad 0<a\le1,
+$$
+
+并令 $M_*$ 为正角点规范下唯一的端点最优矩阵。记
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\beta=\sqrt{\frac{\varphi+2}{2}},\qquad
+L=1+3\varphi.
+\tag{311.1}
+$$
+
+对每个 $0<\delta<1$，令 $\tau(\delta)>0$ 为使固定半群 $T_\tau=e^{-\tau M_*}$ 恰好达到残差预算 $R_\delta=\eta(1-\delta)$ 的唯一参数。则该半群的恢复误差满足
+
+$$
+\begin{aligned}
+e(T_{\tau(\delta)})-\widehat G_a(R_\delta)
+&=C_a\delta^2+o(\delta^2),\\
+C_a&=\frac{\kappa_a}{2L^2}
+\left[3+\varphi-2\beta(\varphi-1)\right]>0.
+\end{aligned}
+\tag{311.2}
+$$
+
+因此，对每个固定 $a$，当 $\delta>0$ 充分小时，端点最优固定生成元产生的该半群严格劣于同一残差预算下的实际受限最优恢复。这个结论只针对该固定生成元，不排除随预算改变生成元或采用其他无限小可分通道。
+
+证明。在第306节的轴向族中取 $k=\sqrt2$。其根方程为 $2t^2-2t-2=0$，故参数 $t=\varphi$，而该节的 $\beta$ 正是式（311.1）的量。按正交基
+
+$$
+u=(1,1,0)/\sqrt2,\qquad w=(1,-1,0)/\sqrt2,\qquad z=e_3,
+$$
+
+端点矩阵为
+
+$$
+[M_*]_{(u,w,z)}
+=\frac1L
+\begin{pmatrix}
+1+2\varphi&0&\varphi\\
+0&2\beta&0\\
+1&0&3\varphi
+\end{pmatrix}.
+\tag{311.3}
+$$
+
+在该标架中，$b=(\sqrt2,0,\sqrt2)/a$、$A=4/a^2$，且 $M_*b=b$。原坐标列仍由 $e_1=(u+w)/\sqrt2$、$e_2=(u-w)/\sqrt2$、$e_3=z$ 给出；不把加权列约束随标架改变。直接计算得到
+
+$$
+\|M_*e_1\|_2^2=\|M_*e_2\|_2^2
+=\frac{5\varphi^2}{L^2},
+\qquad
+\|M_*e_3\|_2^2=\frac{10\varphi^2}{L^2}.
+\tag{311.4}
+$$
+
+因此三列的一阶误差都达到相同值，且
+
+$$
+\kappa_a=\frac{a\sqrt5\,\varphi}{2L}.
+\tag{311.5}
+$$
+
+先将半群参数与实际残差预算对齐。第306节的固定角点结论给出
+
+$$
+r_*(T_\tau)=\frac1{\|e^{\tau M_*^{\mathsf T}}b\|_2}.
+\tag{311.6}
+$$
+
+第304节的严格预算顺序保证 $\tau(\delta)$ 的存在唯一性。记 $U_\Omega=\|\Omega_*b\|_2^2$。由式（311.3），
+
+$$
+U_\Omega=\frac{(\varphi-1)^2}{a^2L^2}.
+\tag{311.7}
+$$
+
+又由 $M_*^{\mathsf T}b=b+2\Omega_*b$、$b\cdot\Omega_*b=0$ 及
+$b^{\mathsf T}(M_*^{\mathsf T})^2b=A$，固定矩阵的指数展开给出
+
+$$
+\frac{\|e^{\tau M_*^{\mathsf T}}b\|_2^2}{A}
+=1+2\tau+\left(2+\frac{4U_\Omega}{A}\right)\tau^2+O(\tau^3).
+\tag{311.8}
+$$
+
+取平方根再取倒数，式（311.6）变为
+
+$$
+1-\frac{r_*(T_\tau)}\eta
+=\tau-\left(\frac12-\frac{2U_\Omega}{A}\right)\tau^2+O(\tau^3).
+$$
+
+其在零点的导数为一，局部反演得到
+
+$$
+\tau(\delta)
+=\delta+\left(\frac12-\frac{2U_\Omega}{A}\right)\delta^2+O(\delta^3).
+\tag{311.9}
+$$
+
+下面展开这个同一通道的恢复误差。写 $m_i=M_*e_i$，并定义
+
+$$
+\rho_i=\frac{\langle m_i,M_*m_i\rangle}{\|m_i\|_2^2}.
+\tag{311.10}
+$$
+
+因为各 $m_i$ 非零，
+
+$$
+\|(I-e^{-\tau M_*})e_i\|_2
+=\tau\|m_i\|_2-\frac{\tau^2}{2}
+\frac{\langle m_i,M_*m_i\rangle}{\|m_i\|_2}
++O(\tau^3).
+\tag{311.11}
+$$
+
+式（311.4）使三列的加权首项都为 $\kappa_a\tau$，故取有限个列误差的最大值后有
+
+$$
+e(T_\tau)
+=\kappa_a\tau-\frac{\kappa_a}{2}
+\min_i\rho_i\,\tau^2+O(\tau^3).
+\tag{311.12}
+$$
+
+这一步不要求最大列在所有参数处固定；有限个余项可取共同界。
+
+代入式（311.3）并使用 $\varphi^2=\varphi+1$，得到
+
+$$
+\rho_1=\rho_2
+=\frac{24+42\varphi+8\beta^3}{10\varphi^2L},
+\qquad
+\rho_3=\frac{4+32\varphi}{10L}.
+\tag{311.13}
+$$
+
+例如对第一列，分子来自 $u,z$ 块的
+$(1+2\varphi)^3+(1+2\varphi)\varphi+(1+2\varphi)+3\varphi$，以及 $w$ 块的 $(2\beta)^3$；前四项之和为 $24+42\varphi$。另外
+
+$$
+\rho_3-\rho_1
+=\frac{12+26\varphi-8\beta^3}{10\varphi^2L}>0.
+\tag{311.14}
+$$
+
+严格性可由 $\varphi>3/2$、$\beta<3/2$ 直接看出。因此式（311.12）的最小值为 $\rho_1$。再代入式（311.9），并使用第301节的
+$\Gamma_a=-2\kappa_aU_\Omega/A$，得到该固定半群在精确预算下的二阶系数
+
+$$
+S_a=\Gamma_a+\frac{\kappa_a}{2}(1-\rho_1).
+\tag{311.15}
+$$
+
+需要将它与实际受限最优值的系数比较。第306节给出该模型的
+
+$$
+\frac\lambda A=\frac\beta{\varphi+2}=\frac1{2\beta},
+\qquad
+d_1d_2=\frac{\beta(1+5\varphi-2\beta)}{L^2}.
+\tag{311.16}
+$$
+
+这里 $d_1,d_2$ 是 $\operatorname{sym}M_*$ 的两个较小特征值；乘积不依赖两者的顺序。由第301节及 $\kappa_a=A/(2D_a)$，
+
+$$
+\Theta_a=\kappa_a\frac\lambda A d_1d_2
+=\frac{\kappa_a(1+5\varphi-2\beta)}{2L^2}.
+\tag{311.17}
+$$
+
+将式（311.13）代入式（311.15）并减去 $\Gamma_a+\Theta_a$，用
+$\varphi^2=\varphi+1$ 与 $\beta^2=(\varphi+2)/2$ 整理，恰得
+
+$$
+S_a-(\Gamma_a+\Theta_a)
+=\frac{\kappa_a}{2L^2}
+\left[3+\varphi-2\beta(\varphi-1)\right].
+\tag{311.18}
+$$
+
+括号内严格为正：被比较的 $3+\varphi$ 和 $2\beta(\varphi-1)$ 都为正，而
+
+$$
+(3+\varphi)^2-4\beta^2(\varphi-1)^2
+=4+9\varphi>0.
+\tag{311.19}
+$$
+
+第300节为实际受限最优值提供
+$\widehat G_a(R_\delta)=\kappa_a\delta+(\Gamma_a+\Theta_a)\delta^2+o(\delta^2)$。
+与固定半群的展开相减，即为式（311.2）；严格正系数保证在充分小的正预算差内误差严格更大。
+
+最后核对操作意义。$T_\tau$ 是第296、306节给出的同一个幺元 CPTP 半群。按第281节选择达到式（311.6）的编码方向，配合相应酉旋转及逆酉解码，可在同一对完整量子比特通道中同时实现所用残差与复合恢复误差。因此这里比较的是同一个实际方案与同预算最优值，不是分别取得的两个不相容读数。证毕。
+
+端点最优性确定了最有效的一阶方向，但不使固定该方向的整条半群自动保持最优。式（311.2）给出了这一点的明确模型和严格二阶差距；它没有确定偏离端点以后真正最优的整条通道路径。
+

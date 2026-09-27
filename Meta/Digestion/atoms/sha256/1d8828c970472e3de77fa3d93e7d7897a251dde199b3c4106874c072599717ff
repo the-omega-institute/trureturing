@@ -1,0 +1,217 @@
+**定理 310.1（两类最优恢复曲线的通用端点符号）。** 对任意固定正半径六态模型，第300节的受限端点二阶系数满足
+
+$$
+\Gamma_a+\Theta_a>0.
+\tag{310.1}
+$$
+
+若三个半径不全相等，则对于充分小的 $\delta>0$，
+
+$$
+F_a^{(2)}\bigl(\eta(1-\delta)\bigr)
+<\kappa_a\delta
+<\widehat G_a\bigl(\eta(1-\delta)\bigr).
+\tag{310.2}
+$$
+
+三个半径全相等时，受限曲线仍严格位于该切线上方，而无限制二阶系数为零。邻域可以依赖于固定的半径，不宣称跨退化参数的统一余项或统一邻域。
+
+在正定支撑分支，取第307、309节的唯一单纯形点 $x$ 及其权重 $w$，并记
+
+$$
+p=x_1x_2+x_1x_3+x_2x_3,
+\qquad q=x_1x_2x_3,
+\qquad h=c/q,
+\qquad m=\sum_iw_ix_i,
+\qquad \beta^2=\sum_iw_ix_i^2.
+\tag{310.3}
+$$
+
+其中 $\beta>0$、$c=c(x)$。该分支的精确系数为
+
+$$
+\Gamma_a+\Theta_a
+=\kappa_a\,
+\frac{\mathcal L(h,p,\beta)}
+{2(h+2)(h^2-1)(\beta+m)},
+\tag{310.4}
+$$
+
+$$
+\mathcal L(h,p,\beta)
+=2\beta(h+1)\bigl[h-(2h+1)p\bigr]
+ +h\bigl[h+1-2(h+3)p+6p^2\bigr].
+\tag{310.5}
+$$
+
+证明。奇异支撑分支已由第308节给出精确正系数。以下证明正定支撑分支的公式与严格正性。
+
+先把共同列支撑化为一个 Gram 恒等式。令
+
+$$
+n=b/\sqrt A,\qquad X=\operatorname{diag}(x),
+\qquad G_0=G/A=nn^{\mathsf T}+\beta R_v,
+\qquad R_v=I-2vv^{\mathsf T},
+\qquad Q_0=G_0X,
+\qquad f=m-\beta^2.
+\tag{310.6}
+$$
+
+这里 $n_i^2=w_i$、$\|n\|_2=1$，且 $M_*=Q_0/f$。第307节的反射恒等式给出 $R_vn=-Xn/\beta$，所以
+
+$$
+G_0^2
+=nn^{\mathsf T}-nn^{\mathsf T}X-Xnn^{\mathsf T}+\beta^2I.
+\tag{310.7}
+$$
+
+当 $i\ne j$ 时，其 $ij$ 元为 $n_in_j(1-x_i-x_j)$。因此 $Q_0^{\mathsf T}Q_0=XG_0^2X$ 的非对角元为 $qn_in_j$；三个对角元则由共同列范数等式为 $cw_i$。从而
+
+$$
+Q_0^{\mathsf T}Q_0
+=(c-q)\operatorname{diag}(w)+qnn^{\mathsf T},
+\qquad \|Q_0\|_F^2=c.
+\tag{310.8}
+$$
+
+另一方面，第307节的两个固定方向恒等式给出
+
+$$
+Q_0n=fn,\qquad
+Q_0^{\mathsf T}n=X(I-X)n.
+$$
+
+将式（310.8）作用到 $n$，并逐坐标消去严格正的 $n_i$，得到
+
+$$
+f\,x_i(1-x_i)=(c-q)w_i+q.
+\tag{310.9}
+$$
+
+三个等式相加，使用 $\sum_i x_i(1-x_i)=2p$，有
+
+$$
+f=\frac{c+2q}{2p}.
+\tag{310.10}
+$$
+
+第309节给出 $c\ge2q$ 及 $c^2-(2p^2-3q)c+2q^2=0$。故 $h\ge2$，而
+
+$$
+q=\frac{2p^2h}{(h+1)(h+2)},
+\qquad
+f=\frac{ph}{h+1}.
+\tag{310.11}
+$$
+
+由式（310.9），$w_i=[fx_i(1-x_i)-q]/(c-q)$。将其乘以 $x_i$ 后求和，并使用
+$\sum_i x_i^2-\sum_i x_i^3=p-3q$，得到
+
+$$
+\begin{aligned}
+m&=\frac{f(p-3q)-q}{c-q}
+=\frac{h(h+1-6p)}{2(h^2-1)},\\
+\beta^2=m-f
+&=\frac{h\left[h+1-2(h+2)p\right]}{2(h^2-1)}.
+\end{aligned}
+\tag{310.12}
+$$
+
+这些是同一实际最优解的等式，未把不同模型各自可达的参数拼接起来。
+
+下面计算受限系数。记
+
+$$
+\mathcal V=\sum_iw_i\left(x_i(1-x_i)-f\right)^2,
+\qquad s_1=\operatorname{Tr}Q_0,
+\qquad s_2=\operatorname{Tr}(Q_0^2).
+\tag{310.13}
+$$
+
+由式（310.8），
+
+$$
+\operatorname{Tr}\bigl((\operatorname{sym}Q_0)^2\bigr)
+=\frac{c+s_2}{2}.
+$$
+
+而 $S_*=(\operatorname{sym}Q_0)/f$ 的最大特征值等于另外两个之和。因此两个较小特征值的乘积为
+
+$$
+d_1d_2=\frac{s_1^2-c-s_2}{4f^2}.
+\tag{310.14}
+$$
+
+结合第301、307节的曲率表达，
+
+$$
+\Gamma_a+\Theta_a
+=\frac{\kappa_a}{2f^2}\mathcal K,
+\qquad
+\mathcal K=\frac\beta2(s_1^2-c-s_2)-\mathcal V.
+\tag{310.15}
+$$
+
+给出这些迹与方差的具体展开，便可核对其因式。定义 $m_j=\sum_iw_ix_i^j$，所以 $m_1=m$、$m_2=\beta^2$。每个 $x_i$ 满足 $x_i^3-x_i^2+px_i-q=0$，故
+
+$$
+m_3=\beta^2-pm+q,
+\qquad m_4=m_3-p\beta^2+qm,
+\qquad
+\mathcal V=(p+q)m-p\beta^2-q-f^2.
+\tag{310.16}
+$$
+
+由 $v=(X+\beta I)n/\sqrt{2\beta(\beta+m)}$，记
+
+$$
+V_1=v^{\mathsf T}Xv
+=\frac{m_3+2\beta^3+\beta^2m}{2\beta(\beta+m)},
+\qquad
+V_2=v^{\mathsf T}X^2v
+=\frac{m_4+2\beta m_3+\beta^4}{2\beta(\beta+m)}.
+\tag{310.17}
+$$
+
+直接展开 $Q_0=(nn^{\mathsf T}+\beta I-2\beta vv^{\mathsf T})X$，得到
+
+$$
+\begin{aligned}
+s_1&=m+\beta-2\beta V_1,\\
+s_2&=m^2+\beta^2(1-2p)+4\beta^2V_1^2
+ -2\beta^2m-4\beta^2V_2.
+\end{aligned}
+\tag{310.18}
+$$
+
+第二式的交叉项使用 $v^{\mathsf T}Xn=\beta(v\cdot n)$ 与
+$(v\cdot n)^2=(\beta+m)/(2\beta)$；因此其中来自 $nn^{\mathsf T}X$ 与 $\beta X$ 的 $2\beta^3$，恰与另一交叉项中的 $-2\beta^3$ 抵消。
+
+将式（310.11）、（310.12）、（310.16）至（310.18）代入式（310.15），保留 $\beta>0$ 而用式（310.12）替换 $\beta^2$，整理为
+
+$$
+\mathcal K
+=\frac{h^2p^2\,\mathcal L(h,p,\beta)}
+{(h+1)^2(h+2)(h^2-1)(\beta+m)}.
+\tag{310.19}
+$$
+
+再以 $f^2=h^2p^2/(h+1)^2$ 约去共同因子，正好得到式（310.4）。全部分母严格为正；这些恒等式不要求三个坐标互不相等。
+
+最后确定分子的符号。开单纯形给出 $0<p\le1/3$，写 $d=1/3-p\ge0$。则
+
+$$
+\begin{aligned}
+h-(2h+1)p&=\frac{h-1}{3}+(2h+1)d,\\
+h+1-2(h+3)p+6p^2
+&=\frac{h-1}{3}+2(h+1)d+6d^2.
+\end{aligned}
+\tag{310.20}
+$$
+
+因为 $h\ge2$、$\beta>0$，式（310.5）的两项均严格为正，故 $\mathcal L>0$。由此证明整个正定支撑分支的严格正受限曲率。结合第308节，便覆盖全部正半径模型，得到式（310.1）。
+
+三个半径不全相等时，第301节给出 $\Gamma_a<0$，再由第300节的两条二阶展开得到式（310.2）。全等半径时，$x_i=1/3$、$p=1/3$、$h=2$、$\beta=m=1/3$，式（310.4）给出 $\Gamma_a+\Theta_a=\kappa_a/12>0$，同时 $\Gamma_a=0$，与已有等半径系数一致。证毕。
+
+本节确定的是任意固定正半径模型在共同端点切线附近的二阶方向。一般有限预算的精确最优曲线、端点以外的整体凸性，以及由端点最优生成元形成的半群是否在其他预算处仍最优，均未由这一符号结论确定。
+

@@ -1,0 +1,72 @@
+**定理 293.1（微分可分恢复的幺元正规形）。** 采用定义281.1的有限中心对称模型及第290节引用的闭微分可分通道类。若实际二维编码、解码 $\mathcal E,\mathcal D$ 的复合恢复属于这个类，则存在一个同属此类的幺元量子比特通道 $\mathcal N_0$ 和酉矩阵 $U$，使
+
+$$
+\mathcal E'=\operatorname{Ad}_U\circ\mathcal N_0,
+\qquad
+\mathcal D'=\operatorname{Ad}_{U^*}
+\tag{293.1}
+$$
+
+的恢复误差与非实残差分别不超过原方案。因此，允许任意非幺元实际恢复与要求实际恢复幺元，在这个动力学限制下给出完全相同的两个上界预算可行区域。更强地，若原恢复的 Bloch 平移为 $h$，则可保证
+
+$$
+e(\mathcal N_0)^2\le e(\mathcal D\mathcal E)^2-\frac{\|h\|_2^2}{4}.
+\tag{293.1a}
+$$
+
+所以固定任意非负残差预算时，每个实际最优恢复本身都必须幺元。
+
+证明。沿用第281节的自旋反转 $\mathcal S(X)=YX^{\mathsf T}Y$，对量子比特保迹通道定义
+
+$$
+\mathfrak U(\Phi)=\frac12(\Phi+\mathcal S\Phi\mathcal S).
+\tag{293.2}
+$$
+
+若 $\Phi$ 的 Bloch 作用为 $v\mapsto c+Av$，则 $\mathfrak U(\Phi)$ 的作用为 $v\mapsto Av$。第281节的 Kraus 计算保证它仍为 CPTP。这里使用量子比特自旋反转；不声称高维中的同名平均具有相同性质。
+
+对两个保迹量子比特通道，复合的线性部分是两个线性部分的乘积。因此
+
+$$
+\mathfrak U(\Psi\Phi)=\mathfrak U(\Psi)\mathfrak U(\Phi),
+\qquad
+\mathfrak U(\mathrm{id})=\mathrm{id}.
+\tag{293.3}
+$$
+
+这是在保迹通道集合上直接核对的等式；它不是对任意两种独立平均的复合恒等式。
+
+现在核对微分可分性。将 $\mathfrak U$ 看成有限维超算子空间上的线性映射，并在该空间取定义290.1使用的固定范数。存在常数 $C>0$，使
+
+$$
+\|\mathfrak U(\Phi)-\mathrm{id}\|
+\le C\|\Phi-\mathrm{id}\|.
+\tag{293.4}
+$$
+
+若 $\Phi$ 对任意 $\delta>0$ 都能精确分解为有限个离恒等通道至多 $\delta$ 的 CPTP 因子，给定 $\varepsilon>0$，先取 $\delta=\varepsilon/C$。由式（293.3），逐个去平移后的因子仍精确复合成 $\mathfrak U(\Phi)$；它们都是 CPTP，并由式（293.4）分别离恒等通道至多 $\varepsilon$。所以去平移保留取闭包之前的微分可分集合。再由 $\mathfrak U$ 的连续性，它也保留这个集合的闭包，包括奇异通道。
+
+这一去平移论证是既有量子比特可分性方法的直接运用：Wolf 与 Cirac，*Dividing Quantum Channels*（2008），[定义14、定理23与定理24的证明](https://arxiv.org/abs/math-ph/0611057v3)在分析幺元目标的细分时使用幺元因子的替换。本节逐因子核对复合与闭包，是为了把该方法接到同一实际编码、解码的两个预算上；不把一般通道分类作为新结果。
+
+写原编码、解码为 $c+Av$ 与 $d+Lw$。原恢复的线性部分为 $T=LA$。由以上结论，
+
+$$
+\mathcal N_0
+=\mathfrak U(\mathcal D\mathcal E)
+=\mathfrak U(\mathcal D)\mathfrak U(\mathcal E)
+\tag{293.5}
+$$
+
+是幺元、微分可分的实际量子比特通道。对 $w_v=(T-I)v$，中心对称性更精确地给出
+
+$$
+\max_{\pm}\|h\pm w_v\|_2^2
+=\|h\|_2^2+\|w_v\|_2^2+2|h\cdot w_v|
+\ge\|h\|_2^2+\|w_v\|_2^2.
+\tag{293.5a}
+$$
+
+对模型取最大值并计入迹距离的 $1/2$ 因子，得到式（293.1a）。去掉编码平移也不增加虚轴残差，具体为第281节的式（281.5）。
+
+最后应用该节的实平面像构造：在 $L(\operatorname{span}\{e_x,e_z\})$ 的正交补中选单位方向 $n$，则 $L^{\mathsf T}n=k e_y$ 且 $|k|\le1$。把 $n$ 酉旋转到编码虚轴，再用逆酉解码，便得到式（293.1）。它的实际恢复仍是 $\mathcal N_0$，故保留微分可分性；新残差至多为原残差的去平移部分，恢复误差已经不增。这证明了同一方案的共同支配。反向包含由幺元恢复本来属于允许的恢复类立即成立。若一个最优恢复有 $h\ne0$，式（293.1a）还给出同一预算下的严格改进，矛盾，所以它本身幺元。证毕。
+

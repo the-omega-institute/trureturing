@@ -1,0 +1,10 @@
+**定义 271.1（加权共轭双块）。** 设 $\mathcal R=\{\rho_s:s\in S\}$ 是 $\mathbb C^d$ 上的非空密度矩阵族，满足共同复线性交换子为 $\mathbb CI_d$，且没有共同反酉对称。固定一组基底以定义逐项复共轭。对固定 $p\in(0,1)$，定义
+
+$$
+\Omega_p(s)=p\rho_s\oplus(1-p)\overline{\rho_s}
+\quad\text{作用于 }\mathbb C^d\oplus\mathbb C^d.
+\tag{271.1}
+$$
+
+所谓可恢复实编码，是固定的完全正保迹复线性映射 $\mathcal E:M_{2d}\to M_D$ 和 $\mathcal D:M_D\to M_{2d}$，使 $\mathcal D\mathcal E(\Omega_p(s))=\Omega_p(s)$ 对每个 $s$ 成立，并使全部 $\mathcal E(\Omega_p(s))$ 在同一个固定正交基底中取实。
+
