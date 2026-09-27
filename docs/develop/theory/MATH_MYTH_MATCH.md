@@ -11349,7 +11349,7 @@ $$
 这里 $S^c$ 只指 $n$ 个标签中的补集，不包括 $\circ$；$a,s_0$ 不依赖具体 $S$。由于目标在 $S^c$ 上为零，边缘 TV 至少为这部分质量，故
 
 $$
-a+cz\le\eta,qquad z\le\frac{\eta-a}{c}<L.
+a+cz\le\eta,\qquad z\le\frac{\eta-a}{c}<L.
 $$
 
 在擦除分支，公共符号上的有符号差为 $L-z>0$，禁止标签上的正差合计为 $cz$，允许标签上的差非正。因此该分支的联合 TV 贡献为
@@ -11386,7 +11386,7 @@ $$
 \mathcal J_{\mathcal Q,r}(\eta)
 =\lambda+\left(\frac2c-1\right)(\lambda-\eta)_+,
 \qquad
-\beta=c(r-\alpha)_+,quad\lambda=cr(1-\alpha).
+\beta=c(r-\alpha)_+,\quad\lambda=cr(1-\alpha).
 $$
 
 证明：边缘可行性来自命题 516.2，因为任一从 $Y$ 生成新增输出的模拟器，都可以额外保留实际 $Y$ 而不改变新增边缘。若 $\eta\ge\lambda$，命题 516.2 的联合上界生成器满足 $m=j=\lambda$；同一命题的通常模拟下界给出最优性。
