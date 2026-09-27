@@ -85,25 +85,13 @@ theorem result : claim := by
     fun a b hab => Fintype.sum_strictMono hab
   -- a positive box is determined by its cells
   have box_inj : ∀ v w : Fin d → ℕ, (∀ i, 0 < v i) → (∀ i, 0 < w i) → box v = box w → v = w := by
-    have single_mem : ∀ u : Fin d → ℕ, (∀ j, 0 < u j) → ∀ i, Pi.single i (u i - 1) ∈ box u := by
-      intro u hu i
-      rw [mem_box]
-      intro j
-      by_cases hj : j = i
-      · subst hj
-        simp only [Pi.single_eq_same]
-        have := hu j
-        omega
-      · simp only [Pi.single_eq_of_ne hj]
-        exact hu j
     intro v w hv hw h
     funext i
-    have h1 := (mem_box w _).1 (h ▸ single_mem v hv i) i
-    have h2 := (mem_box v _).1 (h.symm ▸ single_mem w hw i) i
-    simp only [Pi.single_eq_same] at h1 h2
-    have := hv i
-    have := hw i
-    omega
+    have heval := congrArg (fun s : Finset (Fin d → ℕ) => s.image (fun f => f i)) h
+    simp only [box] at heval
+    rw [Fintype.eval_image_piFinset _ i (fun j _ => Finset.nonempty_range_iff.2 (hv j).ne'),
+      Fintype.eval_image_piFinset _ i (fun j _ => Finset.nonempty_range_iff.2 (hw j).ne')] at heval
+    exact Finset.strictMono_range.injective heval
   -- Step 1: a positive box has exactly the d extensions at the axis cells.
   have box_ext : ∀ v : Fin d → ℕ, (∀ i, 0 < v i) →
       {J : Finset (Fin d → ℕ) | IsSolidPartition ((box v).card + 1) J ∧ box v ⊆ J} =
@@ -136,30 +124,16 @@ theorem result : claim := by
       have zero_off : ∀ i, i ≠ j → c i = 0 := by
         intro i hij
         by_contra hci
-        have hy := below (Function.update c i 0)
-          (fun k => by
-            by_cases hk : k = i
-            · subst hk; simp
-            · simp [Function.update_of_ne hk])
-          (fun heq => hci (by
-            have := congrFun heq i
-            simp at this
-            exact this.symm))
+        have hy := below (Function.update c i 0) (update_le_self_iff.2 (Nat.zero_le _))
+          (Function.update_ne_self_iff.2 (Ne.symm hci))
         have := (mem_box v _).1 hy j
         rw [Function.update_of_ne (Ne.symm hij)] at this
         omega
       have eq_j : c j = v j := by
         by_contra hne
         have hlt : v j < c j := lt_of_le_of_ne hj (Ne.symm hne)
-        have hy := below (Function.update c j (v j))
-          (fun k => by
-            by_cases hk : k = j
-            · subst hk; simp; omega
-            · simp [Function.update_of_ne hk])
-          (fun heq => by
-            have := congrFun heq j
-            simp at this
-            omega)
+        have hy := below (Function.update c j (v j)) (update_le_self_iff.2 hj)
+          (Function.update_ne_self_iff.2 (fun h => hne h.symm))
         have := (mem_box v _).1 hy j
         simp at this
       refine ⟨j, ?_⟩
@@ -363,15 +337,16 @@ theorem result : claim := by
       · rw [Finset.card_erase_of_mem hm, hJc]
         omega
     -- the maximum of the coordinate sum is such a cell
-    have top_of_max : ∀ (T : Finset (Fin d → ℕ)) (m : Fin d → ℕ), m ∈ T → T ⊆ J →
+    have top_of_max : ∀ (T : Finset (Fin d → ℕ)) (m : Fin d → ℕ), m ∈ T →
         (∀ z ∈ T, ∑ i, z i ≤ ∑ i, m i) → (∀ z ∈ J, m ≤ z → z ∈ T) → ∀ z ∈ J, m ≤ z → z = m := by
-      intro T m hmT hTJ hmax hup z hz hmz
-      by_contra hne
-      have := hmax z (hup z hz hmz)
-      have := sum_lt m z (lt_of_le_of_ne hmz (Ne.symm hne))
-      omega
+      intro T m hmT hmax hup z hz hmz
+      have hMF : MaximalFor (fun z => z ∈ T) (fun z : Fin d → ℕ => ∑ i, z i) m :=
+        ⟨hmT, fun z hz _ => hmax z hz⟩
+      have hM : Maximal (fun z => z ∈ T) m :=
+        hMF.maximal_of_strictMonoOn (Fintype.sum_strictMono.strictMonoOn _)
+      exact le_antisymm (hM.2 (hup z hz hmz) hmz) hmz
     obtain ⟨m, hmJ, hmmax⟩ := Finset.exists_max_image J (fun c => ∑ i, c i) hne
-    have hmtop := top_of_max J m hmJ (Finset.Subset.refl _) hmmax (fun z hz _ => hz)
+    have hmtop := top_of_max J m hmJ hmmax (fun z hz _ => hz)
     have below_m : ∀ y ∈ J, y ≤ m := by
       intro y hy
       by_contra hym
@@ -380,7 +355,7 @@ theorem result : claim := by
         Finset.exists_max_image (J.filter fun z => y ≤ z) (fun c => ∑ i, c i) hTne
       have hm'J : m' ∈ J := (Finset.mem_filter.1 hm'T).1
       have hym' : y ≤ m' := (Finset.mem_filter.1 hm'T).2
-      have hm'top := top_of_max _ m' hm'T (Finset.filter_subset _ _) hm'max
+      have hm'top := top_of_max _ m' hm'T hm'max
         (fun z hz hz' => Finset.mem_filter.2 ⟨hz, le_trans hym' hz'⟩)
       have hdist : m' ≠ m := fun h => hym (h ▸ hym')
       have hpair : ({J.erase m, J.erase m'} : Set (Finset (Fin d → ℕ))) ⊆ S := by
