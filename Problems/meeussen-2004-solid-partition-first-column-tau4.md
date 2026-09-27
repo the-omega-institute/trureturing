@@ -112,11 +112,11 @@ The canonical source is `D5/S3/Combinatorics/SolidPartitionFirstColumn.lean`.
 Its public declarations are `IsSolidPartition`, `extensions`, `shrinkings`,
 `firstColumn`, `shrinkColumn`, `tau`, `claim`, and `result`. The
 frozen module state has statement identity
-`sha256:5327b90091e647e4713396e4942400ff5f67ea0ee5419f9af3db8306f8220780`.
+`sha256:e3c669d3216d160ee0130678e1655ee53408d43885b3e64c776ba057afd2fa19`.
 The result declaration has statement identity
 `sha256:7b75193af7f63fa373cc5dd373fb23dfdb8e4e0202f313afe74e0e5f82db5424`.
 The Freeze event is
-`sha256:254225b6a043ee9df468af2e1f4a661a09df3f32677533ce91b03fb269564a27`
+`sha256:910c075597f100c04164389e253ce6cdbda5d634536bd0199dcc86e27817c5ea`
 and has no project-level frozen prerequisites. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
