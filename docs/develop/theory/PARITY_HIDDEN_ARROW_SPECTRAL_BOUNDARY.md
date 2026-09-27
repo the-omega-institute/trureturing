@@ -52000,3 +52000,508 @@ Adamczewski 的 lacunary 级数定理使用 Pisot 或 Salem 数的倒数作为�
 本章未建立任何原始层上的正下界命中、后代区间或统一有限 $H$ 的无限分支。第 168 章的小分母与大分母两种可能在未被本章排除的参数上仍须保留。一个标量类超出旧代数类，并不意味着所构造的每个参数都避开基于其他根组合的旧排除条件；这些排除集的全部交叠关系未作分类。
 
 ## 追加锚（本行以下为增补区）
+
+## 173. 两类原始计数切换：局部均匀方块与完整后验校准
+
+本章在同一个原始数组中保留两类配对切换，得到 $C_0=A+3n-2V-W$、$C_1=B+V$ 的精确计数关系。其整数变换的行列式为一，因而消除了单一切换遗留的非零线性计数守恒量。揭示二项计数的块商以后，余数与独立均匀方块的联合总变差至多为 $Cg/\sqrt n$；这个界对已揭示的商作平均，不能逐个条件商值声称均匀。
+
+在同一个块内，完整有限 $q$ 后验的校准误差按 $g\Delta_Q^2$ 控制。对原始 $\beta\ge3/5$ 和 $\gamma<c<3\gamma/2$，可让块宽超过所有生成法向的高度，同时把校准误差压到原始平面容差之下。同号法向不能满足原始长区间条件；反号且依赖方块位置的生成法向仍缺一个实际概率界。因此更宽物理带宽上的完整条件熵方差结论仍未解决。以下均为普通数学推导，未作 Lean 认证。
+
+### 173.1 联合计数与局部校准定理的范围
+
+**定理 173.1（原始数组的联合计数与局部校准）。** 以下五项在后续各节给出的共同条件下分别对 pair 与 path 实验成立，常数对确定真支撑及合法取整一致。
+
+The new construction uses TWO types of raw count switches with a unimodular change of the two anchor-group multiplicities. It removes Chapter 170's conserved count combination and produces a quantitative joint law for counts AND the exact full-q calibration. Its useful feature is local comparison after revealing integer block quotients: calibration error costs the number of still-unrevealed switches in one block, not the entire number of reservoir pairs.
+
+Here are the proved results.
+
+1. Two disjoint reservoirs, each with n=exp[(c_q-kappa)Q^3-O(log Q)] selected pairs, have a lawful product conditional kernel. The actual group counts are C_0=A+3n-2V-W and C_1=B+V, where V,W are independent binomials with parameters uniformly separated from0 and1. Their count-change matrix has determinant1. Thus no nonzero integer linear form in(C_0,C_1) is conserved by both switches.
+2. For any fixed exponent tau satisfying the explicit inequalities (173.24), set g=floor(exp(tau Q^3)). Reveal floor(V/g),floor(W/g). The JOINT law of these revealed quotients and the two remaining residues differs, in total variation, from the same quotient law with independent uniform residues by at most Cg/sqrt(n). This is an averaged conditional statement, not a false pointwise uniform law at every quotient. On each full block every residue pair is a lawful original count allocation. The actual count residues modulo g also become a uniform square, with no congruence sublattice because the count map is unimodular.
+3. On the SAME block, all exact outside posterior coefficients needed for the generated-plane interval differ from their block-corner coefficients by at most Cg Delta_Q^2. Their contribution to the actual plane error is o((|u|+|v|)epsilon/L), uniformly over ALL normals, including a generated normal depending on the residues.
+4. For every original beta>=3/5 and every fixed gamma<c<3gamma/2, one can take tau=gamma-e, e=(3gamma-2c)/8. Then g exceeds the generated-normal height K by exp[eQ^3-O_c(Q+log Q)], while the uniform-square approximation error decays like exp[-(9kappa/2+e)Q^3+O(log Q)]. The original amplitude is unchanged. This is a restricted-beta RESERVOIR/CALIBRATION theorem, not a new physical bandwidth theorem.
+5. On the inherited regularity event, no operational long-interval generated plane has uv>=0. In particular the formerly conserved direction v=2u cannot contribute, unless u=v=0, which is not a relevant generated plane. This excludes an actual additional portion of the nonzero-J event uniformly, without conditioning on a normal.
+
+The unsolved portion is now a quantified finite-square problem with arbitrary coarse calibration and a residue-dependent generated normal. We do not assert that its square occupancy is small. A uniform count square is not a uniform phase, and a normal chosen using its residues is not independent of them. Sections 173.8–173.9 specify the missing probability exactly. No actual-law obstruction to B165-smallness or to the physical theorem is proved.
+
+The old scopes remain: Chapter 163 proves the SAME physical theorem for0<c<gamma=99c_q/200. Chapter 165 gives its checked conditional extension for gamma<c<3gamma/2. Chapter 167 gives its compensated gap and coupled interval constraints. Chapter 170, with the full-range binomial-ratio proof below, proves its one-reservoir gcd and coefficient results and its restricted J=0 probability bound. None is recast as new work.
+
+### 173.2 原始定义与完整物理目标
+
+Set lambda=Q^3, a=(1+r)/2, b=(1-r)/2, k_0=floor(a lambda), l_0=lambda-k_0. The original count-line row j is
+
+$$
+ (k_j,l_j)=(k_0+jQ,l_0+jP_n).
+$$
+
+Here r is the prescribed original Liouville amplitude, P_n/Q tends to alpha_L=log(1+r)/[-log(1-r)], and0<P_n<Q eventually. We retain
+
+$$
+ \phi=a\log(1+r)+b\log(1-r),\quad
+ c_q=\phi(1-\beta)/\beta,\quad c_M=c_q+\phi,\quad
+ \kappa=c_q/1000,\quad\gamma=c_q/2-5\kappa.
+                                                        \tag{173.1}
+$$
+
+For every fixed original beta in(1/2,1),0<c_q<phi and log q=c_q lambda+O(1), log M=c_Mlambda+O(1). With epsilon_M=rq/(M-q), a_s=log((1+r)/(1-epsilon_M)), b_s=log((1-r)/(1+epsilon_M)), the EXACT weight relation and Chapter 167 estimate are
+
+$$
+ L_j=L_0e^{j\Delta_Q},\quad
+ \Delta_Q=Qa_s+P_nb_s\sim r(1-\alpha_L)Qq/M>0,\quad
+ \log\Delta_Q=-\phi\lambda+O(\log Q).
+                                                        \tag{173.2}
+$$
+
+All weights and multiplicities are from the actual full count posterior; the count-line likelihoods are not replaced by uncompensated scores or generic phases.
+
+For reference, the primary remains the original conclusion at rho=sigma mathcal B comparable exp(-c lambda), with delta=Q^-1/2, B^2=q/Q^(5/2), mathcal B=q/Q^(11/4), original physical H and
+
+$$
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V_{\rm phys}/\sqrt\delta,
+ \qquad Y=T+\sigma G,
+$$
+$$
+ A_{\rm phys}=V_H/\sqrt\delta,\quad \nu_0=2\sum_{j\in H}w_j^2,\quad
+ \kappa_3=8\sum_{j\in H}w_j^3,\quad\Lambda=\nu_0+\sigma^2,
+$$
+$$
+ C_x=A_{\rm phys}^2\kappa_3/\Lambda^3-2A_{\rm phys}\nu_0/\Lambda^2.
+                                                        \tag{173.3}
+$$
+
+The temporary subscripts on A_phys,V_phys distinguish these unchanged original quantities from reservoir baselines and raw binomials. Define D_x(y)=Vpost_x(y)-Vprior_x+A_phys^2/Lambda-C_xy, nu=2g_0, R_*(y)=29/6-3sqrt2+(3sqrt2+8/sqrt3-9)y^2/nu. The required extension is
+
+$$
+ \int f_x|D_x-R_*|\longrightarrow0,\quad E_xY^2\longrightarrow\nu,
+$$
+$$
+ \int f_xVpost_x-Vprior_x+A_{\rm phys}^2/\Lambda-C_xm_x
+       \longrightarrow8/\sqrt3-25/6,\qquad m_x=E_xY.
+                                                        \tag{173.4}
+$$
+
+It requires the exact full-q selected prior, finite coefficients, actual centers, low/outside counts, SAME G, real normalized marks0–2 and all outputs, separately in the two support-uniform raw-data probabilities. No result below changes those requirements or asserts them at a new c.
+
+### 173.3 同一实际数组中的两类配对切换
+
+Write s_0=c_q-kappa>0 and m=floor(exp(s_0lambda)). Predetermine TWO disjoint blocks of m true-label pairs using the fixed ordering of the true support. Predetermine, disjointly, all the finitely many rare-total proof blocks required by 165 and 163 at the chosen fixed c. Their total number of pairs m_r has log m_r<=(67/68)c_qlambda+O_c(log Q). Since s_0>67c_q/68 and s_0<c_q, the total2m+m_r uses2(2m+m_r)=o(q/Q^3) labels. Thus it fits in the original support and leaves the central groups for outside anchors on original occupancy regularity. All quantities are fixed functions of Q and the fixed model/target; the number of proof views is fixed, while the number of trials grows with Q.
+
+The proof choice of true-label blocks is made under P_S for each deterministic S. It is not extra information supplied to the physical observer. True labels have identical raw slot weights, so every resulting constant is independent of the identities of S.
+
+Use the exact parity disintegration of Chapters 155 and 170. The original aligned kernel is
+P_S(i,j)=[1+b_S(i)chi(j)]/(2M), with b_S=r1_S-epsilon_M1_{C_+\setminus S} on C_+ and0 on C_-. Its sum on each parity class is zero. For a stationary path, fixing the entire iid fair parity record factors the departure-label density into independent slot choices with probabilities[1+b_S(i)s_{t+1}]/M in the indicated class, and an independent uniform terminal label. Changing a departure label within its class leaves its predecessor's parity argument unchanged. For independent pairs, fixing the parity pairs gives the same departure weights and independent uniform arrival labels. These separate factorizations justify the same subsequent revealment for each experiment; path rows are never declared iid.
+
+Reveal all parity bits, the masks specifying each predetermined pair's slots, all outside departure labels, and the terminal path label or all pair arrivals. Conditional on this field H_0, the internal allocation strings are jointly independent fair bits; each pair's count kernel is Bin(K_+,1/2) tensor Bin(K_-,1/2), with revealed totals K_+,K_-.
+
+Type0 has totals(2k_0,2l_0). Retain the three ordered count allocations whose two row indices are
+
+$$
+ (0,0),\quad(-1,1),\quad(1,-1).
+                                                        \tag{173.5}
+$$
+
+Its switch is0 for the central alternative and1 for either mixed orientation, exactly as in Chapter 170.
+
+Type1 has totals(2k_1,2l_1). Retain the FOUR ordered allocations with row indices
+
+$$
+ (0,2),\quad(2,0),\quad(-1,3),\quad(3,-1).
+                                                        \tag{173.6}
+$$
+
+Its switch is0 for the first pair of orientations and1 for the second pair. Each alternative has the SAME revealed totals, and its likelihood product is L_1^2. All involved counts are positive eventually, because their shifts are at most3Q and3P_n, whereas k_0,l_0 are of order Q^3. This second type is not merely the reflected version of type0: it removes one group0 label without changing group1, instead of preserving C_0+2C_1.
+
+Define eligibility by the specified totals and allocation category. It is a coarse event involving a pair's hidden allocation, so the surviving law must be newly calculated; it is not called the original fair-binomial law.
+
+For supply, a uniform rounded-point lower bound suffices. For v=a or b, all the counts k_j or l_j with j in{-1,0,1,2,3} satisfy|k-vlambda|<=3Q+1. With J_v(z)=zlog(z/v)-z+v, eventually z=k/lambda lies in[v/2,2v]. Taylor's theorem with J_v(v)=J_v'(v)=0 and J_v''(z)=1/z<=2/v gives
+
+$$
+ \lambda J_v(k/\lambda)\le (k-v\lambda)^2/(v\lambda)=O_r(Q^{-1})\le1.
+$$
+
+The finite bound k!<=3sqrt(k)(k/e)^k and e<3 then imply
+
+$$
+ P\{\operatorname{Pois}(v\lambda)=k\}
+       \ge d_v\lambda^{-1/2},\qquad d_v=(9\sqrt{2v})^{-1}.
+                                                        \tag{173.7}
+$$
+
+This is a compact near-mean Stirling bound with an explicit eventual range, not an extrapolated Gaussian law. Let c_0=min(1/2,d_a^2d_b^2)>0. One specified ordered type0 or type1 alternative has probability at least c_0lambda^-2 in the common independent-Poisson comparison, since it uses four independent coordinates. Choose
+
+$$
+ n=\left\lfloor {c_0m\over2\lambda^2}\right\rfloor,\qquad
+ \log n=s_0\lambda-6\log Q+O_r(1).
+                                                        \tag{173.8}
+$$
+
+Each block has at least n eligible pairs except with comparison probability exp[-c_0m/(8lambda^2)]. This follows by thinning the flags to iid Bernoulli(c_0lambda^-2) and the exponential Markov bound at log2; log2<=3/4 gives the exponent1/8. Flags of different blocks are independent only in this supply comparison, not asserted to be independent in the original data.
+
+Chapter 155's sharp joint comparison applies once to ALL predetermined true labels, with their original exact means a lambda,b lambda, and costs
+
+$$
+ E_{\rm occ}=8(2m+m_r)/M+\sqrt{48(2m+m_r)/M}.
+                                                        \tag{173.9}
+$$
+
+This tends to zero at rate at most C_c exp[-(phi+kappa)lambda/2+O_c(log Q)]. Its true hypotheses hold: total selected fraction tends to zero; both true-label type weights are fixed; both experiments have parity-type variance O(Mlambda); and T_obs=2Mlambda is unchanged. The comparison is an UNCONDITIONAL growing-vector comparison, jointly with parity and the terminal/arrival kernel. It is used only for bounded supply events and never conditioned on masks, outside data or eligibility afterward.
+
+Joint supply failure is therefore at most
+
+$$
+ b_{\rm sup}=2e^{-c_0m/(8\lambda^2)}+C_ce^{-Q^2}+E_{\rm occ}=o(1).
+                                                        \tag{173.10}
+$$
+
+The rare-total flags in this bound are the SAME attained total pairs already used by 165/163. No independent empirical arrays, separate favorable optimizations, or hidden-split unions have been introduced.
+
+### 173.4 自适应揭示后的精确乘积核与整数可逆计数变换
+
+After H_0 reveal each reservoir pair's eligibility indicator. Reveal all ineligible allocations. In each type retain the first n eligible pairs and reveal every surplus eligible allocation. Select the rare proof pairs by their totals alone, as before, and reveal all nonselected rare allocations. Let F be the resulting coarse field. Supply success is measurable in F. For the high-band view additionally reveal the other selected rare splits; this refinement is also denoted F. The high-band rare split remains hidden, as do the two sets of n reservoir switches.
+
+For type0 define
+
+$$
+ R_0={\binom{2k_0}{k_0+Q}\over\binom{2k_0}{k_0}}
+       {\binom{2l_0}{l_0+P_n}\over\binom{2l_0}{l_0}},
+ \qquad\theta_0={2R_0\over1+2R_0}.
+$$
+
+For type1 define
+
+$$
+ R_1={\binom{2k_1}{k_1+2Q}\over\binom{2k_1}{k_1+Q}}
+       {\binom{2l_1}{l_1+2P_n}\over\binom{2l_1}{l_1+P_n}},
+ \qquad\theta_1={R_1\over1+R_1}.
+                                                        \tag{173.11}
+$$
+
+Given F, the retained type0 switches are iid Bernoulli(theta_0), the type1 switches are iid Bernoulli(theta_1), and the two families and the remaining rare split are jointly independent. Conditional orientations within a given type/category have equal probability by binomial symmetry.
+
+Proof. Conditional on H_0 the full string law is a finite product. Each eligibility flag restricts one coordinate to its specified category. Hence conditioning on all flags preserves a product of the individually restricted kernels. For every possible selected-index set, selection depends only on those flags and H_0. Partition by these finite index sets and the totals-selected rare indices, then integrate the revealed coordinates in the product kernel. The unrevealed factors are exactly the displayed laws. Summing the partition gives the conditional identity against every F-measurable bounded test, with no cardinality payment. No regularity or favorable-split event is inserted into this conditioning.
+
+The product estimate used here holds throughout the following range:
+for0<=h<=k/2, log[binom(2k,k+h)/binom(2k,k)] lies between -3h(h+1)/k and0. Indeed write x_i=(2i-1)/(k+i)<=2/3 and use log(1-x_i)>=-3x_i before summing. For R_1 apply the same product argument between shifts Q and2Q, or the corresponding P_n shifts. Thus
+
+$$
+ e^{-C_r/Q}\le R_i\le1,\quad
+ 1/2\le\theta_0\le2/3,\quad1/3\le\theta_1\le1/2
+                                                        \tag{173.12}
+$$
+
+eventually.
+
+Fix any of the nine formal membership candidates for the high-band pair. Let A,B be the F-measurable group0,group1 counts from every label outside the2n retained reservoir pairs, including these fixed membership offsets. If V,W are the numbers of type0/type1 switches equal to1, then EXACTLY
+
+$$
+ (V,W)\mid F\sim\operatorname{Bin}(n,\theta_0)
+                   \otimes\operatorname{Bin}(n,\theta_1),
+$$
+$$
+ C_0=A+3n-2V-W,\qquad C_1=B+V.
+                                                        \tag{173.13}
+$$
+
+Type0 contributes2(n-V),V to the two groups; type1 contributes n-W,0. All other groups, including-1,2,3, retain their corresponding actual counts and are not discarded. The matrix of the count changes is
+
+$$
+ \begin{pmatrix}-2&-1\\1&0\end{pmatrix},\qquad\det=1.
+                                                        \tag{173.14}
+$$
+
+In particular C_0+2C_1=A+3n+2B-W. For an integer normal(u,v),
+
+$$
+ J=uC_0+vC_1
+   =u(A+3n)+vB+(v-2u)V-uW.
+                                                        \tag{173.15}
+$$
+
+If both variable coefficients vanish then u=v=0. The old direction v=2u now has fluctuation -uW. This exact calculation does not imply that an adaptively generated J is independent of its coefficients.
+
+On inherited occupancy, groups0,1 each contain order q/Q^3 labels. All predetermined trials together use o(q/Q^3) labels, so anchors can be chosen outside every trial block using revealed data. A coarse measurable enlargement ensures their existence and C_i<=Cq for every retained switch choice. Original regularity/occupancy failure is charged unconditionally. None of the binomial kernels is conditioned on a hidden-dependent regularity event.
+
+### 173.5 商与余数的联合总变差界
+
+For a binomial X with theta in[1/3,2/3], let p_k=P(X=k), extended by0 outside0,...,n. Its probability mass is unimodal because p_{k+1}/p_k=(n-k)theta/((k+1)(1-theta)) decreases with k. Hence sum_k|p_{k+1}-p_k|=2max_k p_k. Also max_k p_k<=C/sqrt(n): Fourier inversion bounds each atom by one-half-pi times the integral of |1-theta+theta e^{it}|^n; its square is1-4theta(1-theta)sin^2(t/2), giving a Gaussian integral bound with an absolute constant on this theta range.
+
+For an integer g>=1 put U=floor(X/g), R=X-gU. Compare their exact law with the law obtained by retaining the EXACT marginal of U and sampling R uniformly in{0,...,g-1}, independently of U. On a block I_j={jg,...,jg+g-1} write pbar_j=g^-1 sum_{k in I_j}p_k. Then
+
+$$
+ \sum_{k\in I_j}|p_k-\bar p_j|
+ \le {1\over g}\sum_{k,l\in I_j}|p_k-p_l|
+ \le g\sum_{\substack{k,k+1\in I_j}}|p_{k+1}-p_k|.
+$$
+
+Summing and dividing by2 proves
+
+$$
+ d_{\rm TV}(\mathcal L(U,R),\mathcal L(U)\otimes U_g)
+       \le Cg/\sqrt n.
+                                                        \tag{173.16}
+$$
+
+Here U_g denotes uniform measure on the g residues. Tensorization by the common product kernel gives for (173.13), with U=floor(V/g), Z=floor(W/g), R=V-gU, S=W-gZ,
+
+$$
+ d_{\rm TV}\bigl(\mathcal L(U,Z,R,S\mid F),
+                 \mathcal L(U,Z\mid F)\otimes U_g^2\bigr)
+       \le Cg/\sqrt n.
+                                                        \tag{173.17}
+$$
+
+It holds for every successful F-fiber and a modulus chosen using F before V,W. Since both compared measures have exactly the same(U,Z) marginal, it is equivalent to an EXPECTED conditional TV bound after revealing(U,Z). It is NOT a claim that every individual conditional residue law has that bound, nor that residues are exactly independent in the original law.
+
+The comparison includes partial end blocks by padding p_k with zeros. For a reference realization to represent only lawful count values, restrict to full blocks gU+g-1<=n and gZ+g-1<=n. If g<=n/6, failure implies V>n-g or W>n-g; by theta_i<=2/3 its probability is at most2exp(-c n). This follows directly from the binomial exponential Markov bound, or Hoeffding's bounded-Bernoulli inequality with deviation n/6. The comparison uses the same quotient marginal, so this edge probability is identical there. It is paid separately below; no nonexistent raw allocation is used.
+
+For a full block set V_0=gU,W_0=gZ and define
+
+$$
+ C_0^\circ=A+3n-2gU-gZ,\qquad C_1^\circ=B+gU.
+$$
+
+Then(C_0,C_1)=(C_0^\circ,C_1^\circ)+(-2R-S,R). Modulo g the map(R,S) to(C_0,C_1) is a bijection, by (173.14). Thus the reference count residues are exactly uniform on the WHOLE square(Z/gZ)^2, conditional on F,U,Z. There is no index3 sublattice or remaining linear count invariant. The result remains valid jointly with the high-band hidden split because its conditional kernel is independent and common to both measures.
+
+For any bounded statistic of the complete raw allocation strings, the same comparison is available by adjoining their ORIGINAL conditional kernel given F,V,W. On full blocks these are lawful allocations; orientations and label permutations are generated using that kernel, not new uniform phases. Total variation decreases under a common kernel. Thus the comparison can be applied to actual symmetric posterior quantities, or to other raw-data events after retaining this ancillary conditional averaging.
+
+This is a new joint original-law statement. It does not treat a normal chosen using R,S as if it had been chosen before them. For example, when fixed integer coefficients and a target residue ARE measurable in F,U,Z, the exact reference formula is
+
+$$
+ P(uC_0+vC_1\equiv r\pmod g\mid F,U,Z)
+ =\begin{cases}
+ d/g,&d\mid r-uC_0^\circ-vC_1^\circ,\\
+ 0,&\text{otherwise},
+ \end{cases}\quad d=\gcd(u,v,g).
+                                                        \tag{173.18}
+$$
+
+This follows because a homomorphism from the uniform square has image the multiples of d and every nonempty fiber has gd points. Under the original law its averaged error is at most Cg/sqrt n. Formula (173.18) is NOT asserted for residue-dependent coefficients; the generated normal generally is such a coefficient choice.
+
+### 173.6 按局部块宽控制完整后验系数
+
+Let x denote the polynomial indeterminate, to distinguish it from z_*=tanh(Delta_Q/2). A type0 pair has generating factors
+
+$$
+ F_0(x)=(1+xL_0)^2,\quad
+ F_1(x)=1+2xL_0\cosh\Delta_Q+x^2L_0^2.
+$$
+
+A type1 pair has factors
+
+$$
+ G_0(x)=(1+xL_0)(1+xL_2)
+       =1+2xL_1\cosh\Delta_Q+x^2L_1^2,
+$$
+$$
+ G_1(x)=(1+xL_{-1})(1+xL_3)
+       =1+2xL_1\cosh(2\Delta_Q)+x^2L_1^2.
+                                                        \tag{173.19}
+$$
+
+These identities keep the SAME products within each type. Coefficientwise F_0<=F_1<=(cosh Delta_Q)F_0 and G_0<=G_1<=[cosh(2Delta_Q)/cosh Delta_Q]G_0. Both upper factors are at most exp(CDelta_Q^2) eventually.
+
+On a full quotient block let V_0=gU,W_0=gZ be its corner. Its reference reservoir polynomial is
+
+$$
+ F_0^{\,n-V_0}F_1^{\,V_0}G_0^{\,n-W_0}G_1^{\,W_0}.
+$$
+
+For actual residues R,S, increase V_0,W_0 by R,S. At most2(g-1) pairs change factors. Retaining EVERY other coordinate exactly and positively, all elementary symmetric coefficients, at EVERY order, lie between their block-corner counterparts and exp(CgDelta_Q^2) times those counterparts. The same comparison holds if fixed nonreservoir anchors are omitted. It does not delete reservoir coordinates or apply a local expansion after2n deletions. The reference contains n factors of each type with their actual coarse switch counts.
+
+For clarity the outside law of Chapter 165 is exact: excluding only the high-band hidden pair of fixed product P, put C=E_q+PE_{q-2}, D=E_{q-1}. The outside laws nu_0,nu_1 give weights proportional to L_A(1_{|A|=q}+P1_{|A|=q-2}) and L_A1_{|A|=q-1}, respectively. Positive summation of the coefficient inequalities shows that each normalized marginal law on nonreservoir latent labels has probability-density ratio between T_g^-1 and T_g relative to its block-corner law, where T_g=exp(CgDelta_Q^2). Hence every[0,1]-valued marginal expectation changes by at most eta_g=T_g-1. This retains the full-q normalizer and both components of nu_0, not independent posterior indicators.
+
+With fixed outside anchors a_0,a_1 in groups0,1 define p=nu_0(I_a0), d=nu_1(I_a0)-nu_0(I_a0), h_i=nu_i(1_{I_a0+I_a1=1}) exactly as in Chapter 167. Put bars on their block-corner values. Then
+
+$$
+ |p-\bar p|\le\eta_g,\quad |d-\bar d|\le2\eta_g,\quad
+ |h_i-\bar h_i|\le\eta_g,\quad \eta_g\le Cg\Delta_Q^2
+                                                        \tag{173.20}
+$$
+
+whenever gDelta_Q^2 tends to zero. The block-corner coefficients are measurable in F,U,Z. They are generally correlated with the quotient law; no distribution or irrationality assumption is assigned to them. The exact response calibration2D sqrt(P)/C also has relative ratio in[T_g^-1,T_g]. This conclusion uses only positive finite sums, so it is valid even if the block corner itself has very small raw probability. No typical-data property is borrowed for it.
+
+Let(m_0,u,v) be ANY actual unsheared generated primitive normal and s=|u|+|v|>0. Keep C_i and J=uC_0+vC_1 at their ACTUAL residue-dependent values. The affine expression is
+
+$$
+ F_{m_0,u,v}(t)=m_0+J(p+dt)
+       +vC_1z_*[h_0+(h_1-h_0)t],\qquad
+ z_*=\tanh(\Delta_Q/2).
+                                                        \tag{173.21}
+$$
+
+For0<=t<=1, replacing only p,d,h_0,h_1 by bars changes it by at most Csq eta_g on the coarse count envelope C_i<=Cq. This is simultaneous for all integer triples, independent of their height and of how they were selected. We do not change the normal, its unimodular shear, the integer m_0, the determinant condition, the response interval, or the count denominator J. There is no union over normals in this deterministic comparison.
+
+Use Chapter 165's fixed interface choices
+
+$$
+ \gamma<c<3\gamma/2,\quad e=(3\gamma-2c)/8,\quad
+ a_{\rm band}=\gamma-e,\quad\ell=2c-\gamma+3e,\quad h=e.
+                                                        \tag{173.22}
+$$
+
+The ACTUAL tolerance obeys log(epsilon/L)=-(gamma+a_band)lambda+O_c(Q+log Q), with a lower bound supplied by 165.21's epsilon_0 and L=2ceil(exp(a_band lambda)). This lower bound is needed when dividing errors; an upper bound alone would not suffice. For g=floor(exp(tau lambda)),
+
+$$
+ {Cq\eta_g\over\varepsilon/L}
+ \le \exp\{-[2\phi-c_q-\tau-\gamma-a_{\rm band}]\lambda
+                         +O_c(Q+\log Q)\}=:\omega_Q.
+                                                        \tag{173.23}
+$$
+
+Thus a long actual interval remains a long interval for the barred expression with tolerance(1+omega_Q)s epsilon/L whenever
+
+$$
+ 0<\tau<s_0/2,\qquad
+ \tau<2\phi-c_q-\gamma-a_{\rm band}
+      =2(\phi-c_q)+10\kappa+e.
+                                                        \tag{173.24}
+$$
+
+Every original fixed beta admits a positive tau, for example one-half the minimum of s_0/2 and the second upper bound. Both inequalities then have fixed positive margins. The first pays the quotient/residue approximation; the second pays the LOCAL full-q coefficient error. Applying Chapter 170's global nDelta_Q^2 bound at n=exp(s_0lambda) would lose this margin for beta sufficiently close to1/2. The block-corner comparison is a new estimate that avoids that loss while retaining the actual posterior.
+
+These are deterministic coefficient errors compared with the plane tolerance. No raw-data bad-event probability, signed posterior mass error, or polynomial transport remainder is multiplied by inverse sigma.
+
+### 173.7 计数方块宽于法向高度的原始参数范围
+
+Keep EVERY fixed original beta>=3/5, with no amplitude adjustment. Then phi/c_q=beta/(1-beta)>=3/2. Choose
+
+$$
+ s_0=c_q-\kappa,\qquad\tau=a_{\rm band}=\gamma-e.
+                                                        \tag{173.25}
+$$
+
+This choice is strictly feasible:
+
+$$
+ s_0/2-\tau=9\kappa/2+e>0,
+$$
+$$
+ 2\phi-c_q-\tau-\gamma-a_{\rm band}
+       =2\phi-c_q-3\gamma+2e
+       \ge c_q/2+15\kappa+2e>0.
+                                                        \tag{173.26}
+$$
+
+For the first equality use gamma=c_q/2-5kappa; for the last use2phi>=3c_q. These are analytic inequalities for the ORIGINAL prescribed amplitude and every beta in the stated original interval, without varying the amplitude. Floors contribute O(log Q) only. In particular
+
+$$
+ Cg/\sqrt n\le\exp[-(9\kappa/2+e)\lambda+O_c(\log Q)],
+$$
+$$
+ \omega_Q\le\exp[-(c_q/2+15\kappa+2e)\lambda+O_c(Q+\log Q)].
+                                                        \tag{173.27}
+$$
+
+The old generated-normal height satisfies K<=exp[(gamma-2e)lambda+O_c(Q+log Q)]. Therefore
+
+$$
+ g/K\ge\exp[e\lambda-O_c(Q+\log Q)]\longrightarrow\infty.
+                                                        \tag{173.28}
+$$
+
+This is a genuine change of the conditional arithmetic scale: after lawful quotient revealment there is a nearly uniform two-dimensional count square wider than the possible normal coefficients, while the common exact calibration is stable below the plane tolerance. Both statements refer to the SAME original array and the SAME revealment. They do not alone control the generated normal, which can depend on the square position. In particular no assertion that its LCD is large follows from (173.28).
+
+The total supply payment (173.10), the two real constants theta_i, the local full-q factors and the actual count matrix have all been checked together. No new occupied physical block, kappa choice, growing local expansion order, multi-deletion asymptotic formula, or strengthened noise condition is used. This remains a joint distribution/calibration theorem with the stated unresolved physical conclusion; even in beta>=3/5 it is not a theorem about (173.4) above gamma.
+
+### 173.8 同号法向与旧守恒方向的实际排除
+
+We now use the operational interval condition itself. A generated plane can be in B165 only if the sublevel interval of (173.21) on the ACTUAL[0,W_resp] has diameter at least chi/2. For any affine function, two points at that distance with absolute values at most s epsilon/L force
+
+$$
+ |dJ+vC_1z_*(h_1-h_0)|
+      \le4s\varepsilon/(L\chi).
+                                                        \tag{173.29}
+$$
+
+This is a necessary consequence of the SAME interval; its intercept and rank/determinant origin are not replaced by a freely chosen slope condition.
+
+On the original outside enlargement, |d|>=c_*/q by Chapter 165's exact response calibration, and C_0,C_1>=c_*q/Q^3. These are old one-anchor/three-deletion estimates at the actual array, not at a deleted-reservoir posterior. If uv>=0 and s>0, then
+
+$$
+ |J|=|u|C_0+|v|C_1\ge c_*s q/Q^3.
+$$
+
+Since0<=h_i<=1, C_1<=Cq and |z_*|<=Delta_Q/2, the left side of (173.29) is at least
+
+$$
+ c_*^2s/Q^3-C s q\Delta_Q
+       \ge c_*^2s/(2Q^3)
+                                                        \tag{173.30}
+$$
+
+eventually, because phi>c_q. In contrast 165.28 bounds its right side by s exp[-4e lambda+O_c(Q+log Q)], which is smaller. Thus no such normal has a long interval. This excludes all axes as well as both same-sign quadrants. It is deterministic and simultaneous on the actual regularity/enlargement event, so its raw probability is at most their original o(1) failures, separately pair/path and support-uniformly.
+
+In particular v=2u implies uv>=0 and is excluded unless u=v=0; the latter cannot define a relevant nonempty rank2 plane. The previously conserved direction therefore does not create an unhandled operational B165 branch. We did not infer exclusion merely from a nonzero fluctuation coefficient, and did not need to condition on the normal. The two-reservoir theorem nonetheless removes the broader count invariant and supplies the local square for the remaining opposite-sign normals.
+
+More generally (173.29) implies the retained necessary cone bound
+
+$$
+ {|uC_0+vC_1|\over s(C_0+C_1)}
+ \le C Q^3\{\exp[-4e\lambda+O_c(Q+\log Q)]
+                         +\exp[-(\phi-c_q)\lambda+O(\log Q)]\}.
+                                                        \tag{173.31}
+$$
+
+The quantitative inequality is a direct consequence of Chapter 167's slope relation, not separately advertised as new arithmetic. Its role here is to identify the remaining normals with opposite signs and almost cancelling actual count combination. It does not prove their scarcity on the residue square. Neither qualitative irrationality nor count-sign information proves that stronger assertion.
+
+### 173.9 剩余反号事件及其物理返回条件
+
+On a successful full quotient block, F,U,Z fix the original outside labels, all masks/totals, the other rare splits, the two count corners, and the barred finite-q calibration. The only retained reservoir count variables are R,S in{0,...,g-1}. In the reference law they are exactly independent uniform residues. In the original law their joint conditional deviation is controlled in expectation by (173.17).
+
+For each residue pair reconstruct the exact outside count histogram and full-q coefficients using (173.13),(173.19), without an independent empirical model. Form the COMPLETE resonance set of 165.17 on each of its nine membership branches, with the original numerator range, common harmonic denominator, shears, determinant condition and actual response range. If it has rank2, use its uniquely generated primitive normal. Retain only J nonzero and uv<0, and require the actual operational long interval. This defines a finite set E_exact(F,U,Z) of residue pairs. For a full block it uses only lawful original allocations. Orientations and choices of labels having equal row types do not affect this event: the exact full-q symmetric coefficients, group counts and anchor weights depend only on the histogram and the fixed outside data. More generally one may integrate their original conditional string kernel, as in Section 173.5, obtaining a[0,1]-valued version with the same bound.
+
+Define E_bar similarly, requiring the SAME actual-generated normal and SAME determinant/rank/interval range, but using the barred expression with tolerance(1+omega_Q)s epsilon/L for a subinterval of diameter at least chi/2. Uniform comparison (173.20–23) proves
+
+$$
+ E_{\rm exact}(F,U,Z)\subseteq E_{\rm bar}(F,U,Z).
+                                                        \tag{173.32}
+$$
+
+No normal of the corner array replaces the actual normal. Its selection can be discontinuous in R,S. The unsheared numerator m_0 stays the actual integer, without an invented height bound. In these sets
+
+$$
+ J=uC_0^\circ+vC_1^\circ+(v-2u)R-uS,
+$$
+$$
+ m_0+J(\bar p+\bar d t)
+ +v(C_1^\circ+R)z_*[\bar h_0+(\bar h_1-\bar h_0)t]
+                                                        \tag{173.33}
+$$
+
+uses ONE shared t and ONE shared integer J for intercept and slope. This is not independent selection of a rational denominator and a favorable calibration.
+
+By (173.17), common-kernel contraction, the edge estimate and the simultaneous same-sign exclusion, the actual nonzero-J branch satisfies
+
+$$
+ P_S(B165^{(\ne)})\le b_{\rm reg}+b_{\rm env}+b_{\rm sup}
+       +2e^{-c n}+Cg/\sqrt n
+       +\mathbb E_S\!\left[
+          1_{\rm full}\,{|E_{\rm bar}(F,U,Z)|\over g^2}
+         \right].
+                                                        \tag{173.34}
+$$
+
+The expectation uses the ACTUAL joint coarse-field/quotient marginal, not an independent calibration distribution. Failure outcomes can be assigned an empty set because their probabilities are explicitly charged. The finite nine-membership union is included INSIDE E_bar; there is no K^2 union or hidden-trial union. This inequality is a theorem about the original laws, with proved quantitative errors. Its final expectation has NOT been shown to tend to zero. In the regime (173.25), g>K does not supply that conclusion.
+
+This is the remaining concrete arithmetic task: bound the proportion of the uniform square whose OWN generated normal satisfies the coupled long-interval and determinant conditions, averaged over its actual coarse calibration. A theorem for one normal fixed before the residues, including (173.18), does not bound this proportion. A union over all normals may be vacuous. The positive coefficient comparison controls calibration drift but not the arithmetic position of its block-corner value. No coarse calibration density, generic direction, or independent random phase has been proved or assumed.
+
+The new theorem therefore reduces a genuine missing distributional condition rather than restating 170.29: it supplies two independent raw degrees of freedom with an invertible integer map, an approximately independent uniform square after lawful quotient revealment, an explicit modulus exceeding K in a nonempty original-beta regime, and a local calibration error below the actual plane tolerance even for the much larger reservoir. Those facts were absent from Chapter 170. It does NOT settle the final occupancy of that square by the generated-plane event. A merely formal rational choice of the barred coefficients would not be an original-data counterexample, and none is offered as a refutation here.
+
+For beta satisfying Chapter 170's condition $\phi-c_q>\gamma-2e$, its $J=0$ bound remains available. Every original $\beta\ge3/5$ satisfies it: $\phi-c_q\ge c_q/2$ while $\gamma-2e=c_q/2-5\kappa-2e<c_q/2$. If it is desired on the SAME realization as both new reservoirs, reserve additionally Chapter 170's original exp(kappa lambda) trial block disjointly at the outset. Count that extra block in m_r in (173.9); it preserves the stated67c_q/68 upper rate and all supply and selected-fraction margins. In the 170 view reveal both new reservoirs in full; its original exact conditional binomial law survives. In the new view reveal that older reservoir in full; it is part of the baseline A,B. All selections have the finite-product kernel proved above. Thus no separately realizable optimum or incompatible revealment is being combined, and the two unconditional bad-event bounds can be combined by a union bound.
+
+Consequently, in that J=0 scope, the missing raw probability input in 165.29 is now bounded by the last expectation of (173.34) plus the displayed vanishing errors and Chapter 170's paid zero-branch errors. Outside that scope, the J=0 branch remains as an additional missing term unless its original 167.19 condition is otherwise proved. Thus the separate zero-branch theorem applies throughout the concrete wide-square regime $\beta\ge3/5$; the opposite-sign nonzero branch still requires the last expectation in (173.34).
+
+All other input obligations of the conditional physical return remain intact. Every reservoir label is an ORIGINAL physical coordinate; none is deleted from H, T, the full prior or the low/outside groups. For each old view, reveal every other split before applying its projection estimate, leaving exactly the original hidden-pair kernel and its at-most-three-label local expansion. Our many-factor identities are exact positive coefficient comparisons, not new many-deletion asymptotics. The original occupied block and kappa are unchanged; log denominator remains O_c(Q), and all existing q-scale strip/dual margins of 165 are unaffected. Both normalized real marks0–2 remain derivatives of the same normalized exp(uW_phys) at fixed physical y, with W_phys=s_lat+G^2/2. Raw-data response derivatives or residue laws are not substituted for them.
+
+If the remaining expectation and any unpaid zero branch vanished with the original quantifiers, the retained full-axis energy event would feed the SAME hybrid Fourier identities on all rational arcs and complement, real denominator positivity, signed-tuple common-kernel transport, conditional-mean-square clipping, selected log-density correction and all-output tails. The exact C_xm_x and residual (173.4) would then follow under the already derived interface. We do not claim that this conditional return has acquired its missing probability input. No unmarked-TV argument is used for squared conditional means or surprise, and no inverse-noise factor multiplies (173.34).
+
+The primary remains OPEN for every new c>gamma. This chapter proves no physical necessity, threshold, endpoint, optimality or nonvanishing actual-law counterexample. The finite contribution is the new joint law/local calibration scaling and the operational exclusion above, with the precise remaining gap (173.34).
+
+### 173.10 文献归属与选择依赖边界
+
+精确原始标签分解与无条件增长向量比较复用第 155 章；有限完整后验的正系数关系及生成平面接口复用第 165、167 章；第 170 章的零分支结果在其严格参数不等式下使用。本章给出两类切换、整数可逆计数变换、局部商余数定理与按块宽支付的校准界。二项质量的单峰性、有限 Fourier 反演、总变差收缩与正多项式系数比较属于经典工具。
+
+Rudelson–Vershynin 的小球估计针对固定系数向量，其随机法向结论还使用独立坐标矩阵、逐行张量化及与既有列独立的最后一列。这里的法向由同一个计数方块生成，未取得这些独立性或算术条件；论文结论不能直接控制式 (173.34) 的最后一项。原始版本、具体条件及证明方向见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+均匀计数方块不等于均匀相位，也不使按方块位置选择的法向独立。当前结论没有建立一般反号法向的稀疏性，没有证明物理带宽阈值、端点或最优性，也没有给出非消失概率的原始数据反例。
+
+## 追加锚（本行以下为增补区）

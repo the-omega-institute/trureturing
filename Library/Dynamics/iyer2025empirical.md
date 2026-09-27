@@ -6077,3 +6077,17 @@ Marques–Ramirez，*On transcendental analytic functions mapping an uncountable
 Diego Marques，*Mahler's Problem on Liouville Numbers*，[arXiv:2609.14202v2](https://arxiv.org/abs/2609.14202v2)，[原始 TeX](https://arxiv.org/e-print/2609.14202v2)。核对范围为局部定理陈述、双高度计数设置、安全中心证明和相关嵌套区间选择。预印本的陈述自由选取一个 Liouville 输入，使其解析像具有有界无理性指数；安全中心的既约分母位于 $Q\le q<2Q$ 的块内，后续源尺度也随构造选择。它不指定这里的 $\vartheta$ 或 $Q_n^2$，不能提供固定原始层的下界命中。完整行列式计数证明及预印本的全局结论未作独立核验，也未作本章前提。保留原始对象为 34,558 字节，SHA256 d8abf13acd7b51976f3257c2fe491be51f2be4482263f00e2a33f74935d2a536。
 
 有理根、整数整除、Taylor 展开、Liouville 逼近和紧致性保留经典归属。新的模型综合由第 172 章自给证明承担；有限文献核对不表示检索穷尽或全球原创。标量类的代数独立性并不排除同一参数的其他根组合满足既有障碍，也不证明同步参数不存在。
+
+## 谱边界第 173 章补充：原始计数方块与依赖数据的法向
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 173 章在同一实际 pair 或 path 数组内构造两类配对切换，证明整数可逆的计数关系、揭示块商后的平均条件余数总变差界，以及按块宽 $g$ 支付的完整有限 $q$ 后验校准误差。对原始 $\beta\ge3/5$，它给出宽于生成法向高度的计数方块，并排除实际长区间事件中的同号法向。反号自适应法向的实际方块占比仍未得到趋零界，更宽物理带宽上的完整结论仍未解决。
+
+Mark Rudelson 与 Roman Vershynin，*The Littlewood-Offord Problem and invertibility of random matrices*，[arXiv:math/0703503v1](https://arxiv.org/abs/math/0703503v1)，[原始源文件](https://arxiv.org/src/math/0703503v1)。保留的 gzip 原始对象为 28,055 字节，SHA256 ac056c937b948497233c09c14fbdb537bd832356e4d51766aa619abef643f03a；解压出的单个 TeX 为 95,346 字节，SHA256 0f68b7155f97b36df324442b8e9f32f0dbd84919931a8618c9391976d6f93698。该版本的原有注释、排版和草稿文字保留，来源不是期刊终版的替代认证。
+
+核对范围包括 Essential LCD 定义、Small Ball Probability 的基本及精确版本、特征函数／Esseen 归约、算术返回集的间距与密度证明、random normal 与 strong distance 假设，以及张量化、level-set net 和最后一列条件化的完整操作性推导。原始标签包括 `t: small ball intro`、`t: small ball precise`、`Esseen`、`l: scattered`、`rec via LCD`、`random normal`、`l: single`、`l: level` 与 `strong conditioning`。
+
+精确小球定理要求独立同分布的中心化、方差一随机变量，其三阶绝对矩有界于 $B$；系数向量预先固定且 $1\le|a_k|\le K$，并要求 $0<\alpha<1/(6K)$、$0<\kappa_{\mathrm{source}}<n$。常数显式含有 $BK^3$，余项含 $\exp(-c\alpha^2\kappa_{\mathrm{source}}/B^2)$。Essential LCD 要求除规定数量的坐标外，其缩放值接近非零整数。它不是对观察完同一批和项以后再选取系数的统一定理。
+
+随机法向结论通过独立坐标矩阵的层集覆盖得到算术信息：先对 $n-1$ 个独立标量小球事件张量化，再支付网格大小；最终距离估计还条件化于前 $n-1$ 列并使用独立的最后一列。本章的法向由同一个校准计数数组的共振三元组生成，没有相应的独立末列或逐行矩阵模型。其系数也可能为零或有增长的比值；重复系数结构未被证明具有大的 LCD。因此这些定理及其常数均未直接移植到本章的自适应法向事件。
+
+第 173 章直接证明原始条件乘积核和商余数总变差关系，再分别控制法向选择所留下的概率缺口。它复用第 155 章的无条件供给比较、第 165、167 章的完整后验与平面接口，以及第 170 章合法范围内的零分支结果。所有揭示视图属于同一实际数组；数学分析中的配对坐标仍保留在物理观测与完整后验中。经典方法保留原归属，新的模型综合及剩余式 (173.34) 的边界由正文承担；有限来源核对不表示全球原创或检索穷尽。
