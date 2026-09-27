@@ -41113,3 +41113,489 @@ All constants depending on D or eta depend only on fixed c and model parameters,
 本章证明每个固定 $c>0$ 下 $\rho\asymp e^{-cQ^2}$ 的全输出加权方差熵极限，并保留精确 $C_xm_x$ 的积分结论。它不证明 $c=c_Q\to\infty$、零噪声、必要阈值、锐性或算法效率，也不以原数据概率收敛冒领原环境期望收敛。有限文献检索不构成全局原创性证书。
 
 ## 追加锚（本行以下为增补区）
+
+## 150. 带电荷矩的原始计数回接与条件敏感度峰
+
+第 148 章给出两个负电荷区域的有限质量修正；要从质量结论推到场响应，还须控制带电荷矩的积分。本章在每个区域自身的质量尺度上保留电荷标记，经过非中心剖面、离散计数单元、低组、截断尾部和完整选择律，再直接求均值、方差及高阶累积量。该接口给出精确有限剖面的二阶响应近似，并独立证明一个局部唯一的条件敏感度峰。
+
+结论保留原始 $\eta\to0$、$t=\eta/\sqrt\delta\to\infty$ 的任意慢速率、原噪声严格指数余量、固定紧输出集、实际 pair/path 数据律和确定支持的一致性。有限经验系数及有限噪声始终留在精确剖面中；$m_Q$ 无须收敛到确定常数。以下是普通数学推导，未作 Lean 形式化认证。
+
+### 150.1 原始负号条件后验的精确响应对象
+
+**定理 150.1（原始选择计数的二阶场响应）。** The first- and second-response estimates hold at the original scope:
+$$
+ H_P^{(j)}(h,y)-H_{\rm app}^{(j)}(h,y)
+           =o_{\mathrm{Prob}}(r_{\rm sc}^{j}/t^2),\qquad j=1,2.
+ \tag{150.1}
+$$
+The derivatives are ordinary field derivatives at fixed data, eta, sigma, y and separator. The proof below gives charge-marked expansions on EACH original selected region, including quantitative noncentral, cell, low-tuple, excluded-tail and selection returns. Those expansions also give a locally unique conditional-susceptibility maximum and its displacement from Chapter 148's actual equal-region-mass field. No claim concerns the unconditioned posterior susceptibility.
+
+Retain the original level Q and
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ Q_x(n)=\prod_j {C_j\choose n_j}p_j^{n_j}(1-p_j)^{C_j-n_j},
+ \quad v_j=C_jp_j(1-p_j)/B^2,
+$$
+$$
+ V=\sum_jv_j,\quad C_2=\delta^{-1}\sum_jv_j^2,\quad
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+$$
+$$
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad a=(2V)^{-1}+\eta.
+ \tag{150.2}
+$$
+The actual law is the ORIGINAL selected P_x, with raw posterior weight
+$$
+ P_x(n)\exp\{aD^2+hD-(T-y)^2/(2\sigma^2)\}.
+ \tag{150.3}
+$$
+It is not a product-prior result mislabeled as selected. Every original count, floor, low group, outside label, full calibration mu and noncentral e is retained. Write R_c=-D on the negative sign, and use R_0 for a squared charge; neither is the fixed output bound R.
+
+Let eta=eta_Q>0 tend to zero with t=eta/sqrt(delta) tending to infinity at ANY rate, and let sigma>0 tend to zero subject only to
+$$
+ \limsup \log(1/\sigma)/Q^3<c_q/2,\qquad
+ \log q=c_qQ^3+O(1),\quad c_q=\phi(1-\beta)/\beta.
+ \tag{150.4}
+$$
+Put m=sqrt(2V^4/C2), w0=sqrt(2/3), r_sc=m sqrt(eta/delta), h_sc=eta r_sc, and kappa_c=(2/3)w0. The empirical m need not converge deterministically. The exact centered Gaussian noisy profile ell_y(R_0) is defined in Section 150.2, including finite sigma and the high-block defect with full V. Set
+$$
+ F(r;h,y)=\ell_y(r^2)-\ell_y(0)-hr,\quad
+ F_r(r_-;h,y)=0,\quad K=-F_{rr}(r_-;h,y),\quad A=F(r_-;h,y),
+$$
+$$
+ \Lambda=A+\log h+\tfrac12\log(2\pi/K),\qquad
+ C_B=2\ell_y'(0)/h^2,\quad
+ C_I=F^{(4)}(r_-)/(8K^2)+5F^{(3)}(r_-)^2/(24K^3).
+ \tag{150.5}
+$$
+The branch is Chapter 146's unique positive local maximum in its fixed neighborhood of w0 r_sc. Its existence and positivity are retained, not assumed anew. In derivatives F^{(k)} with k>=2 the superscript means charge derivative; primes on ell mean squared-charge derivative. Write r=r_- where unambiguous.
+
+For a fixed separator xi in a compact [xi0,xi1] contained in(0,w0), the regions are B_xi={0<R_c<=xi r_sc}, I_xi={R_c>xi r_sc}. N_P^B,N_P^I are the sums of(150.3) on those regions. Their sum is the negative-sign raw normalizer and is independent of the separator. They are positive on the common good events. Define
+$$
+ H_P=\log(N_P^B+N_P^I),\qquad
+ H_{\rm app}=\ell_y(0)-\log h+
+       \log\{1+C_B+e^\Lambda(1+C_I)\}.
+ \tag{150.6}
+$$
+The missing common factor sigma sqrt(delta/V_H) is h-independent. In particular it has no effect on(150.1).
+
+Precisely, for each fixed L,R and separator compact, take the supremum of t^2/r_sc^j times the absolute difference in(150.1) over |Lambda(h,y)|<=L, |y|<=R and all those xi. It tends to zero in the ORIGINAL actual-data probability, uniformly over deterministic size-q supports, separately in the pair and path experiments. All subsequent little-o estimates are simultaneous on the same sets, with their displayed scale. Work on each inherited tight-constant common data class and then exhaust the classes. The result is for every admissible sequence, not a universal rate across all sequences. Empirical field choices are covered by this simultaneous assertion; no independence from the data is asserted.
+
+### 150.2 条件选择律与所需高阶剖面导数
+
+The literal original selected-law relation is
+$$
+ P_x(n)=L_x(k)Q_x(n),\quad BD=k-m_J,\quad
+ L_x(k)=\frac{[z^{q-k}]\prod_{i\notin J}(1-p_i+p_i z)}
+                    {[z^q]\prod_i(1-p_i+p_i z)},
+ \quad k=\sum_j n_j,\quad m_J=\sum_j C_jp_j.
+ \tag{150.7}
+$$
+This follows from the original size-q support weights and their exactly calibrated Bernoulli labels, not a new conditioning model. All p_i are strictly between zero and one and N_J<q<M-N_J on the common classes. With d_c the outside Bernoulli variance, d_J=B^2V and d_all=d_c+d_J, the Chapter 143 variance-based local bound gives, on EVERY full tuple,
+$$
+ L_x(k)=\exp\{\tfrac12\log(d_{\rm all}/d_c)-\varepsilon D^2\}+O(q^{-1/2}),
+ \quad \varepsilon=B^2/(2d_c)=O(\delta^5),
+$$
+$$
+ 0\le L_x(k)\le1+C(\delta^5+q^{-1/2}),\qquad
+ |L_x(k)-1|\le C(\delta^5+q^{-1/2}+\varepsilon D^2).
+ \tag{150.8}
+$$
+The complete tuple and outside coefficient are important when this bound is integrated against a mark.
+
+Inherited actual-data classes have c<=V,C2<=C, v_*<=C delta, n_g<=C delta^-4, p_j in[1/4,3/4], sum C_j<=CB^2, and at least c/delta coordinates with variances in[c delta,C delta]. They also have
+$$
+ |e_j|\le C\delta^5\sqrt{v_j},\quad \|e\|\le C\delta^5,
+                  \quad (\sum_j|e_j|)^2\le C\delta^6.
+ \tag{150.9}
+$$
+Choose fixed l,zeta with log(1/sigma)<=lQ^3 eventually, l<c_q/2 and 2zeta<c_q-l, and use H={j:C_j>=exp(zeta Q^3)} throughout the parameter set. Every low tuple remains exactly summed. High/full discrepancies are P(Q)exp(-bQ^3) with b>0 under these strict margins.
+
+For the centered Gaussian comparator, set C_H=diag(v_j), b=(v_j), V_H=sum_H v_j, d=b/V_H and A0=C_H-bb^T/V_H. Conditional on its charge r the vector has mean rd and covariance A0. The conditional energy plus independent noise of variance delta sigma^2 has cumulant transform
+$$
+ \mathcal K(z,R_0)=-\tfrac12\log\det(I-2zA_0)
+          +R_0\Psi(z)+\tfrac12\delta\sigma^2z^2,
+ \qquad \Psi(z)=z d^T(I-2zA_0)^{-1}d.
+ \tag{150.10}
+$$
+If f_r^0 is its exact density at H_y=V+sqrt(delta)y, then
+$$
+ g_y^0(r)=e^{\gamma r^2}f_r^0(H_y),\quad
+ \gamma=\eta-\{(2V_H)^{-1}-(2V)^{-1}\},\quad
+ \ell_y(R_0)=\log g_y^0(\sqrt{R_0}).
+ \tag{150.11}
+$$
+This comparator definition does not replace mu or e in the actual law. Its quantitative comparison to that law is made in Section 150.4.
+
+The Chapter 148 exact real saddle z=z(R_0) solves mathcal K_z=H_y for 0<=R_0<=M^2 eta/delta. It satisfies |z|delta<=C_M(eta+sqrt(delta)) and W=mathcal K_zz comparable to delta. With
+$$
+ \mathcal H=\gamma R_0+\mathcal K(z,R_0)-zH_y,\quad
+ L(R_0,\xi)=\mathcal K(z+i\xi/\sqrt\delta,R_0)-\mathcal K(z,R_0)
+                                      -i\xi H_y/\sqrt\delta,
+$$
+$$
+ p_y(R_0)=(2\pi)^{-1}\int e^L\,d\xi,\quad
+ g_y^0(r)=\delta^{-1/2}e^{\mathcal H(r^2)}p_y(r^2),\quad
+ c_M\le p_y\le C_M,
+ \quad |e^L|\le(1+c\delta\xi^2)^{-c'/\delta}.
+ \tag{150.12}
+$$
+The envelope comes from the SAME variance block and is integrable against every fixed frequency power, uniformly as delta tends to zero.
+
+For H_app'' we need genuine field derivatives of C_I through order two, beyond Chapter 148's first field derivative. Here is the additional exact step. Let rho=delta R_0, tau=delta z and tildeK(tau,rho)=delta mathcal K(tau/delta,rho/delta). Its tau-tau derivative is W/delta bounded below; every needed fixed mixed derivative through order eight is bounded on the real branch. On vertical segments the same holds for derivatives with at least two frequency derivatives: ||A0||=O(delta), ||d||^2=O(delta), and |1-2(z+i omega)a_j|>=1-2za_j for each nonnegative eigenvalue. Terms from the null eigenspace are affine in frequency and disappear after two such derivatives. The noise contributes only sigma^2 at second order; no inverse sigma occurs.
+
+The implicit equation tildeK_tau(tau(rho),rho)=H_y gives bounded derivatives of tau through order six by induction: its highest derivative has coefficient tildeK_tautau bounded away from zero, and the other terms involve lower derivatives already controlled. Thus |z^{(j)}(R_0)|<=C delta^{j-1}, j<=6. In the rescaled Fourier exponent the constant and linear terms in q0=sqrt(delta)xi vanish IDENTICALLY for every rho. Differentiating those identities in rho and applying the integral Taylor remainder in q0 yields
+$$
+ |\partial_{R_0}^{j}L|\le C_{j,M}\delta^j\xi^2,
+ \qquad |p_y^{(j)}|+|(\log p_y)^{(j)}|\le C_{j,M}\delta^j,
+                                 \quad1\le j\le6.
+ \tag{150.13}
+$$
+The second conclusion follows by differentiating under the envelope(150.12), since every term is exp L times delta^j times a fixed frequency polynomial, and p_y has a positive lower bound. This is not differentiation of a local central-limit remainder.
+
+Using mathcal H'=gamma+Psi(z) and mathcal H''=-Psi'(z)^2/W gives
+$$
+ |\ell_y^{(j)}(R_0)|\le C_{j,M}\delta^{j-1},\quad2\le j\le6,
+ \qquad \ell_y'(0)=\eta+O_R(\sqrt\delta+\delta)+o_{\exp}(1).
+ \tag{150.14}
+$$
+The inherited sharper second derivative retains the finite-noise factor:
+$$
+ \ell_y''(R_0)=-\frac\delta{m^2}\frac{2C_2}{2C_2+\sigma^2}
+        \{1+O_M(\eta+\sqrt\delta)\}+O_M(\delta^2)+o_{\exp}(1).
+ \tag{150.15}
+$$
+Together with the exact branch geometry this implies, on a fractional well band,
+$$
+ r/r_{\rm sc}\to w_0,\quad K/(2\eta)\to1,\quad
+ |F^{(j)}|/K^{j/2}\le C_jt^{2-j},\quad 3\le j\le6.
+ \tag{150.16}
+$$
+For example F'''=12r ell''+8r^3 ell''' and F''''=12ell''+48r^2ell'''+16r^4ell''''. Further differentiation uses(150.14); its sixth derivative contains 120ell'''+720r^2ell''''+480r^4ell'''''+64r^6ell''''''. These bounds apply on an interval, not just at the saddle.
+
+The exact field relations and their consequences are
+$$
+ r_h=-1/K,\quad K_h=F'''/K,\quad
+ \Lambda_h=-r+1/h-F'''/(2K^2),
+$$
+$$
+ |\partial_h^j C_B|+|\partial_h^j C_I|
+       \le C t^{-2}h_{\rm sc}^{-j},\quad j=0,1,2.
+ \tag{150.17}
+$$
+To verify the last assertion, scale r=r_sc w,h=h_sc kappa. The branch has bounded w_kappa and w_kappakappa by nonzero scaled curvature. The normalized third and fourth derivatives and their first two kappa derivatives are O(t^-1), O(t^-2), respectively, by the bounds through F6. The assertion follows from their polynomial expressions in C_I; C_B is a constant times h^-2. These are derivatives of exact finite quantities.
+
+### 150.3 两种局部尺度的带标记积分
+
+Set
+$$
+ X=hR_c,\qquad Z=\sqrt K(R_c-r),\qquad
+ b_3=F'''(r)/K^{3/2},\quad b_4=F''''(r)/K^2,\quad
+ \beta=\ell'(0)/h^2=C_B/2.
+ \tag{150.18}
+$$
+For a fixed polynomial f, first consider centered comparator integrals. Let E_e denote Exp(1) expectation and E_g standard normal expectation. The expansions with their marks are
+$$
+ h\int_0^{\xi r_{\rm sc}}f(hr)e^{F(r)}dr
+       =E_e f+\beta E_e(fX^2)+O_f(t^{-4}),
+ \tag{150.19}
+$$
+$$
+ e^{-A}\sqrt{K/(2\pi)}\int_{\xi r_{\rm sc}}^\infty
+       f(\sqrt K(r-r_-))e^{F(r)}dr
+   =E_g f+\frac{b_3}{6}E_g(fZ^3)+\frac{b_4}{24}E_g(fZ^4)
+                   +\frac{b_3^2}{72}E_g(fZ^6)+O_f(t^{-3}).
+ \tag{150.20}
+$$
+These are absolute errors relative to the UNMARKED region leading mass; a signed mark may have zero leading expectation. A claim of relative error divided by that zero marked expectation is neither needed nor made.
+
+Here are the uniform integration details. At the endpoint, Taylor's theorem with(150.14) gives
+$$
+ F(x/h)=-x+\beta x^2+O(\delta x^4/h^4),\quad
+ \beta=O(t^{-2}),\quad \delta/h^4=O(t^{-6}).
+ \tag{150.21}
+$$
+For x<=t^(1/4), expanding the exponential through beta x^2 has error bounded by C(t^-4+t^-6) times a fixed polynomial in x and exp(-x/2); a fixed polynomial mark remains integrable. For small fixed d0, the anchored bound ell(r^2)-ell(0)<=C eta r^2 gives F<=-c hr on0<=r<=d0 r_sc. The rest of the endpoint region away from this interval has an action gap -ct^2, uniformly over the permitted separators. Its normalized length h r_sc is O(t^2). Thus all omitted marked tails are smaller than every fixed inverse power of t, without a polynomial Q factor.
+
+At the interior, for |z|<=t^(1/12), Taylor's theorem gives
+$$
+ F(r+z/\sqrt K)-A=-z^2/2+b_3z^3/6+b_4z^4/24+O(t^{-3}|z|^5).
+ \tag{150.22}
+$$
+The exponential through order t^-2 is 1+b3 z^3/6+b4 z^4/24+b3^2 z^6/72. Its remainder is O(t^-3) times a fixed polynomial times exp(-z^2/4). This remains integrable after any fixed polynomial mark. Local concavity bounds the rest of the fractional well band by exp(-c z^2). Outside that band but inside a fixed moderate charge compact the action gap is -ct^2; e^A sqrt(2pi/K)=e^Lambda/h and A=-log t+O(1), so normalization costs only powers of t.
+
+For the remaining charges use the global density bound on the same fiber from Chapter 146, for centered and actual-e Gaussian profiles,
+$$
+ g_y^{\circ}(\sqrt{\eta/\delta}u)/g_y^{\circ}(0)
+ \le C\exp\left[t^2\left\{u^2-\frac{c u^4}{1+\eta u^2}\right\}\right],
+                                      \quad |u|\ge M.
+ \tag{150.23}
+$$
+Here the circle means either of those two profiles, not an arbitrary law. Choose fixed M large, then eta small. The braces are <=-B0 u^2 for any desired fixed B0 on |u|>=M. The negative-side field helps. The scaled Jacobian and each local-variable polynomial cost only fixed powers of t and u. This pays all marked tails at every fixed inverse power of t. This tail proof is why an arbitrarily slow t still suffices in(150.19)--(150.20).
+
+### 150.4 逐区域返回原始选择计数
+
+The new original-law statement is that, for every fixed polynomial f, the exact selected region conditional expectations obey
+$$
+ E_{P,B}f(X)=\frac{E_e f+\beta E_e(fX^2)}{1+C_B}+o(t^{-2}),
+ \tag{150.24}
+$$
+$$
+ E_{P,I}f(Z)=\frac{E_g f+(b_3/6)E_g(fZ^3)+(b_4/24)E_g(fZ^4)
+                         +(b_3^2/72)E_g(fZ^6)}{1+C_I}+o(t^{-2}).
+ \tag{150.25}
+$$
+We now justify all returns with the marks still present. This strengthens Chapter 148's unmarked expansions; a function-value error in those expansions alone would not give(150.24)--(150.25).
+
+First retain the exact quantitative noncentral interpolation of Chapter 148. At the SAME centered real saddle z(R_0), set m_theta=rd-theta e_H and replace the noncentral part in(150.10) by w m_theta^T(I-2wA0)^-1 m_theta. Its theta derivative and w-theta derivative are exactly -2w e_H^T(I-2wA0)^-1 m_theta and -2e_H^T(I-2wA0)^-2 m_theta. On |r|<=M sqrt(eta/delta), put b_e=C_M delta^5(sqrt(eta)+delta^5). Their real-tilt and vertical-increment bounds are C|z|b_e and C b_e|xi|/sqrt(delta). Every interpolated normalized transform has the SAME envelope(150.12): its noncentral factor adds a nonpositive modulus exponent. Integrating its theta derivative under this envelope, without exponentiating a large absolute complex difference, bounds the prefactor change by C b_e/sqrt(delta). The centered prefactor is bounded below. Consequently
+$$
+ \sup_{|r|\le M\sqrt{\eta/\delta},|y|\le R}
+          |f_r^e(H_y)/f_r^0(H_y)-1|\le C_M\delta^4.
+ \tag{150.26}
+$$
+The same r, saddle, H_y, noise and covariance occur throughout. No inverse-sigma differentiation is used. Multiplying(150.26) by |f(X)| or |f(Z)| and integrating costs only the bounded fixed marked moments proved in Section 150.3; outside this compact use(150.23). Thus (150.26) contributes O_f(delta^4), not O(delta^4) divided by a possibly zero marked integral. Since t^2 delta^4=eta^2 delta^3->0 it is below the requested precision.
+
+Next use the high-cell interface of Chapters 143 and 148, with full V,e and EVERY exact low tuple:
+$$
+ |\log(\text{lifted density}/\phi_C)|\le\mathcal E_Q,
+ \quad |D-D_G|\le\mathcal E_Q,
+ \quad |T-T_G|/\sigma\le\mathcal E_Q,
+ \quad \mathcal E_Q=P(Q)e^{-bQ^3}.
+ \tag{150.27}
+$$
+The positive exponential margins are c_q/2-l, c_q-2zeta-l and the high Stirling margin. Here T_G=(sum_H(Y_j-e_j)^2-V)/sqrt(delta). Neither the original center nor the observation has been altered. For each fixed polynomial mark, its cell variation is bounded by C_f times the scaled charge displacement times a fixed polynomial in the local variables. Both h and sqrt K, and r and their inverses when used here, are polynomially bounded in Q on admissible sequences. In particular |X-X_G|<=h mathcal E_Q, |Z-Z_G|<=sqrt K mathcal E_Q. Thus the mark has no exponential cost beyond a fixed polynomial Q factor.
+
+The pointwise growing-field domination is
+$$
+ hD\le\eta D^2+h^2/(4\eta),\qquad h^2/(4\eta)=O(t^2).
+ \tag{150.28}
+$$
+At a_+=(2V)^-1+2eta the joint energy-Fourier estimate of Chapter 137 pays any fixed charge, modal and normalized likelihood-score insertion by sigma P(Q)exp(Ct^2), uniformly for widths in[sigma/2,2sigma]. This is an unnormalized SAME-energy integral bound, not a marginal moment bound independent of the likelihood. The variance block pays fixed frequency powers. To use(150.27), write u=(T_G-y)/sigma and b0=(T-T_G)/sigma. The likelihood log change is -b0u-b0^2/2. Young's inequality absorbs its exponential error into a nearby noise width, and the exact log-width derivative inserts u^2. The preceding joint bound pays that insertion. With polynomial marks included, the central absolute error remains
+$$
+ \sigma P_f(Q)\exp[-bQ^3+C_ft^2].
+ \tag{150.29}
+$$
+No inverse sigma derivative is taken. All low probabilities are summed only after this uniform calculation.
+
+For excluded tuples, D^2<=2n_g E+2(sum e_j)^2, and completing the square in the SAME E yields the bound
+$$
+ e^{aD^2+hD-(E-H_y)^2/(2\delta\sigma^2)}
+ \le e^{Ct^2+2a_+(\sum e_j)^2+2a_+n_gH_y+4a_+^2n_g^2\delta\sigma^2}
+                  e^{-(E-H_y)^2/(4\delta\sigma^2)}.
+ \tag{150.30}
+$$
+The first exponent is O(Q^(7/2))+O(t^2). The raw excluded binomial probability is P(Q)exp(-cQ^4). Each fixed count or local-variable polynomial costs at most exp(C_fQ^3); division by sigma costs only O(Q^3) by(150.4). Hence the excluded contribution remains exp(-c'Q^4) after division by either region's scale sigma/h. Gaussian excluded cells have the same payment. This is a joint count/energy bound, not an invalid unconditioned supercritical Gaussian integral.
+
+On bounded Lambda both Gaussian region masses are comparable to M0/h, with
+$$
+ M_0(y)=\sigma\sqrt{\delta/V_H}\,g_y^0(0)\asymp\sigma.
+ \tag{150.31}
+$$
+Thus(150.29) divided by EITHER region loses only a fixed Q polynomial. Since t^2=o(Q^(1/2)), its relative error remains exponentially small even after multiplication by t^2. Cut disagreement at zero has width mathcal E_Q and raw mass O(sigma mathcal E_Q); at the separator the same strip has an extra action gap exp(-ct^2). At the separator |X|=O(t^2), |Z|=O(t), so a fixed mark adds only a fixed power of t. This pays cut atoms, the excluded strips and lattice offsets. The spacings h/B and sqrt K/B are exponentially small. No global total-variation error is divided by a minority probability.
+
+Finally return from product counts to selected counts BEFORE normalizing the marked expectation. For the exact product region law nu_B, bounded moments from the established return give
+$$
+ E_{\nu_B}[(1+|X|^p)|L_x-1|]
+ \le C_p\{\delta^5+q^{-1/2}+\delta^6/\eta^3\}.
+ \tag{150.32}
+$$
+For nu_I, D^2<=2r^2+2Z^2/K gives
+$$
+ E_{\nu_I}[(1+|Z|^p)|L_x-1|]
+ \le C_p\{\delta^5+q^{-1/2}+\eta\delta^4+\delta^5/\eta\}.
+ \tag{150.33}
+$$
+These require only two additional fixed polynomial moments from the SAME region, already paid above. Normalizers E_nu L=1+o(t^-2) are positive and comparable to one. Multiplying every error in(150.32)--(150.33) by t^2 gives zero: the nontrivial products are delta^5/eta, eta^3 delta^3 and eta delta^4. With eta=t sqrt(delta), even the first is delta^(9/2)/t. The q term is exponential.
+
+In particular, for each fixed mark a simultaneous normalized error bound is
+$$
+ C_f\{t^{-3}+\delta^4+\delta^5+q^{-1/2}
+           +\delta^6/\eta^3+\eta\delta^4+\delta^5/\eta\}
+                  +P_f(Q)e^{-bQ^3+C_ft^2}=o(t^{-2}).
+ \tag{150.34}
+$$
+The endpoint's sharper Taylor error is harmlessly bounded by t^-3 here. All superpolynomial t tails are absorbed there. This proves(150.24)--(150.25) on the original selected counts, and proves the needed bounds for arbitrarily many FIXED moments, with no growing-order claim. All parts of the bound concern one realized array and the same physical output.
+
+### 150.5 区域均值、方差与高阶矩
+
+Write b=E_{P,B}R_c, i=E_{P,I}R_c, v_B=Var_{P,B}R_c and v_I=Var_{P,I}R_c. Exp(1) has kth moment k!, so(150.24) gives
+$$
+ b=h^{-1}\{1+2C_B+o(t^{-2})\},\qquad
+ v_B=h^{-2}\{1+6C_B+o(t^{-2})\}.
+ \tag{150.35}
+$$
+For example E X=(1+6beta)/(1+2beta)=1+4beta+O(beta^2); E X^2=(2+24beta)/(1+2beta)=2+20beta+O(beta^2). Subtracting the squared mean gives1+12beta. This directly checks both coefficients.
+
+Gaussian odd moments vanish. From(150.25), using fourth/sixth/eighth/tenth moments3,15,105,945,
+$$
+ E Z=b_3/2+o(t^{-2}),\quad
+ E Z^2=1+b_4/2+5b_3^2/4+o(t^{-2}),\quad
+ E Z^3=5b_3/2+o(t^{-2}),
+$$
+$$
+ E Z^4=3+4b_4+25b_3^2/2+o(t^{-2}).
+ \tag{150.36}
+$$
+The C_I denominator has been included in these formulas. Defining a_I=F'''/(2K^2), they imply
+$$
+ i=r+a_I+o(1/(\sqrt Kt^2)),\qquad
+ v_I=K^{-1}\{1+b_4/2+b_3^2+o(t^{-2})\}.
+ \tag{150.37}
+$$
+The centered third and fourth cumulants are
+$$
+ \kappa_{3,I}=K^{-3/2}\{b_3+o(t^{-2})\},\qquad
+ \kappa_{4,I}=K^{-2}\{b_4+3b_3^2+o(t^{-2})\}.
+ \tag{150.38}
+$$
+For the endpoint, kappa3,B=2h^-3(1+O(t^-2)) and kappa4,B=6h^-4(1+O(t^-2)). These follow directly from(150.24), not from derivatives of its error. In particular they are O(r^3/t^6) and O(r^4/t^8). The interior third cumulant is O(r^3/t^4)+o(r^3/t^5); its fourth cumulant is o(r^4). These scales will justify the local peak claim independently.
+
+The competing scales are explicit: b=O(r/t^2), sqrt(v_B)=O(r/t^2), i-r=O(r/t^2), and sqrt(v_I)=O(r/t). Thus the boundary mean and the interior skew shift both affect the first finite mean correction, while only interior variance contributes to the global variance at relative order t^-2. The region separation is r(1+O(t^-2)).
+
+### 150.6 由带标记积分建立二阶响应
+
+Use the exact positive approximate component masses
+$$
+ A_B=e^{\ell(0)}h^{-1}(1+C_B),\qquad
+ A_I=e^{\ell(0)}e^A\sqrt{2\pi/K}(1+C_I).
+ \tag{150.39}
+$$
+Their sum has log H_app. Let p_app=A_I/(A_B+A_I) and p_P=N_P^I/(N_P^B+N_P^I). The unmarked case of Section 150.4 gives p_P-p_app=o(t^-2), with neither a vanishing region denominator nor an inverse-minority loss since Lambda is bounded.
+
+Differentiate ONLY the exact expressions(150.39). Their component negative log derivatives and second log derivatives are
+$$
+ b_{\rm app}=1/h+\frac{2C_B}{h(1+C_B)},\qquad
+ i_{\rm app}=r+a_I-(\log(1+C_I))_h,
+$$
+$$
+ v_{B,\rm app}=h^{-2}+(\log(1+C_B))_{hh},
+$$
+$$
+ v_{I,\rm app}=K^{-1}+\frac{F''''}{2K^3}
+                        +\frac{(F''')^2}{K^4}+(\log(1+C_I))_{hh}.
+ \tag{150.40}
+$$
+For the last line, a_I,h=-F''''/(2K^3)-(F''')^2/K^4, using(150.17). These identities are purely finite calculus. Positivity of the component weights holds eventually because C_B,C_I=O(t^-2); their second log derivatives need not be postulated to be variances of any constructed law.
+
+By(150.17), (log(1+C_I))_h=O(1/(h_sc t^2))=O(r/t^4), and its second derivative is O(1/(h_sc^2t^2))=O(r^2/t^6). Also (log(1+C_B))_hh=6C_B/h^2+O(C_B^2/h^2). Comparing(150.40) with the DIRECT marked formulas(150.35)--(150.37) therefore gives
+$$
+ b-b_{\rm app}=o(r/t^2),\quad i-i_{\rm app}=o(r/t^2),\quad
+ v_B-v_{B,\rm app}=o(r^2/t^2),\quad
+ v_I-v_{I,\rm app}=o(r^2/t^2).
+ \tag{150.41}
+$$
+The actual mean identity and variance decomposition are exact:
+$$
+ \mu=(1-p_P)b+p_P i,\qquad
+ \chi=(1-p_P)v_B+p_Pv_I+p_P(1-p_P)(i-b)^2.
+ \tag{150.42}
+$$
+Likewise differentiating log(A_B+A_I) gives the same algebraic formulas using p_app and the exact quantities(150.40). Since i,b=O(r), all replacements in the first formula cost o(r/t^2) and all replacements in the second cost o(r^2/t^2). Finally the original finite sums(150.3) give H_P'=-mu and H_P''=chi, by differentiating the weights exp(-hR_c). Their supports and separator do not vary with h. Equations(150.41)--(150.42) prove(150.1). No assertion has been obtained by differentiating Chapter 148's function-value approximation or the errors in(150.24)--(150.25).
+
+### 150.7 条件敏感度的首个有限修正
+
+Put p=logistic(Lambda) and c=C_I-C_B. The exact regional mass expansions give p_P=p+p(1-p)c+o(t^-2). Combining this with(150.35)--(150.37) yields
+$$
+ \mu=pr+(1-p)/h+p a_I+p(1-p)c\,r+o(r/t^2),
+ \tag{150.43}
+$$
+$$
+ \chi=p(1-p)r^2+\frac pK
+       +2p(1-p)r(a_I-1/h)
+       +p(1-p)(1-2p)c\,r^2+o(r^2/t^2).
+ \tag{150.44}
+$$
+The first term is the Bernoulli region-label variance. The p/K term is the interior fluctuation variance. The next term corrects the region separation using both the skewed interior and the endpoint charge. The last term corrects the phase weight itself. Endpoint variance is only O(r^2/t^4), and has not been mistaken for an order-t^-2 correction.
+
+All exact finite coefficients in(150.43)--(150.44) must be retained when computing a finite field or output response. Their limiting coefficient identities may then be read off from the exact derivative scalings:
+$$
+ t^2/(Kr^2)=3/(4m^2)+o(1),\quad
+ t^2a_I/r=-3/(2m^2)+o(1),\quad
+ t^2/(hr)=9/(4m^2)+o(1),
+$$
+$$
+ t^2c=-37/(8m^2)+o(1).
+ \tag{150.45}
+$$
+For verification, r~w0 m sqrt(eta/delta), K~2eta, h~kappa_c m eta^(3/2)/sqrt(delta). The second relation uses F'''=-12r delta/m^2(1+o(1)). Thus t^2/(Kr^2)=1/(2w0^2m^2), t^2a_I/r=-3/(2m^2), and t^2/(hr)=1/(kappa_c w0m^2). The last relation is Chapter 148's coefficient: t^2 C_I=17/(8m^2)+o(1), t^2 C_B=27/(4m^2)+o(1). Finite sigma tends to zero only AFTER remaining inside the exact coefficients; its slower effects on r,h,K are not discarded.
+
+In particular(150.44) implies the finite-empirical coefficient assertion
+$$
+ \frac{t^2}{r^2}\{\chi-p(1-p)r^2\}
+ -\frac1{m^2}\left\{\frac{3p}{4}-\frac{15p(1-p)}2
+                -\frac{37p(1-p)(1-2p)}8\right\}\longrightarrow0.
+ \tag{150.46}
+$$
+This does not replace m by a deterministic limit or replace the exact Lambda by an expansion about bare kappa_c. It is the first finite susceptibility correction throughout the bounded exact window.
+
+### 150.8 局部唯一峰的位置与高度
+
+This consequence has separate derivative control. At fixed data,y the finite negative-sign sum is positive and smooth for every finite h, so exactly
+$$
+ \chi_h=-\kappa_3(R_c),\qquad \chi_{hh}=\kappa_4(R_c).
+ \tag{150.47}
+$$
+These identities alone give no asymptotics. We supply them from the marks already proved. Let d=i-b and retain the ACTUAL p_P. The exact two-region third cumulant is
+$$
+ \kappa_3=p_P(1-p_P)(1-2p_P)d^3
+       +3p_P(1-p_P)d(v_I-v_B)
+       +p_P\kappa_{3,I}+(1-p_P)\kappa_{3,B}.
+ \tag{150.48}
+$$
+It follows by expanding R_c around its regional mean and then around the full mean. For the fourth cumulant, the direct fixed moments through order four imply
+$$
+ \kappa_4/r^4
+ =p_P(1-p_P)\{1-6p_P(1-p_P)\}+o(1).
+ \tag{150.49}
+$$
+Indeed R_c/r has regional moments tending to those of0 and1, respectively; (150.24)--(150.25) control the required fourth moments and tails. Cumulants are polynomials in these moments. This proof does not differentiate any little-o estimate.
+
+Choose a sufficiently small FIXED L0>0. For |Lambda|<=L0, p_P is near one half and the leading expression in(150.49) is bounded above by a negative constant (its value at one half is -1/8). Hence chi_hh<0 uniformly eventually. At Lambda=+L0, the first term of(150.48) is negative of order r^3; at Lambda=-L0 it is positive of that order. The other terms are O(r^3/t^2). Since Lambda decreases with h, chi_h has the correct positive sign at the lower field and negative sign at the higher field. The intermediate value theorem and strict concavity prove a UNIQUE local maximum h_pk in that field interval, simultaneously for compact y. This is a local statement; no outside-window peak or phase diagram is claimed.
+
+At that maximum, (150.48) first forces p_P=1/2+O(t^-2). Substituting this scale back into(150.48), using v_I=K^-1(1+O(t^-2)+o(t^-2)), v_B=O(r^2/t^4), d=r(1+O(t^-2)) and(150.38), gives
+$$
+ p_P(h_{\rm pk})-\tfrac12=\frac{3}{2Kr^2}+o(t^{-2}),\qquad
+ \log(N_P^I/N_P^B)(h_{\rm pk})=\frac6{Kr^2}+o(t^{-2}).
+ \tag{150.50}
+$$
+For detail, writing p_P=1/2+u, the leading first term is -u d^3/2, the next is3d/(4K), and the regional third cumulants are O(r^3/t^4)+o(r^3/t^5). After division by d^3/2 this yields u=3/(2Kr^2)+o(t^-2). The coefficient6 in the log odds is4u. It is positive: the peak has a slightly larger interior weight than the equal-mass point.
+
+Let h_equal^P(y,xi) be Chapter 148's ACTUAL equal-region-mass field and let h_W solve the EXACT finite Lambda=0 equation. Write r_W,K_W for its branch quantities. The exact log-odds derivative is -i+b=-d, negative, with d=r(1+O(t^-2)). Equation(150.50) and monotonicity first bound |h_pk-h_equal^P| by O(1/(r_Wt^2)); on that interval r/r_W=1+O(t^-4), by r_h=-1/K, and K/K_W=1+O(t^-4). Integrating the exact log-odds derivative therefore gives
+$$
+ h_{\rm pk}=h_{\rm equal}^P-\frac6{K_Wr_W^3}
+                          +o(1/(r_Wt^2))
+             =h_{\rm equal}^P-\frac9{2m^2r_Wt^2}
+                          +o(1/(r_Wt^2)).
+ \tag{150.51}
+$$
+Using Chapter 148's established field correction, separately at its proved precision,
+$$
+ h_{\rm pk}=h_W+\frac{c(h_W)}{r_W}-\frac6{K_Wr_W^3}
+                          +o(1/(r_Wt^2))
+           =h_W-\frac{73}{8m^2r_Wt^2}+o(1/(r_Wt^2)).
+ \tag{150.52}
+$$
+The sign is independently determined by(150.48), not borrowed from a graph or a finite-volume analogy. The peak lies below the actual equal-mass field in h because increasing h favors smaller negative charge.
+
+Its height, retaining exact profile coefficients first, is
+$$
+ \chi(h_{\rm pk},y)=\frac{r_W^2}{4}
+          +\frac{r_W}{2}(a_{I,W}-1/h_W)+\frac1{2K_W}
+                                      +o(r_W^2/t^2)
+       =\frac{r_W^2}{4}-\frac{3r_W^2}{2m^2t^2}+o(r_W^2/t^2).
+ \tag{150.53}
+$$
+To check evaluation at h_W, the change of r over the scale(150.52) is only O(r_W/t^4); (150.17) gives the analogous harmless changes in the other exact coefficients. Also p(1-p)=1/4+O(t^-4) at the peak, so the phase-weight correction does not enter height at relative order t^-2. Equation(150.45) gives the displayed -3/(2m^2) coefficient. The leading susceptibility scale is r_W^2/4~m^2 eta/(6delta); this is an analytic scale calculation, not a numerical measurement.
+
+The total negative-sign susceptibility and its local peak do not depend on xi at all. All approximations above are simultaneous for xi in the permitted compact, so the comparison of this same peak with any associated h_equal^P is valid. Separator dependence of equal-mass fields is already o(1/(r_Wt^2)) by Chapter 148. The older positive log(t)/t^2 displacement from the EXACT finite equal-height center remains unchanged; its coarser error is not promoted into the precision of(150.52). No expansion about limiting kappa_c is asserted.
+
+### 150.9 新接口、方法归属与结论边界
+
+The second-response and marked-moment theorem and the local peak consequence hold under all original eta, t, noise, output and support-uniform probability quantifiers. The new interface is the charge-marked, region-relative original-count return(150.24)--(150.34), together with the one higher exact prefactor derivative needed for H_app''. It turns an unmarked finite weight approximation into justified first and second response estimates. Third and fourth actual marked moments supply a separate local-peak argument.
+
+Exponential-family response identities, variance decomposition, Gaussian/endpoint moments, Laplace coefficients and the generic susceptibility-shift coefficient6 are classical. The contribution is their justified use on this selected count array with disappearing curvature, two different local scales and arbitrarily narrow physical output likelihood. No literature theorem is claimed to identify this array automatically with a low-temperature lattice model. No dynamical assertion, entropy-order derivative, unconditioned response theorem, growing-parameter extension or global originality claim follows. All finite empirical definitions precede the limits.
+
+经典指数族响应恒等式、两区域方差分解、端点与 Gaussian 矩、Laplace 系数和有限相共存的峰偏移系数保留成熟方法归属。Katsevich 的带振幅 Laplace 展开要求单个全局极小点与明确的局部导数、整体尾部条件；Borgs–Kotecký 的有限格点相共存定理要求轮廓表示、Peierls 界和受控场导数。这里分别核对这些方法关系，模型内的带标记选择计数回接由本章给出，具体版本和适用边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（本行以下为增补区）
