@@ -1,12 +1,13 @@
 using System.Collections.Immutable;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.DeclaredTemplate.Tests;
 
-public sealed class FourierBridgeSourceEvidenceTests
+public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     // These are actual :report artifacts, including compiler type materials and axioms.
     // No synthetic positive report or copied certificate supplies the acceptance case.
@@ -18,15 +19,29 @@ public sealed class FourierBridgeSourceEvidenceTests
     public void original_passes_production_materials_join_and_rejects_corruption(
         string sourcePath, string theoremName, int telescope, int state, int scope, int[] coordinates)
     {
-        var directory = Environment.GetEnvironmentVariable("FOURIER_BRIDGE_SOURCE_ARTIFACTS");
-        Assert.False(string.IsNullOrEmpty(directory), "Required native :report artifacts were not supplied.");
         var root = TestRepositoryLayout.FindRoot();
+        var module = sourcePath[..^5].Replace('/', '.');
+        var directory = Environment.GetEnvironmentVariable("FOURIER_BRIDGE_SOURCE_ARTIFACTS");
+        if (string.IsNullOrEmpty(directory))
+        {
+            // Normal engineering invocations produce the original source and mirror
+            // through the supported native facets, with the usual cache admission.
+            var produced = BoundedProcessRunner.Run("/bin/bash",
+                ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "Reg", "build",
+                    "+" + module + ":report", "+Reg." + module + ":report"],
+                root, TestBudgets.ReportSupervisorHangGuard, 4 * 1024 * 1024);
+            var diagnostics = Encoding.UTF8.GetString(produced.StandardOutput)
+                + Encoding.UTF8.GetString(produced.StandardError);
+            output.WriteLine(diagnostics);
+            Assert.True(produced.ExitCode == 0, diagnostics);
+            directory = Path.Combine(root, ".lake/build/lean-inspector/modules");
+        }
+        Assert.False(string.IsNullOrEmpty(directory), "Required native :report artifacts were not supplied.");
         var files = new Dictionary<string, LeanFileReport>();
         var sources = new Dictionary<string, RawRepositoryEntry>();
         RawRepositoryEntry Source(string path) => new(path,
             ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
         using var scratch = new TemporaryDirectory();
-        var module = sourcePath[..^5].Replace('/', '.');
         var artifacts = new[] { Path.Combine(directory!, module + ".zip"),
             Path.Combine(directory!, "Reg." + module + ".zip") };
         Assert.All(artifacts, artifact => Assert.True(File.Exists(artifact), artifact));
