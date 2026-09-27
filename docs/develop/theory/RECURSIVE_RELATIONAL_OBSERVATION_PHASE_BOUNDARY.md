@@ -90515,3 +90515,491 @@ $$
 定理282.1已把每份不可访问的独立相位计入实际来源，但把其分布参数和平均方向视为已标定。未知噪声强度、漂移、控制角误差、访问相位环境或新输入的联合预处理都需要另给合同。式（282.29）进一步说明：相同的单次边界读数不能取代共同参考的跨次关系；保留这份联合来源关系，才足以规定后续观察能够取得什么。
 
 ## 追加锚（本行以下为增补区）
+
+## 283. 有限共同相位块的最优重置副本预算与径向信息
+
+一个来源的相位只在连续若干份副本内保持共同值时，旧记录能够校准的方向也只有这一块的有效期。本节固定最小参考维数 $n=1$，将这一资源单独量化：每个块含 $B$ 个incoming positions，块内共同相位服从Haar分布，块间独立刷新；所有校准、未采用结果和为进入下一块而消耗的位置都计入副本数。
+
+在前述两个正交设置的经典选角reset合同中，$B=1$ 完全不能区分半径；对全部 $B\ge2$，最优完整块副本预算为
+$$
+\Theta\!\left(B+\frac1{B\delta^2}\right).
+$$
+纯边界处每块可取得的最优径向Fisher信息为 $\Theta(B^2)$。下界使用一个与合法reset完全等价的有限经典程序；上界使用真实记录校准和残角无偏的二阶统计量。二者都保留实际权限和完整块计费。
+
+### 283.1 来源、访问与完整块计费
+
+在固定输入 $Y$ 本征基中写
+$$
+\rho_{a,\phi}
+=\frac12\begin{pmatrix}1&a e^{-i\phi}\\a e^{i\phi}&1\end{pmatrix},
+\qquad 3/4\le a\le1.
+\tag{283.1}
+$$
+两假设的半径为
+$$
+a_0=1,\qquad a_1=1-\delta,\qquad0<\delta\le1/4.
+\tag{283.2}
+$$
+每个新块独立抽取 $\phi\sim\operatorname{Unif}[0,2\pi)$，条件于该相位提供 $B$ 份独立来源。块边界和 $B$ 已知。两假设先验均为 $1/2$；错误概率包括所有真实记录、协议随机性及各块的Haar相位。
+
+一次查询请求经典角度 $\theta$，沿用正交reset效果
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{283.3}
+$$
+每次保留实际记录 $(w,\eta)$，输入量子输出重置为共同固定纯态。$n=1$ 没有额外量子参考。约定 $e=\theta-\phi$，单次记录概率为
+$$
+\Pr_a(w,\eta\mid\phi,\theta)
+=\frac{1+\eta a h_w(e)}4,
+\qquad h_0(e)=\cos e,\quad h_1(e)=-\sin e.
+\tag{283.4}
+$$
+特别地，实际设置标签 $w$ 的概率恰为 $1/2$，与相位、半径和旧历史无关。
+
+协议可在每次查询前任意处理已有记录与旧辅助量子记忆，产生经典角度；reset后可任意处理输出，最终允许共同测量。新来源在reset之前不与旧记忆联合作用，也不接受该仪器之外的预处理。初始辅助资源与假设无关。若使用连续经典记录，采用§281的标准Borel、可分量子记忆、可测角度及共同正规CPTP合同。
+
+设协议最多使用 $K$ 个完整块，所有块位置均计费，总预算为
+$$
+N=BK.
+\tag{283.5}
+$$
+块内提前取得判决也须计入该完整块。具有确定最大块数的提前停止协议可补上忽略结果的块；只限制期望停止次数的合同不在此处。令 $N_{\rm opt}(B,\delta)$ 为平均错误不超过 $1/3$ 所需的最小确定最大预算。
+
+另外，固定一块策略及与 $a$ 无关的初始记忆，把全部最终经典读数的分布记为 $p_a$。定义它的纯边界径向Fisher信息
+$$
+I_{\mathsf P}(1)=\sum_h
+\frac{[\partial_a p_a(h)|_{a=1}]^2}{p_1(h)},
+\tag{283.6}
+$$
+连续读数采用相应积分，导数从合法半径内侧取得。对全部允许策略和最终读法取上确界，记为 $I_{\rm opt}(B;1)$。参数 $1-a$ 只改变得分符号，不改变Fisher信息。
+
+### 283.2 不可见极化给出的精确块模拟
+
+设
+$$
+z=\sqrt{1-a^2},
+\qquad
+|\psi_{z,\phi}\rangle
+=\sqrt{\frac{1+z}{2}}|+Y\rangle
++e^{i\phi}\sqrt{\frac{1-z}{2}}|-Y\rangle.
+\tag{283.7}
+$$
+其密度矩阵为
+$$
+|\psi_{z,\phi}\rangle\langle\psi_{z,\phi}|
+=\frac12\begin{pmatrix}1+z&a e^{-i\phi}\\a e^{i\phi}&1-z\end{pmatrix}.
+\tag{283.8}
+$$
+与（283.1）相比，它只增加了垂直于允许测量平面的 $Y$ 极化。每个允许效果在 $Y$ 本征基中有相同对角，所以（283.1）与（283.8）对任意经典角度产生完全相同的四记录概率；固定纯reset因子也相同。$z$ 的正负同样不可见。
+
+因此可以作如下证明用替换：在一个块内，将混态来源换成倾斜纯态的 $B$ 份乘积，保持同一个Haar相位，再以相等概率选择共同极化符号 $+z$ 或 $-z$。条件于相位及符号，新的每份输入仍独立。任意已发生记录之后，下一份合法reset的完整输出仍相同；由逐次复合，整块对任意旧量子记忆产生相同通道。
+
+这里的等价依赖当前访问合同，是操作等价，不是来源密度矩阵相等。替代的倾斜态及其后面的经典程序只承担证明，不作为协议可以免费取得的新资源。
+
+令 $|D_k\rangle$ 为 $B$ 个qubit中恰有 $k$ 个 $|+Y\rangle$ 的归一化Dicke向量。倾斜纯乘积在这些向量上的展开为
+$$
+|\psi_{z,\phi}\rangle^{\otimes B}
+=\sum_{k=0}^B
+\sqrt{\binom Bk}
+\left(\frac{1+z}{2}\right)^{k/2}
+\left(\frac{1-z}{2}\right)^{(B-k)/2}
+e^{i(B-k)\phi}|D_k\rangle.
+\tag{283.9}
+$$
+Haar相位积分使不同 $k$ 的交叉项消失。再平均极化符号，得到
+$$
+\widetilde\rho_{a,B}
+=\sum_{k=0}^Bp_z(k)|D_k\rangle\langle D_k|,
+$$
+$$
+\boxed{
+p_z(k)=\frac12\binom Bk
+\left[
+\left(\frac{1+z}{2}\right)^k\left(\frac{1-z}{2}\right)^{B-k}
++\left(\frac{1-z}{2}\right)^k\left(\frac{1+z}{2}\right)^{B-k}
+\right].
+}
+\tag{283.10}
+$$
+纯边界 $a=1,z=0$ 的权重是
+$$
+p_0(k)=2^{-B}\binom Bk.
+\tag{283.11}
+$$
+这是标准 $U(1)$ twirling 在当前有限乘积态上的直接展开，所需范围已由（283.9）给出。
+
+固定任意整块协议。把该协议作用于“旧记忆 $\tau$ 加上固定输入 $|D_k\rangle\langle D_k|$”所得的通道记为 $\Lambda_k(\tau)$。虽然这个证明用输入可以在块内纠缠，协议作为量子操作仍定义一个共同CPTP映射。它不随假设变化。因此实际整块通道准确具有经典程序表示
+$$
+\boxed{
+\Psi_0(\tau)=\sum_kp_0(k)\Lambda_k(\tau),
+\qquad
+\Psi_1(\tau)=\sum_kp_z(k)\Lambda_k(\tau).
+}
+\tag{283.12}
+$$
+新块相位及程序与旧记忆独立。这个表示保留任意旧量子记忆，既不要求两个假设下旧记忆相同，也不把实际输入权限扩大成原输入共同测量。
+
+### 283.3 对称二项程序的准确二阶亏损
+
+令
+$$
+L_z(k)=p_z(k)/p_0(k).
+$$
+在参考分布下取 $B$ 个独立公平符号 $s_i\in\{\pm1\}$，令 $k$ 为正号数量。二项似然比只依赖 $k$，并可写成
+$$
+L_z=\frac12\left[\prod_{i=1}^B(1+zs_i)+\prod_{i=1}^B(1-zs_i)\right].
+\tag{283.13}
+$$
+由符号独立及 $\mathbb Es_i=0$，
+$$
+\mathbb E_0L_z^2
+=\frac{(1+z^2)^B+(1-z^2)^B}{2}.
+$$
+所以精确的 $\chi^2$ 距离是
+$$
+\boxed{
+\chi^2(p_z\Vert p_0)
+=\sum_{j\ge1}\binom B{2j}z^{4j}.
+}
+\tag{283.14}
+$$
+只有不超过 $B$ 的项参与。用 $\binom B{2j}\le B^{2j}/(2j)!$ 得
+$$
+\chi^2(p_z\Vert p_0)\le\cosh(Bz^2)-1.
+\tag{283.15}
+$$
+当 $B\delta\le1$ 时，$z^2=2\delta-\delta^2\le2\delta$，故 $0\le u:=Bz^2\le2$。逐项比较幂级数给
+$$
+\cosh u-1\le\frac{u^2}{4}(\cosh2-1),
+\qquad\cosh2-1<3.
+$$
+从而
+$$
+\boxed{
+\chi^2(p_z\Vert p_0)\le3(B\delta)^2,
+\qquad B\delta\le1.
+}
+\tag{283.16}
+$$
+
+记根保真度为 $f_B=\sum_k\sqrt{p_0(k)p_z(k)}$。因为
+$$
+1-f_B=\tfrac12\mathbb E_0(\sqrt{L_z}-1)^2
+\le\tfrac12\mathbb E_0(L_z-1)^2,
+$$
+得到
+$$
+1-f_B^2\le\chi^2(p_z\Vert p_0).
+\tag{283.17}
+$$
+所有程序概率在当前参数范围严格为正，故 $f_B>0$。
+
+### 283.4 旧量子记忆与跨块自适应下界
+
+设两假设开始某块时的旧记忆分别为 $\tau_0,\tau_1$，允许它们完全不同。式（283.12）意味着存在同一个CPTP后处理，将
+$$
+\tau_b\otimes\sum_kp_b(k)|k\rangle\langle k|
+$$
+变成该块的完整输出。根保真度的张量乘法和共同通道数据处理因此给
+$$
+\boxed{
+F(\Psi_0(\tau_0),\Psi_1(\tau_1))
+\ge f_B F(\tau_0,\tau_1).
+}
+\tag{283.18}
+$$
+这也可由先保留 $k$ 标记、再使用各 $\Lambda_k$ 的单调性逐项求和得到。连续经典寄存器及可分记忆采用正规态同一性质，适用合同与§281一致。
+
+共同初始记忆的保真度为一。经过至多 $K$ 个完整块，反复使用（283.18），得到
+$$
+F_{\rm final}\ge f_B^K.
+\tag{283.19}
+$$
+各块可以根据旧记录改变策略；每块程序分布固定，故相同因子仍逐块适用。两假设的历史分布差异已包含在 $\tau_0,\tau_1$ 中，没有将它们合并为相同概率律。
+
+共同环境程序限制自适应可区分度是成熟机制。Wilde、Berta、Hirche、Kaur，*Amortized Channel Divergence for Asymptotic Quantum Channel Discrimination*，[arXiv:1808.01498v2](https://arxiv.org/abs/1808.01498v2)，式（239）—（245）及Proposition 33给共同程序和amortization上界；式（249）与Figure 4将整个自适应协议表示为环境程序态的后处理。其Definition 36另行规定环境可取得的条件，说明“能够用程序模拟”本身不保证协议能取得该程序。本节没有将 $p_z$ 当作可实际读取的数据；实际达到方案将在（283.27）以后独立构造。
+
+使用标准根保真度—迹距界，若 $B\delta\le1$，则
+$$
+d_{\rm final}^2\le1-f_B^{2K}
+\le K(1-f_B^2)\le3KB^2\delta^2.
+\tag{283.20}
+$$
+等先验错误不超过 $1/3$ 必须有 $d_{\rm final}\ge1/3$，所以
+$$
+N=BK\ge\frac1{27B\delta^2},\qquad B\delta\le1.
+\tag{283.21}
+$$
+完整块计费另给 $N\ge B$。在 $B\delta\le1$ 时，$B\le1/(B\delta^2)$；在 $B\delta\ge1$ 时，反向不等式成立。因此全部参数范围内
+$$
+\boxed{
+N_{\rm opt}(B,\delta)\ge
+\frac1{54}\left(B+\frac1{B\delta^2}\right).
+}
+\tag{283.22}
+$$
+这里 $B\delta\ge1$ 的下界来自确切预算规则，不从小扰动估计外推。
+
+所用判别与根保真度工具见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4及Theorem 3.33；一般正规态数据处理见 Berta、Furrer、Scholz，*The Smooth Entropy Formalism for von Neumann Algebras*，[arXiv:1107.5460v3](https://arxiv.org/abs/1107.5460v3)，式（16）—（17）、（24）—（26）。后文献采用平方保真度，本节记号取其平方根。这些标准工具只承担上述中间推导。
+
+### 283.5 同一程序给出的纯边界径向信息上界
+
+固定 $B$，展开（283.13），令 $S=\sum_i s_i=2k-B$，得到
+$$
+L_z(k)=1+\frac{S^2-B}{2}z^2+O(z^4).
+\tag{283.23}
+$$
+因为 $z^2=2\delta-\delta^2$，程序在 $\delta=0$ 处的得分恰为
+$$
+s(k)=S^2-B.
+\tag{283.24}
+$$
+$S$ 是 $B$ 个独立公平符号之和。展开二次和四次矩可得
+$$
+\mathbb ES^2=B,\qquad
+\mathbb ES^4=B+6\binom B2=3B^2-2B.
+$$
+所以程序的纯边界Fisher信息准确为
+$$
+\mathbb E(S^2-B)^2=2B(B-1).
+\tag{283.25}
+$$
+固定初始记忆与最终测量后，实际读数是有限程序的参数无关随机后处理。实际得分因此是程序得分在该读数下的条件期望，其方差不超过原方差。于是
+$$
+\boxed{I_{\rm opt}(B;1)\le2B(B-1).}
+\tag{283.26}
+$$
+这条界已经控制全部罕见历史，不能由某条后验特别尖锐的历史再推导更高的信息增长阶。下面实际方案将给匹配的 $B^2$ 下界。
+
+### 283.6 真实校准与按实际设置分组
+
+构造一个仅依赖允许记录的块统计量 $V_B$，目标是
+$$
+\mathbb E_aV_B=a^2,
+\qquad
+\operatorname{Var}_aV_B\le C_V
+\left(\frac{1-a}{B}+\frac1{B^2}\right),
+\qquad C_V:=30000.
+\tag{283.27}
+$$
+先设 $B\ge32$，取
+$$
+m=\lfloor B/2\rfloor,\qquad L=B-m.
+\tag{283.28}
+$$
+前 $m$ 次固定角度零，每份记录生成
+$$
+W_i=(2\eta_i{\bf1}_{w_i=0},2\eta_i{\bf1}_{w_i=1}).
+\tag{283.29}
+$$
+从（283.4）计算得
+$$
+\mathbb E_aW_i=a(\cos\phi,\sin\phi),\qquad\|W_i\|_2^2=4.
+$$
+以样本均值的方向估计 $\phi$；均值零时固定方向 $(1,0)$，角度采用固定可测代表。记估计为 $\widehat\phi$、残角为 $e=\widehat\phi-\phi$。独立样本均值方差及归一化不等式给
+$$
+\mathbb E_a\|\widehat v-au_\phi\|_2^2\le4/m,
+\qquad
+\|\widehat u-u_\phi\|_2\le2\|\widehat v-au_\phi\|_2/a,
+$$
+$$
+\mathbb E_a(1-\cos e)\le\frac8{a^2m},
+\qquad
+\boxed{\mathbb E_a\sin^2e\le\frac{16}{a^2m}<\frac{32}{m}.}
+\tag{283.30}
+$$
+该保证逐固定相位成立，因而也对Haar平均成立。校准不先区分两假设。
+
+后 $L$ 次全部请求实际角度 $\theta=\widehat\phi$。按真实设置标签分组：$k$ 次 $w=0$、$l=L-k$ 次 $w=1$。这些标签是独立公平币，与校准记录及相位无关。条件于校准和全部设置，两组内符号分别独立，其均值为
+$$
+\mu_0=a\cos e,\qquad\mu_1=-a\sin e.
+\tag{283.31}
+$$
+设
+$$
+G=\{k,l\ge L/4\},\qquad\kappa_L=\Pr(G).
+\tag{283.32}
+$$
+$\kappa_L$ 由已知公平二项分布准确计算，参数无关。标准Bernoulli尾界给
+$$
+1-\kappa_L\le2e^{-L/8},\qquad\kappa_L>1/2\quad(L\ge16).
+\tag{283.33}
+$$
+例如将设置编码为独立公平符号，使用 $\cosh t\le e^{t^2/2}$ 的矩母函数界，对其和超过 $L/2$ 的事件取指数Markov界，再对两端求和，即得（283.33）。
+
+### 283.7 对残角无偏的二阶统计量
+
+对一组 $k\ge2$ 个独立符号 $\eta_i\in\{\pm1\}$，定义标准二阶U统计量
+$$
+U_k=\frac{(\sum_i\eta_i)^2-k}{k(k-1)}
+=\frac1{\binom k2}\sum_{i<j}\eta_i\eta_j.
+\tag{283.34}
+$$
+若符号均值为 $\mu$，则
+$$
+\mathbb EU_k=\mu^2,
+\qquad
+\operatorname{Var}U_k
+=\frac{4\mu^2(1-\mu^2)}k
++\frac{2(1-\mu^2)^2}{k(k-1)}.
+\tag{283.35}
+$$
+为核对方差，写 $\eta_i=\mu+\xi_i$。一次项为 $2\mu k^{-1}\sum_i\xi_i$，二次项为 $\binom k2^{-1}\sum_{i<j}\xi_i\xi_j$；二者正交，不同二次配对除相同配对外协方差为零，分别给出（283.35）的两项。
+
+在 $G$ 上，用两个实际设置组分别计算 $U_k^{(0)}$、$U_l^{(1)}$，令
+$$
+T=U_k^{(0)}+U_l^{(1)},
+\qquad
+V_B=\frac{{\bf1}_G}{\kappa_L}T.
+\tag{283.36}
+$$
+$G$ 不成立时 $V_B=0$。这些位置全部仍计入 $B$，没有免费补样或未计费后选择。
+
+条件于校准及设置，由（283.31），
+$$
+\mathbb E[T\mid e,k,l]=\mu_0^2+\mu_1^2=a^2.
+\tag{283.37}
+$$
+所以（283.36）准确无偏：$\mathbb E_aV_B=a^2$。残角不进入均值，只影响方差；这一性质允许在不同相位块之间直接平均统计量。
+
+在 $G$ 上，$k,l\ge L/4\ge4$。两个设置组条件独立，由（283.35），
+$$
+\operatorname{Var}(T\mid e,k,l)
+\le\frac{16}{L}\sum_{j=0}^1\mu_j^2(1-\mu_j^2)
++\frac{128}{L^2}.
+\tag{283.38}
+$$
+令 $\epsilon=1-a$，有
+$$
+\sum_j\mu_j^2(1-\mu_j^2)
+=a^2(1-a^2)+2a^4\sin^2e\cos^2e
+\le2\epsilon+2\sin^2e.
+$$
+利用（283.30），平均条件方差因此不超过
+$$
+\frac{32\epsilon}{L}+\frac{1024}{mL}+\frac{128}{L^2}
+\le\frac{64\epsilon}{B}+\frac{6656}{B^2},
+\tag{283.39}
+$$
+最后一步使用 $m\ge B/3$、$L\ge B/2$。
+
+条件均值（283.37）恒为 $a^2$，故总方差只需另加好设置指示量的方差。由 $\kappa_L>1/2$，
+$$
+\operatorname{Var}_aV_B
+\le4\left(\frac{64\epsilon}{B}+\frac{6656}{B^2}\right)
++2\Pr(G^c).
+\tag{283.40}
+$$
+又 $2\Pr(G^c)\le4e^{-B/16}\le1024/B^2$：函数 $B^2e^{-B/16}$ 在 $B\ge32$ 的最大值取于32，而 $4096e^{-2}<1024$。因此
+$$
+\operatorname{Var}_aV_B
+\le\frac{256\epsilon}{B}+\frac{27648}{B^2}
+\le30000\left(\frac\epsilon B+\frac1{B^2}\right).
+\tag{283.41}
+$$
+这证明了大块情形的（283.27）。
+
+对 $2\le B<32$，只需固定前两次角度零，定义
+$$
+V_B=W_1\cdot W_2.
+\tag{283.42}
+$$
+条件于共同相位，两份来源独立，所以 $\mathbb E_aV_B=a^2$；又 $|V_B|\le4$，方差至多16。其余 $B-2$ 个位置完整消耗并忽略。因为 $16\cdot31^2<30000$，同一（283.27）仍成立。于是统计量覆盖所有 $B\ge2$。
+
+### 283.8 完整块判别达到界与信息下界
+
+独立执行上述块方案 $K$ 次，每块重新校准，不将上块相位带入下一块。两个假设下统计量的均值差为
+$$
+\Delta=1-(1-\delta)^2=2\delta-\delta^2\ge\delta.
+\tag{283.43}
+$$
+以两均值中点检验 $K$ 个统计量的平均。由（283.27），每个假设的错误概率均至多
+$$
+\frac{4C_V}{K\delta^2}
+\left(\frac\delta B+\frac1{B^2}\right).
+\tag{283.44}
+$$
+选取确定整数预算
+$$
+K=\max\left\{1,
+\left\lceil12C_V\left(\frac1{B\delta}+\frac1{B^2\delta^2}\right)\right\rceil\right\}.
+\tag{283.45}
+$$
+由Chebyshev界，两种错误都不超过 $1/3$。全部记录、校准及低设置计数事件均已计费，因此
+$$
+\boxed{
+N_{\rm opt}(B,\delta)
+\le B+360000\left(\delta^{-1}+\frac1{B\delta^2}\right).
+}
+\tag{283.46}
+$$
+
+同一个实际方案也给纯边界Fisher信息的达到阶。它的策略和 $V_B$ 不依赖未知半径，且 $\mathbb E_aV_B=a^2$。在 $a=1$，均值导数为二、方差至多 $30000/B^2$。得分均值为零及Cauchy–Schwarz给
+$$
+4=\left[\partial_a\mathbb E_aV_B\big|_{a=1}\right]^2
+\le\operatorname{Var}_1(V_B)I_{\mathsf P}(1).
+$$
+故
+$$
+\boxed{I_{\rm opt}(B;1)\ge4B^2/30000.}
+\tag{283.47}
+$$
+这里的Fisher界由实际无偏统计量推出；最优副本上界则由（283.44）直接给出，不用局部Fisher信息替代全参数判别证明。
+
+### 283.9 联合最优结论及权限反例
+
+**定理283.1（有限共同相位块的统一预算与径向信息）。** 在（283.1）—（283.6）的来源、访问及完整块合同内，$B=1$ 时两假设对所有协议不可区分。对全部 $B\ge2$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac1{54}\left(B+\frac1{B\delta^2}\right)
+\le N_{\rm opt}(B,\delta)
+\le B+360000\left(\delta^{-1}+\frac1{B\delta^2}\right).
+}
+\tag{283.48}
+$$
+因而比较常数独立于 $B,\delta$ 地有
+$$
+\boxed{
+N_{\rm opt}(B,\delta)
+\asymp B+\frac1{B\delta^2}
+\asymp B+\delta^{-1}+\frac1{B\delta^2}.
+}
+\tag{283.49}
+$$
+同一访问类的纯边界径向Fisher信息满足
+$$
+\boxed{
+\frac{4B^2}{30000}\le I_{\rm opt}(B;1)\le2B(B-1),
+\qquad B\ge2,
+}
+\tag{283.50}
+$$
+而 $I_{\rm opt}(1;1)=0$。
+
+**证明。** 当 $B=1$，对称程序（283.10）恒为 $(1/2,1/2)$，与 $a$ 无关；（283.12）表明每块实际通道也与半径无关，任意复合和后处理均无法区分。对 $B\ge2$，不可见极化替换给共同的经典程序模拟；（283.14）—（283.22）给任意旧量子记忆及跨块自适应的下界。真实校准与两设置二阶统计量由（283.27）—（283.46）给上界。两种预算表达等价，因为
+$$
+\delta^{-1}\le\tfrac12\left(B+\frac1{B\delta^2}\right).
+$$
+程序得分的准确二项方差（283.25）给Fisher信息上界，实际统计量的（283.47）给下界。$\square$
+
+固定 $B\ge2$ 后令 $\delta\downarrow0$，预算是 $\Theta_B(\delta^{-2})$。若 $B\delta$ 大，完整块合同强制至少计费一个 $B$ 长度块，预算变为 $\Theta(B)$。这个 $B$ 项是已声明的计费粒度；它不是没有钟合同就能宣称的不可避免物理历时，也不适用于免费跳过位置或只按实际使用前缀计费的其他规则。
+
+必须保留原输入权限边界。若允许对同相位的两份原qubit直接测量反对称投影，则
+$$
+\Pr_a(P_{\rm anti})
+=\frac{1-\operatorname{Tr}\rho_{a,\phi}^2}{2}
+=\frac{1-a^2}{4}.
+\tag{283.51}
+$$
+纯态时这个概率为零，$a=1-\delta$ 时为 $\delta/2-\delta^2/4$。因而在较强的共同输入访问类中，$B=2$ 也可用 $\Theta(\delta^{-1})$ 份来源完成判别，与当前固定块的 $\Theta_B(\delta^{-2})$ 不同。反对称投影不可从已经reset的经典记录恢复；（283.51）是权限改变的反例，不是本合同的方案。
+
+先估方向、再改变测量设置是成熟方法。Bagan、Ballester、Muñoz-Tapia、Romero-Isart，*Purity estimation with separable measurements*，[arXiv:quant-ph/0509087v2](https://arxiv.org/abs/quant-ph/0509087v2)，第3—4页给可分自适应纯度估计并明确处理近纯边界的非统一性；Zhang等，*Adaptive tomography of qubits: Purity versus statistical fluctuations*，[arXiv:1805.04808v1](https://arxiv.org/abs/1805.04808v1)，第3—4页及第9—10页说明对齐、稀少结果和实际混合噪声的区别。本节的完整块联合界由有限样本二项模拟与无偏统计量直接承担，没有把这些文献的Bayesian或渐近层析结论当作本合同的现成判别定理。
+
+这里新增的是同一来源、访问与计费合同中的联合结论。标准twirling、保真度数据处理、Bernoulli尾界和二阶U统计量都只作为中间工具。Haar相位、块间独立、已知边界、$n=1$、准确经典角度、reset前禁止新旧系统联合作用及确定完整块预算均为结论条件。改变相位先验或相关结构、增加量子参考、允许原输入共同操作、使用未知块边界或仅限制期望停止次数，需要另行分析。
+
+## 追加锚（本行以下为增补区）
