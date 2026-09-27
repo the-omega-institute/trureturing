@@ -3629,3 +3629,64 @@ Gavalakis–Kontoyiannis 和 Hu–Lu–Nualart 分别承担经典排序／编码
 本章先比较联合可观测量和中心一阶矩密度，再于最终参考使用条件 $C/Q$ 密度界；
 未在保留外部真实能量的中间通道虚报独立性。
 文献核对有版本和范围限制，不作为全球原创性证明。
+
+## 原文对照：第 93 章的代数根与傅里叶障碍
+
+[理论卷第 93 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+使用原 $Q_n=10^{e_n}$ 的素因子限制排除代数无理率根的多项式过渡带，
+并在根坐标中限制正有限均值复现集合所能承载的傅里叶衰减。
+两根同步的存在或不存在未被解决。
+
+**实际应用的子空间定理版本。** Boris Adamczewski、Yann Bugeaud，
+*On the complexity of algebraic numbers I. Expansions in integer bases*，
+Annals of Mathematics 165 (2007), 547–565，
+[DOI:10.4007/annals.2007.165.547](https://doi.org/10.4007/annals.2007.165.547)，
+[期刊原文](https://annals.math.princeton.edu/wp-content/uploads/annals-v165-n2-p04.pdf)。
+Section 4、印刷第 554–555 页给绝对值、向量范数和射影高度的完整归一化，
+Theorem E 给所用 $p$-进子空间定理，并归属于 Evertse。
+每个赋值处的形式须线性无关，系数允许是 $K$ 外的代数数，解仍在 $K^m$ 中。
+因此正文可取 $K=\mathbb Q$ 而在无穷处使用代数无理系数 $\xi$。
+本原整数对的高度是欧氏范数，有限赋值处范数为一；
+原分母约分后只有素因子 $2,5$，精确给出正文的受限分母下界。
+该一般逼近机制是经典定理的直接应用，不作新数论定理申报。
+原文自身的数字复杂度定理和正规性猜想没有承担本文前提。
+
+Jan-Hendrik Evertse，*An improvement of the quantitative Subspace theorem*，
+Compositio Mathematica 101(3) (1996), 225–311，
+[原文](https://www.numdam.org/item/CM_1996__101_3_225_0.pdf)。
+核对了前九个 PDF 页的标题、范围和允许 $K$ 外代数系数的说明。
+扫描公式未被现有文本提取完整恢复，故正文精确不等式采用上项已完整核对的
+Theorem E，不声称从缺失的扫描显示式中读出了它，也未审计长篇定量证明。
+
+D. Ridout 的历史原文 *Rational approximations to algebraic numbers*，
+Mathematika 4 (1957), 125–131，
+[DOI:10.1112/S0025579300001182](https://doi.org/10.1112/S0025579300001182)，
+及 *The p-adic generalization of the Thue-Siegel-Roth theorem*，
+Mathematika 5 (1958), 40–48，
+[DOI:10.1112/S0025579300001339](https://doi.org/10.1112/S0025579300001339)，
+提供成熟结果的历史归属。所查 Wiley 路径返回 403，Cambridge 的页面及所列 PDF
+返回访问页 HTML，未取得完整原定理；它们不是正文独立核验的承重来源。
+正文使用前述可访问且完整陈述的 Theorem E。
+
+**实际应用的傅里叶收敛结论。** Andrew Pollington、Sanju Velani、
+Agamemnon Zafeiropoulos、Evgeniy Zorin，
+*Inhomogeneous Diophantine Approximation on $M_0$-sets with restricted denominators*，
+[arXiv:1906.01151v1](https://arxiv.org/abs/1906.01151v1)，
+[原 TeX](https://arxiv.org/e-print/1906.01151v1)。
+原稿 Beyond lacunarity 节的 mainCONV 定理与 Lemma lem2 直接给正文使用的收敛侧：
+若整数倍分母处的傅里叶系数上确界可求和，而目标窗长度也可求和，
+则相应上极限集测度为零。此处不需稀疏性或目标函数单调性。
+原始有限 majorant 界及 Borel–Cantelli 证明均已核对。
+原另一个稀疏计数定理中的对数衰减指数 $A>2$ 不应套到本收敛侧：
+原 $\ln N_n$ 的增长使任何 $A>0$ 已足够求和。
+
+该文的发散／下计数结论针对固定标量、固定测度及其明确条件，
+不提供同一原层上随 $p,d$ 变化的精确对偶相位、单侧方向和剩余类共同命中的下界。
+本章只直接采用收敛结论，配合实际均值给出的必要根邻近窗。
+所得零傅里叶维数在根坐标中成立，不借非线性根映射冒领 $\beta$ 坐标的同一结论。
+
+**核对边界。** 最初的 Annals p06 定位返回 Granville–Soundararajan 的另一篇原文，
+标题核对后未采用；p04 才是本章使用的原文。
+有限的论文检索和版本核对不构成全球原创性认证。
+本章贡献是成熟工具在原实际模型中的定量对应，以及其对熵过渡项与可行研究路线的限制；
+不把测度工具换成新概率先验，不从数论下界推断可变分母的有效统一常数。
