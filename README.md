@@ -96,14 +96,14 @@ and limits of local observation.
 ## Three places to look
 
 **01 · Refute a conjecture.**
-For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
-Greathouse's conjectured formula for OEIS A175406 was
+For positive integers n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
+Greathouse conjectured for OEIS A175406 that
 `a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
 `777451915729368`, while the actual value is one less.
 The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
-establishes `result : ¬ claim` using certified bounds on logarithms.
-This refutes the literal universal formula; neither minimality of the witness
-nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
+uses certified logarithm bounds to refute the literal universal formula.
+What characterizes the inputs where it fails? Witness minimality and priority
+are not claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
 **02 · Find what observations cannot tell you.**
