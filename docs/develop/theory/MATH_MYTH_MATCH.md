@@ -11619,7 +11619,7 @@ $$
 
 这个建议为“不同表达都在指向”提供了一种正面解释：差异并非必定妨碍会通，某些差异能使读者不把任一表达当作对象本身。但柏格森同时要求读者自身作出努力，并断言所指直觉不能由这些图像替代。原典没有给出图像族的概率分布，也没有把注意汇合定义成 TV 中心。
 
-**假设 525.2（共同指引的两种数学问题）。** 若在比较模型中给定状态空间 $W$、读数族 $q_i:W\to V_i$，项目 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的 joint_faithfulness_tfae 说明，联合读数单射、能够区分每一对不同状态、各读数核的交恰为相等关系，是同一组条件的三种表达。此处的假设是确实已经给定同一个 $W$ 与各 $q_i$；跨传统同源性没有被该定理凭空提供。
+**假设 525.2（共同指引的两种数学问题）。** 若在比较模型中给定非空状态空间 $W$、读数族 $q_i:W\to V_i$，项目 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的 joint_faithfulness_tfae 说明，联合读数单射、能够区分每一对不同状态、各读数核的交恰为相等关系，是同一组条件的三种表达。此处的假设是确实已经给定同一个 $W$ 与各 $q_i$；跨传统同源性没有被该定理凭空提供。
 
 如果问题只要求回答一个目标 $a:W\to A$，则不必要求恢复整个 $W$。只要 $a$ 在联合读数的每个纤维上恒定，回答就可经联合读数分解，这是第 520 节所用的回答能力关系。因此共同指引可以有不同强度：足以帮助回答某个问题，强于各自读数，却仍未区分全部状态；或者确实联合区分全部被建模状态。声称哪一种，应由所需关系决定。
 
