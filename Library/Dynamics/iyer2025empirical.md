@@ -3838,8 +3838,8 @@ Nourdin、Peccati，*Stein's method and exact Berry–Esseen asymptotics for fun
 Annals of Probability 37(6), 2231–2261。
 原 PDF 第 11–13 页定理 3.1、命题 3.3 分别给标准化固定阈值 CDF 误差
 和附加矩条件下的一项 Edgeworth 结论。
-前者保留 Malliavin 可微性、绝对连续性、正且趋零的 Stein discrepancy 方差，
-以及相应标准化二元向量的 Gaussian 联合极限。
+前者保留 Malliavin 可微性、绝对连续性、有限、最终为正且趋零的 Stein discrepancy 的 $L^2$ 范数（原文 $\varphi(n)$，其平方为均方而非一般的中心方差），
+以及使用该 $\varphi(n)$ 标准化的二元向量的 Gaussian 联合极限。
 这些条件不直接提供增长的未缩放中心信息量所需的逐点带符号密度展开，
 也不自动把参考 Gaussian 结论传到噪声消失的实际离散后验。
 第 96 章的两次有限分部积分是经典 Gaussian 演算的应用；
