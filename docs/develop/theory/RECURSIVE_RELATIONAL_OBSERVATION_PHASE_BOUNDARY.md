@@ -116904,3 +116904,798 @@ B_T=D_J+g_\delta.
 [^high_order_common_tensor]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)。相关接口为式（27）—（29）、Corollary 16、Lemmas 19、24及 §5 的共同迭代和残差估计。Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115，[DOI](https://doi.org/10.1214/105051604000000549)，[arXiv:math/0309222v5](https://arxiv.org/abs/math/0309222v5)；Proposition 3、式（7）—（11）及 Lemma 4 提供兼容包络与超几何提升接口。两来源潜在流归纳、准确私采样及条件矩母函数分割分别见本卷第338.6、332.2、339.8节。
 
 ## 追加锚（本行以下为增补区）
+
+## 346. 高阶共同网格的成本、实际精度与价格
+
+第345节完成了非整数 \(\beta>2\) 的共同高阶张量构造。本节固定其中的参考数据、任务中心和批量常数，研究持续正地板、实际累计批量、准确首币包装及末层置零共同规定的程序类。
+
+在这个类中，参考临界预算由地板和刻画；固定参考预算下的有限精度任务费用为 \(\log(1/\epsilon)^a\) 阶，近临界逐阶族费用为 \(u^{-a}\) 阶，其中 \(a=\beta/2>1\)。每一份固定可求和地板都严格损失于后一逐阶族界。若改按同一次执行的 \((N_H+\lambda N_T)^a\) 计费，并允许地板随价格选择，则类内最优价格为 \(1+\lambda\log(1/\epsilon)\) 阶。
+
+这些必要界依赖下述实际程序合同，不是任意自适应实现的成本下界。
+
+### 346.1 固定程序类与费用量词
+
+固定非整数 \(\beta>2\)，记 \(a=\beta/2>1\)、\(r=\lfloor\beta\rfloor\)。采用第336节的公共参考扩域
+
+\[
+\underline c=3/5,\qquad x^\dagger=11/40,
+\tag{346.1}
+\]
+
+并固定第345节的一份参考构造、共同任务中心 \(S_m\)、起点 \(\tau\) 及全部充分常数。令
+
+\[
+n_k=Nb^k,\qquad d_k=n_k+r_\rho,\qquad D_k=m_k+r,
+\qquad
+c_\delta=N^a/4,
+\tag{346.2}
+\]
+
+其中 \(\rho>\beta\)、\(r_\rho=\lfloor\rho\rfloor\)，\(b,N,\tau,M\) 均固定。地板与实际任务批量满足
+
+\[
+\begin{gathered}
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_*,\\
+\delta_k=c_\delta n_k^{-a}\eta_k,\\
+Mn_k/\eta_k\le m_k\le L_bMn_k/\eta_k,\qquad
+m_k\in\{\tau b^j:j\ge0\},\\
+m_k\ge r,\qquad m_{k+1}\ge bm_k,
+\qquad L_b=5b/4 .
+\end{gathered}
+\tag{346.3}
+\]
+
+共同比界 \(R_*\) 选得足以包含第345.8节的逐阶地板族和全部有限平地板。第345节的抽象网格及有效安全网格都满足这些条件。
+
+相应数组固定为
+
+\[
+A_k=(1-\delta_k)c_{m_k}(\bar\ell_k),\qquad
+B_k=(1-\delta_k)c_{m_k}(\bar u_k)+\delta_k,
+\tag{346.4}
+\]
+
+并按第345.6节的乘积超几何方案执行：到达每一层时，实际累计取得 \(D_k\) 枚任务币和 \(d_k\) 枚参考币。
+
+记 \(\mathfrak G_J\) 为第 \(J\ge1\) 层后把未决核心币置零的程序类。每份程序均保留第345.9节固定、准确且未截断的首币门控：第一全局调用取得请求来源的真实 \(X\)，触发后运行新鲜双来源核心。有限地板只需定义到 \(J\)，不要求存在某个指定的无限延续。
+
+记 \(\mathfrak G_\infty\) 为同一数据和执行制度下的无限准确核心及其准确包装。第345节保证这些程序几乎必有限返回；这里允许它们的某些矩为无穷。
+
+对完整程序定义
+
+\[
+H_a(A)=\sup_{w,S}\mathbb E^{A,w,S}N_H^a,\qquad
+T_s(A)=\sup_{w,S}\mathbb E^{A,w,S}N_T^s,
+\]
+
+\[
+e(A)=\sup_{w,S}
+\operatorname{TV}(P^A_{w,S},P_{w,S}).
+\tag{346.5}
+\]
+
+\(w\) 遍历原合法世界，\(S\) 遍历两种请求。所有比较常数只依已固定的数据；除非明确写出，不依地板、截止、世界、价格或充分小的矩阶差 \(u\)。
+
+本类不包括另行截断门控、扰动系数表、改变末层回退或更换实际累计调用制度的程序。后面的有限代码近似只在另有扰动控制时继承上界。
+
+### 346.2 同一个实际尾及准确包装
+
+记原参考上下多项式为 \(L_k(x,q),U_k(x,q)\)，其差为 \(\Gamma_k(x,q)\)。全任务延拓在真实域保持这些函数。第345节已固定两个不同的标量逼近常数：
+
+\[
+\|S_m\bar L_k^q-\bar L_k^q\|_\infty\le C_Lm^{-a},\qquad
+\|S_m\bar\Gamma_k^q-\bar\Gamma_k^q\|_\infty
+\le C_{\mathrm{gap}}m^{-a}.
+\tag{346.6}
+\]
+
+同一次充分 \(M\) 的选择满足
+
+\[
+C_LM^{-a}\le c_\delta/4,\qquad
+C_{\mathrm{gap}}M^{-a}\le c_\delta/2.
+\]
+
+由于 \(a>1\)、\(\eta_k\le1\)，相应有
+
+\[
+C_Lm_k^{-a}\le\delta_k/4,\qquad
+C_{\mathrm{gap}}m_k^{-a}\le\delta_k/2.
+\tag{346.7}
+\]
+
+合法数组与实际执行给
+
+\[
+\begin{aligned}
+\mathcal L_k&=(1-\delta_k)S_{m_k}\bar L_k^q,\\
+G_k&=\delta_k+(1-\delta_k)S_{m_k}\bar\Gamma_k^q,\\
+\Pr(R_T>D_k)&=\Pr(R_H>d_k)=G_k,
+\end{aligned}
+\tag{346.8}
+\]
+
+其中 \(R_H,R_T\) 是同一次核心执行的真实调用数。有限截止时最后一式用于 \(k<J\)，无限程序用于全部 \(k\)。
+
+进一步有
+
+\[
+\delta_k/2\le G_k
+\le\delta_k+C_{\mathrm{gap}}m_k^{-a}+\Gamma_k(x,q),
+\qquad
+\sup_w\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C_{\rm loc}.
+\tag{346.9}
+\]
+
+局部和在同一世界求和后才取上确界。下界来自合法系数或标量误差吸收，不使用 \(S_m\) 保正。
+
+由实际批量增长，
+
+\[
+\frac{D_{k+1}}{D_k}\ge\lambda_T:=\frac{b+1}{2}>1,\qquad
+\frac{d_{k+1}}{d_k}\ge
+\lambda_H:=\frac{bN+r_\rho}{N+r_\rho}>1.
+\tag{346.10}
+\]
+
+核心精确尾和为
+
+\[
+\begin{aligned}
+\mathbb ER_T^s
+&=D_0^s+\sum_{k<J}(D_{k+1}^s-D_k^s)G_k,\\
+\mathbb ER_H^s
+&=d_0^s+\sum_{k<J}(d_{k+1}^s-d_k^s)G_k .
+\end{aligned}
+\tag{346.11}
+\]
+
+无限情形用单调收敛取无限和，允许值为无穷。
+
+设请求来源实际成功率为 \(z\)。准确首币门控给
+
+\[
+\Pr(\text{触发},X=0)=\Pr(\text{触发},X=1)=1/6,
+\qquad\Pr(\text{触发})=1/3.
+\tag{346.12}
+\]
+
+条件于完整门控记录，核心使用该世界的新鲜来源尾。因此对每个世界、请求及 \(s>0\)，
+
+\[
+\mathbb EN_T^s\ge\tfrac13\mathbb ER_T^s,\qquad
+\mathbb EN_H^s\ge\tfrac13\mathbb ER_H^s.
+\tag{346.13}
+\]
+
+门控长度不需要与触发事件独立。包装的附加来源费用有共同有限 \(a\) 矩，上界则用
+
+\[
+(x+y)^a\le2^{a-1}(x^a+y^a)
+\tag{346.14}
+\]
+
+及触发后的条件新鲜性加入，不使用低阶次可加性。
+
+### 346.3 参考预算判据与有限层任务下界
+
+**定理346.1（地板和与有限层成本）。** 存在共同 \(c,C>0\)，使每份 \(A^{[J]}\in\mathfrak G_J\) 满足
+
+\[
+\boxed{
+c\left(1+\sum_{k<J}\eta_k\right)
+\le H_a(A^{[J]})
+\le C\left(1+\sum_{k<J}\eta_k\right).}
+\tag{346.15}
+\]
+
+同型上下界对每一个世界、每一种请求的参考矩都成立。无限类满足
+
+\[
+\boxed{
+H_a(A)<\infty
+\quad\Longleftrightarrow\quad
+\sum_{k\ge0}\eta_k<\infty.}
+\tag{346.16}
+\]
+
+若地板和发散，则参考临界矩在每个世界、每种请求中都为无穷。
+
+有限程序的任务矩逐世界满足
+
+\[
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\left(\eta_0^{-a}+\sum_{k<J}\eta_k^{1-a}\right).}
+\tag{346.17}
+\]
+
+特别地，若 \(H_a(A^{[J]})\le K\)，则
+
+\[
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge cJ,\qquad
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\,J^a/K^{a-1}.}
+\tag{346.18}
+\]
+
+**证明。** 参考增量与 \(n_k^a\) 由共同正常数双向控制。式（346.9）的下界和参考尾和给
+\(c(1+\sum_{k<J}\eta_k)\)。上界的三个部分分别由
+
+\[
+\sum_{k<J}n_k^a\delta_k=c_\delta\sum_{k<J}\eta_k,\qquad
+\sum_{k<J}n_k^am_k^{-a}
+\le M^{-a}\sum_{k<J}\eta_k^a
+\le M^{-a}\sum_{k<J}\eta_k,
+\]
+
+以及同一世界的局部和控制。用式（346.13）、（346.14）加入固定包装，得到式（346.15）。无限和同理。有限截止后不再取来源币，所以参考费用的地板和只到 \(J-1\)，不额外计入 \(\eta_J\)。
+
+由式（346.10），
+
+\[
+D_{k+1}^a-D_k^a
+\ge(\lambda_T^a-1)D_k^a.
+\]
+
+将 \(D_k\ge Mn_k/\eta_k\) 和 \(G_k\ge\delta_k/2\) 代入任务尾和，再用式（346.13），每一项至少为 \(c\eta_k^{1-a}\)，初始项至少为 \(c\eta_0^{-a}\)。这证明式（346.17）。由于 \(\eta_k\le1\)，也得到 \(cJ\) 下界。
+
+参考预算给 \(\sum_{k<J}\eta_k\le CK\)。对 \(J\ge1\)，Hölder 不等式给
+
+\[
+\begin{aligned}
+J
+&=\sum_{k<J}\eta_k^{(a-1)/a}\eta_k^{-(a-1)/a}\\
+&\le
+\left(\sum_{k<J}\eta_k\right)^{(a-1)/a}
+\left(\sum_{k<J}\eta_k^{1-a}\right)^{1/a}.
+\end{aligned}
+\]
+
+因此 \(\sum_{k<J}\eta_k^{1-a}\ge J^a/(CK)^{a-1}\)，结合式（346.17）得结论。证毕。
+
+如果 \(K\) 小于固定包装及初始参考调用所需预算，可行类可以为空。式（346.18）是有可行程序时的必要界，不承诺每个正 \(K\) 都可达到。
+
+### 346.4 有符号中心的实际误差
+
+末层未决核心置零后，其成功率恰为 \(\mathcal L_J\)。在实际世界中记
+
+\[
+\Delta_J(w)=F_x(q)-\mathcal L_J(p,q),\qquad
+e_L(w)=S_{m_J}\bar L_J^q(p)-L_J(x,q).
+\]
+
+有精确分解
+
+\[
+\boxed{
+\Delta_J
+=(1-\delta_J)(F_x-L_J)+\delta_JF_x
+ -(1-\delta_J)e_L.}
+\tag{346.19}
+\]
+
+这里把地板乘到目标 \(F_x\) 上，没有把 \(S_m\) 当作正算子。
+
+原参考包络给 \(0\le F_x-L_J\le\Gamma_J\)，并有 \(0\le F_x\le1\)。由式（346.6）、（346.9）及 \(\eta_J\le1\)，
+
+\[
+|\Delta_J(w)|
+\le\Gamma_J(x,q)+\delta_J+C_Lm_J^{-a}
+\le Cn_J^{-a}.
+\tag{346.20}
+\]
+
+下面用实际正世界给匹配下界。令
+
+\[
+\Omega=\frac{15}{16}(2/\underline c)^\beta,\qquad
+\kappa_F=3/8,
+\qquad
+x_J=\frac{x^\dagger}{2}b^{-(J+1)/2}.
+\tag{346.21}
+\]
+
+取原合法子族 \(c=1,h=x_J\)，于是
+
+\[
+p_J=q_J=(1-x_J/C)/B.
+\tag{346.22}
+\]
+
+因 \(0<x_J<x^\dagger/2<1/4\)，这是严格正的合法世界，截平函数在该点为恒等。
+
+第330节的尺度分割满足
+
+\[
+z(x)=2\log_b(x^\dagger/x),\qquad
+v_i(x)>0\Longrightarrow |z(x)-i|<1.
+\]
+
+而 \(z(x_J)=J+1+2\log_b2>J+1\)，所以全部 \(i\le J\) 的已启动环权重为零。第332节式（332.8）的有限系数表达给逐参考系数恒等式
+
+\[
+\ell_{J,t}(x_J)=\frac{1-\Omega x_J^\beta}{2},\qquad
+u_{J,t}(x_J)=\frac{1+\Omega x_J^\beta}{2}.
+\tag{346.23}
+\]
+
+对参考率取二项平均后仍是同一式。在这个 \(c=1\) 世界，目标为
+
+\[
+F_{x_J}(q_J)=\frac12+\kappa_Fx_J^\beta,
+\]
+
+从而
+
+\[
+F_{x_J}(q_J)-L_J(x_J,q_J)=D_*n_J^{-a},
+\]
+
+\[
+D_*=
+\left(\kappa_F+\frac{\Omega}{2}\right)
+\left(\frac{N(x^\dagger)^2}{4b}\right)^a>0.
+\tag{346.24}
+\]
+
+常数不依截止或地板。将其代入式（346.19），利用
+\(\delta_J\le1/4\)、\(F_{x_J}(q_J)\ge1/2\) 和已固定的
+\(|e_L|\le\delta_J/4\)，得到
+
+\[
+\begin{aligned}
+\Delta_J(w_J)
+&\ge(1-\delta_J)D_*n_J^{-a}
++\delta_J/2-(1-\delta_J)\delta_J/4\\
+&\ge\tfrac34D_*n_J^{-a}+\delta_J/4\\
+&\ge\tfrac34D_*n_J^{-a}.
+\end{aligned}
+\tag{346.25}
+\]
+
+这个论证覆盖全部 \(0<\eta_J\le1\)。平滑误差由地板项吸收，不需要再使 \(C_LM^{-a}\) 小于 \(D_*\)，也不需按截止反向更改 \(M\)。未启动环恒等式只用于原参考系数；没有把“在这个世界取值为常数”误当作整个任务函数恒为常数。
+
+### 346.5 包装误差等式与固定参考预算的精度匹配
+
+核心成功率由 \(F_x(q)\) 变成 \(F_x(q)-\Delta_J(w)\) 后，准确首币包装的四格实际律减目标律为
+
+\[
+\begin{array}{c|rrrr}
+(X,Z)&(0,0)&(0,1)&(1,0)&(1,1)\\ \hline
+P^{A^{[J]}}-P&
+-\Delta_J/6&+\Delta_J/6&+\Delta_J/6&-\Delta_J/6 .
+\end{array}
+\tag{346.26}
+\]
+
+每个首币取值的触发质量均为 \(1/6\)，触发后的核心条件律因新鲜性不依门控记录。因此两个请求都满足精确等式
+
+\[
+\operatorname{TV}(P^{A^{[J]}}_{w,S},P_{w,S})
+=|\Delta_J(w)|/3.
+\tag{346.27}
+\]
+
+**定理346.2（实际最坏误差与参考尺度）。** 存在只依固定类数据的 \(0<c_e\le C_e<\infty\)，使全部 \(A^{[J]}\in\mathfrak G_J\) 满足
+
+\[
+\boxed{c_e n_J^{-a}\le e(A^{[J]})\le C_e n_J^{-a}.}
+\tag{346.28}
+\]
+
+可以取 \(c_e=D_*/4\)。
+
+**证明。** 上界由式（346.20）、（346.27）得到；在实际世界 \(w_J\) 上使用式（346.25）、（346.27）得到下界。证毕。
+
+所以若 \(e(A^{[J]})\le\epsilon\)，必有
+
+\[
+J\ge
+\frac{\log(1/\epsilon)+\log c_e-a\log N}{a\log b}.
+\tag{346.29}
+\]
+
+这是由真实输出误差得到的必要层数，不是从一个充分截止选择倒推。
+
+定义类内固定预算费用
+
+\[
+\mathcal F_{\mathfrak G}(\epsilon,K)
+=\inf\left\{
+T_a(A^{[J]}):
+J\ge1,\ A^{[J]}\in\mathfrak G_J,\
+e(A^{[J]})\le\epsilon,\ H_a(A^{[J]})\le K
+\right\},
+\tag{346.30}
+\]
+
+空集的下确界取 \(+\infty\)。式（346.18）、（346.29）给共同必要界
+
+\[
+\mathcal F_{\mathfrak G}(\epsilon,K)
+\ge
+\frac{c}{K^{a-1}}
+[\log(1/\epsilon)-C]_+^a,
+\tag{346.31}
+\]
+
+并另有不依 \(K\) 的线性对数下界。
+
+**推论346.3（共同充分预算下的类内精度阶）。** 存在固定充分 \(K_0,c,C,\epsilon_0>0\)，使每个固定 \(K\ge K_0\)、\(0<\epsilon<\epsilon_0\) 都有
+
+\[
+\frac{c}{K^{a-1}}[\log(1/\epsilon)]^a
+\le\mathcal F_{\mathfrak G}(\epsilon,K)
+\le C[\log(1/\epsilon)]^a.
+\tag{346.32}
+\]
+
+因此对每个固定 \(K\ge K_0\)，
+\(\mathcal F_{\mathfrak G}(\epsilon,K)\asymp_K[\log(1/\epsilon)]^a\)。
+
+**证明。** 下界由式（346.31）缩小固定 \(\epsilon_0\) 得到。上界取第345.10节的平地板
+\(\eta_k=1/(J+1)\)，在同一组常数下有共同参考预算 \(K_0\) 和任务矩 \(C(J+1)^a\)。选最小充分 \(J\) 使
+\(C_en_J^{-a}\le\epsilon\)，则 \(J+1=O(\log(1/\epsilon))\)，得到上界。证毕。
+
+同理，在固定层数 \(J\) 的类内，若预算允许上述共同平地板族，则最小任务临界费用对每个固定 \(K\ge K_0\) 为 \(J^a\) 阶；其必要界保留显式的 \(K^{1-a}\) 因子。这里不宣称上界对任意小 \(K\) 可达，也不宣称这些两侧界已经给出随 \(K\) 变化的最优常数。
+
+### 346.6 加权 Hölder 与近临界逐阶族匹配
+
+现在取 \(A\in\mathfrak G_\infty\)，令
+
+\[
+0<u<u_0,\qquad s=a-u,\qquad
+0<u_0\le\min\{(a-1)/2,1/2\}.
+\tag{346.33}
+\]
+
+于是 \(s\) 位于下端严格大于1的固定区间。共同任务增长使
+\(\lambda_T^s-1\) 有共同正下界。由式（346.3）、（346.9）、（346.11）、（346.13），对每个实际世界和请求，
+
+\[
+\mathbb EN_T^s
+\ge c\sum_{k\ge0}n_k^{-u}\eta_k^{1-s},
+\tag{346.34}
+\]
+
+其中 \(c>0\) 对这个矩阶区间共同。
+
+对任意有限索引集 \(I\)，Hölder 给
+
+\[
+\begin{aligned}
+\sum_{k\in I}n_k^{-u/s}
+&=\sum_{k\in I}
+(n_k^{-u}\eta_k^{1-s})^{1/s}\eta_k^{(s-1)/s}\\
+&\le
+\left(\sum_{k\in I}n_k^{-u}\eta_k^{1-s}\right)^{1/s}
+\left(\sum_{k\in I}\eta_k\right)^{(s-1)/s}.
+\end{aligned}
+\]
+
+因此
+
+\[
+\boxed{
+\sum_{k\in I}n_k^{-u}\eta_k^{1-s}
+\ge
+\frac{\left(\sum_{k\in I}n_k^{-u/s}\right)^s}
+{\left(\sum_{k\in I}\eta_k\right)^{s-1}}.}
+\tag{346.35}
+\]
+
+无限集用有限截段的单调极限处理。
+
+若 \(H_a(A)\le K\)，则参考下界给 \(\sum_k\eta_k\le CK\)。同时
+
+\[
+\sum_{k\ge0}n_k^{-u/s}
+=\frac{N^{-u/s}}{1-b^{-u/s}}\asymp u^{-1}
+\tag{346.36}
+\]
+
+于式（346.33）的范围共同成立。故
+
+\[
+T_{a-u}(A)\ge cK^{1-s}u^{-s}.
+\tag{346.37}
+\]
+
+对固定 \(K\)，由于 \(u^{-s}=u^{-a}u^u\) 且 \(u^u\to1\)，这给
+\(T_{a-u}(A)\ge c_Ku^{-a}\)。下界甚至在每一个固定世界和请求中成立，没有拼接不同世界的尾。
+
+定义
+
+\[
+\mathcal T_{\mathfrak G}(u,K)
+=\inf\{T_{a-u}(A):A\in\mathfrak G_\infty,\ H_a(A)\le K\}.
+\tag{346.38}
+\]
+
+**定理346.4（逐阶族的类内匹配）。** 可以共同选取充分 \(K_0\ge1\)、\(u_0>0\) 和固定 \(c,C>0\)，使每个固定 \(K\ge K_0\) 满足
+
+\[
+\boxed{
+cK^{1-a}u^{-a}\le
+\mathcal T_{\mathfrak G}(u,K)
+\le Cu^{-a}\qquad(0<u<u_0).}
+\tag{346.39}
+\]
+
+特别地，对每个固定充分预算，
+\(\mathcal T_{\mathfrak G}(u,K)\asymp_Ku^{-a}\)。
+
+**证明。** 式（346.37）中的共同常数吸收参考预算比较常数；对 \(K\ge1\)，
+\(K^{1-s}=K^{1-a+u}\ge K^{1-a}\)，而 \(u^u\) 在所取小区间有共同正下界，得到左侧。右侧由第345.8—345.9节的逐阶族给出，其共同参考预算至多某个固定 \(K_0\)。必要时取与推论346.3共同的较大 \(K_0\)，并缩小 \(u_0\)。证毕。
+
+这个下确界允许每个 \(u\) 选择不同程序。下一结论说明，一份固定地板不能以同一个常数对全部趋近临界的阶数达到这一界。
+
+### 346.7 一份固定可求和地板的严格损失
+
+**定理346.5（固定地板的近临界严格损失）。** 对每份固定
+\(A\in\mathfrak G_\infty\)，若 \(H_a(A)<\infty\)，则
+
+\[
+\boxed{\lim_{u\downarrow0}u^aT_{a-u}(A)=+\infty.}
+\tag{346.40}
+\]
+
+同一结论对每个固定世界、每种请求的
+\(u^a\mathbb E^{A,w,S}N_T^{a-u}\) 成立。矩允许取扩展实数值。
+
+**证明。** 参考判据给 \(\sum_k\eta_k<\infty\)。对固定整数 \(L\)，置
+
+\[
+\epsilon_L=\sum_{k\ge L}\eta_k>0,\qquad \epsilon_L\downarrow0.
+\]
+
+将式（346.35）只用于这个固定尾段，再用式（346.34），得到逐世界的下界
+
+\[
+\mathbb EN_T^{a-u}
+\ge c\,\epsilon_L^{1-s}
+n_L^{-u}(1-b^{-u/s})^{-s}.
+\tag{346.41}
+\]
+
+先固定 \(L\)，再令 \(u\downarrow0\)。有
+\(n_L^{-u}\to1\)、\(\epsilon_L^{1-s}\to\epsilon_L^{1-a}\)，并且
+
+\[
+u^a(1-b^{-u/s})^{-s}
+\longrightarrow(a/\log b)^a.
+\tag{346.42}
+\]
+
+最后一个极限使用
+\(1-b^{-u/s}\sim u\log b/s\) 和 \(u^{a-s}=u^u\to1\)。因此
+
+\[
+\liminf_{u\downarrow0}
+u^a\mathbb EN_T^{a-u}
+\ge c(a/\log b)^a\epsilon_L^{1-a}.
+\]
+
+这个不等式对每个固定 \(L\) 成立。再令 \(L\to\infty\)，因 \(a>1\)，右侧趋于无穷，得到结论。证明没有交换这两个极限，也没有把随 \(u\) 改变的地板放入固定程序。证毕。
+
+定理346.4与346.5的量词不同：共同参考预算下，逐阶选择的策略族达到 \(u^{-a}\) 阶；任何一份固定可求和地板都损失一个无界因子。本节不进一步分类该因子能够多慢增长。
+
+### 346.8 有限平地板的同世界价格上界
+
+取价格 \(0<\lambda\le1\)，定义同一次实际执行的费用
+
+\[
+\mathcal C_\lambda(A)
+=\sup_{w,S}\mathbb E^{A,w,S}(N_H+\lambda N_T)^a.
+\tag{346.43}
+\]
+
+此处没有额外约束参考预算；允许为当前价格选择地板。
+
+先令 \(\eta_k=t\in(0,1]\) 于 \(0\le k\le J\)。在每个世界中的精确尾和里，参考增量至多 \(Cn_k^a\)，任务增量至多
+\(Cn_k^at^{-a}\)，初始任务项至多 \(Ct^{-a}\)。由式（346.9），参考地板、平滑和局部项分别至多
+
+\[
+CJt,\qquad CJt^a,\qquad C.
+\]
+
+任务的三个相应项分别至多
+
+\[
+CJt^{1-a},\qquad CJ,\qquad
+Ct^{-a}\sum_{k<J}n_k^a\Gamma_k(x,q).
+\]
+
+因 \(t^a\le t\)、\(t^{1-a}\ge1\)，加入固定包装后得到同一世界、同一请求的共同界
+
+\[
+\mathbb EN_H^a\le C(1+Jt),\qquad
+\mathbb EN_T^a\le C(t^{-a}+Jt^{1-a}).
+\tag{346.44}
+\]
+
+局部项始终先在当前世界求和，再取共同上界。
+
+在这个同一执行中使用高阶凸性，
+
+\[
+\begin{aligned}
+\mathbb E(N_H+\lambda N_T)^a
+&\le2^{a-1}
+ \left(\mathbb EN_H^a+\lambda^a\mathbb EN_T^a\right)\\
+&\le C\left[
+1+Jt+\lambda^at^{-a}
++J\lambda^at^{1-a}\right].
+\end{aligned}
+\tag{346.45}
+\]
+
+取 \(t=\lambda\)，得到
+
+\[
+\boxed{
+\mathcal C_\lambda(A_{\mathrm{flat},\lambda}^{[J]})
+\le C(1+\lambda J).}
+\tag{346.46}
+\]
+
+其中初始任务批量的加权费用
+\(\lambda^at^{-a}=1\) 已计入，不能省去右侧的常数项。常数对全部 \(\lambda,J\) 共同。
+
+### 346.9 任意本类地板的同世界价格下界
+
+式（346.15）、（346.17）的两个来源下界本来就在每个同一世界、同一请求中成立。对 \(a>1\)，逐路径有
+
+\[
+(x+y)^a\ge x^a+y^a\qquad(x,y\ge0).
+\]
+
+因此任意 \(A^{[J]}\in\mathfrak G_J\) 均满足
+
+\[
+\mathbb E^{A^{[J]},w,S}(N_H+\lambda N_T)^a
+\ge
+c\left[
+1+\sum_{k<J}
+\left(\eta_k+\lambda^a\eta_k^{1-a}\right)
+\right].
+\tag{346.47}
+\]
+
+这里没有分别挑选参考矩与任务矩的最坏世界。准确包装也可以直接用触发概率 \(1/3\) 把核心的同世界加权下界传到完整计数。
+
+对任意 \(t>0\)，置 \(v=t/\lambda\)，则
+
+\[
+t+\lambda^at^{1-a}
+=\lambda(v+v^{1-a})\ge c_a\lambda,
+\]
+
+\[
+c_a=\inf_{v>0}(v+v^{1-a})
+=a(a-1)^{-(a-1)/a}>0.
+\tag{346.48}
+\]
+
+极小点为 \(v=(a-1)^{1/a}\)；限制到 \(0<t\le1\) 仍保留同一下界。将其逐项用于式（346.47），得到每个世界和请求中的
+
+\[
+\boxed{
+\mathbb E^{A^{[J]},w,S}(N_H+\lambda N_T)^a
+\ge c(1+\lambda J).}
+\tag{346.49}
+\]
+
+定义
+
+\[
+\Pi_J(\lambda)=\inf_{A\in\mathfrak G_J}\mathcal C_\lambda(A).
+\tag{346.50}
+\]
+
+**定理346.6（固定截止的类内价格）。** 对全部 \(J\ge1\)、\(0<\lambda\le1\)，存在共同 \(c,C>0\)，使
+
+\[
+\boxed{c(1+\lambda J)\le\Pi_J(\lambda)\le C(1+\lambda J).}
+\tag{346.51}
+\]
+
+**证明。** 下界由式（346.49）对世界和请求取上确界，再对同一类取下确界。上界由该类中合法的平地板 \(t=\lambda\) 及式（346.46）给出。证毕。
+
+程序允许随价格改变地板；没有声称一份固定地板同时达到所有价格的共同常数界。参考费用在这次平地板程序中可随 \(\lambda J\) 增长，因此它与固定参考预算的式（346.32）承担不同的优化问题。
+
+### 346.10 实际精度约束下的价格匹配
+
+定义
+
+\[
+\Pi_{\mathfrak G}(\lambda,\epsilon)
+=\inf\left\{
+\mathcal C_\lambda(A^{[J]}):
+J\ge1,\ A^{[J]}\in\mathfrak G_J,\ e(A^{[J]})\le\epsilon
+\right\}.
+\tag{346.52}
+\]
+
+**定理346.7（类内价格与实际精度）。** 存在固定
+\(c,C,\epsilon_*>0\)，使
+
+\[
+\boxed{
+c\bigl(1+\lambda\log(1/\epsilon)\bigr)
+\le\Pi_{\mathfrak G}(\lambda,\epsilon)
+\le C\bigl(1+\lambda\log(1/\epsilon)\bigr)}
+\tag{346.53}
+\]
+
+对全部 \(0<\lambda\le1\)、\(0<\epsilon<\epsilon_*\) 同时成立。
+
+**证明。** 由实际误差下界，任意可行程序的截止层满足式（346.29）。固定缩小 \(\epsilon_*\)，使其右侧至少为
+\(c_1\log(1/\epsilon)\)。将这一必要层数代入式（346.49），得到共同下界，精度阈值不依价格。
+
+反过来，取满足
+\(C_eN^{-a}b^{-aJ}\le\epsilon\) 的最小充分整数 \(J\ge1\)，则
+\(J\le C_2(1+\log(1/\epsilon))\)，且这一选择不依价格。再取平地板 \(t=\lambda\)。实际误差上界保证可行性，式（346.46）给
+
+\[
+\mathcal C_\lambda
+\le C(1+\lambda J)
+\le C'(1+\lambda\log(1/\epsilon)),
+\]
+
+其中使用了 \(\lambda\le1\) 和固定小精度范围。证毕。
+
+特别地，当 \(\lambda\log(1/\epsilon)\) 共同有界时，本类价格共同有界；当该乘积趋于无穷时，本类最优价格也趋于无穷。常数级费用已包含随 \(\lambda^{-1}\) 增大的初始任务批量的加权价格。
+
+这一定理没有给原合同中任意程序的匹配下界。其必要层数依赖准确包装和末层核心置零，其逐层费用依赖持续地板和实际累计批量。
+
+### 346.11 有效实现与下界的适用边界
+
+若 \(C,\beta\) 可计算，地板 \(\eta_k\) 具有统一可计算名字，并采用第345节式（345.25）的有效安全网格，则第345.11节的有限代码可以准确生成相应系数，保留准确首币包装、持续地板和累计批量，实现相应的本类策略。因此这些准确实现仍属于指定类，类内下界对其实际输出与计数原样成立。本类也允许没有可计算名字的地板，这里不把全部成员都认作有效程序。
+
+上界族也可以保持这一有效性。固定参考预算的有限平地板为有理数 \(1/(J+1)\)；近临界族可以逐目标选有理 \(v\in[u/2,u]\)。价格上界若 \(\lambda\) 没有可计算名字，可以逐价格选有理 \(t\in[\lambda/2,\lambda]\)，式（346.45）仍给共同
+\(C(1+\lambda J)\) 上界。代码不需要把不可计算的目标 \(u\) 或价格 \(\lambda\) 作为运行时 oracle。这些程序的核心层数有限时，准确门控仍可以有无界来源深度。
+
+对任意固定实参数，第345.12节的门控截断和有限树有理化另给有限来源深度的有效近似。这个操作只转授已经控制的上界。例如，对固定 \((\lambda,\epsilon)\)，先用本节平地板程序达到 \(\epsilon/2\) 精度；再控制近似程序 \(\widehat A\) 与原程序 \(A\) 的统一输出扰动，使
+
+\[
+\sup_{w,S}\operatorname{TV}(P^{\widehat A}_{w,S},P^A_{w,S})
+<\epsilon/2,
+\]
+
+\[
+\mathbb E^{w,S}\widehat N_H^a\le\mathbb E^{w,S}N_H^a+1,
+\qquad
+\mathbb E^{w,S}\widehat N_T^a\le\mathbb E^{w,S}N_T^a+1.
+\tag{346.54}
+\]
+
+门控截断逐路径不增加来源数；有限来源上限之后，逐行有理化的轨迹总变差可选得足够小，分别以两个来源上限的 \(a\) 次幂控制矩扰动。因此这些条件确可按第345.12节同时实现。
+
+用同一个近似程序的两矩和高阶凸性，式（346.44）及
+\(t=\lambda\) 或 \(t\asymp\lambda\) 给
+
+\[
+\sup_{w,S}
+\mathbb E^{\widehat A,w,S}
+(\widehat N_H+\lambda\widehat N_T)^a
+\le C(1+\lambda\log(1/\epsilon)).
+\tag{346.55}
+\]
+
+同样，固定参考预算的有限精度上界可按任意小的矩容差转授。
+
+但截断或有理化后的程序未必保留式（346.8）的原共同尾、持续地板、准确包装或末层回退。因此不能由概率接近或费用上界，把本节的类内必要界转授给任意有限代码类。要对修改后的程序主张下界，须从其真实输出与计数另行证明。
+
+### 346.12 结论范围与来源
+
+本节在固定高阶共同网格类内得到：参考预算与地板和的充要关系；固定参考预算下的有限层 \(J^a\) 必要费；实际最坏误差与 \(n_J^{-a}\) 的双向比较；共同充分预算下的有限精度和近临界逐阶族匹配；一份固定可求和地板的严格损失；以及同世界加权价格与层数、实际精度的匹配。
+
+实际误差下界使用第330、332节的未启动环恒等式，并用第345节分别固定的 \(C_L,C_{\mathrm{gap}}\) 控制有符号中心；没有使用其保正性。费用下界使用同一执行的离散尾和、准确包装触发质量与 Hölder 不等式。上界由第345节共同构造中的平地板和逐阶地板给出。既有 HNP 与 Nacu–Peres 接口、来源及适用条件沿用第344—345节。
+
+所有结论是上述程序类中的纸面数学与有效实现结论，不认领任意策略的同阶下界、执行时间矩、Lean 核验或经文献核定的原创性。
+
+## 追加锚（本行以下为增补区）
