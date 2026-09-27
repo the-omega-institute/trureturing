@@ -49931,3 +49931,507 @@ Dytso、Poor 与 Shamai 的 Gaussian 条件均值导数定理要求正定 Gaussi
 尚缺的是式 (167.16) 在原数据律下的联合概率估计，或能容忍式 (167.32) 的指数小几何尺度、同时支付离散条件原子和共同归一化代价的全频率估计。大公因数条件只处理 $J=0$ 且带明确参数不等式；它不能替代 $J\ne0$ 分支。当前结果既不证明 $\mathbb P(B_{165})\to0$，也不证明其反面，且不是原后验结论的反例。
 
 ## 追加锚（本行以下为增补区）
+
+## 168. 原层级上的联合截距与剩余类判据
+
+本章采用有理切线寻找同一原层级中具有有限正均值的两个完整得分组。构造同时约束切线截距与该截距整数确定的合法剩余类，给出二者在同一实现上的联合充分条件，把可用辅助分母范围扩大到 $\sqrt Q\le d\le Q$。另一个逆向结论将所有薄条命中表示为带显式三阶误差的抛物残差，并保留较小分母的可能性。
+
+判据回到同一个原尺度格，保留完整组、原取整和精确 Gamma 修正，给出两种原实验共同的有限均值带。固定解析抛物线的反例表明，仅保留截距条件无法保证这条构造路线成功；它不是原同步集合 $E_2$ 的反例。原 Gamma 曲线能否沿一条无限后继链满足联合条件仍未解决。
+
+### 168.1 同层同步问题与原模型
+
+The question is whether there are **one** $\beta\in D=(\beta_*,1)$, **one** finite $H$, and infinitely many of the original layers $Q=Q_n$ with a positive-root complete group and a negative-root complete group whose actual means both lie in $[e^{-H},e^H]$. The same $\beta,Q,M,q$ and count floors must be used on both sides. The pair and path experiments must each be returned to separately.
+
+Here and below all logarithms are natural; at layer $Q=Q_n$ write $P=P_n$. The original constants and history are
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q_n=10^{e_n},\quad
+P_n=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad
+\frac{\ln(1+r)}{-\ln(1-r)}=\vartheta,
+$$
+
+$$
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\ln(1+r)+b\ln(1-r),\quad \lambda=Q^3,\quad N=Q^2,
+$$
+
+$$
+k_0=\lfloor aQ^3\rfloor,\quad l_0=Q^3-k_0,\quad
+z_0=k_0\ln(1+r)+l_0\ln(1-r),
+$$
+
+$$
+L_0(\beta)=\left\lfloor\frac{\phi Q^3}{\beta\ln2}\right\rfloor,\quad
+M=2^{L_0(\beta)},\quad q=\lfloor Me^{-z_0}\rfloor,\quad
+\epsilon=\frac{rq}{M-q},\quad T=2MQ^3.
+$$
+
+Write $J_c(y)=y\ln(y/c)-y+c$, with $0\ln0=0$, and
+
+$$
+I(x)=J_a(a+x)+J_b(b+\vartheta x),\qquad
+F(x)=\frac\phi{\phi+I(x)}.
+$$
+
+The negative endpoint is $u_-=-b/\vartheta$, $I(u_*)=I(u_-)$ with $u_*>0$, and $\beta_*=\phi/(\phi+I(u_-))>1/2$. On $0<u<u_*$, the negative root $v=\Psi(u)$ is determined by $I(v)=I(u)$. The original complete score group at line index $j$ contains the count pair
+
+$$
+(k_j,l_j)=(k_0+Qj,l_0+Pj).
+$$
+
+Its mean is denoted $\mu^{\mathcal E}_{Q,j}(\beta)$, $\mathcal E\in\{\mathrm{pair},\mathrm{path}\}$. It includes every count pair having that score, including any remote collision. No truncation is made in this definition.
+
+The original scale cell is
+
+$$
+C_{Q,L}=\left(\frac{\phi Q^3}{(L+1)\ln2},
+                  \frac{\phi Q^3}{L\ln2}\right]. \tag{168.1}
+$$
+
+On this entire half-open cell, $M,q,\epsilon,T$, the full score groups, and both actual means are constant. Its width on a compact subinterval of $D$ is comparable to $Q^{-3}$. The auxiliary integers $p,d,m$ used below do **not** replace $N$, $Q$, $L$, or any model parameter.
+
+### 168.2 精确曲线、Gamma 修正与完整组均值
+
+Fix a compact positive-root interval $K\Subset(0,u_*)$, and a slightly larger compact interval $K^+\Subset(0,u_*)$. All constants below may depend on these fixed intervals and the unchanged amplitude, but never on $Q,p,d,m$, or a shrinking parent interval.
+
+The exact reference coefficient and its real extension are
+
+$$
+f_{Q,j}=e^{-Q^3}\frac{(aQ^3)^{k_0+Qj}(bQ^3)^{l_0+Pj}}
+{(k_0+Qj)!(l_0+Pj)!},\qquad \chi_{Q,j}=2e^{-z_0}f_{Q,j},
+$$
+
+$$
+\ell_Q(x)=\ln2-z_0-Q^3+(k_0+Qx)\ln(aQ^3)+(l_0+Px)\ln(bQ^3)
+-\ln\Gamma(k_0+Qx+1)-\ln\Gamma(l_0+Px+1). \tag{168.2}
+$$
+
+Thus $\ell_Q(j)=\ln\chi_{Q,j}$. Let $G_Q$ be the negative branch satisfying
+
+$$
+\ell_Q(G_Q(x))=\ell_Q(x).
+$$
+
+Chapters 81.2 and 83.4 give, on fixed enlarged internal arcs,
+
+$$
+g_Q(u):=N^{-1}G_Q(Nu)
+=\Psi(u)+Q^{-3}R_Q(u)+O_K(Q^{-6}) \quad\hbox{in }C^3, \tag{168.3}
+$$
+
+$$
+0<c\le Q^2G_Q''(x)\le C_2,\qquad
+|G_Q'''(x)|\le C_3Q^{-4}. \tag{168.4}
+$$
+
+The $C^3$ assertion comes from the differentiated Binet remainder and implicit equation in (83.13), not by differentiating an uncontrolled pointwise asymptotic. The original count floor remains in $R_Q$. The corresponding negative arc has
+
+$$
+c_\ell Q\le |\ell_Q'(y)|\le\Lambda Q. \tag{168.5}
+$$
+
+For completeness, strict curvature follows from $I''>0,I'''<0$. For $B(x)=I'(x)^2-2I(x)I''(x)$, one has $B(0)=0$ and $B'=-2II'''>0$ away from zero. Comparing equal-rate positive and negative roots and differentiating $I(\Psi(u))=I(u)$ gives $\Psi''>0$; $\Psi'(0)=-1$ and the endpoint derivative give $-1<\Psi'<0$. The same argument applies to $-\ell_Q$, whose second derivative is positive and third derivative negative by the polygamma series. Compactness and (168.3) give (168.4)–(168.5).
+
+Here is the actual-mean bridge, including its scope:
+
+$$
+\mu^{\mathcal E}_{Q,j}(\beta)
+=2^{L_0(\beta)}\chi_{Q,j}(1+o_K(1))+O_K(M^{-10}). \tag{168.6}
+$$
+
+It is uniform on the fixed internal arcs and compact parameter range for both actual experiments. In particular it is a relative comparison on any fixed positive finite proxy band. The underlying estimate is
+
+$$
+|\mu^{\mathcal E}_{Q,j}-m_j|\le C_KQ^9M^{-1}m_j+C_KM^{-10},
+\quad m_j=qf_{Q,j}+(M-q)f^0_{Q,j}.
+$$
+
+This is not an independence assumption. In the original proof, the path's marked-row PGF is an exact finite matrix power; its isolated leading eigenvalue is $1+A_z+O(M^{-2})$. Cauchy coefficient extraction at the Poisson saddle radii gives relative point errors $O(\lambda^{k+1}/M)$ for $k=1,2$ marked rows. The real positive marks $z_+=z_-=2$ give exponential count tails. Taking a sufficiently large fixed count cutoff bounds the sum of **all** remote full-group contributions by $CM^{-10}$. On the isolated original count line, $f_{Q,j}/f^0_{Q,j}=e^{W_j}$, $W_j-z_0=o(1)$, and $q/(Me^{-z_0})=1+o(1)$. These yield $m_j/(Me^{-z_0}f_{Q,j})=2+o(1)$, proving (168.6). The kernel, score, and count-line isolation are those of original 17.2, 39.1–39.2, and spectral 68.22–68.23, 72.5–72.8, 74.2. The complete-group tail is retained even if scores collide outside the cutoff.
+
+To keep the displacement explicit, write
+
+$$
+\Delta_Q=k_0-aQ^3,\quad \eta=\ln\frac{1+r}{1-r},\quad
+\rho_Q(\beta)=\left\{\frac{\phi Q^3}{\beta\ln2}\right\},
+$$
+
+$$
+A_Q(x)=-\ln(2\pi)-\tfrac12\ln[(a+x)(b+\vartheta x)]
++\Delta_Q\left[\ln\frac{b+\vartheta x}{b}-\ln\frac{a+x}{a}\right],
+$$
+
+$$
+C_Q(x;\beta)=(1-\rho_Q(\beta))\ln2-\Delta_Q\eta+A_Q(x).
+$$
+
+The correction in (168.3) is explicitly
+$\displaystyle R_Q(u)=\{A_Q(\Psi(u))-A_Q(u)\}/I'(\Psi(u))$;
+it and its needed derivatives are uniformly bounded on the fixed arcs.
+
+Uniformly on a fixed positive finite actual-mean band, at either simple root $x$,
+
+$$
+\ln\mu^{\mathcal E}_{Q,j}
+=-QI'(x)(j-Nx)-3\ln Q+C_Q(x;\beta)+o(1),
+$$
+
+$$
+j-Nx=-\frac{3\ln Q}{QI'(x)}+O(Q^{-1}). \tag{168.7}
+$$
+
+The shift is negative at the positive root and positive at the negative root. Both equations use the same $\rho_Q$ and $\Delta_Q$. All subsequent certificates return through (168.6) and hence retain (168.7).
+
+### 168.3 薄条命中的抛物残差表示及其逆向
+
+For a reduced rational $s=p/d$ in the fixed interior slope range, let $t=t_{Q,s}$ be the unique solution of $G_Q'(t)=s$. Define
+
+$$
+h(x)=G_Q(x)-sx,\qquad \kappa=Q^2G_Q''(t).
+$$
+
+For an integer $m$, let $r_{p,d,m}\in\{0,\ldots,d-1\}$ be the unique residue satisfying
+
+$$
+pr_{p,d,m}+m\equiv0\pmod d. \tag{168.8}
+$$
+
+For $j\equiv r_{p,d,m}\pmod d$, put $k=(pj+m)/d\in\mathbb Z$ and define the signed residual
+
+$$
+\mathcal D_Q(p,d,m,j)
+=\frac Qd\{m-dh(t)\}-\frac{\kappa}{2Q}(j-t)^2. \tag{168.9}
+$$
+
+**定理 168.1 (uniform parabolic residual, with a converse).** At all sufficiently large original layers, for fixed $B<\infty$, whenever $1\le d\le Q$, $t/N\in K$, and $|j-t|\le BQ/d$,
+
+$$
+\left|Q\{k-G_Q(j)\}-\mathcal D_Q(p,d,m,j)\right|
+\le\frac{C_3B^3}{6d^3}. \tag{168.10}
+$$
+
+Consequently $|\mathcal D_Q|\le A$, with fixed $A,B$, implies
+
+$$
+|k-G_Q(j)|\le\frac{A+C_3B^3/6}{Q}. \tag{168.11}
+$$
+
+Conversely, every pair of integers with $j/N\in K$ and
+
+$$
+|k-G_Q(j)|\le V/Q \tag{168.12}
+$$
+
+admits such a representation on $K^+$, with a reduced $p/d$, $1\le d\le Q$,
+
+$$
+|j-t|\le\frac{Q}{cd},\qquad
+|\mathcal D_Q|\le V+\frac{C_3}{6c^3d^3}. \tag{168.13}
+$$
+
+In this representation the intercept also satisfies the signed bound
+
+$$
+-\frac{Vd}{Q}\le m-dh(t)
+\le\frac{Vd}{Q}+\frac{C_2}{2c^2d}. \tag{168.14}
+$$
+
+**Proof.** Since $h'(t)=0$, Taylor's theorem with its integral or Lagrange remainder gives
+
+$$
+h(j)=h(t)+\frac{\kappa}{2Q^2}(j-t)^2+R,
+\qquad |R|\le\frac{C_3}{6Q^4}|j-t|^3.
+$$
+
+The identity $k-G_Q(j)=m/d-h(j)$ now proves (168.10). Equation (168.11) follows directly. The full cubic error is paid; it is bounded even for small $d$, and tends to zero if $d\to\infty$.
+
+For the converse apply the elementary Dirichlet pigeonhole argument to $\alpha=G_Q'(j)$: among $0,\alpha,\ldots,Q\alpha$ modulo one two lie in one of $Q$ equal intervals. Their difference, followed by reduction of the fraction, gives coprime $p,d$ with
+
+$$
+1\le d\le Q,\qquad |\alpha-p/d|\le\frac1{dQ}.
+$$
+
+On a fixed enlarged slope interval this rational has an exact tangent point for every sufficiently large $Q$. The lower curvature bound gives
+
+$$
+|j-t|\le\frac{Q^2}{c}|G_Q'(j)-G_Q'(t)|\le\frac{Q}{cd}.
+$$
+
+Set $m=dk-pj$. This is an integer and automatically gives the **same** legal residue (168.8). Apply (168.10) with $B=1/c$ to get (168.13). Finally
+
+$$
+m-dh(t)=d\{k-G_Q(j)\}+d\{h(j)-h(t)\},
+\quad 0\le h(j)-h(t)\le\frac{C_2}{2Q^2}(j-t)^2,
+$$
+
+which proves (168.14). All integration segments stay in the fixed enlargement because their normalized lengths are $O(1/Q)$. ∎
+
+This is a geometric representation of thin-strip hits. It does not yet identify their scale cell with a prescribed fixed parameter. For a hit already coming from $\beta$, its original $L_0(\beta)$ must still be kept. Replacing that integer with a convenient nearest integer would generally change the parameter cell.
+
+Equation (168.14) restricts $m$ to a uniformly bounded number of consecutive integers for each reduced $p/d$. The allowed $j$'s then lie in one residue class in an interval of length $2Q/(cd)$. The intercept and the residue are functions of the same $p,d,m$, not independent choices.
+
+### 168.4 大切线分母下的联合截距与剩余类条件
+
+**定理 168.2 (joint intercept and residue box).** Fix finite $A,B>0$. Suppose at an original layer $Q$ there are coprime $p,d$ and an integer $m$ with
+
+$$
+\sqrt Q\le d\le Q,\quad t_{Q,p/d}/N\in K,
+$$
+
+$$
+|m-dh(t)|\le A\frac dQ,\qquad
+\operatorname{dist}\bigl(t,r_{p,d,m}+d\mathbb Z\bigr)\le B\frac Qd. \tag{168.15}
+$$
+
+Choose a nearest legal $j$ in that residue class and put $k=(pj+m)/d$. Then
+
+$$
+|k-G_Q(j)|\le\frac{E}{Q},\qquad E=A+\frac{C_2B^2}{2}. \tag{168.16}
+$$
+
+Let $L$ be a nearest integer to $-\ell_Q(j)/\ln2$. There is one constant
+
+$$
+H=\tfrac12\ln2+\Lambda E+1<\infty \tag{168.17}
+$$
+
+such that, at every sufficiently large original $Q$ satisfying (168.15), the entire cell $C_{Q,L}$ has
+
+$$
+e^{-H}\le\mu^{\mathcal E}_{Q,j}(\beta),\mu^{\mathcal E}_{Q,k}(\beta)\le e^H
+\quad(\beta\in C_{Q,L},\ \mathcal E=\mathrm{pair},\mathrm{path}). \tag{168.18}
+$$
+
+Both are original complete groups. Uniformly on that whole cell,
+
+$$
+\left|\beta-F(t/N)\right|
+\le C_K\left(\frac B{Qd}+\frac{\ln Q}{Q^3}\right). \tag{168.19}
+$$
+
+**Proof.** Direct integration of $h''\le C_2/Q^2$ gives
+
+$$
+|k-G_Q(j)|\le\frac{|m-dh(t)|}{d}
++\frac{C_2(j-t)^2}{2Q^2}
+\le\frac AQ+\frac{C_2B^2}{2d^2}\le\frac EQ.
+$$
+
+This proof needs no truncation of the curve. The integer $k$ is legal because of (168.8), and it is on the fixed negative arc for large $Q$. By the exact equal-coefficient equation and (168.5),
+
+$$
+|\ell_Q(k)-\ell_Q(j)|\le\Lambda E.
+$$
+
+Nearest-integer selection of the **single** $L$ gives
+
+$$
+|L\ln2+\ell_Q(j)|\le\tfrac12\ln2,
+\quad |L\ln2+\ell_Q(k)|\le\tfrac12\ln2+\Lambda E.
+$$
+
+Both proxy means therefore lie in one fixed positive band. Apply (168.6) separately to pair and path. At large $Q$ their logarithmic relative errors are less than one, proving (168.17)–(168.18). Their ratio to the same proxy tends to one, so subsequent joint limiting means agree between experiments; no coupling or equality of the finite data laws is asserted.
+
+The complete count pairs have positive coordinates of order $Q^3$, are in the fixed proof cutoff, and lie strictly in the original score window by the original isolation argument. The tail bound in (168.6) includes the rest of their complete groups. Thus the proof has not substituted a truncated group.
+
+The Stirling expansion with the original count floor is
+
+$$
+\ell_Q(j)=-Q^3[\phi+I(j/N)]-3\ln Q+
+\ln2-\Delta_Q\eta+A_Q(j/N)+O_K(Q^{-3}).
+$$
+
+Combining the bounded nearest-integer error with the full half-open cell (168.1) yields the stronger signed location formula
+
+$$
+\beta=F(j/N)-\frac{3F(j/N)^2}{\phi}\frac{\ln Q}{Q^3}
++O_K(Q^{-3}). \tag{168.20}
+$$
+
+Since $|j/N-t/N|\le B/(Qd)$, the bounded derivative of $F$ gives (168.19). This proves the claim with all floors unchanged. ∎
+
+The new range is $\sqrt Q\le d\le Q$. Chapter 83 instead rounded a crossing to within $d/2$, leaving the cost $d^2/Q$. Here the cost remains finite by requiring the **actual** legal residue to come within $BQ/d$ of the exact tangent point. At $d\asymp Q$ both unnormalized tolerances in (168.15) are constant. The intercept condition becomes easy, but the legal-residue condition becomes stringent.
+
+For each rational slope in this range, the first condition in (168.15) allows at most $\lfloor2A\rfloor+1$ integers $m$. For each $m$, the second allows at most $\lfloor2B\rfloor+1$ indices $j$, because $d^2\ge Q$. These are finite coupled tests, not two separately optimized bounds. There is no multiplication of hypothetical marginal hit probabilities.
+
+定理 168.1 also gives an exhaustive local alternative: every thin-strip hit has a Dirichlet tangent with $d<\sqrt Q$, or it has a certificate of the form (168.15), with $A=V+C_2/(2c^2)$, $B=1/c$. Thus the larger-denominator criterion is not an arbitrary added family unrelated to existing hits. The low-denominator branch is still present and is not ruled out.
+
+The Gamma correction is essential even in the new range. Define $u_s$ by
+$\Psi'(u_s)=s$ and $\mathcal L(s)=\Psi(u_s)-su_s$. Equation (83.12), including the stationary-point cancellation proved there, gives
+
+$$
+dh(t)=Nd\mathcal L(p/d)+\frac dQ R_Q(u_s)+O_K(d/Q^4).
+$$
+
+For $d\asymp Q$, the second term is of constant order, just like the permitted intercept window. Replacing $h(t)$ by the limiting intercept can change which integer $m$ is selected and hence change the legal residue. The criteria above use the exact $h,t$.
+
+### 168.5 条件后继构造与坏逼近斜率的分母限制
+
+Here is a sufficient hypothesis expressed entirely in the exact arithmetic data of 定理 168.2. Fix a nonempty open interval $I_0\Subset D$ whose positive-root range lies in the interior of $K$. Fix the same finite $A,B$ once and for all.
+
+**Joint recurrence hypothesis.** For every nonempty open interval $J\Subset I_0$ with rational endpoints, and every layer lower bound $n_0$, there are an original layer $n>n_0$ and a single triple $p,d,m$ satisfying (168.15), with $F(t_{Q_n,p/d}/Q_n^2)$ in the middle third of $J$.
+
+**定理 168.3 (conditional descendants).** The joint recurrence hypothesis implies the existence of a fixed $\beta\in I_0$ and a strictly increasing sequence of original layer indices $n_s$, on which both actual complete-group means, separately for pair and path, lie in the one band (168.18) with the one finite $H$ in (168.17). A common subsequence has a positive finite limiting mean pair, identical for the two experiments.
+
+**Proof.** Choose a rational closed interval $I_1$ of positive length inside $I_0$. Inductively, suppose a rational closed interval $I_s$ of positive length has been chosen. Choose a rational open interval $J_s$ whose closure lies in its interior. The constants in (168.19) are uniform on the original fixed $K$; they do not depend on $J_s$. Because $d\ge\sqrt Q$, the right side of (168.19) tends uniformly to zero as the original layer tends to infinity. Apply the hypothesis with a layer lower bound large enough that this right side is smaller than one sixth of the length of $J_s$, large enough for 定理 168.2, and larger than the previously chosen layer index. The resulting entire common cell $C_{Q_{n_s},L_s}$ is contained in $J_s$.
+
+Choose a rational closed interval $I_{s+1}$ of positive length inside the interior of that cell, with diameter at most $2^{-s}$. The intervals are nested compact intervals with diameters tending to zero; their intersection consists of one $\beta\in I_1\Subset I_0$. At layer $n_s$, this very same $\beta$ lies in the selected original cell, so (168.18) applies with its original floors and both original groups. The vector of its two pair means belongs to the compact square $[e^{-H},e^H]^2$. Extract a convergent subsequence in that square. Equation (168.6) says each path mean divided by its corresponding pair mean tends to one along this subsequence, since both compare relatively to the same proxy. Thus the path has the same limiting pair. ∎
+
+The hypothesis is **not proved** for the original Gamma curve. Its quantifiers cannot be supplied by the per-parent bound of Chapter 83, whose $H$ grows as the parent shrinks. Nor can separate intercept hits, separate residue hits, or hits at a denominator somewhere in a block establish it. It asks for the same $Q,p,d,m,t$ to satisfy both conditions. One successful nested branch would suffice; the all-interval recurrence hypothesis is stronger and is not asserted to characterize all of $E_2$.
+
+This conditional conclusion is existential. No synchronized computable $\beta$ has been constructed. An effective selection procedure would require effective production of sufficiently late joint certificates with certified margins, together with effective cell inclusion. Nothing proved here guarantees that such a search terminates. Merely knowing that the original constants are computable does not settle that obligation.
+
+There is also a useful converse restriction showing when the new denominator range is forced. First, for a fixed $\beta$ whose two actual means lie in a fixed band, (168.6) implies
+
+$$
+|\ell_Q(k)-\ell_Q(j)|\le 2H+o(1).
+$$
+
+Both indices are on their internal root arcs by (168.7). The lower derivative bound in (168.5), applied between $k$ and $G_Q(j)$, therefore gives
+
+$$
+|k-G_Q(j)|\le \frac{2H+1}{c_\ell Q} \tag{168.21}
+$$
+
+for all sufficiently large layers of that subsequence. This connects the converse of 定理 168.1 to the actual original means. In this application the prescribed $L_0(\beta)$ is retained throughout.
+
+**推论 168.4 (badly approximable limiting slope forces large auxiliary denominators).** Suppose a fixed $\beta\in E_2$ has positive root $u$, and its limiting tangent slope $s_0=\Psi'(u)$ satisfies
+
+$$
+\left|s_0-\frac pd\right|\ge\frac{\gamma}{d^2}
+\quad\hbox{for all rational }p/d,\qquad \gamma>0. \tag{168.22}
+$$
+
+Then every sufficiently late hit in any fixed-band synchronization subsequence has a Dirichlet representation from 定理 168.1 with
+
+$$
+\frac{\gamma Q}{2}\le d\le Q,\qquad
+|j-t|=O(1),\qquad |m-dh(t)|=O(1). \tag{168.23}
+$$
+
+In particular it falls in the range of 定理 168.2 with fixed constants, although its actual scale remains the original $L_0(\beta)$.
+
+**Proof.** Equations (168.3) and (168.7) give
+
+$$
+G_Q'(j)=g_Q'(j/N)
+=\Psi'(u)+O(\ln Q/Q^3).
+$$
+
+Use the rational furnished by 定理 168.1 and (168.21). Combining its Dirichlet estimate with (168.22) yields
+
+$$
+\gamma
+\le \frac dQ+O\!\left(\frac{d^2\ln Q}{Q^3}\right)
+\le \frac dQ+O(\ln Q/Q).
+$$
+
+The final error tends to zero, so $d\ge\gamma Q/2$ eventually. The displacement bound (168.13) now gives $|j-t|=O(1)$, and (168.14) gives the bounded intercept. Since $d\asymp Q$, eventually $d\ge\sqrt Q$, and the constants following (168.20) give (168.15). ∎
+
+This is conditional on the arithmetic property of the **slope**. No implication from transcendence of either root to (168.22) is claimed. The corollary neither supplies a synchronized parameter nor excludes one; it shows that the new joint-residue regime captures every hypothetical synchronized hit with such a slope.
+
+### 168.6 固定曲线中截距充分性的反例
+
+The following countermodel tests a proposed generic inference, not the original amplitude. It keeps the original values of $Q_n$ and $N=Q_n^2$. It shows that even a fixed analytic strictly convex curve and uniformly good intercepts do not allow the residue condition in (168.15) to be inferred.
+
+Consider the single fixed curve
+
+$$
+\Psi_0(u)=\frac12(u-1)^2-\frac12u,
+\qquad \frac34\le u\le\frac54,
+\qquad G_Q^0(x)=N\Psi_0(x/N).
+$$
+
+It has $\Psi_0''=1$ and $\Psi_0'\in[-3/4,-1/4]$. For every sufficiently late original $Q=10^{e_n}$, put
+
+$$
+d=Q-1,\qquad p=-\frac{d-1}{2},\qquad
+s=\frac pd=-\frac12+\frac1{2d}.
+$$
+
+Here $d$ is odd, $2p=1-d$, and hence $(p,d)=1$, with inverse $2$ modulo $d$. Its exact tangent point and intercept are
+
+$$
+t=N\left(1+\frac1{2d}\right),\qquad
+h(x)=G_Q^0(x)-sx,\qquad
+dh(t)=-\frac N2-\frac N{8d}. \tag{168.24}
+$$
+
+**命题 168.5 (intercept-good, residue-bad at every late layer).** Fix any finite $A\ge1$. At every sufficiently late original layer there is an integer $m$ satisfying
+
+$$
+|m-dh(t)|\le A d/Q. \tag{168.25}
+$$
+
+Nevertheless, for every integer $m$ satisfying (168.25) and every legal integer pair
+$pj+m=dk$ with $j/N\in[3/4,5/4]$, one has
+
+$$
+Q\,|G_Q^0(j)-k|\longrightarrow\infty
+$$
+
+uniformly over those choices as the original layer tends to infinity. In particular no fixed thin-strip constant is obtained from this family of intercept-good tangents.
+
+**Proof.** Set $b_0=Q/8\in\mathbb Z$; all sufficiently late original layers have $8\mid Q$. Since $d=8b_0-1$,
+
+$$
+\frac N{8d}=b_0+\frac18+\frac1{8d}.
+$$
+
+Thus the integer $m_0=-N/2-b_0$ satisfies
+
+$$
+m_0-dh(t)=\frac18+\frac1{8d}, \tag{168.26}
+$$
+
+which is less than $A d/Q$ for large $Q$. Any other integer satisfying (168.25) is $m=m_0+v$ with $|v|\le A+1$.
+
+The legal residue is $r_m\equiv-2m\pmod d$. Because $N/2\equiv Q/2=4b_0\pmod d$, one obtains
+
+$$
+r_{m_0}\equiv10b_0\equiv2b_0+1=\frac Q4+1\pmod d.
+$$
+
+A representative of the tangent point modulo $d$, in $[0,d)$ for large $Q$, is
+
+$$
+t\bmod d=\frac d2+2+\frac1{2d}
+=\frac Q2+\frac32+\frac1{2d}.
+$$
+
+For $m=m_0+v$, the legal residue is shifted by $-2v$. Before that bounded shift, the shorter circular distance modulo $d$ is $Q/4+1/2+1/(2d)$ for sufficiently large $Q$; the other distance is asymptotic to $3Q/4$. The distance function to a residue lattice is 1-Lipschitz under translation, so for a constant $C_A$ depending only on $A$,
+
+$$
+|j-t|\ge \operatorname{dist}(t,r_m+d\mathbb Z)
+\ge Q/4-C_A \tag{168.27}
+$$
+
+for every legal $j$. Finally the parabola gives an exact identity, with no asymptotic Taylor error:
+
+$$
+Q\{G_Q^0(j)-k\}
+=\frac{(j-t)^2}{2Q}-\frac Qd\{m-dh(t)\}
+\ge\frac{(Q/4-C_A)^2}{2Q}-A
+=\frac Q{32}-O_A(1).
+$$
+
+This tends to infinity and proves the assertion. ∎
+
+The proposition does **not** say this parabola has no lattice hits. Indeed,
+
+$$
+G_Q^0(2Qz)=2z^2-3Qz+Q^2/2\in\mathbb Z
+\quad(z\in\mathbb Z).
+$$
+
+For large $Q$ many such $z$ have $2z/Q\in[3/4,5/4]$. Thus even the same curve can have exact hits while every intercept in the specified near-tangent family fails. This sharply locates the invalid inference: separately having a good intercept and the ability to choose a rational tangent does not produce a legal nearby horizontal index. Nothing in this example modifies or refutes the original $E_2$ problem.
+
+### 168.7 来源与尚缺的实现条件
+
+Taylor 余项、Dirichlet 抽屉原理、模算术和紧性是经典工具。这里新增的组合是同一原层级上精确切线、截距整数与合法剩余类的联合判据，以及它对完整组实际均值的返回。条件后继论证只说明联合重现一旦成立便可得到固定参数；尚未证明该重现，也未证明 $E_2$ 为空。
+
+第 83 章的 Gamma 截距修正在 $d\asymp Q$ 时为常数量级，足以改变所选整数及其剩余类，因此不能以极限曲线替代。本章的逆向表示保留 $d<\sqrt Q$ 分支；较大分母的充分条件失败也不能排除全部命中。
+
+已核对的分母区间覆盖、曲线格点上界、自由平面坐标缩靶、代数排除与 Fourier 收敛工具，各有不同的量词与尺度。它们均未给出当前精确 Gamma 族在原指定层级上的联合下命中；具体来源与限制见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。本章是普通数学推导，未作 Lean 认证；有限文献核对不构成全球原创性认证。
+
+## 追加锚（本行以下为增补区）

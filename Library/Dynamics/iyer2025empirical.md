@@ -5998,3 +5998,32 @@ Alex Dytso、H. Vincent Poor、Shlomo Shamai (Shitz)，*A General Derivative Ide
 László Györfi、Peter Harremoës、Gábor Tusnády，*Some Refinements of Large Deviation Tail Probabilities*，[arXiv:1205.1005v1](https://arxiv.org/abs/1205.1005v1)，[原 TeX](https://arxiv.org/e-print/1205.1005v1)。所核对 `gyorfi1205v1.tex` 为 19,664 字节，SHA256 `c0c8d218195c3aea5ec0e4529440b0f5467425f55f86fb7c7e7057ecd450c46b`。固定 iid 基准律在零附近有有限矩母函数，倾斜均值位于内部；归一化配分函数和精确散度身份继续用于理解第 163 章已证明的稀有总数率。原文的一维尾估计不提供本章所需的共同计数／校准模整数律，不能替代原取整点下界或共同向量条件律。
 
 第 165 章核对的 Beresnevich 解析非退化性及原始子格下界仍保留其范围。当前指数退化进一步说明，固定几何的多项式非退化常数不能直接迁移到该共同数组的响应。经典有限指数族、交换配对和行列式工具的归属不变；原补偿尺度、共同平面约束及含原选择代价的响应上界是本卷的具体综合推导。有限来源核对不构成全球原创性认证。
+
+## 谱边界第 168 章补充：联合切线截距与剩余类
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 168 章以精确 Gamma 曲线建立同层联合截距／剩余类判据，给出任意薄条命中的切线表示、较大辅助分母的充分条件及固定曲线的截距单独失效反例。Taylor、Dirichlet 抽屉原理、模算术与紧性属经典工具；当前原模型的联合实现仍未证明。
+
+Beresnevich、Vaughan、Velani，*Inhomogeneous Diophantine approximation on planar curves*，[arXiv:0903.2817v1](https://arxiv.org/abs/0903.2817v1)。核对原 TeX 的计数定义、标签 thm6 的覆盖定理及几何数论／Taylor 证明。分母在 $R<q\le2R$ 中变化；常数满足 $C_1=3c_2/(c_1c_0^8)$、$c_0<1/6$、$k_1^3>c_2C_1^2$，并要求 $\delta\ge k_1/R$。对曲率随 $N$ 增长的移动对偶曲线 $N\mathcal L$，这些常数尚无所需一致性；原定理也没有指定 $N$ 或联合原始剩余类的下命中。原证明末尾 Taylor 行的固定因子差异不用于本章任何数值常数。
+
+Li、Li、Wu，[arXiv:2409.18635v1](https://arxiv.org/abs/2409.18635v1)。核对定义、维数定理、Cartesian 乘积下构造及 lacunary 情形证明。其自由平面坐标或附 gcd 条件的同标量限制，不是带原两侧有符号位移的 $(u,\Psi(u))$；误差乘积小不能推出两项同时小。其引用的矩阵环面缩靶预印本未取得可用原文，未作为本章依据。
+
+Guo，[arXiv:1010.4923v2](https://arxiv.org/abs/1010.4923v2)。核对 Remark 6.5(1) 及第 6 节的频率分解、格陪集估计。非零曲率下固定方向的 $O(t^{19/29})$ 误差界支持第 86 章凸壳上界，不提供本章所需的薄条下命中。
+
+Howard、Trifonov，*Bounding the number of lattice points near a convex curve*，[arXiv:2207.09532v1](https://arxiv.org/abs/2207.09532v1)，2023 年发表版 DOI [10.7169/facm/2087](https://doi.org/10.7169/facm/2087)。核对近曲线定理、thm:near_open 及三角面积／非共线证明。假设包含
+
+$$
+\delta<\frac{d_\Lambda^2}{2\{R_2+d_\Lambda+\sqrt{(R_2+d_\Lambda)^2-d_\Lambda^2}\}},
+\qquad A_\Lambda/2-\mathscr L\delta-\tfrac32\delta^2>0.
+$$
+
+结论为上计数。固定内弧经 $N$ 放大时，$R_1,R_2,\mathscr L\asymp N$；整数格上的第一条件要求厚度 $O(N^{-1})$，小于当前的 $N^{-1/2}$。缩短弧只改变长度项，不能消去曲率半径条件，因此该结果不解决原尺度下的存在问题。
+
+Adamczewski、Bugeaud，*On the complexity of algebraic numbers I. Expansions in integer bases*，Annals of Mathematics 165 (2007), 547–565，[发表版 PDF](https://annals.math.princeton.edu/wp-content/uploads/annals-v165-n2-p04.pdf)。核对第 4 节绝对值规范及 554–555 页 Theorem E：允许基域外的代数线性形式系数，结论仍为有限个真基域子空间。这支持第 93、99 章采用的表述；原文归属 Evertse 的深层定理证明未另行核验，第 168 章的新判据不依赖该代数排除。
+
+Pollington、Velani、Zafeiropoulos、Zorin，*Inhomogeneous Diophantine Approximation on M_0-sets with restricted denominators*，[arXiv:1906.01151v1](https://arxiv.org/abs/1906.01151v1)。核对收敛定理 mainCONV、Lemma 2 lem2、Fourier 上包络及 Borel–Cantelli 证明，关键估计为
+
+$$
+\mu(E_q^\gamma)\le3\psi(q)+3\sup_{k\ge1}|\widehat\mu(kq)|.
+$$
+
+在原稀疏根分母上，正的对数 Fourier 衰减使根重现宽度的上包络可求和；这是根坐标中的边界，不是参数坐标中的断言，也不推出 $E_2$ 为空。上述文献范围与本章初等联合判据的证明依赖区分保留；无全局检索完整性或原创性声明。
