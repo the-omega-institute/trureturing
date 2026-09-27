@@ -5680,3 +5680,17 @@ A. Fernandez、E. A. Spence、A. S. Fokas，*Uniform asymptotics as a stationary
 该文指出，换元后的振幅依赖大参数和端点参数时，需要逐模型证明一致误差。本章的两个位置按局部尺度仍相隔发散，且积分为正的数组依赖剖面，因此不导入该 Fresnel 定理或一般化的无条件误差保证。本章直接证明前因子导数和共同尾界。原 PDF 424,462 字节，SHA256 `b688475265e9ad344276baa0f86f9feea101596627710173e0e91f0c7c92f3af`；arXiv 页眉标 2018-01-02，标题页标 2021-06-13，原因未验证。抽取文本对驻点符号的叙述存在歧义，未据此建立数学前提；后续完整证明与全阶结果未作为已核验输入。
 
 端点 Laplace、内部 Gaussian 主项、两个正贡献相加及 logistic 正规化属于经典方法。第 146 章的模型内内容是保留有限经验／噪声项的竞争坐标，以及同一实现上的导数、尾部、逐区域计数比较和完整选择修正。Temme 关于固定振幅的假设不自动覆盖当前变化剖面；Siripraparat–Neammanee 的总方差局部界与 Arratia–Goldstein–Langholz 的条件乘积表示仍按第 143 章的精确范围使用。有限文献核对不证明全局原创性，不把静态共存律称作动力学相变。
+
+## 谱边界第 147 章补充：揭示总数后的条件核与稀有池放大
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 147 章在原始 pair/path 实验、固定参数和完整选择计数后验下，给出每条确定序列 $Q^{3/2}\le R=o(Q^2)$、$\rho\asymp e^{-R}$ 的加权方差熵极限。它先依据各池总数选池，再揭示隐藏拆分；有限分割与条件乘积积分证明所选核精确保留。试验池数满足 $\log m=o(Q)$，算术投影的 $CQ^{-5/2}$ 误差只支付一次，分离宽度 $L=10(R+\sqrt{Q^3\log Q})+20\log Q$ 支付下端点拆分尾部。
+
+Qingwei Liu、Aihua Xia，*On moderate deviations in Poisson approximation*，[arXiv:1906.10016v2](https://arxiv.org/abs/1906.10016v2)。原始 TeX 的 main-results 部分要求 LD2 局部依赖及相应条件原子界，或指定 size-bias 耦合；结论是移位整数变量的相对 Poisson 右尾界，包含明确 Stein 因子、均值／方差调整及左尾余项。size-bias 定理及其证明、独立 Poisson-binomial 专门化均已核对。这些一维右尾结论不提供不同池的联合关系，不能逐池应用后相乘替代原始多项分布。第 147 章通过逐槽类别耦合单独证明有界事件的联合全变差界，并用精确率函数的 Taylor 积分不等式与 Stirling 下界处理增长偏移，未假定中等偏差渐近的高阶余项消失。
+
+该版本原始归档 192,213 字节，SHA256 `64974443e8aeef6f12657d7bf2ba0d11b2bb0f30ecc40e2edaba5b24983999eb`；所核对 TeX 71,512 字节，SHA256 `b0ad6ae79ca03bfd78d97f42eeed4fc4e3a66636a11713a6b913ad55b0ce71a7`。本文不借用文中的数值图例或未迁移的相对尾近似。
+
+Renan Gross，*Noise sensitivity from fractional query algorithms and the axis-aligned Laplacian*，[arXiv:2201.10350v1](https://arxiv.org/abs/2201.10350v1)。原文把分数查询写成乘积输入上的适应过程；除坐标鞅外，还要求每个坐标子集的乘积是鞅，停止时刻适应于已揭示信息。均匀布尔输入上的 revealment 定理控制固定 Fourier 层权重；其完整陈述与证明已核对。该条件结构启发“先选盒子、后开盒子”的描述，但真正迁移到原计数模型的是 (147.9)–(147.10) 的精确条件核，原文没有给出本模型的后验相位随机性或超窄带宽结论。
+
+原始归档 476,635 字节，SHA256 `97504ef766713ea797a8652756c631ea9ff0c77afcb23e830da845b5fb7a4b5d`；主 TeX 101,043 字节，SHA256 `a2357a001103efc408bb013a7ca65fffed6064733474c7695b5c7c5a3441a732`。该版本轴向更新显示式把增量前状态误写为新时刻状态；插值平方展开把交叉项写成负号，而该项在所取期望下为零。这里保留这两个源文边界，不使用它们作为已验证恒等式。
+
+经典条件分布、Poisson 近似、Stirling 与 Gauss／Poisson 求和不列作新理论。本章新增的模型内组合是总数可测的稀有池选择、无池数放大的隐藏拆分控制、原始相对行律给出的 $\lfloor Q\sqrt R\rfloor$ 占据块，以及同一数组上两阶实温度标记、有符号惊异矩、非线性条件均值平方、完整选择律与全部输出的回接。原有 Weyl、theta 与条件导数文献的限制保持：没有独立经验相位、复 theta 无零点前提或整后验 Gaussian 替换。结论限于逐序列次二次对数尺度；有限搜索不证明全局原创性或二次尺度结果不存在。
