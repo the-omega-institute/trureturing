@@ -98013,3 +98013,613 @@ $$
 本节使用既有风险链、逐块制备、逐中途因果模拟、成熟的停止换测度及共同子测度方法。仓内新增连接是将这些前置接到无确定上限但统一有限期望的调用合同，并将临界等号排除推进到几乎必然有限而允许无限期望的停止。这里没有声称新的标准序贯定理，也没有进行 Lean 形式验证或实际仪器实验。
 
 ## 追加锚（本行以下为增补区）
+
+## 303. 未知正增益的适应代价
+
+第301—302节允许已知正增益下界。本节去掉这个预先给定的尺度，只承诺每批真实增益严格为正，仍要求同参数平均风险不超过三分之一及每个合法世界有限给出答案。参考流可以发现并精化当前尺度；未知尺度的额外成本是一个相加的迭代对数项。必要性则以趋零增益子序列上的结论出现，不能改写成每个增益上的双侧匹配阶。
+
+### 303.1 无正下界的合同与三项结论
+
+固定已知参数
+$$
+\kappa_0=-\log\sqrt{3/4},\qquad C_\star=1024/225,
+$$
+$$
+B\in\{2,4\},\quad 1\le C\le C_\star,\quad
+0<\kappa\le\kappa_0,\quad
+k=e^{-\kappa},\quad 0<g\le k-k^2,\quad l=k^2+g.
+$$
+未知参数为一个批次内固定的
+$$
+r\in[l,1],\qquad h\in(0,1].
+$$
+协议只知道增益严格为正，不获得任何正下界。世界 \(j\in\{0,1\}\) 下，两种来源的独立新输出为
+$$
+T:\operatorname{Bernoulli}\!\left(\frac{1-hk^jr/C}{B}\right),
+\qquad
+H:\operatorname{Bernoulli}\!\left(\frac{1-h/C}{B}\right).
+$$
+协议允许根据全部过去记录和独立随机性选择下一来源，要求在每个合法世界几乎必然有限输出。任务与参考各次调用均收费。对有限给出答案的运行，\(N\) 是给出答案前实际调用总数；若始终没有有限给出答案，则分析上置 \(N=\infty\)，即使它只读了有限枚样本后永久进行内部计算。所有合法正增益世界都要求有限给出答案，所以此约定不改变其中的实际成本。成功合同是每个同一 \((r,h)\) 下的平均风险：
+$$
+\frac{\Pr_{0,r,h}(D=1)+\Pr_{1,r,h}(D=0)}2\le\frac13.
+\tag{303.1}
+$$
+没有将两个错误各自限制为 \(1/3\)，也没有把不同 \(r,h\) 的错误进行配对。
+
+置
+$$
+w_h=C-h+h\kappa,\quad
+H=1+\log(\kappa/g),\quad
+\mathcal O(h)=\frac{w_h}{h^2\kappa^2}H,\quad
+\ell(h)=\log\log(e/h),\qquad
+\ell_+(h)=\log\log(e^e/h).
+\tag{303.2}
+$$
+这里 \(\ell(h)\ge0\)、\(\ell_+(h)\ge1\)，且 \(h\downarrow0\) 时两者都与
+\(\log\log(1/h)\) 渐近等价。并且 \(\ell_+(h)\le1+\ell(h)\)，多出的常数成本将被 \(\mathcal O(h)\) 吸收。
+
+**定理303.1（未知正增益的达到界与两种必要界）。** 下列三项同时成立，常数 \(a,A\) 绝对一致；第三项所写 limsup 按其固定参数量词理解：
+
+1. **每个增益上的可达上界。** 存在一个不使用 \(h\) 或正增益下界的协议，满足（303.1）及每世界几乎必然有限输出，且对所有合法参数
+   $$
+   \boxed{\sup_{j,r}\mathbb E_{j,r,h}N
+   \le A\left[\mathcal O(h)+h^{-2}\ell(h)\right].}
+   \tag{303.3}
+   $$
+   \(A\) 是绝对常数，同时独立于 \(B,C,\kappa,g,h\)。
+
+2. **每个增益上的已知尺度必要界。** 每个满足原合同的协议，令
+   \(M(h)=\sup_{j,r}\mathbb E_{j,r,h}N\)，则
+   $$
+   \boxed{M(h)\ge a\,\mathcal O(h)\quad\text{对每个 }h>0.}
+   \tag{303.4}
+   $$
+   这是第302节停止 KL 下界在固定真实 \(h\) 子模型上的直接复用，不另证明一个停止 KL 定理。
+
+3. **未知尺度的子序列必要界。** 对每个固定的合法 \(B,C,\kappa,g\)，每个满足原合同的协议沿合法路径 \(j=0,r=1\) 满足
+   $$
+   \boxed{
+   \limsup_{h\downarrow0}
+   \frac{h^2\mathbb E_{0,1,h}N}
+   {C^2(B-1)\log\log(1/h)}
+   \ge\frac1{48}.}
+   \tag{303.5}
+   $$
+   常数不求最优；允许左侧为无穷大。此式是 limsup 结论，不是每个充分小 \(h\) 的必要界。
+
+所以固定 \(\kappa,g\) 后，不存在一个统一用于全部 \(h>0\) 的协议，使每个世界的期望成本始终只比 \(\mathcal O(h)\) 大常数倍。额外代价能够作为 \(h^{-2}\ell(h)\) 相加；上界没有要求把整个 \(\kappa^{-2}H\) 尺度再乘一个迭代对数。
+
+### 303.2 既有实际概率表与停止必要界
+
+第301节实际概率表可取任意给定的 \(a\in(0,1]\) 为输入增益下界。定义
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\qquad
+\bar\eta=\min(\eta,1/2),\qquad
+H_\eta=1+\log(1/\bar\eta).
+\tag{303.6}
+$$
+该节给出 \(H_\eta\asymp H\)，且所用常数绝对一致。每流使用
+$$
+K(a)=\left\lceil
+A_0\frac{w(a)}{a^2\kappa^2}H_\eta
+\right\rceil,\qquad
+w(a)=C-a+a\kappa,
+\tag{303.7}
+$$
+枚新样本。增大绝对常数 \(A_0\) 后，第301节末尾的响应差
+$$
+f_K(r,h)-f_K(kr,h)
+\ge\frac13+\frac{\bar\eta}{18}
+-A\exp\!\left[-a_1K(a)a^2\kappa^2/w(a)\right]
+$$
+给出
+$$
+\mathcal R_{\rm main}(a;h,r)
+\le\frac13-\frac{\bar\eta}{72}
+\qquad\text{只要 }a\le h\le1.
+\tag{303.8}
+$$
+这里令指数误差至多 \(\bar\eta/36\)，并用风险等于响应差补数的一半。满足（303.7）也满足该表所需的整数和截断基线。对所有可能采样记录，该表都是 \([0,1]\) 值合法决定概率；\(a\le h\) 只用于风险保证，不用于概率表本身的合法性。这一点使后面的校准失败分支仍是合法有限协议。
+
+第302节固定真实 \(h\) 的下界只在同一个 \(h\) 下比较任务参数 \(c=1,k,k^2,l,kl\)，按第302.3节的第一分布期望次数加权 KL 及第302.4节三点链推导。故未知 \(h\) 协议限制到任一固定 \(h\) 子模型，仍直接满足该必要界，得到（303.4）。如果 \(M(h)=\infty\)，（303.4）自动成立。未知尺度不会解除原必要界，也不需要把协议预先告知 \(h\)。
+
+### 303.3 零增益分析律的不终止质量
+
+只为证明引入 \(h=0\) 的分析律 \(Q\)，不把零增益加入合法输入。此时每个来源都是 \(\operatorname{Bernoulli}(1/B)\)。同一因果规则在此律下仍可运行，但允许永不输出。私随机性在所有世界中同律。
+
+固定 \(h>0\)，令 \(f_h(c)\) 表示该协议在任务系数 \(c\)、参考增益 \(h\) 时最终输出零的概率。只使用合法世界的 \(c\)。由于 \(l\le k\)，风险约束在 \(r=1\) 和 \(r=k\) 都成立：
+$$
+f_h(1)-f_h(k)\ge\frac13,\qquad
+f_h(k)-f_h(k^2)\ge\frac13.
+$$
+两种出现方式的中间 \(c=k\) 给出完全相同的任务、参考实验；共同策略使它们的整个记录和决定同律。因此
+$$
+f_h(1)-f_h(k^2)\ge\frac23.
+\tag{303.9}
+$$
+\(l=k\) 的合法端点也满足这一步，没有使用 \(l<k\)。
+
+每个合法世界几乎必然输出零或一，故对每个有限调用上限 \(n\)，
+$$
+\begin{aligned}
+\frac23
+&\le f_h(1)-f_h(k^2)\\
+&=1-\Pr_{c=1,h}(D=1)-\Pr_{c=k^2,h}(D=0)\\
+&\le1-\Pr_{c=1,h}(N\le n,D=1)
+       -\Pr_{c=k^2,h}(N\le n,D=0).
+\end{aligned}
+\tag{303.10}
+$$
+固定 \(n\) 后，两份有限记录律都在 \(h\downarrow0\) 时以总变差收敛到 \(Q\)。一种直接验证是逐步耦合：任意已选来源单次 Bernoulli 参数与 \(1/B\) 之差至多 \(h/(BC)\)，共同控制核不增加总变差，因此长度至多 \(n\) 的记录差至多 \(nh/(BC)\)。停止后使用共同的空记录补齐，不改变有限终止事件。更明确地，可预取至多 \(n\) 次请求所需的随机输出和共同私随机种子，再模拟协议；是否在请求第 \(n+1\) 枚样本之前有限给出指定答案，是这些预取数据的可测函数。永久内部计算属于未有限回答事件；有限回答事件是所有有限内部运行时刻事件的可数并。因此上述有限调用比较不要求辅助零增益世界终止。
+
+将（303.10）中的两个有限事件取极限，它们在 \(Q\) 下互斥并合为 \(\{N\le n\}\)，得到
+$$
+Q(N\le n)\le\frac13.
+$$
+单调收敛给出
+$$
+\boxed{Q(N<\infty)\le\frac13,\qquad Q(N=\infty)\ge\frac23.}
+\tag{303.11}
+$$
+这一步专门核对了同参数平均风险与未知 \(r\) 的合同。单独一条风险边只能得到 \(Q(N<\infty)\le2/3\)；两条合法风险边给出更强的（303.11）。
+
+### 303.4 分离停止窗口与适应必要性
+
+沿 \(j=0,r=1\)，任务和参考都是同一枚币
+$$
+P_h^{(1)}=\operatorname{Bernoulli}\!\left(\frac{1-h/C}{B}\right).
+$$
+记该世界的全协议律为 \(P_h\)，\(m(h)=\mathbb E_hN\)，并置
+$$
+d_\star=C^2(B-1).
+$$
+相对零增益币 \(Q^{(1)}=\operatorname{Bernoulli}(1/B)\)，
+$$
+D(P_h^{(1)}\Vert Q^{(1)})
+\le\chi^2(P_h^{(1)}\Vert Q^{(1)})
+=\frac{h^2}{d_\star}.
+\tag{303.12}
+$$
+因而长度至多 \(n\) 的完整记录，含种子、来源、停止及输出的有限投影，满足
+$$
+D(P_h^{[n]}\Vert Q^{[n]})\le nh^2/d_\star.
+\tag{303.13}
+$$
+这里可先对预取的 \(n\) 枚同分布币及共同种子作有限长度链式 KL，再投影到有限调用事件；不假设 \(Q\) 几乎必然停止，也没有对非终止零增益律套用第302节要求双边有限停止的完整停止等式。
+
+若（303.5）不成立，则存在 \(0<c<1/48\)，使对所有充分小 \(h\)
+$$
+m(h)\le c\,d_\star h^{-2}\log\log(1/h).
+\tag{303.14}
+$$
+这也覆盖先假设左侧 limsup 严格小于 \(1/48\) 后选中间常数的标准逻辑；若期望沿任意趋零子序列为无穷大，则无须此反证。
+
+取
+$$
+h_n=e^{-n^2},\qquad
+b_n=\left\lceil12c\,d_\star h_n^{-2}
+\log\log(1/h_n)\right\rceil
+=\left\lceil24c\,d_\star e^{2n^2}\log n\right\rceil,
+\qquad a_n=b_{n-1}.
+\tag{303.15}
+$$
+对充分大 \(n\)，\(b_n\) 严格增加，且
+$$
+a_nh_n^2/d_\star\longrightarrow0.
+$$
+Pinsker 与（303.11）、（303.13）因此给出
+$$
+P_{h_n}(N\le a_n)
+\le Q(N\le a_n)+\sqrt{a_nh_n^2/(2d_\star)}
+\le\frac13+\frac1{12}=\frac5{12}.
+\tag{303.16}
+$$
+（303.14）、Markov 与 \(b_n\) 的定义给出
+$$
+P_{h_n}(N>b_n)\le\frac1{12}.
+$$
+所以两两不交的停止窗口事件
+$$
+A_n=\{a_n<N\le b_n\}
+$$
+满足
+$$
+p_n=P_{h_n}(A_n)\ge\frac12.
+\tag{303.17}
+$$
+令 \(q_n=Q(A_n)\)。在有限长度 \(b_n\) 上对事件 \(A_n\) 作二元数据处理，并用二元熵至多 \(\log2\)，得到
+$$
+p_n\log(1/q_n)-\log2
+\le\operatorname{kl}(p_n,q_n)
+\le b_nh_n^2/d_\star.
+$$
+因 \(p_n\ge1/2\)，
+$$
+q_n\ge\frac14\exp[-2b_nh_n^2/d_\star]
+\ge c_1n^{-48c}
+\tag{303.18}
+$$
+对所有充分大 \(n\) 成立，其中取整带来的指数余量趋于零。由于 \(48c<1\)，右侧之和发散；左侧是两两不交事件的概率和，甚至不超过 \(Q(N<\infty)\le1/3\)，矛盾。这证明（303.5）。
+
+对固定 \(\kappa,g\)，\(h^2\mathcal O(h)=w_hH/\kappa^2\) 在 \(h\downarrow0\) 时趋于有限正数 \(CH/\kappa^2\)。若某协议的每世界期望始终至多常数倍 \(\mathcal O(h)\)，（303.5）左侧就为零，故不可能。
+
+这个必要性证明使用当前 Bernoulli 模型的有限记录换测度、两条合法风险边和分离停止窗口，因此直接承担当前平均风险与未知干扰参数的合同。
+
+### 303.5 仅参考流校准的三阶段协议
+
+全部校准只使用参考来源。给定固定 \(h\)，校准记录和所选样本数的分布与 \(j,r\) 无关。校准完毕后另取新的两源样本调用（303.7）的实际概率表。这是把校准好事件与同参数平均风险安全组合所需的共同实现。
+
+取
+$$
+\delta=\bar\eta/288,\qquad
+\Lambda=\log(A_1/\delta),
+\tag{303.19}
+$$
+其中绝对常数 \(A_1\) 足够大，从而 \(\Lambda\ge8\)，且 \(\Lambda\asymp H\)。三个校准失败事件各分配至多 \(\delta/3\)。下文的绝对常数可增大以同时满足这些固定要求。
+
+第一阶段发现增益尺度，输出正数 \(H_0\)，其反平方矩受控。第二阶段精化到误差约为 \(h\kappa\) 的保守增益 \(a\)，以保留 \(C-h\) 很小时的稀有背景成本。第三阶段依据 \(a\) 运行已有实际概率表。所有样本收费。
+
+### 303.6 未知尺度发现及无条件逆矩
+
+参考输出 \(Y\) 对应变量
+$$
+Z=C(1-BY),\qquad \mathbb EZ=h.
+$$
+该变量取值区间长度为 \(d=BC\)，且 \(2\le d\le4C_\star\)。
+累计参考样本数依次为
+$$
+n_j=2^j,\quad j=0,1,2,\ldots,\qquad
+L_j=\log(A_1(j+1)^2/\delta),\qquad
+r_j=d\sqrt{\frac{L_j}{2n_j}}.
+\tag{303.20}
+$$
+令 \(\widehat h_j\) 是前 \(n_j\) 枚 \(Z\) 的平均。停在第一个
+$$
+J=\inf\{j:\widehat h_j\ge2r_j\},
+\qquad H_0=\min(1,\widehat h_J/2).
+\tag{303.21}
+$$
+第一阶段实际调用数是累计数 \(n_J\)，并非各级累计数之和。由强大数律及 \(r_j\to0\)，每个 \(h>0\) 下 \(J<\infty\) 几乎必然。停止条件确保 \(H_0>0\)。
+
+Hoeffding 与并合界给出
+$$
+\Pr\{\exists j:|\widehat h_j-h|>r_j\}
+\le\sum_{j\ge0}2e^{-L_j}
+\le\delta/3
+\tag{303.22}
+$$
+（增大 \(A_1\)）。在互补好事件上，由停止时
+\(\widehat h_J\ge2r_J\) 可得
+$$
+\boxed{h/3\le H_0\le h.}
+\tag{303.23}
+$$
+截到一不会破坏此式，因为 \(h\le1\)。此后只使用停止记录上的事件
+$$
+G_1=\{h/3\le H_0\le h\},\qquad
+\Pr_h(G_1^c)\le\delta/3.
+$$
+它是已经取得的第一阶段校准记录的函数；（303.22）的全时好事件只用于证明这个概率界，后续不以未取得的未来样本作条件。
+
+后续成本需要在失败记录上也成立的矩估计：
+$$
+\boxed{
+\mathbb E n_J\le A h^{-2}[\Lambda+\ell_+(h)],
+\quad
+\mathbb E H_0^{-2}\le A h^{-2},
+\quad
+\mathbb E H_0^{-1}\le A h^{-1}.}
+\tag{303.24}
+$$
+特别是反平方矩没有 \(\Lambda\) 或 \(\ell_+(h)\) 因子。
+
+以下证明（303.24）。由于 \(\Lambda\ge8\)，有
+\(L_{j+1}<2L_j\)，故 \(r_j\) 严格下降，\(n_j/L_j\) 严格增加。令 \(j_\star\) 是第一个 \(r_j\le h/4\) 的级别。它至少为一，由前一级的最小性，
+$$
+\frac{n_{j_\star}}{L_{j_\star}}
+\le\frac{16d^2}{h^2}.
+\tag{303.25}
+$$
+同级还满足 \(n_{j_\star}h^2/d^2\ge8L_{j_\star}\)。
+对 \(j>j_\star\)，若 \(J\ge j\)，则前一级尚未停止，所以
+$$
+\widehat h_{j-1}<2r_{j-1}\le h/2.
+$$
+从而
+$$
+\Pr(J\ge j)\le
+\exp[-n_{j-1}h^2/(2d^2)].
+\tag{303.26}
+$$
+这只用该级样本平均的边缘 Hoeffding 界，不假定各级均值独立。
+
+在停止级总有 \(H_0\ge\min(1,r_J)\)，于是
+$$
+H_0^{-2}\le1+r_J^{-2}
+=1+\frac{2n_J}{d^2L_J}.
+\tag{303.27}
+$$
+对 \(J\le j_\star\)，\(n_J/L_J\le n_{j_\star}/L_{j_\star}\)。
+对 \(j=j_\star+m\)、\(m\ge1\)，
+$$
+\frac{n_j}{L_j}
+\le2^m\frac{n_{j_\star}}{L_{j_\star}},
+\qquad
+\Pr(J=j)\le
+\exp[-2^{m-1}n_{j_\star}h^2/(2d^2)].
+$$
+将这些乘积求和，利用 \(n_{j_\star}h^2/d^2\ge8L_{j_\star}\ge64\)，
+得到
+$$
+\mathbb E(n_J/L_J)\le A\,n_{j_\star}/L_{j_\star}\le A/h^2.
+$$
+（303.27）证明反平方矩，Cauchy–Schwarz 给反一阶矩。
+同样的 dyadic 尾和直接给出 \(\mathbb E n_J\le A n_{j_\star}\)。
+
+最后，隐式定义 \(r_{j_\star}\le h/4\) 可反解为
+$$
+n_{j_\star}\le A h^{-2}[\Lambda+\ell_+(h)].
+\tag{303.28}
+$$
+一个不隐藏 \(\delta\) 依赖的验证如下：令
+\(t=\log(e/h)\ge1\)、\(S=\Lambda+\log(e+t)\)。
+取一个 dyadic \(n=2^j\) 介于
+\(A_2h^{-2}S\) 与 \(2A_2h^{-2}S\) 之间。则
+$$
+j+1\le A_3[1+t+\log S+\log A_2],
+$$
+所以 \(\log(j+1)\le A_4S+A_4\log\log(e+A_2)\)，
+且 \(L_j\le A_5S+A_5\log\log(e+A_2)\)。
+选定足够大的绝对 \(A_2\) 后，
+\(n\ge8d^2L_j/h^2\)，即 \(r_j\le h/4\)。
+最小性使 \(n_{j_\star}\le n\)，而
+\(S\asymp\Lambda+\ell_+(h)\)。这证明（303.28）及全部（303.24）。
+
+### 303.7 两批参考样本的方差自适应精校准
+
+条件于已完成的第一阶段记录，\(H_0\in(0,1]\) 已知。令
+$$
+q=\frac{1-h/C}{B},\qquad
+\epsilon=\frac{H_0\kappa}{BC}>0.
+\tag{303.29}
+$$
+\(q\) 只是分析记号，协议不知道它。先取一批新的参考样本，
+$$
+m_0=\lceil A_6\Lambda/\epsilon\rceil,\qquad
+S_0\sim\operatorname{Bin}(m_0,q),\qquad
+\widehat q_0=S_0/m_0.
+\tag{303.30}
+$$
+再根据第一批参考均值选择下一批参考样本数
+$$
+m_1=\left\lceil
+A_7\Lambda\,\frac{\widehat q_0+\epsilon}{\epsilon^2}
+\right\rceil,
+\tag{303.31}
+$$
+并记该批新样本均值为 \(\widehat q_1\)。给定第一阶段及第二阶段第一批记录，这第二批由 \(m_1\) 枚新的独立 \(\operatorname{Bernoulli}(q)\) 构成。
+
+最后输出供主表使用的增益下界候选
+$$
+\widehat h= C(1-B\widehat q_1),\qquad
+a=\min\{1,\max\{H_0,\widehat h-H_0\kappa\}\}.
+\tag{303.32}
+$$
+无论校准是否成功，总有
+$$
+0<H_0\le a\le1.
+\tag{303.33}
+$$
+
+第一批的有利事件为
+$$
+q\le2\widehat q_0+\epsilon.
+\tag{303.34}
+$$
+当 \(q\le\epsilon\) 时它自动成立；当 \(q>\epsilon\) 时，其失败包含于
+\(\{\widehat q_0<q/2\}\)，乘法 Chernoff 给出失败概率至多
+\(\exp(-m_0q/8)\le\exp(-A_6\Lambda/8)\le\delta/3\)。
+这里按固定 \(H_0\) 给界，因此无条件也成立。
+
+在（303.34）上有 \(q+\epsilon\le2(\widehat q_0+\epsilon)\)，故
+$$
+m_1\ge A_7\Lambda(q+\epsilon)/(2\epsilon^2).
+$$
+对新第二批使用双边 Bernstein，
+$$
+\Pr\bigl(|\widehat q_1-q|>\epsilon
+\mid H_0,\widehat q_0\bigr)
+\le2\exp\!\left[-\frac{m_1\epsilon^2}{2(q+\epsilon/3)}\right]
+\le\delta/3
+\tag{303.35}
+$$
+在（303.34）上成立，只需 \(A_7\) 取足够大的绝对常数。
+
+由停止记录事件 \(G_1\)、（303.34）及（303.35）的好事件，合计概率至少 \(1-\delta\)。在它们共同成立时，
+$$
+H_0\le h,\qquad |\widehat h-h|\le BC\epsilon=H_0\kappa,
+$$
+故
+$$
+a\le h,\qquad
+a\ge h-2H_0\kappa\ge(1-2\kappa)h,
+\qquad
+w(a)\le w_h+2h\kappa\le3w_h.
+\tag{303.36}
+$$
+最后的截到一保持这些结论，因真实 \(h\le1\)。
+
+仅有高概率（303.36）不足以证明需要的期望成本。下一节对所有失败分支也作估计。
+
+### 303.8 精校准的无条件成本与缺额矩
+
+先固定第一阶段记录，即固定 \(H_0\)。因为
+\(\mathbb E(\widehat q_0\mid H_0)=q\)，（303.30）、（303.31）及取整给出
+$$
+\mathbb E(m_0+m_1\mid H_0)
+\le A\Lambda\left(\frac{q}{\epsilon^2}
++\frac1\epsilon\right).
+\tag{303.37}
+$$
+常数项被右侧吸收：\(\epsilon\) 有统一严格小于一的上界，且 \(\Lambda\ge8\)。
+代入（303.29）及（303.24），注意 \(BC\) 一致有界：
+$$
+\begin{aligned}
+\mathbb E(m_0+m_1)
+&\le A\Lambda\left[
+\frac{C-h}{\kappa^2}\mathbb E H_0^{-2}
++\frac1\kappa\mathbb E H_0^{-1}\right]\\
+&\le A\Lambda\left[
+\frac{C-h}{h^2\kappa^2}+\frac1{h\kappa}\right]\\
+&=A\Lambda\frac{w_h}{h^2\kappa^2}.
+\end{aligned}
+\tag{303.38}
+$$
+该式没有用校准好事件，也没有在失败事件上改用丢失 \(w_h\) 的最坏上界。
+
+还需证明主表输入 \(a\) 的无条件缺额矩。给定两批样本数和第一批记录，第二批是独立 Bernoulli 平均，因此
+$$
+\mathbb E\bigl(|\widehat q_1-q|\mid H_0\bigr)
+\le \sqrt{q\,\mathbb E(1/m_1\mid H_0)}
+\le
+\epsilon\sqrt{\frac{q}{A_7\Lambda}
+\mathbb E\!\left[\frac1{\widehat q_0+\epsilon}\middle|H_0\right]}.
+\tag{303.39}
+$$
+这里分别用了条件方差界 \(q(1-q)/m_1\le q/m_1\)、Cauchy–Schwarz 及（303.31）。当 \(q>0\)，由 \(m_0\epsilon\ge1\)，
+$$
+\begin{aligned}
+\mathbb E\!\left[\frac1{\widehat q_0+\epsilon}\middle|H_0\right]
+&\le m_0\mathbb E\frac1{S_0+1}\\
+&=\frac{m_0}{m_0+1}
+\frac{1-(1-q)^{m_0+1}}q
+\le\frac1q.
+\end{aligned}
+\tag{303.40}
+$$
+中间等式由
+\(\binom{m_0}s/(s+1)=\binom{m_0+1}{s+1}/(m_0+1)\)
+或积分 \(\int_0^1(1-q+qt)^{m_0}\,dt\) 直接得到。
+当 \(q=0\)，两批均值恒为零，估计误差也恒为零，单独处理即可。
+所以对所有 \(q\)，
+$$
+\mathbb E(|\widehat q_1-q|\mid H_0)
+\le\epsilon/\sqrt{A_7\Lambda}\le\epsilon.
+\tag{303.41}
+$$
+
+由 \(h\le1\) 及（303.32），总有
+$$
+(h-a)_+\le |h-\widehat h|+H_0\kappa.
+$$
+（303.41）于是给出关键的全概率空间矩界
+$$
+\boxed{\mathbb E((h-a)_+\mid H_0)\le2H_0\kappa.}
+\tag{303.42}
+$$
+它允许 \(H_0>h\)、第一批低估方差、第二批校准失败等所有实际分支。未在失败分支强行声称 \(a\le h\)；只估计其成本所需要的正缺额。
+
+### 303.9 主表在全部校准分支上的期望成本
+
+以候选 \(a\) 和（303.7）选取整数 \(K(a)\)，随后使用新鲜的 \(K(a)\) 枚任务样本和 \(K(a)\) 枚参考样本运行第301节实际概率表。
+
+由于 \(\kappa<1\)，
+$$
+w(a)=w_h+(h-a)(1-\kappa)
+\le w_h+(h-a)_+.
+$$
+结合 \(a\ge H_0\)、（303.24）及（303.42），
+$$
+\begin{aligned}
+\mathbb E\frac{w(a)}{a^2}
+&\le w_h\mathbb E H_0^{-2}
++\mathbb E\frac{(h-a)_+}{H_0^2}\\
+&\le A w_h/h^2
++2\kappa\mathbb E H_0^{-1}\\
+&\le A w_h/h^2.
+\end{aligned}
+\tag{303.43}
+$$
+最后使用 \(w_h\ge h\kappa\)。因此包括全部坏校准分支在内，
+$$
+\boxed{\mathbb E[2K(a)]\le
+A\frac{w_h}{h^2\kappa^2}H.}
+\tag{303.44}
+$$
+取整的至多两次调用可吸收到右侧，因该尺度有绝对正基线。
+
+这一步是保留稀有背景端点的关键。只凭 \(H_0\ge h/3\) 就立即运行主表，会在 \(C=h=1\) 附近把 \(w_h\asymp\kappa\) 换成常数量级，产生不必要的 \(\kappa^{-1}\) 额外倍数。（303.42）使增益不足造成的平均背景缺额只占 \(O(h\kappa)\)。
+
+### 303.10 平均风险、有限输出与总调用数
+
+明确取实际校准记录上的事件
+$$
+G_2=\{q\le2\widehat q_0+\epsilon\},\qquad
+G_3=\{|\widehat q_1-q|\le\epsilon\},\qquad
+G=G_1\cap G_2\cap G_3.
+$$
+（303.34）控制 \(\Pr_h(G_2^c)\le\delta/3\)，（303.35）控制
+\(\Pr_h(G_2\cap G_3^c)\le\delta/3\)，结合停止记录事件 \(G_1\) 的界，得到
+\(\Pr_h(G^c)\le\delta\)。这些事件可以依赖固定真实参数作为分析判据，但不要求协议知道它们是否发生。
+校准只调用参考来源，所以 \(G\) 和候选 \(a\) 的联合分布在固定 \(h\) 的两个假设和全部 \(r\) 下相同。给定完整校准记录，主表使用新的独立两源样本。在 \(G\) 上 \(a\le h\)，故同一校准记录下的两假设平均风险受（303.8）控制；在 \(G^c\) 上它至多为一。因而对于每个合法同一 \((r,h)\)，
+$$
+\begin{aligned}
+\mathcal R(r,h)
+&\le (1-\Pr_h(G^c))
+\left(\frac13-\frac{\bar\eta}{72}\right)
++\Pr_h(G^c)\\
+&\le\frac13-\frac{\bar\eta}{72}+\delta
+\le\frac13.
+\end{aligned}
+\tag{303.45}
+$$
+没有分别要求某个假设的错误至多 \(1/3\)，也没有把条件风险当作无条件风险。
+
+第一阶段在所有 \(h>0\) 下几乎必然停止，输出 \(H_0>0\)；其后 \(m_0,m_1,K(a)\) 都为有限整数，因此整个协议在每个合法世界几乎必然有限输出。总来源调用数准确为
+$$
+N=n_J+m_0+m_1+2K(a).
+\tag{303.46}
+$$
+由于这些调用数都只由参考校准记录决定，主表取固定数目新样本后才决定，给定 \(h\) 的总成本分布事实上与 \(j,r\) 无关。
+
+（303.24）、（303.38）和（303.44）给出
+$$
+\mathbb E_h N
+\le A\left\{h^{-2}[\Lambda+\ell_+(h)]
++\frac{w_h}{h^2\kappa^2}H\right\}.
+$$
+由于
+$$
+w_h=C-h+h\kappa\ge\kappa,\qquad
+\Lambda\asymp H,\qquad \kappa\le\kappa_0<1,
+$$
+\(\Lambda/h^2\) 被 \(\mathcal O(h)\) 吸收。再用
+\(\ell_+(h)\le1+\ell(h)\) 及 \(h^{-2}\le A\mathcal O(h)\)，得到（303.3）。
+因此每个固定 \(h>0\) 的期望调用数也是有限的；证明没有依赖一个未报告的 \(h_0\)。
+
+### 303.11 端点、量词与经典序贯背景
+
+- \(C=h=1\) 时参考币 \(q=0\)，两批精校准样本全为零；（303.40）不作除零，而使用零误差直接结算。（303.38）、（303.43）仍保留 \(w_h=\kappa\) 的成本。
+- \(g=k-k^2\) 时 \(l=k\)，两条风险边 \(r=1,k\) 均合法；零增益不终止界仍成立。
+- \(g>0\) 保证 \(\bar\eta,\delta,\epsilon>0\)，各阶段整数有限。\(g=0\) 不属于本结果，应使用第302节有限停止不可达结论。
+- \(h=0\) 只作为换测度分析律，协议无需在它下停止；（303.11）反而证明它必须留下不终止质量。这与每个合法正增益世界几乎必然有限输出相容。
+- 下界（303.5）的量词是：对每个固定合法 \(B,C,\kappa,g\) 和固定协议，沿 \(h\downarrow0\) 有该 limsup 必要性。它没有证明对 \(\kappa,g,h\) 同时变化的任意对角序列都统一出现迭代对数损失。
+- 每个 \(h\) 的（303.3）、（303.4）与子序列（303.5）共同排除固定参数下全增益范围的常数倍已知尺度成本；不能写成所有小 \(h\) 上的
+  \(M(h)=\Theta(\mathcal O(h)+h^{-2}\ell(h))\)。
+- 即使三阶段上界足够取得（303.3），其常数未优化。额外迭代对数项不带 \(\kappa^{-2}H\) 的乘法因子；零增益参照下单次信息为 \(O(h^2)\)，正是相应必要性证明的尺度。
+- 本节给解析结论，未作 Lean 形式化或任何 kernel-verified 声明。
+
+未知尺度的迭代对数成本有经典序贯背景。Jamieson、Malloy、Nowak、Bubeck 的
+[*lil’ UCB: An Optimal Exploration Algorithm for Multi-Armed Bandits*](https://arxiv.org/pdf/1312.7308)，第3页 Theorem 1 重述 Farrell 的正态未知符号检验结论：对 iid \(N(\Delta,1)\)、全部 \(\Delta\ne0\) 的逐参数单独错误至多 \(\delta<1/2\)，有
+$$
+\limsup_{\Delta\to0}
+\frac{\mathbb E_\Delta T}
+{\Delta^{-2}\log\log(\Delta^{-2})}
+\ge2-4\delta.
+$$
+对应原文为 R. H. Farrell，
+[*Asymptotic Behavior of Expected Sample Size in Certain One Sided Tests*](https://doi.org/10.1214/aoms/1177703731)，Annals of Mathematical Statistics 35(1)，36—72（1964）。本节的增益只取正值，还有未知任务参数与同参数平均风险，不能直接套用该未知符号检验；第303.3—303.4节完成了本模型自己的非终止质量与窗口证明。
+
+本节新增连接是：把第301节带严格风险余量的实际概率表接到参考流的未知尺度发现与方差精校准，以无条件缺额矩保留稀有背景成本；把第302节同参数风险链接到零增益辅助律，得到沿正增益路径的子序列必要性。所用 Hoeffding、Bernstein、Chernoff、有限链式 KL、Pinsker 及二元数据处理均为成熟方法。这里没有声称新的标准序贯不等式、经文献核定的原创性、Lean 形式验证或实际仪器实验。
+
+## 追加锚（本行以下为增补区）
