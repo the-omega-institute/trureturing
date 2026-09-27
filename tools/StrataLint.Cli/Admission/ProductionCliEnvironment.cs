@@ -121,6 +121,8 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
         Console.Error.WriteLine(JsonSerializer.Serialize(new
         {
             @event = "gate_stage_timing",
+            // A phase outcome is timing data; the admission result owns diagnostics.
+            level = "information",
             scope = "admission-check",
             stage,
             status,
