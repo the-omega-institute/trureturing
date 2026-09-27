@@ -185,3 +185,69 @@ $\phi$ to $Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$, and the
 multiplicative orders of $\phi$ and $Q$ are equal.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Oriented cubic factors and the original-depth balance
+
+Retain $x_j=L_{3^j}$, $B_j=x_j^2+3$, and the original depth
+$h_p=v_p(F_{\rho(p)})$ for $j\geq1$ and $p\mid B_j$. In the Eisenstein
+integers $\mathbb Z[\omega]$, let $\omega^2+\omega+1=0$ and
+$\lambda=1+2\omega$. A generator is *primary* when it is congruent to
+$1$ modulo $3$. For a prime ideal away from $3$, write
+$(a/\mathfrak p)_3$ for its cubic residue symbol, and extend the symbol
+multiplicatively to coprime ideal denominators. The classical cubic
+reciprocity and supplementary laws used below are the identities in
+Dunn and Radziwill, *Bias in cubic Gauss sums: Patterson's conjecture*,
+arXiv:2109.07463v3, equations (1.4)-(1.5). No conditional analytic
+result of that paper is used.
+
+**Theorem 8.1 (oriented block factorization).** Put
+$\eta_j=-2+(x_j-1)\omega=\omega(x_j+\lambda)$. Then
+
+$$
+N(\eta_j)=B_j,\qquad
+\eta_j\equiv1+\lambda^3\pmod9.
+$$
+
+The ideals $(\eta_j)$ and $(\overline{\eta_j})$ are coprime. For each
+rational prime $p\mid B_j$, exactly one prime above $p$ divides
+$\eta_j$; write $\varpi_{j,p}$ for its primary generator. Then
+
+$$
+\eta_j=\prod_{p\mid B_j}\varpi_{j,p}^{h_p},
+\qquad N(\varpi_{j,p})=p.
+$$
+
+The norm follows from the Eisenstein norm form, and the congruence from
+$x_j\equiv4\pmod9$. A common prime ideal of $\eta_j$ and its conjugate
+would divide $2\lambda$, whereas $\gcd(B_j,6)=1$. Every prime factor of
+$B_j$ is congruent to $1$ modulo $3$, so it splits. The norm identifies
+the exponent in the oriented factorization with $v_p(B_j)=h_p$.
+Both sides are primary; hence the remaining unit is $1$.
+
+**Theorem 8.2 (cubic balance).** For every $j\geq1$,
+
+$$
+\prod_{p\mid B_j}\left(\frac{3}{\varpi_{j,p}}\right)_3^{h_p}
+=\omega.
+$$
+
+If $(3/\varpi_{j,p})_3=\omega^{c_{j,p}}$ with
+$c_{j,p}\in\{0,1,2\}$, equivalently
+
+$$
+\sum_{p\mid B_j}h_pc_{j,p}\equiv1\pmod3.
+$$
+
+The supplementary laws applied to Theorem 8.1 give
+$(\omega/\eta_j)_3=1$ and $(\lambda/\eta_j)_3=\omega^2$.
+Since $3=-\lambda^2$ and $-1$ is a cube, their product gives
+$(3/\eta_j)_3=\omega$. Multiplicativity and the oriented factorization
+give the displayed product and sum.
+
+**Corollary 8.3 (noncube block).** Every $B_j$ has a prime factor $p$
+with $3\nmid h_p$ and
+$3^{(p-1)/3}\not\equiv1\pmod p$. In particular, $B_j$ is not a
+cube in $\mathbb Z$. The cubic balance has a nonzero summand, which
+supplies this factor. A cube would make every $h_p$ divisible by $3$.
+
+## 追加锚（本行以下为增补区）
