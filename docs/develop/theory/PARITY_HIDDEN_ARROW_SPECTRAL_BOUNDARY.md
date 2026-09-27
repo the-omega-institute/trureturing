@@ -63052,3 +63052,338 @@ Lasse Leskelä，*Information divergences and likelihood ratios of Poisson proce
 本章为普通数学推导，未作 Lean 认证；有限文献核对不构成全球原创性判断。这里的最优性只针对规定的直方图二元检验。未知支持恢复、全数据或后验熵、时间箭头区分、同步 E2 均未由本结论判定，发散重复尺度下也未主张正态对数似然极限。
 
 ## 追加锚（本行以下为增补区）
+
+## 199. 固定噪声下的两相位构造与低分母临界事件的实际概率
+
+第 196 章得到两个固定噪声指数中至少一个出现物理剖面障碍的结论。本章在单个固定指数 $c_*=2c_q$ 上研究消去相位增益的临界比率：用实际整数格构造不同方向的相位，并对低原始分母的临界事件给出原始概率上界。更大分母的薄格事件仍未控制，因此本章没有完成单个指数的物理分类。
+
+**定理 199.1（固定指数的局部概率支付与精确剩余事件）。** 固定原参数 $\beta>4/5$，令 $\lambda=Q^3$、$c_q=\phi(1-\beta)/\beta$、$c_*=2c_q$、$\kappa=c_q/1000$ 及 $R_Q=\lfloor e^{\kappa\lambda/8}\rfloor$。保留完整大小 $q$ 的选取后验、原中心、同一标量 $Y$ 及同一 Gaussian 残差。第 199.5 节定义的低分母临界事件满足
+
+$$
+\sup_{S\ {\rm legal}}P_S(E_{\rm low})
+\le b_{\rm cal}(Q)+\exp\{-\kappa Q^3/4+O(\log Q)\}=o(1),
+\tag{199.1}
+$$
+
+pair 与平稳 path 两种原始实验分别成立，$b_{\rm cal}(Q)=o(1)$ 包含同一真实数据上的供给与校准失败概率。允许相位的整数近似依赖同一数据；不假定其相位均匀、连续或独立。
+
+令 $E_{\rm mid}$ 为 (199.25) 中实际最短原始格向量的薄格临界事件。它保留该向量自己的原始分母、校准方差和噪声。第 199.6 节证明：在 $E_{\rm mid}^c$ 上，原积分修正亏损小于 $1/2000$ 的概率趋零，原加权绝对剖面误差小于 $1/4000$ 的概率也趋零。本章没有估计 $P_S(E_{\rm mid})$，也没有证明其补集具有正极限概率；这些条件后果不被升级为新的物理反驳。
+
+以下给出同一选取律上的联合 Gram 与带标记矩估计、两个不同相位的实际可用性、全 $q$ 校准的有限差分和原始概率支付。第 163 章在 $0<c<99c_q/200$ 内的正结果、第 196 章的双指数结论均保留原范围。
+
+### 199.2 Unchanged finite law and input scope
+
+Keep lambda=Q^3, delta=Q^-1/2, c_q=phi(1-beta)/beta, log q=c_q lambda+O(1), log M=(c_q+phi)lambda+O(1), and the original fixed amplitude r and all legal floors. Here phi=((1+r)log(1+r)+(1-r)log(1-r))/2. Let mathcal B=q/Q^(11/4), rho=sigma mathcal B asymptotic up to positive bounded factors to exp(-c_*lambda). The whole physical-window count law and scalar are
+
+$$
+ P_x(n)=\frac{\prod_{j\in I}{C_j\choose n_j}L_j^{n_j}
+ e_{q-\sum_I n_j}(L_{\rm out})}{e_q(L_{\rm all})},\qquad
+ T_x(n)=\mathcal B^{-1}\sum_I(n_j-\mu_j)^2-V_{\rm phys}/\sqrt\delta,
+ \tag{199.2}
+$$
+$$
+ \mu_j=E_{P_x}R_j,\quad Y=T_x(R)+\sigma G,\quad
+ Z=s_x+(G^2-1)/2,\quad s_x=-\log P_x(R)-E_{P_x}[-\log P_x(R)].
+ \tag{199.3}
+$$
+
+The e_q denominator is positive; all likelihoods are positive and0<q<M. Logarithms are taken only on the positive count support. All low, outside-core and outside-window labels retain their original roles. G is the SAME original independent Gaussian residual before observing Y. Proof views never delete physical coordinates or add observer information.
+
+Use the common logistic probabilities p_j, sum_all p_i=q, and m_j=C_jp_j, d_j=C_jp_j(1-p_j), w_j=d_j/mathcal B. Q_x is the product-binomial comparison at fixed x; h=dP_x/dQ_x, a=||h-1||_2. The actual-data estimates of Chapter 196, each support-uniform separately for the two raw experiments, give on events of probability1-o(1)
+
+$$
+ 0\le h\le C,\quad a\le Q^{-12/5},\quad
+ |\mu_j-m_j|\le a\sqrt{d_j},\quad p_j\in[1/4,3/4],
+ \quad |I|=O(Q^2).
+ \tag{199.4}
+$$
+
+The exact complete count-line exchange and compensated likelihood gap imply, with pi_j=mu_j/C_j,
+
+$$
+ |\pi_j-\pi_0|\le D_Q=CQ^3q/M,\qquad
+ |p_j-p_0|\le CQ^3q/M.
+ \tag{199.5}
+$$
+
+Both assertions keep the full outside calibration. The first follows from pi_j-pi_0=tanh(j Delta_Q/2)P_x(I_j+I_0=1), with |Delta_Q|<=CQq/M. No Diophantine or probabilistic property of pi_0 is assumed.
+
+Write
+
+$$
+ S_x^2=V_C=\sum_I C_j^2d_j,\qquad
+ e^{3c_q\lambda-O(\log Q)}\le S_x^2\le16q^3,\qquad
+ \sum_I C_j\le4q.
+ \tag{199.6}
+$$
+
+The lower bound uses the original central supply C_0 comparable to q/Q^3, and the upper bound follows from the calibration and p_j>=1/4. Denote the ORIGINAL core by H and retain J={d_j>=Q^3600}, E=I\J. The original outside variance mass is at most Q^-200 on probability1-o(1). Q_x^lat is the exact normalized integer-Gaussian law on J and binomial law on E. The complete signed mass comparison through centered surprise powers0,1,2 is CQ^-444, as in (142.33) and (153.47); it has no noise restriction.
+
+Keep the empirical, amplified quantities
+
+$$
+ A=\sum_Hw_j,\quad \nu_0=2\sum_Hw_j^2,\quad
+ \kappa_3=8\sum_Hw_j^3,\quad \Lambda=\nu_0+\sigma^2,\quad
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2.
+ \tag{199.7}
+$$
+
+Chapter 196's full profile calculation supplies A=O_P(delta^-1/2), Lambda->nu>0, max w_j=O_P(sqrt(delta)), and, for r_x=sum_H w_jC_j^2d_j/S_x^2,
+
+$$
+ \frac{2Ar_x}{\Lambda}\to\chi=\sqrt6/2,\qquad
+ r_{2,x}:=\sum_Hw_j^2C_j^2d_j/S_x^2=O_P(\delta).
+ \tag{199.8}
+$$
+
+These are ratios of actual empirical profile sums. A^2/Lambda and C_x are never replaced by deterministic means. The known macro correction is K=14/3-8/sqrt3. All assertions used below can be intersected on one actual array. Tight polynomial moment constants are handled by fixed localization followed by its limit, not by declaring a fixed tightness cutoff to have probability1-o(1).
+
+### 199.3 A larger legal phase family, with selected marked errors paid uniformly
+
+Put epsilon=Q^-40 and consider ANY integers p>=1,k with
+
+$$
+ z(p,k)=(S_x(2p\pi_0-k),\rho p),\qquad
+ 0<|z(p,k)|\le\epsilon.
+ \tag{199.9}
+$$
+
+This allows the physical denominator range p<=epsilon/rho. It changes no physical noise or amplitude. Let alpha=2p pi_0-k, ell=|z|, theta=z_1^2/ell^2, v=4pi^2ell^2, t=2pi p mathcal B, e_j=2p mu_j-kC_j, and
+
+$$
+ \zeta=2\pi p\sum_I\mu_j^2-tV_{\rm phys}/\sqrt\delta
+                  -2\pi\sum_I e_jm_j.
+ \tag{199.10}
+$$
+
+For every integer count tuple, tY-zeta=-2pi sum_I e_j(R_j-m_j)+2pi p rho G modulo2pi. Thus the SAME measured Y determines F_z^raw(y)=2[1-cos(ty-zeta)]/v. The normalization is strictly positive because rho p>0. Under Q_x^lat this observable approximates
+
+$$
+ U_z^2,\qquad
+ U_z=-\frac{z_1}{\ell}\frac{\sum_I C_j(R_j-m_j)}{S_x}
+                  +\frac{z_2}{\ell}G.
+ \tag{199.11}
+$$
+
+Here is the required audit for the larger denominator budget. The omitted compensation divided by sqrt(v) has every fixed r-norm bounded by
+
+$$
+ C_r Q^{O_r(1)}\frac{q^{3/2}D_Q}{\rho}
+ =Q^{O_r(1)}e^{-(\phi-3c_q/2-c_*)\lambda}.
+ \tag{199.12}
+$$
+
+Indeed sqrt(v)>=2pi p rho cancels p from the compensation numerator4pi p sum C_j(pi_j-pi_0)(R_j-m_j). Independent count-moment expansion bounds this sum by C_rD_Q S_x, with the exponentially tiny lattice mean bias also paid. At c_*=2c_q and beta>4/5, phi>4c_q, so the exponent has a strict positive margin. There is no approximation error multiplied by p_max, inverse v, or a count of all possible phases.
+
+The normalized count direction in(199.11) has bounded fixed moments uniformly in all coefficients z/ell. Its E part is exponentially small by(199.6) and C_j<=CQ^3600 on E. Normalized integer-Gaussian moments on J equal Gaussian polynomial moments to Ce^{-c'd_j}, uniformly in m_j, by the normalized Poisson identity and fixed derivatives proved in (196.16). Tensor expansion of any fixed-degree joint moment costs only a fixed polynomial in Q. The same statement holds for a FINITE family of z's on the same array, without conditioning a selected phase as independent.
+
+Using |2(1-cos u)-u^2|<=Cu^4 and v<=4pi^2epsilon^2 gives
+
+$$
+ \|F_z^{\rm raw}(Y)-U_z^2\|_r
+ \le C_r\epsilon^2+Q^{O_r(1)}e^{-\eta\lambda}
+ \tag{199.13}
+$$
+
+uniformly over (199.9), for fixed r and some eta>0. Even multiplication by the O(Q) centered-surprise norm leaves a negligible error. In particular alpha=0, arbitrarily tiny ell, rational pi_0 and all central count configurations are permitted.
+
+Set L=Q^(1/100), F_1=clip(Y,-L,L), F_2=F_1^2, F_z=min(F_z^raw,L). These are bounded functions of the same Y. Fixed high moments, for example order4000 as in Chapter 196, make their clipping errors o_P(Q^-4) through Gram degree2 and one surprise mark. The physical Y is not clipped and no noise is added.
+
+For clarity the selected transport remains exact: s_x=s_Q-log h-d, |d|<=CaQ, and for0<=h<=C, |h log h|<=C'|h-1|, h(log h)^2<=C'(h-1)^2. Hence total signed mass errors through centered surprise powers0,1,2 are at most Ca, CaQ, CaQ^2. Add CQ^-444 for product-to-lattice comparison. Expanding the same residual mark (G^2-1)/2 gives kernels whose absolute integrated norms are fixed Gaussian moments, independent of sigma. Thus clipped Gram errors are O((a+Q^-444)L^4)=o_P(delta), and centered-mark covariance errors O((aQ+Q^-444)L^2)=o_P(sqrt(delta)). The second normalized mark is paid at O(aQ^2+Q^-444)=o_P(1), with its exact centering. No unmarked-TV shortcut or inverse-noise bad-event multiplier is used.
+
+The exact selected orthogonalizations of F_1,F_2 give B_1,B_2 as in (196.31), with projection norm A^2/Lambda+K+o_P(1). Their variance/covariance errors are o_P(delta) and o_P(sqrt(delta)), respectively, so the amplified A factors are paid. Project each centered F_z off B_1 and B_2, obtaining B_z. The same joint Gaussian polynomial calculation, now uniform over (199.9), gives
+
+$$
+ E_PZB_z=1-\chi\theta_z+o_P(1),\qquad E_PB_z^2=2+o_P(1).
+ \tag{199.14}
+$$
+
+For two phases z,z', write n_z=(-z_1,z_2)/|z|. Before macro projection their squared Gaussian directions have covariance2(n_z dot n_z')^2. Their first macro covariance is2theta_z r_x+o_P(sqrt(delta)); their second macro covariance is o_P(1), using r_2=O_P(delta) and sigma->0. Therefore the full joint selected Gram entries after projection satisfy
+
+$$
+ E_PB_zB_{z'}=2(n_z\cdot n_{z'})^2+o_P(1).
+ \tag{199.15}
+$$
+
+This proves the needed common realization. Off-diagonal errors follow from the same bounded signed-moment transfer, not from multiplying separately favorable estimates. At most two phases will be chosen. The estimates are pointwise uniform in their allowed parameters, so data-dependent choice creates no raw-law union or conditional-independence premise.
+
+### 199.4 Integer geometry: availability and the precise thin exception
+
+For the actual pi_0,S_x,rho, the set
+
+$$
+ \mathcal L_x=\{(S_x(2p\pi_0-k),\rho p):(p,k)\in\mathbb Z^2\}
+ \quad\hbox{has covolume }\mathfrak d=S_x\rho>0.
+ \tag{199.16}
+$$
+
+This is an invertible linear image of Z^2, not a random normal ensemble. Integer determinants are retained: det(z(p,k),z(p',k'))=S_x rho(p k'-k p'). Two multiples have determinant zero and exactly the same theta; no gain is inferred from them.
+
+Let a=z(p_a,k_a) be a shortest nonzero lattice vector, selected deterministically among ties and with p_a>0. Existence follows from lattice discreteness. It is primitive because division by a common integer factor would shorten it. The choice is well defined on the good event: N=ceil(sqrt(S_x/rho)) and elementary pigeonhole approximation give some1<=p<=N with |2p pi_0-k|<=1/N; its length is at most3sqrt(mathfrak d). Vectors with p=0 have length at least S_x, so cannot be shortest. Consequently
+
+$$
+ 0<|a|\le3\sqrt{\mathfrak d}<\epsilon/100
+ \tag{199.17}
+$$
+
+eventually, because mathfrak d<=4q^(3/2)rho decays exponentially at c_*=2c_q. No generic irrationality is used.
+
+If |a|>=100 mathfrak d/epsilon, Bezout supplies an integer vector b_0 completing the primitive (p_a,k_a) to determinant1. Subtract an integer multiple of a so that the component of b along a has magnitude at most |a|/2. Its perpendicular component has magnitude exactly mathfrak d/|a|<=epsilon/100. Therefore |b|<=epsilon/50, after harmlessly weakening sqrt((epsilon/200)^2+(epsilon/100)^2). The two vectors remain a basis of the SAME integer lattice with determinant magnitude mathfrak d.
+
+Express the target v_0=(0,epsilon/2) in this basis, round each real basis coefficient to a nearest integer, and call the resulting lattice vector w. This is an existence/construction in ordinary mathematics, not a numerical program. The rounding error is at most(|a|+|b|)/2<epsilon/50. Hence
+
+$$
+ |w_1|<\epsilon/50,\quad 12\epsilon/25<w_2<13\epsilon/25,\quad
+ |w|<\epsilon,\quad p_w=w_2/\rho>0,\quad\theta_w<1/100.
+ \tag{199.18}
+$$
+
+Both amplitudes and the legal denominator p_w<=epsilon/rho have now been proved. If desired, divide the integer pair defining w by its gcd; its direction and theta are unchanged and its amplitude decreases. This is division of an actual integral pair, not division of a normal by an unrelated denominator.
+
+Consider the only difficult case theta_a in[3/4,9/10]. Then a and w cannot be parallel. Their direction inner product has magnitude at most sqrt(theta_w)+sqrt(1-theta_a)<=1/10+1/2=3/5. By(199.15), their selected residual Gram matrix has diagonal2+o_P(1), off-diagonal magnitude at most18/25+o_P(1), and minimum eigenvalue at least1 eventually on probability1-o(1). Thus two genuinely different observables of the SAME Y are available and quantitatively well conditioned. The w mark covariance is at least1-chi/100+o_P(1). No assumption that a second direction exists in the other branch is made.
+
+If theta_a lies outside[3/4,9/10], the shortest phase alone suffices: chi<37/30 and chi>11/9 imply |1-chi theta_a|>=3/40. Thus in either the noncritical case or the basis-available case, (199.14) and exact L2 projection yield an additional information gain at least9/3200-o_P(1), beyond A^2/Lambda+K. In the latter case the w contribution is in fact much larger; the conservative common bound is convenient.
+
+The ONLY remaining geometric case is
+
+$$
+ |a|<100\mathfrak d/\epsilon,\qquad \theta_a\in[3/4,9/10].
+ \tag{199.19}
+$$
+
+It implies p_a rho<=|a|, so p_a<100 S_x/epsilon<=400q^(3/2)Q^40. Moreover
+|2pi_0-k_a/p_a|=(rho/S_x)sqrt(theta_a/(1-theta_a)); equivalently the exact distance of pi_0 from k_a/(2p_a) lies between (sqrt3/2)rho/S_x and (3/2)rho/S_x. This is a thin, shifted annulus about an ACTUAL rational approximation, with the same calibration and S_x. Exceptionally close rational data are explicitly retained. Exact rationality alpha=0 instead gives theta=0 and is already in the good branch.
+
+The geometric argument alone assigns no probability to(199.19). In particular a small lattice covolume does not force two short independent directions: Bezout's second perpendicular length is mathfrak d/|a|, which can be large when the first vector is too short. This is a limitation of the available representation, not a physical counterexample. We now move once to the lawful calibration representation to pay a specified part of the exception.
+
+### 199.5 Actual-law payment of the low primitive-denominator critical sector
+
+All phase objects are used where the central group exists. Declare the new phase events false when C_0=0; that failure already belongs to the inherited raw regularity cost. The support-dependent reservoir field below is a proof disintegration only, not extra observer information. The actual phase observables depend on x and Y, not on the hidden true support used to prove their uniform raw-law bound.
+
+Define the new event, without conditioning on an approximant,
+
+$$
+ E_{\rm low}=\{\exists (p,k)\in\mathbb Z^2: 1\le p\le R_Q,
+ \gcd(p,k)=1,\quad
+ \tfrac34\le\tfrac{S_x^2(2p\pi_0-k)^2}
+ {S_x^2(2p\pi_0-k)^2+\rho^2p^2}\le\tfrac9{10}\},
+ \quad R_Q=\lfloor e^{\kappa\lambda/8}\rfloor.
+ \tag{199.20}
+$$
+
+This is larger than the low-denominator part of(199.19): it does not require shortestness or small amplitude. Thus its probability bound will also cover arbitrary adaptive selection of the shortest vector. S_x is the ACTUAL calibrated variance scale on the same array and is not frozen while pi_0 changes.
+
+Here we use the exact FULL-anchor intermediate result (178.20), not its subsequently defined deleted-high-pair calibration p(v). A minimal lawful view suffices. Predetermine m_c=floor(exp(kappa lambda)) true-label pairs in the permitted within-type ordering. Put k_*=k_0-D_*, l_*=l_0, where the fixed original-model integer D_* is as in (178.8). Reveal masks/totals, eligibility for the three allocations ((k_*,l_*),(k_*,l_*)) and ((k_*+1,l_*),(k_*-1,l_*)) with its reverse, all ineligible allocations and all but the first n eligible pairs. Here c_sup>0 is the fixed near-mean supply constant of Chapter 178, unrelated to the noise exponent c_*, and n=floor(c_sup m_c/(2lambda^2)) and log n=kappa lambda-6log Q+O(1).
+
+Every retained pair lies OFF the entire original count line. Its category switch preserves its likelihood product and changes its sum by the fixed positive cosh(a_s)-1 contrast. Thus every C_j, including the central anchor multiplicity, is fixed by the coarse field F. Every label, including these pairs, remains in the exact outside symmetric coefficients in(199.2).
+
+The same exact raw slot disintegration as (178.13) gives
+
+$$
+ V\mid\mathcal F\sim\operatorname{Bin}(n,\vartheta_Q),\qquad
+ \vartheta_Q=\frac{2k_*}{3k_*+1}\in[1/2,2/3].
+ \tag{199.21}
+$$
+
+This is RAW category randomness, not posterior latent-count randomness. To justify it, condition first on all parity/type masks and pair totals. Within each true-label pair the slot weights agree, so the two hidden allocations have their exact binomial split weights. The mixed/central ratio is k_* /(k_*+1) per orientation; two orientations give the displayed category probability. Eligibility restricts one factor at a time. Partition by the retained index set and integrate the subsequently revealed factors; the surviving product kernel is unchanged. For paths, the parity record preserves the predecessor dependence and the permitted terminal factor is revealed; rows are not replaced by iid rows. Selection of the first n eligible pairs depends on flags, not on hidden categories after restriction.
+
+Supply is paid BEFORE this conditioning. One near-mean allocation has probability at least c_sup lambda^-2 in the authenticated bounded joint Poisson comparison. Its fewer-than-n tail is exp[-c_sup m_c/(8lambda^2)]; the raw joint comparison for2m_c labels costs O(m_c/M+sqrt(m_c/M))=o(1), separately in the two experiments. This comparison is used only for the bounded supply event; no Poisson replacement of a fixed-total conditional fiber occurs. There is no high-band proof-pair requirement in this minimal view, since we use P_a(v) directly. Other historical proof blocks, if present, can be fully revealed and kept disjoint; no simultaneous deletion or new multi-deletion approximation is needed.
+
+Define a COARSE good field G_cal from the all-category0 array, successful supply and central supply C_0>=c q/Q^3. Changing at most2n weights shifts the calibrated mean by at most2n and the root's log multiplier by O(n/q); n=o(q). A calibrated variance comparable to q and anchor odds in a fixed compact interval for one good configuration therefore imply those properties for EVERY category configuration, and after the at-most-three deletions used in the fixed-offset proof. This follows by the variance derivative and intermediate-value bracketing used in (178.14); the variance at log shift z is between exp(-|z|) and exp(|z|) times its initial value. Define enlarged constants in G_cal so that the original regular array implies it. The same implication pays its failure without conditioning (199.21) on a hidden-dependent regularity event. In particular
+
+$$
+ P_S(G_{\rm cal}^c)\le b_{\rm cal}(Q)=o(1),\quad
+ \pi_0=P_a(V),\quad c_0/q\le P_a(v)-P_a(v+1)\le C_0'/q
+ \ (0\le v<n).
+ \tag{199.22}
+$$
+
+The exact finite spacing is (178.20). Its proof compares category0 and1 by deleting only that pair and the central anchor, uses the common outside mean q-1 and the uniform fixed-offset ratio with O(q^-2) remainder, and obtains a strict negative main change of size eta_*/q. Positivity of the full elementary-symmetric denominator and the fixed contrast make the lower constant c_0>0. It compares two exact finite ratios; it does not differentiate or accumulate n remainders. All n-1 other retained pairs, all physical groups and all other outside labels remain in those ratios. The argument did not require a high-band pair until the later (178.21) conversion, which is NOT used here.
+
+For all category configurations on G_cal, the complete-window calibrated p_j are in a fixed compact interval, for example[1/20,19/20]. This follows from the root bracket and the uniform tiny count-line likelihood gap. Hence, with the F-measurable quantity
+
+$$
+ S_{\min}=\left(\frac1{50}\sum_I C_j^3\right)^{1/2},\qquad
+ S_x(V)\ge S_{\min}\ge c q^{3/2}Q^{-9/2}
+ \quad\hbox{for ALL }V.
+ \tag{199.23}
+$$
+
+The actual S_x(V), centers and calibration can co-vary arbitrarily subject to these proved bounds. We use only a one-sided envelope to place the critical intervals before V is revealed. On E_low, the exact ratio equation in(199.20) implies
+|pi_0-k/(2p)|<=(3/2)rho/S_x(V)<=(3/2)rho/S_min. The rational VALUES k/(2p),1<=p<=R_Q, that can approach[0,1] lie in[-1,2] eventually; there are at most8R_Q^2 such presentations. Enlarging from reduced values only increases this upper bound. They and the interval radius are F-measurable. A maximum binomial atom is at most C/sqrt(n), by Fourier inversion of |1-vartheta+vartheta exp(it)| and vartheta in[1/2,2/3]. Exact monotone spacing in(199.22) puts at most1+Cqw points P_a(v) in an interval of length w. Therefore
+
+$$
+ P_S(E_{\rm low}\mid\mathcal F)\,1_{G_{\rm cal}}
+ \le \frac{C R_Q^2}{\sqrt n}
+              \left(1+\frac{q\rho}{S_{\min}}\right)1_{G_{\rm cal}}.
+ \tag{199.24}
+$$
+
+At c_*=2c_q, q rho/S_min<=Q^{O(1)}exp[-(5c_q/2)lambda], while R_Q^2/sqrt(n)=exp[-kappa lambda/4+O(log Q)]. Integrating the ACTUAL coarse marginal and adding b_cal proves(199.1). This is a new unconditional payment for the critical phase sector. No generic density, uniform phase, independence of the selected approximant, or claim that rational intervals have their Lebesgue probabilities enters. In particular the atom term1 in(199.24) is retained. The SAME V moves pi_0, S_x and all finite-q coefficients; the interval envelope is what makes the union lawful.
+
+### 199.6 Fixed-c physical map and the exact remaining event
+
+Let a=z(p_a,k_a) be the actual shortest primitive vector from Section 199.4 and define
+
+$$
+ E_{\rm mid}=\{|a|<100S_x\rho/\epsilon,\quad
+          \theta_a\in[3/4,9/10],\quad p_a>R_Q\}.
+ \tag{199.25}
+$$
+
+On the original good event its denominator also satisfies p_a<400q^(3/2)Q^40. This retains shortestness, primitivity, the actual phase variance, common calibration and the exact noise. It is not the freely enlarged union over all rational values. Its probability is NOT estimated here.
+
+Use I_x=E_P[E_P(Z|Y)^2]. The exact selected projection onto the macro features and either a or w gives, outside(199.19),
+
+$$
+ I_x-A^2/\Lambda\ge K+9/3200-o_P(1).
+ \tag{199.26}
+$$
+
+The error is common to the at-most-two selected phase choices by the uniform estimates in Section 199.3, including their Gram positivity. On the part of(199.19) with p_a<=R_Q, E_low occurs and(199.1) pays its actual probability. Consequently
+
+$$
+ \sup_{S\ {\rm legal}}P_S\{I_x-A^2/\Lambda<K+1/1000, E_{\rm mid}^c\}
+ \longrightarrow0,
+ \tag{199.27}
+$$
+
+separately for pair/path. This is the promised fixed-c reduction with an actual-law portion paid. It does not assert that the complement E_mid^c has nonvanishing probability.
+
+Keep the exact original D_x(y)=Vpost_x(y)-Vprior_x+A^2/Lambda-C_xy, R_*(y)=29/6-3sqrt2+(3sqrt2+8/sqrt3-9)y^2/nu, and Rbar=8/sqrt3-25/6=1/2-K. The finite normalized mark identity (196.41), with the full selected output mixture positive for every y, gives
+
+$$
+ Dint_x:=\int f_xD_x=1/2-I_x+A^2/\Lambda-C_xm_x,\qquad m_x=E_PY.
+ \tag{199.28}
+$$
+
+All second normalized marks and the nonlinear conditional mean square are retained in this identity. Its integrability follows from a(y)^2/f(y)<=E[Z^2;Y in dy]/dy and integral b(y)=0, where a and b are the first and second normalized marked densities. It is not an unmarked density comparison.
+
+The original SAME T and h bound, without any noise division, give m_x=O_P(a+a^2delta^-1/2), C_xm_x=o_P(1), and E_PY^2->nu, as proved in (196.39)–41. The exact C_xm_x is retained before estimating it; neither mu nor the prior surprise is replaced by a deterministic mean. Combining (199.27–28) yields
+
+$$
+ \sup_S P_S\{\overline R-Dint_x<1/2000, E_{\rm mid}^c\}\to0,
+ \tag{199.29}
+$$
+$$
+ \sup_S P_S\left\{\int_{\mathbb R}f_x(y)|D_x(y)-R_*(y)|\,dy<1/4000,
+                         \ E_{\rm mid}^c\right\}\to0.
+ \tag{199.30}
+$$
+
+The second implication uses integral f R_*->Rbar and |integral f(D-R_*)|<=integral f|D-R_*| on ALL outputs. This direction is legitimate for a negative consequence; a necessary integrated condition has not been promoted to a sufficient positive profile theorem. Physical moments, exact core H, every low/outside factor, the selected normalizer and both real derivatives remain unchanged.
+
+No harmonic-volume estimate is claimed or needed for these bounded-observable lower bounds. There is no multiplication of a raw bad-event probability by inverse noise. Conversely, (199.29–30) do not complete the physical target, because P(E_mid) is still unpaid. A free rational union through its possible upper denominator would have an unhelpful atom cost of order q^3/sqrt(n), but that failed upper bound neither proves attainability nor supplies a lower probability. No formal near-rational coefficient example is presented as a physical counterexample. The gap is the actual raw probability of the precisely selected, thin, larger-denominator critical event(199.25).
+
+
+### 199.7 来源、共同实现与未解事件
+
+第 196 章提供同一 Gaussian 残差平方参与的联合标记、宏观剖面系数、选取律返回与条件均值平方投影。第 142、153 章的带标记格点比较、第 178 章计数线外标签池及完整锚点有限差分是其他模型内前置。本章具体使用 (178.20) 的完整后验锚点 $P_a(v)$；不借用 (178.21) 以后删除高分标签对才定义的外部校准 $p(v)$，因此这里不需要高分标签对的存在条件。供给常数 $c_{\rm sup}$ 与固定噪声指数 $c_*$ 各有独立含义。
+
+Florin P. Boca 与 Alexandru Zaharescu，*The correlations of Farey fractions*，arXiv:math/0404114v4，其原始 TeX 的定义、主陈述、光滑测试条件及第 4 节完整证明已核对。该结果平均全部不同 Farey 分数，在集合基数倒数的尺度测试间距；证明使用 Möbius 求和、Poisson 求和和互素格点平均。它不描述本章共同全 $q$ 校准的原子分布，不提供固定自适应校准下的均匀方向定理。不同有理数的确定性分离不能代替实际校准落入其邻域的概率。
+
+该来源末尾 Mellin 计算的印刷式 (4.16) 写 $3x^2/\pi^2$，其前残数与后结论则为 $3x^2/(2\pi^2)$；本章不使用这一渐近，也不判定其排印历史。整数行列式与 Bézout 构造在第 199.4 节对实际格直接证明，保留极短最小向量导致的薄格例外。Dytso–Poor–Shamai 条件均值导数定理的 Markov 边界沿第 196 章保留，含同一残差平方的联合标记不被套用为纯计数标记。
+
+本章新增原模型关系是允许校准方差随同一隐藏类别改变的 (199.24) 概率支付，以及同一噪声下的不同相位构造和物理积分回接。确定性几何条件不充当额外分布定理，原子项不能因区间很短而省略。较大分母的实际 $E_{\rm mid}$ 概率、完整固定指数分类、紧邻 $99c_q/200$ 的正区间及原任务其他参数范围仍未解决。普通数学推导未作 Lean 认证，有限文献核对不构成全球原创性判断。
+
+## 追加锚（本行以下为增补区）
