@@ -5770,3 +5770,19 @@ M. Biskup、C. Borgs、J. T. Chayes、L. J. Kleinwaks、R. Kotecký，*Partition
 Katsevich 的 *The Laplace asymptotic expansion in high dimensions*（[arXiv:2406.12706v3](https://arxiv.org/abs/2406.12706v3)）假设 2.3 与注记 2.4–2.5 控制振幅乘密度的尾部，与本章指数标记问题相对应；单独的固定多项式振幅展开并不履行该义务。其单全局极小点前提也不自动覆盖此处竞争的端点与内点。Borgs–Kotecký 的 *Surface Induced Finite Size Effects for First Order Phase Transitions*（[arXiv:cond-mat/9501074v3](https://arxiv.org/abs/cond-mat/9501074v3)）第 6 节至 (6.8) 给出经典两相实响应关系；第 150 章的系数 $6$ 继续归属该成熟有限相机制，两篇原始条件与提取边界沿用第 150 章说明。
 
 同一实现上的关系为：第一共轭对相对于实际等质量场的实位移是 $-\pi^2/(2K_Wr_W^3)$，敏感度峰的实位移是 $-6/(K_Wr_W^3)$，误差均为 $o_{\mathrm{Prob}}((r_Wt^2)^{-1})$；其比值才趋于 $12/\pi^2$。改用精确剖面等质量中心 $h_W$ 时，共同有限质量修正不能删除，因此不是同一个比值。新增内容在于原始计数的指数标记回接及其与有限剖面零点／实响应的连接，不在于创造一般两相抵消机制。本章未证明增长编号、全局最近零点、圆定理、全局相图或原环境期望收敛，也未作 Lean 或全球原创性认证。
+
+## 谱边界第 153 章补充：精确格点率与共同选池预算
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 153 章给出原始选择计数后验在 $\rho\asymp e^{-cQ^3}$ 下的显式正充分区间。预先选择的同一总数对 $x=(x_+,x_-)$ 同时控制大偏差率 $I(x)$ 与分数位移 $\ell(x)$；共同条件槽位律、池供给、有理值间隔、响应曲率和两阶标记回接逐项履行其条件，未把独立比较 Poisson 行当作实际路径行。
+
+Valentin Féray、Pierre-Loïc Méliot、Ashkan Nikeghbali，*Mod-phi convergence I: Normality zones and precise deviations*，[arXiv:1304.2934v4](https://arxiv.org/abs/1304.2934v4)。已核对原始 TeX 的 mod-$\phi$ 定义、Legendre–Fenchel／Poisson 率函数讨论、带倾斜格点 Fourier 反演引理及证明，以及主格点精确偏差定理（原标签 `thm:mainlattice`）的完整陈述和证明。生成函数须在一个共同复带上存在，参考律是非退化无限可分律，$e^{-t_n\eta(z)}\varphi_n(z)$ 须局部一致趋于解析残差 $\psi(z)$，且 $\psi$ 在该复带的实部不消失。主格点定理还要求复带包含零、参考律的最小格点为 $\mathbb Z$、$O(t_n^{-v})$ 的收敛速度、固定内部偏差位置 $x$ 与整数 $t_nx$。
+
+该定理给出指数率、$t_n^{-1/2}$ 前因子和固定阶修正。证明在固定实倾斜下先作 $[-\pi,\pi]$ Fourier 反演，再使用离零频率的严格收缩和 Gaussian 鞍点积分；常数依赖该固定倾斜与紧轮廓。它不直接提供指数增长的实际约束占据向量上的一致近似，也不提供 $e^{-cQ^3}$ 后验带宽或惊异／噪声的两阶标记结论。单行和双行比较不能代替共同复带假设。
+
+单个比较变量 $\operatorname{Pois}(v\lambda)$ 的对应是精确的：$\eta(z)=v(e^z-1)$、$t_n=\lambda$、$\psi=1$，正位置 $x$ 的率函数为 $J_v(x)=x\log(x/v)-x+v$，最优倾斜为 $\log(x/v)$。第 153 章为处理所有确定取整，直接证明 $\Pr\{\operatorname{Pois}(v\lambda)=\lfloor x\lambda\rfloor\}\ge k_v(x)\lambda^{-1/2}e^{-\lambda J_v(x)}$ 的显式界；原文精确偏差框架用于归属与对应，不被当作实际多池律已经 Poisson 化的证明。
+
+同一总数对的最小率由 $\Psi(s)=\sum_\epsilon v_\epsilon(e^{sd_\epsilon}-1-sd_\epsilon)$ 给出，$x_\epsilon(s)=v_\epsilon e^{sd_\epsilon}$、$\ell=\Psi'(s)$。精确差式 $I(x)-I(x(s))=\sum_\epsilon J_{x_\epsilon(s)}(x_\epsilon)$ 只在相同分数位移约束下使用。正可行点和 $5\log Q+O(1)$ 的试验数额外开销均在正文中解析建立；有限正区间是模型内的充分结果，不声称最优性或必要性。
+
+原始归档为 312,525 字节，SHA256 `571a3db83d28686f776e8a1b542e63782c3220fd34bac22b2dadfcc60a2db64e`；主 TeX 335,779 字节，SHA256 `714ea7a213ccb25e4dc420e0ee0d1134e5407be67cef182221e56cbdc0b1a927`；文献文件 17,440 字节，SHA256 `8effbae78f5c53b9c00e12c838ad147cbffd42a6c4d72257d405bf826aaf40a0`。原文 Poisson 率的分段式在 $x>0$ 之后将其余情况写成无穷，而下半连续延拓在 $x=0$ 的值为 $v$；本章只选严格正的 $x_\epsilon$。主格点定理前的均值等式使用极限残差导数 $\psi'$ 代替有限 $n$ 的残差导数，本文不使用该有限等式。原始草稿注释和非格点旁论保持原文身份，不作为本模型前提。
+
+原始第 68 章的相对单／双行概率与精确计数线率仅在其合法范围使用；选池总数的共同比较由本章另行证明。第 151 章的分离有理弧与完整后验回接保留原文归属，新的立方率预算逐项核对增长参数后才使用这些接口。正文区分精确率可行集的弱包含和最终区间的严格扩大；有限搜索未证明全球原创性，普通数学推导未取得 Lean 认证。
