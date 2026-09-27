@@ -22,6 +22,82 @@ def require(test, message):
     if not test:
         raise ArithmeticError(message)
 
+def rank_colored_check(profiles, event_mass, uncapped_hinge):
+    """Verify one actual rank-coloured family, including literal private points."""
+    labels = []
+    for powers in profiles:
+        rank = sum(powers)
+        if rank == 0:
+            continue
+        d = prod(p ** e for p, e in zip(P, powers))
+        modulus = CURRENT * d
+        residue = d * ((rank * pow(d, -1, CURRENT)) % CURRENT)
+        point, period = 0, 1
+        for r, m in [(p ** e, p ** 3) for p, e in zip(P, powers)] + [(rank, CURRENT)]:
+            point += period * (((r - point) * pow(period, -1, m)) % m)
+            period *= m
+        require(0 <= residue < modulus and residue % d == 0 and residue % CURRENT == rank, 'rank original CRT')
+        require(all(point % (p ** 3) == p ** e for p, e in zip(P, powers)), 'private exact valuations')
+        require(point % CURRENT == rank, 'private current colour')
+        labels.append((rank, d, modulus, residue, point))
+    require(len(labels) == len({row[2] for row in labels}) == 2186, 'rank distinct originals')
+    require(period == CURRENT * prod(p ** 3 for p in P), 'private witness period')
+    memberships = 0
+    for i, (_, _, _, _, point) in enumerate(labels):
+        hits = []
+        for j, (_, _, modulus, residue, _) in enumerate(labels):
+            memberships += 1
+            if point % modulus == residue:
+                hits.append(j)
+        require(hits == [i], 'private witness has exactly its own membership')
+    colour_counts, antichain_pairs = {}, 0
+    for rank in range(1, 15):
+        group = [d for r, d, _, _, _ in labels if r == rank]
+        colour_counts[rank] = len(group)
+        for i, d in enumerate(group):
+            for other in group[i + 1:]:
+                require(d % other != 0 and other % d != 0, 'same-colour divisor antichain')
+                antichain_pairs += 1
+    haar_actual = event_actual = haar_load = event_load = F(0)
+    for powers in profiles:
+        mass = prod(F(p - 1, p ** (e + 1)) if e < 2 else F(1, p ** 2)
+                    for p, e in zip(P, powers))
+        d2 = prod(e + 1 for e in powers)
+        colours = {0}
+        for exponent in powers:
+            colours = {r + k for r in colours for k in range(exponent + 1)}
+        colours.discard(0)
+        require(colours == set(range(1, sum(powers) + 1)), 'all and only attainable ranks')
+        alpha = F(len(colours), CURRENT)
+        load = F(d2 - 1, CURRENT)
+        actual = max(F(0), 2 * alpha - 1)
+        additive = max(F(0), 2 * load - 1)
+        require(alpha <= load and alpha <= F(14, 23) and actual <= F(5, 23), 'actual rank union bound')
+        haar_actual += mass * actual
+        haar_load += mass * additive
+        if d2 >= THRESHOLD:
+            event_actual += mass * actual
+            event_load += mass * additive
+    actual_hinge = (1 - MIX) * haar_actual + MIX * event_actual / event_mass
+    repeated_hinge = (1 - MIX) * haar_load + MIX * event_load / event_mass
+    require(repeated_hinge == uncapped_hinge, 'recolouring preserves additive hinge')
+    require(haar_actual == event_actual, 'positive actual hinge lies in source event')
+    require(actual_hinge == F(1219830493798061, 585086293700984182482375), 'rank actual hinge exact value')
+    return {
+        'family': 'a_d mod23d, a_d=0 mod d and a_d=sum_p v_p(d) mod23, 1<d|product_p p^2',
+        'old_coherence': 'centre0', 'full_centre_coherence': False,
+        'actual_originals': len(labels), 'colour_counts': colour_counts,
+        'private_witness_period': period, 'private_witnesses': len(labels),
+        'literal_membership_checks': memberships, 'same_colour_antichain_pairs': antichain_pairs,
+        'actual_union_fraction': 'sum_p min(v_p(x),2)/23',
+        'actual_union_hinge': str(actual_hinge),
+        'actual_union_hinge_decimal': float(actual_hinge),
+        'Haar_actual_union_hinge': str(haar_actual),
+        'max_actual_union_fraction': '14/23', 'max_pointwise_union_hinge': '5/23',
+        'uncapped_additive_hinge': str(repeated_hinge),
+        'private_rule': 'CRT(p^e mod p^3 for every p; rank mod23)',
+    }
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output')
@@ -90,7 +166,7 @@ def main():
         'density_min': 1 - MIX,
     }
     result = {
-        'scope': 'AH9 scalar/support interface; canonical467 source selection not reconstructed; no irredundancy or whole-cover premise; no Lean claim',
+        'scope': 'AH9 scalar/support interface, including an irredundant rank-coloured family; canonical467 source selection not reconstructed; no whole-cover premise; no Lean claim',
         'old_primes': P, 'current_prime': CURRENT, 'old_height': 2,
         'event_threshold': THRESHOLD, 'valuation_profiles': len(profiles),
         'event_profiles': event_profiles, 'actual_full_labels': len(full),
@@ -100,6 +176,7 @@ def main():
         'exact': {key: str(value) for key, value in rational.items()},
         'decimals': {key: float(rational[key]) for key in ('R_infty', 'density_max', 'uncapped_hinge')},
     }
+    result['rank_colored'] = rank_colored_check(profiles, event_mass, hinge)
     rendered = json.dumps(result, indent=2, ensure_ascii=False) + '\n'
     if args.output:
         with open(args.output, 'w', encoding='utf-8') as handle:

@@ -1,17 +1,23 @@
 # The AH9 interface does not bound the uncapped coherent hinge below one
 
 The three displayed source properties in report473(AH9) do not, by themselves,
-imply an uncapped additive cofactor hinge below one, even for actual distinct
-odd moduli with one common old centre. The finite construction below satisfies
-all three properties, has a hinge strictly above one, and has exactly the same
-actual forbidden union as a seven-label family whose additive hinge is zero.
+imply an uncapped additive cofactor hinge below one, even for an irredundant
+family of actual distinct odd moduli with one common OLD-coordinate centre.
+One explicit law satisfying all three properties supports an additive hinge
+strictly above one. Rank colouring the2186 original moduli gives a private
+integer for every class while preserving that same law and additive load.
+
+A separate zero-current-phase construction has exactly the same actual
+forbidden union as a seven-label family whose additive hinge is zero. These
+same-union and irredundancy conclusions concern two different assignments of
+current phases; the zero-current-phase family remains redundant.
 
 This is an interface counterexample. It does not produce an odd cover, refute
 report473, or identify its law with report467's particular source-selection
-mechanism. The larger original family is highly redundant. The example does
-not rule out a route which first reduces to an irredundant original family and
-then uses that additional geometry. All deductions here are ordinary
-mathematics with exact finite checks, not new Lean verification.
+mechanism. The irredundant family has different current phases, so a bound
+requiring FULL CRT coherence plus irredundancy remains outside its scope.
+All deductions here are ordinary mathematics with exact finite checks, not
+new Lean verification.
 
 ## The interface and the two different quantities
 
@@ -171,13 +177,102 @@ For reproduction, the two unnormalized Haar contributions are
 
 Multiplying the first by3/5 and the second by2/(5e) gives CU9.
 
+## Rank colouring makes the obstruction irredundant
+
+The redundancy of CU6 is not necessary for the AH9-interface obstruction.
+Keep the SAME old source CU1 and the same2186 numerical moduli23d. For
+
+    d=product_(p in P)p^e_p,  0<=e_p<=2, d>1,
+    r(d)=sum_p e_p in{1,...,14},
+
+give the original class its unique normalized CRT phase
+
+    a_d=0 mod d,
+    a_d=r(d) mod23,
+    a_d=d*[r(d)*(d^(-1) mod23) mod23].             (CU10)
+
+The bracket denotes the representative in{0,...,22}. Each numerical d receives
+exactly one current colour; the colours are fixed before drawing the common
+old law. There is no independent optimization of a colour group or change of
+source. Every old phase is still the common centre0, but the current phases
+are different. This is OLD-coordinate coherence, not full CRT coherence.
+
+Within one colour, old cofactors form a divisibility antichain. Indeed,
+d'|d means e'_p<=e_p at every p, and equality of r(d') and r(d) forces equality
+of every exponent. All colours are below23, so colour equality modulo23 is
+literal equality of ranks, without wraparound.
+
+More strongly, every original has an actual private integer. For the exponent
+tuple of d, choose x_d by CRT with
+
+    x_d=p^e_p mod p^3 for every p in P,
+    x_d=r(d) mod23.                               (CU11)
+
+The old valuations of this integer are exactly e_p. If x_d lies in another
+original a_(d') mod23d', then d'|x_d gives e'_p<=e_p, while the current
+coordinate gives r(d')=r(d). Thus d'=d. Each x_d belongs to its own original
+and no other one. The family is irredundant; deleting any class changes the
+actual union. The witness period is
+
+    23 product_p p^3=2623683309902380600875.
+
+The colour-class sizes, for ranks1 through14, are
+
+    7,28,77,161,266,357,393,357,266,161,77,28,7,1.
+
+Changing the current phases does not alter which old cofactor indicators are
+active. Thus this irredundant family's additive load and hinge remain exactly
+
+    f_rank(x)=(D2(x)-1)/23,
+    H_(1/2)(f_rank)=H_(1/2)(f_full)>1.             (CU12)
+
+The same all-height query and density bounds CU2--CU5 continue to hold. They
+are properties of the unchanged old law, which is supported on the full
+survivor of the unchanged empty old-only family.
+
+The ACTUAL union is different from CU8 and can also be computed exactly.
+Write v_p=min(v_p(x),2) and s=sum_p v_p. The active exponent vectors are
+precisely the nonzero e with0<=e_p<=v_p. Their possible ranks are every
+integer1,...,s: sums of the integer intervals{0,...,v_p} form the full interval
+{0,...,s}. As s<=14<23, their current colours are all distinct. Hence
+
+    alpha_rank(x)=s/23,
+    alpha_rank(x)<=14/23,
+    (2 alpha_rank(x)-1)_+<=5/23.                  (CU13)
+
+The actual current fibre always has at least9/23 surviving mass. In particular,
+this is not a whole cover or a counterexample to report473.
+
+Exact integration gives
+
+    H_(1/2)(alpha_rank)
+      =1219830493798061/585086293700984182482375
+      =0.0000000020848727904425514... .             (CU14)
+
+For reproduction, its Haar value is233/41614070773275. A positive actual
+hinge requires s>=12. For v in{0,1,2}, (v+1)^2>=2^v, so
+D2^2>=2^s>=2^12 and hence D2>=64>32. Its positive set lies in E.
+Multiplying that Haar value by the density3/5+2/(5e) from CU2 gives CU14.
+The uncapped hinge above one and the small actual-union hinge therefore refer
+to exactly the same source and exactly the same irredundant original family.
+
+This rules out the proposed implication using AH9 together with
+OLD-coordinate coherence and actual irredundancy. It does not rule out a
+bound under the stronger requirement of FULL CRT coherence plus irredundancy:
+CU10 has no common current centre. Nor does it reconstruct report467's
+particular selected law or assume the extra structural consequences of a
+minimal whole covering family. Those are separate, unproved input bridges.
+The coordinates on which a conflict/coherence extraction is performed must
+therefore be stated explicitly.
+
 ## Precisely which proposed bridge fails
 
-There cannot be a theorem using ONLY the three displayed AH9 properties to
-bound the uncapped additive hinge by a uniform H0<1 for every finite coherent
-original family. CU1 and CU6 are a counterexample to that statement. At the
-same time, the actual union hinge is zero, so neither this example nor CU9
-contradicts report473's actual fibre-survival conclusion.
+There cannot be a theorem using only the three displayed AH9 properties,
+old-coordinate coherence and actual irredundancy to bound the uncapped
+additive hinge by a uniform H0<1. CU1 and CU10 are a counterexample to that
+statement. The zero-current family CU6 separately shows that identical actual
+unions can have different additive hinges. Both actual-union calculations
+remain compatible with report473's fibre-survival conclusion.
 
 The source law in CU1 has not been obtained from report467's prescribed source
 construction. Extra structure of that chosen law could still be useful. To
@@ -186,19 +281,14 @@ cannot substitute the three numerical/support summaries for it. The law has
 full support from an actual empty old family, so the sparse-support/density
 failure in report474 is not the issue here.
 
-The larger family is redundant: all2186 classes can be replaced by the seven
-short classes without changing their union. An irredundancy premise, if
-actually used by a consumer, is additional information absent from the
-refuted interface statement. This example supplies no counterexample under
-that additional premise and does not settle an antichain-restricted bound.
-
-One distinction is necessary for that proposed repair. If all FULL phases
-share one centre, irredundancy makes numerical moduli a divisibility antichain.
-If only OLD phases share a centre, as in report473, different current residues
-can make nested old-cofactor classes disjoint. At current height1, one can
-infer an antichain within each common-current-residue group; a single global
-old-cofactor antichain does not follow. At greater current heights, current
-prefix compatibility must also be preserved.
+Removing redundant originals fixes the zero-current family CU6 but cannot
+remove a class from the rank-coloured family CU10. Full CRT coherence would
+impose a stronger condition: irredundancy then forces one divisibility
+antichain. Old-coordinate coherence alone gives a separate antichain within
+each current-residue group at height1, and CU10 satisfies exactly those
+conditions. At greater current heights, current prefix compatibility must
+also be preserved. A bound for a full-centre antichain or for a prescribed
+source selector is not refuted by importing the broader old-only example.
 
 A separate repair is to work with the clipped majorant min(1,f_C). Its hinge
 is bounded by one, and report473's good set can bound it strictly below one
@@ -221,8 +311,14 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/coh
 Checks use explicit exceptions and remain active under Python optimization.
 They cover all2187 valuation types, the2186/7 original-label inventories,
 literal divisibility certificates for the common union, the rational sums,
-and all three strict comparisons. A separate exact implementation reproduced
-the event mass, all-height query norm, density and both hinge integrals.
+and all three strict comparisons. For CU10 the verifier additionally checks
+all2186 normalized CRT phases,4,778,596 private-point/class memberships,
+307020 same-colour antichain pairs and every valuation type's actual colour
+union. The result's original `exact.actual_union_hinge` belongs to the
+zero-current family; its `rank_colored` block records the irredundant family.
+A separate exact implementation reproduced the source quantities and both
+families' hinge integrals, independently constructing and checking every
+rank-coloured private point against all2186 originals.
 The monotone-cylinder proof and all-height geometric-tail deduction above
 are ordinary proof inputs; the finite check does not enumerate infinitely
 many cylinders or reconstruct the source selector.
@@ -239,3 +335,15 @@ requires a same-law multiplicity bridge.
 [Report562](562-joint-deletion-certificates-and-an-actual-query-antichain.md)
 retains actual-original, query-weighted losses; these data are not supplied
 by a clipped union bound alone.
+
+The irredundant examples in
+[Report564](564-integrated-actual-profiles-permit-empty-root-fibres.md),
+[Report609](609-linear-schedule-credit-fails-on-an-actual-irredundant-core.md)
+and [Report615](615-nested-actual-incidences-force-unbounded-fixed-law-credit.md)
+concern integrated support-profile or linear-schedule certificates.
+[Report622](622-full-capacity-unique-maxima-refute-the-universal-hinge-bound.md)
+uses a different full-capacity entropy-selected law and its stated family is
+redundant. Those results do not supply the same AH9/old-coherence/current-
+height1 interface of CU10--CU14. The rank-antichain and CRT reasoning here
+use elementary existing structures; no new generic antichain theorem or
+formal-library declaration is claimed.
