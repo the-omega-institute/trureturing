@@ -1,0 +1,39 @@
+**命题 622.1（固定超额阈值的精确缺额）。** 对任意
+
+$$
+v\in I_h=\left[\max\left(0,\frac{\theta-h}{p}\right),\min\left(q,\frac hd\right)\right],
+$$
+
+置 $c_i=u_i+v$、$H=h-dv$、$L=\min(1,\sum_i c_i+H)$。令 $w(v)$ 为第 607 节的双水位向量，即
+
+$$
+a_0=\min_{1\le k\le n}\frac{U_k+h+(k-d)v}{k},\quad
+a=\min(L/n,a_0),\quad y_i=\max(c_i,a),
+$$
+
+$$
+B=\max_{0\le k<n}\frac{L-\sum_{i=1}^ky_i}{n-k},\qquad
+w_i(v)=\min(y_i,B),\qquad w_\circ(v)=1-L.
+$$
+
+为避免与公共质量 $b$ 混淆，本批把上水位记为 $B$。对每个 $\tau\ge0$，有精确恒等式
+
+$$
+\boxed{
+\Delta_v(\tau):=\sum_i(\tau-w_i(v))_+
+=\max\left\{0,n\tau-L,\sum_i(\tau-c_i)_+-H\right\}.
+}
+$$
+
+证明：任意非负标签向量 $x$ 若满足 $\sum_i x_i=L$、$\sum_i(x_i-c_i)_+\le H$，则其缺额至少为零，至少为 $n\tau-L$，并由逐坐标关系
+
+$$
+(\tau-x_i)_+\ge(\tau-c_i)_+-(x_i-c_i)_+
+$$
+
+至少为第三项。因此右侧是所有可行向量的共同下界。
+
+第 608 节的构造在 $\tau\le a$ 时缺额为零，在 $\tau\ge B$ 时缺额为 $n\tau-L$；在 $a<\tau<B$ 时，下水位预算饱和，缺额恰为 $\sum_i(\tau-c_i)_+-H$。每一情形都达到右侧的一项，而其他各项已经是下界，故该项必等于最大值。端点由同一公式或连续性相接；若 $a=B$，没有需要另填的中间区间。证毕。
+
+这比只给一个最优重叠值多了一层关系：同一个标签向量对所有缺额阈值同时最优。后面的消元依赖这项同时性，不能换成“每个阈值另选一个向量”。
+

@@ -1,0 +1,6 @@
+**定义 840.2（项目接口）。** 新核对项目 [MarkovDataProcessing](../../../D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean) 的有限联合律、条件乘积与互信息差接口，[ConditionalEntropyEquality](../../../D5/S3/Entropy/ConditionalEntropyEquality.lean) 的正质量切片判据，以及 [ParetoWeakPreorder](../../../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.lean) 的逐坐标序结构。正文明确相应变量、前提与比较方向，并区分接口提供的关系和本批另外完成的最优化推导。这里只作源码与数学陈述核对，没有当前 Lean 内核或公理闭包验证。
+
+哲学直接新读文本为第 836 节所列詹姆斯片段，包括他先概括经典神秘主义的一致方向、再收紧该概括的上下文，以及随后对哲学工作的积极说明。其他传统沿用本卷已有背景；没有把詹姆斯的二手引文当成本批已独立校勘的各传统原典，也没有把他的历史心理学概括当作当前临床结论。
+
+本批按 formal-thinking-and-answer 的对象与关系框架、theory-volume-template 的追加结构组织纯理论正文，旧正文全部保持原字节。没有新增 Lean、工程、消化、构建、测试、数值实验、枚举或求解器；普通推导和来源核对不冒充当前形式验证。
+

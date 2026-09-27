@@ -1,0 +1,50 @@
+**命题 605.1（阈值形式与精确可行区间）。** 在命题 603.2 的表示中，全部边缘预算等价于存在一个阈值 $v$，满足
+
+$$
+0\le v\le q,\qquad
+\sum_i(w_i-u_i-v)_+\le h-(n-p)v.
+$$
+
+连同总质量与 $w_0\le u_0$，可用阈值的区间恰为
+
+$$
+\boxed{
+\mathcal I_h=
+\left[
+\max\left(0,\frac{\theta-h}{p}\right),
+\ \min\left(q,\frac{h}{n-p}\right)
+\right].
+}
+$$
+
+该区间非空，当且仅当 $h\ge c\theta_+$。
+
+证明：对任意非负向量 $z$，把其坐标从小到大排序，可直接在第 $p$ 与第 $p+1$ 个坐标之间取阈值，得到最小部分和的常用阈值表达
+
+$$
+\sigma_p(z)
+=\max_v\left(\sum_i\min(z_i,v)-(n-p)v\right).
+$$
+
+当全部 $z_i\le q$ 时，只需 $0\le v\le q$；区间外不会改善值。将 $z_i=\min(t_i,q)$ 代入，并对 $v\le q$ 使用 $\min(z_i,v)=\min(t_i,v)$，得
+
+$$
+\sum_i t_i-\sigma_p((\min(t_i,q))_i)
+=\min_{0\le v\le q}
+\left(\sum_i(t_i-v)_++(n-p)v\right).
+$$
+
+又有 $(t_i-v)_+=(w_i-u_i-v)_+$，得到第一组条件。
+
+令 $c_i=u_i+v$、$H=h-(n-p)v$。可行必要求 $H\ge0$，以及
+
+$$
+1=w_0+\sum_iw_i
+\le u_0+\sum_i c_i+\sum_i(w_i-c_i)_+
+\le C+h+pv.
+$$
+
+因此还必须 $h+pv\ge\theta$。反过来，若这两个条件成立，总容量 $u_0+\sum_i c_i+H\ge1$；可以先在公共与标签容量内分配质量，再用至多 $H$ 的标签超额补足总量一，得到可行概率向量。所以所列阈值区间既必要又充分。
+
+最后，$\theta<1$，而 $pq=1/r>1$，故下端 $(\theta-h)/p$ 不会单独越过 $q$。唯一可能的冲突是 $(\theta-h)/p>h/(n-p)$；排除它恰为 $h\ge(n-p)\theta/n$。加上 $h\ge0$，即得 $h\ge c\theta_+$。证毕。
+

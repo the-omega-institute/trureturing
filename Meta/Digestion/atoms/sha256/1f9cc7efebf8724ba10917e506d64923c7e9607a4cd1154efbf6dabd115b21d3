@@ -1,0 +1,15 @@
+**定义 533.1（两个线性区间的接点）。** 对 $0<r<1$，置
+
+$$
+\eta_0=c\bigl(r(1-b)-n\varepsilon\bigr)
+=\lambda-c(1-r)n\varepsilon.
+$$
+
+因为 $\varepsilon>0$，有 $\eta_0<\lambda$；$\eta_0$ 可以为负。若 $r>M$，则
+
+$$
+\eta_0-\beta=cb(1-r)>0.
+$$
+
+若 $r\le M$，则 $\beta=0$。因此可行区间 $[\beta,\lambda]$ 可以被 $[\beta,\eta_0]$（仅在 $\eta_0\ge\beta$ 时存在）和 $[\max(\beta,\eta_0),\lambda]$ 完整覆盖。下面给出各区间内同时达到 $m$ 与 $j$ 的分支。
+

@@ -1,0 +1,17 @@
+**命题 760.1（整个方形族的非负秩）。** 对任意有限 $\varepsilon\ge0$，
+
+$$
+\operatorname{rank}(P_\varepsilon)=3,\qquad
+\operatorname{rank}_+(P_\varepsilon)=
+\begin{cases}
+4,&0\le\varepsilon<1/\sqrt2,\\
+3,&\varepsilon\ge1/\sqrt2.
+\end{cases}
+$$
+
+证明：第 758—759 节把三项可能性等价于 $1/(1+2\varepsilon)\le\sqrt2-1$，即 $\varepsilon\ge1/\sqrt2$。普通秩三始终给出三项下界；三项不存在时，四项行分解给出准确值。$\varepsilon=0$ 也由第 756 节直接处理。证毕。
+
+对每个有限正参数，所有观察格子都可发生，普通秩也不变，但最少生成状态仍会在一个明确阈值改变。这比把差异归因于某些事件绝对不可能更强。另一方面，当 $\varepsilon\to\infty$ 时，$P_\varepsilon$ 趋近均匀乘积律，其极限只需一个状态；有限参数的秩结论并未把这个极限也包括进去。
+
+会通中的一个对应问题由此更清楚：共同表达的线性关系、允许的正生成规则及极限近似，可能保留不同信息。若将它们归于同一名称，应说明当前所用的是哪一种关系。
+

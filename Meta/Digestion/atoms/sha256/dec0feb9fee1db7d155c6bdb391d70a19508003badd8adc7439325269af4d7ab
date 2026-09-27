@@ -1,0 +1,59 @@
+**命题 569.1（原族实验损失的全先验最优值）。** 设 $0<\varepsilon<\varepsilon_*$，定义
+
+$$
+R_{\mathrm o}
+=\frac{1+\sqrt{1+\dfrac{16\varepsilon U}{A(D-4\varepsilon)}}}{2},
+\qquad
+s_{\mathrm o}=\frac{(D-4\varepsilon)R_{\mathrm o}}U,
+\qquad
+\pi_{\mathrm o}=\frac{1+s_{\mathrm o}}2.
+$$
+
+则
+
+$$
+s_*<s_{\mathrm o}<\frac{D-4\varepsilon}{A}<1,
+$$
+
+并且 $\pi_{\mathrm o}$ 是全部先验中原族实验恢复的唯一最优选择，最优值为
+
+$$
+\boxed{
+\inf_\pi E_{\mathrm{fam}}(\pi,\varepsilon)
+=\frac D2(1-R_{\mathrm o}^{-1/2}).
+}
+$$
+
+因此这个最优查询在零噪声意义下并不单射。
+
+证明：$0<\varepsilon<\varepsilon_*$ 等价于
+
+$$
+U(D-4\varepsilon)>DA.
+$$
+
+所以 $B_\varepsilon>0$，且 $s_h=B_\varepsilon/A>s_*$；又 $B_\varepsilon<D<A$，故 $s_h<1$。在 $(s_*,s_h)$ 内，命题 568.2 要最小化
+
+$$
+\max\{f(s),g(s)\},\qquad
+f(s)=1+\frac{4\varepsilon}{sA},\qquad
+g(s)=\frac{Us}{D-4\varepsilon}.
+$$
+
+$f$ 严格下降，$g$ 严格上升。在 $s_*$ 处有 $f>g$；在 $s_h$ 处有 $f<g$，两者都由上面的严格不等式得到。因此唯一交点是这个区间的唯一最优点。令交点的公共值为 $R_{\mathrm o}$，则
+
+$$
+R_{\mathrm o}^2-R_{\mathrm o}
+=\frac{4\varepsilon U}{A(D-4\varepsilon)},
+$$
+
+取正根即得所列公式。交点值严格小于 $f(s_*)$，而后者是全部 $s\le s_*$ 的最小值；交点值也严格小于 $U/A$，故恒定查询及最后的饱和区间不能更好。损失严格随 $R$ 增大，得到全局唯一性。最后用命题 563.1，$s_{\mathrm o}>s_*$ 恰意味着查询有非退化饱和段。证毕。
+
+$\varepsilon=0$ 时全部单射查询均达到零实验误差。$\varepsilon\ge\varepsilon_*$ 时，每个查询都允许全域相容，最优值统一为
+
+$$
+\frac D2\left(1-\sqrt{\frac A U}\right).
+$$
+
+这些端点结论由第 566 节的振幅界与命题 567.1 得到。非单射查询在允许误差的任务中最优，并不使它在精确恢复任务中变成单射；改变的是结算目标。
+

@@ -1,0 +1,20 @@
+**定义 632.1（继承第 612 节的同一有理切片）。** 取 $n=4,p=3$、$r=M=1/2$、$b=e_1=e_2=1/40$、$e_3=e_4=17/80$。此时 $d=1$、$rD=1/4$、$h=4\eta$、$\theta=0$，且
+
+$$
+u_\circ=u_1=u_2=\frac1{20},\qquad u_3=u_4=\frac{17}{40}.
+$$
+
+从第 623 节取以下五行即可说明整条容量曲线：
+
+$$
+\begin{aligned}
+\mathsf K:&\ s-\tau-v\le h+1/10 &&(k=2),\\
+\mathsf T:&\ \tau\le1/3,\qquad
+\mathsf V:\ v\le h,\\
+\mathsf P:&\ s-3\tau\le0,\qquad
+\mathsf L:\ s+\tau\le1.
+\end{aligned}
+$$
+
+这里行名只是本例的引用标签。
+

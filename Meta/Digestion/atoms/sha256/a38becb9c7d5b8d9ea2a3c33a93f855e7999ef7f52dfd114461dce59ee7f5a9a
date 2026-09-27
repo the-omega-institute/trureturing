@@ -1,0 +1,11 @@
+**命题 627.1（容量包络与联合误差曲线）。** 固定 $n,p,r,l$。在 $h\ge(d/n)\theta_+$ 上，容量 $F_*(h)$ 是非减、连续、分段仿射的凹函数。在 $\eta\ge\beta$ 上，$A_*$ 与 $\mathcal J(r,\eta)$ 均是非增、连续、分段仿射的凸函数。
+
+证明：写 $b(h)=b^{(0)}+h\gamma$。向量 $\gamma$ 在 $dv\le h$、$-pv\le h-\theta$ 和 $n+1$ 条索引约束上为一，在其他行上为零。因此
+
+$$
+F_*(h)=\min_{y\in\mathcal Y_3}\{\alpha_y+\kappa_yh\},\qquad
+\alpha_y=y^{\mathsf T}b^{(0)},\quad \kappa_y=y^{\mathsf T}\gamma\ge0.
+$$
+
+有限个非负斜率仿射函数的下包络具有所述容量性质。也可由预算增加只扩大可行集直接看出单调性。代入 $A_*=rD(1-F_*)$，再取 $\mathcal J=\max(\lambda,2A_*-\eta)$，得到其他性质。证毕。
+

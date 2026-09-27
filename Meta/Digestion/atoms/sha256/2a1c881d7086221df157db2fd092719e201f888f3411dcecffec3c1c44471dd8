@@ -1,0 +1,28 @@
+**定理 690.2（部分族的精确集合系数）。** 在第 689 节条件下，使 $\operatorname{dist}_{\rm TV}(R,\mathcal K_t)\le C_t^{\mathcal F}\Phi_t^{\mathcal F}(R)$ 对全部原始行成立的最小非负常数是
+
+$$
+\boxed{
+C_t^{\mathcal F}=\begin{cases}
+0,&t\le\min_xl_x,\\[1mm]
+\displaystyle\frac1{t(1-\beta_t)},&t>\min_xl_x.
+\end{cases}}
+$$
+
+证明：置 $z_i=\min((a_i)_+,L)$。逐状态正部分解给出精确恒等式
+
+$$
+\Phi_t^{\mathcal F}(R)=H-\min_{S\in\mathcal F}\sum_{i\in S}z_i.
+$$
+
+若正标签支撑 $J$ 非空，则 $\sum_{i\in J}e_i<t\sum_{i\in J}R_i\le t$，故 $J$ 合法。$H>0$ 时，$z/H$ 在 $J$ 上的总质量至多一，可以补成某个概率向量 $w$。于是
+
+$$
+\min_S\frac{z(S)}H\le\min_Sw(S)\le\beta_{\mathcal F}(J)\le\beta_t,
+$$
+
+得到 $\Phi_t^{\mathcal F}\ge(1-\beta_t)H$。若没有正标签，所有 $z_i=0$，同一界成立。与第 689 节的精确距离合用即得上界。全单纯形已包含于 $\mathcal K_t$ 的情形仍恰为 $t\le\min_xl_x$，其最小非负系数为零。
+
+若非零情形中的 $\beta_t=0$，任取 $l_x<t$ 的坐标并把全部概率放在该处，就有正距离；前述恒等式使 $\Phi=H$，故 $1/t$ 锐利。若 $\beta_t>0$，取达到它的 $J,w$，令 $K$ 为 $w$ 的实际正支撑。仍有 $\sum_{i\in K}e_i<t$。选足够小的 $H>0$，在 $K$ 上令 $tR_i=e_i+Hw_i$，使每个 $Hw_i<L$，并使 $H<t-\sum_{i\in K}e_i$。其余坐标要填入的质量非负，不超过它们的总底量，因为 $t\le M$，故可全在各自容量内填足。此时只有 $K$ 发生正超额，$z=Hw$，所以 $\Phi=H(1-\beta_t)$，达到所列比值。证毕。
+
+该构造明确处理了最优权重中的零坐标；不能先把整个 $J$ 都称作正超额支撑，再忘掉它们可能没有实际超额。
+

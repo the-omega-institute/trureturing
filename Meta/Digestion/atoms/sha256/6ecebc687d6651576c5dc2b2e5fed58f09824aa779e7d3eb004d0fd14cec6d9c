@@ -1,0 +1,6 @@
+**定义 695.2（向量观察与标量评价）。** 项目 [JointFaithfulnessLeibnizCriterion](../../../D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean) 的 joint_faithfulness_tfae 把联合读数单射、逐对分离及观察核交为对角联系起来。第 683 节中，问题域可取具有固定总和的标签残余，读数为 $q_S(a)=\sum_{i\in S}a_i$。加入 $13$ 后，这个读数族已联合单射；标量 $\Phi_t^{\mathcal F_1}$ 却仍在一段不同残余上恒定。不能把已有的联合忠实性结论直接转交给经过最大值压缩的读数。
+
+项目 [AnswerabilityCriterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean) 的 answerability_criterion 则问某个指定问题是否在摘要纤维上恒定。第 694 节固定五环、公共底量、标签底量多重集及 $t$，把不同底量排列作为对象；只保留共同直方图的摘要无法回答最佳系数，因为两个明确实例落在同一纤维而答案不同。这项应用只需给出一对反例，不必先证明整个排列空间的完整分类。
+
+这些连接让“投影”成为可以逐项研究的关系：投影保留哪些区别，后处理又丢掉哪些区别，剩余信息是否足以回答当前问题。读取项目源码只核对了这些接口与前提，本批没有运行 Lean，也没有把源码阅读申报为当前内核或公理闭包核验。
+

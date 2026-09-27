@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:998dc3a0417b66552d97543fb266da3984fd35e4974c5b6490d9fbdd3458843e
+  normalized_sha256: sha256:998dc3a0417b66552d97543fb266da3984fd35e4974c5b6490d9fbdd3458843e
+cas_ref: sha256:998dc3a0417b66552d97543fb266da3984fd35e4974c5b6490d9fbdd3458843e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.asymmetric_family_deficiency
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 1028acde2e515d1cb3d70a405b12634fe2ea8c56a14c7d97d9e2b1891265f924
+      - code: chain-migration-incomplete
+        detail: 9abcf5e892933e9e61b2445b505110b034ab601deadd03c4abfe8e3fec307a8a
+  chain_atoms:
+    - e3d93f1c95e87bb2f3b7734253d2e31a46b53f0aee165f0c36cc934b33943742
+    - 1028acde2e515d1cb3d70a405b12634fe2ea8c56a14c7d97d9e2b1891265f924
+    - 9abcf5e892933e9e61b2445b505110b034ab601deadd03c4abfe8e3fec307a8a
