@@ -8,6 +8,8 @@ Different b blocks may delete the same physical mass, so their credits cannot si
 
 For this same family, section6 proves that every head marginal with a uniform actual-fibre lift has original cofactor second moment above893/81>9. Even exact deletion credit leaves a positive certificate gap; full owners and actual private-owner densities are evaluated under the same law.
 
+Section7 identifies a whole-cover condition that this countercontrol fails: every prime3-private point has a hole on its complete3-coordinate line. More generally, an original pure prime power at minimum positive height has an exact private-product region, and every hole resets into it. This extracts the pointwise mechanism of Reports354 and357 without importing their later whole-cover matching conclusions.
+
 These are ordinary mathematical results with exact controls. The Gram projection mechanism is reused from Chapter08; no new Lean certification, mathematical priority, or unrestricted Erdős #7 conclusion is claimed.
 
 ## 1. A sharp weighted bound retaining every original ternary depth
@@ -342,4 +344,76 @@ The [standard-library program](../../frontier/cover-geometry/original_cofactor_g
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_cofactor_gram_uniform_lift.py
+```
+
+## 7. Original prime-private regions meet every hole line
+
+The distinction between a countercontrol for a uniform lift and a whole cover has a pointwise witness. Let PS1 mean that every ENTIRE prime-power CRT coordinate line through every actual private point is covered. This is the private-to-hole nonadjacency condition of the [original-label interface](../../../../../Library/Arith/lettlsun2008cosets.md); it concerns actual private points, not points assigned by an owner partition.
+
+### A pure original at minimum positive height
+
+Fix a nonempty finite irredundant family of literal original classes C_s=a_s mod m_s, of period L. Suppose a distinguished original C_t has modulus p^a for a prime p and a>=1, and
+
+    p divides m_s => p^a divides m_s.                 (PR1)
+
+Thus p^a is at the minimum positive p-height of the original inventory. This holds automatically if the original prime modulus p is present. Write L=p^H B with gcd(p,B)=1, let K be the p-prefix of C_t in Z/p^H, and let R_p be the cofactor residues modulo B avoiding every original p-free class. Then its ACTUAL private region is exactly
+
+    U_t = K times R_p.                               (PR2)
+
+Indeed a cofactor outside R_p is covered by a p-free original everywhere on its p-line. Above a cofactor in R_p, every other p-bearing original is disjoint from C_t: by(PR1) an intersecting class would be contained in C_t and would have no private point, contradicting irredundancy. This argument permits repeated numerical moduli when the original classes are irredundant; the odd-distinct application keeps the stronger numerical restriction.
+
+Let Hole denote the actual hole set. Every h in Hole has its cofactor in R_p. Replacing its full p-coordinate by ANY member of K therefore produces a genuine private point of t while keeping every non-p coordinate fixed. Each hole has exactly p^(H-a) such private neighbors. Consequently
+
+    Hole nonempty => an actual private-to-hole edge,
+    irredundancy + PR1 => (PS1 iff whole coverage).   (PR3)
+
+Only PS1 at U_t in direction p is needed for the forward implication. Whole coverage gives the reverse implication directly. This does not prove that a covering family cannot exist.
+
+In particular, an irredundant PS1 noncover cannot contain an original prime modulus. If it contains a pure p^a, it must contain a p-bearing original at a strictly smaller positive p-height. A nonempty divisor-closed original set above one contains prime labels, so overlap cannot separate all private points from holes in an irredundant divisor-closed family.
+
+The [extremal normalization](../321-384/350-extremal-paired-branch-and-source-support.md) obtains divisor closure AFTER assuming a whole cover exists and minimizing first its cardinality and then its modulus sum. It does not normalize an arbitrary noncover while preserving noncoverage and PS1. No such transformation is supplied by(PR3).
+
+### The height premise is sufficient, not necessary
+
+A weaker sufficient condition for(PR2) is that every other p-bearing original be disjoint from C_t. The odd-distinct irredundant family 0 mod9,1 mod15 violates(PR1) at p=3, but its two first3-digits differ. Every point of0 mod9 is private, and every hole still resets to that class.
+
+With the SAME numerical moduli and the changed residue6 mod15, the hole1 modulo45 instead resets to36, which belongs to both0 mod9 and6 mod15. This refutes an unconditional higher-pure reset; it does not make(PR1) necessary or rule out other private neighbors on that line. The difference is the actual phase relation, not the modulus inventory.
+
+### One-law quantitative consequences
+
+Under uniform probability mu on the original period, the product identity and containment of holes in K-complement times R_p give
+
+    mu(U_t)=|R_p|/(p^a B),
+    mu(Hole)<=(p^a-1)mu(U_t),
+    number of Hole-to-U_t p-edges=|Hole|p^(H-a).      (PR4)
+
+For ONE arbitrary cofactor law beta and an independent uniform p-coordinate, the same mass statements hold with beta(R_p) in place of |R_p|/B. They are not Haar constants for an arbitrary nonuniform p-coordinate. The pointwise reset is stronger than the mass inequality: PS1 requires the actual edge count to vanish, hence rules out every hole immediately under the stated hypotheses.
+
+### The actual702-label family violates PS1 under every supported cofactor law
+
+Keep all original classes of section3 and let nu be ANY probability supported on its actual3-free residual
+
+    R_3 = S times product_(p in P)(Z/p minus{0}).
+
+Use the SAME full-source law mu=Uniform(Z/81) times nu. The cofactor law need not be uniform or a product within its coordinates. The original0 mod3 class is present. Above every cofactor in R_3, all first3-digit0 points are private to this original: the3-free classes are absent, and the other3-bearing comb prefixes are disjoint from its first digit. This private slice has mu-mass exactly1/3.
+
+At that same cofactor, the full3-coordinate80 avoids every pure and mixed ternary comb prefix. It is an actual hole, so the terminal-hole slice has mass1/81. Every point in the displayed prime3-private slice therefore violates PS1. Independently resampling the full3-coordinate while keeping the SAME cofactor gives
+
+    P(old point private to0 mod3, new3-coordinate80)
+      =(1/3)(1/81)=1/243.                            (PR5)
+
+These constants apply to every nu supported on the stated R_3. They witness a missing whole-cover condition and do not invalidate the section6 Gram obstruction, which concerns this same noncover under its specified lift.
+
+### Exact controls and reuse boundary
+
+The [standard-library program](../../frontier/cover-geometry/original_prime_private_reset.py) and [exact data](../../frontier/cover-geometry/original_prime_private_reset.json) retain the original702-class input. They construct a literal integer hole with full3-coordinate80, head coordinates1 and all138 outside coordinates2. Resetting to every value in each original prime's0-root gives177 genuine private neighbors in141 prime directions. The124956 original-AP membership checks equal702 times(1+177); no whole-period enumeration is used.
+
+The small controls include0 mod3,1 mod5,4 mod15, whose prime3 and prime5 private regions have4 and2 points among15, with7 holes; and0 mod9,1 mod45,2 mod175, whose pure9 region has174 private points among1575, with1357 holes. The last family has no prime label but satisfies(PR1) for pure9. The two same-modulus phase examples above verify the boundary of the sufficient condition.
+
+[Report354](../321-384/354-synchronized-prime-private-cofactor-matching.md)'s(SM3) already gives the prime-private Cartesian identity using only the original prime label, comparable-class disjointness and the p-free residual. Its subsequent coverage of every other root and tail, and synchronized matching, do use whole coverage. [Report357](../321-384/357-original-private-swaps-and-prime-reset-transport.md)'s(PT6) starts at another original's private region, so a hole cannot be substituted into that statement literally. Its pointwise reset mechanism and(PT9)'s private-product identity supply the same reuse after the weaker premises are extracted; the hole argument above checks the changed source domain directly.
+
+The higher pure-power case repeats that containment argument under(PR1). This is ordinary reuse and a same-law consequence, not a new Lean declaration or a claim of mathematical priority. For the conditional extremal divisor-closed #7 family, the remaining task is to turn the full coverage of these actual private fibres into a contradictory common arithmetic budget or a legal global transformation. Recovering whole coverage from PS1 does not itself provide that contradiction.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_prime_private_reset.py
 ```
