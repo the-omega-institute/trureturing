@@ -92343,3 +92343,289 @@ $$
 本节没有证明任意参考维数都具有同一消去常数，也没有把该三结果测量扩展成一般量子态层析。结论限于当前规范 $n=2$ 来源及完整原输入权限；投影门数、联合存储容量和钟表历时仍须另行计入。全部矩阵恒等式已在正文推导，预算下界复用§286已说明来源的判别工具，不作外部原创优先权声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 289. 规范参考的带迹余量与所有维数上的未知漂移消去
+
+### 289.1 把两个特殊方向推广为全参考上的读数
+
+保持§288的未知相位矩合同
+$$
+r\in[1-w,1],\qquad0\le w\le1/4,
+\qquad0<\delta\le1/4,
+\tag{289.1}
+$$
+以及逐假设一致条件错误至多 $1/3$、完整两位置块、独立来源块和全部原输入访问。现在允许任意参考维数 $n\ge2$，仍使用同一个规范矩阵族，$M=I+J/4$、$Q+M^\dagger QM=I$。
+
+§288的两个向量只在固定二维参考内使用。如果把它们直接放进更大参考空间，当前来源的归一化会缩小实际概率，不能据此宣称维数一致。本节改用遍及参考空间的算子，并证明其任务信号具有与 $n$ 无关的正下界。
+
+下文的 $N_{\rm unk}^{\rm full}(n,\delta;w)$ 仍指最小确定最大副本数。协议知道 $n,Q,M,\delta,w$，不知道实际 $r$；初始资源与假设无关，相位环境不可访问。
+
+### 289.2 规范矩阵第二副对角线的统一正余量
+
+暂把 $t$ 作为参数，定义矩阵空间上的线性算子
+$$
+\mathcal A(Y)=\frac{J^\dagger Y+YJ}{2},\qquad
+\mathcal B(Y)=\frac{J^\dagger YJ}{2}.
+$$
+规范方程等价于
+$$
+(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q=I/2.
+\tag{289.2}
+$$
+在矩阵算子范数所诱导的映射范数下，$\|\mathcal A\|\le1$、$\|\mathcal B\|\le1/2$。取实际 $t=1/4$ 后，
+$$
+\|t\mathcal A+t^2\mathcal B\|\le9/32<1,
+\qquad
+\|(\operatorname{Id}+t\mathcal A+t^2\mathcal B)^{-1}\|\le32/23.
+\tag{289.3}
+$$
+这是标准Neumann逆估计，下面只把它用来控制明确的有限截断误差。
+
+设
+$$
+Q^{[2]}=I/2-\frac t4(J+J^\dagger)
++\frac{t^2}{8}(J^2+(J^\dagger)^2).
+\tag{289.4}
+$$
+将它代入（289.2），零、一、二次项准确相消，残差为
+$$
+\begin{aligned}
+\mathcal E
+&:=(\operatorname{Id}+t\mathcal A+t^2\mathcal B)Q^{[2]}-I/2\\
+&=\frac{t^3}{16}
+\left[J^3+(J^\dagger)^3-J^\dagger J^2-(J^\dagger)^2J\right]\\
+&\quad+\frac{t^4}{16}J^\dagger\left[J^2+(J^\dagger)^2\right]J.
+\end{aligned}
+\tag{289.5}
+$$
+因 $\|J\|\le1$，
+$$
+\|\mathcal E\|\le t^3/4+t^4/8,
+\qquad
+\|Q-Q^{[2]}\|\le\frac{32}{23}\left(\frac1{256}+\frac1{2048}\right)
+=\frac9{1472}.
+\tag{289.6}
+$$
+该残差包含全部高阶贡献，不要求矩阵阶数固定。实矩阵数据和（289.3）的逆表示也说明 $Q$ 为实对称矩阵。
+
+对 $0\le i\le n-3$，$Q^{[2]}_{i,i+2}=t^2/8=1/128$。每个矩阵元的误差不超过算子范数误差，所以
+$$
+\boxed{
+\frac5{2944}\le Q_{i,i+2}\le\frac{41}{2944}.
+}
+\tag{289.7}
+$$
+特别地，对 $n\ge3$，
+$$
+\sum_{i=0}^{n-3}Q_{i,i+2}\ge\frac{5(n-2)}{2944}.
+\tag{289.8}
+$$
+正余量来自实际规范方程的受控误差，而不是对若干数值矩阵的外推。
+
+### 289.3 旧核内三种响应的共同坐标
+
+记
+$$
+R=I-Q=M^\dagger QM,\qquad N=M^\dagger M,\qquad T=I+N,
+$$
+$$
+D=\frac1n\operatorname{diag}(Q,R),\qquad\tau=I_{2n}/(2n).
+\tag{289.9}
+$$
+这里 $R$ 是参考矩阵，下面 $D\otimes\tau+\tau\otimes D$ 才表示两份白噪声交叉响应。仍按 $H_1H_2E_1E_2$ 重排张量因子。
+
+设 $P_n$ 为§285的完整共同相位理想核投影。在中间总荷扇区定义
+$$
+Gx=\begin{pmatrix}I\otimes M^\dagger\\M^\dagger\otimes I\end{pmatrix}x,
+\qquad
+Kx=\begin{pmatrix}-(M\otimes I)x\\(I\otimes M)x\end{pmatrix}.
+\tag{289.10}
+$$
+$G^\dagger K=0$，故 $P_nK=K$。此外
+$$
+K^\dagger K=N\otimes I+I\otimes N,
+\qquad\|K\|^2\le25/8.
+\tag{289.11}
+$$
+将两份态的漂移背景、白噪声交叉项与双白噪声项压到这个同一核内，分别记为
+$$
+\mathsf A=P_n(D\otimes D)P_n,
+\quad
+\mathsf B=P_n(D\otimes\tau+\tau\otimes D)P_n,
+\quad
+\mathsf C=P_n\tau^{\otimes2}P_n.
+$$
+它们在 $K$ 坐标下满足准确合同恒等式
+$$
+\boxed{
+\begin{aligned}
+K^\dagger\mathsf AK&=\frac2{n^2}R\otimes R,\\
+K^\dagger\mathsf BK&=\frac1{2n^2}(R\otimes T+T\otimes R),\\
+K^\dagger\mathsf CK&=\frac1{4n^2}(N\otimes I+I\otimes N).
+\end{aligned}
+}
+\tag{289.12}
+$$
+例如第一式的两个直和分量分别给 $M^\dagger QM\otimes R$ 与 $R\otimes M^\dagger QM$，都等于 $R\otimes R$；第二式展开四项后合并成 $R\otimes(I+N)+(I+N)\otimes R$；第三式由单位矩阵与（289.11）直接得到。$K$ 不等距，因此这些是合同矩阵，不把其条目直接解释为归一化概率。
+
+### 289.4 一个有统一信号的实际核内算子
+
+设 $n\ge3$，定义第二副对角算子及其中心化
+$$
+S=J^2+(J^\dagger)^2,
+\qquad
+\lambda=\frac{\operatorname{Tr}(SR)}{\operatorname{Tr}R},
+\qquad X=S-\lambda I.
+\tag{289.13}
+$$
+有 $\operatorname{Tr}(XR)=0$。因为 $R=I-Q$、$S$ 无对角项且 $Q$ 实对称，
+$$
+g:=-\operatorname{Tr}(SR)
+=2\sum_{i=0}^{n-3}Q_{i,i+2}>0,
+\qquad\lambda=-\frac g{\operatorname{Tr}R}<0.
+\tag{289.14}
+$$
+由（289.7）及 $R\succeq(7/23)I$，
+$$
+g\ge\frac{5(n-2)}{1472},\qquad
+|\lambda|\le\frac{41}{448}<\frac18,
+\qquad\|X\|\le2+\frac18=\frac{17}{8}.
+\tag{289.15}
+$$
+于是可在实际中间扇区定义Hermitian算子
+$$
+L_n=\frac18K(X\otimes I)K^\dagger,
+\tag{289.16}
+$$
+并在其余扇区取零。它满足
+$$
+P_nL_nP_n=L_n,\qquad
+\|L_n\|\le\frac18\frac{25}{8}\frac{17}{8}=\frac{425}{512}<1,
+\qquad L_n^2\preceq P_n.
+\tag{289.17}
+$$
+其谱测量是本访问类允许的实际有限维测量；它只由已知规范矩阵决定，与 $r$ 无关。
+
+背景均值由（289.12）准确消失：
+$$
+\operatorname{Tr}(L_n\mathsf A)
+=\frac1{4n^2}\operatorname{Tr}(XR)\operatorname{Tr}R=0.
+\tag{289.18}
+$$
+另一方面，$N$ 与 $T$ 都是三对角矩阵，故
+$$
+\operatorname{Tr}S=\operatorname{Tr}(SN)=\operatorname{Tr}(ST)=0,
+$$
+$$
+\operatorname{Tr}(XT)=-\lambda\operatorname{Tr}T,
+\qquad\operatorname{Tr}(XN)=-\lambda\operatorname{Tr}N.
+\tag{289.19}
+$$
+令 $\beta_n=\operatorname{Tr}(L_n\mathsf B)$、$\gamma_n=\operatorname{Tr}(L_n\mathsf C)$。准确计算得到
+$$
+\begin{aligned}
+\beta_n
+&=\frac{-\lambda\operatorname{Tr}T\operatorname{Tr}R}{16n^2}
+=\frac{g\operatorname{Tr}T}{16n^2},\\
+\gamma_n&=-\frac{\lambda\operatorname{Tr}N}{16n}>0.
+\end{aligned}
+\tag{289.20}
+$$
+又因 $\operatorname{Tr}N=n+(n-1)/16\ge n$，有 $\operatorname{Tr}T\ge2n$。结合（289.15），
+$$
+\boxed{
+\beta_n\ge\frac{5(n-2)}{11776n}\ge\frac5{35328}
+\quad(n\ge3).
+}
+\tag{289.21}
+$$
+这就是将遍布参考空间的带迹余量转成实际核内任务信号的步骤。
+
+### 289.5 同一读数对全部未知漂移一致有效
+
+实际平均块仍满足
+$$
+\sigma_{\delta,r}
+=(1-\delta)^2\sigma_{0,r}
++\delta(1-\delta)(D\otimes\tau+\tau\otimes D)
++\delta^2\tau^{\otimes2},
+$$
+$$
+\sigma_{0,r}=r\sigma_{0,1}+(1-r)D\otimes D.
+\tag{289.22}
+$$
+$L_n$ 支撑于 $P_n$，所以消去共同相位理想支撑；（289.18）再消去全部漂移背景。因此其真实谱测量结果 $Y$ 满足
+$$
+\mathbb E_{0,r}Y=0,
+\qquad
+\mathbb E_{\delta,r}Y
+=\delta(1-\delta)\beta_n+\delta^2\gamma_n
+\ge\frac5{47104}\delta>\frac\delta{10000}
+\quad(n\ge3).
+\tag{289.23}
+$$
+两个均值都与实际 $r$ 无关。这里保留了全部有限扰动项，正的二次项可以合法舍去。
+
+当 $n=2$，直接使用§288的三结果算子 $L_2$。它同样支撑于 $P_2$、范数至多一，且扰动均值为 $\delta/272$。故对所有 $n\ge2$，可以统一取
+$$
+\kappa=\frac1{10000},\qquad
+\mathbb E_{0,r}Y=0,\qquad
+\mathbb E_{\delta,r}Y\ge\kappa\delta,
+\qquad L_n^2\preceq P_n.
+\tag{289.24}
+$$
+再由§286的总核点击界，对每个允许 $r$，
+$$
+\operatorname{Var}_{0,r}Y\le w,
+\qquad
+\operatorname{Var}_{\delta,r}Y\le w+\delta.
+\tag{289.25}
+$$
+稀有支撑和均值消去同时成立，才能把“不识别漂移也能读出任务”转成所需的样本尺度。
+
+### 289.6 全部参考维数上的最优未知参数预算
+
+对独立的 $K$ 个真实块测量同一个 $L_n$，以 $\kappa\delta/2$ 为样本均值阈值。理想均值与阈值相隔 $\kappa\delta/2$；扰动均值至少也相隔这么多。因此每类错误对全部允许 $r$ 一致至多
+$$
+\frac{4(w+\delta)}{K\kappa^2\delta^2}.
+\tag{289.26}
+$$
+取
+$$
+K=\left\lceil\frac{12}{\kappa^2}\frac{w+\delta}{\delta^2}\right\rceil,
+\tag{289.27}
+$$
+每类错误都不超过 $1/3$。全部完整块计费，得到
+$$
+N_{\rm unk}^{\rm full}(n,\delta;w)
+\le\left(\frac{24}{\kappa^2}+1\right)\frac{w+\delta}{\delta^2}.
+\tag{289.28}
+$$
+常数只用于证明统一阶，没有作数值优化。
+
+下界对任意全输入策略成立：固定两假设共同 $r=1-w$，再使用§286的已知参数下界。满足逐假设一致目标的协议在这对来源上的平均错误也至多 $1/3$，所以
+$$
+N_{\rm unk}^{\rm full}(n,\delta;w)
+\ge\frac{w+\delta}{180\delta^2}.
+\tag{289.29}
+$$
+
+**定理289.1（维数一致的未知相位矩消去）。** 对当前规范来源、全部 $n\ge2$、$0\le w\le1/4$、$0<\delta\le1/4$，在完整原输入访问及逐假设一致风险下，
+$$
+\boxed{
+\frac{w+\delta}{180\delta^2}
+\le N_{\rm unk}^{\rm full}(n,\delta;w)
+\le\left(24\cdot10000^2+1\right)\frac{w+\delta}{\delta^2}.
+}
+\tag{289.30}
+$$
+
+**证明。** 规范方程的二阶截断和全残差界给（289.7）的带迹余量；同一核内三个响应的合同恒等式将它转成（289.18）—（289.21）的零背景均值与统一任务信号。实际谱测量、稀有支撑方差和完整块计费给（289.28），固定允许漂移值的任意全输入下界给（289.29）。二维端点由§288的准确三结果构造承担。$\square$
+
+这里准确未知的漂移矩不必被单独恢复，最坏预算仍达到与区间端点已标定时相同的阶。$w=O(\delta)$ 时，全部 $n\ge2$ 都可用 $\Theta(\delta^{-1})$ 份实际输入；固定正 $w$ 时则为 $\Theta(\delta^{-2})$。
+
+与此同时，若 $w\ge2\delta-\delta^2$，§288的同过程见证仍排除所有维数的先reset一致识别，也排除 $n=1$ 的完整输入一致识别。因此 $w=3\delta$、$\delta\le1/12$ 时，完整原输入的线性取得与先reset的精确不可识别，已不再局限于一个特定参考维数。
+
+结果依赖当前规范矩阵族，而不是“参考空间足够大”这一空条件。承重结构是：核内的漂移响应与任务响应可由已知的实际算子分开，且这项区别不会随维数增长而消失。构造不提供一般未知来源的相位校准方法，也不把谱测量实现成本、存储成本或物理历时包含进副本阶界。Neumann逆、矩阵范数及判别工具是标准中间步骤；本文保留的是对当前来源的统一关系及其完整推导。
+
+## 追加锚（本行以下为增补区）
