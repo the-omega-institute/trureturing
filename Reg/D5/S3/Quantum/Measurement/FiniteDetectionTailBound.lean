@@ -18,10 +18,7 @@ abbrev signature :=
 
 abbrev actual := Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.actual
 
-def rejected : Realization signature :=
-  realize signature
-    (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N + 1)
-    (fun e => nomatch e)
+abbrev rejected := Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.rejected
 
 def arena : Arena where
   signature := signature
@@ -49,7 +46,9 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hcomp : Qᴴ * Q + ∑ x, (L x)ᴴ * L x = 1 := by simp [Q]
   obtain ⟨g, _hg, _hg1, hblock, _htail⟩ := h Q L hcomp
   have hbad := (hblock 0).2
-  simp only [rejected, realize, signature, Q, pow_zero, mul_one, one_smul] at hbad
+  simp only [rejected,
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.rejected,
+    realize, signature, Q, pow_zero, mul_one, one_smul] at hbad
   have hdiag := (Matrix.le_iff.mp hbad).diag_nonneg (i := 0)
   have hdiag' : (1 : ℂ) ≤ 0 := by simpa using hdiag
   exact (not_le_of_gt (zero_lt_one : (0 : ℂ) < 1)) hdiag'
