@@ -87441,3 +87441,399 @@ $$
 完整数据、精确共同来源和局部误差在所有步骤中保持同一合同。§268—269供应规范单链的正定构造与匹配下界，§271供应多链层级机制，§274的参考过滤结构在本节按实际归一化明确使用；多相位协方差限制和一般 $Q$ 的下界由上述矩阵证明连接。不据这些组合结论宣称外部文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 276. 图来源的可分性判据与同负性下的两种恢复深度
+
+§275以单位圆谱和最长Jordan链分类了图来源的完整数据唯一性与局部恢复指数。本节将该分类与低秩PPT来源的标准可分性结构结合，构造相同纠缠负性下具有不同锐恢复指数的二维来源。
+
+作为该构造的中间步骤，以下在图坐标中写出已知的低秩PPT分解及其加权正规形式。低秩PPT可分性和局部过滤后的正规图矩阵见 Horodecki、Lewenstein、Vidal、Cirac，*Operational criterion and constructive checks for the separability of low rank density matrices*，Phys. Rev. A 62, 032310 (2000)，[原文](https://arxiv.org/abs/quant-ph/0002089)，§III、Lemma 3与Theorem 1。随后结合§275，在相同 $2\otimes2$ 接口、联合秩、参考边缘和负性下，得到锐指数 $1/2$ 与 $1/4$ 的精确比较。
+
+### 276.1 一般正定图来源及完整竞争类
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$，以及
+$$
+Q=Q^\dagger\succ0,
+\qquad M\in M_n(\mathbb C).
+\tag{276.1}
+$$
+输入qubit空间 $H$ 使用固定 $Y$ 本征基；本节简写 $|+\rangle=|y_+\rangle$、$|-\rangle=|y_-\rangle$。定义
+$$
+G=[I_n,M],
+\qquad
+T(Q,M)=G^\dagger QG
+=\begin{pmatrix}
+Q&QM\\M^\dagger Q&M^\dagger QM
+\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T(Q,M)>0,
+\qquad \Omega(Q,M)=T(Q,M)/c.
+\tag{276.2}
+$$
+因为 $G$ 满行秩且 $Q$ 正定，$T$ 正半定、秩为 $n$；所以 $\Omega$ 是实际的 $2\otimes n$ 联合密度态。这里不要求 $M$ 可逆，也不预先约束其谱。
+
+完整数据仍为
+$$
+\mathcal D(\Xi)=\bigl(\operatorname{Tr}_H\Xi,\mathscr K(\Xi)\bigr),
+\qquad \mathscr K(\Xi)=2\Xi_{+-}.
+\tag{276.3}
+$$
+对于（276.2），
+$$
+\rho_*=(Q+M^\dagger QM)/c,
+\qquad K_*=2QM/c.
+\tag{276.4}
+$$
+在该固定真值处，完整数据误差为
+$$
+\varepsilon_*(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho_*\|_1
++\|\mathscr K(\Xi)-K_*\|_1.
+\tag{276.5}
+$$
+竞争者为同一 $H\otimes E$ 上任意密度态，包括不同秩与不同边缘的来源。态距离和完整数据误差都用未除以二的迹范数；无下标范数为算子范数。
+
+令 $\Gamma_H$ 表示固定输入基下的部分转置，采用未加倍负性
+$$
+\operatorname{Neg}(\Xi)
+=\frac{\|\Xi^{\Gamma_H}\|_1-1}{2}
+=\operatorname{Tr}(\Xi^{\Gamma_H})_-.
+\tag{276.6}
+$$
+
+### 276.2 部分转置的Schur补恰为一个自交换子
+
+定义由正定权重确定的相似矩阵
+$$
+A=Q^{1/2}MQ^{-1/2}.
+\tag{276.7}
+$$
+其谱和Jordan链长与 $M$ 相同；正规性则需要按这个实际的 $A$ 检验。
+
+对合同（276.1）—（276.2），标准Schur补计算在当前坐标中给出
+$$
+\boxed{\Omega(Q,M)^{\Gamma_H}\succeq0
+\quad\Longleftrightarrow\quad A^\dagger A=AA^\dagger.}
+\tag{276.8}
+$$
+
+**证明。** 部分转置交换输入的两个非对角块，得到
+$$
+T^{\Gamma_H}
+=\begin{pmatrix}
+Q&M^\dagger Q\\QM&M^\dagger QM
+\end{pmatrix}.
+\tag{276.9}
+$$
+$Q\succ0$，所以该矩阵正半定当且仅当Schur补
+$$
+S=M^\dagger QM-QMQ^{-1}M^\dagger Q
+\tag{276.10}
+$$
+正半定。直接同余化简给
+$$
+Q^{-1/2}SQ^{-1/2}
+=A^\dagger A-AA^\dagger.
+\tag{276.11}
+$$
+右侧是Hermitian矩阵，且由迹的循环性具有零迹。零迹Hermitian矩阵正半定当且仅当其每个本征值均为零，即矩阵本身为零。可逆同余与归一化因子 $c>0$ 保留正性，故（276.8）成立。$\square$
+
+因此，$A$ 不正规时 $\Omega$ 必为NPT，且负性严格正。这一结论适用于一般复矩阵 $M$，包括具有零本征值的情形。
+
+### 276.3 正规性给出显式产品分解
+
+继续写出上述低秩可分性结构在合同（276.1）—（276.2）中的显式形式：
+$$
+\boxed{
+\Omega(Q,M)\text{ 可分}
+\quad\Longleftrightarrow\quad
+\Omega(Q,M)\text{ 为PPT}
+\quad\Longleftrightarrow\quad A\text{ 正规}.
+}
+\tag{276.12}
+$$
+
+**证明。** 可分态可写为有限个产品密度态的凸组合。每个输入因子转置后仍正半定，因此可分态的输入部分转置正半定。式（276.8）随即给 $A$ 正规。
+
+反之，设 $A$ 正规。有限维谱定理给一组正交归一本征向量 $u_1,\ldots,u_n$，满足
+$$
+Au_i=\lambda_i u_i,
+\qquad A^\dagger u_i=\bar\lambda_i u_i.
+\tag{276.13}
+$$
+令
+$$
+v_i=Q^{1/2}u_i\ne0,
+\qquad
+a_i=|+\rangle+\bar\lambda_i|-\rangle.
+\tag{276.14}
+$$
+由（276.7）可得
+$$
+M^\dagger v_i
+=Q^{1/2}A^\dagger u_i
+=\bar\lambda_i v_i.
+\tag{276.15}
+$$
+又有 $Q=\sum_i v_iv_i^\dagger$，所以原图矩阵精确分解为
+$$
+\begin{aligned}
+T(Q,M)
+&=\sum_i
+\begin{bmatrix}v_i\\M^\dagger v_i\end{bmatrix}
+\begin{bmatrix}v_i\\M^\dagger v_i\end{bmatrix}^{\!\dagger}\\
+&=\sum_i |a_i\rangle\langle a_i|\otimes v_iv_i^\dagger.
+\end{aligned}
+\tag{276.16}
+$$
+每一项都是正的产品算子。明确归一化：令
+$$
+|\widehat a_i\rangle
+=\frac{|+\rangle+\bar\lambda_i|-\rangle}
+{\sqrt{1+|\lambda_i|^2}},
+\qquad
+|\widehat v_i\rangle=v_i/\|v_i\|,
+$$
+$$
+p_i=\frac{(1+|\lambda_i|^2)\|v_i\|^2}{c}>0.
+\tag{276.17}
+$$
+对（276.16）取迹得 $\sum_i p_i=1$，因此
+$$
+\boxed{
+\Omega(Q,M)=\sum_i p_i
+|\widehat a_i\rangle\langle\widehat a_i|
+\otimes
+|\widehat v_i\rangle\langle\widehat v_i|.
+}
+\tag{276.18}
+$$
+这就给出所需可分分解。$\square$
+
+该充要判据的合同是秩为 $n$、上对角块正定的图来源（276.2）。证明中的PPT充分性由（276.16）直接承担；本节的结论范围不包含一般更高秩来源或奇异上对角块。
+
+### 276.4 完整数据唯一时，可分性等价于加权酉性
+
+定理275.3表明：（276.2）的完整数据纤维唯一，当且仅当
+$$
+\operatorname{spec}(M)\subseteq\mathbb S^1.
+\tag{276.19}
+$$
+在这个子类中，设最大Jordan块长为 $m$，则标准奇异度为 $m$，完整数据的锐局部逆指数为 $1/(2m)$；这些结论的竞争类仍包含所有密度态。
+
+将前述标准结构用于（276.19）的唯一来源子类，得到
+$$
+\boxed{
+\Omega(Q,M)\text{ 可分}
+\quad\Longleftrightarrow\quad A\text{ 酉}
+\quad\Longleftrightarrow\quad M^\dagger QM=Q.
+}
+\tag{276.20}
+$$
+
+**证明。** $A$ 与 $M$ 相似，故所有本征值模长为一。若 $A$ 正规，谱定理将其酉对角化为单位模长的对角矩阵，因此 $A$ 酉；酉矩阵当然正规。最后，
+$$
+A^\dagger A=I_n
+\quad\Longleftrightarrow\quad
+Q^{-1/2}M^\dagger QMQ^{-1/2}=I_n
+\quad\Longleftrightarrow\quad M^\dagger QM=Q.
+\tag{276.21}
+$$
+结合（276.12）即得结论。$\square$
+
+非平凡Jordan链不可能属于正规矩阵，所以在唯一来源子类中，$m\ge2$ 必使来源NPT纠缠。下一例说明NPT纠缠也能出现在 $m=1$ 时：最长链描述的恢复深度，还不能单独判定权重与不同谱相位之间的纠缠关系。
+
+### 276.5 两个单位相位与一个正定相干权重
+
+现在固定 $E=\mathbb C^2$ 及标准基 $e_1,e_2$，定义
+$$
+M_{\mathrm E}=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+Q_r=\begin{pmatrix}1&r\\r&1\end{pmatrix},
+\qquad 0<r<1.
+\tag{276.22}
+$$
+$Q_r$ 的本征值为 $1\pm r$，所以正定。记
+$$
+\Omega_{\mathrm E}(r)=\Omega(Q_r,M_{\mathrm E}).
+\tag{276.23}
+$$
+直接计算给
+$$
+Q_r+M_{\mathrm E}^\dagger Q_rM_{\mathrm E}=2I_2,
+\qquad c=4,
+$$
+$$
+\rho_{\mathrm E}=I_2/2,
+\qquad
+K_{\mathrm E}(r)
+=\frac12\begin{pmatrix}1&-r\\r&-1\end{pmatrix}.
+\tag{276.24}
+$$
+来源的联合秩为二。
+
+$M_{\mathrm E}$ 的两个本征值为 $1,-1$，两条Jordan链都长一。由定理275.3，
+$$
+\boxed{
+\Omega_{\mathrm E}(r)\text{ 的完整数据纤维唯一},
+\qquad d_{S,\mathrm E}=1,
+\qquad\alpha_{\mathrm E}=\frac12.
+}
+\tag{276.25}
+$$
+这些指数针对固定 $r$ 处的全部合法竞争态；限制为精确共同边缘后仍尖锐。
+
+另一方面，
+$$
+M_{\mathrm E}^\dagger Q_rM_{\mathrm E}
+=\begin{pmatrix}1&-r\\-r&1\end{pmatrix}\ne Q_r.
+\tag{276.26}
+$$
+式（276.20）和（276.12）因此给出NPT纠缠。这里 $M_{\mathrm E}$ 本身已经是对角酉矩阵；检验（276.7）的加权相似矩阵，才得到该来源的可分性答案。
+
+### 276.6 二维例子的负性精确为 $r/2$
+
+定义输入正交向量
+$$
+|s\rangle=\frac{|+\rangle+|-\rangle}{\sqrt2},
+\qquad
+|d\rangle=\frac{|+\rangle-|-\rangle}{\sqrt2},
+$$
+$$
+|a\rangle=|s\rangle\otimes e_1,
+\qquad |b\rangle=|d\rangle\otimes e_2.
+\tag{276.27}
+$$
+由（276.2）与（276.22），
+$$
+\Omega_{\mathrm E}(r)
+=\frac12\left(
+|a\rangle\langle a|+|b\rangle\langle b|
++r|a\rangle\langle b|+r|b\rangle\langle a|
+\right).
+\tag{276.28}
+$$
+这也直接给其两个非零本征值 $(1+r)/2$ 与 $(1-r)/2$。
+
+在正交产品基
+$$
+(s\otimes e_1,\ s\otimes e_2,\ d\otimes e_1,\ d\otimes e_2)
+$$
+中，来源与其输入部分转置分别具有矩阵
+$$
+\frac12\begin{pmatrix}
+1&0&0&r\\0&0&0&0\\0&0&0&0\\r&0&0&1
+\end{pmatrix},
+\qquad
+\frac12\begin{pmatrix}
+1&0&0&0\\0&0&r&0\\0&r&0&0\\0&0&0&1
+\end{pmatrix}.
+\tag{276.29}
+$$
+输入基变换为实酉矩阵，故这里的部分转置与原固定基下的部分转置具有相同谱。读出后者的四个本征值，得到
+$$
+\operatorname{spec}(\Omega_{\mathrm E}(r)^{\Gamma_H})
+=\left\{\frac12,\frac12,\frac r2,-\frac r2\right\}.
+\tag{276.30}
+$$
+所以
+$$
+\boxed{\operatorname{Neg}(\Omega_{\mathrm E}(r))=r/2.}
+\tag{276.31}
+$$
+这给出任意小正负性与深度一、平方根锐指数同时成立的实际来源族。
+
+### 276.7 同一二维接口中的单Jordan来源
+
+仍在同一 $E=\mathbb C^2$ 和同一输入基中，令
+$$
+M_{\mathrm J}(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix},
+\qquad
+Q_{\mathrm J}(t)=\begin{pmatrix}1/2&-t/4\\-t/4&1/2\end{pmatrix},
+\qquad 0\le t\le1/4.
+\tag{276.32}
+$$
+$Q_{\mathrm J}(t)$ 的本征值为 $1/2\pm t/4$，在该区间严格正；直接相乘验证
+$$
+Q_{\mathrm J}(t)+M_{\mathrm J}(t)^\dagger Q_{\mathrm J}(t)M_{\mathrm J}(t)=I_2.
+\tag{276.33}
+$$
+因此§272的二维单链来源恰为
+$$
+\Omega_{\mathrm J}(t)=\frac12T(Q_{\mathrm J}(t),M_{\mathrm J}(t)),
+\qquad\rho_{\mathrm J}=I_2/2,
+$$
+$$
+K_{\mathrm J}(t)=Q_{\mathrm J}(t)M_{\mathrm J}(t)
+=\begin{pmatrix}
+1/2&t/4\\-t/4&1/2-t^2/4
+\end{pmatrix}.
+\tag{276.34}
+$$
+该来源的联合秩为二，且随 $t$ 连续。
+
+对每个固定 $0<t\le1/4$，§269、§272及定理275.3给
+$$
+d_{S,\mathrm J}=2,
+\qquad \alpha_{\mathrm J}=\frac14,
+\tag{276.35}
+$$
+并且完整数据纤维唯一。§272的负性界在 $n=2$ 时为
+$$
+\frac{t^2}{50}
+\le f_{\mathrm J}(t):=\operatorname{Neg}(\Omega_{\mathrm J}(t))
+\le2t^2.
+\tag{276.36}
+$$
+有限维部分转置和迹范数连续，使 $f_{\mathrm J}$ 在整个闭区间连续，且 $f_{\mathrm J}(0)=0$。
+
+### 276.8 相同维数、秩、边缘和负性下的两个锐指数
+
+**定理276.1（二维同负性的精确比较）。** 对任意
+$$
+0<\nu\le\frac1{800},
+\tag{276.37}
+$$
+存在
+$$
+r_\nu=2\nu\in(0,1),
+\qquad
+t_\nu\in[\sqrt{\nu/2},\sqrt{50\nu}]
+\subseteq(0,1/4],
+\tag{276.38}
+$$
+使 $\Omega_{\mathrm E}(r_\nu)$ 与 $\Omega_{\mathrm J}(t_\nu)$ 同时满足：联合空间为同一 $2\otimes2$，联合秩为二，参考边缘为 $I_2/2$，负性精确为 $\nu$。两者的完整数据纤维均唯一，而
+$$
+\boxed{
+(d_{S,\mathrm E},\alpha_{\mathrm E})=(1,1/2),
+\qquad
+(d_{S,\mathrm J},\alpha_{\mathrm J})=(2,1/4).
+}
+\tag{276.39}
+$$
+
+**证明。** （276.37）给 $0<r_\nu\le1/400<1$，所以第一族合法；由（276.31），其负性恰为 $\nu$。第二族参数上端满足 $\sqrt{50\nu}\le1/4$，下端严格正；故区间合法。
+
+由（276.36）的上界和下界分别得到
+$$
+f_{\mathrm J}(\sqrt{\nu/2})\le\nu,
+\qquad
+f_{\mathrm J}(\sqrt{50\nu})\ge\nu.
+\tag{276.40}
+$$
+介值定理给所需的 $t_\nu$。这里使用连续性与端点夹逼，不要求 $f_{\mathrm J}$ 单调或参数解唯一。共同维数、秩和边缘由显式来源成立；因为 $r_\nu,t_\nu$ 均处于所要求的正参数范围，两种深度与锐指数分别由（276.25）、（276.35）成立。$\square$
+
+两者使用同一个完整数据映射（276.3），但各在自己的真值数据中心衡量误差。这些中心可直接区分：
+$$
+(K_{\mathrm E}(r_\nu))_{12}=-r_\nu/2<0,
+\qquad
+(K_{\mathrm J}(t_\nu))_{12}=t_\nu/4>0.
+\tag{276.41}
+$$
+因此比较的是两个不同唯一来源处的局部合同。对每个固定来源，竞争域都是全部 $2\otimes2$ 密度态；共同边缘子合同中的锐指数也分别相同。
+
+本节的分类使两种结构各有明确作用：单位圆谱与最长Jordan链决定这个图来源类的唯一性和恢复深度，$Q^{1/2}MQ^{-1/2}$ 的正规性决定其PPT和可分性。定理276.1进一步证明，即使固定维数、联合秩和参考边缘，负性这一标量仍不能单独确定完整数据的锐恢复指数。
+
+Schur补、有限维谱定理与产品分解在本节内直接给出；单位圆谱的完整竞争类分类由§275供应，单Jordan负性界与尖锐下界由§269、§272供应。结论限于给定来源和数据合同，不附加蒸馏、有限副本或物理时间结论，也不据这些组合推导宣称外部文献原创性。
+
+## 追加锚（本行以下为增补区）
