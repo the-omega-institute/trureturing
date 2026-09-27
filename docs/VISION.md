@@ -158,10 +158,25 @@ uses three windows onto variables: one permits pairs with `x=y`, another
 `y=z`, and the third `x≠z`. Their allowed records agree on every overlap:
 either value of the shared variable is permitted. Yet no joint record
 satisfies all three constraints. Finding relations that make local agreement
-sufficient is the task; the tree criterion below gives one answer. Connecting
-these record models to physical spacetime remains a research question.
+sufficient is the task; the tree criterion below gives one answer.
 
-Existing work offers several connected routes:
+The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Additional global constraints can exclude every extension.
+Unique completion, original-history recovery and computational cost require
+further results.
+
+Here, holography names a research direction concerning wholes and observations.
+This guide establishes no physical holographic duality, area law or model of
+the universe. Correspondences between discrete event times, logical dependency
+depth and physical spacetime coordinates require their own definitions,
+proofs and, where applicable, empirical tests.
+
+Theory inputs explore several routes:
 
 - [Contextual spacetime arithmetic](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
   begins with finite event archives that retain time labels, positions, causal
@@ -183,22 +198,6 @@ Existing work offers several connected routes:
   explore correspondences between observation structures. Each transfer must
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
-
-The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-assumes nonempty local record sets on a finite tree: each recorded variable's
-occurrences form a connected subtree, and neighbors allow exactly the same
-joint assignments on their full overlap. Every allowed local record extends
-across all recorded variables, satisfying every local constraint.
-Do all completions of a fixed local record agree on the target value?
-Additional global constraints can exclude every extension.
-Unique completion, original-history recovery and computational cost require
-further results.
-
-Here, holography names a research direction concerning wholes and observations.
-This guide establishes no physical holographic duality, area law or model of
-the universe. Correspondences between discrete event times, logical dependency
-depth and physical spacetime coordinates require their own definitions,
-proofs and, where applicable, empirical tests.
 
 ## What can serve as the next premise
 
