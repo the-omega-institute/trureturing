@@ -720,9 +720,11 @@ internal static class GitWorktreeInventory
         var reason = $"main checkout {state}";
         if (!string.IsNullOrWhiteSpace(detail)) reason += $" ({detail})";
         reason += "; sync dev and warm the dev cache: "
-            + $"make -C {main} warm-donor";
+            + $"make -C {ShellQuote(main)} warm-donor";
         return new LeanCacheDonorSelection(null, reason);
     }
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
 
     private static bool IsSymlink(string path) =>
         File.GetAttributes(path).HasFlag(FileAttributes.ReparsePoint);

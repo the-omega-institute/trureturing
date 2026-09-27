@@ -297,13 +297,18 @@ internal static partial class LeanCacheEnsureCommand
                                 pins,
                                 runner,
                                 stateProbe);
-                            return LinkedFailure(
-                                root,
-                                pins,
-                                location,
-                                mainDonor.Notice
-                                    ?? "lane project layer is cold and the existing stamp prevents the supported build overlay",
-                                stampMiss);
+                            return mainDonor.Donor is null
+                                ? LinkedFailure(
+                                    root,
+                                    pins,
+                                    location,
+                                    mainDonor.Notice,
+                                    stampMiss)
+                                : LinkedLaneReseedFailure(
+                                    root,
+                                    pins,
+                                    location,
+                                    stampMiss);
                         }
 
                         // A main checkout may fill an empty project layer from the Release archive.
@@ -797,13 +802,13 @@ internal static partial class LeanCacheEnsureCommand
                 stateProbe);
             if (attempt.Result is null)
             {
-                return LinkedFailure(
+                return LinkedLaneReseedFailure(
                     root,
                     pins,
                     location,
-                    attempt.Warning ?? "main-checkout build overlay failed",
                     stampMiss,
-                    attempt.Clonefile);
+                    attempt.Clonefile,
+                    attempt.Warning ?? "main-checkout build overlay failed");
             }
 
             return SuccessWithState(
@@ -827,16 +832,39 @@ internal static partial class LeanCacheEnsureCommand
         }
         catch (Exception exception)
         {
-            return LinkedFailure(
+            return LinkedLaneReseedFailure(
                 root,
                 pins,
                 location,
-                exception.Message,
                 stampMiss,
                 exception is LeanCacheProvisionException provisionException
                     ? provisionException.Clonefile
-                    : null);
+                    : null,
+                exception.Message);
         }
+    }
+
+    private static CommandResult LinkedLaneReseedFailure(
+        string root,
+        LeanPinSet pins,
+        LeanWorktreeLocation location,
+        string? stampMiss,
+        ClonefileReceipt? clonefile = null,
+        string? reason = null)
+    {
+        var lake = ShellQuote(LeanCacheGuard.PhysicalPath(Path.Combine(root, ".lake")));
+        var remediation = "the lane's content layer is cold while the main checkout is warm: "
+            + $"remove {lake} and re-run so ensure seeds it from the main checkout";
+        return FailureReceipt(
+            "failed",
+            root,
+            location.MainCheckout,
+            "none",
+            pins.Sha256,
+            JoinReasons(reason, remediation) ?? remediation,
+            stampMiss,
+            clonefile,
+            LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
     }
 
     private static CommandResult LinkedFailure(
@@ -847,7 +875,8 @@ internal static partial class LeanCacheEnsureCommand
         string? stampMiss,
         ClonefileReceipt? clonefile = null)
     {
-        var remediation = $"sync dev and warm the dev cache: make -C {location.MainCheckout} warm-donor";
+        var remediation = "sync dev and warm the dev cache: "
+            + $"make -C {ShellQuote(location.MainCheckout)} warm-donor";
         var completeReason = reason?.Contains(remediation, StringComparison.Ordinal) == true
             ? reason
             : JoinReasons(reason, remediation) ?? remediation;

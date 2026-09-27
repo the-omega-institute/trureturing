@@ -199,9 +199,10 @@ public sealed partial class WorktreeCommandTests
         Assert.False(result.Success);
         Assert.Contains(target, result.Error, StringComparison.Ordinal);
         Assert.Contains("sync dev and warm the dev cache", result.Error, StringComparison.Ordinal);
+        using var failure = ParseReceipt(result.Error);
         Assert.Contains(
-            $"make -C {LeanCacheGuard.PhysicalPath(repository.Path)} warm-donor",
-            result.Error,
+            $"make -C '{LeanCacheGuard.PhysicalPath(repository.Path)}' warm-donor",
+            failure.RootElement.GetProperty("reason").GetString(),
             StringComparison.Ordinal);
     }
 

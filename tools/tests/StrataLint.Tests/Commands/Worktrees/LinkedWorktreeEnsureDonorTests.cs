@@ -70,7 +70,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         var reason = receipt.RootElement.GetProperty("reason").GetString();
         Assert.Contains(expectedColdState, reason, StringComparison.Ordinal);
-        Assert.Contains(Remediation(repository.Path), reason, StringComparison.Ordinal);
+        Assert.Contains(MainWarmRemediation(repository.Path), reason, StringComparison.Ordinal);
         Assert.Equal(LinkedArchiveDisabled, receipt.RootElement.GetProperty("archive_skip_reason").GetString());
     }
 
@@ -104,7 +104,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void LinkedLaneWithMatchingStampAndColdContentFailsClosedWithoutNewOverlay()
+    public void LinkedLaneWithMatchingStampAndColdContentNamesLaneReseedRemediation()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -128,11 +128,46 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(0, runner.ArchiveInvocations);
         AssertNoCacheGet(runner);
         using var receipt = ParseReceipt(result.Error);
-        Assert.Contains("existing stamp prevents the supported build overlay",
-            receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Contains(Remediation(repository.Path), receipt.RootElement.GetProperty("reason").GetString(),
-            StringComparison.Ordinal);
+        Assert.Equal(
+            LaneReseedRemediation(target),
+            receipt.RootElement.GetProperty("reason").GetString());
         Assert.Equal(LinkedArchiveDisabled, receipt.RootElement.GetProperty("archive_skip_reason").GetString());
+    }
+
+    [Fact]
+    public void LinkedRemediationsShellQuoteMainAndLanePathsContainingSpaces()
+    {
+        using var parent = new TemporaryDirectory();
+        var mainCheckout = Path.Combine(parent.Path, "main checkout");
+        Directory.CreateDirectory(mainCheckout);
+        InitializeRepository(mainCheckout);
+        var target = AddWorktree(mainCheckout, "lane-checkout");
+
+        var coldMain = WorktreeCommand.Run(
+            mainCheckout,
+            ["ensure-cache", "--path", target],
+            new RecordingWorktreeProcessRunner(),
+            new RecordingDirectoryCloner());
+
+        Assert.False(coldMain.Success);
+        Assert.Equal(
+            $"main checkout stamp absent; {MainWarmRemediation(mainCheckout)}",
+            ReceiptReason(coldMain.Error));
+
+        WriteCache(mainCheckout, "warm main cache\n");
+        _ = WriteProjectOlean(mainCheckout, "WarmMain");
+        var targetLake = Path.Combine(target, ".lake");
+        Directory.CreateDirectory(targetLake);
+        LeanCacheStamp.Write(targetLake, ReadPins(target));
+
+        var coldLane = WorktreeCommand.Run(
+            mainCheckout,
+            ["ensure-cache", "--path", target],
+            new RecordingWorktreeProcessRunner(),
+            new RecordingDirectoryCloner());
+
+        Assert.False(coldLane.Success);
+        Assert.Equal(LaneReseedRemediation(target), ReceiptReason(coldLane.Error));
     }
 
     [Theory]
@@ -164,7 +199,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var receipt = ParseReceipt(result.Error);
         Assert.Contains("project layer cold", receipt.RootElement.GetProperty("reason").GetString(),
             StringComparison.Ordinal);
-        Assert.Contains(Remediation(repository.Path), receipt.RootElement.GetProperty("reason").GetString(),
+        Assert.Contains(MainWarmRemediation(repository.Path), receipt.RootElement.GetProperty("reason").GetString(),
             StringComparison.Ordinal);
     }
 
@@ -278,8 +313,17 @@ public sealed partial class LeanCacheEnsureCommandTests
             Path.GetFileName(call.FileName) == "lake"
             && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
 
-    private static string Remediation(string mainCheckout) =>
-        $"sync dev and warm the dev cache: make -C {LeanCacheGuard.PhysicalPath(mainCheckout)} warm-donor";
+    private static string MainWarmRemediation(string mainCheckout) =>
+        $"sync dev and warm the dev cache: make -C {ShellQuote(LeanCacheGuard.PhysicalPath(mainCheckout))} warm-donor";
+
+    private static string Remediation(string mainCheckout) => MainWarmRemediation(mainCheckout);
+
+    private static string LaneReseedRemediation(string lane) =>
+        "the lane's content layer is cold while the main checkout is warm: remove "
+        + $"{ShellQuote(Path.Combine(LeanCacheGuard.PhysicalPath(lane), ".lake"))} "
+        + "and re-run so ensure seeds it from the main checkout";
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
 
     private static string ReceiptReason(string text)
     {

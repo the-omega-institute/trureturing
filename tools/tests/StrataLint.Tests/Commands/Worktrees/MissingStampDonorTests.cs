@@ -442,6 +442,9 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         AssertCrossDeviceCloneReceipt(receipt.RootElement);
+        var reason = receipt.RootElement.GetProperty("reason").GetString();
+        Assert.EndsWith(LaneReseedRemediation(fixture.Target), reason, StringComparison.Ordinal);
+        Assert.DoesNotContain(MainWarmRemediation(repository.Path), reason, StringComparison.Ordinal);
     }
 
     [Fact]
