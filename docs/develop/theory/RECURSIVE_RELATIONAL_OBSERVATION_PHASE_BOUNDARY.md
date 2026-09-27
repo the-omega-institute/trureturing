@@ -85364,3 +85364,505 @@ $$
 标准面对偶与奇异度定义承接§266，单链正定来源和精确下界供应承接§268—269；跨链证书限制、任意链下界及完整列误差控制由本节证明承担。所用PSD谱分解、多项式有界性与Lagrange插值均是标准有限维工具，不据其组合宣称外部文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 272. 单Jordan来源的NPT纠缠、二阶负性与恢复指数的产品端点
+
+§269确定了单Jordan唯一来源的锐局部恢复指数。本节分析同一来源族的纠缠：当参考维数 $n\ge2$、Jordan参数 $0<t\le1/4$ 时，每个来源都具有负部分转置，而且其negativity满足维数与参数共同控制的界
+$$
+\frac{t^2}{25n}\le\mathcal N(\Omega_t)\le\frac{4t^2}{n}.
+$$
+这些正常数在全部声明范围内统一。
+
+固定 $n$ 时，来源在 $t\to0$ 趋向产品态，负性按 $t^2$ 消失；每个 $t>0$ 的锐恢复指数仍为 $1/(2n)$，产品端点则为 $1/2$。因此在这个具体连续族中，纠缠量趋零与局部指数趋向产品值是不同的结论。
+
+### 272.1 整个参数区间上的正定来源
+
+参考空间为 $E=\mathbb C^n$，输入 $H$ 为qubit。所有联合块矩阵使用固定输入 $Y$ 本征基。令
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),
+\qquad M_t=I_n+tJ,\qquad0\le t\le\frac14.
+\tag{272.1}
+$$
+在Hermitian矩阵空间上定义
+$$
+\mathcal E_t(X)=t(J^\dagger X+XJ)+t^2J^\dagger XJ,
+\qquad a(t)=t+\frac{t^2}{2}\le\frac9{32}.
+\tag{272.2}
+$$
+因为 $\|J\|\le1$，$\|\mathcal E_t/2\|\le a(t)<1$。因此§268的Neumann构造在整个区间上给出唯一Hermitian解
+$$
+Q(t)=\frac12
+\left(\operatorname{Id}+\frac12\mathcal E_t\right)^{-1}(I_n),
+\qquad
+Q+M_t^\dagger QM_t=I_n.
+\tag{272.3}
+$$
+以下在不会混淆时省略 $Q$ 的参数。级数估计给
+$$
+\left\|Q(t)-\frac12I_n\right\|
+\le\frac{a(t)}{2(1-a(t))}
+\le\frac9{46},
+$$
+$$
+\boxed{
+\frac7{23}I_n\preceq Q(t)\preceq\frac{16}{23}I_n.
+}
+\tag{272.4}
+$$
+还可将收敛速度写成
+$$
+\left\|Q(t)-\frac12I_n\right\|
+\le\frac{18}{23}t.
+\tag{272.5}
+$$
+确实，$a(t)=t(1+t/2)$，$1+t/2\le9/8$，$1-a(t)\ge23/32$，代入即得。
+
+$M_t$ 可逆，故（272.3）还给 $0\prec Q\prec I_n$。定义
+$$
+T_t=
+\begin{pmatrix}
+Q&QM_t\\
+M_t^\dagger Q&M_t^\dagger QM_t
+\end{pmatrix}
+=
+\begin{bmatrix}I_n\\M_t^\dagger\end{bmatrix}
+Q
+\begin{bmatrix}I_n&M_t\end{bmatrix},
+$$
+$$
+\Omega_t=\frac1nT_t.
+\tag{272.6}
+$$
+它是秩 $n$、迹一的密度态，完整数据为
+$$
+\rho_t=\frac1nI_n,\qquad
+K_t=\mathscr K(\Omega_t)=\frac2nQM_t,
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{272.7}
+$$
+对每个固定 $n$，逆映射、矩阵乘法和正平方根均连续，因而 $Q(t)$、$\Omega_t$ 及下述矩阵表达式都在 $t=0$ 连续。
+
+### 272.2 部分转置的Schur补与正规性
+
+记 $\Gamma$ 为在当前输入基上取部分转置。于是
+$$
+T_t^\Gamma=
+\begin{pmatrix}
+Q&M_t^\dagger Q\\
+QM_t&M_t^\dagger QM_t
+\end{pmatrix}.
+\tag{272.8}
+$$
+因为 $Q\succ0$，部分转置正半定当且仅当其Schur补
+$$
+S_t=M_t^\dagger QM_t-QM_tQ^{-1}M_t^\dagger Q
+\tag{272.9}
+$$
+正半定。置
+$$
+A_t=Q^{1/2}M_tQ^{-1/2}.
+\tag{272.10}
+$$
+直接相乘得到
+$$
+Q^{-1/2}S_tQ^{-1/2}=A_t^\dagger A_t-A_tA_t^\dagger.
+\tag{272.11}
+$$
+右侧Hermitian且迹为零，所以它正半定当且仅当它为零。因此
+$$
+\boxed{
+T_t^\Gamma\succeq0
+\quad\Longleftrightarrow\quad
+A_t\text{ 正规}.
+}
+\tag{272.12}
+$$
+
+**定理272.1（全部非零参数来源均NPT）。** 当 $n\ge2$、$0<t\le1/4$ 时，$\Omega_t^\Gamma$ 有负本征值，因而 $\Omega_t$ 为纠缠态。
+
+**证明。** $M_t=I_n+tJ$ 是非平凡单Jordan块，唯一特征值为一，但不可对角化。$A_t$ 与它相似。若 $A_t$ 正规，则其酉对角化只有本征值一，故 $A_t=I_n$，进一步迫使 $M_t=I_n$，与 $tJ\ne0$ 矛盾。由（272.12），$T_t^\Gamma$ 不是PSD，故有负本征值。
+
+PPT是可分态的必要条件：若 $\Omega=\sum_jp_j\tau_j\otimes\eta_j$ 可分，则
+$$
+\Omega^\Gamma=\sum_jp_j\tau_j^{\mathsf T}\otimes\eta_j\succeq0,
+\tag{272.13}
+$$
+因为单系统转置保持PSD。因此负部分转置排除可分性。$\square$
+
+这里仅使用PPT必要性，没有使用PPT充分性，也没有从NPT进一步宣称蒸馏性质。正规性论证只需 $t>0$ 和相应正定 $Q$ 存在；本节的存在性与统一定量范围为 $0<t\le1/4$。
+
+### 272.3 负性与精确二阶Schur形式
+
+采用negativity的通常归一化
+$$
+\mathcal N(\Omega)
+=\frac{\|\Omega^\Gamma\|_1-1}{2}
+=\operatorname{Tr}(\Omega^\Gamma)_-.
+\tag{272.14}
+$$
+其中 $X_-$ 为Hermitian矩阵的负部；所有态差和数据误差仍使用未除以二的迹范数。由 $\Omega_t=T_t/n$，
+$$
+\mathcal N(\Omega_t)=\frac1n\operatorname{Tr}(T_t^\Gamma)_-.
+\tag{272.15}
+$$
+
+令
+$$
+B_t=Q^{1/2}JQ^{-1/2},
+\qquad A_t=I_n+tB_t.
+\tag{272.16}
+$$
+在 $A_t^\dagger A_t-A_tA_t^\dagger$ 中，常数项及一阶项都精确相消。因此
+$$
+\boxed{
+S_t=t^2Q^{1/2}
+(B_t^\dagger B_t-B_tB_t^\dagger)Q^{1/2}.
+}
+\tag{272.17}
+$$
+这给出负方向的二阶结构，而不需要预先展开 $Q(t)$ 的更高阶系数。
+
+为把Schur补控制转换成整个部分转置的负谱，写
+$$
+T_t^\Gamma=G_t+\operatorname{diag}(0,S_t),
+$$
+$$
+G_t=
+\begin{bmatrix}Q^{1/2}\\QM_tQ^{-1/2}\end{bmatrix}
+\begin{bmatrix}Q^{1/2}\\QM_tQ^{-1/2}\end{bmatrix}^{\dagger}
+\succeq0.
+\tag{272.18}
+$$
+Gram矩阵的下对角块为 $QM_tQ^{-1}M_t^\dagger Q$，其余三块与 $T_t^\Gamma$ 完全相同。负部变分公式
+$$
+\operatorname{Tr}X_-=\max_{0\preceq P\preceq I}\{-\operatorname{Tr}(PX)\}
+\tag{272.19}
+$$
+于是给
+$$
+\boxed{
+\operatorname{Tr}(T_t^\Gamma)_-
+\le\operatorname{Tr}(S_t)_-
+\le\|S_t\|_1.
+}
+\tag{272.20}
+$$
+这里不把Schur补本征值当作原矩阵中相等的本征值，而是通过PSD加法与变分公式比较负谱总量。
+
+### 272.4 全区间的显式负性下界
+
+现在假设 $n\ge2$。由 $M_te_1=e_1$ 和（272.3），
+$$
+M_t^\dagger Qe_1=e_1-Qe_1,\qquad Q_{11}=\frac12.
+\tag{272.21}
+$$
+再比较该方程的 $(1,2)$ 元，得到
+$$
+2Q_{12}+tQ_{11}=0,\qquad Q_{12}=-\frac t4.
+\tag{272.22}
+$$
+利用（272.21）计算Schur补的首个二次型：
+$$
+\begin{aligned}
+e_1^\dagger S_te_1
+&=\frac12-(e_1-Qe_1)^\dagger Q^{-1}(e_1-Qe_1)\\
+&=2-(Q^{-1})_{11}.
+\end{aligned}
+\tag{272.23}
+$$
+
+按 $e_1$ 与其正交补分块，
+$$
+Q=\begin{pmatrix}1/2&r^\dagger\\r&Q_{\mathrm{tail}}\end{pmatrix},
+\qquad
+\alpha=r^\dagger Q_{\mathrm{tail}}^{-1}r.
+\tag{272.24}
+$$
+$Q\succ0$ 给 $0\le\alpha<1/2$，且
+$$
+(Q^{-1})_{11}=\frac1{1/2-\alpha}.
+\tag{272.25}
+$$
+又 $Q_{\mathrm{tail}}\preceq I$，$r$ 的首项为 $-t/4$，所以
+$$
+\alpha\ge\|r\|^2\ge\frac{t^2}{16}.
+\tag{272.26}
+$$
+因此
+$$
+(Q^{-1})_{11}-2
+=\frac{4\alpha}{1-2\alpha}\ge4\alpha\ge\frac{t^2}{4},
+$$
+$$
+e_1^\dagger S_te_1\le-\frac{t^2}{4}.
+\tag{272.27}
+$$
+
+取联合向量
+$$
+q_t=(-Q^{-1}M_t^\dagger Qe_1,e_1)
+=(e_1-Q^{-1}e_1,e_1).
+\tag{272.28}
+$$
+按左上块完成平方的精确恒等式给
+$$
+q_t^\dagger T_t^\Gamma q_t=e_1^\dagger S_te_1.
+\tag{272.29}
+$$
+因为 $0\prec Q\prec I$ 且 $\lambda_{\min}(Q)\ge7/23$，
+$$
+\|I-Q^{-1}\|\le\frac{16}{7},
+\qquad
+\|q_t\|^2\le1+\left(\frac{16}{7}\right)^2
+=\frac{305}{49}\le\frac{25}{4}.
+\tag{272.30}
+$$
+Rayleigh原理与（272.27）给
+$$
+\lambda_{\min}(T_t^\Gamma)
+\le\frac{q_t^\dagger T_t^\Gamma q_t}{\|q_t\|^2}
+\le-\frac{t^2}{25}.
+\tag{272.31}
+$$
+结合（272.15），得到整个参数区间上的下界
+$$
+\boxed{
+\mathcal N(\Omega_t)\ge\frac{t^2}{25n}
+\qquad(n\ge2,\ 0<t\le1/4).
+}
+\tag{272.32}
+$$
+
+### 272.5 交换子方程与维数无关的核范数控制
+
+上界需要直接控制 $\|S_t\|_1$，以保留归一化带来的 $1/n$。令
+$$
+\mathcal L_t(X)=X+M_t^\dagger XM_t
+=2X+\mathcal E_t(X)
+\tag{272.33}
+$$
+作用于全部复矩阵，并使用核范数诱导的算子范数。Schatten乘法界给
+$\|\mathcal E_t\|_{1\to1}\le2t+t^2$，所以
+$$
+\|\mathcal L_t^{-1}\|_{1\to1}
+\le\frac1{2(1-a(t))}
+\le\frac{16}{23}.
+\tag{272.34}
+$$
+这里允许非Hermitian输入，因为下面的交换子一般不为Hermitian。
+
+置
+$$
+C_t=[Q,J]=QJ-JQ.
+\tag{272.35}
+$$
+利用 $JM_t=M_tJ$ 及（272.3），展开得到
+$$
+\mathcal L_t(C_t)
+=[J,M_t^\dagger]QM_t
+=t(E_{11}-E_{nn})QM_t.
+\tag{272.36}
+$$
+对 $n\ge2$，$\|E_{11}-E_{nn}\|_1=2$，并且
+$\|Q\|\le16/23$、$\|M_t\|\le1+t\le5/4$。因此
+$$
+\boxed{
+\|C_t\|_1
+\le\frac{16}{23}\cdot2t\cdot\frac{16}{23}\cdot\frac54
+=\frac{640}{529}t.
+}
+\tag{272.37}
+$$
+该界不含参考维数因子。
+
+令 $X_t=[Q^{1/2},J]$，则
+$$
+Q^{1/2}X_t+X_tQ^{1/2}=C_t.
+\tag{272.38}
+$$
+这个Sylvester方程具有精确积分解
+$$
+X_t=\int_0^\infty
+e^{-uQ^{1/2}}C_t e^{-uQ^{1/2}}\,du.
+\tag{272.39}
+$$
+指数衰减保证积分收敛；对被积函数求导并积分验证方程。正本征值之和保证解唯一。由此
+$$
+\|X_t\|_1
+\le\frac{\|C_t\|_1}{2\sqrt{\lambda_{\min}(Q)}}.
+\tag{272.40}
+$$
+对（272.16）的 $B_t$，
+$$
+B_t-J=X_tQ^{-1/2},
+$$
+$$
+\boxed{
+\|B_t-J\|_1
+\le\frac{\|C_t\|_1}{2\lambda_{\min}(Q)}
+\le\frac{320}{161}t\le2t.
+}
+\tag{272.41}
+$$
+同时
+$$
+\|B_t\|\le
+\sqrt{\frac{\lambda_{\max}(Q)}{\lambda_{\min}(Q)}}
+\le\frac4{\sqrt7}<2.
+\tag{272.42}
+$$
+
+分别展开 $B_t^\dagger B_t-J^\dagger J$ 与
+$B_tB_t^\dagger-JJ^\dagger$，两者的核范数各至多为
+$(\|B_t\|+1)\|B_t-J\|_1$。而
+$J^\dagger J-JJ^\dagger=-E_{11}+E_{nn}$，故
+$$
+\begin{aligned}
+\|B_t^\dagger B_t-B_tB_t^\dagger\|_1
+&\le2+2(\|B_t\|+1)\|B_t-J\|_1\\
+&\le2+12t\le5.
+\end{aligned}
+\tag{272.43}
+$$
+代入精确二阶形式（272.17），得到
+$$
+\|S_t\|_1
+\le t^2\|Q\|\,
+\|B_t^\dagger B_t-B_tB_t^\dagger\|_1
+\le\frac{80}{23}t^2\le4t^2.
+\tag{272.44}
+$$
+最后，（272.15）、（272.20）给
+$$
+\boxed{
+\mathcal N(\Omega_t)\le\frac{4t^2}{n}.
+}
+\tag{272.45}
+$$
+
+**定理272.2（全维统一负性阶）。** 对全部 $n\ge2$、$0<t\le1/4$，
+$$
+\boxed{
+\frac{t^2}{25n}\le\mathcal N(\Omega_t)\le\frac{4t^2}{n}.
+}
+\tag{272.46}
+$$
+因此该族的负性在两个参数上统一为 $\Theta(t^2/n)$。
+
+**证明。** 下界是（272.32），上界是（272.45）；两个系数都是与 $n,t$ 无关的正数。$\square$
+
+### 272.6 产品端点及其锐平方根恢复界
+
+当 $t=0$，
+$$
+M_0=I_n,\qquad Q(0)=\frac12I_n,
+$$
+$$
+\Omega_0=|a\rangle\langle a|\otimes\frac1nI_n,
+\qquad
+|a\rangle=\frac{|y_+\rangle+|y_-\rangle}{\sqrt2},
+\qquad \rho_0=K_0=\frac1nI_n.
+\tag{272.47}
+$$
+$a$ 在当前输入 $Y$ 基中的坐标为 $(1,1)/\sqrt2$，并非 $Y$ 的正本征态；沿用既定基相位，它对应原 $Z$ 基的 $|0\rangle$。
+
+对任意合法竞争态 $\Xi$，令
+$$
+\varepsilon=
+\|\rho_\Xi-\rho_0\|_1+\|K_\Xi-\rho_0\|_1,
+\qquad
+P=|a\rangle\langle a|\otimes I_n.
+\tag{272.48}
+$$
+理想输入支撑外的质量为
+$$
+u=\operatorname{Tr}((I-P)\Xi)
+=\frac{1-\operatorname{Re}\operatorname{Tr}K_\Xi}{2}
+\le\frac{\varepsilon}{2}.
+\tag{272.49}
+$$
+直接压缩得到
+$$
+P\Xi P=|a\rangle\langle a|\otimes A,
+\qquad
+A=\frac{\rho_\Xi+\operatorname{Re}K_\Xi}{2},
+\qquad
+\operatorname{Re}K=\frac{K+K^\dagger}{2}.
+\tag{272.50}
+$$
+所以 $\|A-\rho_0\|_1\le\varepsilon/2$。§265的未归一化投影估计给
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le\|\Xi-P\Xi P\|_1+\|A-\rho_0\|_1\\
+&\le2\sqrt u+\frac{\varepsilon}{2}\\
+&\le\sqrt{2\varepsilon}+\frac{\varepsilon}{2}.
+\end{aligned}
+\tag{272.51}
+$$
+当 $\varepsilon\le1$ 时，右侧至多为 $2\sqrt\varepsilon$；更大误差使用状态迹距上界二。因此
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1\le\min\{2,2\sqrt\varepsilon\}.
+}
+\tag{272.52}
+$$
+这个上界允许任意边缘噪声和全部合法竞争态。
+
+为证明指数最优，取与 $a$ 正交的
+$$
+|b\rangle=\frac{|y_+\rangle-|y_-\rangle}{\sqrt2},
+\qquad
+|\phi_h\rangle=\sqrt{1-h^2}|a\rangle+h|b\rangle,
+$$
+$$
+\Xi_h=|\phi_h\rangle\langle\phi_h|\otimes\frac1nI_n,
+\qquad0<h<1.
+\tag{272.53}
+$$
+它们具有精确共同边缘，且
+$$
+K_{\Xi_h}=(1-2h^2)\rho_0,\qquad
+\varepsilon_h=2h^2,\qquad
+\|\Xi_h-\Omega_0\|_1=2h.
+\tag{272.54}
+$$
+最后一个等式来自纯输入态的重叠
+$|\langle a,\phi_h\rangle|^2=1-h^2$ 及参考态迹一。任何大于 $1/2$ 的局部指数都被该族排除。结合（272.52），得到
+$$
+\boxed{\Omega_0\text{ 的完整数据最优局部指数为 }1/2.}
+\tag{272.55}
+$$
+
+### 272.7 两种参数极限与结论边界
+
+对每个固定 $n\ge2$，连续性给 $\Omega_t\to\Omega_0$；定理272.2给负性按 $\Theta(t^2)$ 趋零。与此同时，§269适用于每个固定 $t>0$，给
+$$
+\boxed{
+\alpha_{\mathrm{sharp}}(\Omega_t)=
+\begin{cases}
+1/(2n),&0<t\le1/4,\\
+1/2,&t=0.
+\end{cases}
+}
+\tag{272.56}
+$$
+这里先固定真值参数 $t$，再取竞争态的数据误差趋零来定义局部指数。没有将 $t$ 本身替代局部误差参数，也没有要求§269的恢复常数在 $t\to0$ 时统一有界。
+
+所以在此具体连续族中，锐指数在产品端点不连续。负性可以任意小，而正参数真值的局部指数仍为 $1/(2n)$。这个结论不声称所有来源的锐指数由negativity单独决定。
+
+还可固定任意 $0<t\le1/4$，增加参考维数。定理272.2和§269分别给
+$$
+\mathcal N(\Omega_t^{(n)})=\Theta(1/n),
+\qquad
+\alpha_{\mathrm{sharp}}(\Omega_t^{(n)})=\frac1{2n}\longrightarrow0.
+\tag{272.57}
+$$
+这里比较不同维数的明确问题实例；没有在一个固定态空间中声称跨维数的迹范数极限。纠缠量变小并不使这些实例的锐恢复指数变大。
+
+$n=1$ 是另一边界：$J=0$、来源不随 $t$ 改变，negativity恒零，最优指数为 $1/2$。因此NPT与非零二阶负性下界始终明确限定为 $n\ge2$。
+
+本节的负性系数不宣称最优；PPT只作为可分性的必要条件使用。结论限定于上述来源族，不给全部同奇异度切片的锐指数分类，也不推导蒸馏、有限副本或物理时间结论。正定构造与锐指数供应承接§268—269；部分转置、交换子、Sylvester积分和端点估计在本节均给出直接证明，不据其组合宣称外部文献原创性。
+
+## 追加锚（本行以下为增补区）
