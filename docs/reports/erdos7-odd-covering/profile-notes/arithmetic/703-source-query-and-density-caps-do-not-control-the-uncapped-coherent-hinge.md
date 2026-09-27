@@ -14,8 +14,11 @@ current phases; the zero-current-phase family remains redundant.
 
 This is an interface counterexample. It does not produce an odd cover, refute
 report473, or identify its law with report467's particular source-selection
-mechanism. The irredundant family has different current phases, so a bound
-requiring FULL CRT coherence plus irredundancy remains outside its scope.
+mechanism. The irredundant example has different current phases. If the old
+cofactors instead form an antichain at each current height, the existing
+antichain mechanism gives H_(1/2)(f)<=R_M(mu)/(q-1), hence below one at
+q=23 under AH9. Full CRT coherence with irredundancy is one sufficient
+source of this structure; it is not required by the bound itself.
 All deductions here are ordinary mathematics with exact finite checks, not
 new Lean verification.
 
@@ -257,13 +260,117 @@ The uncapped hinge above one and the small actual-union hinge therefore refer
 to exactly the same source and exactly the same irredundant original family.
 
 This rules out the proposed implication using AH9 together with
-OLD-coordinate coherence and actual irredundancy. It does not rule out a
-bound under the stronger requirement of FULL CRT coherence plus irredundancy:
-CU10 has no common current centre. Nor does it reconstruct report467's
-particular selected law or assume the extra structural consequences of a
-minimal whole covering family. Those are separate, unproved input bridges.
-The coordinates on which a conflict/coherence extraction is performed must
-therefore be stated explicitly.
+OLD-coordinate coherence and actual irredundancy. CU10 has no common
+current centre and its whole single-height cofactor set is not an
+antichain. The layered-antichain case has the different bound below;
+the particular source-selection mechanism of report467 and the extra
+consequences of a minimal whole covering family are not reconstructed
+by this counterexample. A conflict/coherence extraction must state
+exactly which common-centre or antichain conditions it establishes.
+
+## Same-old-centre layered cofactor antichains control the uncapped load
+
+The existing comparable-class and antichain mechanisms in
+[Chapter16](../../problem-details/16-canonical-conflict-resampling-and-the-exact-shearer-query-ratio.md#congruence-and-complete-layout-specialization),
+[Chapter40](../../problem-details/40-fixed-order-scalar-threshold-barrier-and-cofactor-colors.md#3-existing-actual-label-colors-and-their-boundary)
+and [Report535](535-mixed-chain-moments-retain-shared-prime-correlations.md)
+have a direct application to the AH9 interface. This is an ordinary
+application of those mechanisms, not a new generic antichain theorem or
+formal-library declaration.
+
+Let q>=3 be prime, let M be any finite old period coprime to q, and let mu
+be one probability law on Z/MZ. Consider a finite block of actual original
+classes with distinct numerical moduli d*q^k, where d|M and k>=1. Assume:
+
+* Every old residue is one common t: a_(d,k)=t mod d.
+* At each fixed current height k, the set A_k of present old cofactors d is
+  a divisibility antichain.
+
+The current residues modulo q^k may differ between d and between heights.
+Each original still has its one fixed global CRT phase. No global irredundancy
+or common current centre is required in addition to these two hypotheses.
+Define the unconditioned-Haar cofactor load
+
+    f(x)=sum_(original(d,k)) q^(-k)1_(x=t mod d),
+    R_M(mu)=sum_(1<d|M) max_b mu(x=b mod d).
+
+Then, allowing arbitrary finite old and current heights,
+
+    H_(1/2)(f)=E_mu(2f-1)_+<=R_M(mu)/(q-1).       (CU15)
+
+To prove this, put
+
+    D(x)=#{d|M:x=t mod d}
+        =product_(p|M)(min(v_p(x-t),v_p(M))+1),
+    N_k(x)=#{d in A_k:x=t mod d}.
+
+The product uses truncated valuations, so it is finite even when x=t
+mod M. When D(x)>=2, choose any old coordinate with positive truncated
+valuation v>=1. Holding all other exponents fixed partitions the D(x) active
+divisors into D(x)/(v+1) chains. At most one member of A_k lies on each
+chain, so
+
+    N_k(x)<=D(x)/(v+1)<=D(x)/2,
+    f(x)<=D(x)/[2(q-1)].
+
+The geometric sum bounds the entire finite inventory of current heights;
+no height is dropped and no independently favorable laws are selected.
+When D(x)=1, only d=1 can be active, at most once at each height. Hence
+f(x)<=1/(q-1)<=1/2. In both cases,
+
+    (2f(x)-1)_+<=(D(x)-1)/(q-1).
+
+Finally, under the SAME mu,
+
+    E_mu(D-1)=sum_(1<d|M) mu(x=t mod d)<=R_M(mu),
+
+which proves CU15. The support and density clauses of AH9 are not needed
+for this implication. M need only resolve the actual old cofactors; it can
+also contain all the extra query labels required by AH9.
+
+At q=23, every AH9 law therefore gives, under the stated layered-antichain
+hypothesis,
+
+    H_(1/2)(f)<=70871/74250
+                =0.9544915824915825...<1.          (CU16)
+
+If all current exponents equal1, the same argument uses f=N_1/q and yields
+the stronger bound R_M(mu)/q, here70871/77625<1. These conclusions are not
+restricted to the particular mixture CU1. The actual current union fraction
+alpha(x) satisfies alpha(x)<=f(x), so its hinge obeys the same bound.
+The load here uses weights q^(-k); a load normalized by a pure-survivor
+measure needs its own normalization comparison.
+
+FULL CRT coherence plus actual irredundancy is one SUFFICIENT way to obtain
+the hypothesis on every A_k: comparable old cofactors at the same k would
+make the corresponding common-centre original classes nested. It is not a
+necessary condition for CU15. Another sufficient special case has one common
+current residue separately at each k, together with old coherence and
+irredundancy; those current residues need not lie on one nested path.
+
+General irredundancy plus old coherence gives only an antichain within each
+current-residue colour at a fixed height. It need not make the entire A_k
+an antichain. CU10 retains many comparable cofactors at its single current
+height by assigning different colours, so CU15 does not apply to it.
+
+The distinction also affects actual unions. A full-centre block is contained
+in the single current root and has alpha<=1/q. A block with one current
+residue per height has alpha<=sum_(k>=1)q^(-k)=1/(q-1). Neither bound follows
+merely from CU15's weaker layered-antichain hypothesis, which allows many
+current residues within a layer. These special-case union observations are
+not new noncoverage results; CU15 supplies an uncapped additive consumer under
+a stated structural hypothesis, without solving unrestricted Erdős#7.
+
+There remains a precise extraction obligation. A procedure which enforces
+only old-coordinate coherence has not established the layered-antichain
+hypothesis. Moreover, disagreement of current q-phases does not make the old
+indicators1_(x=a_lambda mod d_lambda) and1_(x=a_kappa mod d_kappa) disjoint.
+Their product can remain positive in E_mu f^2. Current-phase conflicts cannot
+simply be subtracted from that old-cofactor square budget. A paid extraction
+must either establish the actual layered-antichain condition, or reach a
+sufficient stronger form of coherence through an additional same-source
+comparison accounting for those current-phase conflicts. CU15 supplies no
+such missing deletion comparison.
 
 ## Precisely which proposed bridge fails
 
@@ -286,9 +393,10 @@ remove a class from the rank-coloured family CU10. Full CRT coherence would
 impose a stronger condition: irredundancy then forces one divisibility
 antichain. Old-coordinate coherence alone gives a separate antichain within
 each current-residue group at height1, and CU10 satisfies exactly those
-conditions. At greater current heights, current prefix compatibility must
-also be preserved. A bound for a full-centre antichain or for a prescribed
-source selector is not refuted by importing the broader old-only example.
+conditions. At greater current heights, current prefix compatibility must also be
+preserved. CU15 assumes an antichain of old cofactors in each entire
+height layer, a property implied by full coherence and irredundancy but
+not by arbitrary old-only coherent irredundant inputs such as CU10.
 
 A separate repair is to work with the clipped majorant min(1,f_C). Its hinge
 is bounded by one, and report473's good set can bound it strictly below one
@@ -347,3 +455,10 @@ redundant. Those results do not supply the same AH9/old-coherence/current-
 height1 interface of CU10--CU14. The rank-antichain and CRT reasoning here
 use elementary existing structures; no new generic antichain theorem or
 formal-library declaration is claimed.
+
+[Chapter40](../../problem-details/40-fixed-order-scalar-threshold-barrier-and-cofactor-colors.md#3-existing-actual-label-colors-and-their-boundary)
+already gives fixed current-residue colours, rank-coloured actual families
+and symmetric-chain counting. CU10 is a same-AH9-law quantitative
+application of that existing mechanism. Chapter16 and Report535, cited
+above, supply the comparable-class exclusion used to derive a sufficient
+instance of CU15. No new generic antichain theorem is claimed.
