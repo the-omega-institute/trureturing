@@ -81896,3 +81896,479 @@ $$
 §260的精确共同边缘合同排除了（264.38）的竞争态，因为它们有非零边缘误差。因此本节的逆权下界不能直接移作该较窄合同的最优常数；它所结算的是§261允许边缘误差的完整数据问题。所有结论继续保留任意正半定竞争态与参考核外方向。
 
 ## 追加锚（本行以下为增补区）
+
+## 265. 唯一混合来源的最优四次根稳定性
+
+§262给出了一个由完整数据唯一确定的混合来源。唯一性还没有确定带噪恢复的连续性强度。本节对该例建立匹配的上下界：精确同边缘的严格正竞争态可以产生四阶小的数据误差，而态误差只有一阶小；反向，对任意合法竞争态都有四次根恢复界。因此，该混合真值处的最优局部Hölder指数恰为 $1/4$。
+
+先在固定 $2\otimes2$ 空间证明完整数据上界，再通过一个直接证明的投影估计推广到任意有限维参考环境。全部结论针对这里的具体真值和数据映射，不声称一般半正定问题的奇异度分类或文献原创性。
+
+### 265.1 参考真值与完整数据合同
+
+输入空间 $H$ 为qubit，块矩阵使用固定的 $Y$ 本征基。先取参考空间 $S=\mathbb C^2$，并定义
+$$
+Z=\begin{pmatrix}1&1/2\\-1/2&1/2\end{pmatrix},
+\qquad
+F=\begin{pmatrix}1/2&-1/4\\-1/4&1/2\end{pmatrix},
+$$
+$$
+T_0=\begin{pmatrix}F&Z/2\\Z^\dagger/2&I_2-F\end{pmatrix},
+\qquad
+\Omega_0=\frac12T_0.
+\tag{265.1}
+$$
+这是§262中 $a=1/2$ 的来源。其两个非零本征值为 $5/8,3/8$，所以是秩二混合态。参考边缘与响应坐标为
+$$
+\rho_0=\operatorname{Tr}_H\Omega_0=\frac12I_2,
+\qquad
+K_0=\mathscr K(\Omega_0)=\frac12Z,
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{265.2}
+$$
+按 $(+,0),(+,1),(-,0),(-,1)$ 排列联合基，定义
+$$
+q_0=(1,0,-1,0)^{\mathsf T},
+\qquad
+q_1=(1/2,1,1/2,-1)^{\mathsf T},
+$$
+$$
+v_0=(1,-1/2,1,1/2)^{\mathsf T},
+\qquad
+v_1=(0,1,0,1)^{\mathsf T}.
+\tag{265.3}
+$$
+四个向量两两正交，平方长度依次为 $2,5/2,5/2,2$，而
+$$
+T_0=\frac12v_0v_0^\dagger+\frac38v_1v_1^\dagger,
+\qquad
+\ker\Omega_0=\operatorname{span}\{q_0,q_1\}.
+\tag{265.4}
+$$
+这同时验证了正性、秩和上述本征值。
+
+对任意归一化正半定竞争态 $\Xi$，使用完整数据误差
+$$
+\varepsilon(\Xi)=
+\left\|\operatorname{Tr}_H\Xi-\rho_0\right\|_1+
+\left\|\mathscr K(\Xi)-K_0\right\|_1.
+\tag{265.5}
+$$
+所有迹范数和核范数均未除以二。上界不要求竞争态同边缘、同秩或同支撑；用于下界的具体族将满足精确同边缘。
+
+### 265.2 精确同边缘的严格正来源族
+
+取
+$$
+0<h\le\frac18,\qquad
+D_h=\begin{pmatrix}0&2h^2\\2h^2&h\end{pmatrix},
+\qquad
+\delta_h=64h^4,
+$$
+$$
+F_h=F+D_h,\qquad Z_h=(1-\delta_h)Z,
+$$
+$$
+T_h=
+\begin{pmatrix}
+F_h&Z_h/2\\
+Z_h^\dagger/2&I_2-F_h
+\end{pmatrix},
+\qquad
+\Omega_h=\frac12T_h.
+\tag{265.6}
+$$
+
+**引理265.1（严格正性）。** 对上述每个 $h$，有 $T_h\succ0$。因此 $\Omega_h$ 是严格正密度态，且
+$$
+\operatorname{Tr}_H\Omega_h=\frac12I_2.
+\tag{265.7}
+$$
+
+**证明。** 令 $U=[q_0\ q_1\ v_0\ v_1]$。由（265.3），$U$ 可逆。直接计算得
+$$
+U^\dagger T_hU=
+\begin{pmatrix}
+64h^4&0&0&4h^2-32h^4\\
+0&4h^2+48h^4&3h^2-24h^4&2h\\
+0&3h^2-24h^4&25/8-4h^2-88h^4&-h\\
+4h^2-32h^4&2h&-h&3/2-32h^4
+\end{pmatrix}.
+\tag{265.8}
+$$
+其四个前导主子式分别为
+$$
+\Delta_1=64h^4,
+\qquad
+\Delta_2=256h^6(1+12h^2),
+$$
+$$
+\Delta_3=800h^6(1-6h^2)(1+8h^2)^2,
+$$
+$$
+\Delta_4=
+200h^6\left(1+66h^2-64h^4-4352h^6+73728h^{10}\right).
+\tag{265.9}
+$$
+前三项在 $0<h\le1/8$ 上严格为正；最后一个括号满足
+$$
+1+66h^2-64h^4-4352h^6+73728h^{10}
+\ge
+1-\frac{64}{8^4}-\frac{4352}{8^6}
+=\frac{991}{1024}>0.
+\tag{265.10}
+$$
+Sylvester判据给 $U^\dagger T_hU\succ0$，可逆同余给 $T_h\succ0$。两个对角块之和始终为 $I_2$，所以 $\operatorname{Tr}T_h=2$，归一化后的边缘正好为 $I_2/2$。$\square$
+
+这是每个 $h$ 的精确正性证书，不依赖渐近余项或数值本征值阈值。
+
+### 265.3 四阶数据误差与一阶态误差
+
+**定理265.2（四次根障碍）。** 上述来源族满足
+$$
+\boxed{
+\varepsilon(\Omega_h)=16\sqrt{13}\,h^4,
+\qquad
+h\le\|\Omega_h-\Omega_0\|_1<2h.
+}
+\tag{265.11}
+$$
+
+**证明。** 边缘误差为零，而
+$$
+K_h-K_0=-\frac{\delta_h}{2}Z.
+\tag{265.12}
+$$
+对二阶矩阵，奇异值给出
+$$
+\|Z\|_1^2=\|Z\|_{\mathrm F}^2+2|\det Z|
+=\frac74+\frac32=\frac{13}{4}.
+\tag{265.13}
+$$
+因此
+$$
+\varepsilon(\Omega_h)=\frac{\delta_h}{2}\|Z\|_1
+=16\sqrt{13}\,h^4.
+\tag{265.14}
+$$
+
+令 $J=\operatorname{diag}(0,1,0,-1)$。其算子范数为一，且
+$$
+\operatorname{Tr}\bigl(J(\Omega_h-\Omega_0)\bigr)=h.
+\tag{265.15}
+$$
+迹范数对偶性给下界 $\|\Omega_h-\Omega_0\|_1\ge h$。
+
+对于上界，误差的两个部分为
+$$
+\Omega_h-\Omega_0
+=\frac12\operatorname{diag}(D_h,-D_h)
+-\frac{\delta_h}{4}
+\begin{pmatrix}0&Z\\Z^\dagger&0\end{pmatrix}.
+\tag{265.16}
+$$
+由于 $\det D_h=-4h^4<0$，其两个本征值异号，故
+$$
+\|D_h\|_1=\sqrt{h^2+16h^4}=h\sqrt{1+16h^2}.
+\tag{265.17}
+$$
+非对角部分的迹范数恰为 $\delta_h\|Z\|_1/2=\varepsilon(\Omega_h)$。所以
+$$
+\begin{aligned}
+\|\Omega_h-\Omega_0\|_1
+&\le h\sqrt{1+16h^2}+16\sqrt{13}\,h^4\\
+&\le\left(\frac{\sqrt5}{2}+\frac{\sqrt{13}}{32}\right)h
+<2h.
+\end{aligned}
+\tag{265.18}
+$$
+$\square$
+
+因而即使只允许精确共同边缘的合法竞争态，也不存在平方根或线性局部逆界。更一般地，任意 $\alpha>1/4$ 都有
+$$
+\frac{\|\Omega_h-\Omega_0\|_1}
+{\varepsilon(\Omega_h)^\alpha}
+\ge
+\frac{h^{1-4\alpha}}{(16\sqrt{13})^\alpha}
+\longrightarrow+\infty
+\qquad(h\downarrow0).
+\tag{265.19}
+$$
+这一发散发生在同一个固定混合真值的任意小邻域内。
+
+### 265.4 固定二维参考空间的匹配完整数据上界
+
+**定理265.3（二维完整数据四次根界）。** 对 $H\otimes\mathbb C^2$ 上任意归一化正半定态 $\Xi$，
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le
+\min\left\{2,\,
+\left(9+3\sqrt5+\sqrt{13}\right)\varepsilon(\Xi)^{1/4}\right\}
+\le
+\min\{2,20\varepsilon(\Xi)^{1/4}\}.
+}
+\tag{265.20}
+$$
+
+**证明。** 记
+$$
+R=\operatorname{Tr}_H\Xi-\rho_0,\qquad
+E_K=\mathscr K(\Xi)-K_0,\qquad
+\varepsilon=\|R\|_1+\|E_K\|_1.
+\tag{265.21}
+$$
+令 $G$ 为 $\Xi-\Omega_0$ 的左上二阶块。误差有精确分解
+$$
+\Xi-\Omega_0=L(G)+N,
+\qquad
+L(G)=\operatorname{diag}(G,-G),
+$$
+$$
+N=
+\begin{pmatrix}
+0&E_K/2\\
+E_K^\dagger/2&R
+\end{pmatrix}.
+\tag{265.22}
+$$
+块范数估计给
+$$
+\|N\|_1\le\|E_K\|_1+\|R\|_1=\varepsilon,
+\qquad
+\|N\|\le\varepsilon.
+\tag{265.23}
+$$
+写
+$$
+G=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix},
+\qquad x,y\in\mathbb R,\quad z\in\mathbb C.
+\tag{265.24}
+$$
+正性与归一化保证 $0\preceq\Xi\preceq I$。下面只用正半定形式的柯西不等式
+$$
+|a^\dagger\Xi b|^2
+\le(a^\dagger\Xi a)(b^\dagger\Xi b)
+\le(a^\dagger\Xi a)\|b\|^2.
+\tag{265.25}
+$$
+
+首先，$q_0^\dagger L(G)q_0=0$ 且 $\Omega_0q_0=0$，所以
+$$
+0\le q_0^\dagger\Xi q_0=q_0^\dagger Nq_0\le2\varepsilon.
+\tag{265.26}
+$$
+直接相乘还有
+$$
+q_0^\dagger L(G)v_1=2z,
+\qquad
+q_0^\dagger L(G)v_0=2x.
+\tag{265.27}
+$$
+利用 $\|v_1\|^2=2$、$\|v_0\|^2=5/2$ 以及 $\Omega_0q_0=0$，分别得到
+$$
+\begin{aligned}
+2|z|
+&\le|q_0^\dagger\Xi v_1|+|q_0^\dagger Nv_1|\\
+&\le2\sqrt{\varepsilon}+2\varepsilon,
+\end{aligned}
+$$
+$$
+\begin{aligned}
+2|x|
+&\le|q_0^\dagger\Xi v_0|+|q_0^\dagger Nv_0|\\
+&\le\sqrt5\sqrt{\varepsilon}+\sqrt5\varepsilon.
+\end{aligned}
+\tag{265.28}
+$$
+因此第一核向量控制
+$$
+|z|\le\sqrt{\varepsilon}+\varepsilon,
+\qquad
+|x|\le\frac{\sqrt5}{2}
+\left(\sqrt{\varepsilon}+\varepsilon\right).
+\tag{265.29}
+$$
+其中 $z$ 的全部复数分量都已受控。
+
+第二核向量满足
+$$
+q_1^\dagger L(G)q_1=2\operatorname{Re}z,
+\qquad
+q_1^\dagger L(G)v_1=2y.
+\tag{265.30}
+$$
+由于 $\Omega_0q_1=0$ 且 $\|q_1\|^2=5/2$，
+$$
+0\le q_1^\dagger\Xi q_1
+\le2|z|+\frac52\varepsilon
+\le2\sqrt{\varepsilon}+\frac92\varepsilon.
+\tag{265.31}
+$$
+再次使用（265.25），得到
+$$
+\begin{aligned}
+2|y|
+&\le|q_1^\dagger\Xi v_1|+|q_1^\dagger Nv_1|\\
+&\le\sqrt{4\sqrt{\varepsilon}+9\varepsilon}
++\sqrt5\varepsilon.
+\end{aligned}
+\tag{265.32}
+$$
+
+当 $0\le\varepsilon\le1$ 时，上述各式蕴含
+$$
+|z|\le2\varepsilon^{1/2},\qquad
+|x|\le\sqrt5\varepsilon^{1/2},
+$$
+$$
+|y|\le\frac{\sqrt{13}}2\varepsilon^{1/4}
++\frac{\sqrt5}2\varepsilon.
+\tag{265.33}
+$$
+使用 $\|G\|_1\le|x|+|y|+2|z|$、$\|L(G)\|_1=2\|G\|_1$，以及
+$\varepsilon,\varepsilon^{1/2}\le\varepsilon^{1/4}$，便有
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le2\|G\|_1+\|N\|_1\\
+&\le
+\left(9+3\sqrt5+\sqrt{13}\right)\varepsilon^{1/4}.
+\end{aligned}
+\tag{265.34}
+$$
+当 $\varepsilon\ge1$ 时，归一化状态的迹距上界二已经强于该估计。常数 $9+3\sqrt5+\sqrt{13}<20$，故（265.20）成立。$\square$
+
+特别地，$\varepsilon=0$ 强制 $\Xi=\Omega_0$。所以这个带噪上界也独立恢复了参考真值的精确唯一性。
+
+### 265.5 任意有限维参考环境中的扩张
+
+为保留参考支撑外的全部质量与相干，先给一个自足的投影估计。
+
+**引理265.4（未归一化投影误差）。** 设 $\sigma$ 是有限维密度态，$P$ 为正交投影，$t=\operatorname{Tr}((I-P)\sigma)$。则
+$$
+\|\sigma-P\sigma P\|_1\le2\sqrt t.
+\tag{265.35}
+$$
+若 $t<1$，归一化压缩 $\sigma'=P\sigma P/(1-t)$ 还满足
+$$
+\|\sigma-\sigma'\|_1\le2\sqrt t+t.
+\tag{265.36}
+$$
+
+**证明。** 先取纯态 $\sigma=vv^\dagger$，$\|v\|=1$。在 $Pv$ 与 $(I-P)v$ 生成的至多二维空间内，当 $0<t<1$ 时，
+$$
+vv^\dagger-(Pv)(Pv)^\dagger
+\quad\text{的矩阵为}\quad
+\begin{pmatrix}
+0&\sqrt{t(1-t)}\\
+\sqrt{t(1-t)}&t
+\end{pmatrix}.
+\tag{265.37}
+$$
+其迹范数为 $\sqrt{4t-3t^2}\le2\sqrt t$；$t=0,1$ 两个端点直接满足同一界。
+
+一般情况下，取谱分解 $\sigma=\sum_j\lambda_jv_jv_j^\dagger$，并令
+$t_j=\|(I-P)v_j\|^2$。迹范数凸性和平方根的凹性给
+$$
+\|\sigma-P\sigma P\|_1
+\le2\sum_j\lambda_j\sqrt{t_j}
+\le2\sqrt{\sum_j\lambda_jt_j}
+=2\sqrt t.
+\tag{265.38}
+$$
+最后，$\|P\sigma P-\sigma'\|_1=t$；加三角不等式即得（265.36）。$\square$
+
+**推论265.5（环境维数无关的四次根界）。** 将（265.1）的真值嵌入任意有限维参考空间 $E$，在 $S^\perp$ 上补零，其中 $S=\operatorname{supp}\rho_0$ 仍为二维。对 $H\otimes E$ 上任意合法密度态 $\Xi$，使用整个参考空间上的完整数据误差（265.5），则
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le\min\{2,30\varepsilon(\Xi)^{1/4}\}.
+}
+\tag{265.39}
+$$
+常数不依赖 $\dim E$。
+
+**证明。** 记 $P=I_H\otimes P_S$，并令
+$$
+t=\operatorname{Tr}((I-P)\Xi).
+\tag{265.40}
+$$
+由于理想边缘在 $S^\perp$ 上为零，
+$$
+0\le t
+=\operatorname{Tr}\!\left(P_{S^\perp}
+(\operatorname{Tr}_H\Xi-\rho_0)\right)
+\le\varepsilon.
+\tag{265.41}
+$$
+先考虑 $0\le\varepsilon\le1/2$，此时 $t<1$。定义
+$$
+\Xi_c=P\Xi P,\qquad
+\Xi'=\frac{\Xi_c}{1-t}.
+\tag{265.42}
+$$
+$\Xi'$ 是 $H\otimes S$ 上的合法密度态。参考压缩与两个数据读出相容：
+$$
+\rho_c=P_S(\operatorname{Tr}_H\Xi)P_S,
+\qquad
+K_c=P_S\mathscr K(\Xi)P_S.
+\tag{265.43}
+$$
+左、右乘正交投影不增加核范数，因此
+$$
+\|\rho_c-\rho_0\|_1+\|K_c-K_0\|_1\le\varepsilon.
+\tag{265.44}
+$$
+
+对任意半正定联合块 $B=\left(\begin{smallmatrix}A&C\\C^\dagger&D\end{smallmatrix}\right)$，
+$$
+2\|C\|_1\le2\sqrt{\operatorname{Tr}A\,\operatorname{Tr}D}
+\le\operatorname{Tr}B.
+\tag{265.45}
+$$
+例如由Gram分解写 $A=XX^\dagger,D=YY^\dagger,C=XY^\dagger$，再用
+$\|XY^\dagger\|_1\le\|X\|_{\mathrm F}\|Y\|_{\mathrm F}$ 即得。因此
+$\|\rho_c\|_1=1-t$、$\|K_c\|_1\le1-t$。归一化对两项数据分别引入至多 $t$ 的误差，故
+$$
+\varepsilon'
+=\|\operatorname{Tr}_H\Xi'-\rho_0\|_1
++\|\mathscr K(\Xi')-K_0\|_1
+\le\varepsilon+2t\le3\varepsilon.
+\tag{265.46}
+$$
+
+将定理265.3用于 $\Xi'$，再用引理265.4，得到
+$$
+\begin{aligned}
+\|\Xi-\Omega_0\|_1
+&\le\|\Xi-\Xi'\|_1+\|\Xi'-\Omega_0\|_1\\
+&\le2\sqrt{\varepsilon}+\varepsilon
++20(3\varepsilon)^{1/4}\\
+&\le\left(3+20\cdot3^{1/4}\right)\varepsilon^{1/4}\\
+&\le30\varepsilon^{1/4}.
+\end{aligned}
+\tag{265.47}
+$$
+当 $\varepsilon\ge1/2$ 时，迹距上界二已足以给出（265.39）。全过程在估计中保留了压缩丢失的质量与相干，并没有把压缩后的来源冒充原竞争态。$\square$
+
+### 265.6 最优指数与精确结算范围
+
+在一个固定真值 $\Omega_0$ 处，称指数 $\alpha>0$ 可用于局部逆界，是指存在有限常数 $C$ 与该真值的一个邻域，使其中所有合法竞争态满足
+$$
+\|\Xi-\Omega_0\|_1\le C\varepsilon(\Xi)^\alpha.
+\tag{265.48}
+$$
+定理265.3已经给出固定 $2\otimes2$ 空间上指数 $1/4$ 的全域上界；推论265.5把同一指数扩展到任意有限维参考环境，且常数维数无关。定理265.2中的 $\Omega_h\to\Omega_0$ 则排除了每个 $\alpha>1/4$。因此
+$$
+\boxed{\text{该唯一混合来源的最优局部Hölder指数恰为 }1/4.}
+\tag{265.49}
+$$
+
+该指数也适用于把竞争来源限制为精确同边缘的合同：上界对这个子集仍成立，下界族本身已经具有共同边缘。下界族在最小 $2\otimes2$ 空间内严格正；嵌入更大环境后补零仍合法，足以保持同一个障碍。
+
+两层核关系解释了这一指数的来源。第一核方向只有 $O(\varepsilon)$ 的二次型质量，正性把相应未知分量控制到 $O(\varepsilon^{1/2})$；这些分量再控制第二核方向的质量，第二次正性估计才约束剩余分量到 $O(\varepsilon^{1/4})$。精确族以 $D_{01}=2h^2$、$D_{11}=h$、$\varepsilon=16\sqrt{13}h^4$ 同时实现了两层尺度。
+
+这里确定的是该真值处的最优指数，没有声称常数 $20$ 或 $30$ 最优，也没有将两层计算提升为一般半正定问题的奇异度判定。它与§264的纯纠缠源线性界相容：当前真值是秩二混合态，精确唯一性本身不足以继承纯源的线性稳定性。
+
+## 追加锚（本行以下为增补区）
