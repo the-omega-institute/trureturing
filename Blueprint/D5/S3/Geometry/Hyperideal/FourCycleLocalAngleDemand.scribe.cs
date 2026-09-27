@@ -55,7 +55,7 @@ internal sealed class FourCycleLocalAngleDemandDocument : IScribeDocumentDefinit
             Lt(minusOne, ct), Lt(ct, F.D(1)),
             Lt(minusOne, ca), Lt(ca, F.D(1)),
             Lt(minusOne, cb), Lt(cb, F.D(1)));
-        var angleSum = F.Seq(F.D(2), F.Cdot, Call("arccos", ct), F.Plus,
+        var angleSum = F.Seq(F.D(2), F.Cdot, F.Sp, Call("arccos", ct), F.Plus,
             Call("arccos", ca), F.Plus, Call("arccos", cb));
         var real = new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
         Formula.BoundVariable[] binders = [.. new[] { "r", "a", "b", "o" }
