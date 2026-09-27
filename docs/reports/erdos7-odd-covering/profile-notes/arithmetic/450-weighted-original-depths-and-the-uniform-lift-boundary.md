@@ -6,6 +6,8 @@ For original mixed labels d=3^e a b with a dividing1225 and fixed numerical outs
 
 Different b blocks may delete the same physical mass, so their credits cannot simply be added. There is also an explicit702-label actual odd family for which a head marginal with Gamma_1225<=25/3 has a uniform actual-fibre lift whose original completion load exceeds the necessary whole-cover threshold. The same law leaves positive uncovered mass, and a different supported lift makes the completion load zero. Thus the example identifies a limitation of the specified uniform lift, not an obstruction to every lift or a covering counterexample.
 
+For this same family, section6 proves that every head marginal with a uniform actual-fibre lift has original cofactor second moment above893/81>9. Even exact deletion credit leaves a positive certificate gap; full owners and actual private-owner densities are evaluated under the same law.
+
 These are ordinary mathematical results with exact controls. The Gram projection mechanism is reused from Chapter08; no new Lean certification, mathematical priority, or unrestricted Erdős #7 conclusion is claimed.
 
 ## 1. A sharp weighted bound retaining every original ternary depth
@@ -209,3 +211,135 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/ori
 The pointwise original-antichain mechanism is already in363 and Chapters40/42; Chapter08 supplies the generic Gram projection. Their fixed-layer statements do not give the displayed sharp weighted count across all e. The proof here supplies that count and applies the existing projection inside the resulting joint estimate; no separate Lean wrapper or new generic Gram theorem is introduced. The ternary comb is already used in Chapter03, and420 gives a different all-centre first-moment obstruction. The present countercontrol retains the actual736-point head marginal, actual outside fibres, original3-bearing labels and the specific B_H completion budget in one family.
 
 The remaining quantitative task is to control the actual c_d and their joint deletion support across b, or to construct a suitable phase-aware supported lift for the whole original family. A count bound does not supply those correlations, and the uniform-lift example shows why scalar head quality alone does not pay their full budget. Arbitrary higher5/7 heights, outside composite supports, and the whole-cover quantifiers remain outside the new sharp block constant. The unrestricted goal is not settled.
+
+## 6. Exact cofactor second moments also obstruct the uniform actual-fibre lift
+
+The same702-label family in section3 provides a stronger test of the specified uniform lift. It requires no new original classes or head source. Keep H=4 and all138 outside primes P from11 through821. Let lambda be ANY probability supported on the actual736-point head avoid-set S. In particular lambda can be the displayed law with Gamma_1225<=25/3, or any improvement of that head marginal.
+
+On the cofactor carrier B=1225 product_(p in P)p, use ONE reference probability
+
+    rho=lambda times product_(p in P)Uniform(Z/p),
+    R=R_3=S times product_(p in P)(Z/p minus{0}),
+    Z=rho(R)=product_(p in P)(1-1/p),
+    nu=rho conditioned on R.
+
+All original cofactor phases are those in section3. For every original3-bearing class3^e d, use weight3^(1-e) and its actual d-cylinder. The sum over the pure3 originals contributes T_H, while every mixed3^e p contributes3^(1-e)1_[x_p=1]. Hence the full ORIGINAL cofactor load is
+
+    W_3=T_H(1+N),
+    T_H=40/27,
+    N=sum_(p in P)1_[x_p=1].                         (UG1)
+
+For an actual whole cover, union bounding the original classes on each surviving3^H-fibre gives W_3>=3 on R_3. That pointwise implication remains a whole-cover requirement; it is not asserted for this noncover.
+
+Under nu the outside indicators in N are independent with probabilities t_p=1/(p-1). Under rho their probabilities are u_p=1/p. Define
+
+    S_0=sum_p u_p, V_0=sum_p u_p(1-u_p),
+    S_1=sum_p t_p, V_1=sum_p t_p(1-t_p).
+
+The exact moments, unchanged by the choice of lambda, are
+
+    J_0=E_rho W_3^2=T_H^2[(1+S_0)^2+V_0],
+    J_R=E_nu W_3^2=T_H^2[(1+S_1)^2+V_1],
+    D_W=integral_(R^c)W_3^2 d rho=J_0-Z J_R.        (UG2)
+
+Section3 already proves S_1>41/40. Since every p>=11, t_p<=1/10 and
+
+    V_1>= (9/10)S_1>369/400.
+
+Consequently
+
+    E_nu W_3=T_H(1+S_1)>3,
+    J_R>9+(40/27)^2*(369/400)=893/81>9.             (UG3)
+
+This is a uniform obstruction over EVERY supported head law lambda for this specified uniform conditional lift. It does not rely on whether lambda's complete head moment bound is sharp.
+
+The exact rational calculation gives the following certified intervals; each omitted interval width is10^-12:
+
+|quantity|lower endpoint|upper endpoint|
+|---|---|---|
+|Z|0.364555701040|0.364555701041|
+|E_nu W_3|3.000999249680|3.000999249681|
+|J_0|10.831807983986|10.831807983987|
+|J_R|11.181132511931|11.181132511932|
+|D_W|6.755662382669|6.755662382670|
+|J_0-D_W-9Z|0.795144291949|0.795144291950|
+
+The program retains exact rational values for Z,J_0,J_R,D_W and the last positive gap. The decimal table is only a readable enclosure.
+
+### Exact deletion bounds every owner credit
+
+Let Phi be the vector of the actual cofactor indicators and w the original weights. Set
+
+    G^0=E_rho[Phi Phi^T],
+    G^D=E_rho[1_(R^c) Phi Phi^T].
+
+Then w^T G^0 w=J_0 and w^T G^D w=D_W. For ANY valid deletion-owner matrix H satisfying0<=H<=G^D in Loewner order,
+
+    w^T(G^0-H)w-9Z
+      >=w^T(G^0-G^D)w-9Z
+      =Z(J_R-9)>0.                                  (UG4)
+
+Thus even the exact deleted Gram matrix cannot make the certificate w^T(G^0-H)w<9Z succeed on this family under this lift. This is stronger than saying a particular fractional-private lower estimate was too small. It applies to every such owner choice while rho and the actual original indicators stay fixed.
+
+The conclusion has precise limits. This original family is an irredundant noncover, not a hypothetical minimum whole cover. The result excludes deriving that certificate from the displayed head bound, odd distinct labels, divisor closure, comparable-class disjointness, private witnesses and uniform positive actual fibres ALONE. It does not refute a proof that uses additional whole-cover consequences, and it does not obstruct all supported laws. Keeping the same lambda and fixing every outside coordinate to2 gives W_3=T_H<3 and W_3^2=1600/729<9, as the zero mixed-completion law in section4 already implies.
+
+### Full owners and projected actual private owners are different objects
+
+A fixed actual owner partition can assign every deleted point to the first outside prime whose coordinate is zero. Put all3-free classes first; the original head classes have zero mass on lambda's support. Order the outside prime classes increasingly. The owner event for p has mass
+
+    d_p=(1/p) product_(r<p)(1-1/r).
+
+Conditional on it, earlier outside indicators have probabilities1/(r-1), the current indicator is zero, and later ones have probabilities1/r. Let m_p and v_p be the resulting conditional mean and variance of W_3. The same owner partition gives
+
+    D_W=sum_p d_p(m_p^2+v_p),
+    H_full[w]=sum_p d_p m_p^2,
+    D_W-H_full[w]=sum_p d_p v_p.                    (UG5)
+
+The exact controls give
+
+    5.439810371312 < H_full[w] < 5.439810371313,
+    1.315852011357 < D_W-H_full[w] <1.315852011358.
+
+These owners include overlap points. They must not be identified with the actual private regions U_t in the Lettl–Sun rows.
+
+For an outside prime class0 modp, project its ACTUAL private region vertically along the3^H-coordinate. Since all head originals are avoided, that region is nonempty only when p is the unique zero outside coordinate. The pure ternary comb has normalized Haar mass a=T_H/3=40/81. If N>0, all mixed ternary comb leaves are also present, leaving only the terminal prefix of mass1/81; if N=0, the available vertical mass is41/81. Thus the exact fractional-private density is
+
+    eta_p(b)=1_[p is the unique outside zero]
+                *[1/81+(40/81)1_[N=0]].             (UG6)
+
+This formula retains the correlation between private mass and the original cofactor load. In particular the larger vertical private density occurs where that load is small.
+
+Let q_p=E_rho eta_p and v_p^*=E_rho[eta_p W_3]. The projected-private Loewner credit is
+
+    H_private[w]=sum_p (v_p^*)^2/q_p.
+
+For an exact finite expression, put
+
+    b_p=Z/(p-1), s_p=S_1-1/(p-1),
+    z_p=product_(r!=p)(1-1/(r-1)), epsilon=1/81.
+
+Then
+
+    q_p=b_p(epsilon+a z_p),
+    v_p^*=b_p T_H[epsilon(1+s_p)+a z_p].             (UG7)
+
+The exact controls give
+
+    0.178735778663 < H_private[w] <0.178735778664,
+    0.197794573739 < sum_p E_rho[eta_p W_3^2] <0.197794573740.
+
+The remaining private-credit gap separates exactly into unrepresented deleted weight and conditional variance within each private owner:
+
+    D_W-H_private[w]
+      =E_rho[(1_(R^c)-sum_p eta_p)W_3^2]
+         +sum_p [E_rho(eta_p W_3^2)-(v_p^*)^2/q_p].  (UG8)
+
+Both terms are nonnegative. Here the first lies between6.557867808929 and6.557867808930; the second lies between0.019058795076 and0.019058795077. Retaining partial-private intersections is valid, but it does not make the resulting debit large enough, even before accounting for the stronger exact obstruction(UG4).
+
+All quantities above use rho and its full-source lift Uniform(Z/3^H) times rho. That full-source law is generally NOT uniform on the original period when lambda is nonuniform. Pointwise original-owner or shell identities can be integrated against it, but their previously computed Haar CRT capacities cannot be inserted unchanged. The values in(UG2),(UG5),(UG7) are recomputed under this ONE specified law.
+
+The [standard-library program](../../frontier/cover-geometry/original_cofactor_gram_uniform_lift.py) and its [exact JSON data](../../frontier/cover-geometry/original_cofactor_gram_uniform_lift.json) evaluate these finite rational formulas, verify the disjoint first-zero owner decomposition against exact deletion, and verify every private-owner Cauchy–Schwarz contribution. It runs under python3 -I -S -B -O. It reuses section3's original-family construction and its existing702-private-witness verification; it does not claim another whole-period enumeration, new Lean verification, or an unrestricted odd-covering theorem.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_cofactor_gram_uniform_lift.py
+```
