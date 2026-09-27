@@ -94015,3 +94015,351 @@ Q_{K,1}(t,j)-Q_{K,kl}(t,j)
 全部可实现性与预算结论仍针对来源副本数 \(N=2K\)。搜索概率表、隔离驻点和优化最坏先验是另外的计算任务。本节把有限块实验的决策与证书准确写出，未声称相应优化器具有多项式时间复杂度，也未结算临界最优发散率。
 
 ## 追加锚（本行以下为增补区）
+
+## 295. 高阶可实现决策与临界预算的次多项式上界
+
+### 295.1 固定阶数下的实际预算族
+
+固定 \(k\in[\sqrt{3/4},1)\)，\(k^2<l\le k\)，记 \(g=l-k^2\)、\(\kappa=-\log k\)、\(\eta=\log(l/k^2)/\kappa\in(0,1]\)。保持同一真实 \(r\in[l,1]\) 的两假设错误先平均，目标不超过 \(1/3\)，每个独立完整块计两份来源。
+
+**定理295.1（高阶合法系数与实际临界取得）。** 对每个固定整数 \(s\ge1\)，存在只依赖 \(k,s\) 的有限常数 \(C_{k,s}\)，使完整 \(n=1\) 输入与全部 \(n\ge1\) 的先 reset 访问均有确定最大预算
+\[
+N\le 2\max\left\{2s,\left\lceil(C_{k,s}/\eta)^{1/s}\right\rceil\right\}
+=O_{k,s}(g^{-1/s})
+\]
+达到目标。reset 常数不依赖 \(n\)。因此每个固定 \(a>0\) 都有实际 \(O_{k,a}(g^{-a})\) 上界；任何固定正幂的必要发散率都不能成立。
+
+这是连续全部 \(r\) 的解析上界，不依赖数值网格。下面给实际系数与记录；未把理想光滑函数当成可观测参数。没有证明 polylog 上界，没有控制 \(s\) 随 \(g\) 增长时的常数。原有 \(\Omega_k(\log(1/g))\) 必要界仍保留，最优发散率未解。
+
+### 295.2 具有高阶接触的固定宽度常值端段
+
+固定 \(s\)，取偶整数 \(M=2s+2\)。令
+\[
+R_M(z)=
+\frac{\int_0^z u^{M-1}(1-u)^{M-1}\,du}
+{\int_0^1 u^{M-1}(1-u)^{M-1}\,du}
+\qquad(0\le z\le1),
+\]
+并定义
+\[
+\rho(t)=
+\begin{cases}
+0,&t\le1/4,\\
+R_M(2t-1/2),&1/4<t<3/4,\\
+1,&t\ge3/4.
+\end{cases}
+\]
+\(\rho\in C^{M-1}(\mathbb R)\)，\(0\le\rho\le1\)，在两个拼接点分别以恰好 \(M\) 阶接触 0 和 1。特别地，其前 \(M-1\) 阶导数与常值段连续匹配。
+
+在 \(x\in[0,3]\) 定义
+\[
+G(x)=
+\begin{cases}
+1-x\rho(x)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(3-x)\rho(3-x)/3,&2\le x\le3,
+\end{cases}
+\]
+\[
+H(x)=
+\begin{cases}
+x\rho(x),&0\le x\le1,\\
+x,&1\le x\le2,\\
+x\rho(3-x),&2\le x\le3.
+\end{cases}
+\]
+外延取 \(G=1,H=0\) 于 \(x\le0\)，\(G=H=0\) 于 \(x\ge3\)。在 \(x=1,2\) 的邻域，邻接公式本来就是同一个线性函数；在 \(x=0,3\) 的邻域已经恒定。因此 \(G,H\in C^{M-1}(\mathbb R)\)。
+
+有 \(0\le G\le1\)、\(H\ge0\) 以及 \(H\le36G\)。末段只需注意 \(\rho(3-x)>0\) 时 \(3-x>1/4\)，从而
+\[
+H/G=\frac{3x}{3-x}\le36.
+\]
+首段和中段的上界分别是 \(3/2\) 和 6。
+
+令
+\[
+\varepsilon=\eta/144,\qquad A_\varepsilon=G-\varepsilon H.
+\]
+则
+\[
+\frac34G\le A_\varepsilon\le G\le1.
+\]
+尤其零集与 \(G\) 相同；其取值为 1 的集合也与 \(G\) 相同。
+
+对 \(0\le x\le1\)，有准确恒等式
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x[1-\rho(x)]
+\ge\frac13+\varepsilon.
+\]
+对 \(1\le x\le 2-\eta\)，令 \(t=2-x\in[\eta,1]\)，则
+\[
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+[1-\rho(t)]\left[\frac t3-\varepsilon(3-t)\right].
+\]
+括号至少为
+\(\eta/3-3\eta/144=5\eta/16>0\)。故所有合法比较均有余量 \(\eta/144\)。
+
+与 §293 相同，定义全实轴函数
+\[
+F_\eta(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\]
+实际常值区更宽：
+\[
+F_\eta(c)=0\quad(c\le k^{11/4}),\qquad
+F_\eta(c)=1\quad(c\ge k^{1/4}).
+\]
+因此 \(F_\eta\in C^{M-1}(\mathbb R)\)，各阶至 \(M-1\) 的导数界对 \(0<\eta\le1\) 一致。真实 \(r\in[l,1]\) 满足
+\[
+F_\eta(r)-F_\eta(kr)\ge\frac13+\frac{\eta}{144}.
+\tag{295.1}
+\]
+
+### 295.3 两类访问都产生实际独立 Bernoulli 记录
+
+**完整 \(n=1\)。** 每块测量反对称投影，得到实际
+\[
+Y\sim\operatorname{Bernoulli}(p_F(c)),\qquad
+p_F(c)=\frac{1-c}{4}.
+\]
+定义已知函数
+\[
+h_F(t)=F_\eta(1-4t),\qquad0\le t\le1.
+\]
+因此 \(h_F(p_F(c))=F_\eta(c)\)。不同块给独立 Bernoulli 记录。
+
+**先 reset，任意 \(n\ge1\)。** 使用 §284 的真实记录
+\[
+W=(2\zeta\,\mathbf1_{\{w=0\}},2\zeta\,\mathbf1_{\{w=1\}}),
+\quad\zeta\in\{-1,1\},
+\qquad V=W_1\cdot W_2\in\{-4,0,4\}.
+\]
+§290—§291 给 \(\mathbb E_cV=a_n^2c\)、\(a_n\ge15/16\)。在每块后独立随机产生
+\[
+Y\mid V\sim\operatorname{Bernoulli}\!\left(\frac{1+V/4}{2}\right).
+\]
+其实际成功率是
+\[
+p_R(c)=\frac12+\frac{a_n^2c}{8}.
+\]
+这由可访问的 \(V\) 随机化而成，绝非不可访问的模拟程序位。令
+\[
+h_R(t)=F_\eta\!\left(\frac{8(t-1/2)}{a_n^2}\right),\qquad0\le t\le1,
+\]
+便有 \(h_R(p_R(c))=F_\eta(c)\)。
+
+因 \(V\le4\) 且 \(c=1\) 是合法真实参数，\(a_n^2=\mathbb E_1V\le4\)；所以
+\[
+225/256\le a_n^2\le4.
+\]
+两个仿射变换的斜率因而一致有界，零区和一区的边缘保持固定的正间距。以下关于 \(h\) 的常数对 \(\eta\) 一致，并对 reset 的 \(n\) 一致。
+
+### 295.4 实际决策系数
+
+对 \(K\ge2s\)，定义标准 Bernstein 算子
+\[
+(B_Kf)(t)=\sum_{j=0}^K f(j/K)\binom Kj t^j(1-t)^{K-j}.
+\]
+取 \(h=h_F\) 或 \(h_R\)，构造
+\[
+Q_{K,s}h=\sum_{j=0}^{s-1}(I-B_K)^jh.
+\]
+最终的 \(K+1\) 个合法决定零概率为
+\[
+\alpha_i=
+\operatorname{clip}_{[0,1]}
+\bigl((Q_{K,s}h)(i/K)\bigr),
+\qquad 0\le i\le K.
+\tag{295.2}
+\]
+观察实际 \(K\) 枚 Bernoulli 记录的成功次数 \(J\)，以概率 \(\alpha_J\) 输出零。协议有确定块数 \(K\)，并非只有有限期望停止时间的方案。
+
+这些系数完全由已知参数决定。具体可用有限矩阵
+\[
+P_{ij}=\binom Kj(i/K)^j(1-i/K)^{K-j},\qquad
+v_i=h(i/K)
+\]
+计算向量 \(\sum_{j=0}^{s-1}(I-P)^jv\)，再逐项截断。计算该矩阵不需要从虚拟网格参数获取观测。真实响应是
+\[
+f_K(c)=
+\sum_{i=0}^K\alpha_i\binom Ki
+p(c)^i[1-p(c)]^{K-i}.
+\tag{295.3}
+\]
+故（295.2）确实是保持所有系数在 \([0,1]\) 内的物理后处理。
+
+### 295.5 未截断的迭代偏差修正为 \(O(K^{-s})\)
+
+这里的算子组合是经典 Bernstein 迭代布尔和：$B_KQ_{K,s}=I-(I-B_K)^s$。其标准误差算子恒等式与高阶逼近研究可参见 Li Cheng 与 Xinlong Zhou, “Strong inequalities for the iterated Boolean sums of Bernstein operators,” *Studia Universitatis Babeș-Bolyai Mathematica* 64(3), 299–304 (2019)，印刷第300页及 Theorem 1.1，[原文](https://www.cs.ubbcluj.ro/journal/studia-mathematica/journal/article/download/569/pdf)，[DOI](https://doi.org/10.24193/subbmath.2019.3.01)。本节使用这一标准工具，并给出所需的导数范数估计；真实决策还需要后面的系数合法化及其误差证明。
+
+对每个固定非负整数 \(m\)，
+\[
+\|(I-B_K)f\|_{C^m}
+\le\frac{C_m}{K}\|f\|_{C^{m+2}}
+\qquad(K\ge m).
+\tag{295.4}
+\]
+可直接证明，不需要假设函数解析。对于 \(0\le j\le m\)，令 \(S\sim\operatorname{Bin}(K-j,t)\)，令 \(U_1,\ldots,U_j\) 独立均匀于 \([0,1]\)，则有限差分的积分表示给
+\[
+(B_Kf)^{(j)}(t)=\frac{(K)_j}{K^j}
+\mathbb E f^{(j)}
+\!\left(\frac{S+U_1+\cdots+U_j}{K}\right).
+\]
+括号中随机变量 \(T\) 满足
+\[
+\mathbb E(T-t)=\frac{j(1/2-t)}K,\qquad
+\mathbb E(T-t)^2\le C_j/K,\qquad
+\left|1-\frac{(K)_j}{K^j}\right|\le C_j/K.
+\]
+Taylor 展开到一次、以二阶导数控制余项，即给（295.4）。
+
+连续使用（295.4），每次减少两个被控制的导数阶，得到
+\[
+\|(I-B_K)^sh\|_\infty
+\le C_sK^{-s}\|h\|_{C^{2s}}.
+\]
+代数恒等式
+\[
+B_KQ_{K,s}h=h-(I-B_K)^sh
+\]
+因而证明
+\[
+\|B_KQ_{K,s}h-h\|_\infty\le C_{k,s}K^{-s}.
+\tag{295.5}
+\]
+\(h\in C^{M-1}=C^{2s+1}\) 充分满足所需正则性。这里尚未把越界系数当作概率；其合法化见下一步。
+
+### 295.6 高阶常值接触使系数截断损失也是高阶
+
+记 \(Z_0=\{t:h(t)=0\}\)，\(Z_1=\{t:h(t)=1\}\)，以及
+\[
+d_0(t)=\operatorname{dist}(t,Z_0),\qquad
+d_1(t)=\operatorname{dist}(t,Z_1).
+\]
+这些集合都是 \([0,1]\) 中非空的端区间，距离函数为 1-Lipschitz。Beta 拼接在零区边缘恰好有 \(M\) 阶接触，且上述值域比较保持统一正的首项系数，故存在 \(c,C>0\) 使
+\[
+h(t)\ge c\,d_0(t)^M,\qquad
+|h''(t)|\le C\,d_0(t)^{M-2},
+\tag{295.6}
+\]
+\[
+1-h(t)\ge c\,d_1(t)^M,\qquad
+|h''(t)|\le C\,d_1(t)^{M-2}.
+\tag{295.7}
+\]
+在边缘附近，这是局部多项式接触及光滑仿射/对数换元的直接结果；远离边缘，由紧性、正值及导数有界得到。常数可对 \(\eta\) 和 reset 的 \(n\) 统一选择：\(A_\varepsilon\ge3G/4\)、\(1-A_\varepsilon\ge1-G\)，而全部变换参数落在上述紧区间内。
+
+以下只用（295.6）证明下越界小；对 \(1-h\) 使用（295.7）即可证明上越界小。
+
+若 \(T\sim K^{-1}\operatorname{Bin}(K,t)\)，则 \(\mathbb E(T-t)=0\)，并对每个固定偶数 \(q\ge2\) 有
+\[
+\mathbb E|T-t|^q\le C_qK^{-q/2}.
+\tag{295.8}
+\]
+这也可由独立有界中心变量的矩展开直接推出：非零项中每个指标至少出现两次，故至多含 \(q/2\) 个不同指标。
+
+令 \(e=(I-B_K)h\)。Taylor 余项、距离函数的 Lipschitz 性和（295.6）、（295.8）给
+\[
+|e(t)|\le
+C\left[K^{-1}d_0(t)^{M-2}+K^{-M/2}\right].
+\tag{295.9}
+\]
+具体说，余项被常数倍
+\(\mathbb E[(T-t)^2(d_0(t)+|T-t|)^{M-2}]\)
+控制；拆成 \(d_0(t)^{M-2}\mathbb E(T-t)^2\) 与
+\(\mathbb E|T-t|^M\) 即得（295.9）。
+
+\(B_K^j\) 对应固定步数的二项 Markov 链：
+\[
+X_0=t,\qquad X_{i+1}\mid X_i
+\sim K^{-1}\operatorname{Bin}(K,X_i).
+\]
+对固定 \(j\le s\)，由条件（295.8）及 Minkowski 不等式，
+\[
+\mathbb E|X_j-t|^q\le C_{q,j}K^{-q/2}.
+\]
+所以对（295.9）再作用任意 \(B_K^j\)、\(j\le s\)，仍被常数倍
+\[
+K^{-1}d_0(t)^{M-2}+K^{-M/2}
+\]
+控制。展开
+\[
+Q_{K,s}h-h
+=\sum_{j=1}^{s-1}(I-B_K)^{j-1}e
+\]
+为有限个 \(B_K^ie\) 的线性组合，得到
+\[
+|Q_{K,s}h(t)-h(t)|
+\le C_s\left[K^{-1}d_0(t)^{M-2}+K^{-M/2}\right].
+\tag{295.10}
+\]
+
+选择固定充分大的 \(D\)，使
+\((C_s/c)(D^{-2}+D^{-M})\le1/2\)。
+当 \(d_0(t)\ge D/\sqrt K\) 时，（295.6）、（295.10）给
+\[
+Q_{K,s}h(t)\ge h(t)/2\ge0.
+\]
+当 \(d_0(t)<D/\sqrt K\) 时，直接由 \(h\ge0\) 与（295.10）得到
+\[
+Q_{K,s}h(t)\ge-C'_sK^{-M/2}.
+\]
+同样，由 \(Q_{K,s}1=1\) 和对 \(1-h\) 的同一论证，有
+\[
+-C'_sK^{-M/2}\le Q_{K,s}h(t)
+\le1+C'_sK^{-M/2}.
+\tag{295.11}
+\]
+因此逐系数截断损失满足
+\[
+\max_i|\alpha_i-(Q_{K,s}h)(i/K)|
+\le C'_sK^{-M/2}=C'_sK^{-(s+1)}.
+\tag{295.12}
+\]
+Bernstein 基函数非负且和为 1，所以同一个上界控制截断后的整个响应变化。结合（295.5），实际协议（295.3）对全部 \(t\in[0,1]\) 的误差满足
+\[
+\left|
+\sum_i\alpha_i\binom Ki t^i(1-t)^{K-i}-h(t)
+\right|
+\le C_{k,s}K^{-s}.
+\tag{295.13}
+\]
+
+### 295.7 连续风险、预算和未解边界
+
+将（295.13）分别应用于真实 \(p(r)\)、\(p(kr)\)，再用（295.1），得到
+\[
+f_K(r)-f_K(kr)
+\ge\frac13+\frac{\eta}{144}-2C_{k,s}K^{-s}
+\qquad\text{对每个 }r\in[l,1].
+\]
+取
+\[
+K\ge\max\left\{2s,
+\left\lceil(288C_{k,s}/\eta)^{1/s}\right\rceil\right\}
+\]
+即可使全部真实比较差至少为 \(1/3\)，相应同 \(r\) 平均风险不超过 \(1/3\)。重新吸收常数即得开头结论。由
+\[
+\eta\ge g/(l\kappa),\qquad 1/\eta\le\kappa/g,
+\]
+得到固定 \(k,s\) 的 \(O_{k,s}(g^{-1/s})\)。
+
+每个块都实际消耗两份来源；从 \(V\) 随机化产生一枚 Bernoulli 位以及末端随机决定不额外消耗来源副本。系数计算的时间、存储和精确概率实现不计入当前副本预算，与 §293 的合同一致。
+
+任意固定 \(a>0\) 可选择整数 \(s\ge1/a\)，故确有 \(O_{k,a}(g^{-a})\)。这不等于已证 \(\operatorname{polylog}(1/g)\)：本节未控制常数随 \(s\) 的增长，也不将固定 \(s\) 的估计非法地统一到 \(s=s(g)\)。记 \(N_{\min}(g)\) 为这里任一指定访问类的最优副本数；reset 情形先固定 \(n\)。对每个固定 \(s\)，以上界给
+\[
+0\le\liminf_{g\downarrow0}\frac{\log N_{\min}(g)}{\log(1/g)}
+\le\limsup_{g\downarrow0}\frac{\log N_{\min}(g)}{\log(1/g)}\le\frac1s.
+\]
+再对固定整数 \(s\) 任取大值得到该比值趋零；这一步没有在任一估计内部令 \(s\) 随 \(g\) 改变。最佳对数或其他次多项式速率仍未确定。
+
+§293保留未经截断的估计，以便使用它的无偏性；这里截断的是预先计算的决定概率系数，并在（295.11）—（295.13）中计入其全部误差。这两步承担不同的作用。高阶逼近本身不足以成为实际协议，值域约束与合法记录的共同实现仍是证明的一部分。
+
+## 追加锚（本行以下为增补区）
