@@ -93415,3 +93415,234 @@ $$
 这使“全部层联合能分离”与“某个有限层能在指定误差内取得答案”的区别具有具体预算读数。关系接口的极限形状可以出现跳变，任何固定有限记录的响应仍连续；取得成本承担了两者之间的非一致性。本文比较的是来源副本数，未将其换成物理时钟或任意网络的计算复杂度。
 
 ## 追加锚（本行以下为增补区）
+
+## 293. 无偏记录的二阶消差与临界预算的一阶倒数上界
+
+### 293.1 达到指定错误不必逼近准确读数的最优决策
+
+保持§291—§292的共同参数平均风险、同一规范来源和确定最大完整块预算。固定
+$$
+\sqrt{3/4}\le k<1,\qquad k^2<l\le k,
+\qquad g=l-k^2>0.
+\tag{293.1}
+$$
+它们对应 $\delta=1-\sqrt k$、$w=1-l$，属于原来源允许范围。完整原输入仍限于 $n=1$；先reset访问允许全部 $n\ge1$。定义
+$$
+\kappa=-\log k>0,\qquad
+L=\frac{\log l}{\log k},\qquad
+\eta=2-L=\frac{\log(l/k^2)}\kappa\in(0,1].
+\tag{293.2}
+$$
+目标仍是
+$$
+\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2
+\le\frac13.
+\tag{293.3}
+$$
+在这段参数范围内，准确读数的最优风险是 $1/4$。§291的最优连续决策在 $g\downarrow0$ 时斜率增大，配合绝对估计误差只给 $O_k(g^{-2})$ 的充分预算。本节构造另一个实际随机决策：它只需越过（293.3）的判据，导数的Lipschitz常数却可与 $g$ 无关。
+
+### 293.2 临界坐标上的两个光滑拼接函数
+
+对实数 $x$，定义
+$$
+G(x)=
+\begin{cases}
+1,&x\le0,\\
+1-(2x^2-x^3)/3,&0\le x\le1,\\
+(3-x)/3,&1\le x\le2,\\
+(1-u)^2(1+u)/3,\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3,
+\end{cases}
+\tag{293.4}
+$$
+以及
+$$
+H(x)=
+\begin{cases}
+0,&x\le0,\\
+2x^2-x^3,&0\le x\le1,\\
+x,&1\le x\le2,\\
+(1-u)^2(2+5u),\quad u=x-2,&2\le x\le3,\\
+0,&x\ge3.
+\end{cases}
+\tag{293.5}
+$$
+各段在端点给同一函数值。$G'$ 在 $x=0,1,2,3$ 依次为 $0,-1/3,-1/3,0$，$H'$ 依次为 $0,1,1,0$，因此二者均为连续可微函数，其导数全局Lipschitz。
+
+逐段求导得到
+$$
+|G'|\le4/9,\qquad |G''|\le4/3,
+\qquad |H'|\le49/15,\qquad |H''|\le16,
+\tag{293.6}
+$$
+二阶导数界在各段内部成立，一阶导数的连续拼接使它们也控制全局Lipschitz常数。
+
+此外 $0\le G\le1$、$H\ge0$。在三个非恒定区间，分别有
+$$
+H\le\tfrac32G,
+\qquad H\le6G,
+\qquad H\le\tfrac{21}{2}G.
+\tag{293.7}
+$$
+第一段使用 $H\le1$、$G\ge2/3$；第二段使用 $H/G=3x/(3-x)\le6$；第三段使用 $H/G=3(2+5u)/(1+u)\le21/2$，在零端点按连续性成立。
+
+令
+$$
+\varepsilon=\eta/144,\qquad A_\varepsilon(x)=G(x)-\varepsilon H(x).
+\tag{293.8}
+$$
+因为 $0<\varepsilon\le1/144$，上述界给
+$$
+0\le A_\varepsilon\le1,
+\qquad |A_\varepsilon'|\le1,
+\qquad |A_\varepsilon''|\le2.
+\tag{293.9}
+$$
+这些常数均不随 $g$ 缩小而增大。
+
+### 293.3 全部合法比较都有统一的正余量
+
+对 $0\le x\le1$，直接代入两段公式，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+\left(\frac13+\varepsilon\right)x(1-x)^2
+\ge\frac13+\varepsilon.
+\tag{293.10}
+$$
+对 $1\le x\le L=2-\eta$，写 $v=x-1\in[0,1-\eta]$，得到
+$$
+A_\varepsilon(x)-A_\varepsilon(x+1)
+=\frac13+\varepsilon+
+v^2\left[\frac{1-v}{3}-\varepsilon(8-5v)\right].
+\tag{293.11}
+$$
+括号至少为 $\eta/3-8\eta/144=5\eta/18\ge0$。因此对全部 $x\in[0,L]$，
+$$
+\boxed{
+A_\varepsilon(x)-A_\varepsilon(x+1)
+\ge\frac13+\frac\eta{144}
+\ge\frac13+\frac\eta{288}.
+}
+\tag{293.12}
+$$
+后面的预算只使用较弱的最后一项，保留余量而不优化常数。
+
+### 293.4 将决策定义在实际估计可能取到的全部实数上
+
+真实无偏估计可能小于零或大于一，因此不直接对这些读数取对数。定义全实轴上的决定零概率
+$$
+F_\varepsilon(c)=
+\begin{cases}
+0,&c\le k^3,\\
+A_\varepsilon(\log c/\log k),&k^3<c<1,\\
+1,&c\ge1.
+\end{cases}
+\tag{293.13}
+$$
+它在 $[0,1]$ 中取值。由于 $A_\varepsilon'(0)=A_\varepsilon'(3)=0$，常值段与中间段的一阶导数也连续。
+
+在中间段，$c\ge k^3$。链式求导及（293.9）给
+$$
+|F_\varepsilon''(c)|
+\le\frac2{\kappa^2c^2}+\frac1{\kappa c^2}
+\le M_k,
+\qquad
+M_k=k^{-6}\left(\frac2{\kappa^2}+\frac1\kappa\right).
+\tag{293.14}
+$$
+外侧一阶导数为零，有限个拼接点的一阶导数连续，故 $F_\varepsilon'$ 在整个实轴的Lipschitz常数不超过 $M_k$。
+
+对真实 $r\in[l,1]$，$x=\log r/\log k\in[0,L]$，而 $kr$ 对应 $x+1$。全部真实参数都位于 $[kl,1]\subseteq[k^3,1]$。因此（293.12）给
+$$
+F_\varepsilon(r)-F_\varepsilon(kr)
+\ge\frac13+\frac\eta{288}.
+\tag{293.15}
+$$
+这是已知 $k,l$ 所决定的合法随机决策函数，不是把隐藏参数准确读数交给观察者。
+
+### 293.5 无偏记录使一阶误差在决定概率中相消
+
+导数的Lipschitz界蕴含对任意实数 $z,c$，
+$$
+\left|F_\varepsilon(z)-F_\varepsilon(c)
+-F_\varepsilon'(c)(z-c)\right|
+\le\frac{M_k}{2}(z-c)^2.
+\tag{293.16}
+$$
+若实际估计量 $\widehat c$ 无偏，则取期望时线性项准确为零，得到
+$$
+\boxed{
+\left|\mathbb E_cF_\varepsilon(\widehat c)-F_\varepsilon(c)\right|
+\le\frac{M_k}{2}\operatorname{Var}_c\widehat c.
+}
+\tag{293.17}
+$$
+这只是标准一阶Taylor余项估计在当前实际决策中的使用；改善依赖（293.4）—（293.15）同时提供全实轴合法概率、与 $g$ 无关的导数控制和正比较余量。
+
+完整 $n=1$ 输入继续测量反对称投影。对 $K$ 个块的点击均值 $\overline Y$，取未经截断的
+$$
+\widehat c=1-4\overline Y,
+\qquad\mathbb E_c\widehat c=c,
+\qquad\operatorname{Var}_c\widehat c\le4/K.
+\tag{293.18}
+$$
+随后以概率 $F_\varepsilon(\widehat c)$ 输出零。该随机化对估计可能取到的全部实数都有定义。实际决定概率与 $F_\varepsilon(c)$ 的差至多 $2M_k/K$；成对比较中的总损失至多 $4M_k/K$。
+
+所以取
+$$
+K_F=\left\lceil\frac{1152M_k}{\eta}\right\rceil
+\tag{293.19}
+$$
+就使总损失不超过 $\eta/288$。由（293.15）及风险恒等式（291.3），实际风险不超过 $1/3$。
+
+先reset访问使用实际记录均值
+$$
+\widehat c=\overline V/a_n^2,
+\qquad\mathbb E_c\widehat c=c,
+\qquad
+\operatorname{Var}_c\widehat c
+\le\frac8{Ka_n^4}\le\frac{32}{3K},
+\tag{293.20}
+$$
+其中 $a_n\ge15/16$。同样保留无偏估计，不截断，而将全部取值交给已定义的 $F_\varepsilon$。决定概率误差至多 $16M_k/(3K)$，成对比较总损失至多 $32M_k/(3K)$。因此
+$$
+K_R=\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\tag{293.21}
+$$
+对全部 $n\ge1$ 一致达到（293.3）。两种方案都只使用真实观测记录与独立随机数，不接入准确 $c$、实际 $r$ 或隐藏相位。
+
+### 293.6 临界充分预算降至一阶倒数
+
+**定理293.1（平滑决策与无偏记录的临界取得上界）。** 在（293.1）—（293.3）的来源、权限和风险合同下，完整 $n=1$ 输入及全部维数的先reset访问分别满足
+$$
+\boxed{
+N_{\rm av}^{\rm full}(1,\delta;w)
+\le2\left\lceil\frac{1152M_k}{\eta}\right\rceil,
+}
+\tag{293.22}
+$$
+$$
+\boxed{
+N_{\rm av}^{\rm reset}(n,\delta;w)
+\le2\left\lceil\frac{3072M_k}{\eta}\right\rceil
+\quad(n\ge1).
+}
+\tag{293.23}
+$$
+对每个固定允许的 $k$，当 $g=l-k^2\downarrow0$ 时，两种访问均有实际充分预算 $O_k(g^{-1})$，reset常数与 $n$ 无关。
+
+**证明。** 分段函数的范围和导数界使（293.13）成为全实轴上的合法随机决策，全部合法比较的余量由（293.10）—（293.12）逐段证明。无偏记录通过（293.16）—（293.17）将误差降到方差阶；（293.18）—（293.21）给实际块数和两份计费。最后
+$$
+\eta=\frac{\log(1+g/k^2)}\kappa
+\ge\frac g{l\kappa},
+\tag{293.24}
+$$
+所以 $1/\eta\le l\kappa/g\le\kappa/g$，而固定 $k$ 的 $M_k$ 有限，得到所述阶。$\square$
+
+这项改善不要求在有限预算内接近准确读数模型的最优风险 $1/4$。它直接构造满足所需 $1/3$ 判据的平滑决策，并把实际无偏性用于消去一阶误差。若先截断估计，再未经证明地继续使用无偏性，（293.17）的理由就不再成立；本节通过定义全实轴决策避免了该缺项。
+
+§292的有限预算必要界仍然有效，但没有与本节的新上界匹配。因此本节没有给出临界最优发散率，也没有把固定 $k$ 的常数宣称为 $k\uparrow1$ 时一致有界。全部成本仍是来源副本数，精确函数求值、随机化装置和钟表历时属于另行声明的实现成本。
+
+## 追加锚（本行以下为增补区）
