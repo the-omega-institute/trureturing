@@ -31527,3 +31527,245 @@ $$
 **证明。** 完整执行词的差由定理 390.1 计算；反馈任务逐个由基准与限制解析子计算；访问 transcript 由同一联合律推前，未来商的判别同时包含合法性和停止标签。其余消费者分别使用 §393 的成本/风险量词、§394 的映射与耦合、§§395–396 的迹配对、完整 incidence 与任务族极小访问、§397 的联合路径—事件规范类、§398 的闭合分支及当前曲率与周期数据，以及 §399 的算子和概率模型。每个派生量都是列明决定数据的函数；每个不足反例则隐藏全部决定被比较量的数据，并固定所列余项。在这些合同下，原充分性证明可逐任务计算，再沿有限策略或组合树归纳；任何遗漏这些条件的旧必要性或充分性句子不构成该归纳的合法步骤。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 401. 来源似然、未来条件族与相容残差的联合观察商
+
+**定义 401.1（固定 Gaussian 记录模型与三项任务）。** 取 §§359–361、398 的有限实系数上链空间与正定内积，记 $\mathcal H^1=\ker d_1\cap\ker d_0^{\mathsf T}$，其中转置相对于这些内积。固定线性接口 $\Pi:\mathcal H^1\to\mathbb R^p$，不要求单射；在数据空间 $E=C^2\oplus\mathbb R^p\cong\mathbb R^m$ 固定正交坐标，令
+
+$$
+Ag=(d_1g,\Pi P_{\mathcal H}g),\qquad
+y=Ag+\Sigma^{1/2}\xi,\qquad
+z=\Sigma^{-1/2}y=Bg+\xi,\qquad B=\Sigma^{-1/2}A.
+$$
+
+这里 $g$ 遍历整个 $C^1$，实际来源是其中固定但未知的一点；$\Sigma\succ0$ 已知，平方根取对称正定平方根。$y$ 是实际记录，允许在 $\operatorname{im}A$ 外。固定线性映射 $C:C^1\to\mathbb R^q$，未来块是一个已声明、可联合读取的经典随机向量
+
+$$
+Y_f=Cg+\zeta\in\mathbb R^q,\qquad
+\begin{pmatrix}\xi\\\zeta\end{pmatrix}
+\sim\mathcal N\!\left(0,
+\begin{pmatrix}I_m&K^{\mathsf T}\\K&\Gamma\end{pmatrix}\right),\qquad
+\begin{pmatrix}I_m&K^{\mathsf T}\\K&\Gamma\end{pmatrix}\succeq0.
+$$
+
+所有空间、内积、接口、协方差及联合 Gaussian 假设均在读数之前固定；只有协方差相同而联合律非 Gaussian 的模型不在此假设内。未来块不表示非对易量子反事实的共同测量。若 $g$ 按顶点规范类解释，另要求 $Cd_0=0$；否则固定来源代表，$C$ 是对该代表声明的接口。
+
+置
+
+$$
+S=\operatorname{im}B,\quad P=P_S,\quad R=I-P,\quad
+M=\operatorname{im}((KR)^{\mathsf T}),\quad
+N=S^\perp\cap\ker K,
+\qquad r=\dim S,\ k=\dim M,\ \ell=\dim N.
+$$
+
+$M,N$ 是白化数据空间中的子空间，不是来源空间的 harmonic/coexact 分量。记 $P_M,P_N$ 为相应正交投影。令 $p_g(z)=(2\pi)^{-m/2}\exp(-\|z-Bg\|^2/2)$，$\lambda_g(z)=p_g(z)/p_0(z)$，$Q(z)=\|Rz\|^2$，并指定对每个 $g$、每个 $z$ 的核
+
+$$
+\mathcal F_g(z,\cdot)
+=\mathcal N\!\left(Cg+K(z-Bg),\Psi\right),\qquad
+\Psi=\Gamma-KK^{\mathsf T}.
+$$
+
+对半正定 $\Psi$，此记号指 $Cg+K(z-Bg)+\Psi^{1/2}U$ 的分布，$U\sim\mathcal N(0,I_q)$；允许 $\Psi$ 奇异甚至为零。三项任务是保留全部 $g$ 的 $\lambda_g$、保留同一来源索引下的整族 $\mathcal F_g$、保留实际数值 $Q$。不把这份条件核族认作已知实际 $g$，也不把旧原始读数、完整 Bianchi 残差、上同调坐标或操作权限列入这三项任务。读取安排自适应、估计协方差或扩大任务族，均须另给决定数据与假设。
+
+**定理 401.2（三项任务的精确商与正交轨道）。** 在定义 401.1 下，$\mathcal F_g$ 是定义于每个 $z$ 的弱连续条件分布版本，且 $S^\perp=M\oplus N$ 为正交直和。对任意 $z,z'\in\mathbb R^m$，有
+
+$$
+\begin{aligned}
+&\bigl[\ \forall g:\lambda_g(z)=\lambda_g(z'),\quad
+\forall g:\mathcal F_g(z,\cdot)=\mathcal F_g(z',\cdot),\quad
+Q(z)=Q(z')\ \bigr]\\
+&\hspace{25mm}\Longleftrightarrow\quad
+\eta(z)=\eta(z'),\qquad
+\eta(z)=\bigl(Pz,KRz,\|P_Nz\|^2\bigr).
+\end{aligned}
+$$
+
+$\eta$ 的纤维恰为 $O(N)$ 在 $\mathbb R^m=S\oplus M\oplus N$ 上恒等作用于 $S\oplus M$ 所得的轨道；这里 $O(N)$ 包含反射。这是所列三项任务的观察商，不是对来源 $g$ 的恢复断言。
+
+**证明。** 先在这个商的推导中使用经典多元 Gaussian 条件化法，参见 T. W. Anderson, *An Introduction to Multivariate Statistical Analysis*, 第三版，第 2 章，以及本系列主卷《RECURSIVE_RELATIONAL_OBSERVATION》§128.7 的创新分解。令 $\varepsilon=\zeta-K\xi$，直接计算
+
+$$
+\operatorname{Cov}(\varepsilon)=\Psi\succeq0,\qquad
+\operatorname{Cov}(\varepsilon,\xi)=0.
+$$
+
+半正定性也可由联合协方差作用于 $(-K^{\mathsf T}t,t)$ 得到：相应二次型是 $t^{\mathsf T}\Psi t\ge0$。$(\xi,\varepsilon)$ 的联合特征函数为
+
+$$
+\mathbb E\exp\bigl(iu^{\mathsf T}\xi+iv^{\mathsf T}\varepsilon\bigr)
+=\exp(-\|u\|^2/2)\exp(-v^{\mathsf T}\Psi v/2),
+$$
+
+故两者独立，奇异 $\Psi$ 也不例外。由 $Y_f=Cg+K(z-Bg)+\varepsilon$，对任意 Borel 集 $D\subseteq\mathbb R^m$、$H\subseteq\mathbb R^q$ 有
+
+$$
+\mathbb P_g(z\in D,Y_f\in H)
+=\int_D\mathcal F_g(x,H)p_g(x)\,dx.
+$$
+
+这给出条件核版本，而非把概率零的单点事件当作正概率条件事件。对任意有界连续 $f$，$\int f\,d\mathcal F_g(z)$ 是固定随机向量 $\Psi^{1/2}U$ 的连续平移积分，由支配收敛随 $z$ 连续；这里的连续性是弱连续，不要求奇异 Gaussian 平移在全变差距离下连续。
+
+展开当前 Gaussian 密度得到
+
+$$
+\log\lambda_g(z)=\langle z,Bg\rangle-\tfrac12\|Bg\|^2
+=\langle Pz,Bg\rangle-\tfrac12\|Bg\|^2.
+$$
+
+因此全部似然比相同等价于 $z-z'\perp\operatorname{im}B$，即 $Pz=Pz'$。未来协方差固定，Gaussian 概率测度相等必有相等的有限均值，反向由同一均值与协方差也成立；故全部同索引条件核相同等价于 $K(z-z')=0$。已有 $Pz=Pz'$ 时，这恰为 $KRz=KRz'$。这个判据比较的是每个给定 $g$ 的核，不需要从观察估计或选择一个 $g$。
+
+由于 $(KR)^{\mathsf T}=RK^{\mathsf T}$，$M\subseteq S^\perp$，并且对 $v\in S^\perp$，
+
+$$
+v\perp M\quad\Longleftrightarrow\quad KRv=Kv=0.
+$$
+
+所以 $S^\perp=M\oplus N$，$m=r+k+\ell$。若 $v\in M$ 且 $Kv=0$，则 $v\in M\cap N=\{0\}$；因此 $K|_M$ 单射。又 $KRz=KP_Mz$，故 $K|_M:M\to\operatorname{im}(KR)$ 为双射。记其逆为 $D_K$，包括零维空间间的唯一逆映射，则
+
+$$
+P_Mz=D_K(KRz),\qquad
+Q(z)=\|D_K(KRz)\|^2+\|P_Nz\|^2.
+$$
+
+于是三项任务相等先确定 $Pz,KRz$，再由 $Q$ 确定 $N$ 分量的平方范数；反向由这三个量重构全部任务，得到所述等价。
+
+正交作用保持 $Pz,KRz$ 及 $N$ 范数。反向设 $\eta(z)=\eta(z')$，写 $u=P_Nz,v=P_Nz'$，则 $\|u\|=\|v\|$，且两记录的 $S,M$ 分量相同。若 $u=v$，取恒等映射；否则在 $N$ 上令 $w=u-v$ 并取
+
+$$
+H_wx=x-2\frac{\langle x,w\rangle}{\|w\|^2}w.
+$$
+
+展开内积可知 $H_w$ 正交，而 $2\langle u,w\rangle=\|w\|^2$ 给出 $H_wu=v$。把它在 $S\oplus M$ 上延拓为恒等即把 $z$ 送到 $z'$。当 $\ell=0$ 时只有零向量和恒等作用；当 $\ell=1$ 时非零半径纤维的两点由符号反射交换；半径零时纤维在 $N$ 中只有一点。$r=0$ 或 $k=0$ 时相应分量为空，以上推导仍成立。
+
+残差在这里有明确的最小二乘含义。经典广义最小二乘采用协方差逆作权重，参见 A. C. Aitken, *On Least Squares and Linear Combination of Observations*, DOI [10.1017/S0370164600014346](https://doi.org/10.1017/S0370164600014346)。对任意 $a\in C^1$，直接正交分解得
+
+$$
+(y-Aa)^{\mathsf T}\Sigma^{-1}(y-Aa)
+=\|Pz-Ba\|^2+\|Rz\|^2,
+\qquad
+\min_a(y-Aa)^{\mathsf T}\Sigma^{-1}(y-Aa)=Q(z).
+$$
+
+最小值存在，因为 $Pz\in\operatorname{im}B$。所以 $Q=0$ 当且仅当原数据 $y\in\operatorname{im}A$；拟合并不改变原精确 Hodge 方程的可解性。该正交残差方法的 Hodge 先例是 Jiang–Lim–Yao–Ye, *Statistical ranking and combinatorial Hodge theory*, [arXiv:0811.1067v2](https://arxiv.org/abs/0811.1067v2), §§4–5，尤其定理 5.1，期刊 DOI [10.1007/s10107-010-0419-x](https://doi.org/10.1007/s10107-010-0419-x)；这里的数据子空间取所声明的曲率与周期联合像 $S$。
+
+在中心零假设 $g=0$ 下，于 $S,M,N$ 中分别选正交基。$z=\xi$ 的特征函数在这三个坐标块上分解为独立标准正态的乘积，因此
+
+$$
+\|P_Nz\|^2\sim\chi^2_\ell,\qquad
+Q(z)\sim\chi^2_{m-r},\qquad
+\|P_Nz\|^2\ \text{独立于}\ (Pz,KRz).
+$$
+
+$\chi^2_0$ 指零点质量。这是 Cochran 正交二次型分解在本模型中的直接坐标证明；历史参照为 W. G. Cochran, *The distribution of quadratic forms in a normal system, with applications to the analysis of covariance*, 1934, DOI [10.1017/S0305004100016595](https://doi.org/10.1017/S0305004100016595)。小残差不认证实际来源为真，也不排除像内偏移：任取 $b\in S$ 都有 $Q(z+b)=Q(z)$。
+
+最后，若另行给定与 $(\xi,\zeta)$ 独立的来源概率先验 $\mu$，无需假设其 Gaussian，则对每个 $z$ 定义
+
+$$
+\mu_z(dg)=\frac{\lambda_g(z)\mu(dg)}{\int\lambda_a(z)\mu(da)},\qquad
+\mathcal F_\mu(z,H)=\int\mathcal F_g(z,H)\mu_z(dg).
+$$
+
+分母处处严格为正且有限，因为 $0<\lambda_g(z)\le\exp(\|Pz\|^2/2)$。联合模型的积分恒等式与 Bayes 公式证明这是后验及混合预测的版本；$\eta$ 相同就给相同的两者。对有界连续测试函数，在 $z$ 的任意紧邻域上用上述共同上界作支配收敛，还得到混合预测的弱连续性。先验是额外给定的共同输入，不能从噪声协方差推出；一个固定先验下的混合相等也不反推全部来源索引核相等。
+
+这个商与 §398.4 的原始闭路校正相容。具体地，设 $L:C^1\to\mathbb R^p$ 满足 $Ld_0=0$、$\Pi=L|_{\mathcal H^1}$；由既有有限 Hodge 分解，取
+
+$$
+J=\left(d_1|_{\operatorname{im}d_1^{\mathsf T}}\right)^{-1}P_{\operatorname{im}d_1},\qquad
+A_{\mathrm o}g=(d_1g,Lg),\qquad
+T(F,l)=(F,l-LJF).
+$$
+
+这里 $d_1$ 在 coexact 空间上到 $\operatorname{im}d_1$ 为双射：满射由 Hodge 分解得到；若 $c=d_1^{\mathsf T}v$ 且 $d_1c=0$，则 $\|c\|^2=\langle v,d_1c\rangle=0$，故单射，像空间为零也包括在内。将 $g$ 分解为 $d_0u+h+c$，即有 $Jd_1g=c$、$Lg-LJd_1g=Lh=\Pi P_{\mathcal H}g$。因此 $TA_{\mathrm o}=A$，且 $T^{-1}(F,p)=(F,p+LJF)$。$J$ 的投影扩展使 $T$ 定义于不相容记录，也不把这些记录变成原 Hodge 方程的解。
+
+同时运输实际数据和噪声，令
+
+$$
+y_{\mathrm n}=Ty_{\mathrm o},\quad
+\Sigma_{\mathrm n}=T\Sigma_{\mathrm o}T^{\mathsf T},\quad
+O=\Sigma_{\mathrm n}^{-1/2}T\Sigma_{\mathrm o}^{1/2},\qquad
+\Sigma_{\mathrm o}\succ0.
+$$
+
+则 $OO^{\mathsf T}=I$，因为中间乘积 $T\Sigma_{\mathrm o}T^{\mathsf T}$ 正是 $\Sigma_{\mathrm n}$。所以 $z_{\mathrm n}=Oz_{\mathrm o}$、$B_{\mathrm n}=OB_{\mathrm o}$、$\xi_{\mathrm n}=O\xi_{\mathrm o}$。保持同一实际未来块，由交叉协方差定义得到
+
+$$
+K_{\mathrm n}=K_{\mathrm o}O^{\mathsf T},\qquad
+\Gamma-K_{\mathrm n}K_{\mathrm n}^{\mathsf T}
+=\Gamma-K_{\mathrm o}K_{\mathrm o}^{\mathsf T},\qquad
+K_{\mathrm n}(z_{\mathrm n}-B_{\mathrm n}g)
+=K_{\mathrm o}(z_{\mathrm o}-B_{\mathrm o}g).
+$$
+
+未白化的 $H_{\mathrm o}=\operatorname{Cov}(\zeta,y_{\mathrm o}-A_{\mathrm o}g)$ 也同时变为 $H_{\mathrm o}T^{\mathsf T}$。由正交性，$S_{\mathrm n}=OS_{\mathrm o}$、$P_{\mathrm n}=OP_{\mathrm o}O^{\mathsf T}$、$R_{\mathrm n}=OR_{\mathrm o}O^{\mathsf T}$，进而 $M_{\mathrm n}=OM_{\mathrm o}$、$N_{\mathrm n}=ON_{\mathrm o}$。因此
+
+$$
+\eta_{\mathrm n}(Oz)
+=\left(OP_{\mathrm o}z,\ K_{\mathrm o}R_{\mathrm o}z,
+\ \|P_{N_{\mathrm o}}z\|^2\right).
+$$
+
+这逐项运输三项任务与半径，$O(N)$ 的作用由 $O$ 共轭运输；$r,k,\ell$ 与线性摘要的单射性保持。只校正读数而保留旧协方差不满足这些等式。原始精确可解性由可逆性给出的 $y_{\mathrm o}\in\operatorname{im}A_{\mathrm o}\Longleftrightarrow Ty_{\mathrm o}\in\operatorname{im}A$ 保持，不由统计拟合替换。证毕。
+
+## 402. 精确残差的线性压缩障碍与有限 Hodge 实现
+
+**命题 402.1（任意解码器下的线性障碍与显式非线性坐标）。** 在定义 401.1 的全部观察空间上，设线性摘要 $L:\mathbb R^m\to\mathbb R^d$ 配有任意函数 $a,b$，满足
+
+$$
+a(Lz)=Pz,\qquad b(Lz)=Q(z)\qquad(\forall z\in\mathbb R^m).
+$$
+
+则 $L$ 必须单射，故 $d\ge m$；对解码器不要求线性、连续或可测。相反，在 $S$ 与 $\operatorname{im}(KR)$ 各固定一组基，$\eta$ 有 $r+k+1$ 个实坐标的显式表示（$\ell>0$），或 $r+k$ 个实坐标的表示（$\ell=0$）。$\ell\ge2$ 时前者严格少于 $m$。这些是所给表示的坐标数，不是任意可测编码的维数下界。只保留 $(Pz,Q(z))$ 能同时保留未来条件核族，当且仅当 $KR=0$。
+
+**证明。** 若 $v\in\ker L$，比较实际向量 $v$ 与 $0$，得 $Pv=a(Lv)=a(0)=0$，且 $\|Rv\|^2=b(Lv)=b(0)=0$。所以 $v=Pv+Rv=0$，由秩定理得维数结论。该论证要求对所有观察成立，不用“几乎处处”的解码条件替换量词。
+
+由定理 401.2，$\dim\operatorname{im}(KR)=k$，其坐标与 $Pz$ 的 $r$ 个坐标再加 $\|P_Nz\|^2$ 就给所述表示。若 $\ell>0$，值域恰为 $S\times\operatorname{im}(KR)\times[0,\infty)$：给定 $(s,t,u)$，在 $N$ 取单位向量 $n$，$z=s+D_Kt+\sqrt u\,n$ 即实现它。若 $\ell=0$，末项恒零，可省去，且 $m=r+k$；若 $\ell=1$，该表示仍有 $m$ 个坐标，但非零半径纤维有两个点。由 $m=r+k+\ell$，$\ell\ge2$ 时坐标减少量为 $\ell-1$。
+
+若 $KR=0$，$Kz=KPz$，故未来族由 $Pz$ 决定。若 $KR\ne0$，存在 $v\in S^\perp$ 满足 $Kv\ne0$；取 $z=v,z'=-v$，则 $Pz=Pz'=0$、$Q(z)=Q(z')$，但每个 $g$ 的未来条件均值之差均为 $2Kv\ne0$。所以精确的总残差平方不能替代预测所需的残差方向。证毕。
+
+**命题 402.2（圆盘、圆与三个球面的四坐标边界）。** 存在有限 CW 复形
+
+$$
+\mathcal X=D^2\vee S^1\vee S^2\vee S^2\vee S^2
+$$
+
+及标准上链内积，使 $C^1=\mathbb R^2$、$C^2=\mathbb R^4$，以 $g=(c,h)$ 为坐标时
+
+$$
+d_0=0,\qquad d_1(c,h)=(c,0,0,0),\qquad
+\mathcal H^1=\{(0,h)\},\qquad \Pi(0,h)=h,
+\qquad Ag=(c,0,0,0,h).
+$$
+
+取 $\Sigma=I_5$，未来标量为 $Y_f=c+\beta\xi_2+\eta_0$，其中 $\beta\ne0$，$\eta_0\sim\mathcal N(0,1)$ 独立于 $\xi\sim\mathcal N(0,I_5)$。三项任务的精确商可表示为
+
+$$
+\widehat\eta(z)=(z_1,z_5,z_2,z_3^2+z_4^2),
+$$
+
+而任何精确保留来源似然比及 $Q$ 的线性摘要至少需要五个实坐标。这个商合并 $(z_3,z_4)$ 的全部正交轨道，却不能删除 $z_2$ 的符号，也不保留测量曲率的全部 $H^2$ 坐标。
+
+**证明。** 取一个零胞腔、两条闭合一胞腔 $a,b$；圆盘的二胞腔沿 $a$ 以度一附着，三个球面的二胞腔各以常值映射附着。于是 $\partial_1=0$，$\partial_2$ 的第一列为 $(1,0)^{\mathsf T}$，其余三列为零，转置给上述 $d_0,d_1$。标准度量下 $d_1^{\mathsf T}d_1=\operatorname{diag}(1,0)$，故 $\mathcal H^1$ 及 $A$ 如述。此模型没有非零 exact 一上链，规范作用平凡。
+
+在数据标准基中，
+
+$$
+S=\operatorname{span}\{e_1,e_5\},\quad
+K=\beta e_2^{\mathsf T},\quad \Gamma=\beta^2+1,\quad\Psi=1,
+\quad M=\operatorname{span}\{e_2\},\quad
+N=\operatorname{span}\{e_3,e_4\}.
+$$
+
+联合正半定协方差由实际构造 $(\xi,\beta\xi_2+\eta_0)$ 保证。相应公式为
+
+$$
+\lambda_{(c,h)}(z)=\exp\!\left(cz_1+hz_5-\tfrac12(c^2+h^2)\right),\quad
+\mathcal F_{(c,h)}(z,\cdot)=\mathcal N(c+\beta z_2,1),\quad
+Q(z)=z_2^2+z_3^2+z_4^2.
+$$
+
+$\beta$ 固定且非零，所以 $\beta z_2$ 与 $z_2$ 相互确定；定理 401.2 给出 $\widehat\eta$ 的精确性及 $O(2)$ 纤维。命题 402.1 给出线性摘要的五维障碍。对任意 $a\ne0$，记录 $(0,a,0,0,0)$ 与 $(0,-a,0,0,0)$ 有相同的全部来源似然比和 $Q=a^2$，但同一 $(c,h)$ 的未来条件均值分别为 $c+\beta a,c-\beta a$。这是处处定义的连续核的比较，不声称某个精确单点具有正概率。
+
+另一方面，$(0,0,a,0,0)$ 与 $(0,0,0,a,0)$ 有相同 $\widehat\eta$。因 $d_2=0$，它们的曲率测量均闭合，而 $H^2=C^2/\operatorname{im}d_1\cong\mathbb R^3$ 中的坐标分别为 $(0,a,0)$ 与 $(0,0,a)$，并不相等；两份曲率均不可由 $d_1g$ 实现。所保留的 $Q=a^2$ 正确报告非零相容残差，却不报告障碍的全部坐标。增加这些坐标任务就必须细分该商。预测公式仍是未知 $(c,h)$ 索引的条件族，不能把 $z_1,z_5$ 当作已恢复的实际来源。证毕。
+
+## 追加锚（本行以下为增补区）
