@@ -7179,7 +7179,7 @@ Fix one occupied root r and change only the source-root capacities:
 
     u(S,r)=21;       u(S,s)=20 for s!=r.
 
-Call this network N[r]. Every other arc and every actual incidence is unchanged. Assume N[r] has a value77 flow and an exact capacity77 cut C in which r is sink-side and at most one other occupied root is sink-side. Source-side cut sets contain S and exclude T.
+Call this network N[r], and write cap_r for its cut-capacity function. Every other arc and every actual incidence is unchanged. Assume N[r] has a value77 flow and an exact capacity77 cut C in which r is sink-side and at most one other occupied root is sink-side. Source-side cut sets contain S and exclude T.
 
 Every value77 flow of N[r] saturates the r source-root21 edge, so a_r=21. The other roots have masses at most20. We prove:
 
@@ -7218,7 +7218,7 @@ This is an absence in the complete actual G-neighborhood, not a deletion of the 
 
 Set X={v:pi(v)<alpha+1}. The positive selected source-root edge gives pi(S)<=alpha, and a positive selected G path gives pi(T)>=alpha+1, so X is an S-T cut. No positive flow crosses it backwards by(AC2). Every forward cost0 edge is saturated at its N[r] capacity. The two bad prefix arcs each have slack2; the two other positive prefixes are saturated and there is no other rising actual prefix. Therefore, using the SAME modified flow,
 
-    cap_N[r](X)=77+4=81.                            (AC4)
+    cap_r(X)=77+4=81.                            (AC4)
 
 ### AC.3. Any given exact cut C supplies the q4 union pivot
 
@@ -7226,13 +7226,13 @@ The cut C in AC.1 can be used directly; it need not be the smallest residual-rea
 
 Put L=C union X. Submodularity and minimum capacity77 in N[r] give
 
-    cap_N[r](L)+cap_N[r](C intersect X)
+    cap_r(L)+cap_r(C intersect X)
        <=77+81,
-    cap_N[r](L)<=81.
+    cap_r(L)<=81.
 
 The union activates r and both bad children but excludes the two bad prefixes and their four actual leaves. Adding both prefixes removes two incoming6 arcs and exposes exactly four actual entry2 arcs. Including any dead nonactual stubs with their parents adds no actual boundary. Consequently M=L union{P_c,P_d} has capacity at most77. Minimum capacity77 forces
 
-    cap_N[r](L)=81,       cap_N[r](M)=77.            (AC5)
+    cap_r(L)=81,       cap_r(M)=77.            (AC5)
 
 The four bad actual leaves and both public J leaves remain sink-side. Each complementary G-prefix remains sink-side as well: its positive flow excludes it from C, and pi(P)>=pi(C_child)+1>=alpha+1 excludes it from X. The corresponding child may lie on either side. If source-side, its prefix6 arc crosses M; if sink-side, its root-child7 arc crosses. Thus the selected-root forward contribution is at least
 
@@ -7259,7 +7259,7 @@ If this other root has n original children, legal size q0=n-2 and a>=q0 source-s
 
 For 0<=k<=7 this is at least21(1-k/7): at k0 its value is at least70/3 for a full root and exactly28 for the gap; at k7 it is nonnegative; both sides are affine. If a<q0, at least three child7 edges cross, giving21 directly.
 
-The two source-side roots together with the public edges contribute at least42+k>=42. Adding(AC6) and the companion20 gives cap_N[r](M)>=82, contradicting77. For k>=7 the public edges alone contribute at least49, giving an even stronger contradiction. Thus q4 is impossible in N[r].
+The two source-side roots together with the public edges contribute at least42+k>=42. Adding(AC6) and the companion20 gives cap_r(M)>=82, contradicting77. For k>=7 the public edges alone contribute at least49, giving an even stronger contradiction. Thus q4 is impossible in N[r].
 
 ### AC.4. The q5 pivot identity is recalculated in the modified network
 
@@ -7282,13 +7282,13 @@ Each complementary row has G-flow at least2. If its prefix is unsaturated, its t
 
 Every forward cost0 edge, including any changed source-root edge, is saturated at its MODIFIED capacity, and X has no positive backward flow. Therefore the modified-network identity is
 
-    cap_N[r](X)=77+10=87.
+    cap_r(X)=77+10=87.
 
 This does not identify cap_original(X) with87. The latter may be larger by the number of changed source arcs crossing X; it is never used below.
 
 Add the three bad private prefixes to X, together with only their dead nonactual stubs if present, to obtain N. Their children are inside, all m actual leaf nodes are outside, and the change removes18 and adds2m. Hence
 
-    cap_N[r](N)=87-18+2m=69+2m.                    (AC8)
+    cap_r(N)=87-18+2m=69+2m.                    (AC8)
 
 N has no positive backward flow. Its new bad-entry edges can be unsaturated. All unchanged forward cost0 edges retain their X saturation.
 
@@ -7318,7 +7318,7 @@ The three other roots and public edges therefore contribute at least
 
 For k>=9 the public edges alone give at least63. Combining with the selected-root contribution yields
 
-    cap_N[r](N)>=2m+12+60=2m+72,
+    cap_r(N)>=2m+12+60=2m+72,
 
 contradicting(AC8). The contradiction uses only MODIFIED capacities. Thus q5 is impossible too, proving(AC1).
 
