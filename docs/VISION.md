@@ -47,9 +47,9 @@ claim within its stated scope and can suggest which conditions to investigate ne
 a discipline: beauty and intuition guide questions, logic tests
 conclusions, and extensions preserve verified results.
 [GICT](develop/theory/GICT.md) studies coordinates, transformations and
-invariants. [Math Myth Match](develop/theory/MATH_MYTH_MATCH.md) examines
-how images of parts reflecting wholes translate into explicit relations,
-while preserving differences between philosophical traditions. These volumes
+invariants. [Math Myth Match](develop/theory/MATH_MYTH_MATCH.md) compares
+philosophical traditions through questions about observation, shared origins
+and what expressions refer to, preserving differences. These volumes
 are research inputs; their guiding metaphors do not substitute for proofs.
 
 ## The shape of logical truth
