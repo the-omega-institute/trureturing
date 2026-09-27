@@ -1,6 +1,6 @@
 [Index](../../marked_head_profile.md) · [Literal equality reduction](448-literal-product-trees-exclude-the-equality-cut.md) · [Generic cut bound](447-strict-child-cut-surplus-and-arithmetic-boundaries.md)
 
-# Literal cuts65/63 through69/63 force private laws below nine
+# Literal height-two cuts: supported laws and joint flow repairs
 
 The sharp network in [448](448-literal-product-trees-exclude-the-equality-cut.md) is not a moment obstruction. Every source attaining that network's lower bound65/63, under its literal product-blocking and standalone-tree premises, has one actual supported law with
 
@@ -3249,12 +3249,170 @@ A third control has no public cut. At active root1 put(0,c),(1,c) in child c; at
 
 It uses no external solver or unpublished fixture. The source theorem above is an ordinary proof; these finite controls verify its nonvacuity and implementation, not Lean formalization.
 
+## The entire one-inactive-full-root cut77 profile admits a law below nine
+
+This is an ordinary source theorem assembled from the established Report449 interfaces and the actual-support deductions below. It is not Lean verification and does not settle every cut77 source.
+
+Retain the original literal4555 blocker and standalone five-ary seven-tree premises. Suppose the actual network has minimum cut77 and admits a normalized minimum cut with one full root inactive and every occupied child of the other two full roots and the gap active. In root order inactive full / full / full / gap, its active counts are(0,5,5,4). There are no partial-child cut edges at the active roots.
+
+Then there exists ONE actual probability law, chosen before every arithmetic layout, satisfying
+
+    Gamma_1225 <=691/77 <9.                         (IF77)
+
+The inactive root remains part of the actual source. No assertion that deleting it preserves blocking is used.
+
+### Public costs reduce the question to the private-only shapes
+
+Write the public antichain cost as7k and private cost as2Z. The one inactive full-root edge costs21, so
+
+    21+7k+2Z=77.
+
+Thus k is one of0,2,4,6,8.
+
+For k4/Z14, the already proved singleton locking theorem gives exact external coarse masses21,15,10,10 and an actual two-unit repair for the only possible dangerous block, followed by(SH1).
+
+For k2/Z21, the only private shapes are11111/(02222 or11222)/2222, up to full-root exchange. The fixed public-two-leaf/tight-nine argument puts the relevant gap pair and exceptional full triple in the same two columns, contradicting literal pair blocking. This profile is impossible.
+
+For k6/Z7, let p1,p2 be the smallest-full-triple costs and t the smallest-gap-pair cost. All pair sums are at least3. Sorted costs give Z_i>=ceil(5p_i/3) at each full root and Z_gap>=2t. If t0, both p-values are at least3 and total cost is at least10. If t1, both are at least2 and the total is at least4+4+2=10. If t2, both are at least1 and their sum at least3, so their rounded total is at least2+4=6, giving at least10. If t>=3, the full pair-sum alone gives total full cost at least5, while the gap costs at least6. Every case exceeds7. For k8/Z0, zero private costs contradict the pair lower bound1. These profiles are impossible.
+
+It remains to close k0/Z28.
+
+### The eight private-only cost shapes and what they require
+
+At a minimum cut an active child's private integer cost z is at most3: for z>=4, replace raw cost2z by its incoming edge7 and obtain a smaller cut. An active root has private total at most10, either by the same replacement with its incoming edge21 or by saturation and its flow cap. Pair sums of the least selected private costs are at least9.
+
+The [exact shape enumerator](../../frontier/cover-geometry/height_two_cut77_whole_private_shapes.py) with [shape and overlap data](../../frontier/cover-geometry/height_two_cut77_whole_private_shapes.json) gives eleven ordered shapes, or eight up to full-root exchange:
+
+| Row | Full1 | Full2 | Gap | Treatment |
+|---|---|---|---|---|
+|1|12222|12222|1333|all-finite law; any whole gap column impossible|
+|2|12222|12222|2233|impossible for every cost3 realization|
+|3|12222|12223|2223|impossible for every cost3 realization|
+|4|12222|22222|2223|impossible for every cost3 realization|
+|5|12223|12223|2222|impossible for every cost3 realization|
+|6|12223|22222|2222|impossible for every cost3 realization|
+|7|22222|22222|1223|all-finite law; whole gap column handled below|
+|8|22222|22222|2222|all-finite law|
+
+Cost3 has two possible normalized realizations: three leaf edges or a whole-column edge. They cannot be interchanged silently. The all-finite theorem already supplies691/77 whenever ALL private cuts are leaf edges: all active actual points then carry2, public masses are even, and a bad-T3 inactive-root block with C1 would force gap mass at least24.
+
+### Row1 with any whole gap column is impossible
+
+In the first row, if AT LEAST ONE of the three cost3 gap cuts is a whole-column edge, the literal blocker is impossible. No assumption is made about the realizations of the other two gap cost3 cuts.
+
+At the gap let z denote its singleton cut candidate, and choose one whole-column child with column W. Each active full root has one singleton candidate w and four two-candidate children. There is no public support: every singleton/double child's ENTIRE actual fibre is contained in its own one/two candidate labels; the selected whole child is contained in W.
+
+Fix one active full root. Test the gap pair consisting of its singleton child and the selected whole W child against the full triple consisting of its singleton child and any two of its doubles. Outside W there are at most SIX candidate labels: z, w and the four double labels. A ternary tree must use W, since otherwise it would need nine outside leaves. Its other two branches need exactly six distinct actual outside labels, divided into two groups of three. Therefore ALL SIX candidates lie outside W, are mutually distinct and actual in this selected projection.
+
+Each is actual at its OWN child. It is outside W; and its label differs from all the other selected private candidates, so containment prevents another selected child from supplying it. This simultaneously proves z and w actual, outside W, and every candidate of each double actual at its owner. Each double is included in such tests.
+
+Let v_c be the column-count vector of the two labels at full double child c. Exchange one double child c for d while keeping the singleton w, the other selected double and the fixed gap pair. Both six-label outside count vectors have every coordinate0 or3. Thus v_c-v_d is divisible by3 coordinatewise. Each coordinate of the difference lies between-2 and2, so it vanishes. All four doubles have the SAME count vector v.
+
+The two labels of a double cannot lie in one column, since then the selected pair would put four labels there, incompatible with the0-or3 count vector. Thus every double has one label in each of two distinct columns H,L. The two fixed singleton labels z,w must supply one additional label in each column. Set H=col(z); then w lies in L. In particular W,H,L are distinct.
+
+Repeat for the other active full root. Both full roots have the SAME H=col(z); call their other columns L1,L2. If L1=L2, the entire support of both full roots would be contained in H union L1. Their literal full/full pair test could not have three branches. Hence L1 and L2 differ.
+
+At each full root, its four double H labels are distinct: any pair of double children participates in the tight-six test. They all differ from z. Thus there are two four-element subsets A1,A2 of the six seven-digits in H different from z. Consequently
+
+    |A1 intersect A2| >=4+4-6=2.
+
+Choose two common H labels. At EACH full root select the two double children that own them, together with its singleton child. The entire actual projection of this legal full/full pair is contained in:
+
+- column H, with exactly those TWO common fine labels;
+- column L1, with at most its singleton plus the two selected double labels;
+- column L2, with at most its singleton plus the two selected double labels.
+
+All selected fibres were already proved equal to their actual one/two candidate labels, so no hidden extra branch can occur. H has only two leaves. Only L1 and L2 can be ternary branches. This contradicts the required ternary tree and proves the exclusion.
+
+The proof uses one whole-column gap child solely as an anchor for the exact outside-six tests. It does not silently interpret the other two cost3 cuts as whole columns, and it does not infer this exclusion for the all-finite realization from the same argument. The previously obtained finite-private law theorem remains the applicable conclusion for all-finite realizations.
+
+
+
+### Row2 is impossible, independently of both unused cost3 cuts
+
+Fix the two cost2 gap children. Their four candidate labels are distinct and actual because pairing them with a full singleton and any two full doubles gives exactly9 candidate occurrences. A ternary tree forces all9 distinct actual labels in three columns of three. Every selected private label is actual at its own owner: there is no public support, it differs from all other selected candidates, and containment excludes any other owner.
+
+Let v be the fixed four-label gap column-count vector. At one full root, let w be its singleton column and u_c the two-label column vector of double child c. Exchanging one double while keeping the other double and the gap pair fixed shows u_c-u_d is divisible by3 coordinatewise. Its coordinates lie in[-2,2], hence all u_c equal one vector u. A double cannot place both labels in one column, because2u would already have coordinate4 in a ternary-nine count. Thus u has value1 in two different columns.
+
+The tight count equation is
+
+    v+e_w+2u =3*(three different column indicators).
+
+There are exactly two possibilities for v.
+
+**v has multiplicities(2,1,1).** Its double column K must contain the full singleton; its two singleton columns H,L must contain the two leaves of every full double. Both full roots therefore have singleton in K and doubles in H,L. Select the singleton plus two doubles at each full root. Their union has at most2 K leaves and can have full branches only in H,L, contradiction.
+
+**v has multiplicities(3,1).** Write v=3e_K+e_L. Every full double lies in L and a new column H_i; the full singleton lies in H_i. If the two H_i agreed, both full roots would have support in only H_i,L, already contradicting literal blocking. Thus H1,H2 differ. Each full root's four double L labels are distinct and avoid the one fixed gap L label, by the tight-nine tests. Their two four-element subsets of the remaining six L digits share two labels. Select those two double owners plus the singleton at each full root. L now has only2 leaves, and only H1,H2 can be full ternary branches, contradiction.
+
+These two cases exhaust v: if w is one of u's two columns, subtracting e_w+2u from the three3-counts leaves(3,1); otherwise it leaves(2,1,1). The program independently checks all315 labelled solutions of this vector equation. Both other gap cost3 children were unused, so their finite/whole realization is irrelevant.
+
+### A parity obstruction excludes rows3 through6
+
+The following local configuration is impossible: at least three gap cost2 children, together with a full root having a singleton and at least three cost2 children. This applies to each of rows3,4,5,6 and does not use any cost3 child.
+
+Choose any two of those gap doubles and pair them with the full singleton plus any two full doubles. The total candidate count is4+1+4=9. Literal blocking forces exactly three columns of three distinct actual leaves. Exchange one full double while fixing the other selected children; all full double column vectors must agree, since their coordinate differences lie in[-2,2] and are divisible by3. Independently exchange a gap double while fixing the other selections; all gap double vectors likewise agree. There are enough children to keep the partner fixed in each exchange.
+
+Write these common vectors as u and v and the singleton indicator as e_w. The complete column count is
+
+    2u+2v+e_w.
+
+It has exactly ONE odd coordinate, at w. But three columns of three have exactly THREE odd coordinates. This is impossible. The argument concerns all selected actual fibres by exact-nine ownership, not just an abstract column-count relaxation.
+
+### Row7 with a whole gap column has no zero fine residual
+
+Only one cost3 child occurs in row7, at the gap. If it is finite, use the all-finite theorem. Otherwise write its whole-column support as W. Let z be the gap singleton, and E1,E2 its two double candidate sets.
+
+For either i, the gap pair z+Ei contributes3 candidates; any full triple contributes6. Their exact-nine test forces all labels distinct and actual at their own owners. Exchanging a full double within a triple locks all five full double column vectors together. Each double has one leaf in each of two columns H_i,L_i; placing both in one column would produce6 leaves in a branch of a nine-leaf ternary tree. The full triple already contributes3 to each column, so z and Ei are three distinct leaves in one other column K=col(z).
+
+Thus both E1,E2 lie in K, each has two distinct leaves different from z, and each full root is entirely supported in its own two columns outside K. Within either full root, its five H labels are distinct and its five L labels are distinct: any pair of its children occurs in an exact-nine triple. The two full column pairs are not identical, since otherwise their full/full test would have only two branches.
+
+The whole gap column W is outside BOTH full column pairs. Indeed if W were one of a chosen full root's columns, test the gap pair z+whole against a triple at that full root. Its projection would contain only the two full columns and the lone K leaf z, so no third ternary branch. W may equal K or be different from it.
+
+Now take any integral maximum flow77. Every finite private leaf carries2, and the whole gap column carries6 spread over its actual entries, each at most2. The two active full roots have20 each and the gap has16. No active root can be dangerous.
+
+Every other-root PUBLIC FINE mass is at most6:
+
+- In a full-root column, each full root supplies at most2 at a fine label because its five labels there are distinct. At most two full roots share that column, so the total is at most4. The gap cannot contribute there.
+- In K, the finite gap points give at most4 at any fine label: E1,E2 may overlap, but z belongs to neither. If W=K, its one whole-child entry adds at most2, yielding at most6.
+- If W differs from K, only the whole child contributes to W, with each fine entry at most2.
+
+All other-root coarse column masses are even: each finite prefix contributes2 in one column and the whole prefix contributes6 in one column. Hence they are at most20, and every public coarse residual is positive. The preceding fine bound makes every fine residual positive too. There is NO zero-residual public prefix.
+
+The inactive root has21. If it has no block20, apply(SH1). Otherwise let its block20 be J. The active roots have at most1 mass in J, but an actual J point would belong either to a saturated finite2 prefix or to the saturated whole6 prefix in that column. Therefore there are NO active actual J points. If the entire actual J support satisfies T3, use the existing mass20 actual-neighborhood refinement.
+
+If T3 fails, choose an inactive-root child triple with at most2 actual J digits. Suppose the two-unit criterion fails, C1. With no zero residual prefix, its(UC2) actual support cover says the inactive root's entire off-J support lies in one column H. Pair the bad triple with the gap singleton and either double. This gap projection lies entirely in K. The complete projection can have full ternary branches only in H and K: J has at most2 leaves and the gap has no J. Contradiction.
+
+Thus C>=2 and the actual two-unit complement repair removes the sole dangerous block, keeping all active atoms fixed. Then(SH1) gives691/77. This proves row7's whole realization and completes every k0 shape.
+
+Combining all public costs proves(IF77). This closes the entire specified active profile, while other cut77 active profiles and the unrestricted odd-covering problem retain their original unresolved status.
+
+### Exact controls of the remaining vector equation and actual whole-column sources
+
+The [self-contained program](../../frontier/cover-geometry/height_two_cut77_whole_private_row7.py) with [exact data](../../frontier/cover-geometry/height_two_cut77_whole_private_row7.json) exhausts the315 labelled row2 vector solutions and constructs two actual row7 sources, one with W=K and one with W different from K. Each has253 points.
+
+At active full root1, child c contains(0,c),(1,c); at full root2 it contains(2,c),(3,c). The gap singleton is(4,0), its doubles are{(4,1),(4,2)} and{(4,3),(4,4)}, and its whole child has all seven leaves in W=4 or W=6. The inactive full root0 has all fine leaves in every column except J=5 at all five children, and the established bad20 support in J. The actual points at its child triple(1,2,3) have only two J neighbors, so T3 fails initially.
+
+Give2 units to every active finite point and2 to each whole-child fine leaf0,1,2. The active root totals are20,20,16. Put the bad20 matrix at inactive root0/J and one outside unit at(0,0,0,0). The explicit cut consists of the inactive root21 edge,25 finite private2 edges and one private whole-column6 edge:
+
+    21+25*2+6=77.
+
+The complete network replay verifies the matching integral flow77, every edge capacity, all conservation equations, cut saturation and zero backward cut flow. Each source passes480 selected pair tests,10000 complete literal tests, the standalone five-tree and the exact robust-root inventory(one robust root, namely the inactive root0). It recomputes the claimed absence of zero fine residual after subtracting root0.
+
+Increase the old outside atom by1 and delete1 from(0,0,5,0). In BOTH controls the separate-cylinder envelope falls from695/77 to683/77, and the repaired integral flow has no dangerous block. This is a stronger control-specific bound; the uniform active-profile statement remains691/77.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_whole_private_shapes.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_whole_private_row7.py
+```
+
+These programs use no external solver or unpublished fixture. The eleven/eight private-cost inventory and225 overlap controls from the prior shape program are reused, not recounted as new independent cases. These finite checks support the ordinary proofs and actual examples; they do not constitute Lean verification.
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. For the one-inactive-full-root active profile(0,5,5,4), public4/private14 always admits a repair, public2/private21 is impossible, and public0/private28 is controlled when all private cut prefixes are leaves. These restricted strata have bound691/77; public0 cuts containing whole private-column prefixes remain outside that proof. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. Excluding every remaining terminal trap, or supplying a further global reroute, remains missing.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. General high-incidence sources in the remaining
 range72/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
