@@ -1,0 +1,32 @@
+**完整参考下的本地逆解码。** 对终端 $`n\in\{1,2,3\}`$，在接收器旁准备（21.6）的前 $`n`$ 个已知环境纯态，按逆时间顺序使用同一个 $`V^\dagger`$。每次只作用于当前接收器和该轮重新准备的环境，恢复对应发出位；最后丢弃回到初态的接收寄存器。这是一份只访问接收器的合法解码。
+
+更明确地，令 $`\mathsf V_n`$ 是按正时间顺序把同一个 $`V`$ 依次作用于 $`K`$ 和档案中第 $`1,\ldots,n`$ 个位置的酉，已处理位置随后视为环境，记
+ $`\boldsymbol\eta_n=\eta_1\otimes\cdots\otimes\eta_n`$。
+定义整个 $`K`$ 上的通道
+
+$$
+\mathcal D_n(X)=
+\operatorname{Tr}_K\!\left[
+\mathsf V_n^\dagger
+\bigl(X\otimes|\boldsymbol\eta_n\rangle
+\langle\boldsymbol\eta_n|\bigr)
+\mathsf V_n
+\right].
+\tag{21.9}
+$$
+
+其输出为完整 $`\mathcal B^{\otimes n}`$ 档案，因而（21.9）在全域 CPTP，无需依实际输入另选延拓。
+
+每个较早的接收门只作用于 $`K`$ 和已发出的位置，与后续只作用于活动记忆及新位置的来源发射可交换。因此可以先完成全部来源发射，再运行 $`\mathsf V_n`$；这只是重排作用于不同系统的门，不给接收器访问活动记忆的权限。由（21.5）—（21.6），对全部 $`J,\rho_{JM}`$ 有
+
+$$
+(\operatorname{id}_{JM}\otimes\operatorname{Ad}_{\mathsf V_n})
+\bigl(\Omega_n(\rho)\otimes|w\rangle\langle w|_K\bigr)
+=\sigma_n(\rho)\otimes
+|\boldsymbol\eta_n\rangle\langle\boldsymbol\eta_n|,
+\qquad 1\le n\le3,
+\tag{21.10}
+$$
+
+其中按标记系统作固定张量因子置换。代入（21.9）并逆转酉，就精确恢复 $`\Omega_n(\rho)`$。终端新准备的环境只含已知的确定纯态，不是取回运行中丢弃的系统。
+

@@ -1,0 +1,28 @@
+### 7.4 协议词的闭合
+
+若原语操作为 $a\in A$，并为每个原语指定状态更新 $F_a$ 与协议续接 $\delta_a$，要求
+
+$$
+E(F_a x,p)=E(x,\delta_a p).
+\tag{TM.471}
+$$
+
+并规定
+
+$$
+F_{uv}=F_v\circ F_u,
+\qquad
+\delta_{uv}=\delta_u\circ\delta_v
+$$
+
+（按协议回拉的反变方差），则对任意操作词 $w$ 归纳得到
+
+$$
+E(F_w x,p)=E(x,\delta_w p).
+\tag{TM.472}
+$$
+
+若协议本身是自由幺半群，结合律与空词恒等式提供词闭合；若有类型化失败域，必须把可执行性和失败标签一起放进 $E$，不能只在名义 $A^*$ 上写 (TM.472)。`EffectiveProtocolActionMonoid` 与 `DynamicProfileCausalClosure` 分别支撑协议词的有效作用商和完整 profile 的右移。
+
+本节把“时钟读数、状态更新、协议续接”收束为两轴动态半共轭。它明确区分原始评价层的充分条件、商上下降的较弱条件，以及需要满射/逐像分离才能得到的反射和双向恢复。没有新增 Lean 声明，理论结论 Claim status 为 open。
+

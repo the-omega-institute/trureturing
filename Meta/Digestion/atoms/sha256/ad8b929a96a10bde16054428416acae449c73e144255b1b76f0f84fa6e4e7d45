@@ -1,0 +1,10 @@
+**命题 237.3（有限模型中的最小充分行为表示）。** 若 $X$ 和另一个表示空间 $W$ 均有限，满射 $s:X\to W$ 保留每项更新与当前读数，即存在 $\bar F_u$、$\bar q$ 满足
+
+$$
+s\circ F_u=\bar F_u\circ s,\qquad q=\bar q\circ s,
+$$
+
+则 $s(x)=s(y)$ 蕴涵 $\mathcal B(x)=\mathcal B(y)$。按所有有限词后读数相同取商所得的行为状态数，不大于 $|W|$；从 $W$ 到该商还存在唯一与原投影相容、保留更新与读数的满射。这对应项目 [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 的 `controlled_behavior_universal_property`，其中状态、输入、读数、实现空间分别取 $X,U,Q,W$。
+
+这些数学结构给“理解已经进入行动”提供可研究的接口：要比较的可以是对理由、情境和实践要求的后续回应，而不止当下复述。但行为轮廓本身不是道德价值判断；坏习惯同样可以具有稳定轮廓。它也没有要求用现实实验穷举所有可能词，更没有由有限观测证明某人对所有情境都具备德性。若两种传统接受不同输入、目标或规范，必须先建立对应，才能比较其行为轮廓。
+

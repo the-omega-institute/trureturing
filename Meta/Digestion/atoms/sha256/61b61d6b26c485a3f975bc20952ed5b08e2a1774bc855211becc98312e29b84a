@@ -1,0 +1,58 @@
+## 定理 ST35.1：可检验的恢复充要条件与反演构造
+
+由原始矩阵定义
+
+$$
+c_{ab}=\frac1d\operatorname{tr}(E_a^\dagger E_b),
+\qquad D_{ab}=E_a^\dagger E_b-c_{ab}I_d.
+\tag{ST35.1}
+$$
+
+下列三个条件等价：
+
+$$
+\boxed{
+\exists\mathcal R\ \mathrm{CPTP}:\mathcal R\mathcal N=\mathrm{id}
+\quad\Longleftrightarrow\quad
+D_{ab}=0\quad\forall a,b
+\quad\Longleftrightarrow\quad
+\mathcal R_{\mathcal N}\mathcal N=\mathrm{id}.
+}
+\tag{ST35.2}
+$$
+
+这里等号均指全部逻辑矩阵，因而同时保留未知输入与参考系统的纠缠。充要条件属于 Knill–Laflamme 纠错理论；可逆通道的附加态正规形属于 Nayak–Sen 的既有定理。[ST27-KL][ST34-NS] 以下证明同时给出本节需要的每个构造。
+
+**证明：必要性。** 设恢复 Kraus 为 $A_t$。复合通道的 Choi 矩阵为 $|I_d\rangle\!\rangle\langle\!\langle I_d|$，是秩一正矩阵。因此各向量 $|A_tE_a\rangle\!\rangle$ 必须与 $|I_d\rangle\!\rangle$ 共线，记 $A_tE_a=z_{ta}I_d$。由恢复保迹得
+
+$$
+E_a^\dagger E_b
+=\sum_tE_a^\dagger A_t^\dagger A_tE_b
+=\Bigl(\sum_t\overline{z_{ta}}z_{tb}\Bigr)I_d.
+$$
+
+取迹确定该标量正是$c_{ab}$，故$D_{ab}=0$。
+
+**证明：充分性及实际求解。** $c$ 是 Kraus 矩阵的归一 Hilbert–Schmidt Gram 矩阵，故半正定且$\operatorname{tr}c=1$。取有限酉对角化 $V^\dagger cV=\operatorname{diag}(\lambda_j)$，令$F_j=\sum_aV_{aj}E_a$。则
+
+$$
+F_j^\dagger F_k=\lambda_j\delta_{jk}I_d.
+$$
+
+$\lambda_j=0$时$F_j=0$。正权重时令$S_j=F_j/\sqrt{\lambda_j}$，得到$S_j^\dagger S_k=\delta_{jk}I_d$。因此
+
+$$
+Q=\sum_{\lambda_j>0}\lambda_jS_jS_j^\dagger,
+\qquad WF_j=S_j.
+$$
+
+对同一 Kraus 混合，候选恢复的支持部分变为$\sum_jS_j^\dagger X S_j$，故
+
+$$
+\mathcal R_{\mathcal N}\mathcal N(\rho)
+=\sum_{j,k}\lambda_kS_j^\dagger S_k\rho S_k^\dagger S_j
+=\sum_k\lambda_k\rho=\rho.
+$$
+
+补空间项在原通道输出上为零。最后一个条件显然给出第一个。∎
+

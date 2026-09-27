@@ -1,0 +1,326 @@
+**定理 414.1（一般纯记录成功集的维数与共同泛型失败）。** 在上述接口下，
+
+$$
+\mathcal E_{q,k,n}
+=\left\{(x_1,\ldots,x_k)\in\mathcal C_{q,k}:\begin{array}{l}
+\exists\,b\in W,\ \|b\|=1,\ \exists\,t\in(0,1],\\
+|\langle b|s_j^{\otimes n}\rangle|^2=t\quad(1\le j\le k)
+\end{array}\right\}.
+$$
+
+该集合是半代数集，并且
+
+$$
+\boxed{\quad
+\dim_{\mathbb R}\mathcal E_{q,k,n}
+=L:=\min\bigl(km,D+k(m-1)\bigr)
+=k(m-1)+\min(k,D).
+\quad}
+$$
+
+它包含一个实际嵌入的、维数为 $L$ 的光滑片；当 $k\le D$ 时，该片给出非空相对开成功集。当 $k\ge D+1=2M$ 时，
+
+$$
+\mathcal C_{q,k}\setminus\overline{\mathcal E_{q,k,n}}^{\,\mathcal C_{q,k}}
+$$
+
+是开、稠密且具有满乘积 Fubini--Study 测度的集合，并且包含于失败集。这里不声称 $\mathcal E_{q,k,n}$ 闭，也不声称全部失败集开。固定 $q,k$，令
+
+$$
+B_{q,k}=\left\{n\ge1:2\binom{n+q-1}{n}\le k\right\}.
+$$
+
+这是有限集。对每个 $n\in B_{q,k}$ 分别取上面的相对闭包补集，并约定空交集为 $\mathcal C_{q,k}$；所得有限交仍开、稠密且满测度。在这个共同集合上，任何实际次数 $n$ 若成功，必满足
+
+$$
+2\binom{n+q-1}{n}>k.
+$$
+
+**证明。** 先验证物理接口与纯见证的精确对应；这一步沿用第 411 节的维数无关矩阵单位提取。环境测量与固定反馈的原始框架见 Gregoratti 与 Werner，*Quantum Lost and Found*, [arXiv:quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2（PDF 第 4--5 页）。令
+
+$$
+E_y=\mathcal I_y^*(I_{\mathrm{out},y})\succeq0,
+\qquad\sum_{y\in Y}E_y=I_{R_n}.
+$$
+
+其中 $I_{\mathrm{out},y}$ 是分支 $y$ 的输出空间上的恒等算符，$E_y$ 作用于原始 $R_n$。
+
+对系统矩阵单位 $E_{ij}=|i\rangle\langle j|$，取记录迹得到
+
+$$
+\mathcal M_y(E_{ij})
+=\langle r_j|E_y|r_i\rangle E_{ij}.
+$$
+
+对每个实际结果作有限谱分解
+
+$$
+E_y=\sum_a|v_{ya}\rangle\langle v_{ya}|,
+\qquad
+K_{ya}=\operatorname{diag}\bigl(\langle v_{ya}|r_1\rangle,\ldots,
+\langle v_{ya}|r_k\rangle\bigr).
+$$
+
+于是
+
+$$
+\mathcal M_y(X)=\sum_aK_{ya}XK_{ya}^\dagger.
+$$
+
+指标 $a$ 只是同一实际结果的数学分解，同一 $y$ 的所有项必须使用同一个 $U_y$。令 $|\Omega\rangle=\sum_j|j\rangle\otimes|j\rangle$，$|L\rangle\!\rangle=(I\otimes L)|\Omega\rangle$。全矩阵恒等式的 Choi 形式为
+
+$$
+\sum_{y\in Y_{\rm s},a}|U_yK_{ya}\rangle\!\rangle
+\langle\!\langle U_yK_{ya}|
+=p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+对任意 $w\perp|I_S\rangle\!\rangle$，左侧是非负项之和且为零，所以每个 $|U_yK_{ya}\rangle\!\rangle$ 都属于 $\mathbb C|I_S\rangle\!\rangle$。故
+
+$$
+U_yK_{ya}=c_{ya}I_S,\qquad
+\sum_{y\in Y_{\rm s},a}|c_{ya}|^2=p.
+$$
+
+取某个 $c_{ya}\ne0$，记相应向量为 $v$。酉性给出
+
+$$
+|\langle v|r_j\rangle|^2=|c_{ya}|^2>0\qquad(1\le j\le k).
+$$
+
+由于 $r_j\in W$，令 $v_W=P_Wv$，则 $v_W\ne0$ 且保持这些评价。归一化
+
+$$
+ b=\frac{v_W}{\|v_W\|},\qquad
+ t=\frac{|c_{ya}|^2}{\|v_W\|^2}
+$$
+
+得到 $|\langle b|r_j\rangle|^2=t$。Cauchy--Schwarz 给出 $0<t\le1$。注意 $t$ 是归一化见证的共同响应，不必等于原协议接受结果的总概率 $p$。
+
+反过来，给定这样的 $b,t$，把 $b$ 看作完整 $R_n$ 中的单位向量，令
+
+$$
+\Pi=|b\rangle\langle b|,
+\qquad
+\mathcal I_0(Z)=\Pi Z\Pi,
+\qquad
+\mathcal I_1(Z)=(I_{R_n}-\Pi)Z(I_{R_n}-\Pi).
+$$
+
+这是完整原始空间上的两结果 instrument。写
+
+$$
+\langle b|r_j\rangle=\sqrt t\,z_j,\qquad |z_j|=1,
+$$
+
+接受结果 $0$，取
+
+$$
+K=\sqrt t\,\operatorname{diag}(z_1,\ldots,z_k),\qquad
+U=\operatorname{diag}(\overline z_1,\ldots,\overline z_k).
+$$
+
+则 $UK=\sqrt t I_S$，因而 $\mathcal T(X)=tX$，并对每个未操作参考有
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=tX_{AS}.
+$$
+
+所有失败结果均保留在完整 instrument 中。代表重定相 $s_j\mapsto e^{i\theta_j}s_j$ 只把幅度乘以 $e^{in\theta_j}$，由已知校准反馈吸收，故该条件确实定义在射线上。这证明了物理成功集与纯见证投影完全相同。
+
+下面证明上界，并同时处理所有奇异水平。用迹一 Hermitian 幂等矩阵模型
+
+$$
+\mathcal P_a=\{P=P^\dagger:P^2=P,\ \operatorname{Tr}P=1\}
+$$
+
+表示 $\mathbb{CP}^{a-1}$。幂等矩阵的谱只含 $0,1$，迹一迫使它为秩一投影；这些多项式等式给出紧致实代数集。在 $P_{\ell\ell}>0$ 的图上取
+
+$$
+ w_\ell=1,\qquad w_i=P_{i\ell}/P_{\ell\ell}\quad(i\ne\ell),
+\qquad P=\frac{ww^\dagger}{w^\dagger w}.
+$$
+
+有限个这样的有理半代数图覆盖 $\mathcal P_a$，所以其维数为 $2a-2$。取固定等距包含 $Q:W\hookrightarrow R_n$，并以 $P$ 表示记录射线的秩一投影，置
+
+$$
+C_n(P)=Q^\dagger P^{\otimes n}Q,\qquad
+f_B(P)=\operatorname{Tr}(BC_n(P)),
+$$
+
+其中 $B\in\mathcal P_M$。矩阵坐标中的响应是实多项式；若 $B=|b\rangle\langle b|$、$P=|s\rangle\langle s|$，则
+
+$$
+ f_B(P)=|\langle b|s^{\otimes n}\rangle|^2.
+$$
+
+在占据数基 $e_\beta$（$|\beta|=n$）中，
+
+$$
+F_b(Z)=\langle b|Z^{\otimes n}\rangle
+=\sum_{|\beta|=n}\overline{b_\beta}
+ \sqrt{\frac{n!}{\beta!}}Z^\beta.
+$$
+
+这是非零的正次数齐次多项式。取 $F_b(v)\ne0$ 及与 $v$ 线性无关的 $w$。则 $F_b(zv+w)$ 是首项系数为 $F_b(v)$ 的 $n$ 次一元多项式；基本代数定理给出复根 $z_0$，且 $z_0v+w\ne0$。所以响应在某点为零，在 $[v]$ 处为正，必不恒定。
+
+在任一射影仿射图中，水平条件写成
+
+$$
+|F_b(1,z)|^2-t(1+\|z\|^2)^n=0.
+$$
+
+对每个实数 $t$，这个实多项式不可能恒等为零；否则由稠密仿射图及连续性，响应将在整个射影空间恒定。非零实多项式的零集没有满维胞腔，故其半代数维数至多 $m-1$。有限图覆盖给出
+
+$$
+\dim_{\mathbb R}\{P:f_B(P)=t\}\le m-1
+$$
+
+对所有 $B,t$，包括临界、奇异、空及零水平；没有使用正则值假设。
+
+定义关联集
+
+$$
+\mathcal I=\{(B,t,\boldsymbol P)\in\mathcal P_M\times(0,1]\times\mathcal C_{q,k}:
+ f_B(P_j)=t\ (1\le j\le k)\}.
+$$
+
+其底空间维数为 $(2M-2)+1=D$。在 $(B,t)$ 上的每个纤维是 $k$ 个上述水平集的乘积去掉碰撞对角线，维数至多 $k(m-1)$。对连续半代数投影 $(B,t,\boldsymbol P)\mapsto(B,t)$ 应用 Basu--Pollack--Roy，*Algorithms in Real Algebraic Geometry* 作者稿 Theorem 5.45（PDF 第 194 页）的全纤维 Hardt 半代数平凡化；该定理在此不要求 properness。有限分拆、乘积和有限并的维数规则（同稿 Theorem 5.25、Propositions 5.28--5.29、Lemma 5.30，第 178--180 页）给出
+
+$$
+\dim_{\mathbb R}\mathcal I\le D+k(m-1).
+$$
+
+由前面的物理等价，投影到配置坐标的像恰为 $\mathcal E_{q,k,n}$。Tarski--Seidenberg 投影定理（同稿 Theorem 2.76，PDF 第 76 页）给出半代数性，投影不增维给出
+
+$$
+\dim\mathcal E_{q,k,n}\le\min(km,D+k(m-1)).
+$$
+
+下界使用实际球面节点，而不是任意不同节点。置 $d=q-1$，$\Sigma=S^{2d-1}\subset\mathbb C^d$，并令
+
+$$
+A=\{\alpha\in\mathbb N^d:1\le|\alpha|\le n\}.
+$$
+
+球面上的 $D$ 个实函数
+
+$$
+1,\quad\operatorname{Re}u^\alpha,\quad\operatorname{Im}u^\alpha\qquad(\alpha\in A)
+$$
+
+线性无关。事实上，若
+
+$$
+ c_0+\operatorname{Re}\sum_{\ell=1}^nH_\ell(u)=0
+$$
+
+其中 $H_\ell$ 是次数 $\ell$ 的全纯齐次多项式，则代入 $e^{i\theta}u$ 并比较 Fourier 频率，得到 $c_0=0$ 及 $H_\ell(u)=0$。任意非零 $z\in\mathbb C^d$ 可写作 $z=\|z\|u$，齐次性遂给出 $H_\ell(z)=0$；所有系数均为零。
+
+因此评价行张成 $\mathbb R^D$。选取 $D$ 个线性无关的评价行；节点必彼此不同，因为重复节点会重复行。若 $k\le D$，保留其中 $k$ 个；若 $k>D$，再添取任意彼此不同的球面节点。于是得到 $k\times D$ 评价矩阵，秩为 $a=\min(k,D)$。这只断言存在所选节点，不断言任意不同节点组均满秩。
+
+在这些节点附近取
+
+$$
+ e_0=e_{(n,0,\ldots,0)},\qquad
+ e_\alpha=e_{(n-|\alpha|,\alpha)},\qquad
+ C_\alpha=\sqrt{\frac{n!}{(n-|\alpha|)!\,\alpha!}},
+$$
+
+并以
+
+$$
+ b(c)=\frac{e_0+\sum_{\alpha\in A}c_\alpha e_\alpha}
+ {\sqrt{1+\|c\|^2}},\qquad c_\alpha=x_\alpha+iy_\alpha,
+$$
+
+作见证图。令
+
+$$
+ s(r,u)=\frac{(1,ru)}{\sqrt{1+r^2}},\qquad r>0.
+$$
+
+直接展开得到
+
+$$
+ f(c,r,u)=
+\frac{\left|1+\sum_{\alpha\in A}\!C_\alpha\overline{c_\alpha}
+ r^{|\alpha|}u^\alpha\right|^2}
+ {(1+\|c\|^2)(1+r^2)^n}.
+$$
+
+在每个所选球面节点附近选取含 $m-1$ 个实坐标的局部球面坐标 $\theta_j$，并写 $u_j=u_j(\theta_j)$。在 $c=0,r=1$ 处 $f= t_0=2^{-n}$。令 $F_j=f(c,r_j,u_j)-t$。径向导数和见证导数为
+
+$$
+\frac{\partial F_j}{\partial r_\ell}=-n2^{-n}\delta_{j\ell},\qquad
+\frac{\partial F_j}{\partial x_\alpha}=2^{1-n}C_\alpha\operatorname{Re}(u_j^\alpha),
+$$
+
+$$
+\frac{\partial F_j}{\partial y_\alpha}=2^{1-n}C_\alpha\operatorname{Im}(u_j^\alpha),
+\qquad 2^{1-n}C_\alpha>0\ \text{为其对应虚部评价的系数},
+\qquad
+\frac{\partial F_j}{\partial t}=-1.
+$$
+
+在种子点球面切向导数为零。这里的正号来自 $\overline{c_\alpha}=x_\alpha-iy_\alpha$，故没有把共轭坐标换成相反的导数约定。径向 Jacobi 矩阵可逆，故实隐函数定理解出
+
+$$
+ r_j=r_j(c,t,\theta_1,\ldots,\theta_k)
+$$
+
+使全部 $F_j=0$；缩小邻域可保持 $r_j>0$、$0<t<1$ 及所有仿射点互异。微分公式为
+
+$$
+ dr_j=\frac2n\sum_{\alpha\in A}C_\alpha
+ \bigl(\operatorname{Re}(u_j^\alpha)dx_\alpha
+      +\operatorname{Im}(u_j^\alpha)dy_\alpha\bigr)
+      -\frac{2^n}{n}\,dt.
+$$
+
+由所选评价行及非零列系数，$dr$ 对 $(x,y,t)$ 的秩为 $a$；对球面切向变量的一阶导数在种子处为零。
+
+现在在普通仿射输出坐标中考虑
+
+$$
+\Phi(c,t,\theta)=\bigl(r_ju_j(\theta_j)\bigr)_{j=1}^k\in(\mathbb C^d)^k\cong\mathbb R^{km}.
+$$
+
+有
+
+$$
+ d z_j=u_j\,dr_j+du_j.
+$$
+
+每个 $du_j$ 的球面切向空间维数为 $m-1$，并且实正交于径向直线 $\mathbb Ru_j$，所以这些方向提供 $k(m-1)$ 个独立输出方向；径向部分再提供 $a$ 个独立方向。选出 $a$ 个 $(c,t)$ 坐标列，固定其余见证输入；再在实际输出坐标中选出一个非零的 $L\times L$ 子式，其中
+
+$$
+L=k(m-1)+a.
+$$
+
+记相应坐标投影为 $\pi$。实逆函数定理应用于 $\pi\circ\Phi$，给出非空开集 $O\subset\mathbb R^L$ 及图像
+
+$$
+\gamma:O\longrightarrow\mathcal E_{q,k,n}^{\rm aff},\qquad
+\pi\circ\gamma=\operatorname{id}_O,
+$$
+
+其中 $\gamma$ 是嵌入的光滑图。这里没有把球面坐标、$\Phi$ 或 $\gamma$ 声称为半代数；$\mathcal E_{q,k,n}^{\rm aff}$ 已由前面的精确见证投影知道是半代数，故其坐标投影包含 $O$，从而
+
+$$
+L\le\dim\mathcal E_{q,k,n}.
+$$
+
+这与上界合并即得维数公式；当 $k\le D$ 时 $L=km$，故实际成功集含有相对开片。当 $q=2$ 时，维数公式及局部开成功片对应第 412 节，第 411 节在该特例下给出的成功集闭性仍然成立。
+
+最后处理拓扑和实际次数。半代数闭包的维数与原集合相同；这是有限半代数分层的 frontier 性质（Basu--Pollack--Roy 同稿 Theorem 5.38，PDF 第 185 页）的直接维数后果。相对闭包仍在同一开配置流形中。若 $k\ge D+1$，则
+
+$$
+\dim\overline{\mathcal E_{q,k,n}}^{\,\mathcal C_{q,k}}
+=D+k(m-1)<km.
+$$
+
+所以闭包的相对内部为空，闭包补集开且稠密。有限光滑分层的每个片维数小于 $km$，在仿射图中为零 Lebesgue 测度；Fubini--Study 密度光滑且处处为正，故闭包为零乘积测度。闭包补集中的配置当然不在成功集，因而属于失败集。注意这一步只给出失败集含有开稠密满测度子集，不把失败集本身改称开集。
+
+固定 $q,k$ 时，$M(n)=\binom{n+q-1}{n}$ 严格递增且 $M(n)\ge n+1$，故 $B_{q,k}$ 有限。对每个 $n\in B_{q,k}$，分别应用刚才的闭包补集结论并作有限交。有限个开稠密集的交仍开稠密，有限个零测集的并仍零测；空指标时交集为整个配置空间。若共同集合中的某个实际 $n$ 成功，则它不在 $B_{q,k}$，即 $2M(n)>k$。整个论证对每个实际 $J_n$ 独立进行，没有丢弃记录，也没有使用成功性关于 $n$ 的单调性。证毕。
+

@@ -1,0 +1,15 @@
+## ST11．同一范数决定极点留数与能级几何响应
+
+### 定理 ST11.1：简单极点留数
+
+设 $E$ 为 $H$ 的简单本征值且 $E\notin\operatorname{spec}C$。取非零 $v\in\ker S(E)$，记 $P_V:\mathcal H\to V$ 为坐标投影。则
+
+$$
+\boxed{
+\operatorname*{Res}_{z=E}
+P_V(zI-H)^{-1}P_V^\dagger
+=\frac{vv^\dagger}{v^\dagger G(E)v}.
+}
+\tag{ST11.1}
+$$
+

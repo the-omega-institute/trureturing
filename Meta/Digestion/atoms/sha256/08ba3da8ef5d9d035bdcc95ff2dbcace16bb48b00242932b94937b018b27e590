@@ -1,0 +1,6 @@
+**引理265.1（严格正性）。** 对上述每个 $h$，有 $T_h\succ0$。因此 $\Omega_h$ 是严格正密度态，且
+$$
+\operatorname{Tr}_H\Omega_h=\frac12I_2.
+\tag{265.7}
+$$
+

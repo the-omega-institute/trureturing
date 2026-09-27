@@ -1,0 +1,38 @@
+**定义 58.1（微观相位曲线）。** 保持定义 54.1 的原始模型、完整得分组、
+精确标签中心和有限截距，固定 $`U>0`$。取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad R_M=e^{s_M},\qquad
+\eta_M=R_M\delta\longrightarrow\infty,\qquad
+0\le s_M\sqrt\delta\le U/2,
+\qquad \omega\eta_M\bmod 2\pi\longrightarrow\phi
+```
+
+式 (58.1)。
+
+最后的收敛取圆周拓扑；$`\phi`$ 是给定的确定性子列相位，
+不假设这些相位的分布。这里 $`\eta_M`$ 表示谱网格，不是 Liouville 逼近误差。
+对固定紧区间 $`I=[\theta_0,\theta_1]`$，令
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M,\qquad
+u_M(\theta)=z_M(\theta)\sqrt\delta,
+\qquad
+\mathcal V_M(\theta)=\sqrt{\eta_M}\,e^{z_M(\theta)/2}
+ \{\mathcal Z_M(u_M(\theta))-\mathcal J_M-2u_M(\theta)T_M\}.
+```
+
+式 (58.2)。
+
+这些取值点最终都在 $`[0,U]`$ 内。
+在独立于旧联合对象 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上，
+先按均方定义
+
+```math
+S(a)=\sum_{k\ge1}\frac{\sin(ka)}k\xi_k,\qquad
+\mathcal V(\theta)=\frac{4\sqrt{g_0}}\omega S(\phi+\omega\theta),
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (58.3)。
+

@@ -1,0 +1,48 @@
+**定理263.3（每个非空纤维都有低秩成员）。** 若 $\mathcal F(Z)\ne\varnothing$，则存在 $F_0\in\mathcal F(Z)$，使
+$$
+\boxed{\operatorname{rank}T_Z(F_0)\le n.}
+\tag{263.28}
+$$
+
+**证明。** 非空填充先给 $w(Z)\le1$。对任意单位向量 $x$，若 $x^\dagger Zx\ne0$，选择相位使 $e^{-i\theta}x^\dagger Zx=|x^\dagger Zx|$；将 $(x,-e^{-i\theta}x)$ 代入正块，得到
+$$
+1-|x^\dagger Zx|\ge0.
+\tag{263.29}
+$$
+零值情形自动满足同一不等式。
+
+因此矩阵Laurent多项式
+$$
+Q(\zeta)=I_S+\frac12(\zeta Z+\overline\zeta Z^\dagger)
+\tag{263.30}
+$$
+在整个单位圆上正半定。对次数 $m=1$ 应用标准Fejér–Riesz定理，存在 $A,B\in\mathcal L(S)$ 使
+$$
+Q(\zeta)=(A+\zeta B)^\dagger(A+\zeta B).
+\tag{263.31}
+$$
+比较Laurent系数，得到
+$$
+A^\dagger A+B^\dagger B=I_S,
+\qquad A^\dagger B=Z/2.
+\tag{263.32}
+$$
+取 $F_0=A^\dagger A$，则
+$$
+T_Z(F_0)
+=\begin{pmatrix}A^\dagger A&A^\dagger B\\B^\dagger A&B^\dagger B\end{pmatrix}
+=\begin{bmatrix}A&B\end{bmatrix}^{\dagger}
+\begin{bmatrix}A&B\end{bmatrix}\succeq0.
+\tag{263.33}
+$$
+右侧是一个 $n\times2n$ 矩阵的Gram矩阵，秩不超过 $n$。$\square$
+
+该构造也直接表明 $w(Z)\le1$ 足以保证填充存在。若 $w(Z)<1$，取 $w(Z)<\lambda<1$，选择 $Z/\lambda$ 的一个可行填充 $T'$。则
+$$
+\lambda T'+\frac{1-\lambda}{2}I_{S\oplus S}\succ0
+\tag{263.34}
+$$
+是 $Z$ 的严格正填充，所以共同核为零，纤维仿射维数为 $n^2$。而当 $w(Z)=1$ 时，极值向量存在，式（263.21）给非零共同核方向及 $\dim W\ge1$，故仿射维数至多为 $(n-1)^2$。
+
+低秩成员的存在与最大秩判据承担不同职责。定理263.3并不说这个由谱因子得到的成员已经达到最大秩；§263.4正好说明这种混用会导致错误。
+

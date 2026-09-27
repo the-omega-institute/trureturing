@@ -1,0 +1,14 @@
+**定理275.1（离圆谱阻断唯一性）。** 若 $M$ 有模长不为一的本征值，则
+$$
+\Omega_\delta=\frac1cT_\delta,
+\qquad 0<\delta\le\delta_0,
+\tag{275.16}
+$$
+是一条连续的、与 $\Omega$ 完整数据相同的不同来源族。具体地，
+$$
+\varepsilon_\Omega(\Omega_\delta)=0,
+\qquad
+\|\Omega_\delta-\Omega\|_1=\frac{2\delta}{c}>0.
+\tag{275.17}
+$$
+

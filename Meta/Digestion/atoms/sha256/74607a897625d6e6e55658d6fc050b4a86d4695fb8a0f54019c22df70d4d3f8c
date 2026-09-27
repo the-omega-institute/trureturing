@@ -1,0 +1,14 @@
+**定理195.2（按纠缠熵尺度读取统一恢复响应）。** 第193节的完整最优误差满足
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\sup_{0\le\ell\le1/2}
+\left|
+\frac{\mathscr E(\ell,\epsilon)-3/4}{\epsilon}
+-\Phi_{h_S(\ell,\epsilon)}
+\right|=0.
+}
+\tag{195.5}
+$$
+

@@ -1,0 +1,58 @@
+**命题 16.64（同源缺陷取第一位置商）。** 令 $\Gamma=\ker\Psi$，令 $N_A,N_B$ 为定理16.61的两个来源到局部状态同态的核，并令 $N_\Sigma=N_A+N_B$。则
+
+$$
+\begin{gathered}
+\Gamma=\{(u,v,-\chi(u+v)):u+v\in D\},\\
+N_A=\{(0,d,-\chi(d)):d\in D\},\qquad
+N_B=\{(d,0,-\chi(d)):d\in D\},\\
+N_\Sigma=\{(d_1,d_2,-\chi(d_1+d_2)):d_1,d_2\in D\},\qquad
+N_A\cap N_B=\{0\},\\
+\Gamma/N_\Sigma\cong B_0,\quad
+(u,v,k)+N_\Sigma\longmapsto[u],\\
+S/N_\Sigma\cong B_0\times\widehat Q,\quad
+(a,b,h)+N_\Sigma\longmapsto([a],\Psi(a,b,h)).
+\end{gathered}
+\tag{16.42}
+$$
+
+特别地，这里的缺陷同构使用第一位置 $u$ 模 $D$；$u+v$ 在 $\Gamma$ 上模 $D$ 恒为零。
+
+共同标签对任务标签的细化正合列，总能按所示坐标分裂：
+
+$$
+0\longrightarrow B_0\xrightarrow{z\mapsto(z,0)}
+B_0\times\widehat Q\xrightarrow{(z,q)\mapsto q}
+\widehat Q\longrightarrow0.
+\tag{16.43}
+$$
+
+而任务记忆本身具有另一条带标记正合列
+
+$$
+0\longrightarrow H\xrightarrow{\iota}\widehat Q
+\xrightarrow{\sigma}B_0\longrightarrow0,
+\qquad \iota(h)=[(0,h)].
+\tag{16.44}
+$$
+
+它的分裂问题保留所示核与商标记。实际局部对与只匹配任务标签的局部对分别有
+
+$$
+|\mathcal R_{\rm actual}|=|E|^2|H|,
+\qquad
+|\mathcal R_{q}|=|E|^2|\widehat Q|,
+\qquad
+\frac{|\mathcal R_q|}{|\mathcal R_{\rm actual}|}=|B_0|.
+\tag{16.45}
+$$
+
+其中 $\mathcal R_q=\{((a,q),(b,q)):a,b\in E,q\in\widehat Q\}$；在来源上，每个任务标签的纤维有 $|E||D|$ 个点。
+
+证明。各核由式(16.31)、(16.33)直接取得；$\chi$ 可加给 $N_\Sigma$ 的表达式。$\Gamma\to B_0$ 的第一位置投影满射，因为 $(u,-u,0)\in\Gamma$；其核要求 $u\in D$，再由 $u+v\in D$ 得 $v\in D$，所以核恰为 $N_\Sigma$。这证明第一同构。对第二同构，映射 $([a],\Psi(a,b,h))$ 是同态；任给 $(z,[(x,h)])$，选择 $[a]=z$ 并令 $b=x-a$ 得其原像。核同样为 $N_\Sigma$。
+
+一般的实际像与观察核商的对应可用已有 [`finiteObservationQuotientEquivRange`](../../../D5/S3/ConceptDynamics/CanonicalImage/FiniteObservationQuotientRange.lean)：取来源 $X=S$、指标集 $I=\{A,B\}$、预算为两指标全体、观察为两个局部状态映射；余域分别是 $W_A,W_B$，取的是该联合映射的实际像。这里两个核交为零，再由定理16.62取得单射恢复；不能把实际像换成两个余域的全乘积。这个已有构造只要求有限观察指标，不额外要求每个组合可实现。
+
+式(16.43)的截面是 $q\mapsto(0,q)$，在 $S/N_\Sigma$ 中对应选择 $q=[(x,h)]$ 后的 $(0,x,h)+N_\Sigma$，与代表元选择无关。对于式(16.44)，$\iota$ 单射由 $K\cap(\{0\}\times H)=\{0\}$ 得到，$\sigma$ 满射。若 $\sigma([(x,h)])=0$，则 $x\in D$ 且 $[(x,h)]=[(0,h+\chi(x))]$，故 $\ker\sigma=\operatorname{im}\iota$。
+
+实际对按定理16.62与 $S$ 双射，也按定理16.63分为 $|B_0||\widehat Q|$ 个大小 $|D|^2$ 的矩形，二者均给 $|E|^2|H|$。匹配 $q$ 时两个位置各有 $|E|$ 种，得到式(16.45)。$\Gamma$ 中先选 $u\in E$ 及 $u+v\in D$，其余坐标唯一，所以 $|\Gamma|=|E||D|$，即任务来源纤维大小。两条正合列分别描述“补充哪些共同区别才能胶合”和“任务坐标能否按标记加法分开”，它们的核、商及问题均不同。证毕。
+

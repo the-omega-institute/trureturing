@@ -1,0 +1,29 @@
+**引理31.5（单个常量群移位保持投影漏出）。** 对已知历史定义
+
+$$
+\chi_{ij}^{n,\boldsymbol\varphi}
+=\sum_{\substack{\gamma:i\to j\\|\gamma|=n}}
+\sqrt{w_\gamma}\,
+e^{i\sum_{t=1}^n\varphi_t\cdot g_{i_{t-1}i_t}}|\gamma\rangle,\qquad
+S_n(\boldsymbol\varphi)=
+\operatorname{span}\{\chi_{ij}^{n,\boldsymbol\varphi}:i,j\in\mathcal V\}.
+\tag{31.19}
+$$
+
+不存在的路径扇区给零向量。其支撑维数至多 $m^2$，且
+$T_{\boldsymbol\varphi,n}|i\rangle=\sum_j\chi_{ij}^{n,\boldsymbol\varphi}\otimes|j\rangle$。
+若 $W_n$ 是任意这些历史支撑的线性和，$\Pi_n$ 为投影，则对每个
+$h\in\mathcal H$，
+
+$$
+T_{\theta+h,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta+h,n}
+=T_{\theta,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta,n}.
+\tag{31.20}
+$$
+
+证明。选（31.5）的 $\omega,z$。常量相移在每个端点扇区只乘
+$e^{in\omega}z_i\overline{z_j}$，因而定义一个档案端点对角酉
+$D_{h,n}$；在不合法档案基向量上可任意作对角酉延拓。它保持每个
+$S_n(\boldsymbol\varphi)$ 及其任意和 $W_n$，并与 $\Pi_n$ 交换。又有
+$T_{\theta+h,n}=(D_{h,n}\otimes I_M)T_{\theta,n}$，即得（31.20）。这里完整保留端点相干，未把不同初态分别移相。证明完毕。
+

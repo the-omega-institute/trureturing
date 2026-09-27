@@ -1,0 +1,32 @@
+### 10.1 来源独立的私有种子与因果时间表
+
+固定 $j\ge1$、$P=2^j$、$n=P/2$ 及共享的初始高位 $b$，所有信息量以 bit 计。令来源 $R$ 在 $\{0,\ldots,P-1\}$ 上均匀，并写
+
+$$
+R=2T+U,\qquad
+T\sim\operatorname{Unif}\{0,\ldots,n-1\},\quad
+U\sim\operatorname{Bernoulli}(1/2),\quad T\perp U.
+\tag{TM.1001}
+$$
+
+控制器另有取值有限的私有随机种子 $Z$，要求 $Z\perp R$。每个正概率种子值确定一份第9节的因果成功调度；接收端知道这份随机机制及其分布，但不知道实际 $Z$。固定种子后，末次查询之前仍不能区分同一前缀中的两个 $U$，所以完成时间具有
+
+$$
+N=E_T+PK,\qquad K=k(T,Z)\in\mathbb N_0,
+\qquad E_t=P-1+P\,\operatorname{wt}(t)-2t.
+\tag{TM.1002}
+$$
+
+种子可以预先取得，也可由来源独立的内部随机机制供给；没有以额外来源证据预选策略。$N$ 仍是实际末次查询时刻，不能在看到 $U$ 后利用报告延迟重写这个变量。
+
+记
+
+$$
+S=N\bmod P=P-1-2T,\qquad
+Q=\lfloor N/P\rfloor\bmod2,\qquad
+Y=(b+Q+U)\bmod2.
+\tag{TM.1003}
+$$
+
+接收端取得全时刻 $(N,Y)$ 或只有相位的 $(S,Y)$ 是两种不同的访问合同。$Y$ 始终是未校正的原始末读。
+

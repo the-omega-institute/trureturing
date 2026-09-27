@@ -1,0 +1,111 @@
+## 421. 五射线恢复的有限深度递推与最小分别凹上包络
+
+操作约定。固定已知实数 $r>0$ 且 $1/2<r^2<2$，在同一计算基中取
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}
+\quad(j=0,1,2),\\
+S&=\mathbb C^5,&R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&R&=R_A\otimes R_B,\\
+q_i&=s_i\otimes s_i,&J&:S\longrightarrow S\otimes R,&
+J|i\rangle&=|i\rangle\otimes q_i\quad(1\le i\le5).
+\end{aligned}
+$$
+
+Alice、Bob 分别持有原始因子 $R_A,R_B$。在完整空间 $R$ 中记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&R&=W\oplus\mathbb C e_-,\\
+P_W&=P_{W},&P_-&=|e_-\rangle\langle e_-|,&P_W+P_-&=I_R,\\
+\kappa&=\frac{\sqrt{4+2(r^2+r^{-2})}}3,&
+h&=\frac1{3(1+\kappa)},&U&=\frac1{3\kappa}.
+\end{aligned}
+$$
+
+$W$ 与反对称线只用作数学子空间；不把记录物理压缩到 $W$，不改变原始两方分割，所有仪器均须在完整输入空间上完备。
+
+允许每一棵各自有限的局部 CP 操作树。每个非终端节点由任一方在当前有限维局部工作空间上执行有限实际结果的完全正仪器，各分支迹不增，总和保迹。允许任意有限局部量子与经典记忆、非零有限维输出、与未知输入和参考独立的初始乘积辅助态、双向经典通信、同一方连续或重复操作、局部丢弃、粗粒 CP 结果、曾实际取得而后来遗忘的结果、提前终止、不等叶深、零分支、单结果通道及零深度树。下一步只使用当时实际可用的信息；局部寄存器中的控制包括在该方的 CP 映射中。禁止共享纠缠、量子通信，以及终端反馈之前对 $S$ 的任何操作。局部仪器、条件复合和粗粒化采用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3 的约定；这里另固定以下深度计数，不借用其他轮次记号。
+
+一条根到终端的路径上，每执行一次局部仪器就计一个节点，单结果通道也计一个；深度是这些节点数的最大值。纯经典记账与消息传递不计数，最后的系统酉反馈不计数；在每个节点可以由任一方行动。若记账伴随实际的局部量子操作，该操作仍计入局部仪器节点。不同协议之间不预设共同的结果数、记忆维数、输出维数或最小正权重。
+
+以 $\ell$ 表示真实终端历史，包含所有失败和提前停止历史；以 $y=y(\ell)$ 表示最终实际标签。被遗忘的实际历史只能为数学求和保留，不能恢复成原协议可用的控制；一个实际 CP 结果内部的隐藏 Kraus 指标从不成为历史结果。多个真实历史可以并入同一个 $y$。若该历史的记录分支为
+$\mathcal I_\ell:\mathcal L(R)\to\mathcal L(O_{A,\ell}\otimes O_{B,\ell})$，则先逐历史迹掉包括全部剩余记忆在内的所有记录输出，定义
+
+$$
+\begin{aligned}
+\mathcal M_\ell(X)
+ &=\operatorname{Tr}_{O_{A,\ell}\otimes O_{B,\ell}}
+   \bigl[(\operatorname{id}_S\otimes\mathcal I_\ell)(JXJ^\dagger)\bigr],\\
+\mathcal M_y(X)&=\sum_{\ell:\,y(\ell)=y}\mathcal M_\ell(X)
+\qquad(X\in\mathcal L(S)).
+\end{aligned}
+$$
+
+预先固定接受集合 $Y_{\mathrm s}$，每个最终实际标签只指定一个作用于整个 $S$ 的终端酉算子 $U_y$。同一 $y$ 下所有真实历史、隐藏 Kraus 项和数学谱分解项共用该反馈。协议、接受规则与反馈可依赖已知 $r$，不能依赖未知输入或参考。全部失败历史始终保留在完整仪器中。精确恢复要求同一标量 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX
+&&\bigl(X\in\mathcal L(S)\bigr),\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+&&\bigl(X_{FS}\in\mathcal L(F\otimes S)\bigr)
+\quad\text{对每个有限维未操作参考 }F.
+\end{aligned}
+$$
+
+两行通过矩阵张量基展开等价，均为本节保留的恢复条件；在联合密度矩阵上取迹，$p$ 是输入无关的接受概率。空接受集合给出零。先定义
+
+$$
+p_n(r)=\sup\{p(\mathsf P):\mathsf P\text{ 满足上述约定，深度至多 }n\},
+\qquad
+\eta_{\mathrm{fin}}(r)=\sup_{\mathsf P\text{ 各自有限}}p(\mathsf P)
+\quad(n\in\mathbb N_0).
+$$
+
+固定原始计算基的 Pauli 坐标，不随历史另换坐标。置
+
+$$
+\begin{aligned}
+\sigma_1&=\begin{pmatrix}0&1\\1&0\end{pmatrix},&
+\sigma_2&=\begin{pmatrix}0&-i\\i&0\end{pmatrix},&
+\sigma_3&=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\\
+D&=\{a\in\mathbb R^3:|a|\le1\},&
+\rho(a)&=\frac{I_2+a\cdot\sigma}{2},&D^2&=D\times D.
+\end{aligned}
+$$
+
+对单位向量 $x\in\mathbb C^2$，记 $P_x=|x\rangle\langle x|=\rho(a_x)$，其中 $a_x\in D$ 且 $|a_x|=1$。以下的 $\rho(a),\rho(b)$ 表示归一化的累计原始输入效果，不表示操作后的条件态。定义平坦乘积对的集合和终端报酬
+
+$$
+\begin{aligned}
+\mathcal S_{\mathrm{flat}}
+ &=\{(a,b)\in D^2:|a|=|b|=1,\quad
+ \langle q_i|\rho(a)\otimes\rho(b)|q_i\rangle=h\ (1\le i\le5)\},\\
+V_0(a,b)&=\begin{cases}h,&(a,b)\in\mathcal S_{\mathrm{flat}},\\
+0,&(a,b)\notin\mathcal S_{\mathrm{flat}}.\end{cases}
+\end{aligned}
+$$
+
+只对联合上半连续的函数 $f:D^2\to[0,h]$ 定义两个最大化算子：
+
+$$
+\begin{aligned}
+(\mathcal C_Af)(a,b)
+ &=\max\left\{\sum_{j=1}^5\lambda_j f(a_j,b):
+ \lambda_j\ge0,\ \sum_{j=1}^5\lambda_j=1,\ a_j\in D,
+ \ \sum_{j=1}^5\lambda_j a_j=a\right\},\\
+(\mathcal C_Bf)(a,b)
+ &=\max\left\{\sum_{j=1}^5\lambda_j f(a,b_j):
+ \lambda_j\ge0,\ \sum_{j=1}^5\lambda_j=1,\ b_j\in D,
+ \ \sum_{j=1}^5\lambda_j b_j=b\right\},\\
+V_{n+1}&=\max\{\mathcal C_AV_n,\mathcal C_BV_n\},&
+V_\infty(a,b)&=\sup_{n\ge0}V_n(a,b).
+\end{aligned}
+$$
+
+零权重用于把少于五项的分裂补成五项，不代表必须执行的实际结果。最大值的存在与递推中每个函数满足所需上半连续性在下面一并证明；不把这些最大化算子定义到任意有界函数上。
+

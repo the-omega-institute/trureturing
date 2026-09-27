@@ -1,0 +1,14 @@
+### 49.3 由有限探针优化构造最优的钟准备态
+
+下面先给出同时用于三个维数的矩阵构造。函数 $\mathfrak L_a$ 在 $[0,1]$ 上连续并严格递减。连续性来自紧盒上连续目标的最大值；当 $\epsilon<1$ 时最大值为正，且任一最大点都有 $\max_\ell x_\ell=1$。因此对 $0\le\epsilon_1<\epsilon_2<1$，取第二个参数的最大点即得
+
+$$
+\mathfrak L_a(\epsilon_1)
+\ge\mathfrak L_a(\epsilon_2)+
+(\epsilon_2-\epsilon_1)\|x\|^2
+\ge\mathfrak L_a(\epsilon_2)+\epsilon_2-\epsilon_1.
+\tag{49.13}
+$$
+
+与 $\epsilon_2=1$ 的严格比较由 $\mathfrak L_a(\epsilon_1)>0$ 得到。又因所有权重严格正，$\mathfrak L_a(0)\ge1$，且等号恰在 $M_*=1$ 时成立。
+

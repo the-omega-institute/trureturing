@@ -1,0 +1,56 @@
+### 300.8 坏校准与低任务坐标的固定远尾
+
+令
+$$
+F=G^c\cup\{X<a_\star\}.
+$$
+真实 $y=h\ge h_0$，故坏校准阈值与均值至少相隔 $h_\star/2$。
+真实 $x=hc\ge m_\star$，而 $a_\star=m_\star/4$，故低任务坐标阈值与均值至少相隔 $3m_\star/4$。
+
+对任意联合事件 $E$，单流准确阶乘倾斜为
+$$
+\mathbb E\!\left[
+\frac{(I)_m}{(K)_m}\mathbf1_E(I,J)\right]
+=p_x^m
+\Pr\{E(m+\mathrm{Bin}(K-m,p_x),J)\},
+\tag{300.32}
+$$
+校准流有相同恒等式。两流在倾斜后仍独立。
+
+由（300.14），倾斜任一流只把其经验均值向下移动至多 $m_\star/8$。
+因此上述两个固定远阈值在普通分布与任一 $m\le d$ 单流倾斜下都保留统一正距离。对剩余二项和使用 Hoeffding 得
+$$
+\Pr(F)\le A e^{-bK},
+$$
+且（300.32）中的对应倾斜概率也都至多 $A e^{-bK}$。
+
+由于
+$$
+|\beta|\le1+\frac{S_I+S_J}{D\kappa},
+$$
+$$
+Bp_x=1-x/C\le1-m_\star/C_\star=:q_\star<1,\qquad
+Bp_y\le q_\star,
+$$
+权重级数和至多 $2\log(C_\star/m_\star)$，故
+$$
+\boxed{
+\mathbb E[|\beta|\,\mathbf1_F]\le
+\frac A\kappa e^{-bK}.
+}
+\tag{300.33}
+$$
+有害原系数的巨大非正经验坐标已包含在该界中；没有对它们取对数。
+
+由 $K\kappa\ge A_0$，$1/\kappa\le K/A_0$。先吸收
+$K e^{-bK/2}$ 的有限统一上界，再使用
+$$
+t=K\kappa^2/w\le K\kappa\le\kappa_0K,
+$$
+得到
+$$
+\mathbb E[|\beta|\,\mathbf1_F]\le A e^{-at}.
+\tag{300.34}
+$$
+因此 $1/\kappa$ 只出现在固定远尾之前，并已消去；它从未被粗乘到近阈值的弱指数前。
+

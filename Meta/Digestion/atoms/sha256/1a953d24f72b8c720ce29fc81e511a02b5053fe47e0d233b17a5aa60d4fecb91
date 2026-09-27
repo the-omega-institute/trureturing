@@ -1,0 +1,7 @@
+**定义 12.1（带停止标签的关系编码）。** 对固定 $N$，取正交标签 $|\varnothing_N\rangle$ 和 $|n,x\rangle$，令
+
+$$
+\mathcal W_N\psi=|\varnothing_N\rangle\otimes Q^N\psi
++\sum_{n=1}^N\sum_x|n,x\rangle\otimes L_xQ^{n-1}\psi.
+$$
+

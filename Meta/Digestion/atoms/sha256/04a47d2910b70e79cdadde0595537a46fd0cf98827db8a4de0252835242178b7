@@ -1,0 +1,67 @@
+**证明。** 反设（66.10）之一成立，使用引理66.2。取单位向量 $\beta$ 表示 $B$，令
+
+$$
+J=(F\otimes\beta)+(\beta\otimes F),\qquad
+T_0=(U\otimes I_F)V_0|_{S_0}:S_0\longrightarrow Q\otimes J.
+\tag{66.14}
+$$
+
+（66.11）使 $T_0$ 为满等距。定义
+
+$$
+M=(UP_P)T_0^{-1}:Q\otimes J\longrightarrow Q\otimes F,
+\tag{66.15}
+$$
+
+其中 $P_P:S_0=P\oplus Q\to P$ 是正交投影。于是 $MM^*=I$。
+
+对于 $n=3,4,5$，实际来源给 $P_PH_n=G_n$，且 $H_n\cap P=0$。零位固定映射及（66.11）因此给
+
+$$
+\begin{aligned}
+T_0H_3&=Q\otimes\beta\otimes C,&
+UP_PH_3&=Q\otimes C,\\
+T_0H_4&=Q\otimes D\otimes\beta,&
+UP_PH_4&=Q\otimes\beta,\\
+T_0H_5&=Q\otimes\beta\otimes D,&
+UP_PH_5&=Q\otimes D.
+\end{aligned}
+\tag{66.16}
+$$
+
+故 $M$ 满足引理66.1的三个纤维条件。
+
+剩下的秩亏来自真实第二轮。仍有
+
+$$
+H_2=\operatorname{span}\{a^2u+bv,w\},\qquad
+u,w\in G_2=T.
+\tag{66.17}
+$$
+
+因此，正交投影到 $P\cap T^\perp$ 在 $H_2$ 上的秩至多一，只有 $v$ 这一方向可能产生非零分量。这既不要求 $v\in Q$，也不要求 $P_PH_2=G_2$。满等距 $U$ 将 $T$ 送到 $Q\otimes\beta$，将 $P\cap T^\perp$ 送到 $Q\otimes\beta^\perp$，而实际零位像给
+
+$$
+T_0H_2=(UG_3)\otimes\beta=Q\otimes C\otimes\beta.
+\tag{66.18}
+$$
+
+结合（66.15）、（66.17）、（66.18），将 $M$ 限制到 $Q\otimes C\otimes\beta$ 后再投影到 $Q\otimes\beta^\perp$，其秩至多一，严格小于 $\dim Q=2$。引理66.1遂给非零 $x\in T_0H_3$ 或 $x\in T_0H_5$，使 $\|Mx\|=\|x\|$。
+
+令 $h=T_0^{-1}x$。$T_0,U$ 等距，因而
+
+$$
+\|P_Ph\|=\|Mx\|=\|x\|=\|h\|.
+$$
+
+正交投影保持 $h$ 的全部范数，迫使 $h\in P$。但 $h$ 非零且属于 $H_3$ 或 $H_5$，与这两个实际空间在 $P$ 中交零矛盾。证明完毕。
+
+本节新阻碍来自一个可复用的关系：中间切面的缺失方向秩不足，会使共同余等距在某个后期纤维上保留全部范数；而实际来源要求那个纤维同时具有非零的互补接收分量。两种条件不能由同一个映射同时满足。
+
+引理66.1本身不使用首轮环境位置。如果其他子类能够独立证明相同的余等距、纤维和秩亏接口，也可直接应用该引理；本节没有把这些接口自动外推到内置首轮或其他尾词。其余二维尾环境模式仍未全部结算，一般容量保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{66.19}
+$$
+

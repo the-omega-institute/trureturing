@@ -1,0 +1,41 @@
+#### 216.3.1 实际乘子的正定性
+
+第213节在整个零噪声参数面给
+$$
+S_j(0,h,\nu,t)=P_c/4.
+$$
+在该面，$A_0=A_1=1/2$，真实环境梯度为 $G_j=-P_a/4$，所以
+$$
+\Lambda(0,h,\nu,t)=P_0/4.
+\tag{216.12}
+$$
+第213节从两份实际互补方程求得中心读数
+$$
+\partial_\epsilon\Lambda_{11}(0,0,0,0)=\beta R/4>0.
+\tag{216.13}
+$$
+
+现在限制 $h=0$。由于（216.12）在整个 $\epsilon=0$ 面成立，解析整除给
+$$
+\Lambda(\epsilon,0,\nu,t)=
+\begin{pmatrix}
+L(\epsilon,\nu,t)&\epsilon z(\epsilon,\nu,t)\\
+\epsilon\overline{z(\epsilon,\nu,t)}&\epsilon d(\epsilon,\nu,t)
+\end{pmatrix},
+\tag{216.14}
+$$
+其中
+$$
+L(0,0,0)=1/4,\qquad d(0,0,0)=\beta R/4.
+$$
+在固定小参数箱中，$L>0$，$d$ 有统一正下界，$z$ 有界。对充分小正 $\epsilon$，
+$$
+\epsilon d-\frac{\epsilon^2|z|^2}{L}>0.
+$$
+Schur 补因此给
+$$
+\boxed{\Lambda(\epsilon,0,\nu,t)\succ0.}
+\tag{216.15}
+$$
+该结论对全部邻近的带符号 $t$ 成立，不要求 $\mu\ge0$。它也没有把只在中心成立的等式误当成整个面的整除条件。
+

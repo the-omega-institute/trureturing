@@ -1,0 +1,7 @@
+**引理56.3（非正交 AABA 的排除）。** 不可能有
+$$
+\eta_3=\eta_4=\eta_6=A,\qquad\eta_5=B,\qquad
+0<r:=|\langle A,B\rangle|<1,\qquad A,B\in F.
+\tag{56.12}
+$$
+

@@ -1,0 +1,9 @@
+**定义 369.1（未来轨迹作为读数）。** 沿用第 368 节，定义
+
+$$
+I(x)(t)=q(F^t x),\qquad t\in\mathbb N,
+\qquad x\sim_\infty y\ \Longleftrightarrow\ I(x)=I(y).
+$$
+
+其中 $F^0$ 为恒等映射。$I(x)$ 是从当前状态出发的全部未来读数，含当前时刻；它是数学上的函数，不是声称观察者已经看见未来。项目的 [ItineraryCompletion](../../../D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean) 按这一对象构造完整行程，[PredictionCompletion](../../../D5/S3/ObserverMemory/Refinement/PredictionCompletion.lean) 以它的相等纤维构造商状态。
+

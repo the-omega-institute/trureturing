@@ -1,0 +1,61 @@
+### 170.1 代码投影与吸收酉的一个共轭恒等式
+
+沿用第159节的来源
+
+$$
+T|0\rangle=|m_0\rangle_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+|m_0\rangle=a|0\rangle+b|1\rangle,
+$$
+
+$$
+a,b>0,\qquad a^2+b^2=1,\qquad p=b^2.
+\tag{170.1}
+$$
+
+记
+
+$$
+\rho=\rho_*=\frac1{1+p}
+\begin{pmatrix}1&ab\\ab&p\end{pmatrix},
+\qquad
+A=\sqrt\rho,\qquad
+\eta=\det A=\frac{p}{1+p},
+$$
+
+$$
+|\Xi\rangle=\operatorname{vec}A,\qquad
+|\psi_s\rangle=(I_M\otimes Y_R^s)|\Xi\rangle,\qquad s=0,1.
+\tag{170.2}
+$$
+
+两向量正交归一，在 $M\otimes R$ 上定义代码投影及其补投影
+
+$$
+P_{\mathrm c}=P_{\psi_0}+P_{\psi_1},\qquad
+Q_{\mathrm c}=I_{MR}-P_{\mathrm c}.
+\tag{170.3}
+$$
+
+它们具有方便计算的表达式
+
+$$
+\boxed{P_{\mathrm c}=\rho\otimes I_R-\eta\,Y_M\otimes Y_R.}
+\tag{170.4}
+$$
+
+例如，令 $|\Omega\rangle=|00\rangle+|11\rangle$，直接展开得
+$P_\Omega+(I\otimes Y)P_\Omega(I\otimes Y)=I-Y\otimes Y$。
+两边用 $A\otimes I$ 夹乘，再用实对称二阶矩阵恒等式
+$AYA=(\det A)Y$，即得（170.4）。
+
+第156节规定的吸收酉 $U_{\mathrm{abs}}$ 满足
+
+$$
+(I_M\otimes U_{\mathrm{abs}})(T\otimes I_R)|\psi_s\rangle
+=|\Xi\rangle_{MR}|s\rangle_B.
+\tag{170.5}
+$$
+
+这两份纯化在接收侧的 Schmidt 支撑组成整个 $R\otimes B$，所以（170.5）已唯一确定吸收酉。
+

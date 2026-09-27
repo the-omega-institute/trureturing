@@ -1,0 +1,6 @@
+**定义 411.1（项目来源的承担范围）。** 本批使用九个项目数学源码：`DataProcessing` 承担有限通道的 TV 收缩；`Convexity` 承担 TV 联合凸性，未调用其 Hellinger 部分来替代概率条件；`DescentDefectBounds` 承担固定输入纤维的半直径下界、代表元上界与输出后处理；`StochasticDescentLumpability` 对应零缺陷与纤维恒定；`CanonicalPredictiveStateSufficiency` 的条件独立结论限于其有限 PMF 载体；`CausalStateFactorization` 与 `PredictiveStateUniversalMinimality` 承担实际像上的因子化；`PredictiveStateUnifilarUpdate` 承担在已假设条件延长正确时的单值更新及几乎处处性质；`BlackwellCostOrthogonality` 说明未约束的外部费用不会由信息序确定。各路径链接位于使用处。
+
+理论衔接使用[语境几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第 15 节的预测空间、实际域及更新，[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)第 21 节的完整记录近似与第 22 节的成本分解，以及 [singh2004zeckendorfprobability](../../../Library/notes/singh2004zeckendorfprobability.md) 关于共同证据条件化的估计。这些理论文本用于定位既有推导与来源，不替代 Lean 代码的数学地位，也不把它们的全部邻接章节计作本批证据。
+
+本批的贡献是把这些关系连接到 MMM 的表达比较：固定纤维后处理与新纤维合并的分离、同一中间核下的近似组合、持续误差与一次信念近似的分离、有限历史状态数与预测坐标及量化精度的联合比较，以及与两位哲学作者的具体对读。有限例子与普通证明不申报世界范围原创定理；成熟的三角不等式、凸性、耦合、核收缩、Bayes 公式、Chebyshev 不等式和线性张成方法均按原有方法使用。源码阅读不等于当前 Lean kernel 或公理闭包核验，这些散文推导没有取得新增形式化地位。
+

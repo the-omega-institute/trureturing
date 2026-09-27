@@ -1,0 +1,29 @@
+**定理 231.3（带后续增益的策略界）。** 假定在第 $t$ 个节点发生的局部记录扰动，经名义后续续接传到终端时至多放大 $g_{t,h,a}\ge0$。则同一望远镜证明给出
+
+$$
+\boxed{
+\left|
+\mathbb E_{\mathbb P^\pi}F
+-
+\mathbb E_{\bar{\mathbb P}^\pi}F
+\right|
+\le
+\sum_{t=0}^{H-1}
+\mathbb E_{h\sim\mu_t}
+\sum_a\pi_t(a\mid h)g_{t,h,a}\kappa_{t,h,a}.
+}
+\tag{231.3}
+$$
+
+这里的“至多放大”具体指：对该节点下一历史上的任意零迹有符号扰动 $\xi$，名义策略的后续作用满足
+
+$$
+\left|
+\xi\!\left(\mathcal R^{\bar\pi}_{t+1:H}F\right)
+\right|
+\le
+g_{t,h,a}\|\xi\|_{\mathrm{TV}},
+$$
+
+其中 $\mathcal R^{\bar\pi}_{t+1:H}F$ 是从下一历史到终端的名义续接值函数。因而 $g_{t,h,a}=1$ 覆盖普通概率核的收缩情形，而大于一的值只表示声明了额外的算子增益合同。
+

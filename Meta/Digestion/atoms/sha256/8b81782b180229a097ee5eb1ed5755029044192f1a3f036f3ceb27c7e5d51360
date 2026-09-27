@@ -1,0 +1,17 @@
+**定理 2.27（exact mass and extension queries）。** Fix the computable event presentation and odd prime $p$ from C卷第2.7.1节. For every oracle $A$,
+$$
+M\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+R\text{ is }A\text{-decidable}.
+\tag{TM.584}
+$$
+Uniformly in the presentation and $p$, there is an operator sending any valid rational Cauchy name of $M$ to the characteristic function of $R$, and an operator sending the characteristic function of $R$ to a rational Cauchy name of $M$. In particular,
+$$
+M\text{ is computable}
+\quad\Longleftrightarrow\quad
+R\text{ is decidable}.
+\tag{TM.585}
+$$
+
+**Proof.** If $M$ has an $A$-computable name, perform the construction of C卷第2.7.2节 using that name and the fixed computable presentation; every required operation is then $A$-computable. If $R$ is $A$-decidable, the finite query procedure of C卷第2.7.3节 returns an $A$-computable rational Cauchy name. These constructions are uniform in the specified inputs. $\square$
+

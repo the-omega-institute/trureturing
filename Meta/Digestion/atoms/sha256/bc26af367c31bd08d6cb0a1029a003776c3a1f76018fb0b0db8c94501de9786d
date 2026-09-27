@@ -1,0 +1,74 @@
+### 211.2 允许额外 Choi 权重过零的精确 TP 图
+
+按输入优先次序 $(a,c,b,d)$ 写 Choi 向量。
+两份主 Kraus 固定 $a_j>0$：
+
+$$
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},
+\qquad k_j=(a_j,c_j,b_j,d_j)^{\mathsf T}.
+$$
+
+给结果1增加带符号权重：
+
+$$
+J_0=k_0k_0^\dagger,\qquad
+J_1=k_1k_1^\dagger+tww^\dagger,\qquad
+w=(0,u,1,v)^{\mathsf T},\quad u,v\in\mathbb C.
+\tag{211.2}
+$$
+
+$t$ 暂可正可负；只有 $t\ge0$ 才作为物理候选。
+额外矩阵为 $W=\begin{psmallmatrix}0&1\\u&v\end{psmallmatrix}$。
+因为 $a_1>0$，$w,k_1$ 独立，所以 $t>0$ 时结果1 Choi 秩恰为二，
+$t=0$ 时恰为一。
+
+用五个快实坐标
+$x=(\xi,\operatorname{Re}c_0,\operatorname{Im}c_0,
+\operatorname{Re}c_1,\operatorname{Im}c_1)$，置
+
+$$
+P=1-t|u|^2,\qquad C_{\rm main}=|c_0|^2+|c_1|^2,
+$$
+
+$$
+a_j=\sqrt{(P-C_{\rm main})/2+(-1)^j\xi},\qquad
+p=(a_0,c_0,a_1,c_1)^{\mathsf T}.
+\tag{211.3}
+$$
+
+于是 $\|p\|^2=P$。在 $p^\perp$ 中取解析正交标架，
+用五个实变量 $y$ 参数化其中单位球面的局部图 $s(x,t,u;y)$。
+基点为
+
+$$
+s_*=(i\sqrt2n_b,\sqrt2m_b,-i\sqrt2n_b,\sqrt2m_b)^{\mathsf T}.
+$$
+
+它是单位向量，且与 $p_*=(1,0,1,0)^{\mathsf T}/\sqrt2$ 正交。
+先投影并作 Gram–Schmidt，再用两个复坐标和一个相位，
+可得所需解析球面图。令
+
+$$
+R_t=1-t(1+|v|^2),\qquad
+r=-\frac{t\overline u v}{P}p+
+\sqrt{R_t-\frac{t^2|u|^2|v|^2}{P}}\,s(x,t,u;y).
+\tag{211.4}
+$$
+
+把 $r$ 分量依次读为 $b_0,d_0,b_1,d_1$。
+根号及分母在固定基点邻域严格合法；全图实解析，并且
+
+$$
+\|p\|^2+t|u|^2=1,\quad
+\|r\|^2+t(1+|v|^2)=1,\quad
+p^\dagger r+t\overline u v=0.
+\tag{211.5}
+$$
+
+因此对带符号 $t$ 都有同一仿射 TP 约束；
+当 $t\ge0$ 时，得到真实共同 CPTP instrument。
+
+固定 $(t,u,v)$ 时，$(x,y)$ 覆盖两份主 Kraus 的全部局部 TP 切向，
+模去两份整体相位。$K_0$ 在基点可逆，附近仍可逆。
+这里只构造候选，尚未对原优化集合限制秩。
+

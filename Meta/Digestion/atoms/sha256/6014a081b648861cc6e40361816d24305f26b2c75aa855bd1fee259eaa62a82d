@@ -1,0 +1,125 @@
+**二维交叉 Gram 关系的显式稳定矛盾。**
+
+下面只使用二维几何。将 $\delta_G$ 暂记为 $\delta$，假设
+
+$$
+\delta\le g^2/256.
+\tag{40.22}
+$$
+
+令
+
+$$
+x=\langle k,q\rangle,\qquad y=\langle k,u_0\rangle,\qquad
+c_{23}=\langle\eta_2,\eta_3\rangle.
+$$
+
+两个后续输入块的交叉 Gram 矩阵为 $\operatorname{diag}(x,y)$，相应理想输出的矩阵为 $c_{23}(\langle u_i,v_j\rangle)_{i,j=0}^1$。因此
+
+$$
+\max_{i,j\in\{0,1\}}
+\left|\operatorname{diag}(x,y)_{ij}
+-c_{23}\langle u_i,v_j\rangle\right|\le\delta,
+$$
+
+故矩阵算子范数误差至多 $2\delta$。
+矩阵 $(\langle u_i,v_j\rangle)_{i,j=0}^1$ 是酉矩阵，奇异值扰动界给
+
+$$
+\big||x|-|y|\big|\le4\delta.
+\tag{40.23}
+$$
+
+而
+
+$$
+|x|^2+|y|^2
+=\langle k,(|q\rangle\langle q|+|u_0\rangle\langle u_0|)k\rangle
+\ge1-|\langle q,u_0\rangle|=g.
+$$
+
+因此
+
+$$
+|c_{23}|\ge\sqrt{g/2}-2\delta\ge\sqrt g/4.
+$$
+
+非对角 Gram 项遂给
+
+$$
+|\langle u_0,v_1\rangle|,\ |\langle u_1,v_0\rangle|
+\le4\delta/\sqrt g.
+$$
+
+适当选择 $v_i$ 相对于 $u_i$ 的比较相位，得到
+
+$$
+\min_{\theta}\|v_i-e^{i\theta}u_i\|
+\le8\delta/\sqrt g,\qquad i=0,1.
+\tag{40.24}
+$$
+
+令 $\beta=|\langle k,u_1\rangle|$，于是 $|y|=\sqrt{1-\beta^2}$。
+由 $q$ 在 $u$ 基中的系数模为 $1-g,\sqrt{1-(1-g)^2}$，
+
+$$
+|x|\le(1-g)|y|+\beta.
+$$
+
+结合（40.23），有 $g|y|\le\beta+4\delta$。
+若 $\beta\le g/4$，则 $|y|\ge1/2$，而（40.22）蕴含
+$\delta\le g/32$，于是右侧至多 $3g/8$，左侧至少 $g/2$，矛盾。
+所以
+
+$$
+\beta\ge g/4.
+\tag{40.25}
+$$
+
+（40.22）还保证 $8\delta/\sqrt g\le g/8$，因此（40.24）给
+
+$$
+|\langle k,v_1\rangle|\ge g/8.
+$$
+
+首次输入与第二块的一位输入正交。其近似输出内积给
+
+$$
+|\langle\eta_1,\eta_2\rangle|\le4\delta/g.
+$$
+
+再比较首次输入与第二块的零位输入，得到
+
+$$
+|\langle e,k\rangle|\le5\delta/g.
+$$
+
+同理，首次输入与第三块的一位输入正交，得到
+$|\langle\eta_1,\eta_3\rangle|\le8\delta/g$，
+继而与第三块零位输入比较，得
+
+$$
+|\langle e,q\rangle|\le9\delta/g.
+\tag{40.26}
+$$
+
+置 $h=9\delta/g<1$。二维空间中，$k,q$ 沿同一个 $e$ 的分量均不超过
+$h$，故沿 $e^\perp$ 的分量模均至少为 $\sqrt{1-h^2}$。于是
+
+$$
+|x|=|\langle k,q\rangle|\ge1-2h^2.
+$$
+
+由（40.23），$|y|\ge1-2h^2-4\delta$，所以
+
+$$
+\beta^2=1-|y|^2
+\le4h^2+8\delta
+=\frac{324\delta^2}{g^2}+8\delta
+\le\left(\frac{324}{256^2}+\frac8{256}\right)g^2
+<g^2/16.
+\tag{40.27}
+$$
+
+这与（40.25）矛盾。由此，只要（40.22）成立，就不存在这些近似块数据。
+

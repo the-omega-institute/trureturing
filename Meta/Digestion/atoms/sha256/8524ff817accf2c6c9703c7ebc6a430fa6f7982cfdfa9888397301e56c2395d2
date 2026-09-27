@@ -1,0 +1,10 @@
+**第一种：已执行尾像包含整个固定四维块。** 这包括 $k\in S$，以及 $k\notin S$ 但 $B_\lambda=0$。在两种情形中均有
+
+$$
+E=(Q\otimes F)\oplus\mathbb C(r\otimes\zeta),
+\qquad r\in S\setminus\{0\}.
+\tag{104.10}
+$$
+
+事实上，$E$ 五维且包含 $Q\otimes F$，故剩余空间一维；将（104.5）的实际乘积生成式投影到 $S\otimes F$，即知该一维空间为乘积线。其接收因子总跨度恰为 $Q\oplus\mathbb Cr$，三维。在除 $[\zeta]$ 外的每条射线上，$E$ 的完整接收纤维为 $Q$；在 $[\zeta]$ 上为 $Q\oplus\mathbb Cr$。至少一份实际尾输出必须使用 $[\zeta]$ 并具有非零 $r$ 分量，否则它们只能张成四维 $Q\otimes F$，与 $\dim E=5$ 矛盾。
+

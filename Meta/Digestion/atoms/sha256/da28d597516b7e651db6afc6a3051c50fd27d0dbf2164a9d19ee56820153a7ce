@@ -1,0 +1,47 @@
+**命题 517.1（对称化之后仍保留的联合下界）。** 对定义 516.1，设 $0<r<1$，且某生成器满足 $m(T)\le\eta<\lambda$。则
+
+$$
+j(T)\ge 2r(1-\alpha)-\left(\frac2c-1\right)\eta.
+$$
+
+证明：同时置换状态中的标签与新增输出中的标签，并对所有置换后的生成器取平均。目标族在此作用下不变，最坏状态 TV 的凸性保证 $m$、$j$ 均不增加。这里使用项目 [TotalVariation/Convexity](../../../D5/S3/TotalVariation/Convexity.lean) 的 total_variation_joint_convex 所表达的有限凸平均关系。因而只需对平均后的对称生成器给出下界；原生成器的联合误差不会更小。
+
+置 $L=r(1-\alpha)$。令 $z=r(1-R(\circ))$ 为擦除分支分配给全部标签的总质量；对称性使每个标签得到 $z/n$。再记
+
+$$
+a=(1-r)T_S(S^c)\ge0,
+\qquad s_0=(1-r)(T_S(\circ)-\alpha).
+$$
+
+这里 $S^c$ 只指 $n$ 个标签中的补集，不包括 $\circ$；$a,s_0$ 不依赖具体 $S$。由于目标在 $S^c$ 上为零，边缘 TV 至少为这部分质量，故
+
+$$
+a+cz\le\eta,\qquad z\le\frac{\eta-a}{c}<L.
+$$
+
+在擦除分支，公共符号上的有符号差为 $L-z>0$，禁止标签上的正差合计为 $cz$，允许标签上的差非正。因此该分支的联合 TV 贡献为
+
+$$
+F=L-(1-c)z.
+$$
+
+边缘在事件 $\{\circ\}\cup S^c$ 上的有符号差为 $s_0+a+F$。TV 控制每个事件的有符号差，所以 $m\le\eta$ 蕴含
+
+$$
+s_0\le\eta-a-F
+\le\frac{\eta-a}{c}-L<0.
+$$
+
+揭示分支在公共符号上有负差 $s_0$，其联合 TV 贡献至少为 $-s_0$。于是同一个生成器满足
+
+$$
+\begin{aligned}
+j&\ge F-s_0\ge2F+a-\eta\\
+&\ge2L-\left(\frac2c-1\right)\eta
++\left(\frac2c-1\right)a\\
+&\ge2L-\left(\frac2c-1\right)\eta.
+\end{aligned}
+$$
+
+全部不等式使用同一 $a,z,s_0$，没有把分别可达的边缘与联合下界当作可以同时达到。证毕。
+

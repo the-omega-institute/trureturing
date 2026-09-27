@@ -1,0 +1,7 @@
+#### 1.1.9 与既有接口及开放目标的关系
+
+本节直接依赖有限剩余的共同实现、提升和计数。不可变项目快照
+9d416050c9a90f785d50f2a5034f1a1f99334d62 中，现有支点包括：
+
+- D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean:51，
+  joint_residue_image_eq_compatible_pairs：模 $L$ 与模 $m$ 的实际联合像，恰好由模 $\gcd(L,m)$ 上相容的剩余对组成。

@@ -1,0 +1,90 @@
+### 184.3 该构造的二阶优化
+
+记第182节的 $Q_{180}$ 为
+
+$$
+Q_{180}
+=\frac{\beta^2\delta^2}{16}
++\frac{\beta\delta r_1}{4}+r_1^2
++\frac{\gamma\delta t_1}{4}+\frac{t_1^2}{4}.
+$$
+
+将正确块重叠代入调和式，得到
+
+$$
+e(r,t,u_0,u_1)
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++Q(r_1,t_1,v_0,v_1)\epsilon^2+O(\epsilon^3),
+$$
+
+$$
+\boxed{
+Q=Q_{180}
++\frac{v_0^2+v_1^2}{8}
+-\frac{\kappa}{4}
+\left[t_1(v_0-v_1)+\gamma(v_0+Rv_1)\right].
+}
+\tag{184.5}
+$$
+
+固定 $r_1,t_1$，两个反馈变量的唯一二阶最优点为
+
+$$
+v_0=\kappa(t_1+\gamma),\qquad
+v_1=\kappa(-t_1+\gamma R).
+$$
+
+代入后，关于 $t_1$ 的部分为
+
+$$
+\frac{1-\kappa^2}{4}t_1^2
++\frac{\gamma\delta(1+\kappa^2)}4t_1
+-\frac{\kappa^2\gamma^2(1+R^2)}8.
+$$
+
+由于 $\kappa^2=5/9<1$，其二次系数严格为正，最小点为
+
+$$
+t_1=-\frac{\gamma\delta(1+\kappa^2)}
+{2(1-\kappa^2)}
+=-\frac74\gamma\delta.
+$$
+
+与此同时，$r_1=-\beta\delta/8$。由此得到显式参数
+
+$$
+\boxed{
+\begin{aligned}
+\widehat r&=\frac12-\frac{\beta\Delta w}{8},&
+\widehat t&=-\frac74\gamma\Delta w,\\
+\widehat u_0&=\frac{\kappa\gamma}{4}(11w_0-7w_1),&
+\widehat u_1&=\frac{\kappa\gamma}{4}(11w_1-7w_0).
+\end{aligned}
+}
+\tag{184.6}
+$$
+
+这些参数对每个有限 $L\ge3$ 都合法。事实上，$\Delta w<1/2$、
+$\beta<1/8$、$\gamma<1/8$ 给
+
+$$
+\widehat r>\frac{63}{128},\qquad
+1-\widehat r>\frac12,\qquad
+|\widehat t|<\frac7{64}<\frac{63}{128}.
+$$
+
+反馈角度为实数，其大小不限制酉性。
+计算上述二次式的最小值，
+
+$$
+\boxed{
+Q_{\min}
+=\frac{3\beta^2\delta^2}{64}
+-\frac{3\gamma^2\delta^2}{8}
+-\frac{5\gamma^2\Sigma^2}{144}.
+}
+\tag{184.7}
+$$
+
+所以此共同解码器给定理中的二阶上界。
+

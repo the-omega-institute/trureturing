@@ -1,0 +1,20 @@
+**命题 1.12（residue quotient）。** For fixed $a,t$, two residue labels have identical continuation languages if and only if
+$$
+R_{a,r,t}=R_{a,r',t}
+\quad\Longleftrightarrow\quad
+r-r'\in\operatorname{Stab}(H),
+\tag{TM.541}
+$$
+where
+$$
+\operatorname{Stab}(H)
+=\{s\in\mathbb Z/L\mathbb Z:H+s=H\}.
+\tag{TM.542}
+$$
+Consequently the quotient of all residue labels at fixed run and phase has
+$$
+\frac{L}{|\operatorname{Stab}(H)|}
+\tag{TM.543}
+$$
+classes.
+

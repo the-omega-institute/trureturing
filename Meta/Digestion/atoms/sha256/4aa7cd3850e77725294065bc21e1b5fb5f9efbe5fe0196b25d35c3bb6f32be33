@@ -1,0 +1,4 @@
+## 定理 ST41.2：普通通道数据无法唯一补出相干控制的相位
+
+不存在仅依赖酉共轭通道$\operatorname{Ad}_V$的规则，能对每个酉代表$V$都返回受控酉$C_V=|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes V$的共轭通道。
+

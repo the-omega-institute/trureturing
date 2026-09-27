@@ -1,0 +1,51 @@
+**证明。** 由（62.19）、（62.20），每个位块分别有六维输入子空间被送入 $K\otimes F$。因此
+$$
+\operatorname{rank}((I_K\otimes P_{F^\perp})V_i)\le1
+\qquad(i=0,1).
+$$
+全域 $V$ 的像是两个位块像的和，故
+$$
+\operatorname{rank}((I_K\otimes P_{F^\perp})V)\le2.
+\tag{62.23}
+$$
+这里是全 Stinespring 算子投影后的线性像秩，不是接收器边缘态的秩。
+
+选 Bell 参考—来源输入，保留所有旧环境，把实际第二轮前的联合态纯化。引理62.1中取
+$$
+B=R\otimes M,\qquad D=K\otimes\mathbb C^2,
+\qquad W=V,\quad E_{\mathrm{new}}=\text{第二轮新环境}.
+$$
+完整第二终端恢复与标准可逆编码，使其输出满足（62.6）。理想逻辑态可写成
+$$
+|\psi_2\rangle
+=\frac1{\sqrt2}\left(
+ a|0\rangle_Rm_0\otimes u
++b|0\rangle_Rm_1\otimes v
++|1\rangle_Rm_0\otimes w
+\right).
+\tag{62.24}
+$$
+三个 $RM$ 系数向量线性独立：前两个因 $m_0,m_1$ 独立及 $ab\ne0$ 而独立，第三个具有正交的参考标签。所以 $|\psi_2\rangle$ 跨 $RM|Q$ 的 Schmidt 秩恰为三。
+
+式（62.23）与引理62.1遂说明：同一实际第二轮输出在新环境 $F^\perp$ 上的分支为零。
+$$
+(I_{R,M,E_{\mathrm{old}},K}\otimes P_F)|\Omega_2\rangle
+=|\Omega_2\rangle.
+\tag{62.25}
+$$
+这个结论没有要求第二轮新环境本来纯，也没有要求它与旧环境无纠缠。
+
+再由（62.19）及 $V_0K\perp V_1K$，$V_0K$ 正交于整个 $L_1\otimes F$。因此其 $F$ 分量满足
+$$
+(I_K\otimes P_F)V_0K\subseteq L_0\otimes F.
+\tag{62.26}
+$$
+因为实际第二轮完全位于（62.25）的环境分支，且来源的记忆 $|1\rangle$ 分量仅经过 $V_0$，其条件接收支撑由（62.26）包含于 $L_0$。引理62.2给
+$$
+L_0=G\otimes\Gamma.
+\tag{62.27}
+$$
+于是 $A_0\subseteq G\otimes\Gamma$；旧块使 $V_1A_0\subseteq B_0\otimes F$，而实际第四轮使 $V_1A_0=Q_4\otimes\alpha$。故 $Q_4\subseteq B_0$。两者均二维，所以 $Q_4=B_0$，与第3、4款分别证明的 $Q_4\ne B_0$ 矛盾。
+
+第58、59节已经排除外部模式，内部共同射线也已排除；最后的 $AAB,ABA$ 两类现在全部排除。因此秩二第二终端不可能。证明完毕。
+

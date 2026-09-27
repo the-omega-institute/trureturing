@@ -1,0 +1,21 @@
+**定理 17.20（同阶二维来源的最小局部乘积）。** 在定义17.10中进一步取 $V=(\mathbb Z/n\mathbb Z)^2$、$n\ge1$；合法切法由 $GL_2(\mathbb Z/n\mathbb Z)$ 的有序基给出，两轴均为 $n$ 阶循环群。对每个由式(17.62)得到的 $D$，存在沿轴分裂的合法切法，且
+
+$$
+\min_{\text{合法切法}}M_A M_B=\frac{N^2}{|D|}.
+\tag{17.70}
+$$
+
+达到此乘积最小值的切法恰为沿轴分裂的切法，亦恰为最小预测器可仅凭完整钟类匹配便精确胶合的切法。
+
+证明。$n=1$ 时直接成立。设 $n>1$，把 $D$ 提升为 $\widetilde D=\{x\in\mathbb Z^2:x\bmod n\in D\}$，其中 $n\mathbb Z^2\subseteq\widetilde D$。以 $D$ 的整数代表及 $ne_1,ne_2$ 为列得到有限秩二生成矩阵。使用 [RRO 主卷 axiom 54.1](RECURSIVE_RELATIONAL_OBSERVATION.md) 所引的既有整数 Smith 标准形，即 Elman，*Lectures on Abstract Algebra*，Appendix D，[Theorem D.2，PDF 页862](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=862)，存在左幺模矩阵 $U$ 及右幺模生成元变换，使
+
+$$
+U\widetilde D=s_1\mathbb Ze_1\oplus s_2\mathbb Ze_2,
+\qquad 0<s_1\mid s_2.
+\tag{17.71}
+$$
+
+右变换不改变所生成的格。关键是左变换满足 $U(n\mathbb Z^2)=n\mathbb Z^2$，所以 $s_1,s_2$ 都整除 $n$，$U$ 模 $n$ 后给合法自同构，并把 $D$ 送到 $(s_1\mathbb Z/n\mathbb Z)\times(s_2\mathbb Z/n\mathbb Z)$。取标准轴的逆像即得分裂切法。这里 Smith 标准形只作为对子群提升格的已有中间工具。
+
+对任意切法，$D_A\oplus D_B\le D$，故 $d_A d_B\le|D|$，且取等号当且仅当沿轴分裂。将它代入式(17.64)，再用式(17.65)，即得全部结论。证毕。
+

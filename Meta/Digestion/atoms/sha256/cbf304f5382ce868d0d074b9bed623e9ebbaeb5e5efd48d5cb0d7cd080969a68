@@ -1,0 +1,20 @@
+**定理167.2（秩一目标的纯见证变分式）。** 有
+
+$$
+\boxed{
+\min_{\sigma\in\mathcal C}\lambda_{\max}(P_\Psi-\beta\sigma)
+=\max_{\|w\|=1}
+\left\{|\langle\Psi|w\rangle|^2
+-\beta\max_{\sigma\in\mathcal C}\langle w|\sigma|w\rangle\right\}.
+}
+\tag{167.9}
+$$
+
+最小值和最大值均能达到。若 $\sigma_*$ 达到左侧，且 $w_*$ 是 $P_\Psi-\beta\sigma_*$ 的正本征值对应单位向量，则 $w_*$ 达到右侧，且
+
+$$
+\langle w_*|\sigma_*|w_*\rangle
+=\max_{\sigma\in\mathcal C}\langle w_*|\sigma|w_*\rangle.
+\tag{167.10}
+$$
+

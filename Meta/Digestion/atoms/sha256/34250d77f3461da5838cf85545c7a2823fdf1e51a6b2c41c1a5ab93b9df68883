@@ -1,0 +1,62 @@
+**定理212.4（Choi 导数折角与小特征值的线性启用）。**
+唯一最优 Choi 对跨曲线连续并局部 Lipschitz，但在曲线上关于 $h$ 不可微。
+结果1的导数差具有不随主向量规范消失的投影：
+
+$$
+\boxed{
+P\left[(J_1)_h\big|_{\rm 左}-(J_1)_h\big|_{\rm 右}\right]P
+=-a_cPww^\dagger P\ne0.
+}
+\tag{212.15}
+$$
+
+若 $\lambda_2$ 为最优 $J_1$ 的第二大特征值，则对固定小正 $\epsilon$，
+
+$$
+\boxed{
+\lambda_2
+=c_\lambda(\epsilon)[b(\epsilon)-h]_+
++O([b(\epsilon)-h]_+^2),\qquad
+c_\lambda(\epsilon)=a_c\|Pw\|^2>0.
+}
+\tag{212.16}
+$$
+
+余项可在固定小 $\epsilon$ 区间一致选取。
+
+**证明。**
+两条解析 Choi 分支在线上相合，因此拼接后局部 Lipschitz。
+链式法则给
+$\Gamma_{I,h}-\Gamma_{A,h}=\Gamma_t\widehat t_h=-a_c\Gamma_t$。
+在 $t=0$ 对 $J_1=k_1k_1^\dagger+tww^\dagger$ 求 $t$ 导数，
+左右乘 $P$ 后，主向量移动产生的项全部消失，只剩 $Pww^\dagger P$。
+这证明（212.15），也证明整体最优器不可微。
+
+对第二特征值，在 $\operatorname{span}\{k_1,w\}$ 中使用随参数解析变化的
+正交基。该二维矩阵的迹与行列式分别为
+
+$$
+\|k_1\|^2+t\|w\|^2,\qquad
+t\|k_1\|^2\left\|P_{k_1^\perp}w\right\|^2.
+\tag{212.17}
+$$
+
+在 $t=0$，大特征值是严格正的简单根 $\|k_1\|^2$。
+小根因而解析，且展开为
+$t\|P_{k_1^\perp}w\|^2+O(t^2)$；其余两个 Choi 特征值恒为零。
+代入（212.9），再在曲线上取系数，即得（212.16）。
+所有候选及谱因子在共同解析邻域有界，故可统一控制余项。证毕。
+
+令 $s=\sqrt{1-(\gamma/\beta)^2}$。
+零噪声接触分支有 $\|k\|^2=1$、$\|Pw\|^2=(1+s^2)/2$，
+而 $m_b'=(4-s)^2/(24\beta R)$，所以
+
+$$
+c_\lambda(0)=\frac{s(4-s)^2(1+s^2)}{12\beta R}>0.
+\tag{212.18}
+$$
+
+按 Choi 谱取正交 Kraus 表示，新增 Kraus 向量的范数为 $\sqrt{\lambda_2}$，
+因此以 $\sqrt{b(\epsilon)-h}$ 阶启用；通道本身仍以一阶距离连续。
+Kraus 表示可以改变，这里的不变量是 Choi 秩和 Choi 特征值。
+

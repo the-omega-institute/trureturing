@@ -1,0 +1,16 @@
+### 22.1 定义与已有完成结果的边界
+
+对 $0\leq\alpha<1$、$x\in[0,1)$，使用已有实际机械词
+\[
+s_k(\alpha,x)=\lfloor x+(k+1)\alpha\rfloor-\lfloor x+k\alpha\rfloor\in\{0,1\},\qquad
+O_n(\alpha,x)=(s_0,\ldots,s_{n-1}).
+\]
+它等于窗口 $[1-\alpha,1)$ 对真实旋转 $\{x+k\alpha\}$ 的读出。定义
+\[
+E_n(\alpha,\beta)=\{x\in[0,1):O_n(\alpha,x)\neq O_n(\beta,x)\}.
+\tag{22.1}
+\]
+测度 $\lambda$ 为长度测度，亦为该单位相位区间上的均匀概率。
+
+当前 `BisectionCompletion` 证明有理二分区间的精确宽度 $(u-l)2^{-p}$、端点 Cauchy 性及共同完成极限；其中对任意集合的上界判断使用经典选择，不能直接视为可执行的比较 oracle。`ReadoutTopology` 在其指定的有理探针拓扑与容量空间中刻画了有限总容量与连续实值延拓的等价。以下处理参数完成之后的真实离散读出，没有将这些连续延拓结论自动应用到不连续的阈值函数。
+

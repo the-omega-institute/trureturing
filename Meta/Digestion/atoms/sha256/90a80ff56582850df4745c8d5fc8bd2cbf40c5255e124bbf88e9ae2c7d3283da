@@ -1,0 +1,37 @@
+**定义 20.1（算术振幅、边界相位与格点曲线）。** 沿用[原卷第 17—19 章及定义 19.1](PARITY_HIDDEN_ARROW.md)的实验、
+风险、固定基数 $`q=\lfloor M^{1-\beta}\rfloor`$ 与临界参数
+$`\alpha_E,\theta,\gamma,V`$。本章改用算术振幅：存在互素正整数
+$`m,k`$ 及 $`h\gt0`$，使
+
+```math
+\log(1+r)=mh,\qquad \log(1-r)=-kh.
+\tag{20.1}
+```
+
+由 $`(1+r)(1-r)\lt1`$ 得 $`k\gt m`$；互素条件确定最大格距
+$`h`$。记 $`\eta=1-\theta`$，并定义
+
+```math
+\delta_M=\beta\ell-h\left\lfloor\frac{\beta\ell}{h}\right\rfloor,
+\quad C_c=\frac{e^{c g(\theta)}}{\sqrt{2\pi V}},\quad
+x_j(\delta)=hj-\delta,
+\quad a_j=C_ch e^{-\theta x_j(\delta)},\quad
+b_j=C_ch e^{\eta x_j(\delta)}.
+\tag{20.2}
+```
+
+相位空间为把端点 $`0,h`$ 识别的圆。对 $`a,b\gt0`$ 置
+
+```math
+H(a,b)=
+\begin{cases}
+\displaystyle\frac{a(e^{-b}-e^{-a})}{a-b},&a\ne b,\\[4pt]
+ae^{-a},&a=b,
+\end{cases}
+\qquad
+\Psi_h(c,\delta)=\sum_{j\in\mathbb Z}
+\exp\!\left\{-\frac{a_j}{e^{\theta h}-1}
+               -\frac{b_j}{e^{\eta h}-1}\right\}H(a_j,b_j).
+\tag{20.3}
+```
+

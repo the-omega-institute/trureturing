@@ -1,0 +1,13 @@
+**推论 212.3（风险预算的历史分配）。** 若给定总风险预算 $\alpha$，只要选择
+
+$$
+\sum_i\overline\beta_i\,\overline\alpha_i
++
+\overline\alpha_\infty
+\le\alpha,
+$$
+
+便得到所有来源同时成立的最坏风险证书。若 $\overline\beta_i$ 很小，则该历史允许的条件风险可以较大；若历史必达，条件风险几乎就是总风险预算。
+
+这不是把稀有历史的失败删掉，而是把它的到达概率显式计入预算。忘掉 $\overline\beta_i$ 会产生过紧的合同，忘掉 $\overline\alpha_i$ 则会产生不安全的合同。
+

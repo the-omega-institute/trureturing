@@ -1,0 +1,29 @@
+**Definition 1.2 (the source square).** Define
+$H_n[a,b]=a+b+\delta(a,b)\pmod n$, where the first applicable line in
+the following table gives $\delta$. The branch tests use the standard
+representatives of $a,b$. This is equation (7) of Afsane Ghafari and
+Ian M. Wanless, *Latin Squares whose transversals intersect in unusual
+ways*, arXiv:2607.17547v1, §3, DOI
+[10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547),
+hereafter [GW].
+
+| $\delta(a,b)$ | Condition, in priority order |
+| --- | --- |
+| $4$ | $a\in\{0,5,10\},\ b\equiv1\pmod4,\ b-4a/5\ne1$ |
+| $3$ | $(a,b)\in\{(1,1),(6,5),(11,9)\}$ |
+| $1$ | $a\in\{0,5,10\},\ 1\le b-4a/5\le4$ |
+| $-1$ | $a\in\{1,6,11\},\ 2\le b-4(a-1)/5\le4$ |
+| $-4$ | $a\in\{4,9,14\},\ b\equiv1\pmod4$ |
+| $2$ | $15\le a<n-21,\ a\equiv3\pmod4,\ b\equiv0\pmod2$ |
+| $-2$ | $15\le a<n-21,\ a\equiv1\pmod4,\ b\equiv0\pmod2$ |
+| $0$ | Otherwise |
+
+Write
+$$
+d_0=(1,1,5),\qquad d_1=(6,5,14),\qquad d_2=(11,9,23),
+\qquad D=\{d_0,d_1,d_2\}.
+$$
+For an entry $(a,b,c)$, let $\Delta(a,b,c)$ be the integer congruent
+to $c-a-b$ in $(-n/2,n/2]$. Since $n\ge36$, the displayed
+$\delta(a,b)$ is exactly $\Delta(a,b,H_n[a,b])$.
+

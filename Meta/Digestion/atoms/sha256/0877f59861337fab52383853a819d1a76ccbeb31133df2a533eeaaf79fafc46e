@@ -1,0 +1,25 @@
+**定理 33.2（截止制备成本的相对收敛界）。** 若 $0<\varepsilon<1$ 且 $(1-\varepsilon)R\le H_m\le R$，则 $P_m=P$，并有
+
+$$
+(1-\varepsilon)\kappa_R\le\kappa_m\le\frac{\kappa_R}{1-\varepsilon},
+\qquad
+\frac{1-\varepsilon}{\kappa_R}\le p_m^{\mathrm{opt}}
+\le\frac1{(1-\varepsilon)\kappa_R}.
+$$
+
+因此在有限维固定仪器模型中，$L_m\to\kappa_R$ 且 $p_m^{\mathrm{opt}}\to\kappa_R^{-1}$。这些界不声称随 $m$ 单调。
+
+证明。算子夹逼给出相同的核，且最小、最大本征值分别满足
+
+$$
+(1-\varepsilon)\lambda_{\min}(R|_P)
+\le\lambda_{\min}(H_m|_P)\le\lambda_{\min}(R|_P),
+$$
+
+$$
+(1-\varepsilon)\lambda_{\max}(R|_P)
+\le\lambda_{\max}(H_m|_P)\le\lambda_{\max}(R|_P).
+$$
+
+分别用分子下界与分母上界、分子上界与分母下界得到谱比界，再取倒数。令 $\varepsilon=\varepsilon_m\to0$ 并应用定理 32.4，得到极限。$\square$
+

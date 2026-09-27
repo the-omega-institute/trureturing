@@ -1,0 +1,26 @@
+**推论 221.3（自适应风险证书）。** 令 $\mathcal B_{(N_j)}$ 是把定理 221.2 的区间代入参数盒，令
+
+$$
+\widehat R^+_{(N_j)}
+=
+\sup_{\vartheta\in\mathcal B_{(N_j)}}F(\vartheta).
+$$
+
+则
+
+$$
+\boxed{
+\Pr_{\mathrm{data}}
+\left\{
+R_{\mathrm{worst}}^\pi
+\le
+\widehat R^+_{(N_j)}
+\text{ 对最终自适应样本同时成立}
+\right\}
+\ge1-\delta.
+}
+\tag{221.2}
+$$
+
+若策略在风险证书首次低于 $\alpha$ 时停止所有节点，则在同一置信事件上所提交的证书满足 $R_{\mathrm{worst}}^\pi\le\alpha$。
+

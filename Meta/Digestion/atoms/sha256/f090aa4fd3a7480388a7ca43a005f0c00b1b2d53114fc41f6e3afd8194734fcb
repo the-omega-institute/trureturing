@@ -1,0 +1,61 @@
+### 305.6 分离钟窗口的必要性证明
+
+若（305.5）不成立，取固定
+$$
+0<\gamma<1-q
+$$
+大于左侧 limsup，使所有充分小 \(h\) 都有
+$$
+I(h)m(h)\le\gamma\log\log(1/h),
+\qquad m(h)=\mathbb E_hT.
+\tag{305.13}
+$$
+若任意趋零子序列的期望为无穷大，则原结论已成立。
+
+取
+$$
+h_n=n^{-n},\quad I_n=I(h_n),\quad
+L_n=\log\log(1/h_n)=\log n+\log\log n.
+$$
+由（305.4），
+$$
+I_n/I_{n-1}=O(n^{-\rho}).
+$$
+选 \(K\) 足够大及固定 \(p_\star\) 满足
+$$
+\gamma<p_\star<1-q-\gamma/K.
+$$
+定义实值钟窗口端点
+$$
+b_n=K\log n/I_n,\qquad a_n=b_{n-1}.
+\tag{305.14}
+$$
+从某级起 \(b_n\) 严格递增；并且
+$$
+I_n(a_n+\tau_{\max})
+=O(n^{-\rho}\log n)+I_n\tau_{\max}\longrightarrow0.
+\tag{305.15}
+$$
+（305.12）给 \(P_{h_n}(T\le a_n)\le q+o(1)\)；Markov 给
+$$
+P_{h_n}(T>b_n)\le
+\frac{\gamma L_n}{K\log n}=\gamma/K+o(1).
+$$
+所以互不相交的有限回答窗口
+$$
+A_n=\{a_n<T\le b_n\},\quad
+p_n=P_{h_n}(A_n),\quad q_n=Q(A_n)
+$$
+最终满足 \(p_n\ge p_\star\)。（305.11）、（305.13）及二元熵界给
+$$
+p_n\log(1/q_n)-\log2
+\le\operatorname{kl}(p_n,q_n)
+\le I_nm(h_n)\le\gamma L_n.
+$$
+选 \(\gamma/p_\star<\beta<1\)，便有
+\(q_n\ge c n^{-\beta}\) 对所有充分大 \(n\) 成立。右侧求和发散，而同一 \(Q\) 下
+$$
+\sum_nq_n\le Q(T<\infty)\le q.
+$$
+矛盾，证明（305.5）。只用了同一实现上的累计时长；未把各动作分别最优的信息率当作同时可达。
+

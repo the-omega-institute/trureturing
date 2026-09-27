@@ -1,0 +1,18 @@
+**推论 82.2（可校准模型中的纯态返回缺陷下界）。** 回到第 78 节的二维名义仪器 $\Gamma_0$，记其真实失效半径为 $R=\mathfrak r_{\mathrm{fail}}$。若 $\delta(\Gamma)\le u<R$，则对每个纯态 $P$，
+
+$$
+\boxed{
+1-\operatorname{Tr}[P\mathcal N_\Gamma(P)]
+\ge(R-u)^2.
+} \tag{82.3}
+$$
+
+证明。定理 82.1 给一个同接口失效仪器 $\widetilde\Gamma$，其与 $\Gamma$ 的距离至多为返回缺陷的平方根。由失效半径定义及三角不等式，
+
+$$
+R\le\delta(\widetilde\Gamma)
+\le u+\sqrt{1-\operatorname{Tr}[P\mathcal N_\Gamma(P)]}.
+$$
+
+因为 $R-u>0$，移项并平方即得。$\square$
+

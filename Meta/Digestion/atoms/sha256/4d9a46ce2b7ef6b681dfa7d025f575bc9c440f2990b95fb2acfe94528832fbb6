@@ -1,0 +1,74 @@
+**定理60.2（早期纯分支的环境维数上界）。** 本节七维六终端合同下，
+$$
+\boxed{\dim\operatorname{span}\{\eta_1,\eta_2,\eta_3,\eta_4,\eta_5,\eta_6\}\le3.}
+\tag{60.12}
+$$
+该结论不限制环境射线的相互交叠，不要求它们按周期重复。
+
+**证明。** 定理60.1给 $\dim F_2\le3$，所以全部环境的张成维数至多四。反设总维数为四，则 $\dim F_2=3$、$\eta_1\notin F_2$。若 $\dim F_3=3$，定理60.1又给 $\eta_1\in F_3$，矛盾；若 $\dim F_3\le1$，加入 $\eta_2,\eta_1$ 后总维数至多三。因此必有
+$$
+\dim F_3=2,\qquad
+\eta_2\notin F_3,\qquad
+\eta_1\notin\operatorname{span}(F_3,\eta_2).
+\tag{60.13}
+$$
+
+在 $F_3$ 中选择两份实际独立尾环境 $\alpha,\beta$，对应二维接收因子 $T_\alpha,T_\beta$。四个环境方向 $\eta_1,\eta_2,\alpha,\beta$ 线性独立，已知零位像的维数为 $1+2+2+2=7$，于是
+$$
+V_0K=(\mathbb Cp\otimes\eta_1)
+\dotplus(U\otimes\eta_2)
+\dotplus(T_\alpha\otimes\alpha)
+\dotplus(T_\beta\otimes\beta).
+\tag{60.14}
+$$
+所有实际尾零位像都位于后两个二维块之和。
+
+若出现第三条不同尾射线 $\gamma=c_\alpha\alpha+c_\beta\beta$，其中 $c_\alpha c_\beta\ne0$，其二维接收因子包含于 $T_\alpha\cap T_\beta$，所以两者相等，继而每个 $G_3,\ldots,G_6$ 都相同。固定 $V_1$ 在 $G_3,G_4,G_5$ 上的像相同，给 $\eta_4\parallel\eta_5\parallel\eta_6$。这使四个尾位置最多只有 $\eta_3$ 与这一条共同射线，不能出现第三条。因此实际尾词只有两条不同射线。
+
+将首条记为 $A$。由（60.14），同一环境射线的接收纤维唯一，因此相同字母对应的 $G_n$ 相等。若 $\eta_4\parallel A$，则 $G_3=G_4$，固定 $V_1$ 给 $\eta_4\parallel\eta_5$；再由 $G_4=G_5$ 得 $\eta_5\parallel\eta_6$，使尾环境共线，矛盾。因此 $\eta_4$ 属于第二条射线 $B$。
+
+若 $\eta_5\parallel B$，则 $G_4=G_5$，固定 $V_1$ 给 $\eta_6\parallel B$。同一零位纤维因而使 $G_4=G_5=G_6$、$H_3=H_4=H_5$，与实际来源的主角行列式变化矛盾。具体地，令 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$。第53节式（53.14）给
+$$
+\delta_n=\det(P_{H_n}P_{G_n}|_{H_n})
+=x^2\frac{t_{n-2}}{t_n},
+\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0.
+\tag{60.15}
+$$
+
+因此 $\eta_5\parallel A$。此时 $G_3=G_5$，固定 $V_1$ 给 $\eta_6\parallel\eta_4\parallel B$，并由同一零位纤维得到
+$$
+\eta_3\parallel\eta_5\parallel A,\quad
+\eta_4\parallel\eta_6\parallel B,\quad
+G_3=G_5,\quad G_4=G_6,\quad H_2=H_4.
+\tag{60.16}
+$$
+这是反设内部的必要形状，还须满足第六轮的固定等距约束。
+
+第四、第六轮共用环境射线 $B$，所以
+$$
+V_0H_3=G_4\otimes B=G_6\otimes B=V_0H_5,
+\qquad H_3=H_5.
+\tag{60.17}
+$$
+同轮正交及满投影给
+$$
+Q_3=P_{G_3^\perp}H_3
+=P_{G_5^\perp}H_5=Q_5.
+\tag{60.18}
+$$
+这里等号来自相同实际子空间的投影像，没有仅凭环境相同识别接收空间。固定一位映射在第三、第五轮的输入于是满足
+$$
+V_1U=Q_3\otimes A=Q_5\otimes A=V_1G_4,
+\qquad G_4=U.
+\tag{60.19}
+$$
+结合 $H_2=H_4$，得到
+$$
+0\ne w\in H_2\cap U=H_4\cap G_4,
+\tag{60.20}
+$$
+违反（60.4）。因此四维总环境张成不可能，（60.12）成立。证明完毕。
+
+最后的闭合也可直接由来源主角核对：式（60.16）、（60.17）使 $(H_3,G_3)=(H_5,G_5)$，而实际来源有 $\delta_5-\delta_3=x^4y^2/(t_3t_5)>0$。主证明使用同轮满投影，只依赖实际第六轮，没有调用第七轮或全六轮周期假设。
+

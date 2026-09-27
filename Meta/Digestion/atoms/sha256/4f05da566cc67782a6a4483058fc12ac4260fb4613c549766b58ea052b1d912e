@@ -1,0 +1,19 @@
+### 57.2 任意扩展是纯化的末端通道像
+
+令 $r=\operatorname{rank}M$，取 $E=\mathbb C^r$。对 $M$ 的正谱分解
+
+$$
+M=\sum_{j=1}^r\lambda_j|m_j\rangle\langle m_j|,
+\qquad\lambda_j>0,
+$$
+
+定义未归一化的最小纯化
+
+$$
+|\Omega\rangle=\sum_{j=1}^r\sqrt{\lambda_j}|m_j\rangle_{AB}|j\rangle_E,
+\qquad R^{\mathrm{pur}}=|\Omega\rangle\langle\Omega|.
+\tag{57.5}
+$$
+
+其范数平方为 $\operatorname{Tr}M=\dim A$，与未归一化 Choi 约定一致。
+

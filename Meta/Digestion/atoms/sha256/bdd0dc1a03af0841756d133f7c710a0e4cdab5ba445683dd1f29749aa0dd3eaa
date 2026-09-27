@@ -1,0 +1,34 @@
+**定义 240.1（鲁棒目标直径）。** 对非空模型子集 $F\subseteq\mathfrak M$，定义
+
+$$
+D_\Phi(F)
+=
+\sup_{M,M'\in F}
+|\Phi(M)-\Phi(M')|.
+$$
+
+在当前接口 $I$ 下，模型位于某个纤维 $F_I$。执行干预 $a$ 并观察离散结果 $y$ 后，可能纤维为
+
+$$
+F_{I,a,y}
+=
+\{M\in F_I:P_M^a(y)>0\}.
+$$
+
+定义最坏后验直径
+
+$$
+\overline D_a(F_I)
+=
+\sup_{y:F_{I,a,y}\ne\varnothing}
+D_\Phi(F_{I,a,y}),
+$$
+
+以及鲁棒分离价值
+
+$$
+V_\infty(a\mid F_I)
+=
+D_\Phi(F_I)-\overline D_a(F_I).
+$$
+

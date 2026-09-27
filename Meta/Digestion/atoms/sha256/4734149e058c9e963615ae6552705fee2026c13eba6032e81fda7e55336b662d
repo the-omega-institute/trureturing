@@ -1,0 +1,97 @@
+**引理159.3（标签可读与隐藏的误差隙）。** 有
+
+$$
+\boxed{
+\mathfrak e(|+\rangle)=\frac34,\qquad
+\mathfrak e(|0\rangle)\ge\frac34+\frac{\lambda_*}{4}.
+}
+\tag{159.19}
+$$
+
+**证明。** 先给全部 $v$ 的共同下界。取原始活动输入与外部 qubit $J$ 的 Bell 态。由于（159.17）常值，任意解码器的输出形如
+
+$$
+\frac{I_J}{2}\otimes\sigma_{M Q_{\mathrm{out}}R_{\mathrm{out}}}.
+$$
+
+目标为纯态
+
+$$
+|\Gamma\rangle=
+\frac{|0\rangle_J|0\rangle_{Q_{\mathrm{out}}}
++|1\rangle_J|1\rangle_{Q_{\mathrm{out}}}}{\sqrt2}
+\otimes|\Xi\rangle_{MR_{\mathrm{out}}}.
+$$
+
+直接展开 Bell 标签可得
+
+$$
+\begin{aligned}
+\langle\Gamma|
+\left(\frac{I_J}{2}\otimes\sigma\right)
+|\Gamma\rangle
+&=\frac14\operatorname{Tr}\!\left[
+(I_{Q_{\mathrm{out}}}\otimes|\Xi\rangle\langle\Xi|)\sigma
+\right]\\
+&\le\frac14.
+\end{aligned}
+\tag{159.20}
+$$
+
+用目标投影作二结果测量，半迹距离至少为一减去该概率。所以 $\mathfrak e(v)\ge3/4$，下界已经包含对全部解码器的优化。
+
+若 $v=|+\rangle$，式（159.11）的两个接收标签分别为
+$|+\rangle_Q$ 与 $|-\rangle_Q$。解码器可以在 $X$ 基测量 $Q$，无误取得 $s$，再对 $R$ 施加 $Y^s$，将 $\psi_s$ 恢复为同一 $\Xi$。最后制备
+$I_{Q_{\mathrm{out}}}/2$，得到精确输出
+
+$$
+\operatorname{Tr}(X)\,
+\frac{I_{Q_{\mathrm{out}}}}2
+\otimes|\Xi\rangle\langle\Xi|_{MR_{\mathrm{out}}}.
+\tag{159.21}
+$$
+
+与 $\mathcal W_*$ 比较，其半 diamond 距离等于 qubit 完全混合替换通道与恒等通道之间的半 diamond 距离。完全混合替换是四个 Pauli 共轭通道的等权平均；三角不等式给上界 $3/4$，上面的 Bell 下界给等号。因此 $\mathfrak e(|+\rangle)=3/4$。
+
+若 $v=|0\rangle$，$Z^s|0\rangle=|0\rangle$，接收态为
+
+$$
+|0\rangle\langle0|_Q\otimes\tau_{MR},
+\qquad
+\tau=\frac12\left(
+|\Xi\rangle\langle\Xi|
++(I_M\otimes Y)|\Xi\rangle\langle\Xi|(I_M\otimes Y)
+\right).
+\tag{159.22}
+$$
+
+$X\mapsto(X+YXY)/2$ 是 $Y$ 本征基中的完全退相干。它将 qubit $R$ 测量到两个秩一正交投影，故 $\tau$ 在 $M:R$ 之间可分。任何只作用于 $Q,R$ 的 CPTP 解码器都保持 $M:(Q_{\mathrm{out}}R_{\mathrm{out}})$ 的可分性；再迹掉 $Q_{\mathrm{out}}$ 后，
+$\sigma_{MR_{\mathrm{out}}}$ 仍可分。
+
+纯态 $\Xi$ 的最大 Schmidt 权重为
+$\lambda_{\max}(\rho_*)=1-\lambda_*$。对任意纯乘积向量，其与 $\Xi$ 的重叠平方至多为这个数；对可分混合态取凸组合，得到
+
+$$
+\langle\Xi|\sigma_{MR_{\mathrm{out}}}|\Xi\rangle
+\le1-\lambda_*.
+\tag{159.23}
+$$
+
+将（159.23）代入（159.20），目标投影概率至多为
+$(1-\lambda_*)/4$。因此任意解码器的完整参考误差至少为
+$3/4+\lambda_*/4$。证毕。
+
+这份间隔比较的是同一个完整参考目标。标签可读时的解码器没有恢复已经被入口忘掉的原始输入；它恰好达到常值通道所允许的 $3/4$。隐藏标签时，另有不能由本地通道补回的活动记忆纠缠损失。
+
+还将使用比较误差的连续性。第154节的最优解码扰动界和通道收缩性给
+
+$$
+|\mathfrak e(v)-\mathfrak e(w)|
+\le\frac12\|
+\mathfrak E(|v\rangle\langle v|)
+-\mathfrak E(|w\rangle\langle w|)
+\|_1
+\le\frac12\||v\rangle\langle v|-|w\rangle\langle w|\|_1.
+\tag{159.24}
+$$
+

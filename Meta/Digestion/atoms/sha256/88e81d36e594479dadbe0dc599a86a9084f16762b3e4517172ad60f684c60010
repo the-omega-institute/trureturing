@@ -1,0 +1,39 @@
+### 285.2 总相位中间扇区内的已知图像
+
+对两个原输入，重排张量因子为 $H_1H_2E_1E_2$。令
+$$
+\mathcal H_{\rm mid}
+=\operatorname{span}\{|01\rangle,|10\rangle\}\otimes(E_n\otimes E_n),
+\qquad \Pi_{\rm mid}\text{ 为其正交投影}.
+\tag{285.3}
+$$
+两个输入的共同相位在此扇区上都是同一标量 $e^{-i\phi}$。因此任何仅作用在该扇区内部的算子都与共同相位作用对易。
+
+把 $\mathcal H_{\rm mid}$ 按 $|01\rangle,|10\rangle$ 的顺序识别为两份 $E_n\otimes E_n$ 的直和，定义
+$$
+C_nx=
+\begin{pmatrix}I_n\otimes M^\dagger\\M^\dagger\otimes I_n\end{pmatrix}x.
+\tag{285.4}
+$$
+这正是 $(V\otimes V)x$ 的中间扇区分量。$M$ 的最小奇异值至少为 $3/4$，所以 $C_n$ 单射，且
+$$
+C_n^\dagger C_n
+=I_n\otimes MM^\dagger+MM^\dagger\otimes I_n
+\succeq\frac98 I_{n^2}.
+\tag{285.5}
+$$
+在中间扇区上令
+$$
+P_n=I_{\mathcal H_{\rm mid}}
+-C_n(C_n^\dagger C_n)^{-1}C_n^\dagger,
+\tag{285.6}
+$$
+再把它延拓为其余两个扇区上的零算子。则 $P_n$ 是已知正交投影，
+$$
+\operatorname{rank}P_n=n^2,
+\qquad
+P_n(V\otimes V)=0.
+\tag{285.7}
+$$
+该投影只依赖已知的 $n,M$，不依赖未知相位或扰动假设。
+

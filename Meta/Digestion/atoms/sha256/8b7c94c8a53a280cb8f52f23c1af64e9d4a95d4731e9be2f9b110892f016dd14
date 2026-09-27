@@ -1,0 +1,4 @@
+**推论 1.7。** There is no fixed finite-state subsequential transducer that converts every legal $k$-bonacci representation to an equal-valued binary representation in these reading conventions, even when legality is only promised.
+
+**Proof.** The inequality $S\ge L^{k-1}$ holds for every positive odd $L$, whereas $S$ is fixed. $\square$
+

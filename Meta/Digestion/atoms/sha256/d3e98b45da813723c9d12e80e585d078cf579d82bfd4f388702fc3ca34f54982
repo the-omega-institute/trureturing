@@ -1,0 +1,16 @@
+**定义 153.1（干预需要说明被替换的机制）。** 项目的[软干预模块性](../../../D5/S3/ConceptDynamics/Causal/SoftInterventionModularity.lean)在有限有向无环图上，给每个节点 $v$ 配置依赖其父节点值的概率核 $K_v$。节点按父先子后的顺序生成，状态 $z$ 的联合质量写成
+
+$$
+p(z)=\prod_{v\in V}K_v\bigl(z_v\mid z_{\operatorname{pa}(v)}\bigr).
+$$
+
+若实践方案恰好把节点集合 $S$ 上的核替换为 $\widetilde K_v$，并保持其余核，所引模块的局部替换公式给出
+
+$$
+p^{S}(z)=
+\prod_{v\in S}\widetilde K_v\bigl(z_v\mid z_{\operatorname{pa}(v)}\bigr)
+\prod_{v\notin S}K_v\bigl(z_v\mid z_{\operatorname{pa}(v)}\bigr).
+$$
+
+这里保持的是核作为函数的规则，不是保证所有未被替换节点的取值或边缘分布不变。父节点的分布改变，可以沿原来的子节点机制传播。把“没有改动这个机制”误写成“这个变量不会受到影响”，会丢掉中介作用。
+

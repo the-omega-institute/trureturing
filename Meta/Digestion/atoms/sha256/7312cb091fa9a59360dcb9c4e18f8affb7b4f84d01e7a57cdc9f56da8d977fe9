@@ -1,0 +1,67 @@
+**定理166.1（精确比较分布）。** 比较分布的累积分布函数为
+
+$$
+\boxed{
+F_\Delta(x)=
+\begin{cases}
+0,&x\le\ell,\\[2mm]
+\displaystyle\frac2\pi\arccos s_\Delta(x),
+&\ell<x<u_\Delta,\\[2mm]
+1,&x\ge u_\Delta.
+\end{cases}
+}
+\tag{166.7}
+$$
+
+它在支撑区间上连续、严格递增，没有原子。其内部密度为
+
+$$
+\boxed{
+f_\Delta(x)=
+\frac{4(8x-3)}
+{\pi\Delta(4-s_\Delta(x))
+\sqrt{1-s_\Delta(x)^2}},
+\qquad \ell<x<u_\Delta.
+}
+\tag{166.8}
+$$
+
+对 $0<p<1$，其分位数
+$Q_\Delta(p)=\inf\{x:F_\Delta(x)\ge p\}$ 为
+
+$$
+\boxed{
+Q_\Delta(p)=
+\psi_\Delta\!\left(\cos\frac{\pi p}{2}\right).
+}
+\tag{166.9}
+$$
+
+该公式连续延伸到
+$Q_\Delta(0)=\ell$、
+$Q_\Delta(1)=u_\Delta$。
+
+**证明。** 解方程 $x=\psi_\Delta(s)$，先平方，再用
+$(1-s)(7-s)=(4-s)^2-9$，即得（166.6）。因为
+$\psi_\Delta$ 递减，
+
+$$
+\Pr(Z\le x)
+=\Pr(S\ge s_\Delta(x))
+=\frac2\pi\arccos s_\Delta(x)
+$$
+
+在区间内部成立。$S$ 无原子，且 $\psi_\Delta$ 连续严格单调，所以 $Z$ 也无原子。求导时有
+
+$$
+-s_\Delta'(x)=
+\frac{2(8x-3)}
+{\Delta(4-s_\Delta(x))},
+$$
+
+代入 CDF 的导数得到（166.8）。最后由
+$p=(2/\pi)\arccos s$ 解出
+$s=\cos(\pi p/2)$，得到（166.9）。证毕。
+
+这份 CDF 和分位数只使用平方根与初等三角函数。它们已足以精确回答比较轨道中的任意误差阈值与占比问题，不需要先计算一个可能引入特殊函数的均值积分。
+

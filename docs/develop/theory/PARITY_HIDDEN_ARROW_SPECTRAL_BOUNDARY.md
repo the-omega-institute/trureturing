@@ -13316,3 +13316,795 @@ $E_2$ 的存在性与空性仍未解决，参数集的测度不充当统计先�
 两个根的子序列不被改为同一原层。
 
 ## 追加锚（89 章后）
+
+## 90. 带噪能量观测后的第三阶后验覆盖
+
+**定义 90.1（精确熵中心与最小覆盖数）。** 保持定义 87.1 的原固定幅度、
+固定 $\beta\in(1/2,1)$、全部取整、完整得分组、均匀支持先验后验及同一个
+$Y=T+\sigma_MG$，仍假定
+$L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$。
+沿用第 68 章的完整率域 $\mathcal I$、率函数 $I$、$c_q=\phi(1-\beta)/\beta$，
+并置
+
+$$
+\ell_*=\operatorname{Leb}\{u\in\mathcal I:I(u)<c_q\},
+\qquad v=\ell_*/2>0.
+\tag{90.1}
+$$
+
+$v$ 是自然单位信息方差的首阶系数，与能量极限方差 $\nu=2g_0$ 不同。
+对每个有限数据纤维，写
+
+$$
+\begin{aligned}
+f_x(y)&=\sum_rP_x(r)\varphi_{\sigma_M}(y-t_x(r)),\\
+p_x(r\mid y)&=\frac{P_x(r)\varphi_{\sigma_M}(y-t_x(r))}{f_x(y)},\\
+J_y(r)&=-\ln p_x(r\mid y),\qquad
+H_x(y)=\sum_rp_x(r\mid y)J_y(r),\\
+N_\varepsilon(x,y)&=
+\min\{|A|:\sum_{r\in A}p_x(r\mid y)\ge1-\varepsilon\}.
+\end{aligned}
+\tag{90.2}
+$$
+
+以下 $\varepsilon\in(0,1)$ 固定，$z=\Phi^{-1}(1-\varepsilon)$，
+$\varphi$ 是标准正态密度。所有信息量使用自然对数。
+$H_x(y)$ 始终是同一输出处的精确条件熵。
+
+**定理 90.2（常数精度的固定误差覆盖）。** 定义
+
+$$
+C_\varepsilon=\frac{z^2-1}{3}+\ln\varphi(z)-\frac12\ln v.
+\tag{90.3}
+$$
+
+对任意 $\eta>0$，有
+
+$$
+\int f_x(y)\,
+\mathbf1_{\left\{
+\left|\ln N_\varepsilon(x,y)-H_x(y)-Q\sqrt v\,z
+                  +\ln Q-C_\varepsilon\right|>\eta\right\}}dy
+\longrightarrow0
+\tag{90.4}
+$$
+
+在两种原实际实验内分别对固定真实支持的数据概率一致成立。
+即对该积分超过任意 $\tau>0$ 的数据事件，对 $|S_0|=q$ 取概率上确界后趋零。
+特别地，在此输出积分概率意义下，
+
+$$
+\ln N_\varepsilon(x,Y)
+=H_x(Y)+Q\sqrt v\,z-\ln Q
+ +\frac{z^2-1}{3}+\ln\varphi(z)-\frac12\ln v+o_{\mathbb P}(1).
+\tag{90.5}
+$$
+
+不将结论加强为每个输出成立或未界定的对数余项期望收敛。
+
+证明。需要局部信息谱精度，以下先证明一个带速率尺度的条件 Gamma 比较。
+仍用 $\mathsf Q_x$ 表示校准的独立二项组参考，
+$L_x=dP_x/d\mathsf Q_x$、$a_x=\|L_x-1\|_{2,\mathsf Q_x}$，
+$d_j=C_jp_j(1-p_j)$、$B^2=q/Q^{5/2}$、$v_j=d_j/B^2$、
+$U_j=(R_j-C_jp_j)/B$ 和 $e_j=(\mu_j-C_jp_j)/B$。
+第 82、87 章给
+$0<L_x\le C$、$a_x=O_{\mathbb P}(Q^{-5/2})$、
+$\|e_D\|\le a_x\sqrt{V_D}$，其中 $V_D=\sum_Dv_j$。
+这些是完整计数向量的条件化控制，不是路径观测行的独立性。
+
+**过渡组的有界数目。** 在共同良好数据事件上取固定 $A_0=3600$，令
+
+$$
+\mathcal B_x=\{j:d_j\ge Q^{A_0}\},\qquad N_x=|\mathcal B_x|.
+\tag{90.6}
+$$
+
+有
+
+$$
+N_x=\ell_*Q^2+O(1),\qquad
+|\{j\notin\mathcal B_x:C_j>0\}|=O(1).
+\tag{90.7}
+$$
+
+为证明这一精度，原一行／两行比较及完整域 Stirling 界给
+
+$$
+\ln m_j=Q^3\{c_q-I(\bar u_j)\}+O(\ln Q),
+\quad u_j=j/Q^2,\quad \bar u_j=\max(u_j,-b/\vartheta),
+\tag{90.8}
+$$
+
+其中 $m_j$ 是原混合 Poisson 行均值，$\vartheta$ 是原固定斜率。
+这包括零计数端点：$t\ln t$ 的模连续性和
+$\ln(n!)=n\ln n-n+O(\ln Q)$ 在计数范围内给同一误差。
+可行格点低于左端点的偏差为 $O(Q^{-3}+|\vartheta-P/Q|)$，只涉及有界个点。
+$I$ 严格凸，正根导数非零，内部负根导数也非零；
+若 $I(-b/\vartheta)=c_q$，其右导数趋于负无穷，绝对值仍局部有正下界。
+因此小 $t$ 下 $\{|I-c_q|\le t\}$ 至多有两个分支，总长度为 $O(t)$。
+
+由原实际均值方差界，所有 $m_j<Q^{-10}$ 的组同时为空，
+其失败概率至多 $CQ^{-8}$；所有 $m_j>Q^{A_0+10}$ 的组同时满足
+$C_j\ge m_j/2$，其失败概率至多
+$CQ^{2-A_0-10}+CQ^2e_{\rm row}$。
+良好事件上 $p_j\in[1/4,3/4]$，故这些大组都进入 $\mathcal B_x$。
+其余可能有非零占据的过渡点位于宽 $O(\ln Q/Q^3)$ 的率带，
+格距为 $Q^{-2}$，点数至多 $C(1+\ln Q/Q)=O(1)$。
+在正率区间计数格点即得 (90.7)。固定证明截断取在正根以外，
+截断失败仍仅以其数据概率删除，不改原完整窗口。
+
+令 $\mathcal S=-\ln\mathsf Q_x(R)$、$\widetilde h=\mathbb E_{\mathsf Q_x}\mathcal S$，
+$s=\mathcal S-\widetilde h=\sum_js_j$。
+单组二项全点界和中心 Bernoulli 矩展开给每个固定阶的 $s_j$ 中心矩一致有界；
+特别地 $\mathbb Es^2\le CQ^2$、$\mathbb Es^4\le CQ^4$、$\mathbb E|s|^6\le CQ^6$。
+用第 87 章同一单调量化耦合，在 $\mathcal B_x$ 上取独立标准正态 $Z_j$。
+(87.9) 及其 Stirling 余项给
+
+$$
+\left\|s_j-\frac{Z_j^2-1}{2}\right\|_2\le Cd_j^{-1/36}.
+\tag{90.9}
+$$
+
+定义 $S_B=\frac12\sum_{\mathcal B_x}(Z_j^2-1)$，
+$s_b=\sum_{j\notin\mathcal B_x}s_j$。保留外部原乘积计数，则 $S_B,s_b$ 独立，
+$s_b$ 中心且每个固定阶矩有界，并有
+
+$$
+\varepsilon_s:=\|s-S_B-s_b\|_2\le CQ^{2-A_0/36}=CQ^{-98}.
+\tag{90.10}
+$$
+
+此信息权重误差不除以测量噪声。
+
+**在原噪声尺度上的平方标量误差。** 取第 82 章移动核心
+$\mathcal C_R=\{|j\delta|\le R_M\}$，
+$R_M^2=\sqrt{Q^3(L_M+\ln Q+1)}$。
+其组数 $o(Q^2)$，且在良好事件上
+$d_{\min}\ge\exp(c_qQ^3/2)$，因而最终包含于 $\mathcal B_x$。
+记保持全部精确 $e_j,v_j$ 和外部中心截距的参考为 $T_R^{\rm G}$。
+在同一计数／正态耦合下令
+$D_1=\mathbb E|T-T_R^{\rm G}|$、$D_2=\mathbb E|T-T_R^{\rm G}|^2$。
+对所有固定 $a\ge0,b>0$，
+
+$$
+Q^a\sigma_M^{-b}(D_1+\sqrt{D_2})\longrightarrow0.
+\tag{90.11}
+$$
+
+这里需补足平方版本。由 (90.9) 使用的四阶范数量化界，核心误差的 $L^2$ 范数至多
+$C\delta^{-1/2}d_{\min}^{-1/36}(1+a_x)V$。
+在 $\mathcal O=K_M\setminus\mathcal C_R$ 上，精确中心展开给
+
+$$
+\|T-T^{\rm core}\|_2
+\le\delta^{-1/2}
+\left[\left(2\sum_{\mathcal O}v_j^2+B^{-2}V_{\mathcal O}\right)^{1/2}
+                       +2a_xV_{\mathcal O}\right].
+\tag{90.12}
+$$
+
+常数截距精确抵消。原实际行界使尾部一阶、平方方差质量的期望
+分别受 $Ce^{-cR_M^2}$、$C\delta e^{-cR_M^2}+CB^{-2}$ 及
+$Q^Ce^{-cQ^3}$ 型项控制。
+在 Markov 界中平方所需阈值后，
+$R_M^2/(L_M+\ln Q+1)\to\infty$、
+$L_M=o(Q^3)$ 和 $B^{-2}=Q^{5/2}/q$ 支付每个固定
+$Q^a\sigma_M^{-b}$。
+核心可再限制 $V\le Q$，其失败概率趋零；指数 $d_{\min}$ 支付剩余因子。
+得 (90.11)。实际后验密度误差 $a_x$ 与任何多项式中心误差均未除以噪声。
+
+**中心化后的条件分布比较。** 精确 Bayes 恒等式为
+
+$$
+J=S-L_M+\tfrac12\ln(2\pi)+G^2/2+\ln f_x(Y),
+\qquad S=-\ln P_x(R).
+\tag{90.13}
+$$
+
+故令 $K_1=S-\widetilde h+G^2/2$ 后，
+$J-H_x(Y)=K_1-\mathbb E[K_1\mid Y]$；
+全部只依赖输出的项精确消去。
+
+所用有限比较如下。设两个潜变量／输出联合律为 $\mu,\zeta$，
+输出密度 $f,g$，联合 TV 距离至多 $e$。
+同一坐标空间上的 $U_1,U_2$ 满足
+$\mathbb E_\mu|U_1-U_2|\le\epsilon$，
+各自二阶矩之和至多 $CQ^2$。
+若 $\zeta$ 下 $U_2$ 的每个条件密度至多 $C/Q$，
+两个非归一化一阶矩输出密度的 $L^1$ 距离至多 $w$，则任意 $\eta>0$ 下
+
+$$
+\int f\,d_K\!\left(
+\mathcal L_\mu(U_1-\mathbb E_\mu[U_1\mid y]\mid y),
+\mathcal L_\zeta(U_2-\mathbb E_\zeta[U_2\mid y]\mid y)\right)
+\le C\left(e+\frac\epsilon\eta+\frac\eta Q+\frac wQ+\sqrt e\right).
+\tag{90.14}
+$$
+
+若比较的是同一 $(U,y)$ 坐标联合律，可去掉含 $\epsilon,\eta$ 的两项。
+证明此界只需条件 TV 积分、Markov 和密度的区间界。
+对条件均值，用公共输出子测度 $h_0=\min(f,g)$；
+若 $A_1,A_2$ 是两个非归一化矩密度，则
+
+$$
+h_0|A_1/f-A_2/g|
+\le |A_1-A_2|+(f-h_0)|A_1/f|+(g-h_0)|A_2/g|.
+$$
+
+后两项积分由各自的条件 Jensen 与 Cauchy–Schwarz 控制为 $CQ\sqrt e$。
+均值平移再乘条件密度上界 $C/Q$；公共子测度外只支付 $O(e)$。
+这证明 (90.14)，没有把无界条件均值按 TV 直接转移。
+
+在完整扩展量化空间上比较
+
+$$
+d\mu_1=L_x(R)d\mathsf Q_x^{\rm ext}\,
+               \varphi_\sigma(y-T)\,dy,\qquad
+d\mu_2=d\mathsf Q_x^{\rm ext}\,
+               \varphi_\sigma(y-T_R^{\rm G})\,dy.
+\tag{90.15}
+$$
+
+令 $g_1=(y-T)/\sigma$、$g_2=(y-T_R^{\rm G})/\sigma$，
+并分别取
+$K_1=S-\widetilde h+g_1^2/2$、
+$K_2=S_B+s_b+g_2^2/2$。
+噪声变量未作为同一坐标追加到 (90.15)，因为残差图随参考标量改变。
+有限误差满足
+
+$$
+\begin{aligned}
+e_1&\le C(a_x+D_1/\sigma),\\
+\epsilon_1:=\mathbb E_{\mu_1}|K_1-K_2|
+&\le C(a_x+\varepsilon_s+\sqrt{D_2}/\sigma+D_2/\sigma^2),\\
+w_1&\le C(Qa_x+a_x+Q\sqrt{D_1/\sigma}
+                         +\varepsilon_s+D_1/\sigma).
+\end{aligned}
+\tag{90.16}
+$$
+
+第一式是完整向量密度与正态平移界。
+第二式使用 $P_x$ 下 $\mathbb E|\ln L_x|\le Ca_x$ 和
+$|g_1^2-g_2^2|\le2|g_1||T-T_R^{\rm G}|/\sigma
+                         +|T-T_R^{\rm G}|^2/\sigma^2$。
+第三式先中心化 $s$，使换密度的代价为 $CQa_x$；
+正态核的 $L^1$ 差 $k$ 满足
+$k\le\min(2,C|T-T_R^{\rm G}|/\sigma)$，故信息权重的平移代价
+至多 $CQ\sqrt{D_1/\sigma}$。
+对残差平方使用正核
+$\psi_\sigma(t)=(t/\sigma)^2\varphi_\sigma(t)$，
+其积分为一、导数 $L^1$ 范数为 $C/\sigma$。
+这给剩余的 $Ca_x+CD_1/\sigma$，并保留同一个测量变量。
+两侧各自的 $K$ 二阶矩至多 $CQ^2$。
+
+$\mu_2$ 下 $\mathcal B_x\setminus\mathcal C_R$ 的正态信息和
+独立于输出、核心和 $s_b$，是形状
+$(N_x-|\mathcal C_R|)/2\sim vQ^2$ 的中心 Gamma。
+其密度至多 $C/Q$，故 $K_2$ 的每个条件密度也有此界。
+在 (90.14) 取 $\eta=Q^{-1/2}$，由
+$a_x=O_{\mathbb P}(Q^{-5/2})$、(90.10)—(90.11)，得到
+
+$$
+\int f_x\,d_K\!\left(
+\mathcal L(J-H_x(y)\mid y),
+\mathcal L_{\mu_2}(K_2-\mathbb E_{\mu_2}[K_2\mid y]\mid y)\right)dy
+=o_{\mathbb P}(Q^{-1}).
+\tag{90.17}
+$$
+
+**二维正态密度使能量核心缩小。** 取固定足够大 $D$，
+$H_M^2=D\ln Q$、$\mathcal H=\{|j\delta|\le H_M\}$，
+$m_H=|\mathcal H|=O(Q^{1/2}\sqrt{\ln Q})=o(Q)$。
+它最终包含于 $\mathcal C_R$。保留全部中心截距，定义
+
+$$
+T_H^{\rm G}
+=\delta^{-1/2}
+\left[\sum_{\mathcal H}(\sqrt{v_j}Z_j-e_j)^2
+-V_{\mathcal H}+\|e_{K_M\setminus\mathcal H}\|^2\right],
+\qquad S_H=\frac12\sum_{\mathcal H}(Z_j^2-1).
+\tag{90.18}
+$$
+
+则 $(S_H,T_H^{\rm G})$ 的联合密度 $p_H$ 满足
+
+$$
+\|\partial_t p_H(s,t)\|_{L^1(\mathbb R^2)}\le C\delta^{-1/2}.
+\tag{90.19}
+$$
+
+以下核对这一步的有限维非退化性。取 128 个不同核心指标组成 64 个互不相交的对，
+每对一端的空间坐标趋于零，另一端趋于一。
+$b_j=v_j/\delta$ 落在有界正区间内，两个区间因 $\rho(0)>\rho(1)$ 而分离；
+$c_j=e_j/\sqrt{v_j}$ 在这些指标上一致趋零，可限制 $|c_j|\le1$。
+在此固定块上置
+$F_1=\frac12\sum(Z_j^2-1)$、
+$F_2=\sum b_j((Z_j-c_j)^2-1)$。
+梯度 Gram 矩阵 $\Gamma$ 的行列式由 Cauchy–Binet 给
+
+$$
+\det\Gamma\ge4\sum_{\text{64 对 }(i,j)}P_{ij}^2,\qquad
+P_{ij}=(b_j-b_i)Z_iZ_j+b_ic_iZ_j-b_jc_jZ_i.
+\tag{90.20}
+$$
+
+条件于 $Z_j$，多项式关于 $Z_i$ 的斜率小于 $\eta$ 的概率至多 $C\eta$；
+在其补集上，$|P_{ij}|\le u$ 的概率至多 $Cu/\eta$。
+取 $\eta=\sqrt u$ 得 $\Pr(|P_{ij}|\le u)\le C\sqrt u$。
+各对独立，因此
+
+$$
+\Pr(\det\Gamma\le t)\le Ct^{16}\quad(0<t\le1),
+\qquad \mathbb E(\det\Gamma)^{-r}\le C_r\quad(r<16).
+\tag{90.21}
+$$
+
+令 $\mathfrak u=\sum_b(\Gamma^{-1})_{2b}\nabla F_b$。
+它对 $F_1,F_2$ 的方向导数分别为零、一；
+正态散度 $\mathfrak h=Z\cdot\mathfrak u-\operatorname{div}\mathfrak u$
+由多项式除以 $\det\Gamma$ 或其平方组成。
+固定维正态矩与 (90.21) 给 $\mathbb E|\mathfrak h|\le C$。
+先在行列式远离零处光滑截断，再用逆矩界去掉截断，正态分部积分给
+$\mathbb E[\partial_2\zeta(F)]=\mathbb E[\zeta(F)\mathfrak h]$。
+梯度几乎处处秩二；在非零二列 Jacobian 子式的可数局部坐标覆盖内，
+变元公式与 Fubini 给 $(F_1,F_2)$ 的密度 $p$。
+其弱导数为
+$\partial_2p=-p\,\mathbb E[\mathfrak h\mid F]$，故 $L^1$ 范数至多 $C$。
+第二坐标乘 $\sqrt\delta$，再卷积其余独立核心项和常数平移，即得 (90.19)。
+这是经典逆梯度／散度方法的具体二维条件验证。
+
+在同一正态空间保留 $K=S_B+s_b+G^2/2$，取
+$Y_R=T_R^{\rm G}+\sigma G$、$Y_H=T_H^{\rm G}+\sigma G$。
+二标量之差为
+
+$$
+T_R^{\rm G}-T_H^{\rm G}
+=\sum_{\mathcal C_R\setminus\mathcal H}
+  [w_j(Z_j^2-1)-2w_jc_jZ_j],\qquad w_j=v_j/\sqrt\delta.
+\tag{90.22}
+$$
+
+它独立于 $\mathcal H$ 内的正态变量。
+条件于核心外全部变量及同一个 $G$，比较只平移联合密度的第二坐标。
+由 (90.19)，
+
+$$
+e_H:=d_{\rm TV}(\mathcal L(K,Y_R),\mathcal L(K,Y_H))
+\le C\delta^{-1/2}\mathbb E|T_R^{\rm G}-T_H^{\rm G}|
+\le C\delta^{-1}(1+a_x)V_{\mathcal C_R\setminus\mathcal H}.
+\tag{90.23}
+$$
+
+这里没有逆噪声因子。原行尾界为
+$\sup_{S_0}\mathbb E_{S_0}V_{|j\delta|>H_M}
+\le Ce^{-c_{\rm tail}H_M^2}+Q^Ce^{-cQ^3}$，
+其中 $c_{\rm tail}>0$ 由正 Hessian 下界取得。
+固定 $D>200/c_{\rm tail}$ 后，Markov 给 $e_H=o_{\mathbb P}(Q^{-40})$。
+两个 $(K,Y)$ 联合律的一阶矩密度差至多 $CQ\sqrt{e_H}$：
+对被两联合律之和支配的差测度用 Cauchy–Schwarz 即可。
+各自条件密度仍由独立外部 Gamma 以 $C/Q$ 控制。
+用 (90.14) 的同一坐标版本，中心条件律之输出积分距离为 $o_{\mathbb P}(1/Q)$。
+
+**小核心的精确中心化。** 对 $\mathcal H$ 通道，令
+
+$$
+A_k=\frac12\sum_{\mathcal B_x\setminus\mathcal H}(Z_j^2-1),
+\quad k_x=(N_x-m_H)/2,
+\quad B_y=S_H+s_b+G^2/2-\mathbb E[S_H+s_b+G^2/2\mid Y_H=y].
+\tag{90.24}
+$$
+
+$A_k$ 服从 $\operatorname{Gamma}(k_x,1)-k_x$，
+独立于 $(Y_H,B_{Y_H})$；$\mathbb E[B_y\mid Y_H=y]=0$。
+全方差公式给
+
+$$
+\int f_H(y)\mathbb E[B_y^2\mid y]dy\le C(m_H+1),\qquad
+k_x=vQ^2+o(Q),\quad \sqrt{k_x}=Q\sqrt v+o(1).
+\tag{90.25}
+$$
+
+设中心 Gamma 密度及 CDF 为 $p_k,F_k$。
+特征函数模为 $(1+t^2)^{-k/2}$；Fourier 积分给
+$\|p_k\|_\infty\le C/Q$、$\|p_k'\|_\infty\le C/Q^2$。
+密度及导数在支撑左端也连续归零，故全实线 Taylor 界成立。
+条件中心化消去一次项，从而
+
+$$
+\sup_t|\mathbb E[F_k(t-B_y)\mid y]-F_k(t)|
+\le (C/Q^2)\mathbb E[B_y^2\mid y].
+\tag{90.26}
+$$
+
+其输出积分为 $O(m_H/Q^2)=o(1/Q)$。
+组合 (90.17)、(90.23)—(90.26)，并只对有界 CDF 距离更换输出测度，得到
+
+$$
+Q\int f_x(y)\sup_{t\in\mathbb R}
+\left|\Pr_x(J_Y(R)-H_x(y)\le t\mid Y=y)-F_{k_x}(t)\right|dy
+\longrightarrow0.
+\tag{90.27}
+$$
+
+这一步同时保留全组信息、原标量及精确条件熵；
+未直接删除可能接近 $Q^2$ 个组的大核心信息。
+
+**边界计数与并列项。** 对中心 Gamma，
+Stirling 展开及积分给，在固定紧 $z$ 区间一致地
+
+$$
+\begin{aligned}
+\sqrt k\,p_k(\sqrt k\,z)
+&=\varphi(z)\left[1+\frac{z^3-3z}{3\sqrt k}+O(k^{-1})\right],\\
+F_k(\sqrt k\,z)
+&=\Phi(z)+\frac{1-z^2}{3\sqrt k}\varphi(z)+O(k^{-1}).
+\end{aligned}
+\tag{90.28}
+$$
+
+积分余项可在 $|z|\le\sqrt{C\ln k}$ 内以正态密度乘固定多项式控制，
+其外由 Gamma 母函数的 Chernoff 界取为 $O(k^{-2})$。
+这是所用平滑 Gamma 家族的经典 Edgeworth 计算，
+不对任意格点分布套用连续余项。
+其 $1-\varepsilon$ 分位数满足
+
+$$
+t_k=Q\sqrt v\,z+\frac{z^2-1}{3}+o(1).
+\tag{90.29}
+$$
+
+令 $d_y$ 为 (90.27) 内的 CDF 距离，$t_y$ 为实际中心信息的广义分位数。
+$Qd_Y\to0$；Gamma 在 $t_k$ 附近的密度下界为 $c/Q$，
+故任意固定 $\eta>0$ 下两个阈值 $t_k\pm\eta$ 的 CDF 间隔至少为 $c\eta/Q$，
+推出 $t_y-t_k=o_{\mathbb P}(1)$。
+
+使用有界、总变差为二的函数 $u\mapsto e^{u-t}\mathbf1_{u\le t}$，置
+
+$$
+\Lambda_{x,y}(t)=
+\mathbb E[e^{J-H_x(y)-t}\mathbf1_{J-H_x(y)\le t}\mid y],
+\qquad
+\Lambda_k(t)=\int_0^\infty e^{-s}p_k(t-s)\,ds.
+\tag{90.30}
+$$
+
+Stieltjes 分部积分给 $|\Lambda_{x,y}(t)-\Lambda_k(t)|\le2d_y$；
+又 $|\Lambda_k(t)-p_k(t)|\le\|p_k'\|_\infty\le C/Q^2$。
+因此
+
+$$
+Q\Lambda_{x,Y}(t_Y)\to\frac{\varphi(z)}{\sqrt v},\qquad
+\ln\Lambda_{x,Y}(t_Y)
+=-\ln Q+\ln\varphi(z)-\tfrac12\ln v+o_{\mathbb P}(1).
+\tag{90.31}
+$$
+
+有限计数恒等式为
+
+$$
+N_{\rm all}(t)=
+\#\{r:J_y(r)\le H_x(y)+t\}
+=e^{H_x(y)+t}\Lambda_{x,y}(t).
+\tag{90.32}
+$$
+
+最小覆盖按概率递减排列，取全体严格超过边界概率的点，
+再取边界并列组中足够的点。由于 $F_k$ 连续，
+实际 CDF 任一跳跃、特别是边界并列组总概率 $b_y$，至多为 $2d_y$。
+故
+
+$$
+0\le\frac{N_{\rm all}(t_y)-N_\varepsilon(x,y)}{N_{\rm all}(t_y)}
+\le\frac{b_y}{\Lambda_{x,y}(t_y)}=o_{\mathbb P}(1).
+\tag{90.33}
+$$
+
+此式包括选取部分并列组时的整数舍入。
+将 (90.29)、(90.31) 代入 (90.32)—(90.33)，得 (90.4)—(90.5)。证毕。
+
+每个有限纤维只有有限个计数向量，正态核处处为正，
+故上述条件熵、CDF、覆盖数和输出积分可测；
+CDF 上确界可取有理阈值，最优覆盖可按固定字典序打破并列。
+两种原实验的全部环境界对真实支持一致，例外数据只支付概率，
+不将无界信息量乘以例外概率。
+对联合数据／输出中的有界失败事件，原支持置换等变性把均匀先验平均
+转为任意固定真实支持的同一概率；这不认定给定数据和已知支持时的单一正态输出律
+等于先验混合 $f_x$。
+未知方向仍经原共同对齐事件传递同一组、精确中心、标量和测量噪声。
+若改用比特，(90.5) 全式除以 $\ln2$，不再加密度 Jacobian 常数。
+结论不统一于趋近零或一的 $\varepsilon$，不涵盖零噪声或 $L_M$ 与 $Q^3$ 同阶，
+也不给高效编码算法。第 84 章熵响应若另行代入，
+其 $\nu+\sigma_M^2$ 分母仍须保留；本章没有用近似熵替换精确 $H_x(y)$。
+
+## 追加锚（90 章后）
+
+## 91. 固定切线构造的逃离与单侧复现刚性
+
+**定义 91.1（固定切线与原共同单元）。** 保持第 81、83 章的固定幅度、
+原合法 $Q=Q_n$、$N=Q^2$、完整得分组及两个实际实验。
+沿用 $I,\Psi,F(u)=\phi/(\phi+I(u))$、精确 Gamma 曲线 $G_Q$、
+$\ell_Q(j)=\ln\chi_{Q,j}$ 和共同规模单元
+
+$$
+\mathcal J_{Q,L}=
+\left(\frac{\phi Q^3}{(L+1)\ln2},\frac{\phi Q^3}{L\ln2}\right].
+\tag{91.1}
+$$
+
+固定紧参数区间 $K\Subset(\beta_*,1)$，所有根及切点留在稍大的固定内部弧。
+记 $d_{0,Q}=k_0-aQ^3\in(-1,0]$、$\eta=\ln((1+r)/(1-r))$。
+对一个固定既约斜率 $s=p/d\in(-1,0)$，令
+
+$$
+\Psi'(u_s)=s,\quad \beta_s=F(u_s),\quad
+G_Q'(t_{Q,s})=s,\quad h_{Q,s}(x)=G_Q(x)-sx.
+\tag{91.2}
+$$
+
+第 81 章的严格凸性保证唯一性；$F'<0$ 在这些紧弧上与零分离。
+本章的复现始终指同一个参数属于无穷多个原单元。
+第 83 章已给每层可取新参数的局部构造，二者量词不同。
+
+**引理 91.2（精确修正的符号与整单元位置）。** 令 $A_Q$ 如 (76.13)，
+$R_Q(u)=[A_Q(\Psi(u))-A_Q(u)]/I'(\Psi(u))$。则统一有
+
+$$
+-C_K\le R_Q(u)\le-c_K<0.
+\tag{91.3}
+$$
+
+若 $L$ 是 $-\ell_Q(j)/\ln2$ 的任一最近整数，
+则对整个 $\mathcal J_{Q,L}$ 中的参数统一有
+
+$$
+\beta=F(j/N)-\frac{3F(j/N)^2}{\phi}\frac{\ln Q}{Q^3}
+                    +O_K(Q^{-3}).
+\tag{91.4}
+$$
+
+这里 $j/N$ 位于所选正根紧弧，最近整数的并列选择均允许。
+
+证明。原幅度恒等式给
+$\vartheta a-b=\phi/[-\ln(1-r)]>0$。
+直接对含原 count floor 的 $A_Q$ 求导，得到
+
+$$
+A_Q'(x)=-\frac12\left(\frac1{a+x}+\frac{\vartheta}{b+\vartheta x}\right)
+ +d_{0,Q}\frac{\vartheta a-b}{(a+x)(b+\vartheta x)}<0.
+\tag{91.5}
+$$
+
+两个项均非正，第一项严格为负。
+因此 $A_Q(\Psi(u))-A_Q(u)$ 在紧弧上有统一正上下界；
+负根导数 $I'(\Psi(u))<0$ 与零分离，给 (91.3)。
+原精确 Stirling 展开为
+
+$$
+\ell_Q(j)=-Q^3[\phi+I(j/N)]-3\ln Q
+       +\ln2-d_{0,Q}\eta+A_Q(j/N)+O_K(Q^{-3}).
+\tag{91.6}
+$$
+
+最近整数误差与单元内部的规模相位均有界。
+将此式代入 $\beta=\phi Q^3/(L\ln2+\rho\ln2)$，$0\le\rho<1$，
+展开倒数即得 (91.4)。它保留原半开单元的全部点，
+不要求穿过规模跳点时可微。证毕。
+
+**定理 91.3（有限固定切点的环形窗口没有复现）。** 固定有限个上述斜率，
+对每个斜率固定 $0<A_s<B_s<\infty$。
+在每个原合法层，取任意满足
+
+$$
+j\in t_{Q,s}+[A_sQ,B_sQ]
+\quad\text{或}\quad
+j\in t_{Q,s}-[A_sQ,B_sQ]
+\tag{91.7}
+$$
+
+的整数 $j$，按引理 91.2 选择规模整数并取整个原单元。
+令 $\mathcal A_n$ 为这些单元的任意子族之并；可以仅保留已成功配对的单元。
+则
+
+$$
+\limsup_{n\to\infty}\mathcal A_n=\varnothing.
+\tag{91.8}
+$$
+
+证明。由 (83.13) 及隐函数展开，
+
+$$
+t_{Q,s}=Nu_s-Q^{-1}\frac{R_Q'(u_s)}{\Psi''(u_s)}+O_K(Q^{-4}).
+\tag{91.9}
+$$
+
+在右窗口中 $j/N-u_s\in[A_s/Q,B_s/Q]+O_K(Q^{-3})$。
+$F'$ 的严格负性和 (91.4) 给正数 $c_s,C_s$，使整个生成单元满足
+
+$$
+c_s/Q\le\beta_s-\beta\le C_s/Q.
+\tag{91.10}
+$$
+
+左窗口相应为 $c_s/Q\le\beta-\beta_s\le C_s/Q$。
+$O(\ln Q/Q^3)$ 的规模修正与 $O(Q^{-3})$ 单元宽度均不能跨过该间隔。
+固定参数若不同于有限个 $\beta_s$，它与此有限集有正距离，最终不属于任何单元；
+若等于其中一个，自己的窗口排除它，其他切点的窗口最终也排除它。
+故每点只命中有限次，得到 (91.8)。证毕。
+
+适当的固定 $A_s,B_s$ 确实仍能在每个晚期层产生配对单元：
+第 81 章的 $c/Q^2\le h''\le C/Q^2$ 使窗口内相位上升超过常数，
+在 $d\mathbb Z$ 上相邻值差为 $O(d/Q)$，跨过整数后给
+$|\ell_Q(j)-\ell_Q(k)|\le C_Kd$。
+这就是已有局部定理，均值界对固定切点有限。
+定理 91.3 说明此特定族虽逐层有单元，却不能通过嵌套得到固定参数。
+它不排除变化的切点、增长的分母或更靠近切点的交点，也不判定 $E_2$ 为空。
+
+**定理 91.4（首个上方交点的固定参数刚性）。** 对一个固定 $p/d$，
+精确使用第 83 章的如下规则：
+
+$$
+\begin{aligned}
+m_Q&=\lceil d h_{Q,s}(t_{Q,s})\rceil,\qquad
+\omega_Q=m_Q-dh_{Q,s}(t_{Q,s}),\\
+h_{Q,s}(x_*)&=m_Q/d,\qquad x_*\ge t_{Q,s},\\
+pj+m_Q&\equiv0\pmod d,\qquad |j-x_*|\le d/2,\qquad
+k=(pj+m_Q)/d.
+\end{aligned}
+\tag{91.11}
+$$
+
+取该剩余类中距 $x_*$ 最近的整数 $j$，再取 $-\ell_Q(j)/\ln2$ 的最近整数 $L$；
+并列时包含全部选择。记所得单元之并为 $\mathcal B_{n,s}$。
+则
+
+$$
+\limsup_n\mathcal B_{n,s}\subseteq\{\beta_s\}.
+\tag{91.12}
+$$
+
+若 $\beta_s$ 沿某子序列属于这些单元，则沿该子序列
+
+$$
+\begin{aligned}
+j-t_{Q,s}&=-\frac{3\ln Q}{QI'(u_s)}+O_{K,d}(Q^{-1})<0,\\
+0\le\omega_Q&\le C_Kd^3/Q^2,\\
+\frac{\bar c_{Q,j}^{\mathcal E}(\beta_s)}
+     {\bar c_{Q,k}^{\mathcal E}(\beta_s)}&\longrightarrow1
+\quad(\mathcal E=pair,path).
+\end{aligned}
+\tag{91.13}
+$$
+
+任何由此规则产生的联合正极限均为 $(\theta,\theta)$，
+其中 $2^{-1/2}\le\theta\le2^{1/2}$。
+
+证明。(83.3) 在固定 $d$ 时趋零，且单元宽度也趋零，给 (91.12)。
+设固定参数发生命中。原实际均值比较 (83.8) 和最近规模整数规则使正根均值有统一正上下界。
+令
+
+$$
+\rho_Q(\beta)=\left\{\frac{\phi Q^3}{\beta\ln2}\right\},\qquad
+C_Q(x;\beta)=(1-\rho_Q(\beta))\ln2-d_{0,Q}\eta+A_Q(x).
+\tag{91.14}
+$$
+
+原 Stirling 公式与实际行桥给
+
+$$
+\ln\bar c_{Q,j}^{\mathcal E}(\beta)
+=Q^3[c(\beta)-I(j/N)]-3\ln Q+C_Q(j/N;\beta)+o(1).
+\tag{91.15}
+$$
+
+在 $\beta_s$ 的简单正根先得到 $j-Nu_s=O(\ln Q/Q)$，再展开得
+$j-Nu_s=-3\ln Q/[QI'(u_s)]+O(Q^{-1})$。
+二次项在对数均值中仅为 $O((\ln Q)^2/Q^3)$；结合 (91.9) 得首式。
+由于 $x_*\ge t_{Q,s}$ 而 $j<t_{Q,s}$，最近剩余类取整给
+
+$$
+0\le x_*-t_{Q,s}\le d/2+j-t_{Q,s}<d/2.
+\tag{91.16}
+$$
+
+积分 $h''\le C_K/Q^2$，得到 $\omega_Q\le C_Kd^3/Q^2$。
+同一曲率界又给
+
+$$
+|G_Q(j)-k|\le C_K\left(\frac{d^2}{Q^2}
+                    +\frac{(\ln Q)^2}{Q^4}\right).
+\tag{91.17}
+$$
+
+乘以 $|\ell_Q'|\le C_KQ$，固定 $d$ 下的对数系数差趋零。
+(83.8) 把它转为两种实际均值之比趋一，最近规模整数给所述极限范围。证毕。
+
+此规则还有可逐层核对的精确判据。令 $J_Q$ 是 $Nu_s$ 的最近整数，
+并列采用任一固定约定；充分大 $Q$ 下，$\beta_s\in\mathcal B_{n,s}$ 当且仅当
+
+$$
+\begin{gathered}
+L_0(\beta_s)\in\operatorname{Nint}(-\ell_Q(J_Q)/\ln2),\qquad
+pJ_Q+m_Q\equiv0\pmod d,\\
+J_Q+d/2\ge t_{Q,s},\qquad
+0\le\omega_Q\le
+ d[h_{Q,s}(J_Q+d/2)-h_{Q,s}(t_{Q,s})].
+\end{gathered}
+\tag{91.18}
+$$
+
+第一项给有界正根代理均值，因而 (91.13) 对该整数成立，最终最近根整数唯一，
+且 $J_Q-d/2<t_{Q,s}$。严格递增的右支上，最后两项恰好等价于
+$x_*\le J_Q+d/2$；中间同余给合法剩余类与原整数 $k$。
+这些正是取整规则，故两个方向均成立。判据的无穷次可满足性尚未证明。
+
+**推论 91.5（有符号截距条件与等均值排除）。** 置
+$\zeta_s=d\Psi(u_s)-pu_s$。
+定理 91.4 的复现必使
+
+$$
+N\zeta_s-m_Q=-\frac dQ R_Q(u_s)+O_{K,d}(Q^{-2}).
+\tag{91.19}
+$$
+
+因此最终 $m_Q=\lfloor N\zeta_s\rfloor$，且小数部分在正的 $d/Q$ 阶区间内。
+若 $\zeta_s$ 为有理数，该固定切点规则的无穷次命中集为空。
+更一般地，$\|N\zeta_s\|=o(Q^{-1})$ 的子序列不能成为该规则的复现子序列。
+
+证明。(83.12) 保留驻点的一阶抵消，给
+$dh_{Q,s}(t_{Q,s})=N\zeta_s+dR_Q(u_s)/Q+O_K(d/Q^4)$。
+结合 $m_Q-dh_{Q,s}(t_{Q,s})=O_{K,d}(Q^{-2})$ 得 (91.19)，
+负修正的统一符号给余下结论。
+对有理截距，$N\zeta_s$ 若非整数，其到整数的距离有固定正下界；
+若是整数，(91.19) 的严格正 $Q^{-1}$ 阶右端同样不可能。证毕。
+
+等均值的限制还可脱离这一具体取整规则。若在同一个有理斜率切点参数处，
+任意原同步子序列的两实际均值趋于 $\theta_+,\theta_->0$，
+令 $u=u_s,v=\Psi(u_s)$、$m=dk-pj\in\mathbb Z$，则
+
+$$
+Q(m-N\zeta_s)=\frac d{I'(v)}
+\left[A_Q(v)-A_Q(u)+\ln(\theta_+/\theta_-)\right]+o(1).
+\tag{91.20}
+$$
+
+事实上，分别由 (91.15) 解出两根指标，得到
+
+$$
+\begin{aligned}
+j&=Nu-\frac{3\ln Q}{QI'(u)}
+       +\frac{C_Q(u;\beta_s)-\ln\theta_+}{QI'(u)}+o(Q^{-1}),\\
+k&=Nv-\frac{3\ln Q}{QI'(v)}
+       +\frac{C_Q(v;\beta_s)-\ln\theta_-}{QI'(v)}+o(Q^{-1}).
+\end{aligned}
+\tag{91.21}
+$$
+
+关系 $p/I'(u)=d/I'(v)$ 使共同规模相位与 $3\ln Q$ 项精确抵消，
+给 (91.20)；原 $d_{0,Q}$ 的取整项仍保留在 $A_Q$ 内。
+若两极限相等，必有
+
+$$
+N\zeta_s-m=-dR_Q(u)/Q+o(Q^{-1})>c_Kd/Q.
+\tag{91.22}
+$$
+
+因此等正均值同步不能出现在 $\|N\zeta_s\|=o(Q^{-1})$ 的子序列，
+特别不能发生在有理截距切点。
+本章没有证明原曲线上存在同时具有有理斜率和有理截距的切点。
+即使有理截距切点存在，也不能据此排除不等均值的 $E_2$ 子序列：
+那时 (91.20) 仅迫使 $N\zeta_s=m$ 最终成立，并在抽取
+$d_{0,Q}\to d_\infty$ 后要求
+
+$$
+\ln(\theta_+/\theta_-)=-[A_{d_\infty}(v)-A_{d_\infty}(u)]<0.
+\tag{91.23}
+$$
+
+该必要关系的可实现性仍未解决。
+所有均值均是原完整组在实际 pair/path 实验中的期望，原支持置换保证固定支持的一致含义；
+两实验的均值桥不认定其数据律相同。
+增长分母的充分条件仍为 (83.10)，本章没有证明它沿一条嵌套分支成立。
+第 86 章的 $E_2$ 上维数界以及第 88、89 章的边缘通用性均保持原范围，
+原 $E_2$ 的非空性与空性仍是开放问题。
+
+## 追加锚（91 章后）

@@ -1,0 +1,4 @@
+**定义 337.1（数学根据与新增推导）。** 本批亲读项目 `TypedTrustComposition`、`ReputationSufficiencyCriterion`、`ScientificGainGeneralizationReversal` 与 `VerificationCollisionContractIncompleteness` 四个模块，分别借用目标相合与报告组合、历史分数的目标充分性、同一已观察边缘下未来条件损失反转，以及核验碰撞造成的精确实现障碍。正文保留其实际谓词，不把文件中的信任、科学增益或契约名称扩成已经验证的现实评价。
+
+有限概率下的支配与总变差界、实际输入上的链式错误界、条件成功率乘积、选择性回答的风险与覆盖、有限检查族构造及二元检查树下界，均在正文中给出条件和推导。这些是通常有限概率、函数组合与辨别结构的应用和综合，不申报原创数学，也不冒称每项都已在所引模块中逐字形式化。本批未进行 Lean 编译或公理闭包核验。
+

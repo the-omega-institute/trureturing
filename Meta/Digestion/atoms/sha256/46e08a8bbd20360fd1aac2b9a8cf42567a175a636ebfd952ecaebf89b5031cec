@@ -1,0 +1,11 @@
+**定理 11（Hall 约化）.** 有
+\[
+ |P|-\nu=\max_{J\subseteq P}\bigl(|J|-|N_L(J)|\bigr),\qquad
+ \Phi\leq|\mathcal G|+|H|+|L|+\min\{|P|,\varepsilon_c+|B_P\setminus L|\}.\tag{3}
+\]
+特别地，
+\[
+ \Phi\leq\binom N2+1+\varepsilon_c+|\mathcal G|+|H|-N;\tag{4}
+\]
+故 \(|\mathcal G|+|H|\leq N\) 蕴含 \(\Phi\leq B(N)\)。
+

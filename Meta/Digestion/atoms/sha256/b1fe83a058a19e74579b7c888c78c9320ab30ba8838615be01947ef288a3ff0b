@@ -1,0 +1,53 @@
+**定理 399.2（相位支撑间隙的张量下界）。** 对线性子空间 $H\subseteq\mathbb C^d$，令 $P_H$ 为其正交投影，定义
+
+$$
+\mu(H)=\min_{z\in\mathbb T^d}\|(I-P_H)z\|_2^2.
+$$
+
+对每个整数 $n\ge1$，有
+
+$$
+\boxed{\quad \mu(H^{\otimes n})\ge d^{n-1}\mu(H).\quad}
+$$
+
+特别地，取 $H=\operatorname{ran}C$，则定义 399.1 的每个协议均满足
+
+$$
+\boxed{\quad \delta\ge\frac{2\mu(C)}d.\quad}
+$$
+
+这里 $\mu(C)=\mu(\operatorname{ran}C)$ 沿用定义 396.1。若 $\eta(C)=0$，右侧严格为正，且对所有 $n\ge1$ 及所有输入无关的 $t>0$ 同时成立。
+
+证明。正交投影满足 $P_{H^{\otimes n}}=P_H^{\otimes n}$。当 $n\ge2$ 时，
+
+$$
+I-P_H^{\otimes n}-(I-P_H)\otimes I_{d^{n-1}}
+ =P_H\otimes(I_{d^{n-1}}-P_H^{\otimes(n-1)})\succeq0;
+$$
+
+$n=1$ 时两者相等。任取 $z\in\mathbb T^{d^n}$，以其后 $n-1$ 个指标 $\alpha\in\{1,\ldots,d\}^{n-1}$ 将坐标分成 $d$ 维切片 $z^{(\alpha)}$。每个切片都属于 $\mathbb T^d$，故
+
+$$
+\begin{aligned}
+\|(I-P_H^{\otimes n})z\|_2^2
+ &=z^\dagger(I-P_H^{\otimes n})z\\
+ &\ge z^\dagger((I-P_H)\otimes I_{d^{n-1}})z\\
+ &=\sum_\alpha\|(I-P_H)z^{(\alpha)}\|_2^2
+ \ge d^{n-1}\mu(H).
+\end{aligned}
+$$
+
+$n=1$ 时后方指标只有一个空元组，同一求和仍成立。相位集合紧致保证最小值取得；对 $z$ 取最小值即得第一式。
+
+$C\succeq0$ 的谱分解表明，$C^{\otimes n}$ 的正本征空间正是 $H^{\otimes n}$，所以 $\operatorname{ran}(C^{\otimes n})=H^{\otimes n}$。将定理 396.2 应用于维数 $d^n$ 的相关矩阵 $C^{\otimes n}$，得到
+
+$$
+\delta\ge\frac{2\mu(C^{\otimes n})}{d^n}
+ \ge\frac{2d^{n-1}\mu(C)}{d^n}
+ =\frac{2\mu(C)}d.
+$$
+
+最后，$\eta(C)=0$ 时 $\mu(C)>0$ 由定理 396.2 给出。证毕。
+
+这里的切片论证与 Kraus 支撑方法相关。Yu–Duan–Xu，[*Bounds on the distance between a unital quantum channel and the convex hull of unitary channels, with applications to the asymptotic quantum Birkhoff conjecture*, arXiv:1201.1172v1](https://arxiv.org/abs/1201.1172v1)，Lemma 2（PDF 第 7–8 页）以 Kraus 算子空间不含酉算子给出到混合酉通道集合的正距离；Theorem 2 与 Corollary 1（PDF 第 8 页）利用 Schur 张量因子的块结构保留该距离下界。该文比较的是通道与混合酉集合；本定理比较经记录测量和反馈后的成功映射与 $t\operatorname{id}$，其误差结论由上面的切片估计及定理 396.2 推出。这是已有支撑方法的应用，不将两种距离目标视为同一个优化问题，也不主张上述常数是锐误差下界。
+

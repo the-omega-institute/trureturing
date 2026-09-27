@@ -1,0 +1,121 @@
+**普通方向为 $C$ 时，正交支持也不可能。**
+
+现在一位、零位异常方向均为正交的 $A,B$，而 $C$ 是不同于它们的普通方向。完整一位 $C$ 纤维为二维 $Q$，所以
+
+$$
+H_4\cap S=0.
+$$
+
+记三维完整零位 $A$ 纤维为 $U=P_A$，并置
+
+$$
+D=G_2+G_5\subset U,\qquad 2\le\dim D\le3.
+$$
+
+若 $\dim D=2$，则 $G_2=G_5$，固定 $V_0$ 给
+$H_1=H_4$，与非零 $p\in H_1\cap S$ 及 $H_4\cap S=0$ 矛盾。
+
+若 $\dim D=3$，则 $D=U$，故 $P\subset D$。普通当前平面
+$G_4=P_C$ 也含同一个 $P$。但是实际一位映射给
+
+$$
+V_1D\subset K\otimes B,\qquad
+V_1G_4\subset K\otimes A.
+$$
+
+两条环境不同，两个乘积子空间交零。固定 $V_1$ 单射于是使
+$D\cap G_4=0$，却与共同非零 $P\subset D\cap G_4$ 冲突。
+
+两种维数全部排除。因此普通方向为 $C$ 也不可能，三个位置穷尽，$ABCAB$ 尾词完整排除。
+
+### 117.4 ABCBC 的两种实际尾像都不可能
+
+此时 $(\eta_2,\ldots,\eta_6)$ 的射线词为 $A,B,C,B,C$。
+
+首先 $C$ 必是零位异常方向。否则其完整零位纤维二维，给 $G_4=G_6$，固定 $V_0$ 给 $H_3=H_5$。这两个后期平面的当前环境都是 $B$，向同一 $P_B$ 投影得到 $G_3=G_5$，于是空间对 $(H_3,G_3)=(H_5,G_5)$，违反实际来源的 $\delta_5\ne\delta_3$。
+
+完整 $E$ 的 $B$ 纤维不能二维：否则 $V_1G_2=Y_B\otimes B=V_1G_4$，得 $G_2=G_4$，但其当前环境分别为不同的 $A,C$，与两个完整零位纤维只交于单线 $P$ 矛盾。因此 $\dim Y_B=3$。上面两种秩分类都使另一已用方向满足 $\dim Y_C=2$。真实 $G_3,G_5$ 的后继均为 $C$，所以
+
+$$
+G_3=G_5,\qquad H_2=H_4.
+$$
+
+于是早期非零 $w\in H_2\cap G_2$ 也在 $H_4$ 中。
+
+若为秩零，唯一三维方向是 $B$，所以 $Q_4=Y_C=Q\perp S$，从而 $Q_4\perp G_2$。
+
+若为秩一，两个 $M$ 支持正是 $B,C$，零位异常方向为 $B^\perp,C^\perp$。已知 $C$ 异常，而一条非零复 Hilbert 射线不与自身正交，故 $C=B^\perp$。第三条 $A$ 不同于 $B=C^\perp$，所以 $\langle A,C\rangle\ne0$；$G_2\otimes A\subset R_0$ 与 $Q_4\otimes C\subset R_1$ 跨位正交，仍给 $Q_4\perp G_2$。
+
+两种秩都使 $w\perp Q_4$。但 $w\in H_4\subset G_4\oplus Q_4$，且该直和正交，故 $w\in G_4$。这违反后期 $H_4\cap G_4=0$，排除 $ABCBC$。
+
+### 117.5 ABCCC 的两种实际尾像都不可能
+
+现在尾词为 $A,B,C,C,C$。若 $C$ 为普通零位方向，则 $G_4=G_5=G_6$，固定 $V_0$ 给 $H_4=H_5$，违反 $(H_4,G_4)=(H_5,G_5)$ 与实际 $\delta_4\ne\delta_5$。所以 $C$ 必异常。
+
+若 $\dim Y_C=2$，真实 $G_3,G_4$ 的一位像填满相同的 $Y_C\otimes C$，给 $G_3=G_4$，与当前 $B,C$ 两纤维只交于 $P$ 矛盾。因此
+
+$$
+\dim Y_C=3,\qquad \dim Y_B=2.
+$$
+
+两种秩都满足 $E=(Y_B\otimes B)\dotplus(Y_C\otimes C)$：两个环境独立使这两个块代数直和，维数之和为五，已填满 $E$。令
+
+$$
+X_B=(V_1|_S)^{-1}(Y_B\otimes B),\qquad
+X_C=(V_1|_S)^{-1}(Y_C\otimes C).
+$$
+
+于是 $S=X_B\dotplus X_C$、维数分别为二和三，并有
+
+$$
+G_2=X_B,\qquad G_3,G_4,G_5\subset X_C.
+$$
+
+若 $G_4\ne G_5$，这两个二维平面张成完整三维 $P_C$，同时也张成三维 $X_C$。于是 $G_3\subset P_B\cap P_C=P$，与 $\dim G_3=2$ 矛盾。因此
+
+$$
+G_4=G_5=:T,\qquad H_3=H_4.
+$$
+
+$G_3,T$ 是 $X_C$ 内当前方向不同的两个二维平面，故它们交于 $P$，并张成 $X_C$。因为 $G_2=X_B$ 与 $X_C$ 交零，$G_2$ 不包含 $P$；这排除 $A$ 为普通方向。所以恰有
+
+$$
+\mathcal A=\{A,C\},\qquad B\notin\mathcal A.
+$$
+
+若为秩一，两个 $M$ 支持是 $B,C$，故 $\mathcal A=\{B^\perp,C^\perp\}$。$C\in\mathcal A$ 迫使 $C=B^\perp$，从而 $\mathcal A=\{B,C\}$，与 $A,B,C$ 不同矛盾。秩一被排除。
+
+若为秩零，唯一三维 $E$ 方向为 $C$，所以
+
+$$
+E=(Q\otimes F)\oplus\mathbb C(r\otimes C),\qquad 0\ne r\in S.
+$$
+
+$C$ 是 $M$ 的一个支持，故 $C^\perp\in\mathcal A=\{A,C\}$，只能有 $A=C^\perp$。第三条 $B$ 因而不与 $C$ 正交。
+
+完整 $E$ 的 $B$ 纤维恰为 $Q$，所以 $Q_3=Q$；而 $Q_4\subset Q\oplus\mathbb Cr$。将 $H_3=H_4$ 投影到同一个 $S$，得到
+
+$$
+G_3=P_SH_3=P_SH_4\subset T+\mathbb Cr.
+$$
+
+$G_3+T=X_C$ 三维、$T$ 二维，故 $X_C=T+\mathbb Cr$，特别地 $r\in X_C$。另一方面，$r\otimes C\in R_1$ 分别与 $G_3\otimes B$、$T\otimes C$ 跨位正交；$B,C$ 不正交，所以 $r\perp G_3,T$，即 $r\perp X_C$。非零 $r$ 不能同时属于 $X_C$ 并正交于它，矛盾。秩零亦被排除。
+
+### 117.6 二维剩余乘积空间的全部结算
+
+第117.1、117.2节在同一实际合同下给共同单线及无分叉的三个必要三尾词，第117.3—117.5节将它们全部排除。结合第116节推论116.2，$\dim N_{\mathrm{prod}}=2$ 的所有形态都不可能；第106节的下界与 $\dim N=3$ 因而给 $N_{\mathrm{prod}}=N$。沿 $Q\oplus S$ 的接收正交分解再得 $R_1=(R_1)_{\mathrm{prod}}$，定理117.1得证。
+
+全部证明只调用已执行的 $V_1G_2,\ldots,V_1G_5$ 和末轮零位像。所用来源主角差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\ y=|b|^2,\ t_0=1,\ t_j=1-yt_{j-1}.
+$$
+
+因此，二重纤维候选的三维 $N$ 已全部乘积生成；一重纤维分支仍按第113节保留五维 $N$ 中四维或五维的乘积生成空间，其中两尾由第116节只能取五维。本节没有证明这些剩余乘积生成形态满足来源递推，也没有排除全部七维实际候选。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+

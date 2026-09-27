@@ -1,0 +1,52 @@
+### 301.9 真实联合尾差在趋零增益下的统一性
+
+定义
+$$
+R_d(z)=\sum_{m>d}\frac{(1-z/C)^m}{m}.
+$$
+阶乘矩给准确恒等式
+$$
+\mathbb E\beta
+=L(c)+\frac{R_d(hc)-R_d(h)}{D\kappa}.
+\tag{301.40}
+$$
+而
+$$
+R_d(hc)-R_d(h)
+=\int_{hc}^{h}\frac{(1-z/C)^d}{z}\,dz
+$$
+满足
+$$
+0\le R_d(hc)-R_d(h)
+\le(-\log c)\,q_0^d,
+\qquad
+q_0=1-\frac{c_0h_0}{C_\star}\in(0,1).
+\tag{301.41}
+$$
+使用 $hc\ge c_0h\ge c_0h_0$ 和 $-\log c\le3\kappa$，得到
+$$
+0\le\mathbb E\beta-L(c)\le(3/D)q_0^d.
+$$
+
+这里不能把 $q_0<1$ 当成远离一的固定常数。改用
+$$
+-\log q_0\ge c_0h_0/C_\star,\qquad
+q_0^{-1}\le(1-c_0/C_\star)^{-1},
+$$
+以及 $d\ge\alpha h_0\kappa K-1$，得到
+$$
+q_0^d\le A\exp[-a K h_0^2\kappa].
+$$
+由（301.13）
+$$
+Kh_0^2\kappa=t\,w_0/\kappa\ge t.
+$$
+因此
+$$
+\boxed{
+0\le\mathbb E\beta-L(c)\le A e^{-at}.
+}
+\tag{301.42}
+$$
+这一步保留了联合尾差的积分结构；分别估计两个 $R_d$ 的绝对值仍会丢失正确统一性。此处只声称指数 $t$，不误称它对所有 $h$ 都有指数 $t_h$。
+

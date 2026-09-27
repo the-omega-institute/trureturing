@@ -1,0 +1,25 @@
+### 261.2 完整数据暴露理想纯源
+
+在 $S$ 上令
+$$
+a=\rho_S^{-1/2}u,\qquad
+b=\rho_S^{-1/2}v,\qquad \rho_S=\rho|_S.
+\tag{261.5}
+$$
+因为 $aa^\dagger+bb^\dagger=I_S$ 且 $\dim S=2$，$a,b$ 为正交归一基。定义整个参考空间上的算子
+$$
+A_\psi=\rho_S^{-1}\oplus I_{S^\perp},
+\qquad
+B_\psi=-\rho_S^{-1/2}|a\rangle\langle b|\rho_S^{-1/2},
+\tag{261.6}
+$$
+其中 $B_\psi$ 在 $S^\perp$ 上及跨参考支撑块上均补零。置
+$$
+L_\psi=
+\begin{pmatrix}
+A_\psi&B_\psi\\
+B_\psi^\dagger&A_\psi
+\end{pmatrix}.
+\tag{261.7}
+$$
+

@@ -1,0 +1,19 @@
+**定理277.5（小角度和小扰动的统一副本阶）。** 存在固定 $\theta_0,h_0,c_N,C_N>0$，使对所有 $0\le\theta\le\theta_0$、$0<h\le h_0$，
+$$
+\boxed{
+c_N\frac{\theta^{2n}+\delta}{\delta^2}
+\le N_{\rm out}(\theta,h)
+\le C_N\frac{\theta^{2n}+\delta}{\delta^2}.
+}
+\tag{277.38}
+$$
+等价地，矩形上一致有
+$$
+\boxed{
+N_{\rm out}(\theta,h)
+=\Theta\!\left(h^{-2n}+\theta^{2n}h^{-4n}\right).
+}
+\tag{277.39}
+$$
+下界允许任意集体终端POVM；上界由逐份记录读取、参考本征基测量和经典似然比检验达到。
+

@@ -1,0 +1,156 @@
+**定理 320.1（实际最优恢复的最小标量生成元修复）。** 固定三个不全相等的正半径。使用第298、301节的正角点端点矩阵 $M_*=S_*-\Omega_*$，记 $d_3$ 为 $S_*$ 的简单最大特征值，$v_*$ 为相应单位特征向量，并令
+
+$$
+\Xi_a=(\Omega_*v_*)^{\mathsf T}(d_3I-S_*)(\Omega_*v_*)>0.
+\tag{320.1}
+$$
+
+对充分小的 $\delta>0$，取任何达到 $\widehat G_a(\eta(1-\delta))$ 的实际恢复，其 Bloch 矩阵记为 $T_\delta$。定义主矩阵对数及其对称部分
+
+$$
+K_\delta=-\log T_\delta,\qquad
+S_\delta^{\log}=\frac{K_\delta+K_\delta^{\mathsf T}}2,
+\tag{320.2}
+$$
+
+并定义非负数
+
+$$
+\alpha_\delta=
+\max\left\{0,\,
+2\lambda_{\max}(S_\delta^{\log})
+-\operatorname{Tr}S_\delta^{\log}\right\}.
+\tag{320.3}
+$$
+
+则
+
+$$
+\alpha_\delta=\frac{\Xi_a}{6}\delta^3+o(\delta^3)>0.
+\tag{320.4}
+$$
+
+此渐近式对最优恢复的选择一致成立。它是使 $K_\delta+\alpha I$ 满足幺元 GKSL 衰减生成矩阵条件的最小非负标量 $\alpha$。因此
+
+$$
+T_\delta^{\rm hom}=e^{-\alpha_\delta}T_\delta
+=\exp\bigl(-(K_\delta+\alpha_\delta I)\bigr)
+\tag{320.5}
+$$
+
+由单个有限齐次生成元实现，且可由同一二维任务的实际编码、解码在原预算内实现。其误差满足
+
+$$
+0\le e(T_\delta^{\rm hom})-\widehat G_a(\eta(1-\delta))
+\le\frac{a_{\max}}2(1-e^{-\alpha_\delta})\|T_\delta\|_{\rm op}
+\le\frac{a_{\max}\Xi_a}{12}\delta^3+o(\delta^3).
+\tag{320.6}
+$$
+
+证明。第293、315节保证每个内部预算的实际最优恢复幺元、可逆、正行列式，并位于微分可分边界：
+
+$$
+s_3(T_\delta)^2=\det T_\delta.
+\tag{320.7}
+$$
+
+第296、298节还保证，当 $\delta\downarrow0$ 时，$(I-T_\delta)/\delta$ 有界，其任何收敛子列经角点符号共轭后均趋于唯一 $M_*$。于是 $T_\delta$ 一致趋于 $I$，主实矩阵对数存在，且
+
+$$
+K_\delta=(I-T_\delta)+O(\delta^2).
+\tag{320.8}
+$$
+
+因此 $K_\delta/\delta$ 具有相同的端点极限。下面先在正角点规范附近推导局部展开，再说明其对全部最优选择的一致性。
+
+取任意足够接近 $M_*$ 的实矩阵 $M=S-\Omega$，其中 $S$ 对称、$\Omega$ 反对称。不要求这个暂时的 $M$ 本身满足 GKSL 锥条件。令 $d$ 为 $S$ 的最大特征值，$v$ 为其单位特征向量。由于 $S_*$ 的最大特征值简单，在足够小的邻域内 $d$ 仍简单，且
+
+$$
+D=dI-S\succeq0,\qquad \ker D=\mathbb Rv,\qquad
+\Omega v\ne0.
+\tag{320.9}
+$$
+
+最后一项使用第314节的 $\Xi_a>0$ 及连续性。于是 $B=D+\Omega=dI-M$ 的 Hermitian 部分为 $D$，而 $D+\Omega D\Omega^{\mathsf T}\succ0$。这正是第314节使用的 hypocoercivity index 为一的条件。
+
+直接应用 Achleitner、Arnold 与 Carlen，*The hypocoercivity index for the short time behavior of linear time-invariant ODE systems*，[定理2.7(b)、式（2.9）](https://arxiv.org/abs/2109.10784v5)，得到当 $t\downarrow0$ 时
+
+$$
+\|e^{-tB}\|_{\rm op}
+=1-\frac{\Xi(M)}{12}t^3+O(t^4),
+\qquad
+\Xi(M)=(\Omega v)^{\mathsf T}(dI-S)(\Omega v).
+\tag{320.10}
+$$
+
+这里使用实矩阵在实或复 Euclidean 空间上的相同算子范数；单位核向量的复相位不改变系数。这是既有短时范数定理的直接应用，不是新证明的一般三阶范数规律。
+
+本节还需要该余项对变化中的 $M$ 一致。该点可由简单特征值的标准解析扰动保证。矩阵
+
+$$
+H(t,M)=\frac{e^{tM^{\mathsf T}}e^{tM}-I}{2t}
+\tag{320.11}
+$$
+
+在 $t=0$ 解析延拓为 $S$。其在 $t=0$ 的最大特征值 $d$ 简单，故在 $M_*$ 的一个固定小邻域内，相应特征值分支对 $(t,M)$ 共同解析。对正的小 $t$，这一分支仍为 $H(t,M)$ 的最大特征值，并给出 $\|e^{tM}\|_{\rm op}$ 的平方根表达。因而其对数具有在紧邻域内一致的 Taylor 余项。结合式（320.10），
+
+$$
+\log\|e^{tM}\|_{\rm op}
+=td-\frac{\Xi(M)}{12}t^3+O(t^4)
+\tag{320.12}
+$$
+
+对该邻域内的 $M$ 一致成立。这里只用 $t>0$ 的最大奇异值分支；不要求负 $t$ 时最大分支仍相同。
+
+现在对任一已转到正角点极限的最优子列，令 $M=K_\delta/\delta$、$t=\delta$。由 $T_\delta=e^{-K_\delta}$ 及式（320.7），
+
+$$
+2\log\|e^{K_\delta}\|_{\rm op}
+=\operatorname{Tr}K_\delta.
+\tag{320.13}
+$$
+
+记 $S=\operatorname{sym}(K_\delta/\delta)$、$d=\lambda_{\max}(S)$。式（320.12）代入后得到
+
+$$
+\begin{aligned}
+\lambda_{\min}\bigl(\mathcal C(S_\delta^{\log})\bigr)
+&=\operatorname{Tr}S_\delta^{\log}
+-2\lambda_{\max}(S_\delta^{\log})\\
+&=-\frac{\Xi(K_\delta/\delta)}6\delta^3+O(\delta^4)\\
+&=-\frac{\Xi_a}6\delta^3+o(\delta^3).
+\end{aligned}
+\tag{320.14}
+$$
+
+这里 $\mathcal C(S)=(\operatorname{Tr}S)I-2S$。符号共轭保留 $\Xi$、迹与对称特征值；角点符号类只有有限个。若式（320.14）对最优选择不一致，就可选一列违反一致性的最优解，再取端点收敛子列并作一个固定符号共轭，前面的局部一致展开即产生矛盾。所以式（320.14）对全部最优选择一致。由于 $\Xi_a>0$，它在充分小的 $\delta$ 上为负，证明式（320.4）。
+
+剩下验证修复的合法性与同一预算。对任意对称矩阵 $S$，
+
+$$
+\mathcal C(S+\alpha I)=\mathcal C(S)+\alpha I.
+\tag{320.15}
+$$
+
+故式（320.3）恰为使此矩阵半正定的最小非负标量。第296节的标准幺元生成元构造随后给出衰减矩阵 $K_\delta+\alpha_\delta I$ 的 GKSL 半群；其反对称部分保留原 Hamiltonian。这里的锥条件也保证对称衰减部分非负，因为它的每个特征值等于另外两个锥特征值之和的一半。因此不需要另加一个独立正性前提。
+
+式（320.5）便是该半群的时间一矩阵。又由残差的正齐次性，
+
+$$
+r_*(T_\delta^{\rm hom})
+=e^{-\alpha_\delta}r_*(T_\delta)
+\le r_*(T_\delta)\le\eta(1-\delta).
+\tag{320.16}
+$$
+
+最后一个不等式来自第281节对实际编码、解码的共同残差支配。对修复后的同一个矩阵再用该节的实际二维实现，就同时得到原预算内的残差和误差 $e(T_\delta^{\rm hom})$。逐列反三角不等式给出
+
+$$
+e(T_\delta^{\rm hom})-e(T_\delta)
+\le \frac{a_{\max}}2
+\|T_\delta^{\rm hom}-T_\delta\|_{\rm op}
+=\frac{a_{\max}}2(1-e^{-\alpha_\delta})\|T_\delta\|_{\rm op}.
+$$
+
+原最优通道幺元，故 $\|T_\delta\|_{\rm op}\le1$。修复后属于微分可分类且仍在同一预算内，故其误差不能低于原最优值。再代入式（320.4），便得式（320.6）。证毕。
+

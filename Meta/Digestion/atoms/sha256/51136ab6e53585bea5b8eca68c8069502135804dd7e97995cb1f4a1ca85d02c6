@@ -1,0 +1,82 @@
+### 70.3 缩放修复集与实际切锥
+
+令 $P$ 为 $w$ 张成的一维空间的正交投影，$P_0=I-P$。定义
+
+$$
+\mathcal D_t=\frac{\mathcal C-R_0}{t}\quad(t>0),
+\qquad
+\mathcal T=\overline{\bigcup_{t>0}\mathcal D_t}.
+\tag{70.12}
+$$
+
+若 $0<t'\le t$，则 $\mathcal D_t\subseteq\mathcal D_{t'}$：对 $K=(S-R_0)/t$，有
+
+$$
+R_0+t'K=\left(1-\frac{t'}t\right)R_0+\frac{t'}t S\in\mathcal C.
+$$
+
+所以式（70.12）确实是这个因果修复集合在 $R_0$ 处的闭切锥。
+
+在本问题中，它具有准确描述
+
+$$
+\mathcal T=
+\left\{K=K^*:
+\begin{array}{l}
+\operatorname{Tr}_D K=I_A\otimes\dot\sigma
+\text{ 对某个 }\dot\sigma=\dot\sigma^*,\quad\operatorname{Tr}\dot\sigma=0,\\
+P_0KP_0\succeq0
+\end{array}\right\}.
+\tag{70.13}
+$$
+
+先证必要性。对 $K=(S-R_0)/t$，因果等式相减得到所需偏迹；又因 $P_0R_0P_0=0$，有 $P_0KP_0=P_0SP_0/t\succeq0$。这两个条件均闭，故对闭包中所有 $K$ 成立。
+
+再证充分性。固定式（70.13）右侧的任意 $K$，选择严格正的因果算符
+
+$$
+S_{\mathrm{full}}=\frac14 I_{ABD}\in\mathcal C.
+$$
+
+对任意 $\delta>0$，置
+
+$$
+K_\delta=K+\delta(S_{\mathrm{full}}-R_0).
+\tag{70.14}
+$$
+
+它仍满足迹零因果线性约束，且在 $P_0$ 空间内
+
+$$
+B_\delta:=P_0K_\delta P_0
+=P_0KP_0+\frac\delta4P_0\succeq\frac\delta4P_0.
+\tag{70.15}
+$$
+
+令 $\widehat w=w/\sqrt2$、$\alpha_\delta=\langle\widehat w|K_\delta|\widehat w\rangle$、$b_\delta=P_0K_\delta\widehat w$。相对于 $\operatorname{span}(\widehat w)\oplus w^\perp$，
+
+$$
+R_0+tK_\delta=
+\begin{pmatrix}
+2+t\alpha_\delta&t b_\delta^*\\
+t b_\delta&tB_\delta
+\end{pmatrix}.
+\tag{70.16}
+$$
+
+对 $t>0$，右下块严格正，其 Schur 补为
+
+$$
+2+t\left(\alpha_\delta-b_\delta^*B_\delta^{-1}b_\delta\right).
+$$
+
+它对充分小的正 $t$ 严格为正。因此 $R_0+tK_\delta\succeq0$。因果线性约束给
+
+$$
+\operatorname{Tr}_D(R_0+tK_\delta)
+=I_A\otimes\bigl(|0\rangle\langle0|+t\dot\sigma_\delta\bigr),
+\qquad\operatorname{Tr}\dot\sigma_\delta=0.
+$$
+
+括号内的算符由左侧正性自动为正，迹为 $1$。所以 $R_0+tK_\delta\in\mathcal C$，即 $K_\delta\in\mathcal D_t$。令 $\delta\downarrow0$，得到 $K\in\mathcal T$，完成式（70.13）的证明。这个闭包逼近没有把单独的切向正性冒充每个步长上的实际可行性。
+

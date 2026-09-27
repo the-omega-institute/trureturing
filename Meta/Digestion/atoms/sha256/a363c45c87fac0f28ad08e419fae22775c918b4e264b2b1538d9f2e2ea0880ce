@@ -1,0 +1,123 @@
+### 275.6 任意跨链正定上块的完整误差上界
+
+继续在（275.25）的规范多相位坐标中，允许任意 $Q\succ0$。对任意竞争态 $\Xi$，记
+$$
+\Delta\rho=\operatorname{Tr}_H\Xi-\rho,
+\qquad \Delta K=\mathscr K(\Xi)-K,
+\qquad T'=c\Xi.
+$$
+则
+$$
+T'-T=\operatorname{diag}(D,-D)+X,
+\qquad
+X=\frac c2\begin{pmatrix}\Delta\rho&\Delta K\\\Delta K^\dagger&\Delta\rho\end{pmatrix},
+$$
+$$
+D=D^\dagger,
+\qquad \xi:=\|X\|\le\frac c2\varepsilon_\Omega(\Xi),
+\qquad \|T'\|,\|T\|\le c.
+\tag{275.40}
+$$
+总迹是 $c$，无需将其误换为参考维数 $n$。
+
+固定长度 $r=r_b$ 的链，令 $\iota_b:\mathbb C^r\to E$ 为其等距嵌入。对
+$$
+0<\theta\le\theta_{0,b}
+:=\min\left\{1,\frac{t}{2r},\frac\pi r\right\},
+\qquad\ell=0,\ldots,r-1,
+\tag{275.41}
+$$
+定义
+$$
+\mu_\ell=\lambda_be^{i\ell\theta},
+\qquad z_\ell=\frac{e^{i\ell\theta}-1}{t},
+$$
+$$
+x_{b,\ell}=\iota_b\bigl((1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T}\bigr),
+\qquad
+v_{b,\ell}=(x_{b,\ell},-\mu_\ell^{-1}x_{b,\ell}).
+\tag{275.42}
+$$
+全局矩阵满足
+$$
+Mx_{b,\ell}-\mu_\ell x_{b,\ell}
+=-\lambda_bt z_\ell^r e_{b,r},
+$$
+$$
+Gv_{b,\ell}=\mu_\ell^{-1}\lambda_bt z_\ell^r e_{b,r}.
+\tag{275.43}
+$$
+相位因子模长为一，故 $v_{b,\ell}$ 对未知 $\operatorname{diag}(D,-D)$ 的二次型仍精确为零。同时 $|z_\ell|\le1/2$、$\|v_{b,\ell}\|^2\le2r$，所以
+$$
+v_{b,\ell}^\dagger Tv_{b,\ell}
+\le\|Q\|t^2|z_\ell|^{2r}.
+\tag{275.44}
+$$
+
+由 $T'\succeq0$、$\|T'\|\le c$，有
+$\|T'v\|^2\le c\,v^\dagger T'v$。结合（275.40）—（275.44），并从 $(T'-T-X)v$ 读取第一分量，得
+$$
+\begin{aligned}
+\|Dx_{b,\ell}\|
+\le{}&\bigl(\sqrt{c\|Q\|}+\|G\|\|Q\|\bigr)t|z_\ell|^r\\
+&+\sqrt{2cr\xi}+\sqrt{2r}\,\xi.
+\end{aligned}
+\tag{275.45}
+$$
+因此在 $0\le\varepsilon_\Omega(\Xi)\le1$ 时，存在固定有限 $A_b$，使
+$$
+\max_\ell\|Dx_{b,\ell}\|
+\le A_b\bigl(\theta^r+\sqrt{\varepsilon_\Omega(\Xi)}\bigr).
+\tag{275.46}
+$$
+例如可取
+$$
+A_b=
+\bigl(\sqrt{c\|Q\|}+\|G\|\|Q\|\bigr)t
+\left(\frac{r-1}{t}\right)^r
++c\sqrt r+\frac{c\sqrt{2r}}2.
+\tag{275.47}
+$$
+$r=1$ 时第一项为零。
+
+相应局部Vandermonde矩阵 $V_b$ 的节点仍为 $z_\ell$，不含块相位。Lagrange系数估计给
+$$
+\|V_b^{-1}\|\le r(\pi t)^{r-1}\theta^{1-r}.
+\tag{275.48}
+$$
+$D\iota_bV_b$ 的列为完整向量 $Dx_{b,\ell}$，所以
+$$
+\|D\iota_b\|
+\le r^{3/2}(\pi t)^{r-1}A_b
+\theta^{1-r}\bigl(\theta^r+\sqrt{\varepsilon_\Omega(\Xi)}\bigr).
+\tag{275.49}
+$$
+这控制所有落到其他链的列分量，即使 $Q$ 和 $D$ 都有跨链相干也成立。
+
+对充分小的正误差，分别选择
+$\theta=\varepsilon_\Omega(\Xi)^{1/(2r_b)}$。由 $r_b\le m$，各列块都受固定常数乘 $\varepsilon_\Omega(\Xi)^{1/(2m)}$ 控制；有限列块合并给
+$$
+\|D\|\le C_D\varepsilon_\Omega(\Xi)^{1/(2m)}.
+\tag{275.50}
+$$
+零误差时，在（275.49）中令 $\theta\downarrow0$，也得 $D=0$。最后注意归一化因子：
+$$
+\begin{aligned}
+\|\Xi-\Omega\|_1
+&\le\frac2c\|D\|_1+\frac1c\|X\|_1\\
+&\le\frac{2n}{c}\|D\|+\frac{2n}{c}\|X\|\\
+&\le\frac{2nC_D}{c}\varepsilon_\Omega(\Xi)^{1/(2m)}
++n\varepsilon_\Omega(\Xi).
+\end{aligned}
+\tag{275.51}
+$$
+在小误差区间吸收后一项，其余误差用态迹距至多二覆盖，即得固定实例的全域上界
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon_\Omega(\Xi)^{1/(2m)}\}
+}
+\tag{275.52}
+$$
+对某个有限 $C_{\mathrm{up}}$ 成立。过滤的双向距离界将它传回原始坐标。
+

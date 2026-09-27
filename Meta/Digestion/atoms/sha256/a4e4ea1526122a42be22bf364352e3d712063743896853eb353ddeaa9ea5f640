@@ -1,0 +1,32 @@
+### 178.1 固定相位、共同记忆边缘与局部后处理次序
+
+固定任意整数 $L\ge3$，取第174节的相位 $\varphi=\pi/4$。写
+
+$$
+V=U_{\pi/4},\qquad
+\tau_j=\Theta_L(P_j),\qquad
+\omega_j=\mathfrak E(V\tau_jV^*),\qquad
+\omega_*=\mathfrak E(P_+).
+$$
+
+定义同输入、同输出空间的两条通道
+
+$$
+\mathcal N_L(X)=X_{00}\omega_0+X_{11}\omega_1,
+\qquad
+\mathcal S(X)=\operatorname{Tr}(X)\omega_*.
+\tag{178.1}
+$$
+
+其输出为 $M\otimes K$，$K=Q\otimes R$ 是接收端；两条通道在 $M$ 上的边缘始终为同一个 $\rho_*$。
+
+称 $\mathcal P$ 在接收端可模拟 $\mathcal Q$，若存在 CPTP 映射
+$\Lambda:K\to K$，使
+
+$$
+\mathcal Q=(\operatorname{id}_M\otimes\Lambda)\mathcal P.
+\tag{178.2}
+$$
+
+这里没有允许操作不可访问的 $M$，也没有允许重新查询原输入。
+

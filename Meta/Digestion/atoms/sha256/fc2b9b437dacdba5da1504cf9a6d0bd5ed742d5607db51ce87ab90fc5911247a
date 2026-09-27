@@ -1,0 +1,58 @@
+**证明。** 用定理80.1的 $J_0,J_1$ 选输出满等距
+$$
+A_o=J_1:\mathbb C^d\to E_1,\qquad
+B_o=-J_0:\mathbb C^d\to E_0,
+$$
+以及任意满等距 $C_o:\mathbb C^{d-1}\to E_c$。它们的像两两正交。交叉块变成
+$$
+L_1L_0^*=\sqrt{\mu\nu}\,B_oA_o^*.
+$$
+令
+$$
+P_o=\mu^{-1/2}L_0^*A_o,\qquad
+\widetilde P_o=\nu^{-1/2}L_1^*B_o.
+$$
+由（80.5）它们均为等距；交叉块给 $P_o^*\widetilde P_o=I_d$，所以
+$(P_o-\widetilde P_o)^*(P_o-\widetilde P_o)=0$，即两者相同。
+
+再令
+$$
+R_o=\beta^{-1}L_0^*C_o,\qquad
+S_o=\delta^{-1}L_1^*C_o.
+$$
+由（80.5），$R_o,S_o$ 都是来自 $\mathbb C^{d-1}$ 的等距。并且
+$$
+P_o^*R_o=0,\qquad P_o^*S_o=0,\qquad R_o^*S_o=0.
+$$
+第一式来自 $A_o^*XC_o=0$，后二式来自
+$L_0L_1^*=\sqrt{\mu\nu}\,A_oB_o^*$ 及 $B_o^*C_o=0$。
+
+这三个输入像的维数之和为 $d+2(d-1)=3d-2=q-1$。其正交补记为 $N_0$，恰一维。由（80.5），
+$$
+\operatorname{ran}L_0^*=\operatorname{ran}P_o\oplus\operatorname{ran}R_o,\qquad
+\operatorname{ran}L_1^*=\operatorname{ran}P_o\oplus\operatorname{ran}S_o,
+$$
+因此 $N_0$ 被 $L_0,L_1$ 同时消去，且恰为它们的共同核。
+
+在输入坐标 $(P_o,R_o,S_o,N_0)$ 与输出坐标 $(A_o,B_o,C_o)$ 中，直接得到
+$$
+L_0P_o=\sqrt\mu A_o,\quad L_1P_o=\sqrt\nu B_o,\quad
+L_0R_o=\beta C_o,\quad L_1S_o=\delta C_o,
+$$
+$$
+L_1R_o=L_0S_o=0,\qquad L_0|_{N_0}=L_1|_{N_0}=0.
+$$
+这就是（80.13）。
+
+反向，将（80.13）代入（80.1），得到
+$$
+I-MM^*=\mathcal H\mathcal H^*,\qquad
+\mathcal H v=
+\frac{\sqrt\mu\,B_ov\otimes e_0-\sqrt\nu\,A_ov\otimes e_1}{\sqrt s}.
+$$
+$\mathcal H$ 为等距，故缺陷恰为秩 $d$ 的正交投影，$M$ 为收缩。加权块式直接验证全部二次纤维保持。
+
+最后，对非零 $z$，第一输入块在前两个输出块中给出 $d$ 维像；第二、第三输入块的联合像恰为整个第三输出块，维数 $d-1$；第四输入块为零。前两部分正交，因此总纤维秩为 $2d-1$。这对任意复 $z_0,z_1$ 且不全为零成立，证明完毕。
+
+这里的两个酉坐标分别作用于输入和输出接收因子；如同第77节，这不是同一个实际通道反复执行时可以逐轮自由换坐标的声明。
+

@@ -1,0 +1,23 @@
+## 命题 386.2（二态可见振荡）
+
+取 $\hbar>0$、$\omega\ne0$，
+
+$$
+H=\frac{\hbar\omega}{2}Z,\qquad
+\rho_0=|+\rangle\langle+|,\qquad
+F_+=|+\rangle\langle+|.
+$$
+
+则 $f_+(t)=(1+\cos(\omega t))/2$，它是非恒定周期响应。
+
+### 证明
+
+$$
+|\psi(t)\rangle
+=\frac{e^{-i\omega t/2}|0\rangle+e^{i\omega t/2}|1\rangle}{\sqrt2},\qquad
+|\langle+|\psi(t)\rangle|^2=\cos^2(\omega t/2)
+=\frac{1+\cos(\omega t)}2.
+$$
+
+因 $\omega\ne0$，取例如 $t=0$ 和 $t=\pi/|\omega|$ 即得不同读数；周期为 $2\pi/|\omega|$。∎
+

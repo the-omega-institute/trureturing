@@ -1,0 +1,64 @@
+**推论 24.3（随精度扩大的局部相位网）。** 令
+
+$$
+L_\epsilon
+=\left\lceil\frac{\log(4/\epsilon^2)}{\log8}\right\rceil,
+\qquad
+H_{n,\epsilon}
+=\sqrt{\frac{L_\epsilon}{4en}}.
+\tag{24.22}
+$$
+
+则对全部 $`n\ge4`$、$`0<\epsilon<1`$，
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4L_\epsilon
+P(\Theta,H_{n,\epsilon})\}.
+}
+\tag{24.23}
+$$
+
+证明。由 $`k!\ge(k/e)^k`$，在定理24.1中取 $`h=\sqrt{k/(4en)}`$ 后，其误差至多
+
+$$
+2\sqrt{\frac{(k/(8e))^k}{k!}}
+\le2\cdot8^{-k/2}.
+\tag{24.24}
+$$
+
+取 $`k=L_\epsilon`$ 即满足目标误差。若 $`H_{n,\epsilon}>\pi`$，定理24.1仍适用；同时保留 $`2n-1`$ 的精确容量上限。证明完毕。
+
+若某个候选集满足定量小尺度估计
+
+$$
+P(\Theta,h)\le C h^{-s}
+\quad(0<h\le h_0),\qquad 0\le s\le1,
+\tag{24.25}
+$$
+
+则在 $`H_{n,\epsilon}\le h_0`$ 的范围内，（24.23）进一步给
+
+$$
+k_n^{(\epsilon)}(\Theta)
+\le\min\left\{2n-1,\;
+4C(4e)^{s/2}n^{s/2}L_\epsilon^{1-s/2}\right\}.
+\tag{24.26}
+$$
+
+所以误差趋零时有 $`O(n^{s/2}[\log(1/\epsilon)]^{1-s/2})`$ 的联合上界；这里只在明确的小尺度条件内使用该式。仅知道箱维数为 $`s`$，不能自动替代（24.25）的常数统一估计。
+
+对弧长为 $`\ell`$ 的候选弧，总有 $`P(I,h)\le1+\ell/h`$，所以（24.23）给
+
+$$
+k_n^{(\epsilon)}(I)
+\le\min\left\{2n-1,\;
+4L_\epsilon+8\ell\sqrt{enL_\epsilon}\right\}.
+\tag{24.27}
+$$
+
+它保留了弧长与精度的共同作用；若是单一已知相位，仍可直接使用四维精确编码。全圆还可以结合第5节的总荷窗口上界，其他候选集也可以同时使用第22节的网格上界与（24.20），取其中最小者。
+
+本节证明的是可实施的单终端精度上界，没有给出相同精度依赖的下界，也没有建立不同终端之间的共同在线更新。来源的共同移心矩、档案侧导数支撑和全参考误差转换构成这里的具体推导；一般 Taylor 近似、阶乘估计及 Hoeffding 工具作为既有前置使用。
+

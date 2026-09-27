@@ -1,0 +1,18 @@
+**Theorem 4.2 (three transversals and no pinned entry).** For every
+integer $k\ge9$, assuming the cited HLatinness assertion 1.3, the
+square $H_{4k}$ of [GW, equation (7)] has the three explicit transversals
+$T_0,T_1,T_2$ of Definition 2.1, satisfying
+$$
+T_j\cap D=D\setminus\{d_j\}\quad(j=0,1,2),\qquad
+T_0\cap T_1=\{d_2\},\qquad T_0\cap T_1\cap T_2=\varnothing.
+$$
+Every two transversals of $H_{4k}$ intersect, but $H_{4k}$ has no
+pinned entry.
+
+Proof. Lemmas 3.1 and 3.2 give one actual source entry in every row,
+column and symbol for each $T_j$, hence three transversals. Lemma 4.1
+gives the stated intersections. The intersection over all transversals
+is contained in their empty triple intersection, so no entry is pinned.
+Lemma 1.4 gives pairwise intersection for all transversals of the square.
+$\square$
+

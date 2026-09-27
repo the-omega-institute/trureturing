@@ -1,0 +1,19 @@
+**定义 91.1（最近失效集合与未点击谱）。** 保留定义 87.1 的名义仪器
+$Q_0=|0\rangle\langle1|$、$L_0=|0\rangle\langle0|$，以及完整二维活动记忆、两个结果记录与同一仪器齐次重复的合同。记
+
+$$
+\mathfrak F_R=\{\Gamma\in\mathfrak F:\delta(\Gamma)=R\},
+\qquad
+\mathcal A_\Gamma=\mathcal N_\Gamma^*,
+\qquad
+r(\Gamma)=\operatorname{spr}(\mathcal N_\Gamma).
+\tag{91.1}
+$$
+
+这里 $\operatorname{spr}$ 是作用于全部复矩阵空间的谱半径；它也等于伴随映射的谱半径。引理 79.1 保证 $\mathfrak F_R$ 非空紧致，第 85 节给 $0<R<1$。对无永久失效的仪器，记
+
+$$
+T_\Gamma=\sum_{n\ge0}\mathcal A_\Gamma^n(I),
+\qquad M(\Gamma)=\|T_\Gamma\|_\infty.
+$$
+

@@ -1,0 +1,34 @@
+### 279.9 完整编码态的深度与全竞争锐性
+
+编码后的实际来源为
+$$
+\widehat\Omega
+=(\operatorname{id}_H\otimes\mathcal E)(\Omega_{\mathrm{eq}})
+=\frac12\bigoplus_jm_jT(Q_j,M_j).
+\tag{279.46}
+$$
+定义
+$$
+\widehat Q=\bigoplus_jm_jQ_j\succ0,
+\qquad
+\widehat M=\bigoplus_jM_j.
+\tag{279.47}
+$$
+于是
+$$
+\widehat\Omega=\frac12T(\widehat Q,\widehat M),
+\qquad
+\operatorname{Tr}\widehat Q
+=\operatorname{Tr}(\widehat M^\dagger\widehat Q\widehat M)=1.
+\tag{279.48}
+$$
+它的实际完整数据是
+$$
+\widehat\rho=
+\frac{\widehat Q+\widehat M^\dagger\widehat Q\widehat M}{2},
+\qquad
+\widehat K=\widehat Q\widehat M.
+\tag{279.49}
+$$
+$\widehat M$ 的Jordan块长度依次为 $k+1,k-1,\ldots$，最长者仍为 $k+1$。
+

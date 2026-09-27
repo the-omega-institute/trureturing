@@ -1,0 +1,25 @@
+**外部与内部的后继被固定。** 令
+$$
+R_O=\sum_{\eta_j\in O}G_j,
+\qquad
+R_F=(A\otimes F)+\sum_{\eta_j\in F}G_j\otimes\eta_j.
+$$
+两份零位像 $R_O\otimes\eta_1$ 和 $R_F$ 交零。$\dim R_F\ge4$、$\dim R_O\ge2$，故
+$$
+\dim R_O\le3,\qquad \dim R_F\le5.
+\tag{54.11}
+$$
+于是（54.9）给 $A+\sum_{\eta_j\in F}G_j$ 至多三维。
+
+每个内部指标 $j<L$ 都有 $A\cap G_j\ne0$；固定 $V_1$ 在 $A=G_0$ 上产生环境 $\eta_1\in O$，在 $G_j$ 上产生 $\eta_{j+1}$，所以
+$$
+\eta_j\in F\Longrightarrow\eta_{j+1}\in O.
+\tag{54.12}
+$$
+另一方面，每个外部指标 $j<L$ 都有 $G_1\cap G_j\ne0$，因为它们均二维且都位于至多三维 $R_O$。固定 $V_1$ 在 $G_1$ 上产生 $\eta_2$，故
+$$
+\eta_j\in O\Longrightarrow\eta_{j+1}\parallel\eta_2.
+\tag{54.13}
+$$
+式（54.12）、（54.13）给严格交替模式，内部环境的射线固定为 $B=\mathbb C\eta_2\subset F$。证明完毕。
+

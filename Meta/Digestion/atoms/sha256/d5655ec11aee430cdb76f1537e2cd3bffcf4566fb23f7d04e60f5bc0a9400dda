@@ -1,0 +1,121 @@
+**定理 65.3（三种未锚定极限及同一端点平方）。** 令
+$Z_0\sim N(0,128g_0/45)$，$N_2\sim N(0,2g_0)$。
+在下列各子列上，过程与旧联合坐标在固定紧区间联合 C-tight 收敛。
+
+当 $r_M\to0$ 且 $a_M=\eta_M^2d_M/\omega\to a\in\mathbb R$ 时，
+
+$$
+\mathcal V_M(\theta)\Rightarrow
+Z_0+4\sqrt{g_0}B_{\rm odd}(a+\theta).
+\tag{65.16}
+$$
+
+$B_{\rm odd}$ 是同一标准 Brownian motion 的奇延拓，且 $B,Z_0,N_2$ 与整个旧实场相互独立。此分支无需固定 $m_M$ 奇偶性。
+
+当 $r_M\to\zeta\in(0,\infty)$、$d_M/\delta_M\to b$，且 $m_M$ 奇偶性固定时，
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)&\Rightarrow Z_0+I_2(q_{\zeta,b,\theta};W_\sigma),\\
+q_{\zeta,b,\theta}(x,y)&=
+\frac{2\sqrt\zeta}{\omega}\frac{\sin[(b+\omega\theta/\zeta)(x-y)]}{x-y},\\
+I_2(q_{\zeta,b,\theta};W_\sigma)&=
+2\sqrt\zeta\int_0^{b/\omega+\theta/\zeta}
+\left(|F_\sigma(v)|^2-\gamma\right)dv.
+\end{aligned}
+\tag{65.17}
+$$
+
+核在对角线上连续延拓。偶数 $m_M$ 时 $W_\sigma$ 为旧场，奇数时为其独立实副本。
+$Z_0,N_2$ 相互独立，且与两份场联合独立；旧 $J_\infty$ 始终使用旧场。
+
+当 $r_M\to\infty$、$b_M=\eta_Md_M/\sqrt\delta_M\to b$，并固定奇偶子列时，联合有
+
+$$
+\left(\mathcal V_M(\theta),\sqrt{r_M}\mathcal D_M(\theta)\right)
+\Rightarrow
+\left(Z_0+\frac{2b}{\omega}(Y_\sigma^2-\gamma),
+2\theta(Y_\sigma^2-\gamma)\right).
+\tag{65.18}
+$$
+
+$Y_\sigma=W_\sigma(1)$，两处平方是同一个随机量。第一坐标为常数路径，独立性和奇偶约定同 (65.17)。
+全部结论保留先验条件 BL 数据概率收敛、一致固定支持无条件收敛及共同方向事件。
+
+证明。三种参数条件都使 $\mathcal A_M$ 有界，因此前一定理提供未归一化共同 Gaussian 比较和路径紧性。又由
+$\eta^2|d|^2\le C(\delta+|d|)$ 得 $d\to0$。
+令 $\chi_j=(-1)^{m_Mj}$。余弦项的参考 $L^2$ 极限与
+
+$$
+O_M^\chi=-\frac2{\omega^2\sqrt\delta}
+\sum_{j\ne l}\frac{\chi_j\chi_l}{(j-l)^2}G_jG_l
+\tag{65.19}
+$$
+
+相同，因为逐个固定滞后的 $\cos(dk)\to1$，且 $k^{-4}$ 可求和。
+标准正态矩阵的算子范数为 $O(\sqrt\delta)$，参考方差趋于 $128g_0/45$。
+旧移动对角矩阵也有小算子范数，与此零对角矩阵的迹内积为零。
+联合二次型—线性型特征函数或同一有限秩删除证明：这两个量先有联合 Gaussian 极限，再与所有旧及移动符号线性方向独立。
+这给出所述 $Z_0,N_2$，不能由零协方差单独代替这一步。
+
+对固定有限个时间，(65.7) 的正弦核同样逼近完整 Ci 核扣除静态余弦项。
+具体地，Ci 三阶余项的二次均方为 $O(\eta^{-2})$；锚定余弦和正弦振幅的系数平方和为 $O(\eta^{-4})$；
+相位线性化用 $\sum k^{-2}\min(k|u|,2)^2\le C|u|$，给出 $O_I(\eta^{-3})$。
+这些有限维误差结合 (65.14) 的精确路径紧性即可使用连续极限；无需先将一个粗振幅误差乘以 $r^{-1}$。
+
+亚临界时，正弦系数为
+$2\eta\chi_j\chi_l\sin[\omega(a_M+\theta)k/\eta^2]/(\omega\sqrt\delta k)$。
+同第 64 章的滞后分割与余弦尖点计算，其协方差趋于
+$8g_0(|2a+\theta+\psi|-|\theta-\psi|)$。
+标准正态矩阵的算子范数至多 $C_I\sqrt r(1+|\log r|)\to0$。
+与 (65.19) 的协方差至多
+$C_I\eta\sum k^{-3}\min(k/\eta^2,1)=O_I(\eta^{-1})$，与旧对角量的迹内积恰为零。
+对所有这些矩阵的线性组合一起作特征函数展开，得到联合 Gaussian 极限和 (65.16) 的独立性；奇偶符号在新协方差中消失。
+
+临界时，正弦核恰好是 $\chi_j\chi_l q_{M,\theta}(x_j-x_l)$，其中
+
+$$
+q_{M,\theta}(y)=\frac{2\sqrt r}{\omega}
+\frac{\sin[(d/\delta+\omega\theta/r)y]}{y}.
+\tag{65.20}
+$$
+
+核及时间导数在固定时间紧区间全空间有界，在固定空间紧集上一致趋于 (65.17)。
+相邻单元的交替求和给出旧场与符号场的完整 Gram：偶数时两者相同，奇数时极限独立。
+共同矩形逼近同时保留旧 $H$ 和新核，块内平方扣除给出 Wick 常数。
+Gaussian 尾控制空间截断，时间紧性已由精确 Ci 获得。
+该推导无需 $r-\zeta$ 或 $d/\delta-b$ 的额外速率；积分表达式由 Gaussian 乘积公式直接得到。
+
+超临界时，$d/\delta=b_M/\sqrt r\to0$。在零点，由 $|\sin u-u|\le C|u|^3$，
+
+$$
+\left|q_{M,0}(y)-2b_M/\omega\right|\le C y^2/r.
+\tag{65.21}
+$$
+
+(65.10) 使 $\sum_{j,l}|x_j-x_l|^4v_jv_l\le C$，所以正弦二次型在参考 $L^2$ 中逼近
+$(2b_M/\omega)Q_M^\chi$，其中
+$Q_M^\chi=(\sum_j\chi_jG_j)^2-\sum_jG_j^2$。
+后者趋于同一个 $Y_\sigma^2-\gamma$。
+
+对更细的增量重新使用 (65.9)，不放大前面的未量化误差。
+置 $\tau_\eta(\theta)=\eta^3(e^{\theta/\eta^3}-1)$，则余弦中的新增空间频率为
+$b_M/\sqrt r+\omega\tau_\eta(\theta)/r=O_I(r^{-1/2})$。
+用 $|\cos u-1|\le Cu^2$、同一四阶空间界和 Ci 尾界，得到
+
+$$
+E_G\sup_{\theta\in I}
+\left|\sqrt r\sum_{j\ne l}[K_M(\theta,j-l)-K_M(0,j-l)]G_jG_l
+-2\theta Q_M^\chi\right|^2
+\le C_I\left[r^{-2}+\eta^{-6}+\delta/\eta^2\right]\to0.
+\tag{65.22}
+$$
+
+先对导数使用二次型等距，再从零积分即可取得上确界。
+(65.6) 的第二个误差预算、缩放中心界和同一耦合使该比较适用于实际过程。
+因此两坐标共享 $Q_M^\chi$，且未缩放增量消失，证明 (65.18)。
+
+最后，旧非线性截距由共同矩形逼近加入；旧路径由质量尾和方差时钟保持。
+一次完整后验向量 TV 比较只转移有界测试与误差事件，好环境子序列给出条件 BL 收敛。
+这个论证不把新过程的边缘收敛误用为与旧场的联合收敛，也没有断言实际无界矩收敛。
+

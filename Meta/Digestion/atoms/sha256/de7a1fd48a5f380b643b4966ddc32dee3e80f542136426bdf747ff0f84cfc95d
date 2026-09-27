@@ -1,0 +1,28 @@
+**引理 66.2（正预解映射的范数就是最大等待）。** 在定义 66.1 的条件下，作用于 Hermitian 算子空间的映射
+
+$$
+\mathcal R=(\operatorname{id}-\mathcal A)^{-1}
+=\sum_{m\ge0}\mathcal A^m
+$$
+
+存在且正，并且
+
+$$
+\boxed{\|\mathcal R\|_{\infty\to\infty}=\|\mathcal R(I)\|_\infty=M.}
+$$
+
+这里使用 Hermitian 算子的算子范数，未假设 $\mathcal A$ 对 Hilbert–Schmidt 内积自伴。
+
+证明。任意正映射 $\mathcal B$ 在这个实赋范空间上满足 $\|\mathcal B\|_{\infty\to\infty}=\|\mathcal B(I)\|_\infty$：对 $-I\le H\le I$，正性给 $-\mathcal B(I)\le\mathcal B(H)\le\mathcal B(I)$，而 $H=I$ 达到下界。
+
+因此有限维下
+
+$$
+\sum_m\|\mathcal A^m\|_{\infty\to\infty}
+=\sum_m\|\mathcal A^m(I)\|_\infty
+\le\sum_m\operatorname{Tr}\mathcal A^m(I)
+=\operatorname{Tr}T<\infty.
+$$
+
+映射级数绝对收敛。与 $\operatorname{id}-\mathcal A$ 相乘，有限和望远镜抵消，余项 $\mathcal A^{m+1}$ 趋零，故它就是逆映射。正映射级数的极限仍正，且 $\mathcal R(I)=T$；再应用首段范数恒等式。$\square$
+

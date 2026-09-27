@@ -1,0 +1,18 @@
+**命题 67.4（频率大小分离不蕴含能量独立）。** 固定 $`\zeta>0`$、$`\psi\in(0,\pi)`$ 及 $`b\in\mathbb R`$。
+可取合法临界载波 $`\eta_c\equiv\psi/\omega\pmod4`$，距 $`\sqrt{\zeta/\delta}`$ 至多二；并取合法超临界载波
+$`\eta_s=4n_M+\psi/\omega+(b/\omega)\delta`$，其中 $`\log n_M=cQ^{1/4}+o(Q^{1/4})`$，$`0<c<U/2`$。
+它们的强度比可指数增长，但极限仍共用一个独立于旧场的 proper 测度 $`C`$，且
+
+```math
+\operatorname{Cov}\left(
+ 2\theta(|C(e^{ibx})|^2-\gamma),
+ \frac2{\sqrt\zeta}\int_0^t(|C(e^{i\omega ux/\zeta})|^2-\gamma)\,du
+ \right)
+ =\frac{4\theta\gamma^2}{\sqrt\zeta}
+   \int_0^t e^{-(b-\omega u/\zeta)^2/\kappa}\,du.
+```
+
+式 (67.14)。
+
+特别地，$`\theta,t>0`$ 时右侧严格为正。
+

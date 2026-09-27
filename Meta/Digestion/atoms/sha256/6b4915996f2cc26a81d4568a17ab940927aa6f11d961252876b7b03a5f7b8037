@@ -1,0 +1,97 @@
+### 68.3 因果偏迹与矩阵元的定量约束
+
+因果条件给 $S_{x,z}+S_{x',z'}=0$。在基（68.6）中取实部，得到
+
+$$
+\sqrt\varepsilon\,[(m_0-m_1)-(k_0-k_1)]
+=(1-\varepsilon)\operatorname{Re}(f_0-f_1).
+$$
+
+因此
+
+$$
+|m_0-m_1|\le g+
+\frac{1-\varepsilon}{\sqrt\varepsilon}L.
+\tag{68.8}
+$$
+
+记
+
+$$
+\mu=\frac1{1+\varepsilon},\qquad p_*=\frac{\varepsilon}{1+\varepsilon},
+\qquad A=S_{x,x},\qquad p=\sigma_{11}.
+$$
+
+由式（68.6）直接展开，
+
+$$
+\begin{aligned}
+A&=\frac{m_0+\varepsilon k_0+2\sqrt\varepsilon\operatorname{Re}f_0}{1+\varepsilon},\\
+p&=\frac{\varepsilon(m_0+m_1)+(k_0+k_1)
+-2\sqrt\varepsilon\operatorname{Re}(f_0+f_1)}{1+\varepsilon}.
+\end{aligned}
+\tag{68.9}
+$$
+
+式（68.7）、（68.8）从而给
+
+$$
+\begin{aligned}
+\delta_A:=\left|A-\frac\mu2\right|
+&\le g+\frac{1+3\varepsilon}{2(1+\varepsilon)\sqrt\varepsilon}L
+\le g+\frac{19\sqrt2}{16}\sqrt g,\\
+\delta_p:=|p-p_*|&\le g+2\sqrt\varepsilon L
+\le g+4\sqrt2\,\varepsilon\sqrt g.
+\end{aligned}
+\tag{68.10}
+$$
+
+在式（68.4）的参数范围内，使用 $\sqrt2<3/2$ 可以取完全显式的简化界
+
+$$
+\begin{aligned}
+\delta_A
+&\le\left(\frac{57}{1024}+\frac1{16384}\right)\varepsilon
+<\frac\varepsilon{16},\\
+\delta_p
+&\le\left(\frac3{16}+\frac1{1024}\right)\varepsilon^2
+<\frac{\varepsilon^2}{4}.
+\end{aligned}
+\tag{68.11}
+$$
+
+再令
+
+$$
+s=S_{y,y},\qquad k=\sqrt2\,S_{x,y}.
+$$
+
+因果偏迹和正性给 $s\le1-p$，$S$ 在 $x,y$ 上的主子式给 $|k|\le\sqrt{2As}$。算术—几何均值不等式于是给
+
+$$
+|k|\le A+\frac s2
+\le\mu+\delta_A+\frac{\delta_p}{2}.
+\tag{68.12}
+$$
+
+另一方面，
+
+$$
+c-\mu=
+\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)}
+>\frac7{17}\varepsilon,
+$$
+
+因为 $c-\varepsilon>7/8$ 且 $(1+c)(1+\varepsilon)<17/8$。由式（68.11）、（68.12），
+
+$$
+\begin{aligned}
+|c-k|&\ge c-|k|\\
+&>\left(\frac7{17}-\frac1{16}-\frac1{128}\right)\varepsilon
+>\frac\varepsilon3.
+\end{aligned}
+\tag{68.13}
+$$
+
+这里仍允许 $S_{x,y}$ 为复数。
+

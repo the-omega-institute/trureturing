@@ -1,0 +1,4 @@
+**命题 2.2（损失对切向逃逸三阶盲，repo-derived）。** 设 $F$ 二次连续可微，$\theta\in Z$，$v\in K(\theta)$。则 $\ell(\varepsilon)=L(\theta+\varepsilon v)$ 在 $\varepsilon=0$ 处的一、二、三阶导数全为零，且 $\ell(\varepsilon)=O(\varepsilon^4)$。
+
+证明。令 $g(\varepsilon)=F(\theta+\varepsilon v)-y$。$g(0)=0$、$g'(0)=Jv=0$，$g$ 二次连续可微，故 $g(\varepsilon)=O(\varepsilon^2)$、$g'(\varepsilon)=O(\varepsilon)$、$g''$ 有界。于是 $\ell=\tfrac12\|g\|^2=O(\varepsilon^4)$，$\ell'=\langle g,g'\rangle=O(\varepsilon^3)$，$\ell''=\|g'\|^2+\langle g,g''\rangle=O(\varepsilon^2)$；三者在 $0$ 处为零，且 $\ell''(\varepsilon)=O(\varepsilon^2)$ 给 $\ell'''(0)=0$。证毕。
+

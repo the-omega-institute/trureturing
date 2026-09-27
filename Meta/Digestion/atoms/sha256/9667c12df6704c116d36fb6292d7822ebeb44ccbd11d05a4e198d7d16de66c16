@@ -1,0 +1,18 @@
+**定义 160.1（延续等价）。** 固定一个允许控制与记录的任务族 $\mathcal C$。对每个可达历史 $h$ 和策略 $\Pi\in\mathcal C$，令
+
+$$
+\mathcal O_h(\Pi)
+$$
+
+表示从 $h$ 开始执行 $\Pi$ 所得到的全部声明时间、扇区和量子后继记录的联合测度。定义
+
+$$
+\boxed{
+h\sim_{\mathcal C}h'
+\iff
+\mathcal O_h(\Pi)=\mathcal O_{h'}(\Pi)
+\quad\text{对所有 }\Pi\in\mathcal C.
+}
+\tag{160.1}
+$$
+

@@ -1,0 +1,90 @@
+### 174.1 固定任务与需要比较的相位
+
+仍取第171节的 $p=1/2$ 来源，
+
+$$
+\rho=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\qquad
+|\Xi\rangle=\operatorname{vec}\sqrt\rho,
+\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{174.1}
+$$
+
+这里 $M,R,Q$ 均为 qubit；$\operatorname{vec}$ 按
+$|m\rangle_M|r\rangle_R$ 的系数排列。目标输出
+$R_{\mathrm{out}}$ 是 $R$ 的固定二维副本。$\Xi,\psi$ 为正交单位向量，因为
+$\langle\Xi|\psi\rangle=\operatorname{Tr}(\rho Y)=0$。
+
+编码仍为
+
+$$
+\mathfrak E(\sigma)
+=\frac12\left(
+\sigma_Q\otimes P_\Xi+
+Z_Q\sigma_QZ_Q\otimes P_\psi
+\right).
+\tag{174.2}
+$$
+
+张量因子按系统标签识别。令
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+t_0=z/3,\qquad t_1=-2z/3,
+$$
+
+$$
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+w_j=\frac43-t_j-4\sqrt{d(t_j)},
+$$
+
+$$
+\tau_j=\frac12\left[
+I+\frac{84w_j}{2353}X+
+\left(1-\frac{576w_j}{2353}\right)Z
+\right].
+\tag{174.3}
+$$
+
+第171节已给出真实逻辑通道
+$\Theta_L(X)=X_{00}\tau_0+X_{11}\tau_1$。对
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix},
+\qquad
+\xi_j^\varphi=\mathfrak E(U_\varphi\tau_jU_\varphi^\dagger),
+\tag{174.4}
+$$
+
+定义
+
+$$
+\mathcal N_{L,\varphi}(X)=\sum_{j=0}^1X_{jj}\xi_j^\varphi,
+\qquad
+\mathcal V_*(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi,
+$$
+
+$$
+e_L(\varphi)=
+\min_{\mathcal D:QR\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\mathcal D)\mathcal N_{L,\varphi},
+\mathcal V_*
+\right).
+\tag{174.5}
+$$
+
+这里 $d_\diamond$ 为半 diamond 距离，允许任意外部参考；解码器不能操作 $M$。
+按第170节的圆变量记法，
+$e_L(\varphi)=h_L(e^{2i\varphi})$，所以本节的
+$\varphi=\pi/4$ 对应 $h_L(i)$。
+
+在该相位，第165节的常值入口比较误差恰为 $3/4$。下面证明真实任务满足
+$e_L(\pi/4)>3/4$。
+

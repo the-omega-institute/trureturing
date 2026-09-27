@@ -1,0 +1,26 @@
+**引理31.2（路径荷差与全部退化相位）。** 对支持路径
+$\gamma=(i_0,\ldots,i_n)$，记 $|\gamma|=n$、
+$g(\gamma)=\sum_{t=1}^n g_{i_{t-1}i_t}$。令 $\Lambda\le\mathbb Z^q$ 为全部同长度、同起点、同终点路径的荷差生成的整数子群，则
+
+$$
+\mathcal H=\Lambda^\perp
+=\{h:e^{ih\cdot\lambda}=1\text{ 对全部 }\lambda\in\Lambda\}.
+\tag{31.7}
+$$
+
+所以 $\mathcal H$ 闭，允许有有限多个连通分支；$\mathcal Q$ 是维数
+$r=\operatorname{rank}\Lambda$ 的连通紧环面。$r=0$ 时商为单点，不存在额外的有限非平凡离散商。
+
+证明。（31.5）沿路径相乘为 $e^{in\omega}z_{i_0}\overline{z_{i_n}}$，正向成立。反向令
+
+$$
+M_h(i,j)=P_{ij}e^{ih\cdot g_{ij}}.
+\tag{31.8}
+$$
+
+若 $h\in\Lambda^\perp$，同一 $n,i,j$ 的所有路径相位一致，故
+$|M_h^n(i,j)|=P^n(i,j)$，不存在路径时两侧均零。因此
+$\|M_h^n\|_{\infty\to\infty}=1$，其中该范数是最大绝对行和。有限维谱半径公式给 $\rho(M_h)=1$。取模一特征值
+$M_hz=e^{i\omega}z$，从最大模分量所在行的三角不等式取等号，再沿不可约支持图传播，得到所有 $|z_i|$ 相等且非零。逐行取等号于是给
+$e^{ih\cdot g_{ij}}z_j=e^{i\omega}z_i$；归一化共同模即得（31.5）。闭子群及商维数结论是有限生成整数子群的标准环面对偶结构。证明完毕。
+

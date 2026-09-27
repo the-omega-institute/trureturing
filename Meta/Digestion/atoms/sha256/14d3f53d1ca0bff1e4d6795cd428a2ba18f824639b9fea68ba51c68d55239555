@@ -1,0 +1,14 @@
+**定理 42.2（共同判断完整性判据）。** 在定义 42.1 下，以下两条件等价：
+
+$$
+\forall\omega\in\Omega,\quad
+f(F_q(\omega))=F_{q'}(f(\omega));
+$$
+
+$$
+\forall P'\subseteq\Omega'\ \forall\omega\in\Omega,\quad
+\nu_q(f^{-1}(P'),\omega)=\nu_{q'}(P',f(\omega)).
+$$
+
+第一条件要求源侧每条被比较纤维的像覆盖目标侧整个相容范围；第二条件要求所有目标命题及其拉回译文在对应状态 $\omega,f(\omega)$ 上的真、假、未定判断都得到保持。
+

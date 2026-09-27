@@ -1,0 +1,61 @@
+### 165.2 完整 diamond 任务归约为一个最大本征值
+
+对任意解码器，比较输出不依赖原输入。在 $Q_{\mathrm{out}}$ 上平均四个 Pauli 共轭，得到输出
+
+$$
+\frac{I_{Q_{\mathrm{out}}}}2\otimes\bar\sigma,
+\qquad \bar\sigma\in\mathcal K_q.
+\tag{165.7}
+$$
+
+每个共轭前后的误差相同：同时在原输入作相应 Pauli 变量替换，常值入口不变，目标通道协变，diamond 范数在酉前后处理下不变。因此平均不增加误差。反过来，每个（165.7）都可以先实现 $\bar\sigma$、再制备完全混合 qubit 而达到。
+
+固定 $\bar\sigma$ 后，需要比较的两条通道是
+
+$$
+X\longmapsto X_{Q_{\mathrm{out}}}\otimes P_\Xi,
+\qquad
+X\longmapsto\operatorname{Tr}(X)
+\frac{I_{Q_{\mathrm{out}}}}2\otimes\bar\sigma.
+\tag{165.8}
+$$
+
+令 $|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$。两条通道的归一化 Choi 态为
+
+$$
+P_\Phi^{JQ_{\mathrm{out}}}\otimes P_\Xi,
+\qquad
+\frac{I_{JQ_{\mathrm{out}}}}4\otimes\bar\sigma.
+\tag{165.9}
+$$
+
+同一个标准 qubit 传态过程——对输入与 $J$ 作 Bell 测量，并在
+$Q_{\mathrm{out}}$ 作相应 Pauli 纠正——分别从这两份资源实现（165.8）。第一份资源传送输入，第二份资源的传态端口完全混合，故仍给出常值输出。这个共同过程不操作 $M$。对任意输入及外部参考，迹距离收缩给通道距离不超过两资源态的迹距离；以 Bell 态作为参考输入则达到资源态距离。因此完整半 diamond 距离等于（165.9）的半迹距离。
+
+按 $P_\Phi$ 与其三维正交补分块，该距离为
+
+$$
+\frac38+\frac12\left\|P_\Xi-\frac{\bar\sigma}{4}\right\|_1.
+\tag{165.10}
+$$
+
+记 $H=P_\Xi-\bar\sigma/4$。它在 $\Xi^\perp$ 上半负定，所以至多有一个正本征值；又
+$\langle\Xi|H|\Xi\rangle\ge3/4>0$，所以恰有一个。由
+$\operatorname{Tr}H=3/4$，有
+$\|H\|_1=2\lambda_{\max}(H)-3/4$。于是完整参考优化恰为
+
+$$
+\boxed{
+\mathfrak e(v)=
+\min_{\bar\sigma\in\mathcal K_q}
+\lambda_{\max}\left(P_\Xi-\frac{\bar\sigma}{4}\right)
+=
+\min_{\substack{\sigma_\pm\succeq0\\
+\operatorname{Tr}_{R_{\mathrm{out}}}\sigma_\pm=\rho_\pm}}
+\lambda_{\max}\left(P_\Xi-\frac{\sigma_++\sigma_-}{8}\right).
+}
+\tag{165.11}
+$$
+
+这一步对完整参考任务给出等式，而非只检验某一个 Bell 输入所得的下界。
+

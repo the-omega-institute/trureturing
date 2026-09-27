@@ -1,0 +1,47 @@
+## 定理 ST37.1：参数族的光滑恢复与确定的综合征丛
+
+令$B$为紧致光滑参数流形。设$x\mapsto\mathcal N_x:M_d\to M_n$是光滑通道族，每一点满足(ST35.2)，且$Q_x=\mathcal N_x(I)$的秩恒为$kd$。则$P_x,W_x,\pi_x$及$\mathcal D_{\pi_x}$均全局光滑。
+
+记$E_x=\operatorname{Ran}P_x$，定义
+
+$$
+F_x=\operatorname{Ran}\pi_x(e_{11}).
+$$
+
+它是秩$k$光滑子丛。映射
+
+$$
+\boxed{
+\Theta_x:F_x\otimes\mathbb C^d\longrightarrow E_x,
+\qquad v\otimes|i\rangle\longmapsto\pi_x(e_{i1})v
+}
+\tag{ST37.1}
+$$
+
+是全局光滑的酉丛同构。令$\sigma_x=Q_x|_{F_x}$，则$\sigma_x>0$、$\operatorname{tr}_{F_x}\sigma_x=1$，并有
+
+$$
+\boxed{
+\mathcal N_x(\rho)=\Theta_x(\sigma_x\otimes\rho)\Theta_x^\dagger.
+}
+\tag{ST37.2}
+$$
+
+**证明。** 恒秩与紧致性使$Q_x$的正谱与零之间有共同正距离。在包围正谱且避开零的适当复平面围道上，
+
+$$
+P_x=\frac1{2\pi i}\oint(zI-Q_x)^{-1}dz,\quad
+W_x=\frac1{2\pi i}\oint z^{-1/2}(zI-Q_x)^{-1}dz.
+$$
+
+矩阵逆与围道微分给出光滑性；局部围道可拼接，因为定义的是相同谱函数。无需选择全局本征向量。$\pi_x$和ST36的解码随后光滑。矩阵单位给出
+
+$$
+\langle F_{i1}v,F_{j1}w\rangle=\delta_{ij}\langle v,w\rangle,
+\quad\sum_iF_{i1}F_{1i}=P.
+$$
+
+所以$\Theta$等距且满。$Q$与全部$F_{ij}$交换，故$\Theta^\dagger Q\Theta=\sigma\otimes I_d$。由于$\operatorname{tr}Q=d$，有$\operatorname{tr}\sigma=1$。最后用$\mathcal N(\rho)=Q\pi(\rho)$。∎
+
+恒秩是一项足以保障该统一光滑公式的条件；它不是所有光滑恢复族存在的必要条件。秩改变时，不允许无证明地微分伪逆。
+

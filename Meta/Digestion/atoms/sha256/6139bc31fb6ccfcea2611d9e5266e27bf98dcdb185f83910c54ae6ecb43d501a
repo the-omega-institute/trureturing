@@ -1,0 +1,14 @@
+**两条信息量界可同时达到。** 取 $k=r=n\ge2$ 个正交纯态
+$\rho_j=|j\rangle\langle j|$，等权 $p_j=1/n$，于是
+$\rho=I/n$。此时
+
+$$
+F_j=\frac1n,\qquad
+u=1-\frac1n,\qquad
+\chi=\log n,\qquad N=n.
+\tag{169.27}
+$$
+
+（169.22）的上下界都等于 $\log n$。这些分支可由
+$\zeta_j=|j\rangle_M\otimes|j\rangle_K$ 实现，符合正交接收纯分支合同。
+

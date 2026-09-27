@@ -1,0 +1,62 @@
+**定理 203.2（集合层面的条件化—凸包交换律）。** 若 $\mathfrak R_+$ 非空，则
+
+$$
+\boxed{
+\mathsf C_\Phi\!\left(\operatorname{co}\mathfrak R\right)_+
+=
+\operatorname{co}\!\left(\mathsf C_\Phi(\mathfrak R_+)\right),
+}
+\tag{203.1}
+$$
+
+其中左侧的下标 $+$ 表示只保留分支概率为正的凸包点。
+
+### 证明
+
+先取左侧任意点。存在 $\rho_i\in\mathfrak R$ 与 $w_i\ge0$、$\sum_iw_i=1$，使
+
+$$
+\rho=\sum_iw_i\rho_i,
+\qquad
+p_i=p_\Phi(\rho_i),
+\qquad
+p_\Phi(\rho)=\sum_iw_ip_i>0.
+$$
+
+若 $p_i=0$，该项对 $\Phi(\rho)$ 没有贡献，可以删去。对其余项令
+
+$$
+\tau_i=\frac{\Phi(\rho_i)}{p_i},
+\qquad
+\alpha_i=\frac{w_ip_i}{\sum_jw_jp_j}.
+$$
+
+则 $\alpha_i\ge0$、$\sum_i\alpha_i=1$，并且
+
+$$
+\frac{\Phi(\rho)}{p_\Phi(\rho)}
+=\sum_i\alpha_i\tau_i.
+$$
+
+故左侧包含于右侧。
+
+反过来，取右侧任意有限凸组合 $\sum_i\alpha_i\tau_i$，其中 $\tau_i=\Phi(\rho_i)/p_i$ 且 $p_i>0$。令
+
+$$
+c=\sum_i\frac{\alpha_i}{p_i},
+\qquad
+w_i=\frac{\alpha_i/p_i}{c}.
+$$
+
+则 $w_i\ge0$、$\sum_iw_i=1$，且
+
+$$
+\frac{\Phi(\sum_iw_i\rho_i)}
+{p_\Phi(\sum_iw_i\rho_i)}
+=
+\frac{\sum_iw_ip_i\tau_i}{\sum_iw_ip_i}
+=\sum_i\alpha_i\tau_i.
+$$
+
+故右侧也包含于左侧，证毕。
+

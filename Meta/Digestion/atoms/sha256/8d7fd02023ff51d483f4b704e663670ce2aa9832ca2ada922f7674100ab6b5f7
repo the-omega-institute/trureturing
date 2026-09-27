@@ -1,0 +1,46 @@
+### 27.3 当前读出内的最大前向不变核
+
+令 $\tau:Y\to Y$ 是更新，$q:Y\to O$ 是当前实际读出。定义当前读出核
+
+$$
+K_0=\{(y_1,y_2):q(y_1)=q(y_2)\}.
+$$
+
+在 $K_0$ 中取所有满足前向不变条件
+
+$$
+(y_1,y_2)\in K\Longrightarrow
+(\tau y_1,\tau y_2)\in K
+$$
+
+的关系，其最大者记为 $K_\infty$。等价地，
+
+$$
+K_\infty=\ker\bigl(y\mapsto(k\mapsto q(\tau^k y))\bigr).
+\tag{27.6}
+$$
+
+它正是共同未来 profile 的 kernel。仓内 `PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient` 直接给出四个条件：
+
+1. 完成投影的 kernel 是 $K_\infty$；
+2. $K_\infty$ 是当前读出核内的最大前向不变关系；
+3. 当前读出唯一下降到该商；
+4. 更新唯一下降到该商上的更新。
+
+因此，把 $Y$ 压到 $Y/K_\infty$ 得到的不是任意摘要，而是**保留当前读出且仍可继续更新的最粗动态边界**。若另一个摘要 $h:Y\to B$ 也保留当前读出并有更新 $\bar\tau$，则
+
+$$
+\ker(h)\subseteq K_0,
+\qquad
+(h(y_1)=h(y_2)\Longrightarrow h(\tau y_1)=h(\tau y_2)),
+$$
+
+所以 $\ker(h)$ 是 $K_0$ 内的前向不变关系，从最大性得到
+
+$$
+\ker(h)\subseteq K_\infty.
+\tag{27.7}
+$$
+
+式 (27.7) 表明任意其他精确动态摘要都至少保留 canonical completion 所保留的区别；它可以更细，不能更粗。这里的“最小”是按可区分关系的偏序理解，而不是按某个编码字节数或计算时间理解。若要优化存储大小或取得成本，还需另行指定代价模型。
+

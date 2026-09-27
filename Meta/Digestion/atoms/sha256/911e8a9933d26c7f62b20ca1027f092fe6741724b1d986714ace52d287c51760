@@ -1,0 +1,38 @@
+### 69.1 候选、显式常数与结论
+
+沿用第 64、66 节三个量子比特 $A,B,D$ 的混合候选，张量次序为 $A\otimes B\otimes D$。明确写成
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+u&=\sqrt a\,x+\sqrt\varepsilon b\,z,\qquad
+v=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|u+cy\rangle\langle u+cy|+|v\rangle\langle v|.
+\end{aligned}
+\tag{69.1}
+$$
+
+其早边缘为
+
+$$
+\operatorname{Tr}_D R_{a,\varepsilon}
+=|00\rangle\langle00|+(1-\varepsilon)|10\rangle\langle10|
++\varepsilon|11\rangle\langle11|,
+$$
+
+归一化缺陷是 $\Delta=\varepsilon$。误差仍对全部量子 tester 事件取最大值：
+
+$$
+\begin{gathered}
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,\\
+N(X)=\max_{C,E}|\operatorname{Tr}(XE)|,
+\qquad e(R)=\min_{S\ \mathrm{causal}}N(R-S).
+\end{gathered}
+\tag{69.2}
+$$
+
+这里因果修复满足 $S\succeq0$、$\operatorname{Tr}_D S=I_A\otimes\sigma$、$\sigma\succeq0$、$\operatorname{Tr}\sigma=1$；不限制事件的非对角元或修复的相干项。
+

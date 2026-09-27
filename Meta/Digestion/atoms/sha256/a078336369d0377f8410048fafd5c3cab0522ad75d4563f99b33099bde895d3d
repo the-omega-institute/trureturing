@@ -1,0 +1,47 @@
+**定义 19.1（固定基数标度与临界偏移）。** 沿用定义 18.1 的真实平稳独立对
+与平稳路径实验及其完整观测规则。固定 $`r\in(0,1)`$、$`\beta\in(1/2,1)`$，令
+
+```math
+M=2^{d-1},\quad n=2M,\quad \ell=\log M,\quad
+q=\lfloor M^{1-\beta}\rfloor,\quad
+\lambda=s/n,\quad a=\frac{rq}{M-q}.
+\tag{19.1}
+```
+
+真实支持仍为任意未知的 $`q`$ 元子集，规则知道 $`d,s,q,r`$。记
+$`g=g_r`$，并取定理 18.2 的唯一临界点
+$`\alpha=\alpha_E(r,\beta)`$、$`\theta=\theta_E(r,\beta)\in(0,1)`$。置
+
+```math
+\gamma=-g(\theta)\gt 0,\qquad V=\alpha g''(\theta)\gt 0,\qquad
+c_M=\lambda-\alpha\ell+\frac{\log\ell}{2\gamma}.
+\tag{19.2}
+```
+
+它们满足 $`\alpha g'(\theta)=\beta`$ 与
+$`\theta\beta-\alpha g(\theta)=1`$。对 $`c\in\mathbb R`$ 定义
+
+```math
+A_c=\frac{e^{cg(\theta)}}{\theta\sqrt{2\pi V}},\qquad
+B_c=\frac{e^{cg(\theta)}}{(1-\theta)\sqrt{2\pi V}},\qquad
+p=\frac{1-\theta}{\theta},\qquad K_c=B_cA_c^p,
+\qquad
+\Psi(c)=\int_0^\infty e^{-t-K_ct^{-p}}\,dt.
+\tag{19.3}
+```
+
+非格点条件在本章指
+
+```math
+\frac{\log(1+r)}{\log(1-r)}\notin\mathbb Q.
+\tag{19.4}
+```
+
+例如 $`r=1/2`$ 满足此条件：若其比值为 $`u/v`$、$`v\gt 0`$，则
+$`(3/2)^v=(1/2)^u`$，与整数的素因子分解唯一性矛盾。
+固定宽度区间的局部极限定理采用
+[Stone](../../../Library/Dynamics/stone1967local.md) 的非格点结论；
+极值与精确恢复之间的先例及其适用边界见
+[Gao–Stoev](../../../Library/Dynamics/gaostoev2020support.md)。
+这些已有结果不提供以下实际路径律的多行比较与二阶极小极大曲线。
+

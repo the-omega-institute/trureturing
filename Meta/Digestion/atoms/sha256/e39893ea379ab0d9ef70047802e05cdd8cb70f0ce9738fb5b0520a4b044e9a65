@@ -1,0 +1,32 @@
+### 7.15 既有接口、成熟来源与适用边界
+
+相容线程与原状态的区别沿用第 2.1.4、2.2.4 节。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `RefinementSystem` 在当前模型取 $X=\Omega$、第 $n$ 层 `Coordinate` 为 $A^n$、`readout` 为完整前缀、相邻 `restrict` 为截断。所有前缀相等蕴含每个字符相等，故分离路径；相容有限前缀按位置连接为一条路径，且每个前缀读数正确，故满足 `ThreadComplete`。这两项正是 `stateThread_bijective_iff_complete_and_separates` 的条件。`stateEquivInverseLimit` 是非计算性定义；一般逆系统中第 7.1 节只比较两种线程空间，不由此许诺存在实现它们的另一个原状态空间。第 2.2.5 节的实际 LCM 塔已有具体有效余终搜索背景，搜索终止仍须来自其明示的层列条件。
+
+一般余终极限同构的所属接口为钉版 `Mathlib/CategoryTheory/Limits/Final.lean` 中 `CategoryTheory.Functor.Initial.limitIso`；第 7.1 节给出 $D,C,i,H$ 的具体代入、initial 性及逆方向与限制映射的对应。该库声明使用一般极限和非计算性选择；这里的向上搜索名字转换由显式算法另行承担，不能由一个抽象同构自动取得复杂度界。
+
+`D5/S0/Computability/Coding/PrefixFreeCode.lean` 中取字母参数 $\alpha=A$、词集参数为 $F$ 或 $G$，使用 `IsPrefixFree`。其 `isPrefixFree_first_codeword` 在前缀自由、两首词均属码集及两份拼接词相等的条件下，给出首词与余后缀各相等；停止码另排除空词，避免空词反复拼接的歧义。其 `kraft_inequality_of_isPrefixFree` 实际输入是有限二元 `Finset (List (Fin 2))`，并有前缀自由及无空词前提。第 7.2 节的任意 $d$、可数码及任意共同律结论由不交柱集和非负求和证明承担。有限唯一可译码的判定边界按第 4.8.2 节的 Sardinas–Patterson 条件使用。
+
+`D5/S0/Computability/Coding/LengthProfileSeparation.lean` 的 `equal_lengths_unbounded_extension_gap (d r) (hr : 0 < r)` 中，将原参数改记为 $q,h$，避免把 $d$ 误当本章字母数。它比较二元码 $\{u0^h:|u|=q\}$ 与 $\{0^hu:|u|=q\}$，$h>0$：两者有 $2^q$ 个长度 $q+h$ 的词，完整长度多重集相同，Kraft 质量同为 $2^{-h}$，但其 `freeAt` 条件分别是 $q<n$ 与 $0<n$，最短可扩展深度分别为 $q+1$ 与一。这是长度数据不能决定可扩展位置的既有见证；本章受容量约束的完整切口及偏置最优值采用第 7.4–7.6 节的具体证明。
+
+第 1.4.2–1.4.4 节已有完整回返块、未完成窗口与实际 roof 时间，第 1.4.7 节给出“每层一个”规则在换坐标后的双向反例。第 2.6.5 节的首两位交换保持 Haar 律，但需要运输读数 $q'_n=q_n\circ h^{-1}$ 与动力学 $S'=hSh^{-1}$ 才保持原接口；原生前缀查询不能仅凭同胚替换。第 4.7.9–4.7.11 节进一步区分完整窗口、共同律的推前、时钟和预算。这些关系在本章分别具体化为完整前缀、完整祖先束与式 (RST.31) 的不同成本单位。
+
+定义 6.1.1的 $\mathcal C_b$、$S_\mu$ 与本章预算类及停止质量采用相同定义；只有共同律确为所指定的 iid $\mu_p$、合法类也相同时，才把 $M_b(\mu_p)$ 与定理 5.2.2 与定义 6.1.1 中在相同合法类上的 iid 容量记号对应。定理 6.1.2拥有无穷 iid 贪心取到性，推论 6.1.3拥有任意预算的均匀饱和定理；命题 7.3 仅需在那里分别代入 $b$ 与 $\widetilde b$。本章任意相关或原子 Borel 律的事件恒等式不依赖 iid 优化结论。适配 6.7.4–6.7.5 的有效概率接口另需实际共同参考柱的统一可计算名字、同一库存呈示、有效尾界，以及所用方向的正质量和全部查询局部供应；层列或运输预算可计算并不自动提供这些条件。
+
+对全部后续实验的商接口，沿用第 1.3.6 节的具体关系接口及连接 6.7.6 的使用条件：必须在同一实际状态和历史、共同测试类上，有统一双向的合法测试翻译，保留拼接、更新、终端观察以及所指定的原始持续时间；成本若取可消去的交换幺半群中的可加值，还须保持该加法和成本读数。本章给出的逐路径停止事件、有标记策略和嵌套组合是这些条件的具体部分，不把无标记终端集合或一个最优数值等同于完整后续实验商。式 (RST.26) 对非负扩实期望只用逐点相等及积分；含无穷的加法不具可消去性，不能据此省去一般商接口的成本前提。
+
+外部来源各承担下列范围：
+
+1. [Stacks Project，Categories，Lemma 4.17.4，tag 002R](https://stacks.math.columbia.edu/tag/002R)，配合 [Definition 4.17.3，tag 09WP](https://stacks.math.columbia.edu/tag/09WP)，给出沿 initial functor 限制的极限同构。逆索引采用 $m\to n$ 当 $m\ge n$；保留深度包含函子为 initial，因为每个 $n$ 以上的保留层组成非空连通尾。数序中的余终性对应此反向索引中的 initial 性。该结果不含停止规则、预算、有效选点或等待费用；第 7.1 节分别证明坐标连续性和已给名字的有效转换。
+
+2. Jean-Camille Birget，[Bernoulli measure on strings, and Thompson-Higman monoids](https://arxiv.org/abs/1004.5589v1)，§1.2，Lemmas 1.1–1.2，PDF 第 3 页。Lemma 1.1 的局部操作将 $x$ 换成 $xA^r$，保持均匀 Kraft 和；Lemma 1.2 对有限前缀码用有限次完整子节点展开／收缩刻画相同端集。这里每段有限，逐词局部展开对应 $r=m_S(|w|)-|w|$；无限码的结论另由不交柱并和非负求和承担。逐深度容量、禁止越过段边界的收缩及原成本不由该文的标量质量结论自动保证。任意共同律的守恒来自同一事件，不能只由同一 Kraft 数值推断。
+
+3. François Coquet 与 Sandrine Toldo，[Convergence of values in optimal stopping and convergence of optimal stopping times](https://arxiv.org/abs/math/0504318v2)，Theorem 3，PDF 第 3 页。在固定有限视界、有界连续奖励、Skorokhod 概率收敛、Aldous 停止紧性及其规定的过滤包含或弱收敛条件下，该文给最优停止值收敛；证明中使用网格趋细。本文的上取层停止性由式 (RST.29) 直接证明。任意余终网格可以具有增长间距、无限视界和无界等待费，不能据此套用该值收敛结论或去掉逐深度容量限制。
+
+4. Julio Backhoff-Veraguas、Daniel Bartl、Mathias Beiglböck 与 Manu Eder，[All Adapted Topologies are Equal](https://arxiv.org/abs/1905.00368v2)，Theorem 1.2、Theorem 1.3 与 Lemma 1.4，PDF 第 5–6 页。在固定有限步数和有界度量 Polish 状态空间下，文中比较适应 Wasserstein、对称因果 Wasserstein、信息、扩展弱及最优停止拓扑；无界度量版本另涉及 $p$ 阶矩及矩收敛。它解释为何决策时可用信息须进入运输结构，但不编码这里的 $b_n$、祖先束或无限视界均值。
+
+5. Daniel Bartl、Mathias Beiglböck、Gudmund Pammer、Stefan Schrott 与 Xin Zhang，[The Wasserstein Space of Stochastic Processes in Continuous Time](https://arxiv.org/abs/2501.14135v1)，Definition 3.1，PDF 第 12 页；Propositions 4.3–4.4、Corollary 4.5，PDF 第 21–22 页。$\varepsilon$ 因果耦合可经条件分位数把一个停止时间运输成一族随机化策略，并给相应平均成本关系；$\varepsilon>0$ 时须保留构造中的终端截断，或限制原停止时刻加延迟不越过终端。具体地，在有限视界 $[0,H]$ 取含终点 $H$ 的网格，将最近完整记录的过滤记为 $\mathcal H_t=\mathcal F_{s(t)}$。若最大网格间隙不超过 $\varepsilon$，则在未越过终点的范围内有 $\mathcal H_t\subseteq\mathcal F_t\subseteq\mathcal H_{t+\varepsilon}$：右边来自下一网格点不晚于 $t+\varepsilon$。归一化到 $[0,1]$ 时相应缩放 $\varepsilon$，在终点使用文中的截断；若终点未保留，则不能自行声称该终端信息包含。条件分位数运输对随机化参数积分后比较成本，不保证每个参数的确定性策略都保持原费用。文中的 Hoover–Keisler 等价对应非前瞻、下有界成本的停止值等价；连续性还要求有界正则成本及连续的极限过程。一般随机化运输既不保证本章的确定性祖先束、逐深度字数，也不提供可逆的历史标记。
+
+6. Akitoshi Kawamura 与 Stephen Cook，[Complexity Theory for Operators in Analysis](https://arxiv.org/abs/1305.0453v1)，校正版 §3.4.1、Lemma 3.9，PDF 第 13 页，以及 Definition 3.2。若输入表示的多项式时间翻译方向为 $\gamma'\to\gamma$，输出表示的方向为 $\delta\to\delta'$，则对 $\mathsf C=\mathsf{FP}$ 或 $\mathsf{FPSPACE}$ 有 $(\gamma,\delta)\text{-}\mathsf C\subseteq(\gamma',\delta')\text{-}\mathsf C$。先把新输入名字翻成旧输入名字，运行既有实现，再把旧输出名字翻成新输出名字，这正是该方向的组合。第 7.1 节只给可计算翻译；要进一步使用该复杂度结果，还须指定名字大小，并控制层列计算、投影、查询构造及响应处理。即使复杂度类相同，也不等于实际查询次数、等待时间或期望停止费用相等。
+
+这些来源分别支撑标准组成部分；精确树切口、动态规划和等待判据按正文证明使用，不以文献类比替代约束核对。尚未给出的结论包括有用的整体多项式复杂度、仅可枚举输入上的一般有效选择、任意固定苛刻预算下的全律必要性、深度标记的比特最小性、改变源律后的策略等价，以及非均匀分支树、部分历史接口或任意增广过滤下的同样运输。本文不对综合的新颖性或新增形式认证作结论。
+

@@ -1,0 +1,47 @@
+## 73. 早期共同向量的投影夹逼与两种三射线分叉排除
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯初态、固定全域 CPTP 接收器以及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入七维接收空间 $K$，来源与参考不可由接收器访问。沿用实际固定等距位块 $V_0,V_1$，其像相互正交。假设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+本节先考察尾词
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,C,A),
+$$
+
+随后在第73.4节考察尾词 $ABBCB$；两种情形中的三条射线 $A,B,C$ 都两两不同。以下也用 $A,B,C$ 表示各自单位代表；环境相位只改变接收列的共同相位，不改变所用子空间和投影范数。
+
+实际早期正交单位向量满足
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{73.1}
+$$
+
+实际 $n\ge3$ 的 $H_n,G_n,Q_n$ 均二维，且
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n,
+\qquad H_n\cap G_n=0.
+\tag{73.2}
+$$
+

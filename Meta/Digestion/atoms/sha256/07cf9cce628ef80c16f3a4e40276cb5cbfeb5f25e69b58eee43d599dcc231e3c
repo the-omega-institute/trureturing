@@ -1,0 +1,18 @@
+### 168.4 最优局部逻辑恢复的完整参考误差
+
+为保持任务量词明确，定义
+
+$$
+\varepsilon_{\mathrm{loc}}
+:=
+\min_{\mathcal R:\mathcal L(QR)\to\mathcal L(Q_{\mathrm{log}})
+\ {\rm CPTP}}
+\frac12\|
+\mathcal R\mathcal N_{\mathrm{loc}}
+-\operatorname{id}_{Q_{\mathrm{log}}}
+\|_\diamond.
+\tag{168.13}
+$$
+
+目标是恢复任意逻辑输入及其参考；所有恢复操作仍限制在接收端。
+

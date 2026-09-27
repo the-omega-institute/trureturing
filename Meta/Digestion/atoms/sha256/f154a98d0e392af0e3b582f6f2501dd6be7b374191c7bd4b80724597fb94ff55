@@ -1,0 +1,61 @@
+### 202.5 同时满足公共 TP 的可调匹配族
+
+为给受限问题提供匹配上界，取有界实函数 $\xi(h),\theta(h)$，
+并将第200节的构造写成
+
+$$
+\begin{gathered}
+a_j=\sqrt{\frac{1/2+(-1)^j\epsilon\xi}
+{1+4m^2\theta^2\epsilon^2}},\qquad
+A_\Sigma=a_0^2+a_1^2,\qquad
+d_j=2ma_j,\qquad c_j=-i\theta\epsilon d_j,\\
+b_0=i2na_0,\qquad
+b_1=-i\frac{2na_0^2+4m^2\theta\epsilon A_\Sigma}{a_1},\\
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},\qquad
+J=i\sqrt{1-|b_0|^2-|b_1|^2-d_0^2-d_1^2}\,
+|0\rangle\langle1|.
+\end{gathered}
+\tag{202.14}
+$$
+
+额外 $J$ 属于结果1，负旗标按 $Z$ 共轭定义。
+严格内点裕量保证平方根对有界 $\xi,\theta$ 及全部 $h\in I$
+在充分小 $\epsilon$ 处为正。
+第一列归一化、两列正交和额外 $J$ 补足第二列
+仍严格给公共 TP；这里调节 $\theta$ 时同时调节 $b_1$，
+没有独立更改两个结果的合法性。
+
+该构造精确满足
+
+$$
+\begin{gathered}
+U=V=0,\qquad
+D=\frac{4m^2}{1+4m^2\theta^2\epsilon^2},\qquad
+x=\frac{\xi}{1+4m^2\theta^2\epsilon^2},\\
+\sum_{j,\alpha}\left|\frac c\epsilon+itd\right|^2
+=(t-\theta)^2D,\qquad
+M_j-m=O_I(\epsilon).
+\end{gathered}
+\tag{202.15}
+$$
+
+其 Choi 对以 $O_I(\epsilon)$ 接近 $\Gamma^*(h)$，
+并直接满足（202.5）的速率。
+因此可对它使用第200节冻结解析展开与（200.22），得到完整参考误差
+
+$$
+\boxed{
+e_\epsilon^{\xi,\theta}(h)
+=\frac34+\epsilon\Phi_h+
+\epsilon^2\left[
+Q(h)+\left(\xi+\frac{a_{\mathrm{eff}}}{2}\right)^2
++m(h)^2(t-\theta)^2
+\right]+o_I(\epsilon^2).
+}
+\tag{202.16}
+$$
+
+这里先由实际构造验证速率并计算误差，
+没有预先假定它属于待证明的受限近优类。
+谱展开仍优化全部参考权重。
+

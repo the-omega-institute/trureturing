@@ -1,0 +1,52 @@
+### 200.2 冻结操作的统一二阶展开
+
+按第189节的无损旗标对称化，只需考虑正旗标上的两份 Choi 矩阵
+$\Gamma=(J_0,J_1)$：
+
+$$
+\mathcal K=\{J_j\succeq0:
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+\tag{200.5}
+$$
+
+这是固定紧集。保持第189、198节的矩
+$A_j,B_j,C_j,D_j,N_j,M_j,P_j$，并记 $C=C_0+C_1$。
+在 $A_j$ 接近 $1/2$ 的固定邻域中，令
+
+$$
+s_A=A_0+A_1,\quad q=A_1/s_A,\quad
+\lambda=1-A_0A_1/s_A,
+$$
+
+$$
+\begin{aligned}
+L_h(\Gamma)
+={}&-q^2L_0-(1-q)^2L_1+h\mathcal P(\Gamma),\\
+\mathcal P(\Gamma)
+={}&-\lambda+
+\frac{q|1-qM_0|^2+(1-q)|1-(1-q)M_1|^2}{\lambda},\\
+L_j={}&c_j^{\mathrm{in}}
+[\beta(B_j-A_j)+2\gamma\operatorname{Im}N_j],
+\qquad(c_0^{\mathrm{in}},c_1^{\mathrm{in}})=(1,R).
+\end{aligned}
+\tag{200.6}
+$$
+
+第198节证明所用的谱间隙、全部参考权重中的严格极大点及隐函数论证，
+同样允许把解析展开再保留一阶：
+
+$$
+e_\epsilon(h,\Gamma)
+=\lambda+\epsilon L_h(\Gamma)
++\epsilon^2R_h(\Gamma)+O_I(\epsilon^3).
+\tag{200.7}
+$$
+
+此处 $R_h(\Gamma)$ 对 $(h,\Gamma)$ 连续，余项对该固定 Choi 邻域一致。
+具体地，令 $\tau=\sqrt\epsilon$。第189节的四维匹配偶块对
+$(\tau,h,\Gamma)$ 解析，且 $\tau\mapsto-\tau$ 为块酉共轭；
+最高简单根及其唯一参考极大点因此给出关于 $\epsilon$ 的解析函数。
+由于 $I$ 远离零、Choi 参数集紧、基点谱间隙和参考负曲率一致保持，
+可以在统一邻域取三阶余项。这个论证只冻结当前 Choi 数据；
+它不要求最优器本身存在导数。
+

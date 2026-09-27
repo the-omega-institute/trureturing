@@ -1,0 +1,27 @@
+### 74.2 ABCDA 的实际合同与接收跨度
+
+固定同一七维六纯终端实际合同，尾环境张成二维 $F$，且
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,C,D,A),
+$$
+其中 $A,B,C,D$ 四条射线两两不同。所有位块、早期列和终端平面来自同一个固定全域通道。不要求首环境外置，也不预设正交。
+
+沿用第70节：
+$$
+S_0=H_1+\cdots+H_5=K,\qquad
+W:=V_0K=\sum_{i=2}^6G_i\eta_i,\qquad
+R:=\sum_{i=2}^6G_i,\quad\dim R\le6.
+\tag{74.5}
+$$
+共同 $Q_3=Q_4=Q_5=Q_6$ 已被第70节排除。实际早期仍为
+$$
+V_0k=p\eta_1,\quad V_1k=q\eta_1,\quad
+V_0p=uA,\quad V_1p=vA,\quad V_0q=wA,
+$$
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad ab\ne0.
+\tag{74.6}
+$$
+$p,q$ 和 $u,v,w$ 分别为正交单位组；各 $n\ge3$ 的实际满投影合同照旧。
+

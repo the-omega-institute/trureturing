@@ -1,0 +1,7 @@
+**引理61.3（共同内部尾环境不可能）。** 不可能有
+$$
+\eta_4\parallel\eta_5\parallel\eta_6,\qquad \eta_4\in F.
+\tag{61.11}
+$$
+即第二终端秩二的 $FFF$ 候选不能采用 $AAA$ 模式。
+

@@ -1,0 +1,74 @@
+**定理 87.2（全参考校准与永久失效的有理半代数关系）。** 在定义 87.1 的同一接口中，下列两个集合都有有限有理系数实多项式等式、不等式的无量词定义：
+
+$$
+\{(\Gamma,u):\mathsf I(\Gamma),\ u\ge0,\ \delta(\Gamma)\le u\},
+\qquad \mathfrak F.
+\tag{87.2}
+$$
+
+其中 $\mathfrak F$ 是存在某初态永久未点击概率为正的仪器集。因此，准确失效半径 $R$ 是实代数数，而且
+
+$$
+\frac{1601}{2000}<R\le\sqrt{\frac{11+5\sqrt5}{32}}.
+\tag{87.3}
+$$
+
+证明。固定大小的 Hermitian 矩阵正半定，当且仅当其所有主子式非负。拆开复坐标后，式（87.1）因而是有限有理多项式条件。
+
+先准确表示完整校准球。取参考空间 $\mathcal R=\mathbb C^2$ 及单位向量 $z\in\mathcal R\otimes\mathcal H$，令
+
+$$
+D_\Gamma(z)=
+[\operatorname{id}_{\mathcal R}\otimes(\Gamma-\Gamma_0)](|z\rangle\langle z|).
+$$
+
+它是 $8\times8$ Hermitian 矩阵，其矩阵元是仪器实坐标与 $z$ 实坐标的有理多项式。对 Hermitian $D$，
+
+$$
+\|D\|_1\le2u
+\iff
+\exists Y\succeq0:\quad Y^2=D^2,\quad\operatorname{Tr}Y\le2u.
+\tag{87.4}
+$$
+
+原因是 $D^2$ 的正半定平方根唯一，右侧强制 $Y=|D|$。这在零本征值与秩变化处仍成立。
+
+Hermitian 保持映射的 diamond 范数可在与输入同维的参考及纯联合输入上取得；使用 Watrous 定理 3.51、式（3.291）。因此完整距离条件准确等价于有限实量词公式
+
+$$
+\mathsf B(\Gamma,u):\quad
+\mathsf I(\Gamma),\ u\ge0,\quad
+\forall z\ \bigl[
+\|z\|^2=1\Longrightarrow
+\exists Y\succeq0:
+Y^2=D_\Gamma(z)^2,\ \operatorname{Tr}Y\le2u
+\bigr].
+\tag{87.5}
+$$
+
+参考输入的全称量词仍在，点击与未点击的量子后继也都在 $D_\Gamma(z)$ 中；这里没有用单轮标签距离替换完整距离。
+
+其次，由引理 79.1 的固定态判据，永久失效准确等价于
+
+$$
+\mathsf F(\Gamma):\quad
+\mathsf I(\Gamma),\quad
+\exists\sigma\succeq0:
+\operatorname{Tr}\sigma=1,\quad\mathcal N_\Gamma(\sigma)=\sigma.
+\tag{87.6}
+$$
+
+这也是有限有理多项式量词公式；最后的等式对仪器坐标和 $\sigma$ 坐标为双线性。使用实闭域量词消去的标准定理，式（87.5）—（87.6）可消去量词，且保持有理定义域。[^wave_real_closed_elimination]
+
+令 $\mathsf H(u)$ 表示 $u\ge0$ 且存在满足 $\mathsf F(\Gamma)$ 与 $\mathsf B(\Gamma,u)$ 的仪器。引理 79.1 的最小值取得性使 $R$ 成为下列公式唯一选出的实数：
+
+$$
+\mathsf H(R)\quad\wedge\quad
+\neg\exists v\,[0\le v<R\ \wedge\ \mathsf H(v)].
+\tag{87.7}
+$$
+
+所以单点 $\{R\}$ 有有理半代数定义。无量词定义只使用有限个非零有理多项式；若 $R$ 不是其中任何一个的根，则全部符号在其一个邻域内不变，无法只选出单点。因此 $R$ 是实代数数。式（87.3）复用定理 85.2 与第 73.2 条。$\square$
+
+本证明复用《动态充分边界与内部观察者》卷第 76 节的有限优化量词化思路，以及《相位边界》卷第 142 节的迹范数图表示；新的对象是保留全部参考与量子后继的永久失效集合。它没有计算 $R$ 的最小多项式，也没有将代数性解释为低成本计算。
+

@@ -1,0 +1,11 @@
+**推论191.4（零点附近的宽度界）。** 令 $h_c>0$ 为第190节的唯一一阶零点，取 $H>h_c$。存在常数 $K,\eta>0$，使充分小正 $\epsilon$ 时，在 $|h-h_c|<\eta$ 内有
+
+$$
+h<h_c-K\epsilon\Longrightarrow E_\epsilon(h)<\frac34,
+\qquad
+h>h_c+K\epsilon\Longrightarrow E_\epsilon(h)>\frac34.
+\tag{191.15}
+$$
+
+每个这样的 $\epsilon$ 至少存在一个 $h$ 满足 $E_\epsilon(h)=3/4$；该邻域内的全部等值点都落在 $|h-h_c|\le K\epsilon$。
+

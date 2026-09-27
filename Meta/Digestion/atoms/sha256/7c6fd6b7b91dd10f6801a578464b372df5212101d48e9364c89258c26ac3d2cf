@@ -1,0 +1,12 @@
+**定义 221.2（独立性必须说明给定什么）。** 独立误差模型中的 $Y_1,Y_2$ 在给定 $H$ 后独立，未给定 $H$ 时却不是独立的。因为
+
+$$
+P(Y_1=1,Y_2=1)=\frac{a^2+(1-a)^2}{2},
+\qquad
+P(Y_1=1)P(Y_2=1)=\frac14,
+$$
+
+两者之差为 $(a-1/2)^2>0$。共同对象本来就能使报告相关；在检验某个对象状态时，所需的常常是给定该状态之后的生成关系，而非一个脱离条件的“来源独立”标签。
+
+项目 [SharedSourceObservationDependence](../../../D5/S3/ConceptDynamics/Information/SharedSourceObservationDependence.lean) 的 `shared_source_observations_are_not_independent` 给出更基础的公平布尔复制实例：两个读数必然相同，联合取真的概率为 $1/2$，边缘乘积为 $1/4$。上面的准确率模型是在通常有限概率论中作的进一步比较；该项目声明并未为任何真实证言估计 $a$，也未直接承担本节所有后验计算。
+

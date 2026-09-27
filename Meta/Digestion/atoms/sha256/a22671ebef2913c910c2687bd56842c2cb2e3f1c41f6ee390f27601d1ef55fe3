@@ -1,0 +1,31 @@
+### 68.1 候选与结论
+
+固定三个量子比特 $A,B,D$，次序为 $A\otimes B\otimes D$，使用全部量子 tester
+
+$$
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,
+$$
+
+以及归一化因果修复 $S\succeq0$、$\operatorname{Tr}_D S=I_A\otimes\sigma$、$\operatorname{Tr}\sigma=1$。取
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+$$
+
+并固定
+
+$$
+0<\varepsilon\le\frac1{16},\qquad c=\sqrt{1-\varepsilon},
+\qquad
+R_\varepsilon=
+\left|\frac{x+\sqrt\varepsilon z}{\sqrt2}+cy\right\rangle
+\left\langle\frac{x+\sqrt\varepsilon z}{\sqrt2}+cy\right|
++\frac12|x'-\sqrt\varepsilon z'\rangle
+\langle x'-\sqrt\varepsilon z'|.
+\tag{68.1}
+$$
+
+这是前述混合严格反例的 $a=1/2$ 子族。记完整事件最优修复误差为 $e_\varepsilon$；早边缘给 $\Delta=\varepsilon$。
+

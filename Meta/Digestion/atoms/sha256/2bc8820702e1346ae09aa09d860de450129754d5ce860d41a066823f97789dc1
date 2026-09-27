@@ -1,0 +1,8 @@
+**定义 7.1（Choi 边界）。** 若被封装过程为通道 $\mathcal E_M:\mathcal L(\mathcal H_A)\to\mathcal L(\mathcal H_B)$，固定输入基并定义非归一化 Choi 算子
+
+$$
+J_M=\sum_{i,j}|i\rangle\langle j|\otimes\mathcal E_M(|i\rangle\langle j|).
+$$
+
+标准表示参见 Choi, *Completely positive linear maps on complex matrices*, [DOI:10.1016/0024-3795(75)90075-0](https://doi.org/10.1016/0024-3795(75)90075-0)。
+

@@ -1,0 +1,10 @@
+**定理 400.2（纤维预算到有限经历预算的连接）。** 在定义 400.1 下，$n$ 次转移的完整观察路径满足
+
+$$
+\operatorname{TV}\!\left(\mathcal L(Y_0,\ldots,Y_n),
+\mathcal L(\widehat Y_0,\ldots,\widehat Y_n)\right)
+\le1-(1-\varepsilon)^n\le\min(1,n\varepsilon).
+$$
+
+这里沿用[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定理 21.6 的完整记录耦合结构，取无动作的特例。结合第 397 节的代表元预测器，若 $\delta=\delta(q,q_*P)$，就存在这样的 $Q$ 使右侧可以取 $1-(1-\delta)^n$；但 $\delta/2$ 是统一一步误差的下界，不是每个初始律、每个时长的路径误差下界。
+

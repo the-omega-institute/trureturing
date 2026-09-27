@@ -1,0 +1,11 @@
+**定理262.3（唯一填充反例族）。** 对（262.7）的每个 $a$，
+$$
+\boxed{
+\mathcal F(Z_a)=\{F_a\},
+\qquad
+F_a=\frac12\begin{pmatrix}1&-a\\-a&1\end{pmatrix}.
+}
+\tag{262.12}
+$$
+因此 $W(Z)=S$ 是唯一性的充分条件，但不是必要条件。
+

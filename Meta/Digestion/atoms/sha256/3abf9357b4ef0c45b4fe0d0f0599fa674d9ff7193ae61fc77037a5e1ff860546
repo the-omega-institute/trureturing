@@ -1,0 +1,12 @@
+**引理 4.11（有上界归一化行的贪心值）。** 对实数 $v_1\ge\cdots\ge v_m$ 及 $1/m\le r\le1$，令
+$k=\lfloor1/r\rfloor$、$\alpha=1-kr$。则
+
+$$
+\max_{\substack{q_j\ge0,\ \sum_jq_j=1\\q_j\le r}}
+\sum_{j=1}^{m}q_jv_j
+=r\sum_{j=1}^{k}v_j+\alpha v_{k+1}.
+\tag{TM.248}
+$$
+
+当 $\alpha=0$ 时省略最后一项，尤其 $k=m$ 时不会使用不存在的 $v_{m+1}$。一个最优行依次给前 $k$ 项质量 $r$，给下一项质量 $\alpha$，其余为零。
+

@@ -1,0 +1,24 @@
+**定理273.4（相同负性与不同锐指数）。** 对任意
+$$
+0<\nu\le\frac1{1600},
+\tag{273.29}
+$$
+存在参数
+$$
+t_A\in[\sqrt\nu,10\sqrt\nu],
+\qquad
+t_B\in[\sqrt{\nu/2},\sqrt{50\nu}],
+\tag{273.30}
+$$
+均属于 $(0,1/4]$，使
+$$
+\operatorname{Neg}(\Omega_A(t_A))
+=\operatorname{Neg}(\Omega_B(t_B))=\nu.
+\tag{273.31}
+$$
+这两个联合态的参考维数、联合秩、参考边缘及完整数据映射相同，但其最优局部指数分别为
+$$
+\boxed{\alpha_A=\frac18,\qquad\alpha_B=\frac14.}
+\tag{273.32}
+$$
+

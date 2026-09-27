@@ -1,0 +1,35 @@
+### 158.1 实际共同轨道与误差读出
+
+保留第153—155节的固定来源、独立纯初始化、同一全域接收通道及完整参考恢复任务。接收器不访问活动来源记忆，终端解码器可以依赖终端编号。记
+
+$$
+g=(\lambda_1,\ldots,\lambda_s),\qquad
+G=\overline{\{g^n:n\ge0\}}\subseteq\mathbb T^s,
+\qquad
+h:G\longrightarrow[0,1].
+\tag{158.1}
+$$
+
+这里 $G$ 是实际可达转移的共同外围相位群，$h(z)$ 是相位通道 $\mathcal R_z$ 相对于稳定规范目标的最优完整参考解码误差。第155节给出连续性以及
+
+$$
+|e_n-h(g^n)|\le\zeta_n\longrightarrow0\qquad(n\ge3),
+$$
+
+$$
+\zeta_n=C_pp^{n-1}+\sqrt D\,B\kappa^{\lfloor n/L\rfloor},
+\qquad 0<p<1,\quad 0<\kappa<1.
+\tag{158.2}
+$$
+
+$L$、$B$、$\kappa$ 是该节稳定块证书中的固定量；若稳定块为零，可把第二项直接省去。令 $\mu_G$ 为紧群 $G$ 上归一化 Haar 测度，并定义误差分布
+
+$$
+\nu=h_*\mu_G,
+\qquad
+\nu(A)=\mu_G\{z:h(z)\in A\}
+\tag{158.3}
+$$
+
+对 Borel 集 $A\subseteq[0,1]$ 成立。本节的概率测度描述确定性轮次的长期频率，不为原装置额外引入随机相位或新的实验输入分布。
+

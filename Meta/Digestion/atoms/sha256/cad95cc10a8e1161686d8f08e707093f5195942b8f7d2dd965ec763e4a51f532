@@ -1,0 +1,307 @@
+**定理37.1（有限共同接收器的保真度优化）。** 对（37.1）的任一非退化来源，下文（37.8）的共同接收器最大值取得，且 $\Delta_D>0$。其操作误差界为（37.10）；针对指定初态的有限子任务还满足（37.11）的双侧比较。同一个优化可消去全部终端解码器和指数大小档案，以（37.14）的 $388D^4+1$ 个实变量表示为紧半代数问题。代数振幅允许原则上的认证计算；对任意实振幅，不作无有效参数表示的算法声明。这些结论共同由下文的连续纯化、单终端消元、固定接收器有限期限与全局参数化证明。
+
+**连续的规范纯化与单终端恒等式。**
+
+对固定接收通道 $\mathcal C$，令 $\mathcal R_{\mathcal C}$ 为一次来源发射和接收合成的 $M\otimes K$ 上通道。只取允许的指定来源输入 $|0\rangle_M$，置
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|,\qquad
+\sigma_n=\mathcal R_{\mathcal C}^{\,n}(\sigma_0),\qquad
+\rho_n=\operatorname{Tr}_K\sigma_n.
+\tag{37.2}
+$$
+
+局部接收不改变来源记忆边缘，所以 $\rho_n$ 也是未接收的真实纯目标
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$ 的 $M$ 边缘。
+
+始终使用同一个辅助空间 $E=\mathbb C^{2D}$，并在 $M\otimes K$ 选定基
+$\{|z\rangle\}_{z=1}^{2D}$。定义
+
+$$
+|\Omega\rangle=\sum_{z=1}^{2D}|z\rangle_{MK}|z\rangle_E,\qquad
+|\Gamma_n\rangle=(\sqrt{\sigma_n}\otimes I_E)|\Omega\rangle,\qquad
+\omega_n=\operatorname{Tr}_K|\Gamma_n\rangle\langle\Gamma_n|.
+\tag{37.3}
+$$
+
+$|\Omega\rangle$ 未归一化，$|\Gamma_n\rangle$ 则因
+$\operatorname{Tr}\sigma_n=1$ 归一化。它是 $\sigma_n$ 的纯化，且
+$\omega_n$ 是 $M\otimes E$ 上的密度矩阵。
+
+正半定矩阵平方根在整个正半定锥上连续，包括秩发生变化的边界。因而
+$\mathcal C\mapsto\sigma_n\mapsto|\Gamma_n\rangle\mapsto\omega_n$ 连续。
+这里不能仅说“任选一个纯化”就推出所选纯化连续；（37.3）提供了所需的全局规范。
+
+本文使用根保真度
+
+$$
+F(A,B)=\operatorname{Tr}\sqrt{\sqrt A B\sqrt A}.
+$$
+
+对每个终端定义
+
+$$
+f_n(\mathcal C)=
+\max_{\tau\in\mathcal D(E)}
+F(\omega_n,\rho_n\otimes\tau).
+\tag{37.4}
+$$
+
+**单终端恒等式。** 对每个 $n\ge1$，
+
+$$
+\boxed{
+f_n(\mathcal C)=
+\max_{\mathcal D_n:K\to\mathcal B^{\otimes n}\ {\rm CPTP}}
+F\!\left((\operatorname{id}_M\otimes\mathcal D_n)(\sigma_n),
+|\Psi_n\rangle\langle\Psi_n|\right).
+}
+\tag{37.5}
+$$
+
+两侧均取得最大值，且
+
+$$
+f_n(\mathcal C)=1
+\quad\Longleftrightarrow\quad
+\text{该指定初态在终端 $n$ 有精确的 $K$-局部解码。}
+\tag{37.6}
+$$
+
+证明。记目标档案空间为 $A=\mathcal B^{\otimes n}$。对一个解码器取 Stinespring 等距
+$V:K\to A\otimes F$，并把环境维数按需补大。输出的全局纯化为
+
+$$
+|\zeta_V\rangle=(I_{ME}\otimes V)|\Gamma_n\rangle
+$$
+
+（这里只作固定的张量因子重排）。它在 $MA$ 上与纯目标的根保真度等于
+
+$$
+\max_{\|\xi\|=1,\ \xi\in E\otimes F}
+|\langle\Psi_n\otimes\xi\,|\,\zeta_V\rangle|.
+\tag{37.7}
+$$
+
+这是把 $\zeta_V$ 投影到目标纯态后所得环境向量的范数。
+
+对固定 $\xi$，令 $\tau=\operatorname{Tr}_F|\xi\rangle\langle\xi|$。
+$|\Psi_n\rangle\otimes|\xi\rangle$ 是
+$\rho_n\otimes\tau$ 在 $ME$ 上的一份纯化，而 $\Gamma_n$ 是
+$\omega_n$ 的纯化，所余纯化腿为 $K$。
+有限维 Uhlmann 变分恒等式于是给[^phase_uhlmann_transition]
+
+$$
+\max_{V:K\hookrightarrow A\otimes F}
+|\langle\Psi_n\otimes\xi|(I_{ME}\otimes V)|\Gamma_n\rangle|
+=F(\omega_n,\rho_n\otimes\tau).
+$$
+
+可取足够大的 $F$，使 Uhlmann 在纯化支撑上的等距延拓到整个 $K$；该等距因而定义全域 CPTP 解码器，而不是只定义于可达支撑的操作。这个变分恒等式也可由纯化振幅矩阵的极分解直接得到：最大重叠为相应乘积的迹范数。
+
+任意 $\tau$ 都有 $\xi$ 纯化，任意解码器和 $\xi$ 也都给这样一个 $\tau$。交换对这两个独立选择的最大化，得到（37.5）。有限维通道集和密度矩阵集紧，目标连续；上述等距构造也直接给最大值实现。根保真度等于一当且仅当两个密度矩阵相同，故（37.6）成立。证明完毕。
+
+（37.5）表明 $f_n$ 与纯化规范无关。固定 $\sigma_n$ 的两份同维纯化只差 $E$ 上酉变换，$\tau$ 的完整优化集随之双射；非最小辅助空间只需补零。这也是后面可用任意矩阵因子代替平方根而不改变优化值的原因。
+
+**有限期限、正性与操作误差。**
+
+置
+
+$$
+N_D=8D^2,\qquad
+\gamma_D(a,b)=\max_{\mathcal C}\min_{1\le n\le N_D}f_n(\mathcal C),
+\qquad
+\Delta_D(a,b)=1-\gamma_D(a,b).
+\tag{37.8}
+$$
+
+通道 $\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$ 全域且固定，不允许随 $n$ 更换。终端的 $\tau_n$ 和解码器则可分别依赖 $n$，与原合同一致。
+
+由（37.3）的连续性、根保真度的连续性和固定紧集
+$\mathcal D(E)$ 上最大值的连续性，所有 $f_n$ 都是 $\mathcal C$ 的连续函数。Choi 表示中的 CPTP 通道集紧，有限个 $f_n$ 的最小值也连续，所以（37.8）的最大值取得。
+
+若 $\Delta_D=0$，同一个最大点通道使前 $8D^2$ 个 $f_n$ 全为一。由（37.5）分别选择终端解码器，就能对指定输入 $|0\rangle$ 精确服务这些终端。
+
+这里需要核对第12节障碍的实际量词。第12节证明从开头即只取 $|0\rangle_M$，由其每个精确终端推出记忆—累计环境乘积分解，再延拓环境交叉等式；整个矛盾没有使用其他来源初态或参考。因此它已经排除了上述只针对 $|0\rangle$ 的接收器，给出
+
+$$
+\boxed{\Delta_D(a,b)>0.}
+\tag{37.9}
+$$
+
+这一步不是仅凭一个“全输入任务无解”定理就推断子任务无解，而是复用其针对该指定输入的证明范围。
+
+令 $\epsilon_D^\star(a,b)$ 为维数不超过 $D$ 的允许装置在全部终端、全部初始来源和参考上的最优半迹误差下确界。则
+
+$$
+\boxed{
+\epsilon_D^\star(a,b)\ge
+1-\gamma_D(a,b)^2
+=2\Delta_D(a,b)-\Delta_D(a,b)^2
+\ge\Delta_D(a,b)>0.
+}
+\tag{37.10}
+$$
+
+证明。若某装置的全合同误差至多 $\epsilon$，限制到指定初态和前 $N_D$ 个终端。纯目标投影是一个效果，因此其恢复概率至少为 $1-\epsilon$。其根保真度至少为 $\sqrt{1-\epsilon}$，所以
+
+$$
+f_n(\mathcal C)\ge\sqrt{1-\epsilon}
+\quad(1\le n\le N_D),\qquad
+\gamma_D\ge\sqrt{1-\epsilon}.
+$$
+
+平方即得（37.10），再对所有装置取下确界。维数较小的装置可嵌入 $D$ 维，并在未访问部分全域完成固定通道。证明完毕。
+
+这比只使用 $F\ge1-\epsilon$ 的 $\epsilon\ge\Delta_D$ 转换稍强，但仍没有估计 $\Delta_D$ 随 $D$ 的衰减率。
+
+也可精确标定这个工具对应的任务。令 $\varepsilon^0_{D,N_D}$ 为只要求指定初态 $|0\rangle$、只要求前 $N_D$ 个终端的最佳最坏半迹误差，接收通道仍须同一固定通道。定义
+
+$$
+Q_D=1-\gamma_D^2.
+$$
+
+由（37.5）与纯目标的迹距离／保真度关系，
+
+$$
+\boxed{
+Q_D\le\varepsilon^0_{D,N_D}\le\sqrt{Q_D}.
+}
+\tag{37.11}
+$$
+
+下界是上面的纯目标投影论证。上界取（37.8）的最大点通道，并分别取实现（37.5）的各终端解码器；它们的误差都不超过
+$\sqrt{1-f_n^2}\le\sqrt{Q_D}$。
+（37.11）的上界只属于这个指定初态的有限子任务，不是全部来源／参考、全部终端合同的上界。
+
+**每个固定接收器的 SDP 与全局有限变量优化。**
+
+对固定的正半定矩阵 $A,B$，根保真度有变分形式。[^phase_watrous_fidelity_sdp]
+
+$$
+F(A,B)=
+\max_X\left\{\operatorname{Re}\operatorname{Tr}X:
+\begin{pmatrix}A&X\\X^*&B\end{pmatrix}\succeq0\right\}.
+\tag{37.12}
+$$
+
+该式可由块正性给出的
+$X=\sqrt A\,C\,\sqrt B$、$\|C\|_{\rm op}\le1$ 及极分解验证，奇异情形按支撑限制或连续性处理。
+
+所以当 $\mathcal C$ 固定时，（37.4）是以下 SDP：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Re}\operatorname{Tr}X_n,\\
+\text{满足}\quad&
+\tau_n\succeq0,\quad\operatorname{Tr}\tau_n=1,\\
+&
+\begin{pmatrix}
+\omega_n&X_n\\X_n^*&\rho_n\otimes\tau_n
+\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{37.13}
+$$
+
+$\omega_n,\rho_n$ 此时固定，故右下块对 $\tau_n$ 仿射。
+$E$ 的维数为 $2D$，$\omega_n$ 和 $X_n$ 的矩阵大小是 $4D$，整个保真度块大小为 $8D$。这些状态矩阵的大小只随 $D$ 线性增长。
+
+全局优化接收器时，可以完全不引入大小为 $2^n$ 的档案或终端解码器。采用以下实坐标：
+
+- 接收 Choi 矩阵 $J_{\mathcal C}$ 的大小为 $2D^2\times2D^2$，Hermitian 坐标共 $4D^4$ 个，满足 $J_{\mathcal C}\succeq0$ 及对输出偏迹等于 $I_{2D}$。
+- 每个终端 $n=1,\ldots,N_D$ 有一个 $2D\times2D$ Hermitian 状态变量 $S_n$，坐标数 $4D^2$，满足从固定 $S_0=\sigma_0$ 出发的同一一步递推
+  $S_{n+1}=\mathcal R_{\mathcal C}(S_n)$。
+- 每个终端有一个复矩阵 $Y_n\in\mathbb C^{2D\times2D}$，共 $8D^2$ 个实坐标，满足 $`Y_nY_n^*=S_n`$。令 $\Gamma(Y_n)=\operatorname{vec}(Y_n)$，$\omega(Y_n)=\operatorname{Tr}_K|\Gamma(Y_n)\rangle\langle\Gamma(Y_n)|$。
+- 每个终端有一个 $2D\times2D$ Hermitian 密度变量 $\tau_n$，坐标数 $4D^2$，及 $4D\times4D$ 复矩阵 $X_n$，坐标数 $32D^2$。
+- 一个共同实标量 $s\in[0,1]$，要求 $s\le\operatorname{Re}\operatorname{Tr}X_n$ 对全部终端成立，并加入（37.13）的块正性，使用 $\omega(Y_n)$ 和 $\rho_n=\operatorname{Tr}_K S_n$。
+
+不同 $n$ 的 $Y_n$ 只是在各终端表示同一真实状态的辅助纯化；它们不需要是一个物理累计环境的前缀。由（37.5）的纯化不变性，这种自由度既不改变单终端值，也不放松同一接收通道的要求。同一通道要求完整保留在 $S_n$ 的共同递推中。
+
+最大化 $s$ 得到的值恰为 $\gamma_D$。对于固定接收器，每个终端的 $\tau_n,X_n$ 独立优化，故共同下界的最大值就是各 $f_n$ 的最小值；反向，任何可行点都定义一台合法接收器和这些终端的可行保真度见证。
+
+按上述坐标选择，总实变量数恰为
+
+$$
+4D^4+N_D(4+8+4+32)D^2+1
+=388D^4+1.
+\tag{37.14}
+$$
+
+若把纯初态也当变量优化，会再增加 $O(D)$ 坐标；固定初态的基变换已经消去了这项。Choi 矩阵本身大小为 $O(D^2)$，不能与其余 $O(D)$ 大小的状态矩阵混为一谈。
+
+该可行集紧。Choi 正性和固定偏迹使 Choi 坐标有界；一步递推从密度矩阵出发始终保持密度矩阵；$`Y_nY_n^*=S_n`$ 给 $\|Y_n\|_{\rm HS}=1$；$\tau_n$ 为密度矩阵；保真度块正性给
+
+$$
+|(X_n)_{uv}|^2
+\le(\omega_n)_{uu}(\rho_n\otimes\tau_n)_{vv}\le1.
+$$
+
+全部等式和非严格正性约束闭，所以可行集紧。
+
+对固定 $a,b$，递推对 Choi 和状态变量是双线性的，$`Y_nY_n^*=S_n`$ 是二次等式，块矩阵条目也是次数至多二的多项式。将有限大小的 Hermitian 正性用主子式非负表述，就得到一个有限基本闭半代数优化；它在全局上并非凸优化，尽管固定接收器后的每个终端是 SDP。主子式展开的个数和次数随 $D$ 增长，式（37.14）的变量计数不等于多项式时间算法或固定次数标量约束。
+
+**可计算性范围和可复用边界。**
+
+若 $a,b$ 的实、虚分量是明确给定的实代数数，则上述紧半代数优化使用代数系数。实闭域量词消去和代数数隔离可在原则上确定 $\gamma_D$，并为每个固定 $D$ 输出经过认证的有理数
+
+$$
+0<q_D\le\Delta_D
+\quad\text{或}\quad
+0<q'_D\le Q_D.
+\tag{37.15}
+$$
+
+严格正性（37.9）保证存在这样的正有理下界；没有实用运行时间、条件数或精度复杂度声明。“全局多项式优化”只有带有效的全局证书或已证明收敛的认证算法时才能承担此结论，未经认证的局部数值最大值不能作下界证书。
+
+对未提供有效表示的任意实振幅，不声称能从其符号值运行算法得到逐来源的 $\Delta_D(a,b)$。如果只要求统一于
+$|a|^2,|b|^2\ge1/k$ 的下界，可以把 $a,b$ 的四个实坐标也加入优化，并加入第20节的整数系数归一化及端点距离约束。所得紧集依然没有 $\gamma=1$ 的点，故统一 $\Delta_{D,k}>0$；其优化系数是整数，原则上的有理证书计算只需输入 $D,k$。这扩大了证书的参数范围，但不自动给出足够强的数值界或实用算法。
+
+第20节和第35节的显式下界也给出此优化量的定量界。对一个终端取达到 $f_n$ 的 $\tau_n$，由
+
+$$
+D(\omega_n,\rho_n\otimes\tau_n)\le\sqrt{1-f_n^2}
+$$
+
+及边缘收缩、三角不等式，
+
+$$
+h(\sigma_n)\le16(1-f_n^2).
+\tag{37.16}
+$$
+
+在取得 $\gamma_D$ 的接收器上，全部 $f_n\ge\gamma_D$，于是
+
+$$
+G\le16N_DQ_D.
+$$
+
+若第35节给 $G\ge\kappa'_{D,k}$，则
+
+$$
+Q_D\ge\eta'_{D,k},\qquad
+\Delta_D\ge1-\sqrt{1-\eta'_{D,k}}.
+\tag{37.17}
+$$
+
+因此这一工具至少重现既有显式下界；进一步改进必须来自对全局保真度优化的更强估计或认证结果，不能仅凭重新定义不变量宣布新速率。
+
+一个可直接核对的低维边界是 $D=1$。此时接收通道唯一，只能丢弃输入，$\sigma_n=\rho_n$。对任意纯化，极分解或 Schmidt 展开给
+
+$$
+f_n=\lambda_{\max}(\rho_n),\qquad
+\Delta_1=1-\min_{1\le n\le8}\lambda_{\max}(\rho_n).
+\tag{37.18}
+$$
+
+确切地，根保真度平方的优化为
+$\max_{\tau}\operatorname{Tr}(\rho_n^2\tau^{\mathsf T})
+=\lambda_{\max}(\rho_n)^2$；平方根才给上式。它检验了根保真度与平方保真度的区别。一般 $D$ 的全局优化仍保留真实接收器自由度，不能由这一例子外推速率。
+
+本工具给出的新接口是：全部终端解码器和指数大小档案被消去，留下固定通道、前 $8D^2$ 个 $2D$ 维联合态及 $O(D)$ 大小的保真度块。下一步可研究某个可认证的全局上界
+$\gamma_D\le1-\zeta_D$，或等价的 $Q_D$ 下界。若目标为
+$\exp(-CD^2)$ 或 $\exp(-CD)$ 级误差下界，仍须提供相应的 $\zeta_D$ 定量估计；本文没有完成这一部分。
+
+[^phase_uhlmann_transition]: Armin Uhlmann, “The ‘transition probability’ in the state space of a *-algebra,” *Reports on Mathematical Physics* **9** (1976), 273–279, [doi:10.1016/0034-4877(76)90060-4](https://doi.org/10.1016/0034-4877(76)90060-4), [作者原文 PDF](https://www.physik.uni-leipzig.de/~uhlmann/PDF/Uh76a.pdf)。§2 式（4）定义所有共同表示中向量重叠模平方的上确界，§5 式（23）计算密度矩阵情形为平方保真度；本文的根保真度为其平方根。固定一份有限维纯化、对另一纯化腿取等距的形式使用纯化唯一性；把支撑等距完成到全输入的义务由（37.5）的证明给出。
+
+[^phase_watrous_fidelity_sdp]: John Watrous, “Simpler semidefinite programs for completely bounded norms,” [arXiv:1207.5726v2](https://arxiv.org/abs/1207.5726v2), 2 August 2012。式（3）明确采用根保真度；§2.1（原文第5—6页）的 primal problem 正是最大化 Re Tr X、约束 [[P,X],[X*,Q]]≥0，并由 Lemma 2 的收缩算子分解证明最优值等于根保真度，适用于奇异正半定矩阵。本文仅引用这一固定矩阵 SDP 工具，不将其计算复杂度结论扩展到共同接收器的非凸全局优化。
+

@@ -1,0 +1,22 @@
+- 同次独立产生
+  $$
+  Z\sim\operatorname{Bernoulli}((1-\sqrt h)/2),
+  \qquad \tau=1+Z\in\{1,2\}.
+  \tag{305.17}
+  $$
+  给定参数，新联合记录与过去独立。
+
+时长在全部世界使用相同的已知标定 \(\tau=1+Z\)，其概率律依赖真实增益。零增益参照是原币 \(\operatorname{Bernoulli}(1/B)\) 与独立 \(Z\sim\operatorname{Bernoulli}(1/2)\)。对所有 \(h>0\) 都有联合单向绝对连续；没有利用时长奇异编码。
+
+记
+$$
+w(z)=C-z+z\kappa,\qquad w_h=w(h),\qquad
+H=1+\log(\kappa/g),\qquad
+\mathcal O(h)=\frac{w_h}{h^2\kappa^2}H,
+$$
+$$
+\eta=\frac{\log(l/k^2)}{\kappa},\qquad
+\bar\eta=\min(\eta,1/2).
+$$
+第301节给 \(1+\log(1/\bar\eta)\asymp H\)，其常数在本节全部参数范围内一致。
+

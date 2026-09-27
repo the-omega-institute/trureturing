@@ -1,0 +1,88 @@
+**定理 91.2（最近失效的唯一暗态与统一谱分离）。** 每个 $\Gamma_*\in\mathfrak F_R$ 恰有一个未点击固定密度矩阵，且它是纯态 $P=|\psi\rangle\langle\psi|$。取与 $\psi$ 正交的单位向量 $\eta$，可以把任一未点击 Kraus 表示写成
+
+$$
+A_j=\begin{pmatrix}c_j&b_j\\0&a_j\end{pmatrix},
+\qquad
+\sum_j|c_j|^2=1,\qquad
+\sum_j\overline{c_j}b_j=0.
+\tag{91.2}
+$$
+
+令
+
+$$
+\beta=\sum_j|b_j|^2,\quad
+v=\sum_j|a_j|^2,\quad
+d=\sum_j\overline{c_j}a_j,\quad
+e=1-\beta-v.
+$$
+
+则
+
+$$
+e\ge1-R>0,\qquad
+\beta+v\le R,\qquad |d|\le\sqrt v\le\sqrt R<1.
+\tag{91.3}
+$$
+
+未点击映射与其伴随的特征值，计代数重数，均为
+
+$$
+\boxed{1,\ d,\ \overline d,\ v.}
+\tag{91.4}
+$$
+
+特别地，特征值 $1$ 是代数简单的，其余谱统一位于 $|z|\le\sqrt R$ 中。最终未点击效果准确为
+
+$$
+F_*:=\lim_{n\to\infty}\mathcal A_{\Gamma_*}^n(I)
+=P+q(I-P),\qquad
+q=\frac{\beta}{1-v}\le R<1.
+\tag{91.5}
+$$
+
+伴随映射的全部 Hermitian 固定点恰为实数倍的 $F_*$。在正固定点中，$F_*$ 是唯一算子范数为一的成员，其最大本征空间恰为暗态直线。
+
+证明。记实际点击效果为 $E=\mathcal C_{\Gamma_*}^*(I)$。名义仪器从 $P_0=|0\rangle\langle0|$ 出发必点击，完整距离控制这一结果概率，故
+
+$$
+\operatorname{Tr}E\ge\langle0|E|0\rangle\ge1-R>0.
+\tag{91.6}
+$$
+
+任一未点击固定密度矩阵 $\sigma$ 满足 $\operatorname{Tr}(E\sigma)=0$。正性使其支撑包含于 $\ker E$。二维性与 $E\ne0$ 使该核至多一维，而固定密度矩阵存在，因此它恰是一维且 $\sigma=P$ 唯一。于是 $E=e(I-P)$，其中 $e=\operatorname{Tr}E\ge1-R$。
+
+从 $\sum_jA_jPA_j^\dagger=P$ 可知各 $A_j\psi=c_j\psi$，得到上三角形状及 $\sum_j|c_j|^2=1$。完整性给
+
+$$
+\sum_jA_j^\dagger A_j=I-E
+=\begin{pmatrix}1&0\\0&1-e\end{pmatrix}.
+$$
+
+对比矩阵元便得到式（91.2）及 $\beta+v=1-e$；Cauchy–Schwarz 给 $|d|^2\le v$。
+
+若 $H=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}$ 为 Hermitian，令 $k=\sum_j\overline{b_j}a_j$，直接计算得
+
+$$
+\mathcal A_{\Gamma_*}(H)=
+\begin{pmatrix}
+x&dz\\
+\overline d\,\overline z&\beta x+vy+2\operatorname{Re}(kz)
+\end{pmatrix}.
+\tag{91.7}
+$$
+
+在复化坐标 $(x,z,\overline z,y)$ 下这是三角线性系统，故特征多项式为
+$(\lambda-1)(\lambda-d)(\lambda-\overline d)(\lambda-v)$。
+伴随关系使 $\mathcal N_{\Gamma_*}$ 具有共轭谱，而上述多重集已在共轭下不变，得到式（91.4）。
+
+固定点方程先给 $z=0$，再给 $y=\beta x/(1-v)$。从 $I$ 开始迭代时，$x_n=1,z_n=0$，且 $y_{n+1}=\beta+vy_n$，因而收敛到式（91.5）。又
+
+$$
+1-q=\frac e{1-v}\ge e\ge1-R,
+$$
+
+故 $q\le R$，其余固定点及最大本征空间的结论随即成立。$\square$
+
+这里的统一界使用了名义仪器的确定点击输入 $P_0$。不能仅从任意二维名义仪器满足 $R<1$，就省略式（91.6）的实际接口条件。
+

@@ -1,0 +1,76 @@
+**证明。** 固定 $r$，令 $T_r$ 为两列分别是 $A^\dagger r$ 与 $B^\dagger r$ 的 $2\times2$ 矩阵。则
+
+$$
+\Gamma_1^*(P_r)=T_rT_r^\dagger,
+\qquad
+g(c,r)=\|T_r\overline c\|^2.
+$$
+
+$T_rT_r^\dagger$ 与 $T_r^\dagger T_r$ 的两个本征值相同，所以
+
+$$
+\min_{\|c\|=1}g(c,r)
+=\lambda_{\min}(\Gamma_1^*(P_r)).
+$$
+
+这里同时使用输入维数为二、Kraus 数量为二；不能把两个不同维数矩阵的最小本征值未经检查地等同。弱极小极大不等式给出 $\gamma\le\delta_{\rm rot}$，连续性与单位球面的紧性给出极值取得。两个变量的纯态投影集合均非凸，不能直接通过凸极小极大定理交换次序；把系数纯态换成混合态也不再表示只删除一项 Kraus 算子。
+
+记结果一 Choi 矩阵的两个正根为 $\alpha\ge\lambda>0$。由共同 TP 和 $K_0\ne0$，
+
+$$
+\alpha+\lambda=\operatorname{Tr}J_1
+=2-\operatorname{Tr}(K_0^\dagger K_0)<2,
+\qquad \lambda<1.
+$$
+
+将 Kraus 列的二维 Gram 矩阵酉对角化，可在允许的混合中取得一个 HS 范数平方为 $\lambda$ 的谱 Kraus 算子 $M$。因此
+
+$$
+\delta_{\rm rot}\le\|M\|_\infty^2
+\le\|M\|_{HS}^2=\lambda<1.
+$$
+
+对任意竞争者 $\mathcal S\in\mathfrak C_2$，若其结果一块的 Choi 秩至多一，便可写为 $X\mapsto CXC^\dagger$，包括 $C=0$。固定任意单位输出 $r$，行 $r^\dagger C$ 有单位核向量 $v$。竞争者在输入 $P_v$ 上对事件“标签一且量子输出为 $r$”给零概率，目标通道的概率为
+
+$$
+\langle v,\Gamma_1^*(P_r)v\rangle
+\ge\lambda_{\min}(\Gamma_1^*(P_r)).
+$$
+
+合法事件的概率差不超过两通道的完整半 diamond 距离。选择达到 $\gamma$ 的 $r$，得到此类竞争者的下界 $\gamma$；核输入可以依赖竞争者。
+
+若竞争者的结果一 Choi 秩为二，总秩预算迫使其结果零块缺失。选取达到 $q_0$ 的输入并只检验标签零，得到下界 $q_0$。两类穷尽全部预算内竞争者，因此 $d_2\ge\min(\gamma,q_0)$。
+
+取达到 $\delta_{\rm rot}$ 的删除项并补为 $(M,N)$。删除 $M$ 后，保留结果零的 $K_0$ 与结果一的 $N$；上面的严格小于一保证可应用第 219 节修复，得到总秩二的合法竞争者及 $d_2\le\delta_{\rm rot}$。
+
+另一方面，若 $q_0<1$，删除整个结果零块并修复保留的结果一，得到总秩二候选及 $d_2\le q_0$。若 $q_0=1$，已有 $d_2\le\delta_{\rm rot}<1=q_0$，无需在奇异端点调用逆平方根。故得到完整上界。
+
+现在证明等号证书。若所列条件成立，$\Gamma_1^*(P_r)$ 是两个正交向量 $M^\dagger r,N^\dagger r$ 的外积之和，其两本征值为 $\delta$ 与 $\|N^\dagger r\|^2$。因此
+
+$$
+\gamma\ge\delta,\qquad
+\delta_{\rm rot}\le\delta.
+$$
+
+结合弱极小极大不等式，所有量相等。
+
+反过来，设 $\gamma=\delta_{\rm rot}=\delta$。取达到最小删除值的 $M$，补为 $(M,N)$；再取达到 $\gamma$ 的 $r$。在对应系数处，
+
+$$
+\delta=\min_cg(c,r)
+\le\|M^\dagger r\|^2
+\le\max_{r'}\|M^\dagger r'\|^2
+=\delta.
+$$
+
+所以 $MM^\dagger r=\delta r$。对固定 $r$，任意组合 $xM+yN$ 的平方范数由二维 Hermitian Gram 矩阵给出。系数 $(1,0)$ 达到最小 Rayleigh 商 $\delta$，迫使非对角元为零、另一对角元不小于 $\delta$，即另外两个条件。此论证不要求简单主奇异值。若 $\delta=0$，最优 $M=0$，同一证明及零向量外积仍成立。
+
+等价地，等号当且仅当存在纯策略鞍点 $(c_*,r_*)$，使
+
+$$
+g(c_*,r)\le g(c_*,r_*)\le g(c,r_*)
+\quad\text{对所有单位 }c,r.
+$$
+
+在通道条件下，将 $\gamma=\delta_{\rm rot}$ 代入已证距离夹界，得到 $d_2=\min(\delta_{\rm rot},q_0)$。证毕。
+

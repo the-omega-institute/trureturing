@@ -1,0 +1,22 @@
+### 236.2 子空间遗漏支持事件
+
+为证明下界，先允许一般 $d,N\ge2$。对任意候选定义实际目标事件振幅
+$$
+L_j:A\to\mathbb C^{k_j},
+\qquad(L_jv)_a=\langle r_j,C_{j,a}v\rangle,
+\qquad G_j=\ker L_j.
+\tag{236.MP.8}
+$$
+每个 $L_j$ 复线性且秩不超过 $k_j$。$L_jv=0$ 只说明该标签的目标纯输出事件没有振幅，不要求整个候选 Kraus 输出为零。
+
+对任意非零输入子空间 $H$，令 $h=\dim H$。实际子空间参考效果给
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac{\sum_j\operatorname{rank}(L_j|_H)}{Nh}
+=\frac{\sum_j\dim(H\cap G_j)}{Nh}.
+}
+\tag{236.MP.9}
+$$
+式（236.MP.9）直接复用第234节引理234.1；最后一个等号由限制映射的秩—零化度公式得到。此前的效果直接检验原候选，允许任意输出泄漏，没有把投影后的映射当作另一份保迹候选。子空间和效果仍可以依赖被检验候选，符合逐候选取最坏输入的量词。
+

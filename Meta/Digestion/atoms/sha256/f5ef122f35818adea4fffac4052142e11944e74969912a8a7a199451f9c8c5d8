@@ -1,0 +1,26 @@
+**命题 203.4（集合交换而先验不交换的二能级例子）。** 取
+
+$$
+\mathfrak R=\{P_0,P_1\},
+\qquad
+P_j=|j\rangle\langle j|,
+$$
+
+并令 $K=\operatorname{diag}(1,1/\sqrt2)$、$\Phi(X)=KXK$。则
+
+$$
+ p_\Phi(P_0)=1,
+ \qquad
+ p_\Phi(P_1)=\frac12,
+ \qquad
+ \mathsf C_\Phi(\operatorname{co}\mathfrak R)
+=\operatorname{co}\{P_0,P_1\}.
+$$
+
+若先验给 $P_0,P_1$ 各权重 $1/2$，事件后的平均后继却为
+
+$$
+\bar\rho_{\Phi,\mu}
+=\frac23P_0+\frac13P_1.
+$$
+

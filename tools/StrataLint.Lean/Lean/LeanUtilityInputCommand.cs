@@ -8,6 +8,10 @@ namespace StrataLint.EngineeringScope;
 // The inspector consumes this structured contract; utility header syntax has one parser.
 internal static class LeanUtilityInputCommand
 {
+    internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
+        Run(() => GitRepositorySnapshotReader.ReadCurrent(repositoryRoot,
+            readContents: LeanClosureValidator.IsManagedLean), arguments);
+
     internal static ExplicitCommandResult Run(Func<RawRepositorySnapshot> readCurrent, IReadOnlyList<string> arguments)
     {
         if (arguments.Count != 0) return new(2, string.Empty, "USAGE: StrataLint lean-utility-input\n");

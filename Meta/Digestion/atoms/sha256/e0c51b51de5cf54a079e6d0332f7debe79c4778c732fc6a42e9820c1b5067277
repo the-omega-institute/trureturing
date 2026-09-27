@@ -1,0 +1,32 @@
+### 10.4 原始协议更新只在协议商上唯一
+
+若同一 $F$ 与两个映射 $\delta,\delta':P\to P$ 都满足 (10.3)，则
+
+$$
+ E(x,\delta p)=E(Fx,p)=E(x,\delta'p)
+ \qquad(\forall x,p),
+$$
+
+从而
+
+$$
+ \delta p\sim_P\delta'p
+ \qquad(\forall p).
+ \tag{10.13}
+$$
+
+因此动态评价唯一确定的是协议商上的映射
+
+$$
+ \bar\delta=\bar\delta',
+$$
+
+而不是原始协议元素本身。只有当协议列外延，即
+
+$$
+ p\sim_Pq\Longrightarrow p=q,
+ \tag{10.14}
+$$
+
+才可由评价方程推出 $\delta=\delta'$。状态更新 $F$ 的唯一性有完全对偶条件。理论正文中若出现“由时钟评价唯一恢复协议更新”，应明确写成“唯一恢复到协议等价类”。
+

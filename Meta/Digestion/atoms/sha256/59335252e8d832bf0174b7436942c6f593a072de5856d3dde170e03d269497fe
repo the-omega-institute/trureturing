@@ -1,0 +1,18 @@
+**定义 13.1（临界坐标与联合恢复率）。** 沿用定义 11.1，置
+$I=F_M(r)$、$\mu=sI$、$v$ 如 (11.4)、$\sigma^2=sv$，并记
+$\Phi$ 为标准正态分布函数。均匀先验下的最优联合恢复率定义为
+
+$$
+\mathcal S^E_{d,r}(s)=\sup_{\widehat z,\widehat\epsilon}
+ \frac1{2M}\sum_{z\in C_+,\epsilon\in\{+,-\}}
+ \mathsf P^{\epsilon,E}_{b_z,s}
+ \{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}.
+\tag{13.1}
+$$
+
+固定增量律下独立随机乘积和的临界质量逃逸见
+[Kabluchko，定理 5](../../../Library/Dynamics/kabluchko2009products.md)；
+单个隐藏枢纽模型的高斯检测与恢复窗口陈述见
+[Narang–Perkins–Wee，定理 1.1、推论 1.8](../../../Library/Dynamics/narang2026stars.md)。
+两者的分布假设均不同于本定义的两个实验。
+

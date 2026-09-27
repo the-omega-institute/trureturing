@@ -1,0 +1,23 @@
+**推论149.3（第三至第六终端的逻辑通道条件数）。** 对 $3\le n\le6$ 和 $0<p\le1/2$，
+
+$$
+\boxed{
+\frac12\|\mathcal L_n-\mathcal I_n\|_\diamond
+\le\min\{1,e_n/\lambda_n\}
+\le\min\left\{1,\frac{16e_n}{3p^2}\right\}.
+}
+\tag{149.14}
+$$
+
+**证明。** 对逻辑纯态
+$(I_{JM}\otimes\iota_n^*)|\Omega_n\rangle$ 应用定理149.2，取参考系统 $R=JM$、$\gamma=\lambda_n$、$\Delta=\mathcal L_n-\mathcal I_n$。其测试态误差恰为实际完整 Bell 恢复误差 $e_n$。再用（149.8）即得。证毕。
+
+由（149.7），该界中的端点条件数满足
+
+$$
+\lambda_n^{-1}\sim2p^{-2}.
+\tag{149.15}
+$$
+
+因此半 diamond 距离的上界为 $(2+o(1))e_n/p^2$；若使用不除以二的完整 diamond 范数，上界相应为 $(4+o(1))e_n/p^2$。逻辑输入空间是四维 $S_n$，忠实测试的不可访问参考是完整 $JM$，其中活动记忆不能被迹掉。参考侧的线性过滤仅用于数学推导，不给接收器增加制备任意逻辑输入或操作活动记忆的权限。
+

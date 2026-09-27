@@ -1,0 +1,9 @@
+### 定理 12.6：规定逻辑仪器的有限物理实现
+
+在定理12.5条件下，若逻辑 Kraus 满足 $\sum_aL_a^\dagger L_a=I_d$，则物理 Kraus $\pi(L_a)$ 连同 $I-P$ 的平方和为 $I_n$。对于 $PQ=Q$ 且 $Q$ 与全部矩阵单位交换的输入 $Q\pi(\rho)$，失败分支 $I-P$ 的输出为零，其余分支满足
+
+$$
+\pi(L_a)\,Q\pi(\rho)\,\pi(L_a)^\dagger
+=Q\pi(L_a\rho L_a^\dagger).
+$$
+

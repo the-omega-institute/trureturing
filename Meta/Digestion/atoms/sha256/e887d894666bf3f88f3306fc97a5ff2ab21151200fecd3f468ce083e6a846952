@@ -1,0 +1,33 @@
+**定义 243.1（有限信号实验）。** 在有限模型类 $\mathfrak M$ 上，一个确定性信号实验写为
+
+$$
+E=(Y_E,s_E,c_E),
+\qquad
+s_E:\mathfrak M\to Y_E,
+$$
+
+其中 $Y_E$ 是结果集，$c_E>0$ 是成本。给定目标 $\Phi$，结果 $y$ 的模型纤维为
+
+$$
+F_{E,y}
+=
+\{M\in\mathfrak M:s_E(M)=y\},
+$$
+
+并定义实验的最坏后验直径
+
+$$
+\overline D_\Phi(E)
+=
+\max_{y:s_E^{-1}(y)\ne\varnothing}
+D_\Phi(F_{E,y}).
+$$
+
+称 $E'$ **精化** $E$，若存在与模型无关的映射 $r:Y_{E'}\to Y_E$ 使
+
+$$
+s_E=r\circ s_{E'}.
+$$
+
+于是 $E$ 是把 $E'$ 的结果再次粗粒化得到的实验。
+

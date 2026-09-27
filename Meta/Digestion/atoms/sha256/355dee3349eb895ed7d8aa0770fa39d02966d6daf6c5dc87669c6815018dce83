@@ -1,0 +1,70 @@
+### 287.5 参考维数至少为二时的统一联合信号
+
+现在设 $n\ge2$。不仅 $H\ne0$，其规范来源的联合读数还具有统一正强度。令 $t=1/4$，由 $M=I+tJ$ 和规范方程得到
+$$
+H+M^\dagger HM=\frac{I-M^\dagger M}{2}.
+\tag{287.16}
+$$
+在Hilbert–Schmidt范数上，左侧线性算子范数至多
+$$
+1+\|M\|^2\le41/16.
+$$
+右侧是 $-[t(J+J^\dagger)+t^2J^\dagger J]/2$。非对角矩阵 $J+J^\dagger$ 与对角矩阵 $J^\dagger J$ 正交，且
+$$
+\|J+J^\dagger\|_2^2=2(n-1),\qquad
+\|J^\dagger J\|_2^2=n-1.
+$$
+因此
+$$
+\left\|\frac{I-M^\dagger M}{2}\right\|_2^2
+=\frac{33}{1024}(n-1),
+$$
+从而
+$$
+\boxed{
+\frac{\operatorname{Tr}H^2}{n}
+\ge\frac{33(n-1)}{6724n}
+\ge\frac{33}{13448}.
+}
+\tag{287.17}
+$$
+这一步使用了同一个实际规范方程；非零性本身不足以保证随维数一致的信号。
+
+令 $Z_H=|0\rangle\langle0|-|1\rangle\langle1|$，对一份完整输入测量已知Hermitian算子
+$$
+F_n=\frac{46}{9}Z_H\otimes H.
+\tag{287.18}
+$$
+它的谱在 $[-1,1]$ 内。实际均值在每个相位下都相同，由（287.5）算得
+$$
+\mathbb E_aF_n=\kappa_na,\qquad
+\kappa_n=\frac{92}{9n}\operatorname{Tr}H^2
+\ge\frac{253}{10086}>\frac1{40}.
+\tag{287.19}
+$$
+不需要假定 $\operatorname{Tr}H=0$；两个输入对角块相减使常数项抵消。该算子测量的是原输入标签与参考结构的联合关系。
+
+每个块只测第一份，第二份仍计费并忽略。块间独立，且任意 $r$ 下的均值都不变。取阈值 $\kappa_n(1-\delta/2)$，Chebyshev界给每类错误至多
+$$
+\frac4{K\kappa_n^2\delta^2}\le\frac{6400}{K\delta^2}.
+$$
+用 $K=\lceil19200/\delta^2\rceil$ 个完整块，得到
+$$
+N_{\rm unk}^{\rm full}(n,\delta)\le\frac{38401}{\delta^2}
+\qquad(n\ge2).
+\tag{287.20}
+$$
+方案不估计 $r$，没有免费校准，也没有访问真实相位环境。
+
+匹配下界可直接固定两个假设共同的 $r=3/4$。满足（287.2）的协议必须处理这对来源；即使额外告诉它该参数，也要遵守§286的完整输入下界。因此
+$$
+\boxed{
+\frac1{720\delta^2}
+\le N_{\rm unk}^{\rm full}(n,\delta)
+\le\frac{38401}{\delta^2}
+\qquad(n\ge2).
+}
+\tag{287.21}
+$$
+常数不依赖参考维数。这个下界不把未知参数当成唯一障碍：允许区间内 $r=3/4$ 的真实噪声本身已经填满理想核。
+

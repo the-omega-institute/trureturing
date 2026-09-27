@@ -1,0 +1,79 @@
+### 184.4 任意共同 CPTP 解码器的线性收益上界
+
+为证明下界，只作数学坐标变换，将来源写成
+
+$$
+\rho=\operatorname{diag}(r_+,\ell),\qquad
+r_+=\frac{3+\sqrt5}{6},\quad
+\ell=\frac{3-\sqrt5}{6},\quad r_+\ell=\frac19.
+$$
+
+可以选定向实 Schmidt 基，使 Pauli $Y$ 保持不变；此时上一部分的 $H$ 对应 $-X$。这不赋予装置操作 $M$ 的权限。
+
+采用输入优先的未归一化 Choi 约定，并令
+$\operatorname{vec}$ 按矩阵行排列。置
+
+$$
+g_0=\operatorname{vec}\rho,\qquad
+g_1=\operatorname{vec}(-Y\rho),\qquad
+v=\operatorname{vec}I.
+$$
+
+对每个输入 $j$ 与旗标 $s$，纯化收益矩阵为
+
+$$
+A_{j,s}
+=(1-\beta c_j\epsilon)|g_0\rangle\langle g_0|
++\beta c_j\epsilon|g_1\rangle\langle g_1|
++s\gamma c_j\epsilon
+\bigl(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\bigr).
+$$
+
+任意共同解码器可按第173节限制为经典输出标签。固定输入旗标 $s$ 后，它给两个 Choi 矩阵 $J_{0,s},J_{1,s}$，满足
+
+$$
+J_{j,s}\succeq0,\qquad
+\operatorname{Tr}_{\mathrm{out}}(J_{0,s}+J_{1,s})=I.
+$$
+
+它们是同一 instrument 的两个结果，不能各自另设保迹约束或按未知输入独立选择。相应的正确纯化重叠为
+
+$$
+f_j=\frac12\sum_{s=\pm1}\operatorname{Tr}(J_{j,s}A_{j,s}).
+$$
+
+压缩第173节的完整参考矩阵给任意此类解码器
+
+$$
+e\ge1-\frac{f_0f_1}{f_0+f_1}.
+$$
+
+对任意 $q\in[0,1]$，有
+
+$$
+\frac{f_0f_1}{f_0+f_1}
+=\min_{x\in[0,1]}\left[x^2f_0+(1-x)^2f_1\right]
+\le q^2f_0+(1-q)^2f_1,
+$$
+
+其中 $f_0=f_1=0$ 时比值定义为零。
+因此只需构造 Hermitian 矩阵 $\mathsf Y_s$，使同一旗标上同时满足
+
+$$
+\boxed{
+\mathsf Y_s\otimes I\succeq q^2A_{0,s},
+\qquad
+\mathsf Y_s\otimes I\succeq(1-q)^2A_{1,s}.
+}
+\tag{184.8}
+$$
+
+此时
+
+$$
+q^2f_0+(1-q)^2f_1
+\le\frac12\sum_s\operatorname{Tr}\mathsf Y_s.
+$$
+
+这是适用于全部共同 CPTP instrument 的下界证书；它不要求把这些 instrument 缩成任何 Lüders 或单 Kraus 形式，也不需要交换两个最优化次序。
+

@@ -1,0 +1,20 @@
+**引理129.2（两侧平面的三维共同后继）。** 设 $X\subset U$、$Y\subset M$ 均二维，且同一个 $V_1$ 把它们送入纯环境 $A$。则
+
+$$
+X\cap Y=P,\qquad \dim(X+Y)=3,
+$$
+
+$$
+U\cap(X+Y)=X,\qquad M\cap(X+Y)=Y,
+\qquad V_1(X+Y)=U^\perp\otimes A.
+\tag{129.5}
+$$
+
+如果真实第二轮环境为 $A$，还必有 $p\in X\cup Y$。
+
+证明：两个像都包含于三维完整一位 $A$ 纤维，故 $\dim(X+Y)\le3$。另一方面 $X\cap Y\subset U\cap M=P$ 至多一维，迫使维数恰为三，交恰为 $P$，并且共同像填满完整纤维。
+
+若 $x+y\in U$，其中 $x\in X,y\in Y$，则 $y\in U\cap M=P\subset X$，所以 $x+y\in X$；对 $M$ 对称，得到两条交公式。真实 $V_1p=v\otimes A$ 属于该完整像，所以 $p\in X+Y$。首轮零位像又使 $p$ 属于 $U$、$M$ 或 $P$，由交公式即得 $p\in X\cup Y$。证毕。
+
+该引理依赖（129.1）的一维交，不能仅凭同为四维与三维就套到二重共同纤维。
+

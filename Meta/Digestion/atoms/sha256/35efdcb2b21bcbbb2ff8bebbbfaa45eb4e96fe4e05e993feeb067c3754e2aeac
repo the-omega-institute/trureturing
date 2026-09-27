@@ -1,0 +1,49 @@
+### 32.1 半共轭与读出翻译
+
+设两个带更新的实际系统为
+
+$$
+(X,F,q),\qquad (Y,G,r),
+$$
+
+其中 $F:X\to X$、$G:Y\to Y$ 是更新，$q:X\to B$、$r:Y\to R$ 是当前读出。设状态运输 $h:X\to Y$、读出翻译 $\eta:B\to R$ 满足
+
+$$
+ h\circ F=G\circ h,
+ \qquad
+ r\circ h=\eta\circ q.
+\tag{32.1}
+$$
+
+第一式是动态半共轭，第二式是当前接口评价保持。对每个 $n$ 归纳可得
+
+$$
+ r(G^n h(x))=\eta(q(F^n x)),
+$$
+
+于是完整 profile 有自然运输
+
+$$
+\widehat h:\operatorname{im}(\operatorname{TP}_\infty^X)\to
+\operatorname{im}(\operatorname{TP}_\infty^Y),
+$$
+
+$$
+\widehat h\bigl((q(F^n x))_{n\ge0}\bigr)
+ =\bigl(r(G^n h(x))\bigr)_{n\ge0}.
+\tag{32.2}
+$$
+
+若同一个 profile 可由多个 $x$ 表示，(32.1) 保证右侧相同；因此 (32.2) 在实际像上良定义。它满足
+
+$$
+\widehat h\circ\operatorname{TP}_\infty^X
+=\operatorname{TP}_\infty^Y\circ h,
+\qquad
+\widehat h\circ\operatorname{shift}_X
+=\operatorname{shift}_Y\circ\widehat h.
+\tag{32.3}
+$$
+
+仓内 `BehaviorCompletionFunctoriality.behavior_completion_is_functorial` 形式化了这两个交换式，并进一步给出运输的唯一性、恒等和复合。因而换切面可被视为完成化对象之间的态射，而不是在原状态空间中任意旋转坐标。
+

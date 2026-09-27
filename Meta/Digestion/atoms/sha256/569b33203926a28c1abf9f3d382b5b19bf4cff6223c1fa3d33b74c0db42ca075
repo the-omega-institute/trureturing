@@ -1,0 +1,86 @@
+**引理65.2（二次纤维与尾域饱和）。** 在引理65.1的反设下，令 $U=V_1|_R:R\to Q\otimes F$。存在可逆线性算子 $A:F\to F$ 及三维子空间
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}\subset F\otimes F,
+$$
+
+满足
+
+$$
+\begin{gathered}
+(U\otimes I_F)V_0S_0=Q\otimes J,\\
+A\eta_i\parallel\eta_{i+1}\qquad(2\le i\le5).
+\end{gathered}
+\tag{65.7}
+$$
+
+因而 $[\eta_6]$ 不可能等于 $[\eta_3]$、$[\eta_4]$ 或 $[\eta_5]$；四条 $[\eta_3],\ldots,[\eta_6]$ 两两不同。取辅助非零向量 $\eta_7=A\eta_6$，则
+
+$$
+UG_6=Q\otimes\mathbb C\eta_7,
+\qquad
+S_0=H_3+H_4+H_5=R\oplus Q,
+\qquad v\in Q,\quad p\in R,\quad q\in R\oplus Q.
+\tag{65.8}
+$$
+
+$\eta_7$ 只标记一个纤维，没有宣称第七轮存在或具有这一环境。
+
+**证明。** 由引理65.1，$U$ 为满等距，且
+
+$$
+UG_i=Q\otimes\eta_{i+1}\qquad(2\le i\le5).
+$$
+
+置
+
+$$
+J=\operatorname{span}\{
+\eta_3\otimes\eta_2,
+\eta_4\otimes\eta_3,
+\eta_5\otimes\eta_4\}.
+\tag{65.9}
+$$
+
+将（65.6）的接收器因子送入 $U$，得到 $(U\otimes I_F)V_0S_0=Q\otimes J$。左侧六维、$Q$ 二维，所以 $J$ 三维。取核恰为 $J$ 的非零线性泛函，将其视为复双线性形式 $B:F\times F\to\mathbb C$。
+
+若 $B$ 秩一，则 $B(x,y)=\ell(x)m(y)$，其中 $\ell,m$ 均为非零线性泛函。由于 $[\eta_2],[\eta_3],[\eta_4]$ 互异，$m$ 至多杀掉其中一个；（65.9）的三个张量都在核内，便要求 $\ell$ 杀掉 $[\eta_3],[\eta_4],[\eta_5]$ 中至少两个不同射线，矛盾。所以 $B$ 秩二。
+
+二维非退化双线性形式对每个非零 $y$ 恰有一条解射线 $B(x,y)=0$；在任一基中，将非零行泛函的两个系数交换并改变其中一个符号，就得到一个可逆线性算子 $A$，使这条解射线为 $\mathbb C Ay$。因此（65.9）给
+
+$$
+A\eta_2\parallel\eta_3,\quad A\eta_3\parallel\eta_4,
+\quad A\eta_4\parallel\eta_5.
+$$
+
+又因 $G_5\otimes\eta_5\subset V_0S_0$ 且 $UG_5=Q\otimes\eta_6$，得到 $\eta_6\otimes\eta_5\in J$，故 $A\eta_5\parallel\eta_6$。可逆射影映射的单射性排除 $[\eta_6]=[\eta_j]$，$j=3,4,5$：每种情形都会把不同输入 $[\eta_5]$ 与 $[\eta_{j-1}]$ 映到同一射线。四条 $[\eta_3],\ldots,[\eta_6]$ 遂互异。
+
+所有 $Az\otimes z$ 都在 $\ker B$ 中，而三个不同射线的平方张量线性无关，故这些张量张成的空间恰为三维 $J$。这里的独立性可直接核对：以前两个射线为基，第三个向量的两个基坐标都非零，其平方具有非零混合坐标，前两个平方则没有；第一因子的可逆变换 $A$ 不改变独立性。
+
+由 $G_6\otimes\eta_6\subset V_0S_0$，每个 $x\in UG_6\subset Q\otimes F$ 都满足 $x\otimes\eta_6\in Q\otimes\ker B$。对 $Q$ 因子施加任意线性泛函，所得 $F$ 系数必须位于
+
+$$
+\ker B(-,\eta_6)=\mathbb C A\eta_6=\mathbb C\eta_7.
+$$
+
+故 $UG_6\subset Q\otimes\mathbb C\eta_7$；两侧均二维，得到等号。
+
+现考察实际 $V_0H_3,V_0H_4,V_0H_5$。在 $U$ 坐标下，它们分别为
+
+$$
+Q\otimes(\eta_5\otimes\eta_4),\qquad
+Q\otimes(\eta_6\otimes\eta_5),\qquad
+Q\otimes(\eta_7\otimes\eta_6).
+\tag{65.10}
+$$
+
+对第一张量因子作用 $A^{-1}$，三个标量张量成为 $\eta_4\otimes\eta_4,\eta_5\otimes\eta_5,\eta_6\otimes\eta_6$ 的非零倍数；三条射线互异，故独立。于是（65.10）的和六维，等距性给 $\dim(H_3+H_4+H_5)=6$。实际来源又给
+
+$$
+H_j\subset G_j\oplus Q_j\subset R\oplus Q\qquad(j=3,4,5).
+$$
+
+右侧恰六维，所以 $H_3+H_4+H_5=R\oplus Q=S_0$。早期 $a^2u+bv\in H_2\subset S_0$、$u\in R$、$b\ne0$，再结合引理65.1的 $v\perp R$，给 $v\in Q$。于是 $V_1p=v\otimes\eta_2\in Q\otimes F=V_1R$；固定单射性给 $p\in R$。最后 $q\in H_1\subset S_0$。证明完毕。
+
+此处初态仍满足 $k\notin R\oplus Q$。令 $Z=(R\oplus Q)^\perp$，则 $\dim Z=1$、$P_Zk\ne0$。若 $\eta_1\perp F$，等距性还给 $k\in Z$；若 $P_F\eta_1\ne0$，引理65.1给 $q\in Q$，但不消除 $k$ 的 $Z$ 分量。下一步不需要删除这个第七维。
+

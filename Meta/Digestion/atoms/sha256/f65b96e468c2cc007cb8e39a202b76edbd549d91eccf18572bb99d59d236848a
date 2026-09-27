@@ -1,0 +1,102 @@
+### 200.3 唯一的一阶 Choi 极小点
+
+在任意有限 Kraus 表示
+$K_{j,\alpha}=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$ 中，定义
+
+$$
+\begin{gathered}
+U=\sum_{\alpha\text{ 属于结果 }0}|b-i2na|^2,\qquad
+V=\sum_{j,\alpha}|d-2ma|^2,\\
+P=P_0+P_1=\sum_{j,\alpha}c\overline d.
+\end{gathered}
+\tag{200.8}
+$$
+
+这些平方和只由 Choi 矩决定。共同 TP 给
+
+$$
+A_0+A_1=1-C,\qquad
+B_0+B_1+D_0+D_1=1,\qquad N_0+N_1=-P.
+\tag{200.9}
+$$
+
+把（200.6）中的 $A_0,A_1$ 人为置为 $1/2$，其余当前矩保持不动，
+所得代数函数记为 $G_h$。这是一个代数辅助函数，不声称修改后的矩合法。
+由（200.9），
+
+$$
+\begin{aligned}
+G_h={}&\frac{7h}{12}+\frac{\beta\Sigma}{8}
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma\delta}{2}\operatorname{Im}N_0
++\frac{\gamma R}{2}\operatorname{Im}P\\
+&-\frac{2h}{3}\operatorname{Re}(M_0+M_1)
++\frac h6(|M_0|^2+|M_1|^2).
+\end{aligned}
+\tag{200.10}
+$$
+
+展开（200.8），使用 $\gamma=2\beta n$ 和（200.1），严格得到
+
+$$
+\boxed{
+\begin{aligned}
+G_h-\Phi_h={}&
+\frac{\beta\delta}{4}U+\frac{\beta R}{4}V
++\frac h6\sum_j|M_j-m|^2\\
+&-\beta\delta n^2(A_0-\tfrac12)
+-\beta Rm^2(A_0+A_1-1)
++\frac{\gamma R}{2}\operatorname{Im}P.
+\end{aligned}}
+\tag{200.11}
+$$
+
+在纯来源最优面
+$\mathcal F=\{A_0=A_1=1/2,\ C_0=C_1=0\}$ 上，最后一行消失，
+并且 $G_h=L_h$。全部平方系数严格为正，所以
+$L_h=\Phi_h$ 当且仅当 $U=V=0$、$M_0=M_1=m$。
+这些等式唯一确定两份 Choi 矩阵。
+
+确实，$C_j=0$ 强制全部 $c=0$；
+$V=0$ 强制每个 Kraus 的 $d=2ma$；
+$U=0$ 强制结果0的 $b=i2na$。
+结果1的共同 TP 条件给 $N_1=in$。
+将结果1的 $b$ 向量分解成平行及正交于 $a$ 的部分，
+平行部分为 $-i2na$；其正交部分的平方范数由第二条 TP 条件唯一确定为
+$1-4m^2-4n^2$。因此整个 Gram 矩唯一，尽管 Kraus 表示本身不唯一。
+这个 Choi 对恰由
+
+$$
+K_0^*=
+\begin{pmatrix}1/\sqrt2&i\sqrt2n\\0&\sqrt2m\end{pmatrix},\quad
+K_1^*=
+\begin{pmatrix}1/\sqrt2&-i\sqrt2n\\0&\sqrt2m\end{pmatrix},\quad
+J^*=\sqrt{1-4m^2-4n^2}\,|0\rangle\langle1|
+\tag{200.12}
+$$
+
+实现，额外 $J^*$ 属于结果1。记其 Choi 对为 $\Gamma^*(h)$。
+
+第191节给全部最优器一致的速率
+
+$$
+C=O_I(\epsilon^2),\qquad A_j-\tfrac12=O_I(\epsilon).
+\tag{200.13}
+$$
+
+由（200.7）、$\lambda-3/4\ge0$ 与第191节的一阶值展开，
+任意最优器序列的聚点 $(h,\Gamma)$ 都满足
+$\Gamma\in\mathcal F$、$L_h(\Gamma)\le\Phi_h$。
+（200.11）遂强制 $\Gamma=\Gamma^*(h)$。
+紧性反证给出对所有最优器的一致收敛：
+
+$$
+\sup_{\substack{h\in I\\\Gamma\text{ 为最优器}}}
+\|\Gamma-\Gamma^*(h)\|\longrightarrow0.
+\tag{200.14}
+$$
+
+这一步没有假定稀少输入列以任何指定速率收敛。
+连续性继而给
+$R_h(\Gamma)=R_h(\Gamma^*(h))+o_I(1)$。
+

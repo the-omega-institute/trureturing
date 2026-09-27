@@ -1,0 +1,15 @@
+**定义 105.1（先落实安全承载空间）。** 为把第 104 节接到项目[反复到达的控制结构](../../../D5/S3/ConceptDynamics/Control/BuchiAgencyKernel.lean)，取其状态类型为 $S$ 的成员，并只保留满足 $R(x,a)\subseteq S$ 的行动；后继也相应限制到 $S$。原后继非空且全部在 $S$，因此限制后的后继仍非空。某些状态可以没有这样的行动，不能凭删去不安全后继制造一个原本不存在的安全行动。
+
+以下所有集合都位于这个承载空间中，$\operatorname{CPre}_S$ 使用刚才限制后的行动。对候选区域 $Z\subseteq S$，定义
+
+$$
+\begin{aligned}
+B^Z_0&=G\cap\operatorname{CPre}_S(Z),\\
+B^Z_{n+1}&=B^Z_n\cup\bigl(Z\cap\operatorname{CPre}_S(B^Z_n)\bigr),\\
+F(Z)&=\bigcup_{n\ge0}B^Z_n,\qquad
+Z_0=S,\quad Z_{k+1}=F(Z_k).
+\end{aligned}
+$$
+
+$B^Z_0$ 要求在目标处还存在一个返回候选区域的行动；其余层要求有限步到达这样的目标。这里精确沿用源码的起始集合，它没有额外写上与 $Z$ 的交集；因此不预设对任意 $Z$ 都有 $F(Z)\subseteq Z$。但 $F$ 单调且 $F(S)\subseteq S$，所以从 $S$ 开始的上述外层序列递减，在有限状态空间中稳定为最大不动点 $B=F(B)$。
+

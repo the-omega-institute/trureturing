@@ -1,0 +1,36 @@
+**命题 6.3.3（查询必须使用移位预算与实际后验）。** 固定查询 $v$，$h=|v|$。若最终库存有 $w\preceq v$（包括 $w=v$），则 $E_F\cap[v]=\varnothing$。否则只有严格后代 $vu$ 会删到该柱，$u\ne\varnothing$，尾码 $F_v=\{u:vu\in F\}$ 的预算为
+$$
+b^{[h]}_n=b_{h+n}.
+$$
+历史条件律为 $q^v(a\mid z)=q(a\mid vz)$，仍在 $\mathcal Q_\delta$。隐藏条件初态恰为
+$$
+\beta_v=\frac{\alpha M_v}{\alpha M_v\mathbf1},\qquad
+\mu_\alpha[vu]=\mu_\alpha[v]\,\beta_vM_u\mathbf1.
+$$
+分母至少 $\ell^h>0$，$M_v$ 包含最后一个字母发射后的更新，不能删去最后一个 $K$。
+
+这些等式由 $M_{vu}=M_vM_u$ 及 $\beta_v\mathbf1=1$ 直接给出。在移位预算满足命题 6.3.2 的合同时，令 $\eta_s^{[h]}=1-\max_{G\in\mathcal C_{b^{[h]}}}\mu_{e_s}(U_G)$，则保留较强的后验加权界
+$$
+\mu_\alpha(E_F\cap[v])
+=\mu_\alpha[v]\sum_s\beta_v(s)\mu_{e_s}(E_{F_v})
+\ge\mu_\alpha[v]\sum_s\beta_v(s)\eta_s^{[h]}
+\ge\mu_\alpha[v]\min_s\eta_s^{[h]}.
+$$
+历史类版本是 $\mu_q(E_F\cap[v])\ge\mu_q[v]\Gamma(d,\delta,b^{[h]})\ge\delta^h\Gamma(d,\delta,b^{[h]})$。一个查询的数值界不会自动建立全部查询的接口。
+
+移位输入的明确转换如下。最大字母尾满足
+$$
+W_N^{[h]}=\sum_{n>N}b_{h+n}r^n=r^{-h}W_{h+N}.
+$$
+全深度指数包络 $b_n\le Ca^n$ 变为 $b_{h+n}\le(Ca^h)a^n$；第 6.2.4 节保留相同 $s,\log a<H_s,\rho$，只把 $C$ 替换为 $Ca^h$。若是最终包络，起点也须保留或先吸收早期项。对第 5.5.5 节的有效次指数输入 $\nu_{\rm bud}$，给 $a>1$ 先取 $1<t<a$，计算 $N_1$ 使 $(a/t)^{N_1}\ge t^h$，则
+$$
+\nu_h(a)=\max\{1,\nu_{\rm bud}(t),N_1\}
+$$
+保证 $n\ge\nu_h(a)$ 时 $b_{h+n}\le t^{h+n}\le a^n$。这些转换均另需
+$$
+B^{[h]}=\sum_{n\ge1}b_{h+n}d^{-n}<1;
+$$
+根处 $B<1$ 不能代替它。有了实际尾输入才有有效局部界，仅有语义次指数承诺不给可提取模量。常数预算 $c<d-1$ 的移位不变，故全部无禁祖先柱可共用同一条件 gap。
+
+在移位 $W^{[h]}$ 可和的范围内，对所有无禁祖先局部库存有共同正条件 gap 当且仅当 $B^{[h]}<1$。充分性是定理 6.2.2 代入 $q^v,b^{[h]}$；若 $B^{[h]}\ge1$，把该定理的饱和尾码 $G$ 前接 $v$，得 $vG$，绝对层数不超过 $b_{h+n}$、没有 $v$ 的禁祖先，条件删除满测，排除共同正界。这是全族判据，不是某一个指定库存的延拓判定程序。
+

@@ -1,0 +1,82 @@
+### 9.7 各面的共同残差问题、缩放与概率实现
+
+对非空 $S\subseteq\Omega$，令 $k=|S|$，目标格按升序写作 $t_0<\cdots<t_{k-1}$，面外格按升序写作 $j_0<\cdots<j_{8-k}$；当 $k=9$ 时面外序列为空。以下来源块位置满足 $0\le a<k$，面外位置满足 $0\le q<9-k$。为每个目标 $t\in S$ 取方向 $x^{(t)}\in\mathbb R^9$，并取一个自由共同向量 $h\in\mathbb R^{16}$。定义
+
+$$
+\Lambda(S)=\sup\left\{
+\frac1k\sum_{t\in S}x^{(t)}_t:
+\sum_jx^{(t)}_j=0,\quad x^{(t)}_j\ge0\ (j\notin S),\quad
+|F_gx^{(t)}-h_g|\le1\ (0\le g\le15,\ t\in S)
+\right\}.
+\tag{ER9.SH.8}
+$$
+
+面内方向不要求非负，$h$ 不要求属于 $F$ 的实像或概率像，也不附加坐标规范等式。这里 $a$ 是来源块位置，$t_a$ 才是其目标格；面外位置 $q$ 与格 $j_q$ 同样不同。
+
+对实际纤维取每个 $t\in S$ 的上端达到来源 $p^{(t)}$，令 $b_S=\mathbf1_S/k$。当 $\varepsilon>0$ 时
+
+$$
+x^{(t)}=\frac{p^{(t)}-b_S}{\varepsilon},\qquad
+h=\frac{y-Fb_S}{\varepsilon}
+\tag{ER9.SH.9}
+$$
+
+满足全部方向约束，尤其面外基点为零，故面外非负在边界来源也保留。因此
+
+$$
+\frac{\sum_{t\in S}u_t-1}{k}\le\varepsilon\Lambda(S).
+\tag{ER9.SH.10}
+$$
+
+这个上界蕴含对所有正噪声成立，没有小噪声限制。
+
+反向地，对任意可行方向与共同 $h$，令
+
+$$
+p^{(t)}=b_S+\varepsilon x^{(t)},\qquad
+\widehat y=Fb_S+\varepsilon h.
+\tag{ER9.SH.11}
+$$
+
+它们质量一，面外非负；面内非负等价于下列半径限制：
+
+$$
+0\le\varepsilon\le\rho(x),\qquad
+\rho(x)=\min_{\substack{t\in S,\ j\in S\\x^{(t)}_j<0}}
+\frac{-1}{k x^{(t)}_j},\qquad \min\varnothing=+\infty.
+\tag{ER9.SH.12}
+$$
+
+所有来源共用 $\widehat y$，且 $F_gp^{(t)}-\widehat y_g=\varepsilon(F_gx^{(t)}-h_g)$，所以全部噪声界成立，包括端点。其目标和满足
+
+$$
+\frac{\sum_{t\in S}p^{(t)}_t-1}{k}
+=\frac{\varepsilon}{k}\sum_{t\in S}x^{(t)}_t.
+$$
+
+这些来源未必预先就是纤维极值；实际纤维上端和至少达到该值。
+
+为证方向目标有界，任取 $t,s\in S$。共同 $h$ 给 $\|F(x^{(t)}-x^{(s)})\|_\infty\le2$，零和反演给 $\|x^{(t)}-x^{(s)}\|_\infty\le4$。固定 $s$，质量零与面外非负给 $\sum_{t\in S}x^{(s)}_t\le0$，故
+
+$$
+\sum_{t\in S}x^{(t)}_t
+\le\sum_{t\in S}x^{(s)}_t+4(k-1)\le4(k-1).
+$$
+
+零方向与 $h=0$ 可行，因此 $0\le\Lambda(S)\le4(k-1)/k$。以下证书给出最大值的实际达到点，不以无界方向可行域的紧性为前提。
+
+若 $g\in\mathbb R^9$ 支持于 $S$ 且质量零，共同替换 $x^{(t)}\mapsto x^{(t)}+g$、$h\mapsto h+Fg$ 保持全部约束，目标变化为 $k^{-1}\sum_{t\in S}g_t=0$。特别地，可令 $g_j=-x^{(t_0)}_j$ 于 $j\in S\setminus\{t_0\}$，令 $g_{t_0}=\sum_{j\in S\setminus\{t_0\}}x^{(t_0)}_j$，面外为零，使第一来源的这些面内坐标消去。这只说明一个可选坐标规范；以下对偶没有使用任何规范等式。
+
+为写明线性系数，变量 $z$ 依次包含 $k$ 个九维来源块，再包含十六维 $h$。记不等式矩阵为 $\mathsf A$、右端为 $b$、质量矩阵为 $\mathsf E$、目标为 $c$。每来源块有 $41-k$ 行：
+
+$$
+\begin{array}{c|c|c}
+\text{行号}&\text{左端}&\text{右端}\\\hline
+ a(41-k)+2g&\sum_jF_{gj}x^{(t_a)}_j-h_g&1\\
+ a(41-k)+2g+1&-\sum_jF_{gj}x^{(t_a)}_j+h_g&1\\
+ a(41-k)+32+q&-x^{(t_a)}_{j_q}&0
+\end{array}
+$$
+
+质量行 $a$ 是 $\sum_jx^{(t_a)}_j=0$，目标系数 $c_{9a+j}=\mathbf1_{j=t_a}/k$，$c_{9k+g}=0$。因此变量数 $9k+16$，不等式数 $k(41-k)$，质量等式数 $k$。这给出全部矩阵系数，未出现的项为零。
+

@@ -1,0 +1,8 @@
+**引理164.3（紧子群 Haar 测度的连续性）。** 若紧环面子群
+$H_k\to H$ 在 Hausdorff 距离下收敛，则其归一化 Haar 测度满足
+
+$$
+\mu_{H_k}\Longrightarrow\mu_H.
+\tag{164.10}
+$$
+

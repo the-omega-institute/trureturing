@@ -1,0 +1,7 @@
+**引理 231.1（Hermitian 泛函的完整范数）。** 对有限维 Hermitian 矩阵 $M$，令 $f_M(X)=\operatorname{Tr}(MX)$。则
+$$
+\boxed{\|f_M\|_\diamond=\|M\|_{\rm op}.}
+\tag{231.TR.8}
+$$
+若 $\tau$ 是任意固定密度矩阵，则 $X\mapsto f_M(X)\tau$ 具有相同的 diamond 范数。
+

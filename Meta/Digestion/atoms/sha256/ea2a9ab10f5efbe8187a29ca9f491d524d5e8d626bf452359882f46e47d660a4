@@ -1,0 +1,30 @@
+**定义 59.1（等待变量的紧区间编码）。** 固定 $q_0\in(0,1)$，置
+
+$$
+X=q_0^{\mathsf N-1}\quad(\mathsf N<\infty),\qquad X=0\quad(\mathsf N=\infty).
+$$
+
+则对每个整数 $j\ge1$，
+
+$$
+\mathbb E X^j=a(q_0^j).
+$$
+
+零次矩恒为 $\mathbb E1=1$，包括 $X=0$ 的质量；不能把它误换成 $\lim_{q\uparrow1}a(q)=\mathbb P(\mathsf N<\infty)$。这里的幂基常数项就是常数函数一。
+
+对整数 $m\ge2$，定义 $G_m:[0,1]\to[1,m]$：在节点上取
+
+$$
+G_m(q_0^{n-1})=n\quad(1\le n\le m),
+$$
+
+在相邻节点之间线性插值，在 $[0,q_0^{m-1}]$ 恒为 $m$。于是
+
+$$
+G_m(X)=\min(\mathsf N,m),
+\qquad
+L_m=\frac1{(1-q_0)q_0^{m-2}}
+$$
+
+是 $G_m$ 的 Lipschitz 常数：第 $n$、$n+1$ 个节点的间距为 $(1-q_0)q_0^{n-1}$，最小间距在 $n=m-1$ 取得。$\mathsf N=\infty$ 时，截断成本约定为 $m$。
+

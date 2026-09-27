@@ -1,0 +1,87 @@
+### 71.2 同一个切锥上的参数分解
+
+沿用
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad w=x+y.
+$$
+
+将第 70 节的一阶方向准确分解为
+
+$$
+H_r=H_0+rJ_1+\sqrt r\,J_{1/2},
+\tag{71.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+H_0&=-\frac12\bigl(|y\rangle\langle w|+|w\rangle\langle y|\bigr)
++|z'\rangle\langle z'|,\\
+J_1&=-\frac12\bigl(|x\rangle\langle w|+|w\rangle\langle x|\bigr)
++|x'\rangle\langle x'|,\\
+J_{1/2}&=|z\rangle\langle w|+|w\rangle\langle z|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{aligned}
+\tag{71.8}
+$$
+
+固定任意完整 tester $C,E$，即 $C\succeq0$、$\operatorname{Tr}_A C=I_B$、$0\preceq E\preceq C\otimes I_D$。$C$ 的标准基对角元均位于 $[0,1]$，故对上列任一标准基向量 $v$，
+
+$$
+0\le\langle v|E|v\rangle\le1.
+$$
+
+更具体地，$x,y$ 的末输出坐标不同，而它们的 $AB$ 坐标为 $00,10$，所以
+
+$$
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\tag{71.9}
+$$
+
+对正算子 $E$ 使用 Cauchy–Schwarz，不要求 $E$ 在任何基下对角。式（71.9）及上述标准基对角界给
+
+$$
+|\langle w|E|x\rangle|\le1,
+\qquad|\langle w|E|z\rangle|\le1,
+\qquad|\langle z'|E|x'\rangle|\le1.
+$$
+
+因此
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(J_1E)|
+&=\bigl|-\operatorname{Re}\langle w|E|x\rangle
++\langle x'|E|x'\rangle\bigr|\le2,\\
+|\operatorname{Tr}(J_{1/2}E)|
+&=\bigl|2\operatorname{Re}\langle w|E|z\rangle
+-2\operatorname{Re}\langle z'|E|x'\rangle\bigr|\le4.
+\end{aligned}
+$$
+
+取全部 tester 的最大值得到
+
+$$
+N(J_1)\le2,\qquad N(J_{1/2})\le4.
+\tag{71.10}
+$$
+
+任意固定集合的范数距离函数是 $1$-Lipschitz 的。由于所有参数共用同一个 $\mathcal T$，式（71.7）、（71.10）遂给
+
+$$
+\begin{aligned}
+|\gamma_r-\gamma_s|
+&\le N(H_r-H_s)\\
+&\le2|r-s|+4|\sqrt r-\sqrt s|.
+\end{aligned}
+\tag{71.11}
+$$
+
+这证明连续性模量。若 $r,s\ge d>0$，则 $|\sqrt r-\sqrt s|\le|r-s|/(2\sqrt d)$，因此可取局部 Lipschitz 常数 $2+2/\sqrt d$。
+

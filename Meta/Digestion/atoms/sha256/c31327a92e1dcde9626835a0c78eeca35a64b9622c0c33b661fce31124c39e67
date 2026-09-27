@@ -1,0 +1,21 @@
+**定义 56.1（原始等待、截止响应与均值约定）。** 固定来源和仪器，原始首次点击轮数记为
+
+$$
+\mathsf N\in\{1,2,\ldots\}\cup\{\infty\}.
+$$
+
+对 $0<q<1$ 定义
+
+$$
+f_q(n)=q^{n-1}\quad(n<\infty),\qquad f_q(\infty)=0,
+\qquad a(q)=\mathbb E f_q(\mathsf N).
+$$
+
+这里 $a(q)$ 正是截止前点击的概率。本批使用扩展均值
+
+$$
+\mu=\mathbb E\mathsf N\in[1,\infty],
+$$
+
+其中永不点击的正质量使 $\mu=\infty$。这与前文把永不点击分支赋值零的有限点击时间矩 $\operatorname{Tr}(\rho T)$ 有别；只有最终必点击时，两者相同。下面的主要反例均最终必点击，且每个候选模型的均值有限。
+

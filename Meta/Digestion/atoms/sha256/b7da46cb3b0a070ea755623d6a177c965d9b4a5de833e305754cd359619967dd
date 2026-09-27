@@ -1,0 +1,8 @@
+**命题64.2（射线后继确定性）。** 在（64.1）—（64.3）下，对 $2\le i,j\le5$，
+$$
+\eta_i\parallel\eta_j
+\quad\Longrightarrow\quad
+\eta_{i+1}\parallel\eta_{j+1}.
+\tag{64.6}
+$$
+

@@ -1,0 +1,64 @@
+**命题 491.1（多状态排除目标的完整预算曲线）。** 对定义 489.1 的目标族，$k\ge2$、$r,\alpha\in[0,1]$、$\eta\ge0$。存在保留记录的生成器满足 $m(T)\le\eta$，当且仅当 $\eta\ge\beta$。在可行时，
+
+$$
+\min_{T:m(T)\le\eta}j(T)
+=\lambda+(2k-1)(\lambda-\eta)_+,
+\qquad
+\beta=\frac{(r-\alpha)_+}{k},\quad
+\lambda=\frac{r(1-\alpha)}k.
+$$
+
+证明：边缘可行条件即命题 490.1 的第一式，因为任意从 $Y$ 生成新增输出的模拟器都可以同时保留 $Y$，而不改变新增边缘。先设 $0<r<1$，并置 $L=r(1-\alpha)=k\lambda$。对全部状态与标签的同时置换平均生成器，TV 凸性保证 $m,j$ 均不增，故可限制到对称生成器。
+
+在擦除分支记 $z=r(1-R(\circ))$，所以每个状态标签的擦除输出质量都是 $z/k$。在揭示状态 $i$ 的分支记
+
+$$
+a=(1-r)T_i(i)\ge0,\qquad
+s=(1-r)(T_i(\circ)-\alpha).
+$$
+
+对称性使这两个数不依赖 $i$。目标在标签 $i$ 上为零，故边缘误差必有 $m\ge a+z/k$。
+
+若 $\eta\ge\lambda$，第 489.2 项的无约束最优中心配合揭示分支 $T_i=Q_i$，给出 $m=j=\lambda$，并由命题 485.3 的无约束下界知其最优。以下设 $\eta<\lambda$。可行性迫使 $z\le k(\eta-a)<L$。此时擦除分支相对目标的正差只出现在公共符号及被排除标签，故其联合误差贡献为
+
+$$
+F=L-\frac{k-1}{k}z.
+$$
+
+新增边缘在公共符号上的有符号差为 $s+L-z$。连同被排除标签上的正差，$m\le\eta$ 给出
+
+$$
+s+L-z\le\eta-a-z/k,
+\quad\text{即}\quad s\le\eta-a-F.
+$$
+
+右端严格为负，因为 $F\ge L-(k-1)\eta>\eta$。揭示分支的联合 TV 至少为公共符号上负差的绝对值 $-s$，所以
+
+$$
+\begin{aligned}
+j&\ge F-s\ge2F+a-\eta\\
+ &\ge2L-(2k-1)\eta+(2k-1)a\\
+ &\ge2L-(2k-1)\eta.
+\end{aligned}
+$$
+
+这一步同时约束同一生成器的边缘和联合，没有分别挑选不同状态或不同实现来拼下界。
+
+为达到下界，对 $\beta\le\eta\le\lambda$，选
+
+$$
+R(x)=\frac\eta r\quad(x\in I),\qquad R(\circ)=1-\frac{k\eta}r,
+$$
+
+以及
+
+$$
+T_i(i)=0,\qquad
+T_i(\circ)=\frac{\alpha-r+k\eta}{1-r},\qquad
+T_i(x)=\frac{1-T_i(\circ)}{k-1}\quad(x\ne i,\ x\in I).
+$$
+
+$\eta\ge\beta$ 保证揭示分支的公共质量非负；$\eta\le\lambda$ 保证该质量不超过 $\alpha\le1$，且 $R(\circ)\ge\alpha$。所有分布合法。新增边缘的公共质量等于 $\alpha$，被排除标签上的质量为 $\eta$，其余标签合计少 $\eta$，所以 $m=\eta$。这里 $a=0$、$z=k\eta$、$s=k\eta-L$，上述联合下界逐步取等，得到 $j=2L-(2k-1)\eta$。
+
+$r=0$ 时可精确生成且 $\beta=\lambda=0$。$r=1$ 时联合与新增边缘的距离相同，$\beta=\lambda=(1-\alpha)/k$，可行时最优值为 $\lambda$。$\alpha=1$ 时所有目标集中于公共符号，两个误差可为零；$\alpha=0$ 时 $\beta=\lambda$，低于无约束半径的预算均不可行。这些情形都符合公式。证毕。
+

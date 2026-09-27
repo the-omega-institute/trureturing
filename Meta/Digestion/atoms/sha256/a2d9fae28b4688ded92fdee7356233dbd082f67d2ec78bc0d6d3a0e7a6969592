@@ -1,0 +1,28 @@
+**系数矩阵的一个秩一差。** 写 $`X_n=[x_n^0\ x_n^1]`$、$`Y_n=[y_n^0\ y_n^1]`$。第二步使用固定 $`\xi`$ 的纯切片，非实际混合第二终端的纯态假设；第27节式 (27.4) 保证该切片生成同一实际纯第三终端。因此
+$$
+X_2=[c z_\xi\quad a w_\xi],\qquad
+Y_2=[ab u_\xi\quad b w_\xi],
+\quad c=\sqrt{|a|^4+|b|^2},
+\tag{29.18}
+$$
+并且对 $`n=2,3,4`$ 有
+$$
+X_{n+1}=a fX_n+gY_n,\qquad Y_{n+1}=b fX_n.
+\tag{29.19}
+$$
+由 $`H_3=H_\xi=\operatorname{ran}X_2`$，存在可逆二阶矩阵 $`T`$ 使
+$$
+X_3=X_2T,\qquad Y_4=Y_3T.
+\tag{29.20}
+$$
+置 $`M=Y_3-Y_2T`$。来源递推给
+$$
+X_4-X_3T=gM.
+\tag{29.21}
+$$
+左侧两组列合起来张成三维 $`H_3+H_4`$，而 $`\operatorname{ran}(gM)\subset W`$、$`H_3\cap W=0`$。故
+$$
+\operatorname{rank}M=1.
+\tag{29.22}
+$$
+

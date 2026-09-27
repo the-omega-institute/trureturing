@@ -1,0 +1,327 @@
+**定理 418.1（单向恢复的精确装填、取得的对偶与叶子数界）。** 在上述全部有限操作条件与两方局部信息完备假设下，每个接受实际叶子的校正映射均为 $p_{ab}\operatorname{id}_S$，其中 $p_{ab}\ge0$；称 $p_{ab}>0$ 者为正接受叶子。仅对这些正接受叶子，原实际局部效果 $E_a,F_{b\mid a}$ 都秩一。给定一个具有正平坦伙伴的单位 Alice 投影，其 Bob 伙伴投影及正水平唯一；反向亦然。
+
+$Q,C$ 紧，$K$ 是闭凸锥，且 $\{(E,q)\in K:E\preceq I_A\}$ 紧。单向上确界是由有限协议取得的最大值，并有取得的精确对偶
+
+$$
+\boxed{
+\begin{aligned}
+p_*
+ &=\max_{\substack{m\in\mathbb Z_{\ge0},\ a_\ell\ge0,\quad
+                  (P_{x_\ell},P_{y_\ell},c_\ell)\in Q\\
+                  \sum_{\ell=1}^m a_\ell P_{x_\ell}\preceq I_A}}
+                  \sum_{\ell=1}^m a_\ell c_\ell\\
+ &=\max\{q:(E,q)\in K,\ E\preceq I_A\}\\
+ &=\min\left\{\operatorname{Tr}Y:
+        Y\in\operatorname{Herm}(A),\ Y\succeq0,\quad
+        \operatorname{Tr}(YP_x)\ge c\quad
+        \text{对全部 }(P_x,P_y,c)\in Q\right\},\qquad 0\le p_*\le1.
+\end{aligned}}
+$$
+
+存在最优协议，使用至多 $d_A^2$ 个具有正成功后继的 Alice 方向，完整实际叶子数至多 $2d_A^2+1$，计入 Bob 的全部失败叶子与可选的 Alice 剩余失败叶子。若存在正定的最优对偶 $Y$，则可去掉 Alice 剩余叶子，将界改进为 $2d_A^2$。当 $p_*=0$ 时，一条全失败叶子取得最优值。奇异最优对偶允许剩余效果支撑在其核中；仅有严格可行的正定对偶不推出剩余效果为零。
+
+对第 416–417 节的五射线族，在 $1/2\le r^2\le2$ 上存在至多八个实际叶子的最优单向协议。该结论给出存在性上界，不给出八叶公式或最少叶子数；第 416 节的十二叶协议仍是有效的最优协议。若同时去掉上述两方局部信息完备假设，则本装填公式不再普遍成立：两量子比特的两个正交相关源 $u_i=v_i=|i\rangle$，$i=0,1$，给出装填最大值 $1/2$，而实际四叶单向协议取得恢复概率 $1$。这个反例不判定任一方的信息完备假设是否单独最弱。
+
+证明。按实际效果、装填、紧性、对偶、最优支撑的顺序推导。
+
+（一）实际叶子的效果与正接受刚性。迹对偶以及乘积 Kraus 表示给出
+
+$$
+\mathcal I_{ab}^*(I)=E_a\otimes F_{b\mid a},\qquad
+\mathcal M_{ab}(|i\rangle\langle j|)
+ =\langle q_j|E_a\otimes F_{b\mid a}|q_i\rangle
+    |i\rangle\langle j|.
+$$
+
+这一步对原始 $A\otimes B$ 成立，Bob 的映射只依赖实际 $a$，没有把隐藏指标变成消息。对每个实际 $(a,b)$ 分别谱分解两个局部效果，暂略谱数据中的 $a,b$ 下标，令
+
+$$
+\begin{aligned}
+E_a&=\sum_s\lambda_sP_{x_s},&
+F_{b\mid a}&=\sum_t\mu_tP_{y_t},\qquad \lambda_s,\mu_t>0,\\
+D_{st}&=\sqrt{\lambda_s\mu_t}\,
+ \operatorname{diag}\bigl(\langle x_s|u_i\rangle
+                          \langle y_t|v_i\rangle\bigr)_{i=1}^k,&
+\mathcal M_{ab}(X)&=\sum_{s,t}D_{st}XD_{st}^\dagger.
+\end{aligned}
+$$
+
+零效果对应空和。这里使用标准输出迹—效果关系与 Choi 的正矩阵表示；环境测量和终端酉校正的框架见 Gregoratti–Werner，[quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2。对本处固定的实际反馈，所需正支撑论证与第 411、417 节相同：写 $|D\rangle\!\rangle=(I_S\otimes D)\sum_i|i\rangle\otimes|i\rangle$，恢复等式蕴含
+
+$$
+\sum_{(a,b)\in\mathsf Y_{\mathrm s},s,t}
+ |U_{ab}D_{st}\rangle\!\rangle
+ \langle\!\langle U_{ab}D_{st}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+在右侧支撑的正交补上取二次型，左侧每个非负项都为零。因此，对每个接受叶子和每个谱对，有
+
+$$
+U_{ab}D_{st}=\gamma_{abst}I_S,\qquad
+p_{ab}=\sum_{s,t}|\gamma_{abst}|^2,\qquad
+\operatorname{Ad}_{U_{ab}}\circ\mathcal M_{ab}
+ =p_{ab}\operatorname{id}_S,\qquad
+p=\sum_{(a,b)\in\mathsf Y_{\mathrm s}}p_{ab}.
+$$
+
+所有数学谱项共用原来的 $U_{ab}$。该等式允许 $\gamma_{abst}=0$ 的不可见乘积项，不对失败叶子提出秩限制。
+
+先说明局部信息完备性提供的比例响应单射。若 Hermitian 算子 $H$ 满足 $\operatorname{Tr}(HP_{v_i})=0$ 对所有 $i$ 成立，则实线性张成使 $\operatorname{Tr}(H^2)=0$，故 $H=0$。这正是 D’Ariano–Perinotti–Sacchi，[quant-ph/0310013v2](https://arxiv.org/abs/quant-ph/0310013v2)，§2、式 (4) 的算子张成准则。固定单位 $x$，若 $(P_x,P_y,c),(P_x,P_z,d)\in Q$ 且 $c,d>0$，则所有 $f_i=|\langle x|u_i\rangle|^2$ 非零，并且
+
+$$
+\operatorname{Tr}\left[P_{v_i}
+       \left(\frac{P_y}{c}-\frac{P_z}{d}\right)\right]=0
+\quad(1\le i\le k).
+$$
+
+所以 $P_y/c=P_z/d$；取迹得到 $c=d$，进而 $P_y=P_z$。交换两因子，使用 $\{P_{u_i}\}$ 的张成，得到反向唯一性。此结论只谈存在的正伙伴，不要求每个方向都存在伙伴。
+
+现在固定一个正接受叶子。由 $p_{ab}>0$，至少有一对 $(s_0,t_0)$ 满足 $\gamma_{abs_0t_0}\ne0$。酉性使其单位乘积响应具有正的共同水平，所以
+
+$$
+\langle x_{s_0}|u_i\rangle\ne0,\qquad
+\langle y_{t_0}|v_i\rangle\ne0
+\quad\text{对全部 }i.
+$$
+
+局部投影张成还蕴含局部向量族张成：若非零 $x$ 与全部 $u_i$ 正交，则 $P_x$ 与全部 $P_{u_i}$ 迹正交，单射性迫使 $P_x=0$，矛盾。故对 $E_a$ 的任一正谱方向 $x_s$，有某个 $i$ 使 $\langle x_s|u_i\rangle\ne0$；与刚选定的 $y_{t_0}$ 配对后，$D_{st_0}$ 非零。接受 Choi 支撑迫使 $\gamma_{abst_0}\ne0$，从而该对也正平坦。反向伙伴唯一性使 $P_{x_s}=P_{x_{s_0}}$；谱正交性遂迫使 $E_a$ 秩一。再固定 $x_{s_0}$，对 $F_{b\mid a}$ 的任一正谱方向 $y_t$，以 $\{v_i\}$ 的张成证明该对可见，正 Choi 支撑使其正平坦，正向伙伴唯一性给出 $P_{y_t}=P_{y_{t_0}}$。于是 $F_{b\mid a}$ 也秩一。这个论证不排除一般不可见乘积的存在，也不将正接受结论用于接受零叶子或拒绝叶子。
+
+（二）协议与有限装填的双向对应。对任意合法恢复协议，令 $\mathsf A_+$ 为具有正接受后继的 Alice 标签集，$\mathsf B_a^+$ 为其正接受 Bob 标签集。刚才的结论与伙伴唯一性给出
+
+$$
+\begin{aligned}
+E_a&=\alpha_aP_{x_a},\quad \alpha_a>0,
+&F_{b\mid a}&=\beta_{ab}P_{y_a},\quad\beta_{ab}>0
+       \quad(b\in\mathsf B_a^+),\\
+(P_{x_a},P_{y_a},c_a)&\in Q,\quad c_a>0,
+&p_{ab}&=\alpha_a\beta_{ab}c_a.
+\end{aligned}
+$$
+
+固定实际 $a$ 后，Bob 的全部条件结果完备，故
+
+$$
+\left(\sum_{b\in\mathsf B_a^+}\beta_{ab}\right)P_{y_a}
+ \preceq\sum_{b\in\mathsf B_a}F_{b\mid a}=I_B,
+\qquad t_a:=\sum_{b\in\mathsf B_a^+}\beta_{ab}\le1.
+$$
+
+在 $y_a$ 上取二次型得到最后的不等式；失败和零分支一直保留在完备和内。取装填系数 $a_a=\alpha_at_a$，则
+
+$$
+\sum_{a\in\mathsf A_+}a_aP_{x_a}
+ \preceq\sum_{a\in\mathsf A_+}E_a\preceq I_A,
+\qquad
+p=\sum_{a\in\mathsf A_+}a_ac_a.
+$$
+
+没有正接受叶子时用空装填。这不是把谱指标改成可读结果，而是从原协议抽取一个同值可行装填。
+
+反过来，给定任意有限可行装填及每项的伙伴见证，写
+
+$$
+E=\sum_{\ell=1}^m a_\ell P_{x_\ell}\preceq I_A,
+\qquad R_A=I_A-E.
+$$
+
+所有局部输出可分别取原来的 $A,B$。选固定单位空白态 $|0_A\rangle,|0_B\rangle$；Alice 的各结果与可选剩余结果用单 Kraus 算子
+
+$$
+A_\ell=\sqrt{a_\ell}\,|0_A\rangle\langle x_\ell|,
+\qquad A_0=\sqrt{R_A}.
+$$
+
+若 $R_A=0$，可不设置结果 $0$；否则保留它并让 Bob 作单结果恒等仪器，产生一条失败叶子。对收到的每个 $\ell$，Bob 作两个实际结果
+
+$$
+B_{\mathrm s\mid\ell}=|0_B\rangle\langle y_\ell|,
+\qquad B_{\mathrm f\mid\ell}=I_B-P_{y_\ell},\qquad
+B_{\mathrm s\mid\ell}^\dagger B_{\mathrm s\mid\ell}
+ +B_{\mathrm f\mid\ell}^\dagger B_{\mathrm f\mid\ell}=I_B.
+$$
+
+接受 $(\ell,\mathrm s)$，保留全部 $(\ell,\mathrm f)$ 为失败；包括可能为零的补分支。Alice 与各条件 Bob 的完备性保证整个原始记录空间上的完备性
+
+$$
+\sum_{\ell=1}^m a_\ell P_{x_\ell}\otimes
+       (P_{y_\ell}+I_B-P_{y_\ell})+R_A\otimes I_B
+ =I_A\otimes I_B.
+$$
+
+对 $c_\ell>0$，使用实际已知源族和所选向量相位标定
+
+$$
+z_{\ell i}=\frac{\langle x_\ell|u_i\rangle
+                       \langle y_\ell|v_i\rangle}{\sqrt{c_\ell}},
+\quad |z_{\ell i}|=1,\qquad
+U_{\ell,\mathrm s}=\operatorname{diag}(\overline z_{\ell i})_{i=1}^k.
+$$
+
+输出迹后的接受系统 Kraus 算子满足
+
+$$
+D_{\ell,\mathrm s}=\sqrt{a_\ell}\,
+ \operatorname{diag}(\langle x_\ell|u_i\rangle
+                         \langle y_\ell|v_i\rangle)_{i=1}^k,
+\qquad U_{\ell,\mathrm s}D_{\ell,\mathrm s}
+ =\sqrt{a_\ell c_\ell}\,I_S.
+$$
+
+若 $c_\ell=0$，则 $D_{\ell,\mathrm s}=0$，直接取反馈 $I_S$，无须除以零；$a_\ell=0$ 的零结果同样合法。全部失败反馈取 $I_S$。每个实际叶子只有这个指定反馈，没有隐藏指标依赖。对任意有限参考及全部联合矩阵，同一个分支等式给出
+
+$$
+(I_R\otimes U_{\ell,\mathrm s}D_{\ell,\mathrm s})X_{RS}
+ (I_R\otimes U_{\ell,\mathrm s}D_{\ell,\mathrm s})^\dagger
+ =a_\ell c_\ell X_{RS}.
+$$
+
+故完整协议取得 $p=\sum_\ell a_\ell c_\ell$，在所有矩阵和参考上使用同一个标量。空装填可用 Alice、Bob 各一个恒等结果并全部拒绝来实现，恰有一条全失败叶子。
+
+（三）紧基、闭锥与有限取得。单位秩一投影空间是单位球面的连续像，因而紧。$Q$ 是两个这种紧空间与 $[0,1]$ 的乘积中的闭子集；保留零水平保证其闭性。$C$ 是 $Q$ 的连续投影，亦紧。若 $Q=\varnothing$，则 $C=\varnothing$、$K=\{(0,0)\}$，原问题直接取得零。以下取 $C\ne\varnothing$。
+
+令 $n=d_A^2$、$H_C=\operatorname{conv}(C)$。每个生成元的第一坐标迹为一，故 $C$ 位于 $\operatorname{Herm}(A)\times\mathbb R$ 的迹一仿射超平面，维数为 $n$。Bertsekas，[MIT 6.253 第 3 讲](https://ocw.mit.edu/courses/6-253-convex-analysis-and-optimization-spring-2012/3e2a100d7fa327637ed8e31771a22c18_MIT6_253S12_lec03.pdf)，第 8–10 页的凸 Carathéodory 定理及紧集凸包定理，给出 $H_C$ 紧，且其中每点由至多 $n+1$ 个生成元凸组合而成。这里它只是取得有限表示的中间界。
+
+对任意 $(E,q)=\sum_\ell a_\ell(P_{x_\ell},c_\ell)\in K$，有
+
+$$
+t:=\operatorname{Tr}E=\sum_\ell a_\ell,\qquad
+E\succeq0,\qquad 0\le q\le t,
+\qquad K=\{t(H,s):t\ge0,\ (H,s)\in H_C\}.
+$$
+
+若 $(E_j,q_j)\in K$ 收敛，则 $t_j=\operatorname{Tr}E_j$ 收敛。极限 $t>0$ 时，归一化对 $(E_j/t_j,q_j/t_j)\in H_C$ 的极限仍在紧集 $H_C$ 中；极限 $t=0$ 时，正半定性及 $0\le q_j\le t_j$ 使极限为 $(0,0)$。因此 $K$ 闭。可行条件 $E\preceq I_A$ 进一步给出 $t\le d_A$，故可行切片是紧集 $[0,d_A]H_C$ 的闭子集，因而紧。连续目标 $q$ 取得最大值，且每个锥元素按定义及上述凸组合都有有限表示。结合（二），这也是一个有限协议取得的最大值。若所有生成元的 $c$ 均为零，或最大值为零，空装填和一条全失败叶子已经取得该值。
+
+（四）弱差额与闭增广锥的支撑对偶。对任意可行装填 $(E,q)$ 与任意可行对偶 $Y$，有精确差额
+
+$$
+\operatorname{Tr}Y-q
+ =\operatorname{Tr}\bigl[Y(I_A-E)\bigr]
+   +\sum_\ell a_\ell
+           \bigl(\operatorname{Tr}(YP_{x_\ell})-c_\ell\bigr)
+ \ge0.
+$$
+
+第一项非负来自两个正半定算子的迹配对，后面各项由逐生成元约束非负。任取一个源标签 $i$，$Y=P_{u_i}$ 都对偶可行，因为
+
+$$
+c=\operatorname{Tr}(P_xP_{u_i})\operatorname{Tr}(P_yP_{v_i})
+ \le\operatorname{Tr}(P_{u_i}P_x),\qquad
+\operatorname{Tr}P_{u_i}=1.
+$$
+
+故 $0\le p_*\le1$。为证明等值及对偶取得，直接考虑实有限维空间中的增广凸锥
+
+$$
+L=\{(E+Z,q-r):(E,q)\in K,\ Z\succeq0,\ r\ge0\}.
+$$
+
+它包含原点。验证其闭性：设 $(H_j,t_j)\in L$ 收敛，并选取表示 $H_j=E_j+Z_j$、$t_j=q_j-r_j$。因为 $E_j,Z_j\succeq0$，
+
+$$
+0\le\operatorname{Tr}E_j,\operatorname{Tr}Z_j
+ \le\operatorname{Tr}H_j,\qquad
+0\le q_j\le\operatorname{Tr}E_j,\qquad
+r_j=q_j-t_j\ge0.
+$$
+
+收敛的 $H_j,t_j$ 使右侧有界；正半定迹界同时控制 $E_j,Z_j$，而 $\operatorname{Tr}E_j$ 就是生成元总质量。于是 $q_j,r_j$ 也有界。取共同收敛子列，利用 $K$、正半定锥和非负半轴的闭性，极限仍给出 $L$ 中的表示。这也覆盖 $K=\{(0,0)\}$ 的情形。
+
+由原最优解及其剩余效果，$(I_A,p_*)\in L$；对任意 $\varepsilon>0$，$(I_A,p_*+\varepsilon)\notin L$，否则其表示会给出 $E\preceq I_A$ 和 $q\ge p_*+\varepsilon$。因此 $(I_A,p_*)$ 是闭凸集 $L$ 的边界点。应用 Boyd–Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§2.5.2 的支撑超平面定理，得到非零法向量 $(Y,-\lambda)$，取方向使
+
+$$
+\operatorname{Tr}(YH)-\lambda t
+ \ge\operatorname{Tr}Y-\lambda p_*
+ \quad\text{对所有 }(H,t)\in L.
+$$
+
+因为 $L$ 是锥，代入原点与 $(I_A,p_*)$ 的倍数，得到
+
+$$
+\operatorname{Tr}Y-\lambda p_*=0,
+\qquad
+\operatorname{Tr}(YH)-\lambda t\ge0\quad((H,t)\in L).
+$$
+
+代入 $(Z,0)$、$Z\succeq0$，以及 $(0,-r)$、$r\ge0$，得到 $Y\succeq0$ 与 $\lambda\ge0$。此处使用该书 §2.6 的正半定锥自对偶；在复 Hermitian 实空间里，取 $Z=P_x$ 得到所有 $\langle x|Y|x\rangle\ge0$，直接验证了同一自对偶结论。若 $\lambda=0$，上式给出 $\operatorname{Tr}Y=0$，正半定性迫使 $Y=0$，与法向量非零矛盾。因此 $\lambda>0$，可将法向量除以 $\lambda$，归一化为 $\lambda=1$。对每个生成元 $(P_x,c)\in K\subseteq L$，有
+
+$$
+\operatorname{Tr}(YP_x)\ge c,\qquad
+Y\succeq0,\qquad \operatorname{Tr}Y=p_*.
+$$
+
+这直接构造了取得相同值的对偶，未要求 $K$ 有内部或为正常锥。对偶约束可以由无限多个平坦投影对索引；上述结论不将它改称有限约束半定规划，也不提供有效算法。
+
+（五）活跃超平面压缩与全部叶子的计数。固定一个取得最优值的有限装填及一个取得最优值的对偶 $Y$。由（四）的非负差额逐项为零，
+
+$$
+\operatorname{Tr}\bigl[Y(I_A-E)\bigr]=0,\qquad
+a_\ell>0\ \Longrightarrow\quad
+\operatorname{Tr}(YP_{x_\ell})=c_\ell.
+$$
+
+这里使用 Boyd–Vandenberghe §5.9 的互补松弛等式；其前提是已取得且等值的两侧最优解。于是所有正权生成元位于实线性超平面
+
+$$
+\mathcal H_Y=\{(H,s)\in\operatorname{Herm}(A)\times\mathbb R:
+                  \operatorname{Tr}(YH)-s=0\}.
+$$
+
+最后坐标的系数为 $-1$，故该空间恰有维数 $d_A^2$，即使 $Y$ 奇异或为零也一样。在这个空间中应用上述 Bertsekas 第 3 讲的锥 Carathéodory 定理，可从活跃生成元中选至多 $d_A^2$ 项，以非负系数表示同一个 $(E,p_*)$。每个所选生成元保留原来附着的 Bob 伙伴投影，因此压缩不丢失实施见证。这里保留的是整个效果 $E$ 与概率 $p_*$，并非只保留目标值。
+
+去掉零权项后，若尚有 $c_\ell=0$ 的项，可将其去掉；这使 $E$ 减小而保持 $p_*$，因此可行性与最优值都保留。若 $p_*>0$，余下至多 $m\le d_A^2$ 项的权与水平都为正。按（二）重新构造完整协议，每个 Alice 方向有一个 Bob 成功叶子和一个 Bob 失败叶子，共 $2m$ 个；再为非零剩余效果加一条 Alice 失败、Bob 恒等的叶子，得到 $2m+1\le2d_A^2+1$。即使某个 Bob 补分支为零，仍可保留这个实际标签，计数并未把它隐藏。若 $p_*=0$，改用已经给出的单叶全失败协议。
+
+令 $R_A=I_A-E\succeq0$。互补松弛还蕴含 $\operatorname{ran}R_A\subseteq\ker Y$：因为
+
+$$
+\operatorname{Tr}(Y^{1/2}R_AY^{1/2})=0,
+\qquad Y^{1/2}R_AY^{1/2}\succeq0,
+$$
+
+故 $R_A^{1/2}Y^{1/2}=0$，取伴随得到 $Y^{1/2}R_A^{1/2}=0$，从而得到该支撑包含。去掉的活跃零水平投影也满足 $\operatorname{Tr}(YP_x)=0$，所以它们增加的剩余效果仍支撑在 $\ker Y$。
+
+若最优 $Y\succ0$，则 $\ker Y=0$，所以原最优装填有 $E=I_A$；每个活跃生成元还满足 $c=\operatorname{Tr}(YP_x)>0$。锥压缩保持 $E=I_A$ 和 $p_*$，不产生零水平项，无须 Alice 剩余结果，因此完整树至多有 $2d_A^2$ 个实际叶子。此时 $p_*=\operatorname{Tr}Y>0$。反之，单有严格可行正定 $Y$ 并不能使用零差额；例如 $2I_A$ 对所有 $c\le1$ 都严格可行，但没有理由是最优解。奇异最优 $Y$ 所留下的核正是允许非零剩余效果的方向。
+
+（六）五射线的应用。取第 416–417 节的原始两量子比特源 $u_i=v_i=s_i$ 与同一个 $J_2$。第 417 节的两极和三纬线投影张成计算对每个 $r>0$ 给出两方的实 Hermitian 张成。在 $1/2\le r^2\le2$ 上，沿用
+
+$$
+\kappa=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad
+h=\frac1{3(1+\kappa)}>0.
+$$
+
+第 416 节的乘积行列式关系与第 417 节的单位范数归一化表明，每个正平坦单位乘积对都有 $c=h$；第 416 节完整十二叶树及定理 417.1 给出取得的 $p_*=2h$。于是
+
+$$
+Y=hI_2\succ0,\qquad
+\operatorname{Tr}(YP_x)=h\ge c\quad((P_x,P_y,c)\in Q),
+\qquad \operatorname{Tr}Y=2h=p_*.
+$$
+
+约束对正水平是等式，对零水平也成立，因此这是正定最优对偶。由（五），存在至多 $2\cdot2^2=8$ 个实际叶子的最优单向协议，包括其所有失败叶子。它是最优活跃生成元压缩所得的存在结论，不替换原来的十二叶构造，不断言八叶最少，也未给出显式八叶公式。区间外定理 417.1 给出 $p_*=0$，一条全失败叶子取得该值。
+
+（七）缺少联合局部信息完备性的边界。改取 $k=d_A=d_B=2$，源为 $u_i=v_i=|i\rangle$，$i=0,1$，仍使用原始两因子及同一个全矩阵、全参考恢复定义。两方源投影均只张成对角 Hermitian 子空间。对单位 $x,y$ 置 $f=|\langle x|0\rangle|^2$、$g=|\langle y|0\rangle|^2$；平坦条件等价于
+
+$$
+fg=(1-f)(1-g),\qquad f+g=1,\qquad
+c=f(1-f)\le\frac14.
+$$
+
+因此同样定义的装填有 $\sum_\ell a_\ell\le\operatorname{Tr}I_2=2$，目标至多 $1/2$。取 $x_+=|+\rangle$、$x_-=|-\rangle$，两个权均为一，并对两项都取伙伴 $y=|+\rangle$，便有 $E=I_2$、$c_+=c_-=1/4$，达到装填值 $1/2$。
+
+实际协议却可让 Alice 测量 $|a\rangle=(|0\rangle+a|1\rangle)/\sqrt2$，$a\in\{+1,-1\}$，发送 $a$ 后，Bob 测量 $|b\rangle=(|0\rangle+b|1\rangle)/\sqrt2$，$b\in\{+1,-1\}$。两方均可用 $|0\rangle\langle a|$、$|0\rangle\langle b|$ 重置输出，两个结果各自完备。接受全部四个实际叶子，输出迹后的系统 Kraus 与实际终端反馈为
+
+$$
+D_{ab}=\frac12\operatorname{diag}(1,ab),\qquad
+U_{ab}=\operatorname{diag}(1,ab),\qquad
+U_{ab}D_{ab}=\frac12I_2.
+$$
+
+每个校正叶子都是 $\operatorname{id}_S/4$，且对任意有限参考和全部联合矩阵满足
+
+$$
+(I_R\otimes U_{ab}D_{ab})X_{RS}
+ (I_R\otimes U_{ab}D_{ab})^\dagger=\frac14X_{RS}.
+$$
+
+四叶相加得到 $p=1$，这也是概率的最大值。固定同一 Alice 方向时，这里两个不同 Bob 伙伴都正平坦；比例响应单射失效，因而不能把它们当作同一投影再约束其系数和不超过一。故本例反驳删除两方局部信息完备条件后的普遍装填等式，而不证明任一单方条件单独最弱。以上对偶、取得与计数仅针对本节规定的有限精确 Alice 到 Bob 次序。证毕。
+

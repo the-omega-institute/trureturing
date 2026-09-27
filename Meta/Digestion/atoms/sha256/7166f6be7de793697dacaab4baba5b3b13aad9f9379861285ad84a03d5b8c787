@@ -1,0 +1,28 @@
+#### 3.6.3 同一个修复来源律控制全部有界读数和随机后处理
+
+选定上述某个最近修复律 $p_*$ 后，对任意 $f:A\to[0,1]$，都有
+$$
+\left|\mathbb E_{p_*}f-\mathbb E_qf\right|
+\le\operatorname{TV}(p_*,q)
+\le\min\{1,H_A\delta(q,y)\}.
+\tag{TM.71}
+$$
+
+证明如下。令 $v=p_*-q$，则 $\sum_av(a)=0$。正部与负部的总质量相等，均为 $\tfrac12\sum_a|v(a)|=\operatorname{TV}(p_*,q)$。由 $0\le f\le1$，$\sum_af(a)v(a)$ 的上下界分别由正部与负部质量控制，得到式(TM.71)。这对全部 $f$ 同时成立，使用的是已经选定的同一个 $p_*$，无需为不同任务分别换来源。
+
+若后续观察由一个固定随机核 $K(b\mid a)$ 描述，其中输出集合 $B$ 有限，$K(b\mid a)\ge0$ 且 $\sum_bK(b\mid a)=1$，则同一修复还满足
+$$
+\begin{aligned}
+\operatorname{TV}(Kp_*,Kq)
+&=\tfrac12\sum_b\left|\sum_aK(b\mid a)(p_*(a)-q(a))\right|\\
+&\le\tfrac12\sum_{b,a}K(b\mid a)|p_*(a)-q(a)|\\
+&=\operatorname{TV}(p_*,q)
+\le\min\{1,H_A\delta(q,y)\}.
+\end{aligned}
+\tag{TM.72}
+$$
+
+因此，一旦某项后续协议确实由同一档案上的随机核实现，其输出律也受同一界控制。此处比较的是原来源律与所选修复来源律；若未来过程还依赖未进入 $A$ 的变量，就没有取得这样的共同核，不能直接套用本式。
+
+式(TM.70)的取得对象是一份纤维内的邻近来源律。它没有断言该来源唯一，也没有构造只依赖 $y$ 的固定解码器、线性右逆或执行算法。即使 $\delta(q,y)=0$，结论也只保证 $q\in F_y$。例如 $A=\{a_0,a_1\}$ 且所有读数恒定时，$\delta(q,y)$ 对所有 $q$ 都为零，而 $\delta_{a_0}$ 与 $\delta_{a_1}$ 对任务 $f=\mathbf1_{\{a_1\}}$ 的答案仍不同。因此，邻近纤维修复不是根据边界识别某个未知真实来源的保证。
+

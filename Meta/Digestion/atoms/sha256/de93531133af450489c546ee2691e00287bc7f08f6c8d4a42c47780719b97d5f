@@ -1,0 +1,76 @@
+### 93.6 核心维数二 h 的锐性
+
+固定任意正整数 $h$ 和任意 $\mu,\nu>0$。在 $Q=\mathbb C^h\oplus\mathbb C^h$ 上取
+
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu I_h&0\\
+0&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0\\
+\sqrt\nu I_h&0
+\end{pmatrix}.
+\tag{93.18}
+$$
+
+这是 $h$ 个第80节二维块的直和，故相应加权 $M$ 为全部二次纤维保持收缩，完整缺陷为秩 $h$ 的正交投影。也可直接验证：若 $A_o,B_o:\mathbb C^h\to Q$ 分别嵌入第一、第二输出块，则其缺陷因子为等距
+
+$$
+\mathcal Hf=
+\frac{\sqrt\mu\,B_of\otimes e_0-\sqrt\nu\,A_of\otimes e_1}
+{\sqrt{\mu+\nu}},
+\qquad I-MM^*=\mathcal H\mathcal H^*.
+\tag{93.19}
+$$
+
+因此 $(q,d)=(2h,h)$，余量 $3d-q$ 正好是 $h$。
+
+对任意两个系数定义同一输入上的列堆叠映射
+
+$$
+\mathcal S:Q\longrightarrow Q\oplus Q,\qquad
+\mathcal Sx=(L_0x,L_1x),
+$$
+
+并记非负整数
+
+$$
+\epsilon(L_0,L_1)=\operatorname{rank}\mathcal S-\operatorname{rank}L_0\ge0.
+\tag{93.20}
+$$
+
+非负性来自 $L_0$ 是 $\mathcal S$ 的第一坐标投影。对同一对系数施加独立输入、输出酉 $U_{\mathrm{in}},U_{\mathrm{out}}$ 时，
+
+$$
+\mathcal S\longmapsto
+(U_{\mathrm{out}}\oplus U_{\mathrm{out}})
+\mathcal S U_{\mathrm{in}}^*,
+$$
+
+而 $L_0\mapsto U_{\mathrm{out}}L_0U_{\mathrm{in}}^*$，所以两个秩均不变。对同时直和，输入与输出分块的固定重排使列堆叠也成为直和，故两个秩以及 $\epsilon$ 均可加。
+
+（93.18）中，两系数只使用同一个第一输入块，且 $L_0$ 在该块上单射，故
+
+$$
+\operatorname{rank}\mathcal S=h=\operatorname{rank}L_0,
+\qquad \epsilon(L_0,L_1)=0.
+\tag{93.21}
+$$
+
+然而每个三维锐块（92.3）满足
+
+$$
+\operatorname{rank}\mathcal S_{\mathrm{sharp}}=3,\qquad
+\operatorname{rank}B_0=2,\qquad
+\epsilon(B_0,B_1)=1.
+\tag{93.22}
+$$
+
+如果（93.18）可以同时剥离一个或多个锐块，则（93.20）的不变性与可加性会给总 $\epsilon\ge1$，因为剩余块的 $\epsilon$ 仍非负。这与（93.21）矛盾。因此该 $2h$ 维算子不能剥离任何三维锐块，任何这种分解留下的核心都仍为 $2h$ 维。统一上界 $2h$ 的锐性得证，定理93.1全部证明完毕。
+
+取 $h=0$ 恢复第77节的等号结构；取 $h=1$ 得二维核心，第80节还给其完整标准形；取 $h=2,d\ge2$ 时得到四维、缺陷秩二核心，与第92节相同。本节新增的是任意余量下的锐利统一核心界，没有分类一般核心，也不把独立输入、输出酉坐标解释为实际重复通道可逐轮更换的自由。一般接收容量仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+

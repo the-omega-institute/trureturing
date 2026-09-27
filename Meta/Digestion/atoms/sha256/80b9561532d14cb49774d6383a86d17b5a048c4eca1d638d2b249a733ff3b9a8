@@ -1,0 +1,21 @@
+**共同射线下的系数条件。** 余下的（29.5）情形还须同时满足：
+$$
+\begin{gathered}
+H_3=H_\xi,\quad G_3=G_4=A,\quad
+\dim(H_\xi+H_4)=\dim(G_\xi+A)=3,\\
+f:H_\xi+H_4\overset{\cong}{\longrightarrow}A+G_5,
+\quad g:G_\xi+A\overset{\cong}{\longrightarrow}B_3+Q_4,\\
+(A+G_5)\perp(B_3+Q_4),\quad Q_5=Q_4,
+\end{gathered}
+\tag{29.16}
+$$
+以下 $`n=2`$ 的系数是固定附加因子向量 $`\xi`$ 的纯切片系数，并非把实际混合第二终端态改称纯态。由第27节的式 (27.4)，此切片经第三轮产生同一个实际纯第三终端。因此这些切片与后续实际纯终端必须满足来源系数递推
+$$
+x_{n+1}^i=a f(x_n^i)+g(y_n^i),\qquad
+y_{n+1}^i=b f(x_n^i),\qquad n=2,3,4,
+\tag{29.17}
+$$
+其中 $`x_2^0=c(z\otimes\xi)`$、$`x_2^1=a(w\otimes\xi)`$、
+$`y_2^0=ab(u\otimes\xi)`$、$`y_2^1=b(w\otimes\xi)`$。
+前两轮还必须确实产生第27节假设的满秩二维附加态。下面只用已经得到的后续必要条件导出矛盾，因此无需再对前两轮的实现附加限制。
+

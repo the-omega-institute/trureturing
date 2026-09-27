@@ -1,0 +1,61 @@
+### 92.1 合同与结论
+
+沿用有限维复 Hilbert 空间 $Q,F$，其中 $\dim Q=q$、$\dim F=2$，以及可逆 $A:F\to F$。置
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+
+设收缩 $M:Q\otimes J\to Q\otimes F$ 在四条不同射线上保持二次纤维。第76节的多项式论证使全部二次纤维均保持。在 $A^*A$ 的正交单位特征基中，记正特征值为 $\mu,\nu$，并置
+
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+
+存在同一输入、输出 $Q$ 上的两个系数，使
+
+$$
+M=
+\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)
+=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{92.1}
+$$
+
+记 $\mathscr D=I-MM^*\succeq0$、$d=\operatorname{rank}\mathscr D$，本节假设
+
+$$
+d\ge2,\qquad q=3d-2.
+\tag{92.2}
+$$
+
+令
+
+$$
+\beta=\mu\sqrt{s/\Delta},\qquad
+\delta=\nu\sqrt{s/\Delta}.
+$$
+
+第76节的三维锐块系数为
+
+$$
+B_0=
+\begin{pmatrix}
+\sqrt\mu&0&0\\
+0&0&0\\
+0&\beta&0
+\end{pmatrix},
+\qquad
+B_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu&0&0\\
+0&0&\delta
+\end{pmatrix}.
+\tag{92.3}
+$$
+

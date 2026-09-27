@@ -1,0 +1,124 @@
+**定理 407.2（正成功存在性的全局与局部等价）。** 对定义 407.1 的每个 $d,n$ 及记录族，有
+
+$$
+\eta(C^{\circ n})>0
+\quad\Longleftrightarrow\quad
+\text{存在定义 407.1 的局部乘积投影与反馈，使 }
+\mathcal T=p\operatorname{id}_S\text{，其中 }p>0.
+$$
+
+右侧可用每位持有者各一次两结果投影测量实现，并对任意有限维 $A$ 及每个矩阵 $X_{AS}$ 满足
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=pX_{AS}.
+$$
+
+证明。设左侧成立。定理 391.1 的支撑判据给出
+
+$$
+z\in\mathbb T^d\cap\operatorname{ran}R_n,\qquad z=R_nb.
+$$
+
+在上述 $E_n$ 坐标中，定义复线性泛函 $h_0(v)=\sum_\mu b_\mu v_\mu$，于是 $h_0(r_i^{\otimes n})=z_i$。它的表示 ket 的坐标为 $\overline{b_\mu}$，不能把 $b_\mu$ 本身误作该 ket 的坐标。因为 $d\ge1$ 且 $|z_i|=1$，$h_0\ne0$。由于 $E_n\subseteq\operatorname{Sym}^n(\mathbb C^2)$，令
+
+$$
+h=h_0\circ P_{E_n}:
+\operatorname{Sym}^n(\mathbb C^2)\longrightarrow\mathbb C,
+$$
+
+其中 $P_{E_n}$ 是正交投影。这个延拓只用于构造泛函，不是协议中施加的物理投影；它保持所有指定记录上的值，且 $h\ne0$。
+
+令 $e_s$ 为全部恰有 $s$ 个 $|1\rangle$ 的计算基 ket 之和除以 $\sqrt{\binom ns}$，$0\le s\le n$。这些向量是对称子空间的一组正交基，并且
+
+$$
+\begin{aligned}
+(x|0\rangle+y|1\rangle)^{\otimes n}
+ &=\sum_{s=0}^n\sqrt{\binom ns}\,x^{n-s}y^s e_s,\\
+P(x,y)&:=h\bigl((x|0\rangle+y|1\rangle)^{\otimes n}\bigr)
+ =\sum_{s=0}^n\sqrt{\binom ns}\,h(e_s)x^{n-s}y^s.
+\end{aligned}
+$$
+
+若 $P$ 恒为零，各单项式系数都为零，便有所有 $h(e_s)=0$，与 $h\ne0$ 矛盾。因此 $P$ 是非零的 $n$ 次齐次二元多项式。写 $P(t,1)$ 的次数为 $m\le n$；此多项式也非零。复多项式因式分解给出非零首项系数 $c$ 及按重数列出的根 $\lambda_1,\ldots,\lambda_m$，使
+
+$$
+P(t,1)=c\prod_{a=1}^m(t-\lambda_a),\qquad
+P(x,y)=c\,y^{n-m}\prod_{a=1}^m(x-\lambda_a y).
+$$
+
+第二式由齐次化得到，且是多项式恒等式，包含 $y=0$。当 $m=0$ 时空积为 $1$，得到 $P(x,y)=cy^n$；$y$ 的 $n-m$ 个因子保留了射影无穷远处的根。重复根照重数保留，$n=1$ 也包含在同一公式内。因此总能写成
+
+$$
+P(x,y)=c\prod_{a=1}^n\ell_a(x,y),\qquad
+\ell_a(x,y)=\alpha_a x+\beta_a y\ne0.
+$$
+
+这里使用的是经典二元齐次因式分解，其对称量子比特张量形式可参见 Aulbach–Markham–Murao，[*Geometric Entanglement of Symmetric States and the Majorana Representation*, arXiv:1010.4777v1](https://arxiv.org/abs/1010.4777v1)，§IV 式 (11)（PDF 第 4 页）的复振幅恒等式。该文式 (12) 只给重叠的绝对值；此处所需的相对相位保留在上面的复多项式恒等式中。
+
+对每个非零线性因子作实际测量所需的归一化：
+
+$$
+N_a=\sqrt{|\alpha_a|^2+|\beta_a|^2}>0,\qquad
+|a_a\rangle=\frac{\overline{\alpha_a}|0\rangle+
+                         \overline{\beta_a}|1\rangle}{N_a}.
+$$
+
+于是 $\langle a_a|(x|0\rangle+y|1\rangle)=\ell_a(x,y)/N_a$。在每个记录 $r_i$ 上取乘积，得到
+
+$$
+\begin{aligned}
+t_i&:=\prod_{a=1}^n\langle a_a|r_i\rangle
+ =\frac{h(r_i^{\otimes n})}{c\prod_{a=1}^nN_a}
+ =\gamma z_i,\\
+\gamma&:=\frac1{c\prod_{a=1}^nN_a}\ne0.
+\end{aligned}
+$$
+
+此时才使用 $r_i$ 与 $a_a$ 的归一化和 $|z_i|=1$：各重叠的模不超过 $1$，所以
+
+$$
+0<|\gamma|=|t_i|=\prod_{a=1}^n|\langle a_a|r_i\rangle|\le1.
+$$
+
+给每位持有者使用定义 407.1 的两个投影。记 $Q_{a,0}=\Pi_a$、$Q_{a,1}=I_2-\Pi_a$，完整记录测量的结果为 $\varepsilon\in\{0,1\}^n$，投影为 $Q_\varepsilon=\bigotimes_{a=1}^nQ_{a,\varepsilon_a}$。全部 $2^n$ 个结果满足
+
+$$
+\sum_{\varepsilon\in\{0,1\}^n}Q_\varepsilon
+ =\bigotimes_{a=1}^n\bigl(\Pi_a+(I_2-\Pi_a)\bigr)
+ =I_{\mathcal H_R}.
+$$
+
+因各 $Q_\varepsilon$ 是投影，这也给出完整投影 instrument 的保迹性。接受 $\varepsilon=(0,\ldots,0)$ 时，记录的输出向量固定为 $|a_1\rangle\otimes\cdots\otimes|a_n\rangle$，具体为
+
+$$
+(I_S\otimes Q_{(0,\ldots,0)})J_n|i\rangle
+ =t_i|i\rangle\otimes|a_1\rangle\otimes\cdots\otimes|a_n\rangle.
+$$
+
+故迹掉记录后的系统 Kraus 算子为 $K=\operatorname{diag}(t_1,\ldots,t_d)$。取固定对角反馈
+
+$$
+U=\operatorname{diag}(\overline{z_1},\ldots,\overline{z_d}),\qquad
+UK=\gamma I_S,
+$$
+
+便在每个矩阵 $X$ 上得到
+
+$$
+\mathcal T(X)=UKXK^\dagger U^\dagger=pX,\qquad
+p=|\gamma|^2\in(0,1].
+$$
+
+更直接地，$I_A\otimes UK=\gamma I_{A\otimes S}$，故对全部 $X_{AS}$ 都有所述等式。对归一化联合态取迹，成功概率恰为 $p$，与输入无关；归一化后恢复整个联合态。该计算同时保持非对角矩阵元，故并非只匹配系统基标签上的概率。
+
+反过来，设存在这样的局部协议。令 $V:E_n\hookrightarrow\mathcal H_R$ 为包含等距映射，将其完整乘积测量压到实际占据空间：
+
+$$
+D_\varepsilon=V^\dagger Q_\varepsilon V\succeq0,\qquad
+\sum_\varepsilon D_\varepsilon=I_{E_n}.
+$$
+
+在实际记录 $r_i^{\otimes n}$ 上，压缩前后效果的全部矩阵元相同，故各系统分支与原协议一致。它是定义 389.2 中作用于 $E_n$ 的允许全局 POVM；接受同一个结果并使用同一个反馈，便以概率 $p$ 精确恢复。因此 $\eta(C^{\circ n})\ge p>0$。这一比较没有改变局部协议中原有的物理张量因子。证毕。
+
+本定理只等价化正成功分支的存在性，不保证保留某个给定全局分支的成功概率，也不声称局部与全局最优总成功概率相等。对一个给定全局 POVM 的各效果分别作上述构造，不由此得到同时完备的局部替代测量。每次构造都使用已制备的全部 $n$ 份记录。
+

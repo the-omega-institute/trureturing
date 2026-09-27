@@ -1,0 +1,72 @@
+### 6.3 相同分次层、不同扩张与小素数分类
+
+设 $p$ 为素数。取 $K=Q=\mathbb F_p$，用 $\bar a\in\{0,\ldots,p-1\}$ 表示标准整数代表。
+
+第一种整体是
+
+$$
+G_{\mathrm{cyc}}=\mathbb Z/p^2\mathbb Z,
+\quad\iota(k)=p\bar k,\quad q(g)=g\bmod p,
+\quad s(a)=\bar a\bmod p^2.
+$$
+
+此时 $g=\bar a+p\bar k$，进位为
+
+$$
+c_{\mathrm{cyc}}(a,b)
+=\left\lfloor\frac{\bar a+\bar b}{p}\right\rfloor\bmod p.
+\tag{CE.15}
+$$
+
+第二种整体是
+
+$$
+G_{\mathrm{split}}=\mathbb F_p\times\mathbb F_p,
+\quad\iota(k)=(k,0),\quad q(k,a)=a,\quad s(a)=(0,a),
+$$
+
+其进位恒为零。两者的指定滤过都是
+
+$$
+G\supset\iota(K)\supset0,
+\quad\operatorname{gr}(G)=(G/\iota K)\oplus\iota K\cong\mathbb F_p\oplus\mathbb F_p.
+\tag{CE.16}
+$$
+
+这里说的是**选定滤过的分次加法群相同**。不能把第二个滤过写成 $G\supset pG\supset0$，因为 $p\mathbb F_p^2=0$。若分次对象还附带跨层的乘 $p$ 映射等额外关系，两者已经可以被区分。两者也都是 $p^2$ 个点的有限离散空间，差异在运算与滤过拼接，不能从此例宣称它们的裸拓扑不同。
+
+两个群不可能同构：$G_{\mathrm{cyc}}$ 有阶 $p^2$ 的元素，$G_{\mathrm{split}}$ 每个元素都被 $p$ 消去。更直接地，循环群中任何 $1\in Q$ 的提升都是 $1+pt$；它的 $p$ 倍等于 $p\ne0$，因此没有同态截面。
+
+进位中还有一个简洁的不变量：
+
+$$
+\kappa(c):=\sum_{j=0}^{p-1}c(j,1)\in\mathbb F_p.
+\tag{CE.17}
+$$
+
+在 $c\mapsto c+\delta\beta$ 下，额外项为
+
+$$
+\sum_{j=0}^{p-1}[\beta(j)+\beta(1)-\beta(j+1)]
+=p\beta(1)=0,
+$$
+
+其中 $j+1$ 按模 $p$ 计算。所以 $\kappa$ 不随截面改变。循环群只有 $j=p-1$ 时发生一次进位，故 $\kappa(c_{\mathrm{cyc}})=1$；分裂群的 $\kappa(0)=0$。这也直接证明两张表不相差余边界。
+
+其操作含义可直接由式（CE.6）推导。从零出发，将所选提升 $s(1)$ 重复相加 $m$ 次，$0\le m\le p$，其坐标为
+
+$$
+\left(\sum_{j=0}^{m-1}c(j,1),\ m\bmod p\right).
+$$
+
+$m=0$ 为空和与零元；若式子对 $m<p$ 成立，再加 $(0,1)$ 时由式（CE.6）恰添一项 $c(m,1)$，故归纳成立。取 $m=p$，终点的商读数为零，核坐标为 $\kappa(c)$，在循环与分裂两例中分别是 $1$ 和 $0$。当 $p=2$，分裂运算就是逐位异或（XOR）；最小对照为
+
+$$
+(0,1)\star_{c_{\mathrm{cyc}}}(0,1)=(1,0),
+\quad
+(0,1)\star_0(0,1)=(0,0).
+\tag{CE.18}
+$$
+
+因此，“层相同”不保证“反复操作后的共同实现相同”。这个反例也不依赖非交换性：两个整体都完全交换。
+

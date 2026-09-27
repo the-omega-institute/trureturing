@@ -1,0 +1,56 @@
+### 305.11 实际主表、平均风险与全部成本
+
+使用第301节的实际概率表，以候选 \(a\) 取每流
+$$
+K(a)=\left\lceil
+A\frac{w(a)}{a^2\kappa^2}
+[1+\log(1/\bar\eta)]\right\rceil,\qquad
+w(a)=C-a+a\kappa.
+$$
+表在全部校准分支上合法；在 \(a\le h\) 上同参数平均风险至多
+\(1/3-\bar\eta/72\)，这是第301节响应差余量按第303节所取常数的直接应用。校准只用参考联合记录，其分布在固定 \(h\) 的两个假设及所有 \(r\) 下相同，主表使用新鲜两源样本。给定同一校准记录，才能在两个假设之间配对平均风险。令 \(p_{\rm bad}=\Pr_h(G^c)\le\delta\)，于是
+$$
+\begin{aligned}
+\mathcal R(r,h)
+&\le(1-p_{\rm bad})
+\left(\frac13-\frac{\bar\eta}{72}\right)+p_{\rm bad}\\
+&\le\frac13-\frac{\bar\eta}{72}+\delta\le\frac13.
+\end{aligned}
+$$
+没有把某一个假设的错误单独约束为三分之一，也没有忽略失败记录。
+
+无条件主表费用保持稀有背景：
+$$
+\begin{aligned}
+\mathbb E\frac{w(a)}{a^2}
+&\le w_h\mathbb E H_0^{-2}
++\mathbb E\frac{(h-a)_+}{H_0^2}\\
+&\le Aw_h/h^2+2\kappa\mathbb E H_0^{-1}
+\le Aw_h/h^2.
+\end{aligned}
+\tag{305.27}
+$$
+所以 \(\mathbb E(2K(a))\le A\mathcal O(h)\)，包括所有校准失败记录。
+
+总调用数
+$$
+N=n_J+m_0+m_1+2K(a)
+$$
+满足
+$$
+\mathbb E N\le
+A\{\mathcal O(h)+h^{-1}[H+\ell_+(h)]\}.
+\tag{305.28}
+$$
+在原参数范围 \(w_h\ge\kappa\)、\(H\ge1\)、\(\kappa\le\kappa_0<1\)，
+$$
+\mathcal O(h)\ge H/(\kappa h^2)\ge h^{-2}.
+$$
+另有 \(h\ell_+(h)\le1\)：令 \(s=\log(1/h)\ge0\)，则
+\(e^{-s}\log(e+s)\le e^{-s}(1+s/e)\le1\)。
+因此（305.28）的两个附加项以绝对常数被 \(\mathcal O(h)\) 吸收，证明（305.18）的调用上界。每次 \(1\le\tau\le2\)，故逐运行
+$$
+N\le T\le2N,
+$$
+时间上界也成立。所有阶段在每个 \(h>0\) 下有限完成，且期望有限。
+

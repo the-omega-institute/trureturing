@@ -1,0 +1,43 @@
+**定理166.1（精确比较分布）。** 比较分布的累积分布函数为
+
+$$
+\boxed{
+F_\Delta(x)=
+\begin{cases}
+0,&x\le\ell,\\[2mm]
+\displaystyle\frac2\pi\arccos s_\Delta(x),
+&\ell<x<u_\Delta,\\[2mm]
+1,&x\ge u_\Delta.
+\end{cases}
+}
+\tag{166.7}
+$$
+
+它在支撑区间上连续、严格递增，没有原子。其内部密度为
+
+$$
+\boxed{
+f_\Delta(x)=
+\frac{4(8x-3)}
+{\pi\Delta(4-s_\Delta(x))
+\sqrt{1-s_\Delta(x)^2}},
+\qquad \ell<x<u_\Delta.
+}
+\tag{166.8}
+$$
+
+对 $0<p<1$，其分位数
+$Q_\Delta(p)=\inf\{x:F_\Delta(x)\ge p\}$ 为
+
+$$
+\boxed{
+Q_\Delta(p)=
+\psi_\Delta\!\left(\cos\frac{\pi p}{2}\right).
+}
+\tag{166.9}
+$$
+
+该公式连续延伸到
+$Q_\Delta(0)=\ell$、
+$Q_\Delta(1)=u_\Delta$。
+

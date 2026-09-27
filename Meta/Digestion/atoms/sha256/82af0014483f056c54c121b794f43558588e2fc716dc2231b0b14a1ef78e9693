@@ -1,0 +1,1 @@
+| Levi, Beck, Bar-Sinai, *Grokking in Linear Estimators – A Solvable Model that Groks without Understanding*, ICLR 2024, arXiv:2310.16441（库内条目 [levibeckbarsinai2023grokking](../../../Library/Dynamics/levibeckbarsinai2023grokking.md)） | `literature-attested`：线性师生模型在权重衰减下可解的延迟泛化；其式 (12) 另给无权重衰减时由近零谱模态造成的延迟，正是评注 3.3 所说“慢的行模态”的高维实例。定理 3.1 证明中的精确解是其动力学的特化，本卷的增量只是定理 3.1 的逃逸集表述 

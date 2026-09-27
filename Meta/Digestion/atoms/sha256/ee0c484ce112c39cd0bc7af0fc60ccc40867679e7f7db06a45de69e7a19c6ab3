@@ -1,0 +1,15 @@
+**命题180.4（显式弱测量族的二阶上界）。** 当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+h_L(i)
+&\le e_L(\widehat r_L,\widehat t_L)\\
+&=\frac34+\frac{\beta(w_0+w_1)}8
++\frac{3\beta^2-4\gamma^2}{64}(w_1-w_0)^2
++O(w_1^3).
+\end{aligned}
+}
+\tag{180.15}
+$$
+

@@ -1,0 +1,17 @@
+**Quantitative form.** For this decision, one total-mass-name query at an index $t$ satisfying
+$$
+2^{-t}<\delta_d/12
+\tag{TM.575}
+$$
+suffices. Set $\ell_t=v(t)-2^{-t}$ and search for $s$ with $f_s-\ell_t<\delta_d/3$. Since $M-\ell_t<\delta_d/6$, this search terminates. The rational $u_s=\mu(E_s\cap[b]_d)$ then satisfies
+$$
+0\le u_s-\mu(E\cap[b]_d)<\delta_d/3,
+\tag{TM.576}
+$$
+so one may use $q=u_s$ in the decision rule. The required binary accuracy index can be chosen as the least integer strictly larger than
+$$
+d\log_2p+\log_2(12/c_p).
+\tag{TM.577}
+$$
+This counts a requested accuracy, not the number of enumeration steps or the total running time. The stopping stage $s$, the number and depths of cylinders discovered by that stage, the bit lengths of the name's rational answer, and the exact rational arithmetic remain part of the computational cost. No bound on these costs follows merely from the depth $d$ and the accuracy index $t$.
+

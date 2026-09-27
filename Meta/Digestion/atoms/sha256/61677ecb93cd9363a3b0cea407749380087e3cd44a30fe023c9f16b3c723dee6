@@ -1,0 +1,4 @@
+**定义 425.3（更新可以依赖过去，却不能回写本次预测）。** 上述计算并不要求 $q_t$ 在时间零就选成一个固定参数模型；它允许根据 $h$ 选择任意归一化的下一步预测。所需条件是这项选择在 $Y_t$ 出现前已经由历史决定。反之，看到 $Y_t$ 后再把本步预测全部压到已发生的结果上，不能用相同计算取得鞅性质。
+
+这一条件与项目 [`RetrospectiveLookupFailure`](../../../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean) 的边界相接：其 `lookup_copy_zero_loss_and_nonanticipating_failure` 区分回顾查表的零损失与非前视性，且不从前者推出任意未来收益。该模块的承诺依赖谓词不是本节的概率滤过；对应关系是“已见答案不得充当提前预测”的方向，具体概率保证仍由命题 425.2 的条件期望承担。
+

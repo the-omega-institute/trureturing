@@ -1,0 +1,12 @@
+**推论 2.31。** The cylinder-extension relation $R_K$ is undecidable, and $\mu(K)$ is noncomputable. More precisely, for every oracle $A$,
+$$
+\mu(K)\text{ is }A\text{-computable}
+\quad\Longleftrightarrow\quad
+R_K\text{ is }A\text{-decidable}.
+\tag{TM.588}
+$$
+
+**Proof.** If $R_K$ were decidable, the child-selection construction would give a computable point of $K$. Hence it is undecidable, and the equivalence theorem gives noncomputability of the mass and the relative assertion. $\square$
+
+This recovers the noncomputability conclusion of C卷第2.4.8节 and identifies the equivalent extension-query task under the sparse presentation. Cylinder emptiness has a finite forbidden-ancestor witness, so $R_K$ is co-c.e.; the halting oracle decides it and computes a mass name. No completeness classification of this particular $R_K$ is asserted here.
+

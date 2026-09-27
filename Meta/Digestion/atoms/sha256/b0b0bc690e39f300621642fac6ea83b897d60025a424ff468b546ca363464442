@@ -1,0 +1,32 @@
+**命题51.1。** 通道 $\Theta$ 本原，且 $q(\Theta)=3$。
+
+证明。直接迭代（51.4）给
+
+$$
+\Theta^2(X)=\frac{X_{11}}2|1\rangle\langle1|
++\left(X_{00}+\frac{X_{11}}2\right)|+\rangle\langle+|,
+\tag{51.5}
+$$
+
+$$
+\Theta^3(X)=
+\left(\frac{X_{00}}2+\frac{X_{11}}4\right)|1\rangle\langle1|
++\left(\frac{X_{00}}2+\frac{3X_{11}}4\right)|+\rangle\langle+|.
+\tag{51.6}
+$$
+
+对任意 $0\ne X\succeq0$，两个对角元非负，且 $X_{00}+X_{11}=\operatorname{Tr}X>0$。所以（51.6）的两个系数均严格正。$|1\rangle,|+\rangle$ 线性独立，两个秩一正算子的正权和因此正定。故 $\Theta^3$ 严格正。
+
+另一方面，
+
+$$
+\Theta(|0\rangle\langle0|)=|1\rangle\langle1|,
+\qquad
+\Theta^2(|0\rangle\langle0|)=|+\rangle\langle+|,
+\tag{51.7}
+$$
+
+均为秩一，前两次迭代都非严格正。这就证明 $q(\Theta)=3$。证明完毕。
+
+该通道正是第45节二维锐性例子。这里不仅追踪其中一条轨道，还用（51.6）对全部非零半正定输入验证本原性，因此它满足所核对 Theorem B 的全部假设。
+

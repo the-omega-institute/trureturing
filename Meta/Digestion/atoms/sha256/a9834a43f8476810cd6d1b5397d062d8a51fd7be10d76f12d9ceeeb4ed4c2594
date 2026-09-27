@@ -1,0 +1,35 @@
+**定理 52.1（完整仪器校准对随机截止输出的控制）。** 比较两个具有相同端口、相同终端读出和相同截止概率的原始仪器，记其带记录通道的半 diamond 距离为 $\delta_0$。则
+
+$$
+\boxed{
+\delta(\Psi_\eta^I,\Psi_\eta^J)
+\le\min\{1,\delta_0/\eta\},
+}
+$$
+
+以及
+
+$$
+\boxed{
+\|\mathsf C_\eta^I-\mathsf C_\eta^J\|_\infty
+\le\frac q\eta\min\{1,\delta_0/\eta\}.
+}
+$$
+
+证明。以同一独立截止 $\mathsf M$ 对第 38 节有限删失通道混合，得
+
+$$
+\Psi_\eta=\sum_{m\ge1}\eta q^{m-1}\Phi_m.
+$$
+
+这是归一化几何权重的通道混合，级数在通道范数中收敛。第 35、38 节给 $\delta(\Phi_m^I,\Phi_m^J)\le m\delta_0$；凸性与 $\mathbb E\mathsf M=1/\eta$ 给第一界，再与距离不超过一合并。
+
+共同点击旗标检验给 $\|G_\eta^I-G_\eta^J\|_\infty\le\delta(\Psi_\eta^I,\Psi_\eta^J)$。第 50.3 条的恒等式直接给
+
+$$
+\mathsf C_\eta^I-\mathsf C_\eta^J
+=-\frac q\eta(G_\eta^I-G_\eta^J),
+$$
+
+推出第二界。$\square$
+

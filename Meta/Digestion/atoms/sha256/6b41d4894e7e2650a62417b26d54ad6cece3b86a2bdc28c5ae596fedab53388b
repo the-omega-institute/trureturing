@@ -1,0 +1,55 @@
+### 274.4 固定PSD余项保留同边缘锐性
+
+任意权重的匹配下界可直接借用canonical来源，而不重做Schur构造。取
+$$
+\gamma=\frac{\lambda_{\min}(Q)}{2\|Q_{\mathrm c}\|}>0,
+\qquad
+Q_{\mathrm r}=Q-\gamma Q_{\mathrm c}
+\succeq\frac{\lambda_{\min}(Q)}2I_E\succ0.
+\tag{274.24}
+$$
+令 $T_{\mathrm c}=T(Q_{\mathrm c},M)$。§271在一个最长块上构造了真实PSD族 $T_{\mathrm c,h}$，满足
+$$
+\operatorname{Tr}_H T_{\mathrm c,h}=I_E
+=\operatorname{Tr}_H T_{\mathrm c},
+$$
+$$
+\|T_{\mathrm c,h}-T_{\mathrm c}\|_1=\Theta(h),
+\qquad
+\|2(T_{\mathrm c,h}-T_{\mathrm c})_{+-}\|_1
+=b_0h^{2m},
+\qquad b_0>0.
+\tag{274.25}
+$$
+这里使用未归一化矩阵；其迹恒为 $d$。
+
+定义
+$$
+T_h=\gamma T_{\mathrm c,h}+T(Q_{\mathrm r},M),
+\qquad
+\Omega_h=\frac1cT_h.
+\tag{274.26}
+$$
+两项均PSD，且图矩阵对权重线性，所以
+$$
+T_h-T(Q,M)=\gamma(T_{\mathrm c,h}-T_{\mathrm c}).
+\tag{274.27}
+$$
+整个边缘精确保持：
+$$
+\begin{aligned}
+\operatorname{Tr}_H T_h
+&=\gamma I_E+Q_{\mathrm r}+M^\dagger Q_{\mathrm r}M\\
+&=Q+M^\dagger QM.
+\end{aligned}
+\tag{274.28}
+$$
+因此迹恒为 $c$，$\Omega_h$ 是与真值同边缘的合法来源，而不是仅在某个投影上的近似正矩阵。式（274.27）给
+$$
+\|\Omega_h-\Omega\|_1=\Theta(h),
+\qquad
+\varepsilon(\Omega_h)=\frac{\gamma b_0}{c}h^{2m}.
+\tag{274.29}
+$$
+任意 $\alpha>1/(2m)$ 都使误差比值至少为一个正常数乘 $h^{1-2m\alpha}$，趋向无穷。
+

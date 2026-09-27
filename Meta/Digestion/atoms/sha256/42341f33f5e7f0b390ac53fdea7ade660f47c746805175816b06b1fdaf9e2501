@@ -1,0 +1,87 @@
+### 213.4 双退化中心的解析消元与实际对偶
+
+五个快变量的 Hessian 仍为
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)$。
+消去后对额外 $u$ 方向的方程除以 $t$，
+其两个实方向 Jacobian 仍为 $I_2/2$。
+随后目标减 $3/4$ 可解析除以 $\epsilon$。
+
+把中心参数下的冻结一阶函数记为 $\mathcal L_*$，
+其平方恒等式成为
+
+$$
+\mathcal L_*-\Phi_0
+=\frac{\beta\delta}{4}|b_0-i/\sqrt2|^2
++\frac{\beta R}{4}(|d_0|^2+|d_1|^2)
++\frac{\beta R}{4}t|v|^2.
+\tag{213.11}
+$$
+
+故额外 $v$ 方程除以 $t$ 后的 Jacobian 为 $\beta RI_2/2$；
+其余五个慢变量加 $t$ 的六维 Hessian 也正定。
+球面加径向坐标到 $(b_0,d_0,d_1)\in\mathbb C^3$
+仍是局部微分同胚，因为中心 $b_0=i/\sqrt2\ne0$。
+没有使用 $m>0$。
+
+因此逐次隐函数和合法解析除法产生
+$q(\epsilon,h,\nu,t)$，其候选目标为
+
+$$
+\mathcal V(\epsilon,h,\nu,t)=\frac34+\epsilon q(\epsilon,h,\nu,t),
+\qquad \mu=\partial_tq.
+\tag{213.12}
+$$
+
+整个零噪声参数面上的实际 slack 仍为 $P_c/4$。
+其余块可精确除以 $\epsilon$。
+
+为核对慢块，不能沿用第211节除以 $m_b$ 的计算。
+在当前中心，第200节完整一阶梯度给
+$(G_j^{(1)})_{ba}=i\beta c_j^{\rm in}/4$、
+$(G_j^{(1)})_{bb}=-\beta c_j^{\rm in}/4$、
+$(G_j^{(1)})_{dd}=0$，
+其中 $c_0^{\rm in}=1,c_1^{\rm in}=R$。
+记乘子的一阶 $ba$ 输入项为 $\Lambda_{10}^{(1)}$。
+两份实际互补方程的 $b$ 分量分别为
+
+$$
+\Lambda_{10}^{(1)}+i\Lambda_{11}^{(1)}=0,\qquad
+\Lambda_{10}^{(1)}+\frac{i\beta R}{2}
+-i\Lambda_{11}^{(1)}=0.
+$$
+
+因此
+
+$$
+\Lambda_{11}^{(1)}=\frac{\beta R}{4}.
+\tag{213.13}
+$$
+
+结果0的两个慢方向极限为
+$\operatorname{diag}(\beta\delta/4,\beta R/4)\succ0$；
+结果1保留的 $d$ 慢方向极限为 $\beta R/4>0$。
+额外方向由消元精确给
+$w^\dagger S_1w=\epsilon\mu$、
+$e_c^\dagger S_1w=e_d^\dagger S_1w=0$。
+
+固定缩小参数邻域，真实 Schur 补于是给
+$S_0\succeq0$，且 $S_1\succeq0$ 当且仅当 $\mu\ge0$。
+再取
+
+$$
+t\ge0,\qquad \mu\ge0,\qquad t\mu=0,
+\tag{213.14}
+$$
+
+候选为合法共同 CPTP，并满足精确互补。
+对任意多 Kraus、任意距离的共同 CPTP 竞争者，
+实际完整目标的凸支持给
+$e(\Gamma)\ge e(\Gamma^\sharp)+\sum_j\operatorname{Tr}(S_jJ_j)
+\ge e(\Gamma^\sharp)$。
+因此这是全类精确最优，未预先限制竞争者秩。
+
+第211节的核面 Schur 坐标、逐层正 Hessian 及最优线段论证
+在此逐项仍成立：它们只需要 $a_j>0$、共同 Gram 正定和上述正读数。
+故对每个正小 $\epsilon$，最优对称化 Choi 对唯一，
+其秩由 $t$ 的正性精确决定，包括 $\mu=t=0$ 的边界。
+

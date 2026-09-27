@@ -1,0 +1,21 @@
+**定理140.2（有限终端最优误差的 Lipschitz 界）。** 对任意 $D,N$、同一装置 $\mathfrak A$ 及任意 $\theta,\theta'\in\Theta$，
+
+$$
+\left|
+\mathcal E_{D,N}(\theta;\mathfrak A)
+-\mathcal E_{D,N}(\theta';\mathfrak A)
+\right|
+\le2N h(\theta,\theta'),
+\tag{140.6}
+$$
+
+并且
+
+$$
+\boxed{
+|\varepsilon_{D,N}(\theta)-\varepsilon_{D,N}(\theta')|
+\le2N h(\theta,\theta').
+}
+\tag{140.7}
+$$
+

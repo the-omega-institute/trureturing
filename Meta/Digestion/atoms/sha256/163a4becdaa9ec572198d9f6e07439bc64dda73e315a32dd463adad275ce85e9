@@ -1,0 +1,1 @@
+| [NoisyMomentAtomExtremum](https://github.com/the-omega-institute/trureturing/blob/708968483b4104bcc227cc4d65a0d40fccfdf930/D5/S3/Analytic/NoisyMomentAtomExtremum.lean) | 非空有限、互异节点，外部点不在节点像中，非负归一化权重、指定原始矩，以及其 $\varepsilon(1+B)\le(1/P)/2$ 小噪声条件。删除响应不是这些原始矩，故不能以同为归一化小噪声问题省去观察映射。 

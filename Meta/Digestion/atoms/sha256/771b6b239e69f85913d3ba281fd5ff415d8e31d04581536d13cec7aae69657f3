@@ -1,0 +1,16 @@
+**证明。** 对任意一对允许通道，记其平均输出为 $\sigma_\Gamma$。
+以 $P_{\xi(w)}$ 作迹距离检验，利用（183.12），
+
+$$
+\begin{aligned}
+D(\sigma_\Gamma,P_\Xi)
+&\ge\operatorname{Tr}[P_{\xi(w)}(P_\Xi-\sigma_\Gamma)]\\
+&\ge\operatorname{Tr}[P_{\xi(w)}(P_\Xi-\sigma(w,t_*(w)))]\\
+&=d(w,t_*(w)).
+\end{aligned}
+$$
+
+最后的等号使用 $\xi(w)$ 是实际输出差的正本征向量，
+且秩一目标减密度矩阵至多有一个正本征值。
+条件酉产生 $\sigma(w,t_*(w))$，达到这个下界。证毕。
+

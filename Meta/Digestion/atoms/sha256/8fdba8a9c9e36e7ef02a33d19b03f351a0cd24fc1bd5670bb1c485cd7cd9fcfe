@@ -1,0 +1,53 @@
+### 233.3 投影和条件给出实际最优候选
+
+假设（233.FF.7）成立。对两边取迹，得
+$$
+\sum_j\operatorname{rank}\Pi_j=R.
+\tag{233.FF.13}
+$$
+定义候选效应及实际分支
+$$
+E_j=\frac dR\Pi_j,
+\qquad
+\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{233.FF.14}
+$$
+各效应正半定且 $\sum_jE_j=I_d$，故给出一份 CPTP 记录通道。取 $\operatorname{im}\Pi_j$ 的正交基 $\{u_{j,a}\}_a$，其显式 Kraus 为
+$$
+C_{j,a}=\sqrt{\frac dR}|r_j\rangle\langle u_{j,a}|.
+\tag{233.FF.15}
+$$
+该分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，所以分支秩恰为 $\operatorname{rank}\Pi_j$。标签块正交，候选总秩恰为 $R$。
+
+构造公共完全正部分
+$$
+\mathcal C_j(X)=\frac1N\operatorname{Tr}(\Pi_jX)P_j.
+\tag{233.FF.16}
+$$
+在每个固定纯输出 $P_j$ 上，正输入效应给完全正映射，因此
+$$
+(\mathcal R-\mathcal C)_j(X)
+=\frac1N\operatorname{Tr}[(I_d-\Pi_j)X]P_j
+$$
+和
+$$
+(\mathcal S-\mathcal C)_j(X)
+=\left(\frac dR-\frac1N\right)\operatorname{Tr}(\Pi_jX)P_j
+\tag{233.FF.17}
+$$
+都是完全正映射。第二项的系数非负，因为 $R\le dN$。
+
+共同部分的总迹效应为
+$$
+\mathcal C^*(I)=\frac1N\sum_j\Pi_j
+=cI_d,\qquad c=\frac R{dN}.
+\tag{233.FF.18}
+$$
+若 $R<dN$，两份残差除以同一个标量 $1-c$ 后都是 CPTP 通道。任意 CPTP 通道的 diamond 范数为一，所以
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-c=1-\frac R{dN}.
+\tag{233.FF.19}
+$$
+若 $R=dN$，（233.FF.7）迫使全部 $\Pi_j=I_d$，因为 $\sum_j(I_d-\Pi_j)=0$ 且各项正半定；此时（233.FF.14）就是目标本身。结合（233.FF.12），充分性成立。
+

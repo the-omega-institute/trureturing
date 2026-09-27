@@ -1,0 +1,12 @@
+**定理 401.2（边缘误差的收缩预算）。** 在上述条件下，记 $\alpha=\alpha(Q)$，则
+
+$$
+d_{t+1}\le\varepsilon+\alpha d_t,
+\qquad
+d_t\le\alpha^t d_0+\varepsilon\sum_{j=0}^{t-1}\alpha^j.
+$$
+
+特别地，若 $\alpha<1$ 且 $d_0=0$，有 $d_t\le\min\{1,\varepsilon(1-\alpha^t)/(1-\alpha)\}$。这是通常的有限核收缩论证在第 400 节近似下降上的应用，不是完整路径的统一收缩结论。
+
+**证明。** 由隐藏状态边缘的混合，$\operatorname{TV}(\nu_{t+1},\nu_tQ)\le\varepsilon$。任取两个概率行向量 $u,v$，令 $d=\operatorname{TV}(u,v)$。若 $d=0$，核作用后的距离也为零；否则将 $u-v=d(p-r)$，其中 $p,r$ 是归一化的正负部分。由于 $pQ-rQ=\sum_{b,b'}p_br_{b'}(Q_b-Q_{b'})$，三角不等式给 $\operatorname{TV}(uQ,vQ)\le d\alpha$。插入 $\nu_tQ$ 后即得递推式，有限归纳得几何和。$\square$
+

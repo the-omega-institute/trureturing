@@ -1,0 +1,17 @@
+**定义 38.1（最终输出与有限删失输出）。** 对每个首次点击标签 $(n,x)$，固定一个将其后继送到共同有限空间 $\mathcal K$ 的 CPTP 读出 $\Lambda_{n,x}$；两模型使用相同的这族读出。沿用 $S_m=\mathcal A^m(I)$、$F=\lim_m S_m$ 和 $R=I-F$，置
+
+$$
+\begin{aligned}
+\Phi_\infty^{\mathfrak I}(Y)
+&=\left[\sum_{n\ge1,x}
+\Lambda_{n,x}\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}(FY),\\
+\Phi_m^{\mathfrak I}(Y)
+&=\left[\sum_{1\le n\le m,x}
+\Lambda_{n,x}\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}(S_mY).
+\end{aligned}
+$$
+
+第一块汇集点击后读出，第二块为正交的一维旗标。无穷式的旗标表示永不点击；有限式中同一输出位置表示截至第 $m$ 轮未解决。有限式不宣称已经认证永不点击。若要保留无限多个原始时间标签，需另换无限记录接口，本定义没有给有限维接收器免费增加这种能力。
+

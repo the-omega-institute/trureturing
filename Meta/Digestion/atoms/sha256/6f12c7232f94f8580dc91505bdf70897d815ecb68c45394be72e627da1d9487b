@@ -1,0 +1,33 @@
+**证明。** 取单位纯化向量 $|\psi\rangle$，置 $|\phi\rangle=(\Pi\otimes I)|\psi\rangle$。则 $\|\phi\|^2=1-t$，对辅助空间取偏迹分别得到 $\Xi$ 与 $\Pi\Xi\Pi$。
+
+当 $0<t<1$ 时，在投影内外两个归一化分量张成的正交基中，
+$$
+|\psi\rangle=\sqrt{1-t}\,|e\rangle+\sqrt t\,|f\rangle,
+\qquad
+|\phi\rangle=\sqrt{1-t}\,|e\rangle.
+\tag{252.15}
+$$
+故纯化上的差矩阵为
+$$
+|\psi\rangle\langle\psi|-|\phi\rangle\langle\phi|
+=
+\begin{pmatrix}
+0&\sqrt{t(1-t)}\\
+\sqrt{t(1-t)}&t
+\end{pmatrix}
+\tag{252.16}
+$$
+在该二维空间上的嵌入。两特征值异号，其迹范数为
+$$
+\sqrt{t^2+4t(1-t)}=\sqrt{t(4-3t)}\le2\sqrt t.
+\tag{252.17}
+$$
+$t=0$ 与 $t=1$ 时结论直接成立。偏迹在 Hermitian 算子的迹范数上收缩：把算子写成正负部分之差，再使用三角不等式及偏迹保迹性即可。因此偏迹后仍满足（252.14）。$\square$
+
+由（252.12）得到
+$$
+\|\Xi-\Xi_{\mathcal K}\|_1\le2\sqrt{h(\varepsilon)}.
+\tag{252.18}
+$$
+平方根项保留了核内与核外之间可能存在的相干，并没有将竞争态预先去相干。
+

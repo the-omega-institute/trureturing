@@ -1,0 +1,18 @@
+### 32.4 与四种表示的恢复
+
+对空间、时间、边界和记忆四个表示 $q_i$，若每个表示都与同一完整 profile 满足 (32.1) 的下降条件，并且
+
+$$
+\ker(q_i)=\ker(\operatorname{TP}_\infty),
+$$
+
+则它们的完成像之间存在唯一的自然双射，且交换各自的更新。若只有联合交核等式
+
+$$
+\bigcap_i\ker(q_i)=\ker(\operatorname{TP}_\infty),
+$$
+
+则只有联合表示 $J=(q_i)_i$ 得到自然等价；单个分量仍可能只是互补的静态投影。由此，互相恢复的强命题与联合充分的弱命题在完成化范畴中仍然严格区分。
+
+本节对应仓内 `BehaviorCompletionFunctoriality`、`BehaviorCompletionTranslation` 和 `PredictionCompletion.observation_refinement_completion`。它把跨切面运输的交换、唯一性、复合和有限窗口限制写成统一条件；没有新增 Lean 声明，理论结论 Claim status 为 open。
+

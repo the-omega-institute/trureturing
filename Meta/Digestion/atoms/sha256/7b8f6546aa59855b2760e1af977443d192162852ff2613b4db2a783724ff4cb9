@@ -1,0 +1,33 @@
+**定理 6.2（双向有限窗共轭及完整模量）。** 对定理 5.2 中的双提升图，假定每条实际 C 边同时保存其 A 标签和 B 标签，且唯一入边、唯一出边均针对这些实际边成立。则投影给出一个共轭 h:X_A→X_B，满足
+
+$$
+h\sigma_A=\sigma_Bh.
+$$
+
+正向的第 i 输出只依赖 A 坐标 [i,i+d_L]；逆向第 i 输出只依赖 B 坐标 [i-d_R,i]。特别对定义 4.1 的证书，可以使用以下明确公式：
+
+$$
+r_i=\operatorname{pr}_{E_R}\psi_A^{-1}(a_i\cdots a_{i+m-1}),
+\qquad\varphi(a_i,r_{i+1})=(r_i,b_i),\qquad h(x)_i=b_i,
+$$
+
+以及
+
+$$
+r_i=\operatorname{pr}_{E_R}\psi_B^{-1}(b_{i-m}\cdots b_{i-1}),
+\qquad\varphi^{-1}(r_i,b_i)=(a_i,r_{i+1}),\qquad h^{-1}(y)_i=a_i.
+$$
+
+这里两处 pr 的因子位置仍按定理 4.4 解释。
+
+令 q_n^A、q_n^B 分别读取 [-n,n] 的全部边，则
+
+$$
+\mathcal E(q_{n+d_L}^A;q_n^B\circ h)=\varnothing,
+\qquad
+\mathcal E(q_{n+d_R}^B;q_n^A\circ h^{-1})=\varnothing
+\qquad(n\ge0).
+$$
+
+因此相应中心窗口模量分别不超过 n+d_L 和 n+d_R。更精确地，A 的 [-n,n+d_L] 已足够决定 B 的 [-n,n]，逆向只需 B 的 [-n-d_R,n]。
+

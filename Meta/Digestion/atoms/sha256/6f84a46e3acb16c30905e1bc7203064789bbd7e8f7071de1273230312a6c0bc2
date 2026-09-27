@@ -1,0 +1,20 @@
+**核对。** 标量热核中线性曲率系数是 $(1/6-\xi)R$。[ST-HeatKernel] 对两谱作相同 proper-time 积分，维数与迹相等使 $s^{-2}$ 曲率积分在 $s=0$ 有限。谱严格正定保证另一端收敛。两次分部积分给出括号中的差。由于 $\log\mathsf M_0$ 块对角，
+
+$$
+\operatorname{tr}(\mathsf M\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M_0\log\mathsf M_0),
+$$
+
+从而
+
+$$
+\boxed{
+\Delta\kappa
+=\frac{\hbar}{32\pi^2}\left(\frac16-\xi\right)
+ tD(\rho_{\mathsf M}\|\mathcal P\rho_{\mathsf M}).
+}
+\tag{ST7.2}
+$$
+
+该相对熵编码质量谱及指定分块，实际量子场态另行给定。整个有效作用量差也不因此全部紫外有限。
+

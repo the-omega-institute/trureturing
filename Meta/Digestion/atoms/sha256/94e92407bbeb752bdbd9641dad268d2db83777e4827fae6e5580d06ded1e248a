@@ -1,0 +1,23 @@
+**定理276.1（二维同负性的精确比较）。** 对任意
+$$
+0<\nu\le\frac1{800},
+\tag{276.37}
+$$
+存在
+$$
+r_\nu=2\nu\in(0,1),
+\qquad
+t_\nu\in[\sqrt{\nu/2},\sqrt{50\nu}]
+\subseteq(0,1/4],
+\tag{276.38}
+$$
+使 $\Omega_{\mathrm E}(r_\nu)$ 与 $\Omega_{\mathrm J}(t_\nu)$ 同时满足：联合空间为同一 $2\otimes2$，联合秩为二，参考边缘为 $I_2/2$，负性精确为 $\nu$。两者的完整数据纤维均唯一，而
+$$
+\boxed{
+(d_{S,\mathrm E},\alpha_{\mathrm E})=(1,1/2),
+\qquad
+(d_{S,\mathrm J},\alpha_{\mathrm J})=(2,1/4).
+}
+\tag{276.39}
+$$
+

@@ -1,0 +1,43 @@
+### 25.1 经典极值引理的自包含证明
+
+设 `m>=2`、`sum y_r=0`、`S=sum y_r^2>0`。记
+\[
+q_m=m(m-1)/2,\qquad H_m=\prod_{r=1}^m r^r.
+\]
+则
+\[
+\prod_{r<s}(y_r-y_s)^2
+\le H_m\left(\frac{S}{m(m-1)}\right)^{q_m}.
+\tag{67}
+\]
+若有重合点，左边为零。否则在紧集 `sum y=0,sum y^2=S` 上取最大值。最大值为正，极值点没有重合，两个约束的梯度线性独立。对乘积的对数使用 Lagrange 乘子，有
+\[
+2\sum_{s\ne r}\frac1{y_r-y_s}=2\lambda y_r+\mu.
+\]
+求和得 `mu=0`；乘以 `y_r` 再求和得
+`lambda=m(m-1)/(2S)`。令 `R(X)=prod(X-y_r)`，则在每个根上
+`R''(y_r)=2lambda*y_r*R'(y_r)`，因而
+\[
+R''-2\lambda XR'+2\lambda mR=0.
+\tag{68}
+\]
+这里加上最后一项后次数不超过 `m-1`，又有 `m` 个不同根，故多项式恒等式成立。
+
+定义首一的概率论归一化 Hermite 多项式
+\[
+\operatorname{He}_0=1,\quad\operatorname{He}_1=X,\quad
+\operatorname{He}_m=X\operatorname{He}_{m-1}-(m-1)\operatorname{He}_{m-2}.
+\]
+归纳给出 `He'_m=m He_(m-1)` 和 `He''_m-XHe'_m+mHe_m=0`。逐项比较系数，(68) 的首一解唯一，所以极值根是 `He_m` 根的 `sqrt(S/[m(m-1)])` 倍。无需把未知极值点当成已知根分布。
+
+由导数公式与相邻多项式的 resultant 递推，
+\[
+|\operatorname{Res}(\operatorname{He}_m,\operatorname{He}_{m-1})|
+=(m-1)^{m-1}|\operatorname{Res}(\operatorname{He}_{m-1},\operatorname{He}_{m-2})|,
+\]
+\[
+\operatorname{disc}(\operatorname{He}_m)
+=m^m\prod_{r=1}^{m-1}r^r=H_m.
+\]
+第一式是在 `He_(m-1)` 的根处用三项递推，第二式用 `He'_m=mHe_(m-1)`；从 `m=2` 开始归纳。极值根已为互异实根，故判别式取正号。根同时缩放时平方差乘积乘以比例的 `m(m-1)` 次幂，得到 (67)。这个经典 Hermite/Vandermonde 极值事实不作本项目首创主张；归一化已明确，不能把物理学归一化的 `H_m` 公式直接套入。
+

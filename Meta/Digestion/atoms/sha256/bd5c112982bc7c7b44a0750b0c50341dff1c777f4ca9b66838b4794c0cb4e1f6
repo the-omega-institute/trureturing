@@ -1,0 +1,7 @@
+**推论162.2（共同合同下的统一有限窗口）。** 在定理162.1的条件下，
+
+$$
+\sup_{t\in P}\bigl(E_\infty(t)-M_N(t)\bigr)\longrightarrow0.
+\tag{162.7}
+$$
+

@@ -1,0 +1,20 @@
+**商像三维。**
+
+若 $m=3$，则 $Z=M\otimes A$。由 $B,C$ 均不平行 $A$，$\pi(G_4)\otimes B$、$\pi(G_6)\otimes C$ 只能为零，故
+$$
+G_4=G_6=U.
+\tag{55.13}
+$$
+令 $S=U+G_3+G_5$，它五维，且 $S\otimes A\subset V_0K$。因 $V_1U=Q_3\otimes A$，有 $S\perp Q_3$，于是
+$$
+K=S\oplus Q_3,\qquad v\in Q_3.
+\tag{55.14}
+$$
+$B,C$ 张成 $F$，所以它们不能同时正交于非零 $A\in F$。若 $\langle A,B\rangle\ne0$，跨位正交给 $Q_4\perp S$，因而 $Q_4=Q_3$；故
+$$
+V_1(U+G_3)=Q_3\otimes F.
+$$
+由 $V_1P_0=v\otimes F$ 及 $v\in Q_3$，单射性给 $P_0\subset U+G_3\subset S$。若改为 $\langle A,C\rangle\ne0$，则以 $Q_6=Q_3$ 和 $U+G_5$ 得到同样的 $P_0\subset S$。
+
+但（55.13）使 $V_0H_3=U\otimes B=V_0X_B$，故 $H_3=X_B$，非零 $p_B\in P_0\cap H_3$。另一方面，$H_3\subset G_3\oplus Q_3$ 到 $Q_3$ 的投影单射，而 $G_3\subset S\perp Q_3$，所以 $H_3\cap S=0$。与 $P_0\subset S$ 矛盾。
+

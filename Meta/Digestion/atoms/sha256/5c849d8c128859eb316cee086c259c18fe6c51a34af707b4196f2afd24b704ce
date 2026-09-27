@@ -1,0 +1,31 @@
+#### 2.8.6 What the binary endpoint changes
+
+For an odd prime $p$, the sparse cylinder lower bound
+
+$$
+\mu(E\cap[s])\in\{0\}\cup
+\left[\frac{p-2}{p-1}p^{-|s|},\ p^{-|s|}\right]
+\tag{TM.676}
+$$
+
+provides a uniform positive separation and therefore a uniform mass-name-to-extension operator. At $p=2$, that lower gap vanishes. The pointwise equivalence survives by canonical binary expansion, but uniform transport over all presentations fails.
+
+The distinction can be recorded without treating one as the other:
+
+$$
+\begin{aligned}
+&\text{Fixed sparse binary presentation:}&&
+M\text{ is }A\text{-computable}\iff R\text{ is }A\text{-decidable};\\
+&\text{Uniform over sparse binary presentations:}&&
+R\longmapsto M\text{ is computable};\\
+&&&(
+\mathcal P,\text{name}(M))\longmapsto R
+\text{ is not computable in general}.
+\end{aligned}
+\tag{TM.677}
+$$
+
+A dyadic mass supplied with its exact rational value and the choice of terminating versus eventually-one canonical support is enough finite advice to make the forward construction uniform on that subclass. For nondyadic inputs, the usual digit-extraction search already gives a uniform construction, but its stopping precision has no bound here depending only on the requested depth: the real may lie arbitrarily close to a dyadic boundary.
+
+These are statements about effective access to one fixed final object and its specified prefix interface. They do not identify arbitrary real names with a unique Turing degree: a name may carry unrelated extra information. They also do not infer the raw redundant inventory from extension, or equate existence of a decision program with a uniform means of obtaining that program. In particular, the constant-mass family shows exactly why those two claims cannot be interchanged.
+

@@ -1,0 +1,20 @@
+**引理141.2（固定实现中的附加因子化）。** 对给定 $n$，（141.8）成立，当且仅当存在等距
+
+$$
+R_n:\Gamma_n\longrightarrow\Gamma_{n+1}\otimes E
+$$
+
+满足
+
+$$
+\boxed{
+VJ_n=(W_{n+1}\otimes I_E)
+       (I_{S_{n+1}}\otimes R_n),
+\qquad
+\operatorname{Tr}_E(R_n\tau_nR_n^*)=\tau_{n+1}.
+}
+\tag{141.11}
+$$
+
+等式中的因子结合均取自然识别。
+

@@ -1,0 +1,12 @@
+**定义 212.1（首次失败节点）。** 在有限深度事件树中，令 $\mathcal B=\{b_1,\ldots,b_m\}$ 为互不相交的首次失败节点。对来源 $\omega$，记
+
+$$
+q_i(\omega)
+=
+P_\omega^\pi(\text{在 }b_i\text{ 失败}\mid b_i),
+\qquad
+\beta_i(\omega)=P_\omega^\pi(b_i).
+$$
+
+假定所有失败路径恰好先经过某个 $b_i$，并令剩余项 $q_\infty(\omega)$ 表示在时限内未进入任何已列节点而失败的概率。
+

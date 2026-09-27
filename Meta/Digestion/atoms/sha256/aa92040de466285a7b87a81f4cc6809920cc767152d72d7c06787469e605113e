@@ -1,0 +1,18 @@
+**条件一：共同响应幅度。** 要求
+$$
+|R_a|=|R_b|=:M\ne0.
+\tag{255.3}
+$$
+令 $S=\operatorname{supp}M$，$P_0$ 为 $S$ 的正交投影，并取
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\tag{255.4}
+$$
+其中核上取零。在 $S$ 上，两者都是 Hermitian 对合。谱函数性质给
+$$
+R_w=H_wM=MH_w,
+\qquad w=a,b.
+\tag{255.5}
+$$
+

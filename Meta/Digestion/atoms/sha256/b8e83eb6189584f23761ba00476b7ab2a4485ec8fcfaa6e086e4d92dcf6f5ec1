@@ -1,0 +1,45 @@
+**定理 109.1（同接口量子仪器中停止界的渐近锐常数）。** 固定 $a>0$，使用定义 107.1 的两装置 $\Gamma_t^{P_0},\Gamma_t^{P_1}$ 与共同初态 $P$。记其完整单轮距离为 $d_t=k_t$，共同均值为 $M_t$。则
+
+$$
+\boxed{
+\frac{D(\Xi_t^{P_0}(P),\Xi_t^{P_1}(P))}{d_tM_t}
+=\frac1{1+(1-k_t)\sin^2t}
+\longrightarrow1.
+}
+\tag{109.1}
+$$
+
+而且，第 63.1 条保留全部有限停止记录和后继的界中，乘在 $d_t\min(c_m^I,c_m^J)$ 前面的系数一也不能被某个统一的更小正数替代。
+
+证明。由式（107.6）与（108.3），分子为 $k_t/\epsilon_t$，分母为
+$k_t[1+(1-k_t)/\epsilon_t]$。相除得到
+
+$$
+\frac1{\epsilon_t+1-k_t}
+=\frac1{1+(1-k_t)\sin^2t},
+$$
+
+从而成立式（109.1）。
+
+对有限截断，两个装置在同一来源上的活动成本均为
+
+$$
+c_m=\mathbb E_P\min(\mathsf N,m)
+=1+\frac{(1-k_t)(1-r_t^{m-1})}{\epsilon_t}
+\qquad(m\ge1).
+\tag{109.2}
+$$
+
+取 $m_t=\lceil\epsilon_t^{-2}\rceil$，则 $r_t^{m_t}\to0$，同时
+
+$$
+\frac{D(\Omega_{m_t}^{t,P_0}(P),\Omega_{m_t}^{t,P_1}(P))}
+{d_t c_{m_t}}
+=\frac{1-r_t^{m_t}}
+{\epsilon_t+(1-k_t)(1-r_t^{m_t-1})}
+\longrightarrow1.
+\tag{109.3}
+$$
+
+这里 $d_t c_{m_t}\to a/(1+a)<1$，所以第 63.1 条与一取最小值的上限没有遮住该比例。任取统一常数 $c_0<1$，充分小的 $t$ 都使式（109.3）的比例大于 $c_0$，由实际有限停止输出直接推翻该替换。$\square$
+

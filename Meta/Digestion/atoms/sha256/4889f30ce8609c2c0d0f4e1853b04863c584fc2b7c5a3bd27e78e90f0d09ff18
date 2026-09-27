@@ -1,0 +1,10 @@
+**定理288.1（二维参考消去未标定漂移的最优尺度）。** 在（288.1）的同一实际来源和逐假设一致风险下，对全部 $0\le w\le1/4$、$0<\delta\le1/4$，
+$$
+\boxed{
+\frac{w+\delta}{180\delta^2}
+\le N_{\rm unk}^{\rm full}(2,\delta;w)
+\le(24\cdot272^2+1)\frac{w+\delta}{\delta^2}.
+}
+\tag{288.21}
+$$
+

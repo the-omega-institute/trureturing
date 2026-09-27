@@ -1,0 +1,8 @@
+#### 8.9.6 自洽观测全尺度的连续纤维族
+
+取 $m=2,\ldots,6$，令 $A_m=\{a\in\Delta_m:6a_i\in\mathbb N\ \forall i\}\cup\{u_m\}$，其中 $u_m=(1/m,\ldots,1/m)$，重复点只计一次；令 $E_m=\{0,1/12,1/4,1/2,2/3,3/4,1-1/m,1,2\}$，重复半径只计一次。这给 $42$ 组维数／半径及按 $(m,a,\varepsilon)$ 索引的 $7017$ 个完整连续纤维 $K(a,\varepsilon)=\Delta_m\cap\prod_i[a_i-\varepsilon,a_i+\varepsilon]$。每个纤维包含其区间约束下的全部实概率来源；不同索引允许对应同一来源集合。第 8.9.5 节给每个纤维的精确中心半径；ER8.CS.1 给共同上界。每组的概率输出最大半径在 $a=u_m$ 达到，实输出最大半径在 $a=(1/2,1/2,0,\ldots,0)$ 达到；这两个 $a$ 都在 $A_m$ 中，不要求同一个 $a$ 同时最坏。
+
+每个 $A_m$ 的网格部分有 $\binom{m+5}{m-1}$ 个元素；只有 $m\nmid6$ 时均匀点才是额外元素。各域大小为：
+
+| 维数与连续纤维族 | $\lvert A_m\rvert$ | $\lvert E_m\rvert$ | $\lvert A_m\times E_m\rvert$ | 概率下界来源的索引数 $m\lvert E_m\rvert$ | 实下界来源的索引数 $2\lvert E_m\rvert$ |
+| --- | ---: | ---: | ---: | ---: | ---: |

@@ -1,0 +1,68 @@
+**定理 76.2（完整例外集的规范测度零／无穷律）。** 对每个非空开区间
+$J\subset(1/2,1)$ 及每个满足 (76.1) 的 $f$，有
+
+$$
+\mathcal H^f(E\cap J)=
+\begin{cases}
+0,&\displaystyle\sum_nQ_n^2f(Q_n^{-3})<\infty,\\
+\infty,&\displaystyle\sum_nQ_n^2f(Q_n^{-3})=\infty.
+\end{cases}
+\tag{76.2}
+$$
+
+特别地，$\mathcal H^{2/3}(E\cap J)=\infty$。
+若 $f_a(t)=t^{2/3}/(\ln(1/t))^a$，则测度在每个 $a>0$ 时为零，
+在 $a\le0$ 时为无穷。
+
+证明。由 (76.1)，对每个固定 $c>0$ 有 $f(ct)\asymp_c f(t)$：
+$c\ge1$ 时 $f(t)\le f(ct)\le cf(t)$，$c<1$ 时反向缩放即可。
+第 74 章对每个紧参数区间和固定正均值范围，给第 $n$ 层至多 $CQ_n^2$ 个、
+直径至多 $CQ_n^{-3}$ 的原 floor 区间覆盖。
+当级数收敛时，尾覆盖的总 $f$ 代价趋零。
+对正均值范围及紧参数区间取可数穷尽，得到完整 $E$ 的零测度结论。
+
+发散侧使用 Beresnevich–Dickinson–Velani 的经典局部 ubiquity Hausdorff 定理。
+在 $J$ 内选非退化紧区间 $\Omega$，取相对 Euclidean 度量和归一化 Lebesgue 测度。
+小球测度与半径统一可比，包括端点球，所以其条件 (M2) 的指数为 $d=1$。
+以引理 74.4 的正根目标区间中点为点共振，权重为 $Q_n$；
+有界权重内只有有限多个点，点共振的交叠指数为 $\gamma=0$。
+取块下、上端点 $l_n=Q_{n-1}$、$u_n=Q_n$，并令
+
+$$
+\rho(t)=At^{-2},\qquad \psi(t)=\kappa_0t^{-3}.
+\tag{76.3}
+$$
+
+在稍大紧邻域中使用原网格，再保留 $\Omega$ 中点。
+$A$ 足够大时，最大间隙界使每个充分晚块的 $\rho$ 邻域覆盖整个 $\Omega$，
+从而给每个相对球中的局部 ubiquity。
+$\kappa_0$ 足够小时，每个 $\psi$ 小球包含于对应原 floor 区间的开放中三分之一，
+其 limsup $\Lambda$ 因 (74.14) 的实际均值比较而包含于 $E\cap J$。
+端点相对球的裁剪不破坏该包含。
+
+该原定理令
+
+$$
+g(t)=f(\psi(t))\psi(t)^{-\gamma}\rho(t)^{\gamma-d},
+\qquad G=\limsup_ng(u_n).
+\tag{76.4}
+$$
+
+其条件为 $t^{-d}f(t)$ 递减且在零处趋无穷，$t^{-\gamma}f(t)$ 递增。
+在 $G>0$ 时结论为 $\mathcal H^f(\Lambda)=\infty$；
+在 $G=0$ 时，若 $\rho(u_{n+1})\le c\rho(u_n)$ 最终成立于某个 $c<1$，
+且 $\sum_ng(u_n)=\infty$，同样得到该结论。
+本章 (76.1) 恰满足其函数条件，而
+
+$$
+g(Q_n)=A^{-1}Q_n^2f(\kappa_0Q_n^{-3})\asymp Q_n^2f(Q_n^{-3}),
+\qquad \rho(Q_{n+1})/\rho(Q_n)=(Q_n/Q_{n+1})^2\longrightarrow0.
+\tag{76.5}
+$$
+
+因此发散时分别由上述两个分支得到无穷测度，不要求 $g(Q_n)$ 单调。
+在临界幂 $f(t)=t^{2/3}$ 下，$g(Q_n)=\kappa_0^{2/3}/A>0$。
+对数规范的级数项为 $(3\ln Q_n)^{-a}$；
+原 $Q_{n+1}=10^{Q_n^5}$ 使其对每个 $a>0$ 都可求和，$a\le0$ 时发散。
+该计算不把稀疏层序列替换成连续分母。证毕。
+

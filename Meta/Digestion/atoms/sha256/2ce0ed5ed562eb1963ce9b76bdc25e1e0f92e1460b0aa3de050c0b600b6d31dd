@@ -1,0 +1,48 @@
+### 298.7 两个有害系数事件的完整定位
+
+第一，对所有 $G$ 中的经验值都有
+$$
+\beta_{ij}\le U:=
+1+\frac{\log(2C_*/h_0)}{A_*}.
+\tag{298.12}
+$$
+理由是 $\lambda_i\le\log C$，而
+$\lambda_j\ge\log Y_j\ge\log(h_0/2)$。
+
+第二，$G$ 中的负系数只可能满足
+$$
+\beta_{ij}<0\ \Longrightarrow\ R_{ij}<t_0.
+\tag{298.13}
+$$
+若 $R_{ij}\ge t_0$，则
+$X_i\ge t_0h_0/2>a_0$，故（298.9）—（298.10）适用；
+由（298.4）得到
+$\beta_{ij}\ge1/44-1/88>0$。
+
+第三，增加 $K_0$ 后，
+$$
+G,\ \beta_{ij}>1\ \Longrightarrow\ R_{ij}>u_{++}.
+\tag{298.14}
+$$
+当 $X_i\ge a_0$ 且 $R_{ij}\le u_{++}$ 时，（298.9）给
+$$
+\beta_{ij}\le L(u_{++})+1/88
+\le1-1/24+1/88<1.
+$$
+还须处理 $X_i<a_0$，包括负经验坐标。把 $K_0$ 增大到经验网格步长
+$BC/K\le a_0$，可选一个网格值 $X_{i_*}\in[a_0,2a_0]$。
+$S_i$ 随计数 $i$ 不减，所以 $\lambda_i$ 随经验坐标 $X_i$ 不减。
+于是
+$$
+\lambda_i\le\lambda_{i_*}\le\log(2a_0)+\epsilon_K,
+\qquad
+\lambda_j\ge\log(h_0/2).
+$$
+故
+$$
+\beta_{ij}\le
+1+\frac{\log(k^3)+\epsilon_K}{A}
+=1-\frac3D+\epsilon_K/A<1.
+$$
+这一分支没有对非正 $X_i$ 使用对数近似。
+

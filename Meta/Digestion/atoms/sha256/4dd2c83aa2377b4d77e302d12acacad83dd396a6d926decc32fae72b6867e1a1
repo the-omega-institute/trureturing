@@ -1,0 +1,83 @@
+### 307.3 全部分支的费用、平均风险与固定增益必要界
+
+校准后，使用新鲜两源联合记录的 \(X\) 坐标运行第301节及第303.2节的实际主表，每流取
+$$
+K(a)=\left\lceil
+A_0\frac{C-a+a\kappa}{a^2\kappa^2}
+[1+\log(1/\bar\eta)]\right\rceil.
+\tag{307.18}
+$$
+它在每条校准分支的 \(a\in(0,1]\) 上合法；当 \(a\le h\) 时，同一 \((r,h)\) 的平均风险至多 \(1/3-\bar\eta/72\)。
+
+参考校准停止记录在固定 \(h\) 的两个假设及全部 \(r\) 下同律。条件于同一实际校准记录，新鲜主表样本满足原 \(X\) 实验；在 \(G\) 上可用 \(a\le h\)，在 \(G^c\) 上平均风险至多一。所以
+$$
+\mathcal R(r,h)
+\le(1-p_{\rm bad})(1/3-\bar\eta/72)+p_{\rm bad}
+\le1/3-\bar\eta/72+\delta\le1/3.
+\tag{307.19}
+$$
+这里 \(p_{\rm bad}\le\delta/3\le\delta\)。没有把两个假设在不同校准记录上混配，也没有删除校准失败。
+
+所有分支都有 \(C-a+a\kappa\le C\)。式（307.16）给
+$$
+\mathbb E[2K(a)]
+\le A_\beta\frac{CH}{h^2\kappa^2}
+\le A_\beta\mathcal O(h).
+\tag{307.20}
+$$
+固定 \(\beta<1\)，令 \(\gamma=2-2\beta>0\)。则
+$$
+\sup_{0<h\le1/4}h^\gamma\ell_+(h)<\infty,
+\tag{307.21}
+$$
+因为写 \(x=\log(1/h)\) 后为
+\(e^{-\gamma x}\log(e+x)\)，其在 \(x\ge\log4\) 上有界并趋零。因此式（307.17）除以式（307.4）至多是一个只依赖 \(\beta\) 的常数；用 \(H\ge1\)、\(\kappa\le\kappa_0\)、\(C\ge1\) 可对其余参数一致。总数
+$$
+N=n_J+2K(a)
+$$
+遂满足式（307.5）的调用上界，且几乎必然有限回答。该吸收没有对 \(\beta\uparrow1\) 的统一常数；在 \(\beta=1\) 时式（307.21）本身失败。
+
+对任意合法协议，每次新 \(Z_i\) 在请求前历史与来源条件下公平。实际请求指标 \(J_i\) 可预测，因此
+$$
+\mathbb E[J_i(1+Z_i)]=\tfrac32\mathbb EJ_i.
+$$
+Tonelli 给
+$$
+\boxed{\mathbb ET=\tfrac32\,\mathbb EN,}
+\tag{307.22}
+$$
+在每个正参数世界允许无穷期望。这里 \(T\) 是真实已完成调用的时长和；辅助零世界未回答时的分析无穷约定不能无说明地代入该等式。
+
+固定 \(h,\beta\) 比较任务系数 \(c,c'\)，耦合项消去：
+$$
+|P^\beta_{c,h}(x,z)-P^\beta_{c',h}(x,z)|
+=\frac{h|c-c'|}{2BC}.
+$$
+用式（307.2）逐格求和，
+$$
+D(P^\beta_{c,h}\Vert P^\beta_{c',h})
+\le\chi^2
+\le\frac{32h^2(c-c')^2}{B^2C^2}
+\le8h^2(c-c')^2.
+\tag{307.23}
+$$
+不能因为时钟边缘相同而将联合 KL 改为旧币 KL。
+
+若 \(M(h)=\sup_{j,r}\mathbb E_{j,r,h}N<\infty\)，完整四格正支持、共同控制与有界固定比较似然增量使第302节的停止 KL 适用。参考核在固定 \(h,\beta\) 的任务比较中同律，故
+$$
+D(\mathsf P^\beta_{c,h}\Vert\mathsf P^\beta_{c',h})
+\le8M(h)h^2(c-c')^2.
+\tag{307.24}
+$$
+风险在合法 \(r=1,k,l\) 的三条边给
+$$
+1-\operatorname{TV}(\mathsf P^\beta_{1,h},\mathsf P^\beta_{kl,h})
+\le\operatorname{TV}(\mathsf P^\beta_{l,h},\mathsf P^\beta_{k^2,h}).
+$$
+分别用 \(|1-kl|\le3\kappa\)、\(|l-k^2|=g\)、\(|1-k|\le\kappa\)，BH 与 Pinsker 给
+$$
+\tfrac12e^{-Au}\le A'(g/\kappa)\sqrt u,\qquad
+u=M(h)h^2\kappa^2\ge a_0>0.
+$$
+取对数并吸收常数，\(u\ge aH\)。由于 \(w_h\le C_\star\)，得到式（307.6）；\(M(h)=\infty\) 时该界自动成立。参考仍收费，所有时钟、自适应来源选择和停止保留在共同策略内。
+

@@ -1,0 +1,25 @@
+**定义 4.1（本卷的单式兼容数据）。** 固定 essential 方阵 A、B，顶点数分别为 n、k，m≥1。给定非负整数矩阵 R、S 及保端点的路径双射
+
+$$
+\varphi:E_AE_R\longrightarrow E_RE_B,\qquad
+\psi_A:E_RE_S\longrightarrow E_A^m,\qquad
+\psi_B:E_SE_R\longrightarrow E_B^m.
+$$
+
+把 phi 沿一条 A 路径从右向左依次作用，得到
+
+$$
+\varphi^{(m)}:E_A^mE_R\longrightarrow E_RE_B^m.
+$$
+
+要求作为这个指定类型上的实际函数，有
+
+$$
+\varphi^{(m)}=(\operatorname{id}_{E_R}\times\psi_B)
+\circ(\psi_A^{-1}\times\operatorname{id}_{E_R}).\tag{C}
+$$
+
+等式包含全部边身份。全文涉及的乘积括号只按路径串的自然结合识别。
+
+标准的 compatible concrete shift 还给出 E_BE_S→E_SE_A 的路径双射及第二个兼容方程；本卷定理 4.4 以后只需上面这一个方程。这里的“单式”指所用方程数，不指单边时间系统。[^rrosft-bdr]
+

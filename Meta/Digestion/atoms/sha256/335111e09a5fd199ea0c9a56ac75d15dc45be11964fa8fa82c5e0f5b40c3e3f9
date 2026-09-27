@@ -1,0 +1,30 @@
+**定义 81.1（原双根与精确等系数曲线）。** 保持第 72、74、76、78 章的原固定幅度、
+原合法序列 $Q=Q_n$、$P=P_n$、$\lambda=Q^3$、全部取整、完整得分组和实际均值
+$\bar c_{Q,j}^{\mathcal E}(\beta)$，$\mathcal E\in\{pair,path\}$。
+令 $N=Q^2$，$I$ 为原率函数，$u_-=-b/\vartheta$，
+$u_*>0$ 满足 $I(u_*)=I(u_-)$。
+对 $0<u<u_*$，仍以 $\Psi(u)\in(u_-,0)$ 表示 $I(\Psi(u))=I(u)$ 的负根，
+并记 $F(u)=\phi/(\phi+I(u))$。
+定义自然对数相位 $\ell_Q=(\ln2)\Phi_Q$，其中 $\Phi_Q$ 是 (78.2) 的精确 Gamma 延伸：
+
+$$
+\ell_Q(x)=\ln2-z_0-\lambda
+ +(k_0+Qx)\ln(a\lambda)+(l_0+Px)\ln(b\lambda)
+ -\ln\Gamma(k_0+Qx+1)-\ln\Gamma(l_0+Px+1).
+\tag{81.1}
+$$
+
+整数点有 $\ell_Q(j)=\ln\chi_{Q,j}$。本章的双根同步集仍是定义 76.1 的 $E_2$。
+在参数 $\beta\in(\beta_*,1)$，两根记为 $u=u(\beta)>0$、$v=v(\beta)<0$。
+原规模单元为
+
+$$
+\mathcal J_{Q,L}=
+ \left(\frac{\phi Q^3}{(L+1)\ln2},\frac{\phi Q^3}{L\ln2}\right],
+\qquad L\in\mathbb N.
+\tag{81.2}
+$$
+
+在一个单元内，$M=2^L$、$q$、补偿和实际均值均不变；
+任何两根的比较都使用同一个 $L$。
+

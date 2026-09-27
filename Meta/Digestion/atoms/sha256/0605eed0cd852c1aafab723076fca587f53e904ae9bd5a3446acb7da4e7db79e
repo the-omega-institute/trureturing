@@ -1,0 +1,70 @@
+**证明。** 将 $A$ 的两个实列向量视为 $R$ 向量，记
+$u=A|0\rangle$、$v=A|1\rangle$。定义单位实向量
+
+$$
+f_0=\sqrt{1+p}\,u,\qquad
+f_1=\frac{\sqrt{1+p}}b\,v.
+\tag{170.7}
+$$
+
+由（170.2），
+
+$$
+\langle f_0,f_1\rangle=a,\qquad
+\det[f_0\ f_1]=b.
+$$
+
+因此，令 $J=-iY$ 为实平面上的正向四分之一转动，有
+
+$$
+f_1=af_0+bJf_0,\qquad
+\frac{f_0-af_1}{b}=iYf_1.
+\tag{170.8}
+$$
+
+按输出 $M=0,1$ 展开（170.5）的 $s=0$ 一支，得到
+
+$$
+U_{\mathrm{abs}}(u\otimes|0\rangle)
+=\frac vb\otimes|0\rangle,\qquad
+U_{\mathrm{abs}}(v\otimes|1\rangle)
+=\left(u-\frac abv\right)\otimes|0\rangle.
+$$
+
+$s=1$ 一支将输入 $R$ 向量左乘 $Y$，并将输出 $B$ 标签换为 $1$。归一化后，四个基向量的作用为
+
+$$
+\begin{aligned}
+f_0\otimes|0\rangle&\longmapsto f_1\otimes|0\rangle,&
+Yf_0\otimes|0\rangle&\longmapsto f_1\otimes|1\rangle,\\
+f_1\otimes|1\rangle&\longmapsto iYf_1\otimes|0\rangle,&
+Yf_1\otimes|1\rangle&\longmapsto iYf_1\otimes|1\rangle.
+\end{aligned}
+\tag{170.9}
+$$
+
+输入和输出各为正交归一基。令
+
+$$
+K=|f_0\rangle\langle f_1|
++|Yf_0\rangle\langle Yf_1|
+=aI+i bY.
+\tag{170.10}
+$$
+
+最后的等式可由（170.8）在基 $f_1,Yf_1$ 上检验。输出 $R$ 基
+$f_1,iYf_1$ 上的 $Y$ 矩阵为
+$\begin{pmatrix}0&i\\-i&0\end{pmatrix}$。按输入 $B$ 分块回拉，得到
+
+$$
+U_{\mathrm{abs}}^*(Y_R\otimes I_B)U_{\mathrm{abs}}
+=
+\begin{pmatrix}
+0&iK\\
+-iK^*&0
+\end{pmatrix}_B
+=-aI_R\otimes Y_B-bY_R\otimes X_B.
+$$
+
+证毕。
+

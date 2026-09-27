@@ -1,0 +1,51 @@
+**嵌套网与相位祖先。** 置
+
+$$
+B_j=\{2^j,\ldots,2^{j+1}-1\},\qquad
+\rho_j=c_{\rm hist}\epsilon u_j2^{-j/2}.
+\tag{28.10}
+$$
+
+非增性给 $`\rho_{j+1}\le2^{-1/2}\rho_j`$。先选一个有限的、包含意义下极大的 $`\rho_0`$ 分离集 $`A_0\subseteq\Theta`$；递归地将 $`A_{j-1}`$ 扩张为极大的 $`\rho_j`$ 分离集 $`A_j`$。圆上的有限分离数保证扩张在有限步后停止。因此
+
+$$
+A_0\subseteq A_1\subseteq\cdots,\qquad
+|A_j|\le P(\Theta,\rho_j),\qquad
+\forall\vartheta\in\Theta\ \exists a\in A_j:
+\ d_{\mathbb T}(\vartheta,a)<\rho_j.
+\tag{28.11}
+$$
+
+最后一个严格网性质来自极大性：若某点与所有网点的距离均至少为 $`\rho_j`$，就还可将其加入。这个构造不使用 $`\Theta`$ 上的概率测度或紧性。
+
+对每个 $`j\ge1`$ 固定父映射 $`\pi_j:A_j\to A_{j-1}`$，满足
+
+$$
+d_{\mathbb T}(a,\pi_j(a))<\rho_{j-1},
+\qquad \pi_j(a)=a\quad(a\in A_{j-1}).
+\tag{28.12}
+$$
+
+若 $`a\in A_k`$，以反复取父节点得到 $`a_j\in A_j`$，其中 $`a_k=a`$。在整个区块 $`B_j`$ 使用相位 $`a_j`$，再截到终端 $`n`$，得到一条已知相位历史 $`\boldsymbol\varphi^{,a,n}`$。全部网与父映射预先固定，与未来终端无关。
+
+给定实际相位 $`\vartheta`$ 和当前 $`n`$，在误差证明中选 $`a_k\in A_k`$ 使 $`d_{\mathbb T}(\vartheta,a_k)<\rho_k`$。对其任意祖先，三角不等式及几何递减给
+
+$$
+d_{\mathbb T}(\vartheta,a_j)
+<\rho_k+\sum_{\ell=j}^{k-1}\rho_\ell
+\le\frac{\rho_j}{1-2^{-1/2}}.
+\tag{28.13}
+$$
+
+每个 $`B_j`$ 的长度是 $`2^j`$，最后一块截断只会减少平方和。因此所选历史满足
+
+$$
+\begin{aligned}
+\sum_{t=1}^n d_{\mathbb T}(\vartheta,\varphi_t^{,a_k,n})^2
+&\le\frac1{(1-2^{-1/2})^2}\sum_{j=0}^k2^j\rho_j^2\\
+&\le\frac{c_{\rm hist}^2\epsilon^2}{(1-2^{-1/2})^2}
+=\frac{\epsilon^2}{2C_{\rm hist}}.
+\end{aligned}
+\tag{28.14}
+$$
+

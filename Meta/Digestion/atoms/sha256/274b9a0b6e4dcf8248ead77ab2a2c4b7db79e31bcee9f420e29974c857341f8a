@@ -1,0 +1,81 @@
+**定理 112.3（一般子临界方向的锐距离—泄漏上界）。** 对任意趋近最近失效集合的不失效仪器，有一致估计
+
+$$
+\boxed{
+R-\delta(\Gamma)
+\le\bigl(\kappa+o(1)\bigr)\sqrt{\epsilon_\Gamma}.
+}
+\tag{112.5}
+$$
+
+这里 $\delta$ 是保留参考输入、记录与量子后继的完整半钻石距离；该上界并不把允许仪器限制到单 Kraus、实数 Kraus、纯准平稳态或预先选定的旋转族。
+
+证明。先将实际点击后继重置为 $P_0$。该后处理固定名义仪器，保持未点击映射、$\sigma$ 与 $\epsilon$，并只能减小 $\delta$。对重置后的装置使用定义 112.1 的同一个参考输入和两个负谱检验。
+
+每个未点击 Kraus 算子的联合输出向量是
+
+$$
+c_jv_c+b_jv_b+f_jv_f+a_jv_a.
+$$
+
+若其联合未点击输出为 $Y$，则点击参考输出由完整性给成输入参考边缘减去 $\operatorname{Tr}_{\mathcal H}Y$，再张量 $P_0$。所以相对于投影仪器的联合未点击输出 $|v_c\rangle\langle v_c|$，整份负检验值的变化准确为
+
+$$
+\operatorname{Tr}\left[H\bigl(Y-|v_c\rangle\langle v_c|\bigr)\right].
+$$
+
+由于完整输出差的迹为零，这份负检验值不超过实际半迹范数。展开得到
+
+$$
+\begin{aligned}
+\delta(\Gamma)\ge L(a,z)
+&+(C-1)H_{cc}+\beta H_{bb}+F H_{ff}+vH_{aa}\\
+&+2\operatorname{Re}\left[
+H_{cb}g+H_{cf}h
++H_{ca}\sum_j\overline{c_j}a_j
++H_{bf}\sum_j\overline{b_j}f_j\right.\\
+&\hspace{39mm}\left.
++H_{ba}\sum_j\overline{b_j}a_j
++H_{fa}\sum_j\overline{f_j}a_j
+\right].
+\end{aligned}
+\tag{112.6}
+$$
+
+引理 112.2 使 $H_{ca},H_{ba}$ 两项恰为零，且 $\beta,v$ 对角项非负，可以在下界中舍去。其他系数一致有界。再由引理 111.2，
+
+$$
+|C-1|+F=O(\epsilon),\qquad
+|h|=O(\epsilon)\sqrt{\beta v},
+$$
+
+$$
+\left|\sum_j\overline{b_j}f_j\right|
+\le\sqrt{\beta F}=o(\sqrt\epsilon),
+\qquad
+\left|\sum_j\overline{f_j}a_j\right|
+\le\sqrt{Fv}=o(\sqrt\epsilon).
+$$
+
+因此全部可能降低检验值的剩余项中，只有 $H_{cb}g$ 还需保留到 $\sqrt\epsilon$ 阶，得到
+
+$$
+\begin{aligned}
+\delta(\Gamma)
+&\ge L(a,z_0)-2|H_{cb}(a,z_0)||g|-o(\sqrt\epsilon)\\
+&\ge L(a,z_0)
+-2|H_{cb}(a,z_0)|(1+\sqrt v)\sqrt{\ell_\psi}
+-o(\sqrt\epsilon).
+\end{aligned}
+\tag{112.7}
+$$
+
+这里不需要知道 $a-1/2$ 相对 $\epsilon$ 的速度。因为 $a\to1/2$，第 102.4 式在同一个邻域内直接给 $L(a,z_0)\ge R$；引理 112.2 与 $\ell_\psi/\epsilon\to1$ 给
+
+$$
+2|H_{cb}(a,z_0)|(1+\sqrt v)\sqrt{\ell_\psi/\epsilon}
+\longrightarrow\kappa.
+$$
+
+代入式（112.7）即得所需上界。上述估计由相位对齐后的映射矩阵元控制，未依赖 Kraus 表示的秩或选法。若一致性失败，可取一列反例，经最近失效紧集的收敛子列与相同相位对齐后，上述每一项仍给相同极限，矛盾。$\square$
+

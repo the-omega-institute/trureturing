@@ -1,0 +1,69 @@
+### 232.7 预算 $N\le R\le2N-2$：完整标签与秩一标签共同保迹
+
+置
+$$
+a=R-N,\qquad M=2N-R=N-a.
+\tag{232.UC.29}
+$$
+这时 $0\le a\le N-2$、$M\ge2$。对前 $a$ 个标签保留目标完整分支，对余下 $M$ 个标签使用一份共同平衡框架：
+$$
+\mathcal S_j=\mathcal R_j\quad(1\le j\le a),
+$$
+$$
+\mathcal S_{a+b}(X)
+=\frac2N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}
+\quad(1\le b\le M).
+\tag{232.UC.30}
+$$
+由（232.UC.23）及 $a+M=N$，总迹效应为
+$$
+\frac aNI_2+\frac2N\sum_{b=1}^MP_b^{(M)}
+=\frac{a+M}{N}I_2=I_2.
+\tag{232.UC.31}
+$$
+所以候选 CPTP。前 $a$ 个分支各有秩二，余下 $M$ 个各有秩一，因此
+$$
+\boxed{K(\mathcal S)=2a+M=R.}
+\tag{232.UC.32}
+$$
+前者可用 $|r_j\rangle\langle0|/\sqrt N$、$|r_j\rangle\langle1|/\sqrt N$ 两个 Kraus；后者用 $\sqrt{2/N}|r_{a+b}\rangle\langle\psi_b^{(M)}|$。这给出全部实际算子，也验证了分支秩。
+
+定义共同 CP 部分
+$$
+\mathcal C_j=\mathcal R_j\quad(1\le j\le a),
+\qquad
+\mathcal C_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.33}
+$$
+前 $a$ 个标签的两份残差为零；后 $M$ 个标签的目标残差及候选残差分别为
+$$
+(\mathcal R-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}[(I_2-P_b^{(M)})X]P_{a+b},
+$$
+$$
+(\mathcal S-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.34}
+$$
+输入效应都正半定，所以两份残差完全正。共同部分的总效应为
+$$
+\mathcal C^*(I)
+=\frac aNI_2+\frac1N\sum_{b=1}^MP_b^{(M)}
+=\frac{2a+M}{2N}I_2
+=\frac R{2N}I_2.
+\tag{232.UC.35}
+$$
+因此两份残差都具有同一迹权重
+$$
+1-\frac R{2N}=\frac M{2N}>0.
+\tag{232.UC.36}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac R{2N}.
+\tag{232.UC.37}
+$$
+再次与（232.UC.18）匹配，得到第二个预算区间的精确等号。在共同端点 $R=N$，$a=0$、$M=N$，本构造就是第六节的同一候选，两段定义一致。
+

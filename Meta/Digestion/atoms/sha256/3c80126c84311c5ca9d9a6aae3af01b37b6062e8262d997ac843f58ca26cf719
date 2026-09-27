@@ -1,0 +1,26 @@
+**证明。** 将（241.27）代入（241.17）得
+$$
+\kappa(\operatorname{Tr}\rho^2-1/d)\le\varepsilon,
+$$
+这正是（241.28）。另一方面，$\operatorname{Tr}\rho^2\ge1/r$，故
+$$
+r\ge1/\operatorname{Tr}\rho^2
+\ge\frac1{1/d+Nd^2\varepsilon/(d+1)}.
+$$
+$r$ 是整数，取上整得到（241.29）。
+
+记 $\rho$ 的正本征值为 $\lambda_i$。对凹函数 $\log_2$ 应用 Jensen 不等式，得到
+$$
+\sum_i\lambda_i\log_2\lambda_i
+\le\log_2\left(\sum_i\lambda_i^2\right),
+$$
+即
+$$
+S(\rho)=-\sum_i\lambda_i\log_2\lambda_i
+\ge-\log_2\operatorname{Tr}\rho^2.
+\tag{241.31}
+$$
+结合（241.28）及熵非负，整理即为（241.30）。由于联合输入是纯态，这里的 $S(\rho)$ 正是两侧的纠缠熵。$\square$
+
+这些是必要资源下界，不是构造充分条件，也不声称最优。$\varepsilon=0$ 时恢复 $r=d$、$S(\rho)=\log_2d$ 及最大混合输入边缘。对混合联合态，单侧边缘熵不能直接解释成纠缠熵，本推论不作这种替换。
+

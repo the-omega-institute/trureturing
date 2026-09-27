@@ -49,7 +49,7 @@ jobs:
     timeout-minutes: 10
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: 2
@@ -59,7 +59,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.cache_window.outputs.cache_allowed == 'true' && inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
@@ -68,11 +68,11 @@ jobs:
       - name: Validate plan for engineering cache
         if: steps.cache_window.outputs.cache_allowed == 'true'
         run: python3 tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --stage engineering
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         if: steps.cache_window.outputs.cache_allowed == 'true'
         with:
           global-json-file: global.json
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         if: steps.cache_window.outputs.cache_allowed == 'true'
         with:
           artifact-ids: ${{ inputs.build_artifact_id }},${{ inputs.engineering_artifact_id }}
@@ -96,7 +96,7 @@ jobs:
       - id: prior_engineering
         if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
         continue-on-error: true
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.engineering_path }}
           key: ${{ steps.keys.outputs.engineering_key }}
@@ -113,7 +113,7 @@ jobs:
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
       - if: steps.snapshot.outputs.engineering_ready == 'true'
         timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.engineering_path }}
           key: ${{ steps.keys.outputs.engineering_key }}

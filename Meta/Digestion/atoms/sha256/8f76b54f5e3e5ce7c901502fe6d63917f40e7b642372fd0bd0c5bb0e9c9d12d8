@@ -1,0 +1,14 @@
+**引理175.1（紧域上的最大值一阶项）。** 设 $K$ 为非空紧度量空间，
+$F:K\to\mathbb R$ 连续，$\max_KF=1$。设
+$G:K\times I\to\mathbb R$ 连续，其中 $I$ 为紧参数区间。
+若 $\epsilon_n>0$、$\epsilon_n\to0$，且 $r_n\to r_*\in I$，则
+
+$$
+\boxed{
+\max_{x\in K}\bigl(F(x)+\epsilon_nG(x,r_n)\bigr)
+=1+\epsilon_n
+\max_{F(x)=1}G(x,r_*)+o(\epsilon_n).
+}
+\tag{175.20}
+$$
+

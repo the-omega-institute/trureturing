@@ -1,0 +1,22 @@
+**定理 42.4（小事件权重与长条件等待能够同时出现）。** 对 $\varepsilon>0$ 和共同初态 $P_u$，有
+
+$$
+\mathbb P_\varepsilon(\mathsf N=n)
+=\varepsilon^2(1-\varepsilon)^{n-1},
+\qquad
+\mathbb P_\varepsilon(\mathsf N<\infty)=\varepsilon,
+$$
+
+$$
+\boxed{
+\mathbb P_\varepsilon(\mathsf N>m\mid\mathsf N<\infty)
+=(1-\varepsilon)^m,
+\qquad
+\mathbb E_\varepsilon[\mathsf N\mid\mathsf N<\infty]=\frac1\varepsilon.
+}
+$$
+
+所以不存在统一趋零的条件等待尾界，即使第 42.3 条的绝对尾项已经一致趋零。
+
+证明。首次点击效果在命题 42.2 的证明中已算出；在 $P_u$ 上取迹，再除以最终点击概率 $\varepsilon$，得到成功参数 $\varepsilon$ 的几何律。对每个固定 $m$，$\sup_{0<\varepsilon\le1}(1-\varepsilon)^m=1$。在 $\varepsilon=0$ 处最终点击概率为零，条件等待没有定义，不能人为补一个值参与连续性断言。$\square$
+

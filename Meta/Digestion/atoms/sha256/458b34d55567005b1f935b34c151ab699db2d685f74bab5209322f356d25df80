@@ -1,0 +1,26 @@
+**命题162.5（共同矩阵证书给统一尾界）。** 上述条件给出实际通道极限 $\mathcal R_{t,z}$，并使其最优解码值
+
+$$
+h(t,z)=
+\min_{\mathcal D}
+\frac12\left\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_{t,z}
+-\mathcal W_*
+\right\|_\diamond
+\tag{162.21}
+$$
+
+联合连续。其中解码器输出共同规范档案空间，稳定目标 $\mathcal W_*$ 来自固定来源。且全部参数、全部 $n\ge3$ 满足
+
+$$
+\boxed{
+|e_n(t)-h(t,g_t^n)|
+\le
+C_pp^{n-1}
++\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{162.22}
+$$
+
+右侧是一份共同的递减 $\zeta_n\to0$。
+

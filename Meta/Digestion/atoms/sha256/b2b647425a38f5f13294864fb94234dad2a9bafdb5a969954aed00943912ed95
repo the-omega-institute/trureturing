@@ -1,0 +1,5 @@
+### 191.1 统一任务与主张
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$ 和有限 $H>0$。对 $0\le h\le H$，采用第188节来源
+$\ell=h\epsilon$、$r=1-h\epsilon$、输入参数 $w_0=\epsilon,w_1=R\epsilon$ 及相同局部权限。记最优完整半 diamond 误差为 $E_\epsilon(h)$，第189节的圆盘极限为 $\Phi_h$。
+

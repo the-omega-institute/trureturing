@@ -1,0 +1,23 @@
+**排除 ABA。** 选不同环境射线的单位代表 $`\alpha=\eta_3=\eta_5`$、$`\beta=\eta_4`$。由于 $`G_4=U=G_2`$，固定 $`V_1`$ 给 $`Q_5=Q_3`$。由 （29.53） 和 $`G_3\perp Q_3`$，
+$$
+Q_3=(U+G_3)^\perp=:Q,
+\qquad v\in Q,
+\tag{29.56}
+$$
+因为 $`\dim(U+G_3)=4`$、$`v\perp U+G_3`$。
+
+若 $`\alpha\perp\beta`$，固定 $`V_1`$ 对输入 $`U,G_3`$ 的像给 $`U\perp G_3`$，固定 $`V_0`$ 对输入 $`H_2,H_3`$ 的像给 $`H_2\perp H_3`$。此时 $`H_3\subset G_3\oplus Q\subset U^\perp`$，且 $`P_QH_3=Q`$。由 $`v\in Q`$，存在 $`h\in H_3`$ 使 $`\langle v,h\rangle\ne0`$。因 $`u\perp H_3`$，有
+$`\langle a^2u+bv,h\rangle=\bar b\langle v,h\rangle\ne0`$，违反 $`H_2\perp H_3`$。
+
+若 $`\langle\alpha,\beta\rangle\ne0`$，两个不同位的像
+$`G_3\otimes\alpha`$、$`Q_4\otimes\beta`$ 正交，故 $`G_3\perp Q_4`$。结合 $`Q_4\perp U`$ 和 （29.56），得到 $`Q_4=Q_3=Q_5=Q`$。因此
+$$
+V_1(U+G_3)=Q\otimes\operatorname{span}\{\alpha,\beta\}=Q\otimes F.
+\tag{29.57}
+$$
+由 $`v\in Q`$ 和 （29.52），$`V_1P\subset V_1(U+G_3)`$，单射性给 $`P\subset U+G_3=Q^\perp`$。但是 $`H_3\subset G_3\oplus Q`$，且 $`P_Q|_{H_3}`$ 单射，所以 $`H_3\cap Q^\perp=0`$，进而 $`P\cap H_3=0`$。另一方面，
+$$
+V_0P=u\otimes F,\qquad V_0H_3=U\otimes\beta
+$$
+的交恰为一维 $`u\otimes\beta`$。固定等距的单射性要求 $`\dim(P\cap H_3)=1`$，矛盾。
+

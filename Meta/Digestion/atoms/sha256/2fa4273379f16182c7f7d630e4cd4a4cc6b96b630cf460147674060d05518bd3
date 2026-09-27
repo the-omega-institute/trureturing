@@ -1,0 +1,107 @@
+### 171.4 真实启动诱导的逻辑通道闭式
+
+记原始来源计算基输入为 $P_j=|j\rangle\langle j|$，并令
+
+$$
+\rho_{j,L}=\mathcal E_{\mathrm{src}}^L(P_j).
+\tag{171.15}
+$$
+
+这是第159节规范启动纯化所用的同一索引。最后一步重置逻辑标签并施加新掩码后，真实启动通道为
+
+$$
+\mathcal R_L(X)=
+\sum_{j=0}^1X_{jj}\,
+P_0^Q\otimes\omega_{j,L}^{MR},
+$$
+
+$$
+\omega_{j,L}
+=\frac12\left(
+P_{\operatorname{vec}\sqrt{\rho_{j,L}}}
++(I_M\otimes Y_R)
+P_{\operatorname{vec}\sqrt{\rho_{j,L}}}
+(I_M\otimes Y_R)
+\right).
+\tag{171.16}
+$$
+
+原输入的非对角项在重置原规范逻辑标签时被迹掉；对角分支仍可与外部参考相关。
+
+对任意实对称 qubit 密度矩阵 $\rho_j$，第170节相同的二阶恒等式给
+
+$$
+\omega_j=\frac12
+\left(\rho_j\otimes I
+-\sqrt{\det\rho_j}\,Y\otimes Y\right).
+\tag{171.17}
+$$
+
+在（171.16）上取 $H_Z,H_X$ 的期望，所有带 $X_Q$ 的表项都消失。若
+$x_j=\operatorname{Tr}(\rho_jX)$、
+$z_j=\operatorname{Tr}(\rho_jZ)$、
+$d_j=\sqrt{\det\rho_j}$，则
+
+$$
+\begin{aligned}
+\operatorname{Tr}(Z\Theta_L(P_j))
+&=\frac{625+1152x_j+576z_j+2304d_j}{2353},\\
+\operatorname{Tr}(X\Theta_L(P_j))
+&=\frac{252-168x_j-84z_j-336d_j}{2353}.
+\end{aligned}
+\tag{171.18}
+$$
+
+这里 $\Theta_L=\Lambda_\infty\mathcal R_L$ 是第170节的真实逻辑通道。
+
+它的这两份输出均为实矩阵。事实上，（171.6）的运行 Kraus 可取实矩阵，逻辑酉也为实矩阵；第168节联合解码器的各 Kraus 可去掉整体相位取实，并在补空间选实固定输出。故
+$\mathcal U^{-n}\Lambda_{\mathrm{joint}}\mathcal F^n$
+保持实态，其极限 $\Lambda_\infty$ 也保持实态。因此两输出的 $Y$ 坐标严格为零，（171.18）已确定完整逻辑输出。
+
+为写出所有 $L$ 的简式，令
+
+$$
+D=P_{m_0}-P_0,\qquad
+z=\left(-\frac12\right)^{L-1}.
+$$
+
+来源递推满足
+$\mathcal E_{\mathrm{src}}(D)=-D/2$，
+$\rho_{0,1}=\rho_*+D/3$、
+$\rho_{1,1}=\rho_*-2D/3$，所以
+
+$$
+\rho_{0,L}=\rho_*+\frac z3D,\qquad
+\rho_{1,L}=\rho_*-\frac{2z}3D.
+\tag{171.19}
+$$
+
+定义
+
+$$
+d(t)=\det(\rho_*+tD)
+=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+w(t)=\frac43-t-4\sqrt{d(t)}.
+\tag{171.20}
+$$
+
+在这里实际出现的 $t$ 上，$d(t)>0$。代入（171.18）得到
+
+$$
+\boxed{
+\begin{aligned}
+\Theta_L(P_0)&=\tau(z/3),&
+\Theta_L(P_1)&=\tau(-2z/3),\\
+\tau(t)&=\frac12\left[
+I+\frac{84w(t)}{2353}X
++\left(1-\frac{576w(t)}{2353}\right)Z
+\right],\\
+\Theta_L(X)&=X_{00}\tau(z/3)+X_{11}\tau(-2z/3).
+\end{aligned}
+}
+\tag{171.21}
+$$
+
+这些矩阵的正性也由 $\Theta_L$ 的 CPTP 构造保证。该式给的是来源输入到渐近逻辑的真实通道，没有把联合 $\Lambda_\infty$ 当作终端可免费调用的恢复器。
+

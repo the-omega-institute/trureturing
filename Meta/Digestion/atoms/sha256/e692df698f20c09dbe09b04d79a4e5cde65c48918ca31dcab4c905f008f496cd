@@ -1,0 +1,56 @@
+**推论 55.4（有限比例的最大误差律及一致概率障碍）。** 记
+$`r_M=a_M/\sqrt\delta`$。
+若 $`r_M\to c<\infty`$，则与定理 55.2 的同一联合对象一起，
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \Longrightarrow \sup_{s\ge c}|\mathcal E(s)|.
+```
+
+式 (55.15)。
+
+右侧保留与截距、端点和空间轮廓的共同 Gaussian 来源，并不声称独立。
+此外，对固定 $`R<\infty`$，令
+
+```math
+\begin{aligned}
+g(d)&=\int_{\mathbb R}\rho(x)\rho(x+d)\,dx
+      =g(0)e^{-\kappa d^2/4},\\
+z_0&=e^{-1-\gamma_{\mathrm E}},\qquad
+d_R=\min\{1,z_0/(\omega e^R)\},\qquad v_R=16d_Rg(1)>0.
+\end{aligned}
+```
+
+式 (55.16)。
+
+在任意满足 $`r_M\le R`$ 的子列上，任意固定支持序列均有
+
+```math
+\liminf_M\mathbb P_S\!\left\{
+ \sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+       >\sqrt{v_R/2}\right\}\ge\frac1{60}.
+```
+
+式 (55.17)。
+
+证明。紧化后的下端点 $`\psi(r_M)`$ 趋于 $`\psi(c)`$。
+在连续极限处，$`J_1`$ 收敛蕴含一致收敛；极限路径的一致连续性
+使移动下端点的尾部上确界成为连续泛函。
+定理 55.2 因而给出零延拓余项的 (55.15)。
+原始 $`u=U`$ 端点与其零替代值的差依概率趋零，故原闭区间也有同一极限。
+
+为证明定量障碍，使用
+$`\mathrm{Ci}(z)=\gamma_{\mathrm E}+\log z+\int_0^z(\cos t-1)\,dt/t`$。
+当 $`0<z\le z_0`$ 时，$`\mathrm{Ci}(z)\le-1`$。
+将方差积分限制在 $`0<|d|\le d_R`$，由 $`g(d)\ge g(1)`$ 得
+$`\inf_{0\le s\le R}\operatorname{Var}\mathcal E(s)\ge v_R`$。
+第二混沌的四阶矩不超过方差平方的十五倍，
+Paley–Zygmund 不等式遂给出
+$`\inf_{0\le s\le R}\mathbb P\{|\mathcal E(s)|>\sqrt{v_R/2}\}\ge1/60`$。
+对任意 $`r_M\le R`$ 的子列，再取比例收敛的子列，
+以 (55.14) 和开集 Portmanteau 将该下界转移到实际下端点余项，
+再用最大误差大于等于该余项的绝对值。
+若整个有界比例子列的下极限小于 $`1/60`$，可先取违反该下界的子列，
+再取比例收敛子列而得到矛盾，故 (55.17) 成立。
+此处始终转移概率，不用实际后验矩的收敛代替概率障碍。
+

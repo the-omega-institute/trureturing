@@ -1,0 +1,8 @@
+**命题 211.1（覆盖旧状态的扩展保存旧问题的可回答性）。** 设新状态空间为 $Y$，旧空间为 $X$，投影 $p:Y\to X$ 满射。对旧读数 $C:X\to U$ 和旧目标 $T:X\to V$，存在 $d:U\to V$ 使 $T=d\circ C$，当且仅当同样存在这样的解码器使
+
+$$
+T\circ p=d\circ C\circ p.
+$$
+
+正向直接复合，反向利用满射：新空间的等式逐一覆盖每个旧状态。项目 [ConservativeExtensionAnswerability](../../../D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.lean) 的 `answerability_transports_along_surjection` 正是这一关系。本节使用整个 $U$ 上的解码器，与第 210 节只用实际达到的值作讨论的表示约定分开。
+

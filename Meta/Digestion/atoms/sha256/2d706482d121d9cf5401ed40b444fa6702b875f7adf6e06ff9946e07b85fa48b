@@ -1,0 +1,10 @@
+### 100.2 有限异常集与全方向纤维的二择
+
+对任意 $E\subset K\otimes F$、$\dim E\le n$，定义其乘积纤维支持集
+
+$$
+\mathcal Z(E)=
+\{[z]\in\mathbb{CP}^1:E\cap S_z\ne0\}.
+\tag{100.5}
+$$
+
