@@ -95737,3 +95737,446 @@ $h_0>0$ 用于固定正的级数收敛半径、校准好区和所有联合均值
 本节的阶乘矩、无放回抽样界和 Hoeffding 倾斜尾估计都是标准中间工具；单流机制见第296节，点态和联合形式在这里直接推导。新增连接是将任务来源与参考来源的真实联合计数接到同一个无条件风险，并把校准调用包括在匹配的总样本界中；不将此仓内推导自动宣称为文献原创。第297节的有限经典实现结论仍按原输入合同成立，本节没有不经误差论证就把它推广到新的两源仪器。
 
 ## 追加锚（本行以下为增补区）
+
+## 299. 信号强度与可达边界的双尺度取得律
+
+### 299.1 两个同时变化的尺度
+
+第296节固定信号参数，证明临近可达边界时的对数样本发散。本节让信号本身同时变弱，给出不依赖这两个尺度的常数。来源、权限、独立两位置块和共同未知参数风险继续采用第291—296节的合同：完整访问保留输入，先reset访问必须在预处理或相干交互之前执行既定的经典reset；相位环境不可访问。确定最大块数为 $K$，每块两份来源，$N=2K$，未使用的位置仍计费。
+
+设
+$$
+\kappa_0=-\log\sqrt{3/4},\qquad
+0<\kappa\le\kappa_0,\qquad k=e^{-\kappa},
+$$
+$$
+0<g\le k-k^2,\qquad l=k^2+g.
+\tag{299.1}
+$$
+风险仍是在同一个 $r\in[l,1]$ 下先平均两假设错误，再取最坏值：
+$$
+\mathcal R(P)=\sup_{r\in[l,1]}
+\frac{\Pr_{0,r}(\widehat j=1)+\Pr_{1,r}(\widehat j=0)}2.
+\tag{299.2}
+$$
+目标为 $\mathcal R(P)\le1/3$。这里没有分别优化两假设中的未知参数。
+
+**定理299.1（双尺度一致的最优来源预算）。** 存在绝对正常数 $a,A$，使在（299.1）的全部参数域中，
+$$
+a\kappa^{-1}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{full},\,n=1}(k,g)
+\le A\kappa^{-1}\left(1+\log\frac\kappa g\right),
+\tag{299.3}
+$$
+$$
+a\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\le N_{\min}^{\mathrm{reset}}(n;k,g)
+\le A\kappa^{-2}\left(1+\log\frac\kappa g\right)
+\qquad(n\ge1).
+\tag{299.4}
+$$
+常数可以同时独立于 $\kappa,g,n$。完整输入结论限于 $n=1$；高维完整输入还保留第289节使用的其他关系，不能套用该标量下界。因为 $g\le k-k^2<\kappa$，对数项非负。
+
+证明分别给出全部允许协议的必要界和实际可取得记录的概率表。辅助比较函数、下界模拟位与真实记录各保留原权限，不互相替代。
+
+### 299.2 完整输入的统一必要界
+
+第294节的完整实验等价和三点同参数先验给任何成功的 $K$ 块完整输入协议
+$$
+g\ge\left(\frac{3+k^3}{4}\right)^K
+\sqrt{\frac{2(1-k^4)}K}.
+\tag{299.5}
+$$
+在 $0<\kappa\le\kappa_0$ 上，
+$1-k^4\asymp\kappa$，且
+$-\log((3+k^3)/4)\asymp\kappa$，比较常数固定。因此令 $t=K\kappa$，得到
+$$
+\frac g\kappa\ge c\,t^{-1/2}e^{-Ct}
+\tag{299.6}
+$$
+的必要条件。全文中 $c,C,A,a$ 等正常数允许在不同估计中改变，但不依赖 $\kappa,g,n$。
+
+还需排除 $t$ 过小。取合法参数 $r=1$；完整单块是第294节的共同本征基实验，
+$P_c(+)=(1+c)/4$、$P_c(-)=(1-c)/4$、$P_c(0)=1/2$。
+$P_1^{\otimes K}$ 的支持恰为不含负号的序列；在该支持上
+$P_k^{\otimes K}\le P_1^{\otimes K}$。因此两分布的重叠准确等于
+$P_k^{\otimes K}$ 不出现负号的概率，即 $[(3+k)/4]^K$，任何成功协议都要求
+$$
+1-\left(\frac{3+k}{4}\right)^K\ge1/3.
+$$
+由 $-\log((3+k)/4)\asymp\kappa$，得到 $t\ge c_0>0$。
+
+对（299.6）取负对数，再用 $t\ge c_0$ 和 $\log t\le t$，可得
+$$
+1+\log(\kappa/g)\le C't.
+$$
+这证明（299.3）的下界。所用距离属于完整输入实验，故覆盖其全部联合操作、记忆、随机化及允许停止策略，不只约束下面选择的点击测量。
+
+### 299.3 先reset协议的统一必要界
+
+第292节的因果程序表示给出常数 $c_*=33/32$ 及程序位
+$$
+\pi_c(\pm)=\frac{1\pm c/c_*}{2}.
+\tag{299.7}
+$$
+任意确定最多 $K$ 块的实际reset协议，均可由 $K$ 个独立程序位经过一个不依赖 $c$ 的共同后处理模拟。程序位只用于必要界；本节上界仍使用真实reset记录。
+
+令 $f(c)$ 为该共同后处理决定零的概率。若目标风险成立，在三个合法参数 $r=1,k,l$ 上相加可得
+$$
+1\le f(1)-f(kl)+f(l)-f(k^2).
+$$
+因此
+$$
+1-\operatorname{TV}(\pi_1^{\otimes K},\pi_{kl}^{\otimes K})
+\le\operatorname{TV}(\pi_l^{\otimes K},\pi_{k^2}^{\otimes K}).
+\tag{299.8}
+$$
+
+记 $d_*=c_*^2-1>0$。对这两个二值分布，直接计算
+$$
+\chi^2(\pi_u\Vert\pi_v)=\frac{(u-v)^2}{c_*^2-v^2}.
+\tag{299.9}
+$$
+由于 $kl\ge k^3$，有 $1-kl\le3\kappa$，从而
+$$
+D_{\mathrm{KL}}(\pi_1\Vert\pi_{kl})
+\le\chi^2(\pi_1\Vert\pi_{kl})
+\le9\kappa^2/d_*.
+$$
+对根重叠 $\rho(P,Q)=\sum_x\sqrt{P(x)Q(x)}$，Jensen不等式给
+$\rho(P,Q)^2\ge e^{-D_{\mathrm{KL}}(P\Vert Q)}$；Cauchy–Schwarz给
+$\operatorname{TV}(P,Q)\le\sqrt{1-\rho(P,Q)^2}$。
+于是 $1-\sqrt{1-x}\ge x/2$ 导出
+$$
+1-\operatorname{TV}(\pi_1^{\otimes K},\pi_{kl}^{\otimes K})
+\ge\tfrac12e^{-9K\kappa^2/d_*}.
+\tag{299.10}
+$$
+另一方面，由（299.9）、KL的乘积可加性及Pinsker不等式，可放宽为
+$$
+\operatorname{TV}(\pi_l^{\otimes K},\pi_{k^2}^{\otimes K})
+\le g\sqrt{K/d_*}.
+\tag{299.11}
+$$
+也可由根重叠的乘积公式得到同一界。
+
+令 $t=K\kappa^2$，合并（299.8）—（299.11）：
+$$
+\frac g\kappa\ge\frac{\sqrt{d_*}}2\,t^{-1/2}e^{-9t/d_*}.
+\tag{299.12}
+$$
+同参数 $r=1$ 的判别还要求程序分布总变差至少为 $1/3$；其上界不超过
+$(1-k)\sqrt{K/d_*}\le\kappa\sqrt{K/d_*}$。故 $t\ge d_*/9$。与上一节相同的取对数论证给（299.4）的统一下界。
+
+这里的程序后处理表示已经覆盖实际reset协议的全部记录与适应性；在参数域中所有 $\pi_c$ 都有严格正支持，且 $d_*>0$ 不随 $n$ 改变。这是上述下界对全部参考维数一致的原因。
+
+### 299.4 真实计数、比较余量和统一阶数
+
+第296节的两个真实子实验都是
+$$
+Y\sim\operatorname{Bernoulli}(p(c)),\qquad
+p(c)=\frac{1-c/C}{B},
+\tag{299.13}
+$$
+其中完整 $n=1$ 使用反对称投影点击，$(B,C)=(4,1)$；reset使用实际记录的随机补位，$(B,C)=(2,4/a_n^2)$，$15/16\le a_n\le1$。因而统一有
+$$
+B\in\{2,4\},\qquad1\le C\le C_*:=1024/225.
+$$
+完整块数为 $K$，令 $J=\sum_{i=1}^K Y_i$。两种协议均按自己的权限取得这些记录。
+
+保持
+$$
+\eta=\frac{\log(l/k^2)}\kappa,\qquad
+\bar\eta=\min\{\eta,1/2\},\qquad
+D=3-\bar\eta/2\in[11/4,3),
+$$
+$$
+L(c)=1+\frac{\log c}{D\kappa}.
+$$
+在同一真实 $r$ 下有
+$$
+L(r)\le1,\quad L(kr)>0,\quad
+L(r)-L(kr)=1/D\ge1/3+\bar\eta/18.
+\tag{299.14}
+$$
+同时，$k^2\in[3/4,1)$，对数在所需紧区间内与其增量可比，故
+$$
+\eta\asymp g/\kappa,\qquad
+1+\log(1/\bar\eta)\asymp1+\log(\kappa/g)
+\tag{299.15}
+$$
+且比较常数统一。
+
+使用原阈值
+$$
+v_{--}=k^{11/4},\quad v_-=k^{21/8},\quad v=k^{5/2},
+\qquad u=k^{1/2},\quad u_+=k^{1/4},\quad u_{++}=k^{1/8}.
+$$
+所需的六个相邻间距
+$$
+k^2-v,\quad u_{++}-u_+,\quad u_+-u,\quad
+v-v_-,\quad u-k,\quad v_--v_{--}
+$$
+均至少为 $\gamma\kappa$，其中可取
+$\gamma=e^{-3\kappa_0}/8$。这由
+$e^{-a\kappa}-e^{-b\kappa}=\int_a^b\kappa e^{-t\kappa}\,dt$
+直接得到。对应的Bernoulli参数间距至少为
+$\delta_0\kappa$，$\delta_0=\gamma/(4C_*)$。
+
+为控制远尾，再取
+$$
+c_{\mathrm{cut}}=1/2<e^{-3\kappa_0},\qquad
+\delta_{\mathrm{far}}=
+\frac{e^{-(21/8)\kappa_0}-1/2}{4C_*}>0.
+$$
+固定
+$$
+0<\alpha\le\min\{\delta_0/4,
+\delta_{\mathrm{far}}/(4\kappa_0),1/(8\kappa_0)\},
+\qquad d=\lfloor\alpha\kappa K\rfloor.
+\tag{299.16}
+$$
+因此 $d\le K/8$。近阈值倾斜仍保留常数倍 $\kappa$ 的间距，远阈值倾斜则保留固定正间距。此处的截断阶数随双尺度和预算共同改变，不能套用一个未统一的固定 $k$ 常数。
+
+### 299.5 概率表的点态合法性
+
+对 $0\le i\le K$，定义
+$$
+c_i=C(1-Bi/K),\qquad
+\beta_i=1+\frac{\log C}{D\kappa}
+-\frac1{D\kappa}\sum_{m=1}^d
+\frac{B^m}{m}\frac{(i)_m}{(K)_m}.
+\tag{299.17}
+$$
+若 $i<m$，下降阶乘按零解释。整个式子只使用有限算术，未对非正经验坐标取对数。真实期望仍有准确恒等式
+$$
+\mathbb E_c\beta_J=L(c)+R_d(c),\qquad
+R_d(c)=\frac1{D\kappa}\sum_{m>d}\frac{(1-c/C)^m}{m}\ge0.
+\tag{299.18}
+$$
+对于正的经验坐标还成立 $\beta_i\ge L(c_i)$。
+
+第298节直接证明的无放回界是：当 $i\ge1$ 时，
+$$
+0\le(i/K)^m-\frac{(i)_m}{(K)_m}
+\le(i/K)^m\frac{m(m-1)}{2i}.
+$$
+它对 $m>i$ 仍成立；$i=0$ 单独给零误差。在 $c_i\ge1/2$ 的区域令
+$q_i=Bi/K\le q_*:=1-1/(2C_*)<1$，求和得到
+$$
+0\le\beta_i-L(c_i)
+\le\frac1{D\kappa}\left[
+\frac{Bq_i}{2K(1-q_i)^2}
++\frac{q_i^{d+1}}{(d+1)(1-q_i)}\right].
+\tag{299.19}
+$$
+由于 $d+1>\alpha\kappa K$，右侧统一不超过
+$$
+\varepsilon_K:=\frac A{K\kappa}
++\frac A{K\kappa^2}e^{-a\kappa K}.
+\tag{299.20}
+$$
+
+在完整输入情形，$C=1$ 使全部 $\beta_i\le1$；中间区域
+$v<c_i<u$ 又有 $\beta_i\ge L(c_i)\ge1/11$。因此该区域对任何合法阶数 $d$ 都给概率。
+
+在reset情形，$\beta_i$ 随整数 $i$ 单调不增。令 $i_0$ 为第一个
+$c_i\le u_{++}$ 的整数，则
+$$
+u_{++}-BC/K\le c_{i_0}\le u_{++}.
+$$
+存在统一充分大的 $A_0$，使 $K\kappa^2\ge A_0$ 时，网格点 $c_{i_0}\ge1/2$，且（299.20）小于 $1/48$。事实上首项至多 $A\kappa_0/A_0$，第二项至多 $A/A_0$；再增大 $A_0$ 同时控制网格步长即可。于是
+$$
+\beta_{i_0}\le L(u_{++})+1/48
+\le1-1/24+1/48<1.
+$$
+单调性将结论推广到全部 $c_i\le u_{++}$，包括非正坐标；中区下界仍为 $1/11$。
+
+因此真实概率表
+$$
+a_i=\begin{cases}
+0,&c_i\le v,\\
+\beta_i,&v<c_i<u,\\
+1,&c_i\ge u
+\end{cases}
+\tag{299.21}
+$$
+在所列预算范围内逐项合法。读取 $J$ 后以概率 $a_J$ 决定零，得到实际响应 $f_K(c)=\mathbb E_c a_J$。后续估计始终针对这张表。
+
+### 299.6 完整输入的稀有点击估计
+
+完整输入使用 $C=1,B=4$；全部真实参数 $c\ge kl>k^3$ 满足
+$$
+p(c)=(1-c)/4\le3\kappa/4.
+$$
+对独立Bernoulli和 $S$，中心化指数矩估计和Chernoff最优化给
+$$
+\Pr(|S-\mathbb ES|\ge x)
+\le2\exp\left[-\frac{x^2}{2(\operatorname{Var}S+x/3)}\right].
+\tag{299.22}
+$$
+这是标准Bernstein界；其指数矩界可由 $|Y-\mathbb EY|\le1$ 和
+$e^t-1-t\le t^2/[2(1-t/3)]$（$0\le t<3$）逐项相乘得到。
+这里方差至多 $3K\kappa/4$，所需阈值间距为常数倍 $K\kappa$，因而每个错误跨越事件的概率至多
+$Ae^{-aK\kappa}$。
+
+对加权负系数，继续使用准确倾斜
+$$
+\mathbb E\left[\frac{(J)_m}{(K)_m}\varphi(J)\right]
+=p^m\mathbb E\varphi(m+Z),\qquad
+Z\sim\operatorname{Bin}(K-m,p).
+\tag{299.23}
+$$
+$m\le d\le\alpha\kappa K$ 使均值偏移不超过 $\alpha\kappa K$，剩余方差仍为 $O(K\kappa)$。由（299.16）保留的阈值间距，倾斜后仍有同一 $Ae^{-aK\kappa}$ 界。若真实 $c\ge v_-$，乘回权重并求和得到
+$$
+\mathbb E_c(-\beta_J)_+
+\le Ae^{-aK\kappa}\frac{\log(1/v_-)}{D\kappa}
+\le A'e^{-aK\kappa}.
+\tag{299.24}
+$$
+所用比值为 $21/(8D)\le21/22$，不存在随 $\kappa\downarrow0$ 发散的前因子。
+
+真实级数尾也保留一个小参数因子。令 $z=1-c\le1-k^3\le3\kappa$，并取固定 $q_0=1-e^{-3\kappa_0}<1$，则
+$$
+R_d(c)\le\frac{z^{d+1}}{D\kappa(d+1)(1-z)}
+\le A q_0^d\le A'e^{-a\kappa K}.
+\tag{299.25}
+$$
+最后一步吸收 $d\ge\alpha\kappa K-1$ 的固定因子。
+
+现按第296节的四个真实参数区域核对响应：
+
+- 第一族 $r\le u_+$：赋零的损失至多 $\Pr(c_J\le v)$，因为 $\beta_i\le1$；赋一无有害下降，因为所有 $\beta_i\le1$。
+- 第一族 $r>u_+$：$c_J\ge u$ 时直接以概率一决定零，利用其补事件及 $L(r)\le1$。
+- 第二族 $c=kr\le v_-$：只有 $c_J>v$ 时实际概率可能非零，利用其小概率及 $L(c)>0$。
+- 第二族 $c>v_-$：高区赋一的增加量至多 $\Pr(c_J\ge u)$；低区赋零的增加由（299.24）控制，再加入（299.25）。
+
+因此统一有
+$$
+f_K(r)\ge L(r)-Ae^{-aK\kappa},\qquad
+f_K(kr)\le L(kr)+Ae^{-aK\kappa}.
+\tag{299.26}
+$$
+选择
+$$
+K\ge A\kappa^{-1}[1+\log(1/\bar\eta)]
+\tag{299.27}
+$$
+并向上取整，即可使两类误差总和不超过（299.14）的余量，证明完整输入上界。
+
+### 299.7 先reset的超额积分与远尾控制
+
+reset经验坐标 $\widehat c=c_J$ 满足统一Hoeffding界
+$$
+\Pr(|\widehat c-c|\ge x)\le2e^{-bKx^2}.
+\tag{299.28}
+$$
+当真实均值与阈值的距离为常数倍 $\kappa$ 时，普通事件的指数是
+$K\kappa^2$。直接把旧的 $O(1/\kappa)$ 系数界乘上这类概率，会产生多余的对数成本；需要估计真正有害的超额。
+
+如果 $t-c\ge b_0\kappa$，积分尾概率给
+$$
+\begin{aligned}
+\mathbb E(\widehat c-t)_+
+&\le2\int_0^\infty e^{-bK(b_0\kappa+x)^2}\,dx\\
+&\le\frac A{K\kappa}e^{-aK\kappa^2}.
+\end{aligned}
+\tag{299.29}
+$$
+下侧超额同理。因此除以 $\kappa$ 后，只留下
+$A(K\kappa^2)^{-1}e^{-aK\kappa^2}$，在 $K\kappa^2\ge A_0$ 时一致可控。
+
+先估计真实 $c\ge v_-$ 时的负系数。近区
+$1/2\le\widehat c<k^D$ 上，由 $\beta\ge L$ 及对数在 $[1/2,1]$ 上的导数界，
+$$
+(-\beta_J)_+\le(-L(\widehat c))_+
+\le\frac A\kappa(k^D-\widehat c)_+.
+$$
+$k^D\le v_{--}$，所以真实 $c-k^D\ge v_--v_{--}\ge\gamma\kappa$。由（299.29），此项的期望至多 $Ae^{-aK\kappa^2}$。
+
+远区 $\widehat c<1/2$ 上不使用经验对数，改用（299.23）。真实
+$c\ge v_-$ 与 $1/2$ 的距离有固定正下界；（299.16）使任一阶乘倾斜后的距离仍有固定正下界。因此
+$$
+\mathbb E[(-\beta_J)_+;\widehat c<1/2]
+\le\frac A\kappa e^{-bK}.
+\tag{299.30}
+$$
+这里阶乘权重求和至多
+$(D\kappa)^{-1}\log(C/v_-)=O(1/\kappa)$，但乘的是固定远尾指数。
+若 $K\kappa^2\ge1$，则 $1/\kappa\le\sqrt K$，且
+$\sqrt K e^{-bK/2}$ 有统一上界；故（299.30）也至多
+$Ae^{-aK\kappa^2}$。合并近区和远区：
+$$
+\mathbb E_c(-\beta_J)_+\le Ae^{-aK\kappa^2}
+\qquad(c\ge v_-).
+\tag{299.31}
+$$
+
+再处理第一族 $r\le u_+$ 时的高区损失。第299.5节证明
+$\beta_i>1$ 只可能发生在 $\widehat c>u_{++}>1/2$。
+由（299.19）—（299.20）及 $\log x\le x-1$，
+$$
+(\beta_J-1)_+
+\le\frac{(\widehat c-1)_+}{D\kappa}
++\varepsilon_K\mathbf1_{\{\widehat c>u_{++}\}}.
+\tag{299.32}
+$$
+真实 $1-r\ge1-u_+\ge c\kappa$，第一项由超额积分控制；第二项保留了其事件指示，$\varepsilon_K$ 在 $K\kappa^2\ge A_0$ 下一致有界，且事件与真实均值相隔常数倍 $\kappa$。所以高区有害下降的期望也至多 $Ae^{-aK\kappa^2}$。
+
+真实级数尾同样需要保留分母 $d+1$。因 $c\ge k^3>1/2$，使用固定 $q_*=1-1/(2C_*)<1$ 得
+$$
+R_d(c)\le\frac{Aq_*^{d+1}}{\kappa(d+1)}
+\le\frac A{K\kappa^2}e^{-a\kappa K}
+\le A'e^{-a'K\kappa^2}
+\quad(K\kappa^2\ge A_0).
+\tag{299.33}
+$$
+最后用 $\kappa\le\kappa_0$ 调整固定指数常数。
+
+### 299.8 reset的两族响应与双尺度匹配
+
+其余损失可使用概率表的点态范围：
+
+- 第一族 $r\le u_+$ 的低区有 $\beta_i\le1$，所以赋零损失至多跨越 $v$ 的概率；高区损失已由（299.32）控制。
+- 第一族 $r>u_+$ 用赋一区域 $c_J\ge u$ 的补事件，再用 $L(r)\le1$。
+- 第二族 $c=kr\le v_-$ 直接估计 $\Pr(c_J>v)$，并使用 $L(c)>0$。
+- 第二族 $c>v_-$ 在高区有 $\beta_i\ge L(u)>0$，赋一增加至多跨越 $u$ 的概率；低区增加由（299.31）控制，原期望偏差由（299.33）控制。
+
+结合（299.28），得到对全部实际参数统一的
+$$
+f_K(r)\ge L(r)-Ae^{-aK\kappa^2},\qquad
+f_K(kr)\le L(kr)+Ae^{-aK\kappa^2}.
+\tag{299.34}
+$$
+存在统一的 $A$，使选择并向上取整
+$$
+K\ge A\kappa^{-2}[1+\log(1/\bar\eta)]
+\tag{299.35}
+$$
+同时保证 $K\kappa^2\ge A_0$ 及比较余量至少为 $1/3$。这给reset上界，对全部 $n$ 一致。
+
+由（299.15），两种上界分别与第299.2、299.3节的必要界匹配。乘以每块两份来源，即得定理299.1。预算向上取整可以吸收进统一常数，因为两种尺度的基线均有固定正下界。
+
+### 299.9 两种几何缺口怎样进入同一成本
+
+本结果区分了信号弱化与接近可达边界的作用：
+$$
+\boxed{
+\begin{aligned}
+N_{\mathrm{full},\,n=1}&\asymp
+\kappa^{-1}\,[1+\log(\kappa/g)],\\
+N_{\mathrm{reset}}&\asymp
+\kappa^{-2}\,[1+\log(\kappa/g)].
+\end{aligned}}
+$$
+当 $g/\kappa$ 保持为正的固定比例时，边界项有界；当该比值趋零时，同一边界项对数发散。两者可以同时发生，公式无需先固定一个尺度再取另一个极限。
+
+完整输入的点击概率本身随 $\kappa$ 缩小，零支持附近的稀有事件给出 $K\kappa$ 的检验尺度。reset后的程序分布具有统一严格正支持，必要界和实际记录估计共同给出 $K\kappa^2$ 的尺度。两类允许观察的差别因而成为一个统一量化结果：在 $n=1$ 的同一来源和风险任务下，两种最优来源预算之比为 $\Theta(1/\kappa)$，在整个 $g$ 范围内成立。这个机制由具体来源和权限证明，不推广成所有量子/经典观察的普遍指数规律。
+
+两个计数任务的准确接口可以具有相同的可恢复结论，实际取得成本仍有不同阶数。因此边界不仅需要记录可恢复哪些关系，还需要声明如何取得这些关系。这里的 $K$ 是来源调用预算；局域钟增量、仪器操作、计算精度、工作存储和完整有序档案另有各自成本，不能把 $K$ 自动解释为物理历时。第297节的有限经典实现常数只在固定 $k$ 下证明，本节没有将它们统一化；第298节的未知共同增益实验也没有被本定理覆盖。
+
+所用Bernstein、Hoeffding、阶乘矩及KL—总变差关系均是标准工具。式（299.10）使用的检验重叠界可参见 Clément L. Canonne, [*A short note on an inequality between KL and TV*](https://arxiv.org/abs/2202.07198)（2022），本文已给所需推导。新增的仓内连接是对同一实际概率表重新控制双尺度下的有害系数和全部协议下界，不将该综合自动宣称为文献原创。
+
+本节为普通数学证明，未进行Lean形式验证、数值优化或实际仪器实验。$g=0$ 的有限预算障碍沿用第291节；$n\ge2$ 的完整访问不受本节标量下界限制。最佳常数、有限预算最优表及未知增益随尺度变化的情况仍未在这里求解。
+
+## 追加锚（本行以下为增补区）
