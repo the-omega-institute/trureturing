@@ -14445,3 +14445,422 @@ AHH 在于：**鲁棒边界不只是“中心加半径”；它还要保存每�
 **来源与边界 198.2。** 本批在有限维赋范线性阶段、非空紧响应集合、算子范数 Hausdorff 距离和有限串联下推导集合值组合界、共享/独立不确定性的成对反例及鲁棒边界层级。没有把集合值响应自动解释为概率分布，没有把共享标量扰动推广为所有物理相关噪声，没有推广到无限阶段、非紧集合或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
 
 ## 追加锚（本行以下为增补区）
+## 199. 事件条件化后的集合值边界
+
+第 195—198 节保存了合法响应集合、串联增益和阶段相关性。本节加入一个常被遗漏的操作：**先取得一个指定事件，再把剩余关系条件化**。集合值边界经过归一化时，稀有事件会放大原有的不确定性；因此事件概率区间本身也是边界的一部分。
+
+**定义 199.1（集合值分支合同）。** 令 $\mathfrak R$ 为有限维密度算子空间中的非空紧集，令 $\Phi$ 为完全正迹不增映射。写
+
+$$
+B=\Phi^*(I),
+\qquad
+p_\Phi(\rho)=\operatorname{Tr}(\rho B).
+$$
+
+定义分支概率区间
+
+$$
+p^-_\Phi(\mathfrak R)=\min_{\rho\in\mathfrak R}p_\Phi(\rho),
+\qquad
+p^+_\Phi(\mathfrak R)=\max_{\rho\in\mathfrak R}p_\Phi(\rho).
+$$
+
+当 $p^-_\Phi(\mathfrak R)>0$ 时，定义条件后继集合
+
+$$
+\boxed{
+\mathsf C_\Phi(\mathfrak R)
+=
+\left\{
+\frac{\Phi(\rho)}{p_\Phi(\rho)}:
+\rho\in\mathfrak R
+\right\}.
+}
+\tag{199.1}
+$$
+
+在状态空间上使用半迹距离
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+并用它诱导集合的 Hausdorff 距离 $D_H$。这里的正概率下界是声明合同的一部分；有限次没有观察到事件，不能单独推出这样的下界。
+
+**定理 199.2（集合条件化的概率区间与误差放大）。** 对两个非空紧状态集 $\mathfrak R,\mathfrak S$，令
+
+$$
+\varepsilon=D_H(\mathfrak R,\mathfrak S).
+$$
+则
+
+$$
+\boxed{
+\left|p^-_\Phi(\mathfrak R)-p^-_\Phi(\mathfrak S)\right|
+\le\varepsilon,
+\qquad
+\left|p^+_\Phi(\mathfrak R)-p^+_\Phi(\mathfrak S)\right|
+\le\varepsilon.
+}
+\tag{199.2}
+$$
+
+若存在 $p_*>0$ 使
+
+$$
+\inf_{\rho\in\mathfrak R\cup\mathfrak S}p_\Phi(\rho)\ge p_*>
+0,
+$$
+则
+
+$$
+\boxed{
+D_H\!\left(\mathsf C_\Phi(\mathfrak R),
+\mathsf C_\Phi(\mathfrak S)\right)
+\le
+\frac{\varepsilon}{p_*}.
+}
+\tag{199.3}
+$$
+
+### 证明
+
+由于 $0\le B\le I$，迹距离的对偶表述给出
+
+$$
+|p_\Phi(\rho)-p_\Phi(\sigma)|
+=|\operatorname{Tr}[(\rho-\sigma)B]|
+\le D(\rho,\sigma).
+$$
+
+对紧集取最小值与最大值，得到（199.2）。
+
+任取 $\rho\in\mathfrak R$。由 Hausdorff 距离和紧性，存在 $\sigma\in\mathfrak S$ 使 $D(\rho,\sigma)\le\varepsilon$。定理 25.2 应用于同一个分支 $\Phi$，并利用 $p_\Phi(\rho),p_\Phi(\sigma)\ge p_*$，得到
+
+$$
+D\!\left(
+\frac{\Phi(\rho)}{p_\Phi(\rho)},
+\frac{\Phi(\sigma)}{p_\Phi(\sigma)}
+\right)
+\le\frac{\varepsilon}{p_*}.
+$$
+
+交换 $\mathfrak R,\mathfrak S$ 得到反向包含的同一界，故有（199.3）。证毕。
+
+**推论 199.3（正概率下界是条件边界的条件数）。** 在固定 $\varepsilon$ 下，式（199.3）的系数为 $1/p_*$. 因此，未归一化集合响应可以趋于相近，而若允许分支概率趋于零，条件后继集合不具有统一的连续性界。一个只保存未归一化响应误差、却没有保存分支概率下界的边界，不能给出条件后继的鲁棒误差证书。
+
+这一区分把“事件稀有”与“状态本身不稳定”分开：前者来自归一化分母，后者来自原始集合或分支映射的误差。两者在边界合同中必须分别记账。
+
+## 200. 最坏未来集合与概率平均后继
+
+集合值边界描述允许的来源；概率平均后继还需要一个关于来源的先验。两者回答不同问题，不能把平均态自动当作最坏未来的代表。
+
+**定义 200.1（事件后的先验平均）。** 令 $\mu$ 是 $\mathfrak R$ 上的概率测度，且
+
+$$
+\bar p=\int_{\mathfrak R}p_\Phi(\rho)\,d\mu(\rho)>0.
+$$
+
+定义事件后的先验平均态
+
+$$
+\boxed{
+\bar\rho_{\Phi,\mu}
+=
+\frac{\int_{\mathfrak R}\Phi(\rho)\,d\mu(\rho)}{\bar p}.
+}
+\tag{200.1}
+$$
+
+若 $\tau_\rho=\Phi(\rho)/p_\Phi(\rho)$，则令
+
+$$
+ d\nu(\rho)=\frac{p_\Phi(\rho)}{\bar p}\,d\mu(\rho),
+$$
+
+便有
+
+$$
+\bar\rho_{\Phi,\mu}=\int_{\mathfrak R}\tau_\rho\,d\nu(\rho).
+$$
+
+这里的 $\nu$ 是取得事件以后对来源的更新权重，不是原来的 $\mu$.
+
+**定理 200.2（平均后继只给出鲁棒区间中的一个凸组合）。** 对任意效果 $0\le H\le I$，有
+
+$$
+\boxed{
+\min_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H)
+\le
+\operatorname{Tr}(\bar\rho_{\Phi,\mu}H)
+\le
+\max_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H).
+}
+\tag{200.2}
+$$
+
+左侧等号当且仅当 $\operatorname{Tr}(\tau_\rho H)$ 在 $\nu$-几乎处处取到该最小值；右侧等号具有相应的最大值条件。
+
+### 证明
+
+由定义，$\bar\rho_{\Phi,\mu}$ 是条件后继态的凸组合。对线性泛函 $\tau\mapsto\operatorname{Tr}(\tau H)$ 积分，所得值必位于其值域的闭区间内。若积分等于下端点，则非负函数
+
+$$
+\operatorname{Tr}(\tau_\rho H)-min_{\tau\in\mathsf C_\Phi(\mathfrak R)}\operatorname{Tr}(\tau H)
+$$
+
+的积分为零，故它在 $\nu$-几乎处处为零；反向同理。证毕。
+
+**命题 200.3（相同平均后继不能决定最坏未来）。** 设事件分支为恒等映射，取
+
+$$
+\mathfrak R_A=\left\{\frac I2\right\},
+\qquad
+\mathfrak R_B=\{|0\rangle\langle0|,|1\rangle\langle1|\},
+$$
+
+并在第二个集合上给两个来源相等先验。两者的平均后继都为 $I/2$。但是对效果 $H=|0\rangle\langle0|$，有
+
+$$
+\left\{\operatorname{Tr}(\tau H):\tau\in\mathsf C_\Phi(\mathfrak R_A)\right\}
+=\left\{\frac12\right\},
+$$
+
+而
+
+$$
+\left\{\operatorname{Tr}(\tau H):\tau\in\mathsf C_\Phi(\mathfrak R_B)\right\}
+=\{0,1\}.
+$$
+
+### 证明
+
+恒等分支的条件化不改变状态。集合 $\mathfrak R_B$ 的平均为
+
+$$
+\frac12|0\rangle\langle0|+\frac12|1\rangle\langle1|=\frac I2,
+$$
+
+但两集合的效果值域按直接取迹分别为单点 $1/2$ 与区间端点 $0,1$. 证毕。
+
+因此，平均后继适用于已经声明先验并只询问期望值的任务；最坏未来则需要保存整个条件后继集合，不能由平均态后处理恢复。
+
+## 201. 条件后的联合来源与矩形化误差
+
+条件化不仅改变状态，还会改变状态与隐藏校准、环境或控制参数之间的联合来源。若把条件后的两个边缘随意相乘，就会引入原联合关系中从未允许的后继。
+
+**定义 201.1（联合条件后继与矩形包络）。** 令 $\Lambda$ 为有限或紧参数空间，$\mathfrak J\subseteq\mathsf D(\mathcal H)\times\Lambda$ 为非空紧联合来源。对每个 $\lambda$ 给定完全正迹不增分支 $\Phi_\lambda$，定义
+
+$$
+ p_\lambda(\rho)=\operatorname{Tr}[\Phi_\lambda(\rho)],
+$$
+
+并在指定事件的正概率集合上定义
+
+$$
+\mathfrak J_\Phi
+=
+\left\{
+\left(
+\frac{\Phi_\lambda(\rho)}{p_\lambda(\rho)},\lambda\right):
+(\rho,\lambda)\in\mathfrak J, p_\lambda(\rho)>0
+\right\}.
+$$
+
+记其两个投影为 $\mathfrak R_\Phi$ 和 $\Lambda_\Phi$，矩形包络为
+
+$$
+\operatorname{Rect}(\mathfrak J_\Phi)
+=\mathfrak R_\Phi\times\Lambda_\Phi.
+$$
+
+矩形化保留两个边缘集合，却允许它们任意重新配对。
+
+**定理 201.2（矩形化只给出保守最坏界）。** 对任何实值未来响应 $h$，有
+
+$$
+\boxed{
+\inf_{\operatorname{Rect}(\mathfrak J_\Phi)}h
+\le
+\inf_{\mathfrak J_\Phi}h
+\le
+\sup_{\mathfrak J_\Phi}h
+\le
+\sup_{\operatorname{Rect}(\mathfrak J_\Phi)}h.
+}
+\tag{201.1}
+$$
+
+若未来目标分别是下界或上界，矩形化只有在对应极值能够由原联合集合中的合法配对达到时才保持该端点；否则它会扩大鲁棒区间。
+
+### 证明
+
+有
+
+$$
+\mathfrak J_\Phi\subseteq
+\operatorname{Rect}(\mathfrak J_\Phi).
+$$
+
+对集合包含关系取下确界与上确界，立即得到（201.1）。端点相等的充要条件就是扩大后的集合没有产生更小的下界或更大的上界。证毕。
+
+**命题 201.3（条件边缘相同而最坏未来不同）。** 取二维系统、参数集 $\Lambda=\{0,1\}$，并令联合条件后继为
+
+$$
+\mathfrak J_\Phi
+=\left\{
+(|0\rangle\langle0|,0),
+(|1\rangle\langle1|,1)
+\right\}.
+$$
+
+定义未来效果 $H_\lambda=|\lambda\rangle\langle\lambda|$，响应为
+
+$$
+ h(\tau,\lambda)=\operatorname{Tr}(\tau H_\lambda).
+$$
+
+在真实联合集合上 $h=1$ 恒成立；在矩形包络上还包含 $(|0\rangle\langle0|,1)$ 与 $(|1\rangle\langle1|,0)$，故
+
+$$
+\inf_{\mathfrak J_\Phi}h=1,
+\qquad
+\inf_{\operatorname{Rect}(\mathfrak J_\Phi)}h=0.
+$$
+
+### 证明
+
+真实联合集合中的参数和状态标签相同，故对应投影的期望均为一。矩形包络允许交叉配对，而交叉配对的投影正交，响应为零。证毕。
+
+这个反例与第 197 节的共享/独立串联反例承担不同任务：那里比较的是阶段算子串联集合；这里比较的是**事件条件化以后，状态与隐藏来源的联合后继**。如果下一步控制读取了参数、环境记录或与之相关的端口，联合来源必须保留。
+
+## 202. 概率加权的鲁棒全息合同
+
+前面三节给出一条组合链：初态集合经事件归一化，条件后继再经未来响应族传播。最后把这条链压成一个可审计的边界对象。
+
+**定义 202.1（概率加权鲁棒边界）。** 对集合值来源 $\mathfrak R$、事件分支 $\Phi$、未来响应族 $\mathfrak P$ 和联合来源 $\mathfrak J$，定义边界合同至少包含
+
+$$
+\boxed{
+\eta_{\mathrm{rob}}
+=
+\left(
+ p^-_\Phi,p^+_\Phi,
+ \mathsf C_\Phi(\mathfrak R),
+ \mathfrak J_\Phi,
+ \Gamma_{\mathfrak P},
+ \text{来源与控制记录}
+\right),
+}
+\tag{202.1}
+$$
+
+其中 $\Gamma_{\mathfrak P}$ 是未来映射的统一增益上界。若任务只要求先验平均，则还需声明 $\mu$ 和 $\bar\rho_{\Phi,\mu}$；平均态不能替代式（202.1）中的条件集合或联合来源。
+
+**定理 202.2（条件放大与未来增益的串联界）。** 用半迹距离比较状态，用
+
+$$
+\|T\|_{1\to1}=\sup_{\|X\|_1\le1}\|T(X)\|_1
+$$
+
+比较线性未来映射。设两个来源边界满足
+
+$$
+D_H(\mathfrak R,\mathfrak S)\le\varepsilon,
+\qquad
+\inf_{\rho\in\mathfrak R\cup\mathfrak S}p_\Phi(\rho)\ge p_*>0.
+$$
+
+设未来映射族 $\mathfrak P,\mathfrak Q$ 满足：每个 $T\in\mathfrak P$ 有 $U\in\mathfrak Q$ 使
+
+$$
+\frac12\|T-U\|_{1\to1}\le\delta,
+$$
+
+反向也成立，并且
+
+$$
+\|T\|_{1\to1},\|U\|_{1\to1}\le G.
+$$
+
+令
+
+$$
+\mathfrak P\circ\mathsf C_\Phi(\mathfrak R)
+=\{T(\tau):T\in\mathfrak P,\ \tau\in\mathsf C_\Phi(\mathfrak R)\},
+$$
+
+则
+
+$$
+\boxed{
+D_H\!\left(
+\mathfrak P\circ\mathsf C_\Phi(\mathfrak R),
+\mathfrak Q\circ\mathsf C_\Phi(\mathfrak S)
+\right)
+\le
+\delta+G\frac{\varepsilon}{p_*}.
+}
+\tag{202.2}
+$$
+
+### 证明
+
+任取 $T\in\mathfrak P$ 和 $\tau=\Phi(\rho)/p_\Phi(\rho)$，由定理 199.2 取 $\sigma\in\mathfrak S$ 使对应条件态 $\upsilon$ 满足
+
+$$
+D(\tau,\upsilon)\le\varepsilon/p_*.
+$$
+
+再取匹配的 $U\in\mathfrak Q$. 写 $X=\tau-\upsilon$. 由三角不等式与算子范数，
+
+$$
+\begin{aligned}
+D(T\tau,U\upsilon)
+&\le
+\frac12\|(T-U)\upsilon\|_1
++\frac12\|T(\tau-\upsilon)\|_1\\
+&\le
+\delta+G D(\tau,\upsilon)
+\le
+\delta+G\frac{\varepsilon}{p_*}.
+\end{aligned}
+$$
+
+反向选择同理，故得到 Hausdorff 界。证毕。
+
+**关系结论 202.3（平均、条件集合、联合来源的分工）。** 对声明的未来任务，边界所能保证的内容分层如下：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{边界记录}&\text{可回答的任务}&\text{遗漏时的失败}\\
+\hline
+\bar p,\bar\rho_{\Phi,\mu}&\text{给定先验的平均事件后期望}&\text{不能给出最坏界}\\
+ p^- ,p^+ ,\mathsf C_\Phi(\mathfrak R)&\text{单步条件后继的鲁棒区间}&\text{稀有分支误差无界}\\
+\mathfrak J_\Phi&\text{带隐藏来源的联合后续控制}&\text{矩形化引入不可能配对}\\
+\Gamma_{\mathfrak P}&\text{条件集合向未来传播的误差证书}&\text{低估后续增益}\\
+\end{array}
+}
+\tag{202.3}
+$$
+
+**AHH 202.4（概率加权的鲁棒全息）。** 鲁棒全息边界必须同时回答三件事：事件发生的概率范围是多少，发生后允许哪些条件关系，条件关系与隐藏来源之间保留哪些联合约束。若任务还包含未来组合，则要继续保存响应族的增益。一个先验平均态可以是正确的期望摘要，却不能自动成为最坏未来的充分边界；两个条件边缘集合可以分别正确，却可能在联合控制中生成从未存在的后继。
+
+因此，波粒关系中的“事件切片”在不确定来源下不是单个归一化态，而是
+
+$$
+\boxed{
+\text{事件概率区间}
++
+\text{条件后继集合}
++
+\text{联合来源}
++
+\text{未来增益合同}.
+}
+$$
+
+**来源与边界 202.5。** 本批在有限维密度算子、紧集合、完全正迹不增分支和有限算子范数未来映射下，推导集合条件化的概率区间稳定性、$1/p_*$ 误差放大、先验平均与最坏未来的严格区别、联合来源矩形化的保守性及条件后继到未来响应的组合界。没有把先验平均解释为无先验的物理事实，没有把矩形包络解释为真实独立实现，没有把正概率下界从有限观测自动推出，也没有推广到无限维、未知仪器、无限历史或物理钟标定；没有新增 Lean、消化、coverage 或 freeze 内容。本批仍是纯理论 Markdown。
+
+## 追加锚（本行以下为增补区）
