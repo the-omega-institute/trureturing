@@ -9,7 +9,7 @@ internal sealed class FiberwiseEqualDistanceLiftDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/TotalVariation/Equality/FiberwiseEqualDistanceLift.";
 
     private static readonly Formula Wv = F.Id("w"), Zv = F.Id("z"), Lab = LambdaLower;
-    private static readonly Formula RhoP = Seq(Widetilde, Grp(F.Rho));
+    private static readonly Formula RhoP = Seq(F.Rho, Apos);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A prescribed label law Q lifts to a world law exactly when every label of positive Q-mass has a nonempty "
@@ -35,29 +35,76 @@ internal sealed class FiberwiseEqualDistanceLiftDocument : IScribeDocumentDefini
 
     private static Formula TheoremFormula()
     {
-        Formula prob = Seq(F.Rho, Comma, Sp, F.Id("Q"), Sp, F.Text, Grp(Sp, F.Id("probability"), Sp, F.Id("laws"),
-            Sp, F.Id("on"), Sp), F.Id("W"), Comma, Sp, F.Id("Z"), Comma, Sp, F.Id("P"), Sp, Eq, Sp, Push(F.Rho));
+        Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        Formula rhoType = Arrow(F.Id("W"), reals);
+        Formula qType = Arrow(F.Id("Z"), reals);
+        Formula rhoNonnegative = ForallNonnegative(Wv, F.Rho);
+        Formula rhoNormalized = SumEqualsOne(Wv, F.Rho, "W");
+        Formula qNonnegative = ForallNonnegative(Zv, F.Id("Q"));
+        Formula qNormalized = SumEqualsOne(Zv, F.Id("Q"), "Z");
         Formula support = Seq(Forall, Sp, Zv, Comma, Sp, F.Id("Q"), Open, Zv, Close, Sp, Gt, Sp, D(0), Sp,
             Rightarrow, Sp, Exists, Sp, Wv, Comma, Sp, Lab, Open, Wv, Close, Sp, Eq, Sp, Zv);
-        Formula liftable = Seq(Exists, Sp, RhoP, Sp, F.Text, Grp(Sp, F.Id("probability"), Sp), Comma, Sp,
-            Push(RhoP), Sp, Eq, Sp, F.Id("Q"));
-        Formula close = Seq(Exists, Sp, RhoP, Sp, F.Text, Grp(Sp, F.Id("probability"), Sp), Comma, Sp,
-            Push(RhoP), Sp, Eq, Sp, F.Id("Q"), Sp, Land, Sp, Tv(F.Rho, RhoP), Sp, Eq, Sp,
-            Tv(F.Id("P"), F.Id("Q")));
-        return Disp(Seq(
-            prob, Sp, Rightarrow, RowBreak, Grp(),
+        Formula liftable = ExistsLift(RhoP, F.Id("Q"), includeDistance: false);
+        Formula close = ExistsLift(RhoP, F.Id("Q"), includeDistance: true);
+        Formula body = Seq(
             Open, liftable, Close, Sp, Iff, Sp, Open, support, Close, Sp, Land, RowBreak, Grp(),
-            Open, support, Close, Sp, Rightarrow, Sp, close, Dot));
+            Open, support, Close, Sp, Rightarrow, Sp, close, Dot);
+        Formula quantified = Seq(
+            Forall, Sp, F.Id("W"), Comma, Sp, F.Id("Z"), Colon, Sp, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("Fintype", F.Id("W")), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", F.Id("Z")), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", F.Id("Z")), CloseBracket, Sp,
+            Forall, Sp, F.Rho, Colon, Sp, rhoType, Comma, Sp,
+            Implies(rhoNonnegative, Implies(rhoNormalized,
+                Seq(Forall, Sp, Lab, Colon, Sp, Arrow(F.Id("W"), F.Id("Z")), Comma, Sp,
+                    Forall, Sp, F.Id("Q"), Colon, Sp, qType, Comma, Sp,
+                    Implies(qNonnegative, Implies(qNormalized, body))))));
+        return Disp(quantified);
     }
 
-    private static Formula Push(Formula law) => Seq(Sub(Lab, Star), Sp, law);
+    private static Formula ForallNonnegative(Formula variable, Formula law) =>
+        Seq(Forall, Sp, variable, Comma, Sp, D(0), Sp, Leq, Sp,
+            law, Open, variable, Close);
+
+    private static Formula SumEqualsOne(Formula variable, Formula law, string typeName) =>
+        Seq(new Formula.Subscript(Sum, variable), Sp, law, Open, variable, Close,
+            Sp, Eq, Sp, D(1));
+
+    private static Formula ExistsLift(Formula rhoPrime, Formula q, bool includeDistance)
+    {
+        Formula probability = And(
+            ForallNonnegative(Wv, rhoPrime),
+            And(SumEqualsOne(Wv, rhoPrime, "W"),
+                includeDistance
+                    ? And(Equal(Output(rhoPrime), q),
+                        Equal(Tv(F.Rho, rhoPrime), Tv(Output(F.Rho), q)))
+                    : Equal(Output(rhoPrime), q)));
+        return Seq(Exists, Sp, rhoPrime, Colon, Sp, Arrow(F.Id("W"), Seq(Mathbb, Grp(F.Id("R")))), Comma, Sp,
+            probability);
+    }
+
+    private static Formula Output(Formula law) =>
+        Call("channelOutput", Call("labelKernel", Lab), law);
+
+    private static Formula Arrow(Formula left, Formula right) =>
+        Seq(left, Sp, To, Sp, right);
+
+    private static Formula Paren(Formula value) => Seq(Open, value, Close);
+
+    private static Formula And(Formula left, Formula right) =>
+        Seq(Paren(left), Sp, Land, Sp, Paren(right));
+
+    private static Formula Implies(Formula left, Formula right) =>
+        Seq(Paren(left), Sp, Rightarrow, Sp, Paren(right));
+
+    private static Formula Equal(Formula left, Formula right) =>
+        Seq(left, Sp, Eq, Sp, right);
 
     private static Formula Tv(Formula a, Formula b) =>
         Seq(Operatorname, Grp(F.Id("TV")), Open, a, Comma, Sp, b, Close);
 
-    private static Formula Sub(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
-
-    private static Formula Sub(Formula baseFormula, Formula index) => Seq(baseFormula, Underscore, Grp(index));
+    private static Formula Sub(string name, Formula index) =>
+        Seq(F.Id(name), Underscore, Grp(index));
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, string prose, string declaration, DescribeRole role) =>

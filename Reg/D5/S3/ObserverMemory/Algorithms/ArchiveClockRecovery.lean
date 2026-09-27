@@ -53,7 +53,7 @@ def ambiguitySystem :
   domain := fun _ _ => True
   domainDecidable := fun _ _ => inferInstance
   successor := fun _ state => state
-  reading := fun _ _ => ULift.up ()
+  reading := fun _ _ _ => ULift.up ()
   cost := fun _ state => if state.down then 1 else 0
 
 theorem ambiguity_not_recoverable :

@@ -13,9 +13,10 @@ import Mathlib.Tactic
 /- Library-search audit trail (2026-09-27):
    * Repository searches for archive recovery, synchronized paths, and finite
      clock ambiguity found no declaration with the theorem's statement shape.
-   * Pinned Mathlib supplies `List.TFAE`, `List.Nodup.length_le_card`,
-     `Nat.find_spec`, and `Nat.find_min'`. Its simple-graph path bound is not an
-     exact hit because synchronized transitions are directed and action-labelled.
+   * Pinned Mathlib supplies `Function.factorsThrough_iff`, `List.TFAE`,
+     `List.Nodup.length_le_card`, `Nat.find_spec`, and `Nat.find_min'`. Its
+     simple-graph path bound is not an exact hit because synchronized transitions
+     are directed and action-labelled.
    * The proof below therefore constructs the synchronized execution semantics,
      removes a repeated-state loop from a shortest directed action word, and
      applies the finite-cardinality bound directly. -/
@@ -27,13 +28,15 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-/-- A finite deterministic partial-action model. Successors, readings, and
-costs are total functions whose operational use is restricted by `domain`. -/
+/-- A finite deterministic partial-action model. `successor` and `cost` are
+total, while `reading` is defined only on the action's domain. Values outside
+the domain never enter a legal execution, so this faithfully represents the
+source partial maps (including empty reading types and empty domains). -/
 structure System (X A Y : Type*) where
   domain : A -> X -> Prop
   domainDecidable : forall a x, Decidable (domain a x)
   successor : A -> X -> X
-  reading : A -> X -> Y
+  reading : (a : A) -> (x : X) -> domain a x -> Y
   cost : A -> X -> Int
 
 /-- The state reached after applying an action word from left to right. -/
@@ -51,8 +54,12 @@ def Legal {X A Y : Type*} (S : System X A Y) (x : X) : List A -> Prop
 def visibleArchive {X A Y : Type*} (S : System X A Y) (x : X) :
     List A -> List (A × Y)
   | [] => []
-  | a :: word => (a, S.reading a x) ::
-      visibleArchive S (S.successor a x) word
+  | a :: word =>
+      letI := S.domainDecidable a x
+      dite (S.domain a x)
+        (fun h => (a, S.reading a x h) ::
+          visibleArchive S (S.successor a x) word)
+        (fun _ => [])
 
 /-- The accumulated integer clock along an action word. -/
 def clock {X A Y : Type*} (S : System X A Y) (x : X) : List A -> Int
@@ -63,8 +70,8 @@ def clock {X A Y : Type*} (S : System X A Y) (x : X) : List A -> Int
 the same reading on both sides. -/
 def SynchronizedEdge {X A Y : Type*} (S : System X A Y)
     (pair : X × X) (a : A) : Prop :=
-  S.domain a pair.1 ∧ S.domain a pair.2 ∧
-    S.reading a pair.1 = S.reading a pair.2
+  ∃ hleft : S.domain a pair.1, ∃ hright : S.domain a pair.2,
+    S.reading a pair.1 hleft = S.reading a pair.2 hright
 
 /-- A synchronized path follows the same action word through two legal
 executions while matching the reading at every step. -/
@@ -135,37 +142,6 @@ theorem archive_clock_recovery_and_finite_ambiguity
     | cons a first ih =>
         simp only [List.cons_append, stateAfter]
         exact ih (S.successor a x)
-  have legal_append : forall (x : X) (first second : List A),
-      Legal S x (first ++ second) <->
-        Legal S x first ∧ Legal S (stateAfter S x first) second := by
-    intro x first second
-    induction first generalizing x with
-    | nil => simp [Legal, stateAfter]
-    | cons a first ih =>
-        simp only [List.cons_append, Legal, stateAfter]
-        rw [ih]
-        aesop
-  have archive_append : forall (x : X) (first second : List A),
-      visibleArchive S x (first ++ second) =
-        visibleArchive S x first ++
-          visibleArchive S (stateAfter S x first) second := by
-    intro x first second
-    induction first generalizing x with
-    | nil => rfl
-    | cons a first ih =>
-        simp only [List.cons_append, visibleArchive, stateAfter,
-          List.cons_append]
-        rw [ih]
-  have clock_append : forall (x : X) (first second : List A),
-      clock S x (first ++ second) =
-        clock S x first + clock S (stateAfter S x first) second := by
-    intro x first second
-    induction first generalizing x with
-    | nil => simp [clock, stateAfter]
-    | cons a first ih =>
-        simp only [List.cons_append, clock, stateAfter]
-        rw [ih]
-        omega
   have synchronizedPath_append : forall (x x' : X) (first second : List A),
       SynchronizedPath S x x' (first ++ second) <->
         SynchronizedPath S x x' first ∧
@@ -197,10 +173,27 @@ theorem archive_clock_recovery_and_finite_ambiguity
     induction word generalizing x x' with
     | nil => simp [SynchronizedPath, Legal, visibleArchive]
     | cons a word ih =>
-        simp only [SynchronizedPath, SynchronizedEdge, Legal, visibleArchive,
-          List.cons.injEq, Prod.mk.injEq]
-        rw [ih]
-        aesop
+        constructor
+        · intro hsync
+          rcases hsync with ⟨⟨hleft, hright, hread⟩, htailPath⟩
+          rcases (ih (S.successor a x) (S.successor a x')).mp htailPath with
+            ⟨htail, htail', harchive⟩
+          refine ⟨⟨hleft, htail⟩, ⟨hright, htail'⟩, ?_⟩
+          simp only [visibleArchive, dif_pos hleft, dif_pos hright]
+          simp only [hread, harchive]
+        · rintro ⟨⟨hleft, htail⟩, ⟨hright, htail'⟩, harchive⟩
+          have harchive' :
+              (a, S.reading a x hleft) ::
+                  visibleArchive S (S.successor a x) word =
+                (a, S.reading a x' hright) ::
+                  visibleArchive S (S.successor a x') word := by
+            simpa only [visibleArchive, dif_pos hleft, dif_pos hright] using harchive
+          have hread : S.reading a x hleft = S.reading a x' hright := by
+            have hpair := (List.cons.inj harchive').1
+            exact congrArg Prod.snd hpair
+          refine ⟨⟨hleft, hright, hread⟩, ?_⟩
+          exact (ih (S.successor a x) (S.successor a x')).mpr
+            ⟨htail, htail', (List.cons.inj harchive').2⟩
   have deltaSum_eq_clock_sub : forall (x x' : X) (word : List A),
       deltaSum S x x' word = clock S x word - clock S x' word := by
     intro x x' word
@@ -210,13 +203,15 @@ theorem archive_clock_recovery_and_finite_ambiguity
         simp only [deltaSum, clock]
         rw [ih]
         omega
-  have archive_actions : forall (x : X) (word : List A),
+  have archive_actions : forall (x : X) (word : List A), Legal S x word ->
       (visibleArchive S x word).map Prod.fst = word := by
-    intro x word
+    intro x word hlegal
     induction word generalizing x with
     | nil => rfl
     | cons a word ih =>
-        simp [visibleArchive, ih]
+        have ha := hlegal.1
+        have htail := hlegal.2
+        simp only [visibleArchive, dif_pos ha, List.map_cons, ih _ htail]
   have pairTrace_length : forall (x x' : X) (word : List A),
       (pairTrace S x x' word).length = word.length + 1 := by
     intro x x' word
@@ -315,43 +310,42 @@ theorem archive_clock_recovery_and_finite_ambiguity
       omega
     tfae_have 2 -> 1 := by
       intro hzero
-      let Candidate (archive : List (A × Y)) :=
-        {execution : X × List A //
-          execution.1 ∈ X0 ∧ Legal S execution.1 execution.2 ∧
-            visibleArchive S execution.1 execution.2 = archive}
-      let recover (archive : List (A × Y)) : Int :=
-        if h : Nonempty (Candidate archive) then
-          clock S (Classical.choice h).val.1 (Classical.choice h).val.2
-        else
-          0
+      let Execution := {execution : X × List A //
+        execution.1 ∈ X0 ∧ Legal S execution.1 execution.2}
+      let archiveOf : Execution → List (A × Y) := fun execution =>
+        visibleArchive S execution.1.1 execution.1.2
+      let clockOf : Execution → Int := fun execution =>
+        clock S execution.1.1 execution.1.2
+      have hfiber : Function.FactorsThrough clockOf archiveOf := by
+        intro execution execution' harchive
+        have hlegal : Legal S execution.1.1 execution.1.2 := execution.2.2
+        have hlegal' : Legal S execution'.1.1 execution'.1.2 := execution'.2.2
+        have hword : execution.1.2 = execution'.1.2 := by
+          have hactions := congrArg (List.map Prod.fst) harchive
+          dsimp only [archiveOf] at harchive hactions
+          rw [archive_actions execution.1.1 execution.1.2 hlegal,
+            archive_actions execution'.1.1 execution'.1.2 hlegal'] at hactions
+          exact hactions
+        have harchiveWord :
+            visibleArchive S execution.1.1 execution.1.2 =
+              visibleArchive S execution'.1.1 execution.1.2 := by
+          dsimp only [archiveOf] at harchive
+          exact harchive.trans (by rw [hword])
+        have hsync : SynchronizedPath S execution.1.1 execution'.1.1 execution.1.2 := by
+          apply (synchronizedPath_iff execution.1.1 execution'.1.1 execution.1.2).mpr
+          exact ⟨hlegal, by simpa only [hword] using hlegal', harchiveWord⟩
+        have hdelta := hzero execution.1.1 execution.2.1 execution'.1.1
+          execution'.2.1 execution.1.2 hsync
+        rw [deltaSum_eq_clock_sub] at hdelta
+        dsimp only [clockOf]
+        simpa only [hword] using (sub_eq_zero.mp hdelta)
+      obtain ⟨recover, hfactor⟩ :=
+        (Function.factorsThrough_iff (f := archiveOf) clockOf).mp hfiber
       refine ⟨recover, ?_⟩
       intro x hx word hlegal
-      have hexists : Nonempty (Candidate (visibleArchive S x word)) :=
-        ⟨⟨(x, word), hx, hlegal, rfl⟩⟩
-      dsimp only [recover]
-      rw [dif_pos hexists]
-      let chosen := Classical.choice hexists
-      have hchosenStart : chosen.val.1 ∈ X0 := chosen.property.1
-      have hchosenLegal : Legal S chosen.val.1 chosen.val.2 := chosen.property.2.1
-      have hchosenArchive :
-          visibleArchive S chosen.val.1 chosen.val.2 = visibleArchive S x word :=
-        chosen.property.2.2
-      have hword : chosen.val.2 = word := by
-        have := congrArg (List.map Prod.fst) hchosenArchive
-        simpa [archive_actions] using this
-      have hchosenLegalWord : Legal S chosen.val.1 word := by
-        simpa only [hword] using hchosenLegal
-      have hchosenArchiveWord :
-          visibleArchive S chosen.val.1 word = visibleArchive S x word := by
-        simpa only [hword] using hchosenArchive
-      have hsync : SynchronizedPath S chosen.val.1 x word := by
-        apply (synchronizedPath_iff chosen.val.1 x word).mpr
-        exact ⟨hchosenLegalWord, hlegal, hchosenArchiveWord⟩
-      have hdelta := hzero chosen.val.1 hchosenStart x hx word hsync
-      rw [deltaSum_eq_clock_sub] at hdelta
-      change clock S chosen.val.1 chosen.val.2 = clock S x word
-      rw [hword]
-      omega
+      let execution : Execution := ⟨(x, word), hx, hlegal⟩
+      have hclock := congrFun hfactor execution
+      simpa only [Function.comp_apply, archiveOf, clockOf, execution] using hclock.symm
     tfae_have 2 -> 3 := by
       intro hzero pair hreachable a hedge
       rcases hreachable with ⟨x, hx, x', hx', word, hsync, hend⟩
@@ -417,7 +411,7 @@ theorem archive_clock_recovery_and_finite_ambiguity
     rcases hbadReachable with ⟨x, hx, x', hx', word, hsync, hend⟩
     exact ⟨word.length, x, hx, x', hx', word, rfl, hsync, hend⟩
   rcases Nat.find_spec hasSomeLength with
-    ⟨x, hx, x', hx', word, hwordLength, hsync, hend⟩
+    ⟨x, hx, x', hx', word, _, hsync, hend⟩
   have htraceNodup : (pairTrace S x x' word).Nodup := by
     by_contra hrepeated
     rcases shorten_repeated_path x x' word hsync hrepeated with

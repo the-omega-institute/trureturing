@@ -17,9 +17,10 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
                 "System",
                 "Finite partial-action systems",
                 SystemFormula(),
-                "A system assigns to each action a decidable domain, a successor on configurations, "
-                    + "a visible reading, and an integer cost. The successor, reading, and cost are "
-                    + "total functions, while executions use them only where the domain holds."),
+                "A system assigns to each action a decidable domain, a total successor and integer cost, "
+                    + "and a reading defined only on that action's domain. Values outside the domain "
+                    + "never enter a legal execution, so this preserves the source partial-map model, "
+                    + "including empty reading types and empty domains."),
             Def(
                 "archive-clock-state-after",
                 "stateAfter",
@@ -134,6 +135,9 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
 
     private static Formula Id(string name) => F.Id(name);
 
+    private static Formula Lambda(string name, Formula body) =>
+        Seq(F.LambdaLower, Sp, Id(name), Sp, F.Mapsto, Sp, body);
+
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(Id(name))), [.. arguments]);
 
@@ -176,7 +180,10 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
         Seq(Call("System", X, A, Y), Sp, Eq, Sp, OpenBrace,
             Id("D"), Colon, Sp, Arrow(A, Arrow(X, Id("Prop"))), Comma, Sp,
             Id("F"), Colon, Sp, Arrow(A, Arrow(X, X)), Comma, RowBreak, Grp(),
-            Id("ell"), Colon, Sp, Arrow(A, Arrow(X, Y)), Comma, Sp,
+            Id("ell"), Colon, Sp,
+                Forall, Sp, a, Colon, Sp, A, Comma, Sp,
+                Forall, Sp, x, Colon, Sp, X, Comma, Sp,
+                Arrow(Call("D", a, x), Y), Comma, Sp,
             Id("c"), Colon, Sp, Arrow(A, Arrow(X, Integers)), Comma, RowBreak, Grp(),
             Forall, Sp, a, Comma, Sp, x, Comma, Sp, Call("Decidable", Call("D", a, x)),
             CloseBrace, Dot),
@@ -204,8 +211,11 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
         Seq(Equal(Call("visibleArchive", S, x, emptyWord), Seq(OpenBracket, CloseBracket)), Comma),
         Seq(Forall, Sp, a, Colon, Sp, A, Comma, Sp, Forall, Sp, w, Colon, Sp, wordType, Comma, Sp,
             Equal(Call("visibleArchive", S, x, Call("cons", a, w)),
-                Call("cons", Pair(a, Call("reading", S, a, x)),
-                    Call("visibleArchive", S, Call("successor", S, a, x), w))), Dot),
+                Call("dite", Call("domain", S, a, x),
+                    Lambda("h", Call("cons",
+                        Pair(a, Call("reading", S, a, x, Id("h"))),
+                        Call("visibleArchive", S, Call("successor", S, a, x), w))),
+                    Lambda("h", emptyWord))), Dot),
     ]));
 
     private static Formula ClockFormula() => Disp(new Formula.Aligned([
@@ -222,12 +232,12 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
         Forall, Sp, a, Colon, Sp, A, Comma, Sp,
         IffFormula(
             Call("SynchronizedEdge", S, Id("p"), a),
-            And(
-                And(
-                    Call("domain", S, a, Call("fst", Id("p"))),
-                    Call("domain", S, a, Call("snd", Id("p")))),
-                Equal(Call("reading", S, a, Call("fst", Id("p"))),
-                    Call("reading", S, a, Call("snd", Id("p")))))), Dot));
+            Seq(Exists, Sp, Id("h"), Colon, Sp,
+                Call("domain", S, a, Call("fst", Id("p"))), Comma, Sp,
+                Exists, Sp, Seq(Id("h"), Apos), Colon, Sp,
+                    Call("domain", S, a, Call("snd", Id("p"))), Comma, Sp,
+                Equal(Call("reading", S, a, Call("fst", Id("p")), Id("h")),
+                    Call("reading", S, a, Call("snd", Id("p")), Seq(Id("h"), Apos))))), Dot));
 
     private static Formula SynchronizedPathFormula() => Disp(new Formula.Aligned([
         Seq(CommonParameters(), Forall, Sp, x, Comma, Sp, xp, Colon, Sp, X, Comma),
