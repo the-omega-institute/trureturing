@@ -1,0 +1,8 @@
+### 10.2 Support descent for a specified square-class subgroup
+
+A finite prime set $H$ is rank-closed if
+$\operatorname{Supp}(\rho(p))\subseteq H$ for every $p\in H$.
+Throughout this section assume $\{2,3,5\}\subseteq H$ and define
+$$R_H=\operatorname{lcm}_{p\in H}\rho(p).$$
+Then $60\mid R_H$ and $\operatorname{Supp}(R_H)\subseteq H$.
+

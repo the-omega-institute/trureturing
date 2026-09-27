@@ -1,0 +1,38 @@
+**Theorem 10.3 (explicit rank budget).** For every $n\geq1$,
+$$\boxed{[F_n]\in\mathcal G_H\quad\Longrightarrow\quad n\mid5R_H.}
+ \tag{GSE1}$$
+More precisely,
+$$v_q(n)\leq v_q(R_H)\ (q\ne5),\qquad
+  v_5(n)\leq v_5(R_H)+1.$$
+
+Proof. Lemma 10.1 puts all index primes in $H$. Let $q\ne5$ divide $n$
+and suppose $e=v_q(n)>v_q(R_H)$. Lemma 10.2 applies to $(q,e)$:
+the only excluded case is impossible since $4\mid R_H$.
+Choose an odd-exponent prime $p$ in $C_{q,e}$. Its rank $q^e$ cannot
+divide $R_H$, so $p\notin H$. Consequently $p\nmid n$, by Lemma 10.1.
+Since $q^e\mid n$, the original prime-to-index valuation gives
+$v_p(F_n)=h_p$, an odd integer. This contradicts
+$\operatorname{Supp}(d(n))\subseteq H$. The primes two and three
+cannot be this $p$, because they already belong to $H$.
+This proves all non-five bounds, without assuming their depths equal one.
+
+Set $a=v_5(R_H)\geq1$. If $e=v_5(n)\geq a+2$, put $m=n/25$.
+For every $p\in H$, the condition $\rho(p)\mid n$ is equivalent to
+$\rho(p)\mid m$: only the five-exponent has decreased, and it remains
+at least the five-exponent of every rank. For $p\in H\setminus\{2,5\}$
+the valuation formulas then give the same valuation in $F_n$ and $F_m$.
+At five the valuations differ by two. At two, division of an index by
+$25$ preserves its two-valuation and divisibility by three, so the small
+valuation formula gives equality. Outside $H$, primes do not divide $n$
+or $m$. Any such prime occurring in $F_m$ also occurs in $F_n$, with the
+same original valuation, which is even by the square-class hypothesis.
+Other outside primes have even valuation in $F_n$ and zero in $F_m$.
+Thus all valuation parities agree:
+$$[F_n]=[F_m]\quad\hbox{in }\mathcal G.$$
+But $n/m=25$ and $m<n$, contradicting the classical square-class
+exceptions. Hence $e\leq a+1$. These prime-exponent bounds prove GSE1.
+
+The group step is the explicit cancellation of an EVEN shift in the
+valuation vector once rank-divisibility thresholds are preserved.
+No claim is made that $n\mapsto[F_n]$ is a homomorphism.
+

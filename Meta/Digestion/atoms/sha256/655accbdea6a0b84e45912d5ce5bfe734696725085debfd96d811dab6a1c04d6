@@ -1,0 +1,17 @@
+**Theorem 10.6 (uniform lcm escape).** For every positive $n$,
+$$\boxed{U(n)\subseteq\{p:p\leq Q\}
+ \quad\Longrightarrow\quad n\mid10L(Y_Q).}\tag{GSE4}$$
+Equivalently, if $n\nmid10L(Y_Q)$, there is a prime $p>Q$ such that
+$$p\mid F_n,\qquad p\nmid n,\qquad h_p\text{ is odd}.$$
+If $F_n$ is powerful, that same witness has odd $h_p\geq3$ and is WSS.
+
+Proof. Let $H_Q$ consist of all primes at most $Q$. It is rank-closed
+and contains $H(S)$ for $S=\{p:5<p\leq Q\}$; in fact this seed is
+already $H_Q$. For $p>5$ in $H_Q$, the relevant bound $p-(5/p)$ has
+form $2k$ with $1\leq k\leq Y_Q$. Hence $\rho(p)\mid2L(Y_Q)$.
+The ranks three, four and five at the small primes divide this integer
+too. It follows that $R_{H_Q}\mid2L(Y_Q)$. Apply GSE2 to obtain GSE4.
+The remaining assertions are its contrapositive and the definition of
+powerfulness. The existence of a powerful $F_n$ with the displayed
+nondivisibility is not assumed or proved by this implication.
+

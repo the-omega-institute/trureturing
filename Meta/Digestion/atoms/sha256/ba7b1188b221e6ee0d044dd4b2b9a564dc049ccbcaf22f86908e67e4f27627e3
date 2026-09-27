@@ -1,0 +1,17 @@
+**Lemma 10.1 (support descent).** If $[F_n]\in\mathcal G_H$, then
+$\operatorname{Supp}(n)\subseteq H$.
+
+Proof. Suppose otherwise and choose the largest prime $\ell\mid n$
+outside $H$. It exceeds five. Every prime $p\mid F_\ell$ has exact
+rank $\ell$ and satisfies $p>\ell$: the rank divides $p-1$ or $p+1$,
+and the putative equality $p+1=\ell$ is excluded by parity. The rank
+cannot be one, and the small primes are excluded by their small ranks.
+If such a $p$ divided $n$, maximality of $\ell$ outside $H$ would imply
+$p\in H$, whose rank-closure would imply $\ell\in H$, a contradiction.
+Thus $p\nmid n$, and the prime-to-index valuation formula gives
+$v_p(F_n)=v_p(F_\ell)=h_p$.
+The nonsquare $F_\ell$ has an odd-exponent factor $p$. It remains odd in
+$F_n$, hence lies in $H$ by hypothesis. Its rank again forces
+$\ell\in H$, the same contradiction. This is the earlier OSE
+largest-prime-outside-closure argument with a square-class hypothesis.
+

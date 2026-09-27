@@ -1,0 +1,25 @@
+### 10.7 Group comparison and the unremoved WSS obligation
+
+The group $\mathcal G_H$ keeps parity of original and transported
+valuations, while the rank thresholds keep their actual index support.
+Lemma 10.2 supplies new support in the layers; Theorem 10.3 forces a
+forbidden repeated square class if an exponent remains too large.
+The outcome is an explicit divisor bound, rather than just the finite
+cardinality $|\mathcal G_H|$.
+
+A different group occurs in a first lift at an odd prime. For a fixed
+return matrix $g=I+pA$ modulo $p^2$,
+$$g^k=I+kpA\pmod{p^2}.$$
+If $A$ is nonzero modulo $p$, then $g^k=I$ exactly when $p\mid k$.
+Thus a zero sum among copies of this one defect merely multiplies the
+index by $p$. It does not make the original defect vanish. This is the
+already-known local lifting mechanism; a cyclic zero-sum theorem alone
+cannot provide the missing original WSS witness.
+
+Theorem 10.3, its cutoff and its original-depth escape corollaries are
+ordinary deductions using the classical inputs stated in 10.1. They do
+not decide the whole WSS zero set or exclude every $P^2Q^3$ golden block.
+The square-class theorem is a separate formalization prerequisite.
+The prime-power layer statement for primes at least seven and OSE's
+support descent retain their earlier repository attribution.
+

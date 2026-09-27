@@ -1,0 +1,18 @@
+**Corollary 10.4 (finite-support divisor set).** One has
+$$\boxed{U(n)\subseteq S\quad\Longrightarrow\quad n\mid5R_S.}
+ \tag{GSE2}$$
+If $\mathcal P(S)=\{n\geq1:F_n\text{ powerful},\ T(n)\subseteq S\}$,
+then
+$$\boxed{\mathcal P(S)=
+ \{n\mid5R_S:F_n\text{ powerful},\ T(n)\subseteq S\}.}\tag{GSE3}$$
+In particular the earlier OSE bound can be combined with the divisor bound:
+$$\#\mathcal P(S)\leq
+ \min\bigl(2^{|H(S)|}-4,\ \tau(5R_S)\bigr).$$
+
+Proof. The existing OSE support descent gives
+$[F_n]\in\mathcal G_{H(S)}$ from $U(n)\subseteq S$; Theorem 10.3 applies.
+In a powerful value, an external odd original depth is at least three,
+so $U(n)\subseteq T(n)$. This proves both inclusions in GSE3 and the
+stated bounds. The $2^{|H|}-4$ estimate is the earlier square-class
+count, not newly claimed here.
+

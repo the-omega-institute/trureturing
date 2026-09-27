@@ -1,0 +1,32 @@
+**Lemma 10.2 (prime-power layer).** Let $q\ne5$ be prime, let $s\geq1$,
+and exclude $(q,s)=(2,1)$. The actual positive integer
+$$C_{q,s}=F_{q^s}/F_{q^{s-1}}$$
+is greater than one, is coprime to $F_{q^{s-1}}$, and is not a square.
+Every prime $p\mid C_{q,s}$ satisfies
+$$\rho(p)=q^s,\qquad p\ne q,\qquad v_p(C_{q,s})=h_p.$$
+In particular there is such a $p$ with odd original depth.
+
+Proof. Fibonacci divisibility and strict growth give the integer quotient
+and positivity; the omitted case has quotient one. The rank bound shows
+$q\nmid F_{q^s}$ for odd $q\ne5$, since $\rho(q)>1$ is prime to $q$.
+For $q=2$, $\rho(2)=3$ gives the same exclusion. An old prime
+$p\mid F_{q^{s-1}}$ is therefore different from $q$. For odd $p\ne5$
+its valuation is unchanged under multiplication of the index by $q$.
+Five cannot occur because $q\ne5$. If the old prime is two, necessarily
+$q=3$ and both indices are odd multiples of three, so both valuations
+are one. This proves coprimality.
+Any new prime has rank a divisor of $q^s$ which does not divide
+$q^{s-1}$, hence exactly $q^s$. The same valuation formulas give its
+original depth, including $p=2$ at $(q,s)=(3,1)$ and $p=3$ at $(2,2)$.
+If the quotient were square, the distinct positive indices $q^{s-1}$
+and $q^s$ would lie in one classical square class. Inspection of the
+two exceptional classes leaves only the excluded pair $1,2$.
+Thus the quotient has an odd-exponent prime.
+For $q\geq7$ the rank and nonsquare layer mechanism is already present
+in PBC.3. The small-index clauses here ensure it can be used for every
+prime except the ramified prime five.
+
+The exclusion of five is essential to this cancellation argument:
+$F_{25}/F_5=5\cdot3001$ still shares a factor five with $F_5$.
+No nonsquare statement about that quotient with five removed is assumed.
+
