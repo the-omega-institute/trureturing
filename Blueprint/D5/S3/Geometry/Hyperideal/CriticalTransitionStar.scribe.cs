@@ -63,7 +63,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written continuation: flat pairs constrain shared lengths"),
                 F.Disp(FlatPairMeanFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026criticaltransition")),
                 Blocks(
                     Paragraph(Text("This authored Remark records written mathematics beyond "
                         + "critical_transition_star. It names no new Lean declaration and does "
@@ -112,7 +112,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written continuation: two global edges and two-flat support"),
                 F.Disp(TwoEdgeWrittenFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026criticaltransition")),
                 Blocks(
                     Paragraph(Text("This is an authored written-mathematics Remark, not a new "
                         + "Lean declaration or an extension of critical_transition_star. "
@@ -160,7 +160,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written colouring continuation: states, parity and interfaces"),
                 F.Disp(ColourMismatchFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026criticaltransition")),
                 Blocks(
                     Paragraph(Text("This authored research Remark is separate from the original "
                         + "Lean declaration. StrictBoundaryTriangulations has the existing actual "
@@ -197,7 +197,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written continuation: every flat set exposes a pi edge"),
                 F.Disp(ExposedPiEdgeFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026criticaltransition")),
                 Blocks(
                     Paragraph(Text("This authored research Remark records ordinary written "
                         + "mathematics and names no new Lean declaration. T ranges over actual "
@@ -251,7 +251,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written continuation: endpoint caps and unequal transverse pairs"),
                 F.Disp(EndpointCapFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026mixedmatching")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026mixedmatching")),
                 Blocks(
                     Paragraph(Text("This authored Remark describes ordinary written mathematics, "
                         + "not a new Lean declaration. GenuineHyperidealAngles is the six positive "
@@ -309,7 +309,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                 H("Written continuation: coupled endpoint budgets without role averaging"),
                 F.Disp(SingletonRealizationFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/cfmp2026mixedmatching")),
+                    LibraryNoteRef.Create("D5/L/Geometry/cfmp2026mixedmatching")),
                 Blocks(
                     Paragraph(Text("This is authored written mathematics, not a new Lean "
                         + "declaration. StrictBoundaryTriangulations means actual finite "
