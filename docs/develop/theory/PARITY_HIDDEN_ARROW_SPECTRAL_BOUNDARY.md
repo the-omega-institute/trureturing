@@ -53592,3 +53592,445 @@ Rudelson–Vershynin 的 Littlewood–Offord 与随机矩阵研究给出小球�
 式 (176.21) 仍按实际粗粒化数据分布取期望，仍保留实际生成的法向量、同一斜率与截距，以及原始秩、行列式和长区间条件。没有证明它趋零，也没有证明这些条件在原始数据下以非消失概率失败。现有物理结论仍为第 163 章的 $0<c<\gamma$；第 165 章在更宽区间上的回接仍是有条件的。本章不宣称端点、最优性、物理阈值、全球原创性或检索穷尽。
 
 ## 追加锚（本行以下为增补区）
+
+## 177. 全谱尺度的可达复鞍点：原始总归一化量的两项振幅与带标签零点
+
+本章在一个明确的小而固定的非零全谱场区域中，证明原始负号总归一化量有端点和复电荷鞍点两项贡献，二者的定向轮廓系数均为 $+1$。能量积分先在包含原点的复电荷圆盘上建立一致相对估计；有限矩形轮廓控制连接段，剩余实电荷半轴另行保留同一个原始噪声因子。由此得到可以在相消处使用的两项振幅误差界。
+
+预测相位保留有限谱、秩一修正、实际非中心项、选择系数、低元组和振幅对数。在该相位的一个明确逆像区域内，原始总量的零点均简单、标签连续且没有额外零点；相位误差为 $O(\delta)$，原坐标 $d(h-h_0)$ 的误差为 $o(1)$。这是全谱尺度的局部定理，不包含全局延拓、最早 Stokes 转换或最近零点结论。以下为普通数学推导，未作 Lean 认证。
+
+### 177.1 原始完整概率律、共同量词与固定常数
+
+Use the SAME full selected-count law and full residual:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ H_y=V+\sqrt\delta\,y,\quad a=(2V)^{-1}+\eta,
+$$
+$$
+ N_P^-(h,y)=\sum_{D<0}P_x(n)
+  \exp\{aD^2+hD-(E-H_y)^2/(2\delta\sigma^2)\}.
+ \tag{177.1}
+$$
+Here eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, and sigma->0 has ONLY the original strict reserve limsup log(1/sigma)/Q^3<c_q/2. Fix |y|<=Y. On each common tight class of Chapter 169 enlarge M>=16 once so V,V_H in[M^-1,M], max v_j/delta<=M, C2,H=delta^-1 sum_H v_j^2>=M^-1, and both high covariance and its charge-conditioned rank-one reduction have at least1/(M delta) eigenvalues in[delta/M,M delta]. Also ||e||<=M delta^5, n_g<=M delta^-4, and the retained exponential high-cell/low-tuple bounds hold. Enlarging M for interlacing is part of this fixed class. The actual pair and actual path laws have their own original exhaustion of these classes, uniformly over deterministic size-q supports. Every assertion is simultaneous in the array, y and fields on a class. No convergence of an empirical parameter to a deterministic constant is used.
+
+Here are explicit conservative choices; their small size is immaterial to their being fixed. Put
+$$
+ s_0=(100M)^{-1},\quad k=(16M^4)^{-1},\quad
+ E_0=2^{160}(12!)^2(1+Y)^2M^{160},
+$$
+$$
+ s_1=\min\{s_0/64,k/(2^{20}E_0)\},\quad v_1=s_1/8,
+ \quad r_0=\min\{2^{-40}M^{-40},kv_1^2/(2^{30}E_0)\},
+$$
+$$
+ C_0=2^{160}E_0^{20}k^{-20}r_0^{-20},\quad
+ \underline\beta=(8M^5)^{-1},\quad\overline\beta=M^6,
+ \quad\lambda=\min\{r_0/64,2^{-100}\underline\beta C_0^{-2}\}.
+ \tag{177.2}
+$$
+The exact empirical coefficient, charge unit, common field unit and large parameter are
+$$
+ \beta_Q={C_{2,H}\over4V_H^4}\in[\underline\beta,\overline\beta],
+ \quad\ell=\lambda(\underline\beta/\beta_Q)^{1/3},
+ \quad\ell_* =\lambda(\underline\beta/\overline\beta)^{1/3},
+$$
+$$
+ H_* =\underline\beta\lambda^3=\beta_Q\ell^3,
+ \qquad \tau={\beta_Q\ell^4\over\delta}={H_*\ell\over\delta}.
+ \tag{177.3}
+$$
+Thus ell in[ell_*,lambda], tau is bounded above and below by fixed positive multiples of delta^-1, and H_* is independent of the realized spectrum. Fractional powers in (177.3) are positive real.
+
+The explicit fixed field chart is
+$$
+ \Omega=\{\omega:1/2<\Re\omega<5/2,\ |\Im\omega|<1/32\},
+\quad u(\omega)=(-i\omega/3)^{1/4},\quad
+ \kappa(\omega)=-4u(\omega)^3,
+$$
+$$
+ \mathscr H=\{H_*\kappa(\omega):\omega\in\Omega\},\qquad h=H/\sqrt\delta.
+ \tag{177.4}
+$$
+The fourth root continues arg u=-pi/8 on real positive omega. These maps are one-to-one on a neighborhood of the closure of Omega, so (177.4) is a nonempty explicit fixed open H-domain, with fixed boundary margins available. One may enlarge each of the four sides of Omega outward by1/1024 for the analytic derivative estimates; all conservative geometric inequalities below persist there. The proof uses the closure of Omega and then counts on an inner inverse-phase rectangle. In particular |H|<=5H_*, with a fixed positive imaginary part and a negative real part on this chart.
+
+All eventual inequalities used below follow from the original hypotheses. One sufficient geometry threshold is
+$$
+ e_Q:=\eta+\sqrt\delta(1+Y)+\sigma^2+\delta+\epsilon+
+ |V-V_H|+\|e_H\|+\mathfrak l_Q
+ \le {2^{-80}\underline\beta\ell_*^4\over C_0},
+ \tag{177.5}
+$$
+where epsilon and the explicit retained exponentially small low bound mathfrak l_Q are specified next. Fixed polynomial factors multiplying the low bound can be absorbed into mathfrak l_Q. In addition tau must exceed fixed constants and |log(delta)|/tau must be small. Each left side tends to zero, or infinity as appropriate, for EVERY originally specified sequence. These are eventual thresholds for the theorem, not additional relative eta/sigma rates.
+
+### 177.2 原有限系数、低元组与精确谱预测量
+
+The original coefficient is literally
+$$
+ P_x(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j)
+ { [z^{q-k_n}]\prod_{i\notin J0}(1-p_i+p_i z)
+  \over [z^q]\prod_i(1-p_i+p_i z)},\qquad k_n=\sum_jn_j.
+ \tag{177.6}
+$$
+Keep the actual outside variances d_c,d_all and
+$$
+ \epsilon=B^2/(2d_c),\quad \ell_{sel}=\tfrac12\log(d_{all}/d_c),
+ \quad b_{ch}=a-\epsilon.
+ \tag{177.7}
+$$
+Here b_ch is NEVER the residual exponent beta_res. The full-box estimate is the retained L_x(k_n)=exp(ell_sel-epsilon D^2)+O(q^-1/2); it is not an exact replacement of (177.6).
+
+Retain every low tuple L, its probability p_L, centered charge c_L and energy u_L, with sum p_L=1 and |c_L|+u_L<=P(Q)exp(-b_Low Q^3). Write C=diag(v_j:j high), v=(v_j), V_H=sum_H v_j,
+$$
+ A_c=C-vv^T/V_H,\quad B_c=A_c/\delta,\quad
+ b_L(\rho)=-(\rho/\sqrt\delta+c_L)v/V_H-e_H.
+$$
+$$
+ J_L(s,\rho)=\tfrac12\sigma^2s^2+s(u_L-H_y)
+ -\tfrac\delta2\log\det(I-2sB_c)
+ +s b_L(\rho)^T(I-2sB_c)^{-1}b_L(\rho).
+ \tag{177.8}
+$$
+Complex squares are bilinear. The determinant logarithm starts at0 at s=0. The eigenvalues of B_c are nonnegative and at most M. For rho in the disk |rho|<4r0, Section 177.3 proves one specified analytic root s_L(rho) of J_s=0 near zero, with Re K_L>=k where K_L=J_ss(s_L,rho). Define
+$$
+ A_L(\rho)=J_L(s_L(\rho),\rho)+b_{ch}\rho^2
+                    -(\rho+\sqrt\delta c_L)^2/(2V_H),
+$$
+$$
+ Z_Q(\rho)=\sum_Lp_L{e^{A_L(\rho)/\delta}\over\sqrt{K_L(\rho)}},
+ \qquad \mathcal A_Q(\rho)=\delta\Log Z_Q(\rho).
+ \tag{177.9}
+$$
+The square roots and logarithm are proved nonzero below and continue their real values at rho=0. These are finite resolvents, finite saddle equations and the exact low mixture. The predictor is not defined from an unknown total integral, an exact zero, or an amplitude ratio to be estimated. The physical sigma and every noncentral, rank-one, selection and low term remain in (177.8),(177.9).
+
+For clarity about fidelity to the spectrum, put lambda_j=v_j/delta and
+$$
+ S(s)=\sum_H{v_j\over1-2s\lambda_j},\qquad
+ L(s)=-\tfrac\delta2\sum_H\log(1-2s\lambda_j),\qquad
+ m_e(s)=-2s\sum_H{\lambda_je_j\over1-2s\lambda_j}.
+$$
+The retained exact determinant lemma gives det(I-2sB_c)=prod_H(1-2s lambda_j) S(s)/V_H. Equivalently the combined action in (177.9), before setting s=s_L, is EXACTLY
+$$
+ F_L(s,\rho)=\tfrac12\sigma^2s^2+s(u_L-H_y)+L(s)
+ +s\sum_H{e_j^2\over1-2s\lambda_j}+b_{ch}\rho^2
+ -{[\rho+\sqrt\delta\{c_L+m_e(s)\}]^2\over2S(s)}
+ -\tfrac\delta2\log(S(s)/V_H).
+ \tag{177.10}
+$$
+This follows either by Sherman--Morrison or by the two convergent orders of conditioning/tilting for real s<0, extended analytically. S and the diagonal factors have positive real part for Re s<1/(2M). The rank-one logarithm in (177.10) has order delta in rescaled action and can have order one in phase; it is retained. Neither q_star=1-2b_ch S nor its square root occurs in the conditional representation. No q_star singularity is crossed in disguise.
+
+### 177.3 包含端点的复电荷圆盘
+
+This section extends Chapter 169's narrow positive-charge tube to the disk needed for the actual charge contour. It includes zero and the lower-right rectangle. It is a new domain proof, not an inference from real C6 convergence.
+
+On |s|<=4s0, the resolvent norm is at most2. Geometric differentiation gives, through total order12, bounds by E0 for the dimension-weighted trace and mean terms in (177.8). Indeed delta tr B_c^j<=M^{j-1}V_H<=M^j, and ||partial_rho b_L||^2=delta^-1 sum v_j^2/V_H^2<=M^4. A differentiated resolvent contributes j! times a power of2M; a differentiated bilinear mean contributes at most its two differentiated factors. These bounds, the binomial rule and12! are dominated by E0. No factor equal to the high dimension or sigma^-1 occurs. At rho=0,
+$$
+ J_s(0,0)=O_{M,Y}(\sqrt\delta),\quad
+ J_{ss}(0,0)=\sigma^2+2\delta\operatorname{tr}B_c^2+O(\delta^{10})\ge 8k
+ \tag{177.11}
+$$
+eventually. The block of eigenvalues proves the last inequality. Dependence on complex rho changes these quantities by at most E0(|rho|^2+delta^5|rho|+exponentially small terms).
+
+First solve at rho=0 by strict real monotonicity and the intermediate value theorem, obtaining a real root of size O(sqrt(delta)). On its s-circle of radius s1, the linear term in J_s has modulus at least4k s1; its s-remainder is at most E0 s1^2 and its complex-rho perturbation at most E0(4r0)^2+o(1). The choices (177.2) make their sum less than k s1. Rouché gives one root for every |rho|<4r0. A second smaller-circle estimate locates it in the inner quarter disk and gives Re K_L>=k. Uniqueness patches the root holomorphically over the charge disk. The same argument with complex auxiliary low variables gives the derivative bounds needed for their exponentially small variation. This construction includes the possibly positive endpoint energy saddle; it does not require J_s(0,rho)>0 everywhere.
+
+The exact noisy conditional inversion is, initially for real rho,
+$$
+ I_L(\rho)={\sigma\over\sqrt{2\pi\delta}}
+            \int_{\mathbb R}e^{J_L(c+iv,\rho)/\delta}\,dv,
+\quad
+ g(\rho/\sqrt\delta)={e^{\ell_{sel}}\over\sqrt{2\pi V_H}}
+  \sum_Lp_L e^{[b_{ch}\rho^2-(\rho+\sqrt\delta c_L)^2/(2V_H)]/\delta}I_L(\rho).
+ \tag{177.12}
+$$
+The second expression is the SAME faithful comparator profile from Chapters 158 and 169. The following contour argument supplies a locally uniform complex continuation and a relative estimate with raw sigma.
+
+At real rho=0 shift the energy line to its real root. Conditional squared-Gaussian Fourier inversion bounds its centered determinant modulus by (1+c_M v^2)^(-1/(4M delta)); the real noncentral modulus is at most one. This gives a fixed gap outside |v|<v1. Continue only the finite central part in rho. The change in its rescaled action is bounded by E0(4r0)^2+o(1), smaller than the fixed v1 gap by (177.2). Through the continued root use the vertical local segment. Taylor's theorem and Re K_L>=k give Re[J(s_L+iv,rho)-J(s_L,rho)]<=-k v^2/4 on a fixed smaller segment. Short connecting pieces join its ends to the old imaginary contour in the gap region.
+
+The infinite energy contour is treated separately. At heights +/-2s0 join to rays arg s=+/-theta with cos theta=1/4. Their first real coordinate is2s0/sqrt(15)<s0, below every positive determinant pole. The connectors stay in |s|<4s0. For a>=0, direct differentiation and integration give
+$$
+ -\tfrac14\log(1-4a\cos\theta+4a^2)-a\cos\theta
+       \le-\tfrac1{100}\min(a^2,a).
+ \tag{177.13}
+$$
+For example its derivative is -2a(1-2cos^2(theta)+2a cos(theta))/(1-4a cos(theta)+4a^2); integrate separately below and above1. Summing over the block shows that the determinant after subtraction of s tr A_c loses at least c_M min(|s|^2,|s|) in rescaled real action, where c_M=(10^6 M^5)^-1 suffices. The remaining linear energy mismatch is O(sqrt(delta)+delta)|s|. On these rays the resolvent norm is at most1/sin(theta), and the complex mean costs at most2||b_L(rho)||^2 |s|. Its norm is at most E0(4r0)^2+o(1), so (177.2) absorbs this cost into one quarter of the determinant loss starting at |s|>=2s0. The noise has nonpositive real quadratic part because cos(2theta)<0.
+
+On a connector at Im s=+/-2s0 and 0<=Re s<=2s0/sqrt(15), Re s^2 is strictly negative. The centered determinant's quadratic term has that sign; the remaining geometric series is at most a fixed multiple of M|s|<1/20 of it, after the harmless sharper geometric bound is used. The trace linear term cancels the energy center up to O(sqrt(delta)+delta). The preceding mean bound absorbs its complex perturbation. Thus the connectors also have a fixed gap relative to the root, whose rescaled action is O(r0^4+delta). The portions between the small local segment and these connectors retain the real-base Fourier gap. Reducing fixed gap constants absorbs all endpoints of these pieces.
+
+For each positive sigma the finite-Q closing arcs are legal: the swept sectors avoid the positive determinant poles, and the noise Gaussian damps their ends; a complex mean contributes at most exponential-linear growth there. After contour equality, (177.13) supplies uniform estimates without inverse sigma. Equivalently the initial complex-rho identity follows by dominated holomorphic continuation from real rho on this deformed contour. We have NOT applied a real-mean characteristic bound to a complex mean on an infinite vertical line. All nonlocal contour pieces are exponentially small relative to the energy saddle uniformly on a slightly smaller charge disk.
+
+On the local symmetric segment set s-s_L=i sqrt(delta)u. The normalized cubic term is O(sqrt(delta)) and is odd; its integral vanishes. Its square, the quartic term and the uniform sixth-order remainder contribute O(delta). Re K_L>=k controls the Gaussian integral and its tails. Consequently, uniformly and holomorphically on |rho|<2r0,
+$$
+ I_L(\rho)=\sigma {e^{J_L(s_L,\rho)/\delta}\over\sqrt{K_L(\rho)}}[1+O(\delta)].
+ \tag{177.14}
+$$
+The same error bounds hold for fixed derivatives on inner disks by Cauchy. Comparing all lows to c_L=u_L=0 while keeping the actual e_H changes each normalized summand by at most a fixed polynomial in delta^-1 times the retained exponential low bound. Take mathfrak l_Q in (177.5) large enough to include this bound and its fixed-order derivative bounds; it is explicitly P_0(Q)e^(-b_Low Q^3) from those resolvent derivatives. Positive p_L sum to1. Therefore Z_Q divided by the zero-low reference lies in the disk |z-1|<1/4 eventually. This proves the nonzero logarithm in (177.9), and it justifies summing (177.14) without cancellation loss. We obtain the analytic DISK formula
+$$
+ g(\rho/\sqrt\delta)={\sigma e^{\ell_{sel}}\over\sqrt{2\pi V_H}}
+               e^{\mathcal A_Q(\rho)/\delta}[1+R_Q(\rho)],
+ \quad |R_Q|\le C\delta,
+ \tag{177.15}
+$$
+on |rho|<=r0, with uniform fixed derivatives on inner disks. In particular |Acal_Q(0)|<=C delta and Acal_Q(0) is real. Formula (177.15) is relative before any charge-contour deformation; its analytic remainder will be integrated against the proved deformed-contour envelopes.
+
+### 177.4 用于几何控制的谱展开与保留的精确相位
+
+Only for proving geometry, compare (177.10) with the exact finite-array reference
+$$
+ F^0(s,\rho)=L(s)-sV_H+
+           \rho^2\{(2V_H)^{-1}-(2S(s))^{-1}\}.
+ \tag{177.16}
+$$
+The differences are precisely physical noise, output shift, eta/selection, high/full discrepancy, noncentral terms, the rank-one logarithm and the curvature/low logarithms. Their fixed derivatives on the disk are bounded by C0 e_Q. This follows from the resolvent bounds above and Cauchy on the larger disks; the saddle derivative is obtained by division by K_L>=k, with at most the fixed-order powers accounted for by C0. The low logarithm costs delta times its relative low bound, already included in mathfrak l_Q. No uncontrolled division by delta enters these derivative bounds for the RESCALED action.
+
+Write C2=C2,H. Geometric series give
+$$
+ L(s)-sV_H=C2\,s^2+O_M(s^3),\qquad
+ (2V_H)^{-1}-(2S(s))^{-1}=C2\,s/V_H^2+O_M(s^2).
+$$
+The reference stationary equation therefore has an even analytic root s^0(rho)=-rho^2/(2V_H^2)+O_M(rho^4), and
+$$
+ F^0(s^0(\rho),\rho)=-\beta_Q\rho^4+O_M(\rho^6).
+ \tag{177.17}
+$$
+The O constants and six charge derivatives of the remainder on inner disks are bounded by C0, using its construction in (177.2). To check the size of this conservative constant, a resolvent derivative of order at most12 costs at most12!(4M)^12 E0; an implicit derivative of order at most8 costs a product of at most16 such factors and at most16 powers of k^-1. Cauchy on the rho margin costs at most12! r0^-12. Their product is dominated by C0. This also bounds the displayed remainder after factoring the even zero of order6. Thus no unspecified disk-convergence assertion is being applied to a growing domain.
+
+Define the EXACT finite normalized charge phase
+$$
+ f_Q(x,\kappa)={\mathcal A_Q(\ell x)-\mathcal A_Q(0)\over\beta_Q\ell^4}
+                    -\kappa x.
+ \tag{177.18}
+$$
+From (177.5),(177.17), on |x|<=12 and with derivatives through order6,
+$$
+ \|f_Q(x,\kappa)-(-x^4-\kappa x)\|_{C^6}
+ \le {C_0\lambda^2\over\underline\beta}
+      +{C_0 e_Q\over\underline\beta\ell_*^4}<2^{-30}.
+ \tag{177.19}
+$$
+The estimate includes the removable constant subtraction at0; using an overestimate by e_Q is sufficient. The sixth-order spectral effect in (177.17) is fixed small geometrically, NOT asymptotically negligible in the actual exponent. Terms of order ell^6/delta can diverge. Nothing in (177.16)--(177.19) is used to replace Acal_Q in a phase or amplitude formula. Every higher spectral cumulant remains in the finite predictor (177.8)--(177.10).
+
+### 177.5 可达鞍点与两个定向轮廓系数
+
+For reference f(x,kappa)=-x^4-kappa x and kappa=-4u^3 with u=a-ib, exact algebra gives
+$$
+ f(u)=3u^4,\qquad
+ \Re[f(x-ib)-f(u)]=-(x-a)^2(3a^2-6b^2+2ax+x^2),\quad x\ge0,
+ \tag{177.20}
+$$
+$$
+ \Re f(-iv)=-v^4-\Im\kappa\,v\quad(0\le v\le b).
+ \tag{177.21}
+$$
+On the closed Omega in (177.4), 1/2<a<1, 1/5<b<1/2, 3a^2-6b^2>1/2, |kappa|<5 and Im kappa>1/4. These conservative inequalities follow from |arg omega|<=1/16, |u| between(1/6)^(1/4) and1, and |arg u+pi/8|<=1/64; in particular 3a^2-6b^2=|u|^2(3-9 sin^2(arg u))>1/2.
+
+Rouché on |x-u|=2^-16, using |12u^2|>4 and (177.19), gives a unique saddle u_Q near u, holomorphic in omega, with |u_Q-u|<2^-20 after using the stronger constants actually present in (177.2),(177.5). Equivalently the weaker2^-16 location already suffices for every gap below. Put rho_I=ell u_Q. Its exact equation and curvature are
+$$
+ \mathcal A_Q'(\rho_I)=H,\qquad
+ \mathfrak K(H)=-\mathcal A_Q''(\rho_I),\quad
+ \Re\mathfrak K\ge c\beta_Q\ell^2>0.
+ \tag{177.22}
+$$
+There is no generic nondegeneracy assumption: (177.19),(177.20) prove it, and |rho_I|>=ell_*/2. The energy equation also gives s_L(rho_I)=-rho_I^2/(2V_H^2)+O_M(|rho_I|^4+e_Q), uniformly in the exact lows. By (177.2),(177.5) its modulus is bounded below by a fixed positive multiple of ell_*^2. Thus w=s_L/delta has order delta^-1; this is not a charge-only rescaling with a quartic-size energy tilt. The second and third algebraic reference saddles are not assigned coefficients from their action values.
+
+Cut the ORIGINAL positive charge half-line at rho=8ell, a fixed cut independent of any inherited separator. The finite interval[0,8ell] lies in the analytic disk of (177.15). Deform it by Cauchy's theorem to the three oriented sides
+$$
+ 0\longrightarrow-i b_Q\ell\longrightarrow(8-i b_Q)\ell
+       \longrightarrow8\ell,\qquad b_Q=-\Im u_Q.
+ \tag{177.23}
+$$
+No pole, branch cut, or zero of the density approximation lies in this rectangle. The exact profile itself is analytic there. The geometry may depend nonholomorphically on H through b_Q; the integrals equal the original analytic function for each H, and all bounds are uniform. No analytic dependence of the auxiliary path is required.
+
+The first side has strictly decreasing real normalized phase: its v derivative is at most -Im kappa/2. On the second side let a_Q=Re u_Q and compare f_Q to the reference polynomial with stationary point u_Q, i.e. with kappa replaced by -4u_Q^3. Their first derivatives agree at u_Q and their second derivatives differ by at most a fixed multiple of2^-30. Twice integrating this difference along the horizontal segment, and then applying the EXACT identity (177.20) with a_Q,b_Q, proves
+$$
+ \Re[f_Q(x-i b_Q)-f_Q(u_Q)]\le-c(x-a_Q)^2\quad(0\le x\le8)
+ \tag{177.24}
+$$
+for a fixed c>0. On the right connector the reference loss is larger than1000, so a loss of100 remains after (177.19). The junction at the left end of the horizontal side is separated below BOTH the endpoint and saddle by a fixed gap, from (177.20),(177.21). These inequalities explicitly control the connecting pieces. A fixed small saddle neighborhood on the horizontal side and a fixed endpoint neighborhood on the first side cover all contributions not separated by a gap. Thus there is no unpaid third saddle or unexamined thimble in the truncated integral.
+
+The endpoint's oriented integral has coefficient +1. Indeed with mathfrak q=H-Acal_Q'(0), Im mathfrak q>0, and its leading integral along rho=-iv is integral_0^infinity (-i)exp(i mathfrak q v/delta)dv=delta/mathfrak q. Taylor expansion of the analytic remainder on a fixed endpoint interval and its strictly decreasing envelope gives relative O(tau^-1). The horizontal saddle is traversed left to right. Its Gaussian integral is +sqrt(2pi delta/mathfrak K), using the square root with positive real part. Re mathfrak K>0 makes that integral convergent on the actual horizontal direction. Odd cubic terms cancel; the quartic term and squared cubic cost O(tau^-1). Fixed six-derivative bounds and (177.24) pay the local remainders and exterior. Thus its coefficient is also +1. This is a direct oriented contour proof of accessibility, not action alignment promoted into a cycle coefficient.
+
+### 177.6 保留同一噪声因子的远端实电荷尾界
+
+The infinite real tail in the total must be paid before using (177.23). Put R=8ell and use the SAFE real energy line c_R=-R^2/(4V_H^2). Define alpha(c)=1/(2S(c))-b_ch and use Chapter 174's B_L(c), the action in (177.10) at rho=0 without its rank-one logarithm. Uniform spectral series, the low/noncentral bounds and eventual (177.5) give
+$$
+ \alpha(c_R)\ge\tfrac12\beta_Q R^2>0,\qquad
+ B_L(c_R)\le\tfrac13\beta_Q R^4.
+ \tag{177.25}
+$$
+For verification, the leading terms are alpha(c_R)=beta_Q R^2-eta+epsilon+O_M(R^4)+exponentially small terms, and B_L(c_R)=beta_Q R^4/4+O_M(R^6)+O_M((sqrt(delta)(1+Y)+sigma^2+delta^5)R^2). Since R is between fixed positive8ell_* and8lambda, (177.2),(177.5) make the remainders smaller than the stated margins. No action of order delta is discarded in the predictor; these inequalities are only upper tail bounds.
+
+For real rho>=R, |H|<=5beta_Q ell^3 and the actual small noncentral linear shift yield
+$$
+ B_L(c_R)-\alpha(c_R)\rho^2
+  -\Re[H+\sqrt\delta(c_L+m_e(c_R))/S(c_R)]\rho
+ \le-\tfrac18\beta_Q R^2\rho^2.
+ \tag{177.26}
+$$
+Indeed the constant term consumes at most1/3 of beta_Q R^2rho^2, the field and noncentral term consume less than1/64 for eventual Q, and the negative quadratic provides1/2. The residual is more than1/8. This calculation uses the SAME tilt, tuple and rho.
+
+Under the genuine Gaussian energy tilt at c_R, condition on this SAME real charge. The conditional covariance has a surviving spectral block by rank-one interlacing. The squared-energy Fourier factor is bounded by
+$$
+ D_Q(v)=(1+v^2/(64M^2))^{-1/(16M\delta)},\qquad
+ \int_{\mathbb R}D_Q(v)dv\le C\sqrt\delta.
+ \tag{177.27}
+$$
+The real noncentral factor has modulus at most1 and the imaginary field mark has modulus1. Integrate (177.27) against the positive real-charge tilt BEFORE energy inversion. The noisy inversion contributes sigma/sqrt(delta), and changing r to rho contributes delta^-1/2. Finally integral_R^infinity exp(-beta_Q R^2rho^2/(8delta))d rho<=C delta exp(-512tau). Thus
+$$
+ |G_-(H/\sqrt\delta)-G_{-,[0,R/\sqrt\delta]}(H/\sqrt\delta)|
+       \le C\sigma e^{\ell_{sel}}\sqrt\delta\,e^{-512\tau}.
+ \tag{177.28}
+$$
+Reducing512 to100 would absorb any harmless fixed polynomial bound as well. No inverse sigma and no real envelope divided by a small complex saddle occur in this argument. Determinant poles and q_star are avoided on the negative line; the charge deformation (177.23) is finite and independent of this line. This pays the entire omitted charge half-line, not just a compact part of it.
+
+### 177.7 两项相干振幅与原始总归一化量
+
+Set
+$$
+ \mathfrak q(H)=H-\mathcal A_Q'(0),\quad
+ \Delta(H)=\mathcal A_Q(\rho_I)-\mathcal A_Q(0)-H\rho_I,
+$$
+$$
+ A_E(H)={\sigma e^{\ell_{sel}}\sqrt\delta\over\sqrt{2\pi V_H}}
+                     {e^{\mathcal A_Q(0)/\delta}\over\mathfrak q(H)},
+\quad
+ A_I(H)={\sigma e^{\ell_{sel}}\over\sqrt{V_H}}
+             {e^{[\mathcal A_Q(\rho_I)-H\rho_I]/\delta}\over\sqrt{\mathfrak K(H)}}.
+ \tag{177.29}
+$$
+Both factors are nonzero. In particular Im mathfrak q>=c H_*>0, c beta_Q ell^2<=|mathfrak K|<=C beta_Q ell^2, and |Acal_Q(0)|<=C delta. Consequently
+$$
+ c\sigma\sqrt\delta\le |A_E|\le C\sigma\sqrt\delta
+ \tag{177.30}
+$$
+with constants depending on the fixed class and lambda; the large fixed inverse powers of lambda are included in them. ell_sel is bounded on the original class. This is an actual contour amplitude lower bound, not positivity of a complex integral.
+
+Insert (177.15) on (177.23). Its analytic O(delta) remainder is integrated against the envelopes proved in (177.21),(177.24), which have sizes delta/|mathfrak q| at the endpoint and sqrt(delta/|mathfrak K|) exp(Re Delta/delta) at the saddle. Since delta=beta_Q ell^4/tau with bounded fixed coefficients, this contributes at most C tau^-1(|A_E|+|A_I|). The local charge Laplace remainders have the same bound; the junction and right connector have fixed exponential gaps. The paid tail (177.28) is smaller. We conclude
+$$
+ |G_-(H/\sqrt\delta)-A_E(H)-A_I(H)|
+             \le {C\over\tau}(|A_E(H)|+|A_I(H)|)
+ \tag{177.31}
+$$
+uniformly on the fixed chart and a margin. This is a coherent two-amplitude estimate. It does not subtract separate O(delta)-relative approximations to exponentially larger G_all and G_plus.
+
+The Chapter 169 original return on EVERY fixed |H| disk is
+$$
+ |N_P^-(H/\sqrt\delta,y)-G_-(H/\sqrt\delta,y)|
+   \le\sigma P(Q)\exp\{-\beta_{res}Q^3+C/(\eta\delta)\}.
+ \tag{177.32}
+$$
+Its clauses apply on the present disk |H|<=5H_* without extending its scope. To make the original-law content explicit: the uniform full-q coefficient error is paid on the full box using (Re h)D<=eta D^2+C/(eta delta); the same-output positive bound at2eta retains sigma. High-cell density and displacement errors remain P(Q)e^(-bQ^3), since the field is only polynomial in Q. The exact lows are kept before lifting cells. The original likelihood log-width/Young comparison and score marks at widths in[sigma/2,2sigma] pay cell changes without naked inverse-sigma derivatives. Cut strips, charge-lattice equality and floors have the same exponentially thin joint-density control. Excluded full tuples have P(Q)e^(-cQ^4); D^2<=2n_g E+2(sum|e_j|)^2 and completing the square in the SAME energy pay exp(CQ^(7/2)+C/(eta delta)). The strict original noise margin absorbs the lost sigma only in this latter crude bound. Actual e remains in (177.8), so there is no polynomial actual-e replacement error to divide by an oscillatory amplitude. The finite selection coefficient remains in b_ch. These are separate costs, not an independence argument about empirical choices.
+
+Only NOW divide (177.32) by the proved lower bound (177.30). Its cost is
+$$
+ P(Q)\delta^{-1/2}\exp\{-\beta_{res}Q^3+C/(\eta\delta)\}
+       =o(\delta^A)\quad\text{for every fixed }A>0,
+ \tag{177.33}
+$$
+because eta>=sqrt(delta) eventually, so (eta delta)^-1<=Q^(3/4)=o(Q^3). Raw sigma has canceled after a lower bound.
+
+**定理 177.1（全谱固定区域上的原始两项振幅展开）。** Combining (177.31)--(177.33) gives the original total estimate
+$$
+ {N_P^-(H/\sqrt\delta,y)\over A_E(H)}
+       =1+e^{-\Theta_Q(H)}+\mathcal R_Q(H),\qquad
+ |\mathcal R_Q|\le {C\over\tau}(1+|e^{-\Theta_Q}|),
+ \tag{177.34}
+$$
+where the analytic finite phase is
+$$
+ \Theta_Q(H)=-{\Delta(H)\over\delta}
+       -\log\mathfrak q(H)-\tfrac12\log{2\pi\over\delta\mathfrak K(H)}.
+ \tag{177.35}
+$$
+The log of mathfrak q uses its upper-half-plane branch, the log of mathfrak K its right-half-plane branch, and the positive real factor2pi/delta the real logarithm. Then A_I/A_E=exp(-Theta_Q) EXACTLY by (177.29). This establishes all branches before use. Formula (177.34) is an amplitude-normalized analytic error, not a relative estimate to N_P at a zero.
+
+### 177.8 有限相位反演、共同标签与精确零点计数
+
+Define
+$$
+ T_Q(\omega)=-i\Theta_Q(H_*\kappa(\omega))/\tau.
+ \tag{177.36}
+$$
+Since the reference action at u is3u^4=-i omega, (177.19) and analytic differentiation give
+$$
+ \sup_{\overline\Omega}|T_Q(\omega)-\omega|
+   +\sup_{\overline\Omega}|T_Q'(\omega)-1|
+ \le C\,2^{-30}+C\,{1+|\log\delta|\over\tau}<1/1024
+ \tag{177.37}
+$$
+eventually, with the stronger actual smallness from (177.2),(177.5) if needed in the fixed C. To see this without losing derivative precision, the saddle derivative cancels in Delta_H=-rho_I; log mathfrak q and log mathfrak K have uniformly bounded H derivatives because their nonzero margins are fixed. Cauchy on a slightly enlarged omega rectangle gives the same bound on the remaining analytic action perturbation. Its numerical constant can be bounded by2^16 using the explicit |u|, derivative and gap bounds in Section 177.5; the actual bound from (177.2),(177.5) is below2^-60 before this multiplication. The O(log(delta)/tau) term includes the endpoint/saddle width ratio and cannot be dropped from (177.35).
+
+The rectangle Omega is convex. Integrating T_Q'-1 along straight segments proves |T_Q(w1)-T_Q(w2)-(w1-w2)|<|w1-w2|/1024, hence univalence. Rouché on its boundary, or the same elementary perturbation argument, shows its image contains
+$$
+ \{w:3/4\le\Re w\le9/4,\ |\Im w|\le1/64\}.
+ \tag{177.38}
+$$
+Thus Theta_Q has one analytic inverse on the corresponding inner theta-domain. This is a finite-array inverse, not an inverse of the quartic limiting curve.
+
+Let
+$$
+ n_- =\lceil\tau/(2\pi)\rceil,\quad n_+=\lfloor2\tau/(2\pi)\rfloor,
+\quad \mathcal T_Q=\{\theta:-1<\Re\theta<1,
+                       2\pi n_-<\Im\theta<2\pi n_+\},
+$$
+$$
+ \mathcal D_Q=\Theta_Q^{-1}(\mathcal T_Q)\subset\mathscr H.
+ \tag{177.39}
+$$
+For large Q, n_+>n_-; the closure and a fixed phase-width margin lie in the inverse chart by (177.38). This makes boundary dependence explicit: horizontal boundaries are EVEN multiples of pi, never the predicted zeros; the side boundaries are Re theta=+/-1. Changing these even margins changes the included labels in the stated way, with no assertion about a boundary passing through a zero.
+
+On (177.39) both amplitudes genuinely contribute: e^-1<=|A_I/A_E|<=e. The charge cycle obeys |rho_I|>=ell_*/2, and the contour coefficient is +1. Thus this is a nonempty uniform comparable-amplitude region at nonvanishing rescaled charge, not the canceled all-line saddle of Chapter 174. Its real action alignment is displaced by the EXACT logarithmic width and amplitude terms in (177.35).
+
+On each vertical side of the theta rectangle,
+$$
+ {|1+e^{-\theta}|\over1+|e^{-\theta}|}\ge\tanh(1/2)>0;
+$$
+on each horizontal side the ratio is1. Therefore (177.34) and Rouché give exactly n_+-n_- zeros of the ORIGINAL N_P, counted with multiplicity, in D_Q, and none on its boundary. For every integer n_-<=j<n_+ define the predictive field
+$$
+ \widehat H_j=\Theta_Q^{-1}((2j+1)\pi i).
+ \tag{177.40}
+$$
+On a phase circle of radius C1/tau about(2j+1)pi i, Taylor's theorem bounds |1+e^-theta| below by half its radius. Choose fixed C1 larger than the uniform error constant in (177.34). Rouché then gives exactly one zero counting multiplicity in each circle. The circles are disjoint and exhaust the count from the outer rectangle. Each zero is therefore simple, there are no extras anywhere in D_Q, and all labels hold on ONE realization, uniformly:
+$$
+ |\Theta_Q(H_j)-(2j+1)\pi i|\le C_1/\tau.
+ \tag{177.41}
+$$
+This also excludes spurious zeros on compact phase subsets a fixed distance from the odd-pi sites. The conjugate chart has the conjugate statement by reality of the original finite coefficients. Nothing about all complex zeros, a Lee--Yang circle, or a globally nearest pair follows from this local-in-H result.
+
+### 177.9 原始未缩放坐标的精度及局部边界
+
+Exact differentiation of (177.35) gives
+$$
+ \Theta_Q'(H)=\rho_I/\delta-1/\mathfrak q+
+                              \mathfrak K_H/(2\mathfrak K).
+ \tag{177.42}
+$$
+The last two terms are uniformly bounded fixed constants, whereas |rho_I|>=ell_*/2. The univalence estimates give the corresponding inverse Lipschitz bound on the small phase disks. Hence for h_j=H_j/sqrt(delta),
+$$
+ |h_j-\widehat H_j/\sqrt\delta|
+       \le {C\sqrt\delta\over\ell\tau}.
+ \tag{177.43}
+$$
+Use the actual inherited equal-mass h0=h_equal^P and actual mean separation d on the same array, for every permitted separator compact. The retained marked bounds give0<d<=C sqrt(eta/delta). Thus with z_j=d(h_j-h0) and zhat_j=d( Hhat_j/sqrt(delta)-h0),
+$$
+ |z_j-\widehat z_j|\le {C\sqrt\eta\over\ell\tau}=o(1).
+ \tag{177.44}
+$$
+Equations (177.41),(177.44) distinguish the natural finite spectral phase Theta from the older linear coordinate z. Both phase precision and precision in the original coordinate follow. The number of labels is asymptotic to tau/(2pi), of order delta^-1, while tau/t^2 is of order eta^-2. For the contributing charge, eta|U|^2=|rho_I|^2>=ell_*^2/4. The domain is therefore genuinely beyond Chapter 166 for every sequence, however slowly t diverges.
+
+The total predictor and its roots use no artificial separator: the only charge cut is the fixed proof device R=8ell, whose entire omitted tail is paid in (177.28). Changing that proof cut within a fixed larger admissible interval changes neither definitions (177.8)--(177.10),(177.22),(177.29),(177.35) nor the total theorem. The h0,d coordinate conversion has exactly its retained separator scope, with no claim that these two coordinates are separator-independent. Floors, outside labels, lows and actual noncentral centers are accounted for in (177.6)--(177.10),(177.32); support/output/pair/path quantifiers are those stated in Section 177.1.
+
+The mechanism is a bounded original-half-line contour with a proved contributing second cycle at fixed full-spectral charge, together with an energy-disk continuation and a same-sigma far-tail estimate. The quartic identity (177.20) is a robust geometric guide, but the exact finite spectral action, rank-one correction, noise, low mixture and amplitude logs are indispensable to neighboring labels. We have not inferred this theorem from finitely many cumulants, an action error o(delta^-1), an assumed thimble coefficient, or real positivity. We have not divided independent G_all/G_plus errors by their residual. Every contour segment used here has been controlled explicitly. Global continuation outside (177.4), coalescence laws and the earliest Stokes change remain unasserted; they are not needed for the stated nonempty-region conclusion.
+
+### 177.10 文献归属、谱信息与全局边界
+
+Gaussian Fourier 恒等式、Cauchy 变形、解析隐函数、端点与鞍点展开以及 Rouché 计数均是经典工具。Bennett、Howls、Nemes 与 Olde Daalhuis 的全局鞍点理论明确区分作用量、可达相邻鞍点和定向轮廓系数；其全局解析域、无穷远增长、相邻鞍点有限性及遭遇角条件没有在这里的三角计数数组上建立。本章不移植该全局定理，而逐段证明所用圆盘、有限矩形和实尾的控制。原论文版本与适用边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+第 169 章提供精确条件能量／秩一公式及固定 $H$ 圆盘上的原始计数回接；第 171、174 章提供条件 Fourier 控制与相干余量比较。第 164 章的有向有界轮廓使用了不同尺度；第 166 章的增长窗口也不能推出本章固定非零重标电荷的结论。这里的四次式只控制几何，任何相位预测与邻近零点标签都使用式 (177.8)–(177.10) 的有限谱表达式，保留可能在指数中累积到非零乃至发散的高阶谱项。
+
+本章不判定固定区域之外的零点分支、鞍点合并、首次 Stokes 转换或全局最近零点。原始低元组、取整、外部标签、实际非中心量与同一份噪声保留在共同数组中。第 160、162、164 章的区域／总量及分隔参数边界保持原范围；这里不把依赖人工分隔的区域零点提升为总量零点。有限区域的新证明不构成全球原创或文献检索穷尽声明。
+
+## 追加锚（本行以下为增补区）
