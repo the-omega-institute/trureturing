@@ -1149,6 +1149,146 @@ The [exact results](../../frontier/cover-geometry/height_two_cut69_private_law.j
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut69_private_law.py
 ```
 
+## A partial-full-root70/63 profile has an eighteen-point private law
+
+Retain the literal height-two occupancy4555 source and tree premises of447.
+Suppose it admits a cut with all four root nodes source-side, active child
+counts(4,4,5,5), common-tree cost R=3/9, and total unweighted private cost
+Z=21. The four-active full root may be any full root, with any one of its
+five children inactive. The cut has numerator
+
+    7+7*3+2*21=70.
+
+For this entire cut-profile family, an actual uniform eighteen-point law
+satisfies
+
+    Gamma_1225(nu)<=79/9<9.                            (PF1)
+
+This includes both common antichains of cost3/9 and arbitrary actual
+fibres at the inactive child. It does not classify every cut70 source.
+The cut need not be a minimum cut for the support extraction to apply.
+
+### Sorting determines the private cut leaves
+
+Name the gap root a, the partially active full root b, and the other full
+roots c,d. Let p_r be the sum of the least q_r active-child private costs,
+where q=(2,3,3,3). The pair/subset cut inequalities give p_r+p_s>=6.
+The sorting lower bounds for total costs at these roots are respectively
+
+    f_a(p)=p+2 ceil(p/2),
+    f_b(p)=p+ceil(p/3),
+    f_c(p)=f_d(p)=p+2 ceil(p/3).
+
+If the least p-value is t<=2, the following lower bounds result by giving
+every other root at least6-t. They cover every root that can attain the
+minimum; no assumption about tied minima is needed.
+
+| Root attaining t | t=0 | t=1 | t=2 |
+| --- | ---: | ---: | ---: |
+| a | 28 | 28 | 26 |
+| b | 32 | 31 | 27 |
+| c or d | 30 | 30 | 26 |
+
+All exceed21. When every p-value is at least3, the lower bounds sum to
+7+4+5+5=21, and each strictly increases if its p-value increases.
+Consequently p=(3,3,3,3), with no private-cost slack, including under the
+inactive child. Equality forces the sorted active-child costs
+
+    a:1222,  b:1111,  c:11111,  d:11111.               (PF2)
+
+All these private cuts consist of depth-two leaves: a first-prefix edge
+has unweighted cost3. The common antichain is either one whole column or
+three leaves. Write its union as P. For every active child e its actual
+fibre obeys F_e subset P union S_e, where S_e is its one- or two-leaf
+private candidate set. These candidates must still be shown actual.
+
+### Actualness and column separation use only active children
+
+Choose any three children at c and any three at d. Their actual
+projection contains a ternary-seven tree. In the whole-column case its
+six singleton candidates must all be distinct and actual outside P,
+supplying three leaves in each of two further columns. In the three-leaf
+case there are at most nine candidates altogether, so all nine are
+distinct and actual and form exactly three columns of three leaves.
+Each private singleton is actual in its own child: no other selected
+fibre can contain that distinct point outside P.
+
+Exchange one chosen c-child while fixing the other two and the d-triple.
+Removing the old candidate leaves a unique deficient column, which the
+new candidate must fill. All five c-singletons therefore share one
+column and are distinct. The same holds at d; their columns differ.
+In the three-public-leaf case P must now form the third column itself.
+
+Apply the same argument to triples among the four active b-children,
+paired separately with c and d. Four children suffice for the exchange:
+any two have two other children that can be held fixed. This gives four
+distinct actual b-leaves in a third private column. The inactive child
+is never used. Unlike a fully active source, its arbitrary fibre means
+the three-public-leaf cut cannot be excluded using the standalone tree.
+
+At a let its candidate sets be {z},E1,E2,E3 with each |Ei|=2. Pair its
+singleton child and an Ei-child with a full-root triple. The same
+saturation argument makes z and both Ei points actual at their own
+children, distinct and outside P. They share one private column, because
+the other private column is already filled by the full-root triple.
+Repeating with b,c,d separates this gap column from all three other
+private columns. In particular z is outside each Ei.
+
+Pairing any two Ei-children with a full-root triple requires
+|Ei union Ej|>=3. The three two-sets satisfy Hall: single sets have size2,
+any pair has union at least3, and their total union has size at least3.
+Choose three distinct representatives, one from each Ei, and retain z.
+A triangle of two-sets is allowed; no stronger four-representative
+condition is imposed on these three sets.
+
+This constructs18 actual points, one per active child, in four distinct
+private columns with root totals4,4,5,5. Their full49 leaves are all
+distinct. Uniform mass gives the nonunit caps
+
+    q5,q7,q35<=5/18,
+    q25,q49,q175,q245,q1225<=1/18.
+
+The complete81 ordered-LCM pairs, for arbitrary independent original
+phases, give 1+(15*5+65)/18=79/9. This proves(PF1); the private subsupport
+is not asserted to retain the original blocking premises.
+
+### An actual minimum-cut70 source
+
+Use points(r,c,g,h), meaning x5=r+5c and x7=g+7h. Let
+C0={(0,h):0<=h<5}. At the gap root put
+
+    F00=C0 union{(4,0)},
+    F01=C0 union{(4,1),(4,2)},
+    F02=C0 union{(4,2),(4,3)},
+    F03=C0 union{(4,3),(4,4)}.
+
+At root1 take F1c=C0 union{(1,c)} for c<4 and F14 to be all49 leaves.
+At roots2,3 take Frc=C0 union{(r,c)} for c=0,...,4. Root4 is empty.
+There are160 actual child-labelled points. Every required pair/subset
+projection contains a ternary tree; the rich inactive child also supplies
+the standalone five-ary tree. Common column0 meets every occupied child.
+
+The explicit cut uses the root1/child4 edge7, common column0 of cost21,
+and21 private leaf edges of cost2. Its cost70 is matched by an integral
+actual flow. The [exact program](../../frontier/cover-geometry/height_two_cut70_partial_root.py)
+and [results](../../frontier/cover-geometry/height_two_cut70_partial_root.json)
+retain that positive bridge flow and the explicit cut, check all1303
+network capacities and conservation,480 pair/subset tests,10000 literal
+product tests,1767 cylinders and81 ordered-LCM terms. They also check
+all455 triples of distinct two-sets on six leaves up to child permutation,
+which include the triangle case in the Hall step.
+
+The law uses(r,c,4,c) for r=0,c<4 and(r,c,r,c) for the other active
+children. All18 points are actual and have the stated caps. The example
+certifies nonvacuity of this finite source class, without claiming it
+comes from an original odd whole cover or supplies an outside-cofactor
+lift. The general profile conclusion rests on the preceding proof;
+these checks are not Lean verification.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut70_partial_root.py
+```
+
 ## At78/63 the choice of maximum flow matters
 
 All raw quantities in this section are integer units1/63 unless otherwise
@@ -1557,7 +1697,9 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem also controls every78/63 source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-General high-incidence sources in the remaining range70/63 through77/63 are not thereby controlled: their high root/column incidence
+The partial-full-root70/63 profile above is controlled by(PF1), without
+settling every cut70 source. General high-incidence sources in the remaining
+range70/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
 whole-column shapes at75/63 and77/63 are controlled by(WC1), but this
 does not settle all sources at those numerical cut values. Some may contain
