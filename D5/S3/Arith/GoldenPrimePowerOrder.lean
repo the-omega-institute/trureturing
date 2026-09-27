@@ -20,7 +20,10 @@ theorem golden_prime_power_order {p m n : ℕ} (hp : p.Prime)
     (hm : 0 < m) (hpm : m + 2 ≤ p * m) (a b : ℤ)
     (hab : ¬ (p : ℤ) ∣ a ∨ ¬ (p : ℤ) ∣ b) :
     orderOf (1 + (p ^ m : GoldenMod (p ^ (n + m))) *
-      pair (p ^ (n + m)) a b) = p ^ n := by
+      (⟨(a : ZMod (p ^ (n + m))), (b : ZMod (p ^ (n + m)))⟩ :
+        GoldenMod (p ^ (n + m)))) = p ^ n := by
+  change orderOf (1 + (p ^ m : GoldenMod (p ^ (n + m))) *
+    pair (p ^ (n + m)) a b) = p ^ n
   cases n with
   | zero =>
       have hzero : (p ^ m : GoldenMod (p ^ m)) = 0 := by

@@ -1,0 +1,7 @@
+## 13. The actual points are outside the cubic-isogeny images
+
+Retain $j\geq1$ and the notation $d_j,c_j,x_j,f_j,S_j^-,S_j^+$
+of Sections 11 and 12. For $b\ne0$, let
+$\varphi_b:E_{-27b}\to E_b$ be the degree-three isogeny from
+$t^2=s^3-27b$ to $Y^2=X^3+b$.
+

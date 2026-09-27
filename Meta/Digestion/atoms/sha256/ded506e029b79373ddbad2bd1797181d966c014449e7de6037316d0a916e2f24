@@ -1,0 +1,25 @@
+**Theorem 2.1 (native block-power periods).** The prime supports of all
+$B_j$ and $C_j$ are pairwise disjoint, including across distinct indices.
+For every $j,a,b\geq 1$,
+
+$$
+\begin{aligned}
+\pi(C_j^a)&=4\cdot3^{j+1}C_j^{a-1},\\
+\pi(B_j^b)&=2\cdot3^{j+1}B_j^{b-1},\\
+\pi(C_j^aB_j^b)&=4\cdot3^{j+1}C_j^{a-1}B_j^{b-1}.
+\end{aligned}
+$$
+
+Proof. A prime of $C_j$ has rank $3^{j+1}$, and a prime of $B_j$ has
+rank $2\cdot3^{j+1}$. Equality of the ranks would force equal indices
+and equal block types, giving the support claim. The corresponding matrix
+periods are $4\cdot3^{j+1}$ and $2\cdot3^{j+1}$, respectively. If $p$
+occurs in a block to exponent $h_p$, the original Fibonacci valuation
+law and the matrix identity $Q^n=F_nQ+F_{n-1}I$ show that $Q$ first
+returns modulo $p^{a h_p}$ after its prime-level period multiplied by
+$p^{(a-1)h_p}$. In particular the depth is measured in the original
+Fibonacci sequence; it is not reset to one. Every block is coprime to
+six, so these extra prime powers are coprime to the common base period.
+The Chinese remainder theorem takes the least common multiple of the
+local periods, yielding the three displayed formulas.
+

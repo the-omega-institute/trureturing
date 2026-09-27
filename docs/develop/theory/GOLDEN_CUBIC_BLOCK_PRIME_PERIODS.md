@@ -681,3 +681,90 @@ twists. They do not decide a new Wall--Sun--Sun prime or assert the
 degree-three isogeny nonimage condition of the separate GIR2a claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. The actual points are outside the cubic-isogeny images
+
+Retain $j\geq1$ and the notation $d_j,c_j,x_j,f_j,S_j^-,S_j^+$
+of Sections 11 and 12. For $b\ne0$, let
+$\varphi_b:E_{-27b}\to E_b$ be the degree-three isogeny from
+$t^2=s^3-27b$ to $Y^2=X^3+b$.
+
+**Theorem 13.1 (nonimage on every actual layer).** For every
+$j\geq1$, without a Wall--Sun--Sun assumption,
+$S_j^-$ is not in the rational image of $\varphi_{-3d_j^2}$,
+and $S_j^+$ is not in the rational image of
+$\varphi_{125d_j^2}$.
+
+Proof. For an affine source point with $s\ne0$, the isogeny is
+given by
+
+$$
+\varphi_b(s,t)=\left(
+ \frac{s^3-108b}{9s^2},
+ \frac{t(s^3+216b)}{27s^3}
+\right).
+$$
+
+Since $t^2=s^3-27b$, direct expansion gives, in
+$\mathbb Q(\sqrt b)$,
+
+$$
+Y+\sqrt b=
+ \left(\frac{t+9\sqrt b}{3s}\right)^3.
+$$
+
+The point at infinity, and any source point with $s=0$, map to
+infinity. Thus an affine point in the rational image must make
+$Y+\sqrt b$ a cube in $\mathbb Q(\sqrt b)$.
+
+By Corollary 8.3 choose $p\mid B_j$ for which
+$e_p=h_p\bmod3$ belongs to $\{1,2\}$. Section 3.2 gives
+$v_p(B_j)=h_p$ and $p>5$; Section 11 gives $v_p(d_j)=e_p$.
+
+For $S_j^-$, take $\sqrt b=d_j\sqrt{-3}$. Then
+
+$$
+Y+\sqrt b=d_j(x_j+\sqrt{-3}).
+$$
+
+Section 8.1 shows that $p$ splits in $\mathbb Q(\sqrt{-3})$
+and that $x_j+\sqrt{-3}$ has valuations $h_p$ and $0$ at
+the two primes above $p$. Consequently $Y+\sqrt b$ has
+valuations $h_p+e_p$ and $e_p$, congruent to $2e_p$ and
+$e_p$ modulo three. Neither is divisible by three, so this
+element is not a cube.
+
+For $S_j^+$, take $\sqrt b=5d_j\sqrt5$. Then
+
+$$
+\begin{aligned}
+Y+\sqrt b
+ &=25d_jf_j+5d_j\sqrt5\\
+ &=5\sqrt5\,d_j(\sqrt5f_j+1).
+\end{aligned}
+$$
+
+The factors $\sqrt5f_j+1$ and $\sqrt5f_j-1$ have product
+$B_j$ and difference $2$. Section 3.2 gives
+$(5/p)=1$, so $p$ splits in $\mathbb Q(\sqrt5)$.
+These two factors are coprime at the primes above $p$;
+conjugation exchanges them up to sign. Hence
+$\sqrt5f_j+1$ has valuations $h_p$ and $0$ at those
+two primes. Since $p>5$, $5\sqrt5$ is a unit there.
+The valuations of $Y+\sqrt b$ are again $h_p+e_p$
+and $e_p$, neither divisible by three. This element
+is not a cube either. The cubic identity rules out a
+rational preimage in both cases.
+
+The result concerns these two specified points and their
+isogeny images. It does not compute a Selmer group or
+isolate a Wall--Sun--Sun depth pattern.
+
+## 追加锚（本行以下为增补区）
+
+## Erratum to Section 2
+
+In the Cassini factorization in Theorem 2.1, read "the factors
+$F_{t-1}+1$ and $F_t-F_{t-1}$" in place of "the latter two factors".
+The right-hand factor $F_t$ is divisible by $p$ and is not one of the
+units used in that argument.
