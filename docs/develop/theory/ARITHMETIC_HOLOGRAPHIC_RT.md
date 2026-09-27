@@ -2403,6 +2403,9 @@ $Z_s=d_s^{-1/2}\sum_{a=1}^{d_s}(Q_s)_{aa}$。对环境空间中任意秩 $k$
 最后一步保留了每个源 Schmidt 系数恰重复 $d_s$ 次的结构。Ky Fan 变分
 公式遂给 $\sigma(Z_s)\prec_w v_s$。若非负递减向量 $a\prec_w b$，则对
 任意非负递减权重 $w$，前缀和的分部求和给 $a\cdot w\le b\cdot w$。
+式 (36.5) 的部分迹 Ky Fan 前缀界是 Rastegin 的有限维不等式
+(Proposition 1, $p=1$，式 (3.8)) 的归一化矩形情形；矩形算子可嵌入
+方阵，压缩与重复 Schmidt 谱再给出本式的最后一项。
 先后对两侧使用，再用奇异值迹界，得到无需精确基输出假设的交叉界
 \[
 |\langle\zeta_t,\zeta_s\rangle|
@@ -2524,7 +2527,10 @@ $\sqrt3/2$，(36.3) 给最优误差 $1-\sqrt3/2$。这构造了两个带标签
 Harrow, *Entanglement spread and clean resource inequalities* (2010),
 arXiv:0909.1557；Watrous, *Semidefinite Programs for Completely Bounded
 Norms*, Theory of Computing 5 (2009), 217--238，分别提供纠缠扩散与
-完全有界范数的既有背景。Lin, *Ryu-Takayanagi area from Virasoro modular
+完全有界范数的既有背景。Rastegin, *Relations for Certain Symmetric Norms
+and Anti-norms Before and After Partial Trace*, Journal of Statistical
+Physics 148 (2012), 1040--1053，Proposition 1 的 $p=1$ 情形给出上述
+部分迹 Ky Fan 前缀界。Lin, *Ryu-Takayanagi area from Virasoro modular
 data*, arXiv:2606.30723v1，及 Cao--Cheng--Karthikeyan--Li--Preskill,
 *State-dependent geometries from magic-enriched quantum codes*,
 arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有把它们的
