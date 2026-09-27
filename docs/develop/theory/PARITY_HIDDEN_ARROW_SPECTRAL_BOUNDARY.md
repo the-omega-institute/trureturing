@@ -50872,3 +50872,393 @@ On J* our explicit derivative bounds already locate a negative finite saddle uni
 Gaussian 配方、行列式引理、Sherman–Morrison 身份、秩一交错、Laplace 反演、局部鞍点渐近与 Rouché 定理属于经典工具。本章的综合内容是同一原数组的完整谱条件能量、固定复管中的原噪声相对误差及稀有窗口归一化。Toeplitz 二次型和 Gaussian 场能量约束的文献提供结构参照，其平稳性、谱和极限次序不能自动迁移；版本与适用边界见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。普通数学推导，未作 Lean 认证，未声明全局原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 170. 共同计数的条件波动与生成平面上的二阶校准稳定性
+
+在原始计数中，把两个中心组标签换成各一个相邻组标签，会让两组的基数共同波动，同时保持这对标签的似然乘积。本章构造保留这种交换的合法条件分配：同一随机变量 $V$ 满足 $C_0=A+2n-2V$、$C_1=B+V$，而完整 $q$ 选择约束下的校准系数只改变 $O(n\Delta_Q^2)$。误差在实际生成平面的容差内一致趋于零，允许该平面依赖同一个 $V$。
+
+若 $\phi-c_q>\gamma-2e$，条件算术界使第 165 章 $J=uC_0+vC_1=0$ 分支的实际概率趋于零；该条件包含原允许参数中的 $\beta\ge2/3$。$J\ne0$ 的共同小球估计仍未证明，因此本章没有扩大第 163 章的无条件物理带宽。独立对和平稳路径分别处理，对确定真实支撑一致，原幅度、层级、取整与完整后验均保留。
+
+### 170.1 共同实现及范围
+
+原始标签交换、经验组基数和潜在支撑的完整选择后验是三个不同对象。式 (170.12)–(170.15) 控制前两者；式 (170.16)–(170.23) 控制同一数组下的后验校准，不为固定的条件校准系数假定连续分布。式 (170.27) 只结算满足参数条件的零组合分支，式 (170.31) 保留未解决的实际概率项。
+
+### 170.2 原模型与补偿尺度
+
+Write lambda=Q^3, a=(1+r)/2, b=(1-r)/2, so a,b>0 and a+b=1. The original count-line origin is k_0=floor(a lambda), l_0=lambda-k_0. Its group j consists of the exact count tuple(k_0+jQ,l_0+jP_n). All these are actual empirical counts. The original amplitude relation gives alpha_L=log(1+r)/[-log(1-r)] and alpha_Q=P_n/Q, with0<alpha_Q<1 eventually. Neither r nor its Liouville sequence is changed.
+
+Retain
+
+$$
+ \phi=a\log(1+r)+b\log(1-r),\quad
+ c_q=\phi(1-\beta)/\beta,\quad c_M=c_q+\phi,
+ \quad\kappa=c_q/1000,\quad\gamma=c_q/2-5\kappa.
+                                                        \tag{170.1}
+$$
+
+For every original fixed beta in(1/2,1),0<c_q<phi, log q=c_q lambda+O(1), log M=c_M lambda+O(1). All uses of floors below have fixed O(1) defects or explicitly displayed polynomial factors. With epsilon_M=rq/(M-q), the actual compensated scores are a_s=log((1+r)/(1-epsilon_M)), b_s=log((1-r)/(1+epsilon_M)). Equations (167.3)–(167.7) prove, at these unchanged parameters,
+
+$$
+ \Delta_Q=Qa_s+P_nb_s>0,\quad L_j=L_0e^{j\Delta_Q},\quad
+ \Delta_Q\sim r(1-\alpha_L)Qq/M,
+ \quad\log\Delta_Q=-\phi\lambda+O(\log Q).
+                                                        \tag{170.2}
+$$
+
+This exact likelihood ratio and its compensated rate, not the much smaller uncompensated Liouville defect, govern the present construction. We use Chapter 167's proved statement without rederiving its derivative identities.
+
+For the physical target, keep delta=Q^-1/2, B^2=q/Q^(5/2), mathcal B=q/Q^(11/4), rho=sigma mathcal B, and the original scalar
+
+$$
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \qquad Y=T+\sigma G.
+$$
+
+$$
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_{j\in H}w_j^2,
+ \quad\kappa_3=8\sum_{j\in H}w_j^3,\quad
+ \Lambda=\nu_0+\sigma^2,\quad
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2.
+                                                        \tag{170.3}
+$$
+
+Here R_j are posterior latent count variables, whereas the raw count multiplicities C_j used below are data. They must not be confused. Define D_x(y)=Vpost_x(y)-Vprior_x+A^2/Lambda-C_xy, nu=2g_0, and R_*(y)=29/6-3sqrt2+(3sqrt2+8/sqrt3-9)y^2/nu. The still-open extension requires
+
+$$
+ \int f_x(y)|D_x(y)-R_*(y)|\,dy\longrightarrow0,
+ \quad E_xY^2\longrightarrow\nu,
+$$
+
+$$
+ \int f_xVpost_x-Vprior_x+A^2/\Lambda-C_xm_x
+ \longrightarrow8/\sqrt3-25/6,\qquad m_x=E_xY,
+                                                        \tag{170.4}
+$$
+
+at rho comparable exp(-c lambda) for a new fixed c>gamma, in the two separate support-uniform raw-data probabilities. Full-q selection, complete low and outside groups, original empirical centers, exact finite corrections, physical H and SAME residual G remain as in the original theorem. Our reservoir is an analytical revealment, not additional observer information, a changed prior, or removed physical coordinates.
+
+### 170.3 同一数组的分配与供给
+
+We first specify all trial sets deterministically inside the true support S, in its fixed label order. This is a proof selection used under P_S, not an operation available to an observer ignorant of S. Its estimates do not depend on the identities of S. Reserve a block of m=floor(exp(kappa lambda)) disjoint pairs for the reservoir. The finitely many negative-score trial blocks required by Chapter 165's high band and Chapter 163's lower bands are disjoint from it. Their total number of pairs m_r has log m_r<=(67/68)c_q lambda+O_c(log Q) by (165.10). Thus2(m+m_r)=o(q/Q^3), so all blocks fit in the original true support and leave the original central groups available for anchors on original occupancy regularity. No rate, score or total is separately optimized in this step; the rare pools use the same attained total pairs already specified by Chapters 165 and 163.
+
+The exact raw conditional law is crucial. The aligned transition kernel is
+
+$$
+ P_S(i,j)=[1+b_S(i)\chi(j)]/(2M),\quad
+ b_S=r1_S-\epsilon_M1_{C_+\setminus S},\quad
+ b_S|_{C_-}=0.                                      \tag{170.5}
+$$
+
+Its b_S sum in each parity class vanishes. In the stationary path, conditional on all parity bits, departure labels are independent with weight[1+b_S(i)s_{t+1}]/M within the specified class; the terminal label is independent uniform in its class. This follows directly by factoring the path density: altering a departure label inside its parity class leaves its predecessor's parity argument unchanged. The parity bits themselves are iid fair. For independent pairs, conditional on parity pairs the departure choices have the same weights and the arrivals are independent uniform in their classes. These are separate derivations for the two original experiments, not iid-row substitution for the path.
+
+Reveal the parity record, the membership masks of slots in every predetermined pair, every departure label outside all these pairs, and the terminal path label or pair arrivals. Call this field H_0. Conditional on H_0, each pair's two allocation strings are fair bits, independently across pairs and signs, because its two true labels have equal slot weights. Its count kernel is exactly Bin(K_+,1/2) tensor Bin(K_-,1/2). K_+,K_- are the revealed totals. Terminal/arrival data do not bias the strings by the factorization just given. This conclusion uses the actual kernel, not total variation conditioned after the fact.
+
+For supply alone, the growing-vector comparison (155.1), (155.14)–(155.20) applies simultaneously to all2(m+m_r) true labels. It compares their entire count vector with independent Pois(a lambda), Pois(b lambda) coordinates per label at cost
+
+$$
+ E_{\rm occ}=8(m+m_r)/M+\sqrt{48(m+m_r)/M}=o(1).
+                                                        \tag{170.6}
+$$
+
+Its conditions are met: the selected fraction tends to zero, both true slot weights are fixed, the same complete parity record is used, parity type counts have variance at most3T_obs in BOTH experiments, and T_obs=2Mlambda is the original exact observation length. The comparison first matches the total selected count using the common multinomial allocation kernel, then compares all random Poisson means jointly using their Hellinger affinity. It holds unconditionally jointly with the parity record and the independent terminal/arrival kernel, not conditionally on arbitrary masks or outside labels. We use it only for a bounded supply-failure event, once. All conditional laws below are proved afresh from(170.5).
+
+For a reservoir pair call its category eligible if its totals equal(2k_0,2l_0) and its ordered first-label allocation is one of
+
+$$
+ (k_0,l_0),\quad (k_0+Q,l_0+P_n),\quad
+ (k_0-Q,l_0-P_n).                                  \tag{170.7}
+$$
+
+The complementary label then has respectively the central, negative or positive row. Positivity and legality hold eventually since k_0,l_0 have order Q^3 while Q,P_n=O(Q). The central alternative alone supplies an explicit lower bound for eligibility. Here is a rounded-point argument within its true range. For v>0 and an integer k with|k-vlambda|<=1, eventually k/lambda in[v/2,2v]. The finite Stirling bound k!<=3sqrt(k)(k/e)^k and $J_v(z)=z\log(z/v)-z+v$, with $J_v(v)=0$ and $J_v'(z)=\log(z/v)$, give
+
+$$
+ P\{\mathrm{Pois}(v\lambda)=k\}\ge
+ d_v\lambda^{-1/2},\qquad d_v=(6\sqrt{2v})^{-1}.
+                                                        \tag{170.8}
+$$
+
+Indeed lambda J_v(k/lambda)<=log2 by the derivative bound and the distance at most1/lambda; also sqrt(k)<=sqrt(2v lambda). Both k_0 and l_0 satisfy the needed distance bound for v=a,b. Define c_0=min(1/2,d_a^2d_b^2)>0. Under the SINGLE comparison law each pair's central alternative has probability at least c_0lambda^-2, and different reservoir pairs are independent. Take
+
+$$
+ n=\left\lfloor {c_0m\over2\lambda^2}\right\rfloor,
+ \qquad\log n=\kappa\lambda-6\log Q+O_r(1).
+                                                        \tag{170.9}
+$$
+
+The comparison probability of fewer than n eligible pairs is at most exp[-c_0m/(8lambda^2)]. For completeness, thinning to Bernoulli probability c_0lambda^-2 and applying the exponential Markov bound at log2 gives exponent mu(log2/2-1/2)<=-mu/8, with mu=c_0m/lambda^2. Thus actual reservoir-supply failure is at most that exponential plus(170.6). Joint rare-pool failure adds at most a fixed multiple of e^-Q^2 under the same comparison. This proves simultaneous supply without independence assertions for the actual rows or a union over hidden splits. The comparison is not reused after a rare event has been conditioned on.
+
+### 170.4 合法选择后的精确乘积核
+
+The new revealment differs deliberately from totals-only selection. After H_0, reveal eligibility indicators(170.7) for all reservoir pairs. For each ineligible pair reveal its allocation in full. Select the first n eligible pairs by their predetermined order, on supply success, and reveal every surplus eligible allocation. In all rare blocks select the required first totals-flagged pair using H_0, as in Chapter 165, and reveal all other rare allocations. Let F be this resulting coarse field; it leaves n reservoir categories unrefined and the fixed finite collection of rare selected splits unobserved. On failure retain that outcome as a failure, with no artificial conditional kernel assertion.
+
+Conditioning on eligibility does NOT preserve the old fair-binomial kernel at a reservoir pair. Its correct new kernel is as follows. Put
+
+$$
+ R_Q={\binom{2k_0}{k_0+Q}\over\binom{2k_0}{k_0}}
+       {\binom{2l_0}{l_0+P_n}\over\binom{2l_0}{l_0}},
+ \qquad\theta_Q={2R_Q\over1+2R_Q}.                   \tag{170.10}
+$$
+
+The three category probabilities, given eligibility and H_0, are1/(1+2R_Q), R_Q/(1+2R_Q), R_Q/(1+2R_Q). Thus the mixed-versus-central indicator is Bernoulli(theta_Q); conditional on mixed, orientation is fair. Different retained pairs have independent such indicators. The rare selected pairs keep their exact fair-binomial kernels and are jointly independent of the reservoir category indicators conditional on F.
+
+Proof of the joint and adaptive assertion. For fixed H_0, the allocation strings have a finite product law. Eligibility is an event of each pair's own allocation. Conditioning on all these individual category indicators therefore gives the product of the individually restricted kernels; exposing any of the other individual allocations leaves the others' factors intact. For each possible selected index set, selection is a function of the indicators and H_0. Partition by this finite list of index sets and by the rare selected indices. On every partition element integrate the revealed coordinates in their product kernel. Exactly the claimed factors remain. Summing gives the conditional identity against every F-measurable bounded test. The number of partition elements causes no constant: it is an identity, not a union probability estimate. Further revealing the other rare splits for a given view preserves the reservoir law and the remaining rare split's kernel. No regularity or favorable hidden-split event is inserted into this conditioning.
+
+Uniform nondegeneracy of the switch is elementary. For integers0<=h<=k/2,
+
+$$
+ {\binom{2k}{k+h}\over\binom{2k}{k}}
+   =\prod_{i=1}^h{k-i+1\over k+i},\quad
+ 0\ge\log{\binom{2k}{k+h}\over\binom{2k}{k}}
+       \ge-C h(h+1)/k.                              \tag{170.11}
+$$
+
+Put $x_i=(2i-1)/(k+i)$. On the stated range $0\le h\le k/2$, one has $0\le x_i\le2/3$. The identity $\log(1-x)=-\int_0^x(1-t)^{-1}\,dt$ gives $\log(1-x)\ge-3x$ on this whole interval. Summing gives a lower bound $-3\sum_{i=1}^h(2i-1)/(k+i)\ge-3h^2/k\ge-3h(h+1)/k$, while every ratio is at most one. Here h=Q or P_n<=Q and k is k_0 or l_0, so R_Q>=exp(-C_r/Q) and R_Q<=1. Eventually R_Q>=1/2, whence1/2<=theta_Q<=2/3. This bound is uniform over legal floors. It uses no central Gaussian approximation away from its range.
+
+The reservoir consists of raw allocation switches. It is not a family of independent posterior latent indicators. Posterior latent support coordinates still obey the single full-q constraint and retain every original label.
+
+### 170.5 共同计数的条件算术界
+
+Fix one of Chapter 165's nine formal membership candidates for the high-band hidden pair, and reveal all other rare splits for that view. Let A,B,D be the resulting numbers of labels in groups0,1,-1 outside the n retained reservoir pairs, including those fixed formal membership offsets. These are nonnegative F-measurable integers. Denote by V the number of mixed reservoir pairs. Then exactly
+
+$$
+ V\mid F\sim\mathrm{Bin}(n,\theta_Q),\quad
+ C_0=A+2(n-V),\quad C_1=B+V,\quad C_{-1}=D+V,
+$$
+
+$$
+ H_*=C_0+2C_1=A+2n+2B,\qquad
+ \gcd(C_0,C_1)=\gcd(H_*,B+V).                        \tag{170.12}
+$$
+
+H_* is coarse-field measurable and positive on supply success since n>=1. Always H_*<=C M for an absolute C, including the bounded artificial membership offsets. On the inherited original occupancy event, C_0,C_1 are comparable q/Q^3. Anchors in groups0 and1 can be chosen outside ALL predetermined trial blocks: deletion of their2(m+m_r)=o(q/Q^3) labels leaves such anchors. This choice is F-measurable; the anchor likelihoods are L_0,L_1 independently of which label is chosen. The existence of the coarse envelope follows from original occupancy, and its failure is charged unconditionally. We do not condition(170.12) on actual occupancy. The baseline bounds and the deterministic possible reservoir variations allow a measurable enlarged envelope on which all C_i<=Cq and anchors exist for every switch value. Original regularity is only used in this way or after a uniform conditional estimate has been integrated.
+
+**定理 170.1（统一条件计数界）。** 对每个条件基线，式 (170.13)–(170.15) 成立；不以该基线的典型性为前提。 For a binomial(n,theta) with theta in[1/2,2/3], all integers g>=1 and residues r,
+
+$$
+ \Pr(V\equiv r\pmod g)\le {1\over g}+{C\over\sqrt n}.
+                                                        \tag{170.13}
+$$
+
+A proof by the finite Fourier filter avoids any unproved smoothness assumption. The filter expresses the residue probability as1/g times the sum over t=0,...,g-1 of a unit phase times(1-theta+theta e^{2pi it/g})^n. Since
+|1-theta+theta e^{ix}|^2=1-4theta(1-theta)sin^2(x/2), its modulus to power n is at most exp[-c n dist(t/g,Z)^2], with an absolute c>0 on this theta interval. Pair t with g-t. The nonzero sum divided by g is at most(2/g)sum_{t>=1}exp(-c n t^2/g^2)<=C/sqrt n, by comparison with its Gaussian integral. This bound holds for every finite $g$ and $n$. The zero character contributes1/g.
+
+If gcd(H_*,B+V)>=D_*>0, some divisor g of the KNOWN integer H_* is at least D_* and divides B+V. Consequently
+
+$$
+ \Pr\{\gcd(C_0,C_1)\ge D_*\mid F\}
+ \le \tau(H_*)\left(D_*^{-1}+C n^{-1/2}\right),
+                                                        \tag{170.14}
+$$
+
+where tau counts divisors. The RHS may exceed1 for small D_*, which causes no problem. No normal, plane, free denominator or hidden trial has been unioned over. Only divisors of the SAME F-measurable conserved total are used.
+
+Here is the precise uniform exponential consequence. For every fixed d>0, if D_*=exp[d lambda-o(lambda)], then
+
+$$
+ \Pr\{\gcd(C_0,C_1)\ge D_*\mid F\}
+ \le \exp[-\tfrac12\min(d,\kappa/2)\lambda+o(\lambda)]
+                                                        \tag{170.15}
+$$
+
+uniformly on supply success, including arbitrary baselines. To justify the divisor estimate being used, for each epsilon>0 one has tau(H)<=C_epsilon H^epsilon. Choose a prime cutoff beyond which2<=p^epsilon. For large primes, a+1<=2^a<=p^{epsilon a}; for each of the finitely many smaller primes sup_{a>=0}(a+1)p^{-epsilon a} is finite. Multiplying gives the displayed bound. Since log H_*<=c_Mlambda+O(1), take epsilon so that epsilon c_M<min(d,kappa/2)/2, and use(170.9). This proves(170.15) with a fixed positive margin; no uniformity in epsilon as epsilon tends to zero is needed. A finite union over the nine membership offsets preserves it. The statement is support-uniform and holds separately for pair/path because its conditional kernel has been proved for each.
+
+An adaptive normal may depend on V and the entire outside environment. This changes none of(170.14–15): they bound a single count-gcd event containing every such normal's J=0 exception when the deterministic implication below applies. There is no assumption that conditioning on a generated normal preserves the binomial law.
+
+### 170.6 完整选择系数的二阶比较
+
+**定理 170.2（完整选择校准的二阶稳定性）。** 对同一条件纤维保留完整选择约束，式 (170.17)–(170.18) 成立，并给出第 170.7 节对全部生成法向量一致的平面比较。 Fix the outside environment left by F for the high-band view, including the fixed product P of its hidden pair. Each retained reservoir pair contributes one of the two exact generating factors
+
+$$
+ F_0(z)=(1+zL_0)^2,
+$$
+
+$$
+ F_1(z)=(1+zL_0e^{\Delta_Q})(1+zL_0e^{-\Delta_Q})
+       =F_0(z)+2zL_0(\cosh\Delta_Q-1).              \tag{170.16}
+$$
+
+Both orientations give F_1. Define delta_Q=cosh Delta_Q-1. Coefficientwise,0<=F_0<=F_1<=(1+delta_Q)F_0. All OTHER factors remain EXACT, positive, and unexpanded. Therefore every elementary symmetric coefficient of the outside array, and every such coefficient with any specified nonreservoir anchors omitted, lies between its all-central reference coefficient and(1+delta_Q)^n times that coefficient. Multiplication and coefficient extraction preserve the inequalities because all coefficients are nonnegative. The claim is valid for every order, including full-q orders and zeros outside the natural support. No growing-deletion expansion is made.
+
+The reference replaces the switch factors by F_0 only in this algebraic comparison. It is coarse-field measurable and corresponds to a possible conditional allocation, but we neither give it typical-data status nor substitute its posterior for the physical posterior. All reservoir labels and their cardinality contributions remain in each polynomial. In particular this is not an expansion after removing2n labels: no asymptotic coefficient-ratio formula is applied to such a deletion.
+
+Let T_Q=(1+delta_Q)^n and eta_Q=T_Q-1. Marginalize reservoir latent indicators while keeping any fixed nonreservoir latent configuration. Its unnormalized weight is a nonnegative combination of the compared coefficients, and its ratio to its reference lies in[1,T_Q] whenever it is positive. Normalization puts its probability-density ratio in[T_Q^-1,T_Q]. Thus for every event or[0,1]-valued statistic of the nonreservoir latent variables, in each of the exact outside laws nu_0,nu_1 of (165.6), the expectation changes by at most eta_Q. For nu_0 the two cardinalities q,q-2 and their factor P are included in the same positive sum; for nu_1 the cardinality is q-1. This proof uses the SAME normalizers as the actual full-q law, not independent posterior coordinates.
+
+Choose outside anchors a_0,a_1 with actual weights L_0,L_1 and define, as in (167.10),
+
+$$
+ p=\nu_0(I_{a_0}),\quad d=\nu_1(I_{a_0})-\nu_0(I_{a_0}),
+ \quad h_i=\nu_i(1_{I_{a_0}+I_{a_1}=1}),\quad
+ z_*=\tanh(\Delta_Q/2).
+$$
+
+Put bars on their all-central reference values. The comparison proves simultaneously
+
+$$
+ |p-\bar p|\le\eta_Q,\quad |d-\bar d|\le2\eta_Q,
+ \quad|h_i-\bar h_i|\le\eta_Q\quad(i=0,1).
+                                                        \tag{170.17}
+$$
+
+Also the exact C=E_q+PE_{q-2}, D=E_{q-1} and tau=2D sqrt(P)/C of (165.5) obey T_Q^-1<=tau/bar(tau)<=T_Q. This is a quantitative statement about the exact shared finite-q response calibration, with no saddle approximation. It does not imply that bar(p), bar(d) or bar(tau) have a continuous distribution. They are arbitrary F-measurable functions of the original atomic raw environment.
+
+By(170.2),(170.9), nDelta_Q^2 tends to zero. Since cosh x-1<=Cx^2 near zero and e^u-1<=2u for small positive u,
+
+$$
+ 0\le\eta_Q\le Cn\Delta_Q^2,\quad
+ \log(Cn\Delta_Q^2)=-(2\phi-\kappa)\lambda+O_r(\log Q).
+                                                        \tag{170.18}
+$$
+
+The compensation-dominated near-equality which obstructed polynomial transversality in Chapter 167 now provides a second-order calibration stability scale. A central-versus-adjacent switch conserves its likelihood PRODUCT exactly; hence the first-order perturbations cancel in(170.16). This cancellation is needed: a first-order bound nDelta_Q would not give the plane comparison below uniformly for beta approaching1/2.
+
+### 170.7 实际生成平面上的校准误差
+
+Use exactly the interface window and fixed choices of Chapter 165:
+
+$$
+ \gamma<c<3\gamma/2,\quad e=(3\gamma-2c)/8>0,\quad
+ a_{\rm band}=\gamma-e,\quad\ell=2c-\gamma+3e,\quad h=e.
+                                                        \tag{170.19}
+$$
+
+For each formal group-membership branch let(m_0,u,v) denote the unsheared primitive normal actually generated by Chapter 165's finite resonance set in its rank2 case; let s=|u|+|v|. A relevant nonempty plane has s>0. The coordinates u,v have height at most K, while no spurious height bound is assigned to m_0. Keep the actual integers C_0(V),C_1(V) and J(V)=uC_0(V)+vC_1(V).
+
+The exact affine interval from (167.16) is
+
+$$
+ [0,W]\cap\{t:|F_{m_0,u,v}(t;V)|\le s\varepsilon/L\},
+$$
+
+$$
+ F_{m_0,u,v}(t;V)=m_0+J(V)(p(V)+d(V)t)
+ +vC_1(V)z_*[h_0(V)+(h_1(V)-h_0(V))t].             \tag{170.20}
+$$
+
+All coefficients are from the actual same outside array. W is the actual permitted response range and[0,W] is contained in[0,1]. Define bar(F) by replacing ONLY p,d,h_0,h_1 with their bars. In particular do not freeze J, counts, normal, integer shear, determinant, response t or its interval. On the coarse enlarged count envelope C_i<=Cq, (170.17) gives for all real t in[0,1] and ALL integer triples simultaneously
+
+$$
+ |F_{m_0,u,v}(t;V)-\bar F_{m_0,u,v}(t;V)|
+       \le C s q\eta_Q.                             \tag{170.21}
+$$
+
+For example |J|<=Csq and the first two coefficient errors contribute at most3|J|eta_Q; the affine interpolation of h_0,h_1 has error at most eta_Q. This bound is deterministic and uniform in the generated normal, so it pays no K or K^2 union. Normal dependence on V is allowed. It is also uniform in the hidden response coordinate; a fixed-normal conditional anti-concentration assertion is neither needed nor inferred.
+
+To compare with the ACTUAL tolerance, use its lower bound, not only an upper asymptotic estimate. Equations (165.21)–(165.22) define epsilon>=epsilon_0=C_0 mathfrak b Q^(3/2)e^(5kappa lambda)/sqrt(q), with log mathfrak b=O_c(Q) and mathfrak b>=1; the projection-defect term has a strict smaller exponential rate in this window. Also L=2ceil(exp(a_band lambda)). Hence
+
+$$
+ \log(\varepsilon/L)=-(\gamma+a_{\rm band})\lambda
+                        +O_c(Q+\log Q).             \tag{170.22}
+$$
+
+In particular the lower exponential bound needed when dividing by epsilon/L follows from epsilon_0 and the exact L. Combining(170.18),(170.22) yields
+
+$$
+ {Cq\eta_Q\over\varepsilon/L}\le
+ \exp\{-[9\kappa+e+2(\phi-c_q)]\lambda
+                         +O_c(Q+\log Q)\}=:\omega_Q\to0.
+                                                        \tag{170.23}
+$$
+
+The exponent follows from c_q+kappa-2phi+gamma+a_band=2(c_q-phi)-9kappa-e. Every term has a fixed sign for every original fixed beta; the rate does not use beta>=2/3. This is not a polynomially accurate replacement multiplied by inverse noise: it is an explicit exponentially small deterministic coefficient error compared directly with the plane's tolerance. It is used only in this arithmetic interface.
+
+If(170.20) contains an interval of diameter at least chi/2, that SAME interval is contained in the bar(F) sublevel set at tolerance(1+omega_Q)s epsilon/L. This implication retains interval and slope together. It retains all actual rank/determinant conditions and all full-q coefficients outside the reservoir. The statement does not replace the generated normal by the normal of a new reference array; such a replacement could be discontinuous and is not claimed.
+
+This is the promised joint count/calibration theorem: conditional on F one has the explicit binomial count fluctuation(170.12), the fixed barred coefficients, and the deterministic uniform approximation(170.21–23) on that one object. No distribution for the barred coefficients is a premise. Its usefulness is quantitative even though it does not yet settle the nonzero-J simultaneous rational approximation.
+
+### 170.8 零组合分支的原始概率界
+
+**定理 170.3（零组合分支）。** 在式 (170.19)、(170.25) 的条件下，式 (170.27) 对独立对和平稳路径分别成立。
+
+Let B165^(0) be the part of Chapter 165's exceptional event for which at least one of its at most nine generated primitive normals has J=0. Retain all the event's original definitions: rank2, its unique generated plane, the determinant condition and an operative interval of diameter at least chi/2. On original occupancy C_i are comparable q/Q^3. The old height bound is
+
+$$
+ K\le\exp[(\gamma-2e)\lambda+O_c(Q+\log Q)].         \tag{170.24}
+$$
+
+Suppose
+
+$$
+                    \phi-c_q>\gamma-2e.             \tag{170.25}
+$$
+
+Then(170.2),(170.22),(170.24) imply |v|C_1|z_*|+s epsilon/L<1 uniformly on the count envelope. This is precisely (167.19); it is not dropped in the remaining beta range. If J=0 and(170.20) is nonempty, its integer m_0 has absolute value less than1, so m_0=0. If g=gcd(C_0,C_1), solutions of uC_0+vC_1=0 have(u,v)=w(C_1/g,-C_0/g). Primitivity of(0,u,v) forces w=+1 or-1. Consequently g>=max(C_0,C_1)/K, so
+
+$$
+ g\ge\exp[(c_q-\gamma+2e)\lambda-O_c(Q+\log Q)].
+                                                        \tag{170.26}
+$$
+
+This restates Chapter 167's DETERMINISTIC implication only to apply the new count law; the implication was not a probability theorem in Chapter 167. Its threshold exponent d=c_q-gamma+2e exceeds kappa/2. Applying(170.14) on the coarse field and summing only the nine membership offsets now gives
+
+$$
+ P_S(B165^{(0)})\le b_{\rm reg}+b_{\rm env}
+ +C_ce^{-Q^2}+E_{\rm occ}
+ +\exp[-c_0m/(8\lambda^2)]
+ +\exp[-\kappa\lambda/4+o_c(\lambda)] =o(1).
+                                                        \tag{170.27}
+$$
+
+Here b_reg,b_env are the retained actual original regularity/outside-enlargement failure probabilities, with their original support-uniform separate pair/path meanings. One can omit any of these already excluded in the definition of B165; keeping them is a conservative union bound. On a regular realization the coarse count envelope used in the proof is necessary, and its count lower bound at that realization gives(170.26). We bound its intersection with the gcd event by the unconditional conditional gcd bound, rather than conditioning the binomial law on hidden-dependent regularity. Thus no unauthorized conditional marginal law is used. Exact selection failures were charged before conditioning and are not divided by their small point probabilities.
+
+Condition(170.25) includes every originally admissible beta>=2/3: then phi>=2c_q, so phi-c_q>=c_q>gamma-2e. This is a nonempty subset of the original beta interval, using precisely the original fixed Liouville amplitude. It is not an arbitrary amplitude family or a restriction designed to assert the wider physical conclusion. More generally(170.25) is the exact sufficient relation for this branch application. Outside that relation the common count/calibration results(170.12–23) still hold, but this argument does not force m_0=0 and does not settle the J=0 branch. In particular an asserted gcd estimate is not silently used where (167.19) fails.
+
+### 170.9 非零分支与完整物理结论的缺口
+
+The new binomial law does not itself settle J nonzero. To exhibit the remaining dependence explicitly, on a membership branch write H_*=A+2n+2B. Then
+
+$$
+ J(V)=uH_*+(v-2u)(B+V),\qquad C_1=B+V.              \tag{170.28}
+$$
+
+After the proved coefficient comparison the SAME generated normal must satisfy an interval condition of diameter at least chi/2 for
+
+$$
+ m_0+[uH_*+(v-2u)(B+V)](\bar p+\bar d t)
+ +v(B+V)z_*[\bar h_0+(\bar h_1-\bar h_0)t],
+                                                        \tag{170.29}
+$$
+
+on the ACTUAL range[0,W], at tolerance(1+omega_Q)s epsilon/L. In this expression H_*,B and the barred coefficients are F-measurable, V has the exact law(170.12), and(m_0,u,v), W and any other generated-plane data retain their dependence on V. The primitive normal must arise from the actual complete finite resonance set of (165.17). It cannot be selected independently or replaced by all normals for free. The rational denominator J in(170.28) is the same integer which appears in the slope and intercept; it is not a fresh denominator chosen to approximate bar(p).
+
+For a FIXED normal and fixed t the expression(170.29) is affine in V, but its coefficient can be extremely small and both normal and permitted interval are generated from the environment. A marginal count CLT or a fixed-normal residue bound does not control this event. Unioning over K^2 possible(u,v) using only an O(n^-1/2) atom estimate would give the payment
+
+$$
+ K^2n^{-1/2}\le
+ \exp\{[2(\gamma-2e)-\kappa/2]\lambda+O_c(Q+\log Q)\},
+                                                        \tag{170.30}
+$$
+
+whose displayed exponent is positive throughout(170.19), since0<e<gamma/8. This is a ceiling of that crude upper-bound recipe, not a lower bound on a probability or a posterior obstruction. Nor does it establish that every formal normal is generated. We do not claim it rules out a sharper arithmetic argument. The special direction v=2u also shows why count randomness alone is not a uniform free-denominator source: then J=uH_* is conserved. Whether a generated primitive plane actually uses such a direction with a long interval requires precisely the remaining calibration/intercept information; it is not inferred from this algebraic example.
+
+Let B165^(ne) denote the remaining generated-plane event with J nonzero. For beta satisfying(170.25), the exact new missing probability term in (165.29) can now be written
+
+$$
+ P_S(B165^{(ne)})+o(1),                              \tag{170.31}
+$$
+
+where the additional o(1) is explicitly paid by(170.27). For the other original beta, P_S(B165^(0)) remains as well unless (167.19) is proved by a different argument. We have NOT bounded P_S(B165^(ne)) by o(1) in either experiment. We have NOT proved a nonvanishing lower bound for it. Accordingly we have neither proved nor refuted B165-smallness as a whole, nor the physical theorem above gamma.
+
+For completeness the resulting full-axis probability interface in the restricted branch range is exactly (165.29) with its old terms retained and P(B165) replaced by P(B165^(ne)) plus(170.27):
+
+$$
+ b_{163,a_{band}}+C_ce^{-Q^2}+E_{\rm occ}
+ +2e^{-2h^2\lambda/V_x}+18C_0Q^{-5/2}
+ +C(b_{\rm env}+b_{\rm reg}+b_{\rm occ})
+ +e^{-c_0m/(8\lambda^2)}+e^{-\kappa\lambda/4+o_c(\lambda)}
+ +P(B165^{(ne)}).
+                                                        \tag{170.32}
+$$
+
+This is a raw-data probability interface; no inverse-rho multiplies its last term or any other raw bad-event probability. V_x is the bound in (165.11), fixed score-variance bound for the SAME attained rare total pair. The newly retained reservoir can be revealed in full before applying the high-band or lower-band conditional split estimates, so their old exact binomial kernels remain intact. The physical arrays retain every reservoir coordinate and every other coordinate, and old per-view asymptotics still omit only the selected pair and one anchor. The coarse field is used to bound the outside-measurable branch probability; it does not replace the fine field used for the projection argument. This explains how the two revealments coexist without a many-deletion expansion or unauthorized selected-split conditioning.
+
+If the remaining term(s) were shown to vanish with the original quantifiers, the established physical return in Section 165.8 would apply: the same original occupied block; reduced arcs with log denominator O_c(Q); exact hybrid identities on nonzero arcs retaining all unexpanded coordinates; full J reference on the zero arc; both normalized real marks of exp(uW), W=s_lat+G^2/2, at u=0; positive real denominator before logarithms; sigma-free signed tuple/common-kernel transport; conditional-mean-square clipping; selected log-density correction; and all-output tails. None of those interfaces converts an unresolved raw probability into a theorem. Our coefficient comparison is not substituted for a marked density estimate, unmarked total variation is not used to infer squared conditional means, and no polynomial signed-mass error is multiplied by inverse noise.
+
+The current proof changes no occupied block, kappa, truncation, expansion order, prior, amplitude, actual center, C_x or m_x. The common rare-pool trial count still fits with the added exp(kappa lambda) reservoir, and its coupling is paid once by(170.6). These are the only old input obligations affected. We make no claim to have re-proved the full physical return at a new bandwidth; the missing clause is explicitly(170.31), with the additional zero branch outside(170.25). This is the exact partial settlement under the original physical criterion.
+
+### 170.10 归属与适用边界
+
+Poisson Hellinger 亲和度、条件乘积核的逐坐标限制、有限 Fourier 剩余类滤波、Stirling 不等式和除数函数的次幂界属于经典工具。第 155 章的共同选取向量比较只用于未条件化的供给事件；揭示后的乘积律由本章的原奇偶核重新推导。第 167 章的补偿尺度与零组合算术蕴含保留原条件。本章的模型综合是具体中心／相邻组交换、同一计数和校准的联合实现，以及误差相对于实际平面容差的比较。
+
+Leskelä 的 Poisson 点过程论文提供 Hellinger 规范化和条件标记结构的参照，不能直接推出原 Markov 行独立，也不允许在依赖标记的选择后沿用旧核。版本与适用条件见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。非零整数组合的实际概率、完整异常事件的小量性与更宽物理带宽仍未解决。普通数学推导，未作 Lean 认证，未声明全局原创性。
+
+## 追加锚（本行以下为增补区）

@@ -6041,3 +6041,15 @@ Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，*Bose-Einstein Conde
 原文研究周期盒中的中心齐次 Gaussian 场，假设唯一主导的零 Fourier 模式、具有指定低频幂律的极限径向谱，并采用固定强度的热力学极限。当前完整选择计数律未满足这些已验前提。原文的 $\epsilon$ 区分实、复场，与本章有限外部选择系数不同；其反演轮廓位于 Laplace 奇点右侧，变形须保留解析域，式 (19) 的有限红外修正依赖极限次序。这些事实支持完整经验谱及支持域检查，不证明本章总电荷轮廓或凝聚转变，后续未核对的凝聚推导未被采用。
 
 Gaussian 配方、行列式／Sherman–Morrison 身份、谱交错及鞍点方法的经典归属保留。本章模型综合的边界是条件能量复邻域、带原噪声的相对返回与有限谱解释；实大偏差原理不替代相对振荡估计，局部窗口不替代总幅度。所引用版本的提取文本及其字形限制未被当作额外定理，有限来源核对不声称检索穷尽或全球原创。
+
+## 谱边界第 170 章补充：条件计数与完整校准的共同稳定性
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 170 章在同一原始数组构造中心／相邻组条件交换，得到共同二项计数、统一最大公因数概率界及完整选择校准的二阶误差。满足 $\phi-c_q>\gamma-2e$ 时，它控制第 165 章异常事件的 $J=0$ 分支；$J\ne0$ 的联合概率估计仍未解决，没有据此扩展原物理带宽。
+
+Lasse Leskelä，*Information divergences and likelihood ratios of Poisson processes and point patterns*，[arXiv:2404.00294v1](https://arxiv.org/abs/2404.00294v1)。原始 TeX 为 148,388 字节，SHA256 5a359eac75e106ff54583d4ba5fa1c1d529fb8992155bc7bc8e9c2a1e420f59e；原始归档为 46,152 字节，SHA256 529bd2052ae36e884e1ea18080115112fd12b57e6039f7fd5c6e23b63f2facbc。核对源码标签 the:PPPRenyi、the:PoissonHellinger、the:PoissonRenyiFinite 和 sec:MarkedPPP，包括有限强度证明中 $\alpha=1/2$ 的似然比／Laplace 泛函计算与零密度支撑处理。
+
+原文采用 $\sigma$ 有限强度的 Poisson 点过程，以及给定位置后条件独立的概率标记核。规范化为 $H^2(\lambda,\mu)=\tfrac12\int(\sqrt f-\sqrt g)^2$ 和 $H^2(P_\lambda,P_\mu)=1-\exp[-H^2(\lambda,\mu)]$；有限离散空间的亲和度即 $\exp[-\tfrac12\sum_i(\sqrt{\mu_i}-\sqrt{\nu_i})^2]$，允许零强度。第 155 章已在共同随机均值上使用该关系；第 170 章复用其未条件化供给范围，不把它提升为 Markov 行独立或依赖标记选择后的独立性。
+
+式 (170.11) 的完整范围 $0\le h\le k/2$ 使用 $\log(1-x)\ge-3x$、$0\le x\le2/3$。奇偶因子分解与有限选择分割建立实际条件核；正系数比较保留所有标签和完整 $q$ 约束，未在大量删除后应用固定删除渐近。有限 Fourier 滤波和除数界控制同一个条件守恒总数，不为数据生成的法向量假定独立分布。
+
+Poisson 亲和度、条件乘积限制、Stirling、Fourier 剩余类公式和除数估计保留经典归属。本章的综合贡献限于原模型的共同计数／校准关系与有条件的零组合分支。Györfi 的尾近似未被用来代替中心附近的精确取整下界；既有 Le Cam 文本层缺陷不支撑未经核对的更强结论。未取得的校准分布、统一随机相位或非零分支概率均不归于文献，有限核对不表示检索穷尽或全球原创。
