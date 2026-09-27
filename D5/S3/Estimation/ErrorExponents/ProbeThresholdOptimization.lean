@@ -7,6 +7,11 @@
    digest: A positive probability vector has an exact capped probe optimizer. -/
 
 import D5.S3.Weil.ZetaLinear.RankTrace
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Topology.Order.IntermediateValue
 
@@ -16,12 +21,13 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Estimation.ErrorExponents.ProbeThresholdOptimization
 
 open scoped BigOperators
+open Filter Topology
 
 open scoped Classical in
 /-- Let `a` be a strictly positive probability vector and let `0 < ε < 1`.  The capped
 square-root vector has a unique threshold, globally maximizes the probe quadratic on the unit
 box, and admits the finite active-set formula of Proposition 46.2. -/
-theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
+theorem probe_threshold_optimization {ι : Type*} [Fintype ι]
     (a : ι → ℝ) (ha : ∀ l, 0 < a l) (hsum : ∑ l, a l = 1)
     (ε : ℝ) (hε0 : 0 < ε) (hε1 : ε < 1) :
     let v : ι → ℝ := fun l => Real.sqrt (a l)
@@ -31,15 +37,21 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
     let d : ℝ → ℝ := fun c =>
       ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c), a l
     let S : ℝ → ℝ := fun c => ∑ l ∈ H c, v l
-    ∃! c : ℝ,
-      0 < c ∧
-      (∑ l, min (a l) (v l / c)) = ε ∧
-      (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
-      (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
-      d c < ε ∧
-      c = S c / (ε - d c) ∧
-      F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card := by
+    ∃ c : ℝ,
+      (0 < c ∧
+        (∑ l, min (a l) (v l / c)) = ε ∧
+        (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
+        (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
+        d c < ε ∧
+        c = S c / (ε - d c) ∧
+        F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card) ∧
+      (∀ c', 0 < c' → (∑ l, min (a l) (v l / c')) = ε → c' = c) := by
   classical
+  haveI : Nonempty ι := by
+    by_contra hι
+    letI : IsEmpty ι := not_nonempty_iff.mp hι
+    have hzero : (∑ l, a l) = 0 := by simp
+    linarith
   let v : ι → ℝ := fun l => Real.sqrt (a l)
   let F : (ι → ℝ) → ℝ := fun x => (∑ l, v l * x l) ^ 2 - ε * ∑ l, (x l) ^ 2
   let X : ℝ → ι → ℝ := fun c l => min 1 (c * v l)
@@ -48,12 +60,13 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
     ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c), a l
   let S : ℝ → ℝ := fun c => ∑ l ∈ H c, v l
   let g : ℝ → ℝ := fun c => ∑ l, min (a l) (v l / c)
-  change ∃! c : ℝ,
-    0 < c ∧ g c = ε ∧
-    (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
-    (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
-    d c < ε ∧ c = S c / (ε - d c) ∧
-    F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card
+  change ∃ c : ℝ,
+    (0 < c ∧ g c = ε ∧
+      (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
+      (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
+      d c < ε ∧ c = S c / (ε - d c) ∧
+      F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card) ∧
+    (∀ c', 0 < c' → g c' = ε → c' = c)
   have hvpos (l : ι) : 0 < v l := by
     exact Real.sqrt_pos.2 (ha l)
   have hvsq (l : ι) : (v l) ^ 2 = a l := by
@@ -97,11 +110,6 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
     simpa only [Set.mem_image] using intermediate_value_Icc' hCone.le hcont hmem
   obtain ⟨c, hcI, hgc⟩ := hroot_exists
   have hc : 0 < c := lt_of_lt_of_le zero_lt_one hcI.1
-  have hg_mono {p q : ℝ} (hp : 0 < p) (hpq : p ≤ q) : g q ≤ g p := by
-    apply Finset.sum_le_sum
-    intro l _
-    apply min_le_min_left
-    exact div_le_div_of_nonneg_left (hvpos l).le hp hpq
   have hg_strict {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hgp : g p < 1) :
       g q < g p := by
     have hex : ∃ l, min (a l) (v l / p) < a l := by
@@ -244,6 +252,223 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
       have hp : 0 ≤ (1 - z) * (2 * (q * v l) - 1 - z) :=
         mul_nonneg (by linarith) (by linarith)
       nlinarith
+  let Y : ℝ → ι → ℝ := fun t l => min 1 (t * v l / ε)
+  let J : ℝ → ℝ := fun t =>
+    -t ^ 2 + ∑ l, (2 * t * v l * Y t l - ε * (Y t l) ^ 2)
+  have hJderiv (t : ℝ) :
+      HasDerivAt J (2 * (∑ l, v l * Y t l - t)) t := by
+    have hpospart (x : ℝ) :
+        HasDerivAt (fun y : ℝ => max y 0 ^ 2) (2 * max x 0) x := by
+      rcases lt_trichotomy x 0 with hx | hx | hx
+      · have heq : (fun y : ℝ => max y 0 ^ 2) =ᶠ[nhds x] fun _ => 0 := by
+          filter_upwards [Iio_mem_nhds hx] with y hy
+          have hy' : y < 0 := by simpa only [Set.mem_Iio] using hy
+          simp [max_eq_right hy'.le]
+        simpa [max_eq_right hx.le] using
+          (hasDerivAt_const x (0 : ℝ)).congr_of_eventuallyEq heq
+      · subst x
+        apply hasDerivAt_iff_tendsto_slope_zero.mpr
+        have hc : ContinuousAt (fun y : ℝ => max y 0) 0 :=
+          continuousAt_id.max continuousAt_const
+        have ht : Filter.Tendsto (fun y : ℝ => max y 0)
+            (nhdsWithin 0 {0}ᶜ) (nhds 0) := by
+          simpa using hc.mono_left
+            (nhdsWithin_le_nhds : nhdsWithin (0 : ℝ) {0}ᶜ ≤ nhds 0)
+        have heq : (fun y : ℝ => max y 0) =ᶠ[nhdsWithin 0 {0}ᶜ]
+            fun y => y⁻¹ • (max (0 + y) 0 ^ 2 - max 0 0 ^ 2) := by
+          filter_upwards [self_mem_nhdsWithin] with y hy
+          have hy0 : y ≠ 0 := by simpa using hy
+          by_cases hy' : 0 ≤ y
+          · simp only [zero_add, max_eq_left hy', max_self, pow_two, zero_mul,
+              sub_zero, smul_eq_mul]
+            field_simp
+          · have hy' : y < 0 := lt_of_not_ge hy'
+            simp [max_eq_right hy'.le, hy0]
+        simpa using ht.congr' heq
+      · have heq : (fun y : ℝ => max y 0 ^ 2) =ᶠ[nhds x]
+          fun y => y * y := by
+          filter_upwards [Ioi_mem_nhds hx] with y hy
+          have hy' : 0 < y := hy
+          simp [max_eq_left hy'.le, pow_two]
+        have hmul : HasDerivAt (fun y : ℝ => y * y) (2 * x) x :=
+          ((hasDerivAt_id x).mul (hasDerivAt_id x)).congr_deriv (by simp [id]; ring)
+        simpa [max_eq_left hx.le] using hmul.congr_of_eventuallyEq heq
+    have hphi (l : ι) :
+        HasDerivAt (fun s : ℝ =>
+          2 * s * v l * min 1 (s * v l / ε) -
+            ε * (min 1 (s * v l / ε)) ^ 2)
+          (2 * v l * min 1 (t * v l / ε)) t := by
+      have hz : HasDerivAt (fun s : ℝ => s * v l / ε - 1) (v l / ε) t := by
+        have hz0 := (((hasDerivAt_id t).mul_const (v l)).div_const ε).sub_const 1
+        convert! hz0 using 1 <;> ring
+      have hmax : HasDerivAt (fun s : ℝ => max (s * v l / ε - 1) 0 ^ 2)
+          (2 * max (t * v l / ε - 1) 0 * (v l / ε)) t :=
+        by simpa [Function.comp_def] using
+          (hpospart (t * v l / ε - 1)).comp t hz
+      have hbase : HasDerivAt (fun s : ℝ => s ^ 2 * (v l) ^ 2 / ε)
+          (2 * t * (v l) ^ 2 / ε) t := by
+        have hbase0 := ((hasDerivAt_pow 2 t).const_mul ((v l) ^ 2)).div_const ε
+        convert! hbase0 using 1
+        · funext s
+          ring
+        · norm_num
+          ring
+      have hrewrite :
+          (fun s : ℝ =>
+            2 * s * v l * min 1 (s * v l / ε) -
+              ε * (min 1 (s * v l / ε)) ^ 2) =
+          (fun s : ℝ => s ^ 2 * (v l) ^ 2 / ε -
+            ε * max (s * v l / ε - 1) 0 ^ 2) := by
+        funext s
+        by_cases hs : s * v l / ε ≤ 1
+        · rw [min_eq_right hs]
+          have hm : max (s * v l / ε - 1) 0 = 0 :=
+            max_eq_right (sub_nonpos.mpr hs)
+          rw [hm]
+          field_simp
+          ring
+        · have hs' : 1 ≤ s * v l / ε := le_of_lt (lt_of_not_ge hs)
+          rw [min_eq_left hs']
+          rw [max_eq_left (sub_nonneg.mpr hs')]
+          field_simp
+          ring
+      rw [hrewrite]
+      have h := hbase.sub (hmax.const_mul ε)
+      convert! h using 1
+      · by_cases hs : t * v l / ε ≤ 1
+        · rw [min_eq_right hs]
+          rw [max_eq_right (sub_nonpos.mpr hs)]
+          ring
+        · have hs' : 1 ≤ t * v l / ε := le_of_lt (lt_of_not_ge hs)
+          rw [min_eq_left hs']
+          rw [max_eq_left (sub_nonneg.mpr hs')]
+          field_simp [hε0.ne']
+          ring
+    have hsum : HasDerivAt
+        (fun s : ℝ => ∑ l, (2 * s * v l * Y s l - ε * (Y s l) ^ 2))
+        (∑ l, 2 * v l * Y t l) t := by
+      have hsum0 := HasDerivAt.fun_sum (u := Finset.univ) (fun l _ => by
+        simpa [Y] using hphi l)
+      simpa only [Finset.sum_apply] using hsum0
+    have hquad : HasDerivAt (fun s : ℝ => -s ^ 2) (-2 * t) t := by
+      have hquad0 := (hasDerivAt_pow 2 t).neg
+      convert! hquad0 using 1 <;> norm_num
+    dsimp [J]
+    have h := hquad.add hsum
+    have hsum2 : (∑ l, 2 * v l * Y t l) = 2 * ∑ l, v l * Y t l := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro l _
+      ring
+    convert! h using 1
+    rw [hsum2]
+    ring
+  have hJcont : ContinuousOn J (Set.Ici (0 : ℝ)) := by
+    intro t ht
+    exact (hJderiv t).continuousAt.continuousWithinAt
+  have hscale (r : ℝ) (hr : 0 < r) :
+      (∑ l, v l * min 1 (r * v l)) = r * g r := by
+    calc
+      (∑ l, v l * min 1 (r * v l)) =
+          ∑ l, r * min (a l) (v l / r) := by
+        apply Finset.sum_congr rfl
+        intro l hl
+        by_cases hrv : r * v l ≤ 1
+        · rw [min_eq_right hrv]
+          have hle : a l ≤ v l / r := by
+            rw [le_div_iff₀ hr, ← hvsq l]
+            nlinarith [hvpos l]
+          rw [min_eq_left hle, ← hvsq l]
+          ring
+        · have hrv' : 1 ≤ r * v l := le_of_lt (lt_of_not_ge hrv)
+          rw [min_eq_left hrv']
+          have hle : v l / r ≤ a l := by
+            rw [div_le_iff₀ hr, ← hvsq l]
+            nlinarith [hvpos l]
+          rw [min_eq_right hle]
+          field_simp
+      _ = r * g r := by
+        rw [Finset.mul_sum]
+  have hYscale (t : ℝ) (ht : 0 < t) :
+      (∑ l, v l * Y t l) = (t / ε) * g (t / ε) := by
+    have hte : 0 < t / ε := div_pos ht hε0
+    calc
+      (∑ l, v l * Y t l) = ∑ l, v l * min 1 ((t / ε) * v l) := by
+        apply Finset.sum_congr rfl
+        intro l hl
+        dsimp [Y]
+        congr 2
+        ring
+      _ = (t / ε) * g (t / ε) := hscale (t / ε) hte
+  have hderiv_pos {t : ℝ} (ht : 0 < t) (htc : t < ε * c) :
+      0 < 2 * (∑ l, v l * Y t l - t) := by
+    have htc' : t / ε < c := (div_lt_iff₀ hε0).2 (by nlinarith [htc])
+    have hgt : ε < g (t / ε) := by
+      by_cases hgr : g (t / ε) < 1
+      · have hs := hg_strict (div_pos ht hε0) htc' hgr
+        rw [hgc] at hs
+        exact hs
+      · exact hε1.trans_le (le_of_not_gt hgr)
+    rw [hYscale t ht]
+    have hte : ε * (t / ε) = t := by field_simp
+    nlinarith
+  have hderiv_neg {t : ℝ} (htc : ε * c < t) :
+      2 * (∑ l, v l * Y t l - t) < 0 := by
+    have htc' : c < t / ε := (lt_div_iff₀ hε0).2 (by nlinarith [htc])
+    have hgt : g (t / ε) < ε := by
+      have hs := hg_strict hc htc' (by rw [hgc]; exact hε1)
+      rw [hgc] at hs
+      exact hs
+    rw [hYscale t (by nlinarith [htc, hε0, hc])]
+    have hte : ε * (t / ε) = t := by field_simp
+    nlinarith
+  have hJmono : MonotoneOn J (Set.Icc (0 : ℝ) (ε * c)) := by
+    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc 0 (ε * c))
+      (fun t ht => (hJcont t ht.1).mono (fun _ hx => hx.1))
+    · intro t ht
+      exact (hJderiv t).hasDerivWithinAt
+    · intro t ht
+      have ht' : t ∈ Set.Ioo (0 : ℝ) (ε * c) := by
+        simpa only [interior_Icc] using ht
+      exact (le_of_lt (hderiv_pos ht'.1 ht'.2))
+  have hJanti : AntitoneOn J (Set.Ici (ε * c)) := by
+    apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici (ε * c))
+    · intro t ht
+      exact (hJderiv t).continuousAt.continuousWithinAt
+    · intro t ht
+      exact (hJderiv t).hasDerivWithinAt
+    · intro t ht
+      have ht' : t ∈ Set.Ioi (ε * c) := by simpa only [interior_Ici] using ht
+      exact le_of_lt (hderiv_neg ht')
+  have hJmax {t : ℝ} (ht : 0 ≤ t) : J t ≤ J (ε * c) := by
+    rcases le_total t (ε * c) with hle | hle
+    · apply hJmono
+      · exact ⟨ht, hle⟩
+      · exact ⟨le_of_lt (mul_pos hε0 hc), le_rfl⟩
+      · exact hle
+    · apply hJanti
+      · exact (show ε * c ≤ ε * c from le_rfl)
+      · exact (show ε * c ≤ t from hle)
+      · exact hle
+  have hJscale (q : ℝ) : J (ε * q) = ε * K q := by
+    have hYq (l : ι) : Y (ε * q) l = X q l := by
+      dsimp [Y, X]
+      rw [show ε * q * v l / ε = q * v l by field_simp]
+    dsimp [J, K]
+    simp_rw [hYq]
+    have hsum :
+        (∑ x, (2 * (ε * q) * v x * X q x - ε * X q x ^ 2)) =
+          ε * ∑ x, (2 * q * v x * X q x - X q x ^ 2) := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro l hl
+      ring
+    rw [hsum]
+    ring
+  have hKmax {q : ℝ} (hq : 0 ≤ q) : K q ≤ K c := by
+    have hJq := hJmax (mul_nonneg hε0.le hq)
+    rw [hJscale q, hJscale c] at hJq
+    nlinarith [hJq]
   have hsumfactor (r : ℝ) :
       (∑ l, (2 * r * v l * X c l - (X c l) ^ 2)) =
         2 * r * (∑ l, v l * X c l) - ∑ l, (X c l) ^ 2 := by
@@ -255,117 +480,6 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
         intro l _
         ring
       _ = 2 * r * (∑ l, v l * X c l) := by rw [Finset.mul_sum]
-  have hKmax {q : ℝ} (hq : 0 ≤ q) : K q ≤ K c := by
-    have hdiff : K q - K c = -ε * (q - c) ^ 2 +
-        ∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-          (2 * q * v l * X c l - (X c l) ^ 2)) := by
-      calc
-        K q - K c =
-            (-ε * q ^ 2 + ∑ l, (2 * q * v l * X q l - (X q l) ^ 2)) -
-              (-ε * c ^ 2 + ∑ l, (2 * c * v l * X c l - (X c l) ^ 2)) := by
-                rfl
-        _ = -ε * (q - c) ^ 2 +
-            ((∑ l, (2 * q * v l * X q l - (X q l) ^ 2)) -
-              ∑ l, (2 * q * v l * X c l - (X c l) ^ 2)) := by
-                rw [hsumfactor q, hsumfactor c, hAstar]
-                ring
-        _ = -ε * (q - c) ^ 2 +
-            ∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-              (2 * q * v l * X c l - (X c l) ^ 2)) := by
-                have hsd :
-                    (∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-                      (2 * q * v l * X c l - (X c l) ^ 2))) =
-                      (∑ l, (2 * q * v l * X q l - (X q l) ^ 2)) -
-                        ∑ l, (2 * q * v l * X c l - (X c l) ^ 2) :=
-                  Finset.sum_sub_distrib
-                    (s := Finset.univ)
-                    (fun l => 2 * q * v l * X q l - (X q l) ^ 2)
-                    (fun l => 2 * q * v l * X c l - (X c l) ^ 2)
-                exact congrArg (fun z => -ε * (q - c) ^ 2 + z) hsd.symm
-    have hsquare : 0 ≤ (q - c) ^ 2 := sq_nonneg _
-    by_cases hcq : c ≤ q
-    · have hgain : (∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-          (2 * q * v l * X c l - (X c l) ^ 2))) ≤ (q - c) ^ 2 * d c := by
-        rw [hpartition]
-        calc
-          (∑ l ∈ H c, ((2 * q * v l * X q l - (X q l) ^ 2) -
-              (2 * q * v l * X c l - (X c l) ^ 2))) +
-              ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c),
-                ((2 * q * v l * X q l - (X q l) ^ 2) -
-                  (2 * q * v l * X c l - (X c l) ^ 2))
-              ≤ 0 + ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c),
-                (q - c) ^ 2 * a l := by
-            apply add_le_add
-            · apply Finset.sum_nonpos
-              intro l hl
-              rw [hXactive l hl]
-              have hqactive : X q l = 1 := by
-                apply min_eq_left
-                have hcv : 1 ≤ c * v l := by simpa [H] using hl
-                exact hcv.trans (mul_le_mul_of_nonneg_right hcq (hvpos l).le)
-              rw [hqactive]
-              norm_num
-            · apply Finset.sum_le_sum
-              intro l hl
-              rw [hXinactive l (Finset.mem_filter.mp hl).2, ← hvsq l]
-              nlinarith [sq_nonneg (X q l - q * v l)]
-          _ = (q - c) ^ 2 * d c := by
-            dsimp [d]
-            rw [zero_add, Finset.mul_sum]
-      have hgain' : (∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-          (2 * q * v l * X c l - (X c l) ^ 2))) ≤ ε * (q - c) ^ 2 := by
-        exact hgain.trans (by
-          simpa only [mul_comm] using mul_le_mul_of_nonneg_left hdlt.le hsquare)
-      linarith [hdiff]
-    · have hqc : q ≤ c := le_of_not_ge hcq
-      have hgain : (∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-          (2 * q * v l * X c l - (X c l) ^ 2))) ≤ (c - q) ^ 2 * (S c / c + d c) := by
-        rw [hpartition]
-        calc
-          (∑ l ∈ H c, ((2 * q * v l * X q l - (X q l) ^ 2) -
-              (2 * q * v l * X c l - (X c l) ^ 2))) +
-              ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c),
-                ((2 * q * v l * X q l - (X q l) ^ 2) -
-                  (2 * q * v l * X c l - (X c l) ^ 2))
-              ≤ (∑ l ∈ H c, (c - q) ^ 2 * v l / c) +
-                ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c),
-                  (c - q) ^ 2 * a l := by
-            apply add_le_add <;> apply Finset.sum_le_sum <;> intro l hl
-            · rw [hXactive l hl]
-              by_cases hqactive : 1 ≤ q * v l
-              · rw [show X q l = 1 by exact min_eq_left hqactive]
-                have hrhs : 0 ≤ (c - q) ^ 2 * v l / c :=
-                  div_nonneg (mul_nonneg (sq_nonneg _) (hvpos l).le) hc.le
-                norm_num
-                exact hrhs
-              · have hqinactive : q * v l < 1 := lt_of_not_ge hqactive
-                rw [show X q l = q * v l by exact min_eq_right hqinactive.le]
-                apply (le_div_iff₀ hc).2
-                have hcv : 1 ≤ c * v l := by simpa [H] using hl
-                have hq2 : q ^ 2 * v l ≤ q := by
-                  nlinarith [mul_le_mul_of_nonneg_left hqinactive.le hq]
-                have hp : 0 ≤ (c * v l - 1) * (c - q ^ 2 * v l) :=
-                  mul_nonneg (sub_nonneg.mpr hcv) (sub_nonneg.mpr (hq2.trans hqc))
-                nlinarith
-            · have hln : l ∉ H c := (Finset.mem_filter.mp hl).2
-              rw [hXinactive l hln]
-              have hqv : q * v l ≤ 1 := by
-                exact (mul_le_mul_of_nonneg_right hqc (hvpos l).le).trans
-                  (by exact le_of_not_ge fun h => hln (by simpa [H] using h))
-              rw [show X q l = q * v l by exact min_eq_right hqv, ← hvsq l]
-              ring_nf
-              rfl
-          _ = (c - q) ^ 2 * (S c / c + d c) := by
-            dsimp [S, d]
-            simp_rw [mul_div_assoc]
-            rw [← Finset.mul_sum, Finset.sum_div, ← Finset.mul_sum]
-            ring
-      rw [hroot_split] at hgain
-      have hgain' : (∑ l, ((2 * q * v l * X q l - (X q l) ^ 2) -
-          (2 * q * v l * X c l - (X c l) ^ 2))) ≤ ε * (q - c) ^ 2 := by
-        convert hgain using 1
-        all_goals ring
-      linarith [hdiff]
   have hmax : ∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c) := by
     intro x hx
     let A : ℝ := ∑ l, v l * x l
@@ -431,8 +545,8 @@ theorem probe_threshold_optimization {ι : Type*} [Fintype ι] [Nonempty ι]
       _ = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card := by
         ring
   refine ⟨c, ⟨hc, hgc, hXbounds, hmax, hdlt, hc_formula, hvalue⟩, ?_⟩
-  intro q hq
-  exact hroot_unique hq.1 hq.2.1
+  intro q hq hqroot
+  exact hroot_unique hq hqroot
 
 #print axioms probe_threshold_optimization
 

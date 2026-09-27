@@ -30,7 +30,7 @@ def rejected : Realization signature.{u} :=
 open scoped Classical in
 def arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {ι : Type u} [Fintype ι] [Nonempty ι]
+  Law R := ∀ {ι : Type u} [Fintype ι]
     (a : ι → ℝ) (_ha : ∀ l, 0 < a l) (_hsum : ∑ l, a l = 1)
     (ε : ℝ) (_hε0 : 0 < ε) (_hε1 : ε < 1),
     let v : ι → ℝ := fun l => R.readout () ⟨ι, a, ε⟩ l
@@ -40,14 +40,15 @@ def arena : Arena where
     let d : ℝ → ℝ := fun c =>
       ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c), a l
     let S : ℝ → ℝ := fun c => ∑ l ∈ H c, v l
-    ∃! c : ℝ,
-      0 < c ∧
-      (∑ l, min (a l) (v l / c)) = ε ∧
-      (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
-      (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
-      d c < ε ∧
-      c = S c / (ε - d c) ∧
-      F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card
+    ∃ c : ℝ,
+      (0 < c ∧
+        (∑ l, min (a l) (v l / c)) = ε ∧
+        (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
+        (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
+        d c < ε ∧
+        c = S c / (ε - d c) ∧
+        F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card) ∧
+      (∀ c', 0 < c' → (∑ l, min (a l) (v l / c')) = ε → c' = c)
 
 theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
@@ -60,7 +61,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   norm_num at hroot
 
 open scoped Classical in
-def registration : Registration arena.{u} (∀ {ι : Type u} [Fintype ι] [Nonempty ι]
+def registration : Registration arena.{u} (∀ {ι : Type u} [Fintype ι]
     (a : ι → ℝ) (_ha : ∀ l, 0 < a l) (_hsum : ∑ l, a l = 1)
     (ε : ℝ) (_hε0 : 0 < ε) (_hε1 : ε < 1),
     let v : ι → ℝ := fun l => Real.sqrt (a l)
@@ -70,14 +71,15 @@ def registration : Registration arena.{u} (∀ {ι : Type u} [Fintype ι] [Nonem
     let d : ℝ → ℝ := fun c =>
       ∑ l ∈ Finset.univ.filter (fun l => l ∉ H c), a l
     let S : ℝ → ℝ := fun c => ∑ l ∈ H c, v l
-    ∃! c : ℝ,
-      0 < c ∧
-      (∑ l, min (a l) (v l / c)) = ε ∧
-      (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
-      (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
-      d c < ε ∧
-      c = S c / (ε - d c) ∧
-      F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card) where
+    ∃ c : ℝ,
+      (0 < c ∧
+        (∑ l, min (a l) (v l / c)) = ε ∧
+        (∀ l, 0 ≤ X c l ∧ X c l ≤ 1) ∧
+        (∀ x, (∀ l, 0 ≤ x l ∧ x l ≤ 1) → F x ≤ F (X c)) ∧
+        d c < ε ∧
+        c = S c / (ε - d c) ∧
+        F (X c) = ε * (S c) ^ 2 / (ε - d c) - ε * (H c).card) ∧
+      (∀ c', 0 < c' → (∑ l, min (a l) (v l / c')) = ε → c' = c)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨probe_threshold_optimization, rejected, rejected_law⟩
