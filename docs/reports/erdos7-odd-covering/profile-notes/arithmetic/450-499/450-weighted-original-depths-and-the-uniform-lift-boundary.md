@@ -1220,9 +1220,10 @@ Consequently no probability supported on its actual outside-only avoiding
 set gives either strict reverse of PE2 or PE3. This is an obstruction to
 an unconditional sufficient criterion, not an odd covering system. The
 necessary whole-cover implications PE2/PE3 and the conditional suppliers
-AP1--AP8 and WR1--WR10 remain valid. A supplier restricted by consequences
-of a hypothetical whole cover or justified minimality is still a separate
-open question.
+AP1--AP8 and WR1--WR10 remain valid. Section13 additionally rules out a
+supplier based only on union-irredundancy and numerical divisor closure.
+A supplier using further consequences of a hypothetical whole cover or
+extremality among whole covers remains a separate open question.
 
 ### 12.1. Complete numerical original classes
 
@@ -1400,7 +1401,252 @@ nonnegativity already provide the exact certificate. Reproduce with:
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_containment_reduction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/universal_phase_supplier_originals.json --output /tmp/e7_phase_containment_reduction.json
 ```
 
-The unrestricted obligation remains to prove an appropriate supplier for
-every relevant reduced original family, or to use further whole-cover
-structure. This diagnostic neither supplies that quantifier nor settles
-Erdős #7, and it is not new Lean verification.
+This reduction concerns precisely the original452-class input. The
+different463-class family in section13 has no union-redundant original,
+yet defeats both suppliers at every outside survivor. Thus a universal
+repair based only on removing redundant classes is unavailable; the
+remaining task needs further whole-cover structure. Neither diagnostic
+settles Erdős #7 or asserts new Lean verification.
+
+## 13. Irredundancy and divisor closure do not supply a low-excess law
+
+There is a463-class family of distinct odd numerical moduli greater than
+one with ALL of the following properties simultaneously:
+
+- its numerical inventory is closed under every nonunit divisor;
+- its exact prime support is {3,5,7,11,13,17,19}, and each original prime
+  class is0 modulo its prime;
+- each original class has a private integer belonging to no other class;
+- a literal integer avoids the entire family;
+- every probability supported on its actual outside-only survivor set
+  violates both strict low-excess sufficient conditions from PE2/PE3.
+
+The [literal certificate](../../../frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction_originals.json)
+contains only full numerical moduli, full numerical residues, one private
+integer per original, and an uncovered integer. Its SHA256 is
+
+    427138d17d61f284dff84c2143b90b3b5b3997af6c26e9a8c17f4ab790aa1e11.
+
+This is a counterexample to the proposed supplier under these structural
+restrictions. It is a NONCOVER, so it neither refutes Erdős #7 nor rules out
+a supplier using additional consequences specific to whole coverage.
+
+### 13.1. Complete divisor inventory and the actual outside domain
+
+Use the same retained set D from section12.1 and Q=46189. The new full
+numerical inventory is exactly
+
+    {db : d in D union{1}, b divides Q} minus{1}.       (IC1)
+
+Unique prime factorization separates the factors because every d is
+{3,5,7}-smooth and Q=11*13*17*19. Hence all products are distinct and
+there are29*16-1=463 numerical moduli. The displayed D is closed under
+nonunit divisors. A divisor of db decomposes as d'b' with d' dividing d
+and b' dividing b, so IC1 is also closed under nonunit divisors. The
+literal input is additionally checked directly for every divisor.
+
+The fifteen outside-only originals are0 modulo11,13,17,19 and
+
+    (143,1),(187,1),(209,1),(221,1),(247,1),(323,1),
+    (2431,2),(2717,2),(3553,3),(4199,2),(46189,4).      (IC2)
+
+Define V as the set of y modulo Q avoiding ALL fifteen classes in IC2,
+including the four prime classes. Its exact cardinality is33458. The
+retained and full periods are
+
+    L_B=10418625,   L=L_B Q=481225870125.
+
+The new family retains the original452 numerical moduli and adds the
+eleven composite outside-only moduli. Its retained phases are different;
+no preservation of the old covered union is claimed.
+
+### 13.2. Private integers prove irredundancy against the complete union
+
+For every numerical original (m_i,a_i), its supplied private integer w_i
+satisfies
+
+    w_i mod m_i=a_i,
+    w_i mod m_j!=a_j for every j!=i.                 (IC3)
+
+These are direct integer comparisons against all463 originals, giving
+214369 incidence checks. Deleting class i therefore changes the covered
+subset at w_i. Every class is necessary for this family's union, not just
+free of containment in one other class. Any proper subfamily has a
+strictly smaller covered union. In particular, the union-preserving
+reduction from section12.4 deletes nothing here.
+
+The supplied integer
+
+    h=170272916129                                  (IC4)
+
+misses every original class. This is a direct noncoverage certificate
+independent of the phase-excess argument. All463 private integers and h
+lie in the single full period; none is chosen separately for a different
+law or a different projected model.
+
+### 13.3. Exact pointwise bounds exclude every outside law
+
+For each original m_i=d_i b_i, recover the retained phase a_i modulo d_i
+and outside phase a_i modulo b_i from its FULL numerical residue. For
+every y in V form
+
+    P_d(y)={a_i mod d : d_i=d, y mod b_i=a_i mod b_i},
+    R_d(y)=|P_d(y)|.
+
+The pure original at modulus d ensures R_d(y)>=1. Equal phases merge as a
+set, even when they arise from different original labels. Define exactly
+the same quantities as in PE2/PE3:
+
+    F_S(y)=sum_(d in D) omega_B(d)(R_d(y)-1),
+    F_H(y)=sum_(d in D) (R_d(y)-1)/d.
+
+Every L_B omega_B(d) and L_B/d is an integer. Direct reconstruction on
+ALL33458 outside survivors gives
+
+    min_V F_S=256/735=1/3+11/735,
+    argmin_V F_S={19802},
+    min_V F_H=29222/212625=5/48+113177/3402000,
+    argmin_V F_H={25022}.                           (IC5)
+
+The [solver-free verifier](../../../frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction.py)
+uses integer masks for sets of actual retained phases and integer sums
+for both scores. Its [exact output](../../../frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction.json)
+records the complete-domain minima, all minimizing points, private-point
+and containment checks, and input hash. The SHA256 of the ordered list
+of all (y,L_B F_S(y),L_B F_H(y)) triples is
+
+    af0026663acb22f2ff6214eed2e2feeb6722e123019d1c8e0a93e8b747219f6c.
+
+For ANY probability eta supported on V, integrating the two pointwise
+inequalities in IC5 gives
+
+    integral F_S d eta>=256/735>1/3,
+    integral F_H d eta>=29222/212625>5/48.           (IC6)
+
+This includes all nonproduct laws and point masses. The two minimizers
+need not coincide: each lower bound separately holds at EVERY allowed
+point, so both inequalities hold for the SAME eta. Neither low-excess
+strict reverse is available for this family under any outside law.
+
+### 13.4. What phase counts retain, and what this obstruction excludes
+
+A useful sufficient rule for preserving row counts is the following.
+Hold all numerical moduli and outside cylinders fixed. At each retained
+d, preserve equality and inequality of retained phases for every pair of
+labels whose outside cylinders meet. For a fixed y, all active labels are
+pairwise outside-compatible. Their equality partition is therefore
+unchanged, and its number of blocks R_d(y) is unchanged. This proves the
+rule pointwise without choosing any probability measure.
+
+The rule imposes only within-d equality data. It does not assert that
+cross-modulus retained intersections, private integers, or the whole
+covered union are preserved. For this input, an independent direct-set
+calculation checked all33458*28=936824 row counts against the original452
+family restricted to the new V: they agree. Adding IC2's eleven classes
+only restricts the outside domain and keeps both minimizers in IC5.
+The standalone verifier derives IC5 directly from the new463 full
+originals, so the obstruction does not depend on a recoloring algorithm
+or on this comparison with the old family.
+
+Irredundancy, numerical divisor closure, and normalized prime classes
+therefore do not imply a supported law with either strict PE2/PE3 reverse.
+The private points concern this fixed family's union; they do not assert
+global extremality among hypothetical whole covers. A proof of #7 using
+this route must use stronger whole-cover information, or retain further
+joint phase geometry in a different contradiction. The original whole-
+cover implications PE2/PE3 and conditional suppliers remain valid.
+
+These are ordinary arithmetic certificates and a finite-domain argument,
+not Lean verification. Independent checking reconstructed the phases
+without producer helpers and separately verified all private integers,
+the hole, and12415 nonunit-divisor memberships. The canonical verifier
+reads only its explicit input and writes only its explicit output; its
+mathematical checks remain active with Python optimization.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction.py --input docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction_originals.json --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/merged-phase-excess/irredundant_divisor_closed_phase_obstruction.json
+```
+
+### 13.5. Arbitrary prime tails and arbitrarily small positive uncovered density
+
+The obstruction is not limited to seven support primes or bounded outside
+heights. Let T be any finite set of primes greater than19, and choose
+any positive integer H_p for each p in T. Add the original classes
+
+    c_(p,e)=(p^(e-1)-1)/(p-1) modulo p^e,
+    1<=e<=H_p,   p in T.                            (IC7)
+
+These are the residues0,1,1+p,... at successive powers. For e<f,
+
+    c_(p,f)-c_(p,e)=p^(e-1)(1+p+...+p^(f-e-1)),
+
+whose p-adic valuation is exactly e-1. Thus the two classes are disjoint.
+The same calculation with f=H_p+1 shows that the coordinate
+c_(p,H_p+1) avoids every added p-power class. Let S_p be their nonempty
+complement modulo p^H_p.
+
+All original moduli remain distinct, odd and greater than one. Divisors
+of an old modulus are still old, and every nonunit divisor of an added
+p^e is an added p^j. The numerical inventory remains divisor-closed.
+The added pure prime class is0 modulo p, preserving prime normalization.
+
+CRT extends an old private integer w_i by choosing an S_p-coordinate at
+every new prime. The resulting integer belongs only to the old class i.
+For a new class at p^e, choose the old full coordinate h from IC4, choose
+its own p-coordinate c_(p,e), and choose S_q-coordinates at every other
+new prime q. Pairwise disjointness of IC7 excludes the other p-power
+classes, and the old hole excludes all old classes. This is a private
+integer for the new original. Combining h with S_p-coordinates everywhere
+also gives an uncovered integer. Hence genuine union-irredundancy and
+noncoverage persist for every finite T and every choice of heights.
+
+Relative to B={3,5,7}, every new class is outside-only. The new actual
+outside survivor is exactly
+
+    V_T=V times product_(p in T) S_p.
+
+Every mixed original from section13.1 has the same activity and retained
+phase at (y,(z_p)) as at y; there are no new mixed originals. Therefore
+F_S and F_H pull back from the original V, pointwise. Their exact minima
+in IC5 and the all-law obstruction IC6 remain unchanged, including for
+laws correlating old and new coordinates. Taking T to be all primes
+from23 through any chosen terminal prime gives arbitrarily long initial
+segments of the odd primes as the exact support; the H_p have no bound.
+
+There is also no repair using any fixed near-coverage density threshold.
+Let delta_0 be the positive uncovered density of the original463 family.
+Periodicity defines this density exactly and IC4 gives delta_0>=1/L.
+Under uniform counting on the new full CRT carrier the uncovered set is
+the old uncovered set times all S_p, so its density is exactly
+
+    delta_T=delta_0 product_(p in T)
+                [1-sum_(e=1..H_p) p^(-e)]>0.        (IC8)
+
+The local factor is positive because the finite geometric sum is less
+than1/(p-1), and is at most1-1/p. Take T to contain all primes from23
+through a bound P>=23. Every odd prime at most P now has its original
+class0 modulo p, so, writing H_n=sum_(j=1..n)1/j,
+
+    delta_T<=product_(3<=p<=P)(1-1/p)
+            =2 product_(p<=P)(1-1/p)<=2/H_floor(P).
+
+The last inequality follows by expanding the inverse finite Euler
+product: it contains every term1/j with j<=floor(P). Thus for EVERY
+epsilon>0 there is a finite irredundant family with distinct odd nonunit
+moduli, a divisor-closed inventory, normalized prime classes, and IC6,
+whose uncovered density satisfies
+
+    0<delta_T<epsilon.                              (IC9)
+
+An explicit choice is k=max(5,ceil(4/epsilon)), P=2^k: dyadic grouping
+gives H_(2^k)>=1+k/2, hence delta_T<=4/(k+2)<epsilon.
+This includes any prescribed lower bound on all newly added heights:
+larger H_p only decrease the local surviving factors. The uncovered
+density is always positive for each finite member. A limit with density
+zero is neither a finite covering system nor an assertion that every
+integer is covered. IC9 rules out replacing whole coverage by a fixed
+arbitrarily high density premise in the proposed supplier; it does not
+rule out consequences of exact whole coverage, justified extremality
+among whole covers, or a threshold depending on the particular support
+and period. The extension and limit statements follow from the
+displayed CRT and product proofs, not from finite enumeration.

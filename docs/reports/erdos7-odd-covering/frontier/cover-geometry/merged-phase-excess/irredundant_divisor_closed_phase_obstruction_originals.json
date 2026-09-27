@@ -1,0 +1,2320 @@
+{
+  "hole": 170272916129,
+  "originals": [
+    {
+      "modulus": 3,
+      "residue": 0,
+      "private_point": 114860754
+    },
+    {
+      "modulus": 5,
+      "residue": 0,
+      "private_point": 34937394500
+    },
+    {
+      "modulus": 7,
+      "residue": 0,
+      "private_point": 66667436129
+    },
+    {
+      "modulus": 9,
+      "residue": 1,
+      "private_point": 259719085504
+    },
+    {
+      "modulus": 11,
+      "residue": 0,
+      "private_point": 345264141629
+    },
+    {
+      "modulus": 13,
+      "residue": 0,
+      "private_point": 59220792254
+    },
+    {
+      "modulus": 15,
+      "residue": 1,
+      "private_point": 150260993761
+    },
+    {
+      "modulus": 17,
+      "residue": 0,
+      "private_point": 54865807004
+    },
+    {
+      "modulus": 19,
+      "residue": 0,
+      "private_point": 53375943629
+    },
+    {
+      "modulus": 21,
+      "residue": 13,
+      "private_point": 161697155017
+    },
+    {
+      "modulus": 25,
+      "residue": 1,
+      "private_point": 279203402876
+    },
+    {
+      "modulus": 27,
+      "residue": 25,
+      "private_point": 465805004128
+    },
+    {
+      "modulus": 33,
+      "residue": 23,
+      "private_point": 315839167403
+    },
+    {
+      "modulus": 35,
+      "residue": 19,
+      "private_point": 84160724254
+    },
+    {
+      "modulus": 39,
+      "residue": 14,
+      "private_point": 126199355153
+    },
+    {
+      "modulus": 45,
+      "residue": 7,
+      "private_point": 442192771627
+    },
+    {
+      "modulus": 49,
+      "residue": 37,
+      "private_point": 152258645002
+    },
+    {
+      "modulus": 51,
+      "residue": 35,
+      "private_point": 350481095528
+    },
+    {
+      "modulus": 55,
+      "residue": 16,
+      "private_point": 416509444796
+    },
+    {
+      "modulus": 57,
+      "residue": 20,
+      "private_point": 74856371153
+    },
+    {
+      "modulus": 63,
+      "residue": 2,
+      "private_point": 57646252127
+    },
+    {
+      "modulus": 65,
+      "residue": 57,
+      "private_point": 23532995777
+    },
+    {
+      "modulus": 75,
+      "residue": 47,
+      "private_point": 82635265022
+    },
+    {
+      "modulus": 77,
+      "residue": 39,
+      "private_point": 200566466909
+    },
+    {
+      "modulus": 81,
+      "residue": 65,
+      "private_point": 311579371127
+    },
+    {
+      "modulus": 85,
+      "residue": 73,
+      "private_point": 339896544278
+    },
+    {
+      "modulus": 91,
+      "residue": 20,
+      "private_point": 259707928409
+    },
+    {
+      "modulus": 95,
+      "residue": 81,
+      "private_point": 252990375656
+    },
+    {
+      "modulus": 99,
+      "residue": 40,
+      "private_point": 239150236783
+    },
+    {
+      "modulus": 105,
+      "residue": 8,
+      "private_point": 50800157003
+    },
+    {
+      "modulus": 117,
+      "residue": 113,
+      "private_point": 430482839783
+    },
+    {
+      "modulus": 119,
+      "residue": 59,
+      "private_point": 153575795159
+    },
+    {
+      "modulus": 125,
+      "residue": 36,
+      "private_point": 10525253411
+    },
+    {
+      "modulus": 133,
+      "residue": 85,
+      "private_point": 458763231284
+    },
+    {
+      "modulus": 135,
+      "residue": 71,
+      "private_point": 163455130511
+    },
+    {
+      "modulus": 143,
+      "residue": 1,
+      "private_point": 226402482307
+    },
+    {
+      "modulus": 147,
+      "residue": 122,
+      "private_point": 466553122136
+    },
+    {
+      "modulus": 153,
+      "residue": 62,
+      "private_point": 229535217908
+    },
+    {
+      "modulus": 165,
+      "residue": 19,
+      "private_point": 215554051534
+    },
+    {
+      "modulus": 171,
+      "residue": 70,
+      "private_point": 39212835658
+    },
+    {
+      "modulus": 175,
+      "residue": 62,
+      "private_point": 209671104887
+    },
+    {
+      "modulus": 187,
+      "residue": 1,
+      "private_point": 324389650432
+    },
+    {
+      "modulus": 189,
+      "residue": 122,
+      "private_point": 291477597512
+    },
+    {
+      "modulus": 195,
+      "residue": 11,
+      "private_point": 393472654781
+    },
+    {
+      "modulus": 209,
+      "residue": 1,
+      "private_point": 148585772182
+    },
+    {
+      "modulus": 221,
+      "residue": 1,
+      "private_point": 219359491807
+    },
+    {
+      "modulus": 225,
+      "residue": 49,
+      "private_point": 36687545149
+    },
+    {
+      "modulus": 231,
+      "residue": 130,
+      "private_point": 345018558784
+    },
+    {
+      "modulus": 243,
+      "residue": 221,
+      "private_point": 408993979649
+    },
+    {
+      "modulus": 245,
+      "residue": 177,
+      "private_point": 410302286627
+    },
+    {
+      "modulus": 247,
+      "residue": 1,
+      "private_point": 444328861432
+    },
+    {
+      "modulus": 255,
+      "residue": 167,
+      "private_point": 115380716657
+    },
+    {
+      "modulus": 273,
+      "residue": 242,
+      "private_point": 263519400659
+    },
+    {
+      "modulus": 275,
+      "residue": 142,
+      "private_point": 299920457792
+    },
+    {
+      "modulus": 285,
+      "residue": 188,
+      "private_point": 430254401783
+    },
+    {
+      "modulus": 297,
+      "residue": 169,
+      "private_point": 379489770664
+    },
+    {
+      "modulus": 315,
+      "residue": 11,
+      "private_point": 144465931271
+    },
+    {
+      "modulus": 323,
+      "residue": 1,
+      "private_point": 287549392432
+    },
+    {
+      "modulus": 325,
+      "residue": 123,
+      "private_point": 40206557423
+    },
+    {
+      "modulus": 343,
+      "residue": 228,
+      "private_point": 231884387396
+    },
+    {
+      "modulus": 351,
+      "residue": 43,
+      "private_point": 201257966914
+    },
+    {
+      "modulus": 357,
+      "residue": 16,
+      "private_point": 344669398159
+    },
+    {
+      "modulus": 375,
+      "residue": 277,
+      "private_point": 91927460902
+    },
+    {
+      "modulus": 385,
+      "residue": 153,
+      "private_point": 449431502288
+    },
+    {
+      "modulus": 399,
+      "residue": 73,
+      "private_point": 230067196159
+    },
+    {
+      "modulus": 405,
+      "residue": 158,
+      "private_point": 368713500278
+    },
+    {
+      "modulus": 425,
+      "residue": 143,
+      "private_point": 43603445918
+    },
+    {
+      "modulus": 429,
+      "residue": 2,
+      "private_point": 323705229278
+    },
+    {
+      "modulus": 441,
+      "residue": 32,
+      "private_point": 416726965778
+    },
+    {
+      "modulus": 455,
+      "residue": 171,
+      "private_point": 399728892461
+    },
+    {
+      "modulus": 459,
+      "residue": 44,
+      "private_point": 455092673039
+    },
+    {
+      "modulus": 475,
+      "residue": 391,
+      "private_point": 410390739791
+    },
+    {
+      "modulus": 495,
+      "residue": 197,
+      "private_point": 388774115927
+    },
+    {
+      "modulus": 513,
+      "residue": 281,
+      "private_point": 42032650664
+    },
+    {
+      "modulus": 539,
+      "residue": 179,
+      "private_point": 339966467558
+    },
+    {
+      "modulus": 561,
+      "residue": 410,
+      "private_point": 287677624028
+    },
+    {
+      "modulus": 585,
+      "residue": 38,
+      "private_point": 73073071928
+    },
+    {
+      "modulus": 595,
+      "residue": 513,
+      "private_point": 251650303088
+    },
+    {
+      "modulus": 627,
+      "residue": 59,
+      "private_point": 254629745528
+    },
+    {
+      "modulus": 637,
+      "residue": 627,
+      "private_point": 398892084308
+    },
+    {
+      "modulus": 663,
+      "residue": 224,
+      "private_point": 276060857153
+    },
+    {
+      "modulus": 665,
+      "residue": 297,
+      "private_point": 126106544462
+    },
+    {
+      "modulus": 693,
+      "residue": 416,
+      "private_point": 232136228432
+    },
+    {
+      "modulus": 715,
+      "residue": 552,
+      "private_point": 331413366407
+    },
+    {
+      "modulus": 741,
+      "residue": 212,
+      "private_point": 350023447778
+    },
+    {
+      "modulus": 765,
+      "residue": 58,
+      "private_point": 269361038803
+    },
+    {
+      "modulus": 819,
+      "residue": 283,
+      "private_point": 439311658432
+    },
+    {
+      "modulus": 825,
+      "residue": 13,
+      "private_point": 289691802688
+    },
+    {
+      "modulus": 833,
+      "residue": 278,
+      "private_point": 398865627683
+    },
+    {
+      "modulus": 855,
+      "residue": 806,
+      "private_point": 317090473556
+    },
+    {
+      "modulus": 891,
+      "residue": 542,
+      "private_point": 386421831227
+    },
+    {
+      "modulus": 931,
+      "residue": 634,
+      "private_point": 472445450558
+    },
+    {
+      "modulus": 935,
+      "residue": 278,
+      "private_point": 385290076658
+    },
+    {
+      "modulus": 969,
+      "residue": 650,
+      "private_point": 91328989028
+    },
+    {
+      "modulus": 975,
+      "residue": 149,
+      "private_point": 256463301074
+    },
+    {
+      "modulus": 1001,
+      "residue": 541,
+      "private_point": 427760076284
+    },
+    {
+      "modulus": 1045,
+      "residue": 576,
+      "private_point": 404852253656
+    },
+    {
+      "modulus": 1053,
+      "residue": 803,
+      "private_point": 103992972977
+    },
+    {
+      "modulus": 1071,
+      "residue": 43,
+      "private_point": 210334589683
+    },
+    {
+      "modulus": 1105,
+      "residue": 874,
+      "private_point": 400201129409
+    },
+    {
+      "modulus": 1155,
+      "residue": 589,
+      "private_point": 209715560104
+    },
+    {
+      "modulus": 1197,
+      "residue": 1067,
+      "private_point": 288301434683
+    },
+    {
+      "modulus": 1235,
+      "residue": 368,
+      "private_point": 351765067658
+    },
+    {
+      "modulus": 1275,
+      "residue": 896,
+      "private_point": 298131799946
+    },
+    {
+      "modulus": 1287,
+      "residue": 1102,
+      "private_point": 382017782533
+    },
+    {
+      "modulus": 1309,
+      "residue": 927,
+      "private_point": 153471608909
+    },
+    {
+      "modulus": 1365,
+      "residue": 458,
+      "private_point": 121647910478
+    },
+    {
+      "modulus": 1375,
+      "residue": 552,
+      "private_point": 330317743802
+    },
+    {
+      "modulus": 1377,
+      "residue": 455,
+      "private_point": 78683688977
+    },
+    {
+      "modulus": 1425,
+      "residue": 1348,
+      "private_point": 378134676823
+    },
+    {
+      "modulus": 1463,
+      "residue": 48,
+      "private_point": 458974550159
+    },
+    {
+      "modulus": 1485,
+      "residue": 598,
+      "private_point": 82376562118
+    },
+    {
+      "modulus": 1539,
+      "residue": 1526,
+      "private_point": 275532417977
+    },
+    {
+      "modulus": 1547,
+      "residue": 367,
+      "private_point": 291872623409
+    },
+    {
+      "modulus": 1615,
+      "residue": 616,
+      "private_point": 291329440406
+    },
+    {
+      "modulus": 1617,
+      "residue": 1454,
+      "private_point": 155432629112
+    },
+    {
+      "modulus": 1625,
+      "residue": 129,
+      "private_point": 38916970754
+    },
+    {
+      "modulus": 1683,
+      "residue": 454,
+      "private_point": 374297581408
+    },
+    {
+      "modulus": 1729,
+      "residue": 30,
+      "private_point": 149301485909
+    },
+    {
+      "modulus": 1755,
+      "residue": 563,
+      "private_point": 51604917368
+    },
+    {
+      "modulus": 1785,
+      "residue": 1732,
+      "private_point": 304426605577
+    },
+    {
+      "modulus": 1881,
+      "residue": 983,
+      "private_point": 224041772783
+    },
+    {
+      "modulus": 1911,
+      "residue": 899,
+      "private_point": 452049789362
+    },
+    {
+      "modulus": 1925,
+      "residue": 846,
+      "private_point": 353186263121
+    },
+    {
+      "modulus": 1989,
+      "residue": 1849,
+      "private_point": 431217202783
+    },
+    {
+      "modulus": 1995,
+      "residue": 356,
+      "private_point": 385097697221
+    },
+    {
+      "modulus": 2079,
+      "residue": 1373,
+      "private_point": 457614177854
+    },
+    {
+      "modulus": 2125,
+      "residue": 1502,
+      "private_point": 57260168627
+    },
+    {
+      "modulus": 2145,
+      "residue": 2092,
+      "private_point": 26139448282
+    },
+    {
+      "modulus": 2223,
+      "residue": 1915,
+      "private_point": 359638033408
+    },
+    {
+      "modulus": 2261,
+      "residue": 905,
+      "private_point": 469622111534
+    },
+    {
+      "modulus": 2275,
+      "residue": 1709,
+      "private_point": 428621413109
+    },
+    {
+      "modulus": 2295,
+      "residue": 752,
+      "private_point": 386311663742
+    },
+    {
+      "modulus": 2375,
+      "residue": 477,
+      "private_point": 239619445727
+    },
+    {
+      "modulus": 2431,
+      "residue": 2,
+      "private_point": 219255305557
+    },
+    {
+      "modulus": 2457,
+      "residue": 1349,
+      "private_point": 466439009111
+    },
+    {
+      "modulus": 2475,
+      "residue": 2291,
+      "private_point": 93643339991
+    },
+    {
+      "modulus": 2499,
+      "residue": 53,
+      "private_point": 286369321487
+    },
+    {
+      "modulus": 2565,
+      "residue": 2138,
+      "private_point": 323146312493
+    },
+    {
+      "modulus": 2673,
+      "residue": 1201,
+      "private_point": 338354726998
+    },
+    {
+      "modulus": 2695,
+      "residue": 2038,
+      "private_point": 323397204628
+    },
+    {
+      "modulus": 2717,
+      "residue": 2,
+      "private_point": 398038910557
+    },
+    {
+      "modulus": 2793,
+      "residue": 671,
+      "private_point": 284762527727
+    },
+    {
+      "modulus": 2805,
+      "residue": 542,
+      "private_point": 159024336782
+    },
+    {
+      "modulus": 2907,
+      "residue": 2486,
+      "private_point": 175085039783
+    },
+    {
+      "modulus": 2925,
+      "residue": 389,
+      "private_point": 7736031614
+    },
+    {
+      "modulus": 2975,
+      "residue": 2172,
+      "private_point": 161894376247
+    },
+    {
+      "modulus": 3003,
+      "residue": 626,
+      "private_point": 182220196784
+    },
+    {
+      "modulus": 3135,
+      "residue": 1709,
+      "private_point": 424974159284
+    },
+    {
+      "modulus": 3159,
+      "residue": 1445,
+      "private_point": 366615449852
+    },
+    {
+      "modulus": 3185,
+      "residue": 2876,
+      "private_point": 308272385021
+    },
+    {
+      "modulus": 3213,
+      "residue": 992,
+      "private_point": 132341745611
+    },
+    {
+      "modulus": 3315,
+      "residue": 2668,
+      "private_point": 410359115533
+    },
+    {
+      "modulus": 3325,
+      "residue": 2909,
+      "private_point": 474297025234
+    },
+    {
+      "modulus": 3465,
+      "residue": 272,
+      "private_point": 145460083502
+    },
+    {
+      "modulus": 3553,
+      "residue": 3,
+      "private_point": 59569040182
+    },
+    {
+      "modulus": 3575,
+      "residue": 2248,
+      "private_point": 417551919173
+    },
+    {
+      "modulus": 3591,
+      "residue": 2588,
+      "private_point": 251714749361
+    },
+    {
+      "modulus": 3705,
+      "residue": 2786,
+      "private_point": 247518137156
+    },
+    {
+      "modulus": 3773,
+      "residue": 3364,
+      "private_point": 92839943018
+    },
+    {
+      "modulus": 3825,
+      "residue": 1046,
+      "private_point": 305097591746
+    },
+    {
+      "modulus": 3861,
+      "residue": 1169,
+      "private_point": 104808467789
+    },
+    {
+      "modulus": 3927,
+      "residue": 1957,
+      "private_point": 58120882159
+    },
+    {
+      "modulus": 4095,
+      "residue": 1618,
+      "private_point": 318020293753
+    },
+    {
+      "modulus": 4125,
+      "residue": 1619,
+      "private_point": 296078509619
+    },
+    {
+      "modulus": 4131,
+      "residue": 1885,
+      "private_point": 324562063477
+    },
+    {
+      "modulus": 4165,
+      "residue": 3413,
+      "private_point": 83578471148
+    },
+    {
+      "modulus": 4199,
+      "residue": 2,
+      "private_point": 362011305307
+    },
+    {
+      "modulus": 4275,
+      "residue": 4027,
+      "private_point": 316250259727
+    },
+    {
+      "modulus": 4389,
+      "residue": 3029,
+      "private_point": 66845688782
+    },
+    {
+      "modulus": 4455,
+      "residue": 2533,
+      "private_point": 12049757338
+    },
+    {
+      "modulus": 4459,
+      "residue": 3421,
+      "private_point": 1537613768
+    },
+    {
+      "modulus": 4617,
+      "residue": 238,
+      "private_point": 242950658602
+    },
+    {
+      "modulus": 4641,
+      "residue": 1754,
+      "private_point": 143972096657
+    },
+    {
+      "modulus": 4655,
+      "residue": 33,
+      "private_point": 475529816648
+    },
+    {
+      "modulus": 4675,
+      "residue": 1543,
+      "private_point": 278744609168
+    },
+    {
+      "modulus": 4845,
+      "residue": 4583,
+      "private_point": 412428134408
+    },
+    {
+      "modulus": 4851,
+      "residue": 1307,
+      "private_point": 209326404593
+    },
+    {
+      "modulus": 4875,
+      "residue": 491,
+      "private_point": 81125470241
+    },
+    {
+      "modulus": 5005,
+      "residue": 2038,
+      "private_point": 444384872968
+    },
+    {
+      "modulus": 5049,
+      "residue": 905,
+      "private_point": 382290923039
+    },
+    {
+      "modulus": 5187,
+      "residue": 1466,
+      "private_point": 434905925282
+    },
+    {
+      "modulus": 5225,
+      "residue": 642,
+      "private_point": 131954601167
+    },
+    {
+      "modulus": 5265,
+      "residue": 5098,
+      "private_point": 460371294463
+    },
+    {
+      "modulus": 5355,
+      "residue": 359,
+      "private_point": 253654028504
+    },
+    {
+      "modulus": 5525,
+      "residue": 88,
+      "private_point": 410342678288
+    },
+    {
+      "modulus": 5643,
+      "residue": 2111,
+      "private_point": 192120146789
+    },
+    {
+      "modulus": 5733,
+      "residue": 4198,
+      "private_point": 268432336093
+    },
+    {
+      "modulus": 5831,
+      "residue": 3072,
+      "private_point": 157269600893
+    },
+    {
+      "modulus": 5967,
+      "residue": 608,
+      "private_point": 85745599664
+    },
+    {
+      "modulus": 5985,
+      "residue": 1712,
+      "private_point": 324009132752
+    },
+    {
+      "modulus": 6175,
+      "residue": 938,
+      "private_point": 314876817413
+    },
+    {
+      "modulus": 6375,
+      "residue": 3566,
+      "private_point": 369860992316
+    },
+    {
+      "modulus": 6435,
+      "residue": 4937,
+      "private_point": 345035226182
+    },
+    {
+      "modulus": 6517,
+      "residue": 2385,
+      "private_point": 224624172008
+    },
+    {
+      "modulus": 6545,
+      "residue": 3293,
+      "private_point": 164827254343
+    },
+    {
+      "modulus": 6669,
+      "residue": 4586,
+      "private_point": 8824505414
+    },
+    {
+      "modulus": 6783,
+      "residue": 3481,
+      "private_point": 28562327908
+    },
+    {
+      "modulus": 6885,
+      "residue": 3559,
+      "private_point": 323816376964
+    },
+    {
+      "modulus": 7007,
+      "residue": 6549,
+      "private_point": 428628966308
+    },
+    {
+      "modulus": 7125,
+      "residue": 1838,
+      "private_point": 374872771088
+    },
+    {
+      "modulus": 7293,
+      "residue": 3929,
+      "private_point": 396177956528
+    },
+    {
+      "modulus": 7315,
+      "residue": 6107,
+      "private_point": 450910277842
+    },
+    {
+      "modulus": 7497,
+      "residue": 3217,
+      "private_point": 228765957718
+    },
+    {
+      "modulus": 7695,
+      "residue": 5422,
+      "private_point": 99311844712
+    },
+    {
+      "modulus": 7735,
+      "residue": 5463,
+      "private_point": 117985116343
+    },
+    {
+      "modulus": 8075,
+      "residue": 2474,
+      "private_point": 342862411049
+    },
+    {
+      "modulus": 8151,
+      "residue": 3137,
+      "private_point": 214987649153
+    },
+    {
+      "modulus": 8379,
+      "residue": 1013,
+      "private_point": 294031009193
+    },
+    {
+      "modulus": 8415,
+      "residue": 608,
+      "private_point": 141571898933
+    },
+    {
+      "modulus": 8645,
+      "residue": 8557,
+      "private_point": 132371237092
+    },
+    {
+      "modulus": 8721,
+      "residue": 1562,
+      "private_point": 265081005914
+    },
+    {
+      "modulus": 9009,
+      "residue": 7339,
+      "private_point": 319322354683
+    },
+    {
+      "modulus": 9163,
+      "residue": 3512,
+      "private_point": 481162346558
+    },
+    {
+      "modulus": 9405,
+      "residue": 6367,
+      "private_point": 41920423807
+    },
+    {
+      "modulus": 9945,
+      "residue": 2603,
+      "private_point": 218045808308
+    },
+    {
+      "modulus": 10241,
+      "residue": 2435,
+      "private_point": 256039370558
+    },
+    {
+      "modulus": 10659,
+      "residue": 344,
+      "private_point": 462034085153
+    },
+    {
+      "modulus": 10725,
+      "residue": 2797,
+      "private_point": 162925558447
+    },
+    {
+      "modulus": 10829,
+      "residue": 8804,
+      "private_point": 278728462808
+    },
+    {
+      "modulus": 11115,
+      "residue": 1264,
+      "private_point": 271467570559
+    },
+    {
+      "modulus": 11305,
+      "residue": 4602,
+      "private_point": 445242545842
+    },
+    {
+      "modulus": 11583,
+      "residue": 1835,
+      "private_point": 71168258852
+    },
+    {
+      "modulus": 11781,
+      "residue": 950,
+      "private_point": 474518865308
+    },
+    {
+      "modulus": 12103,
+      "residue": 3709,
+      "private_point": 84246662933
+    },
+    {
+      "modulus": 12155,
+      "residue": 4358,
+      "private_point": 102806508158
+    },
+    {
+      "modulus": 12597,
+      "residue": 497,
+      "private_point": 237981554528
+    },
+    {
+      "modulus": 13167,
+      "residue": 1489,
+      "private_point": 307648036183
+    },
+    {
+      "modulus": 13585,
+      "residue": 6998,
+      "private_point": 402842070908
+    },
+    {
+      "modulus": 13923,
+      "residue": 6140,
+      "private_point": 417061090307
+    },
+    {
+      "modulus": 14025,
+      "residue": 7109,
+      "private_point": 210455903309
+    },
+    {
+      "modulus": 14535,
+      "residue": 7223,
+      "private_point": 129858691433
+    },
+    {
+      "modulus": 15015,
+      "residue": 5878,
+      "private_point": 48707134348
+    },
+    {
+      "modulus": 15147,
+      "residue": 3793,
+      "private_point": 199658245477
+    },
+    {
+      "modulus": 15561,
+      "residue": 12107,
+      "private_point": 326531258057
+    },
+    {
+      "modulus": 15675,
+      "residue": 6604,
+      "private_point": 31260643429
+    },
+    {
+      "modulus": 15827,
+      "residue": 5619,
+      "private_point": 406917224432
+    },
+    {
+      "modulus": 16575,
+      "residue": 718,
+      "private_point": 460640184943
+    },
+    {
+      "modulus": 16929,
+      "residue": 7528,
+      "private_point": 42149086852
+    },
+    {
+      "modulus": 17017,
+      "residue": 1641,
+      "private_point": 410113598534
+    },
+    {
+      "modulus": 17765,
+      "residue": 1279,
+      "private_point": 173644739909
+    },
+    {
+      "modulus": 17875,
+      "residue": 9353,
+      "private_point": 225993884603
+    },
+    {
+      "modulus": 17901,
+      "residue": 5342,
+      "private_point": 399111070604
+    },
+    {
+      "modulus": 18525,
+      "residue": 14393,
+      "private_point": 172377955193
+    },
+    {
+      "modulus": 19019,
+      "residue": 19010,
+      "private_point": 473447764781
+    },
+    {
+      "modulus": 19305,
+      "residue": 16223,
+      "private_point": 266560830743
+    },
+    {
+      "modulus": 19635,
+      "residue": 4694,
+      "private_point": 5370726974
+    },
+    {
+      "modulus": 20007,
+      "residue": 428,
+      "private_point": 126134992229
+    },
+    {
+      "modulus": 20349,
+      "residue": 14045,
+      "private_point": 230694856682
+    },
+    {
+      "modulus": 20995,
+      "residue": 11768,
+      "private_point": 369221168033
+    },
+    {
+      "modulus": 21021,
+      "residue": 18065,
+      "private_point": 35890159352
+    },
+    {
+      "modulus": 21879,
+      "residue": 6217,
+      "private_point": 111070478158
+    },
+    {
+      "modulus": 21945,
+      "residue": 10832,
+      "private_point": 457898697077
+    },
+    {
+      "modulus": 23205,
+      "residue": 19792,
+      "private_point": 308583636952
+    },
+    {
+      "modulus": 23375,
+      "residue": 3623,
+      "private_point": 439167703748
+    },
+    {
+      "modulus": 24225,
+      "residue": 23441,
+      "private_point": 289625160191
+    },
+    {
+      "modulus": 24453,
+      "residue": 9286,
+      "private_point": 5863202908
+    },
+    {
+      "modulus": 24871,
+      "residue": 19979,
+      "private_point": 3400805906
+    },
+    {
+      "modulus": 25025,
+      "residue": 5029,
+      "private_point": 385767712354
+    },
+    {
+      "modulus": 25245,
+      "residue": 2192,
+      "private_point": 381289500617
+    },
+    {
+      "modulus": 25935,
+      "residue": 13082,
+      "private_point": 64396021577
+    },
+    {
+      "modulus": 26125,
+      "residue": 22498,
+      "private_point": 247246212623
+    },
+    {
+      "modulus": 26163,
+      "residue": 242,
+      "private_point": 137079050354
+    },
+    {
+      "modulus": 27027,
+      "residue": 14341,
+      "private_point": 263153426863
+    },
+    {
+      "modulus": 27489,
+      "residue": 20815,
+      "private_point": 22627123852
+    },
+    {
+      "modulus": 27625,
+      "residue": 15797,
+      "private_point": 276927380797
+    },
+    {
+      "modulus": 28215,
+      "residue": 21647,
+      "private_point": 167679678737
+    },
+    {
+      "modulus": 29393,
+      "residue": 27238,
+      "private_point": 260574145406
+    },
+    {
+      "modulus": 29835,
+      "residue": 15251,
+      "private_point": 292728832736
+    },
+    {
+      "modulus": 30723,
+      "residue": 620,
+      "private_point": 113593193102
+    },
+    {
+      "modulus": 30875,
+      "residue": 5197,
+      "private_point": 468638415697
+    },
+    {
+      "modulus": 31977,
+      "residue": 3149,
+      "private_point": 251977707908
+    },
+    {
+      "modulus": 32175,
+      "residue": 22189,
+      "private_point": 32387570239
+    },
+    {
+      "modulus": 32487,
+      "residue": 26549,
+      "private_point": 328384112852
+    },
+    {
+      "modulus": 32725,
+      "residue": 19968,
+      "private_point": 435995325868
+    },
+    {
+      "modulus": 33345,
+      "residue": 23,
+      "private_point": 308767097363
+    },
+    {
+      "modulus": 33915,
+      "residue": 20302,
+      "private_point": 27612256702
+    },
+    {
+      "modulus": 34749,
+      "residue": 30595,
+      "private_point": 447979551727
+    },
+    {
+      "modulus": 35035,
+      "residue": 1412,
+      "private_point": 389751203252
+    },
+    {
+      "modulus": 35343,
+      "residue": 21262,
+      "private_point": 291236307988
+    },
+    {
+      "modulus": 36309,
+      "residue": 23510,
+      "private_point": 456624294977
+    },
+    {
+      "modulus": 36465,
+      "residue": 22948,
+      "private_point": 478882798033
+    },
+    {
+      "modulus": 36575,
+      "residue": 2374,
+      "private_point": 198899058499
+    },
+    {
+      "modulus": 37791,
+      "residue": 21713,
+      "private_point": 445367825906
+    },
+    {
+      "modulus": 38675,
+      "residue": 4293,
+      "private_point": 48330179368
+    },
+    {
+      "modulus": 39501,
+      "residue": 1390,
+      "private_point": 231894492988
+    },
+    {
+      "modulus": 40375,
+      "residue": 6122,
+      "private_point": 126267812122
+    },
+    {
+      "modulus": 40755,
+      "residue": 2279,
+      "private_point": 246617717909
+    },
+    {
+      "modulus": 41769,
+      "residue": 5251,
+      "private_point": 389238967363
+    },
+    {
+      "modulus": 42075,
+      "residue": 36902,
+      "private_point": 126296816852
+    },
+    {
+      "modulus": 43225,
+      "residue": 13649,
+      "private_point": 217004901749
+    },
+    {
+      "modulus": 43605,
+      "residue": 26186,
+      "private_point": 242188082861
+    },
+    {
+      "modulus": 45045,
+      "residue": 34616,
+      "private_point": 301712841011
+    },
+    {
+      "modulus": 45441,
+      "residue": 35294,
+      "private_point": 441043019852
+    },
+    {
+      "modulus": 45815,
+      "residue": 32822,
+      "private_point": 480885589127
+    },
+    {
+      "modulus": 46189,
+      "residue": 4,
+      "private_point": 272004803932
+    },
+    {
+      "modulus": 46683,
+      "residue": 31585,
+      "private_point": 277248781363
+    },
+    {
+      "modulus": 47025,
+      "residue": 35314,
+      "private_point": 186975526489
+    },
+    {
+      "modulus": 47481,
+      "residue": 29236,
+      "private_point": 401794269727
+    },
+    {
+      "modulus": 49049,
+      "residue": 24309,
+      "private_point": 95585587382
+    },
+    {
+      "modulus": 49725,
+      "residue": 16052,
+      "private_point": 451229677727
+    },
+    {
+      "modulus": 50787,
+      "residue": 31585,
+      "private_point": 437676760228
+    },
+    {
+      "modulus": 51051,
+      "residue": 22817,
+      "private_point": 16102325033
+    },
+    {
+      "modulus": 51205,
+      "residue": 14537,
+      "private_point": 57638820377
+    },
+    {
+      "modulus": 53295,
+      "residue": 14743,
+      "private_point": 348076961158
+    },
+    {
+      "modulus": 53625,
+      "residue": 6863,
+      "private_point": 111039846488
+    },
+    {
+      "modulus": 53703,
+      "residue": 5333,
+      "private_point": 392245267352
+    },
+    {
+      "modulus": 54145,
+      "residue": 53637,
+      "private_point": 79064586002
+    },
+    {
+      "modulus": 55575,
+      "residue": 29308,
+      "private_point": 137645354983
+    },
+    {
+      "modulus": 56525,
+      "residue": 45889,
+      "private_point": 79047375614
+    },
+    {
+      "modulus": 57057,
+      "residue": 23753,
+      "private_point": 419349859658
+    },
+    {
+      "modulus": 57915,
+      "residue": 34159,
+      "private_point": 242447687464
+    },
+    {
+      "modulus": 58905,
+      "residue": 57809,
+      "private_point": 322988601764
+    },
+    {
+      "modulus": 60021,
+      "residue": 40568,
+      "private_point": 474073148102
+    },
+    {
+      "modulus": 60515,
+      "residue": 14143,
+      "private_point": 123151004378
+    },
+    {
+      "modulus": 60775,
+      "residue": 18472,
+      "private_point": 211519079797
+    },
+    {
+      "modulus": 61047,
+      "residue": 60898,
+      "private_point": 259287731113
+    },
+    {
+      "modulus": 62985,
+      "residue": 3709,
+      "private_point": 256217944909
+    },
+    {
+      "modulus": 63063,
+      "residue": 40801,
+      "private_point": 288034554568
+    },
+    {
+      "modulus": 64141,
+      "residue": 41836,
+      "private_point": 144675262757
+    },
+    {
+      "modulus": 65637,
+      "residue": 45818,
+      "private_point": 318504113414
+    },
+    {
+      "modulus": 65835,
+      "residue": 63452,
+      "private_point": 372067290137
+    },
+    {
+      "modulus": 67925,
+      "residue": 10267,
+      "private_point": 79411331542
+    },
+    {
+      "modulus": 69615,
+      "residue": 54902,
+      "private_point": 135285599387
+    },
+    {
+      "modulus": 70125,
+      "residue": 3743,
+      "private_point": 375078643118
+    },
+    {
+      "modulus": 71687,
+      "residue": 27766,
+      "private_point": 94959710507
+    },
+    {
+      "modulus": 72675,
+      "residue": 40693,
+      "private_point": 37938280243
+    },
+    {
+      "modulus": 73359,
+      "residue": 3860,
+      "private_point": 464562817289
+    },
+    {
+      "modulus": 74613,
+      "residue": 14843,
+      "private_point": 246642986033
+    },
+    {
+      "modulus": 75735,
+      "residue": 17797,
+      "private_point": 141349095337
+    },
+    {
+      "modulus": 75803,
+      "residue": 72015,
+      "private_point": 469837602632
+    },
+    {
+      "modulus": 77805,
+      "residue": 35897,
+      "private_point": 122633787137
+    },
+    {
+      "modulus": 78375,
+      "residue": 63463,
+      "private_point": 359697893713
+    },
+    {
+      "modulus": 78489,
+      "residue": 60745,
+      "private_point": 214234844377
+    },
+    {
+      "modulus": 79135,
+      "residue": 66032,
+      "private_point": 141772159502
+    },
+    {
+      "modulus": 82467,
+      "residue": 25952,
+      "private_point": 481217484443
+    },
+    {
+      "modulus": 82875,
+      "residue": 6373,
+      "private_point": 123442235998
+    },
+    {
+      "modulus": 84645,
+      "residue": 19436,
+      "private_point": 471757923086
+    },
+    {
+      "modulus": 84721,
+      "residue": 7873,
+      "private_point": 80188773257
+    },
+    {
+      "modulus": 85085,
+      "residue": 3798,
+      "private_point": 76123341088
+    },
+    {
+      "modulus": 88179,
+      "residue": 60272,
+      "private_point": 158279954408
+    },
+    {
+      "modulus": 88825,
+      "residue": 81096,
+      "private_point": 156512484671
+    },
+    {
+      "modulus": 89505,
+      "residue": 70528,
+      "private_point": 268614600088
+    },
+    {
+      "modulus": 92169,
+      "residue": 65201,
+      "private_point": 244058323568
+    },
+    {
+      "modulus": 92625,
+      "residue": 45998,
+      "private_point": 57529340873
+    },
+    {
+      "modulus": 95095,
+      "residue": 32113,
+      "private_point": 244437925813
+    },
+    {
+      "modulus": 95931,
+      "residue": 75569,
+      "private_point": 12950280914
+    },
+    {
+      "modulus": 97461,
+      "residue": 69709,
+      "private_point": 40628539318
+    },
+    {
+      "modulus": 100035,
+      "residue": 74507,
+      "private_point": 114839054087
+    },
+    {
+      "modulus": 101745,
+      "residue": 20228,
+      "private_point": 103163650763
+    },
+    {
+      "modulus": 104975,
+      "residue": 48572,
+      "private_point": 45758756047
+    },
+    {
+      "modulus": 108927,
+      "residue": 5323,
+      "private_point": 206232583693
+    },
+    {
+      "modulus": 109395,
+      "residue": 54563,
+      "private_point": 282877036808
+    },
+    {
+      "modulus": 110789,
+      "residue": 31539,
+      "private_point": 88771047257
+    },
+    {
+      "modulus": 113373,
+      "residue": 19763,
+      "private_point": 122696475164
+    },
+    {
+      "modulus": 119119,
+      "residue": 57412,
+      "private_point": 103255980182
+    },
+    {
+      "modulus": 121125,
+      "residue": 47468,
+      "private_point": 168792337718
+    },
+    {
+      "modulus": 122265,
+      "residue": 114728,
+      "private_point": 71754019808
+    },
+    {
+      "modulus": 124355,
+      "residue": 43628,
+      "private_point": 155849190928
+    },
+    {
+      "modulus": 130815,
+      "residue": 103991,
+      "private_point": 215637250586
+    },
+    {
+      "modulus": 133133,
+      "residue": 52952,
+      "private_point": 324419878682
+    },
+    {
+      "modulus": 138567,
+      "residue": 49117,
+      "private_point": 435846335278
+    },
+    {
+      "modulus": 142443,
+      "residue": 57506,
+      "private_point": 417604046567
+    },
+    {
+      "modulus": 146965,
+      "residue": 46253,
+      "private_point": 304606318678
+    },
+    {
+      "modulus": 153153,
+      "residue": 62086,
+      "private_point": 434331555682
+    },
+    {
+      "modulus": 159885,
+      "residue": 144203,
+      "private_point": 192297511058
+    },
+    {
+      "modulus": 171171,
+      "residue": 110554,
+      "private_point": 198951992683
+    },
+    {
+      "modulus": 174097,
+      "residue": 152128,
+      "private_point": 458507582432
+    },
+    {
+      "modulus": 182325,
+      "residue": 62417,
+      "private_point": 450396962942
+    },
+    {
+      "modulus": 188955,
+      "residue": 46283,
+      "private_point": 217625188433
+    },
+    {
+      "modulus": 196911,
+      "residue": 182635,
+      "private_point": 248615876104
+    },
+    {
+      "modulus": 203775,
+      "residue": 11273,
+      "private_point": 38008531823
+    },
+    {
+      "modulus": 205751,
+      "residue": 113623,
+      "private_point": 120145118057
+    },
+    {
+      "modulus": 220077,
+      "residue": 48272,
+      "private_point": 459507839729
+    },
+    {
+      "modulus": 223839,
+      "residue": 189688,
+      "private_point": 119688022183
+    },
+    {
+      "modulus": 230945,
+      "residue": 224149,
+      "private_point": 288062079659
+    },
+    {
+      "modulus": 255255,
+      "residue": 137702,
+      "private_point": 205065623327
+    },
+    {
+      "modulus": 264537,
+      "residue": 163867,
+      "private_point": 213935997433
+    },
+    {
+      "modulus": 266475,
+      "residue": 116197,
+      "private_point": 45976380322
+    },
+    {
+      "modulus": 285285,
+      "residue": 164903,
+      "private_point": 286876328
+    },
+    {
+      "modulus": 287793,
+      "residue": 15791,
+      "private_point": 128216401979
+    },
+    {
+      "modulus": 303875,
+      "residue": 235997,
+      "private_point": 41147645872
+    },
+    {
+      "modulus": 314925,
+      "residue": 246022,
+      "private_point": 74696361997
+    },
+    {
+      "modulus": 323323,
+      "residue": 29669,
+      "private_point": 65907483281
+    },
+    {
+      "modulus": 328185,
+      "residue": 126184,
+      "private_point": 322672602739
+    },
+    {
+      "modulus": 339625,
+      "residue": 107417,
+      "private_point": 176450578042
+    },
+    {
+      "modulus": 340119,
+      "residue": 74921,
+      "private_point": 366021517604
+    },
+    {
+      "modulus": 357357,
+      "residue": 229408,
+      "private_point": 69958937227
+    },
+    {
+      "modulus": 366795,
+      "residue": 33503,
+      "private_point": 91674208238
+    },
+    {
+      "modulus": 373065,
+      "residue": 203768,
+      "private_point": 430432901078
+    },
+    {
+      "modulus": 399399,
+      "residue": 326176,
+      "private_point": 473307711727
+    },
+    {
+      "modulus": 415701,
+      "residue": 204701,
+      "private_point": 302611826156
+    },
+    {
+      "modulus": 425425,
+      "residue": 70689,
+      "private_point": 82732895864
+    },
+    {
+      "modulus": 440895,
+      "residue": 276371,
+      "private_point": 447210215456
+    },
+    {
+      "modulus": 444125,
+      "residue": 343467,
+      "private_point": 24511602217
+    },
+    {
+      "modulus": 459459,
+      "residue": 331763,
+      "private_point": 459872844863
+    },
+    {
+      "modulus": 475475,
+      "residue": 458592,
+      "private_point": 166936878242
+    },
+    {
+      "modulus": 479655,
+      "residue": 273452,
+      "private_point": 248951770862
+    },
+    {
+      "modulus": 513513,
+      "residue": 56047,
+      "private_point": 353023297618
+    },
+    {
+      "modulus": 522291,
+      "residue": 142328,
+      "private_point": 279864029477
+    },
+    {
+      "modulus": 524875,
+      "residue": 30708,
+      "private_point": 445854049708
+    },
+    {
+      "modulus": 546975,
+      "residue": 141187,
+      "private_point": 191700110362
+    },
+    {
+      "modulus": 566865,
+      "residue": 22028,
+      "private_point": 372220020113
+    },
+    {
+      "modulus": 590733,
+      "residue": 73120,
+      "private_point": 97192782877
+    },
+    {
+      "modulus": 595595,
+      "residue": 308587,
+      "private_point": 115624357127
+    },
+    {
+      "modulus": 611325,
+      "residue": 195043,
+      "private_point": 91745405743
+    },
+    {
+      "modulus": 617253,
+      "residue": 537514,
+      "private_point": 8222964727
+    },
+    {
+      "modulus": 621775,
+      "residue": 216186,
+      "private_point": 131283033236
+    },
+    {
+      "modulus": 660231,
+      "residue": 78719,
+      "private_point": 429739815002
+    },
+    {
+      "modulus": 665665,
+      "residue": 436427,
+      "private_point": 327211395502
+    },
+    {
+      "modulus": 671517,
+      "residue": 469957,
+      "private_point": 462731418868
+    },
+    {
+      "modulus": 692835,
+      "residue": 102599,
+      "private_point": 183470431784
+    },
+    {
+      "modulus": 734825,
+      "residue": 292744,
+      "private_point": 143173595744
+    },
+    {
+      "modulus": 765765,
+      "residue": 319387,
+      "private_point": 25672591012
+    },
+    {
+      "modulus": 793611,
+      "residue": 718492,
+      "private_point": 303847387618
+    },
+    {
+      "modulus": 799425,
+      "residue": 696713,
+      "private_point": 292768518488
+    },
+    {
+      "modulus": 833833,
+      "residue": 138900,
+      "private_point": 192452130632
+    },
+    {
+      "modulus": 855855,
+      "residue": 533128,
+      "private_point": 138643052143
+    },
+    {
+      "modulus": 863379,
+      "residue": 274333,
+      "private_point": 78793105252
+    },
+    {
+      "modulus": 870485,
+      "residue": 407613,
+      "private_point": 361620768253
+    },
+    {
+      "modulus": 911625,
+      "residue": 343346,
+      "private_point": 306543365846
+    },
+    {
+      "modulus": 931931,
+      "residue": 771047,
+      "private_point": 193176088382
+    },
+    {
+      "modulus": 944775,
+      "residue": 498488,
+      "private_point": 162577380488
+    },
+    {
+      "modulus": 969969,
+      "residue": 759035,
+      "private_point": 319961523158
+    },
+    {
+      "modulus": 984555,
+      "residue": 289643,
+      "private_point": 362355911843
+    },
+    {
+      "modulus": 1018875,
+      "residue": 825598,
+      "private_point": 136759322473
+    },
+    {
+      "modulus": 1020357,
+      "residue": 682321,
+      "private_point": 344353823752
+    },
+    {
+      "modulus": 1028755,
+      "residue": 520017,
+      "private_point": 351934519252
+    },
+    {
+      "modulus": 1072071,
+      "residue": 225580,
+      "private_point": 309369898192
+    },
+    {
+      "modulus": 1100385,
+      "residue": 716278,
+      "private_point": 242243871718
+    },
+    {
+      "modulus": 1119195,
+      "residue": 645187,
+      "private_point": 112612926892
+    },
+    {
+      "modulus": 1154725,
+      "residue": 841689,
+      "private_point": 304416374539
+    },
+    {
+      "modulus": 1198197,
+      "residue": 866353,
+      "private_point": 299324855317
+    },
+    {
+      "modulus": 1218679,
+      "residue": 968615,
+      "private_point": 468123602132
+    },
+    {
+      "modulus": 1247103,
+      "residue": 409775,
+      "private_point": 475443463289
+    },
+    {
+      "modulus": 1322685,
+      "residue": 1235012,
+      "private_point": 232394344142
+    },
+    {
+      "modulus": 1332375,
+      "residue": 874163,
+      "private_point": 242144041913
+    },
+    {
+      "modulus": 1438965,
+      "residue": 339358,
+      "private_point": 352192778968
+    },
+    {
+      "modulus": 1440257,
+      "residue": 795400,
+      "private_point": 226400554258
+    },
+    {
+      "modulus": 1566873,
+      "residue": 1540543,
+      "private_point": 339307888693
+    },
+    {
+      "modulus": 1574625,
+      "residue": 372848,
+      "private_point": 259824520223
+    },
+    {
+      "modulus": 1616615,
+      "residue": 311963,
+      "private_point": 222270324928
+    },
+    {
+      "modulus": 1700595,
+      "residue": 506893,
+      "private_point": 275343843343
+    },
+    {
+      "modulus": 1851759,
+      "residue": 1608259,
+      "private_point": 110322002443
+    },
+    {
+      "modulus": 2078505,
+      "residue": 1980878,
+      "private_point": 341419290683
+    },
+    {
+      "modulus": 2263261,
+      "residue": 1473606,
+      "private_point": 153713107682
+    },
+    {
+      "modulus": 2909907,
+      "residue": 1566580,
+      "private_point": 419185309558
+    },
+    {
+      "modulus": 3464175,
+      "residue": 899122,
+      "private_point": 371637593122
+    },
+    {
+      "modulus": 3741309,
+      "residue": 800681,
+      "private_point": 437816262479
+    },
+    {
+      "modulus": 4849845,
+      "residue": 4385231,
+      "private_point": 481133258456
+    },
+    {
+      "modulus": 5773625,
+      "residue": 899242,
+      "private_point": 283266488992
+    },
+    {
+      "modulus": 6235515,
+      "residue": 2025212,
+      "private_point": 428911924487
+    },
+    {
+      "modulus": 6789783,
+      "residue": 2452531,
+      "private_point": 128920062352
+    },
+    {
+      "modulus": 8083075,
+      "residue": 4428504,
+      "private_point": 352774070729
+    },
+    {
+      "modulus": 8729721,
+      "residue": 2562124,
+      "private_point": 294971104993
+    },
+    {
+      "modulus": 10392525,
+      "residue": 10014448,
+      "private_point": 241137379498
+    },
+    {
+      "modulus": 11223927,
+      "residue": 1190687,
+      "private_point": 55784107877
+    },
+    {
+      "modulus": 11316305,
+      "residue": 6591072,
+      "private_point": 47546388377
+    },
+    {
+      "modulus": 14549535,
+      "residue": 6036593,
+      "private_point": 379457909393
+    },
+    {
+      "modulus": 15842827,
+      "residue": 2701109,
+      "private_point": 78218738008
+    },
+    {
+      "modulus": 17320875,
+      "residue": 16997963,
+      "private_point": 8989211213
+    },
+    {
+      "modulus": 18706545,
+      "residue": 8459068,
+      "private_point": 4591562593
+    },
+    {
+      "modulus": 20369349,
+      "residue": 19705820,
+      "private_point": 67503359057
+    }
+  ]
+}
