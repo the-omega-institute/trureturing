@@ -6,6 +6,7 @@ triage: theorem
 motivation_gids:
   - D5/S1/Words/Permutations/MamedeShapeExtraction
   - D5/S1/Words/Permutations/MamedeConditionalConverse
+  - D5/S1/Words/Permutations/MamedeOrderFreeFiber
 ---
 
 # Mamede--Santos--Soares Conjecture 5.1
@@ -34,25 +35,32 @@ step, not a verified resolution of Conjecture 5.1. KPI: 0.
 `MamedeExtremalOrientation.extremal_orientation` derives attained generator
 extrema, exterior fixedness, an endpoint orientation, and a full extremal run
 from any nonempty reduced consecutive word. It supplies the extremal part of
-the source adapter; strict internal endpoints and the `j<i` uniqueness step
-remain unproved. This intermediate result does not change KPI.
+the source adapter. Strict internal endpoints and the remaining source
+adapter obligations are still unproved; the conditional `j<i` fiber step
+is proved below. This intermediate result does not change KPI.
 
 `MamedeEndpointUniqueness.extremal_endpoint_unique` proves that two reduced
 consecutive words with the same product and the same first (or the same
 last) letter are equal when that letter is a minimum of both words or a
 maximum of both words. This formalizes the endpoint uniqueness ingredient
-of Lemmas 3.2 and 3.4. It does not yet identify all words in a `j<i` fiber,
-and does not change KPI.
+of Lemmas 3.2 and 3.4. Together with the endpoint assumptions in the
+conditional fiber theorem below, it helps identify all words in a `j<i`
+fiber. It does not change KPI.
 
 `MamedeFactorSeparation.source_shape_unique_of_j_lt_i` supplies the
 factor-separation step of Proposition 3.7: under `1<=m<j<i<M<=n`, equal-product
 reduced consecutive words with the two actual first-orientation source shapes
 are equal. It recovers the separate prefix and suffix products and checks
 all endpoint-uniqueness premises, including empty factors and `i=j+1`.
-The shapes remain hypotheses. Existing source extraction requires `i<=j`
-and cannot establish them for this branch. An extraction theorem with
-independent bounds on `i` and `j`, the actual endpoint equations and exterior
-fixedness is still needed for whole-fiber uniqueness. KPI remains 0.
+The companion `MamedeOrderFreeFiber.singleton_fiber_unique_of_j_lt_i`
+extracts those shapes for every singleton word from the three endpoint
+equations and exterior fixedness under `1<=m<j<i<M<=n`, then applies
+factor separation to prove whole-fiber uniqueness. Its local extraction
+gives the exact `m<k<j` prefix and `i<k<M` suffix bounds. The
+quantified proof covers `i=j+1` and empty outer factors. This settles
+the conditional first-orientation fiber step of Proposition 3.7 in
+the repository's adjacent-word model. The older frozen extraction
+theorems retain their `i<=j` telescope. KPI remains 0.
 
 ## Gap
 

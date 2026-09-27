@@ -14,6 +14,7 @@ strata_touched:
   - D5/S1/Words/Permutations/MamedeExtremalOrientation
   - D5/S1/Words/Permutations/MamedeEndpointUniqueness
   - D5/S1/Words/Permutations/MamedeFactorSeparation
+  - D5/S1/Words/Permutations/MamedeOrderFreeFiber
 license: citation-only
 triage: anchor
 ---
@@ -102,8 +103,9 @@ formalization of a published intermediate result, not a new resolution.
 
 The nonoscillating source-admissibility implication still requires strict
 internal endpoint extraction, the other endpoint equations, nonoscillation
-under reversal, and whole-fiber uniqueness when `j<i`. The extremal theorem
-does not assume or establish `i<=j`, and does not settle Conjecture 5.1.
+under reversal, and a proof that arbitrary sources enter the conditional
+`j<i` fiber theorem below. The extremal theorem does not assume or
+establish `i<=j`, and does not settle Conjecture 5.1.
 
 ## Extremal endpoint uniqueness
 
@@ -145,13 +147,26 @@ and consecutive. Chain boundaries give the common maximal last letter
 nonempty suffixes. The endpoint theorem identifies them. Minimality
 against the empty representative covers empty factors.
 
-This is published intermediate mathematics, not a resolution of the
-global conjecture. Whole-fiber uniqueness still requires shapes for
-every singleton word under the `j<i` endpoint and exterior data.
-The existing `endpointExteriorFixedSource`, `source_forced_runs`, and
-`source_shape_for_every_singleton` require `i<=j`, so their current
-statements cannot supply that premise. A general extraction interface
-would need independent `m<j<M` and `m<i<M` bounds, the three actual endpoint
-equations, and exterior fixedness. The strict endpoints and their
-extraction from an arbitrary nonoscillating source also remain unproved.
-No whole-fiber or source-admissibility implication is claimed; KPI is 0.
+The order-free guarded-walk argument in
+`MamedeOrderFreeFiber.singleton_fiber_unique_of_j_lt_i` supplies the missing
+shape extraction for every `singletonWord n sigma a` under
+`1<=m<j<i<M<=n`, the three endpoint equations
+`sigma(M+1)=m`, `sigma(m)=j+1`, `sigma(i)=M+1`, and exterior fixedness
+outside `[m,M+1]`. It forces the descending `j..m`, ascending `m..M`,
+and descending `M..i` runs independently of the order between `i` and
+`j`. Alignment at the shared `m` and `M` markers yields
+`sourceShape m M i j a p q`, including its exact prefix bounds
+`m<k<j` and suffix bounds `i<k<M`. Applying the factor-separation
+theorem to any two such singleton words gives equality. The proof includes
+`i=j+1` and empty prefix or suffix. The finite word
+`[2,1,2,3,4,3]` at `n=4` witnesses nonvacuity; it is not used to
+establish the universal extraction.
+
+This is the conditional first-orientation fiber argument of published
+Proposition 3.7. The older frozen `endpointExteriorFixedSource` and
+its extraction theorems still require `i<=j`; the new argument uses
+independent interior bounds. Deriving the strict internal endpoints and
+the endpoint equations from an arbitrary nonoscillating source remains
+unproved, as do the other branches of Conjecture 5.1. The identification
+of the paper's commutation classes with `singletonWord` remains a
+source-translation judgment. KPI is 0.
