@@ -31,7 +31,11 @@ internal sealed class HeisenbergModeLocalityDocument : IScribeDocumentDefinition
                         + "Here K is any rational-linear endomorphism. Under this relation, "
                         + "the second coefficient shift of C_A vanishes at every pair, the "
                         + "first shift at (0,-1) is K, and the first shift vanishes everywhere "
-                        + "if and only if K is zero.")),
+                        + "if and only if K is zero. Chu and Lin, Moduli spaces of conformal "
+                        + "structures on Heisenberg vertex algebras, arXiv:1812.11378v1, "
+                        + "Section 3.1, display the Heisenberg mode bracket used as the "
+                        + "hypothesis here; the coefficient-shift conclusion is proved "
+                        + "in this module.")),
                     Paragraph(Text(
                         "The first shift is K exactly on the antidiagonal m+n+1=0. "
                         + "Its next shift therefore subtracts equal values, while the "
