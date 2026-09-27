@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2ebb548366bfbfd166413b9530583a77cbcd2e5c35cae1669409b3080a5bd9b5
   normalized_sha256: sha256:2ebb548366bfbfd166413b9530583a77cbcd2e5c35cae1669409b3080a5bd9b5
 cas_ref: sha256:2ebb548366bfbfd166413b9530583a77cbcd2e5c35cae1669409b3080a5bd9b5
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/FiniteSampleRankAmbiguity.finite_sample_rank_ambiguity
+    target_statement_id: sha256:b265b0d08f0ab8244a98dfba598b8ad16b336941b2c7e05aca71c616d3762ce3
 receipts:
   unresolved_subitems: []
