@@ -54933,3 +54933,372 @@ The geometric quartic in(179.16),(179.22),(179.26) organizes contours and proves
 本章没有证明连接域之外的相位单叶性、轮廓交换、鞍点合并或全局最近零点。上述文献的全局解释不能代替这些缺失条件；当前结果也不构成检索穷尽或全球原创声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 180. 原始路径中的增长阶矩：实际均值下对数窗口的联合 Poisson 逼近
+
+同一原始路径的多行生成函数可写成正 Poisson 生成函数乘以解析余项。在正系数列上估计该乘子，可避免逐行 Cauchy 估计产生的 $\lambda^h$ 损失，得到显式的 $O(\lambda h^2/M)$ 相对误差。保留碰撞项并校准到同一实际概率律的精确均值后，有限阶稀疏化将它转成增长均值窗口中的联合全变差界。
+
+本章的窗口是实际均值总和不超过 $\log q_*/128$，在固定内部参数区间上为 $Q^3$ 阶。结论只在相应原始群与均值实际出现时适用，不断言预设均值、参数或同步子序列的存在。
+
+### 180.1 原始对象与定量结论
+
+
+**定义 180.1（原始实验、实际均值与比较距离）。** All logarithms are natural. Retain the original sequence
+
+$$
+e_1=1,\quad e_{n+1}=10^{5e_n},\quad Q=Q_n=10^{e_n},\quad
+P=P_n=\sum_{h\le n}10^{e_n-e_h},\quad
+\vartheta=\sum_{h\ge1}10^{-e_h},\quad \lambda=Q^3.
+$$
+
+The fixed original amplitude r in (0,1) obeys
+
+$$
+\frac{\log(1+r)}{-\log(1-r)}=\vartheta,
+\quad a=(1+r)/2,\quad b=(1-r)/2,
+\quad \phi=a\log(1+r)+b\log(1-r).
+$$
+
+Keep all floors and compensation exactly:
+
+$$
+k_0=\lfloor aQ^3\rfloor,\quad l_0=Q^3-k_0,
+\quad z_0=k_0\log(1+r)+l_0\log(1-r),
+$$
+$$
+L_0=\left\lfloor\frac{\phi Q^3}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0},\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad \epsilon=\frac{rq}{M-q},\quad T=2M\lambda.
+\tag{180.1}
+$$
+
+Fix a compact interval J inside D=(beta_*,1). The state space has 2M states, with parity classes C_+, C_- of size M. Fix ANY deterministic S contained in C_+, |S|=q, throughout the experiment. Write
+
+$$
+b_S(x)=r\ (x\in S),\quad b_S(x)=-\epsilon\ (x\in C_+\setminus S),
+\quad b_S(x)=0\ (x\in C_-),
+$$
+$$
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M}.
+\tag{180.2}
+$$
+
+This is precisely the original support law used in Chapter72. The path starts in its uniform stationary law and uses T consecutive transitions. The pair experiment takes T independent stationary adjacent pairs. No product-row replacement of the path is made. The compensation gives sum_x b_S(x)=0 exactly, including the original q floor.
+
+For a positive-class row x, let N_{x,+},N_{x,-} count its outgoing transitions to the two parity classes. Original indices j have count pair
+
+$$
+K_j=k_0+Qj,\qquad B_j=l_0+Pj.
+\tag{180.3}
+$$
+
+Choose one or two distinct lawful internal indices j_1,...,j_d, d<=2. They may depend on the layer and beta. Fix enlarged compact internal arcs once, and a finite C_0 such that all selected pairs are nonnegative and K_j+B_j<=C_0 lambda. Constants will be uniform on these arcs and J. The result in fact only needs this count upper bound and the original complete-group identification.
+
+Let C_v be the number of rows in the complete score group of j_v, and let
+
+$$
+\mu_v=\mathbb E_S^{\mathcal E} C_v,\qquad
+u=\sum_{v=1}^d\mu_v,\qquad q_* =\min(q,M-q),
+\quad \mathcal E\in\{pair,path\}.
+\tag{180.4}
+$$
+
+These are the exact ACTUAL means for the indicated experiment. The approximating vector Z has independent coordinates Z_v~Pois(mu_v). Total variation means sup_A |Pr(C in A)-Pr(Z in A)|, equivalently half the l1 distance of mass functions.
+
+Here is an explicit finite-parameter bound. For integers h>=1 set
+
+$$
+t_h=\frac{(1+C_0)h}{2M},\qquad
+\delta_h=10^6(t_h+Tt_h^2)\exp(10^6Tt_h^2)+12\,2^{-T}.
+\tag{180.5}
+$$
+
+For any integer K>=1 with K<=M, t_K<=1/200 and delta_1<1, define
+
+$$
+\eta_K=\left(1+\delta_K+\frac{K(K-1)}{2q_*}\right)
+ (1-\delta_1)^{-K}-1.
+\tag{180.6}
+$$
+
+**定理 180.1（实际均值下增长窗口的联合 Poisson 全变差界）。** At sufficiently late original layers, the original group identification holds and, uniformly as specified above,
+
+$$
+\boxed{\quad
+d_{TV}(\mathcal L(C_1,\ldots,C_d),\mathop{\otimes}_{v=1}^d\mathrm{Pois}(\mu_v))
+\le \frac{\eta_K}{2}(e^{2u}-1)
+ +\frac{2+\eta_K}{2}\frac{(2u)^K}{K!}.
+\quad}\tag{180.7}
+$$
+
+The right side may always be capped at one. In particular, take K=floor(log q_*). On the growing range
+
+$$
+0\le u\le\frac{\log q_*}{128},
+\tag{180.8}
+$$
+
+all the conditions on K hold eventually, and
+
+$$
+d_{TV}\le C_{C_0}(\log q_*)^2 q_*^{1/64}
+ \left(\frac{\lambda}{M}+\frac1{q_*}\right)+16q_*^{-2}
+\le C_{C_0}\frac{\lambda(\log q_*)^2}{\sqrt{q_*}}.
+\tag{180.9}
+$$
+
+For two coordinates it suffices that each mean is at most log(q_*)/256. No lower bound on a mean is required. Zero-mean coordinates are deterministic zero and can be removed.
+
+On J=[beta_0,beta_1], put alpha_J=phi(1/beta_1-1)>0. The original exact scales give q_*=q eventually and
+
+$$
+\log q=\phi(1/\beta-1)Q^3+O_J(1).
+\tag{180.10}
+$$
+
+Thus each mean may, in particular, range up to alpha_J Q^3/512, and a weaker convenient version of (180.9) is
+
+$$
+d_{TV}\le C_{J,C_0}Q^9\exp(-\alpha_J Q^3/4).
+\tag{180.11}
+$$
+
+This is a conditional distribution statement whenever such lawful indices and means occur. It makes no assertion that a prescribed mean, root pair, parameter or subsequence is attained.
+
+### 180.2 正系数上的乘子估计
+
+继续定理 180.1 的证明。先对正 Poisson 系数列作乘子估计；该步骤将精确路径生成函数的误差转成增长阶的相对点概率界。
+
+Let
+
+$$
+G(z)=\exp\left(\sum_{i=1}^m\nu_i(z_i-1)\right),\qquad \nu_i>0,
+$$
+
+and let pi(k)=[z^k]G be its positive product-Poisson mass at a nonnegative integer tuple k. If L(z)=sum_l c_l z^l is an absolutely convergent power series on a polydisc containing the nonnegative radii R_i=k_i/nu_i, then, whenever the indicated absolute sums converge,
+
+$$
+\frac{|[z^k]G(z)L(z)|}{\pi(k)}
+\le\sum_l|c_l|R^l.
+\tag{180.12}
+$$
+
+Proof. For each nonnegative multi-index l,
+
+$$
+\frac{[z^k]G(z)z^l}{\pi(k)}
+=\prod_i\frac{(k_i)_{l_i}}{\nu_i^{l_i}}
+\le\prod_i R_i^{l_i},
+$$
+
+where the left side is zero if some l_i>k_i. Apply the triangle inequality and absolute convergence. If a radius is zero, take positive radii tending down to it, or use the displayed coefficient identity directly. QED.
+
+For an analytic two-variable function H(A,B)=sum h_{ab} A^a B^b, write H#(t)=sum |h_{ab}|t^{a+b}. If the sums of absolute monomial coefficients of A(z) and B(z), evaluated at R, are each at most t, the right side of (180.12) for L=H(A(z),B(z)) is at most H#(t). Constants in the linear forms are included in these sums. This is a bound on multiplication of the original positive coefficient sequence, not an assumption of positive coefficients for H.
+
+### 180.3 原始路径矩阵的增长阶相对概率
+
+Mark h distinct rows of C_+, without restricting how many belong to S. Write n_s=2M temporarily. For a marked row and sign sigma in {+1,-1}, the stationary one-transition probability and reference Poisson intensity are
+
+$$
+p_{x,\sigma}=\frac{1+\sigma b_S(x)}{2n_s},\qquad
+\nu_{x,\sigma}=T p_{x,\sigma}.
+$$
+
+All are positive for late layers. The exact identities from original17.15, valid algebraically for any number of marked rows, are
+
+$$
+A(z)=\sum_{x,\sigma}p_{x,\sigma}(z_{x,\sigma}-1),\qquad
+B(z)=\sum_{x,\sigma}\sigma p_{x,\sigma}(z_{x,\sigma}-1),
+\tag{180.13}
+$$
+$$
+F_{path}(z)=e_1^T
+ \begin{pmatrix}1+A&B\\ A&B\end{pmatrix}^{T}e_1,
+\qquad F_{pair}(z)=(1+A)^T.
+\tag{180.14}
+$$
+
+The exponent T on the matrix denotes its integer power; e_1^T denotes transpose. Equation (180.14) retains all path dependence. Its derivation uses the exact rank-two transition operator and sum b_S=0, not independence of its rows.
+
+Define the analytic multiplier
+
+$$
+H_T(A,B)=e^{-TA}e_1^T
+ \begin{pmatrix}1+A&B\\ A&B\end{pmatrix}^{T}e_1-1.
+$$
+
+We claim that, for 0<=t<=1/200,
+
+$$
+H_T\#(t)\le10^6(t+Tt^2)e^{10^6Tt^2}+12\,2^{-T}.
+\tag{180.15}
+$$
+
+Here H_T# means the sum of absolute Taylor coefficients of the whole multiplier H_T. The same bound holds for the pair multiplier exp(T(log(1+A)-A))-1.
+
+Proof with uniform constants. Work on |A|,|B|<=rho=1/100. The discriminant is
+
+$$
+D=(1+A+B)^2-4B=1+2A-2B+(A+B)^2,
+$$
+
+and |D-1|<=4rho+4rho^2<1/20. The square root with value one at the origin is analytic there. The roots
+
+$$
+\Lambda_{1,2}=\tfrac12(1+A+B\pm\sqrt D)
+$$
+
+satisfy |Lambda_1-1|<1/20 and |Lambda_2|<1/50. These inequalities follow directly from the convergent square-root series, or the identity sqrt(D)-1=(D-1)/(sqrt(D)+1); Lambda_2=B/Lambda_1. In particular the two roots are separated throughout this fixed bidisc. Set
+
+$$
+\kappa=\frac{1+A-\Lambda_2}{\Lambda_1-\Lambda_2},\qquad
+L=\log\Lambda_1-A.
+$$
+
+The matrix identity gives exactly
+
+$$
+H_T=(\kappa e^{TL}-1)+e^{-TA}(1-\kappa)\Lambda_2^T.
+\tag{180.16}
+$$
+
+The branch log(Lambda_1) is analytic, kappa(0,0)=1, and L has no constant or linear term: the first-order term of Lambda_1 is A. On the bidisc, |kappa-1|<=3 and |L|<=1 suffice. Cauchy's formula bounds each Taylor coefficient by its corresponding supremum times rho^{-(a+b)}. For x=100t<=1/2,
+
+$$
+\sum_{d\ge1}(d+1)x^d\le8x,\qquad
+\sum_{d\ge2}(d+1)x^d\le12x^2.
+$$
+
+Consequently
+
+$$
+(\kappa-1)\#(t)\le2400t,\qquad L\#(t)\le120000t^2.
+$$
+
+The absolute-coefficient sum is submultiplicative; its exponential is bounded by the exponential of the sum. Therefore the first term in (180.16) has absolute-coefficient sum at most
+
+$$
+(2400t+120000Tt^2)e^{120000Tt^2},
+$$
+
+which is bounded by the first term in (180.15). On the same fixed bidisc the second term in (180.16) is at most 3(e^{rho}/50)^T<=3*2^{-T}. Its coefficient sum at t<=rho/2 is at most four times this supremum, giving the remaining 12*2^{-T}. This uses a fixed bidisc, not a constant that depends on h. For the pair multiplier, the analytic function log(1+A)-A has no terms of degree below two and the same generous coefficient bounds apply. QED.
+
+Now prescribe a nonnegative count tuple k on the h marked rows with total count at most C_0 h lambda. At radii R_i=k_i/nu_i, the absolute coefficient sums of BOTH forms in (180.13) obey
+
+$$
+\sum_i p_i+\sum_i p_iR_i
+=\frac h{2M}+\frac{\sum_i k_i}{T}
+\le\frac{(1+C_0)h}{2M}=t_h.
+\tag{180.17}
+$$
+
+For B the absolute constant coefficient may be smaller, so the same bound holds. Large individual radii cause no extra factor: their contributions are paid in the total in (180.17). This is why a factor lambda^h is unnecessary. Absolute convergence for the substituted multiplier follows from t_h<=rho/2, with an arbitrarily small enlargement of zero radii if needed.
+
+Apply (180.12) and (180.15) to F=G(1+H_T). We obtain the explicit relative point estimate
+
+$$
+\boxed{\quad
+\left|\Pr_S^{\mathcal E}(N=k)-\prod_i\mathrm{Pois}(\nu_i)\{k_i\}\right|
+\le\delta_h\prod_i\mathrm{Pois}(\nu_i)\{k_i\},
+\quad}\tag{180.18}
+$$
+
+for either experiment and every h with t_h<=1/200. No smallness of delta_h is needed for the validity of the bound. Whenever lambda h^2/M tends to zero, delta_h is O_{C_0}(lambda h^2/M), with an exponentially smaller remainder. In particular (180.18) has a vanishing relative error uniformly for all h<=Q^{10} at late original layers. This last range follows from M=exp(Theta_J(Q^3)), not from substitution into an old fixed-h theorem.
+
+### 180.4 同一实际概率律下的混合阶乘矩与均值校准
+
+By Chapter 175's global score injectivity, the complete group count is exactly
+
+$$
+C_v=\sum_{x\in C_+}\mathbf1_{\{(N_{x,+},N_{x,-})=(K_{j_v},B_{j_v})\}}.
+\tag{180.19}
+$$
+
+The d events at any one row are mutually exclusive because the selected pairs are distinct. Define the reference point probabilities f_{x,v} from the product-Poisson row law in (180.18), and set m_v=sum_x f_{x,v}. These are the original mixture means q f_{j_v}+(M-q)f^0_{j_v}, with every original factorial and compensation parameter kept.
+
+For a multi-index r=(r_1,...,r_d) of total order h, expanding the mixed falling factorial gives a sum over injective assignments of h labelled slots to actual rows. All probabilities in this sum belong to the SAME path or pair law. Equation (180.18) compares each such joint probability to the product of its reference row probabilities with error delta_h.
+
+Without the injectivity restriction, the reference sum is exactly product_v m_v^{r_v}. The loss from repeated rows is controlled uniformly even for small means. For any category v with m_v>0, a row drawn with probabilities f_{x,v}/m_v has maximum probability at most 1/q_*: within each of the two types S and C_+ minus S the reference probability is constant, and that type has at least q_* rows. Hence the chance that any particular two independently assigned slots choose the same row is at most 1/q_*. A union bound over slot pairs gives
+
+$$
+\left|\mathbb E\prod_v(C_v)_{r_v}-\prod_v m_v^{r_v}\right|
+\le\left(\delta_h+\frac{h(h-1)}{2q_*}\right)\prod_v m_v^{r_v}.
+\tag{180.20}
+$$
+
+This union bound does not require the two slots to have the same category. It retains both within-group and between-group collisions. It does not use a random support prior.
+
+At h=1, summing (180.18) gives |mu_v-m_v|<=delta_1 m_v. Therefore, when delta_1<1,
+
+$$
+\left|\mathbb E\prod_v(C_v)_{r_v}-\prod_v\mu_v^{r_v}\right|
+\le\eta_K\prod_v\mu_v^{r_v},\qquad 1\le h\le K,
+\tag{180.21}
+$$
+
+with eta_K as in (180.6). To check calibration explicitly, put a_K=delta_K+K(K-1)/(2q_*). The ratio product m_v^{r_v}/product mu_v^{r_v} lies between (1+delta_1)^{-h} and (1-delta_1)^{-h}. The triangle inequality in (180.20) bounds the relative error by
+
+$$
+a_K(1-\delta_1)^{-K}+((1-\delta_1)^{-K}-1)=\eta_K.
+$$
+
+Thus the dependence error delta_K, repeated-row error and actual-mean calibration are separate, explicit terms. If an actual mean is zero, its count is zero almost surely; (180.18) with delta_1<1 also forces the corresponding reference mean to be zero. Remove that coordinate before using ratios. No positive lower bound on a mean has entered the estimate.
+
+### 180.5 有限稀疏化的全变差反演与余项
+
+下面在有限阶保留反演余项。阶乘矩距离控制全变差是经典方法；这里给出适用于 (180.21) 的有限多元推导，外部方法及其独立性边界见本章文献归属。
+
+For a signed measure sigma on the nonnegative integer lattice, let ||sigma||_1 be the sum of absolute masses. Put D_v=delta_{e_v}-delta_0, so ||D_v||_1=2. Given a nonnegative integer vector C, independently retain each of its items with probability t, only as an auxiliary analytic construction, and call the resulting law P_t. This thinning does not change or condition the actual experiment; P_1 is its actual count law and P_0=delta_0.
+
+For a deterministic realization c, its thinned law is the convolution product of c_v copies of delta_0+tD_v. Differentiating this finite polynomial at zero and averaging gives
+
+$$
+\frac{P_0^{(h)}}{h!}
+=\sum_{|r|=h}\frac{\mathbb E\prod_v(C_v)_{r_v}}{\prod_v r_v!}
+ D_1^{*r_1}*\cdots*D_d^{*r_d}.
+\tag{180.22}
+$$
+
+Writing S_C=sum_v C_v, differentiation at any t in [0,1] also gives
+
+$$
+\|P_t^{(K)}\|_1\le2^K\mathbb E(S_C)_K.
+\tag{180.23}
+$$
+
+Indeed choose the K differentiated factors in their ordered positions. Each contributes a D_v of norm two; every remaining factor is a probability measure of norm one. There are (S_C)_K choices. The counts here are at most M in total, so all these differentiations and expectations are finite.
+
+Taylor's formula with integral remainder therefore bounds the l1 error after degree K-1 by 2^K E(S_C)_K/K!. For the comparison vector Z with independent Pois(mu_v) coordinates, the thinned law is product Pois(t mu_v). Its Kth derivative is (sum_v mu_v D_v)^{*K} convolved with that probability law, and its remainder is at most (2u)^K/K!.
+
+The order-h difference between the Taylor coefficients for C and Z is bounded by (180.21) and ||D^r||_1<=2^h. Summing over |r|=h gives eta_K(2u)^h/h!. Also, by the multinomial identity for falling factorials and (180.21),
+
+$$
+\mathbb E(S_C)_K\le(1+\eta_K)u^K.
+$$
+
+Taking half the l1 distance, adding both remainders, and bounding the finite exponential sum by e^{2u}-1 proves exactly (180.7). No infinite series interchange with uncontrolled high-order moments is used. This is uniform over all subsets of the count lattice, so it is a total-variation bound rather than a subsequential weak limit.
+
+To derive (180.9), set ell_*=log q_* and K=floor(ell_*). Eventually K>=ell_*/2, delta_1<1/2, and
+
+$$
+\delta_K=O_{C_0}(\lambda K^2/M),\quad K\delta_1=o(1),\quad
+\eta_K\le C_{C_0}K^2(\lambda/M+1/q_*)=o(1).
+\tag{180.24}
+$$
+
+All these assertions follow directly from (180.5)-(180.6), since K=O_J(Q^3), lambda=Q^3 and M,q_* grow exponentially in Q^3. Under (180.8), e^{2u}<=q_*^{1/64}. The elementary bound K!>=(K/e)^K gives
+
+$$
+\frac{(2u)^K}{K!}\le(2eu/K)^K\le(e/32)^K\le8^{-K}.
+$$
+
+Here e<4 suffices. Since eta_K<=1 eventually, the remainder in (180.7) is at most (3/2)8^{-K}<=12 q_*^{-log 8}<=16q_*^{-2}. Combining this with (180.24) proves the first inequality in (180.9). Because q_*<=M and lambda>=1, a weaker bound is the second inequality in (180.9). Equation (180.10), uniformly on J, then gives (180.11) and the stated fixed order-Q^3 admissible range. This completes the proof of Theorem 180.1.
+
+
+### 180.6 较大均值窗口与非有界泛函的边界
+
+**定义 180.2（尚未结算的较大窗口断言）。** 保持定义 180.1 的全部原始参数、指标、支持与实际实验，考察各 $\mu_v\le Q^8$ 时联合 Poisson 全变差距离一致趋于零的断言。本章不证明也不反驳该断言。式 (180.18) 允许多项式增长的行数；式 (180.7) 的第一项则含 $e^{2u}$，在 $u$ 为 $Q^8$ 阶时不能由式 (180.24) 的 $e^{-cQ^3}$ 控制推出趋零。因此该上界不能结算较大窗口，也不构成实际分布的反例。
+
+全变差结论仅控制有界检验函数。非有界熵泛函及其矩的转移另需两种概率律下相应的尾界，本章不给出此类转移；第 72 章的熵结论保留原假设与证明。$E_2$ 的存在、空性及同层同步问题仍不由上述条件逼近决定。
+
+## 追加锚（本行以下为增补区）

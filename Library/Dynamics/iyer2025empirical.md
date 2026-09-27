@@ -6169,3 +6169,15 @@ M. Biskup、C. Borgs、J. T. Chayes、L. J. Kleinwaks 与 R. Kotecký，*Partiti
 该版本抽取文本在 (5.31)、(5.32) 定义 $\varphi=\log F_L$、$\theta=\log(F_L/F)$ 后，后续文字使用的相位和号与这两个定义不一致。尚未判定这是抽取问题还是原排印问题；本章不采用该处符号等式，其振幅比、对数分支及相位差均在正文独立推导。既有原文边界保持原状。
 
 本章新增的是模型中的加权跨尺度控制、连接域的单值逆相位与实际标签对应；经典解析工具和文献定理保留原归属。没有将一个局部连接结果提升为全局最大延拓、首次 Stokes 转换、最近零点或 Lean 形式认证，也不宣称全球原创与检索穷尽。
+
+## 谱边界卷第 180 章补充：增长阶相对概率与实际均值 Poisson 逼近
+
+对应 [谱边界卷第 180 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：精确有限秩路径生成函数、原始混合行类型与第 175 章全局得分单射性共同给出完整群的增长阶相对点概率估计，再经碰撞控制、实际均值校准和有限阶反演，得到均值总和至多 $\log q_*/128$ 的联合 Poisson 全变差界。该窗口在固定内部参数区间上为 $Q^3$ 阶；各均值可达 $Q^8$ 的一致逼近、非有界熵矩转移及 $E_2$ 同步问题仍未解决。
+
+A. D. Barbour 与 A. V. Gnedin，*Small counts in the infinite occupancy scheme*，原文版本 [arXiv:0809.4387v1](https://arxiv.org/abs/0809.4387v1)，Lemma 2.1、Proposition 2.2 及其证明给出独立投球模型的定量去 Poisson 化。其尾箱界为 $\pi_k+2k\exp(-np_k/10)$，要求 $m\le np_k/2$。独立箱分配与剩余箱耦合不能直接替代本卷原始相关路径；Poisson 化箱占据数也不自动使“具有某占据数的箱数”相互独立且服从 Poisson 律。
+
+Julia Eaton、Anant P. Godbole 与 Betsy Sinclair，*Competition between Discrete Random Variables, with Applications to Occupancy Problems*，原文版本 [arXiv:0806.1007v1](https://arxiv.org/abs/0806.1007v1)，以强制指定独立球进入一箱并条件重分配其余球构造耦合，多元占据结论使用均匀独立分配与 $n/N\to0$。本文所需的原始比例是 $T/(2M)=Q^3\to\infty$，事件带两种转移标记，路径观察相邻相关；原文耦合与误差界不作为本章原始路径定理的前提。
+
+Nickos Papadatos，*On corrected Poisson approximations for sums of independent indicators*，原文版本 [arXiv:2304.10314v2](https://arxiv.org/abs/2304.10314v2)，讨论独立指标、阶乘矩距离与修正 Poisson 律。距离含 $\frac12\sum_m2^m|\Delta m_m|/m!$；其全变差控制在具有适当指数矩的类中成立，所引反演证明由原文归于 Afendras–Papadatos，修正律的相关现象归于 Barbour–Hall。原文展示的误差同样含 $e^{2\lambda}$。本章不将阶乘矩反演或该指数损失声称为新方法，不借用未核对的引文证明；正文给出有限多元反演、余项与原始路径增长阶输入的完整连接。
+
+上述版本的相关模型、条件与所述原文证明已作有界核对；此归属不宣称全球原创或文献穷尽。实质新增部分是同一实际路径的增长阶系数控制、两种行类型的碰撞界与精确实际均值下的定量组合。
